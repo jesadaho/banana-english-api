@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -23,7 +24,10 @@ async function bootstrap() {
 
   const port = parseInt(process.env.PORT ?? '8000', 10);
   await app.listen(port, '0.0.0.0');
-  console.log(`Banana English API listening on port ${port}`);
+  console.log(`Banana English API listening on 0.0.0.0:${port}`);
 }
 
-bootstrap();
+bootstrap().catch((err) => {
+  console.error('Failed to start:', err);
+  process.exit(1);
+});

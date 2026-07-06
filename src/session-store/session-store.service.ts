@@ -1,6 +1,6 @@
+import { randomUUID } from 'crypto';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { v4 as uuidv4 } from 'uuid';
 
 export interface ChatTurn {
   speaker: 'user' | 'ai';
@@ -30,7 +30,7 @@ export class SessionStoreService {
   constructor(private readonly config: ConfigService) {}
 
   create(topicId: string): SessionData {
-    const sessionId = `session_${uuidv4().replace(/-/g, '').slice(0, 12)}`;
+    const sessionId = `session_${randomUUID().replace(/-/g, '').slice(0, 12)}`;
     const session: ConversationSession = {
       id: sessionId,
       topicId,
