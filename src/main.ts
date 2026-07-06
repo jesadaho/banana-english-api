@@ -8,10 +8,38 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = app.get(ConfigService);
-  const corsOrigins = config.get<string>('CORS_ORIGINS', 'http://localhost:8080');
+  const corsOrigins = config.get<string>('CORS_ORIGINS', '');
 
   app.enableCors({
-    origin: corsOrigins.split(',').map((o) => o.trim()),
+    origin: (origin, callback) => {
+      // Server-to-server / curl
+      if (!origin) {
+        callback(null, true);
+        return;
+      }
+
+      const allowed = corsOrigins
+        .split(',')
+        .map((o) => o.trim())
+        .filter(Boolean);
+
+      if (allowed.includes(origin)) {
+        callback(null, true);
+        return;
+      }
+
+      // Flutter web dev (random localhost ports)
+      if (/^http:\/\/localhost:\d+$/.test(origin)) {
+        callback(null, true);
+        return;
+      }
+      if (/^http:\/\/127\.0\.0\.1:\d+$/.test(origin)) {
+        callback(null, true);
+        return;
+      }
+
+      callback(null, false);
+    },
     credentials: true,
   });
 
