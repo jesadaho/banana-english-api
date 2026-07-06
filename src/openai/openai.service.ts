@@ -9,34 +9,12 @@ import {
   THAI_MIX_PROMPT,
 } from '../topics/topics.data';
 import { ChatTurn } from '../session-store/session-store.service';
-
-export interface GptReply {
-  textEn: string;
-  textTh: string;
-}
-
-export interface HintOption {
-  id: string;
-  label: string;
-  sentenceEn: string;
-}
-
-interface GptHints {
-  hints: HintOption[];
-}
-
-export interface VocabItem {
-  word: string;
-  meaningTh: string;
-  exampleEn: string;
-}
-
-export interface GptReport {
-  feedbackEn: string;
-  feedbackTh: string;
-  grammarTip: string;
-  vocab: VocabItem[];
-}
+import {
+  GptReply,
+  GptReport,
+  HintOption,
+  HintsResponse,
+} from '../common/api.types';
 
 const REPLY_SCHEMA = {
   type: 'object' as const,
@@ -195,7 +173,7 @@ export class OpenAiService {
     });
     const result = JSON.parse(
       response.choices[0].message.content ?? '{}',
-    ) as GptHints;
+    ) as HintsResponse;
     return result.hints;
   }
 

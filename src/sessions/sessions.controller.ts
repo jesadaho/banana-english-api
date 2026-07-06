@@ -9,7 +9,7 @@ import {
   Body,
 } from '@nestjs/common';
 import { OpenAiService } from '../openai/openai.service';
-import type { GptReport, HintOption } from '../openai/openai.service';
+import type { DailyReportResponse, HintsResponse } from '../common/api.types';
 import { SessionStoreService } from '../session-store/session-store.service';
 import { getTopic } from '../topics/topics.data';
 import { StartSessionDto, TurnDto } from './dto/sessions.dto';
@@ -102,7 +102,7 @@ export class SessionsController {
   @Post(':sessionId/hints')
   async getHints(
     @Param('sessionId') sessionId: string,
-  ): Promise<{ hints: HintOption[] }> {
+  ): Promise<HintsResponse> {
     const data = this.sessionStore.get(sessionId);
     if (!data) {
       throw new NotFoundException('Session not found');
@@ -131,7 +131,7 @@ export class SessionsController {
   @Get(':sessionId/report')
   async getReport(
     @Param('sessionId') sessionId: string,
-  ): Promise<GptReport & { sessionId: string; durationSeconds: number }> {
+  ): Promise<DailyReportResponse> {
     const data = this.sessionStore.get(sessionId);
     if (!data) {
       throw new NotFoundException('Session not found');
