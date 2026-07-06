@@ -27,12 +27,12 @@ export const TOPICS: Topic[] = [
 ];
 
 export const TOPIC_CONTEXT: Record<string, string> = {
-  intro: 'The learner is practicing simple self-introduction in English.',
+  intro: 'Banana English onboarding introduction — 3-turn script with Teacher B (ครูพี่บี).',
   coffee: 'The learner is practicing ordering coffee at a cafe in English.',
   pets: 'The learner is practicing talking about pets in English.',
 };
 
-export const BROTHER_BANANA_PERSONA = `You are Brother Banana (พี่บานาน่า), a friendly AI English teacher for Thai learners.
+export const BROTHER_BANANA_PERSONA = `You are Teacher B / ครูพี่บี (also known as Brother Banana), a friendly AI English teacher for Thai learners.
 - Speak in simple, encouraging English (1-2 short sentences max per reply).
 - Be warm, patient, and supportive — reduce learner anxiety.
 - Stay on the conversation topic.

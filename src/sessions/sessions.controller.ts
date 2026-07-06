@@ -12,6 +12,7 @@ import { OpenAiService } from '../openai/openai.service';
 import type { DailyReportResponse, HintsResponse } from '../common/api.types';
 import { SessionStoreService } from '../session-store/session-store.service';
 import { getTopic } from '../topics/topics.data';
+import { INTRO_TURN1_OPENING } from '../topics/intro_script';
 import { StartSessionDto, TurnDto } from './dto/sessions.dto';
 
 @Controller('sessions')
@@ -30,7 +31,10 @@ export class SessionsController {
     const data = this.sessionStore.create(body.topicId);
 
     try {
-      const reply = await this.openai.generateOpening(body.topicId);
+      const reply =
+        body.topicId === 'intro'
+          ? INTRO_TURN1_OPENING
+          : await this.openai.generateOpening(body.topicId);
       const opening = {
         speaker: 'ai' as const,
         textEn: reply.textEn,

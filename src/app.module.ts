@@ -6,6 +6,7 @@ import { SessionsModule } from './sessions/sessions.module';
 import { ConfigKeysModule } from './config-keys/config-keys.module';
 import { OpenAiModule } from './openai/openai.module';
 import { SessionStoreModule } from './session-store/session-store.module';
+import { TtsModule } from './tts/tts.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { SessionStoreModule } from './session-store/session-store.module';
     ConfigKeysModule,
     OpenAiModule,
     SessionStoreModule,
+    TtsModule,
   ],
 })
 export class AppModule {}

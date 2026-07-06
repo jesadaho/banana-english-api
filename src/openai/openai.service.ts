@@ -2,12 +2,17 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import OpenAI from 'openai';
 import {
+  BROTHER_BANANA_PERSONA,
   conversationSystemPrompt,
   HINTS_PROMPT,
   openingUserPrompt,
   REPORT_PROMPT,
   THAI_MIX_PROMPT,
 } from '../topics/topics.data';
+import {
+  INTRO_TOPIC_CONTEXT,
+  introReplyInstruction,
+} from '../topics/intro_script';
 import { ChatTurn } from '../session-store/session-store.service';
 import {
   GptReply,
@@ -124,8 +129,15 @@ export class OpenAiService {
     history: ChatTurn[],
     userMessage: string,
   ): Promise<GptReply> {
+    const userTurnCount = history.filter((t) => t.speaker === 'user').length;
+
+    const systemPrompt =
+      topicId === 'intro'
+        ? `${BROTHER_BANANA_PERSONA}\n\nTopic context: ${INTRO_TOPIC_CONTEXT}`
+        : conversationSystemPrompt(topicId);
+
     const messages: OpenAI.Chat.ChatCompletionMessageParam[] = [
-      { role: 'system', content: conversationSystemPrompt(topicId) },
+      { role: 'system', content: systemPrompt },
     ];
 
     for (const turn of history.slice(-10)) {
@@ -136,12 +148,14 @@ export class OpenAiService {
     }
 
     messages.push({ role: 'user', content: userMessage });
-    messages.push({
-      role: 'system',
-      content:
-        'Respond as Brother Banana. Return JSON with textEn (English reply) ' +
-        'and textTh (Thai translation). Keep textEn to 1-2 short sentences.',
-    });
+
+    const replyGuide =
+      topicId === 'intro'
+        ? introReplyInstruction(userTurnCount)
+        : 'Respond as Teacher B (ครูพี่บี). Return JSON with textEn (English reply) ' +
+          'and textTh (Thai translation). Keep textEn to 1-2 short sentences.';
+
+    messages.push({ role: 'system', content: replyGuide });
 
     const response = await this.client.chat.completions.create({
       model: 'gpt-4o',
@@ -150,7 +164,7 @@ export class OpenAiService {
         type: 'json_schema',
         json_schema: { name: 'reply', schema: REPLY_SCHEMA },
       },
-      max_tokens: 200,
+      max_tokens: topicId === 'intro' ? 350 : 200,
       temperature: 0.7,
     });
     return JSON.parse(response.choices[0].message.content ?? '{}') as GptReply;
@@ -211,5 +225,20 @@ export class OpenAiService {
         return `${speaker}: ${turn.textEn}`;
       })
       .join('\n');
+  }
+
+  async synthesizeSpeech(text: string): Promise<Buffer> {
+    const trimmed = text.trim();
+    if (!trimmed) {
+      return Buffer.alloc(0);
+    }
+
+    const response = await this.client.audio.speech.create({
+      model: 'tts-1',
+      voice: 'nova',
+      input: trimmed,
+    });
+
+    return Buffer.from(await response.arrayBuffer());
   }
 }
