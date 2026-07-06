@@ -21,9 +21,9 @@ async function bootstrap() {
     }),
   );
 
-  const port = config.get<number>('PORT', 8000);
-  await app.listen(port);
-  console.log(`Banana English API running on http://localhost:${port}`);
+  const port = parseInt(process.env.PORT ?? '8000', 10);
+  await app.listen(port, '0.0.0.0');
+  console.log(`Banana English API listening on port ${port}`);
 }
 
 bootstrap();

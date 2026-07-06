@@ -10,12 +10,12 @@ import {
 } from '../topics/topics.data';
 import { ChatTurn } from '../session-store/session-store.service';
 
-interface GptReply {
+export interface GptReply {
   textEn: string;
   textTh: string;
 }
 
-interface HintOption {
+export interface HintOption {
   id: string;
   label: string;
   sentenceEn: string;
@@ -25,13 +25,13 @@ interface GptHints {
   hints: HintOption[];
 }
 
-interface VocabItem {
+export interface VocabItem {
   word: string;
   meaningTh: string;
   exampleEn: string;
 }
 
-interface GptReport {
+export interface GptReport {
   feedbackEn: string;
   feedbackTh: string;
   grammarTip: string;

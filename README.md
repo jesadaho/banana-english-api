@@ -45,7 +45,35 @@ Server runs at `http://localhost:8000`.
 | POST | `/sessions/:id/end` | End session |
 | GET | `/sessions/:id/report` | Daily report |
 
-## Flutter client
+## Deploy on Railway
+
+1. Push this repo to GitHub (if not already).
+2. Go to [railway.app](https://railway.app) → **New Project** → **Deploy from GitHub repo** → select `banana-english-api`.
+3. Railway auto-detects Node.js. `railway.toml` sets build (`npm run build`) and start (`npm run start:prod`).
+4. In **Variables**, add:
+
+   | Variable | Example |
+   |----------|---------|
+   | `OPENAI_API_KEY` | `sk-...` |
+   | `GROQ_API_KEY` | `gsk_...` |
+   | `CORS_ORIGINS` | `http://localhost:8080,https://your-app.web.app` |
+   | `SESSION_DURATION_SECONDS` | `300` |
+
+   `PORT` is injected by Railway automatically — do not set it manually.
+
+5. Open **Settings → Networking → Generate Domain** to get a public URL (e.g. `https://banana-english-api-production.up.railway.app`).
+6. Verify: `curl https://<your-domain>/health` → `{"status":"ok"}`.
+
+### Flutter (point to Railway)
+
+```bash
+flutter run -d chrome \
+  --dart-define=API_BASE_URL=https://<your-railway-domain>
+```
+
+Add your Flutter web origin to `CORS_ORIGINS` on Railway.
+
+## Flutter client (local)
 
 ```bash
 flutter run -d chrome --dart-define=API_BASE_URL=http://localhost:8000
