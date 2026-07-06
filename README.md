@@ -2,12 +2,13 @@
 
 NestJS backend for Banana English — AI English conversation practice for Thai learners.
 
-**Phase 1:** Text-only API. STT runs on the Flutter client (Groq Whisper). TTS runs on the client when `audioUrl` is null.
+**Phase 1:** Text-only API. STT runs on the Flutter client (Groq Whisper). TTS uses Gemini (`gemini-2.5-flash-preview-tts`, voice Puck) via `/api/tts/synthesize`.
 
 ## Stack
 
 - NestJS 10 + TypeScript
 - OpenAI GPT-4o (chat, hints, report, Thai-mix correction)
+- Google Gemini TTS (`gemini-2.5-flash-preview-tts`, voice Puck)
 - In-memory session store (MVP)
 
 ## Setup
@@ -27,6 +28,9 @@ Server runs at `http://localhost:8000`.
 | Variable | Description |
 |----------|-------------|
 | `OPENAI_API_KEY` | OpenAI API key |
+| `GEMINI_API_KEY` | Google Gemini API key (TTS) |
+| `GEMINI_TTS_MODEL` | TTS model (default `gemini-2.5-flash-preview-tts`) |
+| `GEMINI_TTS_VOICE` | TTS voice (default `Puck`) |
 | `GROQ_API_KEY` | Groq key (served to Flutter via `/api/config/keys`) |
 | `PORT` | Server port (default `8000`) |
 | `CORS_ORIGINS` | Comma-separated allowed origins |
@@ -44,6 +48,7 @@ Server runs at `http://localhost:8000`.
 | POST | `/sessions/:id/hints` | Get reply hints |
 | POST | `/sessions/:id/end` | End session |
 | GET | `/sessions/:id/report` | Daily report |
+| POST | `/api/tts/synthesize` | Synthesize speech clips (Gemini TTS) |
 
 ## Deploy on Railway
 
@@ -55,6 +60,7 @@ Server runs at `http://localhost:8000`.
    | Variable | Example |
    |----------|---------|
    | `OPENAI_API_KEY` | `sk-...` |
+   | `GEMINI_API_KEY` | `AIza...` |
    | `GROQ_API_KEY` | `gsk_...` |
    | `CORS_ORIGINS` | `http://localhost:8080,https://your-app.web.app` |
    | `SESSION_DURATION_SECONDS` | `300` |

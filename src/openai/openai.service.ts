@@ -226,19 +226,4 @@ export class OpenAiService {
       })
       .join('\n');
   }
-
-  async synthesizeSpeech(text: string): Promise<Buffer> {
-    const trimmed = text.trim();
-    if (!trimmed) {
-      return Buffer.alloc(0);
-    }
-
-    const response = await this.client.audio.speech.create({
-      model: 'tts-1',
-      voice: 'nova',
-      input: trimmed,
-    });
-
-    return Buffer.from(await response.arrayBuffer());
-  }
 }
