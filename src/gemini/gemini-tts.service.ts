@@ -1,6 +1,7 @@
 import {
   Injectable,
   ServiceUnavailableException,
+  TooManyRequestsException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { pcmToWav, parseSampleRateFromMimeType } from './pcm-to-wav.util';
@@ -48,42 +49,55 @@ export class GeminiTtsService {
       );
     }
 
-    const response = await fetch(
-      'https://generativelanguage.googleapis.com/v1beta/interactions',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-goog-api-key': this.apiKey,
-          'Api-Revision': '2026-05-20',
-        },
-        body: JSON.stringify({
-          model: this.model,
-          input: `Speak warmly and naturally as Teacher B, a friendly English teacher for Thai learners:\n\n${trimmed}`,
-          response_format: { type: 'audio' },
-          generation_config: {
-            speech_config: [{ voice: this.voice }],
-          },
-        }),
+    const body = {
+      model: this.model,
+      input: `Speak warmly and naturally as Teacher B, a friendly English teacher for Thai learners:\n\n${trimmed}`,
+      response_format: { type: 'audio' },
+      generation_config: {
+        speech_config: [{ voice: this.voice }],
       },
-    );
+    };
 
-    if (!response.ok) {
-      const err = await response.text();
-      throw new Error(`Gemini TTS failed (${response.status}): ${err}`);
+    const maxAttempts = 3;
+    let lastError = 'Unknown Gemini TTS error';
+
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+      const response = await fetch(
+        'https://generativelanguage.googleapis.com/v1beta/interactions',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-goog-api-key': this.apiKey,
+          },
+          body: JSON.stringify(body),
+        },
+      );
+
+      if (response.ok) {
+        const data = (await response.json()) as InteractionResponse;
+        return this.toPlayableAudio(this.extractAudioBlock(data));
+      }
+
+      lastError = await response.text();
+
+      if (response.status === 429) {
+        throw new TooManyRequestsException(
+          'Gemini TTS quota exhausted. Use the same GEMINI_API_KEY as AI Studio or enable billing.',
+        );
+      }
+
+      const retryable = response.status >= 500;
+      if (!retryable || attempt === maxAttempts) {
+        throw new Error(
+          `Gemini TTS failed (${response.status}): ${lastError}`,
+        );
+      }
+
+      await new Promise((resolve) => setTimeout(resolve, attempt * 400));
     }
 
-    const data = (await response.json()) as InteractionResponse;
-    const audio = this.extractAudioBlock(data);
-    const mimeType = audio.mime_type ?? audio.mimeType;
-    const raw = Buffer.from(audio.data ?? '', 'base64');
-
-    if (mimeType?.includes('wav')) {
-      return raw;
-    }
-
-    const sampleRate = parseSampleRateFromMimeType(mimeType);
-    return pcmToWav(raw, sampleRate);
+    throw new Error(`Gemini TTS failed: ${lastError}`);
   }
 
   private extractAudioBlock(data: InteractionResponse): AudioBlock {
@@ -102,5 +116,17 @@ export class GeminiTtsService {
     }
 
     throw new Error('Gemini TTS response missing audio data');
+  }
+
+  private toPlayableAudio(block: AudioBlock): Buffer {
+    const mimeType = block.mime_type ?? block.mimeType;
+    const raw = Buffer.from(block.data ?? '', 'base64');
+
+    if (mimeType?.includes('wav') || mimeType?.includes('mpeg')) {
+      return raw;
+    }
+
+    const sampleRate = parseSampleRateFromMimeType(mimeType);
+    return pcmToWav(raw, sampleRate);
   }
 }

@@ -15,25 +15,26 @@ export class TtsController {
   @Post('synthesize')
   async synthesize(@Body() body: SynthesizeTtsDto) {
     const segments = body.segments
-      .map((s) => s.text.trim())
+      .map((segment) => segment.text.trim())
       .filter((text) => text.length > 0);
 
     if (segments.length === 0) {
       return { clips: [] };
     }
 
+    const combinedText = segments.join(' ');
+
     try {
-      const clips = await Promise.all(
-        segments.map(async (text) => {
-          const audio = await this.geminiTts.synthesizeSpeech(text);
-          return {
+      const audio = await this.geminiTts.synthesizeSpeech(combinedText);
+
+      return {
+        clips: [
+          {
             audioBase64: audio.toString('base64'),
             contentType: 'audio/wav',
-          };
-        }),
-      );
-
-      return { clips };
+          },
+        ],
+      };
     } catch (err) {
       if (err instanceof HttpException) {
         throw err;
