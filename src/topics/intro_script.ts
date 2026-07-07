@@ -216,10 +216,9 @@ export const INTRO_TOPIC_CONTEXT =
   'You are Teacher B (ครูพี่บี), a friendly banana English teacher for Thai learners.';
 
 export const INTRO_REPORT_PROMPT =
-  'Analyze this Banana English onboarding introduction session for a Thai learner. ' +
-  'The session covers: name introduction, hobbies, and a warm closing reflection. ' +
-  'Return encouraging results as JSON. ' +
-  'levelTitle should be a short catchy English phrase (e.g. "Ready to Fly", "Steady Start"). ' +
-  'levelEmoji should be one emoji matching the level. ' +
-  'summaryTh: 1-2 warm Thai sentences in quotes style. ' +
-  'Scores (0-100): pronunciation, confidence, listening — estimate from their English attempts.';
+  'Analyze this Banana English intro session for a Thai learner. ' +
+  'Return compact JSON only — no extra text. ' +
+  'levelTitle: short English phrase (2-3 words). ' +
+  'levelEmoji: one emoji. ' +
+  'summaryTh: one short Thai sentence (max 25 words). ' +
+  'Scores 0-100: pronunciation, confidence, listening.';

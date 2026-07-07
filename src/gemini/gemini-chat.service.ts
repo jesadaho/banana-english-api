@@ -260,7 +260,8 @@ export class GeminiChatService {
         },
       ],
       schema: INTRO_REPORT_SCHEMA,
-      maxOutputTokens: 1024,
+      maxOutputTokens: 2048,
+      temperature: 0.4,
     });
 
     return {
@@ -272,30 +273,44 @@ export class GeminiChatService {
   }
 
   private async generateJson<T>(options: GenerateJsonOptions): Promise<T> {
-    const text = await this.callGemini({
-      ...options,
-      schema: options.schema,
-    });
+    const baseTokens = options.maxOutputTokens ?? 1024;
+    const tokenLimits = [baseTokens, baseTokens * 2, 4096];
 
-    try {
-      return this.parseJsonResponse<T>(text);
-    } catch (firstError) {
-      const retryText = await this.callGemini({
-        ...options,
-        schema: options.schema,
-        maxOutputTokens: (options.maxOutputTokens ?? 1024) * 2,
-      });
+    let lastError: unknown;
+    let lastPreview = '';
 
+    for (let attempt = 0; attempt < tokenLimits.length; attempt++) {
       try {
-        return this.parseJsonResponse<T>(retryText);
-      } catch {
-        const message =
-          firstError instanceof Error ? firstError.message : String(firstError);
-        throw new Error(
-          `Gemini returned invalid JSON (${message}). Preview: ${text.slice(0, 120)}`,
-        );
+        const text = await this.callGemini({
+          ...options,
+          schema: options.schema,
+          maxOutputTokens: tokenLimits[attempt],
+        });
+        return this.parseJsonResponse<T>(text);
+      } catch (error) {
+        lastError = error;
+        if (error instanceof Error) {
+          lastPreview = error.message;
+        }
+        const retryable =
+          error instanceof Error &&
+          (error.message.includes('MAX_TOKENS') ||
+            error.message.includes('invalid JSON') ||
+            error.message.includes('Unterminated'));
+        if (!retryable || attempt === tokenLimits.length - 1) {
+          break;
+        }
       }
     }
+
+    if (lastPreview) {
+      throw new Error(
+        `Gemini returned invalid JSON after retries. Last error: ${lastPreview}`,
+      );
+    }
+    throw lastError instanceof Error
+      ? lastError
+      : new Error(String(lastError));
   }
 
   private async generateText(options: GenerateJsonOptions): Promise<string> {
