@@ -1,6 +1,7 @@
 import { randomUUID } from 'crypto';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import type { GptIntroReport } from '../common/api.types';
 
 export interface ChatTurn {
   speaker: 'user' | 'ai';
@@ -21,6 +22,7 @@ interface SessionData {
   turns: ChatTurn[];
   turnCounter: number;
   endedAt: Date | null;
+  introReport: GptIntroReport | null;
 }
 
 @Injectable()
@@ -45,6 +47,7 @@ export class SessionStoreService {
       turns: [],
       turnCounter: 0,
       endedAt: null,
+      introReport: null,
     };
     this.sessions.set(sessionId, data);
     return data;
@@ -64,6 +67,11 @@ export class SessionStoreService {
   markEnded(sessionId: string): void {
     const data = this.require(sessionId);
     data.endedAt = new Date();
+  }
+
+  setIntroReport(sessionId: string, report: GptIntroReport): void {
+    const data = this.require(sessionId);
+    data.introReport = report;
   }
 
   private require(sessionId: string): SessionData {

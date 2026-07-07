@@ -127,12 +127,25 @@ export class SessionsController {
   }
 
   @Post(':sessionId/end')
-  endSession(@Param('sessionId') sessionId: string) {
+  async endSession(@Param('sessionId') sessionId: string) {
     const data = this.sessionStore.get(sessionId);
     if (!data) {
       throw new NotFoundException('Session not found');
     }
     this.sessionStore.markEnded(sessionId);
+
+    if (data.session.topicId === 'intro') {
+      try {
+        const introReport = await this.openai.generateIntroReport(data.turns);
+        this.sessionStore.setIntroReport(sessionId, introReport);
+        return { status: 'ended', introReport };
+      } catch (err) {
+        throw new BadGatewayException(
+          `AI service error: ${err instanceof Error ? err.message : String(err)}`,
+        );
+      }
+    }
+
     return { status: 'ended' };
   }
 
@@ -146,6 +159,10 @@ export class SessionsController {
     }
     if (data.session.topicId !== 'intro') {
       throw new BadRequestException('Not an introduction session');
+    }
+
+    if (data.introReport) {
+      return { sessionId, ...data.introReport };
     }
 
     try {
