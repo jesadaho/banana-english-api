@@ -117,7 +117,6 @@ type GenerateJsonOptions = {
   schema?: Record<string, unknown>;
   maxOutputTokens?: number;
   temperature?: number;
-  useMinimalThinking?: boolean;
 };
 
 type GeminiResponse = {
@@ -276,7 +275,6 @@ export class GeminiChatService {
     const text = await this.callGemini({
       ...options,
       schema: options.schema,
-      useMinimalThinking: true,
     });
 
     try {
@@ -285,7 +283,6 @@ export class GeminiChatService {
       const retryText = await this.callGemini({
         ...options,
         schema: options.schema,
-        useMinimalThinking: true,
         maxOutputTokens: (options.maxOutputTokens ?? 1024) * 2,
       });
 
@@ -320,10 +317,6 @@ export class GeminiChatService {
     if (options.schema) {
       generationConfig.responseMimeType = 'application/json';
       generationConfig.responseSchema = options.schema;
-    }
-
-    if (options.schema || options.useMinimalThinking) {
-      generationConfig.thinkingConfig = { thinkingLevel: 'MINIMAL' };
     }
 
     const body: Record<string, unknown> = {

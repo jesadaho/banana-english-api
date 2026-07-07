@@ -16,7 +16,7 @@ import type {
 } from '../common/api.types';
 import { SessionStoreService } from '../session-store/session-store.service';
 import { getTopic } from '../topics/topics.data';
-import { INTRO_TURN1_OPENING } from '../topics/intro_script';
+import { INTRO_TURN1_OPENING, getTurn2Script, getTurn3Script } from '../topics/intro_script';
 import { StartSessionDto, TurnDto } from './dto/sessions.dto';
 
 @Controller('sessions')
@@ -78,11 +78,20 @@ export class SessionsController {
         textEn: userText,
       });
 
-      const reply = await this.chat.generateReply(
-        data.session.topicId,
-        data.turns,
-        userText,
-      );
+      const userTurnCount = data.turns.filter(
+        (turn) => turn.speaker === 'user',
+      ).length;
+
+      const reply =
+        data.session.topicId === 'intro' && userTurnCount === 1
+          ? getTurn2Script(userText)
+          : data.session.topicId === 'intro' && userTurnCount === 2
+            ? getTurn3Script(userText)
+            : await this.chat.generateReply(
+                data.session.topicId,
+                data.turns,
+                userText,
+              );
 
       const aiTurn = {
         speaker: 'ai' as const,
