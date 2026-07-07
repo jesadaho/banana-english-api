@@ -39,6 +39,121 @@ export class GeminiTtsService {
   }
 
   async synthesizeSpeech(text: string): Promise<Buffer> {
+    return this.synthesizeSpeechUnary(text);
+  }
+
+  async *synthesizeSpeechStream(text: string): AsyncGenerator<Buffer> {
+    const trimmed = text.trim();
+    if (!trimmed) {
+      return;
+    }
+
+    if (!this.apiKey) {
+      throw new ServiceUnavailableException(
+        'GEMINI_API_KEY is not configured on the server',
+      );
+    }
+
+    const body = {
+      model: this.model,
+      input: `Speak warmly and naturally as Teacher B, a friendly English teacher for Thai learners:\n\n${trimmed}`,
+      response_format: { type: 'audio' },
+      generation_config: {
+        speech_config: [{ voice: this.voice }],
+      },
+      stream: true,
+    };
+
+    const response = await fetch(
+      'https://generativelanguage.googleapis.com/v1beta/interactions',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-goog-api-key': this.apiKey,
+        },
+        body: JSON.stringify(body),
+      },
+    );
+
+    if (!response.ok) {
+      const err = await response.text();
+      if (response.status === 429) {
+        throw new HttpException(
+          'Gemini TTS quota exhausted. Use the same GEMINI_API_KEY as AI Studio or enable billing.',
+          HttpStatus.TOO_MANY_REQUESTS,
+        );
+      }
+      throw new Error(`Gemini TTS failed (${response.status}): ${err}`);
+    }
+
+    if (!response.body) {
+      throw new Error('Gemini TTS stream missing response body');
+    }
+
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let leftover = '';
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+
+      leftover += decoder.decode(value, { stream: true });
+      const lines = leftover.split('\n');
+      leftover = lines.pop() ?? '';
+
+      for (const line of lines) {
+        const chunk = this.parseStreamLine(line);
+        if (chunk.length > 0) {
+          yield pcmToWav(chunk);
+        }
+      }
+    }
+
+    if (leftover.trim()) {
+      const chunk = this.parseStreamLine(leftover);
+      if (chunk.length > 0) {
+        yield pcmToWav(chunk);
+      }
+    }
+  }
+
+  private parseStreamLine(line: string): Buffer {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed === '[DONE]') {
+      return Buffer.alloc(0);
+    }
+
+    const jsonText = trimmed.startsWith('data:')
+      ? trimmed.slice(5).trim()
+      : trimmed;
+    if (!jsonText || jsonText === '[DONE]') {
+      return Buffer.alloc(0);
+    }
+
+    try {
+      const event = JSON.parse(jsonText) as Record<string, unknown>;
+      return this.extractStreamAudioDelta(event);
+    } catch {
+      return Buffer.alloc(0);
+    }
+  }
+
+  private extractStreamAudioDelta(event: Record<string, unknown>): Buffer {
+    if (event.event_type !== 'step.delta') {
+      return Buffer.alloc(0);
+    }
+
+    const delta = event.delta as Record<string, unknown> | undefined;
+    if (delta?.type !== 'audio' || typeof delta.data !== 'string') {
+      return Buffer.alloc(0);
+    }
+
+    return Buffer.from(delta.data, 'base64');
+  }
+
+  private async synthesizeSpeechUnary(text: string): Promise<Buffer> {
     const trimmed = text.trim();
     if (!trimmed) {
       return Buffer.alloc(0);

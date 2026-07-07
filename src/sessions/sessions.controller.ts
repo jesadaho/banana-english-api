@@ -8,7 +8,7 @@ import {
   Post,
   Body,
 } from '@nestjs/common';
-import { OpenAiService } from '../openai/openai.service';
+import { GeminiChatService } from '../gemini/gemini-chat.service';
 import type {
   DailyReportResponse,
   HintsResponse,
@@ -23,7 +23,7 @@ import { StartSessionDto, TurnDto } from './dto/sessions.dto';
 export class SessionsController {
   constructor(
     private readonly sessionStore: SessionStoreService,
-    private readonly openai: OpenAiService,
+    private readonly chat: GeminiChatService,
   ) {}
 
   @Post()
@@ -38,7 +38,7 @@ export class SessionsController {
       const reply =
         body.topicId === 'intro'
           ? INTRO_TURN1_OPENING
-          : await this.openai.generateOpening(body.topicId);
+          : await this.chat.generateOpening(body.topicId);
       const opening = {
         speaker: 'ai' as const,
         textEn: reply.textEn,
@@ -70,7 +70,7 @@ export class SessionsController {
 
     try {
       if (body.thaiMixEnabled) {
-        userText = await this.openai.correctThaiMix(userText);
+        userText = await this.chat.correctThaiMix(userText);
       }
 
       this.sessionStore.addTurn(sessionId, {
@@ -78,7 +78,7 @@ export class SessionsController {
         textEn: userText,
       });
 
-      const reply = await this.openai.generateReply(
+      const reply = await this.chat.generateReply(
         data.session.topicId,
         data.turns,
         userText,
@@ -117,7 +117,7 @@ export class SessionsController {
     }
 
     try {
-      const hints = await this.openai.generateHints(data.turns);
+      const hints = await this.chat.generateHints(data.turns);
       return { hints };
     } catch (err) {
       throw new BadGatewayException(
@@ -136,7 +136,7 @@ export class SessionsController {
 
     if (data.session.topicId === 'intro') {
       try {
-        const introReport = await this.openai.generateIntroReport(data.turns);
+        const introReport = await this.chat.generateIntroReport(data.turns);
         this.sessionStore.setIntroReport(sessionId, introReport);
         return { status: 'ended', introReport };
       } catch (err) {
@@ -166,7 +166,7 @@ export class SessionsController {
     }
 
     try {
-      const report = await this.openai.generateIntroReport(data.turns);
+      const report = await this.chat.generateIntroReport(data.turns);
       return { sessionId, ...report };
     } catch (err) {
       throw new BadGatewayException(
@@ -190,7 +190,7 @@ export class SessionsController {
       let duration = Math.floor((ended.getTime() - started.getTime()) / 1000);
       duration = Math.min(duration, data.session.durationLimitSeconds);
 
-      const report = await this.openai.generateReport(data.turns, duration);
+      const report = await this.chat.generateReport(data.turns, duration);
 
       return {
         sessionId,
