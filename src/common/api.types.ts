@@ -30,3 +30,17 @@ export interface DailyReportResponse extends GptReport {
   sessionId: string;
   durationSeconds: number;
 }
+
+export interface GptIntroReport {
+  userName: string;
+  levelTitle: string;
+  levelEmoji: string;
+  summaryTh: string;
+  pronunciationScore: number;
+  confidenceScore: number;
+  listeningScore: number;
+}
+
+export interface IntroReportResponse extends GptIntroReport {
+  sessionId: string;
+}

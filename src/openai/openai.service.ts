@@ -10,11 +10,13 @@ import {
   THAI_MIX_PROMPT,
 } from '../topics/topics.data';
 import {
+  INTRO_REPORT_PROMPT,
   INTRO_TOPIC_CONTEXT,
   introReplyInstruction,
 } from '../topics/intro_script';
 import { ChatTurn } from '../session-store/session-store.service';
 import {
+  GptIntroReport,
   GptReply,
   GptReport,
   HintOption,
@@ -75,6 +77,29 @@ const REPORT_SCHEMA = {
     },
   },
   required: ['feedbackEn', 'feedbackTh', 'grammarTip', 'vocab'],
+  additionalProperties: false,
+};
+
+const INTRO_REPORT_SCHEMA = {
+  type: 'object' as const,
+  properties: {
+    userName: { type: 'string' },
+    levelTitle: { type: 'string' },
+    levelEmoji: { type: 'string' },
+    summaryTh: { type: 'string' },
+    pronunciationScore: { type: 'integer' },
+    confidenceScore: { type: 'integer' },
+    listeningScore: { type: 'integer' },
+  },
+  required: [
+    'userName',
+    'levelTitle',
+    'levelEmoji',
+    'summaryTh',
+    'pronunciationScore',
+    'confidenceScore',
+    'listeningScore',
+  ],
   additionalProperties: false,
 };
 
@@ -215,6 +240,37 @@ export class OpenAiService {
     return JSON.parse(
       response.choices[0].message.content ?? '{}',
     ) as GptReport;
+  }
+
+  async generateIntroReport(history: ChatTurn[]): Promise<GptIntroReport> {
+    const context = this.formatHistory(history);
+    const response = await this.client.chat.completions.create({
+      model: 'gpt-4o',
+      messages: [
+        { role: 'system', content: INTRO_REPORT_PROMPT },
+        { role: 'user', content: `Conversation:\n${context}` },
+      ],
+      response_format: {
+        type: 'json_schema',
+        json_schema: { name: 'intro_report', schema: INTRO_REPORT_SCHEMA },
+      },
+      max_tokens: 400,
+      temperature: 0.7,
+    });
+    const report = JSON.parse(
+      response.choices[0].message.content ?? '{}',
+    ) as GptIntroReport;
+
+    return {
+      ...report,
+      pronunciationScore: this.clampScore(report.pronunciationScore),
+      confidenceScore: this.clampScore(report.confidenceScore),
+      listeningScore: this.clampScore(report.listeningScore),
+    };
+  }
+
+  private clampScore(value: number): number {
+    return Math.max(0, Math.min(100, Math.round(value)));
   }
 
   private formatHistory(history: ChatTurn[]): string {

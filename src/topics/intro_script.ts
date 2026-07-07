@@ -55,3 +55,12 @@ export const INTRO_TOPIC_CONTEXT =
   'Banana English onboarding introduction session (3-turn script). ' +
   'Turn 1: welcome + name & motivation. Turn 2: hobbies/lifestyle. Turn 3: English listening check. ' +
   'You are Teacher B (ครูพี่บี), a friendly banana English teacher for Thai learners.';
+
+export const INTRO_REPORT_PROMPT =
+  'Analyze this Banana English onboarding introduction session for a Thai learner. ' +
+  'The session covers: name/motivation, hobbies, and a short English listening challenge. ' +
+  'Return encouraging results as JSON. ' +
+  'levelTitle should be a short catchy English phrase (e.g. "Ready to Fly", "Steady Start"). ' +
+  'levelEmoji should be one emoji matching the level. ' +
+  'summaryTh: 1-2 warm Thai sentences in quotes style. ' +
+  'Scores (0-100): pronunciation, confidence, listening — estimate from their English attempts.';

@@ -9,7 +9,11 @@ import {
   Body,
 } from '@nestjs/common';
 import { OpenAiService } from '../openai/openai.service';
-import type { DailyReportResponse, HintsResponse } from '../common/api.types';
+import type {
+  DailyReportResponse,
+  HintsResponse,
+  IntroReportResponse,
+} from '../common/api.types';
 import { SessionStoreService } from '../session-store/session-store.service';
 import { getTopic } from '../topics/topics.data';
 import { INTRO_TURN1_OPENING } from '../topics/intro_script';
@@ -130,6 +134,28 @@ export class SessionsController {
     }
     this.sessionStore.markEnded(sessionId);
     return { status: 'ended' };
+  }
+
+  @Get(':sessionId/intro-report')
+  async getIntroReport(
+    @Param('sessionId') sessionId: string,
+  ): Promise<IntroReportResponse> {
+    const data = this.sessionStore.get(sessionId);
+    if (!data) {
+      throw new NotFoundException('Session not found');
+    }
+    if (data.session.topicId !== 'intro') {
+      throw new BadRequestException('Not an introduction session');
+    }
+
+    try {
+      const report = await this.openai.generateIntroReport(data.turns);
+      return { sessionId, ...report };
+    } catch (err) {
+      throw new BadGatewayException(
+        `AI service error: ${err instanceof Error ? err.message : String(err)}`,
+      );
+    }
   }
 
   @Get(':sessionId/report')
