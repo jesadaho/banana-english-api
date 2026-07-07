@@ -78,15 +78,24 @@ const REPORT_SCHEMA = {
 const INTRO_REPORT_SCHEMA = {
   type: 'object',
   properties: {
-    userName: { type: 'string' },
-    levelTitle: { type: 'string' },
-    levelEmoji: { type: 'string' },
-    summaryTh: { type: 'string' },
-    pronunciationScore: { type: 'integer' },
-    confidenceScore: { type: 'integer' },
-    listeningScore: { type: 'integer' },
+    userName: { type: 'string', description: 'Learner first name in Thai or English' },
+    levelTitle: { type: 'string', description: 'Short English level title, e.g. Ready to Fly' },
+    levelEmoji: { type: 'string', description: 'Single emoji matching the level' },
+    summaryTh: { type: 'string', description: '1-2 warm Thai encouragement sentences' },
+    pronunciationScore: { type: 'integer', description: 'Score 0-100' },
+    confidenceScore: { type: 'integer', description: 'Score 0-100' },
+    listeningScore: { type: 'integer', description: 'Score 0-100' },
   },
   required: [
+    'userName',
+    'levelTitle',
+    'levelEmoji',
+    'summaryTh',
+    'pronunciationScore',
+    'confidenceScore',
+    'listeningScore',
+  ],
+  propertyOrdering: [
     'userName',
     'levelTitle',
     'levelEmoji',
@@ -108,6 +117,14 @@ type GenerateJsonOptions = {
   schema?: Record<string, unknown>;
   maxOutputTokens?: number;
   temperature?: number;
+  useMinimalThinking?: boolean;
+};
+
+type GeminiResponse = {
+  candidates?: Array<{
+    content?: { parts?: Array<{ text?: string; thought?: boolean }> };
+    finishReason?: string;
+  }>;
 };
 
 @Injectable()
@@ -244,7 +261,7 @@ export class GeminiChatService {
         },
       ],
       schema: INTRO_REPORT_SCHEMA,
-      maxOutputTokens: 400,
+      maxOutputTokens: 1024,
     });
 
     return {
@@ -259,8 +276,29 @@ export class GeminiChatService {
     const text = await this.callGemini({
       ...options,
       schema: options.schema,
+      useMinimalThinking: true,
     });
-    return JSON.parse(text) as T;
+
+    try {
+      return this.parseJsonResponse<T>(text);
+    } catch (firstError) {
+      const retryText = await this.callGemini({
+        ...options,
+        schema: options.schema,
+        useMinimalThinking: true,
+        maxOutputTokens: (options.maxOutputTokens ?? 1024) * 2,
+      });
+
+      try {
+        return this.parseJsonResponse<T>(retryText);
+      } catch {
+        const message =
+          firstError instanceof Error ? firstError.message : String(firstError);
+        throw new Error(
+          `Gemini returned invalid JSON (${message}). Preview: ${text.slice(0, 120)}`,
+        );
+      }
+    }
   }
 
   private async generateText(options: GenerateJsonOptions): Promise<string> {
@@ -282,6 +320,10 @@ export class GeminiChatService {
     if (options.schema) {
       generationConfig.responseMimeType = 'application/json';
       generationConfig.responseSchema = options.schema;
+    }
+
+    if (options.schema || options.useMinimalThinking) {
+      generationConfig.thinkingConfig = { thinkingLevel: 'MINIMAL' };
     }
 
     const body: Record<string, unknown> = {
@@ -312,18 +354,49 @@ export class GeminiChatService {
       throw new Error(`Gemini API failed (${response.status}): ${err}`);
     }
 
-    const data = (await response.json()) as {
-      candidates?: Array<{
-        content?: { parts?: Array<{ text?: string }> };
-      }>;
-    };
+    const data = (await response.json()) as GeminiResponse;
 
-    const text = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+    const candidate = data.candidates?.[0];
+    const parts = candidate?.content?.parts ?? [];
+    const text = parts
+      .filter((part) => part.text && !part.thought)
+      .map((part) => part.text!)
+      .join('')
+      .trim();
+
     if (!text) {
       throw new Error('Gemini response missing text');
     }
 
+    if (candidate?.finishReason === 'MAX_TOKENS' && options.schema) {
+      throw new Error(
+        `Gemini JSON response truncated (MAX_TOKENS). Preview: ${text.slice(0, 120)}`,
+      );
+    }
+
     return text;
+  }
+
+  private parseJsonResponse<T>(text: string): T {
+    let cleaned = text.trim();
+
+    if (cleaned.startsWith('```')) {
+      cleaned = cleaned
+        .replace(/^```(?:json)?\s*/i, '')
+        .replace(/\s*```$/, '')
+        .trim();
+    }
+
+    try {
+      return JSON.parse(cleaned) as T;
+    } catch {
+      const start = cleaned.indexOf('{');
+      const end = cleaned.lastIndexOf('}');
+      if (start >= 0 && end > start) {
+        return JSON.parse(cleaned.slice(start, end + 1)) as T;
+      }
+      throw new Error('Unterminated string in JSON');
+    }
   }
 
   private clampScore(value: number): number {
