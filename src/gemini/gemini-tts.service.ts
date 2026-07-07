@@ -1,7 +1,8 @@
 import {
+  HttpException,
+  HttpStatus,
   Injectable,
   ServiceUnavailableException,
-  TooManyRequestsException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { pcmToWav, parseSampleRateFromMimeType } from './pcm-to-wav.util';
@@ -82,8 +83,9 @@ export class GeminiTtsService {
       lastError = await response.text();
 
       if (response.status === 429) {
-        throw new TooManyRequestsException(
+        throw new HttpException(
           'Gemini TTS quota exhausted. Use the same GEMINI_API_KEY as AI Studio or enable billing.',
+          HttpStatus.TOO_MANY_REQUESTS,
         );
       }
 
