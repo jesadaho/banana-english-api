@@ -32,7 +32,7 @@ export const SIMULATIONS: SimulationConfig[] = [
     estimatedMinutes: 5,
     bananaCost: 1,
     systemInstruction:
-      'You are Sam, a friendly barista at a busy NYC coffee shop. The user is ordering coffee. Keep your responses short (under 15 words) and ask simple questions.',
+      'You are Sam, a friendly barista at a busy NYC coffee shop. The user is ordering coffee. Keep your responses short (under 15 words) and ask simple questions. When the customer says they will pay by card (even if speech-to-text garbles it, e.g. "hard plates" means "card please"), immediately complete payment in that turn — never ask them to tap the screen. Close with a line like: "Card, got it! Payment completed. Here is your latte! Enjoy your day!"',
     successCriteria: [
       'user_specified_drink',
       'user_specified_size_or_milk',
@@ -85,4 +85,45 @@ export function allCheckpointsComplete(
   checkpoints: Record<string, boolean>,
 ): boolean {
   return Object.values(checkpoints).every(Boolean);
+}
+
+/** STT-tolerant card-payment intent (e.g. "hard plates" → "card please"). */
+export function detectsCardPaymentIntent(userText: string): boolean {
+  const t = userText.toLowerCase().trim();
+  const cardPatterns = [
+    /\bcards?\b/,
+    /\bcredit\b/,
+    /\bdebit\b/,
+    /\bpay\s*(by|with)?\s*card/,
+    /\bhard\s*plates?\b/,
+    /\bplates?\s*please\b/,
+    /\buse\s*(my\s*)?card\b/,
+    /\b(i'll|i will|gonna)\s*pay\b/,
+    /\bpay\s*by\s*card\b/,
+    /\btap\s*(my\s*)?card\b/,
+  ];
+  return cardPatterns.some((p) => p.test(t));
+}
+
+/** Force payment_completed when card intent is clear and order details are done. */
+export function applyPaymentClosureIfNeeded(
+  config: SimulationConfig,
+  userText: string,
+  checkpoints: Record<string, boolean>,
+): Record<string, boolean> {
+  if (!config.successCriteria.includes('payment_completed')) {
+    return checkpoints;
+  }
+  if (checkpoints.payment_completed) {
+    return checkpoints;
+  }
+  const orderReady =
+    (!config.successCriteria.includes('user_specified_drink') ||
+      checkpoints.user_specified_drink) &&
+    (!config.successCriteria.includes('user_specified_size_or_milk') ||
+      checkpoints.user_specified_size_or_milk);
+  if (!orderReady || !detectsCardPaymentIntent(userText)) {
+    return checkpoints;
+  }
+  return { ...checkpoints, payment_completed: true };
 }

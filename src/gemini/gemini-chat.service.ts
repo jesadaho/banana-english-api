@@ -296,12 +296,18 @@ ${checkpointStatus}
 Turn ${currentTurn} of ${config.maxTurns} (${remainingTurns} turns remaining).
 
 Rules:
-- Stay in character. Keep aiResponse under 15 words.
-- Evaluate checkpoints conservatively — only mark true when clearly satisfied this turn.
+- Stay in character. Keep aiResponse under 15 words (up to 25 words on payment-closure turns).
+- For non-payment checkpoints, mark true only when clearly satisfied this turn.
 - updatedCheckpoints must include ALL criteria keys with boolean values.
 - Provide textTh as natural Thai translation of aiResponse.
 - feedbackHints.grammarTip: optional short grammar tip if the user made a mistake.
-- feedbackHints.mispronouncedWords: list words the user mispronounced this turn (empty array if none).`;
+- feedbackHints.mispronouncedWords: list words the user mispronounced this turn (empty array if none).
+
+Payment closure (critical — no tap UI exists):
+- When the customer indicates CARD payment (even if speech-to-text is garbled, e.g. "hard plates" = "card please"), you MUST set payment_completed to true immediately in updatedCheckpoints.
+- Do NOT ask them to tap the screen, point anywhere, or wait for another turn. Close payment in this reply.
+- Example closing line: "Card, got it! Payment completed. Here is your latte! Enjoy your day!"
+- Never use half-open phrases like "Just tap here?" — always finish the transaction and hand over the drink.`;
   }
 
   async generateReply(

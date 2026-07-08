@@ -27,6 +27,7 @@ import {
 } from '../topics/intro_script';
 import {
   allCheckpointsComplete,
+  applyPaymentClosureIfNeeded,
   getSimulation,
   mergeCheckpoints,
 } from '../simulations/simulations.data';
@@ -198,9 +199,16 @@ export class SessionsController {
         nextTurn,
       );
 
-      const mergedCheckpoints = mergeCheckpoints(
-        data.session.checkpointStates ?? {},
-        this.normalizeCheckpoints(config.successCriteria, reply.updatedCheckpoints),
+      const mergedCheckpoints = applyPaymentClosureIfNeeded(
+        config,
+        userText,
+        mergeCheckpoints(
+          data.session.checkpointStates ?? {},
+          this.normalizeCheckpoints(
+            config.successCriteria,
+            reply.updatedCheckpoints,
+          ),
+        ),
       );
 
       const allComplete = allCheckpointsComplete(mergedCheckpoints);
