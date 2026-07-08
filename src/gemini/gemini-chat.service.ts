@@ -45,29 +45,36 @@ export interface SimulationTurnReply {
   };
 }
 
-const SIMULATION_REPLY_SCHEMA = {
-  type: 'object',
-  properties: {
-    aiResponse: { type: 'string' },
-    textTh: { type: 'string' },
-    updatedCheckpoints: {
-      type: 'object',
-      additionalProperties: { type: 'boolean' },
-    },
-    feedbackHints: {
-      type: 'object',
-      properties: {
-        grammarTip: { type: 'string' },
-        mispronouncedWords: {
-          type: 'array',
-          items: { type: 'string' },
-        },
+function buildSimulationReplySchema(criteria: string[]) {
+  const checkpointProperties = Object.fromEntries(
+    criteria.map((key) => [key, { type: 'boolean' }]),
+  );
+
+  return {
+    type: 'object',
+    properties: {
+      aiResponse: { type: 'string' },
+      textTh: { type: 'string' },
+      updatedCheckpoints: {
+        type: 'object',
+        properties: checkpointProperties,
+        required: criteria,
       },
-      required: ['mispronouncedWords'],
+      feedbackHints: {
+        type: 'object',
+        properties: {
+          grammarTip: { type: 'string' },
+          mispronouncedWords: {
+            type: 'array',
+            items: { type: 'string' },
+          },
+        },
+        required: ['mispronouncedWords'],
+      },
     },
-  },
-  required: ['aiResponse', 'textTh', 'updatedCheckpoints', 'feedbackHints'],
-};
+    required: ['aiResponse', 'textTh', 'updatedCheckpoints', 'feedbackHints'],
+  };
+}
 
 const HINTS_SCHEMA = {
   type: 'object',
@@ -223,7 +230,7 @@ export class GeminiChatService {
           ],
         },
       ],
-      schema: SIMULATION_REPLY_SCHEMA,
+      schema: buildSimulationReplySchema(config.successCriteria),
       maxOutputTokens: 300,
     });
   }
@@ -256,7 +263,7 @@ export class GeminiChatService {
         checkpointStates,
       ),
       contents,
-      schema: SIMULATION_REPLY_SCHEMA,
+      schema: buildSimulationReplySchema(config.successCriteria),
       maxOutputTokens: 400,
     });
   }
