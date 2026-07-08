@@ -3,6 +3,10 @@ export type SimulationDifficulty = 'easy' | 'medium' | 'hard';
 export interface SimulationConfig {
   simulationId: string;
   title: string;
+  missionNumber: number;
+  missionTitleTh: string;
+  scenarioTh: string;
+  goalsTh: string[];
   difficulty: SimulationDifficulty;
   estimatedMinutes: number;
   bananaCost: number;
@@ -15,6 +19,15 @@ export const SIMULATIONS: SimulationConfig[] = [
   {
     simulationId: 'coffee_order_easy',
     title: 'สั่งกาแฟยามเช้า',
+    missionNumber: 1,
+    missionTitleTh: 'สั่งกาแฟแก้วแรกที่นิวยอร์ก',
+    scenarioTh:
+      'คุณเพิ่งเดินเข้าร้านกาแฟตอนเช้าในนิวยอร์ก และมีพนักงานบาริสต้าเดินเข้ามาทักทายพร้อมรับออเดอร์',
+    goalsTh: [
+      'สั่งกาแฟที่คุณชอบ 1 แก้ว',
+      'เลือกขนาด (Size) หรือประเภทนม',
+      'ทำท่าจ่ายเงินให้สำเร็จ',
+    ],
     difficulty: 'easy',
     estimatedMinutes: 5,
     bananaCost: 1,

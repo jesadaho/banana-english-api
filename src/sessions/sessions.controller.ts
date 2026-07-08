@@ -433,7 +433,7 @@ export class SessionsController {
           vocab: report.vocab,
           durationSeconds: duration,
           topicId: config.simulationId,
-          missionTitleTh: config.title,
+          missionTitleTh: config.missionTitleTh,
           overallScore,
           scoreLabel,
           goldBananasEarned: allCheckpointsComplete(checkpoints) ? 1 : 0,
