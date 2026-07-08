@@ -15,4 +15,18 @@ export class ConfigKeysController {
     }
     return { groqApiKey };
   }
+
+  @Get('app')
+  getAppConfig() {
+    const groqApiKey = this.config.get<string>('GROQ_API_KEY');
+    const defaultTtsMode =
+      this.config.get<string>('DEFAULT_TTS_MODE', 'server') === 'client'
+        ? 'client'
+        : 'server';
+
+    return {
+      groqApiKey: groqApiKey ?? null,
+      defaultTtsMode,
+    };
+  }
 }

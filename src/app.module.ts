@@ -7,6 +7,7 @@ import { ConfigKeysModule } from './config-keys/config-keys.module';
 import { GeminiModule } from './gemini/gemini.module';
 import { SessionStoreModule } from './session-store/session-store.module';
 import { TtsModule } from './tts/tts.module';
+import { SimulationsModule } from './simulations/simulations.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { TtsModule } from './tts/tts.module';
     GeminiModule,
     SessionStoreModule,
     TtsModule,
+    SimulationsModule,
   ],
 })
 export class AppModule {}

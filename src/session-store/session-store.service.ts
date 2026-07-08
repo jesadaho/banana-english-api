@@ -1,7 +1,9 @@
 import { randomUUID } from 'crypto';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import type { GptIntroReport } from '../common/api.types';
+import type { GptIntroReport, SessionType } from '../common/api.types';
+import type { SimulationConfig } from '../simulations/simulations.data';
+import { initCheckpointStates } from '../simulations/simulations.data';
 
 export interface ChatTurn {
   speaker: 'user' | 'ai';
@@ -12,9 +14,15 @@ export interface ChatTurn {
 
 export interface ConversationSession {
   id: string;
-  topicId: string;
+  sessionType: SessionType;
+  topicId?: string;
+  simulationId?: string;
   startedAt: string;
-  durationLimitSeconds: number;
+  durationLimitSeconds?: number;
+  currentTurn?: number;
+  maxTurns?: number;
+  checkpointStates?: Record<string, boolean>;
+  isComplete?: boolean;
 }
 
 interface SessionData {
@@ -23,6 +31,7 @@ interface SessionData {
   turnCounter: number;
   endedAt: Date | null;
   introReport: GptIntroReport | null;
+  simulationConfig?: SimulationConfig;
 }
 
 @Injectable()
@@ -33,8 +42,10 @@ export class SessionStoreService {
 
   create(topicId: string): SessionData {
     const sessionId = `session_${randomUUID().replace(/-/g, '').slice(0, 12)}`;
+    const sessionType: SessionType = topicId === 'intro' ? 'intro' : 'legacy';
     const session: ConversationSession = {
       id: sessionId,
+      sessionType,
       topicId,
       startedAt: new Date().toISOString(),
       durationLimitSeconds: this.config.get<number>(
@@ -53,6 +64,30 @@ export class SessionStoreService {
     return data;
   }
 
+  createSimulation(config: SimulationConfig): SessionData {
+    const sessionId = `session_${randomUUID().replace(/-/g, '').slice(0, 12)}`;
+    const session: ConversationSession = {
+      id: sessionId,
+      sessionType: 'simulation',
+      simulationId: config.simulationId,
+      startedAt: new Date().toISOString(),
+      currentTurn: 0,
+      maxTurns: config.maxTurns,
+      checkpointStates: initCheckpointStates(config.successCriteria),
+      isComplete: false,
+    };
+    const data: SessionData = {
+      session,
+      turns: [],
+      turnCounter: 0,
+      endedAt: null,
+      introReport: null,
+      simulationConfig: config,
+    };
+    this.sessions.set(sessionId, data);
+    return data;
+  }
+
   get(sessionId: string): SessionData | undefined {
     return this.sessions.get(sessionId);
   }
@@ -62,6 +97,20 @@ export class SessionStoreService {
     data.turns.push(turn);
     data.turnCounter += 1;
     return data.turnCounter;
+  }
+
+  updateSimulationState(
+    sessionId: string,
+    updates: {
+      currentTurn: number;
+      checkpointStates: Record<string, boolean>;
+      isComplete: boolean;
+    },
+  ): void {
+    const data = this.require(sessionId);
+    data.session.currentTurn = updates.currentTurn;
+    data.session.checkpointStates = updates.checkpointStates;
+    data.session.isComplete = updates.isComplete;
   }
 
   markEnded(sessionId: string): void {

@@ -24,6 +24,7 @@ import {
   HintOption,
   HintsResponse,
 } from '../common/api.types';
+import type { SimulationConfig } from '../simulations/simulations.data';
 
 const REPLY_SCHEMA = {
   type: 'object',
@@ -32,6 +33,40 @@ const REPLY_SCHEMA = {
     textTh: { type: 'string' },
   },
   required: ['textEn', 'textTh'],
+};
+
+export interface SimulationTurnReply {
+  aiResponse: string;
+  textTh: string;
+  updatedCheckpoints: Record<string, boolean>;
+  feedbackHints: {
+    grammarTip?: string;
+    mispronouncedWords: string[];
+  };
+}
+
+const SIMULATION_REPLY_SCHEMA = {
+  type: 'object',
+  properties: {
+    aiResponse: { type: 'string' },
+    textTh: { type: 'string' },
+    updatedCheckpoints: {
+      type: 'object',
+      additionalProperties: { type: 'boolean' },
+    },
+    feedbackHints: {
+      type: 'object',
+      properties: {
+        grammarTip: { type: 'string' },
+        mispronouncedWords: {
+          type: 'array',
+          items: { type: 'string' },
+        },
+      },
+      required: ['mispronouncedWords'],
+    },
+  },
+  required: ['aiResponse', 'textTh', 'updatedCheckpoints', 'feedbackHints'],
 };
 
 const HINTS_SCHEMA = {
@@ -169,6 +204,97 @@ export class GeminiChatService {
       schema: REPLY_SCHEMA,
       maxOutputTokens: 200,
     });
+  }
+
+  async generateSimulationOpening(
+    config: SimulationConfig,
+  ): Promise<SimulationTurnReply> {
+    return this.generateJson<SimulationTurnReply>({
+      systemInstruction: this.simulationSystemPrompt(config, 0),
+      contents: [
+        {
+          role: 'user',
+          parts: [
+            {
+              text:
+                'Start the simulation. Greet the customer and begin the scenario naturally. ' +
+                'Return JSON matching the schema.',
+            },
+          ],
+        },
+      ],
+      schema: SIMULATION_REPLY_SCHEMA,
+      maxOutputTokens: 300,
+    });
+  }
+
+  async generateSimulationTurn(
+    config: SimulationConfig,
+    history: ChatTurn[],
+    userMessage: string,
+    checkpointStates: Record<string, boolean>,
+    currentTurn: number,
+  ): Promise<SimulationTurnReply> {
+    const contents: GeminiContent[] = [];
+
+    for (const turn of history.slice(-10)) {
+      contents.push({
+        role: turn.speaker === 'ai' ? 'model' : 'user',
+        parts: [{ text: turn.textEn }],
+      });
+    }
+
+    contents.push({
+      role: 'user',
+      parts: [{ text: userMessage }],
+    });
+
+    return this.generateJson<SimulationTurnReply>({
+      systemInstruction: this.simulationSystemPrompt(
+        config,
+        currentTurn,
+        checkpointStates,
+      ),
+      contents,
+      schema: SIMULATION_REPLY_SCHEMA,
+      maxOutputTokens: 400,
+    });
+  }
+
+  private simulationSystemPrompt(
+    config: SimulationConfig,
+    currentTurn: number,
+    checkpointStates?: Record<string, boolean>,
+  ): string {
+    const criteriaList = config.successCriteria
+      .map((key) => `- ${key}`)
+      .join('\n');
+    const checkpointStatus = checkpointStates
+      ? Object.entries(checkpointStates)
+          .map(([key, done]) => `- ${key}: ${done ? 'complete' : 'pending'}`)
+          .join('\n')
+      : config.successCriteria
+          .map((key) => `- ${key}: pending`)
+          .join('\n');
+    const remainingTurns = config.maxTurns - currentTurn;
+
+    return `${config.systemInstruction}
+
+Success criteria (checkpoints):
+${criteriaList}
+
+Current checkpoint status:
+${checkpointStatus}
+
+Turn ${currentTurn} of ${config.maxTurns} (${remainingTurns} turns remaining).
+
+Rules:
+- Stay in character. Keep aiResponse under 15 words.
+- Evaluate checkpoints conservatively — only mark true when clearly satisfied this turn.
+- updatedCheckpoints must include ALL criteria keys with boolean values.
+- Provide textTh as natural Thai translation of aiResponse.
+- feedbackHints.grammarTip: optional short grammar tip if the user made a mistake.
+- feedbackHints.mispronouncedWords: list words the user mispronounced this turn (empty array if none).`;
   }
 
   async generateReply(
