@@ -51,8 +51,14 @@ the learner could say next. Each hint needs:
 Return JSON matching the schema.`;
 
 export const REPORT_PROMPT = `Summarize this English practice session for a Thai learner.
-Provide encouraging feedback, one grammar tip based on their mistakes, and 3-5 useful vocab words from the conversation.
-Return JSON matching the schema.`;
+Return JSON matching the schema with these fields:
+- feedbackEn / feedbackTh: warm overall encouragement from Teacher Bee about the whole session (not a quoted learner sentence).
+- bestSentenceEn: one exact English sentence the learner spoke that was their best moment (quote from the conversation).
+- bestSentenceNoteTh: short Thai praise explaining why that sentence was great.
+- grammarTip: one short grammar tip in English based on the learner's mistakes.
+- grammarTipTh: Thai translation of grammarTip.
+- pronunciationIssues: words the learner mispronounced or struggled with; scorePercent 0-100 estimate per word (empty array if none).
+- vocab: 3-5 useful vocab items from the conversation.`;
 
 export function getTopic(topicId: string): Topic | undefined {
   return TOPICS.find((t) => t.id === topicId);

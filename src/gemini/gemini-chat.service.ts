@@ -100,7 +100,21 @@ const REPORT_SCHEMA = {
   properties: {
     feedbackEn: { type: 'string' },
     feedbackTh: { type: 'string' },
+    bestSentenceEn: { type: 'string' },
+    bestSentenceNoteTh: { type: 'string' },
     grammarTip: { type: 'string' },
+    grammarTipTh: { type: 'string' },
+    pronunciationIssues: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          word: { type: 'string' },
+          scorePercent: { type: 'integer' },
+        },
+        required: ['word', 'scorePercent'],
+      },
+    },
     vocab: {
       type: 'array',
       items: {
@@ -114,7 +128,16 @@ const REPORT_SCHEMA = {
       },
     },
   },
-  required: ['feedbackEn', 'feedbackTh', 'grammarTip', 'vocab'],
+  required: [
+    'feedbackEn',
+    'feedbackTh',
+    'bestSentenceEn',
+    'bestSentenceNoteTh',
+    'grammarTip',
+    'grammarTipTh',
+    'pronunciationIssues',
+    'vocab',
+  ],
 };
 
 const INTRO_REPORT_SCHEMA = {
@@ -384,7 +407,7 @@ Payment closure (critical — no tap UI exists):
         },
       ],
       schema: REPORT_SCHEMA,
-      maxOutputTokens: 600,
+      maxOutputTokens: 900,
     });
   }
 

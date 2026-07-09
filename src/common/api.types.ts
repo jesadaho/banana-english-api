@@ -68,8 +68,12 @@ export interface VocabItem {
 export interface GptReport {
   feedbackEn: string;
   feedbackTh: string;
+  bestSentenceEn: string;
+  bestSentenceNoteTh: string;
   grammarTip: string;
+  grammarTipTh: string;
   vocab: VocabItem[];
+  pronunciationIssues: Array<{ word: string; scorePercent: number }>;
 }
 
 export interface DailyReportResponse extends GptReport {
