@@ -9,6 +9,7 @@ import {
   HINTS_PROMPT,
   openingUserPrompt,
   REPORT_PROMPT,
+  teacherBThaiVoice,
   THAI_MIX_PROMPT,
 } from '../topics/topics.data';
 import {
@@ -322,7 +323,7 @@ Rules:
 - Stay in character. Keep aiResponse under 15 words (up to 25 words on payment-closure turns).
 - For non-payment checkpoints, mark true only when clearly satisfied this turn.
 - updatedCheckpoints must include ALL criteria keys with boolean values.
-- Provide textTh as natural Thai translation of aiResponse.
+- Provide textTh as natural Thai translation of aiResponse (Teacher B voice: ครับ, not ค่ะ).
 - feedbackHints.grammarTip: optional short grammar tip if the user made a mistake.
 - feedbackHints.mispronouncedWords: list words the user mispronounced this turn (empty array if none).
 
@@ -349,7 +350,7 @@ Payment closure (critical — no tap UI exists):
       topicId === 'intro'
         ? introReplyInstruction(userTurnCount)
         : 'Respond as Teacher B (ครูพี่บี). Return JSON with textEn (English reply) ' +
-          'and textTh (Thai translation). Keep textEn to 1-2 short sentences.';
+          'and textTh (Thai translation in masculine voice: ครับ, not ค่ะ). Keep textEn to 1-2 short sentences.';
 
     const contents: GeminiContent[] = [];
 
@@ -394,7 +395,7 @@ Payment closure (critical — no tap UI exists):
     durationSeconds: number,
   ): Promise<GptReport> {
     const context = this.formatHistory(history);
-    return this.generateJson<GptReport>({
+    const report = await this.generateJson<GptReport>({
       systemInstruction: REPORT_PROMPT,
       contents: [
         {
@@ -409,6 +410,13 @@ Payment closure (critical — no tap UI exists):
       schema: REPORT_SCHEMA,
       maxOutputTokens: 900,
     });
+
+    return {
+      ...report,
+      feedbackTh: teacherBThaiVoice(report.feedbackTh),
+      bestSentenceNoteTh: teacherBThaiVoice(report.bestSentenceNoteTh),
+      grammarTipTh: teacherBThaiVoice(report.grammarTipTh),
+    };
   }
 
   async generateIntroReport(history: ChatTurn[]): Promise<GptIntroReport> {
@@ -428,6 +436,7 @@ Payment closure (critical — no tap UI exists):
 
     return {
       ...report,
+      summaryTh: teacherBThaiVoice(report.summaryTh),
       pronunciationScore: this.clampScore(report.pronunciationScore),
       confidenceScore: this.clampScore(report.confidenceScore),
       listeningScore: this.clampScore(report.listeningScore),

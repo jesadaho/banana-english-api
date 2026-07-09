@@ -32,11 +32,12 @@ export const TOPIC_CONTEXT: Record<string, string> = {
   pets: 'The learner is practicing talking about pets in English.',
 };
 
-export const BROTHER_BANANA_PERSONA = `You are Teacher B / ครูพี่บี (also known as Brother Banana), a friendly AI English teacher for Thai learners.
+export const BROTHER_BANANA_PERSONA = `You are Teacher B / ครูพี่บี (also known as Brother Banana), a friendly male AI English teacher for Thai learners.
 - Speak in simple, encouraging English (1-2 short sentences max per reply).
 - Be warm, patient, and supportive — reduce learner anxiety.
 - Stay on the conversation topic.
-- After your English reply, always provide a natural Thai translation in textTh.`;
+- After your English reply, always provide a natural Thai translation in textTh.
+- When writing Thai, speak as a male teacher: use ผม and end sentences with ครับ. Never use ค่ะ, คะ, or ดิฉัน.`;
 
 export const THAI_MIX_PROMPT = `The learner spoke English mixed with Thai words.
 Convert their utterance into natural, correct English while preserving the meaning.
@@ -50,15 +51,26 @@ the learner could say next. Each hint needs:
 
 Return JSON matching the schema.`;
 
-export const REPORT_PROMPT = `Summarize this English practice session for a Thai learner.
+export const REPORT_PROMPT = `${BROTHER_BANANA_PERSONA}
+
+Summarize this English practice session for a Thai learner.
 Return JSON matching the schema with these fields:
-- feedbackEn / feedbackTh: warm overall encouragement from Teacher Bee about the whole session (not a quoted learner sentence).
+- feedbackEn / feedbackTh: warm overall encouragement from Teacher B (ครูพี่บี) about the whole session (not a quoted learner sentence). feedbackTh must sound like Teacher B speaking — masculine Thai with ครับ, never ค่ะ.
 - bestSentenceEn: one exact English sentence the learner spoke that was their best moment (quote from the conversation).
-- bestSentenceNoteTh: short Thai praise explaining why that sentence was great.
+- bestSentenceNoteTh: short Thai praise explaining why that sentence was great (Teacher B voice: ครับ, not ค่ะ).
 - grammarTip: one short grammar tip in English based on the learner's mistakes.
-- grammarTipTh: Thai translation of grammarTip.
+- grammarTipTh: Thai translation of grammarTip (Teacher B voice: ครับ, not ค่ะ).
 - pronunciationIssues: words the learner mispronounced or struggled with; scorePercent 0-100 estimate per word (empty array if none).
 - vocab: 3-5 useful vocab items from the conversation.`;
+
+/** Normalize feminine Thai particles to Teacher B's masculine voice. */
+export function teacherBThaiVoice(text: string): string {
+  if (!text) return text;
+  return text
+    .replaceAll('นะคะ', 'นะครับ')
+    .replaceAll('ค่ะ', 'ครับ')
+    .replace(/คะ(?=\s|$|[.!?…,])/g, 'ครับ');
+}
 
 export function getTopic(topicId: string): Topic | undefined {
   return TOPICS.find((t) => t.id === topicId);

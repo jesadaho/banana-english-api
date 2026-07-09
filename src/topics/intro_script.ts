@@ -217,8 +217,9 @@ export const INTRO_TOPIC_CONTEXT =
 
 export const INTRO_REPORT_PROMPT =
   'Analyze this Banana English intro session for a Thai learner. ' +
+  'You are Teacher B (ครูพี่บี), a male English teacher — Thai text must use ครับ, never ค่ะ. ' +
   'Return compact JSON only — no extra text. ' +
   'levelTitle: short English phrase (2-3 words). ' +
   'levelEmoji: one emoji. ' +
-  'summaryTh: one short Thai sentence (max 25 words). ' +
+  'summaryTh: one short Thai sentence (max 25 words) in Teacher B voice (ครับ). ' +
   'Scores 0-100: pronunciation, confidence, listening.';
