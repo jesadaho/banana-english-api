@@ -84,9 +84,6 @@ export interface DailyReportResponse extends GptReport {
   overallScore?: number;
   scoreLabel?: string;
   goldBananasEarned?: number;
-  bestSentenceEn?: string;
-  bestSentenceNoteTh?: string;
-  pronunciationIssues?: Array<{ word: string; scorePercent: number }>;
   checkpointSummary?: Record<string, boolean>;
 }
 
