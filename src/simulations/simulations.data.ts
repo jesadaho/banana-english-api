@@ -193,6 +193,7 @@ export function detectsCardPaymentIntent(userText: string): boolean {
     /\bpay\s*(by|with)?\s*card/,
     /\bhard\s*plates?\b/,
     /\bplates?\s*please\b/,
+    /\bcutting\b/,
     /\buse\s*(my\s*)?card\b/,
     /\b(i'll|i will|gonna)\s*pay\b/,
     /\bpay\s*by\s*card\b/,
@@ -213,13 +214,51 @@ export function applyPaymentClosureIfNeeded(
   if (checkpoints.payment_completed) {
     return checkpoints;
   }
-  const orderReady =
+  if (!isOrderReadyForPayment(config, checkpoints)) {
+    return checkpoints;
+  }
+  if (!detectsCardPaymentIntent(userText)) {
+    return checkpoints;
+  }
+  return { ...checkpoints, payment_completed: true };
+}
+
+function isOrderReadyForPayment(
+  config: SimulationConfig,
+  checkpoints: Record<string, boolean>,
+): boolean {
+  return (
     (!config.successCriteria.includes('user_specified_drink') ||
       checkpoints.user_specified_drink) &&
     (!config.successCriteria.includes('user_specified_size_or_milk') ||
-      checkpoints.user_specified_size_or_milk);
-  if (!orderReady || !detectsCardPaymentIntent(userText)) {
+      checkpoints.user_specified_size_or_milk)
+  );
+}
+
+/** When the barista AI already closed payment in dialogue, sync the checkpoint. */
+export function applyPaymentClosureFromAiReply(
+  config: SimulationConfig,
+  aiResponse: string,
+  checkpoints: Record<string, boolean>,
+): Record<string, boolean> {
+  if (!config.successCriteria.includes('payment_completed')) {
     return checkpoints;
   }
+  if (checkpoints.payment_completed) {
+    return checkpoints;
+  }
+  if (!isOrderReadyForPayment(config, checkpoints)) {
+    return checkpoints;
+  }
+
+  const t = aiResponse.toLowerCase();
+  const aiConfirmedPayment =
+    /payment\s+(completed|complete|done|successful)/.test(t) ||
+    (/card,\s*got\s*it/.test(t) && /here\s+is\s+your/.test(t));
+
+  if (!aiConfirmedPayment) {
+    return checkpoints;
+  }
+
   return { ...checkpoints, payment_completed: true };
 }

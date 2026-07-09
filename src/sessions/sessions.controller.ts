@@ -27,6 +27,7 @@ import {
 } from '../topics/intro_script';
 import {
   allCheckpointsComplete,
+  applyPaymentClosureFromAiReply,
   applyPaymentClosureIfNeeded,
   getSimulation,
   mergeCheckpoints,
@@ -199,14 +200,18 @@ export class SessionsController {
         nextTurn,
       );
 
-      const mergedCheckpoints = applyPaymentClosureIfNeeded(
+      const mergedCheckpoints = applyPaymentClosureFromAiReply(
         config,
-        userText,
-        mergeCheckpoints(
-          data.session.checkpointStates ?? {},
-          this.normalizeCheckpoints(
-            config.successCriteria,
-            reply.updatedCheckpoints,
+        reply.aiResponse,
+        applyPaymentClosureIfNeeded(
+          config,
+          userText,
+          mergeCheckpoints(
+            data.session.checkpointStates ?? {},
+            this.normalizeCheckpoints(
+              config.successCriteria,
+              reply.updatedCheckpoints,
+            ),
           ),
         ),
       );
