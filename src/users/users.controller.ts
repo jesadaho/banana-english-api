@@ -41,4 +41,9 @@ export class UsersController {
   async refillBananasDebug(@Req() req: AuthedRequest) {
     return this.users.refillBananasDebug(req.user);
   }
+
+  @Post('me/debug/reset-streak')
+  async resetStreakDebug(@Req() req: AuthedRequest) {
+    return this.users.resetStreakDebug(req.user);
+  }
 }
