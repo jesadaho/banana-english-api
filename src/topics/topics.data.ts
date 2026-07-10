@@ -61,7 +61,10 @@ Return JSON matching the schema with these fields:
 - grammarTip: one short grammar tip in English based on the learner's mistakes.
 - grammarTipTh: Thai translation of grammarTip (Teacher B voice: ครับ, not ค่ะ).
 - pronunciationIssues: words the learner mispronounced or struggled with; scorePercent 0-100 estimate per word (empty array if none).
-- vocab: 3-5 useful vocab items from the conversation.`;
+- vocab: 3-5 useful vocab items from the conversation.
+
+If the learner did not speak at all (no learner lines in the conversation), set bestSentenceEn, bestSentenceNoteTh, grammarTip, and grammarTipTh to empty strings and pronunciationIssues to [].
+Never use "-", "N/A", or other placeholder text for empty fields.`;
 
 /** Normalize feminine Thai particles to Teacher B's masculine voice. */
 export function teacherBThaiVoice(text: string): string {

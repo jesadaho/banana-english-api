@@ -416,11 +416,13 @@ Payment closure (critical — no tap UI exists):
       maxOutputTokens: 900,
     });
 
+    const sanitized = this.sanitizeReportForLearnerParticipation(report, history);
+
     return {
-      ...report,
-      feedbackTh: teacherBThaiVoice(report.feedbackTh),
-      bestSentenceNoteTh: teacherBThaiVoice(report.bestSentenceNoteTh),
-      grammarTipTh: teacherBThaiVoice(report.grammarTipTh),
+      ...sanitized,
+      feedbackTh: teacherBThaiVoice(sanitized.feedbackTh),
+      bestSentenceNoteTh: teacherBThaiVoice(sanitized.bestSentenceNoteTh),
+      grammarTipTh: teacherBThaiVoice(sanitized.grammarTipTh),
     };
   }
 
@@ -572,6 +574,66 @@ Payment closure (critical — no tap UI exists):
     }
 
     return text;
+  }
+
+  private sanitizeReportForLearnerParticipation(
+    report: GptReport,
+    history: ChatTurn[],
+  ): GptReport {
+    const userSpoke = history.some(
+      (turn) => turn.speaker === 'user' && turn.textEn.trim().length > 0,
+    );
+
+    if (!userSpoke) {
+      return {
+        ...report,
+        bestSentenceEn: '',
+        bestSentenceNoteTh: '',
+        grammarTip: '',
+        grammarTipTh: '',
+        pronunciationIssues: [],
+      };
+    }
+
+    return {
+      ...report,
+      bestSentenceEn: this.normalizeFeedbackField(report.bestSentenceEn),
+      bestSentenceNoteTh: this.normalizeFeedbackField(report.bestSentenceNoteTh),
+      grammarTip: this.normalizeFeedbackField(report.grammarTip),
+      grammarTipTh: this.normalizeFeedbackField(report.grammarTipTh),
+      pronunciationIssues: report.pronunciationIssues.filter((issue) =>
+        this.isMeaningfulFeedbackText(issue.word),
+      ),
+    };
+  }
+
+  private normalizeFeedbackField(value: string): string {
+    return this.isMeaningfulFeedbackText(value) ? value.trim() : '';
+  }
+
+  private isMeaningfulFeedbackText(value: string): boolean {
+    const trimmed = value.trim();
+    if (!trimmed) {
+      return false;
+    }
+
+    const normalized = trimmed.toLowerCase();
+    const placeholders = new Set([
+      '-',
+      '—',
+      '–',
+      'n/a',
+      'na',
+      'none',
+      'null',
+      '.',
+      '...',
+      'ไม่มี',
+      'ไม่มีข้อมูล',
+      'no data',
+    ]);
+
+    return !placeholders.has(normalized);
   }
 
   private buildThinkingConfig(): Record<string, unknown> {
