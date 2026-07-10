@@ -85,6 +85,7 @@ export interface DailyReportResponse extends GptReport {
   scoreLabel?: string;
   goldBananasEarned?: number;
   checkpointSummary?: Record<string, boolean>;
+  rewards?: SessionRewardSummary;
 }
 
 export interface GptIntroReport {
@@ -97,6 +98,29 @@ export interface GptIntroReport {
   listeningScore: number;
 }
 
+export interface SessionRewardSummary {
+  xpEarned: number;
+  seedsEarned: number;
+  ratingLabel: string;
+  streakDays: number;
+  previousStreakDays: number;
+  streakBonus?: { days: number; seedsEarned: number };
+  balances: { bananas: number; xp: number; seeds: number };
+  isDailyMission: boolean;
+}
+
 export interface IntroReportResponse extends GptIntroReport {
   sessionId: string;
+}
+
+export interface UserProfileResponse {
+  anonymousId: string;
+  displayName: string;
+  onboardingCompleted: boolean;
+  bananaBalance: number;
+  xpBalance: number;
+  bananaSeedBalance: number;
+  streakDays: number;
+  dailyUsedToday: boolean;
+  timezone: string;
 }

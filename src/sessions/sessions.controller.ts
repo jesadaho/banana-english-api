@@ -8,7 +8,10 @@ import {
   Param,
   Post,
   Body,
+  Req,
+  UseGuards,
 } from '@nestjs/common';
+import { User } from '@prisma/client';
 import { GeminiChatService } from '../gemini/gemini-chat.service';
 import { GeminiTtsService } from '../gemini/gemini-tts.service';
 import type {
@@ -33,19 +36,38 @@ import {
   mergeCheckpoints,
 } from '../simulations/simulations.data';
 import { StartSessionDto, TurnDto } from './dto/sessions.dto';
+import { AnonymousUserGuard } from '../users/anonymous-user.guard';
+import { EconomyService } from '../economy/economy.service';
+import { UsersService } from '../users/users.service';
+import { PrismaService } from '../prisma/prisma.service';
+import { getMissionReward } from '../economy/economy.constants';
+import { getUserLocalTime, isSameDateKey } from '../common/timezone.util';
+
+type AuthedRequest = { user: User };
 
 @Controller('sessions')
+@UseGuards(AnonymousUserGuard)
 export class SessionsController {
   constructor(
     private readonly sessionStore: SessionStoreService,
     private readonly chat: GeminiChatService,
     private readonly geminiTts: GeminiTtsService,
+    private readonly economy: EconomyService,
+    private readonly users: UsersService,
+    private readonly prisma: PrismaService,
   ) {}
 
   @Post()
-  async startSession(@Body() body: StartSessionDto) {
+  async startSession(
+    @Req() req: AuthedRequest,
+    @Body() body: StartSessionDto,
+  ) {
     if (body.sessionType === 'simulation') {
-      return this.startSimulationSession(body.simulationId!);
+      return this.startSimulationSession(
+        req.user,
+        body.simulationId!,
+        body.isDailyMission ?? false,
+      );
     }
 
     if (body.sessionType === 'training') {
@@ -81,14 +103,35 @@ export class SessionsController {
   }
 
   private async startSimulationSession(
+    user: User,
     simulationId: string,
+    isDailyMission: boolean,
   ): Promise<StartSimulationResponse> {
     const config = getSimulation(simulationId);
     if (!config) {
       throw new NotFoundException('Simulation not found');
     }
 
+    if (isDailyMission) {
+      const local = getUserLocalTime(user.timezone);
+      if (isSameDateKey(user.dailyMissionUsedDate, local.dateKey)) {
+        throw new BadRequestException('Daily mission already used today');
+      }
+    }
+
+    await this.economy.spendBananas(user.id, config.bananaCost, simulationId);
+
     const data = this.sessionStore.createSimulation(config);
+
+    await this.prisma.userSession.create({
+      data: {
+        id: data.session.id,
+        userId: user.id,
+        sessionType: 'simulation',
+        simulationId: config.simulationId,
+        isDailyMission,
+      },
+    });
 
     try {
       const reply = await this.chat.generateSimulationOpening(config);
@@ -354,7 +397,10 @@ export class SessionsController {
   }
 
   @Post(':sessionId/end')
-  async endSession(@Param('sessionId') sessionId: string) {
+  async endSession(
+    @Req() req: AuthedRequest,
+    @Param('sessionId') sessionId: string,
+  ) {
     const data = this.sessionStore.get(sessionId);
     if (!data) {
       throw new NotFoundException('Session not found');
@@ -365,6 +411,7 @@ export class SessionsController {
       try {
         const introReport = await this.chat.generateIntroReport(data.turns);
         this.sessionStore.setIntroReport(sessionId, introReport);
+        await this.users.updateDisplayName(req.user.id, introReport.userName);
         return { status: 'ended', introReport };
       } catch (err) {
         throw new BadGatewayException(
@@ -404,6 +451,7 @@ export class SessionsController {
 
   @Get(':sessionId/report')
   async getReport(
+    @Req() req: AuthedRequest,
     @Param('sessionId') sessionId: string,
   ): Promise<DailyReportResponse> {
     const data = this.sessionStore.get(sessionId);
@@ -425,18 +473,42 @@ export class SessionsController {
           totalCount > 0
             ? Math.round((completedCount / totalCount) * 100)
             : 0;
-        const scoreLabel =
-          overallScore >= 90
-            ? 'Excellent'
-            : overallScore >= 70
-              ? 'Good'
-              : overallScore >= 50
-                ? 'Fair'
-                : 'Keep Trying';
+        const rewardTier = getMissionReward(overallScore);
 
         duration = Math.min(duration, config.estimatedMinutes * 60);
 
         const report = await this.chat.generateReport(data.turns, duration);
+
+        const userSession = await this.prisma.userSession.findUnique({
+          where: { id: sessionId },
+        });
+
+        let rewards;
+        if (
+          userSession &&
+          userSession.userId === req.user.id &&
+          !userSession.rewardsApplied
+        ) {
+          rewards = await this.economy.applyMissionRewards({
+            userId: req.user.id,
+            sessionId,
+            overallScore,
+            isDailyMission: userSession.isDailyMission,
+          });
+        } else if (userSession?.rewardsApplied) {
+          const user = await this.prisma.user.findUniqueOrThrow({
+            where: { id: req.user.id },
+          });
+          rewards = {
+            xpEarned: rewardTier.xp,
+            seedsEarned: rewardTier.seeds,
+            ratingLabel: rewardTier.ratingLabel,
+            streakDays: user.streakDays,
+            previousStreakDays: user.streakDays,
+            balances: this.economy.toBalances(user),
+            isDailyMission: userSession.isDailyMission,
+          };
+        }
 
         return {
           sessionId,
@@ -452,9 +524,10 @@ export class SessionsController {
           topicId: config.simulationId,
           missionTitleTh: config.missionTitleTh,
           overallScore,
-          scoreLabel,
-          goldBananasEarned: allCheckpointsComplete(checkpoints) ? 1 : 0,
+          scoreLabel: rewardTier.ratingLabel,
+          goldBananasEarned: rewards?.xpEarned ?? rewardTier.xp,
           checkpointSummary: checkpoints,
+          rewards,
         };
       }
 

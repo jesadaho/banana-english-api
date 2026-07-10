@@ -24,6 +24,10 @@ export class StartSessionDto {
   @IsString()
   @IsNotEmpty()
   simulationId?: string;
+
+  @IsOptional()
+  @IsBoolean()
+  isDailyMission?: boolean;
 }
 
 export class TurnDto {

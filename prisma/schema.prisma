@@ -1,0 +1,91 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Currency {
+  BANANA
+  XP
+  BANANA_SEED
+}
+
+model User {
+  id                      String    @id @default(uuid())
+  anonymousId             String    @unique
+  displayName             String?
+  timezone                String    @default("Asia/Bangkok")
+  onboardingCompleted     Boolean   @default(false)
+
+  bananaBalance           Int       @default(0)
+  xpBalance               Int       @default(0)
+  bananaSeedBalance       Int       @default(0)
+
+  streakDays              Int       @default(0)
+  lastSessionDate         DateTime? @db.Date
+  streakMilestonesClaimed Int[]     @default([])
+
+  lastDailyBananaDate     DateTime? @db.Date
+  lastAppOpenDate         DateTime? @db.Date
+  dailyMissionUsedDate    DateTime? @db.Date
+
+  fcmTokens               UserFcmToken[]
+  transactions            EconomyTransaction[]
+  sessions                UserSession[]
+  notificationLogs        NotificationLog[]
+
+  createdAt               DateTime  @default(now())
+  updatedAt               DateTime  @updatedAt
+}
+
+model EconomyTransaction {
+  id          String   @id @default(uuid())
+  userId      String
+  currency    Currency
+  amount      Int
+  source      String
+  referenceId String?
+  createdAt   DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+}
+
+model UserFcmToken {
+  id        String   @id @default(uuid())
+  userId    String
+  token     String   @unique
+  platform  String?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model NotificationLog {
+  id     String   @id @default(uuid())
+  userId String
+  type   String
+  sentOn DateTime @db.Date
+  sentAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, type, sentOn])
+}
+
+model UserSession {
+  id             String  @id
+  userId         String
+  sessionType    String
+  simulationId   String?
+  isDailyMission Boolean @default(false)
+  rewardsApplied Boolean @default(false)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}

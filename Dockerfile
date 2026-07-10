@@ -6,6 +6,9 @@ WORKDIR /app
 COPY package.json ./
 RUN npm install
 
+COPY prisma ./prisma
+RUN npx prisma generate
+
 COPY . .
 RUN npm run build
 
@@ -19,8 +22,11 @@ ENV NODE_ENV=production
 COPY package.json ./
 RUN npm install --omit=dev
 
+COPY prisma ./prisma
+RUN npx prisma generate
+
 COPY --from=builder /app/dist ./dist
 
 EXPOSE 8000
 
-CMD ["node", "dist/main.js"]
+CMD ["sh", "-c", "npx prisma migrate deploy && node dist/main.js"]
