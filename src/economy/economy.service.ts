@@ -3,6 +3,7 @@ import { Currency, Prisma, User } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import {
   DAILY_BANANA_DROP,
+  DEBUG_BANANA_REFILL,
   ONBOARDING_BANANA_BONUS,
   STREAK_MILESTONES,
   getMissionReward,
@@ -119,6 +120,22 @@ export class EconomyService {
           bananaBalance: { increment: DAILY_BANANA_DROP },
           lastDailyBananaDate: parseDateKey(local.dateKey),
         },
+      });
+    });
+  }
+
+  async creditDebugBananas(userId: string, amount = DEBUG_BANANA_REFILL): Promise<User> {
+    return this.prisma.$transaction(async (tx) => {
+      await this.recordTransaction(tx, {
+        userId,
+        currency: Currency.BANANA,
+        amount,
+        source: 'debug_refill',
+      });
+
+      return tx.user.update({
+        where: { id: userId },
+        data: { bananaBalance: { increment: amount } },
       });
     });
   }

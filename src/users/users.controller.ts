@@ -36,4 +36,9 @@ export class UsersController {
   ) {
     return this.users.completeOnboarding(req.user, body);
   }
+
+  @Post('me/debug/refill-bananas')
+  async refillBananasDebug(@Req() req: AuthedRequest) {
+    return this.users.refillBananasDebug(req.user);
+  }
 }

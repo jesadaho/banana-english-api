@@ -21,6 +21,7 @@ export const STREAK_MILESTONES: Array<{ days: number; seeds: number }> = [
 
 export const ONBOARDING_BANANA_BONUS = 2;
 export const DAILY_BANANA_DROP = 1;
+export const DEBUG_BANANA_REFILL = 2;
 
 export function getMissionReward(score: number): MissionRewardTier {
   const clamped = Math.max(0, Math.min(100, score));

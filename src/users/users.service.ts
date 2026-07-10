@@ -1,4 +1,5 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { User } from '@prisma/client';
 import { EconomyService } from '../economy/economy.service';
 import { getUserLocalTime, isSameDateKey } from '../common/timezone.util';
@@ -22,6 +23,7 @@ export class UsersService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly economy: EconomyService,
+    private readonly config: ConfigService,
   ) {}
 
   async upsertProfile(user: User, dto: UpsertUserDto): Promise<UserProfileResponse> {
@@ -88,6 +90,22 @@ export class UsersService {
 
     const updated = await this.economy.creditOnboardingBonus(user.id);
     return this.getProfile(updated);
+  }
+
+  async refillBananasDebug(user: User): Promise<UserProfileResponse> {
+    if (!this.isDebugEndpointsEnabled()) {
+      throw new ForbiddenException('Debug endpoints are disabled');
+    }
+
+    const updated = await this.economy.creditDebugBananas(user.id);
+    return this.getProfile(updated);
+  }
+
+  private isDebugEndpointsEnabled(): boolean {
+    return (
+      this.config.get<string>('NODE_ENV') !== 'production' ||
+      this.config.get<string>('ENABLE_DEBUG_ENDPOINTS') === 'true'
+    );
   }
 
   async updateDisplayName(userId: string, displayName: string) {
