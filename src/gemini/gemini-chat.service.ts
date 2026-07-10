@@ -190,6 +190,11 @@ type GeminiResponse = {
     content?: { parts?: Array<{ text?: string; thought?: boolean }> };
     finishReason?: string;
   }>;
+  promptFeedback?: { blockReason?: string };
+  usageMetadata?: {
+    thoughtsTokenCount?: number;
+    candidatesTokenCount?: number;
+  };
 };
 
 @Injectable()
@@ -467,7 +472,8 @@ Payment closure (critical — no tap UI exists):
           error instanceof Error &&
           (error.message.includes('MAX_TOKENS') ||
             error.message.includes('invalid JSON') ||
-            error.message.includes('Unterminated'));
+            error.message.includes('Unterminated') ||
+            error.message.includes('missing text'));
         if (!retryable || attempt === tokenLimits.length - 1) {
           break;
         }
@@ -498,6 +504,7 @@ Payment closure (critical — no tap UI exists):
     const generationConfig: Record<string, unknown> = {
       maxOutputTokens: options.maxOutputTokens ?? 1024,
       temperature: options.temperature ?? 0.7,
+      thinkingConfig: this.buildThinkingConfig(),
     };
 
     if (options.schema) {
@@ -544,7 +551,18 @@ Payment closure (critical — no tap UI exists):
       .trim();
 
     if (!text) {
-      throw new Error('Gemini response missing text');
+      const finishReason = candidate?.finishReason ?? 'unknown';
+      const blockReason = data.promptFeedback?.blockReason;
+      const thoughtTokens = data.usageMetadata?.thoughtsTokenCount;
+      const answerTokens = data.usageMetadata?.candidatesTokenCount;
+      throw new Error(
+        'Gemini response missing text' +
+          ` (finishReason=${finishReason}` +
+          (blockReason ? `, block=${blockReason}` : '') +
+          (thoughtTokens != null ? `, thoughtTokens=${thoughtTokens}` : '') +
+          (answerTokens != null ? `, answerTokens=${answerTokens}` : '') +
+          ')',
+      );
     }
 
     if (candidate?.finishReason === 'MAX_TOKENS' && options.schema) {
@@ -554,6 +572,18 @@ Payment closure (critical — no tap UI exists):
     }
 
     return text;
+  }
+
+  private buildThinkingConfig(): Record<string, unknown> {
+    if (this.model.includes('gemini-3')) {
+      return { thinkingLevel: 'minimal' };
+    }
+
+    if (this.model.includes('gemini-2.5')) {
+      return { thinkingBudget: 0 };
+    }
+
+    return { thinkingBudget: 0 };
   }
 
   private parseJsonResponse<T>(text: string): T {

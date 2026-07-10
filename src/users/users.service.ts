@@ -71,6 +71,7 @@ export class UsersService {
     });
 
     updated = await this.economy.maybeCreditDailyBanana(updated);
+    updated = await this.economy.ensureOnboardingBonus(updated.id);
     return this.getProfile(updated);
   }
 

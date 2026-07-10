@@ -43,8 +43,19 @@ export class EconomyService {
   async creditOnboardingBonus(userId: string): Promise<User> {
     return this.prisma.$transaction(async (tx) => {
       const user = await tx.user.findUniqueOrThrow({ where: { id: userId } });
-      if (user.onboardingCompleted) {
-        return user;
+      const existingBonus = await tx.economyTransaction.findFirst({
+        where: { userId, source: 'onboarding_bonus' },
+      });
+
+      if (existingBonus) {
+        if (user.onboardingCompleted) {
+          return user;
+        }
+
+        return tx.user.update({
+          where: { id: userId },
+          data: { onboardingCompleted: true },
+        });
       }
 
       await this.recordTransaction(tx, {
@@ -62,6 +73,22 @@ export class EconomyService {
         },
       });
     });
+  }
+
+  async ensureOnboardingBonus(userId: string): Promise<User> {
+    const existingBonus = await this.prisma.economyTransaction.findFirst({
+      where: { userId, source: 'onboarding_bonus' },
+    });
+    if (existingBonus) {
+      return this.prisma.user.findUniqueOrThrow({ where: { id: userId } });
+    }
+
+    const user = await this.prisma.user.findUniqueOrThrow({ where: { id: userId } });
+    if (!user.onboardingCompleted) {
+      return user;
+    }
+
+    return this.creditOnboardingBonus(userId);
   }
 
   async maybeCreditDailyBanana(user: User, now = new Date()): Promise<User> {
