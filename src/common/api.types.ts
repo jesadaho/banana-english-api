@@ -76,7 +76,7 @@ export interface GptReport {
   pronunciationIssues: Array<{ word: string; scorePercent: number }>;
 }
 
-export interface DailyReportResponse extends GptReport {
+export interface MissionResultResponse extends GptReport {
   sessionId: string;
   durationSeconds: number;
   topicId?: string;

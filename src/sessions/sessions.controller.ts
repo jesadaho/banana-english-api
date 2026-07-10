@@ -15,7 +15,7 @@ import { User } from '@prisma/client';
 import { GeminiChatService } from '../gemini/gemini-chat.service';
 import { GeminiTtsService } from '../gemini/gemini-tts.service';
 import type {
-  DailyReportResponse,
+  MissionResultResponse,
   HintsResponse,
   IntroReportResponse,
   StartSimulationResponse,
@@ -453,7 +453,7 @@ export class SessionsController {
   async getReport(
     @Req() req: AuthedRequest,
     @Param('sessionId') sessionId: string,
-  ): Promise<DailyReportResponse> {
+  ): Promise<MissionResultResponse> {
     const data = this.sessionStore.get(sessionId);
     if (!data) {
       throw new NotFoundException('Session not found');
