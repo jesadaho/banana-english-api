@@ -22,7 +22,7 @@ import type {
   TurnExchangeResponse,
 } from '../common/api.types';
 import { SessionStoreService } from '../session-store/session-store.service';
-import { getTopic } from '../topics/topics.data';
+import { FALLBACK_HINTS, getTopic } from '../topics/topics.data';
 import {
   INTRO_TURN1_OPENING,
   getTurn2Script,
@@ -388,12 +388,14 @@ export class SessionsController {
 
     try {
       const hints = await this.chat.generateHints(data.turns);
-      return { hints };
+      if (hints.length > 0) {
+        return { hints };
+      }
     } catch (err) {
-      throw new BadGatewayException(
-        `AI service error: ${err instanceof Error ? err.message : String(err)}`,
-      );
+      // Fall through to static hints — better than an empty sheet for the learner.
     }
+
+    return { hints: FALLBACK_HINTS };
   }
 
   @Post(':sessionId/end')

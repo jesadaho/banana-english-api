@@ -1,3 +1,5 @@
+import type { HintOption } from '../common/api.types';
+
 export interface Topic {
   id: string;
   titleTh: string;
@@ -51,6 +53,28 @@ the learner could say next. Each hint needs:
 - pronunciation: a Thai phonetic reading (คำอ่านภาษาไทย) of sentenceEn so a Thai learner can pronounce it, e.g. "Could you help me?" -> "คูด ยู เฮลพ์ มี?"
 
 Return JSON matching the schema.`;
+
+/** Used when Gemini hint generation fails so the client never gets an empty list. */
+export const FALLBACK_HINTS: HintOption[] = [
+  {
+    id: 'hint_fallback_1',
+    label: 'ตอบสั้นๆ',
+    sentenceEn: 'Yes, that sounds good.',
+    pronunciation: 'เย็ส, แดท ซาวนด์ส กู้ด',
+  },
+  {
+    id: 'hint_fallback_2',
+    label: 'ถามเพิ่ม',
+    sentenceEn: 'Could you tell me more?',
+    pronunciation: 'คูด ยู เทล มี มอร์?',
+  },
+  {
+    id: 'hint_fallback_3',
+    label: 'ขอความช่วยเหลือ',
+    sentenceEn: 'Could you help me with that?',
+    pronunciation: 'คูด ยู เฮลพ์ มี วิธ แดท?',
+  },
+];
 
 export const REPORT_PROMPT = `${BROTHER_BANANA_PERSONA}
 

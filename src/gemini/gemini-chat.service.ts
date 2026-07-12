@@ -90,7 +90,7 @@ const HINTS_SCHEMA = {
           sentenceEn: { type: 'string' },
           pronunciation: { type: 'string' },
         },
-        required: ['id', 'label', 'sentenceEn', 'pronunciation'],
+        required: ['id', 'label', 'sentenceEn'],
       },
     },
   },
