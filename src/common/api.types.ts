@@ -53,6 +53,7 @@ export interface HintOption {
   id: string;
   label: string;
   sentenceEn: string;
+  pronunciation?: string;
 }
 
 export interface HintsResponse {

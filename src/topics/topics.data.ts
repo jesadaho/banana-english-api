@@ -48,6 +48,7 @@ the learner could say next. Each hint needs:
 - id: hint_1, hint_2, hint_3
 - label: short Thai label (2-4 words) describing the intent
 - sentenceEn: the full English sentence to say
+- pronunciation: a Thai phonetic reading (คำอ่านภาษาไทย) of sentenceEn so a Thai learner can pronounce it, e.g. "Could you help me?" -> "คูด ยู เฮลพ์ มี?"
 
 Return JSON matching the schema.`;
 
