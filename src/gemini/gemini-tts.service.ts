@@ -35,7 +35,7 @@ export class GeminiTtsService {
       'GEMINI_TTS_MODEL',
       'gemini-2.5-flash-preview-tts',
     );
-    this.voice = this.config.get<string>('GEMINI_TTS_VOICE', 'Puck');
+    this.voice = this.config.get<string>('GEMINI_TTS_VOICE', 'Sadachbia');
   }
 
   async synthesizeSpeech(text: string): Promise<Buffer> {

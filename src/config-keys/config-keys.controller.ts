@@ -31,7 +31,7 @@ export class ConfigKeysController {
       'GEMINI_TTS_MODEL',
       'gemini-2.5-flash-preview-tts',
     );
-    const geminiTtsVoice = this.config.get<string>('GEMINI_TTS_VOICE', 'Puck');
+    const geminiTtsVoice = this.config.get<string>('GEMINI_TTS_VOICE', 'Sadachbia');
 
     return {
       groqApiKey: groqApiKey ?? null,
