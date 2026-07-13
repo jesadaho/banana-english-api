@@ -40,6 +40,7 @@ import { AnonymousUserGuard } from '../users/anonymous-user.guard';
 import { EconomyService } from '../economy/economy.service';
 import { UsersService } from '../users/users.service';
 import { PrismaService } from '../prisma/prisma.service';
+import { SeriesService } from '../series/series.service';
 import { getMissionReward } from '../economy/economy.constants';
 import { getUserLocalTime, isSameDateKey } from '../common/timezone.util';
 
@@ -55,6 +56,7 @@ export class SessionsController {
     private readonly economy: EconomyService,
     private readonly users: UsersService,
     private readonly prisma: PrismaService,
+    private readonly seriesService: SeriesService,
   ) {}
 
   @Post()
@@ -117,6 +119,14 @@ export class SessionsController {
       if (isSameDateKey(user.dailyMissionUsedDate, local.dateKey)) {
         throw new BadRequestException('Daily mission already used today');
       }
+    }
+
+    const unlocked = await this.seriesService.isSimulationUnlockedForUser(
+      user.id,
+      simulationId,
+    );
+    if (!unlocked) {
+      throw new BadRequestException('Series locked');
     }
 
     await this.economy.spendBananas(user.id, config.bananaCost, simulationId);

@@ -9,6 +9,7 @@ import { GeminiModule } from './gemini/gemini.module';
 import { SessionStoreModule } from './session-store/session-store.module';
 import { TtsModule } from './tts/tts.module';
 import { SimulationsModule } from './simulations/simulations.module';
+import { SeriesModule } from './series/series.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { EconomyModule } from './economy/economy.module';
 import { UsersModule } from './users/users.module';
@@ -30,6 +31,7 @@ import { NotificationsModule } from './notifications/notifications.module';
     SessionStoreModule,
     TtsModule,
     SimulationsModule,
+    SeriesModule,
   ],
 })
 export class AppModule {}
