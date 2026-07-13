@@ -119,6 +119,27 @@ export class UsersService {
     return this.getProfile(updated);
   }
 
+  async resetProgressDebug(user: User): Promise<UserProfileResponse> {
+    if (!this.isDebugEndpointsEnabled()) {
+      throw new ForbiddenException('Debug endpoints are disabled');
+    }
+
+    const updated = await this.prisma.$transaction(async (tx) => {
+      await tx.userSession.deleteMany({ where: { userId: user.id } });
+      return tx.user.update({
+        where: { id: user.id },
+        data: {
+          streakDays: 0,
+          lastSessionDate: null,
+          dailyMissionUsedDate: null,
+          streakMilestonesClaimed: [],
+        },
+      });
+    });
+
+    return this.getProfile(updated);
+  }
+
   private isDebugEndpointsEnabled(): boolean {
     return (
       this.config.get<string>('NODE_ENV') !== 'production' ||

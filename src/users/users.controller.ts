@@ -46,4 +46,9 @@ export class UsersController {
   async resetStreakDebug(@Req() req: AuthedRequest) {
     return this.users.resetStreakDebug(req.user);
   }
+
+  @Post('me/debug/reset-progress')
+  async resetProgressDebug(@Req() req: AuthedRequest) {
+    return this.users.resetProgressDebug(req.user);
+  }
 }
