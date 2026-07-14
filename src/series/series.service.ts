@@ -53,9 +53,9 @@ export class SeriesService {
   private buildSeriesView(
     series: SeriesConfig,
     completedIds: Set<string>,
-    previousCompleted: boolean,
+    previousUnlockedNext: boolean,
   ): SeriesView {
-    const isUnlocked = series.order === 0 || previousCompleted;
+    const isUnlocked = series.order === 0 || previousUnlockedNext;
     const missions: SeriesMissionView[] = series.missionIds.map(
       (simulationId, index) => ({
         simulationId,
@@ -96,11 +96,15 @@ export class SeriesService {
 
     for (const series of catalog) {
       const prev = getPreviousSeries(series);
-      const previousCompleted = prev
-        ? views.find((v) => v.seriesId === prev.seriesId)?.isCompleted ?? false
+      // Unlock next chapter after clearing any 1 mission in the previous chapter.
+      const previousUnlockedNext = prev
+        ? (views.find((v) => v.seriesId === prev.seriesId)?.completedMissions ??
+            0) >= 1
         : true;
 
-      views.push(this.buildSeriesView(series, completedIds, previousCompleted));
+      views.push(
+        this.buildSeriesView(series, completedIds, previousUnlockedNext),
+      );
     }
 
     return views;
