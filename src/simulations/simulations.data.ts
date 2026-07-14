@@ -7,6 +7,7 @@ export interface SimulationConfig {
   missionTitleTh: string;
   scenarioTh: string;
   goalsTh: string[];
+  goalsEn: string[];
   difficulty: SimulationDifficulty;
   estimatedMinutes: number;
   bananaCost: number;
@@ -27,6 +28,11 @@ export const SIMULATIONS: SimulationConfig[] = [
     scenarioTh:
       'คุณเพิ่งเดินเข้าร้านกาแฟตอนเช้าในนิวยอร์ก และมีพนักงานบาริสต้าเดินเข้ามาทักทายพร้อมรับออเดอร์',
     goalsTh: [
+      '☕ สั่งเครื่องดื่มของคุณ',
+      '🥛 เลือกขนาดหรือนม',
+      '💳 ชำระเงินให้เรียบร้อย',
+    ],
+    goalsEn: [
       '☕ Order your drink',
       '🥛 Choose your size or milk',
       '💳 Complete your payment',
@@ -51,6 +57,11 @@ export const SIMULATIONS: SimulationConfig[] = [
     scenarioTh:
       'คุณมาทานอาหารเย็นที่ร้านอาหารในเมือง กำลังนั่งดูเมนูและพนักงานเดินมารับออเดอร์',
     goalsTh: [
+      '🍝 สั่งอาหาร',
+      '🥤 เลือกเครื่องดื่มหรือเครื่องเคียง',
+      '✅ ยืนยันออเดอร์',
+    ],
+    goalsEn: [
       '🍝 Order your meal',
       '🥤 Choose your drink or side',
       '✅ Confirm your order',
@@ -75,6 +86,11 @@ export const SIMULATIONS: SimulationConfig[] = [
     scenarioTh:
       'เย็นวันเสาร์อันสดใส คุณอยากไปดูหนังเรื่องโปรดที่โรงภาพยนตร์ คุณต้องเดินไปที่ช่องขายตั๋วเพื่อซื้อตั๋วและเลือกทำเลที่นั่งที่ดีที่สุด',
     goalsTh: [
+      '🎬 เลือกหนังและรอบฉาย',
+      '🎟️ เลือกที่นั่ง',
+      '🍿 เพิ่มขนมหรือเครื่องดื่ม',
+    ],
+    goalsEn: [
       '🎬 Choose a movie and showtime',
       '🎟️ Select your seats',
       '🍿 Add snacks or drinks',
@@ -99,6 +115,11 @@ export const SIMULATIONS: SimulationConfig[] = [
     scenarioTh:
       'คุณเดินทางมาถึงโรงแรมที่ลอนดอนหลังจากไฟลท์อันยาวนาน ตอนนี้คุณอยู่ที่หน้าล็อบบี้และต้องการแจ้งพนักงานเพื่อเข้าพักตามที่จองไว้',
     goalsTh: [
+      '🏨 เช็กอินเข้าพักโรงแรม',
+      '🪪 ยืนยันการจอง',
+      '🔑 รับกุญแจห้อง',
+    ],
+    goalsEn: [
       '🏨 Check in to your hotel',
       '🪪 Confirm your booking',
       '🔑 Receive your room key',
@@ -123,6 +144,11 @@ export const SIMULATIONS: SimulationConfig[] = [
     scenarioTh:
       'คุณยืนรอแท็กซี่ข้างถนนในเมืองใหญ่ และต้องการไปสถานที่ที่จองไว้',
     goalsTh: [
+      '📍 บอกจุดหมายให้คนขับ',
+      '🚕 ยืนยันรายละเอียดการเดินทาง',
+      '💳 ชำระค่าโดยสาร',
+    ],
+    goalsEn: [
       '📍 Tell the driver your destination',
       '🚕 Confirm your trip details',
       '💳 Complete the ride',
@@ -147,6 +173,11 @@ export const SIMULATIONS: SimulationConfig[] = [
     scenarioTh:
       'คุณมาถึงสนามบินก่อนเวลาบิน และต้องเช็กอินที่เคาน์เตอร์สายการบิน',
     goalsTh: [
+      '🛫 เช็กอินเที่ยวบิน',
+      '🪪 ยืนยันเอกสารการเดินทาง',
+      '🎫 รับบอร์ดดิ้งพาส',
+    ],
+    goalsEn: [
       '🛫 Check in for your flight',
       '🪪 Confirm your travel documents',
       '🎫 Receive your boarding pass',
@@ -171,6 +202,11 @@ export const SIMULATIONS: SimulationConfig[] = [
     scenarioTh:
       'คุณมาถึงออฟฟิศลูกค้าเพื่อพบปะครั้งแรกและนำเสนอตัวเอง',
     goalsTh: [
+      '👋 แนะนำตัวเอง',
+      '💬 พูดคุยความต้องการของลูกค้า',
+      '🤝 ตกลงขั้นตอนถัดไป',
+    ],
+    goalsEn: [
       '👋 Introduce yourself',
       "💬 Discuss the client's needs",
       '🤝 Agree on the next step',
@@ -195,6 +231,11 @@ export const SIMULATIONS: SimulationConfig[] = [
     scenarioTh:
       'คุณต้องโทรศัพท์ไปหาพาร์ทเนอร์ชาวต่างชาติเพื่อขอนัดหมายเวลาคุยโปรเจกต์ใหม่ โดยเป้าหมายคือต้องหาวันและเวลาที่ลงตัวตรงกันให้ได้',
     goalsTh: [
+      '📅 เสนอเวลานัดหมาย',
+      '🤝 ตกลงตารางเวลา',
+      '✅ ยืนยันการนัดหมาย',
+    ],
+    goalsEn: [
       '📅 Suggest a meeting time',
       '🤝 Agree on a schedule',
       '✅ Confirm the meeting',
@@ -219,6 +260,11 @@ export const SIMULATIONS: SimulationConfig[] = [
     scenarioTh:
       'คุณต้องโทรติดต่อลูกค้าเพื่อแจ้งความคืบหน้าโปรเจกต์และนัดหมายครั้งถัดไป',
     goalsTh: [
+      '☎️ แนะนำตัวเอง',
+      '📈 อัปเดตความคืบหน้าโปรเจกต์',
+      '📅 นัดหมายครั้งถัดไป',
+    ],
+    goalsEn: [
       '☎️ Introduce yourself',
       '📈 Give a project update',
       '📅 Arrange a follow-up',
@@ -243,6 +289,11 @@ export const SIMULATIONS: SimulationConfig[] = [
     scenarioTh:
       'คุณรู้สึกปวดหัวและมีไข้ระหว่างทริปต่างประเทศ จึงเดินเข้าไปในร้านขายยาเพื่ออธิบายอาการป่วยให้เภสัชกรฟังและซื้อยากลับไปทาน',
     goalsTh: [
+      '🤒 อธิบายอาการ',
+      '💊 ซื้อยาที่เหมาะสม',
+      '📋 เข้าใจวิธีรับประทาน',
+    ],
+    goalsEn: [
       '🤒 Describe your symptoms',
       '💊 Get the right medicine',
       '📋 Understand how to take it',
@@ -267,6 +318,11 @@ export const SIMULATIONS: SimulationConfig[] = [
     scenarioTh:
       'คุณรู้สึกไม่สบายและมาพบแพทย์ที่คลินิกในต่างประเทศ',
     goalsTh: [
+      '🤕 อธิบายอาการ',
+      '💬 ตอบคำถามของหมอ',
+      '💡 เข้าใจการรักษา',
+    ],
+    goalsEn: [
       '🤕 Describe your symptoms',
       "💬 Answer the doctor's questions",
       '💡 Understand the treatment',
@@ -291,6 +347,11 @@ export const SIMULATIONS: SimulationConfig[] = [
     scenarioTh:
       'คุณเจอสถานการณ์ฉุกเฉินในต่างประเทศและต้องขอความช่วยเหลือจากคนรอบข้าง',
     goalsTh: [
+      '🆘 อธิบายสถานการณ์',
+      '📍 บอกรายละเอียดที่สำคัญ',
+      '✅ ได้รับความช่วยเหลือที่ต้องการ',
+    ],
+    goalsEn: [
       '🆘 Explain your situation',
       '📍 Share the important details',
       '✅ Get the help you need',
