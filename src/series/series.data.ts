@@ -43,9 +43,9 @@ export const SERIES: SeriesConfig[] = [
     order: 2,
     coverImage: 'category_business',
     missionIds: [
+      'meet_client_easy',
       'business_meeting_easy',
       'business_phone_easy',
-      'meet_client_easy',
     ],
   },
   {

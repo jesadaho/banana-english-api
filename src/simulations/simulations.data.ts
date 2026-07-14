@@ -15,6 +15,9 @@ export interface SimulationConfig {
   maxTurns: number;
 }
 
+const AI_LEAD =
+  'You lead this easy conversation. Ask short clarifying questions and gently guide the learner through each objective. Keep every reply under 15 words. Never dump all questions at once.';
+
 export const SIMULATIONS: SimulationConfig[] = [
   {
     simulationId: 'coffee_order_easy',
@@ -24,15 +27,15 @@ export const SIMULATIONS: SimulationConfig[] = [
     scenarioTh:
       'คุณเพิ่งเดินเข้าร้านกาแฟตอนเช้าในนิวยอร์ก และมีพนักงานบาริสต้าเดินเข้ามาทักทายพร้อมรับออเดอร์',
     goalsTh: [
-      'สั่งกาแฟที่คุณชอบ 1 แก้ว',
-      'เลือกขนาด (Size) หรือประเภทนม',
-      'ทำท่าจ่ายเงินให้สำเร็จ',
+      '☕ Order your drink',
+      '🥛 Choose your size or milk',
+      '💳 Complete your payment',
     ],
     difficulty: 'easy',
     estimatedMinutes: 5,
     bananaCost: 1,
     systemInstruction:
-      'You are Sam, a friendly barista at a busy NYC coffee shop. The user is ordering coffee. Keep your responses short (under 15 words) and ask simple questions. When the customer says they will pay by card (even if speech-to-text garbles it, e.g. "hard plates" means "card please"), immediately complete payment in that turn — never ask them to tap the screen. Close with a line like: "Card, got it! Payment completed. Here is your latte! Enjoy your day!"',
+      `${AI_LEAD} You are Sam, a friendly barista at a busy NYC coffee shop. Ask what they would like, then prompt for size or milk. When they want to pay by card (even if STT garbles it, e.g. "hard plates" = "card please"), complete payment in that turn — never ask them to tap the screen. Close like: "Card, got it! Payment completed. Here is your latte! Enjoy your day!"`,
     successCriteria: [
       'user_specified_drink',
       'user_specified_size_or_milk',
@@ -41,26 +44,50 @@ export const SIMULATIONS: SimulationConfig[] = [
     maxTurns: 8,
   },
   {
-    simulationId: 'business_meeting_easy',
-    title: 'นัดหมายเวลาประชุม',
-    missionNumber: 1,
-    missionTitleTh: 'นัดหมายเวลาประชุม',
+    simulationId: 'restaurant_order_easy',
+    title: 'สั่งอาหารที่ร้านอาหาร',
+    missionNumber: 2,
+    missionTitleTh: 'สั่งอาหารมื้อเย็นที่ร้านอาหาร',
     scenarioTh:
-      'คุณต้องโทรศัพท์ไปหาพาร์ทเนอร์ชาวต่างชาติเพื่อขอนัดหมายเวลาคุยโปรเจกต์ใหม่ โดยเป้าหมายคือต้องหาวันและเวลาที่ลงตัวตรงกันให้ได้',
+      'คุณมาทานอาหารเย็นที่ร้านอาหารในเมือง กำลังนั่งดูเมนูและพนักงานเดินมารับออเดอร์',
     goalsTh: [
-      'บอกจุดประสงค์ว่าต้องการนัดประชุมโปรเจกต์ใหม่',
-      'เสนอวันและเวลาที่คุณสะดวก (เช่น Next Tuesday at 10 AM)',
-      'พูดสรุปยืนยันวันและเวลาที่ตกลงกันได้อีกครั้งก่อนวางสาย',
+      '🍝 Order your meal',
+      '🥤 Choose your drink or side',
+      '✅ Confirm your order',
     ],
     difficulty: 'easy',
     estimatedMinutes: 5,
     bananaCost: 1,
     systemInstruction:
-      'You are Alex, a busy international business partner on a phone call. The user is calling to schedule a new project meeting. Keep responses short (under 15 words). Guide them to state their purpose, propose a day and time they are available, and confirm the final agreed schedule before ending the call.',
+      `${AI_LEAD} You are Mia, a friendly restaurant server. Lead with questions like: "Are you ready to order?" "What would you like to drink?" "Anything else?" Guide them to order a meal, choose a drink or side, then confirm the full order.`,
     successCriteria: [
-      'stated_meeting_purpose',
-      'proposed_date_time',
-      'confirmed_schedule',
+      'ordered_meal',
+      'chose_drink_or_side',
+      'confirmed_order',
+    ],
+    maxTurns: 8,
+  },
+  {
+    simulationId: 'movie_tickets_easy',
+    title: 'ซื้อตั๋วหนังและเลือกที่นั่ง',
+    missionNumber: 3,
+    missionTitleTh: 'ซื้อตั๋วหนังและเลือกที่นั่ง',
+    scenarioTh:
+      'เย็นวันเสาร์อันสดใส คุณอยากไปดูหนังเรื่องโปรดที่โรงภาพยนตร์ คุณต้องเดินไปที่ช่องขายตั๋วเพื่อซื้อตั๋วและเลือกทำเลที่นั่งที่ดีที่สุด',
+    goalsTh: [
+      '🎬 Choose a movie and showtime',
+      '🎟️ Select your seats',
+      '🍿 Add snacks or drinks',
+    ],
+    difficulty: 'easy',
+    estimatedMinutes: 5,
+    bananaCost: 1,
+    systemInstruction:
+      `${AI_LEAD} You are Riley, a cheerful cinema ticket clerk. Ask which movie and showtime they want, help them pick seats, then offer snacks or drinks.`,
+    successCriteria: [
+      'stated_movie_showtime',
+      'selected_tickets_seats',
+      'chosen_snacks_drinks',
     ],
     maxTurns: 8,
   },
@@ -72,163 +99,67 @@ export const SIMULATIONS: SimulationConfig[] = [
     scenarioTh:
       'คุณเดินทางมาถึงโรงแรมที่ลอนดอนหลังจากไฟลท์อันยาวนาน ตอนนี้คุณอยู่ที่หน้าล็อบบี้และต้องการแจ้งพนักงานเพื่อเข้าพักตามที่จองไว้',
     goalsTh: [
-      'แจ้งชื่อและบอกว่ามาเช็กอินห้องพักที่จองล่วงหน้าไว้',
-      'ยื่น/แจ้งเรื่องพาสปอร์ต หรือขอบัตรคีย์การ์ดห้องพัก',
-      'ถามข้อมูลเพิ่มเติมเกี่ยวกับเวลาอาหารเช้า หรือรหัส Wi-Fi ของโรงแรม',
+      '🏨 Check in to your hotel',
+      '🪪 Confirm your booking',
+      '🔑 Receive your room key',
     ],
     difficulty: 'easy',
     estimatedMinutes: 5,
     bananaCost: 1,
     systemInstruction:
-      'You are Jamie, a friendly receptionist at the Grand London Hotel. The user just arrived after a long flight and wants to check in to a pre-booked room. Keep responses short (under 15 words). Guide them to give their name, provide passport details or receive a room key card, and ask about breakfast hours or hotel Wi-Fi.',
+      `${AI_LEAD} You are Jamie, a friendly receptionist at the Grand London Hotel. Guide check-in and booking confirmation, then hand over the room key. You may ask about passport, Wi-Fi, or breakfast yourself — do not require the learner to bring those up first.`,
     successCriteria: [
-      'stated_name_checkin',
-      'provided_passport_or_keycard',
-      'asked_breakfast_or_wifi',
-    ],
-    maxTurns: 8,
-  },
-  {
-    simulationId: 'movie_tickets_easy',
-    title: 'ซื้อตั๋วหนังและเลือกที่นั่ง',
-    missionNumber: 1,
-    missionTitleTh: 'ซื้อตั๋วหนังและเลือกที่นั่ง',
-    scenarioTh:
-      'เย็นวันเสาร์อันสดใส คุณอยากไปดูหนังเรื่องโปรดที่โรงภาพยนตร์ คุณต้องเดินไปที่ช่องขายตั๋วเพื่อซื้อตั๋วและเลือกทำเลที่นั่งที่ดีที่สุด',
-    goalsTh: [
-      'บอกชื่อภาพยนตร์และรอบเวลาที่ต้องการดู',
-      'ระบุจำนวนตั๋ว และเลือกโซนที่นั่ง (เช่น ตรงกลาง หรือแถวบนสุด)',
-      'พูดเลือกประเภทป็อปคอร์นหรือเครื่องดื่มที่ต้องการเพิ่ม',
-    ],
-    difficulty: 'easy',
-    estimatedMinutes: 5,
-    bananaCost: 1,
-    systemInstruction:
-      'You are Riley, a cheerful cinema ticket clerk on a bright Saturday evening. The user wants to buy movie tickets. Keep responses short (under 15 words). Guide them to name the movie and showtime, choose ticket quantity and seat zone, then add popcorn or drinks.',
-    successCriteria: [
-      'stated_movie_showtime',
-      'selected_tickets_seats',
-      'chosen_snacks_drinks',
-    ],
-    maxTurns: 8,
-  },
-  {
-    simulationId: 'pharmacy_easy',
-    title: 'ร้านขายยากับอาการป่วย',
-    missionNumber: 1,
-    missionTitleTh: 'ร้านขายยากับอาการป่วย',
-    scenarioTh:
-      'คุณรู้สึกปวดหัวและมีไข้ระหว่างทริปต่างประเทศ จึงเดินเข้าไปในร้านขายยาเพื่ออธิบายอาการป่วยให้เภสัชกรฟังและซื้อยากลับไปทาน',
-    goalsTh: [
-      'ทักทายและแจ้งเภสัชกรว่ารู้สึกไม่สบาย',
-      'อธิบายอาการป่วยของตัวเองให้ชัดเจน (เช่น เจ็บคอ ปวดหัว หรือมีไข้)',
-      'ถามวิธีและปริมาณในการทานยาที่ถูกต้อง (เช่น ทานก่อนหรือหลังอาหาร)',
-    ],
-    difficulty: 'easy',
-    estimatedMinutes: 5,
-    bananaCost: 1,
-    systemInstruction:
-      'You are Dr. Kim, a caring pharmacist at a clean neighborhood pharmacy. The user feels unwell while traveling abroad and needs medicine. Keep responses short (under 15 words). Guide them to greet you, describe symptoms clearly, and ask about correct dosage instructions such as before or after meals.',
-    successCriteria: [
-      'greeted_pharmacist',
-      'described_symptoms',
-      'asked_dosage_instructions',
-    ],
-    maxTurns: 8,
-  },
-  {
-    simulationId: 'restaurant_order_easy',
-    title: 'สั่งอาหารที่ร้านอาหาร',
-    missionNumber: 1,
-    missionTitleTh: 'สั่งอาหารมื้อเย็นที่ร้านอาหาร',
-    scenarioTh:
-      'คุณมาทานอาหารเย็นที่ร้านอาหารในเมือง กำลังนั่งดูเมนูและพนักงานเดินมารับออเดอร์',
-    goalsTh: [
-      'ทักทายและขอดูเมนูหรือแนะนำเมนูยอดนิยม',
-      'สั่งอาหารและเครื่องดื่มที่ต้องการ',
-      'ถามเรื่องส่วนผสมหรือแพ้อาหารก่อนสั่ง',
-    ],
-    difficulty: 'easy',
-    estimatedMinutes: 5,
-    bananaCost: 1,
-    systemInstruction:
-      'You are Mia, a friendly restaurant server. The user is ordering dinner. Keep responses short (under 15 words). Guide them to greet you, order food and drinks, and ask about ingredients or allergies.',
-    successCriteria: [
-      'greeted_server',
-      'ordered_food_drinks',
-      'asked_ingredients_allergies',
+      'checked_in',
+      'confirmed_booking',
+      'received_room_key',
     ],
     maxTurns: 8,
   },
   {
     simulationId: 'taxi_ride_easy',
     title: 'เรียกแท็กซี่ไปจุดหมาย',
-    missionNumber: 1,
+    missionNumber: 2,
     missionTitleTh: 'เรียกแท็กซี่ไปจุดหมาย',
     scenarioTh:
       'คุณยืนรอแท็กซี่ข้างถนนในเมืองใหญ่ และต้องการไปสถานที่ที่จองไว้',
     goalsTh: [
-      'บอกคนขับว่าต้องการไปที่ไหน',
-      'ถามเรื่องเวลาเดินทางโดยประมาณหรือค่าโดยสาร',
-      'ยืนยันจุดหมายก่อนลงจากรถ',
+      '📍 Tell the driver your destination',
+      '🚕 Confirm your trip details',
+      '💳 Complete the ride',
     ],
     difficulty: 'easy',
     estimatedMinutes: 5,
     bananaCost: 1,
     systemInstruction:
-      'You are Carlos, a taxi driver in a busy city. The user needs a ride to their destination. Keep responses short (under 15 words). Guide them to state their destination, ask about fare or ETA, and confirm arrival.',
+      `${AI_LEAD} You are Carlos, a taxi driver. Lead with questions like: "Where are you going?" "Cash or card?" "Is this the correct destination?" Guide them to state destination, confirm trip details, and complete the ride.`,
     successCriteria: [
       'stated_destination',
-      'asked_fare_or_eta',
-      'confirmed_arrival',
+      'confirmed_trip_details',
+      'completed_ride',
     ],
     maxTurns: 8,
   },
   {
     simulationId: 'airport_checkin_easy',
     title: 'เช็กอินที่สนามบิน',
-    missionNumber: 1,
+    missionNumber: 3,
     missionTitleTh: 'เช็กอินที่สนามบิน',
     scenarioTh:
       'คุณมาถึงสนามบินก่อนเวลาบิน และต้องเช็กอินที่เคาน์เตอร์สายการบิน',
     goalsTh: [
-      'แจ้งว่าต้องการเช็กอินและบอกหมายเลขเที่ยวบิน',
-      'ส่งมอบพาสปอร์ตหรือเอกสารที่จำเป็น',
-      'ถามเรื่องเกตขึ้นเครื่องหรือน้ำหนักสัมภาระ',
+      '🛫 Check in for your flight',
+      '🪪 Confirm your travel documents',
+      '🎫 Receive your boarding pass',
     ],
     difficulty: 'easy',
     estimatedMinutes: 5,
     bananaCost: 1,
     systemInstruction:
-      'You are Nina, an airline check-in agent at the airport. The user needs to check in for their flight. Keep responses short (under 15 words). Guide them to provide flight details, hand over documents, and ask about gate or baggage.',
+      `${AI_LEAD} You are Nina, an airline check-in agent. Guide flight check-in, travel documents, then give the boarding pass. You may ask about baggage, gate, or seat yourself — do not require the learner to raise those topics first.`,
     successCriteria: [
-      'stated_flight_checkin',
-      'provided_documents',
-      'asked_gate_or_baggage',
-    ],
-    maxTurns: 8,
-  },
-  {
-    simulationId: 'business_phone_easy',
-    title: 'โทรศัพท์ธุรกิจ',
-    missionNumber: 1,
-    missionTitleTh: 'โทรศัพท์ธุรกิจ',
-    scenarioTh:
-      'คุณต้องโทรติดต่อลูกค้าเพื่อแจ้งความคืบหน้าโปรเจกต์และนัดหมายครั้งถัดไป',
-    goalsTh: [
-      'แนะนำตัวและบอกจุดประสงค์ของการโทร',
-      'สรุปความคืบหน้าโปรเจกต์อย่างกระชับ',
-      'นัดเวลาพูดคุยหรือส่งเอกสารเพิ่มเติม',
-    ],
-    difficulty: 'easy',
-    estimatedMinutes: 5,
-    bananaCost: 1,
-    systemInstruction:
-      'You are Taylor, a business client on a phone call. The user is calling with a project update. Keep responses short (under 15 words). Guide them to introduce themselves, summarize progress, and schedule a follow-up.',
-    successCriteria: [
-      'introduced_purpose',
-      'summarized_progress',
-      'scheduled_followup',
+      'checked_in_flight',
+      'confirmed_documents',
+      'received_boarding_pass',
     ],
     maxTurns: 8,
   },
@@ -240,15 +171,15 @@ export const SIMULATIONS: SimulationConfig[] = [
     scenarioTh:
       'คุณมาถึงออฟฟิศลูกค้าเพื่อพบปะครั้งแรกและนำเสนอตัวเอง',
     goalsTh: [
-      'ทักทายและแนะนำตัวอย่างสุภาพ',
-      'ถามเรื่องความต้องการหรือเป้าหมายของลูกค้า',
-      'เสนอขั้นตอนถัดไปหรือนัดเวลาพูดคุยต่อ',
+      '👋 Introduce yourself',
+      "💬 Discuss the client's needs",
+      '🤝 Agree on the next step',
     ],
     difficulty: 'easy',
     estimatedMinutes: 5,
     bananaCost: 1,
     systemInstruction:
-      'You are Jordan, a potential client meeting the user for the first time. Keep responses short (under 15 words). Guide them to introduce themselves, ask about needs, and propose next steps.',
+      `${AI_LEAD} You are Jordan, a potential client meeting the learner for the first time. Warmly invite an introduction, ask about needs with simple questions, then guide them to agree on a clear next step.`,
     successCriteria: [
       'introduced_self',
       'asked_client_needs',
@@ -257,22 +188,94 @@ export const SIMULATIONS: SimulationConfig[] = [
     maxTurns: 8,
   },
   {
-    simulationId: 'doctor_visit_easy',
-    title: 'พบแพทย์เมื่อป่วย',
-    missionNumber: 1,
-    missionTitleTh: 'พบแพทย์เมื่อป่วย',
+    simulationId: 'business_meeting_easy',
+    title: 'นัดหมายเวลาประชุม',
+    missionNumber: 2,
+    missionTitleTh: 'นัดหมายเวลาประชุม',
     scenarioTh:
-      'คุณรู้สึกไม่สบายและมาพบแพทย์ที่คลินิกในต่างประเทศ',
+      'คุณต้องโทรศัพท์ไปหาพาร์ทเนอร์ชาวต่างชาติเพื่อขอนัดหมายเวลาคุยโปรเจกต์ใหม่ โดยเป้าหมายคือต้องหาวันและเวลาที่ลงตัวตรงกันให้ได้',
     goalsTh: [
-      'อธิบายอาการที่รู้สึกอยู่',
-      'ตอบคำถามของแพทย์เกี่ยวกับอาการ',
-      'ถามวิธีรักษาและข้อควรระวัง',
+      '📅 Suggest a meeting time',
+      '🤝 Agree on a schedule',
+      '✅ Confirm the meeting',
     ],
     difficulty: 'easy',
     estimatedMinutes: 5,
     bananaCost: 1,
     systemInstruction:
-      'You are Dr. Lee, a clinic doctor. The user feels unwell and came for a visit. Keep responses short (under 15 words). Guide them to describe symptoms, answer follow-up questions, and ask about treatment.',
+      `${AI_LEAD} You are Alex, a busy international business partner on a call. Prompt them to suggest a meeting time, negotiate until you both agree, then confirm the final schedule before ending.`,
+    successCriteria: [
+      'suggested_meeting_time',
+      'agreed_schedule',
+      'confirmed_meeting',
+    ],
+    maxTurns: 8,
+  },
+  {
+    simulationId: 'business_phone_easy',
+    title: 'โทรศัพท์ธุรกิจ',
+    missionNumber: 3,
+    missionTitleTh: 'โทรศัพท์ธุรกิจ',
+    scenarioTh:
+      'คุณต้องโทรติดต่อลูกค้าเพื่อแจ้งความคืบหน้าโปรเจกต์และนัดหมายครั้งถัดไป',
+    goalsTh: [
+      '☎️ Introduce yourself',
+      '📈 Give a project update',
+      '📅 Arrange a follow-up',
+    ],
+    difficulty: 'easy',
+    estimatedMinutes: 5,
+    bananaCost: 1,
+    systemInstruction:
+      `${AI_LEAD} You are Taylor, a business client on a phone call. Ask them to introduce themselves, invite a short project update, then help arrange a follow-up. Keep the call structured and easy.`,
+    successCriteria: [
+      'introduced_purpose',
+      'summarized_progress',
+      'scheduled_followup',
+    ],
+    maxTurns: 8,
+  },
+  {
+    simulationId: 'pharmacy_easy',
+    title: 'ร้านขายยากับอาการป่วย',
+    missionNumber: 1,
+    missionTitleTh: 'ร้านขายยากับอาการป่วย',
+    scenarioTh:
+      'คุณรู้สึกปวดหัวและมีไข้ระหว่างทริปต่างประเทศ จึงเดินเข้าไปในร้านขายยาเพื่ออธิบายอาการป่วยให้เภสัชกรฟังและซื้อยากลับไปทาน',
+    goalsTh: [
+      '🤒 Describe your symptoms',
+      '💊 Get the right medicine',
+      '📋 Understand how to take it',
+    ],
+    difficulty: 'easy',
+    estimatedMinutes: 5,
+    bananaCost: 1,
+    systemInstruction:
+      `${AI_LEAD} You are Dr. Kim, a caring pharmacist. Ask what is wrong, recommend simple medicine, then explain how to take it (e.g. before or after meals).`,
+    successCriteria: [
+      'described_symptoms',
+      'got_medicine',
+      'understood_dosage',
+    ],
+    maxTurns: 8,
+  },
+  {
+    simulationId: 'doctor_visit_easy',
+    title: 'พบแพทย์เมื่อป่วย',
+    missionNumber: 2,
+    missionTitleTh: 'พบแพทย์เมื่อป่วย',
+    scenarioTh:
+      'คุณรู้สึกไม่สบายและมาพบแพทย์ที่คลินิกในต่างประเทศ',
+    goalsTh: [
+      '🤕 Describe your symptoms',
+      "💬 Answer the doctor's questions",
+      '💡 Understand the treatment',
+    ],
+    difficulty: 'easy',
+    estimatedMinutes: 5,
+    bananaCost: 1,
+    systemInstruction:
+      `${AI_LEAD} You are Dr. Lee at a clinic. Ask about symptoms, follow up with easy questions, then clearly explain the treatment.`,
     successCriteria: [
       'described_symptoms',
       'answered_followup',
@@ -283,24 +286,24 @@ export const SIMULATIONS: SimulationConfig[] = [
   {
     simulationId: 'ask_help_easy',
     title: 'ขอความช่วยเหลือฉุกเฉิน',
-    missionNumber: 1,
+    missionNumber: 3,
     missionTitleTh: 'ขอความช่วยเหลือฉุกเฉิน',
     scenarioTh:
       'คุณเจอสถานการณ์ฉุกเฉินในต่างประเทศและต้องขอความช่วยเหลือจากคนรอบข้าง',
     goalsTh: [
-      'บอกว่าต้องการความช่วยเหลือ',
-      'อธิบายปัญหาที่เกิดขึ้นอย่างชัดเจน',
-      'ถามว่าควรทำอย่างไรหรือโทรหาใคร',
+      '🆘 Explain your situation',
+      '📍 Share the important details',
+      '✅ Get the help you need',
     ],
     difficulty: 'easy',
     estimatedMinutes: 5,
     bananaCost: 1,
     systemInstruction:
-      'You are Chris, a helpful local passerby. The user needs emergency help. Keep responses short (under 15 words). Guide them to ask for help, explain the problem clearly, and ask what to do next.',
+      `${AI_LEAD} You are Chris, a helpful local passerby. Calmly ask what happened, prompt for important details, then offer clear next steps so they get the help they need.`,
     successCriteria: [
-      'asked_for_help',
-      'explained_problem',
-      'asked_next_action',
+      'explained_situation',
+      'shared_details',
+      'got_help',
     ],
     maxTurns: 8,
   },
