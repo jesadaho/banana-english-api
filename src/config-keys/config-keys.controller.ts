@@ -19,12 +19,10 @@ export class ConfigKeysController {
   @Get('app')
   getAppConfig() {
     const groqApiKey = this.config.get<string>('GROQ_API_KEY');
-    // Default to client-direct Gemini TTS: streaming via the BE proxy caused
-    // choppy playback on Android, so the client now talks to Gemini directly.
-    const defaultTtsMode =
-      this.config.get<string>('DEFAULT_TTS_MODE', 'client') === 'server'
-        ? 'server'
-        : 'client';
+    const ttsEnv = this.config.get<string>('DEFAULT_TTS_MODE', 'device');
+    const defaultTtsMode = ['client', 'server', 'device'].includes(ttsEnv)
+      ? ttsEnv
+      : 'device';
 
     const geminiApiKey = this.config.get<string>('GEMINI_API_KEY');
     const geminiTtsModel = this.config.get<string>(
