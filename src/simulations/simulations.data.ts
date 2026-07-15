@@ -1,5 +1,11 @@
 export type SimulationDifficulty = 'easy' | 'medium' | 'hard';
 
+export interface VocabDrillWord {
+  word: string;
+  pronunciation: string;
+  meaningTh: string;
+}
+
 export interface SimulationConfig {
   simulationId: string;
   title: string;
@@ -14,6 +20,7 @@ export interface SimulationConfig {
   systemInstruction: string;
   successCriteria: string[];
   maxTurns: number;
+  vocabDrill: VocabDrillWord[];
 }
 
 const AI_LEAD =
@@ -48,6 +55,13 @@ export const SIMULATIONS: SimulationConfig[] = [
       'payment_completed',
     ],
     maxTurns: 8,
+    vocabDrill: [
+      { word: 'Latte', pronunciation: 'ลา-เท', meaningTh: 'กาแฟลาเต้' },
+      { word: 'Espresso', pronunciation: 'เอส-เพรส-โซ', meaningTh: 'กาแฟเอสเพรสโซ' },
+      { word: 'Iced', pronunciation: 'ไอซด์', meaningTh: 'เย็น / แบบเย็น' },
+      { word: 'Receipt', pronunciation: 'ริ-ซีท', meaningTh: 'ใบเสร็จ' },
+      { word: 'Sugar', pronunciation: 'ชู-เกอร์', meaningTh: 'น้ำตาล' },
+    ],
   },
   {
     simulationId: 'restaurant_order_easy',
@@ -77,6 +91,13 @@ export const SIMULATIONS: SimulationConfig[] = [
       'confirmed_order',
     ],
     maxTurns: 8,
+    vocabDrill: [
+      { word: 'Appetizer', pronunciation: 'แอพ-พิ-ไท-เซอร์', meaningTh: 'อาหารเรียกน้ำย่อย' },
+      { word: 'Beverage', pronunciation: 'เบฟ-เวอ-ริจ', meaningTh: 'เครื่องดื่ม' },
+      { word: 'Medium rare', pronunciation: 'มี-เดียม-แรร์', meaningTh: 'สุกปานกลางค่อนดิบ' },
+      { word: 'Allergic', pronunciation: 'อะ-เลอร์-จิก', meaningTh: 'แพ้ (อาหาร)' },
+      { word: 'Bill', pronunciation: 'บิล', meaningTh: 'บิล / ใบเสร็จค่าอาหาร' },
+    ],
   },
   {
     simulationId: 'movie_tickets_easy',
@@ -106,6 +127,13 @@ export const SIMULATIONS: SimulationConfig[] = [
       'chosen_snacks_drinks',
     ],
     maxTurns: 8,
+    vocabDrill: [
+      { word: 'Showtime', pronunciation: 'โชว์-ไทม์', meaningTh: 'รอบฉาย' },
+      { word: 'Subtitles', pronunciation: 'ซับ-ไท-เทิลส์', meaningTh: 'คำบรรยาย' },
+      { word: 'Aisle', pronunciation: 'ไอล์', meaningTh: 'ที่นั่งริมทางเดิน' },
+      { word: 'Popcorn', pronunciation: 'พ็อป-คอร์น', meaningTh: 'ป็อปคอร์น' },
+      { word: 'Screen', pronunciation: 'สกรีน', meaningTh: 'จอภาพยนตร์' },
+    ],
   },
   {
     simulationId: 'hotel_checkin_easy',
@@ -135,6 +163,13 @@ export const SIMULATIONS: SimulationConfig[] = [
       'received_room_key',
     ],
     maxTurns: 8,
+    vocabDrill: [
+      { word: 'Reservation', pronunciation: 'เร-เซอร์-เว-ชั่น', meaningTh: 'การจองห้องพัก' },
+      { word: 'Check-in', pronunciation: 'เช็ค-อิน', meaningTh: 'เช็กอิน' },
+      { word: 'Lobby', pronunciation: 'ล็อบ-บี้', meaningTh: 'ล็อบบี้โรงแรม' },
+      { word: 'Passport', pronunciation: 'พาส-พอร์ท', meaningTh: 'หนังสือเดินทาง' },
+      { word: 'Key card', pronunciation: 'คีย์-การ์ด', meaningTh: 'คีย์การ์ด / กุญแจห้อง' },
+    ],
   },
   {
     simulationId: 'taxi_ride_easy',
@@ -164,6 +199,13 @@ export const SIMULATIONS: SimulationConfig[] = [
       'completed_ride',
     ],
     maxTurns: 8,
+    vocabDrill: [
+      { word: 'Destination', pronunciation: 'เดส-ทิ-เน-ชั่น', meaningTh: 'จุดหมายปลายทาง' },
+      { word: 'Fare', pronunciation: 'แฟร์', meaningTh: 'ค่าโดยสาร' },
+      { word: 'Meter', pronunciation: 'มี-เทอร์', meaningTh: 'มิเตอร์แท็กซี่' },
+      { word: 'Intersection', pronunciation: 'อิน-เทอร์-เซ็ก-ชั่น', meaningTh: 'สี่แยก / ทางแยก' },
+      { word: 'Drop off', pronunciation: 'ดร็อป-ออฟ', meaningTh: 'จุดส่ง / ลงรถ' },
+    ],
   },
   {
     simulationId: 'airport_checkin_easy',
@@ -193,6 +235,13 @@ export const SIMULATIONS: SimulationConfig[] = [
       'received_boarding_pass',
     ],
     maxTurns: 8,
+    vocabDrill: [
+      { word: 'Boarding pass', pronunciation: 'บอร์-ดิ้ง-พาส', meaningTh: 'บัตรขึ้นเครื่อง' },
+      { word: 'Luggage', pronunciation: 'ลัก-กิจ', meaningTh: 'กระเป๋าเดินทาง' },
+      { word: 'Gate', pronunciation: 'เกท', meaningTh: 'ประตูขึ้นเครื่อง' },
+      { word: 'Departure', pronunciation: 'ดิ-พาร์-เชอร์', meaningTh: 'ขาออก' },
+      { word: 'Window seat', pronunciation: 'วิน-โดว์-ซีท', meaningTh: 'ที่นั่งริมหน้าต่าง' },
+    ],
   },
   {
     simulationId: 'meet_client_easy',
@@ -222,6 +271,13 @@ export const SIMULATIONS: SimulationConfig[] = [
       'proposed_next_steps',
     ],
     maxTurns: 8,
+    vocabDrill: [
+      { word: 'Pleasure', pronunciation: 'เพลช-เชอร์', meaningTh: 'ความยินดี' },
+      { word: 'Proposal', pronunciation: 'โพร-โพ-ซัล', meaningTh: 'ข้อเสนอ' },
+      { word: 'Budget', pronunciation: 'บัด-เจ็ท', meaningTh: 'งบประมาณ' },
+      { word: 'Timeline', pronunciation: 'ไทม์-ไลน์', meaningTh: 'ไทม์ไลน์ / กำหนดการ' },
+      { word: 'Follow up', pronunciation: 'ฟอล-โลว์-อัพ', meaningTh: 'ติดตามผล' },
+    ],
   },
   {
     simulationId: 'business_meeting_easy',
@@ -251,6 +307,13 @@ export const SIMULATIONS: SimulationConfig[] = [
       'confirmed_meeting',
     ],
     maxTurns: 8,
+    vocabDrill: [
+      { word: 'Schedule', pronunciation: 'สเก็ด-จูล', meaningTh: 'ตารางเวลา' },
+      { word: 'Available', pronunciation: 'อะ-เว-ละ-เบิ้ล', meaningTh: 'ว่าง / สะดวก' },
+      { word: 'Reschedule', pronunciation: 'รี-สเก็ด-จูล', meaningTh: 'เลื่อนนัด' },
+      { word: 'Confirm', pronunciation: 'คอน-เฟิร์ม', meaningTh: 'ยืนยัน' },
+      { word: 'Agenda', pronunciation: 'อะ-เจน-ด้า', meaningTh: 'วาระการประชุม' },
+    ],
   },
   {
     simulationId: 'business_phone_easy',
@@ -280,6 +343,13 @@ export const SIMULATIONS: SimulationConfig[] = [
       'scheduled_followup',
     ],
     maxTurns: 8,
+    vocabDrill: [
+      { word: 'Update', pronunciation: 'อัพ-เดท', meaningTh: 'อัปเดต / แจ้งความคืบหน้า' },
+      { word: 'Deadline', pronunciation: 'เด็ด-ไลน์', meaningTh: 'กำหนดส่ง' },
+      { word: 'Progress', pronunciation: 'โพร-เกรส', meaningTh: 'ความคืบหน้า' },
+      { word: 'Deliverable', pronunciation: 'ดิ-ลิ-เวอ-ระ-เบิ้ล', meaningTh: 'สิ่งที่ต้องส่งมอบ' },
+      { word: 'Stakeholder', pronunciation: 'สเตก-โฮล-เดอร์', meaningTh: 'ผู้มีส่วนได้ส่วนเสีย' },
+    ],
   },
   {
     simulationId: 'pharmacy_easy',
@@ -309,6 +379,13 @@ export const SIMULATIONS: SimulationConfig[] = [
       'understood_dosage',
     ],
     maxTurns: 8,
+    vocabDrill: [
+      { word: 'Headache', pronunciation: 'เฮด-เอค', meaningTh: 'ปวดหัว' },
+      { word: 'Fever', pronunciation: 'ฟี-เวอร์', meaningTh: 'มีไข้' },
+      { word: 'Prescription', pronunciation: 'พรี-สคริป-ชั่น', meaningTh: 'ใบสั่งยา' },
+      { word: 'Dosage', pronunciation: 'โด-เสจ', meaningTh: 'ขนาดยา / ปริมาณยา' },
+      { word: 'Symptom', pronunciation: 'ซิมพ์-ทัม', meaningTh: 'อาการ' },
+    ],
   },
   {
     simulationId: 'doctor_visit_easy',
@@ -338,6 +415,13 @@ export const SIMULATIONS: SimulationConfig[] = [
       'asked_treatment_advice',
     ],
     maxTurns: 8,
+    vocabDrill: [
+      { word: 'Appointment', pronunciation: 'อะ-พ้อยท์-เม้นท์', meaningTh: 'การนัดพบแพทย์' },
+      { word: 'Diagnosis', pronunciation: 'ได-แอ็ก-โน-ซิส', meaningTh: 'การวินิจฉัย' },
+      { word: 'Medicine', pronunciation: 'เมด-ดิ-ซิน', meaningTh: 'ยา' },
+      { word: 'Sore throat', pronunciation: 'ซอร์-โธรท', meaningTh: 'เจ็บคอ' },
+      { word: 'Treatment', pronunciation: 'ทรีท-เม้นท์', meaningTh: 'การรักษา' },
+    ],
   },
   {
     simulationId: 'ask_help_easy',
@@ -367,6 +451,13 @@ export const SIMULATIONS: SimulationConfig[] = [
       'got_help',
     ],
     maxTurns: 8,
+    vocabDrill: [
+      { word: 'Emergency', pronunciation: 'อิ-เมอร์-เจน-ซี่', meaningTh: 'เหตุฉุกเฉิน' },
+      { word: 'Ambulance', pronunciation: 'แอม-บิว-แลนซ์', meaningTh: 'รถพยาบาล' },
+      { word: 'Police', pronunciation: 'โพ-ลีส', meaningTh: 'ตำรวจ' },
+      { word: 'Stolen', pronunciation: 'สโต-เลน', meaningTh: 'ถูกขโมย' },
+      { word: 'Embassy', pronunciation: 'เอ็ม-บะ-ซี่', meaningTh: 'สถานทูต' },
+    ],
   },
 ];
 
