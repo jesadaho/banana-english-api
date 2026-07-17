@@ -130,7 +130,7 @@ export const SIMULATIONS: SimulationConfig[] = [
     vocabDrill: [
       { word: 'Showtime', pronunciation: 'โชว์-ไทม์', meaningTh: 'รอบฉาย' },
       { word: 'Subtitles', pronunciation: 'ซับ-ไท-เทิลส์', meaningTh: 'คำบรรยาย' },
-      { word: 'Aisle', pronunciation: 'ไอล์', meaningTh: 'ที่นั่งริมทางเดิน' },
+      { word: 'Seat', pronunciation: 'ซีท', meaningTh: 'ที่นั่ง' },
       { word: 'Popcorn', pronunciation: 'พ็อป-คอร์น', meaningTh: 'ป็อปคอร์น' },
       { word: 'Screen', pronunciation: 'สกรีน', meaningTh: 'จอภาพยนตร์' },
     ],
