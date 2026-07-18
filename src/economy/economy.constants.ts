@@ -23,6 +23,11 @@ export const ONBOARDING_BANANA_BONUS = 2;
 export const DAILY_BANANA_DROP = 1;
 export const DEBUG_BANANA_REFILL = 2;
 
+/** Env keys — defaults above apply when unset / invalid. */
+export const ENV_ONBOARDING_BANANA_BONUS = 'ONBOARDING_BANANA_BONUS';
+export const ENV_DAILY_BANANA_DROP = 'DAILY_BANANA_DROP';
+export const ENV_DEBUG_BANANA_REFILL = 'DEBUG_BANANA_REFILL';
+
 export function getMissionReward(score: number): MissionRewardTier {
   const clamped = Math.max(0, Math.min(100, score));
   for (const tier of MISSION_REWARD_TIERS) {

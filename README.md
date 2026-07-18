@@ -35,6 +35,8 @@ Server runs at `http://localhost:8000`.
 | `PORT` | Server port (default `8000`) |
 | `CORS_ORIGINS` | Comma-separated allowed origins |
 | `SESSION_DURATION_SECONDS` | Max session length (default `300`) |
+| `ONBOARDING_BANANA_BONUS` | Bananas granted on onboarding complete (default `2`) |
+| `DAILY_BANANA_DROP` | Bananas granted by daily drop after 08:00 local (default `1`) |
 
 ## Endpoints
 
@@ -64,6 +66,8 @@ Server runs at `http://localhost:8000`.
    | `GROQ_API_KEY` | `gsk_...` |
    | `CORS_ORIGINS` | `http://localhost:8080,https://your-app.web.app` |
    | `SESSION_DURATION_SECONDS` | `300` |
+   | `ONBOARDING_BANANA_BONUS` | `2` (optional) |
+   | `DAILY_BANANA_DROP` | `1` (optional) |
 
    `PORT` is injected by Railway automatically — do not set it manually.
 

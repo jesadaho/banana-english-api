@@ -1,9 +1,13 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { Currency, Prisma, User } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import {
   DAILY_BANANA_DROP,
   DEBUG_BANANA_REFILL,
+  ENV_DAILY_BANANA_DROP,
+  ENV_DEBUG_BANANA_REFILL,
+  ENV_ONBOARDING_BANANA_BONUS,
   ONBOARDING_BANANA_BONUS,
   STREAK_MILESTONES,
   getMissionReward,
@@ -39,9 +43,37 @@ export interface SessionRewardResult {
 
 @Injectable()
 export class EconomyService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly config: ConfigService,
+  ) {}
+
+  private envInt(key: string, fallback: number): number {
+    const raw = this.config.get<string>(key);
+    if (raw == null || raw.trim() === '') {
+      return fallback;
+    }
+    const parsed = Number.parseInt(raw, 10);
+    if (!Number.isFinite(parsed) || parsed < 0) {
+      return fallback;
+    }
+    return parsed;
+  }
+
+  private onboardingBananaBonus(): number {
+    return this.envInt(ENV_ONBOARDING_BANANA_BONUS, ONBOARDING_BANANA_BONUS);
+  }
+
+  private dailyBananaDrop(): number {
+    return this.envInt(ENV_DAILY_BANANA_DROP, DAILY_BANANA_DROP);
+  }
+
+  private debugBananaRefill(): number {
+    return this.envInt(ENV_DEBUG_BANANA_REFILL, DEBUG_BANANA_REFILL);
+  }
 
   async creditOnboardingBonus(userId: string): Promise<User> {
+    const bonus = this.onboardingBananaBonus();
     return this.prisma.$transaction(async (tx) => {
       const user = await tx.user.findUniqueOrThrow({ where: { id: userId } });
       const existingBonus = await tx.economyTransaction.findFirst({
@@ -62,7 +94,7 @@ export class EconomyService {
       await this.recordTransaction(tx, {
         userId,
         currency: Currency.BANANA,
-        amount: ONBOARDING_BANANA_BONUS,
+        amount: bonus,
         source: 'onboarding_bonus',
       });
 
@@ -70,7 +102,7 @@ export class EconomyService {
         where: { id: userId },
         data: {
           onboardingCompleted: true,
-          bananaBalance: { increment: ONBOARDING_BANANA_BONUS },
+          bananaBalance: { increment: bonus },
         },
       });
     });
@@ -101,6 +133,7 @@ export class EconomyService {
       return user;
     }
 
+    const drop = this.dailyBananaDrop();
     return this.prisma.$transaction(async (tx) => {
       const fresh = await tx.user.findUniqueOrThrow({ where: { id: user.id } });
       if (isSameDateKey(fresh.lastDailyBananaDate, local.dateKey)) {
@@ -110,32 +143,33 @@ export class EconomyService {
       await this.recordTransaction(tx, {
         userId: user.id,
         currency: Currency.BANANA,
-        amount: DAILY_BANANA_DROP,
+        amount: drop,
         source: 'daily_drop',
       });
 
       return tx.user.update({
         where: { id: user.id },
         data: {
-          bananaBalance: { increment: DAILY_BANANA_DROP },
+          bananaBalance: { increment: drop },
           lastDailyBananaDate: parseDateKey(local.dateKey),
         },
       });
     });
   }
 
-  async creditDebugBananas(userId: string, amount = DEBUG_BANANA_REFILL): Promise<User> {
+  async creditDebugBananas(userId: string, amount?: number): Promise<User> {
+    const credit = amount ?? this.debugBananaRefill();
     return this.prisma.$transaction(async (tx) => {
       await this.recordTransaction(tx, {
         userId,
         currency: Currency.BANANA,
-        amount,
+        amount: credit,
         source: 'debug_refill',
       });
 
       return tx.user.update({
         where: { id: userId },
-        data: { bananaBalance: { increment: amount } },
+        data: { bananaBalance: { increment: credit } },
       });
     });
   }
