@@ -10,6 +10,8 @@ export interface ChatTurn {
   textEn: string;
   textTh?: string | null;
   audioUrl?: string | null;
+  /** Raw learner utterance before Thai Mix (user turns only). */
+  originalTextEn?: string | null;
 }
 
 export interface ConversationSession {

@@ -88,6 +88,8 @@ export interface StoredChatTurn {
   speaker: 'user' | 'ai';
   textEn: string;
   textTh?: string | null;
+  /** Raw STT / spoken text before Thai Mix. Null when identical or legacy. */
+  originalTextEn?: string | null;
   feedback?: TurnFeedback | null;
 }
 

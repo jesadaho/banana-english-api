@@ -42,6 +42,7 @@ type StoredReportJson = {
     speaker: 'user' | 'ai';
     textEn: string;
     textTh?: string | null;
+    originalTextEn?: string | null;
     feedback?: {
       status: 'great' | 'good' | 'needs_improvement';
       headlineTh: string;

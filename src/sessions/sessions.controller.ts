@@ -237,19 +237,21 @@ export class SessionsController {
       );
     }
 
-    let userText = (body.userSpeechText ?? body.transcript ?? '').trim();
-    if (!userText) {
+    let originalText = (body.userSpeechText ?? body.transcript ?? '').trim();
+    if (!originalText) {
       throw new BadRequestException('userSpeechText is required');
     }
 
+    let userText = originalText;
     try {
       if (body.thaiMixEnabled) {
-        userText = await this.chat.correctThaiMix(userText);
+        userText = await this.chat.correctThaiMix(originalText);
       }
 
       this.sessionStore.addTurn(sessionId, {
         speaker: 'user',
         textEn: userText,
+        originalTextEn: originalText,
       });
 
       const nextTurn = expectedTurn + 1;
@@ -334,19 +336,21 @@ export class SessionsController {
   ) {
     const data = this.sessionStore.get(sessionId)!;
 
-    let userText = (body.transcript ?? body.userSpeechText ?? '').trim();
-    if (!userText) {
+    let originalText = (body.transcript ?? body.userSpeechText ?? '').trim();
+    if (!originalText) {
       throw new BadRequestException('transcript is required');
     }
 
+    let userText = originalText;
     try {
       if (body.thaiMixEnabled) {
-        userText = await this.chat.correctThaiMix(userText);
+        userText = await this.chat.correctThaiMix(originalText);
       }
 
       this.sessionStore.addTurn(sessionId, {
         speaker: 'user',
         textEn: userText,
+        originalTextEn: originalText,
       });
 
       const userTurnCount = data.turns.filter(
@@ -725,6 +729,9 @@ function mergeTurnsWithFeedback(
       textTh: t.textTh ?? null,
     };
     if (t.speaker !== 'user') return base;
+
+    base.originalTextEn = t.originalTextEn ?? t.textEn;
+
     const fb = byIndex.get(userIdx++);
     if (!fb || !fb.headlineTh.trim()) return base;
     return {

@@ -733,7 +733,8 @@ Payment closure (critical — no tap UI exists):
       .join('\n');
   }
 
-  /** Number learner turns so turnFeedback.userTurnIndex aligns. */
+  /** Number learner turns so turnFeedback.userTurnIndex aligns.
+   * Prefer original spoken text so coaching reflects what the learner said. */
   private formatHistoryForReport(history: ChatTurn[]): string {
     if (history.length === 0) return '(no conversation yet)';
     let learnerIndex = 0;
@@ -743,7 +744,8 @@ Payment closure (critical — no tap UI exists):
           return `Teacher B: ${turn.textEn}`;
         }
         const index = learnerIndex++;
-        return `[Learner #${index}]: ${turn.textEn}`;
+        const spoken = turn.originalTextEn?.trim() || turn.textEn;
+        return `[Learner #${index}]: ${spoken}`;
       })
       .join('\n');
   }
