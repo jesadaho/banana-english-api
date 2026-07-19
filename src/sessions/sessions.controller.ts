@@ -532,30 +532,36 @@ export class SessionsController {
         const series = getSeriesForSimulation(config.simulationId);
 
         if (userSession && userSession.userId === req.user.id) {
-          await this.prisma.userSession.update({
-            where: { id: sessionId },
-            data: {
-              completedAt: userSession.completedAt ?? ended,
-              overallScore,
-              scoreLabel,
-              xpEarned,
-              seedsEarned,
-              durationSeconds: duration,
-              reportJson: {
-                feedbackEn: report.feedbackEn,
-                feedbackTh: report.feedbackTh,
-                bestSentenceEn: report.bestSentenceEn,
-                bestSentenceNoteTh: report.bestSentenceNoteTh,
-                grammarTip: report.grammarTip,
-                grammarTipTh: report.grammarTipTh,
-                pronunciationIssues: report.pronunciationIssues,
-                vocab: report.vocab,
-                missionTitleTh: config.missionTitleTh,
-                topicId: config.simulationId,
-                checkpointSummary: checkpoints,
+          try {
+            await this.prisma.userSession.update({
+              where: { id: sessionId },
+              data: {
+                completedAt: userSession.completedAt ?? ended,
+                overallScore,
+                scoreLabel,
+                xpEarned,
+                seedsEarned,
+                durationSeconds: duration,
+                reportJson: {
+                  feedbackEn: report.feedbackEn,
+                  feedbackTh: report.feedbackTh,
+                  bestSentenceEn: report.bestSentenceEn,
+                  bestSentenceNoteTh: report.bestSentenceNoteTh,
+                  grammarTip: report.grammarTip,
+                  grammarTipTh: report.grammarTipTh,
+                  pronunciationIssues: report.pronunciationIssues,
+                  vocab: report.vocab,
+                  missionTitleTh: config.missionTitleTh,
+                  topicId: config.simulationId,
+                  checkpointSummary: checkpoints,
+                },
               },
-            },
-          });
+            });
+          } catch (persistErr) {
+            // Rewards may already be applied; don't fail the result screen
+            // if report persistence fails (e.g. pending migration).
+            console.error('Failed to persist session report', persistErr);
+          }
         }
 
         return {

@@ -306,7 +306,14 @@ export class EconomyService {
 
       await tx.userSession.update({
         where: { id: sessionId },
-        data: { rewardsApplied: true },
+        data: {
+          rewardsApplied: true,
+          completedAt: new Date(),
+          overallScore,
+          scoreLabel: reward.ratingLabel,
+          xpEarned,
+          seedsEarned,
+        },
       });
 
       return {

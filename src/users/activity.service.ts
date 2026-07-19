@@ -47,17 +47,21 @@ export class ActivityService {
   toActivityItem(session: {
     id: string;
     simulationId: string | null;
+    createdAt?: Date;
     completedAt: Date | null;
     overallScore: number | null;
     scoreLabel: string | null;
     xpEarned: number | null;
     seedsEarned: number | null;
   }): ActivityItemResponse | null {
-    if (!session.simulationId || !session.completedAt) return null;
+    if (!session.simulationId) return null;
 
     const simulation = getSimulation(session.simulationId);
     const series = getSeriesForSimulation(session.simulationId);
     if (!simulation || !series) return null;
+
+    const completedAt = session.completedAt ?? session.createdAt ?? null;
+    if (!completedAt) return null;
 
     const score = session.overallScore ?? 0;
     return {
@@ -71,7 +75,7 @@ export class ActivityService {
         simulation.missionTitleTh,
       titleTh: simulation.missionTitleTh,
       coverImage: series.coverImage,
-      completedAt: session.completedAt.toISOString(),
+      completedAt: completedAt.toISOString(),
       overallScore: score,
       scoreLabel: session.scoreLabel ?? '',
       starRating: getStarRating(score),
@@ -106,26 +110,39 @@ export class ActivityService {
       const dayStart = new Date(`${options.date}T00:00:00.000Z`);
       const dayEnd = new Date(dayStart);
       dayEnd.setUTCDate(dayEnd.getUTCDate() + 1);
+      // Match either completedAt or createdAt for older rows without completedAt.
       and.push({
-        completedAt: {
-          gte: dayStart,
-          lt: dayEnd,
-        },
+        OR: [
+          { completedAt: { gte: dayStart, lt: dayEnd } },
+          {
+            completedAt: null,
+            createdAt: { gte: dayStart, lt: dayEnd },
+          },
+        ],
       });
-    } else {
-      and.push({ completedAt: { not: null } });
     }
 
     if (options.cursor) {
       const cursorSession = await this.prisma.userSession.findUnique({
         where: { id: options.cursor },
       });
-      if (cursorSession?.completedAt) {
+      const cursorDate =
+        cursorSession?.completedAt ?? cursorSession?.createdAt ?? null;
+      if (cursorSession && cursorDate) {
         and.push({
           OR: [
-            { completedAt: { lt: cursorSession.completedAt } },
+            { completedAt: { lt: cursorDate } },
             {
-              completedAt: cursorSession.completedAt,
+              completedAt: null,
+              createdAt: { lt: cursorDate },
+            },
+            {
+              completedAt: cursorDate,
+              id: { lt: cursorSession.id },
+            },
+            {
+              completedAt: null,
+              createdAt: cursorDate,
               id: { lt: cursorSession.id },
             },
           ],
@@ -135,7 +152,7 @@ export class ActivityService {
 
     const rows = await this.prisma.userSession.findMany({
       where: { AND: and },
-      orderBy: [{ completedAt: 'desc' }, { id: 'desc' }],
+      orderBy: [{ completedAt: 'desc' }, { createdAt: 'desc' }, { id: 'desc' }],
       take: limit + 1,
     });
 
@@ -163,20 +180,23 @@ export class ActivityService {
       where: {
         userId,
         rewardsApplied: true,
-        completedAt: {
-          gte: start,
-          lt: end,
-        },
         simulationId: { not: null },
         sessionType: 'simulation',
+        OR: [
+          { completedAt: { gte: start, lt: end } },
+          {
+            completedAt: null,
+            createdAt: { gte: start, lt: end },
+          },
+        ],
       },
-      select: { completedAt: true },
+      select: { completedAt: true, createdAt: true },
     });
 
     const dates = new Set<string>();
     for (const row of rows) {
-      if (!row.completedAt) continue;
-      dates.add(row.completedAt.toISOString().slice(0, 10));
+      const at = row.completedAt ?? row.createdAt;
+      dates.add(at.toISOString().slice(0, 10));
     }
 
     return { dates: [...dates].sort() };
