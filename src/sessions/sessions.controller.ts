@@ -11,7 +11,7 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { User } from '@prisma/client';
+import { Prisma, User } from '@prisma/client';
 import { GeminiChatService } from '../gemini/gemini-chat.service';
 import { GeminiTtsService } from '../gemini/gemini-tts.service';
 import type {
@@ -554,7 +554,7 @@ export class SessionsController {
                   missionTitleTh: config.missionTitleTh,
                   topicId: config.simulationId,
                   checkpointSummary: checkpoints,
-                },
+                } as Prisma.InputJsonValue,
               },
             });
           } catch (persistErr) {

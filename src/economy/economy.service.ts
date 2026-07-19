@@ -7,9 +7,12 @@ import {
   DEBUG_BANANA_REFILL,
   ENV_DAILY_BANANA_DROP,
   ENV_DEBUG_BANANA_REFILL,
+  ENV_MAX_BANANA_BALANCE,
   ENV_ONBOARDING_BANANA_BONUS,
+  MAX_BANANA_BALANCE,
   ONBOARDING_BANANA_BONUS,
   STREAK_MILESTONES,
+  cappedBananaCredit,
   getMissionReward,
 } from './economy.constants';
 import {
@@ -72,6 +75,10 @@ export class EconomyService {
     return this.envInt(ENV_DEBUG_BANANA_REFILL, DEBUG_BANANA_REFILL);
   }
 
+  private maxBananaBalance(): number {
+    return this.envInt(ENV_MAX_BANANA_BALANCE, MAX_BANANA_BALANCE);
+  }
+
   async creditOnboardingBonus(userId: string): Promise<User> {
     const bonus = this.onboardingBananaBonus();
     return this.prisma.$transaction(async (tx) => {
@@ -91,10 +98,17 @@ export class EconomyService {
         });
       }
 
+      const credit = cappedBananaCredit(
+        user.bananaBalance,
+        bonus,
+        this.maxBananaBalance(),
+      );
+
+      // Always record so ensureOnboardingBonus does not retry when already at cap.
       await this.recordTransaction(tx, {
         userId,
         currency: Currency.BANANA,
-        amount: bonus,
+        amount: credit,
         source: 'onboarding_bonus',
       });
 
@@ -102,7 +116,7 @@ export class EconomyService {
         where: { id: userId },
         data: {
           onboardingCompleted: true,
-          bananaBalance: { increment: bonus },
+          ...(credit > 0 ? { bananaBalance: { increment: credit } } : {}),
         },
       });
     });
@@ -140,17 +154,25 @@ export class EconomyService {
         return fresh;
       }
 
-      await this.recordTransaction(tx, {
-        userId: user.id,
-        currency: Currency.BANANA,
-        amount: drop,
-        source: 'daily_drop',
-      });
+      const credit = cappedBananaCredit(
+        fresh.bananaBalance,
+        drop,
+        this.maxBananaBalance(),
+      );
+
+      if (credit > 0) {
+        await this.recordTransaction(tx, {
+          userId: user.id,
+          currency: Currency.BANANA,
+          amount: credit,
+          source: 'daily_drop',
+        });
+      }
 
       return tx.user.update({
         where: { id: user.id },
         data: {
-          bananaBalance: { increment: drop },
+          ...(credit > 0 ? { bananaBalance: { increment: credit } } : {}),
           lastDailyBananaDate: parseDateKey(local.dateKey),
         },
       });
@@ -158,8 +180,19 @@ export class EconomyService {
   }
 
   async creditDebugBananas(userId: string, amount?: number): Promise<User> {
-    const credit = amount ?? this.debugBananaRefill();
+    const requested = amount ?? this.debugBananaRefill();
     return this.prisma.$transaction(async (tx) => {
+      const user = await tx.user.findUniqueOrThrow({ where: { id: userId } });
+      const credit = cappedBananaCredit(
+        user.bananaBalance,
+        requested,
+        this.maxBananaBalance(),
+      );
+
+      if (credit <= 0) {
+        return user;
+      }
+
       await this.recordTransaction(tx, {
         userId,
         currency: Currency.BANANA,

@@ -22,11 +22,25 @@ export const STREAK_MILESTONES: Array<{ days: number; seeds: number }> = [
 export const ONBOARDING_BANANA_BONUS = 2;
 export const DAILY_BANANA_DROP = 1;
 export const DEBUG_BANANA_REFILL = 2;
+/** Soft cap on banana balance — credits never push above this. */
+export const MAX_BANANA_BALANCE = 5;
 
 /** Env keys — defaults above apply when unset / invalid. */
 export const ENV_ONBOARDING_BANANA_BONUS = 'ONBOARDING_BANANA_BONUS';
 export const ENV_DAILY_BANANA_DROP = 'DAILY_BANANA_DROP';
 export const ENV_DEBUG_BANANA_REFILL = 'DEBUG_BANANA_REFILL';
+export const ENV_MAX_BANANA_BALANCE = 'MAX_BANANA_BALANCE';
+
+/** How many bananas can still be credited without exceeding the cap. */
+export function cappedBananaCredit(
+  currentBalance: number,
+  amount: number,
+  maxBalance = MAX_BANANA_BALANCE,
+): number {
+  if (amount <= 0) return 0;
+  const room = Math.max(0, maxBalance - currentBalance);
+  return Math.min(amount, room);
+}
 
 export function getMissionReward(score: number): MissionRewardTier {
   const clamped = Math.max(0, Math.min(100, score));
