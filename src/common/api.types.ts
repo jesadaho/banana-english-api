@@ -93,6 +93,12 @@ export interface MissionResultResponse extends GptReport {
   seriesTitleEn?: string;
   seriesTitleTh?: string;
   completedAt?: string;
+  /** Text-only conversation turns (no audio). */
+  turns?: Array<{
+    speaker: 'user' | 'ai';
+    textEn: string;
+    textTh?: string | null;
+  }>;
 }
 
 export interface ActivityItemResponse {
@@ -110,6 +116,8 @@ export interface ActivityItemResponse {
   starRating: number;
   xpEarned: number;
   seedsEarned: number;
+  /** False when score/report were never persisted (legacy sessions). */
+  hasDetails: boolean;
 }
 
 export interface ActivityListResponse {

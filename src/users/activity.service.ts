@@ -38,6 +38,11 @@ type StoredReportJson = {
   missionTitleTh?: string;
   topicId?: string;
   checkpointSummary?: Record<string, boolean>;
+  turns?: Array<{
+    speaker: 'user' | 'ai';
+    textEn: string;
+    textTh?: string | null;
+  }>;
 };
 
 @Injectable()
@@ -53,6 +58,7 @@ export class ActivityService {
     scoreLabel: string | null;
     xpEarned: number | null;
     seedsEarned: number | null;
+    reportJson?: Prisma.JsonValue | null;
   }): ActivityItemResponse | null {
     if (!session.simulationId) return null;
 
@@ -63,7 +69,10 @@ export class ActivityService {
     const completedAt = session.completedAt ?? session.createdAt ?? null;
     if (!completedAt) return null;
 
-    const score = session.overallScore ?? 0;
+    const hasDetails =
+      session.overallScore != null && session.reportJson != null;
+    const score = hasDetails ? (session.overallScore ?? 0) : 0;
+
     return {
       sessionId: session.id,
       simulationId: session.simulationId,
@@ -77,10 +86,11 @@ export class ActivityService {
       coverImage: series.coverImage,
       completedAt: completedAt.toISOString(),
       overallScore: score,
-      scoreLabel: session.scoreLabel ?? '',
-      starRating: getStarRating(score),
-      xpEarned: session.xpEarned ?? 0,
-      seedsEarned: session.seedsEarned ?? 0,
+      scoreLabel: hasDetails ? (session.scoreLabel ?? '') : '',
+      starRating: hasDetails ? getStarRating(score) : 0,
+      xpEarned: hasDetails ? (session.xpEarned ?? 0) : 0,
+      seedsEarned: hasDetails ? (session.seedsEarned ?? 0) : 0,
+      hasDetails,
     };
   }
 
@@ -152,7 +162,11 @@ export class ActivityService {
 
     const rows = await this.prisma.userSession.findMany({
       where: { AND: and },
-      orderBy: [{ completedAt: 'desc' }, { createdAt: 'desc' }, { id: 'desc' }],
+      orderBy: [
+        { completedAt: { sort: 'desc', nulls: 'last' } },
+        { createdAt: 'desc' },
+        { id: 'desc' },
+      ],
       take: limit + 1,
     });
 
@@ -160,7 +174,12 @@ export class ActivityService {
     const page = hasMore ? rows.slice(0, limit) : rows;
     const items = page
       .map((row) => this.toActivityItem(row))
-      .filter((item): item is ActivityItemResponse => item != null);
+      .filter((item): item is ActivityItemResponse => item != null)
+      // Newest first using effective completed time (fallback createdAt already applied).
+      .sort(
+        (a, b) =>
+          new Date(b.completedAt).getTime() - new Date(a.completedAt).getTime(),
+      );
 
     return {
       items,

@@ -530,6 +530,11 @@ export class SessionsController {
         const seedsEarned = rewards?.seedsEarned ?? rewardTier.seeds;
         const scoreLabel = rewardTier.ratingLabel;
         const series = getSeriesForSimulation(config.simulationId);
+        const textTurns = data.turns.map((t) => ({
+          speaker: t.speaker,
+          textEn: t.textEn,
+          textTh: t.textTh ?? null,
+        }));
 
         if (userSession && userSession.userId === req.user.id) {
           try {
@@ -555,6 +560,7 @@ export class SessionsController {
                     missionTitleTh: config.missionTitleTh,
                     topicId: config.simulationId,
                     checkpointSummary: checkpoints,
+                    turns: textTurns,
                   }),
                 ) as Prisma.InputJsonValue,
               },
@@ -590,6 +596,7 @@ export class SessionsController {
           seriesTitleEn: series?.titleEn,
           seriesTitleTh: series?.titleTh,
           completedAt: (userSession?.completedAt ?? ended).toISOString(),
+          turns: textTurns,
         };
       }
 
@@ -611,6 +618,11 @@ export class SessionsController {
         pronunciationIssues: report.pronunciationIssues,
         vocab: report.vocab,
         durationSeconds: duration,
+        turns: data.turns.map((t) => ({
+          speaker: t.speaker,
+          textEn: t.textEn,
+          textTh: t.textTh ?? null,
+        })),
       };
     } catch (err) {
       throw new BadGatewayException(
@@ -692,6 +704,7 @@ export class SessionsController {
       seriesTitleEn: series?.titleEn,
       seriesTitleTh: series?.titleTh,
       completedAt: userSession.completedAt?.toISOString(),
+      turns: stored.turns ?? [],
     };
   }
 }
