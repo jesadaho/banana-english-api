@@ -9,7 +9,11 @@ import {
 } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { AnonymousUserGuard } from './anonymous-user.guard';
-import { CompleteOnboardingDto, UpsertUserDto } from './dto/users.dto';
+import {
+  CompleteOnboardingDto,
+  UnlockAvatarDto,
+  UpsertUserDto,
+} from './dto/users.dto';
 import { UsersService } from './users.service';
 
 type AuthedRequest = { user: User };
@@ -35,6 +39,14 @@ export class UsersController {
     @Body() body: CompleteOnboardingDto,
   ) {
     return this.users.completeOnboarding(req.user, body);
+  }
+
+  @Post('me/avatars/unlock')
+  async unlockAvatar(
+    @Req() req: AuthedRequest,
+    @Body() body: UnlockAvatarDto,
+  ) {
+    return this.users.unlockAvatar(req.user, body.avatarId);
   }
 
   @Post('me/debug/refill-bananas')

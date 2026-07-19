@@ -23,6 +23,7 @@ model User {
   bananaBalance           Int       @default(0)
   xpBalance               Int       @default(0)
   bananaSeedBalance       Int       @default(0)
+  unlockedAvatarIds       String[]  @default([])
 
   streakDays              Int       @default(0)
   lastSessionDate         DateTime? @db.Date

@@ -36,3 +36,10 @@ export class CompleteOnboardingDto {
   @MaxLength(80)
   displayName?: string;
 }
+
+export class UnlockAvatarDto {
+  @IsString()
+  @MinLength(1)
+  @MaxLength(64)
+  avatarId!: string;
+}

@@ -1,9 +1,18 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { User } from '@prisma/client';
 import { EconomyService } from '../economy/economy.service';
 import { getUserLocalTime, isSameDateKey } from '../common/timezone.util';
 import { PrismaService } from '../prisma/prisma.service';
+import {
+  avatarSeedCost,
+  FREE_AVATAR_IDS,
+  isKnownAvatarId,
+} from './avatar-catalog';
 import { CompleteOnboardingDto, UpsertUserDto } from './dto/users.dto';
 
 export interface UserProfileResponse {
@@ -16,6 +25,7 @@ export interface UserProfileResponse {
   streakDays: number;
   dailyUsedToday: boolean;
   timezone: string;
+  unlockedAvatarIds: string[];
 }
 
 @Injectable()
@@ -140,6 +150,82 @@ export class UsersService {
     return this.getProfile(updated);
   }
 
+  async unlockAvatar(
+    user: User,
+    avatarId: string,
+  ): Promise<UserProfileResponse> {
+    const id = avatarId.trim();
+    if (!isKnownAvatarId(id)) {
+      throw new BadRequestException('Unknown avatar');
+    }
+
+    const cost = avatarSeedCost(id);
+    const alreadyUnlocked =
+      (FREE_AVATAR_IDS as readonly string[]).includes(id) ||
+      user.unlockedAvatarIds.includes(id);
+
+    if (alreadyUnlocked) {
+      if (cost <= 0 && !user.unlockedAvatarIds.includes(id)) {
+        const updated = await this.prisma.user.update({
+          where: { id: user.id },
+          data: {
+            unlockedAvatarIds: {
+              set: [...new Set([...user.unlockedAvatarIds, id])],
+            },
+          },
+        });
+        return this.getProfile(updated);
+      }
+      return this.getProfile(user);
+    }
+
+    if (cost <= 0) {
+      const updated = await this.prisma.user.update({
+        where: { id: user.id },
+        data: {
+          unlockedAvatarIds: {
+            set: [...new Set([...user.unlockedAvatarIds, id])],
+          },
+        },
+      });
+      return this.getProfile(updated);
+    }
+
+    const updated = await this.prisma.$transaction(async (tx) => {
+      const current = await tx.user.findUniqueOrThrow({
+        where: { id: user.id },
+      });
+      if (current.unlockedAvatarIds.includes(id)) {
+        return current;
+      }
+      if (current.bananaSeedBalance < cost) {
+        throw new BadRequestException('Insufficient banana seed balance');
+      }
+
+      await tx.economyTransaction.create({
+        data: {
+          userId: user.id,
+          currency: 'BANANA_SEED',
+          amount: -cost,
+          source: 'avatar_unlock',
+          referenceId: `avatar:${id}`,
+        },
+      });
+
+      return tx.user.update({
+        where: { id: user.id },
+        data: {
+          bananaSeedBalance: { decrement: cost },
+          unlockedAvatarIds: {
+            set: [...new Set([...current.unlockedAvatarIds, id])],
+          },
+        },
+      });
+    });
+
+    return this.getProfile(updated);
+  }
+
   private isDebugEndpointsEnabled(): boolean {
     return (
       this.config.get<string>('NODE_ENV') !== 'production' ||
@@ -157,6 +243,9 @@ export class UsersService {
 
   getProfile(user: User): UserProfileResponse {
     const local = getUserLocalTime(user.timezone);
+    const unlockedAvatarIds = [
+      ...new Set([...FREE_AVATAR_IDS, ...user.unlockedAvatarIds]),
+    ];
     return {
       anonymousId: user.anonymousId,
       displayName: user.displayName ?? 'เพื่อน',
@@ -167,6 +256,7 @@ export class UsersService {
       streakDays: user.streakDays,
       dailyUsedToday: isSameDateKey(user.dailyMissionUsedDate, local.dateKey),
       timezone: user.timezone,
+      unlockedAvatarIds,
     };
   }
 }

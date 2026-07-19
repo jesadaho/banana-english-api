@@ -200,6 +200,32 @@ export class EconomyService {
     });
   }
 
+  async spendSeeds(
+    userId: string,
+    amount: number,
+    referenceId: string,
+  ): Promise<User> {
+    return this.prisma.$transaction(async (tx) => {
+      const user = await tx.user.findUniqueOrThrow({ where: { id: userId } });
+      if (user.bananaSeedBalance < amount) {
+        throw new BadRequestException('Insufficient banana seed balance');
+      }
+
+      await this.recordTransaction(tx, {
+        userId,
+        currency: Currency.BANANA_SEED,
+        amount: -amount,
+        source: 'avatar_unlock',
+        referenceId,
+      });
+
+      return tx.user.update({
+        where: { id: userId },
+        data: { bananaSeedBalance: { decrement: amount } },
+      });
+    });
+  }
+
   async applyMissionRewards(params: {
     userId: string;
     sessionId: string;

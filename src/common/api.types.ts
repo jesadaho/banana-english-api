@@ -124,4 +124,5 @@ export interface UserProfileResponse {
   streakDays: number;
   dailyUsedToday: boolean;
   timezone: string;
+  unlockedAvatarIds: string[];
 }
