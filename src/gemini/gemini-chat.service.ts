@@ -129,6 +129,31 @@ const REPORT_SCHEMA = {
         required: ['word', 'meaningTh', 'exampleEn'],
       },
     },
+    turnFeedback: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          userTurnIndex: { type: 'integer' },
+          status: {
+            type: 'string',
+            enum: ['great', 'good', 'needs_improvement'],
+          },
+          headlineTh: { type: 'string' },
+          detailTh: { type: 'string' },
+          suggestionEn: { type: 'string' },
+          suggestionReasonTh: { type: 'string' },
+        },
+        required: [
+          'userTurnIndex',
+          'status',
+          'headlineTh',
+          'detailTh',
+          'suggestionEn',
+          'suggestionReasonTh',
+        ],
+      },
+    },
   },
   required: [
     'feedbackEn',
@@ -139,6 +164,7 @@ const REPORT_SCHEMA = {
     'grammarTipTh',
     'pronunciationIssues',
     'vocab',
+    'turnFeedback',
   ],
 };
 
@@ -400,7 +426,7 @@ Payment closure (critical — no tap UI exists):
     history: ChatTurn[],
     durationSeconds: number,
   ): Promise<GptReport> {
-    const context = this.formatHistory(history);
+    const context = this.formatHistoryForReport(history);
     const report = await this.generateJson<GptReport>({
       systemInstruction: REPORT_PROMPT,
       contents: [
@@ -414,7 +440,7 @@ Payment closure (critical — no tap UI exists):
         },
       ],
       schema: REPORT_SCHEMA,
-      maxOutputTokens: 900,
+      maxOutputTokens: 1600,
     });
 
     const sanitized = this.sanitizeReportForLearnerParticipation(report, history);
@@ -424,6 +450,15 @@ Payment closure (critical — no tap UI exists):
       feedbackTh: teacherBThaiVoice(sanitized.feedbackTh),
       bestSentenceNoteTh: teacherBThaiVoice(sanitized.bestSentenceNoteTh),
       grammarTipTh: teacherBThaiVoice(sanitized.grammarTipTh),
+      turnFeedback: (sanitized.turnFeedback ?? []).map((item) => ({
+        ...item,
+        headlineTh: teacherBThaiVoice(item.headlineTh),
+        detailTh: teacherBThaiVoice(item.detailTh ?? ''),
+        suggestionEn: this.normalizeFeedbackField(item.suggestionEn ?? ''),
+        suggestionReasonTh: teacherBThaiVoice(
+          this.normalizeFeedbackField(item.suggestionReasonTh ?? ''),
+        ),
+      })),
     };
   }
 
@@ -593,6 +628,7 @@ Payment closure (critical — no tap UI exists):
         grammarTip: '',
         grammarTipTh: '',
         pronunciationIssues: [],
+        turnFeedback: [],
       };
     }
 
@@ -605,6 +641,18 @@ Payment closure (critical — no tap UI exists):
       pronunciationIssues: report.pronunciationIssues.filter((issue) =>
         this.isMeaningfulFeedbackText(issue.word),
       ),
+      turnFeedback: (report.turnFeedback ?? [])
+        .filter((item) => Number.isFinite(item.userTurnIndex))
+        .map((item) => ({
+          ...item,
+          headlineTh: this.normalizeFeedbackField(item.headlineTh),
+          detailTh: this.normalizeFeedbackField(item.detailTh ?? ''),
+          suggestionEn: this.normalizeFeedbackField(item.suggestionEn ?? ''),
+          suggestionReasonTh: this.normalizeFeedbackField(
+            item.suggestionReasonTh ?? '',
+          ),
+        }))
+        .filter((item) => item.headlineTh.length > 0),
     };
   }
 
@@ -681,6 +729,21 @@ Payment closure (critical — no tap UI exists):
       .map((turn) => {
         const speaker = turn.speaker === 'ai' ? 'Teacher B' : 'Learner';
         return `${speaker}: ${turn.textEn}`;
+      })
+      .join('\n');
+  }
+
+  /** Number learner turns so turnFeedback.userTurnIndex aligns. */
+  private formatHistoryForReport(history: ChatTurn[]): string {
+    if (history.length === 0) return '(no conversation yet)';
+    let learnerIndex = 0;
+    return history
+      .map((turn) => {
+        if (turn.speaker === 'ai') {
+          return `Teacher B: ${turn.textEn}`;
+        }
+        const index = learnerIndex++;
+        return `[Learner #${index}]: ${turn.textEn}`;
       })
       .join('\n');
   }

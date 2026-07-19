@@ -66,6 +66,31 @@ export interface VocabItem {
   exampleEn: string;
 }
 
+export type TurnFeedbackStatus = 'great' | 'good' | 'needs_improvement';
+
+/** Coaching feedback for one learner utterance (Mission History transcript). */
+export interface TurnFeedback {
+  status: TurnFeedbackStatus;
+  headlineTh: string;
+  detailTh?: string | null;
+  /** Natural alternative ("ลองพูด"). Empty when status is great/good. */
+  suggestionEn?: string | null;
+  /** Why the alternative is better ("เหตุผล"). */
+  suggestionReasonTh?: string | null;
+}
+
+export interface TurnFeedbackItem extends TurnFeedback {
+  /** 0-based index among learner turns only. */
+  userTurnIndex: number;
+}
+
+export interface StoredChatTurn {
+  speaker: 'user' | 'ai';
+  textEn: string;
+  textTh?: string | null;
+  feedback?: TurnFeedback | null;
+}
+
 export interface GptReport {
   feedbackEn: string;
   feedbackTh: string;
@@ -75,6 +100,8 @@ export interface GptReport {
   grammarTipTh: string;
   vocab: VocabItem[];
   pronunciationIssues: Array<{ word: string; scorePercent: number }>;
+  /** Per-learner-turn coaching; aligned by userTurnIndex. */
+  turnFeedback?: TurnFeedbackItem[];
 }
 
 export interface MissionResultResponse extends GptReport {
@@ -94,11 +121,7 @@ export interface MissionResultResponse extends GptReport {
   seriesTitleTh?: string;
   completedAt?: string;
   /** Text-only conversation turns (no audio). */
-  turns?: Array<{
-    speaker: 'user' | 'ai';
-    textEn: string;
-    textTh?: string | null;
-  }>;
+  turns?: StoredChatTurn[];
 }
 
 export interface ActivityItemResponse {

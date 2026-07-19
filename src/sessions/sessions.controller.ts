@@ -19,9 +19,14 @@ import type {
   HintsResponse,
   IntroReportResponse,
   StartSimulationResponse,
+  StoredChatTurn,
   TurnExchangeResponse,
+  TurnFeedbackItem,
 } from '../common/api.types';
-import { SessionStoreService } from '../session-store/session-store.service';
+import {
+  ChatTurn,
+  SessionStoreService,
+} from '../session-store/session-store.service';
 import { FALLBACK_HINTS, getTopic } from '../topics/topics.data';
 import {
   INTRO_TURN1_OPENING,
@@ -530,11 +535,10 @@ export class SessionsController {
         const seedsEarned = rewards?.seedsEarned ?? rewardTier.seeds;
         const scoreLabel = rewardTier.ratingLabel;
         const series = getSeriesForSimulation(config.simulationId);
-        const textTurns = data.turns.map((t) => ({
-          speaker: t.speaker,
-          textEn: t.textEn,
-          textTh: t.textTh ?? null,
-        }));
+        const textTurns = mergeTurnsWithFeedback(
+          data.turns,
+          report.turnFeedback,
+        );
 
         if (userSession && userSession.userId === req.user.id) {
           try {
@@ -618,11 +622,7 @@ export class SessionsController {
         pronunciationIssues: report.pronunciationIssues,
         vocab: report.vocab,
         durationSeconds: duration,
-        turns: data.turns.map((t) => ({
-          speaker: t.speaker,
-          textEn: t.textEn,
-          textTh: t.textTh ?? null,
-        })),
+        turns: mergeTurnsWithFeedback(data.turns, report.turnFeedback),
       };
     } catch (err) {
       throw new BadGatewayException(
@@ -707,4 +707,35 @@ export class SessionsController {
       turns: stored.turns ?? [],
     };
   }
+}
+
+/** Attach report turnFeedback onto user turns by learner-turn index. */
+function mergeTurnsWithFeedback(
+  turns: ChatTurn[],
+  turnFeedback: TurnFeedbackItem[] | undefined,
+): StoredChatTurn[] {
+  const byIndex = new Map(
+    (turnFeedback ?? []).map((item) => [item.userTurnIndex, item]),
+  );
+  let userIdx = 0;
+  return turns.map((t) => {
+    const base: StoredChatTurn = {
+      speaker: t.speaker,
+      textEn: t.textEn,
+      textTh: t.textTh ?? null,
+    };
+    if (t.speaker !== 'user') return base;
+    const fb = byIndex.get(userIdx++);
+    if (!fb || !fb.headlineTh.trim()) return base;
+    return {
+      ...base,
+      feedback: {
+        status: fb.status,
+        headlineTh: fb.headlineTh,
+        detailTh: fb.detailTh || null,
+        suggestionEn: fb.suggestionEn || null,
+        suggestionReasonTh: fb.suggestionReasonTh || null,
+      },
+    };
+  });
 }

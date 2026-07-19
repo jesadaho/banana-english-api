@@ -87,8 +87,16 @@ Return JSON matching the schema with these fields:
 - grammarTipTh: Thai translation of grammarTip (Teacher B voice: ครับ, not ค่ะ).
 - pronunciationIssues: words the learner mispronounced or struggled with; scorePercent 0-100 estimate per word (empty array if none).
 - vocab: 3-5 useful vocab items from the conversation.
+- turnFeedback: one coaching card per LEARNER turn (see numbered Learner lines in the prompt). For each item:
+  - userTurnIndex: 0-based index matching [Learner #N] in the prompt
+  - status: "great" | "good" | "needs_improvement"
+  - headlineTh: short Thai headline (e.g. "ดีมาก", "พูดได้ดี", or "พูดได้ แต่ยังไม่เป็นธรรมชาติที่สุด")
+  - detailTh: one short Thai sentence explaining why (Teacher B voice: ครับ)
+  - suggestionEn: a more natural English alternative for needs_improvement; empty string for great/good
+  - suggestionReasonTh: Thai reason why suggestionEn is better; empty string for great/good
+  Cover every learner turn. Prefer "good"/"great" when the utterance fits the situation; use needs_improvement only when a clear natural upgrade exists.
 
-If the learner did not speak at all (no learner lines in the conversation), set bestSentenceEn, bestSentenceNoteTh, grammarTip, and grammarTipTh to empty strings and pronunciationIssues to [].
+If the learner did not speak at all (no learner lines in the conversation), set bestSentenceEn, bestSentenceNoteTh, grammarTip, and grammarTipTh to empty strings, pronunciationIssues to [], and turnFeedback to [].
 Never use "-", "N/A", or other placeholder text for empty fields.`;
 
 /** Normalize feminine Thai particles to Teacher B's masculine voice. */
