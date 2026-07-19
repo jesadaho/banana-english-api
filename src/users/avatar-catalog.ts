@@ -7,7 +7,7 @@ export const AVATAR_SEED_COSTS: Record<string, number> = {
   kenji: 500,
   sky: 500,
   ray: 500,
-  captain_banana: 1500,
+  captain_banana: 2500,
 };
 
 export const FREE_AVATAR_IDS = ['bogy', 'nana'] as const;
