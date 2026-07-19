@@ -84,9 +84,41 @@ export interface MissionResultResponse extends GptReport {
   missionTitleTh?: string;
   overallScore?: number;
   scoreLabel?: string;
+  starRating?: number;
   goldBananasEarned?: number;
   checkpointSummary?: Record<string, boolean>;
   rewards?: SessionRewardSummary;
+  simulationId?: string;
+  seriesId?: string;
+  seriesTitleEn?: string;
+  seriesTitleTh?: string;
+  completedAt?: string;
+}
+
+export interface ActivityItemResponse {
+  sessionId: string;
+  simulationId: string;
+  seriesId: string;
+  seriesTitleEn: string;
+  seriesTitleTh: string;
+  titleEn: string;
+  titleTh: string;
+  coverImage: string;
+  completedAt: string;
+  overallScore: number;
+  scoreLabel: string;
+  starRating: number;
+  xpEarned: number;
+  seedsEarned: number;
+}
+
+export interface ActivityListResponse {
+  items: ActivityItemResponse[];
+  nextCursor: string | null;
+}
+
+export interface ActivityDaysResponse {
+  dates: string[];
 }
 
 export interface GptIntroReport {

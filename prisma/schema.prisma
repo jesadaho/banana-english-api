@@ -79,14 +79,23 @@ model NotificationLog {
 }
 
 model UserSession {
-  id             String  @id
-  userId         String
-  sessionType    String
-  simulationId   String?
-  isDailyMission Boolean @default(false)
-  rewardsApplied Boolean @default(false)
+  id              String    @id
+  userId          String
+  sessionType     String
+  simulationId    String?
+  isDailyMission  Boolean   @default(false)
+  rewardsApplied  Boolean   @default(false)
+  createdAt       DateTime  @default(now())
+  completedAt     DateTime?
+  overallScore    Int?
+  scoreLabel      String?
+  xpEarned        Int?
+  seedsEarned     Int?
+  durationSeconds Int?
+  reportJson      Json?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
+  @@index([userId, completedAt])
 }

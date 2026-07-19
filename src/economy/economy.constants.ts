@@ -37,3 +37,12 @@ export function getMissionReward(score: number): MissionRewardTier {
   }
   return MISSION_REWARD_TIERS[MISSION_REWARD_TIERS.length - 1];
 }
+
+/** Stars for Journey activity / mission details (1–5). */
+export function getStarRating(score: number): number {
+  const clamped = Math.max(0, Math.min(100, score));
+  if (clamped >= 90) return 5;
+  if (clamped >= 70) return 4;
+  if (clamped >= 50) return 3;
+  return 2;
+}

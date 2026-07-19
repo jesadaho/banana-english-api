@@ -41,8 +41,10 @@ import { EconomyService } from '../economy/economy.service';
 import { UsersService } from '../users/users.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { SeriesService } from '../series/series.service';
-import { getMissionReward } from '../economy/economy.constants';
+import { getMissionReward, getStarRating } from '../economy/economy.constants';
 import { getUserLocalTime, isSameDateKey } from '../common/timezone.util';
+import { getSeriesForSimulation } from '../series/series.data';
+import { ActivityService } from '../users/activity.service';
 
 type AuthedRequest = { user: User };
 
@@ -57,6 +59,7 @@ export class SessionsController {
     private readonly users: UsersService,
     private readonly prisma: PrismaService,
     private readonly seriesService: SeriesService,
+    private readonly activity: ActivityService,
   ) {}
 
   @Post()
@@ -467,8 +470,9 @@ export class SessionsController {
     @Param('sessionId') sessionId: string,
   ): Promise<MissionResultResponse> {
     const data = this.sessionStore.get(sessionId);
+
     if (!data) {
-      throw new NotFoundException('Session not found');
+      return this.getStoredReport(req.user.id, sessionId);
     }
 
     try {
@@ -512,14 +516,46 @@ export class SessionsController {
             where: { id: req.user.id },
           });
           rewards = {
-            xpEarned: rewardTier.xp,
-            seedsEarned: rewardTier.seeds,
-            ratingLabel: rewardTier.ratingLabel,
+            xpEarned: userSession.xpEarned ?? rewardTier.xp,
+            seedsEarned: userSession.seedsEarned ?? rewardTier.seeds,
+            ratingLabel: userSession.scoreLabel ?? rewardTier.ratingLabel,
             streakDays: user.streakDays,
             previousStreakDays: user.streakDays,
             balances: this.economy.toBalances(user),
             isDailyMission: userSession.isDailyMission,
           };
+        }
+
+        const xpEarned = rewards?.xpEarned ?? rewardTier.xp;
+        const seedsEarned = rewards?.seedsEarned ?? rewardTier.seeds;
+        const scoreLabel = rewardTier.ratingLabel;
+        const series = getSeriesForSimulation(config.simulationId);
+
+        if (userSession && userSession.userId === req.user.id) {
+          await this.prisma.userSession.update({
+            where: { id: sessionId },
+            data: {
+              completedAt: userSession.completedAt ?? ended,
+              overallScore,
+              scoreLabel,
+              xpEarned,
+              seedsEarned,
+              durationSeconds: duration,
+              reportJson: {
+                feedbackEn: report.feedbackEn,
+                feedbackTh: report.feedbackTh,
+                bestSentenceEn: report.bestSentenceEn,
+                bestSentenceNoteTh: report.bestSentenceNoteTh,
+                grammarTip: report.grammarTip,
+                grammarTipTh: report.grammarTipTh,
+                pronunciationIssues: report.pronunciationIssues,
+                vocab: report.vocab,
+                missionTitleTh: config.missionTitleTh,
+                topicId: config.simulationId,
+                checkpointSummary: checkpoints,
+              },
+            },
+          });
         }
 
         return {
@@ -536,10 +572,16 @@ export class SessionsController {
           topicId: config.simulationId,
           missionTitleTh: config.missionTitleTh,
           overallScore,
-          scoreLabel: rewardTier.ratingLabel,
-          goldBananasEarned: rewards?.xpEarned ?? rewardTier.xp,
+          scoreLabel,
+          starRating: getStarRating(overallScore),
+          goldBananasEarned: xpEarned,
           checkpointSummary: checkpoints,
           rewards,
+          simulationId: config.simulationId,
+          seriesId: series?.seriesId,
+          seriesTitleEn: series?.titleEn,
+          seriesTitleTh: series?.titleTh,
+          completedAt: (userSession?.completedAt ?? ended).toISOString(),
         };
       }
 
@@ -567,5 +609,81 @@ export class SessionsController {
         `AI service error: ${err instanceof Error ? err.message : String(err)}`,
       );
     }
+  }
+
+  private async getStoredReport(
+    userId: string,
+    sessionId: string,
+  ): Promise<MissionResultResponse> {
+    const userSession = await this.prisma.userSession.findUnique({
+      where: { id: sessionId },
+    });
+
+    if (
+      !userSession ||
+      userSession.userId !== userId ||
+      !userSession.rewardsApplied ||
+      !userSession.reportJson
+    ) {
+      throw new NotFoundException('Session not found');
+    }
+
+    const stored = this.activity.parseStoredReport(userSession.reportJson);
+    const simulationId =
+      userSession.simulationId ?? stored.topicId ?? undefined;
+    const series = simulationId
+      ? getSeriesForSimulation(simulationId)
+      : undefined;
+    const overallScore = userSession.overallScore ?? 0;
+    const scoreLabel = userSession.scoreLabel ?? '';
+    const xpEarned = userSession.xpEarned ?? 0;
+    const seedsEarned = userSession.seedsEarned ?? 0;
+
+    const user = await this.prisma.user.findUniqueOrThrow({
+      where: { id: userId },
+    });
+
+    return {
+      sessionId,
+      feedbackEn: stored.feedbackEn ?? '',
+      feedbackTh: stored.feedbackTh ?? '',
+      bestSentenceEn: stored.bestSentenceEn ?? '',
+      bestSentenceNoteTh: stored.bestSentenceNoteTh ?? '',
+      grammarTip: stored.grammarTip ?? '',
+      grammarTipTh: stored.grammarTipTh ?? '',
+      pronunciationIssues:
+        (stored.pronunciationIssues as Array<{
+          word: string;
+          scorePercent: number;
+        }>) ?? [],
+      vocab:
+        (stored.vocab as Array<{
+          word: string;
+          meaningTh: string;
+          exampleEn: string;
+        }>) ?? [],
+      durationSeconds: userSession.durationSeconds ?? 0,
+      topicId: simulationId,
+      missionTitleTh: stored.missionTitleTh,
+      overallScore,
+      scoreLabel,
+      starRating: getStarRating(overallScore),
+      goldBananasEarned: xpEarned,
+      checkpointSummary: stored.checkpointSummary,
+      rewards: {
+        xpEarned,
+        seedsEarned,
+        ratingLabel: scoreLabel,
+        streakDays: user.streakDays,
+        previousStreakDays: user.streakDays,
+        balances: this.economy.toBalances(user),
+        isDailyMission: userSession.isDailyMission,
+      },
+      simulationId,
+      seriesId: series?.seriesId,
+      seriesTitleEn: series?.titleEn,
+      seriesTitleTh: series?.titleTh,
+      completedAt: userSession.completedAt?.toISOString(),
+    };
   }
 }
