@@ -415,9 +415,10 @@ export class GeminiChatService {
 
 MATCH RESULT: SUCCESS — this transcript clearly matches the taught phrase "${matched}".
 Required response:
-- Brief praise only (e.g. เยี่ยมเลยครับ / ดีมากครับ)
-- ADVANCE immediately to the NEXT teaching step with a NEW learner action
-- FORBIDDEN: โอ๊ะ, เกือบใช่, almost, ลองอีกที, asking to repeat "${matched}" again, inventing pronunciation or "said it twice" issues`;
+- Speak MOSTLY in Thai (beginner tutor). English only for the next target phrase if modeling it.
+- Brief Thai praise only (e.g. เยี่ยมเลยครับ / ดีมากครับ) — do NOT praise in English ("Perfect!", "Great!")
+- ADVANCE immediately to the NEXT teaching step with a NEW Thai-led learner action
+- FORBIDDEN: full-English lines, โอ๊ะ, เกือบใช่, almost, ลองอีกที, asking to repeat "${matched}" again, inventing pronunciation or "said it twice" issues`;
   }
 
   private trainingSystemPrompt(
@@ -436,6 +437,13 @@ Target phrases:
 ${phrases}
 
 Language mix target: ~${config.languageMix.thai}% Thai / ~${config.languageMix.english}% English.
+
+Spoken language rule (critical — Thai beginners):
+- textEn is what Teacher B says aloud. It must be MOSTLY THAI (~${config.languageMix.thai}%), not full English.
+- English in textEn is ONLY for the target phrase being taught/modeled (e.g. "Good evening") and short words the learner must say.
+- Praise, instructions, explanations, and "พูดตาม" cues MUST be Thai (e.g. "เยี่ยมเลยครับ งั้นลองทักตอนเย็น ตามผมว่า Good evening").
+- FORBIDDEN: full-English tutor lines like "Perfect! Now let's try... Repeat after me: ...".
+- textTh: short Thai support line (can mirror textEn).
 
 Teaching mix 70/20/10 (applies to EVERY lesson — do NOT only use "พูดตาม"):
 - ~70% Repeat: model a phrase, then ask the learner to say it after you (pronunciation + confidence).
@@ -458,7 +466,7 @@ Critical turn-loop rule:
 - After a successful learner reply, the next action must be a NEW step — not the same phrase again.
 
 Return JSON:
-- textEn: what Teacher B says aloud this turn (Thai-heavy for beginners; include the English phrase being taught; must end with the learner's next action unless completing)
+- textEn: spoken Teacher B line — MOSTLY THAI; include the English target phrase only where the learner should hear/say it; must end with the learner's next action unless completing
 - textTh: short Thai support line / paraphrase
 - isLessonComplete: true only after the final celebrate/summary step`;
   }
