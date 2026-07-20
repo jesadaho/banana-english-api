@@ -4,6 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import type { GptIntroReport, SessionType } from '../common/api.types';
 import type { SimulationConfig } from '../simulations/simulations.data';
 import { initCheckpointStates } from '../simulations/simulations.data';
+import type { LessonConfig } from '../lessons/lessons.data';
 
 export interface ChatTurn {
   speaker: 'user' | 'ai';
@@ -19,6 +20,7 @@ export interface ConversationSession {
   sessionType: SessionType;
   topicId?: string;
   simulationId?: string;
+  lessonId?: string;
   startedAt: string;
   durationLimitSeconds?: number;
   currentTurn?: number;
@@ -34,6 +36,7 @@ interface SessionData {
   endedAt: Date | null;
   introReport: GptIntroReport | null;
   simulationConfig?: SimulationConfig;
+  lessonConfig?: LessonConfig;
 }
 
 @Injectable()
@@ -90,6 +93,29 @@ export class SessionStoreService {
     return data;
   }
 
+  createTraining(config: LessonConfig): SessionData {
+    const sessionId = `session_${randomUUID().replace(/-/g, '').slice(0, 12)}`;
+    const session: ConversationSession = {
+      id: sessionId,
+      sessionType: 'training',
+      lessonId: config.lessonId,
+      startedAt: new Date().toISOString(),
+      currentTurn: 0,
+      maxTurns: config.maxTurns,
+      isComplete: false,
+    };
+    const data: SessionData = {
+      session,
+      turns: [],
+      turnCounter: 0,
+      endedAt: null,
+      introReport: null,
+      lessonConfig: config,
+    };
+    this.sessions.set(sessionId, data);
+    return data;
+  }
+
   get(sessionId: string): SessionData | undefined {
     return this.sessions.get(sessionId);
   }
@@ -112,6 +138,18 @@ export class SessionStoreService {
     const data = this.require(sessionId);
     data.session.currentTurn = updates.currentTurn;
     data.session.checkpointStates = updates.checkpointStates;
+    data.session.isComplete = updates.isComplete;
+  }
+
+  updateTrainingState(
+    sessionId: string,
+    updates: {
+      currentTurn: number;
+      isComplete: boolean;
+    },
+  ): void {
+    const data = this.require(sessionId);
+    data.session.currentTurn = updates.currentTurn;
     data.session.isComplete = updates.isComplete;
   }
 

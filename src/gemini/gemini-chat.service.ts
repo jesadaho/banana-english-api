@@ -26,6 +26,7 @@ import {
   HintsResponse,
 } from '../common/api.types';
 import type { SimulationConfig } from '../simulations/simulations.data';
+import type { LessonConfig } from '../lessons/lessons.data';
 
 const REPLY_SCHEMA = {
   type: 'object',
@@ -36,6 +37,16 @@ const REPLY_SCHEMA = {
   required: ['textEn', 'textTh'],
 };
 
+const TRAINING_REPLY_SCHEMA = {
+  type: 'object',
+  properties: {
+    textEn: { type: 'string' },
+    textTh: { type: 'string' },
+    isLessonComplete: { type: 'boolean' },
+  },
+  required: ['textEn', 'textTh', 'isLessonComplete'],
+};
+
 export interface SimulationTurnReply {
   aiResponse: string;
   textTh: string;
@@ -44,6 +55,12 @@ export interface SimulationTurnReply {
     grammarTip?: string;
     mispronouncedWords: string[];
   };
+}
+
+export interface TrainingTurnReply {
+  textEn: string;
+  textTh: string;
+  isLessonComplete: boolean;
 }
 
 function buildSimulationReplySchema(criteria: string[]) {
@@ -288,6 +305,71 @@ export class GeminiChatService {
       schema: buildSimulationReplySchema(config.successCriteria),
       maxOutputTokens: 300,
     });
+  }
+
+  async generateTrainingOpening(
+    config: LessonConfig,
+  ): Promise<TrainingTurnReply> {
+    return this.generateJson<TrainingTurnReply>({
+      systemInstruction: this.trainingSystemPrompt(config, 0),
+      contents: [
+        {
+          role: 'user',
+          parts: [{ text: config.openingPrompt }],
+        },
+      ],
+      schema: TRAINING_REPLY_SCHEMA,
+      maxOutputTokens: 350,
+    });
+  }
+
+  async generateTrainingTurn(
+    config: LessonConfig,
+    history: ChatTurn[],
+    userMessage: string,
+    currentTurn: number,
+  ): Promise<TrainingTurnReply> {
+    const contents: GeminiContent[] = [];
+
+    for (const turn of history.slice(-12)) {
+      contents.push({
+        role: turn.speaker === 'ai' ? 'model' : 'user',
+        parts: [{ text: turn.textEn }],
+      });
+    }
+
+    contents.push({
+      role: 'user',
+      parts: [{ text: userMessage }],
+    });
+
+    return this.generateJson<TrainingTurnReply>({
+      systemInstruction: this.trainingSystemPrompt(config, currentTurn),
+      contents,
+      schema: TRAINING_REPLY_SCHEMA,
+      maxOutputTokens: 400,
+    });
+  }
+
+  private trainingSystemPrompt(
+    config: LessonConfig,
+    currentTurn: number,
+  ): string {
+    const remaining = Math.max(0, config.maxTurns - currentTurn);
+    const phrases = config.targetPhrases.map((p) => `- ${p}`).join('\n');
+    return `${config.systemInstruction}
+
+Target phrases:
+${phrases}
+
+Language mix target: ~${config.languageMix.thai}% Thai / ~${config.languageMix.english}% English.
+
+Turn ${currentTurn} of ${config.maxTurns} (${remaining} turns remaining).
+
+Return JSON:
+- textEn: what Teacher B says aloud this turn (Thai-heavy for beginners; include the English phrase being taught)
+- textTh: short Thai support line / paraphrase
+- isLessonComplete: true only after the final celebrate/summary step`;
   }
 
   async generateSimulationTurn(

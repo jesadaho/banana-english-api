@@ -40,6 +40,7 @@ import {
   getSimulation,
   mergeCheckpoints,
 } from '../simulations/simulations.data';
+import { getLesson } from '../lessons/lessons.data';
 import { StartSessionDto, TurnDto } from './dto/sessions.dto';
 import { AnonymousUserGuard } from '../users/anonymous-user.guard';
 import { EconomyService } from '../economy/economy.service';
@@ -81,7 +82,7 @@ export class SessionsController {
     }
 
     if (body.sessionType === 'training') {
-      throw new BadRequestException('Training sessions are not yet supported');
+      return this.startTrainingSession(body.lessonId!);
     }
 
     if (!body.topicId || !getTopic(body.topicId)) {
@@ -213,7 +214,157 @@ export class SessionsController {
       return this.processSimulationTurn(sessionId, body);
     }
 
+    if (data.session.sessionType === 'training') {
+      return this.processTrainingTurn(sessionId, body);
+    }
+
     return this.processLegacyTurn(sessionId, body);
+  }
+
+  private async startTrainingSession(lessonId: string) {
+    const config = getLesson(lessonId);
+    if (!config) {
+      throw new NotFoundException('Lesson not found');
+    }
+
+    const data = this.sessionStore.createTraining(config);
+
+    try {
+      const reply = await this.chat.generateTrainingOpening(config);
+      const opening = {
+        speaker: 'ai' as const,
+        textEn: reply.textEn,
+        textTh: reply.textTh,
+        audioUrl: null,
+      };
+      this.sessionStore.addTurn(data.session.id, opening);
+
+      return {
+        session: {
+          id: data.session.id,
+          sessionType: 'training' as const,
+          lessonId: config.lessonId,
+          startedAt: data.session.startedAt,
+          currentTurn: 0,
+          maxTurns: config.maxTurns,
+          isComplete: false,
+        },
+        lesson: {
+          lessonId: config.lessonId,
+          titleEn: config.titleEn,
+          titleTh: config.titleTh,
+          difficulty: config.difficulty,
+          estimatedMinutesMin: config.estimatedMinutesMin,
+          estimatedMinutesMax: config.estimatedMinutesMax,
+          targetPhrases: config.targetPhrases,
+          maxTurns: config.maxTurns,
+        },
+        opening: {
+          aiResponse: reply.textEn,
+          textTh: reply.textTh,
+          isTaskComplete: false,
+          updatedCheckpoints: {},
+          feedbackHints: { mispronouncedWords: [] as string[] },
+          currentTurn: 0,
+        },
+      };
+    } catch (err) {
+      throw new BadGatewayException(
+        `AI service error: ${err instanceof Error ? err.message : String(err)}`,
+      );
+    }
+  }
+
+  private async processTrainingTurn(
+    sessionId: string,
+    body: TurnDto,
+  ): Promise<TurnExchangeResponse> {
+    const data = this.sessionStore.get(sessionId)!;
+    const config = data.lessonConfig;
+    if (!config) {
+      throw new BadRequestException('Lesson config missing');
+    }
+
+    if (data.session.isComplete) {
+      throw new ConflictException('Session already complete');
+    }
+
+    const expectedTurn = data.session.currentTurn ?? 0;
+    if (body.currentTurn !== undefined && body.currentTurn !== expectedTurn) {
+      throw new ConflictException(
+        `Stale turn: expected ${expectedTurn}, got ${body.currentTurn}`,
+      );
+    }
+
+    let originalText = (body.userSpeechText ?? body.transcript ?? '').trim();
+    if (!originalText) {
+      throw new BadRequestException('userSpeechText is required');
+    }
+
+    let userText = originalText;
+    try {
+      if (body.thaiMixEnabled) {
+        userText = await this.chat.correctThaiMix(originalText);
+      }
+
+      this.sessionStore.addTurn(sessionId, {
+        speaker: 'user',
+        textEn: userText,
+        originalTextEn: originalText,
+      });
+
+      const nextTurn = expectedTurn + 1;
+      const reply = await this.chat.generateTrainingTurn(
+        config,
+        data.turns,
+        userText,
+        nextTurn,
+      );
+
+      const maxTurnsReached = nextTurn >= config.maxTurns;
+      const isTaskComplete = Boolean(reply.isLessonComplete) || maxTurnsReached;
+
+      this.sessionStore.updateTrainingState(sessionId, {
+        currentTurn: nextTurn,
+        isComplete: isTaskComplete,
+      });
+
+      const aiTurn = {
+        speaker: 'ai' as const,
+        textEn: reply.textEn,
+        textTh: reply.textTh,
+        audioUrl: null,
+      };
+      this.sessionStore.addTurn(sessionId, aiTurn);
+
+      const response: TurnExchangeResponse = {
+        aiResponse: reply.textEn,
+        textTh: reply.textTh,
+        isTaskComplete,
+        updatedCheckpoints: {},
+        feedbackHints: { mispronouncedWords: [] },
+        currentTurn: nextTurn,
+      };
+
+      if (body.generateAudio) {
+        const audio = await this.geminiTts.synthesizeSpeech(reply.textEn);
+        response.audioBase64 = audio.toString('base64');
+        response.contentType = 'audio/wav';
+      }
+
+      return response;
+    } catch (err) {
+      if (
+        err instanceof NotFoundException ||
+        err instanceof BadRequestException ||
+        err instanceof ConflictException
+      ) {
+        throw err;
+      }
+      throw new BadGatewayException(
+        `AI service error: ${err instanceof Error ? err.message : String(err)}`,
+      );
+    }
   }
 
   private async processSimulationTurn(

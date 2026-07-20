@@ -25,6 +25,11 @@ export class StartSessionDto {
   @IsNotEmpty()
   simulationId?: string;
 
+  @ValidateIf((o: StartSessionDto) => o.sessionType === 'training')
+  @IsString()
+  @IsNotEmpty()
+  lessonId?: string;
+
   @IsOptional()
   @IsBoolean()
   isDailyMission?: boolean;
