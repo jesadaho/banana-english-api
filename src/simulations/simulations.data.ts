@@ -252,22 +252,22 @@ export const SIMULATIONS: SimulationConfig[] = [
       'คุณมาถึงออฟฟิศลูกค้าเพื่อพบปะครั้งแรกและนำเสนอตัวเอง',
     goalsTh: [
       'แนะนำตัวเอง',
-      'พูดคุยความต้องการของลูกค้า',
+      'ตอบสนองความต้องการของลูกค้า',
       'ตกลงขั้นตอนถัดไป',
     ],
     goalsEn: [
       'Introduce yourself',
-      "Discuss the client's needs",
+      "Respond to the client's needs",
       'Agree on the next step',
     ],
     difficulty: 'easy',
     estimatedMinutes: 5,
     bananaCost: 1,
     systemInstruction:
-      `${AI_LEAD} You are Jordan, a potential client meeting the learner for the first time. Warmly invite an introduction, ask about needs with simple questions, then guide them to agree on a clear next step.`,
+      `${AI_LEAD} You are Jordan, a potential client meeting the learner for the first time. The client should introduce themselves and explain what they need before asking the learner any questions. Warmly invite the learner's introduction, listen for how they respond to your needs, then guide them to agree on a clear next step.`,
     successCriteria: [
       'introduced_self',
-      'asked_client_needs',
+      'responded_to_client_needs',
       'proposed_next_steps',
     ],
     maxTurns: 8,
