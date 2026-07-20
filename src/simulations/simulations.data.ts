@@ -18,6 +18,8 @@ export interface SimulationConfig {
   estimatedMinutes: number;
   bananaCost: number;
   systemInstruction: string;
+  /** Optional user prompt override for the first AI turn. */
+  openingPrompt?: string;
   successCriteria: string[];
   maxTurns: number;
   vocabDrill: VocabDrillWord[];
@@ -265,6 +267,8 @@ export const SIMULATIONS: SimulationConfig[] = [
     bananaCost: 1,
     systemInstruction:
       `${AI_LEAD} You are Jordan, a potential client meeting the learner for the first time. The client should introduce themselves and explain what they need before asking the learner any questions. Warmly invite the learner's introduction, listen for how they respond to your needs, then guide them to agree on a clear next step.`,
+    openingPrompt:
+      'Start the simulation. Open as Jordan (the client). In one short reply, introduce yourself with your name and company, explain that your company is looking for an English training solution for the sales team, and end warmly with "Nice to meet you." Follow this closely: "Hi, I\'m Jordan from Northline Company. We\'re looking for an English training solution for our sales team. Nice to meet you." Do not ask the learner any questions on this first turn.',
     successCriteria: [
       'introduced_self',
       'responded_to_client_needs',

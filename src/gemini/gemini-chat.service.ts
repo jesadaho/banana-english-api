@@ -272,18 +272,17 @@ export class GeminiChatService {
   async generateSimulationOpening(
     config: SimulationConfig,
   ): Promise<SimulationTurnReply> {
+    const openingUserText =
+      config.openingPrompt ??
+      'Start the simulation. Greet the customer and begin the scenario naturally. ' +
+        'Return JSON matching the schema.';
+
     return this.generateJson<SimulationTurnReply>({
       systemInstruction: this.simulationSystemPrompt(config, 0),
       contents: [
         {
           role: 'user',
-          parts: [
-            {
-              text:
-                'Start the simulation. Greet the customer and begin the scenario naturally. ' +
-                'Return JSON matching the schema.',
-            },
-          ],
+          parts: [{ text: openingUserText }],
         },
       ],
       schema: buildSimulationReplySchema(config.successCriteria),
