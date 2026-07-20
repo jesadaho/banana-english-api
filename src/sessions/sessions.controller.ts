@@ -82,7 +82,7 @@ export class SessionsController {
     }
 
     if (body.sessionType === 'training') {
-      return this.startTrainingSession(body.lessonId!);
+      return this.startTrainingSession(req.user, body.lessonId!);
     }
 
     if (!body.topicId || !getTopic(body.topicId)) {
@@ -221,16 +221,20 @@ export class SessionsController {
     return this.processLegacyTurn(sessionId, body);
   }
 
-  private async startTrainingSession(lessonId: string) {
+  private async startTrainingSession(user: User, lessonId: string) {
     const config = getLesson(lessonId);
     if (!config) {
       throw new NotFoundException('Lesson not found');
     }
 
-    const data = this.sessionStore.createTraining(config);
+    const learnerFirstName = firstNameFromDisplayName(user.displayName);
+    const data = this.sessionStore.createTraining(config, learnerFirstName);
 
     try {
-      const reply = await this.chat.generateTrainingOpening(config);
+      const reply = await this.chat.generateTrainingOpening(
+        config,
+        learnerFirstName,
+      );
       const opening = {
         speaker: 'ai' as const,
         textEn: reply.textEn,
@@ -319,6 +323,7 @@ export class SessionsController {
         data.turns,
         userText,
         nextTurn,
+        data.learnerFirstName ?? 'เพื่อน',
       );
 
       const maxTurnsReached = nextTurn >= config.maxTurns;
@@ -896,4 +901,10 @@ function mergeTurnsWithFeedback(
       },
     };
   });
+}
+
+function firstNameFromDisplayName(displayName?: string | null): string {
+  const trimmed = (displayName ?? '').trim();
+  if (!trimmed) return 'เพื่อน';
+  return trimmed.split(/\s+/)[0]!;
 }

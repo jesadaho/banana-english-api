@@ -37,6 +37,8 @@ interface SessionData {
   introReport: GptIntroReport | null;
   simulationConfig?: SimulationConfig;
   lessonConfig?: LessonConfig;
+  /** First name for 1:1 tutor address (training sessions). */
+  learnerFirstName?: string;
 }
 
 @Injectable()
@@ -93,7 +95,10 @@ export class SessionStoreService {
     return data;
   }
 
-  createTraining(config: LessonConfig): SessionData {
+  createTraining(
+    config: LessonConfig,
+    learnerFirstName = 'เพื่อน',
+  ): SessionData {
     const sessionId = `session_${randomUUID().replace(/-/g, '').slice(0, 12)}`;
     const session: ConversationSession = {
       id: sessionId,
@@ -111,6 +116,7 @@ export class SessionStoreService {
       endedAt: null,
       introReport: null,
       lessonConfig: config,
+      learnerFirstName,
     };
     this.sessions.set(sessionId, data);
     return data;

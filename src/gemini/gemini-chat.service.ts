@@ -309,9 +309,14 @@ export class GeminiChatService {
 
   async generateTrainingOpening(
     config: LessonConfig,
+    learnerFirstName: string,
   ): Promise<TrainingTurnReply> {
     return this.generateJson<TrainingTurnReply>({
-      systemInstruction: this.trainingSystemPrompt(config, 0),
+      systemInstruction: this.trainingSystemPrompt(
+        config,
+        0,
+        learnerFirstName,
+      ),
       contents: [
         {
           role: 'user',
@@ -328,6 +333,7 @@ export class GeminiChatService {
     history: ChatTurn[],
     userMessage: string,
     currentTurn: number,
+    learnerFirstName: string,
   ): Promise<TrainingTurnReply> {
     const contents: GeminiContent[] = [];
 
@@ -344,7 +350,11 @@ export class GeminiChatService {
     });
 
     return this.generateJson<TrainingTurnReply>({
-      systemInstruction: this.trainingSystemPrompt(config, currentTurn),
+      systemInstruction: this.trainingSystemPrompt(
+        config,
+        currentTurn,
+        learnerFirstName,
+      ),
       contents,
       schema: TRAINING_REPLY_SCHEMA,
       maxOutputTokens: 400,
@@ -354,10 +364,14 @@ export class GeminiChatService {
   private trainingSystemPrompt(
     config: LessonConfig,
     currentTurn: number,
+    learnerFirstName: string,
   ): string {
     const remaining = Math.max(0, config.maxTurns - currentTurn);
     const phrases = config.targetPhrases.map((p) => `- ${p}`).join('\n');
     return `${config.systemInstruction}
+
+Learner first name: ${learnerFirstName}
+(Use this name sparingly — once in opening, occasionally when encouraging, once near the ending. Never every turn. Never address a group.)
 
 Target phrases:
 ${phrases}
