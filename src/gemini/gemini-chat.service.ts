@@ -337,7 +337,9 @@ export class GeminiChatService {
   ): Promise<TrainingTurnReply> {
     const contents: GeminiContent[] = [];
 
-    for (const turn of history.slice(-12)) {
+    // Session store already appended this user turn before generate — do not
+    // send it twice (model invents "said it twice" / retry loops).
+    for (const turn of this.priorTurnsForModel(history, userMessage, 12)) {
       contents.push({
         role: turn.speaker === 'ai' ? 'model' : 'user',
         parts: [{ text: turn.textEn }],
@@ -346,7 +348,7 @@ export class GeminiChatService {
 
     contents.push({
       role: 'user',
-      parts: [{ text: userMessage }],
+      parts: [{ text: this.trainingUserTurnPayload(userMessage, config) }],
     });
 
     return this.generateJson<TrainingTurnReply>({
@@ -359,6 +361,63 @@ export class GeminiChatService {
       schema: TRAINING_REPLY_SCHEMA,
       maxOutputTokens: 400,
     });
+  }
+
+  /** Drop trailing duplicate of the current user message from stored history. */
+  private priorTurnsForModel(
+    history: ChatTurn[],
+    userMessage: string,
+    limit: number,
+  ): ChatTurn[] {
+    const prior = history.slice(-limit);
+    const last = prior[prior.length - 1];
+    if (last?.speaker === 'user' && last.textEn === userMessage) {
+      return prior.slice(0, -1);
+    }
+    return prior;
+  }
+
+  private matchTargetPhrase(
+    userMessage: string,
+    phrases: string[],
+  ): string | null {
+    const normalized = this.normalizeSpeechText(userMessage);
+    if (!normalized) return null;
+
+    const sorted = [...phrases].sort((a, b) => b.length - a.length);
+    for (const phrase of sorted) {
+      const target = this.normalizeSpeechText(phrase);
+      if (!target) continue;
+      if (normalized === target) return phrase;
+      const escaped = target.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const re = new RegExp(`(?:^|\\s)${escaped}(?:\\s|$)`);
+      if (re.test(normalized)) return phrase;
+    }
+    return null;
+  }
+
+  private normalizeSpeechText(text: string): string {
+    return text
+      .toLowerCase()
+      .replace(/[^\p{L}\p{N}\s]/gu, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  private trainingUserTurnPayload(
+    userMessage: string,
+    config: LessonConfig,
+  ): string {
+    const matched = this.matchTargetPhrase(userMessage, config.targetPhrases);
+    if (!matched) return userMessage;
+
+    return `Learner transcript (exact STT text shown in the app): "${userMessage}"
+
+MATCH RESULT: SUCCESS — this transcript clearly matches the taught phrase "${matched}".
+Required response:
+- Brief praise only (e.g. เยี่ยมเลยครับ / ดีมากครับ)
+- ADVANCE immediately to the NEXT teaching step with a NEW learner action
+- FORBIDDEN: โอ๊ะ, เกือบใช่, almost, ลองอีกที, asking to repeat "${matched}" again, inventing pronunciation or "said it twice" issues`;
   }
 
   private trainingSystemPrompt(
@@ -378,10 +437,28 @@ ${phrases}
 
 Language mix target: ~${config.languageMix.thai}% Thai / ~${config.languageMix.english}% English.
 
+Teaching mix 70/20/10 (applies to EVERY lesson — do NOT only use "พูดตาม"):
+- ~70% Repeat: model a phrase, then ask the learner to say it after you (pronunciation + confidence).
+- ~20% Recognition: short choice or guided use — e.g. pick which phrase fits a situation, or greet you in a given style (learner thinks; answer stays short).
+- ~10% Recall: near the end, ask the learner to use a taught phrase freely (no fixed script; accept any clear taught variant).
+- Never run a whole lesson as repeat-only. After a few repeats, insert recognition. End with free recall before celebrate.
+
+Acceptance rules (critical — prevent retry loops):
+- You only see the learner's transcript TEXT, not audio. Never invent pronunciation, length, speed, or "said it twice" issues from text alone.
+- If the transcript clearly contains the expected phrase (ignore case/punctuation; "Hi", "hi", "Hi!" all count), treat as SUCCESS and ADVANCE to the next step. Do not ask to repeat the same phrase again.
+- Never say "เกือบใช่" / "almost" / "ลองอีกที" when the transcript already matches the target.
+- Maximum ONE retry per phrase. After that retry (or if still unclear), accept generously and move on — do not loop the same phrase a third time.
+- Prefer progress and confidence over perfection.
+
 Turn ${currentTurn} of ${config.maxTurns} (${remaining} turns remaining).
 
+Critical turn-loop rule:
+- If isLessonComplete is false, textEn MUST end with a clear next action for the learner (repeat, recognition choice/guided use, or free recall). Never return explanation/praise only.
+- Always follow the 70/20/10 mix above for this lesson.
+- After a successful learner reply, the next action must be a NEW step — not the same phrase again.
+
 Return JSON:
-- textEn: what Teacher B says aloud this turn (Thai-heavy for beginners; include the English phrase being taught)
+- textEn: what Teacher B says aloud this turn (Thai-heavy for beginners; include the English phrase being taught; must end with the learner's next action unless completing)
 - textTh: short Thai support line / paraphrase
 - isLessonComplete: true only after the final celebrate/summary step`;
   }
@@ -395,7 +472,7 @@ Return JSON:
   ): Promise<SimulationTurnReply> {
     const contents: GeminiContent[] = [];
 
-    for (const turn of history.slice(-10)) {
+    for (const turn of this.priorTurnsForModel(history, userMessage, 10)) {
       contents.push({
         role: turn.speaker === 'ai' ? 'model' : 'user',
         parts: [{ text: turn.textEn }],
