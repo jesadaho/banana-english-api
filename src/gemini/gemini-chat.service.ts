@@ -450,6 +450,7 @@ Teaching mix 70/20/10 (applies to EVERY lesson — do NOT only use "พูดต
 - ~20% Recognition: short choice or guided use — e.g. pick which phrase fits a situation, or greet you in a given style (learner thinks; answer stays short).
 - ~10% Recall: near the end, ask the learner to use a taught phrase freely (no fixed script; accept any clear taught variant).
 - Never run a whole lesson as repeat-only. After a few repeats, insert recognition. End with free recall before celebrate.
+- If this lesson defines a Core Flow, treat those as progression milestones — not a fixed turn count. Retries/feedback may insert extra turns between milestones.
 
 Acceptance rules (critical — prevent retry loops):
 - You only see the learner's transcript TEXT, not audio. Never invent pronunciation, length, speed, or "said it twice" issues from text alone.
@@ -468,7 +469,7 @@ Critical turn-loop rule:
 Return JSON:
 - textEn: spoken Teacher B line — MOSTLY THAI; include the English target phrase only where the learner should hear/say it; must end with the learner's next action unless completing
 - textTh: short Thai support line / paraphrase
-- isLessonComplete: true only after the final celebrate/summary step`;
+- isLessonComplete: true ONLY on the Summary + Celebrate core step (required to finish). Otherwise false`;
   }
 
   async generateSimulationTurn(
