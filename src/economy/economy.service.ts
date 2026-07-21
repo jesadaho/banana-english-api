@@ -9,6 +9,8 @@ import {
   ENV_DEBUG_BANANA_REFILL,
   ENV_MAX_BANANA_BALANCE,
   ENV_ONBOARDING_BANANA_BONUS,
+  LESSON_REWARD_SEEDS,
+  LESSON_REWARD_XP,
   MAX_BANANA_BALANCE,
   ONBOARDING_BANANA_BONUS,
   STREAK_MILESTONES,
@@ -211,6 +213,7 @@ export class EconomyService {
     userId: string,
     amount: number,
     referenceId: string,
+    source: 'mission_start' | 'lesson_start' = 'mission_start',
   ): Promise<User> {
     return this.prisma.$transaction(async (tx) => {
       const user = await tx.user.findUniqueOrThrow({ where: { id: userId } });
@@ -222,7 +225,7 @@ export class EconomyService {
         userId,
         currency: Currency.BANANA,
         amount: -amount,
-        source: 'mission_start',
+        source,
         referenceId,
       });
 
@@ -256,6 +259,98 @@ export class EconomyService {
         where: { id: userId },
         data: { bananaSeedBalance: { decrement: amount } },
       });
+    });
+  }
+
+  async applyLessonRewards(params: {
+    userId: string;
+    sessionId: string;
+    lessonId: string;
+  }): Promise<SessionRewardResult | null> {
+    const { userId, sessionId, lessonId } = params;
+
+    return this.prisma.$transaction(async (tx) => {
+      const priorCompletion = await tx.userSession.findFirst({
+        where: {
+          userId,
+          lessonId,
+          rewardsApplied: true,
+          id: { not: sessionId },
+        },
+      });
+
+      const user = await tx.user.findUniqueOrThrow({ where: { id: userId } });
+      const previousStreakDays = user.streakDays;
+
+      if (priorCompletion) {
+        await tx.userSession.update({
+          where: { id: sessionId },
+          data: {
+            rewardsApplied: true,
+            completedAt: new Date(),
+            xpEarned: 0,
+            seedsEarned: 0,
+            scoreLabel: 'Lesson Complete',
+          },
+        });
+
+        return {
+          xpEarned: 0,
+          seedsEarned: 0,
+          ratingLabel: 'Lesson Complete',
+          streakDays: user.streakDays,
+          previousStreakDays,
+          balances: this.toBalances(user),
+          isDailyMission: false,
+        };
+      }
+
+      const xpEarned = LESSON_REWARD_XP;
+      const seedsEarned = LESSON_REWARD_SEEDS;
+
+      await this.recordTransaction(tx, {
+        userId,
+        currency: Currency.XP,
+        amount: xpEarned,
+        source: 'lesson_reward',
+        referenceId: sessionId,
+      });
+      await this.recordTransaction(tx, {
+        userId,
+        currency: Currency.BANANA_SEED,
+        amount: seedsEarned,
+        source: 'lesson_reward',
+        referenceId: sessionId,
+      });
+
+      const updated = await tx.user.update({
+        where: { id: userId },
+        data: {
+          xpBalance: { increment: xpEarned },
+          bananaSeedBalance: { increment: seedsEarned },
+        },
+      });
+
+      await tx.userSession.update({
+        where: { id: sessionId },
+        data: {
+          rewardsApplied: true,
+          completedAt: new Date(),
+          xpEarned,
+          seedsEarned,
+          scoreLabel: 'Lesson Complete',
+        },
+      });
+
+      return {
+        xpEarned,
+        seedsEarned,
+        ratingLabel: 'Lesson Complete',
+        streakDays: user.streakDays,
+        previousStreakDays,
+        balances: this.toBalances(updated),
+        isDailyMission: false,
+      };
     });
   }
 

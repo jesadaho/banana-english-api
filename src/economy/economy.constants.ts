@@ -19,6 +19,10 @@ export const STREAK_MILESTONES: Array<{ days: number; seeds: number }> = [
   { days: 30, seeds: 300 },
 ];
 
+export const LESSON_BANANA_COST = 1;
+export const LESSON_REWARD_XP = 20;
+export const LESSON_REWARD_SEEDS = 10;
+
 export const ONBOARDING_BANANA_BONUS = 2;
 export const DAILY_BANANA_DROP = 1;
 export const DEBUG_BANANA_REFILL = 2;

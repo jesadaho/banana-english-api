@@ -10,6 +10,7 @@ import { SessionStoreModule } from './session-store/session-store.module';
 import { TtsModule } from './tts/tts.module';
 import { SimulationsModule } from './simulations/simulations.module';
 import { SeriesModule } from './series/series.module';
+import { LessonsModule } from './lessons/lessons.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { EconomyModule } from './economy/economy.module';
 import { UsersModule } from './users/users.module';
@@ -32,6 +33,7 @@ import { NotificationsModule } from './notifications/notifications.module';
     TtsModule,
     SimulationsModule,
     SeriesModule,
+    LessonsModule,
   ],
 })
 export class AppModule {}

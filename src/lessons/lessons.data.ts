@@ -7,6 +7,7 @@ export interface LessonLanguageMix {
 
 export interface LessonConfig {
   lessonId: string;
+  bananaCost?: number;
   titleEn: string;
   titleTh: string;
   goalEn: string;
@@ -1345,6 +1346,32 @@ Turn loop rules (critical — never stall the learner):
 
 const LESSON_BY_ID = new Map(LESSONS.map((l) => [l.lessonId, l]));
 
+export const LESSON_BANANA_COST = 1;
+
+export const LESSON_PROGRESSION_ORDER: string[] = [
+  'greetings',
+  'introductions',
+  'numbers',
+  'everyday_numbers',
+  'telling_time',
+  'days_of_week',
+  'dates_days',
+  'polite_expressions',
+  'yes_no_maybe',
+  'asking_questions',
+  'money_prices',
+];
+
+export function getLessonBananaCost(config: LessonConfig): number {
+  return config.bananaCost ?? LESSON_BANANA_COST;
+}
+
 export function getLesson(lessonId: string): LessonConfig | undefined {
   return LESSON_BY_ID.get(lessonId);
+}
+
+export function getAllLessons(): LessonConfig[] {
+  return LESSON_PROGRESSION_ORDER.map((lessonId) => getLesson(lessonId)).filter(
+    (lesson): lesson is LessonConfig => lesson != null,
+  );
 }

@@ -83,6 +83,7 @@ model UserSession {
   userId          String
   sessionType     String
   simulationId    String?
+  lessonId        String?
   isDailyMission  Boolean   @default(false)
   rewardsApplied  Boolean   @default(false)
   createdAt       DateTime  @default(now())
@@ -98,4 +99,5 @@ model UserSession {
 
   @@index([userId])
   @@index([userId, completedAt])
+  @@index([userId, lessonId])
 }

@@ -40,7 +40,8 @@ import {
   getSimulation,
   mergeCheckpoints,
 } from '../simulations/simulations.data';
-import { getLesson } from '../lessons/lessons.data';
+import { getLesson, getLessonBananaCost } from '../lessons/lessons.data';
+import { LessonsService } from '../lessons/lessons.service';
 import { StartSessionDto, TurnDto } from './dto/sessions.dto';
 import { AnonymousUserGuard } from '../users/anonymous-user.guard';
 import { EconomyService } from '../economy/economy.service';
@@ -65,6 +66,7 @@ export class SessionsController {
     private readonly users: UsersService,
     private readonly prisma: PrismaService,
     private readonly seriesService: SeriesService,
+    private readonly lessonsService: LessonsService,
     private readonly activity: ActivityService,
   ) {}
 
@@ -227,8 +229,28 @@ export class SessionsController {
       throw new NotFoundException('Lesson not found');
     }
 
+    const unlocked = await this.lessonsService.isLessonUnlockedForUser(
+      user.id,
+      lessonId,
+    );
+    if (!unlocked) {
+      throw new BadRequestException('Lesson locked');
+    }
+
+    const bananaCost = getLessonBananaCost(config);
+    await this.economy.spendBananas(user.id, bananaCost, lessonId, 'lesson_start');
+
     const learnerFirstName = firstNameFromDisplayName(user.displayName);
     const data = this.sessionStore.createTraining(config, learnerFirstName);
+
+    await this.prisma.userSession.create({
+      data: {
+        id: data.session.id,
+        userId: user.id,
+        sessionType: 'training',
+        lessonId: config.lessonId,
+      },
+    });
 
     try {
       const reply = await this.chat.generateTrainingOpening(
@@ -598,6 +620,28 @@ export class SessionsController {
           `AI service error: ${err instanceof Error ? err.message : String(err)}`,
         );
       }
+    }
+
+    if (data.session.sessionType === 'training' && data.lessonConfig) {
+      let lessonRewards;
+      if (data.session.isComplete) {
+        const userSession = await this.prisma.userSession.findUnique({
+          where: { id: sessionId },
+        });
+        if (
+          userSession &&
+          userSession.userId === req.user.id &&
+          !userSession.rewardsApplied
+        ) {
+          lessonRewards = await this.economy.applyLessonRewards({
+            userId: req.user.id,
+            sessionId,
+            lessonId: data.lessonConfig.lessonId,
+          });
+        }
+      }
+
+      return { status: 'ended', lessonRewards };
     }
 
     return { status: 'ended' };
