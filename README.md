@@ -28,7 +28,9 @@ Server runs at `http://localhost:8000`.
 | Variable | Description |
 |----------|-------------|
 | `GEMINI_API_KEY` | Google Gemini API key (chat + TTS) |
-| `GEMINI_CHAT_MODEL` | Chat model (default `gemini-3.5-flash`) |
+| `GEMINI_CHAT_MODEL` | Chat models, comma-separated priority (default `gemini-3.5-flash`) |
+| `GEMINI_CHAT_MODEL_COOLDOWN_HOURS` | Skip a model for N hours after 503/high demand (default `2`) |
+| `GEMINI_CHAT_FALLBACK_MODEL` | Deprecated — add models to `GEMINI_CHAT_MODEL` instead |
 | `GEMINI_TTS_MODEL` | TTS model (default `gemini-2.5-flash-preview-tts`) |
 | `GEMINI_TTS_VOICE` | TTS voice (default `Puck`) |
 | `GROQ_API_KEY` | Groq key (served to Flutter via `/api/config/keys`) |
@@ -62,7 +64,8 @@ Server runs at `http://localhost:8000`.
    | Variable | Example |
    |----------|---------|
    | `GEMINI_API_KEY` | `AIza...` |
-   | `GEMINI_CHAT_MODEL` | `gemini-3.5-flash` (optional) |
+   | `GEMINI_CHAT_MODEL` | `gemini-3.5-flash,gemini-2.5-flash` (optional) |
+   | `GEMINI_CHAT_MODEL_COOLDOWN_HOURS` | `2` (optional) |
    | `GROQ_API_KEY` | `gsk_...` |
    | `CORS_ORIGINS` | `http://localhost:8080,https://your-app.web.app` |
    | `SESSION_DURATION_SECONDS` | `300` |

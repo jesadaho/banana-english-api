@@ -1,5 +1,6 @@
 import {
   Injectable,
+  Logger,
   ServiceUnavailableException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -27,6 +28,7 @@ import {
 } from '../common/api.types';
 import type { SimulationConfig } from '../simulations/simulations.data';
 import type { LessonConfig } from '../lessons/lessons.data';
+import { GeminiModelPool, parseGeminiChatModels } from './gemini-model-pool';
 
 const REPLY_SCHEMA = {
   type: 'object',
@@ -243,14 +245,26 @@ type GeminiResponse = {
 
 @Injectable()
 export class GeminiChatService {
+  private readonly logger = new Logger(GeminiChatService.name);
   private readonly apiKey: string;
-  private readonly model: string;
+  private readonly modelPool: GeminiModelPool;
 
   constructor(private readonly config: ConfigService) {
     this.apiKey = this.config.get<string>('GEMINI_API_KEY') ?? '';
-    this.model = this.config.get<string>(
-      'GEMINI_CHAT_MODEL',
-      'gemini-3.5-flash',
+
+    const models = parseGeminiChatModels(
+      this.config.get<string>('GEMINI_CHAT_MODEL'),
+      this.config.get<string>('GEMINI_CHAT_FALLBACK_MODEL'),
+    );
+    const cooldownHours = Number(
+      this.config.get<string>('GEMINI_CHAT_MODEL_COOLDOWN_HOURS', '2'),
+    );
+    const cooldownMs = Math.max(0, cooldownHours) * 60 * 60 * 1000;
+
+    this.modelPool = new GeminiModelPool(models, cooldownMs);
+    this.logger.log(
+      `Gemini chat models: ${models.join(' → ')}` +
+        (cooldownMs > 0 ? ` (cooldown ${cooldownHours}h on high demand)` : ''),
     );
   }
 
@@ -825,10 +839,46 @@ Payment closure (critical — no tap UI exists):
       );
     }
 
+    const models = this.modelPool.activeModels();
+    let lastError: Error | null = null;
+
+    for (let i = 0; i < models.length; i++) {
+      const model = models[i];
+      try {
+        return await this.callGeminiWithModel(model, options);
+      } catch (error) {
+        const err = error instanceof Error ? error : new Error(String(error));
+        lastError = err;
+
+        const hasAnotherModel = i < models.length - 1;
+        if (!hasAnotherModel || !this.isRetryableModelError(err)) {
+          throw err;
+        }
+
+        const until = this.modelPool.markUnavailable(model);
+        const nextModel = models[i + 1];
+        const cooldownNote =
+          until != null
+            ? ` for ${this.modelPool.cooldownHours()}h`
+            : '';
+        this.logger.warn(
+          `Gemini model ${model} unavailable (${err.message.slice(0, 120)})` +
+            `${cooldownNote}; trying ${nextModel}`,
+        );
+      }
+    }
+
+    throw lastError ?? new Error('Gemini call failed');
+  }
+
+  private async callGeminiWithModel(
+    model: string,
+    options: GenerateJsonOptions,
+  ): Promise<string> {
     const generationConfig: Record<string, unknown> = {
       maxOutputTokens: options.maxOutputTokens ?? 1024,
       temperature: options.temperature ?? 0.7,
-      thinkingConfig: this.buildThinkingConfig(),
+      thinkingConfig: this.buildThinkingConfigForModel(model),
     };
 
     if (options.schema) {
@@ -848,7 +898,7 @@ Payment closure (critical — no tap UI exists):
     }
 
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${this.model}:generateContent`,
+      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
       {
         method: 'POST',
         headers: {
@@ -896,6 +946,15 @@ Payment closure (critical — no tap UI exists):
     }
 
     return text;
+  }
+
+  private isRetryableModelError(error: Error): boolean {
+    const message = error.message;
+    return (
+      /\bGemini API failed \((503|429|500|502|504)\):/.test(message) ||
+      message.includes('"status": "UNAVAILABLE"') ||
+      message.includes('high demand')
+    );
   }
 
   private sanitizeReportForLearnerParticipation(
@@ -971,12 +1030,12 @@ Payment closure (critical — no tap UI exists):
     return !placeholders.has(normalized);
   }
 
-  private buildThinkingConfig(): Record<string, unknown> {
-    if (this.model.includes('gemini-3')) {
+  private buildThinkingConfigForModel(model: string): Record<string, unknown> {
+    if (model.includes('gemini-3')) {
       return { thinkingLevel: 'minimal' };
     }
 
-    if (this.model.includes('gemini-2.5')) {
+    if (model.includes('gemini-2.5')) {
       return { thinkingBudget: 0 };
     }
 
