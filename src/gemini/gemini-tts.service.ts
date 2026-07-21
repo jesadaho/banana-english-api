@@ -406,14 +406,16 @@ export class GeminiTtsService {
         const part = data.candidates?.[0]?.content?.parts?.find(
           (p) => p.inlineData?.data || p.inline_data?.data,
         );
-        const inline = part?.inlineData ?? part?.inline_data;
-        if (!inline?.data) {
+        const dataB64 = part?.inlineData?.data ?? part?.inline_data?.data;
+        const mimeType =
+          part?.inlineData?.mimeType ?? part?.inline_data?.mime_type;
+        if (!dataB64) {
           throw new Error('Gemini generateContent TTS response missing audio');
         }
 
         return this.toPlayableAudio({
-          data: inline.data,
-          mimeType: inline.mimeType ?? (inline as { mime_type?: string }).mime_type,
+          data: dataB64,
+          mimeType,
         });
       }
 
