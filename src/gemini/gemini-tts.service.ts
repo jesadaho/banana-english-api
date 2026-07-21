@@ -2,9 +2,11 @@ import {
   HttpException,
   HttpStatus,
   Injectable,
+  Logger,
   ServiceUnavailableException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { GeminiModelPool, parseGeminiModels } from './gemini-model-pool';
 import { pcmToWav, parseSampleRateFromMimeType } from './pcm-to-wav.util';
 
 type AudioBlock = {
@@ -25,17 +27,27 @@ type InteractionResponse = {
 
 @Injectable()
 export class GeminiTtsService {
+  private readonly logger = new Logger(GeminiTtsService.name);
   private readonly apiKey: string;
-  private readonly model: string;
+  private readonly modelPool: GeminiModelPool;
   private readonly voice: string;
 
   constructor(private readonly config: ConfigService) {
     this.apiKey = this.config.get<string>('GEMINI_API_KEY') ?? '';
-    this.model = this.config.get<string>(
-      'GEMINI_TTS_MODEL',
+    const models = parseGeminiModels(
+      this.config.get<string>('GEMINI_TTS_MODEL'),
       'gemini-2.5-flash-preview-tts',
     );
+    const cooldownHours = Number(
+      this.config.get<string>('GEMINI_TTS_MODEL_COOLDOWN_HOURS', '2'),
+    );
+    const cooldownMs = Math.max(0, cooldownHours) * 60 * 60 * 1000;
+    this.modelPool = new GeminiModelPool(models, cooldownMs);
     this.voice = this.config.get<string>('GEMINI_TTS_VOICE', 'Sadachbia');
+    this.logger.log(
+      `Gemini TTS models: ${models.join(' → ')}` +
+        (cooldownMs > 0 ? ` (cooldown ${cooldownHours}h on high demand)` : ''),
+    );
   }
 
   async synthesizeSpeech(text: string): Promise<Buffer> {
@@ -54,8 +66,47 @@ export class GeminiTtsService {
       );
     }
 
+    const models = this.modelPool.activeModels();
+    let lastError: Error | null = null;
+
+    for (let i = 0; i < models.length; i++) {
+      const model = models[i];
+      try {
+        yield* this.streamWithModel(model, trimmed);
+        return;
+      } catch (error) {
+        const err = error instanceof Error ? error : new Error(String(error));
+        lastError = err;
+
+        if (err instanceof HttpException) {
+          throw err;
+        }
+
+        const hasAnother = i < models.length - 1;
+        if (!hasAnother || !this.isRetryableModelError(err)) {
+          throw err;
+        }
+
+        const until = this.modelPool.markUnavailable(model);
+        const nextModel = models[i + 1];
+        const cooldownNote =
+          until != null ? ` for ${this.modelPool.cooldownHours()}h` : '';
+        this.logger.warn(
+          `Gemini TTS model ${model} unavailable (${err.message.slice(0, 120)})` +
+            `${cooldownNote}; trying ${nextModel}`,
+        );
+      }
+    }
+
+    throw lastError ?? new Error('Gemini TTS stream failed');
+  }
+
+  private async *streamWithModel(
+    model: string,
+    trimmed: string,
+  ): AsyncGenerator<Buffer> {
     const body = {
-      model: this.model,
+      model,
       input: `Speak warmly and naturally as Teacher B, a friendly English teacher for Thai learners:\n\n${trimmed}`,
       response_format: { type: 'audio' },
       generation_config: {
@@ -165,8 +216,46 @@ export class GeminiTtsService {
       );
     }
 
+    const models = this.modelPool.activeModels();
+    let lastError: Error | null = null;
+
+    for (let i = 0; i < models.length; i++) {
+      const model = models[i];
+      try {
+        return await this.unaryWithModel(model, trimmed);
+      } catch (error) {
+        const err = error instanceof Error ? error : new Error(String(error));
+        lastError = err;
+
+        if (err instanceof HttpException) {
+          throw err;
+        }
+
+        const hasAnother = i < models.length - 1;
+        if (!hasAnother || !this.isRetryableModelError(err)) {
+          throw err;
+        }
+
+        const until = this.modelPool.markUnavailable(model);
+        const nextModel = models[i + 1];
+        const cooldownNote =
+          until != null ? ` for ${this.modelPool.cooldownHours()}h` : '';
+        this.logger.warn(
+          `Gemini TTS model ${model} unavailable (${err.message.slice(0, 120)})` +
+            `${cooldownNote}; trying ${nextModel}`,
+        );
+      }
+    }
+
+    throw lastError ?? new Error('Gemini TTS failed');
+  }
+
+  private async unaryWithModel(
+    model: string,
+    trimmed: string,
+  ): Promise<Buffer> {
     const body = {
-      model: this.model,
+      model,
       input: `Speak warmly and naturally as Teacher B, a friendly English teacher for Thai learners:\n\n${trimmed}`,
       response_format: { type: 'audio' },
       generation_config: {
@@ -215,6 +304,16 @@ export class GeminiTtsService {
     }
 
     throw new Error(`Gemini TTS failed: ${lastError}`);
+  }
+
+  private isRetryableModelError(error: Error): boolean {
+    const message = error.message;
+    return (
+      /\bGemini TTS failed \((503|429|500|502|504)\):/.test(message) ||
+      message.includes('"status": "UNAVAILABLE"') ||
+      message.includes('high demand') ||
+      message.includes('RESOURCE_EXHAUSTED')
+    );
   }
 
   private extractAudioBlock(data: InteractionResponse): AudioBlock {

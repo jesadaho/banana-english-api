@@ -307,6 +307,10 @@ export class EconomyService {
 
       const xpEarned = LESSON_REWARD_XP;
       const seedsEarned = LESSON_REWARD_SEEDS;
+      const local = getUserLocalTime(user.timezone);
+      const todayKey = local.dateKey;
+      const streakUpdate = this.computeStreakUpdate(user, todayKey);
+      const streakDays = streakUpdate.streakDays;
 
       await this.recordTransaction(tx, {
         userId,
@@ -328,6 +332,8 @@ export class EconomyService {
         data: {
           xpBalance: { increment: xpEarned },
           bananaSeedBalance: { increment: seedsEarned },
+          streakDays,
+          lastSessionDate: parseDateKey(todayKey),
         },
       });
 
@@ -346,7 +352,7 @@ export class EconomyService {
         xpEarned,
         seedsEarned,
         ratingLabel: 'Lesson Complete',
-        streakDays: user.streakDays,
+        streakDays,
         previousStreakDays,
         balances: this.toBalances(updated),
         isDailyMission: false,

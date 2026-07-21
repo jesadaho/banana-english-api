@@ -1,9 +1,10 @@
-/** Parses GEMINI_CHAT_MODEL (comma/semicolon-separated) into a priority list. */
-export function parseGeminiChatModels(
+/** Parses a comma/semicolon-separated Gemini model priority list. */
+export function parseGeminiModels(
   primary: string | undefined,
+  defaultModel: string,
   legacyFallback?: string,
 ): string[] {
-  const raw = (primary ?? 'gemini-3.5-flash')
+  const raw = (primary ?? defaultModel)
     .split(/[,;]/)
     .map((model) => model.trim())
     .filter(Boolean);
@@ -22,11 +23,19 @@ export function parseGeminiChatModels(
     models.push(fallback);
   }
 
-  return models.length > 0 ? models : ['gemini-3.5-flash'];
+  return models.length > 0 ? models : [defaultModel];
+}
+
+/** @deprecated Prefer parseGeminiModels — kept for chat call sites. */
+export function parseGeminiChatModels(
+  primary: string | undefined,
+  legacyFallback?: string,
+): string[] {
+  return parseGeminiModels(primary, 'gemini-3.5-flash', legacyFallback);
 }
 
 /**
- * Rotates through chat models. Marks a model unavailable for a cooldown window
+ * Rotates through models. Marks a model unavailable for a cooldown window
  * after high-demand / transient API errors so traffic shifts to the next model.
  */
 export class GeminiModelPool {
