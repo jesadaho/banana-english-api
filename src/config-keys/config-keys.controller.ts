@@ -20,7 +20,13 @@ export class ConfigKeysController {
   getAppConfig() {
     const groqApiKey = this.config.get<string>('GROQ_API_KEY');
     const ttsEnv = this.config.get<string>('DEFAULT_TTS_MODE', 'device');
-    const defaultTtsMode = ['client', 'server', 'device'].includes(ttsEnv)
+    const defaultTtsMode = [
+      'client',
+      'server',
+      'cloud',
+      'device',
+      'deviceAuto',
+    ].includes(ttsEnv)
       ? ttsEnv
       : 'device';
 
@@ -40,6 +46,17 @@ export class ConfigKeysController {
     );
     const geminiTtsVoice = this.config.get<string>('GEMINI_TTS_VOICE', 'Sadachbia');
 
+    const cloudTtsApiKey = this.config.get<string>('GOOGLE_CLOUD_TTS_API_KEY');
+    const cloudTtsModel = this.config.get<string>(
+      'GOOGLE_CLOUD_TTS_MODEL',
+      'gemini-2.5-flash-tts',
+    );
+    const cloudTtsVoice = this.config.get<string>(
+      'GOOGLE_CLOUD_TTS_VOICE',
+      geminiTtsVoice,
+    );
+    const cloudTtsProjectId = this.config.get<string>('GOOGLE_CLOUD_PROJECT');
+
     return {
       groqApiKey: groqApiKey ?? null,
       defaultTtsMode,
@@ -47,6 +64,10 @@ export class ConfigKeysController {
       geminiTtsModel,
       geminiTtsFallbackModels,
       geminiTtsVoice,
+      cloudTtsApiKey: cloudTtsApiKey ?? null,
+      cloudTtsModel,
+      cloudTtsVoice,
+      cloudTtsProjectId: cloudTtsProjectId ?? null,
     };
   }
 }

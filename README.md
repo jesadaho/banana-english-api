@@ -35,6 +35,10 @@ Server runs at `http://localhost:8000`.
 | `GEMINI_TTS_FALLBACK_MODELS` | Fallback TTS models, comma-separated (newer clients + server pool) |
 | `GEMINI_TTS_MODEL_COOLDOWN_HOURS` | Skip a TTS model for N hours after 503/high demand (default `2`) |
 | `GEMINI_TTS_VOICE` | TTS voice (default `Sadachbia`) |
+| `GOOGLE_CLOUD_TTS_API_KEY` | Android-restricted GCP key for client Cloud Text-to-Speech |
+| `GOOGLE_CLOUD_TTS_MODEL` | Cloud TTS model (default `gemini-2.5-flash-tts`) |
+| `GOOGLE_CLOUD_TTS_VOICE` | Cloud TTS speaker (default = `GEMINI_TTS_VOICE`) |
+| `GOOGLE_CLOUD_PROJECT` | Optional GCP project id for `x-goog-user-project` |
 | `GROQ_API_KEY` | Groq key (served to Flutter via `/api/config/keys`) |
 | `PORT` | Server port (default `8000`) |
 | `CORS_ORIGINS` | Comma-separated allowed origins |
@@ -71,6 +75,8 @@ Server runs at `http://localhost:8000`.
    | `GEMINI_TTS_MODEL` | `gemini-3.1-flash-tts-preview` |
    | `GEMINI_TTS_FALLBACK_MODELS` | `gemini-2.5-pro-preview-tts,gemini-2.5-flash-preview-tts` (optional) |
    | `GEMINI_TTS_MODEL_COOLDOWN_HOURS` | `2` (optional) |
+   | `GOOGLE_CLOUD_TTS_API_KEY` | Android-restricted GCP API key (for client Cloud TTS) |
+   | `GOOGLE_CLOUD_TTS_MODEL` | `gemini-2.5-flash-tts` (optional) |
    | `GROQ_API_KEY` | `gsk_...` |
    | `CORS_ORIGINS` | `http://localhost:8080,https://your-app.web.app` |
    | `SESSION_DURATION_SECONDS` | `300` |

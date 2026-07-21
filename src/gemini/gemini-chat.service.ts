@@ -256,7 +256,8 @@ export class GeminiChatService {
 
     const models = parseGeminiChatModels(
       this.config.get<string>('GEMINI_CHAT_MODEL'),
-      this.config.get<string>('GEMINI_CHAT_FALLBACK_MODEL'),
+      this.config.get<string>('GEMINI_CHAT_FALLBACK_MODEL') ??
+        'gemini-2.5-flash',
     );
     const cooldownHours = Number(
       this.config.get<string>('GEMINI_CHAT_MODEL_COOLDOWN_HOURS', '2'),
@@ -1070,17 +1071,30 @@ Payment closure (critical — no tap UI exists):
       };
     }
 
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-goog-api-key': this.apiKey,
+    let response: Response;
+    try {
+      response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-goog-api-key': this.apiKey,
+          },
+          body: JSON.stringify(body),
+          // 3.5 can hang under load without a quick 503 — cut over to fallback.
+          signal: AbortSignal.timeout(20_000),
         },
-        body: JSON.stringify(body),
-      },
-    );
+      );
+    } catch (error) {
+      const err = error instanceof Error ? error : new Error(String(error));
+      if (err.name === 'TimeoutError' || err.name === 'AbortError') {
+        throw new Error(
+          `Gemini API failed (504): timeout after 20s model=${model}`,
+        );
+      }
+      throw err;
+    }
 
     if (!response.ok) {
       const err = await response.text();
@@ -1123,11 +1137,22 @@ Payment closure (critical — no tap UI exists):
 
   private isRetryableModelError(error: Error): boolean {
     const message = error.message;
+    const name = error.name;
     return (
       /\bGemini API failed \((503|429|500|502|504)\):/.test(message) ||
       message.includes('"status": "UNAVAILABLE"') ||
       message.includes('high demand') ||
-      message.includes('RESOURCE_EXHAUSTED')
+      message.includes('RESOURCE_EXHAUSTED') ||
+      // Undici/Node: network blip or peer reset — switch model, don't hard-fail.
+      message.includes('fetch failed') ||
+      message.includes('ECONNRESET') ||
+      message.includes('ETIMEDOUT') ||
+      message.includes('other side closed') ||
+      name === 'TimeoutError' ||
+      name === 'AbortError' ||
+      message.includes('TimeoutError') ||
+      message.includes('aborted due to timeout') ||
+      message.includes('The operation was aborted')
     );
   }
 
