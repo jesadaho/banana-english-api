@@ -338,7 +338,7 @@ export class GeminiChatService {
         },
       ],
       schema: TRAINING_REPLY_SCHEMA,
-      maxOutputTokens: 350,
+      maxOutputTokens: 512,
     });
   }
 
@@ -381,7 +381,7 @@ export class GeminiChatService {
       ),
       contents,
       schema: TRAINING_REPLY_SCHEMA,
-      maxOutputTokens: 400,
+      maxOutputTokens: 600,
     });
   }
 
@@ -809,6 +809,7 @@ Payment closure (critical — no tap UI exists):
         const retryable =
           error instanceof Error &&
           (error.message.includes('MAX_TOKENS') ||
+            error.message.includes('truncated') ||
             error.message.includes('invalid JSON') ||
             error.message.includes('Unterminated') ||
             error.message.includes('missing text'));
@@ -1052,15 +1053,32 @@ Payment closure (critical — no tap UI exists):
         .trim();
     }
 
+    const preview = cleaned.slice(0, 160);
+
     try {
       return JSON.parse(cleaned) as T;
-    } catch {
+    } catch (firstError) {
       const start = cleaned.indexOf('{');
       const end = cleaned.lastIndexOf('}');
       if (start >= 0 && end > start) {
-        return JSON.parse(cleaned.slice(start, end + 1)) as T;
+        try {
+          return JSON.parse(cleaned.slice(start, end + 1)) as T;
+        } catch {
+          // fall through
+        }
       }
-      throw new Error('Unterminated string in JSON');
+
+      const looksTruncated =
+        start >= 0 && (end < start || !cleaned.trimEnd().endsWith('}'));
+      if (looksTruncated) {
+        throw new Error(
+          `Gemini JSON response truncated (malformed). Preview: ${preview}`,
+        );
+      }
+
+      const detail =
+        firstError instanceof Error ? firstError.message : 'parse failed';
+      throw new Error(`Gemini invalid JSON: ${detail}. Preview: ${preview}`);
     }
   }
 
