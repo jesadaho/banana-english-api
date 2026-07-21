@@ -908,6 +908,7 @@ Payment closure (critical — no tap UI exists):
 
     for (let modelIndex = 0; modelIndex < models.length; modelIndex++) {
       const model = models[modelIndex];
+      let switchModelNow = false;
 
       for (let attempt = 0; attempt < tokenLimits.length; attempt++) {
         const temperature =
@@ -952,15 +953,24 @@ Payment closure (critical — no tap UI exists):
               ? error
               : new Error(String(error));
           }
+
+          // 503/429/high-demand: do not burn the token-limit retry loop on the
+          // same overloaded model — jump to the next model immediately.
+          if (error instanceof Error && this.isRetryableModelError(error)) {
+            this.modelPool.markUnavailable(model);
+            switchModelNow = true;
+            break;
+          }
         }
       }
 
       const hasAnotherModel = modelIndex < models.length - 1;
       if (!hasAnotherModel) break;
 
-      // Soft-switch on persistent bad JSON (no long cooldown — just try next now).
       this.logger.warn(
-        `Gemini model ${model} kept returning bad JSON; trying ${models[modelIndex + 1]}`,
+        switchModelNow
+          ? `Gemini model ${model} unavailable; trying ${models[modelIndex + 1]}`
+          : `Gemini model ${model} kept returning bad JSON; trying ${models[modelIndex + 1]}`,
       );
     }
 

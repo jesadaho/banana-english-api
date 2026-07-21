@@ -69,7 +69,7 @@ Server runs at `http://localhost:8000`.
    | `GEMINI_CHAT_MODEL` | `gemini-3.5-flash,gemini-2.5-flash` (optional) |
    | `GEMINI_CHAT_MODEL_COOLDOWN_HOURS` | `2` (optional) |
    | `GEMINI_TTS_MODEL` | `gemini-3.1-flash-tts-preview` |
-   | `GEMINI_TTS_FALLBACK_MODELS` | `gemini-2.5-flash-lite-preview-tts,gemini-2.5-pro-preview-tts` (optional) |
+   | `GEMINI_TTS_FALLBACK_MODELS` | `gemini-2.5-pro-preview-tts,gemini-2.5-flash-preview-tts` (optional) |
    | `GEMINI_TTS_MODEL_COOLDOWN_HOURS` | `2` (optional) |
    | `GROQ_API_KEY` | `gsk_...` |
    | `CORS_ORIGINS` | `http://localhost:8080,https://your-app.web.app` |

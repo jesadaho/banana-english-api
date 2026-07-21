@@ -40,7 +40,7 @@ export class GeminiTtsService {
     );
     const fallbacks = this.config.get<string>(
       'GEMINI_TTS_FALLBACK_MODELS',
-      'gemini-2.5-flash-lite-preview-tts,gemini-2.5-pro-preview-tts',
+      'gemini-2.5-pro-preview-tts,gemini-2.5-flash-preview-tts',
     );
     const models = parseGeminiModels(
       [primary, fallbacks].filter(Boolean).join(','),

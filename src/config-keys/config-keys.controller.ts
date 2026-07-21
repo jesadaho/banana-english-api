@@ -35,7 +35,8 @@ export class ConfigKeysController {
       'gemini-3.1-flash-tts-preview';
     const geminiTtsFallbackModels = this.config.get<string>(
       'GEMINI_TTS_FALLBACK_MODELS',
-      'gemini-2.5-flash-lite-preview-tts,gemini-2.5-pro-preview-tts',
+      // lite id is often 404 on Developer API; pro-preview is the reliable unary TTS.
+      'gemini-2.5-pro-preview-tts,gemini-2.5-flash-preview-tts',
     );
     const geminiTtsVoice = this.config.get<string>('GEMINI_TTS_VOICE', 'Sadachbia');
 
