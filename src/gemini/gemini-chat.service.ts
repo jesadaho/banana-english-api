@@ -348,7 +348,15 @@ export class GeminiChatService {
 
     contents.push({
       role: 'user',
-      parts: [{ text: this.trainingUserTurnPayload(userMessage, config) }],
+      parts: [
+        {
+          text: this.trainingUserTurnPayload(
+            userMessage,
+            config,
+            history,
+          ),
+        },
+      ],
     });
 
     return this.generateJson<TrainingTurnReply>({
@@ -377,6 +385,22 @@ export class GeminiChatService {
     return prior;
   }
 
+  /** Common STT / beginner pronunciation confusions → canonical phrase. */
+  private static readonly PHRASE_NEAR_MISS_ALIASES: Record<string, string> = {
+    tree: 'three',
+    free: 'three',
+    for: 'four',
+    fore: 'four',
+    ate: 'eight',
+    ait: 'eight',
+    tin: 'ten',
+    tan: 'ten',
+    won: 'one',
+    wan: 'one',
+    too: 'two',
+    to: 'two',
+  };
+
   private matchTargetPhrase(
     userMessage: string,
     phrases: string[],
@@ -393,7 +417,53 @@ export class GeminiChatService {
       const re = new RegExp(`(?:^|\\s)${escaped}(?:\\s|$)`);
       if (re.test(normalized)) return phrase;
     }
+
+    const tokens = normalized.split(/\s+/).filter(Boolean);
+    if (tokens.length === 1) {
+      const alias = GeminiChatService.PHRASE_NEAR_MISS_ALIASES[normalized];
+      if (alias) {
+        const canonical = sorted.find(
+          (p) => this.normalizeSpeechText(p) === alias,
+        );
+        if (canonical) return canonical;
+      }
+
+      for (const phrase of sorted) {
+        const target = this.normalizeSpeechText(phrase);
+        if (!target || target.includes(' ')) continue;
+        if (this.isWithinEditDistanceOne(normalized, target)) return phrase;
+      }
+    }
+
     return null;
+  }
+
+  private isWithinEditDistanceOne(a: string, b: string): boolean {
+    if (a === b) return true;
+    const diff = Math.abs(a.length - b.length);
+    if (diff > 1) return false;
+
+    if (a.length > b.length) [a, b] = [b, a];
+
+    let mismatches = 0;
+    let i = 0;
+    let j = 0;
+    while (i < a.length && j < b.length) {
+      if (a[i] === b[j]) {
+        i++;
+        j++;
+        continue;
+      }
+      mismatches++;
+      if (mismatches > 1) return false;
+      if (a.length === b.length) {
+        i++;
+        j++;
+      } else {
+        j++;
+      }
+    }
+    return mismatches + (b.length - j) <= 1;
   }
 
   private normalizeSpeechText(text: string): string {
@@ -404,21 +474,56 @@ export class GeminiChatService {
       .trim();
   }
 
+  private recentUserMessages(history: ChatTurn[], limit: number): string[] {
+    return history
+      .filter((turn) => turn.speaker === 'user')
+      .slice(-limit)
+      .map((turn) => turn.textEn);
+  }
+
   private trainingUserTurnPayload(
     userMessage: string,
     config: LessonConfig,
+    history: ChatTurn[],
   ): string {
     const matched = this.matchTargetPhrase(userMessage, config.targetPhrases);
-    if (!matched) return userMessage;
+    if (matched) {
+      const nearMiss =
+        this.normalizeSpeechText(userMessage) !==
+        this.normalizeSpeechText(matched);
+      return `Learner transcript (exact STT text shown in the app): "${userMessage}"
 
-    return `Learner transcript (exact STT text shown in the app): "${userMessage}"
-
-MATCH RESULT: SUCCESS — this transcript clearly matches the taught phrase "${matched}".
+MATCH RESULT: SUCCESS — this transcript matches the taught phrase "${matched}"${nearMiss ? ' (close pronunciation / STT variant — treat as correct)' : ''}.
 Required response:
 - Speak MOSTLY in Thai (beginner tutor). English only for the next target phrase if modeling it.
 - Brief Thai praise only (e.g. เยี่ยมเลยครับ / ดีมากครับ) — do NOT praise in English ("Perfect!", "Great!")
 - ADVANCE immediately to the NEXT teaching step with a NEW Thai-led learner action
 - FORBIDDEN: full-English lines, โอ๊ะ, เกือบใช่, almost, ลองอีกที, asking to repeat "${matched}" again, inventing pronunciation or "said it twice" issues`;
+    }
+
+    const recentUsers = this.recentUserMessages(history, 2);
+    const consecutiveMisses =
+      recentUsers.length >= 2 &&
+      recentUsers.every(
+        (msg) => !this.matchTargetPhrase(msg, config.targetPhrases),
+      );
+
+    if (consecutiveMisses) {
+      return `Learner transcript (exact STT text shown in the app): "${userMessage}"
+
+MATCH RESULT: NO MATCH — but this is the learner's SECOND consecutive attempt without a match on the current item.
+Required response:
+- Do NOT ask for the same number/phrase again — maximum one retry already used.
+- Accept generously (e.g. "ไม่เป็นไรครับ ไปต่อกัน") and ADVANCE immediately to the NEXT Core Flow step with a NEW teaching/speaking task.
+- FORBIDDEN: ลองอีกที, repeat the same ask, looping on the same word.`;
+    }
+
+    return `Learner transcript (exact STT text shown in the app): "${userMessage}"
+
+MATCH RESULT: NO MATCH yet on the current speaking task.
+Required response:
+- You may give at most ONE gentle retry with brief Thai feedback — then you MUST advance regardless.
+- FORBIDDEN: asking for the same item more than twice total.`;
   }
 
   private trainingSystemPrompt(
