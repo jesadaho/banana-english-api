@@ -229,6 +229,8 @@ type GenerateJsonOptions = {
   schema?: Record<string, unknown>;
   maxOutputTokens?: number;
   temperature?: number;
+  /** When Gemini ignores JSON mode and returns prose, map it into the schema. */
+  recoverFromPlainText?: (text: string) => unknown | null;
 };
 
 type GeminiResponse = {
@@ -334,11 +336,21 @@ export class GeminiChatService {
       contents: [
         {
           role: 'user',
-          parts: [{ text: config.openingPrompt }],
+          parts: [
+            {
+              text:
+                `${config.openingPrompt}\n\n` +
+                'Respond with ONLY one JSON object: ' +
+                '{"textEn":"...","textTh":"...","isLessonComplete":false}. ' +
+                'No markdown. No prose outside JSON.',
+            },
+          ],
         },
       ],
       schema: TRAINING_REPLY_SCHEMA,
       maxOutputTokens: 512,
+      temperature: 0.4,
+      recoverFromPlainText: (text) => this.recoverTrainingReplyFromPlainText(text),
     });
   }
 
@@ -356,7 +368,19 @@ export class GeminiChatService {
     for (const turn of this.priorTurnsForModel(history, userMessage, 12)) {
       contents.push({
         role: turn.speaker === 'ai' ? 'model' : 'user',
-        parts: [{ text: turn.textEn }],
+        // Keep model turns as JSON so responseSchema stays sticky across turns.
+        parts: [
+          {
+            text:
+              turn.speaker === 'ai'
+                ? JSON.stringify({
+                    textEn: turn.textEn,
+                    textTh: turn.textTh ?? '',
+                    isLessonComplete: false,
+                  })
+                : turn.textEn,
+          },
+        ],
       });
     }
 
@@ -364,11 +388,11 @@ export class GeminiChatService {
       role: 'user',
       parts: [
         {
-          text: this.trainingUserTurnPayload(
-            userMessage,
-            config,
-            history,
-          ),
+          text:
+            `${this.trainingUserTurnPayload(userMessage, config, history)}\n\n` +
+            'Respond with ONLY one JSON object: ' +
+            '{"textEn":"...","textTh":"...","isLessonComplete":false}. ' +
+            'No markdown. No prose outside JSON.',
         },
       ],
     });
@@ -382,6 +406,8 @@ export class GeminiChatService {
       contents,
       schema: TRAINING_REPLY_SCHEMA,
       maxOutputTokens: 600,
+      temperature: 0.4,
+      recoverFromPlainText: (text) => this.recoverTrainingReplyFromPlainText(text),
     });
   }
 
@@ -585,7 +611,8 @@ Critical turn-loop rule:
 - Always follow the 70/20/10 mix above for this lesson.
 - After a successful learner reply, the next action must be a NEW step — not the same phrase again.
 
-Return JSON:
+Return JSON ONLY (critical — never reply with bare prose):
+- Output a single JSON object and nothing else. No markdown fences.
 - textEn: spoken Teacher B line — MOSTLY THAI; include the English target phrase only where the learner should hear/say it; must end with the learner's next action unless completing
 - textTh: short Thai support line / paraphrase
 - isLessonComplete: true ONLY on the Summary + Celebrate core step (required to finish). Otherwise false`;
@@ -788,35 +815,73 @@ Payment closure (critical — no tap UI exists):
 
   private async generateJson<T>(options: GenerateJsonOptions): Promise<T> {
     const baseTokens = options.maxOutputTokens ?? 1024;
-    const tokenLimits = [baseTokens, baseTokens * 2, 4096];
+    const tokenLimits = [
+      baseTokens,
+      Math.max(baseTokens * 2, 1024),
+      Math.max(baseTokens * 3, 2048),
+      4096,
+    ];
+    const models = this.modelPool.activeModels();
 
     let lastError: unknown;
     let lastPreview = '';
 
-    for (let attempt = 0; attempt < tokenLimits.length; attempt++) {
-      try {
-        const text = await this.callGemini({
-          ...options,
-          schema: options.schema,
-          maxOutputTokens: tokenLimits[attempt],
-        });
-        return this.parseJsonResponse<T>(text);
-      } catch (error) {
-        lastError = error;
-        if (error instanceof Error) {
-          lastPreview = error.message;
-        }
-        const retryable =
-          error instanceof Error &&
-          (error.message.includes('MAX_TOKENS') ||
-            error.message.includes('truncated') ||
-            error.message.includes('invalid JSON') ||
-            error.message.includes('Unterminated') ||
-            error.message.includes('missing text'));
-        if (!retryable || attempt === tokenLimits.length - 1) {
-          break;
+    for (let modelIndex = 0; modelIndex < models.length; modelIndex++) {
+      const model = models[modelIndex];
+
+      for (let attempt = 0; attempt < tokenLimits.length; attempt++) {
+        const temperature =
+          attempt === 0
+            ? (options.temperature ?? 0.7)
+            : Math.min(options.temperature ?? 0.7, 0.35);
+
+        try {
+          const text = await this.callGeminiWithModel(model, {
+            ...options,
+            schema: options.schema,
+            maxOutputTokens: tokenLimits[attempt],
+            temperature,
+          });
+          try {
+            return this.parseJsonResponse<T>(text);
+          } catch (parseError) {
+            if (options.recoverFromPlainText) {
+              const recovered = options.recoverFromPlainText(text);
+              if (recovered != null) {
+                this.logger.warn(
+                  `Recovered plain-text Gemini reply into schema (model=${model})`,
+                );
+                return recovered as T;
+              }
+            }
+            throw parseError;
+          }
+        } catch (error) {
+          lastError = error;
+          if (error instanceof Error) {
+            lastPreview = error.message;
+          }
+
+          const retryable = this.isRetryableJsonError(error);
+          this.logger.warn(
+            `Gemini JSON attempt failed model=${model} tokens=${tokenLimits[attempt]}: ${lastPreview.slice(0, 180)}`,
+          );
+
+          if (!retryable) {
+            throw error instanceof Error
+              ? error
+              : new Error(String(error));
+          }
         }
       }
+
+      const hasAnotherModel = modelIndex < models.length - 1;
+      if (!hasAnotherModel) break;
+
+      // Soft-switch on persistent bad JSON (no long cooldown — just try next now).
+      this.logger.warn(
+        `Gemini model ${model} kept returning bad JSON; trying ${models[modelIndex + 1]}`,
+      );
     }
 
     if (lastPreview) {
@@ -827,6 +892,21 @@ Payment closure (critical — no tap UI exists):
     throw lastError instanceof Error
       ? lastError
       : new Error(String(lastError));
+  }
+
+  private isRetryableJsonError(error: unknown): boolean {
+    if (!(error instanceof Error)) return false;
+    const message = error.message;
+    return (
+      message.includes('MAX_TOKENS') ||
+      message.includes('truncated') ||
+      message.includes('invalid JSON') ||
+      message.includes('Unterminated') ||
+      message.includes('missing text') ||
+      message.includes('Unexpected token') ||
+      message.includes('Unexpected end') ||
+      this.isRetryableModelError(error)
+    );
   }
 
   private async generateText(options: GenerateJsonOptions): Promise<string> {
@@ -885,6 +965,8 @@ Payment closure (critical — no tap UI exists):
     if (options.schema) {
       generationConfig.responseMimeType = 'application/json';
       generationConfig.responseSchema = options.schema;
+      // Newer Gemini models accept responseJsonSchema; send both for compatibility.
+      generationConfig.responseJsonSchema = options.schema;
     }
 
     const body: Record<string, unknown> = {
@@ -954,7 +1036,8 @@ Payment closure (critical — no tap UI exists):
     return (
       /\bGemini API failed \((503|429|500|502|504)\):/.test(message) ||
       message.includes('"status": "UNAVAILABLE"') ||
-      message.includes('high demand')
+      message.includes('high demand') ||
+      message.includes('RESOURCE_EXHAUSTED')
     );
   }
 
@@ -1043,6 +1126,33 @@ Payment closure (critical — no tap UI exists):
     return { thinkingBudget: 0 };
   }
 
+  private recoverTrainingReplyFromPlainText(
+    text: string,
+  ): TrainingTurnReply | null {
+    let plain = text.trim();
+    if (!plain) return null;
+
+    if (plain.startsWith('```')) {
+      plain = plain
+        .replace(/^```(?:json)?\s*/i, '')
+        .replace(/\s*```$/, '')
+        .trim();
+    }
+
+    // Already looks like JSON — let the normal parser / repair path handle it.
+    if (plain.startsWith('{')) return null;
+
+    // Model ignored JSON mode and returned Teacher B prose (common with Thai).
+    this.logger.warn(
+      `Training reply plain-text fallback: ${plain.slice(0, 120)}`,
+    );
+    return {
+      textEn: plain,
+      textTh: '',
+      isLessonComplete: false,
+    };
+  }
+
   private parseJsonResponse<T>(text: string): T {
     let cleaned = text.trim();
 
@@ -1053,32 +1163,104 @@ Payment closure (critical — no tap UI exists):
         .trim();
     }
 
-    const preview = cleaned.slice(0, 160);
+    const preview = cleaned.slice(0, 200);
+    const candidates = [
+      cleaned,
+      this.extractJsonObject(cleaned),
+      this.repairTruncatedJson(cleaned),
+      this.repairTruncatedJson(this.extractJsonObject(cleaned) ?? ''),
+    ].filter((value): value is string => Boolean(value && value.trim()));
+
+    let firstError: unknown;
+    for (const candidate of candidates) {
+      try {
+        return JSON.parse(candidate) as T;
+      } catch (error) {
+        firstError ??= error;
+      }
+    }
+
+    const start = cleaned.indexOf('{');
+    const looksTruncated =
+      start >= 0 && !cleaned.trimEnd().endsWith('}');
+    if (looksTruncated) {
+      throw new Error(
+        `Gemini JSON response truncated (malformed). Preview: ${preview}`,
+      );
+    }
+
+    const detail =
+      firstError instanceof Error ? firstError.message : 'parse failed';
+    throw new Error(`Gemini invalid JSON: ${detail}. Preview: ${preview}`);
+  }
+
+  private extractJsonObject(text: string): string | null {
+    const start = text.indexOf('{');
+    const end = text.lastIndexOf('}');
+    if (start < 0 || end <= start) return null;
+    return text.slice(start, end + 1);
+  }
+
+  /** Best-effort close for truncated Gemini JSON (common with Thai/long textEn). */
+  private repairTruncatedJson(text: string): string | null {
+    const start = text.indexOf('{');
+    if (start < 0) return null;
+
+    let body = text.slice(start);
+    let inString = false;
+    let escape = false;
+    let depth = 0;
+
+    for (let i = 0; i < body.length; i++) {
+      const ch = body[i];
+      if (inString) {
+        if (escape) {
+          escape = false;
+          continue;
+        }
+        if (ch === '\\') {
+          escape = true;
+          continue;
+        }
+        if (ch === '"') {
+          inString = false;
+        }
+        continue;
+      }
+
+      if (ch === '"') {
+        inString = true;
+        continue;
+      }
+      if (ch === '{') depth += 1;
+      if (ch === '}') depth -= 1;
+    }
+
+    if (!inString && depth <= 0 && body.trimEnd().endsWith('}')) {
+      return null; // already well-formed enough for extract path
+    }
+
+    if (inString) {
+      // Drop a trailing incomplete escape, then close the string.
+      if (body.endsWith('\\')) {
+        body = body.slice(0, -1);
+      }
+      body += '"';
+    }
+
+    // Remove trailing comma before we close braces.
+    body = body.replace(/,\s*$/, '');
+
+    while (depth > 0) {
+      body += '}';
+      depth -= 1;
+    }
 
     try {
-      return JSON.parse(cleaned) as T;
-    } catch (firstError) {
-      const start = cleaned.indexOf('{');
-      const end = cleaned.lastIndexOf('}');
-      if (start >= 0 && end > start) {
-        try {
-          return JSON.parse(cleaned.slice(start, end + 1)) as T;
-        } catch {
-          // fall through
-        }
-      }
-
-      const looksTruncated =
-        start >= 0 && (end < start || !cleaned.trimEnd().endsWith('}'));
-      if (looksTruncated) {
-        throw new Error(
-          `Gemini JSON response truncated (malformed). Preview: ${preview}`,
-        );
-      }
-
-      const detail =
-        firstError instanceof Error ? firstError.message : 'parse failed';
-      throw new Error(`Gemini invalid JSON: ${detail}. Preview: ${preview}`);
+      JSON.parse(body);
+      return body;
+    } catch {
+      return null;
     }
   }
 
