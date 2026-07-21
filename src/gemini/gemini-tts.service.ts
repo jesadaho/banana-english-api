@@ -34,9 +34,17 @@ export class GeminiTtsService {
 
   constructor(private readonly config: ConfigService) {
     this.apiKey = this.config.get<string>('GEMINI_API_KEY') ?? '';
+    const primary = this.config.get<string>(
+      'GEMINI_TTS_MODEL',
+      'gemini-3.1-flash-tts-preview',
+    );
+    const fallbacks = this.config.get<string>(
+      'GEMINI_TTS_FALLBACK_MODELS',
+      'gemini-2.5-flash-lite-preview-tts,gemini-2.5-pro-preview-tts',
+    );
     const models = parseGeminiModels(
-      this.config.get<string>('GEMINI_TTS_MODEL'),
-      'gemini-2.5-flash-preview-tts',
+      [primary, fallbacks].filter(Boolean).join(','),
+      'gemini-3.1-flash-tts-preview',
     );
     const cooldownHours = Number(
       this.config.get<string>('GEMINI_TTS_MODEL_COOLDOWN_HOURS', '2'),
@@ -105,6 +113,13 @@ export class GeminiTtsService {
     model: string,
     trimmed: string,
   ): AsyncGenerator<Buffer> {
+    // Only 3.1 TTS supports Interactions streaming; everything else uses
+    // generateContent (or Interactions unary via unaryWithModel routing).
+    if (!this.supportsInteractionsStreaming(model)) {
+      yield await this.unaryWithModel(model, trimmed);
+      return;
+    }
+
     const body = {
       model,
       input: `Speak warmly and naturally as Teacher B, a friendly English teacher for Thai learners:\n\n${trimmed}`,
@@ -122,6 +137,7 @@ export class GeminiTtsService {
         headers: {
           'Content-Type': 'application/json',
           'x-goog-api-key': this.apiKey,
+          'Api-Revision': '2026-05-20',
         },
         body: JSON.stringify(body),
       },
@@ -135,7 +151,12 @@ export class GeminiTtsService {
           HttpStatus.TOO_MANY_REQUESTS,
         );
       }
-      throw new Error(`Gemini TTS failed (${response.status}): ${err}`);
+      // Fall through to generateContent for this model.
+      this.logger.warn(
+        `Interactions stream failed for ${model} (${response.status}); trying generateContent`,
+      );
+      yield await this.generateContentTts(model, trimmed);
+      return;
     }
 
     if (!response.body) {
@@ -254,6 +275,26 @@ export class GeminiTtsService {
     model: string,
     trimmed: string,
   ): Promise<Buffer> {
+    if (this.supportsInteractionsStreaming(model)) {
+      try {
+        return await this.interactionsUnary(model, trimmed);
+      } catch (error) {
+        const err = error instanceof Error ? error : new Error(String(error));
+        if (err instanceof HttpException) throw err;
+        if (!this.isRetryableModelError(err)) throw err;
+        this.logger.warn(
+          `Interactions unary failed for ${model}; trying generateContent: ${err.message.slice(0, 120)}`,
+        );
+      }
+    }
+
+    return this.generateContentTts(model, trimmed);
+  }
+
+  private async interactionsUnary(
+    model: string,
+    trimmed: string,
+  ): Promise<Buffer> {
     const body = {
       model,
       input: `Speak warmly and naturally as Teacher B, a friendly English teacher for Thai learners:\n\n${trimmed}`,
@@ -274,6 +315,7 @@ export class GeminiTtsService {
           headers: {
             'Content-Type': 'application/json',
             'x-goog-api-key': this.apiKey,
+            'Api-Revision': '2026-05-20',
           },
           body: JSON.stringify(body),
         },
@@ -293,7 +335,7 @@ export class GeminiTtsService {
         );
       }
 
-      const retryable = response.status >= 500;
+      const retryable = response.status === 404 || response.status >= 500;
       if (!retryable || attempt === maxAttempts) {
         throw new Error(
           `Gemini TTS failed (${response.status}): ${lastError}`,
@@ -306,11 +348,108 @@ export class GeminiTtsService {
     throw new Error(`Gemini TTS failed: ${lastError}`);
   }
 
+  /** generateContent AUDIO path — works for 2.5 / lite without Interactions. */
+  private async generateContentTts(
+    model: string,
+    trimmed: string,
+  ): Promise<Buffer> {
+    const body = {
+      contents: [
+        {
+          parts: [
+            {
+              text: `Speak warmly and naturally as Teacher B, a friendly English teacher for Thai learners:\n\n${trimmed}`,
+            },
+          ],
+        },
+      ],
+      generationConfig: {
+        responseModalities: ['AUDIO'],
+        speechConfig: {
+          voiceConfig: {
+            prebuiltVoiceConfig: {
+              voiceName: this.voice,
+            },
+          },
+        },
+      },
+    };
+
+    const maxAttempts = 3;
+    let lastError = 'Unknown Gemini generateContent TTS error';
+
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-goog-api-key': this.apiKey,
+          },
+          body: JSON.stringify(body),
+        },
+      );
+
+      if (response.ok) {
+        const data = (await response.json()) as {
+          candidates?: Array<{
+            content?: {
+              parts?: Array<{
+                inlineData?: { data?: string; mimeType?: string };
+                inline_data?: { data?: string; mime_type?: string };
+              }>;
+            };
+          }>;
+        };
+
+        const part = data.candidates?.[0]?.content?.parts?.find(
+          (p) => p.inlineData?.data || p.inline_data?.data,
+        );
+        const inline = part?.inlineData ?? part?.inline_data;
+        if (!inline?.data) {
+          throw new Error('Gemini generateContent TTS response missing audio');
+        }
+
+        return this.toPlayableAudio({
+          data: inline.data,
+          mimeType: inline.mimeType ?? (inline as { mime_type?: string }).mime_type,
+        });
+      }
+
+      lastError = await response.text();
+
+      if (response.status === 429) {
+        throw new HttpException(
+          'Gemini TTS quota exhausted. Use the same GEMINI_API_KEY as AI Studio or enable billing.',
+          HttpStatus.TOO_MANY_REQUESTS,
+        );
+      }
+
+      const retryable = response.status === 404 || response.status >= 500;
+      if (!retryable || attempt === maxAttempts) {
+        throw new Error(
+          `Gemini TTS failed (${response.status}): ${lastError}`,
+        );
+      }
+
+      await new Promise((resolve) => setTimeout(resolve, attempt * 400));
+    }
+
+    throw new Error(`Gemini TTS failed: ${lastError}`);
+  }
+
+  private supportsInteractionsStreaming(model: string): boolean {
+    const lower = model.toLowerCase();
+    return lower.includes('3.1') && lower.includes('tts');
+  }
+
   private isRetryableModelError(error: Error): boolean {
     const message = error.message;
     return (
-      /\bGemini TTS failed \((503|429|500|502|504)\):/.test(message) ||
+      /\bGemini TTS failed \((404|503|429|500|502|504)\):/.test(message) ||
       message.includes('"status": "UNAVAILABLE"') ||
+      message.includes('"status": "NOT_FOUND"') ||
       message.includes('high demand') ||
       message.includes('RESOURCE_EXHAUSTED')
     );

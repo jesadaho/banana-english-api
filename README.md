@@ -31,7 +31,8 @@ Server runs at `http://localhost:8000`.
 | `GEMINI_CHAT_MODEL` | Chat models, comma-separated priority (default `gemini-3.5-flash`) |
 | `GEMINI_CHAT_MODEL_COOLDOWN_HOURS` | Skip a model for N hours after 503/high demand (default `2`) |
 | `GEMINI_CHAT_FALLBACK_MODEL` | Deprecated — add models to `GEMINI_CHAT_MODEL` instead |
-| `GEMINI_TTS_MODEL` | TTS models, comma-separated priority (default `gemini-2.5-flash-preview-tts`) |
+| `GEMINI_TTS_MODEL` | Primary TTS model — single id (default `gemini-3.1-flash-tts-preview`) |
+| `GEMINI_TTS_FALLBACK_MODELS` | Fallback TTS models, comma-separated (newer clients + server pool) |
 | `GEMINI_TTS_MODEL_COOLDOWN_HOURS` | Skip a TTS model for N hours after 503/high demand (default `2`) |
 | `GEMINI_TTS_VOICE` | TTS voice (default `Sadachbia`) |
 | `GROQ_API_KEY` | Groq key (served to Flutter via `/api/config/keys`) |
@@ -67,7 +68,8 @@ Server runs at `http://localhost:8000`.
    | `GEMINI_API_KEY` | `AIza...` |
    | `GEMINI_CHAT_MODEL` | `gemini-3.5-flash,gemini-2.5-flash` (optional) |
    | `GEMINI_CHAT_MODEL_COOLDOWN_HOURS` | `2` (optional) |
-   | `GEMINI_TTS_MODEL` | `gemini-2.5-flash-preview-tts` (optional, comma-separated) |
+   | `GEMINI_TTS_MODEL` | `gemini-3.1-flash-tts-preview` |
+   | `GEMINI_TTS_FALLBACK_MODELS` | `gemini-2.5-flash-lite-preview-tts,gemini-2.5-pro-preview-tts` (optional) |
    | `GEMINI_TTS_MODEL_COOLDOWN_HOURS` | `2` (optional) |
    | `GROQ_API_KEY` | `gsk_...` |
    | `CORS_ORIGINS` | `http://localhost:8080,https://your-app.web.app` |

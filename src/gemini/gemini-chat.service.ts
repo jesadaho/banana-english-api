@@ -441,6 +441,69 @@ export class GeminiChatService {
     to: 'two',
   };
 
+  private static readonly NUMBER_ONES = [
+    'zero',
+    'one',
+    'two',
+    'three',
+    'four',
+    'five',
+    'six',
+    'seven',
+    'eight',
+    'nine',
+  ] as const;
+
+  private static readonly NUMBER_TEENS = [
+    'ten',
+    'eleven',
+    'twelve',
+    'thirteen',
+    'fourteen',
+    'fifteen',
+    'sixteen',
+    'seventeen',
+    'eighteen',
+    'nineteen',
+  ] as const;
+
+  private static readonly NUMBER_TENS = [
+    '',
+    '',
+    'twenty',
+    'thirty',
+    'forty',
+    'fifty',
+    'sixty',
+    'seventy',
+    'eighty',
+    'ninety',
+  ] as const;
+
+  /** Convert 0–100 to English words (STT often returns digits instead of words). */
+  private numberToWords(n: number): string | null {
+    if (!Number.isInteger(n) || n < 0 || n > 100) return null;
+    if (n < 10) return GeminiChatService.NUMBER_ONES[n];
+    if (n < 20) return GeminiChatService.NUMBER_TEENS[n - 10];
+    if (n === 100) return 'one hundred';
+    const tens = Math.floor(n / 10);
+    const ones = n % 10;
+    const tensWord = GeminiChatService.NUMBER_TENS[tens];
+    if (ones === 0) return tensWord;
+    return `${tensWord} ${GeminiChatService.NUMBER_ONES[ones]}`;
+  }
+
+  /** Replace standalone digits in normalized speech with English number words. */
+  private expandDigitsToWords(normalized: string): string {
+    return normalized
+      .replace(/\b\d{1,3}\b/g, (raw) => {
+        const words = this.numberToWords(Number(raw));
+        return words ?? raw;
+      })
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
   private matchTargetPhrase(
     userMessage: string,
     phrases: string[],
@@ -448,6 +511,23 @@ export class GeminiChatService {
     const normalized = this.normalizeSpeechText(userMessage);
     if (!normalized) return null;
 
+    const expanded = this.expandDigitsToWords(normalized);
+    const candidates = expanded === normalized
+      ? [normalized]
+      : [normalized, expanded];
+
+    for (const candidate of candidates) {
+      const matched = this.matchNormalizedAgainstPhrases(candidate, phrases);
+      if (matched) return matched;
+    }
+
+    return null;
+  }
+
+  private matchNormalizedAgainstPhrases(
+    normalized: string,
+    phrases: string[],
+  ): string | null {
     const sorted = [...phrases].sort((a, b) => b.length - a.length);
     for (const phrase of sorted) {
       const target = this.normalizeSpeechText(phrase);

@@ -25,9 +25,17 @@ export class ConfigKeysController {
       : 'device';
 
     const geminiApiKey = this.config.get<string>('GEMINI_API_KEY');
-    const geminiTtsModel = this.config.get<string>(
+    const rawPrimary = this.config.get<string>(
       'GEMINI_TTS_MODEL',
-      'gemini-2.5-flash-preview-tts',
+      'gemini-3.1-flash-tts-preview',
+    );
+    // Older Gemini Direct clients treat this as a single model id — never send a list.
+    const geminiTtsModel =
+      rawPrimary.split(/[,;]/).map((m) => m.trim()).find(Boolean) ??
+      'gemini-3.1-flash-tts-preview';
+    const geminiTtsFallbackModels = this.config.get<string>(
+      'GEMINI_TTS_FALLBACK_MODELS',
+      'gemini-2.5-flash-lite-preview-tts,gemini-2.5-pro-preview-tts',
     );
     const geminiTtsVoice = this.config.get<string>('GEMINI_TTS_VOICE', 'Sadachbia');
 
@@ -36,6 +44,7 @@ export class ConfigKeysController {
       defaultTtsMode,
       geminiApiKey: geminiApiKey ?? null,
       geminiTtsModel,
+      geminiTtsFallbackModels,
       geminiTtsVoice,
     };
   }
