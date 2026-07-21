@@ -61,20 +61,8 @@ export class LessonsService {
     );
   }
 
-  isLessonUnlocked(
-    lessonId: string,
-    completedIds: Set<string>,
-  ): boolean {
-    const index = LESSON_PROGRESSION_ORDER.indexOf(lessonId);
-    if (index < 0) {
-      return false;
-    }
-    if (index === 0) {
-      return true;
-    }
-
-    const previousLessonId = LESSON_PROGRESSION_ORDER[index - 1];
-    return completedIds.has(previousLessonId);
+  isLessonUnlocked(lessonId: string): boolean {
+    return LESSON_PROGRESSION_ORDER.includes(lessonId);
   }
 
   private resolveStatus(
@@ -84,9 +72,6 @@ export class LessonsService {
   ): LessonProgressStatus {
     if (completedIds.has(lessonId)) {
       return 'completed';
-    }
-    if (!this.isLessonUnlocked(lessonId, completedIds)) {
-      return 'locked';
     }
     if (lessonId === currentLessonId) {
       return 'in_progress';
@@ -145,11 +130,7 @@ export class LessonsService {
     userId: string,
     lessonId: string,
   ): Promise<boolean> {
-    if (!getLesson(lessonId)) {
-      return false;
-    }
-    const completedIds = await this.getCompletedLessonIds(userId);
-    return this.isLessonUnlocked(lessonId, completedIds);
+    return getLesson(lessonId) != null;
   }
 
   getNextLessonIdAfter(lessonId: string): string | null {
