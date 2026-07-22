@@ -24,6 +24,7 @@ export class ConfigKeysController {
       'client',
       'server',
       'cloud',
+      'cloudGrpc',
       'device',
       'deviceAuto',
     ].includes(ttsEnv)

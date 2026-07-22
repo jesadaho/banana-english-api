@@ -11,6 +11,7 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
+import { formatAiServiceUserMessage } from '../common/ai-user-message';
 import { Prisma, User } from '@prisma/client';
 import { GeminiChatService } from '../gemini/gemini-chat.service';
 import { GeminiTtsService } from '../gemini/gemini-tts.service';
@@ -109,9 +110,7 @@ export class SessionsController {
 
       return { session: data.session, opening };
     } catch (err) {
-      throw new BadGatewayException(
-        `AI service error: ${err instanceof Error ? err.message : String(err)}`,
-      );
+      throw new BadGatewayException(formatAiServiceUserMessage(err));
     }
   }
 
@@ -196,9 +195,7 @@ export class SessionsController {
         opening,
       };
     } catch (err) {
-      throw new BadGatewayException(
-        `AI service error: ${err instanceof Error ? err.message : String(err)}`,
-      );
+      throw new BadGatewayException(formatAiServiceUserMessage(err));
     }
   }
 
@@ -295,9 +292,7 @@ export class SessionsController {
         },
       };
     } catch (err) {
-      throw new BadGatewayException(
-        `AI service error: ${err instanceof Error ? err.message : String(err)}`,
-      );
+      throw new BadGatewayException(formatAiServiceUserMessage(err));
     }
   }
 
@@ -388,9 +383,7 @@ export class SessionsController {
       ) {
         throw err;
       }
-      throw new BadGatewayException(
-        `AI service error: ${err instanceof Error ? err.message : String(err)}`,
-      );
+      throw new BadGatewayException(formatAiServiceUserMessage(err));
     }
   }
 
@@ -502,9 +495,7 @@ export class SessionsController {
       ) {
         throw err;
       }
-      throw new BadGatewayException(
-        `AI service error: ${err instanceof Error ? err.message : String(err)}`,
-      );
+      throw new BadGatewayException(formatAiServiceUserMessage(err));
     }
   }
 
@@ -560,9 +551,7 @@ export class SessionsController {
       ) {
         throw err;
       }
-      throw new BadGatewayException(
-        `AI service error: ${err instanceof Error ? err.message : String(err)}`,
-      );
+      throw new BadGatewayException(formatAiServiceUserMessage(err));
     }
   }
 
@@ -616,9 +605,7 @@ export class SessionsController {
         await this.users.updateDisplayName(req.user.id, introReport.userName);
         return { status: 'ended', introReport };
       } catch (err) {
-        throw new BadGatewayException(
-          `AI service error: ${err instanceof Error ? err.message : String(err)}`,
-        );
+        throw new BadGatewayException(formatAiServiceUserMessage(err));
       }
     }
 
@@ -667,9 +654,7 @@ export class SessionsController {
       const report = await this.chat.generateIntroReport(data.turns);
       return { sessionId, ...report };
     } catch (err) {
-      throw new BadGatewayException(
-        `AI service error: ${err instanceof Error ? err.message : String(err)}`,
-      );
+      throw new BadGatewayException(formatAiServiceUserMessage(err));
     }
   }
 
@@ -829,9 +814,7 @@ export class SessionsController {
         turns: mergeTurnsWithFeedback(data.turns, report.turnFeedback),
       };
     } catch (err) {
-      throw new BadGatewayException(
-        `AI service error: ${err instanceof Error ? err.message : String(err)}`,
-      );
+      throw new BadGatewayException(formatAiServiceUserMessage(err));
     }
   }
 
