@@ -2,17 +2,31 @@ import {
   BadGatewayException,
   Body,
   Controller,
+  Get,
   HttpException,
   Post,
   Res,
 } from '@nestjs/common';
 import type { Response } from 'express';
 import { GeminiTtsService } from '../gemini/gemini-tts.service';
+import { CloudTtsAuthService } from './cloud-tts-auth.service';
 import { SynthesizeTtsDto } from './dto/tts.dto';
 
 @Controller('api/tts')
 export class TtsController {
-  constructor(private readonly geminiTts: GeminiTtsService) {}
+  constructor(
+    private readonly geminiTts: GeminiTtsService,
+    private readonly cloudTtsAuth: CloudTtsAuthService,
+  ) {}
+
+  /**
+   * Short-lived Google OAuth token for client-direct Cloud Text-to-Speech.
+   * Audio synthesis happens on-device against Google — not proxied here.
+   */
+  @Get('cloud-token')
+  async cloudToken() {
+    return this.cloudTtsAuth.mintAccessToken();
+  }
 
   @Post('synthesize')
   async synthesize(@Body() body: SynthesizeTtsDto) {

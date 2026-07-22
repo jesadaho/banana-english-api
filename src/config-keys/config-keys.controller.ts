@@ -56,6 +56,7 @@ export class ConfigKeysController {
       geminiTtsVoice,
     );
     const cloudTtsProjectId = this.config.get<string>('GOOGLE_CLOUD_PROJECT');
+    const cloudTtsTokenEnabled = this.isCloudTtsTokenConfigured();
 
     return {
       groqApiKey: groqApiKey ?? null,
@@ -64,10 +65,24 @@ export class ConfigKeysController {
       geminiTtsModel,
       geminiTtsFallbackModels,
       geminiTtsVoice,
-      cloudTtsApiKey: cloudTtsApiKey ?? null,
+      // Prefer token minting; keep API key only as optional legacy fallback.
+      cloudTtsApiKey: cloudTtsTokenEnabled ? null : (cloudTtsApiKey ?? null),
       cloudTtsModel,
       cloudTtsVoice,
       cloudTtsProjectId: cloudTtsProjectId ?? null,
+      cloudTtsTokenEnabled,
     };
+  }
+
+  private isCloudTtsTokenConfigured(): boolean {
+    const json = this.config
+      .get<string>('GOOGLE_CLOUD_TTS_CREDENTIALS_JSON')
+      ?.trim();
+    if (json) return true;
+    const email = this.config
+      .get<string>('GOOGLE_CLOUD_TTS_CLIENT_EMAIL')
+      ?.trim();
+    const key = this.config.get<string>('GOOGLE_CLOUD_TTS_PRIVATE_KEY')?.trim();
+    return Boolean(email && key);
   }
 }

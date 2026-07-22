@@ -35,10 +35,13 @@ Server runs at `http://localhost:8000`.
 | `GEMINI_TTS_FALLBACK_MODELS` | Fallback TTS models, comma-separated (newer clients + server pool) |
 | `GEMINI_TTS_MODEL_COOLDOWN_HOURS` | Skip a TTS model for N hours after 503/high demand (default `2`) |
 | `GEMINI_TTS_VOICE` | TTS voice (default `Sadachbia`) |
-| `GOOGLE_CLOUD_TTS_API_KEY` | Android-restricted GCP key for client Cloud Text-to-Speech |
+| `GOOGLE_CLOUD_TTS_API_KEY` | Legacy Android-restricted key (only if token minting unset) |
+| `GOOGLE_CLOUD_TTS_CREDENTIALS_JSON` | Service account JSON for minting client Cloud TTS tokens |
+| `GOOGLE_CLOUD_TTS_CLIENT_EMAIL` | SA email (alt to JSON) |
+| `GOOGLE_CLOUD_TTS_PRIVATE_KEY` | SA private key (alt to JSON; use `\n` for newlines) |
 | `GOOGLE_CLOUD_TTS_MODEL` | Cloud TTS model (default `gemini-2.5-flash-tts`) |
 | `GOOGLE_CLOUD_TTS_VOICE` | Cloud TTS speaker (default = `GEMINI_TTS_VOICE`) |
-| `GOOGLE_CLOUD_PROJECT` | Optional GCP project id for `x-goog-user-project` |
+| `GOOGLE_CLOUD_PROJECT` | GCP project id for `x-goog-user-project` on Bearer calls |
 | `GROQ_API_KEY` | Groq key (served to Flutter via `/api/config/keys`) |
 | `PORT` | Server port (default `8000`) |
 | `CORS_ORIGINS` | Comma-separated allowed origins |
@@ -59,6 +62,7 @@ Server runs at `http://localhost:8000`.
 | POST | `/sessions/:id/end` | End session |
 | GET | `/sessions/:id/report` | Daily report |
 | POST | `/api/tts/synthesize` | Synthesize speech clips (Gemini TTS) |
+| GET | `/api/tts/cloud-token` | Short-lived OAuth token for client Cloud TTS |
 
 ## Deploy on Railway
 
@@ -75,7 +79,9 @@ Server runs at `http://localhost:8000`.
    | `GEMINI_TTS_MODEL` | `gemini-3.1-flash-tts-preview` |
    | `GEMINI_TTS_FALLBACK_MODELS` | `gemini-2.5-pro-preview-tts,gemini-2.5-flash-preview-tts` (optional) |
    | `GEMINI_TTS_MODEL_COOLDOWN_HOURS` | `2` (optional) |
-   | `GOOGLE_CLOUD_TTS_API_KEY` | Android-restricted GCP API key (for client Cloud TTS) |
+   | `GOOGLE_CLOUD_TTS_API_KEY` | Android-restricted GCP API key (legacy; optional) |
+   | `GOOGLE_CLOUD_TTS_CREDENTIALS_JSON` | Service account JSON (preferred for client Cloud TTS) |
+   | `GOOGLE_CLOUD_PROJECT` | GCP project id |
    | `GOOGLE_CLOUD_TTS_MODEL` | `gemini-2.5-flash-tts` (optional) |
    | `GROQ_API_KEY` | `gsk_...` |
    | `CORS_ORIGINS` | `http://localhost:8080,https://your-app.web.app` |
