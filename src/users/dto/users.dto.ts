@@ -43,3 +43,10 @@ export class UnlockAvatarDto {
   @MaxLength(64)
   avatarId!: string;
 }
+
+export class RefillBananasByNameDto {
+  @IsString()
+  @MinLength(1)
+  @MaxLength(80)
+  displayName!: string;
+}

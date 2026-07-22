@@ -13,6 +13,7 @@ import { ActivityService } from './activity.service';
 import { AnonymousUserGuard } from './anonymous-user.guard';
 import {
   CompleteOnboardingDto,
+  RefillBananasByNameDto,
   UnlockAvatarDto,
   UpsertUserDto,
 } from './dto/users.dto';
@@ -85,6 +86,11 @@ export class UsersController {
   @Post('me/debug/refill-bananas')
   async refillBananasDebug(@Req() req: AuthedRequest) {
     return this.users.refillBananasDebug(req.user);
+  }
+
+  @Post('debug/refill-bananas-by-name')
+  async refillBananasByNameDebug(@Body() body: RefillBananasByNameDto) {
+    return this.users.refillBananasDebugByDisplayName(body.displayName);
   }
 
   @Post('me/debug/reset-streak')

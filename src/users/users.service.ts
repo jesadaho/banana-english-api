@@ -1,7 +1,9 @@
 import {
   BadRequestException,
+  ConflictException,
   ForbiddenException,
   Injectable,
+  NotFoundException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { User } from '@prisma/client';
@@ -26,6 +28,12 @@ export interface UserProfileResponse {
   dailyUsedToday: boolean;
   timezone: string;
   unlockedAvatarIds: string[];
+}
+
+export interface DebugRefillBananasByNameResponse {
+  displayName: string;
+  bananaBalance: number;
+  credited: number;
 }
 
 @Injectable()
@@ -109,6 +117,42 @@ export class UsersService {
 
     const updated = await this.economy.creditDebugBananas(user.id);
     return this.getProfile(updated);
+  }
+
+  async refillBananasDebugByDisplayName(
+    displayName: string,
+  ): Promise<DebugRefillBananasByNameResponse> {
+    if (!this.isDebugEndpointsEnabled()) {
+      throw new ForbiddenException('Debug endpoints are disabled');
+    }
+
+    const trimmed = displayName.trim();
+    if (!trimmed) {
+      throw new BadRequestException('displayName is required');
+    }
+
+    const matches = await this.prisma.user.findMany({
+      where: { displayName: trimmed },
+    });
+
+    if (matches.length === 0) {
+      throw new NotFoundException(`No user found with displayName "${trimmed}"`);
+    }
+    if (matches.length > 1) {
+      throw new ConflictException(
+        `displayName "${trimmed}" matches ${matches.length} users — use a unique name`,
+      );
+    }
+
+    const target = matches[0];
+    const before = target.bananaBalance;
+    const updated = await this.economy.creditDebugBananas(target.id);
+
+    return {
+      displayName: updated.displayName ?? trimmed,
+      bananaBalance: updated.bananaBalance,
+      credited: updated.bananaBalance - before,
+    };
   }
 
   async resetStreakDebug(user: User): Promise<UserProfileResponse> {
