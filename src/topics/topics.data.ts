@@ -98,14 +98,14 @@ export const FREE_TALK_LANGUAGE_LEVEL_GUIDE: Record<
     'Language level: Easy (มือใหม่).\n' +
     '- textEn (spoken): code-switch in ONE reply — mostly Thai, English about 30–40%.\n' +
     '- Interleave short English words/phrases inside Thai (do NOT put all English first then all Thai).\n' +
-    '- Example textEn: "สวัสดีครับ! Ready for Free Talk ไหมครับ? เราคุยอะไรก็ได้สักสองสามนาที — how\'s your day?"\n' +
+    '- Example textEn: "สวัสดีครับ Jesada! กินข้าวหรือยังครับ? Did you eat yet?"\n' +
     '- textTh: Thai-only subtitle of the same meaning (ครับ voice).\n' +
     '- Wrong: English-only textEn + Thai translation in textTh.',
   balanced:
     'Language level: Balanced (default).\n' +
     '- textEn (spoken): code-switch in ONE reply — English about 60–70%, light Thai mixed in.\n' +
     '- Lead with English, drop short Thai for warmth/clarity mid-sentence (do NOT dump full Thai only into textTh).\n' +
-    '- Example textEn: "Hey! พร้อม Free Talk ไหมครับ? We can chat about anything for a few minutes. วันนี้เป็นไงบ้าง?"\n' +
+    '- Example textEn: "โอ้ Jesada มาแล้ว 😄 เหนื่อยไหมวันนี้? Tired today?"\n' +
     '- textTh: Thai-only subtitle of the same meaning (ครับ voice).\n' +
     '- Wrong: English-only textEn + Thai translation in textTh (that is English Only style).',
   englishOnly:
@@ -116,7 +116,7 @@ export const FREE_TALK_LANGUAGE_LEVEL_GUIDE: Record<
 };
 
 export const FREE_TALK_PHASE_GUIDE = `Conversation phases (advance naturally, do not announce phase names to the learner):
-1) greeting — warm hello, invite freestyle chat for a few minutes.
+1) greeting — vary the opener every time (never the same fixed script). Warm hello by name + one natural follow-up. Feel human, not a menu. Do not explain Free Talk (they already chose it).
 2) ice_breaker — easy small talk to lower anxiety.
 3) discover_topic — find what they want to talk about (or recall a prior memory if natural).
 4) conversation_loop — stay here most of the session. Pick nextAction:
@@ -132,6 +132,50 @@ export const FREE_TALK_PHASE_GUIDE = `Conversation phases (advance naturally, do
 Per-turn internal reasoning (use to choose nextAction; keep replies short):
 User message → Intent → Emotion → Grammar (silent) → Topic → Conversation depth → Previous memory → Next action.
 Do NOT dump this reasoning into textEn/textTh.`;
+
+/**
+ * Opening vibe bank — server picks one at random each Free Talk start
+ * so Teacher B does not sound scripted.
+ */
+export const FREE_TALK_GREETING_SEEDS: readonly string[] = [
+  'Hey! 😊',
+  'Hi!',
+  'โอ้ มาแล้ว 😄',
+  'คิดถึงนะ',
+  'วันนี้พร้อมคุยหรือยัง',
+  'เหนื่อยไหมวันนี้',
+  'ทำอะไรอยู่ก่อนเข้ามา',
+  'กินข้าวหรือยัง',
+  'วันนี้อารมณ์เป็นยังไง',
+  'Yo!',
+  'เฮ้!',
+  'มาแล้ววว',
+  'อุ้ย มาแล้ว',
+  'ดีใจที่ได้เจอ',
+  "What's up?",
+  'Long time no see — แซวเบาๆ',
+  'วันนี้นอนหลับดีไหม',
+  'เช้านี้ / เย็นนี้ เป็นไงบ้าง',
+  'เพิ่งว่างใช่ไหม',
+  'ว้าว มาคุยกันแล้ว',
+  'มีอะไรอยากระบายไหม',
+  'วันนี้ยุ่งไหม',
+  'กาแฟหรือชามั้ย — ถามเล่นๆ',
+  'เสียงดีไหมวันนี้',
+  'พร้อมแซวกันหน่อยไหม',
+  'วันนี้อยากคุยเรื่องสนุกๆ หรือเรื่องจริงจัง',
+  'มีข่าวดีไหมวันนี้',
+  'เหนื่อยจากงาน/เรียนไหม',
+  'เพิ่งกินอะไรอร่อยๆ ไหม',
+  'อากาศวันนี้เป็นไงที่นู่น',
+];
+
+export function pickFreeTalkGreetingSeed(
+  random: () => number = Math.random,
+): string {
+  const index = Math.floor(random() * FREE_TALK_GREETING_SEEDS.length);
+  return FREE_TALK_GREETING_SEEDS[index] ?? FREE_TALK_GREETING_SEEDS[0]!;
+}
 
 /** Bias wrap-up when client reports this many seconds left (or fewer). */
 export const FREE_TALK_WRAP_UP_SECONDS = 45;
@@ -275,16 +319,23 @@ export function freeTalkSystemPrompt(options: {
 export function freeTalkOpeningUserPrompt(options: {
   languageLevel: FreeTalkLanguageLevel;
   memories?: string[];
+  learnerFirstName?: string;
+  greetingSeed?: string;
 }): string {
+  const name = (options.learnerFirstName ?? '').trim() || 'เพื่อน';
+  const seed = (options.greetingSeed ?? '').trim() || pickFreeTalkGreetingSeed();
   const memoryHint =
     options.memories && options.memories.length > 0
       ? 'If natural, lightly recall one prior memory (e.g. something they shared last time) — do not dump a list.'
-      : 'No prior memories — keep the opener generic and easy.';
+      : 'No prior memories — keep the opener easy.';
 
   return (
     'Start a Free Talk session as Teacher B in phase greeting. ' +
-    'Greet warmly, say they can talk about anything for a few minutes, ' +
-    'and ask one easy open question. ' +
+    `Greeting vibe seed (use this energy — paraphrase, do NOT copy word-for-word every time): "${seed}". ` +
+    `Weave in the learner's name (${name}) naturally once. ` +
+    'Then add ONE short follow-up that fits the seed (not always "how\'s your day"). ' +
+    'Vary like a real friend — playful, curious, teasing lightly. Keep total reply short (1–2 beats). ' +
+    'Do NOT explain Free Talk, do NOT say "ready for Free Talk", do NOT pitch "we can talk about anything for a few minutes". ' +
     'Do not lock them into a cafe, pets, or lesson script. ' +
     `Obey language level ${options.languageLevel}. ` +
     (options.languageLevel === 'englishOnly'

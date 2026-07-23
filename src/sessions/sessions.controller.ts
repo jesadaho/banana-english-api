@@ -103,6 +103,7 @@ export class SessionsController {
         'free_talk_start',
       );
       const priorMemories = await this.users.getFreeTalkMemories(req.user.id);
+      const learnerFirstName = firstNameFromDisplayName(req.user.displayName);
       const data = this.sessionStore.create(body.topicId, {
         durationLimitSeconds: durationMinutes * 60,
         freeTalk: {
@@ -115,6 +116,7 @@ export class SessionsController {
         const reply = await this.chat.generateFreeTalkOpening({
           languageLevel,
           memories: priorMemories,
+          learnerFirstName,
         });
         const opening = {
           speaker: 'ai' as const,

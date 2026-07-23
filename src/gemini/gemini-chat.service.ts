@@ -13,6 +13,7 @@ import {
   HINTS_PROMPT,
   normalizeFreeTalkLanguageLevel,
   openingUserPrompt,
+  pickFreeTalkGreetingSeed,
   REPORT_PROMPT,
   teacherBThaiVoice,
   THAI_MIX_PROMPT,
@@ -447,15 +448,28 @@ export class GeminiChatService {
   async generateFreeTalkOpening(options: {
     languageLevel: FreeTalkLanguageLevel;
     memories?: string[];
+    learnerFirstName?: string;
   }): Promise<FreeTalkTurnReply> {
     const languageLevel = normalizeFreeTalkLanguageLevel(options.languageLevel);
     const memories = options.memories ?? [];
+    const learnerFirstName =
+      (options.learnerFirstName ?? '').trim() || 'เพื่อน';
+    const greetingSeed = pickFreeTalkGreetingSeed();
+    const openingPrompt = freeTalkOpeningUserPrompt({
+      languageLevel,
+      memories,
+      learnerFirstName,
+      greetingSeed,
+    });
     const systemInstruction =
       `${freeTalkSystemPrompt({
         languageLevel,
         phase: 'greeting',
         memories,
       })}\n\n` +
+      `Learner first name: ${learnerFirstName}. ` +
+      `This session's greeting vibe seed: "${greetingSeed}". ` +
+      'Open with that vibe + name + one fitting follow-up — never a fixed script.\n\n' +
       'Return JSON matching the schema. Keep the spoken reply short. ' +
       (languageLevel === 'englishOnly'
         ? 'textEn is English-only.'
@@ -466,11 +480,7 @@ export class GeminiChatService {
       contents: [
         {
           role: 'user',
-          parts: [
-            {
-              text: freeTalkOpeningUserPrompt({ languageLevel, memories }),
-            },
-          ],
+          parts: [{ text: openingPrompt }],
         },
       ],
       schema: FREE_TALK_REPLY_SCHEMA,
@@ -482,11 +492,7 @@ export class GeminiChatService {
       priorContents: [
         {
           role: 'user',
-          parts: [
-            {
-              text: freeTalkOpeningUserPrompt({ languageLevel, memories }),
-            },
-          ],
+          parts: [{ text: openingPrompt }],
         },
       ],
     });
@@ -677,8 +683,8 @@ export class GeminiChatService {
                 text:
                   'REWRITE REQUIRED: your spoken textEn was English-only. ' +
                   'Return the SAME greeting/reply again but textEn MUST mix Thai script and English in ONE line ' +
-                  '(e.g. "Hey! พร้อม Free Talk ไหมครับ? How\'s your day?"). ' +
-                  'textTh stays Thai-only subtitle. Return full JSON schema.',
+                  '(e.g. "Hey Jesada! วันนี้เป็นไงบ้างครับ? How\'s your day?"). ' +
+                  'Do not explain Free Talk. textTh stays Thai-only subtitle. Return full JSON schema.',
               },
             ],
           },
