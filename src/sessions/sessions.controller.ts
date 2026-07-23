@@ -627,7 +627,10 @@ export class SessionsController {
             ...suggestion.issueLogEntries,
           ],
         });
-        return aiTurn;
+        return {
+          ...aiTurn,
+          suggestionDebug: suggestion.debug,
+        };
       }
 
       const reply =

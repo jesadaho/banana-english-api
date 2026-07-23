@@ -100,6 +100,13 @@ export const FREE_TALK_LANGUAGE_LEVEL_GUIDE: Record<
     'Language level: Easy (มือใหม่).\n' +
     '- textEn (spoken): code-switch in ONE reply — mostly Thai, English about 30–40%.\n' +
     '- Interleave short English words/phrases inside Thai (do NOT put all English first then all Thai).\n' +
+    '- QUESTIONS ONLY: if you ask something in English, also echo that same question briefly in Thai so they catch the meaning.\n' +
+    '  Good: "Nice! What did you do yesterday? เมื่อวานทำอะไรบ้างครับ?"\n' +
+    '  Also fine: "เมื่อวานทำอะไรบ้างครับ? What did you do yesterday?"\n' +
+    '  Translate only the question beat — not the whole reply.\n' +
+    '- Statements / teasing / praise / soft recast beats: do NOT Thai-echo the whole line; keep those light.\n' +
+    '- Very short questions ("Really?", "Oh?") need no Thai echo.\n' +
+    '- Soft recast + follow-up: Thai-echo only the follow-up question if there is one.\n' +
     '- Example textEn: "สวัสดีครับ Jesada! กินข้าวหรือยังครับ? Did you eat yet?"\n' +
     '- textTh: Thai-only subtitle of the same meaning (ครับ voice).\n' +
     '- Wrong: English-only textEn + Thai translation in textTh.',
@@ -247,6 +254,31 @@ export interface FreeTalkSuggestionGateResult {
   issueLogEntries: FreeTalkIssueLogEntry[];
   grammarSuggestionsUsed: number;
   naturalnessSuggestionsUsed: number;
+  debug: FreeTalkSuggestionDebug;
+}
+
+export interface FreeTalkSuggestionChannelDebug {
+  damage: FreeTalkDamageLevel;
+  eligible: boolean;
+  chance: number | null;
+  roll: number | null;
+  rollPassed: boolean;
+  passed: boolean;
+  used: number;
+  max: number;
+  skipReason: string | null;
+}
+
+export interface FreeTalkSuggestionDebug {
+  languageLevel: FreeTalkLanguageLevel;
+  grammarDamage: FreeTalkDamageLevel;
+  naturalnessDamage: FreeTalkDamageLevel;
+  issueNote: string;
+  hasSoftRecast: boolean;
+  grammar: FreeTalkSuggestionChannelDebug;
+  naturalness: FreeTalkSuggestionChannelDebug;
+  applied: boolean;
+  appliedKind: FreeTalkIssueKind | null;
 }
 
 /** Server-side budget + chance gate (LLM only proposes softRecast candidates). */
@@ -275,35 +307,33 @@ export function applyFreeTalkSuggestionGate(
     });
   }
 
-  let grammarPassed = false;
-  let naturalnessPassed = false;
-
-  if (
-    (input.grammarDamage === 'medium' || input.grammarDamage === 'high') &&
-    input.grammarSuggestionsUsed < input.grammarMax
-  ) {
-    grammarPassed =
-      random() < table.grammar[input.grammarDamage] && hasSoftRecast;
-  }
-  if (
-    (input.naturalnessDamage === 'medium' ||
-      input.naturalnessDamage === 'high') &&
-    input.naturalnessSuggestionsUsed < input.naturalnessMax
-  ) {
-    naturalnessPassed =
-      random() < table.naturalness[input.naturalnessDamage] && hasSoftRecast;
-  }
+  const grammar = evaluateSuggestionChannel({
+    damage: input.grammarDamage,
+    used: input.grammarSuggestionsUsed,
+    max: input.grammarMax,
+    chanceTable: table.grammar,
+    hasSoftRecast,
+    random,
+  });
+  const naturalness = evaluateSuggestionChannel({
+    damage: input.naturalnessDamage,
+    used: input.naturalnessSuggestionsUsed,
+    max: input.naturalnessMax,
+    chanceTable: table.naturalness,
+    hasSoftRecast,
+    random,
+  });
 
   let kind: FreeTalkIssueKind | null = null;
-  if (grammarPassed && naturalnessPassed) {
+  if (grammar.passed && naturalness.passed) {
     kind =
       freeTalkDamageRank(input.grammarDamage) >=
       freeTalkDamageRank(input.naturalnessDamage)
         ? 'grammar'
         : 'naturalness';
-  } else if (grammarPassed) {
+  } else if (grammar.passed) {
     kind = 'grammar';
-  } else if (naturalnessPassed) {
+  } else if (naturalness.passed) {
     kind = 'naturalness';
   }
 
@@ -327,6 +357,110 @@ export function applyFreeTalkSuggestionGate(
     issueLogEntries,
     grammarSuggestionsUsed,
     naturalnessSuggestionsUsed,
+    debug: {
+      languageLevel: input.languageLevel,
+      grammarDamage: input.grammarDamage,
+      naturalnessDamage: input.naturalnessDamage,
+      issueNote: note,
+      hasSoftRecast,
+      grammar: {
+        damage: grammar.damage,
+        eligible: grammar.eligible,
+        chance: grammar.chance,
+        roll: grammar.roll,
+        rollPassed: grammar.rollPassed,
+        passed: grammar.passed,
+        used: grammarSuggestionsUsed,
+        max: input.grammarMax,
+        skipReason: grammar.skipReason,
+      },
+      naturalness: {
+        damage: naturalness.damage,
+        eligible: naturalness.eligible,
+        chance: naturalness.chance,
+        roll: naturalness.roll,
+        rollPassed: naturalness.rollPassed,
+        passed: naturalness.passed,
+        used: naturalnessSuggestionsUsed,
+        max: input.naturalnessMax,
+        skipReason: naturalness.skipReason,
+      },
+      applied: kind != null,
+      appliedKind: kind,
+    },
+  };
+}
+
+function evaluateSuggestionChannel(options: {
+  damage: FreeTalkDamageLevel;
+  used: number;
+  max: number;
+  chanceTable: { high: number; medium: number };
+  hasSoftRecast: boolean;
+  random: () => number;
+}): {
+  damage: FreeTalkDamageLevel;
+  eligible: boolean;
+  chance: number | null;
+  roll: number | null;
+  rollPassed: boolean;
+  passed: boolean;
+  skipReason: string | null;
+} {
+  const base = {
+    damage: options.damage,
+    eligible: false,
+    chance: null as number | null,
+    roll: null as number | null,
+    rollPassed: false,
+    passed: false,
+    skipReason: null as string | null,
+  };
+
+  if (options.damage !== 'medium' && options.damage !== 'high') {
+    return {
+      ...base,
+      skipReason:
+        options.damage === 'none' ? 'damage_none' : 'damage_low',
+    };
+  }
+  if (options.used >= options.max) {
+    return { ...base, skipReason: 'budget_exhausted' };
+  }
+
+  const chance = options.chanceTable[options.damage];
+  const roll = options.random();
+  const rollPassed = roll < chance;
+  if (!options.hasSoftRecast) {
+    return {
+      ...base,
+      eligible: true,
+      chance,
+      roll,
+      rollPassed,
+      passed: false,
+      skipReason: 'no_soft_recast',
+    };
+  }
+  if (!rollPassed) {
+    return {
+      ...base,
+      eligible: true,
+      chance,
+      roll,
+      rollPassed: false,
+      passed: false,
+      skipReason: 'chance_miss',
+    };
+  }
+  return {
+    ...base,
+    eligible: true,
+    chance,
+    roll,
+    rollPassed: true,
+    passed: true,
+    skipReason: null,
   };
 }
 
