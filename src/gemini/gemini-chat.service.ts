@@ -69,8 +69,15 @@ const FREE_TALK_ACTIONS = [
 const FREE_TALK_REPLY_SCHEMA = {
   type: 'object',
   properties: {
-    textEn: { type: 'string' },
-    textTh: { type: 'string' },
+    textEn: {
+      type: 'string',
+      description:
+        'Spoken bubble (TTS). For easy/balanced MUST contain BOTH Thai script and English in one line (code-switch). JSON key is historical — not English-only.',
+    },
+    textTh: {
+      type: 'string',
+      description: 'Thai-only subtitle of the same meaning (ครับ voice).',
+    },
     phase: { type: 'string', enum: [...FREE_TALK_PHASES] },
     nextAction: { type: 'string', enum: [...FREE_TALK_ACTIONS] },
     intent: { type: 'string' },
@@ -443,17 +450,19 @@ export class GeminiChatService {
   }): Promise<FreeTalkTurnReply> {
     const languageLevel = normalizeFreeTalkLanguageLevel(options.languageLevel);
     const memories = options.memories ?? [];
-    const reply = await this.generateJson<FreeTalkTurnReply>({
-      systemInstruction:
-        `${freeTalkSystemPrompt({
-          languageLevel,
-          phase: 'greeting',
-          memories,
-        })}\n\n` +
-        'Return JSON matching the schema. Keep the spoken reply short. ' +
-        (languageLevel === 'englishOnly'
-          ? 'textEn is English-only.'
-          : 'textEn must code-switch Thai+English in one line.'),
+    const systemInstruction =
+      `${freeTalkSystemPrompt({
+        languageLevel,
+        phase: 'greeting',
+        memories,
+      })}\n\n` +
+      'Return JSON matching the schema. Keep the spoken reply short. ' +
+      (languageLevel === 'englishOnly'
+        ? 'textEn is English-only.'
+        : 'HARD RULE: textEn must include Thai script characters AND English — code-switch in one line.');
+
+    let reply = await this.generateJson<FreeTalkTurnReply>({
+      systemInstruction,
       contents: [
         {
           role: 'user',
@@ -467,7 +476,21 @@ export class GeminiChatService {
       schema: FREE_TALK_REPLY_SCHEMA,
       maxOutputTokens: 400,
     });
-    return this.normalizeFreeTalkReply(reply, 'greeting');
+    reply = this.normalizeFreeTalkReply(reply, 'greeting');
+    reply = await this.enforceFreeTalkCodeSwitch(reply, languageLevel, {
+      systemInstruction,
+      priorContents: [
+        {
+          role: 'user',
+          parts: [
+            {
+              text: freeTalkOpeningUserPrompt({ languageLevel, memories }),
+            },
+          ],
+        },
+      ],
+    });
+    return reply;
   }
 
   async generateFreeTalkReply(options: {
@@ -494,7 +517,9 @@ export class GeminiChatService {
       })}\n\n` +
       'Respond as Teacher B in Free Talk. Return JSON matching the schema. ' +
       'Update phase/nextAction/topic based on the learner message. Keep textEn/textTh short. ' +
-      'For easy/balanced: textEn must be Thai–English code-switch in one spoken line — never English-only textEn.';
+      (languageLevel === 'englishOnly'
+        ? 'textEn must be English-only.'
+        : 'HARD RULE: textEn must include Thai script AND English in one spoken line — never English-only textEn.');
 
     const contents: GeminiContent[] = [];
     for (const turn of options.history.slice(-10)) {
@@ -508,13 +533,21 @@ export class GeminiChatService {
       parts: [{ text: options.userMessage }],
     });
 
-    const reply = await this.generateJson<FreeTalkTurnReply>({
+    let reply = await this.generateJson<FreeTalkTurnReply>({
       systemInstruction,
       contents,
       schema: FREE_TALK_REPLY_SCHEMA,
       maxOutputTokens: 450,
     });
-    return this.normalizeFreeTalkReply(reply, options.phase ?? 'conversation_loop');
+    reply = this.normalizeFreeTalkReply(
+      reply,
+      options.phase ?? 'conversation_loop',
+    );
+    reply = await this.enforceFreeTalkCodeSwitch(reply, languageLevel, {
+      systemInstruction,
+      priorContents: contents,
+    });
+    return reply;
   }
 
   async generateFreeTalkReport(
@@ -598,6 +631,93 @@ export class GeminiChatService {
       topic: reply.topic?.trim() || '',
       conversationDepth: reply.conversationDepth?.trim() || '',
     };
+  }
+
+  private containsThaiScript(text: string): boolean {
+    return /[\u0E00-\u0E7F]/.test(text);
+  }
+
+  private containsLatinLetter(text: string): boolean {
+    return /[A-Za-z]/.test(text);
+  }
+
+  /** Easy/Balanced must code-switch in textEn; retry once, then weave Thai in. */
+  private async enforceFreeTalkCodeSwitch(
+    reply: FreeTalkTurnReply,
+    languageLevel: FreeTalkLanguageLevel,
+    context: {
+      systemInstruction: string;
+      priorContents: GeminiContent[];
+    },
+  ): Promise<FreeTalkTurnReply> {
+    if (languageLevel === 'englishOnly') {
+      return reply;
+    }
+
+    if (
+      this.containsThaiScript(reply.textEn) &&
+      this.containsLatinLetter(reply.textEn)
+    ) {
+      return reply;
+    }
+
+    this.logger.warn(
+      `Free Talk ${languageLevel}: textEn missing code-switch — retrying once`,
+    );
+
+    try {
+      const retry = await this.generateJson<FreeTalkTurnReply>({
+        systemInstruction: context.systemInstruction,
+        contents: [
+          ...context.priorContents,
+          {
+            role: 'user',
+            parts: [
+              {
+                text:
+                  'REWRITE REQUIRED: your spoken textEn was English-only. ' +
+                  'Return the SAME greeting/reply again but textEn MUST mix Thai script and English in ONE line ' +
+                  '(e.g. "Hey! พร้อม Free Talk ไหมครับ? How\'s your day?"). ' +
+                  'textTh stays Thai-only subtitle. Return full JSON schema.',
+              },
+            ],
+          },
+        ],
+        schema: FREE_TALK_REPLY_SCHEMA,
+        maxOutputTokens: 450,
+        temperature: 0.4,
+      });
+      const normalized = this.normalizeFreeTalkReply(retry, reply.phase);
+      if (
+        this.containsThaiScript(normalized.textEn) &&
+        this.containsLatinLetter(normalized.textEn)
+      ) {
+        return normalized;
+      }
+      return this.weaveThaiIntoSpoken(normalized);
+    } catch (err) {
+      this.logger.warn(
+        `Free Talk code-switch retry failed: ${err instanceof Error ? err.message : String(err)}`,
+      );
+      return this.weaveThaiIntoSpoken(reply);
+    }
+  }
+
+  private weaveThaiIntoSpoken(reply: FreeTalkTurnReply): FreeTalkTurnReply {
+    if (this.containsThaiScript(reply.textEn)) {
+      return reply;
+    }
+    const th = reply.textTh.trim();
+    const thBit =
+      th.split(/[.!?。]/).map((s) => s.trim()).find((s) => s.length > 0) ||
+      'นะครับ';
+    const en = reply.textEn.trim();
+    const breakAt = en.search(/[.!?]/);
+    const mixed =
+      breakAt >= 0 && breakAt < en.length - 1
+        ? `${en.slice(0, breakAt + 1)} ${thBit} ${en.slice(breakAt + 1).trim()}`.trim()
+        : `${en} ${thBit}`.trim();
+    return { ...reply, textEn: mixed };
   }
 
   async generateSimulationOpening(
