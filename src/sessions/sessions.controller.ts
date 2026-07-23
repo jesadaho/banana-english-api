@@ -46,6 +46,7 @@ import { LessonsService } from '../lessons/lessons.service';
 import { StartSessionDto, TurnDto } from './dto/sessions.dto';
 import { AnonymousUserGuard } from '../users/anonymous-user.guard';
 import { EconomyService } from '../economy/economy.service';
+import { freeTalkBananaCost } from '../economy/economy.constants';
 import { UsersService } from '../users/users.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { SeriesService } from '../series/series.service';
@@ -94,7 +95,7 @@ export class SessionsController {
 
     if (body.topicId === 'free_talk') {
       const durationMinutes = body.durationMinutes === 10 ? 10 : 5;
-      const bananaCost = durationMinutes === 10 ? 2 : 1;
+      const bananaCost = freeTalkBananaCost(durationMinutes);
       const languageLevel = normalizeFreeTalkLanguageLevel(body.languageLevel);
       await this.economy.spendBananas(
         req.user.id,

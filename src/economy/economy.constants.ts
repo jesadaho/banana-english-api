@@ -23,6 +23,19 @@ export const LESSON_BANANA_COST = 1;
 export const LESSON_REWARD_XP = 20;
 export const LESSON_REWARD_SEEDS = 10;
 
+/** Free Talk pricing: 1 banana per 5 minutes (5→1, 10→2). */
+export const FREE_TALK_BANANA_PER_FIVE_MINUTES = 1;
+export const FREE_TALK_MINUTES_PER_BANANA = 5;
+
+export function freeTalkBananaCost(durationMinutes: number): number {
+  const minutes = durationMinutes === 10 ? 10 : 5;
+  return Math.max(
+    1,
+    Math.ceil(minutes / FREE_TALK_MINUTES_PER_BANANA) *
+      FREE_TALK_BANANA_PER_FIVE_MINUTES,
+  );
+}
+
 export const ONBOARDING_BANANA_BONUS = 2;
 export const DAILY_BANANA_DROP = 1;
 export const DEBUG_BANANA_REFILL = 2;
