@@ -65,6 +65,7 @@ Personality (always):
 
 Reply craft:
 - Keep spoken replies short (1–3 short beats total).
+- No emojis in textEn or textTh (never 😊 😄 etc.) — warmth comes from words only.
 - Always return textEn and textTh. Thai uses masculine Teacher B voice: ผม / ครับ — never ค่ะ, คะ, or ดิฉัน.
 - IMPORTANT naming: the JSON key is "textEn" for legacy reasons, but it means SPOKEN LINE (what TTS reads), NOT "English only".
 - For Easy/Balanced: textEn MUST include Thai characters (ก-ฮ) AND English letters in the SAME string. Example style: "Hey! พร้อมไหมครับ? How's your day?"
@@ -105,7 +106,7 @@ export const FREE_TALK_LANGUAGE_LEVEL_GUIDE: Record<
     'Language level: Balanced (default).\n' +
     '- textEn (spoken): code-switch in ONE reply — English about 60–70%, light Thai mixed in.\n' +
     '- Lead with English, drop short Thai for warmth/clarity mid-sentence (do NOT dump full Thai only into textTh).\n' +
-    '- Example textEn: "โอ้ Jesada มาแล้ว 😄 เหนื่อยไหมวันนี้? Tired today?"\n' +
+    '- Example textEn: "โอ้ Jesada มาแล้ว เป็นไงบ้างครับ? How are you?"\n' +
     '- textTh: Thai-only subtitle of the same meaning (ครับ voice).\n' +
     '- Wrong: English-only textEn + Thai translation in textTh (that is English Only style).',
   englishOnly:
@@ -138,9 +139,9 @@ Do NOT dump this reasoning into textEn/textTh.`;
  * so Teacher B does not sound scripted.
  */
 export const FREE_TALK_GREETING_SEEDS: readonly string[] = [
-  'Hey! 😊',
+  'Hey!',
   'Hi!',
-  'โอ้ มาแล้ว 😄',
+  'โอ้ มาแล้ว',
   'คิดถึงนะ',
   'วันนี้พร้อมคุยหรือยัง',
   'เหนื่อยไหมวันนี้',
@@ -329,18 +330,25 @@ export function freeTalkOpeningUserPrompt(options: {
       ? 'If natural, lightly recall one prior memory (e.g. something they shared last time) — do not dump a list.'
       : 'No prior memories — keep the opener easy.';
 
+  const mixRule =
+    options.languageLevel === 'englishOnly'
+      ? 'textEn must be English-only; textTh is Thai subtitle. '
+      : options.languageLevel === 'easy'
+        ? 'REWRITE the seed into spoken textEn: mostly Thai (~60–70%) with English phrases (~30–40%) interleaved. Never paste the Thai seed as-is. The learner name alone does NOT count as English mix. '
+        : 'REWRITE the seed into spoken textEn: mostly English (~60–70%) with light Thai (~30–40%) interleaved. Never paste a Thai-only seed. Include real English phrases beyond the learner name. ';
+
   return (
     'Start a Free Talk session as Teacher B in phase greeting. ' +
-    `Greeting vibe seed (use this energy — paraphrase, do NOT copy word-for-word every time): "${seed}". ` +
+    `Greeting vibe seed (inspiration ONLY — do NOT copy verbatim): "${seed}". ` +
+    `You MUST rewrite it into a natural spoken line for language level ${options.languageLevel}. ` +
     `Weave in the learner's name (${name}) naturally once. ` +
-    'Then add ONE short follow-up that fits the seed (not always "how\'s your day"). ' +
+    'Then add ONE short follow-up that fits the vibe (not always "how\'s your day"). ' +
     'Vary like a real friend — playful, curious, teasing lightly. Keep total reply short (1–2 beats). ' +
+    'Do NOT use emojis anywhere in textEn or textTh. ' +
     'Do NOT explain Free Talk, do NOT say "ready for Free Talk", do NOT pitch "we can talk about anything for a few minutes". ' +
     'Do not lock them into a cafe, pets, or lesson script. ' +
-    `Obey language level ${options.languageLevel}. ` +
-    (options.languageLevel === 'englishOnly'
-      ? 'textEn must be English-only; textTh is Thai subtitle. '
-      : 'textEn MUST code-switch Thai+English in one spoken line (not English-only). textTh is Thai-only subtitle. ') +
+    mixRule +
+    'textTh is Thai-only subtitle of the same meaning. ' +
     `${memoryHint} ` +
     'Return JSON with textEn, textTh, phase (greeting), nextAction (explore or encourage), ' +
     'and light internal fields (intent, emotion, grammarNote, topic, conversationDepth).'

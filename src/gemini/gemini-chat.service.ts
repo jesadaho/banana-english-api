@@ -495,6 +495,7 @@ export class GeminiChatService {
           parts: [{ text: openingPrompt }],
         },
       ],
+      learnerFirstName,
     });
     return reply;
   }
@@ -552,6 +553,7 @@ export class GeminiChatService {
     reply = await this.enforceFreeTalkCodeSwitch(reply, languageLevel, {
       systemInstruction,
       priorContents: contents,
+      learnerFirstName: undefined,
     });
     return reply;
   }
@@ -625,9 +627,11 @@ export class GeminiChatService {
       : 'explore';
 
     return {
-      textEn: reply.textEn?.trim() || 'Nice! Tell me more.',
+      textEn: this.stripEmojis(reply.textEn?.trim() || 'Nice! Tell me more.'),
       textTh: teacherBThaiVoice(
-        reply.textTh?.trim() || 'ดีเลยครับ เล่าเพิ่มเติมได้นะครับ',
+        this.stripEmojis(
+          reply.textTh?.trim() || 'ดีเลยครับ เล่าเพิ่มเติมได้นะครับ',
+        ),
       ),
       phase,
       nextAction,
@@ -639,21 +643,53 @@ export class GeminiChatService {
     };
   }
 
+  private stripEmojis(text: string): string {
+    return text
+      .replace(/\p{Extended_Pictographic}/gu, '')
+      .replace(/\uFE0F/g, '')
+      .replace(/ {2,}/g, ' ')
+      .trim();
+  }
+
   private containsThaiScript(text: string): boolean {
     return /[\u0E00-\u0E7F]/.test(text);
   }
 
-  private containsLatinLetter(text: string): boolean {
-    return /[A-Za-z]/.test(text);
+  private englishContentWords(text: string, learnerFirstName?: string): string[] {
+    const name = (learnerFirstName ?? '').trim().toLowerCase();
+    const nameTokens = name
+      ? name.split(/\s+/).filter(Boolean)
+      : [];
+    return (text.match(/[A-Za-z]+(?:'[A-Za-z]+)?/g) ?? [])
+      .map((w) => w.toLowerCase())
+      .filter((w) => w.length > 1 && !nameTokens.includes(w));
   }
 
-  /** Easy/Balanced must code-switch in textEn; retry once, then weave Thai in. */
+  private meetsFreeTalkMix(
+    textEn: string,
+    languageLevel: FreeTalkLanguageLevel,
+    learnerFirstName?: string,
+  ): boolean {
+    if (languageLevel === 'englishOnly') {
+      return !this.containsThaiScript(textEn);
+    }
+    const hasThai = this.containsThaiScript(textEn);
+    const enWords = this.englishContentWords(textEn, learnerFirstName);
+    if (!hasThai) return false;
+    // Easy: at least one real English phrase beyond the name.
+    // Balanced: enough English that it isn't Thai-only with a Latin name.
+    if (languageLevel === 'easy') return enWords.length >= 1;
+    return enWords.length >= 3;
+  }
+
+  /** Easy/Balanced must code-switch in textEn; retry once, then weave mix in. */
   private async enforceFreeTalkCodeSwitch(
     reply: FreeTalkTurnReply,
     languageLevel: FreeTalkLanguageLevel,
     context: {
       systemInstruction: string;
       priorContents: GeminiContent[];
+      learnerFirstName?: string;
     },
   ): Promise<FreeTalkTurnReply> {
     if (languageLevel === 'englishOnly') {
@@ -661,15 +697,23 @@ export class GeminiChatService {
     }
 
     if (
-      this.containsThaiScript(reply.textEn) &&
-      this.containsLatinLetter(reply.textEn)
+      this.meetsFreeTalkMix(
+        reply.textEn,
+        languageLevel,
+        context.learnerFirstName,
+      )
     ) {
       return reply;
     }
 
     this.logger.warn(
-      `Free Talk ${languageLevel}: textEn missing code-switch — retrying once`,
+      `Free Talk ${languageLevel}: textEn missing proper code-switch — retrying once`,
     );
+
+    const mixHint =
+      languageLevel === 'easy'
+        ? 'Mostly Thai with English ~30–40% (e.g. "โอ้ Jim มาแล้ว! How are you? พร้อมคุยไหมครับ?").'
+        : 'Mostly English ~60–70% with light Thai (e.g. "Hey Jim! มาแล้วครับ How are you feeling today?").';
 
     try {
       const retry = await this.generateJson<FreeTalkTurnReply>({
@@ -681,9 +725,10 @@ export class GeminiChatService {
             parts: [
               {
                 text:
-                  'REWRITE REQUIRED: your spoken textEn was English-only. ' +
-                  'Return the SAME greeting/reply again but textEn MUST mix Thai script and English in ONE line ' +
-                  '(e.g. "Hey Jesada! วันนี้เป็นไงบ้างครับ? How\'s your day?"). ' +
+                  'REWRITE REQUIRED: spoken textEn does not match the language-level mix. ' +
+                  `Level=${languageLevel}. ${mixHint} ` +
+                  'Do NOT paste the Thai greeting seed as-is. ' +
+                  'The learner name alone is not enough English. No emojis. ' +
                   'Do not explain Free Talk. textTh stays Thai-only subtitle. Return full JSON schema.',
               },
             ],
@@ -695,35 +740,77 @@ export class GeminiChatService {
       });
       const normalized = this.normalizeFreeTalkReply(retry, reply.phase);
       if (
-        this.containsThaiScript(normalized.textEn) &&
-        this.containsLatinLetter(normalized.textEn)
+        this.meetsFreeTalkMix(
+          normalized.textEn,
+          languageLevel,
+          context.learnerFirstName,
+        )
       ) {
         return normalized;
       }
-      return this.weaveThaiIntoSpoken(normalized);
+      return this.weaveLanguageMix(
+        normalized,
+        languageLevel,
+        context.learnerFirstName,
+      );
     } catch (err) {
       this.logger.warn(
         `Free Talk code-switch retry failed: ${err instanceof Error ? err.message : String(err)}`,
       );
-      return this.weaveThaiIntoSpoken(reply);
+      return this.weaveLanguageMix(
+        reply,
+        languageLevel,
+        context.learnerFirstName,
+      );
     }
   }
 
-  private weaveThaiIntoSpoken(reply: FreeTalkTurnReply): FreeTalkTurnReply {
-    if (this.containsThaiScript(reply.textEn)) {
+  private weaveLanguageMix(
+    reply: FreeTalkTurnReply,
+    languageLevel: FreeTalkLanguageLevel,
+    learnerFirstName?: string,
+  ): FreeTalkTurnReply {
+    if (
+      this.meetsFreeTalkMix(reply.textEn, languageLevel, learnerFirstName)
+    ) {
       return reply;
     }
-    const th = reply.textTh.trim();
-    const thBit =
-      th.split(/[.!?。]/).map((s) => s.trim()).find((s) => s.length > 0) ||
-      'นะครับ';
+
     const en = reply.textEn.trim();
-    const breakAt = en.search(/[.!?]/);
-    const mixed =
-      breakAt >= 0 && breakAt < en.length - 1
-        ? `${en.slice(0, breakAt + 1)} ${thBit} ${en.slice(breakAt + 1).trim()}`.trim()
-        : `${en} ${thBit}`.trim();
-    return { ...reply, textEn: mixed };
+    if (languageLevel === 'balanced' || languageLevel === 'easy') {
+      // Thai-heavy (or name-only Latin): append a short English follow-up.
+      if (
+        this.containsThaiScript(en) &&
+        this.englishContentWords(en, learnerFirstName).length <
+          (languageLevel === 'balanced' ? 3 : 1)
+      ) {
+        const bit =
+          languageLevel === 'balanced'
+            ? 'How are you doing today?'
+            : 'How are you?';
+        return { ...reply, textEn: `${en} ${bit}`.trim() };
+      }
+    }
+
+    // English-only: weave Thai from subtitle.
+    if (!this.containsThaiScript(en)) {
+      const th = reply.textTh.trim();
+      const thBit =
+        th.split(/[.!?。]/).map((s) => s.trim()).find((s) => s.length > 0) ||
+        'นะครับ';
+      const breakAt = en.search(/[.!?]/);
+      const mixed =
+        breakAt >= 0 && breakAt < en.length - 1
+          ? `${en.slice(0, breakAt + 1)} ${thBit} ${en.slice(breakAt + 1).trim()}`.trim()
+          : `${en} ${thBit}`.trim();
+      return { ...reply, textEn: mixed };
+    }
+
+    return reply;
+  }
+
+  private weaveThaiIntoSpoken(reply: FreeTalkTurnReply): FreeTalkTurnReply {
+    return this.weaveLanguageMix(reply, 'balanced');
   }
 
   async generateSimulationOpening(
