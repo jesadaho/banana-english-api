@@ -22,14 +22,15 @@ export class DailyJobsService {
   @Cron('*/15 * * * *')
   async runScheduledJobs() {
     try {
-      await this.processDailyBananaDrop();
+      await this.processFirstBananaDrop();
       await this.processStreakReminder();
     } catch (error) {
       this.logger.error(`Scheduled jobs failed: ${String(error)}`);
     }
   }
 
-  private async processDailyBananaDrop() {
+  /** Credits the daily banana at 08:00 local and notifies at most once per user per day. */
+  private async processFirstBananaDrop() {
     const users = await this.prisma.user.findMany({
       include: { fcmTokens: true },
     });
@@ -45,17 +46,18 @@ export class DailyJobsService {
         continue;
       }
 
+      // NotificationLog unique(userId, type, sentOn) → max 1 push / user / day.
       const sent = await this.tryLogNotification(
         user.id,
-        'daily_banana',
+        'first_banana',
         local.dateKey,
       );
       if (!sent) continue;
 
       const invalid = await this.fcm.sendToTokens(
         user.fcmTokens.map((token) => token.token),
-        '🍌 Daily Banana',
-        'Daily Banana พร้อมแล้ว',
+        '🍌 First Banana',
+        'First Banana พร้อมแล้ว',
       );
       await this.removeInvalidTokens(invalid);
     }
