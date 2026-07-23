@@ -106,7 +106,7 @@ export const FREE_TALK_LANGUAGE_LEVEL_GUIDE: Record<
     '  Translate only the question beat — not the whole reply.\n' +
     '- Statements / teasing / praise / soft recast beats: do NOT Thai-echo the whole line; keep those light.\n' +
     '- Very short questions ("Really?", "Oh?") need no Thai echo.\n' +
-    '- Soft recast + follow-up: Thai-echo only the follow-up question if there is one.\n' +
+    '- Soft recast + speak-after-me: Thai-echo the invite lightly if needed; the phrase to repeat stays in clear English; Thai-echo the follow-up question.\n' +
     '- Example textEn: "สวัสดีครับ Jesada! กินข้าวหรือยังครับ? Did you eat yet?"\n' +
     '- textTh: Thai-only subtitle of the same meaning (ครับ voice).\n' +
     '- Wrong: English-only textEn + Thai translation in textTh.',
@@ -132,7 +132,7 @@ export const FREE_TALK_PHASE_GUIDE = `Conversation phases (advance naturally, do
    - explore: dig into what they just said
    - expand: help them say a bit more / richer English
    - relate: share a light related thought / tease gently
-   - teach: reserved for when a soft recast is actually applied mid-chat (server may override). Prefer explore/encourage otherwise. Never lecture or label mistakes.
+   - teach: when soft recast is applied — recast + invite them to speak the correct phrase once + short follow-up. Never lecture or label mistakes.
    - encourage: praise effort / confidence boost
    - change_topic: soft pivot when the thread is done
    - wrap_up: only when time is nearly up or they clearly want to end
@@ -174,11 +174,21 @@ Naturalness Damage — grammar OK-ish but a native speaker would not say it this
 Also set:
 - issueNote: short internal English note (empty if both damages are none)
 - softRecastEn / softRecastTh: ONLY when grammarDamage or naturalnessDamage is medium or high.
-  Soft recast = echo their meaning in correct, natural English in a chatty tone + one follow-up.
-  Good: User "I go shopping yesterday." → softRecastEn: "Oh, you went shopping yesterday! What did you buy?"
-  Bad: "ผิดนะ…", "That's wrong", long grammar lectures, "Correct this:"
+  Soft recast = (1) echo their meaning in correct English in a chatty tone,
+  (2) invite them to SAY THE CORRECT PHRASE out loud once (speak-after-me),
+  (3) then one short follow-up question.
+  Keep it playful — never label them wrong, never lecture grammar.
+  Good: User "I go shopping yesterday."
+    → softRecastEn: "Oh, you went shopping yesterday! ลองพูดตามนะครับ — You went shopping yesterday. What did you buy?"
+  Good (English Only): "Oh, you went shopping yesterday! Try saying: You went shopping yesterday. What did you buy?"
+  Bad: "ผิดนะ…", "That's wrong", long grammar lectures, "Correct this:", quiz vibes.
+  The phrase they should repeat must be short (one clear sentence / clause).
   softRecastEn must follow the SAME language-level mix rules as textEn (Easy/Balanced code-switch; English Only = English-only).
-  textEn/textTh must still be a NORMAL chat reply WITHOUT correction (server may swap in softRecast).`;
+  textEn/textTh must still be a NORMAL chat reply WITHOUT correction (server may swap in softRecast).
+
+CRITICAL for damage scoring:
+- Score grammarDamage and naturalnessDamage ONLY on the learner's RAW spoken line.
+- If a "normalized meaning" / Thai Mix line is provided, use it only to understand intent — NEVER score damage on it.`;
 
 export function freeTalkSuggestionBudget(durationLimitSeconds?: number | null): {
   grammarMax: number;

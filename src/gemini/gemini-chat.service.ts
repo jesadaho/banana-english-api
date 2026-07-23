@@ -539,6 +539,8 @@ export class GeminiChatService {
   async generateFreeTalkReply(options: {
     history: ChatTurn[];
     userMessage: string;
+    /** Raw STT / spoken line before Thai Mix — damage is scored on this. */
+    originalUserMessage?: string;
     languageLevel: FreeTalkLanguageLevel;
     phase?: FreeTalkPhase | string;
     topic?: string | null;
@@ -556,6 +558,8 @@ export class GeminiChatService {
     suggestion: FreeTalkSuggestionGateResult;
   }> {
     const languageLevel = normalizeFreeTalkLanguageLevel(options.languageLevel);
+    const rawSpoken = (options.originalUserMessage ?? options.userMessage).trim();
+    const normalizedMeaning = options.userMessage.trim();
     const systemInstruction =
       `${freeTalkSystemPrompt({
         languageLevel,
@@ -568,23 +572,43 @@ export class GeminiChatService {
       })}\n\n` +
       'Respond as Teacher B in Free Talk. Return JSON matching the schema. ' +
       'Update phase/nextAction/topic based on the learner message. Keep textEn/textTh short. ' +
-      'Always evaluate grammarDamage and naturalnessDamage. ' +
+      'Always evaluate grammarDamage and naturalnessDamage on the RAW spoken line only. ' +
       'Put softRecastEn/softRecastTh only when damage is medium or high; textEn stays a normal chat reply. ' +
+      'softRecast must: recast correctly, invite them to speak that phrase once, then one short follow-up. ' +
       'Do not label mistakes in textEn. ' +
       (languageLevel === 'englishOnly'
         ? 'textEn must be English-only.'
         : 'HARD RULE: textEn must include Thai script AND English in one spoken line — never English-only textEn.');
 
     const contents: GeminiContent[] = [];
-    for (const turn of options.history.slice(-10)) {
+    const recent = options.history.slice(-10);
+    const historyWithoutCurrentUser =
+      recent.length > 0 && recent[recent.length - 1]?.speaker === 'user'
+        ? recent.slice(0, -1)
+        : recent;
+    for (const turn of historyWithoutCurrentUser) {
+      // Prefer original spoken line for prior user turns when available.
+      const userLine =
+        turn.speaker === 'user'
+          ? (turn.originalTextEn?.trim() || turn.textEn)
+          : turn.textEn;
       contents.push({
         role: turn.speaker === 'ai' ? 'model' : 'user',
-        parts: [{ text: turn.textEn }],
+        parts: [{ text: userLine }],
       });
     }
+
+    const latestUserPrompt =
+      rawSpoken === normalizedMeaning
+        ? rawSpoken
+        : 'Learner RAW spoken (score grammarDamage/naturalnessDamage on THIS only):\n' +
+          `"${rawSpoken}"\n\n` +
+          'Normalized meaning for intent only (Thai Mix — do NOT score damage on this):\n' +
+          `"${normalizedMeaning}"`;
+
     contents.push({
       role: 'user',
-      parts: [{ text: options.userMessage }],
+      parts: [{ text: latestUserPrompt }],
     });
 
     let reply = await this.generateJson<FreeTalkTurnReply>({
@@ -622,7 +646,7 @@ export class GeminiChatService {
       softRecastEn: reply.softRecastEn,
       softRecastTh: reply.softRecastTh,
       issueNote: reply.issueNote,
-      learnerText: options.userMessage,
+      learnerText: rawSpoken,
       userTurnIndex: options.userTurnIndex,
     });
 

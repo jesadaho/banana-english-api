@@ -583,6 +583,7 @@ export class SessionsController {
         const { reply, suggestion } = await this.chat.generateFreeTalkReply({
           history: data.turns,
           userMessage: userText,
+          originalUserMessage: originalText,
           languageLevel: ft?.languageLevel ?? 'balanced',
           phase: ft?.phase,
           topic: ft?.topic,
