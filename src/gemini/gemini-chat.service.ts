@@ -6,20 +6,25 @@ import {
 import { ConfigService } from '@nestjs/config';
 import {
   BROTHER_BANANA_PERSONA,
+  applyFreeTalkSuggestionGate,
   conversationSystemPrompt,
+  formatFreeTalkIssueLogForReport,
   freeTalkOpeningUserPrompt,
   freeTalkSystemPrompt,
   FREE_TALK_SUMMARY_PROMPT,
   HINTS_PROMPT,
+  normalizeFreeTalkDamage,
   normalizeFreeTalkLanguageLevel,
   openingUserPrompt,
   pickFreeTalkGreetingSeed,
   REPORT_PROMPT,
   teacherBThaiVoice,
   THAI_MIX_PROMPT,
+  type FreeTalkIssueLogEntry,
   type FreeTalkLanguageLevel,
   type FreeTalkNextAction,
   type FreeTalkPhase,
+  type FreeTalkSuggestionGateResult,
 } from '../topics/topics.data';
 import {
   INTRO_REPORT_PROMPT,
@@ -67,13 +72,15 @@ const FREE_TALK_ACTIONS = [
   'wrap_up',
 ] as const;
 
+const FREE_TALK_DAMAGE_LEVELS = ['none', 'low', 'medium', 'high'] as const;
+
 const FREE_TALK_REPLY_SCHEMA = {
   type: 'object',
   properties: {
     textEn: {
       type: 'string',
       description:
-        'Spoken bubble (TTS). For easy/balanced MUST contain BOTH Thai script and English in one line (code-switch). JSON key is historical — not English-only.',
+        'Spoken bubble (TTS). For easy/balanced MUST contain BOTH Thai script and English in one line (code-switch). JSON key is historical — not English-only. Normal chat reply WITHOUT labeling mistakes.',
     },
     textTh: {
       type: 'string',
@@ -86,6 +93,30 @@ const FREE_TALK_REPLY_SCHEMA = {
     grammarNote: { type: 'string' },
     topic: { type: 'string' },
     conversationDepth: { type: 'string' },
+    grammarDamage: {
+      type: 'string',
+      enum: [...FREE_TALK_DAMAGE_LEVELS],
+      description: 'Internal grammar damage: none|low|medium|high',
+    },
+    naturalnessDamage: {
+      type: 'string',
+      enum: [...FREE_TALK_DAMAGE_LEVELS],
+      description: 'Internal naturalness damage: none|low|medium|high',
+    },
+    issueNote: {
+      type: 'string',
+      description:
+        'Short internal English note; empty if both damages are none',
+    },
+    softRecastEn: {
+      type: 'string',
+      description:
+        'Optional soft-recast spoken line when damage is medium/high; empty otherwise',
+    },
+    softRecastTh: {
+      type: 'string',
+      description: 'Thai subtitle for softRecastEn; empty if softRecastEn empty',
+    },
   },
   required: [
     'textEn',
@@ -97,6 +128,11 @@ const FREE_TALK_REPLY_SCHEMA = {
     'grammarNote',
     'topic',
     'conversationDepth',
+    'grammarDamage',
+    'naturalnessDamage',
+    'issueNote',
+    'softRecastEn',
+    'softRecastTh',
   ],
 };
 
@@ -510,7 +546,15 @@ export class GeminiChatService {
     memories?: string[];
     remainingSeconds?: number | null;
     durationLimitSeconds?: number | null;
-  }): Promise<FreeTalkTurnReply> {
+    userTurnIndex: number;
+    grammarSuggestionsUsed: number;
+    naturalnessSuggestionsUsed: number;
+    grammarSuggestionMax: number;
+    naturalnessSuggestionMax: number;
+  }): Promise<{
+    reply: FreeTalkTurnReply;
+    suggestion: FreeTalkSuggestionGateResult;
+  }> {
     const languageLevel = normalizeFreeTalkLanguageLevel(options.languageLevel);
     const systemInstruction =
       `${freeTalkSystemPrompt({
@@ -524,7 +568,9 @@ export class GeminiChatService {
       })}\n\n` +
       'Respond as Teacher B in Free Talk. Return JSON matching the schema. ' +
       'Update phase/nextAction/topic based on the learner message. Keep textEn/textTh short. ' +
-      'Do not correct or recast their English — just keep the conversation going. ' +
+      'Always evaluate grammarDamage and naturalnessDamage. ' +
+      'Put softRecastEn/softRecastTh only when damage is medium or high; textEn stays a normal chat reply. ' +
+      'Do not label mistakes in textEn. ' +
       (languageLevel === 'englishOnly'
         ? 'textEn must be English-only.'
         : 'HARD RULE: textEn must include Thai script AND English in one spoken line — never English-only textEn.');
@@ -545,25 +591,71 @@ export class GeminiChatService {
       systemInstruction,
       contents,
       schema: FREE_TALK_REPLY_SCHEMA,
-      maxOutputTokens: 450,
+      maxOutputTokens: 550,
     });
     reply = this.normalizeFreeTalkReply(
       reply,
       options.phase ?? 'conversation_loop',
     );
+    const evaluation = {
+      grammarDamage: reply.grammarDamage,
+      naturalnessDamage: reply.naturalnessDamage,
+      issueNote: reply.issueNote,
+      softRecastEn: reply.softRecastEn,
+      softRecastTh: reply.softRecastTh,
+    };
     reply = await this.enforceFreeTalkCodeSwitch(reply, languageLevel, {
       systemInstruction,
       priorContents: contents,
       learnerFirstName: undefined,
     });
-    return reply;
+    reply = { ...reply, ...evaluation };
+
+    const suggestion = applyFreeTalkSuggestionGate({
+      languageLevel,
+      grammarDamage: normalizeFreeTalkDamage(reply.grammarDamage),
+      naturalnessDamage: normalizeFreeTalkDamage(reply.naturalnessDamage),
+      grammarSuggestionsUsed: options.grammarSuggestionsUsed,
+      naturalnessSuggestionsUsed: options.naturalnessSuggestionsUsed,
+      grammarMax: options.grammarSuggestionMax,
+      naturalnessMax: options.naturalnessSuggestionMax,
+      softRecastEn: reply.softRecastEn,
+      softRecastTh: reply.softRecastTh,
+      issueNote: reply.issueNote,
+      learnerText: options.userMessage,
+      userTurnIndex: options.userTurnIndex,
+    });
+
+    if (suggestion.applySoftRecast) {
+      const softEn = this.stripEmojis(reply.softRecastEn?.trim() || '');
+      const softTh = teacherBThaiVoice(
+        this.stripEmojis(reply.softRecastTh?.trim() || softEn),
+      );
+      reply = {
+        ...reply,
+        textEn: softEn || reply.textEn,
+        textTh: softTh || reply.textTh,
+        nextAction: 'teach',
+      };
+      // Keep soft-recast meaning; only weave mix if needed (no full LLM rewrite).
+      if (languageLevel !== 'englishOnly') {
+        reply = this.weaveLanguageMix(reply, languageLevel);
+      }
+    }
+
+    return {
+      reply: this.toClientFreeTalkReply(reply),
+      suggestion,
+    };
   }
 
   async generateFreeTalkReport(
     history: ChatTurn[],
     durationSeconds: number,
+    issueLog: FreeTalkIssueLogEntry[] = [],
   ): Promise<FreeTalkSessionSummary> {
     const context = this.formatHistoryForReport(history);
+    const issueBlock = formatFreeTalkIssueLogForReport(issueLog);
     const report = await this.generateJson<FreeTalkSessionSummary>({
       systemInstruction: FREE_TALK_SUMMARY_PROMPT,
       contents: [
@@ -571,7 +663,9 @@ export class GeminiChatService {
           role: 'user',
           parts: [
             {
-              text: `Session duration: ${durationSeconds} seconds.\nConversation:\n${context}`,
+              text:
+                `Session duration: ${durationSeconds} seconds.\n` +
+                `${issueBlock}\n\nConversation:\n${context}`,
             },
           ],
         },
@@ -627,6 +721,14 @@ export class GeminiChatService {
       ? reply.nextAction
       : 'explore';
 
+    const grammarDamage = normalizeFreeTalkDamage(reply.grammarDamage);
+    const naturalnessDamage = normalizeFreeTalkDamage(reply.naturalnessDamage);
+    const needsSoftRecast =
+      grammarDamage === 'medium' ||
+      grammarDamage === 'high' ||
+      naturalnessDamage === 'medium' ||
+      naturalnessDamage === 'high';
+
     return {
       textEn: this.stripEmojis(reply.textEn?.trim() || 'Nice! Tell me more.'),
       textTh: teacherBThaiVoice(
@@ -641,6 +743,30 @@ export class GeminiChatService {
       grammarNote: reply.grammarNote?.trim() || '',
       topic: reply.topic?.trim() || '',
       conversationDepth: reply.conversationDepth?.trim() || '',
+      grammarDamage,
+      naturalnessDamage,
+      issueNote: reply.issueNote?.trim() || '',
+      softRecastEn: needsSoftRecast
+        ? this.stripEmojis(reply.softRecastEn?.trim() || '')
+        : '',
+      softRecastTh: needsSoftRecast
+        ? teacherBThaiVoice(this.stripEmojis(reply.softRecastTh?.trim() || ''))
+        : '',
+    };
+  }
+
+  /** Strip internal evaluation fields before returning to the client path. */
+  private toClientFreeTalkReply(reply: FreeTalkTurnReply): FreeTalkTurnReply {
+    return {
+      textEn: reply.textEn,
+      textTh: reply.textTh,
+      phase: reply.phase,
+      nextAction: reply.nextAction,
+      intent: reply.intent,
+      emotion: reply.emotion,
+      grammarNote: reply.grammarNote,
+      topic: reply.topic,
+      conversationDepth: reply.conversationDepth,
     };
   }
 

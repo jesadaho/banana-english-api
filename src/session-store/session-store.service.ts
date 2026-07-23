@@ -6,10 +6,12 @@ import type { SimulationConfig } from '../simulations/simulations.data';
 import { initCheckpointStates } from '../simulations/simulations.data';
 import type { LessonConfig } from '../lessons/lessons.data';
 import type {
+  FreeTalkIssueLogEntry,
   FreeTalkLanguageLevel,
   FreeTalkNextAction,
   FreeTalkPhase,
 } from '../topics/topics.data';
+import { freeTalkSuggestionBudget } from '../topics/topics.data';
 
 export interface ChatTurn {
   speaker: 'user' | 'ai';
@@ -41,6 +43,14 @@ export interface FreeTalkSessionState {
   nextAction: FreeTalkNextAction | null;
   /** Prior memories injected at session start. */
   priorMemories: string[];
+  /** Mid-chat grammar soft-recast count this session. */
+  grammarSuggestionsUsed: number;
+  /** Mid-chat naturalness soft-recast count this session. */
+  naturalnessSuggestionsUsed: number;
+  grammarSuggestionMax: number;
+  naturalnessSuggestionMax: number;
+  /** Internal issue log for end-of-session report (not shown mid-chat). */
+  issueLog: FreeTalkIssueLogEntry[];
   /** Filled on session end. */
   conversationSummaryEn?: string;
   conversationSummaryTh?: string;
@@ -109,6 +119,7 @@ export class SessionStoreService {
         options?.durationLimitSeconds ??
         this.config.get<number>('SESSION_DURATION_SECONDS', 300),
     };
+    const budget = freeTalkSuggestionBudget(options?.durationLimitSeconds);
     const data: SessionData = {
       session,
       turns: [],
@@ -122,6 +133,11 @@ export class SessionStoreService {
             topic: null,
             nextAction: null,
             priorMemories: options.freeTalk.priorMemories ?? [],
+            grammarSuggestionsUsed: 0,
+            naturalnessSuggestionsUsed: 0,
+            grammarSuggestionMax: budget.grammarMax,
+            naturalnessSuggestionMax: budget.naturalnessMax,
+            issueLog: [],
           }
         : undefined,
     };

@@ -577,7 +577,10 @@ export class SessionsController {
 
       if (topicId === 'free_talk') {
         const ft = data.freeTalk;
-        const reply = await this.chat.generateFreeTalkReply({
+        const userTurnIndex = data.turns.filter(
+          (turn) => turn.speaker === 'user',
+        ).length;
+        const { reply, suggestion } = await this.chat.generateFreeTalkReply({
           history: data.turns,
           userMessage: userText,
           languageLevel: ft?.languageLevel ?? 'balanced',
@@ -587,6 +590,11 @@ export class SessionsController {
           memories: ft?.priorMemories,
           remainingSeconds: body.remainingSeconds,
           durationLimitSeconds: data.session.durationLimitSeconds,
+          userTurnIndex,
+          grammarSuggestionsUsed: ft?.grammarSuggestionsUsed ?? 0,
+          naturalnessSuggestionsUsed: ft?.naturalnessSuggestionsUsed ?? 0,
+          grammarSuggestionMax: ft?.grammarSuggestionMax ?? 2,
+          naturalnessSuggestionMax: ft?.naturalnessSuggestionMax ?? 1,
         });
         const aiTurn = {
           speaker: 'ai' as const,
@@ -612,6 +620,12 @@ export class SessionsController {
             | 'encourage'
             | 'change_topic'
             | 'wrap_up',
+          grammarSuggestionsUsed: suggestion.grammarSuggestionsUsed,
+          naturalnessSuggestionsUsed: suggestion.naturalnessSuggestionsUsed,
+          issueLog: [
+            ...(ft?.issueLog ?? []),
+            ...suggestion.issueLogEntries,
+          ],
         });
         return aiTurn;
       }
@@ -734,6 +748,7 @@ export class SessionsController {
         const summary = await this.chat.generateFreeTalkReport(
           data.turns,
           duration,
+          data.freeTalk?.issueLog ?? [],
         );
         this.sessionStore.updateFreeTalkState(sessionId, {
           conversationSummaryEn: summary.conversationSummaryEn,
@@ -923,7 +938,11 @@ export class SessionsController {
       if (data.session.topicId === 'free_talk') {
         let report = data.freeTalk?.endedReport;
         if (!report) {
-          report = await this.chat.generateFreeTalkReport(data.turns, duration);
+          report = await this.chat.generateFreeTalkReport(
+            data.turns,
+            duration,
+            data.freeTalk?.issueLog ?? [],
+          );
           this.sessionStore.updateFreeTalkState(sessionId, {
             conversationSummaryEn: report.conversationSummaryEn,
             conversationSummaryTh: report.conversationSummaryTh,

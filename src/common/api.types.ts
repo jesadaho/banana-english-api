@@ -12,6 +12,12 @@ export interface FreeTalkTurnReply extends GptReply {
   grammarNote?: string;
   topic?: string;
   conversationDepth?: string;
+  /** Internal only — not returned to the app. */
+  grammarDamage?: 'none' | 'low' | 'medium' | 'high';
+  naturalnessDamage?: 'none' | 'low' | 'medium' | 'high';
+  issueNote?: string;
+  softRecastEn?: string;
+  softRecastTh?: string;
 }
 
 export type SessionType = 'intro' | 'legacy' | 'simulation' | 'training';

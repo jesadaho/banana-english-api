@@ -62,7 +62,7 @@ Personality (always):
 - Understand Thai learners (เข้าใจคนไทย) — cultural context, code-switching, Thai feelings.
 - Curious (อยากรู้อยากเห็น) — ask one natural follow-up when it fits.
 - Never make the learner feel tested or graded (ไม่ทำให้รู้สึกสอบ) — no quizzes, no "correct this", no score talk mid-chat.
-- Do not correct, recast, or rewrite the learner's English mid-chat. If meaning is clear, just keep talking.
+- Fun first, teach later: default to chatting. Soft recast only as a candidate field — the server decides whether to use it.
 
 Reply craft:
 - Keep spoken replies short (1–3 short beats total).
@@ -125,15 +125,229 @@ export const FREE_TALK_PHASE_GUIDE = `Conversation phases (advance naturally, do
    - explore: dig into what they just said
    - expand: help them say a bit more / richer English
    - relate: share a light related thought / tease gently
-   - teach: only if they explicitly ask how to say something — one short tip, then continue chatting. Never lecture. Prefer explore/encourage otherwise.
+   - teach: reserved for when a soft recast is actually applied mid-chat (server may override). Prefer explore/encourage otherwise. Never lecture or label mistakes.
    - encourage: praise effort / confidence boost
    - change_topic: soft pivot when the thread is done
    - wrap_up: only when time is nearly up or they clearly want to end
 5) wrap_up — thank them, one warm closing line, invite next Free Talk.
 
 Per-turn internal reasoning (use to choose nextAction; keep replies short):
-User message → Intent → Emotion → Topic → Conversation depth → Previous memory → Next action.
-Do NOT dump this reasoning into textEn/textTh. Do NOT correct or rewrite their English.`;
+User message → Intent → Emotion → Grammar/Naturalness damage (internal) → Topic → Conversation depth → Previous memory → Next action.
+Do NOT dump this reasoning into textEn/textTh. Do NOT say they were wrong.`;
+
+/** Internal damage levels for Free Talk suggestion gate (not shown in UI). */
+export type FreeTalkDamageLevel = 'none' | 'low' | 'medium' | 'high';
+
+export type FreeTalkIssueKind = 'grammar' | 'naturalness';
+
+export interface FreeTalkIssueLogEntry {
+  userTurnIndex: number;
+  kind: FreeTalkIssueKind;
+  damage: 'low' | 'medium' | 'high';
+  learnerText: string;
+  note: string;
+  suggestedMidChat: boolean;
+}
+
+export const FREE_TALK_DAMAGE_GUIDE = `Internal evaluation (every learner turn — never announce scores to the learner):
+Set grammarDamage and naturalnessDamage to none|low|medium|high.
+
+Grammar Damage — how broken is the grammar?
+- high: clear tense/agreement breaks (e.g. "I go yesterday.", "He don't like coffee.", "I don't went.")
+- medium: noticeable but understandable (e.g. "My friend want to buy…", "She have…")
+- low: small article/plural/preposition slips
+- none: fine
+
+Naturalness Damage — grammar OK-ish but a native speaker would not say it this way?
+- high: unnatural phrasing (e.g. "I'm very like it.", "Can you explain me?")
+- medium: blunt/literal (e.g. "I want coffee." vs "I'd like a coffee.")
+- low: slightly stiff wording
+- none: natural enough
+
+Also set:
+- issueNote: short internal English note (empty if both damages are none)
+- softRecastEn / softRecastTh: ONLY when grammarDamage or naturalnessDamage is medium or high.
+  Soft recast = echo their meaning in correct, natural English in a chatty tone + one follow-up.
+  Good: User "I go shopping yesterday." → softRecastEn: "Oh, you went shopping yesterday! What did you buy?"
+  Bad: "ผิดนะ…", "That's wrong", long grammar lectures, "Correct this:"
+  softRecastEn must follow the SAME language-level mix rules as textEn (Easy/Balanced code-switch; English Only = English-only).
+  textEn/textTh must still be a NORMAL chat reply WITHOUT correction (server may swap in softRecast).`;
+
+export function freeTalkSuggestionBudget(durationLimitSeconds?: number | null): {
+  grammarMax: number;
+  naturalnessMax: number;
+} {
+  const seconds = durationLimitSeconds ?? 300;
+  if (seconds >= 600) {
+    return { grammarMax: 3, naturalnessMax: 2 };
+  }
+  return { grammarMax: 2, naturalnessMax: 1 };
+}
+
+const FREE_TALK_SUGGESTION_CHANCE: Record<
+  FreeTalkLanguageLevel,
+  {
+    grammar: { high: number; medium: number };
+    naturalness: { high: number; medium: number };
+  }
+> = {
+  easy: {
+    grammar: { high: 0.3, medium: 0.15 },
+    naturalness: { high: 0.1, medium: 0.05 },
+  },
+  balanced: {
+    grammar: { high: 0.6, medium: 0.3 },
+    naturalness: { high: 0.3, medium: 0.15 },
+  },
+  englishOnly: {
+    grammar: { high: 0.9, medium: 0.45 },
+    naturalness: { high: 0.6, medium: 0.3 },
+  },
+};
+
+export function normalizeFreeTalkDamage(
+  value?: string | null,
+): FreeTalkDamageLevel {
+  if (value === 'low' || value === 'medium' || value === 'high') return value;
+  return 'none';
+}
+
+function freeTalkDamageRank(damage: FreeTalkDamageLevel): number {
+  switch (damage) {
+    case 'high':
+      return 3;
+    case 'medium':
+      return 2;
+    case 'low':
+      return 1;
+    default:
+      return 0;
+  }
+}
+
+export interface FreeTalkSuggestionGateInput {
+  languageLevel: FreeTalkLanguageLevel;
+  grammarDamage: FreeTalkDamageLevel;
+  naturalnessDamage: FreeTalkDamageLevel;
+  grammarSuggestionsUsed: number;
+  naturalnessSuggestionsUsed: number;
+  grammarMax: number;
+  naturalnessMax: number;
+  softRecastEn?: string;
+  softRecastTh?: string;
+  issueNote?: string;
+  learnerText: string;
+  userTurnIndex: number;
+  random?: () => number;
+}
+
+export interface FreeTalkSuggestionGateResult {
+  applySoftRecast: boolean;
+  kind: FreeTalkIssueKind | null;
+  issueLogEntries: FreeTalkIssueLogEntry[];
+  grammarSuggestionsUsed: number;
+  naturalnessSuggestionsUsed: number;
+}
+
+/** Server-side budget + chance gate (LLM only proposes softRecast candidates). */
+export function applyFreeTalkSuggestionGate(
+  input: FreeTalkSuggestionGateInput,
+): FreeTalkSuggestionGateResult {
+  const random = input.random ?? Math.random;
+  const table = FREE_TALK_SUGGESTION_CHANCE[input.languageLevel];
+  const note = (input.issueNote ?? '').trim();
+  const hasSoftRecast = Boolean((input.softRecastEn ?? '').trim());
+
+  const candidates: Array<{
+    kind: FreeTalkIssueKind;
+    damage: 'low' | 'medium' | 'high';
+  }> = [];
+  if (input.grammarDamage !== 'none') {
+    candidates.push({
+      kind: 'grammar',
+      damage: input.grammarDamage,
+    });
+  }
+  if (input.naturalnessDamage !== 'none') {
+    candidates.push({
+      kind: 'naturalness',
+      damage: input.naturalnessDamage,
+    });
+  }
+
+  let grammarPassed = false;
+  let naturalnessPassed = false;
+
+  if (
+    (input.grammarDamage === 'medium' || input.grammarDamage === 'high') &&
+    input.grammarSuggestionsUsed < input.grammarMax
+  ) {
+    grammarPassed =
+      random() < table.grammar[input.grammarDamage] && hasSoftRecast;
+  }
+  if (
+    (input.naturalnessDamage === 'medium' ||
+      input.naturalnessDamage === 'high') &&
+    input.naturalnessSuggestionsUsed < input.naturalnessMax
+  ) {
+    naturalnessPassed =
+      random() < table.naturalness[input.naturalnessDamage] && hasSoftRecast;
+  }
+
+  let kind: FreeTalkIssueKind | null = null;
+  if (grammarPassed && naturalnessPassed) {
+    kind =
+      freeTalkDamageRank(input.grammarDamage) >=
+      freeTalkDamageRank(input.naturalnessDamage)
+        ? 'grammar'
+        : 'naturalness';
+  } else if (grammarPassed) {
+    kind = 'grammar';
+  } else if (naturalnessPassed) {
+    kind = 'naturalness';
+  }
+
+  let grammarSuggestionsUsed = input.grammarSuggestionsUsed;
+  let naturalnessSuggestionsUsed = input.naturalnessSuggestionsUsed;
+  if (kind === 'grammar') grammarSuggestionsUsed += 1;
+  if (kind === 'naturalness') naturalnessSuggestionsUsed += 1;
+
+  const issueLogEntries: FreeTalkIssueLogEntry[] = candidates.map((c) => ({
+    userTurnIndex: input.userTurnIndex,
+    kind: c.kind,
+    damage: c.damage,
+    learnerText: input.learnerText,
+    note,
+    suggestedMidChat: kind === c.kind,
+  }));
+
+  return {
+    applySoftRecast: kind != null,
+    kind,
+    issueLogEntries,
+    grammarSuggestionsUsed,
+    naturalnessSuggestionsUsed,
+  };
+}
+
+export function formatFreeTalkIssueLogForReport(
+  issueLog: FreeTalkIssueLogEntry[],
+): string {
+  if (!issueLog.length) {
+    return 'No mid-session grammar/naturalness issues were logged.';
+  }
+  return (
+    'Logged grammar/naturalness issues from this session ' +
+    '(prefer coaching on items with suggestedMidChat=false in grammarTip/turnFeedback):\n' +
+    issueLog
+      .map(
+        (e) =>
+          `- turn ${e.userTurnIndex} [${e.kind}/${e.damage}] ` +
+          `midChat=${e.suggestedMidChat}: "${e.learnerText}" — ${e.note || '(no note)'}`,
+      )
+      .join('\n')
+  );
+}
 
 /**
  * Opening vibe bank — server picks one at random each Free Talk start
@@ -308,6 +522,7 @@ export function freeTalkSystemPrompt(options: {
     `Topic context: ${TOPIC_CONTEXT.free_talk}`,
     levelGuide,
     FREE_TALK_PHASE_GUIDE,
+    FREE_TALK_DAMAGE_GUIDE,
     memories,
     phaseLine,
     topicLine,
@@ -352,7 +567,8 @@ export function freeTalkOpeningUserPrompt(options: {
     'textTh is Thai-only subtitle of the same meaning. ' +
     `${memoryHint} ` +
     'Return JSON with textEn, textTh, phase (greeting), nextAction (explore or encourage), ' +
-    'and light internal fields (intent, emotion, grammarNote, topic, conversationDepth).'
+    'light internal fields (intent, emotion, grammarNote, topic, conversationDepth), ' +
+    'and set grammarDamage/naturalnessDamage to none with empty issueNote/softRecastEn/softRecastTh.'
   );
 }
 
@@ -373,7 +589,7 @@ export function openingUserPrompt(topicId: string): string {
 export const FREE_TALK_SUMMARY_PROMPT = `${FREE_TALK_PERSONA}
 
 You are writing the Free Talk wrap-up package for a Thai learner.
-From the full transcript, return JSON with:
+From the full transcript AND the logged issue list, return JSON with:
 - conversationSummaryEn: 2–3 short English sentences summarizing the chat warmly (not a test score).
 - conversationSummaryTh: Thai version in Teacher B voice (ครับ, not ค่ะ).
 - memories: up to 5 strings — the MOST IMPORTANT lasting facts about the learner from THIS session only
@@ -382,9 +598,11 @@ From the full transcript, return JSON with:
   (e.g. "ชอบกาแฟมากกว่าชา", "กำลังเตรียมสัมภาษณ์งาน"). Empty array if nothing lasting.
 - feedbackEn / feedbackTh: warm overall encouragement (Teacher B voice in Thai).
 - bestSentenceEn / bestSentenceNoteTh: best learner English moment (or empty if they barely spoke).
-- grammarTip / grammarTipTh: one gentle tip (or empty).
+- grammarTip / grammarTipTh: one gentle tip — prefer an issue that was NOT already soft-recast mid-chat
+  (suggestedMidChat=false). Empty if nothing useful.
 - pronunciationIssues: [] unless clear issues.
 - vocab: 3–5 useful items from the chat (or []).
 - turnFeedback: coaching cards per learner turn (same rules as mission reports), or [].
+  Prefer turns that still need coaching (logged issues with suggestedMidChat=false).
 
 Never use "-", "N/A", or placeholders for empty fields — use empty string / empty array.`;
