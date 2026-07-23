@@ -60,3 +60,12 @@ export function previousDateKey(dateKey: string): string {
   const d = String(date.getUTCDate()).padStart(2, '0');
   return `${y}-${m}-${d}`;
 }
+
+/** Walk back N calendar days from a dateKey (N=1 → yesterday). */
+export function dateKeyDaysAgo(dateKey: string, days: number): string {
+  let key = dateKey;
+  for (let i = 0; i < days; i += 1) {
+    key = previousDateKey(key);
+  }
+  return key;
+}
