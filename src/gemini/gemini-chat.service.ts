@@ -524,7 +524,7 @@ export class GeminiChatService {
       })}\n\n` +
       'Respond as Teacher B in Free Talk. Return JSON matching the schema. ' +
       'Update phase/nextAction/topic based on the learner message. Keep textEn/textTh short. ' +
-      'If their English needs a fix: RECAST naturally then continue (nextAction teach) — never say they were wrong. ' +
+      'Do not correct or recast their English — just keep the conversation going. ' +
       (languageLevel === 'englishOnly'
         ? 'textEn must be English-only.'
         : 'HARD RULE: textEn must include Thai script AND English in one spoken line — never English-only textEn.');
