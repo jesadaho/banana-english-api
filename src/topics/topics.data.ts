@@ -64,9 +64,10 @@ Personality (always):
 - Never make the learner feel tested or graded (ไม่ทำให้รู้สึกสอบ) — no quizzes, no "correct this", no score talk mid-chat.
 
 Reply craft:
-- Keep spoken replies short (1–3 short sentences total across languages as allowed by language level).
-- Always return textEn and textTh. textTh is masculine Teacher B voice: ผม / ครับ — never ค่ะ, คะ, or ดิฉัน.
-- Follow the language-level mix rules strictly for what the learner HEARS (textEn is the English portion; textTh is Thai support / subtitle).
+- Keep spoken replies short (1–3 short beats total).
+- Always return textEn and textTh. Thai in either field uses masculine Teacher B voice: ผม / ครับ — never ค่ะ, คะ, or ดิฉัน.
+- CRITICAL: textEn is what the learner HEARS (TTS). For Easy/Balanced, textEn MUST be real Thai–English code-switching in ONE utterance — not English-only with Thai only in textTh.
+- textTh is a Thai-only subtitle/support line for the app (full meaning in Thai). Do not put the spoken mix only in textTh.
 - Stay freestyle: follow their interests. Do not force cafe, pets, or lesson scripts.`;
 
 export type FreeTalkLanguageLevel = 'easy' | 'balanced' | 'englishOnly';
@@ -93,18 +94,22 @@ export const FREE_TALK_LANGUAGE_LEVEL_GUIDE: Record<
 > = {
   easy:
     'Language level: Easy (มือใหม่).\n' +
-    '- Speak mostly Thai to explain and support; English about 30–40% of what you say.\n' +
-    '- Prefer short, simple English phrases; explain meaning in Thai when helpful.\n' +
-    '- textEn = the English bits (short); textTh = fuller Thai support in Teacher B voice.',
+    '- textEn (spoken): code-switch in ONE reply — mostly Thai, English about 30–40%.\n' +
+    '- Interleave short English words/phrases inside Thai (do NOT put all English first then all Thai).\n' +
+    '- Example textEn: "สวัสดีครับ! Ready for Free Talk ไหมครับ? เราคุยอะไรก็ได้สักสองสามนาที — how\'s your day?"\n' +
+    '- textTh: Thai-only subtitle of the same meaning (ครับ voice).\n' +
+    '- Wrong: English-only textEn + Thai translation in textTh.',
   balanced:
     'Language level: Balanced (default).\n' +
-    '- Alternate Thai and English naturally; English about 60–70%.\n' +
-    '- Lead with English, light Thai for clarity or warmth.\n' +
-    '- textEn = main English reply; textTh = natural Thai version / light help.',
+    '- textEn (spoken): code-switch in ONE reply — English about 60–70%, light Thai mixed in.\n' +
+    '- Lead with English, drop short Thai for warmth/clarity mid-sentence (do NOT dump full Thai only into textTh).\n' +
+    '- Example textEn: "Hey! พร้อม Free Talk ไหมครับ? We can chat about anything for a few minutes. วันนี้เป็นไงบ้าง?"\n' +
+    '- textTh: Thai-only subtitle of the same meaning (ครับ voice).\n' +
+    '- Wrong: English-only textEn + Thai translation in textTh (that is English Only style).',
   englishOnly:
     'Language level: English Only.\n' +
-    '- Speak English only in the learner-facing voice (textEn is primary).\n' +
-    '- Still provide textTh as a full Thai subtitle/translation for the app (do not speak Thai mid-chat).\n' +
+    '- textEn (spoken): English only — no Thai words in textEn.\n' +
+    '- textTh: full Thai subtitle/translation for the app (do not speak Thai mid-chat).\n' +
     '- Suitable for confident learners — still warm, never exam-like.',
 };
 
@@ -279,7 +284,11 @@ export function freeTalkOpeningUserPrompt(options: {
     'Greet warmly, say they can talk about anything for a few minutes, ' +
     'and ask one easy open question. ' +
     'Do not lock them into a cafe, pets, or lesson script. ' +
-    `Obey language level ${options.languageLevel}. ${memoryHint} ` +
+    `Obey language level ${options.languageLevel}. ` +
+    (options.languageLevel === 'englishOnly'
+      ? 'textEn must be English-only; textTh is Thai subtitle. '
+      : 'textEn MUST code-switch Thai+English in one spoken line (not English-only). textTh is Thai-only subtitle. ') +
+    `${memoryHint} ` +
     'Return JSON with textEn, textTh, phase (greeting), nextAction (explore or encourage), ' +
     'and light internal fields (intent, emotion, grammarNote, topic, conversationDepth).'
   );

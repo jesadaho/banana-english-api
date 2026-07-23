@@ -450,7 +450,10 @@ export class GeminiChatService {
           phase: 'greeting',
           memories,
         })}\n\n` +
-        'Return JSON matching the schema. Keep the spoken reply short.',
+        'Return JSON matching the schema. Keep the spoken reply short. ' +
+        (languageLevel === 'englishOnly'
+          ? 'textEn is English-only.'
+          : 'textEn must code-switch Thai+English in one line.'),
       contents: [
         {
           role: 'user',
@@ -490,7 +493,8 @@ export class GeminiChatService {
         durationLimitSeconds: options.durationLimitSeconds,
       })}\n\n` +
       'Respond as Teacher B in Free Talk. Return JSON matching the schema. ' +
-      'Update phase/nextAction/topic based on the learner message. Keep textEn/textTh short.';
+      'Update phase/nextAction/topic based on the learner message. Keep textEn/textTh short. ' +
+      'For easy/balanced: textEn must be Thai–English code-switch in one spoken line — never English-only textEn.';
 
     const contents: GeminiContent[] = [];
     for (const turn of options.history.slice(-10)) {
