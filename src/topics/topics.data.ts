@@ -106,7 +106,7 @@ export const FREE_TALK_LANGUAGE_LEVEL_GUIDE: Record<
     '  Translate only the question beat — not the whole reply.\n' +
     '- Statements / teasing / praise / soft recast beats: do NOT Thai-echo the whole line; keep those light.\n' +
     '- Very short questions ("Really?", "Oh?") need no Thai echo.\n' +
-    '- Soft recast + speak-after-me: Thai-echo the invite lightly if needed; the phrase to repeat stays in clear English; Thai-echo the follow-up question.\n' +
+    '- Soft recast: medium = recast + speak-after-me; high tip may be Thai (1 short sentence). Model phrase to repeat stays clear English; Thai-echo the follow-up question.\n' +
     '- Example textEn: "สวัสดีครับ Jesada! กินข้าวหรือยังครับ? Did you eat yet?"\n' +
     '- textTh: Thai-only subtitle of the same meaning (ครับ voice).\n' +
     '- Wrong: English-only textEn + Thai translation in textTh.',
@@ -132,7 +132,7 @@ export const FREE_TALK_PHASE_GUIDE = `Conversation phases (advance naturally, do
    - explore: dig into what they just said
    - expand: help them say a bit more / richer English
    - relate: share a light related thought / tease gently
-   - teach: when soft recast is applied — recast + invite them to speak the correct phrase once + short follow-up. Never lecture or label mistakes.
+   - teach: when soft recast is applied — medium = recast + speak-after-me; high = Almost! + one short tip + model sentence + speak-after-me. Then a short follow-up. Never lecture.
    - encourage: praise effort / confidence boost
    - change_topic: soft pivot when the thread is done
    - wrap_up: only when time is nearly up or they clearly want to end
@@ -174,16 +174,29 @@ Naturalness Damage — grammar OK-ish but a native speaker would not say it this
 Also set:
 - issueNote: short internal English note (empty if both damages are none)
 - softRecastEn / softRecastTh: ONLY when grammarDamage or naturalnessDamage is medium or high.
-  Soft recast = (1) echo their meaning in correct English in a chatty tone,
-  (2) invite them to SAY THE CORRECT PHRASE out loud once (speak-after-me),
-  (3) then one short follow-up question.
-  Keep it playful — never label them wrong, never lecture grammar.
-  Good: User "I go shopping yesterday."
-    → softRecastEn: "Oh, you went shopping yesterday! ลองพูดตามนะครับ — You went shopping yesterday. What did you buy?"
-  Good (English Only): "Oh, you went shopping yesterday! Try saying: You went shopping yesterday. What did you buy?"
-  Bad: "ผิดนะ…", "That's wrong", long grammar lectures, "Correct this:", quiz vibes.
-  The phrase they should repeat must be short (one clear sentence / clause).
-  softRecastEn must follow the SAME language-level mix rules as textEn (Easy/Balanced code-switch; English Only = English-only).
+  Craft softRecast for the PRIMARY issue (whichever damage is higher; grammar wins ties).
+  No emojis. Never say "ผิด", "wrong", or lecture. Warm Almost! / Oh! tone is fine.
+
+  MEDIUM (soft recast only — no grammar tip):
+  (1) chatty echo in correct English,
+  (2) invite them to say the correct phrase once,
+  (3) one short follow-up.
+  Good: "Oh, you went shopping yesterday! ลองพูดตามนะครับ — You went shopping yesterday. What did you buy?"
+
+  HIGH (soft recast + ONE short tip why):
+  (1) Almost! / Oh, almost!,
+  (2) ONE short tip (Thai OK on Easy/Balanced; English-only tip on English Only) — the why, not a lecture,
+  (3) clear model sentence to repeat,
+  (4) one short follow-up.
+  Good: User "I go yesterday."
+    → "Oh, almost! เวลาพูดถึงเมื่อวาน เราใช้ went แทน go นะครับ I went somewhere yesterday. ลองพูดตามนะครับ — I went somewhere yesterday. ไปไหนมาครับ?"
+  Good: User "I yesterday." (missing verb)
+    → "Almost! ประโยคยังขาดคำกริยาครับ ลองพูดแบบนี้: I went somewhere yesterday. ไปไหนมาครับ?"
+  Good (English Only high): "Almost! For yesterday we say went, not go. Try: I went somewhere yesterday. Where did you go?"
+
+  Bad: long grammar lessons, quizzes, "Correct this:", stacking multiple tips.
+  The phrase they should repeat must be short (one clear sentence).
+  softRecastEn must follow the SAME language-level mix rules as textEn.
   textEn/textTh must still be a NORMAL chat reply WITHOUT correction (server may swap in softRecast).
 
 CRITICAL for damage scoring:

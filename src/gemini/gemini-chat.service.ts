@@ -574,7 +574,8 @@ export class GeminiChatService {
       'Update phase/nextAction/topic based on the learner message. Keep textEn/textTh short. ' +
       'Always evaluate grammarDamage and naturalnessDamage on the RAW spoken line only. ' +
       'Put softRecastEn/softRecastTh only when damage is medium or high; textEn stays a normal chat reply. ' +
-      'softRecast must: recast correctly, invite them to speak that phrase once, then one short follow-up. ' +
+      'softRecast: MEDIUM = recast + speak-after-me + follow-up; ' +
+      'HIGH = Almost! + one short tip why + model sentence to repeat + follow-up. No emojis, no lectures. ' +
       'Do not label mistakes in textEn. ' +
       (languageLevel === 'englishOnly'
         ? 'textEn must be English-only.'
