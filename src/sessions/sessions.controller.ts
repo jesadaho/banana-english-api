@@ -28,7 +28,7 @@ import {
   ChatTurn,
   SessionStoreService,
 } from '../session-store/session-store.service';
-import { FALLBACK_HINTS, getTopic } from '../topics/topics.data';
+import { FALLBACK_HINTS, getTopic, normalizeFreeTalkLanguageLevel } from '../topics/topics.data';
 import {
   INTRO_TURN1_OPENING,
   getTurn2Script,
@@ -90,6 +90,50 @@ export class SessionsController {
 
     if (!body.topicId || !getTopic(body.topicId)) {
       throw new NotFoundException('Topic not found');
+    }
+
+    if (body.topicId === 'free_talk') {
+      const durationMinutes = body.durationMinutes === 10 ? 10 : 5;
+      const bananaCost = durationMinutes === 10 ? 2 : 1;
+      const languageLevel = normalizeFreeTalkLanguageLevel(body.languageLevel);
+      await this.economy.spendBananas(
+        req.user.id,
+        bananaCost,
+        'free_talk',
+        'free_talk_start',
+      );
+      const priorMemories = await this.users.getFreeTalkMemories(req.user.id);
+      const data = this.sessionStore.create(body.topicId, {
+        durationLimitSeconds: durationMinutes * 60,
+        freeTalk: {
+          languageLevel,
+          priorMemories,
+        },
+      });
+
+      try {
+        const reply = await this.chat.generateFreeTalkOpening({
+          languageLevel,
+          memories: priorMemories,
+        });
+        const opening = {
+          speaker: 'ai' as const,
+          textEn: reply.textEn,
+          textTh: reply.textTh,
+          audioUrl: null,
+        };
+        this.sessionStore.addTurn(data.session.id, opening);
+        data.turns[data.turns.length - 1] = opening;
+        this.sessionStore.updateFreeTalkState(data.session.id, {
+          phase: (reply.phase as 'greeting') || 'greeting',
+          topic: reply.topic || null,
+          nextAction: (reply.nextAction as 'explore') || 'explore',
+        });
+
+        return { session: data.session, opening };
+      } catch (err) {
+        throw new BadGatewayException(formatAiServiceUserMessage(err));
+      }
     }
 
     const data = this.sessionStore.create(body.topicId);
@@ -527,6 +571,48 @@ export class SessionsController {
       ).length;
 
       const topicId = data.session.topicId ?? 'coffee';
+
+      if (topicId === 'free_talk') {
+        const ft = data.freeTalk;
+        const reply = await this.chat.generateFreeTalkReply({
+          history: data.turns,
+          userMessage: userText,
+          languageLevel: ft?.languageLevel ?? 'balanced',
+          phase: ft?.phase,
+          topic: ft?.topic,
+          nextAction: ft?.nextAction,
+          memories: ft?.priorMemories,
+          remainingSeconds: body.remainingSeconds,
+          durationLimitSeconds: data.session.durationLimitSeconds,
+        });
+        const aiTurn = {
+          speaker: 'ai' as const,
+          textEn: reply.textEn,
+          textTh: reply.textTh,
+          audioUrl: null,
+        };
+        this.sessionStore.addTurn(sessionId, aiTurn);
+        data.turns[data.turns.length - 1] = aiTurn;
+        this.sessionStore.updateFreeTalkState(sessionId, {
+          phase: reply.phase as
+            | 'greeting'
+            | 'ice_breaker'
+            | 'discover_topic'
+            | 'conversation_loop'
+            | 'wrap_up',
+          topic: reply.topic || ft?.topic || null,
+          nextAction: reply.nextAction as
+            | 'explore'
+            | 'expand'
+            | 'relate'
+            | 'teach'
+            | 'encourage'
+            | 'change_topic'
+            | 'wrap_up',
+        });
+        return aiTurn;
+      }
+
       const reply =
         topicId === 'intro' && userTurnCount === 1
           ? getTurn2Script(userText)
@@ -629,6 +715,39 @@ export class SessionsController {
       }
 
       return { status: 'ended', lessonRewards };
+    }
+
+    if (data.session.topicId === 'free_talk') {
+      try {
+        const ended = data.endedAt ?? new Date();
+        const started = new Date(data.session.startedAt);
+        let duration = Math.floor(
+          (ended.getTime() - started.getTime()) / 1000,
+        );
+        duration = Math.min(
+          duration,
+          data.session.durationLimitSeconds ?? duration,
+        );
+        const summary = await this.chat.generateFreeTalkReport(
+          data.turns,
+          duration,
+        );
+        this.sessionStore.updateFreeTalkState(sessionId, {
+          conversationSummaryEn: summary.conversationSummaryEn,
+          conversationSummaryTh: summary.conversationSummaryTh,
+          extractedMemories: summary.memories,
+          endedReport: summary,
+        });
+        await this.users.setFreeTalkMemories(req.user.id, summary.memories);
+        return {
+          status: 'ended',
+          conversationSummaryEn: summary.conversationSummaryEn,
+          conversationSummaryTh: summary.conversationSummaryTh,
+          memories: summary.memories,
+        };
+      } catch (err) {
+        throw new BadGatewayException(formatAiServiceUserMessage(err));
+      }
     }
 
     return { status: 'ended' };
@@ -797,6 +916,39 @@ export class SessionsController {
         duration,
         data.session.durationLimitSeconds ?? duration,
       );
+
+      if (data.session.topicId === 'free_talk') {
+        let report = data.freeTalk?.endedReport;
+        if (!report) {
+          report = await this.chat.generateFreeTalkReport(data.turns, duration);
+          this.sessionStore.updateFreeTalkState(sessionId, {
+            conversationSummaryEn: report.conversationSummaryEn,
+            conversationSummaryTh: report.conversationSummaryTh,
+            extractedMemories: report.memories,
+            endedReport: report,
+          });
+          await this.users.setFreeTalkMemories(req.user.id, report.memories);
+        }
+
+        return {
+          sessionId,
+          feedbackEn: report.feedbackEn,
+          feedbackTh: report.feedbackTh,
+          bestSentenceEn: report.bestSentenceEn,
+          bestSentenceNoteTh: report.bestSentenceNoteTh,
+          grammarTip: report.grammarTip,
+          grammarTipTh: report.grammarTipTh,
+          pronunciationIssues: report.pronunciationIssues,
+          vocab: report.vocab,
+          durationSeconds: duration,
+          topicId: 'free_talk',
+          missionTitleTh: 'คุยเล่นกับครูพี่บี',
+          conversationSummaryEn: report.conversationSummaryEn,
+          conversationSummaryTh: report.conversationSummaryTh,
+          memories: report.memories,
+          turns: mergeTurnsWithFeedback(data.turns, report.turnFeedback),
+        };
+      }
 
       const report = await this.chat.generateReport(data.turns, duration);
 

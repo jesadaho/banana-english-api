@@ -3,6 +3,17 @@ export interface GptReply {
   textTh: string;
 }
 
+/** Structured Free Talk turn (client still only needs textEn/textTh). */
+export interface FreeTalkTurnReply extends GptReply {
+  phase: string;
+  nextAction: string;
+  intent?: string;
+  emotion?: string;
+  grammarNote?: string;
+  topic?: string;
+  conversationDepth?: string;
+}
+
 export type SessionType = 'intro' | 'legacy' | 'simulation' | 'training';
 
 export interface FeedbackHints {
@@ -106,6 +117,14 @@ export interface GptReport {
   turnFeedback?: TurnFeedbackItem[];
 }
 
+/** Free Talk wrap-up extras (also used to overwrite user memories). */
+export interface FreeTalkSessionSummary extends GptReport {
+  conversationSummaryEn: string;
+  conversationSummaryTh: string;
+  /** Up to 5 most important lasting facts from this session. */
+  memories: string[];
+}
+
 export interface MissionResultResponse extends GptReport {
   sessionId: string;
   durationSeconds: number;
@@ -124,6 +143,9 @@ export interface MissionResultResponse extends GptReport {
   completedAt?: string;
   /** Text-only conversation turns (no audio). */
   turns?: StoredChatTurn[];
+  conversationSummaryEn?: string;
+  conversationSummaryTh?: string;
+  memories?: string[];
 }
 
 export interface ActivityItemResponse {

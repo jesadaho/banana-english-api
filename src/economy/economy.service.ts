@@ -213,7 +213,7 @@ export class EconomyService {
     userId: string,
     amount: number,
     referenceId: string,
-    source: 'mission_start' | 'lesson_start' = 'mission_start',
+    source: 'mission_start' | 'lesson_start' | 'free_talk_start' = 'mission_start',
   ): Promise<User> {
     return this.prisma.$transaction(async (tx) => {
       const user = await tx.user.findUniqueOrThrow({ where: { id: userId } });

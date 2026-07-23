@@ -15,6 +15,12 @@ export const TOPICS: Topic[] = [
     icon: '👋',
   },
   {
+    id: 'free_talk',
+    titleTh: 'คุยกับครูพี่บี',
+    titleEn: 'Free Talk with Teacher B',
+    icon: '💬',
+  },
+  {
     id: 'coffee',
     titleTh: 'สั่งกาแฟที่คาเฟ่',
     titleEn: 'Ordering Coffee at a Cafe',
@@ -30,6 +36,10 @@ export const TOPICS: Topic[] = [
 
 export const TOPIC_CONTEXT: Record<string, string> = {
   intro: 'Banana English onboarding introduction — 3-turn script with Teacher B (ครูพี่บี).',
+  free_talk:
+    'Open freestyle conversation practice with Teacher B. There is no fixed task or checklist. ' +
+    'Follow the learner’s interests, keep topics light and everyday, and help them speak English comfortably. ' +
+    'Ask simple follow-up questions. Do not force a cafe/pets script.',
   coffee: 'The learner is practicing ordering coffee at a cafe in English.',
   pets: 'The learner is practicing talking about pets in English.',
 };
@@ -40,6 +50,84 @@ export const BROTHER_BANANA_PERSONA = `You are Teacher B / ครูพี่บ
 - Stay on the conversation topic.
 - After your English reply, always provide a natural Thai translation in textTh.
 - When writing Thai, speak as a male teacher: use ผม and end sentences with ครับ. Never use ค่ะ, คะ, or ดิฉัน.`;
+
+/** Free Talk–only Teacher B voice (playful freestyle coach). */
+export const FREE_TALK_PERSONA = `You are Teacher B / ครูพี่บี (Brother Banana) in Free Talk mode — a playful male AI English buddy for Thai learners.
+Personality (always):
+- Playful and light (ขี้เล่น) — smile in your tone, never stiff.
+- High energy (Energy สูง) — warm enthusiasm, short punchy lines.
+- Love light exclamations (ชอบอุทาน) — e.g. Nice!, โอ้โห!, Let's go! — but not every sentence.
+- Gentle teasing (แซวเบาๆ) — never mean, never roast hard.
+- Great at encouragement (ให้กำลังใจเก่ง) — celebrate small wins.
+- Understand Thai learners (เข้าใจคนไทย) — cultural context, code-switching, Thai feelings.
+- Curious (อยากรู้อยากเห็น) — ask one natural follow-up when it fits.
+- Never make the learner feel tested or graded (ไม่ทำให้รู้สึกสอบ) — no quizzes, no "correct this", no score talk mid-chat.
+
+Reply craft:
+- Keep spoken replies short (1–3 short sentences total across languages as allowed by language level).
+- Always return textEn and textTh. textTh is masculine Teacher B voice: ผม / ครับ — never ค่ะ, คะ, or ดิฉัน.
+- Follow the language-level mix rules strictly for what the learner HEARS (textEn is the English portion; textTh is Thai support / subtitle).
+- Stay freestyle: follow their interests. Do not force cafe, pets, or lesson scripts.`;
+
+export type FreeTalkLanguageLevel = 'easy' | 'balanced' | 'englishOnly';
+
+export type FreeTalkPhase =
+  | 'greeting'
+  | 'ice_breaker'
+  | 'discover_topic'
+  | 'conversation_loop'
+  | 'wrap_up';
+
+export type FreeTalkNextAction =
+  | 'explore'
+  | 'expand'
+  | 'relate'
+  | 'teach'
+  | 'encourage'
+  | 'change_topic'
+  | 'wrap_up';
+
+export const FREE_TALK_LANGUAGE_LEVEL_GUIDE: Record<
+  FreeTalkLanguageLevel,
+  string
+> = {
+  easy:
+    'Language level: Easy (มือใหม่).\n' +
+    '- Speak mostly Thai to explain and support; English about 30–40% of what you say.\n' +
+    '- Prefer short, simple English phrases; explain meaning in Thai when helpful.\n' +
+    '- textEn = the English bits (short); textTh = fuller Thai support in Teacher B voice.',
+  balanced:
+    'Language level: Balanced (default).\n' +
+    '- Alternate Thai and English naturally; English about 60–70%.\n' +
+    '- Lead with English, light Thai for clarity or warmth.\n' +
+    '- textEn = main English reply; textTh = natural Thai version / light help.',
+  englishOnly:
+    'Language level: English Only.\n' +
+    '- Speak English only in the learner-facing voice (textEn is primary).\n' +
+    '- Still provide textTh as a full Thai subtitle/translation for the app (do not speak Thai mid-chat).\n' +
+    '- Suitable for confident learners — still warm, never exam-like.',
+};
+
+export const FREE_TALK_PHASE_GUIDE = `Conversation phases (advance naturally, do not announce phase names to the learner):
+1) greeting — warm hello, invite freestyle chat for a few minutes.
+2) ice_breaker — easy small talk to lower anxiety.
+3) discover_topic — find what they want to talk about (or recall a prior memory if natural).
+4) conversation_loop — stay here most of the session. Pick nextAction:
+   - explore: dig into what they just said
+   - expand: help them say a bit more / richer English
+   - relate: share a light related thought / tease gently
+   - teach: one tiny natural language tip woven into chat (never quiz)
+   - encourage: praise effort / confidence boost
+   - change_topic: soft pivot when the thread is done
+   - wrap_up: only when time is nearly up or they clearly want to end
+5) wrap_up — thank them, one warm closing line, invite next Free Talk.
+
+Per-turn internal reasoning (use to choose nextAction; keep replies short):
+User message → Intent → Emotion → Grammar (silent) → Topic → Conversation depth → Previous memory → Next action.
+Do NOT dump this reasoning into textEn/textTh.`;
+
+/** Bias wrap-up when client reports this many seconds left (or fewer). */
+export const FREE_TALK_WRAP_UP_SECONDS = 45;
 
 export const THAI_MIX_PROMPT = `The learner spoke English mixed with Thai words.
 Convert their utterance into natural, correct English while preserving the meaning.
@@ -118,7 +206,90 @@ export function conversationSystemPrompt(topicId: string): string {
   return `${BROTHER_BANANA_PERSONA}\n\nTopic context: ${context}`;
 }
 
+export function normalizeFreeTalkLanguageLevel(
+  value?: string | null,
+): FreeTalkLanguageLevel {
+  if (value === 'easy' || value === 'englishOnly') return value;
+  return 'balanced';
+}
+
+export function freeTalkSystemPrompt(options: {
+  languageLevel: FreeTalkLanguageLevel;
+  phase?: FreeTalkPhase | string;
+  topic?: string | null;
+  nextAction?: FreeTalkNextAction | string | null;
+  memories?: string[];
+  remainingSeconds?: number | null;
+  durationLimitSeconds?: number | null;
+}): string {
+  const levelGuide = FREE_TALK_LANGUAGE_LEVEL_GUIDE[options.languageLevel];
+  const memories =
+    options.memories && options.memories.length > 0
+      ? `Known learner memories from their last Free Talk (use naturally, do not list them):\n` +
+        options.memories.map((m) => `- ${m}`).join('\n')
+      : 'No prior Free Talk memories yet.';
+
+  const phaseLine = options.phase
+    ? `Current phase: ${options.phase}.`
+    : 'Current phase: greeting.';
+  const topicLine = options.topic
+    ? `Current topic focus: ${options.topic}.`
+    : 'Current topic focus: not set yet — discover gently.';
+  const actionLine = options.nextAction
+    ? `Last nextAction: ${options.nextAction}.`
+    : '';
+
+  const remaining =
+    typeof options.remainingSeconds === 'number'
+      ? options.remainingSeconds
+      : null;
+  const wrapHint =
+    remaining != null && remaining <= FREE_TALK_WRAP_UP_SECONDS
+      ? `Time left ≈ ${remaining}s — prefer nextAction wrap_up and move phase toward wrap_up.`
+      : remaining != null
+        ? `Time left ≈ ${remaining}s of ${options.durationLimitSeconds ?? 'session'}s.`
+        : '';
+
+  return [
+    FREE_TALK_PERSONA,
+    `Topic context: ${TOPIC_CONTEXT.free_talk}`,
+    levelGuide,
+    FREE_TALK_PHASE_GUIDE,
+    memories,
+    phaseLine,
+    topicLine,
+    actionLine,
+    wrapHint,
+  ]
+    .filter(Boolean)
+    .join('\n\n');
+}
+
+export function freeTalkOpeningUserPrompt(options: {
+  languageLevel: FreeTalkLanguageLevel;
+  memories?: string[];
+}): string {
+  const memoryHint =
+    options.memories && options.memories.length > 0
+      ? 'If natural, lightly recall one prior memory (e.g. something they shared last time) — do not dump a list.'
+      : 'No prior memories — keep the opener generic and easy.';
+
+  return (
+    'Start a Free Talk session as Teacher B in phase greeting. ' +
+    'Greet warmly, say they can talk about anything for a few minutes, ' +
+    'and ask one easy open question. ' +
+    'Do not lock them into a cafe, pets, or lesson script. ' +
+    `Obey language level ${options.languageLevel}. ${memoryHint} ` +
+    'Return JSON with textEn, textTh, phase (greeting), nextAction (explore or encourage), ' +
+    'and light internal fields (intent, emotion, grammarNote, topic, conversationDepth).'
+  );
+}
+
 export function openingUserPrompt(topicId: string): string {
+  if (topicId === 'free_talk') {
+    return freeTalkOpeningUserPrompt({ languageLevel: 'balanced' });
+  }
+
   const topic = getTopic(topicId);
   const title = topic?.titleEn ?? 'English practice';
   return (
@@ -126,3 +297,23 @@ export function openingUserPrompt(topicId: string): string {
     'Greet the learner warmly as Brother Banana and ask an easy opening question.'
   );
 }
+
+/** End-of-session Free Talk summary + top important memories. */
+export const FREE_TALK_SUMMARY_PROMPT = `${FREE_TALK_PERSONA}
+
+You are writing the Free Talk wrap-up package for a Thai learner.
+From the full transcript, return JSON with:
+- conversationSummaryEn: 2–3 short English sentences summarizing the chat warmly (not a test score).
+- conversationSummaryTh: Thai version in Teacher B voice (ครับ, not ค่ะ).
+- memories: up to 5 strings — the MOST IMPORTANT lasting facts about the learner from THIS session only
+  (preferences, plans, people/pets, learning goals). Rank by importance. Skip trivial one-off chit-chat.
+  Write each memory as a short Thai or English bullet the coach can reuse next time
+  (e.g. "ชอบกาแฟมากกว่าชา", "กำลังเตรียมสัมภาษณ์งาน"). Empty array if nothing lasting.
+- feedbackEn / feedbackTh: warm overall encouragement (Teacher B voice in Thai).
+- bestSentenceEn / bestSentenceNoteTh: best learner English moment (or empty if they barely spoke).
+- grammarTip / grammarTipTh: one gentle tip (or empty).
+- pronunciationIssues: [] unless clear issues.
+- vocab: 3–5 useful items from the chat (or []).
+- turnFeedback: coaching cards per learner turn (same rules as mission reports), or [].
+
+Never use "-", "N/A", or placeholders for empty fields — use empty string / empty array.`;

@@ -5,6 +5,11 @@ import type { GptIntroReport, SessionType } from '../common/api.types';
 import type { SimulationConfig } from '../simulations/simulations.data';
 import { initCheckpointStates } from '../simulations/simulations.data';
 import type { LessonConfig } from '../lessons/lessons.data';
+import type {
+  FreeTalkLanguageLevel,
+  FreeTalkNextAction,
+  FreeTalkPhase,
+} from '../topics/topics.data';
 
 export interface ChatTurn {
   speaker: 'user' | 'ai';
@@ -29,7 +34,42 @@ export interface ConversationSession {
   isComplete?: boolean;
 }
 
-interface SessionData {
+export interface FreeTalkSessionState {
+  languageLevel: FreeTalkLanguageLevel;
+  phase: FreeTalkPhase;
+  topic: string | null;
+  nextAction: FreeTalkNextAction | null;
+  /** Prior memories injected at session start. */
+  priorMemories: string[];
+  /** Filled on session end. */
+  conversationSummaryEn?: string;
+  conversationSummaryTh?: string;
+  extractedMemories?: string[];
+  /** Full Free Talk report cached after end (avoids a second Gemini call). */
+  endedReport?: {
+    feedbackEn: string;
+    feedbackTh: string;
+    bestSentenceEn: string;
+    bestSentenceNoteTh: string;
+    grammarTip: string;
+    grammarTipTh: string;
+    vocab: Array<{ word: string; meaningTh: string; exampleEn: string }>;
+    pronunciationIssues: Array<{ word: string; scorePercent: number }>;
+    turnFeedback?: Array<{
+      userTurnIndex: number;
+      status: 'great' | 'good' | 'needs_improvement';
+      headlineTh: string;
+      detailTh?: string | null;
+      suggestionEn?: string | null;
+      suggestionReasonTh?: string | null;
+    }>;
+    conversationSummaryEn: string;
+    conversationSummaryTh: string;
+    memories: string[];
+  };
+}
+
+export interface SessionData {
   session: ConversationSession;
   turns: ChatTurn[];
   turnCounter: number;
@@ -39,6 +79,7 @@ interface SessionData {
   lessonConfig?: LessonConfig;
   /** First name for 1:1 tutor address (training sessions). */
   learnerFirstName?: string;
+  freeTalk?: FreeTalkSessionState;
 }
 
 @Injectable()
@@ -47,7 +88,16 @@ export class SessionStoreService {
 
   constructor(private readonly config: ConfigService) {}
 
-  create(topicId: string): SessionData {
+  create(
+    topicId: string,
+    options?: {
+      durationLimitSeconds?: number;
+      freeTalk?: {
+        languageLevel: FreeTalkLanguageLevel;
+        priorMemories?: string[];
+      };
+    },
+  ): SessionData {
     const sessionId = `session_${randomUUID().replace(/-/g, '').slice(0, 12)}`;
     const sessionType: SessionType = topicId === 'intro' ? 'intro' : 'legacy';
     const session: ConversationSession = {
@@ -55,10 +105,9 @@ export class SessionStoreService {
       sessionType,
       topicId,
       startedAt: new Date().toISOString(),
-      durationLimitSeconds: this.config.get<number>(
-        'SESSION_DURATION_SECONDS',
-        300,
-      ),
+      durationLimitSeconds:
+        options?.durationLimitSeconds ??
+        this.config.get<number>('SESSION_DURATION_SECONDS', 300),
     };
     const data: SessionData = {
       session,
@@ -66,6 +115,15 @@ export class SessionStoreService {
       turnCounter: 0,
       endedAt: null,
       introReport: null,
+      freeTalk: options?.freeTalk
+        ? {
+            languageLevel: options.freeTalk.languageLevel,
+            phase: 'greeting',
+            topic: null,
+            nextAction: null,
+            priorMemories: options.freeTalk.priorMemories ?? [],
+          }
+        : undefined,
     };
     this.sessions.set(sessionId, data);
     return data;
@@ -131,6 +189,15 @@ export class SessionStoreService {
     data.turns.push(turn);
     data.turnCounter += 1;
     return data.turnCounter;
+  }
+
+  updateFreeTalkState(
+    sessionId: string,
+    updates: Partial<FreeTalkSessionState>,
+  ): void {
+    const data = this.require(sessionId);
+    if (!data.freeTalk) return;
+    data.freeTalk = { ...data.freeTalk, ...updates };
   }
 
   updateSimulationState(

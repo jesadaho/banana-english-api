@@ -7,11 +7,18 @@ import { ConfigService } from '@nestjs/config';
 import {
   BROTHER_BANANA_PERSONA,
   conversationSystemPrompt,
+  freeTalkOpeningUserPrompt,
+  freeTalkSystemPrompt,
+  FREE_TALK_SUMMARY_PROMPT,
   HINTS_PROMPT,
+  normalizeFreeTalkLanguageLevel,
   openingUserPrompt,
   REPORT_PROMPT,
   teacherBThaiVoice,
   THAI_MIX_PROMPT,
+  type FreeTalkLanguageLevel,
+  type FreeTalkNextAction,
+  type FreeTalkPhase,
 } from '../topics/topics.data';
 import {
   INTRO_REPORT_PROMPT,
@@ -20,6 +27,8 @@ import {
 } from '../topics/intro_script';
 import { ChatTurn } from '../session-store/session-store.service';
 import {
+  FreeTalkSessionSummary,
+  FreeTalkTurnReply,
   GptIntroReport,
   GptReply,
   GptReport,
@@ -37,6 +46,50 @@ const REPLY_SCHEMA = {
     textTh: { type: 'string' },
   },
   required: ['textEn', 'textTh'],
+};
+
+const FREE_TALK_PHASES = [
+  'greeting',
+  'ice_breaker',
+  'discover_topic',
+  'conversation_loop',
+  'wrap_up',
+] as const;
+
+const FREE_TALK_ACTIONS = [
+  'explore',
+  'expand',
+  'relate',
+  'teach',
+  'encourage',
+  'change_topic',
+  'wrap_up',
+] as const;
+
+const FREE_TALK_REPLY_SCHEMA = {
+  type: 'object',
+  properties: {
+    textEn: { type: 'string' },
+    textTh: { type: 'string' },
+    phase: { type: 'string', enum: [...FREE_TALK_PHASES] },
+    nextAction: { type: 'string', enum: [...FREE_TALK_ACTIONS] },
+    intent: { type: 'string' },
+    emotion: { type: 'string' },
+    grammarNote: { type: 'string' },
+    topic: { type: 'string' },
+    conversationDepth: { type: 'string' },
+  },
+  required: [
+    'textEn',
+    'textTh',
+    'phase',
+    'nextAction',
+    'intent',
+    'emotion',
+    'grammarNote',
+    'topic',
+    'conversationDepth',
+  ],
 };
 
 const TRAINING_REPLY_SCHEMA = {
@@ -187,6 +240,87 @@ const REPORT_SCHEMA = {
   ],
 };
 
+const FREE_TALK_REPORT_SCHEMA = {
+  type: 'object',
+  properties: {
+    conversationSummaryEn: { type: 'string' },
+    conversationSummaryTh: { type: 'string' },
+    memories: {
+      type: 'array',
+      items: { type: 'string' },
+      maxItems: 5,
+    },
+    feedbackEn: { type: 'string' },
+    feedbackTh: { type: 'string' },
+    bestSentenceEn: { type: 'string' },
+    bestSentenceNoteTh: { type: 'string' },
+    grammarTip: { type: 'string' },
+    grammarTipTh: { type: 'string' },
+    pronunciationIssues: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          word: { type: 'string' },
+          scorePercent: { type: 'integer' },
+        },
+        required: ['word', 'scorePercent'],
+      },
+    },
+    vocab: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          word: { type: 'string' },
+          meaningTh: { type: 'string' },
+          exampleEn: { type: 'string' },
+        },
+        required: ['word', 'meaningTh', 'exampleEn'],
+      },
+    },
+    turnFeedback: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          userTurnIndex: { type: 'integer' },
+          status: {
+            type: 'string',
+            enum: ['great', 'good', 'needs_improvement'],
+          },
+          headlineTh: { type: 'string' },
+          detailTh: { type: 'string' },
+          suggestionEn: { type: 'string' },
+          suggestionReasonTh: { type: 'string' },
+        },
+        required: [
+          'userTurnIndex',
+          'status',
+          'headlineTh',
+          'detailTh',
+          'suggestionEn',
+          'suggestionReasonTh',
+        ],
+      },
+    },
+  },
+  required: [
+    'conversationSummaryEn',
+    'conversationSummaryTh',
+    'memories',
+    'feedbackEn',
+    'feedbackTh',
+    'bestSentenceEn',
+    'bestSentenceNoteTh',
+    'grammarTip',
+    'grammarTipTh',
+    'pronunciationIssues',
+    'vocab',
+    'turnFeedback',
+  ],
+};
+
 const INTRO_REPORT_SCHEMA = {
   type: 'object',
   properties: {
@@ -301,6 +435,165 @@ export class GeminiChatService {
       schema: REPLY_SCHEMA,
       maxOutputTokens: 200,
     });
+  }
+
+  async generateFreeTalkOpening(options: {
+    languageLevel: FreeTalkLanguageLevel;
+    memories?: string[];
+  }): Promise<FreeTalkTurnReply> {
+    const languageLevel = normalizeFreeTalkLanguageLevel(options.languageLevel);
+    const memories = options.memories ?? [];
+    const reply = await this.generateJson<FreeTalkTurnReply>({
+      systemInstruction:
+        `${freeTalkSystemPrompt({
+          languageLevel,
+          phase: 'greeting',
+          memories,
+        })}\n\n` +
+        'Return JSON matching the schema. Keep the spoken reply short.',
+      contents: [
+        {
+          role: 'user',
+          parts: [
+            {
+              text: freeTalkOpeningUserPrompt({ languageLevel, memories }),
+            },
+          ],
+        },
+      ],
+      schema: FREE_TALK_REPLY_SCHEMA,
+      maxOutputTokens: 400,
+    });
+    return this.normalizeFreeTalkReply(reply, 'greeting');
+  }
+
+  async generateFreeTalkReply(options: {
+    history: ChatTurn[];
+    userMessage: string;
+    languageLevel: FreeTalkLanguageLevel;
+    phase?: FreeTalkPhase | string;
+    topic?: string | null;
+    nextAction?: FreeTalkNextAction | string | null;
+    memories?: string[];
+    remainingSeconds?: number | null;
+    durationLimitSeconds?: number | null;
+  }): Promise<FreeTalkTurnReply> {
+    const languageLevel = normalizeFreeTalkLanguageLevel(options.languageLevel);
+    const systemInstruction =
+      `${freeTalkSystemPrompt({
+        languageLevel,
+        phase: options.phase,
+        topic: options.topic,
+        nextAction: options.nextAction,
+        memories: options.memories,
+        remainingSeconds: options.remainingSeconds,
+        durationLimitSeconds: options.durationLimitSeconds,
+      })}\n\n` +
+      'Respond as Teacher B in Free Talk. Return JSON matching the schema. ' +
+      'Update phase/nextAction/topic based on the learner message. Keep textEn/textTh short.';
+
+    const contents: GeminiContent[] = [];
+    for (const turn of options.history.slice(-10)) {
+      contents.push({
+        role: turn.speaker === 'ai' ? 'model' : 'user',
+        parts: [{ text: turn.textEn }],
+      });
+    }
+    contents.push({
+      role: 'user',
+      parts: [{ text: options.userMessage }],
+    });
+
+    const reply = await this.generateJson<FreeTalkTurnReply>({
+      systemInstruction,
+      contents,
+      schema: FREE_TALK_REPLY_SCHEMA,
+      maxOutputTokens: 450,
+    });
+    return this.normalizeFreeTalkReply(reply, options.phase ?? 'conversation_loop');
+  }
+
+  async generateFreeTalkReport(
+    history: ChatTurn[],
+    durationSeconds: number,
+  ): Promise<FreeTalkSessionSummary> {
+    const context = this.formatHistoryForReport(history);
+    const report = await this.generateJson<FreeTalkSessionSummary>({
+      systemInstruction: FREE_TALK_SUMMARY_PROMPT,
+      contents: [
+        {
+          role: 'user',
+          parts: [
+            {
+              text: `Session duration: ${durationSeconds} seconds.\nConversation:\n${context}`,
+            },
+          ],
+        },
+      ],
+      schema: FREE_TALK_REPORT_SCHEMA,
+      maxOutputTokens: 1800,
+    });
+
+    const sanitized = this.sanitizeReportForLearnerParticipation(
+      report,
+      history,
+    ) as FreeTalkSessionSummary;
+
+    const memories = (report.memories ?? [])
+      .map((m) => (typeof m === 'string' ? m.trim() : ''))
+      .filter(Boolean)
+      .slice(0, 5);
+
+    return {
+      ...sanitized,
+      conversationSummaryEn: (report.conversationSummaryEn ?? '').trim(),
+      conversationSummaryTh: teacherBThaiVoice(
+        (report.conversationSummaryTh ?? '').trim(),
+      ),
+      memories,
+      feedbackTh: teacherBThaiVoice(sanitized.feedbackTh),
+      bestSentenceNoteTh: teacherBThaiVoice(sanitized.bestSentenceNoteTh),
+      grammarTipTh: teacherBThaiVoice(sanitized.grammarTipTh),
+      turnFeedback: (sanitized.turnFeedback ?? []).map((item) => ({
+        ...item,
+        headlineTh: teacherBThaiVoice(item.headlineTh),
+        detailTh: teacherBThaiVoice(item.detailTh ?? ''),
+        suggestionEn: this.normalizeFeedbackField(item.suggestionEn ?? ''),
+        suggestionReasonTh: teacherBThaiVoice(
+          this.normalizeFeedbackField(item.suggestionReasonTh ?? ''),
+        ),
+      })),
+    };
+  }
+
+  private normalizeFreeTalkReply(
+    reply: FreeTalkTurnReply,
+    fallbackPhase: string,
+  ): FreeTalkTurnReply {
+    const phase = FREE_TALK_PHASES.includes(
+      reply.phase as (typeof FREE_TALK_PHASES)[number],
+    )
+      ? reply.phase
+      : fallbackPhase;
+    const nextAction = FREE_TALK_ACTIONS.includes(
+      reply.nextAction as (typeof FREE_TALK_ACTIONS)[number],
+    )
+      ? reply.nextAction
+      : 'explore';
+
+    return {
+      textEn: reply.textEn?.trim() || 'Nice! Tell me more.',
+      textTh: teacherBThaiVoice(
+        reply.textTh?.trim() || 'ดีเลยครับ เล่าเพิ่มเติมได้นะครับ',
+      ),
+      phase,
+      nextAction,
+      intent: reply.intent?.trim() || '',
+      emotion: reply.emotion?.trim() || '',
+      grammarNote: reply.grammarNote?.trim() || '',
+      topic: reply.topic?.trim() || '',
+      conversationDepth: reply.conversationDepth?.trim() || '',
+    };
   }
 
   async generateSimulationOpening(

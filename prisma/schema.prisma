@@ -33,6 +33,9 @@ model User {
   lastAppOpenDate         DateTime? @db.Date
   dailyMissionUsedDate    DateTime? @db.Date
 
+  /** Top Free Talk memories from the latest session (max 5, overwritten each end). */
+  freeTalkMemories        String[]  @default([])
+
   fcmTokens               UserFcmToken[]
   transactions            EconomyTransaction[]
   sessions                UserSession[]

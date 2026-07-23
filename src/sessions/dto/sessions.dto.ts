@@ -33,6 +33,18 @@ export class StartSessionDto {
   @IsOptional()
   @IsBoolean()
   isDailyMission?: boolean;
+
+  /** Free Talk only: 5 or 10 minutes (default 5). */
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  @IsIn([5, 10])
+  durationMinutes?: number;
+
+  /** Free Talk only: Easy / Balanced / English Only (default balanced). */
+  @IsOptional()
+  @IsIn(['easy', 'balanced', 'englishOnly'])
+  languageLevel?: 'easy' | 'balanced' | 'englishOnly';
 }
 
 export class TurnDto {
@@ -57,4 +69,11 @@ export class TurnDto {
   @IsOptional()
   @IsBoolean()
   generateAudio?: boolean;
+
+  /** Free Talk: client countdown remaining seconds (wrap-up bias). */
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  @Min(0)
+  remainingSeconds?: number;
 }

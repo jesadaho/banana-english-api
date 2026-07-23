@@ -285,6 +285,25 @@ export class UsersService {
     });
   }
 
+  async getFreeTalkMemories(userId: string): Promise<string[]> {
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      select: { freeTalkMemories: true },
+    });
+    return (user?.freeTalkMemories ?? []).slice(0, 5);
+  }
+
+  async setFreeTalkMemories(userId: string, memories: string[]): Promise<void> {
+    const cleaned = memories
+      .map((m) => m.trim())
+      .filter(Boolean)
+      .slice(0, 5);
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: { freeTalkMemories: cleaned },
+    });
+  }
+
   getProfile(user: User): UserProfileResponse {
     const local = getUserLocalTime(user.timezone);
     const unlockedAvatarIds = [
