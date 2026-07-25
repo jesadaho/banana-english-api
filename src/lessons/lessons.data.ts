@@ -1268,8 +1268,8 @@ Turn loop rules (critical — never stall the learner):
   },
   {
     lessonId: 'numbers',
-    titleEn: 'Basic Number',
-    titleTh: 'ตัวเลขพื้นฐาน',
+    titleEn: 'Numbers',
+    titleTh: 'ตัวเลข',
     goalEn: 'Recognize, read, and say numbers 0–20 confidently.',
     goalTh: 'ฟัง อ่าน และพูดตัวเลข 0–20 ได้อย่างมั่นใจ',
     difficulty: 'beginner',
@@ -1522,8 +1522,8 @@ Turn loop rules (critical — never stall the learner):
   },
   {
     lessonId: 'telling_time',
-    titleEn: 'Telling Time',
-    titleTh: 'การบอกเวลา',
+    titleEn: 'Time',
+    titleTh: 'เวลา',
     goalEn:
       'Say digital times, use o\'clock, a.m./p.m., and understand noon and midnight.',
     goalTh:
@@ -1772,8 +1772,8 @@ Turn loop rules (critical — never stall the learner):
   },
   {
     lessonId: 'dates_days',
-    titleEn: 'Dates & Months',
-    titleTh: 'วันที่และเดือน',
+    titleEn: 'Dates & Calendar',
+    titleTh: 'วันที่และปฏิทิน',
     goalEn:
       'Say all 12 months, say simple dates, and understand the Month + Date pattern.',
     goalTh:
@@ -2395,8 +2395,8 @@ export const LESSON_PROGRESSION_ORDER: string[] = [
   'talk_about_groups',
   'likes_dislikes',
   'wants_needs',
-  'have_has',
   'can_cant',
+  'have_has',
   'where_i_am',
   'going_places',
   'feelings',
