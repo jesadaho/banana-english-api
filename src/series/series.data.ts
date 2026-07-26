@@ -61,6 +61,19 @@ export const SERIES: SeriesConfig[] = [
       'ask_help_easy',
     ],
   },
+  {
+    seriesId: 'social_english',
+    titleEn: 'Social',
+    titleTh: 'สังคม',
+    subtitleTh: 'คุยกับคนใหม่และฝึกบทสนทนาในสังคม',
+    order: 4,
+    coverImage: 'category_social',
+    missionIds: [
+      'meet_new_friend_easy',
+      'join_english_club_easy',
+      'small_talk_easy',
+    ],
+  },
 ];
 
 export function getAllSeries(): SeriesConfig[] {

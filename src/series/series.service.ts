@@ -97,10 +97,14 @@ export class SeriesService {
     for (const series of catalog) {
       const prev = getPreviousSeries(series);
       // Unlock next chapter after clearing any 1 mission in the previous chapter.
-      const previousUnlockedNext = prev
-        ? (views.find((v) => v.seriesId === prev.seriesId)?.completedMissions ??
-            0) >= 1
-        : true;
+      // Early access: Social is open while we ship its first missions.
+      const previousUnlockedNext =
+        series.seriesId === 'social_english' ||
+        (prev
+          ? (views.find((v) => v.seriesId === prev.seriesId)
+                  ?.completedMissions ??
+                0) >= 1
+          : true);
 
       views.push(
         this.buildSeriesView(series, completedIds, previousUnlockedNext),

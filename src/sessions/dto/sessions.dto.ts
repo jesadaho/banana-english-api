@@ -45,6 +45,11 @@ export class StartSessionDto {
   @IsOptional()
   @IsIn(['easy', 'balanced', 'englishOnly'])
   languageLevel?: 'easy' | 'balanced' | 'englishOnly';
+
+  /** Training only: Thai-heavy or English-heavy tutor speech (default thai). */
+  @IsOptional()
+  @IsIn(['thai', 'english'])
+  teachingLanguage?: 'thai' | 'english';
 }
 
 export class TurnDto {

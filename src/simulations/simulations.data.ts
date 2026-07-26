@@ -463,6 +463,120 @@ export const SIMULATIONS: SimulationConfig[] = [
       { word: 'Embassy', pronunciation: 'เอ็ม-บะ-ซี่', meaningTh: 'สถานทูต' },
     ],
   },
+  {
+    simulationId: 'meet_new_friend_easy',
+    title: 'ทำความรู้จักเพื่อนใหม่',
+    missionNumber: 1,
+    missionTitleTh: 'ทำความรู้จักเพื่อนใหม่',
+    scenarioTh:
+      'คุณกำลังเดินเล่นในสวนสาธารณะ มีคนยิ้มแล้วทักทายคุณ นี่เป็นโอกาสดีในการทำความรู้จักเพื่อนใหม่ และฝึกบทสนทนาภาษาอังกฤษครั้งแรก',
+    goalsTh: [
+      'แนะนำตัวเอง',
+      'ตอบคำถามง่ายๆ เกี่ยวกับตัวเอง',
+      'ทำความรู้จักเพื่อนใหม่',
+    ],
+    goalsEn: [
+      'Introduce yourself',
+      'Answer simple questions about yourself',
+      'Get to know your new friend',
+    ],
+    difficulty: 'easy',
+    estimatedMinutes: 5,
+    bananaCost: 1,
+    systemInstruction:
+      `${AI_LEAD} You are Mia, a friendly stranger the learner meets while walking in the park. You just smiled and said hello. Warmly help them introduce themselves, ask simple questions about them (name, where they are from, what they like), and share a little about yourself so they get to know you. Keep it light and social — not a job interview. Celebrate when they share about themselves.`,
+    openingPrompt:
+      'Start the simulation. Open as Mia, a friendly person in the park. In one short reply, smile and greet them, say your name is Mia, and end with "Nice to meet you." Follow this closely: "Hi! I\'m Mia. Nice to meet you." Do not ask the learner any questions on this first turn.',
+    successCriteria: [
+      'introduced_self',
+      'answered_about_self',
+      'got_to_know_friend',
+    ],
+    maxTurns: 8,
+    vocabDrill: [
+      { word: 'Nice to meet you', pronunciation: 'ไนซ์-ทู-มีท-ยู', meaningTh: 'ยินดีที่ได้รู้จัก' },
+      { word: 'Friend', pronunciation: 'เฟรนด์', meaningTh: 'เพื่อน' },
+      { word: 'Park', pronunciation: 'พาร์ค', meaningTh: 'สวนสาธารณะ' },
+      { word: 'Where are you from?', pronunciation: 'แวร์-อาร์-ยู-ฟรอม', meaningTh: 'คุณมาจากไหน?' },
+      { word: 'Hobby', pronunciation: 'ฮ็อบ-บี้', meaningTh: 'งานอดิเรก' },
+    ],
+  },
+  {
+    simulationId: 'join_english_club_easy',
+    title: 'เข้าร่วมคลับภาษาอังกฤษ',
+    missionNumber: 2,
+    missionTitleTh: 'เข้าร่วมคลับภาษาอังกฤษ',
+    scenarioTh:
+      'คุณไปงานปฐมนิเทศของคลับภาษาอังกฤษ และต้องแนะนำตัวกับสมาชิกคนอื่นๆ',
+    goalsTh: [
+      'แนะนำตัวเองให้คลับ',
+      'บอกเหตุผลที่อยากเข้าร่วม',
+      'ถามคำถามเกี่ยวกับคลับ',
+    ],
+    goalsEn: [
+      'Introduce yourself to the club',
+      'Say why you want to join',
+      'Ask a question about the club',
+    ],
+    difficulty: 'easy',
+    estimatedMinutes: 5,
+    bananaCost: 1,
+    systemInstruction:
+      `${AI_LEAD} You are Leo, a friendly English club member welcoming a new joiner. Help them introduce themselves, ask why they want to join, invite one question about the club, then welcome them warmly.`,
+    openingPrompt:
+      'Start the simulation. Open as Leo from the English club. Greet them briefly and welcome them to the club orientation. Follow this closely: "Hi! Welcome to our English club. I\'m Leo." Do not ask the learner any questions on this first turn.',
+    successCriteria: [
+      'introduced_self',
+      'shared_join_reason',
+      'asked_about_club',
+    ],
+    maxTurns: 8,
+    vocabDrill: [
+      { word: 'Club', pronunciation: 'คลับ', meaningTh: 'ชมรม / คลับ' },
+      { word: 'Member', pronunciation: 'เมม-เบอร์', meaningTh: 'สมาชิก' },
+      { word: 'Join', pronunciation: 'จอยน์', meaningTh: 'เข้าร่วม' },
+      { word: 'Practice', pronunciation: 'แพรก-ทิส', meaningTh: 'ฝึกฝน' },
+      { word: 'Welcome', pronunciation: 'เวล-คัม', meaningTh: 'ยินดีต้อนรับ' },
+    ],
+  },
+  {
+    simulationId: 'small_talk_easy',
+    title: 'คุยสั้นๆ',
+    missionNumber: 3,
+    missionTitleTh: 'คุยสั้นๆ',
+    scenarioTh:
+      'คุณยืนรอรถไฟกับคนแปลกหน้า และเริ่มคุยสั้นๆ เป็นภาษาอังกฤษ',
+    goalsTh: [
+      'ทักทายอย่างเป็นมิตร',
+      'ถามไถ่เรื่องง่ายๆ',
+      'ตอบและคุยต่อได้สั้นๆ',
+    ],
+    goalsEn: [
+      'Greet them warmly',
+      'Ask a simple small-talk question',
+      'Keep a short friendly chat going',
+    ],
+    difficulty: 'easy',
+    estimatedMinutes: 5,
+    bananaCost: 1,
+    systemInstruction:
+      `${AI_LEAD} You are Sam, a friendly stranger waiting for a train. Keep light small talk going — greeting, weather or weekend, and one easy follow-up. Help the learner stay in a short friendly chat.`,
+    openingPrompt:
+      'Start the simulation. Open as Sam waiting for a train. Greet them briefly and comment on the wait. Follow this closely: "Hi there! The train is a bit late today." Do not ask the learner any questions on this first turn.',
+    successCriteria: [
+      'greeted_warmly',
+      'asked_small_talk_question',
+      'kept_chat_going',
+    ],
+    maxTurns: 8,
+    vocabDrill: [
+      { word: 'How are you?', pronunciation: 'ฮาว-อาร์-ยู', meaningTh: 'สบายดีไหม?' },
+      { word: 'Weather', pronunciation: 'เว-เธอร์', meaningTh: 'สภาพอากาศ' },
+      { word: 'Weekend', pronunciation: 'วีค-เอนด์', meaningTh: 'วันหยุดสุดสัปดาห์' },
+      { word: 'Busy', pronunciation: 'บิซ-ซี่', meaningTh: 'ยุ่ง' },
+      { word: 'Nice chatting', pronunciation: 'ไนซ์-แชท-ติ้ง', meaningTh: 'คุยกันสนุกดี' },
+    ],
+  },
 ];
 
 const LEGACY_TOPIC_TO_SIMULATION: Record<string, string> = {

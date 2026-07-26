@@ -41,7 +41,12 @@ import {
   getSimulation,
   mergeCheckpoints,
 } from '../simulations/simulations.data';
-import { getLesson, getLessonBananaCost } from '../lessons/lessons.data';
+import {
+  getLesson,
+  getLessonBananaCost,
+  normalizeLessonTeachingLanguage,
+  withTeachingLanguage,
+} from '../lessons/lessons.data';
 import { LessonsService } from '../lessons/lessons.service';
 import { StartSessionDto, TurnDto } from './dto/sessions.dto';
 import { AnonymousUserGuard } from '../users/anonymous-user.guard';
@@ -86,7 +91,11 @@ export class SessionsController {
     }
 
     if (body.sessionType === 'training') {
-      return this.startTrainingSession(req.user, body.lessonId!);
+      return this.startTrainingSession(
+        req.user,
+        body.lessonId!,
+        body.teachingLanguage,
+      );
     }
 
     if (!body.topicId || !getTopic(body.topicId)) {
@@ -267,11 +276,19 @@ export class SessionsController {
     return this.processLegacyTurn(sessionId, body);
   }
 
-  private async startTrainingSession(user: User, lessonId: string) {
-    const config = getLesson(lessonId);
-    if (!config) {
+  private async startTrainingSession(
+    user: User,
+    lessonId: string,
+    teachingLanguageRaw?: string,
+  ) {
+    const baseConfig = getLesson(lessonId);
+    if (!baseConfig) {
       throw new NotFoundException('Lesson not found');
     }
+
+    const teachingLanguage =
+      normalizeLessonTeachingLanguage(teachingLanguageRaw);
+    const config = withTeachingLanguage(baseConfig, teachingLanguage);
 
     const unlocked = await this.lessonsService.isLessonUnlockedForUser(
       user.id,

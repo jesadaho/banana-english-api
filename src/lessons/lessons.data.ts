@@ -3515,6 +3515,33 @@ export const LESSON_PROGRESSION_ORDER: string[] = [
   'shopping_basics',
 ];
 
+export type LessonTeachingLanguage = 'thai' | 'english';
+
+export const LESSON_TEACHING_LANGUAGE_MIX: Record<
+  LessonTeachingLanguage,
+  LessonLanguageMix
+> = {
+  thai: { thai: 70, english: 30 },
+  english: { thai: 15, english: 85 },
+};
+
+export function normalizeLessonTeachingLanguage(
+  value: string | undefined | null,
+): LessonTeachingLanguage {
+  return value === 'english' ? 'english' : 'thai';
+}
+
+/** Clone a lesson config with the user's preferred teaching language mix. */
+export function withTeachingLanguage(
+  config: LessonConfig,
+  teachingLanguage: LessonTeachingLanguage,
+): LessonConfig {
+  return {
+    ...config,
+    languageMix: LESSON_TEACHING_LANGUAGE_MIX[teachingLanguage],
+  };
+}
+
 export function getLessonBananaCost(config: LessonConfig): number {
   return config.bananaCost ?? LESSON_BANANA_COST;
 }

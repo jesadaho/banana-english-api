@@ -24,6 +24,9 @@ const ACTIVITY_TITLE_EN: Record<string, string> = {
   pharmacy_easy: 'At the Pharmacy',
   doctor_visit_easy: 'Visit a Doctor',
   ask_help_easy: 'Ask for Help',
+  meet_new_friend_easy: 'Meet a New Friend',
+  join_english_club_easy: 'Join an English Club',
+  small_talk_easy: 'Small Talk',
 };
 
 type StoredReportJson = {

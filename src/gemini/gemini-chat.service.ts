@@ -1316,6 +1316,27 @@ Required response:
   ): string {
     const remaining = Math.max(0, config.maxTurns - currentTurn);
     const phrases = config.targetPhrases.map((p) => `- ${p}`).join('\n');
+    const englishHeavy = config.languageMix.english >= 70;
+    const spokenLanguageRules = englishHeavy
+      ? `Spoken language rule (critical — English teaching mode):
+- User settings override any "70% Thai / 30% English" notes inside the lesson instruction above.
+- textEn is what Teacher B says aloud. It must be MOSTLY ENGLISH (~${config.languageMix.english}%).
+- Use clear, simple English for praise, instructions, and explanations (short sentences).
+- Thai in textEn is optional and light (~${config.languageMix.thai}%) — only a short meaning cue if the learner may be lost.
+- textTh: short Thai support / translation for the app subtitle (do not rely on speaking Thai).
+- Still model the English target phrase clearly and ask the learner to speak English.
+- Keep the warm private 1:1 tutor tone.`
+      : `Spoken language rule (critical — Thai beginners):
+- textEn is what Teacher B says aloud. It must be MOSTLY THAI (~${config.languageMix.thai}%), not full English.
+- English in textEn is ONLY for the target phrase being taught/modeled (e.g. "Good evening") and short words the learner must say.
+- Praise, instructions, explanations, and "พูดตาม" cues MUST be Thai (e.g. "เยี่ยมเลยครับ งั้นลองทักตอนเย็น ตามผมว่า Good evening").
+- FORBIDDEN: full-English tutor lines like "Perfect! Now let's try... Repeat after me: ...".
+- textTh: short Thai support line (can mirror textEn).`;
+
+    const textEnJsonHint = englishHeavy
+      ? 'textEn: spoken Teacher B line — MOSTLY ENGLISH; keep Thai light/optional; must end with the learner\'s next action unless completing'
+      : 'textEn: spoken Teacher B line — MOSTLY THAI; include the English target phrase only where the learner should hear/say it; must end with the learner\'s next action unless completing';
+
     return `${config.systemInstruction}
 
 Learner first name: ${learnerFirstName}
@@ -1325,15 +1346,11 @@ Target phrases:
 ${phrases}
 
 Language mix target: ~${config.languageMix.thai}% Thai / ~${config.languageMix.english}% English.
+(This mix comes from the learner's Lesson Language setting and OVERRIDES any fixed mix mentioned in the lesson instruction above.)
 
-Spoken language rule (critical — Thai beginners):
-- textEn is what Teacher B says aloud. It must be MOSTLY THAI (~${config.languageMix.thai}%), not full English.
-- English in textEn is ONLY for the target phrase being taught/modeled (e.g. "Good evening") and short words the learner must say.
-- Praise, instructions, explanations, and "พูดตาม" cues MUST be Thai (e.g. "เยี่ยมเลยครับ งั้นลองทักตอนเย็น ตามผมว่า Good evening").
-- FORBIDDEN: full-English tutor lines like "Perfect! Now let's try... Repeat after me: ...".
-- textTh: short Thai support line (can mirror textEn).
+${spokenLanguageRules}
 
-Teaching mix 70/20/10 (applies to EVERY lesson — do NOT only use "พูดตาม"):
+Teaching mix 70/20/10 (applies to EVERY lesson — do NOT only use "พูดตาม" / "Repeat after me"):
 - ~70% Repeat: model a phrase, then ask the learner to say it after you (pronunciation + confidence).
 - ~20% Recognition: short choice or guided use — e.g. pick which phrase fits a situation, or greet you in a given style (learner thinks; answer stays short).
 - ~10% Recall: near the end, ask the learner to use a taught phrase freely (no fixed script; accept any clear taught variant).
@@ -1356,7 +1373,7 @@ Critical turn-loop rule:
 
 Return JSON ONLY (critical — never reply with bare prose):
 - Output a single JSON object and nothing else. No markdown fences.
-- textEn: spoken Teacher B line — MOSTLY THAI; include the English target phrase only where the learner should hear/say it; must end with the learner's next action unless completing
+- ${textEnJsonHint}
 - textTh: short Thai support line / paraphrase
 - isLessonComplete: true ONLY on the Summary + Celebrate core step (required to finish). Otherwise false`;
   }
