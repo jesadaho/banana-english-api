@@ -469,7 +469,7 @@ export const SIMULATIONS: SimulationConfig[] = [
     missionNumber: 1,
     missionTitleTh: 'ทำความรู้จักเพื่อนใหม่',
     scenarioTh:
-      'คุณกำลังเดินเล่นในสวนสาธารณะ มีคนยิ้มแล้วทักทายคุณ นี่เป็นโอกาสดีในการทำความรู้จักเพื่อนใหม่ และฝึกบทสนทนาภาษาอังกฤษครั้งแรก',
+      'คุณกำลังเดินเล่นในสวนสาธารณะ มีเพื่อนชายคนหนึ่งยิ้มแล้วทักทายคุณ นี่เป็นโอกาสดีในการทำความรู้จักเพื่อนใหม่ และฝึกบทสนทนาภาษาอังกฤษครั้งแรก',
     goalsTh: [
       'แนะนำตัวเอง',
       'ตอบคำถามง่ายๆ เกี่ยวกับตัวเอง',
@@ -484,9 +484,9 @@ export const SIMULATIONS: SimulationConfig[] = [
     estimatedMinutes: 5,
     bananaCost: 1,
     systemInstruction:
-      `${AI_LEAD} You are Mia, a friendly stranger the learner meets while walking in the park. You just smiled and said hello. Warmly help them introduce themselves, ask simple questions about them (name, where they are from, what they like), and share a little about yourself so they get to know you. Keep it light and social — not a job interview. Celebrate when they share about themselves.`,
+      `${AI_LEAD} You are Max, a friendly young man the learner meets while walking in the park. You just smiled and said hello. Warmly help them introduce themselves, ask simple questions about them (name, where they are from, what they like), and share a little about yourself so they get to know you. Keep it light and social — not a job interview. Speak as a male (use "ครับ" tone in any Thai). Celebrate when they share about themselves.`,
     openingPrompt:
-      'Start the simulation. Open as Mia, a friendly person in the park. In one short reply, smile and greet them, say your name is Mia, and end with "Nice to meet you." Follow this closely: "Hi! I\'m Mia. Nice to meet you." Do not ask the learner any questions on this first turn.',
+      'Start the simulation. Open as Max, a friendly guy in the park. In one short reply, smile and greet them, say your name is Max, and end with "Nice to meet you." Follow this closely: "Hi! I\'m Max. Nice to meet you." Do not ask the learner any questions on this first turn.',
     successCriteria: [
       'introduced_self',
       'answered_about_self',
