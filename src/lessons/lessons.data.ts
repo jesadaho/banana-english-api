@@ -1191,19 +1191,17 @@ Personalization:
 
 Core Flow (progression milestones — NOT a fixed turn count):
 - Follow these core steps in order. Do not skip ahead.
-- Extra turns for praise, one retry, or short feedback MAY happen between steps — that is OK. Turn number ≠ step number.
-- After a core step succeeds, advance to the next core step.
+- Extra turns for praise, one retry, or short feedback MAY happen between steps — that is OK.
 - Keep the session short and focused (about 3–5 minutes).
 
-1. Welcome + Goal — welcome by name; briefly say today you will practice saying what you like (ชอบ) in English. Do NOT mention I don't like yet. Go straight into the first Thai→English sentence with coffee. (Opening → Repeat)
-2. Teach I like... — Thai→English pattern with coffee (and optionally pizza next): ถ้าจะบอกว่า "ฉันชอบกาแฟ" ให้พูดว่า "I like coffee." ลองพูดตามครูนะครับ! After success, invite their own like OR another taught noun only. (Repeat)
-3. Teach I don't like... — ONLY now, same pattern with tea: ถ้าจะบอกว่า "ฉันไม่ชอบชา" ให้พูดว่า "I don't like tea." ลองพูดตามครูนะครับ! Do NOT invent a new noun here. (Repeat)
-4. Recognition — short situations in Thai using ONLY coffee / pizza / tea; learner says matching like / don't like sentence. Do 2–3 items. (Recognition)
-5. Build Sentences — model + repeat using taught nouns; invite their own details if they offer them. (Repeat)
-6. Mini Practice — 1–2 scenes in Thai with taught nouns only; learner produces a full sentence. (Recall)
-7. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED).`,
+1. Welcome + Goal — welcome by name; say today you will practice saying what you like. Do NOT mention I don't like yet. Go straight into Thai→English sentence with coffee. (Opening → Repeat)
+2. Teach I like... — "ถ้าจะบอกว่า 'ฉันชอบกาแฟ' ให้พูดว่า I like coffee." → ให้พูดตาม. Then invite one more with pizza (taught noun only) or let them offer their own preference. (Repeat)
+3. Teach I don't like... — only NOW introduce don't like: "ถ้าจะบอกว่า 'ฉันไม่ชอบชา' ให้พูดว่า I don't like tea." → ให้พูดตาม. Do NOT invent a new noun here. (Repeat)
+4. Recognition — 2 short Thai situations using ONLY coffee / pizza / tea; learner says the matching I like / I don't like sentence each time. (Recognition)
+5. Mini Practice — invite them to say what THEY really like or don't like; help map Thai→English if needed; let them produce the full sentence themselves. (Recall)
+6. Summary + Celebrate — short recap of I like / I don't like + their sentence; celebrate with their name once → set isLessonComplete = true (REQUIRED).`,
     openingPrompt:
-      'Start the Likes & Dislikes lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Keep the opening SHORT — do NOT list both I like and I don\'t like yet. Teach with Thai→English whole sentences using coffee first: ถ้าจะบอกว่า "ฉันชอบกาแฟ" ให้พูดว่า "I like coffee." แล้วให้พูดตาม. Throughout the lesson, ONLY use nouns already taught (coffee, pizza, tea) unless the learner introduces their own word. Never invent new nouns like cat. Follow the Core Flow milestones. Every turn must end with a clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the Likes & Dislikes lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Do NOT mention I don\'t like yet. Teach I like coffee first (Thai→English), then pizza, then introduce I don\'t like tea. Then 2 recognition situations with coffee/pizza/tea, then invite their own sentence. Celebrate with their name. ONLY use coffee/pizza/tea as nouns unless the learner offers their own. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
   },
   {
     lessonId: 'wants_needs',
@@ -1402,10 +1400,9 @@ Core Flow (progression milestones — NOT a fixed turn count):
 1. Welcome + Goal — welcome by name; say you will learn I can and I can't; begin with "I can...". (Opening → Repeat)
 2. Teach I can... — model (e.g. "I can swim.", "I can cook.") and ask to repeat. (Repeat)
 3. Teach I can't... — model (e.g. "I can't drive.") and ask to repeat. (Repeat)
-4. Recognition — situations in Thai; learner answers with can / can't. Do 2–3 items. (Recognition)
-5. Build Sentences — model + repeat; invite their own abilities. (Repeat)
-6. Mini Practice — 1–2 scenes in Thai (no photos); learner produces a full sentence. (Recall)
-7. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED).`,
+4. Recognition — 2–3 short Thai situations; learner answers with can / can't sentence. (Recognition)
+5. Build Sentences — model + repeat; invite them to say their own real abilities (can or can't). (Recall)
+6. Summary + Celebrate — short recap + celebrate with their name once → set isLessonComplete = true (REQUIRED).`,
     openingPrompt:
       'Start the Can & Can\'t lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once in the welcome, briefly say you will learn I can / I can\'t, then model "I can swim." and ask them to repeat (Core Flow step 1–2). Follow the Core Flow milestones — retries/feedback may add turns between steps. Every turn must end with a clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
   },
