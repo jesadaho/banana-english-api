@@ -1108,6 +1108,45 @@ export class GeminiChatService {
     haus: 'house',
     houes: 'house',
     hous: 'house',
+    // school / office (Work & School quiz)
+    schol: 'school',
+    scool: 'school',
+    skol: 'school',
+    ofice: 'office',
+    offis: 'office',
+    ofis: 'office',
+    // pets quiz
+    kat: 'cat',
+    catt: 'cat',
+    kit: 'cat',
+    dag: 'dog',
+    doug: 'dog',
+    dug: 'dog',
+    ped: 'pet',
+    pate: 'pet',
+    // people quiz / jobs
+    fonny: 'funny',
+    funy: 'funny',
+    fanny: 'funny',
+    bussy: 'busy',
+    bizi: 'busy',
+    enginer: 'engineer',
+    enginner: 'engineer',
+    injineer: 'engineer',
+    desiner: 'designer',
+    disigner: 'designer',
+    // friends / social
+    hangout: 'hang out',
+    hungout: 'hang out',
+    eatout: 'eat out',
+    // weather
+    sany: 'sunny',
+    suny: 'sunny',
+    sonny: 'sunny',
+    rany: 'rainy',
+    rainny: 'rainy',
+    wether: 'weather',
+    wheather: 'weather',
   };
 
   private static readonly NUMBER_ONES = [
