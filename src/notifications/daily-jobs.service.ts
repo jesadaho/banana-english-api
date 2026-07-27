@@ -32,7 +32,7 @@ export class DailyJobsService {
     }
   }
 
-  /** Credits the daily banana at 08:00 local and notifies at most once per user per day. */
+  /** Credits the daily banana at 08:00 local; push only on the user's first-ever daily drop. */
   private async processFirstBananaDrop() {
     const users = await this.prisma.user.findMany({
       include: { fcmTokens: true },
@@ -44,12 +44,22 @@ export class DailyJobsService {
       if (local.hour !== 8) continue;
       if (isSameDateKey(user.lastDailyBananaDate, local.dateKey)) continue;
 
+      const isFirstDailyBanana = user.lastDailyBananaDate == null;
+
       const updated = await this.economy.maybeCreditDailyBanana(user, now);
       if (updated.lastDailyBananaDate?.getTime() === user.lastDailyBananaDate?.getTime()) {
         continue;
       }
 
-      // NotificationLog unique(userId, type, sentOn) → max 1 push / user / day.
+      // Push only the first time they ever receive a daily banana.
+      if (!isFirstDailyBanana) continue;
+
+      const alreadyNotified = await this.prisma.notificationLog.findFirst({
+        where: { userId: user.id, type: 'first_banana' },
+        select: { id: true },
+      });
+      if (alreadyNotified) continue;
+
       const sent = await this.tryLogNotification(
         user.id,
         'first_banana',
@@ -59,8 +69,8 @@ export class DailyJobsService {
 
       const invalid = await this.fcm.sendToTokens(
         user.fcmTokens.map((token) => token.token),
-        '🍌 First Banana',
-        'First Banana พร้อมแล้ว',
+        'กล้วยมาแล้ว! 🍌',
+        'กล้วยของวันนี้มาส่งแล้วนะ!',
       );
       await this.removeInvalidTokens(invalid);
     }
