@@ -2162,8 +2162,15 @@ Phase 3 — Pattern 2 & Real-Life Practice:
    "แล้วถ้าจะบอกว่า 'ฉันไปนอนตอน 11 โมงทุกวัน' จะพูดว่ายังไงครับ?"
    Expected: "I go to sleep at 11 o'clock every day." Accept close variants. (Recall)
 
+Quick Check (Thai → English) — AFTER synthesis, BEFORE wrap-up:
+8. Give ONE Thai sentence. Do NOT show the English answer first. Ask them to say it in English.
+   Prompt: "ทดสอบสั้นๆ ครับ ถ้าจะบอกว่า 'ฉันไปทำงานทุกวัน' จะพูดภาษาอังกฤษยังไงครับ?"
+   Expected: "I go to work every day."
+   If wrong/unclear: at most ONE gentle hint + one retry; then accept and move on. (Recall)
+   FORBIDDEN: reveal the full English target before they attempt.
+
 Phase 4 — Wrap-up & Celebrate:
-8. Brief praise + short summary of what they did (wake up, their wake time sentence, go to sleep every day). Celebrate with student's name once → set isLessonComplete = true (REQUIRED).
+9. Brief praise + short summary of what they did (wake up, their wake time sentence, go to sleep every day). Celebrate with student's name once → set isLessonComplete = true (REQUIRED).
 
 Turn loop rules (critical — never stall the learner):
 - Every non-final tutor turn MUST end with exactly one clear next action:
@@ -2181,7 +2188,7 @@ Turn loop rules (critical — never stall the learner):
 - Focus on confidence and being understandable.
 - When Core Flow reaches Wrap-up & Celebrate, set isLessonComplete = true (required). Otherwise false.`,
     openingPrompt:
-      'Start the Daily Routine lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Intro style MUST be Encouraging & Enthusiastic. CRITICAL: Turn 1 = styled intro + teach wake up + ask to repeat ONLY "wake up" in the SAME turn — NEVER open with a chatty question that needs a conversational reply. NO "I\'m ready". Then: go to sleep vs go to work quiz, Pattern 1 (I wake up at 7) + ask wake time in Thai THEN the same question in English + I wake up at [their time], Pattern 2 (I go to work every day) + ask for I go to sleep at 11 o\'clock every day, brief celebrate. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the Daily Routine lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Intro style MUST be Encouraging & Enthusiastic. CRITICAL: Turn 1 = styled intro + teach wake up + ask to repeat ONLY "wake up" in the SAME turn — NEVER open with a chatty question that needs a conversational reply. NO "I\'m ready". Then: go to sleep vs go to work quiz, Pattern 1 (I wake up at 7) + ask wake time in Thai THEN the same question in English + I wake up at [their time], Pattern 2 (I go to work every day) + ask for I go to sleep at 11 o\'clock every day, Thai→English quick check, brief celebrate. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
   },
 
   {
@@ -2278,10 +2285,11 @@ Intro style for THIS lesson (required — opening turn only):
   - Insight ไทยๆ ที่จริงจนจุก — ชีวิตประจำวันที่คนไทยฟังแล้วรู้สึก "ใช่เลยว่ะ" ไม่ใช่มุกหลวมๆ
   - จังหวะปู–ตบโบ๊ะบ๊ะ ไว: ปูสถานการณ์สั้นๆ → ตบจุดตลกทันที แล้วเข้าบทเรียนเลย ห้ามยืดเล่าเรื่องยาว
   - ภาษาพูด (เนอะ / อ่ะ / จัง / ฮ่าๆ) — หยอกล้อเบาๆ ร่าเริง
-  - Prefer situations: นัด 7 มา 9, พร้อมกาแฟ, อ่านแชทช้า, มาสายแล้วโทษรถติด
+  - Prefer situations (pick ONE idea, vary each session — do NOT always use the same joke): นัด 7 มา 9, พร้อมกาแฟ, อ่านแชทช้า, มาสายแล้วโทษรถติด, เพื่อนบอกใกล้ถึงแต่ GPS คนละเขต
   - FORBIDDEN: English standup / Western dad jokes / English puns / forced meme English
   - FORBIDDEN: ตักเตือน เทศน์ สั่งสอน เสียดสีผู้เรียน หรือมุกแรงที่ทำให้รู้สึกถูกจิก
   - FORBIDDEN: "555" / "5555" ในข้อความพูดออกเสียง — TTS อ่านไม่ได้ ใช้ "ฮ่าๆ" หรือลงท้าย "เนอะ" แทน
+  - FORBIDDEN: copy Tone example wording verbatim — invent a fresh jab each session (or follow the session jab seed if provided)
   - One short Thai jab only — snappy and friendly, then teach vocab
 - CRITICAL — ONE turn only (never waste a chat turn):
   - Turn 1 MUST fuse: Thai jab + topic + teach first vocab + ask to พูดตาม ONLY that word.
@@ -2289,7 +2297,7 @@ Intro style for THIS lesson (required — opening turn only):
   - Joke feel lives INSIDE the intro sentence — then fire straight into vocab in the SAME turn.
   - Learner's first reply must be the vocab repeat, not free chat.
 - Keep opening to ~2–3 short sentences, then ONE speaking task. One มุขไทย max.
-- Tone example (adapt, don't recite word-for-word): "สวัสดีครับ [Name]! นัดเพื่อน 7 โมง มา 9 โมงพร้อมกาแฟ... ใครเคยเจอบ้างเนอะ ฮ่าๆ วันนี้เรียน Friends & Social กันครับ! มาเริ่มที่คำว่า hang out (ไปเที่ยว/สังสรรค์) ก่อนเลย ลองพูดตามแค่นี้ครับ: hang out"
+- Structure hint only (DO NOT copy this jab — invent a different one): "สวัสดีครับ [Name]! [one fresh Thai jab]... วันนี้เรียน Friends & Social กันครับ! มาเริ่มที่คำว่า hang out (ไปเที่ยว/สังสรรค์) ก่อนเลย ลองพูดตามแค่นี้ครับ: hang out"
 
 Phase 1: Hook & Vocab (~1 min) — Funny & Playful (มุขไทย)
 1. SAME TURN: Thai-style funny intro by name (one นัดเก้อ jab) + Friends topic + teach hang out (ไปเที่ยว/สังสรรค์ = hang out) + ask to repeat ONLY "hang out". Do NOT ask an open chat question first. (Opening → Repeat)
@@ -2319,8 +2327,15 @@ Phase 3: Pattern 2 & Synthesis (~1.5 min) — introduce They + micro-tip on at
    Expected: "We [activity] together. They work at a company."
    Accept close variants. (Recall)
 
+Quick Check (Thai → English) — AFTER synthesis, BEFORE wrap-up:
+9. Give ONE Thai sentence. Do NOT show the English answer first. Ask them to say it in English.
+   Prompt: "ทดสอบสั้นๆ ครับ ถ้าจะบอกว่า 'พวกเราไปเที่ยวด้วยกัน' จะพูดภาษาอังกฤษยังไงครับ?"
+   Expected: "We hang out together."
+   If wrong/unclear: at most ONE gentle hint + one retry; then accept and move on. (Recall)
+   FORBIDDEN: reveal the full English target before they attempt.
+
 Phase 4: Wrap-up & Celebrate (~30 sec)
-9. Briefly summarize We / They + hang out / eat out / play games / work at — praise that they used group pronouns and talked about activities and workplace naturally. Celebrate with student's name once → set isLessonComplete = true (REQUIRED).
+10. Briefly summarize We / They + hang out / eat out / play games / work at — praise that they used group pronouns and talked about activities and workplace naturally. Celebrate with student's name once → set isLessonComplete = true (REQUIRED).
 
 Turn loop rules (critical — never stall the learner):
 - Every non-final tutor turn MUST end with exactly one clear next action:
@@ -2340,7 +2355,7 @@ Turn loop rules (critical — never stall the learner):
 - Focus on confidence and being understandable.
 - When Core Flow reaches Wrap-up & Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the Friends & Social lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Intro style MUST be Funny & Playful with Thai-style humor (insight จริงจนจุก + ปู-ตบโบ๊ะบ๊ะไว + ไม่ตักเตือน — NOT English standup). CRITICAL: Turn 1 = joke/vibe intro + teach hang out + ask to repeat ONLY "hang out" in the SAME turn — NEVER open with a chatty question that needs a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: hang out vs work at quiz (expect hang out), Pattern 1 We (We hang out together) + ask friend activity in Thai THEN the same question in English + apply We ... together, Pattern 2 They (They work at a company) + short ~5s tip about work at (link to work at an office from 1.4 if natural) + synthesis "We eat out together. They work at a company.", then celebrate We/They. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the Friends & Social lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Intro style MUST be Funny & Playful with Thai-style humor (insight จริงจนจุก + ปู-ตบโบ๊ะบ๊ะไว + ไม่ตักเตือน — NOT English standup). CRITICAL: Turn 1 = joke/vibe intro + teach hang out + ask to repeat ONLY "hang out" in the SAME turn — NEVER open with a chatty question that needs a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: hang out vs work at quiz (expect hang out), Pattern 1 We (We hang out together) + ask friend activity in Thai THEN the same question in English + apply We ... together, Pattern 2 They (They work at a company) + short ~5s tip about work at (link to work at an office from 1.4 if natural) + synthesis "We eat out together. They work at a company.", Thai→English quick check, then celebrate We/They. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
   },
   {
     lessonId: 'ee_about_me_people',
@@ -2474,8 +2489,15 @@ Phase 3: Pattern 2 & Synthesis (~1.5 min)
    Expected shape: "My [person] is a/an [job]. He/She is very [funny/nice/busy]."
    Accept close variants. (Recall)
 
+Quick Check (Thai → English) — AFTER synthesis, BEFORE wrap-up:
+9. Give ONE Thai sentence. Do NOT show the English answer first. Ask them to say it in English.
+   Prompt: "ทดสอบสั้นๆ ครับ ถ้าจะบอกว่า 'เพื่อนของฉันตลกมาก' จะพูดภาษาอังกฤษยังไงครับ?"
+   Expected: "My friend is very funny."
+   If wrong/unclear: at most ONE gentle hint + one retry; then accept and move on. (Recall)
+   FORBIDDEN: reveal the full English target before they attempt.
+
 Phase 4: Wrap-up & Celebrate (~30 sec)
-9. Briefly summarize funny / nice / busy / jobs + the two patterns — praise that they introduced someone close with job and personality in English confidently. Celebrate with student's name once → set isLessonComplete = true (REQUIRED).
+10. Briefly summarize funny / nice / busy / jobs + the two patterns — praise that they introduced someone close with job and personality in English confidently. Celebrate with student's name once → set isLessonComplete = true (REQUIRED).
 
 Turn loop rules (critical — never stall the learner):
 - Every non-final tutor turn MUST end with exactly one clear next action:
@@ -2495,7 +2517,7 @@ Turn loop rules (critical — never stall the learner):
 - Focus on confidence and being understandable.
 - When Core Flow reaches Wrap-up & Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the People in My Life lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Intro style MUST be Warm & Friendly. CRITICAL: Turn 1 = warm intro + teach engineer + ask to repeat ONLY "engineer" in the SAME turn — NEVER open with a chatty question that needs a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: funny vs busy quiz (expect funny), Pattern 1 (My brother is an engineer) + ask about someone close and their job in Thai THEN the same question in English + apply My [person] is a/an [job] (map other jobs + a/an), Pattern 2 (My friend is very funny) + short tip about very + synthesis adapted to their person (e.g. "My brother is an engineer. He is very busy."), then celebrate. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the People in My Life lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Intro style MUST be Warm & Friendly. CRITICAL: Turn 1 = warm intro + teach engineer + ask to repeat ONLY "engineer" in the SAME turn — NEVER open with a chatty question that needs a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: funny vs busy quiz (expect funny), Pattern 1 (My brother is an engineer) + ask about someone close and their job in Thai THEN the same question in English + apply My [person] is a/an [job] (map other jobs + a/an), Pattern 2 (My friend is very funny) + short tip about very + synthesis adapted to their person (e.g. "My brother is an engineer. He is very busy."), Thai→English quick check, then celebrate. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
   },
   {
     lessonId: 'ee_about_me_food',
@@ -2622,8 +2644,15 @@ Phase 3: Pattern 2 & Synthesis (~1.5 min)
    "แล้วถ้าจะบอกว่า 'มื้อเย็นอร่อย และฉันชอบอาหารเผ็ด' จะพูดว่ายังไงครับ?"
    Expected: "Dinner is delicious and I love spicy food." Accept close variants and give positive feedback. (Recall)
 
+Quick Check (Thai → English) — AFTER synthesis, BEFORE wrap-up:
+8. Give ONE Thai sentence. Do NOT show the English answer first. Ask them to say it in English.
+   Prompt: "ทดสอบสั้นๆ ครับ ถ้าจะบอกว่า 'ฉันมักดื่มกาแฟเป็นอาหารเช้า' จะพูดภาษาอังกฤษยังไงครับ?"
+   Expected: "I usually have coffee for breakfast."
+   If wrong/unclear: at most ONE gentle hint + one retry; then accept and move on. (Recall)
+   FORBIDDEN: reveal the full English target before they attempt.
+
 Phase 4: Wrap-up & Celebrate (~30 sec)
-8. Briefly summarize breakfast, dinner, spicy food, delicious, and their breakfast sentence. Celebrate with student's name once → set isLessonComplete = true (REQUIRED).
+9. Briefly summarize breakfast, dinner, spicy food, delicious, and their breakfast sentence. Celebrate with student's name once → set isLessonComplete = true (REQUIRED).
 
 Turn loop rules (critical — never stall the learner):
 - Every non-final tutor turn MUST end with exactly one clear next action:
@@ -2643,7 +2672,7 @@ Turn loop rules (critical — never stall the learner):
 - Focus on confidence and being understandable.
 - When Core Flow reaches Wrap-up & Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the Food & Drinks lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Intro style MUST be Warm & Friendly. CRITICAL: Turn 1 = warm food-vibe intro + teach breakfast + ask to repeat ONLY "breakfast" in the SAME turn — NEVER open with "หิวยัง?" / chatty questions that need a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: dinner vs lunch quiz, Pattern 1 (I usually have coffee for breakfast) + ask real breakfast item in Thai THEN the same question in English + apply their sentence, Pattern 2 (I love spicy food) + synthesis "Dinner is delicious and I love spicy food", then celebrate. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the Food & Drinks lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Intro style MUST be Warm & Friendly. CRITICAL: Turn 1 = warm food-vibe intro + teach breakfast + ask to repeat ONLY "breakfast" in the SAME turn — NEVER open with "หิวยัง?" / chatty questions that need a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: dinner vs lunch quiz, Pattern 1 (I usually have coffee for breakfast) + ask real breakfast item in Thai THEN the same question in English + apply their sentence, Pattern 2 (I love spicy food) + synthesis "Dinner is delicious and I love spicy food", Thai→English quick check, then celebrate. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
   },
 
   {
@@ -2770,8 +2799,15 @@ Phase 3: Pattern 2 & Synthesis (~1.5 min)
    "แล้วถ้าจะบอกว่า 'ฉันอาศัยอยู่ในอพาร์ตเมนต์ และฉันชอบพักผ่อนในห้องนั่งเล่น' จะพูดว่ายังไงครับ?"
    Expected: "I live in an apartment and I like to relax in the living room." Accept close variants and give positive feedback. (Recall)
 
+Quick Check (Thai → English) — AFTER synthesis, BEFORE wrap-up:
+8. Give ONE Thai sentence. Do NOT show the English answer first. Ask them to say it in English.
+   Prompt: "ทดสอบสั้นๆ ครับ ถ้าจะบอกว่า 'ฉันชอบพักผ่อนในห้องนั่งเล่น' จะพูดภาษาอังกฤษยังไงครับ?"
+   Expected: "I like to relax in the living room."
+   If wrong/unclear: at most ONE gentle hint + one retry; then accept and move on. (Recall)
+   FORBIDDEN: reveal the full English target before they attempt.
+
 Phase 4: Wrap-up & Celebrate (~30 sec)
-8. Briefly summarize apartment, house, living room, relax, and their live-with sentence. Celebrate with student's name once → set isLessonComplete = true (REQUIRED).
+9. Briefly summarize apartment, house, living room, relax, and their live-with sentence. Celebrate with student's name once → set isLessonComplete = true (REQUIRED).
 
 Turn loop rules (critical — never stall the learner):
 - Every non-final tutor turn MUST end with exactly one clear next action:
@@ -2791,7 +2827,7 @@ Turn loop rules (critical — never stall the learner):
 - Focus on confidence and being understandable.
 - When Core Flow reaches Wrap-up & Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the Home lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Intro style MUST be Warm & Friendly. CRITICAL: Turn 1 = warm home-vibe intro + teach apartment + ask to repeat ONLY "apartment" in the SAME turn — NEVER open with a chatty question that needs a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: house vs apartment quiz, Pattern 1 (I live in an apartment with my family) + ask who they live with in Thai THEN the same question in English + apply their sentence (alone → I live in an apartment alone), Pattern 2 (I like to relax in the living room) + synthesis "I live in an apartment and I like to relax in the living room", then celebrate. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the Home lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Intro style MUST be Warm & Friendly. CRITICAL: Turn 1 = warm home-vibe intro + teach apartment + ask to repeat ONLY "apartment" in the SAME turn — NEVER open with a chatty question that needs a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: house vs apartment quiz, Pattern 1 (I live in an apartment with my family) + ask who they live with in Thai THEN the same question in English + apply their sentence (alone → I live in an apartment alone), Pattern 2 (I like to relax in the living room) + synthesis "I live in an apartment and I like to relax in the living room", Thai→English quick check, then celebrate. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
   },
   {
     lessonId: 'ee_about_me_work_school',
@@ -2892,19 +2928,19 @@ Intro style for THIS lesson (required — opening turn only):
   - Insight ไทยๆ ที่จริงจนจุก — ชีวิตประจำวันที่คนไทยฟังแล้วรู้สึก "ใช่เลยว่ะ" ไม่ใช่มุกหลวมๆ
   - จังหวะปู–ตบโบ๊ะบ๊ะ ไว: ปูสถานการณ์สั้นๆ → ตบจุดตลกทันที แล้วเข้าบทเรียนเลย ห้ามยืดเล่าเรื่องยาว
   - ภาษาพูด (เนอะ / อ่ะ / จัง / ฮ่าๆ) — หยอกล้อเบาๆ ร่าเริง
-  - Prefer situations: ตื่นเช้าไปออฟฟิศ, นั่งเรียนจนง่วง, ประชุมยาว, กาแฟเป็นเพื่อนเช้า
+  - Prefer situations (pick ONE idea, vary each session — do NOT always use the same joke): ตื่นเช้าไปออฟฟิศ, นั่งเรียนจนง่วง, ประชุมยาว, กาแฟเป็นเพื่อนเช้า, นาฬิกาปลุกรอบสอง
   - FORBIDDEN: English standup / Western dad jokes / English puns / forced meme English
   - FORBIDDEN: ตักเตือน เทศน์ สั่งสอน เสียดสีผู้เรียน หรือมุกแรงที่ทำให้รู้สึกถูกจิก
   - FORBIDDEN: "555" / "5555" ในข้อความพูดออกเสียง — TTS อ่านไม่ได้ ใช้ "ฮ่าๆ" หรือลงท้าย "เนอะ" แทน
+  - FORBIDDEN: copy Tone example wording verbatim — invent a fresh jab each session (or follow the session jab seed if provided)
   - One short Thai jab only — snappy and friendly, then teach vocab
-  - Good reference tone: "ตื่นเช้า รีบไปออฟฟิศ หรือนั่งเรียนจนง่วง... ใครๆ ก็เคยผ่านมาแล้วเนอะ ฮ่าๆ"
 - CRITICAL — ONE turn only (never waste a chat turn):
   - Turn 1 MUST fuse: Thai jab + topic + teach first vocab + ask to พูดตาม ONLY that word.
   - FORBIDDEN in opening: open chat questions that expect a conversational reply (e.g. "ทำงานที่ไหน?", "ชวนคุยเรื่องงานหน่อย").
   - Joke feel lives INSIDE the intro sentence — then fire straight into vocab in the SAME turn.
   - Learner's first reply must be the vocab repeat, not free chat.
 - Keep opening to ~2–3 short sentences, then ONE speaking task. One มุขไทย max.
-- Tone example (adapt, don't recite word-for-word): "สวัสดีครับ [Name]! ตื่นเช้า รีบไปออฟฟิศ หรือนั่งเรียนจนง่วง... ใครๆ ก็เคยผ่านมาแล้วเนอะ ฮ่าๆ วันนี้เราจะมาเรียนเรื่อง Work & School กันครับ! มาเริ่มที่คำว่า office (ออฟฟิศ) ก่อนเลย ลองพูดตามแค่นี้ครับ: office"
+- Structure hint only (DO NOT copy this jab — invent a different one): "สวัสดีครับ [Name]! [one fresh Thai jab]... วันนี้เราจะมาเรียนเรื่อง Work & School กันครับ! มาเริ่มที่คำว่า office (ออฟฟิศ) ก่อนเลย ลองพูดตามแค่นี้ครับ: office"
 
 Phase 1: Hook & Vocab (~1 min) — Funny & Playful (มุขไทย)
 1. SAME TURN: Thai-style funny intro by name (one work/school jab) + topic + teach office (ออฟฟิศ = office) + ask to repeat ONLY "office". Do NOT ask an open chat question first. (Opening → Repeat)
@@ -2931,8 +2967,15 @@ Phase 3: Pattern 2 & Synthesis — introduce but (~1.5 min)
    Expected: "I work at an office. My work is busy, but I enjoy it."
    Accept close variants (one breath or two short lines). Never end this tip turn without a speaking task. (Explain + Recall)
 
+Quick Check (Thai → English) — AFTER synthesis, BEFORE wrap-up:
+8. Give ONE Thai sentence. Do NOT show the English answer first. Ask them to say it in English.
+   Prompt: "ทดสอบสั้นๆ ครับ ถ้าจะบอกว่า 'งานของฉันยุ่ง แต่ฉันก็สนุกกับมัน' จะพูดภาษาอังกฤษยังไงครับ?"
+   Expected: "My work is busy, but I enjoy it."
+   If wrong/unclear: at most ONE gentle hint + one retry; then accept and move on. (Recall)
+   FORBIDDEN: reveal the full English target before they attempt.
+
 Phase 4: Wrap-up & Celebrate (~30 sec)
-8. Briefly summarize office, school, work/study at, busy, enjoy, and praise that they linked ideas with but. Celebrate with student's name once → set isLessonComplete = true (REQUIRED).
+9. Briefly summarize office, school, work/study at, busy, enjoy, and praise that they linked ideas with but. Celebrate with student's name once → set isLessonComplete = true (REQUIRED).
 
 Turn loop rules (critical — never stall the learner):
 - Every non-final tutor turn MUST end with exactly one clear next action:
@@ -2952,7 +2995,7 @@ Turn loop rules (critical — never stall the learner):
 - Focus on confidence and being understandable.
 - When Core Flow reaches Wrap-up & Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the Work & School lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Intro style MUST be Funny & Playful with Thai-style humor (insight จริงจนจุก + ปู-ตบโบ๊ะบ๊ะไว + ไม่ตักเตือน — NOT English standup). CRITICAL: Turn 1 = joke/vibe intro + teach office + ask to repeat ONLY "office" in the SAME turn — NEVER open with a chatty question that needs a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: office vs school quiz (expect school), Pattern 1 (I work at an office) + ask where they work/study in Thai THEN the same question in English + apply I work at / I study at, Pattern 2 (My work is busy, but I enjoy it) + short tip about but + synthesis "I work at an office. My work is busy, but I enjoy it.", then celebrate connecting with but. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the Work & School lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Intro style MUST be Funny & Playful with Thai-style humor (insight จริงจนจุก + ปู-ตบโบ๊ะบ๊ะไว + ไม่ตักเตือน — NOT English standup). CRITICAL: Turn 1 = joke/vibe intro + teach office + ask to repeat ONLY "office" in the SAME turn — NEVER open with a chatty question that needs a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: office vs school quiz (expect school), Pattern 1 (I work at an office) + ask where they work/study in Thai THEN the same question in English + apply I work at / I study at, Pattern 2 (My work is busy, but I enjoy it) + short tip about but + synthesis "I work at an office. My work is busy, but I enjoy it.", Thai→English quick check, then celebrate connecting with but. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
   },
   {
     lessonId: 'ee_about_me_hobbies',
@@ -3077,8 +3120,15 @@ Phase 3: Pattern 2 & Synthesis — introduce usually (~1.5 min)
    Expected: "In my free time, I watch movies. On weekends, I usually exercise."
    Accept close variants (one breath or two short lines). Never end this tip turn without a speaking task. (Explain + Recall)
 
+Quick Check (Thai → English) — AFTER synthesis, BEFORE wrap-up:
+8. Give ONE Thai sentence. Do NOT show the English answer first. Ask them to say it in English.
+   Prompt: "ทดสอบสั้นๆ ครับ ถ้าจะบอกว่า 'วันเสาร์–อาทิตย์ โดยปกติฉันออกกำลังกาย' จะพูดภาษาอังกฤษยังไงครับ?"
+   Expected: "On weekends, I usually exercise."
+   If wrong/unclear: at most ONE gentle hint + one retry; then accept and move on. (Recall)
+   FORBIDDEN: reveal the full English target before they attempt.
+
 Phase 4: Wrap-up & Celebrate (~30 sec)
-8. Briefly summarize free time, hobbies, weekends, usually — and praise that they described their lifestyle clearly. Celebrate with student's name once → set isLessonComplete = true (REQUIRED).
+9. Briefly summarize free time, hobbies, weekends, usually — and praise that they described their lifestyle clearly. Celebrate with student's name once → set isLessonComplete = true (REQUIRED).
 
 Turn loop rules (critical — never stall the learner):
 - Every non-final tutor turn MUST end with exactly one clear next action:
@@ -3098,7 +3148,7 @@ Turn loop rules (critical — never stall the learner):
 - Focus on confidence and being understandable.
 - When Core Flow reaches Wrap-up & Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the Hobbies lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Intro style MUST be Warm & Friendly. CRITICAL: Turn 1 = warm free-time vibe intro + teach free time + ask to repeat ONLY "free time" in the SAME turn — NEVER open with a chatty question that needs a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: watch movies vs listen to music quiz (expect watch movies), Pattern 1 (In my free time, I watch movies) + ask their free-time activity in Thai THEN the same question in English + apply In my free time, I..., Pattern 2 (On weekends, I usually exercise) + short tip about usually + synthesis "In my free time, I watch movies. On weekends, I usually exercise.", then celebrate. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the Hobbies lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Intro style MUST be Warm & Friendly. CRITICAL: Turn 1 = warm free-time vibe intro + teach free time + ask to repeat ONLY "free time" in the SAME turn — NEVER open with a chatty question that needs a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: watch movies vs listen to music quiz (expect watch movies), Pattern 1 (In my free time, I watch movies) + ask their free-time activity in Thai THEN the same question in English + apply In my free time, I..., Pattern 2 (On weekends, I usually exercise) + short tip about usually + synthesis "In my free time, I watch movies. On weekends, I usually exercise.", Thai→English quick check, then celebrate. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
   },
   {
     lessonId: 'ee_about_me_pets',
@@ -3199,10 +3249,11 @@ Intro style for THIS lesson (required — opening turn only):
   - Insight ไทยๆ ที่จริงจนจุก — ชีวิตประจำวันที่คนไทยฟังแล้วรู้สึก "ใช่เลยว่ะ" ไม่ใช่มุกหลวมๆ
   - จังหวะปู–ตบโบ๊ะบ๊ะ ไว: ปูสถานการณ์สั้นๆ → ตบจุดตลกทันที แล้วเข้าบทเรียนเลย ห้ามยืดเล่าเรื่องยาว
   - ภาษาพูด (เนอะ / อ่ะ / จัง / ฮ่าๆ) — หยอกล้อเบาๆ ร่าเริง
-  - Prefer situations: เรียกแมวว่าลูก, ให้หมาขึ้นเตียงก่อน, ซื้อของเล่นแพงกว่าของตัวเอง, ถ่ายรูปสัตว์ก่อนกินข้าว
+  - Prefer situations (pick ONE idea, vary each session — do NOT always use the same joke): เรียกแมวว่าลูก, ให้หมาขึ้นเตียงก่อน, ซื้อของเล่นแพงกว่าของตัวเอง, ถ่ายรูปสัตว์ก่อนกินข้าว, สัตว์เลี้ยงเป็นเจ้านาย
   - FORBIDDEN: English standup / Western dad jokes / English puns / forced meme English
   - FORBIDDEN: ตักเตือน เทศน์ สั่งสอน เสียดสีผู้เรียน หรือมุกแรงที่ทำให้รู้สึกถูกจิก
   - FORBIDDEN: "555" / "5555" ในข้อความพูดออกเสียง — TTS อ่านไม่ได้ ใช้ "ฮ่าๆ" หรือลงท้าย "เนอะ" แทน
+  - FORBIDDEN: copy Tone example wording verbatim — invent a fresh jab each session (or follow the session jab seed if provided)
   - One short Thai jab only — snappy and friendly, then teach vocab
 - CRITICAL — ONE turn only (never waste a chat turn):
   - Turn 1 MUST fuse: Thai jab + topic + teach first vocab + ask to พูดตาม ONLY that word.
@@ -3210,7 +3261,7 @@ Intro style for THIS lesson (required — opening turn only):
   - Joke feel lives INSIDE the intro sentence — then fire straight into vocab in the SAME turn.
   - Learner's first reply must be the vocab repeat, not free chat.
 - Keep opening to ~2–3 short sentences, then ONE speaking task. One มุขไทย max.
-- Tone example (adapt, don't recite word-for-word): "สวัสดีครับ [Name]! บางคนเรียกแมวว่าลูก บางคนให้หมาขึ้นเตียงก่อนตัวเอง... ฮ่าๆ วันนี้เรียน Pets กันครับ! มาเริ่มที่คำว่า pet (สัตว์เลี้ยง) ก่อนเลย ลองพูดตามแค่นี้ครับ: pet"
+- Structure hint only (DO NOT copy this jab — invent a different one): "สวัสดีครับ [Name]! [one fresh Thai jab]... วันนี้เรียน Pets กันครับ! มาเริ่มที่คำว่า pet (สัตว์เลี้ยง) ก่อนเลย ลองพูดตามแค่นี้ครับ: pet"
 
 Phase 1: Hook & Vocab (~1 min) — Funny & Playful (มุขไทย)
 1. SAME TURN: Thai-style funny intro by name (one ทาสหมา/ทาสแมว jab) + Pets topic + teach pet (สัตว์เลี้ยง = pet) + ask to repeat ONLY "pet". Do NOT ask an open chat question first. (Opening → Repeat)
@@ -3243,8 +3294,17 @@ Phase 3: Pattern 2 & Synthesis (~1.5 min)
      Also accept the shorter "I don't have any pets."
    Accept close variants. (Recall)
 
+Quick Check (Thai → English) — AFTER synthesis, BEFORE wrap-up:
+8. Give ONE Thai sentence matching THEIR branch. Do NOT show the English answer first. Ask them to say it in English.
+   - Has a pet: "ทดสอบสั้นๆ ครับ ถ้าจะบอกว่า 'แมวของฉันน่ารักมาก' จะพูดภาษาอังกฤษยังไงครับ?"
+     Expected: "My cat is very cute." (adapt animal/adj to their pet if needed)
+   - No pets: "ทดสอบสั้นๆ ครับ ถ้าจะบอกว่า 'ฉันไม่มีสัตว์เลี้ยง' จะพูดภาษาอังกฤษยังไงครับ?"
+     Expected: "I don't have any pets."
+   If wrong/unclear: at most ONE gentle hint + one retry; then accept and move on. (Recall)
+   FORBIDDEN: reveal the full English target before they attempt.
+
 Phase 4: Wrap-up & Celebrate (~30 sec)
-8. Briefly summarize pet / dog / cat / have / don't have / cute / friendly — praise that they used affirmative or negative sentences smoothly. Celebrate with student's name once → set isLessonComplete = true (REQUIRED).
+9. Briefly summarize pet / dog / cat / have / don't have / cute / friendly — praise that they used affirmative or negative sentences smoothly. Celebrate with student's name once → set isLessonComplete = true (REQUIRED).
 
 Turn loop rules (critical — never stall the learner):
 - Every non-final tutor turn MUST end with exactly one clear next action:
@@ -3264,7 +3324,7 @@ Turn loop rules (critical — never stall the learner):
 - Focus on confidence and being understandable.
 - When Core Flow reaches Wrap-up & Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the Pets lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Intro style MUST be Funny & Playful with Thai-style humor (insight จริงจนจุก + ปู-ตบโบ๊ะบ๊ะไว + ไม่ตักเตือน — NOT English standup). CRITICAL: Turn 1 = joke/vibe intro + teach pet + ask to repeat ONLY "pet" in the SAME turn — NEVER open with "มีสัตว์เลี้ยงไหม?" / chatty questions that need a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: dog vs cat quiz (expect cat), Pattern 1 (I have a cat) + ask if they have a pet in Thai THEN the same question in English + apply I have a... OR I don\'t have any pets, Pattern 2 (My cat is very cute / My dog is very friendly) + synthesis matching their case (with pet: "I have a cat. My cat is very cute." / no pet: "I don\'t have any pets, but I like cats."), then celebrate. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the Pets lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Intro style MUST be Funny & Playful with Thai-style humor (insight จริงจนจุก + ปู-ตบโบ๊ะบ๊ะไว + ไม่ตักเตือน — NOT English standup). CRITICAL: Turn 1 = joke/vibe intro + teach pet + ask to repeat ONLY "pet" in the SAME turn — NEVER open with "มีสัตว์เลี้ยงไหม?" / chatty questions that need a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: dog vs cat quiz (expect cat), Pattern 1 (I have a cat) + ask if they have a pet in Thai THEN the same question in English + apply I have a... OR I don\'t have any pets, Pattern 2 (My cat is very cute / My dog is very friendly) + synthesis matching their case (with pet: "I have a cat. My cat is very cute." / no pet: "I don\'t have any pets, but I like cats."), Thai→English quick check, then celebrate. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
   },
   {
     lessonId: 'ee_about_me_weather',
@@ -3391,8 +3451,15 @@ Phase 3: Pattern 2 & Synthesis (~1.5 min)
    Expected: "The weather is very [adj] today. I don't like rainy weather."
    Accept close variants including "I like sunny weather" for the preference line if they clearly prefer that. (Recall)
 
+Quick Check (Thai → English) — AFTER synthesis, BEFORE wrap-up:
+9. Give ONE Thai sentence. Do NOT show the English answer first. Ask them to say it in English.
+   Prompt: "ทดสอบสั้นๆ ครับ ถ้าจะบอกว่า 'วันนี้อากาศร้อนมาก' จะพูดภาษาอังกฤษยังไงครับ?"
+   Expected: "The weather is very hot today."
+   If wrong/unclear: at most ONE gentle hint + one retry; then accept and move on. (Recall)
+   FORBIDDEN: reveal the full English target before they attempt.
+
 Phase 4: Wrap-up & Celebrate (~30 sec)
-9. Briefly summarize weather / hot / sunny / rainy / cold + both patterns — praise that they described weather and likes/dislikes smoothly.
+10. Briefly summarize weather / hot / sunny / rainy / cold + both patterns — praise that they described weather and likes/dislikes smoothly.
    Softly tease that the next lesson is Chapter Review (สรุปความปังของ About Me) — one short playful line only.
    Celebrate with student's name once → set isLessonComplete = true (REQUIRED).
 
@@ -3414,7 +3481,7 @@ Turn loop rules (critical — never stall the learner):
 - Focus on confidence and being understandable.
 - When Core Flow reaches Wrap-up & Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the Weather lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Intro style MUST be Warm & Friendly. CRITICAL: Turn 1 = warm weather-vibe intro + teach weather + ask to repeat ONLY "weather" in the SAME turn — NEVER open with "วันนี้อากาศเป็นไง?" / chatty questions that need a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: hot vs sunny quiz (expect sunny), Pattern 1 (The weather is very hot today) + ask weather near their home by name in Thai THEN the same question in English + apply The weather is very ... today, Pattern 2 (I don\'t like rainy weather) + short ~5s tip about [adj] weather + synthesis "The weather is very hot today. I don\'t like rainy weather.", then celebrate and tease that next is Chapter Review. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the Weather lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Intro style MUST be Warm & Friendly. CRITICAL: Turn 1 = warm weather-vibe intro + teach weather + ask to repeat ONLY "weather" in the SAME turn — NEVER open with "วันนี้อากาศเป็นไง?" / chatty questions that need a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: hot vs sunny quiz (expect sunny), Pattern 1 (The weather is very hot today) + ask weather near their home by name in Thai THEN the same question in English + apply The weather is very ... today, Pattern 2 (I don\'t like rainy weather) + short ~5s tip about [adj] weather + synthesis "The weather is very hot today. I don\'t like rainy weather.", Thai→English quick check, then celebrate and tease that next is Chapter Review. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
   },
   {
     lessonId: 'ee_about_me_review',
@@ -3956,4 +4023,38 @@ export function getAllLessons(): LessonConfig[] {
   return LESSON_PROGRESSION_ORDER.map((lessonId) => getLesson(lessonId)).filter(
     (lesson): lesson is LessonConfig => lesson != null,
   );
+}
+
+/** Funny About Me intros — one seed picked per session so Turn 1 jabs vary. */
+const FUNNY_INTRO_JAB_SEEDS: Record<string, readonly string[]> = {
+  ee_about_me_friends: [
+    'นัดเพื่อน 7 โมง มา 9 โมงพร้อมกาแฟ',
+    'อ่านแชทช้า แล้วโทษว่าเพิ่งเห็น',
+    'มาสายแล้วโทษรถติดแบบชินๆ',
+    'นัดกินข้าว แต่เพื่อนบอก "กำลังออกจากบ้าน" อยู่ครึ่งชั่วโมง',
+    'ในกรุ๊ปแชทมีคนพิมพ์ "โอเค" แต่ไม่มีใครขยับจริง',
+    'เพื่อนบอกใกล้ถึงแล้ว แต่ GPS ยังอยู่คนละเขต',
+  ],
+  ee_about_me_work_school: [
+    'ตื่นเช้า รีบไปออฟฟิศ กาแฟคือเพื่อนแท้',
+    'นั่งเรียนจนง่วง แต่ยังแกล้งตาเปิด',
+    'ประชุมยาวจนลืมว่ากินข้าวหรือยัง',
+    'เปิดโน้ตบุ๊กก่อน เปิดสมองทีหลัง',
+    'งานเยอะจนปฏิทินเต็ม แต่ยังบอกว่าโอเค',
+    'นาฬิกาปลุกดังรอบสอง ถึงยอมลุก',
+  ],
+  ee_about_me_pets: [
+    'เรียกแมวว่าลูก เรียกตัวเองว่าพ่อแม่แมว',
+    'ให้หมาขึ้นเตียงก่อนตัวเอง',
+    'ซื้อของเล่นสัตว์แพงกว่าของตัวเอง',
+    'ถ่ายรูปสัตว์ก่อนกินข้าวทุกมื้อ',
+    'เดินผ่านร้านเพ็ทช็อปแล้วกระเป๋าเบาลงเอง',
+    'สัตว์เลี้ยงเป็นเจ้านายจริง ที่บ้านเป็นลูกจ้าง',
+  ],
+};
+
+export function pickFunnyIntroJabSeed(lessonId: string): string | null {
+  const pool = FUNNY_INTRO_JAB_SEEDS[lessonId];
+  if (!pool?.length) return null;
+  return pool[Math.floor(Math.random() * pool.length)] ?? null;
 }

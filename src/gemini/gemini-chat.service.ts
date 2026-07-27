@@ -43,6 +43,7 @@ import {
 } from '../common/api.types';
 import type { SimulationConfig } from '../simulations/simulations.data';
 import type { LessonConfig } from '../lessons/lessons.data';
+import { pickFunnyIntroJabSeed } from '../lessons/lessons.data';
 import { GeminiModelPool, parseGeminiChatModels } from './gemini-model-pool';
 
 const REPLY_SCHEMA = {
@@ -990,6 +991,13 @@ export class GeminiChatService {
     config: LessonConfig,
     learnerFirstName: string,
   ): Promise<TrainingTurnReply> {
+    const jabSeed = pickFunnyIntroJabSeed(config.lessonId);
+    const jabSeedLine = jabSeed
+      ? `This session's funny jab seed: "${jabSeed}". ` +
+        'Build Turn 1 jab FROM this seed — paraphrase freely in your own words. ' +
+        'FORBIDDEN: copy any Tone example verbatim. One short Thai jab only, then teach vocab.\n\n'
+      : '';
+
     return this.generateJson<TrainingTurnReply>({
       systemInstruction: this.trainingSystemPrompt(
         config,
@@ -1003,6 +1011,7 @@ export class GeminiChatService {
             {
               text:
                 `${config.openingPrompt}\n\n` +
+                jabSeedLine +
                 'Respond with ONLY one JSON object: ' +
                 '{"textEn":"...","textTh":"...","isLessonComplete":false}. ' +
                 'No markdown. No prose outside JSON.',
@@ -1012,7 +1021,7 @@ export class GeminiChatService {
       ],
       schema: TRAINING_REPLY_SCHEMA,
       maxOutputTokens: 512,
-      temperature: 0.4,
+      temperature: jabSeed ? 0.85 : 0.4,
       recoverFromPlainText: (text) => this.recoverTrainingReplyFromPlainText(text),
     });
   }
