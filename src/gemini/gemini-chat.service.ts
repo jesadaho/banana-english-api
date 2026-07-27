@@ -1102,6 +1102,12 @@ export class GeminiChatService {
     wan: 'one',
     too: 'two',
     to: 'two',
+    // house (Home quiz) — STT often mangles this short word
+    hals: 'house',
+    hows: 'house',
+    haus: 'house',
+    houes: 'house',
+    hous: 'house',
   };
 
   private static readonly NUMBER_ONES = [
@@ -1214,39 +1220,54 @@ export class GeminiChatService {
       for (const phrase of sorted) {
         const target = this.normalizeSpeechText(phrase);
         if (!target || target.includes(' ')) continue;
-        if (this.isWithinEditDistanceOne(normalized, target)) return phrase;
+        const maxDist = this.maxEditDistanceForWord(target);
+        if (this.editDistanceAtMost(normalized, target, maxDist)) {
+          return phrase;
+        }
       }
     }
 
     return null;
   }
 
-  private isWithinEditDistanceOne(a: string, b: string): boolean {
+  /**
+   * Length-scaled near-miss budget for single-token answers:
+   * ≤3 → 1 · 4–5 → 2 · ≥6 → 3
+   */
+  private maxEditDistanceForWord(target: string): number {
+    const len = target.length;
+    if (len <= 3) return 1;
+    if (len <= 5) return 2;
+    return 3;
+  }
+
+  /** True if Levenshtein distance(a, b) ≤ maxDist (early-exit when exceeding). */
+  private editDistanceAtMost(a: string, b: string, maxDist: number): boolean {
     if (a === b) return true;
-    const diff = Math.abs(a.length - b.length);
-    if (diff > 1) return false;
+    if (maxDist <= 0) return false;
+    if (Math.abs(a.length - b.length) > maxDist) return false;
 
-    if (a.length > b.length) [a, b] = [b, a];
+    const prev = new Array<number>(b.length + 1);
+    const curr = new Array<number>(b.length + 1);
+    for (let j = 0; j <= b.length; j++) prev[j] = j;
 
-    let mismatches = 0;
-    let i = 0;
-    let j = 0;
-    while (i < a.length && j < b.length) {
-      if (a[i] === b[j]) {
-        i++;
-        j++;
-        continue;
+    for (let i = 1; i <= a.length; i++) {
+      curr[0] = i;
+      let rowMin = curr[0];
+      for (let j = 1; j <= b.length; j++) {
+        const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+        curr[j] = Math.min(
+          prev[j] + 1,
+          curr[j - 1] + 1,
+          prev[j - 1] + cost,
+        );
+        if (curr[j] < rowMin) rowMin = curr[j];
       }
-      mismatches++;
-      if (mismatches > 1) return false;
-      if (a.length === b.length) {
-        i++;
-        j++;
-      } else {
-        j++;
-      }
+      if (rowMin > maxDist) return false;
+      for (let j = 0; j <= b.length; j++) prev[j] = curr[j];
     }
-    return mismatches + (b.length - j) <= 1;
+
+    return prev[b.length] <= maxDist;
   }
 
   private normalizeSpeechText(text: string): string {
