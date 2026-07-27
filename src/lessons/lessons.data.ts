@@ -2150,7 +2150,10 @@ Phase 1 — Hook & Vocab:
 
 Phase 2 — Pattern 1 & Personalize:
 3. Model Pattern 1 — ถ้าจะบอกว่า "ฉันตื่นนอนตอน 7 โมง" ให้พูดว่า "I wake up at 7 o'clock." ลองพูดตามครูนะครับ! (Repeat)
-4. Ask real wake-up time — "ปกติคุณตื่นกี่โมงครับ?" Accept any clear time (e.g. 8 o'clock / ten). Do NOT force only 6/7/8. (Short answer)
+4. Ask real wake-up time — ask the question in Thai first, then immediately ask the SAME question in English.
+   Example: "ปกติคุณตื่นกี่โมงครับ? What time do you wake up?"
+   Accept English answers (preferred) or Thai/number if needed, then map to English time. Do NOT force only 6/7/8. (Short answer)
+   FORBIDDEN in this ask: answer scaffolds like "ลองตอบเป็นอังกฤษได้เลย เช่น ..." — only Thai Q + English Q.
 5. Apply — using THEIR time, prompt: "งั้นพูดว่า I wake up at [User Time] ครับ" (Recall)
 
 Phase 3 — Pattern 2 & Real-Life Practice:
@@ -2178,7 +2181,7 @@ Turn loop rules (critical — never stall the learner):
 - Focus on confidence and being understandable.
 - When Core Flow reaches Wrap-up & Celebrate, set isLessonComplete = true (required). Otherwise false.`,
     openingPrompt:
-      'Start the Daily Routine lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Intro style MUST be Encouraging & Enthusiastic. CRITICAL: Turn 1 = styled intro + teach wake up + ask to repeat ONLY "wake up" in the SAME turn — NEVER open with a chatty question that needs a conversational reply. NO "I\'m ready". Then: go to sleep vs go to work quiz, Pattern 1 (I wake up at 7) + ask wake time + I wake up at [their time], Pattern 2 (I go to work every day) + ask for I go to sleep at 11 o\'clock every day, brief celebrate. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the Daily Routine lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Intro style MUST be Encouraging & Enthusiastic. CRITICAL: Turn 1 = styled intro + teach wake up + ask to repeat ONLY "wake up" in the SAME turn — NEVER open with a chatty question that needs a conversational reply. NO "I\'m ready". Then: go to sleep vs go to work quiz, Pattern 1 (I wake up at 7) + ask wake time in Thai THEN the same question in English + I wake up at [their time], Pattern 2 (I go to work every day) + ask for I go to sleep at 11 o\'clock every day, brief celebrate. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
   },
 
   {
@@ -2295,7 +2298,10 @@ Phase 1: Hook & Vocab (~1 min) — Funny & Playful (มุขไทย)
 
 Phase 2: Pattern 1 & Personalize (~1.5 min) — introduce We
 3. Model Pattern 1 — lightly note We = พวกเรา (กลุ่มเรา) if helpful in one short phrase, then: ถ้าจะบอกว่า "พวกเราไปเที่ยวด้วยกัน" ให้พูดว่า "We hang out together." ลองพูดตามครูนะครับ! (Repeat)
-4. Ask about friend activities — "เวลาเจอกับกลุ่มเพื่อน ปกติชอบทำอะไรกันเป็นหลักครับ? เช่น hang out, eat out หรือ play games" Accept a short answer. Soft, natural — not a forced menu. (Short answer)
+4. Ask about friend activities — ask the question in Thai first, then immediately ask the SAME question in English.
+   Example: "เวลาเจอกับกลุ่มเพื่อน ปกติชอบทำอะไรกันเป็นหลักครับ? What do you usually do with your friends?"
+   Accept short English answers (preferred) or Thai if needed, then map to English. Soft, natural — not a forced menu. (Short answer)
+   FORBIDDEN in this ask: answer scaffolds like "ลองตอบเป็นอังกฤษได้เลย เช่น ..." — only Thai Q + English Q.
 5. Apply — build from THEIR answer:
    - Chosen from options: "งั้นพูดว่า We [hang out / eat out / play games] together. ครับ"
    - Other activity: map into "We [activity] together." (e.g. "We watch movies together.") and ask them to say it
@@ -2334,7 +2340,7 @@ Turn loop rules (critical — never stall the learner):
 - Focus on confidence and being understandable.
 - When Core Flow reaches Wrap-up & Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the Friends & Social lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Intro style MUST be Funny & Playful with Thai-style humor (insight จริงจนจุก + ปู-ตบโบ๊ะบ๊ะไว + ไม่ตักเตือน — NOT English standup). CRITICAL: Turn 1 = joke/vibe intro + teach hang out + ask to repeat ONLY "hang out" in the SAME turn — NEVER open with a chatty question that needs a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: hang out vs work at quiz (expect hang out), Pattern 1 We (We hang out together) + ask friend activity + apply We ... together, Pattern 2 They (They work at a company) + short ~5s tip about work at (link to work at an office from 1.4 if natural) + synthesis "We eat out together. They work at a company.", then celebrate We/They. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the Friends & Social lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Intro style MUST be Funny & Playful with Thai-style humor (insight จริงจนจุก + ปู-ตบโบ๊ะบ๊ะไว + ไม่ตักเตือน — NOT English standup). CRITICAL: Turn 1 = joke/vibe intro + teach hang out + ask to repeat ONLY "hang out" in the SAME turn — NEVER open with a chatty question that needs a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: hang out vs work at quiz (expect hang out), Pattern 1 We (We hang out together) + ask friend activity in Thai THEN the same question in English + apply We ... together, Pattern 2 They (They work at a company) + short ~5s tip about work at (link to work at an office from 1.4 if natural) + synthesis "We eat out together. They work at a company.", then celebrate We/They. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
   },
   {
     lessonId: 'ee_about_me_people',
@@ -2446,7 +2452,10 @@ Phase 1: Hook & Vocab (~1 min) — Warm & Friendly
 
 Phase 2: Pattern 1 & Personalize (~1.5 min)
 3. Model Pattern 1 — ถ้าจะบอกว่า "พี่ชายของฉันเป็นวิศวกร" ให้พูดว่า "My brother is an engineer." ลองพูดตามครูนะครับ! (Repeat)
-4. Ask about someone close — "ลองเล่าถึงคนใกล้ตัวสักคนสิครับ อาจจะเป็นพี่น้องหรือเพื่อนก็ได้ เขาทำอาชีพอะไรอยู่ครับ? (เช่น designer, engineer, business owner)" Accept a short answer. Soft, natural — not a forced menu. (Short answer)
+4. Ask about someone close — ask the question in Thai first, then immediately ask the SAME question in English.
+   Example: "ลองเล่าถึงคนใกล้ตัวสักคนสิครับ อาจจะเป็นพี่น้องหรือเพื่อนก็ได้ เขาทำอาชีพอะไรอยู่ครับ? What does he or she do?"
+   Accept short English answers (preferred) or Thai if needed, then map to English. Soft, natural — not a forced menu. (Short answer)
+   FORBIDDEN in this ask: answer scaffolds like "ลองตอบเป็นอังกฤษได้เลย เช่น ..." — only Thai Q + English Q.
 5. Apply — build from THEIR answer:
    - Chosen from options: "งั้นพูดว่า My [brother/friend/sister] is [an engineer / a designer / a business owner]. ครับ"
    - Other job: map vocabulary + a/an automatically (e.g. "My friend is a doctor.") and ask them to say that sentence
@@ -2486,7 +2495,7 @@ Turn loop rules (critical — never stall the learner):
 - Focus on confidence and being understandable.
 - When Core Flow reaches Wrap-up & Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the People in My Life lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Intro style MUST be Warm & Friendly. CRITICAL: Turn 1 = warm intro + teach engineer + ask to repeat ONLY "engineer" in the SAME turn — NEVER open with a chatty question that needs a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: funny vs busy quiz (expect funny), Pattern 1 (My brother is an engineer) + ask about someone close and their job + apply My [person] is a/an [job] (map other jobs + a/an), Pattern 2 (My friend is very funny) + short tip about very + synthesis adapted to their person (e.g. "My brother is an engineer. He is very busy."), then celebrate. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the People in My Life lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Intro style MUST be Warm & Friendly. CRITICAL: Turn 1 = warm intro + teach engineer + ask to repeat ONLY "engineer" in the SAME turn — NEVER open with a chatty question that needs a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: funny vs busy quiz (expect funny), Pattern 1 (My brother is an engineer) + ask about someone close and their job in Thai THEN the same question in English + apply My [person] is a/an [job] (map other jobs + a/an), Pattern 2 (My friend is very funny) + short tip about very + synthesis adapted to their person (e.g. "My brother is an engineer. He is very busy."), then celebrate. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
   },
   {
     lessonId: 'ee_about_me_food',
@@ -2601,7 +2610,10 @@ Phase 1: Hook & Vocab (~1 min) — Warm & Friendly
 
 Phase 2: Pattern 1 & Personalize (~1.5 min)
 3. Model Pattern 1 — ถ้าจะบอกว่า "ปกติฉันดื่มกาแฟเป็นอาหารเช้า" ให้พูดว่า "I usually have coffee for breakfast." ลองพูดตามครูนะครับ! (Repeat)
-4. Ask their real morning routine — "ปกติคุณกินหรือดื่มอะไรเป็นอาหารเช้าครับ? เช่น coffee, tea, bread" Accept a short item answer. (Short answer)
+4. Ask their real morning routine — ask the question in Thai first, then immediately ask the SAME question in English.
+   Example: "ปกติคุณกินหรือดื่มอะไรเป็นอาหารเช้าครับ? What do you usually have for breakfast?"
+   Accept short English answers (preferred) or Thai if needed, then map to English. Soft item answer OK. (Short answer)
+   FORBIDDEN in this ask: answer scaffolds like "ลองตอบเป็นอังกฤษได้เลย เช่น ..." — only Thai Q + English Q.
 5. Apply — using THEIR item, prompt: "งั้นพูดว่า I usually have [User Item] for breakfast ครับ" (Recall)
 
 Phase 3: Pattern 2 & Synthesis (~1.5 min)
@@ -2631,7 +2643,7 @@ Turn loop rules (critical — never stall the learner):
 - Focus on confidence and being understandable.
 - When Core Flow reaches Wrap-up & Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the Food & Drinks lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Intro style MUST be Warm & Friendly. CRITICAL: Turn 1 = warm food-vibe intro + teach breakfast + ask to repeat ONLY "breakfast" in the SAME turn — NEVER open with "หิวยัง?" / chatty questions that need a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: dinner vs lunch quiz, Pattern 1 (I usually have coffee for breakfast) + ask real breakfast item + apply their sentence, Pattern 2 (I love spicy food) + synthesis "Dinner is delicious and I love spicy food", then celebrate. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the Food & Drinks lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Intro style MUST be Warm & Friendly. CRITICAL: Turn 1 = warm food-vibe intro + teach breakfast + ask to repeat ONLY "breakfast" in the SAME turn — NEVER open with "หิวยัง?" / chatty questions that need a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: dinner vs lunch quiz, Pattern 1 (I usually have coffee for breakfast) + ask real breakfast item in Thai THEN the same question in English + apply their sentence, Pattern 2 (I love spicy food) + synthesis "Dinner is delicious and I love spicy food", then celebrate. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
   },
 
   {
@@ -2743,7 +2755,10 @@ Phase 1: Hook & Vocab (~1 min) — Warm & Friendly
 
 Phase 2: Pattern 1 & Personalize (~1.5 min)
 3. Model Pattern 1 — ถ้าจะบอกว่า "ฉันอาศัยอยู่ในอพาร์ตเมนต์กับครอบครัว" ให้พูดว่า "I live in an apartment with my family." ลองพูดตามครูนะครับ! (Repeat)
-4. Ask who they live with — "ปกติคุณพักอาศัยอยู่กับใครครับ? เช่น family, friends, partner, หรือ alone" Accept a short answer. (Short answer)
+4. Ask who they live with — ask the question in Thai first, then immediately ask the SAME question in English.
+   Example: "ปกติคุณพักอาศัยอยู่กับใครครับ? Who do you live with?"
+   Accept short English answers (preferred) or Thai if needed, then map to English. (Short answer)
+   FORBIDDEN in this ask: answer scaffolds like "ลองตอบเป็นอังกฤษได้เลย เช่น ..." — only Thai Q + English Q.
 5. Apply — using THEIR choice:
    - If they live with someone: "งั้นพูดว่า I live in an apartment with [User Choice] ครับ"
    - If they said alone / คนเดียว: "งั้นพูดว่า I live in an apartment alone ครับ"
@@ -2776,7 +2791,7 @@ Turn loop rules (critical — never stall the learner):
 - Focus on confidence and being understandable.
 - When Core Flow reaches Wrap-up & Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the Home lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Intro style MUST be Warm & Friendly. CRITICAL: Turn 1 = warm home-vibe intro + teach apartment + ask to repeat ONLY "apartment" in the SAME turn — NEVER open with a chatty question that needs a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: house vs apartment quiz, Pattern 1 (I live in an apartment with my family) + ask who they live with + apply their sentence (alone → I live in an apartment alone), Pattern 2 (I like to relax in the living room) + synthesis "I live in an apartment and I like to relax in the living room", then celebrate. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the Home lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Intro style MUST be Warm & Friendly. CRITICAL: Turn 1 = warm home-vibe intro + teach apartment + ask to repeat ONLY "apartment" in the SAME turn — NEVER open with a chatty question that needs a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: house vs apartment quiz, Pattern 1 (I live in an apartment with my family) + ask who they live with in Thai THEN the same question in English + apply their sentence (alone → I live in an apartment alone), Pattern 2 (I like to relax in the living room) + synthesis "I live in an apartment and I like to relax in the living room", then celebrate. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
   },
   {
     lessonId: 'ee_about_me_work_school',
@@ -2898,7 +2913,10 @@ Phase 1: Hook & Vocab (~1 min) — Funny & Playful (มุขไทย)
 
 Phase 2: Pattern 1 & Personalize (~1.5 min)
 3. Model Pattern 1 — ถ้าจะบอกว่า "ฉันทำงานที่ออฟฟิศ" ให้พูดว่า "I work at an office." ลองพูดตามครูนะครับ! (Repeat)
-4. Ask where they mainly work or study — "ตอนนี้ทำงานหรือเรียนอยู่ที่ไหนเป็นหลักครับ? อย่างเช่น office, school หรือ home" Accept a short answer. Soft examples only — not a forced menu. (Short answer)
+4. Ask where they mainly work or study — ask the question in Thai first, then immediately ask the SAME question in English.
+   Example: "ตอนนี้ทำงานหรือเรียนอยู่ที่ไหนเป็นหลักครับ? Where do you work or study?"
+   Accept short English answers (preferred) or Thai if needed, then map to English. Soft examples only — not a forced menu. (Short answer)
+   FORBIDDEN in this ask: answer scaffolds like "ลองตอบเป็นอังกฤษได้เลย เช่น ..." — only Thai Q + English Q.
 5. Apply — map THEIR answer into one clear sentence:
    - If they work somewhere: "งั้นพูดว่า I work at [User Place] ครับ" (use "an office" / "a school" / "home" naturally)
    - If they study somewhere: "งั้นพูดว่า I study at [User Place] ครับ"
@@ -2934,7 +2952,7 @@ Turn loop rules (critical — never stall the learner):
 - Focus on confidence and being understandable.
 - When Core Flow reaches Wrap-up & Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the Work & School lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Intro style MUST be Funny & Playful with Thai-style humor (insight จริงจนจุก + ปู-ตบโบ๊ะบ๊ะไว + ไม่ตักเตือน — NOT English standup). CRITICAL: Turn 1 = joke/vibe intro + teach office + ask to repeat ONLY "office" in the SAME turn — NEVER open with a chatty question that needs a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: office vs school quiz (expect school), Pattern 1 (I work at an office) + ask where they work/study + apply I work at / I study at, Pattern 2 (My work is busy, but I enjoy it) + short tip about but + synthesis "I work at an office. My work is busy, but I enjoy it.", then celebrate connecting with but. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the Work & School lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Intro style MUST be Funny & Playful with Thai-style humor (insight จริงจนจุก + ปู-ตบโบ๊ะบ๊ะไว + ไม่ตักเตือน — NOT English standup). CRITICAL: Turn 1 = joke/vibe intro + teach office + ask to repeat ONLY "office" in the SAME turn — NEVER open with a chatty question that needs a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: office vs school quiz (expect school), Pattern 1 (I work at an office) + ask where they work/study in Thai THEN the same question in English + apply I work at / I study at, Pattern 2 (My work is busy, but I enjoy it) + short tip about but + synthesis "I work at an office. My work is busy, but I enjoy it.", then celebrate connecting with but. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
   },
   {
     lessonId: 'ee_about_me_hobbies',
@@ -3042,7 +3060,10 @@ Phase 1: Hook & Vocab (~1 min) — Warm & Friendly
 
 Phase 2: Pattern 1 & Personalize (~1.5 min)
 3. Model Pattern 1 — ถ้าจะบอกว่า "ในเวลาว่างฉันดูหนัง" ให้พูดว่า "In my free time, I watch movies." ลองพูดตามครูนะครับ! (Repeat)
-4. Ask their main free-time activity — "ปกติเวลาว่าง ชอบทำอะไรเป็นหลักครับ? อย่างเช่น watch movies, listen to music หรือ travel" Accept a short answer. Soft examples only — not a forced menu. (Short answer)
+4. Ask their main free-time activity — ask the question in Thai first, then immediately ask the SAME question in English.
+   Example: "ปกติเวลาว่าง ชอบทำอะไรเป็นหลักครับ? What do you usually do in your free time?"
+   Accept short English answers (preferred) or Thai if needed, then map to English. Soft examples only — not a forced menu. (Short answer)
+   FORBIDDEN in this ask: answer scaffolds like "ลองตอบเป็นอังกฤษได้เลย เช่น ..." — only Thai Q + English Q.
 5. Apply — map THEIR answer into one clear sentence:
    - If they pick a taught option: "งั้นพูดว่า In my free time, I [User Choice] ครับ"
    - If they give another activity (read books, play games, cook…): map it into In my free time, I... and prompt that sentence.
@@ -3077,7 +3098,7 @@ Turn loop rules (critical — never stall the learner):
 - Focus on confidence and being understandable.
 - When Core Flow reaches Wrap-up & Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the Hobbies lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Intro style MUST be Warm & Friendly. CRITICAL: Turn 1 = warm free-time vibe intro + teach free time + ask to repeat ONLY "free time" in the SAME turn — NEVER open with a chatty question that needs a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: watch movies vs listen to music quiz (expect watch movies), Pattern 1 (In my free time, I watch movies) + ask their free-time activity + apply In my free time, I..., Pattern 2 (On weekends, I usually exercise) + short tip about usually + synthesis "In my free time, I watch movies. On weekends, I usually exercise.", then celebrate. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the Hobbies lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Intro style MUST be Warm & Friendly. CRITICAL: Turn 1 = warm free-time vibe intro + teach free time + ask to repeat ONLY "free time" in the SAME turn — NEVER open with a chatty question that needs a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: watch movies vs listen to music quiz (expect watch movies), Pattern 1 (In my free time, I watch movies) + ask their free-time activity in Thai THEN the same question in English + apply In my free time, I..., Pattern 2 (On weekends, I usually exercise) + short tip about usually + synthesis "In my free time, I watch movies. On weekends, I usually exercise.", then celebrate. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
   },
   {
     lessonId: 'ee_about_me_pets',
@@ -3198,7 +3219,10 @@ Phase 1: Hook & Vocab (~1 min) — Funny & Playful (มุขไทย)
 
 Phase 2: Pattern 1 & Personalize (~1.5 min)
 3. Model Pattern 1 — ถ้าจะบอกว่า "ฉันมีแมว" ให้พูดว่า "I have a cat." ลองพูดตามครูนะครับ! (Repeat)
-4. Ask if they have a pet — "ตอนนี้มีสัตว์เลี้ยงที่บ้านไหมครับ? เลี้ยงตัวอะไรอยู่ หรือไม่ได้เลี้ยงครับ?" Accept a short answer. Soft, natural — not a forced menu. (Short answer)
+4. Ask if they have a pet — ask the question in Thai first, then immediately ask the SAME question in English.
+   Example: "ตอนนี้มีสัตว์เลี้ยงที่บ้านไหมครับ? เลี้ยงตัวอะไรอยู่ หรือไม่ได้เลี้ยงครับ? Do you have any pets?"
+   Accept short English answers (preferred) or Thai if needed, then map to English. Soft, natural — not a forced menu. (Short answer)
+   FORBIDDEN in this ask: answer scaffolds like "ลองตอบเป็นอังกฤษได้เลย เช่น ..." — only Thai Q + English Q.
 5. Apply — branch by THEIR answer:
    - Has a pet (dog/cat/pet or other): "งั้นพูดว่า I have a [animal] ครับ" (map fish/bird/etc. if needed)
    - No pets: "งั้นพูดว่า I don't have any pets. ครับ" — keep it light and easy, no pressure
@@ -3240,7 +3264,7 @@ Turn loop rules (critical — never stall the learner):
 - Focus on confidence and being understandable.
 - When Core Flow reaches Wrap-up & Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the Pets lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Intro style MUST be Funny & Playful with Thai-style humor (insight จริงจนจุก + ปู-ตบโบ๊ะบ๊ะไว + ไม่ตักเตือน — NOT English standup). CRITICAL: Turn 1 = joke/vibe intro + teach pet + ask to repeat ONLY "pet" in the SAME turn — NEVER open with "มีสัตว์เลี้ยงไหม?" / chatty questions that need a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: dog vs cat quiz (expect cat), Pattern 1 (I have a cat) + ask if they have a pet + apply I have a... OR I don\'t have any pets, Pattern 2 (My cat is very cute / My dog is very friendly) + synthesis matching their case (with pet: "I have a cat. My cat is very cute." / no pet: "I don\'t have any pets, but I like cats."), then celebrate. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the Pets lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Intro style MUST be Funny & Playful with Thai-style humor (insight จริงจนจุก + ปู-ตบโบ๊ะบ๊ะไว + ไม่ตักเตือน — NOT English standup). CRITICAL: Turn 1 = joke/vibe intro + teach pet + ask to repeat ONLY "pet" in the SAME turn — NEVER open with "มีสัตว์เลี้ยงไหม?" / chatty questions that need a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: dog vs cat quiz (expect cat), Pattern 1 (I have a cat) + ask if they have a pet in Thai THEN the same question in English + apply I have a... OR I don\'t have any pets, Pattern 2 (My cat is very cute / My dog is very friendly) + synthesis matching their case (with pet: "I have a cat. My cat is very cute." / no pet: "I don\'t have any pets, but I like cats."), then celebrate. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
   },
   {
     lessonId: 'ee_about_me_weather',
@@ -3347,7 +3371,10 @@ Phase 1: Hook & Vocab (~1 min) — Warm & Friendly
 
 Phase 2: Pattern 1 & Personalize (~1.5 min)
 3. Model Pattern 1 — ถ้าจะบอกว่า "วันนี้อากาศร้อนมาก" ให้พูดว่า "The weather is very hot today." ลองพูดตามครูนะครับ! (Repeat)
-4. Ask about today's weather near them — "แล้ววันนี้อากาศแถวบ้านคุณ [Name] เป็นยังไงบ้างครับ? เช่น hot, sunny หรือ rainy" Accept a short answer. Soft, natural — not a forced menu. (Short answer)
+4. Ask about today's weather near them — ask the question in Thai first, then immediately ask the SAME question in English.
+   Example: "แล้ววันนี้อากาศแถวบ้านคุณ [Name] เป็นยังไงบ้างครับ? How's the weather near you today?"
+   Accept short English answers (preferred) or Thai if needed, then map to English. Soft, natural — not a forced menu. (Short answer)
+   FORBIDDEN in this ask: answer scaffolds like "ลองตอบเป็นอังกฤษได้เลย เช่น ..." — only Thai Q + English Q.
 5. Apply — build from THEIR answer:
    - Chosen from options: "งั้นพูดว่า The weather is very [hot / sunny / rainy] today. ครับ"
    - Other weather: map into "The weather is very [adj] today." (e.g. cold, nice, windy) and ask them to say it
@@ -3387,7 +3414,7 @@ Turn loop rules (critical — never stall the learner):
 - Focus on confidence and being understandable.
 - When Core Flow reaches Wrap-up & Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the Weather lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Intro style MUST be Warm & Friendly. CRITICAL: Turn 1 = warm weather-vibe intro + teach weather + ask to repeat ONLY "weather" in the SAME turn — NEVER open with "วันนี้อากาศเป็นไง?" / chatty questions that need a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: hot vs sunny quiz (expect sunny), Pattern 1 (The weather is very hot today) + ask weather near their home by name + apply The weather is very ... today, Pattern 2 (I don\'t like rainy weather) + short ~5s tip about [adj] weather + synthesis "The weather is very hot today. I don\'t like rainy weather.", then celebrate and tease that next is Chapter Review. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the Weather lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Intro style MUST be Warm & Friendly. CRITICAL: Turn 1 = warm weather-vibe intro + teach weather + ask to repeat ONLY "weather" in the SAME turn — NEVER open with "วันนี้อากาศเป็นไง?" / chatty questions that need a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: hot vs sunny quiz (expect sunny), Pattern 1 (The weather is very hot today) + ask weather near their home by name in Thai THEN the same question in English + apply The weather is very ... today, Pattern 2 (I don\'t like rainy weather) + short ~5s tip about [adj] weather + synthesis "The weather is very hot today. I don\'t like rainy weather.", then celebrate and tease that next is Chapter Review. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
   },
   {
     lessonId: 'ee_about_me_review',
@@ -3503,7 +3530,7 @@ Review 5: Frequency Words (+ ~30% random chill follow-up)
 5. Prompt: "ปกติเวลาว่าง คุณ [Name] ออกกำลังกายบ่อยแค่ไหนครับ? เลือกคำว่า usually หรือ sometimes แล้วพูดประโยคเต็มดูครับ: 'In my free time, I [usually / sometimes] exercise.'"
    Expected: "In my free time, I usually exercise." OR "In my free time, I sometimes exercise."
    Accept either. (Recall)
-6. OPTIONAL (~30% chance, at most once): after they answer Review 5, ask ONE short chill follow-up in Thai-led style, e.g. "Nice! แล้วปกติเวลาว่างชอบทำอะไรเป็นหลักครับ?" / "What do you usually do?" — keep it light (1 turn only) to reduce exam feel, THEN go to Final Challenge. If not selected, go straight to Final. (Optional Short answer)
+6. OPTIONAL (~30% chance, at most once): after they answer Review 5, ask ONE short chill follow-up — Thai question first, then the SAME question in English, e.g. "Nice! แล้วปกติเวลาว่างชอบทำอะไรเป็นหลักครับ? What do you usually do in your free time?" — keep it light (1 turn only) to reduce exam feel, THEN go to Final Challenge. If not selected, go straight to Final. (Optional Short answer)
 
 Phase 6: Final Speaking Challenge (~1.5 min)
 7. Ask for a short self-introduction of AT LEAST 4 sentences. Soft scaffolds OK:
