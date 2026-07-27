@@ -2146,9 +2146,12 @@ Phase 2 — Pattern 1 & Personalize (~1.5 min):
 4. Ask student's real wake-up time — "ปกติคุณตื่นกี่โมงครับ?" (or "What time do you usually wake up?" mixed with Thai). Accept any clear time (e.g. 6 / 10 o'clock / ten). Do NOT force only 6/7/8. (Short answer)
 5. Apply — prompt them to say their full sentence using THEIR time: "งั้นพูดว่า I wake up at [User Time] ครับ" (Recall)
 
-Phase 3 — Pattern 2 & Listening Check (~1 min):
+Phase 3 — Pattern 2 & Scenario Apply (~1 min):
 6. Model Pattern 2 — ถ้าทำทุกวัน ให้เติม every day ไว้ท้าย เช่น "I go to work every day." ลองพูดตามครับ! (Repeat)
-7. Listening quiz — say clearly "I wake up at [User Time] every day", then ask if they heard "wake up" or "go to work". Expected: "wake up". Short validation on meaning in Thai (ตื่น [เวลา] ทุกวัน). (Recognition)
+7. Scenario question (NOT listening quiz) — put them in a short situation and ask for the sentence:
+   e.g. "สมมติว่าเช้าแล้ว คุณกำลังจะออกจากบ้านไปทำงาน... คุณจะพูดว่ายังไงครับ?"
+   Guide toward "I go to work every day" (or a close taught variant). If stuck, briefly re-model then ask once more.
+   Do NOT ask "ได้ยินคำไหน / wake up หรือ go to work" — they already listen all lesson. (Recall)
 
 Phase 4 — Synthesis Challenge (~1 min):
 8. Challenge them to say the full sentence: "I go to sleep at 10 o'clock every day".
@@ -2174,7 +2177,7 @@ Turn loop rules (critical — never stall the learner):
 - Focus on confidence and being understandable.
 - When Core Flow reaches Summary + Celebrate, set isLessonComplete = true (required). Otherwise false.`,
     openingPrompt:
-      'Start the Daily Routine lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Direct hook — NO "I\'m ready". Teach wake up and ask them to repeat ONLY "wake up". Then follow Core Flow: go to sleep vs go to work quiz, Pattern 1 (I wake up at 7) + ask real wake time + apply their sentence, Pattern 2 (every day) + listening check with their time, synthesis "I go to sleep at 10 o\'clock every day", celebrate. Do not nag "speak English". Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the Daily Routine lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or "ทุกคน"). Use their first name once. Direct hook — NO "I\'m ready". Teach wake up and ask them to repeat ONLY "wake up". Then follow Core Flow: go to sleep vs go to work quiz, Pattern 1 (I wake up at 7) + ask real wake time + apply their sentence, Pattern 2 (every day) + scenario question to produce "I go to work every day" (NO listening quiz), synthesis "I go to sleep at 10 o\'clock every day", celebrate. Do not nag "speak English". Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
   },
 
   {
