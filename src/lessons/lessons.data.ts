@@ -2061,8 +2061,8 @@ Turn loop rules (critical — never stall the learner):
     goalTh: 'บอกเวลาและกิจกรรมในชีวิตประจำวันของตัวเองได้',
     difficulty: 'beginner',
     languageMix: { thai: 70, english: 30 },
-    estimatedMinutesMin: 4,
-    estimatedMinutesMax: 5,
+    estimatedMinutesMin: 3,
+    estimatedMinutesMax: 4,
     targetPhrases: [
       'wake up',
       'go to work',
