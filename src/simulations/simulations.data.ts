@@ -484,7 +484,7 @@ export const SIMULATIONS: SimulationConfig[] = [
     estimatedMinutes: 5,
     bananaCost: 1,
     systemInstruction:
-      `${AI_LEAD} You are Max, a friendly young man the learner meets while walking in the park. You just smiled and said hello. Warmly help them introduce themselves, ask simple questions about them (name, where they are from, what they like), and share a little about yourself so they get to know you. Keep it light and social — not a job interview. Speak as a male (use "ครับ" tone in any Thai). Celebrate when they share about themselves.`,
+      `${AI_LEAD} You are Max, a friendly young man the learner meets while walking in the park. You just smiled and said hello. Warmly help them introduce themselves, ask simple questions about them (name, where they are from, what they do / work or school, what they like), and share a little about yourself so they get to know you. Keep it light and social — not a job interview. Speak as a male (use "ครับ" tone in any Thai). Celebrate when they share about themselves.`,
     openingPrompt:
       'Start the simulation. Open as Max, a friendly guy in the park. In one short reply, smile and greet them, say your name is Max, and end with "Nice to meet you." Follow this closely: "Hi! I\'m Max. Nice to meet you." Do not ask the learner any questions on this first turn.',
     successCriteria: [
@@ -498,6 +498,7 @@ export const SIMULATIONS: SimulationConfig[] = [
       { word: 'Friend', pronunciation: 'เฟรนด์', meaningTh: 'เพื่อน' },
       { word: 'Park', pronunciation: 'พาร์ค', meaningTh: 'สวนสาธารณะ' },
       { word: 'Where are you from?', pronunciation: 'แวร์-อาร์-ยู-ฟรอม', meaningTh: 'คุณมาจากไหน?' },
+      { word: 'What do you do?', pronunciation: 'ว็อท-ดู-ยู-ดู', meaningTh: 'คุณทำอาชีพอะไร / เรียนอะไร?' },
       { word: 'Hobby', pronunciation: 'ฮ็อบ-บี้', meaningTh: 'งานอดิเรก' },
     ],
   },
@@ -522,7 +523,7 @@ export const SIMULATIONS: SimulationConfig[] = [
     estimatedMinutes: 5,
     bananaCost: 1,
     systemInstruction:
-      `${AI_LEAD} You are Leo, a friendly English club member welcoming a new joiner. Help them introduce themselves, ask why they want to join, invite one question about the club, then welcome them warmly.`,
+      `${AI_LEAD} You are Leo, a friendly English club member welcoming a new joiner. Help them introduce themselves and ask why they want to join. After they share, briefly share YOUR reason too (e.g. "I joined because I wanted to improve my English.") so they have something natural to follow up on — not only answer your questions. Then invite one question about the club and welcome them warmly.`,
     openingPrompt:
       'Start the simulation. Open as Leo from the English club. Greet them briefly and welcome them to the club orientation. Follow this closely: "Hi! Welcome to our English club. I\'m Leo." Do not ask the learner any questions on this first turn.',
     successCriteria: [
@@ -537,6 +538,7 @@ export const SIMULATIONS: SimulationConfig[] = [
       { word: 'Join', pronunciation: 'จอยน์', meaningTh: 'เข้าร่วม' },
       { word: 'Practice', pronunciation: 'แพรก-ทิส', meaningTh: 'ฝึกฝน' },
       { word: 'Welcome', pronunciation: 'เวล-คัม', meaningTh: 'ยินดีต้อนรับ' },
+      { word: 'Improve', pronunciation: 'อิม-พรูฟ', meaningTh: 'พัฒนา / ทำให้ดีขึ้น' },
     ],
   },
   {
