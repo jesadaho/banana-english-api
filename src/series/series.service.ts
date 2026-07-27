@@ -55,7 +55,9 @@ export class SeriesService {
     completedIds: Set<string>,
     previousUnlockedNext: boolean,
   ): SeriesView {
-    const isUnlocked = series.order === 0 || previousUnlockedNext;
+    const hasProgress = series.missionIds.some((id) => completedIds.has(id));
+    const isUnlocked =
+      series.order === 0 || previousUnlockedNext || hasProgress;
     const missions: SeriesMissionView[] = series.missionIds.map(
       (simulationId, index) => ({
         simulationId,
