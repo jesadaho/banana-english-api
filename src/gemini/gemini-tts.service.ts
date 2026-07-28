@@ -32,6 +32,15 @@ export class GeminiTtsService {
   private readonly modelPool: GeminiModelPool;
   private readonly voice: string;
 
+  /** Teacher B style + digit pronunciation (Thai vs English by surrounding language). */
+  private static readonly stylePrompt =
+    'Speak warmly and naturally as Teacher B, a friendly English teacher for Thai learners. ' +
+    'Arabic digits inside Thai sentences: pronounce as Thai number words ' +
+    '(e.g. "เลข 18" → สิบแปด, "เลข 7" → เจ็ด). ' +
+    'Arabic digits inside English phrases, and English number words ' +
+    '(twelve, eighteen): pronounce in English. ' +
+    'Keep Thai text Thai and English words English.';
+
   constructor(private readonly config: ConfigService) {
     this.apiKey = this.config.get<string>('GEMINI_API_KEY') ?? '';
     const primary = this.config.get<string>(
@@ -122,7 +131,7 @@ export class GeminiTtsService {
 
     const body = {
       model,
-      input: `Speak warmly and naturally as Teacher B, a friendly English teacher for Thai learners:\n\n${trimmed}`,
+      input: `${GeminiTtsService.stylePrompt}:\n\n${trimmed}`,
       response_format: { type: 'audio' },
       generation_config: {
         speech_config: [{ voice: this.voice }],
@@ -297,7 +306,7 @@ export class GeminiTtsService {
   ): Promise<Buffer> {
     const body = {
       model,
-      input: `Speak warmly and naturally as Teacher B, a friendly English teacher for Thai learners:\n\n${trimmed}`,
+      input: `${GeminiTtsService.stylePrompt}:\n\n${trimmed}`,
       response_format: { type: 'audio' },
       generation_config: {
         speech_config: [{ voice: this.voice }],
@@ -358,7 +367,7 @@ export class GeminiTtsService {
         {
           parts: [
             {
-              text: `Speak warmly and naturally as Teacher B, a friendly English teacher for Thai learners:\n\n${trimmed}`,
+              text: `${GeminiTtsService.stylePrompt}:\n\n${trimmed}`,
             },
           ],
         },
