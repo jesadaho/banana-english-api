@@ -739,16 +739,28 @@ export class SessionsController {
         const userSession = await this.prisma.userSession.findUnique({
           where: { id: sessionId },
         });
-        if (
-          userSession &&
-          userSession.userId === req.user.id &&
-          !userSession.rewardsApplied
-        ) {
-          lessonRewards = await this.economy.applyLessonRewards({
-            userId: req.user.id,
-            sessionId,
-            lessonId: data.lessonConfig.lessonId,
-          });
+        if (userSession && userSession.userId === req.user.id) {
+          if (!userSession.rewardsApplied) {
+            lessonRewards = await this.economy.applyLessonRewards({
+              userId: req.user.id,
+              sessionId,
+              lessonId: data.lessonConfig.lessonId,
+            });
+          } else {
+            // Already saved — still return summary so clients can sync UI.
+            const user = await this.prisma.user.findUniqueOrThrow({
+              where: { id: req.user.id },
+            });
+            lessonRewards = {
+              xpEarned: userSession.xpEarned ?? 0,
+              seedsEarned: userSession.seedsEarned ?? 0,
+              ratingLabel: userSession.scoreLabel ?? 'Lesson Complete',
+              streakDays: user.streakDays,
+              previousStreakDays: user.streakDays,
+              balances: this.economy.toBalances(user),
+              isDailyMission: false,
+            };
+          }
         }
       }
 
