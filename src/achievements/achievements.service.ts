@@ -40,7 +40,7 @@ interface UserProgressSnapshot {
   lessonCount: number;
   missionCount: number;
   anySessionCount: number;
-  maxMissionScore: number;
+  clearPronunciationMission: boolean;
   noHintMission: boolean;
   englishOnlyMission: boolean;
   perfectMission: boolean;
@@ -139,13 +139,14 @@ export class AchievementsService {
         overallScore: true,
         hintsUsed: true,
         thaiMixUsed: true,
+        reportJson: true,
       },
     });
 
     const lessonIds = new Set<string>();
     const simulationIds = new Set<string>();
     let anySessionCount = 0;
-    let maxMissionScore = 0;
+    let clearPronunciationMission = false;
     let noHintMission = false;
     let englishOnlyMission = false;
     let perfectMission = false;
@@ -162,8 +163,10 @@ export class AchievementsService {
 
       if (session.sessionType === 'simulation') {
         const score = session.overallScore ?? 0;
-        if (score > maxMissionScore) maxMissionScore = score;
         if (score >= 100) perfectMission = true;
+        if (this.hasNoPronunciationIssues(session.reportJson)) {
+          clearPronunciationMission = true;
+        }
 
         // Only count tracked sessions (null = pre-achievements / unknown).
         if (session.hintsUsed != null && session.hintsUsed === 0) {
@@ -187,7 +190,7 @@ export class AchievementsService {
       lessonCount: lessonIds.size,
       missionCount: simulationIds.size,
       anySessionCount,
-      maxMissionScore,
+      clearPronunciationMission,
       noHintMission,
       englishOnlyMission,
       perfectMission,
@@ -216,8 +219,8 @@ export class AchievementsService {
           : 0;
         return Math.max(snapshot.streakDays, claimed);
       }
-      case 'max_mission_score':
-        return snapshot.maxMissionScore;
+      case 'clear_pronunciation_mission':
+        return snapshot.clearPronunciationMission ? 1 : 0;
       case 'no_hint_mission':
         return snapshot.noHintMission ? 1 : 0;
       case 'english_only_mission':
@@ -233,6 +236,21 @@ export class AchievementsService {
       default:
         return 0;
     }
+  }
+
+  private hasNoPronunciationIssues(reportJson: unknown): boolean {
+    if (
+      reportJson == null ||
+      typeof reportJson !== 'object' ||
+      Array.isArray(reportJson)
+    ) {
+      return false;
+    }
+
+    const pronunciationIssues = (
+      reportJson as Record<string, unknown>
+    ).pronunciationIssues;
+    return Array.isArray(pronunciationIssues) && pronunciationIssues.length === 0;
   }
 
   private buildItems(

@@ -16,7 +16,7 @@ export type AchievementMetric =
   | 'mission_count'
   | 'lesson_count'
   | 'streak_days'
-  | 'max_mission_score'
+  | 'clear_pronunciation_mission'
   | 'no_hint_mission'
   | 'english_only_mission'
   | 'perfect_mission'
@@ -263,11 +263,11 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
     rarity: 'rare',
     titleEn: 'Crystal Clear',
     titleTh: 'ชัดเจน',
-    descriptionEn: 'Score 90% or higher on a mission.',
-    descriptionTh: 'ได้คะแนนมิชชัน 90% ขึ้นไป',
+    descriptionEn: 'Complete a mission without any pronunciation mistakes.',
+    descriptionTh: 'จบมิชชันโดยออกเสียงไม่ผิดเลย',
     iconKey: 'crystal',
-    target: 90,
-    metric: 'max_mission_score',
+    target: 1,
+    metric: 'clear_pronunciation_mission',
   },
   {
     achievementId: 'no_hint_hero',
