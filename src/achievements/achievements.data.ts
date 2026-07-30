@@ -20,7 +20,9 @@ export type AchievementMetric =
   | 'no_hint_mission'
   | 'english_only_mission'
   | 'perfect_mission'
-  | 'simulation_completed';
+  | 'simulation_completed'
+  /** Progress = how many of matchIds the user has completed. */
+  | 'all_simulations_completed';
 
 export interface AchievementDef {
   achievementId: string;
@@ -306,58 +308,91 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
     metric: 'perfect_mission',
   },
 
-  // Explorer
+  // Explorer — one badge per mission category (complete every mission in it)
   {
-    achievementId: 'coffee_explorer',
+    achievementId: 'daily_life_explorer',
     category: 'explorer',
     rarity: 'common',
-    titleEn: 'Coffee Explorer',
-    titleTh: 'นักสำรวจกาแฟ',
-    descriptionEn: 'Complete the Coffee Order mission.',
-    descriptionTh: 'จบมิชชันสั่งกาแฟ',
+    titleEn: 'Daily Life Explorer',
+    titleTh: 'นักสำรวจชีวิตประจำวัน',
+    descriptionEn: 'Complete every Daily Life mission.',
+    descriptionTh: 'จบมิชชันในหมวดชีวิตประจำวันครบทุกอัน',
     iconKey: 'coffee_cup',
-    target: 1,
-    metric: 'simulation_completed',
-    matchIds: ['coffee_order_easy'],
+    target: 4,
+    metric: 'all_simulations_completed',
+    matchIds: [
+      'coffee_order_easy',
+      'restaurant_order_easy',
+      'movie_tickets_easy',
+      'pharmacy_easy',
+    ],
   },
   {
-    achievementId: 'restaurant_explorer',
+    achievementId: 'travel_explorer',
+    category: 'explorer',
+    rarity: 'rare',
+    titleEn: 'Travel Explorer',
+    titleTh: 'นักสำรวจการเดินทาง',
+    descriptionEn: 'Complete every Travel mission.',
+    descriptionTh: 'จบมิชชันในหมวดการเดินทางครบทุกอัน',
+    iconKey: 'airplane',
+    target: 3,
+    metric: 'all_simulations_completed',
+    matchIds: [
+      'airport_checkin_easy',
+      'taxi_ride_easy',
+      'hotel_checkin_easy',
+    ],
+  },
+  {
+    achievementId: 'work_career_explorer',
+    category: 'explorer',
+    rarity: 'rare',
+    titleEn: 'Work Explorer',
+    titleTh: 'นักสำรวจงานและอาชีพ',
+    descriptionEn: 'Complete every Work & Career mission.',
+    descriptionTh: 'จบมิชชันในหมวดงานและอาชีพครบทุกอัน',
+    iconKey: 'briefcase',
+    target: 4,
+    metric: 'all_simulations_completed',
+    matchIds: [
+      'meet_client_easy',
+      'business_meeting_easy',
+      'business_phone_easy',
+      'small_talk_easy',
+    ],
+  },
+  {
+    achievementId: 'social_explorer',
     category: 'explorer',
     rarity: 'common',
-    titleEn: 'Restaurant Explorer',
-    titleTh: 'นักสำรวจร้านอาหาร',
-    descriptionEn: 'Complete the Restaurant Order mission.',
-    descriptionTh: 'จบมิชชันสั่งอาหาร',
-    iconKey: 'fork_spoon',
-    target: 1,
-    metric: 'simulation_completed',
-    matchIds: ['restaurant_order_easy'],
+    titleEn: 'Social Explorer',
+    titleTh: 'นักสำรวจสังคม',
+    descriptionEn: 'Complete every Social mission.',
+    descriptionTh: 'จบมิชชันในหมวดสังคมครบทุกอัน',
+    iconKey: 'two_speech_bubbles',
+    target: 2,
+    metric: 'all_simulations_completed',
+    matchIds: [
+      'meet_new_friend_easy',
+      'join_english_club_easy',
+    ],
   },
   {
-    achievementId: 'airport_explorer',
+    achievementId: 'survival_explorer',
     category: 'explorer',
-    rarity: 'rare',
-    titleEn: 'Airport Explorer',
-    titleTh: 'นักสำรวจสนามบิน',
-    descriptionEn: 'Complete the Airport Check-in mission.',
-    descriptionTh: 'จบมิชชันเช็กอินสนามบิน',
-    iconKey: 'airplane',
-    target: 1,
-    metric: 'simulation_completed',
-    matchIds: ['airport_checkin_easy'],
-  },
-  {
-    achievementId: 'hotel_explorer',
-    category: 'explorer',
-    rarity: 'rare',
-    titleEn: 'Hotel Explorer',
-    titleTh: 'นักสำรวจโรงแรม',
-    descriptionEn: 'Complete the Hotel Check-in mission.',
-    descriptionTh: 'จบมิชชันเช็กอินโรงแรม',
-    iconKey: 'hotel_bell',
-    target: 1,
-    metric: 'simulation_completed',
-    matchIds: ['hotel_checkin_easy'],
+    rarity: 'epic',
+    titleEn: 'Survival Explorer',
+    titleTh: 'นักสำรวจเอาตัวรอด',
+    descriptionEn: 'Complete every Survival mission.',
+    descriptionTh: 'จบมิชชันในหมวดเอาตัวรอดครบทุกอัน',
+    iconKey: 'emergency',
+    target: 2,
+    metric: 'all_simulations_completed',
+    matchIds: [
+      'doctor_visit_easy',
+      'ask_help_easy',
+    ],
   },
 ];
 

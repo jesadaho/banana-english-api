@@ -233,6 +233,11 @@ export class AchievementsService {
           ? 1
           : 0;
       }
+      case 'all_simulations_completed': {
+        const ids = def.matchIds ?? [];
+        return ids.filter((id) => snapshot.completedSimulationIds.has(id))
+          .length;
+      }
       default:
         return 0;
     }
