@@ -180,6 +180,7 @@ export class UsersService {
 
     const updated = await this.prisma.$transaction(async (tx) => {
       await tx.userAchievement.deleteMany({ where: { userId: user.id } });
+      await tx.userOutfit.deleteMany({ where: { userId: user.id } });
       await tx.userSession.deleteMany({ where: { userId: user.id } });
       return tx.user.update({
         where: { id: user.id },

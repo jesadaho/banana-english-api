@@ -39,6 +39,12 @@ export interface AchievementDef {
   metric: AchievementMetric;
   /** For explorer / all_*_completed metrics (simulation or lesson ids). */
   matchIds?: string[];
+  /** Banana seeds granted when the user claims this badge. */
+  rewardSeeds?: number;
+  /** Bananas granted when the user claims this badge. */
+  rewardBananas?: number;
+  /** Outfit id (see outfit-catalog) granted when the user claims this badge. */
+  rewardOutfitId?: string;
 }
 
 export const ACHIEVEMENT_CATEGORY_ORDER: AchievementCategory[] = [
@@ -91,6 +97,7 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
     iconKey: 'hand',
     target: 1,
     metric: 'onboarding_completed',
+    rewardSeeds: 20,
   },
   {
     achievementId: 'first_lesson',
@@ -103,6 +110,7 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
     iconKey: 'open_book',
     target: 1,
     metric: 'lesson_count',
+    rewardSeeds: 20,
   },
   {
     achievementId: 'first_mission',
@@ -115,6 +123,7 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
     iconKey: 'target',
     target: 1,
     metric: 'mission_count',
+    rewardBananas: 1,
   },
   {
     achievementId: 'beginner',
@@ -128,6 +137,8 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
     target: BASICS_LESSON_IDS.length,
     metric: 'all_lessons_completed',
     matchIds: BASICS_LESSON_IDS,
+    rewardSeeds: 100,
+    rewardOutfitId: 'banana_cap',
   },
 
   // Learning
@@ -142,6 +153,7 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
     iconKey: 'open_book',
     target: 3,
     metric: 'lesson_count',
+    rewardSeeds: 30,
   },
   {
     achievementId: 'bookworm',
@@ -154,6 +166,7 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
     iconKey: 'stack_of_books',
     target: 10,
     metric: 'lesson_count',
+    rewardSeeds: 50,
   },
   {
     achievementId: 'scholar',
@@ -166,6 +179,7 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
     iconKey: 'graduation_cap',
     target: 20,
     metric: 'lesson_count',
+    rewardSeeds: 100,
   },
   {
     achievementId: 'banana_graduate',
@@ -178,6 +192,7 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
     iconKey: 'trophy',
     target: TOTAL_LESSONS,
     metric: 'lesson_count',
+    rewardOutfitId: 'graduation_cap',
   },
 
   // Speaking
@@ -192,6 +207,7 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
     iconKey: 'smile',
     target: 1,
     metric: 'any_session_count',
+    rewardSeeds: 20,
   },
   {
     achievementId: 'talkative',
@@ -204,6 +220,7 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
     iconKey: 'two_speech_bubbles',
     target: 10,
     metric: 'any_session_count',
+    rewardSeeds: 50,
   },
   {
     achievementId: 'smooth_speaker',
@@ -216,6 +233,7 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
     iconKey: 'microphone',
     target: 25,
     metric: 'any_session_count',
+    rewardSeeds: 100,
   },
   {
     achievementId: 'conversation_master',
@@ -228,6 +246,7 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
     iconKey: 'crown',
     target: 50,
     metric: 'any_session_count',
+    rewardOutfitId: 'headphones',
   },
 
   // Consistency
@@ -242,6 +261,7 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
     iconKey: 'fire_3',
     target: 3,
     metric: 'streak_days',
+    rewardSeeds: 30,
   },
   {
     achievementId: 'streak_7',
@@ -254,6 +274,7 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
     iconKey: 'fire_7',
     target: 7,
     metric: 'streak_days',
+    rewardSeeds: 50,
   },
   {
     achievementId: 'streak_14',
@@ -266,6 +287,7 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
     iconKey: 'fire_14',
     target: 14,
     metric: 'streak_days',
+    rewardSeeds: 100,
   },
   {
     achievementId: 'streak_30',
@@ -278,6 +300,7 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
     iconKey: 'fire_30',
     target: 30,
     metric: 'streak_days',
+    rewardOutfitId: 'flame_jacket',
   },
 
   // Skill
@@ -292,6 +315,7 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
     iconKey: 'crystal',
     target: 1,
     metric: 'clear_pronunciation_mission',
+    rewardSeeds: 50,
   },
   {
     achievementId: 'no_hint_hero',
@@ -304,6 +328,7 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
     iconKey: 'shield_check',
     target: 1,
     metric: 'no_hint_mission',
+    rewardSeeds: 50,
   },
   {
     achievementId: 'english_only',
@@ -316,6 +341,7 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
     iconKey: 'speech_bubble_en',
     target: 1,
     metric: 'english_only_mission',
+    rewardSeeds: 50,
   },
   {
     achievementId: 'perfect_mission',
@@ -326,8 +352,9 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
     descriptionEn: 'Score 100% on a mission.',
     descriptionTh: 'ได้คะแนนมิชชันเต็ม 100%',
     iconKey: 'bullseye',
-    target: 100,
+    target: 1,
     metric: 'perfect_mission',
+    rewardSeeds: 50,
   },
 
   // Explorer — one badge per mission category (complete every mission in it)
@@ -348,6 +375,7 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
       'movie_tickets_easy',
       'pharmacy_easy',
     ],
+    rewardSeeds: 50,
   },
   {
     achievementId: 'travel_explorer',
@@ -365,6 +393,7 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
       'taxi_ride_easy',
       'hotel_checkin_easy',
     ],
+    rewardSeeds: 50,
   },
   {
     achievementId: 'work_career_explorer',
@@ -383,6 +412,7 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
       'business_phone_easy',
       'small_talk_easy',
     ],
+    rewardSeeds: 50,
   },
   {
     achievementId: 'social_explorer',
@@ -399,6 +429,7 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
       'meet_new_friend_easy',
       'join_english_club_easy',
     ],
+    rewardSeeds: 50,
   },
   {
     achievementId: 'survival_explorer',
@@ -415,6 +446,7 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
       'doctor_visit_easy',
       'ask_help_easy',
     ],
+    rewardSeeds: 50,
   },
 ];
 

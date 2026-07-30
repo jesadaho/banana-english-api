@@ -198,6 +198,42 @@ export interface LearningStatsResponse {
   longestStreakDays: number;
 }
 
+export interface AchievementRewardResponse {
+  seeds: number;
+  bananas: number;
+  outfitId: string | null;
+  outfitNameEn: string | null;
+  outfitNameTh: string | null;
+  outfitIconKey: string | null;
+}
+
+export interface OutfitItemResponse {
+  outfitId: string;
+  slot: string;
+  rarity: string;
+  nameEn: string;
+  nameTh: string;
+  descriptionEn: string;
+  descriptionTh: string;
+  iconKey: string;
+  sourceAchievementId: string | null;
+  isOwned: boolean;
+  acquiredAt: string | null;
+}
+
+export interface OutfitsResponse {
+  ownedCount: number;
+  totalCount: number;
+  items: OutfitItemResponse[];
+}
+
+export interface AchievementClaimResponse {
+  achievementId: string;
+  reward: AchievementRewardResponse;
+  outfit: OutfitItemResponse | null;
+  balances: { bananas: number; xp: number; seeds: number };
+}
+
 export interface GptIntroReport {
   userName: string;
   levelTitle: string;

@@ -1,5 +1,17 @@
-import { Injectable, Logger } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
+import { Currency, Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
+import {
+  OutfitItemView,
+  getOutfitById,
+  toOutfitItemView,
+} from '../outfits/outfit-catalog';
 import {
   ACHIEVEMENT_CATALOG,
   ACHIEVEMENT_CATEGORY_ORDER,
@@ -7,8 +19,18 @@ import {
   AchievementCategory,
   AchievementDef,
   AchievementRarity,
+  getAchievementById,
   getAllAchievements,
 } from './achievements.data';
+
+export interface AchievementRewardView {
+  seeds: number;
+  bananas: number;
+  outfitId: string | null;
+  outfitNameEn: string | null;
+  outfitNameTh: string | null;
+  outfitIconKey: string | null;
+}
 
 export interface AchievementItemView {
   achievementId: string;
@@ -23,14 +45,31 @@ export interface AchievementItemView {
   progress: number;
   isUnlocked: boolean;
   unlockedAt: string | null;
+  isClaimed: boolean;
+  claimedAt: string | null;
+  reward: AchievementRewardView | null;
 }
 
 export interface AchievementsView {
   unlockedCount: number;
   totalCount: number;
+  /** Unlocked badges whose reward has not been claimed yet. */
+  claimableCount: number;
   items: AchievementItemView[];
   /** Newly unlocked in this sync call (empty on GET if nothing new). */
   newlyUnlocked: AchievementItemView[];
+}
+
+export interface AchievementClaimResult {
+  achievementId: string;
+  reward: AchievementRewardView;
+  outfit: OutfitItemView | null;
+  balances: { bananas: number; xp: number; seeds: number };
+}
+
+interface UnlockState {
+  unlockedAt: Date;
+  claimedAt: Date | null;
 }
 
 interface UserProgressSnapshot {
@@ -58,11 +97,9 @@ export class AchievementsService {
     const snapshot = await this.buildSnapshot(userId);
     const existing = await this.prisma.userAchievement.findMany({
       where: { userId },
-      select: { achievementId: true, unlockedAt: true },
+      select: { achievementId: true },
     });
-    const existingMap = new Map(
-      existing.map((row) => [row.achievementId, row.unlockedAt]),
-    );
+    const existingMap = new Set(existing.map((row) => row.achievementId));
 
     const toUnlock: string[] = [];
     for (const def of ACHIEVEMENT_CATALOG) {
@@ -85,10 +122,13 @@ export class AchievementsService {
 
     const unlockedRows = await this.prisma.userAchievement.findMany({
       where: { userId },
-      select: { achievementId: true, unlockedAt: true },
+      select: { achievementId: true, unlockedAt: true, claimedAt: true },
     });
-    const unlockedMap = new Map(
-      unlockedRows.map((row) => [row.achievementId, row.unlockedAt]),
+    const unlockedMap = new Map<string, UnlockState>(
+      unlockedRows.map((row) => [
+        row.achievementId,
+        { unlockedAt: row.unlockedAt, claimedAt: row.claimedAt },
+      ]),
     );
 
     const items = this.buildItems(snapshot, unlockedMap);
@@ -100,6 +140,9 @@ export class AchievementsService {
     return {
       unlockedCount: items.filter((i) => i.isUnlocked).length,
       totalCount: items.length,
+      claimableCount: items.filter(
+        (i) => i.isUnlocked && !i.isClaimed && i.reward != null,
+      ).length,
       items,
       newlyUnlocked,
     };
@@ -116,6 +159,125 @@ export class AchievementsService {
       );
       return null;
     }
+  }
+
+  async claimReward(
+    userId: string,
+    achievementId: string,
+  ): Promise<AchievementClaimResult> {
+    const def = getAchievementById(achievementId);
+    if (!def) {
+      throw new NotFoundException('Unknown achievement');
+    }
+
+    const reward = this.rewardView(def);
+    if (!reward) {
+      throw new BadRequestException('Achievement has no reward');
+    }
+
+    return this.prisma.$transaction(async (tx) => {
+      const row = await tx.userAchievement.findUnique({
+        where: { userId_achievementId: { userId, achievementId } },
+        select: { claimedAt: true },
+      });
+      if (!row) {
+        throw new BadRequestException('Achievement is not unlocked yet');
+      }
+      if (row.claimedAt) {
+        throw new ConflictException('Reward already claimed');
+      }
+
+      // Guards against a double tap racing two claims through at once.
+      const marked = await tx.userAchievement.updateMany({
+        where: { userId, achievementId, claimedAt: null },
+        data: { claimedAt: new Date() },
+      });
+      if (marked.count === 0) {
+        throw new ConflictException('Reward already claimed');
+      }
+
+      const userUpdate: Prisma.UserUpdateInput = {};
+      if (reward.seeds > 0) {
+        userUpdate.bananaSeedBalance = { increment: reward.seeds };
+        await tx.economyTransaction.create({
+          data: {
+            userId,
+            currency: Currency.BANANA_SEED,
+            amount: reward.seeds,
+            source: 'achievement_reward',
+            referenceId: achievementId,
+          },
+        });
+      }
+      if (reward.bananas > 0) {
+        userUpdate.bananaBalance = { increment: reward.bananas };
+        await tx.economyTransaction.create({
+          data: {
+            userId,
+            currency: Currency.BANANA,
+            amount: reward.bananas,
+            source: 'achievement_reward',
+            referenceId: achievementId,
+          },
+        });
+      }
+
+      const user =
+        Object.keys(userUpdate).length > 0
+          ? await tx.user.update({ where: { id: userId }, data: userUpdate })
+          : await tx.user.findUniqueOrThrow({ where: { id: userId } });
+
+      let outfit: OutfitItemView | null = null;
+      if (reward.outfitId) {
+        const outfitDef = getOutfitById(reward.outfitId);
+        if (outfitDef) {
+          const owned = await tx.userOutfit.upsert({
+            where: {
+              userId_outfitId: { userId, outfitId: outfitDef.outfitId },
+            },
+            create: {
+              userId,
+              outfitId: outfitDef.outfitId,
+              sourceAchievementId: achievementId,
+            },
+            update: {},
+          });
+          outfit = toOutfitItemView(outfitDef, owned.acquiredAt);
+        }
+      }
+
+      return {
+        achievementId,
+        reward,
+        outfit,
+        balances: {
+          bananas: user.bananaBalance,
+          xp: user.xpBalance,
+          seeds: user.bananaSeedBalance,
+        },
+      };
+    });
+  }
+
+  private rewardView(def: AchievementDef): AchievementRewardView | null {
+    const seeds = def.rewardSeeds ?? 0;
+    const bananas = def.rewardBananas ?? 0;
+    const outfitDef = def.rewardOutfitId
+      ? getOutfitById(def.rewardOutfitId)
+      : undefined;
+
+    if (seeds === 0 && bananas === 0 && !outfitDef) {
+      return null;
+    }
+
+    return {
+      seeds,
+      bananas,
+      outfitId: outfitDef?.outfitId ?? null,
+      outfitNameEn: outfitDef?.nameEn ?? null,
+      outfitNameTh: outfitDef?.nameTh ?? null,
+      outfitIconKey: outfitDef?.iconKey ?? null,
+    };
   }
 
   private async buildSnapshot(userId: string): Promise<UserProgressSnapshot> {
@@ -266,15 +428,15 @@ export class AchievementsService {
 
   private buildItems(
     snapshot: UserProgressSnapshot,
-    unlockedMap: Map<string, Date>,
+    unlockedMap: Map<string, UnlockState>,
   ): AchievementItemView[] {
     const items = getAllAchievements().map((def) => {
       const rawProgress = this.metricProgress(def, snapshot);
-      const isUnlocked = unlockedMap.has(def.achievementId);
+      const state = unlockedMap.get(def.achievementId);
+      const isUnlocked = state != null;
       const progress = isUnlocked
         ? def.target
         : Math.min(rawProgress, def.target);
-      const unlockedAt = unlockedMap.get(def.achievementId);
 
       return {
         achievementId: def.achievementId,
@@ -288,7 +450,10 @@ export class AchievementsService {
         target: def.target,
         progress,
         isUnlocked,
-        unlockedAt: unlockedAt ? unlockedAt.toISOString() : null,
+        unlockedAt: state ? state.unlockedAt.toISOString() : null,
+        isClaimed: state?.claimedAt != null,
+        claimedAt: state?.claimedAt ? state.claimedAt.toISOString() : null,
+        reward: this.rewardView(def),
       };
     });
 
