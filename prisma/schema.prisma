@@ -40,6 +40,7 @@ model User {
   transactions            EconomyTransaction[]
   sessions                UserSession[]
   notificationLogs        NotificationLog[]
+  achievements            UserAchievement[]
 
   createdAt               DateTime  @default(now())
   updatedAt               DateTime  @updatedAt
@@ -97,10 +98,26 @@ model UserSession {
   seedsEarned     Int?
   durationSeconds Int?
   reportJson      Json?
+  /** Hint sheet opens this session (null = not tracked / pre-achievements). */
+  hintsUsed       Int?
+  /** True if Thai Mix was used on any turn (null = not tracked). */
+  thaiMixUsed     Boolean?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@index([userId, completedAt])
   @@index([userId, lessonId])
+}
+
+model UserAchievement {
+  id            String   @id @default(uuid())
+  userId        String
+  achievementId String
+  unlockedAt    DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, achievementId])
+  @@index([userId])
 }

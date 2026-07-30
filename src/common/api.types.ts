@@ -142,6 +142,15 @@ export interface MissionResultResponse extends GptReport {
   goldBananasEarned?: number;
   checkpointSummary?: Record<string, boolean>;
   rewards?: SessionRewardSummary;
+  /** Achievements unlocked by this session (if any). */
+  newAchievements?: Array<{
+    achievementId: string;
+    titleEn: string;
+    titleTh: string;
+    iconKey: string;
+    category: string;
+    rarity: string;
+  }>;
   simulationId?: string;
   seriesId?: string;
   seriesTitleEn?: string;

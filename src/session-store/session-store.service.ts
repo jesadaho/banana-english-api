@@ -90,6 +90,10 @@ export interface SessionData {
   /** First name for 1:1 tutor address (training sessions). */
   learnerFirstName?: string;
   freeTalk?: FreeTalkSessionState;
+  /** Hint sheet opens this session. */
+  hintsUsed: number;
+  /** True if Thai Mix was used on any turn. */
+  thaiMixUsed: boolean;
 }
 
 @Injectable()
@@ -126,6 +130,8 @@ export class SessionStoreService {
       turnCounter: 0,
       endedAt: null,
       introReport: null,
+      hintsUsed: 0,
+      thaiMixUsed: false,
       freeTalk: options?.freeTalk
         ? {
             languageLevel: options.freeTalk.languageLevel,
@@ -164,6 +170,8 @@ export class SessionStoreService {
       endedAt: null,
       introReport: null,
       simulationConfig: config,
+      hintsUsed: 0,
+      thaiMixUsed: false,
     };
     this.sessions.set(sessionId, data);
     return data;
@@ -191,6 +199,8 @@ export class SessionStoreService {
       introReport: null,
       lessonConfig: config,
       learnerFirstName,
+      hintsUsed: 0,
+      thaiMixUsed: false,
     };
     this.sessions.set(sessionId, data);
     return data;
@@ -245,6 +255,16 @@ export class SessionStoreService {
   markEnded(sessionId: string): void {
     const data = this.require(sessionId);
     data.endedAt = new Date();
+  }
+
+  markHintUsed(sessionId: string): void {
+    const data = this.require(sessionId);
+    data.hintsUsed += 1;
+  }
+
+  markThaiMixUsed(sessionId: string): void {
+    const data = this.require(sessionId);
+    data.thaiMixUsed = true;
   }
 
   setIntroReport(sessionId: string, report: GptIntroReport): void {

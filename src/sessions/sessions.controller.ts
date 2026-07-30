@@ -59,6 +59,7 @@ import { getMissionReward, getStarRating } from '../economy/economy.constants';
 import { getUserLocalTime, isSameDateKey } from '../common/timezone.util';
 import { getSeriesForSimulation } from '../series/series.data';
 import { ActivityService } from '../users/activity.service';
+import { AchievementsService } from '../achievements/achievements.service';
 
 type AuthedRequest = { user: User };
 
@@ -75,6 +76,7 @@ export class SessionsController {
     private readonly seriesService: SeriesService,
     private readonly lessonsService: LessonsService,
     private readonly activity: ActivityService,
+    private readonly achievements: AchievementsService,
   ) {}
 
   @Post()
@@ -389,6 +391,7 @@ export class SessionsController {
     let userText = originalText;
     try {
       if (body.thaiMixEnabled) {
+        this.sessionStore.markThaiMixUsed(sessionId);
         userText = await this.chat.correctThaiMix(originalText);
       }
 
@@ -480,6 +483,7 @@ export class SessionsController {
     let userText = originalText;
     try {
       if (body.thaiMixEnabled) {
+        this.sessionStore.markThaiMixUsed(sessionId);
         userText = await this.chat.correctThaiMix(originalText);
       }
 
@@ -577,6 +581,7 @@ export class SessionsController {
     let userText = originalText;
     try {
       if (body.thaiMixEnabled) {
+        this.sessionStore.markThaiMixUsed(sessionId);
         userText = await this.chat.correctThaiMix(originalText);
       }
 
@@ -699,6 +704,8 @@ export class SessionsController {
       throw new NotFoundException('Session not found');
     }
 
+    this.sessionStore.markHintUsed(sessionId);
+
     try {
       const hints = await this.chat.generateHints(data.turns);
       if (hints.length > 0) {
@@ -735,6 +742,10 @@ export class SessionsController {
 
     if (data.session.sessionType === 'training' && data.lessonConfig) {
       let lessonRewards;
+      let newAchievements: Awaited<
+        ReturnType<AchievementsService['syncForUser']>
+      >['newlyUnlocked'] = [];
+
       if (data.session.isComplete) {
         const userSession = await this.prisma.userSession.findUnique({
           where: { id: sessionId },
@@ -761,10 +772,27 @@ export class SessionsController {
               isDailyMission: false,
             };
           }
+
+          try {
+            await this.prisma.userSession.update({
+              where: { id: sessionId },
+              data: {
+                hintsUsed: data.hintsUsed,
+                thaiMixUsed: data.thaiMixUsed,
+              },
+            });
+          } catch {
+            // Non-fatal — achievements still sync from rewards.
+          }
+
+          const sync = await this.achievements.syncForUserSafe(req.user.id);
+          if (sync) {
+            newAchievements = sync.newlyUnlocked;
+          }
         }
       }
 
-      return { status: 'ended', lessonRewards };
+      return { status: 'ended', lessonRewards, newAchievements };
     }
 
     if (data.session.topicId === 'free_talk') {
@@ -899,6 +927,10 @@ export class SessionsController {
           report.turnFeedback,
         );
 
+        let newAchievements: Awaited<
+          ReturnType<AchievementsService['syncForUser']>
+        >['newlyUnlocked'] = [];
+
         if (userSession && userSession.userId === req.user.id) {
           try {
             await this.prisma.userSession.update({
@@ -910,6 +942,8 @@ export class SessionsController {
                 xpEarned,
                 seedsEarned,
                 durationSeconds: duration,
+                hintsUsed: data.hintsUsed,
+                thaiMixUsed: data.thaiMixUsed,
                 reportJson: JSON.parse(
                   JSON.stringify({
                     feedbackEn: report.feedbackEn,
@@ -933,6 +967,11 @@ export class SessionsController {
             // if report persistence fails (e.g. pending migration).
             console.error('Failed to persist session report', persistErr);
           }
+
+          const sync = await this.achievements.syncForUserSafe(req.user.id);
+          if (sync) {
+            newAchievements = sync.newlyUnlocked;
+          }
         }
 
         return {
@@ -954,6 +993,7 @@ export class SessionsController {
           goldBananasEarned: xpEarned,
           checkpointSummary: checkpoints,
           rewards,
+          newAchievements,
           simulationId: config.simulationId,
           seriesId: series?.seriesId,
           seriesTitleEn: series?.titleEn,
