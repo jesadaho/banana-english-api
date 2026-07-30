@@ -774,11 +774,23 @@ export class SessionsController {
           }
 
           try {
+            const ended = data.endedAt ?? new Date();
+            const started = new Date(data.session.startedAt);
+            const durationSeconds = Math.max(
+              0,
+              Math.floor((ended.getTime() - started.getTime()) / 1000),
+            );
+            const learnerTurnCount = data.turns.filter(
+              (t) => t.speaker === 'user',
+            ).length;
+
             await this.prisma.userSession.update({
               where: { id: sessionId },
               data: {
                 hintsUsed: data.hintsUsed,
                 thaiMixUsed: data.thaiMixUsed,
+                durationSeconds,
+                learnerTurnCount,
               },
             });
           } catch {
@@ -806,6 +818,9 @@ export class SessionsController {
           duration,
           data.session.durationLimitSeconds ?? duration,
         );
+        const learnerTurnCount = data.turns.filter(
+          (t) => t.speaker === 'user',
+        ).length;
         const summary = await this.chat.generateFreeTalkReport(
           data.turns,
           duration,
@@ -818,6 +833,29 @@ export class SessionsController {
           endedReport: summary,
         });
         await this.users.setFreeTalkMemories(req.user.id, summary.memories);
+
+        try {
+          await this.prisma.userSession.upsert({
+            where: { id: sessionId },
+            create: {
+              id: sessionId,
+              userId: req.user.id,
+              sessionType: 'free_talk',
+              rewardsApplied: false,
+              completedAt: ended,
+              durationSeconds: duration,
+              learnerTurnCount,
+            },
+            update: {
+              completedAt: ended,
+              durationSeconds: duration,
+              learnerTurnCount,
+            },
+          });
+        } catch {
+          // Non-fatal — free talk summary still returns to the client.
+        }
+
         return {
           status: 'ended',
           conversationSummaryEn: summary.conversationSummaryEn,
@@ -942,6 +980,8 @@ export class SessionsController {
                 xpEarned,
                 seedsEarned,
                 durationSeconds: duration,
+                learnerTurnCount: textTurns.filter((t) => t.speaker === 'user')
+                  .length,
                 hintsUsed: data.hintsUsed,
                 thaiMixUsed: data.thaiMixUsed,
                 reportJson: JSON.parse(

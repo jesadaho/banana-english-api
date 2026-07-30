@@ -191,6 +191,13 @@ export interface ActivityDaysResponse {
   dates: string[];
 }
 
+export interface LearningStatsResponse {
+  lessonsCompleted: number;
+  sentencesSpoken: number;
+  minutesPracticed: number;
+  longestStreakDays: number;
+}
+
 export interface GptIntroReport {
   userName: string;
   levelTitle: string;

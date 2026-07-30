@@ -188,6 +188,7 @@ export class UsersService {
           lastSessionDate: null,
           dailyMissionUsedDate: null,
           streakMilestonesClaimed: [],
+          longestStreakDays: 0,
         },
       });
     });

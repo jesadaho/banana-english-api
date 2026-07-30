@@ -45,6 +45,7 @@ interface UserProgressSnapshot {
   englishOnlyMission: boolean;
   perfectMission: boolean;
   completedSimulationIds: Set<string>;
+  completedLessonIds: Set<string>;
 }
 
 @Injectable()
@@ -195,6 +196,7 @@ export class AchievementsService {
       englishOnlyMission,
       perfectMission,
       completedSimulationIds: simulationIds,
+      completedLessonIds: lessonIds,
     };
   }
 
@@ -237,6 +239,10 @@ export class AchievementsService {
         const ids = def.matchIds ?? [];
         return ids.filter((id) => snapshot.completedSimulationIds.has(id))
           .length;
+      }
+      case 'all_lessons_completed': {
+        const ids = def.matchIds ?? [];
+        return ids.filter((id) => snapshot.completedLessonIds.has(id)).length;
       }
       default:
         return 0;

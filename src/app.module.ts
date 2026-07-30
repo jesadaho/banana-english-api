@@ -12,6 +12,7 @@ import { SimulationsModule } from './simulations/simulations.module';
 import { SeriesModule } from './series/series.module';
 import { LessonsModule } from './lessons/lessons.module';
 import { AchievementsModule } from './achievements/achievements.module';
+import { StatsModule } from './stats/stats.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { EconomyModule } from './economy/economy.module';
 import { UsersModule } from './users/users.module';
@@ -36,6 +37,7 @@ import { NotificationsModule } from './notifications/notifications.module';
     SeriesModule,
     LessonsModule,
     AchievementsModule,
+    StatsModule,
   ],
 })
 export class AppModule {}

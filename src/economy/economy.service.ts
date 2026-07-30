@@ -333,6 +333,7 @@ export class EconomyService {
           xpBalance: { increment: xpEarned },
           bananaSeedBalance: { increment: seedsEarned },
           streakDays,
+          longestStreakDays: Math.max(user.longestStreakDays, streakDays),
           lastSessionDate: parseDateKey(todayKey),
         },
       });
@@ -405,6 +406,10 @@ export class EconomyService {
         const streakUpdate = this.computeStreakUpdate(user, todayKey);
         streakDays = streakUpdate.streakDays;
         updateData.streakDays = streakDays;
+        updateData.longestStreakDays = Math.max(
+          user.longestStreakDays,
+          streakDays,
+        );
         updateData.lastSessionDate = parseDateKey(todayKey);
         updateData.dailyMissionUsedDate = parseDateKey(todayKey);
 

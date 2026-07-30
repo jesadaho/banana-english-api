@@ -28,6 +28,8 @@ model User {
   streakDays              Int       @default(0)
   lastSessionDate         DateTime? @db.Date
   streakMilestonesClaimed Int[]     @default([])
+  /** Highest streakDays ever reached (survives streak resets). */
+  longestStreakDays       Int       @default(0)
 
   lastDailyBananaDate     DateTime? @db.Date
   lastAppOpenDate         DateTime? @db.Date
@@ -102,6 +104,8 @@ model UserSession {
   hintsUsed       Int?
   /** True if Thai Mix was used on any turn (null = not tracked). */
   thaiMixUsed     Boolean?
+  /** Learner (user) turns this session (null = not tracked / pre-stats). */
+  learnerTurnCount Int?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 

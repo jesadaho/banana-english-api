@@ -21,8 +21,10 @@ export type AchievementMetric =
   | 'english_only_mission'
   | 'perfect_mission'
   | 'simulation_completed'
-  /** Progress = how many of matchIds the user has completed. */
-  | 'all_simulations_completed';
+  /** Progress = how many of matchIds (simulations) the user has completed. */
+  | 'all_simulations_completed'
+  /** Progress = how many of matchIds (lessons) the user has completed. */
+  | 'all_lessons_completed';
 
 export interface AchievementDef {
   achievementId: string;
@@ -35,7 +37,7 @@ export interface AchievementDef {
   iconKey: string;
   target: number;
   metric: AchievementMetric;
-  /** For explorer / simulation_completed metrics. */
+  /** For explorer / all_*_completed metrics (simulation or lesson ids). */
   matchIds?: string[];
 }
 
@@ -57,6 +59,25 @@ export const ACHIEVEMENT_RARITY_ORDER: AchievementRarity[] = [
 
 const TOTAL_LESSONS = LESSON_PROGRESSION_ORDER.length;
 
+/** Lessons shown in the Basics course catalog (app BasicsLessons). */
+const BASICS_LESSON_IDS: string[] = [
+  'greetings',
+  'introductions',
+  'yes_no_maybe',
+  'polite_expressions',
+  'meet_people',
+  'talk_about_groups',
+  'ee_about_me_family',
+  'numbers',
+  'telling_time',
+  'everyday_numbers',
+  'money_prices',
+  'likes_dislikes',
+  'wants_needs',
+  'can_cant',
+  'asking_questions',
+];
+
 export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
   // Getting Started
   {
@@ -65,32 +86,32 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
     rarity: 'common',
     titleEn: 'First Hello',
     titleTh: 'สวัสดีครั้งแรก',
-    descriptionEn: 'Complete your first introduction with Teacher B.',
-    descriptionTh: 'คุยแนะนำตัวกับครูบีครั้งแรกสำเร็จ',
+    descriptionEn: 'Speak your first sentence.',
+    descriptionTh: 'พูดประโยคแรก',
     iconKey: 'hand',
     target: 1,
     metric: 'onboarding_completed',
   },
   {
-    achievementId: 'first_conversation',
+    achievementId: 'first_lesson',
     category: 'getting_started',
     rarity: 'common',
-    titleEn: 'First Conversation',
-    titleTh: 'บทสนทนาแรก',
-    descriptionEn: 'Finish any lesson or mission conversation.',
-    descriptionTh: 'จบบทเรียนหรือมิชชันครั้งแรก',
-    iconKey: 'speech_bubble',
+    titleEn: 'First Lesson',
+    titleTh: 'บทเรียนแรก',
+    descriptionEn: 'Complete your first lesson.',
+    descriptionTh: 'เรียนบทแรกจบ',
+    iconKey: 'open_book',
     target: 1,
-    metric: 'any_session_count',
+    metric: 'lesson_count',
   },
   {
-    achievementId: 'mission_complete',
+    achievementId: 'first_mission',
     category: 'getting_started',
     rarity: 'common',
-    titleEn: 'Mission Complete',
-    titleTh: 'ภารกิจสำเร็จ',
-    descriptionEn: 'Complete your first speaking mission.',
-    descriptionTh: 'จบมิชชันพูดครั้งแรก',
+    titleEn: 'First Mission',
+    titleTh: 'มิชชันแรก',
+    descriptionEn: 'Complete your first mission.',
+    descriptionTh: 'จบ Mission แรก',
     iconKey: 'target',
     target: 1,
     metric: 'mission_count',
@@ -101,11 +122,12 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
     rarity: 'common',
     titleEn: 'Beginner',
     titleTh: 'มือใหม่',
-    descriptionEn: 'Complete your first lesson.',
-    descriptionTh: 'จบบทเรียนแรก',
+    descriptionEn: 'Complete the Basic Course.',
+    descriptionTh: 'จบ Basic Course',
     iconKey: 'sprout',
-    target: 1,
-    metric: 'lesson_count',
+    target: BASICS_LESSON_IDS.length,
+    metric: 'all_lessons_completed',
+    matchIds: BASICS_LESSON_IDS,
   },
 
   // Learning
