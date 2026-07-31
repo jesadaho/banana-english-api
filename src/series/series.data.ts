@@ -19,17 +19,29 @@ export const LEGACY_SERIES_ID_ALIASES: Record<string, string> = {
 
 export const SERIES: SeriesConfig[] = [
   {
+    seriesId: 'social',
+    titleEn: 'Social',
+    titleTh: 'สังคม',
+    subtitleTh: 'คุยกับคนใหม่และฝึกบทสนทนาในสังคม',
+    order: 0,
+    coverImage: 'category_social',
+    missionIds: [
+      'meet_new_friend_easy',
+      'join_english_club_easy',
+      'small_talk_easy',
+    ],
+  },
+  {
     seriesId: 'daily_life',
     titleEn: 'Daily Life',
     titleTh: 'ชีวิตประจำวัน',
     subtitleTh: 'ฝึกพูดในสถานการณ์ที่เจอทุกวัน',
-    order: 0,
+    order: 1,
     coverImage: 'category_daily_life',
     missionIds: [
       'coffee_order_easy',
       'restaurant_order_easy',
       'movie_tickets_easy',
-      'pharmacy_easy',
     ],
   },
   {
@@ -37,7 +49,7 @@ export const SERIES: SeriesConfig[] = [
     titleEn: 'Travel',
     titleTh: 'การเดินทาง',
     subtitleTh: 'เดินทางต่างประเทศได้อย่างมั่นใจ',
-    order: 1,
+    order: 2,
     coverImage: 'category_travel',
     missionIds: [
       'airport_checkin_easy',
@@ -50,25 +62,12 @@ export const SERIES: SeriesConfig[] = [
     titleEn: 'Work & Career',
     titleTh: 'งานและอาชีพ',
     subtitleTh: 'สื่อสารในงานได้อย่างมั่นใจ',
-    order: 2,
+    order: 3,
     coverImage: 'category_business',
     missionIds: [
       'meet_client_easy',
       'business_meeting_easy',
       'business_phone_easy',
-      'small_talk_easy',
-    ],
-  },
-  {
-    seriesId: 'social',
-    titleEn: 'Social',
-    titleTh: 'สังคม',
-    subtitleTh: 'คุยกับคนใหม่และฝึกบทสนทนาในสังคม',
-    order: 3,
-    coverImage: 'category_social',
-    missionIds: [
-      'meet_new_friend_easy',
-      'join_english_club_easy',
     ],
   },
   {
@@ -81,6 +80,7 @@ export const SERIES: SeriesConfig[] = [
     missionIds: [
       'doctor_visit_easy',
       'ask_help_easy',
+      'pharmacy_easy',
     ],
   },
 ];
