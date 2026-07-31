@@ -18,6 +18,28 @@ const FORBIDDEN_IN_ENGLISH = [
   'Speak approximately 70% Thai',
 ];
 
+/**
+ * Instructions that order the tutor to speak Thai. A Thai example is fine —
+ * L1_EXAMPLE_RULE tells the model to re-express it in English — but a rule
+ * saying "ALWAYS map in spoken Thai" contradicts English mode outright.
+ *
+ * Only the Basics course is held to this. Everyday English is still Thai-only
+ * by design; its English-mode content is deliberately deferred.
+ */
+const THAI_DIRECTIVES = [
+  /ALWAYS[^\n]*spoken Thai/,
+  /Never write English-only/,
+  /Thai first → English second/,
+  /Thai ?→ ?English/,
+  /Thai digit mapping/,
+  /Thai mapper words/,
+  /short Thai situations/,
+  /ถ้าจะบอกว่า/,
+  /ให้พูดตาม/,
+];
+
+const isBasics = (lessonId: string) => !lessonId.startsWith('ee_');
+
 let failed = 0;
 
 for (const base of LESSONS) {
@@ -46,6 +68,18 @@ for (const base of LESSONS) {
           failed++;
         }
       }
+
+      if (isBasics(base.lessonId)) {
+        for (const rule of THAI_DIRECTIVES) {
+          const hit = rule.exec(`${sys}\n${opening}`);
+          if (hit) {
+            console.error(
+              `[${base.lessonId}/english] Thai directive leaked: ${JSON.stringify(hit[0])}`,
+            );
+            failed++;
+          }
+        }
+      }
     }
 
     if (lang === 'thai') {
@@ -61,6 +95,22 @@ for (const base of LESSONS) {
 const sample = renderTokens('Say it in {{L1}} then {{REPEAT_CUE}}', 'english');
 if (sample !== 'Say it in simple English then say it after me') {
   console.error('renderTokens english mismatch:', sample);
+  failed++;
+}
+
+// Language-tagged lines: keep the active language, drop the other, preserve indent.
+const tagged = ['keep me', '@thai   thai line', '@english   en line'].join('\n');
+const expectThai = ['keep me', '  thai line'].join('\n');
+const expectEn = ['keep me', '  en line'].join('\n');
+if (renderTokens(tagged, 'thai') !== expectThai) {
+  console.error('language lines (thai) mismatch:', renderTokens(tagged, 'thai'));
+  failed++;
+}
+if (renderTokens(tagged, 'english') !== expectEn) {
+  console.error(
+    'language lines (english) mismatch:',
+    renderTokens(tagged, 'english'),
+  );
   failed++;
 }
 
