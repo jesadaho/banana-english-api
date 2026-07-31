@@ -38,6 +38,9 @@ model User {
   /** Top Free Talk memories from the latest session (max 5, overwritten each end). */
   freeTalkMemories        String[]  @default([])
 
+  /** How Teacher B speaks during lessons: "thai" | "english". */
+  lessonTeachingLanguage  String    @default("thai")
+
   fcmTokens               UserFcmToken[]
   transactions            EconomyTransaction[]
   sessions                UserSession[]
@@ -107,6 +110,8 @@ model UserSession {
   thaiMixUsed     Boolean?
   /** Learner (user) turns this session (null = not tracked / pre-stats). */
   learnerTurnCount Int?
+  /** Lesson teaching language for training sessions: "thai" | "english". */
+  teachingLanguage String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 

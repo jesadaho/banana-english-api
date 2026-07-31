@@ -5,6 +5,7 @@ import type { GptIntroReport, SessionType } from '../common/api.types';
 import type { SimulationConfig } from '../simulations/simulations.data';
 import { initCheckpointStates } from '../simulations/simulations.data';
 import type { LessonConfig } from '../lessons/lessons.data';
+import { teachingLanguageFromConfig, learnerNameFallback } from '../lessons/lesson-prompt';
 import type {
   FreeTalkIssueLogEntry,
   FreeTalkLanguageLevel,
@@ -179,8 +180,10 @@ export class SessionStoreService {
 
   createTraining(
     config: LessonConfig,
-    learnerFirstName = 'เพื่อน',
+    learnerFirstName?: string,
   ): SessionData {
+    const lang = teachingLanguageFromConfig(config);
+    const name = learnerFirstName?.trim() || learnerNameFallback(lang);
     const sessionId = `session_${randomUUID().replace(/-/g, '').slice(0, 12)}`;
     const session: ConversationSession = {
       id: sessionId,
@@ -198,7 +201,7 @@ export class SessionStoreService {
       endedAt: null,
       introReport: null,
       lessonConfig: config,
-      learnerFirstName,
+      learnerFirstName: name,
       hintsUsed: 0,
       thaiMixUsed: false,
     };

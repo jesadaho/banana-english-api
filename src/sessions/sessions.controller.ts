@@ -47,6 +47,10 @@ import {
   normalizeLessonTeachingLanguage,
   withTeachingLanguage,
 } from '../lessons/lessons.data';
+import {
+  learnerNameFallback,
+  teachingLanguageFromConfig,
+} from '../lessons/lesson-prompt';
 import { LessonsService } from '../lessons/lessons.service';
 import { StartSessionDto, TurnDto } from './dto/sessions.dto';
 import { AnonymousUserGuard } from '../users/anonymous-user.guard';
@@ -288,8 +292,11 @@ export class SessionsController {
       throw new NotFoundException('Lesson not found');
     }
 
-    const teachingLanguage =
-      normalizeLessonTeachingLanguage(teachingLanguageRaw);
+    const teachingLanguage = normalizeLessonTeachingLanguage(
+      teachingLanguageRaw ??
+        (user as User & { lessonTeachingLanguage?: string })
+          .lessonTeachingLanguage,
+    );
     const config = withTeachingLanguage(baseConfig, teachingLanguage);
 
     const unlocked = await this.lessonsService.isLessonUnlockedForUser(
@@ -303,7 +310,10 @@ export class SessionsController {
     const bananaCost = getLessonBananaCost(config);
     await this.economy.spendBananas(user.id, bananaCost, lessonId, 'lesson_start');
 
-    const learnerFirstName = firstNameFromDisplayName(user.displayName);
+    const learnerFirstName = firstNameFromDisplayName(
+      user.displayName,
+      teachingLanguage,
+    );
     const data = this.sessionStore.createTraining(config, learnerFirstName);
 
     await this.prisma.userSession.create({
@@ -312,7 +322,8 @@ export class SessionsController {
         userId: user.id,
         sessionType: 'training',
         lessonId: config.lessonId,
-      },
+        teachingLanguage,
+      } as Prisma.UserSessionUncheckedCreateInput,
     });
 
     try {
@@ -407,7 +418,8 @@ export class SessionsController {
         data.turns,
         userText,
         nextTurn,
-        data.learnerFirstName ?? 'เพื่อน',
+        data.learnerFirstName ??
+          learnerNameFallback(teachingLanguageFromConfig(config)),
       );
 
       const maxTurnsReached = nextTurn >= config.maxTurns;
@@ -1217,8 +1229,11 @@ function mergeTurnsWithFeedback(
   });
 }
 
-function firstNameFromDisplayName(displayName?: string | null): string {
+function firstNameFromDisplayName(
+  displayName?: string | null,
+  teachingLanguage: 'thai' | 'english' = 'thai',
+): string {
   const trimmed = (displayName ?? '').trim();
-  if (!trimmed) return 'เพื่อน';
+  if (!trimmed) return learnerNameFallback(teachingLanguage);
   return trimmed.split(/\s+/)[0]!;
 }

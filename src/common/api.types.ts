@@ -270,4 +270,5 @@ export interface UserProfileResponse {
   dailyUsedToday: boolean;
   timezone: string;
   unlockedAvatarIds: string[];
+  lessonTeachingLanguage: 'thai' | 'english';
 }

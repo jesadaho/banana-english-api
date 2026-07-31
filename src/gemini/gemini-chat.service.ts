@@ -44,6 +44,11 @@ import {
 import type { SimulationConfig } from '../simulations/simulations.data';
 import type { LessonConfig } from '../lessons/lessons.data';
 import { pickFunnyIntroJabSeed } from '../lessons/lessons.data';
+import {
+  buildLessonSystemInstruction,
+  renderOpeningPrompt,
+  teachingLanguageFromConfig,
+} from '../lessons/lesson-prompt';
 import { GeminiModelPool, parseGeminiChatModels } from './gemini-model-pool';
 
 const REPLY_SCHEMA = {
@@ -991,12 +996,16 @@ export class GeminiChatService {
     config: LessonConfig,
     learnerFirstName: string,
   ): Promise<TrainingTurnReply> {
-    const jabSeed = pickFunnyIntroJabSeed(config.lessonId);
+    const lang = teachingLanguageFromConfig(config);
+    // Funny jab seeds are Thai-only (parked About Me lessons). Skip in English mode.
+    const jabSeed =
+      lang === 'thai' ? pickFunnyIntroJabSeed(config.lessonId) : null;
     const jabSeedLine = jabSeed
       ? `This session's funny jab seed: "${jabSeed}". ` +
         'Build Turn 1 jab FROM this seed — paraphrase freely in your own words. ' +
         'FORBIDDEN: copy any Tone example verbatim. One short Thai jab only, then teach vocab.\n\n'
       : '';
+    const openingPrompt = renderOpeningPrompt(config, lang);
 
     return this.generateJson<TrainingTurnReply>({
       systemInstruction: this.trainingSystemPrompt(
@@ -1010,7 +1019,7 @@ export class GeminiChatService {
           parts: [
             {
               text:
-                `${config.openingPrompt}\n\n` +
+                `${openingPrompt}\n\n` +
                 jabSeedLine +
                 'Respond with ONLY one JSON object: ' +
                 '{"textEn":"...","textTh":"...","isLessonComplete":false}. ' +
@@ -1079,7 +1088,8 @@ export class GeminiChatService {
       schema: TRAINING_REPLY_SCHEMA,
       maxOutputTokens: 600,
       temperature: 0.4,
-      recoverFromPlainText: (text) => this.recoverTrainingReplyFromPlainText(text),
+      recoverFromPlainText: (text) =>
+        this.recoverTrainingReplyFromPlainText(text),
     });
   }
 
@@ -1338,12 +1348,22 @@ export class GeminiChatService {
     config: LessonConfig,
     history: ChatTurn[],
   ): string {
+    const lang = teachingLanguageFromConfig(config);
     const matched = this.matchTargetPhrase(userMessage, config.targetPhrases);
     if (matched) {
       const nearMiss =
         this.normalizeSpeechText(userMessage) !==
         this.normalizeSpeechText(matched);
-      return `Learner transcript (exact STT text shown in the app): "${userMessage}"
+      return lang === 'english'
+        ? `Learner transcript (exact STT text shown in the app): "${userMessage}"
+
+MATCH RESULT: SUCCESS — this transcript matches the taught phrase "${matched}"${nearMiss ? ' (close pronunciation / STT variant — treat as correct)' : ''}.
+Required response:
+- Speak in clear simple English (English teaching mode). Thai only as a short optional meaning cue.
+- Brief English praise (e.g. Great! / Nice work!)
+- ADVANCE immediately to the NEXT teaching step with a NEW English-led learner action
+- FORBIDDEN: asking to repeat "${matched}" again, inventing pronunciation or "said it twice" issues`
+        : `Learner transcript (exact STT text shown in the app): "${userMessage}"
 
 MATCH RESULT: SUCCESS — this transcript matches the taught phrase "${matched}"${nearMiss ? ' (close pronunciation / STT variant — treat as correct)' : ''}.
 Required response:
@@ -1361,7 +1381,15 @@ Required response:
       );
 
     if (consecutiveMisses) {
-      return `Learner transcript (exact STT text shown in the app): "${userMessage}"
+      return lang === 'english'
+        ? `Learner transcript (exact STT text shown in the app): "${userMessage}"
+
+MATCH RESULT: NO MATCH — but this is the learner's SECOND consecutive attempt without a match on the current item.
+Required response:
+- Do NOT ask for the same number/phrase again — maximum one retry already used.
+- Accept generously (e.g. "No worries — let's keep going.") and ADVANCE immediately to the NEXT Core Flow step with a NEW teaching/speaking task.
+- FORBIDDEN: "try again" loops, repeating the same ask, looping on the same word.`
+        : `Learner transcript (exact STT text shown in the app): "${userMessage}"
 
 MATCH RESULT: NO MATCH — but this is the learner's SECOND consecutive attempt without a match on the current item.
 Required response:
@@ -1370,7 +1398,14 @@ Required response:
 - FORBIDDEN: ลองอีกที, repeat the same ask, looping on the same word.`;
     }
 
-    return `Learner transcript (exact STT text shown in the app): "${userMessage}"
+    return lang === 'english'
+      ? `Learner transcript (exact STT text shown in the app): "${userMessage}"
+
+MATCH RESULT: NO MATCH yet on the current speaking task.
+Required response:
+- You may give at most ONE gentle retry with brief English feedback — then you MUST advance regardless.
+- FORBIDDEN: asking for the same item more than twice total.`
+      : `Learner transcript (exact STT text shown in the app): "${userMessage}"
 
 MATCH RESULT: NO MATCH yet on the current speaking task.
 Required response:
@@ -1385,28 +1420,15 @@ Required response:
   ): string {
     const remaining = Math.max(0, config.maxTurns - currentTurn);
     const phrases = config.targetPhrases.map((p) => `- ${p}`).join('\n');
-    const englishHeavy = config.languageMix.english >= 70;
-    const spokenLanguageRules = englishHeavy
-      ? `Spoken language rule (critical — English teaching mode):
-- User settings override any "70% Thai / 30% English" notes inside the lesson instruction above.
-- textEn is what Teacher B says aloud. It must be MOSTLY ENGLISH (~${config.languageMix.english}%).
-- Use clear, simple English for praise, instructions, and explanations (short sentences).
-- Thai in textEn is optional and light (~${config.languageMix.thai}%) — only a short meaning cue if the learner may be lost.
-- textTh: short Thai support / translation for the app subtitle (do not rely on speaking Thai).
-- Still model the English target phrase clearly and ask the learner to speak English.
-- Keep the warm private 1:1 tutor tone.`
-      : `Spoken language rule (critical — Thai beginners):
-- textEn is what Teacher B says aloud. It must be MOSTLY THAI (~${config.languageMix.thai}%), not full English.
-- English in textEn is ONLY for the target phrase being taught/modeled (e.g. "Good evening") and short words the learner must say.
-- Praise, instructions, explanations, and "พูดตาม" cues MUST be Thai (e.g. "เยี่ยมเลยครับ งั้นลองทักตอนเย็น ตามผมว่า Good evening").
-- FORBIDDEN: full-English tutor lines like "Perfect! Now let's try... Repeat after me: ...".
-- textTh: short Thai support line (can mirror textEn).`;
+    const lang = teachingLanguageFromConfig(config);
+    const englishHeavy = lang === 'english';
+    const lessonInstruction = buildLessonSystemInstruction(config, lang);
 
     const textEnJsonHint = englishHeavy
       ? 'textEn: spoken Teacher B line — MOSTLY ENGLISH; keep Thai light/optional; must end with the learner\'s next action unless completing'
       : 'textEn: spoken Teacher B line — MOSTLY THAI; include the English target phrase only where the learner should hear/say it; must end with the learner\'s next action unless completing';
 
-    return `${config.systemInstruction}
+    return `${lessonInstruction}
 
 Learner first name: ${learnerFirstName}
 (Use this name sparingly — once in opening, occasionally when encouraging, once near the ending. Never every turn. Never address a group.)
@@ -1415,9 +1437,7 @@ Target phrases:
 ${phrases}
 
 Language mix target: ~${config.languageMix.thai}% Thai / ~${config.languageMix.english}% English.
-(This mix comes from the learner's Lesson Language setting and OVERRIDES any fixed mix mentioned in the lesson instruction above.)
-
-${spokenLanguageRules}
+(This mix comes from the learner's Lesson Language setting.)
 
 Teaching mix 70/20/10 (applies to EVERY lesson — do NOT only use "พูดตาม" / "Repeat after me"):
 - ~70% Repeat: model a phrase, then ask the learner to say it after you (pronunciation + confidence).

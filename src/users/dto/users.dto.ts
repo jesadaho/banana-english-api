@@ -1,5 +1,6 @@
 import {
   IsBoolean,
+  IsIn,
   IsOptional,
   IsString,
   MaxLength,
@@ -18,6 +19,10 @@ export class UpsertUserDto {
   @MinLength(1)
   @MaxLength(80)
   timezone?: string;
+
+  @IsOptional()
+  @IsIn(['thai', 'english'])
+  lessonTeachingLanguage?: 'thai' | 'english';
 
   @IsOptional()
   @IsString()

@@ -6,7 +6,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { User } from '@prisma/client';
+import { User, Prisma } from '@prisma/client';
 import { EconomyService } from '../economy/economy.service';
 import { getUserLocalTime, isSameDateKey } from '../common/timezone.util';
 import { PrismaService } from '../prisma/prisma.service';
@@ -28,6 +28,7 @@ export interface UserProfileResponse {
   dailyUsedToday: boolean;
   timezone: string;
   unlockedAvatarIds: string[];
+  lessonTeachingLanguage: 'thai' | 'english';
 }
 
 export interface DebugRefillBananasByNameResponse {
@@ -47,13 +48,19 @@ export class UsersService {
   async upsertProfile(user: User, dto: UpsertUserDto): Promise<UserProfileResponse> {
     let updated = user;
 
-    if (dto.displayName || dto.timezone || dto.fcmToken) {
+    if (
+      dto.displayName ||
+      dto.timezone ||
+      dto.fcmToken ||
+      dto.lessonTeachingLanguage
+    ) {
       updated = await this.prisma.user.update({
         where: { id: user.id },
         data: {
           displayName: dto.displayName ?? undefined,
           timezone: dto.timezone ?? undefined,
-        },
+          lessonTeachingLanguage: dto.lessonTeachingLanguage ?? undefined,
+        } as Prisma.UserUpdateInput,
       });
 
       if (dto.fcmToken) {
@@ -312,6 +319,10 @@ export class UsersService {
     const unlockedAvatarIds = [
       ...new Set([...FREE_AVATAR_IDS, ...user.unlockedAvatarIds]),
     ];
+    const rawLang = (user as User & { lessonTeachingLanguage?: string })
+      .lessonTeachingLanguage;
+    const lessonTeachingLanguage =
+      rawLang === 'english' ? 'english' : 'thai';
     return {
       anonymousId: user.anonymousId,
       displayName: user.displayName ?? 'เพื่อน',
@@ -323,6 +334,7 @@ export class UsersService {
       dailyUsedToday: isSameDateKey(user.dailyMissionUsedDate, local.dateKey),
       timezone: user.timezone,
       unlockedAvatarIds,
+      lessonTeachingLanguage,
     };
   }
 }
