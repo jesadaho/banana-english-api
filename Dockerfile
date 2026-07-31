@@ -13,6 +13,8 @@ RUN npx prisma generate
 
 COPY . .
 RUN npm run build
+# nest build silently relocates output if any .ts outside src/ is compiled
+RUN test -f dist/main.js
 
 # Production stage
 FROM node:20-alpine
