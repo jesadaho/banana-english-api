@@ -23,6 +23,19 @@ import {
   getAllAchievements,
 } from './achievements.data';
 
+/** Learner turns a mission needs before its "clean run" badges count. */
+const MIN_SKILL_BADGE_TURNS = 3;
+
+/**
+ * Badges a zero-effort mission used to hand out for free. Sync re-checks these
+ * so accounts that banked a wrong unlock lose it instead of keeping it forever.
+ */
+const REVOCABLE_ACHIEVEMENT_IDS = [
+  'crystal_clear',
+  'no_hint_hero',
+  'english_only',
+];
+
 export interface AchievementRewardView {
   seeds: number;
   bananas: number;
@@ -100,6 +113,24 @@ export class AchievementsService {
       select: { achievementId: true },
     });
     const existingMap = new Set(existing.map((row) => row.achievementId));
+
+    const toRevoke = REVOCABLE_ACHIEVEMENT_IDS.filter((achievementId) => {
+      if (!existingMap.has(achievementId)) return false;
+      const def = getAchievementById(achievementId);
+      return def != null && this.metricProgress(def, snapshot) < def.target;
+    });
+
+    if (toRevoke.length > 0) {
+      await this.prisma.userAchievement.deleteMany({
+        where: { userId, achievementId: { in: toRevoke } },
+      });
+      for (const achievementId of toRevoke) {
+        existingMap.delete(achievementId);
+      }
+      this.logger.log(
+        `Revoked unearned achievements for ${userId}: ${toRevoke.join(', ')}`,
+      );
+    }
 
     const toUnlock: string[] = [];
     for (const def of ACHIEVEMENT_CATALOG) {
@@ -302,6 +333,7 @@ export class AchievementsService {
         overallScore: true,
         hintsUsed: true,
         thaiMixUsed: true,
+        learnerTurnCount: true,
         reportJson: true,
       },
     });
@@ -327,15 +359,24 @@ export class AchievementsService {
       if (session.sessionType === 'simulation') {
         const score = session.overallScore ?? 0;
         if (score >= 100) perfectMission = true;
-        if (this.hasNoPronunciationIssues(session.reportJson)) {
+
+        // A mission the learner barely spoke in has nothing to be clean about:
+        // no words to mispronounce, no hints opened, no Thai Mix. Without this
+        // guard, quitting a mission early earns three skill badges at once.
+        const learnerTurns =
+          session.learnerTurnCount ??
+          this.countLearnerTurns(session.reportJson);
+        const spoke = learnerTurns >= MIN_SKILL_BADGE_TURNS;
+
+        if (spoke && this.hasNoPronunciationIssues(session.reportJson)) {
           clearPronunciationMission = true;
         }
 
         // Only count tracked sessions (null = pre-achievements / unknown).
-        if (session.hintsUsed != null && session.hintsUsed === 0) {
+        if (spoke && session.hintsUsed === 0) {
           noHintMission = true;
         }
-        if (session.thaiMixUsed != null && session.thaiMixUsed === false) {
+        if (spoke && session.thaiMixUsed === false) {
           englishOnlyMission = true;
         }
       }
@@ -409,6 +450,25 @@ export class AchievementsService {
       default:
         return 0;
     }
+  }
+
+  /** Learner turns for sessions saved before the column existed. */
+  private countLearnerTurns(reportJson: unknown): number {
+    if (
+      reportJson == null ||
+      typeof reportJson !== 'object' ||
+      Array.isArray(reportJson)
+    ) {
+      return 0;
+    }
+
+    const turns = (reportJson as Record<string, unknown>).turns;
+    if (!Array.isArray(turns)) return 0;
+
+    return (turns as unknown[]).filter((turn) => {
+      if (turn == null || typeof turn !== 'object') return false;
+      return (turn as Record<string, unknown>).speaker === 'user';
+    }).length;
   }
 
   private hasNoPronunciationIssues(reportJson: unknown): boolean {
