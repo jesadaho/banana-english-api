@@ -1108,7 +1108,7 @@ export class GeminiChatService {
       ],
     });
 
-    return this.generateJson<TrainingTurnReply>({
+    const reply = await this.generateJson<TrainingTurnReply>({
       systemInstruction: this.trainingSystemPrompt(
         config,
         currentTurn,
@@ -1121,6 +1121,78 @@ export class GeminiChatService {
       recoverFromPlainText: (text) =>
         this.recoverTrainingReplyFromPlainText(text),
     });
+
+    if (userMessage === TAP_TO_CONTINUE_TURN_TEXT) {
+      return {
+        ...reply,
+        textEn: this.stripPraiseOpener(reply.textEn),
+        textTh: this.stripPraiseOpener(reply.textTh),
+      };
+    }
+
+    return reply;
+  }
+
+  /** Praise openers, longest first so "เยี่ยมเลย" wins over "เยี่ยม". */
+  private static readonly PRAISE_OPENERS: string[] = [
+    'ทำได้ดีมาก',
+    'ยอดเยี่ยม',
+    'เยี่ยมเลย',
+    'เยี่ยมมาก',
+    'ทำได้ดี',
+    'เก่งมาก',
+    'เก่งจริง',
+    'สุดยอด',
+    'ดีมาก',
+    'ดีเลย',
+    'ดีจัง',
+    'เยี่ยม',
+    'excellent',
+    'fantastic',
+    'wonderful',
+    'great job',
+    'great work',
+    'nice work',
+    'good job',
+    'nice job',
+    'well done',
+    'beautiful',
+    'brilliant',
+    'awesome',
+    'perfect',
+    'lovely',
+    'great',
+    'nice',
+    'good',
+  ];
+
+  private static readonly PRAISE_OPENER_RE = (() => {
+    const openers = GeminiChatService.PRAISE_OPENERS.map((p) =>
+      p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'),
+    ).join('|');
+    const stem = `(?:${openers})(?:เลย|มาก)?`;
+    const punct = '[!！?？.,…\\-—]';
+    // The praise must be its own clause: a Thai particle, or punctuation.
+    // Whitespace alone is not enough or "Good morning" loses its "Good".
+    return new RegExp(
+      `^(?:\\s*(?:${stem}(?:ครับ|ค่ะ)\\s*${punct}*\\s*|${stem}\\s*${punct}+\\s*))+`,
+      'i',
+    );
+  })();
+
+  /**
+   * A Continue tap is not a spoken attempt, so praising it is nonsense.
+   * The prompt forbids it; this is the deterministic backstop.
+   */
+  private stripPraiseOpener(text: string | undefined): string {
+    if (!text) return text ?? '';
+    const stripped = text
+      .replace(GeminiChatService.PRAISE_OPENER_RE, '')
+      .trimStart();
+    if (!stripped) return text;
+    return stripped.charAt(0).toUpperCase() === stripped.charAt(0)
+      ? stripped
+      : stripped.charAt(0).toUpperCase() + stripped.slice(1);
   }
 
   /** Drop trailing duplicate of the current user message from stored history. */
@@ -1386,13 +1458,39 @@ export class GeminiChatService {
     if (userMessage === TAP_TO_CONTINUE_TURN_TEXT) {
       return `Learner action: they tapped the Continue button. There is no transcript because they were not asked to speak.
 
-MATCH RESULT: NOT APPLICABLE — a button press is not a spoken attempt.
+MATCH RESULT: NOT APPLICABLE — a button press is not a spoken attempt. They have said NOTHING yet.
 Required response:
-- Do NOT praise, evaluate, correct, or repeat the button press.
-- Move straight to the NEXT Core Flow step.`;
+- START your line with the content of the NEXT Core Flow step. No opener before it.
+- FORBIDDEN first words: เยี่ยม / เยี่ยมเลยครับ / ดีมาก / เก่งมาก / สุดยอด / Great / Nice / Good job / Perfect / Well done — there is nothing to praise.
+- FORBIDDEN wording that implies they already spoke: คราวนี้ / อีกครั้ง / ลองใหม่ / this time / now try again.
+- Do NOT evaluate, correct, or repeat the button press.`;
     }
 
     const matched = this.matchTargetPhrase(userMessage, config.targetPhrases);
+
+    if (config.coachOnly) {
+      const matchNote = matched
+        ? `transcript confirms they said something close to "${matched}" — but Whisper cannot measure stress or rhythm`
+        : `transcript does not clearly match a target phrase — still do NOT fail them on stress/rhythm`;
+      return lang === 'english'
+        ? `Learner transcript (exact STT text shown in the app): "${userMessage}"
+
+COACH MODE: ${matchNote}.
+Required response:
+- Speak in clear simple English (English teaching mode). Thai only as a short optional meaning cue.
+- Give ONE short coach tip about stress/rhythm (e.g. "Try making the first syllable a bit louder." / "Nice — now soften the last syllable.").
+- ADVANCE immediately to the NEXT item — never ask them to repeat the same one.
+- FORBIDDEN: saying they passed/failed stress, inventing pronunciation problems from text, retry loops`
+        : `Learner transcript (exact STT text shown in the app): "${userMessage}"
+
+COACH MODE: ${matchNote}.
+Required response:
+- Speak MOSTLY in Thai (beginner tutor). English only for the next target phrase if modeling it.
+- Give ONE short coach tip about stress/rhythm (e.g. "ลองเน้นพยางค์แรกให้ชัดขึ้นอีกนิดครับ" / "ดีขึ้นแล้ว ลองลดเสียงคำหลังลง").
+- ADVANCE immediately to the NEXT item — never ask them to repeat the same one.
+- FORBIDDEN: saying they passed/failed stress, inventing pronunciation problems from text, ลองอีกที, retry loops`;
+    }
+
     if (matched) {
       const nearMiss =
         this.normalizeSpeechText(userMessage) !==
