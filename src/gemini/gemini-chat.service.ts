@@ -1087,7 +1087,11 @@ export class GeminiChatService {
                     textEn: turn.textEn,
                     textTh: turn.textTh ?? '',
                     isLessonComplete: false,
-                    ...(speechFlag ? { expectsUserSpeech: true } : {}),
+                    // Replay what the app really showed: claiming every past
+                    // turn wanted speech taught the model to keep asking.
+                    ...(speechFlag
+                      ? { expectsUserSpeech: turn.expectsUserSpeech ?? true }
+                      : {}),
                   })
                 : turn.textEn,
           },

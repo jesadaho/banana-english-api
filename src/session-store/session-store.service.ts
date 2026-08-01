@@ -21,6 +21,11 @@ export interface ChatTurn {
   audioUrl?: string | null;
   /** Raw learner utterance before Thai Mix (user turns only). */
   originalTextEn?: string | null;
+  /**
+   * What the app actually showed after this tutor turn (ai turns only).
+   * Replayed to the model so it does not learn from a made-up value.
+   */
+  expectsUserSpeech?: boolean;
 }
 
 export interface ConversationSession {

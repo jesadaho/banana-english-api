@@ -336,11 +336,17 @@ export class SessionsController {
         config,
         learnerFirstName,
       );
+      // Pronunciation lessons always open on the Listen step, so don't let
+      // a model slip decide whether the learner sees the mic.
+      const openingExpectsUserSpeech = isPronunciationLesson(config.lessonId)
+        ? false
+        : (reply.expectsUserSpeech ?? true);
       const opening = {
         speaker: 'ai' as const,
         textEn: reply.textEn,
         textTh: reply.textTh,
         audioUrl: null,
+        expectsUserSpeech: openingExpectsUserSpeech,
       };
       this.sessionStore.addTurn(data.session.id, opening);
 
@@ -371,11 +377,7 @@ export class SessionsController {
           updatedCheckpoints: {},
           feedbackHints: { mispronouncedWords: [] as string[] },
           currentTurn: 0,
-          // Pronunciation lessons always open on the Listen step, so don't let
-          // a model slip decide whether the learner sees the mic.
-          expectsUserSpeech: isPronunciationLesson(config.lessonId)
-            ? false
-            : (reply.expectsUserSpeech ?? true),
+          expectsUserSpeech: openingExpectsUserSpeech,
         },
       };
     } catch (err) {
@@ -446,11 +448,21 @@ export class SessionsController {
         isComplete: isTaskComplete,
       });
 
+      // Scripted opening steps (overview / listen / explain / tip) never ask
+      // for speech, so don't let a model slip put the mic in front of the
+      // learner. nextTurn 1 is the tutor turn right after the opening.
+      const inListenOnlyIntro = nextTurn < (config.listenOnlyTurns ?? 0);
+      const expectsUserSpeech =
+        isTaskComplete || inListenOnlyIntro
+          ? false
+          : (reply.expectsUserSpeech ?? true);
+
       const aiTurn = {
         speaker: 'ai' as const,
         textEn: reply.textEn,
         textTh: reply.textTh,
         audioUrl: null,
+        expectsUserSpeech,
       };
       this.sessionStore.addTurn(sessionId, aiTurn);
 
@@ -462,9 +474,7 @@ export class SessionsController {
         feedbackHints: { mispronouncedWords: [] },
         currentTurn: nextTurn,
         // A completed lesson hands off to the drill, so never ask for speech.
-        expectsUserSpeech: isTaskComplete
-          ? false
-          : (reply.expectsUserSpeech ?? true),
+        expectsUserSpeech,
       };
 
       if (body.generateAudio) {

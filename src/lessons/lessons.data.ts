@@ -27,19 +27,22 @@ export interface LessonConfig {
    * pronunciation from transcript text (Whisper cannot hear stress).
    */
   coachOnly?: boolean;
+  /**
+   * Pronunciation lessons open with scripted listen-only steps (overview,
+   * listen / wrong-vs-right, explain, tip). That many tutor turns never ask
+   * for speech, so the mic must stay hidden no matter what the model returns.
+   */
+  listenOnlyTurns?: number;
 }
 
 interface PronunciationContrast {
   /**
-   * Chapter 2: Thai-script mispronunciation so TTS reads Thai syllables.
-   * Chapter 3 (stressMode): English with the WRONG syllable capitalized
-   * (e.g. ta-BLE) so TTS can contrast stress placement.
+   * Thai-script mispronunciation so TTS reads Thai syllables — used by both
+   * Chapter 2 (added/dropped sounds) and Chapter 3, where the flat Thai
+   * rhythm stands in for the wrong stress.
    */
   wrong: string;
-  /**
-   * Correct form in Latin English. Chapter 3 capitalizes the stressed
-   * syllable (e.g. TA-ble).
-   */
+  /** Correct form in plain Latin English (e.g. stop, table). */
   right: string;
 }
 
@@ -60,25 +63,41 @@ interface PronunciationLessonSpec {
   /** First lesson of a chapter opens with a welcome to the chapter. */
   chapterOverviewTh?: string;
   chapterOverviewEn?: string;
-  /**
-   * Contrast pairs for Chapter 2 (Thai wrong / English right) or
-   * Chapter 3 stressMode (English wrong stress / English right stress).
-   */
+  /** Chapter 2 contrast pairs: Thai-script wrong vs English right. */
   contrasts?: PronunciationContrast[];
-  /** Short explanation after the contrast (Chapter 2 / 3). */
+  /** Short explanation after the contrast (Chapter 2). */
   explainTh?: string;
   explainEn?: string;
   /**
-   * Chapter 3: Listen → Compare → Rhythm Tip → Repeat (coach) → Complete.
-   * Both contrast sides stay in English; capitals mark stressed syllables.
+   * Chapter 3: rhythm tip instead of a mouth tip, and coach-style feedback —
+   * never pass/fail, because Whisper cannot hear stress.
+   *
+   * No contrast pair: the voice cannot say a word with the wrong stress, and
+   * a Thai-script stand-in only teaches a Thai accent, not misplaced stress.
    */
   stressMode?: boolean;
+  /**
+   * Chapter 4: Listen → Listen Again → Speaking Tip → Repeat (coach) → Complete.
+   * No pass/fail — focus on linking / continuity / imitation.
+   */
+  smoothMode?: boolean;
+  /**
+   * First Listen pass models (defaults to [items]).
+   * Reductions: full forms like "going to" / "want to" / "got to".
+   */
+  listenItems?: string[];
+  /**
+   * Listen Again models (defaults to [items]).
+   * Reductions: reduced forms matching [items] (gonna / wanna / gotta).
+   */
+  listenAgainItems?: string[];
 }
 
 /**
  * Chapter 1: (Overview →) Listen → Tip → Practice → Complete
  * Chapter 2: (Overview →) Wrong vs Right → Explain → Tip → Practice → Complete
- * Chapter 3: (Overview →) Listen → Compare → Rhythm Tip → Repeat → Complete
+ * Chapter 3: (Overview →) Listen → Rhythm Tip → Repeat (coach) → Complete
+ * Chapter 4: (Overview →) Listen → Listen Again → Speaking Tip → Repeat (coach) → Complete
  */
 function buildPronunciationLesson(spec: PronunciationLessonSpec): LessonConfig {
   const noun = spec.itemNoun ?? 'word';
@@ -87,6 +106,10 @@ function buildPronunciationLesson(spec: PronunciationLessonSpec): LessonConfig {
   const arrow = spec.items.join(' → ');
   const first = spec.items[0];
   const last = spec.items[spec.items.length - 1];
+  const listenItems = spec.listenItems ?? spec.items;
+  const listenAgainItems = spec.listenAgainItems ?? spec.items;
+  const listenArrow = listenItems.join(' → ');
+  const listenAgainArrow = listenAgainItems.join(' → ');
   const hasOverview =
     spec.chapterOverviewTh != null && spec.chapterOverviewEn != null;
   const hasContrast =
@@ -95,6 +118,8 @@ function buildPronunciationLesson(spec: PronunciationLessonSpec): LessonConfig {
     spec.explainTh != null &&
     spec.explainEn != null;
   const stressMode = spec.stressMode === true;
+  const smoothMode = spec.smoothMode === true;
+  const coachMode = stressMode || smoothMode;
 
   // Language tags only work at the start of a line — never indent them.
   const overviewStep = `Chapter Overview — welcome them to the chapter using their first name once, staying close to the script below. Nothing else — no ${noun} modeling, no tip, no question, no mention of any button. expectsUserSpeech = false. (Opening — Overview)
@@ -109,7 +134,7 @@ function buildPronunciationLesson(spec: PronunciationLessonSpec): LessonConfig {
     ? 'invite'
     : 'welcome them by first name in ONE short sentence, then invite';
 
-  const contrastLabel = stressMode ? 'Listen' : 'Wrong vs Right';
+  const contrastLabel = 'Wrong vs Right';
 
   const wrongVsRightStep = `${contrastLabel} — ${inviteListen} them to listen to two versions, then model each pair clearly, wrong first then right, one pair at a time:
 ${contrastLines}
@@ -117,21 +142,21 @@ Write the wrong form EXACTLY in Thai script (so TTS reads Thai syllables) and th
     hasOverview ? contrastLabel : `Opening — ${contrastLabel}`
   })`;
 
-  const explainStep = stressMode
-    ? `Compare — give ONLY the short explanation below in {{L1}}, 1–2 sentences, then stop. Do not model ${nouns} again, do not ask them to speak, do not mention any button. expectsUserSpeech = false. (Compare)
-@thai   Script: ${spec.explainTh}
-@english   Script: ${spec.explainEn}`
-    : `Explain — give ONLY the short explanation below in {{L1}}, 1–2 sentences, then stop. Do not model ${nouns} again, do not ask them to speak, do not mention any button. expectsUserSpeech = false. (Explain)
+  const explainStep = `Explain — give ONLY the short explanation below in {{L1}}, 1–2 sentences, then stop. Do not model ${nouns} again, do not ask them to speak, do not mention any button. expectsUserSpeech = false. (Explain)
 @thai   Script: ${spec.explainTh}
 @english   Script: ${spec.explainEn}`;
 
-  const listenStep = `Listen — ${inviteListen} them to listen and model the ${nouns} clearly, one per line: ${arrow}. Nothing else — no goal speech, no tip, no question, no mention of any button. Stop right after the last one. expectsUserSpeech = false. (${
+  const listenStep = `Listen — ${inviteListen} them to listen and model the ${nouns} clearly, one per line: ${
+    smoothMode ? listenArrow : arrow
+  }. Nothing else — no goal speech, no tip, no question, no mention of any button. Stop right after the last one. expectsUserSpeech = false. (${
     hasOverview ? 'Listen' : 'Opening — Listen'
   })`;
 
+  const listenAgainStep = `Listen Again — invite them to listen one more time and model the ${nouns} clearly, one per line: ${listenAgainArrow}. Nothing else — no tip, no question, no mention of any button. Stop right after the last one. expectsUserSpeech = false. (Listen Again)`;
+
   const tipStep = stressMode
     ? `Rhythm Tip — give ONLY the rhythm tip above in {{L1}}, one short sentence, then stop. Do not model ${nouns} again, do not ask them to speak, do not mention any button. expectsUserSpeech = false. (Rhythm Tip)`
-    : `Speaking Tip — give ONLY the mouth tip above in {{L1}}, one short sentence, then stop. Do not model ${nouns} again, do not ask them to speak, do not mention any button. expectsUserSpeech = false. (Tip)`;
+    : `Speaking Tip — give ONLY the speaking tip above in {{L1}}, one short sentence, then stop. Do not model ${nouns} again, do not ask them to speak, do not mention any button. expectsUserSpeech = false. (Tip)`;
 
   let practiceStep: string;
   if (stressMode) {
@@ -141,7 +166,14 @@ Write the wrong form EXACTLY in Thai script (so TTS reads Thai syllables) and th
    - NEVER say they were wrong or right about stress — you cannot hear stress from transcript text.
    - NEVER ask them to repeat the same ${noun} again — always advance after one attempt.
    - Never practice anything outside this list.
-   - During Repeat, say only the correct English form — never model the Thai-script version again.
+   - Every turn in this step ends with something for them to say. expectsUserSpeech = true. (Repeat)`;
+  } else if (smoothMode) {
+    practiceStep = `Repeat — the same ${nouns}, ONE per turn, always in this order: ${arrow}.
+   - Open this step with "ตาคุณแล้วครับ" (or the {{L1}} equivalent of "Your turn"), then ask them to say: ${first}.
+   - After EACH attempt give ONE short coach tip about linking / continuity (one sentence), then immediately ask for the next ${noun} in the same turn. Examples: "ลองต่อเสียงให้ลื่นขึ้นอีกนิดครับ" / "ดีแล้ว อย่าหยุดระหว่างคำ" / "Try running the words together a bit more."
+   - NEVER say they were wrong or right about linking — you cannot hear smoothness from transcript text.
+   - NEVER ask them to repeat the same ${noun} again — always advance after one attempt.
+   - Never practice anything outside this list.
    - Every turn in this step ends with something for them to say. expectsUserSpeech = true. (Repeat)`;
   } else {
     const practiceExtra = hasContrast
@@ -154,40 +186,60 @@ Write the wrong form EXACTLY in Thai script (so TTS reads Thai syllables) and th
    - Every turn in this step ends with something for them to say. expectsUserSpeech = true. (Repeat)`;
   }
 
-  const completeStep = `Complete — after feedback on "${last}", celebrate in one short sentence using their first name once, and tell them a short drill is next. Set isLessonComplete = true (REQUIRED) and expectsUserSpeech = false.`;
+  // What actually opens next is this lesson's own closing drill, so the line
+  // must not promise a new lesson or chapter.
+  const completeStep = `Complete — after feedback on "${last}", celebrate in one short sentence using their first name once, then say that this lesson closes with a quick drill on the same ${nouns} they just practised. NEVER say the drill is the next lesson, the next chapter, or a new topic, and never say goodbye. Set isLessonComplete = true (REQUIRED) and expectsUserSpeech = false.
+@thai   Stay close to: "เก่งมากครับ! ปิดท้ายบทนี้ด้วยการฝึกทวนคำเมื่อกี้อีกรอบนะครับ"
+@english   Stay close to: "Great work! Let's close this lesson with a quick drill on the same ${nouns}."`;
 
-  const coreSteps = hasContrast
-    ? [
-        ...(hasOverview ? [overviewStep] : []),
-        wrongVsRightStep,
-        explainStep,
-        tipStep,
-        practiceStep,
-        completeStep,
-      ]
-    : [
-        ...(hasOverview ? [overviewStep] : []),
-        listenStep,
-        tipStep,
-        practiceStep,
-        completeStep,
-      ];
+  let coreSteps: string[];
+  if (hasContrast) {
+    coreSteps = [
+      ...(hasOverview ? [overviewStep] : []),
+      wrongVsRightStep,
+      explainStep,
+      tipStep,
+      practiceStep,
+      completeStep,
+    ];
+  } else if (smoothMode) {
+    coreSteps = [
+      ...(hasOverview ? [overviewStep] : []),
+      listenStep,
+      listenAgainStep,
+      tipStep,
+      practiceStep,
+      completeStep,
+    ];
+  } else {
+    coreSteps = [
+      ...(hasOverview ? [overviewStep] : []),
+      listenStep,
+      tipStep,
+      practiceStep,
+      completeStep,
+    ];
+  }
 
   const steps = coreSteps
     .map((step, index) => `${index + 1}. ${step}`)
     .join('\n');
 
-  // Tip step index (1-based) depends on overview + contrast.
+  // Tip step index (1-based) depends on overview + path.
   let tipStepNumber: number;
   if (hasContrast) {
+    tipStepNumber = hasOverview ? 4 : 3;
+  } else if (smoothMode) {
     tipStepNumber = hasOverview ? 4 : 3;
   } else {
     tipStepNumber = hasOverview ? 3 : 2;
   }
 
-  // Base listen-only steps before practice: contrast path has 3, ch1 has 2;
+  // Base listen-only steps before practice:
+  // contrast = 3, smooth = 3 (Listen + Listen Again + Tip), ch1/ch3 = 2;
   // plus optional overview.
-  const listenOnlyCount = (hasOverview ? 1 : 0) + (hasContrast ? 3 : 2);
+  const listenOnlyBase = hasContrast || smoothMode ? 3 : 2;
+  const listenOnlyCount = (hasOverview ? 1 : 0) + listenOnlyBase;
 
   let opening: string;
   if (hasOverview) {
@@ -196,48 +248,61 @@ Write the wrong form EXACTLY in Thai script (so TTS reads Thai syllables) and th
     const pairs = (spec.contrasts ?? [])
       .map((c) => `❌ ${c.wrong} / ✅ ${c.right}`)
       .join(', ');
-    opening = `This opening is Core Flow step 1 (${contrastLabel}): greet them by first name in one short sentence, invite them to listen to two versions, then model each pair — wrong (Thai script) then right (English) — one pair at a time: ${pairs}. Do NOT explain yet, do NOT give the ${
-      stressMode ? 'rhythm' : 'mouth'
-    } tip, and do NOT ask them to speak.`;
+    opening = `This opening is Core Flow step 1 (${contrastLabel}): greet them by first name in one short sentence, invite them to listen to two versions, then model each pair — wrong (Thai script) then right (English) — one pair at a time: ${pairs}. Do NOT explain yet, do NOT give the mouth tip, and do NOT ask them to speak.`;
   } else {
-    opening = `This opening is Core Flow step 1 (Listen): greet them by first name in one short sentence, invite them to listen, then model the ${nouns} one per line — ${spec.items.join(
+    const tipKind = stressMode ? 'rhythm' : 'speaking';
+    opening = `This opening is Core Flow step 1 (Listen): greet them by first name in one short sentence, invite them to listen, then model the ${nouns} one per line — ${listenItems.join(
       ', ',
-    )} — and stop there. Do NOT give the mouth tip and do NOT ask them to speak.`;
+    )} — and stop there. Do NOT give the ${tipKind} tip${
+      smoothMode ? ', do NOT start Listen Again yet,' : ''
+    } and do NOT ask them to speak.`;
   }
 
-  // The voice cannot be told to move word stress: capitalised spellings like
-  // "ta-BLE" come out with the same stress as "TA-ble", and the engine
-  // sometimes spells them letter by letter. Thai script is the only reliable
-  // way to make the wrong version sound wrong — so Chapter 3 uses it too, with
-  // the flat Thai rhythm standing in for the wrong stress.
-  let contrastRules = '';
-  if (hasContrast) {
-    const stressNote = stressMode
-      ? '- The Thai-script version carries the flat Thai rhythm; the English version carries natural stress. Never write English letters with capitals to mark stress (no "TA-ble") — the voice reads them as spelled-out letters.\n'
-      : '';
-    contrastRules = `
+  // Thai script is the only way to make the wrong version audibly wrong: the
+  // voice ignores capitals like "ta-BLE" and sometimes spells them out letter
+  // by letter. That works for added/dropped sounds (Chapter 2) but not for
+  // stress, so Chapter 3 has no contrast pair at all.
+  const contrastRules = hasContrast
+    ? `
 Wrong vs Right rules (critical for TTS):
 - The wrong form MUST stay in Thai script (e.g. สะ-ต๊อป) so the voice reads Thai syllables.
 - The right form MUST stay in Latin English letters (e.g. stop).
 - Never rewrite the wrong form as English letters — the aha moment disappears.
-${stressNote}- During Practice, say only the correct English form — never repeat the wrong form.
-`;
-  }
+- During Practice, say only the correct English form — never repeat the wrong form.
+`
+    : '';
 
-  const teachingRules = stressMode
-    ? `Important teaching rules:
+  let teachingRules: string;
+  if (stressMode) {
+    teachingRules = `Important teaching rules:
 - Focus ONLY on stress and rhythm. Do not correct grammar, vocabulary choice, or sentence structure.
 - You only see transcript TEXT, not audio — Whisper cannot measure stress or rhythm.
 - NEVER judge the learner's stress as pass/fail from the transcript.
 - NEVER invent pronunciation/length/speed problems from text.
 - Rhythm tips are teaching tips for EVERYONE (say them once as instruction), not personal diagnosis of what they just did wrong.
+- NEVER demonstrate a wrong version of a ${noun}, and never write capitals or hyphens to mark stress (no "TA-ble") — the voice cannot move stress and reads capitals as spelled-out letters. Model only the correct plain English form.
 - After every speaking attempt: give ONE short coach tip about stress/rhythm, then ADVANCE to the next ${noun}. No retries.
 - Keep each tutor turn under 2–3 short sentences.
 - Every non-final tutor turn MUST end with exactly one clear next action for the learner.
 - NEVER ask the learner to say "Ready" / "OK" / "I'm ready", and NEVER mention the Continue button. Listen-only steps just end after their content with expectsUserSpeech = false.
 - On every Repeat turn the turn must end with something for them to SAY, with expectsUserSpeech = true.
-- When Core Flow reaches Complete, set isLessonComplete = true (required). Otherwise false.`
-    : `Important teaching rules:
+- When Core Flow reaches Complete, set isLessonComplete = true (required). Otherwise false.`;
+  } else if (smoothMode) {
+    teachingRules = `Important teaching rules:
+- Focus ONLY on linking, continuity, and natural flow. Do not correct grammar, vocabulary choice, or sentence structure.
+- You only see transcript TEXT, not audio — Whisper cannot measure smoothness or linking.
+- NEVER judge the learner's linking as pass/fail from the transcript.
+- NEVER invent pronunciation/length/speed problems from text.
+- Speaking tips are teaching tips for EVERYONE (say them once as instruction), not personal diagnosis of what they just did wrong.
+- NEVER demonstrate a choppy or "wrong" version as contrast — model only the connected English forms.
+- After every speaking attempt: give ONE short coach tip about linking/continuity, then ADVANCE to the next ${noun}. No retries.
+- Keep each tutor turn under 2–3 short sentences.
+- Every non-final tutor turn MUST end with exactly one clear next action for the learner.
+- NEVER ask the learner to say "Ready" / "OK" / "I'm ready", and NEVER mention the Continue button. Listen-only steps just end after their content with expectsUserSpeech = false.
+- On every Repeat turn the turn must end with something for them to SAY, with expectsUserSpeech = true.
+- When Core Flow reaches Complete, set isLessonComplete = true (required). Otherwise false.`;
+  } else {
+    teachingRules = `Important teaching rules:
 - Focus ONLY on the target sound / speaking habit. Do not correct grammar, vocabulary choice, or sentence structure.
 - You only see transcript TEXT, not audio — never invent pronunciation/length/speed problems from text.
 - Do NOT diagnose what the learner did wrong with their tongue or airflow from the transcript.
@@ -250,8 +315,13 @@ ${stressNote}- During Practice, say only the correct English form — never repe
 - NEVER ask the learner to say "Ready" / "OK" / "I'm ready", and NEVER mention the Continue button. Listen-only steps just end after their content with expectsUserSpeech = false.
 - On every practice turn the turn must end with something for them to SAY, with expectsUserSpeech = true.
 - When Core Flow reaches Complete, set isLessonComplete = true (required). Otherwise false.`;
+  }
 
-  const tipLabel = stressMode ? 'Rhythm tip' : 'Mouth tip';
+  const tipLabel = stressMode
+    ? 'Rhythm tip'
+    : smoothMode
+      ? 'Speaking tip'
+      : 'Mouth tip';
 
   // Strip stress hyphens so "TA-ble" matches STT "table".
   const targetPhrases = spec.items.flatMap((item) =>
@@ -271,7 +341,8 @@ ${stressNote}- During Practice, say only the correct English form — never repe
     estimatedMinutesMax: 6,
     targetPhrases,
     maxTurns: 2 * (spec.items.length + listenOnlyCount + 1),
-    coachOnly: stressMode || undefined,
+    coachOnly: coachMode || undefined,
+    listenOnlyTurns: listenOnlyCount,
     systemInstruction: `Lesson: ${spec.titleEn}
 Goal: Help the learner feel and produce ${spec.soundLabel} in common ${nouns}. This is a teaching session — not a pronunciation scoring session.
 
@@ -3830,12 +3901,6 @@ Core Flow (progression milestones — NOT a fixed turn count):
       'Clear sounds are in place — next is rhythm. English has words that stand out and words that stay soft. ' +
       'When the rhythm is right, the same sentence suddenly sounds more natural.',
     stressMode: true,
-    contrasts: [
-      { wrong: 'ทะ-เบิ้ล', right: 'table' },
-      { wrong: 'วิน-โด้ว', right: 'window' },
-    ],
-    explainTh: 'ภาษาอังกฤษจะมีพยางค์ที่เด่นกว่าพยางค์อื่น ไม่ได้พูดเรียบเท่ากันทุกพยางค์แบบไทยครับ',
-    explainEn: 'English has one syllable that stands out — it is not flat and even like Thai syllables.',
   }),
   buildPronunciationLesson({
     lessonId: 'pron_stress_2',
@@ -3848,12 +3913,6 @@ Core Flow (progression milestones — NOT a fixed turn count):
     tipTh: 'ลองเน้นเสียงพยางค์หลังให้ชัดขึ้น',
     tipEn: 'Try making the later syllable clearer and stronger.',
     stressMode: true,
-    contrasts: [
-      { wrong: 'โฮ-เต็ล', right: 'hotel' },
-      { wrong: 'กี-ต้าร์', right: 'guitar' },
-    ],
-    explainTh: 'บางคำเน้นพยางค์หลัง ไม่ใช่พยางค์แรก — ฟังแล้วรู้สึกได้เลยครับ',
-    explainEn: 'Some words stress a later syllable, not the first — you can feel it when you listen.',
   }),
   buildPronunciationLesson({
     lessonId: 'pron_sent_stress_1',
@@ -3867,12 +3926,6 @@ Core Flow (progression milestones — NOT a fixed turn count):
     tipTh: 'เน้นเฉพาะคำสำคัญ ไม่ต้องเน้นทุกคำ',
     tipEn: 'Stress only the key words — not every word.',
     stressMode: true,
-    contrasts: [
-      { wrong: 'ไอ เลิฟ คอฟ-ฟี่', right: 'I love coffee.' },
-      { wrong: 'ไอ ไลค์ พิซ-ซ่า', right: 'I like pizza.' },
-    ],
-    explainTh: 'ในประโยค คำสำคัญต้องดังขึ้น คำเล็ก ๆ พูดเบาได้ครับ',
-    explainEn: 'In a sentence, key words get louder — small words can stay soft.',
   }),
   buildPronunciationLesson({
     lessonId: 'pron_weak_1',
@@ -3886,12 +3939,6 @@ Core Flow (progression milestones — NOT a fixed turn count):
     tipTh: 'คำสั้น ๆ อย่าง can, to, a พูดเบาและเร็วกว่าคำอื่น',
     tipEn: 'Short words like can, to, and a are softer and quicker than the rest.',
     stressMode: true,
-    contrasts: [
-      { wrong: 'ไอ แคน สะ-วิม', right: 'I can swim.' },
-      { wrong: 'ไอ แฮฟ อะ ด็อก', right: 'I have a dog.' },
-    ],
-    explainTh: 'คำเล็ก ๆ มักพูดเบาและเร็ว — อย่าเน้นทุกคำเท่ากันครับ',
-    explainEn: 'Little words are usually soft and fast — do not stress every word the same.',
   }),
   buildPronunciationLesson({
     lessonId: 'pron_rhythm_1',
@@ -3905,12 +3952,6 @@ Core Flow (progression milestones — NOT a fixed turn count):
     tipTh: 'เว้นจังหวะตามคำสำคัญ อย่าพูดทุกคำเท่ากัน',
     tipEn: 'Time the beat around the key words — do not say every word equally.',
     stressMode: true,
-    contrasts: [
-      { wrong: 'ไอ เลิฟ คอฟ ฟี่', right: 'I love coffee.' },
-      { wrong: 'ชี ไลค์ส พิซ ซ่า', right: 'She likes pizza.' },
-    ],
-    explainTh: 'อย่าพูดทุกพยางค์เท่ากัน — เว้นจังหวะตามคำสำคัญครับ',
-    explainEn: 'Do not give every syllable the same beat — follow the rhythm of the key words.',
   }),
   buildPronunciationLesson({
     lessonId: 'pron_review_3',
@@ -3924,12 +3965,97 @@ Core Flow (progression milestones — NOT a fixed turn count):
     tipTh: 'ทวนสั้น ๆ: เน้นพยางค์ที่เด่น เน้นคำสำคัญ และเว้นจังหวะตามคำนั้น',
     tipEn: 'Quick recap: stress the strong syllable, stress key words, and keep the beat on those words.',
     stressMode: true,
-    contrasts: [
-      { wrong: 'บะ-นา-น่า', right: 'banana' },
-      { wrong: 'วี เพลย์ ฟุต-บอล', right: 'We play football.' },
+  }),
+  // --- Chapter 4: Speak Smoothly ---
+  buildPronunciationLesson({
+    lessonId: 'pron_link_1',
+    titleEn: 'Linking Sounds I',
+    titleTh: 'เชื่อมเสียงพยัญชนะ + สระ',
+    goalEn: 'Link a final consonant into the next vowel so speech flows.',
+    goalTh: 'เชื่อมเสียงพยัญชนะท้ายกับสระถัดไปให้พูดลื่น',
+    soundLabel: 'consonant-to-vowel linking',
+    items: ['pick it up', 'turn it on', 'take it easy'],
+    itemNoun: 'phrase',
+    tipTh: 'อย่าหยุดระหว่างสองคำครับ',
+    tipEn: 'Do not pause between the two words.',
+    chapterOverviewTh:
+      'ออกเสียงชัดและจังหวะดีแล้วครับ ขั้นต่อไปคือพูดให้ลื่น — ไม่ต้องหยุดทีละคำ ' +
+      'พอเชื่อมเสียงได้ ประโยคเดิมจะฟังเหมือนเจ้าของภาษามากขึ้นทันทีครับ',
+    chapterOverviewEn:
+      'Clear sounds and rhythm are in place — next is smooth speech. You will stop chopping word by word. ' +
+      'Once the sounds link, the same sentence suddenly sounds more native.',
+    smoothMode: true,
+  }),
+  buildPronunciationLesson({
+    lessonId: 'pron_link_2',
+    titleEn: 'Linking Sounds II',
+    titleTh: 'เชื่อมเสียงสระ + สระ',
+    goalEn: 'Link vowel-to-vowel phrases so they sound like one unit.',
+    goalTh: 'เชื่อมสระกับสระให้ฟังเหมือนคำเดียว',
+    soundLabel: 'vowel-to-vowel linking',
+    items: ['go out', 'do it', 'see it'],
+    itemNoun: 'phrase',
+    tipTh: 'ลองพูดให้ต่อเนื่องเหมือนเป็นคำเดียว',
+    tipEn: 'Try saying it as one continuous word.',
+    smoothMode: true,
+  }),
+  buildPronunciationLesson({
+    lessonId: 'pron_reduce_1',
+    titleEn: 'Reductions',
+    titleTh: 'คำที่เจ้าของภาษาพูดสั้นลง',
+    goalEn: 'Recognize and imitate common reduced forms like gonna and wanna.',
+    goalTh: 'ฟังและเลียนแบบรูปที่ลดเสียงอย่าง gonna และ wanna',
+    soundLabel: 'everyday reductions (gonna, wanna, gotta)',
+    items: ['gonna', 'wanna', 'gotta'],
+    itemNoun: 'phrase',
+    tipTh: 'ฟังให้คุ้นก่อน ยังไม่จำเป็นต้องใช้ทันที',
+    tipEn: 'Get used to hearing them first — you do not need to use them yet.',
+    listenItems: ['going to', 'want to', 'got to'],
+    listenAgainItems: ['gonna', 'wanna', 'gotta'],
+    smoothMode: true,
+  }),
+  buildPronunciationLesson({
+    lessonId: 'pron_natural_1',
+    titleEn: 'Natural Phrases',
+    titleTh: 'ประโยคที่พูดลื่น',
+    goalEn: 'Say common natural phrases as one smooth unit.',
+    goalTh: 'พูดประโยคธรรมชาติที่ใช้บ่อยให้ลื่นต่อเนื่อง',
+    soundLabel: 'smooth everyday phrases',
+    items: ["I don't know.", 'Let me see.', 'Sounds good.'],
+    itemNoun: 'phrase',
+    tipTh: 'พูดทั้งประโยคต่อเนื่อง ไม่ต้องแยกทีละคำ',
+    tipEn: 'Say the whole phrase continuously — do not chop it word by word.',
+    smoothMode: true,
+  }),
+  buildPronunciationLesson({
+    lessonId: 'pron_flow_1',
+    titleEn: 'Everyday Flow',
+    titleTh: 'ฝึกประโยคจริง',
+    goalEn: 'Speak real everyday lines with natural connected flow.',
+    goalTh: 'พูดประโยคจริงในชีวิตประจำวันให้ลื่นแบบกำลังคุย',
+    soundLabel: 'connected everyday sentences',
+    items: [
+      'Can I have a coffee?',
+      "I'd like some water.",
+      'See you later.',
     ],
-    explainTh: 'รอบนี้รวม Word Stress, Sentence Stress และ Rhythm ของ Chapter 3',
-    explainEn: 'This round mixes Word Stress, Sentence Stress, and Rhythm from Chapter 3.',
+    itemNoun: 'phrase',
+    tipTh: 'ลองพูดเหมือนกำลังคุยกับคนจริง',
+    tipEn: 'Try saying it like you are talking to a real person.',
+    smoothMode: true,
+  }),
+  buildPronunciationLesson({
+    lessonId: 'pron_review_4',
+    titleEn: 'Review Challenge',
+    titleTh: 'ทบทวนการพูดลื่น',
+    goalEn: 'Practice linking, reductions, and natural phrases together.',
+    goalTh: 'ฝึก Linking, Reductions และ Natural Phrases รวมกัน',
+    soundLabel: 'linking, reductions, and natural phrases together',
+    items: ['pick it up', 'gonna', "I don't know."],
+    itemNoun: 'phrase',
+    tipTh: 'ทวนสั้น ๆ: เชื่อมเสียง ฟังรูปสั้น และพูดทั้งประโยคให้ลื่น',
+    tipEn: 'Quick recap: link sounds, hear reductions, and keep whole phrases smooth.',
+    smoothMode: true,
   }),
 ];
 
@@ -3992,6 +4118,12 @@ export const LESSON_PROGRESSION_ORDER: string[] = [
   'pron_weak_1',
   'pron_rhythm_1',
   'pron_review_3',
+  'pron_link_1',
+  'pron_link_2',
+  'pron_reduce_1',
+  'pron_natural_1',
+  'pron_flow_1',
+  'pron_review_4',
 ];
 
 /** Pronunciation course lessons run on the same engine but have their own
