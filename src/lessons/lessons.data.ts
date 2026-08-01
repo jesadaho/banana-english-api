@@ -109,17 +109,13 @@ function buildPronunciationLesson(spec: PronunciationLessonSpec): LessonConfig {
     ? 'invite'
     : 'welcome them by first name in ONE short sentence, then invite';
 
-  const wrongVsRightStep = stressMode
-    ? `Listen — ${inviteListen} them to listen to two versions ("ลองฟังสองแบบนะครับ" or the {{L1}} equivalent), then model each pair clearly, wrong stress first then right stress, one pair at a time:
-${contrastLines}
-Write BOTH forms EXACTLY as shown — English letters with the stressed syllable in CAPITALS (e.g. ta-BLE vs TA-ble). Do NOT rewrite either side in Thai script. Do NOT spell letter-by-letter. Do NOT explain what capitals mean. Nothing else — no tip, no question, no mention of any button. Stop after the last pair. expectsUserSpeech = false. (${
-        hasOverview ? 'Listen' : 'Opening — Listen'
-      })`
-    : `Wrong vs Right — ${inviteListen} them to listen to two versions, then model each pair clearly, wrong first then right, one pair at a time:
+  const contrastLabel = stressMode ? 'Listen' : 'Wrong vs Right';
+
+  const wrongVsRightStep = `${contrastLabel} — ${inviteListen} them to listen to two versions, then model each pair clearly, wrong first then right, one pair at a time:
 ${contrastLines}
 Write the wrong form EXACTLY in Thai script (so TTS reads Thai syllables) and the right form EXACTLY in English Latin letters. Nothing else — no explanation, no tip, no question, no mention of any button. Stop after the last pair. expectsUserSpeech = false. (${
-        hasOverview ? 'Wrong vs Right' : 'Opening — Wrong vs Right'
-      })`;
+    hasOverview ? contrastLabel : `Opening — ${contrastLabel}`
+  })`;
 
   const explainStep = stressMode
     ? `Compare — give ONLY the short explanation below in {{L1}}, 1–2 sentences, then stop. Do not model ${nouns} again, do not ask them to speak, do not mention any button. expectsUserSpeech = false. (Compare)
@@ -145,7 +141,7 @@ Write the wrong form EXACTLY in Thai script (so TTS reads Thai syllables) and th
    - NEVER say they were wrong or right about stress — you cannot hear stress from transcript text.
    - NEVER ask them to repeat the same ${noun} again — always advance after one attempt.
    - Never practice anything outside this list.
-   - During Repeat, say only the correct (right-stress) form — never model the wrong-stress form.
+   - During Repeat, say only the correct English form — never model the Thai-script version again.
    - Every turn in this step ends with something for them to say. expectsUserSpeech = true. (Repeat)`;
   } else {
     const practiceExtra = hasContrast
@@ -196,40 +192,35 @@ Write the wrong form EXACTLY in Thai script (so TTS reads Thai syllables) and th
   let opening: string;
   if (hasOverview) {
     opening = `This opening is Core Flow step 1 (Chapter Overview): welcome them to the chapter with their first name once, staying close to the chapter script in the lesson instruction. Do NOT model the ${nouns} yet, do NOT give the tip, and do NOT ask them to speak.`;
-  } else if (hasContrast && stressMode) {
-    const pairs = (spec.contrasts ?? [])
-      .map((c) => `❌ ${c.wrong} / ✅ ${c.right}`)
-      .join(', ');
-    opening = `This opening is Core Flow step 1 (Listen): greet them by first name in one short sentence, invite them to listen to two versions, then model each pair — wrong stress then right stress — one pair at a time: ${pairs}. Keep both sides in English with CAPITALS on the stressed syllable. Do NOT explain yet, do NOT give the rhythm tip, and do NOT ask them to speak.`;
   } else if (hasContrast) {
     const pairs = (spec.contrasts ?? [])
       .map((c) => `❌ ${c.wrong} / ✅ ${c.right}`)
       .join(', ');
-    opening = `This opening is Core Flow step 1 (Wrong vs Right): greet them by first name in one short sentence, invite them to listen to two versions, then model each pair — wrong (Thai script) then right (English) — one pair at a time: ${pairs}. Do NOT explain yet, do NOT give the mouth tip, and do NOT ask them to speak.`;
+    opening = `This opening is Core Flow step 1 (${contrastLabel}): greet them by first name in one short sentence, invite them to listen to two versions, then model each pair — wrong (Thai script) then right (English) — one pair at a time: ${pairs}. Do NOT explain yet, do NOT give the ${
+      stressMode ? 'rhythm' : 'mouth'
+    } tip, and do NOT ask them to speak.`;
   } else {
     opening = `This opening is Core Flow step 1 (Listen): greet them by first name in one short sentence, invite them to listen, then model the ${nouns} one per line — ${spec.items.join(
       ', ',
     )} — and stop there. Do NOT give the mouth tip and do NOT ask them to speak.`;
   }
 
+  // The voice cannot be told to move word stress: capitalised spellings like
+  // "ta-BLE" come out with the same stress as "TA-ble", and the engine
+  // sometimes spells them letter by letter. Thai script is the only reliable
+  // way to make the wrong version sound wrong — so Chapter 3 uses it too, with
+  // the flat Thai rhythm standing in for the wrong stress.
   let contrastRules = '';
-  if (hasContrast && stressMode) {
-    contrastRules = `
-Stress contrast rules (critical for TTS):
-- BOTH wrong and right forms MUST stay in English Latin letters.
-- Capitalize the stressed syllable (or key word) exactly as written — e.g. ❌ ta-BLE / ✅ TA-ble.
-- NEVER rewrite either side in Thai script.
-- NEVER spell capital letters out loud (do not say "T-A-ble").
-- NEVER explain that capitals mark stress — just model the two versions.
-- During Repeat, say only the correct (right-stress) form — never model the wrong-stress form.
-`;
-  } else if (hasContrast) {
+  if (hasContrast) {
+    const stressNote = stressMode
+      ? '- The Thai-script version carries the flat Thai rhythm; the English version carries natural stress. Never write English letters with capitals to mark stress (no "TA-ble") — the voice reads them as spelled-out letters.\n'
+      : '';
     contrastRules = `
 Wrong vs Right rules (critical for TTS):
 - The wrong form MUST stay in Thai script (e.g. สะ-ต๊อป) so the voice reads Thai syllables.
 - The right form MUST stay in Latin English letters (e.g. stop).
 - Never rewrite the wrong form as English letters — the aha moment disappears.
-- During Practice, say only the correct English form — never repeat the wrong form.
+${stressNote}- During Practice, say only the correct English form — never repeat the wrong form.
 `;
   }
 
@@ -3829,7 +3820,7 @@ Core Flow (progression milestones — NOT a fixed turn count):
     goalEn: 'Stress the first syllable of common two-syllable words.',
     goalTh: 'เน้นเสียงพยางค์แรกของคำสองพยางค์ที่ใช้บ่อย',
     soundLabel: 'first-syllable word stress',
-    items: ['TA-ble', 'WIN-dow', 'DOC-tor'],
+    items: ['table', 'window', 'doctor'],
     tipTh: 'เน้นเสียงพยางค์แรกให้ดังกว่าพยางค์อื่นครับ',
     tipEn: 'Make the first syllable louder than the rest.',
     chapterOverviewTh:
@@ -3839,9 +3830,12 @@ Core Flow (progression milestones — NOT a fixed turn count):
       'Clear sounds are in place — next is rhythm. English has words that stand out and words that stay soft. ' +
       'When the rhythm is right, the same sentence suddenly sounds more natural.',
     stressMode: true,
-    contrasts: [{ wrong: 'ta-BLE', right: 'TA-ble' }],
-    explainTh: 'ภาษาอังกฤษจะมีพยางค์ที่เด่นกว่าพยางค์อื่น — ฟังความต่างของตำแหน่งที่เน้นดูครับ',
-    explainEn: 'English has one syllable that stands out more than the others — listen for where the stress lands.',
+    contrasts: [
+      { wrong: 'ทะ-เบิ้ล', right: 'table' },
+      { wrong: 'วิน-โด้ว', right: 'window' },
+    ],
+    explainTh: 'ภาษาอังกฤษจะมีพยางค์ที่เด่นกว่าพยางค์อื่น ไม่ได้พูดเรียบเท่ากันทุกพยางค์แบบไทยครับ',
+    explainEn: 'English has one syllable that stands out — it is not flat and even like Thai syllables.',
   }),
   buildPronunciationLesson({
     lessonId: 'pron_stress_2',
@@ -3850,11 +3844,14 @@ Core Flow (progression milestones — NOT a fixed turn count):
     goalEn: 'Stress the later syllable in words like hotel and guitar.',
     goalTh: 'เน้นพยางค์หลังในคำอย่าง hotel และ guitar',
     soundLabel: 'later-syllable word stress',
-    items: ['ho-TEL', 'gui-TAR', 'ba-NA-na'],
+    items: ['hotel', 'guitar', 'banana'],
     tipTh: 'ลองเน้นเสียงพยางค์หลังให้ชัดขึ้น',
     tipEn: 'Try making the later syllable clearer and stronger.',
     stressMode: true,
-    contrasts: [{ wrong: 'HO-tel', right: 'ho-TEL' }],
+    contrasts: [
+      { wrong: 'โฮ-เต็ล', right: 'hotel' },
+      { wrong: 'กี-ต้าร์', right: 'guitar' },
+    ],
     explainTh: 'บางคำเน้นพยางค์หลัง ไม่ใช่พยางค์แรก — ฟังแล้วรู้สึกได้เลยครับ',
     explainEn: 'Some words stress a later syllable, not the first — you can feel it when you listen.',
   }),
@@ -3865,12 +3862,15 @@ Core Flow (progression milestones — NOT a fixed turn count):
     goalEn: 'Make the key content words louder in a short sentence.',
     goalTh: 'ทำให้คำสำคัญดังขึ้นในประโยคสั้น ๆ',
     soundLabel: 'sentence stress on key content words',
-    items: ['I LOVE coffee.', 'I like PIZZA.', 'She is HAPPY.'],
+    items: ['I love coffee.', 'I like pizza.', 'She is happy.'],
     itemNoun: 'phrase',
     tipTh: 'เน้นเฉพาะคำสำคัญ ไม่ต้องเน้นทุกคำ',
     tipEn: 'Stress only the key words — not every word.',
     stressMode: true,
-    contrasts: [{ wrong: 'I love COFFEE.', right: 'I LOVE coffee.' }],
+    contrasts: [
+      { wrong: 'ไอ เลิฟ คอฟ-ฟี่', right: 'I love coffee.' },
+      { wrong: 'ไอ ไลค์ พิซ-ซ่า', right: 'I like pizza.' },
+    ],
     explainTh: 'ในประโยค คำสำคัญต้องดังขึ้น คำเล็ก ๆ พูดเบาได้ครับ',
     explainEn: 'In a sentence, key words get louder — small words can stay soft.',
   }),
@@ -3881,12 +3881,15 @@ Core Flow (progression milestones — NOT a fixed turn count):
     goalEn: 'Keep short grammar words soft and quick while content words stand out.',
     goalTh: 'พูดคำไวยากรณ์สั้น ๆ ให้เบาและเร็ว คำสำคัญยังเด่นอยู่',
     soundLabel: 'weak forms of short grammar words (can, to, a)',
-    items: ['I can SWIM.', 'I want to GO.', 'I have a DOG.'],
+    items: ['I can swim.', 'I want to go.', 'I have a dog.'],
     itemNoun: 'phrase',
     tipTh: 'คำสั้น ๆ อย่าง can, to, a พูดเบาและเร็วกว่าคำอื่น',
     tipEn: 'Short words like can, to, and a are softer and quicker than the rest.',
     stressMode: true,
-    contrasts: [{ wrong: 'I CAN swim.', right: 'I can SWIM.' }],
+    contrasts: [
+      { wrong: 'ไอ แคน สะ-วิม', right: 'I can swim.' },
+      { wrong: 'ไอ แฮฟ อะ ด็อก', right: 'I have a dog.' },
+    ],
     explainTh: 'คำเล็ก ๆ มักพูดเบาและเร็ว — อย่าเน้นทุกคำเท่ากันครับ',
     explainEn: 'Little words are usually soft and fast — do not stress every word the same.',
   }),
@@ -3897,12 +3900,15 @@ Core Flow (progression milestones — NOT a fixed turn count):
     goalEn: 'Keep natural English rhythm by stressing key words and grouping the rest.',
     goalTh: 'รักษาจังหวะภาษาอังกฤษด้วยการเน้นคำสำคัญและจัดกลุ่มคำที่เหลือ',
     soundLabel: 'natural English sentence rhythm',
-    items: ['I LOVE coffee.', 'She LIKES pizza.', 'We PLAY football.'],
+    items: ['I love coffee.', 'She likes pizza.', 'We play football.'],
     itemNoun: 'phrase',
     tipTh: 'เว้นจังหวะตามคำสำคัญ อย่าพูดทุกคำเท่ากัน',
     tipEn: 'Time the beat around the key words — do not say every word equally.',
     stressMode: true,
-    contrasts: [{ wrong: 'I - love - cof - fee', right: 'I LOVE coffee.' }],
+    contrasts: [
+      { wrong: 'ไอ เลิฟ คอฟ ฟี่', right: 'I love coffee.' },
+      { wrong: 'ชี ไลค์ส พิซ ซ่า', right: 'She likes pizza.' },
+    ],
     explainTh: 'อย่าพูดทุกพยางค์เท่ากัน — เว้นจังหวะตามคำสำคัญครับ',
     explainEn: 'Do not give every syllable the same beat — follow the rhythm of the key words.',
   }),
@@ -3913,12 +3919,15 @@ Core Flow (progression milestones — NOT a fixed turn count):
     goalEn: 'Practice word stress, sentence stress, and rhythm together.',
     goalTh: 'ฝึกเน้นคำ เน้นประโยค และจังหวะรวมกัน',
     soundLabel: 'word stress, sentence stress, and rhythm together',
-    items: ['ba-NA-na', 'I LOVE coffee.', 'We PLAY football.'],
+    items: ['banana', 'I love coffee.', 'We play football.'],
     itemNoun: 'phrase',
     tipTh: 'ทวนสั้น ๆ: เน้นพยางค์ที่เด่น เน้นคำสำคัญ และเว้นจังหวะตามคำนั้น',
     tipEn: 'Quick recap: stress the strong syllable, stress key words, and keep the beat on those words.',
     stressMode: true,
-    contrasts: [{ wrong: 'we play FOOT-ball', right: 'We PLAY football.' }],
+    contrasts: [
+      { wrong: 'บะ-นา-น่า', right: 'banana' },
+      { wrong: 'วี เพลย์ ฟุต-บอล', right: 'We play football.' },
+    ],
     explainTh: 'รอบนี้รวม Word Stress, Sentence Stress และ Rhythm ของ Chapter 3',
     explainEn: 'This round mixes Word Stress, Sentence Stress, and Rhythm from Chapter 3.',
   }),
