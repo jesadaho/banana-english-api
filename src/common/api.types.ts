@@ -22,6 +22,12 @@ export interface FreeTalkTurnReply extends GptReply {
 
 export type SessionType = 'intro' | 'legacy' | 'simulation' | 'training';
 
+/** The app posts this instead of a transcript when the learner taps Continue. */
+export const TAP_TO_CONTINUE_SENTINEL = '[continue]';
+
+/** How a Continue tap is stored in history and shown to the model. */
+export const TAP_TO_CONTINUE_TURN_TEXT = '(tapped Continue)';
+
 export interface FeedbackHints {
   grammarTip?: string;
   mispronouncedWords: string[];
@@ -36,6 +42,9 @@ export interface TurnExchangeResponse {
   updatedCheckpoints: Record<string, boolean>;
   feedbackHints: FeedbackHints;
   currentTurn: number;
+  /** False when the learner should tap Continue instead of speaking.
+   * Omitted on paths that always expect speech. */
+  expectsUserSpeech?: boolean;
 }
 
 export interface SimulationConfigResponse {

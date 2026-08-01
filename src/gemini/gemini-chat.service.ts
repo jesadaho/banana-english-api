@@ -41,9 +41,13 @@ import {
   HintOption,
   HintsResponse,
 } from '../common/api.types';
+import { TAP_TO_CONTINUE_TURN_TEXT } from '../common/api.types';
 import type { SimulationConfig } from '../simulations/simulations.data';
 import type { LessonConfig } from '../lessons/lessons.data';
-import { pickFunnyIntroJabSeed } from '../lessons/lessons.data';
+import {
+  isPronunciationLesson,
+  pickFunnyIntroJabSeed,
+} from '../lessons/lessons.data';
 import {
   buildLessonSystemInstruction,
   renderOpeningPrompt,
@@ -142,15 +146,36 @@ const FREE_TALK_REPLY_SCHEMA = {
   ],
 };
 
-const TRAINING_REPLY_SCHEMA = {
-  type: 'object',
-  properties: {
-    textEn: { type: 'string' },
-    textTh: { type: 'string' },
-    isLessonComplete: { type: 'boolean' },
-  },
-  required: ['textEn', 'textTh', 'isLessonComplete'],
-};
+function buildTrainingReplySchema(withSpeechFlag: boolean) {
+  if (!withSpeechFlag) {
+    return {
+      type: 'object',
+      properties: {
+        textEn: { type: 'string' },
+        textTh: { type: 'string' },
+        isLessonComplete: { type: 'boolean' },
+      },
+      required: ['textEn', 'textTh', 'isLessonComplete'],
+    };
+  }
+
+  return {
+    type: 'object',
+    properties: {
+      textEn: { type: 'string' },
+      textTh: { type: 'string' },
+      isLessonComplete: { type: 'boolean' },
+      expectsUserSpeech: { type: 'boolean' },
+    },
+    required: ['textEn', 'textTh', 'isLessonComplete', 'expectsUserSpeech'],
+  };
+}
+
+function trainingReplyJsonExample(withSpeechFlag: boolean): string {
+  return withSpeechFlag
+    ? '{"textEn":"...","textTh":"...","isLessonComplete":false,"expectsUserSpeech":true}'
+    : '{"textEn":"...","textTh":"...","isLessonComplete":false}';
+}
 
 export interface SimulationTurnReply {
   aiResponse: string;
@@ -166,6 +191,8 @@ export interface TrainingTurnReply {
   textEn: string;
   textTh: string;
   isLessonComplete: boolean;
+  /** Only present for lessons that expose a tap-to-continue button. */
+  expectsUserSpeech?: boolean;
 }
 
 function buildSimulationReplySchema(criteria: string[]) {
@@ -1006,6 +1033,7 @@ export class GeminiChatService {
         'FORBIDDEN: copy any Tone example verbatim. One short Thai jab only, then teach vocab.\n\n'
       : '';
     const openingPrompt = renderOpeningPrompt(config, lang);
+    const speechFlag = isPronunciationLesson(config.lessonId);
 
     return this.generateJson<TrainingTurnReply>({
       systemInstruction: this.trainingSystemPrompt(
@@ -1022,13 +1050,13 @@ export class GeminiChatService {
                 `${openingPrompt}\n\n` +
                 jabSeedLine +
                 'Respond with ONLY one JSON object: ' +
-                '{"textEn":"...","textTh":"...","isLessonComplete":false}. ' +
+                `${trainingReplyJsonExample(speechFlag)}. ` +
                 'No markdown. No prose outside JSON.',
             },
           ],
         },
       ],
-      schema: TRAINING_REPLY_SCHEMA,
+      schema: buildTrainingReplySchema(speechFlag),
       maxOutputTokens: 512,
       temperature: jabSeed ? 0.85 : 0.4,
       recoverFromPlainText: (text) => this.recoverTrainingReplyFromPlainText(text),
@@ -1043,6 +1071,7 @@ export class GeminiChatService {
     learnerFirstName: string,
   ): Promise<TrainingTurnReply> {
     const contents: GeminiContent[] = [];
+    const speechFlag = isPronunciationLesson(config.lessonId);
 
     // Session store already appended this user turn before generate — do not
     // send it twice (model invents "said it twice" / retry loops).
@@ -1058,6 +1087,7 @@ export class GeminiChatService {
                     textEn: turn.textEn,
                     textTh: turn.textTh ?? '',
                     isLessonComplete: false,
+                    ...(speechFlag ? { expectsUserSpeech: true } : {}),
                   })
                 : turn.textEn,
           },
@@ -1072,7 +1102,7 @@ export class GeminiChatService {
           text:
             `${this.trainingUserTurnPayload(userMessage, config, history)}\n\n` +
             'Respond with ONLY one JSON object: ' +
-            '{"textEn":"...","textTh":"...","isLessonComplete":false}. ' +
+            `${trainingReplyJsonExample(speechFlag)}. ` +
             'No markdown. No prose outside JSON.',
         },
       ],
@@ -1085,7 +1115,7 @@ export class GeminiChatService {
         learnerFirstName,
       ),
       contents,
-      schema: TRAINING_REPLY_SCHEMA,
+      schema: buildTrainingReplySchema(speechFlag),
       maxOutputTokens: 600,
       temperature: 0.4,
       recoverFromPlainText: (text) =>
@@ -1338,7 +1368,10 @@ export class GeminiChatService {
 
   private recentUserMessages(history: ChatTurn[], limit: number): string[] {
     return history
-      .filter((turn) => turn.speaker === 'user')
+      .filter(
+        (turn) =>
+          turn.speaker === 'user' && turn.textEn !== TAP_TO_CONTINUE_TURN_TEXT,
+      )
       .slice(-limit)
       .map((turn) => turn.textEn);
   }
@@ -1349,6 +1382,16 @@ export class GeminiChatService {
     history: ChatTurn[],
   ): string {
     const lang = teachingLanguageFromConfig(config);
+
+    if (userMessage === TAP_TO_CONTINUE_TURN_TEXT) {
+      return `Learner action: they tapped the Continue button. There is no transcript because they were not asked to speak.
+
+MATCH RESULT: NOT APPLICABLE — a button press is not a spoken attempt.
+Required response:
+- Do NOT praise, evaluate, correct, or repeat the button press.
+- Move straight to the NEXT Core Flow step.`;
+    }
+
     const matched = this.matchTargetPhrase(userMessage, config.targetPhrases);
     if (matched) {
       const nearMiss =
@@ -1424,6 +1467,17 @@ Required response:
     const englishHeavy = lang === 'english';
     const lessonInstruction = buildLessonSystemInstruction(config, lang);
 
+    const speechFlagBlock = isPronunciationLesson(config.lessonId)
+      ? `
+Tap-to-continue (this lesson only):
+- The learner sees a "Continue" button when they are not expected to speak, and the mic otherwise.
+- expectsUserSpeech: true when your turn asks the learner to SAY a word or phrase out loud.
+- expectsUserSpeech: false when your turn only asks them to listen or to confirm they are ready — in that case tell them to TAP CONTINUE, never to say "Ready" or "OK".
+- A learner message of "${TAP_TO_CONTINUE_TURN_TEXT}" is a button press, not speech. Never praise, evaluate, or repeat it — just move straight to the next step.
+- On the final turn (isLessonComplete true), set expectsUserSpeech false.
+`
+      : '';
+
     const textEnJsonHint = englishHeavy
       ? 'textEn: spoken Teacher B line — MOSTLY ENGLISH; keep Thai light/optional; must end with the learner\'s next action unless completing'
       : 'textEn: spoken Teacher B line — MOSTLY THAI; include the English target phrase only where the learner should hear/say it; must end with the learner\'s next action unless completing';
@@ -1454,7 +1508,7 @@ Acceptance rules (critical — prevent retry loops):
 - Prefer progress and confidence over perfection.
 
 Turn ${currentTurn} of ${config.maxTurns} (${remaining} turns remaining).
-
+${speechFlagBlock}
 Critical turn-loop rule:
 - If isLessonComplete is false, textEn MUST end with a clear next action for the learner (repeat, recognition choice/guided use, or free recall). Never return explanation/praise only.
 - Always follow the 70/20/10 mix above for this lesson.
@@ -1464,7 +1518,11 @@ Return JSON ONLY (critical — never reply with bare prose):
 - Output a single JSON object and nothing else. No markdown fences.
 - ${textEnJsonHint}
 - textTh: short Thai support line / paraphrase
-- isLessonComplete: true ONLY on the Summary + Celebrate core step (required to finish). Otherwise false`;
+- isLessonComplete: true ONLY on the Summary + Celebrate core step (required to finish). Otherwise false${
+      speechFlagBlock
+        ? '\n- expectsUserSpeech: false when this turn is listen-only or a ready check, true when you ask the learner to speak'
+        : ''
+    }`;
   }
 
   async generateSimulationTurn(

@@ -25,6 +25,10 @@ import type {
   TurnFeedbackItem,
 } from '../common/api.types';
 import {
+  TAP_TO_CONTINUE_SENTINEL,
+  TAP_TO_CONTINUE_TURN_TEXT,
+} from '../common/api.types';
+import {
   ChatTurn,
   SessionStoreService,
 } from '../session-store/session-store.service';
@@ -366,6 +370,7 @@ export class SessionsController {
           updatedCheckpoints: {},
           feedbackHints: { mispronouncedWords: [] as string[] },
           currentTurn: 0,
+          expectsUserSpeech: reply.expectsUserSpeech ?? true,
         },
       };
     } catch (err) {
@@ -399,9 +404,15 @@ export class SessionsController {
       throw new BadRequestException('userSpeechText is required');
     }
 
+    // A Continue tap is not speech — never send it through Thai-mix repair.
+    const isTapToContinue = originalText === TAP_TO_CONTINUE_SENTINEL;
+    if (isTapToContinue) {
+      originalText = TAP_TO_CONTINUE_TURN_TEXT;
+    }
+
     let userText = originalText;
     try {
-      if (body.thaiMixEnabled) {
+      if (body.thaiMixEnabled && !isTapToContinue) {
         this.sessionStore.markThaiMixUsed(sessionId);
         userText = await this.chat.correctThaiMix(originalText);
       }
@@ -445,6 +456,10 @@ export class SessionsController {
         updatedCheckpoints: {},
         feedbackHints: { mispronouncedWords: [] },
         currentTurn: nextTurn,
+        // A completed lesson hands off to the drill, so never ask for speech.
+        expectsUserSpeech: isTaskComplete
+          ? false
+          : (reply.expectsUserSpeech ?? true),
       };
 
       if (body.generateAudio) {
