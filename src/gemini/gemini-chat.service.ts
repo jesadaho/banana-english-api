@@ -1470,9 +1470,10 @@ Required response:
     const speechFlagBlock = isPronunciationLesson(config.lessonId)
       ? `
 Tap-to-continue (this lesson only):
-- The learner sees a "Continue" button when they are not expected to speak, and the mic otherwise.
+- The app shows a Continue button whenever expectsUserSpeech is false, and the mic when it is true. The learner can always see it.
 - expectsUserSpeech: true when your turn asks the learner to SAY a word or phrase out loud.
-- expectsUserSpeech: false when your turn only asks them to listen or to confirm they are ready — in that case tell them to TAP CONTINUE, never to say "Ready" or "OK".
+- expectsUserSpeech: false when your turn is listen-only — you are modeling sounds or giving a tip and they should not speak yet.
+- NEVER mention the button in textEn or textTh. Do not write "Tap Continue", "แตะเพื่อไปต่อ", "press the button", or any variation. Do not ask them to say "Ready" or "OK" either. A listen-only turn simply ends after its content — that is allowed, and the button is the learner's next action.
 - A learner message of "${TAP_TO_CONTINUE_TURN_TEXT}" is a button press, not speech. Never praise, evaluate, or repeat it — just move straight to the next step.
 - On the final turn (isLessonComplete true), set expectsUserSpeech false.
 `
@@ -1510,7 +1511,11 @@ Acceptance rules (critical — prevent retry loops):
 Turn ${currentTurn} of ${config.maxTurns} (${remaining} turns remaining).
 ${speechFlagBlock}
 Critical turn-loop rule:
-- If isLessonComplete is false, textEn MUST end with a clear next action for the learner (repeat, recognition choice/guided use, or free recall). Never return explanation/praise only.
+- If isLessonComplete is false, textEn MUST end with a clear next action for the learner (repeat, recognition choice/guided use, or free recall). Never return explanation/praise only.${
+      speechFlagBlock
+        ? '\n- EXCEPTION: on a listen-only turn (expectsUserSpeech false) the Continue button is the next action, so end after the content and ask for nothing.'
+        : ''
+    }
 - Always follow the 70/20/10 mix above for this lesson.
 - After a successful learner reply, the next action must be a NEW step — not the same phrase again.
 
