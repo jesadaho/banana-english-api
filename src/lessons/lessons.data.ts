@@ -24,6 +24,209 @@ export interface LessonConfig {
   openingPrompt: string;
 }
 
+interface PronunciationContrast {
+  /** Thai-script mispronunciation so TTS reads it as Thai syllables. */
+  wrong: string;
+  /** Correct English word in Latin script. */
+  right: string;
+}
+
+interface PronunciationLessonSpec {
+  lessonId: string;
+  titleEn: string;
+  titleTh: string;
+  goalEn: string;
+  goalTh: string;
+  /** How the sound / habit is described inside the prompt. */
+  soundLabel: string;
+  /** What the learner listens to and then says, one per practice turn. */
+  items: string[];
+  /** Word used when talking about one practice item. */
+  itemNoun?: string;
+  tipTh: string;
+  tipEn: string;
+  /** First lesson of a chapter opens with a welcome to the chapter. */
+  chapterOverviewTh?: string;
+  chapterOverviewEn?: string;
+  /**
+   * Chapter 2: Wrong vs Right pairs. Wrong MUST be Thai script so TTS
+   * reads it as Thai syllables; right MUST be Latin English.
+   */
+  contrasts?: PronunciationContrast[];
+  /** Short explanation after the contrast (Chapter 2). */
+  explainTh?: string;
+  explainEn?: string;
+}
+
+/**
+ * Chapter 1: (Overview →) Listen → Tip → Practice → Complete
+ * Chapter 2: (Overview →) Wrong vs Right → Explain → Tip → Practice → Complete
+ */
+function buildPronunciationLesson(spec: PronunciationLessonSpec): LessonConfig {
+  const noun = spec.itemNoun ?? 'word';
+  const nouns = `${noun}s`;
+  const list = spec.items.map((item) => `- ${item}`).join('\n');
+  const arrow = spec.items.join(' → ');
+  const first = spec.items[0];
+  const last = spec.items[spec.items.length - 1];
+  const hasOverview =
+    spec.chapterOverviewTh != null && spec.chapterOverviewEn != null;
+  const hasContrast =
+    spec.contrasts != null &&
+    spec.contrasts.length > 0 &&
+    spec.explainTh != null &&
+    spec.explainEn != null;
+
+  // Language tags only work at the start of a line — never indent them.
+  const overviewStep = `Chapter Overview — welcome them to the chapter using their first name once, staying close to the script below. Nothing else — no ${noun} modeling, no tip, no question, no mention of any button. expectsUserSpeech = false. (Opening — Overview)
+@thai   Script: ${spec.chapterOverviewTh}
+@english   Script: ${spec.chapterOverviewEn}`;
+
+  const contrastLines = (spec.contrasts ?? [])
+    .map((c) => `❌ ${c.wrong}\n✅ ${c.right}`)
+    .join('\n...\n');
+
+  const wrongVsRightStep = `Wrong vs Right — ${
+    hasOverview
+      ? 'invite'
+      : 'welcome them by first name in ONE short sentence, then invite'
+  } them to listen to two versions, then model each pair clearly, wrong first then right, one pair at a time:
+${contrastLines}
+Write the wrong form EXACTLY in Thai script (so TTS reads Thai syllables) and the right form EXACTLY in English Latin letters. Nothing else — no explanation, no tip, no question, no mention of any button. Stop after the last pair. expectsUserSpeech = false. (${
+    hasOverview ? 'Wrong vs Right' : 'Opening — Wrong vs Right'
+  })`;
+
+  const explainStep = `Explain — give ONLY the short explanation below in {{L1}}, 1–2 sentences, then stop. Do not model ${nouns} again, do not ask them to speak, do not mention any button. expectsUserSpeech = false. (Explain)
+@thai   Script: ${spec.explainTh}
+@english   Script: ${spec.explainEn}`;
+
+  const listenStep = `Listen — ${
+    hasOverview ? 'invite' : 'welcome them by first name in ONE short sentence, then invite'
+  } them to listen and model the ${nouns} clearly, one per line: ${arrow}. Nothing else — no goal speech, no tip, no question, no mention of any button. Stop right after the last one. expectsUserSpeech = false. (${
+    hasOverview ? 'Listen' : 'Opening — Listen'
+  })`;
+
+  const tipStep = `Speaking Tip — give ONLY the mouth tip above in {{L1}}, one short sentence, then stop. Do not model ${nouns} again, do not ask them to speak, do not mention any button. expectsUserSpeech = false. (Tip)`;
+
+  const practiceExtra = hasContrast
+    ? `\n   - NEVER say or model the wrong (Thai-script) form again during Practice — only the correct English ${noun}.`
+    : '';
+
+  const practiceStep = `Practice — the same ${nouns}, ONE per turn, always in this order: ${arrow}.
+   - Open this step with "ตาคุณแล้วครับ" (or the {{L1}} equivalent of "Your turn"), then ask them to say: ${first}.
+   - After each attempt give ONE short piece of feedback (one sentence: praise, or a light reminder of the tip), then immediately ask for the next ${noun} in the same turn.
+   - Never practice anything outside this list, and never practice full sentences.${practiceExtra}
+   - Every turn in this step ends with something for them to say. expectsUserSpeech = true. (Repeat)`;
+
+  const completeStep = `Complete — after feedback on "${last}", celebrate in one short sentence using their first name once, and tell them a short drill is next. Set isLessonComplete = true (REQUIRED) and expectsUserSpeech = false.`;
+
+  const coreSteps = hasContrast
+    ? [
+        ...(hasOverview ? [overviewStep] : []),
+        wrongVsRightStep,
+        explainStep,
+        tipStep,
+        practiceStep,
+        completeStep,
+      ]
+    : [
+        ...(hasOverview ? [overviewStep] : []),
+        listenStep,
+        tipStep,
+        practiceStep,
+        completeStep,
+      ];
+
+  const steps = coreSteps
+    .map((step, index) => `${index + 1}. ${step}`)
+    .join('\n');
+
+  // Tip step index (1-based) depends on overview + contrast.
+  let tipStepNumber: number;
+  if (hasContrast) {
+    tipStepNumber = hasOverview ? 4 : 3;
+  } else {
+    tipStepNumber = hasOverview ? 3 : 2;
+  }
+
+  // Base listen-only steps before practice: contrast path has 3, ch1 has 2;
+  // plus optional overview.
+  const listenOnlyCount = (hasOverview ? 1 : 0) + (hasContrast ? 3 : 2);
+
+  let opening: string;
+  if (hasOverview) {
+    opening = `This opening is Core Flow step 1 (Chapter Overview): welcome them to the chapter with their first name once, staying close to the chapter script in the lesson instruction. Do NOT model the ${nouns} yet, do NOT give the mouth tip, and do NOT ask them to speak.`;
+  } else if (hasContrast) {
+    const pairs = (spec.contrasts ?? [])
+      .map((c) => `❌ ${c.wrong} / ✅ ${c.right}`)
+      .join(', ');
+    opening = `This opening is Core Flow step 1 (Wrong vs Right): greet them by first name in one short sentence, invite them to listen to two versions, then model each pair — wrong (Thai script) then right (English) — one pair at a time: ${pairs}. Do NOT explain yet, do NOT give the mouth tip, and do NOT ask them to speak.`;
+  } else {
+    opening = `This opening is Core Flow step 1 (Listen): greet them by first name in one short sentence, invite them to listen, then model the ${nouns} one per line — ${spec.items.join(
+      ', ',
+    )} — and stop there. Do NOT give the mouth tip and do NOT ask them to speak.`;
+  }
+
+  const contrastRules = hasContrast
+    ? `
+Wrong vs Right rules (critical for TTS):
+- The wrong form MUST stay in Thai script (e.g. สะ-ต๊อป) so the voice reads Thai syllables.
+- The right form MUST stay in Latin English letters (e.g. stop).
+- Never rewrite the wrong form as English letters — the aha moment disappears.
+- During Practice, say only the correct English form — never repeat the wrong form.
+`
+    : '';
+
+  return {
+    lessonId: spec.lessonId,
+    targetLabel: noun,
+    titleEn: spec.titleEn,
+    titleTh: spec.titleTh,
+    goalEn: spec.goalEn,
+    goalTh: spec.goalTh,
+    difficulty: 'beginner',
+    languageMix: { thai: 70, english: 30 },
+    estimatedMinutesMin: 4,
+    estimatedMinutesMax: 6,
+    targetPhrases: spec.items.flatMap((item) =>
+      item.split('/').map((part) => part.trim()),
+    ),
+    maxTurns: 2 * (spec.items.length + listenOnlyCount + 1),
+    systemInstruction: `Lesson: ${spec.titleEn}
+Goal: Help the learner feel and produce ${spec.soundLabel} in common ${nouns}. This is a teaching session — not a pronunciation scoring session.
+
+Target ${nouns} (exactly these, in this order — never add others to practice):
+${list}
+${contrastRules}
+Important teaching rules:
+- Focus ONLY on the target sound / speaking habit. Do not correct grammar, vocabulary choice, or sentence structure.
+- You only see transcript TEXT, not audio — never invent pronunciation/length/speed problems from text.
+- Do NOT diagnose what the learner did wrong with their tongue or airflow from the transcript.
+- Mouth tips are teaching tips for EVERYONE (say them once as instruction), not personal diagnosis.
+- Accept any clear attempt that includes the target ${noun} and ADVANCE.
+- If the text truly does not match the target, gently ask for at most ONE retry.
+- After one retry (or two total attempts on the same ${noun}), accept and move on.
+- Keep each tutor turn under 2–3 short sentences.
+- Every non-final tutor turn MUST end with exactly one clear next action for the learner.
+- NEVER ask the learner to say "Ready" / "OK" / "I'm ready", and NEVER mention the Continue button. Listen-only steps just end after their content with expectsUserSpeech = false.
+- On every practice turn the turn must end with something for them to SAY, with expectsUserSpeech = true.
+- When Core Flow reaches Complete, set isLessonComplete = true (required). Otherwise false.
+
+Mouth tip (this is the whole of Core Flow step ${tipStepNumber} — same tip for everyone):
+@thai   ${spec.tipTh}
+@english   ${spec.tipEn}
+Do not add a long explanation after the tip.
+
+Core Flow (progression milestones — NOT a fixed turn count):
+- Follow these core steps in order. Do not skip ahead.
+- Extra turns for praise, one retry, or short feedback MAY happen between steps — that is OK.
+- After a core step succeeds, advance to the next core step.
+
+${steps}`,
+    openingPrompt: `Start the ${spec.titleEn} pronunciation lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). ${opening} Do NOT ask them to say "Ready", and do NOT mention any button. Return JSON matching the schema. isLessonComplete must be false and expectsUserSpeech must be false.`,
+  };
+}
+
 export const LESSONS: LessonConfig[] = [
   {
     lessonId: 'greetings',
@@ -3321,73 +3524,226 @@ Core Flow (progression milestones — NOT a fixed turn count):
     openingPrompt:
       'Start the Shopping Basics lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once in the welcome, briefly say the lesson goal, then model "I\'m just looking." and ask them to repeat (Core Flow step 1–2). Follow the Core Flow milestones — retries/feedback may add turns between steps. Every turn must end with a clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
   },
-  {
+  buildPronunciationLesson({
     lessonId: 'pron_th_1',
-    targetLabel: 'word',
     titleEn: 'TH Sound (think)',
     titleTh: 'เสียง TH (think)',
     goalEn: 'Say the voiceless TH sound clearly in common words.',
     goalTh: 'ออกเสียง TH แบบไม่มีเสียงชัดในคำที่ใช้บ่อย',
-    difficulty: 'beginner',
-    languageMix: { thai: 70, english: 30 },
-    estimatedMinutesMin: 4,
-    estimatedMinutesMax: 6,
-    targetPhrases: [
-      'think',
-      'thank',
-      'three',
-      'Thursday',
-      'Thank you.',
-      'Three books.',
-      'Think about it.',
+    soundLabel: 'the voiceless TH sound (/θ/)',
+    items: ['think', 'thank', 'three'],
+    tipTh: 'แลบปลายลิ้นออกมาแตะฟันเบา ๆ แล้วเป่าลมออก',
+    tipEn: 'Put the tip of your tongue lightly on your front teeth, then blow air out.',
+    chapterOverviewTh:
+      'ยินดีต้อนรับสู่ Chapter 1 ครับ! ในหมวดนี้เราจะมาปรับการออกเสียงคำพื้นฐานให้ชัดเป๊ะ ฟังดูอินเตอร์ขึ้นทันที ' +
+      'ประเดิมบทแรกด้วยเสียง TH ที่คนไทยเกือบทุกคนเคยออกเสียงผิดกันครับ',
+    chapterOverviewEn:
+      'Welcome to Chapter 1! In this chapter we sharpen the basic sounds so your English instantly sounds clearer. ' +
+      'We start with the TH sound — almost every Thai speaker gets this one wrong at first.',
+  }),
+  buildPronunciationLesson({
+    lessonId: 'pron_th_2',
+    titleEn: 'TH Sound (this)',
+    titleTh: 'เสียง TH (this)',
+    goalEn: 'Say the voiced TH sound clearly in common words.',
+    goalTh: 'ออกเสียง TH แบบมีเสียงชัดในคำที่ใช้บ่อย',
+    soundLabel: 'the voiced TH sound (/ð/)',
+    items: ['this', 'that', 'they', 'those'],
+    tipTh: 'วางลิ้นแตะฟันเหมือนเดิม แต่คราวนี้ให้ลำคอสั่นด้วย',
+    tipEn: 'Same tongue position on your teeth, but this time let your throat buzz.',
+  }),
+  buildPronunciationLesson({
+    lessonId: 'pron_w_1',
+    titleEn: 'W Sound',
+    titleTh: 'เสียง W',
+    goalEn: 'Say the W sound clearly without turning it into a V.',
+    goalTh: 'ออกเสียง W ให้ชัด ไม่กลายเป็นเสียง V',
+    soundLabel: 'the W sound (/w/)',
+    items: ['we', 'water', 'window', 'work'],
+    tipTh: 'จู๋ปากเป็นวงกลมก่อนออกเสียง อย่าให้ฟันบนแตะริมฝีปาก',
+    tipEn: 'Round your lips first, and keep your top teeth off your lip.',
+  }),
+  buildPronunciationLesson({
+    lessonId: 'pron_v_1',
+    titleEn: 'V Sound',
+    titleTh: 'เสียง V',
+    goalEn: 'Say the V sound clearly without turning it into a W.',
+    goalTh: 'ออกเสียง V ให้ชัด ไม่กลายเป็นเสียง W',
+    soundLabel: 'the V sound (/v/)',
+    items: ['very', 'voice', 'visit', 'move'],
+    tipTh: 'ใช้ฟันบนแตะริมฝีปากล่างเบา ๆ แล้วออกเสียงให้สั่น',
+    tipEn: 'Rest your top teeth lightly on your bottom lip and let it buzz.',
+  }),
+  buildPronunciationLesson({
+    lessonId: 'pron_rl_1',
+    titleEn: 'R vs L',
+    titleTh: 'เสียง R กับ L',
+    goalEn: 'Hear and say the difference between R and L.',
+    goalTh: 'แยกและออกเสียง R กับ L ให้ต่างกันชัดเจน',
+    soundLabel: 'the difference between R (/r/) and L (/l/)',
+    items: ['right / light', 'road / load', 'really / lily'],
+    itemNoun: 'pair',
+    tipTh: 'เสียง R ม้วนลิ้นค้างไว้ อย่าให้ลิ้นแตะอะไรเลย ส่วนเสียง L ให้ปลายลิ้นแตะเหงือกหลังฟันบน',
+    tipEn: 'For R, curl your tongue and touch nothing. For L, touch the tip of your tongue behind your top teeth.',
+  }),
+  buildPronunciationLesson({
+    lessonId: 'pron_end_t_1',
+    titleEn: 'Ending T',
+    titleTh: 'เสียง T ท้ายคำ',
+    goalEn: 'Finish words with a clear ending T.',
+    goalTh: 'ปิดท้ายคำด้วยเสียง T ให้ชัด',
+    soundLabel: 'the ending T sound (/t/) at the end of a word',
+    items: ['cat', 'sit', 'want', 'not'],
+    tipTh: 'แตะปลายลิ้นที่เหงือกหลังฟันบน แล้วหยุดเสียงทันที ไม่ต้องลากเสียงต่อ',
+    tipEn: 'Touch the tip of your tongue behind your top teeth, then stop the sound right there.',
+  }),
+  buildPronunciationLesson({
+    lessonId: 'pron_end_d_1',
+    titleEn: 'Ending D',
+    titleTh: 'เสียง D ท้ายคำ',
+    goalEn: 'Finish words with a clear ending D.',
+    goalTh: 'ปิดท้ายคำด้วยเสียง D ให้ชัด',
+    soundLabel: 'the ending D sound (/d/) at the end of a word',
+    items: ['need', 'good', 'friend', 'called'],
+    tipTh: 'ตำแหน่งลิ้นเหมือนเสียง T แต่ให้ลำคอสั่นตอนปิดคำ',
+    tipEn: 'Same tongue position as T, but let your throat buzz as you close the word.',
+  }),
+  buildPronunciationLesson({
+    lessonId: 'pron_review_1',
+    titleEn: 'Review Challenge',
+    titleTh: 'ทบทวนรวมเสียง',
+    goalEn: 'Say all five sounds from this course clearly in one round.',
+    goalTh: 'ออกเสียงทั้งห้ากลุ่มของคอร์สนี้ให้ชัดในรอบเดียว',
+    soundLabel: 'all five sounds from this course (TH, W, V, R/L, ending T/D)',
+    items: ['think', 'water', 'very', 'right / light', 'cat / need'],
+    itemNoun: 'item',
+    tipTh: 'ทวนสั้น ๆ: TH ลิ้นแตะฟัน, W จู๋ปาก, V ฟันแตะริมฝีปาก, R ม้วนลิ้น, T กับ D ปิดท้ายคำให้ครบ',
+    tipEn: 'Quick recap: TH tongue on teeth, W round lips, V teeth on lip, R curled tongue, and close T and D at the end.',
+  }),
+  // --- Chapter 2: Break the Habit ---
+  buildPronunciationLesson({
+    lessonId: 'pron_no_add_1',
+    titleEn: 'Don\'t Add Sounds',
+    titleTh: 'อย่าเติมเสียง',
+    goalEn: 'Stop adding an extra Thai syllable before English consonant clusters.',
+    goalTh: 'เลิกเติมพยางค์ไทยข้างหน้าคลัสเตอร์พยัญชนะภาษาอังกฤษ',
+    soundLabel: 'consonant clusters without an extra Thai syllable in front',
+    items: ['stop', 'school', 'spring'],
+    tipTh: 'เริ่มพูดจากเสียง st ได้เลย ไม่ต้องเติมเสียง "สะ"',
+    tipEn: 'Start right on the st sound — do not add a "sa" in front.',
+    chapterOverviewTh:
+      'หลายครั้งที่คนไทยพูดผิด ไม่ใช่เพราะออกเสียงไม่ได้ แต่เพราะติดนิสัยการพูดแบบภาษาไทย ' +
+      'Chapter นี้เราจะค่อย ๆ แก้นิสัยเหล่านั้นไปด้วยกันครับ',
+    chapterOverviewEn:
+      'Thai speakers often say a word wrong not because they cannot make the sound, ' +
+      'but because of speaking habits carried over from Thai. In this chapter we will fix those habits together, one at a time.',
+    contrasts: [{ wrong: 'สะ-ต๊อป', right: 'stop' }],
+    explainTh: 'ได้ยินความต่างไหมครับ ภาษาอังกฤษไม่มีเสียง "สะ" ข้างหน้า',
+    explainEn: 'Hear the difference? English has no "sa" sound in front.',
+  }),
+  buildPronunciationLesson({
+    lessonId: 'pron_end_l_1',
+    titleEn: 'Ending L Sounds',
+    titleTh: 'เสียง L ท้ายคำ',
+    goalEn: 'Keep a clear L at the end of a word instead of turning it into N.',
+    goalTh: 'ออกเสียง L ท้ายคำให้ชัด ไม่เปลี่ยนเป็นเสียง น',
+    soundLabel: 'a clear ending L (/l/) instead of turning it into N',
+    items: ['call', 'people', 'email'],
+    tipTh: 'ปลายลิ้นแตะเหงือกหลังฟันบนตอนจบคำ อย่าปล่อยเป็นเสียง น',
+    tipEn: 'Touch the tip of your tongue behind your top teeth as you finish — do not let it become an N.',
+    contrasts: [{ wrong: 'คอล-น', right: 'call' }],
+    explainTh: 'คนไทยมักเปลี่ยน L ท้ายคำเป็นเสียง น แต่เจ้าของภาษาแตะลิ้นค้างไว้',
+    explainEn: 'Thai speakers often turn ending L into N, but native speakers keep the tongue touch.',
+  }),
+  buildPronunciationLesson({
+    lessonId: 'pron_no_drop_1',
+    titleEn: 'Don\'t Drop Sounds',
+    titleTh: 'อย่าตัดเสียงท้าย',
+    goalEn: 'Keep the final consonant — do not cut it off.',
+    goalTh: 'ออกเสียงพยัญชนะท้ายคำให้ครบ อย่าตัดทิ้ง',
+    soundLabel: 'final consonants that Thai speakers often drop',
+    items: ['want', 'first', 'next'],
+    tipTh: 'แตะลิ้นแล้วหยุดเสียงสั้น ๆ ตอนท้ายคำ',
+    tipEn: 'Touch your tongue and stop the sound briefly at the end.',
+    contrasts: [{ wrong: 'วอน', right: 'want' }],
+    explainTh: 'คำนี้ต้องมีเสียง T ตอนท้าย อย่าตัดทิ้ง',
+    explainEn: 'This word needs the T at the end — do not drop it.',
+  }),
+  buildPronunciationLesson({
+    lessonId: 'pron_final_s_1',
+    titleEn: 'Final S Sounds',
+    titleTh: 'เสียง S ท้ายคำ',
+    goalEn: 'Say the final S clearly on plurals and verbs.',
+    goalTh: 'ออกเสียง S ท้ายคำให้ชัด ทั้งพหูพจน์และกริยา',
+    soundLabel: 'a clear final S (/s/ or /z/) on plurals and verbs',
+    items: ['books', 'likes', 'needs'],
+    tipTh: 'ปิดท้ายด้วยเสียง s หรือ z สั้น ๆ อย่าตัดทิ้ง',
+    tipEn: 'Finish with a short s or z — do not cut it off.',
+    contrasts: [{ wrong: 'บุ๊ค', right: 'books' }],
+    explainTh: 'พหูพจน์และกริยาต้องมีเสียง S ท้ายคำ อย่าพูดแค่รูปเอกพจน์',
+    explainEn: 'Plurals and verbs need the final S — do not say only the singular form.',
+  }),
+  buildPronunciationLesson({
+    lessonId: 'pron_tricky_1',
+    titleEn: 'Tricky Words',
+    titleTh: 'คำที่อ่านไม่ง่าย',
+    goalEn: 'Say common words the way native speakers say them — not letter by letter.',
+    goalTh: 'พูดคำที่ใช้บ่อยแบบเจ้าของภาษา ไม่สะกดทีละตัว',
+    soundLabel: 'reduced syllable patterns in everyday English words',
+    items: ['comfortable', 'vegetable', 'chocolate'],
+    tipTh: 'อย่าอ่านทีละพยางค์ตามตัวสะกด ฟังจังหวะสั้นของเจ้าของภาษาแล้วพูดตาม',
+    tipEn: 'Do not spell every syllable — copy the short native rhythm.',
+    contrasts: [
+      { wrong: 'คอม-ฟอร์-ท-เบิ้ล', right: 'comfortable' },
     ],
-    maxTurns: 16,
-    systemInstruction: `Lesson: TH Sound (think)
-Goal: Help the learner feel and produce the voiceless TH sound (/θ/) in common words and short phrases. This is a teaching session — not a pronunciation scoring session.
-
-Target words / phrases:
-- think
-- thank
-- three
-- Thursday
-- Thank you.
-- Three books.
-- Think about it.
-
-Important teaching rules:
-- Focus ONLY on the TH sound. Do not correct grammar, vocabulary choice, or sentence structure.
-- You only see transcript TEXT, not audio — never invent pronunciation/length/speed problems from text.
-- Do NOT diagnose what the learner did wrong with their tongue or airflow from the transcript.
-- Mouth tips are teaching tips for EVERYONE (say them once as instruction), not personal diagnosis.
-- Accept any clear attempt that includes the target word/phrase and ADVANCE.
-- If the text truly does not match the target, gently ask for at most ONE retry.
-- After one retry (or two total attempts on the same item), accept and move on.
-- Keep each tutor turn under 2–3 short sentences.
-- Every non-final tutor turn MUST end with exactly one clear next action for the learner.
-- NEVER ask the learner to say "Ready" / "OK" / "I'm ready", and NEVER mention the Continue button. Listen-only steps just end after their content with expectsUserSpeech = false.
-- On every practice step the turn must end with a word or phrase for them to SAY, with expectsUserSpeech = true.
-- When Core Flow reaches Summary + Celebrate, set isLessonComplete = true (required). Otherwise false.
-
-Mouth tip (this is the whole of Core Flow step 2 — same tip for everyone):
-@thai   แลบปลายลิ้นออกมาแตะฟันเบา ๆ แล้วเป่าลมออก
-@english   Put the tip of your tongue lightly on your front teeth, then blow air out.
-Do not add a long explanation after the tip.
-
-Core Flow (progression milestones — NOT a fixed turn count):
-- Follow these core steps in order. Do not skip ahead.
-- Extra turns for praise, one retry, or short feedback MAY happen between steps — that is OK.
-- After a core step succeeds, advance to the next core step.
-
-1. Listen — welcome them by first name in ONE short sentence, then invite them to listen to three words and model them clearly, one per line: think → thank → three. Nothing else — no goal speech, no tip, no question, no mention of any button. Stop right after the third word. expectsUserSpeech = false. (Opening — Listen)
-2. Speaking Tip — give ONLY the mouth tip above in {{L1}}, one short sentence, then stop. Do not model words again, do not ask them to speak, do not mention any button. expectsUserSpeech = false. (Tip)
-3. First Try — say "ตาคุณแล้วครับ" (or the {{L1}} equivalent of "Your turn"), then ask them to say: think. Nothing else. expectsUserSpeech = true. (Repeat)
-4. Guided Practice — model and ask them to say each word, one at a time: thank → three → Thursday. Praise briefly after each clear attempt and advance. expectsUserSpeech = true. (Guided)
-5. Phrase Practice — model and ask them to say each phrase, one at a time: "Thank you." → "Three books." → "Think about it." Focus only on TH — ignore grammar. expectsUserSpeech = true. (Phrase)
-6. Summary + Celebrate with their first name once. Tell them a short TH drill is next. Set isLessonComplete = true (REQUIRED) and expectsUserSpeech = false.`,
-    openingPrompt:
-      'Start the TH Sound (think) pronunciation lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). This opening is Core Flow step 1 (Listen): greet them by first name in one short sentence, invite them to listen, then model the three words one per line — think, thank, three, and stop there. Do NOT give the mouth tip, do NOT ask them to speak, do NOT ask them to say "Ready", and do NOT mention any button. Return JSON matching the schema. isLessonComplete must be false and expectsUserSpeech must be false.',
-  },
-
+    explainTh: 'หลายคนอ่านตามตัวสะกด แต่เจ้าของภาษามักพูดสั้นลง',
+    explainEn: 'Many people read every letter, but natives usually say a shorter form.',
+  }),
+  buildPronunciationLesson({
+    lessonId: 'pron_silent_1',
+    titleEn: 'Silent Letters',
+    titleTh: 'ตัวอักษรเงียบ',
+    goalEn: 'Skip silent letters instead of pronouncing every letter you see.',
+    goalTh: 'ข้ามตัวอักษรที่ไม่อ่าน แทนที่จะอ่านทุกตัวที่เห็น',
+    soundLabel: 'silent letters that Thai speakers often pronounce',
+    items: ['Wednesday', 'know', 'listen'],
+    tipTh: 'มีตัวอักษรที่ไม่อ่าน — ข้ามไปเลย อย่าออกเสียงทุกตัว',
+    tipEn: 'Some letters are silent — skip them. Do not say every letter you see.',
+    contrasts: [{ wrong: 'เว้ด-เนส-เดย์', right: 'Wednesday' }],
+    explainTh: 'ตัว d ตรงกลางของ Wednesday ไม่อ่าน เจ้าของภาษาพูดสั้นกว่าที่สะกด',
+    explainEn: 'The middle d in Wednesday is silent — natives say a shorter form than the spelling.',
+  }),
+  buildPronunciationLesson({
+    lessonId: 'pron_ed_1',
+    titleEn: 'ED Endings',
+    titleTh: 'เสียง ED ท้ายคำ',
+    goalEn: 'Say -ed endings the natural way — /t/, /d/, or /ɪd/.',
+    goalTh: 'ออกเสียง ED ท้ายคำให้ถูกจังหวะ — /t/, /d/ หรือ /ɪd/',
+    soundLabel: 'natural -ed endings (/t/, /d/, or /ɪd/)',
+    items: ['worked', 'played', 'wanted'],
+    tipTh: 'ส่วนใหญ่ ED ไม่ได้อ่านว่า "เอ็ด" ทั้งคำ — ฟังจบคำแล้วต่อเสียง t หรือ d สั้น ๆ',
+    tipEn: 'Most -ed endings are not a full "ed" syllable — finish with a short t or d sound.',
+    contrasts: [{ wrong: 'วอร์ค-เอ็ด', right: 'worked' }],
+    explainTh: 'หลายคนเติมเสียง "เอ็ด" ทุกคำ แต่เจ้าของภาษามักปิดด้วย t หรือ d สั้น ๆ',
+    explainEn: 'Many people add a full "ed" syllable every time, but natives often finish with a short t or d.',
+  }),
+  buildPronunciationLesson({
+    lessonId: 'pron_review_2',
+    titleEn: 'Review Challenge',
+    titleTh: 'ทบทวนนิสัยการพูด',
+    goalEn: 'Fix all five speaking habits from this chapter in one round.',
+    goalTh: 'แก้ทั้งห้านิสัยของแชปเตอร์นี้ในรอบเดียว',
+    soundLabel: 'all five habits from this chapter (no add, no drop, final S, tricky words, silent letters)',
+    items: ['stop', 'want', 'books', 'comfortable', 'Wednesday'],
+    tipTh: 'ทวนสั้น ๆ: อย่าเติมสะ, อย่าตัดท้าย, อย่าลืม S, อย่าสะกดทุกพยางค์, ข้ามตัวเงียบ',
+    tipEn: 'Quick recap: no extra sa, keep endings, keep final S, shorten tricky words, skip silent letters.',
+    contrasts: [
+      { wrong: 'สะ-ต๊อป', right: 'stop' },
+      { wrong: 'วอน', right: 'want' },
+    ],
+    explainTh: 'รอบนี้รวมนิสัยหลักของ Chapter 2 — ฟังความต่างแล้วพูดแบบถูกต้อง',
+    explainEn: 'This round mixes the main habits from Chapter 2 — hear the difference, then say it right.',
+  }),
 ];
 
 const LESSON_BY_ID = new Map(LESSONS.map((l) => [l.lessonId, l]));
@@ -3428,6 +3784,21 @@ export const LESSON_PROGRESSION_ORDER: string[] = [
   'shopping_basics',
   // Pronunciation course (separate catalog UI — excluded from Banana Graduate)
   'pron_th_1',
+  'pron_th_2',
+  'pron_w_1',
+  'pron_v_1',
+  'pron_rl_1',
+  'pron_end_t_1',
+  'pron_end_d_1',
+  'pron_review_1',
+  'pron_no_add_1',
+  'pron_end_l_1',
+  'pron_no_drop_1',
+  'pron_final_s_1',
+  'pron_tricky_1',
+  'pron_silent_1',
+  'pron_ed_1',
+  'pron_review_2',
 ];
 
 /** Pronunciation course lessons run on the same engine but have their own
