@@ -48,6 +48,7 @@ import {
 import {
   getLesson,
   getLessonBananaCost,
+  isPronunciationLesson,
   normalizeLessonTeachingLanguage,
   withTeachingLanguage,
 } from '../lessons/lessons.data';
@@ -370,7 +371,11 @@ export class SessionsController {
           updatedCheckpoints: {},
           feedbackHints: { mispronouncedWords: [] as string[] },
           currentTurn: 0,
-          expectsUserSpeech: reply.expectsUserSpeech ?? true,
+          // Pronunciation lessons always open on the Listen step, so don't let
+          // a model slip decide whether the learner sees the mic.
+          expectsUserSpeech: isPronunciationLesson(config.lessonId)
+            ? false
+            : (reply.expectsUserSpeech ?? true),
         },
       };
     } catch (err) {

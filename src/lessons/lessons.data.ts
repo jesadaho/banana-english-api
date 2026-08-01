@@ -248,7 +248,7 @@ Teaching scope:
 - Learner only needs to SPEAK a few selected numbers (see Core Flow) — not all 21.
 
 Practice mix target for this short lesson (~3–4 min):
-- Teach/model in batches, Repeat ~4 times total, Recognition + Recall combined in one quick check phase (2–3 questions total).
+- Teach/model in batches, Repeat ~4 times total, Recognition + Recall combined in one quick check phase (at most 2 questions).
 - Never run the whole lesson as repeat-only.
 
 Core Flow (progression milestones — NOT a fixed turn count):
@@ -267,11 +267,11 @@ Core Flow (progression milestones — NOT a fixed turn count):
    → ask learner to repeat ONE teen number only (e.g. fifteen or eighteen). (Teach + Repeat)
 @thai 6. Teach 20: map "เลข 20 อ่านว่า twenty" → ask learner to repeat twenty. (Teach + Repeat)
 @english 6. Teach 20 (twenty) → ask learner to repeat twenty. (Teach + Repeat)
-7. Quick Recognition + Recall (2–3 questions total, one per turn):
+7. Quick Recognition + Recall (AT MOST 2 questions, one per turn — if only one unused item is left, ask ONE and stop):
 @thai    - Mix see-digit → say-word AND hear-digit → say-word checks.
 @thai    - Example pair: "เลข 20 อ่านว่าอะไร?" (recognition) then "พูดเลข 12 ให้หน่อย" (recall).
 @english    - Mix one sequence question (e.g. "What comes before twelve?") and one counting task (e.g. "Count from six to ten.").
-   - Use different numbers across questions — do NOT repeat the same number twice.
+   - Never reuse a number you already used anywhere earlier in this lesson.
    - Keep each question short; advance after each clear answer. (Recognition + Recall)
 8. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED to end the lesson).
 
@@ -366,7 +366,7 @@ Teaching scope:
 - Learner only SPEAKS selected examples — not every number 20–100.
 
 Practice mix target for this lesson (~4–5 min):
-- Teach/model in batches, Repeat ~4 times total, Recognition + Recall in quick check phase (2–3 questions).
+- Teach/model in batches, Repeat ~4 times total, Recognition + Recall in quick check phase (at most 2 questions).
 - Never run the whole lesson as repeat-only.
 
 Core Flow (progression milestones — NOT a fixed turn count):
@@ -380,10 +380,10 @@ Core Flow (progression milestones — NOT a fixed turn count):
 @thai 4. Recognition 20–99: one short check (e.g. "เลข 62 อ่านว่าอะไร?" / learner says "sixty-two"). (Recognition)
 @english 4. Recognition 20–99: one short check — ask a sequence or pattern question (e.g. "What comes after sixty?"). NEVER ask "How do you say 62?"; the voice would speak the digit as its English word and give the answer away. (Recognition)
 5. Explain -teen vs -ty and tricky pairs (e.g. thirteen vs thirty, fourteen vs forty, fifteen vs fifty, eighteen vs eighty) → ask learner to repeat ONE tens word you choose (e.g. fifty). Never stop after explain alone. (Explain + Repeat)
-6. Quick Recognition + Recall (2–3 questions total, one per turn):
+6. Quick Recognition + Recall (AT MOST 2 questions, one per turn — if only one unused item is left, ask ONE and stop):
 @thai    - Mix see-digit → say-word AND hear-digit → say-word checks across 20–100.
 @english    - Mix one sequence question (e.g. "What comes after eighty?") and one counting task (e.g. "Count from twenty to twenty-five.") across 20–100.
-   - Use different numbers; do NOT repeat the same number twice. (Recognition + Recall)
+   - Never reuse a number you already used anywhere earlier in this lesson. (Recognition + Recall)
 7. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED to end the lesson).
 
 Turn loop rules (critical — never stall the learner):
@@ -478,7 +478,7 @@ Teaching scope:
 - Learner only SPEAKS selected example sentences — not every time on the clock.
 
 Practice mix target for this lesson (~4–5 min):
-- Teach/model in small batches, Repeat ~3 times total, Explain once, Recognition + Recall in quick check phase (2–3 questions).
+- Teach/model in small batches, Repeat ~3 times total, Explain once, Recognition + Recall in quick check phase (at most 2 questions).
 - Never run the whole lesson as repeat-only.
 
 Core Flow (progression milestones — NOT a fixed turn count):
@@ -492,10 +492,10 @@ Core Flow (progression milestones — NOT a fixed turn count):
 4. Teach a.m. / p.m.: explain briefly in {{L1}} (morning vs afternoon/evening), model examples → ask learner to repeat ONE full sentence with a.m. or p.m. (e.g. It's seven a.m.). (Teach + Repeat)
 5. Recognition: show one digital time (with a.m./p.m. if helpful) → learner says the time in English. (Recognition)
 6. Explain in {{L1}}: recap o'clock, a.m./p.m., noon (12:00 midday), midnight (12:00 at night). Keep it short — this step is explanation-focused. (Explain)
-7. Quick Recognition + Recall (2–3 questions total, one per turn):
+7. Quick Recognition + Recall (AT MOST 2 questions, one per turn — if only one unused item is left, ask ONE and stop):
    - Mix see-time → say-time AND hear-time → say-time checks.
    - Include at least one question involving a.m./p.m. or noon/midnight if natural.
-   - Use different times; do NOT repeat the same time twice. (Recognition + Recall)
+   - Never reuse a time you already used anywhere earlier in this lesson. (Recognition + Recall)
 8. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED to end the lesson).
 
 Turn loop rules (critical — never stall the learner):
@@ -572,7 +572,7 @@ Teaching scope:
 - Learner only SPEAKS selected examples — not every day individually.
 
 Practice mix target for this lesson (~4–5 min):
-- Teach/model in batches, Repeat ~4 times total, Explain once, Recognition + Recall in quick check phase (2–3 questions).
+- Teach/model in batches, Repeat ~4 times total, Explain once, Recognition + Recall in quick check phase (at most 2 questions).
 - Never run the whole lesson as repeat-only.
 
 Core Flow (progression milestones — NOT a fixed turn count):
@@ -586,10 +586,10 @@ Core Flow (progression milestones — NOT a fixed turn count):
 4. Teach today / tomorrow / yesterday: explain briefly in {{L1}}, model one example → ask learner to repeat ONE short sentence (e.g. Today is Monday). (Teach + Repeat)
 5. Recognition: ask one simple day question (e.g. "วันอะไร?" showing a day / "What day is today?" with context). (Recognition)
 6. Explain in {{L1}}: day order sequence (Monday → Tuesday → Wednesday → … → Sunday). Keep it short — explanation-focused. (Explain)
-7. Quick Recognition + Recall (2–3 questions total, one per turn):
+7. Quick Recognition + Recall (AT MOST 2 questions, one per turn — if only one unused item is left, ask ONE and stop):
    - Mix see-day → say-day AND hear-day → say-day checks.
    - Include today / tomorrow / yesterday when natural.
-   - Use different days; do NOT repeat the same item twice. (Recognition + Recall)
+   - Never reuse a day you already used anywhere earlier in this lesson. (Recognition + Recall)
 8. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED to end the lesson).
 
 Turn loop rules (critical — never stall the learner):
@@ -670,7 +670,7 @@ Teaching scope:
 - Learner only SPEAKS selected examples — not every month individually.
 
 Practice mix target for this lesson (~4–5 min):
-- Teach/model in batches, Repeat ~4 times total, Explain once, Recognition + Recall in quick check phase (2–3 questions).
+- Teach/model in batches, Repeat ~4 times total, Explain once, Recognition + Recall in quick check phase (at most 2 questions).
 - Never run the whole lesson as repeat-only.
 
 Core Flow (progression milestones — NOT a fixed turn count):
@@ -684,9 +684,9 @@ Core Flow (progression milestones — NOT a fixed turn count):
 4. Teach Dates: explain Month + Date pattern briefly, model examples (July 15th, December 25th …) → ask learner to repeat ONE date example. (Teach + Repeat)
 5. Recognition: show one month or date → learner says it in English. (Recognition)
 6. Explain in {{L1}}: recap Month + Date pattern (month first, then date with -st/-nd/-rd/-th). Keep it short — explanation-focused. (Explain)
-7. Quick Recognition + Recall (2–3 questions total, one per turn):
+7. Quick Recognition + Recall (AT MOST 2 questions, one per turn — if only one unused item is left, ask ONE and stop):
    - Mix see-month/date → say AND hear-month/date → say checks.
-   - Use different months and dates; do NOT repeat the same item twice. (Recognition + Recall)
+   - Never reuse a month or date you already used anywhere earlier in this lesson. (Recognition + Recall)
 8. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED to end the lesson).
 
 Turn loop rules (critical — never stall the learner):
@@ -782,7 +782,7 @@ Core Flow (progression milestones — NOT a fixed turn count):
 @english 1. Welcome + Goal — welcome by name; briefly say today you will practice talking about yourself and the person you talk with. Do NOT mention He / She / It. Go straight into the first {{L1_TO_EN}} sentence with I am... (Opening → Repeat)
 2. Teach I am... — {{L1_TO_EN}} with "I am Ben." then "I am a student." Invite their own name or role when ready. (Repeat)
 3. Teach You are... — {{L1_TO_EN}} with "You are my friend." (Repeat)
-4. Recognition — short situations in {{L1}}; learner says the matching I am... / You are... sentence. Do 2–3 quick items. (Recognition)
+4. Recognition — short situations in {{L1}}; learner says the matching I am... / You are... sentence. Do at most 2 quick items, and never reuse one you already used earlier in this lesson. (Recognition)
 5. Build Sentences / Mini Practice — 1–2 quick guided scenes; learner produces a full sentence (optionally with their own name). (Recall)
 6. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED to end the lesson).
 
@@ -880,7 +880,7 @@ Core Flow (progression milestones — NOT a fixed turn count):
 @english 1. Welcome + Goal — welcome by name; briefly say today you will practice talking about other people and things. Do NOT mention We / They. Go straight into He is... (Opening → Repeat)
 2. Teach He is... / She is... — {{L1_TO_EN}} with "He is my father." then "She is my sister." Map He/She briefly; still only ONE sentence to repeat per turn. (Repeat)
 3. Teach It is... — {{L1_TO_EN}} with "It is my bag." (Repeat)
-4. Recognition — short situations in {{L1}}; learner says He is... / She is... / It is... Do 2–3 quick items. (Recognition)
+4. Recognition — short situations in {{L1}}; learner says He is... / She is... / It is... Do at most 2 quick items, and never reuse one you already used earlier in this lesson. (Recognition)
 5. Build Sentences / Mini Practice — 1–2 guided scenes; learner produces a full sentence (optionally with their own people/things). (Recall)
 6. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED to end the lesson).
 
@@ -1222,7 +1222,7 @@ Teaching scope:
 - Learner SPEAKS selected example sentences — not every variation.
 
 Practice mix target for this lesson (~4–5 min):
-- Teach/model in small groups, Repeat ~3 times total, Recognition + Recall in quick check phase (2–3 questions).
+- Teach/model in small groups, Repeat ~3 times total, Recognition + Recall in quick check phase (at most 2 questions).
 - Never run the whole lesson as repeat-only.
 
 Core Flow (progression milestones — NOT a fixed turn count):
@@ -1236,9 +1236,9 @@ Core Flow (progression milestones — NOT a fixed turn count):
 4. Teach Excuse me & Sorry: explain both with simple situations in {{L1}} → ask learner to repeat ONE sentence (e.g. Excuse me or I'm sorry). (Teach + Repeat)
 5. Recognition: give ONE everyday situation in {{L1}} → learner says the most appropriate polite phrase aloud (e.g. someone gives you something → thank you). (Recognition)
 6. Explain in {{L1}}: Excuse me ≠ Sorry — excuse me = get attention / small interruption; sorry = apologize for a mistake. Keep it short — explanation-focused. (Explain)
-7. Quick Recognition + Recall (2–3 questions total, one per turn):
+7. Quick Recognition + Recall (AT MOST 2 questions, one per turn — if only one unused item is left, ask ONE and stop):
    - Mix situation → say-phrase AND hear-situation → say-phrase checks.
-   - Use different situations; do NOT repeat the same scenario twice. (Recognition + Recall)
+   - Never reuse a situation you already used anywhere earlier in this lesson. (Recognition + Recall)
 8. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED to end the lesson).
 
 Turn loop rules (critical — never stall the learner):
@@ -1310,7 +1310,7 @@ Teaching scope:
 - Learner SPEAKS selected examples — not every variation.
 
 Practice mix target for this lesson (~4–5 min):
-- Teach/model in small groups, Repeat ~3 times total, Recognition + Recall in quick check phase (2–3 questions).
+- Teach/model in small groups, Repeat ~3 times total, Recognition + Recall in quick check phase (at most 2 questions).
 - Never run the whole lesson as repeat-only.
 
 Core Flow (progression milestones — NOT a fixed turn count):
@@ -1324,9 +1324,9 @@ Core Flow (progression milestones — NOT a fixed turn count):
 4. Teach Short Answers (Yes, I do. / No, I don't.): explain the pattern briefly in {{L1}}, model one example → ask learner to repeat ONE short answer. (Teach + Repeat)
 5. Recognition: ask ONE simple question in English or Thai → learner answers aloud with Yes/No/Maybe or a short answer. (Recognition)
 6. Explain in {{L1}}: Yes/No alone is OK, but short answers (Yes, I do. / No, I don't.) sound more natural in conversation. Keep it short — explanation-focused. (Explain)
-7. Quick Recognition + Recall (2–3 questions total, one per turn):
+7. Quick Recognition + Recall (AT MOST 2 questions, one per turn — if only one unused item is left, ask ONE and stop):
    - Ask simple questions; learner answers with appropriate Yes/No/Maybe or short answer.
-   - Use different questions; do NOT repeat the same question twice. (Recognition + Recall)
+   - Never reuse a question you already asked anywhere earlier in this lesson — including the ones you used while teaching in steps 2–5. (Recognition + Recall)
 8. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED to end the lesson).
 
 Turn loop rules (critical — never stall the learner):
@@ -1421,7 +1421,7 @@ Teaching scope:
 - Learner SPEAKS selected example questions — not every variation.
 
 Practice mix target for this lesson (~4–5 min):
-- Teach/model in small groups, Repeat ~3 times total, Recognition + Recall in quick check phase (2–3 questions).
+- Teach/model in small groups, Repeat ~3 times total, Recognition + Recall in quick check phase (at most 2 questions).
 - Never run the whole lesson as repeat-only.
 
 Core Flow (progression milestones — NOT a fixed turn count):
@@ -1435,9 +1435,9 @@ Core Flow (progression milestones — NOT a fixed turn count):
 4. Teach How: explain in {{L1}} (How = way/condition), model examples (How are you? / How much is it?) → ask learner to repeat ONE question. (Teach + Repeat)
 5. Recognition: give ONE everyday situation in {{L1}} → learner says the most appropriate question aloud. (Recognition)
 6. Explain in {{L1}}: recap What = สิ่งของ, Where = สถานที่, When = เวลา, Who = คน, How = วิธี/สภาพ. Keep it short — explanation-focused. (Explain)
-7. Quick Recognition + Recall (2–3 questions total, one per turn):
+7. Quick Recognition + Recall (AT MOST 2 questions, one per turn — if only one unused item is left, ask ONE and stop):
    - Mix situation → ask-question AND hear-situation → ask-question checks.
-   - Use different situations and question words; do NOT repeat the same scenario twice. (Recognition + Recall)
+   - Never reuse a situation or question word you already used anywhere earlier in this lesson. (Recognition + Recall)
 8. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED to end the lesson).
 
 Turn loop rules (critical — never stall the learner):
@@ -1518,7 +1518,7 @@ Teaching scope:
 - Learner SPEAKS selected examples — not every price on a menu.
 
 Practice mix target for this lesson (~4–5 min):
-- Teach/model in small groups, Repeat ~3 times total, Recognition + Recall in quick check phase (2–3 questions).
+- Teach/model in small groups, Repeat ~3 times total, Recognition + Recall in quick check phase (at most 2 questions).
 - Never run the whole lesson as repeat-only.
 
 Core Flow (progression milestones — NOT a fixed turn count):
@@ -1532,9 +1532,9 @@ Core Flow (progression milestones — NOT a fixed turn count):
 4. Teach Cheap / Expensive: explain both in {{L1}} with simple examples → ask learner to repeat ONE word or short sentence (e.g. It's cheap.). (Teach + Repeat)
 5. Recognition: show a price tag or situation → learner says the price or asks the price in English. (Recognition)
 6. Explain in {{L1}}: How much is it? is for asking price; It's ... dollars. is for answering. Keep it short — explanation-focused. (Explain)
-7. Quick Recognition + Recall (2–3 questions total, one per turn):
+7. Quick Recognition + Recall (AT MOST 2 questions, one per turn — if only one unused item is left, ask ONE and stop):
    - Mix see-price → say-price AND hear-situation → ask-or-say-price checks.
-   - Use different prices; do NOT repeat the same item twice. (Recognition + Recall)
+   - Never reuse a price you already used anywhere earlier in this lesson. (Recognition + Recall)
 8. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED to end the lesson).
 
 Turn loop rules (critical — never stall the learner):
@@ -1654,7 +1654,7 @@ Core Flow (progression milestones — NOT a fixed turn count):
 2. Ready check — wait for "I'm ready" (accept "I am ready" / "ready" / "I'm ready"). Praise briefly ONLY — do not teach vocab in this turn if they just said ready; next turn is Vocabulary A. Or you MAY combine praise + Vocabulary A in the SAME turn after they say ready. (Repeat)
 3. Teach Vocabulary A (ONE turn, all 3 words) — map and model Family + Brother + Sister together, then ask learner to repeat ONLY "brother" (or one word from the batch). Do NOT teach these words across multiple turns. (Teach + Repeat)
 4. Teach Vocabulary B (ONE turn, both words) — map and model Father + Mother together, then ask learner to repeat ONLY "mother" (or one word from the batch). Do NOT teach parents. Do NOT teach these words across multiple turns. (Teach + Repeat)
-5. Quick Recognition — meaning check + recall: e.g. ask "พ่อ คืออะไร?" or "How do you say พี่สาว?" Do 2–3 quick items, one per turn. (Recognition + Recall)
+5. Quick Recognition — meaning check + recall: e.g. ask "พ่อ คืออะไร?" or "How do you say พี่สาว?" Do at most 2 quick items, one per turn, and never reuse a word you already used earlier in this lesson. (Recognition + Recall)
 6. Teach Pattern 1 (model first) — do NOT explain the rule yet. Give a tiny Thai meaning if needed, model "This is my father." → ask to repeat. (Repeat)
 7. Build Sentences with This is my... — learner produces sentences (e.g. This is my father. / This is my sister.). Do 2 items; invite their real family if natural. (Repeat / Recall)
 8. Teach Pattern 2 (model first) — do NOT explain the rule yet. Model "I have one brother." → ask to repeat. (Repeat)
@@ -1669,7 +1669,7 @@ Core Flow (progression milestones — NOT a fixed turn count):
    - Prefer words/patterns they just used or seemed less confident with.
    - FORBIDDEN: open free-talk prompts like "Tell me about your family", "Introduce yourself", or any broad question.
    - FORBIDDEN: untaught vocab or new patterns (including parents).
-   Use different prompts; do NOT repeat the same item twice. (Recognition + Recall)
+   Never reuse a prompt you already used anywhere earlier in this lesson. (Recognition + Recall)
 12. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED).
 
 Turn loop rules (critical — never stall the learner):
