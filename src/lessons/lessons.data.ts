@@ -3321,6 +3321,71 @@ Core Flow (progression milestones — NOT a fixed turn count):
     openingPrompt:
       'Start the Shopping Basics lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once in the welcome, briefly say the lesson goal, then model "I\'m just looking." and ask them to repeat (Core Flow step 1–2). Follow the Core Flow milestones — retries/feedback may add turns between steps. Every turn must end with a clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
   },
+  {
+    lessonId: 'pron_th_1',
+    targetLabel: 'word',
+    titleEn: 'TH Sound (think)',
+    titleTh: 'เสียง TH (think)',
+    goalEn: 'Say the voiceless TH sound clearly in common words.',
+    goalTh: 'ออกเสียง TH แบบไม่มีเสียงชัดในคำที่ใช้บ่อย',
+    difficulty: 'beginner',
+    languageMix: { thai: 70, english: 30 },
+    estimatedMinutesMin: 4,
+    estimatedMinutesMax: 6,
+    targetPhrases: [
+      'think',
+      'thank',
+      'three',
+      'Thursday',
+      'Thank you.',
+      'Three books.',
+      'Think about it.',
+    ],
+    maxTurns: 16,
+    systemInstruction: `Lesson: TH Sound (think)
+Goal: Help the learner feel and produce the voiceless TH sound (/θ/) in common words and short phrases. This is a teaching session — not a pronunciation scoring session.
+
+Target words / phrases:
+- think
+- thank
+- three
+- Thursday
+- Thank you.
+- Three books.
+- Think about it.
+
+Important teaching rules:
+- Focus ONLY on the TH sound. Do not correct grammar, vocabulary choice, or sentence structure.
+- You only see transcript TEXT, not audio — never invent pronunciation/length/speed problems from text.
+- Do NOT diagnose what the learner did wrong with their tongue or airflow from the transcript.
+- Mouth tips are teaching tips for EVERYONE (say them once as instruction), not personal diagnosis.
+- Accept any clear attempt that includes the target word/phrase and ADVANCE.
+- If the text truly does not match the target, gently ask for at most ONE retry.
+- After one retry (or two total attempts on the same item), accept and move on.
+- Keep each tutor turn under 2–3 short sentences.
+- Every non-final tutor turn MUST end with exactly one clear next action for the learner.
+- When Core Flow reaches Summary + Celebrate, set isLessonComplete = true (required). Otherwise false.
+
+Mouth tip (teach once in Core Flow step 3 — same tip for everyone):
+@thai   แลบปลายลิ้นออกมาแตะฟันเบา ๆ แล้วเป่าลมออก
+@english   Put the tip of your tongue lightly on your front teeth, then blow air out.
+Do not add a long explanation after the tip.
+
+Core Flow (progression milestones — NOT a fixed turn count):
+- Follow these core steps in order. Do not skip ahead.
+- Extra turns for praise, one retry, or short feedback MAY happen between steps — that is OK.
+- After a core step succeeds, advance to the next core step.
+
+1. Welcome + Goal — welcome by name; say today you will practice the TH sound (think / thank / three). End by asking them to say "Ready" or "OK". (Opening)
+2. Listen — model the three words clearly, one by one: think → thank → three. Tell them to listen only (no speaking yet). End by asking them to say "Ready" when finished listening. (Listen)
+3. Speaking Tip — give the mouth tip above in {{L1}} in one short sentence. Then say "Your turn." and ask them to say: think. (Tip → First Try)
+4. First Try follow-up — if step 3 already collected "think", praise briefly and advance. Otherwise model "think" once more and ask them to say it. (First Try)
+5. Guided Practice — model and ask them to say each word, one at a time: thank → three → Thursday. Praise briefly after each clear attempt and advance. (Guided)
+6. Phrase Practice — model and ask them to say each phrase, one at a time: "Thank you." → "Three books." → "Think about it." Focus only on TH — ignore grammar. (Phrase)
+7. Summary + Celebrate with their first name once. Tell them a short TH drill is next. Set isLessonComplete = true (REQUIRED).`,
+    openingPrompt:
+      'Start the TH Sound (think) pronunciation lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once in the welcome, briefly say today you will practice the TH sound, then ask them to say "Ready" or "OK" (Core Flow step 1). Follow the Core Flow milestones — retries/feedback may add turns between steps. Every turn must end with a clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+  },
 
 ];
 
@@ -3360,6 +3425,8 @@ export const LESSON_PROGRESSION_ORDER: string[] = [
   'weather',
   'directions',
   'shopping_basics',
+  // Pronunciation course (separate catalog UI — excluded from Banana Graduate)
+  'pron_th_1',
 ];
 
 export type LessonTeachingLanguage = 'thai' | 'english';

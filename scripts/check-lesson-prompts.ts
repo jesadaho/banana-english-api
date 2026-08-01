@@ -38,7 +38,8 @@ const THAI_DIRECTIVES = [
   /ให้พูดตาม/,
 ];
 
-const isBasics = (lessonId: string) => !lessonId.startsWith('ee_');
+const isBasics = (lessonId: string) =>
+  !lessonId.startsWith('ee_') && !lessonId.startsWith('pron_');
 
 let failed = 0;
 

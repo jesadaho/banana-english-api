@@ -63,7 +63,10 @@ export const ACHIEVEMENT_RARITY_ORDER: AchievementRarity[] = [
   'legendary',
 ];
 
-const TOTAL_LESSONS = LESSON_PROGRESSION_ORDER.length;
+/** Curriculum lessons for Banana Graduate — exclude pronunciation course. */
+const TOTAL_LESSONS = LESSON_PROGRESSION_ORDER.filter(
+  (id) => !id.startsWith('pron_'),
+).length;
 
 /** Lessons shown in the Basics course catalog (app BasicsLessons). */
 const BASICS_LESSON_IDS: string[] = [

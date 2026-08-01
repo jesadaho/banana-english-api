@@ -349,7 +349,9 @@ export class AchievementsService {
     for (const session of sessions) {
       anySessionCount += 1;
 
-      if (session.lessonId) {
+      // Pronunciation-course lessons do not count toward learning badges /
+      // Banana Graduate (separate catalog).
+      if (session.lessonId && !session.lessonId.startsWith('pron_')) {
         lessonIds.add(session.lessonId);
       }
       if (session.simulationId) {

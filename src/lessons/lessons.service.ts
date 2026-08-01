@@ -81,6 +81,8 @@ export class LessonsService {
 
   private resolveCurrentLessonId(completedIds: Set<string>): string | null {
     for (const lessonId of LESSON_PROGRESSION_ORDER) {
+      // Pronunciation course has its own continue pointer in the app.
+      if (lessonId.startsWith('pron_')) continue;
       if (!completedIds.has(lessonId)) {
         return lessonId;
       }
