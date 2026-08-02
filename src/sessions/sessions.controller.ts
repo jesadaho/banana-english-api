@@ -49,6 +49,7 @@ import {
   getLesson,
   getLessonBananaCost,
   isPronunciationLesson,
+  lessonUsesTapToContinue,
   normalizeLessonTeachingLanguage,
   withTeachingLanguage,
 } from '../lessons/lessons.data';
@@ -336,9 +337,9 @@ export class SessionsController {
         config,
         learnerFirstName,
       );
-      // Pronunciation lessons always open on the Listen step, so don't let
-      // a model slip decide whether the learner sees the mic.
-      const openingExpectsUserSpeech = isPronunciationLesson(config.lessonId)
+      // Tap-to-continue lessons (pronunciation / Everyday Life) always open
+      // listen-only so the mic stays hidden on the first tutor turn.
+      const openingExpectsUserSpeech = lessonUsesTapToContinue(config.lessonId)
         ? false
         : (reply.expectsUserSpeech ?? true);
       const opening = {
@@ -347,6 +348,7 @@ export class SessionsController {
         textTh: reply.textTh,
         audioUrl: null,
         expectsUserSpeech: openingExpectsUserSpeech,
+        scene: reply.scene ?? null,
       };
       this.sessionStore.addTurn(data.session.id, opening);
 
@@ -378,6 +380,7 @@ export class SessionsController {
           feedbackHints: { mispronouncedWords: [] as string[] },
           currentTurn: 0,
           expectsUserSpeech: openingExpectsUserSpeech,
+          scene: reply.scene,
         },
       };
     } catch (err) {
@@ -468,6 +471,7 @@ export class SessionsController {
         textTh: reply.textTh,
         audioUrl: null,
         expectsUserSpeech,
+        scene: reply.scene ?? null,
       };
       this.sessionStore.addTurn(sessionId, aiTurn);
 
@@ -480,6 +484,7 @@ export class SessionsController {
         currentTurn: nextTurn,
         // A completed lesson hands off to the drill, so never ask for speech.
         expectsUserSpeech,
+        scene: reply.scene,
       };
 
       if (body.generateAudio) {

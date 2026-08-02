@@ -427,6 +427,105 @@ ${steps}`,
   };
 }
 
+interface AroundTownLessonSpec {
+  lessonId: string;
+  code: string;
+  titleEn: string;
+  titleTh: string;
+  goalEn: string;
+  goalTh: string;
+  situationEn: string;
+  situationTh: string;
+  /** Short Watch & Listen model dialogue (Teacher B + NPC). */
+  sceneTitle: string;
+  sceneNpcSpeaker: string;
+  sceneNpcVoice: 'Breeze' | 'Puck';
+  sceneLines: Array<{ speaker: string; role: 'npc' | 'teacher'; textEn: string }>;
+  vocabulary: Array<{ en: string; th: string }>;
+  patterns: string[];
+  grammarFocus: string;
+  grammarExamples: string[];
+  missionHint: string;
+}
+
+function buildAroundTownLesson(spec: AroundTownLessonSpec): LessonConfig {
+  const vocabList = spec.vocabulary
+    .map((v) => `- ${v.en} = ${v.th}`)
+    .join('\n');
+  const patternList = spec.patterns.map((p) => `- ${p}`).join('\n');
+  const sceneScript = spec.sceneLines
+    .map((line) => `  ${line.speaker}: ${line.textEn}`)
+    .join('\n');
+  const targetPhrases = [
+    ...spec.vocabulary.map((v) => v.en),
+    ...spec.patterns,
+  ];
+
+  return {
+    lessonId: spec.lessonId,
+    targetLabel: 'word or sentence',
+    titleEn: spec.titleEn,
+    titleTh: spec.titleTh,
+    goalEn: spec.goalEn,
+    goalTh: spec.goalTh,
+    difficulty: 'beginner',
+    languageMix: { thai: 70, english: 30 },
+    estimatedMinutesMin: 8,
+    estimatedMinutesMax: 10,
+    targetPhrases,
+    maxTurns: 28,
+    listenOnlyTurns: 2,
+    systemInstruction: `Lesson: ${spec.titleEn} (Everyday English → Everyday Life → ${spec.code})
+Goal: ${spec.goalEn}
+
+Target vocabulary (ONLY these):
+${vocabList}
+
+Useful sentence patterns:
+${patternList}
+
+Grammar focus (reveal LATE — after Pattern Practice):
+- ${spec.grammarFocus}
+- Examples: ${spec.grammarExamples.join(' / ')}
+- Keep Grammar Discovery to ~30 seconds. Do NOT drill conjugations. Frame: I'm + Verb-ing = กำลังทำตอนนี้
+
+Teaching vs speaking (critical — ~8–10 min):
+- Ask only ONE speaking task or one question per turn.
+- Soft correction ONLY: never say Wrong / ไม่ถูก. Praise → offer better line → continue talking.
+- STT is English-only for spoken answers. Ask/explain in {{L1}} OK.
+- Vocabulary lock: ONLY the target vocab + patterns above (+ slot swaps the learner just practiced).
+- FORBIDDEN: open free-talk like "Tell me about your day" outside the AI Conversation mission phase.
+
+Scene / Watch & Listen rules:
+- On Core Flow step 2, return a scene object (expectsUserSpeech false).
+- NPC speaker name: "${spec.sceneNpcSpeaker}" with voice "${spec.sceneNpcVoice}".
+- Teacher B lines: role "teacher", omit voice (default Sadachbia).
+- Stay close to this model dialogue (paraphrase lightly OK, keep meaning):
+${sceneScript}
+- textEn = short summary only (e.g. "Watch this short ${spec.sceneTitle} dialogue.").
+
+Core Flow (progression milestones — NOT a fixed turn count):
+1. Situation — set the scene in {{L1}} (~30s). Example vibe: "${spec.situationTh}" / "${spec.situationEn}". Learner does NOT speak. expectsUserSpeech = false. (Opening)
+2. Watch & Listen — play the Scene dialogue above. No grammar explanation. expectsUserSpeech = false. Return scene.lines. (Scene)
+3. Vocabulary — teach needed words one/few at a time: hear → พูดตาม → remember. Like Chapter 1. expectsUserSpeech = true on repeat turns. (Repeat)
+4. Useful Sentences — model full patterns (${spec.patterns.slice(0, 3).join(' / ')}); learner repeats. Do NOT name Present Continuous yet. (Repeat)
+5. Pattern Practice — swap the noun/slot (e.g. I'm looking for coffee → tea → water). Learner repeats each. Let them notice the pattern. (Repeat)
+6. Grammar Discovery (~30s) — THEN point out I'm + Verb-ing for things happening now. expectsUserSpeech = false. (Explain listen-only)
+7. AI Conversation — roleplay the mission: ${spec.missionHint}. NPC opens (e.g. Hello!). Learner answers freely. Offer Hint if stuck. Soft-recast mistakes. expectsUserSpeech = true. (Recall / Mission)
+8. Soft Correction — weave into mission turns: praise + "You can also say…" + continue. Never block the conversation. (Soft Feedback)
+9. Wrap-up — brief celebrate of the patterns they used + first name once → isLessonComplete = true. expectsUserSpeech = false. (Complete)
+
+Turn loop rules:
+- Every non-final tutor turn ends with exactly one next action OR is a listen-only Scene/Situation/Grammar/Wrap turn (Continue button).
+- Maximum ONE retry per item; then accept and advance.
+- Accept close variants when meaning is clear.
+- Do not invent pronunciation issues from text.
+- When Core Flow reaches Wrap-up, set isLessonComplete = true (required). Otherwise false.`,
+    openingPrompt:
+      `Start the ${spec.titleEn} Everyday Life lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. CRITICAL: Turn 1 = Situation ONLY — set the scene ("${spec.situationTh}"), no vocab teaching yet, expectsUserSpeech false, NO scene object yet. Do NOT mention any button. Return JSON matching the schema. isLessonComplete must be false.`,
+  };
+}
+
 export const LESSONS: LessonConfig[] = [
   {
     lessonId: 'greetings',
@@ -3724,6 +3823,328 @@ Core Flow (progression milestones — NOT a fixed turn count):
     openingPrompt:
       'Start the Shopping Basics lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once in the welcome, briefly say the lesson goal, then model "I\'m just looking." and ask them to repeat (Core Flow step 1–2). Follow the Core Flow milestones — retries/feedback may add turns between steps. Every turn must end with a clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
   },
+  buildAroundTownLesson({
+    lessonId: 'ee_around_town_shopping',
+    code: '2.1',
+    titleEn: 'Shopping',
+    titleTh: 'ซื้อของ',
+    goalEn: 'Buy clothes and talk to a shop assistant.',
+    goalTh: 'ซื้อของและคุยกับพนักงานได้',
+    situationEn: "We're in a clothing store.",
+    situationTh: 'ตอนนี้เราอยู่ในร้านเสื้อผ้าครับ',
+    sceneTitle: 'Clothing Store',
+    sceneNpcSpeaker: 'Clerk',
+    sceneNpcVoice: 'Breeze',
+    sceneLines: [
+      { speaker: 'Clerk', role: 'npc', textEn: 'Hi! Can I help you?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: "Hi! I'm looking for a shirt." },
+      { speaker: 'Clerk', role: 'npc', textEn: 'Sure. What size?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'Can I try this on?' },
+    ],
+    vocabulary: [
+      { en: 'shirt', th: 'เสื้อเชิ้ต' },
+      { en: 'pants', th: 'กางเกง' },
+      { en: 'shoes', th: 'รองเท้า' },
+      { en: 'bag', th: 'กระเป๋า' },
+      { en: 'size', th: 'ไซส์' },
+      { en: 'fitting room', th: 'ห้องลองเสื้อ' },
+      { en: 'cash', th: 'เงินสด' },
+      { en: 'card', th: 'บัตร' },
+    ],
+    patterns: [
+      "I'm looking for...",
+      "I'm buying...",
+      "I'm trying on...",
+      'Can I try this on?',
+    ],
+    grammarFocus: 'Present Continuous for actions happening now',
+    grammarExamples: ["I'm looking", "I'm buying", "I'm trying on"],
+    missionHint: 'Buy clothes in a mall — talk to the clerk',
+  }),
+  buildAroundTownLesson({
+    lessonId: 'ee_around_town_restaurant',
+    code: '2.2',
+    titleEn: 'Restaurant',
+    titleTh: 'ร้านอาหาร',
+    goalEn: 'Order simple food at a restaurant.',
+    goalTh: 'สั่งอาหารง่ายๆ',
+    situationEn: "We're at a restaurant.",
+    situationTh: 'ตอนนี้เราอยู่ที่ร้านอาหารครับ',
+    sceneTitle: 'Restaurant',
+    sceneNpcSpeaker: 'Server',
+    sceneNpcVoice: 'Breeze',
+    sceneLines: [
+      { speaker: 'Server', role: 'npc', textEn: 'Hello! Ready to order?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: "Hi! I'd like chicken and rice." },
+      { speaker: 'Server', role: 'npc', textEn: 'Spicy?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'Yes, please. And water.' },
+    ],
+    vocabulary: [
+      { en: 'menu', th: 'เมนู' },
+      { en: 'chicken', th: 'ไก่' },
+      { en: 'rice', th: 'ข้าว' },
+      { en: 'water', th: 'น้ำ' },
+      { en: 'spicy', th: 'เผ็ด' },
+      { en: 'bill', th: 'บิล' },
+    ],
+    patterns: [
+      "I'd like...",
+      "I'm having...",
+      'Can I have...?',
+      'The bill, please.',
+    ],
+    grammarFocus: 'Present Continuous for actions happening now',
+    grammarExamples: ["I'm eating", "I'm waiting"],
+    missionHint: 'Order food at a restaurant',
+  }),
+  buildAroundTownLesson({
+    lessonId: 'ee_around_town_coffee',
+    code: '2.3',
+    titleEn: 'Coffee Shop',
+    titleTh: 'ร้านกาแฟ',
+    goalEn: 'Order coffee at a cafe.',
+    goalTh: 'สั่งกาแฟ',
+    situationEn: "Today we're going to buy coffee.",
+    situationTh: 'วันนี้เราจะไปซื้อกาแฟกันครับ',
+    sceneTitle: 'Coffee Shop',
+    sceneNpcSpeaker: 'Barista',
+    sceneNpcVoice: 'Breeze',
+    sceneLines: [
+      { speaker: 'Barista', role: 'npc', textEn: 'Hello!' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: "Hi! I'm looking for a latte." },
+      { speaker: 'Barista', role: 'npc', textEn: 'Hot or iced?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'Iced, please.' },
+    ],
+    vocabulary: [
+      { en: 'coffee', th: 'กาแฟ' },
+      { en: 'latte', th: 'ลาเต้' },
+      { en: 'hot', th: 'ร้อน' },
+      { en: 'iced', th: 'เย็น' },
+      { en: 'sugar', th: 'น้ำตาล' },
+      { en: 'milk', th: 'นม' },
+      { en: 'small', th: 'เล็ก' },
+      { en: 'large', th: 'ใหญ่' },
+    ],
+    patterns: [
+      'Can I get...?',
+      "I'd like...",
+      "I'm looking for...",
+      "I'm waiting for my coffee.",
+    ],
+    grammarFocus: 'Present Continuous for actions happening now',
+    grammarExamples: ["I'm looking", "I'm waiting"],
+    missionHint: 'Order coffee from the barista',
+  }),
+  buildAroundTownLesson({
+    lessonId: 'ee_around_town_convenience',
+    code: '2.4',
+    titleEn: 'Convenience Store',
+    titleTh: 'ร้านสะดวกซื้อ',
+    goalEn: 'Buy things at a convenience store.',
+    goalTh: 'ซื้อของในร้านสะดวกซื้อ',
+    situationEn: "We're in a convenience store.",
+    situationTh: 'ตอนนี้เราอยู่ในร้านสะดวกซื้อครับ',
+    sceneTitle: 'Convenience Store',
+    sceneNpcSpeaker: 'Cashier',
+    sceneNpcVoice: 'Puck',
+    sceneLines: [
+      { speaker: 'Cashier', role: 'npc', textEn: 'Hi! Finding everything?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: "Yes. I'm buying water and a snack." },
+      { speaker: 'Cashier', role: 'npc', textEn: 'Cash or card?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'Can I pay by card?' },
+    ],
+    vocabulary: [
+      { en: 'water', th: 'น้ำ' },
+      { en: 'snack', th: 'ขนม' },
+      { en: 'sandwich', th: 'แซนด์วิช' },
+      { en: 'bag', th: 'ถุง' },
+      { en: 'receipt', th: 'ใบเสร็จ' },
+    ],
+    patterns: [
+      "I'm buying...",
+      'Can I pay by card?',
+      "That's all.",
+    ],
+    grammarFocus: 'Present Continuous for actions happening now',
+    grammarExamples: ["I'm buying"],
+    missionHint: 'Buy items at a convenience store and pay',
+  }),
+  buildAroundTownLesson({
+    lessonId: 'ee_around_town_transport',
+    code: '2.5',
+    titleEn: 'Transportation',
+    titleTh: 'การเดินทาง',
+    goalEn: 'Talk about getting around town.',
+    goalTh: 'เดินทาง',
+    situationEn: "We're at the station.",
+    situationTh: 'ตอนนี้เราอยู่ที่สถานีครับ',
+    sceneTitle: 'Station',
+    sceneNpcSpeaker: 'Clerk',
+    sceneNpcVoice: 'Puck',
+    sceneLines: [
+      { speaker: 'Clerk', role: 'npc', textEn: 'Hello. Where are you going?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: "I'm going to the city." },
+      { speaker: 'Clerk', role: 'npc', textEn: 'One ticket?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'Can I buy a ticket?' },
+    ],
+    vocabulary: [
+      { en: 'bus', th: 'รถบัส' },
+      { en: 'train', th: 'รถไฟ' },
+      { en: 'taxi', th: 'แท็กซี่' },
+      { en: 'station', th: 'สถานี' },
+      { en: 'ticket', th: 'ตั๋ว' },
+      { en: 'platform', th: 'ชานชาลา' },
+    ],
+    patterns: [
+      "I'm going to...",
+      "I'm taking...",
+      'Can I buy a ticket?',
+    ],
+    grammarFocus: 'Present Continuous for actions happening now',
+    grammarExamples: ["I'm going", "I'm taking"],
+    missionHint: 'Buy a ticket and take the train',
+  }),
+  buildAroundTownLesson({
+    lessonId: 'ee_around_town_directions',
+    code: '2.6',
+    titleEn: 'Asking Directions',
+    titleTh: 'ถามทาง',
+    goalEn: 'Ask for directions politely.',
+    goalTh: 'ถามทาง',
+    situationEn: "We're on the street and need directions.",
+    situationTh: 'ตอนนี้เราอยู่บนถนน แล้วต้องการถามทางครับ',
+    sceneTitle: 'On the Street',
+    sceneNpcSpeaker: 'Local',
+    sceneNpcVoice: 'Breeze',
+    sceneLines: [
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'Excuse me. Where is the station?' },
+      { speaker: 'Local', role: 'npc', textEn: 'Go straight, then turn left.' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: "I'm looking for the corner near the station." },
+      { speaker: 'Local', role: 'npc', textEn: "It's across from the cafe." },
+    ],
+    vocabulary: [
+      { en: 'left', th: 'ซ้าย' },
+      { en: 'right', th: 'ขวา' },
+      { en: 'straight', th: 'ตรงไป' },
+      { en: 'near', th: 'ใกล้' },
+      { en: 'across', th: 'ฝั่งตรงข้าม' },
+      { en: 'corner', th: 'มุมถนน' },
+    ],
+    patterns: [
+      'Excuse me...',
+      'Where is...?',
+      "I'm looking for...",
+      'Go straight.',
+      'Turn left.',
+      'Turn right.',
+    ],
+    grammarFocus: 'Imperatives for giving directions',
+    grammarExamples: ['Go straight', 'Turn left', 'Turn right'],
+    missionHint: 'Ask for directions to the station',
+  }),
+  buildAroundTownLesson({
+    lessonId: 'ee_around_town_hotel',
+    code: '2.7',
+    titleEn: 'Hotel',
+    titleTh: 'โรงแรม',
+    goalEn: 'Check in at a hotel.',
+    goalTh: 'เช็กอินโรงแรม',
+    situationEn: "We're at the hotel front desk.",
+    situationTh: 'ตอนนี้เราอยู่ที่เคาน์เตอร์โรงแรมครับ',
+    sceneTitle: 'Hotel Front Desk',
+    sceneNpcSpeaker: 'Receptionist',
+    sceneNpcVoice: 'Breeze',
+    sceneLines: [
+      { speaker: 'Receptionist', role: 'npc', textEn: 'Welcome! Do you have a reservation?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'Yes. I have a reservation.' },
+      { speaker: 'Receptionist', role: 'npc', textEn: 'Your passport, please.' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: "I'm checking in. Can I have my key?" },
+    ],
+    vocabulary: [
+      { en: 'reservation', th: 'การจอง' },
+      { en: 'room', th: 'ห้อง' },
+      { en: 'key', th: 'กุญแจ' },
+      { en: 'passport', th: 'พาสปอร์ต' },
+      { en: 'breakfast', th: 'อาหารเช้า' },
+    ],
+    patterns: [
+      'I have a reservation.',
+      "I'm checking in.",
+      'Can I have my key?',
+    ],
+    grammarFocus: 'Present Continuous for actions happening now',
+    grammarExamples: ["I'm checking in"],
+    missionHint: 'Check in at a hotel',
+  }),
+  buildAroundTownLesson({
+    lessonId: 'ee_around_town_airport',
+    code: '2.8',
+    titleEn: 'Airport',
+    titleTh: 'สนามบิน',
+    goalEn: 'Get through the airport.',
+    goalTh: 'ผ่านสนามบิน',
+    situationEn: "We're at the airport.",
+    situationTh: 'ตอนนี้เราอยู่ที่สนามบินครับ',
+    sceneTitle: 'Airport Check-in',
+    sceneNpcSpeaker: 'Agent',
+    sceneNpcVoice: 'Breeze',
+    sceneLines: [
+      { speaker: 'Agent', role: 'npc', textEn: 'Good morning. Passport please.' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: "I'm checking in." },
+      { speaker: 'Agent', role: 'npc', textEn: 'Here is your boarding pass. Gate 5.' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'Where is Gate 5?' },
+    ],
+    vocabulary: [
+      { en: 'passport', th: 'พาสปอร์ต' },
+      { en: 'boarding pass', th: 'บัตรขึ้นเครื่อง' },
+      { en: 'gate', th: 'เกต' },
+      { en: 'baggage', th: 'กระเป๋าเดินทาง' },
+      { en: 'flight', th: 'เที่ยวบิน' },
+    ],
+    patterns: [
+      "I'm checking in.",
+      "I'm boarding.",
+      'Where is Gate 5?',
+    ],
+    grammarFocus: 'Present Continuous for actions happening now',
+    grammarExamples: ["I'm checking in", "I'm boarding"],
+    missionHint: 'Check in at the airport',
+  }),
+  buildAroundTownLesson({
+    lessonId: 'ee_around_town_pharmacy',
+    code: '2.9',
+    titleEn: 'Hospital / Pharmacy',
+    titleTh: 'โรงพยาบาล / ร้านยา',
+    goalEn: 'Ask for basic help at a pharmacy.',
+    goalTh: 'ขอความช่วยเหลือเบื้องต้น',
+    situationEn: "We're at a pharmacy.",
+    situationTh: 'ตอนนี้เราอยู่ที่ร้านขายยาครับ',
+    sceneTitle: 'Pharmacy',
+    sceneNpcSpeaker: 'Pharmacist',
+    sceneNpcVoice: 'Puck',
+    sceneLines: [
+      { speaker: 'Pharmacist', role: 'npc', textEn: 'Hello. How can I help?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'I have a headache.' },
+      { speaker: 'Pharmacist', role: 'npc', textEn: 'Do you have a fever?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: "I'm not feeling well. Can I get some medicine?" },
+    ],
+    vocabulary: [
+      { en: 'medicine', th: 'ยา' },
+      { en: 'headache', th: 'ปวดหัว' },
+      { en: 'fever', th: 'ไข้' },
+      { en: 'pharmacy', th: 'ร้านขายยา' },
+      { en: 'doctor', th: 'หมอ' },
+    ],
+    patterns: [
+      'I have a headache.',
+      "I'm not feeling well.",
+      'Can I get some medicine?',
+      "I'm feeling sick.",
+    ],
+    grammarFocus: 'Present Continuous for how you feel now',
+    grammarExamples: ["I'm feeling sick", "I'm not feeling well"],
+    missionHint: 'Buy medicine at a pharmacy',
+  }),
   buildPronunciationLesson({
     lessonId: 'pron_th_1',
     titleEn: 'TH Sound (think)',
@@ -4446,6 +4867,15 @@ export const LESSON_PROGRESSION_ORDER: string[] = [
   'ee_about_me_friends',
   'ee_about_me_weather',
   'ee_about_me_review',
+  'ee_around_town_shopping',
+  'ee_around_town_restaurant',
+  'ee_around_town_coffee',
+  'ee_around_town_convenience',
+  'ee_around_town_transport',
+  'ee_around_town_directions',
+  'ee_around_town_hotel',
+  'ee_around_town_airport',
+  'ee_around_town_pharmacy',
   'weather',
   'directions',
   'shopping_basics',
@@ -4490,6 +4920,16 @@ export const LESSON_PROGRESSION_ORDER: string[] = [
  * catalog, progress pointer and turn UI (tap-to-continue). */
 export function isPronunciationLesson(lessonId: string): boolean {
   return lessonId.startsWith('pron_');
+}
+
+/** Everyday English Chapter 2 — Everyday Life (Scene + tap-to-continue). */
+export function isAroundTownLesson(lessonId: string): boolean {
+  return lessonId.startsWith('ee_around_town_');
+}
+
+/** Lessons that use expectsUserSpeech + Continue button (and optional Scene). */
+export function lessonUsesTapToContinue(lessonId: string): boolean {
+  return isPronunciationLesson(lessonId) || isAroundTownLesson(lessonId);
 }
 
 export type LessonTeachingLanguage = 'thai' | 'english';

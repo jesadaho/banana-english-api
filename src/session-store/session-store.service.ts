@@ -1,7 +1,7 @@
 import { randomUUID } from 'crypto';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import type { GptIntroReport, SessionType } from '../common/api.types';
+import type { GptIntroReport, LessonScene, SessionType } from '../common/api.types';
 import type { SimulationConfig } from '../simulations/simulations.data';
 import { initCheckpointStates } from '../simulations/simulations.data';
 import type { LessonConfig } from '../lessons/lessons.data';
@@ -26,6 +26,8 @@ export interface ChatTurn {
    * Replayed to the model so it does not learn from a made-up value.
    */
   expectsUserSpeech?: boolean;
+  /** Multi-speaker Scene dialogue (ai turns only). */
+  scene?: LessonScene | null;
 }
 
 export interface ConversationSession {

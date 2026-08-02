@@ -45,6 +45,22 @@ export interface TurnExchangeResponse {
   /** False when the learner should tap Continue instead of speaking.
    * Omitted on paths that always expect speech. */
   expectsUserSpeech?: boolean;
+  /** Multi-speaker dialogue for Scene / Watch & Listen turns. */
+  scene?: LessonScene;
+}
+
+/** One line in a lesson Scene dialogue (Watch & Listen). */
+export interface LessonSceneLine {
+  speaker: string;
+  role: 'npc' | 'teacher';
+  textEn: string;
+  /** Gemini TTS voice override (e.g. Breeze, Puck). */
+  voice?: string;
+}
+
+export interface LessonScene {
+  title?: string;
+  lines: LessonSceneLine[];
 }
 
 export interface SimulationConfigResponse {

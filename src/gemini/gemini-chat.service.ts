@@ -45,7 +45,7 @@ import { TAP_TO_CONTINUE_TURN_TEXT } from '../common/api.types';
 import type { SimulationConfig } from '../simulations/simulations.data';
 import type { LessonConfig } from '../lessons/lessons.data';
 import {
-  isPronunciationLesson,
+  lessonUsesTapToContinue,
   pickFunnyIntroJabSeed,
 } from '../lessons/lessons.data';
 import {
@@ -166,6 +166,28 @@ function buildTrainingReplySchema(withSpeechFlag: boolean) {
       textTh: { type: 'string' },
       isLessonComplete: { type: 'boolean' },
       expectsUserSpeech: { type: 'boolean' },
+      scene: {
+        type: 'object',
+        description:
+          'Optional multi-speaker dialogue for Watch & Listen Scene turns',
+        properties: {
+          title: { type: 'string' },
+          lines: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                speaker: { type: 'string' },
+                role: { type: 'string', enum: ['npc', 'teacher'] },
+                textEn: { type: 'string' },
+                voice: { type: 'string' },
+              },
+              required: ['speaker', 'role', 'textEn'],
+            },
+          },
+        },
+        required: ['lines'],
+      },
     },
     required: ['textEn', 'textTh', 'isLessonComplete', 'expectsUserSpeech'],
   };
@@ -193,6 +215,16 @@ export interface TrainingTurnReply {
   isLessonComplete: boolean;
   /** Only present for lessons that expose a tap-to-continue button. */
   expectsUserSpeech?: boolean;
+  /** Multi-speaker Scene for Watch & Listen (Everyday Life, etc.). */
+  scene?: {
+    title?: string;
+    lines: Array<{
+      speaker: string;
+      role: 'npc' | 'teacher';
+      textEn: string;
+      voice?: string;
+    }>;
+  };
 }
 
 function buildSimulationReplySchema(criteria: string[]) {
@@ -1033,7 +1065,7 @@ export class GeminiChatService {
         'FORBIDDEN: copy any Tone example verbatim. One short Thai jab only, then teach vocab.\n\n'
       : '';
     const openingPrompt = renderOpeningPrompt(config, lang);
-    const speechFlag = isPronunciationLesson(config.lessonId);
+    const speechFlag = lessonUsesTapToContinue(config.lessonId);
 
     return this.generateJson<TrainingTurnReply>({
       systemInstruction: this.trainingSystemPrompt(
@@ -1073,7 +1105,7 @@ export class GeminiChatService {
     originalUserMessage?: string,
   ): Promise<TrainingTurnReply> {
     const contents: GeminiContent[] = [];
-    const speechFlag = isPronunciationLesson(config.lessonId);
+    const speechFlag = lessonUsesTapToContinue(config.lessonId);
     const displayTranscript = (originalUserMessage ?? userMessage).trim();
 
     // Session store already appended this user turn before generate — do not
@@ -1095,6 +1127,7 @@ export class GeminiChatService {
                     ...(speechFlag
                       ? { expectsUserSpeech: turn.expectsUserSpeech ?? true }
                       : {}),
+                    ...(turn.scene ? { scene: turn.scene } : {}),
                   })
                 : turn.textEn,
           },
@@ -1593,15 +1626,22 @@ Required response:
     const englishHeavy = lang === 'english';
     const lessonInstruction = buildLessonSystemInstruction(config, lang);
 
-    const speechFlagBlock = isPronunciationLesson(config.lessonId)
+    const speechFlagBlock = lessonUsesTapToContinue(config.lessonId)
       ? `
 Tap-to-continue (this lesson only):
 - The app shows a Continue button whenever expectsUserSpeech is false, and the mic when it is true. The learner can always see it.
 - expectsUserSpeech: true when your turn asks the learner to SAY a word or phrase out loud.
-- expectsUserSpeech: false when your turn is listen-only — you are modeling sounds or giving a tip and they should not speak yet.
+- expectsUserSpeech: false when your turn is listen-only — Situation, Scene / Watch & Listen, Grammar Discovery tip, or Wrap-up.
 - NEVER mention the button in textEn or textTh. Do not write "Tap Continue", "แตะเพื่อไปต่อ", "press the button", or any variation. Do not ask them to say "Ready" or "OK" either. A listen-only turn simply ends after its content — that is allowed, and the button is the learner's next action.
 - A learner message of "${TAP_TO_CONTINUE_TURN_TEXT}" is a button press, not speech. Never praise, evaluate, or repeat it — just move straight to the next step.
 - On the final turn (isLessonComplete true), set expectsUserSpeech false.
+
+Scene / Watch & Listen (when the Core Flow calls for a short model dialogue):
+- Return a "scene" object with "lines": each line has speaker (display name), role ("npc" | "teacher"), textEn (that speaker's line only), and optional voice.
+- Voice map: teacher lines omit voice or use "Sadachbia"; female NPC use "Breeze"; male NPC use "Puck".
+- textEn should be a SHORT one-line summary for history (e.g. "Watch this short coffee-shop dialogue.") — do NOT paste the full script into textEn.
+- expectsUserSpeech must be false on Scene turns.
+- Omit "scene" on non-Scene turns.
 `
       : '';
 
@@ -1651,7 +1691,7 @@ Return JSON ONLY (critical — never reply with bare prose):
 - textTh: short Thai support line / paraphrase
 - isLessonComplete: true ONLY on the Summary + Celebrate core step (required to finish). Otherwise false${
       speechFlagBlock
-        ? '\n- expectsUserSpeech: false when this turn is listen-only or a ready check, true when you ask the learner to speak'
+        ? '\n- expectsUserSpeech: false when this turn is listen-only or a ready check, true when you ask the learner to speak\n- scene: optional; include only on Watch & Listen Scene turns (see rules above)'
         : ''
     }`;
   }
