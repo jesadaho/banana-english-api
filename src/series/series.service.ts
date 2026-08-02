@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import {
-  getAllSeries,
+  getMissionTabSeries,
   getPreviousSeries,
   getSeriesById,
+  getSeriesForSimulation,
   SeriesConfig,
 } from './series.data';
 
@@ -54,10 +55,11 @@ export class SeriesService {
     series: SeriesConfig,
     completedIds: Set<string>,
     previousUnlockedNext: boolean,
+    catalogIndex: number,
   ): SeriesView {
     const hasProgress = series.missionIds.some((id) => completedIds.has(id));
     const isUnlocked =
-      series.order === 0 || previousUnlockedNext || hasProgress;
+      catalogIndex === 0 || previousUnlockedNext || hasProgress;
     const missions: SeriesMissionView[] = series.missionIds.map(
       (simulationId, index) => ({
         simulationId,
@@ -80,7 +82,7 @@ export class SeriesService {
       titleEn: series.titleEn,
       titleTh: series.titleTh,
       subtitleTh: series.subtitleTh,
-      order: series.order,
+      order: catalogIndex,
       coverImage: series.coverImage,
       isUnlocked,
       isCompleted,
@@ -93,10 +95,11 @@ export class SeriesService {
 
   async getAllForUser(userId: string): Promise<SeriesView[]> {
     const completedIds = await this.getCompletedSimulationIds(userId);
-    const catalog = getAllSeries();
+    const catalog = getMissionTabSeries();
     const views: SeriesView[] = [];
 
-    for (const series of catalog) {
+    for (let i = 0; i < catalog.length; i++) {
+      const series = catalog[i];
       const prev = getPreviousSeries(series);
       // Unlock next chapter after clearing any 1 mission in the previous chapter.
       const previousUnlockedNext = prev
@@ -105,7 +108,7 @@ export class SeriesService {
         : true;
 
       views.push(
-        this.buildSeriesView(series, completedIds, previousUnlockedNext),
+        this.buildSeriesView(series, completedIds, previousUnlockedNext, i),
       );
     }
 
@@ -119,20 +122,32 @@ export class SeriesService {
     const series = getSeriesById(seriesId);
     if (!series) return undefined;
 
+    // Learn-hosted series are not on the Mission tab, but deep links may still
+    // resolve them for activity / history.
+    if (series.showInMissionTab === false) {
+      const completedIds = await this.getCompletedSimulationIds(userId);
+      return this.buildSeriesView(series, completedIds, true, series.order);
+    }
+
     const all = await this.getAllForUser(userId);
-    return all.find((s) => s.seriesId === seriesId);
+    return all.find((s) => s.seriesId === series.seriesId);
   }
 
   async isSimulationUnlockedForUser(
     userId: string,
     simulationId: string,
   ): Promise<boolean> {
+    const series = getSeriesForSimulation(simulationId);
+    if (!series) return false;
+    // Everyday Life missions are gated in Learn (after chapter review).
+    if (series.showInMissionTab === false) return true;
+
     const all = await this.getAllForUser(userId);
-    for (const series of all) {
-      if (!series.missions.some((m) => m.simulationId === simulationId)) {
+    for (const view of all) {
+      if (!view.missions.some((m) => m.simulationId === simulationId)) {
         continue;
       }
-      return series.isUnlocked;
+      return view.isUnlocked;
     }
     return false;
   }

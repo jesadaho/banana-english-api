@@ -446,6 +446,8 @@ interface AroundTownLessonSpec {
   grammarFocus: string;
   grammarExamples: string[];
   missionHint: string;
+  /** Soft tease on Wrap-up that the next lesson is this (e.g. Lesson Summary). */
+  nextLessonHint?: string;
 }
 
 function buildAroundTownLesson(spec: AroundTownLessonSpec): LessonConfig {
@@ -460,6 +462,9 @@ function buildAroundTownLesson(spec: AroundTownLessonSpec): LessonConfig {
     ...spec.vocabulary.map((v) => v.en),
     ...spec.patterns,
   ];
+  const wrapTease = spec.nextLessonHint
+    ? ` + softly tease that next is ${spec.nextLessonHint} (one short playful line only)`
+    : '';
 
   return {
     lessonId: spec.lessonId,
@@ -498,6 +503,7 @@ Teaching vs speaking (critical — ~8–10 min):
 
 Scene / Watch & Listen rules:
 - On Core Flow step 2, return a scene object (expectsUserSpeech false).
+- scene.title must be exactly: "${spec.sceneTitle}"
 - NPC speaker name: "${spec.sceneNpcSpeaker}" with voice "${spec.sceneNpcVoice}".
 - Teacher B lines: role "teacher", omit voice (default Sadachbia).
 - Stay close to this model dialogue (paraphrase lightly OK, keep meaning):
@@ -513,7 +519,7 @@ Core Flow (progression milestones — NOT a fixed turn count):
 6. Grammar Discovery (~30s) — THEN point out I'm + Verb-ing for things happening now. expectsUserSpeech = false. (Explain listen-only)
 7. AI Conversation — roleplay the mission: ${spec.missionHint}. NPC opens (e.g. Hello!). Learner answers freely. Offer Hint if stuck. Soft-recast mistakes. expectsUserSpeech = true. (Recall / Mission)
 8. Soft Correction — weave into mission turns: praise + "You can also say…" + continue. Never block the conversation. (Soft Feedback)
-9. Wrap-up — brief celebrate of the patterns they used + first name once → isLessonComplete = true. expectsUserSpeech = false. (Complete)
+9. Wrap-up — brief celebrate of the patterns they used + first name once${wrapTease} → isLessonComplete = true. expectsUserSpeech = false. (Complete)
 
 Turn loop rules:
 - Every non-final tutor turn ends with exactly one next action OR is a listen-only Scene/Situation/Grammar/Wrap turn (Continue button).
@@ -3832,14 +3838,14 @@ Core Flow (progression milestones — NOT a fixed turn count):
     goalTh: 'ซื้อของและคุยกับพนักงานได้',
     situationEn: "We're in a clothing store.",
     situationTh: 'ตอนนี้เราอยู่ในร้านเสื้อผ้าครับ',
-    sceneTitle: 'Clothing Store',
-    sceneNpcSpeaker: 'Clerk',
+    sceneTitle: '🛍️ Shopping',
+    sceneNpcSpeaker: 'Shop Assistant',
     sceneNpcVoice: 'Breeze',
     sceneLines: [
-      { speaker: 'Clerk', role: 'npc', textEn: 'Hi! Can I help you?' },
+      { speaker: 'Shop Assistant', role: 'npc', textEn: 'Hi! Can I help you?' },
       { speaker: 'Teacher B', role: 'teacher', textEn: "Hi! I'm looking for a shirt." },
-      { speaker: 'Clerk', role: 'npc', textEn: 'Sure. What size?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'Can I try this on?' },
+      { speaker: 'Shop Assistant', role: 'npc', textEn: 'What size?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'Medium, please.' },
     ],
     vocabulary: [
       { en: 'shirt', th: 'เสื้อเชิ้ต' },
@@ -3859,7 +3865,7 @@ Core Flow (progression milestones — NOT a fixed turn count):
     ],
     grammarFocus: 'Present Continuous for actions happening now',
     grammarExamples: ["I'm looking", "I'm buying", "I'm trying on"],
-    missionHint: 'Buy clothes in a mall — talk to the clerk',
+    missionHint: 'Buy clothes in a mall — talk to the shop assistant',
   }),
   buildAroundTownLesson({
     lessonId: 'ee_around_town_restaurant',
@@ -3870,14 +3876,14 @@ Core Flow (progression milestones — NOT a fixed turn count):
     goalTh: 'สั่งอาหารง่ายๆ',
     situationEn: "We're at a restaurant.",
     situationTh: 'ตอนนี้เราอยู่ที่ร้านอาหารครับ',
-    sceneTitle: 'Restaurant',
+    sceneTitle: '🍽️ Restaurant',
     sceneNpcSpeaker: 'Server',
     sceneNpcVoice: 'Breeze',
     sceneLines: [
-      { speaker: 'Server', role: 'npc', textEn: 'Hello! Ready to order?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: "Hi! I'd like chicken and rice." },
-      { speaker: 'Server', role: 'npc', textEn: 'Spicy?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'Yes, please. And water.' },
+      { speaker: 'Server', role: 'npc', textEn: 'Hello! Are you ready to order?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: "Yes. I'd like a chicken burger." },
+      { speaker: 'Server', role: 'npc', textEn: 'Anything to drink?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'Water, please.' },
     ],
     vocabulary: [
       { en: 'menu', th: 'เมนู' },
@@ -3906,12 +3912,12 @@ Core Flow (progression milestones — NOT a fixed turn count):
     goalTh: 'สั่งกาแฟ',
     situationEn: "Today we're going to buy coffee.",
     situationTh: 'วันนี้เราจะไปซื้อกาแฟกันครับ',
-    sceneTitle: 'Coffee Shop',
+    sceneTitle: '☕ Coffee Shop',
     sceneNpcSpeaker: 'Barista',
     sceneNpcVoice: 'Breeze',
     sceneLines: [
       { speaker: 'Barista', role: 'npc', textEn: 'Hello!' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: "Hi! I'm looking for a latte." },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'Hi! Can I get a latte?' },
       { speaker: 'Barista', role: 'npc', textEn: 'Hot or iced?' },
       { speaker: 'Teacher B', role: 'teacher', textEn: 'Iced, please.' },
     ],
@@ -3944,14 +3950,14 @@ Core Flow (progression milestones — NOT a fixed turn count):
     goalTh: 'ซื้อของในร้านสะดวกซื้อ',
     situationEn: "We're in a convenience store.",
     situationTh: 'ตอนนี้เราอยู่ในร้านสะดวกซื้อครับ',
-    sceneTitle: 'Convenience Store',
+    sceneTitle: '🏪 Convenience Store',
     sceneNpcSpeaker: 'Cashier',
     sceneNpcVoice: 'Puck',
     sceneLines: [
-      { speaker: 'Cashier', role: 'npc', textEn: 'Hi! Finding everything?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: "Yes. I'm buying water and a snack." },
-      { speaker: 'Cashier', role: 'npc', textEn: 'Cash or card?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'Can I pay by card?' },
+      { speaker: 'Cashier', role: 'npc', textEn: 'Hello!' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: "Hi. I'd like this sandwich." },
+      { speaker: 'Cashier', role: 'npc', textEn: 'Anything else?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: "That's all, thanks." },
     ],
     vocabulary: [
       { en: 'water', th: 'น้ำ' },
@@ -3978,14 +3984,14 @@ Core Flow (progression milestones — NOT a fixed turn count):
     goalTh: 'เดินทาง',
     situationEn: "We're at the station.",
     situationTh: 'ตอนนี้เราอยู่ที่สถานีครับ',
-    sceneTitle: 'Station',
-    sceneNpcSpeaker: 'Clerk',
+    sceneTitle: '🚌 Transportation',
+    sceneNpcSpeaker: 'Ticket Staff',
     sceneNpcVoice: 'Puck',
     sceneLines: [
-      { speaker: 'Clerk', role: 'npc', textEn: 'Hello. Where are you going?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: "I'm going to the city." },
-      { speaker: 'Clerk', role: 'npc', textEn: 'One ticket?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'Can I buy a ticket?' },
+      { speaker: 'Ticket Staff', role: 'npc', textEn: 'Where are you going?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: "I'm going to Bangkok." },
+      { speaker: 'Ticket Staff', role: 'npc', textEn: 'One ticket?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'Yes, please.' },
     ],
     vocabulary: [
       { en: 'bus', th: 'รถบัส' },
@@ -4013,14 +4019,14 @@ Core Flow (progression milestones — NOT a fixed turn count):
     goalTh: 'ถามทาง',
     situationEn: "We're on the street and need directions.",
     situationTh: 'ตอนนี้เราอยู่บนถนน แล้วต้องการถามทางครับ',
-    sceneTitle: 'On the Street',
+    sceneTitle: '🗺️ Asking Directions',
     sceneNpcSpeaker: 'Local',
     sceneNpcVoice: 'Breeze',
     sceneLines: [
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'Excuse me. Where is the station?' },
-      { speaker: 'Local', role: 'npc', textEn: 'Go straight, then turn left.' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: "I'm looking for the corner near the station." },
-      { speaker: 'Local', role: 'npc', textEn: "It's across from the cafe." },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'Excuse me.' },
+      { speaker: 'Local', role: 'npc', textEn: 'Yes?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'Where is the train station?' },
+      { speaker: 'Local', role: 'npc', textEn: 'Go straight and turn left.' },
     ],
     vocabulary: [
       { en: 'left', th: 'ซ้าย' },
@@ -4051,14 +4057,14 @@ Core Flow (progression milestones — NOT a fixed turn count):
     goalTh: 'เช็กอินโรงแรม',
     situationEn: "We're at the hotel front desk.",
     situationTh: 'ตอนนี้เราอยู่ที่เคาน์เตอร์โรงแรมครับ',
-    sceneTitle: 'Hotel Front Desk',
+    sceneTitle: '🏨 Hotel',
     sceneNpcSpeaker: 'Receptionist',
     sceneNpcVoice: 'Breeze',
     sceneLines: [
-      { speaker: 'Receptionist', role: 'npc', textEn: 'Welcome! Do you have a reservation?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'Yes. I have a reservation.' },
-      { speaker: 'Receptionist', role: 'npc', textEn: 'Your passport, please.' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: "I'm checking in. Can I have my key?" },
+      { speaker: 'Receptionist', role: 'npc', textEn: 'Welcome!' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'Hi. I have a reservation.' },
+      { speaker: 'Receptionist', role: 'npc', textEn: 'May I have your passport?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'Sure. Here you are.' },
     ],
     vocabulary: [
       { en: 'reservation', th: 'การจอง' },
@@ -4085,14 +4091,14 @@ Core Flow (progression milestones — NOT a fixed turn count):
     goalTh: 'ผ่านสนามบิน',
     situationEn: "We're at the airport.",
     situationTh: 'ตอนนี้เราอยู่ที่สนามบินครับ',
-    sceneTitle: 'Airport Check-in',
-    sceneNpcSpeaker: 'Agent',
+    sceneTitle: '✈️ Airport',
+    sceneNpcSpeaker: 'Airport Staff',
     sceneNpcVoice: 'Breeze',
     sceneLines: [
-      { speaker: 'Agent', role: 'npc', textEn: 'Good morning. Passport please.' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: "I'm checking in." },
-      { speaker: 'Agent', role: 'npc', textEn: 'Here is your boarding pass. Gate 5.' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'Where is Gate 5?' },
+      { speaker: 'Airport Staff', role: 'npc', textEn: 'Good morning.' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: "Hi. I'd like to check in." },
+      { speaker: 'Airport Staff', role: 'npc', textEn: 'May I see your passport?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'Here you are.' },
     ],
     vocabulary: [
       { en: 'passport', th: 'พาสปอร์ต' },
@@ -4113,20 +4119,20 @@ Core Flow (progression milestones — NOT a fixed turn count):
   buildAroundTownLesson({
     lessonId: 'ee_around_town_pharmacy',
     code: '2.9',
-    titleEn: 'Hospital / Pharmacy',
-    titleTh: 'โรงพยาบาล / ร้านยา',
+    titleEn: 'Pharmacy',
+    titleTh: 'ร้านยา',
     goalEn: 'Ask for basic help at a pharmacy.',
     goalTh: 'ขอความช่วยเหลือเบื้องต้น',
     situationEn: "We're at a pharmacy.",
     situationTh: 'ตอนนี้เราอยู่ที่ร้านขายยาครับ',
-    sceneTitle: 'Pharmacy',
+    sceneTitle: '💊 Pharmacy',
     sceneNpcSpeaker: 'Pharmacist',
     sceneNpcVoice: 'Puck',
     sceneLines: [
-      { speaker: 'Pharmacist', role: 'npc', textEn: 'Hello. How can I help?' },
+      { speaker: 'Pharmacist', role: 'npc', textEn: 'How can I help you?' },
       { speaker: 'Teacher B', role: 'teacher', textEn: 'I have a headache.' },
-      { speaker: 'Pharmacist', role: 'npc', textEn: 'Do you have a fever?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: "I'm not feeling well. Can I get some medicine?" },
+      { speaker: 'Pharmacist', role: 'npc', textEn: 'Here is some medicine.' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'Thank you.' },
     ],
     vocabulary: [
       { en: 'medicine', th: 'ยา' },
@@ -4144,7 +4150,134 @@ Core Flow (progression milestones — NOT a fixed turn count):
     grammarFocus: 'Present Continuous for how you feel now',
     grammarExamples: ["I'm feeling sick", "I'm not feeling well"],
     missionHint: 'Buy medicine at a pharmacy',
+    nextLessonHint: 'Lesson Summary / สรุปบทเรียน',
   }),
+  // --- Everyday Life chapter review ---
+  {
+    lessonId: 'ee_around_town_review',
+    targetLabel: 'sentence',
+    titleEn: 'Lesson Summary',
+    titleTh: 'สรุปบทเรียน',
+    goalEn:
+      'Review Everyday Life phrases by listening, choosing, and saying full sentences — then use at least 4 useful lines for going around town.',
+    goalTh:
+      'สรุปประโยคหมวด Everyday Life ผ่านการฟัง-เลือก-พูดประโยคเต็ม แล้วปิดท้ายด้วยการใช้ประโยคมีประโยชน์อย่างน้อย 4 ประโยคเวลาออกไปข้างนอก',
+    difficulty: 'beginner',
+    languageMix: { thai: 70, english: 30 },
+    estimatedMinutesMin: 5,
+    estimatedMinutesMax: 7,
+    targetPhrases: [
+      "I'm looking for a shirt.",
+      "I'd like a chicken burger.",
+      'Can I get a latte?',
+      "I'm going to Bangkok.",
+      'Excuse me. Where is the train station?',
+      'Go straight and turn left.',
+      'I have a reservation.',
+      "I'd like to check in.",
+      'I have a headache.',
+      'Medium, please.',
+      'Water, please.',
+      'Iced, please.',
+    ],
+    maxTurns: 24,
+    systemInstruction: `Lesson: Lesson Summary — Everyday Life (Everyday English → Everyday Life → 2.R)
+Type: REVIEW (voice-optimized) — do NOT teach long new vocabulary lists.
+Goal: Review Everyday Life phrases via listen → choose → speak full sentences, then a final speaking challenge of at least 4 useful around-town lines.
+Target time: ~5–7 minutes.
+
+Using the learner's first name:
+- Use their first name naturally once in the opening.
+- Use it again naturally in later reviews / Final / Wrap when helpful.
+- Do not repeat the learner's name in every turn.
+
+Teaching vs speaking (critical — voice-optimized):
+- Ask only ONE speaking / check task per turn.
+- For "listen then choose" checks: say BOTH options clearly, then ask them to SPEAK the correct FULL sentence.
+- Accept the full correct sentence; also accept near-miss STT variants when meaning is clear.
+- After one wrong attempt, gently give the correct sentence and move on (at most ONE retry).
+- Keep explanations SHORT in {{L1}}. No long grammar lectures.
+
+Intro style for THIS lesson (required — opening turn only):
+- Style: Encouraging & Enthusiastic (~พลังบวก / ฉลองเข้าสู่บทสรุป)
+- CRITICAL — ONE turn only (never waste a chat turn):
+  - Turn 1 MUST fuse: celebration + "สรุปความปัง Everyday Life" + launch Review 1 check in the SAME turn.
+  - FORBIDDEN: separate ready-check / open chat before Review 1.
+  - Learner's first reply must be the Review 1 answer.
+- Tone example (adapt, don't recite word-for-word): "สวัสดีครับ [Name]! เดินทางมาถึงสรุปบทเรียน Everyday Life แล้ว เก่งมากเลยครับ! วันนี้เรามาสรุปประโยคที่ใช้ข้างนอกบ้านกัน — เริ่มเลยนะครับ ฟังสองประโยคนี้ แล้วพูดประโยคที่ถูกต้อง: 'I'm looking for a shirt.' หรือ 'I looking for a shirt.'"
+
+Core Flow (progression milestones — NOT a fixed turn count):
+- Follow these core steps in order. Do not skip ahead.
+- Extra turns for praise, one retry, or short feedback MAY happen between steps — that is OK.
+- Keep the session about 5–7 minutes.
+- Rhythm: Intro+R1 → R2 → R3 → R4 → R5 → Final (≥4 sentences) → Celebrate.
+
+Phase 0 + Review 1: Present Continuous — I'm looking for... — SAME TURN
+1. Encouraging intro by name + launch Review 1 immediately:
+   "ฟังสองประโยคนี้นะครับ แล้วพูดประโยคที่ถูกต้องออกมาได้เลย: 'I'm looking for a shirt.' หรือ 'I looking for a shirt.'"
+   Expected: "I'm looking for a shirt."
+   (Opening → Recognition)
+
+Review 2: Polite ordering — I'd like...
+2. Prompt: "ฟังสองประโยคนี้นะครับ แล้วพูดประโยคที่ถูกต้องออกมาได้เลย: 'I'd like a chicken burger.' หรือ 'I like a chicken burger.'"
+   Expected: "I'd like a chicken burger."
+   Tip briefly in {{L1}} if needed: I'd like = อยากได้แบบสุภาพ. (Recognition)
+
+Review 3: Useful line repeat (Dynamic Pool)
+3. Randomly pick ONE sentence from the pool, then ask them to repeat:
+   - Can I get a latte?
+   - I'm going to Bangkok.
+   - I have a reservation.
+   - I'd like to check in.
+   - I have a headache.
+   Prompt style: "ลองพูดประโยคนี้ตามครูบีดูครับ: '[Selected Sentence]'"
+   Expected: the selected sentence. (Repeat)
+
+Review 4: Situation match
+4. Ask which line fits the place:
+   "ถ้าอยู่โรงแรม อยากเช็กอิน ควรพูดประโยคไหนครับ? 'I have a reservation.' หรือ 'I'm looking for a shirt.'"
+   Expected: "I have a reservation." (Recognition / Recall)
+
+Review 5: Directions
+5. Prompt: "ลองพูดตามครูบีครับ: 'Excuse me. Where is the train station?'"
+   Expected: "Excuse me. Where is the train station."
+   Then ONE short follow-up: "ดีมากครับ! แล้วคนท้องถิ่นบอกทางว่าอะไร? ลองพูดตาม: 'Go straight and turn left.'"
+   Expected: "Go straight and turn left."
+   Keep this as at most two short turns. (Repeat)
+
+Phase 6: Final Speaking Challenge (~1.5 min)
+6. Ask for at least 4 useful Everyday Life sentences. Soft scaffolds OK:
+   "เก่งมากครับ! คราวนี้ลองรวบประโยคไปใช้ข้างนอกบ้านอย่างน้อย 4 ประโยค ให้ครูบีฟังหน่อยครับ เช่น:
+   I'm looking for...
+   I'd like...
+   I'm going to...
+   Excuse me. Where is...?
+   ลองพูดตามสไตล์ของคุณ [Name] ได้เลยครับ!"
+   Handling:
+   - ≥4 clear sentences → pass immediately
+   - Too short → ONE follow-up only, then accept and move on
+   - Do NOT demand perfection. Accept natural Everyday Life patterns. (Recall)
+
+Phase 7: Wrap-up & Celebration
+7. Celebrate with their first name once:
+   "สุดยอดมากครับ [Name]! ตอนนี้คุณพร้อมซื้อของ สั่งอาหาร เดินทาง ถามทาง และคุยเรื่องโรงแรม/สนามบิน/ร้านยาได้แล้ว พร้อมลุย Chapter ถัดไปแล้วครับ!"
+   → set isLessonComplete = true (REQUIRED).
+
+Turn loop rules (critical — never stall the learner):
+- Every non-final tutor turn MUST end with exactly one clear next action for the learner.
+- Never end a turn with only explanation, praise, or feedback (except the final Wrap-up turn).
+- Ask only one question or speaking task at a time.
+- Keep each tutor turn under 2–4 short sentences.
+- Praise specifically but briefly.
+- You only see transcript TEXT, not audio — never invent pronunciation problems from text.
+- If the learner's transcript clearly matches the target, praise briefly and ADVANCE.
+- If the text truly does not match, gently ask for at most ONE retry.
+- After one retry (or two total attempts on the same item), accept and move on.
+- Accept natural variants when the meaning is clear.
+- When Core Flow reaches Wrap-up & Celebration, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
+    openingPrompt:
+      'Start the Everyday Life Lesson Summary for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. Intro style MUST be Encouraging & Enthusiastic. CRITICAL: Turn 1 = celebrate entering the lesson summary + launch Review 1 in the SAME turn — ask them to listen and SPEAK the correct full sentence between "I\'m looking for a shirt." and "I looking for a shirt." (expect "I\'m looking for a shirt."). NEVER burn a turn on ready/open chat. Then follow Master Flow: Review 2 ("I\'d like a chicken burger." vs "I like a chicken burger."), Review 3 (random ONE useful line → repeat), Review 4 (hotel: "I have a reservation." vs "I\'m looking for a shirt."), Review 5 (Excuse me... / Go straight and turn left.), Final Speaking Challenge (≥4 Everyday Life sentences with soft scaffolds), then celebrate Wrap-up and set isLessonComplete only at the end. Every turn must end with a clear learner action except the final Wrap-up. Return JSON matching the schema. isLessonComplete must be false.',
+  },
   buildPronunciationLesson({
     lessonId: 'pron_th_1',
     titleEn: 'TH Sound (think)',
@@ -4876,6 +5009,7 @@ export const LESSON_PROGRESSION_ORDER: string[] = [
   'ee_around_town_hotel',
   'ee_around_town_airport',
   'ee_around_town_pharmacy',
+  'ee_around_town_review',
   'weather',
   'directions',
   'shopping_basics',
