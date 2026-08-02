@@ -60,7 +60,13 @@ interface PronunciationLessonSpec {
   itemNoun?: string;
   tipTh: string;
   tipEn: string;
-  /** First lesson of a chapter opens with a welcome to the chapter. */
+  /**
+   * First lesson of a chapter only — welcome to the whole chapter
+   * (comes before the per-lesson overview).
+   */
+  chapterIntroTh?: string;
+  chapterIntroEn?: string;
+  /** Per-lesson opening before Listen / Wrong vs Right. */
   chapterOverviewTh?: string;
   chapterOverviewEn?: string;
   /** Chapter 2 contrast pairs: Thai-script wrong vs English right. */
@@ -102,11 +108,11 @@ interface PronunciationLessonSpec {
 }
 
 /**
- * Chapter 1: (Overview →) Listen → Tip → Practice → Complete
- * Chapter 2: (Overview →) Wrong vs Right → Explain → Tip → Practice → Complete
- * Chapter 3: (Overview →) Listen → Rhythm Tip → Repeat (coach) → Complete
- * Chapter 4: (Overview →) Listen → Listen Again → Speaking Tip → Repeat (coach) → Complete
- * Chapter 5: (Overview →) Listen → Listen Again → Speaking Tip → Practice → Complete
+ * Chapter 1: (Chapter Intro →) Lesson Overview → Listen → Tip → Practice → Complete
+ * Chapter 2: (Chapter Intro →) Lesson Overview → Wrong vs Right → Explain → Tip → Practice → Complete
+ * Chapter 3: (Chapter Intro →) Lesson Overview → Listen → Rhythm Tip → Repeat (coach) → Complete
+ * Chapter 4: (Chapter Intro →) Lesson Overview → Listen → Listen Again → Tip → Repeat (coach) → Complete
+ * Chapter 5: (Chapter Intro →) Lesson Overview → Listen → Listen Again → Tip → Practice → Complete
  */
 function buildPronunciationLesson(spec: PronunciationLessonSpec): LessonConfig {
   const noun = spec.itemNoun ?? 'word';
@@ -119,6 +125,8 @@ function buildPronunciationLesson(spec: PronunciationLessonSpec): LessonConfig {
   const listenAgainItems = spec.listenAgainItems ?? spec.items;
   const listenArrow = listenItems.join(' → ');
   const listenAgainArrow = listenAgainItems.join(' → ');
+  const hasChapterIntro =
+    spec.chapterIntroTh != null && spec.chapterIntroEn != null;
   const hasOverview =
     spec.chapterOverviewTh != null && spec.chapterOverviewEn != null;
   const hasContrast =
@@ -133,7 +141,13 @@ function buildPronunciationLesson(spec: PronunciationLessonSpec): LessonConfig {
   const coachMode = stressMode || smoothMode;
 
   // Language tags only work at the start of a line — never indent them.
-  const overviewStep = `Lesson Overview — open the lesson staying close to the script below. Use their first name at most once if it fits naturally. Nothing else — no ${noun} modeling, no tip, no question, no mention of any button. expectsUserSpeech = false. (Opening — Overview)
+  const chapterIntroStep = `Chapter Intro — welcome them to this chapter using their first name once, staying close to the script below. Nothing else — no ${noun} modeling, no tip, no question, no mention of any button. expectsUserSpeech = false. (Opening — Chapter Intro)
+@thai   Script: ${spec.chapterIntroTh}
+@english   Script: ${spec.chapterIntroEn}`;
+
+  const overviewStep = `Lesson Overview — open the lesson staying close to the script below. Use their first name at most once if it fits naturally. Nothing else — no ${noun} modeling, no tip, no question, no mention of any button. expectsUserSpeech = false. (${
+    hasChapterIntro ? 'Lesson Overview' : 'Opening — Overview'
+  })
 @thai   Script: ${spec.chapterOverviewTh}
 @english   Script: ${spec.chapterOverviewEn}`;
 
@@ -141,16 +155,17 @@ function buildPronunciationLesson(spec: PronunciationLessonSpec): LessonConfig {
     .map((c) => `❌ ${c.wrong}\n✅ ${c.right}`)
     .join('\n...\n');
 
-  const inviteListen = hasOverview
-    ? 'invite'
-    : 'welcome them by first name in ONE short sentence, then invite';
+  const inviteListen =
+    hasChapterIntro || hasOverview
+      ? 'invite'
+      : 'welcome them by first name in ONE short sentence, then invite';
 
   const contrastLabel = 'Wrong vs Right';
 
   const wrongVsRightStep = `${contrastLabel} — ${inviteListen} them to listen to two versions, then model each pair clearly, wrong first then right, one pair at a time:
 ${contrastLines}
 Write the wrong form EXACTLY in Thai script (so TTS reads Thai syllables) and the right form EXACTLY in English Latin letters. Nothing else — no explanation, no tip, no question, no mention of any button. Stop after the last pair. expectsUserSpeech = false. (${
-    hasOverview ? contrastLabel : `Opening — ${contrastLabel}`
+    hasChapterIntro || hasOverview ? contrastLabel : `Opening — ${contrastLabel}`
   })`;
 
   const explainStep = `Explain — give ONLY the short explanation below in {{L1}}, 1–2 sentences, then stop. Do not model ${nouns} again, do not ask them to speak, do not mention any button. expectsUserSpeech = false. (Explain)
@@ -160,7 +175,7 @@ Write the wrong form EXACTLY in Thai script (so TTS reads Thai syllables) and th
   const listenStep = `Listen — ${inviteListen} them to listen and model the ${nouns} clearly, one per line: ${
     dualListen ? listenArrow : arrow
   }. Nothing else — no goal speech, no tip, no question, no mention of any button. Stop right after the last one. expectsUserSpeech = false. (${
-    hasOverview ? 'Listen' : 'Opening — Listen'
+    hasChapterIntro || hasOverview ? 'Listen' : 'Opening — Listen'
   })`;
 
   const listenAgainStep = `Listen Again — invite them to listen one more time and model the ${nouns} clearly, one per line: ${listenAgainArrow}. Nothing else — no tip, no question, no mention of any button. Stop right after the last one. expectsUserSpeech = false. (Listen Again)`;
@@ -211,10 +226,15 @@ Write the wrong form EXACTLY in Thai script (so TTS reads Thai syllables) and th
 @thai   Stay close to: "เก่งมากครับ! ปิดท้ายบทนี้ด้วยการฝึกทวนคำเมื่อกี้อีกรอบนะครับ"
 @english   Stay close to: "Great work! Let's close this lesson with a quick drill on the same ${nouns}."`;
 
+  const openingSteps = [
+    ...(hasChapterIntro ? [chapterIntroStep] : []),
+    ...(hasOverview ? [overviewStep] : []),
+  ];
+
   let coreSteps: string[];
   if (hasContrast) {
     coreSteps = [
-      ...(hasOverview ? [overviewStep] : []),
+      ...openingSteps,
       wrongVsRightStep,
       explainStep,
       tipStep,
@@ -223,7 +243,7 @@ Write the wrong form EXACTLY in Thai script (so TTS reads Thai syllables) and th
     ];
   } else if (dualListen) {
     coreSteps = [
-      ...(hasOverview ? [overviewStep] : []),
+      ...openingSteps,
       listenStep,
       listenAgainStep,
       tipStep,
@@ -232,7 +252,7 @@ Write the wrong form EXACTLY in Thai script (so TTS reads Thai syllables) and th
     ];
   } else {
     coreSteps = [
-      ...(hasOverview ? [overviewStep] : []),
+      ...openingSteps,
       listenStep,
       tipStep,
       practiceStep,
@@ -244,24 +264,28 @@ Write the wrong form EXACTLY in Thai script (so TTS reads Thai syllables) and th
     .map((step, index) => `${index + 1}. ${step}`)
     .join('\n');
 
-  // Tip step index (1-based) depends on overview + path.
+  // Tip step index (1-based) depends on chapter intro + lesson overview + path.
+  const preTipExtra =
+    (hasChapterIntro ? 1 : 0) + (hasOverview ? 1 : 0);
   let tipStepNumber: number;
   if (hasContrast) {
-    tipStepNumber = hasOverview ? 4 : 3;
+    tipStepNumber = preTipExtra + 3; // + Wrong vs Right + Explain
   } else if (dualListen) {
-    tipStepNumber = hasOverview ? 4 : 3;
+    tipStepNumber = preTipExtra + 3; // + Listen + Listen Again
   } else {
-    tipStepNumber = hasOverview ? 3 : 2;
+    tipStepNumber = preTipExtra + 2; // + Listen
   }
 
   // Base listen-only steps before practice:
   // contrast = 3, dualListen = 3 (Listen + Listen Again + Tip), ch1/ch3 = 2;
-  // plus optional overview.
+  // plus optional chapter intro / lesson overview.
   const listenOnlyBase = hasContrast || dualListen ? 3 : 2;
-  const listenOnlyCount = (hasOverview ? 1 : 0) + listenOnlyBase;
+  const listenOnlyCount = preTipExtra + listenOnlyBase;
 
   let opening: string;
-  if (hasOverview) {
+  if (hasChapterIntro) {
+    opening = `This opening is Core Flow step 1 (Chapter Intro): welcome them to the chapter with their first name once, staying close to the chapter intro script in the lesson instruction. Do NOT model the ${nouns} yet, do NOT give the tip, do NOT start the lesson overview yet, and do NOT ask them to speak.`;
+  } else if (hasOverview) {
     opening = `This opening is Core Flow step 1 (Lesson Overview): stay close to the overview script in the lesson instruction. Use their first name at most once if it fits. Do NOT model the ${nouns} yet, do NOT give the tip, and do NOT ask them to speak.`;
   } else if (hasContrast) {
     const pairs = (spec.contrasts ?? [])
@@ -3712,6 +3736,14 @@ Core Flow (progression milestones — NOT a fixed turn count):
       'ลองแลบปลายลิ้นออกมาแตะฟันเบา ๆ แล้วเป่าลมออก',
     tipEn: 'When you see TH like in think or three, don’t say ต first. Lightly put your tongue tip ' +
       'on your teeth, then blow air out.',
+    chapterIntroTh:
+      'ยินดีต้อนรับสู่ Chapter 1: Sounds ครับ\n\n' +
+      'ในบทนี้ เราจะฝึกเสียงที่คนไทยมักออกเสียงผิดบ่อยที่สุด ไม่ว่าจะเป็น TH, W, V, R กับ L รวมถึงเสียงท้ายคำอย่าง T และ D\n\n' +
+      'ไม่ต้องกังวลนะครับ ถ้าตอนนี้ยังออกไม่ได้ เดี๋ยวเราจะค่อย ๆ ฝึกไปทีละเสียงครับ',
+    chapterIntroEn:
+      'Welcome to Chapter 1: Sounds.\n\n' +
+      'In this chapter we practise the sounds Thai speakers most often get wrong — TH, W, V, R and L, plus ending T and D.\n\n' +
+      'No worries if you can’t say them yet — we’ll train one sound at a time.',
     chapterOverviewTh:
       'วันนี้เราจะเริ่มด้วยเสียง TH แบบในคำว่า think ครับ เสียงนี้เจอได้บ่อยในคำอย่าง think,' +
       'thank, three, Thursday คนไทยมักออกเสียงเป็น ต หรือ ซ มาฝึกให้ถูกกันครับ',
@@ -3857,6 +3889,14 @@ Core Flow (progression milestones — NOT a fixed turn count):
       'ไม่ต้องเติม \'สะ\'',
     tipEn: 'For words starting with st, sp, or sk — like stop or school — start on the first sound.' +
       'Don’t add “sa”.',
+    chapterIntroTh:
+      'ยินดีต้อนรับสู่ Chapter 2: Break the Habit ครับ\n\n' +
+      'คราวนี้เราจะมาแก้นิสัยการออกเสียงที่ติดมาจากภาษาไทย เช่น การเติมเสียงเกิน การตัดเสียงท้าย หรือการอ่านตามตัวสะกด\n\n' +
+      'แค่เปลี่ยนนิสัยเล็ก ๆ เหล่านี้ ภาษาอังกฤษของคุณจะฟังเป็นธรรมชาติขึ้นเยอะครับ',
+    chapterIntroEn:
+      'Welcome to Chapter 2: Break the Habit.\n\n' +
+      'Now we fix speaking habits carried over from Thai — adding extra sounds, dropping endings, or reading letter by letter.\n\n' +
+      'Change these small habits and your English will sound much more natural.',
     chapterOverviewTh:
       'หลายครั้งที่คนไทยพูดผิด ไม่ใช่เพราะไม่รู้คำศัพท์ แต่เพราะติดนิสัยการออกเสียงแบบภาษาไทย ' +
       'วันนี้เราจะมาแก้กันครับ',
@@ -4022,6 +4062,14 @@ Core Flow (progression milestones — NOT a fixed turn count):
     tipTh: 'เวลาเจอคำหลายพยางค์ อย่าลงน้ำหนักทุกพยางค์เท่ากันนะครับ ลองเน้นพยางค์ที่เด่นให้ชัด',
     tipEn: 'For multi-syllable words, don’t stress every syllable equally — make the strong one ' +
       'clearer.',
+    chapterIntroTh:
+      'ยินดีต้อนรับสู่ Chapter 3: Stress & Rhythm ครับ\n\n' +
+      'ตอนนี้คุณออกเสียงได้ชัดขึ้นแล้ว ขั้นต่อไปคือการพูดให้มีจังหวะแบบเจ้าของภาษา\n\n' +
+      'เราจะฝึกการเน้นพยางค์ การเน้นคำสำคัญ และจังหวะของประโยค เพื่อให้พูดฟังลื่นและเป็นธรรมชาติมากขึ้นครับ',
+    chapterIntroEn:
+      'Welcome to Chapter 3: Stress & Rhythm.\n\n' +
+      'Your sounds are clearer now — next is native-like rhythm.\n\n' +
+      'We’ll practise syllable stress, key-word stress, and sentence rhythm so your speech sounds smoother and more natural.',
     chapterOverviewTh:
       'คราวนี้เราจะฝึก Word Stress ครับ คำที่มีหลายพยางค์จะมีพยางค์หนึ่งที่เด่นกว่าพยางค์อื่น',
     chapterOverviewEn:
@@ -4128,6 +4176,14 @@ Core Flow (progression milestones — NOT a fixed turn count):
     itemNoun: 'phrase',
     tipTh: 'เวลาเจอคำที่พูดติดกัน อย่ารีบหยุดระหว่างคำ ลองเชื่อมเสียงให้ลื่นครับ',
     tipEn: 'When words run together, don’t pause between them — link the sounds smoothly.',
+    chapterIntroTh:
+      'ยินดีต้อนรับสู่ Chapter 4: Speak Smoothly ครับ\n\n' +
+      'ตอนนี้เราจะเชื่อมทุกอย่างเข้าด้วยกันครับ ทั้งการเชื่อมเสียง การย่อเสียง และการพูดเป็นวลี\n\n' +
+      'เป้าหมายคือให้คุณพูดได้ลื่นขึ้น เหมือนกำลังคุยกับคนจริง ไม่ใช่พูดทีละคำครับ',
+    chapterIntroEn:
+      'Welcome to Chapter 4: Speak Smoothly.\n\n' +
+      'Now we put everything together — linking, reductions, and speaking in phrases.\n\n' +
+      'The goal is smoother speech, like talking to a real person — not word by word.',
     chapterOverviewTh:
       'คราวนี้เราจะฝึกเชื่อมเสียงระหว่างคำ เพื่อให้พูดต่อเนื่องเหมือนเจ้าของภาษา',
     chapterOverviewEn:
@@ -4238,6 +4294,14 @@ Core Flow (progression milestones — NOT a fixed turn count):
     items: ['ship', 'sheep', 'sit', 'seat'],
     tipTh: 'เวลาเจอคู่เสียงแบบนี้ ลองฟังความยาวของเสียงก่อน แล้วค่อยพูดตามครับ',
     tipEn: 'For pairs like these, listen to the vowel length first, then repeat.',
+    chapterIntroTh:
+      'ยินดีต้อนรับสู่ Chapter 5: Fine-tune Your Sounds ครับ\n\n' +
+      'นี่คือบทสุดท้ายของคอร์สแล้วครับ เราจะมาเก็บรายละเอียดของเสียงที่คล้ายกัน เพื่อให้การออกเสียงของคุณชัดและแม่นยำยิ่งขึ้น\n\n' +
+      'หลังจากจบบทนี้ คุณจะพร้อมนำทุกอย่างไปใช้ในการสนทนาจริงครับ',
+    chapterIntroEn:
+      'Welcome to Chapter 5: Fine-tune Your Sounds.\n\n' +
+      'This is the final chapter of the course. We’ll fine-tune similar sounds so your pronunciation is clearer and more precise.\n\n' +
+      'After this chapter, you’ll be ready to use everything in real conversation.',
     chapterOverviewTh:
       'คราวนี้เราจะฝึกแยกเสียงสระสั้นกับสระยาว เพราะความยาวของเสียงทำให้ความหมายเปลี่ยนได้',
     chapterOverviewEn:
