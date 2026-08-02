@@ -35,7 +35,7 @@ export const TOPICS: Topic[] = [
 ];
 
 export const TOPIC_CONTEXT: Record<string, string> = {
-  intro: 'Banana English onboarding introduction — 3-turn script with Teacher B (ครูพี่บี).',
+  intro: 'Banana English onboarding introduction — Hello warm-up, ask name, then complete with Teacher B (ครูพี่บี).',
   free_talk:
     'Open freestyle conversation practice with Teacher B. There is no fixed task or checklist. ' +
     'Follow the learner’s interests, keep topics light and everyday, and help them speak English comfortably. ' +
