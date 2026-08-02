@@ -41,6 +41,8 @@ export const DAILY_BANANA_DROP = 1;
 export const DEBUG_BANANA_REFILL = 2;
 /** Soft cap on banana balance — credits never push above this. */
 export const MAX_BANANA_BALANCE = 5;
+/** Typical Mission start cost shown in the Banana Ticket sheet. */
+export const MISSION_BANANA_COST = 1;
 
 /** Env keys — defaults above apply when unset / invalid. */
 export const ENV_ONBOARDING_BANANA_BONUS = 'ONBOARDING_BANANA_BONUS';

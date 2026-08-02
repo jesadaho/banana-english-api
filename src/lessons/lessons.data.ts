@@ -82,13 +82,21 @@ interface PronunciationLessonSpec {
    */
   smoothMode?: boolean;
   /**
+   * Chapter 5: Listen → Listen Again → Speaking Tip → Practice → Complete.
+   * Same listen shape as Chapter 4, but Chapter 1-style match feedback
+   * (at most one retry) for minimal-pair vowel contrasts.
+   */
+  fineTuneMode?: boolean;
+  /**
    * First Listen pass models (defaults to [items]).
    * Reductions: full forms like "going to" / "want to" / "got to".
+   * Chapter 5: first minimal-pair set (e.g. ship, sheep).
    */
   listenItems?: string[];
   /**
    * Listen Again models (defaults to [items]).
    * Reductions: reduced forms matching [items] (gonna / wanna / gotta).
+   * Chapter 5: second minimal-pair set (e.g. sit, seat).
    */
   listenAgainItems?: string[];
 }
@@ -98,6 +106,7 @@ interface PronunciationLessonSpec {
  * Chapter 2: (Overview →) Wrong vs Right → Explain → Tip → Practice → Complete
  * Chapter 3: (Overview →) Listen → Rhythm Tip → Repeat (coach) → Complete
  * Chapter 4: (Overview →) Listen → Listen Again → Speaking Tip → Repeat (coach) → Complete
+ * Chapter 5: (Overview →) Listen → Listen Again → Speaking Tip → Practice → Complete
  */
 function buildPronunciationLesson(spec: PronunciationLessonSpec): LessonConfig {
   const noun = spec.itemNoun ?? 'word';
@@ -119,6 +128,8 @@ function buildPronunciationLesson(spec: PronunciationLessonSpec): LessonConfig {
     spec.explainEn != null;
   const stressMode = spec.stressMode === true;
   const smoothMode = spec.smoothMode === true;
+  const fineTuneMode = spec.fineTuneMode === true;
+  const dualListen = smoothMode || fineTuneMode;
   const coachMode = stressMode || smoothMode;
 
   // Language tags only work at the start of a line — never indent them.
@@ -147,7 +158,7 @@ Write the wrong form EXACTLY in Thai script (so TTS reads Thai syllables) and th
 @english   Script: ${spec.explainEn}`;
 
   const listenStep = `Listen — ${inviteListen} them to listen and model the ${nouns} clearly, one per line: ${
-    smoothMode ? listenArrow : arrow
+    dualListen ? listenArrow : arrow
   }. Nothing else — no goal speech, no tip, no question, no mention of any button. Stop right after the last one. expectsUserSpeech = false. (${
     hasOverview ? 'Listen' : 'Opening — Listen'
   })`;
@@ -155,8 +166,8 @@ Write the wrong form EXACTLY in Thai script (so TTS reads Thai syllables) and th
   const listenAgainStep = `Listen Again — invite them to listen one more time and model the ${nouns} clearly, one per line: ${listenAgainArrow}. Nothing else — no tip, no question, no mention of any button. Stop right after the last one. expectsUserSpeech = false. (Listen Again)`;
 
   const tipStep = stressMode
-    ? `Rhythm Tip — give ONLY the rhythm tip above in {{L1}}, one short sentence, then stop. Do not model ${nouns} again, do not ask them to speak, do not mention any button. expectsUserSpeech = false. (Rhythm Tip)`
-    : `Speaking Tip — give ONLY the speaking tip above in {{L1}}, one short sentence, then stop. Do not model ${nouns} again, do not ask them to speak, do not mention any button. expectsUserSpeech = false. (Tip)`;
+    ? `Rhythm Tip — give ONLY the rhythm tip above in {{L1}}, one short sentence, then stop. FORBIDDEN on this turn: modeling ${nouns}, "Your turn" / "ตาคุณแล้ว", "Please say", asking them to speak, or any speaking task. Tip only. expectsUserSpeech = false. (Rhythm Tip)`
+    : `Speaking Tip — give ONLY the speaking tip above in {{L1}}, one short sentence, then stop. FORBIDDEN on this turn: modeling ${nouns}, "Your turn" / "ตาคุณแล้ว", "Please say", asking them to speak, or any speaking task. Tip only. expectsUserSpeech = false. (Tip)`;
 
   let practiceStep: string;
   if (stressMode) {
@@ -174,6 +185,14 @@ Write the wrong form EXACTLY in Thai script (so TTS reads Thai syllables) and th
    - NEVER say they were wrong or right about linking — you cannot hear smoothness from transcript text.
    - NEVER ask them to repeat the same ${noun} again — always advance after one attempt.
    - Never practice anything outside this list.
+   - Every turn in this step ends with something for them to say. expectsUserSpeech = true. (Repeat)`;
+  } else if (fineTuneMode) {
+    practiceStep = `Practice — the same ${nouns}, ONE per turn, always in this order: ${arrow}.
+   - Open this step with "ตาคุณแล้วครับ" (or the {{L1}} equivalent of "Your turn"), then ask them to say: ${first}.
+   - Accept any clear attempt that matches the target ${noun} (transcript text) and ADVANCE with brief praise or a light tip reminder.
+   - If the transcript truly does not match the target, gently ask for at most ONE retry.
+   - After one retry (or two total attempts on the same ${noun}), accept and move on.
+   - Never practice anything outside this list, and never invent vowel-length problems beyond the STT match.
    - Every turn in this step ends with something for them to say. expectsUserSpeech = true. (Repeat)`;
   } else {
     const practiceExtra = hasContrast
@@ -202,7 +221,7 @@ Write the wrong form EXACTLY in Thai script (so TTS reads Thai syllables) and th
       practiceStep,
       completeStep,
     ];
-  } else if (smoothMode) {
+  } else if (dualListen) {
     coreSteps = [
       ...(hasOverview ? [overviewStep] : []),
       listenStep,
@@ -229,16 +248,16 @@ Write the wrong form EXACTLY in Thai script (so TTS reads Thai syllables) and th
   let tipStepNumber: number;
   if (hasContrast) {
     tipStepNumber = hasOverview ? 4 : 3;
-  } else if (smoothMode) {
+  } else if (dualListen) {
     tipStepNumber = hasOverview ? 4 : 3;
   } else {
     tipStepNumber = hasOverview ? 3 : 2;
   }
 
   // Base listen-only steps before practice:
-  // contrast = 3, smooth = 3 (Listen + Listen Again + Tip), ch1/ch3 = 2;
+  // contrast = 3, dualListen = 3 (Listen + Listen Again + Tip), ch1/ch3 = 2;
   // plus optional overview.
-  const listenOnlyBase = hasContrast || smoothMode ? 3 : 2;
+  const listenOnlyBase = hasContrast || dualListen ? 3 : 2;
   const listenOnlyCount = (hasOverview ? 1 : 0) + listenOnlyBase;
 
   let opening: string;
@@ -254,7 +273,7 @@ Write the wrong form EXACTLY in Thai script (so TTS reads Thai syllables) and th
     opening = `This opening is Core Flow step 1 (Listen): greet them by first name in one short sentence, invite them to listen, then model the ${nouns} one per line — ${listenItems.join(
       ', ',
     )} — and stop there. Do NOT give the ${tipKind} tip${
-      smoothMode ? ', do NOT start Listen Again yet,' : ''
+      dualListen ? ', do NOT start Listen Again yet,' : ''
     } and do NOT ask them to speak.`;
   }
 
@@ -285,6 +304,7 @@ Wrong vs Right rules (critical for TTS):
 - Keep each tutor turn under 2–3 short sentences.
 - Every non-final tutor turn MUST end with exactly one clear next action for the learner.
 - NEVER ask the learner to say "Ready" / "OK" / "I'm ready", and NEVER mention the Continue button. Listen-only steps just end after their content with expectsUserSpeech = false.
+- Tip / Rhythm Tip turns are listen-only: tip sentence ONLY — never "Your turn" / "ตาคุณแล้ว" / "Please say", and never start Repeat in the same turn.
 - On every Repeat turn the turn must end with something for them to SAY, with expectsUserSpeech = true.
 - When Core Flow reaches Complete, set isLessonComplete = true (required). Otherwise false.`;
   } else if (smoothMode) {
@@ -299,7 +319,23 @@ Wrong vs Right rules (critical for TTS):
 - Keep each tutor turn under 2–3 short sentences.
 - Every non-final tutor turn MUST end with exactly one clear next action for the learner.
 - NEVER ask the learner to say "Ready" / "OK" / "I'm ready", and NEVER mention the Continue button. Listen-only steps just end after their content with expectsUserSpeech = false.
+- Tip / Speaking Tip turns are listen-only: tip sentence ONLY — never "Your turn" / "ตาคุณแล้ว" / "Please say", and never start Repeat in the same turn.
 - On every Repeat turn the turn must end with something for them to SAY, with expectsUserSpeech = true.
+- When Core Flow reaches Complete, set isLessonComplete = true (required). Otherwise false.`;
+  } else if (fineTuneMode) {
+    teachingRules = `Important teaching rules:
+- Focus ONLY on hearing and producing the target vowel / sound contrast. Do not correct grammar or vocabulary choice.
+- You only see transcript TEXT, not audio — judge ONLY by whether the transcript matches the target ${noun}.
+- NEVER invent vowel-length, mouth-shape, or airflow problems beyond the STT match.
+- Speaking tips are teaching tips for EVERYONE (say them once as instruction), not personal diagnosis.
+- Accept any clear attempt that matches the target ${noun} and ADVANCE.
+- If the text truly does not match the target, gently ask for at most ONE retry.
+- After one retry (or two total attempts on the same ${noun}), accept and move on.
+- Keep each tutor turn under 2–3 short sentences.
+- Every non-final tutor turn MUST end with exactly one clear next action for the learner.
+- NEVER ask the learner to say "Ready" / "OK" / "I'm ready", and NEVER mention the Continue button. Listen-only steps just end after their content with expectsUserSpeech = false.
+- Tip / Speaking Tip turns are listen-only: tip sentence ONLY — never "Your turn" / "ตาคุณแล้ว" / "Please say", and never start Practice in the same turn.
+- On every practice turn the turn must end with something for them to SAY, with expectsUserSpeech = true.
 - When Core Flow reaches Complete, set isLessonComplete = true (required). Otherwise false.`;
   } else {
     teachingRules = `Important teaching rules:
@@ -313,13 +349,14 @@ Wrong vs Right rules (critical for TTS):
 - Keep each tutor turn under 2–3 short sentences.
 - Every non-final tutor turn MUST end with exactly one clear next action for the learner.
 - NEVER ask the learner to say "Ready" / "OK" / "I'm ready", and NEVER mention the Continue button. Listen-only steps just end after their content with expectsUserSpeech = false.
+- Tip / Speaking Tip turns are listen-only: tip sentence ONLY — never "Your turn" / "ตาคุณแล้ว" / "Please say", and never start Practice in the same turn.
 - On every practice turn the turn must end with something for them to SAY, with expectsUserSpeech = true.
 - When Core Flow reaches Complete, set isLessonComplete = true (required). Otherwise false.`;
   }
 
   const tipLabel = stressMode
     ? 'Rhythm tip'
-    : smoothMode
+    : smoothMode || fineTuneMode
       ? 'Speaking tip'
       : 'Mouth tip';
 
@@ -4057,6 +4094,106 @@ Core Flow (progression milestones — NOT a fixed turn count):
     tipEn: 'Quick recap: link sounds, hear reductions, and keep whole phrases smooth.',
     smoothMode: true,
   }),
+  // --- Chapter 5: Fine-tune Your Sounds ---
+  buildPronunciationLesson({
+    lessonId: 'pron_short_i_1',
+    titleEn: 'Short vs Long I',
+    titleTh: 'เสียง I สั้น vs ยาว',
+    goalEn: 'Tell apart /ɪ/ and /iː/ in common minimal pairs.',
+    goalTh: 'แยกเสียง /ɪ/ กับ /iː/ ในคู่คำที่ใช้บ่อย',
+    soundLabel: 'short /ɪ/ vs long /iː/',
+    items: ['ship', 'sheep', 'sit', 'seat'],
+    tipTh: 'ฟังความยาวของเสียงให้ชัดก่อน แล้วค่อยพูดตาม',
+    tipEn: 'Listen carefully to the vowel length first, then repeat.',
+    chapterOverviewTh:
+      'ตอนนี้เราจะมาแยกเสียงที่คล้ายกันครับ — เมื่อก่อนอาจฟังเหมือนกันหมด ' +
+      'พอฟังความต่างได้แล้ว การพูดจะแม่นขึ้นทันทีครับ',
+    chapterOverviewEn:
+      'Next we fine-tune sounds that used to blur together. ' +
+      'Once you can hear the difference, your speech gets sharper right away.',
+    listenItems: ['ship', 'sheep'],
+    listenAgainItems: ['sit', 'seat'],
+    fineTuneMode: true,
+  }),
+  buildPronunciationLesson({
+    lessonId: 'pron_short_u_1',
+    titleEn: 'Short vs Long U',
+    titleTh: 'เสียง U สั้น vs ยาว',
+    goalEn: 'Tell apart short and long U sounds in pairs like full and fool.',
+    goalTh: 'แยกเสียง U สั้นกับยาวในคู่คำอย่าง full และ fool',
+    soundLabel: 'short vs long U',
+    items: ['full', 'fool', 'pull', 'pool'],
+    tipTh: 'เสียงยาวลากนานกว่าเล็กน้อย',
+    tipEn: 'The long vowel stretches a little longer.',
+    listenItems: ['full', 'fool'],
+    listenAgainItems: ['pull', 'pool'],
+    fineTuneMode: true,
+  }),
+  buildPronunciationLesson({
+    lessonId: 'pron_e_a_1',
+    titleEn: 'E vs A',
+    titleTh: 'เสียง E กับ A',
+    goalEn: 'Tell apart E and A sounds in pairs like pen and pan.',
+    goalTh: 'แยกเสียง E กับ A ในคู่คำอย่าง pen และ pan',
+    soundLabel: 'E vs A vowel contrast',
+    items: ['pen', 'pan', 'bed', 'bad'],
+    tipTh: 'เปิดปากกว้างขึ้นเล็กน้อยสำหรับเสียง A',
+    tipEn: 'Open your mouth a little wider for the A sound.',
+    listenItems: ['pen', 'pan'],
+    listenAgainItems: ['bed', 'bad'],
+    fineTuneMode: true,
+  }),
+  buildPronunciationLesson({
+    lessonId: 'pron_o_1',
+    titleEn: 'O Sounds',
+    titleTh: 'เสียง O',
+    goalEn: 'Tell apart short and long O sounds in pairs like not and note.',
+    goalTh: 'แยกเสียง O สั้นกับยาวในคู่คำอย่าง not และ note',
+    soundLabel: 'short vs long O',
+    items: ['not', 'note', 'hop', 'hope'],
+    tipTh: 'ฟังว่ามีเสียงยาวเพิ่มขึ้นหรือไม่',
+    tipEn: 'Listen for whether the vowel gets longer.',
+    listenItems: ['not', 'note'],
+    listenAgainItems: ['hop', 'hope'],
+    fineTuneMode: true,
+  }),
+  buildPronunciationLesson({
+    lessonId: 'pron_diph_1',
+    titleEn: 'Diphthongs',
+    titleTh: 'สระคู่',
+    goalEn: 'Feel diphthongs glide from one vowel toward another.',
+    goalTh: 'รู้สึกถึงเสียงสระคู่ที่ไหลจากสระหนึ่งไปอีกสระ',
+    soundLabel: 'diphthong glides',
+    items: ['day', 'boy', 'now'],
+    tipTh: 'ปล่อยเสียงไหลจากสระหนึ่งไปอีกสระ',
+    tipEn: 'Let the sound glide from one vowel into the next.',
+    listenItems: ['day', 'boy', 'now'],
+    listenAgainItems: ['face', 'choice', 'house'],
+    fineTuneMode: true,
+  }),
+  buildPronunciationLesson({
+    lessonId: 'pron_review_5',
+    titleEn: 'Mixed Sound Challenge',
+    titleTh: 'ท้าทายเสียงผสม',
+    goalEn: 'Practice all the vowel contrasts from this chapter together.',
+    goalTh: 'ฝึกทุกคู่เสียงจากแชปเตอร์นี้รวมกัน',
+    soundLabel: 'mixed minimal-pair vowel contrasts',
+    items: [
+      'ship',
+      'sheep',
+      'full',
+      'fool',
+      'pen',
+      'pan',
+      'not',
+      'note',
+    ],
+    tipTh: 'ฟังก่อน พูดตาม แล้วเปรียบเทียบคู่เสียงให้ชัด',
+    tipEn: 'Listen, repeat, then compare each pair clearly.',
+    listenItems: ['ship', 'sheep'],
+    listenAgainItems: ['full', 'fool'],
+    fineTuneMode: true,
+  }),
 ];
 
 const LESSON_BY_ID = new Map(LESSONS.map((l) => [l.lessonId, l]));
@@ -4124,6 +4261,12 @@ export const LESSON_PROGRESSION_ORDER: string[] = [
   'pron_natural_1',
   'pron_flow_1',
   'pron_review_4',
+  'pron_short_i_1',
+  'pron_short_u_1',
+  'pron_e_a_1',
+  'pron_o_1',
+  'pron_diph_1',
+  'pron_review_5',
 ];
 
 /** Pronunciation course lessons run on the same engine but have their own

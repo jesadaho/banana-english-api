@@ -96,6 +96,7 @@ interface UserProgressSnapshot {
   noHintMission: boolean;
   englishOnlyMission: boolean;
   perfectMission: boolean;
+  perfectVocabDrill: boolean;
   completedSimulationIds: Set<string>;
   completedLessonIds: Set<string>;
 }
@@ -190,6 +191,15 @@ export class AchievementsService {
       );
       return null;
     }
+  }
+
+  /** Client reports a Vocab Drill finished with zero mistakes. */
+  async recordPerfectVocabDrill(userId: string): Promise<AchievementsView> {
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: { perfectVocabDrillCompleted: true },
+    });
+    return this.syncForUser(userId);
   }
 
   async claimReward(
@@ -318,6 +328,7 @@ export class AchievementsService {
         onboardingCompleted: true,
         streakDays: true,
         streakMilestonesClaimed: true,
+        perfectVocabDrillCompleted: true,
       },
     });
 
@@ -338,7 +349,8 @@ export class AchievementsService {
       },
     });
 
-    const lessonIds = new Set<string>();
+    const lessonIdsForCount = new Set<string>();
+    const completedLessonIds = new Set<string>();
     const simulationIds = new Set<string>();
     let anySessionCount = 0;
     let clearPronunciationMission = false;
@@ -349,10 +361,13 @@ export class AchievementsService {
     for (const session of sessions) {
       anySessionCount += 1;
 
-      // Pronunciation-course lessons do not count toward learning badges /
-      // Banana Graduate (separate catalog).
-      if (session.lessonId && !session.lessonId.startsWith('pron_')) {
-        lessonIds.add(session.lessonId);
+      // Pronunciation lessons count for Clear Voice (matchIds) but not for
+      // learning badges / Banana Graduate (lesson_count).
+      if (session.lessonId) {
+        completedLessonIds.add(session.lessonId);
+        if (!session.lessonId.startsWith('pron_')) {
+          lessonIdsForCount.add(session.lessonId);
+        }
       }
       if (session.simulationId) {
         simulationIds.add(session.simulationId);
@@ -393,15 +408,16 @@ export class AchievementsService {
       onboardingCompleted: user.onboardingCompleted,
       streakDays: user.streakDays,
       streakMilestonesClaimed: user.streakMilestonesClaimed,
-      lessonCount: lessonIds.size,
+      lessonCount: lessonIdsForCount.size,
       missionCount: simulationIds.size,
       anySessionCount,
       clearPronunciationMission,
       noHintMission,
       englishOnlyMission,
       perfectMission,
+      perfectVocabDrill: user.perfectVocabDrillCompleted,
       completedSimulationIds: simulationIds,
-      completedLessonIds: lessonIds,
+      completedLessonIds,
     };
   }
 
@@ -434,6 +450,8 @@ export class AchievementsService {
         return snapshot.englishOnlyMission ? 1 : 0;
       case 'perfect_mission':
         return snapshot.perfectMission ? 1 : 0;
+      case 'perfect_vocab_drill':
+        return snapshot.perfectVocabDrill ? 1 : 0;
       case 'simulation_completed': {
         const ids = def.matchIds ?? [];
         return ids.some((id) => snapshot.completedSimulationIds.has(id))

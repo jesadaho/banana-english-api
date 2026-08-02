@@ -12,6 +12,7 @@ import {
   LESSON_REWARD_SEEDS,
   LESSON_REWARD_XP,
   MAX_BANANA_BALANCE,
+  MISSION_BANANA_COST,
   ONBOARDING_BANANA_BONUS,
   STREAK_MILESTONES,
   cappedBananaCredit,
@@ -79,6 +80,19 @@ export class EconomyService {
 
   private maxBananaBalance(): number {
     return this.envInt(ENV_MAX_BANANA_BALANCE, MAX_BANANA_BALANCE);
+  }
+
+  /** Rules shown in the Banana Ticket UI — env-overridable where applicable. */
+  ticketRules(): {
+    dailyDrop: number;
+    maxBalance: number;
+    missionCost: number;
+  } {
+    return {
+      dailyDrop: this.dailyBananaDrop(),
+      maxBalance: this.maxBananaBalance(),
+      missionCost: MISSION_BANANA_COST,
+    };
   }
 
   async creditOnboardingBonus(userId: string): Promise<User> {

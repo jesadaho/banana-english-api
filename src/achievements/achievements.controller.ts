@@ -15,6 +15,12 @@ export class AchievementsController {
     return this.achievements.syncForUser(req.user.id);
   }
 
+  /** Vocab Drill finished with zero mistakes (Perfect Drill badge). */
+  @Post('perfect-vocab-drill')
+  async recordPerfectVocabDrill(@Req() req: AuthedRequest) {
+    return this.achievements.recordPerfectVocabDrill(req.user.id);
+  }
+
   @Post(':achievementId/claim')
   async claim(
     @Req() req: AuthedRequest,

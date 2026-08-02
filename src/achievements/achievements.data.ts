@@ -20,6 +20,7 @@ export type AchievementMetric =
   | 'no_hint_mission'
   | 'english_only_mission'
   | 'perfect_mission'
+  | 'perfect_vocab_drill'
   | 'simulation_completed'
   /** Progress = how many of matchIds (simulations) the user has completed. */
   | 'all_simulations_completed'
@@ -67,6 +68,11 @@ export const ACHIEVEMENT_RARITY_ORDER: AchievementRarity[] = [
 const TOTAL_LESSONS = LESSON_PROGRESSION_ORDER.filter(
   (id) => !id.startsWith('pron_'),
 ).length;
+
+/** Pronunciation course lessons for Clear Voice. */
+const PRONUNCIATION_LESSON_IDS = LESSON_PROGRESSION_ORDER.filter((id) =>
+  id.startsWith('pron_'),
+);
 
 /** Lessons shown in the Basics course catalog (app BasicsLessons). */
 const BASICS_LESSON_IDS: string[] = [
@@ -357,6 +363,33 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
     iconKey: 'bullseye',
     target: 1,
     metric: 'perfect_mission',
+    rewardSeeds: 50,
+  },
+  {
+    achievementId: 'clear_voice',
+    category: 'skill',
+    rarity: 'epic',
+    titleEn: 'Clear Voice',
+    titleTh: 'เสียงชัด',
+    descriptionEn: 'Complete the Pronunciation Course.',
+    descriptionTh: 'จบคอร์สออกเสียง',
+    iconKey: 'microphone',
+    target: PRONUNCIATION_LESSON_IDS.length,
+    metric: 'all_lessons_completed',
+    matchIds: PRONUNCIATION_LESSON_IDS,
+    rewardOutfitId: 'studio_microphone',
+  },
+  {
+    achievementId: 'perfect_drill',
+    category: 'skill',
+    rarity: 'rare',
+    titleEn: 'Perfect Drill',
+    titleTh: 'ดริลเป๊ะ',
+    descriptionEn: 'Complete a Vocab Drill with no mistakes.',
+    descriptionTh: 'จบ Vocab Drill โดยไม่ผิดเลย',
+    iconKey: 'crystal',
+    target: 1,
+    metric: 'perfect_vocab_drill',
     rewardSeeds: 50,
   },
 

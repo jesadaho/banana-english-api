@@ -1464,7 +1464,9 @@ export class GeminiChatService {
 
 MATCH RESULT: NOT APPLICABLE — a button press is not a spoken attempt. They have said NOTHING yet.
 Required response:
-- START your line with the content of the NEXT Core Flow step. No opener before it.
+- START your line with the content of the NEXT Core Flow step ONLY. No opener before it.
+- Do ONE Core Flow step — never combine Tip with Repeat/Practice in the same turn.
+- If the next step is Tip / Rhythm Tip / Speaking Tip: give ONLY the tip sentence, then stop. FORBIDDEN: "Your turn" / "ตาคุณแล้ว" / "Please say" / any speaking task. expectsUserSpeech = false.
 - FORBIDDEN first words: เยี่ยม / เยี่ยมเลยครับ / ดีมาก / เก่งมาก / สุดยอด / Great / Nice / Good job / Perfect / Well done — there is nothing to praise.
 - FORBIDDEN wording that implies they already spoke: คราวนี้ / อีกครั้ง / ลองใหม่ / this time / now try again.
 - Do NOT evaluate, correct, or repeat the button press.`;

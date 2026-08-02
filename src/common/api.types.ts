@@ -280,4 +280,10 @@ export interface UserProfileResponse {
   timezone: string;
   unlockedAvatarIds: string[];
   lessonTeachingLanguage: 'thai' | 'english';
+  /** Banana Ticket sheet copy — kept in sync with economy env/defaults. */
+  bananaTicket: {
+    dailyDrop: number;
+    maxBalance: number;
+    missionCost: number;
+  };
 }

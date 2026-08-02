@@ -61,6 +61,17 @@ export const OUTFIT_CATALOG: OutfitDef[] = [
     iconKey: 'flame_jacket',
     sourceAchievementId: 'streak_30',
   },
+  {
+    outfitId: 'studio_microphone',
+    slot: 'accessory',
+    rarity: 'epic',
+    nameEn: 'Studio Microphone',
+    nameTh: 'ไมค์สตูดิโอ',
+    descriptionEn: 'For finishing the Pronunciation Course.',
+    descriptionTh: 'สำหรับคนที่จบคอร์สออกเสียง',
+    iconKey: 'studio_microphone',
+    sourceAchievementId: 'clear_voice',
+  },
 ];
 
 export interface OutfitItemView {
