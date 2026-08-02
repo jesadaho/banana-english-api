@@ -39,14 +39,13 @@ export const SERIES: SeriesConfig[] = [
     ],
   },
   {
-    // Learn → Everyday English → Everyday Life challenges (not on Mission tab).
+    // Also listed under Learn → Everyday English → Everyday Life challenges.
     seriesId: 'everyday_life',
     titleEn: 'Everyday Life',
     titleTh: 'ชีวิตประจำวัน',
     subtitleTh: 'ฝึกพูดในสถานการณ์รอบตัวและตอนเดินทาง',
     order: 1,
     coverImage: 'category_daily_life',
-    showInMissionTab: false,
     missionIds: [
       'coffee_order_easy',
       'restaurant_order_easy',

@@ -4,7 +4,6 @@ import {
   getMissionTabSeries,
   getPreviousSeries,
   getSeriesById,
-  getSeriesForSimulation,
   SeriesConfig,
 } from './series.data';
 
@@ -122,13 +121,6 @@ export class SeriesService {
     const series = getSeriesById(seriesId);
     if (!series) return undefined;
 
-    // Learn-hosted series are not on the Mission tab, but deep links may still
-    // resolve them for activity / history.
-    if (series.showInMissionTab === false) {
-      const completedIds = await this.getCompletedSimulationIds(userId);
-      return this.buildSeriesView(series, completedIds, true, series.order);
-    }
-
     const all = await this.getAllForUser(userId);
     return all.find((s) => s.seriesId === series.seriesId);
   }
@@ -137,11 +129,6 @@ export class SeriesService {
     userId: string,
     simulationId: string,
   ): Promise<boolean> {
-    const series = getSeriesForSimulation(simulationId);
-    if (!series) return false;
-    // Everyday Life missions are gated in Learn (after chapter review).
-    if (series.showInMissionTab === false) return true;
-
     const all = await this.getAllForUser(userId);
     for (const view of all) {
       if (!view.missions.some((m) => m.simulationId === simulationId)) {
