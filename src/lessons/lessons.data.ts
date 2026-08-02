@@ -133,7 +133,7 @@ function buildPronunciationLesson(spec: PronunciationLessonSpec): LessonConfig {
   const coachMode = stressMode || smoothMode;
 
   // Language tags only work at the start of a line — never indent them.
-  const overviewStep = `Chapter Overview — welcome them to the chapter using their first name once, staying close to the script below. Nothing else — no ${noun} modeling, no tip, no question, no mention of any button. expectsUserSpeech = false. (Opening — Overview)
+  const overviewStep = `Lesson Overview — open the lesson staying close to the script below. Use their first name at most once if it fits naturally. Nothing else — no ${noun} modeling, no tip, no question, no mention of any button. expectsUserSpeech = false. (Opening — Overview)
 @thai   Script: ${spec.chapterOverviewTh}
 @english   Script: ${spec.chapterOverviewEn}`;
 
@@ -262,7 +262,7 @@ Write the wrong form EXACTLY in Thai script (so TTS reads Thai syllables) and th
 
   let opening: string;
   if (hasOverview) {
-    opening = `This opening is Core Flow step 1 (Chapter Overview): welcome them to the chapter with their first name once, staying close to the chapter script in the lesson instruction. Do NOT model the ${nouns} yet, do NOT give the tip, and do NOT ask them to speak.`;
+    opening = `This opening is Core Flow step 1 (Lesson Overview): stay close to the overview script in the lesson instruction. Use their first name at most once if it fits. Do NOT model the ${nouns} yet, do NOT give the tip, and do NOT ask them to speak.`;
   } else if (hasContrast) {
     const pairs = (spec.contrasts ?? [])
       .map((c) => `❌ ${c.wrong} / ✅ ${c.right}`)
@@ -3708,14 +3708,16 @@ Core Flow (progression milestones — NOT a fixed turn count):
     goalTh: 'ออกเสียง TH แบบไม่มีเสียงชัดในคำที่ใช้บ่อย',
     soundLabel: 'the voiceless TH sound (/θ/)',
     items: ['think', 'thank', 'three'],
-    tipTh: 'แลบปลายลิ้นออกมาแตะฟันเบา ๆ แล้วเป่าลมออก',
-    tipEn: 'Put the tip of your tongue lightly on your front teeth, then blow air out.',
+    tipTh: 'เวลาเจอคำที่สะกดด้วย TH แบบ think หรือ three อย่าเพิ่งออกเสียงเป็น ต นะครับ ' +
+      'ลองแลบปลายลิ้นออกมาแตะฟันเบา ๆ แล้วเป่าลมออก',
+    tipEn: 'When you see TH like in think or three, don’t say ต first. Lightly put your tongue tip ' +
+      'on your teeth, then blow air out.',
     chapterOverviewTh:
-      'ยินดีต้อนรับสู่ Chapter 1 ครับ! ในหมวดนี้เราจะมาปรับการออกเสียงคำพื้นฐานให้ชัดเป๊ะ ฟังดูอินเตอร์ขึ้นทันที ' +
-      'ประเดิมบทแรกด้วยเสียง TH ที่คนไทยเกือบทุกคนเคยออกเสียงผิดกันครับ',
+      'วันนี้เราจะเริ่มด้วยเสียง TH แบบในคำว่า think ครับ เสียงนี้เจอได้บ่อยในคำอย่าง think,' +
+      'thank, three, Thursday คนไทยมักออกเสียงเป็น ต หรือ ซ มาฝึกให้ถูกกันครับ',
     chapterOverviewEn:
-      'Welcome to Chapter 1! In this chapter we sharpen the basic sounds so your English instantly sounds clearer. ' +
-      'We start with the TH sound — almost every Thai speaker gets this one wrong at first.',
+      'Today we start with the TH sound in words like think. You hear it a lot in think, thank,' +
+      'three, and Thursday. Thai speakers often say it as ต or ซ — let’s get it right.',
   }),
   buildPronunciationLesson({
     lessonId: 'pron_th_2',
@@ -3725,8 +3727,16 @@ Core Flow (progression milestones — NOT a fixed turn count):
     goalTh: 'ออกเสียง TH แบบมีเสียงชัดในคำที่ใช้บ่อย',
     soundLabel: 'the voiced TH sound (/ð/)',
     items: ['this', 'that', 'they', 'those'],
-    tipTh: 'วางลิ้นแตะฟันเหมือนเดิม แต่คราวนี้ให้ลำคอสั่นด้วย',
-    tipEn: 'Same tongue position on your teeth, but this time let your throat buzz.',
+    tipTh: 'เวลาเจอ this, that หรือ they ให้วางลิ้นเหมือนเดิม แล้วเปิดเสียงจากลำคอ ' +
+      'ให้รู้สึกว่ามีเสียงสั่นนิด ๆ',
+    tipEn: 'For this, that, or they, keep the same tongue place and turn on your voice so you feel a ' +
+      'light buzz.',
+    chapterOverviewTh:
+      'คราวนี้เป็นเสียง TH อีกแบบครับ แบบในคำว่า this, that, they, those ตำแหน่งลิ้นเหมือนเดิม ' +
+      'แต่คราวนี้มีเสียงสั่นจากลำคอ',
+    chapterOverviewEn:
+      'Now the other TH sound — in this, that, they, and those. Same tongue place, but this ' +
+      'time your throat buzzes.',
   }),
   buildPronunciationLesson({
     lessonId: 'pron_w_1',
@@ -3736,8 +3746,15 @@ Core Flow (progression milestones — NOT a fixed turn count):
     goalTh: 'ออกเสียง W ให้ชัด ไม่กลายเป็นเสียง V',
     soundLabel: 'the W sound (/w/)',
     items: ['we', 'water', 'window', 'work'],
-    tipTh: 'จู๋ปากเป็นวงกลมก่อนออกเสียง อย่าให้ฟันบนแตะริมฝีปาก',
-    tipEn: 'Round your lips first, and keep your top teeth off your lip.',
+    tipTh: 'เวลาเจอคำที่ขึ้นต้นด้วย W ให้จู๋ปากก่อนนิดหนึ่ง แล้วค่อยปล่อยเสียงออกมา ' +
+      'อย่าให้ฟันบนแตะริมฝีปากนะครับ',
+    tipEn: 'For words that start with W, round your lips a little first, then release the sound —' +
+      'keep your top teeth off your lip.',
+    chapterOverviewTh:
+      'เสียง W เจอได้บ่อยในคำอย่าง we, water, window, work คนไทยมักเผลอพูดเป็นเสียง V',
+    chapterOverviewEn:
+      'You hear W a lot in we, water, window, and work. Thai speakers often slip into a V ' +
+      'sound.',
   }),
   buildPronunciationLesson({
     lessonId: 'pron_v_1',
@@ -3747,8 +3764,14 @@ Core Flow (progression milestones — NOT a fixed turn count):
     goalTh: 'ออกเสียง V ให้ชัด ไม่กลายเป็นเสียง W',
     soundLabel: 'the V sound (/v/)',
     items: ['very', 'voice', 'visit', 'move'],
-    tipTh: 'ใช้ฟันบนแตะริมฝีปากล่างเบา ๆ แล้วออกเสียงให้สั่น',
-    tipEn: 'Rest your top teeth lightly on your bottom lip and let it buzz.',
+    tipTh: 'เวลาเจอคำที่ขึ้นต้นด้วย V เอาฟันบนแตะริมฝีปากล่างเบา ๆ แล้วเปิดเสียงออกมา',
+    tipEn: 'For words that start with V, rest your top teeth lightly on your bottom lip, then turn ' +
+      'the sound on.',
+    chapterOverviewTh:
+      'เสียง V เป็นอีกเสียงที่คนไทยสับสนกับ W ครับ เราจะเจอในคำอย่าง very, voice, visit, move',
+    chapterOverviewEn:
+      'V is another sound Thai speakers mix up with W. You’ll meet it in very, voice, visit,' +
+      'and move.',
   }),
   buildPronunciationLesson({
     lessonId: 'pron_rl_1',
@@ -3759,8 +3782,14 @@ Core Flow (progression milestones — NOT a fixed turn count):
     soundLabel: 'the difference between R (/r/) and L (/l/)',
     items: ['right / light', 'road / load', 'really / lily'],
     itemNoun: 'pair',
-    tipTh: 'เสียง R ม้วนลิ้นค้างไว้ อย่าให้ลิ้นแตะอะไรเลย ส่วนเสียง L ให้ปลายลิ้นแตะเหงือกหลังฟันบน',
-    tipEn: 'For R, curl your tongue and touch nothing. For L, touch the tip of your tongue behind your top teeth.',
+    tipTh: 'เวลาเจอ R อย่าให้ลิ้นแตะอะไรนะครับ แต่ถ้าเป็น L ให้แตะปลายลิ้นที่เหงือกหลังฟันบน',
+    tipEn: 'For R, don’t let your tongue touch anything. For L, touch the tip behind your top teeth.',
+    chapterOverviewTh:
+      'คราวนี้เราจะฝึกแยก R กับ L ครับ เป็นคู่เสียงที่คนไทยสลับกันบ่อย เช่น right / light และ ' +
+      'road / load',
+    chapterOverviewEn:
+      'Now we practice R vs L — a pair Thai speakers often swap, like right / light and road /' +
+      'load.',
   }),
   buildPronunciationLesson({
     lessonId: 'pron_end_t_1',
@@ -3770,8 +3799,16 @@ Core Flow (progression milestones — NOT a fixed turn count):
     goalTh: 'ปิดท้ายคำด้วยเสียง T ให้ชัด',
     soundLabel: 'the ending T sound (/t/) at the end of a word',
     items: ['cat', 'sit', 'want', 'not'],
-    tipTh: 'แตะปลายลิ้นที่เหงือกหลังฟันบน แล้วหยุดเสียงทันที ไม่ต้องลากเสียงต่อ',
-    tipEn: 'Touch the tip of your tongue behind your top teeth, then stop the sound right there.',
+    tipTh: 'เวลาเจอคำที่ลงท้ายด้วย T แตะปลายลิ้นที่เหงือกหลังฟันบน แล้วหยุดเสียงทันที ไม่ต้องเติม ' +
+      '\'ตะ\' ต่อท้ายครับ',
+    tipEn: 'For words ending in T, touch the tip behind your top teeth and stop right there — don’t ' +
+      'add an extra “ta”.',
+    chapterOverviewTh:
+      'เสียง T ตอนท้ายคำ เจอได้บ่อยในคำอย่าง cat, sit, want, not ถ้าไม่ออกเสียง ' +
+      'ความหมายอาจฟังไม่ชัด',
+    chapterOverviewEn:
+      'Ending T shows up a lot in cat, sit, want, and not. If you skip it, the meaning can ' +
+      'sound unclear.',
   }),
   buildPronunciationLesson({
     lessonId: 'pron_end_d_1',
@@ -3781,8 +3818,15 @@ Core Flow (progression milestones — NOT a fixed turn count):
     goalTh: 'ปิดท้ายคำด้วยเสียง D ให้ชัด',
     soundLabel: 'the ending D sound (/d/) at the end of a word',
     items: ['need', 'good', 'friend', 'called'],
-    tipTh: 'ตำแหน่งลิ้นเหมือนเสียง T แต่ให้ลำคอสั่นตอนปิดคำ',
-    tipEn: 'Same tongue position as T, but let your throat buzz as you close the word.',
+    tipTh: 'เวลาเจอคำที่ลงท้ายด้วย D แตะลิ้นเหมือนเสียง T แต่เปิดเสียงจากลำคอก่อนจบคำครับ',
+    tipEn: 'For words ending in D, use the same tongue touch as T, but turn your voice on before you ' +
+      'finish.',
+    chapterOverviewTh:
+      'เสียง D ตอนท้ายคำ เจอได้บ่อยในคำอย่าง need, good, friend, called ตำแหน่งลิ้นคล้ายเสียง T ' +
+      'แต่มีเสียงสั่นจากลำคอ',
+    chapterOverviewEn:
+      'Ending D is common in need, good, friend, and called. Same tongue place as T, but with ' +
+      'voice from the throat.',
   }),
   buildPronunciationLesson({
     lessonId: 'pron_review_1',
@@ -3793,8 +3837,12 @@ Core Flow (progression milestones — NOT a fixed turn count):
     soundLabel: 'all five sounds from this course (TH, W, V, R/L, ending T/D)',
     items: ['think', 'water', 'very', 'right / light', 'cat / need'],
     itemNoun: 'item',
-    tipTh: 'ทวนสั้น ๆ: TH ลิ้นแตะฟัน, W จู๋ปาก, V ฟันแตะริมฝีปาก, R ม้วนลิ้น, T กับ D ปิดท้ายคำให้ครบ',
-    tipEn: 'Quick recap: TH tongue on teeth, W round lips, V teeth on lip, R curled tongue, and close T and D at the end.',
+    tipTh: 'ไม่ต้องรีบครับ ฟังให้ชัด แล้วค่อยพูดตามทีละคำ',
+    tipEn: 'No rush — listen carefully, then repeat one word at a time.',
+    chapterOverviewTh:
+      'มาทบทวนเสียงทั้งหมดที่เรียนในบทนี้กันครับ ทั้ง TH, W, V, R/L และเสียงท้าย T กับ D',
+    chapterOverviewEn:
+      'Let’s review every sound from this chapter — TH, W, V, R/L, and ending T and D.',
   }),
   // --- Chapter 2: Break the Habit ---
   buildPronunciationLesson({
@@ -3805,14 +3853,16 @@ Core Flow (progression milestones — NOT a fixed turn count):
     goalTh: 'เลิกเติมพยางค์ไทยข้างหน้าคลัสเตอร์พยัญชนะภาษาอังกฤษ',
     soundLabel: 'consonant clusters without an extra Thai syllable in front',
     items: ['stop', 'school', 'spring'],
-    tipTh: 'เริ่มพูดจากเสียง st ได้เลย ไม่ต้องเติมเสียง "สะ"',
-    tipEn: 'Start right on the st sound — do not add a "sa" in front.',
+    tipTh: 'เวลาเจอคำที่ขึ้นต้นด้วย st, sp, sk อย่าง stop หรือ school เริ่มจากเสียงแรกได้เลย ' +
+      'ไม่ต้องเติม \'สะ\'',
+    tipEn: 'For words starting with st, sp, or sk — like stop or school — start on the first sound.' +
+      'Don’t add “sa”.',
     chapterOverviewTh:
-      'หลายครั้งที่คนไทยพูดผิด ไม่ใช่เพราะออกเสียงไม่ได้ แต่เพราะติดนิสัยการพูดแบบภาษาไทย ' +
-      'Chapter นี้เราจะค่อย ๆ แก้นิสัยเหล่านั้นไปด้วยกันครับ',
+      'หลายครั้งที่คนไทยพูดผิด ไม่ใช่เพราะไม่รู้คำศัพท์ แต่เพราะติดนิสัยการออกเสียงแบบภาษาไทย ' +
+      'วันนี้เราจะมาแก้กันครับ',
     chapterOverviewEn:
-      'Thai speakers often say a word wrong not because they cannot make the sound, ' +
-      'but because of speaking habits carried over from Thai. In this chapter we will fix those habits together, one at a time.',
+      'Thai speakers often get words wrong not from vocabulary, but from Thai speaking habits.' +
+      'Today we fix that.',
     contrasts: [{ wrong: 'สะ-ต๊อป', right: 'stop' }],
     explainTh: 'ได้ยินความต่างไหมครับ ภาษาอังกฤษไม่มีเสียง "สะ" ข้างหน้า',
     explainEn: 'Hear the difference? English has no "sa" sound in front.',
@@ -3825,8 +3875,13 @@ Core Flow (progression milestones — NOT a fixed turn count):
     goalTh: 'ออกเสียง L ท้ายคำให้ชัด ไม่เปลี่ยนเป็นเสียง น',
     soundLabel: 'a clear ending L (/l/) instead of turning it into N',
     items: ['call', 'people', 'email'],
-    tipTh: 'ปลายลิ้นแตะเหงือกหลังฟันบนตอนจบคำ อย่าปล่อยเป็นเสียง น',
-    tipEn: 'Touch the tip of your tongue behind your top teeth as you finish — do not let it become an N.',
+    tipTh: 'เวลาเจอคำที่ลงท้ายด้วย L แตะปลายลิ้นไว้ที่เหงือกหลังฟันบน แล้วจบคำตรงนั้นเลยครับ',
+    tipEn: 'For words ending in L, keep the tongue tip behind your top teeth and finish right there.',
+    chapterOverviewTh:
+      'เสียง L ตอนท้ายคำ เจอได้บ่อยในคำอย่าง call, fall, well, school คนไทยมักเผลอออกเสียงเป็น ' +
+      'น',
+    chapterOverviewEn:
+      'Ending L is common in call, fall, well, and school. Thai speakers often turn it into น.',
     contrasts: [{ wrong: 'คอล-น', right: 'call' }],
     explainTh: 'คนไทยมักเปลี่ยน L ท้ายคำเป็นเสียง น แต่เจ้าของภาษาแตะลิ้นค้างไว้',
     explainEn: 'Thai speakers often turn ending L into N, but native speakers keep the tongue touch.',
@@ -3839,8 +3894,14 @@ Core Flow (progression milestones — NOT a fixed turn count):
     goalTh: 'ออกเสียงพยัญชนะท้ายคำให้ครบ อย่าตัดทิ้ง',
     soundLabel: 'final consonants that Thai speakers often drop',
     items: ['want', 'first', 'next'],
-    tipTh: 'แตะลิ้นแล้วหยุดเสียงสั้น ๆ ตอนท้ายคำ',
-    tipEn: 'Touch your tongue and stop the sound briefly at the end.',
+    tipTh: 'เวลาเจอคำที่มีเสียงท้าย อย่ารีบตัดเสียงนะครับ ออกเสียงสั้น ๆ ให้ครบก่อนจบคำ',
+    tipEn: 'When a word has a final sound, don’t cut it early — finish with a short, complete ' +
+      'ending.',
+    chapterOverviewTh:
+      'หลายคำมีเสียงท้ายที่สำคัญ เช่น want, best, last ถ้าไม่ออกเสียง ความหมายอาจเปลี่ยนได้',
+    chapterOverviewEn:
+      'Many words need a clear ending — like want, best, and last. Drop it, and the meaning can ' +
+      'change.',
     contrasts: [{ wrong: 'วอน', right: 'want' }],
     explainTh: 'คำนี้ต้องมีเสียง T ตอนท้าย อย่าตัดทิ้ง',
     explainEn: 'This word needs the T at the end — do not drop it.',
@@ -3853,8 +3914,12 @@ Core Flow (progression milestones — NOT a fixed turn count):
     goalTh: 'ออกเสียง S ท้ายคำให้ชัด ทั้งพหูพจน์และกริยา',
     soundLabel: 'a clear final S (/s/ or /z/) on plurals and verbs',
     items: ['books', 'likes', 'needs'],
-    tipTh: 'ปิดท้ายด้วยเสียง s หรือ z สั้น ๆ อย่าตัดทิ้ง',
-    tipEn: 'Finish with a short s or z — do not cut it off.',
+    tipTh: 'เวลาเจอคำที่ลงท้ายด้วย S อย่าลืมเติมเสียง s หรือ z สั้น ๆ ตอนท้ายครับ',
+    tipEn: 'For words ending in S, keep a short s or z at the end.',
+    chapterOverviewTh:
+      'เสียง S ตอนท้ายคำ เจอบ่อยในคำนามพหูพจน์ และคำกริยาที่ประธานเป็น he, she, it',
+    chapterOverviewEn:
+      'Final S is common on plurals and on verbs with he, she, or it.',
     contrasts: [{ wrong: 'บุ๊ค', right: 'books' }],
     explainTh: 'พหูพจน์และกริยาต้องมีเสียง S ท้ายคำ อย่าพูดแค่รูปเอกพจน์',
     explainEn: 'Plurals and verbs need the final S — do not say only the singular form.',
@@ -3867,8 +3932,15 @@ Core Flow (progression milestones — NOT a fixed turn count):
     goalTh: 'พูดคำที่ใช้บ่อยแบบเจ้าของภาษา ไม่สะกดทีละตัว',
     soundLabel: 'reduced syllable patterns in everyday English words',
     items: ['comfortable', 'vegetable', 'chocolate'],
-    tipTh: 'อย่าอ่านทีละพยางค์ตามตัวสะกด ฟังจังหวะสั้นของเจ้าของภาษาแล้วพูดตาม',
-    tipEn: 'Do not spell every syllable — copy the short native rhythm.',
+    tipTh: 'เวลาเจอคำยาว ๆ อย่าอ่านทีละพยางค์ครับ ฟังทั้งคำแล้วพูดตามจะเป็นธรรมชาติกว่า',
+    tipEn: 'For long words, don’t read syllable by syllable — listen to the whole word, then copy ' +
+      'it.',
+    chapterOverviewTh:
+      'บางคำอ่านไม่ตรงกับตัวสะกด เช่น comfortable, vegetable, chocolate ' +
+      'ต้องจำจากการฟังมากกว่าการสะกด',
+    chapterOverviewEn:
+      'Some words don’t match their spelling — like comfortable, vegetable, and chocolate.' +
+      'Learn them by ear more than by letters.',
     contrasts: [
       { wrong: 'คอม-ฟอร์-ท-เบิ้ล', right: 'comfortable' },
     ],
@@ -3883,8 +3955,14 @@ Core Flow (progression milestones — NOT a fixed turn count):
     goalTh: 'ข้ามตัวอักษรที่ไม่อ่าน แทนที่จะอ่านทุกตัวที่เห็น',
     soundLabel: 'silent letters that Thai speakers often pronounce',
     items: ['Wednesday', 'know', 'listen'],
-    tipTh: 'มีตัวอักษรที่ไม่อ่าน — ข้ามไปเลย อย่าออกเสียงทุกตัว',
-    tipEn: 'Some letters are silent — skip them. Do not say every letter you see.',
+    tipTh: 'เวลาเจอตัวอักษรที่ไม่ออกเสียง ข้ามไปเลยครับ ไม่ต้องพยายามอ่านให้ครบทุกตัว',
+    tipEn: 'When a letter is silent, skip it — don’t force every letter you see.',
+    chapterOverviewTh:
+      'บางคำมีตัวอักษรที่ไม่ออกเสียง เช่น Wednesday, knife, hour, island ' +
+      'เราไม่จำเป็นต้องอ่านทุกตัว',
+    chapterOverviewEn:
+      'Some words have silent letters — like Wednesday, knife, hour, and island. You don’t need ' +
+      'to say every letter.',
     contrasts: [{ wrong: 'เว้ด-เนส-เดย์', right: 'Wednesday' }],
     explainTh: 'ตัว d ตรงกลางของ Wednesday ไม่อ่าน เจ้าของภาษาพูดสั้นกว่าที่สะกด',
     explainEn: 'The middle d in Wednesday is silent — natives say a shorter form than the spelling.',
@@ -3897,8 +3975,15 @@ Core Flow (progression milestones — NOT a fixed turn count):
     goalTh: 'ออกเสียง ED ท้ายคำให้ถูกจังหวะ — /t/, /d/ หรือ /ɪd/',
     soundLabel: 'natural -ed endings (/t/, /d/, or /ɪd/)',
     items: ['worked', 'played', 'wanted'],
-    tipTh: 'ส่วนใหญ่ ED ไม่ได้อ่านว่า "เอ็ด" ทั้งคำ — ฟังจบคำแล้วต่อเสียง t หรือ d สั้น ๆ',
-    tipEn: 'Most -ed endings are not a full "ed" syllable — finish with a short t or d sound.',
+    tipTh: 'เวลาเจอคำที่ลงท้ายด้วย -ed อย่าเพิ่งอ่านว่า \'เอ็ด\' นะครับ ลองฟังก่อนว่าควรจบเป็นเสียง ' +
+      't, d หรือ id',
+    tipEn: 'For -ed endings, don’t jump to “ed”. Listen first — it may finish as t, d, or id.',
+    chapterOverviewTh:
+      'คำกริยาช่อง 2 และช่อง 3 จำนวนมากลงท้ายด้วย -ed เช่น worked, played, watched ' +
+      'แต่ไม่ได้อ่านว่า "เอ็ด" ทุกคำ',
+    chapterOverviewEn:
+      'Many past verbs end in -ed — worked, played, watched — but they are not all said as a ' +
+      'full “ed”.',
     contrasts: [{ wrong: 'วอร์ค-เอ็ด', right: 'worked' }],
     explainTh: 'หลายคนเติมเสียง "เอ็ด" ทุกคำ แต่เจ้าของภาษามักปิดด้วย t หรือ d สั้น ๆ',
     explainEn: 'Many people add a full "ed" syllable every time, but natives often finish with a short t or d.',
@@ -3911,8 +3996,13 @@ Core Flow (progression milestones — NOT a fixed turn count):
     goalTh: 'แก้ทั้งห้านิสัยของแชปเตอร์นี้ในรอบเดียว',
     soundLabel: 'all five habits from this chapter (no add, no drop, final S, tricky words, silent letters)',
     items: ['stop', 'want', 'books', 'comfortable', 'Wednesday'],
-    tipTh: 'ทวนสั้น ๆ: อย่าเติมสะ, อย่าตัดท้าย, อย่าลืม S, อย่าสะกดทุกพยางค์, ข้ามตัวเงียบ',
-    tipEn: 'Quick recap: no extra sa, keep endings, keep final S, shorten tricky words, skip silent letters.',
+    tipTh: 'ค่อย ๆ พูดครับ ถ้าคุมเสียงท้ายได้ ภาษาอังกฤษจะฟังชัดขึ้นมาก',
+    tipEn: 'Speak slowly. If you control the endings, your English sounds much clearer.',
+    chapterOverviewTh:
+      'มาทบทวนนิสัยที่ต้องเลิกกันครับ ทั้งการเติมเสียง การตัดเสียงท้าย และการอ่านตามตัวสะกด',
+    chapterOverviewEn:
+      'Let’s review the habits to drop — adding sounds, cutting endings, and reading letter by ' +
+      'letter.',
     contrasts: [
       { wrong: 'สะ-ต๊อป', right: 'stop' },
       { wrong: 'วอน', right: 'want' },
@@ -3929,14 +4019,14 @@ Core Flow (progression milestones — NOT a fixed turn count):
     goalTh: 'เน้นเสียงพยางค์แรกของคำสองพยางค์ที่ใช้บ่อย',
     soundLabel: 'first-syllable word stress',
     items: ['table', 'window', 'doctor'],
-    tipTh: 'เน้นเสียงพยางค์แรกให้ดังกว่าพยางค์อื่นครับ',
-    tipEn: 'Make the first syllable louder than the rest.',
+    tipTh: 'เวลาเจอคำหลายพยางค์ อย่าลงน้ำหนักทุกพยางค์เท่ากันนะครับ ลองเน้นพยางค์ที่เด่นให้ชัด',
+    tipEn: 'For multi-syllable words, don’t stress every syllable equally — make the strong one ' +
+      'clearer.',
     chapterOverviewTh:
-      'ออกเสียงชัดแล้วครับ ขั้นต่อไปคือจังหวะ — ภาษาอังกฤษมีคำที่เน้นและคำที่พูดเบา ' +
-      'พอวางจังหวะถูก ประโยคเดิมจะฟังเป็นธรรมชาติขึ้นทันทีครับ',
+      'คราวนี้เราจะฝึก Word Stress ครับ คำที่มีหลายพยางค์จะมีพยางค์หนึ่งที่เด่นกว่าพยางค์อื่น',
     chapterOverviewEn:
-      'Clear sounds are in place — next is rhythm. English has words that stand out and words that stay soft. ' +
-      'When the rhythm is right, the same sentence suddenly sounds more natural.',
+      'Now we practice word stress. In multi-syllable words, one syllable stands out more than ' +
+      'the others.',
     stressMode: true,
   }),
   buildPronunciationLesson({
@@ -3947,8 +4037,14 @@ Core Flow (progression milestones — NOT a fixed turn count):
     goalTh: 'เน้นพยางค์หลังในคำอย่าง hotel และ guitar',
     soundLabel: 'later-syllable word stress',
     items: ['hotel', 'guitar', 'banana'],
-    tipTh: 'ลองเน้นเสียงพยางค์หลังให้ชัดขึ้น',
-    tipEn: 'Try making the later syllable clearer and stronger.',
+    tipTh: 'เวลาเจอคำกลุ่มนี้ ลองเน้นพยางค์หลังให้ชัด แล้วปล่อยพยางค์อื่นเบาลง',
+    tipEn: 'For this group, make the later syllable clearer and keep the others softer.',
+    chapterOverviewTh:
+      'คำบางคำไม่ได้เน้นพยางค์แรกเสมอไป เช่น hotel, guitar, banana ' +
+      'วันนี้เราจะฝึกอีกแบบหนึ่งครับ',
+    chapterOverviewEn:
+      'Some words don’t stress the first syllable — like hotel, guitar, and banana. Today we ' +
+      'practice that pattern.',
     stressMode: true,
   }),
   buildPronunciationLesson({
@@ -3960,8 +4056,12 @@ Core Flow (progression milestones — NOT a fixed turn count):
     soundLabel: 'sentence stress on key content words',
     items: ['I love coffee.', 'I like pizza.', 'She is happy.'],
     itemNoun: 'phrase',
-    tipTh: 'เน้นเฉพาะคำสำคัญ ไม่ต้องเน้นทุกคำ',
-    tipEn: 'Stress only the key words — not every word.',
+    tipTh: 'เวลาอ่านประโยค ลองเน้นคำนาม คำกริยา หรือคำสำคัญ ส่วนคำอื่นพูดเบาลงครับ',
+    tipEn: 'When you say a sentence, stress nouns, verbs, or key words, and keep the rest lighter.',
+    chapterOverviewTh:
+      'ในประโยคภาษาอังกฤษ เราไม่ได้เน้นทุกคำเท่ากัน แต่จะเน้นเฉพาะคำที่สำคัญ',
+    chapterOverviewEn:
+      'In English sentences, we don’t stress every word equally — only the important ones.',
     stressMode: true,
   }),
   buildPronunciationLesson({
@@ -3973,8 +4073,12 @@ Core Flow (progression milestones — NOT a fixed turn count):
     soundLabel: 'weak forms of short grammar words (can, to, a)',
     items: ['I can swim.', 'I want to go.', 'I have a dog.'],
     itemNoun: 'phrase',
-    tipTh: 'คำสั้น ๆ อย่าง can, to, a พูดเบาและเร็วกว่าคำอื่น',
-    tipEn: 'Short words like can, to, and a are softer and quicker than the rest.',
+    tipTh: 'เวลาเจอคำสั้น ๆ พวกนี้ ไม่ต้องเน้นครับ พูดให้เบาและลื่นกว่าเดิม',
+    tipEn: 'For these short words, don’t stress them — keep them soft and smooth.',
+    chapterOverviewTh:
+      'คำสั้น ๆ อย่าง to, a, can, of มักถูกพูดเบาและเร็วในบทสนทนาจริง',
+    chapterOverviewEn:
+      'Short words like to, a, can, and of are usually soft and quick in real conversation.',
     stressMode: true,
   }),
   buildPronunciationLesson({
@@ -3986,8 +4090,13 @@ Core Flow (progression milestones — NOT a fixed turn count):
     soundLabel: 'natural English sentence rhythm',
     items: ['I love coffee.', 'She likes pizza.', 'We play football.'],
     itemNoun: 'phrase',
-    tipTh: 'เว้นจังหวะตามคำสำคัญ อย่าพูดทุกคำเท่ากัน',
-    tipEn: 'Time the beat around the key words — do not say every word equally.',
+    tipTh: 'เวลาอ่านประโยค ลองเว้นจังหวะตามคำสำคัญ อย่าพูดทุกคำเท่ากันครับ',
+    tipEn: 'When you say a sentence, keep the beat on the key words — don’t make every word equal.',
+    chapterOverviewTh:
+      'ภาษาอังกฤษมีจังหวะการพูดของตัวเอง ถ้าจับจังหวะได้ ประโยคจะฟังเป็นธรรมชาติขึ้นมาก',
+    chapterOverviewEn:
+      'English has its own speaking rhythm. Once you catch it, sentences sound much more ' +
+      'natural.',
     stressMode: true,
   }),
   buildPronunciationLesson({
@@ -3999,8 +4108,12 @@ Core Flow (progression milestones — NOT a fixed turn count):
     soundLabel: 'word stress, sentence stress, and rhythm together',
     items: ['banana', 'I love coffee.', 'We play football.'],
     itemNoun: 'phrase',
-    tipTh: 'ทวนสั้น ๆ: เน้นพยางค์ที่เด่น เน้นคำสำคัญ และเว้นจังหวะตามคำนั้น',
-    tipEn: 'Quick recap: stress the strong syllable, stress key words, and keep the beat on those words.',
+    tipTh: 'ไม่ต้องพูดเร็วครับ พูดให้มีจังหวะก่อน แล้วความเร็วจะตามมาเอง',
+    tipEn: 'Don’t rush. Get the rhythm first — speed will follow.',
+    chapterOverviewTh:
+      'มาทบทวนทั้งการเน้นพยางค์ การเน้นคำสำคัญ และจังหวะการพูดกันครับ',
+    chapterOverviewEn:
+      'Let’s review syllable stress, key-word stress, and speaking rhythm together.',
     stressMode: true,
   }),
   // --- Chapter 4: Speak Smoothly ---
@@ -4013,14 +4126,12 @@ Core Flow (progression milestones — NOT a fixed turn count):
     soundLabel: 'consonant-to-vowel linking',
     items: ['pick it up', 'turn it on', 'take it easy'],
     itemNoun: 'phrase',
-    tipTh: 'อย่าหยุดระหว่างสองคำครับ',
-    tipEn: 'Do not pause between the two words.',
+    tipTh: 'เวลาเจอคำที่พูดติดกัน อย่ารีบหยุดระหว่างคำ ลองเชื่อมเสียงให้ลื่นครับ',
+    tipEn: 'When words run together, don’t pause between them — link the sounds smoothly.',
     chapterOverviewTh:
-      'ออกเสียงชัดและจังหวะดีแล้วครับ ขั้นต่อไปคือพูดให้ลื่น — ไม่ต้องหยุดทีละคำ ' +
-      'พอเชื่อมเสียงได้ ประโยคเดิมจะฟังเหมือนเจ้าของภาษามากขึ้นทันทีครับ',
+      'คราวนี้เราจะฝึกเชื่อมเสียงระหว่างคำ เพื่อให้พูดต่อเนื่องเหมือนเจ้าของภาษา',
     chapterOverviewEn:
-      'Clear sounds and rhythm are in place — next is smooth speech. You will stop chopping word by word. ' +
-      'Once the sounds link, the same sentence suddenly sounds more native.',
+      'Now we practice linking sounds between words so speech flows more like a native speaker.',
     smoothMode: true,
   }),
   buildPronunciationLesson({
@@ -4032,8 +4143,12 @@ Core Flow (progression milestones — NOT a fixed turn count):
     soundLabel: 'vowel-to-vowel linking',
     items: ['go out', 'do it', 'see it'],
     itemNoun: 'phrase',
-    tipTh: 'ลองพูดให้ต่อเนื่องเหมือนเป็นคำเดียว',
-    tipEn: 'Try saying it as one continuous word.',
+    tipTh: 'เวลาเจอวลีพวกนี้ ลองพูดต่อเนื่องเหมือนเป็นคำเดียวครับ',
+    tipEn: 'For phrases like these, say them as one continuous unit.',
+    chapterOverviewTh:
+      'มีหลายวลีที่เจ้าของภาษาพูดติดกัน เช่น go out, do it, see it',
+    chapterOverviewEn:
+      'Native speakers often run phrases together — like go out, do it, and see it.',
     smoothMode: true,
   }),
   buildPronunciationLesson({
@@ -4045,8 +4160,14 @@ Core Flow (progression milestones — NOT a fixed turn count):
     soundLabel: 'everyday reductions (gonna, wanna, gotta)',
     items: ['gonna', 'wanna', 'gotta'],
     itemNoun: 'phrase',
-    tipTh: 'ฟังให้คุ้นก่อน ยังไม่จำเป็นต้องใช้ทันที',
-    tipEn: 'Get used to hearing them first — you do not need to use them yet.',
+    tipTh: 'เวลาได้ยินรูปสั้น ไม่ต้องตกใจครับ ฟังให้คุ้นก่อน ยังไม่ต้องรีบใช้',
+    tipEn: 'When you hear reduced forms, don’t worry — get used to them first. You don’t need to use ' +
+      'them yet.',
+    chapterOverviewTh:
+      'เจ้าของภาษามักย่อเสียงในบทสนทนา เช่น going to หรือ want to วันนี้เราจะฝึกฟังให้คุ้นเคย',
+    chapterOverviewEn:
+      'Native speakers often reduce sounds in conversation — like going to or want to. Today we ' +
+      'train your ear.',
     listenItems: ['going to', 'want to', 'got to'],
     listenAgainItems: ['gonna', 'wanna', 'gotta'],
     smoothMode: true,
@@ -4060,8 +4181,12 @@ Core Flow (progression milestones — NOT a fixed turn count):
     soundLabel: 'smooth everyday phrases',
     items: ["I don't know.", 'Let me see.', 'Sounds good.'],
     itemNoun: 'phrase',
-    tipTh: 'พูดทั้งประโยคต่อเนื่อง ไม่ต้องแยกทีละคำ',
-    tipEn: 'Say the whole phrase continuously — do not chop it word by word.',
+    tipTh: 'เวลาเจอประโยคที่ใช้บ่อย ลองจำทั้งประโยคเลยครับ ไม่ต้องแยกเป็นคำ ๆ',
+    tipEn: 'For common phrases, remember the whole line — don’t chop it word by word.',
+    chapterOverviewTh:
+      'มีหลายประโยคที่เจ้าของภาษาพูดเป็นชุด เช่น I don\'t know หรือ Sounds good',
+    chapterOverviewEn:
+      'Native speakers say many lines as set phrases — like “I don’t know” or “Sounds good.”',
     smoothMode: true,
   }),
   buildPronunciationLesson({
@@ -4077,8 +4202,12 @@ Core Flow (progression milestones — NOT a fixed turn count):
       'See you later.',
     ],
     itemNoun: 'phrase',
-    tipTh: 'ลองพูดเหมือนกำลังคุยกับคนจริง',
-    tipEn: 'Try saying it like you are talking to a real person.',
+    tipTh: 'ลองนึกว่ากำลังคุยกับเพื่อนครับ พูดต่อเนื่อง อย่าหยุดทุกคำ',
+    tipEn: 'Imagine talking to a friend — keep going, and don’t stop on every word.',
+    chapterOverviewTh:
+      'ตอนนี้เราจะลองพูดประโยคที่ใช้ในชีวิตประจำวันให้ลื่นเหมือนกำลังคุยกับคนจริง',
+    chapterOverviewEn:
+      'Now we practice everyday lines with smooth flow — like talking to a real person.',
     smoothMode: true,
   }),
   buildPronunciationLesson({
@@ -4090,8 +4219,12 @@ Core Flow (progression milestones — NOT a fixed turn count):
     soundLabel: 'linking, reductions, and natural phrases together',
     items: ['pick it up', 'gonna', "I don't know."],
     itemNoun: 'phrase',
-    tipTh: 'ทวนสั้น ๆ: เชื่อมเสียง ฟังรูปสั้น และพูดทั้งประโยคให้ลื่น',
-    tipEn: 'Quick recap: link sounds, hear reductions, and keep whole phrases smooth.',
+    tipTh: 'อย่ากังวลเรื่องความเร็วครับ เน้นให้ต่อเนื่องก่อน',
+    tipEn: 'Don’t worry about speed — focus on continuity first.',
+    chapterOverviewTh:
+      'มาทบทวนการเชื่อมเสียง การย่อเสียง และการพูดให้ลื่นเป็นธรรมชาติกันครับ',
+    chapterOverviewEn:
+      'Let’s review linking, reductions, and natural smooth speech together.',
     smoothMode: true,
   }),
   // --- Chapter 5: Fine-tune Your Sounds ---
@@ -4103,14 +4236,12 @@ Core Flow (progression milestones — NOT a fixed turn count):
     goalTh: 'แยกเสียง /ɪ/ กับ /iː/ ในคู่คำที่ใช้บ่อย',
     soundLabel: 'short /ɪ/ vs long /iː/',
     items: ['ship', 'sheep', 'sit', 'seat'],
-    tipTh: 'ฟังความยาวของเสียงให้ชัดก่อน แล้วค่อยพูดตาม',
-    tipEn: 'Listen carefully to the vowel length first, then repeat.',
+    tipTh: 'เวลาเจอคู่เสียงแบบนี้ ลองฟังความยาวของเสียงก่อน แล้วค่อยพูดตามครับ',
+    tipEn: 'For pairs like these, listen to the vowel length first, then repeat.',
     chapterOverviewTh:
-      'ตอนนี้เราจะมาแยกเสียงที่คล้ายกันครับ — เมื่อก่อนอาจฟังเหมือนกันหมด ' +
-      'พอฟังความต่างได้แล้ว การพูดจะแม่นขึ้นทันทีครับ',
+      'คราวนี้เราจะฝึกแยกเสียงสระสั้นกับสระยาว เพราะความยาวของเสียงทำให้ความหมายเปลี่ยนได้',
     chapterOverviewEn:
-      'Next we fine-tune sounds that used to blur together. ' +
-      'Once you can hear the difference, your speech gets sharper right away.',
+      'Now we practice short vs long vowels — length can change the meaning.',
     listenItems: ['ship', 'sheep'],
     listenAgainItems: ['sit', 'seat'],
     fineTuneMode: true,
@@ -4123,8 +4254,12 @@ Core Flow (progression milestones — NOT a fixed turn count):
     goalTh: 'แยกเสียง U สั้นกับยาวในคู่คำอย่าง full และ fool',
     soundLabel: 'short vs long U',
     items: ['full', 'fool', 'pull', 'pool'],
-    tipTh: 'เสียงยาวลากนานกว่าเล็กน้อย',
-    tipEn: 'The long vowel stretches a little longer.',
+    tipTh: 'เวลาเจอเสียงยาว อย่ารีบจบครับ ลากเสียงต่ออีกนิดหนึ่ง',
+    tipEn: 'For the long sound, don’t finish early — stretch it a little longer.',
+    chapterOverviewTh:
+      'เสียง /ʊ/ กับ /uː/ ฟังคล้ายกัน แต่ความยาวต่างกัน เช่น full กับ fool',
+    chapterOverviewEn:
+      'The sounds /ʊ/ and /uː/ feel similar, but the length differs — like full and fool.',
     listenItems: ['full', 'fool'],
     listenAgainItems: ['pull', 'pool'],
     fineTuneMode: true,
@@ -4137,8 +4272,12 @@ Core Flow (progression milestones — NOT a fixed turn count):
     goalTh: 'แยกเสียง E กับ A ในคู่คำอย่าง pen และ pan',
     soundLabel: 'E vs A vowel contrast',
     items: ['pen', 'pan', 'bed', 'bad'],
-    tipTh: 'เปิดปากกว้างขึ้นเล็กน้อยสำหรับเสียง A',
-    tipEn: 'Open your mouth a little wider for the A sound.',
+    tipTh: 'เวลาเจอเสียง A ลองเปิดปากกว้างกว่าเสียง E นิดหนึ่งครับ',
+    tipEn: 'For the A sound, open your mouth a little wider than for E.',
+    chapterOverviewTh:
+      'เสียง E กับ A เป็นอีกคู่ที่คนไทยสับสนบ่อย เช่น pen กับ pan',
+    chapterOverviewEn:
+      'E and A are another pair Thai speakers often mix up — like pen and pan.',
     listenItems: ['pen', 'pan'],
     listenAgainItems: ['bed', 'bad'],
     fineTuneMode: true,
@@ -4151,8 +4290,12 @@ Core Flow (progression milestones — NOT a fixed turn count):
     goalTh: 'แยกเสียง O สั้นกับยาวในคู่คำอย่าง not และ note',
     soundLabel: 'short vs long O',
     items: ['not', 'note', 'hop', 'hope'],
-    tipTh: 'ฟังว่ามีเสียงยาวเพิ่มขึ้นหรือไม่',
-    tipEn: 'Listen for whether the vowel gets longer.',
+    tipTh: 'เวลาเจอเสียง O ลองสังเกตว่ามีการลากเสียงเพิ่มหรือเปล่าครับ',
+    tipEn: 'For O sounds, notice whether the vowel stretches longer.',
+    chapterOverviewTh:
+      'เสียง O ก็มีทั้งแบบสั้นและยาว เช่น not กับ note ลองฟังความต่างให้ชัด',
+    chapterOverviewEn:
+      'O also has short and long forms — like not and note. Listen for the difference.',
     listenItems: ['not', 'note'],
     listenAgainItems: ['hop', 'hope'],
     fineTuneMode: true,
@@ -4165,8 +4308,12 @@ Core Flow (progression milestones — NOT a fixed turn count):
     goalTh: 'รู้สึกถึงเสียงสระคู่ที่ไหลจากสระหนึ่งไปอีกสระ',
     soundLabel: 'diphthong glides',
     items: ['day', 'boy', 'now'],
-    tipTh: 'ปล่อยเสียงไหลจากสระหนึ่งไปอีกสระ',
-    tipEn: 'Let the sound glide from one vowel into the next.',
+    tipTh: 'เวลาเจอเสียงพวกนี้ อย่าตัดเสียงกลางครับ ปล่อยให้เสียงไหลต่อเนื่อง',
+    tipEn: 'For these sounds, don’t cut the middle — let the glide keep flowing.',
+    chapterOverviewTh:
+      'บางสระไม่ได้อยู่ที่เสียงเดียว แต่ค่อย ๆ ไหลไปอีกเสียงหนึ่ง เช่น day, boy, now',
+    chapterOverviewEn:
+      'Some vowels don’t stay on one sound — they glide into another, like day, boy, and now.',
     listenItems: ['day', 'boy', 'now'],
     listenAgainItems: ['face', 'choice', 'house'],
     fineTuneMode: true,
@@ -4188,8 +4335,14 @@ Core Flow (progression milestones — NOT a fixed turn count):
       'not',
       'note',
     ],
-    tipTh: 'ฟังก่อน พูดตาม แล้วเปรียบเทียบคู่เสียงให้ชัด',
-    tipEn: 'Listen, repeat, then compare each pair clearly.',
+    tipTh: 'ฟังก่อนครับ แล้วค่อยพูดตาม ถ้ายังไม่เหมือน ไม่เป็นไร ลองใหม่ได้เสมอ',
+    tipEn: 'Listen first, then repeat. If it’s not perfect yet, that’s fine — you can always try ' +
+      'again.',
+    chapterOverviewTh:
+      'ถึงเวลารวมทุกเสียงที่ฝึกมาแล้วครับ ลองฟัง แยกความแตกต่าง แล้วออกเสียงให้ชัดที่สุด',
+    chapterOverviewEn:
+      'Time to mix every contrast from this chapter — listen, tell them apart, and say them ' +
+      'clearly.',
     listenItems: ['ship', 'sheep'],
     listenAgainItems: ['full', 'fool'],
     fineTuneMode: true,

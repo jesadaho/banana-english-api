@@ -203,6 +203,20 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
     metric: 'lesson_count',
     rewardOutfitId: 'graduation_cap',
   },
+  {
+    achievementId: 'clear_voice',
+    category: 'learning',
+    rarity: 'epic',
+    titleEn: 'Clear Voice',
+    titleTh: 'เสียงชัด',
+    descriptionEn: 'Complete the Pronunciation Course.',
+    descriptionTh: 'จบคอร์สออกเสียง',
+    iconKey: 'microphone',
+    target: PRONUNCIATION_LESSON_IDS.length,
+    metric: 'all_lessons_completed',
+    matchIds: PRONUNCIATION_LESSON_IDS,
+    rewardOutfitId: 'studio_microphone',
+  },
 
   // Speaking
   {
@@ -364,20 +378,6 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
     target: 1,
     metric: 'perfect_mission',
     rewardSeeds: 50,
-  },
-  {
-    achievementId: 'clear_voice',
-    category: 'skill',
-    rarity: 'epic',
-    titleEn: 'Clear Voice',
-    titleTh: 'เสียงชัด',
-    descriptionEn: 'Complete the Pronunciation Course.',
-    descriptionTh: 'จบคอร์สออกเสียง',
-    iconKey: 'microphone',
-    target: PRONUNCIATION_LESSON_IDS.length,
-    metric: 'all_lessons_completed',
-    matchIds: PRONUNCIATION_LESSON_IDS,
-    rewardOutfitId: 'studio_microphone',
   },
   {
     achievementId: 'perfect_drill',

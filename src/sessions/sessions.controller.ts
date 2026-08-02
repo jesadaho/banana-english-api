@@ -419,7 +419,11 @@ export class SessionsController {
 
     let userText = originalText;
     try {
-      if (body.thaiMixEnabled && !isTapToContinue) {
+      // Pronunciation lessons match exact target words — Thai-mix "repair"
+      // can rewrite a correct "Seat." into something else and falsely fail.
+      const skipThaiMix =
+        isTapToContinue || isPronunciationLesson(config.lessonId);
+      if (body.thaiMixEnabled && !skipThaiMix) {
         this.sessionStore.markThaiMixUsed(sessionId);
         userText = await this.chat.correctThaiMix(originalText);
       }
@@ -438,6 +442,7 @@ export class SessionsController {
         nextTurn,
         data.learnerFirstName ??
           learnerNameFallback(teachingLanguageFromConfig(config)),
+        originalText,
       );
 
       const maxTurnsReached = nextTurn >= config.maxTurns;

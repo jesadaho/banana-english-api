@@ -1069,9 +1069,12 @@ export class GeminiChatService {
     userMessage: string,
     currentTurn: number,
     learnerFirstName: string,
+    /** Raw STT text shown in the app (before Thai-mix repair). */
+    originalUserMessage?: string,
   ): Promise<TrainingTurnReply> {
     const contents: GeminiContent[] = [];
     const speechFlag = isPronunciationLesson(config.lessonId);
+    const displayTranscript = (originalUserMessage ?? userMessage).trim();
 
     // Session store already appended this user turn before generate — do not
     // send it twice (model invents "said it twice" / retry loops).
@@ -1104,7 +1107,12 @@ export class GeminiChatService {
       parts: [
         {
           text:
-            `${this.trainingUserTurnPayload(userMessage, config, history)}\n\n` +
+            `${this.trainingUserTurnPayload(
+              userMessage,
+              config,
+              history,
+              displayTranscript,
+            )}\n\n` +
             'Respond with ONLY one JSON object: ' +
             `${trainingReplyJsonExample(speechFlag)}. ` +
             'No markdown. No prose outside JSON.',
@@ -1207,7 +1215,11 @@ export class GeminiChatService {
   ): ChatTurn[] {
     const prior = history.slice(-limit);
     const last = prior[prior.length - 1];
-    if (last?.speaker === 'user' && last.textEn === userMessage) {
+    if (
+      last?.speaker === 'user' &&
+      this.normalizeSpeechText(last.textEn) ===
+        this.normalizeSpeechText(userMessage)
+    ) {
       return prior.slice(0, -1);
     }
     return prior;
@@ -1456,6 +1468,7 @@ export class GeminiChatService {
     userMessage: string,
     config: LessonConfig,
     history: ChatTurn[],
+    displayTranscript: string = userMessage,
   ): string {
     const lang = teachingLanguageFromConfig(config);
 
@@ -1472,14 +1485,19 @@ Required response:
 - Do NOT evaluate, correct, or repeat the button press.`;
     }
 
-    const matched = this.matchTargetPhrase(userMessage, config.targetPhrases);
+    // Match the repaired text and the raw STT shown in the app — either counts.
+    const matched =
+      this.matchTargetPhrase(userMessage, config.targetPhrases) ??
+      (displayTranscript !== userMessage
+        ? this.matchTargetPhrase(displayTranscript, config.targetPhrases)
+        : null);
 
     if (config.coachOnly) {
       const matchNote = matched
         ? `transcript confirms they said something close to "${matched}" — but Whisper cannot measure stress or rhythm`
         : `transcript does not clearly match a target phrase — still do NOT fail them on stress/rhythm`;
       return lang === 'english'
-        ? `Learner transcript (exact STT text shown in the app): "${userMessage}"
+        ? `Learner transcript (exact STT text shown in the app): "${displayTranscript}"
 
 COACH MODE: ${matchNote}.
 Required response:
@@ -1487,7 +1505,7 @@ Required response:
 - Give ONE short coach tip about stress/rhythm (e.g. "Try making the first syllable a bit louder." / "Nice — now soften the last syllable.").
 - ADVANCE immediately to the NEXT item — never ask them to repeat the same one.
 - FORBIDDEN: saying they passed/failed stress, inventing pronunciation problems from text, retry loops`
-        : `Learner transcript (exact STT text shown in the app): "${userMessage}"
+        : `Learner transcript (exact STT text shown in the app): "${displayTranscript}"
 
 COACH MODE: ${matchNote}.
 Required response:
@@ -1498,26 +1516,30 @@ Required response:
     }
 
     if (matched) {
+      const normalized = this.normalizeSpeechText(displayTranscript);
       const nearMiss =
-        this.normalizeSpeechText(userMessage) !==
-        this.normalizeSpeechText(matched);
+        normalized !== this.normalizeSpeechText(matched);
       return lang === 'english'
-        ? `Learner transcript (exact STT text shown in the app): "${userMessage}"
+        ? `Learner transcript (exact STT text shown in the app): "${displayTranscript}"
+Normalized (case + punctuation stripped): "${normalized}"
 
-MATCH RESULT: SUCCESS — this transcript matches the taught phrase "${matched}"${nearMiss ? ' (close pronunciation / STT variant — treat as correct)' : ''}.
+MATCH RESULT: SUCCESS — "${normalized}" matches the taught phrase "${matched}"${nearMiss ? ' (close pronunciation / STT variant — treat as correct)' : ' (exact after normalize)'}.
+Case and punctuation NEVER count as wrong ("Seat.", "SEAT", "seat" are all SUCCESS for "seat").
 Required response:
 - Speak in clear simple English (English teaching mode). Thai only as a short optional meaning cue.
 - Brief English praise (e.g. Great! / Nice work!)
 - ADVANCE immediately to the NEXT teaching step with a NEW English-led learner action
-- FORBIDDEN: asking to repeat "${matched}" again, inventing pronunciation or "said it twice" issues`
-        : `Learner transcript (exact STT text shown in the app): "${userMessage}"
+- FORBIDDEN: asking to repeat "${matched}" again, inventing pronunciation or "said it twice" issues, treating capital letters or a trailing period as a mistake`
+        : `Learner transcript (exact STT text shown in the app): "${displayTranscript}"
+Normalized (case + punctuation stripped): "${normalized}"
 
-MATCH RESULT: SUCCESS — this transcript matches the taught phrase "${matched}"${nearMiss ? ' (close pronunciation / STT variant — treat as correct)' : ''}.
+MATCH RESULT: SUCCESS — "${normalized}" matches the taught phrase "${matched}"${nearMiss ? ' (close pronunciation / STT variant — treat as correct)' : ' (exact after normalize)'}.
+ตัวพิมพ์เล็ก/ใหญ่ และเครื่องหมายวรรคตอนไม่นับว่าผิด ("Seat.", "SEAT", "seat" = สำเร็จทั้งหมดสำหรับ "seat")
 Required response:
 - Speak MOSTLY in Thai (beginner tutor). English only for the next target phrase if modeling it.
 - Brief Thai praise only (e.g. เยี่ยมเลยครับ / ดีมากครับ) — do NOT praise in English ("Perfect!", "Great!")
 - ADVANCE immediately to the NEXT teaching step with a NEW Thai-led learner action
-- FORBIDDEN: full-English lines, โอ๊ะ, เกือบใช่, almost, ลองอีกที, asking to repeat "${matched}" again, inventing pronunciation or "said it twice" issues`;
+- FORBIDDEN: full-English lines, โอ๊ะ, เกือบใช่, almost, ลองอีกที, asking to repeat "${matched}" again, inventing pronunciation or "said it twice" issues, treating capital letters or a trailing period as a mistake`;
     }
 
     const recentUsers = this.recentUserMessages(history, 2);
@@ -1529,14 +1551,14 @@ Required response:
 
     if (consecutiveMisses) {
       return lang === 'english'
-        ? `Learner transcript (exact STT text shown in the app): "${userMessage}"
+        ? `Learner transcript (exact STT text shown in the app): "${displayTranscript}"
 
 MATCH RESULT: NO MATCH — but this is the learner's SECOND consecutive attempt without a match on the current item.
 Required response:
 - Do NOT ask for the same number/phrase again — maximum one retry already used.
 - Accept generously (e.g. "No worries — let's keep going.") and ADVANCE immediately to the NEXT Core Flow step with a NEW teaching/speaking task.
 - FORBIDDEN: "try again" loops, repeating the same ask, looping on the same word.`
-        : `Learner transcript (exact STT text shown in the app): "${userMessage}"
+        : `Learner transcript (exact STT text shown in the app): "${displayTranscript}"
 
 MATCH RESULT: NO MATCH — but this is the learner's SECOND consecutive attempt without a match on the current item.
 Required response:
@@ -1546,13 +1568,13 @@ Required response:
     }
 
     return lang === 'english'
-      ? `Learner transcript (exact STT text shown in the app): "${userMessage}"
+      ? `Learner transcript (exact STT text shown in the app): "${displayTranscript}"
 
 MATCH RESULT: NO MATCH yet on the current speaking task.
 Required response:
 - You may give at most ONE gentle retry with brief English feedback — then you MUST advance regardless.
 - FORBIDDEN: asking for the same item more than twice total.`
-      : `Learner transcript (exact STT text shown in the app): "${userMessage}"
+      : `Learner transcript (exact STT text shown in the app): "${displayTranscript}"
 
 MATCH RESULT: NO MATCH yet on the current speaking task.
 Required response:
@@ -1607,8 +1629,8 @@ Teaching mix 70/20/10 (applies to EVERY lesson — do NOT only use "พูดต
 
 Acceptance rules (critical — prevent retry loops):
 - You only see the learner's transcript TEXT, not audio. Never invent pronunciation, length, speed, or "said it twice" issues from text alone.
-- If the transcript clearly contains the expected phrase (ignore case/punctuation; "Hi", "hi", "Hi!" all count), treat as SUCCESS and ADVANCE to the next step. Do not ask to repeat the same phrase again.
-- Never say "เกือบใช่" / "almost" / "ลองอีกที" when the transcript already matches the target.
+- If the transcript clearly contains the expected phrase (ignore case/punctuation; "Hi", "hi", "Hi!", "Seat.", "seat" all count), treat as SUCCESS and ADVANCE to the next step. Do not ask to repeat the same phrase again.
+- Never say "เกือบใช่" / "almost" / "ลองอีกที" when the transcript already matches the target — capital letters and trailing periods are NOT mistakes.
 - Maximum ONE retry per phrase. After that retry (or if still unclear), accept generously and move on — do not loop the same phrase a third time.
 - Prefer progress and confidence over perfection.
 
