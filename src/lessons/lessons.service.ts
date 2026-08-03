@@ -35,6 +35,8 @@ export interface LessonProgressView {
   completedCount: number;
   totalPlayable: number;
   currentLessonId: string | null;
+  /** Most recently started training lesson (any completion state). */
+  lastStudiedLessonId: string | null;
   lessons: LessonProgressItemView[];
 }
 
@@ -61,6 +63,20 @@ export class LessonsService {
     );
   }
 
+  /** Latest training session's lesson — used to resume Continue strips. */
+  async getLastStudiedLessonId(userId: string): Promise<string | null> {
+    const row = await this.prisma.userSession.findFirst({
+      where: {
+        userId,
+        sessionType: 'training',
+        lessonId: { not: null },
+      },
+      orderBy: { createdAt: 'desc' },
+      select: { lessonId: true },
+    });
+    return row?.lessonId ?? null;
+  }
+
   isLessonUnlocked(lessonId: string): boolean {
     return LESSON_PROGRESSION_ORDER.includes(lessonId);
   }
@@ -79,9 +95,24 @@ export class LessonsService {
     return 'available';
   }
 
-  private resolveCurrentLessonId(completedIds: Set<string>): string | null {
+  /**
+   * Resume the last studied lesson when still incomplete; otherwise the first
+   * incomplete lesson in catalog order (skipping pronunciation — it has its
+   * own Continue pointer on the client).
+   */
+  private resolveCurrentLessonId(
+    completedIds: Set<string>,
+    lastStudiedLessonId: string | null,
+  ): string | null {
+    if (
+      lastStudiedLessonId &&
+      !lastStudiedLessonId.startsWith('pron_') &&
+      LESSON_PROGRESSION_ORDER.includes(lastStudiedLessonId) &&
+      !completedIds.has(lastStudiedLessonId)
+    ) {
+      return lastStudiedLessonId;
+    }
     for (const lessonId of LESSON_PROGRESSION_ORDER) {
-      // Pronunciation course has its own continue pointer in the app.
       if (lessonId.startsWith('pron_')) continue;
       if (!completedIds.has(lessonId)) {
         return lessonId;
@@ -108,8 +139,14 @@ export class LessonsService {
   }
 
   async buildProgressView(userId: string): Promise<LessonProgressView> {
-    const completedIds = await this.getCompletedLessonIds(userId);
-    const currentLessonId = this.resolveCurrentLessonId(completedIds);
+    const [completedIds, lastStudiedLessonId] = await Promise.all([
+      this.getCompletedLessonIds(userId),
+      this.getLastStudiedLessonId(userId),
+    ]);
+    const currentLessonId = this.resolveCurrentLessonId(
+      completedIds,
+      lastStudiedLessonId,
+    );
     const lessons = getAllLessons().map((lesson, index) =>
       this.toItemView(
         lesson,
@@ -124,6 +161,7 @@ export class LessonsService {
       completedCount: completedIds.size,
       totalPlayable: LESSON_PROGRESSION_ORDER.length,
       currentLessonId,
+      lastStudiedLessonId,
       lessons,
     };
   }
