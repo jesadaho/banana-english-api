@@ -18,6 +18,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { EconomyModule } from './economy/economy.module';
 import { UsersModule } from './users/users.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { MiniGamesModule } from './mini-games/mini-games.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { NotificationsModule } from './notifications/notifications.module';
     AchievementsModule,
     StatsModule,
     OutfitsModule,
+    MiniGamesModule,
   ],
 })
 export class AppModule {}

@@ -502,6 +502,74 @@ export class EconomyService {
     return { streakDays: 1 };
   }
 
+  async applyMiniGameRewards(params: {
+    userId: string;
+    gameId: string;
+  }): Promise<{
+    xpEarned: number;
+    seedsEarned: number;
+    balances: UserBalances;
+    alreadyClaimed: boolean;
+  }> {
+    const { userId, gameId } = params;
+    const referenceId = `mini_game:${gameId}`;
+
+    return this.prisma.$transaction(async (tx) => {
+      const prior = await tx.economyTransaction.findFirst({
+        where: {
+          userId,
+          source: 'mini_game_reward',
+          referenceId,
+          currency: Currency.XP,
+        },
+      });
+
+      const user = await tx.user.findUniqueOrThrow({ where: { id: userId } });
+
+      if (prior) {
+        return {
+          xpEarned: 0,
+          seedsEarned: 0,
+          balances: this.toBalances(user),
+          alreadyClaimed: true,
+        };
+      }
+
+      const xpEarned = LESSON_REWARD_XP;
+      const seedsEarned = LESSON_REWARD_SEEDS;
+
+      await this.recordTransaction(tx, {
+        userId,
+        currency: Currency.XP,
+        amount: xpEarned,
+        source: 'mini_game_reward',
+        referenceId,
+      });
+      await this.recordTransaction(tx, {
+        userId,
+        currency: Currency.BANANA_SEED,
+        amount: seedsEarned,
+        source: 'mini_game_reward',
+        referenceId,
+      });
+
+      const updated = await tx.user.update({
+        where: { id: userId },
+        data: {
+          xpBalance: { increment: xpEarned },
+          bananaSeedBalance: { increment: seedsEarned },
+        },
+      });
+
+      return {
+        xpEarned,
+        seedsEarned,
+        balances: this.toBalances(updated),
+        alreadyClaimed: false,
+      };
+    });
+  }
+
   toBalances(user: User): UserBalances {
     return {
       bananas: user.bananaBalance,
