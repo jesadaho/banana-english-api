@@ -45,6 +45,11 @@ export interface TurnExchangeResponse {
   /** False when the learner should tap Continue instead of speaking.
    * Omitted on paths that always expect speech. */
   expectsUserSpeech?: boolean;
+  /**
+   * Exact English the learner should say this turn (for Whisper bias).
+   * Prefer a single word on vocab/repeat turns (e.g. "latte").
+   */
+  expectedSpeech?: string | null;
   /** Multi-speaker dialogue for Scene / Watch & Listen turns. */
   scene?: LessonScene;
 }

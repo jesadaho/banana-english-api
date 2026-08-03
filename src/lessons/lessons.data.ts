@@ -427,6 +427,11 @@ ${steps}`,
   };
 }
 
+interface AroundTownVocabWord {
+  en: string;
+  th: string;
+}
+
 interface AroundTownLessonSpec {
   lessonId: string;
   code: string;
@@ -446,65 +451,81 @@ interface AroundTownLessonSpec {
     textEn: string;
     textTh: string;
   }>;
-  vocabulary: Array<{ en: string; th: string }>;
-  patterns: string[];
-  /** Kept for data compatibility; Grammar Discovery is no longer taught. */
-  grammarFocus?: string;
-  grammarExamples?: string[];
+  /**
+   * Exactly 6 words: Set1 = [quizAnswer, speakWord, distractor],
+   * Set2 = [quizAnswer, speakWord, distractor].
+   */
+  vocabulary: [
+    AroundTownVocabWord,
+    AroundTownVocabWord,
+    AroundTownVocabWord,
+    AroundTownVocabWord,
+    AroundTownVocabWord,
+    AroundTownVocabWord,
+  ];
+  /** Thai quiz stem for Vocab Set 1 (e.g. ถ้าจะสั่งกาแฟลาเต้ คุณต้องเลือกคำไหน). */
+  vocabQuiz1Th: string;
+  /** Thai quiz stem for Vocab Set 2. */
+  vocabQuiz2Th: string;
+  /** Pattern Drill 1 — model + substitute. */
+  patternRepeat: string;
+  patternSubstitute1: string;
+  /** Pattern Drill 2 — expand + substitute. */
+  patternExpand: string;
+  patternSubstitute2: string;
+  /** Soft wrap-up tip about the main frame. */
+  wrapGrammarTipTh: string;
+  wrapGrammarTipEn: string;
+  /** Extra words allowed only in mission (e.g. small / large). */
+  missionExtraWords?: string[];
+  /** NPC follow-up on mission turn 2 (e.g. Small or large?). */
+  missionFollowUpEn: string;
   missionHint: string;
-  /** Soft tease on Wrap-up that the next lesson is this (e.g. Lesson Summary). */
   nextLessonHint?: string;
 }
 
 function buildAroundTownLesson(spec: AroundTownLessonSpec): LessonConfig {
+  const set1 = spec.vocabulary.slice(0, 3) as [
+    AroundTownVocabWord,
+    AroundTownVocabWord,
+    AroundTownVocabWord,
+  ];
+  const set2 = spec.vocabulary.slice(3, 6) as [
+    AroundTownVocabWord,
+    AroundTownVocabWord,
+    AroundTownVocabWord,
+  ];
   const vocabList = spec.vocabulary
     .map((v) => `- ${v.en} = ${v.th}`)
     .join('\n');
-  const mainPattern = spec.patterns[0] ?? '...';
   const sceneScript = spec.sceneLines
-    .map(
-      (line) =>
-        `  ${line.speaker}: ${line.textEn} / ${line.textTh}`,
-    )
+    .map((line) => `  ${line.speaker}: ${line.textEn} / ${line.textTh}`)
     .join('\n');
-  const slotWords = spec.vocabulary
-    .slice(0, 4)
-    .map((v) => v.en)
-    .join(', ');
+  const missionExtras = (spec.missionExtraWords ?? []).join(', ');
   const targetPhrases = [
     ...spec.vocabulary.map((v) => v.en),
-    ...spec.patterns,
+    ...(spec.missionExtraWords ?? []),
+    spec.patternRepeat,
+    spec.patternSubstitute1,
+    spec.patternExpand,
+    spec.patternSubstitute2,
   ];
   const wrapTease = spec.nextLessonHint
     ? ` + softly tease that next is ${spec.nextLessonHint} (one short playful line only)`
     : '';
 
-  // Max 2 vocabulary turns total — split evenly into ≤2 batches.
-  const vocabBatches: Array<Array<{ en: string; th: string }>> = [];
-  const vocab = spec.vocabulary;
-  if (vocab.length <= 4) {
-    vocabBatches.push(vocab);
-  } else {
-    const mid = Math.ceil(vocab.length / 2);
-    vocabBatches.push(vocab.slice(0, mid));
-    vocabBatches.push(vocab.slice(mid));
-  }
-  const vocabBatchPlan = vocabBatches
-    .map((batch, index) => {
-      const letter = String.fromCharCode(65 + index); // A, B
-      const mapped = batch.map((v) => `${v.en} = ${v.th}`).join(' / ');
-      const speakWord = batch[Math.min(1, batch.length - 1)]?.en ?? batch[0].en;
-      const bridgeNote =
-        index === 0
-          ? ' START this turn with a 1-line Scene bridge in {{L1}} (e.g. เมื่อกี้ได้ยิน latte / hot or iced…), then immediately map the words — bridge is NOT a separate turn.'
-          : '';
-      return `Vocabulary ${letter} (ONE tutor turn ONLY):${bridgeNote} map ALL of [${mapped}] in that same turn, then ask the learner to speak ONLY "${speakWord}" (or a short recognition using one word from this batch). NEVER teach these words one-per-turn.`;
-    })
-    .join('\n');
-  const vocabTurnCap =
-    vocabBatches.length === 1
-      ? 'Vocabulary is ONE turn only (bridge + map + one speak ask).'
-      : 'Vocabulary is EXACTLY 2 turns max (A then B). Never a 3rd vocab turn. Never a separate bridge-only turn.';
+  const vocabSetBlock = (
+    setLabel: '1' | '2',
+    words: [AroundTownVocabWord, AroundTownVocabWord, AroundTownVocabWord],
+    quizTh: string,
+  ) => {
+    const [quiz, speak, other] = words;
+    const options = `${quiz.en}, ${speak.en}, ${other.en}`;
+    return `Vocab Set ${setLabel} (EXACTLY 2 learner speaking turns — never more):
+  Turn A — Quiz (3 choices, speech answer): Ask in {{L1}} like "${quizTh} ระหว่าง ${options} ครับ?" Correct answer = "${quiz.en}". Set expectedSpeech="${quiz.en}".
+  Turn B — AFTER a clear quiz answer: briefly map ALL 3 meanings (${quiz.en}=${quiz.th}, ${speak.en}=${speak.th}, ${other.en}=${other.th}), then ask them to repeat ONLY "${speak.en}". Set expectedSpeech="${speak.en}".
+  FORBIDDEN: teaching words outside this trio; one-word queues; skipping the quiz; asking for more than these 2 speaks.`;
+  };
 
   return {
     lessonId: spec.lessonId,
@@ -515,67 +536,68 @@ function buildAroundTownLesson(spec: AroundTownLessonSpec): LessonConfig {
     goalTh: spec.goalTh,
     difficulty: 'beginner',
     languageMix: { thai: 70, english: 30 },
-    estimatedMinutesMin: 7,
-    estimatedMinutesMax: 9,
+    estimatedMinutesMin: 3,
+    estimatedMinutesMax: 4,
     targetPhrases,
-    maxTurns: 24,
-    listenOnlyTurns: 2,
+    maxTurns: 18,
+    listenOnlyTurns: 1,
     systemInstruction: `Lesson: ${spec.titleEn} (Everyday English → Everyday Life → ${spec.code})
 Goal: ${spec.goalEn}
+Pace target: ~3–4 minutes, about 10 short learner speaks total. Keep every tutor turn tight.
 
-Target vocabulary (ONLY these):
+Target vocabulary (ONLY these 6 + mission extras ${missionExtras || 'none'}):
 ${vocabList}
 
-REQUIRED vocabulary batch plan (HARD CAP — max ${vocabBatches.length} vocab turn${vocabBatches.length > 1 ? 's' : ''}):
-${vocabTurnCap}
-${vocabBatchPlan}
+${vocabSetBlock('1', set1, spec.vocabQuiz1Th)}
 
-Main sentence pattern for Pattern Drill (ONLY this frame — do not teach a list of patterns):
-- ${mainPattern}
-Slot-swap nouns/words from target vocabulary (examples: ${slotWords}).
+${vocabSetBlock('2', set2, spec.vocabQuiz2Th)}
 
-Teaching vs speaking (critical — ~7–9 min):
-- Ask only ONE speaking task or one question per turn.
-- Soft correction ONLY: never say Wrong / ไม่ถูก. Praise → offer better line → continue talking.
+Pattern sentences (use EXACTLY these — do not invent new frames):
+- Pattern Drill 1 Repeat: "${spec.patternRepeat}"
+- Pattern Drill 1 Substitute: "${spec.patternSubstitute1}"
+- Pattern Drill 2 Expand: "${spec.patternExpand}"
+- Pattern Drill 2 Substitute: "${spec.patternSubstitute2}"
+
+Teaching rules:
+- Ask only ONE speaking task per turn.
+- Soft correction ONLY (never Wrong / ไม่ถูก).
 - STT is English-only for spoken answers. Ask/explain in {{L1}} OK.
-- Vocabulary lock: ONLY the target vocab + the main pattern above (+ the 2 slot swaps practiced).
-- FORBIDDEN: open free-talk like "Tell me about your day" outside the AI Conversation mission phase.
-- FORBIDDEN in Vocabulary: jumping straight to "คำแรกที่เราจะเรียนคือ…" with zero link to the Scene; "คำแรก" / "คำต่อไป" one-word queues; teaching only one new word per turn; stretching vocab across many turns; a separate listen-only bridge turn; more than ${vocabBatches.length} vocabulary turns.
-- FORBIDDEN: Grammar Discovery / naming grammar labels (Present Continuous, etc.). Skip grammar explanation entirely.
-- After Scene → Vocabulary: ALWAYS open Vocabulary A with a short bridge in the SAME turn, then map that batch. Never feel like a hard cut / new unrelated segment.
-- Keep most tutor turns under 2–3 short sentences — EXCEPT Vocabulary batch turns, which MUST map the whole batch then end with ONE ask.
+- Vocabulary lock: only the 6 target words + the 4 pattern sentences above (+ mission extras if listed).
+- FORBIDDEN: Grammar Discovery mid-lesson; Useful Sentences lists; going backward in Core Flow; hell-loop re-drills after mission starts.
+- Keep most turns under 2 short sentences (Vocab Set B may map 3 meanings then one ask).
 
-Scene / Watch & Listen rules:
-- On Core Flow step 2, return a scene object (expectsUserSpeech false).
+Scene rules (Core Flow step 1 — ONE listen-only turn):
+- Combine welcome/situation + Watch & Listen in the SAME turn.
+- expectsUserSpeech = false. Return scene object.
 - scene.title must be exactly: "${spec.sceneTitle}"
-- NPC speaker name: "${spec.sceneNpcSpeaker}" with voice "${spec.sceneNpcVoice}".
-- Teacher B lines: role "teacher", omit voice (default Sadachbia).
-- Stay close to this model dialogue (paraphrase lightly OK, keep meaning). EVERY line MUST include textTh (Thai translation of that line):
+- NPC: "${spec.sceneNpcSpeaker}" voice "${spec.sceneNpcVoice}". Teacher B: role "teacher", omit voice.
+- Model dialogue (paraphrase lightly OK; every line needs textTh):
 ${sceneScript}
-- Top-level textEn = short summary only (e.g. "Watch this short ${spec.sceneTitle} dialogue.").
-- Top-level textTh = short {{L1}} prompt that they can open Thai subtitles for the dialogue if needed (do not paste the full script into textTh).
+- Top-level textEn = short summary; textTh may welcome + invite them to listen. Do NOT paste the full script into textEn/textTh.
 
-Core Flow (progression milestones — NOT a fixed turn count):
-1. Situation — set the scene in {{L1}} (~30s). Example vibe: "${spec.situationTh}" / "${spec.situationEn}". Learner does NOT speak. expectsUserSpeech = false. (Opening)
-2. Watch & Listen — play the Scene dialogue above. No grammar explanation. expectsUserSpeech = false. Return scene.lines with textEn + textTh on EVERY line. (Scene)
-3. Vocabulary — MAX ${vocabBatches.length} turn${vocabBatches.length > 1 ? 's' : ''} total. Follow the REQUIRED vocabulary batch plan exactly. Vocabulary A MUST include the Scene bridge in the SAME turn (ไม่แยกเทิร์น). Each batch maps all its words, then ONE speak/recognition ask. After Vocabulary ${String.fromCharCode(64 + vocabBatches.length)}, advance immediately to Pattern Drill. expectsUserSpeech = true. (Repeat / Recognition)
-4. Pattern Drill (ONE phase — replaces Useful Sentences + Pattern Practice) — teach ONLY "${mainPattern}":
-   a) Model one full example sentence with the frame (e.g. fill the blank with a target vocab word) → learner repeats. (Repeat)
-   b) Slot-swap round 1 — change the noun/slot to another target word → learner says the new sentence. (Repeat)
-   c) Slot-swap round 2 — change the noun/slot again → learner says the new sentence. (Repeat)
-   Then advance immediately to AI Conversation. Do NOT teach other pattern frames. Do NOT add a Grammar Discovery step.
-5. AI Conversation — roleplay the mission: ${spec.missionHint}. NPC opens (e.g. Hello!). Learner answers freely. Offer Hint if stuck. Soft-recast mistakes. expectsUserSpeech = true. (Recall / Mission)
-6. Soft Correction — weave into mission turns: praise + "You can also say…" + continue. Never block the conversation. (Soft Feedback)
-7. Wrap-up — brief celebrate of the pattern they used + first name once${wrapTease} → isLessonComplete = true. expectsUserSpeech = false. (Complete)
+Core Flow (ONE-WAY — never go backward):
+1. Scene — welcome ("${spec.situationTh}") + play the scene dialogue. Listen-only. expectsUserSpeech=false. expectedSpeech="".
+2. Vocab Set 1 — follow the Vocab Set 1 plan (quiz → map 3 → speak "${set1[1].en}"). 2 speaks.
+3. Pattern Drill 1 — EXACTLY 2 speaks:
+   a) Model "${spec.patternRepeat}" → learner repeats. expectedSpeech="${spec.patternRepeat}".
+   b) Substitute: prompt them ({{L1}} OK) to say "${spec.patternSubstitute1}" (you MAY briefly name the new slot word). expectedSpeech="${spec.patternSubstitute1}".
+4. Vocab Set 2 — follow the Vocab Set 2 plan (quiz → map 3 → speak "${set2[1].en}"). 2 speaks.
+5. Pattern Drill 2 — EXACTLY 2 speaks:
+   a) Expand: model "${spec.patternExpand}" → learner repeats. expectedSpeech="${spec.patternExpand}".
+   b) Substitute: prompt for "${spec.patternSubstitute2}". expectedSpeech="${spec.patternSubstitute2}".
+6. AI Conversation — EXACTLY 2 learner speaks (mission: ${spec.missionHint}):
+   a) NPC opens (e.g. Hello! What can I get for you?). Learner orders freely (practiced lines OK). expectedSpeech="".
+   b) NPC follow-up exactly like: "${spec.missionFollowUpEn}". Learner answers. expectedSpeech="".
+   Then NPC confirms briefly → go to Wrap-up.
+   CRITICAL: once mission starts, NEVER return to Vocab / Pattern Drill — even if they reuse a practiced sentence (that is SUCCESS).
+7. Wrap-up (listen-only, ~10–15s) — soft tip: "${spec.wrapGrammarTipTh}" / "${spec.wrapGrammarTipEn}". Celebrate with first name once${wrapTease}. expectsUserSpeech=false. isLessonComplete=true. expectedSpeech="".
 
 Turn loop rules:
-- Every non-final tutor turn ends with exactly one next action OR is a listen-only Scene/Situation/Wrap turn (Continue button).
-- Maximum ONE retry per item; then accept and advance.
+- Every non-final turn ends with one clear next action OR is listen-only (Continue).
+- Max ONE retry per item; then accept and advance.
 - Accept close variants when meaning is clear.
-- Do not invent pronunciation issues from text.
-- When Core Flow reaches Wrap-up, set isLessonComplete = true (required). Otherwise false.`,
-    openingPrompt:
-      `Start the ${spec.titleEn} Everyday Life lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. CRITICAL: Turn 1 = Situation ONLY — set the scene ("${spec.situationTh}"), no vocab teaching yet, expectsUserSpeech false, NO scene object yet. Do NOT mention any button. After Scene, Vocabulary is MAX ${vocabBatches.length} turn${vocabBatches.length > 1 ? 's' : ''}: bridge inside Vocabulary A (same turn), then follow the REQUIRED vocabulary batch plan — never a 3rd vocab turn. After Vocabulary, run Pattern Drill on "${mainPattern}" only (model once + 2 slot swaps) — skip Grammar Discovery. Return JSON matching the schema. isLessonComplete must be false.`,
+- When Wrap-up is reached, isLessonComplete must be true.`,
+    openingPrompt: `Start the ${spec.titleEn} Everyday Life lesson for this one learner only. Speak as a private 1:1 tutor (never {{NO_GROUP}}). Use their first name once. CRITICAL Turn 1 = Scene ONLY: welcome ("${spec.situationTh}") + return the scene dialogue object, expectsUserSpeech false, expectedSpeech "". Do NOT teach vocab yet. Do NOT mention any button. Then follow the Core Flow exactly: Vocab Set1 (quiz+speak) → Pattern Drill1 (repeat+sub) → Vocab Set2 → Pattern Drill2 (expand+sub) → AI Conversation (exactly 2 speaks) → Wrap-up with soft tip about the main frame. Never go backward. Return JSON matching the schema. isLessonComplete must be false.`,
   };
 }
 
@@ -3898,20 +3920,20 @@ Core Flow (progression milestones — NOT a fixed turn count):
       { en: 'shirt', th: 'เสื้อเชิ้ต' },
       { en: 'pants', th: 'กางเกง' },
       { en: 'shoes', th: 'รองเท้า' },
-      { en: 'bag', th: 'กระเป๋า' },
       { en: 'size', th: 'ไซส์' },
-      { en: 'fitting room', th: 'ห้องลองเสื้อ' },
       { en: 'cash', th: 'เงินสด' },
       { en: 'card', th: 'บัตร' },
     ],
-    patterns: [
-      "I'm looking for...",
-      "I'm buying...",
-      "I'm trying on...",
-      'Can I try this on?',
-    ],
-    grammarFocus: 'Present Continuous for actions happening now',
-    grammarExamples: ["I'm looking", "I'm buying", "I'm trying on"],
+    vocabQuiz1Th: 'ถ้าจะหาเสื้อเชิ้ต คุณต้องเลือกคำไหน',
+    vocabQuiz2Th: 'ถ้าจะบอกไซส์ คุณต้องเลือกคำไหน',
+    patternRepeat: "I'm looking for a shirt.",
+    patternSubstitute1: "I'm looking for pants.",
+    patternExpand: "I'm looking for a shirt. Medium, please.",
+    patternSubstitute2: "I'm looking for pants. Medium, please.",
+    wrapGrammarTipTh:
+      'จำง่ายๆ เวลาหาของในร้าน ให้พูดว่า I\'m looking for... ได้เลยครับ',
+    wrapGrammarTipEn: "When you look for something in a shop, say I'm looking for...",
+    missionFollowUpEn: 'What size?',
     missionHint: 'Buy clothes in a mall — talk to the shop assistant',
   }),
   buildAroundTownLesson({
@@ -3933,21 +3955,22 @@ Core Flow (progression milestones — NOT a fixed turn count):
       { speaker: 'Teacher B', role: 'teacher', textEn: 'Water, please.', textTh: 'น้ำเปล่าครับ' },
     ],
     vocabulary: [
-      { en: 'menu', th: 'เมนู' },
       { en: 'chicken', th: 'ไก่' },
       { en: 'rice', th: 'ข้าว' },
+      { en: 'menu', th: 'เมนู' },
       { en: 'water', th: 'น้ำ' },
       { en: 'spicy', th: 'เผ็ด' },
       { en: 'bill', th: 'บิล' },
     ],
-    patterns: [
-      "I'd like...",
-      "I'm having...",
-      'Can I have...?',
-      'The bill, please.',
-    ],
-    grammarFocus: 'Present Continuous for actions happening now',
-    grammarExamples: ["I'm eating", "I'm waiting"],
+    vocabQuiz1Th: 'ถ้าจะสั่งไก่ คุณต้องเลือกคำไหน',
+    vocabQuiz2Th: 'ถ้าจะขอน้ำ คุณต้องเลือกคำไหน',
+    patternRepeat: "I'd like chicken.",
+    patternSubstitute1: "I'd like rice.",
+    patternExpand: "I'd like chicken and water.",
+    patternSubstitute2: "I'd like rice and water.",
+    wrapGrammarTipTh: 'จำง่ายๆ เวลาสั่งอาหาร ให้พูดว่า I\'d like... ได้เลยครับ',
+    wrapGrammarTipEn: "When you order food, say I'd like...",
+    missionFollowUpEn: 'Anything to drink?',
     missionHint: 'Order food at a restaurant',
   }),
   buildAroundTownLesson({
@@ -3963,29 +3986,31 @@ Core Flow (progression milestones — NOT a fixed turn count):
     sceneNpcSpeaker: 'Barista',
     sceneNpcVoice: 'Aoede',
     sceneLines: [
-      { speaker: 'Barista', role: 'npc', textEn: 'Hello!', textTh: 'สวัสดีค่ะ!' },
+      { speaker: 'Barista', role: 'npc', textEn: 'Hello! Can I get you something?', textTh: 'สวัสดีค่ะ! รับอะไรดีคะ?' },
       { speaker: 'Teacher B', role: 'teacher', textEn: 'Hi! Can I get a latte?', textTh: 'สวัสดีครับ! ขอลาเต้ได้ไหมครับ?' },
       { speaker: 'Barista', role: 'npc', textEn: 'Hot or iced?', textTh: 'ร้อนหรือเย็นคะ?' },
       { speaker: 'Teacher B', role: 'teacher', textEn: 'Iced, please.', textTh: 'เย็นครับ' },
     ],
     vocabulary: [
-      { en: 'coffee', th: 'กาแฟ' },
       { en: 'latte', th: 'ลาเต้' },
-      { en: 'hot', th: 'ร้อน' },
-      { en: 'iced', th: 'เย็น' },
-      { en: 'sugar', th: 'น้ำตาล' },
+      { en: 'tea', th: 'ชา' },
       { en: 'milk', th: 'นม' },
-      { en: 'small', th: 'เล็ก' },
-      { en: 'large', th: 'ใหญ่' },
+      { en: 'iced', th: 'เย็น' },
+      { en: 'hot', th: 'ร้อน' },
+      { en: 'warm', th: 'อุ่น' },
     ],
-    patterns: [
-      'Can I get...?',
-      "I'd like...",
-      "I'm looking for...",
-      "I'm waiting for my coffee.",
-    ],
-    grammarFocus: 'Present Continuous for actions happening now',
-    grammarExamples: ["I'm looking", "I'm waiting"],
+    vocabQuiz1Th: 'ถ้าจะสั่งกาแฟลาเต้ คุณต้องเลือกคำไหน',
+    vocabQuiz2Th: 'ถ้าอยากได้แบบเย็น คุณต้องเลือกคำไหน',
+    patternRepeat: 'Can I get a latte?',
+    patternSubstitute1: 'Can I get a tea?',
+    patternExpand: 'Can I get an iced latte?',
+    patternSubstitute2: 'Can I get a hot tea?',
+    wrapGrammarTipTh:
+      'จำง่ายๆ นะครับ เวลาไปสั่งของหรือขออะไรอย่างสุภาพ ให้พูดติดปากว่า Can I get...?',
+    wrapGrammarTipEn:
+      'When you politely ask for something, say Can I get...?',
+    missionExtraWords: ['small', 'large'],
+    missionFollowUpEn: 'Sure thing! Small or large?',
     missionHint: 'Order coffee from the barista',
   }),
   buildAroundTownLesson({
@@ -4007,19 +4032,22 @@ Core Flow (progression milestones — NOT a fixed turn count):
       { speaker: 'Teacher B', role: 'teacher', textEn: "That's all, thanks.", textTh: 'เท่านี้ครับ ขอบคุณ' },
     ],
     vocabulary: [
+      { en: 'sandwich', th: 'แซนด์วิช' },
       { en: 'water', th: 'น้ำ' },
       { en: 'snack', th: 'ขนม' },
-      { en: 'sandwich', th: 'แซนด์วิช' },
       { en: 'bag', th: 'ถุง' },
       { en: 'receipt', th: 'ใบเสร็จ' },
+      { en: 'card', th: 'บัตร' },
     ],
-    patterns: [
-      "I'm buying...",
-      'Can I pay by card?',
-      "That's all.",
-    ],
-    grammarFocus: 'Present Continuous for actions happening now',
-    grammarExamples: ["I'm buying"],
+    vocabQuiz1Th: 'ถ้าจะซื้อแซนด์วิช คุณต้องเลือกคำไหน',
+    vocabQuiz2Th: 'ถ้าอยากได้ถุง คุณต้องเลือกคำไหน',
+    patternRepeat: "I'd like this sandwich.",
+    patternSubstitute1: "I'd like water.",
+    patternExpand: "I'd like this sandwich. That's all.",
+    patternSubstitute2: "I'd like water. That's all.",
+    wrapGrammarTipTh: 'จำง่ายๆ เวลาซื้อของ ให้พูดว่า I\'d like... ได้เลยครับ',
+    wrapGrammarTipEn: "When you buy something, say I'd like...",
+    missionFollowUpEn: 'Anything else?',
     missionHint: 'Buy items at a convenience store and pay',
   }),
   buildAroundTownLesson({
@@ -4041,20 +4069,22 @@ Core Flow (progression milestones — NOT a fixed turn count):
       { speaker: 'Teacher B', role: 'teacher', textEn: 'Yes, please.', textTh: 'ใช่ครับ' },
     ],
     vocabulary: [
-      { en: 'bus', th: 'รถบัส' },
       { en: 'train', th: 'รถไฟ' },
+      { en: 'bus', th: 'รถบัส' },
       { en: 'taxi', th: 'แท็กซี่' },
-      { en: 'station', th: 'สถานี' },
       { en: 'ticket', th: 'ตั๋ว' },
+      { en: 'station', th: 'สถานี' },
       { en: 'platform', th: 'ชานชาลา' },
     ],
-    patterns: [
-      "I'm going to...",
-      "I'm taking...",
-      'Can I buy a ticket?',
-    ],
-    grammarFocus: 'Present Continuous for actions happening now',
-    grammarExamples: ["I'm going", "I'm taking"],
+    vocabQuiz1Th: 'ถ้าจะไปด้วยรถไฟ คุณต้องเลือกคำไหน',
+    vocabQuiz2Th: 'ถ้าจะซื้อตั๋ว คุณต้องเลือกคำไหน',
+    patternRepeat: "I'm going to Bangkok.",
+    patternSubstitute1: "I'm taking the train.",
+    patternExpand: "I'm going to Bangkok. One ticket, please.",
+    patternSubstitute2: "I'm taking the bus. One ticket, please.",
+    wrapGrammarTipTh: 'จำง่ายๆ เวลาบอกว่ากำลังไปไหน ให้พูดว่า I\'m going to... ได้เลยครับ',
+    wrapGrammarTipEn: "When you say where you're going, use I'm going to...",
+    missionFollowUpEn: 'One ticket?',
     missionHint: 'Buy a ticket and take the train',
   }),
   buildAroundTownLesson({
@@ -4083,16 +4113,15 @@ Core Flow (progression milestones — NOT a fixed turn count):
       { en: 'across', th: 'ฝั่งตรงข้าม' },
       { en: 'corner', th: 'มุมถนน' },
     ],
-    patterns: [
-      'Excuse me...',
-      'Where is...?',
-      "I'm looking for...",
-      'Go straight.',
-      'Turn left.',
-      'Turn right.',
-    ],
-    grammarFocus: 'Imperatives for giving directions',
-    grammarExamples: ['Go straight', 'Turn left', 'Turn right'],
+    vocabQuiz1Th: 'ถ้าจะเลี้ยวซ้าย คุณต้องเลือกคำไหน',
+    vocabQuiz2Th: 'ถ้าของานอยู่ใกล้ๆ คุณต้องเลือกคำไหน',
+    patternRepeat: 'Where is the station?',
+    patternSubstitute1: 'Where is the corner?',
+    patternExpand: 'Excuse me. Where is the station?',
+    patternSubstitute2: 'Excuse me. Where is the corner?',
+    wrapGrammarTipTh: 'จำง่ายๆ เวลาถามทางอย่างสุภาพ เริ่มด้วย Excuse me แล้วถาม Where is...?',
+    wrapGrammarTipEn: 'To ask directions politely, start with Excuse me, then Where is...?',
+    missionFollowUpEn: 'Go straight and turn left. Okay?',
     missionHint: 'Ask for directions to the station',
   }),
   buildAroundTownLesson({
@@ -4119,14 +4148,17 @@ Core Flow (progression milestones — NOT a fixed turn count):
       { en: 'key', th: 'กุญแจ' },
       { en: 'passport', th: 'พาสปอร์ต' },
       { en: 'breakfast', th: 'อาหารเช้า' },
+      { en: 'check-in', th: 'เช็กอิน' },
     ],
-    patterns: [
-      'I have a reservation.',
-      "I'm checking in.",
-      'Can I have my key?',
-    ],
-    grammarFocus: 'Present Continuous for actions happening now',
-    grammarExamples: ["I'm checking in"],
+    vocabQuiz1Th: 'ถ้าจะบอกว่าจองไว้ คุณต้องเลือกคำไหน',
+    vocabQuiz2Th: 'ถ้าพนักงานขอพาสปอร์ต คุณต้องเลือกคำไหน',
+    patternRepeat: 'I have a reservation.',
+    patternSubstitute1: "I'm checking in.",
+    patternExpand: 'I have a reservation. Here is my passport.',
+    patternSubstitute2: "I'm checking in. Here is my passport.",
+    wrapGrammarTipTh: 'จำง่ายๆ เวลาเช็กอิน ให้พูดว่า I have a reservation. ได้เลยครับ',
+    wrapGrammarTipEn: 'When you check in, say I have a reservation.',
+    missionFollowUpEn: 'May I have your passport?',
     missionHint: 'Check in at a hotel',
   }),
   buildAroundTownLesson({
@@ -4149,18 +4181,21 @@ Core Flow (progression milestones — NOT a fixed turn count):
     ],
     vocabulary: [
       { en: 'passport', th: 'พาสปอร์ต' },
-      { en: 'boarding pass', th: 'บัตรขึ้นเครื่อง' },
       { en: 'gate', th: 'เกต' },
-      { en: 'baggage', th: 'กระเป๋าเดินทาง' },
       { en: 'flight', th: 'เที่ยวบิน' },
+      { en: 'boarding pass', th: 'บัตรขึ้นเครื่อง' },
+      { en: 'baggage', th: 'กระเป๋าเดินทาง' },
+      { en: 'check-in', th: 'เช็กอิน' },
     ],
-    patterns: [
-      "I'm checking in.",
-      "I'm boarding.",
-      'Where is Gate 5?',
-    ],
-    grammarFocus: 'Present Continuous for actions happening now',
-    grammarExamples: ["I'm checking in", "I'm boarding"],
+    vocabQuiz1Th: 'ถ้าพนักงานขอพาสปอร์ต คุณต้องเลือกคำไหน',
+    vocabQuiz2Th: 'ถ้าจะหาบัตรขึ้นเครื่อง คุณต้องเลือกคำไหน',
+    patternRepeat: "I'd like to check in.",
+    patternSubstitute1: "I'm boarding.",
+    patternExpand: "I'd like to check in. Here is my passport.",
+    patternSubstitute2: "I'm boarding. Here is my boarding pass.",
+    wrapGrammarTipTh: 'จำง่ายๆ เวลาเช็กอินสนามบิน ให้พูดว่า I\'d like to check in. ได้เลยครับ',
+    wrapGrammarTipEn: "At the airport, say I'd like to check in.",
+    missionFollowUpEn: 'May I see your passport?',
     missionHint: 'Check in at the airport',
   }),
   buildAroundTownLesson({
@@ -4182,21 +4217,23 @@ Core Flow (progression milestones — NOT a fixed turn count):
       { speaker: 'Teacher B', role: 'teacher', textEn: 'Thank you.', textTh: 'ขอบคุณครับ' },
     ],
     vocabulary: [
-      { en: 'medicine', th: 'ยา' },
       { en: 'headache', th: 'ปวดหัว' },
       { en: 'fever', th: 'ไข้' },
+      { en: 'medicine', th: 'ยา' },
       { en: 'pharmacy', th: 'ร้านขายยา' },
       { en: 'doctor', th: 'หมอ' },
+      { en: 'sick', th: 'ไม่สบาย' },
     ],
-    patterns: [
-      'I have a headache.',
-      "I'm not feeling well.",
-      'Can I get some medicine?',
-      "I'm feeling sick.",
-    ],
-    grammarFocus: 'Present Continuous for how you feel now',
-    grammarExamples: ["I'm feeling sick", "I'm not feeling well"],
-    missionHint: 'Buy medicine at a pharmacy',
+    vocabQuiz1Th: 'ถ้าปวดหัว คุณต้องเลือกคำไหน',
+    vocabQuiz2Th: 'ถ้าร้านขายยา เรียกว่าคำไหน',
+    patternRepeat: 'I have a headache.',
+    patternSubstitute1: 'I have a fever.',
+    patternExpand: 'I have a headache. Can I get some medicine?',
+    patternSubstitute2: 'I have a fever. Can I get some medicine?',
+    wrapGrammarTipTh: 'จำง่ายๆ เวลาบอกอาการ ให้พูดว่า I have a... ได้เลยครับ',
+    wrapGrammarTipEn: 'When you describe a symptom, say I have a...',
+    missionFollowUpEn: 'Here is some medicine. Okay?',
+    missionHint: 'Ask for medicine at a pharmacy',
     nextLessonHint: 'Lesson Summary / สรุปบทเรียน',
   }),
   // --- Everyday Life chapter review ---

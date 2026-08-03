@@ -28,6 +28,11 @@ export interface ChatTurn {
   expectsUserSpeech?: boolean;
   /** Multi-speaker Scene dialogue (ai turns only). */
   scene?: LessonScene | null;
+  /**
+   * Exact English the learner should say (ai turns only).
+   * Used by the app to bias Whisper on single-word repeat turns.
+   */
+  expectedSpeech?: string | null;
 }
 
 export interface ConversationSession {

@@ -166,6 +166,11 @@ function buildTrainingReplySchema(withSpeechFlag: boolean) {
       textTh: { type: 'string' },
       isLessonComplete: { type: 'boolean' },
       expectsUserSpeech: { type: 'boolean' },
+      expectedSpeech: {
+        type: 'string',
+        description:
+          'Exact English the learner should say this turn. Use a SINGLE WORD for vocab/repeat-after-me (e.g. "latte"). Use empty string when not asking for speech, or when the ask is open-ended / a full sentence.',
+      },
       scene: {
         type: 'object',
         description:
@@ -194,13 +199,19 @@ function buildTrainingReplySchema(withSpeechFlag: boolean) {
         required: ['lines'],
       },
     },
-    required: ['textEn', 'textTh', 'isLessonComplete', 'expectsUserSpeech'],
+    required: [
+      'textEn',
+      'textTh',
+      'isLessonComplete',
+      'expectsUserSpeech',
+      'expectedSpeech',
+    ],
   };
 }
 
 function trainingReplyJsonExample(withSpeechFlag: boolean): string {
   return withSpeechFlag
-    ? '{"textEn":"...","textTh":"...","isLessonComplete":false,"expectsUserSpeech":true}'
+    ? '{"textEn":"...","textTh":"...","isLessonComplete":false,"expectsUserSpeech":true,"expectedSpeech":"latte"}'
     : '{"textEn":"...","textTh":"...","isLessonComplete":false}';
 }
 
@@ -220,6 +231,11 @@ export interface TrainingTurnReply {
   isLessonComplete: boolean;
   /** Only present for lessons that expose a tap-to-continue button. */
   expectsUserSpeech?: boolean;
+  /**
+   * Exact English the learner should say this turn.
+   * Prefer a single word on vocab / พูดตาม turns.
+   */
+  expectedSpeech?: string;
   /** Multi-speaker Scene for Watch & Listen (Everyday Life, etc.). */
   scene?: {
     title?: string;
@@ -1408,6 +1424,22 @@ export class GeminiChatService {
     return null;
   }
 
+  /**
+   * True when the latest tutor turn is already in AI Conversation / roleplay,
+   * so a taught-phrase match must NOT restart Vocabulary / Pattern Drill.
+   */
+  private looksLikeMissionOrRoleplayTurn(history: ChatTurn[]): boolean {
+    for (let i = history.length - 1; i >= 0; i--) {
+      const turn = history[i];
+      if (turn.speaker !== 'ai') continue;
+      const text = `${turn.textEn} ${turn.textTh ?? ''}`;
+      return /สถานการณ์|สมมติว่า|roleplay|mission|จริงกัน|Can I help you|What can I get for you|Hello!\s*Can I|ยินดีต้อนรับ|พนักงานทัก|จะตอบว่า|NPC|barista|cashier|server|receptionist|Small or large|What size\?/i.test(
+        text,
+      );
+    }
+    return false;
+  }
+
   private matchNormalizedAgainstPhrases(
     normalized: string,
     phrases: string[],
@@ -1558,6 +1590,31 @@ Required response:
       const normalized = this.normalizeSpeechText(displayTranscript);
       const nearMiss =
         normalized !== this.normalizeSpeechText(matched);
+      const inMission = this.looksLikeMissionOrRoleplayTurn(history);
+      if (inMission) {
+        return lang === 'english'
+          ? `Learner transcript (exact STT text shown in the app): "${displayTranscript}"
+Normalized (case + punctuation stripped): "${normalized}"
+
+MATCH RESULT: SUCCESS for the mission/roleplay reply — they used taught language close to "${matched}".
+Required response:
+- Continue the AI Conversation / roleplay as the NPC or scene partner (short reply + optional follow-up question in-character).
+- Brief praise OK.
+- FORBIDDEN: restarting Vocabulary, Pattern Drill, "try saying…", or "ถ้าจะ… จะพูดว่าอะไร?" style teaching questions.
+- FORBIDDEN: going backward in the Core Flow. Mission stays in mission until Wrap-up.
+- Reusing a sentence from earlier practice is GOOD here — treat it as a valid mission answer, not a drill retry.`
+          : `Learner transcript (exact STT text shown in the app): "${displayTranscript}"
+Normalized (case + punctuation stripped): "${normalized}"
+
+MATCH RESULT: SUCCESS สำหรับคำตอบในสถานการณ์จริง — ผู้เรียนใช้ภาษาที่เรียนมาใกล้เคียง "${matched}"
+Required response:
+- คุยต่อใน AI Conversation / roleplay เป็น NPC หรือคู่สนทนา (ตอบสั้น + ถามต่อในฉากได้)
+- ชมสั้นๆ ได้
+- FORBIDDEN: ย้อนกลับไป Vocabulary / Pattern Drill / "ลองพูดว่า…" / คำถามแบบ "ถ้าจะ… จะพูดว่าอะไร?"
+- FORBIDDEN: เดิน Core Flow ย้อนกลับ — อยู่ mission จน Wrap-up
+- การนำประโยคที่เพิ่งฝึกมาใช้ในสถานการณ์ = สำเร็จ ไม่ใช่สัญญาณให้สอนซ้ำ`;
+      }
+
       return lang === 'english'
         ? `Learner transcript (exact STT text shown in the app): "${displayTranscript}"
 Normalized (case + punctuation stripped): "${normalized}"
@@ -1567,8 +1624,8 @@ Case and punctuation NEVER count as wrong ("Seat.", "SEAT", "seat" are all SUCCE
 Required response:
 - Speak in clear simple English (English teaching mode). Thai only as a short optional meaning cue.
 - Brief English praise (e.g. Great! / Nice work!)
-- ADVANCE immediately to the NEXT teaching step with a NEW English-led learner action
-- FORBIDDEN: asking to repeat "${matched}" again, inventing pronunciation or "said it twice" issues, treating capital letters or a trailing period as a mistake`
+- ADVANCE immediately to the NEXT Core Flow milestone ONLY (forward one-way — never revisit Vocabulary or Pattern Drill already completed)
+- FORBIDDEN: asking to repeat "${matched}" again, inventing pronunciation or "said it twice" issues, treating capital letters or a trailing period as a mistake, looping on the same teaching ask`
         : `Learner transcript (exact STT text shown in the app): "${displayTranscript}"
 Normalized (case + punctuation stripped): "${normalized}"
 
@@ -1577,8 +1634,8 @@ MATCH RESULT: SUCCESS — "${normalized}" matches the taught phrase "${matched}"
 Required response:
 - Speak MOSTLY in Thai (beginner tutor). English only for the next target phrase if modeling it.
 - Brief Thai praise only (e.g. เยี่ยมเลยครับ / ดีมากครับ) — do NOT praise in English ("Perfect!", "Great!")
-- ADVANCE immediately to the NEXT teaching step with a NEW Thai-led learner action
-- FORBIDDEN: full-English lines, โอ๊ะ, เกือบใช่, almost, ลองอีกที, asking to repeat "${matched}" again, inventing pronunciation or "said it twice" issues, treating capital letters or a trailing period as a mistake`;
+- ADVANCE immediately to the NEXT Core Flow milestone ONLY (เดินหน้าอย่างเดียว — ห้ามย้อนกลับไป Vocabulary / Pattern Drill ที่จบแล้ว)
+- FORBIDDEN: full-English lines, โอ๊ะ, เกือบใช่, almost, ลองอีกที, asking to repeat "${matched}" again, inventing pronunciation or "said it twice" issues, treating capital letters or a trailing period as a mistake, looping on the same teaching ask`;
     }
 
     const recentUsers = this.recentUserMessages(history, 2);
@@ -1638,6 +1695,7 @@ Tap-to-continue (this lesson only):
 - The app shows a Continue button whenever expectsUserSpeech is false, and the mic when it is true. The learner can always see it.
 - expectsUserSpeech: true when your turn asks the learner to SAY a word or phrase out loud.
 - expectsUserSpeech: false when your turn is listen-only — Situation, Scene / Watch & Listen, or Wrap-up.
+- expectedSpeech: if you ask for ONE WORD (vocab map → พูดตาม / recognition of a single word), set expectedSpeech to that exact English word only. If you ask for a full sentence, free recall, or listen-only, set expectedSpeech to "".
 - NEVER mention the button in textEn or textTh. Do not write "Tap Continue", "แตะเพื่อไปต่อ", "press the button", or any variation. Do not ask them to say "Ready" or "OK" either. A listen-only turn simply ends after its content — that is allowed, and the button is the learner's next action.
 - A learner message of "${TAP_TO_CONTINUE_TURN_TEXT}" is a button press, not speech. Never praise, evaluate, or repeat it — just move straight to the next step.
 - On the final turn (isLessonComplete true), set expectsUserSpeech false.
@@ -1691,6 +1749,8 @@ Critical turn-loop rule:
     }
 - Always follow the 70/20/10 mix above for this lesson.
 - After a successful learner reply, the next action must be a NEW step — not the same phrase again.
+- Core Flow is ONE-WAY only: never revisit an earlier milestone (e.g. do not return to Vocabulary / Pattern Drill after AI Conversation has started).
+- If the learner reuses a practiced sentence during AI Conversation / roleplay, that is SUCCESS — continue the scene as NPC; do not re-drill.
 
 Return JSON ONLY (critical — never reply with bare prose):
 - Output a single JSON object and nothing else. No markdown fences.
@@ -1698,7 +1758,7 @@ Return JSON ONLY (critical — never reply with bare prose):
 - textTh: short Thai support line / paraphrase
 - isLessonComplete: true ONLY on the Summary + Celebrate core step (required to finish). Otherwise false${
       speechFlagBlock
-        ? '\n- expectsUserSpeech: false when this turn is listen-only or a ready check, true when you ask the learner to speak\n- scene: optional; include only on Watch & Listen Scene turns (see rules above)'
+        ? '\n- expectsUserSpeech: false when this turn is listen-only or a ready check, true when you ask the learner to speak\n- expectedSpeech: when expectsUserSpeech is true AND the learner should say ONE WORD (vocab / พูดตาม), set it to that exact word only (e.g. "latte", "coffee", "hot"). When the ask is a full sentence, open recall, or listen-only, set expectedSpeech to ""\n- scene: optional; include only on Watch & Listen Scene turns (see rules above)'
         : ''
     }`;
   }

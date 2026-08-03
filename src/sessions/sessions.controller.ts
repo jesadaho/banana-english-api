@@ -348,6 +348,7 @@ export class SessionsController {
         textTh: reply.textTh,
         audioUrl: null,
         expectsUserSpeech: openingExpectsUserSpeech,
+        expectedSpeech: reply.expectedSpeech?.trim() || null,
         scene: reply.scene ?? null,
       };
       this.sessionStore.addTurn(data.session.id, opening);
@@ -380,6 +381,7 @@ export class SessionsController {
           feedbackHints: { mispronouncedWords: [] as string[] },
           currentTurn: 0,
           expectsUserSpeech: openingExpectsUserSpeech,
+          expectedSpeech: reply.expectedSpeech?.trim() || null,
           scene: reply.scene,
         },
       };
@@ -471,6 +473,7 @@ export class SessionsController {
         textTh: reply.textTh,
         audioUrl: null,
         expectsUserSpeech,
+        expectedSpeech: reply.expectedSpeech?.trim() || null,
         scene: reply.scene ?? null,
       };
       this.sessionStore.addTurn(sessionId, aiTurn);
@@ -484,6 +487,7 @@ export class SessionsController {
         currentTurn: nextTurn,
         // A completed lesson hands off to the drill, so never ask for speech.
         expectsUserSpeech,
+        expectedSpeech: reply.expectedSpeech?.trim() || null,
         scene: reply.scene,
       };
 
