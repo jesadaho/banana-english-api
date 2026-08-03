@@ -213,9 +213,13 @@ Write the wrong form EXACTLY in Thai script (so TTS reads Thai syllables) and th
     const practiceExtra = hasContrast
       ? `\n   - NEVER say or model the wrong (Thai-script) form again during Practice — only the correct English ${noun}.`
       : '';
-    practiceStep = `Practice — the same ${nouns}, ONE per turn, always in this order: ${arrow}.
+    practiceStep = `Practice — the same ${nouns}, ONE per turn, always FORWARD in this exact order: ${arrow}.
    - Open this step with "ตาคุณแล้วครับ" (or the {{L1}} equivalent of "Your turn"), then ask them to say: ${first}.
-   - After each attempt give ONE short piece of feedback (one sentence: praise, or a light reminder of the tip), then immediately ask for the next ${noun} in the same turn.
+   - Accept any clear attempt that includes the target ${noun} and ADVANCE with brief praise or a light tip reminder, then immediately ask for the NEXT ${noun} in the same turn.
+   - If the transcript truly does not match the target, gently ask for at most ONE retry on that same ${noun}.
+   - After one retry (or two total attempts on the same ${noun}), accept and ADVANCE — never loop further.
+   - ONE-WAY only: never go backward in the list (e.g. NEVER ask for "${spec.items.length >= 2 ? spec.items[spec.items.length - 2] : first}" again after "${last}"). Once you have moved past a ${noun}, it is done.
+   - After feedback on "${last}", do NOT ask for any earlier ${noun} — go to Complete on the next tutor turn.
    - Never practice anything outside this list, and never practice full sentences.${practiceExtra}
    - Every turn in this step ends with something for them to say. expectsUserSpeech = true. (Repeat)`;
   }
@@ -367,9 +371,11 @@ Wrong vs Right rules (critical for TTS):
 - You only see transcript TEXT, not audio — never invent pronunciation/length/speed problems from text.
 - Do NOT diagnose what the learner did wrong with their tongue or airflow from the transcript.
 - Mouth tips are teaching tips for EVERYONE (say them once as instruction), not personal diagnosis.
+- Practice order is ONE-WAY FORWARD only: ${arrow}. Never go backward to an earlier ${noun} (e.g. never ask for a previous word after the learner already reached a later one).
 - Accept any clear attempt that includes the target ${noun} and ADVANCE.
-- If the text truly does not match the target, gently ask for at most ONE retry.
-- After one retry (or two total attempts on the same ${noun}), accept and move on.
+- If the text truly does not match the target, gently ask for at most ONE retry on that same ${noun}.
+- After one retry (or two total attempts on the same ${noun}), accept and move on — never loop the same ${noun}, and never rewind to an earlier one.
+- After "${last}" is practised (including its optional one retry), go to Complete — do not revisit earlier ${nouns}.
 - Keep each tutor turn under 2–3 short sentences.
 - Every non-final tutor turn MUST end with exactly one clear next action for the learner.
 - NEVER ask the learner to say "Ready" / "OK" / "I'm ready", and NEVER mention the Continue button. Listen-only steps just end after their content with expectsUserSpeech = false.
@@ -418,8 +424,9 @@ ${tipLabel} (this is the whole of Core Flow step ${tipStepNumber} — same tip f
 Do not add a long explanation after the tip.
 
 Core Flow (progression milestones — NOT a fixed turn count):
-- Follow these core steps in order. Do not skip ahead.
-- Extra turns for praise, short coach feedback, or short feedback MAY happen between steps — that is OK.
+- Follow these core steps in order. Do not skip ahead. Do not go backward.
+- During Practice, word order is ONE-WAY only (${arrow}) — never ask for an earlier ${noun} after a later one.
+- Extra turns for praise, at most ONE retry on the current ${noun}, or short feedback MAY happen — that is OK — but never rewind to a previous ${noun}.
 - After a core step succeeds, advance to the next core step.
 
 ${steps}`,
