@@ -466,6 +466,19 @@ function buildAroundTownLesson(spec: AroundTownLessonSpec): LessonConfig {
     ? ` + softly tease that next is ${spec.nextLessonHint} (one short playful line only)`
     : '';
 
+  const vocabBatches: Array<Array<{ en: string; th: string }>> = [];
+  for (let i = 0; i < spec.vocabulary.length; i += 3) {
+    vocabBatches.push(spec.vocabulary.slice(i, i + 3));
+  }
+  const vocabBatchPlan = vocabBatches
+    .map((batch, index) => {
+      const letter = String.fromCharCode(65 + index); // A, B, C...
+      const mapped = batch.map((v) => `${v.en} = ${v.th}`).join(' / ');
+      const speakWord = batch[Math.min(1, batch.length - 1)]?.en ?? batch[0].en;
+      return `Vocabulary ${letter} (ONE tutor turn): map ALL of [${mapped}] in that same turn, then ask the learner to speak ONLY "${speakWord}" (or a short recognition using one word from this batch). NEVER teach these words one-per-turn.`;
+    })
+    .join('\n');
+
   return {
     lessonId: spec.lessonId,
     targetLabel: 'word or sentence',
@@ -486,6 +499,9 @@ Goal: ${spec.goalEn}
 Target vocabulary (ONLY these):
 ${vocabList}
 
+REQUIRED vocabulary batch plan (follow exactly — do NOT invent a one-word queue):
+${vocabBatchPlan}
+
 Useful sentence patterns:
 ${patternList}
 
@@ -500,7 +516,9 @@ Teaching vs speaking (critical — ~8–10 min):
 - STT is English-only for spoken answers. Ask/explain in {{L1}} OK.
 - Vocabulary lock: ONLY the target vocab + patterns above (+ slot swaps the learner just practiced).
 - FORBIDDEN: open free-talk like "Tell me about your day" outside the AI Conversation mission phase.
-- Keep most tutor turns under 2–3 short sentences — EXCEPT Vocabulary batch turns, which MAY briefly map 2–3 words then end with ONE ask.
+- FORBIDDEN in Vocabulary: jumping straight to "คำแรกที่เราจะเรียนคือ…" with zero link to the Scene; "คำแรก" / "คำต่อไป" one-word queues; teaching only one new word per turn; stretching vocab across many turns.
+- After Scene → Vocabulary: ALWAYS bridge first (1 short {{L1}} line tying back to the dialogue), then teach the batch. Never feel like a hard cut / new unrelated segment.
+- Keep most tutor turns under 2–3 short sentences — EXCEPT Vocabulary batch turns, which MUST map 2–3 words then end with ONE ask.
 
 Scene / Watch & Listen rules:
 - On Core Flow step 2, return a scene object (expectsUserSpeech false).
@@ -514,7 +532,7 @@ ${sceneScript}
 Core Flow (progression milestones — NOT a fixed turn count):
 1. Situation — set the scene in {{L1}} (~30s). Example vibe: "${spec.situationTh}" / "${spec.situationEn}". Learner does NOT speak. expectsUserSpeech = false. (Opening)
 2. Watch & Listen — play the Scene dialogue above. No grammar explanation. expectsUserSpeech = false. Return scene.lines. (Scene)
-3. Vocabulary — teach in BATCHES of 2–3 related words per turn (NEVER one word per turn through the whole list). In ONE turn: briefly map each word (EN = {{L1}}), contrast confusable pairs when they appear (e.g. shirt vs pants, hot vs iced, small vs large), then ask exactly ONE task — either พูดตาม one English word from the batch OR a short recognition ("อันไหนคือกางเกง?" → speak "pants"). Cover the needed vocab in ~2–3 batch turns max, then advance. expectsUserSpeech = true on speaking turns. (Repeat / Recognition)
+3. Vocabulary — FIRST, one short bridge from the Scene (do not hard-cut). In {{L1}}, briefly point back to what they just heard/saw — e.g. "เมื่อกี้ได้ยินคำว่า … ใช่ไหมครับ" / "ลองมาเรียนคำศัพท์จากบทสนทนาเมื่อกี้กันครับ" / "เวลาอยู่ที่นี่ สิ่งแรกที่เราเจอคือ …". THEN in the SAME turn (or immediately next if the bridge was listen-only), run Vocabulary A, then B (then C if listed) exactly as the REQUIRED vocabulary batch plan. Each batch = ONE turn that maps 2–3 words, then ONE speak/recognition ask. After the last batch, advance immediately to Useful Sentences. expectsUserSpeech = true on speaking turns. (Repeat / Recognition)
 4. Useful Sentences — model full patterns (${spec.patterns.slice(0, 3).join(' / ')}); learner repeats. Do NOT name Present Continuous yet. (Repeat)
 5. Pattern Practice — swap the noun/slot (e.g. I'm looking for coffee → tea → water). Learner repeats each. Let them notice the pattern. (Repeat)
 6. Grammar Discovery (~30s) — THEN point out I'm + Verb-ing for things happening now. expectsUserSpeech = false. (Explain listen-only)
@@ -529,7 +547,7 @@ Turn loop rules:
 - Do not invent pronunciation issues from text.
 - When Core Flow reaches Wrap-up, set isLessonComplete = true (required). Otherwise false.`,
     openingPrompt:
-      `Start the ${spec.titleEn} Everyday Life lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. CRITICAL: Turn 1 = Situation ONLY — set the scene ("${spec.situationTh}"), no vocab teaching yet, expectsUserSpeech false, NO scene object yet. Do NOT mention any button. Return JSON matching the schema. isLessonComplete must be false.`,
+      `Start the ${spec.titleEn} Everyday Life lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. CRITICAL: Turn 1 = Situation ONLY — set the scene ("${spec.situationTh}"), no vocab teaching yet, expectsUserSpeech false, NO scene object yet. Do NOT mention any button. After Scene, Vocabulary MUST open with a short bridge back to the dialogue (เมื่อกี้ได้ยิน… / จากบทสนทนาเมื่อกี้…), then follow the REQUIRED vocabulary batch plan (map 2–3 words in ONE turn — never a hard cut to "คำแรกคือ…" alone). Return JSON matching the schema. isLessonComplete must be false.`,
   };
 }
 
