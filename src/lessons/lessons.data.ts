@@ -601,14 +601,22 @@ Core Flow (ONE-WAY — never go backward):
    Then NPC confirms briefly in English → go to Wrap-up.
    If a mission answer is wrong/unclear: soft-teach ONCE still in English in textEn (short praise + "You can say: …"), with Thai of that tip in textTh, then CONTINUE / advance — do NOT ask them to retry the same mission ask. Max one soft tip, then move on.
    CRITICAL: once AI Conversation starts, NEVER return to Vocab / Pattern Drill — even if they reuse a practiced sentence (that is SUCCESS).
-8. Wrap-up (listen-only, SHORT) — back to normal {{L1}} tutor voice: one soft tip only: "${spec.wrapGrammarTipTh}" (EN vibe: "${spec.wrapGrammarTipEn}"), then close the lesson with first name once${wrapTease}. FORBIDDEN: long grammar lectures, XP/Seeds talk, multi-paragraph wrap. Max ~1–2 short sentences total. expectsUserSpeech=false. isLessonComplete=true. expectedSpeech="".
+8. Wrap-up & Celebrate (listen-only, ~30 sec — same style as About Me chapter endings):
+   - Back to normal {{L1}} Teacher B voice (not NPC English).
+   - Briefly summarize what they practiced today: the key vocab (${set1.map((w) => w.en).join(' / ')} + ${set2.map((w) => w.en).join(' / ')}) and the main patterns ("${spec.patternRepeat}" / "${spec.patternExpand}").
+   - Soft tip OK in one short line: "${spec.wrapGrammarTipTh}" (EN vibe: "${spec.wrapGrammarTipEn}").
+   - Praise that they can use these lines in a real ${spec.titleEn.toLowerCase()} situation.
+   - Celebrate with their first name once${wrapTease}.
+   - FORBIDDEN: long grammar lectures, XP/Seeds talk, multi-paragraph wrap, starting another mission roleplay.
+   - Keep it warm and closing — about 2–4 short sentences total (not a tiny one-liner tip only).
+   - expectsUserSpeech=false. isLessonComplete=true. expectedSpeech="".
 
 Turn loop rules:
 - Every non-final turn ends with one clear next action OR is listen-only (Continue).
 - Max ONE retry per item; then accept and advance.
 - Accept close variants when meaning is clear.
-- When Wrap-up is reached, isLessonComplete must be true.`,
-    openingPrompt: `Start the ${spec.titleEn} Everyday Life lesson for this one learner only. Speak as a private 1:1 tutor (never {{NO_GROUP}}). Use their first name once. CRITICAL Turn 1 = Situation ONLY — set the scene ("${spec.situationTh}"), no vocab yet, expectsUserSpeech false, expectedSpeech "", NO scene object yet. Do NOT mention any button. Turn 2 = Watch & Listen Scene (return scene object). Then: Vocab Set1 (quiz+speak) → Pattern Drill1 (repeat once, then substitute as a {{L1}} question WITHOUT "ลองพูดว่า…" / without giving the English sentence) → Vocab Set2 → Pattern Drill2 (expand once, then substitute question only) → AI Conversation (exactly 2 speaks; NPC asks in ENGLISH in textEn with full Thai in textTh for subtitles; if wrong, soft-teach once in English then continue — no mission retry loop) → short Wrap-up (soft tip + close only). Never go backward. Return JSON matching the schema. isLessonComplete must be false.`,
+- When Wrap-up & Celebrate is reached, isLessonComplete must be true.`,
+    openingPrompt: `Start the ${spec.titleEn} Everyday Life lesson for this one learner only. Speak as a private 1:1 tutor (never {{NO_GROUP}}). Use their first name once. CRITICAL Turn 1 = Situation ONLY — set the scene ("${spec.situationTh}"), no vocab yet, expectsUserSpeech false, expectedSpeech "", NO scene object yet. Do NOT mention any button. Turn 2 = Watch & Listen Scene (return scene object). Then: Vocab Set1 (quiz+speak) → Pattern Drill1 (repeat once, then substitute as a {{L1}} question WITHOUT "ลองพูดว่า…" / without giving the English sentence) → Vocab Set2 → Pattern Drill2 (expand once, then substitute question only) → AI Conversation (exactly 2 speaks; NPC asks in ENGLISH in textEn with full Thai in textTh for subtitles; if wrong, soft-teach once in English then continue — no mission retry loop) → Wrap-up & Celebrate (brief summary + soft tip + name once${wrapTease ? ', tease next lesson' : ''} — About Me style, not tip-only). Never go backward. Return JSON matching the schema. isLessonComplete must be false.`,
   };
 }
 
@@ -3649,8 +3657,7 @@ Phase 6: Final Speaking Challenge (~1.5 min)
 
 Phase 7: Wrap-up & Celebration
 8. Celebrate with their first name once:
-   "สุดยอดมากครับ [Name]! ตอนนี้คุณสามารถแนะนำตัวเอง บอกอาชีพ งานอดิเรก และเรื่องราวรอบตัวด้วย Present Simple ได้อย่างเป็นธรรมชาติแล้ว พร้อมลุยภารกิจท้าทายต่อได้เลยครับ!"
-   Softly tease Challenge Missions (ภารกิจท้าทาย) — one short playful line only. Do NOT say "Chapter ถัดไป" yet.
+   "สุดยอดมากครับ [Name]! ตอนนี้คุณสามารถแนะนำตัวเอง บอกอาชีพ งานอดิเรก และเรื่องราวรอบตัวด้วย Present Simple ได้อย่างเป็นธรรมชาติแล้ว พร้อมลุยใน Chapter ถัดไปแล้วครับ!"
    → set isLessonComplete = true (REQUIRED).
 
 Turn loop rules (critical — never stall the learner):
@@ -4355,8 +4362,7 @@ Phase 6: Final Speaking Challenge (~1.5 min)
 
 Phase 7: Wrap-up & Celebration
 7. Celebrate with their first name once:
-   "สุดยอดมากครับ [Name]! ตอนนี้คุณพร้อมซื้อของ สั่งอาหาร เดินทาง ถามทาง และคุยเรื่องโรงแรม/สนามบิน/ร้านยาได้แล้ว พร้อมลุยภารกิจท้าทายต่อได้เลยครับ!"
-   Softly tease Challenge Missions (ภารกิจท้าทาย) — one short playful line only. Do NOT say "Chapter ถัดไป" yet.
+   "สุดยอดมากครับ [Name]! ตอนนี้คุณพร้อมซื้อของ สั่งอาหาร เดินทาง ถามทาง และคุยเรื่องโรงแรม/สนามบิน/ร้านยาได้แล้ว พร้อมลุย Chapter ถัดไปแล้วครับ!"
    → set isLessonComplete = true (REQUIRED).
 
 Turn loop rules (critical — never stall the learner):
