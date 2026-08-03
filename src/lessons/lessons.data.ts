@@ -523,8 +523,9 @@ function buildAroundTownLesson(spec: AroundTownLessonSpec): LessonConfig {
     const options = `${quiz.en}, ${speak.en}, ${other.en}`;
     return `Vocab Set ${setLabel} (EXACTLY 2 learner speaking turns — never more):
   Turn A — Quiz (3 choices, speech answer): Ask in {{L1}} like "${quizTh} ระหว่าง ${options} ครับ?" Correct answer = "${quiz.en}". Set expectedSpeech="${quiz.en}".
-  Turn B — AFTER a clear quiz answer: briefly map ALL 3 meanings (${quiz.en}=${quiz.th}, ${speak.en}=${speak.th}, ${other.en}=${other.th}), then ask them to repeat ONLY "${speak.en}". Set expectedSpeech="${speak.en}".
-  FORBIDDEN: teaching words outside this trio; one-word queues; skipping the quiz; asking for more than these 2 speaks.`;
+  Turn B — AFTER a clear quiz answer: map ONLY 2 meanings first (${quiz.en}=${quiz.th}, ${other.en}=${other.th}) — do NOT map ${speak.en} yet — then ask them to repeat ONLY "${speak.en}". Set expectedSpeech="${speak.en}".
+  After they say "${speak.en}": in your NEXT tutor turn, map ${speak.en}=${speak.th} in ONE short phrase, then immediately start the next Core Flow step (Pattern Drill). Do not ask another vocab speak.
+  FORBIDDEN: dumping all 3 meanings right after the quiz; teaching words outside this trio; one-word queues; skipping the quiz; more than 2 vocab speaks in this set.`;
   };
 
   return {
@@ -565,7 +566,8 @@ Teaching rules:
 - Vocabulary lock: only the 6 target words + the 4 pattern sentences above (+ mission extras if listed).
 - FORBIDDEN: Grammar Discovery mid-lesson; Useful Sentences lists; going backward in Core Flow; hell-loop re-drills after mission starts.
 - FORBIDDEN on Pattern Drill Substitute turns: "ลองพูดว่า…", "พูดตามว่า…", "Try saying…", or any full English model of the answer — let the learner think.
-- Keep most turns under 2 short sentences (Vocab Set B may map 3 meanings then one ask).
+- On AI Conversation misses: soft-teach once, then advance — FORBIDDEN: mission retry loops / "ลองอีกที" on the same NPC ask.
+- Keep most turns under 2 short sentences (Vocab Set B maps only 2 meanings then one ask; map the speak-word on the way into Pattern Drill).
 
 Scene / Watch & Listen rules:
 - On Core Flow step 2, return a scene object (expectsUserSpeech false).
@@ -579,18 +581,19 @@ ${sceneScript}
 Core Flow (ONE-WAY — never go backward):
 1. Situation — set the scene in {{L1}} only (~15–30s). Example vibe: "${spec.situationTh}" / "${spec.situationEn}". NO vocab yet. NO scene object yet. expectsUserSpeech=false. expectedSpeech="".
 2. Watch & Listen — play the Scene dialogue above. No grammar explanation. expectsUserSpeech=false. Return scene.lines with textEn + textTh on EVERY line. expectedSpeech="".
-3. Vocab Set 1 — follow the Vocab Set 1 plan (quiz → map 3 → speak "${set1[1].en}"). 2 speaks.
+3. Vocab Set 1 — follow the Vocab Set 1 plan (quiz → map 2 [${set1[0].en}/${set1[2].en}] → speak "${set1[1].en}" → then map ${set1[1].en} + go Pattern Drill). 2 speaks.
 4. Pattern Drill 1 — EXACTLY 2 speaks:
    a) Model "${spec.patternRepeat}" → learner repeats. expectedSpeech="${spec.patternRepeat}".
    b) Substitute — ask a short {{L1}} QUESTION only (e.g. "ถ้าอยากสั่งข้าวแทนไก่ จะพูดว่าอะไร?"). You MAY name the Thai/slot idea (ข้าว / rice) but NEVER dump the full English target. FORBIDDEN wording: "ลองพูดว่า…", "พูดตามว่า…", "Try saying…", quoting "${spec.patternSubstitute1}" in the ask. Learner must produce it. Soft-accept close variants. expectedSpeech="${spec.patternSubstitute1}" (for Whisper only — do not speak it to them).
-5. Vocab Set 2 — follow the Vocab Set 2 plan (quiz → map 3 → speak "${set2[1].en}"). 2 speaks.
+5. Vocab Set 2 — follow the Vocab Set 2 plan (quiz → map 2 [${set2[0].en}/${set2[2].en}] → speak "${set2[1].en}" → then map ${set2[1].en} + go Pattern Drill 2). 2 speaks.
 6. Pattern Drill 2 — EXACTLY 2 speaks:
    a) Expand: model "${spec.patternExpand}" → learner repeats. expectedSpeech="${spec.patternExpand}".
    b) Substitute — same rule as Drill 1b: {{L1}} question only, NO "ลองพูดว่า…" / NO full English answer in the prompt. Target (Whisper only): "${spec.patternSubstitute2}". expectedSpeech="${spec.patternSubstitute2}".
 7. AI Conversation — EXACTLY 2 learner speaks (mission: ${spec.missionHint}):
-   a) NPC opens (e.g. Hello! What can I get for you?). Learner orders freely (practiced lines OK). expectedSpeech="".
-   b) NPC follow-up exactly like: "${spec.missionFollowUpEn}". Learner answers. expectedSpeech="".
+   a) NPC opens (e.g. Hello! What can I get for you today?). Learner orders freely (practiced lines OK). expectedSpeech="".
+   b) NPC follow-up exactly like: "${spec.missionFollowUpEn}". Learner answers (e.g. Large, please. / Small, please.). expectedSpeech="".
    Then NPC confirms briefly → go to Wrap-up.
+   If a mission answer is wrong/unclear: soft-teach the better line ONCE in the same turn (praise-ish + "You can say…" / "พูดแบบนี้ได้ครับ: …"), then CONTINUE the mission / advance — do NOT ask them to retry the same mission ask. Max one soft tip, then move on.
    CRITICAL: once mission starts, NEVER return to Vocab / Pattern Drill — even if they reuse a practiced sentence (that is SUCCESS).
 8. Wrap-up (listen-only, SHORT) — one soft tip only: "${spec.wrapGrammarTipTh}" (EN vibe: "${spec.wrapGrammarTipEn}"), then close the lesson with first name once${wrapTease}. FORBIDDEN: long grammar lectures, XP/Seeds talk, multi-paragraph wrap. Max ~1–2 short sentences total. expectsUserSpeech=false. isLessonComplete=true. expectedSpeech="".
 
@@ -599,7 +602,7 @@ Turn loop rules:
 - Max ONE retry per item; then accept and advance.
 - Accept close variants when meaning is clear.
 - When Wrap-up is reached, isLessonComplete must be true.`,
-    openingPrompt: `Start the ${spec.titleEn} Everyday Life lesson for this one learner only. Speak as a private 1:1 tutor (never {{NO_GROUP}}). Use their first name once. CRITICAL Turn 1 = Situation ONLY — set the scene ("${spec.situationTh}"), no vocab yet, expectsUserSpeech false, expectedSpeech "", NO scene object yet. Do NOT mention any button. Turn 2 = Watch & Listen Scene (return scene object). Then: Vocab Set1 (quiz+speak) → Pattern Drill1 (repeat once, then substitute as a {{L1}} question WITHOUT "ลองพูดว่า…" / without giving the English sentence) → Vocab Set2 → Pattern Drill2 (expand once, then substitute question only) → AI Conversation (exactly 2 speaks) → short Wrap-up (soft tip + close only). Never go backward. Return JSON matching the schema. isLessonComplete must be false.`,
+    openingPrompt: `Start the ${spec.titleEn} Everyday Life lesson for this one learner only. Speak as a private 1:1 tutor (never {{NO_GROUP}}). Use their first name once. CRITICAL Turn 1 = Situation ONLY — set the scene ("${spec.situationTh}"), no vocab yet, expectsUserSpeech false, expectedSpeech "", NO scene object yet. Do NOT mention any button. Turn 2 = Watch & Listen Scene (return scene object). Then: Vocab Set1 (quiz+speak) → Pattern Drill1 (repeat once, then substitute as a {{L1}} question WITHOUT "ลองพูดว่า…" / without giving the English sentence) → Vocab Set2 → Pattern Drill2 (expand once, then substitute question only) → AI Conversation (exactly 2 speaks; if wrong, soft-teach once then continue — no mission retry loop) → short Wrap-up (soft tip + close only). Never go backward. Return JSON matching the schema. isLessonComplete must be false.`,
   };
 }
 

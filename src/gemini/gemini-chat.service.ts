@@ -1645,6 +1645,25 @@ Required response:
         (msg) => !this.matchTargetPhrase(msg, config.targetPhrases),
       );
 
+    const inMission = this.looksLikeMissionOrRoleplayTurn(history);
+    if (inMission) {
+      return lang === 'english'
+        ? `Learner transcript (exact STT text shown in the app): "${displayTranscript}"
+
+MATCH RESULT: NO CLEAR MATCH during AI Conversation / mission.
+Required response:
+- Soft-teach ONE better line briefly (e.g. "You can say: Can I get an iced latte?").
+- Then CONTINUE the mission as NPC (next follow-up or short confirm → Wrap-up) — do NOT ask them to retry the same mission question.
+- FORBIDDEN: "try again", repeating the same NPC ask, returning to Vocabulary / Pattern Drill.`
+        : `Learner transcript (exact STT text shown in the app): "${displayTranscript}"
+
+MATCH RESULT: NO CLEAR MATCH ระหว่าง AI Conversation / mission
+Required response:
+- สอนประโยคที่ดีกว่าสั้นๆ ครั้งเดียว (เช่น "พูดแบบนี้ได้ครับ: Can I get an iced latte?")
+- แล้วไปต่อใน mission ทันที (ถามต่อเป็น NPC หรือยืนยันสั้นๆ → Wrap-up) — ห้ามให้ลองตอบคำถาม mission เดิมซ้ำ
+- FORBIDDEN: ลองอีกที, วนถาม NPC เดิม, ย้อนกลับไป Vocabulary / Pattern Drill`;
+    }
+
     if (consecutiveMisses) {
       return lang === 'english'
         ? `Learner transcript (exact STT text shown in the app): "${displayTranscript}"
