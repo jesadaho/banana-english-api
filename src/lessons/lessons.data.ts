@@ -440,11 +440,17 @@ interface AroundTownLessonSpec {
   sceneTitle: string;
   sceneNpcSpeaker: string;
   sceneNpcVoice: 'Aoede' | 'Puck';
-  sceneLines: Array<{ speaker: string; role: 'npc' | 'teacher'; textEn: string }>;
+  sceneLines: Array<{
+    speaker: string;
+    role: 'npc' | 'teacher';
+    textEn: string;
+    textTh: string;
+  }>;
   vocabulary: Array<{ en: string; th: string }>;
   patterns: string[];
-  grammarFocus: string;
-  grammarExamples: string[];
+  /** Kept for data compatibility; Grammar Discovery is no longer taught. */
+  grammarFocus?: string;
+  grammarExamples?: string[];
   missionHint: string;
   /** Soft tease on Wrap-up that the next lesson is this (e.g. Lesson Summary). */
   nextLessonHint?: string;
@@ -454,10 +460,17 @@ function buildAroundTownLesson(spec: AroundTownLessonSpec): LessonConfig {
   const vocabList = spec.vocabulary
     .map((v) => `- ${v.en} = ${v.th}`)
     .join('\n');
-  const patternList = spec.patterns.map((p) => `- ${p}`).join('\n');
+  const mainPattern = spec.patterns[0] ?? '...';
   const sceneScript = spec.sceneLines
-    .map((line) => `  ${line.speaker}: ${line.textEn}`)
+    .map(
+      (line) =>
+        `  ${line.speaker}: ${line.textEn} / ${line.textTh}`,
+    )
     .join('\n');
+  const slotWords = spec.vocabulary
+    .slice(0, 4)
+    .map((v) => v.en)
+    .join(', ');
   const targetPhrases = [
     ...spec.vocabulary.map((v) => v.en),
     ...spec.patterns,
@@ -466,18 +479,32 @@ function buildAroundTownLesson(spec: AroundTownLessonSpec): LessonConfig {
     ? ` + softly tease that next is ${spec.nextLessonHint} (one short playful line only)`
     : '';
 
+  // Max 2 vocabulary turns total — split evenly into ≤2 batches.
   const vocabBatches: Array<Array<{ en: string; th: string }>> = [];
-  for (let i = 0; i < spec.vocabulary.length; i += 3) {
-    vocabBatches.push(spec.vocabulary.slice(i, i + 3));
+  const vocab = spec.vocabulary;
+  if (vocab.length <= 4) {
+    vocabBatches.push(vocab);
+  } else {
+    const mid = Math.ceil(vocab.length / 2);
+    vocabBatches.push(vocab.slice(0, mid));
+    vocabBatches.push(vocab.slice(mid));
   }
   const vocabBatchPlan = vocabBatches
     .map((batch, index) => {
-      const letter = String.fromCharCode(65 + index); // A, B, C...
+      const letter = String.fromCharCode(65 + index); // A, B
       const mapped = batch.map((v) => `${v.en} = ${v.th}`).join(' / ');
       const speakWord = batch[Math.min(1, batch.length - 1)]?.en ?? batch[0].en;
-      return `Vocabulary ${letter} (ONE tutor turn): map ALL of [${mapped}] in that same turn, then ask the learner to speak ONLY "${speakWord}" (or a short recognition using one word from this batch). NEVER teach these words one-per-turn.`;
+      const bridgeNote =
+        index === 0
+          ? ' START this turn with a 1-line Scene bridge in {{L1}} (e.g. เมื่อกี้ได้ยิน latte / hot or iced…), then immediately map the words — bridge is NOT a separate turn.'
+          : '';
+      return `Vocabulary ${letter} (ONE tutor turn ONLY):${bridgeNote} map ALL of [${mapped}] in that same turn, then ask the learner to speak ONLY "${speakWord}" (or a short recognition using one word from this batch). NEVER teach these words one-per-turn.`;
     })
     .join('\n');
+  const vocabTurnCap =
+    vocabBatches.length === 1
+      ? 'Vocabulary is ONE turn only (bridge + map + one speak ask).'
+      : 'Vocabulary is EXACTLY 2 turns max (A then B). Never a 3rd vocab turn. Never a separate bridge-only turn.';
 
   return {
     lessonId: spec.lessonId,
@@ -488,10 +515,10 @@ function buildAroundTownLesson(spec: AroundTownLessonSpec): LessonConfig {
     goalTh: spec.goalTh,
     difficulty: 'beginner',
     languageMix: { thai: 70, english: 30 },
-    estimatedMinutesMin: 8,
-    estimatedMinutesMax: 10,
+    estimatedMinutesMin: 7,
+    estimatedMinutesMax: 9,
     targetPhrases,
-    maxTurns: 28,
+    maxTurns: 24,
     listenOnlyTurns: 2,
     systemInstruction: `Lesson: ${spec.titleEn} (Everyday English → Everyday Life → ${spec.code})
 Goal: ${spec.goalEn}
@@ -499,55 +526,56 @@ Goal: ${spec.goalEn}
 Target vocabulary (ONLY these):
 ${vocabList}
 
-REQUIRED vocabulary batch plan (follow exactly — do NOT invent a one-word queue):
+REQUIRED vocabulary batch plan (HARD CAP — max ${vocabBatches.length} vocab turn${vocabBatches.length > 1 ? 's' : ''}):
+${vocabTurnCap}
 ${vocabBatchPlan}
 
-Useful sentence patterns:
-${patternList}
+Main sentence pattern for Pattern Drill (ONLY this frame — do not teach a list of patterns):
+- ${mainPattern}
+Slot-swap nouns/words from target vocabulary (examples: ${slotWords}).
 
-Grammar focus (reveal LATE — after Pattern Practice):
-- ${spec.grammarFocus}
-- Examples: ${spec.grammarExamples.join(' / ')}
-- Keep Grammar Discovery to ~30 seconds. Do NOT drill conjugations. Frame: I'm + Verb-ing = กำลังทำตอนนี้
-
-Teaching vs speaking (critical — ~8–10 min):
+Teaching vs speaking (critical — ~7–9 min):
 - Ask only ONE speaking task or one question per turn.
 - Soft correction ONLY: never say Wrong / ไม่ถูก. Praise → offer better line → continue talking.
 - STT is English-only for spoken answers. Ask/explain in {{L1}} OK.
-- Vocabulary lock: ONLY the target vocab + patterns above (+ slot swaps the learner just practiced).
+- Vocabulary lock: ONLY the target vocab + the main pattern above (+ the 2 slot swaps practiced).
 - FORBIDDEN: open free-talk like "Tell me about your day" outside the AI Conversation mission phase.
-- FORBIDDEN in Vocabulary: jumping straight to "คำแรกที่เราจะเรียนคือ…" with zero link to the Scene; "คำแรก" / "คำต่อไป" one-word queues; teaching only one new word per turn; stretching vocab across many turns.
-- After Scene → Vocabulary: ALWAYS bridge first (1 short {{L1}} line tying back to the dialogue), then teach the batch. Never feel like a hard cut / new unrelated segment.
-- Keep most tutor turns under 2–3 short sentences — EXCEPT Vocabulary batch turns, which MUST map 2–3 words then end with ONE ask.
+- FORBIDDEN in Vocabulary: jumping straight to "คำแรกที่เราจะเรียนคือ…" with zero link to the Scene; "คำแรก" / "คำต่อไป" one-word queues; teaching only one new word per turn; stretching vocab across many turns; a separate listen-only bridge turn; more than ${vocabBatches.length} vocabulary turns.
+- FORBIDDEN: Grammar Discovery / naming grammar labels (Present Continuous, etc.). Skip grammar explanation entirely.
+- After Scene → Vocabulary: ALWAYS open Vocabulary A with a short bridge in the SAME turn, then map that batch. Never feel like a hard cut / new unrelated segment.
+- Keep most tutor turns under 2–3 short sentences — EXCEPT Vocabulary batch turns, which MUST map the whole batch then end with ONE ask.
 
 Scene / Watch & Listen rules:
 - On Core Flow step 2, return a scene object (expectsUserSpeech false).
 - scene.title must be exactly: "${spec.sceneTitle}"
 - NPC speaker name: "${spec.sceneNpcSpeaker}" with voice "${spec.sceneNpcVoice}".
 - Teacher B lines: role "teacher", omit voice (default Sadachbia).
-- Stay close to this model dialogue (paraphrase lightly OK, keep meaning):
+- Stay close to this model dialogue (paraphrase lightly OK, keep meaning). EVERY line MUST include textTh (Thai translation of that line):
 ${sceneScript}
-- textEn = short summary only (e.g. "Watch this short ${spec.sceneTitle} dialogue.").
+- Top-level textEn = short summary only (e.g. "Watch this short ${spec.sceneTitle} dialogue.").
+- Top-level textTh = short {{L1}} prompt that they can open Thai subtitles for the dialogue if needed (do not paste the full script into textTh).
 
 Core Flow (progression milestones — NOT a fixed turn count):
 1. Situation — set the scene in {{L1}} (~30s). Example vibe: "${spec.situationTh}" / "${spec.situationEn}". Learner does NOT speak. expectsUserSpeech = false. (Opening)
-2. Watch & Listen — play the Scene dialogue above. No grammar explanation. expectsUserSpeech = false. Return scene.lines. (Scene)
-3. Vocabulary — FIRST, one short bridge from the Scene (do not hard-cut). In {{L1}}, briefly point back to what they just heard/saw — e.g. "เมื่อกี้ได้ยินคำว่า … ใช่ไหมครับ" / "ลองมาเรียนคำศัพท์จากบทสนทนาเมื่อกี้กันครับ" / "เวลาอยู่ที่นี่ สิ่งแรกที่เราเจอคือ …". THEN in the SAME turn (or immediately next if the bridge was listen-only), run Vocabulary A, then B (then C if listed) exactly as the REQUIRED vocabulary batch plan. Each batch = ONE turn that maps 2–3 words, then ONE speak/recognition ask. After the last batch, advance immediately to Useful Sentences. expectsUserSpeech = true on speaking turns. (Repeat / Recognition)
-4. Useful Sentences — model full patterns (${spec.patterns.slice(0, 3).join(' / ')}); learner repeats. Do NOT name Present Continuous yet. (Repeat)
-5. Pattern Practice — swap the noun/slot (e.g. I'm looking for coffee → tea → water). Learner repeats each. Let them notice the pattern. (Repeat)
-6. Grammar Discovery (~30s) — THEN point out I'm + Verb-ing for things happening now. expectsUserSpeech = false. (Explain listen-only)
-7. AI Conversation — roleplay the mission: ${spec.missionHint}. NPC opens (e.g. Hello!). Learner answers freely. Offer Hint if stuck. Soft-recast mistakes. expectsUserSpeech = true. (Recall / Mission)
-8. Soft Correction — weave into mission turns: praise + "You can also say…" + continue. Never block the conversation. (Soft Feedback)
-9. Wrap-up — brief celebrate of the patterns they used + first name once${wrapTease} → isLessonComplete = true. expectsUserSpeech = false. (Complete)
+2. Watch & Listen — play the Scene dialogue above. No grammar explanation. expectsUserSpeech = false. Return scene.lines with textEn + textTh on EVERY line. (Scene)
+3. Vocabulary — MAX ${vocabBatches.length} turn${vocabBatches.length > 1 ? 's' : ''} total. Follow the REQUIRED vocabulary batch plan exactly. Vocabulary A MUST include the Scene bridge in the SAME turn (ไม่แยกเทิร์น). Each batch maps all its words, then ONE speak/recognition ask. After Vocabulary ${String.fromCharCode(64 + vocabBatches.length)}, advance immediately to Pattern Drill. expectsUserSpeech = true. (Repeat / Recognition)
+4. Pattern Drill (ONE phase — replaces Useful Sentences + Pattern Practice) — teach ONLY "${mainPattern}":
+   a) Model one full example sentence with the frame (e.g. fill the blank with a target vocab word) → learner repeats. (Repeat)
+   b) Slot-swap round 1 — change the noun/slot to another target word → learner says the new sentence. (Repeat)
+   c) Slot-swap round 2 — change the noun/slot again → learner says the new sentence. (Repeat)
+   Then advance immediately to AI Conversation. Do NOT teach other pattern frames. Do NOT add a Grammar Discovery step.
+5. AI Conversation — roleplay the mission: ${spec.missionHint}. NPC opens (e.g. Hello!). Learner answers freely. Offer Hint if stuck. Soft-recast mistakes. expectsUserSpeech = true. (Recall / Mission)
+6. Soft Correction — weave into mission turns: praise + "You can also say…" + continue. Never block the conversation. (Soft Feedback)
+7. Wrap-up — brief celebrate of the pattern they used + first name once${wrapTease} → isLessonComplete = true. expectsUserSpeech = false. (Complete)
 
 Turn loop rules:
-- Every non-final tutor turn ends with exactly one next action OR is a listen-only Scene/Situation/Grammar/Wrap turn (Continue button).
+- Every non-final tutor turn ends with exactly one next action OR is a listen-only Scene/Situation/Wrap turn (Continue button).
 - Maximum ONE retry per item; then accept and advance.
 - Accept close variants when meaning is clear.
 - Do not invent pronunciation issues from text.
 - When Core Flow reaches Wrap-up, set isLessonComplete = true (required). Otherwise false.`,
     openingPrompt:
-      `Start the ${spec.titleEn} Everyday Life lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. CRITICAL: Turn 1 = Situation ONLY — set the scene ("${spec.situationTh}"), no vocab teaching yet, expectsUserSpeech false, NO scene object yet. Do NOT mention any button. After Scene, Vocabulary MUST open with a short bridge back to the dialogue (เมื่อกี้ได้ยิน… / จากบทสนทนาเมื่อกี้…), then follow the REQUIRED vocabulary batch plan (map 2–3 words in ONE turn — never a hard cut to "คำแรกคือ…" alone). Return JSON matching the schema. isLessonComplete must be false.`,
+      `Start the ${spec.titleEn} Everyday Life lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. CRITICAL: Turn 1 = Situation ONLY — set the scene ("${spec.situationTh}"), no vocab teaching yet, expectsUserSpeech false, NO scene object yet. Do NOT mention any button. After Scene, Vocabulary is MAX ${vocabBatches.length} turn${vocabBatches.length > 1 ? 's' : ''}: bridge inside Vocabulary A (same turn), then follow the REQUIRED vocabulary batch plan — never a 3rd vocab turn. After Vocabulary, run Pattern Drill on "${mainPattern}" only (model once + 2 slot swaps) — skip Grammar Discovery. Return JSON matching the schema. isLessonComplete must be false.`,
   };
 }
 
@@ -3861,10 +3889,10 @@ Core Flow (progression milestones — NOT a fixed turn count):
     sceneNpcSpeaker: 'Shop Assistant',
     sceneNpcVoice: 'Aoede',
     sceneLines: [
-      { speaker: 'Shop Assistant', role: 'npc', textEn: 'Hi! Can I help you?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: "Hi! I'm looking for a shirt." },
-      { speaker: 'Shop Assistant', role: 'npc', textEn: 'What size?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'Medium, please.' },
+      { speaker: 'Shop Assistant', role: 'npc', textEn: 'Hi! Can I help you?', textTh: 'สวัสดีค่ะ! ต้องการให้ช่วยไหมคะ?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: "Hi! I'm looking for a shirt.", textTh: 'สวัสดีครับ! ผมกำลังหาเสื้อเชิ้ตครับ' },
+      { speaker: 'Shop Assistant', role: 'npc', textEn: 'What size?', textTh: 'ไซส์อะไรคะ?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'Medium, please.', textTh: 'มีเดียมครับ' },
     ],
     vocabulary: [
       { en: 'shirt', th: 'เสื้อเชิ้ต' },
@@ -3899,10 +3927,10 @@ Core Flow (progression milestones — NOT a fixed turn count):
     sceneNpcSpeaker: 'Server',
     sceneNpcVoice: 'Aoede',
     sceneLines: [
-      { speaker: 'Server', role: 'npc', textEn: 'Hello! Are you ready to order?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: "Yes. I'd like a chicken burger." },
-      { speaker: 'Server', role: 'npc', textEn: 'Anything to drink?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'Water, please.' },
+      { speaker: 'Server', role: 'npc', textEn: 'Hello! Are you ready to order?', textTh: 'สวัสดีค่ะ! พร้อมสั่งหรือยังคะ?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: "Yes. I'd like a chicken burger.", textTh: 'ครับ ขอเบอร์เกอร์ไก่ครับ' },
+      { speaker: 'Server', role: 'npc', textEn: 'Anything to drink?', textTh: 'อยากดื่มอะไรไหมคะ?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'Water, please.', textTh: 'น้ำเปล่าครับ' },
     ],
     vocabulary: [
       { en: 'menu', th: 'เมนู' },
@@ -3935,10 +3963,10 @@ Core Flow (progression milestones — NOT a fixed turn count):
     sceneNpcSpeaker: 'Barista',
     sceneNpcVoice: 'Aoede',
     sceneLines: [
-      { speaker: 'Barista', role: 'npc', textEn: 'Hello!' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'Hi! Can I get a latte?' },
-      { speaker: 'Barista', role: 'npc', textEn: 'Hot or iced?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'Iced, please.' },
+      { speaker: 'Barista', role: 'npc', textEn: 'Hello!', textTh: 'สวัสดีค่ะ!' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'Hi! Can I get a latte?', textTh: 'สวัสดีครับ! ขอลาเต้ได้ไหมครับ?' },
+      { speaker: 'Barista', role: 'npc', textEn: 'Hot or iced?', textTh: 'ร้อนหรือเย็นคะ?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'Iced, please.', textTh: 'เย็นครับ' },
     ],
     vocabulary: [
       { en: 'coffee', th: 'กาแฟ' },
@@ -3973,10 +4001,10 @@ Core Flow (progression milestones — NOT a fixed turn count):
     sceneNpcSpeaker: 'Cashier',
     sceneNpcVoice: 'Puck',
     sceneLines: [
-      { speaker: 'Cashier', role: 'npc', textEn: 'Hello!' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: "Hi. I'd like this sandwich." },
-      { speaker: 'Cashier', role: 'npc', textEn: 'Anything else?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: "That's all, thanks." },
+      { speaker: 'Cashier', role: 'npc', textEn: 'Hello!', textTh: 'สวัสดีครับ!' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: "Hi. I'd like this sandwich.", textTh: 'สวัสดีครับ ขอแซนด์วิชอันนี้ครับ' },
+      { speaker: 'Cashier', role: 'npc', textEn: 'Anything else?', textTh: 'อย่างอื่นอีกไหมครับ?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: "That's all, thanks.", textTh: 'เท่านี้ครับ ขอบคุณ' },
     ],
     vocabulary: [
       { en: 'water', th: 'น้ำ' },
@@ -4007,10 +4035,10 @@ Core Flow (progression milestones — NOT a fixed turn count):
     sceneNpcSpeaker: 'Ticket Staff',
     sceneNpcVoice: 'Puck',
     sceneLines: [
-      { speaker: 'Ticket Staff', role: 'npc', textEn: 'Where are you going?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: "I'm going to Bangkok." },
-      { speaker: 'Ticket Staff', role: 'npc', textEn: 'One ticket?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'Yes, please.' },
+      { speaker: 'Ticket Staff', role: 'npc', textEn: 'Where are you going?', textTh: 'จะไปไหนครับ?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: "I'm going to Bangkok.", textTh: 'ผมจะไปกรุงเทพครับ' },
+      { speaker: 'Ticket Staff', role: 'npc', textEn: 'One ticket?', textTh: 'ตั๋วหนึ่งใบใช่ไหมครับ?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'Yes, please.', textTh: 'ใช่ครับ' },
     ],
     vocabulary: [
       { en: 'bus', th: 'รถบัส' },
@@ -4042,10 +4070,10 @@ Core Flow (progression milestones — NOT a fixed turn count):
     sceneNpcSpeaker: 'Local',
     sceneNpcVoice: 'Aoede',
     sceneLines: [
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'Excuse me.' },
-      { speaker: 'Local', role: 'npc', textEn: 'Yes?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'Where is the train station?' },
-      { speaker: 'Local', role: 'npc', textEn: 'Go straight and turn left.' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'Excuse me.', textTh: 'ขอโทษครับ' },
+      { speaker: 'Local', role: 'npc', textEn: 'Yes?', textTh: 'ค่ะ?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'Where is the train station?', textTh: 'สถานีรถไฟอยู่ที่ไหนครับ?' },
+      { speaker: 'Local', role: 'npc', textEn: 'Go straight and turn left.', textTh: 'ตรงไปแล้วเลี้ยวซ้ายค่ะ' },
     ],
     vocabulary: [
       { en: 'left', th: 'ซ้าย' },
@@ -4080,10 +4108,10 @@ Core Flow (progression milestones — NOT a fixed turn count):
     sceneNpcSpeaker: 'Receptionist',
     sceneNpcVoice: 'Aoede',
     sceneLines: [
-      { speaker: 'Receptionist', role: 'npc', textEn: 'Welcome!' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'Hi. I have a reservation.' },
-      { speaker: 'Receptionist', role: 'npc', textEn: 'May I have your passport?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'Sure. Here you are.' },
+      { speaker: 'Receptionist', role: 'npc', textEn: 'Welcome!', textTh: 'ยินดีต้อนรับค่ะ!' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'Hi. I have a reservation.', textTh: 'สวัสดีครับ ผมจองห้องไว้ครับ' },
+      { speaker: 'Receptionist', role: 'npc', textEn: 'May I have your passport?', textTh: 'ขอดูพาสปอร์ตหน่อยได้ไหมคะ?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'Sure. Here you are.', textTh: 'ได้ครับ นี่ครับ' },
     ],
     vocabulary: [
       { en: 'reservation', th: 'การจอง' },
@@ -4114,10 +4142,10 @@ Core Flow (progression milestones — NOT a fixed turn count):
     sceneNpcSpeaker: 'Airport Staff',
     sceneNpcVoice: 'Aoede',
     sceneLines: [
-      { speaker: 'Airport Staff', role: 'npc', textEn: 'Good morning.' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: "Hi. I'd like to check in." },
-      { speaker: 'Airport Staff', role: 'npc', textEn: 'May I see your passport?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'Here you are.' },
+      { speaker: 'Airport Staff', role: 'npc', textEn: 'Good morning.', textTh: 'อรุณสวัสดิ์ค่ะ' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: "Hi. I'd like to check in.", textTh: 'สวัสดีครับ ขอเช็กอินครับ' },
+      { speaker: 'Airport Staff', role: 'npc', textEn: 'May I see your passport?', textTh: 'ขอดูพาสปอร์ตหน่อยได้ไหมคะ?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'Here you are.', textTh: 'นี่ครับ' },
     ],
     vocabulary: [
       { en: 'passport', th: 'พาสปอร์ต' },
@@ -4148,10 +4176,10 @@ Core Flow (progression milestones — NOT a fixed turn count):
     sceneNpcSpeaker: 'Pharmacist',
     sceneNpcVoice: 'Puck',
     sceneLines: [
-      { speaker: 'Pharmacist', role: 'npc', textEn: 'How can I help you?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'I have a headache.' },
-      { speaker: 'Pharmacist', role: 'npc', textEn: 'Here is some medicine.' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'Thank you.' },
+      { speaker: 'Pharmacist', role: 'npc', textEn: 'How can I help you?', textTh: 'มีอะไรให้ช่วยไหมครับ?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'I have a headache.', textTh: 'ผมปวดหัวครับ' },
+      { speaker: 'Pharmacist', role: 'npc', textEn: 'Here is some medicine.', textTh: 'นี่ยาให้ครับ' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'Thank you.', textTh: 'ขอบคุณครับ' },
     ],
     vocabulary: [
       { en: 'medicine', th: 'ยา' },

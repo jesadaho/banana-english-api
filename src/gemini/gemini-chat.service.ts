@@ -180,9 +180,14 @@ function buildTrainingReplySchema(withSpeechFlag: boolean) {
                 speaker: { type: 'string' },
                 role: { type: 'string', enum: ['npc', 'teacher'] },
                 textEn: { type: 'string' },
+                textTh: {
+                  type: 'string',
+                  description:
+                    'Thai translation of this dialogue line (for subtitle toggle)',
+                },
                 voice: { type: 'string' },
               },
-              required: ['speaker', 'role', 'textEn'],
+              required: ['speaker', 'role', 'textEn', 'textTh'],
             },
           },
         },
@@ -222,6 +227,7 @@ export interface TrainingTurnReply {
       speaker: string;
       role: 'npc' | 'teacher';
       textEn: string;
+      textTh?: string;
       voice?: string;
     }>;
   };
@@ -1631,13 +1637,14 @@ Required response:
 Tap-to-continue (this lesson only):
 - The app shows a Continue button whenever expectsUserSpeech is false, and the mic when it is true. The learner can always see it.
 - expectsUserSpeech: true when your turn asks the learner to SAY a word or phrase out loud.
-- expectsUserSpeech: false when your turn is listen-only — Situation, Scene / Watch & Listen, Grammar Discovery tip, or Wrap-up.
+- expectsUserSpeech: false when your turn is listen-only — Situation, Scene / Watch & Listen, or Wrap-up.
 - NEVER mention the button in textEn or textTh. Do not write "Tap Continue", "แตะเพื่อไปต่อ", "press the button", or any variation. Do not ask them to say "Ready" or "OK" either. A listen-only turn simply ends after its content — that is allowed, and the button is the learner's next action.
 - A learner message of "${TAP_TO_CONTINUE_TURN_TEXT}" is a button press, not speech. Never praise, evaluate, or repeat it — just move straight to the next step.
 - On the final turn (isLessonComplete true), set expectsUserSpeech false.
 
 Scene / Watch & Listen (when the Core Flow calls for a short model dialogue):
-- Return a "scene" object with "lines": each line has speaker (display name), role ("npc" | "teacher"), textEn (that speaker's line only), and optional voice.
+- Return a "scene" object with "lines": each line has speaker (display name), role ("npc" | "teacher"), textEn (that speaker's English line), textTh (Thai translation of that same line), and optional voice.
+- EVERY scene line MUST include textTh so the learner can open Thai subtitles.
 - Voice map: teacher lines omit voice or use "Sadachbia"; female NPC use "Aoede"; male NPC use "Puck".
 - textEn should be a SHORT one-line summary for history (e.g. "Watch this short coffee-shop dialogue.") — do NOT paste the full script into textEn.
 - expectsUserSpeech must be false on Scene turns.

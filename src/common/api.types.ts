@@ -54,6 +54,8 @@ export interface LessonSceneLine {
   speaker: string;
   role: 'npc' | 'teacher';
   textEn: string;
+  /** Thai translation of this dialogue line (for subtitle toggle). */
+  textTh?: string;
   /** Gemini TTS voice override (e.g. Aoede, Puck). */
   voice?: string;
 }
