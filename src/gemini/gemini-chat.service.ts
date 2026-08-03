@@ -1638,7 +1638,7 @@ Tap-to-continue (this lesson only):
 
 Scene / Watch & Listen (when the Core Flow calls for a short model dialogue):
 - Return a "scene" object with "lines": each line has speaker (display name), role ("npc" | "teacher"), textEn (that speaker's line only), and optional voice.
-- Voice map: teacher lines omit voice or use "Sadachbia"; female NPC use "Breeze"; male NPC use "Puck".
+- Voice map: teacher lines omit voice or use "Sadachbia"; female NPC use "Aoede"; male NPC use "Puck".
 - textEn should be a SHORT one-line summary for history (e.g. "Watch this short coffee-shop dialogue.") — do NOT paste the full script into textEn.
 - expectsUserSpeech must be false on Scene turns.
 - Omit "scene" on non-Scene turns.

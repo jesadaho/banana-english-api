@@ -439,7 +439,7 @@ interface AroundTownLessonSpec {
   /** Short Watch & Listen model dialogue (Teacher B + NPC). */
   sceneTitle: string;
   sceneNpcSpeaker: string;
-  sceneNpcVoice: 'Breeze' | 'Puck';
+  sceneNpcVoice: 'Aoede' | 'Puck';
   sceneLines: Array<{ speaker: string; role: 'npc' | 'teacher'; textEn: string }>;
   vocabulary: Array<{ en: string; th: string }>;
   patterns: string[];
@@ -3841,7 +3841,7 @@ Core Flow (progression milestones — NOT a fixed turn count):
     situationTh: 'ตอนนี้เราอยู่ในร้านเสื้อผ้าครับ',
     sceneTitle: '🛍️ Shopping',
     sceneNpcSpeaker: 'Shop Assistant',
-    sceneNpcVoice: 'Breeze',
+    sceneNpcVoice: 'Aoede',
     sceneLines: [
       { speaker: 'Shop Assistant', role: 'npc', textEn: 'Hi! Can I help you?' },
       { speaker: 'Teacher B', role: 'teacher', textEn: "Hi! I'm looking for a shirt." },
@@ -3879,7 +3879,7 @@ Core Flow (progression milestones — NOT a fixed turn count):
     situationTh: 'ตอนนี้เราอยู่ที่ร้านอาหารครับ',
     sceneTitle: '🍽️ Restaurant',
     sceneNpcSpeaker: 'Server',
-    sceneNpcVoice: 'Breeze',
+    sceneNpcVoice: 'Aoede',
     sceneLines: [
       { speaker: 'Server', role: 'npc', textEn: 'Hello! Are you ready to order?' },
       { speaker: 'Teacher B', role: 'teacher', textEn: "Yes. I'd like a chicken burger." },
@@ -3915,7 +3915,7 @@ Core Flow (progression milestones — NOT a fixed turn count):
     situationTh: 'วันนี้เราจะไปซื้อกาแฟกันครับ',
     sceneTitle: '☕ Coffee Shop',
     sceneNpcSpeaker: 'Barista',
-    sceneNpcVoice: 'Breeze',
+    sceneNpcVoice: 'Aoede',
     sceneLines: [
       { speaker: 'Barista', role: 'npc', textEn: 'Hello!' },
       { speaker: 'Teacher B', role: 'teacher', textEn: 'Hi! Can I get a latte?' },
@@ -4022,7 +4022,7 @@ Core Flow (progression milestones — NOT a fixed turn count):
     situationTh: 'ตอนนี้เราอยู่บนถนน แล้วต้องการถามทางครับ',
     sceneTitle: '🗺️ Asking Directions',
     sceneNpcSpeaker: 'Local',
-    sceneNpcVoice: 'Breeze',
+    sceneNpcVoice: 'Aoede',
     sceneLines: [
       { speaker: 'Teacher B', role: 'teacher', textEn: 'Excuse me.' },
       { speaker: 'Local', role: 'npc', textEn: 'Yes?' },
@@ -4060,7 +4060,7 @@ Core Flow (progression milestones — NOT a fixed turn count):
     situationTh: 'ตอนนี้เราอยู่ที่เคาน์เตอร์โรงแรมครับ',
     sceneTitle: '🏨 Hotel',
     sceneNpcSpeaker: 'Receptionist',
-    sceneNpcVoice: 'Breeze',
+    sceneNpcVoice: 'Aoede',
     sceneLines: [
       { speaker: 'Receptionist', role: 'npc', textEn: 'Welcome!' },
       { speaker: 'Teacher B', role: 'teacher', textEn: 'Hi. I have a reservation.' },
@@ -4094,7 +4094,7 @@ Core Flow (progression milestones — NOT a fixed turn count):
     situationTh: 'ตอนนี้เราอยู่ที่สนามบินครับ',
     sceneTitle: '✈️ Airport',
     sceneNpcSpeaker: 'Airport Staff',
-    sceneNpcVoice: 'Breeze',
+    sceneNpcVoice: 'Aoede',
     sceneLines: [
       { speaker: 'Airport Staff', role: 'npc', textEn: 'Good morning.' },
       { speaker: 'Teacher B', role: 'teacher', textEn: "Hi. I'd like to check in." },

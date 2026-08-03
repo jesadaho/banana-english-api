@@ -54,7 +54,7 @@ export interface LessonSceneLine {
   speaker: string;
   role: 'npc' | 'teacher';
   textEn: string;
-  /** Gemini TTS voice override (e.g. Breeze, Puck). */
+  /** Gemini TTS voice override (e.g. Aoede, Puck). */
   voice?: string;
 }
 
