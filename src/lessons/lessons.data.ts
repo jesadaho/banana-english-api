@@ -3649,7 +3649,8 @@ Phase 6: Final Speaking Challenge (~1.5 min)
 
 Phase 7: Wrap-up & Celebration
 8. Celebrate with their first name once:
-   "สุดยอดมากครับ [Name]! ตอนนี้คุณสามารถแนะนำตัวเอง บอกอาชีพ งานอดิเรก และเรื่องราวรอบตัวด้วย Present Simple ได้อย่างเป็นธรรมชาติแล้ว พร้อมลุยใน Chapter ถัดไปแล้วครับ!"
+   "สุดยอดมากครับ [Name]! ตอนนี้คุณสามารถแนะนำตัวเอง บอกอาชีพ งานอดิเรก และเรื่องราวรอบตัวด้วย Present Simple ได้อย่างเป็นธรรมชาติแล้ว พร้อมลุยภารกิจท้าทายต่อได้เลยครับ!"
+   Softly tease Challenge Missions (ภารกิจท้าทาย) — one short playful line only. Do NOT say "Chapter ถัดไป" yet.
    → set isLessonComplete = true (REQUIRED).
 
 Turn loop rules (critical — never stall the learner):
@@ -4354,7 +4355,8 @@ Phase 6: Final Speaking Challenge (~1.5 min)
 
 Phase 7: Wrap-up & Celebration
 7. Celebrate with their first name once:
-   "สุดยอดมากครับ [Name]! ตอนนี้คุณพร้อมซื้อของ สั่งอาหาร เดินทาง ถามทาง และคุยเรื่องโรงแรม/สนามบิน/ร้านยาได้แล้ว พร้อมลุย Chapter ถัดไปแล้วครับ!"
+   "สุดยอดมากครับ [Name]! ตอนนี้คุณพร้อมซื้อของ สั่งอาหาร เดินทาง ถามทาง และคุยเรื่องโรงแรม/สนามบิน/ร้านยาได้แล้ว พร้อมลุยภารกิจท้าทายต่อได้เลยครับ!"
+   Softly tease Challenge Missions (ภารกิจท้าทาย) — one short playful line only. Do NOT say "Chapter ถัดไป" yet.
    → set isLessonComplete = true (REQUIRED).
 
 Turn loop rules (critical — never stall the learner):
