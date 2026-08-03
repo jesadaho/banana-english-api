@@ -540,11 +540,12 @@ function buildAroundTownLesson(spec: AroundTownLessonSpec): LessonConfig {
     estimatedMinutesMin: 3,
     estimatedMinutesMax: 4,
     targetPhrases,
-    maxTurns: 20,
+    maxTurns: 18,
     listenOnlyTurns: 2,
     systemInstruction: `Lesson: ${spec.titleEn} (Everyday English → Everyday Life → ${spec.code})
 Goal: ${spec.goalEn}
 Pace target: ~3–4 minutes, about 10 short learner speaks total. Keep every tutor turn tight.
+After this lesson, the app may offer an optional full Mission (soft gate) — still run the short in-lesson AI Conversation below.
 
 Target vocabulary (ONLY these 6 + mission extras ${missionExtras || 'none'}):
 ${vocabList}
@@ -562,9 +563,9 @@ Pattern sentences (use EXACTLY these — do not invent new frames):
 Teaching rules:
 - Ask only ONE speaking task per turn.
 - Soft correction ONLY (never Wrong / ไม่ถูก).
-- STT is English-only for spoken answers. Ask/explain in {{L1}} OK.
+- STT is English-only for spoken answers. Ask/explain in {{L1}} OK (except AI Conversation — see below).
 - Vocabulary lock: only the 6 target words + the 4 pattern sentences above (+ mission extras if listed).
-- FORBIDDEN: Grammar Discovery mid-lesson; Useful Sentences lists; going backward in Core Flow; hell-loop re-drills after mission starts.
+- FORBIDDEN: Grammar Discovery mid-lesson; Useful Sentences lists; going backward in Core Flow; hell-loop re-drills after AI Conversation starts.
 - FORBIDDEN on Pattern Drill Substitute turns: "ลองพูดว่า…", "พูดตามว่า…", "Try saying…", or any full English model of the answer — let the learner think.
 - On AI Conversation misses: soft-teach once, then advance — FORBIDDEN: mission retry loops / "ลองอีกที" on the same NPC ask.
 - Keep most turns under 2 short sentences (Vocab Set B maps only 2 meanings then one ask; map the speak-word on the way into Pattern Drill).
@@ -590,19 +591,24 @@ Core Flow (ONE-WAY — never go backward):
    a) Expand: model "${spec.patternExpand}" → learner repeats. expectedSpeech="${spec.patternExpand}".
    b) Substitute — same rule as Drill 1b: {{L1}} question only, NO "ลองพูดว่า…" / NO full English answer in the prompt. Target (Whisper only): "${spec.patternSubstitute2}". expectedSpeech="${spec.patternSubstitute2}".
 7. AI Conversation — EXACTLY 2 learner speaks (mission: ${spec.missionHint}):
-   a) NPC opens (e.g. Hello! What can I get for you today?). Learner orders freely (practiced lines OK). expectedSpeech="".
-   b) NPC follow-up exactly like: "${spec.missionFollowUpEn}". Learner answers (e.g. Large, please. / Small, please.). expectedSpeech="".
-   Then NPC confirms briefly → go to Wrap-up.
-   If a mission answer is wrong/unclear: soft-teach the better line ONCE in the same turn (praise-ish + "You can say…" / "พูดแบบนี้ได้ครับ: …"), then CONTINUE the mission / advance — do NOT ask them to retry the same mission ask. Max one soft tip, then move on.
-   CRITICAL: once mission starts, NEVER return to Vocab / Pattern Drill — even if they reuse a practiced sentence (that is SUCCESS).
-8. Wrap-up (listen-only, SHORT) — one soft tip only: "${spec.wrapGrammarTipTh}" (EN vibe: "${spec.wrapGrammarTipEn}"), then close the lesson with first name once${wrapTease}. FORBIDDEN: long grammar lectures, XP/Seeds talk, multi-paragraph wrap. Max ~1–2 short sentences total. expectsUserSpeech=false. isLessonComplete=true. expectedSpeech="".
+   LANGUAGE OVERRIDE (critical — Thai subtitle button):
+   - textEn MUST be ENGLISH ONLY — speak as the NPC / scene partner (e.g. Hello! What can I get for you today?).
+   - FORBIDDEN in textEn during AI Conversation: Thai script, {{L1}} tutor talk, "ลองพูดว่า", praise-in-Thai, Teacher B Thai coaching as the main bubble.
+   - textTh MUST be the full natural Thai translation of that same English line (so the learner can toggle Thai Subtitles).
+   - Do NOT return a scene object on AI Conversation turns (omit scene). expectsUserSpeech=true. expectedSpeech="".
+   a) NPC opens in English (e.g. Hello! What can I get for you today?). Learner orders freely (practiced lines OK).
+   b) NPC follow-up in English exactly like: "${spec.missionFollowUpEn}". Learner answers (e.g. Large, please. / Small, please.).
+   Then NPC confirms briefly in English → go to Wrap-up.
+   If a mission answer is wrong/unclear: soft-teach ONCE still in English in textEn (short praise + "You can say: …"), with Thai of that tip in textTh, then CONTINUE / advance — do NOT ask them to retry the same mission ask. Max one soft tip, then move on.
+   CRITICAL: once AI Conversation starts, NEVER return to Vocab / Pattern Drill — even if they reuse a practiced sentence (that is SUCCESS).
+8. Wrap-up (listen-only, SHORT) — back to normal {{L1}} tutor voice: one soft tip only: "${spec.wrapGrammarTipTh}" (EN vibe: "${spec.wrapGrammarTipEn}"), then close the lesson with first name once${wrapTease}. FORBIDDEN: long grammar lectures, XP/Seeds talk, multi-paragraph wrap. Max ~1–2 short sentences total. expectsUserSpeech=false. isLessonComplete=true. expectedSpeech="".
 
 Turn loop rules:
 - Every non-final turn ends with one clear next action OR is listen-only (Continue).
 - Max ONE retry per item; then accept and advance.
 - Accept close variants when meaning is clear.
 - When Wrap-up is reached, isLessonComplete must be true.`,
-    openingPrompt: `Start the ${spec.titleEn} Everyday Life lesson for this one learner only. Speak as a private 1:1 tutor (never {{NO_GROUP}}). Use their first name once. CRITICAL Turn 1 = Situation ONLY — set the scene ("${spec.situationTh}"), no vocab yet, expectsUserSpeech false, expectedSpeech "", NO scene object yet. Do NOT mention any button. Turn 2 = Watch & Listen Scene (return scene object). Then: Vocab Set1 (quiz+speak) → Pattern Drill1 (repeat once, then substitute as a {{L1}} question WITHOUT "ลองพูดว่า…" / without giving the English sentence) → Vocab Set2 → Pattern Drill2 (expand once, then substitute question only) → AI Conversation (exactly 2 speaks; if wrong, soft-teach once then continue — no mission retry loop) → short Wrap-up (soft tip + close only). Never go backward. Return JSON matching the schema. isLessonComplete must be false.`,
+    openingPrompt: `Start the ${spec.titleEn} Everyday Life lesson for this one learner only. Speak as a private 1:1 tutor (never {{NO_GROUP}}). Use their first name once. CRITICAL Turn 1 = Situation ONLY — set the scene ("${spec.situationTh}"), no vocab yet, expectsUserSpeech false, expectedSpeech "", NO scene object yet. Do NOT mention any button. Turn 2 = Watch & Listen Scene (return scene object). Then: Vocab Set1 (quiz+speak) → Pattern Drill1 (repeat once, then substitute as a {{L1}} question WITHOUT "ลองพูดว่า…" / without giving the English sentence) → Vocab Set2 → Pattern Drill2 (expand once, then substitute question only) → AI Conversation (exactly 2 speaks; NPC asks in ENGLISH in textEn with full Thai in textTh for subtitles; if wrong, soft-teach once in English then continue — no mission retry loop) → short Wrap-up (soft tip + close only). Never go backward. Return JSON matching the schema. isLessonComplete must be false.`,
   };
 }
 

@@ -1599,6 +1599,7 @@ Normalized (case + punctuation stripped): "${normalized}"
 MATCH RESULT: SUCCESS for the mission/roleplay reply — they used taught language close to "${matched}".
 Required response:
 - Continue the AI Conversation / roleplay as the NPC or scene partner (short reply + optional follow-up question in-character).
+- textEn MUST be ENGLISH ONLY (NPC voice). textTh = full Thai translation for subtitle toggle.
 - Brief praise OK.
 - FORBIDDEN: restarting Vocabulary, Pattern Drill, "try saying…", or "ถ้าจะ… จะพูดว่าอะไร?" style teaching questions.
 - FORBIDDEN: going backward in the Core Flow. Mission stays in mission until Wrap-up.
@@ -1608,9 +1609,11 @@ Normalized (case + punctuation stripped): "${normalized}"
 
 MATCH RESULT: SUCCESS สำหรับคำตอบในสถานการณ์จริง — ผู้เรียนใช้ภาษาที่เรียนมาใกล้เคียง "${matched}"
 Required response:
-- คุยต่อใน AI Conversation / roleplay เป็น NPC หรือคู่สนทนา (ตอบสั้น + ถามต่อในฉากได้)
-- ชมสั้นๆ ได้
+- คุยต่อใน AI Conversation / roleplay เป็น NPC หรือคู่สนทนา
+- textEn MUST be ENGLISH ONLY (NPC voice). textTh = คำแปลไทยเต็มของบรรทัดนั้น (เปิดปุ่ม Thai Subtitle ได้)
+- ชมสั้นๆ ได้ในภาษาอังกฤษ
 - FORBIDDEN: ย้อนกลับไป Vocabulary / Pattern Drill / "ลองพูดว่า…" / คำถามแบบ "ถ้าจะ… จะพูดว่าอะไร?"
+- FORBIDDEN: ใส่ภาษาไทยใน textEn ระหว่าง AI Conversation
 - FORBIDDEN: เดิน Core Flow ย้อนกลับ — อยู่ mission จน Wrap-up
 - การนำประโยคที่เพิ่งฝึกมาใช้ในสถานการณ์ = สำเร็จ ไม่ใช่สัญญาณให้สอนซ้ำ`;
       }
@@ -1652,16 +1655,18 @@ Required response:
 
 MATCH RESULT: NO CLEAR MATCH during AI Conversation / mission.
 Required response:
-- Soft-teach ONE better line briefly (e.g. "You can say: Can I get an iced latte?").
-- Then CONTINUE the mission as NPC (next follow-up or short confirm → Wrap-up) — do NOT ask them to retry the same mission question.
-- FORBIDDEN: "try again", repeating the same NPC ask, returning to Vocabulary / Pattern Drill.`
+- Soft-teach ONE better line briefly in ENGLISH in textEn (e.g. "You can say: Can I get an iced latte?").
+- textTh = full Thai translation of that English tip/line.
+- Then CONTINUE the mission as NPC in ENGLISH (next follow-up or short confirm → Wrap-up) — do NOT ask them to retry the same mission question.
+- FORBIDDEN: Thai in textEn, "try again", repeating the same NPC ask, returning to Vocabulary / Pattern Drill.`
         : `Learner transcript (exact STT text shown in the app): "${displayTranscript}"
 
 MATCH RESULT: NO CLEAR MATCH ระหว่าง AI Conversation / mission
 Required response:
-- สอนประโยคที่ดีกว่าสั้นๆ ครั้งเดียว (เช่น "พูดแบบนี้ได้ครับ: Can I get an iced latte?")
-- แล้วไปต่อใน mission ทันที (ถามต่อเป็น NPC หรือยืนยันสั้นๆ → Wrap-up) — ห้ามให้ลองตอบคำถาม mission เดิมซ้ำ
-- FORBIDDEN: ลองอีกที, วนถาม NPC เดิม, ย้อนกลับไป Vocabulary / Pattern Drill`;
+- Soft-teach ประโยคที่ดีกว่าสั้นๆ ครั้งเดียว — textEn เป็น ENGLISH ONLY (เช่น "You can say: Can I get an iced latte?")
+- textTh = คำแปลไทยเต็มของบรรทัดนั้น (เปิดปุ่ม Thai Subtitle ได้)
+- แล้วไปต่อใน mission ทันทีเป็น NPC ภาษาอังกฤษ (ถามต่อหรือยืนยันสั้นๆ → Wrap-up) — ห้ามให้ลองตอบคำถาม mission เดิมซ้ำ
+- FORBIDDEN: ใส่ภาษาไทยใน textEn, ลองอีกที, วนถาม NPC เดิม, ย้อนกลับไป Vocabulary / Pattern Drill`;
     }
 
     if (consecutiveMisses) {
