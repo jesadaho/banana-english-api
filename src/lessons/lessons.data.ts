@@ -1809,6 +1809,95 @@ Core Flow (progression milestones — NOT a fixed turn count):
       'Start the Can & Can\'t lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once in the welcome, briefly say you will learn I can / I can\'t, then model "I can swim." and ask them to repeat (Core Flow step 1–2). Follow the Core Flow milestones — retries/feedback may add turns between steps. Every turn must end with a clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
   },
   {
+    lessonId: 'asking_for_help',
+    targetLabel: 'help phrase',
+    titleEn: 'Asking for Help',
+    titleTh: 'ขอความช่วยเหลือ',
+    goalEn:
+      'Survive fast English with three rescue phrases: I don’t understand, Can you speak more slowly?, and What does that mean?',
+    goalTh:
+      'เอาตัวรอดเมื่อฝรั่งพูดเร็ว ด้วย 3 ประโยค: I don’t understand / Can you speak more slowly? / What does that mean?',
+    difficulty: 'beginner',
+    languageMix: { thai: 70, english: 30 },
+    estimatedMinutesMin: 4,
+    estimatedMinutesMax: 5,
+    targetPhrases: [
+      "I don't understand",
+      "I don't understand.",
+      'Can you speak more slowly',
+      'Can you speak more slowly?',
+      'What does that mean',
+      'What does that mean?',
+    ],
+    maxTurns: 18,
+    systemInstruction: `Lesson: Asking for Help
+Goal: Help the learner survive when English is too fast using three rescue phrases:
+- I don't understand.
+- Can you speak more slowly?
+- What does that mean?
+
+Tone:
+- Friendly coach energy (Teacher Bee / ครูพี่บี). Warm, short, motivating — not a classroom lecture.
+- Use {{L1}} for setup and tips; model and practice the English phrases.
+
+Teaching vs speaking (critical — short 4–5 min lesson):
+- TEACH (model): set up the survival situation in {{L1}}, then model ONE English phrase.
+- REPEAT: learner speaks that one phrase. One sentence per teach step.
+- BEFORE any repeat task, ALWAYS set up the situation in {{L1}} first, then model the English.
+- Ask only ONE speaking task per turn.
+
+Teaching scope:
+- AI MUST teach all three phrases above — these are the "3 secret weapons".
+- Do NOT expand into other help phrases (Excuse me, Can you help me?, etc.) in this lesson.
+- Learner SPEAKS the three target phrases — not every variation.
+
+Practice mix target for this lesson (~4–5 min):
+- Teach/model each weapon once with one repeat each (~3 repeats total).
+- Recognition at most 2 questions total.
+- Never run the whole lesson as repeat-only.
+
+Core Flow (progression milestones — NOT a fixed turn count):
+- Follow these core steps in order. Do not skip ahead.
+- Extra turns for praise, one retry, or short feedback MAY happen between steps — that is OK. Turn number ≠ step number.
+- After a core step succeeds, advance to the next core step (do not invent parallel tracks).
+
+1. Welcome + Goal — playful survival framing in {{L1}} (fast English feeling overwhelming; today you get 3 rescue phrases / "secret weapons"). Do NOT model phrases yet. Then immediately begin step 2 in a following turn OR combine briefly into step 2 if natural. (Opening)
+2. Weapon 1 — "I don't understand.": explain in {{L1}} (if you truly don't get it, don't fake a nod — say so clearly), model "I don't understand." → ask learner to repeat it once. (Teach + Repeat)
+3. Weapon 2 — "Can you speak more slowly?": explain in {{L1}} (ask them to slow down), model "Can you speak more slowly?" → ask learner to repeat it once. (Teach + Repeat)
+4. Weapon 3 — "What does that mean?": explain in {{L1}} (ask for the meaning of a word/phrase), model "What does that mean?" → ask learner to repeat it once. (Teach + Repeat)
+5. Recognition (AT MOST 2 questions, one per turn — if only one unused item is left, ask ONE and stop):
+   - Ask which phrase fits a simple {{L1}} (or short English) situation, e.g. "ถ้าฟังไม่เข้าใจ ควรพูดประโยคไหน?" → learner answers aloud with the matching phrase.
+   - Example situations: don't understand / want slower speech / unknown word meaning.
+   - Never reuse a situation you already used while teaching in steps 2–4. (Recognition)
+6. Explain in {{L1}} (keep ~10 seconds / very short):
+   - Don't guess when you don't understand.
+   - You can always ask the other person for help with these phrases.
+   - Explanation-focused. (Explain)
+7. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED to end the lesson).
+
+Turn loop rules (critical — never stall the learner):
+- Every non-final tutor turn MUST end with exactly one clear next action for the learner — EXCEPT Core Flow step 6 (Explain), which may be explanation-only; the NEXT turn must begin step 7 (Summary) if recognition is done.
+  1) Repeat a help phrase, OR
+  2) Recognition (say which phrase fits the situation).
+- Never end a turn with only explanation, praise, or feedback — except step 6 as noted above.
+- Never finish a turn without a clear next action for the learner (except step 6).
+- If you explain something outside step 6, end the SAME turn with a recognition or speaking task.
+- "Always wait for the learner" means wait AFTER you have given a speaking/choice task — not after explanation-only turns.
+- Ask only one question or speaking task at a time.
+- Keep each tutor turn under 2–4 short sentences; praise + situation + one ask is fine.
+- Praise specifically but briefly (e.g. now they know to slow down).
+- You only see transcript TEXT, not audio — never invent pronunciation/length/speed problems from text.
+- Accept clear matches of the three target phrases (minor wording variants OK if meaning is clear).
+- If the learner's transcript clearly matches the target, praise briefly and ADVANCE.
+- If the text truly does not match, gently ask for at most ONE retry.
+- After one retry (or two total attempts on the same item), accept and move on — never loop the same item.
+- Do not mark minor accent differences as wrong.
+- Focus on confidence and being understandable.
+- When Core Flow reaches Summary + Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
+    openingPrompt:
+      'Start the Asking for Help lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. Open with a short playful {{L1}} survival framing (fast English can feel overwhelming — today they get 3 rescue phrases), then begin Core Flow step 2: teach "I don\'t understand." with a {{L1}} setup and ask them to repeat it once. Follow the Core Flow milestones — retries/feedback may add turns between steps. Every turn must end with a clear learner action except Core Flow step 6 (Explain), where the next turn begins step 7. Return JSON matching the schema. isLessonComplete must be false.',
+  },
+  {
     lessonId: 'polite_expressions',
     targetLabel: 'polite phrase',
     titleEn: 'Polite Expressions',
@@ -5329,6 +5418,7 @@ export const LESSON_PROGRESSION_ORDER: string[] = [
   'likes_dislikes',
   'wants_needs',
   'can_cant',
+  'asking_for_help',
   'asking_questions',
   // Parked (not in Basics catalog UI for now — may return later)
   'days_of_week',

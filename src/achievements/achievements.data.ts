@@ -90,6 +90,7 @@ const BASICS_LESSON_IDS: string[] = [
   'likes_dislikes',
   'wants_needs',
   'can_cant',
+  'asking_for_help',
   'asking_questions',
 ];
 
