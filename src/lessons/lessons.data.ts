@@ -4749,33 +4749,35 @@ Turn loop rules (critical):
       'Did you eat breakfast yesterday?',
     ],
     maxTurns: 28,
-    listenOnlyTurns: 1,
+    listenOnlyTurns: 2,
     systemInstruction: `Lesson: Yesterday (Everyday English → Stories → 3.1)
 Goal: Talk about what you did yesterday using Past Simple.
 Pace target: ~4–6 minutes. Keep every tutor turn tight.
 
 Core Flow (ONE-WAY — never go backward):
 1. Hook (listen-only, ~5–10 sec) — OPENING TURN
-   - Context of the lesson in {{L1}}:
-     เมื่อวานทำอะไรมาบ้าง?
-     วันนี้มาฝึกเล่าเรื่องเมื่อวานกันครับ!
+   - Context in {{L1}}: "เมื่อวานทำอะไรมาบ้าง วันนี้มาฝึกเล่าเรื่องเมื่อวานกันครับ!"
    - expectsUserSpeech=false. expectedSpeech="". Omit emojiSpeak. Omit scene.
    - Do NOT start Emoji Speak on this turn.
 
-2. Emoji Speak — EXACTLY 6 learner speaking turns (warm-up / vocab recall — NO repeat / NO พูดตาม)
-   Order (fixed):
-   a) 🍳 breakfast
-   b) 🍱 lunch
-   c) 🍽️ dinner
-   d) 📅 yesterday
-   e) 🌅 morning
-   f) 🌙 last night
+2. Emoji Speak
+   2a. Intro (listen-only, ONE turn after Hook):
+   - {{L1}}: "ลองมาทายคำศัพท์ที่จะได้ใช้ในบทนี้กันก่อนนะ!"
+   - expectsUserSpeech=false. expectedSpeech="". Omit emojiSpeak.
+   2b. Puzzle — EXACTLY 6 learner speaking turns (warm-up / vocab recall — NO repeat / NO พูดตาม)
+   Fixed order — ALWAYS return full emojiSpeak with hint + index + total:
+   a) index 1/6: emoji "🍳" answer "breakfast" hint "b _ _ _ k f _ _ t"
+   b) index 2/6: emoji "🍱" answer "lunch" hint "l _ _ _ h"
+   c) index 3/6: emoji "🍽️" answer "dinner" hint "d _ n _ _ r"
+   d) index 4/6: emoji "📅" answer "yesterday" hint "y _ s _ _ _ d _ y"
+   e) index 5/6: emoji "🌅" answer "morning" hint "m _ r _ _ _ g"
+   f) index 6/6: emoji "🌙" answer "last night" hint "l _ _ t n _ _ h t"
    Each speak turn:
-   - Short {{L1}} prompt + big emoji in textEn/textTh (e.g. "คำนี้คืออะไรครับ? 🍳").
+   - Short {{L1}} prompt ONLY in textEn/textTh (e.g. "ลองทายคำนี้ครับ!") — NO emoji dump required in bubble; the app card shows the puzzle.
    - FORBIDDEN in the bubble: letter blanks, the English answer, Thai gloss of the answer.
-   - expectsUserSpeech=true. expectedSpeech=exact English answer (lowercase as listed).
-   - MUST return emojiSpeak={ emoji, answer } matching expectedSpeech.
-   - After clear answer (or app sent the revealed answer): brief praise → next emoji (or Pattern Challenge — Tell after the 6th). NO second speak / repeat of the same word.
+   - expectsUserSpeech=true. expectedSpeech=exact answer.
+   - MUST return emojiSpeak={ emoji, answer, hint, index, total: 6 } exactly as listed for that word.
+   - After clear answer (or app sent revealed answer): brief praise → next puzzle (or Pattern Challenge — Tell after 6th). NO second speak / repeat.
    - Soft-accept close STT variants. Max ONE soft tip then advance.
    - FORBIDDEN: 3-choice Thai quiz; inventing extra vocab; skipping a word; emojiSpeak on non-Emoji turns.
 
@@ -4826,7 +4828,7 @@ Turn loop rules:
 - Max ONE retry per item; then accept and advance.
 - Accept close variants when meaning is clear.
 - When Celebrate is reached, isLessonComplete must be true.`,
-    openingPrompt: `Start the Yesterday Stories lesson (3.1) for this one learner only. Speak as a private 1:1 tutor (never {{NO_GROUP}}). Use their first name once. CRITICAL Turn 1 = Hook ONLY — เมื่อวานทำอะไรมาบ้าง? + วันนี้มาฝึกเล่าเรื่องเมื่อวานกันครับ! — expectsUserSpeech false, expectedSpeech "", NO emojiSpeak, NO scene. Do NOT mention any button. Then one-way: Emoji Speak ×6 (🍳 breakfast → 🍱 lunch → 🍽️ dinner → 📅 yesterday → 🌅 morning → 🌙 last night; each MUST include emojiSpeak + expectedSpeech; NO repeat) → Pattern Challenge Tell (2–3 speaks: I ate breakfast this morning. / I ate breakfast yesterday. / I had dinner last night.) → Pattern Challenge Ask (EXACTLY 2: learner asks What did you do yesterday? then Did you eat breakfast yesterday?; YOU answer) → Pattern Challenge Answer (EXACTLY 2: YOU ask those two questions; learner answers) → Celebrate (complete). Never go backward. Return JSON matching the schema. isLessonComplete must be false.`,
+    openingPrompt: `Start the Yesterday Stories lesson (3.1) for this one learner only. Speak as a private 1:1 tutor (never {{NO_GROUP}}). Use their first name once. CRITICAL Turn 1 = Hook ONLY — "เมื่อวานทำอะไรมาบ้าง วันนี้มาฝึกเล่าเรื่องเมื่อวานกันครับ!" — expectsUserSpeech false, expectedSpeech "", NO emojiSpeak, NO scene. Do NOT mention any button. Then: Emoji Speak Intro listen ("ลองมาทายคำศัพท์ที่จะได้ใช้ในบทนี้กันก่อนนะ!") → Emoji Speak puzzle ×6 with FULL emojiSpeak {emoji,answer,hint,index,total:6} in order (1 🍳 breakfast "b _ _ _ k f _ _ t" → 2 🍱 lunch "l _ _ _ h" → 3 🍽️ dinner "d _ n _ _ r" → 4 📅 yesterday "y _ s _ _ _ d _ y" → 5 🌅 morning "m _ r _ _ _ g" → 6 🌙 last night "l _ _ t n _ _ h t"; NO repeat) → Pattern Challenge Tell (2–3) → Ask (EXACTLY 2 learner asks; YOU answer) → Answer (EXACTLY 2 YOU ask; learner answers) → Celebrate (complete). Never go backward. Return JSON matching the schema. isLessonComplete must be false.`,
   },
 
   buildAroundTownLesson({
@@ -6060,6 +6062,66 @@ export function isAroundTownLesson(lessonId: string): boolean {
     lessonId.startsWith('ee_around_town_') ||
     lessonId.startsWith('ee_stories_')
   );
+}
+
+/** Canonical Emoji Speak puzzle for Stories 3.1 — fills missing hint/index. */
+const EE_STORIES_YESTERDAY_EMOJI: Record<
+  string,
+  { emoji: string; hint: string; index: number }
+> = {
+  breakfast: { emoji: '🍳', hint: 'b _ _ _ k f _ _ t', index: 1 },
+  lunch: { emoji: '🍱', hint: 'l _ _ _ h', index: 2 },
+  dinner: { emoji: '🍽️', hint: 'd _ n _ _ r', index: 3 },
+  yesterday: { emoji: '📅', hint: 'y _ s _ _ _ d _ y', index: 4 },
+  morning: { emoji: '🌅', hint: 'm _ r _ _ _ g', index: 5 },
+  'last night': { emoji: '🌙', hint: 'l _ _ t n _ _ h t', index: 6 },
+};
+
+export function enrichEmojiSpeakForLesson(
+  lessonId: string,
+  emojiSpeak:
+    | {
+        emoji: string;
+        answer: string;
+        hint?: string;
+        index?: number;
+        total?: number;
+      }
+    | null
+    | undefined,
+):
+  | {
+      emoji: string;
+      answer: string;
+      hint?: string;
+      index?: number;
+      total?: number;
+    }
+  | null {
+  if (!emojiSpeak) return null;
+  const answer = emojiSpeak.answer.trim().toLowerCase();
+  if (!answer) return null;
+
+  if (lessonId === 'ee_stories_yesterday') {
+    const known = EE_STORIES_YESTERDAY_EMOJI[answer];
+    if (known) {
+      return {
+        emoji: emojiSpeak.emoji?.trim() || known.emoji,
+        answer,
+        hint: emojiSpeak.hint?.trim() || known.hint,
+        index: emojiSpeak.index ?? known.index,
+        total: 6,
+      };
+    }
+  }
+
+  return {
+    emoji: emojiSpeak.emoji,
+    answer: emojiSpeak.answer.trim(),
+    hint: emojiSpeak.hint?.trim() || undefined,
+    index: emojiSpeak.index,
+    total: emojiSpeak.total,
+  };
 }
 
 /** Everyday English chapter reviews (Grammar Discovery — listen-only celebrate/reveals). */

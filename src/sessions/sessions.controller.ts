@@ -46,6 +46,7 @@ import {
   mergeCheckpoints,
 } from '../simulations/simulations.data';
 import {
+  enrichEmojiSpeakForLesson,
   getLesson,
   getLessonBananaCost,
   isPronunciationLesson,
@@ -350,7 +351,10 @@ export class SessionsController {
         expectsUserSpeech: openingExpectsUserSpeech,
         expectedSpeech: reply.expectedSpeech?.trim() || null,
         scene: reply.scene ?? null,
-        emojiSpeak: reply.emojiSpeak ?? null,
+        emojiSpeak: enrichEmojiSpeakForLesson(
+          config.lessonId,
+          reply.emojiSpeak,
+        ),
       };
       this.sessionStore.addTurn(data.session.id, opening);
 
@@ -384,7 +388,10 @@ export class SessionsController {
           expectsUserSpeech: openingExpectsUserSpeech,
           expectedSpeech: reply.expectedSpeech?.trim() || null,
           scene: reply.scene,
-          emojiSpeak: reply.emojiSpeak ?? null,
+          emojiSpeak: enrichEmojiSpeakForLesson(
+            config.lessonId,
+            reply.emojiSpeak,
+          ),
         },
       };
     } catch (err) {
@@ -469,6 +476,11 @@ export class SessionsController {
           ? false
           : (reply.expectsUserSpeech ?? true);
 
+      const emojiSpeak = enrichEmojiSpeakForLesson(
+        config.lessonId,
+        reply.emojiSpeak,
+      );
+
       const aiTurn = {
         speaker: 'ai' as const,
         textEn: reply.textEn,
@@ -477,7 +489,7 @@ export class SessionsController {
         expectsUserSpeech,
         expectedSpeech: reply.expectedSpeech?.trim() || null,
         scene: reply.scene ?? null,
-        emojiSpeak: reply.emojiSpeak ?? null,
+        emojiSpeak,
       };
       this.sessionStore.addTurn(sessionId, aiTurn);
 
@@ -492,7 +504,7 @@ export class SessionsController {
         expectsUserSpeech,
         expectedSpeech: reply.expectedSpeech?.trim() || null,
         scene: reply.scene,
-        emojiSpeak: reply.emojiSpeak ?? null,
+        emojiSpeak,
       };
 
       if (body.generateAudio) {

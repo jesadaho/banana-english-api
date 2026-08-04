@@ -60,6 +60,12 @@ export interface TurnExchangeResponse {
 export interface EmojiSpeakPrompt {
   emoji: string;
   answer: string;
+  /** Letter-blank hint shown on the puzzle card (e.g. "b _ _ _ k f _ _ t"). */
+  hint?: string;
+  /** 1-based index in this lesson's emoji set. */
+  index?: number;
+  /** Total emoji words in this lesson set. */
+  total?: number;
 }
 
 /** One line in a lesson Scene dialogue (Watch & Listen). */

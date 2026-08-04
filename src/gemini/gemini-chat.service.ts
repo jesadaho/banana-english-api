@@ -201,19 +201,32 @@ function buildTrainingReplySchema(withSpeechFlag: boolean) {
       emojiSpeak: {
         type: 'object',
         description:
-          'Optional in-chat Emoji Speak card. Include ONLY on Emoji Speak vocab turns (emoji → speak English word). Omit on all other turns.',
+          'Optional in-chat Emoji Speak puzzle card. Include ONLY on Emoji Speak vocab turns. Omit on all other turns.',
         properties: {
           emoji: {
             type: 'string',
-            description: 'Single emoji shown on the card (e.g. "🍳")',
+            description: 'Single emoji shown large on the card (e.g. "🍳")',
           },
           answer: {
             type: 'string',
             description:
               'Exact English answer the learner should say (same as expectedSpeech)',
           },
+          hint: {
+            type: 'string',
+            description:
+              'Letter-blank puzzle shown under the emoji (e.g. "b _ _ _ k f _ _ t"). Never the full answer.',
+          },
+          index: {
+            type: 'integer',
+            description: '1-based position in this lesson emoji set (e.g. 2)',
+          },
+          total: {
+            type: 'integer',
+            description: 'Total emoji words in this lesson set (e.g. 6)',
+          },
         },
-        required: ['emoji', 'answer'],
+        required: ['emoji', 'answer', 'hint', 'index', 'total'],
       },
     },
     required: [
@@ -268,6 +281,9 @@ export interface TrainingTurnReply {
   emojiSpeak?: {
     emoji: string;
     answer: string;
+    hint?: string;
+    index?: number;
+    total?: number;
   };
 }
 
@@ -1794,9 +1810,9 @@ Scene / Watch & Listen (when the Core Flow calls for a short model dialogue):
 - Omit "scene" on non-Scene turns.
 
 Emoji Speak (when the Core Flow calls for emoji → speak English word):
-- Return "emojiSpeak": { "emoji": "🍳", "answer": "breakfast" } with expectsUserSpeech true and expectedSpeech equal to answer.
-- Put the emoji prominently in textEn/textTh (short prompt only — do NOT print letter blanks or the English answer in the bubble).
-- FORBIDDEN: emojiSpeak on Pattern Challenge / Hook / Reward turns. Omit emojiSpeak when not on an Emoji Speak vocab turn.
+- Return "emojiSpeak": { "emoji": "🍳", "answer": "breakfast", "hint": "b _ _ _ k f _ _ t", "index": 1, "total": 6 } with expectsUserSpeech true and expectedSpeech equal to answer.
+- textEn/textTh: short intro only (e.g. ลองทายคำนี้) — do NOT put letter blanks or the English answer in the bubble (the app card shows the puzzle).
+- FORBIDDEN: emojiSpeak on Pattern Challenge / Hook / Celebrate turns. Omit emojiSpeak when not on an Emoji Speak vocab turn.
 - After a clear answer (or if the learner used ขอเฉลย and the app sends the answer), praise briefly and advance — NO "พูดตาม" / repeat of the same word.
 `
       : '';
