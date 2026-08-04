@@ -516,6 +516,7 @@ const STORIES_CHAPTER_FLOW_RULES = `Stories Chapter 3 flow rules (ALL Stories le
 - FORBIDDEN after soft-accept: "ลองพูดอีกครั้ง" / asking them to repeat the same item / burning an extra mic turn.
 - Max ONE hard retry only when the answer is wrong/unclear/off-topic; then accept + เฉลย + advance.
 - Never mash praise + next speaking cue + AI/NPC answer into one turn when a listen-only answer beat is required.
+- After an AI-answer listen turn, the Continue turn must NOT re-answer or echo the previous reply — praise + next cue only.
 - Ask only ONE speaking task per turn.`;
 
 interface StoriesPatternEmojiWord {
@@ -674,8 +675,12 @@ ${emojiList}
 
    After EACH of the 2 learner asks, use this 3-step split (never mash):
      ① Learner asks (expectsUserSpeech=true) — this increments the speak count by 1
-     ② NEXT API turn = AI ANSWER ONLY (listen-only, expectsUserSpeech=false). Short English reply. NO praise. NO "คราวนี้…". NO next cue.
-     ③ User taps Continue → NEXT API turn = short praise FIRST, then next action.
+     ② NEXT API turn = AI ANSWER ONLY (listen-only, expectsUserSpeech=false). Short English reply ONLY (e.g. "I went to the beach."). NO praise. NO "เป๊ะ". NO "คราวนี้…". NO next cue. NO Thai coaching.
+     ③ User taps Continue → NEXT API turn = short praise in {{L1}} FIRST, then cue next speak ONLY.
+        Example OK: "เป๊ะเลยครับ! คราวนี้ลองถามเองดูครับ … พูดว่าไงดี?"
+        BAD (do NOT do this): "What did you do last weekend? เป๊ะเลยครับ! คราวนี้…" — that echoes the ask.
+        BAD (do NOT do this): "I went to the beach. เป๊ะเลยครับ! คราวนี้…" — that re-answers.
+        FORBIDDEN on turn ③: repeating/re-answering; echoing the learner's question in textEn/textTh; saying the previous AI answer again; any second answer beat. Leave textEn empty or short praise only — never paste the prior question/answer.
 
    Speak #1 (guided):
    - Cue in {{L1}} with English guide: ให้พูด "${spec.ask1En}"
@@ -683,7 +688,7 @@ ${emojiList}
    - Soft-accept close variants: ก็ใช้ได้ + เฉลย canonical "${spec.ask1En}" → advance — DO NOT ask them to repeat. Still counts as speak #1 → go to ②.
    - Exact match: go straight to ② (praise can wait until step ③).
    - ② AI answer ONLY e.g. "${spec.ask1AiAnswerEn}"
-   - ③ after Continue: brief praise, THEN cue Speak #2.
+   - ③ after Continue: brief praise + cue Speak #2 ONLY (never re-answer).
 
    Speak #2 (NO guide — learner thinks themselves):
    - Cue in {{L1}} ONLY e.g. "${spec.ask2ThaiCue}"
@@ -691,17 +696,20 @@ ${emojiList}
    - FORBIDDEN: showing/saying the English question "${spec.ask2En}" before they speak.
    - Soft-accept close variants: ก็ใช้ได้ + เฉลย canonical once → advance to ②. DO NOT ask them to speak again.
    - ② AI answer ONLY: "${spec.ask2AiAnswerEn}" (listen-only)
-   - ③ after Continue: brief praise, THEN start Pattern Challenge — Answer.
+   - ③ after Continue: brief praise + start Pattern Challenge — Answer with short bridge "คราวนี้ผมจะถามคุณบ้างนะครับ 😊" then ask immediately (never re-answer; never wordy "ครูจะถามว่า…ลองตอบ").
 
    HARD STOP after speak #2 (+ its answer + praise handoff). Never a 3rd learner ask.
    Soft-accept rule (Ask): acceptable near-miss → เฉลย + go forward. Never "ลองพูดอีกครั้ง" / never burn an extra mic turn.
-   FORBIDDEN: answering for the learner; skipping either ask; mashing AI answer + praise + next cue into one turn.
+   FORBIDDEN: answering for the learner; skipping either ask; mashing AI answer + praise + next cue into one turn; replaying the AI answer on the Continue/praise turn.
 
 5. Pattern Challenge — Answer (EXACTLY 2 learner speaks) — difficulty ⭐⭐⭐⭐
    Goal: AI asks; learner answers.
    LANGUAGE: ask in ENGLISH in textEn; textTh = full Thai translation (subtitle toggle).
-   a) AI asks: "${spec.answer1En}" → learner answers freely (short OK). expectedSpeech="". Soft-accept clear short answers.
-   b) AI asks: "${spec.answer2En}" → learner answers. expectedSpeech="". Soft-accept clear short yes/no or practiced lines.
+   OPENING (first Answer turn only): ONE short bridge in {{L1}} then ask immediately —
+     "คราวนี้ผมจะถามคุณบ้างนะครับ 😊" + English question "${spec.answer1En}"
+     FORBIDDEN wordy intros: "คราวนี้มาลองตอบคำถาม…" / "ครูจะถามว่า…" / "[name] ลองตอบดูนะครับ" / explaining what you're about to ask before asking.
+   a) First ask: short bridge + "${spec.answer1En}" → learner answers freely (short OK). expectedSpeech="". Soft-accept clear short answers.
+   b) Second ask: "${spec.answer2En}" only (no bridge again) → learner answers. expectedSpeech="". Soft-accept clear short yes/no or practiced lines.
    FORBIDDEN: asking the learner to ask; more than 2 Answer speaks; going back to Tell/Ask. Omit emojiSpeak. Omit scene.
    After Answer → Celebrate.
 
@@ -722,7 +730,7 @@ Turn loop rules:
 - Max ONE retry per item; then accept and advance.
 - Soft-accept close variants when meaning is clear: say ก็ใช้ได้ + show the canonical English once (เฉลย) → advance. DO NOT make the learner repeat the same item.
 - When Celebrate is reached, isLessonComplete must be true.`,
-    openingPrompt: `Start the ${spec.titleEn} ${track} lesson (${spec.code}) for this one learner only. Speak as a private 1:1 tutor (never {{NO_GROUP}}). Use their first name once. CRITICAL Turn 1 = Hook ONLY — "${spec.hookTh}" — expectsUserSpeech false, expectedSpeech "", NO emojiSpeak, NO emojiSpeakSet, NO scene. Do NOT mention any button. Then ONE Intro listen turn with emojiSpeakSet of ALL 4 puzzles (${emojiOpening} — each with hint/index/total:4); expectsUserSpeech false. App runs the 4 locally. After "(finished Emoji Speak — start Pattern Challenge 1)": Pattern Challenge 1 Tell EXACTLY 3 speaks (${spec.tell1En} → SEPARATE listen-only tip → NEXT ${spec.tell2En} → ${spec.tell3En}) → Ask = learner mic exactly 2 times (speak#1 guided "${spec.ask1En}"; speak#2 NO English guide — Thai cue only). After EACH ask: AI answer-only listen turn → Continue → praise then next. Never mash answer+praise+next. Never 3rd ask. → Answer (learner speaks exactly 2: AI asks "${spec.answer1En}" then "${spec.answer2En}") → Celebrate (complete). Never emit per-word emojiSpeak turns. Never re-open Intro after Emoji Speak. Never go backward. Return JSON matching the schema. isLessonComplete must be false.`,
+    openingPrompt: `Start the ${spec.titleEn} ${track} lesson (${spec.code}) for this one learner only. Speak as a private 1:1 tutor (never {{NO_GROUP}}). Use their first name once. CRITICAL Turn 1 = Hook ONLY — "${spec.hookTh}" — expectsUserSpeech false, expectedSpeech "", NO emojiSpeak, NO emojiSpeakSet, NO scene. Do NOT mention any button. Then ONE Intro listen turn with emojiSpeakSet of ALL 4 puzzles (${emojiOpening} — each with hint/index/total:4); expectsUserSpeech false. App runs the 4 locally. After "(finished Emoji Speak — start Pattern Challenge 1)": Pattern Challenge 1 Tell EXACTLY 3 speaks (${spec.tell1En} → SEPARATE listen-only tip → NEXT ${spec.tell2En} → ${spec.tell3En}) → Ask = learner mic exactly 2 times (speak#1 guided "${spec.ask1En}"; speak#2 NO English guide — Thai cue only). After EACH ask: AI answer-only listen turn → Continue → praise + next cue ONLY (FORBIDDEN: re-answer / echo prior AI reply / echo the question as main content). Never mash answer+praise+next. Never 3rd ask. → Answer (learner speaks exactly 2: AI asks "${spec.answer1En}" then "${spec.answer2En}") → Celebrate (complete). Never emit per-word emojiSpeak turns. Never re-open Intro after Emoji Speak. Never go backward. Return JSON matching the schema. isLessonComplete must be false.`,
   };
 }
 
@@ -4877,8 +4885,12 @@ Core Flow (ONE-WAY — never go backward):
 
    After EACH of the 2 learner asks, use this 3-step split (never mash):
      ① Learner asks (expectsUserSpeech=true) — this increments the speak count by 1
-     ② NEXT API turn = AI ANSWER ONLY (listen-only, expectsUserSpeech=false). Short English reply. NO praise. NO "คราวนี้…". NO next cue.
-     ③ User taps Continue → NEXT API turn = short praise FIRST, then next action.
+     ② NEXT API turn = AI ANSWER ONLY (listen-only, expectsUserSpeech=false). Short English reply ONLY (e.g. "I went to work yesterday."). NO praise. NO "เป๊ะ". NO "คราวนี้…". NO next cue. NO Thai coaching.
+     ③ User taps Continue → NEXT API turn = short praise in {{L1}} FIRST, then cue next speak ONLY.
+        Example OK: "เป๊ะเลยครับ! คราวนี้ลองถามเองดูครับ … พูดว่าไงดี?"
+        BAD (do NOT do this): "What did you do yesterday? เป๊ะเลยครับ! คราวนี้…" — that echoes the ask.
+        BAD (do NOT do this): "I went to work yesterday. เป๊ะเลยครับ! คราวนี้…" — that re-answers.
+        FORBIDDEN on turn ③: repeating/re-answering; echoing the learner's question in textEn/textTh; saying the previous AI answer again; any second answer beat. Leave textEn empty or short praise only — never paste the prior question/answer.
 
    Speak #1 (guided):
    - Cue in {{L1}} with English guide: ให้พูด "What did you do yesterday?"
@@ -4886,7 +4898,7 @@ Core Flow (ONE-WAY — never go backward):
    - Soft-accept close variants (e.g. What did you eat yesterday?): briefly say ก็ใช้ได้ + เฉลย canonical "What did you do yesterday?" then advance — DO NOT ask them to repeat/retry the question. Still counts as speak #1 → go to ② AI answer on the NEXT turn (or answer after Continue; never require a second mic for #1).
    - Exact match: go straight to ② (praise can wait until step ③).
    - ② AI answer ONLY e.g. "I went to work yesterday." / "I studied."
-   - ③ after Continue: brief praise, THEN cue Speak #2.
+   - ③ after Continue: brief praise + cue Speak #2 ONLY (never re-answer).
 
    Speak #2 (NO guide — learner thinks themselves):
    - Cue in {{L1}} ONLY e.g. "คราวนี้ลองถามเองดูครับ เกี่ยวกับการกินข้าวเช้าเมื่อวานน่ะ พูดว่าไงดี?"
@@ -4894,17 +4906,20 @@ Core Flow (ONE-WAY — never go backward):
    - FORBIDDEN: showing/saying the English question "Did you eat breakfast yesterday?" before they speak.
    - Soft-accept close yes/no-question variants about breakfast yesterday: ก็ใช้ได้ + เฉลย canonical once → advance to ②. DO NOT ask them to speak again.
    - ② AI answer ONLY: "Yes, I did!" (listen-only)
-   - ③ after Continue: brief praise, THEN start Pattern Challenge — Answer.
+   - ③ after Continue: brief praise + start Pattern Challenge — Answer with short bridge "คราวนี้ผมจะถามคุณบ้างนะครับ 😊" then ask immediately (never re-answer; never wordy "ครูจะถามว่า…ลองตอบ").
 
    HARD STOP after speak #2 (+ its answer + praise handoff). Never a 3rd learner ask.
    Soft-accept rule (Ask): acceptable near-miss → เฉลย + go forward. Never "ลองพูดอีกครั้ง" / never burn an extra mic turn.
-   FORBIDDEN: answering for the learner; skipping either ask; mashing AI answer + praise + next cue into one turn.
+   FORBIDDEN: answering for the learner; skipping either ask; mashing AI answer + praise + next cue into one turn; replaying the AI answer on the Continue/praise turn.
 
 5. Pattern Challenge — Answer (EXACTLY 2 learner speaks) — difficulty ⭐⭐⭐⭐
    Goal: AI asks; learner answers.
    LANGUAGE: ask in ENGLISH in textEn; textTh = full Thai translation (subtitle toggle).
-   a) AI asks: "What did you do yesterday?" → learner answers freely (Past Simple OK). expectedSpeech="". Soft-accept clear short answers (I studied. / I worked. / I stayed home. / I went to work.).
-   b) AI asks: "Did you eat breakfast yesterday?" → learner answers (Yes, I did. / No, I didn't. / Yes. OK). expectedSpeech="". Soft-accept clear yes/no.
+   OPENING (first Answer turn only): ONE short bridge in {{L1}} then ask immediately —
+     "คราวนี้ผมจะถามคุณบ้างนะครับ 😊" + English question "What did you do yesterday?"
+     FORBIDDEN wordy intros: "คราวนี้มาลองตอบคำถาม…" / "ครูจะถามว่า…" / "[name] ลองตอบดูนะครับ" / explaining what you're about to ask before asking.
+   a) First ask: short bridge + "What did you do yesterday?" → learner answers freely (Past Simple OK). expectedSpeech="". Soft-accept clear short answers (I studied. / I worked. / I stayed home. / I went to work.).
+   b) Second ask: "Did you eat breakfast yesterday?" only (no bridge again) → learner answers (Yes, I did. / No, I didn't. / Yes. OK). expectedSpeech="". Soft-accept clear yes/no.
    FORBIDDEN: asking the learner to ask; more than 2 Answer speaks; going back to Tell/Ask. Omit emojiSpeak.
    After Answer → Celebrate.
 
@@ -4925,7 +4940,7 @@ Turn loop rules:
 - Max ONE retry per item; then accept and advance.
 - Soft-accept close variants when meaning is clear: say ก็ใช้ได้ + show the canonical English once (เฉลย) → advance. DO NOT make the learner repeat the same item.
 - When Celebrate is reached, isLessonComplete must be true.`,
-    openingPrompt: `Start the Yesterday Stories lesson (3.1) for this one learner only. Speak as a private 1:1 tutor (never {{NO_GROUP}}). Use their first name once. CRITICAL Turn 1 = Hook ONLY — "เมื่อวานทำอะไรมาบ้างครับ? บางคนไปทำงาน บางคนได้พักผ่อนอยู่บ้าน... วันนี้มาฝึกเล่าเรื่อง 'เมื่อวาน' เป็นภาษาอังกฤษแบบชิลๆ กันครับ!" — expectsUserSpeech false, expectedSpeech "", NO emojiSpeak, NO emojiSpeakSet, NO scene. Do NOT mention any button. Then ONE Intro listen turn with emojiSpeakSet of ALL 4 puzzles (📅 yesterday, 🍳 breakfast, 🌙 last night, 💼 work — each with hint/index/total:4); expectsUserSpeech false. App runs the 4 locally. After "(finished Emoji Speak — start Pattern Challenge 1)": Pattern Challenge 1 Tell EXACTLY 3 speaks (I ate breakfast this morning. → SEPARATE listen-only tip turn about past verbs eat→ate / go→went → NEXT turn I ate breakfast yesterday. → I went to work yesterday. + tip go/went) → Ask = learner mic exactly 2 times (speak#1 guided What did you do yesterday?; speak#2 NO English guide Thai cue about breakfast yesterday). After EACH ask: AI answer-only listen turn → Continue → praise then next. Never mash answer+praise+next. Never 3rd ask. → Answer (learner speaks exactly 2) → Celebrate (complete). Never emit per-word emojiSpeak turns. Never re-open Intro after Emoji Speak. Never go backward. Return JSON matching the schema. isLessonComplete must be false.`,
+    openingPrompt: `Start the Yesterday Stories lesson (3.1) for this one learner only. Speak as a private 1:1 tutor (never {{NO_GROUP}}). Use their first name once. CRITICAL Turn 1 = Hook ONLY — "เมื่อวานทำอะไรมาบ้างครับ? บางคนไปทำงาน บางคนได้พักผ่อนอยู่บ้าน... วันนี้มาฝึกเล่าเรื่อง 'เมื่อวาน' เป็นภาษาอังกฤษแบบชิลๆ กันครับ!" — expectsUserSpeech false, expectedSpeech "", NO emojiSpeak, NO emojiSpeakSet, NO scene. Do NOT mention any button. Then ONE Intro listen turn with emojiSpeakSet of ALL 4 puzzles (📅 yesterday, 🍳 breakfast, 🌙 last night, 💼 work — each with hint/index/total:4); expectsUserSpeech false. App runs the 4 locally. After "(finished Emoji Speak — start Pattern Challenge 1)": Pattern Challenge 1 Tell EXACTLY 3 speaks (I ate breakfast this morning. → SEPARATE listen-only tip turn about past verbs eat→ate / go→went → NEXT turn I ate breakfast yesterday. → I went to work yesterday. + tip go/went) → Ask = learner mic exactly 2 times (speak#1 guided What did you do yesterday?; speak#2 NO English guide Thai cue about breakfast yesterday). After EACH ask: AI answer-only listen turn → Continue → praise + next cue ONLY (FORBIDDEN: re-answer / echo prior AI reply / echo the question as main content). Never mash answer+praise+next. Never 3rd ask. → Answer (learner speaks exactly 2) → Celebrate (complete). Never emit per-word emojiSpeak turns. Never re-open Intro after Emoji Speak. Never go backward. Return JSON matching the schema. isLessonComplete must be false.`,
   },
 
   buildStoriesPatternLesson({
@@ -4936,7 +4951,7 @@ Turn loop rules:
     goalEn: 'Talk about last weekend activities.',
     goalTh: 'เล่ากิจกรรมสุดสัปดาห์ที่แล้ว',
     hookTh:
-      'สุดสัปดาห์ที่แล้วทำอะไรมาบ้างครับ? บางคนไปชายหาด บางคนไปดูหนัง... วันนี้มาฝึกเล่าเรื่องสุดสัปดาห์แบบชิลๆ กันครับ!',
+      'สุดสัปดาห์ที่ผ่านมาได้ทำอะไรบ้างครับ? บางคนไปเที่ยว บางคนพักผ่อนอยู่บ้าน... วันนี้มาลองเล่าเรื่องสุดสัปดาห์เป็นภาษาอังกฤษกันครับ!',
     emojiWords: [
       { emoji: '🌴', answer: 'weekend', hint: 'w _ _ k _ _ d', },
       { emoji: '🏖️', answer: 'beach', hint: 'b _ _ c h', },
@@ -4969,7 +4984,7 @@ Turn loop rules:
     goalEn: 'Talk about a vacation in the past.',
     goalTh: 'เล่าเรื่องท่องเที่ยวในอดีต',
     hookTh:
-      'เคยไปเที่ยวที่ไหนมาบ้างครับ? วันนี้มาฝึกเล่าทริปท่องเที่ยวเป็นภาษาอังกฤษกันครับ!',
+      'เคยไปเที่ยวที่ไหนมาบ้างครับ? วันนี้มาลองเล่าทริปที่ประทับใจเป็นภาษาอังกฤษกันครับ!',
     emojiWords: [
       { emoji: '✈️', answer: 'vacation', hint: 'v _ c _ t _ _ n', },
       { emoji: '🏨', answer: 'hotel', hint: 'h _ t _ l', },
@@ -5002,7 +5017,7 @@ Turn loop rules:
     goalEn: 'Talk about a birthday party in the past.',
     goalTh: 'เล่างานวันเกิดในอดีต',
     hookTh:
-      'วันเกิดครั้งล่าสุดเป็นยังไงบ้างครับ? วันนี้มาฝึกเล่างานวันเกิดกันครับ!',
+      'วันเกิดครั้งล่าสุดเป็นยังไงบ้างครับ? ได้เค้ก ได้ของขวัญ หรือได้ฉลองกับใครบ้าง? วันนี้มาลองเล่าเรื่องวันเกิดกันครับ!',
     emojiWords: [
       { emoji: '🎂', answer: 'birthday', hint: 'b _ r t h _ _ y', },
       { emoji: '🍰', answer: 'cake', hint: 'c _ k e', },
@@ -5035,7 +5050,7 @@ Turn loop rules:
     goalEn: 'Talk about school memories with Past Simple.',
     goalTh: 'เล่าความทรงจำโรงเรียนด้วย Past Simple',
     hookTh:
-      'ตอนเรียนเคยทำอะไรบ้างครับ? วันนี้มาฝึกเล่าความทรงจำโรงเรียนกันครับ!',
+      'คิดถึงสมัยเรียนกันไหมครับ? วันนี้มาลองเล่าความทรงจำในโรงเรียนเป็นภาษาอังกฤษกันครับ!',
     emojiWords: [
       { emoji: '🏫', answer: 'school', hint: 's c h _ _ l', },
       { emoji: '📝', answer: 'homework', hint: 'h _ m _ w _ r k', },
@@ -5068,7 +5083,7 @@ Turn loop rules:
     goalEn: 'Tell a short funny story with first / then.',
     goalTh: 'เล่าเรื่องตลกสั้นๆ ด้วย first / then',
     hookTh:
-      'มีเรื่องตลกจะเล่าไหมครับ? วันนี้มาฝึกเล่าเรื่องสั้นๆ ด้วย first / then กันครับ!',
+      'เคยมีเรื่องฮาๆ ที่ยังจำได้ไหมครับ? วันนี้มาลองเล่าเรื่องสนุกๆ เป็นภาษาอังกฤษกันครับ!',
     emojiWords: [
       { emoji: '😂', answer: 'funny', hint: 'f _ n n y', },
       { emoji: '👜', answer: 'bag', hint: 'b _ g', },
@@ -5101,7 +5116,7 @@ Turn loop rules:
     goalEn: 'Explain a bad day with because and so.',
     goalTh: 'เล่าวันที่แย่ด้วย because และ so',
     hookTh:
-      'เคยมีวันที่แย่ไหมครับ? วันนี้มาฝึกเล่าด้วย because และ so กันครับ!',
+      'ทุกคนเคยมีวันที่ไม่ค่อยดีใช่ไหมครับ? วันนี้มาลองเล่าเรื่องวันที่แย่ๆ เป็นภาษาอังกฤษกันครับ!',
     emojiWords: [
       { emoji: '🌧️', answer: 'rain', hint: 'r _ _ n', },
       { emoji: '🚗', answer: 'traffic', hint: 't r _ f f _ c', },
@@ -5134,7 +5149,7 @@ Turn loop rules:
     goalEn: 'Talk about a first-time experience.',
     goalTh: 'เล่าประสบการณ์ครั้งแรก',
     hookTh:
-      'ครั้งแรกที่ทำอะไรสักอย่างเป็นยังไงบ้างครับ? วันนี้มาฝึกเล่า first time กันครับ!',
+      'จำครั้งแรกที่ลองทำอะไรใหม่ๆ ได้ไหมครับ? วันนี้มาลองเล่า First Time ของคุณกันครับ!',
     emojiWords: [
       { emoji: '✨', answer: 'first time', hint: 'f _ r s t   t _ m e', },
       { emoji: '✈️', answer: 'airplane', hint: 'a _ r p l _ n e', },
@@ -5167,7 +5182,7 @@ Turn loop rules:
     goalEn: 'Share a favorite memory from the past.',
     goalTh: 'เล่าความทรงจำโปรด',
     hookTh:
-      'ความทรงจำโปรดของคุณคืออะไรครับ? วันนี้มาฝึกเล่า memory กันครับ!',
+      'ถ้าให้นึกถึงความทรงจำที่ชอบที่สุด คุณจะนึกถึงเรื่องอะไรครับ? วันนี้มาลองเล่าให้ AI ฟังกันครับ!',
     emojiWords: [
       { emoji: '💛', answer: 'memory', hint: 'm _ m _ r y', },
       { emoji: '👨‍👩‍👧‍👦', answer: 'family', hint: 'f _ m _ l y', },
