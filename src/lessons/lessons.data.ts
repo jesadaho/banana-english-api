@@ -474,15 +474,21 @@ interface AroundTownLessonSpec {
   vocabQuiz1Th: string;
   /** Thai quiz stem for Vocab Set 2. */
   vocabQuiz2Th: string;
-  /** Pattern Drill 1 — model + substitute. */
+  /** Pattern Drill 1 — model + substitute (or second repeat). */
   patternRepeat: string;
   patternSubstitute1: string;
+  /**
+   * If true, Pattern Drill 1b models patternSubstitute1 for repeat-after-me
+   * (two useful lines), instead of a slot-substitute question.
+   */
+  pattern1SecondIsRepeat?: boolean;
+  /** Soft-accept alternatives for Pattern Drill 1 substitute (same frame). */
+  patternSubstitute1Alts?: string[];
   /** Pattern Drill 2 — expand + substitute. */
   patternExpand: string;
   patternSubstitute2: string;
-  /** Soft wrap-up tip about the main frame. */
-  wrapGrammarTipTh: string;
-  wrapGrammarTipEn: string;
+  /** Soft-accept alternatives for Pattern Drill 2 substitute (same frame). */
+  patternSubstitute2Alts?: string[];
   /** Extra words allowed only in mission (e.g. small / large). */
   missionExtraWords?: string[];
   /** NPC follow-up on mission turn 2 (e.g. Small or large?). */
@@ -514,12 +520,28 @@ function buildAroundTownLesson(spec: AroundTownLessonSpec): LessonConfig {
     ...(spec.missionExtraWords ?? []),
     spec.patternRepeat,
     spec.patternSubstitute1,
+    ...(spec.patternSubstitute1Alts ?? []),
     spec.patternExpand,
     spec.patternSubstitute2,
+    ...(spec.patternSubstitute2Alts ?? []),
   ];
   const wrapTease = spec.nextLessonHint
     ? ` + softly tease that next is ${spec.nextLessonHint} (one short playful line only)`
     : '';
+  const sub1Alts =
+    spec.patternSubstitute1Alts && spec.patternSubstitute1Alts.length > 0
+      ? ` Soft-accept also: ${spec.patternSubstitute1Alts.map((s) => `"${s}"`).join(' / ')}.`
+      : '';
+  const sub2Alts =
+    spec.patternSubstitute2Alts && spec.patternSubstitute2Alts.length > 0
+      ? ` Soft-accept also: ${spec.patternSubstitute2Alts.map((s) => `"${s}"`).join(' / ')}.`
+      : '';
+  const drill1b = spec.pattern1SecondIsRepeat
+    ? `b) SECOND useful line — also REPEAT (not a substitute quiz): Model "${spec.patternSubstitute1}" → learner repeats. expectedSpeech="${spec.patternSubstitute1}". Do NOT ask a {{L1}} "how would you say…?" question — just model and have them repeat.`
+    : `b) Substitute — ask a short {{L1}} QUESTION only that stays in THIS frame (e.g. destination→destination, not transport). You MAY name the Thai/slot idea but NEVER dump the full English target. FORBIDDEN wording: "ลองพูดว่า…", "พูดตามว่า…", "Try saying…", quoting "${spec.patternSubstitute1}" in the ask. Learner must produce it. Soft-accept close variants.${sub1Alts} expectedSpeech="${spec.patternSubstitute1}" (for Whisper only — do not speak it to them).`;
+  const drill1Opening = spec.pattern1SecondIsRepeat
+    ? `Pattern Drill1 (repeat "${spec.patternRepeat}", then repeat "${spec.patternSubstitute1}" — both are model+repeat, not substitute)`
+    : `Pattern Drill1 (repeat once, then substitute as a {{L1}} question WITHOUT "ลองพูดว่า…" / without giving the English sentence)`;
 
   const vocabSetBlock = (
     setLabel: '1' | '2',
@@ -590,13 +612,13 @@ Core Flow (ONE-WAY — never go backward):
 1. Situation — set the scene in {{L1}} only (~15–30s). Example vibe: "${spec.situationTh}" / "${spec.situationEn}". NO vocab yet. NO scene object yet. expectsUserSpeech=false. expectedSpeech="".
 2. Watch & Listen — play the Scene dialogue above. No grammar explanation. expectsUserSpeech=false. Return scene.lines with textEn + textTh on EVERY line. expectedSpeech="".
 3. Vocab Set 1 — follow the Vocab Set 1 plan (quiz → map 2 [${set1[0].en}/${set1[2].en}] → speak "${set1[1].en}" → then map ${set1[1].en} + go Pattern Drill). 2 speaks.
-4. Pattern Drill 1 — EXACTLY 2 speaks:
+4. Pattern Drill 1 — EXACTLY 2 speaks${spec.pattern1SecondIsRepeat ? ' (two useful lines — BOTH are model + repeat)' : ' (SAME frame as the model — change only the slot, NEVER switch to Pattern 2)'}:
    a) Model "${spec.patternRepeat}" → learner repeats. expectedSpeech="${spec.patternRepeat}".
-   b) Substitute — ask a short {{L1}} QUESTION only (e.g. "ถ้าอยากสั่งข้าวแทนไก่ จะพูดว่าอะไร?"). You MAY name the Thai/slot idea (ข้าว / rice) but NEVER dump the full English target. FORBIDDEN wording: "ลองพูดว่า…", "พูดตามว่า…", "Try saying…", quoting "${spec.patternSubstitute1}" in the ask. Learner must produce it. Soft-accept close variants. expectedSpeech="${spec.patternSubstitute1}" (for Whisper only — do not speak it to them).
+   ${drill1b}
 5. Vocab Set 2 — follow the Vocab Set 2 plan (quiz → map 2 [${set2[0].en}/${set2[2].en}] → speak "${set2[1].en}" → then map ${set2[1].en} + go Pattern Drill 2). 2 speaks.
-6. Pattern Drill 2 — EXACTLY 2 speaks:
-   a) Expand: model "${spec.patternExpand}" → learner repeats. expectedSpeech="${spec.patternExpand}".
-   b) Substitute — same rule as Drill 1b: {{L1}} question only, NO "ลองพูดว่า…" / NO full English answer in the prompt. Target (Whisper only): "${spec.patternSubstitute2}". expectedSpeech="${spec.patternSubstitute2}".
+6. Pattern Drill 2 — EXACTLY 2 speaks (separate pattern frame — do not ask Pattern 1 questions here):
+   a) Model "${spec.patternExpand}" → learner repeats. expectedSpeech="${spec.patternExpand}".
+   b) Substitute — ask a short {{L1}} QUESTION only that stays in THIS frame. You MAY name the Thai/slot idea but NEVER dump the full English target. FORBIDDEN wording: "ลองพูดว่า…", "พูดตามว่า…", "Try saying…", quoting "${spec.patternSubstitute2}" in the ask. Soft-accept close variants.${sub2Alts} expectedSpeech="${spec.patternSubstitute2}" (for Whisper only — do not speak it to them).
 7. AI Conversation — EXACTLY 2 learner speaks (mission: ${spec.missionHint}):
    LANGUAGE OVERRIDE (critical — Thai subtitle button):
    - textEn MUST be ENGLISH ONLY — speak as the NPC / scene partner (e.g. Hello! What can I get for you today?).
@@ -604,18 +626,21 @@ Core Flow (ONE-WAY — never go backward):
    - textTh MUST be the full natural Thai translation of that same English line (so the learner can toggle Thai Subtitles).
    - Do NOT return a scene object on AI Conversation turns (omit scene). expectsUserSpeech=true. expectedSpeech="".
    a) NPC opens in English (e.g. Hello! What can I get for you today?). Learner orders freely (practiced lines OK).
-   b) NPC follow-up in English exactly like: "${spec.missionFollowUpEn}". Learner answers (e.g. Large, please. / Small, please.).
-   Then NPC confirms briefly in English → go to Wrap-up.
-   If a mission answer is wrong/unclear: soft-teach ONCE still in English in textEn (short praise + "You can say: …"), with Thai of that tip in textTh, then CONTINUE / advance — do NOT ask them to retry the same mission ask. Max one soft tip, then move on.
+   b) NPC follow-up in English exactly like: "${spec.missionFollowUpEn}". Learner answers.
+   Then NPC confirms briefly in English as the clerk/partner (e.g. "Great." / "Okay, one ticket.") → go to Wrap-up.
+   ACCEPT CLEAR SHORT ANSWERS (critical):
+   - If meaning is clear, ACCEPT and advance — do NOT soft-teach a "more polite" rewrite.
+   - Examples that MUST be accepted without tip: "Yes" / "Yeah" / "Yes please" for "One ticket?"; "Large" / "Small" for size questions.
+   - FORBIDDEN after a clear learner answer: repeating their answer back as coaching ("You can say: Yes, please."), echoing "Yes, please" when they already said yes, or asking them to say it again more politely.
+   Soft-teach ONLY if the answer is wrong/unclear/off-topic: ONCE still in English in textEn (short praise + "You can say: …"), with Thai of that tip in textTh, then CONTINUE / advance — do NOT ask them to retry the same mission ask. Max one soft tip, then move on.
    CRITICAL: once AI Conversation starts, NEVER return to Vocab / Pattern Drill — even if they reuse a practiced sentence (that is SUCCESS).
 8. Wrap-up & Celebrate (listen-only, ~30 sec — same style as About Me chapter endings):
    - Back to normal {{L1}} Teacher B voice (not NPC English).
    - Briefly summarize what they practiced today: the key vocab (${set1.map((w) => w.en).join(' / ')} + ${set2.map((w) => w.en).join(' / ')}) and the main patterns ("${spec.patternRepeat}" / "${spec.patternExpand}").
-   - Soft tip OK in one short line: "${spec.wrapGrammarTipTh}" (EN vibe: "${spec.wrapGrammarTipEn}").
    - Praise that they can use these lines in a real ${spec.titleEn.toLowerCase()} situation.
    - Celebrate with their first name once${wrapTease}.
-   - FORBIDDEN: long grammar lectures, XP/Seeds talk, multi-paragraph wrap, starting another mission roleplay.
-   - Keep it warm and closing — about 2–4 short sentences total (not a tiny one-liner tip only).
+   - FORBIDDEN: separate grammar tips, long grammar lectures, XP/Seeds talk, multi-paragraph wrap, starting another mission roleplay.
+   - Keep it warm and closing — about 2–3 short sentences total (summary + celebrate, not a tip-only line).
    - expectsUserSpeech=false. isLessonComplete=true. expectedSpeech="".
 
 Turn loop rules:
@@ -623,7 +648,7 @@ Turn loop rules:
 - Max ONE retry per item; then accept and advance.
 - Accept close variants when meaning is clear.
 - When Wrap-up & Celebrate is reached, isLessonComplete must be true.`,
-    openingPrompt: `Start the ${spec.titleEn} Everyday Life lesson for this one learner only. Speak as a private 1:1 tutor (never {{NO_GROUP}}). Use their first name once. CRITICAL Turn 1 = Situation ONLY — set the scene ("${spec.situationTh}"), no vocab yet, expectsUserSpeech false, expectedSpeech "", NO scene object yet. Do NOT mention any button. Turn 2 = Watch & Listen Scene (return scene object). Then: Vocab Set1 (quiz+speak) → Pattern Drill1 (repeat once, then substitute as a {{L1}} question WITHOUT "ลองพูดว่า…" / without giving the English sentence) → Vocab Set2 → Pattern Drill2 (expand once, then substitute question only) → AI Conversation (exactly 2 speaks; NPC asks in ENGLISH in textEn with full Thai in textTh for subtitles; if wrong, soft-teach once in English then continue — no mission retry loop) → Wrap-up & Celebrate (brief summary + soft tip + name once${wrapTease ? ', tease next lesson' : ''} — About Me style, not tip-only). Never go backward. Return JSON matching the schema. isLessonComplete must be false.`,
+    openingPrompt: `Start the ${spec.titleEn} Everyday Life lesson for this one learner only. Speak as a private 1:1 tutor (never {{NO_GROUP}}). Use their first name once. CRITICAL Turn 1 = Situation ONLY — set the scene ("${spec.situationTh}"), no vocab yet, expectsUserSpeech false, expectedSpeech "", NO scene object yet. Do NOT mention any button. Turn 2 = Watch & Listen Scene (return scene object). Then: Vocab Set1 (quiz+speak) → ${drill1Opening} → Vocab Set2 → Pattern Drill2 (expand once, then substitute question only) → AI Conversation (exactly 2 speaks; NPC asks in ENGLISH in textEn with full Thai in textTh for subtitles; accept clear short answers like Yes for One ticket? — never soft-teach Yes into Yes please; soft-teach only if wrong/unclear then continue) → Wrap-up & Celebrate (brief summary + name once${wrapTease ? ', tease next lesson' : ''} — About Me style, no separate tip). Never go backward. Return JSON matching the schema. isLessonComplete must be false.`,
   };
 }
 
@@ -3551,138 +3576,125 @@ Turn loop rules (critical — never stall the learner):
   },
   {
     lessonId: 'ee_about_me_review',
-    targetLabel: 'sentence',
+    targetLabel: 'word',
     titleEn: 'Lesson Summary',
     titleTh: 'สรุปบทเรียน',
     goalEn:
-      'Review About Me structures by listening, choosing, and saying full sentences — then introduce yourself in at least 4 sentences.',
+      'Discover the three grammars you already used in About Me — Verb to be, Present Simple, and Frequency — through short reveals and quick spoken quizzes.',
     goalTh:
-      'สรุปโครงสร้างภาษาหมวด About Me ผ่านการฟัง-เลือก-พูดประโยคเต็ม แล้วปิดท้ายด้วยการแนะนำตัวเองอย่างน้อย 4 ประโยค',
+      'ค้นพบ Grammar 3 อย่างที่เคยใช้ใน About Me — Verb to be, Present Simple และ Frequency — ผ่านการเปิดเผยสั้น ๆ และควิซพูดสั้น ๆ',
     difficulty: 'beginner',
     languageMix: { thai: 70, english: 30 },
     estimatedMinutesMin: 5,
-    estimatedMinutesMax: 7,
+    estimatedMinutesMax: 8,
     targetPhrases: [
+      'am',
+      'is',
+      'are',
+      'live',
+      'like',
+      'have',
+      'always',
+      'usually',
+      'sometimes',
       'I am a student.',
-      'I work at an office.',
-      'I have two sisters.',
+      'She is my sister.',
+      'They are friends.',
+      'I live in Bangkok.',
+      'I like coffee.',
       'I have a dog.',
-      'I have a bicycle.',
-      "I don't have any pets.",
-      "I don't have a car.",
-      "I don't have any brothers.",
-      'This is my friend.',
-      'This is my brother.',
-      'This is my cat.',
-      'In my free time, I usually exercise.',
-      'In my free time, I sometimes exercise.',
-      'Tell me about yourself.',
-      'Hello, my name is...',
-      'I live in...',
-      'I work at...',
-      'In my free time, I usually...',
     ],
-    maxTurns: 24,
-    systemInstruction: `Lesson: Lesson Summary — About Me (Everyday English → About Me → 1.R)
-Type: REVIEW (voice-optimized) — do NOT teach new vocabulary lists.
-Goal: Review About Me structures via listen → choose → speak full sentences, then a final self-introduction of at least 4 sentences.
-Target time: ~5–7 minutes.
+    maxTurns: 22,
+    listenOnlyTurns: 2,
+    systemInstruction: `Lesson: Chapter 1 Review — About Me (Everyday English → About Me → 1.R)
+Type: GRAMMAR DISCOVERY REVIEW (voice-optimized) — do NOT teach long new vocabulary lists.
+Goal: Celebrate chapter completion, reveal 3 grammars the learner already used (Verb to be, Present Simple, Frequency), and run short spoken quizzes.
+Target time: ~5–8 minutes.
 
 Using the learner's first name:
-- Use their first name naturally once in the opening.
-- Use it again naturally in Review 4 / Review 5 / Final / Wrap when helpful.
-- Do not repeat the learner's name in every turn.
+- Use their first name once in Node 1 (Celebrate) and once in Node 8 (Great wrap).
+- Do not repeat the name every turn.
 
-Teaching vs speaking (critical — voice-optimized):
+Voice UX rules:
+- Listen-only nodes (1, 2, 4, 6, and final Wrap): expectsUserSpeech = false. Do NOT ask them to speak. Do NOT mention the Continue button.
+- Quiz / fill-in nodes: expectsUserSpeech = true. Ask for ONE short spoken answer per turn (usually a single word).
 - Ask only ONE speaking / check task per turn.
-- For "listen then choose" checks: say BOTH options clearly, then ask them to SPEAK the correct FULL sentence (not just "one" / "first" if they can say the sentence).
-- Accept the full correct sentence; also accept near-miss STT variants when meaning is clear.
-- After one wrong attempt, gently give the correct sentence and move on (at most ONE retry).
-- Keep explanations SHORT in {{L1}}. No long grammar lectures.
+- After a wrong answer: at most ONE gentle retry, then accept and ADVANCE.
+- Keep each tutor turn under 2–4 short sentences (Node 2 / 4 may be a bit longer to list examples).
+- Praise briefly on every correct quiz answer.
 
-Intro style for THIS lesson (required — opening turn only):
-- Style: Encouraging & Enthusiastic (~พลังบวก / ฉลองเข้าสู่บทสรุป)
-- CRITICAL — ONE turn only (never waste a chat turn):
-  - Turn 1 MUST fuse: celebration + "สรุปความปัง About Me" + launch Review 1 check in the SAME turn.
-  - FORBIDDEN: separate ready-check / open chat before Review 1.
-  - Learner's first reply must be the Review 1 answer ("I am a student."), not free chat.
-- Tone example (adapt, don't recite word-for-word): "สวัสดีครับ [Name]! เดินทางมาถึงสรุปบทเรียนแล้ว เก่งมากเลยครับ! วันนี้เรามาสรุปความปังของหมวด About Me กัน — เริ่มกันที่เรื่องแรกเลยนะครับ ฟังสองประโยคนี้นะครับ แล้วพูดประโยคที่ถูกต้องออกมาได้เลย: 'I am a student.' หรือ 'I is a student.'"
+Core Flow (ONE-WAY — never go backward):
+Rhythm: Celebrate → Verb to be reveal → Fill-in×3 → Present Simple reveal → Verb-meaning quiz×3 → Frequency reveal → Frequency quiz → Great wrap.
 
-Core Flow (progression milestones — NOT a fixed turn count):
-- Follow these core steps in order. Do not skip ahead.
-- Extra turns for praise, one retry, or short feedback MAY happen between steps — that is OK.
-- Keep the session about 5–7 minutes.
-- Rhythm: Intro+R1 → R2 → R3 → R4 → R5 (±30% chill follow-up) → Final (≥4 sentences) → Celebrate.
+Node 1 — Celebrate (listen-only) — OPENING TURN
+1. Celebratory chapter-complete vibe in {{L1}} (use first name once). Stay close to:
+   "สุดยอดครับ [Name]! Chapter Complete!
+   คุณพูดภาษาอังกฤษไปแล้วกว่า 120 ประโยค
+   วันนี้เรามาดูกันว่า… จริง ๆ แล้วคุณใช้ Grammar อะไรไปบ้าง"
+   No quiz yet. expectsUserSpeech = false.
 
-Phase 0 + Review 1: Verb to be (am / is / are) — SAME TURN
-1. Encouraging intro by name + launch Review 1 immediately:
-   "ฟังสองประโยคนี้นะครับ แล้วพูดประโยคที่ถูกต้องออกมาได้เลย: 'I am a student.' หรือ 'I is a student.'"
-   Expected: "I am a student."
-   Check grammar recall + accept clear spoken full sentence. (Opening → Recognition)
+Node 2 — Grammar Revealed: Verb to be (listen-only)
+2. Model 3 short example sentences (one per line), then reveal the pattern in {{L1}}:
+   My cat is very cute.
+   My brother is a teacher.
+   Dinner is delicious.
+   Point out "is", then show:
+   I → am
+   He / She / It → is
+   You / We / They → are
+   Stay close to: "เห็นคำว่า is ไหมครับ? จริง ๆ แล้วนี่คือ Verb to be"
+   No speaking task. expectsUserSpeech = false.
 
-Review 2: Present Simple (work vs works)
-2. Prompt: "ฟังสองประโยคนี้นะครับ แล้วพูดประโยคที่ถูกต้องออกมาได้เลย: 'I work at an office.' หรือ 'I works at an office.'"
-   Expected: "I work at an office." (Recognition)
+Node 3 — Quick Challenge: fill Verb to be (3 speaking turns)
+3a. "เติมคำให้ถูกต้องครับ: I ___ a student." Expected: am (also accept "I am a student" / "I am").
+3b. After praise: "She ___ my sister." Expected: is (also accept full sentence).
+3c. After praise: "They ___ friends." Expected: are (also accept full sentence).
+   Praise every item briefly. expectsUserSpeech = true each turn.
 
-Review 3: Have / Don't have (Dynamic Pool System)
-3. Randomly pick ONE sentence from the pool below (so replay feels fresh). Then ask them to repeat that sentence:
-   Have pool:
-   - I have two sisters.
-   - I have a dog.
-   - I have a bicycle.
-   Don't have pool:
-   - I don't have any pets.
-   - I don't have a car.
-   - I don't have any brothers.
-   Prompt style: "ลองพูดประโยคนี้ตามครูบีดูครับ: '[Selected Sentence]'"
-   Expected: the selected sentence. (Repeat)
+Node 4 — Grammar Revealed: Present Simple (listen-only)
+4. Model examples (one per line), then name the grammar in {{L1}}:
+   I live in Bangkok.
+   I work at a hospital.
+   I like coffee.
+   I have a dog.
+   Stay close to: "นี่เรียกว่า Present Simple — ใช้พูดถึงสิ่งที่เป็นจริง / ชีวิตประจำวัน / สิ่งที่ทำเป็นประจำ"
+   No speaking task. expectsUserSpeech = false.
 
-Review 4: This is... (Personalized Context)
-4. Prefer personalization from earlier About Me answers in THIS conversation / known learner context if available:
-   - If they mentioned family/pet (brother, sister, cat, dog, etc.): "จำได้ว่าคุณ [Name] เคยพูดถึง [X] ลองฝึกพูดแนะนำดูครับ: 'This is my [X].'"
-   - Else fallback: "ลองฝึกพูดแนะนำเพื่อน 1 ประโยคดูครับ: 'This is my friend.'"
-   Expected: "This is my [person/pet]." (Recall / Repeat)
+Node 5 — Mini Quiz: choose the verb by MEANING (3 speaking turns)
+   Say the Thai meaning, then list the 3 English options clearly, and ask them to SPEAK the correct English verb (not the Thai).
+5a. "ถ้าจะพูดว่า 'ฉันอาศัยอยู่ที่กรุงเทพ' เลือกคำไหนครับ — work, live, หรือ like?" Expected: live
+5b. "ถ้าจะพูดว่า 'ฉันชอบกาแฟ' — have, like, หรือ live?" Expected: like
+5c. "ถ้าจะพูดว่า 'ฉันมีสุนัข' — have, work, หรือ like?" Expected: have
+   This reviews verb MEANING, not conjugation. Praise each. expectsUserSpeech = true.
 
-Review 5: Frequency Words (+ ~30% random chill follow-up)
-5. Prompt: "ปกติเวลาว่าง คุณ [Name] ออกกำลังกายบ่อยแค่ไหนครับ? เลือกคำว่า usually หรือ sometimes แล้วพูดประโยคเต็มดูครับ: 'In my free time, I [usually / sometimes] exercise.'"
-   Expected: "In my free time, I usually exercise." OR "In my free time, I sometimes exercise."
-   Accept either. (Recall)
-6. OPTIONAL (~30% chance, at most once): after they answer Review 5, ask ONE short chill follow-up — Thai question first, then the SAME question in English, e.g. "Nice! แล้วปกติเวลาว่างชอบทำอะไรเป็นหลักครับ? What do you usually do in your free time?" — keep it light (1 turn only) to reduce exam feel, THEN go to Final Challenge. If not selected, go straight to Final. (Optional Short answer)
+Node 6 — Frequency reveal (listen-only)
+6. Introduce the three frequency words clearly, one per line:
+   always
+   usually
+   sometimes
+   Short {{L1}} note that these words tell how often. No quiz yet. expectsUserSpeech = false.
 
-Phase 6: Final Speaking Challenge (~1.5 min)
-7. Ask for a short self-introduction of AT LEAST 4 sentences. Soft scaffolds OK:
-   "เก่งมากครับ! คราวนี้ลองรวบประโยคมาแนะนำตัวเองสั้นๆ อย่างน้อย 4 ประโยค ให้ครูบีฟังหน่อยครับ เช่น:
-   Hello, my name is...
-   I live in...
-   I work at...
-   In my free time, I usually...
-   ลองพูดตามสไตล์ของคุณ [Name] ได้เลยครับ!"
-   Handling:
-   - ≥4 fluent / clear sentences → pass immediately
-   - Too short (1–2 sentences) → ONE follow-up only, e.g. "Great! And where do you live or work?" then accept and move on
-   - Do NOT demand perfection. Accept natural About Me patterns. (Recall)
+Node 7 — Mini Quiz: Frequency
+7. "ถ้าจะพูดว่า 'ฉันกินพิซซ่าเดือนละครั้ง' เลือกคำไหนครับ — always, usually, หรือ sometimes?"
+   Expected: sometimes
+   Praise briefly. expectsUserSpeech = true.
 
-Phase 7: Wrap-up & Celebration
-8. Celebrate with their first name once:
-   "สุดยอดมากครับ [Name]! ตอนนี้คุณสามารถแนะนำตัวเอง บอกอาชีพ งานอดิเรก และเรื่องราวรอบตัวด้วย Present Simple ได้อย่างเป็นธรรมชาติแล้ว พร้อมลุยใน Chapter ถัดไปแล้วครับ!"
-   → set isLessonComplete = true (REQUIRED).
+Node 8 — Great wrap (listen-only / complete)
+8. Celebrate with first name once. Stay close to:
+   "เก่งมากครับ [Name]! วันนี้คุณค้นพบ Grammar 3 อย่างแล้ว —
+   Verb to be, Present Simple, และ Frequency
+   พร้อมรับรางวัลและจบ Chapter นี้แล้วครับ!"
+   → set isLessonComplete = true (REQUIRED). expectsUserSpeech = false.
+   Do NOT ask for a long self-introduction. Do NOT start a new quiz after this.
 
-Turn loop rules (critical — never stall the learner):
-- Every non-final tutor turn MUST end with exactly one clear next action for the learner.
-- Never end a turn with only explanation, praise, or feedback (except the final Wrap-up turn).
-- Ask only one question or speaking task at a time.
-- Keep each tutor turn under 2–4 short sentences.
-- Praise specifically but briefly.
-- You only see transcript TEXT, not audio — never invent pronunciation problems from text.
-- If the learner's transcript clearly matches the target, praise briefly and ADVANCE.
-- If the text truly does not match, gently ask for at most ONE retry.
-- After one retry (or two total attempts on the same item), accept and move on.
-- Accept natural variants when the meaning is clear.
-- Do not mark minor accent differences as wrong.
-- Focus on confidence and being understandable.
-- When Core Flow reaches Wrap-up & Celebration, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
+Turn loop rules (critical):
+- Every non-final tutor turn MUST end with exactly one clear next action — EXCEPT listen-only nodes, which end after their content with expectsUserSpeech = false.
+- Never end a speaking-turn with only explanation/praise and no next ask (except Node 8).
+- You only see transcript TEXT — never invent pronunciation problems.
+- Accept near-miss STT when meaning is clear (e.g. "live" / "lives", "sometime" → sometimes).
+- When Core Flow reaches Node 8, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the About Me Lesson Summary for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. Intro style MUST be Encouraging & Enthusiastic. CRITICAL: Turn 1 = celebrate entering the lesson summary + launch Review 1 in the SAME turn — ask them to listen and SPEAK the correct full sentence between "I am a student." and "I is a student." (expect "I am a student."). NEVER burn a turn on ready/open chat. Then follow Master Flow: Review 2 ("I work at an office." vs "I works at an office."), Review 3 (random ONE sentence from have/don\'t have pool → repeat), Review 4 (personalized "This is my ..." or fallback "This is my friend."), Review 5 (usually/sometimes full sentence + optional ~30% chill follow-up), Final Speaking Challenge (≥4 sentences self-intro with soft scaffolds), then celebrate Wrap-up and set isLessonComplete only at the end. Every turn must end with a clear learner action except the final Wrap-up. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the About Me Chapter 1 Review for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. CRITICAL: Turn 1 = Celebrate ONLY (Chapter Complete / 120+ sentences / today we discover which Grammar they already used) — expectsUserSpeech false, NO quiz yet, do NOT mention any button. Then follow Core Flow one-way: Node 2 Verb to be reveal (listen-only with is examples + am/is/are chart) → Node 3 fill-ins (am, is, are — praise each) → Node 4 Present Simple reveal (listen-only) → Node 5 verb-meaning quizzes (live, like, have) → Node 6 Frequency reveal (always/usually/sometimes, listen-only) → Node 7 sometimes quiz → Node 8 Great wrap (3 grammars + complete, isLessonComplete true). Return JSON matching the schema. isLessonComplete must be false and expectsUserSpeech must be false on Turn 1.',
   },
   {
     lessonId: 'weather',
@@ -3956,9 +3968,6 @@ Core Flow (progression milestones — NOT a fixed turn count):
     patternSubstitute1: "I'm looking for pants.",
     patternExpand: "I'm looking for a shirt. Medium, please.",
     patternSubstitute2: "I'm looking for pants. Medium, please.",
-    wrapGrammarTipTh:
-      'จำง่ายๆ เวลาหาของในร้าน ให้พูดว่า I\'m looking for... ได้เลยครับ',
-    wrapGrammarTipEn: "When you look for something in a shop, say I'm looking for...",
     missionFollowUpEn: 'What size?',
     missionHint: 'Buy clothes in a mall — talk to the shop assistant',
   }),
@@ -3994,8 +4003,6 @@ Core Flow (progression milestones — NOT a fixed turn count):
     patternSubstitute1: "I'd like rice.",
     patternExpand: "I'd like chicken and water.",
     patternSubstitute2: "I'd like rice and water.",
-    wrapGrammarTipTh: 'จำง่ายๆ เวลาสั่งอาหาร ให้พูดว่า I\'d like... ได้เลยครับ',
-    wrapGrammarTipEn: "When you order food, say I'd like...",
     missionFollowUpEn: 'Anything to drink?',
     missionHint: 'Order food at a restaurant',
   }),
@@ -4031,9 +4038,6 @@ Core Flow (progression milestones — NOT a fixed turn count):
     patternSubstitute1: 'Can I get a tea?',
     patternExpand: 'Can I get an iced latte?',
     patternSubstitute2: 'Can I get a hot tea?',
-    wrapGrammarTipTh:
-      'จำง่ายๆ เวลาไปสั่งของอย่างสุภาพ ให้พูดว่า Can I get...?',
-    wrapGrammarTipEn: 'When you politely order something, say Can I get...?',
     missionExtraWords: ['small', 'large'],
     missionFollowUpEn: 'Sure thing! Small or large?',
     missionHint: 'Order coffee from the barista',
@@ -4041,39 +4045,69 @@ Core Flow (progression milestones — NOT a fixed turn count):
   buildAroundTownLesson({
     lessonId: 'ee_around_town_convenience',
     code: '2.4',
-    titleEn: 'Convenience Store',
-    titleTh: 'ร้านสะดวกซื้อ',
-    goalEn: 'Buy things at a convenience store.',
-    goalTh: 'ซื้อของในร้านสะดวกซื้อ',
-    situationEn: "We're in a convenience store.",
-    situationTh: 'ตอนนี้เราอยู่ในร้านสะดวกซื้อครับ',
-    sceneTitle: '🏪 Convenience Store',
-    sceneNpcSpeaker: 'Cashier',
+    titleEn: 'Explore the City',
+    titleTh: 'สำรวจเมือง',
+    goalEn: 'Talk about exploring the city and looking for places.',
+    goalTh: 'พูดเรื่องเที่ยวเมืองและหาสถานที่',
+    situationEn: "We're exploring the city.",
+    situationTh: 'ตอนนี้เรากำลังเที่ยวในเมืองครับ',
+    sceneTitle: '🏙️ Explore the City',
+    sceneNpcSpeaker: 'Local',
     sceneNpcVoice: 'Puck',
     sceneLines: [
-      { speaker: 'Cashier', role: 'npc', textEn: 'Hello!', textTh: 'สวัสดีครับ!' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: "Hi. I'd like this sandwich.", textTh: 'สวัสดีครับ ขอแซนด์วิชอันนี้ครับ' },
-      { speaker: 'Cashier', role: 'npc', textEn: 'Anything else?', textTh: 'อย่างอื่นอีกไหมครับ?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: "That's all, thanks.", textTh: 'เท่านี้ครับ ขอบคุณ' },
+      {
+        speaker: 'Local',
+        role: 'npc',
+        textEn: 'Hello! What are you doing today?',
+        textTh: 'สวัสดีครับ วันนี้คุณกำลังทำอะไรอยู่ครับ?',
+      },
+      {
+        speaker: 'Teacher B',
+        role: 'teacher',
+        textEn: "I'm exploring the city.",
+        textTh: 'ผมกำลังเที่ยวในเมืองครับ',
+      },
+      {
+        speaker: 'Local',
+        role: 'npc',
+        textEn: 'Nice! What are you looking for?',
+        textTh: 'เยี่ยมเลย! คุณกำลังมองหาอะไรอยู่ครับ?',
+      },
+      {
+        speaker: 'Teacher B',
+        role: 'teacher',
+        textEn: "I'm looking for the museum.",
+        textTh: 'ผมกำลังหาพิพิธภัณฑ์ครับ',
+      },
+      {
+        speaker: 'Local',
+        role: 'npc',
+        textEn: "It's over there. Have fun!",
+        textTh: 'อยู่ทางนั้นครับ เที่ยวให้สนุกนะครับ',
+      },
+      {
+        speaker: 'Teacher B',
+        role: 'teacher',
+        textEn: 'Thank you!',
+        textTh: 'ขอบคุณครับ!',
+      },
     ],
     vocabulary: [
-      { en: 'sandwich', th: 'แซนด์วิช' },
-      { en: 'water', th: 'น้ำ' },
-      { en: 'snack', th: 'ขนม' },
-      { en: 'bag', th: 'ถุง' },
-      { en: 'receipt', th: 'ใบเสร็จ' },
-      { en: 'card', th: 'บัตร' },
+      { en: 'museum', th: 'พิพิธภัณฑ์' },
+      { en: 'park', th: 'สวนสาธารณะ' },
+      { en: 'temple', th: 'วัด' },
+      { en: 'map', th: 'แผนที่' },
+      { en: 'tourist', th: 'นักท่องเที่ยว' },
+      { en: 'picture', th: 'รูปภาพ' },
     ],
-    vocabQuiz1Th: 'ถ้าจะซื้อแซนด์วิช คุณต้องเลือกคำไหน',
-    vocabQuiz2Th: 'ถ้าอยากได้ถุง คุณต้องเลือกคำไหน',
-    patternRepeat: "I'd like this sandwich.",
-    patternSubstitute1: "I'd like water.",
-    patternExpand: "I'd like this sandwich. That's all.",
-    patternSubstitute2: "I'd like water. That's all.",
-    wrapGrammarTipTh: 'จำง่ายๆ เวลาซื้อของ ให้พูดว่า I\'d like... ได้เลยครับ',
-    wrapGrammarTipEn: "When you buy something, say I'd like...",
-    missionFollowUpEn: 'Anything else?',
-    missionHint: 'Buy items at a convenience store and pay',
+    vocabQuiz1Th: 'ถ้าจะไปพิพิธภัณฑ์ คุณต้องเลือกคำไหน',
+    vocabQuiz2Th: 'ถ้าจะดูแผนที่ คุณต้องเลือกคำไหน',
+    patternRepeat: "I'm exploring the city.",
+    patternSubstitute1: "I'm exploring the park.",
+    patternExpand: "I'm looking for the museum.",
+    patternSubstitute2: "I'm looking for the temple.",
+    missionFollowUpEn: 'Nice! What are you looking for?',
+    missionHint: 'Tell a local you are exploring and looking for a place',
   }),
   buildAroundTownLesson({
     lessonId: 'ee_around_town_transport',
@@ -4090,6 +4124,8 @@ Core Flow (progression milestones — NOT a fixed turn count):
     sceneLines: [
       { speaker: 'Ticket Staff', role: 'npc', textEn: 'Where are you going?', textTh: 'จะไปไหนครับ?' },
       { speaker: 'Teacher B', role: 'teacher', textEn: "I'm going to Bangkok.", textTh: 'ผมจะไปกรุงเทพครับ' },
+      { speaker: 'Ticket Staff', role: 'npc', textEn: 'How are you going?', textTh: 'จะไปยังไงครับ?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: "I'm taking the train.", textTh: 'ผมจะไปโดยรถไฟครับ' },
       { speaker: 'Ticket Staff', role: 'npc', textEn: 'One ticket?', textTh: 'ตั๋วหนึ่งใบใช่ไหมครับ?' },
       { speaker: 'Teacher B', role: 'teacher', textEn: 'Yes, please.', textTh: 'ใช่ครับ' },
     ],
@@ -4103,14 +4139,20 @@ Core Flow (progression milestones — NOT a fixed turn count):
     ],
     vocabQuiz1Th: 'ถ้าจะไปด้วยรถไฟ คุณต้องเลือกคำไหน',
     vocabQuiz2Th: 'ถ้าจะซื้อตั๋ว คุณต้องเลือกคำไหน',
+    // Pattern 1 = destination (I'm going to...). Pattern 2 = transport (I'm taking...).
+    // Do NOT mix: never ask "by train?" as a substitute for Pattern 1.
     patternRepeat: "I'm going to Bangkok.",
-    patternSubstitute1: "I'm taking the train.",
-    patternExpand: "I'm going to Bangkok. One ticket, please.",
-    patternSubstitute2: "I'm taking the bus. One ticket, please.",
-    wrapGrammarTipTh: 'จำง่ายๆ เวลาบอกว่ากำลังไปไหน ให้พูดว่า I\'m going to... ได้เลยครับ',
-    wrapGrammarTipEn: "When you say where you're going, use I'm going to...",
+    patternSubstitute1: "I'm going to Chiang Mai.",
+    patternSubstitute1Alts: [
+      "I'm going to Phuket.",
+      "I'm going to Pattaya.",
+    ],
+    patternExpand: "I'm taking the train.",
+    patternSubstitute2: "I'm taking the bus.",
+    patternSubstitute2Alts: ["I'm taking a taxi.", "I'm taking the taxi."],
     missionFollowUpEn: 'One ticket?',
-    missionHint: 'Buy a ticket and take the train',
+    missionHint:
+      'Buy a ticket: say where you are going / how you are going, then answer One ticket? with Yes (Yes / Yeah / Yes please all OK — do NOT correct Yes into Yes please)',
   }),
   buildAroundTownLesson({
     lessonId: 'ee_around_town_directions',
@@ -4126,9 +4168,10 @@ Core Flow (progression milestones — NOT a fixed turn count):
     sceneNpcVoice: 'Aoede',
     sceneLines: [
       { speaker: 'Teacher B', role: 'teacher', textEn: 'Excuse me.', textTh: 'ขอโทษครับ' },
-      { speaker: 'Local', role: 'npc', textEn: 'Yes?', textTh: 'ค่ะ?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'Where is the train station?', textTh: 'สถานีรถไฟอยู่ที่ไหนครับ?' },
-      { speaker: 'Local', role: 'npc', textEn: 'Go straight and turn left.', textTh: 'ตรงไปแล้วเลี้ยวซ้ายค่ะ' },
+      { speaker: 'Local', role: 'npc', textEn: 'Yes?', textTh: 'ครับ/คะ?' },
+      { speaker: 'Local', role: 'npc', textEn: 'What are you looking for?', textTh: 'คุณกำลังมองหาอะไรอยู่ครับ?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: "I'm looking for the train station.", textTh: 'ผมกำลังหาสถานีรถไฟครับ' },
+      { speaker: 'Local', role: 'npc', textEn: 'Go straight and turn left.', textTh: 'ตรงไปแล้วเลี้ยวซ้ายครับ' },
     ],
     vocabulary: [
       { en: 'left', th: 'ซ้าย' },
@@ -4144,8 +4187,6 @@ Core Flow (progression milestones — NOT a fixed turn count):
     patternSubstitute1: 'Where is the corner?',
     patternExpand: 'Excuse me. Where is the station?',
     patternSubstitute2: 'Excuse me. Where is the corner?',
-    wrapGrammarTipTh: 'จำง่ายๆ เวลาถามทางอย่างสุภาพ เริ่มด้วย Excuse me แล้วถาม Where is...?',
-    wrapGrammarTipEn: 'To ask directions politely, start with Excuse me, then Where is...?',
     missionFollowUpEn: 'Go straight and turn left. Okay?',
     missionHint: 'Ask for directions to the station',
   }),
@@ -4177,12 +4218,13 @@ Core Flow (progression milestones — NOT a fixed turn count):
     ],
     vocabQuiz1Th: 'ถ้าจะบอกว่าจองไว้ คุณต้องเลือกคำไหน',
     vocabQuiz2Th: 'ถ้าพนักงานขอพาสปอร์ต คุณต้องเลือกคำไหน',
+    // P1: two useful check-in lines — BOTH model + repeat (not substitute).
     patternRepeat: 'I have a reservation.',
-    patternSubstitute1: "I'm checking in.",
-    patternExpand: 'I have a reservation. Here is my passport.',
-    patternSubstitute2: "I'm checking in. Here is my passport.",
-    wrapGrammarTipTh: 'จำง่ายๆ เวลาเช็กอิน ให้พูดว่า I have a reservation. ได้เลยครับ',
-    wrapGrammarTipEn: 'When you check in, say I have a reservation.',
+    patternSubstitute1: "I'd like to check in.",
+    pattern1SecondIsRepeat: true,
+    // P2: checking in ↔ checking out (same frame).
+    patternExpand: "I'm checking in.",
+    patternSubstitute2: "I'm checking out.",
     missionFollowUpEn: 'May I have your passport?',
     missionHint: 'Check in at a hotel',
   }),
@@ -4215,11 +4257,9 @@ Core Flow (progression milestones — NOT a fixed turn count):
     vocabQuiz1Th: 'ถ้าพนักงานขอพาสปอร์ต คุณต้องเลือกคำไหน',
     vocabQuiz2Th: 'ถ้าจะหาบัตรขึ้นเครื่อง คุณต้องเลือกคำไหน',
     patternRepeat: "I'd like to check in.",
-    patternSubstitute1: "I'm boarding.",
-    patternExpand: "I'd like to check in. Here is my passport.",
-    patternSubstitute2: "I'm boarding. Here is my boarding pass.",
-    wrapGrammarTipTh: 'จำง่ายๆ เวลาเช็กอินสนามบิน ให้พูดว่า I\'d like to check in. ได้เลยครับ',
-    wrapGrammarTipEn: "At the airport, say I'd like to check in.",
+    patternSubstitute1: "I'd like to check in for my flight.",
+    patternExpand: 'Here is my passport.',
+    patternSubstitute2: 'Here is my boarding pass.',
     missionFollowUpEn: 'May I see your passport?',
     missionHint: 'Check in at the airport',
   }),
@@ -4237,8 +4277,10 @@ Core Flow (progression milestones — NOT a fixed turn count):
     sceneNpcVoice: 'Puck',
     sceneLines: [
       { speaker: 'Pharmacist', role: 'npc', textEn: 'How can I help you?', textTh: 'มีอะไรให้ช่วยไหมครับ?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: "I'm not feeling well.", textTh: 'ผมรู้สึกไม่ค่อยสบายครับ' },
+      { speaker: 'Pharmacist', role: 'npc', textEn: "What's wrong?", textTh: 'เป็นอะไรครับ?' },
       { speaker: 'Teacher B', role: 'teacher', textEn: 'I have a headache.', textTh: 'ผมปวดหัวครับ' },
-      { speaker: 'Pharmacist', role: 'npc', textEn: 'Here is some medicine.', textTh: 'นี่ยาให้ครับ' },
+      { speaker: 'Pharmacist', role: 'npc', textEn: 'Here is some medicine.', textTh: 'นี่ยาครับ' },
       { speaker: 'Teacher B', role: 'teacher', textEn: 'Thank you.', textTh: 'ขอบคุณครับ' },
     ],
     vocabulary: [
@@ -4255,8 +4297,6 @@ Core Flow (progression milestones — NOT a fixed turn count):
     patternSubstitute1: 'I have a fever.',
     patternExpand: 'I have a headache. Can I get some medicine?',
     patternSubstitute2: 'I have a fever. Can I get some medicine?',
-    wrapGrammarTipTh: 'จำง่ายๆ เวลาบอกอาการ ให้พูดว่า I have a... ได้เลยครับ',
-    wrapGrammarTipEn: 'When you describe a symptom, say I have a...',
     missionFollowUpEn: 'Here is some medicine. Okay?',
     missionHint: 'Ask for medicine at a pharmacy',
     nextLessonHint: 'Lesson Summary / สรุปบทเรียน',
@@ -4264,128 +4304,132 @@ Core Flow (progression milestones — NOT a fixed turn count):
   // --- Everyday Life chapter review ---
   {
     lessonId: 'ee_around_town_review',
-    targetLabel: 'sentence',
+    targetLabel: 'word or sentence',
     titleEn: 'Lesson Summary',
     titleTh: 'สรุปบทเรียน',
     goalEn:
-      'Review Everyday Life phrases by listening, choosing, and saying full sentences — then use at least 4 useful lines for going around town.',
+      'Discover Present Continuous, Can I...?, and Imperatives from Everyday Life sentences you already used — plus polite everyday lines.',
     goalTh:
-      'สรุปประโยคหมวด Everyday Life ผ่านการฟัง-เลือก-พูดประโยคเต็ม แล้วปิดท้ายด้วยการใช้ประโยคมีประโยชน์อย่างน้อย 4 ประโยคเวลาออกไปข้างนอก',
+      'ค้นพบ Present Continuous, Can I...? และ Imperatives จากประโยค Everyday Life ที่เคยใช้ — พร้อมประโยคสุภาพที่ใช้บ่อย',
     difficulty: 'beginner',
     languageMix: { thai: 70, english: 30 },
     estimatedMinutesMin: 5,
-    estimatedMinutesMax: 7,
+    estimatedMinutesMax: 8,
     targetPhrases: [
+      'am',
+      'is',
+      'are',
       "I'm looking for a shirt.",
-      "I'd like a chicken burger.",
+      "I'm taking the train.",
+      "I'm not feeling well.",
       'Can I get a latte?',
-      "I'm going to Bangkok.",
-      'Excuse me. Where is the train station?',
-      'Go straight and turn left.',
-      'I have a reservation.',
-      "I'd like to check in.",
-      'I have a headache.',
-      'Medium, please.',
-      'Water, please.',
-      'Iced, please.',
+      'Can I get some medicine?',
+      'Can I try this on?',
+      'Can I get some water?',
+      'Go straight.',
+      'Turn left.',
+      'Turn right.',
+      'Excuse me.',
+      'Thank you.',
+      'Here you are.',
     ],
     maxTurns: 24,
-    systemInstruction: `Lesson: Lesson Summary — Everyday Life (Everyday English → Everyday Life → 2.R)
-Type: REVIEW (voice-optimized) — do NOT teach long new vocabulary lists.
-Goal: Review Everyday Life phrases via listen → choose → speak full sentences, then a final speaking challenge of at least 4 useful around-town lines.
-Target time: ~5–7 minutes.
+    listenOnlyTurns: 5,
+    systemInstruction: `Lesson: Chapter 2 Review — Everyday Life (Everyday English → Everyday Life → 2.R)
+Type: GRAMMAR DISCOVERY REVIEW (voice-optimized) — do NOT teach long new vocabulary lists.
+Goal: Celebrate chapter completion, reveal 3 grammars the learner already used (Present Continuous, Can I...?, Imperatives), run short spoken quizzes, then highlight polite everyday lines.
+Target time: ~5–8 minutes.
 
 Using the learner's first name:
-- Use their first name naturally once in the opening.
-- Use it again naturally in later reviews / Final / Wrap when helpful.
-- Do not repeat the learner's name in every turn.
+- Use their first name once in Node 1 (Celebrate) and once in Node 9 (Chapter Complete).
+- Do not repeat the name every turn.
 
-Teaching vs speaking (critical — voice-optimized):
+Voice UX rules:
+- Listen-only nodes (1, 2, 4, 6, 8, and final Wrap 9): expectsUserSpeech = false. Do NOT ask them to speak. Do NOT mention the Continue button.
+- Quiz / fill-in nodes: expectsUserSpeech = true. Ask for ONE short spoken answer per turn.
 - Ask only ONE speaking / check task per turn.
-- For "listen then choose" checks: say BOTH options clearly, then ask them to SPEAK the correct FULL sentence.
-- Accept the full correct sentence; also accept near-miss STT variants when meaning is clear.
-- After one wrong attempt, gently give the correct sentence and move on (at most ONE retry).
-- Keep explanations SHORT in {{L1}}. No long grammar lectures.
+- After a wrong answer: at most ONE gentle retry, then accept and ADVANCE.
+- Keep each tutor turn under 2–4 short sentences (reveal nodes may be a bit longer to list examples).
+- Praise briefly on every correct quiz answer.
 
-Intro style for THIS lesson (required — opening turn only):
-- Style: Encouraging & Enthusiastic (~พลังบวก / ฉลองเข้าสู่บทสรุป)
-- CRITICAL — ONE turn only (never waste a chat turn):
-  - Turn 1 MUST fuse: celebration + "สรุปความปัง Everyday Life" + launch Review 1 check in the SAME turn.
-  - FORBIDDEN: separate ready-check / open chat before Review 1.
-  - Learner's first reply must be the Review 1 answer.
-- Tone example (adapt, don't recite word-for-word): "สวัสดีครับ [Name]! เดินทางมาถึงสรุปบทเรียน Everyday Life แล้ว เก่งมากเลยครับ! วันนี้เรามาสรุปประโยคที่ใช้ข้างนอกบ้านกัน — เริ่มเลยนะครับ ฟังสองประโยคนี้ แล้วพูดประโยคที่ถูกต้อง: 'I'm looking for a shirt.' หรือ 'I looking for a shirt.'"
+Core Flow (ONE-WAY — never go backward):
+Rhythm: Celebrate → Present Continuous reveal → Fill-in×3 → Can I...? reveal → Can I quiz×2 → Imperatives reveal → Directions quiz×2 → Useful Expressions → Chapter Complete.
 
-Core Flow (progression milestones — NOT a fixed turn count):
-- Follow these core steps in order. Do not skip ahead.
-- Extra turns for praise, one retry, or short feedback MAY happen between steps — that is OK.
-- Keep the session about 5–7 minutes.
-- Rhythm: Intro+R1 → R2 → R3 → R4 → R5 → Final (≥4 sentences) → Celebrate.
+Node 1 — Celebrate (listen-only) — OPENING TURN
+1. Celebratory chapter-complete vibe in {{L1}} (use first name once). Stay close to:
+   "เยี่ยมมากครับ [Name]!
+   ตอนนี้คุณสามารถสื่อสารในสถานการณ์ต่าง ๆ นอกบ้านได้แล้ว
+   คุณสั่งอาหาร ซื้อของ ถามทาง เช็กอินโรงแรม และขอความช่วยเหลือได้ด้วยตัวเอง
+   แต่รู้ไหมครับ... ระหว่างที่พูดทั้งหมดนั้น คุณใช้ Grammar สำคัญอยู่หลายอย่าง โดยแทบไม่ต้องท่องจำเลยครับ"
+   No quiz yet. expectsUserSpeech = false.
 
-Phase 0 + Review 1: Present Continuous — I'm looking for... — SAME TURN
-1. Encouraging intro by name + launch Review 1 immediately:
-   "ฟังสองประโยคนี้นะครับ แล้วพูดประโยคที่ถูกต้องออกมาได้เลย: 'I'm looking for a shirt.' หรือ 'I looking for a shirt.'"
-   Expected: "I'm looking for a shirt."
-   (Opening → Recognition)
+Node 2 — Grammar Revealed: Present Continuous (listen-only)
+2. Show example sentences (one per line), then reveal the pattern in {{L1}}:
+   I'm looking for a shirt.
+   I'm taking the train.
+   I'm not feeling well.
+   Point out am / is / are + verb-ing.
+   Stay close to: "สังเกตไหมครับ ทุกประโยคมี am / is / are + verb-ing — นี่เรียกว่า Present Continuous เราใช้เวลาพูดถึงสิ่งที่กำลังเกิดขึ้นในตอนนี้"
+   No speaking task. expectsUserSpeech = false.
 
-Review 2: Polite ordering — I'd like...
-2. Prompt: "ฟังสองประโยคนี้นะครับ แล้วพูดประโยคที่ถูกต้องออกมาได้เลย: 'I'd like a chicken burger.' หรือ 'I like a chicken burger.'"
-   Expected: "I'd like a chicken burger."
-   Tip briefly in {{L1}} if needed: I'd like = อยากได้แบบสุภาพ. (Recognition)
+Node 3 — Mini Challenge: fill am / is / are (3 speaking turns)
+3a. "ช่วยเติมคำให้ถูกต้องนะครับ: I ____ checking in." Expected: am (also accept "I am checking in" / "I'm checking in").
+3b. After praise: "She ____ waiting." Expected: is (also accept full sentence).
+3c. After praise: "They ____ taking pictures." Expected: are (also accept full sentence).
+   Praise every item briefly. expectsUserSpeech = true each turn.
+   After 3c praise briefly, then go to Node 4.
 
-Review 3: Useful line repeat (Dynamic Pool)
-3. Randomly pick ONE sentence from the pool, then ask them to repeat:
-   - Can I get a latte?
-   - I'm going to Bangkok.
-   - I have a reservation.
-   - I'd like to check in.
-   - I have a headache.
-   Prompt style: "ลองพูดประโยคนี้ตามครูบีดูครับ: '[Selected Sentence]'"
-   Expected: the selected sentence. (Repeat)
+Node 4 — Grammar Revealed: Can I...? (listen-only)
+4. Model examples (one per line), then name the pattern in {{L1}}:
+   Can I get a latte?
+   Can I get some medicine?
+   Can I try this on?
+   Stay close to: "ประโยคที่ขึ้นต้นด้วย Can I... ใช้เวลาขอความช่วยเหลือ หรือขออะไรอย่างสุภาพ"
+   No speaking task. expectsUserSpeech = false.
 
-Review 4: Situation match
-4. Ask which line fits the place:
-   "ถ้าอยู่โรงแรม อยากเช็กอิน ควรพูดประโยคไหนครับ? 'I have a reservation.' หรือ 'I'm looking for a shirt.'"
-   Expected: "I have a reservation." (Recognition / Recall)
+Node 5 — Mini Challenge: Can I...? (2 speaking turns)
+5a. "ถ้าคุณอยากลองเสื้อตัวนี้ ควรพูดว่าอะไรครับ?" Expected: "Can I try this on?" (soft-accept close variants with same meaning).
+5b. After praise: "ถ้าอยากขอน้ำ ควรพูดว่าอะไรครับ?" Expected: "Can I get some water?" (also accept "Can I have some water?").
+   Praise each. expectsUserSpeech = true.
 
-Review 5: Directions
-5. Prompt: "ลองพูดตามครูบีครับ: 'Excuse me. Where is the train station?'"
-   Expected: "Excuse me. Where is the train station."
-   Then ONE short follow-up: "ดีมากครับ! แล้วคนท้องถิ่นบอกทางว่าอะไร? ลองพูดตาม: 'Go straight and turn left.'"
-   Expected: "Go straight and turn left."
-   Keep this as at most two short turns. (Repeat)
+Node 6 — Grammar Revealed: Giving Directions / Imperatives (listen-only)
+6. Model short lines (one per line):
+   Go straight.
+   Turn left.
+   Turn right.
+   Stay close to: "ประโยคแบบนี้เรียกว่า Imperatives ใช้สำหรับบอกทาง บอกให้ทำ ให้คำแนะนำ โดยส่วนใหญ่ไม่ต้องมี You อยู่ข้างหน้าครับ"
+   No speaking task. expectsUserSpeech = false.
 
-Phase 6: Final Speaking Challenge (~1.5 min)
-6. Ask for at least 4 useful Everyday Life sentences. Soft scaffolds OK:
-   "เก่งมากครับ! คราวนี้ลองรวบประโยคไปใช้ข้างนอกบ้านอย่างน้อย 4 ประโยค ให้ครูบีฟังหน่อยครับ เช่น:
-   I'm looking for...
-   I'd like...
-   I'm going to...
-   Excuse me. Where is...?
-   ลองพูดตามสไตล์ของคุณ [Name] ได้เลยครับ!"
-   Handling:
-   - ≥4 clear sentences → pass immediately
-   - Too short → ONE follow-up only, then accept and move on
-   - Do NOT demand perfection. Accept natural Everyday Life patterns. (Recall)
+Node 7 — Mini Challenge: Directions (2 speaking turns)
+7a. "ถ้าอยากบอกว่า 'ตรงไป' พูดว่าอะไรครับ?" Expected: "Go straight."
+7b. After praise: "ถ้าอยากบอกว่า 'เลี้ยวขวา' พูดว่าอะไรครับ?" Expected: "Turn right."
+   Praise each. expectsUserSpeech = true.
 
-Phase 7: Wrap-up & Celebration
-7. Celebrate with their first name once:
-   "สุดยอดมากครับ [Name]! ตอนนี้คุณพร้อมซื้อของ สั่งอาหาร เดินทาง ถามทาง และคุยเรื่องโรงแรม/สนามบิน/ร้านยาได้แล้ว พร้อมลุย Chapter ถัดไปแล้วครับ!"
-   → set isLessonComplete = true (REQUIRED).
+Node 8 — Useful Expressions (listen-only)
+8. Highlight polite everyday lines (one per line):
+   Excuse me.
+   Thank you.
+   Here you are.
+   Stay close to: "วันนี้คุณยังใช้ประโยคสุภาพหลายประโยคด้วย ประโยคเหล่านี้ไม่มี Grammar ซับซ้อน แต่เจ้าของภาษาใช้ทุกวัน จำไว้ให้ขึ้นใจเลยนะครับ"
+   No speaking task. expectsUserSpeech = false.
 
-Turn loop rules (critical — never stall the learner):
-- Every non-final tutor turn MUST end with exactly one clear next action for the learner.
-- Never end a turn with only explanation, praise, or feedback (except the final Wrap-up turn).
-- Ask only one question or speaking task at a time.
-- Keep each tutor turn under 2–4 short sentences.
-- Praise specifically but briefly.
-- You only see transcript TEXT, not audio — never invent pronunciation problems from text.
-- If the learner's transcript clearly matches the target, praise briefly and ADVANCE.
-- If the text truly does not match, gently ask for at most ONE retry.
-- After one retry (or two total attempts on the same item), accept and move on.
-- Accept natural variants when the meaning is clear.
-- When Core Flow reaches Wrap-up & Celebration, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
+Node 9 — Chapter Complete (listen-only / complete)
+9. Celebrate with first name once. Stay close to:
+   "ยอดเยี่ยมครับ [Name]! วันนี้คุณค้นพบแล้ว —
+   Present Continuous, Can I...?, และ Imperatives
+   และยังใช้ประโยคสุภาพได้อย่างเป็นธรรมชาติอีกด้วย
+   ตอนนี้คุณพร้อมออกไปใช้ภาษาอังกฤษนอกบ้านแล้วครับ!"
+   → set isLessonComplete = true (REQUIRED). expectsUserSpeech = false.
+   Do NOT ask for a long free-speak challenge. Do NOT start a new quiz after this.
+
+Turn loop rules (critical):
+- Every non-final tutor turn MUST end with exactly one clear next action — EXCEPT listen-only nodes, which end after their content with expectsUserSpeech = false.
+- Never end a speaking-turn with only explanation/praise and no next ask (except Node 9).
+- You only see transcript TEXT — never invent pronunciation problems.
+- Accept near-miss STT when meaning is clear (e.g. "go strait" → Go straight, "can i try this" → Can I try this on?).
+- When Core Flow reaches Node 9, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the Everyday Life Lesson Summary for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. Intro style MUST be Encouraging & Enthusiastic. CRITICAL: Turn 1 = celebrate entering the lesson summary + launch Review 1 in the SAME turn — ask them to listen and SPEAK the correct full sentence between "I\'m looking for a shirt." and "I looking for a shirt." (expect "I\'m looking for a shirt."). NEVER burn a turn on ready/open chat. Then follow Master Flow: Review 2 ("I\'d like a chicken burger." vs "I like a chicken burger."), Review 3 (random ONE useful line → repeat), Review 4 (hotel: "I have a reservation." vs "I\'m looking for a shirt."), Review 5 (Excuse me... / Go straight and turn left.), Final Speaking Challenge (≥4 Everyday Life sentences with soft scaffolds), then celebrate Wrap-up and set isLessonComplete only at the end. Every turn must end with a clear learner action except the final Wrap-up. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the Everyday Life Chapter 2 Review for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. CRITICAL: Turn 1 = Celebrate ONLY (เยี่ยมมาก / can communicate outside / order food, shop, ask directions, hotel check-in, ask for help / you already used important Grammar without memorizing) — expectsUserSpeech false, NO quiz yet, do NOT mention any button. Then follow Core Flow one-way: Node 2 Present Continuous reveal (listen-only: I\'m looking for / I\'m taking / I\'m not feeling well + am/is/are + verb-ing) → Node 3 fill-ins (am, is, are) → Node 4 Can I...? reveal (listen-only) → Node 5 Can I quizzes (try this on / get some water) → Node 6 Imperatives reveal (Go straight / Turn left / Turn right) → Node 7 directions quizzes → Node 8 Useful Expressions (Excuse me / Thank you / Here you are, listen-only) → Node 9 Chapter Complete (3 grammars + polite lines + complete, isLessonComplete true). Return JSON matching the schema. isLessonComplete must be false and expectsUserSpeech must be false on Turn 1.',
   },
   buildPronunciationLesson({
     lessonId: 'pron_th_1',
