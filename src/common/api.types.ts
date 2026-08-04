@@ -52,6 +52,14 @@ export interface TurnExchangeResponse {
   expectedSpeech?: string | null;
   /** Multi-speaker dialogue for Scene / Watch & Listen turns. */
   scene?: LessonScene;
+  /** In-chat Emoji Speak card — app shows "ขอเฉลย" when present. */
+  emojiSpeak?: EmojiSpeakPrompt | null;
+}
+
+/** One Emoji Speak prompt embedded in a training turn. */
+export interface EmojiSpeakPrompt {
+  emoji: string;
+  answer: string;
 }
 
 /** One line in a lesson Scene dialogue (Watch & Listen). */

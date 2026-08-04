@@ -576,11 +576,14 @@ function buildAroundTownLesson(spec: AroundTownLessonSpec): LessonConfig {
   ) => {
     const [quiz, speak, other] = words;
     const options = `${quiz.en}, ${speak.en}, ${other.en}`;
-    return `Vocab Set ${setLabel} (EXACTLY 2 learner speaking turns — never more):
+    return `Vocab Set ${setLabel} (EXACTLY 1 learner speaking turn — quiz only):
   Turn A — Quiz (3 choices, speech answer): Ask in {{L1}} like "${quizTh} ระหว่าง ${options} ครับ?" Correct answer = "${quiz.en}". Set expectedSpeech="${quiz.en}".
-  Turn B — AFTER a clear quiz answer: map ONLY 2 meanings first (${quiz.en}=${quiz.th}, ${other.en}=${other.th}) — do NOT map ${speak.en} yet — then ask them to repeat ONLY "${speak.en}". Set expectedSpeech="${speak.en}".
-  After they say "${speak.en}": in your NEXT tutor turn, map ${speak.en}=${speak.th} in ONE short phrase, then immediately start the next Core Flow step (Pattern Drill). Do not ask another vocab speak.
-  FORBIDDEN: dumping all 3 meanings right after the quiz; teaching words outside this trio; one-word queues; skipping the quiz; more than 2 vocab speaks in this set.`;
+  AFTER a clear quiz answer (NEXT tutor turn, listen-only / Continue — expectsUserSpeech=false): praise briefly, then reveal ALL 3 meanings in one short block:
+    ${quiz.en} = ${quiz.th}
+    ${speak.en} = ${speak.th}
+    ${other.en} = ${other.th}
+  Then immediately start the next Core Flow step (Pattern Drill) on the FOLLOWING turn — do NOT ask them to repeat any vocab word.
+  FORBIDDEN: a second vocab speak / "พูดตาม" after the quiz; teaching words outside this trio; skipping the quiz; more than 1 vocab speak in this set.`;
   };
 
   return {
@@ -599,7 +602,7 @@ function buildAroundTownLesson(spec: AroundTownLessonSpec): LessonConfig {
     listenOnlyTurns: 2,
     systemInstruction: `Lesson: ${spec.titleEn} (Everyday English → ${trackLabel} → ${spec.code})
 Goal: ${spec.goalEn}
-Pace target: ~3–4 minutes, about 10 short learner speaks total. Keep every tutor turn tight.
+Pace target: ~3–4 minutes, about 8 short learner speaks total. Keep every tutor turn tight.
 After this lesson, the app may offer an optional full Mission (soft gate) — still run the short in-lesson AI Conversation below.
 
 Target vocabulary (ONLY these 6 + mission extras ${missionExtras || 'none'}):
@@ -623,7 +626,7 @@ Teaching rules:
 - FORBIDDEN: Grammar Discovery mid-lesson; Useful Sentences lists; going backward in Core Flow; hell-loop re-drills after AI Conversation starts.
 - FORBIDDEN on Pattern Drill Substitute turns: "ลองพูดว่า…", "พูดตามว่า…", "Try saying…", or any full English model of the answer — let the learner think.
 - On AI Conversation misses: soft-teach once, then advance — FORBIDDEN: mission retry loops / "ลองอีกที" on the same NPC ask.
-- Keep most turns under 2 short sentences (Vocab Set B maps only 2 meanings then one ask; map the speak-word on the way into Pattern Drill).
+- Keep most turns under 2 short sentences (Vocab Set: quiz once, then reveal all 3 meanings — no second speak).
 
 Scene / Watch & Listen rules:
 - On Core Flow step 2, return a scene object (expectsUserSpeech false).
@@ -637,11 +640,11 @@ ${sceneScript}
 Core Flow (ONE-WAY — never go backward):
 1. Situation — set the scene in {{L1}} only (~15–30s). Example vibe: "${spec.situationTh}" / "${spec.situationEn}". NO vocab yet. NO scene object yet. expectsUserSpeech=false. expectedSpeech="".
 2. Watch & Listen — play the Scene dialogue above. No grammar explanation. expectsUserSpeech=false. Return scene.lines with textEn + textTh on EVERY line. expectedSpeech="".
-3. Vocab Set 1 — follow the Vocab Set 1 plan (quiz → map 2 [${set1[0].en}/${set1[2].en}] → speak "${set1[1].en}" → then map ${set1[1].en} + go Pattern Drill). 2 speaks.
+3. Vocab Set 1 — follow the Vocab Set 1 plan (quiz once → reveal all 3 [${set1[0].en}/${set1[1].en}/${set1[2].en}] → Pattern Drill). EXACTLY 1 speak.
 4. Pattern Drill 1 — EXACTLY 2 speaks${spec.pattern1SecondIsRepeat ? ' (two useful lines — BOTH are model + repeat)' : ' (SAME frame as the model — change only the slot, NEVER switch to Pattern 2)'}:
    a) Model "${spec.patternRepeat}" → learner repeats. expectedSpeech="${spec.patternRepeat}".
    ${drill1b}
-5. Vocab Set 2 — follow the Vocab Set 2 plan (quiz → map 2 [${set2[0].en}/${set2[2].en}] → speak "${set2[1].en}" → then map ${set2[1].en} + go Pattern Drill 2). 2 speaks.
+5. Vocab Set 2 — follow the Vocab Set 2 plan (quiz once → reveal all 3 [${set2[0].en}/${set2[1].en}/${set2[2].en}] → Pattern Drill 2). EXACTLY 1 speak.
 ${drill2Block}
 7. AI Conversation — EXACTLY 2 learner speaks (mission: ${spec.missionHint}):
    LANGUAGE OVERRIDE (critical — Thai subtitle button):
@@ -672,7 +675,7 @@ Turn loop rules:
 - Max ONE retry per item; then accept and advance.
 - Accept close variants when meaning is clear.
 - When Wrap-up & Celebrate is reached, isLessonComplete must be true.`,
-    openingPrompt: `Start the ${spec.titleEn} ${openingCourseLabel} lesson for this one learner only. Speak as a private 1:1 tutor (never {{NO_GROUP}}). Use their first name once. CRITICAL Turn 1 = Situation ONLY — set the scene ("${spec.situationTh}"), no vocab yet, expectsUserSpeech false, expectedSpeech "", NO scene object yet. Do NOT mention any button. Turn 2 = Watch & Listen Scene (return scene object). Then: Vocab Set1 (quiz+speak) → ${drill1Opening} → Vocab Set2 → ${drill2Opening} → AI Conversation (exactly 2 speaks; NPC asks in ENGLISH in textEn with full Thai in textTh for subtitles; accept clear short answers like Yes for One ticket? — never soft-teach Yes into Yes please; soft-teach only if wrong/unclear then continue) → Wrap-up & Celebrate (brief summary + name once${wrapTease ? ', tease next lesson' : ''} — About Me style, no separate tip). Never go backward. Return JSON matching the schema. isLessonComplete must be false.`,
+    openingPrompt: `Start the ${spec.titleEn} ${openingCourseLabel} lesson for this one learner only. Speak as a private 1:1 tutor (never {{NO_GROUP}}). Use their first name once. CRITICAL Turn 1 = Situation ONLY — set the scene ("${spec.situationTh}"), no vocab yet, expectsUserSpeech false, expectedSpeech "", NO scene object yet. Do NOT mention any button. Turn 2 = Watch & Listen Scene (return scene object). Then: Vocab Set1 (quiz ONCE then reveal all 3 meanings — no second speak) → ${drill1Opening} → Vocab Set2 (quiz ONCE then reveal all 3 — no second speak) → ${drill2Opening} → AI Conversation (exactly 2 speaks; NPC asks in ENGLISH in textEn with full Thai in textTh for subtitles; accept clear short answers like Yes for One ticket? — never soft-teach Yes into Yes please; soft-teach only if wrong/unclear then continue) → Wrap-up & Celebrate (brief summary + name once${wrapTease ? ', tease next lesson' : ''} — About Me style, no separate tip). Never go backward. Return JSON matching the schema. isLessonComplete must be false.`,
   };
 }
 
@@ -4721,48 +4724,115 @@ Turn loop rules (critical):
   },
 
   // --- Everyday English Chapter 3: Stories (Past Simple) ---
-  buildAroundTownLesson({
+  {
     lessonId: 'ee_stories_yesterday',
-    code: '3.1',
-    trackLabel: 'Stories (Past Simple)',
+    targetLabel: 'word or sentence',
     titleEn: 'Yesterday',
     titleTh: 'เมื่อวาน',
     goalEn: 'Talk about what you did yesterday using Past Simple.',
     goalTh: 'เล่าสิ่งที่ทำเมื่อวานด้วย Past Simple',
-    situationEn: "We're talking about yesterday.",
-    situationTh: 'วันนี้เราจะคุยเรื่องเมื่อวานกันครับ',
-    sceneTitle: '📅 Yesterday',
-    sceneNpcSpeaker: 'Friend',
-    sceneNpcVoice: 'Puck',
-    sceneLines: [
-      { speaker: 'Friend', role: 'npc', textEn: 'Hey! What did you do yesterday?', textTh: 'เฮ้! เมื่อวานทำอะไรบ้าง?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'I ate breakfast this morning.', textTh: 'ผมกินอาหารเช้าเมื่อเช้านี้ครับ' },
-      { speaker: 'Friend', role: 'npc', textEn: 'Nice. And last night?', textTh: 'ดีจัง คืนนี้ล่ะ?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'I had dinner last night.', textTh: 'เมื่อคืนกินมื้อเย็นครับ' },
+    difficulty: 'beginner',
+    languageMix: { thai: 70, english: 30 },
+    estimatedMinutesMin: 4,
+    estimatedMinutesMax: 6,
+    targetPhrases: [
+      'breakfast',
+      'lunch',
+      'dinner',
+      'yesterday',
+      'morning',
+      'last night',
+      'I ate breakfast this morning.',
+      'I ate breakfast yesterday.',
+      'I had dinner last night.',
+      'What did you do yesterday?',
+      'Did you eat breakfast yesterday?',
     ],
-    vocabulary: [
-      { en: 'yesterday', th: 'เมื่อวาน' },
-      { en: 'morning', th: 'ตอนเช้า' },
-      { en: 'breakfast', th: 'อาหารเช้า' },
-      { en: 'lunch', th: 'อาหารกลางวัน' },
-      { en: 'dinner', th: 'อาหารเย็น' },
-      { en: 'last night', th: 'เมื่อคืน' },
-    ],
-    vocabQuiz1Th: 'ถ้าจะพูดถึงเมื่อวาน คุณต้องเลือกคำไหน',
-    vocabQuiz2Th: 'ถ้าจะพูดถึงมื้อเย็น คุณต้องเลือกคำไหน',
-    patternRepeat: 'I ate breakfast this morning.',
-    patternSubstitute1: 'I had dinner last night.',
-    patternExpand: 'I went to work.',
-    patternSubstitute2: 'I stayed home.',
-    pattern2QuestionEn: 'What did you do yesterday?',
-    missionFollowUpEn: 'What about last night?',
-    missionHint: 'Tell a friend what you did yesterday',
-    nextLessonHint: 'Last Weekend / สุดสัปดาห์ที่แล้ว',
-  }),
+    maxTurns: 28,
+    listenOnlyTurns: 1,
+    systemInstruction: `Lesson: Yesterday (Everyday English → Stories → 3.1)
+Goal: Talk about what you did yesterday using Past Simple.
+Pace target: ~4–6 minutes. Keep every tutor turn tight.
+
+Core Flow (ONE-WAY — never go backward):
+1. Hook (listen-only, ~5–10 sec) — OPENING TURN
+   - Context of the lesson in {{L1}}:
+     เมื่อวานทำอะไรมาบ้าง?
+     วันนี้มาฝึกเล่าเรื่องเมื่อวานกันครับ!
+   - expectsUserSpeech=false. expectedSpeech="". Omit emojiSpeak. Omit scene.
+   - Do NOT start Emoji Speak on this turn.
+
+2. Emoji Speak — EXACTLY 6 learner speaking turns (warm-up / vocab recall — NO repeat / NO พูดตาม)
+   Order (fixed):
+   a) 🍳 breakfast
+   b) 🍱 lunch
+   c) 🍽️ dinner
+   d) 📅 yesterday
+   e) 🌅 morning
+   f) 🌙 last night
+   Each speak turn:
+   - Short {{L1}} prompt + big emoji in textEn/textTh (e.g. "คำนี้คืออะไรครับ? 🍳").
+   - FORBIDDEN in the bubble: letter blanks, the English answer, Thai gloss of the answer.
+   - expectsUserSpeech=true. expectedSpeech=exact English answer (lowercase as listed).
+   - MUST return emojiSpeak={ emoji, answer } matching expectedSpeech.
+   - After clear answer (or app sent the revealed answer): brief praise → next emoji (or Pattern Challenge — Tell after the 6th). NO second speak / repeat of the same word.
+   - Soft-accept close STT variants. Max ONE soft tip then advance.
+   - FORBIDDEN: 3-choice Thai quiz; inventing extra vocab; skipping a word; emojiSpeak on non-Emoji turns.
+
+3. Pattern Challenge — Tell (2–3 learner speaks, HARD CAP 3) — difficulty ⭐⭐
+   Goal: build Past Simple statements.
+   Target models (use these frames):
+   - "I ate breakfast this morning."
+   - "I ate breakfast yesterday."
+   - "I had dinner last night."
+   Suggested path (2–3 speaks):
+   a) Cue in {{L1}} for this morning → learner says "I ate breakfast this morning." expectedSpeech="I ate breakfast this morning."
+      (Optional short listen model first on a separate listen-only turn, then speak — counts as listen, not a speak.)
+   b) Cue เมื่อวาน → "I ate breakfast yesterday." expectedSpeech="I ate breakfast yesterday."
+   c) Cue มื้อเย็นเมื่อคืน → "I had dinner last night." expectedSpeech="I had dinner last night."
+   Soft-accept close variants. After Tell: short praise → Pattern Challenge — Ask. Never exceed 3 speaks. Omit emojiSpeak.
+
+4. Pattern Challenge — Ask (EXACTLY 2 learner speaks) — difficulty ⭐⭐⭐
+   Goal: learner ASKS the AI questions; AI answers.
+   a) Prompt in {{L1}} to ask: "What did you do yesterday?" → learner speaks that question. expectedSpeech="What did you do yesterday?"
+      Then YOU answer briefly in English (e.g. I studied. / I went to work.) — can be same turn after praise or next listen turn.
+   b) Prompt to ask: "Did you eat breakfast yesterday?" → learner speaks it. expectedSpeech="Did you eat breakfast yesterday?"
+      Then YOU answer: "Yes, I did!" (or short natural reply). Soft-accept missing "?".
+   FORBIDDEN: answering for the learner; skipping either question; more than 2 Ask speaks. Omit emojiSpeak.
+   After Ask → Pattern Challenge — Answer.
+
+5. Pattern Challenge — Answer (EXACTLY 2 learner speaks) — difficulty ⭐⭐⭐⭐
+   Goal: AI asks; learner answers.
+   LANGUAGE: ask in ENGLISH in textEn; textTh = full Thai translation (subtitle toggle).
+   a) AI asks: "What did you do yesterday?" → learner answers freely (Past Simple OK). expectedSpeech="". Soft-accept clear short answers (I studied. / I worked. / I stayed home.).
+   b) AI asks: "Did you eat breakfast yesterday?" → learner answers (Yes, I did. / No, I didn't. / Yes. OK). expectedSpeech="". Soft-accept clear yes/no.
+   FORBIDDEN: asking the learner to ask; more than 2 Answer speaks; going back to Tell/Ask. Omit emojiSpeak.
+   After Answer → Celebrate.
+
+6. Celebrate (listen-only)
+   - Warm {{L1}} Teacher B voice. Praise that they can tell / ask / answer about yesterday.
+   - Celebrate with first name once. Softly tease next: Last Weekend.
+   - expectsUserSpeech=false. isLessonComplete=true. expectedSpeech="". Omit emojiSpeak.
+
+Teaching rules:
+- Ask only ONE speaking task per turn.
+- Soft correction ONLY (never Wrong / ไม่ถูก).
+- STT is English-only for spoken answers. Ask/explain in {{L1}} OK except Answer challenges (English questions in textEn).
+- FORBIDDEN: Watch & Listen scene object; Around Town vocab quiz; going backward; hell-loop re-drills after Celebrate starts.
+- Omit emojiSpeak on Hook / Pattern / Celebrate turns.
+
+Turn loop rules:
+- Every non-final turn ends with one clear next action OR is listen-only (Continue).
+- Max ONE retry per item; then accept and advance.
+- Accept close variants when meaning is clear.
+- When Celebrate is reached, isLessonComplete must be true.`,
+    openingPrompt: `Start the Yesterday Stories lesson (3.1) for this one learner only. Speak as a private 1:1 tutor (never {{NO_GROUP}}). Use their first name once. CRITICAL Turn 1 = Hook ONLY — เมื่อวานทำอะไรมาบ้าง? + วันนี้มาฝึกเล่าเรื่องเมื่อวานกันครับ! — expectsUserSpeech false, expectedSpeech "", NO emojiSpeak, NO scene. Do NOT mention any button. Then one-way: Emoji Speak ×6 (🍳 breakfast → 🍱 lunch → 🍽️ dinner → 📅 yesterday → 🌅 morning → 🌙 last night; each MUST include emojiSpeak + expectedSpeech; NO repeat) → Pattern Challenge Tell (2–3 speaks: I ate breakfast this morning. / I ate breakfast yesterday. / I had dinner last night.) → Pattern Challenge Ask (EXACTLY 2: learner asks What did you do yesterday? then Did you eat breakfast yesterday?; YOU answer) → Pattern Challenge Answer (EXACTLY 2: YOU ask those two questions; learner answers) → Celebrate (complete). Never go backward. Return JSON matching the schema. isLessonComplete must be false.`,
+  },
+
   buildAroundTownLesson({
     lessonId: 'ee_stories_last_weekend',
     code: '3.2',
-    trackLabel: 'Stories (Past Simple)',
+    trackLabel: 'Stories',
     titleEn: 'Last Weekend',
     titleTh: 'สุดสัปดาห์ที่แล้ว',
     goalEn: 'Talk about last weekend activities.',
@@ -4800,7 +4870,7 @@ Turn loop rules (critical):
   buildAroundTownLesson({
     lessonId: 'ee_stories_vacation',
     code: '3.3',
-    trackLabel: 'Stories (Past Simple)',
+    trackLabel: 'Stories',
     titleEn: 'Vacation',
     titleTh: 'ท่องเที่ยว',
     goalEn: 'Talk about a vacation in the past.',
@@ -4837,7 +4907,7 @@ Turn loop rules (critical):
   buildAroundTownLesson({
     lessonId: 'ee_stories_birthday',
     code: '3.4',
-    trackLabel: 'Stories (Past Simple)',
+    trackLabel: 'Stories',
     titleEn: 'Birthday',
     titleTh: 'วันเกิด',
     goalEn: 'Talk about a birthday party in the past.',
@@ -4874,7 +4944,7 @@ Turn loop rules (critical):
   buildAroundTownLesson({
     lessonId: 'ee_stories_school',
     code: '3.5',
-    trackLabel: 'Stories (Past Simple)',
+    trackLabel: 'Stories',
     titleEn: 'School Memories',
     titleTh: 'ความทรงจำโรงเรียน',
     goalEn: 'Talk about school memories with Past Simple.',
@@ -4911,7 +4981,7 @@ Turn loop rules (critical):
   buildAroundTownLesson({
     lessonId: 'ee_stories_funny',
     code: '3.6',
-    trackLabel: 'Stories (Past Simple)',
+    trackLabel: 'Stories',
     titleEn: 'Funny Story',
     titleTh: 'เรื่องตลก',
     goalEn: 'Tell a short funny story with first / then.',
@@ -4948,7 +5018,7 @@ Turn loop rules (critical):
   buildAroundTownLesson({
     lessonId: 'ee_stories_bad_day',
     code: '3.7',
-    trackLabel: 'Stories (Past Simple)',
+    trackLabel: 'Stories',
     titleEn: 'Bad Day',
     titleTh: 'วันที่แย่',
     goalEn: 'Explain a bad day with because and so.',
@@ -4985,7 +5055,7 @@ Turn loop rules (critical):
   buildAroundTownLesson({
     lessonId: 'ee_stories_first_time',
     code: '3.8',
-    trackLabel: 'Stories (Past Simple)',
+    trackLabel: 'Stories',
     titleEn: 'First Time',
     titleTh: 'ครั้งแรก',
     goalEn: 'Talk about a first-time experience.',
@@ -5023,7 +5093,7 @@ Turn loop rules (critical):
   buildAroundTownLesson({
     lessonId: 'ee_stories_favorite',
     code: '3.9',
-    trackLabel: 'Stories (Past Simple)',
+    trackLabel: 'Stories',
     titleEn: 'Favorite Memory',
     titleTh: 'ความทรงจำโปรด',
     goalEn: 'Share a favorite memory from the past.',
@@ -5093,7 +5163,7 @@ Turn loop rules (critical):
     ],
     maxTurns: 28,
     listenOnlyTurns: 2,
-    systemInstruction: `Lesson: Chapter 3 Review — Stories (Past Simple) (Everyday English → Stories (Past Simple) → 3.R)
+    systemInstruction: `Lesson: Chapter 3 Review — Stories (Everyday English → Stories → 3.R)
 Type: GRAMMAR DISCOVERY REVIEW (voice-optimized) — do NOT teach long new vocabulary lists.
 Goal: Celebrate finishing Stories, reveal Past Simple + was/were + did/didn't + connectors (because / so / first / then), run short Thai→English quizzes, then unlock-ready wrap.
 Target time: ~5–9 minutes.

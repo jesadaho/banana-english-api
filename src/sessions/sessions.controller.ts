@@ -350,6 +350,7 @@ export class SessionsController {
         expectsUserSpeech: openingExpectsUserSpeech,
         expectedSpeech: reply.expectedSpeech?.trim() || null,
         scene: reply.scene ?? null,
+        emojiSpeak: reply.emojiSpeak ?? null,
       };
       this.sessionStore.addTurn(data.session.id, opening);
 
@@ -383,6 +384,7 @@ export class SessionsController {
           expectsUserSpeech: openingExpectsUserSpeech,
           expectedSpeech: reply.expectedSpeech?.trim() || null,
           scene: reply.scene,
+          emojiSpeak: reply.emojiSpeak ?? null,
         },
       };
     } catch (err) {
@@ -475,6 +477,7 @@ export class SessionsController {
         expectsUserSpeech,
         expectedSpeech: reply.expectedSpeech?.trim() || null,
         scene: reply.scene ?? null,
+        emojiSpeak: reply.emojiSpeak ?? null,
       };
       this.sessionStore.addTurn(sessionId, aiTurn);
 
@@ -489,6 +492,7 @@ export class SessionsController {
         expectsUserSpeech,
         expectedSpeech: reply.expectedSpeech?.trim() || null,
         scene: reply.scene,
+        emojiSpeak: reply.emojiSpeak ?? null,
       };
 
       if (body.generateAudio) {

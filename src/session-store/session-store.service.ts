@@ -1,7 +1,12 @@
 import { randomUUID } from 'crypto';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import type { GptIntroReport, LessonScene, SessionType } from '../common/api.types';
+import type {
+  EmojiSpeakPrompt,
+  GptIntroReport,
+  LessonScene,
+  SessionType,
+} from '../common/api.types';
 import type { SimulationConfig } from '../simulations/simulations.data';
 import { initCheckpointStates } from '../simulations/simulations.data';
 import type { LessonConfig } from '../lessons/lessons.data';
@@ -33,6 +38,8 @@ export interface ChatTurn {
    * Used by the app to bias Whisper on single-word repeat turns.
    */
   expectedSpeech?: string | null;
+  /** In-chat Emoji Speak card (ai turns only). */
+  emojiSpeak?: EmojiSpeakPrompt | null;
 }
 
 export interface ConversationSession {

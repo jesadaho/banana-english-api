@@ -198,6 +198,23 @@ function buildTrainingReplySchema(withSpeechFlag: boolean) {
         },
         required: ['lines'],
       },
+      emojiSpeak: {
+        type: 'object',
+        description:
+          'Optional in-chat Emoji Speak card. Include ONLY on Emoji Speak vocab turns (emoji → speak English word). Omit on all other turns.',
+        properties: {
+          emoji: {
+            type: 'string',
+            description: 'Single emoji shown on the card (e.g. "🍳")',
+          },
+          answer: {
+            type: 'string',
+            description:
+              'Exact English answer the learner should say (same as expectedSpeech)',
+          },
+        },
+        required: ['emoji', 'answer'],
+      },
     },
     required: [
       'textEn',
@@ -246,6 +263,11 @@ export interface TrainingTurnReply {
       textTh?: string;
       voice?: string;
     }>;
+  };
+  /** In-chat Emoji Speak card (Stories vocab turns). */
+  emojiSpeak?: {
+    emoji: string;
+    answer: string;
   };
 }
 
@@ -1150,6 +1172,9 @@ export class GeminiChatService {
                       ? { expectsUserSpeech: turn.expectsUserSpeech ?? true }
                       : {}),
                     ...(turn.scene ? { scene: turn.scene } : {}),
+                    ...(turn.emojiSpeak
+                      ? { emojiSpeak: turn.emojiSpeak }
+                      : {}),
                   })
                 : turn.textEn,
           },
@@ -1767,6 +1792,12 @@ Scene / Watch & Listen (when the Core Flow calls for a short model dialogue):
 - textEn should be a SHORT one-line summary for history (e.g. "Watch this short coffee-shop dialogue.") — do NOT paste the full script into textEn.
 - expectsUserSpeech must be false on Scene turns.
 - Omit "scene" on non-Scene turns.
+
+Emoji Speak (when the Core Flow calls for emoji → speak English word):
+- Return "emojiSpeak": { "emoji": "🍳", "answer": "breakfast" } with expectsUserSpeech true and expectedSpeech equal to answer.
+- Put the emoji prominently in textEn/textTh (short prompt only — do NOT print letter blanks or the English answer in the bubble).
+- FORBIDDEN: emojiSpeak on Pattern Challenge / Hook / Reward turns. Omit emojiSpeak when not on an Emoji Speak vocab turn.
+- After a clear answer (or if the learner used ขอเฉลย and the app sends the answer), praise briefly and advance — NO "พูดตาม" / repeat of the same word.
 `
       : '';
 
@@ -1820,7 +1851,7 @@ Return JSON ONLY (critical — never reply with bare prose):
 - textTh: short Thai support line / paraphrase
 - isLessonComplete: true ONLY on the Summary + Celebrate core step (required to finish). Otherwise false${
       speechFlagBlock
-        ? '\n- expectsUserSpeech: false when this turn is listen-only or a ready check, true when you ask the learner to speak\n- expectedSpeech: when expectsUserSpeech is true AND they should say a specific word / short phrase / scripted sentence, set it to that exact English (e.g. "latte", "boarding pass", "I\'m going to Chiang Mai."). When the ask is open free recall or listen-only, set expectedSpeech to ""\n- scene: optional; include only on Watch & Listen Scene turns (see rules above)'
+        ? '\n- expectsUserSpeech: false when this turn is listen-only or a ready check, true when you ask the learner to speak\n- expectedSpeech: when expectsUserSpeech is true AND they should say a specific word / short phrase / scripted sentence, set it to that exact English (e.g. "latte", "boarding pass", "I\'m going to Chiang Mai."). When the ask is open free recall or listen-only, set expectedSpeech to ""\n- scene: optional; include only on Watch & Listen Scene turns (see rules above)\n- emojiSpeak: optional; include only on Emoji Speak vocab turns as { emoji, answer } matching expectedSpeech'
         : ''
     }`;
   }
