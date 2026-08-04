@@ -37,32 +37,32 @@ export const SIMULATIONS: SimulationConfig[] = [
     scenarioTh:
       'คุณเพิ่งเดินเข้าร้านกาแฟตอนเช้าในนิวยอร์ก และมีพนักงานบาริสต้าเดินเข้ามาทักทายพร้อมรับออเดอร์',
     goalsTh: [
-      'สั่งเครื่องดื่มของคุณ',
-      'เลือกขนาดหรือนม',
-      'ชำระเงินให้เรียบร้อย',
+      'สั่งเครื่องดื่ม',
+      'ถามราคา',
+      'ชำระเงิน / ขอบคุณ',
     ],
     goalsEn: [
-      'Order your drink',
-      'Choose your size or milk',
-      'Complete your payment',
+      'Order a drink',
+      'Ask the price',
+      'Pay / say thank you',
     ],
     difficulty: 'easy',
     estimatedMinutes: 5,
     bananaCost: 1,
     systemInstruction:
-      `${AI_LEAD} You are Sam, a friendly barista at a busy NYC coffee shop. Ask what they would like, then prompt for size or milk. When they want to pay by card (even if STT garbles it, e.g. "hard plates" = "card please"), complete payment in that turn — never ask them to tap the screen. Close like: "Card, got it! Payment completed. Here is your latte! Enjoy your day!"`,
+      `${AI_LEAD} You are Sam, a friendly barista at a busy NYC coffee shop. Flow: greet and ask what they want → after they order, say "Sure! Anything else?" (give space for them to ask the price) → when they ask "How much is it?" (or close), tell a simple price → then take payment / thanks and hand over the drink. Soft-accept "How much?" / "How much is this?". When they pay by card (even if STT garbles it, e.g. "hard plates" = "card please"), complete payment in that turn — never ask them to tap the screen. Close like: "Card, got it! Payment completed. Here is your latte! Enjoy your day!" Do NOT require size/milk as a separate objective.`,
     successCriteria: [
-      'user_specified_drink',
-      'user_specified_size_or_milk',
+      'ordered_drink',
+      'asked_price',
       'payment_completed',
     ],
     maxTurns: 8,
     vocabDrill: [
       { word: 'Latte', pronunciation: 'ลา-เท', meaningTh: 'กาแฟลาเต้' },
       { word: 'Espresso', pronunciation: 'เอส-เพรส-โซ', meaningTh: 'กาแฟเอสเพรสโซ' },
-      { word: 'Iced', pronunciation: 'ไอซด์', meaningTh: 'เย็น / แบบเย็น' },
+      { word: 'How much is it?', pronunciation: 'ฮาว-มัช-อิส-อิท', meaningTh: 'ราคาเท่าไหร่?' },
       { word: 'Receipt', pronunciation: 'ริ-ซีท', meaningTh: 'ใบเสร็จ' },
-      { word: 'Sugar', pronunciation: 'ชู-เกอร์', meaningTh: 'น้ำตาล' },
+      { word: 'Thank you', pronunciation: 'แทงก์-ยู', meaningTh: 'ขอบคุณ' },
     ],
   },
   {
@@ -74,31 +74,31 @@ export const SIMULATIONS: SimulationConfig[] = [
       'คุณมาทานอาหารเย็นที่ร้านอาหารในเมือง กำลังนั่งดูเมนูและพนักงานเดินมารับออเดอร์',
     goalsTh: [
       'สั่งอาหาร',
-      'เลือกเครื่องดื่มหรือเครื่องเคียง',
-      'ยืนยันออเดอร์',
+      'ขอคำแนะนำ',
+      'สั่งเครื่องดื่มหรือขอใบเสร็จ',
     ],
     goalsEn: [
-      'Order your meal',
-      'Choose your drink or side',
-      'Confirm your order',
+      'Order a meal',
+      'Ask for a recommendation',
+      'Order a drink or ask for the bill',
     ],
     difficulty: 'easy',
     estimatedMinutes: 5,
     bananaCost: 1,
     systemInstruction:
-      `${AI_LEAD} You are Mia, a friendly restaurant server. Lead with questions like: "Are you ready to order?" "What would you like to drink?" "Anything else?" Guide them to order a meal, choose a drink or side, then confirm the full order.`,
+      `${AI_LEAD} You are Mia, a friendly restaurant server. Guide them to: (1) order a meal, (2) ask "What do you recommend?" (or close) — then give a short recommendation, (3) order a drink OR ask for the bill/receipt. Soft-accept "Any recommendations?" / "What do you recommend?". Lead with short questions like "Are you ready to order?" — leave room for THEM to ask for a recommendation; do not dump the answer first.`,
     successCriteria: [
       'ordered_meal',
-      'chose_drink_or_side',
-      'confirmed_order',
+      'asked_recommendation',
+      'ordered_drink_or_bill',
     ],
     maxTurns: 8,
     vocabDrill: [
       { word: 'Appetizer', pronunciation: 'แอพ-พิ-ไท-เซอร์', meaningTh: 'อาหารเรียกน้ำย่อย' },
+      { word: 'What do you recommend?', pronunciation: 'ว็อท-ดู-ยู-เรค-คะ-เมนด์', meaningTh: 'แนะนำอะไรดี?' },
       { word: 'Beverage', pronunciation: 'เบฟ-เวอ-ริจ', meaningTh: 'เครื่องดื่ม' },
-      { word: 'Medium rare', pronunciation: 'มี-เดียม-แรร์', meaningTh: 'สุกปานกลางค่อนดิบ' },
-      { word: 'Allergic', pronunciation: 'อะ-เลอร์-จิก', meaningTh: 'แพ้ (อาหาร)' },
       { word: 'Bill', pronunciation: 'บิล', meaningTh: 'บิล / ใบเสร็จค่าอาหาร' },
+      { word: 'Allergic', pronunciation: 'อะ-เลอร์-จิก', meaningTh: 'แพ้ (อาหาร)' },
     ],
   },
   {
@@ -145,12 +145,12 @@ export const SIMULATIONS: SimulationConfig[] = [
     scenarioTh:
       'คุณเดินทางมาถึงโรงแรมที่ลอนดอนหลังจากไฟลท์อันยาวนาน ตอนนี้คุณอยู่ที่หน้าล็อบบี้และต้องการแจ้งพนักงานเพื่อเข้าพักตามที่จองไว้',
     goalsTh: [
-      'เช็กอินเข้าพักโรงแรม',
+      'เช็กอิน',
       'ยืนยันการจอง',
       'รับกุญแจห้อง',
     ],
     goalsEn: [
-      'Check in to your hotel',
+      'Check in',
       'Confirm your booking',
       'Receive your room key',
     ],
@@ -181,31 +181,31 @@ export const SIMULATIONS: SimulationConfig[] = [
     scenarioTh:
       'คุณยืนรอแท็กซี่ข้างถนนในเมืองใหญ่ และต้องการไปสถานที่ที่จองไว้',
     goalsTh: [
-      'บอกจุดหมายให้คนขับ',
-      'ยืนยันรายละเอียดการเดินทาง',
-      'ชำระค่าโดยสาร',
+      'บอกจุดหมาย',
+      'ถามใช้เวลานานแค่ไหน (How long does it take?)',
+      'ยืนยันออกเดินทาง',
     ],
     goalsEn: [
-      'Tell the driver your destination',
-      'Confirm your trip details',
-      'Complete the ride',
+      'Say your destination',
+      'Ask how long it takes (How long does it take?)',
+      'Confirm you are ready to go',
     ],
     difficulty: 'easy',
     estimatedMinutes: 5,
     bananaCost: 1,
     systemInstruction:
-      `${AI_LEAD} You are Carlos, a taxi driver. Lead with questions like: "Where are you going?" "Cash or card?" "Is this the correct destination?" Guide them to state destination, confirm trip details, and complete the ride.`,
+      `${AI_LEAD} You are Carlos, a taxi driver. Guide them to: (1) state a destination, (2) ask "How long does it take?" (or close) — then answer briefly with a short time, (3) confirm departure (e.g. "Okay, let's go" / "Yes, please"). Soft-accept "How long?" / "How long does it take?". Do NOT require them to ask the price. Lead with "Where are you going?" — leave room for THEM to ask about time.`,
     successCriteria: [
       'stated_destination',
-      'confirmed_trip_details',
-      'completed_ride',
+      'asked_duration',
+      'confirmed_departure',
     ],
     maxTurns: 8,
     vocabDrill: [
       { word: 'Destination', pronunciation: 'เดส-ทิ-เน-ชั่น', meaningTh: 'จุดหมายปลายทาง' },
+      { word: 'How long does it take?', pronunciation: 'ฮาว-ลอง-ดัส-อิท-เทค', meaningTh: 'ใช้เวลานานไหม?' },
+      { word: 'Traffic', pronunciation: 'แทรฟ-ฟิก', meaningTh: 'รถติด / การจราจร' },
       { word: 'Fare', pronunciation: 'แฟร์', meaningTh: 'ค่าโดยสาร' },
-      { word: 'Meter', pronunciation: 'มี-เทอร์', meaningTh: 'มิเตอร์แท็กซี่' },
-      { word: 'Intersection', pronunciation: 'อิน-เทอร์-เซ็ก-ชั่น', meaningTh: 'สี่แยก / ทางแยก' },
       { word: 'Drop off', pronunciation: 'ดร็อป-ออฟ', meaningTh: 'จุดส่ง / ลงรถ' },
     ],
   },
@@ -678,12 +678,18 @@ function isOrderReadyForPayment(
   config: SimulationConfig,
   checkpoints: Record<string, boolean>,
 ): boolean {
-  return (
+  // Coffee: drink + price question ready before forcing payment_completed.
+  const drinkDone =
+    (!config.successCriteria.includes('ordered_drink') ||
+      checkpoints.ordered_drink) &&
     (!config.successCriteria.includes('user_specified_drink') ||
-      checkpoints.user_specified_drink) &&
+      checkpoints.user_specified_drink);
+  const priceDone =
+    (!config.successCriteria.includes('asked_price') ||
+      checkpoints.asked_price) &&
     (!config.successCriteria.includes('user_specified_size_or_milk') ||
-      checkpoints.user_specified_size_or_milk)
-  );
+      checkpoints.user_specified_size_or_milk);
+  return drinkDone && priceDone;
 }
 
 /** When the barista AI already closed payment in dialogue, sync the checkpoint. */
