@@ -169,7 +169,7 @@ function buildTrainingReplySchema(withSpeechFlag: boolean) {
       expectedSpeech: {
         type: 'string',
         description:
-          'Exact English the learner should say this turn. Use a SINGLE WORD for vocab/repeat-after-me (e.g. "latte"). Use empty string when not asking for speech, or when the ask is open-ended / a full sentence.',
+          'Exact English the learner should say this turn (for STT bias). Prefer a single word or short phrase for vocab/พูดตาม (e.g. "latte", "boarding pass", "Go straight"). For a scripted pattern sentence, put that full target here (e.g. "I\'m looking for pants."). Use empty string when not asking for speech, or when the ask is open-ended free recall.',
       },
       scene: {
         type: 'object',
@@ -232,8 +232,8 @@ export interface TrainingTurnReply {
   /** Only present for lessons that expose a tap-to-continue button. */
   expectsUserSpeech?: boolean;
   /**
-   * Exact English the learner should say this turn.
-   * Prefer a single word on vocab / พูดตาม turns.
+   * Exact English the learner should say this turn (STT bias).
+   * Prefer a word or short phrase; may be a full pattern sentence when scripted.
    */
   expectedSpeech?: string;
   /** Multi-speaker Scene for Watch & Listen (Everyday Life, etc.). */
@@ -1719,7 +1719,7 @@ Tap-to-continue (this lesson only):
 - The app shows a Continue button whenever expectsUserSpeech is false, and the mic when it is true. The learner can always see it.
 - expectsUserSpeech: true when your turn asks the learner to SAY a word or phrase out loud.
 - expectsUserSpeech: false when your turn is listen-only — Situation, Scene / Watch & Listen, or Wrap-up.
-- expectedSpeech: if you ask for ONE WORD (vocab map → พูดตาม / recognition of a single word), set expectedSpeech to that exact English word only. If you ask for a full sentence, free recall, or listen-only, set expectedSpeech to "".
+- expectedSpeech: if you ask them to say a specific word, short phrase, or scripted pattern sentence, set expectedSpeech to that exact English target (e.g. "latte", "boarding pass", "Go straight.", "I'm looking for pants."). If you ask for open free recall, or listen-only, set expectedSpeech to "".
 - NEVER mention the button in textEn or textTh. Do not write "Tap Continue", "แตะเพื่อไปต่อ", "press the button", or any variation. Do not ask them to say "Ready" or "OK" either. A listen-only turn simply ends after its content — that is allowed, and the button is the learner's next action.
 - A learner message of "${TAP_TO_CONTINUE_TURN_TEXT}" is a button press, not speech. Never praise, evaluate, or repeat it — just move straight to the next step.
 - On the final turn (isLessonComplete true), set expectsUserSpeech false.
@@ -1782,7 +1782,7 @@ Return JSON ONLY (critical — never reply with bare prose):
 - textTh: short Thai support line / paraphrase
 - isLessonComplete: true ONLY on the Summary + Celebrate core step (required to finish). Otherwise false${
       speechFlagBlock
-        ? '\n- expectsUserSpeech: false when this turn is listen-only or a ready check, true when you ask the learner to speak\n- expectedSpeech: when expectsUserSpeech is true AND the learner should say ONE WORD (vocab / พูดตาม), set it to that exact word only (e.g. "latte", "coffee", "hot"). When the ask is a full sentence, open recall, or listen-only, set expectedSpeech to ""\n- scene: optional; include only on Watch & Listen Scene turns (see rules above)'
+        ? '\n- expectsUserSpeech: false when this turn is listen-only or a ready check, true when you ask the learner to speak\n- expectedSpeech: when expectsUserSpeech is true AND they should say a specific word / short phrase / scripted sentence, set it to that exact English (e.g. "latte", "boarding pass", "I\'m going to Chiang Mai."). When the ask is open free recall or listen-only, set expectedSpeech to ""\n- scene: optional; include only on Watch & Listen Scene turns (see rules above)'
         : ''
     }`;
   }

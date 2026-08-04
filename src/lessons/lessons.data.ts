@@ -3654,10 +3654,11 @@ Node 2b — Verb to be: summarize rule (listen-only) — NEXT TURN
    expectsUserSpeech = false.
 
 Node 3 — Quick Challenge: fill Verb to be (3 speaking turns)
-3a. "เติมคำให้ถูกต้องครับ: I ___ a student." Expected: am (also accept "I am a student" / "I am").
-3b. After praise: "She ___ my sister." Expected: is (also accept full sentence).
-3c. After praise: "They ___ friends." Expected: are (also accept full sentence).
-   Praise every item briefly. expectsUserSpeech = true each turn.
+   Always give the Thai meaning of the FULL sentence first, then the blank English line, then ask them to SPEAK the missing word (or full sentence). expectedSpeech = the missing word.
+3a. Stay close to: "ถ้าจะพูดว่า 'ฉันเป็นนักเรียน' — I ____ a student. เติมคำให้ถูกต้องแล้วพูดออกมาครับ?" Expected: am (also accept "I am a student" / "I am").
+3b. After praise: "ถ้าจะพูดว่า 'เธอเป็นน้องสาวของฉัน' — She ____ my sister. เติมคำแล้วพูดออกมาครับ?" Expected: is (also accept full sentence).
+3c. After praise: "ถ้าจะพูดว่า 'พวกเขาเป็นเพื่อนกัน' — They ____ friends. เติมคำแล้วพูดออกมาครับ?" Expected: are (also accept full sentence).
+   Praise every item briefly. expectsUserSpeech = true each turn. Always set expectedSpeech to am / is / are.
 
 Node 4 — Grammar Revealed: Present Simple (listen-only)
 4. Model examples (one per line), then name the grammar in {{L1}}:
@@ -4381,10 +4382,11 @@ Node 2 — Grammar Revealed: Present Continuous (listen-only)
    No speaking task. expectsUserSpeech = false.
 
 Node 3 — Mini Challenge: fill am / is / are (3 speaking turns)
-3a. "ช่วยเติมคำให้ถูกต้องนะครับ: I ____ checking in." Expected: am (also accept "I am checking in" / "I'm checking in").
-3b. After praise: "She ____ waiting." Expected: is (also accept full sentence).
-3c. After praise: "They ____ taking pictures." Expected: are (also accept full sentence).
-   Praise every item briefly. expectsUserSpeech = true each turn.
+   Always give the Thai meaning of the FULL sentence first, then the blank English line, then ask them to SPEAK the missing word (or full sentence). expectedSpeech = the missing word.
+3a. Stay close to: "ถ้าจะพูดว่า 'ฉันกำลังเช็กอิน' — I ____ checking in. เติมคำให้ถูกต้องแล้วพูดออกมาครับ?" Expected: am (also accept "I am checking in" / "I'm checking in").
+3b. After praise: "ถ้าจะพูดว่า 'เธอกำลังรออยู่' — She ____ waiting. เติมคำแล้วพูดออกมาครับ?" Expected: is (also accept full sentence).
+3c. After praise: "ถ้าจะพูดว่า 'พวกเขากำลังถ่ายรูป' — They ____ taking pictures. เติมคำแล้วพูดออกมาครับ?" Expected: are (also accept full sentence).
+   Praise every item briefly. expectsUserSpeech = true each turn. Always set expectedSpeech to am / is / are.
    After 3c praise briefly, then go to Node 4.
 
 Node 4 — Grammar Revealed: Can I...? (listen-only)
