@@ -3653,12 +3653,14 @@ Node 2b — Verb to be: summarize rule (listen-only) — NEXT TURN
    Do NOT ask them to fill in yet on this turn — the next turn starts the quiz.
    expectsUserSpeech = false.
 
-Node 3 — Quick Challenge: fill Verb to be (3 speaking turns)
-   Always give the Thai meaning of the FULL sentence first, then the blank English line, then ask them to SPEAK the missing word (or full sentence). expectedSpeech = the missing word.
-3a. Stay close to: "ถ้าจะพูดว่า 'ฉันเป็นนักเรียน' — I ____ a student. เติมคำให้ถูกต้องแล้วพูดออกมาครับ?" Expected: am (also accept "I am a student" / "I am").
-3b. After praise: "ถ้าจะพูดว่า 'เธอเป็นน้องสาวของฉัน' — She ____ my sister. เติมคำแล้วพูดออกมาครับ?" Expected: is (also accept full sentence).
-3c. After praise: "ถ้าจะพูดว่า 'พวกเขาเป็นเพื่อนกัน' — They ____ friends. เติมคำแล้วพูดออกมาครับ?" Expected: are (also accept full sentence).
-   Praise every item briefly. expectsUserSpeech = true each turn. Always set expectedSpeech to am / is / are.
+Node 3 — Quick Challenge: Verb to be in full sentences (3 speaking turns)
+   Ask how to say the Thai meaning in English. Do NOT show blank frames. Do NOT list am/is/are as multiple choice unless they struggle once.
+3a. Stay close to: "ถ้าจะพูดว่า 'ฉันเป็นนักเรียน' จะพูดอย่างไรครับ?" Expected: "I am a student." (also accept "I'm a student" / "I am" / am).
+3b. After praise: "ถ้าจะพูดว่า 'เธอเป็นน้องสาวของฉัน' จะพูดอย่างไรครับ?" Expected: "She is my sister." (also accept "She's my sister" / is).
+3c. After praise: "ถ้าจะพูดว่า 'พวกเขาเป็นเพื่อนกัน' จะพูดอย่างไรครับ?" Expected: "They are friends." (also accept are).
+   Praise every item briefly. expectsUserSpeech = true each turn.
+   preferred expectedSpeech: the full English sentence (e.g. "I am a student."); soft-accept the key verb alone.
+   FORBIDDEN: "I ____ a student", listing am/is/are as quiz options on the first ask.
 
 Node 4 — Grammar Revealed: Present Simple (listen-only)
 4. Model examples (one per line), then name the grammar in {{L1}}:
@@ -3703,7 +3705,7 @@ Turn loop rules (critical):
 - Accept near-miss STT when meaning is clear (e.g. "live" / "lives", "sometime" → sometimes).
 - When Core Flow reaches Node 8, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the About Me Chapter 1 Review for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. CRITICAL: Turn 1 = Celebrate ONLY (Chapter Complete / 120+ sentences / today we discover which Grammar they already used) — expectsUserSpeech false, NO quiz yet, do NOT mention any button. Then follow Core Flow one-way: Node 2a observe pattern (listen-only — ลองดูตัวอย่าง + 3 sentences on separate lines + สังเกตไหมครับ ทุกประโยคมีคำว่า is — stop, NO am/are yet) → Node 2b summarize rule (listen-only — ง่ายมากครับ / I ใช้ am / He She It ใช้ is / You We They ใช้ are / เดี๋ยวลองใช้กันเลยครับ — NO arrows) → Node 3 fill-ins (am, is, are — praise each) → Node 4 Present Simple reveal (listen-only) → Node 5 verb-meaning quizzes (live, like, have) → Node 6 Frequency reveal (always/usually/sometimes, listen-only) → Node 7 sometimes quiz → Node 8 Great wrap (3 grammars + complete, isLessonComplete true). Return JSON matching the schema. isLessonComplete must be false and expectsUserSpeech must be false on Turn 1.',
+      'Start the About Me Chapter 1 Review for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. CRITICAL: Turn 1 = Celebrate ONLY (Chapter Complete / 120+ sentences / today we discover which Grammar they already used) — expectsUserSpeech false, NO quiz yet, do NOT mention any button. Then follow Core Flow one-way: Node 2a observe pattern (listen-only — ลองดูตัวอย่าง + 3 sentences on separate lines + สังเกตไหมครับ ทุกประโยคมีคำว่า is — stop, NO am/are yet) → Node 2b summarize rule (listen-only — ง่ายมากครับ / I ใช้ am / He She It ใช้ is / You We They ใช้ are / เดี๋ยวลองใช้กันเลยครับ — NO arrows) → Node 3 speak challenges (ถ้าจะพูดว่า … จะพูดอย่างไรครับ? — full sentence; soft-accept am/is/are) → Node 4 Present Simple reveal (listen-only) → Node 5 verb-meaning quizzes (live, like, have) → Node 6 Frequency reveal (always/usually/sometimes, listen-only) → Node 7 sometimes quiz → Node 8 Great wrap (3 grammars + complete, isLessonComplete true). Return JSON matching the schema. isLessonComplete must be false and expectsUserSpeech must be false on Turn 1.',
   },
   {
     lessonId: 'weather',
@@ -4381,12 +4383,14 @@ Node 2 — Grammar Revealed: Present Continuous (listen-only)
    Stay close to: "สังเกตไหมครับ ทุกประโยคมี am / is / are + verb-ing — นี่เรียกว่า Present Continuous เราใช้เวลาพูดถึงสิ่งที่กำลังเกิดขึ้นในตอนนี้"
    No speaking task. expectsUserSpeech = false.
 
-Node 3 — Mini Challenge: fill am / is / are (3 speaking turns)
-   Always give the Thai meaning of the FULL sentence first, then the blank English line, then ask them to SPEAK the missing word (or full sentence). expectedSpeech = the missing word.
-3a. Stay close to: "ถ้าจะพูดว่า 'ฉันกำลังเช็กอิน' — I ____ checking in. เติมคำให้ถูกต้องแล้วพูดออกมาครับ?" Expected: am (also accept "I am checking in" / "I'm checking in").
-3b. After praise: "ถ้าจะพูดว่า 'เธอกำลังรออยู่' — She ____ waiting. เติมคำแล้วพูดออกมาครับ?" Expected: is (also accept full sentence).
-3c. After praise: "ถ้าจะพูดว่า 'พวกเขากำลังถ่ายรูป' — They ____ taking pictures. เติมคำแล้วพูดออกมาครับ?" Expected: are (also accept full sentence).
-   Praise every item briefly. expectsUserSpeech = true each turn. Always set expectedSpeech to am / is / are.
+Node 3 — Mini Challenge: am / is / are in full sentences (3 speaking turns)
+   Ask how to say the Thai meaning in English. Do NOT show blank frames. Do NOT list am/is/are as multiple choice unless they struggle once.
+3a. Stay close to: "ถ้าจะพูดว่า 'ฉันกำลังเช็กอิน' จะพูดอย่างไรครับ?" Expected: "I am checking in." (also accept "I'm checking in" / am).
+3b. After praise: "ถ้าจะพูดว่า 'เธอกำลังรออยู่' จะพูดอย่างไรครับ?" Expected: "She is waiting." (also accept "She's waiting" / is).
+3c. After praise: "ถ้าจะพูดว่า 'พวกเขากำลังถ่ายรูป' จะพูดอย่างไรครับ?" Expected: "They are taking pictures." (also accept are).
+   Praise every item briefly. expectsUserSpeech = true each turn.
+   preferred expectedSpeech: the full English sentence; soft-accept the key verb alone.
+   FORBIDDEN: "I ____ checking in", listing am/is/are as quiz options on the first ask.
    After 3c praise briefly, then go to Node 4.
 
 Node 4 — Grammar Revealed: Can I...? (listen-only)
@@ -4439,7 +4443,7 @@ Turn loop rules (critical):
 - Accept near-miss STT when meaning is clear (e.g. "go strait" → Go straight, "can i try this" → Can I try this on?).
 - When Core Flow reaches Node 9, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the Everyday Life Chapter 2 Review for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. CRITICAL: Turn 1 = Celebrate ONLY (เยี่ยมมาก / can communicate outside / order food, shop, ask directions, hotel check-in, ask for help / you already used important Grammar without memorizing) — expectsUserSpeech false, NO quiz yet, do NOT mention any button. Then follow Core Flow one-way: Node 2 Present Continuous reveal (listen-only: I\'m looking for / I\'m taking / I\'m not feeling well + am/is/are + verb-ing) → Node 3 fill-ins (am, is, are) → Node 4 Can I...? reveal (listen-only) → Node 5 Can I quizzes (try this on / get some water) → Node 6 Imperatives reveal (Go straight / Turn left / Turn right) → Node 7 directions quizzes → Node 8 Useful Expressions (Excuse me / Thank you / Here you are, listen-only) → Node 9 Chapter Complete (3 grammars + polite lines + complete, isLessonComplete true). Return JSON matching the schema. isLessonComplete must be false and expectsUserSpeech must be false on Turn 1.',
+      'Start the Everyday Life Chapter 2 Review for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. CRITICAL: Turn 1 = Celebrate ONLY (เยี่ยมมาก / can communicate outside / order food, shop, ask directions, hotel check-in, ask for help / you already used important Grammar without memorizing) — expectsUserSpeech false, NO quiz yet, do NOT mention any button. Then follow Core Flow one-way: Node 2 Present Continuous reveal (listen-only: I\'m looking for / I\'m taking / I\'m not feeling well + am/is/are + verb-ing) → Node 3 speak challenges (ถ้าจะพูดว่า … จะพูดอย่างไรครับ? — full sentence; soft-accept am/is/are) → Node 4 Can I...? reveal (listen-only) → Node 5 Can I quizzes (try this on / get some water) → Node 6 Imperatives reveal (Go straight / Turn left / Turn right) → Node 7 directions quizzes → Node 8 Useful Expressions (Excuse me / Thank you / Here you are, listen-only) → Node 9 Chapter Complete (3 grammars + polite lines + complete, isLessonComplete true). Return JSON matching the schema. isLessonComplete must be false and expectsUserSpeech must be false on Turn 1.',
   },
   buildPronunciationLesson({
     lessonId: 'pron_th_1',
