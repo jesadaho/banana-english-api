@@ -3604,8 +3604,8 @@ Turn loop rules (critical — never stall the learner):
       'I like coffee.',
       'I have a dog.',
     ],
-    maxTurns: 22,
-    listenOnlyTurns: 2,
+    maxTurns: 24,
+    listenOnlyTurns: 3,
     systemInstruction: `Lesson: Chapter 1 Review — About Me (Everyday English → About Me → 1.R)
 Type: GRAMMAR DISCOVERY REVIEW (voice-optimized) — do NOT teach long new vocabulary lists.
 Goal: Celebrate chapter completion, reveal 3 grammars the learner already used (Verb to be, Present Simple, Frequency), and run short spoken quizzes.
@@ -3616,15 +3616,15 @@ Using the learner's first name:
 - Do not repeat the name every turn.
 
 Voice UX rules:
-- Listen-only nodes (1, 2, 4, 6, and final Wrap): expectsUserSpeech = false. Do NOT ask them to speak. Do NOT mention the Continue button.
+- Listen-only nodes (1, 2a, 2b, 4, 6, and final Wrap): expectsUserSpeech = false. Do NOT ask them to speak. Do NOT mention the Continue button.
 - Quiz / fill-in nodes: expectsUserSpeech = true. Ask for ONE short spoken answer per turn (usually a single word).
 - Ask only ONE speaking / check task per turn.
 - After a wrong answer: at most ONE gentle retry, then accept and ADVANCE.
-- Keep each tutor turn under 2–4 short sentences (Node 2 / 4 may be a bit longer to list examples).
+- Keep each tutor turn under 2–4 short sentences (reveal nodes list examples one per line).
 - Praise briefly on every correct quiz answer.
 
 Core Flow (ONE-WAY — never go backward):
-Rhythm: Celebrate → Verb to be reveal → Fill-in×3 → Present Simple reveal → Verb-meaning quiz×3 → Frequency reveal → Frequency quiz → Great wrap.
+Rhythm: Celebrate → Verb to be observe → Verb to be rule → Fill-in×3 → Present Simple reveal → Verb-meaning quiz×3 → Frequency reveal → Frequency quiz → Great wrap.
 
 Node 1 — Celebrate (listen-only) — OPENING TURN
 1. Celebratory chapter-complete vibe in {{L1}} (use first name once). Stay close to:
@@ -3633,17 +3633,25 @@ Node 1 — Celebrate (listen-only) — OPENING TURN
    วันนี้เรามาดูกันว่า… จริง ๆ แล้วคุณใช้ Grammar อะไรไปบ้าง"
    No quiz yet. expectsUserSpeech = false.
 
-Node 2 — Grammar Revealed: Verb to be (listen-only)
-2. Model 3 short example sentences (one per line), then reveal the pattern in {{L1}}:
+Node 2a — Verb to be: observe pattern (listen-only) — ONE TURN
+2a. Stay close to this script, SEPARATE lines (never one long paragraph). NO arrows (→):
+   ลองดูตัวอย่างนะครับ
    My cat is very cute.
    My brother is a teacher.
    Dinner is delicious.
-   Point out "is", then show:
-   I → am
-   He / She / It → is
-   You / We / They → are
-   Stay close to: "เห็นคำว่า is ไหมครับ? จริง ๆ แล้วนี่คือ Verb to be"
-   No speaking task. expectsUserSpeech = false.
+   สังเกตไหมครับ ทุกประโยคมีคำว่า is
+   Stop here. Do NOT explain am / are yet. Do NOT start the fill-in quiz.
+   expectsUserSpeech = false. (Learner taps Continue / "เข้าใจแล้ว")
+
+Node 2b — Verb to be: summarize rule (listen-only) — NEXT TURN
+2b. Stay close to this script, SEPARATE lines. NO arrows (→):
+   ง่ายมากครับ
+   I ใช้ am
+   He / She / It ใช้ is
+   You / We / They ใช้ are
+   เดี๋ยวลองใช้กันเลยครับ!
+   Do NOT ask them to fill in yet on this turn — the next turn starts the quiz.
+   expectsUserSpeech = false.
 
 Node 3 — Quick Challenge: fill Verb to be (3 speaking turns)
 3a. "เติมคำให้ถูกต้องครับ: I ___ a student." Expected: am (also accept "I am a student" / "I am").
@@ -3694,7 +3702,7 @@ Turn loop rules (critical):
 - Accept near-miss STT when meaning is clear (e.g. "live" / "lives", "sometime" → sometimes).
 - When Core Flow reaches Node 8, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the About Me Chapter 1 Review for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. CRITICAL: Turn 1 = Celebrate ONLY (Chapter Complete / 120+ sentences / today we discover which Grammar they already used) — expectsUserSpeech false, NO quiz yet, do NOT mention any button. Then follow Core Flow one-way: Node 2 Verb to be reveal (listen-only with is examples + am/is/are chart) → Node 3 fill-ins (am, is, are — praise each) → Node 4 Present Simple reveal (listen-only) → Node 5 verb-meaning quizzes (live, like, have) → Node 6 Frequency reveal (always/usually/sometimes, listen-only) → Node 7 sometimes quiz → Node 8 Great wrap (3 grammars + complete, isLessonComplete true). Return JSON matching the schema. isLessonComplete must be false and expectsUserSpeech must be false on Turn 1.',
+      'Start the About Me Chapter 1 Review for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. CRITICAL: Turn 1 = Celebrate ONLY (Chapter Complete / 120+ sentences / today we discover which Grammar they already used) — expectsUserSpeech false, NO quiz yet, do NOT mention any button. Then follow Core Flow one-way: Node 2a observe pattern (listen-only — ลองดูตัวอย่าง + 3 sentences on separate lines + สังเกตไหมครับ ทุกประโยคมีคำว่า is — stop, NO am/are yet) → Node 2b summarize rule (listen-only — ง่ายมากครับ / I ใช้ am / He She It ใช้ is / You We They ใช้ are / เดี๋ยวลองใช้กันเลยครับ — NO arrows) → Node 3 fill-ins (am, is, are — praise each) → Node 4 Present Simple reveal (listen-only) → Node 5 verb-meaning quizzes (live, like, have) → Node 6 Frequency reveal (always/usually/sometimes, listen-only) → Node 7 sometimes quiz → Node 8 Great wrap (3 grammars + complete, isLessonComplete true). Return JSON matching the schema. isLessonComplete must be false and expectsUserSpeech must be false on Turn 1.',
   },
   {
     lessonId: 'weather',

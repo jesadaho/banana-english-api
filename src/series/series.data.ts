@@ -34,8 +34,8 @@ export const SERIES: SeriesConfig[] = [
     coverImage: 'category_social',
     missionIds: [
       'meet_new_friend_easy',
-      'join_english_club_easy',
       'small_talk_easy',
+      'join_english_club_easy',
     ],
   },
   {

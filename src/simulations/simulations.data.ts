@@ -505,7 +505,7 @@ export const SIMULATIONS: SimulationConfig[] = [
   {
     simulationId: 'join_english_club_easy',
     title: 'เข้าร่วมคลับภาษาอังกฤษ',
-    missionNumber: 2,
+    missionNumber: 3,
     missionTitleTh: 'เข้าร่วมคลับภาษาอังกฤษ',
     scenarioTh:
       'คุณไปงานปฐมนิเทศของคลับภาษาอังกฤษ และต้องแนะนำตัวกับสมาชิกคนอื่นๆ',
@@ -544,7 +544,7 @@ export const SIMULATIONS: SimulationConfig[] = [
   {
     simulationId: 'small_talk_easy',
     title: 'คุยสั้นๆ',
-    missionNumber: 3,
+    missionNumber: 2,
     missionTitleTh: 'คุยสั้นๆ',
     scenarioTh:
       'คุณเจอ Emma และเริ่มคุยสั้นๆ เป็นภาษาอังกฤษ เรื่องอากาศกับสัตว์เลี้ยง',

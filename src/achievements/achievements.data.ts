@@ -443,8 +443,8 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
     metric: 'all_simulations_completed',
     matchIds: [
       'meet_new_friend_easy',
-      'join_english_club_easy',
       'small_talk_easy',
+      'join_english_club_easy',
     ],
     rewardSeeds: 50,
   },
