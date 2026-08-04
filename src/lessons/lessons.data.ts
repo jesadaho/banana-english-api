@@ -518,6 +518,214 @@ const STORIES_CHAPTER_FLOW_RULES = `Stories Chapter 3 flow rules (ALL Stories le
 - Never mash praise + next speaking cue + AI/NPC answer into one turn when a listen-only answer beat is required.
 - Ask only ONE speaking task per turn.`;
 
+interface StoriesPatternEmojiWord {
+  emoji: string;
+  answer: string;
+  hint: string;
+}
+
+interface StoriesPatternLessonSpec {
+  lessonId: string;
+  code: string;
+  /** Chapter path label, e.g. Stories / Everyday Life. Default: Stories. */
+  trackLabel?: string;
+  titleEn: string;
+  titleTh: string;
+  goalEn: string;
+  goalTh: string;
+  hookTh: string;
+  emojiWords: [
+    StoriesPatternEmojiWord,
+    StoriesPatternEmojiWord,
+    StoriesPatternEmojiWord,
+    StoriesPatternEmojiWord,
+  ];
+  /** Tell section goal line. Default: Past Simple statements. */
+  tellGoal?: string;
+  tell1Thai: string;
+  tell1En: string;
+  tipTh: string;
+  tell2Thai: string;
+  tell2En: string;
+  tell3Thai: string;
+  tell3En: string;
+  tell3PraiseTh: string;
+  ask1En: string;
+  ask1AiAnswerEn: string;
+  ask2ThaiCue: string;
+  ask2En: string;
+  ask2AiAnswerEn: string;
+  answer1En: string;
+  answer2En: string;
+  nextLessonHint?: string;
+}
+
+/** Forced emojiSpeakSet after Hook for pattern lessons (Ch2 + Ch3 Stories). */
+export const STORIES_PATTERN_EMOJI_SETS: Record<
+  string,
+  Array<{
+    emoji: string;
+    answer: string;
+    hint: string;
+    index: number;
+    total: number;
+  }>
+> = {};
+
+function buildStoriesPatternLesson(spec: StoriesPatternLessonSpec): LessonConfig {
+  const track = spec.trackLabel ?? 'Stories';
+  const tellGoal =
+    spec.tellGoal ?? 'build Past Simple statements';
+  const emojiList = spec.emojiWords
+    .map(
+      (w, i) =>
+        `     ${i + 1}) { emoji:"${w.emoji}", answer:"${w.answer}", hint:"${w.hint}", index:${i + 1}, total:4 }`,
+    )
+    .join('\n');
+  const emojiOpening = spec.emojiWords
+    .map((w) => `${w.emoji} ${w.answer}`)
+    .join(', ');
+  const tease = spec.nextLessonHint
+    ? ` Softly tease next: ${spec.nextLessonHint}.`
+    : '';
+
+  STORIES_PATTERN_EMOJI_SETS[spec.lessonId] = spec.emojiWords.map((w, i) => ({
+    emoji: w.emoji,
+    answer: w.answer,
+    hint: w.hint,
+    index: i + 1,
+    total: 4,
+  }));
+
+  const targetPhrases = [
+    ...spec.emojiWords.map((w) => w.answer),
+    spec.tell1En,
+    spec.tell2En,
+    spec.tell3En,
+    spec.ask1En,
+    spec.ask2En,
+    spec.answer1En,
+    spec.answer2En,
+  ];
+
+  return {
+    lessonId: spec.lessonId,
+    targetLabel: 'word or sentence',
+    titleEn: spec.titleEn,
+    titleTh: spec.titleTh,
+    goalEn: spec.goalEn,
+    goalTh: spec.goalTh,
+    difficulty: 'beginner',
+    languageMix: { thai: 70, english: 30 },
+    estimatedMinutesMin: 4,
+    estimatedMinutesMax: 6,
+    targetPhrases,
+    maxTurns: 20,
+    listenOnlyTurns: 2,
+    systemInstruction: `Lesson: ${spec.titleEn} (Everyday English → ${track} → ${spec.code})
+Goal: ${spec.goalEn}
+Pace target: ~4–6 minutes. Keep every tutor turn tight.
+
+${STORIES_CHAPTER_FLOW_RULES}
+
+Core Flow (ONE-WAY — never go backward):
+1. Hook (listen-only, ~5–10 sec) — OPENING TURN
+   - Exact vibe in {{L1}} (paraphrase lightly OK, keep this meaning):
+     "${spec.hookTh}"
+   - expectsUserSpeech=false. expectedSpeech="". Omit emojiSpeak. Omit scene.
+   - Do NOT start Emoji Speak on this turn.
+
+2. Emoji Speak (ONE API turn delivers the full batch — app runs puzzles locally)
+   2a. Intro (listen-only, ONE turn after Hook — training turn 1):
+   - {{L1}}: "ลองมาทายคำศัพท์ที่จะได้ใช้ในบทนี้กันก่อนนะ!"
+   - expectsUserSpeech=false. expectedSpeech="". Omit per-word emojiSpeak.
+   - MUST return emojiSpeakSet with ALL 4 items (exact list below). The app plays all 4 locally without further AI calls.
+   - Fixed emojiSpeakSet (total 4):
+${emojiList}
+   2b. After the app finishes all 4, it sends "(finished Emoji Speak — start Pattern Challenge 1)" (not a normal Continue). YOUR NEXT turn is Pattern Challenge 1 — Tell ข้อที่ 1 with expectsUserSpeech=true.
+   - FORBIDDEN: returning one-word emojiSpeak turns for the 4 puzzles; inventing extra vocab; re-asking emoji words after the batch.
+   - FORBIDDEN after Emoji Speak complete: returning emojiSpeakSet / emojiSpeak again; repeating "ลองมาทายคำศัพท์..." Intro — go straight to Pattern Challenge 1.
+
+3. Pattern Challenge 1 — Tell / ประโยคบอกเล่า (EXACTLY 3 learner speaks) — difficulty ⭐⭐
+   Goal: ${tellGoal}. Omit emojiSpeak. Omit scene.
+   ข้อที่ 1 (REPEAT):
+   - Cue in {{L1}}: "ถ้าจะบอกเพื่อนต่างชาติว่า '${spec.tell1Thai}' จะพูดอย่างไรครับ?"
+   - You MAY briefly model "${spec.tell1En}" then ask them to repeat — OR cue Thai and have them produce it.
+   - expectedSpeech="${spec.tell1En}"
+   - FORBIDDEN: ending this turn as explain-only / STALL — must ask the learner to speak (expectsUserSpeech=true).
+   - After clear answer: praise + tip in {{L1}} on a SEPARATE listen-only turn (expectsUserSpeech=false): "${spec.tipTh}"
+   - FORBIDDEN: combining this tip with ข้อที่ 2 on the same turn — tip turn first, then ข้อที่ 2 on the NEXT turn.
+   ข้อที่ 2 (SUBSTITUTE):
+   - Cue in {{L1}} ONLY — ask how they'd say it, e.g. "คราวนี้ลองเปลี่ยนเป็น '${spec.tell2Thai}' ดูครับ พูดว่าไงดี?"
+   - expectedSpeech="${spec.tell2En}" (for STT match ONLY — never speak/show this English in the tutor message)
+   - FORBIDDEN: revealing the English answer / modeling the full sentence before the learner speaks.
+   - After clear answer: "โอเคเลย! เข้าใจง่ายสุดๆ" → ข้อที่ 3.
+   ข้อที่ 3:
+   - Cue in {{L1}} ONLY — ask how they'd say it: "สลับบ้าง... '${spec.tell3Thai}' พูดว่าไงดี?"
+   - expectedSpeech="${spec.tell3En}" (for STT match ONLY — never speak/show this English in the tutor message)
+   - Soft-accept close variants; soft-teach once if needed then advance.
+   - FORBIDDEN: revealing the English answer before the learner speaks.
+   - After clear answer: "${spec.tell3PraiseTh}"
+   Then → Pattern Challenge — Ask. Never exceed 3 Tell speaks.
+
+4. Pattern Challenge — Ask — difficulty ⭐⭐⭐
+   COUNT: learner holds the mic to ASK exactly 2 times (speak #1 + speak #2). AI listen/answer turns do NOT count.
+   Goal: learner asks; AI answers. Omit emojiSpeak. Omit scene.
+
+   After EACH of the 2 learner asks, use this 3-step split (never mash):
+     ① Learner asks (expectsUserSpeech=true) — this increments the speak count by 1
+     ② NEXT API turn = AI ANSWER ONLY (listen-only, expectsUserSpeech=false). Short English reply. NO praise. NO "คราวนี้…". NO next cue.
+     ③ User taps Continue → NEXT API turn = short praise FIRST, then next action.
+
+   Speak #1 (guided):
+   - Cue in {{L1}} with English guide: ให้พูด "${spec.ask1En}"
+   - expectedSpeech="${spec.ask1En}"
+   - Soft-accept close variants: ก็ใช้ได้ + เฉลย canonical "${spec.ask1En}" → advance — DO NOT ask them to repeat. Still counts as speak #1 → go to ②.
+   - Exact match: go straight to ② (praise can wait until step ③).
+   - ② AI answer ONLY e.g. "${spec.ask1AiAnswerEn}"
+   - ③ after Continue: brief praise, THEN cue Speak #2.
+
+   Speak #2 (NO guide — learner thinks themselves):
+   - Cue in {{L1}} ONLY e.g. "${spec.ask2ThaiCue}"
+   - expectedSpeech="${spec.ask2En}" (STT only)
+   - FORBIDDEN: showing/saying the English question "${spec.ask2En}" before they speak.
+   - Soft-accept close variants: ก็ใช้ได้ + เฉลย canonical once → advance to ②. DO NOT ask them to speak again.
+   - ② AI answer ONLY: "${spec.ask2AiAnswerEn}" (listen-only)
+   - ③ after Continue: brief praise, THEN start Pattern Challenge — Answer.
+
+   HARD STOP after speak #2 (+ its answer + praise handoff). Never a 3rd learner ask.
+   Soft-accept rule (Ask): acceptable near-miss → เฉลย + go forward. Never "ลองพูดอีกครั้ง" / never burn an extra mic turn.
+   FORBIDDEN: answering for the learner; skipping either ask; mashing AI answer + praise + next cue into one turn.
+
+5. Pattern Challenge — Answer (EXACTLY 2 learner speaks) — difficulty ⭐⭐⭐⭐
+   Goal: AI asks; learner answers.
+   LANGUAGE: ask in ENGLISH in textEn; textTh = full Thai translation (subtitle toggle).
+   a) AI asks: "${spec.answer1En}" → learner answers freely (short OK). expectedSpeech="". Soft-accept clear short answers.
+   b) AI asks: "${spec.answer2En}" → learner answers. expectedSpeech="". Soft-accept clear short yes/no or practiced lines.
+   FORBIDDEN: asking the learner to ask; more than 2 Answer speaks; going back to Tell/Ask. Omit emojiSpeak. Omit scene.
+   After Answer → Celebrate.
+
+6. Celebrate (listen-only)
+   - Warm {{L1}} Teacher B voice. Praise that they can tell / ask / answer about ${spec.titleEn.toLowerCase()}.
+   - Celebrate with first name once.${tease}
+   - expectsUserSpeech=false. isLessonComplete=true. expectedSpeech="". Omit emojiSpeak. Omit scene.
+
+Teaching rules:
+- Ask only ONE speaking task per turn.
+- Soft correction ONLY (never Wrong / ไม่ถูก).
+- STT is English-only for spoken answers. Ask/explain in {{L1}} OK except Answer challenges (English questions in textEn).
+- FORBIDDEN: Watch & Listen scene object; Around Town vocab quiz; going backward; hell-loop re-drills after Celebrate starts.
+- Omit emojiSpeak / emojiSpeakSet on Hook / Pattern / Celebrate turns.
+
+Turn loop rules:
+- Every non-final turn ends with one clear next action OR is listen-only (Continue).
+- Max ONE retry per item; then accept and advance.
+- Soft-accept close variants when meaning is clear: say ก็ใช้ได้ + show the canonical English once (เฉลย) → advance. DO NOT make the learner repeat the same item.
+- When Celebrate is reached, isLessonComplete must be true.`,
+    openingPrompt: `Start the ${spec.titleEn} ${track} lesson (${spec.code}) for this one learner only. Speak as a private 1:1 tutor (never {{NO_GROUP}}). Use their first name once. CRITICAL Turn 1 = Hook ONLY — "${spec.hookTh}" — expectsUserSpeech false, expectedSpeech "", NO emojiSpeak, NO emojiSpeakSet, NO scene. Do NOT mention any button. Then ONE Intro listen turn with emojiSpeakSet of ALL 4 puzzles (${emojiOpening} — each with hint/index/total:4); expectsUserSpeech false. App runs the 4 locally. After "(finished Emoji Speak — start Pattern Challenge 1)": Pattern Challenge 1 Tell EXACTLY 3 speaks (${spec.tell1En} → SEPARATE listen-only tip → NEXT ${spec.tell2En} → ${spec.tell3En}) → Ask = learner mic exactly 2 times (speak#1 guided "${spec.ask1En}"; speak#2 NO English guide — Thai cue only). After EACH ask: AI answer-only listen turn → Continue → praise then next. Never mash answer+praise+next. Never 3rd ask. → Answer (learner speaks exactly 2: AI asks "${spec.answer1En}" then "${spec.answer2En}") → Celebrate (complete). Never emit per-word emojiSpeak turns. Never re-open Intro after Emoji Speak. Never go backward. Return JSON matching the schema. isLessonComplete must be false.`,
+  };
+}
+
 function buildAroundTownLesson(spec: AroundTownLessonSpec): LessonConfig {
   const trackLabel = spec.trackLabel ?? 'Everyday Life / Around Town';
   const isStories = trackLabel.includes('Stories');
@@ -4103,468 +4311,319 @@ Core Flow (progression milestones — NOT a fixed turn count):
     openingPrompt:
       'Start the Shopping Basics lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once in the welcome, briefly say the lesson goal, then model "I\'m just looking." and ask them to repeat (Core Flow step 1–2). Follow the Core Flow milestones — retries/feedback may add turns between steps. Every turn must end with a clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
   },
-  buildAroundTownLesson({
+  buildStoriesPatternLesson({
     lessonId: 'ee_around_town_shopping',
     code: '2.1',
+    trackLabel: 'Everyday Life',
     titleEn: 'Shopping',
     titleTh: 'ซื้อของ',
     goalEn: 'Buy clothes, ask the price, and talk to a shop assistant.',
     goalTh: 'ซื้อของ ถามราคา และคุยกับพนักงานได้',
-    situationEn: "We're in a clothing store.",
-    situationTh: 'ตอนนี้เราอยู่ในร้านเสื้อผ้าครับ',
-    sceneTitle: '🛍️ Shopping',
-    sceneNpcSpeaker: 'Shop Assistant',
-    sceneNpcVoice: 'Aoede',
-    sceneLines: [
-      { speaker: 'Shop Assistant', role: 'npc', textEn: 'Hi! Can I help you?', textTh: 'สวัสดีค่ะ! ต้องการให้ช่วยไหมคะ?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: "Hi! I'm looking for a shirt.", textTh: 'สวัสดีครับ! ผมกำลังหาเสื้อเชิ้ตครับ' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'How much is this?', textTh: 'อันนี้ราคาเท่าไหร่ครับ?' },
-      { speaker: 'Shop Assistant', role: 'npc', textEn: "It's $20.", textTh: '20 ดอลลาร์ค่ะ' },
-      { speaker: 'Shop Assistant', role: 'npc', textEn: 'What size?', textTh: 'ไซส์อะไรคะ?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'Medium, please.', textTh: 'มีเดียมครับ' },
+    hookTh:
+      'วันนี้มาฝึกคุยในร้านเสื้อผ้ากันครับ! หาเสื้อ ถามราคา แล้วเลือกไซส์แบบชิลๆ เลย',
+    emojiWords: [
+      { emoji: '👕', answer: 'shirt', hint: 's h _ r t' },
+      { emoji: '👖', answer: 'pants', hint: 'p _ n t s' },
+      { emoji: '📏', answer: 'size', hint: 's _ z e' },
+      { emoji: '💵', answer: 'cash', hint: 'c _ s h' },
     ],
-    // Focus words: shirt/pants + size/cash. shoes/card are quiz distractors only.
-    vocabulary: [
-      { en: 'shirt', th: 'เสื้อเชิ้ต' },
-      { en: 'pants', th: 'กางเกง' },
-      { en: 'shoes', th: 'รองเท้า' },
-      { en: 'size', th: 'ไซส์' },
-      { en: 'cash', th: 'เงินสด' },
-      { en: 'card', th: 'บัตร' },
-    ],
-    vocabQuiz1Th: 'ถ้าจะหาเสื้อเชิ้ต คุณต้องเลือกคำไหน',
-    vocabQuiz2Th: 'ถ้าจะบอกไซส์ คุณต้องเลือกคำไหน',
-    patternRepeat: "I'm looking for a shirt.",
-    patternSubstitute1: "I'm looking for pants.",
-    patternExpand: 'How much is this?',
-    patternSubstitute2: 'How much is this shirt?',
-    patternSubstitute2Alts: [
-      'How much is this pants?',
-      'How much are these pants?',
-    ],
-    missionFollowUpEn: 'What size?',
-    missionHint: 'Buy clothes — look for an item and ask the price if needed',
+    tellGoal: 'build shopping statements (Present Continuous / useful lines)',
+    tell1Thai: 'ฉันกำลังหาเสื้อเชิ้ต',
+    tell1En: "I'm looking for a shirt.",
+    tipTh:
+      'เยี่ยมเลยครับ! เห็นไหมครับ เวลาพูดถึงสิ่งที่กำลังทำอยู่ ใช้ am/is/are + verb-ing เช่น I\'m looking for a shirt.',
+    tell2Thai: 'ฉันกำลังหากางเกง',
+    tell2En: "I'm looking for pants.",
+    tell3Thai: 'อันนี้ราคาเท่าไหร่',
+    tell3En: 'How much is this?',
+    tell3PraiseTh: 'เป๊ะ! How much is this? ใช้ถามราคาได้เลยครับ',
+    ask1En: 'How much is this?',
+    ask1AiAnswerEn: "It's $20.",
+    ask2ThaiCue: 'คราวนี้ลองถามเองดูครับ ว่ามีไซส์ไหม พูดว่าไงดี?',
+    ask2En: 'Do you have this in medium?',
+    ask2AiAnswerEn: 'Yes, we do.',
+    answer1En: 'Can I help you?',
+    answer2En: 'What size?',
+    nextLessonHint: 'Restaurant / ร้านอาหาร',
   }),
-  buildAroundTownLesson({
+  buildStoriesPatternLesson({
     lessonId: 'ee_around_town_restaurant',
     code: '2.2',
+    trackLabel: 'Everyday Life',
     titleEn: 'Restaurant',
     titleTh: 'ร้านอาหาร',
     goalEn: 'Order simple food at a restaurant.',
     goalTh: 'สั่งอาหารง่ายๆ',
-    situationEn: "We're at a restaurant.",
-    situationTh: 'ตอนนี้เราอยู่ที่ร้านอาหารครับ',
-    sceneTitle: '🍽️ Restaurant',
-    sceneNpcSpeaker: 'Server',
-    sceneNpcVoice: 'Aoede',
-    sceneLines: [
-      { speaker: 'Server', role: 'npc', textEn: 'Hello! Are you ready to order?', textTh: 'สวัสดีค่ะ! พร้อมสั่งหรือยังคะ?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: "Yes. I'd like a chicken burger.", textTh: 'ครับ ขอเบอร์เกอร์ไก่ครับ' },
-      { speaker: 'Server', role: 'npc', textEn: 'Anything to drink?', textTh: 'อยากดื่มอะไรไหมคะ?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'Water, please.', textTh: 'น้ำเปล่าครับ' },
+    hookTh:
+      'หิวไหมครับ? วันนี้มาฝึกสั่งอาหารที่ร้านแบบง่ายๆ กันครับ!',
+    emojiWords: [
+      { emoji: '🍗', answer: 'chicken', hint: 'c h _ c k _ n' },
+      { emoji: '🍚', answer: 'rice', hint: 'r _ c e' },
+      { emoji: '💧', answer: 'water', hint: 'w _ t _ r' },
+      { emoji: '🧾', answer: 'bill', hint: 'b _ l l' },
     ],
-    vocabulary: [
-      { en: 'chicken', th: 'ไก่' },
-      { en: 'rice', th: 'ข้าว' },
-      { en: 'menu', th: 'เมนู' },
-      { en: 'water', th: 'น้ำ' },
-      { en: 'spicy', th: 'เผ็ด' },
-      { en: 'bill', th: 'บิล' },
-    ],
-    vocabQuiz1Th: 'ถ้าจะสั่งไก่ คุณต้องเลือกคำไหน',
-    vocabQuiz2Th: 'ถ้าจะขอน้ำ คุณต้องเลือกคำไหน',
-    patternRepeat: "I'd like chicken.",
-    patternSubstitute1: "I'd like rice.",
-    patternExpand: "I'd like chicken and water.",
-    patternSubstitute2: "I'd like rice and water.",
-    missionFollowUpEn: 'Anything to drink?',
-    missionHint: 'Order food at a restaurant',
+    tellGoal: 'build restaurant order lines',
+    tell1Thai: 'ขอไก่หน่อย',
+    tell1En: "I'd like chicken.",
+    tipTh:
+      'เยี่ยมเลยครับ! I\'d like... ใช้สั่งของสุภาพๆ ได้เลย เช่น I\'d like chicken.',
+    tell2Thai: 'ขอข้าวหน่อย',
+    tell2En: "I'd like rice.",
+    tell3Thai: 'ขอไก่กับน้ำ',
+    tell3En: "I'd like chicken and water.",
+    tell3PraiseTh: 'เป๊ะเวอร์! สั่งครบเป็นประโยคเดียวได้เลยครับ',
+    ask1En: 'What do you recommend?',
+    ask1AiAnswerEn: 'I recommend the chicken.',
+    ask2ThaiCue: 'คราวนี้ลองถามเองดูครับ เรื่องเครื่องดื่ม พูดว่าไงดี?',
+    ask2En: 'Can I get some water?',
+    ask2AiAnswerEn: 'Sure! Water coming up.',
+    answer1En: 'Are you ready to order?',
+    answer2En: 'Anything to drink?',
+    nextLessonHint: 'Coffee Shop / ร้านกาแฟ',
   }),
-  buildAroundTownLesson({
+  buildStoriesPatternLesson({
     lessonId: 'ee_around_town_coffee',
     code: '2.3',
+    trackLabel: 'Everyday Life',
     titleEn: 'Coffee Shop',
     titleTh: 'ร้านกาแฟ',
     goalEn: 'Order coffee at a cafe.',
     goalTh: 'สั่งกาแฟ',
-    situationEn: "Today we're going to buy coffee.",
-    situationTh: 'วันนี้เราจะไปซื้อกาแฟกันครับ',
-    sceneTitle: '☕ Coffee Shop',
-    sceneNpcSpeaker: 'Barista',
-    sceneNpcVoice: 'Aoede',
-    sceneLines: [
-      { speaker: 'Barista', role: 'npc', textEn: 'Hello! Can I get you something?', textTh: 'สวัสดีค่ะ! รับอะไรดีคะ?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'Hi! Can I get a latte?', textTh: 'สวัสดีครับ! ขอลาเต้ได้ไหมครับ?' },
-      { speaker: 'Barista', role: 'npc', textEn: 'Hot or iced?', textTh: 'ร้อนหรือเย็นคะ?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'Iced, please.', textTh: 'เย็นครับ' },
+    hookTh:
+      'อยากได้กาแฟแก้วไหมครับ? วันนี้มาฝึกสั่งที่ร้านกาแฟกันครับ!',
+    emojiWords: [
+      { emoji: '☕', answer: 'latte', hint: 'l _ t t e' },
+      { emoji: '🍵', answer: 'tea', hint: 't _ a' },
+      { emoji: '🧊', answer: 'iced', hint: 'i c _ d' },
+      { emoji: '🔥', answer: 'hot', hint: 'h _ t' },
     ],
-    vocabulary: [
-      { en: 'latte', th: 'ลาเต้' },
-      { en: 'tea', th: 'ชา' },
-      { en: 'milk', th: 'นม' },
-      { en: 'iced', th: 'เย็น' },
-      { en: 'hot', th: 'ร้อน' },
-      { en: 'warm', th: 'อุ่น' },
-    ],
-    vocabQuiz1Th: 'ถ้าจะสั่งกาแฟลาเต้ คุณต้องเลือกคำไหน',
-    vocabQuiz2Th: 'ถ้าอยากได้แบบเย็น คุณต้องเลือกคำไหน',
-    patternRepeat: 'Can I get a latte?',
-    patternSubstitute1: 'Can I get a tea?',
-    patternExpand: 'Can I get an iced latte?',
-    patternSubstitute2: 'Can I get a hot tea?',
-    missionExtraWords: ['small', 'large'],
-    missionFollowUpEn: 'Sure thing! Small or large?',
-    missionHint: 'Order coffee from the barista',
+    tellGoal: 'build cafe order lines',
+    tell1Thai: 'ขอลาเต้ได้ไหม',
+    tell1En: 'Can I get a latte?',
+    tipTh:
+      'เยี่ยมเลยครับ! Can I get...? ใช้สั่งของสุภาพๆ ได้ เช่น Can I get a latte?',
+    tell2Thai: 'ขอชาได้ไหม',
+    tell2En: 'Can I get a tea?',
+    tell3Thai: 'ขอลาเต้เย็น',
+    tell3En: 'Can I get an iced latte?',
+    tell3PraiseTh: 'เป๊ะ! iced latte ชัดเจนมากครับ',
+    ask1En: 'How much is it?',
+    ask1AiAnswerEn: "It's $5.",
+    ask2ThaiCue: 'คราวนี้ลองถามเองดูครับ ว่าร้อนหรือเย็น พูดว่าไงดี?',
+    ask2En: 'Is it hot or iced?',
+    ask2AiAnswerEn: 'You can choose hot or iced.',
+    answer1En: 'What can I get for you?',
+    answer2En: 'Hot or iced?',
+    nextLessonHint: 'Explore the City / สำรวจเมือง',
   }),
-  buildAroundTownLesson({
+  buildStoriesPatternLesson({
     lessonId: 'ee_around_town_convenience',
     code: '2.4',
+    trackLabel: 'Everyday Life',
     titleEn: 'Explore the City',
     titleTh: 'สำรวจเมือง',
     goalEn: 'Talk about exploring the city and looking for places.',
     goalTh: 'พูดเรื่องเที่ยวเมืองและหาสถานที่',
-    situationEn: "We're exploring the city.",
-    situationTh: 'ตอนนี้เรากำลังเที่ยวในเมืองครับ',
-    sceneTitle: '🏙️ Explore the City',
-    sceneNpcSpeaker: 'Local',
-    sceneNpcVoice: 'Puck',
-    sceneLines: [
-      {
-        speaker: 'Local',
-        role: 'npc',
-        textEn: 'Hello! What are you doing today?',
-        textTh: 'สวัสดีครับ วันนี้คุณกำลังทำอะไรอยู่ครับ?',
-      },
-      {
-        speaker: 'Teacher B',
-        role: 'teacher',
-        textEn: "I'm exploring the city.",
-        textTh: 'ผมกำลังเที่ยวในเมืองครับ',
-      },
-      {
-        speaker: 'Local',
-        role: 'npc',
-        textEn: 'Nice! What are you looking for?',
-        textTh: 'เยี่ยมเลย! คุณกำลังมองหาอะไรอยู่ครับ?',
-      },
-      {
-        speaker: 'Teacher B',
-        role: 'teacher',
-        textEn: "I'm looking for the museum.",
-        textTh: 'ผมกำลังหาพิพิธภัณฑ์ครับ',
-      },
-      {
-        speaker: 'Local',
-        role: 'npc',
-        textEn: "It's over there. Have fun!",
-        textTh: 'อยู่ทางนั้นครับ เที่ยวให้สนุกนะครับ',
-      },
-      {
-        speaker: 'Teacher B',
-        role: 'teacher',
-        textEn: 'Thank you!',
-        textTh: 'ขอบคุณครับ!',
-      },
+    hookTh:
+      'วันนี้มาฝึกพูดตอนเที่ยวเมืองครับ! สำรวจเมือง แล้วบอกว่ากำลังหาที่ไหน',
+    emojiWords: [
+      { emoji: '🏛️', answer: 'museum', hint: 'm _ s _ _ m' },
+      { emoji: '🏞️', answer: 'park', hint: 'p _ r k' },
+      { emoji: '🛕', answer: 'temple', hint: 't _ m p l e' },
+      { emoji: '🗺️', answer: 'map', hint: 'm _ p' },
     ],
-    vocabulary: [
-      { en: 'museum', th: 'พิพิธภัณฑ์' },
-      { en: 'park', th: 'สวนสาธารณะ' },
-      { en: 'temple', th: 'วัด' },
-      { en: 'map', th: 'แผนที่' },
-      { en: 'tourist', th: 'นักท่องเที่ยว' },
-      { en: 'picture', th: 'รูปภาพ' },
-    ],
-    vocabQuiz1Th: 'ถ้าจะไปพิพิธภัณฑ์ คุณต้องเลือกคำไหน',
-    vocabQuiz2Th: 'ถ้าจะดูแผนที่ คุณต้องเลือกคำไหน',
-    patternRepeat: "I'm exploring the city.",
-    patternSubstitute1: "I'm exploring the park.",
-    patternExpand: "I'm looking for the museum.",
-    patternSubstitute2: "I'm looking for the temple.",
-    missionFollowUpEn: 'Nice! What are you looking for?',
-    missionHint: 'Tell a local you are exploring and looking for a place',
+    tellGoal: 'build Present Continuous exploring lines',
+    tell1Thai: 'ฉันกำลังเที่ยวในเมือง',
+    tell1En: "I'm exploring the city.",
+    tipTh:
+      'เยี่ยมเลยครับ! I\'m exploring... / I\'m looking for... ใช้ตอนกำลังทำอะไรอยู่ได้เลย',
+    tell2Thai: 'ฉันกำลังเที่ยวในสวน',
+    tell2En: "I'm exploring the park.",
+    tell3Thai: 'ฉันกำลังหาพิพิธภัณฑ์',
+    tell3En: "I'm looking for the museum.",
+    tell3PraiseTh: 'เป๊ะ! looking for ใช้หาสถานที่ได้ดีมากครับ',
+    ask1En: 'Where is the museum?',
+    ask1AiAnswerEn: "It's over there.",
+    ask2ThaiCue: 'คราวนี้ลองถามเองดูครับ เรื่องสวนสาธารณะ พูดว่าไงดี?',
+    ask2En: 'Where is the park?',
+    ask2AiAnswerEn: 'Go straight. The park is near here.',
+    answer1En: 'What are you doing today?',
+    answer2En: 'What are you looking for?',
+    nextLessonHint: 'Transportation / การเดินทาง',
   }),
-  buildAroundTownLesson({
+  buildStoriesPatternLesson({
     lessonId: 'ee_around_town_transport',
     code: '2.5',
+    trackLabel: 'Everyday Life',
     titleEn: 'Transportation',
     titleTh: 'การเดินทาง',
     goalEn: 'Talk about getting around town.',
     goalTh: 'เดินทาง',
-    situationEn: "We're at the station.",
-    situationTh: 'ตอนนี้เราอยู่ที่สถานีครับ',
-    sceneTitle: '🚌 Transportation',
-    sceneNpcSpeaker: 'Ticket Staff',
-    sceneNpcVoice: 'Puck',
-    sceneLines: [
-      { speaker: 'Ticket Staff', role: 'npc', textEn: 'Where are you going?', textTh: 'จะไปไหนครับ?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: "I'm going to Bangkok.", textTh: 'ผมจะไปกรุงเทพครับ' },
-      { speaker: 'Ticket Staff', role: 'npc', textEn: 'How are you going?', textTh: 'จะไปยังไงครับ?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: "I'm taking the train.", textTh: 'ผมจะไปโดยรถไฟครับ' },
-      { speaker: 'Ticket Staff', role: 'npc', textEn: 'One ticket?', textTh: 'ตั๋วหนึ่งใบใช่ไหมครับ?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'Yes, please.', textTh: 'ใช่ครับ' },
+    hookTh:
+      'วันนี้มาฝึกพูดตอนขึ้นรถไฟ/รถบัสครับ! บอกจุดหมาย แล้วบอกว่าจะไปยังไง',
+    emojiWords: [
+      { emoji: '🚆', answer: 'train', hint: 't r _ _ n' },
+      { emoji: '🚌', answer: 'bus', hint: 'b _ s' },
+      { emoji: '🎫', answer: 'ticket', hint: 't _ c k _ t' },
+      { emoji: '🚉', answer: 'station', hint: 's t _ t _ _ n' },
     ],
-    vocabulary: [
-      { en: 'train', th: 'รถไฟ' },
-      { en: 'bus', th: 'รถบัส' },
-      { en: 'taxi', th: 'แท็กซี่' },
-      { en: 'ticket', th: 'ตั๋ว' },
-      { en: 'station', th: 'สถานี' },
-      { en: 'platform', th: 'ชานชาลา' },
-    ],
-    vocabQuiz1Th: 'ถ้าจะไปด้วยรถไฟ คุณต้องเลือกคำไหน',
-    vocabQuiz2Th: 'ถ้าจะซื้อตั๋ว คุณต้องเลือกคำไหน',
-    // Pattern 1 = destination (I'm going to...). Pattern 2 = transport (I'm taking...).
-    // Do NOT mix: never ask "by train?" as a substitute for Pattern 1.
-    patternRepeat: "I'm going to Bangkok.",
-    patternSubstitute1: "I'm going to Chiang Mai.",
-    patternSubstitute1Alts: [
-      "I'm going to Phuket.",
-      "I'm going to Pattaya.",
-    ],
-    patternExpand: "I'm taking the train.",
-    patternSubstitute2: "I'm taking the bus.",
-    patternSubstitute2Alts: ["I'm taking a taxi.", "I'm taking the taxi."],
-    missionFollowUpEn: 'One ticket?',
-    missionHint:
-      'Buy a ticket: say where you are going / how you are going, then answer One ticket? with Yes (Yes / Yeah / Yes please all OK — do NOT correct Yes into Yes please)',
+    tellGoal: 'build transport / destination lines',
+    tell1Thai: 'ฉันจะไปกรุงเทพ',
+    tell1En: "I'm going to Bangkok.",
+    tipTh:
+      'เยี่ยมเลยครับ! I\'m going to... บอกจุดหมาย และ I\'m taking the train. บอกวิธีเดินทาง',
+    tell2Thai: 'ฉันจะไปเชียงใหม่',
+    tell2En: "I'm going to Chiang Mai.",
+    tell3Thai: 'ฉันจะไปโดยรถไฟ',
+    tell3En: "I'm taking the train.",
+    tell3PraiseTh: 'เป๊ะ! taking the train ชัดเจนครับ',
+    ask1En: 'Where is the station?',
+    ask1AiAnswerEn: "It's over there.",
+    ask2ThaiCue: 'คราวนี้ลองถามเองดูครับ เรื่องตั๋ว พูดว่าไงดี?',
+    ask2En: 'How much is a ticket?',
+    ask2AiAnswerEn: "It's $10.",
+    answer1En: 'Where are you going?',
+    answer2En: 'One ticket?',
+    nextLessonHint: 'Asking Directions / ถามทาง',
   }),
-  buildAroundTownLesson({
+  buildStoriesPatternLesson({
     lessonId: 'ee_around_town_directions',
     code: '2.6',
+    trackLabel: 'Everyday Life',
     titleEn: 'Asking Directions',
     titleTh: 'ถามทาง',
     goalEn: 'Ask for directions politely.',
     goalTh: 'ถามทาง',
-    situationEn: "We're on the street and need directions.",
-    situationTh: 'ตอนนี้เราอยู่บนถนน แล้วต้องการถามทางครับ',
-    sceneTitle: '🗺️ Asking Directions',
-    sceneNpcSpeaker: 'Local',
-    sceneNpcVoice: 'Aoede',
-    sceneLines: [
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'Excuse me.', textTh: 'ขอโทษครับ' },
-      { speaker: 'Local', role: 'npc', textEn: 'Yes?', textTh: 'ครับ/คะ?' },
-      { speaker: 'Local', role: 'npc', textEn: 'What are you looking for?', textTh: 'คุณกำลังมองหาอะไรอยู่ครับ?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: "I'm looking for the train station.", textTh: 'ผมกำลังหาสถานีรถไฟครับ' },
-      { speaker: 'Local', role: 'npc', textEn: 'Go straight and turn left.', textTh: 'ตรงไปแล้วเลี้ยวซ้ายครับ' },
+    hookTh:
+      'หลงทางไหมครับ? วันนี้มาฝึกถามทางสุภาพๆ กันครับ!',
+    emojiWords: [
+      { emoji: '⬅️', answer: 'left', hint: 'l _ f t' },
+      { emoji: '➡️', answer: 'right', hint: 'r _ g h t' },
+      { emoji: '⬆️', answer: 'straight', hint: 's t r _ _ g h t' },
+      { emoji: '📍', answer: 'near', hint: 'n _ _ r' },
     ],
-    vocabulary: [
-      { en: 'left', th: 'ซ้าย' },
-      { en: 'right', th: 'ขวา' },
-      { en: 'straight', th: 'ตรงไป' },
-      { en: 'near', th: 'ใกล้' },
-      { en: 'across', th: 'ฝั่งตรงข้าม' },
-      { en: 'corner', th: 'มุมถนน' },
-    ],
-    vocabQuiz1Th: 'ถ้าจะเลี้ยวซ้าย คุณต้องเลือกคำไหน',
-    vocabQuiz2Th: 'ถ้าของานอยู่ใกล้ๆ คุณต้องเลือกคำไหน',
-    patternRepeat: 'Where is the station?',
-    patternSubstitute1: 'Where is the corner?',
-    patternExpand: 'Excuse me. Where is the station?',
-    patternSubstitute2: 'Excuse me. Where is the corner?',
-    missionFollowUpEn: 'Go straight and turn left. Okay?',
-    missionHint: 'Ask for directions to the station',
+    tellGoal: 'build direction questions and polite openers',
+    tell1Thai: 'สถานีอยู่ที่ไหน',
+    tell1En: 'Where is the station?',
+    tipTh:
+      'เยี่ยมเลยครับ! Where is...? ใช้ถามทางได้ และขึ้นต้นด้วย Excuse me. จะสุภาพขึ้น',
+    tell2Thai: 'มุมถนนอยู่ที่ไหน',
+    tell2En: 'Where is the corner?',
+    tell3Thai: 'ขอโทษครับ สถานีอยู่ที่ไหน',
+    tell3En: 'Excuse me. Where is the station?',
+    tell3PraiseTh: 'สุภาพมาก! Excuse me + Where is... เป๊ะครับ',
+    ask1En: 'Where is the station?',
+    ask1AiAnswerEn: 'Go straight and turn left.',
+    ask2ThaiCue: 'คราวนี้ลองถามเองดูครับ ว่าใกล้ไหม พูดว่าไงดี?',
+    ask2En: 'Is it near here?',
+    ask2AiAnswerEn: 'Yes, it is near here.',
+    answer1En: 'What are you looking for?',
+    answer2En: 'Go straight and turn left. Okay?',
+    nextLessonHint: 'Hotel / โรงแรม',
   }),
-  {
+  buildStoriesPatternLesson({
     lessonId: 'ee_around_town_hotel',
-    targetLabel: 'word or sentence',
+    code: '2.7',
+    trackLabel: 'Everyday Life',
     titleEn: 'Hotel',
     titleTh: 'โรงแรม',
-    goalEn: 'Check in at a hotel and use your / his / her with passport.',
-    goalTh: 'เช็กอินโรงแรม และใช้ your / his / her กับ passport ได้',
-    difficulty: 'beginner',
-    languageMix: { thai: 70, english: 30 },
-    estimatedMinutesMin: 4,
-    estimatedMinutesMax: 6,
-    targetPhrases: [
-      'reservation',
-      'passport',
-      'room',
-      'I have a reservation.',
-      "I'd like to check in.",
-      'Your passport.',
-      'His passport.',
-      'Her passport.',
+    goalEn: 'Check in at a hotel.',
+    goalTh: 'เช็กอินโรงแรม',
+    hookTh:
+      'ถึงโรงแรมแล้วครับ! วันนี้มาฝึกเช็กอินแบบสั้นๆ กันครับ',
+    emojiWords: [
+      { emoji: '🏨', answer: 'reservation', hint: 'r _ s _ r v _ t _ _ n' },
+      { emoji: '🛂', answer: 'passport', hint: 'p _ s s p _ r t' },
+      { emoji: '🛏️', answer: 'room', hint: 'r _ _ m' },
+      { emoji: '🔑', answer: 'check-in', hint: 'c h _ c k - i n' },
     ],
-    maxTurns: 20,
-    listenOnlyTurns: 3,
-    systemInstruction: `Lesson: Hotel (Everyday English → Everyday Life → 2.7)
-Goal: Check in at a hotel, then notice your / his / her with passport.
-Pace target: ~4–6 minutes. Keep every tutor turn tight.
-After this lesson, the app may offer an optional full Mission (soft gate) — still run the short in-lesson AI Conversation below.
-
-Target vocabulary (ONLY these):
-- reservation = การจอง
-- passport = พาสปอร์ต / หนังสือเดินทาง
-- room = ห้อง
-
-Target patterns:
-- I have a reservation.
-- I'd like to check in.
-- Your passport. / His passport. / Her passport.
-
-Teaching rules:
-- Ask only ONE speaking task per turn.
-- Soft correction ONLY (never Wrong / ไม่ถูก).
-- STT is English-only for spoken answers. Ask/explain in {{L1}} OK (except AI Conversation — see below).
-- Vocabulary lock: only the target words + patterns above.
-- FORBIDDEN: Useful Sentences lists; going backward in Core Flow; hell-loop re-drills after AI Conversation starts.
-- On AI Conversation misses: soft-teach once, then advance — FORBIDDEN: mission retry loops on the same NPC ask.
-- Keep most turns under 2–3 short sentences.
-
-Scene / Watch & Listen rules:
-- On Core Flow step 2, return a scene object (expectsUserSpeech false).
-- scene.title must be exactly: "🏨 Hotel"
-- NPC: "Receptionist" voice "Aoede". Teacher B: role "teacher", omit voice.
-- Model dialogue (paraphrase lightly OK; every line needs textTh):
-  Receptionist: Welcome! / ยินดีต้อนรับค่ะ!
-  Teacher B: Hi. I have a reservation. / สวัสดีครับ ผมจองห้องไว้ครับ
-  Receptionist: May I have your passport? / ขอดูพาสปอร์ตหน่อยได้ไหมคะ?
-  Teacher B: Sure. Here you are. / ได้ครับ นี่ครับ
-- Top-level textEn = short summary only (e.g. "Watch this short hotel dialogue.").
-- Top-level textTh = short {{L1}} prompt that they can open Thai subtitles if needed (do not paste the full script into textTh).
-
-Core Flow (ONE-WAY — never go backward):
-1. Situation — set the scene in {{L1}} only (~15–30s). Stay close to: "ตอนนี้เราอยู่ที่เคาน์เตอร์โรงแรมครับ มาดูฉากเช็กอินกันก่อนนะครับ"
-   NO vocab yet. NO scene object yet. expectsUserSpeech=false. expectedSpeech="".
-
-2. Watch & Listen — play the Scene dialogue above. No grammar explanation. expectsUserSpeech=false. Return scene.lines with textEn + textTh on EVERY line. expectedSpeech="".
-
-3. Vocabulary — EXACTLY 3 learner speaking turns (teach → speak, one word per turn):
-   3a. Teach reservation = การจอง → ask to repeat ONLY "reservation". expectedSpeech="reservation".
-   3b. Teach passport = พาสปอร์ต / หนังสือเดินทาง → ask to repeat ONLY "passport". expectedSpeech="passport".
-   3c. Teach room = ห้อง → ask to repeat ONLY "room". expectedSpeech="room".
-   FORBIDDEN: dumping all 3 meanings in one turn; quizzes with 3 options; teaching extra hotel words (key, breakfast, check-in as vocab drills).
-
-4. Pattern 1 — EXACTLY 2 speaks (BOTH are model + repeat — not substitute quizzes):
-   4a. Model "I have a reservation." → learner repeats. expectedSpeech="I have a reservation.".
-   4b. Model "I'd like to check in." → learner repeats. expectedSpeech="I'd like to check in.".
-   FORBIDDEN: "I'm checking in/out" drills; substitute questions that give the English answer.
-
-5. AI Conversation — EXACTLY 2–3 learner speaks (short hotel check-in; prefer using reservation / passport):
-   LANGUAGE OVERRIDE (critical — Thai subtitle button):
-   - textEn MUST be ENGLISH ONLY — speak as the Receptionist NPC.
-   - FORBIDDEN in textEn: Thai script, {{L1}} tutor talk, "ลองพูดว่า", Teacher B Thai coaching as the main bubble.
-   - textTh MUST be the full natural Thai translation of that same English line.
-   - Do NOT return a scene object on AI Conversation turns (omit scene). expectsUserSpeech=true. expectedSpeech="".
-   a) NPC opens (e.g. "Welcome! How can I help you?"). Learner checks in (practiced lines OK: I have a reservation. / I'd like to check in.).
-   b) NPC follow-up: "May I have your passport?" Learner answers (e.g. Sure. / Here you are. / Here is my passport.).
-   c) OPTIONAL third speak only if needed for a natural close (e.g. room number / "Okay, you're all set.") — otherwise confirm briefly after (b) and go to Grammar Discovery.
-   ACCEPT CLEAR SHORT ANSWERS: If meaning is clear, ACCEPT and advance — do NOT soft-teach a "more polite" rewrite.
-   Soft-teach ONLY if wrong/unclear/off-topic: ONCE in English in textEn, Thai tip in textTh, then CONTINUE — do NOT retry the same ask.
-   CRITICAL: once AI Conversation starts, NEVER return to Vocab / Pattern Drill — even if they reuse a practiced sentence (that is SUCCESS).
-   After the mission closes: go to step 6 as a NEW listen-only turn (do not mash Grammar Discovery into the NPC confirmation).
-
-6. Grammar Discovery — your / his / her (listen-only) — NEW TURN after AI Conversation
-   expectsUserSpeech=false. Do NOT ask them to speak yet.
-   Stay close to this script, SEPARATE lines:
-   สังเกตนะครับ
-   Your passport.
-   His passport.
-   Her passport.
-   your = ของคุณ
-   his = ของเขา (ผู้ชาย)
-   her = ของเธอ (ผู้หญิง)
-   FORBIDDEN: starting Quick Speak in the same turn; long grammar lectures; inventing new possessive drills (my passport) on this turn.
-
-7. Quick Speak — EXACTLY 3 speaks (model → พูดตาม, one per turn):
-   7a. Model "Your passport." → learner repeats. expectedSpeech="Your passport.".
-   7b. Model "His passport." → learner repeats. expectedSpeech="His passport.".
-   7c. Model "Her passport." → learner repeats. expectedSpeech="Her passport.".
-
-8. Quick Recall — EXACTLY 2 speaking turns (Thai → English). Do NOT show the English answer first:
-   8a. "ถ้าจะพูดว่า 'หนังสือเดินทางของเขา' จะพูดอย่างไรครับ?" Expected: "His passport." (also accept "His passport").
-   8b. After praise: "ถ้าจะพูดว่า 'หนังสือเดินทางของเธอ' จะพูดอย่างไรครับ?" Expected: "Her passport.".
-   Soft-accept close variants. expectedSpeech = the full English line.
-   FORBIDDEN: revealing the English target in the ask; arrow frames like "____ passport".
-
-9. Wrap-up & Celebrate (listen-only, ~30 sec):
-   - Back to normal {{L1}} Teacher B voice (not NPC English).
-   - Briefly summarize: reservation / passport / room + I have a reservation / I'd like to check in + your / his / her passport.
-   - Praise that they can check in and talk about whose passport.
-   - Celebrate with their first name once.
-   - FORBIDDEN: XP/Seeds talk, multi-paragraph wrap, starting another mission roleplay.
-   - expectsUserSpeech=false. isLessonComplete=true. expectedSpeech="".
-
-Turn loop rules:
-- Every non-final turn ends with one clear next action OR is listen-only (Continue).
-- Max ONE retry per item; then accept and advance.
-- Accept close variants when meaning is clear.
-- When Wrap-up & Celebrate is reached, isLessonComplete must be true.`,
-    openingPrompt:
-      'Start the Hotel Everyday Life lesson for this one learner only. Speak as a private 1:1 tutor (never {{NO_GROUP}}). Use their first name once. CRITICAL Turn 1 = Situation ONLY — set the hotel front-desk scene ("ดูฉากเช็กอินโรงแรม"), no vocab yet, expectsUserSpeech false, expectedSpeech "", NO scene object yet. Do NOT mention any button. Turn 2 = Watch & Listen Scene (return scene object: Welcome / I have a reservation / May I have your passport? / Sure. Here you are.). Then: Vocab (reservation → passport → room, speak each) → Pattern 1 (repeat I have a reservation. then I\'d like to check in.) → AI Conversation (2–3 speaks; NPC English in textEn + full Thai in textTh; use reservation/passport) → Grammar Discovery NEW listen-only turn ("สังเกตนะครับ" + Your/His/Her passport — no speak) → Quick Speak (repeat each) → Quick Recall (หนังสือเดินทางของเขา/ของเธอ) → Wrap-up & Celebrate (complete). Never go backward. Return JSON matching the schema. isLessonComplete must be false.',
-  },
-  buildAroundTownLesson({
+    tellGoal: 'build hotel check-in lines',
+    tell1Thai: 'ฉันจองห้องไว้',
+    tell1En: 'I have a reservation.',
+    tipTh:
+      'เยี่ยมเลยครับ! I have a reservation. และ I\'d like to check in. ใช้ตอนเช็กอินได้เลย',
+    tell2Thai: 'ขอเช็กอินครับ',
+    tell2En: "I'd like to check in.",
+    tell3Thai: 'นี่พาสปอร์ตของฉัน',
+    tell3En: 'Here is my passport.',
+    tell3PraiseTh: 'เป๊ะ! Here is my passport. ชัดเจนครับ',
+    ask1En: 'What time is breakfast?',
+    ask1AiAnswerEn: 'Breakfast is from 7 to 10.',
+    ask2ThaiCue: 'คราวนี้ลองถามเองดูครับ เรื่องห้อง พูดว่าไงดี?',
+    ask2En: 'Where is my room?',
+    ask2AiAnswerEn: 'Your room is on the second floor.',
+    answer1En: 'Welcome! How can I help you?',
+    answer2En: 'May I have your passport?',
+    nextLessonHint: 'Airport / สนามบิน',
+  }),
+  buildStoriesPatternLesson({
     lessonId: 'ee_around_town_airport',
     code: '2.8',
+    trackLabel: 'Everyday Life',
     titleEn: 'Airport',
     titleTh: 'สนามบิน',
     goalEn: 'Get through the airport.',
     goalTh: 'ผ่านสนามบิน',
-    situationEn: "We're at the airport.",
-    situationTh: 'ตอนนี้เราอยู่ที่สนามบินครับ',
-    sceneTitle: '✈️ Airport',
-    sceneNpcSpeaker: 'Airport Staff',
-    sceneNpcVoice: 'Aoede',
-    sceneLines: [
-      { speaker: 'Airport Staff', role: 'npc', textEn: 'Good morning.', textTh: 'อรุณสวัสดิ์ค่ะ' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: "Hi. I'd like to check in.", textTh: 'สวัสดีครับ ขอเช็กอินครับ' },
-      { speaker: 'Airport Staff', role: 'npc', textEn: 'May I see your passport?', textTh: 'ขอดูพาสปอร์ตหน่อยได้ไหมคะ?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'Here you are.', textTh: 'นี่ครับ' },
+    hookTh:
+      'ถึงสนามบินแล้วครับ! วันนี้มาฝึกเช็กอินและยื่นเอกสารแบบสั้นๆ กันครับ',
+    emojiWords: [
+      { emoji: '🛂', answer: 'passport', hint: 'p _ s s p _ r t' },
+      { emoji: '✈️', answer: 'flight', hint: 'f l _ g h t' },
+      { emoji: '🎫', answer: 'boarding pass', hint: 'b _ _ r d _ n g   p _ s s' },
+      { emoji: '🧳', answer: 'baggage', hint: 'b _ g g _ g e' },
     ],
-    vocabulary: [
-      { en: 'passport', th: 'พาสปอร์ต' },
-      { en: 'gate', th: 'เกต' },
-      { en: 'flight', th: 'เที่ยวบิน' },
-      { en: 'boarding pass', th: 'บัตรขึ้นเครื่อง' },
-      { en: 'baggage', th: 'กระเป๋าเดินทาง' },
-      { en: 'check-in', th: 'เช็กอิน' },
-    ],
-    vocabQuiz1Th: 'ถ้าพนักงานขอพาสปอร์ต คุณต้องเลือกคำไหน',
-    vocabQuiz2Th: 'ถ้าจะหาบัตรขึ้นเครื่อง คุณต้องเลือกคำไหน',
-    patternRepeat: "I'd like to check in.",
-    patternSubstitute1: "I'd like to check in for my flight.",
-    patternExpand: 'Here is my passport.',
-    patternSubstitute2: 'Here is my boarding pass.',
-    missionFollowUpEn: 'May I see your passport?',
-    missionHint: 'Check in at the airport',
+    tellGoal: 'build airport check-in lines',
+    tell1Thai: 'ขอเช็กอินครับ',
+    tell1En: "I'd like to check in.",
+    tipTh:
+      'เยี่ยมเลยครับ! I\'d like to check in. ใช้ที่สนามบินได้เลย แล้วค่อยยื่น passport',
+    tell2Thai: 'ขอเช็กอินเที่ยวบินครับ',
+    tell2En: "I'd like to check in for my flight.",
+    tell3Thai: 'นี่พาสปอร์ตของฉัน',
+    tell3En: 'Here is my passport.',
+    tell3PraiseTh: 'เป๊ะ! Here is my passport. ใช้ได้ทันทีครับ',
+    ask1En: 'Where is the gate?',
+    ask1AiAnswerEn: 'Gate 12.',
+    ask2ThaiCue: 'คราวนี้ลองถามเองดูครับ เรื่องกระเป๋า พูดว่าไงดี?',
+    ask2En: 'Where do I put my baggage?',
+    ask2AiAnswerEn: 'Please put it here.',
+    answer1En: 'Good morning. How can I help you?',
+    answer2En: 'May I see your passport?',
+    nextLessonHint: 'Pharmacy / ร้านยา',
   }),
-  buildAroundTownLesson({
+  buildStoriesPatternLesson({
     lessonId: 'ee_around_town_pharmacy',
     code: '2.9',
+    trackLabel: 'Everyday Life',
     titleEn: 'Pharmacy',
     titleTh: 'ร้านยา',
     goalEn: 'Ask for basic help at a pharmacy.',
     goalTh: 'ขอความช่วยเหลือเบื้องต้น',
-    situationEn: "We're at a pharmacy.",
-    situationTh: 'ตอนนี้เราอยู่ที่ร้านขายยาครับ',
-    sceneTitle: '💊 Pharmacy',
-    sceneNpcSpeaker: 'Pharmacist',
-    sceneNpcVoice: 'Puck',
-    sceneLines: [
-      { speaker: 'Pharmacist', role: 'npc', textEn: 'How can I help you?', textTh: 'มีอะไรให้ช่วยไหมครับ?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: "I'm not feeling well.", textTh: 'ผมรู้สึกไม่ค่อยสบายครับ' },
-      { speaker: 'Pharmacist', role: 'npc', textEn: "What's wrong?", textTh: 'เป็นอะไรครับ?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'I have a headache.', textTh: 'ผมปวดหัวครับ' },
-      { speaker: 'Pharmacist', role: 'npc', textEn: 'Here is some medicine.', textTh: 'นี่ยาครับ' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'Thank you.', textTh: 'ขอบคุณครับ' },
+    hookTh:
+      'รู้สึกไม่สบายไหมครับ? วันนี้มาฝึกคุยที่ร้านขายยาแบบสั้นๆ กันครับ!',
+    emojiWords: [
+      { emoji: '🤕', answer: 'headache', hint: 'h _ _ d _ c h e' },
+      { emoji: '🤒', answer: 'fever', hint: 'f _ v _ r' },
+      { emoji: '💊', answer: 'medicine', hint: 'm _ d _ c _ n e' },
+      { emoji: '🏪', answer: 'pharmacy', hint: 'p h _ r m _ c y' },
     ],
-    vocabulary: [
-      { en: 'headache', th: 'ปวดหัว' },
-      { en: 'fever', th: 'ไข้' },
-      { en: 'medicine', th: 'ยา' },
-      { en: 'pharmacy', th: 'ร้านขายยา' },
-      { en: 'doctor', th: 'หมอ' },
-      { en: 'sick', th: 'ไม่สบาย' },
-    ],
-    vocabQuiz1Th: 'ถ้าปวดหัว คุณต้องเลือกคำไหน',
-    vocabQuiz2Th: 'ถ้าร้านขายยา เรียกว่าคำไหน',
-    patternRepeat: 'I have a headache.',
-    patternSubstitute1: 'I have a fever.',
-    patternExpand: 'I have a headache.',
-    patternSubstitute2: 'I have a fever.',
-    pattern2QuestionEn: "What's wrong?",
-    missionFollowUpEn: 'Here is some medicine. Okay?',
-    missionHint: 'Ask for medicine at a pharmacy',
+    tellGoal: 'build pharmacy symptom lines',
+    tell1Thai: 'ฉันปวดหัว',
+    tell1En: 'I have a headache.',
+    tipTh:
+      'เยี่ยมเลยครับ! I have a headache. / I have a fever. ใช้บอกอาการได้เลย',
+    tell2Thai: 'ฉันมีไข้',
+    tell2En: 'I have a fever.',
+    tell3Thai: 'ฉันรู้สึกไม่ค่อยสบาย',
+    tell3En: "I'm not feeling well.",
+    tell3PraiseTh: 'ชัดเจนมาก! not feeling well ใช้ได้ดีครับ',
+    ask1En: 'Can you help me?',
+    ask1AiAnswerEn: 'Of course. What\'s wrong?',
+    ask2ThaiCue: 'คราวนี้ลองถามเองดูครับ เรื่องยาแก้ปวดหัว พูดว่าไงดี?',
+    ask2En: 'Do you have medicine for a headache?',
+    ask2AiAnswerEn: 'Yes. Here is some medicine.',
+    answer1En: 'How can I help you?',
+    answer2En: "What's wrong?",
     nextLessonHint: 'Lesson Summary / สรุปบทเรียน',
   }),
   // --- Everyday Life chapter review ---
@@ -4869,302 +4928,268 @@ Turn loop rules:
     openingPrompt: `Start the Yesterday Stories lesson (3.1) for this one learner only. Speak as a private 1:1 tutor (never {{NO_GROUP}}). Use their first name once. CRITICAL Turn 1 = Hook ONLY — "เมื่อวานทำอะไรมาบ้างครับ? บางคนไปทำงาน บางคนได้พักผ่อนอยู่บ้าน... วันนี้มาฝึกเล่าเรื่อง 'เมื่อวาน' เป็นภาษาอังกฤษแบบชิลๆ กันครับ!" — expectsUserSpeech false, expectedSpeech "", NO emojiSpeak, NO emojiSpeakSet, NO scene. Do NOT mention any button. Then ONE Intro listen turn with emojiSpeakSet of ALL 4 puzzles (📅 yesterday, 🍳 breakfast, 🌙 last night, 💼 work — each with hint/index/total:4); expectsUserSpeech false. App runs the 4 locally. After "(finished Emoji Speak — start Pattern Challenge 1)": Pattern Challenge 1 Tell EXACTLY 3 speaks (I ate breakfast this morning. → SEPARATE listen-only tip turn about past verbs eat→ate / go→went → NEXT turn I ate breakfast yesterday. → I went to work yesterday. + tip go/went) → Ask = learner mic exactly 2 times (speak#1 guided What did you do yesterday?; speak#2 NO English guide Thai cue about breakfast yesterday). After EACH ask: AI answer-only listen turn → Continue → praise then next. Never mash answer+praise+next. Never 3rd ask. → Answer (learner speaks exactly 2) → Celebrate (complete). Never emit per-word emojiSpeak turns. Never re-open Intro after Emoji Speak. Never go backward. Return JSON matching the schema. isLessonComplete must be false.`,
   },
 
-  buildAroundTownLesson({
+  buildStoriesPatternLesson({
     lessonId: 'ee_stories_last_weekend',
     code: '3.2',
-    trackLabel: 'Stories',
     titleEn: 'Last Weekend',
     titleTh: 'สุดสัปดาห์ที่แล้ว',
     goalEn: 'Talk about last weekend activities.',
     goalTh: 'เล่ากิจกรรมสุดสัปดาห์ที่แล้ว',
-    situationEn: "We're talking about last weekend.",
-    situationTh: 'วันนี้เราจะคุยเรื่องสุดสัปดาห์ที่แล้วครับ',
-    sceneTitle: '🌴 Last Weekend',
-    sceneNpcSpeaker: 'Friend',
-    sceneNpcVoice: 'Aoede',
-    sceneLines: [
-      { speaker: 'Friend', role: 'npc', textEn: 'How was your weekend?', textTh: 'สุดสัปดาห์เป็นไงบ้าง?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'I went to the beach.', textTh: 'ผมไปชายหาดครับ' },
-      { speaker: 'Friend', role: 'npc', textEn: 'Did you have fun?', textTh: 'สนุกไหม?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'Yes, I did!', textTh: 'สนุกมากครับ!' },
+    hookTh:
+      'สุดสัปดาห์ที่แล้วทำอะไรมาบ้างครับ? บางคนไปชายหาด บางคนไปดูหนัง... วันนี้มาฝึกเล่าเรื่องสุดสัปดาห์แบบชิลๆ กันครับ!',
+    emojiWords: [
+      { emoji: '🌴', answer: 'weekend', hint: 'w _ _ k _ _ d', },
+      { emoji: '🏖️', answer: 'beach', hint: 'b _ _ c h', },
+      { emoji: '🎬', answer: 'movie', hint: 'm _ v _ e', },
+      { emoji: '🛍️', answer: 'shopping', hint: 's h _ p p _ _ g', },
     ],
-    vocabulary: [
-      { en: 'weekend', th: 'สุดสัปดาห์' },
-      { en: 'beach', th: 'ชายหาด' },
-      { en: 'movie', th: 'หนัง' },
-      { en: 'shopping', th: 'ช้อปปิ้ง' },
-      { en: 'friend', th: 'เพื่อน' },
-      { en: 'family', th: 'ครอบครัว' },
-    ],
-    vocabQuiz1Th: 'ถ้าจะพูดถึงชายหาด คุณต้องเลือกคำไหน',
-    vocabQuiz2Th: 'ถ้าจะพูดถึงช้อปปิ้ง คุณต้องเลือกคำไหน',
-    patternRepeat: 'I went to the beach.',
-    patternSubstitute1: 'I went shopping.',
-    patternExpand: 'Yes, I did.',
-    patternSubstitute2: "No, I didn't.",
-    pattern2QuestionEn: 'Did you have fun?',
-    missionFollowUpEn: 'Did you go with friends?',
-    missionHint: 'Tell a friend about last weekend',
+    tell1Thai: 'สุดสัปดาห์ที่แล้วฉันไปชายหาด',
+    tell1En: 'I went to the beach.',
+    tipTh:
+      'เยี่ยมเลยครับ! เห็นไหมครับ เวลาเล่าเรื่องในอดีต go เปลี่ยนเป็น went นะ เช่น I went to the beach.',
+    tell2Thai: 'ฉันไปช้อปปิ้ง',
+    tell2En: 'I went shopping.',
+    tell3Thai: 'ฉันสนุกมาก',
+    tell3En: 'I had fun.',
+    tell3PraiseTh: 'เป๊ะเวอร์! had fun ลื่นหูมากครับ',
+    ask1En: 'What did you do last weekend?',
+    ask1AiAnswerEn: 'I went to the beach.',
+    ask2ThaiCue: 'คราวนี้ลองถามเองดูครับ ว่าสนุกไหม พูดว่าไงดี?',
+    ask2En: 'Did you have fun?',
+    ask2AiAnswerEn: 'Yes, I did!',
+    answer1En: 'What did you do last weekend?',
+    answer2En: 'Did you have fun?',
     nextLessonHint: 'Vacation / ท่องเที่ยว',
   }),
-  buildAroundTownLesson({
+  buildStoriesPatternLesson({
     lessonId: 'ee_stories_vacation',
     code: '3.3',
-    trackLabel: 'Stories',
     titleEn: 'Vacation',
     titleTh: 'ท่องเที่ยว',
     goalEn: 'Talk about a vacation in the past.',
     goalTh: 'เล่าเรื่องท่องเที่ยวในอดีต',
-    situationEn: "We're talking about a vacation.",
-    situationTh: 'วันนี้เราจะคุยเรื่องท่องเที่ยวครับ',
-    sceneTitle: '✈️ Vacation',
-    sceneNpcSpeaker: 'Friend',
-    sceneNpcVoice: 'Puck',
-    sceneLines: [
-      { speaker: 'Friend', role: 'npc', textEn: 'Where did you go on vacation?', textTh: 'ไปเที่ยวที่ไหนมา?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'I went to Japan.', textTh: 'ผมไปญี่ปุ่นครับ' },
-      { speaker: 'Friend', role: 'npc', textEn: 'Cool! Where did you stay?', textTh: 'เจ๋ง! พักที่ไหน?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'I stayed at a hotel.', textTh: 'พักที่โรงแรมครับ' },
+    hookTh:
+      'เคยไปเที่ยวที่ไหนมาบ้างครับ? วันนี้มาฝึกเล่าทริปท่องเที่ยวเป็นภาษาอังกฤษกันครับ!',
+    emojiWords: [
+      { emoji: '✈️', answer: 'vacation', hint: 'v _ c _ t _ _ n', },
+      { emoji: '🏨', answer: 'hotel', hint: 'h _ t _ l', },
+      { emoji: '📷', answer: 'photos', hint: 'p h _ t _ s', },
+      { emoji: '🧳', answer: 'travel', hint: 't r _ v _ l', },
     ],
-    vocabulary: [
-      { en: 'vacation', th: 'วันหยุดท่องเที่ยว' },
-      { en: 'hotel', th: 'โรงแรม' },
-      { en: 'beach', th: 'ชายหาด' },
-      { en: 'mountain', th: 'ภูเขา' },
-      { en: 'travel', th: 'เดินทาง' },
-      { en: 'photos', th: 'รูปภาพ' },
-    ],
-    vocabQuiz1Th: 'ถ้าจะพูดถึงโรงแรม คุณต้องเลือกคำไหน',
-    vocabQuiz2Th: 'ถ้าจะพูดถึงรูปภาพ คุณต้องเลือกคำไหน',
-    patternRepeat: 'I went to Japan.',
-    patternSubstitute1: 'I went to Korea.',
-    patternExpand: 'I stayed at a hotel.',
-    patternSubstitute2: 'I took many photos.',
-    missionFollowUpEn: 'Did you take many photos?',
-    missionHint: 'Tell a friend about your vacation',
+    tell1Thai: 'ฉันไปญี่ปุ่น',
+    tell1En: 'I went to Japan.',
+    tipTh:
+      'เยี่ยมเลยครับ! เล่าอดีตแล้ว go → went นะ เช่น I went to Japan.',
+    tell2Thai: 'ฉันไปเกาหลี',
+    tell2En: 'I went to Korea.',
+    tell3Thai: 'ฉันพักที่โรงแรม',
+    tell3En: 'I stayed at a hotel.',
+    tell3PraiseTh: 'เป๊ะ! stayed ใช้กับพักโรงแรมได้ดีมากครับ',
+    ask1En: 'Where did you go on vacation?',
+    ask1AiAnswerEn: 'I went to Japan.',
+    ask2ThaiCue: 'คราวนี้ลองถามเองดูครับ ว่าถ่ายรูปเยอะไหม พูดว่าไงดี?',
+    ask2En: 'Did you take many photos?',
+    ask2AiAnswerEn: 'Yes, I did!',
+    answer1En: 'Where did you go on vacation?',
+    answer2En: 'Did you take many photos?',
     nextLessonHint: 'Birthday / วันเกิด',
   }),
-  buildAroundTownLesson({
+  buildStoriesPatternLesson({
     lessonId: 'ee_stories_birthday',
     code: '3.4',
-    trackLabel: 'Stories',
     titleEn: 'Birthday',
     titleTh: 'วันเกิด',
     goalEn: 'Talk about a birthday party in the past.',
     goalTh: 'เล่างานวันเกิดในอดีต',
-    situationEn: "We're talking about a birthday.",
-    situationTh: 'วันนี้เราจะคุยเรื่องวันเกิดครับ',
-    sceneTitle: '🎂 Birthday',
-    sceneNpcSpeaker: 'Friend',
-    sceneNpcVoice: 'Aoede',
-    sceneLines: [
-      { speaker: 'Friend', role: 'npc', textEn: 'How was your birthday?', textTh: 'วันเกิดเป็นไงบ้าง?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'I had a birthday party.', textTh: 'ผมจัดงานวันเกิดครับ' },
-      { speaker: 'Friend', role: 'npc', textEn: 'Did you get a gift?', textTh: 'ได้ของขวัญไหม?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'Yes! We ate cake and celebrated together.', textTh: 'ได้ครับ! กินเค้กและฉลองด้วยกัน' },
+    hookTh:
+      'วันเกิดครั้งล่าสุดเป็นยังไงบ้างครับ? วันนี้มาฝึกเล่างานวันเกิดกันครับ!',
+    emojiWords: [
+      { emoji: '🎂', answer: 'birthday', hint: 'b _ r t h _ _ y', },
+      { emoji: '🍰', answer: 'cake', hint: 'c _ k e', },
+      { emoji: '🎁', answer: 'gift', hint: 'g _ f t', },
+      { emoji: '🎉', answer: 'party', hint: 'p _ r t y', },
     ],
-    vocabulary: [
-      { en: 'birthday', th: 'วันเกิด' },
-      { en: 'cake', th: 'เค้ก' },
-      { en: 'gift', th: 'ของขวัญ' },
-      { en: 'party', th: 'งานปาร์ตี้' },
-      { en: 'candles', th: 'เทียน' },
-      { en: 'celebrate', th: 'ฉลอง' },
-    ],
-    vocabQuiz1Th: 'ถ้าจะพูดถึงเค้ก คุณต้องเลือกคำไหน',
-    vocabQuiz2Th: 'ถ้าจะพูดถึงการฉลอง คุณต้องเลือกคำไหน',
-    patternRepeat: 'I had a birthday party.',
-    patternSubstitute1: 'I got a gift.',
-    patternExpand: 'We ate cake and celebrated together.',
-    patternSubstitute2: 'We sang and celebrated together.',
-    missionFollowUpEn: 'What gift did you get?',
-    missionHint: 'Tell a friend about your birthday',
+    tell1Thai: 'ฉันจัดงานวันเกิด',
+    tell1En: 'I had a birthday party.',
+    tipTh:
+      'เยี่ยมเลยครับ! had ใช้เล่าอดีตได้ เช่น I had a birthday party.',
+    tell2Thai: 'ฉันได้ของขวัญ',
+    tell2En: 'I got a gift.',
+    tell3Thai: 'เรากินเค้กด้วยกัน',
+    tell3En: 'We ate cake together.',
+    tell3PraiseTh: 'เป๊ะเวอร์! ate เปลี่ยนจาก eat สวยมากครับ',
+    ask1En: 'How was your birthday?',
+    ask1AiAnswerEn: 'I had a birthday party.',
+    ask2ThaiCue: 'คราวนี้ลองถามเองดูครับ ว่าได้ของขวัญไหม พูดว่าไงดี?',
+    ask2En: 'Did you get a gift?',
+    ask2AiAnswerEn: 'Yes, I did!',
+    answer1En: 'How was your birthday?',
+    answer2En: 'Did you get a gift?',
     nextLessonHint: 'School Memories / ความทรงจำโรงเรียน',
   }),
-  buildAroundTownLesson({
+  buildStoriesPatternLesson({
     lessonId: 'ee_stories_school',
     code: '3.5',
-    trackLabel: 'Stories',
     titleEn: 'School Memories',
     titleTh: 'ความทรงจำโรงเรียน',
     goalEn: 'Talk about school memories with Past Simple.',
     goalTh: 'เล่าความทรงจำโรงเรียนด้วย Past Simple',
-    situationEn: "We're talking about school memories.",
-    situationTh: 'วันนี้เราจะคุยเรื่องความทรงจำโรงเรียนครับ',
-    sceneTitle: '🏫 School Memories',
-    sceneNpcSpeaker: 'Friend',
-    sceneNpcVoice: 'Puck',
-    sceneLines: [
-      { speaker: 'Friend', role: 'npc', textEn: 'What did you do at school?', textTh: 'ที่โรงเรียนทำอะไรบ้าง?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'I studied English.', textTh: 'ผมเรียนภาษาอังกฤษครับ' },
-      { speaker: 'Friend', role: 'npc', textEn: 'Did you like homework?', textTh: 'ชอบการบ้านไหม?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: "I didn't like homework. I liked English.", textTh: 'ไม่ชอบการบ้านครับ แต่ชอบวิชาอังกฤษ' },
+    hookTh:
+      'ตอนเรียนเคยทำอะไรบ้างครับ? วันนี้มาฝึกเล่าความทรงจำโรงเรียนกันครับ!',
+    emojiWords: [
+      { emoji: '🏫', answer: 'school', hint: 's c h _ _ l', },
+      { emoji: '📝', answer: 'homework', hint: 'h _ m _ w _ r k', },
+      { emoji: '👨‍🏫', answer: 'teacher', hint: 't _ _ c h _ r', },
+      { emoji: '📚', answer: 'study', hint: 's t _ d y', },
     ],
-    vocabulary: [
-      { en: 'school', th: 'โรงเรียน' },
-      { en: 'teacher', th: 'ครู' },
-      { en: 'homework', th: 'การบ้าน' },
-      { en: 'classroom', th: 'ห้องเรียน' },
-      { en: 'friends', th: 'เพื่อน' },
-      { en: 'study', th: 'เรียน' },
-    ],
-    vocabQuiz1Th: 'ถ้าจะพูดถึงการบ้าน คุณต้องเลือกคำไหน',
-    vocabQuiz2Th: 'ถ้าจะพูดถึงการเรียน คุณต้องเลือกคำไหน',
-    patternRepeat: 'I studied English.',
-    patternSubstitute1: 'I played football.',
-    patternExpand: "I didn't like homework.",
-    patternSubstitute2: 'I liked English.',
-    missionFollowUpEn: 'Who was your favorite teacher?',
-    missionHint: 'Tell a friend about school memories',
+    tell1Thai: 'ฉันเรียนภาษาอังกฤษ',
+    tell1En: 'I studied English.',
+    tipTh:
+      'เยี่ยมเลยครับ! study ในอดีตเป็น studied นะ เช่น I studied English.',
+    tell2Thai: 'ฉันเล่นฟุตบอล',
+    tell2En: 'I played football.',
+    tell3Thai: 'ฉันไม่ชอบการบ้าน',
+    tell3En: "I didn't like homework.",
+    tell3PraiseTh: "เก่งมาก! didn't like ชัดเจนครับ",
+    ask1En: 'What did you do at school?',
+    ask1AiAnswerEn: 'I studied English.',
+    ask2ThaiCue: 'คราวนี้ลองถามเองดูครับ ว่าชอบการบ้านไหม พูดว่าไงดี?',
+    ask2En: 'Did you like homework?',
+    ask2AiAnswerEn: "No, I didn't.",
+    answer1En: 'What did you do at school?',
+    answer2En: 'Did you like homework?',
     nextLessonHint: 'Funny Story / เรื่องตลก',
   }),
-  buildAroundTownLesson({
+  buildStoriesPatternLesson({
     lessonId: 'ee_stories_funny',
     code: '3.6',
-    trackLabel: 'Stories',
     titleEn: 'Funny Story',
     titleTh: 'เรื่องตลก',
     goalEn: 'Tell a short funny story with first / then.',
     goalTh: 'เล่าเรื่องตลกสั้นๆ ด้วย first / then',
-    situationEn: "We're telling a funny story.",
-    situationTh: 'วันนี้เราจะเล่าเรื่องตลกกันครับ',
-    sceneTitle: '😂 Funny Story',
-    sceneNpcSpeaker: 'Friend',
-    sceneNpcVoice: 'Aoede',
-    sceneLines: [
-      { speaker: 'Friend', role: 'npc', textEn: 'Tell me something funny!', textTh: 'เล่าอะไรตลกๆ หน่อยสิ!' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'First, I forgot my bag.', textTh: 'ก่อนอื่น ผมลืมกระเป๋าครับ' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'Then, I lost my phone.', textTh: 'แล้วก็ทำโทรศัพท์หาย' },
-      { speaker: 'Friend', role: 'npc', textEn: 'Everyone laughed!', textTh: 'ทุกคนหัวเราะเลย!' },
+    hookTh:
+      'มีเรื่องตลกจะเล่าไหมครับ? วันนี้มาฝึกเล่าเรื่องสั้นๆ ด้วย first / then กันครับ!',
+    emojiWords: [
+      { emoji: '😂', answer: 'funny', hint: 'f _ n n y', },
+      { emoji: '👜', answer: 'bag', hint: 'b _ g', },
+      { emoji: '📱', answer: 'phone', hint: 'p h _ n e', },
+      { emoji: '😅', answer: 'laugh', hint: 'l _ _ g h', },
     ],
-    vocabulary: [
-      { en: 'funny', th: 'ตลก' },
-      { en: 'laugh', th: 'หัวเราะ' },
-      { en: 'forget', th: 'ลืม' },
-      { en: 'bag', th: 'กระเป๋า' },
-      { en: 'phone', th: 'โทรศัพท์' },
-      { en: 'fall', th: 'ล้ม' },
-    ],
-    vocabQuiz1Th: 'ถ้าจะพูดถึงการลืม คุณต้องเลือกคำไหน',
-    vocabQuiz2Th: 'ถ้าจะพูดถึงโทรศัพท์ คุณต้องเลือกคำไหน',
-    patternRepeat: 'First, I forgot my bag.',
-    patternSubstitute1: 'Then, I lost my phone.',
-    patternExpand: 'Everyone laughed.',
-    patternSubstitute2: 'It was funny.',
-    missionFollowUpEn: 'What happened next?',
-    missionHint: 'Tell a friend a short funny story',
+    tell1Thai: 'ก่อนอื่น ฉันลืมกระเป๋า',
+    tell1En: 'First, I forgot my bag.',
+    tipTh:
+      'เยี่ยมเลยครับ! ใช้ First, ... แล้วค่อย Then, ... จะเล่าเรื่องเป็นลำดับได้เลย',
+    tell2Thai: 'แล้วก็ทำโทรศัพท์หาย',
+    tell2En: 'Then, I lost my phone.',
+    tell3Thai: 'ทุกคนหัวเราะ',
+    tell3En: 'Everyone laughed.',
+    tell3PraiseTh: 'ตลกดี! laughed ลื่นมากครับ',
+    ask1En: 'What happened first?',
+    ask1AiAnswerEn: 'First, I forgot my bag.',
+    ask2ThaiCue: 'คราวนี้ลองถามเองดูครับ ว่าเกิดอะไรต่อ พูดว่าไงดี?',
+    ask2En: 'What happened next?',
+    ask2AiAnswerEn: 'Then, I lost my phone.',
+    answer1En: 'What happened first?',
+    answer2En: 'What happened next?',
     nextLessonHint: 'Bad Day / วันที่แย่',
   }),
-  buildAroundTownLesson({
+  buildStoriesPatternLesson({
     lessonId: 'ee_stories_bad_day',
     code: '3.7',
-    trackLabel: 'Stories',
     titleEn: 'Bad Day',
     titleTh: 'วันที่แย่',
     goalEn: 'Explain a bad day with because and so.',
     goalTh: 'เล่าวันที่แย่ด้วย because และ so',
-    situationEn: "We're talking about a bad day.",
-    situationTh: 'วันนี้เราจะคุยเรื่องวันที่แย่ครับ',
-    sceneTitle: '🌧️ Bad Day',
-    sceneNpcSpeaker: 'Friend',
-    sceneNpcVoice: 'Puck',
-    sceneLines: [
-      { speaker: 'Friend', role: 'npc', textEn: 'You look tired. What happened?', textTh: 'ดูเหนื่อยจัง เป็นอะไร?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'I was late because of traffic.', textTh: 'ผมมาสายเพราะรถติดครับ' },
-      { speaker: 'Friend', role: 'npc', textEn: 'And the weather?', textTh: 'แล้วอากาศล่ะ?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'It rained, so I took the bus.', textTh: 'ฝนตก เลยขึ้นรถเมล์ครับ' },
+    hookTh:
+      'เคยมีวันที่แย่ไหมครับ? วันนี้มาฝึกเล่าด้วย because และ so กันครับ!',
+    emojiWords: [
+      { emoji: '🌧️', answer: 'rain', hint: 'r _ _ n', },
+      { emoji: '🚗', answer: 'traffic', hint: 't r _ f f _ c', },
+      { emoji: '🚌', answer: 'bus', hint: 'b _ s', },
+      { emoji: '😩', answer: 'tired', hint: 't _ r _ d', },
     ],
-    vocabulary: [
-      { en: 'late', th: 'สาย' },
-      { en: 'rain', th: 'ฝน' },
-      { en: 'traffic', th: 'รถติด' },
-      { en: 'tired', th: 'เหนื่อย' },
-      { en: 'umbrella', th: 'ร่ม' },
-      { en: 'bus', th: 'รถเมล์' },
-    ],
-    vocabQuiz1Th: 'ถ้าจะพูดถึงรถติด คุณต้องเลือกคำไหน',
-    vocabQuiz2Th: 'ถ้าจะพูดถึงรถเมล์ คุณต้องเลือกคำไหน',
-    patternRepeat: 'I was tired because of the rain.',
-    patternSubstitute1: 'I was late because of traffic.',
-    patternExpand: 'It rained, so I took the bus.',
-    patternSubstitute2: 'It rained, so I stayed home.',
-    missionFollowUpEn: 'Did you have an umbrella?',
-    missionHint: 'Tell a friend about a bad day',
+    tell1Thai: 'ฉันมาสายเพราะรถติด',
+    tell1En: 'I was late because of traffic.',
+    tipTh:
+      'เยี่ยมเลยครับ! ใช้ because เพื่อบอกเหตุผล เช่น I was late because of traffic.',
+    tell2Thai: 'ฝนตก เลยขึ้นรถเมล์',
+    tell2En: 'It rained, so I took the bus.',
+    tell3Thai: 'ฉันเหนื่อยเพราะฝน',
+    tell3En: 'I was tired because of the rain.',
+    tell3PraiseTh: 'เป๊ะ! because / so ใช้ถูกทางครับ',
+    ask1En: 'What happened?',
+    ask1AiAnswerEn: 'I was late because of traffic.',
+    ask2ThaiCue: 'คราวนี้ลองถามเองดูครับ ว่ามีร่มไหม พูดว่าไงดี?',
+    ask2En: 'Did you have an umbrella?',
+    ask2AiAnswerEn: "No, I didn't.",
+    answer1En: 'What happened?',
+    answer2En: 'Did you have an umbrella?',
     nextLessonHint: 'First Time / ครั้งแรก',
   }),
-  buildAroundTownLesson({
+  buildStoriesPatternLesson({
     lessonId: 'ee_stories_first_time',
     code: '3.8',
-    trackLabel: 'Stories',
     titleEn: 'First Time',
     titleTh: 'ครั้งแรก',
     goalEn: 'Talk about a first-time experience.',
     goalTh: 'เล่าประสบการณ์ครั้งแรก',
-    situationEn: "We're talking about a first time.",
-    situationTh: 'วันนี้เราจะคุยเรื่องครั้งแรกครับ',
-    sceneTitle: '✨ First Time',
-    sceneNpcSpeaker: 'Friend',
-    sceneNpcVoice: 'Aoede',
-    sceneLines: [
-      { speaker: 'Friend', role: 'npc', textEn: 'Was it your first time?', textTh: 'เป็นครั้งแรกหรอ?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'It was my first time on an airplane.', textTh: 'เป็นครั้งแรกที่ขึ้นเครื่องบินครับ' },
-      { speaker: 'Friend', role: 'npc', textEn: 'Did you enjoy it?', textTh: 'สนุกไหม?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'Yes, I did! I was excited.', textTh: 'สนุกครับ! ตื่นเต้นมาก' },
+    hookTh:
+      'ครั้งแรกที่ทำอะไรสักอย่างเป็นยังไงบ้างครับ? วันนี้มาฝึกเล่า first time กันครับ!',
+    emojiWords: [
+      { emoji: '✨', answer: 'first time', hint: 'f _ r s t   t _ m e', },
+      { emoji: '✈️', answer: 'airplane', hint: 'a _ r p l _ n e', },
+      { emoji: '🤩', answer: 'excited', hint: 'e x c _ t _ d', },
+      { emoji: '😬', answer: 'nervous', hint: 'n _ r v _ _ s', },
     ],
-    vocabulary: [
-      { en: 'first time', th: 'ครั้งแรก' },
-      { en: 'airplane', th: 'เครื่องบิน' },
-      { en: 'sushi', th: 'ซูชิ' },
-      { en: 'concert', th: 'คอนเสิร์ต' },
-      { en: 'excited', th: 'ตื่นเต้น' },
-      { en: 'nervous', th: 'ตื่นเต้นกังวล' },
-    ],
-    vocabQuiz1Th: 'ถ้าจะพูดถึงเครื่องบิน คุณต้องเลือกคำไหน',
-    vocabQuiz2Th: 'ถ้าจะพูดถึงความรู้สึกตื่นเต้น คุณต้องเลือกคำไหน',
-    patternRepeat: 'It was my first time.',
-    patternSubstitute1: 'It was my first time on an airplane.',
-    patternExpand: 'Yes, I did.',
-    patternSubstitute2: "No, I didn't.",
-    pattern2QuestionEn: 'Did you enjoy it?',
-    missionFollowUpEn: 'Were you nervous?',
-    missionHint: 'Tell a friend about a first-time experience',
+    tell1Thai: 'เป็นครั้งแรกของฉัน',
+    tell1En: 'It was my first time.',
+    tipTh:
+      'เยี่ยมเลยครับ! It was my first time... ใช้เล่าประสบการณ์ครั้งแรกได้เลย',
+    tell2Thai: 'เป็นครั้งแรกที่ขึ้นเครื่องบิน',
+    tell2En: 'It was my first time on an airplane.',
+    tell3Thai: 'ฉันตื่นเต้น',
+    tell3En: 'I was excited.',
+    tell3PraiseTh: 'ดีมาก! was excited ชัดเจนครับ',
+    ask1En: 'Was it your first time?',
+    ask1AiAnswerEn: 'Yes, it was my first time on an airplane.',
+    ask2ThaiCue: 'คราวนี้ลองถามเองดูครับ ว่าสนุกไหม พูดว่าไงดี?',
+    ask2En: 'Did you enjoy it?',
+    ask2AiAnswerEn: 'Yes, I did!',
+    answer1En: 'Was it your first time?',
+    answer2En: 'Did you enjoy it?',
     nextLessonHint: 'Favorite Memory / ความทรงจำโปรด',
   }),
-  buildAroundTownLesson({
+  buildStoriesPatternLesson({
     lessonId: 'ee_stories_favorite',
     code: '3.9',
-    trackLabel: 'Stories',
     titleEn: 'Favorite Memory',
     titleTh: 'ความทรงจำโปรด',
     goalEn: 'Share a favorite memory from the past.',
     goalTh: 'เล่าความทรงจำโปรด',
-    situationEn: "We're talking about a favorite memory.",
-    situationTh: 'วันนี้เราจะคุยเรื่องความทรงจำโปรดครับ',
-    sceneTitle: '💛 Favorite Memory',
-    sceneNpcSpeaker: 'Friend',
-    sceneNpcVoice: 'Puck',
-    sceneLines: [
-      { speaker: 'Friend', role: 'npc', textEn: "What's your favorite memory?", textTh: 'ความทรงจำโปรดคืออะไร?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'My favorite memory was our family trip.', textTh: 'ความทรงจำโปรดคือทริปครอบครัวครับ' },
-      { speaker: 'Friend', role: 'npc', textEn: 'Why was it special?', textTh: 'ทำไมถึงพิเศษ?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'We were happy because we were together.', textTh: 'เรามีความสุขเพราะได้อยู่ด้วยกันครับ' },
+    hookTh:
+      'ความทรงจำโปรดของคุณคืออะไรครับ? วันนี้มาฝึกเล่า memory กันครับ!',
+    emojiWords: [
+      { emoji: '💛', answer: 'memory', hint: 'm _ m _ r y', },
+      { emoji: '👨‍👩‍👧‍👦', answer: 'family', hint: 'f _ m _ l y', },
+      { emoji: '🏖️', answer: 'holiday', hint: 'h _ l _ d _ y', },
+      { emoji: '🤝', answer: 'together', hint: 't _ g _ t h _ r', },
     ],
-    vocabulary: [
-      { en: 'memory', th: 'ความทรงจำ' },
-      { en: 'family', th: 'ครอบครัว' },
-      { en: 'travel', th: 'เดินทาง' },
-      { en: 'holiday', th: 'วันหยุด' },
-      { en: 'photos', th: 'รูปภาพ' },
-      { en: 'together', th: 'ด้วยกัน' },
-    ],
-    vocabQuiz1Th: 'ถ้าจะพูดถึงความทรงจำ คุณต้องเลือกคำไหน',
-    vocabQuiz2Th: 'ถ้าจะพูดถึงการอยู่ด้วยกัน คุณต้องเลือกคำไหน',
-    patternRepeat: 'My favorite memory was our family trip.',
-    patternSubstitute1: 'My favorite memory was our holiday.',
-    patternExpand: 'We were happy because we were together.',
-    patternSubstitute2: 'We were happy because we traveled.',
-    missionFollowUpEn: 'Do you have photos?',
-    missionHint: 'Share a favorite memory with a friend',
+    tell1Thai: 'ความทรงจำโปรดคือทริปครอบครัว',
+    tell1En: 'My favorite memory was our family trip.',
+    tipTh:
+      'เยี่ยมเลยครับ! was ใช้เล่าความทรงจำในอดีตได้ เช่น My favorite memory was...',
+    tell2Thai: 'ความทรงจำโปรดคือวันหยุด',
+    tell2En: 'My favorite memory was our holiday.',
+    tell3Thai: 'เรามีความสุขเพราะได้อยู่ด้วยกัน',
+    tell3En: 'We were happy because we were together.',
+    tell3PraiseTh: 'อบอุ่นมาก! were happy / because ใช้ได้สวยครับ',
+    ask1En: "What's your favorite memory?",
+    ask1AiAnswerEn: 'My favorite memory was our family trip.',
+    ask2ThaiCue: 'คราวนี้ลองถามเองดูครับ ว่าทำไมถึงพิเศษ พูดว่าไงดี?',
+    ask2En: 'Why was it special?',
+    ask2AiAnswerEn: 'Because we were together.',
+    answer1En: "What's your favorite memory?",
+    answer2En: 'Why was it special?',
     nextLessonHint: 'Lesson Summary / สรุปบทเรียน',
   }),
   {
@@ -6186,10 +6211,11 @@ export function emojiSpeakSetForTrainingTurn(
   lessonId: string,
   currentTurn: number,
 ): typeof EE_STORIES_YESTERDAY_EMOJI_SET | null {
-  if (lessonId === 'ee_stories_yesterday' && currentTurn === 1) {
+  if (currentTurn !== 1) return null;
+  if (lessonId === 'ee_stories_yesterday') {
     return EE_STORIES_YESTERDAY_EMOJI_SET;
   }
-  return null;
+  return STORIES_PATTERN_EMOJI_SETS[lessonId] ?? null;
 }
 
 /** Everyday English chapter reviews (Grammar Discovery — listen-only celebrate/reveals). */
