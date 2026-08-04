@@ -4334,7 +4334,7 @@ Core Flow (progression milestones — NOT a fixed turn count):
       'Here you are.',
     ],
     maxTurns: 24,
-    listenOnlyTurns: 5,
+    listenOnlyTurns: 2,
     systemInstruction: `Lesson: Chapter 2 Review — Everyday Life (Everyday English → Everyday Life → 2.R)
 Type: GRAMMAR DISCOVERY REVIEW (voice-optimized) — do NOT teach long new vocabulary lists.
 Goal: Celebrate chapter completion, reveal 3 grammars the learner already used (Present Continuous, Can I...?, Imperatives), run short spoken quizzes, then highlight polite everyday lines.
@@ -5214,9 +5214,20 @@ export function isAroundTownLesson(lessonId: string): boolean {
   return lessonId.startsWith('ee_around_town_');
 }
 
+/** Everyday English chapter reviews (Grammar Discovery — listen-only celebrate/reveals). */
+export function isEverydayEnglishReview(lessonId: string): boolean {
+  return (
+    lessonId === 'ee_about_me_review' || lessonId === 'ee_around_town_review'
+  );
+}
+
 /** Lessons that use expectsUserSpeech + Continue button (and optional Scene). */
 export function lessonUsesTapToContinue(lessonId: string): boolean {
-  return isPronunciationLesson(lessonId) || isAroundTownLesson(lessonId);
+  return (
+    isPronunciationLesson(lessonId) ||
+    isAroundTownLesson(lessonId) ||
+    isEverydayEnglishReview(lessonId)
+  );
 }
 
 export type LessonTeachingLanguage = 'thai' | 'english';
