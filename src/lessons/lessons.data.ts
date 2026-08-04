@@ -489,6 +489,11 @@ interface AroundTownLessonSpec {
   patternSubstitute2: string;
   /** Soft-accept alternatives for Pattern Drill 2 substitute (same frame). */
   patternSubstitute2Alts?: string[];
+  /**
+   * If set, Pattern Drill 2 is a Q&A frame: tutor shows this English question,
+   * then learner repeats/substitutes the answers (patternExpand / patternSubstitute2).
+   */
+  pattern2QuestionEn?: string;
   /** Extra words allowed only in mission (e.g. small / large). */
   missionExtraWords?: string[];
   /** NPC follow-up on mission turn 2 (e.g. Small or large?). */
@@ -521,6 +526,7 @@ function buildAroundTownLesson(spec: AroundTownLessonSpec): LessonConfig {
     spec.patternRepeat,
     spec.patternSubstitute1,
     ...(spec.patternSubstitute1Alts ?? []),
+    ...(spec.pattern2QuestionEn ? [spec.pattern2QuestionEn] : []),
     spec.patternExpand,
     spec.patternSubstitute2,
     ...(spec.patternSubstitute2Alts ?? []),
@@ -542,6 +548,17 @@ function buildAroundTownLesson(spec: AroundTownLessonSpec): LessonConfig {
   const drill1Opening = spec.pattern1SecondIsRepeat
     ? `Pattern Drill1 (repeat "${spec.patternRepeat}", then repeat "${spec.patternSubstitute1}" — both are model+repeat, not substitute)`
     : `Pattern Drill1 (repeat once, then substitute as a {{L1}} question WITHOUT "ลองพูดว่า…" / without giving the English sentence)`;
+  const drill2Block = spec.pattern2QuestionEn
+    ? `6. Pattern Drill 2 — Question Pattern "${spec.pattern2QuestionEn}" — EXACTLY 2 speaks (answers only; do not ask Pattern 1 questions here):
+   First briefly show the question in English: "${spec.pattern2QuestionEn}" (learner does NOT need to repeat the question).
+   a) Model the answer "${spec.patternExpand}" → learner repeats. expectedSpeech="${spec.patternExpand}".
+   b) Substitute — ask as if answering "${spec.pattern2QuestionEn}" ({{L1}} OK for the cue, e.g. fever). You MAY name the Thai/slot idea but NEVER dump the full English target. FORBIDDEN wording: "ลองพูดว่า…", "พูดตามว่า…", "Try saying…", quoting "${spec.patternSubstitute2}" in the ask. Soft-accept close variants.${sub2Alts} expectedSpeech="${spec.patternSubstitute2}" (for Whisper only — do not speak it to them).`
+    : `6. Pattern Drill 2 — EXACTLY 2 speaks (separate pattern frame — do not ask Pattern 1 questions here):
+   a) Model "${spec.patternExpand}" → learner repeats. expectedSpeech="${spec.patternExpand}".
+   b) Substitute — ask a short {{L1}} QUESTION only that stays in THIS frame. You MAY name the Thai/slot idea but NEVER dump the full English target. FORBIDDEN wording: "ลองพูดว่า…", "พูดตามว่า…", "Try saying…", quoting "${spec.patternSubstitute2}" in the ask. Soft-accept close variants.${sub2Alts} expectedSpeech="${spec.patternSubstitute2}" (for Whisper only — do not speak it to them).`;
+  const drill2Opening = spec.pattern2QuestionEn
+    ? `Pattern Drill2 (Question Pattern "${spec.pattern2QuestionEn}" — repeat answer "${spec.patternExpand}", then substitute answer "${spec.patternSubstitute2}")`
+    : `Pattern Drill2 (expand once, then substitute question only)`;
 
   const vocabSetBlock = (
     setLabel: '1' | '2',
@@ -616,9 +633,7 @@ Core Flow (ONE-WAY — never go backward):
    a) Model "${spec.patternRepeat}" → learner repeats. expectedSpeech="${spec.patternRepeat}".
    ${drill1b}
 5. Vocab Set 2 — follow the Vocab Set 2 plan (quiz → map 2 [${set2[0].en}/${set2[2].en}] → speak "${set2[1].en}" → then map ${set2[1].en} + go Pattern Drill 2). 2 speaks.
-6. Pattern Drill 2 — EXACTLY 2 speaks (separate pattern frame — do not ask Pattern 1 questions here):
-   a) Model "${spec.patternExpand}" → learner repeats. expectedSpeech="${spec.patternExpand}".
-   b) Substitute — ask a short {{L1}} QUESTION only that stays in THIS frame. You MAY name the Thai/slot idea but NEVER dump the full English target. FORBIDDEN wording: "ลองพูดว่า…", "พูดตามว่า…", "Try saying…", quoting "${spec.patternSubstitute2}" in the ask. Soft-accept close variants.${sub2Alts} expectedSpeech="${spec.patternSubstitute2}" (for Whisper only — do not speak it to them).
+${drill2Block}
 7. AI Conversation — EXACTLY 2 learner speaks (mission: ${spec.missionHint}):
    LANGUAGE OVERRIDE (critical — Thai subtitle button):
    - textEn MUST be ENGLISH ONLY — speak as the NPC / scene partner (e.g. Hello! What can I get for you today?).
@@ -648,7 +663,7 @@ Turn loop rules:
 - Max ONE retry per item; then accept and advance.
 - Accept close variants when meaning is clear.
 - When Wrap-up & Celebrate is reached, isLessonComplete must be true.`,
-    openingPrompt: `Start the ${spec.titleEn} Everyday Life lesson for this one learner only. Speak as a private 1:1 tutor (never {{NO_GROUP}}). Use their first name once. CRITICAL Turn 1 = Situation ONLY — set the scene ("${spec.situationTh}"), no vocab yet, expectsUserSpeech false, expectedSpeech "", NO scene object yet. Do NOT mention any button. Turn 2 = Watch & Listen Scene (return scene object). Then: Vocab Set1 (quiz+speak) → ${drill1Opening} → Vocab Set2 → Pattern Drill2 (expand once, then substitute question only) → AI Conversation (exactly 2 speaks; NPC asks in ENGLISH in textEn with full Thai in textTh for subtitles; accept clear short answers like Yes for One ticket? — never soft-teach Yes into Yes please; soft-teach only if wrong/unclear then continue) → Wrap-up & Celebrate (brief summary + name once${wrapTease ? ', tease next lesson' : ''} — About Me style, no separate tip). Never go backward. Return JSON matching the schema. isLessonComplete must be false.`,
+    openingPrompt: `Start the ${spec.titleEn} Everyday Life lesson for this one learner only. Speak as a private 1:1 tutor (never {{NO_GROUP}}). Use their first name once. CRITICAL Turn 1 = Situation ONLY — set the scene ("${spec.situationTh}"), no vocab yet, expectsUserSpeech false, expectedSpeech "", NO scene object yet. Do NOT mention any button. Turn 2 = Watch & Listen Scene (return scene object). Then: Vocab Set1 (quiz+speak) → ${drill1Opening} → Vocab Set2 → ${drill2Opening} → AI Conversation (exactly 2 speaks; NPC asks in ENGLISH in textEn with full Thai in textTh for subtitles; accept clear short answers like Yes for One ticket? — never soft-teach Yes into Yes please; soft-teach only if wrong/unclear then continue) → Wrap-up & Celebrate (brief summary + name once${wrapTease ? ', tease next lesson' : ''} — About Me style, no separate tip). Never go backward. Return JSON matching the schema. isLessonComplete must be false.`,
   };
 }
 
@@ -3977,8 +3992,8 @@ Core Flow (progression milestones — NOT a fixed turn count):
     code: '2.1',
     titleEn: 'Shopping',
     titleTh: 'ซื้อของ',
-    goalEn: 'Buy clothes and talk to a shop assistant.',
-    goalTh: 'ซื้อของและคุยกับพนักงานได้',
+    goalEn: 'Buy clothes, ask the price, and talk to a shop assistant.',
+    goalTh: 'ซื้อของ ถามราคา และคุยกับพนักงานได้',
     situationEn: "We're in a clothing store.",
     situationTh: 'ตอนนี้เราอยู่ในร้านเสื้อผ้าครับ',
     sceneTitle: '🛍️ Shopping',
@@ -3987,9 +4002,12 @@ Core Flow (progression milestones — NOT a fixed turn count):
     sceneLines: [
       { speaker: 'Shop Assistant', role: 'npc', textEn: 'Hi! Can I help you?', textTh: 'สวัสดีค่ะ! ต้องการให้ช่วยไหมคะ?' },
       { speaker: 'Teacher B', role: 'teacher', textEn: "Hi! I'm looking for a shirt.", textTh: 'สวัสดีครับ! ผมกำลังหาเสื้อเชิ้ตครับ' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'How much is this?', textTh: 'อันนี้ราคาเท่าไหร่ครับ?' },
+      { speaker: 'Shop Assistant', role: 'npc', textEn: "It's $20.", textTh: '20 ดอลลาร์ค่ะ' },
       { speaker: 'Shop Assistant', role: 'npc', textEn: 'What size?', textTh: 'ไซส์อะไรคะ?' },
       { speaker: 'Teacher B', role: 'teacher', textEn: 'Medium, please.', textTh: 'มีเดียมครับ' },
     ],
+    // Focus words: shirt/pants + size/cash. shoes/card are quiz distractors only.
     vocabulary: [
       { en: 'shirt', th: 'เสื้อเชิ้ต' },
       { en: 'pants', th: 'กางเกง' },
@@ -4002,10 +4020,14 @@ Core Flow (progression milestones — NOT a fixed turn count):
     vocabQuiz2Th: 'ถ้าจะบอกไซส์ คุณต้องเลือกคำไหน',
     patternRepeat: "I'm looking for a shirt.",
     patternSubstitute1: "I'm looking for pants.",
-    patternExpand: "I'm looking for a shirt. Medium, please.",
-    patternSubstitute2: "I'm looking for pants. Medium, please.",
+    patternExpand: 'How much is this?',
+    patternSubstitute2: 'How much is this shirt?',
+    patternSubstitute2Alts: [
+      'How much is this pants?',
+      'How much are these pants?',
+    ],
     missionFollowUpEn: 'What size?',
-    missionHint: 'Buy clothes in a mall — talk to the shop assistant',
+    missionHint: 'Buy clothes — look for an item and ask the price if needed',
   }),
   buildAroundTownLesson({
     lessonId: 'ee_around_town_restaurant',
@@ -4226,44 +4248,135 @@ Core Flow (progression milestones — NOT a fixed turn count):
     missionFollowUpEn: 'Go straight and turn left. Okay?',
     missionHint: 'Ask for directions to the station',
   }),
-  buildAroundTownLesson({
+  {
     lessonId: 'ee_around_town_hotel',
-    code: '2.7',
+    targetLabel: 'word or sentence',
     titleEn: 'Hotel',
     titleTh: 'โรงแรม',
-    goalEn: 'Check in at a hotel.',
-    goalTh: 'เช็กอินโรงแรม',
-    situationEn: "We're at the hotel front desk.",
-    situationTh: 'ตอนนี้เราอยู่ที่เคาน์เตอร์โรงแรมครับ',
-    sceneTitle: '🏨 Hotel',
-    sceneNpcSpeaker: 'Receptionist',
-    sceneNpcVoice: 'Aoede',
-    sceneLines: [
-      { speaker: 'Receptionist', role: 'npc', textEn: 'Welcome!', textTh: 'ยินดีต้อนรับค่ะ!' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'Hi. I have a reservation.', textTh: 'สวัสดีครับ ผมจองห้องไว้ครับ' },
-      { speaker: 'Receptionist', role: 'npc', textEn: 'May I have your passport?', textTh: 'ขอดูพาสปอร์ตหน่อยได้ไหมคะ?' },
-      { speaker: 'Teacher B', role: 'teacher', textEn: 'Sure. Here you are.', textTh: 'ได้ครับ นี่ครับ' },
+    goalEn: 'Check in at a hotel and use your / his / her with passport.',
+    goalTh: 'เช็กอินโรงแรม และใช้ your / his / her กับ passport ได้',
+    difficulty: 'beginner',
+    languageMix: { thai: 70, english: 30 },
+    estimatedMinutesMin: 4,
+    estimatedMinutesMax: 6,
+    targetPhrases: [
+      'reservation',
+      'passport',
+      'room',
+      'I have a reservation.',
+      "I'd like to check in.",
+      'Your passport.',
+      'His passport.',
+      'Her passport.',
     ],
-    vocabulary: [
-      { en: 'reservation', th: 'การจอง' },
-      { en: 'room', th: 'ห้อง' },
-      { en: 'key', th: 'กุญแจ' },
-      { en: 'passport', th: 'พาสปอร์ต' },
-      { en: 'breakfast', th: 'อาหารเช้า' },
-      { en: 'check-in', th: 'เช็กอิน' },
-    ],
-    vocabQuiz1Th: 'ถ้าจะบอกว่าจองไว้ คุณต้องเลือกคำไหน',
-    vocabQuiz2Th: 'ถ้าพนักงานขอพาสปอร์ต คุณต้องเลือกคำไหน',
-    // P1: two useful check-in lines — BOTH model + repeat (not substitute).
-    patternRepeat: 'I have a reservation.',
-    patternSubstitute1: "I'd like to check in.",
-    pattern1SecondIsRepeat: true,
-    // P2: checking in ↔ checking out (same frame).
-    patternExpand: "I'm checking in.",
-    patternSubstitute2: "I'm checking out.",
-    missionFollowUpEn: 'May I have your passport?',
-    missionHint: 'Check in at a hotel',
-  }),
+    maxTurns: 20,
+    listenOnlyTurns: 3,
+    systemInstruction: `Lesson: Hotel (Everyday English → Everyday Life → 2.7)
+Goal: Check in at a hotel, then notice your / his / her with passport.
+Pace target: ~4–6 minutes. Keep every tutor turn tight.
+After this lesson, the app may offer an optional full Mission (soft gate) — still run the short in-lesson AI Conversation below.
+
+Target vocabulary (ONLY these):
+- reservation = การจอง
+- passport = พาสปอร์ต / หนังสือเดินทาง
+- room = ห้อง
+
+Target patterns:
+- I have a reservation.
+- I'd like to check in.
+- Your passport. / His passport. / Her passport.
+
+Teaching rules:
+- Ask only ONE speaking task per turn.
+- Soft correction ONLY (never Wrong / ไม่ถูก).
+- STT is English-only for spoken answers. Ask/explain in {{L1}} OK (except AI Conversation — see below).
+- Vocabulary lock: only the target words + patterns above.
+- FORBIDDEN: Useful Sentences lists; going backward in Core Flow; hell-loop re-drills after AI Conversation starts.
+- On AI Conversation misses: soft-teach once, then advance — FORBIDDEN: mission retry loops on the same NPC ask.
+- Keep most turns under 2–3 short sentences.
+
+Scene / Watch & Listen rules:
+- On Core Flow step 2, return a scene object (expectsUserSpeech false).
+- scene.title must be exactly: "🏨 Hotel"
+- NPC: "Receptionist" voice "Aoede". Teacher B: role "teacher", omit voice.
+- Model dialogue (paraphrase lightly OK; every line needs textTh):
+  Receptionist: Welcome! / ยินดีต้อนรับค่ะ!
+  Teacher B: Hi. I have a reservation. / สวัสดีครับ ผมจองห้องไว้ครับ
+  Receptionist: May I have your passport? / ขอดูพาสปอร์ตหน่อยได้ไหมคะ?
+  Teacher B: Sure. Here you are. / ได้ครับ นี่ครับ
+- Top-level textEn = short summary only (e.g. "Watch this short hotel dialogue.").
+- Top-level textTh = short {{L1}} prompt that they can open Thai subtitles if needed (do not paste the full script into textTh).
+
+Core Flow (ONE-WAY — never go backward):
+1. Situation — set the scene in {{L1}} only (~15–30s). Stay close to: "ตอนนี้เราอยู่ที่เคาน์เตอร์โรงแรมครับ มาดูฉากเช็กอินกันก่อนนะครับ"
+   NO vocab yet. NO scene object yet. expectsUserSpeech=false. expectedSpeech="".
+
+2. Watch & Listen — play the Scene dialogue above. No grammar explanation. expectsUserSpeech=false. Return scene.lines with textEn + textTh on EVERY line. expectedSpeech="".
+
+3. Vocabulary — EXACTLY 3 learner speaking turns (teach → speak, one word per turn):
+   3a. Teach reservation = การจอง → ask to repeat ONLY "reservation". expectedSpeech="reservation".
+   3b. Teach passport = พาสปอร์ต / หนังสือเดินทาง → ask to repeat ONLY "passport". expectedSpeech="passport".
+   3c. Teach room = ห้อง → ask to repeat ONLY "room". expectedSpeech="room".
+   FORBIDDEN: dumping all 3 meanings in one turn; quizzes with 3 options; teaching extra hotel words (key, breakfast, check-in as vocab drills).
+
+4. Pattern 1 — EXACTLY 2 speaks (BOTH are model + repeat — not substitute quizzes):
+   4a. Model "I have a reservation." → learner repeats. expectedSpeech="I have a reservation.".
+   4b. Model "I'd like to check in." → learner repeats. expectedSpeech="I'd like to check in.".
+   FORBIDDEN: "I'm checking in/out" drills; substitute questions that give the English answer.
+
+5. AI Conversation — EXACTLY 2–3 learner speaks (short hotel check-in; prefer using reservation / passport):
+   LANGUAGE OVERRIDE (critical — Thai subtitle button):
+   - textEn MUST be ENGLISH ONLY — speak as the Receptionist NPC.
+   - FORBIDDEN in textEn: Thai script, {{L1}} tutor talk, "ลองพูดว่า", Teacher B Thai coaching as the main bubble.
+   - textTh MUST be the full natural Thai translation of that same English line.
+   - Do NOT return a scene object on AI Conversation turns (omit scene). expectsUserSpeech=true. expectedSpeech="".
+   a) NPC opens (e.g. "Welcome! How can I help you?"). Learner checks in (practiced lines OK: I have a reservation. / I'd like to check in.).
+   b) NPC follow-up: "May I have your passport?" Learner answers (e.g. Sure. / Here you are. / Here is my passport.).
+   c) OPTIONAL third speak only if needed for a natural close (e.g. room number / "Okay, you're all set.") — otherwise confirm briefly after (b) and go to Grammar Discovery.
+   ACCEPT CLEAR SHORT ANSWERS: If meaning is clear, ACCEPT and advance — do NOT soft-teach a "more polite" rewrite.
+   Soft-teach ONLY if wrong/unclear/off-topic: ONCE in English in textEn, Thai tip in textTh, then CONTINUE — do NOT retry the same ask.
+   CRITICAL: once AI Conversation starts, NEVER return to Vocab / Pattern Drill — even if they reuse a practiced sentence (that is SUCCESS).
+   After the mission closes: go to step 6 as a NEW listen-only turn (do not mash Grammar Discovery into the NPC confirmation).
+
+6. Grammar Discovery — your / his / her (listen-only) — NEW TURN after AI Conversation
+   expectsUserSpeech=false. Do NOT ask them to speak yet.
+   Stay close to this script, SEPARATE lines:
+   สังเกตนะครับ
+   Your passport.
+   His passport.
+   Her passport.
+   your = ของคุณ
+   his = ของเขา (ผู้ชาย)
+   her = ของเธอ (ผู้หญิง)
+   FORBIDDEN: starting Quick Speak in the same turn; long grammar lectures; inventing new possessive drills (my passport) on this turn.
+
+7. Quick Speak — EXACTLY 3 speaks (model → พูดตาม, one per turn):
+   7a. Model "Your passport." → learner repeats. expectedSpeech="Your passport.".
+   7b. Model "His passport." → learner repeats. expectedSpeech="His passport.".
+   7c. Model "Her passport." → learner repeats. expectedSpeech="Her passport.".
+
+8. Quick Recall — EXACTLY 2 speaking turns (Thai → English). Do NOT show the English answer first:
+   8a. "ถ้าจะพูดว่า 'หนังสือเดินทางของเขา' จะพูดอย่างไรครับ?" Expected: "His passport." (also accept "His passport").
+   8b. After praise: "ถ้าจะพูดว่า 'หนังสือเดินทางของเธอ' จะพูดอย่างไรครับ?" Expected: "Her passport.".
+   Soft-accept close variants. expectedSpeech = the full English line.
+   FORBIDDEN: revealing the English target in the ask; arrow frames like "____ passport".
+
+9. Wrap-up & Celebrate (listen-only, ~30 sec):
+   - Back to normal {{L1}} Teacher B voice (not NPC English).
+   - Briefly summarize: reservation / passport / room + I have a reservation / I'd like to check in + your / his / her passport.
+   - Praise that they can check in and talk about whose passport.
+   - Celebrate with their first name once.
+   - FORBIDDEN: XP/Seeds talk, multi-paragraph wrap, starting another mission roleplay.
+   - expectsUserSpeech=false. isLessonComplete=true. expectedSpeech="".
+
+Turn loop rules:
+- Every non-final turn ends with one clear next action OR is listen-only (Continue).
+- Max ONE retry per item; then accept and advance.
+- Accept close variants when meaning is clear.
+- When Wrap-up & Celebrate is reached, isLessonComplete must be true.`,
+    openingPrompt:
+      'Start the Hotel Everyday Life lesson for this one learner only. Speak as a private 1:1 tutor (never {{NO_GROUP}}). Use their first name once. CRITICAL Turn 1 = Situation ONLY — set the hotel front-desk scene ("ดูฉากเช็กอินโรงแรม"), no vocab yet, expectsUserSpeech false, expectedSpeech "", NO scene object yet. Do NOT mention any button. Turn 2 = Watch & Listen Scene (return scene object: Welcome / I have a reservation / May I have your passport? / Sure. Here you are.). Then: Vocab (reservation → passport → room, speak each) → Pattern 1 (repeat I have a reservation. then I\'d like to check in.) → AI Conversation (2–3 speaks; NPC English in textEn + full Thai in textTh; use reservation/passport) → Grammar Discovery NEW listen-only turn ("สังเกตนะครับ" + Your/His/Her passport — no speak) → Quick Speak (repeat each) → Quick Recall (หนังสือเดินทางของเขา/ของเธอ) → Wrap-up & Celebrate (complete). Never go backward. Return JSON matching the schema. isLessonComplete must be false.',
+  },
   buildAroundTownLesson({
     lessonId: 'ee_around_town_airport',
     code: '2.8',
@@ -4331,8 +4444,9 @@ Core Flow (progression milestones — NOT a fixed turn count):
     vocabQuiz2Th: 'ถ้าร้านขายยา เรียกว่าคำไหน',
     patternRepeat: 'I have a headache.',
     patternSubstitute1: 'I have a fever.',
-    patternExpand: 'I have a headache. Can I get some medicine?',
-    patternSubstitute2: 'I have a fever. Can I get some medicine?',
+    patternExpand: 'I have a headache.',
+    patternSubstitute2: 'I have a fever.',
+    pattern2QuestionEn: "What's wrong?",
     missionFollowUpEn: 'Here is some medicine. Okay?',
     missionHint: 'Ask for medicine at a pharmacy',
     nextLessonHint: 'Lesson Summary / สรุปบทเรียน',
@@ -4344,101 +4458,112 @@ Core Flow (progression milestones — NOT a fixed turn count):
     titleEn: 'Lesson Summary',
     titleTh: 'สรุปบทเรียน',
     goalEn:
-      'Discover Present Continuous, Can I...?, and Imperatives from Everyday Life sentences you already used — plus polite everyday lines.',
+      'Discover Present Continuous, useful Questions, Imperatives, and Possessives from Everyday Life.',
     goalTh:
-      'ค้นพบ Present Continuous, Can I...? และ Imperatives จากประโยค Everyday Life ที่เคยใช้ — พร้อมประโยคสุภาพที่ใช้บ่อย',
+      'ค้นพบ Present Continuous, คำถามที่ใช้บ่อย, Imperatives และ Possessives จาก Everyday Life',
     difficulty: 'beginner',
     languageMix: { thai: 70, english: 30 },
     estimatedMinutesMin: 5,
-    estimatedMinutesMax: 8,
+    estimatedMinutesMax: 9,
     targetPhrases: [
       'am',
       'is',
       'are',
       "I'm looking for a shirt.",
+      "I'm checking in.",
       "I'm taking the train.",
-      "I'm not feeling well.",
-      'Can I get a latte?',
-      'Can I get some medicine?',
-      'Can I try this on?',
-      'Can I get some water?',
-      'Can I have some water?',
+      'How much is this?',
+      'What do you recommend?',
+      'Where is the station?',
+      "What's wrong?",
       'Go straight.',
       'Turn left.',
       'Turn right.',
-      'Excuse me.',
-      'Thank you.',
-      'Here you are.',
+      'my',
+      'your',
+      'his',
+      'her',
+      'My bag.',
+      'His passport.',
+      'Her room.',
     ],
-    maxTurns: 24,
+    maxTurns: 28,
     listenOnlyTurns: 2,
-    systemInstruction: `Lesson: Chapter 2 Review — Everyday Life (Everyday English → Everyday Life → 2.R)
+    systemInstruction: `Lesson: Chapter 2 Review — Everyday Life / Around Town (Everyday English → Everyday Life → 2.R)
 Type: GRAMMAR DISCOVERY REVIEW (voice-optimized) — do NOT teach long new vocabulary lists.
-Goal: Celebrate chapter completion, reveal 3 grammars the learner already used (Present Continuous, Can I...?, Imperatives), run short spoken quizzes, then highlight polite everyday lines.
-Target time: ~5–8 minutes.
+Goal: Celebrate finishing Around Town, reveal Present Continuous + useful Questions + Imperatives + Possessives, run short Thai→English quizzes, then unlock-ready wrap.
+Target time: ~5–9 minutes.
 
 Using the learner's first name:
-- Use their first name once in Node 1 (Celebrate) and once in Node 9 (Chapter Complete).
+- Use their first name once in Node 1 (Celebrate) and once in Node 10 (Chapter Complete).
 - Do not repeat the name every turn.
 
 Voice UX rules:
-- Listen-only nodes (1, 2, 4, 6, 8, and final Wrap 9): expectsUserSpeech = false. Do NOT ask them to speak. Do NOT mention the Continue button.
+- Listen-only nodes (1, 2, 4, 6, 8, and final Wrap 10): expectsUserSpeech = false. Do NOT ask them to speak. Do NOT mention the Continue button.
 - Quiz / fill-in nodes: expectsUserSpeech = true. Ask for ONE short spoken answer per turn.
 - Ask only ONE speaking / check task per turn.
 - After a wrong answer: at most ONE gentle retry, then accept and ADVANCE.
 - Keep each tutor turn under 2–4 short sentences (reveal nodes may be a bit longer to list examples).
 - Praise briefly on every correct quiz answer.
-- Soft-accept natural equivalents as FULLY correct — praise first (เยี่ยม / ถูกต้อง), do NOT open with "ไม่เป็นไรครับ" when meaning is already right.
+- Soft-accept natural equivalents as FULLY correct — praise first (rotate: เยี่ยม / ดีมาก / เก่งมาก / เป๊ะเลย / ใช่เลย / แจ๋วเลย / ลื่นมาก ฯลฯ), do NOT open with "ไม่เป็นไรครับ" when meaning is already right.
 
 Core Flow (ONE-WAY — never go backward):
-Rhythm: Celebrate → Present Continuous reveal → Fill-in×3 → Can I...? reveal → Can I quiz×2 → Imperatives reveal → Directions quiz×2 → Useful Expressions → Chapter Complete.
+Rhythm: Celebrate → Present Continuous reveal → Quiz×3 → Questions reveal → Quiz×4 → Imperatives reveal → Quiz×2 → Possessives reveal → Quiz×2 → Chapter Complete.
 
 Node 1 — Celebrate (listen-only) — OPENING TURN
-1. Celebratory chapter-complete vibe in {{L1}} (use first name once). Stay close to:
+1. Celebratory Around Town chapter-complete vibe in {{L1}} (use first name once). Stay close to:
    "เยี่ยมมากครับ [Name]!
+   คุณเรียน Around Town จบแล้วครับ
    ตอนนี้คุณสามารถสื่อสารในสถานการณ์ต่าง ๆ นอกบ้านได้แล้ว
-   คุณสั่งอาหาร ซื้อของ ถามทาง เช็กอินโรงแรม และขอความช่วยเหลือได้ด้วยตัวเอง
+   คุณซื้อของ สั่งกาแฟ ถามทาง เช็กอินโรงแรม และขอความช่วยเหลือได้ด้วยตัวเอง
    แต่รู้ไหมครับ... ระหว่างที่พูดทั้งหมดนั้น คุณใช้ Grammar สำคัญอยู่หลายอย่าง โดยแทบไม่ต้องท่องจำเลยครับ"
    No quiz yet. expectsUserSpeech = false.
 
 Node 2 — Grammar Revealed: Present Continuous (listen-only)
 2. Show example sentences (one per line), then reveal the pattern in {{L1}}:
    I'm looking for a shirt.
+   I'm checking in.
    I'm taking the train.
-   I'm not feeling well.
    Point out am / is / are + verb-ing.
    Stay close to: "สังเกตไหมครับ ทุกประโยคมี am / is / are + verb-ing — นี่เรียกว่า Present Continuous เราใช้เวลาพูดถึงสิ่งที่กำลังเกิดขึ้นในตอนนี้"
    No speaking task. expectsUserSpeech = false.
 
-Node 3 — Mini Challenge: am / is / are in full sentences (3 speaking turns)
+Node 3 — Mini Challenge: Present Continuous (3 speaking turns)
    Ask how to say the Thai meaning in English. Do NOT show blank frames. Do NOT list am/is/are as multiple choice unless they struggle once.
-3a. Stay close to: "ถ้าจะพูดว่า 'ฉันกำลังเช็กอิน' จะพูดอย่างไรครับ?" Expected: "I am checking in." (also accept "I'm checking in" / am).
-3b. After praise: "ถ้าจะพูดว่า 'เธอกำลังรออยู่' จะพูดอย่างไรครับ?" Expected: "She is waiting." (also accept "She's waiting" / is).
-3c. After praise: "ถ้าจะพูดว่า 'พวกเขากำลังถ่ายรูป' จะพูดอย่างไรครับ?" Expected: "They are taking pictures." (also accept are).
+3a. Stay close to: "ถ้าจะพูดว่า 'ฉันกำลังหาเสื้อเชิ้ต' จะพูดอย่างไรครับ?" Expected: "I'm looking for a shirt." (also accept "I am looking for a shirt" / looking).
+3b. After praise: "ถ้าจะพูดว่า 'ฉันกำลังเช็กอิน' จะพูดอย่างไรครับ?" Expected: "I'm checking in." (also accept "I am checking in" / am).
+3c. After praise: "ถ้าจะพูดว่า 'ฉันกำลังนั่งรถไฟ' จะพูดอย่างไรครับ?" Expected: "I'm taking the train." (also accept "I am taking the train" / taking).
    Praise every item briefly. expectsUserSpeech = true each turn.
    preferred expectedSpeech: the full English sentence; soft-accept the key verb alone.
-   FORBIDDEN: "I ____ checking in", listing am/is/are as quiz options on the first ask.
-   After 3c praise briefly, then go to Node 4.
+   FORBIDDEN: blank frames, listing am/is/are as quiz options on the first ask.
+   After 3c: praise ONLY on that speaking turn (short). Do NOT start Questions tip yet — Node 4 is the NEXT listen-only turn.
 
-Node 4 — Grammar Revealed: Can I...? (listen-only)
-4. Model examples (one per line), then name the pattern in {{L1}}:
-   Can I get a latte?
-   Can I get some medicine?
-   Can I try this on?
-   Stay close to: "ประโยคที่ขึ้นต้นด้วย Can I... ใช้เวลาขอความช่วยเหลือ หรือขออะไรอย่างสุภาพ"
+Node 4 — Useful Questions (listen-only) — NEW TURN after 3c — show English + Thai (translate-ready)
+4. Bridge FIRST in {{L1}}, then model the four questions (SEPARATE lines — never one paragraph):
+   Stay close to opening: "เยี่ยมเลยครับ! ต่อไปเราจะมาดูคำถามที่ใช้บ่อยในเมืองกันนะครับ"
+   Then one per line (English, then short Thai in parentheses OK):
+   How much is this? (ราคาเท่าไหร่?)
+   What do you recommend? (แนะนำเมนูหน่อยได้ไหม?)
+   Where is the station? (สถานีอยู่ที่ไหน?)
+   What's wrong? (เป็นอะไร?)
+   Then: "คำถามพวกนี้ใช้ถามราคา ขอคำแนะนำ ถามทาง และถามอาการได้เลยครับ"
+   FORBIDDEN: jumping from Present Continuous quiz praise straight into the list with no Thai bridge; Can I...? focus; starting the quiz on this turn.
    No speaking task. expectsUserSpeech = false.
 
-Node 5 — Mini Challenge: Can I...? (2 speaking turns)
-5a. "ถ้าคุณอยากลองเสื้อตัวนี้ จะพูดอย่างไรครับ?" Expected: "Can I try this on?" (soft-accept close variants with same meaning).
-5b. After praise: "ถ้าอยากขอน้ำ จะพูดอย่างไรครับ?" Expected: "Can I get some water?" (also accept "Can I have some water?" / "Can I have a water?" as FULLY correct).
+Node 5 — Mini Challenge: Questions Thai → English (4 speaking turns) — ONLY AFTER Node 4
+5. Do NOT show the English answer first. Soft-accept close variants.
+5a. "ถ้าจะพูดว่า 'ราคาเท่าไหร่?' จะพูดอย่างไรครับ?" Expected: "How much is this?"
+5b. After praise: "ถ้าจะพูดว่า 'แนะนำเมนูหน่อยได้ไหม?' จะพูดอย่างไรครับ?" Expected: "What do you recommend?"
+5c. After praise: "ถ้าจะพูดว่า 'สถานีอยู่ที่ไหน?' จะพูดอย่างไรครับ?" Expected: "Where is the station?"
+5d. After praise: "ถ้าจะพูดว่า 'เป็นอะไร?' จะพูดอย่างไรครับ?" Expected: "What's wrong?"
    Praise each. expectsUserSpeech = true. Set expectedSpeech to the preferred full English line.
-   Soft-accept rule (critical): if their answer is a natural equivalent (e.g. get/have for water), PRAISE as correct — e.g. "เยี่ยมครับ! Can I have some water? ก็ใช้ได้ดีเลย" / "ถูกต้องครับ!".
-   FORBIDDEN when the meaning is already right: "ไม่เป็นไรครับ", "ก็ได้เหมือนกัน" as the main vibe (sounds like consolation). Treat it as a win, then advance.
+   FORBIDDEN: revealing the English target in the ask; skipping any of the 4; Can I try this on? quizzes.
+   After 5d: praise ONLY — Node 6 is the NEXT listen-only turn.
 
 Node 6 — Grammar Revealed: Giving Directions / Imperatives (listen-only) — TEACH FIRST
 6. Teach BEFORE any quiz. expectsUserSpeech = false. Do NOT ask "ตรงไป พูดว่าอะไร" yet.
-   Stay close to this script, SEPARATE lines:
-   ต่อไปมาดูประโยคบอกทางกันนะครับ
+   Stay close to this script, SEPARATE lines — open with the bridge:
+   เยี่ยมเลยครับ! ต่อไปเราจะมาพูดถึงประโยคบอกทางกันนะครับ
    เวลาบอกทาง เราใช้ประโยคสั้น ๆ แบบนี้
    Go straight.
    Turn left.
@@ -4447,6 +4572,7 @@ Node 6 — Grammar Revealed: Giving Directions / Imperatives (listen-only) — T
    ใช้สำหรับบอกทาง บอกให้ทำ หรือให้คำแนะนำ
    โดยส่วนใหญ่ไม่ต้องมี You อยู่ข้างหน้าครับ
    FORBIDDEN on this turn: any speaking task, quiz, or "พูดว่าอะไร". Tip/reveal only.
+   FORBIDDEN: skipping the Thai bridge after Questions quiz praise.
 
 Node 7 — Mini Challenge: Directions (2 speaking turns) — ONLY AFTER Node 6
 7. Bridge briefly: "งั้นลองใช้กันเลยครับ" then ask. Soft-accept close variants.
@@ -4454,32 +4580,50 @@ Node 7 — Mini Challenge: Directions (2 speaking turns) — ONLY AFTER Node 6
 7b. After praise: "ถ้าอยากบอกว่า 'เลี้ยวขวา' จะพูดอย่างไรครับ?" Expected: "Turn right."
    Praise each. expectsUserSpeech = true. Set expectedSpeech to the full English line.
    FORBIDDEN: jumping to 7a without completing the Node 6 teach turn.
+   After 7b: praise ONLY — Node 8 is the NEXT listen-only turn.
 
-Node 8 — Useful Expressions (listen-only)
-8. Highlight polite everyday lines (one per line):
-   Excuse me.
-   Thank you.
-   Here you are.
-   Stay close to: "วันนี้คุณยังใช้ประโยคสุภาพหลายประโยคด้วย ประโยคเหล่านี้ไม่มี Grammar ซับซ้อน แต่เจ้าของภาษาใช้ทุกวัน จำไว้ให้ขึ้นใจเลยนะครับ"
+Node 8 — Grammar Revealed: Possessives (listen-only) — NEW TURN after 7b
+8. Bridge FIRST, then reveal my / your / his / her with short examples (SEPARATE lines — never one paragraph):
+   Stay close to opening: "ดีมากครับ! ต่อไปเราจะมาพูดถึง Possessives กันนะครับ"
+   Then:
+   my = ของฉัน
+   your = ของคุณ
+   his = ของเขา (ผู้ชาย)
+   her = ของเธอ (ผู้หญิง)
+   Then model (one per line):
+   My bag.
+   His passport.
+   Her room.
+   Optional closer: "คำพวกนี้บอกว่าของใครครับ"
+   FORBIDDEN: jumping from directions quiz praise into possessives with no Thai bridge; starting the quiz on this turn.
    No speaking task. expectsUserSpeech = false.
 
-Node 9 — Chapter Complete (listen-only / complete)
-9. Celebrate with first name once. Stay close to:
+Node 9 — Mini Challenge: Possessives (2 speaking turns) — ONLY AFTER Node 8
+9. Soft-accept close variants (with/without period). Do NOT show the English answer first.
+9a. "ถ้าจะพูดว่า 'หนังสือเดินทางของเขา' จะพูดอย่างไรครับ?" Expected: "His passport."
+9b. After praise: "ถ้าจะพูดว่า 'ห้องของเธอ' จะพูดอย่างไรครับ?" Expected: "Her room."
+   (My bag. is modeled in Node 8 — do not require a third quiz unless needed.)
+   Praise each. expectsUserSpeech = true. Set expectedSpeech to the full English line.
+   FORBIDDEN: revealing the English target in the ask; blank frames like "____ passport".
+   After 9b: praise ONLY — Node 10 is the NEXT listen-only turn.
+
+Node 10 — Chapter Complete (listen-only / complete)
+10. Celebrate with first name once. Stay close to:
    "ยอดเยี่ยมครับ [Name]! วันนี้คุณค้นพบแล้ว —
-   Present Continuous, Can I...?, และ Imperatives
-   และยังใช้ประโยคสุภาพได้อย่างเป็นธรรมชาติอีกด้วย
-   ตอนนี้คุณพร้อมออกไปใช้ภาษาอังกฤษนอกบ้านแล้วครับ!"
+   Present Continuous, คำถามที่ใช้บ่อย, Imperatives และ Possessives
+   Around Town เคลียร์แล้วครับ — พร้อมปลดล็อก Chapter ถัดไปแล้ว!"
    → set isLessonComplete = true (REQUIRED). expectsUserSpeech = false.
    Do NOT ask for a long free-speak challenge. Do NOT start a new quiz after this.
+   FORBIDDEN: Can I...? as a grammar win; polite-line lists as the main wrap.
 
 Turn loop rules (critical):
 - Every non-final tutor turn MUST end with exactly one clear next action — EXCEPT listen-only nodes, which end after their content with expectsUserSpeech = false.
-- Never end a speaking-turn with only explanation/praise and no next ask (except Node 9).
+- Never end a speaking-turn with only explanation/praise and no next ask (except Node 10).
 - You only see transcript TEXT — never invent pronunciation problems.
-- Accept near-miss STT when meaning is clear (e.g. "go strait" → Go straight, "can i try this" → Can I try this on?).
-- When Core Flow reaches Node 9, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
+- Accept near-miss STT when meaning is clear (e.g. "go strait" → Go straight, "how much is this" → How much is this?, "his pass port" → His passport).
+- When Core Flow reaches Node 10, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the Everyday Life Chapter 2 Review for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. CRITICAL: Turn 1 = Celebrate ONLY (เยี่ยมมาก / can communicate outside / order food, shop, ask directions, hotel check-in, ask for help / you already used important Grammar without memorizing) — expectsUserSpeech false, NO quiz yet, do NOT mention any button. Then follow Core Flow one-way: Node 2 Present Continuous reveal (listen-only: I\'m looking for / I\'m taking / I\'m not feeling well + am/is/are + verb-ing) → Node 3 speak challenges (ถ้าจะพูดว่า … จะพูดอย่างไรครับ? — full sentence; soft-accept am/is/are) → Node 4 Can I...? reveal (listen-only) → Node 5 Can I quizzes (try this on / get some water) → Node 6 Imperatives teach FIRST (listen-only: Go straight / Turn left / Turn right + name Imperatives — NO quiz yet) → Node 7 directions quizzes (จะพูดอย่างไรครับ) → Node 8 Useful Expressions (Excuse me / Thank you / Here you are, listen-only) → Node 9 Chapter Complete (3 grammars + polite lines + complete, isLessonComplete true). Return JSON matching the schema. isLessonComplete must be false and expectsUserSpeech must be false on Turn 1.',
+      'Start the Everyday Life Chapter 2 Review (Around Town complete) for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. CRITICAL: Turn 1 = Celebrate ONLY (Around Town จบแล้ว / can communicate outside / shop, coffee, directions, hotel, help / Grammar without memorizing) — expectsUserSpeech false, NO quiz yet, do NOT mention any button. Then follow Core Flow one-way: Node 2 Present Continuous (I\'m looking for / I\'m checking in / I\'m taking the train) → Node 3 quiz×3 → Node 4 Questions reveal (NEW listen-only; How much is this? / What do you recommend? / Where is the station? / What\'s wrong? — NOT Can I...?) → Node 5 Questions quiz×4 Thai→English → Node 6 Imperatives teach FIRST → Node 7 directions quiz×2 → Node 8 Possessives (my/your/his/her + My bag / His passport / Her room) → Node 9 Possessives quiz×2 → Node 10 Chapter Complete (สรุป + พร้อมปลดล็อก Chapter ถัดไป, isLessonComplete true). Return JSON matching the schema. isLessonComplete must be false and expectsUserSpeech must be false on Turn 1.',
   },
   buildPronunciationLesson({
     lessonId: 'pron_th_1',

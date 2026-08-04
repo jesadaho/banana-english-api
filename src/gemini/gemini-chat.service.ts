@@ -1210,10 +1210,16 @@ export class GeminiChatService {
     'เก่งมาก',
     'เก่งจริง',
     'สุดยอด',
+    'เป๊ะเลย',
+    'ใช่เลย',
+    'แจ๋วเลย',
+    'ลื่นมาก',
     'ดีมาก',
     'ดีเลย',
     'ดีจัง',
     'เยี่ยม',
+    'เป๊ะ',
+    'แจ๋ว',
     'excellent',
     'fantastic',
     'wonderful',
@@ -1232,6 +1238,36 @@ export class GeminiChatService {
     'nice',
     'good',
   ];
+
+  /** Rotate these short Thai praise lines — do not spam the same one. */
+  private static readonly THAI_PRAISE_VARIETY = [
+    'เยี่ยมเลยครับ!',
+    'เยี่ยมมากครับ!',
+    'เยี่ยมครับ!',
+    'ดีมากครับ!',
+    'ดีเลยครับ!',
+    'ดีจังครับ!',
+    'เก่งมากครับ!',
+    'เก่งจริงครับ!',
+    'ทำได้ดีมากครับ!',
+    'ยอดเยี่ยมครับ!',
+    'สุดยอดครับ!',
+    'เป๊ะเลยครับ!',
+    'ใช่เลยครับ!',
+    'แจ๋วเลยครับ!',
+    'ลื่นมากครับ!',
+  ];
+
+  private thaiPraiseVarietyRule(): string {
+    const list = GeminiChatService.THAI_PRAISE_VARIETY.join(' / ');
+    return `Praise variety (Thai teaching mode):
+- On SUCCESS, open with ONE short Thai praise, then advance.
+- Rotate across this pool — do NOT reuse the same praise on consecutive successful turns:
+  ${list}
+- Pick a different line from the ones you used in the last 1–2 AI turns when possible.
+- FORBIDDEN: English praise openers (Perfect! / Great! / Nice!) in Thai teaching mode.
+- Keep praise to one short clause — then continue teaching.`;
+  }
 
   private static readonly PRAISE_OPENER_RE = (() => {
     const openers = GeminiChatService.PRAISE_OPENERS.map((p) =>
@@ -1636,7 +1672,7 @@ MATCH RESULT: SUCCESS — "${normalized}" matches the taught phrase "${matched}"
 ตัวพิมพ์เล็ก/ใหญ่ และเครื่องหมายวรรคตอนไม่นับว่าผิด ("Seat.", "SEAT", "seat" = สำเร็จทั้งหมดสำหรับ "seat")
 Required response:
 - Speak MOSTLY in Thai (beginner tutor). English only for the next target phrase if modeling it.
-- Brief Thai praise only (e.g. เยี่ยมเลยครับ / ดีมากครับ) — do NOT praise in English ("Perfect!", "Great!")
+- Brief Thai praise only — rotate from: เยี่ยมเลยครับ! / เยี่ยมมากครับ! / เยี่ยมครับ! / ดีมากครับ! / ดีเลยครับ! / ดีจังครับ! / เก่งมากครับ! / เก่งจริงครับ! / ทำได้ดีมากครับ! / ยอดเยี่ยมครับ! / สุดยอดครับ! / เป๊ะเลยครับ! / ใช่เลยครับ! / แจ๋วเลยครับ! / ลื่นมากครับ! — do NOT reuse the same praise as the previous successful turn; do NOT praise in English ("Perfect!", "Great!")
 - ADVANCE immediately to the NEXT Core Flow milestone ONLY (เดินหน้าอย่างเดียว — ห้ามย้อนกลับไป Vocabulary / Pattern Drill ที่จบแล้ว)
 - FORBIDDEN: full-English lines, โอ๊ะ, เกือบใช่, almost, ลองอีกที, asking to repeat "${matched}" again, inventing pronunciation or "said it twice" issues, treating capital letters or a trailing period as a mistake, looping on the same teaching ask`;
     }
@@ -1762,6 +1798,8 @@ Acceptance rules (critical — prevent retry loops):
 - Never say "เกือบใช่" / "almost" / "ลองอีกที" when the transcript already matches the target — capital letters and trailing periods are NOT mistakes.
 - Maximum ONE retry per phrase. After that retry (or if still unclear), accept generously and move on — do not loop the same phrase a third time.
 - Prefer progress and confidence over perfection.
+
+${this.thaiPraiseVarietyRule()}
 
 Turn ${currentTurn} of ${config.maxTurns} (${remaining} turns remaining).
 ${speechFlagBlock}
