@@ -3289,29 +3289,33 @@ Turn loop rules (critical — never stall the learner):
     titleEn: 'Pets',
     titleTh: 'สัตว์เลี้ยง',
     goalEn:
-      'Say if you have a pet, what animals you like, and describe a pet briefly.',
-    goalTh: 'บอกว่ามีสัตว์เลี้ยงไหม ชอบสัตว์อะไร และบรรยายสัตว์เลี้ยงสั้นๆ ได้',
+      'Say if you have a pet, describe a pet with my/your, and use affirmative and negative have-patterns.',
+    goalTh:
+      'บอกว่ามีสัตว์เลี้ยงไหม บรรยายด้วย my/your และใช้ประโยคมี/ไม่มีสัตว์เลี้ยงได้',
     difficulty: 'beginner',
     languageMix: { thai: 70, english: 30 },
     estimatedMinutesMin: 4,
-    estimatedMinutesMax: 5,
+    estimatedMinutesMax: 6,
     targetPhrases: [
       'dog',
       'cat',
       'pet',
       'cute',
       'friendly',
+      'my',
+      'your',
       'I have a cat',
       'I have a dog',
       "I don't have any pets",
       'My cat is very cute',
       'My dog is very friendly',
+      'Your dog is very friendly',
       'I have a cat. My cat is very cute',
       "I don't have any pets, but I like cats",
     ],
-    maxTurns: 20,
+    maxTurns: 22,
     systemInstruction: `Lesson: Pets (Everyday English → About Me → 1.6)
-Goal: Say if you have a pet, what animals you like, and describe a pet briefly — including affirmative and negative patterns.
+Goal: Say if you have a pet, describe a pet with my/your, and use affirmative and negative have-patterns.
 
 Target vocabulary:
 - pet = สัตว์เลี้ยง
@@ -3319,11 +3323,14 @@ Target vocabulary:
 - cat = แมว
 - cute = น่ารัก
 - friendly = เป็นมิตร / ใจดี
+- my = ของฉัน
+- your = ของคุณ
 
 Target patterns:
 - I have a [pet].
 - I don't have any pets.
 - My [pet] is very cute / friendly.
+- Your [pet] is very friendly / cute.
 - With pet synthesis: I have a cat. My cat is very cute.
 - No-pet synthesis: I don't have any pets, but I like cats. (or simply I don't have any pets.)
 
@@ -3332,9 +3339,9 @@ Teaching vs speaking (critical):
 - Ask only ONE speaking task or one question per turn.
 - Do NOT use "I'm ready" in this lesson.
 - Mid-lesson Q&A should be short and guided, not open free-talk.
-- Core vocabulary: pet / dog / cat / cute / friendly.
+- Core vocabulary: pet / dog / cat / cute / friendly / my / your.
 - If the learner names another animal (fish, bird, rabbit, etc.), map it into I have a... / My [animal] is... and accept it — do not reject.
-- Remember whether they HAVE a pet or NOT after Phase 2 — Phase 3 synthesis MUST follow their real case.
+- Remember whether they HAVE a pet or NOT after Phase 2 — later Pattern 2 / synthesis MUST follow their real case.
 
 Word & pattern meanings:
 - pet = สัตว์เลี้ยง
@@ -3342,16 +3349,19 @@ Word & pattern meanings:
 - cat = แมว
 - cute = น่ารัก
 - friendly = เป็นมิตร
+- my = ของฉัน
+- your = ของคุณ
 - I have a cat. = ฉันมีแมว
 - I don't have any pets. = ฉันไม่มีสัตว์เลี้ยง
 - My cat is very cute. = แมวของฉันน่ารักมาก
 - My dog is very friendly. = หมาของฉันเป็นมิตรมาก
+- Your dog is very friendly. = หมาของคุณเป็นมิตรมาก
 - I don't have any pets, but I like cats. = ฉันไม่มีสัตว์เลี้ยง แต่ฉันชอบแมวมาก
 
 Core Flow (progression milestones — NOT a fixed turn count):
 - Follow these core steps in order. Do not skip ahead.
 - Extra turns for praise, one retry, or short feedback MAY happen between steps — that is OK.
-- Keep the session short (~4–5 minutes).
+- Keep the session about ~4–6 minutes.
 
 Intro style for THIS lesson (required — opening turn only):
 - Style: Funny & Playful (~มุกแบบไทยๆ)
@@ -3388,26 +3398,35 @@ Phase 2: Pattern 1 & Personalize (~1.5 min)
 5. Apply — branch by THEIR answer:
    - Has a pet (dog/cat/pet or other): "งั้นพูดว่า I have a [animal] ครับ" (map fish/bird/etc. if needed)
    - No pets: "งั้นพูดว่า I don't have any pets. ครับ" — keep it light and easy, no pressure
-   Remember this branch for Phase 3. (Recall)
+   Remember this branch for later steps. (Recall)
 
-Phase 3: Pattern 2 & Synthesis (~1.5 min)
-6. Model Pattern 2 based on their branch:
-   - Has cat (or default with-pet example): "My cat is very cute." → ask to repeat
-   - Has dog: "My dog is very friendly." → ask to repeat
-   - Has other animal: "My [animal] is very cute." (or friendly) → ask to repeat
-   - No pets: still model "My cat is very cute." as a useful pattern, then ask to repeat once (so they know the describing pattern)
+Phase 3: Grammar Tip — my / your (listen-only, ~20–30 sec)
+6. Short tip ONLY — expectsUserSpeech = false. Do NOT ask them to speak yet.
+   Stay close to (SEPARATE lines):
+   ง่ายๆ ครับ
+   my = ของฉัน
+   your = ของคุณ
+   My cat is very cute.
+   Your dog is very friendly.
+   FORBIDDEN: starting Pattern 2 speak in the same turn as this tip.
+
+Phase 4: Pattern 2 & Synthesis (~1.5 min)
+7. Model Pattern 2 based on their branch → ask to repeat:
+   - Has a pet: "My [animal] is very cute/friendly." (cat→cute, dog→friendly, other→cute or friendly)
+   - No pets: model "Your dog is very friendly." OR "My cat is very cute." as a useful describing pattern → ask to repeat once
    (Repeat)
-7. Synthesis — one clear speaking task matching THEIR branch. Do NOT show the English answer first:
-   - Has a pet: "ลองพูดรวมกันดูครับ: 'ฉันมีแมวหนึ่งตัว แมวของฉันน่ารักมาก' จะพูดภาษาอังกฤษยังไงครับ?"
+8. Synthesis — one clear speaking task matching THEIR branch. Do NOT show the English answer first:
+   - Has a pet: "ลองพูดรวมกันดูครับ: 'ฉันมีแมวหนึ่งตัว มันน่ารักมาก' จะพูดภาษาอังกฤษยังไงครับ?"
      (Adapt animal/adjective to their pet: dog→friendly, etc.)
      Expected: "I have a [pet]. My [pet] is very cute/friendly."
-   - No pets: "ลองพูดประโยคนี้ดูครับ: 'ฉันไม่มีสัตว์เลี้ยง แต่ฉันชอบแมวมาก' จะพูดภาษาอังกฤษยังไงครับ?"
-   FORBIDDEN: "→" arrow or reveal English answer in the synthesis prompt.
+   - No pets: "ลองพูดประโยคนี้ดูครับ: 'ฉันไม่มีสัตว์เลี้ยง แต่ฉันชอบแมว' จะพูดภาษาอังกฤษยังไงครับ?"
+     Expected: "I don't have any pets, but I like cats."
      Also accept the shorter "I don't have any pets."
+   FORBIDDEN: "→" arrow or reveal English answer in the synthesis prompt.
    Accept close variants. (Recall)
 
 Quick Check (Thai → English) — AFTER synthesis, BEFORE wrap-up:
-8. Give ONE Thai sentence matching THEIR branch. Do NOT show the English answer first. Ask them to say it in English.
+9. Give ONE Thai sentence matching THEIR branch. Do NOT show the English answer first. Ask them to say it in English.
    - Has a pet: "ทดสอบสั้นๆ ครับ ถ้าจะบอกว่า 'แมวของฉันน่ารักมาก' จะพูดภาษาอังกฤษยังไงครับ?"
      Expected: "My cat is very cute." (adapt animal/adj to their pet if needed)
    - No pets: "ทดสอบสั้นๆ ครับ ถ้าจะบอกว่า 'ฉันไม่มีสัตว์เลี้ยง' จะพูดภาษาอังกฤษยังไงครับ?"
@@ -3415,15 +3434,12 @@ Quick Check (Thai → English) — AFTER synthesis, BEFORE wrap-up:
    If wrong/unclear: at most ONE gentle hint + one retry; then accept and move on. (Recall)
    FORBIDDEN: reveal the full English target before they attempt.
 
-Phase 4: Wrap-up & Celebrate (~30 sec)
-9. Briefly summarize pet / dog / cat / have / don't have / cute / friendly — praise that they used affirmative or negative sentences smoothly. Celebrate with student's name once → set isLessonComplete = true (REQUIRED).
+Phase 5: Wrap-up & Celebrate (~30 sec)
+10. Briefly summarize pet / dog / cat / have / don't have / my / your / cute / friendly — praise that they used affirmative or negative sentences smoothly. Celebrate with student's name once → set isLessonComplete = true (REQUIRED).
 
 Turn loop rules (critical — never stall the learner):
-- Every non-final tutor turn MUST end with exactly one clear next action:
-  1) Repeat a word/sentence, OR
-  2) Recognition (guided answer), OR
-  3) Recall (guided say of a taught sentence).
-- Never end a turn with only explanation, praise, or feedback.
+- Every non-final tutor turn MUST end with exactly one clear next action — EXCEPT the Grammar Tip (step 6), which is listen-only and ends with expectsUserSpeech = false.
+- Never end a speaking-turn with only explanation, praise, or feedback.
 - Ask only one question or speaking task at a time.
 - Keep most tutor turns under 2–3 short sentences.
 - Praise specifically but briefly.
@@ -3436,7 +3452,7 @@ Turn loop rules (critical — never stall the learner):
 - Focus on confidence and being understandable.
 - When Core Flow reaches Wrap-up & Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the Pets lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. Intro style MUST be Funny & Playful with Thai-style humor (insight จริงจนจุก + ปู-ตบโบ๊ะบ๊ะไว + ไม่ตักเตือน — NOT English standup). CRITICAL: Turn 1 = joke/vibe intro + teach pet + ask to repeat ONLY "pet" in the SAME turn — NEVER open with "มีสัตว์เลี้ยงไหม?" / chatty questions that need a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: dog vs cat quiz (expect cat), Pattern 1 (I have a cat) + ask if they have a pet in {{L1}} THEN the same question in English + apply I have a... OR I don\'t have any pets, Pattern 2 (My cat is very cute / My dog is very friendly) + synthesis matching their case (with pet: "I have a cat. My cat is very cute." / no pet: "I don\'t have any pets, but I like cats."), Thai→English quick check, then celebrate. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the Pets lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. Intro style MUST be Funny & Playful with Thai-style humor (insight จริงจนจุก + ปู-ตบโบ๊ะบ๊ะไว + ไม่ตักเตือน — NOT English standup). CRITICAL: Turn 1 = joke/vibe intro + teach pet + ask to repeat ONLY "pet" in the SAME turn — NEVER open with "มีสัตว์เลี้ยงไหม?" / chatty questions that need a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: dog vs cat quiz (expect cat), Pattern 1 (I have a cat) + ask if they have a pet in {{L1}} THEN the same question in English + apply I have a... OR I don\'t have any pets, Grammar Tip listen-only (my=ของฉัน / your=ของคุณ + My cat is very cute / Your dog is very friendly — no speak yet), Pattern 2 by branch (has pet: My [animal] is... / no pet: Your dog is very friendly OR My cat is very cute) + synthesis matching their case, Thai→English quick check, then celebrate. Every speaking turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
   },
   {
     lessonId: 'ee_about_me_weather',
@@ -3683,15 +3699,15 @@ Node 5 — Mini Quiz: choose the verb by MEANING (3 speaking turns)
    This reviews verb MEANING, not conjugation. Praise each. expectsUserSpeech = true.
 
 Node 6 — Frequency reveal (listen-only)
-6. Introduce the four frequency words clearly, ONE per line with Thai meaning:
-   always = เสมอ
-   usually = โดยปกติ
-   sometimes = บางครั้ง
-   never = ไม่เคย
+6. Introduce the four frequency words clearly, ONE per line with Thai in parentheses:
+   Always (เสมอ)
+   Usually (โดยปกติ)
+   Sometimes (บางครั้ง)
+   Never (ไม่เคย)
    Stay close to opening: "ดีมากครับ! ต่อไปเรามาดูคำที่บอกว่าทำบ่อยแค่ไหนกันนะครับ"
-   Then list the four mappings on separate lines (as above).
+   Then list the four lines above on separate lines.
    Optional one short closer: "คำพวกนี้บอกว่าทำบ่อยแค่ไหนครับ"
-   FORBIDDEN: dumping the English words in one run-on line without Thai meanings.
+   FORBIDDEN: dumping the English words in one run-on line, or using "=" mappings (prefer parentheses).
    No quiz yet. expectsUserSpeech = false.
 
 Node 7 — Mini Quiz: Frequency
@@ -3714,7 +3730,7 @@ Turn loop rules (critical):
 - Accept near-miss STT when meaning is clear (e.g. "live" / "lives", "sometime" → sometimes).
 - When Core Flow reaches Node 8, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the About Me Chapter 1 Review for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. CRITICAL: Turn 1 = Celebrate ONLY (Chapter Complete / 120+ sentences / today we discover which Grammar they already used) — expectsUserSpeech false, NO quiz yet, do NOT mention any button. Then follow Core Flow one-way: Node 2a observe pattern (listen-only — ลองดูตัวอย่าง + 3 sentences on separate lines + สังเกตไหมครับ ทุกประโยคมีคำว่า is — stop, NO am/are yet) → Node 2b summarize rule (listen-only — ง่ายมากครับ / I ใช้ am / He She It ใช้ is / You We They ใช้ are / เดี๋ยวลองใช้กันเลยครับ — NO arrows) → Node 3 speak challenges (ถ้าจะพูดว่า … จะพูดอย่างไรครับ? — full sentence; soft-accept am/is/are) → Node 4 Present Simple reveal (listen-only) → Node 5 verb-meaning quizzes (live, like, have) → Node 6 Frequency reveal (always=เสมอ / usually=โดยปกติ / sometimes=บางครั้ง / never=ไม่เคย, listen-only) → Node 7 sometimes quiz → Node 8 Great wrap (3 grammars + complete, isLessonComplete true). Return JSON matching the schema. isLessonComplete must be false and expectsUserSpeech must be false on Turn 1.',
+      'Start the About Me Chapter 1 Review for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. CRITICAL: Turn 1 = Celebrate ONLY (Chapter Complete / 120+ sentences / today we discover which Grammar they already used) — expectsUserSpeech false, NO quiz yet, do NOT mention any button. Then follow Core Flow one-way: Node 2a observe pattern (listen-only — ลองดูตัวอย่าง + 3 sentences on separate lines + สังเกตไหมครับ ทุกประโยคมีคำว่า is — stop, NO am/are yet) → Node 2b summarize rule (listen-only — ง่ายมากครับ / I ใช้ am / He She It ใช้ is / You We They ใช้ are / เดี๋ยวลองใช้กันเลยครับ — NO arrows) → Node 3 speak challenges (ถ้าจะพูดว่า … จะพูดอย่างไรครับ? — full sentence; soft-accept am/is/are) → Node 4 Present Simple reveal (listen-only) → Node 5 verb-meaning quizzes (live, like, have) → Node 6 Frequency reveal (Always (เสมอ) / Usually (โดยปกติ) / Sometimes (บางครั้ง) / Never (ไม่เคย), listen-only) → Node 7 sometimes quiz → Node 8 Great wrap (3 grammars + complete, isLessonComplete true). Return JSON matching the schema. isLessonComplete must be false and expectsUserSpeech must be false on Turn 1.',
   },
   {
     lessonId: 'weather',
@@ -4346,6 +4362,7 @@ Core Flow (progression milestones — NOT a fixed turn count):
       'Can I get some medicine?',
       'Can I try this on?',
       'Can I get some water?',
+      'Can I have some water?',
       'Go straight.',
       'Turn left.',
       'Turn right.',
@@ -4371,6 +4388,7 @@ Voice UX rules:
 - After a wrong answer: at most ONE gentle retry, then accept and ADVANCE.
 - Keep each tutor turn under 2–4 short sentences (reveal nodes may be a bit longer to list examples).
 - Praise briefly on every correct quiz answer.
+- Soft-accept natural equivalents as FULLY correct — praise first (เยี่ยม / ถูกต้อง), do NOT open with "ไม่เป็นไรครับ" when meaning is already right.
 
 Core Flow (ONE-WAY — never go backward):
 Rhythm: Celebrate → Present Continuous reveal → Fill-in×3 → Can I...? reveal → Can I quiz×2 → Imperatives reveal → Directions quiz×2 → Useful Expressions → Chapter Complete.
@@ -4411,22 +4429,31 @@ Node 4 — Grammar Revealed: Can I...? (listen-only)
    No speaking task. expectsUserSpeech = false.
 
 Node 5 — Mini Challenge: Can I...? (2 speaking turns)
-5a. "ถ้าคุณอยากลองเสื้อตัวนี้ ควรพูดว่าอะไรครับ?" Expected: "Can I try this on?" (soft-accept close variants with same meaning).
-5b. After praise: "ถ้าอยากขอน้ำ ควรพูดว่าอะไรครับ?" Expected: "Can I get some water?" (also accept "Can I have some water?").
-   Praise each. expectsUserSpeech = true.
+5a. "ถ้าคุณอยากลองเสื้อตัวนี้ จะพูดอย่างไรครับ?" Expected: "Can I try this on?" (soft-accept close variants with same meaning).
+5b. After praise: "ถ้าอยากขอน้ำ จะพูดอย่างไรครับ?" Expected: "Can I get some water?" (also accept "Can I have some water?" / "Can I have a water?" as FULLY correct).
+   Praise each. expectsUserSpeech = true. Set expectedSpeech to the preferred full English line.
+   Soft-accept rule (critical): if their answer is a natural equivalent (e.g. get/have for water), PRAISE as correct — e.g. "เยี่ยมครับ! Can I have some water? ก็ใช้ได้ดีเลย" / "ถูกต้องครับ!".
+   FORBIDDEN when the meaning is already right: "ไม่เป็นไรครับ", "ก็ได้เหมือนกัน" as the main vibe (sounds like consolation). Treat it as a win, then advance.
 
-Node 6 — Grammar Revealed: Giving Directions / Imperatives (listen-only)
-6. Model short lines (one per line):
+Node 6 — Grammar Revealed: Giving Directions / Imperatives (listen-only) — TEACH FIRST
+6. Teach BEFORE any quiz. expectsUserSpeech = false. Do NOT ask "ตรงไป พูดว่าอะไร" yet.
+   Stay close to this script, SEPARATE lines:
+   ต่อไปมาดูประโยคบอกทางกันนะครับ
+   เวลาบอกทาง เราใช้ประโยคสั้น ๆ แบบนี้
    Go straight.
    Turn left.
    Turn right.
-   Stay close to: "ประโยคแบบนี้เรียกว่า Imperatives ใช้สำหรับบอกทาง บอกให้ทำ ให้คำแนะนำ โดยส่วนใหญ่ไม่ต้องมี You อยู่ข้างหน้าครับ"
-   No speaking task. expectsUserSpeech = false.
+   ประโยคแบบนี้เรียกว่า Imperatives
+   ใช้สำหรับบอกทาง บอกให้ทำ หรือให้คำแนะนำ
+   โดยส่วนใหญ่ไม่ต้องมี You อยู่ข้างหน้าครับ
+   FORBIDDEN on this turn: any speaking task, quiz, or "พูดว่าอะไร". Tip/reveal only.
 
-Node 7 — Mini Challenge: Directions (2 speaking turns)
-7a. "ถ้าอยากบอกว่า 'ตรงไป' พูดว่าอะไรครับ?" Expected: "Go straight."
-7b. After praise: "ถ้าอยากบอกว่า 'เลี้ยวขวา' พูดว่าอะไรครับ?" Expected: "Turn right."
-   Praise each. expectsUserSpeech = true.
+Node 7 — Mini Challenge: Directions (2 speaking turns) — ONLY AFTER Node 6
+7. Bridge briefly: "งั้นลองใช้กันเลยครับ" then ask. Soft-accept close variants.
+7a. "ถ้าอยากบอกว่า 'ตรงไป' จะพูดอย่างไรครับ?" Expected: "Go straight."
+7b. After praise: "ถ้าอยากบอกว่า 'เลี้ยวขวา' จะพูดอย่างไรครับ?" Expected: "Turn right."
+   Praise each. expectsUserSpeech = true. Set expectedSpeech to the full English line.
+   FORBIDDEN: jumping to 7a without completing the Node 6 teach turn.
 
 Node 8 — Useful Expressions (listen-only)
 8. Highlight polite everyday lines (one per line):
@@ -4452,7 +4479,7 @@ Turn loop rules (critical):
 - Accept near-miss STT when meaning is clear (e.g. "go strait" → Go straight, "can i try this" → Can I try this on?).
 - When Core Flow reaches Node 9, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the Everyday Life Chapter 2 Review for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. CRITICAL: Turn 1 = Celebrate ONLY (เยี่ยมมาก / can communicate outside / order food, shop, ask directions, hotel check-in, ask for help / you already used important Grammar without memorizing) — expectsUserSpeech false, NO quiz yet, do NOT mention any button. Then follow Core Flow one-way: Node 2 Present Continuous reveal (listen-only: I\'m looking for / I\'m taking / I\'m not feeling well + am/is/are + verb-ing) → Node 3 speak challenges (ถ้าจะพูดว่า … จะพูดอย่างไรครับ? — full sentence; soft-accept am/is/are) → Node 4 Can I...? reveal (listen-only) → Node 5 Can I quizzes (try this on / get some water) → Node 6 Imperatives reveal (Go straight / Turn left / Turn right) → Node 7 directions quizzes → Node 8 Useful Expressions (Excuse me / Thank you / Here you are, listen-only) → Node 9 Chapter Complete (3 grammars + polite lines + complete, isLessonComplete true). Return JSON matching the schema. isLessonComplete must be false and expectsUserSpeech must be false on Turn 1.',
+      'Start the Everyday Life Chapter 2 Review for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. CRITICAL: Turn 1 = Celebrate ONLY (เยี่ยมมาก / can communicate outside / order food, shop, ask directions, hotel check-in, ask for help / you already used important Grammar without memorizing) — expectsUserSpeech false, NO quiz yet, do NOT mention any button. Then follow Core Flow one-way: Node 2 Present Continuous reveal (listen-only: I\'m looking for / I\'m taking / I\'m not feeling well + am/is/are + verb-ing) → Node 3 speak challenges (ถ้าจะพูดว่า … จะพูดอย่างไรครับ? — full sentence; soft-accept am/is/are) → Node 4 Can I...? reveal (listen-only) → Node 5 Can I quizzes (try this on / get some water) → Node 6 Imperatives teach FIRST (listen-only: Go straight / Turn left / Turn right + name Imperatives — NO quiz yet) → Node 7 directions quizzes (จะพูดอย่างไรครับ) → Node 8 Useful Expressions (Excuse me / Thank you / Here you are, listen-only) → Node 9 Chapter Complete (3 grammars + polite lines + complete, isLessonComplete true). Return JSON matching the schema. isLessonComplete must be false and expectsUserSpeech must be false on Turn 1.',
   },
   buildPronunciationLesson({
     lessonId: 'pron_th_1',
