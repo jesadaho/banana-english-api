@@ -25,6 +25,8 @@ import type {
   TurnFeedbackItem,
 } from '../common/api.types';
 import {
+  EMOJI_SPEAK_COMPLETE_SENTINEL,
+  EMOJI_SPEAK_COMPLETE_TURN_TEXT,
   TAP_TO_CONTINUE_SENTINEL,
   TAP_TO_CONTINUE_TURN_TEXT,
 } from '../common/api.types';
@@ -426,10 +428,14 @@ export class SessionsController {
       throw new BadRequestException('userSpeechText is required');
     }
 
-    // A Continue tap is not speech — never send it through Thai-mix repair.
+    // Continue / Emoji Speak complete are not speech — skip Thai-mix repair.
     const isTapToContinue = originalText === TAP_TO_CONTINUE_SENTINEL;
+    const isEmojiSpeakComplete =
+      originalText === EMOJI_SPEAK_COMPLETE_SENTINEL;
     if (isTapToContinue) {
       originalText = TAP_TO_CONTINUE_TURN_TEXT;
+    } else if (isEmojiSpeakComplete) {
+      originalText = EMOJI_SPEAK_COMPLETE_TURN_TEXT;
     }
 
     let userText = originalText;
@@ -437,7 +443,9 @@ export class SessionsController {
       // Pronunciation lessons match exact target words — Thai-mix "repair"
       // can rewrite a correct "Seat." into something else and falsely fail.
       const skipThaiMix =
-        isTapToContinue || isPronunciationLesson(config.lessonId);
+        isTapToContinue ||
+        isEmojiSpeakComplete ||
+        isPronunciationLesson(config.lessonId);
       if (body.thaiMixEnabled && !skipThaiMix) {
         this.sessionStore.markThaiMixUsed(sessionId);
         userText = await this.chat.correctThaiMix(originalText);
@@ -472,10 +480,21 @@ export class SessionsController {
       // for speech, so don't let a model slip put the mic in front of the
       // learner. nextTurn 1 is the tutor turn right after the opening.
       const inListenOnlyIntro = nextTurn < (config.listenOnlyTurns ?? 0);
-      const expectsUserSpeech =
+      let expectsUserSpeech =
         isTaskComplete || inListenOnlyIntro
           ? false
           : (reply.expectsUserSpeech ?? true);
+
+      // Stories 3.1: after Hook + Emoji Intro, the next turn must be Pattern
+      // Challenge speak — never re-open as listen-only Intro.
+      if (
+        config.lessonId === 'ee_stories_yesterday' &&
+        nextTurn >= 2 &&
+        !isTaskComplete &&
+        isEmojiSpeakComplete
+      ) {
+        expectsUserSpeech = true;
+      }
 
       const emojiSpeak = enrichEmojiSpeakForLesson(
         config.lessonId,

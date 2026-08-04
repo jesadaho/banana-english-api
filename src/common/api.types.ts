@@ -28,6 +28,16 @@ export const TAP_TO_CONTINUE_SENTINEL = '[continue]';
 /** How a Continue tap is stored in history and shown to the model. */
 export const TAP_TO_CONTINUE_TURN_TEXT = '(tapped Continue)';
 
+/**
+ * App posts this after finishing a local Emoji Speak batch (Stories 3.1).
+ * Distinct from Continue so the model does not re-open the Intro listen turn.
+ */
+export const EMOJI_SPEAK_COMPLETE_SENTINEL = '[emoji-speak-complete]';
+
+/** How an Emoji Speak completion is stored in history / shown to the model. */
+export const EMOJI_SPEAK_COMPLETE_TURN_TEXT =
+  '(finished Emoji Speak — start Pattern Challenge 1)';
+
 export interface FeedbackHints {
   grammarTip?: string;
   mispronouncedWords: string[];

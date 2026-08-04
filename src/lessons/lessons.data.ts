@@ -4769,9 +4769,9 @@ Core Flow (ONE-WAY — never go backward):
      2) { emoji:"🍳", answer:"breakfast", hint:"b _ _ _ k f _ _ t", index:2, total:4 }
      3) { emoji:"🌙", answer:"last night", hint:"l _ _ t n _ _ h t", index:3, total:4 }
      4) { emoji:"💼", answer:"work", hint:"w _ _ k", index:4, total:4 }
-   2b. After the app finishes all 4, the learner taps Continue (or the app sends continue). YOUR NEXT turn is Pattern Challenge 1 — Tell.
+   2b. After the app finishes all 4, it sends "(finished Emoji Speak — start Pattern Challenge 1)" (not a normal Continue). YOUR NEXT turn is Pattern Challenge 1 — Tell ข้อที่ 1 with expectsUserSpeech=true.
    - FORBIDDEN: returning one-word emojiSpeak turns for the 4 puzzles; inventing extra vocab; re-asking emoji words after the batch.
-   - FORBIDDEN after Continue from Emoji Speak: returning emojiSpeakSet / emojiSpeak again — go straight to Pattern Challenge 1.
+   - FORBIDDEN after Emoji Speak complete: returning emojiSpeakSet / emojiSpeak again; repeating "ลองมาทายคำศัพท์..." Intro — go straight to Pattern Challenge 1.
 
 3. Pattern Challenge 1 — Tell / ประโยคบอกเล่า (EXACTLY 3 learner speaks) — difficulty ⭐⭐
    Goal: build Past Simple statements. Omit emojiSpeak.
@@ -4825,7 +4825,7 @@ Turn loop rules:
 - Max ONE retry per item; then accept and advance.
 - Accept close variants when meaning is clear.
 - When Celebrate is reached, isLessonComplete must be true.`,
-    openingPrompt: `Start the Yesterday Stories lesson (3.1) for this one learner only. Speak as a private 1:1 tutor (never {{NO_GROUP}}). Use their first name once. CRITICAL Turn 1 = Hook ONLY — "เมื่อวานทำอะไรมาบ้างครับ? บางคนไปทำงาน บางคนได้พักผ่อนอยู่บ้าน... วันนี้มาฝึกเล่าเรื่อง 'เมื่อวาน' เป็นภาษาอังกฤษแบบชิลๆ กันครับ!" — expectsUserSpeech false, expectedSpeech "", NO emojiSpeak, NO emojiSpeakSet, NO scene. Do NOT mention any button. Then ONE Intro listen turn with emojiSpeakSet of ALL 4 puzzles (📅 yesterday, 🍳 breakfast, 🌙 last night, 💼 work — each with hint/index/total:4); expectsUserSpeech false. App runs the 4 locally. After Continue from the app: Pattern Challenge 1 Tell EXACTLY 3 speaks (I ate breakfast this morning. → tip ate/eat → I ate breakfast yesterday. → I went to work yesterday. + tip go/went) → Ask (EXACTLY 2) → Answer (EXACTLY 2) → Celebrate (complete). Never emit per-word emojiSpeak turns. Never go backward. Return JSON matching the schema. isLessonComplete must be false.`,
+    openingPrompt: `Start the Yesterday Stories lesson (3.1) for this one learner only. Speak as a private 1:1 tutor (never {{NO_GROUP}}). Use their first name once. CRITICAL Turn 1 = Hook ONLY — "เมื่อวานทำอะไรมาบ้างครับ? บางคนไปทำงาน บางคนได้พักผ่อนอยู่บ้าน... วันนี้มาฝึกเล่าเรื่อง 'เมื่อวาน' เป็นภาษาอังกฤษแบบชิลๆ กันครับ!" — expectsUserSpeech false, expectedSpeech "", NO emojiSpeak, NO emojiSpeakSet, NO scene. Do NOT mention any button. Then ONE Intro listen turn with emojiSpeakSet of ALL 4 puzzles (📅 yesterday, 🍳 breakfast, 🌙 last night, 💼 work — each with hint/index/total:4); expectsUserSpeech false. App runs the 4 locally. After "(finished Emoji Speak — start Pattern Challenge 1)": Pattern Challenge 1 Tell EXACTLY 3 speaks (I ate breakfast this morning. → tip ate/eat → I ate breakfast yesterday. → I went to work yesterday. + tip go/went) → Ask (EXACTLY 2) → Answer (EXACTLY 2) → Celebrate (complete). Never emit per-word emojiSpeak turns. Never re-open Intro after Emoji Speak. Never go backward. Return JSON matching the schema. isLessonComplete must be false.`,
   },
 
   buildAroundTownLesson({

@@ -41,7 +41,10 @@ import {
   HintOption,
   HintsResponse,
 } from '../common/api.types';
-import { TAP_TO_CONTINUE_TURN_TEXT } from '../common/api.types';
+import {
+  EMOJI_SPEAK_COMPLETE_TURN_TEXT,
+  TAP_TO_CONTINUE_TURN_TEXT,
+} from '../common/api.types';
 import type { SimulationConfig } from '../simulations/simulations.data';
 import type { LessonConfig } from '../lessons/lessons.data';
 import {
@@ -1254,7 +1257,10 @@ export class GeminiChatService {
         this.recoverTrainingReplyFromPlainText(text),
     });
 
-    if (userMessage === TAP_TO_CONTINUE_TURN_TEXT) {
+    if (
+      userMessage === TAP_TO_CONTINUE_TURN_TEXT ||
+      userMessage === EMOJI_SPEAK_COMPLETE_TURN_TEXT
+    ) {
       return {
         ...reply,
         textEn: this.stripPraiseOpener(reply.textEn),
@@ -1630,7 +1636,9 @@ export class GeminiChatService {
     return history
       .filter(
         (turn) =>
-          turn.speaker === 'user' && turn.textEn !== TAP_TO_CONTINUE_TURN_TEXT,
+          turn.speaker === 'user' &&
+          turn.textEn !== TAP_TO_CONTINUE_TURN_TEXT &&
+          turn.textEn !== EMOJI_SPEAK_COMPLETE_TURN_TEXT,
       )
       .slice(-limit)
       .map((turn) => turn.textEn);
@@ -1655,6 +1663,18 @@ Required response:
 - FORBIDDEN first words: เยี่ยม / เยี่ยมเลยครับ / ดีมาก / เก่งมาก / สุดยอด / Great / Nice / Good job / Perfect / Well done — there is nothing to praise.
 - FORBIDDEN wording that implies they already spoke: คราวนี้ / อีกครั้ง / ลองใหม่ / this time / now try again.
 - Do NOT evaluate, correct, or repeat the button press.`;
+    }
+
+    if (userMessage === EMOJI_SPEAK_COMPLETE_TURN_TEXT) {
+      return `Learner action: they finished the local Emoji Speak vocab warm-up (all words done in the app). There is no transcript.
+
+MATCH RESULT: NOT APPLICABLE — not a spoken attempt.
+Required response for Stories 3.1 (Yesterday):
+- START Pattern Challenge 1 — Tell ข้อที่ 1 IMMEDIATELY.
+- Cue them to say: "I ate breakfast this morning." (expectedSpeech exactly that).
+- expectsUserSpeech = true. Omit emojiSpeak and emojiSpeakSet.
+- FORBIDDEN: repeating the Intro "ทายคำศัพท์" listen turn; returning emojiSpeakSet; another listen-only warm-up; praising a button.
+- START with the speaking cue only — no praise opener.`;
     }
 
     // Match the repaired text and the raw STT shown in the app — either counts.
@@ -1823,6 +1843,7 @@ Tap-to-continue (this lesson only):
 - expectedSpeech: if you ask them to say a specific word, short phrase, or scripted pattern sentence, set expectedSpeech to that exact English target (e.g. "latte", "boarding pass", "Go straight.", "I'm looking for pants."). If you ask for open free recall, or listen-only, set expectedSpeech to "".
 - NEVER mention the button in textEn or textTh. Do not write "Tap Continue", "แตะเพื่อไปต่อ", "press the button", or any variation. Do not ask them to say "Ready" or "OK" either. A listen-only turn simply ends after its content — that is allowed, and the button is the learner's next action.
 - A learner message of "${TAP_TO_CONTINUE_TURN_TEXT}" is a button press, not speech. Never praise, evaluate, or repeat it — just move straight to the next step.
+- A learner message of "${EMOJI_SPEAK_COMPLETE_TURN_TEXT}" means the app finished the local Emoji Speak batch. Go straight to Pattern Challenge 1 (speak). FORBIDDEN: re-opening Intro / emojiSpeakSet.
 - On the final turn (isLessonComplete true), set expectsUserSpeech false.
 
 Scene / Watch & Listen (when the Core Flow calls for a short model dialogue):
