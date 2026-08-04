@@ -4469,9 +4469,12 @@ Turn loop rules:
       'am',
       'is',
       'are',
-      "I'm looking for a shirt.",
+      'I'm looking for a shirt.',
       "I'm checking in.",
       "I'm taking the train.",
+      'How much',
+      'What',
+      'Where',
       'How much is this?',
       'What do you recommend?',
       'Where is the station?',
@@ -4508,7 +4511,7 @@ Voice UX rules:
 - Soft-accept natural equivalents as FULLY correct — praise first (rotate: เยี่ยม / ดีมาก / เก่งมาก / เป๊ะเลย / ใช่เลย / แจ๋วเลย / ลื่นมาก ฯลฯ), do NOT open with "ไม่เป็นไรครับ" when meaning is already right.
 
 Core Flow (ONE-WAY — never go backward):
-Rhythm: Celebrate → Present Continuous reveal → Quiz×3 → Questions reveal → Quiz×4 → Imperatives reveal → Quiz×2 → Possessives reveal → Quiz×2 → Chapter Complete.
+Rhythm: Celebrate → Present Continuous reveal → Quiz×3 → Question words (How much / What / Where) → Quiz×4 full questions → Imperatives reveal → Quiz×2 → Possessives reveal → Quiz×2 → Chapter Complete.
 
 Node 1 — Celebrate (listen-only) — OPENING TURN
 1. Celebratory Around Town chapter-complete vibe in {{L1}} (use first name once). Stay close to:
@@ -4538,20 +4541,19 @@ Node 3 — Mini Challenge: Present Continuous (3 speaking turns)
    FORBIDDEN: blank frames, listing am/is/are as quiz options on the first ask.
    After 3c: praise ONLY on that speaking turn (short). Do NOT start Questions tip yet — Node 4 is the NEXT listen-only turn.
 
-Node 4 — Useful Questions (listen-only) — NEW TURN after 3c — show English + Thai (translate-ready)
-4. Bridge FIRST in {{L1}}, then model the four questions (SEPARATE lines — never one paragraph):
+Node 4 — Useful Questions (listen-only) — NEW TURN after 3c — question words only
+4. Bridge FIRST in {{L1}}, then reveal ONLY these question words (SEPARATE lines — never one paragraph):
    Stay close to opening: "เยี่ยมเลยครับ! ต่อไปเราจะมาดูคำถามที่ใช้บ่อยในเมืองกันนะครับ"
-   Then one per line (English, then short Thai in parentheses OK):
-   How much is this? (ราคาเท่าไหร่?)
-   What do you recommend? (แนะนำเมนูหน่อยได้ไหม?)
-   Where is the station? (สถานีอยู่ที่ไหน?)
-   What's wrong? (เป็นอะไร?)
-   Then: "คำถามพวกนี้ใช้ถามราคา ขอคำแนะนำ ถามทาง และถามอาการได้เลยครับ"
-   FORBIDDEN: jumping from Present Continuous quiz praise straight into the list with no Thai bridge; Can I...? focus; starting the quiz on this turn.
+   Then one per line:
+   How much (เท่าไหร่)
+   What (อะไร)
+   Where (ที่ไหน)
+   Then: "จำสามคำนี้ไว้ก่อน เดี๋ยวเราจะลองใช้ในประโยคเต็มกันครับ"
+   FORBIDDEN: modeling full sentences on this turn (do NOT say How much is this? / What do you recommend? / Where is the station? / What's wrong? yet); Can I...? focus; starting the quiz on this turn; adding What's as a fourth word line.
    No speaking task. expectsUserSpeech = false.
 
 Node 5 — Mini Challenge: Questions Thai → English (4 speaking turns) — ONLY AFTER Node 4
-5. Do NOT show the English answer first. Soft-accept close variants.
+5. Now use FULL question sentences. Do NOT show the English answer first. Soft-accept close variants.
 5a. "ถ้าจะพูดว่า 'ราคาเท่าไหร่?' จะพูดอย่างไรครับ?" Expected: "How much is this?"
 5b. After praise: "ถ้าจะพูดว่า 'แนะนำเมนูหน่อยได้ไหม?' จะพูดอย่างไรครับ?" Expected: "What do you recommend?"
 5c. After praise: "ถ้าจะพูดว่า 'สถานีอยู่ที่ไหน?' จะพูดอย่างไรครับ?" Expected: "Where is the station?"
@@ -4583,19 +4585,19 @@ Node 7 — Mini Challenge: Directions (2 speaking turns) — ONLY AFTER Node 6
    After 7b: praise ONLY — Node 8 is the NEXT listen-only turn.
 
 Node 8 — Grammar Revealed: Possessives (listen-only) — NEW TURN after 7b
-8. Bridge FIRST, then reveal my / your / his / her with short examples (SEPARATE lines — never one paragraph):
+8. Bridge FIRST, then reveal my / your / his / her with Thai in parentheses (SEPARATE lines — never one paragraph):
    Stay close to opening: "ดีมากครับ! ต่อไปเราจะมาพูดถึง Possessives กันนะครับ"
-   Then:
-   my = ของฉัน
-   your = ของคุณ
-   his = ของเขา (ผู้ชาย)
-   her = ของเธอ (ผู้หญิง)
+   Then ONE per line — use parentheses, NEVER "=" mappings:
+   my (ของฉัน)
+   your (ของคุณ)
+   his (ของเขา)
+   her (ของเธอ)
    Then model (one per line):
    My bag.
    His passport.
    Her room.
    Optional closer: "คำพวกนี้บอกว่าของใครครับ"
-   FORBIDDEN: jumping from directions quiz praise into possessives with no Thai bridge; starting the quiz on this turn.
+   FORBIDDEN: writing "my = ของฉัน" / "your = ของคุณ" style; jumping from directions quiz praise into possessives with no Thai bridge; starting the quiz on this turn.
    No speaking task. expectsUserSpeech = false.
 
 Node 9 — Mini Challenge: Possessives (2 speaking turns) — ONLY AFTER Node 8
@@ -4623,7 +4625,7 @@ Turn loop rules (critical):
 - Accept near-miss STT when meaning is clear (e.g. "go strait" → Go straight, "how much is this" → How much is this?, "his pass port" → His passport).
 - When Core Flow reaches Node 10, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the Everyday Life Chapter 2 Review (Around Town complete) for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. CRITICAL: Turn 1 = Celebrate ONLY (Around Town จบแล้ว / can communicate outside / shop, coffee, directions, hotel, help / Grammar without memorizing) — expectsUserSpeech false, NO quiz yet, do NOT mention any button. Then follow Core Flow one-way: Node 2 Present Continuous (I\'m looking for / I\'m checking in / I\'m taking the train) → Node 3 quiz×3 → Node 4 Questions reveal (NEW listen-only; How much is this? / What do you recommend? / Where is the station? / What\'s wrong? — NOT Can I...?) → Node 5 Questions quiz×4 Thai→English → Node 6 Imperatives teach FIRST → Node 7 directions quiz×2 → Node 8 Possessives (my/your/his/her + My bag / His passport / Her room) → Node 9 Possessives quiz×2 → Node 10 Chapter Complete (สรุป + พร้อมปลดล็อก Chapter ถัดไป, isLessonComplete true). Return JSON matching the schema. isLessonComplete must be false and expectsUserSpeech must be false on Turn 1.',
+      'Start the Everyday Life Chapter 2 Review (Around Town complete) for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. CRITICAL: Turn 1 = Celebrate ONLY (Around Town จบแล้ว / can communicate outside / shop, coffee, directions, hotel, help / Grammar without memorizing) — expectsUserSpeech false, NO quiz yet, do NOT mention any button. Then follow Core Flow one-way: Node 2 Present Continuous (I\'m looking for / I\'m checking in / I\'m taking the train) → Node 3 quiz×3 → Node 4 Questions reveal (NEW listen-only; ONLY question words How much / What / Where with Thai — NOT full sentences yet, NOT Can I...?) → Node 5 Questions quiz×4 Thai→English full sentences (How much is this? / What do you recommend? / Where is the station? / What\'s wrong?) → Node 6 Imperatives teach FIRST → Node 7 directions quiz×2 → Node 8 Possessives (my (ของฉัน) / your / his / her — parentheses NOT equals; + My bag / His passport / Her room) → Node 9 Possessives quiz×2 → Node 10 Chapter Complete (สรุป + พร้อมปลดล็อก Chapter ถัดไป, isLessonComplete true). Return JSON matching the schema. isLessonComplete must be false and expectsUserSpeech must be false on Turn 1.',
   },
   buildPronunciationLesson({
     lessonId: 'pron_th_1',
