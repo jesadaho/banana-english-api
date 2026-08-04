@@ -544,6 +544,20 @@ interface StoriesPatternLessonSpec {
   ];
   /** Tell section goal line. Default: Past Simple statements. */
   tellGoal?: string;
+  /** Optional full voice cues (override default 「บอกเพื่อนต่างชาติ…」 templates). */
+  tell1CueTh?: string;
+  tell2CueTh?: string;
+  tell3CueTh?: string;
+  tell2PraiseTh?: string;
+  ask1CueTh?: string;
+  ask1PraiseTh?: string;
+  ask2PraiseTh?: string;
+  /**
+   * Optional listen-only Answer bridge (Teacher B). When set, Answer questions
+   * are spoken in role (e.g. พนักงาน) AFTER this turn — not mashed with the bridge.
+   */
+  answerBridgeTh?: string;
+  answer1PraiseTh?: string;
   tell1Thai: string;
   tell1En: string;
   tipTh: string;
@@ -590,6 +604,60 @@ function buildStoriesPatternLesson(spec: StoriesPatternLessonSpec): LessonConfig
   const tease = spec.nextLessonHint
     ? ` Softly tease next: ${spec.nextLessonHint}.`
     : '';
+  const tell1Cue =
+    spec.tell1CueTh ??
+    `ถ้าจะบอกเพื่อนต่างชาติว่า '${spec.tell1Thai}' จะพูดอย่างไรครับ?`;
+  const tell2Cue =
+    spec.tell2CueTh ??
+    `คราวนี้ลองเปลี่ยนเป็น '${spec.tell2Thai}' ดูครับ พูดว่าไงดี?`;
+  const tell3Cue =
+    spec.tell3CueTh ?? `สลับบ้าง... '${spec.tell3Thai}' พูดว่าไงดี?`;
+  const tell2Praise = spec.tell2PraiseTh ?? 'โอเคเลย! เข้าใจง่ายสุดๆ';
+  const ask1Cue =
+    spec.ask1CueTh ??
+    `คราวนี้ลองถามดูครับ ให้พูด "${spec.ask1En}"`;
+  const ask1Praise = spec.ask1PraiseTh ?? 'เป๊ะเลยครับ!';
+  const ask2Praise = spec.ask2PraiseTh ?? 'ดีมากครับ!';
+  const answer1Praise = spec.answer1PraiseTh ?? 'ดีมากครับ!';
+  const answerSection = spec.answerBridgeTh
+    ? `5. Pattern Challenge — Answer (EXACTLY 2 learner speaks) — difficulty ⭐⭐⭐⭐
+   Goal: role-play — Teacher briefly switches into NPC/staff voice; learner answers. EXACTLY 2 different questions — never re-ask a clear reply.
+   LANGUAGE on ask turns: ENGLISH question in textEn; textTh = full Thai translation (subtitle toggle).
+
+   OPENING (listen-only, expectsUserSpeech=false) — AFTER Ask #2 praise handoff, BEFORE any Answer ask:
+   - Teacher B in {{L1}} ONLY, close to: "${spec.answerBridgeTh}"
+   - NO English question on this turn. NO mic yet.
+   - User taps Continue → then Answer ask #1 as staff/NPC.
+
+   a) Answer #1 — staff/NPC voice asks ONLY: "${spec.answer1En}" (expectsUserSpeech=true). expectedSpeech="". Soft-accept clear short answers (e.g. I'd like chicken. / Yes, I'd like rice.).
+      After clear answer → NEXT turn: brief Teacher praise "${answer1Praise}" THEN staff asks "${spec.answer2En}" (can be same turn: short praise + next English ask).
+      FORBIDDEN: re-asking "${spec.answer1En}"; long coaching before the ask; wordy "ครูจะถามว่า…".
+   b) Answer #2 — staff/NPC asks ONLY: "${spec.answer2En}". expectedSpeech="". Soft-accept (Water, please. / I'd like water.).
+      After clear answer → Celebrate immediately. DO NOT re-ask. DO NOT ask a 3rd question.
+   HARD: each Answer question once after a clear reply. Soft-accept = done → advance.
+   FORBIDDEN: asking the learner to ask; more than 2 Answer speaks; going back to Tell/Ask. Omit emojiSpeak. Omit scene.
+   After Answer → Celebrate.`
+    : `5. Pattern Challenge — Answer (EXACTLY 2 learner speaks) — difficulty ⭐⭐⭐⭐
+   Goal: AI asks; learner answers. EXACTLY 2 different questions — never re-ask a question they already answered clearly.
+   LANGUAGE: ask in ENGLISH in textEn; textTh = full Thai translation (subtitle toggle).
+   OPENING (first Answer turn only): ONE short bridge in {{L1}} then ask immediately —
+     "คราวนี้ผมจะถามคุณบ้างนะครับ 😊" + English question "${spec.answer1En}"
+     FORBIDDEN wordy intros: "คราวนี้มาลองตอบคำถาม…" / "ครูจะถามว่า…" / "[name] ลองตอบดูนะครับ" / explaining what you're about to ask before asking.
+   a) First ask: short bridge + "${spec.answer1En}" → learner answers freely (short OK). expectedSpeech="". Soft-accept clear short answers.
+      After clear answer → NEXT turn: brief praise in {{L1}} (1 short beat) + ask "${spec.answer2En}" immediately.
+      Example OK: "ดีมากครับ! Did you have fun?"
+      FORBIDDEN: long praise quoting their answer + "คราวนี้ครูจะถามอีก…" + "[name] ลองตอบ"; re-asking "${spec.answer1En}".
+   b) Second ask: "${spec.answer2En}" only → learner answers. expectedSpeech="". Soft-accept clear short yes/no or practiced lines.
+      After clear answer → Celebrate immediately (listen-only). DO NOT ask "${spec.answer2En}" again. DO NOT ask a 3rd question.
+   HARD: each Answer question is asked ONCE after a clear reply. Soft-accept / clear reply = count as done → advance.
+   FORBIDDEN: asking the learner to ask; more than 2 Answer speaks; re-asking the same Answer question; going back to Tell/Ask. Omit emojiSpeak. Omit scene.
+   After Answer → Celebrate.`;
+  const ask2Handoff = spec.answerBridgeTh
+    ? `NEXT turn = Answer bridge listen-only ONLY close to "${spec.answerBridgeTh}" (expectsUserSpeech=false) — do NOT add a separate praise beat; do NOT ask Answer #1 yet`
+    : `brief praise "${ask2Praise}" + start Pattern Challenge — Answer with short bridge "คราวนี้ผมจะถามคุณบ้างนะครับ 😊" then ask immediately (never re-answer; never wordy "ครูจะถามว่า…ลองตอบ")`;
+  const openingAnswerBit = spec.answerBridgeTh
+    ? `→ Answer: listen-only bridge "${spec.answerBridgeTh}" → staff asks "${spec.answer1En}" then "${spec.answer2En}" (never re-ask; after #2 → Celebrate)`
+    : `→ Answer (learner speaks exactly 2: AI asks "${spec.answer1En}" then "${spec.answer2En}" — never re-ask a clear reply; after #2 → Celebrate)`;
 
   STORIES_PATTERN_EMOJI_SETS[spec.lessonId] = spec.emojiWords.map((w, i) => ({
     emoji: w.emoji,
@@ -651,19 +719,19 @@ ${emojiList}
 3. Pattern Challenge 1 — Tell / ประโยคบอกเล่า (EXACTLY 3 learner speaks) — difficulty ⭐⭐
    Goal: ${tellGoal}. Omit emojiSpeak. Omit scene.
    ข้อที่ 1 (REPEAT):
-   - Cue in {{L1}}: "ถ้าจะบอกเพื่อนต่างชาติว่า '${spec.tell1Thai}' จะพูดอย่างไรครับ?"
-   - You MAY briefly model "${spec.tell1En}" then ask them to repeat — OR cue Thai and have them produce it.
+   - Cue in {{L1}} close to: "${tell1Cue}"
+   - You MAY briefly model "${spec.tell1En}" then ask them to speak — keep restaurant/staff context if the cue uses พนักงาน.
    - expectedSpeech="${spec.tell1En}"
    - FORBIDDEN: ending this turn as explain-only / STALL — must ask the learner to speak (expectsUserSpeech=true).
    - After clear answer: praise + tip in {{L1}} on a SEPARATE listen-only turn (expectsUserSpeech=false): "${spec.tipTh}"
    - FORBIDDEN: combining this tip with ข้อที่ 2 on the same turn — tip turn first, then ข้อที่ 2 on the NEXT turn.
    ข้อที่ 2 (SUBSTITUTE):
-   - Cue in {{L1}} ONLY — ask how they'd say it, e.g. "คราวนี้ลองเปลี่ยนเป็น '${spec.tell2Thai}' ดูครับ พูดว่าไงดี?"
+   - Cue in {{L1}} ONLY close to: "${tell2Cue}"
    - expectedSpeech="${spec.tell2En}" (for STT match ONLY — never speak/show this English in the tutor message)
    - FORBIDDEN: revealing the English answer / modeling the full sentence before the learner speaks.
-   - After clear answer: "โอเคเลย! เข้าใจง่ายสุดๆ" → ข้อที่ 3.
+   - After clear answer: "${tell2Praise}" → ข้อที่ 3.
    ข้อที่ 3:
-   - Cue in {{L1}} ONLY — ask how they'd say it: "สลับบ้าง... '${spec.tell3Thai}' พูดว่าไงดี?"
+   - Cue in {{L1}} ONLY close to: "${tell3Cue}"
    - expectedSpeech="${spec.tell3En}" (for STT match ONLY — never speak/show this English in the tutor message)
    - Soft-accept close variants; soft-teach once if needed then advance.
    - FORBIDDEN: revealing the English answer before the learner speaks.
@@ -684,12 +752,12 @@ ${emojiList}
         FORBIDDEN on turn ③: repeating/re-answering; echoing the learner's question in textEn/textTh; saying the previous AI answer again; any second answer beat. Leave textEn empty or short praise only — never paste the prior question/answer.
 
    Speak #1 (guided):
-   - Cue in {{L1}} with English guide: ให้พูด "${spec.ask1En}"
+   - Cue in {{L1}} close to: "${ask1Cue}"
    - expectedSpeech="${spec.ask1En}"
    - Soft-accept close variants: ก็ใช้ได้ + เฉลย canonical "${spec.ask1En}" → advance — DO NOT ask them to repeat. Still counts as speak #1 → go to ②.
    - Exact match: go straight to ② (praise can wait until step ③).
    - ② AI answer ONLY e.g. "${spec.ask1AiAnswerEn}"
-   - ③ after Continue: brief praise + cue Speak #2 ONLY (never re-answer).
+   - ③ after Continue: brief praise "${ask1Praise}" + cue Speak #2 ONLY (never re-answer).
 
    Speak #2 (NO guide — learner thinks themselves):
    - Cue in {{L1}} ONLY e.g. "${spec.ask2ThaiCue}"
@@ -697,27 +765,13 @@ ${emojiList}
    - FORBIDDEN: showing/saying the English question "${spec.ask2En}" before they speak.
    - Soft-accept close variants: ก็ใช้ได้ + เฉลย canonical once → advance to ②. DO NOT ask them to speak again.
    - ② AI answer ONLY: "${spec.ask2AiAnswerEn}" (listen-only)
-   - ③ after Continue: brief praise + start Pattern Challenge — Answer with short bridge "คราวนี้ผมจะถามคุณบ้างนะครับ 😊" then ask immediately (never re-answer; never wordy "ครูจะถามว่า…ลองตอบ").
+   - ③ after Continue: ${ask2Handoff}.
 
    HARD STOP after speak #2 (+ its answer + praise handoff). Never a 3rd learner ask.
    Soft-accept rule (Ask): acceptable near-miss → เฉลย + go forward. Never "ลองพูดอีกครั้ง" / never burn an extra mic turn.
    FORBIDDEN: answering for the learner; skipping either ask; mashing AI answer + praise + next cue into one turn; replaying the AI answer on the Continue/praise turn.
 
-5. Pattern Challenge — Answer (EXACTLY 2 learner speaks) — difficulty ⭐⭐⭐⭐
-   Goal: AI asks; learner answers. EXACTLY 2 different questions — never re-ask a question they already answered clearly.
-   LANGUAGE: ask in ENGLISH in textEn; textTh = full Thai translation (subtitle toggle).
-   OPENING (first Answer turn only): ONE short bridge in {{L1}} then ask immediately —
-     "คราวนี้ผมจะถามคุณบ้างนะครับ 😊" + English question "${spec.answer1En}"
-     FORBIDDEN wordy intros: "คราวนี้มาลองตอบคำถาม…" / "ครูจะถามว่า…" / "[name] ลองตอบดูนะครับ" / explaining what you're about to ask before asking.
-   a) First ask: short bridge + "${spec.answer1En}" → learner answers freely (short OK). expectedSpeech="". Soft-accept clear short answers.
-      After clear answer → NEXT turn: brief praise in {{L1}} (1 short beat) + ask "${spec.answer2En}" immediately.
-      Example OK: "ดีมากครับ! Did you have fun?"
-      FORBIDDEN: long praise quoting their answer + "คราวนี้ครูจะถามอีก…" + "[name] ลองตอบ"; re-asking "${spec.answer1En}".
-   b) Second ask: "${spec.answer2En}" only → learner answers. expectedSpeech="". Soft-accept clear short yes/no or practiced lines.
-      After clear answer → Celebrate immediately (listen-only). DO NOT ask "${spec.answer2En}" again. DO NOT ask a 3rd question.
-   HARD: each Answer question is asked ONCE after a clear reply. Soft-accept / clear reply = count as done → advance.
-   FORBIDDEN: asking the learner to ask; more than 2 Answer speaks; re-asking the same Answer question; going back to Tell/Ask. Omit emojiSpeak. Omit scene.
-   After Answer → Celebrate.
+${answerSection}
 
 6. Celebrate (listen-only)
    - Warm {{L1}} Teacher B voice. Praise that they can tell / ask / answer about ${spec.titleEn.toLowerCase()}.
@@ -736,7 +790,7 @@ Turn loop rules:
 - Max ONE retry per item; then accept and advance.
 - Soft-accept close variants when meaning is clear: say ก็ใช้ได้ + show the canonical English once (เฉลย) → advance. DO NOT make the learner repeat the same item.
 - When Celebrate is reached, isLessonComplete must be true.`,
-    openingPrompt: `Start the ${spec.titleEn} ${track} lesson (${spec.code}) for this one learner only. Speak as a private 1:1 tutor (never {{NO_GROUP}}). Use their first name once. CRITICAL Turn 1 = Hook ONLY — "${spec.hookTh}" — expectsUserSpeech false, expectedSpeech "", NO emojiSpeak, NO emojiSpeakSet, NO scene. Do NOT mention any button. Then ONE Intro listen turn with emojiSpeakSet of ALL 4 puzzles (${emojiOpening} — each with hint/index/total:4); expectsUserSpeech false. App runs the 4 locally. After "(finished Emoji Speak — start Pattern Challenge 1)": Pattern Challenge 1 Tell EXACTLY 3 speaks (${spec.tell1En} → SEPARATE listen-only tip → NEXT ${spec.tell2En} → ${spec.tell3En}) → Ask = learner mic exactly 2 times (speak#1 guided "${spec.ask1En}"; speak#2 NO English guide — Thai cue only). After EACH ask: AI answer-only listen turn → Continue → praise + next cue ONLY (FORBIDDEN: re-answer / echo prior AI reply / echo the question as main content). Never mash answer+praise+next. Never 3rd ask. → Answer (learner speaks exactly 2: AI asks "${spec.answer1En}" then "${spec.answer2En}" — never re-ask a clear reply; after #2 → Celebrate) → Celebrate (complete). Never emit per-word emojiSpeak turns. Never re-open Intro after Emoji Speak. Never go backward. Return JSON matching the schema. isLessonComplete must be false.`,
+    openingPrompt: `Start the ${spec.titleEn} ${track} lesson (${spec.code}) for this one learner only. Speak as a private 1:1 tutor (never {{NO_GROUP}}). Use their first name once. CRITICAL Turn 1 = Hook ONLY — "${spec.hookTh}" — expectsUserSpeech false, expectedSpeech "", NO emojiSpeak, NO emojiSpeakSet, NO scene. Do NOT mention any button. Then ONE Intro listen turn with emojiSpeakSet of ALL 4 puzzles (${emojiOpening} — each with hint/index/total:4); expectsUserSpeech false. App runs the 4 locally. After "(finished Emoji Speak — start Pattern Challenge 1)": Pattern Challenge 1 Tell EXACTLY 3 speaks (${spec.tell1En} → SEPARATE listen-only tip → NEXT ${spec.tell2En} → ${spec.tell3En}) → Ask = learner mic exactly 2 times (speak#1 guided "${spec.ask1En}"; speak#2 NO English guide — Thai cue only). After EACH ask: AI answer-only listen turn → Continue → praise + next cue ONLY (FORBIDDEN: re-answer / echo prior AI reply / echo the question as main content). Never mash answer+praise+next. Never 3rd ask. ${openingAnswerBit} → Celebrate (complete). Never emit per-word emojiSpeak turns. Never re-open Intro after Emoji Speak. Never go backward. Return JSON matching the schema. isLessonComplete must be false.`,
   };
 }
 
@@ -4342,21 +4396,33 @@ Core Flow (progression milestones — NOT a fixed turn count):
       { emoji: '💵', answer: 'cash', hint: 'c _ s h' },
     ],
     tellGoal: 'build shopping statements (Present Continuous / useful lines)',
+    tell1CueTh:
+      "ถ้าจะบอกพนักงานว่า กำลังหาเสื้อเชิ้ต ให้พูดว่า... I'm looking for a shirt. ... ลองพูดดูครับ",
     tell1Thai: 'ฉันกำลังหาเสื้อเชิ้ต',
     tell1En: "I'm looking for a shirt.",
     tipTh:
-      'เยี่ยมเลยครับ! เห็นไหมครับ เวลาพูดถึงสิ่งที่กำลังทำอยู่ ใช้ am/is/are + verb-ing เช่น I\'m looking for a shirt.',
+      "เยี่ยมเลยครับ! เวลาพูดถึงสิ่งที่กำลังทำอยู่ ใช้ am/is/are + verb-ing เช่น I'm looking for a shirt.",
+    tell2CueTh:
+      'คราวนี้ถ้าจะเปลี่ยนเป็น กำลังหากางเกง... ลองพูดว่าไงดีครับ?',
     tell2Thai: 'ฉันกำลังหากางเกง',
     tell2En: "I'm looking for pants.",
-    tell3Thai: 'อันนี้ราคาเท่าไหร่',
-    tell3En: 'How much is this?',
-    tell3PraiseTh: 'เป๊ะ! How much is this? ใช้ถามราคาได้เลยครับ',
+    tell2PraiseTh: 'โอเคเลย! เข้าใจง่ายสุดๆ',
+    tell3CueTh: 'ถ้าจะบอกว่า เอาอันนี้... ลองพูดสิครับ',
+    tell3Thai: 'เอาอันนี้',
+    tell3En: "I'd like this one.",
+    tell3PraiseTh: "เป๊ะ! I'd like this one. ใช้เลือกของได้เลยครับ",
+    ask1CueTh:
+      'คราวนี้ลองถามพนักงานเรื่องราคา... โดยพูดว่า How much is this? ... ลองเลยครับ',
     ask1En: 'How much is this?',
     ask1AiAnswerEn: "It's $20.",
+    ask1PraiseTh: 'เป๊ะเลยครับ!',
     ask2ThaiCue: 'คราวนี้ลองถามเองดูครับ ว่ามีไซส์ไหม พูดว่าไงดี?',
     ask2En: 'Do you have this in medium?',
     ask2AiAnswerEn: 'Yes, we do.',
+    ask2PraiseTh: 'ดีมากครับ!',
+    answerBridgeTh: 'ดีมากครับ! ต่อไปสมมุติว่าผมเป็นพนักงานนะครับ...',
     answer1En: 'Can I help you?',
+    answer1PraiseTh: 'ดีมากครับ!',
     answer2En: 'What size?',
     nextLessonHint: 'Restaurant / ร้านอาหาร',
   }),
@@ -4377,21 +4443,33 @@ Core Flow (progression milestones — NOT a fixed turn count):
       { emoji: '🧾', answer: 'bill', hint: 'b _ l l' },
     ],
     tellGoal: 'build restaurant order lines',
+    tell1CueTh:
+      "ถ้าจะบอกพนักงานว่า ขอไก่หน่อยครับ ให้พูดว่า... I'd like chicken. ... ลองพูดดูครับ",
     tell1Thai: 'ขอไก่หน่อย',
     tell1En: "I'd like chicken.",
     tipTh:
-      'เยี่ยมเลยครับ! I\'d like... ใช้สั่งของสุภาพๆ ได้เลย เช่น I\'d like chicken.',
+      "เยี่ยมเลยครับ! ประโยค I'd like... เอาไว้ใช้สั่งอาหารแบบสุภาพได้เลยครับ",
+    tell2CueTh:
+      'คราวนี้ถ้าจะเปลี่ยนเป็น ขอข้าวหน่อย... ลองพูดว่าไงดีครับ?',
     tell2Thai: 'ขอข้าวหน่อย',
     tell2En: "I'd like rice.",
+    tell2PraiseTh: 'โอเคเลย! เข้าใจง่ายสุดๆ',
+    tell3CueTh: 'ถ้าจะสั่งรวดเดียว ขอไก่กับน้ำ... ลองพูดสิครับ',
     tell3Thai: 'ขอไก่กับน้ำ',
     tell3En: "I'd like chicken and water.",
-    tell3PraiseTh: 'เป๊ะเวอร์! สั่งครบเป็นประโยคเดียวได้เลยครับ',
+    tell3PraiseTh: 'เป๊ะเวอร์! สั่งครบในประโยคเดียวได้เลยครับ',
+    ask1CueTh:
+      'คราวนี้ลองถามพนักงานว่า มีเมนูแนะนำไหม... โดยพูดว่า What do you recommend? ... ลองเลยครับ',
     ask1En: 'What do you recommend?',
     ask1AiAnswerEn: 'I recommend the chicken.',
-    ask2ThaiCue: 'คราวนี้ลองถามเองดูครับ เรื่องเครื่องดื่ม พูดว่าไงดี?',
+    ask1PraiseTh: 'เป๊ะเลยครับ!',
+    ask2ThaiCue: 'คราวนี้ลองถามขอรับน้ำเปล่าเพิ่มดูครับ... พูดว่าไงดี?',
     ask2En: 'Can I get some water?',
-    ask2AiAnswerEn: 'Sure! Water coming up.',
+    ask2AiAnswerEn: 'Sure! Water coming right up.',
+    ask2PraiseTh: 'ดีมากครับ!',
+    answerBridgeTh: 'ดีมากครับ! ต่อไปสมมุติว่าผมเป็นพนักงานนะครับ...',
     answer1En: 'Are you ready to order?',
+    answer1PraiseTh: 'ดีมากครับ!',
     answer2En: 'Anything to drink?',
     nextLessonHint: 'Coffee Shop / ร้านกาแฟ',
   }),
@@ -4412,21 +4490,32 @@ Core Flow (progression milestones — NOT a fixed turn count):
       { emoji: '🔥', answer: 'hot', hint: 'h _ t' },
     ],
     tellGoal: 'build cafe order lines',
+    tell1CueTh:
+      "ถ้าจะบอกบาริสต้าว่า ขอลาเต้ได้ไหม ให้พูดว่า... Can I get a latte? ... ลองพูดดูครับ",
     tell1Thai: 'ขอลาเต้ได้ไหม',
     tell1En: 'Can I get a latte?',
     tipTh:
-      'เยี่ยมเลยครับ! Can I get...? ใช้สั่งของสุภาพๆ ได้ เช่น Can I get a latte?',
+      'เยี่ยมเลยครับ! Can I get...? ใช้สั่งของสุภาพๆ ที่ร้านกาแฟได้เลยครับ',
+    tell2CueTh: 'คราวนี้ถ้าจะเปลี่ยนเป็น ขอชาได้ไหม... ลองพูดว่าไงดีครับ?',
     tell2Thai: 'ขอชาได้ไหม',
     tell2En: 'Can I get a tea?',
+    tell2PraiseTh: 'โอเคเลย! เข้าใจง่ายสุดๆ',
+    tell3CueTh: 'ถ้าจะสั่งลาเต้เย็น... ลองพูดสิครับ',
     tell3Thai: 'ขอลาเต้เย็น',
     tell3En: 'Can I get an iced latte?',
     tell3PraiseTh: 'เป๊ะ! iced latte ชัดเจนมากครับ',
+    ask1CueTh:
+      'คราวนี้ลองถามบาริสต้าเรื่องราคา... โดยพูดว่า How much is it? ... ลองเลยครับ',
     ask1En: 'How much is it?',
     ask1AiAnswerEn: "It's $5.",
+    ask1PraiseTh: 'เป๊ะเลยครับ!',
     ask2ThaiCue: 'คราวนี้ลองถามเองดูครับ ว่าร้อนหรือเย็น พูดว่าไงดี?',
     ask2En: 'Is it hot or iced?',
     ask2AiAnswerEn: 'You can choose hot or iced.',
+    ask2PraiseTh: 'ดีมากครับ!',
+    answerBridgeTh: 'ดีมากครับ! ต่อไปสมมุติว่าผมเป็นบาริสต้านะครับ...',
     answer1En: 'What can I get for you?',
+    answer1PraiseTh: 'ดีมากครับ!',
     answer2En: 'Hot or iced?',
     nextLessonHint: 'Explore the City / สำรวจเมือง',
   }),
@@ -4447,21 +4536,34 @@ Core Flow (progression milestones — NOT a fixed turn count):
       { emoji: '🗺️', answer: 'map', hint: 'm _ p' },
     ],
     tellGoal: 'build Present Continuous exploring lines',
+    tell1CueTh:
+      "ถ้าจะบอกเพื่อนว่า กำลังเที่ยวในเมือง ให้พูดว่า... I'm exploring the city. ... ลองพูดดูครับ",
     tell1Thai: 'ฉันกำลังเที่ยวในเมือง',
     tell1En: "I'm exploring the city.",
     tipTh:
-      'เยี่ยมเลยครับ! I\'m exploring... / I\'m looking for... ใช้ตอนกำลังทำอะไรอยู่ได้เลย',
+      "เยี่ยมเลยครับ! I'm exploring... / I'm looking for... ใช้ตอนกำลังทำอะไรอยู่ได้เลย",
+    tell2CueTh:
+      'คราวนี้ถ้าจะเปลี่ยนเป็น กำลังเที่ยวในสวน... ลองพูดว่าไงดีครับ?',
     tell2Thai: 'ฉันกำลังเที่ยวในสวน',
     tell2En: "I'm exploring the park.",
+    tell2PraiseTh: 'โอเคเลย! เข้าใจง่ายสุดๆ',
+    tell3CueTh: 'ถ้าจะบอกว่า กำลังหาพิพิธภัณฑ์... ลองพูดสิครับ',
     tell3Thai: 'ฉันกำลังหาพิพิธภัณฑ์',
     tell3En: "I'm looking for the museum.",
     tell3PraiseTh: 'เป๊ะ! looking for ใช้หาสถานที่ได้ดีมากครับ',
+    ask1CueTh:
+      'คราวนี้ลองถามคนท้องถิ่นว่า พิพิธภัณฑ์อยู่ไหน... โดยพูดว่า Where is the museum? ... ลองเลยครับ',
     ask1En: 'Where is the museum?',
     ask1AiAnswerEn: "It's over there.",
+    ask1PraiseTh: 'เป๊ะเลยครับ!',
     ask2ThaiCue: 'คราวนี้ลองถามเองดูครับ เรื่องสวนสาธารณะ พูดว่าไงดี?',
     ask2En: 'Where is the park?',
     ask2AiAnswerEn: 'Go straight. The park is near here.',
+    ask2PraiseTh: 'ดีมากครับ!',
+    answerBridgeTh:
+      'ดีมากครับ! ต่อไปสมมุติว่าผมเป็นเพื่อนที่เจอในเมืองนะครับ...',
     answer1En: 'What are you doing today?',
+    answer1PraiseTh: 'ดีมากครับ!',
     answer2En: 'What are you looking for?',
     nextLessonHint: 'Transportation / การเดินทาง',
   }),
@@ -4482,21 +4584,33 @@ Core Flow (progression milestones — NOT a fixed turn count):
       { emoji: '🚉', answer: 'station', hint: 's t _ t _ _ n' },
     ],
     tellGoal: 'build transport / destination lines',
+    tell1CueTh:
+      "ถ้าจะบอกพนักงานว่า จะไปกรุงเทพ ให้พูดว่า... I'm going to Bangkok. ... ลองพูดดูครับ",
     tell1Thai: 'ฉันจะไปกรุงเทพ',
     tell1En: "I'm going to Bangkok.",
     tipTh:
-      'เยี่ยมเลยครับ! I\'m going to... บอกจุดหมาย และ I\'m taking the train. บอกวิธีเดินทาง',
+      "เยี่ยมเลยครับ! I'm going to... บอกจุดหมาย และ I'm taking the train. บอกวิธีเดินทาง",
+    tell2CueTh:
+      'คราวนี้ถ้าจะเปลี่ยนเป็น จะไปเชียงใหม่... ลองพูดว่าไงดีครับ?',
     tell2Thai: 'ฉันจะไปเชียงใหม่',
     tell2En: "I'm going to Chiang Mai.",
+    tell2PraiseTh: 'โอเคเลย! เข้าใจง่ายสุดๆ',
+    tell3CueTh: 'ถ้าจะบอกว่า จะไปโดยรถไฟ... ลองพูดสิครับ',
     tell3Thai: 'ฉันจะไปโดยรถไฟ',
     tell3En: "I'm taking the train.",
     tell3PraiseTh: 'เป๊ะ! taking the train ชัดเจนครับ',
+    ask1CueTh:
+      'คราวนี้ลองถามว่า สถานีอยู่ไหน... โดยพูดว่า Where is the station? ... ลองเลยครับ',
     ask1En: 'Where is the station?',
     ask1AiAnswerEn: "It's over there.",
+    ask1PraiseTh: 'เป๊ะเลยครับ!',
     ask2ThaiCue: 'คราวนี้ลองถามเองดูครับ เรื่องตั๋ว พูดว่าไงดี?',
     ask2En: 'How much is a ticket?',
     ask2AiAnswerEn: "It's $10.",
+    ask2PraiseTh: 'ดีมากครับ!',
+    answerBridgeTh: 'ดีมากครับ! ต่อไปสมมุติว่าผมเป็นพนักงานขายตั๋วนะครับ...',
     answer1En: 'Where are you going?',
+    answer1PraiseTh: 'ดีมากครับ!',
     answer2En: 'One ticket?',
     nextLessonHint: 'Asking Directions / ถามทาง',
   }),
@@ -4517,22 +4631,35 @@ Core Flow (progression milestones — NOT a fixed turn count):
       { emoji: '📍', answer: 'near', hint: 'n _ _ r' },
     ],
     tellGoal: 'build direction questions and polite openers',
+    tell1CueTh:
+      'ถ้าจะถามคนเดินผ่านว่า สถานีอยู่ที่ไหน ให้พูดว่า... Where is the station? ... ลองพูดดูครับ',
     tell1Thai: 'สถานีอยู่ที่ไหน',
     tell1En: 'Where is the station?',
     tipTh:
       'เยี่ยมเลยครับ! Where is...? ใช้ถามทางได้ และขึ้นต้นด้วย Excuse me. จะสุภาพขึ้น',
+    tell2CueTh:
+      'คราวนี้ถ้าจะเปลี่ยนเป็น มุมถนนอยู่ที่ไหน... ลองพูดว่าไงดีครับ?',
     tell2Thai: 'มุมถนนอยู่ที่ไหน',
     tell2En: 'Where is the corner?',
+    tell2PraiseTh: 'โอเคเลย! เข้าใจง่ายสุดๆ',
+    tell3CueTh: 'ถ้าจะถามแบบสุภาพ ขอโทษครับ สถานีอยู่ที่ไหน... ลองพูดสิครับ',
     tell3Thai: 'ขอโทษครับ สถานีอยู่ที่ไหน',
     tell3En: 'Excuse me. Where is the station?',
     tell3PraiseTh: 'สุภาพมาก! Excuse me + Where is... เป๊ะครับ',
+    ask1CueTh:
+      'คราวนี้ลองถามทางอีกครั้ง... โดยพูดว่า Where is the station? ... ลองเลยครับ',
     ask1En: 'Where is the station?',
     ask1AiAnswerEn: 'Go straight and turn left.',
+    ask1PraiseTh: 'เป๊ะเลยครับ!',
     ask2ThaiCue: 'คราวนี้ลองถามเองดูครับ ว่าใกล้ไหม พูดว่าไงดี?',
     ask2En: 'Is it near here?',
     ask2AiAnswerEn: 'Yes, it is near here.',
+    ask2PraiseTh: 'ดีมากครับ!',
+    answerBridgeTh:
+      'ดีมากครับ! ต่อไปสมมุติว่าผมเป็นคนท้องถิ่นนะครับ...',
     answer1En: 'What are you looking for?',
-    answer2En: 'Go straight and turn left. Okay?',
+    answer1PraiseTh: 'ดีมากครับ!',
+    answer2En: 'Do you need help?',
     nextLessonHint: 'Hotel / โรงแรม',
   }),
   buildStoriesPatternLesson({
@@ -4552,21 +4679,33 @@ Core Flow (progression milestones — NOT a fixed turn count):
       { emoji: '🔑', answer: 'check-in', hint: 'c h _ c k - i n' },
     ],
     tellGoal: 'build hotel check-in lines',
+    tell1CueTh:
+      'ถ้าจะบอกพนักงานต้อนรับว่า จองห้องไว้ ให้พูดว่า... I have a reservation. ... ลองพูดดูครับ',
     tell1Thai: 'ฉันจองห้องไว้',
     tell1En: 'I have a reservation.',
     tipTh:
-      'เยี่ยมเลยครับ! I have a reservation. และ I\'d like to check in. ใช้ตอนเช็กอินได้เลย',
+      "เยี่ยมเลยครับ! I have a reservation. และ I'd like to check in. ใช้ตอนเช็กอินได้เลย",
+    tell2CueTh: 'คราวนี้ถ้าจะบอกว่า ขอเช็กอินครับ... ลองพูดว่าไงดีครับ?',
     tell2Thai: 'ขอเช็กอินครับ',
     tell2En: "I'd like to check in.",
+    tell2PraiseTh: 'โอเคเลย! เข้าใจง่ายสุดๆ',
+    tell3CueTh: 'ถ้าจะยื่นเอกสาร นี่พาสปอร์ตของฉัน... ลองพูดสิครับ',
     tell3Thai: 'นี่พาสปอร์ตของฉัน',
     tell3En: 'Here is my passport.',
     tell3PraiseTh: 'เป๊ะ! Here is my passport. ชัดเจนครับ',
+    ask1CueTh:
+      'คราวนี้ลองถามเรื่องอาหารเช้า... โดยพูดว่า What time is breakfast? ... ลองเลยครับ',
     ask1En: 'What time is breakfast?',
     ask1AiAnswerEn: 'Breakfast is from 7 to 10.',
+    ask1PraiseTh: 'เป๊ะเลยครับ!',
     ask2ThaiCue: 'คราวนี้ลองถามเองดูครับ เรื่องห้อง พูดว่าไงดี?',
     ask2En: 'Where is my room?',
     ask2AiAnswerEn: 'Your room is on the second floor.',
+    ask2PraiseTh: 'ดีมากครับ!',
+    answerBridgeTh:
+      'ดีมากครับ! ต่อไปสมมุติว่าผมเป็นพนักงานต้อนรับนะครับ...',
     answer1En: 'Welcome! How can I help you?',
+    answer1PraiseTh: 'ดีมากครับ!',
     answer2En: 'May I have your passport?',
     nextLessonHint: 'Airport / สนามบิน',
   }),
@@ -4587,21 +4726,34 @@ Core Flow (progression milestones — NOT a fixed turn count):
       { emoji: '🧳', answer: 'baggage', hint: 'b _ g g _ g e' },
     ],
     tellGoal: 'build airport check-in lines',
+    tell1CueTh:
+      "ถ้าจะบอกพนักงานว่า ขอเช็กอินครับ ให้พูดว่า... I'd like to check in. ... ลองพูดดูครับ",
     tell1Thai: 'ขอเช็กอินครับ',
     tell1En: "I'd like to check in.",
     tipTh:
-      'เยี่ยมเลยครับ! I\'d like to check in. ใช้ที่สนามบินได้เลย แล้วค่อยยื่น passport',
+      "เยี่ยมเลยครับ! I'd like to check in. ใช้ที่สนามบินได้เลย แล้วค่อยยื่น passport",
+    tell2CueTh:
+      'คราวนี้ถ้าจะบอกว่า ขอเช็กอินเที่ยวบินครับ... ลองพูดว่าไงดีครับ?',
     tell2Thai: 'ขอเช็กอินเที่ยวบินครับ',
     tell2En: "I'd like to check in for my flight.",
+    tell2PraiseTh: 'โอเคเลย! เข้าใจง่ายสุดๆ',
+    tell3CueTh: 'ถ้าจะยื่นเอกสาร นี่พาสปอร์ตของฉัน... ลองพูดสิครับ',
     tell3Thai: 'นี่พาสปอร์ตของฉัน',
     tell3En: 'Here is my passport.',
     tell3PraiseTh: 'เป๊ะ! Here is my passport. ใช้ได้ทันทีครับ',
+    ask1CueTh:
+      'คราวนี้ลองถามว่า ประตูขึ้นเครื่องอยู่ไหน... โดยพูดว่า Where is the gate? ... ลองเลยครับ',
     ask1En: 'Where is the gate?',
     ask1AiAnswerEn: 'Gate 12.',
+    ask1PraiseTh: 'เป๊ะเลยครับ!',
     ask2ThaiCue: 'คราวนี้ลองถามเองดูครับ เรื่องกระเป๋า พูดว่าไงดี?',
     ask2En: 'Where do I put my baggage?',
     ask2AiAnswerEn: 'Please put it here.',
+    ask2PraiseTh: 'ดีมากครับ!',
+    answerBridgeTh:
+      'ดีมากครับ! ต่อไปสมมุติว่าผมเป็นพนักงานเช็กอินนะครับ...',
     answer1En: 'Good morning. How can I help you?',
+    answer1PraiseTh: 'ดีมากครับ!',
     answer2En: 'May I see your passport?',
     nextLessonHint: 'Pharmacy / ร้านยา',
   }),
@@ -4622,21 +4774,32 @@ Core Flow (progression milestones — NOT a fixed turn count):
       { emoji: '🏪', answer: 'pharmacy', hint: 'p h _ r m _ c y' },
     ],
     tellGoal: 'build pharmacy symptom lines',
+    tell1CueTh:
+      'ถ้าจะบอกเภสัชกรว่า ปวดหัว ให้พูดว่า... I have a headache. ... ลองพูดดูครับ',
     tell1Thai: 'ฉันปวดหัว',
     tell1En: 'I have a headache.',
     tipTh:
-      'เยี่ยมเลยครับ! I have a headache. / I have a fever. ใช้บอกอาการได้เลย',
+      'เยี่ยมเลยครับ! I have a headache. / I have a fever. ใช้บอกอาการที่ร้านยาได้เลย',
+    tell2CueTh: 'คราวนี้ถ้าจะเปลี่ยนเป็น มีไข้... ลองพูดว่าไงดีครับ?',
     tell2Thai: 'ฉันมีไข้',
     tell2En: 'I have a fever.',
+    tell2PraiseTh: 'โอเคเลย! เข้าใจง่ายสุดๆ',
+    tell3CueTh: 'ถ้าจะบอกว่า รู้สึกไม่ค่อยสบาย... ลองพูดสิครับ',
     tell3Thai: 'ฉันรู้สึกไม่ค่อยสบาย',
     tell3En: "I'm not feeling well.",
     tell3PraiseTh: 'ชัดเจนมาก! not feeling well ใช้ได้ดีครับ',
+    ask1CueTh:
+      'คราวนี้ลองขอความช่วยเหลือ... โดยพูดว่า Can you help me? ... ลองเลยครับ',
     ask1En: 'Can you help me?',
-    ask1AiAnswerEn: 'Of course. What\'s wrong?',
+    ask1AiAnswerEn: "Of course. What's wrong?",
+    ask1PraiseTh: 'เป๊ะเลยครับ!',
     ask2ThaiCue: 'คราวนี้ลองถามเองดูครับ เรื่องยาแก้ปวดหัว พูดว่าไงดี?',
     ask2En: 'Do you have medicine for a headache?',
     ask2AiAnswerEn: 'Yes. Here is some medicine.',
+    ask2PraiseTh: 'ดีมากครับ!',
+    answerBridgeTh: 'ดีมากครับ! ต่อไปสมมุติว่าผมเป็นเภสัชกรนะครับ...',
     answer1En: 'How can I help you?',
+    answer1PraiseTh: 'ดีมากครับ!',
     answer2En: "What's wrong?",
     nextLessonHint: 'Lesson Summary / สรุปบทเรียน',
   }),
