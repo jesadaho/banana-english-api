@@ -1277,14 +1277,36 @@ export class GeminiChatService {
     'ยอดเยี่ยม',
     'เยี่ยมเลย',
     'เยี่ยมมาก',
+    'เกือบเป๊ะแล้ว',
+    'เกือบครบแล้ว',
+    'ใกล้เคียงแล้ว',
+    'เข้าใจได้เลย',
+    'ใช้ได้เลย',
+    'ผ่านไปได้เลย',
+    'เครื่องติดแล้ว',
+    'ไปได้สวยเลย',
+    'ตอบต่อเนื่องเลย',
+    'จังหวะกำลังดีเลย',
+    'คล่องขึ้นเรื่อย',
+    'รอบนี้เป๊ะติดกันเลย',
+    'ไปต่อแบบนี้เลย',
+    'จบบทนี้เรียบร้อย',
+    'ผ่านอีกหนึ่งบทแล้ว',
+    'เกือบเป๊ะ',
+    'ใกล้เคียง',
     'ทำได้ดี',
     'เก่งมาก',
     'เก่งจริง',
     'สุดยอด',
     'เป๊ะเลย',
     'ใช่เลย',
+    'ถูกต้อง',
     'แจ๋วเลย',
     'ลื่นมาก',
+    'ลื่นเลย',
+    'ก็ใช้ได้',
+    'ใกล้แล้ว',
+    'อีกนิดเดียว',
     'ดีมาก',
     'ดีเลย',
     'ดีจัง',
@@ -1310,34 +1332,106 @@ export class GeminiChatService {
     'good',
   ];
 
-  /** Rotate these short Thai praise lines — do not spam the same one. */
-  private static readonly THAI_PRAISE_VARIETY = [
+  /** Exact match / clear success — rotate; never spam the same line twice in a row. */
+  private static readonly THAI_SUCCESS_PRAISE = [
+    'ใช่เลยครับ!',
+    'ถูกต้องครับ!',
+    'เป๊ะเลยครับ!',
     'เยี่ยมเลยครับ!',
     'เยี่ยมมากครับ!',
-    'เยี่ยมครับ!',
     'ดีมากครับ!',
     'ดีเลยครับ!',
-    'ดีจังครับ!',
     'เก่งมากครับ!',
-    'เก่งจริงครับ!',
     'ทำได้ดีมากครับ!',
     'ยอดเยี่ยมครับ!',
-    'สุดยอดครับ!',
-    'เป๊ะเลยครับ!',
-    'ใช่เลยครับ!',
     'แจ๋วเลยครับ!',
-    'ลื่นมากครับ!',
+    'สุดยอดครับ!',
+  ];
+
+  /**
+   * Optional after Success (~30–50% of advances, or when changing section).
+   * Never alone — always after a Success line. Never after Soft Accept.
+   */
+  private static readonly THAI_TRANSITION_PRAISE = [
+    'ไปต่อกันเลยครับ!',
+    'อีกข้อหนึ่งนะครับ 😊',
+    'มาลองอีกข้อกันครับ!',
+    'คราวนี้ลองอีกแบบดูครับ!',
+    'ต่อกันเลยครับ!',
+    'ลองต่ออีกนิดครับ!',
+    'มาอีกข้อครับ!',
+    'พร้อมลุยข้อต่อไปไหมครับ?',
+  ];
+
+  /**
+   * Soft-accept near-miss — tone is "usable / close", not full celebration.
+   * Detail (e.g. eat → ate) belongs in UI / เฉลย, not in the spoken praise.
+   */
+  private static readonly THAI_SOFT_ACCEPT_PRAISE = [
+    'เกือบเป๊ะแล้วครับ!',
+    'ใกล้เคียงแล้วครับ!',
+    'ใช้ได้เลยครับ!',
+    'ก็ใช้ได้ครับ!',
+    'ผ่านไปได้เลยครับ!',
+    'อีกนิดเดียวครับ!',
+    'เกือบครบแล้วครับ!',
+    'เข้าใจได้เลยครับ!',
+    'ใกล้แล้วครับ!',
+    'ลองอีกนิดนะครับ!',
+  ];
+
+  /** 3+ clear successes in a row — use sparingly (not every streak turn). */
+  private static readonly THAI_STREAK_PRAISE = [
+    'เครื่องติดแล้วครับ! 🔥',
+    'ลื่นเลยครับ!',
+    'ไปได้สวยเลยครับ!',
+    'ตอบต่อเนื่องเลยนะครับ!',
+    'จังหวะกำลังดีเลยครับ!',
+    'คล่องขึ้นเรื่อย ๆ แล้วครับ!',
+    'รอบนี้เป๊ะติดกันเลย!',
+    'ไปต่อแบบนี้เลยครับ!',
+  ];
+
+  /** Lesson / chapter wrap — one short line; name at most once. */
+  private static readonly THAI_LESSON_COMPLETE_PRAISE = [
+    'เยี่ยมมากครับ! วันนี้คุณทำได้แล้ว 🎉',
+    'จบบทนี้เรียบร้อยครับ!',
+    'เก่งมากครับ! ไปอีกหนึ่งก้าวแล้ว',
+    'เยี่ยมเลยครับ! พร้อมบทต่อไปไหม?',
+    'สุดยอดครับ! วันนี้ฝึกได้ดีมาก',
+    'ผ่านอีกหนึ่งบทแล้วครับ 🍌',
   ];
 
   private thaiPraiseVarietyRule(): string {
-    const list = GeminiChatService.THAI_PRAISE_VARIETY.join(' / ');
-    return `Praise variety (Thai teaching mode):
-- On SUCCESS, open with ONE short Thai praise, then advance.
-- Rotate across this pool — do NOT reuse the same praise on consecutive successful turns:
-  ${list}
-- Pick a different line from the ones you used in the last 1–2 AI turns when possible.
-- FORBIDDEN: English praise openers (Perfect! / Great! / Nice!) in Thai teaching mode.
-- Keep praise to one short clause — then continue teaching.`;
+    const success = GeminiChatService.THAI_SUCCESS_PRAISE.join(' / ');
+    const transition = GeminiChatService.THAI_TRANSITION_PRAISE.join(' / ');
+    const soft = GeminiChatService.THAI_SOFT_ACCEPT_PRAISE.join(' / ');
+    const streak = GeminiChatService.THAI_STREAK_PRAISE.join(' / ');
+    const complete = GeminiChatService.THAI_LESSON_COMPLETE_PRAISE.join(' / ');
+    return `Praise pools (Thai teaching mode) — pick the RIGHT pool; rotate within it; do NOT reuse the same line as the previous AI turn:
+
+1) SUCCESS (clear / exact match) — open with ONE line from:
+   ${success}
+   Then optionally (~30–50% of advances, especially when moving to the next item/section) append ONE Transition line from:
+   ${transition}
+   Example OK: "เป๊ะเลยครับ! ไปต่อกันเลยครับ 😊"
+   FORBIDDEN: Transition alone with no Success first. FORBIDDEN: English praise (Perfect! / Great! / Nice!).
+
+2) SOFT ACCEPT (near-miss accepted → advance) — ONE line from:
+   ${soft}
+   Spoken line stays short. Canonical English / eat→ate style tips go in UI or a separate เฉลย beat — do NOT lecture in the praise opener.
+   FORBIDDEN: appending a Transition line on the same Soft Accept turn.
+   FORBIDDEN: using Success-pool celebration (เป๊ะเลย / ยอดเยี่ยม) for soft-accept.
+
+3) STREAK (3+ clear successes in a row) — occasionally replace Success with ONE line from:
+   ${streak}
+   Use sparingly so it stays special. Reset streak after soft-accept or miss.
+
+4) LESSON COMPLETE (isLessonComplete / Celebrate) — ONE line from:
+   ${complete}
+   Keep it one short beat; learner first name at most once.
+
+Keep praise to one short clause (or Success + optional Transition) — then continue teaching.`;
   }
 
   private static readonly PRAISE_OPENER_RE = (() => {
@@ -1757,7 +1851,7 @@ MATCH RESULT: SUCCESS — "${normalized}" matches the taught phrase "${matched}"
 ตัวพิมพ์เล็ก/ใหญ่ และเครื่องหมายวรรคตอนไม่นับว่าผิด ("Seat.", "SEAT", "seat" = สำเร็จทั้งหมดสำหรับ "seat")
 Required response:
 - Speak MOSTLY in Thai (beginner tutor). English only for the next target phrase if modeling it.
-- Brief Thai praise only — rotate from: เยี่ยมเลยครับ! / เยี่ยมมากครับ! / เยี่ยมครับ! / ดีมากครับ! / ดีเลยครับ! / ดีจังครับ! / เก่งมากครับ! / เก่งจริงครับ! / ทำได้ดีมากครับ! / ยอดเยี่ยมครับ! / สุดยอดครับ! / เป๊ะเลยครับ! / ใช่เลยครับ! / แจ๋วเลยครับ! / ลื่นมากครับ! — do NOT reuse the same praise as the previous successful turn; do NOT praise in English ("Perfect!", "Great!")
+- Brief Thai praise only — SUCCESS pool (rotate; optional Transition after ~30–50%). Do NOT reuse the same praise as the previous successful turn; do NOT praise in English ("Perfect!", "Great!")
 - ADVANCE immediately to the NEXT Core Flow milestone ONLY (เดินหน้าอย่างเดียว — ห้ามย้อนกลับไป Vocabulary / Pattern Drill ที่จบแล้ว)
 - FORBIDDEN: full-English lines, โอ๊ะ, เกือบใช่, almost, ลองอีกที, asking to repeat "${matched}" again, inventing pronunciation or "said it twice" issues, treating capital letters or a trailing period as a mistake, looping on the same teaching ask`;
     }

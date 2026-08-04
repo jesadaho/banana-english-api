@@ -31,7 +31,7 @@ const TOKEN_VALUES: Record<
 > = {
   thai: {
     L1: 'Thai',
-    L1_PRAISE: 'เยี่ยมเลยครับ / ดีมากครับ',
+    L1_PRAISE: 'ใช่เลยครับ / เป๊ะเลยครับ / ดีมากครับ',
     REPEAT_CUE: 'พูดตาม',
     NO_GROUP: '"ทุกคน", "เพื่อนๆ", "ทุกคนนะ"',
 
