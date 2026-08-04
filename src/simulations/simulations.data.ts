@@ -511,24 +511,24 @@ export const SIMULATIONS: SimulationConfig[] = [
       'คุณไปงานปฐมนิเทศของคลับภาษาอังกฤษ และต้องแนะนำตัวกับสมาชิกคนอื่นๆ',
     goalsTh: [
       'แนะนำตัวเองให้คลับ',
-      'บอกเหตุผลที่อยากเข้าร่วม',
+      'พูดเกี่ยวกับตัวเอง',
       'ถามคำถามเกี่ยวกับคลับ',
     ],
     goalsEn: [
       'Introduce yourself to the club',
-      'Say why you want to join',
+      'Talk about yourself.',
       'Ask a question about the club',
     ],
     difficulty: 'easy',
     estimatedMinutes: 5,
     bananaCost: 1,
     systemInstruction:
-      `${AI_LEAD} You are Leo, a friendly English club member welcoming a new joiner. Help them introduce themselves and ask why they want to join. After they share, briefly share YOUR reason too (e.g. "I joined because I wanted to improve my English.") so they have something natural to follow up on — not only answer your questions. Then invite one question about the club and welcome them warmly.`,
+      `${AI_LEAD} You are Leo, a friendly English club member welcoming a new joiner. Help them introduce themselves, then invite them to talk about themselves (e.g. hobbies, work/study, where they are from — not "why do you want to join"). After they share, briefly share something about yourself too so they have something natural to follow up on — not only answer your questions. Then invite one question about the club and welcome them warmly.`,
     openingPrompt:
       'Start the simulation. Open as Leo from the English club. Greet them briefly and welcome them to the club orientation. Follow this closely: "Hi! Welcome to our English club. I\'m Leo." Do not ask the learner any questions on this first turn.',
     successCriteria: [
       'introduced_self',
-      'shared_join_reason',
+      'talked_about_self',
       'asked_about_club',
     ],
     maxTurns: 8,
@@ -547,36 +547,44 @@ export const SIMULATIONS: SimulationConfig[] = [
     missionNumber: 3,
     missionTitleTh: 'คุยสั้นๆ',
     scenarioTh:
-      'คุณยืนรอรถไฟกับคนแปลกหน้า และเริ่มคุยสั้นๆ เป็นภาษาอังกฤษ',
+      'คุณเจอ Emma และเริ่มคุยสั้นๆ เป็นภาษาอังกฤษ เรื่องอากาศกับสัตว์เลี้ยง',
     goalsTh: [
-      'ทักทายอย่างเป็นมิตร',
-      'ถามไถ่เรื่องง่ายๆ',
-      'ตอบและคุยต่อได้สั้นๆ',
+      'ทักทายและแนะนำตัว',
+      'คุยเรื่องอากาศ',
+      'คุยเรื่องสัตว์เลี้ยง',
     ],
     goalsEn: [
-      'Greet them warmly',
-      'Ask a simple small-talk question',
-      'Keep a short friendly chat going',
+      'Greet and introduce yourself',
+      'Talk about the weather',
+      'Talk about pets',
     ],
     difficulty: 'easy',
     estimatedMinutes: 5,
     bananaCost: 1,
     systemInstruction:
-      `${AI_LEAD} You are Sam, a friendly stranger waiting for a train. Keep light small talk going — greeting, weather or weekend, and one easy follow-up. Help the learner stay in a short friendly chat.`,
+      `${AI_LEAD} You are Emma, a friendly person starting light small talk. Follow this arc closely (adapt wording, keep the same topics in order):
+1) Open with a short greeting + your name only (e.g. "Hi! I'm Emma.") — no question yet.
+2) After they greet/introduce themselves, comment on today's weather (e.g. "It's very sunny today.").
+3) After they respond, ask what weather they like (e.g. "What weather do you like?").
+4) After they answer, shift to pets (e.g. "Nice! Do you have any pets?").
+5) Ask one easy follow-up about their pet (e.g. "Is your dog friendly?").
+6) Close warmly (e.g. "That's nice. Nice talking to you!").
+Keep turns short and beginner-friendly. Accept natural variants. Do not jump to pets before weather, and do not ask about weekend/train.`,
     openingPrompt:
-      'Start the simulation. Open as Sam waiting for a train. Greet them briefly and comment on the wait. Follow this closely: "Hi there! The train is a bit late today." Do not ask the learner any questions on this first turn.',
+      'Start the simulation. Open as Emma. Greet them briefly and introduce yourself only. Follow this closely: "Hi! I\'m Emma." Do not ask the learner any questions on this first turn.',
     successCriteria: [
-      'greeted_warmly',
-      'asked_small_talk_question',
-      'kept_chat_going',
+      'greeted_and_introduced',
+      'talked_about_weather',
+      'talked_about_pets',
     ],
-    maxTurns: 8,
+    maxTurns: 10,
     vocabDrill: [
-      { word: 'How are you?', pronunciation: 'ฮาว-อาร์-ยู', meaningTh: 'สบายดีไหม?' },
+      { word: 'Sunny', pronunciation: 'ซัน-นี่', meaningTh: 'แดดออก' },
+      { word: 'Rainy', pronunciation: 'เรน-นี่', meaningTh: 'ฝนตก' },
       { word: 'Weather', pronunciation: 'เว-เธอร์', meaningTh: 'สภาพอากาศ' },
-      { word: 'Weekend', pronunciation: 'วีค-เอนด์', meaningTh: 'วันหยุดสุดสัปดาห์' },
-      { word: 'Busy', pronunciation: 'บิซ-ซี่', meaningTh: 'ยุ่ง' },
-      { word: 'Nice chatting', pronunciation: 'ไนซ์-แชท-ติ้ง', meaningTh: 'คุยกันสนุกดี' },
+      { word: 'Pet', pronunciation: 'เพท', meaningTh: 'สัตว์เลี้ยง' },
+      { word: 'Friendly', pronunciation: 'เฟรน-ลี่', meaningTh: 'เป็นมิตร / เชื่อง' },
+      { word: 'Nice talking to you', pronunciation: 'ไนซ์-ทอล์ค-กิ้ง-ทู-ยู', meaningTh: 'คุยกันสนุกดี / ยินดีที่ได้คุย' },
     ],
   },
 ];
