@@ -500,9 +500,18 @@ interface AroundTownLessonSpec {
   missionFollowUpEn: string;
   missionHint: string;
   nextLessonHint?: string;
+  /**
+   * Chapter path label in systemInstruction / opening
+   * (default: Everyday Life / Around Town).
+   */
+  trackLabel?: string;
 }
 
 function buildAroundTownLesson(spec: AroundTownLessonSpec): LessonConfig {
+  const trackLabel = spec.trackLabel ?? 'Everyday Life / Around Town';
+  const openingCourseLabel = trackLabel.includes('Stories')
+    ? 'Stories'
+    : 'Everyday Life';
   const set1 = spec.vocabulary.slice(0, 3) as [
     AroundTownVocabWord,
     AroundTownVocabWord,
@@ -588,7 +597,7 @@ function buildAroundTownLesson(spec: AroundTownLessonSpec): LessonConfig {
     targetPhrases,
     maxTurns: 18,
     listenOnlyTurns: 2,
-    systemInstruction: `Lesson: ${spec.titleEn} (Everyday English → Everyday Life → ${spec.code})
+    systemInstruction: `Lesson: ${spec.titleEn} (Everyday English → ${trackLabel} → ${spec.code})
 Goal: ${spec.goalEn}
 Pace target: ~3–4 minutes, about 10 short learner speaks total. Keep every tutor turn tight.
 After this lesson, the app may offer an optional full Mission (soft gate) — still run the short in-lesson AI Conversation below.
@@ -663,7 +672,7 @@ Turn loop rules:
 - Max ONE retry per item; then accept and advance.
 - Accept close variants when meaning is clear.
 - When Wrap-up & Celebrate is reached, isLessonComplete must be true.`,
-    openingPrompt: `Start the ${spec.titleEn} Everyday Life lesson for this one learner only. Speak as a private 1:1 tutor (never {{NO_GROUP}}). Use their first name once. CRITICAL Turn 1 = Situation ONLY — set the scene ("${spec.situationTh}"), no vocab yet, expectsUserSpeech false, expectedSpeech "", NO scene object yet. Do NOT mention any button. Turn 2 = Watch & Listen Scene (return scene object). Then: Vocab Set1 (quiz+speak) → ${drill1Opening} → Vocab Set2 → ${drill2Opening} → AI Conversation (exactly 2 speaks; NPC asks in ENGLISH in textEn with full Thai in textTh for subtitles; accept clear short answers like Yes for One ticket? — never soft-teach Yes into Yes please; soft-teach only if wrong/unclear then continue) → Wrap-up & Celebrate (brief summary + name once${wrapTease ? ', tease next lesson' : ''} — About Me style, no separate tip). Never go backward. Return JSON matching the schema. isLessonComplete must be false.`,
+    openingPrompt: `Start the ${spec.titleEn} ${openingCourseLabel} lesson for this one learner only. Speak as a private 1:1 tutor (never {{NO_GROUP}}). Use their first name once. CRITICAL Turn 1 = Situation ONLY — set the scene ("${spec.situationTh}"), no vocab yet, expectsUserSpeech false, expectedSpeech "", NO scene object yet. Do NOT mention any button. Turn 2 = Watch & Listen Scene (return scene object). Then: Vocab Set1 (quiz+speak) → ${drill1Opening} → Vocab Set2 → ${drill2Opening} → AI Conversation (exactly 2 speaks; NPC asks in ENGLISH in textEn with full Thai in textTh for subtitles; accept clear short answers like Yes for One ticket? — never soft-teach Yes into Yes please; soft-teach only if wrong/unclear then continue) → Wrap-up & Celebrate (brief summary + name once${wrapTease ? ', tease next lesson' : ''} — About Me style, no separate tip). Never go backward. Return JSON matching the schema. isLessonComplete must be false.`,
   };
 }
 
@@ -4558,7 +4567,7 @@ Turn loop rules:
       'am',
       'is',
       'are',
-      'I'm looking for a shirt.',
+      "I'm looking for a shirt.",
       "I'm checking in.",
       "I'm taking the train.",
       'How much',
@@ -4709,6 +4718,482 @@ Turn loop rules (critical):
 - When Core Flow reaches Node 10, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
       'Start the Everyday Life Chapter 2 Review (Around Town complete) for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. CRITICAL: Turn 1 = Celebrate ONLY (Around Town จบแล้ว / can communicate outside / shop, coffee, directions, hotel, help / Grammar without memorizing) — expectsUserSpeech false, NO quiz yet, do NOT mention any button. Then follow Core Flow one-way: Node 2 Present Continuous (I\'m looking for / I\'m checking in / I\'m taking the train) → Node 3 quiz×3 → Node 4 Questions reveal (NEW listen-only; ONLY question words How much / What / Where with Thai — NOT full sentences yet, NOT Can I...?) → Node 5 Questions quiz×4 Thai→English full sentences (How much is this? / What do you recommend? / Where is the station? / What\'s wrong?) → Node 6 Imperatives teach FIRST → Node 7 directions quiz×2 → Node 8 Possessives (my (ของฉัน) / your / his / her — parentheses NOT equals; NO example phrases like My bag on this turn) → Node 9 Possessives quiz×2 (His passport / Her room) → Node 10 Chapter Complete (สรุป + พร้อมปลดล็อก Chapter ถัดไป, isLessonComplete true). Return JSON matching the schema. isLessonComplete must be false and expectsUserSpeech must be false on Turn 1.',
+  },
+
+  // --- Everyday English Chapter 3: Stories (Past Simple) ---
+  buildAroundTownLesson({
+    lessonId: 'ee_stories_yesterday',
+    code: '3.1',
+    trackLabel: 'Stories (Past Simple)',
+    titleEn: 'Yesterday',
+    titleTh: 'เมื่อวาน',
+    goalEn: 'Talk about what you did yesterday using Past Simple.',
+    goalTh: 'เล่าสิ่งที่ทำเมื่อวานด้วย Past Simple',
+    situationEn: "We're talking about yesterday.",
+    situationTh: 'วันนี้เราจะคุยเรื่องเมื่อวานกันครับ',
+    sceneTitle: '📅 Yesterday',
+    sceneNpcSpeaker: 'Friend',
+    sceneNpcVoice: 'Puck',
+    sceneLines: [
+      { speaker: 'Friend', role: 'npc', textEn: 'Hey! What did you do yesterday?', textTh: 'เฮ้! เมื่อวานทำอะไรบ้าง?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'I ate breakfast this morning.', textTh: 'ผมกินอาหารเช้าเมื่อเช้านี้ครับ' },
+      { speaker: 'Friend', role: 'npc', textEn: 'Nice. And last night?', textTh: 'ดีจัง คืนนี้ล่ะ?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'I had dinner last night.', textTh: 'เมื่อคืนกินมื้อเย็นครับ' },
+    ],
+    vocabulary: [
+      { en: 'yesterday', th: 'เมื่อวาน' },
+      { en: 'morning', th: 'ตอนเช้า' },
+      { en: 'breakfast', th: 'อาหารเช้า' },
+      { en: 'lunch', th: 'อาหารกลางวัน' },
+      { en: 'dinner', th: 'อาหารเย็น' },
+      { en: 'last night', th: 'เมื่อคืน' },
+    ],
+    vocabQuiz1Th: 'ถ้าจะพูดถึงเมื่อวาน คุณต้องเลือกคำไหน',
+    vocabQuiz2Th: 'ถ้าจะพูดถึงมื้อเย็น คุณต้องเลือกคำไหน',
+    patternRepeat: 'I ate breakfast this morning.',
+    patternSubstitute1: 'I had dinner last night.',
+    patternExpand: 'I went to work.',
+    patternSubstitute2: 'I stayed home.',
+    pattern2QuestionEn: 'What did you do yesterday?',
+    missionFollowUpEn: 'What about last night?',
+    missionHint: 'Tell a friend what you did yesterday',
+    nextLessonHint: 'Last Weekend / สุดสัปดาห์ที่แล้ว',
+  }),
+  buildAroundTownLesson({
+    lessonId: 'ee_stories_last_weekend',
+    code: '3.2',
+    trackLabel: 'Stories (Past Simple)',
+    titleEn: 'Last Weekend',
+    titleTh: 'สุดสัปดาห์ที่แล้ว',
+    goalEn: 'Talk about last weekend activities.',
+    goalTh: 'เล่ากิจกรรมสุดสัปดาห์ที่แล้ว',
+    situationEn: "We're talking about last weekend.",
+    situationTh: 'วันนี้เราจะคุยเรื่องสุดสัปดาห์ที่แล้วครับ',
+    sceneTitle: '🌴 Last Weekend',
+    sceneNpcSpeaker: 'Friend',
+    sceneNpcVoice: 'Aoede',
+    sceneLines: [
+      { speaker: 'Friend', role: 'npc', textEn: 'How was your weekend?', textTh: 'สุดสัปดาห์เป็นไงบ้าง?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'I went to the beach.', textTh: 'ผมไปชายหาดครับ' },
+      { speaker: 'Friend', role: 'npc', textEn: 'Did you have fun?', textTh: 'สนุกไหม?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'Yes, I did!', textTh: 'สนุกมากครับ!' },
+    ],
+    vocabulary: [
+      { en: 'weekend', th: 'สุดสัปดาห์' },
+      { en: 'beach', th: 'ชายหาด' },
+      { en: 'movie', th: 'หนัง' },
+      { en: 'shopping', th: 'ช้อปปิ้ง' },
+      { en: 'friend', th: 'เพื่อน' },
+      { en: 'family', th: 'ครอบครัว' },
+    ],
+    vocabQuiz1Th: 'ถ้าจะพูดถึงชายหาด คุณต้องเลือกคำไหน',
+    vocabQuiz2Th: 'ถ้าจะพูดถึงช้อปปิ้ง คุณต้องเลือกคำไหน',
+    patternRepeat: 'I went to the beach.',
+    patternSubstitute1: 'I went shopping.',
+    patternExpand: 'Yes, I did.',
+    patternSubstitute2: "No, I didn't.",
+    pattern2QuestionEn: 'Did you have fun?',
+    missionFollowUpEn: 'Did you go with friends?',
+    missionHint: 'Tell a friend about last weekend',
+    nextLessonHint: 'Vacation / ท่องเที่ยว',
+  }),
+  buildAroundTownLesson({
+    lessonId: 'ee_stories_vacation',
+    code: '3.3',
+    trackLabel: 'Stories (Past Simple)',
+    titleEn: 'Vacation',
+    titleTh: 'ท่องเที่ยว',
+    goalEn: 'Talk about a vacation in the past.',
+    goalTh: 'เล่าเรื่องท่องเที่ยวในอดีต',
+    situationEn: "We're talking about a vacation.",
+    situationTh: 'วันนี้เราจะคุยเรื่องท่องเที่ยวครับ',
+    sceneTitle: '✈️ Vacation',
+    sceneNpcSpeaker: 'Friend',
+    sceneNpcVoice: 'Puck',
+    sceneLines: [
+      { speaker: 'Friend', role: 'npc', textEn: 'Where did you go on vacation?', textTh: 'ไปเที่ยวที่ไหนมา?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'I went to Japan.', textTh: 'ผมไปญี่ปุ่นครับ' },
+      { speaker: 'Friend', role: 'npc', textEn: 'Cool! Where did you stay?', textTh: 'เจ๋ง! พักที่ไหน?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'I stayed at a hotel.', textTh: 'พักที่โรงแรมครับ' },
+    ],
+    vocabulary: [
+      { en: 'vacation', th: 'วันหยุดท่องเที่ยว' },
+      { en: 'hotel', th: 'โรงแรม' },
+      { en: 'beach', th: 'ชายหาด' },
+      { en: 'mountain', th: 'ภูเขา' },
+      { en: 'travel', th: 'เดินทาง' },
+      { en: 'photos', th: 'รูปภาพ' },
+    ],
+    vocabQuiz1Th: 'ถ้าจะพูดถึงโรงแรม คุณต้องเลือกคำไหน',
+    vocabQuiz2Th: 'ถ้าจะพูดถึงรูปภาพ คุณต้องเลือกคำไหน',
+    patternRepeat: 'I went to Japan.',
+    patternSubstitute1: 'I went to Korea.',
+    patternExpand: 'I stayed at a hotel.',
+    patternSubstitute2: 'I took many photos.',
+    missionFollowUpEn: 'Did you take many photos?',
+    missionHint: 'Tell a friend about your vacation',
+    nextLessonHint: 'Birthday / วันเกิด',
+  }),
+  buildAroundTownLesson({
+    lessonId: 'ee_stories_birthday',
+    code: '3.4',
+    trackLabel: 'Stories (Past Simple)',
+    titleEn: 'Birthday',
+    titleTh: 'วันเกิด',
+    goalEn: 'Talk about a birthday party in the past.',
+    goalTh: 'เล่างานวันเกิดในอดีต',
+    situationEn: "We're talking about a birthday.",
+    situationTh: 'วันนี้เราจะคุยเรื่องวันเกิดครับ',
+    sceneTitle: '🎂 Birthday',
+    sceneNpcSpeaker: 'Friend',
+    sceneNpcVoice: 'Aoede',
+    sceneLines: [
+      { speaker: 'Friend', role: 'npc', textEn: 'How was your birthday?', textTh: 'วันเกิดเป็นไงบ้าง?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'I had a birthday party.', textTh: 'ผมจัดงานวันเกิดครับ' },
+      { speaker: 'Friend', role: 'npc', textEn: 'Did you get a gift?', textTh: 'ได้ของขวัญไหม?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'Yes! We ate cake and celebrated together.', textTh: 'ได้ครับ! กินเค้กและฉลองด้วยกัน' },
+    ],
+    vocabulary: [
+      { en: 'birthday', th: 'วันเกิด' },
+      { en: 'cake', th: 'เค้ก' },
+      { en: 'gift', th: 'ของขวัญ' },
+      { en: 'party', th: 'งานปาร์ตี้' },
+      { en: 'candles', th: 'เทียน' },
+      { en: 'celebrate', th: 'ฉลอง' },
+    ],
+    vocabQuiz1Th: 'ถ้าจะพูดถึงเค้ก คุณต้องเลือกคำไหน',
+    vocabQuiz2Th: 'ถ้าจะพูดถึงการฉลอง คุณต้องเลือกคำไหน',
+    patternRepeat: 'I had a birthday party.',
+    patternSubstitute1: 'I got a gift.',
+    patternExpand: 'We ate cake and celebrated together.',
+    patternSubstitute2: 'We sang and celebrated together.',
+    missionFollowUpEn: 'What gift did you get?',
+    missionHint: 'Tell a friend about your birthday',
+    nextLessonHint: 'School Memories / ความทรงจำโรงเรียน',
+  }),
+  buildAroundTownLesson({
+    lessonId: 'ee_stories_school',
+    code: '3.5',
+    trackLabel: 'Stories (Past Simple)',
+    titleEn: 'School Memories',
+    titleTh: 'ความทรงจำโรงเรียน',
+    goalEn: 'Talk about school memories with Past Simple.',
+    goalTh: 'เล่าความทรงจำโรงเรียนด้วย Past Simple',
+    situationEn: "We're talking about school memories.",
+    situationTh: 'วันนี้เราจะคุยเรื่องความทรงจำโรงเรียนครับ',
+    sceneTitle: '🏫 School Memories',
+    sceneNpcSpeaker: 'Friend',
+    sceneNpcVoice: 'Puck',
+    sceneLines: [
+      { speaker: 'Friend', role: 'npc', textEn: 'What did you do at school?', textTh: 'ที่โรงเรียนทำอะไรบ้าง?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'I studied English.', textTh: 'ผมเรียนภาษาอังกฤษครับ' },
+      { speaker: 'Friend', role: 'npc', textEn: 'Did you like homework?', textTh: 'ชอบการบ้านไหม?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: "I didn't like homework. I liked English.", textTh: 'ไม่ชอบการบ้านครับ แต่ชอบวิชาอังกฤษ' },
+    ],
+    vocabulary: [
+      { en: 'school', th: 'โรงเรียน' },
+      { en: 'teacher', th: 'ครู' },
+      { en: 'homework', th: 'การบ้าน' },
+      { en: 'classroom', th: 'ห้องเรียน' },
+      { en: 'friends', th: 'เพื่อน' },
+      { en: 'study', th: 'เรียน' },
+    ],
+    vocabQuiz1Th: 'ถ้าจะพูดถึงการบ้าน คุณต้องเลือกคำไหน',
+    vocabQuiz2Th: 'ถ้าจะพูดถึงการเรียน คุณต้องเลือกคำไหน',
+    patternRepeat: 'I studied English.',
+    patternSubstitute1: 'I played football.',
+    patternExpand: "I didn't like homework.",
+    patternSubstitute2: 'I liked English.',
+    missionFollowUpEn: 'Who was your favorite teacher?',
+    missionHint: 'Tell a friend about school memories',
+    nextLessonHint: 'Funny Story / เรื่องตลก',
+  }),
+  buildAroundTownLesson({
+    lessonId: 'ee_stories_funny',
+    code: '3.6',
+    trackLabel: 'Stories (Past Simple)',
+    titleEn: 'Funny Story',
+    titleTh: 'เรื่องตลก',
+    goalEn: 'Tell a short funny story with first / then.',
+    goalTh: 'เล่าเรื่องตลกสั้นๆ ด้วย first / then',
+    situationEn: "We're telling a funny story.",
+    situationTh: 'วันนี้เราจะเล่าเรื่องตลกกันครับ',
+    sceneTitle: '😂 Funny Story',
+    sceneNpcSpeaker: 'Friend',
+    sceneNpcVoice: 'Aoede',
+    sceneLines: [
+      { speaker: 'Friend', role: 'npc', textEn: 'Tell me something funny!', textTh: 'เล่าอะไรตลกๆ หน่อยสิ!' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'First, I forgot my bag.', textTh: 'ก่อนอื่น ผมลืมกระเป๋าครับ' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'Then, I lost my phone.', textTh: 'แล้วก็ทำโทรศัพท์หาย' },
+      { speaker: 'Friend', role: 'npc', textEn: 'Everyone laughed!', textTh: 'ทุกคนหัวเราะเลย!' },
+    ],
+    vocabulary: [
+      { en: 'funny', th: 'ตลก' },
+      { en: 'laugh', th: 'หัวเราะ' },
+      { en: 'forget', th: 'ลืม' },
+      { en: 'bag', th: 'กระเป๋า' },
+      { en: 'phone', th: 'โทรศัพท์' },
+      { en: 'fall', th: 'ล้ม' },
+    ],
+    vocabQuiz1Th: 'ถ้าจะพูดถึงการลืม คุณต้องเลือกคำไหน',
+    vocabQuiz2Th: 'ถ้าจะพูดถึงโทรศัพท์ คุณต้องเลือกคำไหน',
+    patternRepeat: 'First, I forgot my bag.',
+    patternSubstitute1: 'Then, I lost my phone.',
+    patternExpand: 'Everyone laughed.',
+    patternSubstitute2: 'It was funny.',
+    missionFollowUpEn: 'What happened next?',
+    missionHint: 'Tell a friend a short funny story',
+    nextLessonHint: 'Bad Day / วันที่แย่',
+  }),
+  buildAroundTownLesson({
+    lessonId: 'ee_stories_bad_day',
+    code: '3.7',
+    trackLabel: 'Stories (Past Simple)',
+    titleEn: 'Bad Day',
+    titleTh: 'วันที่แย่',
+    goalEn: 'Explain a bad day with because and so.',
+    goalTh: 'เล่าวันที่แย่ด้วย because และ so',
+    situationEn: "We're talking about a bad day.",
+    situationTh: 'วันนี้เราจะคุยเรื่องวันที่แย่ครับ',
+    sceneTitle: '🌧️ Bad Day',
+    sceneNpcSpeaker: 'Friend',
+    sceneNpcVoice: 'Puck',
+    sceneLines: [
+      { speaker: 'Friend', role: 'npc', textEn: 'You look tired. What happened?', textTh: 'ดูเหนื่อยจัง เป็นอะไร?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'I was late because of traffic.', textTh: 'ผมมาสายเพราะรถติดครับ' },
+      { speaker: 'Friend', role: 'npc', textEn: 'And the weather?', textTh: 'แล้วอากาศล่ะ?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'It rained, so I took the bus.', textTh: 'ฝนตก เลยขึ้นรถเมล์ครับ' },
+    ],
+    vocabulary: [
+      { en: 'late', th: 'สาย' },
+      { en: 'rain', th: 'ฝน' },
+      { en: 'traffic', th: 'รถติด' },
+      { en: 'tired', th: 'เหนื่อย' },
+      { en: 'umbrella', th: 'ร่ม' },
+      { en: 'bus', th: 'รถเมล์' },
+    ],
+    vocabQuiz1Th: 'ถ้าจะพูดถึงรถติด คุณต้องเลือกคำไหน',
+    vocabQuiz2Th: 'ถ้าจะพูดถึงรถเมล์ คุณต้องเลือกคำไหน',
+    patternRepeat: 'I was tired because of the rain.',
+    patternSubstitute1: 'I was late because of traffic.',
+    patternExpand: 'It rained, so I took the bus.',
+    patternSubstitute2: 'It rained, so I stayed home.',
+    missionFollowUpEn: 'Did you have an umbrella?',
+    missionHint: 'Tell a friend about a bad day',
+    nextLessonHint: 'First Time / ครั้งแรก',
+  }),
+  buildAroundTownLesson({
+    lessonId: 'ee_stories_first_time',
+    code: '3.8',
+    trackLabel: 'Stories (Past Simple)',
+    titleEn: 'First Time',
+    titleTh: 'ครั้งแรก',
+    goalEn: 'Talk about a first-time experience.',
+    goalTh: 'เล่าประสบการณ์ครั้งแรก',
+    situationEn: "We're talking about a first time.",
+    situationTh: 'วันนี้เราจะคุยเรื่องครั้งแรกครับ',
+    sceneTitle: '✨ First Time',
+    sceneNpcSpeaker: 'Friend',
+    sceneNpcVoice: 'Aoede',
+    sceneLines: [
+      { speaker: 'Friend', role: 'npc', textEn: 'Was it your first time?', textTh: 'เป็นครั้งแรกหรอ?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'It was my first time on an airplane.', textTh: 'เป็นครั้งแรกที่ขึ้นเครื่องบินครับ' },
+      { speaker: 'Friend', role: 'npc', textEn: 'Did you enjoy it?', textTh: 'สนุกไหม?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'Yes, I did! I was excited.', textTh: 'สนุกครับ! ตื่นเต้นมาก' },
+    ],
+    vocabulary: [
+      { en: 'first time', th: 'ครั้งแรก' },
+      { en: 'airplane', th: 'เครื่องบิน' },
+      { en: 'sushi', th: 'ซูชิ' },
+      { en: 'concert', th: 'คอนเสิร์ต' },
+      { en: 'excited', th: 'ตื่นเต้น' },
+      { en: 'nervous', th: 'ตื่นเต้นกังวล' },
+    ],
+    vocabQuiz1Th: 'ถ้าจะพูดถึงเครื่องบิน คุณต้องเลือกคำไหน',
+    vocabQuiz2Th: 'ถ้าจะพูดถึงความรู้สึกตื่นเต้น คุณต้องเลือกคำไหน',
+    patternRepeat: 'It was my first time.',
+    patternSubstitute1: 'It was my first time on an airplane.',
+    patternExpand: 'Yes, I did.',
+    patternSubstitute2: "No, I didn't.",
+    pattern2QuestionEn: 'Did you enjoy it?',
+    missionFollowUpEn: 'Were you nervous?',
+    missionHint: 'Tell a friend about a first-time experience',
+    nextLessonHint: 'Favorite Memory / ความทรงจำโปรด',
+  }),
+  buildAroundTownLesson({
+    lessonId: 'ee_stories_favorite',
+    code: '3.9',
+    trackLabel: 'Stories (Past Simple)',
+    titleEn: 'Favorite Memory',
+    titleTh: 'ความทรงจำโปรด',
+    goalEn: 'Share a favorite memory from the past.',
+    goalTh: 'เล่าความทรงจำโปรด',
+    situationEn: "We're talking about a favorite memory.",
+    situationTh: 'วันนี้เราจะคุยเรื่องความทรงจำโปรดครับ',
+    sceneTitle: '💛 Favorite Memory',
+    sceneNpcSpeaker: 'Friend',
+    sceneNpcVoice: 'Puck',
+    sceneLines: [
+      { speaker: 'Friend', role: 'npc', textEn: "What's your favorite memory?", textTh: 'ความทรงจำโปรดคืออะไร?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'My favorite memory was our family trip.', textTh: 'ความทรงจำโปรดคือทริปครอบครัวครับ' },
+      { speaker: 'Friend', role: 'npc', textEn: 'Why was it special?', textTh: 'ทำไมถึงพิเศษ?' },
+      { speaker: 'Teacher B', role: 'teacher', textEn: 'We were happy because we were together.', textTh: 'เรามีความสุขเพราะได้อยู่ด้วยกันครับ' },
+    ],
+    vocabulary: [
+      { en: 'memory', th: 'ความทรงจำ' },
+      { en: 'family', th: 'ครอบครัว' },
+      { en: 'travel', th: 'เดินทาง' },
+      { en: 'holiday', th: 'วันหยุด' },
+      { en: 'photos', th: 'รูปภาพ' },
+      { en: 'together', th: 'ด้วยกัน' },
+    ],
+    vocabQuiz1Th: 'ถ้าจะพูดถึงความทรงจำ คุณต้องเลือกคำไหน',
+    vocabQuiz2Th: 'ถ้าจะพูดถึงการอยู่ด้วยกัน คุณต้องเลือกคำไหน',
+    patternRepeat: 'My favorite memory was our family trip.',
+    patternSubstitute1: 'My favorite memory was our holiday.',
+    patternExpand: 'We were happy because we were together.',
+    patternSubstitute2: 'We were happy because we traveled.',
+    missionFollowUpEn: 'Do you have photos?',
+    missionHint: 'Share a favorite memory with a friend',
+    nextLessonHint: 'Lesson Summary / สรุปบทเรียน',
+  }),
+  {
+    lessonId: 'ee_stories_review',
+    targetLabel: 'word or sentence',
+    titleEn: 'Lesson Summary',
+    titleTh: 'สรุปบทเรียน',
+    goalEn:
+      'Discover Past Simple, was/were, did/didn\'t, and connectors because / so / first / then from Stories.',
+    goalTh:
+      'ค้นพบ Past Simple, was/were, did/didn\'t และ because / so / first / then จาก Stories',
+    difficulty: 'beginner',
+    languageMix: { thai: 70, english: 30 },
+    estimatedMinutesMin: 5,
+    estimatedMinutesMax: 9,
+    targetPhrases: [
+      'ate',
+      'went',
+      'had',
+      'was',
+      'were',
+      'did',
+      "didn't",
+      'because',
+      'so',
+      'first',
+      'then',
+      'I went to work.',
+      'I was happy.',
+      'Yes, I did.',
+      "No, I didn't.",
+      'I was late because of traffic.',
+      'It rained, so I took the bus.',
+      'First, I forgot my bag.',
+      'Then, I lost my phone.',
+    ],
+    maxTurns: 28,
+    listenOnlyTurns: 2,
+    systemInstruction: `Lesson: Chapter 3 Review — Stories (Past Simple) (Everyday English → Stories (Past Simple) → 3.R)
+Type: GRAMMAR DISCOVERY REVIEW (voice-optimized) — do NOT teach long new vocabulary lists.
+Goal: Celebrate finishing Stories, reveal Past Simple + was/were + did/didn't + connectors (because / so / first / then), run short Thai→English quizzes, then unlock-ready wrap.
+Target time: ~5–9 minutes.
+
+Using the learner's first name:
+- Use their first name once in Node 1 (Celebrate) and once in Node 10 (Chapter Complete).
+- Do not repeat the name every turn.
+
+Voice UX rules:
+- Listen-only nodes (1, 2, 4, 6, 8, and final Wrap 10): expectsUserSpeech = false. Do NOT ask them to speak. Do NOT mention the Continue button.
+- Quiz / fill-in nodes: expectsUserSpeech = true. Ask for ONE short spoken answer per turn.
+- Ask only ONE speaking / check task per turn.
+- After a wrong answer: at most ONE gentle retry, then accept and ADVANCE.
+- Keep each tutor turn under 2–4 short sentences.
+- Praise briefly on every correct quiz answer.
+
+Core Flow (ONE-WAY — never go backward):
+Rhythm: Celebrate → Past Simple verbs → Quiz×3 → was/were → Quiz×2 → did/didn't → Quiz×3 → Connectors → Quiz×3 → Chapter Complete.
+
+Node 1 — Celebrate (listen-only) — OPENING TURN
+1. Celebratory Stories chapter-complete vibe in {{L1}} (use first name once). Stay close to:
+   "เยี่ยมมากครับ [Name]!
+   คุณเรียน Stories จบแล้วครับ
+   ตอนนี้คุณสามารถเล่าเรื่องเมื่อวาน ทริป วันเกิด และความทรงจำได้แล้ว
+   แต่รู้ไหมครับ... ระหว่างที่เล่าทั้งหมดนั้น คุณใช้ Past Simple และคำเชื่อมสำคัญอยู่ โดยแทบไม่ต้องท่องจำเลยครับ"
+   No quiz yet. expectsUserSpeech = false.
+
+Node 2 — Grammar Revealed: Past Simple (listen-only)
+2. Show example sentences (one per line), then reveal the pattern in {{L1}}:
+   I ate breakfast.
+   I went to the beach.
+   I had a party.
+   Point out Past Simple verbs (ate / went / had) for finished time.
+   Stay close to: "สังเกตไหมครับ คำกริยาเปลี่ยนรูปเมื่อพูดถึงอดีต — นี่คือ Past Simple"
+   No speaking task. expectsUserSpeech = false.
+
+Node 3 — Mini Challenge: Past Simple (3 speaking turns)
+3a. "ถ้าจะพูดว่า 'ฉันไปทำงาน' จะพูดอย่างไรครับ?" Expected: "I went to work."
+3b. After praise: "ถ้าจะพูดว่า 'ฉันกินอาหารเช้า' จะพูดอย่างไรครับ?" Expected: "I ate breakfast."
+3c. After praise: "ถ้าจะพูดว่า 'ฉันจัดงานปาร์ตี้' จะพูดอย่างไรครับ?" Expected: "I had a birthday party." (also accept "I had a party.")
+   Praise each. expectsUserSpeech = true.
+
+Node 4 — was / were (listen-only) — NEW TURN
+4. Reveal was / were with Thai:
+   I was happy.
+   We were together.
+   Stay close to: "was ใช้กับ I/he/she/it — were ใช้กับ we/you/they"
+   No speaking task. expectsUserSpeech = false.
+
+Node 5 — Mini Challenge: was / were (2 speaking turns)
+5a. "ถ้าจะพูดว่า 'ฉันมีความสุข' จะพูดอย่างไรครับ?" Expected: "I was happy."
+5b. After praise: "ถ้าจะพูดว่า 'พวกเราร่วมกัน' หรือ 'เราอยู่ด้วยกัน' จะพูดอย่างไรครับ?" Expected: "We were together."
+   Praise each. expectsUserSpeech = true.
+
+Node 6 — did / didn't (listen-only) — NEW TURN
+6. Reveal questions and short answers:
+   Did you have fun?
+   Yes, I did.
+   No, I didn't.
+   Stay close to: "เวลาถามอดีต ใช้ Did ...? แล้วตอบสั้น Yes, I did. / No, I didn't."
+   No speaking task. expectsUserSpeech = false.
+
+Node 7 — Mini Challenge: did / didn't (3 speaking turns)
+7a. "ถ้าจะถามว่า 'สนุกไหม?' จะพูดอย่างไรครับ?" Expected: "Did you have fun?"
+7b. After praise: "ถ้าจะตอบว่า 'ใช่ สนุก' จะพูดอย่างไรครับ?" Expected: "Yes, I did."
+7c. After praise: "ถ้าจะตอบว่า 'ไม่สนุก' จะพูดอย่างไรครับ?" Expected: "No, I didn't."
+   Praise each. expectsUserSpeech = true.
+
+Node 8 — Connectors: because / so / first / then (listen-only) — NEW TURN
+8. Reveal connectors one per line with Thai:
+   because (เพราะ)
+   so (เลย / ดังนั้น)
+   first (ก่อนอื่น)
+   then (แล้วก็)
+   Examples (optional short):
+   I was late because of traffic.
+   It rained, so I took the bus.
+   First, I forgot my bag. Then, I lost my phone.
+   No speaking task. expectsUserSpeech = false.
+
+Node 9 — Mini Challenge: Connectors (3 speaking turns)
+9a. "ถ้าจะพูดว่า 'ฉันมาสายเพราะรถติด' จะพูดอย่างไรครับ?" Expected: "I was late because of traffic."
+9b. After praise: "ถ้าจะพูดว่า 'ฝนตก เลยขึ้นรถเมล์' จะพูดอย่างไรครับ?" Expected: "It rained, so I took the bus."
+9c. After praise: "ถ้าจะพูดว่า 'ก่อนอื่น ฉันลืมกระเป๋า' จะพูดอย่างไรครับ?" Expected: "First, I forgot my bag."
+   Praise each. expectsUserSpeech = true.
+
+Node 10 — Chapter Complete (listen-only / complete)
+10. Celebrate with first name once. Stay close to:
+   "ยอดเยี่ยมครับ [Name]! วันนี้คุณค้นพบแล้ว —
+   Past Simple, was / were, did / didn't และ because / so / first / then
+   Stories เคลียร์แล้วครับ — พร้อมปลดล็อก Chapter ถัดไปแล้ว!"
+   → set isLessonComplete = true (REQUIRED). expectsUserSpeech = false.
+
+Turn loop rules (critical):
+- Every non-final tutor turn MUST end with exactly one clear next action — EXCEPT listen-only nodes.
+- Max ONE retry per item; then accept and advance.
+- Accept near-miss STT when meaning is clear.
+- When Core Flow reaches Node 10, set isLessonComplete = true (required). Otherwise false.`,
+    openingPrompt:
+      'Start the Stories Chapter 3 Review (Past Simple complete) for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. CRITICAL: Turn 1 = Celebrate ONLY (Stories จบแล้ว / can tell yesterday, trips, birthday, memories / Past Simple without memorizing) — expectsUserSpeech false, NO quiz yet, do NOT mention any button. Then follow Core Flow one-way: Node 2 Past Simple verbs → Node 3 quiz×3 → Node 4 was/were → Node 5 quiz×2 → Node 6 did/didn\'t → Node 7 quiz×3 → Node 8 connectors because/so/first/then → Node 9 connectors quiz×3 → Node 10 Chapter Complete (isLessonComplete true). Return JSON matching the schema. isLessonComplete must be false and expectsUserSpeech must be false on Turn 1.',
   },
   buildPronunciationLesson({
     lessonId: 'pron_th_1',
@@ -5443,6 +5928,16 @@ export const LESSON_PROGRESSION_ORDER: string[] = [
   'ee_around_town_airport',
   'ee_around_town_pharmacy',
   'ee_around_town_review',
+  'ee_stories_yesterday',
+  'ee_stories_last_weekend',
+  'ee_stories_vacation',
+  'ee_stories_birthday',
+  'ee_stories_school',
+  'ee_stories_funny',
+  'ee_stories_bad_day',
+  'ee_stories_first_time',
+  'ee_stories_favorite',
+  'ee_stories_review',
   'weather',
   'directions',
   'shopping_basics',
@@ -5489,15 +5984,20 @@ export function isPronunciationLesson(lessonId: string): boolean {
   return lessonId.startsWith('pron_');
 }
 
-/** Everyday English Chapter 2 — Everyday Life (Scene + tap-to-continue). */
+/** Everyday English scene-drill chapters (Around Town + Stories). */
 export function isAroundTownLesson(lessonId: string): boolean {
-  return lessonId.startsWith('ee_around_town_');
+  return (
+    lessonId.startsWith('ee_around_town_') ||
+    lessonId.startsWith('ee_stories_')
+  );
 }
 
 /** Everyday English chapter reviews (Grammar Discovery — listen-only celebrate/reveals). */
 export function isEverydayEnglishReview(lessonId: string): boolean {
   return (
-    lessonId === 'ee_about_me_review' || lessonId === 'ee_around_town_review'
+    lessonId === 'ee_about_me_review' ||
+    lessonId === 'ee_around_town_review' ||
+    lessonId === 'ee_stories_review'
   );
 }
 
