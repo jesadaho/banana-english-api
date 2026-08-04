@@ -201,7 +201,7 @@ function buildTrainingReplySchema(withSpeechFlag: boolean) {
       emojiSpeak: {
         type: 'object',
         description:
-          'Optional in-chat Emoji Speak puzzle card. Include ONLY on Emoji Speak vocab turns. Omit on all other turns.',
+          'Optional single in-chat Emoji Speak puzzle card. Prefer emojiSpeakSet for batched puzzles.',
         properties: {
           emoji: {
             type: 'string',
@@ -227,6 +227,22 @@ function buildTrainingReplySchema(withSpeechFlag: boolean) {
           },
         },
         required: ['emoji', 'answer', 'hint', 'index', 'total'],
+      },
+      emojiSpeakSet: {
+        type: 'array',
+        description:
+          'Optional full Emoji Speak batch (e.g. all 6 Stories words). Include once on the Intro listen turn; the app runs them locally. Omit on other turns.',
+        items: {
+          type: 'object',
+          properties: {
+            emoji: { type: 'string' },
+            answer: { type: 'string' },
+            hint: { type: 'string' },
+            index: { type: 'integer' },
+            total: { type: 'integer' },
+          },
+          required: ['emoji', 'answer', 'hint', 'index', 'total'],
+        },
       },
     },
     required: [
@@ -285,6 +301,14 @@ export interface TrainingTurnReply {
     index?: number;
     total?: number;
   };
+  /** Full Emoji Speak batch — app runs locally without per-word AI turns. */
+  emojiSpeakSet?: Array<{
+    emoji: string;
+    answer: string;
+    hint?: string;
+    index?: number;
+    total?: number;
+  }>;
 }
 
 function buildSimulationReplySchema(criteria: string[]) {
@@ -1809,11 +1833,10 @@ Scene / Watch & Listen (when the Core Flow calls for a short model dialogue):
 - expectsUserSpeech must be false on Scene turns.
 - Omit "scene" on non-Scene turns.
 
-Emoji Speak (when the Core Flow calls for emoji → speak English word):
-- Return "emojiSpeak": { "emoji": "🍳", "answer": "breakfast", "hint": "b _ _ _ k f _ _ t", "index": 1, "total": 6 } with expectsUserSpeech true and expectedSpeech equal to answer.
-- textEn/textTh: short intro only (e.g. ลองทายคำนี้) — do NOT put letter blanks or the English answer in the bubble (the app card shows the puzzle).
-- FORBIDDEN: emojiSpeak on Pattern Challenge / Hook / Celebrate turns. Omit emojiSpeak when not on an Emoji Speak vocab turn.
-- After a clear answer (or if the learner used ขอเฉลย and the app sends the answer), praise briefly and advance — NO "พูดตาม" / repeat of the same word.
+Emoji Speak (when the Core Flow delivers a vocab warm-up batch):
+- Prefer "emojiSpeakSet": [ { emoji, answer, hint, index, total }, ... ] on ONE Intro listen turn (expectsUserSpeech false). The app runs every item locally.
+- Do NOT return per-word emojiSpeak turns after delivering emojiSpeakSet.
+- FORBIDDEN: emojiSpeak / emojiSpeakSet on Pattern Challenge / Hook / Celebrate turns.
 `
       : '';
 
@@ -1867,7 +1890,7 @@ Return JSON ONLY (critical — never reply with bare prose):
 - textTh: short Thai support line / paraphrase
 - isLessonComplete: true ONLY on the Summary + Celebrate core step (required to finish). Otherwise false${
       speechFlagBlock
-        ? '\n- expectsUserSpeech: false when this turn is listen-only or a ready check, true when you ask the learner to speak\n- expectedSpeech: when expectsUserSpeech is true AND they should say a specific word / short phrase / scripted sentence, set it to that exact English (e.g. "latte", "boarding pass", "I\'m going to Chiang Mai."). When the ask is open free recall or listen-only, set expectedSpeech to ""\n- scene: optional; include only on Watch & Listen Scene turns (see rules above)\n- emojiSpeak: optional; include only on Emoji Speak vocab turns as { emoji, answer } matching expectedSpeech'
+        ? '\n- expectsUserSpeech: false when this turn is listen-only or a ready check, true when you ask the learner to speak\n- expectedSpeech: when expectsUserSpeech is true AND they should say a specific word / short phrase / scripted sentence, set it to that exact English (e.g. "latte", "boarding pass", "I\'m going to Chiang Mai."). When the ask is open free recall or listen-only, set expectedSpeech to ""\n- scene: optional; include only on Watch & Listen Scene turns (see rules above)\n- emojiSpeakSet: optional full puzzle batch on Intro listen turns; emojiSpeak: optional single card (prefer set for Stories)'
         : ''
     }`;
   }

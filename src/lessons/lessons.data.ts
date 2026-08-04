@@ -4748,7 +4748,7 @@ Turn loop rules (critical):
       'What did you do yesterday?',
       'Did you eat breakfast yesterday?',
     ],
-    maxTurns: 28,
+    maxTurns: 20,
     listenOnlyTurns: 2,
     systemInstruction: `Lesson: Yesterday (Everyday English → Stories → 3.1)
 Goal: Talk about what you did yesterday using Past Simple.
@@ -4760,26 +4760,20 @@ Core Flow (ONE-WAY — never go backward):
    - expectsUserSpeech=false. expectedSpeech="". Omit emojiSpeak. Omit scene.
    - Do NOT start Emoji Speak on this turn.
 
-2. Emoji Speak
-   2a. Intro (listen-only, ONE turn after Hook):
+2. Emoji Speak (ONE API turn delivers the full batch — app runs puzzles locally)
+   2a. Intro (listen-only, ONE turn after Hook — training turn 1):
    - {{L1}}: "ลองมาทายคำศัพท์ที่จะได้ใช้ในบทนี้กันก่อนนะ!"
-   - expectsUserSpeech=false. expectedSpeech="". Omit emojiSpeak.
-   2b. Puzzle — EXACTLY 6 learner speaking turns (warm-up / vocab recall — NO repeat / NO พูดตาม)
-   Fixed order — ALWAYS return full emojiSpeak with hint + index + total:
-   a) index 1/6: emoji "🍳" answer "breakfast" hint "b _ _ _ k f _ _ t"
-   b) index 2/6: emoji "🍱" answer "lunch" hint "l _ _ _ h"
-   c) index 3/6: emoji "🍽️" answer "dinner" hint "d _ n _ _ r"
-   d) index 4/6: emoji "📅" answer "yesterday" hint "y _ s _ _ _ d _ y"
-   e) index 5/6: emoji "🌅" answer "morning" hint "m _ r _ _ _ g"
-   f) index 6/6: emoji "🌙" answer "last night" hint "l _ _ t n _ _ h t"
-   Each speak turn:
-   - Short {{L1}} prompt ONLY in textEn/textTh (e.g. "ลองทายคำนี้ครับ!") — NO emoji dump required in bubble; the app card shows the puzzle.
-   - FORBIDDEN in the bubble: letter blanks, the English answer, Thai gloss of the answer.
-   - expectsUserSpeech=true. expectedSpeech=exact answer.
-   - MUST return emojiSpeak={ emoji, answer, hint, index, total: 6 } exactly as listed for that word.
-   - After clear answer (or app sent revealed answer): brief praise → next puzzle (or Pattern Challenge — Tell after 6th). NO second speak / repeat.
-   - Soft-accept close STT variants. Max ONE soft tip then advance.
-   - FORBIDDEN: 3-choice Thai quiz; inventing extra vocab; skipping a word; emojiSpeak on non-Emoji turns.
+   - expectsUserSpeech=false. expectedSpeech="". Omit per-word emojiSpeak.
+   - MUST return emojiSpeakSet with ALL 6 items (exact list below). The app plays all 6 locally without further AI turns.
+   - Fixed emojiSpeakSet (total 6):
+     1) { emoji:"🍳", answer:"breakfast", hint:"b _ _ _ k f _ _ t", index:1, total:6 }
+     2) { emoji:"🍱", answer:"lunch", hint:"l _ _ _ h", index:2, total:6 }
+     3) { emoji:"🍽️", answer:"dinner", hint:"d _ n _ _ r", index:3, total:6 }
+     4) { emoji:"📅", answer:"yesterday", hint:"y _ s _ _ _ d _ y", index:4, total:6 }
+     5) { emoji:"🌅", answer:"morning", hint:"m _ r _ _ _ g", index:5, total:6 }
+     6) { emoji:"🌙", answer:"last night", hint:"l _ _ t n _ _ h t", index:6, total:6 }
+   2b. After the app finishes all 6, the learner taps Continue (or the app sends continue). YOUR NEXT turn is Pattern Challenge — Tell.
+   - FORBIDDEN: returning one-word emojiSpeak turns for the 6 puzzles; inventing extra vocab; re-asking emoji words after the batch.
 
 3. Pattern Challenge — Tell (2–3 learner speaks, HARD CAP 3) — difficulty ⭐⭐
    Goal: build Past Simple statements.
@@ -4821,14 +4815,14 @@ Teaching rules:
 - Soft correction ONLY (never Wrong / ไม่ถูก).
 - STT is English-only for spoken answers. Ask/explain in {{L1}} OK except Answer challenges (English questions in textEn).
 - FORBIDDEN: Watch & Listen scene object; Around Town vocab quiz; going backward; hell-loop re-drills after Celebrate starts.
-- Omit emojiSpeak on Hook / Pattern / Celebrate turns.
+- Omit emojiSpeak / emojiSpeakSet on Hook / Pattern / Celebrate turns.
 
 Turn loop rules:
 - Every non-final turn ends with one clear next action OR is listen-only (Continue).
 - Max ONE retry per item; then accept and advance.
 - Accept close variants when meaning is clear.
 - When Celebrate is reached, isLessonComplete must be true.`,
-    openingPrompt: `Start the Yesterday Stories lesson (3.1) for this one learner only. Speak as a private 1:1 tutor (never {{NO_GROUP}}). Use their first name once. CRITICAL Turn 1 = Hook ONLY — "เมื่อวานทำอะไรมาบ้าง วันนี้มาฝึกเล่าเรื่องเมื่อวานกันครับ!" — expectsUserSpeech false, expectedSpeech "", NO emojiSpeak, NO scene. Do NOT mention any button. Then: Emoji Speak Intro listen ("ลองมาทายคำศัพท์ที่จะได้ใช้ในบทนี้กันก่อนนะ!") → Emoji Speak puzzle ×6 with FULL emojiSpeak {emoji,answer,hint,index,total:6} in order (1 🍳 breakfast "b _ _ _ k f _ _ t" → 2 🍱 lunch "l _ _ _ h" → 3 🍽️ dinner "d _ n _ _ r" → 4 📅 yesterday "y _ s _ _ _ d _ y" → 5 🌅 morning "m _ r _ _ _ g" → 6 🌙 last night "l _ _ t n _ _ h t"; NO repeat) → Pattern Challenge Tell (2–3) → Ask (EXACTLY 2 learner asks; YOU answer) → Answer (EXACTLY 2 YOU ask; learner answers) → Celebrate (complete). Never go backward. Return JSON matching the schema. isLessonComplete must be false.`,
+    openingPrompt: `Start the Yesterday Stories lesson (3.1) for this one learner only. Speak as a private 1:1 tutor (never {{NO_GROUP}}). Use their first name once. CRITICAL Turn 1 = Hook ONLY — "เมื่อวานทำอะไรมาบ้าง วันนี้มาฝึกเล่าเรื่องเมื่อวานกันครับ!" — expectsUserSpeech false, expectedSpeech "", NO emojiSpeak, NO emojiSpeakSet, NO scene. Do NOT mention any button. Then ONE Intro listen turn with emojiSpeakSet of ALL 6 puzzles (🍳 breakfast, 🍱 lunch, 🍽️ dinner, 📅 yesterday, 🌅 morning, 🌙 last night — each with hint/index/total:6); expectsUserSpeech false. App runs the 6 locally. After Continue from the app: Pattern Challenge Tell (2–3) → Ask (EXACTLY 2) → Answer (EXACTLY 2) → Celebrate (complete). Never emit per-word emojiSpeak turns. Never go backward. Return JSON matching the schema. isLessonComplete must be false.`,
   },
 
   buildAroundTownLesson({
@@ -6077,6 +6071,22 @@ const EE_STORIES_YESTERDAY_EMOJI: Record<
   'last night': { emoji: '🌙', hint: 'l _ _ t n _ _ h t', index: 6 },
 };
 
+/** Full 6-word batch delivered once for Stories 3.1 (app runs locally). */
+export const EE_STORIES_YESTERDAY_EMOJI_SET: Array<{
+  emoji: string;
+  answer: string;
+  hint: string;
+  index: number;
+  total: number;
+}> = [
+  { emoji: '🍳', answer: 'breakfast', hint: 'b _ _ _ k f _ _ t', index: 1, total: 6 },
+  { emoji: '🍱', answer: 'lunch', hint: 'l _ _ _ h', index: 2, total: 6 },
+  { emoji: '🍽️', answer: 'dinner', hint: 'd _ n _ _ r', index: 3, total: 6 },
+  { emoji: '📅', answer: 'yesterday', hint: 'y _ s _ _ _ d _ y', index: 4, total: 6 },
+  { emoji: '🌅', answer: 'morning', hint: 'm _ r _ _ _ g', index: 5, total: 6 },
+  { emoji: '🌙', answer: 'last night', hint: 'l _ _ t n _ _ h t', index: 6, total: 6 },
+];
+
 export function enrichEmojiSpeakForLesson(
   lessonId: string,
   emojiSpeak:
@@ -6122,6 +6132,20 @@ export function enrichEmojiSpeakForLesson(
     index: emojiSpeak.index,
     total: emojiSpeak.total,
   };
+}
+
+/**
+ * After Hook continue (training turn 1), Stories 3.1 always attaches the full
+ * Emoji Speak batch so the app can run all 6 words without per-word AI turns.
+ */
+export function emojiSpeakSetForTrainingTurn(
+  lessonId: string,
+  currentTurn: number,
+): typeof EE_STORIES_YESTERDAY_EMOJI_SET | null {
+  if (lessonId === 'ee_stories_yesterday' && currentTurn === 1) {
+    return EE_STORIES_YESTERDAY_EMOJI_SET;
+  }
+  return null;
 }
 
 /** Everyday English chapter reviews (Grammar Discovery — listen-only celebrate/reveals). */

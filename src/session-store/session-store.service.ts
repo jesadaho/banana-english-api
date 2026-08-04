@@ -40,6 +40,8 @@ export interface ChatTurn {
   expectedSpeech?: string | null;
   /** In-chat Emoji Speak card (ai turns only). */
   emojiSpeak?: EmojiSpeakPrompt | null;
+  /** Full Emoji Speak batch (ai turns only). */
+  emojiSpeakSet?: EmojiSpeakPrompt[] | null;
 }
 
 export interface ConversationSession {

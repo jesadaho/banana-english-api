@@ -54,6 +54,11 @@ export interface TurnExchangeResponse {
   scene?: LessonScene;
   /** In-chat Emoji Speak card — app shows "ขอเฉลย" when present. */
   emojiSpeak?: EmojiSpeakPrompt | null;
+  /**
+   * Full Emoji Speak puzzle batch for this lesson phase.
+   * App runs all items locally; only one API round-trip to deliver the set.
+   */
+  emojiSpeakSet?: EmojiSpeakPrompt[] | null;
 }
 
 /** One Emoji Speak prompt embedded in a training turn. */

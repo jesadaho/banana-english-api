@@ -46,6 +46,7 @@ import {
   mergeCheckpoints,
 } from '../simulations/simulations.data';
 import {
+  emojiSpeakSetForTrainingTurn,
   enrichEmojiSpeakForLesson,
   getLesson,
   getLessonBananaCost,
@@ -480,6 +481,13 @@ export class SessionsController {
         config.lessonId,
         reply.emojiSpeak,
       );
+      const emojiSpeakSet =
+        emojiSpeakSetForTrainingTurn(config.lessonId, nextTurn) ??
+        (Array.isArray(reply.emojiSpeakSet) && reply.emojiSpeakSet.length > 0
+          ? reply.emojiSpeakSet.map((item) =>
+              enrichEmojiSpeakForLesson(config.lessonId, item),
+            ).filter((item): item is NonNullable<typeof item> => item != null)
+          : null);
 
       const aiTurn = {
         speaker: 'ai' as const,
@@ -489,7 +497,8 @@ export class SessionsController {
         expectsUserSpeech,
         expectedSpeech: reply.expectedSpeech?.trim() || null,
         scene: reply.scene ?? null,
-        emojiSpeak,
+        emojiSpeak: emojiSpeakSet ? null : emojiSpeak,
+        emojiSpeakSet,
       };
       this.sessionStore.addTurn(sessionId, aiTurn);
 
@@ -504,7 +513,8 @@ export class SessionsController {
         expectsUserSpeech,
         expectedSpeech: reply.expectedSpeech?.trim() || null,
         scene: reply.scene,
-        emojiSpeak,
+        emojiSpeak: emojiSpeakSet ? null : emojiSpeak,
+        emojiSpeakSet,
       };
 
       if (body.generateAudio) {
