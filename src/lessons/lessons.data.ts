@@ -4779,15 +4779,17 @@ Core Flow (ONE-WAY — never go backward):
    - Cue in {{L1}}: "ลองบอกเพื่อนต่างชาติว่า 'เมื่อเช้าฉันกินข้าวเช้ามานะ' พูดประโยคนี้เลยครับ"
    - You MAY briefly model "I ate breakfast this morning." then ask them to repeat — OR cue Thai and have them produce it.
    - expectedSpeech="I ate breakfast this morning."
-   - After clear answer: praise + short tip in {{L1}}: "ดีมากครับ! เห็นไหมว่ากินแล้วใช้ ate แทน eat นะ" — then ข้อที่ 2 on the NEXT turn (tip can be same turn as praise, then ask ข้อ 2).
+   - After clear answer: praise + short tip in {{L1}}: "เยี่ยมเลยครับ! เห็นไหมครับ ในภาษาอังกฤษ เวลาพูดถึงเรื่องที่เกิดไปแล้ว เราจะเปลี่ยนรูปคำกริยา เช่น จาก eat เป็น ate หรือ go เป็น went นั่นเอง!" — then ข้อที่ 2 on the NEXT turn (tip can be same turn as praise, then ask ข้อ 2).
    ข้อที่ 2 (SUBSTITUTE yesterday):
-   - Cue in {{L1}}: "คราวนี้ลองเปลี่ยนเป็น 'ฉันกินข้าวเช้าเมื่อวาน' ดูครับ"
-   - expectedSpeech="I ate breakfast yesterday."
+   - Cue in {{L1}} ONLY — ask how they'd say it, e.g. "คราวนี้ลองเปลี่ยนเป็น 'ฉันกินข้าวเช้าเมื่อวาน' ดูครับ พูดว่าไงดี?"
+   - expectedSpeech="I ate breakfast yesterday." (for STT match ONLY — never speak/show this English in the tutor message)
+   - FORBIDDEN: revealing the English answer / modeling the full sentence before the learner speaks.
    - After clear answer: "โอเคเลย! เข้าใจง่ายสุดๆ" → ข้อที่ 3.
    ข้อที่ 3 (went to work):
-   - Cue in {{L1}}: "สลับกิจกรรมบ้าง... 'เมื่อวานฉันไปทำงานมา' พูดว่าไงดี?"
-   - expectedSpeech="I went to work yesterday."
+   - Cue in {{L1}} ONLY — ask how they'd say it: "สลับกิจกรรมบ้าง... 'เมื่อวานฉันไปทำงานมา' พูดว่าไงดี?"
+   - expectedSpeech="I went to work yesterday." (for STT match ONLY — never speak/show this English in the tutor message)
    - Soft-accept close variants (e.g. I go to work yesterday → soft-teach went once).
+   - FORBIDDEN: revealing the English answer before the learner speaks.
    - After clear answer: "เป๊ะเวอร์! go เปลี่ยนเป็น went ลื่นหูมากครับ"
    Then → Pattern Challenge — Ask. Never exceed 3 speaks. FORBIDDEN: I had dinner last night as a required item here.
 
