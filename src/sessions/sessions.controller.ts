@@ -481,13 +481,25 @@ export class SessionsController {
         config.lessonId,
         reply.emojiSpeak,
       );
+      // Stories 3.1: only inject the batch on turn 1. Ignore model emojiSpeakSet
+      // on later turns so the app does not replay the puzzle after Continue.
+      const forcedSet = emojiSpeakSetForTrainingTurn(
+        config.lessonId,
+        nextTurn,
+      );
       const emojiSpeakSet =
-        emojiSpeakSetForTrainingTurn(config.lessonId, nextTurn) ??
-        (Array.isArray(reply.emojiSpeakSet) && reply.emojiSpeakSet.length > 0
-          ? reply.emojiSpeakSet.map((item) =>
-              enrichEmojiSpeakForLesson(config.lessonId, item),
-            ).filter((item): item is NonNullable<typeof item> => item != null)
-          : null);
+        forcedSet ??
+        (config.lessonId === 'ee_stories_yesterday'
+          ? null
+          : Array.isArray(reply.emojiSpeakSet) && reply.emojiSpeakSet.length > 0
+            ? reply.emojiSpeakSet
+                .map((item) =>
+                  enrichEmojiSpeakForLesson(config.lessonId, item),
+                )
+                .filter(
+                  (item): item is NonNullable<typeof item> => item != null,
+                )
+            : null);
 
       const aiTurn = {
         speaker: 'ai' as const,

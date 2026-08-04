@@ -1835,6 +1835,7 @@ Scene / Watch & Listen (when the Core Flow calls for a short model dialogue):
 
 Emoji Speak (when the Core Flow delivers a vocab warm-up batch):
 - Prefer "emojiSpeakSet": [ { emoji, answer, hint, index, total }, ... ] on ONE Intro listen turn (expectsUserSpeech false). The app runs every item locally.
+- Example Stories 3.1 set (4 words): yesterday / breakfast / last night / work.
 - Do NOT return per-word emojiSpeak turns after delivering emojiSpeakSet.
 - FORBIDDEN: emojiSpeak / emojiSpeakSet on Pattern Challenge / Hook / Celebrate turns.
 `
