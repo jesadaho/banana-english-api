@@ -4779,7 +4779,8 @@ Core Flow (ONE-WAY — never go backward):
    - Cue in {{L1}}: "ลองบอกเพื่อนต่างชาติว่า 'เมื่อเช้าฉันกินข้าวเช้ามานะ' พูดประโยคนี้เลยครับ"
    - You MAY briefly model "I ate breakfast this morning." then ask them to repeat — OR cue Thai and have them produce it.
    - expectedSpeech="I ate breakfast this morning."
-   - After clear answer: praise + short tip in {{L1}}: "เยี่ยมเลยครับ! เห็นไหมครับ ในภาษาอังกฤษ เวลาพูดถึงเรื่องที่เกิดไปแล้ว เราจะเปลี่ยนรูปคำกริยา เช่น จาก eat เป็น ate หรือ go เป็น went นั่นเอง!" — then ข้อที่ 2 on the NEXT turn (tip can be same turn as praise, then ask ข้อ 2).
+   - After clear answer: praise + short tip in {{L1}} on a SEPARATE listen-only turn (expectsUserSpeech=false): "เยี่ยมเลยครับ! เห็นไหมครับ ในภาษาอังกฤษ เวลาพูดถึงเรื่องที่เกิดไปแล้ว เราจะเปลี่ยนรูปคำกริยา เช่น จาก eat เป็น ate หรือ go เป็น went นั่นเอง!"
+   - FORBIDDEN: combining this tip with ข้อที่ 2 on the same turn — tip turn first, then ข้อที่ 2 on the NEXT turn.
    ข้อที่ 2 (SUBSTITUTE yesterday):
    - Cue in {{L1}} ONLY — ask how they'd say it, e.g. "คราวนี้ลองเปลี่ยนเป็น 'ฉันกินข้าวเช้าเมื่อวาน' ดูครับ พูดว่าไงดี?"
    - expectedSpeech="I ate breakfast yesterday." (for STT match ONLY — never speak/show this English in the tutor message)
@@ -4795,12 +4796,24 @@ Core Flow (ONE-WAY — never go backward):
 
 4. Pattern Challenge — Ask (EXACTLY 2 learner speaks) — difficulty ⭐⭐⭐
    Goal: learner ASKS the AI questions; AI answers.
-   a) Prompt in {{L1}} to ask: "What did you do yesterday?" → learner speaks that question. expectedSpeech="What did you do yesterday?"
-      Then YOU answer briefly in English (e.g. I studied. / I went to work.) — can be same turn after praise or next listen turn.
-   b) Prompt to ask: "Did you eat breakfast yesterday?" → learner speaks it. expectedSpeech="Did you eat breakfast yesterday?"
-      Then YOU answer: "Yes, I did!" (or short natural reply). Soft-accept missing "?".
+   STRICT turn split after each learner ask (never mash into one turn):
+     ① Learner speaks the question (expectsUserSpeech=true)
+     ② NEXT turn = AI answer ONLY (listen-only, expectsUserSpeech=false). Short English reply. No praise yet. No next cue.
+     ③ User taps Continue → NEXT turn = short praise in {{L1}} FIRST, then the next prompt (Ask b, or transition into Answer).
+   FORBIDDEN on the AI-answer turn: praise, "คราวนี้…", or any next speaking cue.
+   FORBIDDEN on the praise/next turn: re-answering the previous question as the main content.
+
+   a) Prompt in {{L1}} with English guide: ask them to say "What did you do yesterday?" → learner speaks. expectedSpeech="What did you do yesterday?"
+      → ② AI answer ONLY e.g. "I went to work yesterday." / "I studied." (listen-only)
+      → ③ after Continue: praise briefly, THEN cue Ask b (same turn OK for praise + cue b).
+   b) NO English guide — learner thinks themselves. Cue in {{L1}} only, e.g. "คราวนี้ลองถามเองดูครับ เกี่ยวกับการกินข้าวเช้าเมื่อวานน่ะ พูดว่าไงดี?"
+      - expectedSpeech="Did you eat breakfast yesterday." (for STT match ONLY — never speak/show this English / never model the question before they speak)
+      - FORBIDDEN: revealing or prompting the full English question ("Did you eat breakfast yesterday?") before the learner speaks.
+      - Soft-accept close yes/no-question variants about breakfast yesterday.
+      → ② AI answer ONLY: "Yes, I did!" (or short natural reply). Soft-accept missing "?". (listen-only)
+      → ③ after Continue: short praise, THEN start Pattern Challenge — Answer (AI asks first Answer question).
    FORBIDDEN: answering for the learner; skipping either question; more than 2 Ask speaks. Omit emojiSpeak.
-   After Ask → Pattern Challenge — Answer.
+   After Ask (and the praise→Answer handoff) → Pattern Challenge — Answer.
 
 5. Pattern Challenge — Answer (EXACTLY 2 learner speaks) — difficulty ⭐⭐⭐⭐
    Goal: AI asks; learner answers.
@@ -4827,7 +4840,7 @@ Turn loop rules:
 - Max ONE retry per item; then accept and advance.
 - Accept close variants when meaning is clear.
 - When Celebrate is reached, isLessonComplete must be true.`,
-    openingPrompt: `Start the Yesterday Stories lesson (3.1) for this one learner only. Speak as a private 1:1 tutor (never {{NO_GROUP}}). Use their first name once. CRITICAL Turn 1 = Hook ONLY — "เมื่อวานทำอะไรมาบ้างครับ? บางคนไปทำงาน บางคนได้พักผ่อนอยู่บ้าน... วันนี้มาฝึกเล่าเรื่อง 'เมื่อวาน' เป็นภาษาอังกฤษแบบชิลๆ กันครับ!" — expectsUserSpeech false, expectedSpeech "", NO emojiSpeak, NO emojiSpeakSet, NO scene. Do NOT mention any button. Then ONE Intro listen turn with emojiSpeakSet of ALL 4 puzzles (📅 yesterday, 🍳 breakfast, 🌙 last night, 💼 work — each with hint/index/total:4); expectsUserSpeech false. App runs the 4 locally. After "(finished Emoji Speak — start Pattern Challenge 1)": Pattern Challenge 1 Tell EXACTLY 3 speaks (I ate breakfast this morning. → tip ate/eat → I ate breakfast yesterday. → I went to work yesterday. + tip go/went) → Ask (EXACTLY 2) → Answer (EXACTLY 2) → Celebrate (complete). Never emit per-word emojiSpeak turns. Never re-open Intro after Emoji Speak. Never go backward. Return JSON matching the schema. isLessonComplete must be false.`,
+    openingPrompt: `Start the Yesterday Stories lesson (3.1) for this one learner only. Speak as a private 1:1 tutor (never {{NO_GROUP}}). Use their first name once. CRITICAL Turn 1 = Hook ONLY — "เมื่อวานทำอะไรมาบ้างครับ? บางคนไปทำงาน บางคนได้พักผ่อนอยู่บ้าน... วันนี้มาฝึกเล่าเรื่อง 'เมื่อวาน' เป็นภาษาอังกฤษแบบชิลๆ กันครับ!" — expectsUserSpeech false, expectedSpeech "", NO emojiSpeak, NO emojiSpeakSet, NO scene. Do NOT mention any button. Then ONE Intro listen turn with emojiSpeakSet of ALL 4 puzzles (📅 yesterday, 🍳 breakfast, 🌙 last night, 💼 work — each with hint/index/total:4); expectsUserSpeech false. App runs the 4 locally. After "(finished Emoji Speak — start Pattern Challenge 1)": Pattern Challenge 1 Tell EXACTLY 3 speaks (I ate breakfast this morning. → SEPARATE listen-only tip turn about past verbs eat→ate / go→went → NEXT turn I ate breakfast yesterday. → I went to work yesterday. + tip go/went) → Ask (EXACTLY 2 learner asks; after EACH ask: SEPARATE listen-only AI answer turn, then Continue, then praise + next cue; a guided "What did you do yesterday?", b NO English guide — Thai cue only about breakfast yesterday) → Answer (EXACTLY 2) → Celebrate (complete). Never mash AI answer + praise + next ask into one turn. Never emit per-word emojiSpeak turns. Never re-open Intro after Emoji Speak. Never go backward. Return JSON matching the schema. isLessonComplete must be false.`,
   },
 
   buildAroundTownLesson({
