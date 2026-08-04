@@ -3597,6 +3597,7 @@ Turn loop rules (critical — never stall the learner):
       'always',
       'usually',
       'sometimes',
+      'never',
       'I am a student.',
       'She is my sister.',
       'They are friends.',
@@ -3663,12 +3664,15 @@ Node 3 — Quick Challenge: Verb to be in full sentences (3 speaking turns)
    FORBIDDEN: "I ____ a student", listing am/is/are as quiz options on the first ask.
 
 Node 4 — Grammar Revealed: Present Simple (listen-only)
-4. Model examples (one per line), then name the grammar in {{L1}}:
+4. After the fill-ins, bridge clearly then model examples (SEPARATE lines — never one paragraph):
+   Stay close to opening: "เยี่ยมเลยครับ! ต่อไป ลองสังเกตประโยคเหล่านี้นะครับ"
+   Then one per line:
    I live in Bangkok.
    I work at a hospital.
    I like coffee.
    I have a dog.
-   Stay close to: "นี่เรียกว่า Present Simple — ใช้พูดถึงสิ่งที่เป็นจริง / ชีวิตประจำวัน / สิ่งที่ทำเป็นประจำ"
+   Then: "นี่เรียกว่า Present Simple — ใช้พูดถึงสิ่งที่เป็นจริง / ชีวิตประจำวัน / สิ่งที่ทำเป็นประจำ"
+   FORBIDDEN: jumping straight from praise into English examples with no Thai bridge (e.g. do not start "เยี่ยมเลยครับ! I live in Bangkok…").
    No speaking task. expectsUserSpeech = false.
 
 Node 5 — Mini Quiz: choose the verb by MEANING (3 speaking turns)
@@ -3679,14 +3683,19 @@ Node 5 — Mini Quiz: choose the verb by MEANING (3 speaking turns)
    This reviews verb MEANING, not conjugation. Praise each. expectsUserSpeech = true.
 
 Node 6 — Frequency reveal (listen-only)
-6. Introduce the three frequency words clearly, one per line:
-   always
-   usually
-   sometimes
-   Short {{L1}} note that these words tell how often. No quiz yet. expectsUserSpeech = false.
+6. Introduce the four frequency words clearly, ONE per line with Thai meaning:
+   always = เสมอ
+   usually = โดยปกติ
+   sometimes = บางครั้ง
+   never = ไม่เคย
+   Stay close to opening: "ดีมากครับ! ต่อไปเรามาดูคำที่บอกว่าทำบ่อยแค่ไหนกันนะครับ"
+   Then list the four mappings on separate lines (as above).
+   Optional one short closer: "คำพวกนี้บอกว่าทำบ่อยแค่ไหนครับ"
+   FORBIDDEN: dumping the English words in one run-on line without Thai meanings.
+   No quiz yet. expectsUserSpeech = false.
 
 Node 7 — Mini Quiz: Frequency
-7. "ถ้าจะพูดว่า 'ฉันกินพิซซ่าเดือนละครั้ง' เลือกคำไหนครับ — always, usually, หรือ sometimes?"
+7. "ถ้าจะพูดว่า 'ฉันกินพิซซ่าเดือนละครั้ง' เลือกคำไหนครับ — always, usually, sometimes หรือ never?"
    Expected: sometimes
    Praise briefly. expectsUserSpeech = true.
 
@@ -3705,7 +3714,7 @@ Turn loop rules (critical):
 - Accept near-miss STT when meaning is clear (e.g. "live" / "lives", "sometime" → sometimes).
 - When Core Flow reaches Node 8, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the About Me Chapter 1 Review for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. CRITICAL: Turn 1 = Celebrate ONLY (Chapter Complete / 120+ sentences / today we discover which Grammar they already used) — expectsUserSpeech false, NO quiz yet, do NOT mention any button. Then follow Core Flow one-way: Node 2a observe pattern (listen-only — ลองดูตัวอย่าง + 3 sentences on separate lines + สังเกตไหมครับ ทุกประโยคมีคำว่า is — stop, NO am/are yet) → Node 2b summarize rule (listen-only — ง่ายมากครับ / I ใช้ am / He She It ใช้ is / You We They ใช้ are / เดี๋ยวลองใช้กันเลยครับ — NO arrows) → Node 3 speak challenges (ถ้าจะพูดว่า … จะพูดอย่างไรครับ? — full sentence; soft-accept am/is/are) → Node 4 Present Simple reveal (listen-only) → Node 5 verb-meaning quizzes (live, like, have) → Node 6 Frequency reveal (always/usually/sometimes, listen-only) → Node 7 sometimes quiz → Node 8 Great wrap (3 grammars + complete, isLessonComplete true). Return JSON matching the schema. isLessonComplete must be false and expectsUserSpeech must be false on Turn 1.',
+      'Start the About Me Chapter 1 Review for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. CRITICAL: Turn 1 = Celebrate ONLY (Chapter Complete / 120+ sentences / today we discover which Grammar they already used) — expectsUserSpeech false, NO quiz yet, do NOT mention any button. Then follow Core Flow one-way: Node 2a observe pattern (listen-only — ลองดูตัวอย่าง + 3 sentences on separate lines + สังเกตไหมครับ ทุกประโยคมีคำว่า is — stop, NO am/are yet) → Node 2b summarize rule (listen-only — ง่ายมากครับ / I ใช้ am / He She It ใช้ is / You We They ใช้ are / เดี๋ยวลองใช้กันเลยครับ — NO arrows) → Node 3 speak challenges (ถ้าจะพูดว่า … จะพูดอย่างไรครับ? — full sentence; soft-accept am/is/are) → Node 4 Present Simple reveal (listen-only) → Node 5 verb-meaning quizzes (live, like, have) → Node 6 Frequency reveal (always=เสมอ / usually=โดยปกติ / sometimes=บางครั้ง / never=ไม่เคย, listen-only) → Node 7 sometimes quiz → Node 8 Great wrap (3 grammars + complete, isLessonComplete true). Return JSON matching the schema. isLessonComplete must be false and expectsUserSpeech must be false on Turn 1.',
   },
   {
     lessonId: 'weather',
