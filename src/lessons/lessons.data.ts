@@ -7735,19 +7735,25 @@ export function guideScriptedAroundTownRoleplayIfNeeded(
     return null;
   }
 
-  // Shopping: after size is answered, leave roleplay (Pattern 2).
-  // Strip NPC chrome even when the model already wrote the Pattern 2 line.
+  // Shopping: after size is answered → Teacher Pattern 2 (clear NPC chrome).
+  // Never keep premature closes like "It's twenty dollars." right after size.
   const lastAskIdx = config.asks.length - 1;
   const lastAskDone =
     !config.closeWithSure &&
     startIdx >= 0 &&
     lastAskAnswered(history, startIdx, lastAskIdx, config);
-  if (lastAskDone) {
-    const stuckOnStaffAsk = currentAskIdx >= 0 || offScript;
-    if (stuckOnStaffAsk && config.exitAfterLastAsk) {
+  if (lastAskDone && config.exitAfterLastAsk) {
+    const th = current.textTh?.trim() ?? '';
+    const en = current.textEn.trim().toLowerCase();
+    const looksLikePattern2 =
+      en.includes('how much is this') ||
+      th.includes('ถามราคา') ||
+      th.includes('ราคาเท่าไหร่');
+
+    if (looksLikePattern2 && !isAroundTownRoleplayCloseLine(current.textEn)) {
       return {
-        textEn: config.exitAfterLastAsk.textEn,
-        textTh: config.exitAfterLastAsk.textTh,
+        textEn: current.textEn,
+        textTh: th || config.exitAfterLastAsk.textTh,
         expectsUserSpeech: false,
         expectedSpeech: null,
         roleplayNpc: null,
@@ -7755,19 +7761,16 @@ export function guideScriptedAroundTownRoleplayIfNeeded(
         isTaskComplete: false,
       };
     }
-    if (current.roleplayNpc != null) {
-      // Keep Teacher Pattern 2 copy — only end roleplay chrome.
-      return {
-        textEn: current.textEn,
-        textTh: current.textTh?.trim() || null,
-        expectsUserSpeech: current.expectsUserSpeech,
-        expectedSpeech: current.expectedSpeech,
-        roleplayNpc: null,
-        emojiChoice: null,
-        isTaskComplete: false,
-      };
-    }
-    return null;
+
+    return {
+      textEn: config.exitAfterLastAsk.textEn,
+      textTh: config.exitAfterLastAsk.textTh,
+      expectsUserSpeech: false,
+      expectedSpeech: null,
+      roleplayNpc: null,
+      emojiChoice: null,
+      isTaskComplete: false,
+    };
   }
 
   const reached = Math.max(
