@@ -7753,14 +7753,16 @@ export const SHOPPING_ROLEPLAY_BRIDGE_TH =
 export const SHOPPING_ROLEPLAY_BRIDGE_EN =
   "Next I'll be the shop assistant 😊 Tap when you're ready to start!";
 
-const SHOPPING_LOOKING_FOR_BOARD = {
+const SHOPPING_LOOKING_FOR_BOARD: {
+  options: Array<{ emoji: string; label: string; speak: string }>;
+} = {
   options: [
     { emoji: '👕', label: 'shirt', speak: "I'm looking for a shirt." },
     { emoji: '👖', label: 'pants', speak: "I'm looking for pants." },
     { emoji: '👟', label: 'shoes', speak: "I'm looking for shoes." },
     { emoji: '🧢', label: 'cap', speak: "I'm looking for a cap." },
   ],
-} as const;
+};
 
 function normalizeLookingForKey(text: string): string {
   return text
