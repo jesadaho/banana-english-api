@@ -1776,8 +1776,12 @@ Keep praise to one short clause (or Success + optional Transition) — then cont
     for (let i = history.length - 1; i >= 0; i--) {
       const turn = history[i];
       if (turn.speaker !== 'ai') continue;
+      // Active NPC chrome / Roleplay Intro — stronger than text heuristics.
+      if (turn.roleplayNpc != null || turn.roleplayIntro != null) {
+        return true;
+      }
       const text = `${turn.textEn} ${turn.textTh ?? ''}`;
-      return /สถานการณ์|สมมติว่า|roleplay|mission|จริงกัน|Can I help you|What can I get for you|Hello!\s*Can I|ยินดีต้อนรับ|พนักงานทัก|จะตอบว่า|NPC|barista|cashier|server|receptionist|Small or large|What size\?/i.test(
+      return /สถานการณ์|สมมติว่า|roleplay|mission|จริงกัน|Can I help you|What can I get for you|Hello!\s*Can I|ยินดีต้อนรับ|พนักงานทัก|จะตอบว่า|NPC|barista|cashier|server|receptionist|Small or large|What size\?|Local Guide|You're welcome|Go straight/i.test(
         text,
       );
     }
@@ -2011,20 +2015,24 @@ Required response:
       return lang === 'english'
         ? `Learner transcript (exact STT text shown in the app): "${displayTranscript}"
 
-MATCH RESULT: NO CLEAR MATCH during AI Conversation / mission.
-Required response:
-- Soft-teach ONE better line briefly in ENGLISH in textEn (e.g. "You can say: Can I get an iced latte?").
-- textTh = full Thai translation of that English tip/line.
-- Then CONTINUE the mission as NPC in ENGLISH (next follow-up or short confirm → Wrap-up) — do NOT ask them to retry the same mission question.
-- FORBIDDEN: Thai in textEn, "try again", repeating the same NPC ask, returning to Vocabulary / Pattern Drill.`
+MATCH RESULT: NO CLEAR MATCH during AI Conversation / roleplay — communication broke down.
+Required response — STAY IN CHARACTER as the NPC (never switch to Teacher):
+- Clarify briefly in ENGLISH in textEn, e.g. "Sorry?" or "Did you mean Big Ben?" / "Did you mean the museum?"
+- If you can guess the place/intent from context, offer ONE short "Did you mean …?" question.
+- If you cannot guess, just "Sorry?" / "Pardon?" and wait.
+- textTh = full Thai translation (subtitle CC only).
+- Keep expectsUserSpeech=true. expectedSpeech="". Keep roleplayNpc if this is a roleplay lesson.
+- FORBIDDEN: Teacher voice, Thai in textEn, praise ("Almost!", "เกือบเป๊ะ"), "You can say…", "ลองพูดว่า…", "พูดตาม", Repeat drills, soft-teach models, returning to Vocabulary / Pattern Drill.`
         : `Learner transcript (exact STT text shown in the app): "${displayTranscript}"
 
-MATCH RESULT: NO CLEAR MATCH ระหว่าง AI Conversation / mission
-Required response:
-- Soft-teach ประโยคที่ดีกว่าสั้นๆ ครั้งเดียว — textEn เป็น ENGLISH ONLY (เช่น "You can say: Can I get an iced latte?")
-- textTh = คำแปลไทยเต็มของบรรทัดนั้น (เปิดปุ่ม Thai Subtitle ได้)
-- แล้วไปต่อใน mission ทันทีเป็น NPC ภาษาอังกฤษ (ถามต่อหรือยืนยันสั้นๆ → Wrap-up) — ห้ามให้ลองตอบคำถาม mission เดิมซ้ำ
-- FORBIDDEN: ใส่ภาษาไทยใน textEn, ลองอีกที, วนถาม NPC เดิม, ย้อนกลับไป Vocabulary / Pattern Drill`;
+MATCH RESULT: NO CLEAR MATCH ระหว่าง AI Conversation / roleplay — สื่อสารไม่สำเร็จ
+Required response — สวมบทบาท NPC ต่อ (ห้ามสลับเป็นครู):
+- ขอ clarify สั้นๆ เป็น ENGLISH ใน textEn เช่น "Sorry?" หรือ "Did you mean Big Ben?" / "Did you mean the museum?"
+- ถ้าเดาสถานที่/เจตนาจากบริบทได้ ให้ถาม "Did you mean …?" ครั้งเดียว
+- ถ้าเดาไม่ได้ ใช้แค่ "Sorry?" / "Pardon?" แล้วรอ
+- textTh = คำแปลไทยเต็ม (CC ซับไตเติลเท่านั้น)
+- expectsUserSpeech=true. expectedSpeech="". คง roleplayNpc ถ้าเป็นบท roleplay
+- FORBIDDEN: น้ำเสียงครู, ภาษาไทยใน textEn, คำชม ("เกือบเป๊ะ" / Almost), "You can say…", "ลองพูดว่า…", "พูดตาม", Repeat drill, soft-teach, ย้อน Vocabulary / Pattern Drill`;
     }
 
     if (consecutiveMisses) {

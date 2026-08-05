@@ -4922,8 +4922,13 @@ Core Flow (ONE-WAY):
    Flow idea (flexible — adapt wording, do NOT hardcode exact lines):
      - Staff greets / opens space for the learner
      - Learner asks about a place (prefer landmark from step 5; Big Ben OK)
-     - Staff gives simple directions
-     - Optional thank-you → staff welcome close (listen-only)
+     - Staff gives simple directions RIGHT AWAY (e.g. "Sure! Go straight and turn left.")
+       FORBIDDEN after a place ask: "You're welcome!" / closing without directions
+     - Optional thank-you → staff welcome close (listen-only) — ONLY after thanks
+   MISTAKES / unclear speech (🟡 communication broke down) — STAY IN ROLE:
+     - Do NOT correct like a teacher. Do NOT "เกือบเป๊ะ" / "ลองพูดว่า…" / "You can say…" / Repeat.
+     - NPC clarifies in English: "Sorry?" or "Did you mean Big Ben?" (guess from context / landmarks).
+     - Then continue the roleplay — never switch to Teacher B voice mid-scene.
    ROLEPLAY CLOSE (listen-only): short English close only (You're welcome! / Sure! / Have a nice day!).
      expectsUserSpeech=false. isLessonComplete=false. Keep roleplayNpc.
      User taps Continue → Celebrate NEXT turn.
@@ -6889,6 +6894,142 @@ function isExploreCityLearnerLineAsStaff(text: string): boolean {
   );
 }
 
+/** Teacher coaching leaked into roleplay — must become NPC clarify instead. */
+function isExploreCityTeacherCorrection(text: string): boolean {
+  const t = text.trim();
+  if (!t) return false;
+  if (
+    /(ลองพูด|พูดตาม|เกือบเป๊ะ|เกือบครบ|อีกครั้งนะ|คุณสามารถพูด|ลองใหม)/u.test(t)
+  ) {
+    return true;
+  }
+  if (/you can say\s*:/i.test(t)) return true;
+  if (/try saying/i.test(t)) return true;
+  if (/almost[! ]/i.test(t) && /say|looking for|where is/i.test(t)) return true;
+  // Thai script in staff bubble = Teacher voice, not Local Guide.
+  if (/[\u0E00-\u0E7F]/.test(t) && /[A-Za-z]/.test(t)) return true;
+  return false;
+}
+
+const EXPLORE_CITY_PLACE_GUESSES: Array<{ en: string; th: string; re: RegExp }> =
+  [
+    { en: 'Big Ben', th: 'บิ๊กเบน', re: /big\s*ben|บิ๊กเบน/i },
+    { en: 'the London Eye', th: 'ลอนดอนอาย', re: /london\s*eye|ลอนดอนอาย/i },
+    {
+      en: 'Tower Bridge',
+      th: 'ทาวเวอร์บริดจ์',
+      re: /tower\s*bridge|ทาวเวอร์/,
+    },
+    { en: 'the museum', th: 'พิพิธภัณฑ์', re: /museum|พิพิธภัณฑ์/i },
+    { en: 'the park', th: 'สวนสาธารณะ', re: /\bpark\b|สวน/i },
+    { en: 'the temple', th: 'วัด', re: /temple|\bวัด\b/i },
+  ];
+
+function guessExploreCityPlace(
+  text: string,
+  history: Array<{ speaker: string; textEn?: string }>,
+): { en: string; th: string } | null {
+  for (const place of EXPLORE_CITY_PLACE_GUESSES) {
+    if (place.re.test(text)) return { en: place.en, th: place.th };
+  }
+  // Recent user utterances (e.g. "big bed" near Big Ben).
+  for (let i = history.length - 1; i >= 0; i--) {
+    const t = history[i];
+    if (t.speaker !== 'user') continue;
+    const u = (t.textEn ?? '').trim();
+    if (!u || u.startsWith('[')) continue;
+    if (/big\s*bed/i.test(u) || /ben/i.test(u)) {
+      return { en: 'Big Ben', th: 'บิ๊กเบน' };
+    }
+    for (const place of EXPLORE_CITY_PLACE_GUESSES) {
+      if (place.re.test(u)) return { en: place.en, th: place.th };
+    }
+    break;
+  }
+  return null;
+}
+
+function exploreCityClarifyReply(
+  staffText: string,
+  history: Array<{ speaker: string; textEn?: string }>,
+): { textEn: string; textTh: string } {
+  const place = guessExploreCityPlace(staffText, history);
+  if (place) {
+    return {
+      textEn: `Sorry? Did you mean ${place.en}?`,
+      textTh: `ขอโทษนะครับ? หมายถึง${place.th}ใช่ไหมครับ?`,
+    };
+  }
+  return {
+    textEn: 'Sorry?',
+    textTh: 'ขอโทษนะครับ?',
+  };
+}
+
+function latestExploreCityUserText(
+  history: Array<{ speaker: string; textEn?: string }>,
+): string {
+  for (let i = history.length - 1; i >= 0; i--) {
+    const t = history[i];
+    if (t.speaker !== 'user') continue;
+    const text = (t.textEn ?? '').trim();
+    if (!text || text.startsWith('[')) continue;
+    return text;
+  }
+  return '';
+}
+
+function isExploreCityThankYou(text: string): boolean {
+  const t = normalizeExploreCityStaffKey(text);
+  return (
+    t === 'thank you' ||
+    t === 'thanks' ||
+    t === 'thank you so much' ||
+    t === 'thanks a lot' ||
+    t.startsWith('thank you') ||
+    t.startsWith('thanks')
+  );
+}
+
+/** Learner is asking for a place — staff must give directions, never "You're welcome!". */
+function isExploreCityPlaceAsk(text: string): boolean {
+  const t = normalizeExploreCityStaffKey(text);
+  if (!t) return false;
+  if (t.startsWith('where is') || t.includes(' where is ')) return true;
+  if (t.startsWith("i'm looking for") || t.startsWith('i am looking for')) {
+    return true;
+  }
+  if (t.includes('looking for')) return true;
+  // STT sometimes prefixes junk ("Target, I'm looking for…").
+  if (/looking for|where is/i.test(text)) return true;
+  for (const place of EXPLORE_CITY_PLACE_GUESSES) {
+    if (place.re.test(text) && !isExploreCityThankYou(text)) return true;
+  }
+  return false;
+}
+
+function isExploreCityDirectionsLine(text: string): boolean {
+  return /go straight|turn left|turn right|over there|that way|it'?s (on|near|next|across|down)|walk |block|around the corner|on your (left|right)/i.test(
+    text,
+  );
+}
+
+function exploreCityDirectionsReply(
+  history: Array<{ speaker: string; textEn?: string }>,
+): { textEn: string; textTh: string } {
+  const place = guessExploreCityPlace('', history);
+  if (place) {
+    return {
+      textEn: `Sure! Go straight and turn left. ${place.en} is over there.`,
+      textTh: `ได้เลยครับ! ตรงไปแล้วเลี้ยวซ้าย ${place.th}อยู่แถวนั้นครับ`,
+    };
+  }
+  return {
+    textEn: 'Sure! Go straight and turn left.',
+    textTh: 'ได้เลยครับ! ตรงไปแล้วเลี้ยวซ้ายครับ',
+  };
+}
+
 function exploreCityRoleplayIntroIndex(
   history: Array<{ speaker: string; roleplayIntro?: unknown }>,
 ): number {
@@ -6934,7 +7075,8 @@ function exploreCityRoleplayAlreadyClosed(
  * Guide Explore the City roleplay without a fixed script:
  * - Pin objective + NPC chrome after intro
  * - Block staff from saying learner lines (Where is… / I'm looking for…)
- * - Enforce max 4 learner speaks → listen-only close
+ * - Answer place asks with directions (never premature "You're welcome!")
+ * - Enforce max 4 learner speaks → listen-only close (after helping)
  */
 export function guideExploreCityRoleplayIfNeeded(
   lessonId: string,
@@ -6979,14 +7121,34 @@ export function guideExploreCityRoleplayIfNeeded(
   const hitMax = learnerSpeaks >= EXPLORE_CITY_ROLEPLAY_MAX_LEARNER_SPEAKS;
   const raw = (current.textEn ?? '').trim();
   const staffSaidLearnerLine = isExploreCityLearnerLineAsStaff(raw);
+  const lastUser = latestExploreCityUserText(history);
+  const userAskedPlace = isExploreCityPlaceAsk(lastUser);
+  const userThanked = isExploreCityThankYou(lastUser);
 
   let textEn = raw;
   let textTh = current.textTh?.trim() || null;
   let expectsUserSpeech = current.expectsUserSpeech;
   let expectedSpeech = current.expectedSpeech;
 
-  if (hitMax || isAroundTownRoleplayCloseLine(raw)) {
-    // Max turns or model already closing — pin a listen-only close.
+  if (userAskedPlace) {
+    // User asked for a place — ALWAYS answer with directions, never close.
+    if (
+      isAroundTownRoleplayCloseLine(raw) ||
+      isExploreCityTeacherCorrection(raw) ||
+      staffSaidLearnerLine ||
+      !raw ||
+      !isExploreCityDirectionsLine(raw)
+    ) {
+      const dirs = exploreCityDirectionsReply(history);
+      textEn = dirs.textEn;
+      textTh = dirs.textTh;
+    }
+    // After directions at max speaks → listen-only (tap Continue → Celebrate).
+    // Otherwise keep chatting (thank-you optional).
+    expectsUserSpeech = !hitMax;
+    expectedSpeech = expectsUserSpeech ? '' : null;
+  } else if (userThanked || (hitMax && !userAskedPlace)) {
+    // Thanks → welcome; or soft close at max when not mid-question.
     textEn = isAroundTownRoleplayCloseLine(raw) ? raw : "You're welcome!";
     textTh =
       textTh && isAroundTownRoleplayCloseLine(raw)
@@ -6994,6 +7156,19 @@ export function guideExploreCityRoleplayIfNeeded(
         : 'ด้วยความยินดีครับ!';
     expectsUserSpeech = false;
     expectedSpeech = null;
+  } else if (isAroundTownRoleplayCloseLine(raw)) {
+    // Model closed early without thanks / place ask — reopen lightly.
+    textEn = 'Yes?';
+    textTh = 'ครับ?';
+    expectsUserSpeech = true;
+    expectedSpeech = '';
+  } else if (isExploreCityTeacherCorrection(raw)) {
+    // Teacher drill leaked mid-roleplay → force NPC clarify instead.
+    const clarify = exploreCityClarifyReply(raw, history);
+    textEn = clarify.textEn;
+    textTh = clarify.textTh;
+    expectsUserSpeech = true;
+    expectedSpeech = '';
   } else if (staffSaidLearnerLine || !raw) {
     // NPC must help, not ask for directions — soft repair only.
     textEn = 'Yes?';
