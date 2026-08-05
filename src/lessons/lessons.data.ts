@@ -7941,15 +7941,41 @@ export function guideScriptedAroundTownRoleplayIfNeeded(
     lastAskAnswered(history, startIdx, lastAskIdx, config);
   if (lastAskDone && config.exitAfterLastAsk) {
     const th = current.textTh?.trim() ?? '';
-    const en = current.textEn.trim().toLowerCase();
-    const looksLikePattern2 =
-      en.includes('how much is this') ||
-      th.includes('ถามราคา') ||
-      th.includes('ราคาเท่าไหร่');
+    const en = current.textEn.trim();
+    const enLower = en.toLowerCase();
 
-    if (looksLikePattern2 && !isAroundTownRoleplayCloseLine(current.textEn)) {
+    // Mini Challenge speak ("ไหนลองถามราคา…") — NOT Pattern 2 listen teach.
+    const looksLikePriceSpeakChallenge =
+      th.includes('ไหนลองถามราคา') ||
+      th.includes('ลองถามราคา') ||
+      (enLower.includes('how much') && current.expectsUserSpeech);
+
+    if (looksLikePriceSpeakChallenge) {
       return {
-        textEn: current.textEn,
+        textEn: enLower.includes('how much') ? en : 'How much is this?',
+        textTh: th || 'ไหนลองถามราคาเสื้อตัวนี้ดูครับ',
+        expectsUserSpeech: true,
+        expectedSpeech: 'How much is this?',
+        roleplayNpc: null,
+        emojiChoice: {
+          options: [
+            { emoji: '👕', label: 'shirt', speak: 'How much is this?' },
+          ],
+        },
+        isTaskComplete: false,
+      };
+    }
+
+    // Pattern 2 listen teach only (model How much + มาฝึกถามราคา / ถ้าจะถามว่า).
+    const looksLikePriceTeach =
+      th.includes('มาฝึกถามราคา') ||
+      th.includes('ถ้าจะถามว่า') ||
+      (enLower.includes('how much is this') &&
+        (th.includes('ราคาเท่าไหร่') || th.includes('ต่อมา')));
+
+    if (looksLikePriceTeach && !isAroundTownRoleplayCloseLine(en)) {
+      return {
+        textEn: en || config.exitAfterLastAsk.textEn,
         textTh: th || config.exitAfterLastAsk.textTh,
         expectsUserSpeech: false,
         expectedSpeech: null,
@@ -7959,6 +7985,8 @@ export function guideScriptedAroundTownRoleplayIfNeeded(
       };
     }
 
+    // Default handoff after size → Pattern 2 listen teach (never Mini Challenge yet,
+    // never "It's twenty dollars.").
     return {
       textEn: config.exitAfterLastAsk.textEn,
       textTh: config.exitAfterLastAsk.textTh,
