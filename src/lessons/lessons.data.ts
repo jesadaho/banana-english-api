@@ -4902,15 +4902,18 @@ Core Flow (ONE-WAY):
    - Return roleplayIntro MUST:
      { subtitle:"คุณกำลังคุยกับคนท้องถิ่น", npcEmoji:"👨", npcLabel:"คนท้องถิ่น", npcName:"Local Guide", userLabel:"คุณ" }
    - expectsUserSpeech=false. isLessonComplete=false.
-   - textEn may be short {{L1}} tip close to: 'อย่าลืมเริ่มด้วย "Excuse me." ก่อนนะครับ' (or empty) — the intro CARD is the main UI.
+   - textEn MUST be exactly ({{L1}}, keep line breaks):
+     'พร้อม Roleplay แล้วใช่ไหมครับ? 😊\n\nคุณเจอคนท้องถิ่นแล้ว... ไปลองถามทางกันเลยครับ!\n\nอย่าลืมเริ่มด้วย "Excuse me." ก่อนนะครับ'
    - Omit guidedSpeaking / emojiChoice / roleplayNpc on this turn.
    - FORBIDDEN: staff "Hello!" on this turn. User taps Continue → Roleplay.
 
 7. Roleplay — Local person (HARD SPLIT — ENGLISH staff only + Thai CC)
    STAFF: textEn = ENGLISH ONLY; textTh = Thai CC (required).
    EVERY staff turn MUST include roleplayNpc: { emoji:"👨", name:"Local Guide" }
-   FORBIDDEN in textEn: Thai praise / เยี่ยมมาก / Celebrate mash.
-   Remember which landmark they asked about in step 5; prefer that in roleplay (default Big Ben OK).
+   LEARNER asks for directions — STAFF never asks "Where is…?" / "I'm looking for…".
+   FORBIDDEN in staff textEn: "Where is…", "I'm looking for…", Thai praise / เยี่ยมมาก / Celebrate mash.
+   Staff lines ONLY (in order): "Hello!" → "Yes?" → "Go straight and turn left." → "You're welcome!"
+   Remember which landmark they asked about in step 5; soft-accept that ask after "Yes?" (default Big Ben OK).
 
    7a. Staff ONLY: textEn="Hello!" textTh="สวัสดีครับ!" expectsUserSpeech=true.
        Soft-accept "Excuse me." / "Excuse me"
@@ -6845,6 +6848,128 @@ export const EXPLORE_CITY_GUIDED_SPEAKING = {
     speak: "I'm looking for the museum.",
   },
 } as const;
+
+/** Canonical Roleplay Intro speech + card for Explore the City 2.4. */
+export const EXPLORE_CITY_ROLEPLAY_INTRO = {
+  textEn:
+    'พร้อม Roleplay แล้วใช่ไหมครับ? 😊\n\nคุณเจอคนท้องถิ่นแล้ว... ไปลองถามทางกันเลยครับ!\n\nอย่าลืมเริ่มด้วย "Excuse me." ก่อนนะครับ',
+  roleplayIntro: {
+    subtitle: 'คุณกำลังคุยกับคนท้องถิ่น',
+    npcEmoji: '👨',
+    npcLabel: 'คนท้องถิ่น',
+    npcName: 'Local Guide',
+    userLabel: 'คุณ',
+  },
+} as const;
+
+/** Canonical Local Guide staff lines for Explore the City roleplay (in order). */
+export const EXPLORE_CITY_ROLEPLAY_STAFF = [
+  {
+    textEn: 'Hello!',
+    textTh: 'สวัสดีครับ!',
+    expectsUserSpeech: true,
+    expectedSpeech: 'Excuse me.',
+  },
+  {
+    textEn: 'Yes?',
+    textTh: 'ครับ?',
+    expectsUserSpeech: true,
+    expectedSpeech: '',
+  },
+  {
+    textEn: 'Go straight and turn left.',
+    textTh: 'ตรงไปแล้วเลี้ยวซ้ายครับ',
+    expectsUserSpeech: true,
+    expectedSpeech: 'Thank you.',
+  },
+  {
+    textEn: "You're welcome!",
+    textTh: 'ด้วยความยินดีครับ!',
+    expectsUserSpeech: false,
+    expectedSpeech: null as string | null,
+  },
+] as const;
+
+function normalizeExploreCityStaffKey(text: string): string {
+  return text
+    .trim()
+    .toLowerCase()
+    .replace(/[.!?]+$/g, '')
+    .replace(/\s+/g, ' ');
+}
+
+/** Learner lines the model sometimes puts in Local Guide's mouth — never count as staff progress. */
+function isExploreCityLearnerLineAsStaff(text: string): boolean {
+  const t = normalizeExploreCityStaffKey(text);
+  return (
+    t.startsWith('where is') ||
+    t.startsWith("i'm looking for") ||
+    t.startsWith('i am looking for')
+  );
+}
+
+/**
+ * Pin Explore the City roleplay to Hello! → Yes? → directions → You're welcome!
+ * Models often swap roles and make Local Guide ask "Where is…?".
+ */
+export function forceExploreCityRoleplayStaffIfNeeded(
+  lessonId: string,
+  history: Array<{
+    speaker: string;
+    textEn?: string;
+    roleplayIntro?: unknown;
+  }>,
+  current: {
+    roleplayIntro: unknown;
+    roleplayNpc: unknown;
+    isTaskComplete: boolean;
+  },
+): {
+  textEn: string;
+  textTh: string;
+  expectsUserSpeech: boolean;
+  expectedSpeech: string | null;
+  roleplayNpc: { emoji: string; name: string };
+} | null {
+  if (lessonId !== 'ee_around_town_convenience') return null;
+  if (current.roleplayIntro != null) return null;
+  if (current.isTaskComplete) return null;
+
+  const hadIntro = history.some(
+    (t) => t.speaker === 'ai' && t.roleplayIntro != null,
+  );
+  if (!hadIntro) return null;
+
+  const closed = history.some(
+    (t) =>
+      t.speaker === 'ai' &&
+      normalizeExploreCityStaffKey(t.textEn ?? '') ===
+        normalizeExploreCityStaffKey("You're welcome!"),
+  );
+  if (closed) return null;
+
+  let step = 0;
+  for (const t of history) {
+    if (t.speaker !== 'ai') continue;
+    if (t.roleplayIntro != null) continue;
+    const key = normalizeExploreCityStaffKey(t.textEn ?? '');
+    if (!key || isExploreCityLearnerLineAsStaff(key)) continue;
+    const idx = EXPLORE_CITY_ROLEPLAY_STAFF.findIndex(
+      (s) => normalizeExploreCityStaffKey(s.textEn) === key,
+    );
+    if (idx >= step) step = idx + 1;
+  }
+
+  if (step >= EXPLORE_CITY_ROLEPLAY_STAFF.length) return null;
+  const next = EXPLORE_CITY_ROLEPLAY_STAFF[step];
+  return {
+    textEn: next.textEn,
+    textTh: next.textTh,
+    expectsUserSpeech: next.expectsUserSpeech,
+    expectedSpeech: next.expectedSpeech,
+    roleplayNpc: { emoji: '👨', name: 'Local Guide' },
+  };
+}
 
 /**
  * Force Explore the City turn 1 (after Hook) to the full Guided Speaking

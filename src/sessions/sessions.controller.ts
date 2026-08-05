@@ -55,6 +55,8 @@ import {
   normalizeRoleplayIntro,
   normalizeRoleplayNpc,
   forceExploreCityGuidedSpeakingIfNeeded,
+  forceExploreCityRoleplayStaffIfNeeded,
+  EXPLORE_CITY_ROLEPLAY_INTRO,
   sanitizeAroundTownStaffSpeech,
   isAroundTownRoleplayCloseLine,
   getLesson,
@@ -551,7 +553,7 @@ export class SessionsController {
 
       let emojiChoice = normalizeEmojiChoice(reply.emojiChoice);
       let guidedSpeaking = normalizeGuidedSpeaking(reply.guidedSpeaking);
-      const roleplayIntro = normalizeRoleplayIntro(reply.roleplayIntro);
+      let roleplayIntro = normalizeRoleplayIntro(reply.roleplayIntro);
       let roleplayNpc = normalizeRoleplayNpc(reply.roleplayNpc);
 
       let textEn = reply.textEn;
@@ -575,6 +577,40 @@ export class SessionsController {
         guidedSpeaking = forcedGuided.guidedSpeaking;
         expectedSpeech = forcedGuided.expectedSpeech;
         emojiChoice = null;
+      }
+
+      // Pin Explore the City Roleplay Intro copy + card whenever the model
+      // returns the intro turn (avoids mangled bridge lines).
+      if (
+        config.lessonId === 'ee_around_town_convenience' &&
+        roleplayIntro != null
+      ) {
+        textEn = EXPLORE_CITY_ROLEPLAY_INTRO.textEn;
+        roleplayIntro = { ...EXPLORE_CITY_ROLEPLAY_INTRO.roleplayIntro };
+        emojiChoice = null;
+        guidedSpeaking = null;
+      }
+
+      // Pin Local Guide lines — never let staff ask "Where is…?" (learner line).
+      const forcedStaff = forceExploreCityRoleplayStaffIfNeeded(
+        config.lessonId,
+        data.turns,
+        {
+          roleplayIntro,
+          roleplayNpc,
+          isTaskComplete,
+        },
+      );
+      if (forcedStaff != null) {
+        textEn = forcedStaff.textEn;
+        textTh = forcedStaff.textTh;
+        expectsUserSpeech = forcedStaff.expectsUserSpeech;
+        expectedSpeech = forcedStaff.expectedSpeech;
+        roleplayNpc = forcedStaff.roleplayNpc;
+        roleplayIntro = null;
+        guidedSpeaking = null;
+        emojiChoice = null;
+        isTaskComplete = false;
       }
 
       // Emoji Choice / Guided Speaking turns always need the mic — never listen-only.
