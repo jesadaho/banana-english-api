@@ -4909,10 +4909,10 @@ Core Flow (ONE-WAY):
 
 7. Roleplay — Local person (OBJECTIVE-DRIVEN — NOT a fixed script)
    OBJECTIVE (show via roleplayNpc.objective every staff turn):
-     "🎯 Ask for directions to a place."
+     "Ask for directions to a place."
    STAFF: textEn = ENGLISH ONLY short NPC lines; textTh = Thai CC (required).
    EVERY staff turn MUST include:
-     roleplayNpc: { emoji:"👨", name:"Local Guide", objective:"🎯 Ask for directions to a place." }
+     roleplayNpc: { emoji:"👨", name:"Local Guide", objective:"Ask for directions to a place." }
    Roles: LEARNER asks for directions (Excuse me / Where is… / I'm looking for…).
           STAFF is the local who HELPS — never asks "Where is…?" / "I'm looking for…".
    Length: about 2–4 learner speaks. HARD MAX = 4 learner speaks after Roleplay Intro.
@@ -4930,8 +4930,9 @@ Core Flow (ONE-WAY):
      FORBIDDEN: mash close + Celebrate / Thai Teacher praise into staff textEn.
 
 8. Celebrate (listen-only) — AFTER Continue from roleplay close ONLY
-   - Warm ~2–3 sentences in {{L1}}: name once + I'm looking for… / Where is… / Excuse me + soft tease Transportation.
-   - FORBIDDEN: one-liner only; starting with staff close lines.
+   - MUST open with praise first ({{L1}}), e.g. "เยี่ยมเลยครับ! 👏" or "เยี่ยมมากครับ [Name]! 👏" — praise BEFORE any recap.
+   - Then warm ~2–3 sentences: name once (if not in the praise line) + I'm looking for… / Where is… / Excuse me + soft tease Transportation.
+   - FORBIDDEN: one-liner only; starting with staff close lines; jumping straight into recap without praise.
    - expectsUserSpeech=false. isLessonComplete=true. Omit guidedSpeaking / emojiChoice / roleplayIntro / roleplayNpc.
 
 Teaching rules:
@@ -4941,7 +4942,7 @@ Teaching rules:
 
 Turn loop: non-final = action or Continue; Celebrate → isLessonComplete true.`,
     openingPrompt:
-      'Start Explore the City 2.4 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — greet by name + "วันนี้เราจะออกไปเดินเที่ยวในเมืองกันครับ! 🗺️ มาฝึกถามหาสถานที่เป็นภาษาอังกฤษกันครับ!" — expectsUserSpeech false. FORBIDDEN on Turn 1: question; guidedSpeaking; emojiChoice; roleplayIntro; mic. After Continue: Guided Speaking London/museum with guidedSpeaking stem "I\'m looking for the..." + 🏛️ → listen-only pattern teach "I\'m looking for the..." → Mini Challenge looking-for board museum/park/temple/map → listen Pattern "Where is the museum?" → Mini Challenge landmarks Big Ben/London Eye/Tower Bridge → Roleplay Intro card (roleplayIntro คนท้องถิ่น, tap Continue) → OBJECTIVE roleplay (roleplayNpc.objective "🎯 Ask for directions to a place.", ~2–4 learner speaks, max 4; staff helps, never asks Where is…; soft-close with thank you if natural) → listen-only staff close → tap Continue → THEN Celebrate ~2–3 sentences + Transportation tease. NEVER mash staff close + Celebrate. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
+      'Start Explore the City 2.4 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — greet by name + "วันนี้เราจะออกไปเดินเที่ยวในเมืองกันครับ! 🗺️ มาฝึกถามหาสถานที่เป็นภาษาอังกฤษกันครับ!" — expectsUserSpeech false. FORBIDDEN on Turn 1: question; guidedSpeaking; emojiChoice; roleplayIntro; mic. After Continue: Guided Speaking London/museum with guidedSpeaking stem "I\'m looking for the..." + 🏛️ → listen-only pattern teach "I\'m looking for the..." → Mini Challenge looking-for board museum/park/temple/map → listen Pattern "Where is the museum?" → Mini Challenge landmarks Big Ben/London Eye/Tower Bridge → Roleplay Intro card (roleplayIntro คนท้องถิ่น, tap Continue) → OBJECTIVE roleplay (roleplayNpc.objective "Ask for directions to a place.", ~2–4 learner speaks, max 4; staff helps, never asks Where is…; soft-close with thank you if natural) → listen-only staff close → tap Continue → THEN Celebrate MUST open with praise "เยี่ยมเลยครับ! 👏" first then ~2–3 sentences + Transportation tease. NEVER mash staff close + Celebrate. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
   },
   buildStoriesPatternLesson({
     lessonId: 'ee_around_town_transport',
@@ -6865,7 +6866,7 @@ export const EXPLORE_CITY_ROLEPLAY_INTRO = {
 
 /** Objective shown on Explore the City roleplay chrome. */
 export const EXPLORE_CITY_ROLEPLAY_OBJECTIVE =
-  '🎯 Ask for directions to a place.';
+  'Ask for directions to a place.';
 
 const EXPLORE_CITY_ROLEPLAY_MAX_LEARNER_SPEAKS = 4;
 
@@ -7009,6 +7010,38 @@ export function guideExploreCityRoleplayIfNeeded(
     roleplayNpc: npc,
     isTaskComplete: false,
   };
+}
+
+/**
+ * After roleplay close → Celebrate must open with praise (เยี่ยม…).
+ * Models often jump straight into the recap.
+ */
+export function ensureExploreCityCelebratePraiseFirst(
+  lessonId: string,
+  history: Array<{
+    speaker: string;
+    textEn?: string;
+    roleplayIntro?: unknown;
+  }>,
+  current: {
+    textEn: string;
+    roleplayIntro: unknown;
+    roleplayNpc: unknown;
+    isTaskComplete: boolean;
+  },
+): string | null {
+  if (lessonId !== 'ee_around_town_convenience') return null;
+  if (!current.isTaskComplete) return null;
+  if (current.roleplayIntro != null || current.roleplayNpc != null) {
+    return null;
+  }
+  if (!exploreCityRoleplayAlreadyClosed(history)) return null;
+
+  const raw = (current.textEn ?? '').trim();
+  if (!raw) return null;
+  if (/^(เยี่ยม|เก่งมาก|สุดยอด|ดีมาก)/u.test(raw)) return raw;
+
+  return `เยี่ยมเลยครับ! 👏\n\n${raw}`;
 }
 
 /**

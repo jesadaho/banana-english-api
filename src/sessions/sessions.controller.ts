@@ -56,7 +56,9 @@ import {
   normalizeRoleplayNpc,
   forceExploreCityGuidedSpeakingIfNeeded,
   guideExploreCityRoleplayIfNeeded,
+  ensureExploreCityCelebratePraiseFirst,
   EXPLORE_CITY_ROLEPLAY_INTRO,
+  EXPLORE_CITY_ROLEPLAY_OBJECTIVE,
   sanitizeAroundTownStaffSpeech,
   isAroundTownRoleplayCloseLine,
   getLesson,
@@ -617,6 +619,21 @@ export class SessionsController {
         isTaskComplete = guidedRoleplay.isTaskComplete;
       }
 
+      // Celebrate after roleplay — always open with praise first.
+      const celebrateWithPraise = ensureExploreCityCelebratePraiseFirst(
+        config.lessonId,
+        data.turns,
+        {
+          textEn,
+          roleplayIntro,
+          roleplayNpc,
+          isTaskComplete,
+        },
+      );
+      if (celebrateWithPraise != null) {
+        textEn = celebrateWithPraise;
+      }
+
       // Emoji Choice / Guided Speaking turns always need the mic — never listen-only.
       if ((emojiChoice != null || guidedSpeaking != null) && !isTaskComplete) {
         expectsUserSpeech = true;
@@ -630,6 +647,17 @@ export class SessionsController {
           roleplayNpc = {
             emoji: roleplayIntro.npcEmoji,
             name: roleplayIntro.npcName?.trim() || roleplayIntro.npcLabel,
+            ...(config.lessonId === 'ee_around_town_convenience'
+              ? { objective: EXPLORE_CITY_ROLEPLAY_OBJECTIVE }
+              : {}),
+          };
+        } else if (
+          config.lessonId === 'ee_around_town_convenience' &&
+          !roleplayNpc.objective
+        ) {
+          roleplayNpc = {
+            ...roleplayNpc,
+            objective: EXPLORE_CITY_ROLEPLAY_OBJECTIVE,
           };
         }
       }
