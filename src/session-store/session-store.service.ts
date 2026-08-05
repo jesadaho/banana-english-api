@@ -2,6 +2,7 @@ import { randomUUID } from 'crypto';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import type {
+  EmojiChoicePrompt,
   EmojiSpeakPrompt,
   GptIntroReport,
   LessonScene,
@@ -42,6 +43,8 @@ export interface ChatTurn {
   emojiSpeak?: EmojiSpeakPrompt | null;
   /** Full Emoji Speak batch (ai turns only). */
   emojiSpeakSet?: EmojiSpeakPrompt[] | null;
+  /** Emoji Choice scaffolds (ai turns only). */
+  emojiChoice?: EmojiChoicePrompt | null;
 }
 
 export interface ConversationSession {

@@ -50,6 +50,7 @@ import {
 import {
   emojiSpeakSetForTrainingTurn,
   enrichEmojiSpeakForLesson,
+  normalizeEmojiChoice,
   getLesson,
   getLessonBananaCost,
   isPronunciationLesson,
@@ -358,6 +359,7 @@ export class SessionsController {
           config.lessonId,
           reply.emojiSpeak,
         ),
+        emojiChoice: normalizeEmojiChoice(reply.emojiChoice),
       };
       this.sessionStore.addTurn(data.session.id, opening);
 
@@ -395,6 +397,7 @@ export class SessionsController {
             config.lessonId,
             reply.emojiSpeak,
           ),
+          emojiChoice: normalizeEmojiChoice(reply.emojiChoice),
         },
       };
     } catch (err) {
@@ -520,6 +523,8 @@ export class SessionsController {
                 )
             : null);
 
+      const emojiChoice = normalizeEmojiChoice(reply.emojiChoice);
+
       const aiTurn = {
         speaker: 'ai' as const,
         textEn: reply.textEn,
@@ -530,6 +535,7 @@ export class SessionsController {
         scene: reply.scene ?? null,
         emojiSpeak: emojiSpeakSet ? null : emojiSpeak,
         emojiSpeakSet,
+        emojiChoice,
       };
       this.sessionStore.addTurn(sessionId, aiTurn);
 
@@ -546,6 +552,7 @@ export class SessionsController {
         scene: reply.scene,
         emojiSpeak: emojiSpeakSet ? null : emojiSpeak,
         emojiSpeakSet,
+        emojiChoice,
       };
 
       if (body.generateAudio) {

@@ -4379,53 +4379,127 @@ Core Flow (progression milestones — NOT a fixed turn count):
     openingPrompt:
       'Start the Shopping Basics lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once in the welcome, briefly say the lesson goal, then model "I\'m just looking." and ask them to repeat (Core Flow step 1–2). Follow the Core Flow milestones — retries/feedback may add turns between steps. Every turn must end with a clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
   },
-  buildStoriesPatternLesson({
+  {
     lessonId: 'ee_around_town_shopping',
-    code: '2.1',
-    trackLabel: 'Everyday Life',
+    targetLabel: 'word or sentence',
     titleEn: 'Shopping',
     titleTh: 'ซื้อของ',
     goalEn: 'Buy clothes, ask the price, and talk to a shop assistant.',
     goalTh: 'ซื้อของ ถามราคา และคุยกับพนักงานได้',
-    hookTh:
-      'วันนี้มาฝึกคุยในร้านเสื้อผ้ากันครับ! หาเสื้อ ถามราคา แล้วเลือกไซส์แบบชิลๆ เลย',
-    emojiWords: [
-      { emoji: '👕', answer: 'shirt', hint: 's h _ r t' },
-      { emoji: '👖', answer: 'pants', hint: 'p _ n t s' },
-      { emoji: '📏', answer: 'size', hint: 's _ z e' },
-      { emoji: '💵', answer: 'cash', hint: 'c _ s h' },
+    difficulty: 'beginner',
+    languageMix: { thai: 70, english: 30 },
+    estimatedMinutesMin: 4,
+    estimatedMinutesMax: 6,
+    targetPhrases: [
+      'shirt',
+      'pants',
+      'shoes',
+      'hat',
+      "I'm looking for a shirt.",
+      "I'm looking for pants.",
+      "I'm looking for shoes.",
+      "I'm looking for a hat.",
+      'Small',
+      'Medium',
+      'Large',
+      'How much is this?',
     ],
-    tellGoal: 'build shopping statements (Present Continuous / useful lines)',
-    tell1CueTh:
-      "ถ้าจะบอกพนักงานว่า กำลังหาเสื้อเชิ้ต ให้พูดว่า... I'm looking for a shirt. ... ลองพูดดูครับ",
-    tell1Thai: 'ฉันกำลังหาเสื้อเชิ้ต',
-    tell1En: "I'm looking for a shirt.",
-    tipTh:
-      "เยี่ยมเลยครับ! เวลาพูดถึงสิ่งที่กำลังทำอยู่ ใช้ am/is/are + verb-ing เช่น I'm looking for a shirt.",
-    tell2CueTh:
-      'คราวนี้ถ้าจะเปลี่ยนเป็น กำลังหากางเกง... ลองพูดว่าไงดีครับ?',
-    tell2Thai: 'ฉันกำลังหากางเกง',
-    tell2En: "I'm looking for pants.",
-    tell2PraiseTh: 'โอเคเลย! เข้าใจง่ายสุดๆ',
-    tell3CueTh: 'ถ้าจะบอกว่า เอาอันนี้... ลองพูดสิครับ',
-    tell3Thai: 'เอาอันนี้',
-    tell3En: "I'd like this one.",
-    tell3PraiseTh: "เป๊ะ! I'd like this one. ใช้เลือกของได้เลยครับ",
-    ask1CueTh:
-      'คราวนี้ลองถามพนักงานเรื่องราคา... โดยพูดว่า How much is this? ... ลองเลยครับ',
-    ask1En: 'How much is this?',
-    ask1AiAnswerEn: "It's $20.",
-    ask1PraiseTh: 'เป๊ะเลยครับ!',
-    ask2ThaiCue: 'คราวนี้ลองถามเองดูครับ ว่ามีไซส์ไหม พูดว่าไงดี?',
-    ask2En: 'Do you have this in medium?',
-    ask2AiAnswerEn: 'Yes, we do.',
-    ask2PraiseTh: 'ดีมากครับ!',
-    answerBridgeTh: 'ดีมากครับ! ต่อไปสมมุติว่าผมเป็นพนักงานนะครับ...',
-    answer1En: 'Can I help you?',
-    answer1PraiseTh: 'ดีมากครับ!',
-    answer2En: 'What size?',
-    nextLessonHint: 'Restaurant / ร้านอาหาร',
-  }),
+    maxTurns: 22,
+    listenOnlyTurns: 1,
+    systemInstruction: `Lesson: Shopping (Everyday English → Everyday Life → 2.1)
+Goal: Buy clothes, ask the price, and talk to a shop assistant.
+Pace target: ~4–6 minutes. Keep every tutor turn tight.
+
+NEW turn type — emojiChoice (critical):
+- On speak turns that need visual scaffolds, return emojiChoice: { options: [ { emoji, label?, speak }, ... ] }.
+- The app shows options under your bubble; the learner STILL speaks via mic (tap is guide only).
+- Single-option emojiChoice = emoji cue only (Emoji Recall) — omit label or leave empty.
+- Multi-option = Mini Challenge choices — include short English labels when helpful (sizes).
+- FORBIDDEN: emojiSpeak / emojiSpeakSet anywhere in this lesson (no letter-blank puzzles).
+- Omit emojiChoice on listen-only / Celebrate turns.
+
+Core Flow (ONE-WAY — never go backward):
+
+1. Hook (listen-only) — OPENING TURN
+   - {{L1}} vibe close to: "วันนี้เราจะไปซื้อเสื้อผ้ากันครับ 👕 มาเรียนประโยคที่ใช้บ่อยที่สุดในร้านค้ากันครับ!"
+   - expectsUserSpeech=false. expectedSpeech="". Omit emojiChoice / emojiSpeak / scene.
+   - Use first name once.
+
+2. Mini Game — Emoji Recall (EXACTLY 2 learner speaks) — NO multi-choice
+   a) Ask in {{L1}}: '"เสื้อ" ในภาษาอังกฤษเรียกว่าอะไรนะครับ?'
+      - expectsUserSpeech=true. expectedSpeech="shirt"
+      - emojiChoice: { options: [ { emoji:"👕", speak:"shirt" } ] }  (emoji cue only — no Choice row of many items)
+   b) After clear "shirt": brief praise + ask '"กางเกง" ล่ะครับ?'
+      - expectedSpeech="pants"
+      - emojiChoice: { options: [ { emoji:"👖", speak:"pants" } ] }
+   After clear "pants": short praise "เยี่ยมเลยครับ!" then → Pattern 1.
+   Soft-accept close variants; max ONE retry then advance.
+
+3. Pattern 1 — Model (listen-only)
+   - {{L1}} close to: 'ถ้า [Name] จะบอกว่า "กำลังหาเสื้ออยู่" ให้พูดว่า...'
+   - textEn MUST include the model line: "I'm looking for a shirt."
+   - expectsUserSpeech=false. expectedSpeech="". Omit emojiChoice.
+   - Do NOT ask them to repeat yet — Continue → Mini Challenge.
+
+4. Mini Challenge — Looking for (emojiChoice multi)
+   - {{L1}}: "ไหนลองบอกว่าคุณกำลังหาอะไรดูครับ 😊"
+   - expectsUserSpeech=true. expectedSpeech="" (learner picks)
+   - emojiChoice MUST be:
+     { options: [
+       { emoji:"👖", label:"pants", speak:"I'm looking for pants." },
+       { emoji:"👟", label:"shoes", speak:"I'm looking for shoes." },
+       { emoji:"🧢", label:"hat", speak:"I'm looking for a hat." },
+       { emoji:"👕", label:"shirt", speak:"I'm looking for a shirt." }
+     ] }
+   - Soft-accept any of those sentences (or close: "I'm looking for a shirt" / pants / shoes / hat).
+   - Remember their item for soft personalization in Roleplay if natural.
+   - After clear answer → Roleplay bridge.
+
+5. Roleplay — Shop assistant
+   5a. Bridge (listen-only): {{L1}} close to "ต่อไปครูพี่บีจะเป็นพนักงานร้านเสื้อผ้านะครับ 😊 พร้อมแล้ว แตะเพื่อเริ่มได้เลย!"
+      expectsUserSpeech=false. Omit emojiChoice.
+   5b. Staff asks ONLY: "Can I help you?" (textEn). textTh = Thai subtitle.
+      expectsUserSpeech=true. expectedSpeech="" (prefer their Mini Challenge line; soft-accept "I'm looking for a shirt." etc.)
+      Omit emojiChoice OR optionally show the same 4 looking-for options again if helpful.
+   5c. After clear answer: Staff asks ONLY "What size?"
+      expectsUserSpeech=true. expectedSpeech=""
+      emojiChoice MUST be:
+        { options: [
+          { emoji:"👕", label:"Small", speak:"Small" },
+          { emoji:"👕", label:"Medium", speak:"Medium" },
+          { emoji:"👕", label:"Large", speak:"Large" }
+        ] }
+      Soft-accept Small / Medium / Large (or "I'd like a medium." etc.).
+   After size → Pattern 2. FORBIDDEN: re-ask Can I help you / What size after a clear reply.
+
+6. Pattern 2 — Price model (listen-only)
+   - Brief praise then {{L1}}: 'ต่อมาเรามาฝึกถามราคากันครับ ถ้าจะถามว่า "ราคาเท่าไหร่" ให้พูดว่า...'
+   - textEn includes: "How much is this?"
+   - expectsUserSpeech=false. Omit emojiChoice.
+
+7. Mini Challenge — Ask price
+   - {{L1}}: "ไหนลองถามราคาเสื้อตัวนี้ดูครับ"
+   - expectsUserSpeech=true. expectedSpeech="How much is this?"
+   - emojiChoice: { options: [ { emoji:"👕", speak:"How much is this?" } ] }
+   - After clear ask → NEXT turn listen-only staff answer: "It's twenty dollars." (expectsUserSpeech=false)
+   - Then → Celebrate.
+
+8. Celebrate (listen-only)
+   - Warm {{L1}}: they can shop for clothes in English. Name once. Soft tease Restaurant.
+   - expectsUserSpeech=false. isLessonComplete=true. Omit emojiChoice / emojiSpeak / scene.
+
+Teaching rules:
+- ONE speaking task per turn.
+- Soft correction only. Soft-accept close variants → เฉลย once → advance (no hell-loop).
+- STT English-only for spoken answers; coach in {{L1}} OK; staff questions in English in textEn.
+- Never go backward. Never emojiSpeak/emojiSpeakSet in this lesson.
+
+Turn loop:
+- Non-final turns end with one clear action OR listen-only Continue.
+- When Celebrate is reached, isLessonComplete must be true.`,
+    openingPrompt:
+      'Start Shopping 2.1 for this one learner only (private 1:1, never {{NO_GROUP}}). Use first name once. CRITICAL Turn 1 = Hook ONLY — shopping clothes vibe with 👕 — expectsUserSpeech false, NO emojiChoice, NO emojiSpeak. Then Emoji Recall: ask Thai "เสื้อ"→shirt with emojiChoice single 👕; then "กางเกง"→pants with 👖 (NO multi-choice). Then listen-only Pattern model "I\'m looking for a shirt." → Mini Challenge with emojiChoice 👖pants/👟shoes/🧢hat/👕shirt (learner speaks I\'m looking for …). Roleplay: listen bridge → staff "Can I help you?" → "What size?" with emojiChoice Small/Medium/Large → listen Pattern "How much is this?" → speak How much is this? with 👕 → staff "It\'s twenty dollars." → Celebrate complete. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
+  },
   buildStoriesPatternLesson({
     lessonId: 'ee_around_town_restaurant',
     code: '2.2',
@@ -6389,6 +6463,41 @@ export function enrichEmojiSpeakForLesson(
     index: emojiSpeak.index,
     total: emojiSpeak.total,
   };
+}
+
+/** Sanitize optional emojiChoice scaffolds from the model. */
+export function normalizeEmojiChoice(
+  emojiChoice:
+    | {
+        options?: Array<{
+          emoji?: string;
+          label?: string;
+          speak?: string;
+        }>;
+      }
+    | null
+    | undefined,
+):
+  | {
+      options: Array<{ emoji: string; label?: string; speak: string }>;
+    }
+  | null {
+  if (!emojiChoice || !Array.isArray(emojiChoice.options)) return null;
+  const options = emojiChoice.options
+    .map((opt) => {
+      const emoji = opt.emoji?.trim() ?? '';
+      const speak = opt.speak?.trim() ?? '';
+      if (!emoji || !speak) return null;
+      const label = opt.label?.trim();
+      return {
+        emoji,
+        speak,
+        ...(label ? { label } : {}),
+      };
+    })
+    .filter((opt): opt is NonNullable<typeof opt> => opt != null);
+  if (options.length === 0) return null;
+  return { options };
 }
 
 /**

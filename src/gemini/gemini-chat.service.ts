@@ -247,6 +247,37 @@ function buildTrainingReplySchema(withSpeechFlag: boolean) {
           required: ['emoji', 'answer', 'hint', 'index', 'total'],
         },
       },
+      emojiChoice: {
+        type: 'object',
+        description:
+          'Optional visual emoji (+ label) scaffolds for a speak turn. Shown with the AI bubble; learner still speaks via mic. Omit on listen-only / emojiSpeak turns.',
+        properties: {
+          options: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                emoji: {
+                  type: 'string',
+                  description: 'Emoji shown on the chip (e.g. "👕")',
+                },
+                label: {
+                  type: 'string',
+                  description:
+                    'Optional English label under the emoji (e.g. "Small"). Empty OK for emoji-only cues.',
+                },
+                speak: {
+                  type: 'string',
+                  description:
+                    'English the learner may say for this option (word or full sentence).',
+                },
+              },
+              required: ['emoji', 'speak'],
+            },
+          },
+        },
+        required: ['options'],
+      },
     },
     required: [
       'textEn',
@@ -312,6 +343,14 @@ export interface TrainingTurnReply {
     index?: number;
     total?: number;
   }>;
+  /** Visual emoji scaffolds while the learner speaks via mic. */
+  emojiChoice?: {
+    options: Array<{
+      emoji: string;
+      label?: string;
+      speak: string;
+    }>;
+  };
 }
 
 function buildSimulationReplySchema(criteria: string[]) {
@@ -1218,6 +1257,9 @@ export class GeminiChatService {
                     ...(turn.emojiSpeak
                       ? { emojiSpeak: turn.emojiSpeak }
                       : {}),
+                    ...(turn.emojiChoice
+                      ? { emojiChoice: turn.emojiChoice }
+                      : {}),
                   })
                 : turn.textEn,
           },
@@ -2006,7 +2048,7 @@ Return JSON ONLY (critical — never reply with bare prose):
 - textTh: short Thai support line / paraphrase
 - isLessonComplete: true ONLY on the Summary + Celebrate core step (required to finish). Otherwise false${
       speechFlagBlock
-        ? '\n- expectsUserSpeech: false when this turn is listen-only or a ready check, true when you ask the learner to speak\n- expectedSpeech: when expectsUserSpeech is true AND they should say a specific word / short phrase / scripted sentence, set it to that exact English (e.g. "latte", "boarding pass", "I\'m going to Chiang Mai."). When the ask is open free recall or listen-only, set expectedSpeech to ""\n- scene: optional; include only on Watch & Listen Scene turns (see rules above)\n- emojiSpeakSet: optional full puzzle batch on Intro listen turns; emojiSpeak: optional single card (prefer set for Stories)'
+        ? '\n- expectsUserSpeech: false when this turn is listen-only or a ready check, true when you ask the learner to speak\n- expectedSpeech: when expectsUserSpeech is true AND they should say a specific word / short phrase / scripted sentence, set it to that exact English (e.g. "latte", "boarding pass", "I\'m going to Chiang Mai."). When the ask is open free recall or listen-only, set expectedSpeech to ""\n- scene: optional; include only on Watch & Listen Scene turns (see rules above)\n- emojiSpeakSet: optional full puzzle batch on Intro listen turns; emojiSpeak: optional single card (prefer set for Stories)\n- emojiChoice: optional { options:[{ emoji, label?, speak }] } on speak turns that need visual emoji scaffolds (Shopping Mini Challenge / size). Omit on listen-only, emojiSpeak, and Celebrate. Never use emojiChoice instead of emojiSpeak puzzles.'
         : ''
     }`;
   }

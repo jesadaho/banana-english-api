@@ -69,6 +69,11 @@ export interface TurnExchangeResponse {
    * App runs all items locally; only one API round-trip to deliver the set.
    */
   emojiSpeakSet?: EmojiSpeakPrompt[] | null;
+  /**
+   * Visual emoji (+ optional label) scaffolds for the learner's spoken answer.
+   * Shown with the AI bubble; mic still required (tap is guide / STT bias only).
+   */
+  emojiChoice?: EmojiChoicePrompt | null;
 }
 
 /** One Emoji Speak prompt embedded in a training turn. */
@@ -81,6 +86,20 @@ export interface EmojiSpeakPrompt {
   index?: number;
   /** Total emoji words in this lesson set. */
   total?: number;
+}
+
+/** One option in an Emoji Choice scaffold. */
+export interface EmojiChoiceOption {
+  emoji: string;
+  /** Optional English label under the emoji (e.g. "Small", "pants"). */
+  label?: string;
+  /** English the learner may say for this option (STT soft-accept / bias). */
+  speak: string;
+}
+
+/** In-chat Emoji Choice prompt — visual options while the learner speaks. */
+export interface EmojiChoicePrompt {
+  options: EmojiChoiceOption[];
 }
 
 /** One line in a lesson Scene dialogue (Watch & Listen). */
