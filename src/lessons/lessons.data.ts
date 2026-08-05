@@ -7724,52 +7724,67 @@ function highestAskReached(
 }
 
 /**
- * User replies that belong to this ask — from the ask line until the next
- * scripted staff ask (or end). Does NOT leak later answers (e.g. drink reply)
- * back onto an earlier ask — that caused order→drink→loopback to order.
+ * Sticky success for a scripted ask: true if the learner EVER gave a satisfying
+ * reply in a window after that ask — even if the model re-asks the same line
+ * later (re-ask must NOT clear prior success → roleplay loopback).
  */
-function userTextsForAsk(
+function lastAskAnswered(
   history: Array<{ speaker: string; textEn?: string }>,
   startIdx: number,
   askIndex: number,
   config: ScriptedRoleplayConfig,
-): string[] {
-  if (askIndex < 0 || startIdx < 0) return [];
-  const target = normalizeScriptedStaffKey(config.asks[askIndex].staffEn);
-  const texts: string[] = [];
-  let sawAsk = false;
+): boolean {
+  if (askIndex < 0 || startIdx < 0) return false;
+  let inWindow = false;
   for (let i = startIdx; i < history.length; i++) {
     const t = history[i];
     if (t.speaker === 'ai') {
-      const key = normalizeScriptedStaffKey(t.textEn ?? '');
-      if (key === target) {
-        sawAsk = true;
-        texts.length = 0;
-        continue;
+      const idx = matchScriptedAskIndex(t.textEn ?? '', config);
+      if (idx === askIndex) {
+        inWindow = true;
+      } else if (idx >= 0) {
+        inWindow = false;
       }
-      if (!sawAsk) continue;
-      // Next scripted ask (or later) closes this ask's reply window.
-      const nextIdx = matchScriptedAskIndex(t.textEn ?? '', config);
-      if (nextIdx >= 0 && nextIdx !== askIndex) break;
-      // Mid-roleplay "I recommend the chicken." — still in order window.
       continue;
     }
-    if (!sawAsk || t.speaker !== 'user') continue;
+    if (!inWindow || t.speaker !== 'user') continue;
     const text = (t.textEn ?? '').trim();
     if (!text || text.startsWith('[')) continue;
-    texts.push(text);
+    if (userSatisfiesScriptedAsk(config.lessonId, askIndex, text)) {
+      return true;
+    }
   }
-  return texts;
+  return false;
 }
 
+/** User replies in the latest window for this ask (for recommend detection). */
 function latestUserTextAfterAsk(
   history: Array<{ speaker: string; textEn?: string }>,
   startIdx: number,
   askIndex: number,
   config: ScriptedRoleplayConfig,
 ): string {
-  const texts = userTextsForAsk(history, startIdx, askIndex, config);
-  return texts.length === 0 ? '' : texts[texts.length - 1];
+  if (askIndex < 0 || startIdx < 0) return '';
+  let inWindow = false;
+  let latest = '';
+  for (let i = startIdx; i < history.length; i++) {
+    const t = history[i];
+    if (t.speaker === 'ai') {
+      const idx = matchScriptedAskIndex(t.textEn ?? '', config);
+      if (idx === askIndex) {
+        inWindow = true;
+        latest = '';
+      } else if (idx >= 0) {
+        inWindow = false;
+      }
+      continue;
+    }
+    if (!inWindow || t.speaker !== 'user') continue;
+    const text = (t.textEn ?? '').trim();
+    if (!text || text.startsWith('[')) continue;
+    latest = text;
+  }
+  return latest;
 }
 
 function isRecommendQuestion(text: string): boolean {
@@ -7846,19 +7861,6 @@ function userSatisfiesScriptedAsk(
 
   // Fallback: any non-empty speech (legacy).
   return true;
-}
-
-/** Sticky: once any reply in this ask's window satisfied it, stay done. */
-function lastAskAnswered(
-  history: Array<{ speaker: string; textEn?: string }>,
-  startIdx: number,
-  askIndex: number,
-  config: ScriptedRoleplayConfig,
-): boolean {
-  const texts = userTextsForAsk(history, startIdx, askIndex, config);
-  return texts.some((text) =>
-    userSatisfiesScriptedAsk(config.lessonId, askIndex, text),
-  );
 }
 
 function buildScriptedNpc(config: ScriptedRoleplayConfig) {
@@ -7968,6 +7970,24 @@ export function guideScriptedAroundTownRoleplayIfNeeded(
     const en = current.textEn.trim();
     const enLower = en.toLowerCase();
 
+    // Price close — keep staff line, never re-open roleplay chrome.
+    if (isAroundTownRoleplayCloseLine(en)) {
+      return {
+        textEn: en,
+        textTh: th || 'ยี่สิบดอลลาร์ครับ',
+        expectsUserSpeech: false,
+        expectedSpeech: null,
+        roleplayNpc: null,
+        emojiChoice: null,
+        isTaskComplete: false,
+      };
+    }
+
+    const reenteringRoleplay =
+      currentAskIdx >= 0 ||
+      current.roleplayNpc != null ||
+      offScript;
+
     // Mini Challenge speak ("ไหนลองถามราคา…") — NOT Pattern 2 listen teach.
     const looksLikePriceSpeakChallenge =
       th.includes('ไหนลองถามราคา') ||
@@ -7997,7 +8017,7 @@ export function guideScriptedAroundTownRoleplayIfNeeded(
       (enLower.includes('how much is this') &&
         (th.includes('ราคาเท่าไหร่') || th.includes('ต่อมา')));
 
-    if (looksLikePriceTeach && !isAroundTownRoleplayCloseLine(en)) {
+    if (looksLikePriceTeach) {
       return {
         textEn: en || config.exitAfterLastAsk.textEn,
         textTh: th || config.exitAfterLastAsk.textTh,
@@ -8009,17 +8029,21 @@ export function guideScriptedAroundTownRoleplayIfNeeded(
       };
     }
 
-    // Default handoff after size → Pattern 2 listen teach (never Mini Challenge yet,
-    // never "It's twenty dollars.").
-    return {
-      textEn: config.exitAfterLastAsk.textEn,
-      textTh: config.exitAfterLastAsk.textTh,
-      expectsUserSpeech: false,
-      expectedSpeech: null,
-      roleplayNpc: null,
-      emojiChoice: null,
-      isTaskComplete: false,
-    };
+    // Model tried Can I help you? / What size? again after size → block loopback.
+    if (reenteringRoleplay) {
+      return {
+        textEn: config.exitAfterLastAsk.textEn,
+        textTh: config.exitAfterLastAsk.textTh,
+        expectsUserSpeech: false,
+        expectedSpeech: null,
+        roleplayNpc: null,
+        emojiChoice: null,
+        isTaskComplete: false,
+      };
+    }
+
+    // Price / Celebrate turns after roleplay — don't rewrite, just stay out of NPC.
+    return null;
   }
 
   // First unsatisfied ask in order — don't skip ahead when model jumped
