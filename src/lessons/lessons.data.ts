@@ -4514,7 +4514,7 @@ Core Flow (ONE-WAY — never go backward):
    6b. (see step 7)
 
 7. Mini Challenge — Ask price
-   - {{L1}}: "ไหนลองถามราคาเสื้อตัวนี้ดูครับ"
+   - {{L1}}: "ไหนลองถามราคาเสื้อตัวนี้ดูหน่อยครับ"
    - expectsUserSpeech=true. expectedSpeech="How much is this?"
    - emojiChoice: ONLY the shirt cue (do NOT show pants/shoes/cap on this turn):
      { options: [ { emoji:"👕", label:"shirt", speak:"How much is this?" } ] }
@@ -4526,8 +4526,10 @@ Core Flow (ONE-WAY — never go backward):
 
 8. Celebrate (listen-only) — AFTER Continue from staff price answer ONLY
    - Warm Teacher B voice in {{L1}} — NOT a one-liner. Aim ~2–3 short sentences.
-   - MUST cover: (1) specific praise with first name once, (2) what they can do now (หาเสื้อ/กางเกง · คุยพนักงาน · ถามราคา), (3) soft tease next = Restaurant / ร้านอาหาร.
-   - Tone example (adapt, don't recite word-for-word): "เยี่ยมมากครับ [Name]! 👏 วันนี้คุณซื้อเสื้อผ้าเป็นภาษาอังกฤษได้แล้ว — ทั้งบอกว่ากำลังหาอะไร คุยกับพนักงาน และถามราคา เก่งมากเลยครับ พร้อมไปบท Restaurant กันเลยไหมครับ!"
+   - MUST open with praise first: "เยี่ยมเลยครับ!" / "เยี่ยมมากครับ!" (with 👏) BEFORE the name or recap.
+   - FORBIDDEN: starting with the learner's name alone (e.g. "Jim! 👏 วันนี้คุณ…") — praise word first.
+   - MUST cover: (1) praise opener, (2) first name once, (3) what they can do now (หาเสื้อ/กางเกง · คุยพนักงาน · ถามราคา), (4) soft tease next = Restaurant / ร้านอาหาร.
+   - Tone example (adapt, don't recite word-for-word): "เยี่ยมมากครับ! 👏 [Name] วันนี้คุณซื้อเสื้อผ้าเป็นภาษาอังกฤษได้แล้ว — ทั้งบอกว่ากำลังหาอะไร คุยกับพนักงาน และถามราคา เก่งมากเลยครับ พร้อมไปบท Restaurant กันเลยไหมครับ!"
    - FORBIDDEN: ultra-short closers only like "วันนี้คุณทำได้แล้ว" / "เก่งมากครับ จบแล้ว" with nothing else.
    - FORBIDDEN: starting with staff "It's twenty dollars."
    - expectsUserSpeech=false. isLessonComplete=true. Omit emojiChoice / emojiSpeak / scene.
@@ -4664,7 +4666,9 @@ Core Flow (ONE-WAY — never go backward):
    HARD: Roleplay is ONLY 7b→7c→7d — never go backward.
 
 8. Celebrate (listen-only) — AFTER Continue from 7d ONLY
-   - Warm ~2–3 sentences: name once + what they can do (สั่ง I'd like… / ถาม recommend / คุยพนักงาน) + soft tease Coffee Shop.
+   - Warm ~2–3 sentences. MUST open with "เยี่ยมเลยครับ!" / "เยี่ยมมากครับ!" 👏 BEFORE name or recap.
+   - FORBIDDEN: starting with the learner's name alone.
+   - Then: name once + what they can do (สั่ง I'd like… / ถาม recommend / คุยพนักงาน) + soft tease Coffee Shop.
    - FORBIDDEN: one-liner only like "วันนี้คุณทำได้แล้ว"; starting with staff "Sure!".
    - expectsUserSpeech=false. isLessonComplete=true. Omit emojiChoice.
 
@@ -4802,7 +4806,9 @@ Core Flow (ONE-WAY):
    HARD: Roleplay is ONLY 5b→5c→5d→5e. ALWAYS ends at 5e (AI Sure! → tap Continue). Celebrate is NEVER the same turn as Sure!
 
 6. Celebrate (listen-only) — AFTER Continue from 5e ONLY
-   - Warm ~2–3 sentences in {{L1}}: name once + Can I get… / coffee type / hot-iced + soft tease Explore the City.
+   - Warm ~2–3 sentences in {{L1}}. MUST open with "เยี่ยมเลยครับ!" / "เยี่ยมมากครับ!" 👏 BEFORE name or recap.
+   - FORBIDDEN: starting with the learner's name alone.
+   - Then: name once + Can I get… / coffee type / hot-iced + soft tease Explore the City.
    - FORBIDDEN: one-liner only "วันนี้คุณทำได้แล้ว".
    - FORBIDDEN: starting with staff "Sure!" or keeping barista voice.
    - expectsUserSpeech=false. isLessonComplete=true. Omit emojiChoice.
@@ -7238,8 +7244,8 @@ export function guideExploreCityRoleplayIfNeeded(
 }
 
 /**
- * After roleplay close → Celebrate must open with praise (เยี่ยม…).
- * Models often jump straight into the recap.
+ * Celebrate / session-end turns must open with praise first.
+ * Models often jump to the name or recap ("Jim! วันนี้คุณ…").
  */
 export function ensureExploreCityCelebratePraiseFirst(
   lessonId: string,
@@ -7255,18 +7261,37 @@ export function ensureExploreCityCelebratePraiseFirst(
     isTaskComplete: boolean;
   },
 ): string | null {
-  if (lessonId !== 'ee_around_town_convenience') return null;
+  const aroundTown =
+    lessonId === 'ee_around_town_convenience' ||
+    lessonId === 'ee_around_town_shopping' ||
+    lessonId === 'ee_around_town_restaurant' ||
+    lessonId === 'ee_around_town_coffee';
+  if (!aroundTown) return null;
   if (!current.isTaskComplete) return null;
   if (current.roleplayIntro != null || current.roleplayNpc != null) {
     return null;
   }
-  if (!exploreCityRoleplayAlreadyClosed(history)) return null;
+
+  // Explore City: only after roleplay close. Other Around Town lessons:
+  // any isLessonComplete Celebrate turn.
+  if (
+    lessonId === 'ee_around_town_convenience' &&
+    !exploreCityRoleplayAlreadyClosed(history)
+  ) {
+    return null;
+  }
 
   const raw = (current.textEn ?? '').trim();
   if (!raw) return null;
   if (/^(เยี่ยม|เก่งมาก|สุดยอด|ดีมาก)/u.test(raw)) return raw;
 
-  return `เยี่ยมเลยครับ! 👏\n\n${raw}`;
+  // Strip a bare leading name so we don't get "เยี่ยมเลยครับ! 👏 Jim! 👏 …"
+  const withoutLeadingName = raw
+    .replace(/^[A-Za-z][A-Za-z'’\-.]{0,20}\s*[!！]?\s*👏?\s*/u, '')
+    .trim();
+  const body = withoutLeadingName || raw;
+
+  return `เยี่ยมเลยครับ! 👏\n\n${body}`;
 }
 
 /**
@@ -7988,16 +8013,17 @@ export function guideScriptedAroundTownRoleplayIfNeeded(
       current.roleplayNpc != null ||
       offScript;
 
-    // Mini Challenge speak ("ไหนลองถามราคา…") — NOT Pattern 2 listen teach.
+    // Mini Challenge speak — Teacher B coaches in Thai; learner speaks How much…
     const looksLikePriceSpeakChallenge =
       th.includes('ไหนลองถามราคา') ||
+      en.includes('ไหนลองถามราคา') ||
       th.includes('ลองถามราคา') ||
       (enLower.includes('how much') && current.expectsUserSpeech);
 
     if (looksLikePriceSpeakChallenge) {
       return {
-        textEn: enLower.includes('how much') ? en : 'How much is this?',
-        textTh: th || 'ไหนลองถามราคาเสื้อตัวนี้ดูครับ',
+        textEn: 'ไหนลองถามราคาเสื้อตัวนี้ดูหน่อยครับ',
+        textTh: null,
         expectsUserSpeech: true,
         expectedSpeech: 'How much is this?',
         roleplayNpc: null,
