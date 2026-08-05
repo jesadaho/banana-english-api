@@ -13,7 +13,10 @@ import { AnonymousUserGuard } from '../users/anonymous-user.guard';
 type AuthedRequest = { user: User };
 
 /** Allowed mini-game ids that can claim lesson-sized rewards once. */
-const ALLOWED_MINI_GAME_IDS = new Set(['emoji_speak_first_contact']);
+const ALLOWED_MINI_GAME_IDS = new Set([
+  'emoji_speak_first_contact',
+  'speak_challenge_ee_everyday_life_1',
+]);
 
 @Controller('mini-games')
 @UseGuards(AnonymousUserGuard)
