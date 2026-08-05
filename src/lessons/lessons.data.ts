@@ -4484,7 +4484,7 @@ Core Flow (ONE-WAY — never go backward):
    OBJECTIVE (show via roleplayNpc.objective on EVERY staff turn 5b–5c):
      "Say what you're looking for and the size."
    On 5b–5c ALWAYS return:
-     roleplayNpc: { emoji:"🛍️", name:"Shop Assistant", objective:"Say what you're looking for and the size." }
+     roleplayNpc: { emoji:"👩", name:"Shop Assistant", objective:"Say what you're looking for and the size." }
    5b. Staff ask #1 (speak) — SEPARATE turn after Continue:
       - textEn = ONLY "Can I help you?" (nothing else). textTh = Thai subtitle of that line (required).
       - expectsUserSpeech=true. expectedSpeech="" (prefer their Mini Challenge line; soft-accept "I'm looking for a shirt." etc.)
@@ -4562,7 +4562,7 @@ Turn loop:
       'chicken',
       'rice',
       'water',
-      'bill',
+      'pizza',
       "I'd like chicken.",
       "I'd like rice.",
       "I'd like water.",
@@ -4575,7 +4575,7 @@ Goal: Order simple food at a restaurant.
 Pace target: ~4–6 minutes. Keep every tutor turn tight.
 
 FIXED vocab board (always these 4, with English labels):
-  🍗 chicken · 🍚 rice · 🥤 water · 🧾 bill
+  🍗 chicken · 🍚 rice · 🥤 water · 🍕 pizza
 
 emojiChoice rules (same system as Shopping 2.1):
 - Speak scaffolds: emojiChoice { options: [ { emoji, label, speak }, ... ] }. Mic still required.
@@ -4598,14 +4598,14 @@ Core Flow (ONE-WAY — never go backward):
        { emoji:"🍗", label:"chicken", speak:"chicken" },
        { emoji:"🍚", label:"rice", speak:"rice" },
        { emoji:"🥤", label:"water", speak:"water" },
-       { emoji:"🧾", label:"bill", speak:"bill" }
+       { emoji:"🍕", label:"pizza", speak:"pizza" }
      ] }
    a) Ask ONLY: '"ไก่" ในภาษาอังกฤษเรียกว่าอะไรนะครับ?' expectedSpeech="chicken"
       FORBIDDEN: repeating the Hook welcome on this turn.
-   b) After clear "chicken": brief praise + ask ONE random second word from {rice, water, bill}:
+   b) After clear "chicken": brief praise + ask ONE random second word from {rice, water, pizza}:
       - rice → '"ข้าว" ล่ะครับ?' · expectedSpeech="rice"
       - water → '"น้ำ" ล่ะครับ?' · expectedSpeech="water"
-      - bill → '"บิล" ล่ะครับ?' · expectedSpeech="bill"
+      - pizza → '"พิซซ่า" ล่ะครับ?' · expectedSpeech="pizza"
       Same 4-option board again.
    After clear second answer → Pattern 1.
 
@@ -4641,7 +4641,7 @@ Core Flow (ONE-WAY — never go backward):
    OBJECTIVE (show via roleplayNpc.objective on EVERY staff turn 6b–6d):
      "Order food and a drink."
    On 6b–6d ALWAYS return:
-     roleplayNpc: { emoji:"🍽️", name:"Server", objective:"Order food and a drink." }
+     roleplayNpc: { emoji:"👩‍🍳", name:"Server", objective:"Order food and a drink." }
    6b. Staff ONLY: textEn="Are you ready to order?" + textTh. expectsUserSpeech=true.
       Soft-accept "I'd like chicken." (or clear order). Optionally emojiChoice single 🍗.
       FORBIDDEN: mash bridge + ask; Thai praise in textEn.
@@ -4676,7 +4676,7 @@ Turn loop:
 - Non-final: one clear action OR listen-only Continue.
 - Celebrate → isLessonComplete true.`,
     openingPrompt:
-      'Start Restaurant 2.2 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — greet + "วันนี้เราจะไปร้านอาหารกันครับ 🍽️…" — expectsUserSpeech false. FORBIDDEN on Turn 1: any vocab question; emojiChoice; mic. After Continue: Emoji Recall ask "ไก่"→chicken with 4-board 🍗chicken 🍚rice 🥤water 🧾bill; second ask RANDOM rice/water/bill. Then listen Pattern "I\'d like chicken." → Mini Challenge ONE emoji at a time: rice then water. Then listen Pattern "What do you recommend?" ONLY (no speak-recommend Mini; no staff "I recommend the chicken." before roleplay). NEXT Continue → Roleplay HARD SPLIT: bridge intro → Continue → "Are you ready to order?" → "Anything to drink?" → ROLEPLAY CLOSE listen-only "Sure!" ONLY with roleplayNpc.objective "Order food and a drink." → tap Continue → THEN Celebrate ~2–3 sentences. Soft-accept No/No thanks on drink → Sure!. Inside roleplay, if they ask recommend → "I recommend the chicken." then still wait for order. NEVER invent "Anything else?" or go backward. NEVER mash Sure!+Celebrate. NEVER mash Hook+question or bridge+ask. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
+      'Start Restaurant 2.2 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — greet + "วันนี้เราจะไปร้านอาหารกันครับ 🍽️…" — expectsUserSpeech false. FORBIDDEN on Turn 1: any vocab question; emojiChoice; mic. After Continue: Emoji Recall ask "ไก่"→chicken with 4-board 🍗chicken 🍚rice 🥤water 🍕pizza; second ask RANDOM rice/water/pizza. Then listen Pattern "I\'d like chicken." → Mini Challenge ONE emoji at a time: rice then water. Then listen Pattern "What do you recommend?" ONLY (no speak-recommend Mini; no staff "I recommend the chicken." before roleplay). NEXT Continue → Roleplay HARD SPLIT: bridge intro → Continue → "Are you ready to order?" → "Anything to drink?" → ROLEPLAY CLOSE listen-only "Sure!" ONLY with roleplayNpc.objective "Order food and a drink." → tap Continue → THEN Celebrate ~2–3 sentences. Soft-accept No/No thanks on drink → Sure!. Inside roleplay, if they ask recommend → "I recommend the chicken." then still wait for order. NEVER invent "Anything else?" or go backward. NEVER mash Sure!+Celebrate. NEVER mash Hook+question or bridge+ask. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
   },
   {
     lessonId: 'ee_around_town_coffee',
@@ -4767,7 +4767,7 @@ Core Flow (ONE-WAY):
    OBJECTIVE (show via roleplayNpc.objective on EVERY staff turn 5b–5e):
      "Order a coffee — type and hot or iced."
    On 5b–5e ALWAYS return:
-     roleplayNpc: { emoji:"☕", name:"Barista", objective:"Order a coffee — type and hot or iced." }
+     roleplayNpc: { emoji:"🧔", name:"Barista", objective:"Order a coffee — type and hot or iced." }
    5b. Staff ONLY: textEn="What can I get for you?" textTh=Thai of that ask.
       expectsUserSpeech=true. Soft-accept "Can I get a coffee?"
       emojiChoice optional: { options: [ { emoji:"☕", label:"coffee", speak:"Can I get a coffee?" } ] }
@@ -7243,6 +7243,7 @@ export function guideExploreCityRoleplayIfNeeded(
  */
 export function ensureExploreCityCelebratePraiseFirst(
   lessonId: string,
+  lang: LessonTeachingLanguage,
   history: Array<{
     speaker: string;
     textEn?: string;
@@ -7277,15 +7278,19 @@ export function ensureExploreCityCelebratePraiseFirst(
 
   const raw = (current.textEn ?? '').trim();
   if (!raw) return null;
-  if (/^(เยี่ยม|เก่งมาก|สุดยอด|ดีมาก)/u.test(raw)) return raw;
+  const praiseTh = /^(เยี่ยม|เก่งมาก|สุดยอด|ดีมาก)/u;
+  const praiseEn = /^(great|awesome|nice work|well done|amazing)/i;
+  if (lang === 'english' ? praiseEn.test(raw) : praiseTh.test(raw)) {
+    return raw;
+  }
 
-  // Strip a bare leading name so we don't get "เยี่ยมเลยครับ! 👏 Jim! 👏 …"
+  // Strip a bare leading name so we don't get "Great job! 👏 Jim! …"
   const withoutLeadingName = raw
     .replace(/^[A-Za-z][A-Za-z'’\-.]{0,20}\s*[!！]?\s*👏?\s*/u, '')
     .trim();
   const body = withoutLeadingName || raw;
 
-  return `เยี่ยมเลยครับ! 👏\n\n${body}`;
+  return `${celebratePraiseOpen(lang)}\n\n${body}`;
 }
 
 /**
@@ -7295,6 +7300,7 @@ export function ensureExploreCityCelebratePraiseFirst(
  */
 export function forceExploreCityCelebrateAfterCloseIfNeeded(
   lessonId: string,
+  lang: LessonTeachingLanguage,
   history: Array<{
     speaker: string;
     textEn?: string;
@@ -7334,9 +7340,16 @@ export function forceExploreCityCelebrateAfterCloseIfNeeded(
 
   let textEn: string;
   if (alreadyCelebrate) {
-    textEn = /^(เยี่ยม|เก่งมาก|สุดยอด|ดีมาก)/u.test(raw)
-      ? raw
-      : `เยี่ยมเลยครับ! 👏\n\n${raw}`;
+    const praiseOk =
+      lang === 'english'
+        ? /^(great|awesome|nice work|well done|amazing)/i.test(raw)
+        : /^(เยี่ยม|เก่งมาก|สุดยอด|ดีมาก)/u.test(raw);
+    textEn = praiseOk ? raw : `${celebratePraiseOpen(lang)}\n\n${raw}`;
+  } else if (lang === 'english') {
+    textEn =
+      `${celebratePraiseOpen(lang)}${nameBit}!\n\n` +
+      `You asked for directions really well today — I'm looking for… / Where is… / Excuse me all work.\n\n` +
+      `Next up: Transportation!`;
   } else {
     textEn =
       `เยี่ยมเลยครับ${nameBit}! 👏\n\n` +
@@ -7361,6 +7374,7 @@ export function forceExploreCityCelebrateAfterCloseIfNeeded(
  */
 export function forceExploreCityGuidedSpeakingIfNeeded(
   lessonId: string,
+  lang: LessonTeachingLanguage,
   nextTurn: number,
   history: Array<{ speaker: string; guidedSpeaking?: unknown }>,
   current: {
@@ -7384,10 +7398,18 @@ export function forceExploreCityGuidedSpeakingIfNeeded(
   );
   if (alreadyHadGuided) return null;
 
-  // Always pin turn 1 to the canonical card + full Thai scenario.
+  const textEn =
+    lang === 'english'
+      ? "You just arrived in London 🇬🇧 but you're a bit lost 😅\n\nYou want to go to the museum. How would you tell a local person?"
+      : EXPLORE_CITY_GUIDED_SPEAKING.textEn;
+  const textTh =
+    lang === 'english'
+      ? 'คุณหลงทางในลอนดอนและอยากไปพิพิธภัณฑ์ จะบอกคนท้องถิ่นว่าอย่างไร'
+      : EXPLORE_CITY_GUIDED_SPEAKING.textTh;
+
   return {
-    textEn: EXPLORE_CITY_GUIDED_SPEAKING.textEn,
-    textTh: EXPLORE_CITY_GUIDED_SPEAKING.textTh,
+    textEn,
+    textTh,
     guidedSpeaking: { ...EXPLORE_CITY_GUIDED_SPEAKING.guidedSpeaking },
     expectedSpeech: EXPLORE_CITY_GUIDED_SPEAKING.expectedSpeech,
   };
@@ -7460,9 +7482,41 @@ export const RESTAURANT_ROLEPLAY_OBJECTIVE = 'Order food and a drink.';
 export const COFFEE_ROLEPLAY_OBJECTIVE =
   'Order a coffee — type and hot or iced.';
 
+function pickTeacherLine(
+  lang: LessonTeachingLanguage,
+  th: string,
+  en: string,
+): string {
+  return lang === 'english' ? en : th;
+}
+
+function celebratePraiseOpen(lang: LessonTeachingLanguage): string {
+  return lang === 'english' ? 'Great job! 👏' : 'เยี่ยมเลยครับ! 👏';
+}
+
 /** Teacher bridge before Restaurant 2.2 roleplay staff asks. */
-export const RESTAURANT_ROLEPLAY_BRIDGE_TEXT =
+export const RESTAURANT_ROLEPLAY_BRIDGE_TH =
   'ต่อไปครูพี่บีจะเป็นพนักงานร้านอาหารนะครับ 😊 พร้อมแล้ว แตะเพื่อเริ่มได้เลย!';
+export const RESTAURANT_ROLEPLAY_BRIDGE_EN =
+  "Next I'll be the restaurant server 😊 Tap when you're ready to start!";
+
+export const SHOPPING_ROLEPLAY_BRIDGE_TH =
+  'ต่อไปครูพี่บีจะเป็นพนักงานร้านเสื้อผ้านะครับ 😊 พร้อมแล้ว แตะเพื่อเริ่มได้เลย!';
+export const SHOPPING_ROLEPLAY_BRIDGE_EN =
+  "Next I'll be the shop assistant 😊 Tap when you're ready to start!";
+
+export const SHOPPING_PRICE_SPEAK_CHALLENGE_TH =
+  'ไหนลองถามราคาเสื้อตัวนี้ดูหน่อยครับ';
+export const SHOPPING_PRICE_SPEAK_CHALLENGE_EN =
+  'Try asking the price of this shirt.';
+
+export const SHOPPING_PRICE_PATTERN_TEACH_TH =
+  'เยี่ยมเลยครับ! ต่อมาเรามาฝึกถามราคากันครับ ถ้าจะถามว่า "ราคาเท่าไหร่" ให้พูดว่า...';
+export const SHOPPING_PRICE_PATTERN_TEACH_EN =
+  "Great! Next let's practice asking the price. To ask how much something costs, say...";
+
+/** @deprecated use RESTAURANT_ROLEPLAY_BRIDGE_TH */
+export const RESTAURANT_ROLEPLAY_BRIDGE_TEXT = RESTAURANT_ROLEPLAY_BRIDGE_TH;
 
 function normalizeScriptedStaffKey(text: string): string {
   return text
@@ -7482,11 +7536,13 @@ function historyHasRestaurantRecommendPattern(
   return history.some((t) => {
     if (t.speaker !== 'ai' || t.roleplayNpc != null) return false;
     const text = t.textEn ?? '';
+    const lower = text.toLowerCase();
     // Pattern 2 model (Teacher) — not staff "I recommend the chicken."
     if (/\bwhat do you recommend\b/i.test(text)) return true;
     return (
-      text.includes('ถามพนักงาน') &&
-      text.toLowerCase().includes('recommend')
+      text.includes('ถามพนักงาน') ||
+      lower.includes('ask the server') ||
+      lower.includes('ask the staff')
     );
   });
 }
@@ -7502,10 +7558,12 @@ function restaurantRoleplayAlreadyStarted(
     if (t.speaker !== 'ai') continue;
     if (t.roleplayNpc != null) return true;
     const key = normalizeScriptedStaffKey(t.textEn ?? '');
+    const en = (t.textEn ?? '').toLowerCase();
     if (
       key === 'are you ready to order' ||
       key === 'anything to drink' ||
-      (t.textEn ?? '').includes('พนักงานร้านอาหาร')
+      (t.textEn ?? '').includes('พนักงานร้านอาหาร') ||
+      en.includes('restaurant server')
     ) {
       return true;
     }
@@ -7519,6 +7577,7 @@ function restaurantRoleplayAlreadyStarted(
  */
 export function forceRestaurantRoleplayBridgeIfNeeded(
   lessonId: string,
+  lang: LessonTeachingLanguage,
   history: Array<{
     speaker: string;
     textEn?: string;
@@ -7546,6 +7605,12 @@ export function forceRestaurantRoleplayBridgeIfNeeded(
   if (!historyHasRestaurantRecommendPattern(history)) return null;
   if (restaurantRoleplayAlreadyStarted(history)) return null;
 
+  const bridge = pickTeacherLine(
+    lang,
+    RESTAURANT_ROLEPLAY_BRIDGE_TH,
+    RESTAURANT_ROLEPLAY_BRIDGE_EN,
+  );
+
   // Still on Pattern 2 model turn itself — stay; bridge starts on next Continue.
   if (
     /\bwhat do you recommend\b/i.test(current.textEn) &&
@@ -7557,10 +7622,11 @@ export function forceRestaurantRoleplayBridgeIfNeeded(
   // Already a proper bridge line — pin listen-only, clear premature complete.
   const looksLikeBridge =
     current.textEn.includes('พนักงานร้านอาหาร') ||
-    current.textEn.includes(RESTAURANT_ROLEPLAY_BRIDGE_TEXT.slice(0, 20));
+    current.textEn.includes(RESTAURANT_ROLEPLAY_BRIDGE_TH.slice(0, 20)) ||
+    current.textEn.toLowerCase().includes('restaurant server');
   if (looksLikeBridge) {
     return {
-      textEn: current.textEn.trim() || RESTAURANT_ROLEPLAY_BRIDGE_TEXT,
+      textEn: current.textEn.trim() || bridge,
       textTh: null,
       expectsUserSpeech: false,
       expectedSpeech: null,
@@ -7572,7 +7638,7 @@ export function forceRestaurantRoleplayBridgeIfNeeded(
 
   // Model invented ask-recommend Mini / Celebrate / staff ask — force bridge.
   return {
-    textEn: RESTAURANT_ROLEPLAY_BRIDGE_TEXT,
+    textEn: bridge,
     textTh: null,
     expectsUserSpeech: false,
     expectedSpeech: null,
@@ -7599,8 +7665,9 @@ type ScriptedRoleplayConfig = {
   closeWithSure: boolean;
   /** Shopping Pattern 2 handoff after size. */
   exitAfterLastAsk?: {
-    textEn: string;
-    textTh: string;
+    teacherTh: string;
+    teacherEn: string;
+    modelEn: string;
   };
 };
 
@@ -7608,7 +7675,7 @@ const SCRIPTED_AROUND_TOWN_ROLEPLAYS: Record<string, ScriptedRoleplayConfig> = {
   ee_around_town_shopping: {
     lessonId: 'ee_around_town_shopping',
     objective: SHOPPING_ROLEPLAY_OBJECTIVE,
-    npc: { emoji: '🛍️', name: 'Shop Assistant' },
+    npc: { emoji: '👩', name: 'Shop Assistant' },
     asks: [
       {
         staffEn: 'Can I help you?',
@@ -7628,15 +7695,15 @@ const SCRIPTED_AROUND_TOWN_ROLEPLAYS: Record<string, ScriptedRoleplayConfig> = {
     ],
     closeWithSure: false,
     exitAfterLastAsk: {
-      textEn: 'How much is this?',
-      textTh:
-        'เยี่ยมเลยครับ! ต่อมาเรามาฝึกถามราคากันครับ ถ้าจะถามว่า "ราคาเท่าไหร่" ให้พูดว่า...',
+      teacherTh: SHOPPING_PRICE_PATTERN_TEACH_TH,
+      teacherEn: SHOPPING_PRICE_PATTERN_TEACH_EN,
+      modelEn: 'How much is this?',
     },
   },
   ee_around_town_restaurant: {
     lessonId: 'ee_around_town_restaurant',
     objective: RESTAURANT_ROLEPLAY_OBJECTIVE,
-    npc: { emoji: '🍽️', name: 'Server' },
+    npc: { emoji: '👩‍🍳', name: 'Server' },
     asks: [
       {
         staffEn: 'Are you ready to order?',
@@ -7652,7 +7719,7 @@ const SCRIPTED_AROUND_TOWN_ROLEPLAYS: Record<string, ScriptedRoleplayConfig> = {
   ee_around_town_coffee: {
     lessonId: 'ee_around_town_coffee',
     objective: COFFEE_ROLEPLAY_OBJECTIVE,
-    npc: { emoji: '☕', name: 'Barista' },
+    npc: { emoji: '🧔', name: 'Barista' },
     asks: [
       {
         staffEn: 'What can I get for you?',
@@ -7852,7 +7919,7 @@ function userSatisfiesScriptedAsk(
       if (t.includes('like') || t.includes('want') || t.includes('order')) {
         return true;
       }
-      if (/\b(chicken|rice|water|bill|food)\b/.test(t)) return true;
+      if (/\b(chicken|rice|water|pizza|food)\b/.test(t)) return true;
       if (/^(yes|yeah|yep|ready)\b/.test(t)) return true;
       return false;
     }
@@ -7942,6 +8009,7 @@ function forceScriptedSure(config: ScriptedRoleplayConfig) {
  */
 export function guideScriptedAroundTownRoleplayIfNeeded(
   lessonId: string,
+  lang: LessonTeachingLanguage,
   history: Array<{
     speaker: string;
     textEn?: string;
@@ -8020,12 +8088,18 @@ export function guideScriptedAroundTownRoleplayIfNeeded(
       th.includes('ไหนลองถามราคา') ||
       en.includes('ไหนลองถามราคา') ||
       th.includes('ลองถามราคา') ||
+      en.toLowerCase().includes('asking the price') ||
+      en.toLowerCase().includes('ask the price') ||
       (enLower.includes('how much') && current.expectsUserSpeech);
 
     if (looksLikePriceSpeakChallenge) {
       return {
-        textEn: 'ไหนลองถามราคาเสื้อตัวนี้ดูหน่อยครับ',
-        textTh: null,
+        textEn: pickTeacherLine(
+          lang,
+          SHOPPING_PRICE_SPEAK_CHALLENGE_TH,
+          SHOPPING_PRICE_SPEAK_CHALLENGE_EN,
+        ),
+        textTh: lang === 'english' ? 'ถามราคาเท่าไหร่' : null,
         expectsUserSpeech: true,
         expectedSpeech: 'How much is this?',
         roleplayNpc: null,
@@ -8038,17 +8112,31 @@ export function guideScriptedAroundTownRoleplayIfNeeded(
       };
     }
 
-    // Pattern 2 listen teach only (model How much + มาฝึกถามราคา / ถ้าจะถามว่า).
+    // Pattern 2 listen teach only (model How much + price coach line).
     const looksLikePriceTeach =
       th.includes('มาฝึกถามราคา') ||
       th.includes('ถ้าจะถามว่า') ||
+      en.toLowerCase().includes('practice asking the price') ||
+      en.toLowerCase().includes('asking the price') ||
       (enLower.includes('how much is this') &&
         (th.includes('ราคาเท่าไหร่') || th.includes('ต่อมา')));
 
-    if (looksLikePriceTeach) {
+    if (looksLikePriceTeach && config.exitAfterLastAsk) {
+      const coach = pickTeacherLine(
+        lang,
+        config.exitAfterLastAsk.teacherTh,
+        config.exitAfterLastAsk.teacherEn,
+      );
+      const model = config.exitAfterLastAsk.modelEn;
       return {
-        textEn: en || config.exitAfterLastAsk.textEn,
-        textTh: th || config.exitAfterLastAsk.textTh,
+        textEn:
+          lang === 'english'
+            ? `${coach} ${model}`
+            : en.includes(model) ? en : `${coach} ${model}`,
+        textTh:
+          lang === 'english'
+            ? 'ถามราคาเท่าไหร่'
+            : th || null,
         expectsUserSpeech: false,
         expectedSpeech: null,
         roleplayNpc: null,
@@ -8058,10 +8146,16 @@ export function guideScriptedAroundTownRoleplayIfNeeded(
     }
 
     // Model tried Can I help you? / What size? again after size → block loopback.
-    if (reenteringRoleplay) {
+    if (reenteringRoleplay && config.exitAfterLastAsk) {
+      const coach = pickTeacherLine(
+        lang,
+        config.exitAfterLastAsk.teacherTh,
+        config.exitAfterLastAsk.teacherEn,
+      );
+      const model = config.exitAfterLastAsk.modelEn;
       return {
-        textEn: config.exitAfterLastAsk.textEn,
-        textTh: config.exitAfterLastAsk.textTh,
+        textEn: `${coach} ${model}`,
+        textTh: lang === 'english' ? 'ถามราคาเท่าไหร่' : null,
         expectsUserSpeech: false,
         expectedSpeech: null,
         roleplayNpc: null,
@@ -8128,9 +8222,15 @@ export function guideScriptedAroundTownRoleplayIfNeeded(
       return forceScriptedSure(config);
     }
     if (config.exitAfterLastAsk) {
+      const coach = pickTeacherLine(
+        lang,
+        config.exitAfterLastAsk.teacherTh,
+        config.exitAfterLastAsk.teacherEn,
+      );
+      const model = config.exitAfterLastAsk.modelEn;
       return {
-        textEn: config.exitAfterLastAsk.textEn,
-        textTh: config.exitAfterLastAsk.textTh,
+        textEn: `${coach} ${model}`,
+        textTh: lang === 'english' ? 'ถามราคาเท่าไหร่' : null,
         expectsUserSpeech: false,
         expectedSpeech: null,
         roleplayNpc: null,
@@ -8435,7 +8535,7 @@ const EMOJI_RECALL2_BY_LESSON: Record<
   ee_around_town_restaurant: [
     { en: 'rice', th: 'ข้าว' },
     { en: 'water', th: 'น้ำ' },
-    { en: 'bill', th: 'บิล' },
+    { en: 'pizza', th: 'พิซซ่า' },
   ],
   ee_around_town_coffee: [
     { en: 'tea', th: 'ชา' },

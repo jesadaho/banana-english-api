@@ -160,6 +160,16 @@ export function buildLessonSystemInstruction(
     parts.push(exampleRule);
   }
 
+  if (lang === 'english') {
+    parts.push(
+      `CRITICAL (English teaching mode):
+- Teacher B spoken content in textEn must be ENGLISH only — never Thai script in textEn.
+- Thai examples in this lesson plan are IDEAS only — express them in simple English.
+- Put Thai meaning support in textTh when helpful for subtitles.
+- Staff/NPC roleplay: English in textEn, Thai subtitle in textTh.`,
+    );
+  }
+
   return renderTokens(parts.join('\n\n'), lang);
 }
 
@@ -171,6 +181,20 @@ export function teachingLanguageFromConfig(
 
 export function learnerNameFallback(lang: LessonTeachingLanguage): string {
   return lang === 'english' ? 'friend' : 'เพื่อน';
+}
+
+/** Teacher B spoken line — textEn in the active teaching language. */
+export function teacherLine(
+  lang: LessonTeachingLanguage,
+  th: string,
+  en: string,
+): string {
+  return lang === 'english' ? en : th;
+}
+
+/** Celebrate opener for the active teaching language. */
+export function celebratePraisePrefix(lang: LessonTeachingLanguage): string {
+  return lang === 'english' ? 'Great job! 👏' : 'เยี่ยมเลยครับ! 👏';
 }
 
 export function renderOpeningPrompt(

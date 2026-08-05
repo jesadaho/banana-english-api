@@ -567,9 +567,11 @@ export class SessionsController {
       let textEn = reply.textEn;
       let textTh: string | null | undefined = reply.textTh;
       let expectedSpeech = reply.expectedSpeech?.trim() || null;
+      const teachingLang = teachingLanguageFromConfig(config);
 
       const forcedGuided = forceExploreCityGuidedSpeakingIfNeeded(
         config.lessonId,
+        teachingLang,
         nextTurn,
         data.turns,
         {
@@ -628,6 +630,7 @@ export class SessionsController {
       // After Pattern 2 recommend model → Roleplay bridge (no speak-recommend Mini).
       const forcedRestaurantBridge = forceRestaurantRoleplayBridgeIfNeeded(
         config.lessonId,
+        teachingLang,
         data.turns,
         {
           textEn,
@@ -653,6 +656,7 @@ export class SessionsController {
       // Scripted Shopping / Restaurant / Coffee roleplay — pin objective, no backward.
       const guidedScripted = guideScriptedAroundTownRoleplayIfNeeded(
         config.lessonId,
+        teachingLang,
         data.turns,
         {
           textEn,
@@ -679,6 +683,7 @@ export class SessionsController {
       // After You're welcome + Continue → Celebrate (never double the close).
       const forcedCelebrate = forceExploreCityCelebrateAfterCloseIfNeeded(
         config.lessonId,
+        teachingLang,
         data.turns,
         {
           textEn,
@@ -705,6 +710,7 @@ export class SessionsController {
       // Celebrate after roleplay — always open with praise first.
       const celebrateWithPraise = ensureExploreCityCelebratePraiseFirst(
         config.lessonId,
+        teachingLang,
         data.turns,
         {
           textEn,
