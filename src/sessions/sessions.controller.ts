@@ -58,22 +58,24 @@ import {
   guideExploreCityRoleplayIfNeeded,
   guideScriptedAroundTownRoleplayIfNeeded,
   forceRestaurantRoleplayBridgeIfNeeded,
-  forceTransportDestinationTeachIfNeeded,
   forceTransportDestinationMiniIfNeeded,
   forceTransportPattern2IfNeeded,
   forceTransportRoleplayBridgeIfNeeded,
   forceShoppingLookingForSoftTeachIfNeeded,
   ensureExploreCityCelebratePraiseFirst,
   forceExploreCityCelebrateAfterCloseIfNeeded,
-  EXPLORE_CITY_ROLEPLAY_INTRO,
   EXPLORE_CITY_ROLEPLAY_OBJECTIVE,
   SHOPPING_ROLEPLAY_OBJECTIVE,
   RESTAURANT_ROLEPLAY_OBJECTIVE,
   COFFEE_ROLEPLAY_OBJECTIVE,
-  aroundTownRoleplayIntroForLesson,
+  TRANSPORT_ROLEPLAY_OBJECTIVE,
+  aroundTownRoleplayIntroSpeech,
+  forceShoppingRoleplayBridgeIfNeeded,
+  forceCoffeeRoleplayBridgeIfNeeded,
   looksLikeAroundTownRoleplayBridge,
   sanitizeAroundTownStaffSpeech,
   isAroundTownRoleplayCloseLine,
+  isAroundTownRoleplayEndListenTurn,
   TRANSPORT_HOOK_GUIDED_SPEAKING,
   transportHookOpeningText,
   getLesson,
@@ -616,17 +618,7 @@ export class SessionsController {
         emojiChoice = null;
       }
 
-      // Pin Explore the City Roleplay Intro copy + card whenever the model
-      // returns the intro turn (avoids mangled bridge lines).
-      if (
-        config.lessonId === 'ee_around_town_convenience' &&
-        roleplayIntro != null
-      ) {
-        textEn = EXPLORE_CITY_ROLEPLAY_INTRO.textEn;
-        roleplayIntro = { ...EXPLORE_CITY_ROLEPLAY_INTRO.roleplayIntro };
-        emojiChoice = null;
-        guidedSpeaking = null;
-      }
+      // Pin Explore the City / Around Town Roleplay Intro later (after bridge attach).
 
       // Objective-driven Explore City roleplay (no fixed script; max 4 speaks).
       const guidedRoleplay = guideExploreCityRoleplayIfNeeded(
@@ -680,6 +672,32 @@ export class SessionsController {
         isTaskComplete = forcedShoppingSoftTeach.isTaskComplete;
       }
 
+      // After looking-for Mini clear → Shopping Roleplay Intro.
+      const forcedShoppingBridge = forceShoppingRoleplayBridgeIfNeeded(
+        config.lessonId,
+        teachingLang,
+        data.turns,
+        {
+          textEn,
+          textTh,
+          roleplayIntro,
+          roleplayNpc,
+          expectsUserSpeech,
+          isTaskComplete,
+        },
+      );
+      if (forcedShoppingBridge != null) {
+        textEn = forcedShoppingBridge.textEn;
+        textTh = forcedShoppingBridge.textTh;
+        expectsUserSpeech = forcedShoppingBridge.expectsUserSpeech;
+        expectedSpeech = forcedShoppingBridge.expectedSpeech;
+        roleplayNpc = forcedShoppingBridge.roleplayNpc;
+        roleplayIntro = forcedShoppingBridge.roleplayIntro;
+        guidedSpeaking = forcedShoppingBridge.guidedSpeaking;
+        emojiChoice = forcedShoppingBridge.emojiChoice;
+        isTaskComplete = forcedShoppingBridge.isTaskComplete;
+      }
+
       // After Pattern 2 recommend model → Roleplay bridge (no speak-recommend Mini).
       const forcedRestaurantBridge = forceRestaurantRoleplayBridgeIfNeeded(
         config.lessonId,
@@ -700,14 +718,14 @@ export class SessionsController {
         expectsUserSpeech = forcedRestaurantBridge.expectsUserSpeech;
         expectedSpeech = forcedRestaurantBridge.expectedSpeech;
         roleplayNpc = forcedRestaurantBridge.roleplayNpc;
-        roleplayIntro = null;
-        guidedSpeaking = null;
-        emojiChoice = null;
+        roleplayIntro = forcedRestaurantBridge.roleplayIntro;
+        guidedSpeaking = forcedRestaurantBridge.guidedSpeaking;
+        emojiChoice = forcedRestaurantBridge.emojiChoice;
         isTaskComplete = forcedRestaurantBridge.isTaskComplete;
       }
 
-      // Teach after Hook: model THEIR city (not hardcoded Bangkok).
-      const forcedTransportTeach = forceTransportDestinationTeachIfNeeded(
+      // After coffee Mini (tea + cake) → Roleplay Intro.
+      const forcedCoffeeBridge = forceCoffeeRoleplayBridgeIfNeeded(
         config.lessonId,
         teachingLang,
         data.turns,
@@ -717,15 +735,19 @@ export class SessionsController {
           roleplayIntro,
           roleplayNpc,
           expectsUserSpeech,
+          isTaskComplete,
         },
       );
-      if (forcedTransportTeach != null) {
-        textEn = forcedTransportTeach.textEn;
-        textTh = forcedTransportTeach.textTh;
-        expectsUserSpeech = forcedTransportTeach.expectsUserSpeech;
-        expectedSpeech = forcedTransportTeach.expectedSpeech;
-        guidedSpeaking = forcedTransportTeach.guidedSpeaking;
-        emojiChoice = forcedTransportTeach.emojiChoice;
+      if (forcedCoffeeBridge != null) {
+        textEn = forcedCoffeeBridge.textEn;
+        textTh = forcedCoffeeBridge.textTh;
+        expectsUserSpeech = forcedCoffeeBridge.expectsUserSpeech;
+        expectedSpeech = forcedCoffeeBridge.expectedSpeech;
+        roleplayNpc = forcedCoffeeBridge.roleplayNpc;
+        roleplayIntro = forcedCoffeeBridge.roleplayIntro;
+        guidedSpeaking = forcedCoffeeBridge.guidedSpeaking;
+        emojiChoice = forcedCoffeeBridge.emojiChoice;
+        isTaskComplete = forcedCoffeeBridge.isTaskComplete;
       }
 
       // Mini Challenge: one random city at a time (not the 4-city board).
@@ -792,9 +814,9 @@ export class SessionsController {
         expectsUserSpeech = forcedTransportBridge.expectsUserSpeech;
         expectedSpeech = forcedTransportBridge.expectedSpeech;
         roleplayNpc = forcedTransportBridge.roleplayNpc;
-        roleplayIntro = null;
-        guidedSpeaking = null;
-        emojiChoice = null;
+        roleplayIntro = forcedTransportBridge.roleplayIntro;
+        guidedSpeaking = forcedTransportBridge.guidedSpeaking;
+        emojiChoice = forcedTransportBridge.emojiChoice;
         isTaskComplete = forcedTransportBridge.isTaskComplete;
       }
 
@@ -873,7 +895,7 @@ export class SessionsController {
         expectsUserSpeech = true;
       }
 
-      // Around Town text bridges often omit roleplayIntro — attach card so CTA is purple.
+      // Around Town text bridges often omit roleplayIntro — attach praise + purple card.
       if (
         roleplayIntro == null &&
         roleplayNpc == null &&
@@ -881,31 +903,43 @@ export class SessionsController {
         !isTaskComplete &&
         looksLikeAroundTownRoleplayBridge(textEn)
       ) {
-        const bridgeIntro = aroundTownRoleplayIntroForLesson(config.lessonId);
+        const bridgeIntro = aroundTownRoleplayIntroSpeech(
+          config.lessonId,
+          teachingLang,
+        );
         if (bridgeIntro != null) {
-          roleplayIntro = bridgeIntro;
+          textEn = bridgeIntro.textEn;
+          roleplayIntro = bridgeIntro.roleplayIntro;
         }
       }
 
-      // Roleplay Intro is always listen-only (tap Continue).
+      // Pin canonical Roleplay Intro speech + card (2.1–2.5 + Explore City).
+      if (
+        roleplayIntro != null &&
+        roleplayNpc == null &&
+        !isTaskComplete
+      ) {
+        const pinnedIntro = aroundTownRoleplayIntroSpeech(
+          config.lessonId,
+          teachingLang,
+        );
+        if (pinnedIntro != null) {
+          textEn = pinnedIntro.textEn;
+          roleplayIntro = pinnedIntro.roleplayIntro;
+          expectsUserSpeech = false;
+          expectedSpeech = null;
+          emojiChoice = null;
+          guidedSpeaking = null;
+          roleplayNpc = null;
+        }
+      }
+
+      // Roleplay Intro is always listen-only (tap Start Roleplay / Continue).
+      // Keep roleplayNpc null on Intro so purple CTA stays; seed objective
+      // only once staff chrome is already present.
       if (roleplayIntro != null && !isTaskComplete) {
         expectsUserSpeech = false;
-        // Seed NPC chrome for the upcoming staff turns if model omitted it.
-        if (roleplayNpc == null) {
-          roleplayNpc = {
-            emoji: roleplayIntro.npcEmoji,
-            name: roleplayIntro.npcName?.trim() || roleplayIntro.npcLabel,
-            ...(config.lessonId === 'ee_around_town_convenience'
-              ? { objective: EXPLORE_CITY_ROLEPLAY_OBJECTIVE }
-              : config.lessonId === 'ee_around_town_shopping'
-                ? { objective: SHOPPING_ROLEPLAY_OBJECTIVE }
-                : config.lessonId === 'ee_around_town_restaurant'
-                  ? { objective: RESTAURANT_ROLEPLAY_OBJECTIVE }
-                  : config.lessonId === 'ee_around_town_coffee'
-                    ? { objective: COFFEE_ROLEPLAY_OBJECTIVE }
-                    : {}),
-          };
-        } else if (!roleplayNpc.objective) {
+        if (roleplayNpc != null && !roleplayNpc.objective) {
           const objective =
             config.lessonId === 'ee_around_town_convenience'
               ? EXPLORE_CITY_ROLEPLAY_OBJECTIVE
@@ -915,7 +949,9 @@ export class SessionsController {
                   ? RESTAURANT_ROLEPLAY_OBJECTIVE
                   : config.lessonId === 'ee_around_town_coffee'
                     ? COFFEE_ROLEPLAY_OBJECTIVE
-                    : null;
+                    : config.lessonId === 'ee_around_town_transport'
+                      ? TRANSPORT_ROLEPLAY_OBJECTIVE
+                      : null;
           if (objective) {
             roleplayNpc = {
               ...roleplayNpc,
@@ -943,7 +979,21 @@ export class SessionsController {
       // Roleplay close (Sure! / price answer / You're welcome!): listen-only →
       // tap Continue → Celebrate. Never mark lesson complete on this beat.
       // Skip when Celebrate was just forced (close already in history).
-      if (
+      // All other staff roleplay turns MUST open the mic (speak every ask).
+      if (roleplayNpc != null && roleplayIntro == null && !isTaskComplete) {
+        if (
+          isAroundTownRoleplayEndListenTurn(
+            config.lessonId,
+            staffSpeech.textEn,
+            expectsUserSpeech,
+          )
+        ) {
+          isTaskComplete = false;
+          expectsUserSpeech = false;
+        } else {
+          expectsUserSpeech = true;
+        }
+      } else if (
         isAroundTownRoleplayCloseLine(staffSpeech.textEn) &&
         !maxTurnsReached &&
         !isTaskComplete

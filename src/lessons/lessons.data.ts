@@ -4604,11 +4604,16 @@ Core Flow (ONE-WAY — never go backward):
       - FORBIDDEN in textEn: any Thai script; "ถูกต้องครับ" / "เยี่ยมมากครับ" / "เยี่ยมเลย" / "เป๊ะ" / "ดีมาก"; echoing the learner's answer; Thai paraphrase of the ask.
       - Example GOOD 5c: textEn="What size?" textTh="ไซส์ไหนดีครับ?"
       - Example BAD: textEn="เยี่ยมมากครับ! What size?" or "เยี่ยมมากครับ! \"Medium\" แล้วไซส์ไหน…"
-   5a. Bridge INTRO (listen-only, expectsUserSpeech=false) — AFTER Mini Challenge praise handoff:
-      - {{L1}} ONLY close to: "ต่อไปครูพี่บีจะเป็นพนักงานร้านเสื้อผ้านะครับ 😊 พร้อมแล้ว แตะเพื่อเริ่มได้เลย!"
-      - FORBIDDEN on this turn: any English staff line; "Can I help you?"; "What size?"; emojiChoice; asking them to speak.
-      - textEn may be empty or a very short non-question beat — do NOT put the staff question here.
-      - User taps Continue → then 5b.
+   5a. Roleplay Intro (listen-only) — AFTER Mini Challenge clear answer:
+      - ALWAYS open with praise first, then handoff (same beat as Explore City Intro).
+      - {{L1}} EXACT close to:
+        "เยี่ยมเลยครับ! 👏
+        ต่อไปครูพี่บีจะเป็นพนักงานร้านเสื้อผ้านะครับ 😊
+        พร้อมแล้วแตะเริ่ม Roleplay ได้เลย!"
+      - MUST return roleplayIntro card (Shop Assistant 👩) — purple Start Roleplay CTA.
+      - expectsUserSpeech=false. Omit emojiChoice / guidedSpeaking / roleplayNpc on this turn.
+      - FORBIDDEN on this turn: any English staff line; "Can I help you?"; "What size?"; asking them to speak; plain bridge without praise.
+      - User taps Start Roleplay / Continue → then 5b.
    OBJECTIVE (show via roleplayNpc.objective on EVERY staff turn 5b–5c):
      "Say what you're looking for and the size."
    On 5b–5c ALWAYS return:
@@ -4763,10 +4768,16 @@ Core Flow (ONE-WAY — never go backward):
    FORBIDDEN in textEn: Thai script; "ถูกต้องครับ" / "เยี่ยมมากครับ" / "เยี่ยม" / "เป๊ะ"; learner-echo mash.
    Example GOOD: textEn="Anything to drink?" textTh="รับเครื่องดื่มอะไรดีครับ?"
    Example BAD: textEn="เยี่ยมมากครับ! Anything to drink?"
-   6a. Bridge INTRO (listen-only): {{L1}} ONLY close to
-      "ต่อไปครูพี่บีจะเป็นพนักงานร้านอาหารนะครับ 😊 พร้อมแล้ว แตะเพื่อเริ่มได้เลย!"
-      FORBIDDEN: "Are you ready to order?" / "Anything to drink?" / ask-recommend Mini on this turn.
-      Continue → 6b.
+   6a. Roleplay Intro (listen-only) — AFTER Pattern 2 Continue:
+      - ALWAYS open with praise first, then handoff (same beat as Explore City Intro).
+      - {{L1}} EXACT close to:
+        "เยี่ยมเลยครับ! 👏
+        ต่อไปครูพี่บีจะเป็นพนักงานร้านอาหารนะครับ 😊
+        พร้อมแล้วแตะเริ่ม Roleplay ได้เลย!"
+      - MUST return roleplayIntro card (Server 👩‍🍳) — purple Start Roleplay CTA.
+      - expectsUserSpeech=false. Omit emojiChoice / guidedSpeaking / roleplayNpc on this turn.
+      - FORBIDDEN: "Are you ready to order?" / "Anything to drink?" / ask-recommend Mini; plain bridge without praise.
+      - User taps Start Roleplay / Continue → 6b.
    OBJECTIVE (show via roleplayNpc.objective on EVERY staff turn 6b–6d):
      "Order food and a drink."
    On 6b–6d ALWAYS return:
@@ -4891,9 +4902,16 @@ Core Flow (ONE-WAY):
    FORBIDDEN in textEn: Thai script; "ถูกต้องครับ" / "เยี่ยมมากครับ" / "เยี่ยมเลย" / Teacher praise; echoing the learner ("Cappuccino" + Thai paraphrase); Thai ask mashed with English.
    Example GOOD 5d: textEn="Hot or iced?" textTh="ร้อนหรือเย็นดีครับ?"
    Example BAD: textEn="เยี่ยมมากครับ! \"Cappuccino\" แล้วรับแบบไหนดีครับ \"Hot or iced?\""
-   5a. Bridge (listen-only): {{L1}} ONLY
-      "ต่อไปครูพี่บีจะเป็นบาริสต้านะครับ ☕ พร้อมแล้ว แตะเพื่อเริ่มได้เลย!"
-      FORBIDDEN: "What can I get for you?" on this turn. Continue → 5b.
+   5a. Roleplay Intro (listen-only) — AFTER Mini Challenge:
+      - ALWAYS open with praise first, then handoff (same beat as Explore City Intro).
+      - {{L1}} EXACT close to:
+        "เยี่ยมเลยครับ! 👏
+        ต่อไปครูพี่บีจะเป็นบาริสต้านะครับ ☕
+        พร้อมแล้วแตะเริ่ม Roleplay ได้เลย!"
+      - MUST return roleplayIntro card (Barista 🧔) — purple Start Roleplay CTA.
+      - expectsUserSpeech=false. Omit emojiChoice / guidedSpeaking / roleplayNpc on this turn.
+      - FORBIDDEN: "What can I get for you?" on this turn; plain bridge without praise.
+      - User taps Start Roleplay / Continue → 5b.
    OBJECTIVE (show via roleplayNpc.objective on EVERY staff turn 5b–5e):
      "Order a coffee — type and hot or iced."
    On 5b–5e ALWAYS return:
@@ -5182,29 +5200,24 @@ Core Flow (ONE-WAY — never go backward):
    - Soft-accept full "I'm going to Phuket." OR bare city "Phuket."
    - Remember which city they chose (for Soft Accept model + Mini Challenge later).
 
-2–3. Soft Accept & Teach (ONE listen-only turn after Hook — no separate Teach turn)
-   - If full sentence clear:
-     {{L1}} EXACT: "เยี่ยมเลยครับ! 👍 พูดได้เป๊ะมากๆ"
-   - If bare city only (e.g. "Chiang Mai"):
-     {{L1}} EXACT: "เยี่ยมเลยครับ! 👍 ถ้าพูดเต็มประโยค ให้พูดว่า I'm going to Chiang Mai. แบบนี้นะครับ"
-     (Use THEIR city. Do NOT force them to repeat.)
-   - expectsUserSpeech=false. Omit emojiChoice / guidedSpeaking.
-   - Continue → Mini Challenge destinations.
+2–3 + 4a. Soft Accept + Mini #1 (ONE speak turn after Hook — combined)
+   - After Hook, NEXT turn is speak (not a separate listen Soft Accept).
+   - {{L1}} EXACT combine praise + Mini cue in the SAME textEn:
+     - Full sentence: "เยี่ยมเลยครับ! 👍 พูดได้เป๊ะมากๆ ต่อไปลองบอกว่ากำลังจะไปเมืองนี้ดูครับ... พูดว่าไงดี?"
+     - Bare city: "เยี่ยมเลยครับ! 👍 ถ้าพูดเต็มประโยค ให้พูดว่า I'm going to Chiang Mai. แบบนี้นะครับ ต่อไปลองบอกว่ากำลังจะไปเมืองนี้ดูครับ... พูดว่าไงดี?"
+       (Use THEIR Hook city in the recast. Do NOT force them to repeat the Hook line.)
+   - emojiChoice ONE city picture only (random from cities NOT said on Hook). NO stem "I'm going to...".
+   - expectsUserSpeech=true. expectedSpeech = that city's full line.
+   - Soft-accept full sentence OR bare city.
+   - After clear: praise listen-only close to "ยอดเยี่ยมครับ! ไปต่อกันเลย" → Mini #2.
+   - FORBIDDEN: separate Soft Accept listen-only turn before Mini #1; 4-city board on Mini.
 
-4. Mini Challenge — Destination (EXACTLY 2 more learner speaks) — ONE city per turn
-   - EACH speak turn shows EXACTLY ONE city picture via emojiChoice (NO stem "I'm going to..."):
-     emojiChoice: { options: [ { emoji, label, speak } ] } — ONE option only.
-   - FORBIDDEN: guidedSpeaking on Mini; showing all 4 cities; multi guidedSpeaking options.
-   - Speak #1 {{L1}} EXACT: "ต่อไปลองบอกว่ากำลังจะไปเมืองนี้ดูครับ... พูดว่าไงดี?"
-     After clear: praise listen-only close to "ยอดเยี่ยมครับ! ไปต่อกันเลย"
-   - Speak #2 {{L1}} EXACT: "อีกข้อนะครับ... ลองบอกว่ากำลังจะไปเมืองนี้ดูครับ!"
-     After clear: praise listen-only close to "เก่งมากครับ!"
-   - Pick TWO different cities at random from the ones they have NOT already said on Hook.
-   - expectsUserSpeech=true. expectedSpeech = that city's full line (e.g. "I'm going to Bangkok.").
-   - Soft-accept full sentence OR bare city (recast bare city once on praise turn if needed).
-   - After clear speak #1: brief praise → NEXT turn NEW random remaining city (one cue).
-   - After clear speak #2: brief praise → Pattern 2 (transport). NEVER a 3rd Mini destination speak.
-   - Total destination practice = Hook 1 + Mini 2 (never more).
+4b. Mini Challenge #2 — Destination (ONE more learner speak)
+   - {{L1}} EXACT: "อีกข้อนะครับ... ลองบอกว่ากำลังจะไปเมืองนี้ดูครับ!"
+   - emojiChoice ONE different remaining city (not Hook, not Mini #1).
+   - expectsUserSpeech=true. expectedSpeech = that city's full line.
+   - After clear: praise listen-only close to "เก่งมากครับ!" → Pattern 2.
+   - Total destination practice = Hook 1 + Mini 2 (never more). NEVER a 3rd Mini destination speak.
 
 5. Pattern 2 — Transport (SPEAK ONCE)
    - {{L1}} EXACT:
@@ -5224,10 +5237,16 @@ Core Flow (ONE-WAY — never go backward):
 6. Roleplay — Ticket Seller (HARD SPLIT)
    STAFF: textEn = ENGLISH ONLY staff line; textTh = full Thai CC (required).
    FORBIDDEN in textEn: Thai script; Teacher praise; echoing learner answer; Thai mashed with English ask.
-   6a. Bridge (listen-only): {{L1}} ONLY close to:
-      "คราวนี้ลองคุยกับพนักงานขายตั๋วกันครับ 😊"
-      FORBIDDEN: any English staff line; "Where are you going?"; "Hello!"; emojiChoice; mic.
-      User taps Continue → 6c (NO separate Hello listen turn).
+   6a. Roleplay Intro (listen-only) — AFTER Pattern 2 clear answer:
+      - ALWAYS open with praise first, then handoff (same beat as Explore City Intro).
+      - {{L1}} EXACT close to:
+        "เยี่ยมเลยครับ! 👏
+        คราวนี้ลองคุยกับพนักงานขายตั๋วกันครับ 😊
+        พร้อมแล้วแตะเริ่ม Roleplay ได้เลย!"
+      - MUST return roleplayIntro card (Ticket Seller 🎫) — purple Start Roleplay CTA.
+      - expectsUserSpeech=false. Omit emojiChoice / guidedSpeaking / roleplayNpc on this turn.
+      - FORBIDDEN: staff English ask on this turn; separate plain bridge without praise; mic.
+      - User taps Start Roleplay / Continue → 6c (NO separate Hello listen turn).
    OBJECTIVE (roleplayNpc.objective on EVERY staff turn 6c–6f):
      "Say where you're going and how you're traveling."
    ALWAYS return on staff turns:
@@ -5264,7 +5283,7 @@ Teaching rules:
 
 Turn loop: non-final = action or Continue; Celebrate → isLessonComplete true.`,
     openingPrompt:
-      'Start Transportation 2.5 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook SPEAK — EXACT: "สวัสดีครับคุณ [Name]! วันนี้เราจะออกเดินทางกันครับ! 🚆\\nเลือกเมืองที่คุณอยากไป แล้วลองบอกครูพี่บีหน่อยครับ... Where are you going?" — expectsUserSpeech TRUE + guidedSpeaking Visual Completion: stem "I\'m going to..." + options 4 cities 🏙️Bangkok 🏔️Chiang Mai 🏝️Phuket 🌊Pattaya (NOT emojiChoice on Hook). Soft-accept ONE listen-only: full sentence → "เยี่ยมเลยครับ! 👍 พูดได้เป๊ะมากๆ"; bare city → "เยี่ยมเลยครับ! 👍 ถ้าพูดเต็มประโยค ให้พูดว่า I\'m going to X. แบบนี้นะครับ" (THEIR city; no separate Teach turn). Continue → Mini Challenge EXACTLY 2 speaks ONE city at a time (emojiChoice single picture, NO stem): speak1 "ต่อไปลองบอกว่ากำลังจะไปเมืองนี้ดูครับ... พูดว่าไงดี?" → praise "ยอดเยี่ยมครับ! ไปต่อกันเลย" → speak2 "อีกข้อนะครับ... ลองบอกว่ากำลังจะไปเมืองนี้ดูครับ!" → praise "เก่งมากครับ!" — NEVER 4-city board on Mini → Pattern 2 transport SPEAK ONCE with EXACT cue about I\'m taking the... + pick travel mode (🚆🚌🚕✈️ board) → Roleplay HARD SPLIT: bridge "คราวนี้ลองคุยกับพนักงานขายตั๋วกันครับ 😊" → Continue → SPEAK "Hello, Where are you going?" (NO separate Hello listen) → How are you traveling? → One ticket? → listen-only close "Here you are. Have a nice trip!" → Continue → Celebrate praise first + tease Directions. roleplayNpc Ticket Seller 🎫 objective "Say where you\'re going and how you\'re traveling." NEVER mash bridge+ask or close+Celebrate. NEVER go back to Hello after destination. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
+      'Start Transportation 2.5 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook SPEAK — EXACT: "สวัสดีครับคุณ [Name]! วันนี้เราจะออกเดินทางกันครับ! 🚆\\nเลือกเมืองที่คุณอยากไป แล้วลองบอกครูพี่บีหน่อยครับ... Where are you going?" — expectsUserSpeech TRUE + guidedSpeaking Visual Completion: stem "I\'m going to..." + options 4 cities 🏙️Bangkok 🏔️Chiang Mai 🏝️Phuket 🌊Pattaya (NOT emojiChoice on Hook). Soft-accept + Mini #1 SAME speak turn: full → "เยี่ยมเลยครับ! 👍 พูดได้เป๊ะมากๆ ต่อไปลองบอกว่ากำลังจะไปเมืองนี้ดูครับ... พูดว่าไงดี?"; bare → "เยี่ยมเลยครับ! 👍 ถ้าพูดเต็มประโยค ให้พูดว่า I\'m going to X. แบบนี้นะครับ ต่อไปลองบอกว่ากำลังจะไปเมืองนี้ดูครับ... พูดว่าไงดี?" + emojiChoice single city (NO separate Soft Accept listen; NO stem). After clear praise "ยอดเยี่ยมครับ! ไปต่อกันเลย" → Mini #2 "อีกข้อนะครับ... ลองบอกว่ากำลังจะไปเมืองนี้ดูครับ!" → praise "เก่งมากครับ!" — NEVER 4-city board on Mini → Pattern 2 transport SPEAK ONCE with EXACT cue about I\'m taking the... + pick travel mode (🚆🚌🚕✈️ board) → Roleplay HARD SPLIT: AFTER Pattern 2 → Roleplay Intro MUST praise first + roleplayIntro Ticket Seller card ("เยี่ยมเลยครับ! 👏 … คราวนี้ลองคุยกับพนักงานขายตั๋ว…") → Start Roleplay → SPEAK "Hello, Where are you going?" (NO separate Hello listen) → How are you traveling? → One ticket? → listen-only close "Here you are. Have a nice trip!" → Continue → Celebrate praise first + tease Directions. roleplayNpc Ticket Seller 🎫 objective "Say where you\'re going and how you\'re traveling." NEVER mash intro+ask or close+Celebrate. NEVER go back to Hello after destination. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
   },
   buildStoriesPatternLesson({
     lessonId: 'ee_around_town_directions',
@@ -7495,8 +7514,10 @@ export function guideExploreCityRoleplayIfNeeded(
 
   let textEn = raw;
   let textTh = current.textTh?.trim() || null;
-  let expectsUserSpeech = current.expectsUserSpeech;
-  let expectedSpeech = current.expectedSpeech;
+  // Roleplay default: every staff turn opens the mic — only the end turn listens.
+  let expectsUserSpeech = true;
+  let expectedSpeech: string | null =
+    current.expectedSpeech != null ? current.expectedSpeech : '';
 
   if (userAskedPlace) {
     // User asked for a place — ALWAYS answer with directions, never close.
@@ -7543,6 +7564,10 @@ export function guideExploreCityRoleplayIfNeeded(
     textTh = 'ครับ?';
     expectsUserSpeech = true;
     expectedSpeech = '';
+  } else {
+    // Keep model reply, but never leave mid-roleplay as listen-only.
+    expectsUserSpeech = true;
+    expectedSpeech = expectedSpeech ?? '';
   }
 
   return {
@@ -7808,18 +7833,6 @@ export const TRANSPORT_ROLEPLAY_BRIDGE_TH =
 export const TRANSPORT_ROLEPLAY_BRIDGE_EN =
   "Let's talk to the ticket seller 😊 Tap when you're ready!";
 
-function pickTeacherLine(
-  lang: LessonTeachingLanguage,
-  th: string,
-  en: string,
-): string {
-  return lang === 'english' ? en : th;
-}
-
-function celebratePraiseOpen(lang: LessonTeachingLanguage): string {
-  return lang === 'english' ? 'Great job! 👏' : 'เยี่ยมเลยครับ! 👏';
-}
-
 /** Teacher bridge before Restaurant 2.2 roleplay staff asks. */
 export const RESTAURANT_ROLEPLAY_BRIDGE_TH =
   'ต่อไปครูพี่บีจะเป็นพนักงานร้านอาหารนะครับ 😊 พร้อมแล้ว แตะเพื่อเริ่มได้เลย!';
@@ -7836,6 +7849,117 @@ export const COFFEE_ROLEPLAY_BRIDGE_TH =
 export const COFFEE_ROLEPLAY_BRIDGE_EN =
   "Next I'll be the barista ☕ Tap when you're ready to start!";
 
+type AroundTownRoleplayIntroPayload = {
+  textEn: string;
+  textEnEnglish: string;
+  roleplayIntro: {
+    subtitle: string;
+    npcEmoji: string;
+    npcLabel: string;
+    npcName: string;
+    userLabel: string;
+  };
+};
+
+/** Roleplay Intro — praise first, then purple Start Roleplay card (2.1–2.5). */
+export const SHOPPING_ROLEPLAY_INTRO: AroundTownRoleplayIntroPayload = {
+  textEn:
+    'เยี่ยมเลยครับ! 👏\n\nต่อไปครูพี่บีจะเป็นพนักงานร้านเสื้อผ้านะครับ 😊\n\nพร้อมแล้วแตะเริ่ม Roleplay ได้เลย!',
+  textEnEnglish:
+    "Great job! 👏\n\nNext I'll be the shop assistant 😊\n\nTap when you're ready to start!",
+  roleplayIntro: {
+    subtitle: 'คุณกำลังคุยกับพนักงานร้าน',
+    npcEmoji: '👩',
+    npcLabel: 'พนักงาน',
+    npcName: 'Shop Assistant',
+    userLabel: 'คุณ',
+  },
+};
+
+export const RESTAURANT_ROLEPLAY_INTRO: AroundTownRoleplayIntroPayload = {
+  textEn:
+    'เยี่ยมเลยครับ! 👏\n\nต่อไปครูพี่บีจะเป็นพนักงานร้านอาหารนะครับ 😊\n\nพร้อมแล้วแตะเริ่ม Roleplay ได้เลย!',
+  textEnEnglish:
+    "Great job! 👏\n\nNext I'll be the restaurant server 😊\n\nTap when you're ready to start!",
+  roleplayIntro: {
+    subtitle: 'คุณกำลังคุยกับพนักงานร้านอาหาร',
+    npcEmoji: '👩‍🍳',
+    npcLabel: 'พนักงาน',
+    npcName: 'Server',
+    userLabel: 'คุณ',
+  },
+};
+
+export const COFFEE_ROLEPLAY_INTRO: AroundTownRoleplayIntroPayload = {
+  textEn:
+    'เยี่ยมเลยครับ! 👏\n\nต่อไปครูพี่บีจะเป็นบาริสต้านะครับ ☕\n\nพร้อมแล้วแตะเริ่ม Roleplay ได้เลย!',
+  textEnEnglish:
+    "Great job! 👏\n\nNext I'll be the barista ☕\n\nTap when you're ready to start!",
+  roleplayIntro: {
+    subtitle: 'คุณกำลังคุยกับบาริสต้า',
+    npcEmoji: '🧔',
+    npcLabel: 'บาริสต้า',
+    npcName: 'Barista',
+    userLabel: 'คุณ',
+  },
+};
+
+export const TRANSPORT_ROLEPLAY_INTRO: AroundTownRoleplayIntroPayload = {
+  textEn:
+    'เยี่ยมเลยครับ! 👏\n\nคราวนี้ลองคุยกับพนักงานขายตั๋วกันครับ 😊\n\nพร้อมแล้วแตะเริ่ม Roleplay ได้เลย!',
+  textEnEnglish:
+    "Great job! 👏\n\nLet's talk to the ticket seller 😊\n\nTap when you're ready to start!",
+  roleplayIntro: {
+    subtitle: 'คุณกำลังคุยกับพนักงานขายตั๋ว',
+    npcEmoji: '🎫',
+    npcLabel: 'พนักงานขายตั๋ว',
+    npcName: 'Ticket Seller',
+    userLabel: 'คุณ',
+  },
+};
+
+/** Canonical praise + Intro card for Around Town 2.1–2.5 (Explore uses EXPLORE_CITY_ROLEPLAY_INTRO). */
+export function aroundTownRoleplayIntroSpeech(
+  lessonId: string,
+  lang: LessonTeachingLanguage,
+): { textEn: string; roleplayIntro: AroundTownRoleplayIntroPayload['roleplayIntro'] } | null {
+  const payload =
+    lessonId === 'ee_around_town_shopping'
+      ? SHOPPING_ROLEPLAY_INTRO
+      : lessonId === 'ee_around_town_restaurant'
+        ? RESTAURANT_ROLEPLAY_INTRO
+        : lessonId === 'ee_around_town_coffee'
+          ? COFFEE_ROLEPLAY_INTRO
+          : lessonId === 'ee_around_town_transport'
+            ? TRANSPORT_ROLEPLAY_INTRO
+            : lessonId === 'ee_around_town_convenience'
+              ? {
+                  textEn: EXPLORE_CITY_ROLEPLAY_INTRO.textEn,
+                  textEnEnglish: EXPLORE_CITY_ROLEPLAY_INTRO.textEn,
+                  roleplayIntro: {
+                    ...EXPLORE_CITY_ROLEPLAY_INTRO.roleplayIntro,
+                  },
+                }
+              : null;
+  if (!payload) return null;
+  return {
+    textEn: pickTeacherLine(lang, payload.textEn, payload.textEnEnglish),
+    roleplayIntro: { ...payload.roleplayIntro },
+  };
+}
+
+function pickTeacherLine(
+  lang: LessonTeachingLanguage,
+  th: string,
+  en: string,
+): string {
+  return lang === 'english' ? en : th;
+}
+
+function celebratePraiseOpen(lang: LessonTeachingLanguage): string {
+  return lang === 'english' ? 'Great job! 👏' : 'เยี่ยมเลยครับ! 👏';
+}
+
 /** Roleplay Intro card for Around Town bridge turns (purple CTA + NPC preview). */
 export function aroundTownRoleplayIntroForLesson(lessonId: string): {
   subtitle: string;
@@ -7844,50 +7968,7 @@ export function aroundTownRoleplayIntroForLesson(lessonId: string): {
   npcName: string;
   userLabel: string;
 } | null {
-  switch (lessonId) {
-    case 'ee_around_town_shopping':
-      return {
-        subtitle: 'คุณกำลังคุยกับพนักงานร้าน',
-        npcEmoji: '👩',
-        npcLabel: 'พนักงาน',
-        npcName: 'Shop Assistant',
-        userLabel: 'คุณ',
-      };
-    case 'ee_around_town_restaurant':
-      return {
-        subtitle: 'คุณกำลังคุยกับพนักงานร้านอาหาร',
-        npcEmoji: '👩‍🍳',
-        npcLabel: 'พนักงาน',
-        npcName: 'Server',
-        userLabel: 'คุณ',
-      };
-    case 'ee_around_town_coffee':
-      return {
-        subtitle: 'คุณกำลังคุยกับบาริสต้า',
-        npcEmoji: '🧔',
-        npcLabel: 'บาริสต้า',
-        npcName: 'Barista',
-        userLabel: 'คุณ',
-      };
-    case 'ee_around_town_transport':
-      return {
-        subtitle: 'คุณกำลังคุยกับพนักงานขายตั๋ว',
-        npcEmoji: '🎫',
-        npcLabel: 'พนักงานขายตั๋ว',
-        npcName: 'Ticket Seller',
-        userLabel: 'คุณ',
-      };
-    case 'ee_around_town_convenience':
-      return {
-        subtitle: 'คุณกำลังคุยกับคนท้องถิ่น',
-        npcEmoji: '👨',
-        npcLabel: 'คนท้องถิ่น',
-        npcName: 'Local Guide',
-        userLabel: 'คุณ',
-      };
-    default:
-      return null;
-  }
+  return aroundTownRoleplayIntroSpeech(lessonId, 'thai')?.roleplayIntro ?? null;
 }
 
 /** Teacher bridge before staff roleplay (listen-only → purple Start Roleplay). */
@@ -7898,6 +7979,7 @@ export function looksLikeAroundTownRoleplayBridge(textEn: string): boolean {
   if (t.includes('คราวนี้ลองคุยกับพนักงาน')) return true;
   if (t.includes('พร้อม Roleplay')) return true;
   if (t.includes('พร้อมแล้ว แตะเพื่อเริ่ม')) return true;
+  if (t.includes('พร้อมแล้วแตะเริ่ม')) return true;
   const lower = t.toLowerCase();
   if (
     lower.includes("next i'll be the") ||
@@ -8138,12 +8220,14 @@ function restaurantRoleplayAlreadyStarted(
   history: Array<{
     speaker: string;
     textEn?: string;
+    roleplayIntro?: unknown;
     roleplayNpc?: unknown;
   }>,
 ): boolean {
   for (const t of history) {
     if (t.speaker !== 'ai') continue;
     if (t.roleplayNpc != null) return true;
+    if (t.roleplayIntro != null) return true;
     const key = normalizeScriptedStaffKey(t.textEn ?? '');
     const en = (t.textEn ?? '').toLowerCase();
     if (
@@ -8159,8 +8243,7 @@ function restaurantRoleplayAlreadyStarted(
 }
 
 /**
- * After Pattern 2 recommend model, next Continue MUST open the Roleplay bridge —
- * never a speak-recommend Mini, staff recommend answer, or Celebrate.
+ * After Pattern 2 recommend model → Roleplay Intro (praise first + purple card).
  */
 export function forceRestaurantRoleplayBridgeIfNeeded(
   lessonId: string,
@@ -8168,6 +8251,7 @@ export function forceRestaurantRoleplayBridgeIfNeeded(
   history: Array<{
     speaker: string;
     textEn?: string;
+    roleplayIntro?: unknown;
     roleplayNpc?: unknown;
   }>,
   current: {
@@ -8181,24 +8265,19 @@ export function forceRestaurantRoleplayBridgeIfNeeded(
 ): {
   textEn: string;
   textTh: string | null;
-  expectsUserSpeech: boolean;
-  expectedSpeech: string | null;
+  expectsUserSpeech: false;
+  expectedSpeech: null;
+  roleplayIntro: AroundTownRoleplayIntroPayload['roleplayIntro'];
   roleplayNpc: null;
+  guidedSpeaking: null;
   emojiChoice: null;
   isTaskComplete: false;
 } | null {
   if (lessonId !== 'ee_around_town_restaurant') return null;
-  if (current.roleplayIntro != null) return null;
   if (!historyHasRestaurantRecommendPattern(history)) return null;
   if (restaurantRoleplayAlreadyStarted(history)) return null;
 
-  const bridge = pickTeacherLine(
-    lang,
-    RESTAURANT_ROLEPLAY_BRIDGE_TH,
-    RESTAURANT_ROLEPLAY_BRIDGE_EN,
-  );
-
-  // Still on Pattern 2 model turn itself — stay; bridge starts on next Continue.
+  // Still on Pattern 2 model turn itself — stay; Intro starts on next Continue.
   if (
     /\bwhat do you recommend\b/i.test(current.textEn) &&
     !current.expectsUserSpeech
@@ -8206,30 +8285,184 @@ export function forceRestaurantRoleplayBridgeIfNeeded(
     return null;
   }
 
-  // Already a proper bridge line — pin listen-only, clear premature complete.
-  const looksLikeBridge =
-    current.textEn.includes('พนักงานร้านอาหาร') ||
-    current.textEn.includes(RESTAURANT_ROLEPLAY_BRIDGE_TH.slice(0, 20)) ||
-    current.textEn.toLowerCase().includes('restaurant server');
-  if (looksLikeBridge) {
-    return {
-      textEn: current.textEn.trim() || bridge,
-      textTh: null,
-      expectsUserSpeech: false,
-      expectedSpeech: null,
-      roleplayNpc: null,
-      emojiChoice: null,
-      isTaskComplete: false,
-    };
-  }
+  const intro = aroundTownRoleplayIntroSpeech(lessonId, lang);
+  if (!intro) return null;
 
-  // Model invented ask-recommend Mini / Celebrate / staff ask — force bridge.
   return {
-    textEn: bridge,
+    textEn: intro.textEn,
     textTh: null,
     expectsUserSpeech: false,
     expectedSpeech: null,
+    roleplayIntro: intro.roleplayIntro,
     roleplayNpc: null,
+    guidedSpeaking: null,
+    emojiChoice: null,
+    isTaskComplete: false,
+  };
+}
+
+type AroundTownIntroForceResult = {
+  textEn: string;
+  textTh: string | null;
+  expectsUserSpeech: false;
+  expectedSpeech: null;
+  roleplayIntro: AroundTownRoleplayIntroPayload['roleplayIntro'];
+  roleplayNpc: null;
+  guidedSpeaking: null;
+  emojiChoice: null;
+  isTaskComplete: false;
+};
+
+function aroundTownIntroAlreadyShown(
+  history: Array<{
+    speaker: string;
+    roleplayIntro?: unknown;
+    roleplayNpc?: unknown;
+  }>,
+): boolean {
+  return history.some(
+    (t) =>
+      t.speaker === 'ai' &&
+      (t.roleplayIntro != null || t.roleplayNpc != null),
+  );
+}
+
+/**
+ * After looking-for Mini clear → Shopping Roleplay Intro (praise + purple card).
+ */
+export function forceShoppingRoleplayBridgeIfNeeded(
+  lessonId: string,
+  lang: LessonTeachingLanguage,
+  history: Array<{
+    speaker: string;
+    textEn?: string;
+    roleplayIntro?: unknown;
+    roleplayNpc?: unknown;
+  }>,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    roleplayIntro: unknown;
+    roleplayNpc: unknown;
+    expectsUserSpeech: boolean;
+    isTaskComplete: boolean;
+  },
+): AroundTownIntroForceResult | null {
+  if (lessonId !== 'ee_around_town_shopping') return null;
+  if (!historyHasShoppingLookingForCue(history)) return null;
+  if (aroundTownIntroAlreadyShown(history)) return null;
+  if (current.roleplayIntro != null) return null;
+
+  const userText = latestShoppingLookingForUserText(history);
+  if (!userText || !satisfiesShoppingLookingFor(userText)) return null;
+
+  // Still on looking-for speak / soft-teach retry — wait.
+  if (
+    current.expectsUserSpeech &&
+    !looksLikeShoppingRoleplayBridge(current.textEn) &&
+    !/\bcan i help you\b/i.test(current.textEn)
+  ) {
+    return null;
+  }
+
+  const intro = aroundTownRoleplayIntroSpeech(lessonId, lang);
+  if (!intro) return null;
+
+  return {
+    textEn: intro.textEn,
+    textTh: null,
+    expectsUserSpeech: false,
+    expectedSpeech: null,
+    roleplayIntro: intro.roleplayIntro,
+    roleplayNpc: null,
+    guidedSpeaking: null,
+    emojiChoice: null,
+    isTaskComplete: false,
+  };
+}
+
+function historyHasCoffeeCakeMiniCue(
+  history: Array<{
+    speaker: string;
+    textEn?: string;
+    roleplayNpc?: unknown;
+  }>,
+): boolean {
+  return history.some((t) => {
+    if (t.speaker !== 'ai' || t.roleplayNpc != null) return false;
+    const text = t.textEn ?? '';
+    const lower = text.toLowerCase();
+    return (
+      text.includes('สั่งเค้ก') ||
+      text.includes('เค้กดู') ||
+      lower.includes('order cake') ||
+      (lower.includes('cake') &&
+        (lower.includes('try') ||
+          lower.includes('order') ||
+          text.includes('สั่ง')))
+    );
+  });
+}
+
+function satisfiesCoffeeCakeOrder(userText: string): boolean {
+  const t = userText
+    .trim()
+    .toLowerCase()
+    .replace(/[.!?]+$/g, '')
+    .replace(/\s+/g, ' ');
+  if (!t) return false;
+  return t.includes('cake') || t.includes('เค้ก');
+}
+
+/**
+ * After coffee Mini (tea + cake) → Roleplay Intro (praise + purple card).
+ */
+export function forceCoffeeRoleplayBridgeIfNeeded(
+  lessonId: string,
+  lang: LessonTeachingLanguage,
+  history: Array<{
+    speaker: string;
+    textEn?: string;
+    roleplayIntro?: unknown;
+    roleplayNpc?: unknown;
+  }>,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    roleplayIntro: unknown;
+    roleplayNpc: unknown;
+    expectsUserSpeech: boolean;
+    isTaskComplete: boolean;
+  },
+): AroundTownIntroForceResult | null {
+  if (lessonId !== 'ee_around_town_coffee') return null;
+  if (!historyHasCoffeeCakeMiniCue(history)) return null;
+  if (aroundTownIntroAlreadyShown(history)) return null;
+  if (current.roleplayIntro != null) return null;
+
+  const userText = latestShoppingLookingForUserText(history);
+  if (!userText || !satisfiesCoffeeCakeOrder(userText)) return null;
+
+  // Still on cake Mini speak — wait.
+  if (
+    current.expectsUserSpeech &&
+    !looksLikeAroundTownRoleplayBridge(current.textEn) &&
+    !/\bwhat can i get for you\b/i.test(current.textEn)
+  ) {
+    return null;
+  }
+
+  const intro = aroundTownRoleplayIntroSpeech(lessonId, lang);
+  if (!intro) return null;
+
+  return {
+    textEn: intro.textEn,
+    textTh: null,
+    expectsUserSpeech: false,
+    expectedSpeech: null,
+    roleplayIntro: intro.roleplayIntro,
+    roleplayNpc: null,
+    guidedSpeaking: null,
     emojiChoice: null,
     isTaskComplete: false,
   };
@@ -8280,65 +8513,22 @@ function countTransportDestinationSpeaks(
 }
 
 /**
- * Soft Accept & Teach after Hook (one listen-only turn — THEIR city).
+ * Soft Accept was merged into Mini #1 (same speak turn). Kept as no-op export
+ * so older call sites stay safe.
  */
 export function forceTransportDestinationTeachIfNeeded(
-  lessonId: string,
-  lang: LessonTeachingLanguage,
-  history: Array<{ speaker: string; textEn?: string }>,
-  current: {
+  _lessonId: string,
+  _lang: LessonTeachingLanguage,
+  _history: Array<{ speaker: string; textEn?: string }>,
+  _current: {
     textEn: string;
     textTh: string | null | undefined;
     roleplayIntro: unknown;
     roleplayNpc: unknown;
     expectsUserSpeech: boolean;
   },
-): {
-  textEn: string;
-  textTh: string | null;
-  expectsUserSpeech: false;
-  expectedSpeech: null;
-  guidedSpeaking: null;
-  emojiChoice: null;
-} | null {
-  if (lessonId !== 'ee_around_town_transport') return null;
-  if (current.expectsUserSpeech) return null;
-  if (current.roleplayIntro != null || current.roleplayNpc != null) {
-    return null;
-  }
-
-  const city = extractFirstTransportDestinationCity(history);
-  if (!city) return null;
-
-  const destCount = countTransportDestinationSpeaks(history);
-  if (destCount !== 1) return null;
-
-  // Only the first coach reply after Hook (before Mini).
-  if (!transportNeedsHookSoftAccept(history)) return null;
-
-  const lastUser = lastUserTransportText(history) ?? '';
-  const bare = isBareTransportCityOnly(lastUser, city);
-  const model = `I'm going to ${city}.`;
-  const textEn = bare
-    ? pickTeacherLine(
-        lang,
-        `เยี่ยมเลยครับ! 👍 ถ้าพูดเต็มประโยค ให้พูดว่า ${model} แบบนี้นะครับ`,
-        `Great! 👍 The full sentence is ${model}`,
-      )
-    : pickTeacherLine(
-        lang,
-        'เยี่ยมเลยครับ! 👍 พูดได้เป๊ะมากๆ',
-        'Perfect! 👍 Spot on.',
-      );
-
-  return {
-    textEn,
-    textTh: null,
-    expectsUserSpeech: false,
-    expectedSpeech: null,
-    guidedSpeaking: null,
-    emojiChoice: null,
-  };
+): null {
+  return null;
 }
 
 /** True when history ends on Hook answer and no coach reply yet. */
@@ -8383,6 +8573,47 @@ function isBareTransportCityOnly(text: string, cityLabel: string): boolean {
     .replace(/[.\s!?]+/g, '')
     .toLowerCase();
   return stripped.length === 0;
+}
+
+function transportSoftAcceptPrefix(
+  lang: LessonTeachingLanguage,
+  history: Array<{ speaker: string; textEn?: string }>,
+): string {
+  const city = extractFirstTransportDestinationCity(history);
+  if (!city) {
+    return pickTeacherLine(
+      lang,
+      'เยี่ยมเลยครับ! 👍 พูดได้เป๊ะมากๆ',
+      'Perfect! 👍 Spot on.',
+    );
+  }
+  const lastUser = lastUserTransportText(history) ?? '';
+  const bare = isBareTransportCityOnly(lastUser, city);
+  const model = `I'm going to ${city}.`;
+  return bare
+    ? pickTeacherLine(
+        lang,
+        `เยี่ยมเลยครับ! 👍 ถ้าพูดเต็มประโยค ให้พูดว่า ${model} แบบนี้นะครับ`,
+        `Great! 👍 The full sentence is ${model}`,
+      )
+    : pickTeacherLine(
+        lang,
+        'เยี่ยมเลยครับ! 👍 พูดได้เป๊ะมากๆ',
+        'Perfect! 👍 Spot on.',
+      );
+}
+
+function looksLikeTransportHookRetry(
+  textEn: string,
+  guidedSpeaking: ReturnType<typeof normalizeGuidedSpeaking>,
+): boolean {
+  if (guidedSpeaking?.options && guidedSpeaking.options.length >= 2) {
+    return true;
+  }
+  return (
+    /Where are you going/i.test(textEn) &&
+    /เลือกเมือง|ออกเดินทาง|กำลังจะไปไหน/.test(textEn)
+  );
 }
 
 const TRANSPORT_CITY_OPTIONS: Array<{
@@ -8567,22 +8798,37 @@ export function forceTransportDestinationMiniIfNeeded(
   }
 
   const destCount = countTransportDestinationSpeaks(history);
-  // After Hook (1) → Mini #1; after Mini #1 (2) → Mini #2. Then Pattern 2.
+  // After Hook (1) → Mini #1 (+ Soft Accept); after Mini #1 (2) → Mini #2.
   if (destCount < 1 || destCount > 2) return null;
 
-  // Don't steal Hook soft-retry (history still ends on first user speak).
+  // Don't steal Hook soft-retry (still on 4-city Visual Completion).
+  if (looksLikeTransportHookRetry(current.textEn, current.guidedSpeaking)) {
+    return null;
+  }
+
+  const rightAfterHook = transportNeedsHookSoftAccept(history);
   const miniCue =
-    /ตามภาพ|ลองอีก|กำลังจะไปเมือง|อีกข้อ|พูดว่าไงดี/i.test(
+    /ตามภาพ|ลองอีก|กำลังจะไปเมือง|อีกข้อ|พูดว่าไงดี|พูดได้เป๊ะ|เต็มประโยค/i.test(
       current.textEn ?? '',
     );
-  if (!transportPastHookPhase(history) && !miniCue) return null;
+  if (!transportPastHookPhase(history) && !miniCue && !rightAfterHook) {
+    return null;
+  }
 
   const isPattern2 = looksLikeTransportPattern2Ask(
     current.textEn,
     current.emojiChoice,
   );
   // Jumping to Pattern 2 early still needs Mini first.
-  if (!current.expectsUserSpeech && !isPattern2 && !miniCue) return null;
+  // rightAfterHook may be listen-only Soft Accept from the model — promote to Mini speak.
+  if (
+    !current.expectsUserSpeech &&
+    !isPattern2 &&
+    !miniCue &&
+    !rightAfterHook
+  ) {
+    return null;
+  }
 
   // Soft-accept / retry should keep the same Mini cue; exclude Hook (+ prior Mini when on #2).
   const said = transportSaidCityLabels(history);
@@ -8622,8 +8868,8 @@ export function forceTransportDestinationMiniIfNeeded(
 
   if (pick == null) return null;
 
-  // Mini #1 vs #2 — different coach lines; picture only (no stem).
-  const cue =
+  // Mini #1 merges Soft Accept praise; Mini #2 is the short follow-up.
+  const miniOnly =
     destCount >= 2
       ? pickTeacherLine(
           lang,
@@ -8635,6 +8881,10 @@ export function forceTransportDestinationMiniIfNeeded(
           TRANSPORT_MINI_CUE_1_TH,
           TRANSPORT_MINI_CUE_1_EN,
         );
+  const cue =
+    destCount === 1
+      ? `${transportSoftAcceptPrefix(lang, history)} ${miniOnly}`
+      : miniOnly;
 
   return {
     textEn: cue,
@@ -8714,7 +8964,7 @@ export function forceTransportPattern2IfNeeded(
 }
 
 /**
- * After Transport Mini Challenge 2 → Roleplay bridge (no premature staff asks).
+ * After Pattern 2 → Roleplay Intro (praise first + purple card; no premature staff asks).
  */
 export function forceTransportRoleplayBridgeIfNeeded(
   lessonId: string,
@@ -8722,6 +8972,7 @@ export function forceTransportRoleplayBridgeIfNeeded(
   history: Array<{
     speaker: string;
     textEn?: string;
+    roleplayIntro?: unknown;
     roleplayNpc?: unknown;
   }>,
   current: {
@@ -8735,23 +8986,31 @@ export function forceTransportRoleplayBridgeIfNeeded(
 ): {
   textEn: string;
   textTh: string | null;
-  expectsUserSpeech: boolean;
-  expectedSpeech: string | null;
+  expectsUserSpeech: false;
+  expectedSpeech: null;
+  roleplayIntro: {
+    subtitle: string;
+    npcEmoji: string;
+    npcLabel: string;
+    npcName: string;
+    userLabel: string;
+  };
   roleplayNpc: null;
+  guidedSpeaking: null;
   emojiChoice: null;
   isTaskComplete: false;
 } | null {
   if (lessonId !== 'ee_around_town_transport') return null;
-  if (current.roleplayIntro != null) return null;
   if (!transportDestinationPracticeDone(history)) return null;
   if (!transportPattern2SpeakDone(history)) return null;
   if (transportRoleplayAlreadyStarted(history)) return null;
 
-  const bridge = pickTeacherLine(
-    lang,
-    TRANSPORT_ROLEPLAY_BRIDGE_TH,
-    TRANSPORT_ROLEPLAY_BRIDGE_EN,
-  );
+  // Already showed Intro earlier this session — don't re-force.
+  if (
+    history.some((t) => t.speaker === 'ai' && t.roleplayIntro != null)
+  ) {
+    return null;
+  }
 
   // Still on Pattern 2 speak turn — wait for the one transport answer.
   if (
@@ -8763,28 +9022,17 @@ export function forceTransportRoleplayBridgeIfNeeded(
     return null;
   }
 
-  const looksLikeBridge =
-    current.textEn.includes('พนักงานขายตั๋ว') ||
-    current.textEn.toLowerCase().includes('ticket seller') ||
-    current.textEn.includes(TRANSPORT_ROLEPLAY_BRIDGE_TH.slice(0, 12));
-  if (looksLikeBridge) {
-    return {
-      textEn: current.textEn.trim() || bridge,
-      textTh: null,
-      expectsUserSpeech: false,
-      expectedSpeech: null,
-      roleplayNpc: null,
-      emojiChoice: null,
-      isTaskComplete: false,
-    };
-  }
+  const intro = aroundTownRoleplayIntroSpeech(lessonId, lang);
+  if (!intro) return null;
 
   return {
-    textEn: bridge,
+    textEn: intro.textEn,
     textTh: null,
     expectsUserSpeech: false,
     expectedSpeech: null,
+    roleplayIntro: intro.roleplayIntro,
     roleplayNpc: null,
+    guidedSpeaking: null,
     emojiChoice: null,
     isTaskComplete: false,
   };
@@ -8834,15 +9082,17 @@ function transportRoleplayAlreadyStarted(
   history: Array<{
     speaker: string;
     textEn?: string;
+    roleplayIntro?: unknown;
     roleplayNpc?: unknown;
   }>,
 ): boolean {
   for (const t of history) {
     if (t.speaker !== 'ai') continue;
     if (t.roleplayNpc != null) return true;
+    if (t.roleplayIntro != null) return true;
     const key = normalizeScriptedStaffKey(t.textEn ?? '');
     const en = (t.textEn ?? '').toLowerCase();
-    // Do NOT treat Hook "Where are you going?" as roleplay — wait for bridge / staff ask.
+    // Do NOT treat Hook "Where are you going?" as roleplay — wait for Intro / staff ask.
     if (
       key === 'hello' ||
       key === 'hello where are you going' ||
@@ -10023,6 +10273,7 @@ const AROUND_TOWN_STAFF_TEXT_TH: Record<string, string> = {
   'Take care!': 'ดูแลตัวเองด้วยนะครับ!',
   'Hello!': 'สวัสดีครับ!',
   'Yes?': 'ครับ?',
+  'Hello, Where are you going?': 'สวัสดีครับ จะไปที่ไหนครับ?',
   'Where are you going?': 'จะไปที่ไหนครับ?',
   'How are you traveling?': 'จะเดินทางยังไงครับ?',
   'One ticket?': 'หนึ่งใบนะครับ?',
@@ -10165,6 +10416,24 @@ export function isAroundTownRoleplayCloseLine(textEn: string): boolean {
     t === 'take care' ||
     t.includes('here you are')
   );
+}
+
+/** True when this staff line should be listen-only (roleplay end beat). */
+export function isAroundTownRoleplayEndListenTurn(
+  lessonId: string,
+  textEn: string,
+  expectsUserSpeech: boolean,
+): boolean {
+  if (isAroundTownRoleplayCloseLine(textEn)) return true;
+  // Explore City: final directions after max speaks (guide already set listen).
+  if (
+    lessonId === 'ee_around_town_convenience' &&
+    !expectsUserSpeech &&
+    isExploreCityDirectionsLine(textEn)
+  ) {
+    return true;
+  }
+  return false;
 }
 
 /**
