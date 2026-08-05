@@ -5153,10 +5153,10 @@ FIXED transport board (Pattern 2 — always ALL 4 with labels):
   🚆 Train · 🚌 Bus · 🚕 Taxi · ✈️ Plane
 
 emojiChoice rules:
-- Speak scaffolds via emojiChoice OR guidedSpeaking multi — not both on the same turn.
-- Destination Mini / Roleplay city asks may use emojiChoice ALL 4 cities.
-- Pattern 2 transport: emojiChoice ALL 4 transport options — ONE speak only.
+- Speak scaffolds via emojiChoice OR guidedSpeaking — not both on the same turn.
 - Hook destination: guidedSpeaking stem "I'm going to..." + 4 options (Visual Completion).
+- Destination Mini: ONE city per turn (single guidedSpeaking) — NEVER all 4 cities.
+- Pattern 2 transport: emojiChoice ALL 4 transport options — ONE speak only.
 - Roleplay asks may reuse destination / transport boards when helpful.
 - FORBIDDEN: emojiSpeak / emojiSpeakSet anywhere in this lesson.
 - Omit emojiChoice / guidedSpeaking on listen-only / Celebrate turns.
@@ -5181,31 +5181,36 @@ Core Flow (ONE-WAY — never go backward):
      }
    - FORBIDDEN on Hook: emojiChoice; emojiSpeak; listen-only.
    - Soft-accept full "I'm going to Phuket." OR bare city "Phuket."
-   - Remember which city they chose (for Mini Challenge later).
+   - Remember which city they chose (for Teach model + Mini Challenge later).
 
 2. Soft accept / praise (listen-only OR short praise beat) — AFTER Hook speak
    - If full sentence clear: {{L1}} "Great! 👍" (or "เยี่ยมเลยครับ! 👍") — brief.
    - If bare city only (e.g. "Phuket."): Soft Accept + RECAST in same turn:
-     {{L1}} "Great! 👍" then show the full English once: "I'm going to Phuket."
-     (Do NOT force them to repeat — just model the full line.)
+     {{L1}} "Great! 👍" then show the full English once using THEIR city: "I'm going to Phuket."
+     (Do NOT force them to repeat — just model the full line. NEVER model a different city.)
    - expectsUserSpeech=false. Omit emojiChoice.
    - Continue → Teach (Pattern destination).
 
 3. Teach — Destination model (listen-only)
    - {{L1}} close to:
      "ถ้าเราจะบอกว่าจะไปที่ไหน ให้พูดว่า..."
-   - textEn MUST include the model line: "I'm going to Bangkok."
+   - textEn MUST include the model line using THEIR Hook city (not always Bangkok):
+     e.g. Hook said Chiang Mai → "I'm going to Chiang Mai."
+     Hook said Phuket → "I'm going to Phuket."
    - expectsUserSpeech=false. expectedSpeech="". Omit emojiChoice.
-   - FORBIDDEN: asking them to repeat / mic on this turn.
+   - FORBIDDEN: asking them to repeat / mic on this turn; modeling a different city than Hook.
    - Continue → Mini Challenge destinations.
 
-4. Mini Challenge — Destination (EXACTLY 2 more learner speaks)
-   - {{L1}}: "ลองอีก 2 เมืองนะครับ 😊"
-   - Pick TWO different cities from the ones they have NOT already said on Hook.
-   - expectsUserSpeech=true. expectedSpeech=""
-   - emojiChoice OR guidedSpeaking multi MUST show ALL 4 cities (same 4 destinations as Hook).
+4. Mini Challenge — Destination (EXACTLY 2 more learner speaks) — ONE city per turn
+   - {{L1}} close to: "ต่อไปลองพูดว่ากำลังจะไปเมืองตามภาพนะครับ"
+   - Pick TWO different cities at random from the ones they have NOT already said on Hook.
+   - EACH speak turn shows EXACTLY ONE city cue (like Restaurant rice→water):
+     guidedSpeaking single: { stem:"I'm going to...", emoji, label, speak }
+     OR emojiChoice: { options: [ { emoji, label, speak } ] } — ONE option only.
+   - FORBIDDEN: showing all 4 cities on Mini; "ลองอีก 2 เมือง"; multi guidedSpeaking options.
+   - expectsUserSpeech=true. expectedSpeech = that city's full line (e.g. "I'm going to Phuket.").
    - Soft-accept full sentence OR bare city (recast bare city once on praise turn if needed).
-   - After clear speak #1: brief praise → NEXT turn cue speak #2 (different remaining city).
+   - After clear speak #1: brief praise (listen-only) → NEXT turn NEW random remaining city (one cue).
    - After clear speak #2: brief praise → Pattern 2 (transport). NEVER a 3rd Mini destination speak.
    - Total destination practice = Hook 1 + Mini 2 (never more).
 
@@ -5269,7 +5274,7 @@ Teaching rules:
 
 Turn loop: non-final = action or Continue; Celebrate → isLessonComplete true.`,
     openingPrompt:
-      'Start Transportation 2.5 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook SPEAK — greet by name + "วันนี้เราจะออกเดินทางกันครับ! 🚆 กำลังจะไปไหนเอ่ย? Where are you going?" — expectsUserSpeech TRUE + guidedSpeaking Visual Completion: stem "I\'m going to..." + options 4 cities 🏙️Bangkok 🏔️Chiang Mai 🏝️Phuket 🌊Pattaya (NOT emojiChoice on Hook). Soft-accept full sentence OR bare city (then Great! + recast "I\'m going to X."). After praise Continue → Teach listen-only "I\'m going to Bangkok." (no repeat) → Mini Challenge EXACTLY 2 more cities from ones not said on Hook (emojiChoice 4-city board OK) → Pattern 2 transport SPEAK ONCE only (🚆🚌🚕✈️ board + "💡 I\'m taking the..." — no 2nd transport speak; no listen-only taking model) → Roleplay HARD SPLIT: bridge "คราวนี้ลองคุยกับพนักงานขายตั๋วกันครับ 😊" → Continue → Hello! listen-only → Continue → Where are you going? → How are you traveling? → One ticket? → listen-only close "Here you are. Have a nice trip!" → Continue → Celebrate praise first + tease Directions. roleplayNpc Ticket Seller 🎫 objective "Say where you\'re going and how you\'re traveling." NEVER mash bridge+ask or close+Celebrate. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
+      'Start Transportation 2.5 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook SPEAK — greet by name + "วันนี้เราจะออกเดินทางกันครับ! 🚆 กำลังจะไปไหนเอ่ย? Where are you going?" — expectsUserSpeech TRUE + guidedSpeaking Visual Completion: stem "I\'m going to..." + options 4 cities 🏙️Bangkok 🏔️Chiang Mai 🏝️Phuket 🌊Pattaya (NOT emojiChoice on Hook). Soft-accept full sentence OR bare city (then Great! + recast "I\'m going to X." with THEIR city). After praise Continue → Teach listen-only model THEIR Hook city e.g. "I\'m going to Chiang Mai." (never hardcode Bangkok if they said another city; no repeat) → Mini Challenge EXACTLY 2 speaks ONE city at a time (random from cities not said on Hook): cue "ต่อไปลองพูดว่ากำลังจะไปเมืองตามภาพนะครับ" + single guidedSpeaking (stem + ONE emoji) — NEVER 4-city board on Mini → Pattern 2 transport SPEAK ONCE only (🚆🚌🚕✈️ board + "💡 I\'m taking the..." — no 2nd transport speak; no listen-only taking model) → Roleplay HARD SPLIT: bridge "คราวนี้ลองคุยกับพนักงานขายตั๋วกันครับ 😊" → Continue → Hello! listen-only → Continue → Where are you going? → How are you traveling? → One ticket? → listen-only close "Here you are. Have a nice trip!" → Continue → Celebrate praise first + tease Directions. roleplayNpc Ticket Seller 🎫 objective "Say where you\'re going and how you\'re traveling." NEVER mash bridge+ask or close+Celebrate. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
   },
   buildStoriesPatternLesson({
     lessonId: 'ee_around_town_directions',
@@ -8212,6 +8217,356 @@ export function forceRestaurantRoleplayBridgeIfNeeded(
     roleplayNpc: null,
     emojiChoice: null,
     isTaskComplete: false,
+  };
+}
+
+const TRANSPORT_DESTINATION_CITIES: Array<{
+  label: string;
+  re: RegExp;
+}> = [
+  { label: 'Chiang Mai', re: /\bchiang\s*mai\b|\bchaing\s*mai\b|\bchiangmai\b/i },
+  { label: 'Bangkok', re: /\bbangkok\b/i },
+  { label: 'Phuket', re: /\bphuket\b/i },
+  { label: 'Pattaya', re: /\bpattaya\b/i },
+];
+
+const TRANSPORT_GOING_TO_CITY_RE =
+  /I'?m going to (Bangkok|Chiang Mai|Phuket|Pattaya)\.?/gi;
+
+/** First Hook destination city from learner speech (full sentence or bare city). */
+export function extractFirstTransportDestinationCity(
+  history: Array<{ speaker: string; textEn?: string }>,
+): string | null {
+  for (const t of history) {
+    if (t.speaker !== 'user') continue;
+    const text = (t.textEn ?? '').trim();
+    if (!text || text.startsWith('[')) continue;
+    for (const city of TRANSPORT_DESTINATION_CITIES) {
+      if (city.re.test(text)) return city.label;
+    }
+  }
+  return null;
+}
+
+function countTransportDestinationSpeaks(
+  history: Array<{ speaker: string; textEn?: string }>,
+): number {
+  let goingCount = 0;
+  for (const t of history) {
+    if (t.speaker !== 'user') continue;
+    const text = (t.textEn ?? '').trim();
+    if (!text || text.startsWith('[')) continue;
+    const lower = text.toLowerCase();
+    if (
+      /\bgoing to\b/.test(lower) ||
+      TRANSPORT_DESTINATION_CITIES.some((c) => c.re.test(text))
+    ) {
+      goingCount++;
+    }
+  }
+  return goingCount;
+}
+
+/**
+ * Teach / soft-accept after Hook must model THEIR city, not always Bangkok.
+ */
+export function forceTransportDestinationTeachIfNeeded(
+  lessonId: string,
+  lang: LessonTeachingLanguage,
+  history: Array<{ speaker: string; textEn?: string }>,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    roleplayIntro: unknown;
+    roleplayNpc: unknown;
+    expectsUserSpeech: boolean;
+  },
+): {
+  textEn: string;
+  textTh: string | null;
+  expectsUserSpeech: false;
+  expectedSpeech: null;
+  guidedSpeaking: null;
+  emojiChoice: null;
+} | null {
+  if (lessonId !== 'ee_around_town_transport') return null;
+  if (current.expectsUserSpeech) return null;
+  if (current.roleplayIntro != null || current.roleplayNpc != null) {
+    return null;
+  }
+
+  const city = extractFirstTransportDestinationCity(history);
+  if (!city) return null;
+
+  const destCount = countTransportDestinationSpeaks(history);
+  const text = (current.textEn ?? '').trim();
+  const isTeach =
+    /ถ้าเราจะบอกว่าจะไปที่ไหน/i.test(text) ||
+    /if we (?:want to )?say where/i.test(text) ||
+    /ถ้าจะบอกว่าจะไปที่ไหน/i.test(text);
+  const hasGoingModel = TRANSPORT_GOING_TO_CITY_RE.test(text);
+  TRANSPORT_GOING_TO_CITY_RE.lastIndex = 0;
+
+  // Soft-accept / Teach right after Hook (1 destination speak), or any Teach copy.
+  if (!isTeach && !(destCount === 1 && hasGoingModel)) return null;
+
+  const model = `I'm going to ${city}.`;
+  let textEn = text;
+
+  if (hasGoingModel) {
+    textEn = text.replace(TRANSPORT_GOING_TO_CITY_RE, model);
+  } else if (isTeach) {
+    // Teach prose without a model line — append theirs.
+    textEn = `${text.replace(/\s+$/, '')}\n\n${model}`;
+  }
+
+  // Canonical Teach if model still mangled / missing.
+  if (isTeach && !new RegExp(`I'm going to ${city}\\.?`, 'i').test(textEn)) {
+    textEn = pickTeacherLine(
+      lang,
+      `เยี่ยมเลยครับ! 👍 ถ้าเราจะบอกว่าจะไปที่ไหน ให้พูดว่า\n\n${model}`,
+      `Great! 👍 If we want to say where we're going, we say...\n\n${model}`,
+    );
+  }
+
+  if (textEn === text && hasGoingModel) {
+    // Already correct city — still clear scaffolds.
+    const alreadyCorrect = new RegExp(`I'm going to ${city}`, 'i').test(text);
+    if (alreadyCorrect) {
+      return {
+        textEn: text,
+        textTh: null,
+        expectsUserSpeech: false,
+        expectedSpeech: null,
+        guidedSpeaking: null,
+        emojiChoice: null,
+      };
+    }
+  }
+
+  return {
+    textEn,
+    textTh: null,
+    expectsUserSpeech: false,
+    expectedSpeech: null,
+    guidedSpeaking: null,
+    emojiChoice: null,
+  };
+}
+
+const TRANSPORT_CITY_OPTIONS: Array<{
+  emoji: string;
+  label: string;
+  speak: string;
+}> = [
+  { emoji: '🏙️', label: 'Bangkok', speak: "I'm going to Bangkok." },
+  { emoji: '🏔️', label: 'Chiang Mai', speak: "I'm going to Chiang Mai." },
+  { emoji: '🏝️', label: 'Phuket', speak: "I'm going to Phuket." },
+  { emoji: '🌊', label: 'Pattaya', speak: "I'm going to Pattaya." },
+];
+
+function transportCityLabelFromText(text: string): string | null {
+  for (const city of TRANSPORT_DESTINATION_CITIES) {
+    if (city.re.test(text)) return city.label;
+  }
+  return null;
+}
+
+function transportCityFromScaffold(turn: {
+  guidedSpeaking?: {
+    label?: string;
+    speak?: string;
+    emoji?: string;
+    options?: Array<{ label?: string; speak?: string; emoji?: string }>;
+  } | null;
+  emojiChoice?: {
+    options?: Array<{ label?: string; speak?: string; emoji?: string }>;
+  } | null;
+}): string | null {
+  const guided = turn.guidedSpeaking;
+  if (guided?.options && guided.options.length >= 2) {
+    // Multi board — not a single Mini cue.
+    return null;
+  }
+  if (guided) {
+    const fromLabel = guided.label?.trim();
+    if (fromLabel && transportCityLabelFromText(fromLabel)) return fromLabel;
+    const fromSpeak = transportCityLabelFromText(guided.speak ?? '');
+    if (fromSpeak) return fromSpeak;
+  }
+  const opts = turn.emojiChoice?.options ?? [];
+  if (opts.length === 1) {
+    const only = opts[0];
+    const fromLabel = only.label?.trim();
+    if (fromLabel && transportCityLabelFromText(fromLabel)) return fromLabel;
+    return transportCityLabelFromText(only.speak ?? '');
+  }
+  return null;
+}
+
+function transportSaidCityLabels(
+  history: Array<{ speaker: string; textEn?: string }>,
+): string[] {
+  const labels: string[] = [];
+  for (const t of history) {
+    if (t.speaker !== 'user') continue;
+    const text = (t.textEn ?? '').trim();
+    if (!text || text.startsWith('[')) continue;
+    const label = transportCityLabelFromText(text);
+    if (label && !labels.includes(label)) labels.push(label);
+  }
+  return labels;
+}
+
+function transportAiMiniCityLabels(
+  history: Array<{
+    speaker: string;
+    guidedSpeaking?: unknown;
+    emojiChoice?: unknown;
+  }>,
+): string[] {
+  const labels: string[] = [];
+  for (const t of history) {
+    if (t.speaker !== 'ai') continue;
+    const label = transportCityFromScaffold({
+      guidedSpeaking: t.guidedSpeaking as {
+        label?: string;
+        speak?: string;
+        emoji?: string;
+        options?: Array<{ label?: string; speak?: string; emoji?: string }>;
+      } | null,
+      emojiChoice: t.emojiChoice as {
+        options?: Array<{ label?: string; speak?: string; emoji?: string }>;
+      } | null,
+    });
+    if (label && !labels.includes(label)) labels.push(label);
+  }
+  return labels;
+}
+
+function pickTransportMiniCity(
+  excluded: string[],
+  seedKey: string,
+): (typeof TRANSPORT_CITY_OPTIONS)[number] | null {
+  const available = TRANSPORT_CITY_OPTIONS.filter(
+    (c) => !excluded.some((e) => e.toLowerCase() === c.label.toLowerCase()),
+  );
+  if (available.length === 0) return null;
+  let hash = 0;
+  for (let i = 0; i < seedKey.length; i++) {
+    hash = (hash * 31 + seedKey.charCodeAt(i)) >>> 0;
+  }
+  return available[hash % available.length] ?? available[0] ?? null;
+}
+
+function looksLikeTransportPattern2Ask(
+  textEn: string,
+  emojiChoice: { options?: Array<{ speak?: string; label?: string }> } | null,
+): boolean {
+  if (/\btaking the\b/i.test(textEn) || /เดินทางยังไง/.test(textEn)) {
+    return true;
+  }
+  const opts = emojiChoice?.options ?? [];
+  if (opts.length === 0) return false;
+  return opts.every((o) =>
+    /\b(train|bus|taxi|plane)\b/i.test(`${o.label ?? ''} ${o.speak ?? ''}`),
+  );
+}
+
+/**
+ * Mini Challenge destinations: one random city cue per speak (not the 4-board).
+ */
+export function forceTransportDestinationMiniIfNeeded(
+  lessonId: string,
+  lang: LessonTeachingLanguage,
+  history: Array<{
+    speaker: string;
+    textEn?: string;
+    guidedSpeaking?: unknown;
+    emojiChoice?: unknown;
+  }>,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    roleplayIntro: unknown;
+    roleplayNpc: unknown;
+    expectsUserSpeech: boolean;
+    guidedSpeaking: ReturnType<typeof normalizeGuidedSpeaking>;
+    emojiChoice: ReturnType<typeof normalizeEmojiChoice>;
+  },
+): {
+  textEn: string;
+  textTh: string | null;
+  expectsUserSpeech: true;
+  expectedSpeech: string;
+  guidedSpeaking: {
+    stem: string;
+    emoji: string;
+    label: string;
+    speak: string;
+  };
+  emojiChoice: null;
+} | null {
+  if (lessonId !== 'ee_around_town_transport') return null;
+  if (current.roleplayIntro != null || current.roleplayNpc != null) {
+    return null;
+  }
+
+  const destCount = countTransportDestinationSpeaks(history);
+  // After Hook (1) → Mini #1; after Mini #1 (2) → Mini #2. Then Pattern 2.
+  if (destCount < 1 || destCount > 2) return null;
+
+  const isPattern2 = looksLikeTransportPattern2Ask(
+    current.textEn,
+    current.emojiChoice,
+  );
+  // Jumping to Pattern 2 early still needs Mini first.
+  if (!current.expectsUserSpeech && !isPattern2) return null;
+  if (destCount >= 3) return null;
+
+  // Hook is opening speak with destCount 0 only — already gated.
+  // Soft-accept wrong city on Mini should keep same cue (sticky).
+  const said = transportSaidCityLabels(history);
+  const priorAiMini = transportAiMiniCityLabels(history);
+  const excluded = [...new Set([...said, ...priorAiMini])];
+
+  const sticky = transportCityFromScaffold({
+    guidedSpeaking: current.guidedSpeaking,
+    emojiChoice: current.emojiChoice,
+  });
+  const stickyOk =
+    sticky != null &&
+    !excluded.some((e) => e.toLowerCase() === sticky.toLowerCase());
+
+  const pick = stickyOk
+    ? (TRANSPORT_CITY_OPTIONS.find(
+        (c) => c.label.toLowerCase() === sticky!.toLowerCase(),
+      ) ?? null)
+    : pickTransportMiniCity(
+        excluded,
+        `${said.join('|')}|mini${destCount}|${priorAiMini.join('|')}`,
+      );
+
+  if (pick == null) return null;
+
+  const cue = pickTeacherLine(
+    lang,
+    'ต่อไปลองพูดว่ากำลังจะไปเมืองตามภาพนะครับ',
+    "Next, try saying you're going to the city in the picture.",
+  );
+
+  return {
+    textEn: cue,
+    textTh: null,
+    expectsUserSpeech: true,
+    expectedSpeech: pick.speak,
+    guidedSpeaking: {
+      stem: "I'm going to...",
+      emoji: pick.emoji,
+      label: pick.label,
+      speak: pick.speak,
+    },
+    emojiChoice: null,
   };
 }
 

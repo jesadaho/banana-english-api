@@ -58,6 +58,8 @@ import {
   guideExploreCityRoleplayIfNeeded,
   guideScriptedAroundTownRoleplayIfNeeded,
   forceRestaurantRoleplayBridgeIfNeeded,
+  forceTransportDestinationTeachIfNeeded,
+  forceTransportDestinationMiniIfNeeded,
   forceTransportRoleplayBridgeIfNeeded,
   forceShoppingLookingForSoftTeachIfNeeded,
   ensureExploreCityCelebratePraiseFirst,
@@ -694,6 +696,52 @@ export class SessionsController {
         guidedSpeaking = null;
         emojiChoice = null;
         isTaskComplete = forcedRestaurantBridge.isTaskComplete;
+      }
+
+      // Teach after Hook: model THEIR city (not hardcoded Bangkok).
+      const forcedTransportTeach = forceTransportDestinationTeachIfNeeded(
+        config.lessonId,
+        teachingLang,
+        data.turns,
+        {
+          textEn,
+          textTh,
+          roleplayIntro,
+          roleplayNpc,
+          expectsUserSpeech,
+        },
+      );
+      if (forcedTransportTeach != null) {
+        textEn = forcedTransportTeach.textEn;
+        textTh = forcedTransportTeach.textTh;
+        expectsUserSpeech = forcedTransportTeach.expectsUserSpeech;
+        expectedSpeech = forcedTransportTeach.expectedSpeech;
+        guidedSpeaking = forcedTransportTeach.guidedSpeaking;
+        emojiChoice = forcedTransportTeach.emojiChoice;
+      }
+
+      // Mini Challenge: one random city at a time (not the 4-city board).
+      const forcedTransportMini = forceTransportDestinationMiniIfNeeded(
+        config.lessonId,
+        teachingLang,
+        data.turns,
+        {
+          textEn,
+          textTh,
+          roleplayIntro,
+          roleplayNpc,
+          expectsUserSpeech,
+          guidedSpeaking,
+          emojiChoice,
+        },
+      );
+      if (forcedTransportMini != null) {
+        textEn = forcedTransportMini.textEn;
+        textTh = forcedTransportMini.textTh;
+        expectsUserSpeech = forcedTransportMini.expectsUserSpeech;
+        expectedSpeech = forcedTransportMini.expectedSpeech;
+        guidedSpeaking = forcedTransportMini.guidedSpeaking;
+        emojiChoice = forcedTransportMini.emojiChoice;
       }
 
       const forcedTransportBridge = forceTransportRoleplayBridgeIfNeeded(
