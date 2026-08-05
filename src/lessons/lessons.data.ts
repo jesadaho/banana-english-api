@@ -4417,6 +4417,7 @@ NEW turn type — emojiChoice (critical):
 - On speak turns that need visual scaffolds, return emojiChoice: { options: [ { emoji, label, speak }, ... ] }.
 - The app shows a compact row under your bubble; the learner STILL speaks via mic (tap is guide only).
 - Vocab / looking-for turns MUST show ALL 4 items with labels shirt / pants / shoes / cap (never a single giant emoji).
+- Ask-price Mini Challenge is the exception: ONLY 👕 shirt.
 - Size turns use 3 options (Small / Medium / Large) with 👕.
 - FORBIDDEN: emojiSpeak / emojiSpeakSet anywhere in this lesson (no letter-blank puzzles).
 - Omit emojiChoice on listen-only / Celebrate turns.
@@ -4438,9 +4439,12 @@ Core Flow (ONE-WAY — never go backward):
      ] }
    a) Ask in {{L1}}: '"เสื้อ" ในภาษาอังกฤษเรียกว่าอะไรนะครับ?'
       - expectsUserSpeech=true. expectedSpeech="shirt"
-   b) After clear "shirt": brief praise + ask '"กางเกง" ล่ะครับ?'
-      - expectedSpeech="pants" + same 4-option board again
-   After clear "pants": short praise "เยี่ยมเลยครับ!" then → Pattern 1.
+   b) After clear "shirt": brief praise + ask ONE random second word from {pants, shoes, cap} — pick ONE at random each session (do NOT always use pants):
+      - pants → '"กางเกง" ล่ะครับ?' · expectedSpeech="pants"
+      - shoes → '"รองเท้า" ล่ะครับ?' · expectedSpeech="shoes"
+      - cap → '"หมวก" ล่ะครับ?' · expectedSpeech="cap"
+      - Same 4-option board again.
+   After clear second answer: short praise "เยี่ยมเลยครับ!" then → Pattern 1.
    Soft-accept close variants; max ONE retry then advance.
 
 3. Pattern 1 — Model (listen-only)
@@ -4450,7 +4454,7 @@ Core Flow (ONE-WAY — never go backward):
    - Do NOT ask them to repeat yet — Continue → Mini Challenge.
 
 4. Mini Challenge — Looking for (emojiChoice multi)
-   - {{L1}}: "ไหนลองบอกว่าคุณกำลังหาอะไรดูครับ 😊"
+   - {{L1}}: "ไหนลองบอกหน่อยครับว่าคุณกำลังหาอยู่ 😊"
    - expectsUserSpeech=true. expectedSpeech="" (learner picks)
    - emojiChoice MUST be:
      { options: [
@@ -4461,15 +4465,24 @@ Core Flow (ONE-WAY — never go backward):
      ] }
    - Soft-accept any of those sentences (or close: shirt / pants / shoes / cap).
    - Remember their item for soft personalization in Roleplay if natural.
-   - After clear answer → Roleplay bridge.
+   - After clear answer: short praise ONLY in {{L1}} (e.g. "เยี่ยมเลยครับ!") on THIS speak-ack turn OR on the NEXT bridge turn — NEVER add "Can I help you?" yet.
+   - NEXT turn MUST be Roleplay bridge (5a) — never skip straight to staff ask.
 
-5. Roleplay — Shop assistant
-   5a. Bridge (listen-only): {{L1}} close to "ต่อไปครูพี่บีจะเป็นพนักงานร้านเสื้อผ้านะครับ 😊 พร้อมแล้ว แตะเพื่อเริ่มได้เลย!"
-      expectsUserSpeech=false. Omit emojiChoice.
-   5b. Staff asks ONLY: "Can I help you?" (textEn). textTh = Thai subtitle.
-      expectsUserSpeech=true. expectedSpeech="" (prefer their Mini Challenge line; soft-accept "I'm looking for a shirt." etc.)
-      Optionally show the same 4 looking-for options again if helpful.
-   5c. After clear answer: Staff asks ONLY "What size?"
+5. Roleplay — Shop assistant (HARD SPLIT — never mash)
+   STAFF VOICE RULE (5b–5c and price answer): when speaking as พนักงาน, reply in ENGLISH only (plus Thai subtitle). FORBIDDEN: "ถูกต้องครับ" / "เยี่ยมเลย" / "เป๊ะ" / "ดีมาก" / any Teacher-B praise mashed into the staff line.
+   5a. Bridge INTRO (listen-only, expectsUserSpeech=false) — AFTER Mini Challenge praise handoff:
+      - {{L1}} ONLY close to: "ต่อไปครูพี่บีจะเป็นพนักงานร้านเสื้อผ้านะครับ 😊 พร้อมแล้ว แตะเพื่อเริ่มได้เลย!"
+      - FORBIDDEN on this turn: any English staff line; "Can I help you?"; "What size?"; emojiChoice; asking them to speak.
+      - textEn may be empty or a very short non-question beat — do NOT put the staff question here.
+      - User taps Continue → then 5b.
+   5b. Staff ask #1 (speak) — SEPARATE turn after Continue:
+      - textEn = ONLY "Can I help you?" (nothing else). textTh = Thai subtitle of that line.
+      - expectsUserSpeech=true. expectedSpeech="" (prefer their Mini Challenge line; soft-accept "I'm looking for a shirt." etc.)
+      - Optionally show the same 4 looking-for emojiChoice options.
+      - FORBIDDEN: repeating the bridge intro on this turn; mashing bridge + ask; praising before/with the ask.
+   5c. After clear answer: next turn may have a VERY short Teacher praise in {{L1}} THEN staff asks ONLY "What size?" — OR staff ask alone.
+      - Prefer: short praise + "What size?" OK on same turn IF praise is Teacher voice and the English ask is clean.
+      - NEVER put "ถูกต้องครับ" inside the staff English line (e.g. FORBIDDEN: "ถูกต้องครับ! What size?").
       expectsUserSpeech=true. expectedSpeech=""
       emojiChoice MUST be:
         { options: [
@@ -4479,30 +4492,32 @@ Core Flow (ONE-WAY — never go backward):
         ] }
       Soft-accept Small / Medium / Large (or "I'd like a medium." etc.).
    After size → Pattern 2. FORBIDDEN: re-ask Can I help you / What size after a clear reply.
+   HARD: Bridge and "Can I help you?" are NEVER the same API turn.
 
-6. Pattern 2 — Price model (listen-only)
-   - Brief praise then {{L1}}: 'ต่อมาเรามาฝึกถามราคากันครับ ถ้าจะถามว่า "ราคาเท่าไหร่" ให้พูดว่า...'
-   - textEn includes: "How much is this?"
-   - expectsUserSpeech=false. Omit emojiChoice.
+6. Pattern 2 — Price (HARD SPLIT)
+   6a. Intro / model (listen-only, expectsUserSpeech=false):
+      - Brief praise for the size answer + {{L1}}: 'ต่อมาเรามาฝึกถามราคากันครับ ถ้าจะถามว่า "ราคาเท่าไหร่" ให้พูดว่า...'
+      - textEn includes the model line: "How much is this?"
+      - FORBIDDEN: asking them to speak / mic on this turn; emojiChoice.
+      - Continue → Mini Challenge ask price.
+   6b. (see step 7)
 
 7. Mini Challenge — Ask price
    - {{L1}}: "ไหนลองถามราคาเสื้อตัวนี้ดูครับ"
    - expectsUserSpeech=true. expectedSpeech="How much is this?"
-   - emojiChoice: { options: [
-       { emoji:"👕", label:"shirt", speak:"How much is this?" },
-       { emoji:"👖", label:"pants", speak:"How much is this?" },
-       { emoji:"👟", label:"shoes", speak:"How much is this?" },
-       { emoji:"🧢", label:"cap", speak:"How much is this?" }
-     ] }
-   - After clear ask → NEXT turn listen-only staff answer: "It's twenty dollars." (expectsUserSpeech=false)
-   - Then → Celebrate.
+   - emojiChoice: ONLY the shirt cue (do NOT show pants/shoes/cap on this turn):
+     { options: [ { emoji:"👕", label:"shirt", speak:"How much is this?" } ] }
+   - After clear ask → NEXT turn listen-only staff answer ONLY in English: "It's twenty dollars."
+     - expectsUserSpeech=false. Omit emojiChoice.
+     - FORBIDDEN on this staff turn: Thai praise / coaching — no "ถูกต้องครับ" / "เยี่ยม" / "เป๊ะ" / "ดีมาก" / Teacher-B meta. Staff voice only.
+   - Then → Celebrate on the FOLLOWING turn.
 
 8. Celebrate (listen-only)
    - Warm {{L1}}: they can shop for clothes in English. Name once. Soft tease Restaurant.
    - expectsUserSpeech=false. isLessonComplete=true. Omit emojiChoice / emojiSpeak / scene.
 
 Teaching rules:
-- ONE speaking task per turn.
+- ONE speaking task per turn. NEVER mash listen-intro + staff question in one turn.
 - Soft correction only. Soft-accept close variants → เฉลย once → advance (no hell-loop).
 - STT English-only for spoken answers; coach in {{L1}} OK; staff questions in English in textEn.
 - Never go backward. Never emojiSpeak/emojiSpeakSet in this lesson.
@@ -4511,7 +4526,7 @@ Turn loop:
 - Non-final turns end with one clear action OR listen-only Continue.
 - When Celebrate is reached, isLessonComplete must be true.`,
     openingPrompt:
-      'Start Shopping 2.1 for this one learner only (private 1:1, never {{NO_GROUP}}). Use first name once. CRITICAL Turn 1 = Hook ONLY — shopping clothes vibe with 👕 — expectsUserSpeech false, NO emojiChoice, NO emojiSpeak. Then Emoji Recall: ask Thai "เสื้อ"→shirt then "กางเกง"→pants — EACH speak turn MUST return emojiChoice with ALL 4 labeled options 👕shirt 👖pants 👟shoes 🧢cap (never a single giant emoji). Then listen-only Pattern model "I\'m looking for a shirt." → Mini Challenge with same 4 labels (speak I\'m looking for a shirt/pants/shoes/a cap). Roleplay: listen bridge → staff "Can I help you?" → "What size?" with Small/Medium/Large → listen Pattern "How much is this?" → speak How much is this? with the 4-item board → staff "It\'s twenty dollars." → Celebrate complete. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
+      'Start Shopping 2.1 for this one learner only (private 1:1, never {{NO_GROUP}}). Use first name once. CRITICAL Turn 1 = Hook ONLY — shopping clothes vibe with 👕 — expectsUserSpeech false, NO emojiChoice, NO emojiSpeak, NO staff question. Then Emoji Recall: ask Thai "เสื้อ"→shirt; second ask RANDOM one of pants/shoes/cap — EACH speak turn MUST return emojiChoice with ALL 4 labeled options. Then listen-only Pattern model "I\'m looking for a shirt." → Mini Challenge looking-for. Roleplay HARD SPLIT: (1) listen-only bridge intro — NO "Can I help you?" → Continue → (2) staff ONLY "Can I help you?" → (3) "What size?" with Small/Medium/Large. Then listen-only Pattern price model → speak How much is this? with emojiChoice ONLY 👕 shirt → staff answer ONLY "It\'s twenty dollars." (FORBIDDEN: "ถูกต้องครับ" / Thai praise on staff turns) → Celebrate. NEVER mash bridge+ask. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
   },
   buildStoriesPatternLesson({
     lessonId: 'ee_around_town_restaurant',
@@ -6620,4 +6635,32 @@ export function pickFunnyIntroJabSeed(lessonId: string): string | null {
   const pool = FUNNY_INTRO_JAB_SEEDS[lessonId];
   if (!pool?.length) return null;
   return pool[Math.floor(Math.random() * pool.length)] ?? null;
+}
+
+/** Shopping 2.1 Emoji Recall #2 — one of pants / shoes / cap per session. */
+export const SHOPPING_RECALL2_OPTIONS = [
+  { en: 'pants', th: 'กางเกง' },
+  { en: 'shoes', th: 'รองเท้า' },
+  { en: 'cap', th: 'หมวก' },
+] as const;
+
+export function pickShoppingRecall2Option():
+  | (typeof SHOPPING_RECALL2_OPTIONS)[number]
+  | null {
+  const i = Math.floor(Math.random() * SHOPPING_RECALL2_OPTIONS.length);
+  return SHOPPING_RECALL2_OPTIONS[i] ?? null;
+}
+
+/** Append a fixed Recall #2 seed so the model does not always pick pants. */
+export function withShoppingRecall2Seed(config: LessonConfig): LessonConfig {
+  if (config.lessonId !== 'ee_around_town_shopping') return config;
+  const pick = pickShoppingRecall2Option();
+  if (!pick) return config;
+  const seedLine =
+    `\n\nSESSION SEED — Emoji Recall #2 (REQUIRED this session): ask '"${pick.th}" ล่ะครับ?' ` +
+    `with expectedSpeech="${pick.en}". Do NOT switch to another word. Still show the full 4-option board.`;
+  return {
+    ...config,
+    systemInstruction: `${config.systemInstruction}${seedLine}`,
+  };
 }

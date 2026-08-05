@@ -56,6 +56,7 @@ import {
   isPronunciationLesson,
   lessonUsesTapToContinue,
   normalizeLessonTeachingLanguage,
+  withShoppingRecall2Seed,
   withTeachingLanguage,
 } from '../lessons/lessons.data';
 import {
@@ -308,7 +309,9 @@ export class SessionsController {
         (user as User & { lessonTeachingLanguage?: string })
           .lessonTeachingLanguage,
     );
-    const config = withTeachingLanguage(baseConfig, teachingLanguage);
+    const config = withShoppingRecall2Seed(
+      withTeachingLanguage(baseConfig, teachingLanguage),
+    );
 
     const unlocked = await this.lessonsService.isLessonUnlockedForUser(
       user.id,
