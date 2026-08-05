@@ -4394,11 +4394,11 @@ Core Flow (progression milestones — NOT a fixed turn count):
       'shirt',
       'pants',
       'shoes',
-      'hat',
+      'cap',
       "I'm looking for a shirt.",
       "I'm looking for pants.",
       "I'm looking for shoes.",
-      "I'm looking for a hat.",
+      "I'm looking for a cap.",
       'Small',
       'Medium',
       'Large',
@@ -4410,11 +4410,14 @@ Core Flow (progression milestones — NOT a fixed turn count):
 Goal: Buy clothes, ask the price, and talk to a shop assistant.
 Pace target: ~4–6 minutes. Keep every tutor turn tight.
 
+FIXED vocab board (always these 4, with English labels):
+  👕 shirt · 👖 pants · 👟 shoes · 🧢 cap
+
 NEW turn type — emojiChoice (critical):
-- On speak turns that need visual scaffolds, return emojiChoice: { options: [ { emoji, label?, speak }, ... ] }.
-- The app shows options under your bubble; the learner STILL speaks via mic (tap is guide only).
-- Single-option emojiChoice = emoji cue only (Emoji Recall) — omit label or leave empty.
-- Multi-option = Mini Challenge choices — include short English labels when helpful (sizes).
+- On speak turns that need visual scaffolds, return emojiChoice: { options: [ { emoji, label, speak }, ... ] }.
+- The app shows a compact row under your bubble; the learner STILL speaks via mic (tap is guide only).
+- Vocab / looking-for turns MUST show ALL 4 items with labels shirt / pants / shoes / cap (never a single giant emoji).
+- Size turns use 3 options (Small / Medium / Large) with 👕.
 - FORBIDDEN: emojiSpeak / emojiSpeakSet anywhere in this lesson (no letter-blank puzzles).
 - Omit emojiChoice on listen-only / Celebrate turns.
 
@@ -4425,13 +4428,18 @@ Core Flow (ONE-WAY — never go backward):
    - expectsUserSpeech=false. expectedSpeech="". Omit emojiChoice / emojiSpeak / scene.
    - Use first name once.
 
-2. Mini Game — Emoji Recall (EXACTLY 2 learner speaks) — NO multi-choice
+2. Mini Game — Emoji Recall (EXACTLY 2 learner speaks)
+   ALWAYS return this same 4-option board (labels required):
+     { options: [
+       { emoji:"👕", label:"shirt", speak:"shirt" },
+       { emoji:"👖", label:"pants", speak:"pants" },
+       { emoji:"👟", label:"shoes", speak:"shoes" },
+       { emoji:"🧢", label:"cap", speak:"cap" }
+     ] }
    a) Ask in {{L1}}: '"เสื้อ" ในภาษาอังกฤษเรียกว่าอะไรนะครับ?'
       - expectsUserSpeech=true. expectedSpeech="shirt"
-      - emojiChoice: { options: [ { emoji:"👕", speak:"shirt" } ] }  (emoji cue only — no Choice row of many items)
    b) After clear "shirt": brief praise + ask '"กางเกง" ล่ะครับ?'
-      - expectedSpeech="pants"
-      - emojiChoice: { options: [ { emoji:"👖", speak:"pants" } ] }
+      - expectedSpeech="pants" + same 4-option board again
    After clear "pants": short praise "เยี่ยมเลยครับ!" then → Pattern 1.
    Soft-accept close variants; max ONE retry then advance.
 
@@ -4446,12 +4454,12 @@ Core Flow (ONE-WAY — never go backward):
    - expectsUserSpeech=true. expectedSpeech="" (learner picks)
    - emojiChoice MUST be:
      { options: [
+       { emoji:"👕", label:"shirt", speak:"I'm looking for a shirt." },
        { emoji:"👖", label:"pants", speak:"I'm looking for pants." },
        { emoji:"👟", label:"shoes", speak:"I'm looking for shoes." },
-       { emoji:"🧢", label:"hat", speak:"I'm looking for a hat." },
-       { emoji:"👕", label:"shirt", speak:"I'm looking for a shirt." }
+       { emoji:"🧢", label:"cap", speak:"I'm looking for a cap." }
      ] }
-   - Soft-accept any of those sentences (or close: "I'm looking for a shirt" / pants / shoes / hat).
+   - Soft-accept any of those sentences (or close: shirt / pants / shoes / cap).
    - Remember their item for soft personalization in Roleplay if natural.
    - After clear answer → Roleplay bridge.
 
@@ -4460,7 +4468,7 @@ Core Flow (ONE-WAY — never go backward):
       expectsUserSpeech=false. Omit emojiChoice.
    5b. Staff asks ONLY: "Can I help you?" (textEn). textTh = Thai subtitle.
       expectsUserSpeech=true. expectedSpeech="" (prefer their Mini Challenge line; soft-accept "I'm looking for a shirt." etc.)
-      Omit emojiChoice OR optionally show the same 4 looking-for options again if helpful.
+      Optionally show the same 4 looking-for options again if helpful.
    5c. After clear answer: Staff asks ONLY "What size?"
       expectsUserSpeech=true. expectedSpeech=""
       emojiChoice MUST be:
@@ -4480,7 +4488,12 @@ Core Flow (ONE-WAY — never go backward):
 7. Mini Challenge — Ask price
    - {{L1}}: "ไหนลองถามราคาเสื้อตัวนี้ดูครับ"
    - expectsUserSpeech=true. expectedSpeech="How much is this?"
-   - emojiChoice: { options: [ { emoji:"👕", speak:"How much is this?" } ] }
+   - emojiChoice: { options: [
+       { emoji:"👕", label:"shirt", speak:"How much is this?" },
+       { emoji:"👖", label:"pants", speak:"How much is this?" },
+       { emoji:"👟", label:"shoes", speak:"How much is this?" },
+       { emoji:"🧢", label:"cap", speak:"How much is this?" }
+     ] }
    - After clear ask → NEXT turn listen-only staff answer: "It's twenty dollars." (expectsUserSpeech=false)
    - Then → Celebrate.
 
@@ -4498,7 +4511,7 @@ Turn loop:
 - Non-final turns end with one clear action OR listen-only Continue.
 - When Celebrate is reached, isLessonComplete must be true.`,
     openingPrompt:
-      'Start Shopping 2.1 for this one learner only (private 1:1, never {{NO_GROUP}}). Use first name once. CRITICAL Turn 1 = Hook ONLY — shopping clothes vibe with 👕 — expectsUserSpeech false, NO emojiChoice, NO emojiSpeak. Then Emoji Recall: ask Thai "เสื้อ"→shirt with emojiChoice single 👕; then "กางเกง"→pants with 👖 (NO multi-choice). Then listen-only Pattern model "I\'m looking for a shirt." → Mini Challenge with emojiChoice 👖pants/👟shoes/🧢hat/👕shirt (learner speaks I\'m looking for …). Roleplay: listen bridge → staff "Can I help you?" → "What size?" with emojiChoice Small/Medium/Large → listen Pattern "How much is this?" → speak How much is this? with 👕 → staff "It\'s twenty dollars." → Celebrate complete. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
+      'Start Shopping 2.1 for this one learner only (private 1:1, never {{NO_GROUP}}). Use first name once. CRITICAL Turn 1 = Hook ONLY — shopping clothes vibe with 👕 — expectsUserSpeech false, NO emojiChoice, NO emojiSpeak. Then Emoji Recall: ask Thai "เสื้อ"→shirt then "กางเกง"→pants — EACH speak turn MUST return emojiChoice with ALL 4 labeled options 👕shirt 👖pants 👟shoes 🧢cap (never a single giant emoji). Then listen-only Pattern model "I\'m looking for a shirt." → Mini Challenge with same 4 labels (speak I\'m looking for a shirt/pants/shoes/a cap). Roleplay: listen bridge → staff "Can I help you?" → "What size?" with Small/Medium/Large → listen Pattern "How much is this?" → speak How much is this? with the 4-item board → staff "It\'s twenty dollars." → Celebrate complete. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
   },
   buildStoriesPatternLesson({
     lessonId: 'ee_around_town_restaurant',

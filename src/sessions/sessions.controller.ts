@@ -347,19 +347,21 @@ export class SessionsController {
       const openingExpectsUserSpeech = lessonUsesTapToContinue(config.lessonId)
         ? false
         : (reply.expectsUserSpeech ?? true);
+      const openingEmojiChoice = normalizeEmojiChoice(reply.emojiChoice);
       const opening = {
         speaker: 'ai' as const,
         textEn: reply.textEn,
         textTh: reply.textTh,
         audioUrl: null,
-        expectsUserSpeech: openingExpectsUserSpeech,
+        expectsUserSpeech:
+          openingEmojiChoice != null ? true : openingExpectsUserSpeech,
         expectedSpeech: reply.expectedSpeech?.trim() || null,
         scene: reply.scene ?? null,
         emojiSpeak: enrichEmojiSpeakForLesson(
           config.lessonId,
           reply.emojiSpeak,
         ),
-        emojiChoice: normalizeEmojiChoice(reply.emojiChoice),
+        emojiChoice: openingEmojiChoice,
       };
       this.sessionStore.addTurn(data.session.id, opening);
 
@@ -390,14 +392,15 @@ export class SessionsController {
           updatedCheckpoints: {},
           feedbackHints: { mispronouncedWords: [] as string[] },
           currentTurn: 0,
-          expectsUserSpeech: openingExpectsUserSpeech,
+          expectsUserSpeech:
+            openingEmojiChoice != null ? true : openingExpectsUserSpeech,
           expectedSpeech: reply.expectedSpeech?.trim() || null,
           scene: reply.scene,
           emojiSpeak: enrichEmojiSpeakForLesson(
             config.lessonId,
             reply.emojiSpeak,
           ),
-          emojiChoice: normalizeEmojiChoice(reply.emojiChoice),
+          emojiChoice: openingEmojiChoice,
         },
       };
     } catch (err) {
@@ -524,6 +527,11 @@ export class SessionsController {
             : null);
 
       const emojiChoice = normalizeEmojiChoice(reply.emojiChoice);
+
+      // Emoji Choice turns always need the mic — never listen-only.
+      if (emojiChoice != null && !isTaskComplete) {
+        expectsUserSpeech = true;
+      }
 
       const aiTurn = {
         speaker: 'ai' as const,
