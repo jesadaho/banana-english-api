@@ -4581,8 +4581,9 @@ emojiChoice rules (same system as Shopping 2.1):
 - Speak scaffolds: emojiChoice { options: [ { emoji, label, speak }, ... ] }. Mic still required.
 - Vocab Recall turns MUST show ALL 4 labeled items.
 - Mini Challenge order turns show ONE emoji at a time (rice, then water).
-- Recommend ask: no board needed OR optional single cue — prefer no full 4-board.
 - FORBIDDEN: emojiSpeak / emojiSpeakSet. Omit emojiChoice on listen-only / Celebrate.
+- FORBIDDEN: a separate Mini Challenge to speak "What do you recommend?" before roleplay.
+  After Pattern 2 model → Roleplay bridge on the NEXT Continue (learner may ask recommend inside roleplay).
 
 Core Flow (ONE-WAY — never go backward):
 
@@ -4625,47 +4626,40 @@ Core Flow (ONE-WAY — never go backward):
 5. Pattern 2 — Recommend model (listen-only)
    - Short praise + {{L1}} close to: 'ถ้าไม่รู้จะสั่งอะไร สามารถถามพนักงานว่า...'
    - textEn MUST include: "What do you recommend?"
-   - expectsUserSpeech=false. Omit emojiChoice. Continue → ask-recommend challenge.
+   - expectsUserSpeech=false. Omit emojiChoice.
+   - Continue → Roleplay bridge (do NOT ask them to speak recommend; do NOT skip to Celebrate).
 
-6. Mini Challenge — Ask recommend (speak)
-   - {{L1}}: "ไหนลองถามพนักงานดูครับ มีเมนูอะไรแนะนำบ้าง 😊"
-   - expectsUserSpeech=true. expectedSpeech="What do you recommend?"
-   - Omit emojiChoice (or single subtle cue — never full 4-board).
-   - After clear ask → NEXT turn listen-only staff answer ONLY: "I recommend the chicken."
-     FORBIDDEN on staff turn: "ถูกต้องครับ" / Thai Teacher praise mashed in.
-   - Then → Roleplay bridge (do NOT skip to Celebrate).
-
-7. Roleplay — Staff (HARD SPLIT — never mash)
+6. Roleplay — Staff (HARD SPLIT — never mash)
    STAFF VOICE: textEn = ENGLISH ONLY staff line; textTh = full Thai CC subtitle (required).
    FORBIDDEN in textEn: Thai script; "ถูกต้องครับ" / "เยี่ยมมากครับ" / "เยี่ยม" / "เป๊ะ"; learner-echo mash.
    Example GOOD: textEn="Anything to drink?" textTh="รับเครื่องดื่มอะไรดีครับ?"
    Example BAD: textEn="เยี่ยมมากครับ! Anything to drink?"
-   7a. Bridge INTRO (listen-only): {{L1}} ONLY close to
+   6a. Bridge INTRO (listen-only): {{L1}} ONLY close to
       "ต่อไปครูพี่บีจะเป็นพนักงานร้านอาหารนะครับ 😊 พร้อมแล้ว แตะเพื่อเริ่มได้เลย!"
-      FORBIDDEN: "Are you ready to order?" / "Anything to drink?" on this turn.
-      Continue → 7b.
-   OBJECTIVE (show via roleplayNpc.objective on EVERY staff turn 7b–7d):
+      FORBIDDEN: "Are you ready to order?" / "Anything to drink?" / ask-recommend Mini on this turn.
+      Continue → 6b.
+   OBJECTIVE (show via roleplayNpc.objective on EVERY staff turn 6b–6d):
      "Order food and a drink."
-   On 7b–7d ALWAYS return:
+   On 6b–6d ALWAYS return:
      roleplayNpc: { emoji:"🍽️", name:"Server", objective:"Order food and a drink." }
-   7b. Staff ONLY: textEn="Are you ready to order?" + textTh. expectsUserSpeech=true.
+   6b. Staff ONLY: textEn="Are you ready to order?" + textTh. expectsUserSpeech=true.
       Soft-accept "I'd like chicken." (or clear order). Optionally emojiChoice single 🍗.
       FORBIDDEN: mash bridge + ask; Thai praise in textEn.
-      FORBIDDEN: "Anything else?" (use only "Anything to drink?" at 7c).
+      FORBIDDEN: "Anything else?" (use only "Anything to drink?" at 6c).
       If learner asks "What do you recommend?" (or close): reply ONLY "I recommend the chicken."
         + keep expecting an order — do NOT jump to "Anything to drink?" yet.
-   7c. After clear order: Staff ONLY textEn="Anything to drink?" + textTh. NO praise mash.
+   6c. After clear order: Staff ONLY textEn="Anything to drink?" + textTh. NO praise mash.
       Soft-accept "I'd like water." / "No." / "No thanks." Optionally emojiChoice single 🥤.
-   7d. ROLEPLAY CLOSE (ALWAYS) — after clear drink answer (including No / No thanks):
+   6d. ROLEPLAY CLOSE (ALWAYS) — after clear drink answer (including No / No thanks):
       - Staff listen-only textEn="Sure!" textTh="ได้เลยครับ!" ONLY.
       - expectsUserSpeech=false. isLessonComplete=false. Omit emojiChoice. Keep roleplayNpc.
       - User taps Continue to end roleplay → Celebrate on the NEXT turn.
       - FORBIDDEN: mash Sure! + Celebrate / Thai Teacher praise on this turn.
       - FORBIDDEN: re-ask order / drink / invent "Anything else?" after a clear reply.
-   After 7d Continue → Celebrate (omit roleplayNpc). FORBIDDEN: jump to Celebrate on the same turn as the drink answer.
-   HARD: Roleplay is ONLY 7b→7c→7d — never go backward.
+   After 6d Continue → Celebrate (omit roleplayNpc). FORBIDDEN: jump to Celebrate on the same turn as the drink answer.
+   HARD: Roleplay is ONLY 6b→6c→6d — never go backward.
 
-8. Celebrate (listen-only) — AFTER Continue from 7d ONLY
+7. Celebrate (listen-only) — AFTER Continue from 6d ONLY
    - Warm ~2–3 sentences. MUST open with "เยี่ยมเลยครับ!" / "เยี่ยมมากครับ!" 👏 BEFORE name or recap.
    - FORBIDDEN: starting with the learner's name alone.
    - Then: name once + what they can do (สั่ง I'd like… / ถาม recommend / คุยพนักงาน) + soft tease Coffee Shop.
@@ -4682,7 +4676,7 @@ Turn loop:
 - Non-final: one clear action OR listen-only Continue.
 - Celebrate → isLessonComplete true.`,
     openingPrompt:
-      'Start Restaurant 2.2 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — greet + "วันนี้เราจะไปร้านอาหารกันครับ 🍽️…" — expectsUserSpeech false. FORBIDDEN on Turn 1: any vocab question; emojiChoice; mic. After Continue: Emoji Recall ask "ไก่"→chicken with 4-board 🍗chicken 🍚rice 🥤water 🧾bill; second ask RANDOM rice/water/bill. Then listen Pattern "I\'d like chicken." → Mini Challenge ONE emoji at a time: rice then water. Then listen Pattern "What do you recommend?" → speak that → staff "I recommend the chicken." (no ถูกต้องครับ). Roleplay HARD SPLIT: bridge intro → Continue → "Are you ready to order?" → "Anything to drink?" → ROLEPLAY CLOSE listen-only "Sure!" ONLY with roleplayNpc.objective "Order food and a drink." → tap Continue → THEN Celebrate ~2–3 sentences. Soft-accept No/No thanks on drink → Sure!. NEVER invent "Anything else?" or go backward. NEVER mash Sure!+Celebrate. NEVER mash Hook+question or bridge+ask. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
+      'Start Restaurant 2.2 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — greet + "วันนี้เราจะไปร้านอาหารกันครับ 🍽️…" — expectsUserSpeech false. FORBIDDEN on Turn 1: any vocab question; emojiChoice; mic. After Continue: Emoji Recall ask "ไก่"→chicken with 4-board 🍗chicken 🍚rice 🥤water 🧾bill; second ask RANDOM rice/water/bill. Then listen Pattern "I\'d like chicken." → Mini Challenge ONE emoji at a time: rice then water. Then listen Pattern "What do you recommend?" ONLY (no speak-recommend Mini; no staff "I recommend the chicken." before roleplay). NEXT Continue → Roleplay HARD SPLIT: bridge intro → Continue → "Are you ready to order?" → "Anything to drink?" → ROLEPLAY CLOSE listen-only "Sure!" ONLY with roleplayNpc.objective "Order food and a drink." → tap Continue → THEN Celebrate ~2–3 sentences. Soft-accept No/No thanks on drink → Sure!. Inside roleplay, if they ask recommend → "I recommend the chicken." then still wait for order. NEVER invent "Anything else?" or go backward. NEVER mash Sure!+Celebrate. NEVER mash Hook+question or bridge+ask. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
   },
   {
     lessonId: 'ee_around_town_coffee',
@@ -7478,20 +7472,23 @@ function normalizeScriptedStaffKey(text: string): string {
     .replace(/\s+/g, ' ');
 }
 
-function isRestaurantRecommendStaffAnswer(text: string): boolean {
-  return (
-    normalizeScriptedStaffKey(text) === 'i recommend the chicken'
-  );
-}
-
-function historyHasRestaurantRecommendAnswer(
-  history: Array<{ speaker: string; textEn?: string }>,
+function historyHasRestaurantRecommendPattern(
+  history: Array<{
+    speaker: string;
+    textEn?: string;
+    roleplayNpc?: unknown;
+  }>,
 ): boolean {
-  return history.some(
-    (t) =>
-      t.speaker === 'ai' &&
-      isRestaurantRecommendStaffAnswer(t.textEn ?? ''),
-  );
+  return history.some((t) => {
+    if (t.speaker !== 'ai' || t.roleplayNpc != null) return false;
+    const text = t.textEn ?? '';
+    // Pattern 2 model (Teacher) — not staff "I recommend the chicken."
+    if (/\bwhat do you recommend\b/i.test(text)) return true;
+    return (
+      text.includes('ถามพนักงาน') &&
+      text.toLowerCase().includes('recommend')
+    );
+  });
 }
 
 function restaurantRoleplayAlreadyStarted(
@@ -7517,8 +7514,8 @@ function restaurantRoleplayAlreadyStarted(
 }
 
 /**
- * After Mini Challenge recommend staff answer, next Continue MUST open the
- * Roleplay bridge — never skip to Celebrate.
+ * After Pattern 2 recommend model, next Continue MUST open the Roleplay bridge —
+ * never a speak-recommend Mini, staff recommend answer, or Celebrate.
  */
 export function forceRestaurantRoleplayBridgeIfNeeded(
   lessonId: string,
@@ -7546,11 +7543,16 @@ export function forceRestaurantRoleplayBridgeIfNeeded(
 } | null {
   if (lessonId !== 'ee_around_town_restaurant') return null;
   if (current.roleplayIntro != null) return null;
-  if (!historyHasRestaurantRecommendAnswer(history)) return null;
+  if (!historyHasRestaurantRecommendPattern(history)) return null;
   if (restaurantRoleplayAlreadyStarted(history)) return null;
 
-  // Still on the recommend staff answer turn itself — stay; roleplay starts next.
-  if (isRestaurantRecommendStaffAnswer(current.textEn)) return null;
+  // Still on Pattern 2 model turn itself — stay; bridge starts on next Continue.
+  if (
+    /\bwhat do you recommend\b/i.test(current.textEn) &&
+    !current.expectsUserSpeech
+  ) {
+    return null;
+  }
 
   // Already a proper bridge line — pin listen-only, clear premature complete.
   const looksLikeBridge =
@@ -7568,7 +7570,7 @@ export function forceRestaurantRoleplayBridgeIfNeeded(
     };
   }
 
-  // Model skipped to Celebrate / staff ask / anything else — force bridge.
+  // Model invented ask-recommend Mini / Celebrate / staff ask — force bridge.
   return {
     textEn: RESTAURANT_ROLEPLAY_BRIDGE_TEXT,
     textTh: null,

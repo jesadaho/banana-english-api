@@ -625,7 +625,7 @@ export class SessionsController {
         isTaskComplete = guidedRoleplay.isTaskComplete;
       }
 
-      // After recommend staff answer → Roleplay bridge (never skip to Celebrate).
+      // After Pattern 2 recommend model → Roleplay bridge (no speak-recommend Mini).
       const forcedRestaurantBridge = forceRestaurantRoleplayBridgeIfNeeded(
         config.lessonId,
         data.turns,
