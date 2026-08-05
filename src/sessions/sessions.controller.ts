@@ -55,7 +55,7 @@ import {
   normalizeRoleplayIntro,
   normalizeRoleplayNpc,
   forceExploreCityGuidedSpeakingIfNeeded,
-  forceExploreCityRoleplayStaffIfNeeded,
+  guideExploreCityRoleplayIfNeeded,
   EXPLORE_CITY_ROLEPLAY_INTRO,
   sanitizeAroundTownStaffSpeech,
   isAroundTownRoleplayCloseLine,
@@ -591,26 +591,30 @@ export class SessionsController {
         guidedSpeaking = null;
       }
 
-      // Pin Local Guide lines — never let staff ask "Where is…?" (learner line).
-      const forcedStaff = forceExploreCityRoleplayStaffIfNeeded(
+      // Objective-driven Explore City roleplay (no fixed script; max 4 speaks).
+      const guidedRoleplay = guideExploreCityRoleplayIfNeeded(
         config.lessonId,
         data.turns,
         {
+          textEn,
+          textTh,
           roleplayIntro,
           roleplayNpc,
+          expectsUserSpeech,
+          expectedSpeech,
           isTaskComplete,
         },
       );
-      if (forcedStaff != null) {
-        textEn = forcedStaff.textEn;
-        textTh = forcedStaff.textTh;
-        expectsUserSpeech = forcedStaff.expectsUserSpeech;
-        expectedSpeech = forcedStaff.expectedSpeech;
-        roleplayNpc = forcedStaff.roleplayNpc;
+      if (guidedRoleplay != null) {
+        textEn = guidedRoleplay.textEn;
+        textTh = guidedRoleplay.textTh;
+        expectsUserSpeech = guidedRoleplay.expectsUserSpeech;
+        expectedSpeech = guidedRoleplay.expectedSpeech;
+        roleplayNpc = guidedRoleplay.roleplayNpc;
         roleplayIntro = null;
         guidedSpeaking = null;
         emojiChoice = null;
-        isTaskComplete = false;
+        isTaskComplete = guidedRoleplay.isTaskComplete;
       }
 
       // Emoji Choice / Guided Speaking turns always need the mic — never listen-only.

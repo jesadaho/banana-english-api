@@ -4903,34 +4903,35 @@ Core Flow (ONE-WAY):
      { subtitle:"คุณกำลังคุยกับคนท้องถิ่น", npcEmoji:"👨", npcLabel:"คนท้องถิ่น", npcName:"Local Guide", userLabel:"คุณ" }
    - expectsUserSpeech=false. isLessonComplete=false.
    - textEn MUST be exactly ({{L1}}, keep line breaks):
-     'พร้อม Roleplay แล้วใช่ไหมครับ? 😊\n\nคุณเจอคนท้องถิ่นแล้ว... ไปลองถามทางกันเลยครับ!\n\nอย่าลืมเริ่มด้วย "Excuse me." ก่อนนะครับ'
+     'เยี่ยมเลยครับ! 👏\n\nพร้อม Roleplay แล้วใช่ไหมครับ? 😊\n\nคุณเจอคนท้องถิ่นแล้ว... ไปลองถามทางกันเลยครับ!\n\nอย่าลืมเริ่มด้วย "Excuse me." ก่อนนะครับ'
    - Omit guidedSpeaking / emojiChoice / roleplayNpc on this turn.
    - FORBIDDEN: staff "Hello!" on this turn. User taps Continue → Roleplay.
 
-7. Roleplay — Local person (HARD SPLIT — ENGLISH staff only + Thai CC)
-   STAFF: textEn = ENGLISH ONLY; textTh = Thai CC (required).
-   EVERY staff turn MUST include roleplayNpc: { emoji:"👨", name:"Local Guide" }
-   LEARNER asks for directions — STAFF never asks "Where is…?" / "I'm looking for…".
-   FORBIDDEN in staff textEn: "Where is…", "I'm looking for…", Thai praise / เยี่ยมมาก / Celebrate mash.
-   Staff lines ONLY (in order): "Hello!" → "Yes?" → "Go straight and turn left." → "You're welcome!"
-   Remember which landmark they asked about in step 5; soft-accept that ask after "Yes?" (default Big Ben OK).
+7. Roleplay — Local person (OBJECTIVE-DRIVEN — NOT a fixed script)
+   OBJECTIVE (show via roleplayNpc.objective every staff turn):
+     "🎯 Ask for directions to a place."
+   STAFF: textEn = ENGLISH ONLY short NPC lines; textTh = Thai CC (required).
+   EVERY staff turn MUST include:
+     roleplayNpc: { emoji:"👨", name:"Local Guide", objective:"🎯 Ask for directions to a place." }
+   Roles: LEARNER asks for directions (Excuse me / Where is… / I'm looking for…).
+          STAFF is the local who HELPS — never asks "Where is…?" / "I'm looking for…".
+   Length: about 2–4 learner speaks. HARD MAX = 4 learner speaks after Roleplay Intro.
+   Soft goal: steer toward a polite close with "Thank you." / "Thanks." when natural —
+     after thanks, staff listen-only close (e.g. "You're welcome!") → Continue → Celebrate.
+     If they never say thank you, still OK — close after directions are given (or at max 4).
+   Flow idea (flexible — adapt wording, do NOT hardcode exact lines):
+     - Staff greets / opens space for the learner
+     - Learner asks about a place (prefer landmark from step 5; Big Ben OK)
+     - Staff gives simple directions
+     - Optional thank-you → staff welcome close (listen-only)
+   ROLEPLAY CLOSE (listen-only): short English close only (You're welcome! / Sure! / Have a nice day!).
+     expectsUserSpeech=false. isLessonComplete=false. Keep roleplayNpc.
+     User taps Continue → Celebrate NEXT turn.
+     FORBIDDEN: mash close + Celebrate / Thai Teacher praise into staff textEn.
 
-   7a. Staff ONLY: textEn="Hello!" textTh="สวัสดีครับ!" expectsUserSpeech=true.
-       Soft-accept "Excuse me." / "Excuse me"
-   7b. After clear: Staff ONLY textEn="Yes?" textTh="ครับ?"
-       Soft-accept "Where is Big Ben?" (or their landmark from step 5)
-   7c. After clear: Staff ONLY textEn="Go straight and turn left." textTh=Thai of that line.
-       Soft-accept "Thank you." / "Thank you" / "Thanks."
-   7d. ROLEPLAY CLOSE (ALWAYS) — Staff listen-only:
-       textEn="You're welcome!" textTh="ด้วยความยินดีครับ!"
-       expectsUserSpeech=false. isLessonComplete=false. Omit emojiChoice / guidedSpeaking / roleplayIntro.
-       Keep roleplayNpc on this turn.
-       User taps Continue to end roleplay → Celebrate on the NEXT turn.
-       FORBIDDEN: mash You're welcome! + Celebrate / Thai Teacher praise.
-
-8. Celebrate (listen-only) — AFTER Continue from 7d ONLY
+8. Celebrate (listen-only) — AFTER Continue from roleplay close ONLY
    - Warm ~2–3 sentences in {{L1}}: name once + I'm looking for… / Where is… / Excuse me + soft tease Transportation.
-   - FORBIDDEN: one-liner only; starting with staff "You're welcome!".
+   - FORBIDDEN: one-liner only; starting with staff close lines.
    - expectsUserSpeech=false. isLessonComplete=true. Omit guidedSpeaking / emojiChoice / roleplayIntro / roleplayNpc.
 
 Teaching rules:
@@ -4940,7 +4941,7 @@ Teaching rules:
 
 Turn loop: non-final = action or Continue; Celebrate → isLessonComplete true.`,
     openingPrompt:
-      'Start Explore the City 2.4 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — greet by name + "วันนี้เราจะออกไปเดินเที่ยวในเมืองกันครับ! 🗺️ มาฝึกถามหาสถานที่เป็นภาษาอังกฤษกันครับ!" — expectsUserSpeech false. FORBIDDEN on Turn 1: question; guidedSpeaking; emojiChoice; roleplayIntro; mic. After Continue: Guided Speaking London/museum with guidedSpeaking stem "I\'m looking for the..." + 🏛️ → listen-only pattern teach "I\'m looking for the..." → Mini Challenge looking-for board museum/park/temple/map → listen Pattern "Where is the museum?" → Mini Challenge landmarks Big Ben/London Eye/Tower Bridge → Roleplay Intro card (roleplayIntro คนท้องถิ่น, tap Continue) → staff roleplayNpc "Hello!" → "Yes?" → "Go straight and turn left." → ROLEPLAY CLOSE "You\'re welcome!" ONLY → tap Continue → THEN Celebrate ~2–3 sentences + Transportation tease. NEVER mash staff close + Celebrate. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
+      'Start Explore the City 2.4 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — greet by name + "วันนี้เราจะออกไปเดินเที่ยวในเมืองกันครับ! 🗺️ มาฝึกถามหาสถานที่เป็นภาษาอังกฤษกันครับ!" — expectsUserSpeech false. FORBIDDEN on Turn 1: question; guidedSpeaking; emojiChoice; roleplayIntro; mic. After Continue: Guided Speaking London/museum with guidedSpeaking stem "I\'m looking for the..." + 🏛️ → listen-only pattern teach "I\'m looking for the..." → Mini Challenge looking-for board museum/park/temple/map → listen Pattern "Where is the museum?" → Mini Challenge landmarks Big Ben/London Eye/Tower Bridge → Roleplay Intro card (roleplayIntro คนท้องถิ่น, tap Continue) → OBJECTIVE roleplay (roleplayNpc.objective "🎯 Ask for directions to a place.", ~2–4 learner speaks, max 4; staff helps, never asks Where is…; soft-close with thank you if natural) → listen-only staff close → tap Continue → THEN Celebrate ~2–3 sentences + Transportation tease. NEVER mash staff close + Celebrate. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
   },
   buildStoriesPatternLesson({
     lessonId: 'ee_around_town_transport',
@@ -6852,7 +6853,7 @@ export const EXPLORE_CITY_GUIDED_SPEAKING = {
 /** Canonical Roleplay Intro speech + card for Explore the City 2.4. */
 export const EXPLORE_CITY_ROLEPLAY_INTRO = {
   textEn:
-    'พร้อม Roleplay แล้วใช่ไหมครับ? 😊\n\nคุณเจอคนท้องถิ่นแล้ว... ไปลองถามทางกันเลยครับ!\n\nอย่าลืมเริ่มด้วย "Excuse me." ก่อนนะครับ',
+    'เยี่ยมเลยครับ! 👏\n\nพร้อม Roleplay แล้วใช่ไหมครับ? 😊\n\nคุณเจอคนท้องถิ่นแล้ว... ไปลองถามทางกันเลยครับ!\n\nอย่าลืมเริ่มด้วย "Excuse me." ก่อนนะครับ',
   roleplayIntro: {
     subtitle: 'คุณกำลังคุยกับคนท้องถิ่น',
     npcEmoji: '👨',
@@ -6862,33 +6863,11 @@ export const EXPLORE_CITY_ROLEPLAY_INTRO = {
   },
 } as const;
 
-/** Canonical Local Guide staff lines for Explore the City roleplay (in order). */
-export const EXPLORE_CITY_ROLEPLAY_STAFF = [
-  {
-    textEn: 'Hello!',
-    textTh: 'สวัสดีครับ!',
-    expectsUserSpeech: true,
-    expectedSpeech: 'Excuse me.',
-  },
-  {
-    textEn: 'Yes?',
-    textTh: 'ครับ?',
-    expectsUserSpeech: true,
-    expectedSpeech: '',
-  },
-  {
-    textEn: 'Go straight and turn left.',
-    textTh: 'ตรงไปแล้วเลี้ยวซ้ายครับ',
-    expectsUserSpeech: true,
-    expectedSpeech: 'Thank you.',
-  },
-  {
-    textEn: "You're welcome!",
-    textTh: 'ด้วยความยินดีครับ!',
-    expectsUserSpeech: false,
-    expectedSpeech: null as string | null,
-  },
-] as const;
+/** Objective shown on Explore the City roleplay chrome. */
+export const EXPLORE_CITY_ROLEPLAY_OBJECTIVE =
+  '🎯 Ask for directions to a place.';
+
+const EXPLORE_CITY_ROLEPLAY_MAX_LEARNER_SPEAKS = 4;
 
 function normalizeExploreCityStaffKey(text: string): string {
   return text
@@ -6898,21 +6877,65 @@ function normalizeExploreCityStaffKey(text: string): string {
     .replace(/\s+/g, ' ');
 }
 
-/** Learner lines the model sometimes puts in Local Guide's mouth — never count as staff progress. */
+/** Learner lines the model sometimes puts in Local Guide's mouth. */
 function isExploreCityLearnerLineAsStaff(text: string): boolean {
   const t = normalizeExploreCityStaffKey(text);
   return (
     t.startsWith('where is') ||
     t.startsWith("i'm looking for") ||
-    t.startsWith('i am looking for')
+    t.startsWith('i am looking for') ||
+    t.startsWith('excuse me')
   );
 }
 
+function exploreCityRoleplayIntroIndex(
+  history: Array<{ speaker: string; roleplayIntro?: unknown }>,
+): number {
+  return history.findIndex(
+    (t) => t.speaker === 'ai' && t.roleplayIntro != null,
+  );
+}
+
+function exploreCityRoleplayLearnerSpeakCount(
+  history: Array<{
+    speaker: string;
+    textEn?: string;
+    roleplayIntro?: unknown;
+  }>,
+): number {
+  const introIdx = exploreCityRoleplayIntroIndex(history);
+  if (introIdx < 0) return 0;
+  let count = 0;
+  for (let i = introIdx + 1; i < history.length; i++) {
+    const t = history[i];
+    if (t.speaker !== 'user') continue;
+    const text = (t.textEn ?? '').trim();
+    if (!text || text.startsWith('[')) continue;
+    count += 1;
+  }
+  return count;
+}
+
+function exploreCityRoleplayAlreadyClosed(
+  history: Array<{ speaker: string; textEn?: string; roleplayIntro?: unknown }>,
+): boolean {
+  const introIdx = exploreCityRoleplayIntroIndex(history);
+  if (introIdx < 0) return false;
+  for (let i = introIdx + 1; i < history.length; i++) {
+    const t = history[i];
+    if (t.speaker !== 'ai' || t.roleplayIntro != null) continue;
+    if (isAroundTownRoleplayCloseLine(t.textEn ?? '')) return true;
+  }
+  return false;
+}
+
 /**
- * Pin Explore the City roleplay to Hello! → Yes? → directions → You're welcome!
- * Models often swap roles and make Local Guide ask "Where is…?".
+ * Guide Explore the City roleplay without a fixed script:
+ * - Pin objective + NPC chrome after intro
+ * - Block staff from saying learner lines (Where is… / I'm looking for…)
+ * - Enforce max 4 learner speaks → listen-only close
  */
-export function forceExploreCityRoleplayStaffIfNeeded(
+export function guideExploreCityRoleplayIfNeeded(
   lessonId: string,
   history: Array<{
     speaker: string;
@@ -6920,54 +6943,71 @@ export function forceExploreCityRoleplayStaffIfNeeded(
     roleplayIntro?: unknown;
   }>,
   current: {
+    textEn: string;
+    textTh: string | null | undefined;
     roleplayIntro: unknown;
-    roleplayNpc: unknown;
+    roleplayNpc: { emoji: string; name: string; objective?: string } | null;
+    expectsUserSpeech: boolean;
+    expectedSpeech: string | null;
     isTaskComplete: boolean;
   },
 ): {
   textEn: string;
-  textTh: string;
+  textTh: string | null;
   expectsUserSpeech: boolean;
   expectedSpeech: string | null;
-  roleplayNpc: { emoji: string; name: string };
+  roleplayNpc: { emoji: string; name: string; objective: string };
+  isTaskComplete: boolean;
 } | null {
   if (lessonId !== 'ee_around_town_convenience') return null;
   if (current.roleplayIntro != null) return null;
   if (current.isTaskComplete) return null;
 
-  const hadIntro = history.some(
-    (t) => t.speaker === 'ai' && t.roleplayIntro != null,
-  );
+  const hadIntro = exploreCityRoleplayIntroIndex(history) >= 0;
+  if (!hadIntro && current.roleplayNpc == null) return null;
   if (!hadIntro) return null;
+  if (exploreCityRoleplayAlreadyClosed(history)) return null;
 
-  const closed = history.some(
-    (t) =>
-      t.speaker === 'ai' &&
-      normalizeExploreCityStaffKey(t.textEn ?? '') ===
-        normalizeExploreCityStaffKey("You're welcome!"),
-  );
-  if (closed) return null;
+  const npc = {
+    emoji: current.roleplayNpc?.emoji?.trim() || '👨',
+    name: current.roleplayNpc?.name?.trim() || 'Local Guide',
+    objective: EXPLORE_CITY_ROLEPLAY_OBJECTIVE,
+  };
 
-  let step = 0;
-  for (const t of history) {
-    if (t.speaker !== 'ai') continue;
-    if (t.roleplayIntro != null) continue;
-    const key = normalizeExploreCityStaffKey(t.textEn ?? '');
-    if (!key || isExploreCityLearnerLineAsStaff(key)) continue;
-    const idx = EXPLORE_CITY_ROLEPLAY_STAFF.findIndex(
-      (s) => normalizeExploreCityStaffKey(s.textEn) === key,
-    );
-    if (idx >= step) step = idx + 1;
+  const learnerSpeaks = exploreCityRoleplayLearnerSpeakCount(history);
+  const hitMax = learnerSpeaks >= EXPLORE_CITY_ROLEPLAY_MAX_LEARNER_SPEAKS;
+  const raw = (current.textEn ?? '').trim();
+  const staffSaidLearnerLine = isExploreCityLearnerLineAsStaff(raw);
+
+  let textEn = raw;
+  let textTh = current.textTh?.trim() || null;
+  let expectsUserSpeech = current.expectsUserSpeech;
+  let expectedSpeech = current.expectedSpeech;
+
+  if (hitMax || isAroundTownRoleplayCloseLine(raw)) {
+    // Max turns or model already closing — pin a listen-only close.
+    textEn = isAroundTownRoleplayCloseLine(raw) ? raw : "You're welcome!";
+    textTh =
+      textTh && isAroundTownRoleplayCloseLine(raw)
+        ? textTh
+        : 'ด้วยความยินดีครับ!';
+    expectsUserSpeech = false;
+    expectedSpeech = null;
+  } else if (staffSaidLearnerLine || !raw) {
+    // NPC must help, not ask for directions — soft repair only.
+    textEn = 'Yes?';
+    textTh = 'ครับ?';
+    expectsUserSpeech = true;
+    expectedSpeech = '';
   }
 
-  if (step >= EXPLORE_CITY_ROLEPLAY_STAFF.length) return null;
-  const next = EXPLORE_CITY_ROLEPLAY_STAFF[step];
   return {
-    textEn: next.textEn,
-    textTh: next.textTh,
-    expectsUserSpeech: next.expectsUserSpeech,
-    expectedSpeech: next.expectedSpeech,
-    roleplayNpc: { emoji: '👨', name: 'Local Guide' },
+    textEn,
+    textTh,
+    expectsUserSpeech,
+    expectedSpeech,
+    roleplayNpc: npc,
+    isTaskComplete: false,
   };
 }
 
@@ -7053,15 +7093,21 @@ export function normalizeRoleplayNpc(
     | {
         emoji?: string;
         name?: string;
+        objective?: string;
       }
     | null
     | undefined,
-): { emoji: string; name: string } | null {
+): { emoji: string; name: string; objective?: string } | null {
   if (!roleplayNpc) return null;
   const emoji = roleplayNpc.emoji?.trim() ?? '';
   const name = roleplayNpc.name?.trim() ?? '';
   if (!emoji || !name) return null;
-  return { emoji, name };
+  const objective = roleplayNpc.objective?.trim();
+  return {
+    emoji,
+    name,
+    ...(objective ? { objective } : {}),
+  };
 }
 
 /** Known Around Town staff lines — used to strip Thai praise mash from textEn. */
@@ -7191,13 +7237,15 @@ export function sanitizeAroundTownStaffSpeech(
 
 /** Staff closing lines that end roleplay — listen-only, never lesson-complete. */
 export function isAroundTownRoleplayCloseLine(textEn: string): boolean {
-  const t = textEn.trim().toLowerCase();
+  const t = textEn.trim().toLowerCase().replace(/[.!]+$/g, '');
   return (
-    t === 'sure!' ||
-    t === "it's twenty dollars." ||
-    t === 'its twenty dollars.' ||
-    t === "you're welcome!" ||
-    t === 'youre welcome!'
+    t === 'sure' ||
+    t === "it's twenty dollars" ||
+    t === 'its twenty dollars' ||
+    t === "you're welcome" ||
+    t === 'youre welcome' ||
+    t === 'have a nice day' ||
+    t === 'have a good day'
   );
 }
 

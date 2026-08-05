@@ -147,6 +147,8 @@ export interface RoleplayIntroPrompt {
 export interface RoleplayNpcPrompt {
   emoji: string;
   name: string;
+  /** Mission-style objective shown under ROLEPLAY (e.g. "🎯 Ask for directions…"). */
+  objective?: string;
 }
 
 /** One line in a lesson Scene dialogue (Watch & Listen). */

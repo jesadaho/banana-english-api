@@ -337,10 +337,15 @@ function buildTrainingReplySchema(withSpeechFlag: boolean) {
       roleplayNpc: {
         type: 'object',
         description:
-          'Optional active roleplay NPC chrome on staff turns (ROLEPLAY tag + bubble avatar). Omit on Teacher / Celebrate / Intro turns.',
+          'Optional active roleplay NPC chrome on staff turns (ROLEPLAY tag + bubble avatar + objective). Omit on Teacher / Celebrate / Intro turns.',
         properties: {
           emoji: { type: 'string' },
           name: { type: 'string' },
+          objective: {
+            type: 'string',
+            description:
+              'Short objective under ROLEPLAY (e.g. "🎯 Ask for directions to a place.").',
+          },
         },
         required: ['emoji', 'name'],
       },
@@ -436,6 +441,7 @@ export interface TrainingTurnReply {
   roleplayNpc?: {
     emoji: string;
     name: string;
+    objective?: string;
   };
 }
 
