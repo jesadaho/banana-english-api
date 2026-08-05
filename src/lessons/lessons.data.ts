@@ -4650,52 +4650,123 @@ Turn loop:
     openingPrompt:
       'Start Restaurant 2.2 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — greet + "วันนี้เราจะไปร้านอาหารกันครับ 🍽️…" — expectsUserSpeech false. FORBIDDEN on Turn 1: any vocab question; emojiChoice; mic. After Continue: Emoji Recall ask "ไก่"→chicken with 4-board 🍗chicken 🍚rice 🥤water 🧾bill; second ask RANDOM rice/water/bill. Then listen Pattern "I\'d like chicken." → Mini Challenge ONE emoji at a time: rice then water. Then listen Pattern "What do you recommend?" → speak that → staff "I recommend the chicken." (no ถูกต้องครับ). Roleplay HARD SPLIT: bridge intro → Continue → "Are you ready to order?" → "Anything to drink?". Celebrate ~2–3 sentences + Coffee Shop tease. NEVER mash Hook+question or bridge+ask. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
   },
-  buildStoriesPatternLesson({
+  {
     lessonId: 'ee_around_town_coffee',
-    code: '2.3',
-    trackLabel: 'Everyday Life',
+    targetLabel: 'word or sentence',
     titleEn: 'Coffee Shop',
     titleTh: 'ร้านกาแฟ',
     goalEn: 'Order coffee at a cafe.',
     goalTh: 'สั่งกาแฟ',
-    hookTh:
-      'อยากได้กาแฟแก้วไหมครับ? วันนี้มาฝึกสั่งที่ร้านกาแฟกันครับ!',
-    emojiWords: [
-      { emoji: '☕', answer: 'latte', hint: 'l _ t t e' },
-      { emoji: '🍵', answer: 'tea', hint: 't _ a' },
-      { emoji: '🧊', answer: 'iced', hint: 'i c _ d' },
-      { emoji: '🔥', answer: 'hot', hint: 'h _ t' },
+    difficulty: 'beginner',
+    languageMix: { thai: 70, english: 30 },
+    estimatedMinutesMin: 4,
+    estimatedMinutesMax: 6,
+    targetPhrases: [
+      'coffee',
+      'tea',
+      'milk',
+      'cake',
+      'Can I get a coffee?',
+      'Can I get tea?',
+      'Can I get cake?',
+      'latte',
+      'cappuccino',
+      'espresso',
+      'Hot',
+      'Iced',
     ],
-    tellGoal: 'build cafe order lines',
-    tell1CueTh:
-      "ถ้าจะบอกบาริสต้าว่า ขอลาเต้ได้ไหม ให้พูดว่า... Can I get a latte? ... ลองพูดดูครับ",
-    tell1Thai: 'ขอลาเต้ได้ไหม',
-    tell1En: 'Can I get a latte?',
-    tipTh:
-      'เยี่ยมเลยครับ! Can I get...? ใช้สั่งของสุภาพๆ ที่ร้านกาแฟได้เลยครับ',
-    tell2CueTh: 'คราวนี้ถ้าจะเปลี่ยนเป็น ขอชาได้ไหม... ลองพูดว่าไงดีครับ?',
-    tell2Thai: 'ขอชาได้ไหม',
-    tell2En: 'Can I get a tea?',
-    tell2PraiseTh: 'โอเคเลย! เข้าใจง่ายสุดๆ',
-    tell3CueTh: 'ถ้าจะสั่งลาเต้เย็น... ลองพูดสิครับ',
-    tell3Thai: 'ขอลาเต้เย็น',
-    tell3En: 'Can I get an iced latte?',
-    tell3PraiseTh: 'เป๊ะ! iced latte ชัดเจนมากครับ',
-    ask1CueTh:
-      'คราวนี้ลองถามบาริสต้าเรื่องราคา... โดยพูดว่า How much is it? ... ลองเลยครับ',
-    ask1En: 'How much is it?',
-    ask1AiAnswerEn: "It's $5.",
-    ask1PraiseTh: 'เป๊ะเลยครับ!',
-    ask2ThaiCue: 'คราวนี้ลองถามเองดูครับ ว่าร้อนหรือเย็น พูดว่าไงดี?',
-    ask2En: 'Is it hot or iced?',
-    ask2AiAnswerEn: 'You can choose hot or iced.',
-    ask2PraiseTh: 'ดีมากครับ!',
-    answerBridgeTh: 'ดีมากครับ! ต่อไปสมมุติว่าผมเป็นบาริสต้านะครับ...',
-    answer1En: 'What can I get for you?',
-    answer1PraiseTh: 'ดีมากครับ!',
-    answer2En: 'Hot or iced?',
-    nextLessonHint: 'Explore the City / สำรวจเมือง',
-  }),
+    maxTurns: 24,
+    listenOnlyTurns: 1,
+    systemInstruction: `Lesson: Coffee Shop (Everyday English → Everyday Life → 2.3)
+Goal: Order coffee at a cafe.
+Pace target: ~4–6 minutes. Keep every tutor turn tight.
+
+FIXED vocab board (Recall):
+  ☕ coffee · 🍵 tea · 🥛 milk · 🍰 cake
+
+emojiChoice rules (like Shopping / Restaurant):
+- Speak scaffolds via emojiChoice; mic still required.
+- Recall turns: ALL 4 labeled items.
+- Mini Challenge: ONE emoji at a time (tea, then cake).
+- Roleplay type ask: latte / cappuccino / espresso board; Hot/Iced board.
+- FORBIDDEN: emojiSpeak / emojiSpeakSet. Omit emojiChoice on listen-only / Celebrate.
+
+Core Flow (ONE-WAY):
+
+1. Hook (listen-only) — OPENING ONLY
+   - {{L1}} close to: "สวัสดีครับ [Name]! เช้าๆ แบบนี้ รับกาแฟสักแก้วไหมครับ? วันนี้มาฝึกสั่งกาแฟแก้วโปรดเป็นภาษาอังกฤษแบบมั่นใจกันครับ ☕"
+   - expectsUserSpeech=false. Omit emojiChoice.
+   - FORBIDDEN: vocab question / board / mic on Hook. Continue → 2.
+
+2. Emoji Recall (EXACTLY 2 speaks) — AFTER Hook Continue
+   Board ALWAYS:
+     { options: [
+       { emoji:"☕", label:"coffee", speak:"coffee" },
+       { emoji:"🍵", label:"tea", speak:"tea" },
+       { emoji:"🥛", label:"milk", speak:"milk" },
+       { emoji:"🍰", label:"cake", speak:"cake" }
+     ] }
+   a) Ask ONLY: '"กาแฟ" ในภาษาอังกฤษเรียกว่าอะไรนะครับ?' expectedSpeech="coffee"
+      FORBIDDEN: re-saying Hook on this turn.
+   b) After clear "coffee": praise + ONE random from {tea, milk, cake}:
+      - tea → '"ชา" ล่ะครับ?' · expectedSpeech="tea"
+      - milk → '"นม" ล่ะครับ?' · expectedSpeech="milk"
+      - cake → '"เค้ก" ล่ะครับ?' · expectedSpeech="cake"
+   After clear #2 → Pattern.
+
+3. Pattern — Model (listen-only)
+   - {{L1}}: 'ถ้าจะสั่งกาแฟ ให้พูดว่า...'
+   - textEn MUST include: "Can I get a coffee?"
+   - expectsUserSpeech=false. Omit emojiChoice. Continue → Mini Challenge.
+
+4. Mini Challenge — Order (EXACTLY 2 speaks) — ONE emoji each
+   a) {{L1}}: "ไหนลองสั่งเครื่องดื่มดูครับ 😊"
+      emojiChoice: { options: [ { emoji:"🍵", label:"tea", speak:"Can I get tea?" } ] }
+      expectedSpeech="Can I get tea." Soft-accept "Can I get a tea?" / "Can I get tea?"
+   b) After clear: {{L1}} "แล้วลองสั่งเค้กดูครับ 😊"
+      emojiChoice: { options: [ { emoji:"🍰", label:"cake", speak:"Can I get cake?" } ] }
+      expectedSpeech="Can I get cake." Soft-accept with/without "a".
+   After cake → Roleplay bridge.
+
+5. Roleplay — Barista (HARD SPLIT)
+   STAFF: English only (+ Thai subtitle). FORBIDDEN: "ถูกต้องครับ" / Teacher praise inside staff lines.
+   5a. Bridge (listen-only): {{L1}} ONLY
+      "ต่อไปครูพี่บีจะเป็นบาริสต้านะครับ ☕ พร้อมแล้ว แตะเพื่อเริ่มได้เลย!"
+      FORBIDDEN: "What can I get for you?" on this turn. Continue → 5b.
+   5b. Staff ONLY: "What can I get for you?"
+      expectsUserSpeech=true. Soft-accept "Can I get a coffee?"
+      emojiChoice optional: { options: [ { emoji:"☕", label:"coffee", speak:"Can I get a coffee?" } ] }
+   5c. After clear: Staff ONLY "What type of coffee?"
+      emojiChoice MUST be:
+        { options: [
+          { emoji:"☕", label:"latte", speak:"Latte" },
+          { emoji:"☕", label:"cappuccino", speak:"Cappuccino" },
+          { emoji:"☕", label:"espresso", speak:"Espresso" }
+        ] }
+      Soft-accept Latte / Cappuccino / Espresso (with/without period).
+   5d. After clear type: Staff ONLY "Hot or iced?"
+      emojiChoice MUST be:
+        { options: [
+          { emoji:"♨️", label:"hot", speak:"Hot" },
+          { emoji:"🧊", label:"iced", speak:"Iced" }
+        ] }
+      Soft-accept Hot / Iced / hot / iced.
+   5e. After clear: Staff listen-only ONLY "Sure!" (no Thai praise). Continue → Celebrate.
+   HARD: never mash bridge + first ask. Never re-ask after clear reply.
+
+6. Celebrate (listen-only)
+   - Warm ~2–3 sentences: name once + Can I get… / coffee type / hot-iced + soft tease Explore the City.
+   - FORBIDDEN: one-liner only "วันนี้คุณทำได้แล้ว".
+   - expectsUserSpeech=false. isLessonComplete=true. Omit emojiChoice.
+
+Teaching rules:
+- ONE speaking task per turn. Never mash Hook+question or bridge+ask.
+- Soft-accept → เฉลย once → advance. No emojiSpeak/emojiSpeakSet.
+
+Turn loop: non-final = action or Continue; Celebrate → isLessonComplete true.`,
+    openingPrompt:
+      'Start Coffee Shop 2.3 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — greet by name + "เช้าๆ แบบนี้ รับกาแฟสักแก้วไหมครับ? วันนี้มาฝึกสั่งกาแฟแก้วโปรดเป็นภาษาอังกฤษแบบมั่นใจกันครับ ☕" — expectsUserSpeech false. FORBIDDEN on Turn 1: vocab question; emojiChoice; mic. After Continue: Emoji Recall "กาแฟ"→coffee with board ☕coffee 🍵tea 🥛milk 🍰cake; second ask RANDOM tea/milk/cake. Then listen Pattern "Can I get a coffee?" → Mini Challenge one emoji: tea then cake. Roleplay HARD SPLIT: barista bridge → Continue → "What can I get for you?" → "What type of coffee?" (latte/cappuccino/espresso) → "Hot or iced?" → staff "Sure!" only → Celebrate ~2–3 sentences + Explore the City tease. NEVER mash Hook+question or bridge+ask. NEVER emojiSpeak/emojiSpeakSet. No ถูกต้องครับ on staff turns. Return JSON matching schema. isLessonComplete must be false.',
+  },
   buildStoriesPatternLesson({
     lessonId: 'ee_around_town_convenience',
     code: '2.4',
@@ -6726,6 +6797,11 @@ const EMOJI_RECALL2_BY_LESSON: Record<
     { en: 'rice', th: 'ข้าว' },
     { en: 'water', th: 'น้ำ' },
     { en: 'bill', th: 'บิล' },
+  ],
+  ee_around_town_coffee: [
+    { en: 'tea', th: 'ชา' },
+    { en: 'milk', th: 'นม' },
+    { en: 'cake', th: 'เค้ก' },
   ],
 };
 
