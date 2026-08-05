@@ -4769,10 +4769,12 @@ Core Flow (ONE-WAY):
    On 5b–5e ALWAYS return:
      roleplayNpc: { emoji:"🧔", name:"Barista", objective:"Order a coffee — type and hot or iced." }
    5b. Staff ONLY: textEn="What can I get for you?" textTh=Thai of that ask.
-      expectsUserSpeech=true. Soft-accept "Can I get a coffee?"
+      expectsUserSpeech=true. Soft-accept "Can I get a coffee?" / "Can I get a latte." etc.
       emojiChoice optional: { options: [ { emoji:"☕", label:"coffee", speak:"Can I get a coffee?" } ] }
       FORBIDDEN: "Anything else?" / inventing extra asks.
-   5c. After clear: Staff ONLY textEn="What type of coffee?" + textTh. NO praise.
+   5c. After clear order WITHOUT a type (latte/cappuccino/espresso): Staff ONLY textEn="What type of coffee?" + textTh. NO praise.
+      SKIP 5c entirely if 5b reply already named latte / cappuccino / espresso → go straight to 5d.
+      On FIRST wrong answer at 5c: Staff ONLY textEn="No worries. A latte?" textTh="ไม่เป็นไรครับ ลาเต้นะครับ?" listen-only → Continue → 5d (do NOT re-ask "What type?").
       Keep roleplayNpc + objective.
       emojiChoice MUST be:
         { options: [
@@ -4781,7 +4783,7 @@ Core Flow (ONE-WAY):
           { emoji:"☕", label:"espresso", speak:"Espresso" }
         ] }
       Soft-accept Latte / Cappuccino / Espresso (with/without period).
-   5d. After clear type: Staff ONLY textEn="Hot or iced?" + textTh. NO praise / NO learner echo.
+   5d. After clear type (or after 5b that already named type): Staff ONLY textEn="Hot or iced?" + textTh. NO praise / NO learner echo.
       Keep roleplayNpc + objective.
       emojiChoice MUST be:
         { options: [
@@ -4814,7 +4816,7 @@ Teaching rules:
 
 Turn loop: non-final = action or Continue; Celebrate → isLessonComplete true.`,
     openingPrompt:
-      'Start Coffee Shop 2.3 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — greet by name + "เช้า ๆ แบบนี้ รับกาแฟสักแก้วไหมครับ? ☕ วันนี้มาฝึกสั่งกาแฟแก้วโปรดเป็นภาษาอังกฤษกันครับ!" — expectsUserSpeech false. FORBIDDEN on Turn 1: vocab question; emojiChoice; mic. After Continue: Emoji Recall "กาแฟ"→coffee with board ☕coffee 🍵tea 🥛milk 🍰cake; second ask RANDOM tea/milk/cake. Then listen Pattern "Can I get a coffee?" → Mini Challenge one emoji: tea then cake. Roleplay HARD SPLIT: barista bridge → Continue → staff English-ONLY "What can I get for you?" (textTh Thai CC) → "What type of coffee?" → "Hot or iced?" → ROLEPLAY CLOSE listen-only "Sure!" ONLY with roleplayNpc.objective "Order a coffee — type and hot or iced." (isLessonComplete false) → tap Continue → THEN Celebrate ~2–3 sentences (separate turn, isLessonComplete true). NEVER invent "Anything else?" or go backward. NEVER mash Sure!+Celebrate or Thai praise into staff textEn. NEVER mash Hook+question or bridge+ask. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
+      'Start Coffee Shop 2.3 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — greet by name + "เช้า ๆ แบบนี้ รับกาแฟสักแก้วไหมครับ? ☕ วันนี้มาฝึกสั่งกาแฟแก้วโปรดเป็นภาษาอังกฤษกันครับ!" — expectsUserSpeech false. FORBIDDEN on Turn 1: vocab question; emojiChoice; mic. After Continue: Emoji Recall "กาแฟ"→coffee with board ☕coffee 🍵tea 🥛milk 🍰cake; second ask RANDOM tea/milk/cake. Then listen Pattern "Can I get a coffee?" → Mini Challenge one emoji: tea then cake. Roleplay HARD SPLIT: barista bridge → Continue → staff English-ONLY "What can I get for you?" (textTh Thai CC) → if order already named latte/cappuccino/espresso SKIP "What type of coffee?" else ask type → "Hot or iced?" → ROLEPLAY CLOSE listen-only "Sure!" ONLY with roleplayNpc.objective "Order a coffee — type and hot or iced." (isLessonComplete false) → tap Continue → THEN Celebrate ~2–3 sentences (separate turn, isLessonComplete true). NEVER invent "Anything else?" or go backward. NEVER mash Sure!+Celebrate or Thai praise into staff textEn. NEVER mash Hook+question or bridge+ask. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
   },
   {
     lessonId: 'ee_around_town_convenience',
@@ -7829,6 +7831,20 @@ function lastAskAnswered(
   config: ScriptedRoleplayConfig,
 ): boolean {
   if (askIndex < 0 || startIdx < 0) return false;
+
+  // Coffee: order already named latte/cappuccino/espresso → skip "What type?"
+  if (
+    config.lessonId === 'ee_around_town_coffee' &&
+    askIndex === 1 &&
+    coffeeTypeAlreadyNamedInRoleplay(history, startIdx)
+  ) {
+    return true;
+  }
+
+  if (scriptedAskHintShownAfter(history, startIdx, askIndex, config)) {
+    return true;
+  }
+
   let inWindow = false;
   for (let i = startIdx; i < history.length; i++) {
     const t = history[i];
@@ -7891,6 +7907,26 @@ function isRecommendQuestion(text: string): boolean {
   );
 }
 
+function isCoffeeTypeName(text: string): boolean {
+  return /\b(latte|cappuccino|espresso)\b/.test(normalizeScriptedStaffKey(text));
+}
+
+/** True if learner already named latte/cappuccino/espresso during coffee roleplay. */
+function coffeeTypeAlreadyNamedInRoleplay(
+  history: Array<{ speaker: string; textEn?: string }>,
+  startIdx: number,
+): boolean {
+  if (startIdx < 0) return false;
+  for (let i = startIdx; i < history.length; i++) {
+    const t = history[i];
+    if (t.speaker !== 'user') continue;
+    const text = (t.textEn ?? '').trim();
+    if (!text || text.startsWith('[')) continue;
+    if (isCoffeeTypeName(text)) return true;
+  }
+  return false;
+}
+
 /** True when learner speech actually completes this scripted ask (not just any words). */
 function userSatisfiesScriptedAsk(
   lessonId: string,
@@ -7946,7 +7982,8 @@ function userSatisfiesScriptedAsk(
       return false;
     }
     if (askIndex === 1) {
-      return /\b(latte|cappuccino|espresso|coffee)\b/.test(t);
+      // Type only — bare "coffee" does not count (still need latte/cappuccino/espresso).
+      return isCoffeeTypeName(t);
     }
     if (askIndex === 2) {
       return /\b(hot|iced|ice|cold)\b/.test(t);
@@ -7955,6 +7992,125 @@ function userSatisfiesScriptedAsk(
 
   // Fallback: any non-empty speech (legacy).
   return true;
+}
+
+function isScriptedSoftHintLine(text: string): boolean {
+  return /^no worries/i.test(text.trim());
+}
+
+/** Staff already gave a "No worries…" soft hint after this ask. */
+function scriptedAskHintShownAfter(
+  history: Array<{ speaker: string; textEn?: string }>,
+  startIdx: number,
+  askIndex: number,
+  config: ScriptedRoleplayConfig,
+): boolean {
+  if (askIndex < 0 || startIdx < 0) return false;
+  let inWindow = false;
+  for (let i = startIdx; i < history.length; i++) {
+    const t = history[i];
+    if (t.speaker !== 'ai') continue;
+    const idx = matchScriptedAskIndex(t.textEn ?? '', config);
+    if (idx === askIndex) {
+      inWindow = true;
+      continue;
+    }
+    if (idx >= 0) return false;
+    if (inWindow && isScriptedSoftHintLine(t.textEn ?? '')) return true;
+  }
+  return false;
+}
+
+type ScriptedSoftHint = { en: string; th: string };
+
+const SCRIPTED_SOFT_HINTS: Record<string, Record<number, ScriptedSoftHint>> = {
+  ee_around_town_shopping: {
+    0: {
+      en: "No worries. I'm looking for a shirt?",
+      th: 'ไม่เป็นไรครับ กำลังหาเสื้อเชิ้ตนะครับ?',
+    },
+    1: {
+      en: 'No worries. Medium?',
+      th: 'ไม่เป็นไรครับ ไซส์กลางนะครับ?',
+    },
+  },
+  ee_around_town_restaurant: {
+    0: {
+      en: "No worries. I'd like chicken?",
+      th: 'ไม่เป็นไรครับ ขอไก่นะครับ?',
+    },
+    1: {
+      en: 'No worries. Water?',
+      th: 'ไม่เป็นไรครับ น้ำนะครับ?',
+    },
+  },
+  ee_around_town_coffee: {
+    0: {
+      en: 'No worries. Can I get a coffee?',
+      th: 'ไม่เป็นไรครับ กาแฟนะครับ?',
+    },
+    1: {
+      en: 'No worries. A latte?',
+      th: 'ไม่เป็นไรครับ ลาเต้นะครับ?',
+    },
+    2: {
+      en: 'No worries. Hot?',
+      th: 'ไม่เป็นไรครับ ร้อนนะครับ?',
+    },
+  },
+};
+
+function getScriptedSoftHint(
+  lessonId: string,
+  askIndex: number,
+): ScriptedSoftHint | null {
+  return SCRIPTED_SOFT_HINTS[lessonId]?.[askIndex] ?? null;
+}
+
+/**
+ * First wrong answer on a scripted ask → soft hint (No worries + model answer).
+ * After hint (listen-only) → treat ask satisfied and advance on Continue.
+ */
+function resolveScriptedAskMissOverride(
+  history: Array<{ speaker: string; textEn?: string }>,
+  startIdx: number,
+  config: ScriptedRoleplayConfig,
+  current: { textEn: string },
+): {
+  textEn: string;
+  textTh: string | null;
+  expectsUserSpeech: boolean;
+  expectedSpeech: string | null;
+  roleplayNpc: { emoji: string; name: string; objective: string };
+  emojiChoice: null;
+  isTaskComplete: false;
+} | null {
+  if (startIdx < 0) return null;
+  if (isScriptedSoftHintLine(current.textEn)) return null;
+
+  for (let i = 0; i < config.asks.length; i++) {
+    if (lastAskAnswered(history, startIdx, i, config)) continue;
+
+    const userText = latestUserTextAfterAsk(history, startIdx, i, config);
+    if (!userText) return null;
+    if (userText.startsWith('[')) return null;
+    if (userSatisfiesScriptedAsk(config.lessonId, i, userText)) return null;
+    if (scriptedAskHintShownAfter(history, startIdx, i, config)) return null;
+
+    const hint = getScriptedSoftHint(config.lessonId, i);
+    if (!hint) return null;
+
+    return {
+      textEn: hint.en,
+      textTh: hint.th,
+      expectsUserSpeech: false,
+      expectedSpeech: null,
+      roleplayNpc: buildScriptedNpc(config),
+      emojiChoice: null,
+      isTaskComplete: false,
+    };
+  }
+  return null;
 }
 
 function buildScriptedNpc(config: ScriptedRoleplayConfig) {
@@ -8051,6 +8207,16 @@ export function guideScriptedAroundTownRoleplayIfNeeded(
 
   if (scriptedRoleplayAlreadyClosed(history, startIdx)) {
     return null;
+  }
+
+  const missOverride = resolveScriptedAskMissOverride(
+    history,
+    startIdx,
+    config,
+    current,
+  );
+  if (missOverride != null) {
+    return missOverride;
   }
 
   // Shopping: after size is answered → Teacher Pattern 2 (clear NPC chrome).
