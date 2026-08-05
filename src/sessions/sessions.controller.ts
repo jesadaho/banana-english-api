@@ -57,6 +57,7 @@ import {
   forceExploreCityGuidedSpeakingIfNeeded,
   guideExploreCityRoleplayIfNeeded,
   ensureExploreCityCelebratePraiseFirst,
+  forceExploreCityCelebrateAfterCloseIfNeeded,
   EXPLORE_CITY_ROLEPLAY_INTRO,
   EXPLORE_CITY_ROLEPLAY_OBJECTIVE,
   sanitizeAroundTownStaffSpeech,
@@ -619,6 +620,32 @@ export class SessionsController {
         isTaskComplete = guidedRoleplay.isTaskComplete;
       }
 
+      // After You're welcome + Continue → Celebrate (never double the close).
+      const forcedCelebrate = forceExploreCityCelebrateAfterCloseIfNeeded(
+        config.lessonId,
+        data.turns,
+        {
+          textEn,
+          textTh,
+          roleplayIntro,
+          roleplayNpc,
+          isTaskComplete,
+        },
+        data.learnerFirstName ??
+          learnerNameFallback(teachingLanguageFromConfig(config)),
+      );
+      if (forcedCelebrate != null) {
+        textEn = forcedCelebrate.textEn;
+        textTh = forcedCelebrate.textTh;
+        expectsUserSpeech = forcedCelebrate.expectsUserSpeech;
+        expectedSpeech = forcedCelebrate.expectedSpeech;
+        roleplayNpc = forcedCelebrate.roleplayNpc;
+        roleplayIntro = null;
+        guidedSpeaking = null;
+        emojiChoice = null;
+        isTaskComplete = forcedCelebrate.isTaskComplete;
+      }
+
       // Celebrate after roleplay — always open with praise first.
       const celebrateWithPraise = ensureExploreCityCelebratePraiseFirst(
         config.lessonId,
@@ -679,9 +706,11 @@ export class SessionsController {
 
       // Roleplay close (Sure! / price answer / You're welcome!): listen-only →
       // tap Continue → Celebrate. Never mark lesson complete on this beat.
+      // Skip when Celebrate was just forced (close already in history).
       if (
         isAroundTownRoleplayCloseLine(staffSpeech.textEn) &&
-        !maxTurnsReached
+        !maxTurnsReached &&
+        !isTaskComplete
       ) {
         isTaskComplete = false;
         expectsUserSpeech = false;

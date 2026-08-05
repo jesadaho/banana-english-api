@@ -7071,6 +7071,33 @@ function exploreCityRoleplayAlreadyClosed(
   return false;
 }
 
+/** True when Celebrate already ran after the roleplay close. */
+function exploreCityCelebrateAlreadyDone(
+  history: Array<{
+    speaker: string;
+    textEn?: string;
+    roleplayIntro?: unknown;
+    roleplayNpc?: unknown;
+  }>,
+): boolean {
+  const introIdx = exploreCityRoleplayIntroIndex(history);
+  if (introIdx < 0) return false;
+  let sawClose = false;
+  for (let i = introIdx + 1; i < history.length; i++) {
+    const t = history[i];
+    if (t.speaker !== 'ai' || t.roleplayIntro != null) continue;
+    const text = t.textEn ?? '';
+    if (isAroundTownRoleplayCloseLine(text)) {
+      sawClose = true;
+      continue;
+    }
+    if (sawClose && t.roleplayNpc == null && text.trim()) {
+      return true;
+    }
+  }
+  return false;
+}
+
 /**
  * Guide Explore the City roleplay without a fixed script:
  * - Pin objective + NPC chrome after intro
@@ -7217,6 +7244,72 @@ export function ensureExploreCityCelebratePraiseFirst(
   if (/^(เยี่ยม|เก่งมาก|สุดยอด|ดีมาก)/u.test(raw)) return raw;
 
   return `เยี่ยมเลยครับ! 👏\n\n${raw}`;
+}
+
+/**
+ * After staff close ("You're welcome!") + Continue, ALWAYS Celebrate once.
+ * Without this the model often repeats You're welcome and the close-line
+ * guard keeps isLessonComplete false → infinite listen loop.
+ */
+export function forceExploreCityCelebrateAfterCloseIfNeeded(
+  lessonId: string,
+  history: Array<{
+    speaker: string;
+    textEn?: string;
+    roleplayIntro?: unknown;
+  }>,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    roleplayIntro: unknown;
+    roleplayNpc: unknown;
+    isTaskComplete: boolean;
+  },
+  learnerFirstName?: string,
+): {
+  textEn: string;
+  textTh: string | null;
+  expectsUserSpeech: false;
+  expectedSpeech: null;
+  roleplayNpc: null;
+  isTaskComplete: true;
+} | null {
+  if (lessonId !== 'ee_around_town_convenience') return null;
+  if (current.roleplayIntro != null) return null;
+  if (!exploreCityRoleplayAlreadyClosed(history)) return null;
+  if (exploreCityCelebrateAlreadyDone(history)) return null;
+
+  const raw = (current.textEn ?? '').trim();
+  const name = learnerFirstName?.trim();
+  const nameBit = name ? ` ${name}` : '';
+
+  // Model already celebrating — keep (with praise-first if needed).
+  const alreadyCelebrate =
+    current.isTaskComplete &&
+    current.roleplayNpc == null &&
+    !isAroundTownRoleplayCloseLine(raw) &&
+    raw.length > 0;
+
+  let textEn: string;
+  if (alreadyCelebrate) {
+    textEn = /^(เยี่ยม|เก่งมาก|สุดยอด|ดีมาก)/u.test(raw)
+      ? raw
+      : `เยี่ยมเลยครับ! 👏\n\n${raw}`;
+  } else {
+    textEn =
+      `เยี่ยมเลยครับ${nameBit}! 👏\n\n` +
+      `วันนี้ฝึกถามทางเก่งมากครับ — I'm looking for… / Where is… / Excuse me ใช้ได้เลย\n\n` +
+      `คราวหน้าไปฝึก Transportation กันต่อนะครับ!`;
+  }
+
+  return {
+    textEn,
+    textTh: current.textTh?.trim() || null,
+    expectsUserSpeech: false,
+    expectedSpeech: null,
+    roleplayNpc: null,
+    isTaskComplete: true,
+  };
 }
 
 /**
