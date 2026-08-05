@@ -60,6 +60,7 @@ import {
   forceRestaurantRoleplayBridgeIfNeeded,
   forceTransportDestinationTeachIfNeeded,
   forceTransportDestinationMiniIfNeeded,
+  forceTransportPattern2IfNeeded,
   forceTransportRoleplayBridgeIfNeeded,
   forceShoppingLookingForSoftTeachIfNeeded,
   ensureExploreCityCelebratePraiseFirst,
@@ -74,6 +75,7 @@ import {
   sanitizeAroundTownStaffSpeech,
   isAroundTownRoleplayCloseLine,
   TRANSPORT_HOOK_GUIDED_SPEAKING,
+  transportHookOpeningText,
   getLesson,
   getLessonBananaCost,
   isPronunciationLesson,
@@ -397,10 +399,15 @@ export class SessionsController {
       // Opening is Hook — never start mid-roleplay.
       const openingRoleplayIntro = null;
       const openingRoleplayNpc = null;
+      const openingTextEn =
+        config.lessonId === 'ee_around_town_transport'
+          ? transportHookOpeningText(teachingLanguage, learnerFirstName)
+          : reply.textEn;
       const opening = {
         speaker: 'ai' as const,
-        textEn: reply.textEn,
-        textTh: reply.textTh,
+        textEn: openingTextEn,
+        textTh:
+          config.lessonId === 'ee_around_town_transport' ? null : reply.textTh,
         audioUrl: null,
         expectsUserSpeech: openingExpectsUserSpeech,
         expectedSpeech: openingExpectsUserSpeech
@@ -439,8 +446,9 @@ export class SessionsController {
           maxTurns: config.maxTurns,
         },
         opening: {
-          aiResponse: reply.textEn,
-          textTh: reply.textTh,
+          aiResponse: openingTextEn,
+          textTh:
+            config.lessonId === 'ee_around_town_transport' ? null : reply.textTh,
           isTaskComplete: false,
           updatedCheckpoints: {},
           feedbackHints: { mispronouncedWords: [] as string[] },
@@ -742,6 +750,27 @@ export class SessionsController {
         expectedSpeech = forcedTransportMini.expectedSpeech;
         guidedSpeaking = forcedTransportMini.guidedSpeaking;
         emojiChoice = forcedTransportMini.emojiChoice;
+      }
+
+      const forcedTransportPattern2 = forceTransportPattern2IfNeeded(
+        config.lessonId,
+        teachingLang,
+        data.turns,
+        {
+          textEn,
+          roleplayIntro,
+          roleplayNpc,
+          expectsUserSpeech,
+          emojiChoice,
+        },
+      );
+      if (forcedTransportPattern2 != null) {
+        textEn = forcedTransportPattern2.textEn;
+        textTh = forcedTransportPattern2.textTh;
+        expectsUserSpeech = forcedTransportPattern2.expectsUserSpeech;
+        expectedSpeech = forcedTransportPattern2.expectedSpeech;
+        guidedSpeaking = forcedTransportPattern2.guidedSpeaking;
+        emojiChoice = forcedTransportPattern2.emojiChoice;
       }
 
       const forcedTransportBridge = forceTransportRoleplayBridgeIfNeeded(
