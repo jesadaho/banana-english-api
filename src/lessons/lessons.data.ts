@@ -7723,31 +7723,53 @@ function highestAskReached(
   return max;
 }
 
+/**
+ * User replies that belong to this ask — from the ask line until the next
+ * scripted staff ask (or end). Does NOT leak later answers (e.g. drink reply)
+ * back onto an earlier ask — that caused order→drink→loopback to order.
+ */
+function userTextsForAsk(
+  history: Array<{ speaker: string; textEn?: string }>,
+  startIdx: number,
+  askIndex: number,
+  config: ScriptedRoleplayConfig,
+): string[] {
+  if (askIndex < 0 || startIdx < 0) return [];
+  const target = normalizeScriptedStaffKey(config.asks[askIndex].staffEn);
+  const texts: string[] = [];
+  let sawAsk = false;
+  for (let i = startIdx; i < history.length; i++) {
+    const t = history[i];
+    if (t.speaker === 'ai') {
+      const key = normalizeScriptedStaffKey(t.textEn ?? '');
+      if (key === target) {
+        sawAsk = true;
+        texts.length = 0;
+        continue;
+      }
+      if (!sawAsk) continue;
+      // Next scripted ask (or later) closes this ask's reply window.
+      const nextIdx = matchScriptedAskIndex(t.textEn ?? '', config);
+      if (nextIdx >= 0 && nextIdx !== askIndex) break;
+      // Mid-roleplay "I recommend the chicken." — still in order window.
+      continue;
+    }
+    if (!sawAsk || t.speaker !== 'user') continue;
+    const text = (t.textEn ?? '').trim();
+    if (!text || text.startsWith('[')) continue;
+    texts.push(text);
+  }
+  return texts;
+}
+
 function latestUserTextAfterAsk(
   history: Array<{ speaker: string; textEn?: string }>,
   startIdx: number,
   askIndex: number,
   config: ScriptedRoleplayConfig,
 ): string {
-  if (askIndex < 0 || startIdx < 0) return '';
-  const target = normalizeScriptedStaffKey(config.asks[askIndex].staffEn);
-  let sawAsk = false;
-  let latest = '';
-  for (let i = startIdx; i < history.length; i++) {
-    const t = history[i];
-    if (t.speaker === 'ai') {
-      if (normalizeScriptedStaffKey(t.textEn ?? '') === target) {
-        sawAsk = true;
-        latest = '';
-      }
-      continue;
-    }
-    if (!sawAsk || t.speaker !== 'user') continue;
-    const text = (t.textEn ?? '').trim();
-    if (!text || text.startsWith('[')) continue;
-    latest = text;
-  }
-  return latest;
+  const texts = userTextsForAsk(history, startIdx, askIndex, config);
+  return texts.length === 0 ? '' : texts[texts.length - 1];
 }
 
 function isRecommendQuestion(text: string): boolean {
@@ -7826,15 +7848,17 @@ function userSatisfiesScriptedAsk(
   return true;
 }
 
+/** Sticky: once any reply in this ask's window satisfied it, stay done. */
 function lastAskAnswered(
   history: Array<{ speaker: string; textEn?: string }>,
   startIdx: number,
   askIndex: number,
   config: ScriptedRoleplayConfig,
 ): boolean {
-  const userText = latestUserTextAfterAsk(history, startIdx, askIndex, config);
-  if (!userText) return false;
-  return userSatisfiesScriptedAsk(config.lessonId, askIndex, userText);
+  const texts = userTextsForAsk(history, startIdx, askIndex, config);
+  return texts.some((text) =>
+    userSatisfiesScriptedAsk(config.lessonId, askIndex, text),
+  );
 }
 
 function buildScriptedNpc(config: ScriptedRoleplayConfig) {
