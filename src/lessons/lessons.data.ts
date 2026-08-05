@@ -588,6 +588,127 @@ export const STORIES_PATTERN_EMOJI_SETS: Record<
   }>
 > = {};
 
+type RoleplayCloseLine = { en: string; th: string };
+
+/** Tier 1 — acknowledgement (pick 1). */
+const ROLEPLAY_CLOSE_TIER1: ReadonlyArray<RoleplayCloseLine> = [
+  { en: 'Sure!', th: 'ได้เลยครับ!' },
+  { en: 'Of course!', th: 'แน่นอนครับ!' },
+  { en: 'Absolutely!', th: 'แน่นอนครับ!' },
+  { en: 'No problem!', th: 'ไม่มีปัญหาครับ!' },
+  { en: 'Certainly!', th: 'ได้เลยครับ!' },
+];
+
+/** Tier 2 — in progress (pick 1). */
+const ROLEPLAY_CLOSE_TIER2: ReadonlyArray<RoleplayCloseLine> = [
+  { en: "I'll get that for you.", th: 'เดี๋ยวจัดให้ครับ!' },
+  { en: 'Coming right up.', th: 'ได้เลยครับ รอสักครู่นะครับ!' },
+  { en: 'Right away.', th: 'ได้เลยครับ!' },
+  { en: 'One moment, please.', th: 'รอสักครู่นะครับ!' },
+  { en: "I'll take care of that.", th: 'เดี๋ยวจัดการให้ครับ!' },
+];
+
+/** Tier 3 — sign-off (pick 1). */
+const ROLEPLAY_CLOSE_TIER3: ReadonlyArray<RoleplayCloseLine> = [
+  { en: 'Here you go.', th: 'นี่ครับ!' },
+  { en: "You're all set.", th: 'เรียบร้อยแล้วครับ!' },
+  { en: 'Enjoy!', th: 'ขอให้มีความสุขครับ!' },
+  { en: 'Have a nice day!', th: 'ขอให้เป็นวันที่ดีครับ!' },
+  { en: 'Take care!', th: 'ดูแลตัวเองด้วยนะครับ!' },
+];
+
+/** All single lines — staff-line matching / legacy helpers. */
+export const ROLEPLAY_ACK_CLOSE_POOL: ReadonlyArray<RoleplayCloseLine> = [
+  ...ROLEPLAY_CLOSE_TIER1,
+  ...ROLEPLAY_CLOSE_TIER2,
+  ...ROLEPLAY_CLOSE_TIER3,
+];
+
+/** Prompt hint: 3-line roleplay close (one random line per tier). */
+export const ROLEPLAY_CLOSE_FORMAT_HINT_EN =
+  '3 short EN staff lines (newline between): Tier1 ack (Sure! / Of course! / Absolutely! / No problem! / Certainly!) + Tier2 progress (I\'ll get that for you. / Coming right up. / Right away. / One moment, please. / I\'ll take care of that.) + Tier3 close (Here you go. / You\'re all set. / Enjoy! / Have a nice day! / Take care!) — e.g. "Sure!\nI\'ll get that for you.\nEnjoy!"';
+
+function normalizeAckCloseKey(text: string): string {
+  return text.trim().toLowerCase().replace(/[.!]+$/g, '');
+}
+
+function parseTieredCloseLines(text: string): string[] {
+  return text
+    .split(/\n+/)
+    .map((l) => l.trim())
+    .filter(Boolean);
+}
+
+function matchLineToTier(
+  line: string,
+  tier: ReadonlyArray<RoleplayCloseLine>,
+): RoleplayCloseLine | null {
+  const key = normalizeAckCloseKey(line);
+  return (
+    tier.find((item) => normalizeAckCloseKey(item.en) === key) ?? null
+  );
+}
+
+function matchTieredCloseParts(
+  lines: string[],
+): RoleplayCloseLine[] | null {
+  if (lines.length < 3) return null;
+  const t1 = matchLineToTier(lines[0], ROLEPLAY_CLOSE_TIER1);
+  const t2 = matchLineToTier(lines[1], ROLEPLAY_CLOSE_TIER2);
+  const t3 = matchLineToTier(lines[2], ROLEPLAY_CLOSE_TIER3);
+  if (t1 && t2 && t3) return [t1, t2, t3];
+  return null;
+}
+
+function joinTieredClose(parts: RoleplayCloseLine[]): { en: string; th: string } {
+  return {
+    en: parts.map((p) => p.en).join('\n'),
+    th: parts.map((p) => p.th).join('\n'),
+  };
+}
+
+function isRoleplayTieredCloseLine(textEn: string): boolean {
+  return matchTieredCloseParts(parseTieredCloseLines(textEn)) != null;
+}
+
+function isRoleplayAckCloseLine(textEn: string): boolean {
+  return isRoleplayTieredCloseLine(textEn);
+}
+
+function findRoleplayTieredCloseInHistory(
+  history: Array<{ speaker: string; textEn?: string }>,
+): { en: string; th: string } | null {
+  for (const t of history) {
+    if (t.speaker !== 'ai') continue;
+    const en = (t.textEn ?? '').trim();
+    const matched = matchTieredCloseParts(parseTieredCloseLines(en));
+    if (matched) return joinTieredClose(matched);
+  }
+  return null;
+}
+
+/** Sticky per session: reuse if already spoken; otherwise pick one per tier. */
+function pickRoleplayTieredClose(
+  history: Array<{ speaker: string; textEn?: string }>,
+  currentEn?: string,
+): { en: string; th: string } {
+  const existing = findRoleplayTieredCloseInHistory(history);
+  if (existing) return existing;
+
+  if (currentEn) {
+    const parsed = matchTieredCloseParts(parseTieredCloseLines(currentEn));
+    if (parsed) return joinTieredClose(parsed);
+  }
+
+  const seed = history.length;
+  const t1 = ROLEPLAY_CLOSE_TIER1[seed % ROLEPLAY_CLOSE_TIER1.length];
+  const t2 =
+    ROLEPLAY_CLOSE_TIER2[(seed + 1) % ROLEPLAY_CLOSE_TIER2.length];
+  const t3 =
+    ROLEPLAY_CLOSE_TIER3[(seed + 2) % ROLEPLAY_CLOSE_TIER3.length];
+  return joinTieredClose([t1, t2, t3]);
+}
+
 function buildStoriesPatternLesson(spec: StoriesPatternLessonSpec): LessonConfig {
   const track = spec.trackLabel ?? 'Stories';
   const tellGoal =
@@ -4465,10 +4586,17 @@ Core Flow (ONE-WAY — never go backward):
        { emoji:"👟", label:"shoes", speak:"I'm looking for shoes." },
        { emoji:"🧢", label:"cap", speak:"I'm looking for a cap." }
      ] }
-   - Soft-accept any of those sentences (or close: shirt / pants / shoes / cap).
+   - Clear SUCCESS = any of those 4 full sentences (with/without period). Then short praise → Roleplay bridge.
+   - FIRST wrong / wrong form (e.g. "I'm looking for a shoe" / "looking for shoe" / off-topic):
+     Soft-teach ONLY — {{L1}} close to: 'ไม่เป็นไรครับ ลองพูดว่า "I\'m looking for shoes." แล้วพูดตามนะครับ'
+     (เฉลย the closest canonical from the board they meant; shoe→shoes, pant→pants, etc.)
+     expectsUserSpeech=true. expectedSpeech=that canonical. Keep the SAME 4-option emojiChoice.
+     FORBIDDEN: Roleplay bridge / "ต่อไปครูพี่บีจะเป็นพนักงาน…" / advancing on this turn.
+   - SECOND attempt (after soft-teach): accept generously + short praise → Roleplay bridge (even if still imperfect). Never a 3rd mic on the same Mini.
    - Remember their item for soft personalization in Roleplay if natural.
    - After clear answer: short praise ONLY in {{L1}} (e.g. "เยี่ยมเลยครับ!") on THIS speak-ack turn OR on the NEXT bridge turn — NEVER add "Can I help you?" yet.
    - NEXT turn MUST be Roleplay bridge (5a) — never skip straight to staff ask.
+   - HARD: never mash soft-teach + Roleplay bridge in the same turn.
 
 5. Roleplay — Shop assistant (HARD SPLIT — never mash)
    STAFF VOICE RULE (5b–5c and price answer): when speaking as พนักงาน:
@@ -4536,7 +4664,8 @@ Core Flow (ONE-WAY — never go backward):
 
 Teaching rules:
 - ONE speaking task per turn. NEVER mash listen-intro + staff question in one turn.
-- Soft correction only. Soft-accept close variants → เฉลย once → advance (no hell-loop).
+- Soft correction: FIRST miss → เฉลย canonical + ONE correction speak (mic on). SECOND miss → accept + advance. Never hell-loop.
+- FORBIDDEN: mash soft-teach ("ไม่เป็นไร…ลองพูดว่า…") with Roleplay bridge in the same turn.
 - STT English-only for spoken answers; coach in {{L1}} OK; staff questions in English in textEn.
 - Staff closing reply is ALWAYS listen-only → tap Continue → Celebrate (never mash).
 - Never go backward. Never emojiSpeak/emojiSpeakSet in this lesson.
@@ -4651,10 +4780,11 @@ Core Flow (ONE-WAY — never go backward):
    6c. After clear order: Staff ONLY textEn="Anything to drink?" + textTh. NO praise mash.
       Soft-accept "I'd like water." / "No." / "No thanks." Optionally emojiChoice single 🥤.
    6d. ROLEPLAY CLOSE (ALWAYS) — after clear drink answer (including No / No thanks):
-      - Staff listen-only textEn="Sure!" textTh="ได้เลยครับ!" ONLY.
+      - Staff listen-only: ${ROLEPLAY_CLOSE_FORMAT_HINT_EN}
+      - textTh = full Thai CC for all 3 lines (newline between, matching each EN line).
       - expectsUserSpeech=false. isLessonComplete=false. Omit emojiChoice. Keep roleplayNpc.
       - User taps Continue to end roleplay → Celebrate on the NEXT turn.
-      - FORBIDDEN: mash Sure! + Celebrate / Thai Teacher praise on this turn.
+      - FORBIDDEN: mash tiered close + Celebrate / Thai Teacher praise on this turn.
       - FORBIDDEN: re-ask order / drink / invent "Anything else?" after a clear reply.
    After 6d Continue → Celebrate (omit roleplayNpc). FORBIDDEN: jump to Celebrate on the same turn as the drink answer.
    HARD: Roleplay is ONLY 6b→6c→6d — never go backward.
@@ -4663,20 +4793,20 @@ Core Flow (ONE-WAY — never go backward):
    - Warm ~2–3 sentences. MUST open with "เยี่ยมเลยครับ!" / "เยี่ยมมากครับ!" 👏 BEFORE name or recap.
    - FORBIDDEN: starting with the learner's name alone.
    - Then: name once + what they can do (สั่ง I'd like… / ถาม recommend / คุยพนักงาน) + soft tease Coffee Shop.
-   - FORBIDDEN: one-liner only like "วันนี้คุณทำได้แล้ว"; starting with staff "Sure!".
+   - FORBIDDEN: one-liner only like "วันนี้คุณทำได้แล้ว"; starting with staff tiered roleplay close.
    - expectsUserSpeech=false. isLessonComplete=true. Omit emojiChoice.
 
 Teaching rules:
 - ONE speaking task per turn. NEVER mash Hook+question or bridge+staff ask.
-- Soft-accept close variants → เฉลย once → advance.
+- Soft correction: FIRST miss → เฉลย + ONE correction speak. SECOND miss → accept + advance.
+- FORBIDDEN: mash soft-teach with Roleplay bridge in the same turn.
 - Roleplay close is ALWAYS AI staff reply (listen-only) → tap Continue → Celebrate.
 - Never emojiSpeak/emojiSpeakSet. Never go backward.
 
 Turn loop:
 - Non-final: one clear action OR listen-only Continue.
 - Celebrate → isLessonComplete true.`,
-    openingPrompt:
-      'Start Restaurant 2.2 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — greet + "วันนี้เราจะไปร้านอาหารกันครับ 🍽️…" — expectsUserSpeech false. FORBIDDEN on Turn 1: any vocab question; emojiChoice; mic. After Continue: Emoji Recall ask "ไก่"→chicken with 4-board 🍗chicken 🍚rice 🥤water 🍕pizza; second ask RANDOM rice/water/pizza. Then listen Pattern "I\'d like chicken." → Mini Challenge ONE emoji at a time: rice then water. Then listen Pattern "What do you recommend?" ONLY (no speak-recommend Mini; no staff "I recommend the chicken." before roleplay). NEXT Continue → Roleplay HARD SPLIT: bridge intro → Continue → "Are you ready to order?" → "Anything to drink?" → ROLEPLAY CLOSE listen-only "Sure!" ONLY with roleplayNpc.objective "Order food and a drink." → tap Continue → THEN Celebrate ~2–3 sentences. Soft-accept No/No thanks on drink → Sure!. Inside roleplay, if they ask recommend → "I recommend the chicken." then still wait for order. NEVER invent "Anything else?" or go backward. NEVER mash Sure!+Celebrate. NEVER mash Hook+question or bridge+ask. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
+    openingPrompt: `Start Restaurant 2.2 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — greet + "วันนี้เราจะไปร้านอาหารกันครับ 🍽️…" — expectsUserSpeech false. FORBIDDEN on Turn 1: any vocab question; emojiChoice; mic. After Continue: Emoji Recall ask "ไก่"→chicken with 4-board 🍗chicken 🍚rice 🥤water 🍕pizza; second ask RANDOM rice/water/pizza. Then listen Pattern "I'd like chicken." → Mini Challenge ONE emoji at a time: rice then water. Then listen Pattern "What do you recommend?" ONLY (no speak-recommend Mini; no staff "I recommend the chicken." before roleplay). NEXT Continue → Roleplay HARD SPLIT: bridge intro → Continue → "Are you ready to order?" → "Anything to drink?" → ROLEPLAY CLOSE listen-only ${ROLEPLAY_CLOSE_FORMAT_HINT_EN} with roleplayNpc.objective "Order food and a drink." → tap Continue → THEN Celebrate ~2–3 sentences. Soft-accept No/No thanks on drink → tiered close. Inside roleplay, if they ask recommend → "I recommend the chicken." then still wait for order. NEVER invent "Anything else?" or go backward. NEVER mash tiered close+Celebrate. NEVER mash Hook+question or bridge+ask. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.`,
   },
   {
     lessonId: 'ee_around_town_coffee',
@@ -4792,31 +4922,31 @@ Core Flow (ONE-WAY):
         ] }
       Soft-accept Hot / Iced / hot / iced.
    5e. ROLEPLAY CLOSE (ALWAYS) — Staff listen-only AFTER hot/iced answer:
-      - textEn = ONLY "Sure!" (nothing else). textTh = "ได้เลยครับ!" (or short Thai of Sure).
+      - ${ROLEPLAY_CLOSE_FORMAT_HINT_EN}
+      - textTh = full Thai CC for all 3 lines (newline between).
       - expectsUserSpeech=false. isLessonComplete=false. Omit emojiChoice. Keep roleplayNpc.
       - User MUST tap Continue to end roleplay → then Celebrate on the NEXT turn.
-      - FORBIDDEN on this turn: Teacher praise; Celebrate copy; name; "วันนี้คุณ…"; "เก่งมาก"; mashing Sure! + Celebrate.
-      - Example GOOD: textEn="Sure!" textTh="ได้เลยครับ!"
+      - FORBIDDEN on this turn: Teacher praise; Celebrate copy; name; "วันนี้คุณ…"; "เก่งมาก"; mashing tiered close + Celebrate.
+      - Example GOOD: textEn="Absolutely!\nComing right up.\nHave a nice day!" with matching textTh.
       - Example BAD: textEn="Sure! เยี่ยมมากครับ Jim วันนี้คุณสั่งกาแฟ…"
    HARD: never mash bridge + first ask. Never re-ask / go backward after clear reply. Never put Teacher praise inside staff textEn.
-   HARD: Roleplay is ONLY 5b→5c→5d→5e. ALWAYS ends at 5e (AI Sure! → tap Continue). Celebrate is NEVER the same turn as Sure!
+   HARD: Roleplay is ONLY 5b→5c→5d→5e. ALWAYS ends at 5e (tiered close → tap Continue). Celebrate is NEVER the same turn as the close!
 
 6. Celebrate (listen-only) — AFTER Continue from 5e ONLY
    - Warm ~2–3 sentences in {{L1}}. MUST open with "เยี่ยมเลยครับ!" / "เยี่ยมมากครับ!" 👏 BEFORE name or recap.
    - FORBIDDEN: starting with the learner's name alone.
    - Then: name once + Can I get… / coffee type / hot-iced + soft tease Explore the City.
    - FORBIDDEN: one-liner only "วันนี้คุณทำได้แล้ว".
-   - FORBIDDEN: starting with staff "Sure!" or keeping barista voice.
+   - FORBIDDEN: starting with staff tiered roleplay close or keeping barista voice.
    - expectsUserSpeech=false. isLessonComplete=true. Omit emojiChoice.
 
 Teaching rules:
 - ONE speaking task per turn. Never mash Hook+question or bridge+ask.
-- Soft-accept → เฉลย once → advance. No emojiSpeak/emojiSpeakSet.
+- Soft correction: FIRST miss → เฉลย + ONE correction speak. SECOND miss → accept + advance. No emojiSpeak/emojiSpeakSet.
 - Roleplay close is ALWAYS AI staff reply (listen-only) → tap Continue → Celebrate.
 
 Turn loop: non-final = action or Continue; Celebrate → isLessonComplete true.`,
-    openingPrompt:
-      'Start Coffee Shop 2.3 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — greet by name + "เช้า ๆ แบบนี้ รับกาแฟสักแก้วไหมครับ? ☕ วันนี้มาฝึกสั่งกาแฟแก้วโปรดเป็นภาษาอังกฤษกันครับ!" — expectsUserSpeech false. FORBIDDEN on Turn 1: vocab question; emojiChoice; mic. After Continue: Emoji Recall "กาแฟ"→coffee with board ☕coffee 🍵tea 🥛milk 🍰cake; second ask RANDOM tea/milk/cake. Then listen Pattern "Can I get a coffee?" → Mini Challenge one emoji: tea then cake. Roleplay HARD SPLIT: barista bridge → Continue → staff English-ONLY "What can I get for you?" (textTh Thai CC) → if order already named latte/cappuccino/espresso SKIP "What type of coffee?" else ask type → "Hot or iced?" → ROLEPLAY CLOSE listen-only "Sure!" ONLY with roleplayNpc.objective "Order a coffee — type and hot or iced." (isLessonComplete false) → tap Continue → THEN Celebrate ~2–3 sentences (separate turn, isLessonComplete true). NEVER invent "Anything else?" or go backward. NEVER mash Sure!+Celebrate or Thai praise into staff textEn. NEVER mash Hook+question or bridge+ask. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
+    openingPrompt: `Start Coffee Shop 2.3 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — greet by name + "เช้า ๆ แบบนี้ รับกาแฟสักแก้วไหมครับ? ☕ วันนี้มาฝึกสั่งกาแฟแก้วโปรดเป็นภาษาอังกฤษกันครับ!" — expectsUserSpeech false. FORBIDDEN on Turn 1: vocab question; emojiChoice; mic. After Continue: Emoji Recall "กาแฟ"→coffee with board ☕coffee 🍵tea 🥛milk 🍰cake; second ask RANDOM tea/milk/cake. Then listen Pattern "Can I get a coffee?" → Mini Challenge one emoji: tea then cake. Roleplay HARD SPLIT: barista bridge → Continue → staff English-ONLY "What can I get for you?" (textTh Thai CC) → if order already named latte/cappuccino/espresso SKIP "What type of coffee?" else ask type → "Hot or iced?" → ROLEPLAY CLOSE listen-only ${ROLEPLAY_CLOSE_FORMAT_HINT_EN} with roleplayNpc.objective "Order a coffee — type and hot or iced." (isLessonComplete false) → tap Continue → THEN Celebrate ~2–3 sentences (separate turn, isLessonComplete true). NEVER invent "Anything else?" or go backward. NEVER mash tiered close+Celebrate or Thai praise into staff textEn. NEVER mash Hook+question or bridge+ask. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.`,
   },
   {
     lessonId: 'ee_around_town_convenience',
@@ -4954,7 +5084,7 @@ Core Flow (ONE-WAY):
      - Do NOT correct like a teacher. Do NOT "เกือบเป๊ะ" / "ลองพูดว่า…" / "You can say…" / Repeat.
      - NPC clarifies in English: "Sorry?" or "Did you mean Big Ben?" (guess from context / landmarks).
      - Then continue the roleplay — never switch to Teacher B voice mid-scene.
-   ROLEPLAY CLOSE (listen-only): short English close only (You're welcome! / Sure! / Have a nice day!).
+   ROLEPLAY CLOSE (listen-only): short English close only (You're welcome! / ${ROLEPLAY_CLOSE_FORMAT_HINT_EN} / Have a nice day!).
      expectsUserSpeech=false. isLessonComplete=false. Keep roleplayNpc.
      User taps Continue → Celebrate NEXT turn.
      FORBIDDEN: mash close + Celebrate / Thai Teacher praise into staff textEn.
@@ -4974,53 +5104,158 @@ Turn loop: non-final = action or Continue; Celebrate → isLessonComplete true.`
     openingPrompt:
       'Start Explore the City 2.4 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — greet by name + "วันนี้เราจะออกไปเดินเที่ยวในเมืองกันครับ! 🗺️ มาฝึกถามหาสถานที่เป็นภาษาอังกฤษกันครับ!" — expectsUserSpeech false. FORBIDDEN on Turn 1: question; guidedSpeaking; emojiChoice; roleplayIntro; mic. After Continue: Guided Speaking London/museum with guidedSpeaking stem "I\'m looking for the..." + 🏛️ → listen-only pattern teach "I\'m looking for the..." → Mini Challenge looking-for board museum/park/temple/map → listen Pattern "Where is the museum?" → Mini Challenge landmarks Big Ben/London Eye/Tower Bridge → Roleplay Intro card (roleplayIntro คนท้องถิ่น, tap Continue) → OBJECTIVE roleplay (roleplayNpc.objective "Ask for directions to a place.", ~2–4 learner speaks, max 4; staff helps, never asks Where is…; soft-close with thank you if natural) → listen-only staff close → tap Continue → THEN Celebrate MUST open with praise "เยี่ยมเลยครับ! 👏" first then ~2–3 sentences + Transportation tease. NEVER mash staff close + Celebrate. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
   },
-  buildStoriesPatternLesson({
+  {
     lessonId: 'ee_around_town_transport',
-    code: '2.5',
-    trackLabel: 'Everyday Life',
+    targetLabel: 'word or sentence',
     titleEn: 'Transportation',
     titleTh: 'การเดินทาง',
-    goalEn: 'Talk about getting around town.',
-    goalTh: 'เดินทาง',
-    hookTh:
-      'วันนี้มาฝึกพูดตอนขึ้นรถไฟ/รถบัสครับ! บอกจุดหมาย แล้วบอกว่าจะไปยังไง',
-    emojiWords: [
-      { emoji: '🚆', answer: 'train', hint: 't r _ _ n' },
-      { emoji: '🚌', answer: 'bus', hint: 'b _ s' },
-      { emoji: '🎫', answer: 'ticket', hint: 't _ c k _ t' },
-      { emoji: '🚉', answer: 'station', hint: 's t _ t _ _ n' },
+    goalEn: 'Buy a ticket and say where you are going.',
+    goalTh: 'ซื้อตั๋วและบอกว่าจะไปที่ไหน',
+    difficulty: 'beginner',
+    languageMix: { thai: 70, english: 30 },
+    estimatedMinutesMin: 4,
+    estimatedMinutesMax: 6,
+    targetPhrases: [
+      'Bangkok',
+      'Chiang Mai',
+      'Phuket',
+      'Pattaya',
+      'train',
+      'bus',
+      'taxi',
+      'plane',
+      "I'm going to Bangkok.",
+      "I'm going to Chiang Mai.",
+      "I'm going to Phuket.",
+      "I'm going to Pattaya.",
+      "I'm taking the train.",
+      "I'm taking the bus.",
+      "I'm taking the taxi.",
+      "I'm taking the plane.",
+      'Where are you going?',
+      'How are you traveling?',
+      'One ticket?',
+      'Yes, please.',
     ],
-    tellGoal: 'build transport / destination lines',
-    tell1CueTh:
-      "ถ้าจะบอกพนักงานว่า จะไปกรุงเทพ ให้พูดว่า... I'm going to Bangkok. ... ลองพูดดูครับ",
-    tell1Thai: 'ฉันจะไปกรุงเทพ',
-    tell1En: "I'm going to Bangkok.",
-    tipTh:
-      "เยี่ยมเลยครับ! I'm going to... บอกจุดหมาย และ I'm taking the train. บอกวิธีเดินทาง",
-    tell2CueTh:
-      'คราวนี้ถ้าจะเปลี่ยนเป็น จะไปเชียงใหม่... ลองพูดว่าไงดีครับ?',
-    tell2Thai: 'ฉันจะไปเชียงใหม่',
-    tell2En: "I'm going to Chiang Mai.",
-    tell2PraiseTh: 'โอเคเลย! เข้าใจง่ายสุดๆ',
-    tell3CueTh: 'ถ้าจะบอกว่า จะไปโดยรถไฟ... ลองพูดสิครับ',
-    tell3Thai: 'ฉันจะไปโดยรถไฟ',
-    tell3En: "I'm taking the train.",
-    tell3PraiseTh: 'เป๊ะ! taking the train ชัดเจนครับ',
-    ask1CueTh:
-      'คราวนี้ลองถามว่า สถานีอยู่ไหน... โดยพูดว่า Where is the station? ... ลองเลยครับ',
-    ask1En: 'Where is the station?',
-    ask1AiAnswerEn: "It's over there.",
-    ask1PraiseTh: 'เป๊ะเลยครับ!',
-    ask2ThaiCue: 'คราวนี้ลองถามเองดูครับ เรื่องตั๋ว พูดว่าไงดี?',
-    ask2En: 'How much is a ticket?',
-    ask2AiAnswerEn: "It's $10.",
-    ask2PraiseTh: 'ดีมากครับ!',
-    answerBridgeTh: 'ดีมากครับ! ต่อไปสมมุติว่าผมเป็นพนักงานขายตั๋วนะครับ...',
-    answer1En: 'Where are you going?',
-    answer1PraiseTh: 'ดีมากครับ!',
-    answer2En: 'One ticket?',
-    nextLessonHint: 'Asking Directions / ถามทาง',
-  }),
+    maxTurns: 22,
+    listenOnlyTurns: 1,
+    systemInstruction: `Lesson: Transportation (Everyday English → Everyday Life → 2.5)
+Goal: Buy a ticket and say where you are going.
+Pace target: ~4–6 minutes. Keep every tutor turn tight.
+
+FIXED destination board (Mini Challenge 1 — always ALL 4 with labels):
+  📍 Bangkok · 📍 Chiang Mai · 📍 Phuket · 📍 Pattaya
+
+FIXED transport board (Mini Challenge 2 — always ALL 4 with labels):
+  🚆 Train · 🚌 Bus · 🚕 Taxi · ✈️ Plane
+
+emojiChoice rules:
+- Speak scaffolds via emojiChoice; mic still required.
+- Mini Challenge 1: ALL 4 cities on each speak turn.
+- Mini Challenge 2: ALL 4 transport options on each speak turn.
+- Roleplay asks may reuse destination / transport boards when helpful.
+- FORBIDDEN: emojiSpeak / emojiSpeakSet anywhere in this lesson.
+- Omit emojiChoice on listen-only / Celebrate turns.
+
+Core Flow (ONE-WAY — never go backward):
+
+1. Hook (listen-only) — OPENING ONLY
+   - {{L1}} close to (two short beats OK):
+     "สวัสดีครับ [Name]! วันนี้เราจะออกเดินทางกันครับ! 🚆 มาฝึกซื้อตั๋วและบอกว่าจะไปที่ไหนเป็นภาษาอังกฤษกันครับ 😊"
+   - expectsUserSpeech=false. expectedSpeech="". Omit emojiChoice / emojiSpeak / scene.
+   - FORBIDDEN on Hook: any question; mic task; emojiChoice board.
+   - User taps Continue → Pattern 1.
+
+2. Pattern 1 — Destination model (listen-only)
+   - {{L1}} close to:
+     "ถ้าจะบอกว่าจะไปที่ไหน ให้พูดว่า..."
+   - textEn MUST include the model line: "I'm going to Bangkok."
+   - expectsUserSpeech=false. expectedSpeech="". Omit emojiChoice.
+   - Continue → Mini Challenge 1.
+
+3. Mini Challenge 1 — Destination (EXACTLY 2 learner speaks)
+   - {{L1}}: "ไหนลองบอกว่าจะไปที่ไหนดูครับ 😊"
+   - expectsUserSpeech=true. expectedSpeech=""
+   - emojiChoice MUST be ALL 4 cities:
+     { options: [
+       { emoji:"📍", label:"Bangkok", speak:"I'm going to Bangkok." },
+       { emoji:"📍", label:"Chiang Mai", speak:"I'm going to Chiang Mai." },
+       { emoji:"📍", label:"Phuket", speak:"I'm going to Phuket." },
+       { emoji:"📍", label:"Pattaya", speak:"I'm going to Pattaya." }
+     ] }
+   - Pick TWO different random cities across the two speaks (never the same city twice).
+   - Soft-accept I'm going to Bangkok / Chiang Mai / Phuket / Pattaya (with/without period).
+   - After clear speak #1: brief praise ONLY ({{L1}} "Great!" / "เยี่ยมเลยครับ!") → NEXT turn cue speak #2 with same 4-city board (different random city).
+   - After clear speak #2: brief praise → Pattern 2. NEVER a 3rd destination speak.
+
+4. Pattern 2 — Transport model (listen-only)
+   - {{L1}} close to:
+     "ถ้าจะบอกว่าจะเดินทางด้วยอะไร ให้พูดว่า..."
+     FORBIDDEN cue wording: "ด้วยรถไฟ" / "โดยรถไฟ" — use "เดินทางด้วยอะไร" so bus/taxi/plane work too.
+   - textEn MUST include: "I'm taking the train."
+   - expectsUserSpeech=false. Omit emojiChoice. Continue → Mini Challenge 2.
+
+5. Mini Challenge 2 — Transport (EXACTLY 2 learner speaks)
+   - {{L1}}: "วันนี้คุณจะเดินทางยังไงครับ? 😊"
+   - expectsUserSpeech=true. expectedSpeech=""
+   - emojiChoice MUST be ALL 4:
+     { options: [
+       { emoji:"🚆", label:"Train", speak:"I'm taking the train." },
+       { emoji:"🚌", label:"Bus", speak:"I'm taking the bus." },
+       { emoji:"🚕", label:"Taxi", speak:"I'm taking the taxi." },
+       { emoji:"✈️", label:"Plane", speak:"I'm taking the plane." }
+     ] }
+   - Pick TWO different random transport options across the two speaks.
+   - Soft-accept I'm taking the train / bus / taxi / plane.
+   - After speak #1: brief praise → speak #2 with same board (different random option).
+   - After speak #2: brief praise → Roleplay bridge. NEVER a 3rd transport speak.
+
+6. Roleplay — Ticket Seller (HARD SPLIT)
+   STAFF: textEn = ENGLISH ONLY staff line; textTh = full Thai CC (required).
+   FORBIDDEN in textEn: Thai script; Teacher praise; echoing learner answer; Thai mashed with English ask.
+   6a. Bridge (listen-only): {{L1}} ONLY close to:
+      "คราวนี้ลองคุยกับพนักงานขายตั๋วกันครับ 😊"
+      FORBIDDEN: any English staff line; "Where are you going?"; "Hello!"; emojiChoice; mic.
+      User taps Continue → 6b.
+   OBJECTIVE (roleplayNpc.objective on EVERY staff turn 6b–6f):
+     "Say where you're going and how you're traveling."
+   ALWAYS return on staff turns:
+     roleplayNpc: { emoji:"🎫", name:"Ticket Seller", objective:"Say where you're going and how you're traveling." }
+   6b. Greeting (listen-only) — SEPARATE turn after bridge Continue:
+      textEn = ONLY "Hello!" textTh = "สวัสดีครับ!"
+      expectsUserSpeech=false. Keep roleplayNpc. Continue → 6c.
+   6c. Staff ask #1 — textEn = ONLY "Where are you going?" textTh = Thai CC.
+      expectsUserSpeech=true. expectedSpeech=""
+      Optional emojiChoice: same 4-city board.
+      Soft-accept I'm going to Bangkok / Chiang Mai / Phuket / Pattaya.
+   6d. After clear destination: Staff ONLY textEn="How are you traveling?" textTh = Thai CC. NO praise.
+      expectsUserSpeech=true. Optional transport emojiChoice board (Train/Bus/Taxi/Plane).
+      Soft-accept I'm taking the train / bus / taxi / plane.
+   6e. After clear transport: Staff ONLY textEn="One ticket?" textTh = Thai CC.
+      expectsUserSpeech=true. Soft-accept Yes, please. / Yes. / One ticket. / Please.
+   6f. ROLEPLAY CLOSE (listen-only) — AFTER clear yes to One ticket?:
+      textEn = ONLY "Here you are. Have a nice trip!"
+      textTh = "นี่ครับ เดินทางปลอดภัยครับ!"
+      expectsUserSpeech=false. isLessonComplete=false. Keep roleplayNpc.
+      User taps Continue → Celebrate NEXT turn.
+      FORBIDDEN: mash close + Celebrate; Teacher praise on close turn.
+   HARD: Bridge / Hello / each ask are NEVER the same API turn.
+   FORBIDDEN: inventing extra asks; re-asking after clear reply; "Anything else?"
+
+7. Celebrate (listen-only) — AFTER Continue from roleplay close ONLY
+   - MUST open with praise first ({{L1}}), e.g. "เยี่ยมเลยครับ! 👏" / "Great job! 👏"
+   - Warm ~2–3 sentences: name once + I'm going to… + I'm taking… + ticket seller chat + soft tease Asking Directions / ถามทาง.
+   - expectsUserSpeech=false. isLessonComplete=true. Omit emojiChoice / emojiSpeak.
+
+Teaching rules:
+- ONE speaking task per turn. Soft correction: FIRST miss → เฉลย + ONE correction speak; SECOND → accept + advance.
+- Staff questions in English in textEn; coach in {{L1}} on Teacher turns.
+- Never emojiSpeak/emojiSpeakSet. Never go backward.
+
+Turn loop: non-final = action or Continue; Celebrate → isLessonComplete true.`,
+    openingPrompt:
+      'Start Transportation 2.5 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY — greet by name + "วันนี้เราจะออกเดินทางกันครับ! 🚆 มาฝึกซื้อตั๋วและบอกว่าจะไปที่ไหนเป็นภาษาอังกฤษกันครับ 😊" — expectsUserSpeech false. FORBIDDEN: mic; emojiChoice; emojiSpeak. After Continue: listen Pattern 1 "I\'m going to Bangkok." → Mini Challenge destination EXACTLY 2 speaks (4-city board 📍 Bangkok/Chiang Mai/Phuket/Pattaya — TWO different random cities) → listen Pattern 2 cue "เดินทางด้วยอะไร" + "I\'m taking the train." → Mini Challenge transport EXACTLY 2 speaks (🚆🚌🚕✈️ — TWO different random options) → Roleplay HARD SPLIT: bridge "คราวนี้ลองคุยกับพนักงานขายตั๋วกันครับ 😊" → Continue → Hello! listen-only → Continue → Where are you going? → How are you traveling? → One ticket? → listen-only close "Here you are. Have a nice trip!" → Continue → Celebrate praise first + tease Directions. roleplayNpc Ticket Seller 🎫 objective "Say where you\'re going and how you\'re traveling." NEVER mash bridge+ask or close+Celebrate. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
+  },
   buildStoriesPatternLesson({
     lessonId: 'ee_around_town_directions',
     code: '2.6',
@@ -7483,6 +7718,14 @@ export const SHOPPING_ROLEPLAY_OBJECTIVE =
 export const RESTAURANT_ROLEPLAY_OBJECTIVE = 'Order food and a drink.';
 export const COFFEE_ROLEPLAY_OBJECTIVE =
   'Order a coffee — type and hot or iced.';
+export const TRANSPORT_ROLEPLAY_OBJECTIVE =
+  "Say where you're going and how you're traveling.";
+
+/** Teacher bridge before Transportation 2.5 roleplay. */
+export const TRANSPORT_ROLEPLAY_BRIDGE_TH =
+  'คราวนี้ลองคุยกับพนักงานขายตั๋วกันครับ 😊';
+export const TRANSPORT_ROLEPLAY_BRIDGE_EN =
+  "Let's talk to the ticket seller 😊 Tap when you're ready!";
 
 function pickTeacherLine(
   lang: LessonTeachingLanguage,
@@ -7506,6 +7749,186 @@ export const SHOPPING_ROLEPLAY_BRIDGE_TH =
   'ต่อไปครูพี่บีจะเป็นพนักงานร้านเสื้อผ้านะครับ 😊 พร้อมแล้ว แตะเพื่อเริ่มได้เลย!';
 export const SHOPPING_ROLEPLAY_BRIDGE_EN =
   "Next I'll be the shop assistant 😊 Tap when you're ready to start!";
+
+const SHOPPING_LOOKING_FOR_BOARD = {
+  options: [
+    { emoji: '👕', label: 'shirt', speak: "I'm looking for a shirt." },
+    { emoji: '👖', label: 'pants', speak: "I'm looking for pants." },
+    { emoji: '👟', label: 'shoes', speak: "I'm looking for shoes." },
+    { emoji: '🧢', label: 'cap', speak: "I'm looking for a cap." },
+  ],
+} as const;
+
+function normalizeLookingForKey(text: string): string {
+  return text
+    .trim()
+    .toLowerCase()
+    .replace(/[.!?]+$/g, '')
+    .replace(/\s+/g, ' ');
+}
+
+/** Clear Mini Challenge looking-for success (full board sentence). */
+function satisfiesShoppingLookingFor(userText: string): boolean {
+  const t = normalizeLookingForKey(userText);
+  if (!t) return false;
+  return (
+    t === "i'm looking for a shirt" ||
+    t === 'im looking for a shirt' ||
+    t === "i'm looking for pants" ||
+    t === 'im looking for pants' ||
+    t === "i'm looking for shoes" ||
+    t === 'im looking for shoes' ||
+    t === "i'm looking for a cap" ||
+    t === 'im looking for a cap' ||
+    t === "i'm looking for a hat" ||
+    t === 'im looking for a hat'
+  );
+}
+
+/** Guess canonical line when form is close but wrong (shoe→shoes). */
+function shoppingLookingForCanonical(userText: string): string {
+  const t = normalizeLookingForKey(userText);
+  if (/\bshoes?\b/.test(t)) return "I'm looking for shoes.";
+  if (/\bpants?\b|\btrousers?\b/.test(t)) return "I'm looking for pants.";
+  if (/\bcaps?\b|\bhats?\b/.test(t)) return "I'm looking for a cap.";
+  if (/\bshirts?\b/.test(t)) return "I'm looking for a shirt.";
+  return "I'm looking for a shirt.";
+}
+
+function historyHasShoppingLookingForCue(
+  history: Array<{ speaker: string; textEn?: string; roleplayNpc?: unknown }>,
+): boolean {
+  return history.some((t) => {
+    if (t.speaker !== 'ai' || t.roleplayNpc != null) return false;
+    const text = t.textEn ?? '';
+    const lower = text.toLowerCase();
+    return (
+      text.includes('กำลังหาอะไร') ||
+      text.includes('ไหนลองบอก') ||
+      lower.includes('what are you looking for') ||
+      lower.includes('tell me what you') ||
+      lower.includes('looking for?')
+    );
+  });
+}
+
+function shoppingLookingForSoftTeachAlreadyGiven(
+  history: Array<{ speaker: string; textEn?: string; roleplayNpc?: unknown }>,
+): boolean {
+  return history.some((t) => {
+    if (t.speaker !== 'ai' || t.roleplayNpc != null) return false;
+    const text = t.textEn ?? '';
+    return (
+      (text.includes('ไม่เป็นไร') || text.toLowerCase().includes('no worries')) &&
+      (text.includes('ลองพูด') ||
+        text.toLowerCase().includes('try saying') ||
+        text.toLowerCase().includes('say') ||
+        /i'?m looking for/i.test(text))
+    );
+  });
+}
+
+function latestShoppingLookingForUserText(
+  history: Array<{ speaker: string; textEn?: string }>,
+): string {
+  for (let i = history.length - 1; i >= 0; i--) {
+    const t = history[i];
+    if (t.speaker !== 'user') continue;
+    const text = (t.textEn ?? '').trim();
+    if (!text || text.startsWith('[')) continue;
+    return text;
+  }
+  return '';
+}
+
+function looksLikeShoppingRoleplayBridge(textEn: string): boolean {
+  const t = textEn.trim();
+  const lower = t.toLowerCase();
+  return (
+    t.includes('พนักงานร้านเสื้อผ้า') ||
+    t.includes(SHOPPING_ROLEPLAY_BRIDGE_TH.slice(0, 16)) ||
+    lower.includes('shop assistant') ||
+    (lower.includes("i'll be") && lower.includes('shop'))
+  );
+}
+
+/**
+ * Mini Challenge looking-for: FIRST wrong/wrong-form → soft-teach + mic retry.
+ * Block premature Roleplay bridge until they get a correction turn.
+ */
+export function forceShoppingLookingForSoftTeachIfNeeded(
+  lessonId: string,
+  lang: LessonTeachingLanguage,
+  history: Array<{
+    speaker: string;
+    textEn?: string;
+    roleplayNpc?: unknown;
+  }>,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    roleplayIntro: unknown;
+    roleplayNpc: unknown;
+    expectsUserSpeech: boolean;
+    isTaskComplete: boolean;
+  },
+): {
+  textEn: string;
+  textTh: string | null;
+  expectsUserSpeech: boolean;
+  expectedSpeech: string;
+  roleplayNpc: null;
+  emojiChoice: typeof SHOPPING_LOOKING_FOR_BOARD;
+  isTaskComplete: false;
+} | null {
+  if (lessonId !== 'ee_around_town_shopping') return null;
+  if (current.roleplayIntro != null) return null;
+  if (current.roleplayNpc != null) return null;
+  if (!historyHasShoppingLookingForCue(history)) return null;
+  if (shoppingLookingForSoftTeachAlreadyGiven(history)) return null;
+
+  const userText = latestShoppingLookingForUserText(history);
+  if (!userText) return null;
+  if (satisfiesShoppingLookingFor(userText)) return null;
+
+  // Already a proper soft-teach speak turn (mic on, no bridge mash) — keep.
+  if (
+    current.expectsUserSpeech &&
+    !looksLikeShoppingRoleplayBridge(current.textEn) &&
+    !current.isTaskComplete
+  ) {
+    return null;
+  }
+
+  const mashedSoftTeachBridge =
+    (current.textEn.includes('ไม่เป็นไร') ||
+      current.textEn.toLowerCase().includes('no worries')) &&
+    looksLikeShoppingRoleplayBridge(current.textEn);
+
+  const jumpingAhead =
+    looksLikeShoppingRoleplayBridge(current.textEn) ||
+    current.isTaskComplete ||
+    mashedSoftTeachBridge ||
+    !current.expectsUserSpeech;
+
+  if (!jumpingAhead) return null;
+
+  const canonical = shoppingLookingForCanonical(userText);
+  const softTeach =
+    lang === 'english'
+      ? `No worries. Try saying "${canonical}" — say it once.`
+      : `ไม่เป็นไรครับ ลองพูดว่า "${canonical}" แล้วพูดตามนะครับ`;
+
+  return {
+    textEn: softTeach,
+    textTh: lang === 'english' ? 'ลองพูดตามประโยคที่ถูกต้องครั้งเดียว' : null,
+    expectsUserSpeech: true,
+    expectedSpeech: canonical,
+    roleplayNpc: null,
+    emojiChoice: SHOPPING_LOOKING_FOR_BOARD,
+    isTaskComplete: false,
+  };
+}
 
 export const SHOPPING_PRICE_SPEAK_CHALLENGE_TH =
   'ไหนลองถามราคาเสื้อตัวนี้ดูหน่อยครับ';
@@ -7650,6 +8073,138 @@ export function forceRestaurantRoleplayBridgeIfNeeded(
   };
 }
 
+/**
+ * After Transport Mini Challenge 2 → Roleplay bridge (no premature staff asks).
+ */
+export function forceTransportRoleplayBridgeIfNeeded(
+  lessonId: string,
+  lang: LessonTeachingLanguage,
+  history: Array<{
+    speaker: string;
+    textEn?: string;
+    roleplayNpc?: unknown;
+  }>,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    roleplayIntro: unknown;
+    roleplayNpc: unknown;
+    expectsUserSpeech: boolean;
+    isTaskComplete: boolean;
+  },
+): {
+  textEn: string;
+  textTh: string | null;
+  expectsUserSpeech: boolean;
+  expectedSpeech: string | null;
+  roleplayNpc: null;
+  emojiChoice: null;
+  isTaskComplete: false;
+} | null {
+  if (lessonId !== 'ee_around_town_transport') return null;
+  if (current.roleplayIntro != null) return null;
+  if (!historyHasTransportPattern2(history)) return null;
+  if (!transportMiniChallengeComplete(history)) return null;
+  if (transportRoleplayAlreadyStarted(history)) return null;
+
+  const bridge = pickTeacherLine(
+    lang,
+    TRANSPORT_ROLEPLAY_BRIDGE_TH,
+    TRANSPORT_ROLEPLAY_BRIDGE_EN,
+  );
+
+  if (
+    /\bi'm taking the (train|bus|taxi|plane)\b/i.test(current.textEn) &&
+    !current.expectsUserSpeech &&
+    !current.roleplayNpc
+  ) {
+    return null;
+  }
+
+  const looksLikeBridge =
+    current.textEn.includes('พนักงานขายตั๋ว') ||
+    current.textEn.toLowerCase().includes('ticket seller') ||
+    current.textEn.includes(TRANSPORT_ROLEPLAY_BRIDGE_TH.slice(0, 12));
+  if (looksLikeBridge) {
+    return {
+      textEn: current.textEn.trim() || bridge,
+      textTh: null,
+      expectsUserSpeech: false,
+      expectedSpeech: null,
+      roleplayNpc: null,
+      emojiChoice: null,
+      isTaskComplete: false,
+    };
+  }
+
+  return {
+    textEn: bridge,
+    textTh: null,
+    expectsUserSpeech: false,
+    expectedSpeech: null,
+    roleplayNpc: null,
+    emojiChoice: null,
+    isTaskComplete: false,
+  };
+}
+
+function historyHasTransportPattern2(
+  history: Array<{ speaker: string; textEn?: string; roleplayNpc?: unknown }>,
+): boolean {
+  return history.some((t) => {
+    if (t.speaker !== 'ai' || t.roleplayNpc != null) return false;
+    return /\bi'm taking the (train|bus|taxi|plane)\b/i.test(t.textEn ?? '');
+  });
+}
+
+function transportMiniChallengeComplete(
+  history: Array<{ speaker: string; textEn?: string }>,
+): boolean {
+  let afterPattern2 = false;
+  let takingCount = 0;
+  for (const t of history) {
+    if (
+      t.speaker === 'ai' &&
+      /\bi'm taking the\b/i.test(t.textEn ?? '')
+    ) {
+      afterPattern2 = true;
+    }
+    if (afterPattern2 && t.speaker === 'user') {
+      const text = (t.textEn ?? '').trim();
+      if (text && !text.startsWith('[') && /\btaking\b/i.test(text)) {
+        takingCount++;
+      }
+    }
+  }
+  return takingCount >= 2;
+}
+
+function transportRoleplayAlreadyStarted(
+  history: Array<{
+    speaker: string;
+    textEn?: string;
+    roleplayNpc?: unknown;
+  }>,
+): boolean {
+  for (const t of history) {
+    if (t.speaker !== 'ai') continue;
+    if (t.roleplayNpc != null) return true;
+    const key = normalizeScriptedStaffKey(t.textEn ?? '');
+    const en = (t.textEn ?? '').toLowerCase();
+    if (
+      key === 'where are you going' ||
+      key === 'how are you traveling' ||
+      key === 'one ticket' ||
+      t.textEn?.includes('พนักงานขายตั๋ว') ||
+      en.includes('ticket seller') ||
+      t.textEn?.includes(TRANSPORT_ROLEPLAY_BRIDGE_TH.slice(0, 12))
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
 type ScriptedRoleplayAskStep = {
   staffEn: string;
   staffTh: string;
@@ -7663,14 +8218,36 @@ type ScriptedRoleplayConfig = {
   objective: string;
   npc: { emoji: string; name: string };
   asks: ScriptedRoleplayAskStep[];
+  /** Listen-only greeting before first ask (e.g. Hello!). */
+  roleplayGreeting?: { staffEn: string; staffTh: string };
   /** After last ask is answered: close with Sure! (restaurant/coffee) or exit to Pattern (shopping). */
   closeWithSure: boolean;
+  /** Custom listen-only staff close (transport ticket handoff). */
+  closeLine?: { staffEn: string; staffTh: string };
   /** Shopping Pattern 2 handoff after size. */
   exitAfterLastAsk?: {
     teacherTh: string;
     teacherEn: string;
     modelEn: string;
   };
+};
+
+const TRANSPORT_CITY_EMOJI_CHOICE = {
+  options: [
+    { emoji: '📍', label: 'Bangkok', speak: "I'm going to Bangkok." },
+    { emoji: '📍', label: 'Chiang Mai', speak: "I'm going to Chiang Mai." },
+    { emoji: '📍', label: 'Phuket', speak: "I'm going to Phuket." },
+    { emoji: '📍', label: 'Pattaya', speak: "I'm going to Pattaya." },
+  ],
+};
+
+const TRANSPORT_MODE_EMOJI_CHOICE = {
+  options: [
+    { emoji: '🚆', label: 'Train', speak: "I'm taking the train." },
+    { emoji: '🚌', label: 'Bus', speak: "I'm taking the bus." },
+    { emoji: '🚕', label: 'Taxi', speak: "I'm taking the taxi." },
+    { emoji: '✈️', label: 'Plane', speak: "I'm taking the plane." },
+  ],
 };
 
 const SCRIPTED_AROUND_TOWN_ROLEPLAYS: Record<string, ScriptedRoleplayConfig> = {
@@ -7751,7 +8328,47 @@ const SCRIPTED_AROUND_TOWN_ROLEPLAYS: Record<string, ScriptedRoleplayConfig> = {
     ],
     closeWithSure: true,
   },
+  ee_around_town_transport: {
+    lessonId: 'ee_around_town_transport',
+    objective: TRANSPORT_ROLEPLAY_OBJECTIVE,
+    npc: { emoji: '🎫', name: 'Ticket Seller' },
+    roleplayGreeting: { staffEn: 'Hello!', staffTh: 'สวัสดีครับ!' },
+    asks: [
+      {
+        staffEn: 'Where are you going?',
+        staffTh: 'จะไปที่ไหนครับ?',
+        emojiChoice: TRANSPORT_CITY_EMOJI_CHOICE,
+      },
+      {
+        staffEn: 'How are you traveling?',
+        staffTh: 'จะเดินทางยังไงครับ?',
+        emojiChoice: TRANSPORT_MODE_EMOJI_CHOICE,
+      },
+      {
+        staffEn: 'One ticket?',
+        staffTh: 'หนึ่งใบนะครับ?',
+      },
+    ],
+    closeWithSure: false,
+    closeLine: {
+      staffEn: 'Here you are. Have a nice trip!',
+      staffTh: 'นี่ครับ เดินทางปลอดภัยครับ!',
+    },
+  },
 };
+
+function scriptedRoleplayGreetingShown(
+  history: Array<{ speaker: string; textEn?: string }>,
+  config: ScriptedRoleplayConfig,
+): boolean {
+  if (!config.roleplayGreeting) return true;
+  const gKey = normalizeScriptedStaffKey(config.roleplayGreeting.staffEn);
+  return history.some(
+    (t) =>
+      t.speaker === 'ai' &&
+      normalizeScriptedStaffKey(t.textEn ?? '') === gKey,
+  );
+}
 
 function matchScriptedAskIndex(
   text: string,
@@ -7990,6 +8607,24 @@ function userSatisfiesScriptedAsk(
     }
   }
 
+  if (lessonId === 'ee_around_town_transport') {
+    if (askIndex === 0) {
+      if (/\bgoing to\b/.test(t)) return true;
+      if (/\b(bangkok|chiang mai|phuket|pattaya)\b/.test(t)) return true;
+      return false;
+    }
+    if (askIndex === 1) {
+      if (/\btaking the\b/.test(t)) return true;
+      if (/\b(train|bus|taxi|plane)\b/.test(t)) return true;
+      return false;
+    }
+    if (askIndex === 2) {
+      if (/^(yes|yeah|yep|please|one ticket)\b/.test(t)) return true;
+      if (t.includes('please')) return true;
+      return false;
+    }
+  }
+
   // Fallback: any non-empty speech (legacy).
   return true;
 }
@@ -8056,6 +8691,20 @@ const SCRIPTED_SOFT_HINTS: Record<string, Record<number, ScriptedSoftHint>> = {
     2: {
       en: 'No worries. Hot?',
       th: 'ไม่เป็นไรครับ ร้อนนะครับ?',
+    },
+  },
+  ee_around_town_transport: {
+    0: {
+      en: "No worries. I'm going to Bangkok?",
+      th: 'ไม่เป็นไรครับ ไปกรุงเทพนะครับ?',
+    },
+    1: {
+      en: "No worries. I'm taking the train?",
+      th: 'ไม่เป็นไรครับ รถไฟนะครับ?',
+    },
+    2: {
+      en: 'No worries. Yes, please?',
+      th: 'ไม่เป็นไรครับ ใช่ครับ ขอหนึ่งใบนะครับ?',
     },
   },
 };
@@ -8145,10 +8794,15 @@ function forceScriptedAsk(
   };
 }
 
-function forceScriptedSure(config: ScriptedRoleplayConfig) {
+function forceScriptedAckClose(
+  config: ScriptedRoleplayConfig,
+  history: Array<{ speaker: string; textEn?: string }>,
+  currentEn?: string,
+) {
+  const close = pickRoleplayTieredClose(history, currentEn);
   return {
-    textEn: 'Sure!',
-    textTh: 'ได้เลยครับ!',
+    textEn: close.en,
+    textTh: close.th,
     expectsUserSpeech: false,
     expectedSpeech: null as string | null,
     roleplayNpc: buildScriptedNpc(config),
@@ -8217,6 +8871,26 @@ export function guideScriptedAroundTownRoleplayIfNeeded(
   );
   if (missOverride != null) {
     return missOverride;
+  }
+
+  if (
+    config.roleplayGreeting &&
+    inRoleplay &&
+    !scriptedRoleplayGreetingShown(history, config)
+  ) {
+    const gKey = normalizeScriptedStaffKey(config.roleplayGreeting.staffEn);
+    const curKey = normalizeScriptedStaffKey(current.textEn);
+    if (curKey !== gKey || current.expectsUserSpeech) {
+      return {
+        textEn: config.roleplayGreeting.staffEn,
+        textTh: config.roleplayGreeting.staffTh,
+        expectsUserSpeech: false,
+        expectedSpeech: null,
+        roleplayNpc: buildScriptedNpc(config),
+        emojiChoice: null,
+        isTaskComplete: false,
+      };
+    }
   }
 
   // Shopping: after size is answered → Teacher Pattern 2 (clear NPC chrome).
@@ -8384,8 +9058,32 @@ export function guideScriptedAroundTownRoleplayIfNeeded(
     currentAskIdx >= 0 && desiredAsk >= 0 && currentAskIdx !== desiredAsk;
 
   if (desiredAsk >= config.asks.length) {
+    if (config.closeLine) {
+      const closeKey = normalizeScriptedStaffKey(config.closeLine.staffEn);
+      const curKey = normalizeScriptedStaffKey(current.textEn);
+      if (curKey === closeKey && !current.expectsUserSpeech) {
+        return {
+          textEn: config.closeLine.staffEn,
+          textTh: current.textTh?.trim() || config.closeLine.staffTh,
+          expectsUserSpeech: false,
+          expectedSpeech: null,
+          roleplayNpc: buildScriptedNpc(config),
+          emojiChoice: null,
+          isTaskComplete: false,
+        };
+      }
+      return {
+        textEn: config.closeLine.staffEn,
+        textTh: config.closeLine.staffTh,
+        expectsUserSpeech: false,
+        expectedSpeech: null,
+        roleplayNpc: buildScriptedNpc(config),
+        emojiChoice: null,
+        isTaskComplete: false,
+      };
+    }
     if (config.closeWithSure) {
-      return forceScriptedSure(config);
+      return forceScriptedAckClose(config, history, current.textEn);
     }
     if (config.exitAfterLastAsk) {
       const coach = pickTeacherLine(
@@ -8434,7 +9132,7 @@ export function guideScriptedAroundTownRoleplayIfNeeded(
   }
 
   if (isAroundTownRoleplayCloseLine(current.textEn) && config.closeWithSure) {
-    return forceScriptedSure(config);
+    return forceScriptedAckClose(config, history, current.textEn);
   }
 
   return null;
@@ -8452,8 +9150,25 @@ const AROUND_TOWN_STAFF_LINES = [
   'What type of coffee?',
   'Hot or iced?',
   'Sure!',
+  'Of course!',
+  'Absolutely!',
+  'No problem!',
+  'Certainly!',
+  "I'll get that for you.",
+  'Coming right up.',
+  'Right away.',
+  'One moment, please.',
+  "I'll take care of that.",
+  'Here you go.',
+  "You're all set.",
+  'Enjoy!',
+  'Take care!',
   'Hello!',
   'Yes?',
+  'Where are you going?',
+  'How are you traveling?',
+  'One ticket?',
+  'Here you are. Have a nice trip!',
   'Go straight and turn left.',
   "You're welcome!",
 ] as const;
@@ -8469,8 +9184,25 @@ const AROUND_TOWN_STAFF_TEXT_TH: Record<string, string> = {
   'What type of coffee?': 'กาแฟแบบไหนดีครับ?',
   'Hot or iced?': 'ร้อนหรือเย็นดีครับ?',
   'Sure!': 'ได้เลยครับ!',
+  'Of course!': 'แน่นอนครับ!',
+  'Absolutely!': 'แน่นอนครับ!',
+  'No problem!': 'ไม่มีปัญหาครับ!',
+  'Certainly!': 'ได้เลยครับ!',
+  "I'll get that for you.": 'เดี๋ยวจัดให้ครับ!',
+  'Coming right up.': 'ได้เลยครับ รอสักครู่นะครับ!',
+  'Right away.': 'ได้เลยครับ!',
+  'One moment, please.': 'รอสักครู่นะครับ!',
+  "I'll take care of that.": 'เดี๋ยวจัดการให้ครับ!',
+  'Here you go.': 'นี่ครับ!',
+  "You're all set.": 'เรียบร้อยแล้วครับ!',
+  'Enjoy!': 'ขอให้มีความสุขครับ!',
+  'Take care!': 'ดูแลตัวเองด้วยนะครับ!',
   'Hello!': 'สวัสดีครับ!',
   'Yes?': 'ครับ?',
+  'Where are you going?': 'จะไปที่ไหนครับ?',
+  'How are you traveling?': 'จะเดินทางยังไงครับ?',
+  'One ticket?': 'หนึ่งใบนะครับ?',
+  'Here you are. Have a nice trip!': 'นี่ครับ เดินทางปลอดภัยครับ!',
   'Go straight and turn left.': 'ตรงไปแล้วเลี้ยวซ้ายครับ',
   "You're welcome!": 'ด้วยความยินดีครับ!',
 };
@@ -8511,10 +9243,21 @@ export function sanitizeAroundTownStaffSpeech(
   const mixedThaiIntoSpeech = thaiCount > 0 && latinCount >= 3;
   const staffMatch = findStaffMatch(raw);
 
-  // "Sure! เยี่ยมมากครับ Jim…" — always peel to roleplay close only.
-  const sureMash =
-    /^sure!(?:\s|$)/i.test(raw) &&
-    (thaiCount > 0 || raw.length > 'Sure!'.length + 2);
+  // Tiered roleplay close mash with Thai praise — peel to clean 3-line close.
+  const tieredParsed = matchTieredCloseParts(parseTieredCloseLines(raw));
+  const tier1Lead = ROLEPLAY_CLOSE_TIER1.find((item) =>
+    new RegExp(
+      `^${item.en.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?:\\s|$)`,
+      'i',
+    ).test(raw),
+  );
+  const tieredCloseMash =
+    tieredParsed != null &&
+    (thaiCount > 0 || raw.split('\n').length > 3);
+  const tier1CloseMash =
+    tier1Lead != null &&
+    !tieredParsed &&
+    (thaiCount > 0 || raw.length > tier1Lead.en.length + 2);
   // "It's twenty dollars. เยี่ยมมาก…" — same for Shopping close.
   const priceMash =
     /^it'?s twenty dollars\.?(?:\s|$)/i.test(raw) &&
@@ -8540,9 +9283,23 @@ export function sanitizeAroundTownStaffSpeech(
   let cleanedEn = raw;
   let nextTh = textTh?.trim() || '';
 
-  if (sureMash) {
-    cleanedEn = 'Sure!';
-    nextTh = AROUND_TOWN_STAFF_TEXT_TH['Sure!'];
+  if (tieredParsed && tieredCloseMash) {
+    const close = joinTieredClose(tieredParsed);
+    cleanedEn = close.en;
+    nextTh = close.th;
+  } else if (tier1CloseMash && tier1Lead) {
+    const idx = ROLEPLAY_CLOSE_TIER1.indexOf(tier1Lead);
+    const close = joinTieredClose([
+      tier1Lead,
+      ROLEPLAY_CLOSE_TIER2[idx % ROLEPLAY_CLOSE_TIER2.length],
+      ROLEPLAY_CLOSE_TIER3[(idx + 1) % ROLEPLAY_CLOSE_TIER3.length],
+    ]);
+    cleanedEn = close.en;
+    nextTh = close.th;
+  } else if (tieredParsed) {
+    const close = joinTieredClose(tieredParsed);
+    cleanedEn = close.en;
+    if (!nextTh) nextTh = close.th;
   } else if (priceMash) {
     cleanedEn = "It's twenty dollars.";
     nextTh = AROUND_TOWN_STAFF_TEXT_TH["It's twenty dollars."];
@@ -8567,15 +9324,22 @@ export function sanitizeAroundTownStaffSpeech(
 
 /** Staff closing lines that end roleplay — listen-only, never lesson-complete. */
 export function isAroundTownRoleplayCloseLine(textEn: string): boolean {
+  if (isRoleplayTieredCloseLine(textEn)) return true;
   const t = textEn.trim().toLowerCase().replace(/[.!]+$/g, '');
   return (
-    t === 'sure' ||
     t === "it's twenty dollars" ||
     t === 'its twenty dollars' ||
     t === "you're welcome" ||
     t === 'youre welcome' ||
     t === 'have a nice day' ||
-    t === 'have a good day'
+    t === 'have a good day' ||
+    t === 'have a nice trip' ||
+    t === 'here you go' ||
+    t === "you're all set" ||
+    t === 'youre all set' ||
+    t === 'enjoy' ||
+    t === 'take care' ||
+    t.includes('here you are')
   );
 }
 

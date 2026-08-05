@@ -58,6 +58,8 @@ import {
   guideExploreCityRoleplayIfNeeded,
   guideScriptedAroundTownRoleplayIfNeeded,
   forceRestaurantRoleplayBridgeIfNeeded,
+  forceTransportRoleplayBridgeIfNeeded,
+  forceShoppingLookingForSoftTeachIfNeeded,
   ensureExploreCityCelebratePraiseFirst,
   forceExploreCityCelebrateAfterCloseIfNeeded,
   EXPLORE_CITY_ROLEPLAY_INTRO,
@@ -627,6 +629,32 @@ export class SessionsController {
         isTaskComplete = guidedRoleplay.isTaskComplete;
       }
 
+      // Shopping Mini Challenge: first wrong → soft-teach + mic (block premature bridge).
+      const forcedShoppingSoftTeach = forceShoppingLookingForSoftTeachIfNeeded(
+        config.lessonId,
+        teachingLang,
+        data.turns,
+        {
+          textEn,
+          textTh,
+          roleplayIntro,
+          roleplayNpc,
+          expectsUserSpeech,
+          isTaskComplete,
+        },
+      );
+      if (forcedShoppingSoftTeach != null) {
+        textEn = forcedShoppingSoftTeach.textEn;
+        textTh = forcedShoppingSoftTeach.textTh;
+        expectsUserSpeech = forcedShoppingSoftTeach.expectsUserSpeech;
+        expectedSpeech = forcedShoppingSoftTeach.expectedSpeech;
+        roleplayNpc = forcedShoppingSoftTeach.roleplayNpc;
+        roleplayIntro = null;
+        guidedSpeaking = null;
+        emojiChoice = forcedShoppingSoftTeach.emojiChoice;
+        isTaskComplete = forcedShoppingSoftTeach.isTaskComplete;
+      }
+
       // After Pattern 2 recommend model → Roleplay bridge (no speak-recommend Mini).
       const forcedRestaurantBridge = forceRestaurantRoleplayBridgeIfNeeded(
         config.lessonId,
@@ -651,6 +679,31 @@ export class SessionsController {
         guidedSpeaking = null;
         emojiChoice = null;
         isTaskComplete = forcedRestaurantBridge.isTaskComplete;
+      }
+
+      const forcedTransportBridge = forceTransportRoleplayBridgeIfNeeded(
+        config.lessonId,
+        teachingLang,
+        data.turns,
+        {
+          textEn,
+          textTh,
+          roleplayIntro,
+          roleplayNpc,
+          expectsUserSpeech,
+          isTaskComplete,
+        },
+      );
+      if (forcedTransportBridge != null) {
+        textEn = forcedTransportBridge.textEn;
+        textTh = forcedTransportBridge.textTh;
+        expectsUserSpeech = forcedTransportBridge.expectsUserSpeech;
+        expectedSpeech = forcedTransportBridge.expectedSpeech;
+        roleplayNpc = forcedTransportBridge.roleplayNpc;
+        roleplayIntro = null;
+        guidedSpeaking = null;
+        emojiChoice = null;
+        isTaskComplete = forcedTransportBridge.isTaskComplete;
       }
 
       // Scripted Shopping / Restaurant / Coffee roleplay — pin objective, no backward.

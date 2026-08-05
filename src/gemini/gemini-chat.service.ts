@@ -2017,16 +2017,18 @@ Required response:
 
 MATCH RESULT: NO CLEAR MATCH during AI Conversation / roleplay — communication broke down.
 Required response — STAY IN CHARACTER as the NPC (never switch to Teacher):
-- Clarify briefly in ENGLISH in textEn, e.g. "Sorry?" or "Did you mean Big Ben?" / "Did you mean the museum?"
+- On the FIRST miss at a scripted staff question, say a short soft hint in ENGLISH in textEn, e.g. "No worries. A latte?" / "No worries. Water?" / "No worries. Medium?" — then listen-only (expectsUserSpeech false) so the flow advances on Continue. Do NOT re-ask the same question in a loop.
+- Otherwise clarify briefly in ENGLISH in textEn, e.g. "Sorry?" or "Did you mean Big Ben?" / "Did you mean the museum?"
 - If you can guess the place/intent from context, offer ONE short "Did you mean …?" question.
 - If you cannot guess, just "Sorry?" / "Pardon?" and wait.
 - textTh = full Thai translation (subtitle CC only).
 - Keep expectsUserSpeech=true. expectedSpeech="". Keep roleplayNpc if this is a roleplay lesson.
-- FORBIDDEN: Teacher voice, Thai in textEn, praise ("Almost!", "เกือบเป๊ะ"), "You can say…", "ลองพูดว่า…", "พูดตาม", Repeat drills, soft-teach models, returning to Vocabulary / Pattern Drill.`
+- FORBIDDEN: Teacher voice, Thai in textEn, praise ("Almost!", "เกือบเป๊ะ"), infinite retry loops re-asking the same staff question, "You can say…", "ลองพูดว่า…", "พูดตาม", Repeat drills, soft-teach models, returning to Vocabulary / Pattern Drill.`
         : `Learner transcript (exact STT text shown in the app): "${displayTranscript}"
 
 MATCH RESULT: NO CLEAR MATCH ระหว่าง AI Conversation / roleplay — สื่อสารไม่สำเร็จ
 Required response — สวมบทบาท NPC ต่อ (ห้ามสลับเป็นครู):
+- ตอบผิดครั้งแรกที่คำถามพนักงาน → ใช้ soft hint สั้นๆ ใน textEn เช่น "No worries. A latte?" / "No worries. Water?" แล้ว listen-only (expectsUserSpeech false) ให้กด Continue ไปขั้นถัดไป ห้ามถามซ้ำวนลูป
 - ขอ clarify สั้นๆ เป็น ENGLISH ใน textEn เช่น "Sorry?" หรือ "Did you mean Big Ben?" / "Did you mean the museum?"
 - ถ้าเดาสถานที่/เจตนาจากบริบทได้ ให้ถาม "Did you mean …?" ครั้งเดียว
 - ถ้าเดาไม่ได้ ใช้แค่ "Sorry?" / "Pardon?" แล้วรอ
@@ -2056,16 +2058,22 @@ Required response:
     return lang === 'english'
       ? `Learner transcript (exact STT text shown in the app): "${displayTranscript}"
 
-MATCH RESULT: NO MATCH yet on the current speaking task.
-Required response:
-- You may give at most ONE gentle retry with brief English feedback — then you MUST advance regardless.
-- FORBIDDEN: asking for the same item more than twice total.`
+MATCH RESULT: NO MATCH yet on the current speaking task (FIRST miss).
+Required response — soft-teach ONCE, then let them fix:
+- Brief soft opener (e.g. "No worries.") + show the CANONICAL English target once (เฉลย) + ask them to SAY that correct line once.
+- Keep expectsUserSpeech=true. Set expectedSpeech to the canonical English.
+- Keep the same emojiChoice / guidedSpeaking board if this was a Mini Challenge speak turn.
+- FORBIDDEN on this turn: advancing to the next Core Flow step; Roleplay bridge ("Next I'll be the shop assistant…"); Celebrate; listen-only Continue-only handoff.
+- After they speak again (2nd attempt), you may accept + advance even if still imperfect.`
       : `Learner transcript (exact STT text shown in the app): "${displayTranscript}"
 
-MATCH RESULT: NO MATCH yet on the current speaking task.
-Required response:
-- You may give at most ONE gentle retry with brief Thai feedback — then you MUST advance regardless.
-- FORBIDDEN: asking for the same item more than twice total.`;
+MATCH RESULT: NO MATCH yet on the current speaking task (FIRST miss).
+Required response — soft-teach ครั้งเดียว แล้วให้แก้:
+- เปิดด้วย "ไม่เป็นไรครับ" / "เกือบแล้วครับ" + เฉลยประโยค ENGLISH ที่ถูกครั้งเดียว + ขอให้พูดตาม/พูดแก้ครั้งเดียว
+- expectsUserSpeech=true. expectedSpeech = ประโยค canonical ที่เฉลย
+- คง emojiChoice / guidedSpeaking board เดิมถ้าเป็น Mini Challenge
+- FORBIDDEN ในเทิร์นนี้: ไปขั้นถัดไป; Roleplay bridge ("ต่อไปครูพี่บีจะเป็นพนักงาน…"); Celebrate; listen-only แล้วให้กด Continue ไปต่อเลย
+- พอพูดรอบ 2 แล้ว ค่อย accept + ไปต่อได้ แม้ยังไม่เป๊ะ`;
   }
 
   private trainingSystemPrompt(
