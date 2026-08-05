@@ -4650,6 +4650,8 @@ Core Flow (ONE-WAY — never go backward):
       Soft-accept "I'd like chicken." (or clear order). Optionally emojiChoice single 🍗.
       FORBIDDEN: mash bridge + ask; Thai praise in textEn.
       FORBIDDEN: "Anything else?" (use only "Anything to drink?" at 7c).
+      If learner asks "What do you recommend?" (or close): reply ONLY "I recommend the chicken."
+        + keep expecting an order — do NOT jump to "Anything to drink?" yet.
    7c. After clear order: Staff ONLY textEn="Anything to drink?" + textTh. NO praise mash.
       Soft-accept "I'd like water." / "No." / "No thanks." Optionally emojiChoice single 🥤.
    7d. ROLEPLAY CLOSE (ALWAYS) — after clear drink answer (including No / No thanks):
@@ -7721,29 +7723,118 @@ function highestAskReached(
   return max;
 }
 
-function lastAskAnswered(
+function latestUserTextAfterAsk(
   history: Array<{ speaker: string; textEn?: string }>,
   startIdx: number,
   askIndex: number,
   config: ScriptedRoleplayConfig,
-): boolean {
-  if (askIndex < 0 || startIdx < 0) return false;
+): string {
+  if (askIndex < 0 || startIdx < 0) return '';
   const target = normalizeScriptedStaffKey(config.asks[askIndex].staffEn);
   let sawAsk = false;
+  let latest = '';
   for (let i = startIdx; i < history.length; i++) {
     const t = history[i];
     if (t.speaker === 'ai') {
       if (normalizeScriptedStaffKey(t.textEn ?? '') === target) {
         sawAsk = true;
+        latest = '';
       }
       continue;
     }
     if (!sawAsk || t.speaker !== 'user') continue;
     const text = (t.textEn ?? '').trim();
     if (!text || text.startsWith('[')) continue;
-    return true;
+    latest = text;
   }
-  return false;
+  return latest;
+}
+
+function isRecommendQuestion(text: string): boolean {
+  const t = normalizeScriptedStaffKey(text);
+  return (
+    t.includes('recommend') ||
+    t.includes('recommendation') ||
+    t.includes('what do you suggest') ||
+    t.includes('any suggestion')
+  );
+}
+
+/** True when learner speech actually completes this scripted ask (not just any words). */
+function userSatisfiesScriptedAsk(
+  lessonId: string,
+  askIndex: number,
+  userText: string,
+): boolean {
+  const t = normalizeScriptedStaffKey(userText);
+  if (!t) return false;
+
+  if (lessonId === 'ee_around_town_shopping') {
+    if (askIndex === 0) {
+      // Looking-for reply — not size / price.
+      if (t.includes('looking for')) return true;
+      if (/\b(shirt|pants|shoes|cap|hat)\b/.test(t)) return true;
+      return false;
+    }
+    if (askIndex === 1) {
+      return /\b(small|medium|large|s|m|l)\b/.test(t);
+    }
+  }
+
+  if (lessonId === 'ee_around_town_restaurant') {
+    if (askIndex === 0) {
+      // Order food — recommend questions do NOT count.
+      if (isRecommendQuestion(t)) return false;
+      if (t.includes('like') || t.includes('want') || t.includes('order')) {
+        return true;
+      }
+      if (/\b(chicken|rice|water|bill|food)\b/.test(t)) return true;
+      if (/^(yes|yeah|yep|ready)\b/.test(t)) return true;
+      return false;
+    }
+    if (askIndex === 1) {
+      if (/^(no|nope|no thanks|nothing|i'm fine|im fine)\b/.test(t)) {
+        return true;
+      }
+      if (t.includes('like') || t.includes('want') || t.includes('get')) {
+        return true;
+      }
+      if (/\b(water|drink|tea|coffee|juice|soda)\b/.test(t)) return true;
+      return false;
+    }
+  }
+
+  if (lessonId === 'ee_around_town_coffee') {
+    if (askIndex === 0) {
+      if (t.includes('get') || t.includes('have') || t.includes('like')) {
+        return true;
+      }
+      if (/\b(coffee|tea|cake|milk|latte|cappuccino|espresso)\b/.test(t)) {
+        return true;
+      }
+      return false;
+    }
+    if (askIndex === 1) {
+      return /\b(latte|cappuccino|espresso|coffee)\b/.test(t);
+    }
+    if (askIndex === 2) {
+      return /\b(hot|iced|ice|cold)\b/.test(t);
+    }
+  }
+
+  // Fallback: any non-empty speech (legacy).
+  return true;
+}
+
+function lastAskAnswered(
+  history: Array<{ speaker: string; textEn?: string }>,
+  startIdx: number,
+  askIndex: number,
+  config: ScriptedRoleplayConfig,
+): boolean {
+  const userText = latestUserTextAfterAsk(history, startIdx, askIndex, config);
+  if (!userText) return false;
+  return userSatisfiesScriptedAsk(config.lessonId, askIndex, userText);
 }
 
 function buildScriptedNpc(config: ScriptedRoleplayConfig) {
@@ -7879,18 +7970,48 @@ export function guideScriptedAroundTownRoleplayIfNeeded(
     };
   }
 
-  const reached = Math.max(
-    highestAskReached(history, startIdx, config),
-    currentAskIdx,
-  );
-  const answered =
-    reached >= 0 && lastAskAnswered(history, startIdx, reached, config);
-
-  let desiredAsk = reached;
-  if (answered) {
-    desiredAsk = reached + 1;
-  } else if (reached < 0) {
+  // First unsatisfied ask in order — don't skip ahead when model jumped
+  // (e.g. drink ask while order was only "What do you recommend?").
+  let desiredAsk = 0;
+  if (startIdx >= 0) {
     desiredAsk = 0;
+    for (let i = 0; i < config.asks.length; i++) {
+      if (!lastAskAnswered(history, startIdx, i, config)) {
+        desiredAsk = i;
+        break;
+      }
+      desiredAsk = i + 1;
+    }
+  } else if (currentAskIdx >= 0) {
+    desiredAsk = currentAskIdx;
+  }
+
+  // Restaurant: "What do you recommend?" during order → answer, don't jump to drink.
+  if (
+    lessonId === 'ee_around_town_restaurant' &&
+    desiredAsk === 0 &&
+    startIdx >= 0
+  ) {
+    const userText = latestUserTextAfterAsk(history, startIdx, 0, config);
+    if (isRecommendQuestion(userText)) {
+      return {
+        textEn: 'I recommend the chicken.',
+        textTh: 'ขอแนะนำไก่ครับ',
+        expectsUserSpeech: true,
+        expectedSpeech: null,
+        roleplayNpc: buildScriptedNpc(config),
+        emojiChoice: {
+          options: [
+            {
+              emoji: '🍗',
+              label: 'chicken',
+              speak: "I'd like chicken.",
+            },
+          ],
+        },
+        isTaskComplete: false,
+      };
+    }
   }
 
   const goingBackward =
