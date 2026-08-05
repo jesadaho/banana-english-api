@@ -350,15 +350,20 @@ export class SessionsController {
       const openingExpectsUserSpeech = lessonUsesTapToContinue(config.lessonId)
         ? false
         : (reply.expectsUserSpeech ?? true);
-      const openingEmojiChoice = normalizeEmojiChoice(reply.emojiChoice);
+      // Hook / opening must stay listen-only — never attach emojiChoice or
+      // force the mic just because the model prematurely returned scaffolds.
+      const openingEmojiChoice = openingExpectsUserSpeech
+        ? normalizeEmojiChoice(reply.emojiChoice)
+        : null;
       const opening = {
         speaker: 'ai' as const,
         textEn: reply.textEn,
         textTh: reply.textTh,
         audioUrl: null,
-        expectsUserSpeech:
-          openingEmojiChoice != null ? true : openingExpectsUserSpeech,
-        expectedSpeech: reply.expectedSpeech?.trim() || null,
+        expectsUserSpeech: openingExpectsUserSpeech,
+        expectedSpeech: openingExpectsUserSpeech
+          ? reply.expectedSpeech?.trim() || null
+          : null,
         scene: reply.scene ?? null,
         emojiSpeak: enrichEmojiSpeakForLesson(
           config.lessonId,
@@ -395,9 +400,10 @@ export class SessionsController {
           updatedCheckpoints: {},
           feedbackHints: { mispronouncedWords: [] as string[] },
           currentTurn: 0,
-          expectsUserSpeech:
-            openingEmojiChoice != null ? true : openingExpectsUserSpeech,
-          expectedSpeech: reply.expectedSpeech?.trim() || null,
+          expectsUserSpeech: openingExpectsUserSpeech,
+          expectedSpeech: openingExpectsUserSpeech
+            ? reply.expectedSpeech?.trim() || null
+            : null,
           scene: reply.scene,
           emojiSpeak: enrichEmojiSpeakForLesson(
             config.lessonId,
