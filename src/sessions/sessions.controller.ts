@@ -57,6 +57,7 @@ import {
   forceExploreCityGuidedSpeakingIfNeeded,
   guideExploreCityRoleplayIfNeeded,
   guideScriptedAroundTownRoleplayIfNeeded,
+  forceRestaurantRoleplayBridgeIfNeeded,
   ensureExploreCityCelebratePraiseFirst,
   forceExploreCityCelebrateAfterCloseIfNeeded,
   EXPLORE_CITY_ROLEPLAY_INTRO,
@@ -622,6 +623,31 @@ export class SessionsController {
         guidedSpeaking = null;
         emojiChoice = null;
         isTaskComplete = guidedRoleplay.isTaskComplete;
+      }
+
+      // After recommend staff answer → Roleplay bridge (never skip to Celebrate).
+      const forcedRestaurantBridge = forceRestaurantRoleplayBridgeIfNeeded(
+        config.lessonId,
+        data.turns,
+        {
+          textEn,
+          textTh,
+          roleplayIntro,
+          roleplayNpc,
+          expectsUserSpeech,
+          isTaskComplete,
+        },
+      );
+      if (forcedRestaurantBridge != null) {
+        textEn = forcedRestaurantBridge.textEn;
+        textTh = forcedRestaurantBridge.textTh;
+        expectsUserSpeech = forcedRestaurantBridge.expectsUserSpeech;
+        expectedSpeech = forcedRestaurantBridge.expectedSpeech;
+        roleplayNpc = forcedRestaurantBridge.roleplayNpc;
+        roleplayIntro = null;
+        guidedSpeaking = null;
+        emojiChoice = null;
+        isTaskComplete = forcedRestaurantBridge.isTaskComplete;
       }
 
       // Scripted Shopping / Restaurant / Coffee roleplay — pin objective, no backward.

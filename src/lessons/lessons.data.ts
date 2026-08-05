@@ -7439,6 +7439,120 @@ export const RESTAURANT_ROLEPLAY_OBJECTIVE = 'Order food and a drink.';
 export const COFFEE_ROLEPLAY_OBJECTIVE =
   'Order a coffee — type and hot or iced.';
 
+/** Teacher bridge before Restaurant 2.2 roleplay staff asks. */
+export const RESTAURANT_ROLEPLAY_BRIDGE_TEXT =
+  'ต่อไปครูพี่บีจะเป็นพนักงานร้านอาหารนะครับ 😊 พร้อมแล้ว แตะเพื่อเริ่มได้เลย!';
+
+function normalizeScriptedStaffKey(text: string): string {
+  return text
+    .trim()
+    .toLowerCase()
+    .replace(/[.!?]+$/g, '')
+    .replace(/\s+/g, ' ');
+}
+
+function isRestaurantRecommendStaffAnswer(text: string): boolean {
+  return (
+    normalizeScriptedStaffKey(text) === 'i recommend the chicken'
+  );
+}
+
+function historyHasRestaurantRecommendAnswer(
+  history: Array<{ speaker: string; textEn?: string }>,
+): boolean {
+  return history.some(
+    (t) =>
+      t.speaker === 'ai' &&
+      isRestaurantRecommendStaffAnswer(t.textEn ?? ''),
+  );
+}
+
+function restaurantRoleplayAlreadyStarted(
+  history: Array<{
+    speaker: string;
+    textEn?: string;
+    roleplayNpc?: unknown;
+  }>,
+): boolean {
+  for (const t of history) {
+    if (t.speaker !== 'ai') continue;
+    if (t.roleplayNpc != null) return true;
+    const key = normalizeScriptedStaffKey(t.textEn ?? '');
+    if (
+      key === 'are you ready to order' ||
+      key === 'anything to drink' ||
+      (t.textEn ?? '').includes('พนักงานร้านอาหาร')
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
+ * After Mini Challenge recommend staff answer, next Continue MUST open the
+ * Roleplay bridge — never skip to Celebrate.
+ */
+export function forceRestaurantRoleplayBridgeIfNeeded(
+  lessonId: string,
+  history: Array<{
+    speaker: string;
+    textEn?: string;
+    roleplayNpc?: unknown;
+  }>,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    roleplayIntro: unknown;
+    roleplayNpc: { emoji: string; name: string; objective?: string } | null;
+    expectsUserSpeech: boolean;
+    isTaskComplete: boolean;
+  },
+): {
+  textEn: string;
+  textTh: string | null;
+  expectsUserSpeech: boolean;
+  expectedSpeech: string | null;
+  roleplayNpc: null;
+  emojiChoice: null;
+  isTaskComplete: false;
+} | null {
+  if (lessonId !== 'ee_around_town_restaurant') return null;
+  if (current.roleplayIntro != null) return null;
+  if (!historyHasRestaurantRecommendAnswer(history)) return null;
+  if (restaurantRoleplayAlreadyStarted(history)) return null;
+
+  // Still on the recommend staff answer turn itself — stay; roleplay starts next.
+  if (isRestaurantRecommendStaffAnswer(current.textEn)) return null;
+
+  // Already a proper bridge line — pin listen-only, clear premature complete.
+  const looksLikeBridge =
+    current.textEn.includes('พนักงานร้านอาหาร') ||
+    current.textEn.includes(RESTAURANT_ROLEPLAY_BRIDGE_TEXT.slice(0, 20));
+  if (looksLikeBridge) {
+    return {
+      textEn: current.textEn.trim() || RESTAURANT_ROLEPLAY_BRIDGE_TEXT,
+      textTh: null,
+      expectsUserSpeech: false,
+      expectedSpeech: null,
+      roleplayNpc: null,
+      emojiChoice: null,
+      isTaskComplete: false,
+    };
+  }
+
+  // Model skipped to Celebrate / staff ask / anything else — force bridge.
+  return {
+    textEn: RESTAURANT_ROLEPLAY_BRIDGE_TEXT,
+    textTh: null,
+    expectsUserSpeech: false,
+    expectedSpeech: null,
+    roleplayNpc: null,
+    emojiChoice: null,
+    isTaskComplete: false,
+  };
+}
+
 type ScriptedRoleplayAskStep = {
   staffEn: string;
   staffTh: string;
@@ -7540,14 +7654,6 @@ const SCRIPTED_AROUND_TOWN_ROLEPLAYS: Record<string, ScriptedRoleplayConfig> = {
     closeWithSure: true,
   },
 };
-
-function normalizeScriptedStaffKey(text: string): string {
-  return text
-    .trim()
-    .toLowerCase()
-    .replace(/[.!?]+$/g, '')
-    .replace(/\s+/g, ' ');
-}
 
 function matchScriptedAskIndex(
   text: string,
