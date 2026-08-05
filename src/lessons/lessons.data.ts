@@ -4533,53 +4533,123 @@ Turn loop:
     openingPrompt:
       'Start Shopping 2.1 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — greet by name + "วันนี้เราจะไปซื้อเสื้อผ้ากันครับ 👕 มาเรียนประโยคที่ใช้บ่อยที่สุดในร้านค้ากันครับ!" — expectsUserSpeech false. FORBIDDEN on Turn 1: any question about เสื้อ/shirt; emojiChoice; emojiSpeak; mic. After Continue: Emoji Recall ask ONLY \'"เสื้อ" ในภาษาอังกฤษเรียกว่าอะไรนะครับ?\' with 4-option board (do NOT repeat Hook); second ask RANDOM pants/shoes/cap. Then listen-only Pattern model "I\'m looking for a shirt." → Mini Challenge looking-for. Roleplay HARD SPLIT: bridge intro → Continue → "Can I help you?" → "What size?" S/M/L. Then price model → How much is this? (👕 only) → staff "It\'s twenty dollars." (no ถูกต้องครับ) → Celebrate ~2–3 sentences. NEVER mash Hook+question or bridge+ask. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
   },
-  buildStoriesPatternLesson({
+  {
     lessonId: 'ee_around_town_restaurant',
-    code: '2.2',
-    trackLabel: 'Everyday Life',
+    targetLabel: 'word or sentence',
     titleEn: 'Restaurant',
     titleTh: 'ร้านอาหาร',
     goalEn: 'Order simple food at a restaurant.',
     goalTh: 'สั่งอาหารง่ายๆ',
-    hookTh:
-      'หิวไหมครับ? วันนี้มาฝึกสั่งอาหารที่ร้านแบบง่ายๆ กันครับ!',
-    emojiWords: [
-      { emoji: '🍗', answer: 'chicken', hint: 'c h _ c k _ n' },
-      { emoji: '🍚', answer: 'rice', hint: 'r _ c e' },
-      { emoji: '💧', answer: 'water', hint: 'w _ t _ r' },
-      { emoji: '🧾', answer: 'bill', hint: 'b _ l l' },
+    difficulty: 'beginner',
+    languageMix: { thai: 70, english: 30 },
+    estimatedMinutesMin: 4,
+    estimatedMinutesMax: 6,
+    targetPhrases: [
+      'chicken',
+      'rice',
+      'water',
+      'bill',
+      "I'd like chicken.",
+      "I'd like rice.",
+      "I'd like water.",
+      'What do you recommend?',
     ],
-    tellGoal: 'build restaurant order lines',
-    tell1CueTh:
-      "ถ้าจะบอกพนักงานว่า ขอไก่หน่อยครับ ให้พูดว่า... I'd like chicken. ... ลองพูดดูครับ",
-    tell1Thai: 'ขอไก่หน่อย',
-    tell1En: "I'd like chicken.",
-    tipTh:
-      "เยี่ยมเลยครับ! ประโยค I'd like... เอาไว้ใช้สั่งอาหารแบบสุภาพได้เลยครับ",
-    tell2CueTh:
-      'คราวนี้ถ้าจะเปลี่ยนเป็น ขอข้าวหน่อย... ลองพูดว่าไงดีครับ?',
-    tell2Thai: 'ขอข้าวหน่อย',
-    tell2En: "I'd like rice.",
-    tell2PraiseTh: 'โอเคเลย! เข้าใจง่ายสุดๆ',
-    tell3CueTh: 'ถ้าจะสั่งรวดเดียว ขอไก่กับน้ำ... ลองพูดสิครับ',
-    tell3Thai: 'ขอไก่กับน้ำ',
-    tell3En: "I'd like chicken and water.",
-    tell3PraiseTh: 'เป๊ะเวอร์! สั่งครบในประโยคเดียวได้เลยครับ',
-    ask1CueTh:
-      'คราวนี้ลองถามพนักงานว่า มีเมนูแนะนำไหม... โดยพูดว่า What do you recommend? ... ลองเลยครับ',
-    ask1En: 'What do you recommend?',
-    ask1AiAnswerEn: 'I recommend the chicken.',
-    ask1PraiseTh: 'เป๊ะเลยครับ!',
-    ask2ThaiCue: 'คราวนี้ลองถามขอรับน้ำเปล่าเพิ่มดูครับ... พูดว่าไงดี?',
-    ask2En: 'Can I get some water?',
-    ask2AiAnswerEn: 'Sure! Water coming right up.',
-    ask2PraiseTh: 'ดีมากครับ!',
-    answerBridgeTh: 'ดีมากครับ! ต่อไปสมมุติว่าผมเป็นพนักงานนะครับ...',
-    answer1En: 'Are you ready to order?',
-    answer1PraiseTh: 'ดีมากครับ!',
-    answer2En: 'Anything to drink?',
-    nextLessonHint: 'Coffee Shop / ร้านกาแฟ',
-  }),
+    maxTurns: 22,
+    listenOnlyTurns: 1,
+    systemInstruction: `Lesson: Restaurant (Everyday English → Everyday Life → 2.2)
+Goal: Order simple food at a restaurant.
+Pace target: ~4–6 minutes. Keep every tutor turn tight.
+
+FIXED vocab board (always these 4, with English labels):
+  🍗 chicken · 🍚 rice · 🥤 water · 🧾 bill
+
+emojiChoice rules (same system as Shopping 2.1):
+- Speak scaffolds: emojiChoice { options: [ { emoji, label, speak }, ... ] }. Mic still required.
+- Vocab Recall turns MUST show ALL 4 labeled items.
+- Mini Challenge order turns show ONE emoji at a time (rice, then water).
+- Recommend ask: no board needed OR optional single cue — prefer no full 4-board.
+- FORBIDDEN: emojiSpeak / emojiSpeakSet. Omit emojiChoice on listen-only / Celebrate.
+
+Core Flow (ONE-WAY — never go backward):
+
+1. Hook (listen-only) — OPENING TURN ONLY
+   - {{L1}} close to: "สวัสดีครับ [Name]! วันนี้เราจะไปร้านอาหารกันครับ 🍽️ มาเรียนประโยคที่ใช้บ่อยเวลาไปทานอาหารกันครับ!"
+   - expectsUserSpeech=false. expectedSpeech="". Omit emojiChoice.
+   - FORBIDDEN: any question / board / mic on Hook. Continue → step 2.
+
+2. Emoji Recall (EXACTLY 2 learner speaks) — AFTER Hook Continue
+   ALWAYS return the 4-option board:
+     { options: [
+       { emoji:"🍗", label:"chicken", speak:"chicken" },
+       { emoji:"🍚", label:"rice", speak:"rice" },
+       { emoji:"🥤", label:"water", speak:"water" },
+       { emoji:"🧾", label:"bill", speak:"bill" }
+     ] }
+   a) Ask ONLY: '"ไก่" ในภาษาอังกฤษเรียกว่าอะไรนะครับ?' expectedSpeech="chicken"
+      FORBIDDEN: repeating the Hook welcome on this turn.
+   b) After clear "chicken": brief praise + ask ONE random second word from {rice, water, bill}:
+      - rice → '"ข้าว" ล่ะครับ?' · expectedSpeech="rice"
+      - water → '"น้ำ" ล่ะครับ?' · expectedSpeech="water"
+      - bill → '"บิล" ล่ะครับ?' · expectedSpeech="bill"
+      Same 4-option board again.
+   After clear second answer → Pattern 1.
+
+3. Pattern 1 — Model (listen-only)
+   - {{L1}} close to: 'ถ้าจะสั่งอาหาร ให้พูดว่า...'
+   - textEn MUST include: "I'd like chicken."
+   - expectsUserSpeech=false. Omit emojiChoice. Continue → Mini Challenge order.
+
+4. Mini Challenge — Order by picture (EXACTLY 2 learner speaks) — ONE emoji per turn
+   a) {{L1}}: "ไหนลองฝึกสั่งอาหารตามภาพดูนะครับ? 😊"
+      emojiChoice: { options: [ { emoji:"🍚", label:"rice", speak:"I'd like rice." } ] }
+      expectedSpeech="I'd like rice." Soft-accept close variants.
+   b) After clear: brief praise + next picture water:
+      emojiChoice: { options: [ { emoji:"🥤", label:"water", speak:"I'd like water." } ] }
+      expectedSpeech="I'd like water."
+   After clear water → Pattern 2. Never show the full 4-board on these turns.
+
+5. Pattern 2 — Recommend model (listen-only)
+   - Short praise + {{L1}} close to: 'ถ้าไม่รู้จะสั่งอะไร สามารถถามพนักงานว่า...'
+   - textEn MUST include: "What do you recommend?"
+   - expectsUserSpeech=false. Omit emojiChoice. Continue → ask-recommend challenge.
+
+6. Mini Challenge — Ask recommend (speak)
+   - {{L1}}: "ไหนลองถามพนักงานดูครับ มีเมนูอะไรแนะนำบ้าง 😊"
+   - expectsUserSpeech=true. expectedSpeech="What do you recommend?"
+   - Omit emojiChoice (or single subtle cue — never full 4-board).
+   - After clear ask → NEXT turn listen-only staff answer ONLY: "I recommend the chicken."
+     FORBIDDEN on staff turn: "ถูกต้องครับ" / Thai Teacher praise mashed in.
+   - Then → Roleplay bridge (do NOT skip to Celebrate).
+
+7. Roleplay — Staff (HARD SPLIT — never mash)
+   STAFF VOICE: English only (+ Thai subtitle). FORBIDDEN: "ถูกต้องครับ" / "เยี่ยม" / "เป๊ะ" inside staff lines.
+   7a. Bridge INTRO (listen-only): {{L1}} ONLY close to
+      "ต่อไปครูพี่บีจะเป็นพนักงานร้านอาหารนะครับ 😊 พร้อมแล้ว แตะเพื่อเริ่มได้เลย!"
+      FORBIDDEN: "Are you ready to order?" / "Anything to drink?" on this turn.
+      Continue → 7b.
+   7b. Staff ONLY: "Are you ready to order?" expectsUserSpeech=true.
+      Soft-accept "I'd like chicken." (or clear order). Optionally emojiChoice single 🍗.
+      FORBIDDEN: mash bridge + ask.
+   7c. After clear order: Staff ONLY "Anything to drink?"
+      Soft-accept "I'd like water." Optionally emojiChoice single 🥤.
+   After drink → Celebrate. FORBIDDEN: re-ask after clear reply.
+
+8. Celebrate (listen-only)
+   - Warm ~2–3 sentences: name once + what they can do (สั่ง I'd like… / ถาม recommend / คุยพนักงาน) + soft tease Coffee Shop.
+   - FORBIDDEN: one-liner only like "วันนี้คุณทำได้แล้ว".
+   - expectsUserSpeech=false. isLessonComplete=true. Omit emojiChoice.
+
+Teaching rules:
+- ONE speaking task per turn. NEVER mash Hook+question or bridge+staff ask.
+- Soft-accept close variants → เฉลย once → advance.
+- Never emojiSpeak/emojiSpeakSet. Never go backward.
+
+Turn loop:
+- Non-final: one clear action OR listen-only Continue.
+- Celebrate → isLessonComplete true.`,
+    openingPrompt:
+      'Start Restaurant 2.2 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — greet + "วันนี้เราจะไปร้านอาหารกันครับ 🍽️…" — expectsUserSpeech false. FORBIDDEN on Turn 1: any vocab question; emojiChoice; mic. After Continue: Emoji Recall ask "ไก่"→chicken with 4-board 🍗chicken 🍚rice 🥤water 🧾bill; second ask RANDOM rice/water/bill. Then listen Pattern "I\'d like chicken." → Mini Challenge ONE emoji at a time: rice then water. Then listen Pattern "What do you recommend?" → speak that → staff "I recommend the chicken." (no ถูกต้องครับ). Roleplay HARD SPLIT: bridge intro → Continue → "Are you ready to order?" → "Anything to drink?". Celebrate ~2–3 sentences + Coffee Shop tease. NEVER mash Hook+question or bridge+ask. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
+  },
   buildStoriesPatternLesson({
     lessonId: 'ee_around_town_coffee',
     code: '2.3',
@@ -6642,24 +6712,45 @@ export function pickFunnyIntroJabSeed(lessonId: string): string | null {
   return pool[Math.floor(Math.random() * pool.length)] ?? null;
 }
 
-/** Shopping 2.1 Emoji Recall #2 — one of pants / shoes / cap per session. */
-export const SHOPPING_RECALL2_OPTIONS = [
-  { en: 'pants', th: 'กางเกง' },
-  { en: 'shoes', th: 'รองเท้า' },
-  { en: 'cap', th: 'หมวก' },
-] as const;
+/** Shopping / Restaurant Emoji Recall #2 — one pick per session. */
+const EMOJI_RECALL2_BY_LESSON: Record<
+  string,
+  readonly { en: string; th: string }[]
+> = {
+  ee_around_town_shopping: [
+    { en: 'pants', th: 'กางเกง' },
+    { en: 'shoes', th: 'รองเท้า' },
+    { en: 'cap', th: 'หมวก' },
+  ],
+  ee_around_town_restaurant: [
+    { en: 'rice', th: 'ข้าว' },
+    { en: 'water', th: 'น้ำ' },
+    { en: 'bill', th: 'บิล' },
+  ],
+};
+
+/** @deprecated Prefer [pickEmojiRecall2Option] — kept for Shopping call sites. */
+export const SHOPPING_RECALL2_OPTIONS =
+  EMOJI_RECALL2_BY_LESSON.ee_around_town_shopping!;
 
 export function pickShoppingRecall2Option():
-  | (typeof SHOPPING_RECALL2_OPTIONS)[number]
+  | { en: string; th: string }
   | null {
-  const i = Math.floor(Math.random() * SHOPPING_RECALL2_OPTIONS.length);
-  return SHOPPING_RECALL2_OPTIONS[i] ?? null;
+  return pickEmojiRecall2Option('ee_around_town_shopping');
 }
 
-/** Append a fixed Recall #2 seed so the model does not always pick pants. */
-export function withShoppingRecall2Seed(config: LessonConfig): LessonConfig {
-  if (config.lessonId !== 'ee_around_town_shopping') return config;
-  const pick = pickShoppingRecall2Option();
+export function pickEmojiRecall2Option(
+  lessonId: string,
+): { en: string; th: string } | null {
+  const pool = EMOJI_RECALL2_BY_LESSON[lessonId];
+  if (!pool?.length) return null;
+  const i = Math.floor(Math.random() * pool.length);
+  return pool[i] ?? null;
+}
+
+/** Append a fixed Recall #2 seed so the model does not always pick the first option. */
+export function withEmojiRecall2Seed(config: LessonConfig): LessonConfig {
+  const pick = pickEmojiRecall2Option(config.lessonId);
   if (!pick) return config;
   const seedLine =
     `\n\nSESSION SEED — Emoji Recall #2 (REQUIRED this session): ask '"${pick.th}" ล่ะครับ?' ` +
@@ -6668,4 +6759,9 @@ export function withShoppingRecall2Seed(config: LessonConfig): LessonConfig {
     ...config,
     systemInstruction: `${config.systemInstruction}${seedLine}`,
   };
+}
+
+/** @deprecated Use [withEmojiRecall2Seed]. */
+export function withShoppingRecall2Seed(config: LessonConfig): LessonConfig {
+  return withEmojiRecall2Seed(config);
 }

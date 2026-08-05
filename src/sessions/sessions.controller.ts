@@ -56,7 +56,7 @@ import {
   isPronunciationLesson,
   lessonUsesTapToContinue,
   normalizeLessonTeachingLanguage,
-  withShoppingRecall2Seed,
+  withEmojiRecall2Seed,
   withTeachingLanguage,
 } from '../lessons/lessons.data';
 import {
@@ -309,7 +309,7 @@ export class SessionsController {
         (user as User & { lessonTeachingLanguage?: string })
           .lessonTeachingLanguage,
     );
-    const config = withShoppingRecall2Seed(
+    const config = withEmojiRecall2Seed(
       withTeachingLanguage(baseConfig, teachingLanguage),
     );
 
