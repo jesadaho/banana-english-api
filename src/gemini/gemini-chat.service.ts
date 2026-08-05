@@ -2017,7 +2017,7 @@ Required response:
 
 MATCH RESULT: NO CLEAR MATCH during AI Conversation / roleplay — communication broke down.
 Required response — STAY IN CHARACTER as the NPC (never switch to Teacher):
-- On the FIRST miss at a scripted staff question, say a short soft hint in ENGLISH in textEn, e.g. "No worries. A latte?" / "No worries. Water?" / "No worries. Medium?" — then listen-only (expectsUserSpeech false) so the flow advances on Continue. Do NOT re-ask the same question in a loop.
+- On the FIRST miss at a scripted staff question, say a short soft hint in ENGLISH in textEn, e.g. "No worries. A latte?" / "No worries. Water?" / "No worries. Medium?" — keep expectsUserSpeech=true and expectedSpeech set to the hinted answer so the learner can SPEAK it once (show mic, not Continue). Keep the same emojiChoice board if any. After they speak again, advance. Do NOT use listen-only Continue on this soft-hint turn. Do NOT re-ask the same staff question in an infinite loop.
 - Otherwise clarify briefly in ENGLISH in textEn, e.g. "Sorry?" or "Did you mean Big Ben?" / "Did you mean the museum?"
 - If you can guess the place/intent from context, offer ONE short "Did you mean …?" question.
 - If you cannot guess, just "Sorry?" / "Pardon?" and wait.
@@ -2028,7 +2028,7 @@ Required response — STAY IN CHARACTER as the NPC (never switch to Teacher):
 
 MATCH RESULT: NO CLEAR MATCH ระหว่าง AI Conversation / roleplay — สื่อสารไม่สำเร็จ
 Required response — สวมบทบาท NPC ต่อ (ห้ามสลับเป็นครู):
-- ตอบผิดครั้งแรกที่คำถามพนักงาน → ใช้ soft hint สั้นๆ ใน textEn เช่น "No worries. A latte?" / "No worries. Water?" แล้ว listen-only (expectsUserSpeech false) ให้กด Continue ไปขั้นถัดไป ห้ามถามซ้ำวนลูป
+- ตอบผิดครั้งแรกที่คำถามพนักงาน → ใช้ soft hint สั้นๆ ใน textEn เช่น "No worries. A latte?" / "No worries. Water?" / "No worries. Medium?" แล้ว expectsUserSpeech=true + expectedSpeech เป็นคำที่เฉลย ให้ขึ้นไมค์พูดใหม่ครั้งเดียว (ห้าม listen-only / แตะเพื่อไปต่อ ในเทิร์น soft hint) คง emojiChoice board เดิมถ้ามี พูดรอบ 2 แล้วค่อยไปต่อ ห้ามถามซ้ำวนลูป
 - ขอ clarify สั้นๆ เป็น ENGLISH ใน textEn เช่น "Sorry?" หรือ "Did you mean Big Ben?" / "Did you mean the museum?"
 - ถ้าเดาสถานที่/เจตนาจากบริบทได้ ให้ถาม "Did you mean …?" ครั้งเดียว
 - ถ้าเดาไม่ได้ ใช้แค่ "Sorry?" / "Pardon?" แล้วรอ

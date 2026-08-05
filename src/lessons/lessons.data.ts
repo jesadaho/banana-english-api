@@ -4904,7 +4904,7 @@ Core Flow (ONE-WAY):
       FORBIDDEN: "Anything else?" / inventing extra asks.
    5c. After clear order WITHOUT a type (latte/cappuccino/espresso): Staff ONLY textEn="What type of coffee?" + textTh. NO praise.
       SKIP 5c entirely if 5b reply already named latte / cappuccino / espresso → go straight to 5d.
-      On FIRST wrong answer at 5c: Staff ONLY textEn="No worries. A latte?" textTh="ไม่เป็นไรครับ ลาเต้นะครับ?" listen-only → Continue → 5d (do NOT re-ask "What type?").
+      On FIRST wrong answer at 5c: Staff ONLY textEn="No worries. A latte?" textTh="ไม่เป็นไรครับ ลาเต้นะครับ?" expectsUserSpeech=true expectedSpeech="A latte" (mic open — learner says it once; keep latte board). After 2nd speak → 5d. FORBIDDEN: listen-only Continue on this soft-hint turn.
       Keep roleplayNpc + objective.
       emojiChoice MUST be:
         { options: [
@@ -8458,7 +8458,7 @@ function lastAskAnswered(
     return true;
   }
 
-  if (scriptedAskHintShownAfter(history, startIdx, askIndex, config)) {
+  if (scriptedAskHintRetrySpoken(history, startIdx, askIndex, config)) {
     return true;
   }
 
@@ -8656,6 +8656,42 @@ function scriptedAskHintShownAfter(
   return false;
 }
 
+/** Learner spoke again after the soft hint (2nd attempt) — then ask may advance. */
+function scriptedAskHintRetrySpoken(
+  history: Array<{ speaker: string; textEn?: string }>,
+  startIdx: number,
+  askIndex: number,
+  config: ScriptedRoleplayConfig,
+): boolean {
+  if (askIndex < 0 || startIdx < 0) return false;
+  let inWindow = false;
+  let afterHint = false;
+  for (let i = startIdx; i < history.length; i++) {
+    const t = history[i];
+    if (t.speaker === 'ai') {
+      const idx = matchScriptedAskIndex(t.textEn ?? '', config);
+      if (idx === askIndex) {
+        inWindow = true;
+        afterHint = false;
+        continue;
+      }
+      if (idx >= 0) {
+        inWindow = false;
+        afterHint = false;
+        continue;
+      }
+      if (inWindow && isScriptedSoftHintLine(t.textEn ?? '')) {
+        afterHint = true;
+      }
+      continue;
+    }
+    if (!afterHint || t.speaker !== 'user') continue;
+    const text = (t.textEn ?? '').trim();
+    if (text && !text.startsWith('[')) return true;
+  }
+  return false;
+}
+
 type ScriptedSoftHint = { en: string; th: string };
 
 const SCRIPTED_SOFT_HINTS: Record<string, Record<number, ScriptedSoftHint>> = {
@@ -8716,48 +8752,77 @@ function getScriptedSoftHint(
   return SCRIPTED_SOFT_HINTS[lessonId]?.[askIndex] ?? null;
 }
 
+/** "No worries. Medium?" → "Medium" for STT bias. */
+function softHintExpectedSpeech(hint: ScriptedSoftHint): string {
+  const m = hint.en.match(/^no worries\.\s*(.+?)\??\s*$/i);
+  if (!m) return '';
+  return m[1].replace(/\?+$/, '').trim();
+}
+
+function forceScriptedSoftHintSpeak(
+  config: ScriptedRoleplayConfig,
+  askIndex: number,
+  hint: ScriptedSoftHint,
+) {
+  return {
+    textEn: hint.en,
+    textTh: hint.th,
+    expectsUserSpeech: true,
+    expectedSpeech: softHintExpectedSpeech(hint) || null,
+    roleplayNpc: buildScriptedNpc(config),
+    emojiChoice: config.asks[askIndex]?.emojiChoice ?? null,
+    isTaskComplete: false as const,
+  };
+}
+
 /**
- * First wrong answer on a scripted ask → soft hint (No worries + model answer).
- * After hint (listen-only) → treat ask satisfied and advance on Continue.
+ * First wrong answer on a scripted ask → soft hint (No worries + model answer)
+ * with mic open so the learner can say the correct line once.
+ * After they speak again (2nd attempt) → treat ask satisfied and advance.
  */
 function resolveScriptedAskMissOverride(
   history: Array<{ speaker: string; textEn?: string }>,
   startIdx: number,
   config: ScriptedRoleplayConfig,
-  current: { textEn: string },
+  current: { textEn: string; expectsUserSpeech?: boolean },
 ): {
   textEn: string;
   textTh: string | null;
   expectsUserSpeech: boolean;
   expectedSpeech: string | null;
   roleplayNpc: { emoji: string; name: string; objective: string };
-  emojiChoice: null;
+  emojiChoice: ScriptedRoleplayAskStep['emojiChoice'] | null;
   isTaskComplete: false;
 } | null {
   if (startIdx < 0) return null;
-  if (isScriptedSoftHintLine(current.textEn)) return null;
 
   for (let i = 0; i < config.asks.length; i++) {
     if (lastAskAnswered(history, startIdx, i, config)) continue;
+
+    const hint = getScriptedSoftHint(config.lessonId, i);
+    if (!hint) return null;
+
+    const hintShown =
+      scriptedAskHintShownAfter(history, startIdx, i, config) ||
+      isScriptedSoftHintLine(current.textEn);
+    const retrySpoken = scriptedAskHintRetrySpoken(
+      history,
+      startIdx,
+      i,
+      config,
+    );
+
+    // Soft hint already out — keep mic open until they speak again.
+    if (hintShown && !retrySpoken) {
+      return forceScriptedSoftHintSpeak(config, i, hint);
+    }
 
     const userText = latestUserTextAfterAsk(history, startIdx, i, config);
     if (!userText) return null;
     if (userText.startsWith('[')) return null;
     if (userSatisfiesScriptedAsk(config.lessonId, i, userText)) return null;
-    if (scriptedAskHintShownAfter(history, startIdx, i, config)) return null;
 
-    const hint = getScriptedSoftHint(config.lessonId, i);
-    if (!hint) return null;
-
-    return {
-      textEn: hint.en,
-      textTh: hint.th,
-      expectsUserSpeech: false,
-      expectedSpeech: null,
-      roleplayNpc: buildScriptedNpc(config),
-      emojiChoice: null,
-      isTaskComplete: false,
-    };
+    return forceScriptedSoftHintSpeak(config, i, hint);
   }
   return null;
 }
@@ -8855,7 +8920,8 @@ export function guideScriptedAroundTownRoleplayIfNeeded(
     current.roleplayNpc != null ||
     currentAskIdx >= 0 ||
     offScript ||
-    startIdx >= 0;
+    startIdx >= 0 ||
+    isScriptedSoftHintLine(current.textEn);
 
   if (!inRoleplay) return null;
 
