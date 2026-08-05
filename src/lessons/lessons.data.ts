@@ -4902,8 +4902,10 @@ Core Flow (ONE-WAY):
       expectsUserSpeech=true. Soft-accept "Can I get a coffee?" / "Can I get a latte." etc.
       emojiChoice optional: { options: [ { emoji:"☕", label:"coffee", speak:"Can I get a coffee?" } ] }
       FORBIDDEN: "Anything else?" / inventing extra asks.
-   5c. After clear order WITHOUT a type (latte/cappuccino/espresso): Staff ONLY textEn="What type of coffee?" + textTh. NO praise.
-      SKIP 5c entirely if 5b reply already named latte / cappuccino / espresso → go straight to 5d.
+   5c. After clear order of COFFEE WITHOUT a type (latte/cappuccino/espresso): Staff ONLY textEn="What type of coffee?" + textTh. NO praise.
+      SKIP 5c entirely if:
+        - 5b reply already named latte / cappuccino / espresso → go to 5d
+        - 5b reply is NOT coffee needing a type (cake / tea / milk / water / food) → skip type; if food/cake also SKIP 5d → close
       On FIRST wrong answer at 5c: Staff ONLY textEn="No worries. A latte?" textTh="ไม่เป็นไรครับ ลาเต้นะครับ?" expectsUserSpeech=true expectedSpeech="A latte" (mic open — learner says it once; keep latte board). After 2nd speak → 5d. FORBIDDEN: listen-only Continue on this soft-hint turn.
       Keep roleplayNpc + objective.
       emojiChoice MUST be:
@@ -4913,7 +4915,8 @@ Core Flow (ONE-WAY):
           { emoji:"☕", label:"espresso", speak:"Espresso" }
         ] }
       Soft-accept Latte / Cappuccino / Espresso (with/without period).
-   5d. After clear type (or after 5b that already named type): Staff ONLY textEn="Hot or iced?" + textTh. NO praise / NO learner echo.
+   5d. After clear type (or after 5b that already named type, or tea/milk drink): Staff ONLY textEn="Hot or iced?" + textTh. NO praise / NO learner echo.
+      SKIP 5d entirely if 5b was food/cake (non-drink) → go straight to ROLEPLAY CLOSE.
       Keep roleplayNpc + objective.
       emojiChoice MUST be:
         { options: [
@@ -4946,7 +4949,7 @@ Teaching rules:
 - Roleplay close is ALWAYS AI staff reply (listen-only) → tap Continue → Celebrate.
 
 Turn loop: non-final = action or Continue; Celebrate → isLessonComplete true.`,
-    openingPrompt: `Start Coffee Shop 2.3 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — greet by name + "เช้า ๆ แบบนี้ รับกาแฟสักแก้วไหมครับ? ☕ วันนี้มาฝึกสั่งกาแฟแก้วโปรดเป็นภาษาอังกฤษกันครับ!" — expectsUserSpeech false. FORBIDDEN on Turn 1: vocab question; emojiChoice; mic. After Continue: Emoji Recall "กาแฟ"→coffee with board ☕coffee 🍵tea 🥛milk 🍰cake; second ask RANDOM tea/milk/cake. Then listen Pattern "Can I get a coffee?" → Mini Challenge one emoji: tea then cake. Roleplay HARD SPLIT: barista bridge → Continue → staff English-ONLY "What can I get for you?" (textTh Thai CC) → if order already named latte/cappuccino/espresso SKIP "What type of coffee?" else ask type → "Hot or iced?" → ROLEPLAY CLOSE listen-only ${ROLEPLAY_CLOSE_FORMAT_HINT_EN} with roleplayNpc.objective "Order a coffee — type and hot or iced." (isLessonComplete false) → tap Continue → THEN Celebrate ~2–3 sentences (separate turn, isLessonComplete true). NEVER invent "Anything else?" or go backward. NEVER mash tiered close+Celebrate or Thai praise into staff textEn. NEVER mash Hook+question or bridge+ask. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.`,
+    openingPrompt: `Start Coffee Shop 2.3 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — greet by name + "เช้า ๆ แบบนี้ รับกาแฟสักแก้วไหมครับ? ☕ วันนี้มาฝึกสั่งกาแฟแก้วโปรดเป็นภาษาอังกฤษกันครับ!" — expectsUserSpeech false. FORBIDDEN on Turn 1: vocab question; emojiChoice; mic. After Continue: Emoji Recall "กาแฟ"→coffee with board ☕coffee 🍵tea 🥛milk 🍰cake; second ask RANDOM tea/milk/cake. Then listen Pattern "Can I get a coffee?" → Mini Challenge one emoji: tea then cake. Roleplay HARD SPLIT: barista bridge → Continue → staff English-ONLY "What can I get for you?" (textTh Thai CC) → SKIP "What type of coffee?" if order already named latte/cappuccino/espresso OR order is not coffee needing a type (cake/tea/milk/food) → SKIP "Hot or iced?" for food/cake → else ask type then hot/iced → ROLEPLAY CLOSE listen-only ${ROLEPLAY_CLOSE_FORMAT_HINT_EN} with roleplayNpc.objective "Order a coffee — type and hot or iced." (isLessonComplete false) → tap Continue → THEN Celebrate ~2–3 sentences (separate turn, isLessonComplete true). NEVER invent "Anything else?" or go backward. NEVER mash tiered close+Celebrate or Thai praise into staff textEn. NEVER mash Hook+question or bridge+ask. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.`,
   },
   {
     lessonId: 'ee_around_town_convenience',
@@ -8449,11 +8452,26 @@ function lastAskAnswered(
 ): boolean {
   if (askIndex < 0 || startIdx < 0) return false;
 
-  // Coffee: order already named latte/cappuccino/espresso → skip "What type?"
+  // Coffee: skip "What type?" when type already named, or order isn't coffee needing a type
+  // (e.g. "Can I get a cake?" / tea / milk → never ask latte board).
   if (
     config.lessonId === 'ee_around_town_coffee' &&
     askIndex === 1 &&
-    coffeeTypeAlreadyNamedInRoleplay(history, startIdx)
+    (coffeeTypeAlreadyNamedInRoleplay(history, startIdx) ||
+      !coffeeOrderNeedsTypeAsk(
+        latestUserTextAfterAsk(history, startIdx, 0, config),
+      ))
+  ) {
+    return true;
+  }
+
+  // Coffee: skip "Hot or iced?" for non-drink orders (cake / food).
+  if (
+    config.lessonId === 'ee_around_town_coffee' &&
+    askIndex === 2 &&
+    !coffeeOrderNeedsHotIcedAsk(
+      latestUserTextAfterAsk(history, startIdx, 0, config),
+    )
   ) {
     return true;
   }
@@ -8526,6 +8544,42 @@ function isRecommendQuestion(text: string): boolean {
 
 function isCoffeeTypeName(text: string): boolean {
   return /\b(latte|cappuccino|espresso)\b/.test(normalizeScriptedStaffKey(text));
+}
+
+/** Food / snack — not a beverage (skip coffee type + hot/iced). */
+function isCoffeeShopFoodOrder(text: string): boolean {
+  return /\b(cake|pastry|cookie|cookies|sandwich|muffin|bread|bagel|scone|food|snack|pie)\b/.test(
+    normalizeScriptedStaffKey(text),
+  );
+}
+
+/** Non-coffee drinks that still may be hot/iced (tea) but never need latte board. */
+function isNonCoffeeDrinkOrder(text: string): boolean {
+  const t = normalizeScriptedStaffKey(text);
+  if (/\bcoffee\b/.test(t) || isCoffeeTypeName(t)) return false;
+  return /\b(tea|milk|water|juice|soda|lemonade|smoothie)\b/.test(t);
+}
+
+/**
+ * Ask "What type of coffee?" only when the order is coffee without a type.
+ * Skip for latte/cappuccino/espresso, tea/milk/water, cake/food.
+ */
+function coffeeOrderNeedsTypeAsk(orderText: string): boolean {
+  const t = normalizeScriptedStaffKey(orderText);
+  if (!t) return true;
+  if (isCoffeeTypeName(t)) return false;
+  if (isCoffeeShopFoodOrder(t)) return false;
+  if (isNonCoffeeDrinkOrder(t)) return false;
+  // Bare coffee / "Can I get a coffee?" / unclear drink → ask type.
+  return true;
+}
+
+/** Hot/iced only for drinks — skip for cake/food. */
+function coffeeOrderNeedsHotIcedAsk(orderText: string): boolean {
+  const t = normalizeScriptedStaffKey(orderText);
+  if (!t) return true;
+  if (isCoffeeShopFoodOrder(t)) return false;
+  return true;
 }
 
 /** True if learner already named latte/cappuccino/espresso during coffee roleplay. */
