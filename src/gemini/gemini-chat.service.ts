@@ -2333,6 +2333,36 @@ Payment closure (critical — no tap UI exists):
     };
   }
 
+  /** Fast utterance grading for Speak Challenge mini-game. */
+  async evaluateSpeakChallengeUtterance(params: {
+    systemInstruction: string;
+    userPrompt: string;
+  }): Promise<{ tier: 'perfect' | 'also_correct' | 'close_enough' | 'retry' }> {
+    const schema = {
+      type: 'object',
+      properties: {
+        tier: {
+          type: 'string',
+          enum: ['perfect', 'also_correct', 'close_enough', 'retry'],
+        },
+      },
+      required: ['tier'],
+    };
+
+    return this.generateJson<{ tier: 'perfect' | 'also_correct' | 'close_enough' | 'retry' }>({
+      systemInstruction: params.systemInstruction,
+      contents: [
+        {
+          role: 'user',
+          parts: [{ text: params.userPrompt }],
+        },
+      ],
+      schema,
+      maxOutputTokens: 64,
+      temperature: 0.1,
+    });
+  }
+
   async generateIntroReport(history: ChatTurn[]): Promise<GptIntroReport> {
     const context = this.formatHistory(history);
     const report = await this.generateJson<GptIntroReport>({

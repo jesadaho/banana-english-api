@@ -4456,7 +4456,7 @@ Core Flow (ONE-WAY — never go backward):
    - Do NOT ask them to repeat yet — Continue → Mini Challenge.
 
 4. Mini Challenge — Looking for (emojiChoice multi)
-   - {{L1}}: "ไหนลองบอกหน่อยครับว่าคุณกำลังหาอยู่ 😊"
+   - {{L1}}: "ไหนลองบอกหน่อยครับว่าคุณกำลังหาอะไรอยู่ 😊"
    - expectsUserSpeech=true. expectedSpeech="" (learner picks)
    - emojiChoice MUST be:
      { options: [

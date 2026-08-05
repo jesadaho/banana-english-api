@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  Body,
   Controller,
   Param,
   Post,
@@ -9,6 +10,10 @@ import {
 import { User } from '@prisma/client';
 import { EconomyService } from '../economy/economy.service';
 import { AnonymousUserGuard } from '../users/anonymous-user.guard';
+import {
+  SpeakChallengeEvaluateService,
+  type SpeakChallengeEvalTier,
+} from './speak-challenge-evaluate.service';
 
 type AuthedRequest = { user: User };
 
@@ -18,10 +23,37 @@ const ALLOWED_MINI_GAME_IDS = new Set([
   'speak_challenge_ee_everyday_life_1',
 ]);
 
+class EvaluateSpeakChallengeDto {
+  transcript!: string;
+  targetEn!: string;
+  promptTh?: string;
+}
+
 @Controller('mini-games')
 @UseGuards(AnonymousUserGuard)
 export class MiniGamesController {
-  constructor(private readonly economy: EconomyService) {}
+  constructor(
+    private readonly economy: EconomyService,
+    private readonly speakChallengeEval: SpeakChallengeEvaluateService,
+  ) {}
+
+  @Post('speak-challenge/evaluate')
+  async evaluateSpeakChallenge(@Body() body: EvaluateSpeakChallengeDto): Promise<{
+    tier: SpeakChallengeEvalTier;
+  }> {
+    const transcript = body.transcript?.trim() ?? '';
+    const targetEn = body.targetEn?.trim() ?? '';
+    if (!transcript || !targetEn) {
+      throw new BadRequestException('transcript and targetEn are required');
+    }
+
+    const tier = await this.speakChallengeEval.evaluate({
+      transcript,
+      targetEn,
+      promptTh: body.promptTh?.trim(),
+    });
+    return { tier };
+  }
 
   @Post(':gameId/complete')
   async complete(
