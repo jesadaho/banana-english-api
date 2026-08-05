@@ -8993,6 +8993,306 @@ function satisfiesSurvivalSpeakAdjustAnswer(userText: string): boolean {
   );
 }
 
+/** Smart Shopper 2.6 — fixed guidedSpeaking boards (Teach 1–3 + Mini 1–4). */
+export const SMART_SHOPPER_BOARDS: Record<
+  number,
+  {
+    textEn: string;
+    stem: string;
+    expectedSpeech: string;
+    options: Array<{ emoji: string; label: string; speak: string }>;
+  }
+> = {
+  1: {
+    textEn:
+      "Which one is cheaper? เวลาเลือกของ 2 ชิ้นแล้วอยากถามว่า 'อันไหน...' ให้ใช้คำว่า 'Which one is...' แล้วเลือกคำเปรียบเทียบบนจอเลยครับ",
+    stem: 'Which one is ______?',
+    expectedSpeech: 'Which one is cheaper?',
+    options: [
+      { emoji: '🏷️', label: 'cheaper', speak: 'Which one is cheaper?' },
+      { emoji: '📦', label: 'bigger', speak: 'Which one is bigger?' },
+      { emoji: '🥤', label: 'better', speak: 'Which one is better?' },
+    ],
+  },
+  2: {
+    textEn:
+      "เยี่ยมมาก! คำว่า Which one แปลว่า 'อันไหน/ชิ้นไหน' ครับ 🏷️\n\nThis one is bigger. สมมติเราหยิบขึ้นมาดูแล้วบอกว่า 'อันนี้ใหญ่กว่า / ถูกกว่า' ให้พูดว่า 'This one is...' ลองเลือกตอบดูครับ",
+    stem: 'This one is ______',
+    expectedSpeech: 'This one is bigger.',
+    options: [
+      { emoji: '🏷️', label: 'cheaper', speak: 'This one is cheaper.' },
+      { emoji: '📦', label: 'bigger', speak: 'This one is bigger.' },
+      { emoji: '😋', label: 'better', speak: 'This one is better.' },
+    ],
+  },
+  3: {
+    textEn:
+      "เป๊ะเลย! เติม -er หลังคำศัพท์เพื่อบอกว่า '...กว่า' ครับ 📦\n\nI'll take this one. ตัดสินใจได้แล้ว! จะบอกพนักงานว่า 'เอาอันนี้แหละ' ให้พูดประโยคนี้ครับ",
+    stem: "I'll take ______",
+    expectedSpeech: "I'll take this one.",
+    options: [
+      { emoji: '🛍️', label: 'this one', speak: "I'll take this one." },
+      {
+        emoji: '🏷️',
+        label: 'the cheaper one',
+        speak: "I'll take the cheaper one.",
+      },
+      {
+        emoji: '📦',
+        label: 'the bigger one',
+        speak: "I'll take the bigger one.",
+      },
+    ],
+  },
+  4: {
+    textEn:
+      "สุดยอด! คำว่า I'll take... เป็นคำติดปากเวลาตัดสินใจซื้อของเลยครับ 🛒\n\nWhich one is cheaper? อันไหนถูกกว่ากันครับ?\nRed Shirt — $10 · Blue Shirt — $8",
+    stem: 'The blue one is...',
+    expectedSpeech: 'The blue one is cheaper.',
+    options: [
+      {
+        emoji: '🔵',
+        label: 'cheaper',
+        speak: 'The blue one is cheaper.',
+      },
+      {
+        emoji: '🔴',
+        label: 'more expensive',
+        speak: 'The blue one is more expensive.',
+      },
+    ],
+  },
+  5: {
+    textEn:
+      'ถูกต้องครับ! 🔵👕 ใช้ The [color] one... เวลาชี้ระบุของชิ้นนั้นๆ ได้เลย!\n\nWhich one is bigger? ขวดไหนใหญ่กว่ากันครับ?\nSmall Water — 500 ml · Big Water — 1,500 ml',
+    stem: 'The big one is...',
+    expectedSpeech: 'The big one is bigger.',
+    options: [
+      { emoji: '📦', label: 'bigger', speak: 'The big one is bigger.' },
+      { emoji: '🥤', label: 'smaller', speak: 'The big one is smaller.' },
+    ],
+  },
+  6: {
+    textEn:
+      'เป๊ะเลยครับ! The big one หมายถึงขวดใหญ่ครับ 📦\n\nWhich one is better? อันไหนน่าทานหรือดีกว่ากัน?\nSandwich A — ⭐⭐⭐ · Sandwich B — ⭐⭐⭐⭐⭐',
+    stem: 'Sandwich B is...',
+    expectedSpeech: 'Sandwich B is better.',
+    options: [
+      { emoji: '😋', label: 'better', speak: 'Sandwich B is better.' },
+      { emoji: '🌶️', label: 'spicier', speak: 'Sandwich B is spicier.' },
+    ],
+  },
+  7: {
+    textEn:
+      'เก่งมากครับ! better ใช้บอกว่าดีกว่า/อร่อยกว่าครับ 😋\n\nSo, which one do you want? งั้นคุณจะรับชิ้นไหนดีครับ?',
+    stem: "I'll take...",
+    expectedSpeech: "I'll take the blue shirt.",
+    options: [
+      {
+        emoji: '🔵',
+        label: 'Blue Shirt',
+        speak: "I'll take the blue shirt.",
+      },
+      { emoji: '📦', label: 'Big Water', speak: "I'll take the big one." },
+      {
+        emoji: '🥪',
+        label: 'Sandwich B',
+        speak: "I'll take sandwich B.",
+      },
+    ],
+  },
+};
+
+function normalizeSmartShopperSpeech(userText: string): string {
+  return userText
+    .trim()
+    .toLowerCase()
+    .replace(/[.!?]+$/g, '')
+    .replace(/\s+/g, ' ');
+}
+
+function matchesSmartShopperStep(step: number, userText: string): boolean {
+  const t = normalizeSmartShopperSpeech(userText);
+  if (!t) return false;
+  switch (step) {
+    case 1:
+      return /\bwhich one is\b/.test(t) && /\b(cheaper|bigger|better)\b/.test(t);
+    case 2:
+      return /\bthis one is\b/.test(t) && /\b(cheaper|bigger|better)\b/.test(t);
+    case 3:
+      return (
+        /\bi(?:'ll| will) take\b/.test(t) &&
+        (/\bthis one\b/.test(t) ||
+          /\bthe cheaper one\b/.test(t) ||
+          /\bthe bigger one\b/.test(t)) &&
+        !/\bblue\b/.test(t) &&
+        !/\bsandwich\b/.test(t)
+      );
+    case 4:
+      return (
+        (/\bblue one is cheaper\b/.test(t) || /\bblue is cheaper\b/.test(t)) &&
+        !/\bmore expensive\b/.test(t)
+      );
+    case 5:
+      return /\bbig one is bigger\b/.test(t);
+    case 6:
+      return (
+        /\bsandwich b is better\b/.test(t) || /\bb is better\b/.test(t)
+      );
+    case 7:
+      return (
+        /\bi(?:'ll| will) take\b/.test(t) &&
+        (/\bblue\b/.test(t) ||
+          /\bbig one\b/.test(t) ||
+          /\bbig water\b/.test(t) ||
+          /\bsandwich\b/.test(t))
+      );
+    default:
+      return false;
+  }
+}
+
+/** How many Smart Shopper speak steps are cleared (0–7). */
+export function smartShopperProgress(
+  history: Array<{ speaker: string; textEn?: string }>,
+): number {
+  let progress = 0;
+  for (const turn of history) {
+    if (turn.speaker !== 'user') continue;
+    const text = (turn.textEn ?? '').trim();
+    if (!text || text.startsWith('[') || text.startsWith('(')) continue;
+    const next = progress + 1;
+    if (next <= 7 && matchesSmartShopperStep(next, text)) {
+      progress = next;
+    }
+  }
+  return progress;
+}
+
+/**
+ * Pin Smart Shopper guidedSpeaking boards for Teach 1–3 and Mini 1–4.
+ */
+export function forceSmartShopperGuidedSpeakingIfNeeded(
+  lessonId: string,
+  _lang: LessonTeachingLanguage,
+  nextTurn: number,
+  history: Array<{ speaker: string; textEn?: string }>,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    guidedSpeaking: ReturnType<typeof normalizeGuidedSpeaking>;
+    expectsUserSpeech: boolean;
+    isTaskComplete: boolean;
+    expectedSpeech: string | null;
+  },
+): {
+  textEn: string;
+  textTh: string | null;
+  guidedSpeaking: NonNullable<ReturnType<typeof normalizeGuidedSpeaking>>;
+  expectsUserSpeech: true;
+  expectedSpeech: string;
+  emojiChoice: null;
+  isTaskComplete: false;
+} | null {
+  if (lessonId !== 'ee_around_town_smart_shopper') return null;
+  if (current.isTaskComplete) return null;
+  if (nextTurn < 1) return null;
+
+  const progress = smartShopperProgress(history);
+  if (progress >= 7) return null;
+
+  const step = progress + 1;
+  const board = SMART_SHOPPER_BOARDS[step];
+  if (!board) return null;
+
+  const stemOk =
+    current.guidedSpeaking?.stem
+      ?.toLowerCase()
+      .includes(board.stem.toLowerCase().slice(0, 12)) ?? false;
+  const optionsOk =
+    (current.guidedSpeaking?.options?.length ?? 0) >= board.options.length;
+  if (
+    current.expectsUserSpeech &&
+    stemOk &&
+    optionsOk &&
+    current.guidedSpeaking
+  ) {
+    return null;
+  }
+
+  const options = board.options.map((o) => ({ ...o }));
+  const first = options[0];
+  return {
+    textEn: stemOk
+      ? current.textEn?.trim() || board.textEn
+      : board.textEn,
+    textTh: current.textTh?.trim() || null,
+    guidedSpeaking: {
+      stem: board.stem,
+      emoji: first.emoji,
+      speak: first.speak,
+      ...(first.label ? { label: first.label } : {}),
+      options,
+    },
+    expectsUserSpeech: true,
+    expectedSpeech: board.expectedSpeech,
+    emojiChoice: null,
+    isTaskComplete: false,
+  };
+}
+
+/**
+ * After Smart Shopper Mini 4 → Celebrate (no Roleplay).
+ */
+export function forceSmartShopperCelebrateIfNeeded(
+  lessonId: string,
+  lang: LessonTeachingLanguage,
+  history: Array<{ speaker: string; textEn?: string }>,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    expectsUserSpeech: boolean;
+    isTaskComplete: boolean;
+  },
+): {
+  textEn: string;
+  textTh: string | null;
+  expectsUserSpeech: false;
+  expectedSpeech: null;
+  guidedSpeaking: null;
+  emojiChoice: null;
+  isTaskComplete: true;
+} | null {
+  if (lessonId !== 'ee_around_town_smart_shopper') return null;
+  if (smartShopperProgress(history) < 7) return null;
+
+  const praise = celebratePraiseOpen(lang);
+  const body =
+    lang === 'english'
+      ? `You've got Which one is…, This one is…, and I'll take… ready for the shop. Next up — Hotel.`
+      : `ยอดเยี่ยม! ปิดการขายได้เพอร์เฟกต์เลยครับ 🛒🎉\n\nตอนนี้คุณใช้ Which one is… / This one is… / I'll take… ได้แล้วครับ ต่อไปลองไปที่ Hotel / โรงแรม ได้เลย`;
+
+  const raw = (current.textEn ?? '').trim();
+  const praiseOk =
+    lang === 'english'
+      ? /^(great|awesome|nice work|well done|amazing)/i.test(raw)
+      : /^(เยี่ยม|เก่งมาก|สุดยอด|ดีมาก|ยอดเยี่ยม)/u.test(raw);
+  const textEn =
+    current.isTaskComplete && praiseOk && raw.length > 40
+      ? raw
+      : `${praise}\n\n${body}`;
+
+  return {
+    textEn,
+    textTh: null,
+    expectsUserSpeech: false,
+    expectedSpeech: null,
+    guidedSpeaking: null,
+    emojiChoice: null,
+    isTaskComplete: true,
+  };
+}
+
 /**
  * After Survival Step 3 (Can you speak…?) → Emoji Speak Intro + full batch.
  */

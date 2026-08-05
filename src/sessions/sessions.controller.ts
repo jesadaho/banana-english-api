@@ -74,6 +74,8 @@ import {
   forceShoppingRoleplayBridgeIfNeeded,
   forceCoffeeRoleplayBridgeIfNeeded,
   forceFavoritesRoleplayBridgeIfNeeded,
+  forceSmartShopperGuidedSpeakingIfNeeded,
+  forceSmartShopperCelebrateIfNeeded,
   forceSurvivalEmojiSpeakIfNeeded,
   forceSurvivalCelebrateAfterEmojiSpeakIfNeeded,
   looksLikeAroundTownRoleplayBridge,
@@ -778,6 +780,52 @@ export class SessionsController {
         guidedSpeaking = forcedFavoritesBridge.guidedSpeaking;
         emojiChoice = forcedFavoritesBridge.emojiChoice;
         isTaskComplete = forcedFavoritesBridge.isTaskComplete;
+      }
+
+      // Smart Shopper 2.6: pin Teach/Mini guidedSpeaking boards.
+      const forcedSmartShopper = forceSmartShopperGuidedSpeakingIfNeeded(
+        config.lessonId,
+        teachingLang,
+        nextTurn,
+        data.turns,
+        {
+          textEn,
+          textTh,
+          guidedSpeaking,
+          expectsUserSpeech,
+          isTaskComplete,
+          expectedSpeech,
+        },
+      );
+      if (forcedSmartShopper != null) {
+        textEn = forcedSmartShopper.textEn;
+        textTh = forcedSmartShopper.textTh;
+        guidedSpeaking = forcedSmartShopper.guidedSpeaking;
+        expectsUserSpeech = forcedSmartShopper.expectsUserSpeech;
+        expectedSpeech = forcedSmartShopper.expectedSpeech;
+        emojiChoice = forcedSmartShopper.emojiChoice;
+        isTaskComplete = forcedSmartShopper.isTaskComplete;
+      }
+
+      const forcedSmartShopperCelebrate = forceSmartShopperCelebrateIfNeeded(
+        config.lessonId,
+        teachingLang,
+        data.turns,
+        {
+          textEn,
+          textTh,
+          expectsUserSpeech,
+          isTaskComplete,
+        },
+      );
+      if (forcedSmartShopperCelebrate != null) {
+        textEn = forcedSmartShopperCelebrate.textEn;
+        textTh = forcedSmartShopperCelebrate.textTh;
+        expectsUserSpeech = forcedSmartShopperCelebrate.expectsUserSpeech;
+        expectedSpeech = forcedSmartShopperCelebrate.expectedSpeech;
+        guidedSpeaking = forcedSmartShopperCelebrate.guidedSpeaking;
+        emojiChoice = forcedSmartShopperCelebrate.emojiChoice;
+        isTaskComplete = forcedSmartShopperCelebrate.isTaskComplete;
       }
 
       // After Survival Step 3 → Emoji Speak Intro + full batch.
