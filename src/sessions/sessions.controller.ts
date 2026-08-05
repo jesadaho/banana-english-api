@@ -54,6 +54,7 @@ import {
   normalizeGuidedSpeaking,
   normalizeRoleplayIntro,
   normalizeRoleplayNpc,
+  forceExploreCityGuidedSpeakingIfNeeded,
   sanitizeAroundTownStaffSpeech,
   isAroundTownRoleplayCloseLine,
   getLesson,
@@ -548,10 +549,33 @@ export class SessionsController {
                 )
             : null);
 
-      const emojiChoice = normalizeEmojiChoice(reply.emojiChoice);
-      const guidedSpeaking = normalizeGuidedSpeaking(reply.guidedSpeaking);
+      let emojiChoice = normalizeEmojiChoice(reply.emojiChoice);
+      let guidedSpeaking = normalizeGuidedSpeaking(reply.guidedSpeaking);
       const roleplayIntro = normalizeRoleplayIntro(reply.roleplayIntro);
       let roleplayNpc = normalizeRoleplayNpc(reply.roleplayNpc);
+
+      let textEn = reply.textEn;
+      let textTh: string | null | undefined = reply.textTh;
+      let expectedSpeech = reply.expectedSpeech?.trim() || null;
+
+      const forcedGuided = forceExploreCityGuidedSpeakingIfNeeded(
+        config.lessonId,
+        nextTurn,
+        data.turns,
+        {
+          textEn,
+          textTh,
+          guidedSpeaking,
+          expectedSpeech,
+        },
+      );
+      if (forcedGuided != null) {
+        textEn = forcedGuided.textEn;
+        textTh = forcedGuided.textTh;
+        guidedSpeaking = forcedGuided.guidedSpeaking;
+        expectedSpeech = forcedGuided.expectedSpeech;
+        emojiChoice = null;
+      }
 
       // Emoji Choice / Guided Speaking turns always need the mic — never listen-only.
       if ((emojiChoice != null || guidedSpeaking != null) && !isTaskComplete) {
@@ -571,12 +595,19 @@ export class SessionsController {
       }
 
       // Roleplay staff: peel Thai praise mash out of textEn; keep Thai in textTh (CC).
-      const staffSpeech = sanitizeAroundTownStaffSpeech(
-        config.lessonId,
-        reply.textEn,
-        reply.textTh,
-        emojiChoice != null,
-      );
+      // Skip when Guided Speaking / Roleplay Intro — those turns are Teacher L1, not staff.
+      const staffSpeech =
+        guidedSpeaking != null || roleplayIntro != null
+          ? {
+              textEn,
+              textTh: textTh?.trim() || null,
+            }
+          : sanitizeAroundTownStaffSpeech(
+              config.lessonId,
+              textEn,
+              textTh,
+              emojiChoice != null,
+            );
 
       // Roleplay close (Sure! / price answer / You're welcome!): listen-only →
       // tap Continue → Celebrate. Never mark lesson complete on this beat.
@@ -599,7 +630,7 @@ export class SessionsController {
         textTh: staffSpeech.textTh,
         audioUrl: null,
         expectsUserSpeech,
-        expectedSpeech: reply.expectedSpeech?.trim() || null,
+        expectedSpeech,
         scene: reply.scene ?? null,
         emojiSpeak: emojiSpeakSet ? null : emojiSpeak,
         emojiSpeakSet,
@@ -619,7 +650,7 @@ export class SessionsController {
         currentTurn: nextTurn,
         // A completed lesson hands off to the drill, so never ask for speech.
         expectsUserSpeech,
-        expectedSpeech: reply.expectedSpeech?.trim() || null,
+        expectedSpeech,
         scene: reply.scene,
         emojiSpeak: emojiSpeakSet ? null : emojiSpeak,
         emojiSpeakSet,

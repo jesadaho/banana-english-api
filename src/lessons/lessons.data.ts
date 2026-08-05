@@ -4851,18 +4851,19 @@ Core Flow (ONE-WAY):
    - FORBIDDEN on Hook: any question; mic task. Continue → 2.
 
 2. Guided Speaking (พูด) — AFTER Hook Continue
-   2a. Speak turn:
-      - {{L1}} scenario close to:
-        "คุณเพิ่งมาถึง London 🇬🇧 แต่หลงทางซะแล้ว 😅 คุณอยากไปพิพิธภัณฑ์ คุณจะบอกคนท้องถิ่นว่าอย่างไรครับ?"
+   2a. Speak turn — textEn MUST be EXACTLY these two beats (newline between; do NOT shorten):
+        "คุณเพิ่งมาถึง London 🇬🇧 แต่หลงทางซะแล้ว 😅"
+        "คุณอยากไปพิพิธภัณฑ์ คุณจะบอกคนท้องถิ่นว่าอย่างไรครับ?"
+      FORBIDDEN textEn: "London 🇬🇧 😅 ?" / emoji-only / one-liner mash / English-only paraphrase.
       - guidedSpeaking MUST be:
         { stem:"I'm looking for the...", emoji:"🏛️", label:"museum", speak:"I'm looking for the museum." }
       - expectsUserSpeech=true. expectedSpeech="I'm looking for the museum."
-      - Soft-accept "I'm looking for the museum" / with/without period / "I'm looking for museum".
-      - Omit emojiChoice.
+      - Soft-accept "I'm looking for the museum" / "I'm looking for a museum" / with/without period / "I'm looking for museum".
+      - Omit emojiChoice / roleplayIntro.
    2b. After clear answer — Pattern teach (listen-only), SEPARATE turn:
-      - {{L1}} praise + teach close to:
-        'เยี่ยมมากครับ! 👏 ถ้าจะบอกว่ากำลังหาสถานที่ ให้พูดว่า...'
-      - textEn MUST include the model stem/line for TTS: "I'm looking for the..."
+      - textEn MUST be close to EXACTLY:
+        "เยี่ยมมากครับ! 👏 ถ้าจะบอกว่ากำลังหาสถานที่ ให้พูดว่า I'm looking for the..."
+      - FORBIDDEN: dropping the Thai praise (never "! 👏 I'm looking for the..." alone).
       - expectsUserSpeech=false. isLessonComplete=false. Omit guidedSpeaking / emojiChoice.
       - Continue → Mini Challenge 1.
 
@@ -6830,6 +6831,60 @@ export function normalizeGuidedSpeaking(
   };
 }
 
+/** Canonical Guided Speaking payload for Explore the City 2.4. */
+export const EXPLORE_CITY_GUIDED_SPEAKING = {
+  textEn:
+    'คุณเพิ่งมาถึง London 🇬🇧 แต่หลงทางซะแล้ว 😅\n\nคุณอยากไปพิพิธภัณฑ์ คุณจะบอกคนท้องถิ่นว่าอย่างไรครับ?',
+  textTh:
+    'คุณเพิ่งมาถึงลอนดอนแต่หลงทาง คุณอยากไปพิพิธภัณฑ์ จะบอกคนท้องถิ่นว่าอย่างไร',
+  expectedSpeech: "I'm looking for the museum.",
+  guidedSpeaking: {
+    stem: "I'm looking for the...",
+    emoji: '🏛️',
+    label: 'museum',
+    speak: "I'm looking for the museum.",
+  },
+} as const;
+
+/**
+ * Force Explore the City turn 1 (after Hook) to the full Guided Speaking
+ * scenario — models often collapse it to "London 🇬🇧 😅 ?" and drop the card.
+ * ONLY turn 1 — never rewrite later turns (that was garbling the whole lesson).
+ */
+export function forceExploreCityGuidedSpeakingIfNeeded(
+  lessonId: string,
+  nextTurn: number,
+  history: Array<{ speaker: string; guidedSpeaking?: unknown }>,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    guidedSpeaking: ReturnType<typeof normalizeGuidedSpeaking>;
+    expectedSpeech: string | null;
+  },
+): {
+  textEn: string;
+  textTh: string | null;
+  guidedSpeaking: NonNullable<ReturnType<typeof normalizeGuidedSpeaking>>;
+  expectedSpeech: string;
+} | null {
+  if (lessonId !== 'ee_around_town_convenience') return null;
+  // Opening Hook = turn 0; first Continue → training turn 1 = Guided Speaking only.
+  if (nextTurn !== 1) return null;
+
+  const alreadyHadGuided = history.some(
+    (t) => t.speaker === 'ai' && t.guidedSpeaking != null,
+  );
+  if (alreadyHadGuided) return null;
+
+  // Always pin turn 1 to the canonical card + full Thai scenario.
+  return {
+    textEn: EXPLORE_CITY_GUIDED_SPEAKING.textEn,
+    textTh: EXPLORE_CITY_GUIDED_SPEAKING.textTh,
+    guidedSpeaking: { ...EXPLORE_CITY_GUIDED_SPEAKING.guidedSpeaking },
+    expectedSpeech: EXPLORE_CITY_GUIDED_SPEAKING.expectedSpeech,
+  };
+}
+
 /** Sanitize optional Roleplay Intro card from the model. */
 export function normalizeRoleplayIntro(
   roleplayIntro:
@@ -6929,7 +6984,7 @@ export function sanitizeAroundTownStaffSpeech(
   lessonId: string,
   textEn: string,
   textTh: string | null | undefined,
-  hasEmojiChoice: boolean,
+  _hasEmojiChoice: boolean,
 ): { textEn: string; textTh: string | null } {
   if (!lessonId.startsWith('ee_around_town_')) {
     return { textEn, textTh: textTh?.trim() || null };
@@ -6969,75 +7024,42 @@ export function sanitizeAroundTownStaffSpeech(
     /^you'?re welcome!(?:\s|$)/i.test(raw) &&
     (thaiCount > 0 || raw.length > "You're welcome!".length + 2);
 
+  // Only rewrite when Thai is mashed into a KNOWN staff line that leads the turn
+  // (or Sure!/price/welcome closes). Never touch Teacher coaching / pattern teaches.
+  const staffLeadMash =
+    !!staffMatch &&
+    mixedThaiIntoSpeech &&
+    (new RegExp(
+      `^\\s*${staffMatch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`,
+      'i',
+    ).test(raw) ||
+      (/^(เยี่ยม|ถูกต้อง|เก่ง|เป๊ะ|ดีมาก)/u.test(raw) &&
+        raw.toLowerCase().includes(staffMatch.toLowerCase())));
+
   let cleanedEn = raw;
   let nextTh = textTh?.trim() || '';
 
-  if (
-    sureMash ||
-    priceMash ||
-    welcomeMash ||
-    mixedThaiIntoSpeech ||
-    (hasEmojiChoice && thaiCount > 0)
-  ) {
-    if (sureMash) {
-      cleanedEn = 'Sure!';
-      nextTh = AROUND_TOWN_STAFF_TEXT_TH['Sure!'];
-    } else if (priceMash) {
-      cleanedEn = "It's twenty dollars.";
-      nextTh = AROUND_TOWN_STAFF_TEXT_TH["It's twenty dollars."];
-    } else if (welcomeMash) {
-      cleanedEn = "You're welcome!";
-      nextTh = AROUND_TOWN_STAFF_TEXT_TH["You're welcome!"];
-    } else {
-      cleanedEn = staffMatch ?? '';
-      if (!cleanedEn) {
-        const stripped = raw
-          .replace(/[\u0E00-\u0E7F]+/g, ' ')
-          .replace(/["“”]/g, ' ')
-          .replace(/\s+/g, ' ')
-          .trim();
-        const chunks = stripped
-          .split(/(?<=[.?!:])\s+/)
-          .map((s) => s.trim())
-          .filter(Boolean);
-        cleanedEn =
-          [...chunks]
-            .reverse()
-            .find(
-              (c) =>
-                /\?$/.test(c) ||
-                /^(what|how|are|can|anything|sure)/i.test(c),
-            ) ?? stripped;
-      }
-      if (!nextTh) {
-        nextTh = raw
-          .replace(/[A-Za-z0-9][A-Za-z0-9'?.!, ]*/g, ' ')
-          .replace(/["“”]/g, ' ')
-          .replace(/\s+/g, ' ')
-          .trim()
-          .replace(
-            /^(เยี่ยมมากครับ|เยี่ยมเลยครับ|ถูกต้องครับ|เก่งมากครับ|เป๊ะครับ|ดีมากครับ)[!！.\s]*/u,
-            '',
-          )
-          .trim();
-      }
+  if (sureMash) {
+    cleanedEn = 'Sure!';
+    nextTh = AROUND_TOWN_STAFF_TEXT_TH['Sure!'];
+  } else if (priceMash) {
+    cleanedEn = "It's twenty dollars.";
+    nextTh = AROUND_TOWN_STAFF_TEXT_TH["It's twenty dollars."];
+  } else if (welcomeMash) {
+    cleanedEn = "You're welcome!";
+    nextTh = AROUND_TOWN_STAFF_TEXT_TH["You're welcome!"];
+  } else if (staffLeadMash && staffMatch) {
+    cleanedEn = staffMatch;
+    if (!nextTh) {
+      nextTh = AROUND_TOWN_STAFF_TEXT_TH[staffMatch] ?? '';
     }
-  }
-
-  const finalEn = (cleanedEn || raw).trim();
-  const matched = sureMash
-    ? 'Sure!'
-    : priceMash
-      ? "It's twenty dollars."
-      : welcomeMash
-        ? "You're welcome!"
-        : (staffMatch ?? findStaffMatch(finalEn));
-  if (!nextTh && matched && AROUND_TOWN_STAFF_TEXT_TH[matched]) {
-    nextTh = AROUND_TOWN_STAFF_TEXT_TH[matched];
+  } else if (!nextTh && staffMatch && !mixedThaiIntoSpeech && raw === staffMatch) {
+    // Exact clean staff line missing textTh — fill CC.
+    nextTh = AROUND_TOWN_STAFF_TEXT_TH[staffMatch] ?? '';
   }
 
   return {
-    textEn: finalEn,
+    textEn: (cleanedEn || raw).trim(),
     textTh: nextTh || null,
   };
 }
