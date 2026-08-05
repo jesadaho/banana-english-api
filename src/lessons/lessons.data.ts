@@ -5153,12 +5153,13 @@ FIXED transport board (Pattern 2 — always ALL 4 with labels):
   🚆 Train · 🚌 Bus · 🚕 Taxi · ✈️ Plane
 
 emojiChoice rules:
-- Speak scaffolds via emojiChoice; mic still required.
-- Destination speaks: ALL 4 cities on the board.
-- Pattern 2 transport: ALL 4 transport options — ONE speak only.
+- Speak scaffolds via emojiChoice OR guidedSpeaking multi — not both on the same turn.
+- Destination Mini / Roleplay city asks may use emojiChoice ALL 4 cities.
+- Pattern 2 transport: emojiChoice ALL 4 transport options — ONE speak only.
+- Hook destination: guidedSpeaking stem "I'm going to..." + 4 options (Visual Completion).
 - Roleplay asks may reuse destination / transport boards when helpful.
 - FORBIDDEN: emojiSpeak / emojiSpeakSet anywhere in this lesson.
-- Omit emojiChoice on listen-only / Celebrate turns.
+- Omit emojiChoice / guidedSpeaking on listen-only / Celebrate turns.
 
 Core Flow (ONE-WAY — never go backward):
 
@@ -5166,16 +5167,19 @@ Core Flow (ONE-WAY — never go backward):
    - {{L1}} close to:
      "สวัสดีครับ [Name]! วันนี้เราจะออกเดินทางกันครับ! 🚆
      กำลังจะไปไหนเอ่ย?
-     Where are you going?
-     💡 I'm going to..."
+     Where are you going?"
    - expectsUserSpeech=true. expectedSpeech=""
-   - emojiChoice MUST be ALL 4 cities:
-     { options: [
-       { emoji:"🏙️", label:"Bangkok", speak:"I'm going to Bangkok." },
-       { emoji:"🏔️", label:"Chiang Mai", speak:"I'm going to Chiang Mai." },
-       { emoji:"🏝️", label:"Phuket", speak:"I'm going to Phuket." },
-       { emoji:"🌊", label:"Pattaya", speak:"I'm going to Pattaya." }
-     ] }
+   - Use guidedSpeaking multi-card (NOT emojiChoice) — same Visual Completion system as Explore City:
+     guidedSpeaking: {
+       stem: "I'm going to...",
+       options: [
+         { emoji:"🏙️", label:"Bangkok", speak:"I'm going to Bangkok." },
+         { emoji:"🏔️", label:"Chiang Mai", speak:"I'm going to Chiang Mai." },
+         { emoji:"🏝️", label:"Phuket", speak:"I'm going to Phuket." },
+         { emoji:"🌊", label:"Pattaya", speak:"I'm going to Pattaya." }
+       ]
+     }
+   - FORBIDDEN on Hook: emojiChoice; emojiSpeak; listen-only.
    - Soft-accept full "I'm going to Phuket." OR bare city "Phuket."
    - Remember which city they chose (for Mini Challenge later).
 
@@ -5199,7 +5203,7 @@ Core Flow (ONE-WAY — never go backward):
    - {{L1}}: "ลองอีก 2 เมืองนะครับ 😊"
    - Pick TWO different cities from the ones they have NOT already said on Hook.
    - expectsUserSpeech=true. expectedSpeech=""
-   - emojiChoice MUST still show ALL 4 cities (same board as Hook).
+   - emojiChoice OR guidedSpeaking multi MUST show ALL 4 cities (same 4 destinations as Hook).
    - Soft-accept full sentence OR bare city (recast bare city once on praise turn if needed).
    - After clear speak #1: brief praise → NEXT turn cue speak #2 (different remaining city).
    - After clear speak #2: brief praise → Pattern 2 (transport). NEVER a 3rd Mini destination speak.
@@ -5265,7 +5269,7 @@ Teaching rules:
 
 Turn loop: non-final = action or Continue; Celebrate → isLessonComplete true.`,
     openingPrompt:
-      'Start Transportation 2.5 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook SPEAK — greet by name + "วันนี้เราจะออกเดินทางกันครับ! 🚆 กำลังจะไปไหนเอ่ย? Where are you going?" + guideline "💡 I\'m going to..." — expectsUserSpeech TRUE + emojiChoice ALL 4 cities 🏙️Bangkok 🏔️Chiang Mai 🏝️Phuket 🌊Pattaya. Soft-accept full sentence OR bare city (then Great! + recast "I\'m going to X."). After praise Continue → Teach listen-only "I\'m going to Bangkok." (no repeat) → Mini Challenge EXACTLY 2 more cities from ones not said on Hook (same 4-city board) → Pattern 2 transport SPEAK ONCE only (🚆🚌🚕✈️ board + "💡 I\'m taking the..." — no 2nd transport speak; no listen-only taking model) → Roleplay HARD SPLIT: bridge "คราวนี้ลองคุยกับพนักงานขายตั๋วกันครับ 😊" → Continue → Hello! listen-only → Continue → Where are you going? → How are you traveling? → One ticket? → listen-only close "Here you are. Have a nice trip!" → Continue → Celebrate praise first + tease Directions. roleplayNpc Ticket Seller 🎫 objective "Say where you\'re going and how you\'re traveling." NEVER mash bridge+ask or close+Celebrate. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
+      'Start Transportation 2.5 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook SPEAK — greet by name + "วันนี้เราจะออกเดินทางกันครับ! 🚆 กำลังจะไปไหนเอ่ย? Where are you going?" — expectsUserSpeech TRUE + guidedSpeaking Visual Completion: stem "I\'m going to..." + options 4 cities 🏙️Bangkok 🏔️Chiang Mai 🏝️Phuket 🌊Pattaya (NOT emojiChoice on Hook). Soft-accept full sentence OR bare city (then Great! + recast "I\'m going to X."). After praise Continue → Teach listen-only "I\'m going to Bangkok." (no repeat) → Mini Challenge EXACTLY 2 more cities from ones not said on Hook (emojiChoice 4-city board OK) → Pattern 2 transport SPEAK ONCE only (🚆🚌🚕✈️ board + "💡 I\'m taking the..." — no 2nd transport speak; no listen-only taking model) → Roleplay HARD SPLIT: bridge "คราวนี้ลองคุยกับพนักงานขายตั๋วกันครับ 😊" → Continue → Hello! listen-only → Continue → Where are you going? → How are you traveling? → One ticket? → listen-only close "Here you are. Have a nice trip!" → Continue → Celebrate praise first + tease Directions. roleplayNpc Ticket Seller 🎫 objective "Say where you\'re going and how you\'re traveling." NEVER mash bridge+ask or close+Celebrate. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
   },
   buildStoriesPatternLesson({
     lessonId: 'ee_around_town_directions',
@@ -7087,6 +7091,11 @@ export function normalizeGuidedSpeaking(
         emoji?: string;
         label?: string;
         speak?: string;
+        options?: Array<{
+          emoji?: string;
+          label?: string;
+          speak?: string;
+        }>;
       }
     | null
     | undefined,
@@ -7096,13 +7105,43 @@ export function normalizeGuidedSpeaking(
       emoji: string;
       label?: string;
       speak: string;
+      options?: Array<{ emoji: string; label?: string; speak: string }>;
     }
   | null {
   if (!guidedSpeaking) return null;
   const stem = guidedSpeaking.stem?.trim() ?? '';
+  if (!stem) return null;
+
+  const options = Array.isArray(guidedSpeaking.options)
+    ? guidedSpeaking.options
+        .map((opt) => {
+          const emoji = opt.emoji?.trim() ?? '';
+          const speak = opt.speak?.trim() ?? '';
+          if (!emoji || !speak) return null;
+          const label = opt.label?.trim();
+          return {
+            emoji,
+            speak,
+            ...(label ? { label } : {}),
+          };
+        })
+        .filter((opt): opt is NonNullable<typeof opt> => opt != null)
+    : [];
+
+  if (options.length >= 2) {
+    const first = options[0];
+    return {
+      stem,
+      emoji: first.emoji,
+      speak: first.speak,
+      ...(first.label ? { label: first.label } : {}),
+      options,
+    };
+  }
+
   const emoji = guidedSpeaking.emoji?.trim() ?? '';
   const speak = guidedSpeaking.speak?.trim() ?? '';
-  if (!stem || !emoji || !speak) return null;
+  if (!emoji || !speak) return null;
   const label = guidedSpeaking.label?.trim();
   return {
     stem,
@@ -7111,6 +7150,17 @@ export function normalizeGuidedSpeaking(
     ...(label ? { label } : {}),
   };
 }
+
+/** Canonical Guided Speaking multi-card for Transportation 2.5 Hook. */
+export const TRANSPORT_HOOK_GUIDED_SPEAKING = {
+  stem: "I'm going to...",
+  options: [
+    { emoji: '🏙️', label: 'Bangkok', speak: "I'm going to Bangkok." },
+    { emoji: '🏔️', label: 'Chiang Mai', speak: "I'm going to Chiang Mai." },
+    { emoji: '🏝️', label: 'Phuket', speak: "I'm going to Phuket." },
+    { emoji: '🌊', label: 'Pattaya', speak: "I'm going to Pattaya." },
+  ],
+} as const;
 
 /** Canonical Guided Speaking payload for Explore the City 2.4. */
 export const EXPLORE_CITY_GUIDED_SPEAKING = {

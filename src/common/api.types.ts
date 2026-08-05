@@ -117,16 +117,18 @@ export interface EmojiChoicePrompt {
   options: EmojiChoiceOption[];
 }
 
-/** Guided Speaking — stem + single emoji for the learner to complete aloud. */
+/** Guided Speaking — stem + emoji cue(s) for the learner to complete aloud. */
 export interface GuidedSpeakingPrompt {
   /** Sentence stem shown on the card (e.g. "I'm looking for the..."). */
   stem: string;
-  /** Emoji cue for the missing word/place. */
+  /** Emoji cue for single-card mode (or fallback from first option). */
   emoji: string;
   /** Optional English label under the emoji (e.g. "museum"). */
   label?: string;
   /** Full English the learner should say (STT soft-accept / bias). */
   speak: string;
+  /** Multi-card mode (2–4): stem + option cards; tap biases STT. */
+  options?: Array<{ emoji: string; label?: string; speak: string }>;
 }
 
 /** Roleplay Intro — dual avatar card before staff/NPC dialogue. */

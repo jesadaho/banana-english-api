@@ -71,6 +71,7 @@ import {
   looksLikeAroundTownRoleplayBridge,
   sanitizeAroundTownStaffSpeech,
   isAroundTownRoleplayCloseLine,
+  TRANSPORT_HOOK_GUIDED_SPEAKING,
   getLesson,
   getLessonBananaCost,
   isPronunciationLesson,
@@ -376,13 +377,21 @@ export class SessionsController {
             : (reply.expectsUserSpeech ?? true);
       // Hook / opening must stay listen-only — never attach emojiChoice /
       // guidedSpeaking / roleplayIntro or force the mic just because the model
-      // prematurely returned scaffolds.
-      const openingEmojiChoice = openingExpectsUserSpeech
+      // prematurely returned scaffolds — except Transport Hook (speak + board).
+      let openingEmojiChoice = openingExpectsUserSpeech
         ? normalizeEmojiChoice(reply.emojiChoice)
         : null;
-      const openingGuidedSpeaking = openingExpectsUserSpeech
+      let openingGuidedSpeaking = openingExpectsUserSpeech
         ? normalizeGuidedSpeaking(reply.guidedSpeaking)
         : null;
+      if (config.lessonId === 'ee_around_town_transport') {
+        // Pin Visual Completion 4-city stem (never fall back to flat emojiChoice).
+        openingGuidedSpeaking = normalizeGuidedSpeaking({
+          stem: TRANSPORT_HOOK_GUIDED_SPEAKING.stem,
+          options: [...TRANSPORT_HOOK_GUIDED_SPEAKING.options],
+        });
+        openingEmojiChoice = null;
+      }
       // Opening is Hook — never start mid-roleplay.
       const openingRoleplayIntro = null;
       const openingRoleplayNpc = null;

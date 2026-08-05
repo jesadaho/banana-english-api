@@ -281,16 +281,17 @@ function buildTrainingReplySchema(withSpeechFlag: boolean) {
       guidedSpeaking: {
         type: 'object',
         description:
-          'Optional Guided Speaking card: sentence stem + single emoji cue. Learner completes the stem via mic. Omit on listen-only / emojiChoice / Celebrate turns.',
+          'Optional Guided Speaking: sentence stem + emoji cue(s). Single: stem+emoji+speak. Multi (2–4 cards, e.g. Transport Hook): stem+options[{emoji,label?,speak}]. Learner completes via mic; option tap biases STT. Omit on listen-only / emojiChoice / Celebrate. Do not combine with emojiChoice on the same turn.',
         properties: {
           stem: {
             type: 'string',
             description:
-              'Sentence stem shown on the card (e.g. "I\'m looking for the...").',
+              'Sentence stem shown on the card (e.g. "I\'m looking for the..." / "I\'m going to...").',
           },
           emoji: {
             type: 'string',
-            description: 'Emoji cue for the missing word/place (e.g. "🏛️").',
+            description:
+              'Single-cue emoji (required when options omitted). Ignored when options has 2+ items.',
           },
           label: {
             type: 'string',
@@ -299,10 +300,27 @@ function buildTrainingReplySchema(withSpeechFlag: boolean) {
           speak: {
             type: 'string',
             description:
-              'Full English the learner should say (e.g. "I\'m looking for the museum.").',
+              'Full English for single-cue mode (e.g. "I\'m looking for the museum.").',
+          },
+          options: {
+            type: 'array',
+            description:
+              'Multi-card cues under the same stem (2–4). Prefer this over emojiChoice when a stem is needed.',
+            items: {
+              type: 'object',
+              properties: {
+                emoji: { type: 'string' },
+                label: { type: 'string' },
+                speak: {
+                  type: 'string',
+                  description: 'Full sentence for this option.',
+                },
+              },
+              required: ['emoji', 'speak'],
+            },
           },
         },
-        required: ['stem', 'emoji', 'speak'],
+        required: ['stem'],
       },
       roleplayIntro: {
         type: 'object',
@@ -422,12 +440,17 @@ export interface TrainingTurnReply {
       speak: string;
     }>;
   };
-  /** Guided Speaking — stem + single emoji for the learner to complete aloud. */
+  /// Guided Speaking — stem + emoji cue(s) for the learner to complete aloud.
   guidedSpeaking?: {
     stem: string;
-    emoji: string;
+    emoji?: string;
     label?: string;
-    speak: string;
+    speak?: string;
+    options?: Array<{
+      emoji: string;
+      label?: string;
+      speak: string;
+    }>;
   };
   /** Roleplay Intro card (listen-only → tap Continue). */
   roleplayIntro?: {
