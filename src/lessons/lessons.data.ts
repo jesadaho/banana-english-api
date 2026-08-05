@@ -5227,18 +5227,16 @@ Core Flow (ONE-WAY — never go backward):
    6a. Bridge (listen-only): {{L1}} ONLY close to:
       "คราวนี้ลองคุยกับพนักงานขายตั๋วกันครับ 😊"
       FORBIDDEN: any English staff line; "Where are you going?"; "Hello!"; emojiChoice; mic.
-      User taps Continue → 6b.
-   OBJECTIVE (roleplayNpc.objective on EVERY staff turn 6b–6f):
+      User taps Continue → 6c (NO separate Hello listen turn).
+   OBJECTIVE (roleplayNpc.objective on EVERY staff turn 6c–6f):
      "Say where you're going and how you're traveling."
    ALWAYS return on staff turns:
      roleplayNpc: { emoji:"🎫", name:"Ticket Seller", objective:"Say where you're going and how you're traveling." }
-   6b. Greeting (listen-only) — SEPARATE turn after bridge Continue:
-      textEn = ONLY "Hello!" textTh = "สวัสดีครับ!"
-      expectsUserSpeech=false. Keep roleplayNpc. Continue → 6c.
-   6c. Staff ask #1 — textEn = ONLY "Where are you going?" textTh = Thai CC.
+   6c. Staff ask #1 (SPEAK) — textEn = ONLY "Hello, Where are you going?" textTh = "สวัสดีครับ จะไปที่ไหนครับ?"
       expectsUserSpeech=true. expectedSpeech=""
       Optional emojiChoice: same 4-city board (🏙️🏔️🏝️🌊).
       Soft-accept I'm going to Bangkok / Chiang Mai / Phuket / Pattaya OR bare city.
+      FORBIDDEN: a separate listen-only "Hello!" turn before this ask.
    6d. After clear destination: Staff ONLY textEn="How are you traveling?" textTh = Thai CC. NO praise.
       expectsUserSpeech=true. Optional transport emojiChoice board (Train/Bus/Taxi/Plane).
       Soft-accept I'm taking the train / bus / taxi / plane.
@@ -5250,8 +5248,8 @@ Core Flow (ONE-WAY — never go backward):
       expectsUserSpeech=false. isLessonComplete=false. Keep roleplayNpc.
       User taps Continue → Celebrate NEXT turn.
       FORBIDDEN: mash close + Celebrate; Teacher praise on close turn.
-   HARD: Bridge / Hello / each ask are NEVER the same API turn.
-   FORBIDDEN: inventing extra asks; re-asking after clear reply; "Anything else?"
+   HARD: Bridge / each ask / close are NEVER the same API turn. NEVER go back to Hello after a clear destination.
+   FORBIDDEN: inventing extra asks; re-asking after clear reply; "Anything else?"; separate Hello listen.
 
 7. Celebrate (listen-only) — AFTER Continue from roleplay close ONLY
    - MUST open with praise first ({{L1}}), e.g. "เยี่ยมเลยครับ! 👏" / "Great job! 👏"
@@ -5266,7 +5264,7 @@ Teaching rules:
 
 Turn loop: non-final = action or Continue; Celebrate → isLessonComplete true.`,
     openingPrompt:
-      'Start Transportation 2.5 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook SPEAK — EXACT: "สวัสดีครับคุณ [Name]! วันนี้เราจะออกเดินทางกันครับ! 🚆\\nเลือกเมืองที่คุณอยากไป แล้วลองบอกครูพี่บีหน่อยครับ... Where are you going?" — expectsUserSpeech TRUE + guidedSpeaking Visual Completion: stem "I\'m going to..." + options 4 cities 🏙️Bangkok 🏔️Chiang Mai 🏝️Phuket 🌊Pattaya (NOT emojiChoice on Hook). Soft-accept ONE listen-only: full sentence → "เยี่ยมเลยครับ! 👍 พูดได้เป๊ะมากๆ"; bare city → "เยี่ยมเลยครับ! 👍 ถ้าพูดเต็มประโยค ให้พูดว่า I\'m going to X. แบบนี้นะครับ" (THEIR city; no separate Teach turn). Continue → Mini Challenge EXACTLY 2 speaks ONE city at a time (emojiChoice single picture, NO stem): speak1 "ต่อไปลองบอกว่ากำลังจะไปเมืองนี้ดูครับ... พูดว่าไงดี?" → praise "ยอดเยี่ยมครับ! ไปต่อกันเลย" → speak2 "อีกข้อนะครับ... ลองบอกว่ากำลังจะไปเมืองนี้ดูครับ!" → praise "เก่งมากครับ!" — NEVER 4-city board on Mini → Pattern 2 transport SPEAK ONCE with EXACT cue about I\'m taking the... + pick travel mode (🚆🚌🚕✈️ board) → Roleplay HARD SPLIT: bridge "คราวนี้ลองคุยกับพนักงานขายตั๋วกันครับ 😊" → Continue → Hello! listen-only → Continue → Where are you going? → How are you traveling? → One ticket? → listen-only close "Here you are. Have a nice trip!" → Continue → Celebrate praise first + tease Directions. roleplayNpc Ticket Seller 🎫 objective "Say where you\'re going and how you\'re traveling." NEVER mash bridge+ask or close+Celebrate. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
+      'Start Transportation 2.5 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook SPEAK — EXACT: "สวัสดีครับคุณ [Name]! วันนี้เราจะออกเดินทางกันครับ! 🚆\\nเลือกเมืองที่คุณอยากไป แล้วลองบอกครูพี่บีหน่อยครับ... Where are you going?" — expectsUserSpeech TRUE + guidedSpeaking Visual Completion: stem "I\'m going to..." + options 4 cities 🏙️Bangkok 🏔️Chiang Mai 🏝️Phuket 🌊Pattaya (NOT emojiChoice on Hook). Soft-accept ONE listen-only: full sentence → "เยี่ยมเลยครับ! 👍 พูดได้เป๊ะมากๆ"; bare city → "เยี่ยมเลยครับ! 👍 ถ้าพูดเต็มประโยค ให้พูดว่า I\'m going to X. แบบนี้นะครับ" (THEIR city; no separate Teach turn). Continue → Mini Challenge EXACTLY 2 speaks ONE city at a time (emojiChoice single picture, NO stem): speak1 "ต่อไปลองบอกว่ากำลังจะไปเมืองนี้ดูครับ... พูดว่าไงดี?" → praise "ยอดเยี่ยมครับ! ไปต่อกันเลย" → speak2 "อีกข้อนะครับ... ลองบอกว่ากำลังจะไปเมืองนี้ดูครับ!" → praise "เก่งมากครับ!" — NEVER 4-city board on Mini → Pattern 2 transport SPEAK ONCE with EXACT cue about I\'m taking the... + pick travel mode (🚆🚌🚕✈️ board) → Roleplay HARD SPLIT: bridge "คราวนี้ลองคุยกับพนักงานขายตั๋วกันครับ 😊" → Continue → SPEAK "Hello, Where are you going?" (NO separate Hello listen) → How are you traveling? → One ticket? → listen-only close "Here you are. Have a nice trip!" → Continue → Celebrate praise first + tease Directions. roleplayNpc Ticket Seller 🎫 objective "Say where you\'re going and how you\'re traveling." NEVER mash bridge+ask or close+Celebrate. NEVER go back to Hello after destination. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
   },
   buildStoriesPatternLesson({
     lessonId: 'ee_around_town_directions',
@@ -8844,9 +8842,11 @@ function transportRoleplayAlreadyStarted(
     if (t.roleplayNpc != null) return true;
     const key = normalizeScriptedStaffKey(t.textEn ?? '');
     const en = (t.textEn ?? '').toLowerCase();
-    // Do NOT treat Hook "Where are you going?" as roleplay — wait for bridge / Hello / later asks.
+    // Do NOT treat Hook "Where are you going?" as roleplay — wait for bridge / staff ask.
     if (
       key === 'hello' ||
+      key === 'hello where are you going' ||
+      key === 'hello, where are you going' ||
       key === 'how are you traveling' ||
       key === 'one ticket' ||
       t.textEn?.includes('พนักงานขายตั๋ว') ||
@@ -8986,11 +8986,11 @@ const SCRIPTED_AROUND_TOWN_ROLEPLAYS: Record<string, ScriptedRoleplayConfig> = {
     lessonId: 'ee_around_town_transport',
     objective: TRANSPORT_ROLEPLAY_OBJECTIVE,
     npc: { emoji: '🎫', name: 'Ticket Seller' },
-    roleplayGreeting: { staffEn: 'Hello!', staffTh: 'สวัสดีครับ!' },
+    // No separate Hello listen — greeting is part of ask #1 (avoids loopback to Hello).
     asks: [
       {
-        staffEn: 'Where are you going?',
-        staffTh: 'จะไปที่ไหนครับ?',
+        staffEn: 'Hello, Where are you going?',
+        staffTh: 'สวัสดีครับ จะไปที่ไหนครับ?',
         emojiChoice: TRANSPORT_CITY_EMOJI_CHOICE,
       },
       {
@@ -9030,9 +9030,21 @@ function matchScriptedAskIndex(
 ): number {
   const key = normalizeScriptedStaffKey(text);
   if (!key) return -1;
-  return config.asks.findIndex(
+  const exact = config.asks.findIndex(
     (step) => normalizeScriptedStaffKey(step.staffEn) === key,
   );
+  if (exact >= 0) return exact;
+  // Transport: accept legacy / partial first asks as ask #0.
+  if (config.lessonId === 'ee_around_town_transport') {
+    if (
+      key === 'where are you going' ||
+      key === 'hello where are you going' ||
+      key === 'hello, where are you going'
+    ) {
+      return 0;
+    }
+  }
+  return -1;
 }
 
 /** Off-script staff questions that should never appear mid-roleplay. */
@@ -9056,9 +9068,26 @@ function scriptedRoleplayStartIndex(
     const t = history[i];
     if (t.speaker !== 'ai') continue;
     if (t.roleplayNpc != null) return i;
-    // Transport Hook also asks "Where are you going?" — only start roleplay on NPC / Hello.
+    // Transport Hook also asks "Where are you going?" — only start on NPC /
+    // combined Hello ask / legacy Hello (never Hook teacher mash).
     if (config.lessonId === 'ee_around_town_transport') {
-      if (normalizeScriptedStaffKey(t.textEn ?? '') === 'hello') return i;
+      const key = normalizeScriptedStaffKey(t.textEn ?? '');
+      if (
+        key === 'hello' ||
+        key === 'hello where are you going' ||
+        key === 'hello, where are you going' ||
+        matchScriptedAskIndex(t.textEn ?? '', config) === 0
+      ) {
+        // Bare "where are you going" only counts once Ticket Seller chrome exists
+        // earlier, or text is exactly the staff line (not Hook).
+        if (key === 'where are you going') {
+          const hasNpcEarlier = history
+            .slice(0, i + 1)
+            .some((h) => h.speaker === 'ai' && h.roleplayNpc != null);
+          if (!hasNpcEarlier && (t.textEn ?? '').length > 40) continue;
+        }
+        return i;
+      }
       continue;
     }
     if (matchScriptedAskIndex(t.textEn ?? '', config) === 0) return i;
@@ -9626,11 +9655,13 @@ export function guideScriptedAroundTownRoleplayIfNeeded(
   const startIdx = scriptedRoleplayStartIndex(history, config);
   const currentAskIdx = matchScriptedAskIndex(current.textEn, config);
   const offScript = isOffScriptRoleplayAsk(current.textEn);
-  // Transport Hook also says "Where are you going?" — ignore until Hello / NPC.
+  // Transport Hook also says "Where are you going?" — ignore until NPC chrome /
+  // combined Hello ask (never treat Hook as roleplay).
   const transportBeforeRoleplay =
     config.lessonId === 'ee_around_town_transport' &&
     current.roleplayNpc == null &&
-    !scriptedRoleplayGreetingShown(history, config);
+    startIdx < 0 &&
+    currentAskIdx < 0;
   const inRoleplay =
     current.roleplayNpc != null ||
     offScript ||
@@ -9654,23 +9685,34 @@ export function guideScriptedAroundTownRoleplayIfNeeded(
     return missOverride;
   }
 
+  // Transport: never force a standalone Hello after destination was answered.
+  // Legacy sessions may still have roleplayGreeting removed — skip if unset.
   if (
     config.roleplayGreeting &&
     inRoleplay &&
     !scriptedRoleplayGreetingShown(history, config)
   ) {
-    const gKey = normalizeScriptedStaffKey(config.roleplayGreeting.staffEn);
-    const curKey = normalizeScriptedStaffKey(current.textEn);
-    if (curKey !== gKey || current.expectsUserSpeech) {
-      return {
-        textEn: config.roleplayGreeting.staffEn,
-        textTh: config.roleplayGreeting.staffTh,
-        expectsUserSpeech: false,
-        expectedSpeech: null,
-        roleplayNpc: buildScriptedNpc(config),
-        emojiChoice: null,
-        isTaskComplete: false,
-      };
+    // If ask #0 is already answered, skip greeting and advance.
+    if (
+      config.lessonId === 'ee_around_town_transport' &&
+      startIdx >= 0 &&
+      lastAskAnswered(history, startIdx, 0, config)
+    ) {
+      // fall through to desiredAsk
+    } else {
+      const gKey = normalizeScriptedStaffKey(config.roleplayGreeting.staffEn);
+      const curKey = normalizeScriptedStaffKey(current.textEn);
+      if (curKey !== gKey || current.expectsUserSpeech) {
+        return {
+          textEn: config.roleplayGreeting.staffEn,
+          textTh: config.roleplayGreeting.staffTh,
+          expectsUserSpeech: false,
+          expectedSpeech: null,
+          roleplayNpc: buildScriptedNpc(config),
+          emojiChoice: null,
+          isTaskComplete: false,
+        };
+      }
     }
   }
 
@@ -9946,6 +9988,7 @@ const AROUND_TOWN_STAFF_LINES = [
   'Take care!',
   'Hello!',
   'Yes?',
+  'Hello, Where are you going?',
   'Where are you going?',
   'How are you traveling?',
   'One ticket?',
