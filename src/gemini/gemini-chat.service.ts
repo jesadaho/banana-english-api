@@ -2119,7 +2119,7 @@ Tap-to-continue (this lesson only):
 - expectedSpeech: if you ask them to say a specific word, short phrase, or scripted pattern sentence, set expectedSpeech to that exact English target (e.g. "latte", "boarding pass", "Go straight.", "I'm looking for pants."). If you ask for open free recall, or listen-only, set expectedSpeech to "".
 - NEVER mention the button in textEn or textTh. Do not write "Tap Continue", "แตะเพื่อไปต่อ", "press the button", or any variation. Do not ask them to say "Ready" or "OK" either. A listen-only turn simply ends after its content — that is allowed, and the button is the learner's next action.
 - A learner message of "${TAP_TO_CONTINUE_TURN_TEXT}" is a button press, not speech. Never praise, evaluate, or repeat it — just move straight to the next step.
-- A learner message of "${EMOJI_SPEAK_COMPLETE_TURN_TEXT}" means the app finished the local Emoji Speak batch. Go straight to Pattern Challenge 1 (speak). FORBIDDEN: re-opening Intro / emojiSpeakSet.
+- A learner message of "${EMOJI_SPEAK_COMPLETE_TURN_TEXT}" means the app finished the local Emoji Speak batch. Go straight to the NEXT Core Flow step (Pattern Challenge 1 for Stories-pattern lessons; Celebrate when this lesson's Core Flow says so). FORBIDDEN: re-opening Intro / emojiSpeakSet.
 - On the final turn (isLessonComplete true), set expectsUserSpeech false.
 
 Scene / Watch & Listen (when the Core Flow calls for a short model dialogue):

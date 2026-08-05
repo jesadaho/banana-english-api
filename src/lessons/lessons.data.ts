@@ -4116,7 +4116,180 @@ Turn loop rules (critical — never stall the learner):
 - Focus on confidence and being understandable.
 - When Core Flow reaches Wrap-up & Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the Weather lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. Intro style MUST be Warm & Friendly. CRITICAL: Turn 1 = warm weather-vibe intro + teach weather + ask to repeat ONLY "weather" in the SAME turn — NEVER open with "วันนี้อากาศเป็นไง?" / chatty questions that need a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: hot vs sunny quiz (expect sunny), Pattern 1 (The weather is very hot today) + ask weather near their home by name in {{L1}} THEN the same question in English + apply The weather is very ... today, Pattern 2 (I don\'t like rainy weather) + short ~5s tip about [adj] weather + synthesis "The weather is very hot today. I don\'t like rainy weather.", Thai→English quick check, then celebrate and tease that next is Lesson Summary (สรุปบทเรียน). Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the Weather lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. Intro style MUST be Warm & Friendly. CRITICAL: Turn 1 = warm weather-vibe intro + teach weather + ask to repeat ONLY "weather" in the SAME turn — NEVER open with "วันนี้อากาศเป็นไง?" / chatty questions that need a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: hot vs sunny quiz (expect sunny), Pattern 1 (The weather is very hot today) + ask weather near their home by name in {{L1}} THEN the same question in English + apply The weather is very ... today, Pattern 2 (I don\'t like rainy weather) + short ~5s tip about [adj] weather + synthesis "The weather is very hot today. I don\'t like rainy weather.", Thai→English quick check, then celebrate and tease that next is Favorites / Preferences (เรื่องของโปรด). Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+  },
+  {
+    lessonId: 'ee_about_me_favorites',
+    targetLabel: 'word or sentence',
+    titleEn: 'Favorites',
+    titleTh: 'เรื่องของโปรด',
+    goalEn: 'Talk about preferences, opinions, and what friends like.',
+    goalTh: 'พูดเรื่องของโปรด ความคิดเห็น และสิ่งที่เพื่อนชอบ',
+    difficulty: 'beginner',
+    languageMix: { thai: 70, english: 30 },
+    estimatedMinutesMin: 5,
+    estimatedMinutesMax: 7,
+    targetPhrases: [
+      'pizza',
+      'sushi',
+      'burger',
+      'delicious',
+      'spicy',
+      'I prefer pizza.',
+      'I prefer sushi.',
+      "I think it's delicious.",
+      "I think it's spicy.",
+      'They like pizza.',
+      'They like burgers.',
+      'We eat together.',
+      'We watch movies.',
+      'action',
+      'comedy',
+      'romance',
+      'I prefer action movies.',
+      "I think they're exciting.",
+      'They like comedy movies.',
+      'Yes, we do.',
+    ],
+    maxTurns: 22,
+    listenOnlyTurns: 1,
+    systemInstruction: `Lesson: Favorites (Everyday English → About Me → 1.10)
+Goal: Talk about preferences (I prefer / I think / They like / We…) then Movie roleplay.
+Pace target: ~5–7 minutes. Keep every tutor turn tight.
+
+TEACHING topic = FOOD (fixed for Steps 1–4 — do NOT switch to Movies here).
+ROLEPLAY topic = MOVIES (so answers are not the same as teaching).
+
+Topic banks (reference only — teaching uses Food; roleplay uses Movies):
+  🍕 Food: Pizza · Sushi · Burger
+  🎬 Movies: Action · Comedy · Romance
+  🎵 Music: Rock · Pop · Classical
+  🏖️ Places: Beach · Mountain · City
+
+guidedSpeaking rules (Steps 1–4):
+- MUST return guidedSpeaking with stem + options[] (2 cards). Mic still required.
+- FORBIDDEN: emojiSpeak / emojiSpeakSet. Omit guidedSpeaking on Hook / Intro / Roleplay staff / Celebrate.
+- Soft-accept close variants (with/without "a", plural burgers, "it's" / "it is").
+
+Core Flow (ONE-WAY):
+
+1. Hook (listen-only) — OPENING ONLY
+   - {{L1}} EXACT close to:
+     "สวัสดีครับ [Name]! วันนี้เราจะมาฝึกเล่าเรื่องของโปรด แถมยังเมาท์เรื่องเพื่อนๆ เป็นภาษาอังกฤษได้ในบทเดียว! พร้อมไหมครับ?"
+   - expectsUserSpeech=false. Omit guidedSpeaking / emojiChoice / roleplayIntro.
+   - FORBIDDEN: any mic task / preference question on Hook. Continue → Step 1.
+
+2. Step 1 — Choice & Preference (พูด)
+   - textEn MUST be close to:
+     "Which food do you prefer? ระหว่างสองอย่างนี้ คุณชอบอันไหนมากกว่ากันครับ?"
+   - guidedSpeaking MUST:
+     { stem:"I prefer...", options:[
+       { emoji:"🍕", label:"Pizza", speak:"I prefer pizza." },
+       { emoji:"🍣", label:"Sushi", speak:"I prefer sushi." }
+     ] }
+   - expectsUserSpeech=true. Soft-accept I prefer pizza/sushi (with/without period).
+   - After clear → Step 2. Remember their food for soft praise later if natural.
+
+3. Step 2 — Opinion (พูด)
+   - textEn MUST be close to:
+     "Why do you like it? ทำไมถึงชอบครับ?"
+   - guidedSpeaking MUST:
+     { stem:"I think it's...", options:[
+       { emoji:"😋", label:"delicious", speak:"I think it's delicious." },
+       { emoji:"🌶️", label:"spicy", speak:"I think it's spicy." }
+     ] }
+   - expectsUserSpeech=true. Soft-accept delicious / spicy / full sentence.
+   - After clear → Step 3.
+
+4. Step 3 — Talking about Others (พูด)
+   - textEn MUST be close to:
+     "What about your friends? แล้วเพื่อนๆ ล่ะชอบอะไร?"
+   - guidedSpeaking MUST:
+     { stem:"They like...", options:[
+       { emoji:"🍕", label:"Pizza", speak:"They like pizza." },
+       { emoji:"🍔", label:"Burger", speak:"They like burgers." }
+     ] }
+   - expectsUserSpeech=true. Soft-accept They like pizza/burgers/burger.
+   - After clear → Step 4.
+
+5. Step 4 — Group Action (พูด)
+   - textEn MUST be close to:
+     "Do you eat together? พวกคุณกินด้วยกันไหม?"
+   - guidedSpeaking MUST:
+     { stem:"We...", options:[
+       { emoji:"🍽️", label:"eat together", speak:"We eat together." },
+       { emoji:"🎬", label:"watch movies", speak:"We watch movies." }
+     ] }
+   - expectsUserSpeech=true. Soft-accept We eat together / We watch movies / Yes, we do.
+   - After clear → Roleplay Intro (NEXT turn). FORBIDDEN: jump straight into movie staff ask.
+
+6. Roleplay Intro (listen-only)
+   - ALWAYS praise first, then handoff (same beat as Around Town Intro).
+   - {{L1}} EXACT close to:
+     "เยี่ยมเลยครับ! 👏
+     คราวนี้ลองคุยเรื่องหนังกันเล่นๆ นะครับ 😊
+     พร้อมแล้วแตะเริ่ม Roleplay ได้เลย!"
+   - MUST return roleplayIntro:
+     { subtitle:"คุณกำลังคุยเรื่องหนัง", npcEmoji:"🎬", npcLabel:"เพื่อน", npcName:"Movie Buddy", userLabel:"คุณ" }
+   - expectsUserSpeech=false. Omit guidedSpeaking / roleplayNpc on this turn.
+   - User taps Start Roleplay / Continue → Roleplay.
+
+7. Roleplay — Movies (HARD SPLIT — speak every ask; listen only on close)
+   OBJECTIVE (roleplayNpc.objective every staff turn):
+     "Talk about movies you and your friends like."
+   ALWAYS on staff asks:
+     roleplayNpc: { emoji:"🎬", name:"Movie Buddy", objective:"Talk about movies you and your friends like." }
+   STAFF textEn = ENGLISH ONLY; textTh = Thai CC.
+   FORBIDDEN: Teacher praise in staff textEn; re-asking after clear reply; using Food answers as the only path.
+   7a. Staff: "Which movie do you prefer?" + textTh
+       expectsUserSpeech=true.
+       emojiChoice MUST:
+         { options:[
+           { emoji:"💥", label:"Action", speak:"I prefer action movies." },
+           { emoji:"😂", label:"Comedy", speak:"I prefer comedy movies." },
+           { emoji:"❤️", label:"Romance", speak:"I prefer romance movies." }
+         ] }
+       Soft-accept I prefer action/comedy/romance movies (or bare action/comedy/romance).
+   7b. After clear: Staff ONLY "Why?" (+ textTh). NO praise mash.
+       expectsUserSpeech=true.
+       emojiChoice:
+         { options:[
+           { emoji:"🔥", label:"exciting", speak:"I think they're exciting." },
+           { emoji:"😄", label:"funny", speak:"I think they're funny." },
+           { emoji:"💕", label:"sweet", speak:"I think they're sweet." }
+         ] }
+       Soft-accept I think they're exciting/funny/sweet / I think it's exciting.
+   7c. After clear: Staff ONLY "What about your friends?"
+       expectsUserSpeech=true.
+       emojiChoice:
+         { options:[
+           { emoji:"💥", label:"Action", speak:"They like action movies." },
+           { emoji:"😂", label:"Comedy", speak:"They like comedy movies." },
+           { emoji:"❤️", label:"Romance", speak:"They like romance movies." }
+         ] }
+   7d. After clear: Staff ONLY "Do you watch movies together?"
+       expectsUserSpeech=true. Soft-accept Yes, we do. / Yes. / We watch movies together.
+       Optional emojiChoice: [{ emoji:"🎬", label:"Yes", speak:"Yes, we do." }, { emoji:"🙅", label:"Not really", speak:"Not really." }]
+   7e. ROLEPLAY CLOSE (listen-only) — AFTER clear 7d:
+       textEn = ONLY "Nice!"
+       textTh = "ดีเลยครับ!"
+       expectsUserSpeech=false. Keep roleplayNpc. Continue → Celebrate.
+       FORBIDDEN: mash Nice! + Celebrate.
+
+8. Celebrate (listen-only) — AFTER Continue from Nice! ONLY
+   - MUST open with praise "เยี่ยมเลยครับ! 👏" first.
+   - Warm ~2–3 sentences: name once + I prefer / I think / They like / We… + soft tease Lesson Summary.
+   - expectsUserSpeech=false. isLessonComplete=true. Omit guidedSpeaking / roleplayIntro / roleplayNpc.
+
+Teaching rules:
+- ONE speaking task per turn. Never mash Hook+ask or Intro+staff.
+- Soft-accept → advance. Soft-teach once on unclear → second attempt advance.
+- Roleplay asks ALWAYS expectsUserSpeech=true except Nice! close.
+- Never go backward after a clear reply.
+
+Turn loop: non-final = action or Continue; Celebrate → isLessonComplete true.`,
+    openingPrompt:
+      'Start Favorites 1.10 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — greet by name + "วันนี้เราจะมาฝึกเล่าเรื่องของโปรด แถมยังเมาท์เรื่องเพื่อนๆ เป็นภาษาอังกฤษได้ในบทเดียว! พร้อมไหมครับ?" — expectsUserSpeech false. FORBIDDEN on Turn 1: preference question; guidedSpeaking; mic. After Continue: Step1 food prefer Pizza/Sushi guidedSpeaking stem "I prefer..." → Step2 "Why do you like it?" stem "I think it\'s..." delicious/spicy → Step3 "What about your friends?" stem "They like..." Pizza/Burger → Step4 "Do you eat together?" stem "We..." eat together/watch movies → Roleplay Intro praise + Movie Buddy card → Movie roleplay SPEAK: Which movie do you prefer? (Action/Comedy/Romance) → Why? → What about your friends? → Do you watch movies together? → listen-only "Nice!" → Continue → Celebrate praise first + tease Lesson Summary. roleplayNpc Movie Buddy 🎬 objective "Talk about movies you and your friends like." NEVER mash intro+ask or Nice+Celebrate. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
   },
   {
     lessonId: 'ee_about_me_review',
@@ -5272,7 +5445,7 @@ Core Flow (ONE-WAY — never go backward):
 
 7. Celebrate (listen-only) — AFTER Continue from roleplay close ONLY
    - MUST open with praise first ({{L1}}), e.g. "เยี่ยมเลยครับ! 👏" / "Great job! 👏"
-   - Warm ~2–3 sentences: name once + I'm going to… + I'm taking… + ticket seller chat + soft tease Asking Directions / ถามทาง.
+   - Warm ~2–3 sentences: name once + I'm going to… + I'm taking… + ticket seller chat + soft tease Smart Shopper / ช้อปเปรียบเทียบ.
    - expectsUserSpeech=false. isLessonComplete=true. Omit emojiChoice / emojiSpeak.
 
 Teaching rules:
@@ -5283,56 +5456,163 @@ Teaching rules:
 
 Turn loop: non-final = action or Continue; Celebrate → isLessonComplete true.`,
     openingPrompt:
-      'Start Transportation 2.5 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook SPEAK — EXACT: "สวัสดีครับคุณ [Name]! วันนี้เราจะออกเดินทางกันครับ! 🚆\\nเลือกเมืองที่คุณอยากไป แล้วลองบอกครูพี่บีหน่อยครับ... Where are you going?" — expectsUserSpeech TRUE + guidedSpeaking Visual Completion: stem "I\'m going to..." + options 4 cities 🏙️Bangkok 🏔️Chiang Mai 🏝️Phuket 🌊Pattaya (NOT emojiChoice on Hook). Soft-accept + Mini #1 SAME speak turn: full → "เยี่ยมเลยครับ! 👍 พูดได้เป๊ะมากๆ ต่อไปลองบอกว่ากำลังจะไปเมืองนี้ดูครับ... พูดว่าไงดี?"; bare → "เยี่ยมเลยครับ! 👍 ถ้าพูดเต็มประโยค ให้พูดว่า I\'m going to X. แบบนี้นะครับ ต่อไปลองบอกว่ากำลังจะไปเมืองนี้ดูครับ... พูดว่าไงดี?" + emojiChoice single city (NO separate Soft Accept listen; NO stem). After clear praise "ยอดเยี่ยมครับ! ไปต่อกันเลย" → Mini #2 "อีกข้อนะครับ... ลองบอกว่ากำลังจะไปเมืองนี้ดูครับ!" → praise "เก่งมากครับ!" — NEVER 4-city board on Mini → Pattern 2 transport SPEAK ONCE with EXACT cue about I\'m taking the... + pick travel mode (🚆🚌🚕✈️ board) → Roleplay HARD SPLIT: AFTER Pattern 2 → Roleplay Intro MUST praise first + roleplayIntro Ticket Seller card ("เยี่ยมเลยครับ! 👏 … คราวนี้ลองคุยกับพนักงานขายตั๋ว…") → Start Roleplay → SPEAK "Hello, Where are you going?" (NO separate Hello listen) → How are you traveling? → One ticket? → listen-only close "Here you are. Have a nice trip!" → Continue → Celebrate praise first + tease Directions. roleplayNpc Ticket Seller 🎫 objective "Say where you\'re going and how you\'re traveling." NEVER mash intro+ask or close+Celebrate. NEVER go back to Hello after destination. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
+      'Start Transportation 2.5 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook SPEAK — EXACT: "สวัสดีครับคุณ [Name]! วันนี้เราจะออกเดินทางกันครับ! 🚆\\nเลือกเมืองที่คุณอยากไป แล้วลองบอกครูพี่บีหน่อยครับ... Where are you going?" — expectsUserSpeech TRUE + guidedSpeaking Visual Completion: stem "I\'m going to..." + options 4 cities 🏙️Bangkok 🏔️Chiang Mai 🏝️Phuket 🌊Pattaya (NOT emojiChoice on Hook). Soft-accept + Mini #1 SAME speak turn: full → "เยี่ยมเลยครับ! 👍 พูดได้เป๊ะมากๆ ต่อไปลองบอกว่ากำลังจะไปเมืองนี้ดูครับ... พูดว่าไงดี?"; bare → "เยี่ยมเลยครับ! 👍 ถ้าพูดเต็มประโยค ให้พูดว่า I\'m going to X. แบบนี้นะครับ ต่อไปลองบอกว่ากำลังจะไปเมืองนี้ดูครับ... พูดว่าไงดี?" + emojiChoice single city (NO separate Soft Accept listen; NO stem). After clear praise "ยอดเยี่ยมครับ! ไปต่อกันเลย" → Mini #2 "อีกข้อนะครับ... ลองบอกว่ากำลังจะไปเมืองนี้ดูครับ!" → praise "เก่งมากครับ!" — NEVER 4-city board on Mini → Pattern 2 transport SPEAK ONCE with EXACT cue about I\'m taking the... + pick travel mode (🚆🚌🚕✈️ board) → Roleplay HARD SPLIT: AFTER Pattern 2 → Roleplay Intro MUST praise first + roleplayIntro Ticket Seller card ("เยี่ยมเลยครับ! 👏 … คราวนี้ลองคุยกับพนักงานขายตั๋ว…") → Start Roleplay → SPEAK "Hello, Where are you going?" (NO separate Hello listen) → How are you traveling? → One ticket? → listen-only close "Here you are. Have a nice trip!" → Continue → Celebrate praise first + tease Smart Shopper. roleplayNpc Ticket Seller 🎫 objective "Say where you\'re going and how you\'re traveling." NEVER mash intro+ask or close+Celebrate. NEVER go back to Hello after destination. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
   },
-  buildStoriesPatternLesson({
-    lessonId: 'ee_around_town_directions',
-    code: '2.6',
-    trackLabel: 'Everyday Life',
-    titleEn: 'Asking Directions',
-    titleTh: 'ถามทาง',
-    goalEn: 'Ask for directions politely.',
-    goalTh: 'ถามทาง',
-    hookTh:
-      'หลงทางไหมครับ? วันนี้มาฝึกถามทางสุภาพๆ กันครับ!',
-    emojiWords: [
-      { emoji: '⬅️', answer: 'left', hint: 'l _ f t' },
-      { emoji: '➡️', answer: 'right', hint: 'r _ g h t' },
-      { emoji: '⬆️', answer: 'straight', hint: 's t r _ _ g h t' },
-      { emoji: '📍', answer: 'near', hint: 'n _ _ r' },
+  {
+    lessonId: 'ee_around_town_smart_shopper',
+    targetLabel: 'word or sentence',
+    titleEn: 'Smart Shopper',
+    titleTh: 'ช้อปเปรียบเทียบ',
+    goalEn: 'Compare items and decide what to buy.',
+    goalTh: 'เปรียบเทียบของแล้วตัดสินใจซื้อ',
+    difficulty: 'beginner',
+    languageMix: { thai: 70, english: 30 },
+    estimatedMinutesMin: 5,
+    estimatedMinutesMax: 8,
+    targetPhrases: [
+      'cheaper',
+      'bigger',
+      'better',
+      'Which one is cheaper?',
+      'Which one is bigger?',
+      'Which one is better?',
+      'This one is bigger.',
+      'This one is cheaper.',
+      'This one is better.',
+      "I'll take this one.",
+      "I'll take the cheaper one.",
+      "I'll take the bigger one.",
+      'The blue one is cheaper.',
+      'The big one is bigger.',
+      'Sandwich B is better.',
+      "I'll take the blue shirt.",
+      "I'll take the big one.",
+      "I'll take sandwich B.",
     ],
-    tellGoal: 'build direction questions and polite openers',
-    tell1CueTh:
-      'ถ้าจะถามคนเดินผ่านว่า สถานีอยู่ที่ไหน ให้พูดว่า... Where is the station? ... ลองพูดดูครับ',
-    tell1Thai: 'สถานีอยู่ที่ไหน',
-    tell1En: 'Where is the station?',
-    tipTh:
-      'เยี่ยมเลยครับ! Where is...? ใช้ถามทางได้ และขึ้นต้นด้วย Excuse me. จะสุภาพขึ้น',
-    tell2CueTh:
-      'คราวนี้ถ้าจะเปลี่ยนเป็น มุมถนนอยู่ที่ไหน... ลองพูดว่าไงดีครับ?',
-    tell2Thai: 'มุมถนนอยู่ที่ไหน',
-    tell2En: 'Where is the corner?',
-    tell2PraiseTh: 'โอเคเลย! เข้าใจง่ายสุดๆ',
-    tell3CueTh: 'ถ้าจะถามแบบสุภาพ ขอโทษครับ สถานีอยู่ที่ไหน... ลองพูดสิครับ',
-    tell3Thai: 'ขอโทษครับ สถานีอยู่ที่ไหน',
-    tell3En: 'Excuse me. Where is the station?',
-    tell3PraiseTh: 'สุภาพมาก! Excuse me + Where is... เป๊ะครับ',
-    ask1CueTh:
-      'คราวนี้ลองถามทางอีกครั้ง... โดยพูดว่า Where is the station? ... ลองเลยครับ',
-    ask1En: 'Where is the station?',
-    ask1AiAnswerEn: 'Go straight and turn left.',
-    ask1PraiseTh: 'เป๊ะเลยครับ!',
-    ask2ThaiCue: 'คราวนี้ลองถามเองดูครับ ว่าใกล้ไหม พูดว่าไงดี?',
-    ask2En: 'Is it near here?',
-    ask2AiAnswerEn: 'Yes, it is near here.',
-    ask2PraiseTh: 'ดีมากครับ!',
-    answerBridgeTh:
-      'ดีมากครับ! ต่อไปสมมุติว่าผมเป็นคนท้องถิ่นนะครับ...',
-    answer1En: 'What are you looking for?',
-    answer1PraiseTh: 'ดีมากครับ!',
-    answer2En: 'Do you need help?',
-    nextLessonHint: 'Hotel / โรงแรม',
-  }),
+    maxTurns: 22,
+    listenOnlyTurns: 1,
+    systemInstruction: `Lesson: Smart Shopper (Everyday English → Everyday Life → 2.6)
+Goal: Teach Which one is… / This one is… / I'll take… then run 4 Mini Challenge compares.
+Pace target: ~5–8 minutes. Keep every tutor turn tight.
+
+FIXED boards (guidedSpeaking ONLY — never emojiChoice on these beats):
+  Teach1: cheaper · bigger · better
+  Teach2: cheaper · bigger · better
+  Teach3: this one · the cheaper one · the bigger one
+  Mini1: cheaper · more expensive
+  Mini2: bigger · smaller
+  Mini3: better · spicier
+  Mini4: the blue shirt · the big one · sandwich B
+
+guidedSpeaking rules:
+- MUST return guidedSpeaking with stem + options[] (2–3 cards). Mic still required.
+- FORBIDDEN: emojiSpeak / emojiSpeakSet / roleplayIntro / roleplayNpc.
+- Soft-accept close variants.
+
+Core Flow (ONE-WAY):
+
+1. Hook (listen-only) — OPENING ONLY (~3 sec vibe)
+   - {{L1}} EXACT close to:
+     "เข้าเซเว่นเลือกของไม่ถูก... อันไหนคุ้มกว่า ถอดรหัสเปรียบเทียบใน 3 นาทีกันครับ!"
+   - expectsUserSpeech=false. Omit guidedSpeaking / emojiChoice.
+   - FORBIDDEN: mic / question on Hook. Continue → Teach 1.
+
+2. Teach 1 — Compare & Ask (พูด)
+   - textEn MUST be close to:
+     "Which one is cheaper? เวลาเลือกของ 2 ชิ้นแล้วอยากถามว่า 'อันไหน...' ให้ใช้คำว่า 'Which one is...' แล้วเลือกคำเปรียบเทียบบนจอเลยครับ"
+   - guidedSpeaking MUST:
+     { stem:"Which one is ______?", options:[
+       { emoji:"🏷️", label:"cheaper", speak:"Which one is cheaper?" },
+       { emoji:"📦", label:"bigger", speak:"Which one is bigger?" },
+       { emoji:"🥤", label:"better", speak:"Which one is better?" }
+     ] }
+   - expectsUserSpeech=true. Soft-accept Which one is cheaper/bigger/better.
+   - After clear → Teach 2. Open Teach 2 with praise close to:
+     "เยี่ยมมาก! คำว่า Which one แปลว่า 'อันไหน/ชิ้นไหน' ครับ 🏷️"
+
+3. Teach 2 — State Comparison (พูด)
+   - After praise opener, cue close to:
+     "This one is bigger. สมมติเราหยิบขึ้นมาดูแล้วบอกว่า 'อันนี้ใหญ่กว่า / ถูกกว่า' ให้พูดว่า 'This one is...' ลองเลือกตอบดูครับ"
+   - guidedSpeaking MUST:
+     { stem:"This one is ______", options:[
+       { emoji:"🏷️", label:"cheaper", speak:"This one is cheaper." },
+       { emoji:"📦", label:"bigger", speak:"This one is bigger." },
+       { emoji:"😋", label:"better", speak:"This one is better." }
+     ] }
+   - expectsUserSpeech=true. Soft-accept This one is cheaper/bigger/better.
+   - After clear → Teach 3. Open with:
+     "เป๊ะเลย! เติม -er หลังคำศัพท์เพื่อบอกว่า '...กว่า' ครับ 📦"
+
+4. Teach 3 — Decision (พูด)
+   - Cue close to:
+     "I'll take this one. ตัดสินใจได้แล้ว! จะบอกพนักงานว่า 'เอาอันนี้แหละ' ให้พูดประโยคนี้ครับ"
+   - guidedSpeaking MUST:
+     { stem:"I'll take ______", options:[
+       { emoji:"🛍️", label:"this one", speak:"I'll take this one." },
+       { emoji:"🏷️", label:"the cheaper one", speak:"I'll take the cheaper one." },
+       { emoji:"📦", label:"the bigger one", speak:"I'll take the bigger one." }
+     ] }
+   - expectsUserSpeech=true. Soft-accept I'll take this one / the cheaper one / the bigger one.
+   - After clear → Mini 1. Open with:
+     "สุดยอด! คำว่า I'll take... เป็นคำติดปากเวลาตัดสินใจซื้อของเลยครับ 🛒"
+
+5. Mini 1 — Price (พูด)
+   - Cue close to:
+     "Which one is cheaper? อันไหนถูกกว่ากันครับ? Red Shirt — $10 · Blue Shirt — $8"
+   - guidedSpeaking MUST:
+     { stem:"The blue one is...", options:[
+       { emoji:"🔵", label:"cheaper", speak:"The blue one is cheaper." },
+       { emoji:"🔴", label:"more expensive", speak:"The blue one is more expensive." }
+     ] }
+   - Soft-accept The blue one is cheaper. / Blue is cheaper.
+   - After clear praise close to: "ถูกต้องครับ! 🔵👕 ใช้ The [color] one... เวลาชี้ระบุของชิ้นนั้นๆ ได้เลย!" → Mini 2.
+
+6. Mini 2 — Size (พูด)
+   - Cue: "Which one is bigger? ขวดไหนใหญ่กว่ากันครับ? Small Water — 500 ml · Big Water — 1,500 ml"
+   - guidedSpeaking:
+     { stem:"The big one is...", options:[
+       { emoji:"📦", label:"bigger", speak:"The big one is bigger." },
+       { emoji:"🥤", label:"smaller", speak:"The big one is smaller." }
+     ] }
+   - Soft-accept The big one is bigger.
+   - After clear: "เป๊ะเลยครับ! The big one หมายถึงขวดใหญ่ครับ 📦" → Mini 3.
+
+7. Mini 3 — Taste/Quality (พูด)
+   - Cue: "Which one is better? อันไหนน่าทานหรือดีกว่ากัน? Sandwich A — 3 stars · Sandwich B — 5 stars"
+   - guidedSpeaking:
+     { stem:"Sandwich B is...", options:[
+       { emoji:"😋", label:"better", speak:"Sandwich B is better." },
+       { emoji:"🌶️", label:"spicier", speak:"Sandwich B is spicier." }
+     ] }
+   - Soft-accept Sandwich B is better. / B is better.
+   - After clear: "เก่งมากครับ! better ใช้บอกว่าดีกว่า/อร่อยกว่าครับ 😋" → Mini 4.
+
+8. Mini 4 — Final Selection (พูด)
+   - Cue: "So, which one do you want? งั้นคุณจะรับชิ้นไหนดีครับ?"
+   - guidedSpeaking:
+     { stem:"I'll take...", options:[
+       { emoji:"🔵", label:"Blue Shirt", speak:"I'll take the blue shirt." },
+       { emoji:"📦", label:"Big Water", speak:"I'll take the big one." },
+       { emoji:"🥪", label:"Sandwich B", speak:"I'll take sandwich B." }
+     ] }
+   - Soft-accept I'll take the blue shirt / the big one / sandwich B / I'll take Blue Shirt.
+   - After clear → Celebrate NEXT turn (listen-only). Short praise OK on this speak turn, but FORBIDDEN: Celebrate mash on same turn.
+
+9. Celebrate (listen-only) — AFTER Mini 4 clear ONLY
+   - MUST open with praise "เยี่ยมเลยครับ! 👏" first.
+   - Warm ~2–3 sentences: name once + Which one is… / This one is… / I'll take… + soft tease Hotel / โรงแรม.
+   - Also stay close to vibe: "ยอดเยี่ยม! ปิดการขายได้เพอร์เฟกต์เลยครับ 🛒🎉"
+   - expectsUserSpeech=false. isLessonComplete=true. Omit guidedSpeaking / emojiChoice.
+
+Teaching rules:
+- ONE speaking task per turn. Never mash Hook+Teach1.
+- Soft-accept → advance. Soft-teach once if unclear → second attempt advance.
+- Never go backward.
+
+Turn loop: non-final = action or Continue; Celebrate → isLessonComplete true.`,
+    openingPrompt:
+      'Start Smart Shopper 2.6 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — "เข้าเซเว่นเลือกของไม่ถูก... อันไหนคุ้มกว่า ถอดรหัสเปรียบเทียบใน 3 นาทีกันครับ!" — expectsUserSpeech false. FORBIDDEN on Turn 1: guidedSpeaking; mic. After Continue: Teach1 "Which one is ______?" cheaper/bigger/better → Teach2 "This one is ______" → Teach3 "I\'ll take ______" → Mini1 The blue one is cheaper (Red $10 / Blue $8) → Mini2 The big one is bigger → Mini3 Sandwich B is better → Mini4 I\'ll take the blue shirt / big one / sandwich B → Celebrate praise first + tease Hotel. NO Roleplay. NO emojiSpeak. NEVER mash Hook+ask. Return JSON matching schema. isLessonComplete must be false.',
+  },
   buildStoriesPatternLesson({
     lessonId: 'ee_around_town_hotel',
     code: '2.7',
@@ -5472,8 +5752,115 @@ Turn loop: non-final = action or Continue; Celebrate → isLessonComplete true.`
     answer1En: 'How can I help you?',
     answer1PraiseTh: 'ดีมากครับ!',
     answer2En: "What's wrong?",
-    nextLessonHint: 'Lesson Summary / สรุปบทเรียน',
+    nextLessonHint: 'Survival English / เอาตัวรอด',
   }),
+  {
+    lessonId: 'ee_around_town_survival',
+    targetLabel: 'word or sentence',
+    titleEn: 'Survival English',
+    titleTh: 'เอาตัวรอด',
+    goalEn: 'Use short survival lines when something goes wrong.',
+    goalTh: 'ใช้ประโยคเอาตัวรอดสั้นๆ เมื่อเกิดเรื่องฉุกเฉิน',
+    difficulty: 'beginner',
+    languageMix: { thai: 70, english: 30 },
+    estimatedMinutesMin: 5,
+    estimatedMinutesMax: 7,
+    targetPhrases: [
+      'bag',
+      'phone',
+      'wallet',
+      "I can't find my bag.",
+      "I can't find my phone.",
+      "I can't find my wallet.",
+      'Can you help me?',
+      'Can you show me?',
+      'Can you speak slowly?',
+      'Can you speak again?',
+    ],
+    maxTurns: 18,
+    listenOnlyTurns: 1,
+    systemInstruction: `Lesson: Survival English (Everyday English → Everyday Life → 2.10)
+Goal: Build 3 survival lines, then lock them with Emoji Speak.
+Pace target: ~5–7 minutes. Keep every tutor turn tight.
+
+FIXED boards:
+  Lost items: 🧳 bag · 📱 phone · 👛 wallet
+  Assist: 🆘 help me · 📍 show me
+  Adjust: 🐢 slowly · 🔁 again
+
+guidedSpeaking rules (Steps 1–3):
+- MUST return guidedSpeaking with stem + options[] (2–3 cards). Mic still required.
+- FORBIDDEN on Steps 1–3: emojiSpeak / emojiSpeakSet / roleplayIntro.
+- Soft-accept close variants.
+
+Core Flow (ONE-WAY):
+
+1. Hook (listen-only) — OPENING ONLY (~3 sec vibe)
+   - {{L1}} EXACT close to:
+     "เกิดเรื่องฉุกเฉินขึ้นมา... จะพูดเอาตัวรอดได้ยังไง? มาเก็บประโยคเอาชีวิตรอดแล้วลุยเกม Emoji Speak กันครับ!"
+   - expectsUserSpeech=false. Omit guidedSpeaking / emojiChoice / emojiSpeakSet.
+   - FORBIDDEN: mic / question on Hook. Continue → Step 1.
+
+2. Step 1 — Tell the Problem (พูด)
+   - textEn MUST be close to:
+     "I can't find my bag. บอกปัญหาก่อนครับ... สมมติว่า 'ฉันหาของไม่เจอ' ให้พูดว่า 'I can't find my...' แล้วเลือกของบนจอได้เลยครับ"
+   - guidedSpeaking MUST:
+     { stem:"I can't find my...", options:[
+       { emoji:"🧳", label:"bag", speak:"I can't find my bag." },
+       { emoji:"📱", label:"phone", speak:"I can't find my phone." },
+       { emoji:"👛", label:"wallet", speak:"I can't find my wallet." }
+     ] }
+   - expectsUserSpeech=true. Soft-accept I can't find my bag/phone/wallet.
+   - After clear → Step 2.
+
+3. Step 2 — Request Assistance (พูด)
+   - textEn MUST be close to:
+     "Can you help me? พอเกิดเรื่องขึ้น ขอให้คนอื่นช่วยด้วยประโยคนี้ครับ"
+   - guidedSpeaking MUST:
+     { stem:"Can you ______?", options:[
+       { emoji:"🆘", label:"help me", speak:"Can you help me?" },
+       { emoji:"📍", label:"show me", speak:"Can you show me?" }
+     ] }
+   - expectsUserSpeech=true. Soft-accept Can you help me? / Can you show me?
+   - After clear → Step 3.
+
+4. Step 3 — Speak Adjustments (พูด)
+   - textEn MUST be close to:
+     "Can you speak slowly? ถ้าฟังฝรั่งพูดไม่ทัน ลองขอให้เขาปรับวิธีพูดดูครับ"
+   - guidedSpeaking MUST:
+     { stem:"Can you speak ______?", options:[
+       { emoji:"🐢", label:"slowly", speak:"Can you speak slowly?" },
+       { emoji:"🔁", label:"again", speak:"Can you speak again?" }
+     ] }
+   - expectsUserSpeech=true. Soft-accept Can you speak slowly? / Can you speak again?
+   - After clear → Emoji Speak Intro (NEXT turn). FORBIDDEN: Celebrate yet.
+
+5. Emoji Speak (listen-only Intro + full batch) — AFTER Step 3
+   - {{L1}} close to: "เยี่ยมเลยครับ! 👏 ต่อไปลุยเกม Emoji Speak ทายประโยคเอาตัวรอดกันครับ!"
+   - expectsUserSpeech=false. isLessonComplete=false.
+   - MUST return emojiSpeakSet with ALL 4 items (exact list; app runs locally):
+     1) { emoji:"📱❓", answer:"I can't find my phone.", hint:"I c__ f__ m_ p____.", index:1, total:4 }
+     2) { emoji:"👛❓", answer:"I can't find my wallet.", hint:"I c__ f__ m_ w______.", index:2, total:4 }
+     3) { emoji:"🆘👮", answer:"Can you help me?", hint:"C__ y__ h___ m_?", index:3, total:4 }
+     4) { emoji:"🗣️🐢", answer:"Can you speak slowly?", hint:"C__ y__ s____ s______?", index:4, total:4 }
+   - FORBIDDEN: one-word emojiSpeak turns; inventing extra puzzles; guidedSpeaking on this turn.
+   - App finishes all 4 then sends "[emoji-speak-complete]" (or finished Emoji Speak signal).
+
+6. Celebrate (listen-only) — AFTER emoji-speak-complete ONLY
+   - MUST open with praise "เยี่ยมเลยครับ! 👏" first.
+   - Warm ~2–3 sentences: name once + I can't find my… / Can you help me? / Can you speak slowly? + soft tease Lesson Summary.
+   - expectsUserSpeech=false. isLessonComplete=true. Omit guidedSpeaking / emojiSpeakSet / emojiChoice.
+   - FORBIDDEN: starting Pattern Challenge after Emoji Speak — this lesson has NO Tell/Ask after the game.
+
+Teaching rules:
+- ONE speaking task per turn. Never mash Hook+Step1.
+- Soft-accept → advance. Soft-teach once if unclear → second attempt advance.
+- Never go backward.
+
+Turn loop: non-final = action or Continue; Celebrate → isLessonComplete true.`,
+    openingPrompt:
+      'Start Survival English 2.10 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — "เกิดเรื่องฉุกเฉินขึ้นมา... จะพูดเอาตัวรอดได้ยังไง? มาเก็บประโยคเอาชีวิตรอดแล้วลุยเกม Emoji Speak กันครับ!" — expectsUserSpeech false. FORBIDDEN on Turn 1: guidedSpeaking; emojiSpeakSet; mic. After Continue: Step1 "I can\'t find my..." bag/phone/wallet guidedSpeaking → Step2 stem "Can you ______?" help me/show me → Step3 stem "Can you speak ______?" slowly/again → NEXT listen-only Emoji Speak Intro + emojiSpeakSet ALL 4 (phone / wallet / help me / speak slowly with letter hints) → after [emoji-speak-complete] Celebrate praise first + tease Lesson Summary. NO Pattern Challenge after Emoji Speak. NEVER mash Hook+ask. Return JSON matching schema. isLessonComplete must be false.',
+  },
   // --- Everyday Life chapter review ---
   {
     lessonId: 'ee_around_town_review',
@@ -5540,7 +5927,7 @@ Node 1 — Celebrate (listen-only) — OPENING TURN
    "เยี่ยมมากครับ [Name]!
    คุณเรียน Around Town จบแล้วครับ
    ตอนนี้คุณสามารถสื่อสารในสถานการณ์ต่าง ๆ นอกบ้านได้แล้ว
-   คุณซื้อของ สั่งกาแฟ ถามทาง เช็กอินโรงแรม และขอความช่วยเหลือได้ด้วยตัวเอง
+   คุณซื้อของ สั่งกาแฟ เปรียบเทียบของในร้าน เช็กอินโรงแรม และขอความช่วยเหลือได้ด้วยตัวเอง
    แต่รู้ไหมครับ... ระหว่างที่พูดทั้งหมดนั้น คุณใช้ Grammar สำคัญอยู่หลายอย่าง โดยแทบไม่ต้องท่องจำเลยครับ"
    No quiz yet. expectsUserSpeech = false.
 
@@ -5642,7 +6029,7 @@ Turn loop rules (critical):
 - Accept near-miss STT when meaning is clear (e.g. "go strait" → Go straight, "how much is this" → How much is this?, "his pass port" → His passport).
 - When Core Flow reaches Node 10, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the Everyday Life Chapter 2 Review (Around Town complete) for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. CRITICAL: Turn 1 = Celebrate ONLY (Around Town จบแล้ว / can communicate outside / shop, coffee, directions, hotel, help / Grammar without memorizing) — expectsUserSpeech false, NO quiz yet, do NOT mention any button. Then follow Core Flow one-way: Node 2 Present Continuous (I\'m looking for / I\'m checking in / I\'m taking the train) → Node 3 quiz×3 → Node 4 Questions reveal (NEW listen-only; ONLY question words How much / What / Where with Thai — NOT full sentences yet, NOT Can I...?) → Node 5 Questions quiz×4 Thai→English full sentences (How much is this? / What do you recommend? / Where is the station? / What\'s wrong?) → Node 6 Imperatives teach FIRST → Node 7 directions quiz×2 → Node 8 Possessives (my (ของฉัน) / your / his / her — parentheses NOT equals; NO example phrases like My bag on this turn) → Node 9 Possessives quiz×2 (His passport / Her room) → Node 10 Chapter Complete (สรุป + พร้อมปลดล็อก Chapter ถัดไป, isLessonComplete true). Return JSON matching the schema. isLessonComplete must be false and expectsUserSpeech must be false on Turn 1.',
+      'Start the Everyday Life Chapter 2 Review (Around Town complete) for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. CRITICAL: Turn 1 = Celebrate ONLY (Around Town จบแล้ว / can communicate outside / shop, coffee, compare items, hotel, help / Grammar without memorizing) — expectsUserSpeech false, NO quiz yet, do NOT mention any button. Then follow Core Flow one-way: Node 2 Present Continuous (I\'m looking for / I\'m checking in / I\'m taking the train) → Node 3 quiz×3 → Node 4 Questions reveal (NEW listen-only; ONLY question words How much / What / Where with Thai — NOT full sentences yet, NOT Can I...?) → Node 5 Questions quiz×4 Thai→English full sentences (How much is this? / What do you recommend? / Where is the station? / What\'s wrong?) → Node 6 Imperatives teach FIRST → Node 7 directions quiz×2 → Node 8 Possessives (my (ของฉัน) / your / his / her — parentheses NOT equals; NO example phrases like My bag on this turn) → Node 9 Possessives quiz×2 (His passport / Her room) → Node 10 Chapter Complete (สรุป + พร้อมปลดล็อก Chapter ถัดไป, isLessonComplete true). Return JSON matching the schema. isLessonComplete must be false and expectsUserSpeech must be false on Turn 1.',
   },
 
   // --- Everyday English Chapter 3: Stories (Past Simple) ---
@@ -6915,16 +7302,18 @@ export const LESSON_PROGRESSION_ORDER: string[] = [
   'ee_about_me_people',
   'ee_about_me_friends',
   'ee_about_me_weather',
+  'ee_about_me_favorites',
   'ee_about_me_review',
   'ee_around_town_shopping',
   'ee_around_town_restaurant',
   'ee_around_town_coffee',
   'ee_around_town_convenience',
   'ee_around_town_transport',
-  'ee_around_town_directions',
+  'ee_around_town_smart_shopper',
   'ee_around_town_hotel',
   'ee_around_town_airport',
   'ee_around_town_pharmacy',
+  'ee_around_town_survival',
   'ee_around_town_review',
   'ee_stories_yesterday',
   'ee_stories_last_weekend',
@@ -7603,7 +7992,11 @@ export function ensureExploreCityCelebratePraiseFirst(
     lessonId === 'ee_around_town_convenience' ||
     lessonId === 'ee_around_town_shopping' ||
     lessonId === 'ee_around_town_restaurant' ||
-    lessonId === 'ee_around_town_coffee';
+    lessonId === 'ee_around_town_coffee' ||
+    lessonId === 'ee_around_town_transport' ||
+    lessonId === 'ee_around_town_smart_shopper' ||
+    lessonId === 'ee_around_town_survival' ||
+    lessonId === 'ee_about_me_favorites';
   if (!aroundTown) return null;
   if (!current.isTaskComplete) return null;
   if (current.roleplayIntro != null || current.roleplayNpc != null) {
@@ -7826,6 +8219,8 @@ export const COFFEE_ROLEPLAY_OBJECTIVE =
   'Order a coffee — type and hot or iced.';
 export const TRANSPORT_ROLEPLAY_OBJECTIVE =
   "Say where you're going and how you're traveling.";
+export const FAVORITES_ROLEPLAY_OBJECTIVE =
+  'Talk about movies you and your friends like.';
 
 /** Teacher bridge before Transportation 2.5 roleplay. */
 export const TRANSPORT_ROLEPLAY_BRIDGE_TH =
@@ -7918,6 +8313,20 @@ export const TRANSPORT_ROLEPLAY_INTRO: AroundTownRoleplayIntroPayload = {
   },
 };
 
+export const FAVORITES_ROLEPLAY_INTRO: AroundTownRoleplayIntroPayload = {
+  textEn:
+    'เยี่ยมเลยครับ! 👏\n\nคราวนี้ลองคุยเรื่องหนังกันเล่นๆ นะครับ 😊\n\nพร้อมแล้วแตะเริ่ม Roleplay ได้เลย!',
+  textEnEnglish:
+    "Great job! 👏\n\nLet's chat about movies 😊\n\nTap when you're ready to start!",
+  roleplayIntro: {
+    subtitle: 'คุณกำลังคุยเรื่องหนัง',
+    npcEmoji: '🎬',
+    npcLabel: 'เพื่อน',
+    npcName: 'Movie Buddy',
+    userLabel: 'คุณ',
+  },
+};
+
 /** Canonical praise + Intro card for Around Town 2.1–2.5 (Explore uses EXPLORE_CITY_ROLEPLAY_INTRO). */
 export function aroundTownRoleplayIntroSpeech(
   lessonId: string,
@@ -7932,15 +8341,17 @@ export function aroundTownRoleplayIntroSpeech(
           ? COFFEE_ROLEPLAY_INTRO
           : lessonId === 'ee_around_town_transport'
             ? TRANSPORT_ROLEPLAY_INTRO
-            : lessonId === 'ee_around_town_convenience'
-              ? {
-                  textEn: EXPLORE_CITY_ROLEPLAY_INTRO.textEn,
-                  textEnEnglish: EXPLORE_CITY_ROLEPLAY_INTRO.textEn,
-                  roleplayIntro: {
-                    ...EXPLORE_CITY_ROLEPLAY_INTRO.roleplayIntro,
-                  },
-                }
-              : null;
+            : lessonId === 'ee_about_me_favorites'
+              ? FAVORITES_ROLEPLAY_INTRO
+              : lessonId === 'ee_around_town_convenience'
+                ? {
+                    textEn: EXPLORE_CITY_ROLEPLAY_INTRO.textEn,
+                    textEnEnglish: EXPLORE_CITY_ROLEPLAY_INTRO.textEn,
+                    roleplayIntro: {
+                      ...EXPLORE_CITY_ROLEPLAY_INTRO.roleplayIntro,
+                    },
+                  }
+                : null;
   if (!payload) return null;
   return {
     textEn: pickTeacherLine(lang, payload.textEn, payload.textEnEnglish),
@@ -7977,6 +8388,7 @@ export function looksLikeAroundTownRoleplayBridge(textEn: string): boolean {
   if (!t) return false;
   if (t.includes('ต่อไปครูพี่บีจะเป็น')) return true;
   if (t.includes('คราวนี้ลองคุยกับพนักงาน')) return true;
+  if (t.includes('คราวนี้ลองคุยเรื่องหนัง')) return true;
   if (t.includes('พร้อม Roleplay')) return true;
   if (t.includes('พร้อมแล้ว แตะเพื่อเริ่ม')) return true;
   if (t.includes('พร้อมแล้วแตะเริ่ม')) return true;
@@ -8448,6 +8860,287 @@ export function forceCoffeeRoleplayBridgeIfNeeded(
     current.expectsUserSpeech &&
     !looksLikeAroundTownRoleplayBridge(current.textEn) &&
     !/\bwhat can i get for you\b/i.test(current.textEn)
+  ) {
+    return null;
+  }
+
+  const intro = aroundTownRoleplayIntroSpeech(lessonId, lang);
+  if (!intro) return null;
+
+  return {
+    textEn: intro.textEn,
+    textTh: null,
+    expectsUserSpeech: false,
+    expectedSpeech: null,
+    roleplayIntro: intro.roleplayIntro,
+    roleplayNpc: null,
+    guidedSpeaking: null,
+    emojiChoice: null,
+    isTaskComplete: false,
+  };
+}
+
+function historyHasFavoritesGroupStepCue(
+  history: Array<{
+    speaker: string;
+    textEn?: string;
+    roleplayNpc?: unknown;
+  }>,
+): boolean {
+  return history.some((t) => {
+    if (t.speaker !== 'ai' || t.roleplayNpc != null) return false;
+    const text = t.textEn ?? '';
+    const lower = text.toLowerCase();
+    return (
+      text.includes('กินด้วยกัน') ||
+      lower.includes('eat together') ||
+      (lower.includes('do you') && lower.includes('together'))
+    );
+  });
+}
+
+function satisfiesFavoritesGroupAnswer(userText: string): boolean {
+  const t = userText
+    .trim()
+    .toLowerCase()
+    .replace(/[.!?]+$/g, '')
+    .replace(/\s+/g, ' ');
+  if (!t) return false;
+  return (
+    t.includes('we ') ||
+    t.includes('eat together') ||
+    t.includes('watch movies') ||
+    /^(yes|yeah|yep|we do)\b/.test(t)
+  );
+}
+
+/** Full Emoji Speak batch for Survival English 2.10 (after Quick Build-Up). */
+export const EE_SURVIVAL_EMOJI_SPEAK_SET: Array<{
+  emoji: string;
+  answer: string;
+  hint: string;
+  index: number;
+  total: number;
+}> = [
+  {
+    emoji: '📱❓',
+    answer: "I can't find my phone.",
+    hint: 'I c__ f__ m_ p____.',
+    index: 1,
+    total: 4,
+  },
+  {
+    emoji: '👛❓',
+    answer: "I can't find my wallet.",
+    hint: 'I c__ f__ m_ w______.',
+    index: 2,
+    total: 4,
+  },
+  {
+    emoji: '🆘👮',
+    answer: 'Can you help me?',
+    hint: 'C__ y__ h___ m_?',
+    index: 3,
+    total: 4,
+  },
+  {
+    emoji: '🗣️🐢',
+    answer: 'Can you speak slowly?',
+    hint: 'C__ y__ s____ s______?',
+    index: 4,
+    total: 4,
+  },
+];
+
+function historyHasSurvivalSpeakAdjustCue(
+  history: Array<{ speaker: string; textEn?: string }>,
+): boolean {
+  return history.some((t) => {
+    if (t.speaker !== 'ai') return false;
+    const text = t.textEn ?? '';
+    const lower = text.toLowerCase();
+    return (
+      lower.includes('can you speak slowly') ||
+      text.includes('ปรับวิธีพูด') ||
+      (lower.includes('speak slowly') && text.includes('ครับ'))
+    );
+  });
+}
+
+function historyHasSurvivalEmojiSpeakSet(
+  history: Array<{ speaker: string; emojiSpeakSet?: unknown }>,
+): boolean {
+  return history.some(
+    (t) =>
+      t.speaker === 'ai' &&
+      Array.isArray(t.emojiSpeakSet) &&
+      t.emojiSpeakSet.length > 0,
+  );
+}
+
+function satisfiesSurvivalSpeakAdjustAnswer(userText: string): boolean {
+  const t = userText
+    .trim()
+    .toLowerCase()
+    .replace(/[.!?]+$/g, '')
+    .replace(/\s+/g, ' ');
+  if (!t) return false;
+  return (
+    t.includes('speak slowly') ||
+    t.includes('speak again') ||
+    /\bslowly\b/.test(t) ||
+    /\bagain\b/.test(t)
+  );
+}
+
+/**
+ * After Survival Step 3 (Can you speak…?) → Emoji Speak Intro + full batch.
+ */
+export function forceSurvivalEmojiSpeakIfNeeded(
+  lessonId: string,
+  lang: LessonTeachingLanguage,
+  history: Array<{
+    speaker: string;
+    textEn?: string;
+    emojiSpeakSet?: unknown;
+  }>,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    expectsUserSpeech: boolean;
+    isTaskComplete: boolean;
+    emojiSpeakSet: unknown;
+  },
+): {
+  textEn: string;
+  textTh: string | null;
+  expectsUserSpeech: false;
+  expectedSpeech: null;
+  guidedSpeaking: null;
+  emojiChoice: null;
+  emojiSpeakSet: typeof EE_SURVIVAL_EMOJI_SPEAK_SET;
+  isTaskComplete: false;
+} | null {
+  if (lessonId !== 'ee_around_town_survival') return null;
+  if (!historyHasSurvivalSpeakAdjustCue(history)) return null;
+  if (historyHasSurvivalEmojiSpeakSet(history)) return null;
+  if (Array.isArray(current.emojiSpeakSet) && current.emojiSpeakSet.length > 0) {
+    return null;
+  }
+
+  const userText = latestShoppingLookingForUserText(history);
+  if (!userText || !satisfiesSurvivalSpeakAdjustAnswer(userText)) return null;
+
+  const textEn =
+    lang === 'english'
+      ? 'Awesome! 👏 Next up — Emoji Speak. Guess these survival lines!'
+      : 'เยี่ยมเลยครับ! 👏 ต่อไปลุยเกม Emoji Speak ทายประโยคเอาตัวรอดกันครับ!';
+
+  return {
+    textEn,
+    textTh: null,
+    expectsUserSpeech: false,
+    expectedSpeech: null,
+    guidedSpeaking: null,
+    emojiChoice: null,
+    emojiSpeakSet: EE_SURVIVAL_EMOJI_SPEAK_SET,
+    isTaskComplete: false,
+  };
+}
+
+/**
+ * After Survival Emoji Speak batch → Celebrate (no Pattern Challenge).
+ */
+export function forceSurvivalCelebrateAfterEmojiSpeakIfNeeded(
+  lessonId: string,
+  lang: LessonTeachingLanguage,
+  history: Array<{
+    speaker: string;
+    textEn?: string;
+    emojiSpeakSet?: unknown;
+  }>,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    expectsUserSpeech: boolean;
+    isTaskComplete: boolean;
+  },
+  isEmojiSpeakComplete: boolean,
+): {
+  textEn: string;
+  textTh: string | null;
+  expectsUserSpeech: false;
+  expectedSpeech: null;
+  guidedSpeaking: null;
+  emojiChoice: null;
+  emojiSpeakSet: null;
+  isTaskComplete: true;
+} | null {
+  if (lessonId !== 'ee_around_town_survival') return null;
+  if (!isEmojiSpeakComplete) return null;
+  if (!historyHasSurvivalEmojiSpeakSet(history)) return null;
+
+  const praise = celebratePraiseOpen(lang);
+  const body =
+    lang === 'english'
+      ? `You've got survival lines ready: I can't find my…, Can you help me?, and Can you speak slowly? Next up — Lesson Summary.`
+      : `ตอนนี้คุณมีประโยคเอาตัวรอดแล้วครับ เช่น I can't find my…, Can you help me?, และ Can you speak slowly? ต่อไปลองไปที่ Lesson Summary ได้เลยครับ`;
+
+  const raw = (current.textEn ?? '').trim();
+  const praiseOk =
+    lang === 'english'
+      ? /^(great|awesome|nice work|well done|amazing)/i.test(raw)
+      : /^(เยี่ยม|เก่งมาก|สุดยอด|ดีมาก)/u.test(raw);
+  const textEn =
+    current.isTaskComplete && praiseOk && raw.length > 20
+      ? raw
+      : `${praise}\n\n${body}`;
+
+  return {
+    textEn,
+    textTh: null,
+    expectsUserSpeech: false,
+    expectedSpeech: null,
+    guidedSpeaking: null,
+    emojiChoice: null,
+    emojiSpeakSet: null,
+    isTaskComplete: true,
+  };
+}
+
+/**
+ * After Favorites Step 4 (We…) → Movie Roleplay Intro.
+ */
+export function forceFavoritesRoleplayBridgeIfNeeded(
+  lessonId: string,
+  lang: LessonTeachingLanguage,
+  history: Array<{
+    speaker: string;
+    textEn?: string;
+    roleplayIntro?: unknown;
+    roleplayNpc?: unknown;
+  }>,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    roleplayIntro: unknown;
+    roleplayNpc: unknown;
+    expectsUserSpeech: boolean;
+    isTaskComplete: boolean;
+  },
+): AroundTownIntroForceResult | null {
+  if (lessonId !== 'ee_about_me_favorites') return null;
+  if (!historyHasFavoritesGroupStepCue(history)) return null;
+  if (aroundTownIntroAlreadyShown(history)) return null;
+  if (current.roleplayIntro != null) return null;
+
+  const userText = latestShoppingLookingForUserText(history);
+  if (!userText || !satisfiesFavoritesGroupAnswer(userText)) return null;
+
+  if (
+    current.expectsUserSpeech &&
+    !looksLikeAroundTownRoleplayBridge(current.textEn) &&
+    !/\bwhich movie do you prefer\b/i.test(current.textEn)
   ) {
     return null;
   }
@@ -9259,6 +9952,97 @@ const SCRIPTED_AROUND_TOWN_ROLEPLAYS: Record<string, ScriptedRoleplayConfig> = {
       staffTh: 'นี่ครับ เดินทางปลอดภัยครับ!',
     },
   },
+  ee_about_me_favorites: {
+    lessonId: 'ee_about_me_favorites',
+    objective: FAVORITES_ROLEPLAY_OBJECTIVE,
+    npc: { emoji: '🎬', name: 'Movie Buddy' },
+    asks: [
+      {
+        staffEn: 'Which movie do you prefer?',
+        staffTh: 'ชอบหนังแนวไหนมากกว่ากันครับ?',
+        emojiChoice: {
+          options: [
+            {
+              emoji: '💥',
+              label: 'Action',
+              speak: 'I prefer action movies.',
+            },
+            {
+              emoji: '😂',
+              label: 'Comedy',
+              speak: 'I prefer comedy movies.',
+            },
+            {
+              emoji: '❤️',
+              label: 'Romance',
+              speak: 'I prefer romance movies.',
+            },
+          ],
+        },
+      },
+      {
+        staffEn: 'Why?',
+        staffTh: 'ทำไมครับ?',
+        emojiChoice: {
+          options: [
+            {
+              emoji: '🔥',
+              label: 'exciting',
+              speak: "I think they're exciting.",
+            },
+            {
+              emoji: '😄',
+              label: 'funny',
+              speak: "I think they're funny.",
+            },
+            {
+              emoji: '💕',
+              label: 'sweet',
+              speak: "I think they're sweet.",
+            },
+          ],
+        },
+      },
+      {
+        staffEn: 'What about your friends?',
+        staffTh: 'แล้วเพื่อนๆ ล่ะชอบอะไรครับ?',
+        emojiChoice: {
+          options: [
+            {
+              emoji: '💥',
+              label: 'Action',
+              speak: 'They like action movies.',
+            },
+            {
+              emoji: '😂',
+              label: 'Comedy',
+              speak: 'They like comedy movies.',
+            },
+            {
+              emoji: '❤️',
+              label: 'Romance',
+              speak: 'They like romance movies.',
+            },
+          ],
+        },
+      },
+      {
+        staffEn: 'Do you watch movies together?',
+        staffTh: 'พวกคุณดูหนังด้วยกันไหมครับ?',
+        emojiChoice: {
+          options: [
+            { emoji: '🎬', label: 'Yes', speak: 'Yes, we do.' },
+            { emoji: '🙅', label: 'Not really', speak: 'Not really.' },
+          ],
+        },
+      },
+    ],
+    closeWithSure: false,
+    closeLine: {
+      staffEn: 'Nice!',
+      staffTh: 'ดีเลยครับ!',
+    },
+  },
 };
 
 function scriptedRoleplayGreetingShown(
@@ -9614,6 +10398,29 @@ function userSatisfiesScriptedAsk(
     }
   }
 
+  if (lessonId === 'ee_about_me_favorites') {
+    if (askIndex === 0) {
+      if (/\bprefer\b/.test(t)) return true;
+      if (/\b(action|comedy|romance)\b/.test(t)) return true;
+      return false;
+    }
+    if (askIndex === 1) {
+      if (/\bthink\b/.test(t)) return true;
+      if (/\b(exciting|funny|sweet|delicious|spicy)\b/.test(t)) return true;
+      return false;
+    }
+    if (askIndex === 2) {
+      if (/\blike\b/.test(t)) return true;
+      if (/\b(action|comedy|romance)\b/.test(t)) return true;
+      return false;
+    }
+    if (askIndex === 3) {
+      if (/^(yes|yeah|yep|we do|not really|no)\b/.test(t)) return true;
+      if (t.includes('watch') || t.includes('together')) return true;
+      return false;
+    }
+  }
+
   // Fallback: any non-empty speech (legacy).
   return true;
 }
@@ -9730,6 +10537,24 @@ const SCRIPTED_SOFT_HINTS: Record<string, Record<number, ScriptedSoftHint>> = {
     2: {
       en: 'No worries. Yes, please?',
       th: 'ไม่เป็นไรครับ ใช่ครับ ขอหนึ่งใบนะครับ?',
+    },
+  },
+  ee_about_me_favorites: {
+    0: {
+      en: 'No worries. I prefer action movies?',
+      th: 'ไม่เป็นไรครับ หนังแอ็กชันนะครับ?',
+    },
+    1: {
+      en: "No worries. I think they're exciting?",
+      th: 'ไม่เป็นไรครับ น่าตื่นเต้นนะครับ?',
+    },
+    2: {
+      en: 'No worries. They like comedy movies?',
+      th: 'ไม่เป็นไรครับ เพื่อนชอบหนังตลกนะครับ?',
+    },
+    3: {
+      en: 'No worries. Yes, we do?',
+      th: 'ไม่เป็นไรครับ ใช่ครับ ดูด้วยกันนะครับ?',
     },
   },
 };
@@ -9877,6 +10702,7 @@ export function guideScriptedAroundTownRoleplayIfNeeded(
   history: Array<{
     speaker: string;
     textEn?: string;
+    roleplayIntro?: unknown;
     roleplayNpc?: unknown;
   }>,
   current: {
@@ -9907,17 +10733,20 @@ export function guideScriptedAroundTownRoleplayIfNeeded(
   const offScript = isOffScriptRoleplayAsk(current.textEn);
   // Transport Hook also says "Where are you going?" — ignore until NPC chrome /
   // combined Hello ask (never treat Hook as roleplay).
-  const transportBeforeRoleplay =
-    config.lessonId === 'ee_around_town_transport' &&
+  // Favorites teaching Step 3 reuses "What about your friends?" — ignore until Intro.
+  const scriptedBeforeRoleplay =
+    (config.lessonId === 'ee_around_town_transport' ||
+      config.lessonId === 'ee_about_me_favorites') &&
     current.roleplayNpc == null &&
     startIdx < 0 &&
-    currentAskIdx < 0;
+    currentAskIdx >= 0 &&
+    !history.some((t) => t.speaker === 'ai' && t.roleplayIntro != null);
   const inRoleplay =
     current.roleplayNpc != null ||
     offScript ||
     startIdx >= 0 ||
     isScriptedSoftHintLine(current.textEn) ||
-    (currentAskIdx >= 0 && !transportBeforeRoleplay);
+    (currentAskIdx >= 0 && !scriptedBeforeRoleplay);
 
   if (!inRoleplay) return null;
 
@@ -10245,6 +11074,11 @@ const AROUND_TOWN_STAFF_LINES = [
   'Here you are. Have a nice trip!',
   'Go straight and turn left.',
   "You're welcome!",
+  'Which movie do you prefer?',
+  'Why?',
+  'What about your friends?',
+  'Do you watch movies together?',
+  'Nice!',
 ] as const;
 
 const AROUND_TOWN_STAFF_TEXT_TH: Record<string, string> = {
@@ -10280,6 +11114,11 @@ const AROUND_TOWN_STAFF_TEXT_TH: Record<string, string> = {
   'Here you are. Have a nice trip!': 'นี่ครับ เดินทางปลอดภัยครับ!',
   'Go straight and turn left.': 'ตรงไปแล้วเลี้ยวซ้ายครับ',
   "You're welcome!": 'ด้วยความยินดีครับ!',
+  'Which movie do you prefer?': 'ชอบหนังแนวไหนมากกว่ากันครับ?',
+  'Why?': 'ทำไมครับ?',
+  'What about your friends?': 'แล้วเพื่อนๆ ล่ะชอบอะไรครับ?',
+  'Do you watch movies together?': 'พวกคุณดูหนังด้วยกันไหมครับ?',
+  'Nice!': 'ดีเลยครับ!',
 };
 
 /**
@@ -10294,7 +11133,10 @@ export function sanitizeAroundTownStaffSpeech(
   textTh: string | null | undefined,
   _hasEmojiChoice: boolean,
 ): { textEn: string; textTh: string | null } {
-  if (!lessonId.startsWith('ee_around_town_')) {
+  if (
+    !lessonId.startsWith('ee_around_town_') &&
+    lessonId !== 'ee_about_me_favorites'
+  ) {
     return { textEn, textTh: textTh?.trim() || null };
   }
 
@@ -10413,6 +11255,7 @@ export function isAroundTownRoleplayCloseLine(textEn: string): boolean {
     t === "you're all set" ||
     t === 'youre all set' ||
     t === 'enjoy' ||
+    t === 'nice' ||
     t === 'take care' ||
     t.includes('here you are')
   );
@@ -10466,7 +11309,8 @@ export function lessonUsesTapToContinue(lessonId: string): boolean {
   return (
     isPronunciationLesson(lessonId) ||
     isAroundTownLesson(lessonId) ||
-    isEverydayEnglishReview(lessonId)
+    isEverydayEnglishReview(lessonId) ||
+    lessonId === 'ee_about_me_favorites'
   );
 }
 

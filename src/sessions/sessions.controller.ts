@@ -69,9 +69,13 @@ import {
   RESTAURANT_ROLEPLAY_OBJECTIVE,
   COFFEE_ROLEPLAY_OBJECTIVE,
   TRANSPORT_ROLEPLAY_OBJECTIVE,
+  FAVORITES_ROLEPLAY_OBJECTIVE,
   aroundTownRoleplayIntroSpeech,
   forceShoppingRoleplayBridgeIfNeeded,
   forceCoffeeRoleplayBridgeIfNeeded,
+  forceFavoritesRoleplayBridgeIfNeeded,
+  forceSurvivalEmojiSpeakIfNeeded,
+  forceSurvivalCelebrateAfterEmojiSpeakIfNeeded,
   looksLikeAroundTownRoleplayBridge,
   sanitizeAroundTownStaffSpeech,
   isAroundTownRoleplayCloseLine,
@@ -574,7 +578,7 @@ export class SessionsController {
         config.lessonId,
         nextTurn,
       );
-      const emojiSpeakSet =
+      let emojiSpeakSet =
         forcedSet ??
         (config.lessonId === 'ee_stories_yesterday'
           ? null
@@ -748,6 +752,81 @@ export class SessionsController {
         guidedSpeaking = forcedCoffeeBridge.guidedSpeaking;
         emojiChoice = forcedCoffeeBridge.emojiChoice;
         isTaskComplete = forcedCoffeeBridge.isTaskComplete;
+      }
+
+      // After Favorites Step 4 (We…) → Movie Roleplay Intro.
+      const forcedFavoritesBridge = forceFavoritesRoleplayBridgeIfNeeded(
+        config.lessonId,
+        teachingLang,
+        data.turns,
+        {
+          textEn,
+          textTh,
+          roleplayIntro,
+          roleplayNpc,
+          expectsUserSpeech,
+          isTaskComplete,
+        },
+      );
+      if (forcedFavoritesBridge != null) {
+        textEn = forcedFavoritesBridge.textEn;
+        textTh = forcedFavoritesBridge.textTh;
+        expectsUserSpeech = forcedFavoritesBridge.expectsUserSpeech;
+        expectedSpeech = forcedFavoritesBridge.expectedSpeech;
+        roleplayNpc = forcedFavoritesBridge.roleplayNpc;
+        roleplayIntro = forcedFavoritesBridge.roleplayIntro;
+        guidedSpeaking = forcedFavoritesBridge.guidedSpeaking;
+        emojiChoice = forcedFavoritesBridge.emojiChoice;
+        isTaskComplete = forcedFavoritesBridge.isTaskComplete;
+      }
+
+      // After Survival Step 3 → Emoji Speak Intro + full batch.
+      const forcedSurvivalEmoji = forceSurvivalEmojiSpeakIfNeeded(
+        config.lessonId,
+        teachingLang,
+        data.turns,
+        {
+          textEn,
+          textTh,
+          expectsUserSpeech,
+          isTaskComplete,
+          emojiSpeakSet,
+        },
+      );
+      if (forcedSurvivalEmoji != null) {
+        textEn = forcedSurvivalEmoji.textEn;
+        textTh = forcedSurvivalEmoji.textTh;
+        expectsUserSpeech = forcedSurvivalEmoji.expectsUserSpeech;
+        expectedSpeech = forcedSurvivalEmoji.expectedSpeech;
+        guidedSpeaking = forcedSurvivalEmoji.guidedSpeaking;
+        emojiChoice = forcedSurvivalEmoji.emojiChoice;
+        emojiSpeakSet = forcedSurvivalEmoji.emojiSpeakSet;
+        isTaskComplete = forcedSurvivalEmoji.isTaskComplete;
+      }
+
+      // After Survival Emoji Speak → Celebrate (no Pattern Challenge).
+      const forcedSurvivalCelebrate =
+        forceSurvivalCelebrateAfterEmojiSpeakIfNeeded(
+          config.lessonId,
+          teachingLang,
+          data.turns,
+          {
+            textEn,
+            textTh,
+            expectsUserSpeech,
+            isTaskComplete,
+          },
+          isEmojiSpeakComplete,
+        );
+      if (forcedSurvivalCelebrate != null) {
+        textEn = forcedSurvivalCelebrate.textEn;
+        textTh = forcedSurvivalCelebrate.textTh;
+        expectsUserSpeech = forcedSurvivalCelebrate.expectsUserSpeech;
+        expectedSpeech = forcedSurvivalCelebrate.expectedSpeech;
+        guidedSpeaking = forcedSurvivalCelebrate.guidedSpeaking;
+        emojiChoice = forcedSurvivalCelebrate.emojiChoice;
+        emojiSpeakSet = forcedSurvivalCelebrate.emojiSpeakSet;
+        isTaskComplete = forcedSurvivalCelebrate.isTaskComplete;
       }
 
       // Mini Challenge: one random city at a time (not the 4-city board).
@@ -951,6 +1030,8 @@ export class SessionsController {
                     ? COFFEE_ROLEPLAY_OBJECTIVE
                     : config.lessonId === 'ee_around_town_transport'
                       ? TRANSPORT_ROLEPLAY_OBJECTIVE
+                      : config.lessonId === 'ee_about_me_favorites'
+                        ? FAVORITES_ROLEPLAY_OBJECTIVE
                       : null;
           if (objective) {
             roleplayNpc = {
