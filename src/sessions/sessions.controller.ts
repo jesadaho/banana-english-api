@@ -56,10 +56,14 @@ import {
   normalizeRoleplayNpc,
   forceExploreCityGuidedSpeakingIfNeeded,
   guideExploreCityRoleplayIfNeeded,
+  guideScriptedAroundTownRoleplayIfNeeded,
   ensureExploreCityCelebratePraiseFirst,
   forceExploreCityCelebrateAfterCloseIfNeeded,
   EXPLORE_CITY_ROLEPLAY_INTRO,
   EXPLORE_CITY_ROLEPLAY_OBJECTIVE,
+  SHOPPING_ROLEPLAY_OBJECTIVE,
+  RESTAURANT_ROLEPLAY_OBJECTIVE,
+  COFFEE_ROLEPLAY_OBJECTIVE,
   sanitizeAroundTownStaffSpeech,
   isAroundTownRoleplayCloseLine,
   getLesson,
@@ -620,6 +624,32 @@ export class SessionsController {
         isTaskComplete = guidedRoleplay.isTaskComplete;
       }
 
+      // Scripted Shopping / Restaurant / Coffee roleplay — pin objective, no backward.
+      const guidedScripted = guideScriptedAroundTownRoleplayIfNeeded(
+        config.lessonId,
+        data.turns,
+        {
+          textEn,
+          textTh,
+          roleplayIntro,
+          roleplayNpc,
+          expectsUserSpeech,
+          expectedSpeech,
+          isTaskComplete,
+        },
+      );
+      if (guidedScripted != null) {
+        textEn = guidedScripted.textEn;
+        textTh = guidedScripted.textTh;
+        expectsUserSpeech = guidedScripted.expectsUserSpeech;
+        expectedSpeech = guidedScripted.expectedSpeech;
+        roleplayNpc = guidedScripted.roleplayNpc;
+        roleplayIntro = null;
+        guidedSpeaking = null;
+        emojiChoice = guidedScripted.emojiChoice ?? null;
+        isTaskComplete = guidedScripted.isTaskComplete;
+      }
+
       // After You're welcome + Continue → Celebrate (never double the close).
       const forcedCelebrate = forceExploreCityCelebrateAfterCloseIfNeeded(
         config.lessonId,
@@ -676,16 +706,31 @@ export class SessionsController {
             name: roleplayIntro.npcName?.trim() || roleplayIntro.npcLabel,
             ...(config.lessonId === 'ee_around_town_convenience'
               ? { objective: EXPLORE_CITY_ROLEPLAY_OBJECTIVE }
-              : {}),
+              : config.lessonId === 'ee_around_town_shopping'
+                ? { objective: SHOPPING_ROLEPLAY_OBJECTIVE }
+                : config.lessonId === 'ee_around_town_restaurant'
+                  ? { objective: RESTAURANT_ROLEPLAY_OBJECTIVE }
+                  : config.lessonId === 'ee_around_town_coffee'
+                    ? { objective: COFFEE_ROLEPLAY_OBJECTIVE }
+                    : {}),
           };
-        } else if (
-          config.lessonId === 'ee_around_town_convenience' &&
-          !roleplayNpc.objective
-        ) {
-          roleplayNpc = {
-            ...roleplayNpc,
-            objective: EXPLORE_CITY_ROLEPLAY_OBJECTIVE,
-          };
+        } else if (!roleplayNpc.objective) {
+          const objective =
+            config.lessonId === 'ee_around_town_convenience'
+              ? EXPLORE_CITY_ROLEPLAY_OBJECTIVE
+              : config.lessonId === 'ee_around_town_shopping'
+                ? SHOPPING_ROLEPLAY_OBJECTIVE
+                : config.lessonId === 'ee_around_town_restaurant'
+                  ? RESTAURANT_ROLEPLAY_OBJECTIVE
+                  : config.lessonId === 'ee_around_town_coffee'
+                    ? COFFEE_ROLEPLAY_OBJECTIVE
+                    : null;
+          if (objective) {
+            roleplayNpc = {
+              ...roleplayNpc,
+              objective,
+            };
+          }
         }
       }
 

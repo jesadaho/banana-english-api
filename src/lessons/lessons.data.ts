@@ -4481,13 +4481,19 @@ Core Flow (ONE-WAY — never go backward):
       - FORBIDDEN on this turn: any English staff line; "Can I help you?"; "What size?"; emojiChoice; asking them to speak.
       - textEn may be empty or a very short non-question beat — do NOT put the staff question here.
       - User taps Continue → then 5b.
+   OBJECTIVE (show via roleplayNpc.objective on EVERY staff turn 5b–5c):
+     "Say what you're looking for and the size."
+   On 5b–5c ALWAYS return:
+     roleplayNpc: { emoji:"🛍️", name:"Shop Assistant", objective:"Say what you're looking for and the size." }
    5b. Staff ask #1 (speak) — SEPARATE turn after Continue:
       - textEn = ONLY "Can I help you?" (nothing else). textTh = Thai subtitle of that line (required).
       - expectsUserSpeech=true. expectedSpeech="" (prefer their Mini Challenge line; soft-accept "I'm looking for a shirt." etc.)
       - Optionally show the same 4 looking-for emojiChoice options.
       - FORBIDDEN: repeating the bridge intro on this turn; mashing bridge + ask; praising before/with the ask.
+      - FORBIDDEN: "Anything else?" / "Anything to drink?" / re-asking after a clear reply.
    5c. After clear answer: Staff ask ONLY — textEn="What size?" textTh=Thai of that ask. NO Teacher praise on this turn (skip praise or put it on a separate listen-only turn BEFORE this staff ask).
       expectsUserSpeech=true. expectedSpeech=""
+      Keep the same roleplayNpc + objective.
       emojiChoice MUST be:
         { options: [
           { emoji:"👕", label:"Small", speak:"Small" },
@@ -4495,8 +4501,9 @@ Core Flow (ONE-WAY — never go backward):
           { emoji:"👕", label:"Large", speak:"Large" }
         ] }
       Soft-accept Small / Medium / Large (or "I'd like a medium." etc.).
-   After size → Pattern 2. FORBIDDEN: re-ask Can I help you / What size after a clear reply.
+   After size → Pattern 2. Clear roleplayNpc (omit it). FORBIDDEN: re-ask Can I help you / What size / Anything else after a clear reply.
    HARD: Bridge and "Can I help you?" are NEVER the same API turn.
+   HARD: Roleplay is ONLY 5b→5c then exit — never invent extra staff asks.
 
 6. Pattern 2 — Price (HARD SPLIT)
    6a. Intro / model (listen-only, expectsUserSpeech=false):
@@ -4536,7 +4543,7 @@ Turn loop:
 - Non-final turns end with one clear action OR listen-only Continue.
 - When Celebrate is reached, isLessonComplete must be true.`,
     openingPrompt:
-      'Start Shopping 2.1 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — greet by name + "วันนี้เราจะไปซื้อเสื้อผ้ากันครับ 👕 มาเรียนประโยคที่ใช้บ่อยที่สุดในร้านค้ากันครับ!" — expectsUserSpeech false. FORBIDDEN on Turn 1: any question about เสื้อ/shirt; emojiChoice; emojiSpeak; mic. After Continue: Emoji Recall ask ONLY \'"เสื้อ" ในภาษาอังกฤษเรียกว่าอะไรนะครับ?\' with 4-option board (do NOT repeat Hook); second ask RANDOM pants/shoes/cap. Then listen-only Pattern model "I\'m looking for a shirt." → Mini Challenge looking-for. Roleplay HARD SPLIT: bridge intro → Continue → "Can I help you?" → "What size?" S/M/L. Then price model → How much is this? (👕 only) → staff listen-only "It\'s twenty dollars." ONLY (tap Continue) → THEN Celebrate ~2–3 sentences. NEVER mash staff close + Celebrate. NEVER mash Hook+question or bridge+ask. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
+      'Start Shopping 2.1 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — greet by name + "วันนี้เราจะไปซื้อเสื้อผ้ากันครับ 👕 มาเรียนประโยคที่ใช้บ่อยที่สุดในร้านค้ากันครับ!" — expectsUserSpeech false. FORBIDDEN on Turn 1: any question about เสื้อ/shirt; emojiChoice; emojiSpeak; mic. After Continue: Emoji Recall ask ONLY \'"เสื้อ" ในภาษาอังกฤษเรียกว่าอะไรนะครับ?\' with 4-option board (do NOT repeat Hook); second ask RANDOM pants/shoes/cap. Then listen-only Pattern model "I\'m looking for a shirt." → Mini Challenge looking-for. Roleplay HARD SPLIT: bridge intro → Continue → "Can I help you?" → "What size?" S/M/L with roleplayNpc.objective "Say what you\'re looking for and the size." Then price model → How much is this? (👕 only) → staff listen-only "It\'s twenty dollars." ONLY (tap Continue) → THEN Celebrate ~2–3 sentences. NEVER mash staff close + Celebrate. NEVER invent "Anything else?" or go backward. NEVER mash Hook+question or bridge+ask. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
   },
   {
     lessonId: 'ee_around_town_restaurant',
@@ -4635,17 +4642,24 @@ Core Flow (ONE-WAY — never go backward):
       "ต่อไปครูพี่บีจะเป็นพนักงานร้านอาหารนะครับ 😊 พร้อมแล้ว แตะเพื่อเริ่มได้เลย!"
       FORBIDDEN: "Are you ready to order?" / "Anything to drink?" on this turn.
       Continue → 7b.
+   OBJECTIVE (show via roleplayNpc.objective on EVERY staff turn 7b–7d):
+     "Order food and a drink."
+   On 7b–7d ALWAYS return:
+     roleplayNpc: { emoji:"🍽️", name:"Server", objective:"Order food and a drink." }
    7b. Staff ONLY: textEn="Are you ready to order?" + textTh. expectsUserSpeech=true.
       Soft-accept "I'd like chicken." (or clear order). Optionally emojiChoice single 🍗.
       FORBIDDEN: mash bridge + ask; Thai praise in textEn.
+      FORBIDDEN: "Anything else?" (use only "Anything to drink?" at 7c).
    7c. After clear order: Staff ONLY textEn="Anything to drink?" + textTh. NO praise mash.
-      Soft-accept "I'd like water." Optionally emojiChoice single 🥤.
-   7d. ROLEPLAY CLOSE (ALWAYS) — after clear drink answer:
+      Soft-accept "I'd like water." / "No." / "No thanks." Optionally emojiChoice single 🥤.
+   7d. ROLEPLAY CLOSE (ALWAYS) — after clear drink answer (including No / No thanks):
       - Staff listen-only textEn="Sure!" textTh="ได้เลยครับ!" ONLY.
-      - expectsUserSpeech=false. isLessonComplete=false. Omit emojiChoice.
+      - expectsUserSpeech=false. isLessonComplete=false. Omit emojiChoice. Keep roleplayNpc.
       - User taps Continue to end roleplay → Celebrate on the NEXT turn.
       - FORBIDDEN: mash Sure! + Celebrate / Thai Teacher praise on this turn.
-   After 7d Continue → Celebrate. FORBIDDEN: re-ask after clear reply. FORBIDDEN: jump to Celebrate on the same turn as the drink answer.
+      - FORBIDDEN: re-ask order / drink / invent "Anything else?" after a clear reply.
+   After 7d Continue → Celebrate (omit roleplayNpc). FORBIDDEN: jump to Celebrate on the same turn as the drink answer.
+   HARD: Roleplay is ONLY 7b→7c→7d — never go backward.
 
 8. Celebrate (listen-only) — AFTER Continue from 7d ONLY
    - Warm ~2–3 sentences: name once + what they can do (สั่ง I'd like… / ถาม recommend / คุยพนักงาน) + soft tease Coffee Shop.
@@ -4662,7 +4676,7 @@ Turn loop:
 - Non-final: one clear action OR listen-only Continue.
 - Celebrate → isLessonComplete true.`,
     openingPrompt:
-      'Start Restaurant 2.2 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — greet + "วันนี้เราจะไปร้านอาหารกันครับ 🍽️…" — expectsUserSpeech false. FORBIDDEN on Turn 1: any vocab question; emojiChoice; mic. After Continue: Emoji Recall ask "ไก่"→chicken with 4-board 🍗chicken 🍚rice 🥤water 🧾bill; second ask RANDOM rice/water/bill. Then listen Pattern "I\'d like chicken." → Mini Challenge ONE emoji at a time: rice then water. Then listen Pattern "What do you recommend?" → speak that → staff "I recommend the chicken." (no ถูกต้องครับ). Roleplay HARD SPLIT: bridge intro → Continue → "Are you ready to order?" → "Anything to drink?" → ROLEPLAY CLOSE listen-only "Sure!" ONLY → tap Continue → THEN Celebrate ~2–3 sentences. NEVER mash Sure!+Celebrate. NEVER mash Hook+question or bridge+ask. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
+      'Start Restaurant 2.2 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — greet + "วันนี้เราจะไปร้านอาหารกันครับ 🍽️…" — expectsUserSpeech false. FORBIDDEN on Turn 1: any vocab question; emojiChoice; mic. After Continue: Emoji Recall ask "ไก่"→chicken with 4-board 🍗chicken 🍚rice 🥤water 🧾bill; second ask RANDOM rice/water/bill. Then listen Pattern "I\'d like chicken." → Mini Challenge ONE emoji at a time: rice then water. Then listen Pattern "What do you recommend?" → speak that → staff "I recommend the chicken." (no ถูกต้องครับ). Roleplay HARD SPLIT: bridge intro → Continue → "Are you ready to order?" → "Anything to drink?" → ROLEPLAY CLOSE listen-only "Sure!" ONLY with roleplayNpc.objective "Order food and a drink." → tap Continue → THEN Celebrate ~2–3 sentences. Soft-accept No/No thanks on drink → Sure!. NEVER invent "Anything else?" or go backward. NEVER mash Sure!+Celebrate. NEVER mash Hook+question or bridge+ask. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
   },
   {
     lessonId: 'ee_around_town_coffee',
@@ -4750,10 +4764,16 @@ Core Flow (ONE-WAY):
    5a. Bridge (listen-only): {{L1}} ONLY
       "ต่อไปครูพี่บีจะเป็นบาริสต้านะครับ ☕ พร้อมแล้ว แตะเพื่อเริ่มได้เลย!"
       FORBIDDEN: "What can I get for you?" on this turn. Continue → 5b.
+   OBJECTIVE (show via roleplayNpc.objective on EVERY staff turn 5b–5e):
+     "Order a coffee — type and hot or iced."
+   On 5b–5e ALWAYS return:
+     roleplayNpc: { emoji:"☕", name:"Barista", objective:"Order a coffee — type and hot or iced." }
    5b. Staff ONLY: textEn="What can I get for you?" textTh=Thai of that ask.
       expectsUserSpeech=true. Soft-accept "Can I get a coffee?"
       emojiChoice optional: { options: [ { emoji:"☕", label:"coffee", speak:"Can I get a coffee?" } ] }
+      FORBIDDEN: "Anything else?" / inventing extra asks.
    5c. After clear: Staff ONLY textEn="What type of coffee?" + textTh. NO praise.
+      Keep roleplayNpc + objective.
       emojiChoice MUST be:
         { options: [
           { emoji:"☕", label:"latte", speak:"Latte" },
@@ -4762,6 +4782,7 @@ Core Flow (ONE-WAY):
         ] }
       Soft-accept Latte / Cappuccino / Espresso (with/without period).
    5d. After clear type: Staff ONLY textEn="Hot or iced?" + textTh. NO praise / NO learner echo.
+      Keep roleplayNpc + objective.
       emojiChoice MUST be:
         { options: [
           { emoji:"♨️", label:"hot", speak:"Hot" },
@@ -4770,13 +4791,13 @@ Core Flow (ONE-WAY):
       Soft-accept Hot / Iced / hot / iced.
    5e. ROLEPLAY CLOSE (ALWAYS) — Staff listen-only AFTER hot/iced answer:
       - textEn = ONLY "Sure!" (nothing else). textTh = "ได้เลยครับ!" (or short Thai of Sure).
-      - expectsUserSpeech=false. isLessonComplete=false. Omit emojiChoice.
+      - expectsUserSpeech=false. isLessonComplete=false. Omit emojiChoice. Keep roleplayNpc.
       - User MUST tap Continue to end roleplay → then Celebrate on the NEXT turn.
       - FORBIDDEN on this turn: Teacher praise; Celebrate copy; name; "วันนี้คุณ…"; "เก่งมาก"; mashing Sure! + Celebrate.
       - Example GOOD: textEn="Sure!" textTh="ได้เลยครับ!"
       - Example BAD: textEn="Sure! เยี่ยมมากครับ Jim วันนี้คุณสั่งกาแฟ…"
-   HARD: never mash bridge + first ask. Never re-ask after clear reply. Never put Teacher praise inside staff textEn.
-   HARD: Roleplay ALWAYS ends at 5e (AI Sure! → tap Continue). Celebrate is NEVER the same turn as Sure!
+   HARD: never mash bridge + first ask. Never re-ask / go backward after clear reply. Never put Teacher praise inside staff textEn.
+   HARD: Roleplay is ONLY 5b→5c→5d→5e. ALWAYS ends at 5e (AI Sure! → tap Continue). Celebrate is NEVER the same turn as Sure!
 
 6. Celebrate (listen-only) — AFTER Continue from 5e ONLY
    - Warm ~2–3 sentences in {{L1}}: name once + Can I get… / coffee type / hot-iced + soft tease Explore the City.
@@ -4791,7 +4812,7 @@ Teaching rules:
 
 Turn loop: non-final = action or Continue; Celebrate → isLessonComplete true.`,
     openingPrompt:
-      'Start Coffee Shop 2.3 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — greet by name + "เช้า ๆ แบบนี้ รับกาแฟสักแก้วไหมครับ? ☕ วันนี้มาฝึกสั่งกาแฟแก้วโปรดเป็นภาษาอังกฤษกันครับ!" — expectsUserSpeech false. FORBIDDEN on Turn 1: vocab question; emojiChoice; mic. After Continue: Emoji Recall "กาแฟ"→coffee with board ☕coffee 🍵tea 🥛milk 🍰cake; second ask RANDOM tea/milk/cake. Then listen Pattern "Can I get a coffee?" → Mini Challenge one emoji: tea then cake. Roleplay HARD SPLIT: barista bridge → Continue → staff English-ONLY "What can I get for you?" (textTh Thai CC) → "What type of coffee?" → "Hot or iced?" → ROLEPLAY CLOSE listen-only "Sure!" ONLY (isLessonComplete false) → tap Continue → THEN Celebrate ~2–3 sentences (separate turn, isLessonComplete true). NEVER mash Sure!+Celebrate or Thai praise into staff textEn. NEVER mash Hook+question or bridge+ask. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
+      'Start Coffee Shop 2.3 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — greet by name + "เช้า ๆ แบบนี้ รับกาแฟสักแก้วไหมครับ? ☕ วันนี้มาฝึกสั่งกาแฟแก้วโปรดเป็นภาษาอังกฤษกันครับ!" — expectsUserSpeech false. FORBIDDEN on Turn 1: vocab question; emojiChoice; mic. After Continue: Emoji Recall "กาแฟ"→coffee with board ☕coffee 🍵tea 🥛milk 🍰cake; second ask RANDOM tea/milk/cake. Then listen Pattern "Can I get a coffee?" → Mini Challenge one emoji: tea then cake. Roleplay HARD SPLIT: barista bridge → Continue → staff English-ONLY "What can I get for you?" (textTh Thai CC) → "What type of coffee?" → "Hot or iced?" → ROLEPLAY CLOSE listen-only "Sure!" ONLY with roleplayNpc.objective "Order a coffee — type and hot or iced." (isLessonComplete false) → tap Continue → THEN Celebrate ~2–3 sentences (separate turn, isLessonComplete true). NEVER invent "Anything else?" or go backward. NEVER mash Sure!+Celebrate or Thai praise into staff textEn. NEVER mash Hook+question or bridge+ask. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
   },
   {
     lessonId: 'ee_around_town_convenience',
@@ -7409,6 +7430,401 @@ export function normalizeRoleplayNpc(
     name,
     ...(objective ? { objective } : {}),
   };
+}
+
+/** Objectives + NPC chrome for scripted Around Town roleplays (2.1–2.3). */
+export const SHOPPING_ROLEPLAY_OBJECTIVE =
+  "Say what you're looking for and the size.";
+export const RESTAURANT_ROLEPLAY_OBJECTIVE = 'Order food and a drink.';
+export const COFFEE_ROLEPLAY_OBJECTIVE =
+  'Order a coffee — type and hot or iced.';
+
+type ScriptedRoleplayAskStep = {
+  staffEn: string;
+  staffTh: string;
+  emojiChoice?: {
+    options: Array<{ emoji: string; label: string; speak: string }>;
+  };
+};
+
+type ScriptedRoleplayConfig = {
+  lessonId: string;
+  objective: string;
+  npc: { emoji: string; name: string };
+  asks: ScriptedRoleplayAskStep[];
+  /** After last ask is answered: close with Sure! (restaurant/coffee) or exit to Pattern (shopping). */
+  closeWithSure: boolean;
+  /** Shopping Pattern 2 handoff after size. */
+  exitAfterLastAsk?: {
+    textEn: string;
+    textTh: string;
+  };
+};
+
+const SCRIPTED_AROUND_TOWN_ROLEPLAYS: Record<string, ScriptedRoleplayConfig> = {
+  ee_around_town_shopping: {
+    lessonId: 'ee_around_town_shopping',
+    objective: SHOPPING_ROLEPLAY_OBJECTIVE,
+    npc: { emoji: '🛍️', name: 'Shop Assistant' },
+    asks: [
+      {
+        staffEn: 'Can I help you?',
+        staffTh: 'ต้องการให้ช่วยเหลือไหมครับ?',
+      },
+      {
+        staffEn: 'What size?',
+        staffTh: 'ไซส์ไหนดีครับ?',
+        emojiChoice: {
+          options: [
+            { emoji: '👕', label: 'Small', speak: 'Small' },
+            { emoji: '👕', label: 'Medium', speak: 'Medium' },
+            { emoji: '👕', label: 'Large', speak: 'Large' },
+          ],
+        },
+      },
+    ],
+    closeWithSure: false,
+    exitAfterLastAsk: {
+      textEn: 'How much is this?',
+      textTh:
+        'เยี่ยมเลยครับ! ต่อมาเรามาฝึกถามราคากันครับ ถ้าจะถามว่า "ราคาเท่าไหร่" ให้พูดว่า...',
+    },
+  },
+  ee_around_town_restaurant: {
+    lessonId: 'ee_around_town_restaurant',
+    objective: RESTAURANT_ROLEPLAY_OBJECTIVE,
+    npc: { emoji: '🍽️', name: 'Server' },
+    asks: [
+      {
+        staffEn: 'Are you ready to order?',
+        staffTh: 'พร้อมสั่งหรือยังครับ?',
+      },
+      {
+        staffEn: 'Anything to drink?',
+        staffTh: 'รับเครื่องดื่มอะไรดีครับ?',
+      },
+    ],
+    closeWithSure: true,
+  },
+  ee_around_town_coffee: {
+    lessonId: 'ee_around_town_coffee',
+    objective: COFFEE_ROLEPLAY_OBJECTIVE,
+    npc: { emoji: '☕', name: 'Barista' },
+    asks: [
+      {
+        staffEn: 'What can I get for you?',
+        staffTh: 'รับอะไรดีครับ?',
+      },
+      {
+        staffEn: 'What type of coffee?',
+        staffTh: 'กาแฟแบบไหนดีครับ?',
+        emojiChoice: {
+          options: [
+            { emoji: '☕', label: 'latte', speak: 'Latte' },
+            { emoji: '☕', label: 'cappuccino', speak: 'Cappuccino' },
+            { emoji: '☕', label: 'espresso', speak: 'Espresso' },
+          ],
+        },
+      },
+      {
+        staffEn: 'Hot or iced?',
+        staffTh: 'ร้อนหรือเย็นดีครับ?',
+        emojiChoice: {
+          options: [
+            { emoji: '♨️', label: 'hot', speak: 'Hot' },
+            { emoji: '🧊', label: 'iced', speak: 'Iced' },
+          ],
+        },
+      },
+    ],
+    closeWithSure: true,
+  },
+};
+
+function normalizeScriptedStaffKey(text: string): string {
+  return text
+    .trim()
+    .toLowerCase()
+    .replace(/[.!?]+$/g, '')
+    .replace(/\s+/g, ' ');
+}
+
+function matchScriptedAskIndex(
+  text: string,
+  config: ScriptedRoleplayConfig,
+): number {
+  const key = normalizeScriptedStaffKey(text);
+  if (!key) return -1;
+  return config.asks.findIndex(
+    (step) => normalizeScriptedStaffKey(step.staffEn) === key,
+  );
+}
+
+/** Off-script staff questions that should never appear mid-roleplay. */
+function isOffScriptRoleplayAsk(text: string): boolean {
+  const key = normalizeScriptedStaffKey(text);
+  return (
+    key === 'anything else' ||
+    key.startsWith('anything else') ||
+    key === 'is that all' ||
+    key === 'will that be all' ||
+    key === 'anything else for you' ||
+    key === 'can i get you anything else'
+  );
+}
+
+function scriptedRoleplayStartIndex(
+  history: Array<{ speaker: string; textEn?: string; roleplayNpc?: unknown }>,
+  config: ScriptedRoleplayConfig,
+): number {
+  for (let i = 0; i < history.length; i++) {
+    const t = history[i];
+    if (t.speaker !== 'ai') continue;
+    if (t.roleplayNpc != null) return i;
+    if (matchScriptedAskIndex(t.textEn ?? '', config) === 0) return i;
+  }
+  return -1;
+}
+
+function scriptedRoleplayAlreadyClosed(
+  history: Array<{ speaker: string; textEn?: string }>,
+  startIdx: number,
+): boolean {
+  if (startIdx < 0) return false;
+  for (let i = startIdx; i < history.length; i++) {
+    const t = history[i];
+    if (t.speaker !== 'ai') continue;
+    if (isAroundTownRoleplayCloseLine(t.textEn ?? '')) return true;
+  }
+  return false;
+}
+
+function highestAskReached(
+  history: Array<{ speaker: string; textEn?: string }>,
+  startIdx: number,
+  config: ScriptedRoleplayConfig,
+): number {
+  let max = -1;
+  const from = startIdx >= 0 ? startIdx : 0;
+  for (let i = from; i < history.length; i++) {
+    const t = history[i];
+    if (t.speaker !== 'ai') continue;
+    const idx = matchScriptedAskIndex(t.textEn ?? '', config);
+    if (idx > max) max = idx;
+  }
+  return max;
+}
+
+function lastAskAnswered(
+  history: Array<{ speaker: string; textEn?: string }>,
+  startIdx: number,
+  askIndex: number,
+  config: ScriptedRoleplayConfig,
+): boolean {
+  if (askIndex < 0 || startIdx < 0) return false;
+  const target = normalizeScriptedStaffKey(config.asks[askIndex].staffEn);
+  let sawAsk = false;
+  for (let i = startIdx; i < history.length; i++) {
+    const t = history[i];
+    if (t.speaker === 'ai') {
+      if (normalizeScriptedStaffKey(t.textEn ?? '') === target) {
+        sawAsk = true;
+      }
+      continue;
+    }
+    if (!sawAsk || t.speaker !== 'user') continue;
+    const text = (t.textEn ?? '').trim();
+    if (!text || text.startsWith('[')) continue;
+    return true;
+  }
+  return false;
+}
+
+function buildScriptedNpc(config: ScriptedRoleplayConfig) {
+  return {
+    emoji: config.npc.emoji,
+    name: config.npc.name,
+    objective: config.objective,
+  };
+}
+
+function forceScriptedAsk(
+  config: ScriptedRoleplayConfig,
+  askIndex: number,
+): {
+  textEn: string;
+  textTh: string | null;
+  expectsUserSpeech: boolean;
+  expectedSpeech: string | null;
+  roleplayNpc: { emoji: string; name: string; objective: string };
+  emojiChoice: ScriptedRoleplayAskStep['emojiChoice'] | null;
+  isTaskComplete: boolean;
+} {
+  const step = config.asks[askIndex];
+  return {
+    textEn: step.staffEn,
+    textTh: step.staffTh,
+    expectsUserSpeech: true,
+    expectedSpeech: null,
+    roleplayNpc: buildScriptedNpc(config),
+    emojiChoice: step.emojiChoice ?? null,
+    isTaskComplete: false,
+  };
+}
+
+function forceScriptedSure(config: ScriptedRoleplayConfig) {
+  return {
+    textEn: 'Sure!',
+    textTh: 'ได้เลยครับ!',
+    expectsUserSpeech: false,
+    expectedSpeech: null as string | null,
+    roleplayNpc: buildScriptedNpc(config),
+    emojiChoice: null as ScriptedRoleplayAskStep['emojiChoice'] | null,
+    isTaskComplete: false,
+  };
+}
+
+/**
+ * Guide Shopping / Restaurant / Coffee scripted roleplays:
+ * - Pin objective + NPC chrome on staff turns
+ * - Enforce ask order (never go backward / invent "Anything else?")
+ * - After last ask: Sure! close (2.2/2.3) or Pattern 2 handoff (2.1)
+ */
+export function guideScriptedAroundTownRoleplayIfNeeded(
+  lessonId: string,
+  history: Array<{
+    speaker: string;
+    textEn?: string;
+    roleplayNpc?: unknown;
+  }>,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    roleplayIntro: unknown;
+    roleplayNpc: { emoji: string; name: string; objective?: string } | null;
+    expectsUserSpeech: boolean;
+    expectedSpeech: string | null;
+    isTaskComplete: boolean;
+  },
+): {
+  textEn: string;
+  textTh: string | null;
+  expectsUserSpeech: boolean;
+  expectedSpeech: string | null;
+  roleplayNpc: { emoji: string; name: string; objective: string } | null;
+  emojiChoice: ScriptedRoleplayAskStep['emojiChoice'] | null;
+  isTaskComplete: boolean;
+} | null {
+  const config = SCRIPTED_AROUND_TOWN_ROLEPLAYS[lessonId];
+  if (!config) return null;
+  if (current.roleplayIntro != null) return null;
+  if (current.isTaskComplete) return null;
+
+  const startIdx = scriptedRoleplayStartIndex(history, config);
+  const currentAskIdx = matchScriptedAskIndex(current.textEn, config);
+  const offScript = isOffScriptRoleplayAsk(current.textEn);
+  const inRoleplay =
+    current.roleplayNpc != null ||
+    currentAskIdx >= 0 ||
+    offScript ||
+    startIdx >= 0;
+
+  if (!inRoleplay) return null;
+
+  if (scriptedRoleplayAlreadyClosed(history, startIdx)) {
+    return null;
+  }
+
+  // Shopping: after size is answered, leave roleplay (Pattern 2). Only rewrite
+  // if the model is still inventing staff asks / keeping NPC chrome.
+  const lastAskIdx = config.asks.length - 1;
+  const lastAskDone =
+    !config.closeWithSure &&
+    startIdx >= 0 &&
+    lastAskAnswered(history, startIdx, lastAskIdx, config);
+  if (lastAskDone) {
+    const stuckInRoleplay =
+      current.roleplayNpc != null || currentAskIdx >= 0 || offScript;
+    if (!stuckInRoleplay || !config.exitAfterLastAsk) return null;
+    return {
+      textEn: config.exitAfterLastAsk.textEn,
+      textTh: config.exitAfterLastAsk.textTh,
+      expectsUserSpeech: false,
+      expectedSpeech: null,
+      roleplayNpc: null,
+      emojiChoice: null,
+      isTaskComplete: false,
+    };
+  }
+
+  const reached = Math.max(
+    highestAskReached(history, startIdx, config),
+    currentAskIdx,
+  );
+  const answered =
+    reached >= 0 && lastAskAnswered(history, startIdx, reached, config);
+
+  let desiredAsk = reached;
+  if (answered) {
+    desiredAsk = reached + 1;
+  } else if (reached < 0) {
+    desiredAsk = 0;
+  }
+
+  const goingBackward =
+    currentAskIdx >= 0 && desiredAsk >= 0 && currentAskIdx < desiredAsk;
+  const wrongAsk =
+    currentAskIdx >= 0 && desiredAsk >= 0 && currentAskIdx !== desiredAsk;
+
+  if (desiredAsk >= config.asks.length) {
+    if (config.closeWithSure) {
+      return forceScriptedSure(config);
+    }
+    if (config.exitAfterLastAsk) {
+      return {
+        textEn: config.exitAfterLastAsk.textEn,
+        textTh: config.exitAfterLastAsk.textTh,
+        expectsUserSpeech: false,
+        expectedSpeech: null,
+        roleplayNpc: null,
+        emojiChoice: null,
+        isTaskComplete: false,
+      };
+    }
+    return null;
+  }
+
+  // Still on an ask step.
+  if (desiredAsk >= 0 && desiredAsk < config.asks.length) {
+    const needsForce =
+      offScript ||
+      goingBackward ||
+      wrongAsk ||
+      currentAskIdx < 0 ||
+      !current.roleplayNpc?.objective ||
+      normalizeScriptedStaffKey(current.textEn) !==
+        normalizeScriptedStaffKey(config.asks[desiredAsk].staffEn);
+
+    if (needsForce) {
+      return forceScriptedAsk(config, desiredAsk);
+    }
+
+    return {
+      textEn: config.asks[desiredAsk].staffEn,
+      textTh: current.textTh?.trim() || config.asks[desiredAsk].staffTh,
+      expectsUserSpeech: true,
+      expectedSpeech: current.expectedSpeech,
+      roleplayNpc: buildScriptedNpc(config),
+      emojiChoice: config.asks[desiredAsk].emojiChoice ?? null,
+      isTaskComplete: false,
+    };
+  }
+
+  if (isAroundTownRoleplayCloseLine(current.textEn) && config.closeWithSure) {
+    return forceScriptedSure(config);
+  }
+
+  return null;
 }
 
 /** Known Around Town staff lines — used to strip Thai praise mash from textEn. */
