@@ -5141,65 +5141,74 @@ Turn loop: non-final = action or Continue; Celebrate → isLessonComplete true.`
       'Yes, please.',
     ],
     maxTurns: 22,
-    listenOnlyTurns: 1,
+    listenOnlyTurns: 0,
     systemInstruction: `Lesson: Transportation (Everyday English → Everyday Life → 2.5)
 Goal: Buy a ticket and say where you are going.
 Pace target: ~4–6 minutes. Keep every tutor turn tight.
 
-FIXED destination board (Mini Challenge 1 — always ALL 4 with labels):
-  📍 Bangkok · 📍 Chiang Mai · 📍 Phuket · 📍 Pattaya
+FIXED destination board (ALWAYS ALL 4 with these emojis + labels):
+  🏙️ Bangkok · 🏔️ Chiang Mai · 🏝️ Phuket · 🌊 Pattaya
 
-FIXED transport board (Mini Challenge 2 — always ALL 4 with labels):
+FIXED transport board (Pattern 2 — always ALL 4 with labels):
   🚆 Train · 🚌 Bus · 🚕 Taxi · ✈️ Plane
 
 emojiChoice rules:
 - Speak scaffolds via emojiChoice; mic still required.
-- Mini Challenge 1: ALL 4 cities on each speak turn.
-- Mini Challenge 2: ALL 4 transport options on each speak turn.
+- Destination speaks: ALL 4 cities on the board.
+- Pattern 2 transport: ALL 4 transport options — ONE speak only.
 - Roleplay asks may reuse destination / transport boards when helpful.
 - FORBIDDEN: emojiSpeak / emojiSpeakSet anywhere in this lesson.
 - Omit emojiChoice on listen-only / Celebrate turns.
 
 Core Flow (ONE-WAY — never go backward):
 
-1. Hook (listen-only) — OPENING ONLY
-   - {{L1}} close to (two short beats OK):
-     "สวัสดีครับ [Name]! วันนี้เราจะออกเดินทางกันครับ! 🚆 มาฝึกซื้อตั๋วและบอกว่าจะไปที่ไหนเป็นภาษาอังกฤษกันครับ 😊"
-   - expectsUserSpeech=false. expectedSpeech="". Omit emojiChoice / emojiSpeak / scene.
-   - FORBIDDEN on Hook: any question; mic task; emojiChoice board.
-   - User taps Continue → Pattern 1.
-
-2. Pattern 1 — Destination model (listen-only)
+1. Hook + first destination ask (SPEAK — OPENING)
    - {{L1}} close to:
-     "ถ้าจะบอกว่าจะไปที่ไหน ให้พูดว่า..."
-   - textEn MUST include the model line: "I'm going to Bangkok."
-   - expectsUserSpeech=false. expectedSpeech="". Omit emojiChoice.
-   - Continue → Mini Challenge 1.
-
-3. Mini Challenge 1 — Destination (EXACTLY 2 learner speaks)
-   - {{L1}}: "ไหนลองบอกว่าจะไปที่ไหนดูครับ 😊"
+     "สวัสดีครับ [Name]! วันนี้เราจะออกเดินทางกันครับ! 🚆
+     กำลังจะไปไหนเอ่ย?
+     Where are you going?
+     💡 I'm going to..."
    - expectsUserSpeech=true. expectedSpeech=""
    - emojiChoice MUST be ALL 4 cities:
      { options: [
-       { emoji:"📍", label:"Bangkok", speak:"I'm going to Bangkok." },
-       { emoji:"📍", label:"Chiang Mai", speak:"I'm going to Chiang Mai." },
-       { emoji:"📍", label:"Phuket", speak:"I'm going to Phuket." },
-       { emoji:"📍", label:"Pattaya", speak:"I'm going to Pattaya." }
+       { emoji:"🏙️", label:"Bangkok", speak:"I'm going to Bangkok." },
+       { emoji:"🏔️", label:"Chiang Mai", speak:"I'm going to Chiang Mai." },
+       { emoji:"🏝️", label:"Phuket", speak:"I'm going to Phuket." },
+       { emoji:"🌊", label:"Pattaya", speak:"I'm going to Pattaya." }
      ] }
-   - Pick TWO different random cities across the two speaks (never the same city twice).
-   - Soft-accept I'm going to Bangkok / Chiang Mai / Phuket / Pattaya (with/without period).
-   - After clear speak #1: brief praise ONLY ({{L1}} "Great!" / "เยี่ยมเลยครับ!") → NEXT turn cue speak #2 with same 4-city board (different random city).
-   - After clear speak #2: brief praise → Pattern 2. NEVER a 3rd destination speak.
+   - Soft-accept full "I'm going to Phuket." OR bare city "Phuket."
+   - Remember which city they chose (for Mini Challenge later).
 
-4. Pattern 2 — Transport model (listen-only)
+2. Soft accept / praise (listen-only OR short praise beat) — AFTER Hook speak
+   - If full sentence clear: {{L1}} "Great! 👍" (or "เยี่ยมเลยครับ! 👍") — brief.
+   - If bare city only (e.g. "Phuket."): Soft Accept + RECAST in same turn:
+     {{L1}} "Great! 👍" then show the full English once: "I'm going to Phuket."
+     (Do NOT force them to repeat — just model the full line.)
+   - expectsUserSpeech=false. Omit emojiChoice.
+   - Continue → Teach (Pattern destination).
+
+3. Teach — Destination model (listen-only)
    - {{L1}} close to:
-     "ถ้าจะบอกว่าจะเดินทางด้วยอะไร ให้พูดว่า..."
-     FORBIDDEN cue wording: "ด้วยรถไฟ" / "โดยรถไฟ" — use "เดินทางด้วยอะไร" so bus/taxi/plane work too.
-   - textEn MUST include: "I'm taking the train."
-   - expectsUserSpeech=false. Omit emojiChoice. Continue → Mini Challenge 2.
+     "ถ้าเราจะบอกว่าจะไปที่ไหน ให้พูดว่า..."
+   - textEn MUST include the model line: "I'm going to Bangkok."
+   - expectsUserSpeech=false. expectedSpeech="". Omit emojiChoice.
+   - FORBIDDEN: asking them to repeat / mic on this turn.
+   - Continue → Mini Challenge destinations.
 
-5. Mini Challenge 2 — Transport (EXACTLY 2 learner speaks)
-   - {{L1}}: "วันนี้คุณจะเดินทางยังไงครับ? 😊"
+4. Mini Challenge — Destination (EXACTLY 2 more learner speaks)
+   - {{L1}}: "ลองอีก 2 เมืองนะครับ 😊"
+   - Pick TWO different cities from the ones they have NOT already said on Hook.
+   - expectsUserSpeech=true. expectedSpeech=""
+   - emojiChoice MUST still show ALL 4 cities (same board as Hook).
+   - Soft-accept full sentence OR bare city (recast bare city once on praise turn if needed).
+   - After clear speak #1: brief praise → NEXT turn cue speak #2 (different remaining city).
+   - After clear speak #2: brief praise → Pattern 2 (transport). NEVER a 3rd Mini destination speak.
+   - Total destination practice = Hook 1 + Mini 2 (never more).
+
+5. Pattern 2 — Transport (SPEAK ONCE)
+   - {{L1}} close to:
+     "วันนี้คุณจะเดินทางยังไงครับ? 😊
+     💡 I'm taking the..."
    - expectsUserSpeech=true. expectedSpeech=""
    - emojiChoice MUST be ALL 4:
      { options: [
@@ -5208,10 +5217,8 @@ Core Flow (ONE-WAY — never go backward):
        { emoji:"🚕", label:"Taxi", speak:"I'm taking the taxi." },
        { emoji:"✈️", label:"Plane", speak:"I'm taking the plane." }
      ] }
-   - Pick TWO different random transport options across the two speaks.
-   - Soft-accept I'm taking the train / bus / taxi / plane.
-   - After speak #1: brief praise → speak #2 with same board (different random option).
-   - After speak #2: brief praise → Roleplay bridge. NEVER a 3rd transport speak.
+   - EXACTLY ONE learner speak — pick any transport. Soft-accept I'm taking the train / bus / taxi / plane (or bare "train" / "bus" etc. → Soft Accept + recast full line).
+   - After clear: brief praise → Roleplay bridge. FORBIDDEN: a 2nd transport Mini speak; listen-only "I'm taking the train." model before this ask.
 
 6. Roleplay — Ticket Seller (HARD SPLIT)
    STAFF: textEn = ENGLISH ONLY staff line; textTh = full Thai CC (required).
@@ -5229,8 +5236,8 @@ Core Flow (ONE-WAY — never go backward):
       expectsUserSpeech=false. Keep roleplayNpc. Continue → 6c.
    6c. Staff ask #1 — textEn = ONLY "Where are you going?" textTh = Thai CC.
       expectsUserSpeech=true. expectedSpeech=""
-      Optional emojiChoice: same 4-city board.
-      Soft-accept I'm going to Bangkok / Chiang Mai / Phuket / Pattaya.
+      Optional emojiChoice: same 4-city board (🏙️🏔️🏝️🌊).
+      Soft-accept I'm going to Bangkok / Chiang Mai / Phuket / Pattaya OR bare city.
    6d. After clear destination: Staff ONLY textEn="How are you traveling?" textTh = Thai CC. NO praise.
       expectsUserSpeech=true. Optional transport emojiChoice board (Train/Bus/Taxi/Plane).
       Soft-accept I'm taking the train / bus / taxi / plane.
@@ -5252,12 +5259,13 @@ Core Flow (ONE-WAY — never go backward):
 
 Teaching rules:
 - ONE speaking task per turn. Soft correction: FIRST miss → เฉลย + ONE correction speak; SECOND → accept + advance.
+- Bare city / bare transport word → Soft Accept + recast full sentence (no forced repeat).
 - Staff questions in English in textEn; coach in {{L1}} on Teacher turns.
 - Never emojiSpeak/emojiSpeakSet. Never go backward.
 
 Turn loop: non-final = action or Continue; Celebrate → isLessonComplete true.`,
     openingPrompt:
-      'Start Transportation 2.5 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY — greet by name + "วันนี้เราจะออกเดินทางกันครับ! 🚆 มาฝึกซื้อตั๋วและบอกว่าจะไปที่ไหนเป็นภาษาอังกฤษกันครับ 😊" — expectsUserSpeech false. FORBIDDEN: mic; emojiChoice; emojiSpeak. After Continue: listen Pattern 1 "I\'m going to Bangkok." → Mini Challenge destination EXACTLY 2 speaks (4-city board 📍 Bangkok/Chiang Mai/Phuket/Pattaya — TWO different random cities) → listen Pattern 2 cue "เดินทางด้วยอะไร" + "I\'m taking the train." → Mini Challenge transport EXACTLY 2 speaks (🚆🚌🚕✈️ — TWO different random options) → Roleplay HARD SPLIT: bridge "คราวนี้ลองคุยกับพนักงานขายตั๋วกันครับ 😊" → Continue → Hello! listen-only → Continue → Where are you going? → How are you traveling? → One ticket? → listen-only close "Here you are. Have a nice trip!" → Continue → Celebrate praise first + tease Directions. roleplayNpc Ticket Seller 🎫 objective "Say where you\'re going and how you\'re traveling." NEVER mash bridge+ask or close+Celebrate. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
+      'Start Transportation 2.5 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook SPEAK — greet by name + "วันนี้เราจะออกเดินทางกันครับ! 🚆 กำลังจะไปไหนเอ่ย? Where are you going?" + guideline "💡 I\'m going to..." — expectsUserSpeech TRUE + emojiChoice ALL 4 cities 🏙️Bangkok 🏔️Chiang Mai 🏝️Phuket 🌊Pattaya. Soft-accept full sentence OR bare city (then Great! + recast "I\'m going to X."). After praise Continue → Teach listen-only "I\'m going to Bangkok." (no repeat) → Mini Challenge EXACTLY 2 more cities from ones not said on Hook (same 4-city board) → Pattern 2 transport SPEAK ONCE only (🚆🚌🚕✈️ board + "💡 I\'m taking the..." — no 2nd transport speak; no listen-only taking model) → Roleplay HARD SPLIT: bridge "คราวนี้ลองคุยกับพนักงานขายตั๋วกันครับ 😊" → Continue → Hello! listen-only → Continue → Where are you going? → How are you traveling? → One ticket? → listen-only close "Here you are. Have a nice trip!" → Continue → Celebrate praise first + tease Directions. roleplayNpc Ticket Seller 🎫 objective "Say where you\'re going and how you\'re traveling." NEVER mash bridge+ask or close+Celebrate. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
   },
   buildStoriesPatternLesson({
     lessonId: 'ee_around_town_directions',
@@ -7753,6 +7761,85 @@ export const SHOPPING_ROLEPLAY_BRIDGE_TH =
 export const SHOPPING_ROLEPLAY_BRIDGE_EN =
   "Next I'll be the shop assistant 😊 Tap when you're ready to start!";
 
+export const COFFEE_ROLEPLAY_BRIDGE_TH =
+  'ต่อไปครูพี่บีจะเป็นบาริสต้านะครับ ☕ พร้อมแล้ว แตะเพื่อเริ่มได้เลย!';
+export const COFFEE_ROLEPLAY_BRIDGE_EN =
+  "Next I'll be the barista ☕ Tap when you're ready to start!";
+
+/** Roleplay Intro card for Around Town bridge turns (purple CTA + NPC preview). */
+export function aroundTownRoleplayIntroForLesson(lessonId: string): {
+  subtitle: string;
+  npcEmoji: string;
+  npcLabel: string;
+  npcName: string;
+  userLabel: string;
+} | null {
+  switch (lessonId) {
+    case 'ee_around_town_shopping':
+      return {
+        subtitle: 'คุณกำลังคุยกับพนักงานร้าน',
+        npcEmoji: '👩',
+        npcLabel: 'พนักงาน',
+        npcName: 'Shop Assistant',
+        userLabel: 'คุณ',
+      };
+    case 'ee_around_town_restaurant':
+      return {
+        subtitle: 'คุณกำลังคุยกับพนักงานร้านอาหาร',
+        npcEmoji: '👩‍🍳',
+        npcLabel: 'พนักงาน',
+        npcName: 'Server',
+        userLabel: 'คุณ',
+      };
+    case 'ee_around_town_coffee':
+      return {
+        subtitle: 'คุณกำลังคุยกับบาริสต้า',
+        npcEmoji: '🧔',
+        npcLabel: 'บาริสต้า',
+        npcName: 'Barista',
+        userLabel: 'คุณ',
+      };
+    case 'ee_around_town_transport':
+      return {
+        subtitle: 'คุณกำลังคุยกับพนักงานขายตั๋ว',
+        npcEmoji: '🎫',
+        npcLabel: 'พนักงานขายตั๋ว',
+        npcName: 'Ticket Seller',
+        userLabel: 'คุณ',
+      };
+    case 'ee_around_town_convenience':
+      return {
+        subtitle: 'คุณกำลังคุยกับคนท้องถิ่น',
+        npcEmoji: '👨',
+        npcLabel: 'คนท้องถิ่น',
+        npcName: 'Local Guide',
+        userLabel: 'คุณ',
+      };
+    default:
+      return null;
+  }
+}
+
+/** Teacher bridge before staff roleplay (listen-only → purple Start Roleplay). */
+export function looksLikeAroundTownRoleplayBridge(textEn: string): boolean {
+  const t = textEn.trim();
+  if (!t) return false;
+  if (t.includes('ต่อไปครูพี่บีจะเป็น')) return true;
+  if (t.includes('คราวนี้ลองคุยกับพนักงาน')) return true;
+  if (t.includes('พร้อม Roleplay')) return true;
+  if (t.includes('พร้อมแล้ว แตะเพื่อเริ่ม')) return true;
+  const lower = t.toLowerCase();
+  if (
+    lower.includes("next i'll be the") ||
+    lower.includes('next i will be the')
+  ) {
+    return true;
+  }
+  if (lower.includes("let's talk to the ticket seller")) return true;
+  if (lower.includes("tap when you're ready")) return true;
+  return false;
+}
+
 const SHOPPING_LOOKING_FOR_BOARD: {
   options: Array<{ emoji: string; label: string; speak: string }>;
 } = {
@@ -8108,8 +8195,8 @@ export function forceTransportRoleplayBridgeIfNeeded(
 } | null {
   if (lessonId !== 'ee_around_town_transport') return null;
   if (current.roleplayIntro != null) return null;
-  if (!historyHasTransportPattern2(history)) return null;
-  if (!transportMiniChallengeComplete(history)) return null;
+  if (!transportDestinationPracticeDone(history)) return null;
+  if (!transportPattern2SpeakDone(history)) return null;
   if (transportRoleplayAlreadyStarted(history)) return null;
 
   const bridge = pickTeacherLine(
@@ -8118,10 +8205,12 @@ export function forceTransportRoleplayBridgeIfNeeded(
     TRANSPORT_ROLEPLAY_BRIDGE_EN,
   );
 
+  // Still on Pattern 2 speak turn — wait for the one transport answer.
   if (
-    /\bi'm taking the (train|bus|taxi|plane)\b/i.test(current.textEn) &&
-    !current.expectsUserSpeech &&
-    !current.roleplayNpc
+    current.expectsUserSpeech &&
+    (/\btaking the\b/i.test(current.textEn) ||
+      /\b(train|bus|taxi|plane)\b/i.test(current.textEn) ||
+      current.textEn.includes('เดินทาง'))
   ) {
     return null;
   }
@@ -8153,35 +8242,44 @@ export function forceTransportRoleplayBridgeIfNeeded(
   };
 }
 
-function historyHasTransportPattern2(
-  history: Array<{ speaker: string; textEn?: string; roleplayNpc?: unknown }>,
-): boolean {
-  return history.some((t) => {
-    if (t.speaker !== 'ai' || t.roleplayNpc != null) return false;
-    return /\bi'm taking the (train|bus|taxi|plane)\b/i.test(t.textEn ?? '');
-  });
-}
-
-function transportMiniChallengeComplete(
+/** Hook + Mini destinations done (≈3 going-to / city answers). */
+function transportDestinationPracticeDone(
   history: Array<{ speaker: string; textEn?: string }>,
 ): boolean {
-  let afterPattern2 = false;
-  let takingCount = 0;
+  let goingCount = 0;
   for (const t of history) {
+    if (t.speaker !== 'user') continue;
+    const text = (t.textEn ?? '').trim();
+    if (!text || text.startsWith('[')) continue;
+    const lower = text.toLowerCase();
     if (
-      t.speaker === 'ai' &&
-      /\bi'm taking the\b/i.test(t.textEn ?? '')
+      /\bgoing to\b/.test(lower) ||
+      /\b(bangkok|chiang mai|phuket|pattaya)\b/.test(lower)
     ) {
-      afterPattern2 = true;
-    }
-    if (afterPattern2 && t.speaker === 'user') {
-      const text = (t.textEn ?? '').trim();
-      if (text && !text.startsWith('[') && /\btaking\b/i.test(text)) {
-        takingCount++;
-      }
+      goingCount++;
     }
   }
-  return takingCount >= 2;
+  return goingCount >= 3;
+}
+
+/** Pattern 2: exactly one transport speak. */
+function transportPattern2SpeakDone(
+  history: Array<{ speaker: string; textEn?: string }>,
+): boolean {
+  let takingCount = 0;
+  for (const t of history) {
+    if (t.speaker !== 'user') continue;
+    const text = (t.textEn ?? '').trim();
+    if (!text || text.startsWith('[')) continue;
+    const lower = text.toLowerCase();
+    if (
+      /\btaking\b/.test(lower) ||
+      /^(train|bus|taxi|plane)\.?$/.test(lower)
+    ) {
+      takingCount++;
+    }
+  }
+  return takingCount >= 1;
 }
 
 function transportRoleplayAlreadyStarted(
@@ -8196,8 +8294,9 @@ function transportRoleplayAlreadyStarted(
     if (t.roleplayNpc != null) return true;
     const key = normalizeScriptedStaffKey(t.textEn ?? '');
     const en = (t.textEn ?? '').toLowerCase();
+    // Do NOT treat Hook "Where are you going?" as roleplay — wait for bridge / Hello / later asks.
     if (
-      key === 'where are you going' ||
+      key === 'hello' ||
       key === 'how are you traveling' ||
       key === 'one ticket' ||
       t.textEn?.includes('พนักงานขายตั๋ว') ||
@@ -8239,10 +8338,10 @@ type ScriptedRoleplayConfig = {
 
 const TRANSPORT_CITY_EMOJI_CHOICE = {
   options: [
-    { emoji: '📍', label: 'Bangkok', speak: "I'm going to Bangkok." },
-    { emoji: '📍', label: 'Chiang Mai', speak: "I'm going to Chiang Mai." },
-    { emoji: '📍', label: 'Phuket', speak: "I'm going to Phuket." },
-    { emoji: '📍', label: 'Pattaya', speak: "I'm going to Pattaya." },
+    { emoji: '🏙️', label: 'Bangkok', speak: "I'm going to Bangkok." },
+    { emoji: '🏔️', label: 'Chiang Mai', speak: "I'm going to Chiang Mai." },
+    { emoji: '🏝️', label: 'Phuket', speak: "I'm going to Phuket." },
+    { emoji: '🌊', label: 'Pattaya', speak: "I'm going to Pattaya." },
   ],
 };
 
@@ -8407,6 +8506,11 @@ function scriptedRoleplayStartIndex(
     const t = history[i];
     if (t.speaker !== 'ai') continue;
     if (t.roleplayNpc != null) return i;
+    // Transport Hook also asks "Where are you going?" — only start roleplay on NPC / Hello.
+    if (config.lessonId === 'ee_around_town_transport') {
+      if (normalizeScriptedStaffKey(t.textEn ?? '') === 'hello') return i;
+      continue;
+    }
     if (matchScriptedAskIndex(t.textEn ?? '', config) === 0) return i;
   }
   return -1;
@@ -8972,12 +9076,17 @@ export function guideScriptedAroundTownRoleplayIfNeeded(
   const startIdx = scriptedRoleplayStartIndex(history, config);
   const currentAskIdx = matchScriptedAskIndex(current.textEn, config);
   const offScript = isOffScriptRoleplayAsk(current.textEn);
+  // Transport Hook also says "Where are you going?" — ignore until Hello / NPC.
+  const transportBeforeRoleplay =
+    config.lessonId === 'ee_around_town_transport' &&
+    current.roleplayNpc == null &&
+    !scriptedRoleplayGreetingShown(history, config);
   const inRoleplay =
     current.roleplayNpc != null ||
-    currentAskIdx >= 0 ||
     offScript ||
     startIdx >= 0 ||
-    isScriptedSoftHintLine(current.textEn);
+    isScriptedSoftHintLine(current.textEn) ||
+    (currentAskIdx >= 0 && !transportBeforeRoleplay);
 
   if (!inRoleplay) return null;
 

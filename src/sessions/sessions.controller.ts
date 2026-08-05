@@ -67,6 +67,8 @@ import {
   SHOPPING_ROLEPLAY_OBJECTIVE,
   RESTAURANT_ROLEPLAY_OBJECTIVE,
   COFFEE_ROLEPLAY_OBJECTIVE,
+  aroundTownRoleplayIntroForLesson,
+  looksLikeAroundTownRoleplayBridge,
   sanitizeAroundTownStaffSpeech,
   isAroundTownRoleplayCloseLine,
   getLesson,
@@ -364,10 +366,14 @@ export class SessionsController {
         learnerFirstName,
       );
       // Tap-to-continue lessons (pronunciation / Everyday Life) always open
-      // listen-only so the mic stays hidden on the first tutor turn.
-      const openingExpectsUserSpeech = lessonUsesTapToContinue(config.lessonId)
-        ? false
-        : (reply.expectsUserSpeech ?? true);
+      // listen-only so the mic stays hidden on the first tutor turn —
+      // except Transportation 2.5 Hook which asks destination with a board.
+      const openingExpectsUserSpeech =
+        config.lessonId === 'ee_around_town_transport'
+          ? true
+          : lessonUsesTapToContinue(config.lessonId)
+            ? false
+            : (reply.expectsUserSpeech ?? true);
       // Hook / opening must stay listen-only — never attach emojiChoice /
       // guidedSpeaking / roleplayIntro or force the mic just because the model
       // prematurely returned scaffolds.
@@ -779,6 +785,20 @@ export class SessionsController {
       // Emoji Choice / Guided Speaking turns always need the mic — never listen-only.
       if ((emojiChoice != null || guidedSpeaking != null) && !isTaskComplete) {
         expectsUserSpeech = true;
+      }
+
+      // Around Town text bridges often omit roleplayIntro — attach card so CTA is purple.
+      if (
+        roleplayIntro == null &&
+        roleplayNpc == null &&
+        !expectsUserSpeech &&
+        !isTaskComplete &&
+        looksLikeAroundTownRoleplayBridge(textEn)
+      ) {
+        const bridgeIntro = aroundTownRoleplayIntroForLesson(config.lessonId);
+        if (bridgeIntro != null) {
+          roleplayIntro = bridgeIntro;
+        }
       }
 
       // Roleplay Intro is always listen-only (tap Continue).
