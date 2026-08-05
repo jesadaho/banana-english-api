@@ -278,6 +278,72 @@ function buildTrainingReplySchema(withSpeechFlag: boolean) {
         },
         required: ['options'],
       },
+      guidedSpeaking: {
+        type: 'object',
+        description:
+          'Optional Guided Speaking card: sentence stem + single emoji cue. Learner completes the stem via mic. Omit on listen-only / emojiChoice / Celebrate turns.',
+        properties: {
+          stem: {
+            type: 'string',
+            description:
+              'Sentence stem shown on the card (e.g. "I\'m looking for the...").',
+          },
+          emoji: {
+            type: 'string',
+            description: 'Emoji cue for the missing word/place (e.g. "🏛️").',
+          },
+          label: {
+            type: 'string',
+            description: 'Optional English label under the emoji (e.g. "museum").',
+          },
+          speak: {
+            type: 'string',
+            description:
+              'Full English the learner should say (e.g. "I\'m looking for the museum.").',
+          },
+        },
+        required: ['stem', 'emoji', 'speak'],
+      },
+      roleplayIntro: {
+        type: 'object',
+        description:
+          'Optional Roleplay Intro card (listen-only). Learner taps Continue to start NPC dialogue. NPC = emoji; learner = app avatar. Omit on speak / Celebrate turns.',
+        properties: {
+          subtitle: {
+            type: 'string',
+            description:
+              'Line under ROLEPLAY (e.g. "คุณกำลังคุยกับคนท้องถิ่น").',
+          },
+          npcEmoji: {
+            type: 'string',
+            description: 'NPC emoji in the right circle (e.g. "👨").',
+          },
+          npcLabel: {
+            type: 'string',
+            description: 'Label under NPC circle (e.g. "คนท้องถิ่น").',
+          },
+          npcName: {
+            type: 'string',
+            description:
+              'Name on NPC bubbles after intro (e.g. "Local Guide").',
+          },
+          userLabel: {
+            type: 'string',
+            description: 'Label under learner circle (default "คุณ").',
+          },
+        },
+        required: ['subtitle', 'npcEmoji', 'npcLabel'],
+      },
+      roleplayNpc: {
+        type: 'object',
+        description:
+          'Optional active roleplay NPC chrome on staff turns (ROLEPLAY tag + bubble avatar). Omit on Teacher / Celebrate / Intro turns.',
+        properties: {
+          emoji: { type: 'string' },
+          name: { type: 'string' },
+        },
+        required: ['emoji', 'name'],
+      },
     },
     required: [
       'textEn',
@@ -350,6 +416,26 @@ export interface TrainingTurnReply {
       label?: string;
       speak: string;
     }>;
+  };
+  /** Guided Speaking — stem + single emoji for the learner to complete aloud. */
+  guidedSpeaking?: {
+    stem: string;
+    emoji: string;
+    label?: string;
+    speak: string;
+  };
+  /** Roleplay Intro card (listen-only → tap Continue). */
+  roleplayIntro?: {
+    subtitle: string;
+    npcEmoji: string;
+    npcLabel: string;
+    npcName?: string;
+    userLabel?: string;
+  };
+  /** Active roleplay NPC chrome on staff turns. */
+  roleplayNpc?: {
+    emoji: string;
+    name: string;
   };
 }
 
@@ -1260,6 +1346,15 @@ export class GeminiChatService {
                     ...(turn.emojiChoice
                       ? { emojiChoice: turn.emojiChoice }
                       : {}),
+                    ...(turn.guidedSpeaking
+                      ? { guidedSpeaking: turn.guidedSpeaking }
+                      : {}),
+                    ...(turn.roleplayIntro
+                      ? { roleplayIntro: turn.roleplayIntro }
+                      : {}),
+                    ...(turn.roleplayNpc
+                      ? { roleplayNpc: turn.roleplayNpc }
+                      : {}),
                   })
                 : turn.textEn,
           },
@@ -2048,7 +2143,7 @@ Return JSON ONLY (critical — never reply with bare prose):
 - textTh: short Thai support line / paraphrase
 - isLessonComplete: true ONLY on the Summary + Celebrate core step (required to finish). Otherwise false${
       speechFlagBlock
-        ? '\n- expectsUserSpeech: false when this turn is listen-only or a ready check, true when you ask the learner to speak\n- expectedSpeech: when expectsUserSpeech is true AND they should say a specific word / short phrase / scripted sentence, set it to that exact English (e.g. "latte", "boarding pass", "I\'m going to Chiang Mai."). When the ask is open free recall or listen-only, set expectedSpeech to ""\n- scene: optional; include only on Watch & Listen Scene turns (see rules above)\n- emojiSpeakSet: optional full puzzle batch on Intro listen turns; emojiSpeak: optional single card (prefer set for Stories)\n- emojiChoice: optional { options:[{ emoji, label?, speak }] } on speak turns that need visual emoji scaffolds (Shopping Mini Challenge / size). Omit on listen-only, emojiSpeak, and Celebrate. Never use emojiChoice instead of emojiSpeak puzzles.'
+        ? '\n- expectsUserSpeech: false when this turn is listen-only or a ready check, true when you ask the learner to speak\n- expectedSpeech: when expectsUserSpeech is true AND they should say a specific word / short phrase / scripted sentence, set it to that exact English (e.g. "latte", "boarding pass", "I\'m going to Chiang Mai."). When the ask is open free recall or listen-only, set expectedSpeech to ""\n- scene: optional; include only on Watch & Listen Scene turns (see rules above)\n- emojiSpeakSet: optional full puzzle batch on Intro listen turns; emojiSpeak: optional single card (prefer set for Stories)\n- emojiChoice: optional { options:[{ emoji, label?, speak }] } on speak turns that need visual emoji scaffolds (Shopping Mini Challenge / size). Omit on listen-only, emojiSpeak, and Celebrate. Never use emojiChoice instead of emojiSpeak puzzles.\n- guidedSpeaking: optional { stem, emoji, label?, speak } on Guided Speaking turns (sentence stem + single emoji). Omit on listen-only / emojiChoice / Celebrate. Never combine guidedSpeaking with emojiChoice on the same turn.\n- roleplayIntro: optional { subtitle, npcEmoji, npcLabel, npcName?, userLabel? } on Roleplay Intro listen-only turns (tap Continue). Omit on speak / Celebrate.\n- roleplayNpc: optional { emoji, name } on Roleplay staff/NPC turns (chat chrome). Omit on Teacher / Celebrate / Intro.'
         : ''
     }`;
   }

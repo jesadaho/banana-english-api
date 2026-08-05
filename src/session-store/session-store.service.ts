@@ -4,6 +4,9 @@ import { ConfigService } from '@nestjs/config';
 import type {
   EmojiChoicePrompt,
   EmojiSpeakPrompt,
+  GuidedSpeakingPrompt,
+  RoleplayIntroPrompt,
+  RoleplayNpcPrompt,
   GptIntroReport,
   LessonScene,
   SessionType,
@@ -45,6 +48,12 @@ export interface ChatTurn {
   emojiSpeakSet?: EmojiSpeakPrompt[] | null;
   /** Emoji Choice scaffolds (ai turns only). */
   emojiChoice?: EmojiChoicePrompt | null;
+  /** Guided Speaking card (ai turns only). */
+  guidedSpeaking?: GuidedSpeakingPrompt | null;
+  /** Roleplay Intro card (ai turns only). */
+  roleplayIntro?: RoleplayIntroPrompt | null;
+  /** Active roleplay NPC chrome (ai turns only). */
+  roleplayNpc?: RoleplayNpcPrompt | null;
 }
 
 export interface ConversationSession {

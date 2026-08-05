@@ -51,6 +51,11 @@ import {
   emojiSpeakSetForTrainingTurn,
   enrichEmojiSpeakForLesson,
   normalizeEmojiChoice,
+  normalizeGuidedSpeaking,
+  normalizeRoleplayIntro,
+  normalizeRoleplayNpc,
+  sanitizeAroundTownStaffSpeech,
+  isAroundTownRoleplayCloseLine,
   getLesson,
   getLessonBananaCost,
   isPronunciationLesson,
@@ -350,11 +355,18 @@ export class SessionsController {
       const openingExpectsUserSpeech = lessonUsesTapToContinue(config.lessonId)
         ? false
         : (reply.expectsUserSpeech ?? true);
-      // Hook / opening must stay listen-only — never attach emojiChoice or
-      // force the mic just because the model prematurely returned scaffolds.
+      // Hook / opening must stay listen-only — never attach emojiChoice /
+      // guidedSpeaking / roleplayIntro or force the mic just because the model
+      // prematurely returned scaffolds.
       const openingEmojiChoice = openingExpectsUserSpeech
         ? normalizeEmojiChoice(reply.emojiChoice)
         : null;
+      const openingGuidedSpeaking = openingExpectsUserSpeech
+        ? normalizeGuidedSpeaking(reply.guidedSpeaking)
+        : null;
+      // Opening is Hook — never start mid-roleplay.
+      const openingRoleplayIntro = null;
+      const openingRoleplayNpc = null;
       const opening = {
         speaker: 'ai' as const,
         textEn: reply.textEn,
@@ -370,6 +382,9 @@ export class SessionsController {
           reply.emojiSpeak,
         ),
         emojiChoice: openingEmojiChoice,
+        guidedSpeaking: openingGuidedSpeaking,
+        roleplayIntro: openingRoleplayIntro,
+        roleplayNpc: openingRoleplayNpc,
       };
       this.sessionStore.addTurn(data.session.id, opening);
 
@@ -410,6 +425,9 @@ export class SessionsController {
             reply.emojiSpeak,
           ),
           emojiChoice: openingEmojiChoice,
+          guidedSpeaking: openingGuidedSpeaking,
+          roleplayIntro: openingRoleplayIntro,
+          roleplayNpc: openingRoleplayNpc,
         },
       };
     } catch (err) {
@@ -484,12 +502,7 @@ export class SessionsController {
       );
 
       const maxTurnsReached = nextTurn >= config.maxTurns;
-      const isTaskComplete = Boolean(reply.isLessonComplete) || maxTurnsReached;
-
-      this.sessionStore.updateTrainingState(sessionId, {
-        currentTurn: nextTurn,
-        isComplete: isTaskComplete,
-      });
+      let isTaskComplete = Boolean(reply.isLessonComplete) || maxTurnsReached;
 
       // Scripted opening steps (overview / listen / explain / tip) never ask
       // for speech, so don't let a model slip put the mic in front of the
@@ -536,16 +549,54 @@ export class SessionsController {
             : null);
 
       const emojiChoice = normalizeEmojiChoice(reply.emojiChoice);
+      const guidedSpeaking = normalizeGuidedSpeaking(reply.guidedSpeaking);
+      const roleplayIntro = normalizeRoleplayIntro(reply.roleplayIntro);
+      let roleplayNpc = normalizeRoleplayNpc(reply.roleplayNpc);
 
-      // Emoji Choice turns always need the mic — never listen-only.
-      if (emojiChoice != null && !isTaskComplete) {
+      // Emoji Choice / Guided Speaking turns always need the mic — never listen-only.
+      if ((emojiChoice != null || guidedSpeaking != null) && !isTaskComplete) {
         expectsUserSpeech = true;
       }
 
+      // Roleplay Intro is always listen-only (tap Continue).
+      if (roleplayIntro != null && !isTaskComplete) {
+        expectsUserSpeech = false;
+        // Seed NPC chrome for the upcoming staff turns if model omitted it.
+        if (roleplayNpc == null) {
+          roleplayNpc = {
+            emoji: roleplayIntro.npcEmoji,
+            name: roleplayIntro.npcName?.trim() || roleplayIntro.npcLabel,
+          };
+        }
+      }
+
+      // Roleplay staff: peel Thai praise mash out of textEn; keep Thai in textTh (CC).
+      const staffSpeech = sanitizeAroundTownStaffSpeech(
+        config.lessonId,
+        reply.textEn,
+        reply.textTh,
+        emojiChoice != null,
+      );
+
+      // Roleplay close (Sure! / price answer / You're welcome!): listen-only →
+      // tap Continue → Celebrate. Never mark lesson complete on this beat.
+      if (
+        isAroundTownRoleplayCloseLine(staffSpeech.textEn) &&
+        !maxTurnsReached
+      ) {
+        isTaskComplete = false;
+        expectsUserSpeech = false;
+      }
+
+      this.sessionStore.updateTrainingState(sessionId, {
+        currentTurn: nextTurn,
+        isComplete: isTaskComplete,
+      });
+
       const aiTurn = {
         speaker: 'ai' as const,
-        textEn: reply.textEn,
-        textTh: reply.textTh,
+        textEn: staffSpeech.textEn,
+        textTh: staffSpeech.textTh,
         audioUrl: null,
         expectsUserSpeech,
         expectedSpeech: reply.expectedSpeech?.trim() || null,
@@ -553,12 +604,15 @@ export class SessionsController {
         emojiSpeak: emojiSpeakSet ? null : emojiSpeak,
         emojiSpeakSet,
         emojiChoice,
+        guidedSpeaking,
+        roleplayIntro,
+        roleplayNpc: isTaskComplete ? null : roleplayNpc,
       };
       this.sessionStore.addTurn(sessionId, aiTurn);
 
       const response: TurnExchangeResponse = {
-        aiResponse: reply.textEn,
-        textTh: reply.textTh,
+        aiResponse: staffSpeech.textEn,
+        textTh: staffSpeech.textTh ?? '',
         isTaskComplete,
         updatedCheckpoints: {},
         feedbackHints: { mispronouncedWords: [] },
@@ -570,10 +624,13 @@ export class SessionsController {
         emojiSpeak: emojiSpeakSet ? null : emojiSpeak,
         emojiSpeakSet,
         emojiChoice,
+        guidedSpeaking,
+        roleplayIntro,
+        roleplayNpc: isTaskComplete ? null : roleplayNpc,
       };
 
       if (body.generateAudio) {
-        const audio = await this.geminiTts.synthesizeSpeech(reply.textEn);
+        const audio = await this.geminiTts.synthesizeSpeech(staffSpeech.textEn);
         response.audioBase64 = audio.toString('base64');
         response.contentType = 'audio/wav';
       }

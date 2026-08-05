@@ -4471,20 +4471,22 @@ Core Flow (ONE-WAY — never go backward):
    - NEXT turn MUST be Roleplay bridge (5a) — never skip straight to staff ask.
 
 5. Roleplay — Shop assistant (HARD SPLIT — never mash)
-   STAFF VOICE RULE (5b–5c and price answer): when speaking as พนักงาน, reply in ENGLISH only (plus Thai subtitle). FORBIDDEN: "ถูกต้องครับ" / "เยี่ยมเลย" / "เป๊ะ" / "ดีมาก" / any Teacher-B praise mashed into the staff line.
+   STAFF VOICE RULE (5b–5c and price answer): when speaking as พนักงาน:
+      - textEn = ENGLISH ONLY (the staff line alone). textTh = full Thai translation for CC Thai subtitle.
+      - FORBIDDEN in textEn: any Thai script; "ถูกต้องครับ" / "เยี่ยมมากครับ" / "เยี่ยมเลย" / "เป๊ะ" / "ดีมาก"; echoing the learner's answer; Thai paraphrase of the ask.
+      - Example GOOD 5c: textEn="What size?" textTh="ไซส์ไหนดีครับ?"
+      - Example BAD: textEn="เยี่ยมมากครับ! What size?" or "เยี่ยมมากครับ! \"Medium\" แล้วไซส์ไหน…"
    5a. Bridge INTRO (listen-only, expectsUserSpeech=false) — AFTER Mini Challenge praise handoff:
       - {{L1}} ONLY close to: "ต่อไปครูพี่บีจะเป็นพนักงานร้านเสื้อผ้านะครับ 😊 พร้อมแล้ว แตะเพื่อเริ่มได้เลย!"
       - FORBIDDEN on this turn: any English staff line; "Can I help you?"; "What size?"; emojiChoice; asking them to speak.
       - textEn may be empty or a very short non-question beat — do NOT put the staff question here.
       - User taps Continue → then 5b.
    5b. Staff ask #1 (speak) — SEPARATE turn after Continue:
-      - textEn = ONLY "Can I help you?" (nothing else). textTh = Thai subtitle of that line.
+      - textEn = ONLY "Can I help you?" (nothing else). textTh = Thai subtitle of that line (required).
       - expectsUserSpeech=true. expectedSpeech="" (prefer their Mini Challenge line; soft-accept "I'm looking for a shirt." etc.)
       - Optionally show the same 4 looking-for emojiChoice options.
       - FORBIDDEN: repeating the bridge intro on this turn; mashing bridge + ask; praising before/with the ask.
-   5c. After clear answer: next turn may have a VERY short Teacher praise in {{L1}} THEN staff asks ONLY "What size?" — OR staff ask alone.
-      - Prefer: short praise + "What size?" OK on same turn IF praise is Teacher voice and the English ask is clean.
-      - NEVER put "ถูกต้องครับ" inside the staff English line (e.g. FORBIDDEN: "ถูกต้องครับ! What size?").
+   5c. After clear answer: Staff ask ONLY — textEn="What size?" textTh=Thai of that ask. NO Teacher praise on this turn (skip praise or put it on a separate listen-only turn BEFORE this staff ask).
       expectsUserSpeech=true. expectedSpeech=""
       emojiChoice MUST be:
         { options: [
@@ -4510,28 +4512,31 @@ Core Flow (ONE-WAY — never go backward):
    - emojiChoice: ONLY the shirt cue (do NOT show pants/shoes/cap on this turn):
      { options: [ { emoji:"👕", label:"shirt", speak:"How much is this?" } ] }
    - After clear ask → NEXT turn listen-only staff answer ONLY in English: "It's twenty dollars."
-     - expectsUserSpeech=false. Omit emojiChoice.
-     - FORBIDDEN on this staff turn: Thai praise / coaching — no "ถูกต้องครับ" / "เยี่ยม" / "เป๊ะ" / "ดีมาก" / Teacher-B meta. Staff voice only.
-   - Then → Celebrate on the FOLLOWING turn.
+     - expectsUserSpeech=false. isLessonComplete=false. Omit emojiChoice.
+     - FORBIDDEN on this staff turn: Thai praise / coaching / Celebrate mash — no "ถูกต้องครับ" / "เยี่ยม" / "เป๊ะ" / "ดีมาก" / Teacher-B meta. Staff voice only.
+     - User taps Continue to end this beat → Celebrate on the FOLLOWING turn.
+   - FORBIDDEN: mash "It's twenty dollars." + Celebrate on the same turn.
 
-8. Celebrate (listen-only)
+8. Celebrate (listen-only) — AFTER Continue from staff price answer ONLY
    - Warm Teacher B voice in {{L1}} — NOT a one-liner. Aim ~2–3 short sentences.
    - MUST cover: (1) specific praise with first name once, (2) what they can do now (หาเสื้อ/กางเกง · คุยพนักงาน · ถามราคา), (3) soft tease next = Restaurant / ร้านอาหาร.
    - Tone example (adapt, don't recite word-for-word): "เยี่ยมมากครับ [Name]! 👏 วันนี้คุณซื้อเสื้อผ้าเป็นภาษาอังกฤษได้แล้ว — ทั้งบอกว่ากำลังหาอะไร คุยกับพนักงาน และถามราคา เก่งมากเลยครับ พร้อมไปบท Restaurant กันเลยไหมครับ!"
    - FORBIDDEN: ultra-short closers only like "วันนี้คุณทำได้แล้ว" / "เก่งมากครับ จบแล้ว" with nothing else.
+   - FORBIDDEN: starting with staff "It's twenty dollars."
    - expectsUserSpeech=false. isLessonComplete=true. Omit emojiChoice / emojiSpeak / scene.
 
 Teaching rules:
 - ONE speaking task per turn. NEVER mash listen-intro + staff question in one turn.
 - Soft correction only. Soft-accept close variants → เฉลย once → advance (no hell-loop).
 - STT English-only for spoken answers; coach in {{L1}} OK; staff questions in English in textEn.
+- Staff closing reply is ALWAYS listen-only → tap Continue → Celebrate (never mash).
 - Never go backward. Never emojiSpeak/emojiSpeakSet in this lesson.
 
 Turn loop:
 - Non-final turns end with one clear action OR listen-only Continue.
 - When Celebrate is reached, isLessonComplete must be true.`,
     openingPrompt:
-      'Start Shopping 2.1 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — greet by name + "วันนี้เราจะไปซื้อเสื้อผ้ากันครับ 👕 มาเรียนประโยคที่ใช้บ่อยที่สุดในร้านค้ากันครับ!" — expectsUserSpeech false. FORBIDDEN on Turn 1: any question about เสื้อ/shirt; emojiChoice; emojiSpeak; mic. After Continue: Emoji Recall ask ONLY \'"เสื้อ" ในภาษาอังกฤษเรียกว่าอะไรนะครับ?\' with 4-option board (do NOT repeat Hook); second ask RANDOM pants/shoes/cap. Then listen-only Pattern model "I\'m looking for a shirt." → Mini Challenge looking-for. Roleplay HARD SPLIT: bridge intro → Continue → "Can I help you?" → "What size?" S/M/L. Then price model → How much is this? (👕 only) → staff "It\'s twenty dollars." (no ถูกต้องครับ) → Celebrate ~2–3 sentences. NEVER mash Hook+question or bridge+ask. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
+      'Start Shopping 2.1 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — greet by name + "วันนี้เราจะไปซื้อเสื้อผ้ากันครับ 👕 มาเรียนประโยคที่ใช้บ่อยที่สุดในร้านค้ากันครับ!" — expectsUserSpeech false. FORBIDDEN on Turn 1: any question about เสื้อ/shirt; emojiChoice; emojiSpeak; mic. After Continue: Emoji Recall ask ONLY \'"เสื้อ" ในภาษาอังกฤษเรียกว่าอะไรนะครับ?\' with 4-option board (do NOT repeat Hook); second ask RANDOM pants/shoes/cap. Then listen-only Pattern model "I\'m looking for a shirt." → Mini Challenge looking-for. Roleplay HARD SPLIT: bridge intro → Continue → "Can I help you?" → "What size?" S/M/L. Then price model → How much is this? (👕 only) → staff listen-only "It\'s twenty dollars." ONLY (tap Continue) → THEN Celebrate ~2–3 sentences. NEVER mash staff close + Celebrate. NEVER mash Hook+question or bridge+ask. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
   },
   {
     lessonId: 'ee_around_town_restaurant',
@@ -4622,33 +4627,42 @@ Core Flow (ONE-WAY — never go backward):
    - Then → Roleplay bridge (do NOT skip to Celebrate).
 
 7. Roleplay — Staff (HARD SPLIT — never mash)
-   STAFF VOICE: English only (+ Thai subtitle). FORBIDDEN: "ถูกต้องครับ" / "เยี่ยม" / "เป๊ะ" inside staff lines.
+   STAFF VOICE: textEn = ENGLISH ONLY staff line; textTh = full Thai CC subtitle (required).
+   FORBIDDEN in textEn: Thai script; "ถูกต้องครับ" / "เยี่ยมมากครับ" / "เยี่ยม" / "เป๊ะ"; learner-echo mash.
+   Example GOOD: textEn="Anything to drink?" textTh="รับเครื่องดื่มอะไรดีครับ?"
+   Example BAD: textEn="เยี่ยมมากครับ! Anything to drink?"
    7a. Bridge INTRO (listen-only): {{L1}} ONLY close to
       "ต่อไปครูพี่บีจะเป็นพนักงานร้านอาหารนะครับ 😊 พร้อมแล้ว แตะเพื่อเริ่มได้เลย!"
       FORBIDDEN: "Are you ready to order?" / "Anything to drink?" on this turn.
       Continue → 7b.
-   7b. Staff ONLY: "Are you ready to order?" expectsUserSpeech=true.
+   7b. Staff ONLY: textEn="Are you ready to order?" + textTh. expectsUserSpeech=true.
       Soft-accept "I'd like chicken." (or clear order). Optionally emojiChoice single 🍗.
-      FORBIDDEN: mash bridge + ask.
-   7c. After clear order: Staff ONLY "Anything to drink?"
+      FORBIDDEN: mash bridge + ask; Thai praise in textEn.
+   7c. After clear order: Staff ONLY textEn="Anything to drink?" + textTh. NO praise mash.
       Soft-accept "I'd like water." Optionally emojiChoice single 🥤.
-   After drink → Celebrate. FORBIDDEN: re-ask after clear reply.
+   7d. ROLEPLAY CLOSE (ALWAYS) — after clear drink answer:
+      - Staff listen-only textEn="Sure!" textTh="ได้เลยครับ!" ONLY.
+      - expectsUserSpeech=false. isLessonComplete=false. Omit emojiChoice.
+      - User taps Continue to end roleplay → Celebrate on the NEXT turn.
+      - FORBIDDEN: mash Sure! + Celebrate / Thai Teacher praise on this turn.
+   After 7d Continue → Celebrate. FORBIDDEN: re-ask after clear reply. FORBIDDEN: jump to Celebrate on the same turn as the drink answer.
 
-8. Celebrate (listen-only)
+8. Celebrate (listen-only) — AFTER Continue from 7d ONLY
    - Warm ~2–3 sentences: name once + what they can do (สั่ง I'd like… / ถาม recommend / คุยพนักงาน) + soft tease Coffee Shop.
-   - FORBIDDEN: one-liner only like "วันนี้คุณทำได้แล้ว".
+   - FORBIDDEN: one-liner only like "วันนี้คุณทำได้แล้ว"; starting with staff "Sure!".
    - expectsUserSpeech=false. isLessonComplete=true. Omit emojiChoice.
 
 Teaching rules:
 - ONE speaking task per turn. NEVER mash Hook+question or bridge+staff ask.
 - Soft-accept close variants → เฉลย once → advance.
+- Roleplay close is ALWAYS AI staff reply (listen-only) → tap Continue → Celebrate.
 - Never emojiSpeak/emojiSpeakSet. Never go backward.
 
 Turn loop:
 - Non-final: one clear action OR listen-only Continue.
 - Celebrate → isLessonComplete true.`,
     openingPrompt:
-      'Start Restaurant 2.2 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — greet + "วันนี้เราจะไปร้านอาหารกันครับ 🍽️…" — expectsUserSpeech false. FORBIDDEN on Turn 1: any vocab question; emojiChoice; mic. After Continue: Emoji Recall ask "ไก่"→chicken with 4-board 🍗chicken 🍚rice 🥤water 🧾bill; second ask RANDOM rice/water/bill. Then listen Pattern "I\'d like chicken." → Mini Challenge ONE emoji at a time: rice then water. Then listen Pattern "What do you recommend?" → speak that → staff "I recommend the chicken." (no ถูกต้องครับ). Roleplay HARD SPLIT: bridge intro → Continue → "Are you ready to order?" → "Anything to drink?". Celebrate ~2–3 sentences + Coffee Shop tease. NEVER mash Hook+question or bridge+ask. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
+      'Start Restaurant 2.2 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — greet + "วันนี้เราจะไปร้านอาหารกันครับ 🍽️…" — expectsUserSpeech false. FORBIDDEN on Turn 1: any vocab question; emojiChoice; mic. After Continue: Emoji Recall ask "ไก่"→chicken with 4-board 🍗chicken 🍚rice 🥤water 🧾bill; second ask RANDOM rice/water/bill. Then listen Pattern "I\'d like chicken." → Mini Challenge ONE emoji at a time: rice then water. Then listen Pattern "What do you recommend?" → speak that → staff "I recommend the chicken." (no ถูกต้องครับ). Roleplay HARD SPLIT: bridge intro → Continue → "Are you ready to order?" → "Anything to drink?" → ROLEPLAY CLOSE listen-only "Sure!" ONLY → tap Continue → THEN Celebrate ~2–3 sentences. NEVER mash Sure!+Celebrate. NEVER mash Hook+question or bridge+ask. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
   },
   {
     lessonId: 'ee_around_town_coffee',
@@ -4694,7 +4708,7 @@ emojiChoice rules (like Shopping / Restaurant):
 Core Flow (ONE-WAY):
 
 1. Hook (listen-only) — OPENING ONLY
-   - {{L1}} close to: "สวัสดีครับ [Name]! เช้าๆ แบบนี้ รับกาแฟสักแก้วไหมครับ? วันนี้มาฝึกสั่งกาแฟแก้วโปรดเป็นภาษาอังกฤษแบบมั่นใจกันครับ ☕"
+   - {{L1}} close to (two short beats OK): "สวัสดีครับ [Name]! เช้า ๆ แบบนี้ รับกาแฟสักแก้วไหมครับ? ☕ วันนี้มาฝึกสั่งกาแฟแก้วโปรดเป็นภาษาอังกฤษกันครับ!"
    - expectsUserSpeech=false. Omit emojiChoice.
    - FORBIDDEN: vocab question / board / mic on Hook. Continue → 2.
 
@@ -4729,14 +4743,17 @@ Core Flow (ONE-WAY):
    After cake → Roleplay bridge.
 
 5. Roleplay — Barista (HARD SPLIT)
-   STAFF: English only (+ Thai subtitle). FORBIDDEN: "ถูกต้องครับ" / Teacher praise inside staff lines.
+   STAFF: textEn = ENGLISH ONLY staff line; textTh = full Thai CC subtitle (required on every staff turn).
+   FORBIDDEN in textEn: Thai script; "ถูกต้องครับ" / "เยี่ยมมากครับ" / "เยี่ยมเลย" / Teacher praise; echoing the learner ("Cappuccino" + Thai paraphrase); Thai ask mashed with English.
+   Example GOOD 5d: textEn="Hot or iced?" textTh="ร้อนหรือเย็นดีครับ?"
+   Example BAD: textEn="เยี่ยมมากครับ! \"Cappuccino\" แล้วรับแบบไหนดีครับ \"Hot or iced?\""
    5a. Bridge (listen-only): {{L1}} ONLY
       "ต่อไปครูพี่บีจะเป็นบาริสต้านะครับ ☕ พร้อมแล้ว แตะเพื่อเริ่มได้เลย!"
       FORBIDDEN: "What can I get for you?" on this turn. Continue → 5b.
-   5b. Staff ONLY: "What can I get for you?"
+   5b. Staff ONLY: textEn="What can I get for you?" textTh=Thai of that ask.
       expectsUserSpeech=true. Soft-accept "Can I get a coffee?"
       emojiChoice optional: { options: [ { emoji:"☕", label:"coffee", speak:"Can I get a coffee?" } ] }
-   5c. After clear: Staff ONLY "What type of coffee?"
+   5c. After clear: Staff ONLY textEn="What type of coffee?" + textTh. NO praise.
       emojiChoice MUST be:
         { options: [
           { emoji:"☕", label:"latte", speak:"Latte" },
@@ -4744,77 +4761,183 @@ Core Flow (ONE-WAY):
           { emoji:"☕", label:"espresso", speak:"Espresso" }
         ] }
       Soft-accept Latte / Cappuccino / Espresso (with/without period).
-   5d. After clear type: Staff ONLY "Hot or iced?"
+   5d. After clear type: Staff ONLY textEn="Hot or iced?" + textTh. NO praise / NO learner echo.
       emojiChoice MUST be:
         { options: [
           { emoji:"♨️", label:"hot", speak:"Hot" },
           { emoji:"🧊", label:"iced", speak:"Iced" }
         ] }
       Soft-accept Hot / Iced / hot / iced.
-   5e. After clear: Staff listen-only ONLY "Sure!" (no Thai praise). Continue → Celebrate.
-   HARD: never mash bridge + first ask. Never re-ask after clear reply.
+   5e. ROLEPLAY CLOSE (ALWAYS) — Staff listen-only AFTER hot/iced answer:
+      - textEn = ONLY "Sure!" (nothing else). textTh = "ได้เลยครับ!" (or short Thai of Sure).
+      - expectsUserSpeech=false. isLessonComplete=false. Omit emojiChoice.
+      - User MUST tap Continue to end roleplay → then Celebrate on the NEXT turn.
+      - FORBIDDEN on this turn: Teacher praise; Celebrate copy; name; "วันนี้คุณ…"; "เก่งมาก"; mashing Sure! + Celebrate.
+      - Example GOOD: textEn="Sure!" textTh="ได้เลยครับ!"
+      - Example BAD: textEn="Sure! เยี่ยมมากครับ Jim วันนี้คุณสั่งกาแฟ…"
+   HARD: never mash bridge + first ask. Never re-ask after clear reply. Never put Teacher praise inside staff textEn.
+   HARD: Roleplay ALWAYS ends at 5e (AI Sure! → tap Continue). Celebrate is NEVER the same turn as Sure!
 
-6. Celebrate (listen-only)
-   - Warm ~2–3 sentences: name once + Can I get… / coffee type / hot-iced + soft tease Explore the City.
+6. Celebrate (listen-only) — AFTER Continue from 5e ONLY
+   - Warm ~2–3 sentences in {{L1}}: name once + Can I get… / coffee type / hot-iced + soft tease Explore the City.
    - FORBIDDEN: one-liner only "วันนี้คุณทำได้แล้ว".
+   - FORBIDDEN: starting with staff "Sure!" or keeping barista voice.
    - expectsUserSpeech=false. isLessonComplete=true. Omit emojiChoice.
 
 Teaching rules:
 - ONE speaking task per turn. Never mash Hook+question or bridge+ask.
 - Soft-accept → เฉลย once → advance. No emojiSpeak/emojiSpeakSet.
+- Roleplay close is ALWAYS AI staff reply (listen-only) → tap Continue → Celebrate.
 
 Turn loop: non-final = action or Continue; Celebrate → isLessonComplete true.`,
     openingPrompt:
-      'Start Coffee Shop 2.3 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — greet by name + "เช้าๆ แบบนี้ รับกาแฟสักแก้วไหมครับ? วันนี้มาฝึกสั่งกาแฟแก้วโปรดเป็นภาษาอังกฤษแบบมั่นใจกันครับ ☕" — expectsUserSpeech false. FORBIDDEN on Turn 1: vocab question; emojiChoice; mic. After Continue: Emoji Recall "กาแฟ"→coffee with board ☕coffee 🍵tea 🥛milk 🍰cake; second ask RANDOM tea/milk/cake. Then listen Pattern "Can I get a coffee?" → Mini Challenge one emoji: tea then cake. Roleplay HARD SPLIT: barista bridge → Continue → "What can I get for you?" → "What type of coffee?" (latte/cappuccino/espresso) → "Hot or iced?" → staff "Sure!" only → Celebrate ~2–3 sentences + Explore the City tease. NEVER mash Hook+question or bridge+ask. NEVER emojiSpeak/emojiSpeakSet. No ถูกต้องครับ on staff turns. Return JSON matching schema. isLessonComplete must be false.',
+      'Start Coffee Shop 2.3 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — greet by name + "เช้า ๆ แบบนี้ รับกาแฟสักแก้วไหมครับ? ☕ วันนี้มาฝึกสั่งกาแฟแก้วโปรดเป็นภาษาอังกฤษกันครับ!" — expectsUserSpeech false. FORBIDDEN on Turn 1: vocab question; emojiChoice; mic. After Continue: Emoji Recall "กาแฟ"→coffee with board ☕coffee 🍵tea 🥛milk 🍰cake; second ask RANDOM tea/milk/cake. Then listen Pattern "Can I get a coffee?" → Mini Challenge one emoji: tea then cake. Roleplay HARD SPLIT: barista bridge → Continue → staff English-ONLY "What can I get for you?" (textTh Thai CC) → "What type of coffee?" → "Hot or iced?" → ROLEPLAY CLOSE listen-only "Sure!" ONLY (isLessonComplete false) → tap Continue → THEN Celebrate ~2–3 sentences (separate turn, isLessonComplete true). NEVER mash Sure!+Celebrate or Thai praise into staff textEn. NEVER mash Hook+question or bridge+ask. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
   },
-  buildStoriesPatternLesson({
+  {
     lessonId: 'ee_around_town_convenience',
-    code: '2.4',
-    trackLabel: 'Everyday Life',
+    targetLabel: 'word or sentence',
     titleEn: 'Explore the City',
     titleTh: 'สำรวจเมือง',
-    goalEn: 'Talk about exploring the city and looking for places.',
-    goalTh: 'พูดเรื่องเที่ยวเมืองและหาสถานที่',
-    hookTh:
-      'วันนี้มาฝึกพูดตอนเที่ยวเมืองครับ! สำรวจเมือง แล้วบอกว่ากำลังหาที่ไหน',
-    emojiWords: [
-      { emoji: '🏛️', answer: 'museum', hint: 'm _ s _ _ m' },
-      { emoji: '🏞️', answer: 'park', hint: 'p _ r k' },
-      { emoji: '🛕', answer: 'temple', hint: 't _ m p l e' },
-      { emoji: '🗺️', answer: 'map', hint: 'm _ p' },
+    goalEn: 'Ask for places in the city in English.',
+    goalTh: 'ถามหาสถานที่เป็นภาษาอังกฤษ',
+    difficulty: 'beginner',
+    languageMix: { thai: 70, english: 30 },
+    estimatedMinutesMin: 4,
+    estimatedMinutesMax: 6,
+    targetPhrases: [
+      'museum',
+      'park',
+      'temple',
+      'map',
+      "I'm looking for the museum.",
+      "I'm looking for the park.",
+      "I'm looking for the temple.",
+      'Where is the museum?',
+      'Where is Big Ben?',
+      'Where is the London Eye?',
+      'Where is Tower Bridge?',
+      'Excuse me.',
+      'Thank you.',
     ],
-    tellGoal: 'build Present Continuous exploring lines',
-    tell1CueTh:
-      "ถ้าจะบอกเพื่อนว่า กำลังเที่ยวในเมือง ให้พูดว่า... I'm exploring the city. ... ลองพูดดูครับ",
-    tell1Thai: 'ฉันกำลังเที่ยวในเมือง',
-    tell1En: "I'm exploring the city.",
-    tipTh:
-      "เยี่ยมเลยครับ! I'm exploring... / I'm looking for... ใช้ตอนกำลังทำอะไรอยู่ได้เลย",
-    tell2CueTh:
-      'คราวนี้ถ้าจะเปลี่ยนเป็น กำลังเที่ยวในสวน... ลองพูดว่าไงดีครับ?',
-    tell2Thai: 'ฉันกำลังเที่ยวในสวน',
-    tell2En: "I'm exploring the park.",
-    tell2PraiseTh: 'โอเคเลย! เข้าใจง่ายสุดๆ',
-    tell3CueTh: 'ถ้าจะบอกว่า กำลังหาพิพิธภัณฑ์... ลองพูดสิครับ',
-    tell3Thai: 'ฉันกำลังหาพิพิธภัณฑ์',
-    tell3En: "I'm looking for the museum.",
-    tell3PraiseTh: 'เป๊ะ! looking for ใช้หาสถานที่ได้ดีมากครับ',
-    ask1CueTh:
-      'คราวนี้ลองถามคนท้องถิ่นว่า พิพิธภัณฑ์อยู่ไหน... โดยพูดว่า Where is the museum? ... ลองเลยครับ',
-    ask1En: 'Where is the museum?',
-    ask1AiAnswerEn: "It's over there.",
-    ask1PraiseTh: 'เป๊ะเลยครับ!',
-    ask2ThaiCue: 'คราวนี้ลองถามเองดูครับ เรื่องสวนสาธารณะ พูดว่าไงดี?',
-    ask2En: 'Where is the park?',
-    ask2AiAnswerEn: 'Go straight. The park is near here.',
-    ask2PraiseTh: 'ดีมากครับ!',
-    answerBridgeTh:
-      'ดีมากครับ! ต่อไปสมมุติว่าผมเป็นเพื่อนที่เจอในเมืองนะครับ...',
-    answer1En: 'What are you doing today?',
-    answer1PraiseTh: 'ดีมากครับ!',
-    answer2En: 'What are you looking for?',
-    nextLessonHint: 'Transportation / การเดินทาง',
-  }),
+    maxTurns: 24,
+    listenOnlyTurns: 1,
+    systemInstruction: `Lesson: Explore the City (Everyday English → Everyday Life → 2.4)
+Goal: Ask for places in the city in English.
+Pace target: ~4–6 minutes. Keep every tutor turn tight.
+
+FIXED boards:
+  Looking-for: 🏛️ museum · 🌳 park · 🛕 temple · 🗺️ map
+  Landmarks: 🕰️ Big Ben · 🎡 London Eye · 🌉 Tower Bridge
+
+NEW turn type — guidedSpeaking (critical):
+- Return guidedSpeaking: { stem, emoji, label?, speak } on Guided Speaking speak turns.
+- App shows stem + single large emoji under your bubble; learner STILL speaks via mic.
+- Example: { stem:"I'm looking for the...", emoji:"🏛️", label:"museum", speak:"I'm looking for the museum." }
+- FORBIDDEN: combine guidedSpeaking with emojiChoice on the same turn.
+- Omit guidedSpeaking on listen-only / Celebrate / Roleplay staff turns.
+
+emojiChoice rules (Mini Challenges):
+- Speak scaffolds via emojiChoice { options:[{ emoji, label, speak }] }. Mic still required.
+- Looking-for board: ALL 4 labeled items.
+- Landmark board: ALL 3 labeled items (Big Ben / London Eye / Tower Bridge).
+- FORBIDDEN: emojiSpeak / emojiSpeakSet anywhere in this lesson.
+
+Core Flow (ONE-WAY):
+
+1. Hook (listen-only) — OPENING ONLY
+   - {{L1}} close to (two short beats OK):
+     "สวัสดีครับ [Name]! วันนี้เราจะออกไปเดินเที่ยวในเมืองกันครับ! 🗺️ มาฝึกถามหาสถานที่เป็นภาษาอังกฤษกันครับ!"
+   - expectsUserSpeech=false. expectedSpeech="". Omit guidedSpeaking / emojiChoice / emojiSpeak / scene.
+   - FORBIDDEN on Hook: any question; mic task. Continue → 2.
+
+2. Guided Speaking (พูด) — AFTER Hook Continue
+   2a. Speak turn:
+      - {{L1}} scenario close to:
+        "คุณเพิ่งมาถึง London 🇬🇧 แต่หลงทางซะแล้ว 😅 คุณอยากไปพิพิธภัณฑ์ คุณจะบอกคนท้องถิ่นว่าอย่างไรครับ?"
+      - guidedSpeaking MUST be:
+        { stem:"I'm looking for the...", emoji:"🏛️", label:"museum", speak:"I'm looking for the museum." }
+      - expectsUserSpeech=true. expectedSpeech="I'm looking for the museum."
+      - Soft-accept "I'm looking for the museum" / with/without period / "I'm looking for museum".
+      - Omit emojiChoice.
+   2b. After clear answer — Pattern teach (listen-only), SEPARATE turn:
+      - {{L1}} praise + teach close to:
+        'เยี่ยมมากครับ! 👏 ถ้าจะบอกว่ากำลังหาสถานที่ ให้พูดว่า...'
+      - textEn MUST include the model stem/line for TTS: "I'm looking for the..."
+      - expectsUserSpeech=false. isLessonComplete=false. Omit guidedSpeaking / emojiChoice.
+      - Continue → Mini Challenge 1.
+
+3. Mini Challenge 1 — Looking for (พูด)
+   - {{L1}}: "แล้วตอนนี้คุณกำลังหาที่ไหนอยู่ครับ? 😊"
+   - expectsUserSpeech=true. expectedSpeech=""
+   - emojiChoice MUST be:
+     { options: [
+       { emoji:"🏛️", label:"museum", speak:"I'm looking for the museum." },
+       { emoji:"🌳", label:"park", speak:"I'm looking for the park." },
+       { emoji:"🛕", label:"temple", speak:"I'm looking for the temple." },
+       { emoji:"🗺️", label:"map", speak:"I'm looking for the map." }
+     ] }
+   - Soft-accept I'm looking for the park/temple/museum/map (with/without "the").
+   - After clear → Pattern 2. Omit guidedSpeaking.
+
+4. Pattern 2 — Where is (listen-only)
+   - {{L1}} close to: 'ถ้าจะถามทางตรง ๆ ให้พูดว่า...'
+   - textEn MUST include: "Where is the museum?"
+   - expectsUserSpeech=false. Omit guidedSpeaking / emojiChoice.
+   - Continue → Mini Challenge 2.
+
+5. Mini Challenge 2 — Ask landmark (พูด)
+   - {{L1}}: "ไหนลองถามหาสถานที่ดูครับ 😊"
+   - expectsUserSpeech=true. expectedSpeech=""
+   - emojiChoice MUST be:
+     { options: [
+       { emoji:"🕰️", label:"Big Ben", speak:"Where is Big Ben?" },
+       { emoji:"🎡", label:"London Eye", speak:"Where is the London Eye?" },
+       { emoji:"🌉", label:"Tower Bridge", speak:"Where is Tower Bridge?" }
+     ] }
+   - Soft-accept Where is Big Ben? / Where is the London Eye? / Where is Tower Bridge?
+   - After clear → Roleplay bridge. Omit guidedSpeaking.
+
+6. Roleplay Intro (listen-only) — NEW turn type roleplayIntro
+   - Return roleplayIntro MUST:
+     { subtitle:"คุณกำลังคุยกับคนท้องถิ่น", npcEmoji:"👨", npcLabel:"คนท้องถิ่น", npcName:"Local Guide", userLabel:"คุณ" }
+   - expectsUserSpeech=false. isLessonComplete=false.
+   - textEn may be short {{L1}} tip close to: 'อย่าลืมเริ่มด้วย "Excuse me." ก่อนนะครับ' (or empty) — the intro CARD is the main UI.
+   - Omit guidedSpeaking / emojiChoice / roleplayNpc on this turn.
+   - FORBIDDEN: staff "Hello!" on this turn. User taps Continue → Roleplay.
+
+7. Roleplay — Local person (HARD SPLIT — ENGLISH staff only + Thai CC)
+   STAFF: textEn = ENGLISH ONLY; textTh = Thai CC (required).
+   EVERY staff turn MUST include roleplayNpc: { emoji:"👨", name:"Local Guide" }
+   FORBIDDEN in textEn: Thai praise / เยี่ยมมาก / Celebrate mash.
+   Remember which landmark they asked about in step 5; prefer that in roleplay (default Big Ben OK).
+
+   7a. Staff ONLY: textEn="Hello!" textTh="สวัสดีครับ!" expectsUserSpeech=true.
+       Soft-accept "Excuse me." / "Excuse me"
+   7b. After clear: Staff ONLY textEn="Yes?" textTh="ครับ?"
+       Soft-accept "Where is Big Ben?" (or their landmark from step 5)
+   7c. After clear: Staff ONLY textEn="Go straight and turn left." textTh=Thai of that line.
+       Soft-accept "Thank you." / "Thank you" / "Thanks."
+   7d. ROLEPLAY CLOSE (ALWAYS) — Staff listen-only:
+       textEn="You're welcome!" textTh="ด้วยความยินดีครับ!"
+       expectsUserSpeech=false. isLessonComplete=false. Omit emojiChoice / guidedSpeaking / roleplayIntro.
+       Keep roleplayNpc on this turn.
+       User taps Continue to end roleplay → Celebrate on the NEXT turn.
+       FORBIDDEN: mash You're welcome! + Celebrate / Thai Teacher praise.
+
+8. Celebrate (listen-only) — AFTER Continue from 7d ONLY
+   - Warm ~2–3 sentences in {{L1}}: name once + I'm looking for… / Where is… / Excuse me + soft tease Transportation.
+   - FORBIDDEN: one-liner only; starting with staff "You're welcome!".
+   - expectsUserSpeech=false. isLessonComplete=true. Omit guidedSpeaking / emojiChoice / roleplayIntro / roleplayNpc.
+
+Teaching rules:
+- ONE speaking task per turn. Never mash Hook+question or Intro+Hello.
+- Soft-accept → เฉลย once → advance. No emojiSpeak/emojiSpeakSet.
+- Roleplay close is ALWAYS AI staff reply (listen-only) → tap Continue → Celebrate.
+
+Turn loop: non-final = action or Continue; Celebrate → isLessonComplete true.`,
+    openingPrompt:
+      'Start Explore the City 2.4 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — greet by name + "วันนี้เราจะออกไปเดินเที่ยวในเมืองกันครับ! 🗺️ มาฝึกถามหาสถานที่เป็นภาษาอังกฤษกันครับ!" — expectsUserSpeech false. FORBIDDEN on Turn 1: question; guidedSpeaking; emojiChoice; roleplayIntro; mic. After Continue: Guided Speaking London/museum with guidedSpeaking stem "I\'m looking for the..." + 🏛️ → listen-only pattern teach "I\'m looking for the..." → Mini Challenge looking-for board museum/park/temple/map → listen Pattern "Where is the museum?" → Mini Challenge landmarks Big Ben/London Eye/Tower Bridge → Roleplay Intro card (roleplayIntro คนท้องถิ่น, tap Continue) → staff roleplayNpc "Hello!" → "Yes?" → "Go straight and turn left." → ROLEPLAY CLOSE "You\'re welcome!" ONLY → tap Continue → THEN Celebrate ~2–3 sentences + Transportation tease. NEVER mash staff close + Celebrate. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
+  },
   buildStoriesPatternLesson({
     lessonId: 'ee_around_town_transport',
     code: '2.5',
@@ -6672,6 +6795,263 @@ export function normalizeEmojiChoice(
     .filter((opt): opt is NonNullable<typeof opt> => opt != null);
   if (options.length === 0) return null;
   return { options };
+}
+
+/** Sanitize optional Guided Speaking card from the model. */
+export function normalizeGuidedSpeaking(
+  guidedSpeaking:
+    | {
+        stem?: string;
+        emoji?: string;
+        label?: string;
+        speak?: string;
+      }
+    | null
+    | undefined,
+):
+  | {
+      stem: string;
+      emoji: string;
+      label?: string;
+      speak: string;
+    }
+  | null {
+  if (!guidedSpeaking) return null;
+  const stem = guidedSpeaking.stem?.trim() ?? '';
+  const emoji = guidedSpeaking.emoji?.trim() ?? '';
+  const speak = guidedSpeaking.speak?.trim() ?? '';
+  if (!stem || !emoji || !speak) return null;
+  const label = guidedSpeaking.label?.trim();
+  return {
+    stem,
+    emoji,
+    speak,
+    ...(label ? { label } : {}),
+  };
+}
+
+/** Sanitize optional Roleplay Intro card from the model. */
+export function normalizeRoleplayIntro(
+  roleplayIntro:
+    | {
+        subtitle?: string;
+        npcEmoji?: string;
+        npcLabel?: string;
+        npcName?: string;
+        userLabel?: string;
+      }
+    | null
+    | undefined,
+):
+  | {
+      subtitle: string;
+      npcEmoji: string;
+      npcLabel: string;
+      npcName?: string;
+      userLabel?: string;
+    }
+  | null {
+  if (!roleplayIntro) return null;
+  const subtitle = roleplayIntro.subtitle?.trim() ?? '';
+  const npcEmoji = roleplayIntro.npcEmoji?.trim() ?? '';
+  const npcLabel = roleplayIntro.npcLabel?.trim() ?? '';
+  if (!subtitle || !npcEmoji || !npcLabel) return null;
+  const npcName = roleplayIntro.npcName?.trim();
+  const userLabel = roleplayIntro.userLabel?.trim();
+  return {
+    subtitle,
+    npcEmoji,
+    npcLabel,
+    ...(npcName ? { npcName } : {}),
+    ...(userLabel ? { userLabel } : {}),
+  };
+}
+
+/** Sanitize optional roleplay NPC chrome from the model. */
+export function normalizeRoleplayNpc(
+  roleplayNpc:
+    | {
+        emoji?: string;
+        name?: string;
+      }
+    | null
+    | undefined,
+): { emoji: string; name: string } | null {
+  if (!roleplayNpc) return null;
+  const emoji = roleplayNpc.emoji?.trim() ?? '';
+  const name = roleplayNpc.name?.trim() ?? '';
+  if (!emoji || !name) return null;
+  return { emoji, name };
+}
+
+/** Known Around Town staff lines — used to strip Thai praise mash from textEn. */
+const AROUND_TOWN_STAFF_LINES = [
+  'Can I help you?',
+  'What size?',
+  "It's twenty dollars.",
+  'Are you ready to order?',
+  'Anything to drink?',
+  'I recommend the chicken.',
+  'What can I get for you?',
+  'What type of coffee?',
+  'Hot or iced?',
+  'Sure!',
+  'Hello!',
+  'Yes?',
+  'Go straight and turn left.',
+  "You're welcome!",
+] as const;
+
+const AROUND_TOWN_STAFF_TEXT_TH: Record<string, string> = {
+  'Can I help you?': 'ต้องการให้ช่วยเหลือไหมครับ?',
+  'What size?': 'ไซส์ไหนดีครับ?',
+  "It's twenty dollars.": 'ยี่สิบดอลลาร์ครับ',
+  'Are you ready to order?': 'พร้อมสั่งหรือยังครับ?',
+  'Anything to drink?': 'รับเครื่องดื่มอะไรดีครับ?',
+  'I recommend the chicken.': 'ขอแนะนำไก่ครับ',
+  'What can I get for you?': 'รับอะไรดีครับ?',
+  'What type of coffee?': 'กาแฟแบบไหนดีครับ?',
+  'Hot or iced?': 'ร้อนหรือเย็นดีครับ?',
+  'Sure!': 'ได้เลยครับ!',
+  'Hello!': 'สวัสดีครับ!',
+  'Yes?': 'ครับ?',
+  'Go straight and turn left.': 'ตรงไปแล้วเลี้ยวซ้ายครับ',
+  "You're welcome!": 'ด้วยความยินดีครับ!',
+};
+
+/**
+ * Roleplay staff turns must be English in textEn + Thai in textTh (CC).
+ * Models often mash Teacher praise into textEn ("เยี่ยมมากครับ! … Hot or iced?").
+ * When Thai is mixed into a known staff line (or emojiChoice staff turn), peel it apart.
+ * Also fill missing textTh for known staff lines so CC Thai works.
+ */
+export function sanitizeAroundTownStaffSpeech(
+  lessonId: string,
+  textEn: string,
+  textTh: string | null | undefined,
+  hasEmojiChoice: boolean,
+): { textEn: string; textTh: string | null } {
+  if (!lessonId.startsWith('ee_around_town_')) {
+    return { textEn, textTh: textTh?.trim() || null };
+  }
+
+  const raw = (textEn ?? '').trim();
+  if (!raw) {
+    return { textEn: raw, textTh: textTh?.trim() || null };
+  }
+
+  const findStaffMatch = (haystack: string): string | null => {
+    const lower = haystack.toLowerCase();
+    for (const phrase of [...AROUND_TOWN_STAFF_LINES].sort(
+      (a, b) => b.length - a.length,
+    )) {
+      if (lower.includes(phrase.toLowerCase())) return phrase;
+    }
+    return null;
+  };
+
+  const thaiCount = (raw.match(/[\u0E00-\u0E7F]/g) ?? []).length;
+  const latinCount = (raw.match(/[A-Za-z]/g) ?? []).length;
+  const mixedThaiIntoSpeech = thaiCount > 0 && latinCount >= 3;
+  const staffMatch = findStaffMatch(raw);
+
+  // "Sure! เยี่ยมมากครับ Jim…" — always peel to roleplay close only.
+  const sureMash =
+    /^sure!(?:\s|$)/i.test(raw) &&
+    (thaiCount > 0 || raw.length > 'Sure!'.length + 2);
+  // "It's twenty dollars. เยี่ยมมาก…" — same for Shopping close.
+  const priceMash =
+    /^it'?s twenty dollars\.?(?:\s|$)/i.test(raw) &&
+    (thaiCount > 0 || raw.length > "It's twenty dollars.".length + 2);
+
+  // "You're welcome! เยี่ยม…" — Explore the City roleplay close.
+  const welcomeMash =
+    /^you'?re welcome!(?:\s|$)/i.test(raw) &&
+    (thaiCount > 0 || raw.length > "You're welcome!".length + 2);
+
+  let cleanedEn = raw;
+  let nextTh = textTh?.trim() || '';
+
+  if (
+    sureMash ||
+    priceMash ||
+    welcomeMash ||
+    mixedThaiIntoSpeech ||
+    (hasEmojiChoice && thaiCount > 0)
+  ) {
+    if (sureMash) {
+      cleanedEn = 'Sure!';
+      nextTh = AROUND_TOWN_STAFF_TEXT_TH['Sure!'];
+    } else if (priceMash) {
+      cleanedEn = "It's twenty dollars.";
+      nextTh = AROUND_TOWN_STAFF_TEXT_TH["It's twenty dollars."];
+    } else if (welcomeMash) {
+      cleanedEn = "You're welcome!";
+      nextTh = AROUND_TOWN_STAFF_TEXT_TH["You're welcome!"];
+    } else {
+      cleanedEn = staffMatch ?? '';
+      if (!cleanedEn) {
+        const stripped = raw
+          .replace(/[\u0E00-\u0E7F]+/g, ' ')
+          .replace(/["“”]/g, ' ')
+          .replace(/\s+/g, ' ')
+          .trim();
+        const chunks = stripped
+          .split(/(?<=[.?!:])\s+/)
+          .map((s) => s.trim())
+          .filter(Boolean);
+        cleanedEn =
+          [...chunks]
+            .reverse()
+            .find(
+              (c) =>
+                /\?$/.test(c) ||
+                /^(what|how|are|can|anything|sure)/i.test(c),
+            ) ?? stripped;
+      }
+      if (!nextTh) {
+        nextTh = raw
+          .replace(/[A-Za-z0-9][A-Za-z0-9'?.!, ]*/g, ' ')
+          .replace(/["“”]/g, ' ')
+          .replace(/\s+/g, ' ')
+          .trim()
+          .replace(
+            /^(เยี่ยมมากครับ|เยี่ยมเลยครับ|ถูกต้องครับ|เก่งมากครับ|เป๊ะครับ|ดีมากครับ)[!！.\s]*/u,
+            '',
+          )
+          .trim();
+      }
+    }
+  }
+
+  const finalEn = (cleanedEn || raw).trim();
+  const matched = sureMash
+    ? 'Sure!'
+    : priceMash
+      ? "It's twenty dollars."
+      : welcomeMash
+        ? "You're welcome!"
+        : (staffMatch ?? findStaffMatch(finalEn));
+  if (!nextTh && matched && AROUND_TOWN_STAFF_TEXT_TH[matched]) {
+    nextTh = AROUND_TOWN_STAFF_TEXT_TH[matched];
+  }
+
+  return {
+    textEn: finalEn,
+    textTh: nextTh || null,
+  };
+}
+
+/** Staff closing lines that end roleplay — listen-only, never lesson-complete. */
+export function isAroundTownRoleplayCloseLine(textEn: string): boolean {
+  const t = textEn.trim().toLowerCase();
+  return (
+    t === 'sure!' ||
+    t === "it's twenty dollars." ||
+    t === 'its twenty dollars.' ||
+    t === "you're welcome!" ||
+    t === 'youre welcome!'
+  );
 }
 
 /**

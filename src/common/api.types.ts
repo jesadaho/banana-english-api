@@ -74,6 +74,21 @@ export interface TurnExchangeResponse {
    * Shown with the AI bubble; mic still required (tap is guide / STT bias only).
    */
   emojiChoice?: EmojiChoicePrompt | null;
+  /**
+   * Guided Speaking card — sentence stem + single emoji cue.
+   * Learner completes the stem via mic (e.g. "I'm looking for the..." + 🏛️).
+   */
+  guidedSpeaking?: GuidedSpeakingPrompt | null;
+  /**
+   * Roleplay Intro card — listen-only; learner taps Continue to start roleplay.
+   * NPC is shown as emoji; learner as their avatar.
+   */
+  roleplayIntro?: RoleplayIntroPrompt | null;
+  /**
+   * Active roleplay NPC chrome for staff turns (tag + bubble avatar).
+   * Omit on Teacher / Celebrate turns.
+   */
+  roleplayNpc?: RoleplayNpcPrompt | null;
 }
 
 /** One Emoji Speak prompt embedded in a training turn. */
@@ -100,6 +115,38 @@ export interface EmojiChoiceOption {
 /** In-chat Emoji Choice prompt — visual options while the learner speaks. */
 export interface EmojiChoicePrompt {
   options: EmojiChoiceOption[];
+}
+
+/** Guided Speaking — stem + single emoji for the learner to complete aloud. */
+export interface GuidedSpeakingPrompt {
+  /** Sentence stem shown on the card (e.g. "I'm looking for the..."). */
+  stem: string;
+  /** Emoji cue for the missing word/place. */
+  emoji: string;
+  /** Optional English label under the emoji (e.g. "museum"). */
+  label?: string;
+  /** Full English the learner should say (STT soft-accept / bias). */
+  speak: string;
+}
+
+/** Roleplay Intro — dual avatar card before staff/NPC dialogue. */
+export interface RoleplayIntroPrompt {
+  /** Thai (or L1) line under ROLEPLAY (e.g. "คุณกำลังคุยกับคนท้องถิ่น"). */
+  subtitle: string;
+  /** NPC emoji shown in the right circle. */
+  npcEmoji: string;
+  /** Label under the NPC circle (e.g. "คนท้องถิ่น"). */
+  npcLabel: string;
+  /** Name used on NPC bubbles after intro (e.g. "Local Guide"). */
+  npcName?: string;
+  /** Label under the learner circle (default "คุณ"). */
+  userLabel?: string;
+}
+
+/** Active roleplay NPC identity for chat chrome. */
+export interface RoleplayNpcPrompt {
+  emoji: string;
+  name: string;
 }
 
 /** One line in a lesson Scene dialogue (Watch & Listen). */
