@@ -543,48 +543,53 @@ export const SIMULATIONS: SimulationConfig[] = [
   },
   {
     simulationId: 'small_talk_easy',
-    title: 'คุยสั้นๆ',
+    title: 'คุยเรื่องตัวเอง',
     missionNumber: 2,
-    missionTitleTh: 'คุยสั้นๆ',
+    missionTitleTh: 'คุยเรื่องตัวเอง',
     scenarioTh:
-      'คุณเจอ Emma และเริ่มคุยสั้นๆ เป็นภาษาอังกฤษ เรื่องอากาศกับสัตว์เลี้ยง',
+      'คุณเจอ Emma และคุยภาษาอังกฤษเรื่องตัวเอง ชีวิตประจำวัน บ้าน และงานหรือโรงเรียน',
     goalsTh: [
-      'ทักทายและแนะนำตัว',
-      'คุยเรื่องอากาศ',
-      'คุยเรื่องสัตว์เลี้ยง',
+      'แนะนำตัว',
+      'เล่าเรื่องชีวิตประจำวัน',
+      'เล่าเรื่องบ้าน',
+      'เล่าเรื่องงานหรือโรงเรียน',
     ],
     goalsEn: [
-      'Greet and introduce yourself',
-      'Talk about the weather',
-      'Talk about pets',
+      'Introduce yourself',
+      'Talk about your daily life',
+      'Talk about your home',
+      'Talk about work or school',
     ],
     difficulty: 'easy',
-    estimatedMinutes: 5,
+    estimatedMinutes: 8,
     bananaCost: 1,
     systemInstruction:
-      `${AI_LEAD} You are Emma, a friendly person starting light small talk. Follow this arc closely (adapt wording, keep the same topics in order):
+      `${AI_LEAD} You are Emma, a friendly person helping the learner talk about themselves. Follow this arc closely (adapt wording slightly, but keep the same topics and order):
 1) Open with a short greeting + your name only (e.g. "Hi! I'm Emma.") — no question yet.
-2) After they greet/introduce themselves, comment on today's weather (e.g. "It's very sunny today.").
-3) After they respond, ask what weather they like (e.g. "What weather do you like?").
-4) After they answer, shift to pets (e.g. "Nice! Do you have any pets?").
-5) Ask one easy follow-up about their pet (e.g. "Is your dog friendly?").
-6) Close warmly (e.g. "That's nice. Nice talking to you!").
-Keep turns short and beginner-friendly. Accept natural variants. Do not jump to pets before weather, and do not ask about weekend/train.`,
+2) After they greet/introduce themselves, ask these 5 questions in order — MANDATORY, one question per turn, wait for their answer before the next:
+   Q1) "What time do you wake up?"
+   Q2) "What do you usually have for breakfast?"
+   Q3) "Where do you live?"
+   Q4) "Where do you work or study?"
+   Q5) "Do you enjoy your work or school?"
+3) After Q5 is answered, close warmly (e.g. "Nice talking to you!").
+Keep turns short and beginner-friendly. Accept natural variants. Do NOT skip, reorder, or replace these 5 questions. Do NOT ask about weather, pets, or weekend plans.`,
     openingPrompt:
       'Start the simulation. Open as Emma. Greet them briefly and introduce yourself only. Follow this closely: "Hi! I\'m Emma." Do not ask the learner any questions on this first turn.',
     successCriteria: [
-      'greeted_and_introduced',
-      'talked_about_weather',
-      'talked_about_pets',
+      'introduced_self',
+      'talked_about_daily_life',
+      'talked_about_home',
+      'talked_about_work_or_school',
     ],
-    maxTurns: 10,
+    maxTurns: 14,
     vocabDrill: [
-      { word: 'Sunny', pronunciation: 'ซัน-นี่', meaningTh: 'แดดออก' },
-      { word: 'Rainy', pronunciation: 'เรน-นี่', meaningTh: 'ฝนตก' },
-      { word: 'Weather', pronunciation: 'เว-เธอร์', meaningTh: 'สภาพอากาศ' },
-      { word: 'Pet', pronunciation: 'เพท', meaningTh: 'สัตว์เลี้ยง' },
-      { word: 'Friendly', pronunciation: 'เฟรน-ลี่', meaningTh: 'เป็นมิตร / เชื่อง' },
-      { word: 'Nice talking to you', pronunciation: 'ไนซ์-ทอล์ค-กิ้ง-ทู-ยู', meaningTh: 'คุยกันสนุกดี / ยินดีที่ได้คุย' },
+      { word: 'Wake up', pronunciation: 'เวค-อัพ', meaningTh: 'ตื่นนอน' },
+      { word: 'Breakfast', pronunciation: 'เบรค-ฟาสต์', meaningTh: 'อาหารเช้า' },
+      { word: 'Live', pronunciation: 'ลิฟ', meaningTh: 'อาศัยอยู่' },
+      { word: 'Work', pronunciation: 'เวิร์ค', meaningTh: 'ทำงาน' },
+      { word: 'Study', pronunciation: 'สตัด-ดี้', meaningTh: 'เรียน' },
+      { word: 'Enjoy', pronunciation: 'เอ็น-จอย', meaningTh: 'สนุก / ชอบ' },
     ],
   },
 ];
