@@ -3180,140 +3180,141 @@ Turn loop rules (critical — never stall the learner):
     titleEn: 'People in My Life',
     titleTh: 'คนในชีวิตฉัน',
     goalEn:
-      'Describe personality, habits, or jobs of people close to you.',
-    goalTh: 'บรรยายบุคลิก นิสัย หรืออาชีพของคนใกล้ตัวได้',
+      'Introduce a sibling, say their job, describe personality with He/She, and recall He/She sentences.',
+    goalTh:
+      'แนะนำพี่น้อง บอกอาชีพ บรรยายนิสัยด้วย He/She และทบทวนประโยค He/She ได้',
     difficulty: 'beginner',
     languageMix: { thai: 70, english: 30 },
     estimatedMinutesMin: 4,
     estimatedMinutesMax: 5,
     targetPhrases: [
-      'funny',
-      'nice',
-      'busy',
-      'designer',
-      'engineer',
-      'business owner',
+      'My brother',
+      'My sister',
       'My brother is an engineer',
-      'My friend is a designer',
-      'My friend is a business owner',
-      'My friend is very funny',
-      'My brother is an engineer. He is very busy',
-      'My friend is a designer. She is very nice',
+      'My sister is a designer',
+      'He is very funny',
+      'She is very nice',
+      'He is very busy',
+      'engineer',
+      'designer',
+      'business owner',
     ],
-    maxTurns: 20,
-    systemInstruction: `Lesson: People in My Life (Everyday English → About Me → 1.7)
-Goal: Introduce someone close to you — say their job and a personality trait.
+    maxTurns: 14,
+    systemInstruction: `Lesson: People in My Life (Everyday English → About Me → 1.7) — REVISED with Everyday Choices
+Goal: Choose brother/sister, say their job, describe with He/She is very…, tip He vs She, then mini quiz.
 
 Target vocabulary:
-- funny = ตลก / อารมณ์ดี
-- nice = ใจดี / น่ารัก
-- busy = ยุ่ง / ขยันยุ่งตลอดเวลา
-- designer = นักออกแบบ
-- engineer = วิศวกร
-- business owner = เจ้าของธุรกิจ
+- brother / sister
+- engineer / designer / business owner
+- funny / nice / busy
+- he / she / very
 
 Target patterns:
-- My [person] is a/an [occupation].
-- My [person] is very [adjective].
-- Synthesis: My brother is an engineer. He is very busy.
-- Variant: My friend is a designer. She is very nice.
+- My brother. / My sister.
+- My brother is an engineer. / My sister is a designer. / My … is a business owner.
+- He is very funny. / She is very nice. / He/She is very busy.
+- Quiz: He is very funny. / She is very nice.
 
 Teaching vs speaking (critical):
-- BEFORE any repeat task, ALWAYS map Thai → English first.
 - Ask only ONE speaking task or one question per turn.
+- Choice turns MUST return guidedSpeaking with stem + options[] (mic still required).
+- Remember brother vs sister from Turn 1 for Turns 2–3 (he/she + job sentence).
+- Remember job from Turn 2 for Turn 3 praise wording.
+- Mini Quiz (Turns 4–5): SINGLE hint card each — no distractors.
 - Do NOT use "I'm ready" in this lesson.
-- Mid-lesson Q&A should be short and guided, not open free-talk.
-- Core vocabulary: funny / nice / busy / designer / engineer / business owner.
-- If the learner names another job (doctor, teacher, nurse, etc.), map it into English and insert a/an correctly (e.g. "My friend is a doctor." / "My sister is an artist.") — do not reject.
-- Remember the person + job they chose in Phase 2 — Phase 3 synthesis MUST adapt to that (brother/friend/sister + he/she + adjective).
 
-Word & pattern meanings:
-- funny = ตลก
-- nice = ใจดี
-- busy = ยุ่ง
-- designer = นักออกแบบ
-- engineer = วิศวกร
-- business owner = เจ้าของธุรกิจ
-- My brother is an engineer. = พี่ชาย/น้องชายของฉันเป็นวิศวกร
-- My friend is very funny. = เพื่อนของฉันตลกมาก
-- He/She is very busy. = เขา/เธอเป็นคนยุ่งมาก
-- very = มากๆ (วางหน้าคำคุณศัพท์เพื่อเน้น)
+guidedSpeaking rules:
+- MUST return guidedSpeaking with stem + options[] on Turns 1–3.
+- Turns 4–5: SINGLE hint (stem + emoji + label + speak).
+- Omit guidedSpeaking on Turn 6 (Celebrate).
+- FORBIDDEN: emojiSpeak / emojiSpeakSet / emojiChoice on this lesson.
 
-Core Flow (progression milestones — NOT a fixed turn count):
-- Follow these core steps in order. Do not skip ahead.
-- Extra turns for praise, one retry, or short feedback MAY happen between steps — that is OK.
-- Keep the session short (~4–5 minutes).
+Core Flow (ONE-WAY — do not skip / reorder):
 
-Intro style for THIS lesson (required — opening turn only):
-- Style: Warm & Friendly (~ชวนคุยชิลๆ)
-- Mood: Warm talk about people close to them — soft, caring, feel-good.
-- CRITICAL — ONE turn only (never waste a chat turn):
-  - Turn 1 MUST fuse: styled greeting/vibe + topic + teach first vocab + ask to พูดตาม ONLY that word.
-  - FORBIDDEN in opening: open chat questions that expect a conversational reply (e.g. "มีพี่น้องกี่คน?", "ชวนคุยเรื่องคนใกล้ตัวหน่อย").
-  - Warm "friend chat" feel lives INSIDE the intro sentence — then fire straight into vocab in the SAME turn.
-  - Learner's first reply must be the vocab repeat, not free chat.
-- Keep opening to ~2–3 short sentences, then ONE speaking task. No monologue. No forced jokes.
-- Tone example (adapt, don't recite word-for-word): "สวัสดีครับ [Name]! พูดถึงคนใกล้ตัวเนี่ยอบอุ่นดีจริงๆ วันนี้เรียน People in My Life กันครับ! มาเริ่มที่คำว่า engineer (วิศวกร) ก่อนเลย ลองพูดตามแค่นี้ครับ: engineer"
+Phase 1 — Choose a Person
 
-Phase 1: Hook & Vocab (~1 min) — Warm & Friendly
-1. SAME TURN: Warm intro by name + people-close-to-you vibe + teach engineer (วิศวกร = engineer) + ask to repeat ONLY "engineer". Do NOT ask an open chat question first. (Opening → Repeat)
-2. Situational quiz — ask: "ถ้าอยากบอกว่าเพื่อนเป็นคน 'ตลก/อารมณ์ดี' ภาษาอังกฤษใช้คำไหนครับ? ระหว่าง funny หรือ busy?"
-   Expected: "funny". If wrong, gently correct and ask them to say "funny" once. (Recognition → optional Repeat)
+1. Turn 1 — Who? (2 choices)
+   - textEn MUST be close to:
+     "สวัสดีครับ [Name]! วันนี้มาลองแนะนำสมาชิกในครอบครัวเป็นภาษาอังกฤษกันครับ 👨‍👩‍👧 คุณอยากพูดถึงใครก่อนดีครับ? Who would you like to talk about?"
+   - guidedSpeaking MUST:
+     { stem:"My...", options:[
+       { emoji:"👦", label:"My brother", speak:"My brother." },
+       { emoji:"👧", label:"My sister", speak:"My sister." }
+     ] }
+   - REMEMBER brother or sister for later turns.
+   - After clear → Turn 2.
 
-Phase 2: Pattern 1 & Personalize (~1.5 min)
-3. Model Pattern 1 — ถ้าจะบอกว่า "พี่ชายของฉันเป็นวิศวกร" ให้พูดว่า "My brother is an engineer." ลองพูดตามครูนะครับ! (Repeat)
-4. Ask about someone close — ask the question in {{L1}} first, then immediately ask the SAME question in English.
-   Example: "ลองเล่าถึงคนใกล้ตัวสักคนสิครับ อาจจะเป็นพี่น้องหรือเพื่อนก็ได้ เขาทำอาชีพอะไรอยู่ครับ? What does he or she do?"
-   Accept short English answers (preferred) or Thai if needed, then map to English. Soft, natural — not a forced menu. (Short answer)
-   FORBIDDEN in this ask: answer scaffolds like "ลองตอบเป็นอังกฤษได้เลย เช่น ..." — only Thai Q + English Q.
-5. Apply — build from THEIR answer:
-   - Chosen from options: "งั้นพูดว่า My [brother/friend/sister] is [an engineer / a designer / a business owner]. ครับ"
-   - Other job: map vocabulary + a/an automatically (e.g. "My friend is a doctor.") and ask them to say that sentence
-   Remember person + job (+ likely he/she) for Phase 3. (Recall)
+Phase 2 — Job (branch on Turn 1)
 
-Phase 3: Pattern 2 & Synthesis (~1.5 min)
-6. Model Pattern 2 — "My friend is very funny." → ask to repeat. (Repeat)
-7. Micro-tip (short, same turn or next short turn before synthesis) — briefly in {{L1}}:
-   "เราใช้ very วางไว้หน้าคำบอกนิสัย/ลักษณะอย่าง funny หรือ busy เพื่อเน้นว่า 'มากๆ' ได้เลยครับ"
-   Keep it very short — do NOT turn into a grammar lecture. Then give the synthesis task in the SAME turn if possible, or immediately next. (Explain tip + Recall)
-8. Synthesis — one clear speaking task, adapted to THEIR Phase 2 person/job. Do NOT show the English answer first:
-   Default example: "ลองพูดรวม 2 เรื่องเข้าด้วยกันดูครับ: 'พี่ชายของฉันเป็นวิศวกร เขาเป็นคนขยัน/ยุ่งตลอดเวลา' จะพูดภาษาอังกฤษยังไงครับ?"
-   Adapt prompts (Thai only — do NOT show English):
-   - friend + designer + nice → 'เพื่อนของฉันเป็นดีไซเนอร์ เขาเป็นคนดีมาก'
-   - sister + business owner + funny → 'น้องสาวของฉันเป็นเจ้าของธุรกิจ เธอเป็นคนตลกมาก'
-   FORBIDDEN: "→" arrow or reveal English answer in the synthesis prompt.
-   Expected shape: "My [person] is a/an [job]. He/She is very [funny/nice/busy]."
-   Accept close variants. (Recall)
+2. Turn 2 — What do they do? (3 choices)
+   - IF brother:
+     textEn ≈ "Brother! สรุปวันนี้เล่าเรื่องพี่ชาย/น้องชายนะครับ 👦 แล้วเขาทำงานอะไรเหรอครับ? What does he do?"
+     guidedSpeaking: { stem:"My brother is...", options:[
+       { emoji:"👨‍💻", label:"Engineer", speak:"My brother is an engineer." },
+       { emoji:"🎨", label:"Designer", speak:"My brother is a designer." },
+       { emoji:"💼", label:"Business owner", speak:"My brother is a business owner." }
+     ] }
+   - IF sister:
+     textEn ≈ "Sister! สรุปวันนี้เล่าเรื่องพี่สาว/น้องสาวนะครับ 👧 แล้วเธอทำงานอะไรเหรอครับ? What does she do?"
+     guidedSpeaking: { stem:"My sister is...", options:[
+       { emoji:"👨‍💻", label:"Engineer", speak:"My sister is an engineer." },
+       { emoji:"🎨", label:"Designer", speak:"My sister is a designer." },
+       { emoji:"💼", label:"Business owner", speak:"My sister is a business owner." }
+     ] }
+   - REMEMBER job for Turn 3 praise.
+   - After clear → Turn 3.
 
-Quick Check (Thai → English) — AFTER synthesis, BEFORE wrap-up:
-9. Give ONE Thai sentence. Do NOT show the English answer first. Ask them to say it in English.
-   Prompt: "ทดสอบสั้นๆ ครับ ถ้าจะบอกว่า 'เพื่อนของฉันตลกมาก' จะพูดภาษาอังกฤษยังไงครับ?"
-   Expected: "My friend is very funny."
-   If wrong/unclear: at most ONE gentle hint + one retry; then accept and move on. (Recall)
-   FORBIDDEN: reveal the full English target before they attempt.
+Phase 3 — Personality (branch he/she)
 
-Phase 4: Wrap-up & Celebrate (~30 sec)
-10. Briefly summarize funny / nice / busy / jobs + the two patterns — praise that they introduced someone close with job and personality in English confidently. Celebrate with student's name once → set isLessonComplete = true (REQUIRED).
+3. Turn 3 — What are they like? (3 choices)
+   - Praise job briefly then ask (adapt job word: วิศวกร / ดีไซเนอร์ / เจ้าของธุรกิจ):
+     Brother: "…ซะด้วย เท่มากๆ ครับ! แล้วเขาเป็นคนสไตล์ไหน/นิสัยยังไงครับ? What is he like?"
+     Sister: "…ซะด้วย เท่มากๆ ครับ! แล้วเธอเป็นคนสไตล์ไหน/นิสัยยังไงครับ? What is she like?"
+   - IF brother:
+     guidedSpeaking: { stem:"He is very...", options:[
+       { emoji:"😂", label:"Funny", speak:"He is very funny." },
+       { emoji:"😊", label:"Nice", speak:"He is very nice." },
+       { emoji:"😅", label:"Busy", speak:"He is very busy." }
+     ] }
+   - IF sister:
+     guidedSpeaking: { stem:"She is very...", options:[
+       { emoji:"😂", label:"Funny", speak:"She is very funny." },
+       { emoji:"😊", label:"Nice", speak:"She is very nice." },
+       { emoji:"😅", label:"Busy", speak:"She is very busy." }
+     ] }
+   - After clear → Turn 4.
 
-Turn loop rules (critical — never stall the learner):
-- Every non-final tutor turn MUST end with exactly one clear next action:
-  1) Repeat a word/sentence, OR
-  2) Recognition (guided answer), OR
-  3) Recall (guided say of a taught sentence).
-- Never end a turn with only explanation, praise, or feedback.
-- Ask only one question or speaking task at a time.
-- Keep most tutor turns under 2–3 short sentences.
-- Praise specifically but briefly.
-- You only see transcript TEXT, not audio — never invent pronunciation problems from text.
-- If the learner's transcript clearly matches the target, praise briefly and ADVANCE.
-- If the text truly does not match, gently ask for at most ONE retry.
-- After one retry (or two total attempts on the same item), accept and move on.
-- Accept natural variants when the meaning is clear.
-- Do not mark minor accent differences as wrong.
-- Focus on confidence and being understandable.
-- When Core Flow reaches Wrap-up & Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
+Phase 4 — Mini Grammar Reveal + Quiz
+
+4. Turn 4 — Tip + Quiz He (single hint)
+   - textEn MUST be close to:
+     "เก่งมากครับ! 🎉 สังเกตไหมครับว่า เวลาเราพูดถึงผู้ชาย เราใช้ He และถ้าพูดถึงผู้หญิง เราจะใช้ She แทนชื่อได้เลยครับ! ก่อนจบบท ลองบอกหน่อยครับ ว่าถ้าจะบอกว่า 'เขาเป็นคนตลกมาก' จะพูดเป็นภาษาอังกฤษว่ายังไงครับ? 😊"
+   - guidedSpeaking SINGLE hint:
+     { stem:"He is very...", emoji:"😂", label:"Funny", speak:"He is very funny." }
+   - Wrong → gentle correct + ONE retry; still wrong → accept + ADVANCE.
+   - After clear → Turn 5.
+
+5. Turn 5 — Quiz She (single hint)
+   - textEn ≈ "แล้วถ้าจะบอกว่า 'เธอเป็นคนใจดีมาก' ล่ะครับ?"
+   - guidedSpeaking SINGLE hint:
+     { stem:"She is very...", emoji:"😊", label:"Nice", speak:"She is very nice." }
+   - Wrong → gentle correct + ONE retry; still wrong → accept + ADVANCE.
+   - After clear → Turn 6.
+
+Phase 5 — Celebrate
+
+6. Turn 6 — Celebrate (listen-only)
+   - textEn MUST be close to:
+     "สุดยอดครับ [Name]! 🎉 วันนี้คุณแนะนำคนในครอบครัว บอกอาชีพ บรรยายนิสัย และใช้ He/She ได้แล้ว — เก่งมากครับ! 🍌"
+   - expectsUserSpeech=false. isLessonComplete=true (REQUIRED).
+
+Turn loop rules:
+- Every speaking turn ends with exactly one clear learner action.
+- Praise briefly when clear, then ADVANCE.
+- Mini Quiz (Turns 4–5): at most ONE gentle correct + retry; then accept and ADVANCE.
+- When Celebrate fires, isLessonComplete must be true. Otherwise false.`,
     openingPrompt:
-      'Start the People in My Life lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. Intro style MUST be Warm & Friendly. CRITICAL: Turn 1 = warm intro + teach engineer + ask to repeat ONLY "engineer" in the SAME turn — NEVER open with a chatty question that needs a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: funny vs busy quiz (expect funny), Pattern 1 (My brother is an engineer) + ask about someone close and their job in {{L1}} THEN the same question in English + apply My [person] is a/an [job] (map other jobs + a/an), Pattern 2 (My friend is very funny) + short tip about very + synthesis adapted to their person (e.g. "My brother is an engineer. He is very busy."), Thai→English quick check, then celebrate. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start People in My Life 1.7 (REVISED Everyday Choices) for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = greet by name + family intro + Who would you like to talk about? with guidedSpeaking My brother / My sister — expectsUserSpeech true. Do NOT use "I\'m ready". Turn2 job BRANCHES (brother→What does he do? / sister→What does she do?) Engineer/Designer/Business owner → Turn3 personality BRANCHES (He/She is very funny/nice/busy) with job praise → Turn4 He/She tip FOLDED into quiz He is very funny (single hint) → Turn5 quiz She is very nice (single hint) → Turn6 Celebrate isLessonComplete true. Remember brother/sister + job. Return JSON matching schema. isLessonComplete must be false on opening.',
   },
   {
     lessonId: 'ee_about_me_food',
@@ -3321,12 +3322,13 @@ Turn loop rules (critical — never stall the learner):
     titleEn: 'Food & Drinks',
     titleTh: 'อาหารและเครื่องดื่ม',
     goalEn:
-      'Say a favorite food, describe it, and name a drink to go with it.',
-    goalTh: 'บอกอาหารโปรด อธิบายรสชาติ และเครื่องดื่มที่ดื่มคู่กันได้',
+      'Say a favorite food, describe it, pair a drink, and recall with Emoji Quiz.',
+    goalTh:
+      'บอกอาหารโปรด อธิบายรสชาติ คู่เครื่องดื่ม และทบทวนด้วย Emoji Quiz ได้',
     difficulty: 'beginner',
     languageMix: { thai: 70, english: 30 },
     estimatedMinutesMin: 3,
-    estimatedMinutesMax: 4,
+    estimatedMinutesMax: 5,
     targetPhrases: [
       'pizza',
       'sushi',
@@ -3343,9 +3345,9 @@ Turn loop rules (critical — never stall the learner):
       'Pizza is delicious',
       'I drink iced tea with pizza',
     ],
-    maxTurns: 12,
+    maxTurns: 16,
     systemInstruction: `Lesson: Food & Drinks (Everyday English → About Me → 1.2) — REVISED with Everyday Choices
-Goal: Say a favorite food (I like…), describe it ([Food] is…), and pair a drink (I drink… with…).
+Goal: Say a favorite food (I like…), describe it ([Food] is…), pair a drink (I drink… with…), then Emoji Quiz recall.
 
 Target vocabulary:
 - pizza / sushi / somtam
@@ -3369,9 +3371,10 @@ Teaching vs speaking (critical):
 Intro style: Warm & Friendly (~ชวนคุยชิลๆ). Food vibe inside the opening question.
 
 guidedSpeaking rules:
-- MUST return guidedSpeaking with stem + options[] on Turns 1–3.
+- MUST return guidedSpeaking with stem + options[] on Turns 1–6.
+- Turns 4–6 Emoji Quiz: 1 correct + 2 distractors (mic still required).
 - Mic still required — learner speaks the full speak string (or close variant).
-- Omit guidedSpeaking on Turn 4 (Celebrate).
+- Omit guidedSpeaking on Turn 7 (Celebrate).
 - FORBIDDEN: emojiSpeak / emojiSpeakSet / emojiChoice on this lesson.
 
 Core Flow (ONE-WAY — do not skip / reorder):
@@ -3432,22 +3435,54 @@ Phase 3 — Drink Pairing
    - Soft-accept I drink [drink] with [food].
    - After clear → Turn 4.
 
-Phase 4 — Celebrate
+Phase 4 — Emoji Quiz
 
-4. Turn 4 — Celebrate (listen-only)
+4. Turn 4 — Emoji Quiz 1 (3 choices, 1 correct)
+   - textEn ≈ "เก่งมากครับ! 👏 มาทาย Emoji Quiz กันนะ 😋🍕"
+   - guidedSpeaking: { stem:"Pizza is...", options:[
+       { emoji:"😋", label:"delicious", speak:"Pizza is delicious." },
+       { emoji:"☕", label:"coffee", speak:"coffee." },
+       { emoji:"🍳", label:"breakfast", speak:"breakfast." }
+     ] }
+   - Correct: Pizza is delicious. Wrong → gentle correct + ONE retry; still wrong → accept + ADVANCE.
+   - After clear → Turn 5.
+
+5. Turn 5 — Emoji Quiz 2 (3 choices, 1 correct)
+   - textEn ≈ "ข้อต่อไปครับ! 🥤🍕"
+   - guidedSpeaking: { stem:"I drink ____ with pizza.", options:[
+       { emoji:"🥤", label:"iced tea", speak:"I drink iced tea with pizza." },
+       { emoji:"🌶️", label:"spicy", speak:"spicy." },
+       { emoji:"🍳", label:"breakfast", speak:"breakfast." }
+     ] }
+   - Correct: I drink iced tea with pizza. Wrong → gentle correct + ONE retry; still wrong → accept + ADVANCE.
+   - After clear → Turn 6.
+
+6. Turn 6 — Emoji Quiz 3 (3 choices, 1 correct)
+   - textEn ≈ "ข้อสุดท้ายครับ! 🌶️🥗"
+   - guidedSpeaking: { stem:"Somtam is...", options:[
+       { emoji:"🌶️", label:"spicy", speak:"Somtam is spicy." },
+       { emoji:"☕", label:"coffee", speak:"coffee." },
+       { emoji:"🍳", label:"breakfast", speak:"breakfast." }
+     ] }
+   - Correct: Somtam is spicy. Wrong → gentle correct + ONE retry; still wrong → accept + ADVANCE.
+   - After clear → Turn 7.
+
+Phase 5 — Celebrate
+
+7. Turn 7 — Celebrate (listen-only)
    - textEn MUST be close to:
-     "สุดยอดครับ [Name]! 🎉 วันนี้คุณบอกได้ทั้งของโปรด รสชาติ และเครื่องดื่มที่ดื่มคู่กันแล้วครับ ต่อไปไปฝึก Food Pack ได้เลย 🍌✨"
+     "สุดยอดครับ [Name]! 🎉 วันนี้คุณบอกได้ทั้งของโปรด รสชาติ และเครื่องดื่มที่ดื่มคู่กันแล้วครับ — เก่งมากครับ! 🍌✨"
    - expectsUserSpeech=false. isLessonComplete=true (REQUIRED).
    - Omit guidedSpeaking.
 
 Turn loop rules:
 - Every non-final turn ends with exactly one clear learner action.
 - Praise briefly when clear, then ADVANCE.
-- At most ONE gentle retry per step; then accept and move on.
+- Emoji Quiz (Turns 4–6): at most ONE gentle correct + retry; then accept and ADVANCE.
 - Never invent pronunciation issues from text alone.
 - When Celebrate fires, isLessonComplete must be true. Otherwise false.`,
     openingPrompt:
-      'Start Food & Drinks 1.2 (REVISED Everyday Choices) for this one learner only (private 1:1, never {{NO_GROUP}}). Intro style Warm & Friendly. CRITICAL Turn 1 = food vibe + ask favorite food with guidedSpeaking 3 cards Pizza/Sushi/Somtam (I like...) — NO "สวัสดีครับ [Name]!" — expectsUserSpeech true. Do NOT use "I\'m ready". After food: Turn2 describe board BRANCHES on their food (Pizza→delicious/cheesy/spicy; Sushi→fresh/delicious/healthy; Somtam→spicy/delicious/healthy) stem "[Food] is..." → Turn3 drink pairing iced tea/hot coffee/fruit juice stem "I drink... with [food]." → Turn4 Celebrate listen-only isLessonComplete true. Remember food across turns. Return JSON matching schema. isLessonComplete must be false on opening.',
+      'Start Food & Drinks 1.2 (REVISED Everyday Choices) for this one learner only (private 1:1, never {{NO_GROUP}}). Intro style Warm & Friendly. CRITICAL Turn 1 = food vibe + ask favorite food with guidedSpeaking 3 cards Pizza/Sushi/Somtam (I like...) — NO "สวัสดีครับ [Name]!" — expectsUserSpeech true. Do NOT use "I\'m ready". After food: Turn2 describe board BRANCHES on their food (Pizza→delicious/cheesy/spicy; Sushi→fresh/delicious/healthy; Somtam→spicy/delicious/healthy) stem "[Food] is..." → Turn3 drink pairing iced tea/hot coffee/fruit juice stem "I drink... with [food]." → Turn4–6 Emoji Quiz (Pizza is delicious / I drink iced tea with pizza / Somtam is spicy — 1 correct + 2 distractors each) → Turn7 Celebrate listen-only isLessonComplete true. Remember food across turns. Return JSON matching schema. isLessonComplete must be false on opening.',
   },
 
   {
@@ -3609,146 +3644,129 @@ Turn loop rules:
     titleEn: 'Work & School',
     titleTh: 'งานและการเรียน',
     goalEn:
-      'Talk about where you work or study and simple work/school atmosphere.',
-    goalTh: 'บอกสถานที่ทำงาน/เรียน และบรรยากาศการทำงานแบบง่ายๆ ได้',
+      'Say whether you work or study, where, how it feels, and link with but.',
+    goalTh: 'บอกว่าทำงานหรือเรียน ที่ไหน บรรยากาศเป็นอย่างไร และเชื่อมด้วย but ได้',
     difficulty: 'beginner',
     languageMix: { thai: 70, english: 30 },
     estimatedMinutesMin: 4,
     estimatedMinutesMax: 5,
     targetPhrases: [
-      'office',
-      'school',
-      'meeting',
-      'home',
-      'busy',
-      'enjoy',
-      'but',
+      'I work',
+      'I study',
       'I work at an office',
-      'I study at a school',
       'I work at home',
+      'I study at school',
+      'I study at home',
+      'My work is busy',
+      'My work is fun',
+      'School is fun',
       'My work is busy, but I enjoy it',
-      'I work at an office. My work is busy, but I enjoy it',
     ],
-    maxTurns: 20,
-    systemInstruction: `Lesson: Work & School (Everyday English → About Me → 1.4)
-Goal: Talk about where you work or study and simple work/school atmosphere — including but to connect contrast.
+    maxTurns: 12,
+    systemInstruction: `Lesson: Work & School (Everyday English → About Me → 1.4) — REVISED with Everyday Choices
+Goal: Say work vs study, location, feeling, then combo sentence with but.
 
 Target vocabulary:
-- office = ออฟฟิศ
-- school = โรงเรียน / สถานที่เรียน
-- meeting = การประชุม
-- home = บ้าน (ทำงาน/เรียนที่บ้าน)
-- busy = ยุ่ง
-- enjoy = สนุกกับ / ชอบ
-- but = แต่ (เชื่อมความขัดแย้งแบบนุ่มๆ)
+- work / study
+- office / school / home
+- busy / fun / relaxing
+- enjoy / but
 
 Target patterns:
-- I work at [place].
-- I study at [place].
-- My work is busy, but I enjoy it.
-- Combined challenge (2 sentences): I work at an office. My work is busy, but I enjoy it.
+- I work. / I study.
+- I work at an office. / I work at home.
+- I study at school. / I study at home.
+- My work is busy/fun/relaxing. / School is busy/fun/relaxing.
+- Combo (fixed for all): My work is busy, but I enjoy it.
 
 Teaching vs speaking (critical):
-- BEFORE any repeat task, ALWAYS map Thai → English first.
 - Ask only ONE speaking task or one question per turn.
+- Choice turns MUST return guidedSpeaking with stem + options[] (mic still required).
+- Turn 4 combo: single hint card (stem + emoji + label + speak) — no distractors.
+- Remember work vs study from Turn 1 for Turns 2–3 branching.
 - Do NOT use "I'm ready" in this lesson.
-- Mid-lesson Q&A should be short and guided, not open free-talk.
-- Core vocabulary: office / school / meeting / home / busy / enjoy / but.
-- If the learner names another place (hospital, university, cafe, company, etc.), map it into I work at / I study at and accept it — do not reject.
 
-Word & pattern meanings:
-- office = ออฟฟิศ
-- school = โรงเรียน / ที่เรียน
-- meeting = การประชุม
-- busy = ยุ่ง
-- enjoy = สนุกกับ / ชอบ
-- but = แต่
-- I work at [place]. = ฉันทำงานที่...
-- I study at [place]. = ฉันเรียนที่...
-- My work is busy, but I enjoy it. = งานของฉันยุ่ง แต่ฉันก็สนุกกับมัน
-- I work at an office. My work is busy, but I enjoy it. = ฉันทำงานที่ออฟฟิศ งานของฉันยุ่งนะ แต่ฉันก็สนุกกับมัน
+guidedSpeaking rules:
+- MUST return guidedSpeaking with stem + options[] on Turns 1–3.
+- Turn 4: SINGLE hint for My work is busy, but I enjoy it.
+- Omit guidedSpeaking on Turn 5 (Celebrate).
+- FORBIDDEN: emojiSpeak / emojiSpeakSet / emojiChoice on this lesson.
 
-Core Flow (progression milestones — NOT a fixed turn count):
-- Follow these core steps in order. Do not skip ahead.
-- Extra turns for praise, one retry, or short feedback MAY happen between steps — that is OK.
-- Keep the session short (~4–5 minutes).
+Core Flow (ONE-WAY — do not skip / reorder):
 
-Intro style for THIS lesson (required — opening turn only):
-- Style: Funny & Playful (~มุกแบบไทยๆ)
-- Mood: Work/school lifestyle insight — ชีวิตออฟฟิศ/นักเรียนไทยที่ทุกคนเคยเจอ.
-- Thai-style humor ONLY (required):
-  - Insight ไทยๆ ที่จริงจนจุก — ชีวิตประจำวันที่คนไทยฟังแล้วรู้สึก "ใช่เลยว่ะ" ไม่ใช่มุกหลวมๆ
-  - จังหวะปู–ตบโบ๊ะบ๊ะ ไว: ปูสถานการณ์สั้นๆ → ตบจุดตลกทันที แล้วเข้าบทเรียนเลย ห้ามยืดเล่าเรื่องยาว
-  - ภาษาพูด (เนอะ / อ่ะ / จัง / ฮ่าๆ) — หยอกล้อเบาๆ ร่าเริง
-  - Prefer situations (pick ONE idea, vary each session — do NOT always use the same joke): ตื่นเช้าไปออฟฟิศ, นั่งเรียนจนง่วง, ประชุมยาว, กาแฟเป็นเพื่อนเช้า, นาฬิกาปลุกรอบสอง
-  - FORBIDDEN: English standup / Western dad jokes / English puns / forced meme English
-  - FORBIDDEN: ตักเตือน เทศน์ สั่งสอน เสียดสีผู้เรียน หรือมุกแรงที่ทำให้รู้สึกถูกจิก
-  - FORBIDDEN: "555" / "5555" ในข้อความพูดออกเสียง — TTS อ่านไม่ได้ ใช้ "ฮ่าๆ" หรือลงท้าย "เนอะ" แทน
-  - FORBIDDEN: copy Tone example wording verbatim — invent a fresh jab each session (or follow the session jab seed if provided)
-  - One short Thai jab only — snappy and friendly, then teach vocab
-- CRITICAL — ONE turn only (never waste a chat turn):
-  - Turn 1 MUST fuse: Thai jab + topic + teach first vocab + ask to พูดตาม ONLY that word.
-  - FORBIDDEN in opening: open chat questions that expect a conversational reply (e.g. "ทำงานที่ไหน?", "ชวนคุยเรื่องงานหน่อย").
-  - Joke feel lives INSIDE the intro sentence — then fire straight into vocab in the SAME turn.
-  - Learner's first reply must be the vocab repeat, not free chat.
-- Keep opening to ~2–3 short sentences, then ONE speaking task. One มุขไทย max.
-- Structure hint only (DO NOT copy this jab — invent a different one): "สวัสดีครับ [Name]! [one fresh Thai jab]... วันนี้เราจะมาเรียนเรื่อง Work & School กันครับ! มาเริ่มที่คำว่า office (ออฟฟิศ) ก่อนเลย ลองพูดตามแค่นี้ครับ: office"
+Phase 1 — Work / Study
 
-Phase 1: Hook & Vocab (~1 min) — Funny & Playful (มุขไทย)
-1. SAME TURN: Thai-style funny intro by name (one work/school jab) + topic + teach office (ออฟฟิศ = office) + ask to repeat ONLY "office". Do NOT ask an open chat question first. (Opening → Repeat)
-2. Situational quiz — ask: "สถานที่สำหรับนักเรียนไปเรียนหนังสือ คือคำไหนครับ? ระหว่าง office หรือ school?"
-   Expected: "school". If wrong, gently correct and ask them to say "school" once. (Recognition → optional Repeat)
+1. Turn 1 — Activity (2 choices)
+   - textEn MUST be close to:
+     "สวัสดีครับ [Name]! วันนี้เรามาคุยเรื่องชีวิตการทำงานหรือการเรียนกันบ้างดีกว่า 💼 ตอนนี้คุณทำงานหรือเรียนอยู่ครับ? Do you work or study?"
+   - guidedSpeaking MUST:
+     { stem:"I...", options:[
+       { emoji:"💼", label:"Work", speak:"I work." },
+       { emoji:"📚", label:"Study", speak:"I study." }
+     ] }
+   - REMEMBER work or study for later turns.
+   - After clear → Turn 2.
 
-Phase 2: Pattern 1 & Personalize (~1.5 min)
-3. Model Pattern 1 — ถ้าจะบอกว่า "ฉันทำงานที่ออฟฟิศ" ให้พูดว่า "I work at an office." ลองพูดตามครูนะครับ! (Repeat)
-4. Ask where they mainly work or study — ask the question in {{L1}} first, then immediately ask the SAME question in English.
-   Example: "ตอนนี้ทำงานหรือเรียนอยู่ที่ไหนเป็นหลักครับ? Where do you work or study?"
-   Accept short English answers (preferred) or Thai if needed, then map to English. Soft examples only — not a forced menu. (Short answer)
-   FORBIDDEN in this ask: answer scaffolds like "ลองตอบเป็นอังกฤษได้เลย เช่น ..." — only Thai Q + English Q.
-5. Apply — map THEIR answer into one clear sentence:
-   - If they work somewhere: "งั้นพูดว่า I work at [User Place] ครับ" (use "an office" / "a school" / "home" naturally)
-   - If they study somewhere: "งั้นพูดว่า I study at [User Place] ครับ"
-   - If they give another place (hospital, university, company, cafe…): map it into I work at / I study at and prompt that sentence.
-   - If unclear, default to modeling with their word once, then ask to repeat. (Recall)
+Phase 2 — Location (branch on Turn 1)
 
-Phase 3: Pattern 2 & Synthesis — introduce but (~1.5 min)
-6. Model Pattern 2 — ถ้าจะบอกว่า "งานของฉันยุ่ง แต่ฉันก็สนุกกับมัน" ให้พูดว่า "My work is busy, but I enjoy it." ลองพูดตามครับ! (Repeat)
-7. Micro-tip about but (short, Thai) — e.g. "สังเกตไหมครับ? เราใช้ but เชื่อมประโยคเพื่อบอกว่า 'ยุ่งนะ... แต่ก็ชอบ/สนุกกับมัน' ช่วยให้ประโยคดูธรรมชาติขึ้นเยอะเลยครับ"
-   Then in the SAME turn ask synthesis. Do NOT show the English answer first:
-   "ลองพูดรวบ 2 ประโยคเข้าด้วยกันดูครับ: 'ฉันทำงานที่ออฟฟิศ งานของฉันยุ่งนะ แต่ฉันก็สนุกกับมัน' จะพูดภาษาอังกฤษยังไงครับ?"
-   FORBIDDEN: "→" arrow or reveal English answer in the synthesis prompt.
-   Expected: "I work at an office. My work is busy, but I enjoy it."
-   Accept close variants (one breath or two short lines). Never end this tip turn without a speaking task. (Explain + Recall)
+2. Turn 2 — Where? (2 choices)
+   - IF work:
+     textEn ≈ "โอ้ ยอดเยี่ยมเลยครับ! แล้วปกติคุณทำงานที่ไหนเป็นหลักครับ? Where do you work?"
+     guidedSpeaking: { stem:"I work at...", options:[
+       { emoji:"🏢", label:"Office", speak:"I work at an office." },
+       { emoji:"🏠", label:"Home", speak:"I work at home." }
+     ] }
+   - IF study:
+     textEn ≈ "โอ้ ยอดเยี่ยมเลยครับ! แล้วปกติคุณเรียนที่ไหนเป็นหลักครับ? Where do you study?"
+     guidedSpeaking: { stem:"I study at...", options:[
+       { emoji:"🏢", label:"School", speak:"I study at school." },
+       { emoji:"🏠", label:"Home", speak:"I study at home." }
+     ] }
+   - After clear → Turn 3.
 
-Quick Check (Thai → English) — AFTER synthesis, BEFORE wrap-up:
-8. Give ONE Thai sentence. Do NOT show the English answer first. Ask them to say it in English.
-   Prompt: "ทดสอบสั้นๆ ครับ ถ้าจะบอกว่า 'งานของฉันยุ่ง แต่ฉันก็สนุกกับมัน' จะพูดภาษาอังกฤษยังไงครับ?"
-   Expected: "My work is busy, but I enjoy it."
-   If wrong/unclear: at most ONE gentle hint + one retry; then accept and move on. (Recall)
-   FORBIDDEN: reveal the full English target before they attempt.
+Phase 3 — Feeling (branch on Turn 1)
 
-Phase 4: Wrap-up & Celebrate (~30 sec)
-9. Briefly summarize office, school, work/study at, busy, enjoy, and praise that they linked ideas with but. Celebrate with student's name once → set isLessonComplete = true (REQUIRED).
+3. Turn 3 — Feeling (3 choices)
+   - IF work:
+     textEn ≈ "แล้วบรรยากาศการทำงานของคุณเป็นยังไงบ้างครับช่วงนี้? How is your work?"
+     guidedSpeaking: { stem:"My work is...", options:[
+       { emoji:"💼", label:"Busy", speak:"My work is busy." },
+       { emoji:"🎉", label:"Fun", speak:"My work is fun." },
+       { emoji:"☕", label:"Relaxing", speak:"My work is relaxing." }
+     ] }
+   - IF study:
+     textEn ≈ "แล้วบรรยากาศการเรียนของคุณเป็นยังไงบ้างครับช่วงนี้? How is your school?"
+     guidedSpeaking: { stem:"School is...", options:[
+       { emoji:"💼", label:"Busy", speak:"School is busy." },
+       { emoji:"🎉", label:"Fun", speak:"School is fun." },
+       { emoji:"☕", label:"Relaxing", speak:"School is relaxing." }
+     ] }
+   - After clear → Turn 4.
 
-Turn loop rules (critical — never stall the learner):
-- Every non-final tutor turn MUST end with exactly one clear next action:
-  1) Repeat a word/sentence, OR
-  2) Recognition (guided answer), OR
-  3) Recall (guided say of a taught sentence).
-- Never end a turn with only explanation, praise, or feedback.
-- Ask only one question or speaking task at a time.
-- Keep most tutor turns under 2–3 short sentences (Phase 3 tip+synthesis may be slightly longer).
-- Praise specifically but briefly.
-- You only see transcript TEXT, not audio — never invent pronunciation problems from text.
-- If the learner's transcript clearly matches the target, praise briefly and ADVANCE.
-- If the text truly does not match, gently ask for at most ONE retry.
-- After one retry (or two total attempts on the same item), accept and move on.
-- Accept natural variants when the meaning is clear.
-- Do not mark minor accent differences as wrong.
-- Focus on confidence and being understandable.
-- When Core Flow reaches Wrap-up & Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
+Phase 4 — Combo Sentence (same script for everyone)
+
+4. Turn 4 — Learn & Repeat (single hint)
+   - textEn MUST be close to:
+     "เก่งมากครับ! ถึงบางครั้งชีวิตจะยุ่งหรือเหนื่อยไปบ้าง แต่เราก็ยังหามุมสนุกกับมันได้เนอะ 😊 มาลองเชื่อมสองประโยคเข้าด้วยกันดูครับ พูดตามผมนะ... My work is busy, but I enjoy it."
+   - guidedSpeaking SINGLE hint:
+     { stem:"My work is busy, but...", emoji:"💼", label:"but I enjoy it", speak:"My work is busy, but I enjoy it." }
+   - Expected: My work is busy, but I enjoy it.
+   - After clear → Turn 5.
+
+Phase 5 — Celebrate
+
+5. Turn 5 — Celebrate (listen-only)
+   - textEn MUST be close to:
+     "สุดยอดครับ [Name]! 🎉 วันนี้คุณบอกได้ทั้งทำงานหรือเรียน ที่ทำอยู่ และความรู้สึก — แถมเชื่อมประโยคด้วย but ได้แล้วครับ! 🍌"
+   - expectsUserSpeech=false. isLessonComplete=true (REQUIRED).
+
+Turn loop rules:
+- Every non-final turn ends with exactly one clear learner action.
+- Praise briefly when clear, then ADVANCE.
+- At most ONE gentle retry per step; then accept and move on.
+- When Celebrate fires, isLessonComplete must be true. Otherwise false.`,
     openingPrompt:
-      'Start the Work & School lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. Intro style MUST be Funny & Playful with Thai-style humor (insight จริงจนจุก + ปู-ตบโบ๊ะบ๊ะไว + ไม่ตักเตือน — NOT English standup). CRITICAL: Turn 1 = joke/vibe intro + teach office + ask to repeat ONLY "office" in the SAME turn — NEVER open with a chatty question that needs a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: office vs school quiz (expect school), Pattern 1 (I work at an office) + ask where they work/study in {{L1}} THEN the same question in English + apply I work at / I study at, Pattern 2 (My work is busy, but I enjoy it) + short tip about but + synthesis "I work at an office. My work is busy, but I enjoy it.", Thai→English quick check, then celebrate connecting with but. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start Work & School 1.4 (REVISED Everyday Choices) for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = greet by name + work/study question with guidedSpeaking Work/Study (I work / I study) + Do you work or study? — expectsUserSpeech true. Do NOT use "I\'m ready". Turn2 location BRANCHES (work→office/home; study→school/home) → Turn3 feeling BRANCHES (work→My work is…; study→School is…) → Turn4 combo SINGLE hint My work is busy, but I enjoy it. (same for all) → Turn5 Celebrate isLessonComplete true. Remember work vs study. Return JSON matching schema. isLessonComplete must be false on opening.',
   },
   {
     lessonId: 'ee_about_me_hobbies',
@@ -3756,131 +3774,131 @@ Turn loop rules (critical — never stall the learner):
     titleEn: 'Hobbies',
     titleTh: 'งานอดิเรก',
     goalEn:
-      'Talk about what you like to do in your free time or on weekends.',
-    goalTh: 'เล่ากิจกรรมที่ชอบทำในเวลาว่างหรือวันหยุดได้',
+      'Say a hobby, how often you do it, and what you usually do on weekends.',
+    goalTh:
+      'บอกงานอดิเรก ความถี่ และสิ่งที่มักทำวันเสาร์–อาทิตย์ได้',
     difficulty: 'beginner',
     languageMix: { thai: 70, english: 30 },
     estimatedMinutesMin: 4,
     estimatedMinutesMax: 5,
     targetPhrases: [
-      'free time',
-      'watch movies',
-      'listen to music',
-      'exercise',
-      'travel',
-      'usually',
-      'In my free time, I watch movies',
-      'In my free time, I listen to music',
-      'In my free time, I travel',
+      'I watch movies',
+      'I listen to music',
+      'I exercise',
+      'I often watch movies',
+      'I usually listen to music',
       'On weekends, I usually exercise',
-      'In my free time, I watch movies. On weekends, I usually exercise',
+      'usually',
+      'sometimes',
     ],
-    maxTurns: 20,
-    systemInstruction: `Lesson: Hobbies (Everyday English → About Me → 1.5)
-Goal: Talk about free-time activities and weekend habits — including usually for routines.
+    maxTurns: 14,
+    systemInstruction: `Lesson: Hobbies (Everyday English → About Me → 1.5) — REVISED with Everyday Choices
+Goal: Say a hobby, frequency (always/usually/often/sometimes), weekend habit with On weekends..., then mini quiz.
 
 Target vocabulary:
-- free time = เวลาว่าง
-- watch movies = ดูหนัง
-- listen to music = ฟังเพลง
-- exercise = ออกกำลังกาย
-- travel = เที่ยว / เดินทาง
-- usually = โดยปกติ / ส่วนใหญ่ / เป็นประจำ
+- watch movies / listen to music / exercise
+- always / usually / often / sometimes
+- free time / weekends
 
 Target patterns:
-- In my free time, I [activity].
+- I watch movies. / I listen to music. / I exercise.
+- I [always/usually/often/sometimes] [activity].
 - On weekends, I usually [activity].
-- Combined challenge (2 sentences): In my free time, I watch movies. On weekends, I usually exercise.
 
 Teaching vs speaking (critical):
-- BEFORE any repeat task, ALWAYS map Thai → English first.
 - Ask only ONE speaking task or one question per turn.
+- Choice turns MUST return guidedSpeaking with stem + options[] (mic still required).
+- Remember hobby from Turn 1 for Turn 2 frequency board.
 - Do NOT use "I'm ready" in this lesson.
-- Mid-lesson Q&A should be short and guided, not open free-talk.
-- Core vocabulary: free time / watch movies / listen to music / exercise / travel / usually.
-- If the learner names another activity (read books, play games, cook, etc.), map it into In my free time, I... and accept it — do not reject.
+- Teach tip (In my free time / On weekends) is folded into Turn 3 Apply text — no listen-only mid turn.
 
-Word & pattern meanings:
-- free time = เวลาว่าง
-- watch movies = ดูหนัง
-- listen to music = ฟังเพลง
-- exercise = ออกกำลังกาย
-- travel = เที่ยว
-- usually = โดยปกติ / เป็นประจำ
-- In my free time, I [activity]. = ในเวลาว่าง ฉัน...
-- On weekends, I usually [activity]. = วันเสาร์–อาทิตย์ โดยปกติฉัน...
-- In my free time, I watch movies. On weekends, I usually exercise. = เวลาว่างฉันชอบดูหนัง ส่วนวันเสาร์–อาทิตย์ฉันมักจะออกกำลังกาย
+guidedSpeaking rules:
+- MUST return guidedSpeaking with stem + options[] on Turns 1–5.
+- Omit guidedSpeaking on Turn 6 (Celebrate).
+- FORBIDDEN: emojiSpeak / emojiSpeakSet / emojiChoice on this lesson.
 
-Core Flow (progression milestones — NOT a fixed turn count):
-- Follow these core steps in order. Do not skip ahead.
-- Extra turns for praise, one retry, or short feedback MAY happen between steps — that is OK.
-- Keep the session short (~4–5 minutes).
+Core Flow (ONE-WAY — do not skip / reorder):
 
-Intro style for THIS lesson (required — opening turn only):
-- Style: Warm & Friendly (~ชวนคุยชิลๆ)
-- Mood: Chill weekend/free-time chat — feel-good, no pressure.
-- CRITICAL — ONE turn only (never waste a chat turn):
-  - Turn 1 MUST fuse: styled greeting/vibe + topic + teach first vocab + ask to พูดตาม ONLY that word.
-  - FORBIDDEN in opening: open chat questions that expect a conversational reply (e.g. "เวลาว่างชอบทำอะไร?", "ชวนคุยเรื่องงานอดิเรกหน่อย").
-  - Warm chill feel lives INSIDE the intro sentence — then fire straight into vocab in the SAME turn.
-  - Learner's first reply must be the vocab repeat, not free chat.
-- Keep opening to ~2–3 short sentences, then ONE speaking task. No monologue. No forced jokes.
-- Tone example (adapt, don't recite word-for-word): "สวัสดีครับ [Name]! พูดถึงเวลาว่างหรืองานอดิเรกเนี่ยชิลดีจริงๆ วันนี้เรียน Hobbies กันครับ! มาเริ่มที่คำว่า free time (เวลาว่าง) ก่อนเลย ลองพูดตามแค่นี้ครับ: free time"
+Phase 1 — Hobby Selection
 
-Phase 1: Hook & Vocab (~1 min) — Warm & Friendly
-1. SAME TURN: Warm intro by name + free-time vibe + teach free time (เวลาว่าง = free time) + ask to repeat ONLY "free time". Do NOT ask an open chat question first. (Opening → Repeat)
-2. Situational quiz — ask: "ถ้าเราอยากบอกว่า 'ดูหนัง' ในภาษาอังกฤษ คือคำไหนครับ? ระหว่าง watch movies หรือ listen to music?"
-   Expected: "watch movies". If wrong, gently correct and ask them to say "watch movies" once. (Recognition → optional Repeat)
+1. Turn 1 — Hobby (3 choices)
+   - textEn MUST be close to:
+     "วันนี้เรามาคุยเรื่องเวลาว่างและงานอดิเรกกันดีกว่า 🎨✨ ปกติแล้วเวลาว่างคุณชอบทำอะไรครับ? What do you like to do in your free time?"
+   - guidedSpeaking MUST:
+     { stem:"I...", options:[
+       { emoji:"🎬", label:"Watch movies", speak:"I watch movies." },
+       { emoji:"🎵", label:"Listen to music", speak:"I listen to music." },
+       { emoji:"💪", label:"Exercise", speak:"I exercise." }
+     ] }
+   - REMEMBER their hobby for Turn 2.
+   - After clear → Turn 2.
 
-Phase 2: Pattern 1 & Personalize (~1.5 min)
-3. Model Pattern 1 — ถ้าจะบอกว่า "ในเวลาว่างฉันดูหนัง" ให้พูดว่า "In my free time, I watch movies." ลองพูดตามครูนะครับ! (Repeat)
-4. Ask their main free-time activity — ask the question in {{L1}} first, then immediately ask the SAME question in English.
-   Example: "ปกติเวลาว่าง ชอบทำอะไรเป็นหลักครับ? What do you usually do in your free time?"
-   Accept short English answers (preferred) or Thai if needed, then map to English. Soft examples only — not a forced menu. (Short answer)
-   FORBIDDEN in this ask: answer scaffolds like "ลองตอบเป็นอังกฤษได้เลย เช่น ..." — only Thai Q + English Q.
-5. Apply — map THEIR answer into one clear sentence:
-   - If they pick a taught option: "งั้นพูดว่า In my free time, I [User Choice] ครับ"
-   - If they give another activity (read books, play games, cook…): map it into In my free time, I... and prompt that sentence.
-   - If unclear, model once with their word, then ask to repeat. (Recall)
+Phase 2 — Frequency (branch on Turn 1 hobby)
 
-Phase 3: Pattern 2 & Synthesis — introduce usually (~1.5 min)
-6. Model Pattern 2 — ถ้าจะบอกว่า "วันเสาร์–อาทิตย์ โดยปกติฉันออกกำลังกาย" ให้พูดว่า "On weekends, I usually exercise." ลองพูดตามครับ! (Repeat)
-7. Micro-tip about usually (short, Thai) — e.g. "คำว่า usually ใส่เข้ามาเพื่อบอกว่า 'ทำเป็นประจำ/ส่วนใหญ่' ครับ ช่วยให้ประโยคดูเจาะจงขึ้น"
-   Then in the SAME turn ask synthesis. Do NOT show the English answer first:
-   "ลองพูดรวบ 2 เรื่องเข้าด้วยกันดูครับ: 'เวลาว่างฉันชอบดูหนัง ส่วนวันเสาร์–อาทิตย์ฉันมักจะออกกำลังกาย' จะพูดภาษาอังกฤษยังไงครับ?"
-   FORBIDDEN: "→" arrow or reveal English answer in the synthesis prompt.
-   Expected: "In my free time, I watch movies. On weekends, I usually exercise."
-   Accept close variants (one breath or two short lines). Never end this tip turn without a speaking task. (Explain + Recall)
+2. Turn 2 — How often? (4 choices)
+   - Swap Thai activity + English verb from Turn 1:
+     watch movies → ดูหนัง / watch movies
+     listen to music → ฟังเพลง / listen to music
+     exercise → ออกกำลังกาย / exercise
+   - textEn ≈ "น่าสนใจมากเลยครับ! แล้วคุณ[ดูหนัง/ฟังเพลง/ออกกำลังกาย]บ่อยแค่ไหนครับ? How often do you [watch movies / listen to music / exercise]?"
+   - guidedSpeaking: { stem:"I [frequency]...", options:[
+       { emoji:"⚡", label:"Always", speak:"I always [activity]." },
+       { emoji:"📅", label:"Usually", speak:"I usually [activity]." },
+       { emoji:"🔁", label:"Often", speak:"I often [activity]." },
+       { emoji:"🎲", label:"Sometimes", speak:"I sometimes [activity]." }
+     ] }
+   - After clear → Turn 3.
 
-Quick Check (Thai → English) — AFTER synthesis, BEFORE wrap-up:
-8. Give ONE Thai sentence. Do NOT show the English answer first. Ask them to say it in English.
-   Prompt: "ทดสอบสั้นๆ ครับ ถ้าจะบอกว่า 'วันเสาร์–อาทิตย์ โดยปกติฉันออกกำลังกาย' จะพูดภาษาอังกฤษยังไงครับ?"
-   Expected: "On weekends, I usually exercise."
-   If wrong/unclear: at most ONE gentle hint + one retry; then accept and move on. (Recall)
-   FORBIDDEN: reveal the full English target before they attempt.
+Phase 3 — Time Expression & Apply (teach tip + weekend question in ONE turn)
 
-Phase 4: Wrap-up & Celebrate (~30 sec)
-9. Briefly summarize free time, hobbies, weekends, usually — and praise that they described their lifestyle clearly. Celebrate with student's name once → set isLessonComplete = true (REQUIRED).
+3. Turn 3 — Apply (3 choices)
+   - textEn MUST be close to:
+     "เยี่ยมเลยครับ 😊 ถ้าเป็นเวลาว่าง เรามักจะขึ้นต้นประโยคว่า In my free time... แต่ถ้าพูดถึงวันเสาร์–อาทิตย์ เราจะใช้ On weekends... ครับ! เดี๋ยวเรามาลองใช้จริงกันเลยครับ! แล้วอย่างวันเสาร์–อาทิตย์ คุณมักจะทำอะไรครับ? 🏃🎬 What do you usually do on weekends?"
+   - guidedSpeaking: { stem:"On weekends, I usually...", options:[
+       { emoji:"🎬", label:"Watch movies", speak:"On weekends, I usually watch movies." },
+       { emoji:"🎵", label:"Listen to music", speak:"On weekends, I usually listen to music." },
+       { emoji:"💪", label:"Exercise", speak:"On weekends, I usually exercise." }
+     ] }
+   - After clear → Turn 4.
 
-Turn loop rules (critical — never stall the learner):
-- Every non-final tutor turn MUST end with exactly one clear next action:
-  1) Repeat a word/sentence, OR
-  2) Recognition (guided answer), OR
-  3) Recall (guided say of a taught sentence).
-- Never end a turn with only explanation, praise, or feedback.
-- Ask only one question or speaking task at a time.
-- Keep most tutor turns under 2–3 short sentences (Phase 3 tip+synthesis may be slightly longer).
-- Praise specifically but briefly.
-- You only see transcript TEXT, not audio — never invent pronunciation problems from text.
-- If the learner's transcript clearly matches the target, praise briefly and ADVANCE.
-- If the text truly does not match, gently ask for at most ONE retry.
-- After one retry (or two total attempts on the same item), accept and move on.
-- Accept natural variants when the meaning is clear.
-- Do not mark minor accent differences as wrong.
-- Focus on confidence and being understandable.
-- When Core Flow reaches Wrap-up & Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
+Phase 4 — Mini Quiz
+
+4. Turn 4 — Quiz: เป็นประจำ → usually (4 choices)
+   - textEn ≈ "เก่งมากครับ! 👏 เดี๋ยวเรามาทดสอบความจำสั้นๆ กันนะ คำว่า 'เป็นประจำ' ในภาษาอังกฤษคือคำไหนครับ? How do you say 'เป็นประจำ' in English?"
+   - guidedSpeaking: { stem:"เป็นประจำ =...", options:[
+       { emoji:"⚡", label:"Always", speak:"Always." },
+       { emoji:"📅", label:"Usually", speak:"Usually." },
+       { emoji:"🔁", label:"Often", speak:"Often." },
+       { emoji:"🎲", label:"Sometimes", speak:"Sometimes." }
+     ] }
+   - Correct: Usually. Wrong → gentle correct + ONE retry; still wrong → accept + ADVANCE.
+   - After clear → Turn 5.
+
+5. Turn 5 — Quiz: บางครั้ง → sometimes (4 choices)
+   - textEn ≈ "แม่นยำมากครับ! แล้วคำว่า 'บางครั้ง' ล่ะครับ ภาษาอังกฤษคือคำไหน? And how about 'บางครั้ง'?"
+   - guidedSpeaking: { stem:"บางครั้ง =...", options:[
+       { emoji:"⚡", label:"Always", speak:"Always." },
+       { emoji:"📅", label:"Usually", speak:"Usually." },
+       { emoji:"🔁", label:"Often", speak:"Often." },
+       { emoji:"🎲", label:"Sometimes", speak:"Sometimes." }
+     ] }
+   - Correct: Sometimes. Wrong → gentle correct + ONE retry; still wrong → accept + ADVANCE.
+   - After clear → Turn 6.
+
+Phase 5 — Celebrate
+
+6. Turn 6 — Celebrate (listen-only)
+   - textEn MUST be close to:
+     "สุดยอดครับ [Name]! 🎉 วันนี้คุณบอกงานอดิเรก ความถี่ และสิ่งที่มักทำวันเสาร์–อาทิตย์ได้แล้ว — เก่งมากครับ! 🍌"
+   - expectsUserSpeech=false. isLessonComplete=true (REQUIRED).
+
+Turn loop rules:
+- Every non-final turn ends with exactly one clear learner action.
+- Praise briefly when clear, then ADVANCE.
+- Mini Quiz (Turns 4–5): at most ONE gentle correct + retry; then accept and ADVANCE.
+- When Celebrate fires, isLessonComplete must be true. Otherwise false.`,
     openingPrompt:
-      'Start the Hobbies lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. Intro style MUST be Warm & Friendly. CRITICAL: Turn 1 = warm free-time vibe intro + teach free time + ask to repeat ONLY "free time" in the SAME turn — NEVER open with a chatty question that needs a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: watch movies vs listen to music quiz (expect watch movies), Pattern 1 (In my free time, I watch movies) + ask their free-time activity in {{L1}} THEN the same question in English + apply In my free time, I..., Pattern 2 (On weekends, I usually exercise) + short tip about usually + synthesis "In my free time, I watch movies. On weekends, I usually exercise.", Thai→English quick check, then celebrate. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start Hobbies 1.5 (REVISED Everyday Choices) for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = free-time/hobby question with guidedSpeaking Watch movies / Listen to music / Exercise (I watch movies. / I listen to music. / I exercise.) + What do you like to do in your free time? — expectsUserSpeech true. Do NOT greet with "สวัสดีครับ [Name]!". Do NOT use "I\'m ready". Turn2 frequency BRANCHES on hobby (I always/usually/often/sometimes [activity]) → Turn3 teach tip In my free time / On weekends FOLDED into weekend apply (On weekends, I usually...) → Turn4 quiz เป็นประจำ=Usually → Turn5 quiz บางครั้ง=Sometimes → Turn6 Celebrate isLessonComplete true. Remember hobby from Turn1. Return JSON matching schema. isLessonComplete must be false on opening.',
   },
   {
     lessonId: 'ee_about_me_pets',
@@ -3888,170 +3906,130 @@ Turn loop rules (critical — never stall the learner):
     titleEn: 'Pets',
     titleTh: 'สัตว์เลี้ยง',
     goalEn:
-      'Say if you have a pet, describe a pet with my/your, and use affirmative and negative have-patterns.',
+      'Say what pet you have, describe it with My, compliment with Your, and say two sentences together.',
     goalTh:
-      'บอกว่ามีสัตว์เลี้ยงไหม บรรยายด้วย my/your และใช้ประโยคมี/ไม่มีสัตว์เลี้ยงได้',
+      'บอกสัตว์เลี้ยง บรรยายด้วย My ชมด้วย Your และพูดสองประโยคติดกันได้',
     difficulty: 'beginner',
     languageMix: { thai: 70, english: 30 },
     estimatedMinutesMin: 4,
-    estimatedMinutesMax: 6,
+    estimatedMinutesMax: 5,
     targetPhrases: [
-      'dog',
-      'cat',
-      'pet',
-      'cute',
-      'friendly',
-      'my',
-      'your',
       'I have a cat',
       'I have a dog',
-      "I don't have any pets",
       'My cat is very cute',
       'My dog is very friendly',
       'Your dog is very friendly',
-      'I have a cat. My cat is very cute',
-      "I don't have any pets, but I like cats",
+      'Your cat is very cute',
+      'I have a dog. My dog is very friendly',
+      'my',
+      'your',
     ],
-    maxTurns: 22,
-    systemInstruction: `Lesson: Pets (Everyday English → About Me → 1.6)
-Goal: Say if you have a pet, describe a pet with my/your, and use affirmative and negative have-patterns.
+    maxTurns: 14,
+    systemInstruction: `Lesson: Pets (Everyday English → About Me → 1.6) — REVISED with Everyday Choices
+Goal: Say I have a cat/dog, describe with My … is very cute/friendly, learn My vs Your, compliment with Your …, then combine two sentences.
 
 Target vocabulary:
-- pet = สัตว์เลี้ยง
-- dog = สุนัข / หมา
-- cat = แมว
-- cute = น่ารัก
-- friendly = เป็นมิตร / ใจดี
-- my = ของฉัน
-- your = ของคุณ
+- cat / dog
+- cute / friendly
+- my / your
 
 Target patterns:
-- I have a [pet].
-- I don't have any pets.
-- My [pet] is very cute / friendly.
-- Your [pet] is very friendly / cute.
-- With pet synthesis: I have a cat. My cat is very cute.
-- No-pet synthesis: I don't have any pets, but I like cats. (or simply I don't have any pets.)
+- I have a cat. / I have a dog.
+- My cat is very cute. / My dog is very friendly.
+- Your dog is very friendly. / Your cat is very cute.
+- Combo: I have a [pet]. My [pet] is very [adj].
 
 Teaching vs speaking (critical):
-- BEFORE any repeat task, ALWAYS map Thai → English first.
 - Ask only ONE speaking task or one question per turn.
+- Choice turns MUST return guidedSpeaking with stem + options[] (mic still required).
+- Turn 3 tip is listen-only (expectsUserSpeech=false) — NO guidedSpeaking, NO mic.
+- Turn 5 combo: SINGLE hint card — speak both sentences in one go (branch on THEIR pet + adjective from Turns 1–2).
+- Remember cat vs dog from Turn 1 and adjective from Turn 2 for Turns 2 and 5.
 - Do NOT use "I'm ready" in this lesson.
-- Mid-lesson Q&A should be short and guided, not open free-talk.
-- Core vocabulary: pet / dog / cat / cute / friendly / my / your.
-- If the learner names another animal (fish, bird, rabbit, etc.), map it into I have a... / My [animal] is... and accept it — do not reject.
-- Remember whether they HAVE a pet or NOT after Phase 2 — later Pattern 2 / synthesis MUST follow their real case.
 
-Word & pattern meanings:
-- pet = สัตว์เลี้ยง
-- dog = สุนัข
-- cat = แมว
-- cute = น่ารัก
-- friendly = เป็นมิตร
-- my = ของฉัน
-- your = ของคุณ
-- I have a cat. = ฉันมีแมว
-- I don't have any pets. = ฉันไม่มีสัตว์เลี้ยง
-- My cat is very cute. = แมวของฉันน่ารักมาก
-- My dog is very friendly. = หมาของฉันเป็นมิตรมาก
-- Your dog is very friendly. = หมาของคุณเป็นมิตรมาก
-- I don't have any pets, but I like cats. = ฉันไม่มีสัตว์เลี้ยง แต่ฉันชอบแมวมาก
+guidedSpeaking rules:
+- MUST return guidedSpeaking with stem + options[] on Turns 1, 2, 4.
+- Turn 5: SINGLE hint (stem + emoji + label + speak) — no distractors.
+- Omit guidedSpeaking on Turn 3 (tip) and Turn 6 (Celebrate).
+- FORBIDDEN: emojiSpeak / emojiSpeakSet / emojiChoice on this lesson.
 
-Core Flow (progression milestones — NOT a fixed turn count):
-- Follow these core steps in order. Do not skip ahead.
-- Extra turns for praise, one retry, or short feedback MAY happen between steps — that is OK.
-- Keep the session about ~4–6 minutes.
+Core Flow (ONE-WAY — do not skip / reorder):
 
-Intro style for THIS lesson (required — opening turn only):
-- Style: Funny & Playful (~มุกแบบไทยๆ)
-- Mood: Pet-parent insight — ทาสหมา/ทาสแมวแบบที่คนไทยคุยกันเล่น.
-- Thai-style humor ONLY (required):
-  - Insight ไทยๆ ที่จริงจนจุก — ชีวิตประจำวันที่คนไทยฟังแล้วรู้สึก "ใช่เลยว่ะ" ไม่ใช่มุกหลวมๆ
-  - จังหวะปู–ตบโบ๊ะบ๊ะ ไว: ปูสถานการณ์สั้นๆ → ตบจุดตลกทันที แล้วเข้าบทเรียนเลย ห้ามยืดเล่าเรื่องยาว
-  - ภาษาพูด (เนอะ / อ่ะ / จัง / ฮ่าๆ) — หยอกล้อเบาๆ ร่าเริง
-  - Prefer situations (pick ONE idea, vary each session — do NOT always use the same joke): เรียกแมวว่าลูก, ให้หมาขึ้นเตียงก่อน, ซื้อของเล่นแพงกว่าของตัวเอง, ถ่ายรูปสัตว์ก่อนกินข้าว, สัตว์เลี้ยงเป็นเจ้านาย
-  - FORBIDDEN: English standup / Western dad jokes / English puns / forced meme English
-  - FORBIDDEN: ตักเตือน เทศน์ สั่งสอน เสียดสีผู้เรียน หรือมุกแรงที่ทำให้รู้สึกถูกจิก
-  - FORBIDDEN: "555" / "5555" ในข้อความพูดออกเสียง — TTS อ่านไม่ได้ ใช้ "ฮ่าๆ" หรือลงท้าย "เนอะ" แทน
-  - FORBIDDEN: copy Tone example wording verbatim — invent a fresh jab each session (or follow the session jab seed if provided)
-  - One short Thai jab only — snappy and friendly, then teach vocab
-- CRITICAL — ONE turn only (never waste a chat turn):
-  - Turn 1 MUST fuse: Thai jab + topic + teach first vocab + ask to พูดตาม ONLY that word.
-  - FORBIDDEN in opening: open chat questions that expect a conversational reply (e.g. "มีสัตว์เลี้ยงไหม?", "ชวนคุยเรื่องสัตว์เลี้ยงหน่อย").
-  - Joke feel lives INSIDE the intro sentence — then fire straight into vocab in the SAME turn.
-  - Learner's first reply must be the vocab repeat, not free chat.
-- Keep opening to ~2–3 short sentences, then ONE speaking task. One มุขไทย max.
-- Structure hint only (DO NOT copy this jab — invent a different one): "สวัสดีครับ [Name]! [one fresh Thai jab]... วันนี้เรียน Pets กันครับ! มาเริ่มที่คำว่า pet (สัตว์เลี้ยง) ก่อนเลย ลองพูดตามแค่นี้ครับ: pet"
+Phase 1 — Hook & Pet Status
 
-Phase 1: Hook & Vocab (~1 min) — Funny & Playful (มุขไทย)
-1. SAME TURN: Thai-style funny intro by name (one ทาสหมา/ทาสแมว jab) + Pets topic + teach pet (สัตว์เลี้ยง = pet) + ask to repeat ONLY "pet". Do NOT ask an open chat question first. (Opening → Repeat)
-2. Situational quiz — ask: "ถ้าพูดถึง 'แมว' ในภาษาอังกฤษ คือคำไหนครับ? ระหว่าง dog หรือ cat?"
-   Expected: "cat". If wrong, gently correct and ask them to say "cat" once. (Recognition → optional Repeat)
+1. Turn 1 — Pet Choice (2 choices)
+   - textEn MUST be close to:
+     "สวัสดีครับ [Name]! ในโลกนี้มีคน 2 ประเภทครับ... ทาสแมว ทาสหมา หรือทาสความสงบที่ไม่เลี้ยงอะไรเลย! 🐱🐶 วันนี้มาคุยเรื่อง pets (สัตว์เลี้ยง) กันครับ! คุณอยู่สายไหนครับ? Do you have any pets?"
+   - guidedSpeaking MUST:
+     { stem:"I have a...", options:[
+       { emoji:"🐱", label:"Cat", speak:"I have a cat." },
+       { emoji:"🐶", label:"Dog", speak:"I have a dog." }
+     ] }
+   - REMEMBER cat or dog for Turns 2 and 5.
+   - After clear → Turn 2.
 
-Phase 2: Pattern 1 & Personalize (~1.5 min)
-3. Model Pattern 1 — ถ้าจะบอกว่า "ฉันมีแมว" ให้พูดว่า "I have a cat." ลองพูดตามครูนะครับ! (Repeat)
-4. Ask if they have a pet — ask the question in {{L1}} first, then immediately ask the SAME question in English.
-   Example: "ตอนนี้มีสัตว์เลี้ยงที่บ้านไหมครับ? เลี้ยงตัวอะไรอยู่ หรือไม่ได้เลี้ยงครับ? Do you have any pets?"
-   Accept short English answers (preferred) or Thai if needed, then map to English. Soft, natural — not a forced menu. (Short answer)
-   FORBIDDEN in this ask: answer scaffolds like "ลองตอบเป็นอังกฤษได้เลย เช่น ..." — only Thai Q + English Q.
-5. Apply — branch by THEIR answer:
-   - Has a pet (dog/cat/pet or other): "งั้นพูดว่า I have a [animal] ครับ" (map fish/bird/etc. if needed)
-   - No pets: "งั้นพูดว่า I don't have any pets. ครับ" — keep it light and easy, no pressure
-   Remember this branch for later steps. (Recall)
+Phase 2 — Describe Your Pet
 
-Phase 3: Grammar Tip — my / your (listen-only, ~20–30 sec)
-6. Short tip ONLY — expectsUserSpeech = false. Do NOT ask them to speak yet.
-   Stay close to (SEPARATE lines):
-   ง่ายๆ ครับ
-   my = ของฉัน
-   your = ของคุณ
-   My cat is very cute.
-   Your dog is very friendly.
-   FORBIDDEN: starting Pattern 2 speak in the same turn as this tip.
+2. Turn 2 — Describe (2 choices)
+   - textEn ≈ "น่ารักมากครับ! แล้วน้องสัตว์เลี้ยงของคุณตัวนี้เป็นยังไงบ้างครับ?"
+   - IF cat:
+     guidedSpeaking: { stem:"My cat is very...", options:[
+       { emoji:"🥰", label:"Cute", speak:"My cat is very cute." },
+       { emoji:"🤝", label:"Friendly", speak:"My cat is very friendly." }
+     ] }
+   - IF dog:
+     guidedSpeaking: { stem:"My dog is very...", options:[
+       { emoji:"🥰", label:"Cute", speak:"My dog is very cute." },
+       { emoji:"🤝", label:"Friendly", speak:"My dog is very friendly." }
+     ] }
+   - REMEMBER cute or friendly for Turn 5.
+   - After clear → Turn 3.
 
-Phase 4: Pattern 2 & Synthesis (~1.5 min)
-7. Model Pattern 2 based on their branch → ask to repeat:
-   - Has a pet: "My [animal] is very cute/friendly." (cat→cute, dog→friendly, other→cute or friendly)
-   - No pets: model "Your dog is very friendly." OR "My cat is very cute." as a useful describing pattern → ask to repeat once
-   (Repeat)
-8. Synthesis — one clear speaking task matching THEIR branch. Do NOT show the English answer first:
-   - Has a pet: "ลองพูดรวมกันดูครับ: 'ฉันมีแมวหนึ่งตัว มันน่ารักมาก' จะพูดภาษาอังกฤษยังไงครับ?"
-     (Adapt animal/adjective to their pet: dog→friendly, etc.)
-     Expected: "I have a [pet]. My [pet] is very cute/friendly."
-   - No pets: "ลองพูดประโยคนี้ดูครับ: 'ฉันไม่มีสัตว์เลี้ยง แต่ฉันชอบแมว' จะพูดภาษาอังกฤษยังไงครับ?"
-     Expected: "I don't have any pets, but I like cats."
-     Also accept the shorter "I don't have any pets."
-   FORBIDDEN: "→" arrow or reveal English answer in the synthesis prompt.
-   Accept close variants. (Recall)
+Phase 3 — Tip & Concept (listen-only)
 
-Quick Check (Thai → English) — AFTER synthesis, BEFORE wrap-up:
-9. Give ONE Thai sentence matching THEIR branch. Do NOT show the English answer first. Ask them to say it in English.
-   - Has a pet: "ทดสอบสั้นๆ ครับ ถ้าจะบอกว่า 'แมวของฉันน่ารักมาก' จะพูดภาษาอังกฤษยังไงครับ?"
-     Expected: "My cat is very cute." (adapt animal/adj to their pet if needed)
-   - No pets: "ทดสอบสั้นๆ ครับ ถ้าจะบอกว่า 'ฉันไม่มีสัตว์เลี้ยง' จะพูดภาษาอังกฤษยังไงครับ?"
-     Expected: "I don't have any pets."
-   If wrong/unclear: at most ONE gentle hint + one retry; then accept and move on. (Recall)
-   FORBIDDEN: reveal the full English target before they attempt.
+3. Turn 3 — Teach (listen-only)
+   - textEn MUST be close to:
+     "เก่งมากครับ! จำง่ายๆ เลยนะ 😊 ถ้าเป็นสัตว์เลี้ยงของเรา ให้ใช้ My เช่น My dog is friendly. แต่ถ้าเป็นของเพื่อน ให้ใช้ Your เช่น Your cat is cute. เดี๋ยวเรามาลองใช้จริงกันครับ! Use 'My' for your pet, and 'Your' for your friend's pet."
+   - expectsUserSpeech=false. NO guidedSpeaking. NO mic.
+   - After Continue → Turn 4.
 
-Phase 5: Wrap-up & Celebrate (~30 sec)
-10. Briefly summarize pet / dog / cat / have / don't have / my / your / cute / friendly — praise that they used affirmative or negative sentences smoothly. Celebrate with student's name once → set isLessonComplete = true (REQUIRED).
+Phase 4 — Apply (Your Pattern)
 
-Turn loop rules (critical — never stall the learner):
-- Every non-final tutor turn MUST end with exactly one clear next action — EXCEPT the Grammar Tip (step 6), which is listen-only and ends with expectsUserSpeech = false.
-- Never end a speaking-turn with only explanation, praise, or feedback.
-- Ask only one question or speaking task at a time.
-- Keep most tutor turns under 2–3 short sentences.
-- Praise specifically but briefly.
-- You only see transcript TEXT, not audio — never invent pronunciation problems from text.
-- If the learner's transcript clearly matches the target, praise briefly and ADVANCE.
-- If the text truly does not match, gently ask for at most ONE retry.
-- After one retry (or two total attempts on the same item), accept and move on.
-- Accept natural variants when the meaning is clear.
-- Do not mark minor accent differences as wrong.
-- Focus on confidence and being understandable.
-- When Core Flow reaches Wrap-up & Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
+4. Turn 4 — Compliment friend's pet (2 choices)
+   - textEn ≈ "แล้วถ้าเราจะเอ่ยปากชมสัตว์เลี้ยงของเพื่อนบ้าง อยากลองชมตัวไหนดีครับ? 🐶🐱 How would you compliment your friend's pet?"
+   - guidedSpeaking: { stem:"Your ... is very...", options:[
+       { emoji:"🐶", label:"Dog", speak:"Your dog is very friendly." },
+       { emoji:"🐱", label:"Cat", speak:"Your cat is very cute." }
+     ] }
+   - After clear → Turn 5.
+
+Phase 5 — Combo (two sentences)
+
+5. Turn 5 — Learn & Repeat (single hint)
+   - textEn MUST be close to:
+     "คราวนี้ลองนำมารวมกัน ค่อยๆ พูด 2 ประโยคติดกันดูนะครับ!"
+   - Build from THEIR Turn 1 pet + Turn 2 adjective, e.g.:
+     I have a dog. My dog is very friendly.
+     OR I have a cat. My cat is very cute.
+   - guidedSpeaking SINGLE hint:
+     { stem:"I have a...", emoji:"🐶" or "🐱", label:"2 sentences", speak:"I have a [pet]. My [pet] is very [adj]." }
+   - After clear → Turn 6.
+
+Phase 6 — Celebrate
+
+6. Turn 6 — Celebrate (listen-only)
+   - textEn MUST be close to:
+     "สุดยอดครับ [Name]! 🎉 วันนี้คุณบอกสัตว์เลี้ยง บรรยายด้วย My ชมด้วย Your และพูดสองประโยคติดกันได้แล้ว — เก่งมากครับ! 🍌"
+   - expectsUserSpeech=false. isLessonComplete=true (REQUIRED).
+
+Turn loop rules:
+- Every speaking turn ends with exactly one clear learner action.
+- Turn 3 tip ends with expectsUserSpeech=false (Continue).
+- Praise briefly when clear, then ADVANCE.
+- At most ONE gentle retry per step; then accept and move on.
+- When Celebrate fires, isLessonComplete must be true. Otherwise false.`,
     openingPrompt:
-      'Start the Pets lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. Intro style MUST be Funny & Playful with Thai-style humor (insight จริงจนจุก + ปู-ตบโบ๊ะบ๊ะไว + ไม่ตักเตือน — NOT English standup). CRITICAL: Turn 1 = joke/vibe intro + teach pet + ask to repeat ONLY "pet" in the SAME turn — NEVER open with "มีสัตว์เลี้ยงไหม?" / chatty questions that need a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: dog vs cat quiz (expect cat), Pattern 1 (I have a cat) + ask if they have a pet in {{L1}} THEN the same question in English + apply I have a... OR I don\'t have any pets, Grammar Tip listen-only (my=ของฉัน / your=ของคุณ + My cat is very cute / Your dog is very friendly — no speak yet), Pattern 2 by branch (has pet: My [animal] is... / no pet: Your dog is very friendly OR My cat is very cute) + synthesis matching their case, Thai→English quick check, then celebrate. Every speaking turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start Pets 1.6 (REVISED Everyday Choices) for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = greet by name + pet-parent vibe + Do you have any pets? with guidedSpeaking Cat/Dog (I have a cat. / I have a dog.) — expectsUserSpeech true. Do NOT use "I\'m ready". Turn2 describe BRANCHES on pet (My cat/dog is very cute/friendly) → Turn3 My vs Your tip LISTEN-ONLY expectsUserSpeech false → Turn4 compliment friend\'s pet Your dog is very friendly / Your cat is very cute → Turn5 combo SINGLE hint "I have a [pet]. My [pet] is very [adj]." from their choices → Turn6 Celebrate isLessonComplete true. Remember cat/dog and adjective. Return JSON matching schema. isLessonComplete must be false on opening.',
   },
   {
     lessonId: 'ee_about_me_weather',
@@ -4166,8 +4144,8 @@ Quick Check (Thai → English) — AFTER synthesis, BEFORE wrap-up:
 
 Phase 4: Wrap-up & Celebrate (~30 sec)
 10. Briefly summarize weather / hot / sunny / rainy / cold + both patterns — praise that they described weather and likes/dislikes smoothly.
-   Softly tease that the next lesson is Lesson Summary / สรุปบทเรียน — one short playful line only.
    Celebrate with student's name once → set isLessonComplete = true (REQUIRED).
+   FORBIDDEN: mention the next lesson / Favorites / Lesson Summary / "ต่อไปไป…".
 
 Turn loop rules (critical — never stall the learner):
 - Every non-final tutor turn MUST end with exactly one clear next action:
@@ -4187,7 +4165,7 @@ Turn loop rules (critical — never stall the learner):
 - Focus on confidence and being understandable.
 - When Core Flow reaches Wrap-up & Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the Weather lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. Intro style MUST be Warm & Friendly. CRITICAL: Turn 1 = warm weather-vibe intro + teach weather + ask to repeat ONLY "weather" in the SAME turn — NEVER open with "วันนี้อากาศเป็นไง?" / chatty questions that need a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: hot vs sunny quiz (expect sunny), Pattern 1 (The weather is very hot today) + ask weather near their home by name in {{L1}} THEN the same question in English + apply The weather is very ... today, Pattern 2 (I don\'t like rainy weather) + short ~5s tip about [adj] weather + synthesis "The weather is very hot today. I don\'t like rainy weather.", Thai→English quick check, then celebrate and tease that next is Favorites / Preferences (เรื่องของโปรด). Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the Weather lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. Intro style MUST be Warm & Friendly. CRITICAL: Turn 1 = warm weather-vibe intro + teach weather + ask to repeat ONLY "weather" in the SAME turn — NEVER open with "วันนี้อากาศเป็นไง?" / chatty questions that need a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: hot vs sunny quiz (expect sunny), Pattern 1 (The weather is very hot today) + ask weather near their home by name in {{L1}} THEN the same question in English + apply The weather is very ... today, Pattern 2 (I don\'t like rainy weather) + short ~5s tip about [adj] weather + synthesis "The weather is very hot today. I don\'t like rainy weather.", Thai→English quick check, then celebrate (NO tease of next lesson). Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
   },
   {
     lessonId: 'ee_about_me_favorites',
@@ -4349,7 +4327,8 @@ Core Flow (ONE-WAY):
 
 8. Celebrate (listen-only) — AFTER Continue from Nice! ONLY
    - MUST open with praise "เยี่ยมเลยครับ! 👏" first.
-   - Warm ~2–3 sentences: name once + I prefer / I think / They like / We… + soft tease Lesson Summary.
+   - Warm ~2–3 sentences: name once + I prefer / I think / They like / We… — praise only, no next-lesson tease.
+   - FORBIDDEN: mention Lesson Summary / สรุปบทเรียน / "ต่อไปไป…".
    - expectsUserSpeech=false. isLessonComplete=true. Omit guidedSpeaking / roleplayIntro / roleplayNpc.
 
 Teaching rules:
@@ -4360,7 +4339,7 @@ Teaching rules:
 
 Turn loop: non-final = action or Continue; Celebrate → isLessonComplete true.`,
     openingPrompt:
-      'Start Favorites 1.10 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — greet by name + "วันนี้เราจะมาฝึกเล่าเรื่องของโปรด แถมยังเมาท์เรื่องเพื่อนๆ เป็นภาษาอังกฤษได้ในบทเดียว! พร้อมไหมครับ?" — expectsUserSpeech false. FORBIDDEN on Turn 1: preference question; guidedSpeaking; mic. After Continue: Step1 food prefer Pizza/Sushi guidedSpeaking stem "I prefer..." → Step2 "Why do you like it?" stem "I think it\'s..." delicious/spicy → Step3 "What about your friends?" stem "They like..." Pizza/Burger → Step4 "Do you eat together?" stem "We..." eat together/watch movies → Roleplay Intro praise + Movie Buddy card → Movie roleplay SPEAK: Which movie do you prefer? (Action/Comedy/Romance) → Why? → What about your friends? → Do you watch movies together? → listen-only "Nice!" → Continue → Celebrate praise first + tease Lesson Summary. roleplayNpc Movie Buddy 🎬 objective "Talk about movies you and your friends like." NEVER mash intro+ask or Nice+Celebrate. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
+      'Start Favorites 1.10 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — greet by name + "วันนี้เราจะมาฝึกเล่าเรื่องของโปรด แถมยังเมาท์เรื่องเพื่อนๆ เป็นภาษาอังกฤษได้ในบทเดียว! พร้อมไหมครับ?" — expectsUserSpeech false. FORBIDDEN on Turn 1: preference question; guidedSpeaking; mic. After Continue: Step1 food prefer Pizza/Sushi guidedSpeaking stem "I prefer..." → Step2 "Why do you like it?" stem "I think it\'s..." delicious/spicy → Step3 "What about your friends?" stem "They like..." Pizza/Burger → Step4 "Do you eat together?" stem "We..." eat together/watch movies → Roleplay Intro praise + Movie Buddy card → Movie roleplay SPEAK: Which movie do you prefer? (Action/Comedy/Romance) → Why? → What about your friends? → Do you watch movies together? → listen-only "Nice!" → Continue → Celebrate praise first (NO tease of Lesson Summary). roleplayNpc Movie Buddy 🎬 objective "Talk about movies you and your friends like." NEVER mash intro+ask or Nice+Celebrate. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.',
   },
   {
     lessonId: 'ee_about_me_review',
@@ -9871,6 +9850,51 @@ function foodDrinkBoard(food: FoodFavoriteId): {
   };
 }
 
+const FOOD_EMOJI_QUIZ_BOARDS: Record<
+  4 | 5 | 6,
+  {
+    textEn: string;
+    stem: string;
+    expectedSpeech: string;
+    options: Array<{ emoji: string; label: string; speak: string }>;
+  }
+> = {
+  4: {
+    textEn: 'เก่งมากครับ! 👏 มาทาย Emoji Quiz กันนะ 😋🍕',
+    stem: 'Pizza is...',
+    expectedSpeech: 'Pizza is delicious.',
+    options: [
+      { emoji: '😋', label: 'delicious', speak: 'Pizza is delicious.' },
+      { emoji: '☕', label: 'coffee', speak: 'coffee.' },
+      { emoji: '🍳', label: 'breakfast', speak: 'breakfast.' },
+    ],
+  },
+  5: {
+    textEn: 'ข้อต่อไปครับ! 🥤🍕',
+    stem: 'I drink ____ with pizza.',
+    expectedSpeech: 'I drink iced tea with pizza.',
+    options: [
+      {
+        emoji: '🥤',
+        label: 'iced tea',
+        speak: 'I drink iced tea with pizza.',
+      },
+      { emoji: '🌶️', label: 'spicy', speak: 'spicy.' },
+      { emoji: '🍳', label: 'breakfast', speak: 'breakfast.' },
+    ],
+  },
+  6: {
+    textEn: 'ข้อสุดท้ายครับ! 🌶️🥗',
+    stem: 'Somtam is...',
+    expectedSpeech: 'Somtam is spicy.',
+    options: [
+      { emoji: '🌶️', label: 'spicy', speak: 'Somtam is spicy.' },
+      { emoji: '☕', label: 'coffee', speak: 'coffee.' },
+      { emoji: '🍳', label: 'breakfast', speak: 'breakfast.' },
+    ],
+  },
+};
+
 function normalizeFoodSpeech(userText: string): string {
   return userText
     .trim()
@@ -9882,6 +9906,23 @@ function normalizeFoodSpeech(userText: string): string {
 export function extractFoodFavorite(
   history: Array<{ speaker: string; textEn?: string }>,
 ): FoodFavoriteId | null {
+  for (const turn of history) {
+    if (turn.speaker !== 'user') continue;
+    const t = normalizeFoodSpeech(turn.textEn ?? '');
+    if (!t) continue;
+    // Prefer Turn-1 style "I like …" so quiz "Pizza is delicious" doesn't overwrite.
+    if (/\bi like\b/.test(t)) {
+      if (/\bpizza\b/.test(t)) return 'pizza';
+      if (/\bsushi\b/.test(t)) return 'sushi';
+      if (
+        /\bsom\s*-?\s*tam\b/.test(t) ||
+        /\bsomtam\b/.test(t) ||
+        /\bpapaya salad\b/.test(t)
+      ) {
+        return 'somtam';
+      }
+    }
+  }
   for (const turn of history) {
     if (turn.speaker !== 'user') continue;
     const t = normalizeFoodSpeech(turn.textEn ?? '');
@@ -9940,34 +9981,88 @@ function matchesFoodStep(
           /\btea\b/.test(t) ||
           /\bjuice\b/.test(t))
       );
+    case 4: // Emoji Quiz: Pizza is delicious
+      return (
+        t === 'delicious' ||
+        t === 'pizza is delicious' ||
+        /\bpizza is delicious\b/.test(t)
+      );
+    case 5: // Emoji Quiz: I drink iced tea with pizza
+      return (
+        t === 'iced tea' ||
+        /\bi drink iced tea with pizza\b/.test(t)
+      );
+    case 6: // Emoji Quiz: Somtam is spicy
+      return (
+        t === 'spicy' ||
+        t === 'somtam is spicy' ||
+        /\bsom\s*-?\s*tam is spicy\b/.test(t) ||
+        /\bsomtam is spicy\b/.test(t)
+      );
     default:
       return false;
   }
 }
 
-/** How many Food & Drinks speak steps are cleared (0–3). */
+/** How many Food & Drinks speak steps are cleared (0–6).
+ * Emoji Quiz steps 4–6: soft-advance after 2 failed attempts.
+ */
 export function foodLessonProgress(
   history: Array<{ speaker: string; textEn?: string }>,
 ): number {
   let progress = 0;
   let food: FoodFavoriteId | null = null;
+  let attemptsOnCurrent = 0;
   for (const turn of history) {
     if (turn.speaker !== 'user') continue;
     const text = (turn.textEn ?? '').trim();
     if (!text || text.startsWith('[') || text.startsWith('(')) continue;
     const next = progress + 1;
-    if (next <= 3 && matchesFoodStep(next, text, food)) {
+    if (next > 6) continue;
+    if (matchesFoodStep(next, text, food)) {
       progress = next;
+      attemptsOnCurrent = 0;
       if (progress === 1) {
         food = extractFoodFavorite([{ speaker: 'user', textEn: text }]);
+      }
+      continue;
+    }
+    if (next >= 4 && next <= 6) {
+      attemptsOnCurrent += 1;
+      if (attemptsOnCurrent >= 2) {
+        progress = next;
+        attemptsOnCurrent = 0;
       }
     }
   }
   return progress;
 }
 
+function foodBoardFromAiText(textEn: string): number | null {
+  const t = (textEn ?? '').toLowerCase();
+  if (!t) return null;
+  if (t.includes('ข้อสุดท้าย') || t.includes('🌶️🥗')) return 6;
+  if (t.includes('ข้อต่อไป') || t.includes('🥤🍕')) return 5;
+  if (t.includes('emoji quiz') || t.includes('😋🍕')) return 4;
+  if (t.includes('ดื่มอะไรคู่') || t.includes('what do you usually drink')) {
+    return 3;
+  }
+  if (
+    t.includes('what is pizza like') ||
+    t.includes('what is sushi like') ||
+    t.includes('what is somtam like') ||
+    t.includes('เป็นยังไงครับ')
+  ) {
+    return 2;
+  }
+  if (t.includes('what food do you like') || t.includes('ชอบทานอะไร')) {
+    return 1;
+  }
+  return null;
+}
+
 /**
- * Pin Food & Drinks guidedSpeaking boards (Turns 1–3) and Celebrate after drink.
+ * Pin Food & Drinks guidedSpeaking boards (Turns 1–6).
  */
 export function forceFoodGuidedSpeakingIfNeeded(
   lessonId: string,
@@ -9995,18 +10090,25 @@ export function forceFoodGuidedSpeakingIfNeeded(
   if (current.isTaskComplete) return null;
 
   const progress = foodLessonProgress(history);
-  if (progress >= 3) return null;
+  if (progress >= 6) return null;
 
   const food = extractFoodFavorite(history);
-  // progress 0 → Turn 1 favorite; 1 → describe; 2 → drink
-  const step = progress + 1;
+  const fromText = foodBoardFromAiText(current.textEn ?? '');
+  let step = fromText;
+  if (step == null) {
+    if (progress >= 0 && progress <= 5) step = progress + 1;
+    else return null;
+  }
+
+  if (step < 1 || step > 6) return null;
+  if (nextTurn < 1 && step !== 1) return null;
 
   let board: {
     textEn: string;
     stem: string;
     expectedSpeech: string;
     options: Array<{ emoji: string; label: string; speak: string }>;
-  } | null = null;
+  };
 
   if (step === 1) {
     board = {
@@ -10018,16 +10120,12 @@ export function forceFoodGuidedSpeakingIfNeeded(
       options: FOOD_FAVORITE_GUIDED_SPEAKING.options.map((o) => ({ ...o })),
     };
   } else if (step === 2) {
-    const id = food ?? 'pizza';
-    board = FOOD_DESCRIBE_BOARDS[id];
+    board = FOOD_DESCRIBE_BOARDS[food ?? 'pizza'];
   } else if (step === 3) {
     board = foodDrinkBoard(food ?? 'pizza');
+  } else {
+    board = FOOD_EMOJI_QUIZ_BOARDS[step as 4 | 5 | 6];
   }
-
-  if (!board) return null;
-
-  // Opening (nextTurn 0) may still need pin — allow when step === 1
-  if (nextTurn < 1 && step !== 1) return null;
 
   const stemOk =
     current.guidedSpeaking?.stem
@@ -10065,7 +10163,7 @@ export function forceFoodGuidedSpeakingIfNeeded(
 }
 
 /**
- * After Food drink pairing → Celebrate.
+ * After Food Emoji Quiz → Celebrate.
  */
 export function forceFoodCelebrateIfNeeded(
   lessonId: string,
@@ -10088,13 +10186,13 @@ export function forceFoodCelebrateIfNeeded(
   isTaskComplete: true;
 } | null {
   if (lessonId !== 'ee_about_me_food') return null;
-  if (foodLessonProgress(history) < 3) return null;
+  if (foodLessonProgress(history) < 6) return null;
 
   const name = learnerFirstName.trim() || 'เพื่อน';
   const body =
     lang === 'english'
-      ? `Awesome, ${name}! 🎉 You named a favorite food, described it, and paired a drink. Next up — Food Pack. 🍌✨`
-      : `สุดยอดครับ ${name}! 🎉 วันนี้คุณบอกได้ทั้งของโปรด รสชาติ และเครื่องดื่มที่ดื่มคู่กันแล้วครับ ต่อไปไปฝึก Food Pack ได้เลย 🍌✨`;
+      ? `Awesome, ${name}! 🎉 You named a favorite food, described it, and paired a drink — great work! 🍌✨`
+      : `สุดยอดครับ ${name}! 🎉 วันนี้คุณบอกได้ทั้งของโปรด รสชาติ และเครื่องดื่มที่ดื่มคู่กันแล้วครับ — เก่งมากครับ! 🍌✨`;
 
   const raw = (current.textEn ?? '').trim();
   const praiseOk =
@@ -10451,6 +10549,1714 @@ export function forceHomeCelebrateIfNeeded(
 
   const body =
     'สุดยอดครับ! 🎉 วันนี้คุณสามารถพูดเรื่องบ้านของตัวเองได้แล้ว ทั้งที่พัก คนที่อาศัยอยู่ด้วย และมุมโปรดในบ้าน เก่งมากครับ! 🍌';
+
+  const raw = (current.textEn ?? '').trim();
+  const praiseOk = /^(เยี่ยม|เก่งมาก|สุดยอด|ดีมาก|ยอดเยี่ยม)/u.test(raw);
+  const textEn =
+    current.isTaskComplete && praiseOk && raw.length > 30 ? raw : body;
+
+  return {
+    textEn,
+    textTh: null,
+    expectsUserSpeech: false,
+    expectedSpeech: null,
+    guidedSpeaking: null,
+    emojiChoice: null,
+    isTaskComplete: true,
+  };
+}
+
+export type WorkSchoolMode = 'work' | 'study';
+
+/** Work & School 1.4 — Turn 1 activity board (also used on opening). */
+export const WORK_SCHOOL_ACTIVITY_GUIDED_SPEAKING = {
+  stem: 'I...',
+  options: [
+    { emoji: '💼', label: 'Work', speak: 'I work.' },
+    { emoji: '📚', label: 'Study', speak: 'I study.' },
+  ],
+} as const;
+
+export function workSchoolOpeningText(learnerFirstName: string): string {
+  const name = learnerFirstName.trim() || 'เพื่อน';
+  return `สวัสดีครับ ${name}! วันนี้เรามาคุยเรื่องชีวิตการทำงานหรือการเรียนกันบ้างดีกว่า 💼 ตอนนี้คุณทำงานหรือเรียนอยู่ครับ? Do you work or study?`;
+}
+
+function workSchoolLocationBoard(mode: WorkSchoolMode): {
+  textEn: string;
+  stem: string;
+  expectedSpeech: string;
+  options: Array<{ emoji: string; label: string; speak: string }>;
+} {
+  if (mode === 'study') {
+    return {
+      textEn:
+        'โอ้ ยอดเยี่ยมเลยครับ! แล้วปกติคุณเรียนที่ไหนเป็นหลักครับ? Where do you study?',
+      stem: 'I study at...',
+      expectedSpeech: 'I study at school.',
+      options: [
+        { emoji: '🏢', label: 'School', speak: 'I study at school.' },
+        { emoji: '🏠', label: 'Home', speak: 'I study at home.' },
+      ],
+    };
+  }
+  return {
+    textEn:
+      'โอ้ ยอดเยี่ยมเลยครับ! แล้วปกติคุณทำงานที่ไหนเป็นหลักครับ? Where do you work?',
+    stem: 'I work at...',
+    expectedSpeech: 'I work at an office.',
+    options: [
+      { emoji: '🏢', label: 'Office', speak: 'I work at an office.' },
+      { emoji: '🏠', label: 'Home', speak: 'I work at home.' },
+    ],
+  };
+}
+
+function workSchoolFeelingBoard(mode: WorkSchoolMode): {
+  textEn: string;
+  stem: string;
+  expectedSpeech: string;
+  options: Array<{ emoji: string; label: string; speak: string }>;
+} {
+  if (mode === 'study') {
+    return {
+      textEn:
+        'แล้วบรรยากาศการเรียนของคุณเป็นยังไงบ้างครับช่วงนี้? How is your school?',
+      stem: 'School is...',
+      expectedSpeech: 'School is fun.',
+      options: [
+        { emoji: '💼', label: 'Busy', speak: 'School is busy.' },
+        { emoji: '🎉', label: 'Fun', speak: 'School is fun.' },
+        { emoji: '☕', label: 'Relaxing', speak: 'School is relaxing.' },
+      ],
+    };
+  }
+  return {
+    textEn:
+      'แล้วบรรยากาศการทำงานของคุณเป็นยังไงบ้างครับช่วงนี้? How is your work?',
+    stem: 'My work is...',
+    expectedSpeech: 'My work is busy.',
+    options: [
+      { emoji: '💼', label: 'Busy', speak: 'My work is busy.' },
+      { emoji: '🎉', label: 'Fun', speak: 'My work is fun.' },
+      { emoji: '☕', label: 'Relaxing', speak: 'My work is relaxing.' },
+    ],
+  };
+}
+
+const WORK_SCHOOL_COMBO_BOARD = {
+  textEn:
+    'เก่งมากครับ! ถึงบางครั้งชีวิตจะยุ่งหรือเหนื่อยไปบ้าง แต่เราก็ยังหามุมสนุกกับมันได้เนอะ 😊 มาลองเชื่อมสองประโยคเข้าด้วยกันดูครับ พูดตามผมนะ... My work is busy, but I enjoy it.',
+  stem: 'My work is busy, but...',
+  expectedSpeech: 'My work is busy, but I enjoy it.',
+  options: [
+    {
+      emoji: '💼',
+      label: 'but I enjoy it',
+      speak: 'My work is busy, but I enjoy it.',
+    },
+  ],
+};
+
+function normalizeWorkSchoolSpeech(userText: string): string {
+  return userText
+    .trim()
+    .toLowerCase()
+    .replace(/[.!?]+$/g, '')
+    .replace(/\s+/g, ' ');
+}
+
+export function extractWorkSchoolMode(
+  history: Array<{ speaker: string; textEn?: string }>,
+): WorkSchoolMode | null {
+  for (const turn of history) {
+    if (turn.speaker !== 'user') continue;
+    const t = normalizeWorkSpeech(turn.textEn ?? '');
+    if (!t) continue;
+    if (t === 'i study' || /^i study\b/.test(t)) return 'study';
+    if (t === 'i work' || /^i work\b/.test(t) && !/\bat\b/.test(t)) {
+      return 'work';
+    }
+  }
+  for (const turn of history) {
+    if (turn.speaker !== 'user') continue;
+    const t = normalizeWorkSchoolSpeech(turn.textEn ?? '');
+    if (/\bi study at\b/.test(t) || /\bschool is\b/.test(t)) return 'study';
+    if (/\bi work at\b/.test(t) || /\bmy work is\b/.test(t)) return 'work';
+  }
+  return 'work';
+}
+
+function normalizeWorkSpeech(userText: string): string {
+  return normalizeWorkSchoolSpeech(userText);
+}
+
+function matchesWorkSchoolStep(
+  step: number,
+  userText: string,
+  mode: WorkSchoolMode,
+): boolean {
+  const t = normalizeWorkSchoolSpeech(userText);
+  if (!t) return false;
+  switch (step) {
+    case 1:
+      return t === 'i work' || t === 'i study';
+    case 2:
+      if (mode === 'study') {
+        return /\bi study at\b/.test(t) && (/\bschool\b/.test(t) || /\bhome\b/.test(t));
+      }
+      return /\bi work at\b/.test(t) && (/\boffice\b/.test(t) || /\bhome\b/.test(t));
+    case 3:
+      if (mode === 'study') {
+        return (
+          /\bschool is\b/.test(t) &&
+          (/\bbusy\b/.test(t) || /\bfun\b/.test(t) || /\brelaxing\b/.test(t))
+        );
+      }
+      return (
+        /\bmy work is\b/.test(t) &&
+        (/\bbusy\b/.test(t) || /\bfun\b/.test(t) || /\brelaxing\b/.test(t))
+      );
+    case 4:
+      return /\bmy work is busy\b/.test(t) && /\bbut\b/.test(t) && /\benjoy\b/.test(t);
+    default:
+      return false;
+  }
+}
+
+/** How many Work & School speak steps are cleared (0–4). */
+export function workSchoolLessonProgress(
+  history: Array<{ speaker: string; textEn?: string }>,
+): number {
+  const mode = extractWorkSchoolMode(history) ?? 'work';
+  let progress = 0;
+  for (const turn of history) {
+    if (turn.speaker !== 'user') continue;
+    const text = (turn.textEn ?? '').trim();
+    if (!text || text.startsWith('[') || text.startsWith('(')) continue;
+    const next = progress + 1;
+    if (next <= 4 && matchesWorkSchoolStep(next, text, mode)) {
+      progress = next;
+    }
+  }
+  return progress;
+}
+
+function workSchoolBoardFromAiText(textEn: string): number | null {
+  const t = (textEn ?? '').toLowerCase();
+  if (!t) return null;
+  if (
+    t.includes('my work is busy, but') ||
+    (t.includes('เชื่อมสองประโยค') && t.includes('enjoy'))
+  ) {
+    return 4;
+  }
+  if (t.includes('บรรยากาศ') || t.includes('how is your work') || t.includes('how is your school')) {
+    return 3;
+  }
+  if (
+    t.includes('ทำงานที่ไหน') ||
+    t.includes('เรียนที่ไหน') ||
+    t.includes('where do you work') ||
+    t.includes('where do you study')
+  ) {
+    return 2;
+  }
+  if (
+    t.includes('ทำงานหรือเรียน') ||
+    t.includes('do you work or study')
+  ) {
+    return 1;
+  }
+  return null;
+}
+
+/**
+ * Pin Work & School guidedSpeaking boards (Turns 1–4).
+ */
+export function forceWorkSchoolGuidedSpeakingIfNeeded(
+  lessonId: string,
+  _lang: LessonTeachingLanguage,
+  nextTurn: number,
+  history: Array<{ speaker: string; textEn?: string }>,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    guidedSpeaking: ReturnType<typeof normalizeGuidedSpeaking>;
+    expectsUserSpeech: boolean;
+    isTaskComplete: boolean;
+    expectedSpeech: string | null;
+  },
+): {
+  textEn: string;
+  textTh: string | null;
+  guidedSpeaking: NonNullable<ReturnType<typeof normalizeGuidedSpeaking>>;
+  expectsUserSpeech: true;
+  expectedSpeech: string;
+  emojiChoice: null;
+  isTaskComplete: false;
+} | null {
+  if (lessonId !== 'ee_about_me_work_school') return null;
+  if (current.isTaskComplete) return null;
+
+  const progress = workSchoolLessonProgress(history);
+  if (progress >= 4) return null;
+
+  const mode = extractWorkSchoolMode(history) ?? 'work';
+  const fromText = workSchoolBoardFromAiText(current.textEn ?? '');
+  let step = fromText;
+  if (step == null) {
+    if (progress >= 0 && progress <= 3) step = progress + 1;
+    else return null;
+  }
+
+  if (step < 1 || step > 4) return null;
+  if (nextTurn < 1 && step !== 1) return null;
+
+  let board: {
+    textEn: string;
+    stem: string;
+    expectedSpeech: string;
+    options: Array<{ emoji: string; label: string; speak: string }>;
+  };
+  if (step === 1) {
+    board = {
+      textEn: current.textEn?.trim() || workSchoolOpeningText(''),
+      stem: WORK_SCHOOL_ACTIVITY_GUIDED_SPEAKING.stem,
+      expectedSpeech: 'I work.',
+      options: WORK_SCHOOL_ACTIVITY_GUIDED_SPEAKING.options.map((o) => ({
+        ...o,
+      })),
+    };
+    if (current.textEn?.trim()) {
+      board = { ...board, textEn: current.textEn.trim() };
+    }
+  } else if (step === 2) {
+    board = workSchoolLocationBoard(mode);
+  } else if (step === 3) {
+    board = workSchoolFeelingBoard(mode);
+  } else {
+    board = WORK_SCHOOL_COMBO_BOARD;
+  }
+
+  const isSingleHint = board.options.length === 1;
+  const stemOk =
+    current.guidedSpeaking?.stem
+      ?.toLowerCase()
+      .includes(board.stem.toLowerCase().slice(0, 8)) ?? false;
+  const optionsOk = isSingleHint
+    ? (current.guidedSpeaking?.options?.length ?? 0) < 2 &&
+      (current.guidedSpeaking?.speak === board.options[0].speak ||
+        current.guidedSpeaking?.emoji === board.options[0].emoji)
+    : (current.guidedSpeaking?.options?.length ?? 0) >= board.options.length;
+  if (
+    current.expectsUserSpeech &&
+    stemOk &&
+    optionsOk &&
+    current.guidedSpeaking
+  ) {
+    return null;
+  }
+
+  const options = board.options.map((o) => ({ ...o }));
+  const first = options[0];
+  return {
+    textEn: board.textEn,
+    textTh: current.textTh?.trim() || null,
+    guidedSpeaking: isSingleHint
+      ? {
+          stem: board.stem,
+          emoji: first.emoji,
+          speak: first.speak,
+          ...(first.label ? { label: first.label } : {}),
+        }
+      : {
+          stem: board.stem,
+          emoji: first.emoji,
+          speak: first.speak,
+          ...(first.label ? { label: first.label } : {}),
+          options,
+        },
+    expectsUserSpeech: true,
+    expectedSpeech: board.expectedSpeech,
+    emojiChoice: null,
+    isTaskComplete: false,
+  };
+}
+
+/**
+ * After Work & School combo → Celebrate.
+ */
+export function forceWorkSchoolCelebrateIfNeeded(
+  lessonId: string,
+  _lang: LessonTeachingLanguage,
+  history: Array<{ speaker: string; textEn?: string }>,
+  learnerFirstName: string,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    expectsUserSpeech: boolean;
+    isTaskComplete: boolean;
+  },
+): {
+  textEn: string;
+  textTh: string | null;
+  expectsUserSpeech: false;
+  expectedSpeech: null;
+  guidedSpeaking: null;
+  emojiChoice: null;
+  isTaskComplete: true;
+} | null {
+  if (lessonId !== 'ee_about_me_work_school') return null;
+  if (workSchoolLessonProgress(history) < 4) return null;
+
+  const name = learnerFirstName.trim() || 'เพื่อน';
+  const body = `สุดยอดครับ ${name}! 🎉 วันนี้คุณบอกได้ทั้งทำงานหรือเรียน ที่ทำอยู่ และความรู้สึก — แถมเชื่อมประโยคด้วย but ได้แล้วครับ! 🍌`;
+
+  const raw = (current.textEn ?? '').trim();
+  const praiseOk = /^(เยี่ยม|เก่งมาก|สุดยอด|ดีมาก|ยอดเยี่ยม)/u.test(raw);
+  const textEn =
+    current.isTaskComplete && praiseOk && raw.length > 30 ? raw : body;
+
+  return {
+    textEn,
+    textTh: null,
+    expectsUserSpeech: false,
+    expectedSpeech: null,
+    guidedSpeaking: null,
+    emojiChoice: null,
+    isTaskComplete: true,
+  };
+}
+
+export type HobbiesActivity = 'watch_movies' | 'listen_music' | 'exercise';
+
+const HOBBIES_ACTIVITY_META: Record<
+  HobbiesActivity,
+  { th: string; en: string; phrase: string }
+> = {
+  watch_movies: {
+    th: 'ดูหนัง',
+    en: 'watch movies',
+    phrase: 'watch movies',
+  },
+  listen_music: {
+    th: 'ฟังเพลง',
+    en: 'listen to music',
+    phrase: 'listen to music',
+  },
+  exercise: {
+    th: 'ออกกำลังกาย',
+    en: 'exercise',
+    phrase: 'exercise',
+  },
+};
+
+/** Hobbies 1.5 — Turn 1 hobby board (also used on opening). */
+export const HOBBIES_HOBBY_GUIDED_SPEAKING = {
+  stem: 'I...',
+  options: [
+    { emoji: '🎬', label: 'Watch movies', speak: 'I watch movies.' },
+    { emoji: '🎵', label: 'Listen to music', speak: 'I listen to music.' },
+    { emoji: '💪', label: 'Exercise', speak: 'I exercise.' },
+  ],
+} as const;
+
+export function hobbiesOpeningText(): string {
+  return 'วันนี้เรามาคุยเรื่องเวลาว่างและงานอดิเรกกันดีกว่า 🎨✨ ปกติแล้วเวลาว่างคุณชอบทำอะไรครับ? What do you like to do in your free time?';
+}
+
+function hobbiesFrequencyBoard(activity: HobbiesActivity): {
+  textEn: string;
+  stem: string;
+  expectedSpeech: string;
+  options: Array<{ emoji: string; label: string; speak: string }>;
+} {
+  const meta = HOBBIES_ACTIVITY_META[activity];
+  return {
+    textEn: `น่าสนใจมากเลยครับ! แล้วคุณ${meta.th}บ่อยแค่ไหนครับ? How often do you ${meta.en}?`,
+    stem: 'I [frequency]...',
+    expectedSpeech: `I often ${meta.phrase}.`,
+    options: [
+      {
+        emoji: '⚡',
+        label: 'Always',
+        speak: `I always ${meta.phrase}.`,
+      },
+      {
+        emoji: '📅',
+        label: 'Usually',
+        speak: `I usually ${meta.phrase}.`,
+      },
+      {
+        emoji: '🔁',
+        label: 'Often',
+        speak: `I often ${meta.phrase}.`,
+      },
+      {
+        emoji: '🎲',
+        label: 'Sometimes',
+        speak: `I sometimes ${meta.phrase}.`,
+      },
+    ],
+  };
+}
+
+const HOBBIES_WEEKEND_BOARD = {
+  textEn:
+    'เยี่ยมเลยครับ 😊 ถ้าเป็นเวลาว่าง เรามักจะขึ้นต้นประโยคว่า In my free time... แต่ถ้าพูดถึงวันเสาร์–อาทิตย์ เราจะใช้ On weekends... ครับ! เดี๋ยวเรามาลองใช้จริงกันเลยครับ! แล้วอย่างวันเสาร์–อาทิตย์ คุณมักจะทำอะไรครับ? 🏃🎬 What do you usually do on weekends?',
+  stem: 'On weekends, I usually...',
+  expectedSpeech: 'On weekends, I usually exercise.',
+  options: [
+    {
+      emoji: '🎬',
+      label: 'Watch movies',
+      speak: 'On weekends, I usually watch movies.',
+    },
+    {
+      emoji: '🎵',
+      label: 'Listen to music',
+      speak: 'On weekends, I usually listen to music.',
+    },
+    {
+      emoji: '💪',
+      label: 'Exercise',
+      speak: 'On weekends, I usually exercise.',
+    },
+  ],
+};
+
+const HOBBIES_QUIZ_USUALLY_BOARD = {
+  textEn:
+    "เก่งมากครับ! 👏 เดี๋ยวเรามาทดสอบความจำสั้นๆ กันนะ คำว่า 'เป็นประจำ' ในภาษาอังกฤษคือคำไหนครับ? How do you say 'เป็นประจำ' in English?",
+  stem: 'เป็นประจำ =...',
+  expectedSpeech: 'Usually.',
+  options: [
+    { emoji: '⚡', label: 'Always', speak: 'Always.' },
+    { emoji: '📅', label: 'Usually', speak: 'Usually.' },
+    { emoji: '🔁', label: 'Often', speak: 'Often.' },
+    { emoji: '🎲', label: 'Sometimes', speak: 'Sometimes.' },
+  ],
+};
+
+const HOBBIES_QUIZ_SOMETIMES_BOARD = {
+  textEn:
+    "แม่นยำมากครับ! แล้วคำว่า 'บางครั้ง' ล่ะครับ ภาษาอังกฤษคือคำไหน? And how about 'บางครั้ง'?",
+  stem: 'บางครั้ง =...',
+  expectedSpeech: 'Sometimes.',
+  options: [
+    { emoji: '⚡', label: 'Always', speak: 'Always.' },
+    { emoji: '📅', label: 'Usually', speak: 'Usually.' },
+    { emoji: '🔁', label: 'Often', speak: 'Often.' },
+    { emoji: '🎲', label: 'Sometimes', speak: 'Sometimes.' },
+  ],
+};
+
+function normalizeHobbiesSpeech(userText: string): string {
+  return userText
+    .trim()
+    .toLowerCase()
+    .replace(/[.!?]+$/g, '')
+    .replace(/\s+/g, ' ');
+}
+
+export function extractHobbiesActivity(
+  history: Array<{ speaker: string; textEn?: string }>,
+): HobbiesActivity | null {
+  for (const turn of history) {
+    if (turn.speaker !== 'user') continue;
+    const t = normalizeHobbiesSpeech(turn.textEn ?? '');
+    if (!t) continue;
+    // Prefer Turn-1 style: "I watch movies." / "I listen to music." / "I exercise."
+    if (t === 'i watch movies') return 'watch_movies';
+    if (t === 'i listen to music') return 'listen_music';
+    if (t === 'i exercise') return 'exercise';
+  }
+  for (const turn of history) {
+    if (turn.speaker !== 'user') continue;
+    const t = normalizeHobbiesSpeech(turn.textEn ?? '');
+    if (!t) continue;
+    if (/^i (always|usually|often|sometimes) watch movies\b/.test(t)) {
+      return 'watch_movies';
+    }
+    if (/^i (always|usually|often|sometimes) listen to music\b/.test(t)) {
+      return 'listen_music';
+    }
+    if (/^i (always|usually|often|sometimes) exercise\b/.test(t)) {
+      return 'exercise';
+    }
+  }
+  return 'watch_movies';
+}
+
+function matchesHobbiesStep(
+  step: number,
+  userText: string,
+  activity: HobbiesActivity,
+): boolean {
+  const t = normalizeHobbiesSpeech(userText);
+  if (!t) return false;
+  const phrase = HOBBIES_ACTIVITY_META[activity].phrase;
+  switch (step) {
+    case 1:
+      return (
+        t === 'i watch movies' ||
+        t === 'i listen to music' ||
+        t === 'i exercise'
+      );
+    case 2:
+      return (
+        new RegExp(
+          `^i (always|usually|often|sometimes) ${phrase.replace(/\s+/g, '\\s+')}$`,
+        ).test(t)
+      );
+    case 3:
+      return (
+        /\bon weekends,?\s*i usually\b/.test(t) &&
+        (/\bwatch movies\b/.test(t) ||
+          /\blisten to music\b/.test(t) ||
+          /\bexercise\b/.test(t))
+      );
+    case 4:
+      return t === 'usually';
+    case 5:
+      return t === 'sometimes';
+    default:
+      return false;
+  }
+}
+
+/** How many Hobbies speak steps are cleared (0–5).
+ * Mini Quiz steps 4–5: soft-advance after 2 failed attempts.
+ */
+export function hobbiesLessonProgress(
+  history: Array<{ speaker: string; textEn?: string }>,
+): number {
+  const activity = extractHobbiesActivity(history) ?? 'watch_movies';
+  let progress = 0;
+  let attemptsOnCurrent = 0;
+  for (const turn of history) {
+    if (turn.speaker !== 'user') continue;
+    const text = (turn.textEn ?? '').trim();
+    if (!text || text.startsWith('[') || text.startsWith('(')) continue;
+    const next = progress + 1;
+    if (next > 5) continue;
+    if (matchesHobbiesStep(next, text, activity)) {
+      progress = next;
+      attemptsOnCurrent = 0;
+      continue;
+    }
+    if (next >= 4 && next <= 5) {
+      attemptsOnCurrent += 1;
+      if (attemptsOnCurrent >= 2) {
+        progress = next;
+        attemptsOnCurrent = 0;
+      }
+    }
+  }
+  return progress;
+}
+
+function hobbiesBoardFromAiText(textEn: string): number | null {
+  const t = (textEn ?? '').toLowerCase();
+  if (!t) return null;
+  if (t.includes('บางครั้ง') && (t.includes('ล่ะ') || t.includes('and how about'))) {
+    return 5;
+  }
+  if (
+    t.includes('เป็นประจำ') ||
+    (t.includes('how do you say') && t.includes('เป็นประจำ'))
+  ) {
+    return 4;
+  }
+  if (
+    t.includes('on weekends') ||
+    t.includes('วันเสาร์') ||
+    t.includes('in my free time')
+  ) {
+    return 3;
+  }
+  if (t.includes('บ่อยแค่ไหน') || t.includes('how often')) {
+    return 2;
+  }
+  if (
+    t.includes('เวลาว่างคุณชอบทำอะไร') ||
+    t.includes('what do you like to do in your free time')
+  ) {
+    return 1;
+  }
+  return null;
+}
+
+/**
+ * Pin Hobbies guidedSpeaking boards (Turns 1–5).
+ */
+export function forceHobbiesGuidedSpeakingIfNeeded(
+  lessonId: string,
+  _lang: LessonTeachingLanguage,
+  nextTurn: number,
+  history: Array<{ speaker: string; textEn?: string }>,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    guidedSpeaking: ReturnType<typeof normalizeGuidedSpeaking>;
+    expectsUserSpeech: boolean;
+    isTaskComplete: boolean;
+    expectedSpeech: string | null;
+  },
+): {
+  textEn: string;
+  textTh: string | null;
+  guidedSpeaking: NonNullable<ReturnType<typeof normalizeGuidedSpeaking>>;
+  expectsUserSpeech: true;
+  expectedSpeech: string;
+  emojiChoice: null;
+  isTaskComplete: false;
+} | null {
+  if (lessonId !== 'ee_about_me_hobbies') return null;
+  if (current.isTaskComplete) return null;
+
+  const progress = hobbiesLessonProgress(history);
+  if (progress >= 5) return null;
+
+  const activity = extractHobbiesActivity(history) ?? 'watch_movies';
+  const fromText = hobbiesBoardFromAiText(current.textEn ?? '');
+  let step = fromText;
+  if (step == null) {
+    if (progress >= 0 && progress <= 4) step = progress + 1;
+    else return null;
+  }
+
+  if (step < 1 || step > 5) return null;
+  if (nextTurn < 1 && step !== 1) return null;
+
+  let board: {
+    textEn: string;
+    stem: string;
+    expectedSpeech: string;
+    options: Array<{ emoji: string; label: string; speak: string }>;
+  };
+  if (step === 1) {
+    board = {
+      textEn: current.textEn?.trim() || hobbiesOpeningText(),
+      stem: HOBBIES_HOBBY_GUIDED_SPEAKING.stem,
+      expectedSpeech: 'I watch movies.',
+      options: HOBBIES_HOBBY_GUIDED_SPEAKING.options.map((o) => ({ ...o })),
+    };
+    if (current.textEn?.trim()) {
+      board = { ...board, textEn: current.textEn.trim() };
+    }
+  } else if (step === 2) {
+    board = hobbiesFrequencyBoard(activity);
+  } else if (step === 3) {
+    board = {
+      textEn: HOBBIES_WEEKEND_BOARD.textEn,
+      stem: HOBBIES_WEEKEND_BOARD.stem,
+      expectedSpeech: HOBBIES_WEEKEND_BOARD.expectedSpeech,
+      options: HOBBIES_WEEKEND_BOARD.options.map((o) => ({ ...o })),
+    };
+  } else if (step === 4) {
+    board = {
+      textEn: HOBBIES_QUIZ_USUALLY_BOARD.textEn,
+      stem: HOBBIES_QUIZ_USUALLY_BOARD.stem,
+      expectedSpeech: HOBBIES_QUIZ_USUALLY_BOARD.expectedSpeech,
+      options: HOBBIES_QUIZ_USUALLY_BOARD.options.map((o) => ({ ...o })),
+    };
+  } else {
+    board = {
+      textEn: HOBBIES_QUIZ_SOMETIMES_BOARD.textEn,
+      stem: HOBBIES_QUIZ_SOMETIMES_BOARD.stem,
+      expectedSpeech: HOBBIES_QUIZ_SOMETIMES_BOARD.expectedSpeech,
+      options: HOBBIES_QUIZ_SOMETIMES_BOARD.options.map((o) => ({ ...o })),
+    };
+  }
+
+  const stemOk =
+    current.guidedSpeaking?.stem
+      ?.toLowerCase()
+      .includes(board.stem.toLowerCase().slice(0, 8)) ?? false;
+  const optionsOk =
+    (current.guidedSpeaking?.options?.length ?? 0) >= board.options.length;
+  if (
+    current.expectsUserSpeech &&
+    stemOk &&
+    optionsOk &&
+    current.guidedSpeaking
+  ) {
+    return null;
+  }
+
+  const options = board.options.map((o) => ({ ...o }));
+  const first = options[0];
+  return {
+    textEn: board.textEn,
+    textTh: current.textTh?.trim() || null,
+    guidedSpeaking: {
+      stem: board.stem,
+      emoji: first.emoji,
+      speak: first.speak,
+      ...(first.label ? { label: first.label } : {}),
+      options,
+    },
+    expectsUserSpeech: true,
+    expectedSpeech: board.expectedSpeech,
+    emojiChoice: null,
+    isTaskComplete: false,
+  };
+}
+
+/**
+ * After Hobbies mini quiz → Celebrate.
+ */
+export function forceHobbiesCelebrateIfNeeded(
+  lessonId: string,
+  _lang: LessonTeachingLanguage,
+  history: Array<{ speaker: string; textEn?: string }>,
+  learnerFirstName: string,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    expectsUserSpeech: boolean;
+    isTaskComplete: boolean;
+  },
+): {
+  textEn: string;
+  textTh: string | null;
+  expectsUserSpeech: false;
+  expectedSpeech: null;
+  guidedSpeaking: null;
+  emojiChoice: null;
+  isTaskComplete: true;
+} | null {
+  if (lessonId !== 'ee_about_me_hobbies') return null;
+  if (hobbiesLessonProgress(history) < 5) return null;
+
+  const name = learnerFirstName.trim() || 'เพื่อน';
+  const body = `สุดยอดครับ ${name}! 🎉 วันนี้คุณบอกงานอดิเรก ความถี่ และสิ่งที่มักทำวันเสาร์–อาทิตย์ได้แล้ว — เก่งมากครับ! 🍌`;
+
+  const raw = (current.textEn ?? '').trim();
+  const praiseOk = /^(เยี่ยม|เก่งมาก|สุดยอด|ดีมาก|ยอดเยี่ยม)/u.test(raw);
+  const textEn =
+    current.isTaskComplete && praiseOk && raw.length > 30 ? raw : body;
+
+  return {
+    textEn,
+    textTh: null,
+    expectsUserSpeech: false,
+    expectedSpeech: null,
+    guidedSpeaking: null,
+    emojiChoice: null,
+    isTaskComplete: true,
+  };
+}
+
+export type PetsAnimal = 'cat' | 'dog';
+
+/** Pets 1.6 — Turn 1 pet board (also used on opening). */
+export const PETS_CHOICE_GUIDED_SPEAKING = {
+  stem: 'I have a...',
+  options: [
+    { emoji: '🐱', label: 'Cat', speak: 'I have a cat.' },
+    { emoji: '🐶', label: 'Dog', speak: 'I have a dog.' },
+  ],
+} as const;
+
+export function petsOpeningText(learnerFirstName: string): string {
+  const name = learnerFirstName.trim() || 'เพื่อน';
+  return `สวัสดีครับ ${name}! ในโลกนี้มีคน 2 ประเภทครับ... ทาสแมว ทาสหมา หรือทาสความสงบที่ไม่เลี้ยงอะไรเลย! 🐱🐶 วันนี้มาคุยเรื่อง pets (สัตว์เลี้ยง) กันครับ! คุณอยู่สายไหนครับ? Do you have any pets?`;
+}
+
+function petsDescribeBoard(animal: PetsAnimal): {
+  textEn: string;
+  stem: string;
+  expectedSpeech: string;
+  options: Array<{ emoji: string; label: string; speak: string }>;
+} {
+  if (animal === 'dog') {
+    return {
+      textEn:
+        'น่ารักมากครับ! แล้วน้องสัตว์เลี้ยงของคุณตัวนี้เป็นยังไงบ้างครับ?',
+      stem: 'My dog is very...',
+      expectedSpeech: 'My dog is very friendly.',
+      options: [
+        { emoji: '🥰', label: 'Cute', speak: 'My dog is very cute.' },
+        {
+          emoji: '🤝',
+          label: 'Friendly',
+          speak: 'My dog is very friendly.',
+        },
+      ],
+    };
+  }
+  return {
+    textEn:
+      'น่ารักมากครับ! แล้วน้องสัตว์เลี้ยงของคุณตัวนี้เป็นยังไงบ้างครับ?',
+    stem: 'My cat is very...',
+    expectedSpeech: 'My cat is very cute.',
+    options: [
+      { emoji: '🥰', label: 'Cute', speak: 'My cat is very cute.' },
+      {
+        emoji: '🤝',
+        label: 'Friendly',
+        speak: 'My cat is very friendly.',
+      },
+    ],
+  };
+}
+
+export const PETS_TIP_TEXT =
+  "เก่งมากครับ! จำง่ายๆ เลยนะ 😊 ถ้าเป็นสัตว์เลี้ยงของเรา ให้ใช้ My เช่น My dog is friendly. แต่ถ้าเป็นของเพื่อน ให้ใช้ Your เช่น Your cat is cute. เดี๋ยวเรามาลองใช้จริงกันครับ! Use 'My' for your pet, and 'Your' for your friend's pet.";
+
+const PETS_YOUR_BOARD = {
+  textEn:
+    "แล้วถ้าเราจะเอ่ยปากชมสัตว์เลี้ยงของเพื่อนบ้าง อยากลองชมตัวไหนดีครับ? 🐶🐱 How would you compliment your friend's pet?",
+  stem: 'Your ... is very...',
+  expectedSpeech: 'Your dog is very friendly.',
+  options: [
+    {
+      emoji: '🐶',
+      label: 'Dog',
+      speak: 'Your dog is very friendly.',
+    },
+    {
+      emoji: '🐱',
+      label: 'Cat',
+      speak: 'Your cat is very cute.',
+    },
+  ],
+};
+
+function normalizePetsSpeech(userText: string): string {
+  return userText
+    .trim()
+    .toLowerCase()
+    .replace(/[.!?]+$/g, '')
+    .replace(/\s+/g, ' ');
+}
+
+function isPetsContinueTurn(textEn: string): boolean {
+  const t = (textEn ?? '').trim().toLowerCase();
+  return (
+    t === '(tapped continue)' ||
+    t === '[continue]' ||
+    t.startsWith('(tapped continue')
+  );
+}
+
+export function extractPetsAnimal(
+  history: Array<{ speaker: string; textEn?: string }>,
+): PetsAnimal {
+  for (const turn of history) {
+    if (turn.speaker !== 'user') continue;
+    const t = normalizePetsSpeech(turn.textEn ?? '');
+    if (!t || isPetsContinueTurn(t)) continue;
+    if (t === 'i have a cat') return 'cat';
+    if (t === 'i have a dog') return 'dog';
+  }
+  for (const turn of history) {
+    if (turn.speaker !== 'user') continue;
+    const t = normalizePetsSpeech(turn.textEn ?? '');
+    if (!t || isPetsContinueTurn(t)) continue;
+    if (/^my cat is very\b/.test(t) || /\bi have a cat\b/.test(t)) return 'cat';
+    if (/^my dog is very\b/.test(t) || /\bi have a dog\b/.test(t)) return 'dog';
+  }
+  return 'dog';
+}
+
+export type PetsAdjective = 'cute' | 'friendly';
+
+export function extractPetsAdjective(
+  history: Array<{ speaker: string; textEn?: string }>,
+  animal: PetsAnimal,
+): PetsAdjective {
+  for (const turn of history) {
+    if (turn.speaker !== 'user') continue;
+    const t = normalizePetsSpeech(turn.textEn ?? '');
+    if (!t || isPetsContinueTurn(t)) continue;
+    const m = t.match(/^my (cat|dog) is very (cute|friendly)$/);
+    if (m) return m[2] as PetsAdjective;
+  }
+  return animal === 'dog' ? 'friendly' : 'cute';
+}
+
+function petsComboBoard(
+  animal: PetsAnimal,
+  adjective: PetsAdjective,
+): {
+  textEn: string;
+  stem: string;
+  expectedSpeech: string;
+  options: Array<{ emoji: string; label: string; speak: string }>;
+} {
+  const speak = `I have a ${animal}. My ${animal} is very ${adjective}.`;
+  return {
+    textEn:
+      'คราวนี้ลองนำมารวมกัน ค่อยๆ พูด 2 ประโยคติดกันดูนะครับ!',
+    stem: 'I have a...',
+    expectedSpeech: speak,
+    options: [
+      {
+        emoji: animal === 'dog' ? '🐶' : '🐱',
+        label: '2 sentences',
+        speak,
+      },
+    ],
+  };
+}
+
+function matchesPetsSpeakStep(
+  step: number,
+  userText: string,
+  animal: PetsAnimal,
+  adjective: PetsAdjective,
+): boolean {
+  const t = normalizePetsSpeech(userText);
+  if (!t || isPetsContinueTurn(t)) return false;
+  switch (step) {
+    case 1:
+      return t === 'i have a cat' || t === 'i have a dog';
+    case 2:
+      return /^my (cat|dog) is very (cute|friendly)$/.test(t);
+    case 3:
+      return (
+        t === 'your dog is very friendly' || t === 'your cat is very cute'
+      );
+    case 4: {
+      // Accept exact combo or close (optional period / one breath).
+      const expected = `i have a ${animal}. my ${animal} is very ${adjective}`;
+      const compact = t.replace(/\./g, '').replace(/\s+/g, ' ').trim();
+      const expectedCompact = expected.replace(/\./g, '').replace(/\s+/g, ' ');
+      return (
+        t === expected ||
+        compact === expectedCompact ||
+        (/\bi have a (cat|dog)\b/.test(t) &&
+          /\bmy (cat|dog) is very (cute|friendly)\b/.test(t))
+      );
+    }
+    default:
+      return false;
+  }
+}
+
+/** Speak steps cleared (0–4): have → describe → Your → combo. */
+export function petsLessonProgress(
+  history: Array<{ speaker: string; textEn?: string }>,
+): number {
+  const animal = extractPetsAnimal(history);
+  const adjective = extractPetsAdjective(history, animal);
+  let progress = 0;
+  for (const turn of history) {
+    if (turn.speaker !== 'user') continue;
+    const text = (turn.textEn ?? '').trim();
+    if (!text || text.startsWith('[') || isPetsContinueTurn(text)) continue;
+    const next = progress + 1;
+    if (next <= 4 && matchesPetsSpeakStep(next, text, animal, adjective)) {
+      progress = next;
+    }
+  }
+  return progress;
+}
+
+/** True when describe is done and learner has not yet tapped Continue after tip. */
+function petsAwaitingTipContinue(
+  history: Array<{ speaker: string; textEn?: string }>,
+): boolean {
+  if (petsLessonProgress(history) !== 2) return false;
+  // After describe: if last user turn is continue, tip already passed.
+  for (let i = history.length - 1; i >= 0; i--) {
+    const turn = history[i];
+    if (turn.speaker !== 'user') continue;
+    const text = (turn.textEn ?? '').trim();
+    if (!text) continue;
+    return !isPetsContinueTurn(text);
+  }
+  return true;
+}
+
+function petsBoardFromAiText(textEn: string): number | null {
+  const t = (textEn ?? '').toLowerCase();
+  if (!t) return null;
+  if (
+    t.includes('นำมารวมกัน') ||
+    t.includes('2 ประโยค') ||
+    t.includes('สองประโยค')
+  ) {
+    return 5;
+  }
+  if (
+    t.includes('ชมสัตว์เลี้ยงของเพื่อน') ||
+    t.includes("compliment your friend's pet") ||
+    t.includes('your ... is very')
+  ) {
+    return 4;
+  }
+  if (
+    (t.includes("use 'my'") || t.includes('ใช้ my') || t.includes('ให้ใช้ my')) &&
+    (t.includes('your') || t.includes('ของเพื่อน'))
+  ) {
+    return 3;
+  }
+  if (
+    t.includes('น้องสัตว์เลี้ยง') ||
+    t.includes('เป็นยังไงบ้าง')
+  ) {
+    return 2;
+  }
+  if (
+    t.includes('do you have any pets') ||
+    t.includes('คุณอยู่สายไหน') ||
+    t.includes('ทาสแมว')
+  ) {
+    return 1;
+  }
+  return null;
+}
+
+/**
+ * Pin Pets guidedSpeaking boards (Turns 1, 2, 4, 5). Tip (3) handled separately.
+ */
+export function forcePetsGuidedSpeakingIfNeeded(
+  lessonId: string,
+  _lang: LessonTeachingLanguage,
+  nextTurn: number,
+  history: Array<{ speaker: string; textEn?: string }>,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    guidedSpeaking: ReturnType<typeof normalizeGuidedSpeaking>;
+    expectsUserSpeech: boolean;
+    isTaskComplete: boolean;
+    expectedSpeech: string | null;
+  },
+): {
+  textEn: string;
+  textTh: string | null;
+  guidedSpeaking: NonNullable<ReturnType<typeof normalizeGuidedSpeaking>>;
+  expectsUserSpeech: true;
+  expectedSpeech: string;
+  emojiChoice: null;
+  isTaskComplete: false;
+} | null {
+  if (lessonId !== 'ee_about_me_pets') return null;
+  if (current.isTaskComplete) return null;
+
+  const progress = petsLessonProgress(history);
+  if (progress >= 4) return null;
+
+  // During tip phase: do not pin speaking boards.
+  if (petsAwaitingTipContinue(history)) return null;
+
+  const animal = extractPetsAnimal(history);
+  const adjective = extractPetsAdjective(history, animal);
+  const fromText = petsBoardFromAiText(current.textEn ?? '');
+  let step = fromText;
+  if (step == null) {
+    if (progress === 0) step = 1;
+    else if (progress === 1) step = 2;
+    else if (progress === 2) step = 4; // after tip continue → Your board
+    else if (progress === 3) step = 5; // combo
+    else return null;
+  }
+
+  // Tip is step 3 — skip here.
+  if (step === 3) return null;
+  if (step < 1 || step > 5) return null;
+  if (nextTurn < 1 && step !== 1) return null;
+
+  let board: {
+    textEn: string;
+    stem: string;
+    expectedSpeech: string;
+    options: Array<{ emoji: string; label: string; speak: string }>;
+  };
+  if (step === 1) {
+    board = {
+      textEn: current.textEn?.trim() || petsOpeningText(''),
+      stem: PETS_CHOICE_GUIDED_SPEAKING.stem,
+      expectedSpeech: 'I have a cat.',
+      options: PETS_CHOICE_GUIDED_SPEAKING.options.map((o) => ({ ...o })),
+    };
+    if (current.textEn?.trim()) {
+      board = { ...board, textEn: current.textEn.trim() };
+    }
+  } else if (step === 2) {
+    board = petsDescribeBoard(animal);
+  } else if (step === 4) {
+    board = {
+      textEn: PETS_YOUR_BOARD.textEn,
+      stem: PETS_YOUR_BOARD.stem,
+      expectedSpeech: PETS_YOUR_BOARD.expectedSpeech,
+      options: PETS_YOUR_BOARD.options.map((o) => ({ ...o })),
+    };
+  } else {
+    board = petsComboBoard(animal, adjective);
+  }
+
+  const isSingleHint = board.options.length === 1;
+  const stemOk =
+    current.guidedSpeaking?.stem
+      ?.toLowerCase()
+      .includes(board.stem.toLowerCase().slice(0, 8)) ?? false;
+  const optionsOk = isSingleHint
+    ? (current.guidedSpeaking?.options?.length ?? 0) < 2 &&
+      (current.guidedSpeaking?.speak === board.options[0].speak ||
+        current.guidedSpeaking?.emoji === board.options[0].emoji)
+    : (current.guidedSpeaking?.options?.length ?? 0) >= board.options.length;
+  if (
+    current.expectsUserSpeech &&
+    stemOk &&
+    optionsOk &&
+    current.guidedSpeaking
+  ) {
+    return null;
+  }
+
+  const options = board.options.map((o) => ({ ...o }));
+  const first = options[0];
+  return {
+    textEn: board.textEn,
+    textTh: current.textTh?.trim() || null,
+    guidedSpeaking: isSingleHint
+      ? {
+          stem: board.stem,
+          emoji: first.emoji,
+          speak: first.speak,
+          ...(first.label ? { label: first.label } : {}),
+        }
+      : {
+          stem: board.stem,
+          emoji: first.emoji,
+          speak: first.speak,
+          ...(first.label ? { label: first.label } : {}),
+          options,
+        },
+    expectsUserSpeech: true,
+    expectedSpeech: board.expectedSpeech,
+    emojiChoice: null,
+    isTaskComplete: false,
+  };
+}
+
+/**
+ * After describe → My vs Your tip (listen-only).
+ */
+export function forcePetsTipIfNeeded(
+  lessonId: string,
+  _lang: LessonTeachingLanguage,
+  history: Array<{ speaker: string; textEn?: string }>,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    expectsUserSpeech: boolean;
+    isTaskComplete: boolean;
+  },
+): {
+  textEn: string;
+  textTh: string | null;
+  expectsUserSpeech: false;
+  expectedSpeech: null;
+  guidedSpeaking: null;
+  emojiChoice: null;
+  isTaskComplete: false;
+} | null {
+  if (lessonId !== 'ee_about_me_pets') return null;
+  if (current.isTaskComplete) return null;
+  if (!petsAwaitingTipContinue(history)) return null;
+
+  const raw = (current.textEn ?? '').trim();
+  const tipOk =
+    /ให้ใช้ my/i.test(raw) ||
+    /use ['']my['']/i.test(raw) ||
+    (raw.includes('My dog is friendly') && raw.includes('Your cat is cute'));
+  const textEn = tipOk && raw.length > 40 ? raw : PETS_TIP_TEXT;
+
+  if (
+    !current.expectsUserSpeech &&
+    tipOk &&
+    raw.length > 40
+  ) {
+    return null;
+  }
+
+  return {
+    textEn,
+    textTh: null,
+    expectsUserSpeech: false,
+    expectedSpeech: null,
+    guidedSpeaking: null,
+    emojiChoice: null,
+    isTaskComplete: false,
+  };
+}
+
+/**
+ * After Pets Your-compliment → Celebrate.
+ */
+export function forcePetsCelebrateIfNeeded(
+  lessonId: string,
+  _lang: LessonTeachingLanguage,
+  history: Array<{ speaker: string; textEn?: string }>,
+  learnerFirstName: string,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    expectsUserSpeech: boolean;
+    isTaskComplete: boolean;
+  },
+): {
+  textEn: string;
+  textTh: string | null;
+  expectsUserSpeech: false;
+  expectedSpeech: null;
+  guidedSpeaking: null;
+  emojiChoice: null;
+  isTaskComplete: true;
+} | null {
+  if (lessonId !== 'ee_about_me_pets') return null;
+  if (petsLessonProgress(history) < 4) return null;
+
+  const name = learnerFirstName.trim() || 'เพื่อน';
+  const body = `สุดยอดครับ ${name}! 🎉 วันนี้คุณบอกสัตว์เลี้ยง บรรยายด้วย My ชมด้วย Your และพูดสองประโยคติดกันได้แล้ว — เก่งมากครับ! 🍌`;
+
+  const raw = (current.textEn ?? '').trim();
+  const praiseOk = /^(เยี่ยม|เก่งมาก|สุดยอด|ดีมาก|ยอดเยี่ยม)/u.test(raw);
+  const textEn =
+    current.isTaskComplete && praiseOk && raw.length > 30 ? raw : body;
+
+  return {
+    textEn,
+    textTh: null,
+    expectsUserSpeech: false,
+    expectedSpeech: null,
+    guidedSpeaking: null,
+    emojiChoice: null,
+    isTaskComplete: true,
+  };
+}
+
+export type PeoplePerson = 'brother' | 'sister';
+export type PeopleJob = 'engineer' | 'designer' | 'business_owner';
+
+const PEOPLE_JOB_META: Record<
+  PeopleJob,
+  { th: string; speakArticle: string; label: string; emoji: string }
+> = {
+  engineer: {
+    th: 'วิศวกร',
+    speakArticle: 'an engineer',
+    label: 'Engineer',
+    emoji: '👨‍💻',
+  },
+  designer: {
+    th: 'ดีไซเนอร์',
+    speakArticle: 'a designer',
+    label: 'Designer',
+    emoji: '🎨',
+  },
+  business_owner: {
+    th: 'เจ้าของธุรกิจ',
+    speakArticle: 'a business owner',
+    label: 'Business owner',
+    emoji: '💼',
+  },
+};
+
+/** People 1.7 — Turn 1 person board (also used on opening). */
+export const PEOPLE_PERSON_GUIDED_SPEAKING = {
+  stem: 'My...',
+  options: [
+    { emoji: '👦', label: 'My brother', speak: 'My brother.' },
+    { emoji: '👧', label: 'My sister', speak: 'My sister.' },
+  ],
+} as const;
+
+export function peopleOpeningText(learnerFirstName: string): string {
+  const name = learnerFirstName.trim() || 'เพื่อน';
+  return `สวัสดีครับ ${name}! วันนี้มาลองแนะนำสมาชิกในครอบครัวเป็นภาษาอังกฤษกันครับ 👨‍👩‍👧 คุณอยากพูดถึงใครก่อนดีครับ? Who would you like to talk about?`;
+}
+
+function peopleJobBoard(person: PeoplePerson): {
+  textEn: string;
+  stem: string;
+  expectedSpeech: string;
+  options: Array<{ emoji: string; label: string; speak: string }>;
+} {
+  if (person === 'sister') {
+    return {
+      textEn:
+        'Sister! สรุปวันนี้เล่าเรื่องพี่สาว/น้องสาวนะครับ 👧 แล้วเธอทำงานอะไรเหรอครับ? What does she do?',
+      stem: 'My sister is...',
+      expectedSpeech: 'My sister is an engineer.',
+      options: [
+        {
+          emoji: '👨‍💻',
+          label: 'Engineer',
+          speak: 'My sister is an engineer.',
+        },
+        {
+          emoji: '🎨',
+          label: 'Designer',
+          speak: 'My sister is a designer.',
+        },
+        {
+          emoji: '💼',
+          label: 'Business owner',
+          speak: 'My sister is a business owner.',
+        },
+      ],
+    };
+  }
+  return {
+    textEn:
+      'Brother! สรุปวันนี้เล่าเรื่องพี่ชาย/น้องชายนะครับ 👦 แล้วเขาทำงานอะไรเหรอครับ? What does he do?',
+    stem: 'My brother is...',
+    expectedSpeech: 'My brother is an engineer.',
+    options: [
+      {
+        emoji: '👨‍💻',
+        label: 'Engineer',
+        speak: 'My brother is an engineer.',
+      },
+      {
+        emoji: '🎨',
+        label: 'Designer',
+        speak: 'My brother is a designer.',
+      },
+      {
+        emoji: '💼',
+        label: 'Business owner',
+        speak: 'My brother is a business owner.',
+      },
+    ],
+  };
+}
+
+function peoplePersonalityBoard(
+  person: PeoplePerson,
+  job: PeopleJob,
+): {
+  textEn: string;
+  stem: string;
+  expectedSpeech: string;
+  options: Array<{ emoji: string; label: string; speak: string }>;
+} {
+  const jobTh = PEOPLE_JOB_META[job].th;
+  if (person === 'sister') {
+    return {
+      textEn: `${jobTh}ซะด้วย เท่มากๆ ครับ! แล้วเธอเป็นคนสไตล์ไหน/นิสัยยังไงครับ? What is she like?`,
+      stem: 'She is very...',
+      expectedSpeech: 'She is very nice.',
+      options: [
+        { emoji: '😂', label: 'Funny', speak: 'She is very funny.' },
+        { emoji: '😊', label: 'Nice', speak: 'She is very nice.' },
+        { emoji: '😅', label: 'Busy', speak: 'She is very busy.' },
+      ],
+    };
+  }
+  return {
+    textEn: `${jobTh}ซะด้วย เท่มากๆ ครับ! แล้วเขาเป็นคนสไตล์ไหน/นิสัยยังไงครับ? What is he like?`,
+    stem: 'He is very...',
+    expectedSpeech: 'He is very funny.',
+    options: [
+      { emoji: '😂', label: 'Funny', speak: 'He is very funny.' },
+      { emoji: '😊', label: 'Nice', speak: 'He is very nice.' },
+      { emoji: '😅', label: 'Busy', speak: 'He is very busy.' },
+    ],
+  };
+}
+
+const PEOPLE_QUIZ_HE_BOARD = {
+  textEn:
+    "เก่งมากครับ! 🎉 สังเกตไหมครับว่า เวลาเราพูดถึงผู้ชาย เราใช้ He และถ้าพูดถึงผู้หญิง เราจะใช้ She แทนชื่อได้เลยครับ! ก่อนจบบท ลองบอกหน่อยครับ ว่าถ้าจะบอกว่า 'เขาเป็นคนตลกมาก' จะพูดเป็นภาษาอังกฤษว่ายังไงครับ? 😊",
+  stem: 'He is very...',
+  expectedSpeech: 'He is very funny.',
+  options: [
+    { emoji: '😂', label: 'Funny', speak: 'He is very funny.' },
+  ],
+};
+
+const PEOPLE_QUIZ_SHE_BOARD = {
+  textEn: "แล้วถ้าจะบอกว่า 'เธอเป็นคนใจดีมาก' ล่ะครับ?",
+  stem: 'She is very...',
+  expectedSpeech: 'She is very nice.',
+  options: [
+    { emoji: '😊', label: 'Nice', speak: 'She is very nice.' },
+  ],
+};
+
+function normalizePeopleSpeech(userText: string): string {
+  return userText
+    .trim()
+    .toLowerCase()
+    .replace(/[.!?]+$/g, '')
+    .replace(/\s+/g, ' ');
+}
+
+export function extractPeoplePerson(
+  history: Array<{ speaker: string; textEn?: string }>,
+): PeoplePerson {
+  for (const turn of history) {
+    if (turn.speaker !== 'user') continue;
+    const t = normalizePeopleSpeech(turn.textEn ?? '');
+    if (!t) continue;
+    if (t === 'my brother' || /^my brother is\b/.test(t)) return 'brother';
+    if (t === 'my sister' || /^my sister is\b/.test(t)) return 'sister';
+  }
+  return 'brother';
+}
+
+export function extractPeopleJob(
+  history: Array<{ speaker: string; textEn?: string }>,
+): PeopleJob {
+  for (const turn of history) {
+    if (turn.speaker !== 'user') continue;
+    const t = normalizePeopleSpeech(turn.textEn ?? '');
+    if (!t) continue;
+    if (/\ban engineer\b/.test(t)) return 'engineer';
+    if (/\ba designer\b/.test(t)) return 'designer';
+    if (/\bbusiness owner\b/.test(t)) return 'business_owner';
+  }
+  return 'engineer';
+}
+
+function matchesPeopleStep(step: number, userText: string): boolean {
+  const t = normalizePeopleSpeech(userText);
+  if (!t) return false;
+  switch (step) {
+    case 1:
+      return t === 'my brother' || t === 'my sister';
+    case 2:
+      return (
+        /^my (brother|sister) is (an engineer|a designer|a business owner)$/.test(
+          t,
+        )
+      );
+    case 3:
+      return /^((he|she) is very (funny|nice|busy))$/.test(t);
+    case 4:
+      return t === 'he is very funny';
+    case 5:
+      return t === 'she is very nice';
+    default:
+      return false;
+  }
+}
+
+/** Speak steps cleared (0–5). Quiz 4–5 soft-advance after 2 failed attempts. */
+export function peopleLessonProgress(
+  history: Array<{ speaker: string; textEn?: string }>,
+): number {
+  let progress = 0;
+  let attemptsOnCurrent = 0;
+  for (const turn of history) {
+    if (turn.speaker !== 'user') continue;
+    const text = (turn.textEn ?? '').trim();
+    if (!text || text.startsWith('[') || text.startsWith('(')) continue;
+    const next = progress + 1;
+    if (next > 5) continue;
+    if (matchesPeopleStep(next, text)) {
+      progress = next;
+      attemptsOnCurrent = 0;
+      continue;
+    }
+    if (next >= 4 && next <= 5) {
+      attemptsOnCurrent += 1;
+      if (attemptsOnCurrent >= 2) {
+        progress = next;
+        attemptsOnCurrent = 0;
+      }
+    }
+  }
+  return progress;
+}
+
+function peopleBoardFromAiText(textEn: string): number | null {
+  const t = (textEn ?? '').toLowerCase();
+  if (!t) return null;
+  if (t.includes('เธอเป็นคนใจดีมาก') || t.includes('ใจดีมาก')) return 5;
+  if (
+    t.includes('เขาเป็นคนตลกมาก') ||
+    (t.includes('ใช้ he') && t.includes('ใช้ she')) ||
+    (t.includes('เราใช้ he') && t.includes('she'))
+  ) {
+    return 4;
+  }
+  if (
+    t.includes('นิสัยยังไง') ||
+    t.includes('สไตล์ไหน') ||
+    t.includes('what is he like') ||
+    t.includes('what is she like')
+  ) {
+    return 3;
+  }
+  if (
+    t.includes('ทำงานอะไร') ||
+    t.includes('what does he do') ||
+    t.includes('what does she do')
+  ) {
+    return 2;
+  }
+  if (
+    t.includes('who would you like to talk about') ||
+    t.includes('อยากพูดถึงใคร')
+  ) {
+    return 1;
+  }
+  return null;
+}
+
+/**
+ * Pin People guidedSpeaking boards (Turns 1–5).
+ */
+export function forcePeopleGuidedSpeakingIfNeeded(
+  lessonId: string,
+  _lang: LessonTeachingLanguage,
+  nextTurn: number,
+  history: Array<{ speaker: string; textEn?: string }>,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    guidedSpeaking: ReturnType<typeof normalizeGuidedSpeaking>;
+    expectsUserSpeech: boolean;
+    isTaskComplete: boolean;
+    expectedSpeech: string | null;
+  },
+): {
+  textEn: string;
+  textTh: string | null;
+  guidedSpeaking: NonNullable<ReturnType<typeof normalizeGuidedSpeaking>>;
+  expectsUserSpeech: true;
+  expectedSpeech: string;
+  emojiChoice: null;
+  isTaskComplete: false;
+} | null {
+  if (lessonId !== 'ee_about_me_people') return null;
+  if (current.isTaskComplete) return null;
+
+  const progress = peopleLessonProgress(history);
+  if (progress >= 5) return null;
+
+  const person = extractPeoplePerson(history);
+  const job = extractPeopleJob(history);
+  const fromText = peopleBoardFromAiText(current.textEn ?? '');
+  let step = fromText;
+  if (step == null) {
+    if (progress >= 0 && progress <= 4) step = progress + 1;
+    else return null;
+  }
+
+  if (step < 1 || step > 5) return null;
+  if (nextTurn < 1 && step !== 1) return null;
+
+  let board: {
+    textEn: string;
+    stem: string;
+    expectedSpeech: string;
+    options: Array<{ emoji: string; label: string; speak: string }>;
+  };
+  if (step === 1) {
+    board = {
+      textEn: current.textEn?.trim() || peopleOpeningText(''),
+      stem: PEOPLE_PERSON_GUIDED_SPEAKING.stem,
+      expectedSpeech: 'My brother.',
+      options: PEOPLE_PERSON_GUIDED_SPEAKING.options.map((o) => ({ ...o })),
+    };
+    if (current.textEn?.trim()) {
+      board = { ...board, textEn: current.textEn.trim() };
+    }
+  } else if (step === 2) {
+    board = peopleJobBoard(person);
+  } else if (step === 3) {
+    board = peoplePersonalityBoard(person, job);
+  } else if (step === 4) {
+    board = {
+      textEn: PEOPLE_QUIZ_HE_BOARD.textEn,
+      stem: PEOPLE_QUIZ_HE_BOARD.stem,
+      expectedSpeech: PEOPLE_QUIZ_HE_BOARD.expectedSpeech,
+      options: PEOPLE_QUIZ_HE_BOARD.options.map((o) => ({ ...o })),
+    };
+  } else {
+    board = {
+      textEn: PEOPLE_QUIZ_SHE_BOARD.textEn,
+      stem: PEOPLE_QUIZ_SHE_BOARD.stem,
+      expectedSpeech: PEOPLE_QUIZ_SHE_BOARD.expectedSpeech,
+      options: PEOPLE_QUIZ_SHE_BOARD.options.map((o) => ({ ...o })),
+    };
+  }
+
+  const isSingleHint = board.options.length === 1;
+  const stemOk =
+    current.guidedSpeaking?.stem
+      ?.toLowerCase()
+      .includes(board.stem.toLowerCase().slice(0, 8)) ?? false;
+  const optionsOk = isSingleHint
+    ? (current.guidedSpeaking?.options?.length ?? 0) < 2 &&
+      (current.guidedSpeaking?.speak === board.options[0].speak ||
+        current.guidedSpeaking?.emoji === board.options[0].emoji)
+    : (current.guidedSpeaking?.options?.length ?? 0) >= board.options.length;
+  if (
+    current.expectsUserSpeech &&
+    stemOk &&
+    optionsOk &&
+    current.guidedSpeaking
+  ) {
+    return null;
+  }
+
+  const options = board.options.map((o) => ({ ...o }));
+  const first = options[0];
+  return {
+    textEn: board.textEn,
+    textTh: current.textTh?.trim() || null,
+    guidedSpeaking: isSingleHint
+      ? {
+          stem: board.stem,
+          emoji: first.emoji,
+          speak: first.speak,
+          ...(first.label ? { label: first.label } : {}),
+        }
+      : {
+          stem: board.stem,
+          emoji: first.emoji,
+          speak: first.speak,
+          ...(first.label ? { label: first.label } : {}),
+          options,
+        },
+    expectsUserSpeech: true,
+    expectedSpeech: board.expectedSpeech,
+    emojiChoice: null,
+    isTaskComplete: false,
+  };
+}
+
+/**
+ * After People mini quiz → Celebrate.
+ */
+export function forcePeopleCelebrateIfNeeded(
+  lessonId: string,
+  _lang: LessonTeachingLanguage,
+  history: Array<{ speaker: string; textEn?: string }>,
+  learnerFirstName: string,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    expectsUserSpeech: boolean;
+    isTaskComplete: boolean;
+  },
+): {
+  textEn: string;
+  textTh: string | null;
+  expectsUserSpeech: false;
+  expectedSpeech: null;
+  guidedSpeaking: null;
+  emojiChoice: null;
+  isTaskComplete: true;
+} | null {
+  if (lessonId !== 'ee_about_me_people') return null;
+  if (peopleLessonProgress(history) < 5) return null;
+
+  const name = learnerFirstName.trim() || 'เพื่อน';
+  const body = `สุดยอดครับ ${name}! 🎉 วันนี้คุณแนะนำคนในครอบครัว บอกอาชีพ บรรยายนิสัย และใช้ He/She ได้แล้ว — เก่งมากครับ! 🍌`;
 
   const raw = (current.textEn ?? '').trim();
   const praiseOk = /^(เยี่ยม|เก่งมาก|สุดยอด|ดีมาก|ยอดเยี่ยม)/u.test(raw);

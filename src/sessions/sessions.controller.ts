@@ -81,10 +81,27 @@ import {
   forceFoodCelebrateIfNeeded,
   forceHomeGuidedSpeakingIfNeeded,
   forceHomeCelebrateIfNeeded,
+  forceWorkSchoolGuidedSpeakingIfNeeded,
+  forceWorkSchoolCelebrateIfNeeded,
+  forceHobbiesGuidedSpeakingIfNeeded,
+  forceHobbiesCelebrateIfNeeded,
+  forcePetsGuidedSpeakingIfNeeded,
+  forcePetsTipIfNeeded,
+  forcePetsCelebrateIfNeeded,
+  forcePeopleGuidedSpeakingIfNeeded,
+  forcePeopleCelebrateIfNeeded,
   FOOD_FAVORITE_GUIDED_SPEAKING,
   HOME_TYPE_GUIDED_SPEAKING,
+  WORK_SCHOOL_ACTIVITY_GUIDED_SPEAKING,
+  HOBBIES_HOBBY_GUIDED_SPEAKING,
+  PETS_CHOICE_GUIDED_SPEAKING,
+  PEOPLE_PERSON_GUIDED_SPEAKING,
   foodFavoriteOpeningText,
   homeOpeningText,
+  workSchoolOpeningText,
+  hobbiesOpeningText,
+  petsOpeningText,
+  peopleOpeningText,
   forceSurvivalEmojiSpeakIfNeeded,
   forceSurvivalCelebrateAfterEmojiSpeakIfNeeded,
   looksLikeAroundTownRoleplayBridge,
@@ -431,6 +448,44 @@ export class SessionsController {
         });
         openingEmojiChoice = null;
       }
+      if (config.lessonId === 'ee_about_me_work_school') {
+        // Pin Work/Study activity board on opening.
+        openingGuidedSpeaking = normalizeGuidedSpeaking({
+          stem: WORK_SCHOOL_ACTIVITY_GUIDED_SPEAKING.stem,
+          options: WORK_SCHOOL_ACTIVITY_GUIDED_SPEAKING.options.map((o) => ({
+            ...o,
+          })),
+        });
+        openingEmojiChoice = null;
+      }
+      if (config.lessonId === 'ee_about_me_hobbies') {
+        // Pin Hobby board on opening (Watch movies / Listen to music / Exercise).
+        openingGuidedSpeaking = normalizeGuidedSpeaking({
+          stem: HOBBIES_HOBBY_GUIDED_SPEAKING.stem,
+          options: HOBBIES_HOBBY_GUIDED_SPEAKING.options.map((o) => ({
+            ...o,
+          })),
+        });
+        openingEmojiChoice = null;
+      }
+      if (config.lessonId === 'ee_about_me_pets') {
+        // Pin Cat/Dog board on opening.
+        openingGuidedSpeaking = normalizeGuidedSpeaking({
+          stem: PETS_CHOICE_GUIDED_SPEAKING.stem,
+          options: PETS_CHOICE_GUIDED_SPEAKING.options.map((o) => ({ ...o })),
+        });
+        openingEmojiChoice = null;
+      }
+      if (config.lessonId === 'ee_about_me_people') {
+        // Pin brother/sister board on opening.
+        openingGuidedSpeaking = normalizeGuidedSpeaking({
+          stem: PEOPLE_PERSON_GUIDED_SPEAKING.stem,
+          options: PEOPLE_PERSON_GUIDED_SPEAKING.options.map((o) => ({
+            ...o,
+          })),
+        });
+        openingEmojiChoice = null;
+      }
       // Opening is Hook — never start mid-roleplay.
       const openingRoleplayIntro = null;
       const openingRoleplayNpc = null;
@@ -441,10 +496,22 @@ export class SessionsController {
             ? foodFavoriteOpeningText(learnerFirstName)
             : config.lessonId === 'ee_about_me_home'
               ? homeOpeningText()
-              : reply.textEn;
+              : config.lessonId === 'ee_about_me_work_school'
+                ? workSchoolOpeningText(learnerFirstName)
+                : config.lessonId === 'ee_about_me_hobbies'
+                  ? hobbiesOpeningText()
+                  : config.lessonId === 'ee_about_me_pets'
+                    ? petsOpeningText(learnerFirstName)
+                    : config.lessonId === 'ee_about_me_people'
+                      ? peopleOpeningText(learnerFirstName)
+                      : reply.textEn;
       const openingExpectsSpeechFinal =
         config.lessonId === 'ee_about_me_food' ||
-        config.lessonId === 'ee_about_me_home'
+        config.lessonId === 'ee_about_me_home' ||
+        config.lessonId === 'ee_about_me_work_school' ||
+        config.lessonId === 'ee_about_me_hobbies' ||
+        config.lessonId === 'ee_about_me_pets' ||
+        config.lessonId === 'ee_about_me_people'
           ? true
           : openingExpectsUserSpeech;
       const openingExpectedSpeechFinal =
@@ -452,16 +519,28 @@ export class SessionsController {
           ? 'I like pizza.'
           : config.lessonId === 'ee_about_me_home'
             ? 'I live in an apartment.'
-            : openingExpectsSpeechFinal
-              ? reply.expectedSpeech?.trim() || null
-              : null;
+            : config.lessonId === 'ee_about_me_work_school'
+              ? 'I work.'
+              : config.lessonId === 'ee_about_me_hobbies'
+                ? 'I watch movies.'
+                : config.lessonId === 'ee_about_me_pets'
+                  ? 'I have a cat.'
+                  : config.lessonId === 'ee_about_me_people'
+                    ? 'My brother.'
+                    : openingExpectsSpeechFinal
+                      ? reply.expectedSpeech?.trim() || null
+                      : null;
       const opening = {
         speaker: 'ai' as const,
         textEn: openingTextEn,
         textTh:
           config.lessonId === 'ee_around_town_transport' ||
           config.lessonId === 'ee_about_me_food' ||
-          config.lessonId === 'ee_about_me_home'
+          config.lessonId === 'ee_about_me_home' ||
+          config.lessonId === 'ee_about_me_work_school' ||
+          config.lessonId === 'ee_about_me_hobbies' ||
+          config.lessonId === 'ee_about_me_pets' ||
+          config.lessonId === 'ee_about_me_people'
             ? null
             : reply.textTh,
         audioUrl: null,
@@ -504,7 +583,11 @@ export class SessionsController {
           textTh:
             config.lessonId === 'ee_around_town_transport' ||
             config.lessonId === 'ee_about_me_food' ||
-            config.lessonId === 'ee_about_me_home'
+            config.lessonId === 'ee_about_me_home' ||
+            config.lessonId === 'ee_about_me_work_school' ||
+            config.lessonId === 'ee_about_me_hobbies' ||
+            config.lessonId === 'ee_about_me_pets' ||
+            config.lessonId === 'ee_about_me_people'
               ? null
               : reply.textTh,
           isTaskComplete: false,
@@ -972,6 +1055,219 @@ export class SessionsController {
         guidedSpeaking = forcedHomeCelebrate.guidedSpeaking;
         emojiChoice = forcedHomeCelebrate.emojiChoice;
         isTaskComplete = forcedHomeCelebrate.isTaskComplete;
+      }
+
+      // Work & School 1.4: pin Activity / Location / Feeling / Combo boards.
+      const forcedWorkSchool = forceWorkSchoolGuidedSpeakingIfNeeded(
+        config.lessonId,
+        teachingLang,
+        nextTurn,
+        data.turns,
+        {
+          textEn,
+          textTh,
+          guidedSpeaking,
+          expectsUserSpeech,
+          isTaskComplete,
+          expectedSpeech,
+        },
+      );
+      if (forcedWorkSchool != null) {
+        textEn = forcedWorkSchool.textEn;
+        textTh = forcedWorkSchool.textTh;
+        guidedSpeaking = forcedWorkSchool.guidedSpeaking;
+        expectsUserSpeech = forcedWorkSchool.expectsUserSpeech;
+        expectedSpeech = forcedWorkSchool.expectedSpeech;
+        emojiChoice = forcedWorkSchool.emojiChoice;
+        isTaskComplete = forcedWorkSchool.isTaskComplete;
+      }
+
+      const forcedWorkSchoolCelebrate = forceWorkSchoolCelebrateIfNeeded(
+        config.lessonId,
+        teachingLang,
+        data.turns,
+        data.learnerFirstName ??
+          learnerNameFallback(teachingLanguageFromConfig(config)),
+        {
+          textEn,
+          textTh,
+          expectsUserSpeech,
+          isTaskComplete,
+        },
+      );
+      if (forcedWorkSchoolCelebrate != null) {
+        textEn = forcedWorkSchoolCelebrate.textEn;
+        textTh = forcedWorkSchoolCelebrate.textTh;
+        expectsUserSpeech = forcedWorkSchoolCelebrate.expectsUserSpeech;
+        expectedSpeech = forcedWorkSchoolCelebrate.expectedSpeech;
+        guidedSpeaking = forcedWorkSchoolCelebrate.guidedSpeaking;
+        emojiChoice = forcedWorkSchoolCelebrate.emojiChoice;
+        isTaskComplete = forcedWorkSchoolCelebrate.isTaskComplete;
+      }
+
+      // Hobbies 1.5: pin Hobby / Frequency / Weekend / Quiz boards.
+      const forcedHobbies = forceHobbiesGuidedSpeakingIfNeeded(
+        config.lessonId,
+        teachingLang,
+        nextTurn,
+        data.turns,
+        {
+          textEn,
+          textTh,
+          guidedSpeaking,
+          expectsUserSpeech,
+          isTaskComplete,
+          expectedSpeech,
+        },
+      );
+      if (forcedHobbies != null) {
+        textEn = forcedHobbies.textEn;
+        textTh = forcedHobbies.textTh;
+        guidedSpeaking = forcedHobbies.guidedSpeaking;
+        expectsUserSpeech = forcedHobbies.expectsUserSpeech;
+        expectedSpeech = forcedHobbies.expectedSpeech;
+        emojiChoice = forcedHobbies.emojiChoice;
+        isTaskComplete = forcedHobbies.isTaskComplete;
+      }
+
+      const forcedHobbiesCelebrate = forceHobbiesCelebrateIfNeeded(
+        config.lessonId,
+        teachingLang,
+        data.turns,
+        data.learnerFirstName ??
+          learnerNameFallback(teachingLanguageFromConfig(config)),
+        {
+          textEn,
+          textTh,
+          expectsUserSpeech,
+          isTaskComplete,
+        },
+      );
+      if (forcedHobbiesCelebrate != null) {
+        textEn = forcedHobbiesCelebrate.textEn;
+        textTh = forcedHobbiesCelebrate.textTh;
+        expectsUserSpeech = forcedHobbiesCelebrate.expectsUserSpeech;
+        expectedSpeech = forcedHobbiesCelebrate.expectedSpeech;
+        guidedSpeaking = forcedHobbiesCelebrate.guidedSpeaking;
+        emojiChoice = forcedHobbiesCelebrate.emojiChoice;
+        isTaskComplete = forcedHobbiesCelebrate.isTaskComplete;
+      }
+
+      // Pets 1.6: tip (listen-only) then Cat/Dog / Describe / Your boards.
+      const forcedPetsTip = forcePetsTipIfNeeded(
+        config.lessonId,
+        teachingLang,
+        data.turns,
+        {
+          textEn,
+          textTh,
+          expectsUserSpeech,
+          isTaskComplete,
+        },
+      );
+      if (forcedPetsTip != null) {
+        textEn = forcedPetsTip.textEn;
+        textTh = forcedPetsTip.textTh;
+        expectsUserSpeech = forcedPetsTip.expectsUserSpeech;
+        expectedSpeech = forcedPetsTip.expectedSpeech;
+        guidedSpeaking = forcedPetsTip.guidedSpeaking;
+        emojiChoice = forcedPetsTip.emojiChoice;
+        isTaskComplete = forcedPetsTip.isTaskComplete;
+      }
+
+      const forcedPets = forcePetsGuidedSpeakingIfNeeded(
+        config.lessonId,
+        teachingLang,
+        nextTurn,
+        data.turns,
+        {
+          textEn,
+          textTh,
+          guidedSpeaking,
+          expectsUserSpeech,
+          isTaskComplete,
+          expectedSpeech,
+        },
+      );
+      if (forcedPets != null) {
+        textEn = forcedPets.textEn;
+        textTh = forcedPets.textTh;
+        guidedSpeaking = forcedPets.guidedSpeaking;
+        expectsUserSpeech = forcedPets.expectsUserSpeech;
+        expectedSpeech = forcedPets.expectedSpeech;
+        emojiChoice = forcedPets.emojiChoice;
+        isTaskComplete = forcedPets.isTaskComplete;
+      }
+
+      const forcedPetsCelebrate = forcePetsCelebrateIfNeeded(
+        config.lessonId,
+        teachingLang,
+        data.turns,
+        data.learnerFirstName ??
+          learnerNameFallback(teachingLanguageFromConfig(config)),
+        {
+          textEn,
+          textTh,
+          expectsUserSpeech,
+          isTaskComplete,
+        },
+      );
+      if (forcedPetsCelebrate != null) {
+        textEn = forcedPetsCelebrate.textEn;
+        textTh = forcedPetsCelebrate.textTh;
+        expectsUserSpeech = forcedPetsCelebrate.expectsUserSpeech;
+        expectedSpeech = forcedPetsCelebrate.expectedSpeech;
+        guidedSpeaking = forcedPetsCelebrate.guidedSpeaking;
+        emojiChoice = forcedPetsCelebrate.emojiChoice;
+        isTaskComplete = forcedPetsCelebrate.isTaskComplete;
+      }
+
+      // People 1.7: pin Person / Job / Personality / Quiz boards.
+      const forcedPeople = forcePeopleGuidedSpeakingIfNeeded(
+        config.lessonId,
+        teachingLang,
+        nextTurn,
+        data.turns,
+        {
+          textEn,
+          textTh,
+          guidedSpeaking,
+          expectsUserSpeech,
+          isTaskComplete,
+          expectedSpeech,
+        },
+      );
+      if (forcedPeople != null) {
+        textEn = forcedPeople.textEn;
+        textTh = forcedPeople.textTh;
+        guidedSpeaking = forcedPeople.guidedSpeaking;
+        expectsUserSpeech = forcedPeople.expectsUserSpeech;
+        expectedSpeech = forcedPeople.expectedSpeech;
+        emojiChoice = forcedPeople.emojiChoice;
+        isTaskComplete = forcedPeople.isTaskComplete;
+      }
+
+      const forcedPeopleCelebrate = forcePeopleCelebrateIfNeeded(
+        config.lessonId,
+        teachingLang,
+        data.turns,
+        data.learnerFirstName ??
+          learnerNameFallback(teachingLanguageFromConfig(config)),
+        {
+          textEn,
+          textTh,
+          expectsUserSpeech,
+          isTaskComplete,
+        },
+      );
+      if (forcedPeopleCelebrate != null) {
+        textEn = forcedPeopleCelebrate.textEn;
+        textTh = forcedPeopleCelebrate.textTh;
+        expectsUserSpeech = forcedPeopleCelebrate.expectsUserSpeech;
+        expectedSpeech = forcedPeopleCelebrate.expectedSpeech;
+        guidedSpeaking = forcedPeopleCelebrate.guidedSpeaking;
+        emojiChoice = forcedPeopleCelebrate.emojiChoice;
+        isTaskComplete = forcedPeopleCelebrate.isTaskComplete;
       }
 
       const forcedSmartShopperCelebrate = forceSmartShopperCelebrateIfNeeded(
