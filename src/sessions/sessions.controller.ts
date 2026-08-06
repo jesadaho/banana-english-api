@@ -90,12 +90,15 @@ import {
   forcePetsCelebrateIfNeeded,
   forcePeopleGuidedSpeakingIfNeeded,
   forcePeopleCelebrateIfNeeded,
+  forceWeatherGuidedSpeakingIfNeeded,
+  forceWeatherCelebrateIfNeeded,
   FOOD_FAVORITE_GUIDED_SPEAKING,
   HOME_TYPE_GUIDED_SPEAKING,
   WORK_SCHOOL_ACTIVITY_GUIDED_SPEAKING,
   HOBBIES_HOBBY_GUIDED_SPEAKING,
   PETS_CHOICE_GUIDED_SPEAKING,
   PEOPLE_PERSON_GUIDED_SPEAKING,
+  WEATHER_HOT_QUIZ_GUIDED_SPEAKING,
   foodFavoriteOpeningText,
   homeOpeningText,
   workSchoolOpeningText,
@@ -486,6 +489,16 @@ export class SessionsController {
         });
         openingEmojiChoice = null;
       }
+      if (config.lessonId === 'ee_about_me_weather') {
+        // Pin Hot / Sunny / Cold quiz on opening.
+        openingGuidedSpeaking = normalizeGuidedSpeaking({
+          stem: WEATHER_HOT_QUIZ_GUIDED_SPEAKING.stem,
+          options: WEATHER_HOT_QUIZ_GUIDED_SPEAKING.options.map((o) => ({
+            ...o,
+          })),
+        });
+        openingEmojiChoice = null;
+      }
       // Opening is Hook — never start mid-roleplay.
       const openingRoleplayIntro = null;
       const openingRoleplayNpc = null;
@@ -504,14 +517,17 @@ export class SessionsController {
                     ? petsOpeningText(learnerFirstName)
                     : config.lessonId === 'ee_about_me_people'
                       ? peopleOpeningText(learnerFirstName)
-                      : reply.textEn;
+                      : config.lessonId === 'ee_about_me_weather'
+                        ? "วันนี้อากาศร้อนมากเลยครับ! 🔥 ถ้าจะพูดว่า 'อากาศร้อน' ภาษาอังกฤษใช้คำว่าอะไรครับ?"
+                        : reply.textEn;
       const openingExpectsSpeechFinal =
         config.lessonId === 'ee_about_me_food' ||
         config.lessonId === 'ee_about_me_home' ||
         config.lessonId === 'ee_about_me_work_school' ||
         config.lessonId === 'ee_about_me_hobbies' ||
         config.lessonId === 'ee_about_me_pets' ||
-        config.lessonId === 'ee_about_me_people'
+        config.lessonId === 'ee_about_me_people' ||
+        config.lessonId === 'ee_about_me_weather'
           ? true
           : openingExpectsUserSpeech;
       const openingExpectedSpeechFinal =
@@ -527,9 +543,11 @@ export class SessionsController {
                   ? 'I have a cat.'
                   : config.lessonId === 'ee_about_me_people'
                     ? 'My brother.'
-                    : openingExpectsSpeechFinal
-                      ? reply.expectedSpeech?.trim() || null
-                      : null;
+                    : config.lessonId === 'ee_about_me_weather'
+                      ? 'Hot.'
+                      : openingExpectsSpeechFinal
+                        ? reply.expectedSpeech?.trim() || null
+                        : null;
       const opening = {
         speaker: 'ai' as const,
         textEn: openingTextEn,
@@ -540,7 +558,8 @@ export class SessionsController {
           config.lessonId === 'ee_about_me_work_school' ||
           config.lessonId === 'ee_about_me_hobbies' ||
           config.lessonId === 'ee_about_me_pets' ||
-          config.lessonId === 'ee_about_me_people'
+          config.lessonId === 'ee_about_me_people' ||
+          config.lessonId === 'ee_about_me_weather'
             ? null
             : reply.textTh,
         audioUrl: null,
@@ -587,7 +606,8 @@ export class SessionsController {
             config.lessonId === 'ee_about_me_work_school' ||
             config.lessonId === 'ee_about_me_hobbies' ||
             config.lessonId === 'ee_about_me_pets' ||
-            config.lessonId === 'ee_about_me_people'
+            config.lessonId === 'ee_about_me_people' ||
+            config.lessonId === 'ee_about_me_weather'
               ? null
               : reply.textTh,
           isTaskComplete: false,
@@ -1268,6 +1288,54 @@ export class SessionsController {
         guidedSpeaking = forcedPeopleCelebrate.guidedSpeaking;
         emojiChoice = forcedPeopleCelebrate.emojiChoice;
         isTaskComplete = forcedPeopleCelebrate.isTaskComplete;
+      }
+
+      // Weather 1.9: pin Hot quiz / cold apply / preference / rainy quiz.
+      const forcedWeather = forceWeatherGuidedSpeakingIfNeeded(
+        config.lessonId,
+        teachingLang,
+        nextTurn,
+        data.turns,
+        {
+          textEn,
+          textTh,
+          guidedSpeaking,
+          expectsUserSpeech,
+          isTaskComplete,
+          expectedSpeech,
+        },
+      );
+      if (forcedWeather != null) {
+        textEn = forcedWeather.textEn;
+        textTh = forcedWeather.textTh;
+        guidedSpeaking = forcedWeather.guidedSpeaking;
+        expectsUserSpeech = forcedWeather.expectsUserSpeech;
+        expectedSpeech = forcedWeather.expectedSpeech;
+        emojiChoice = forcedWeather.emojiChoice;
+        isTaskComplete = forcedWeather.isTaskComplete;
+      }
+
+      const forcedWeatherCelebrate = forceWeatherCelebrateIfNeeded(
+        config.lessonId,
+        teachingLang,
+        data.turns,
+        data.learnerFirstName ??
+          learnerNameFallback(teachingLanguageFromConfig(config)),
+        {
+          textEn,
+          textTh,
+          expectsUserSpeech,
+          isTaskComplete,
+        },
+      );
+      if (forcedWeatherCelebrate != null) {
+        textEn = forcedWeatherCelebrate.textEn;
+        textTh = forcedWeatherCelebrate.textTh;
+        expectsUserSpeech = forcedWeatherCelebrate.expectsUserSpeech;
+        expectedSpeech = forcedWeatherCelebrate.expectedSpeech;
+        guidedSpeaking = forcedWeatherCelebrate.guidedSpeaking;
+        emojiChoice = forcedWeatherCelebrate.emojiChoice;
+        isTaskComplete = forcedWeatherCelebrate.isTaskComplete;
       }
 
       const forcedSmartShopperCelebrate = forceSmartShopperCelebrateIfNeeded(

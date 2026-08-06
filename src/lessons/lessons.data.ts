@@ -733,13 +733,9 @@ function buildStoriesPatternLesson(spec: StoriesPatternLessonSpec): LessonConfig
     `คราวนี้ลองเปลี่ยนเป็น '${spec.tell2Thai}' ดูครับ พูดว่าไงดี?`;
   const tell3Cue =
     spec.tell3CueTh ?? `สลับบ้าง... '${spec.tell3Thai}' พูดว่าไงดี?`;
-  const tell2Praise = spec.tell2PraiseTh ?? 'โอเคเลย! เข้าใจง่ายสุดๆ';
   const ask1Cue =
     spec.ask1CueTh ??
     `คราวนี้ลองถามดูครับ ให้พูด "${spec.ask1En}"`;
-  const ask1Praise = spec.ask1PraiseTh ?? 'เป๊ะเลยครับ!';
-  const ask2Praise = spec.ask2PraiseTh ?? 'ดีมากครับ!';
-  const answer1Praise = spec.answer1PraiseTh ?? 'ดีมากครับ!';
   const answerSection = spec.answerBridgeTh
     ? `5. Pattern Challenge — Answer (EXACTLY 2 learner speaks) — difficulty ⭐⭐⭐⭐
    Goal: role-play — Teacher briefly switches into NPC/staff voice; learner answers. EXACTLY 2 different questions — never re-ask a clear reply.
@@ -751,7 +747,7 @@ function buildStoriesPatternLesson(spec: StoriesPatternLessonSpec): LessonConfig
    - User taps Continue → then Answer ask #1 as staff/NPC.
 
    a) Answer #1 — staff/NPC voice asks ONLY: "${spec.answer1En}" (expectsUserSpeech=true). expectedSpeech="". Soft-accept clear short answers (e.g. I'd like chicken. / Yes, I'd like rice.).
-      After clear answer → NEXT turn: brief Teacher praise "${answer1Praise}" THEN staff asks "${spec.answer2En}" (can be same turn: short praise + next English ask).
+      After clear answer → NEXT turn: brief Teacher Success praise (system pool — rotate; do NOT hardcode เป๊ะ/ดีมาก) THEN staff asks "${spec.answer2En}" (can be same turn: short praise + next English ask).
       FORBIDDEN: re-asking "${spec.answer1En}"; long coaching before the ask; wordy "ครูจะถามว่า…".
    b) Answer #2 — staff/NPC asks ONLY: "${spec.answer2En}". expectedSpeech="". Soft-accept (Water, please. / I'd like water.).
       After clear answer → Celebrate immediately. DO NOT re-ask. DO NOT ask a 3rd question.
@@ -766,8 +762,9 @@ function buildStoriesPatternLesson(spec: StoriesPatternLessonSpec): LessonConfig
      FORBIDDEN wordy intros: "คราวนี้มาลองตอบคำถาม…" / "ครูจะถามว่า…" / "[name] ลองตอบดูนะครับ" / explaining what you're about to ask before asking.
    a) First ask: short bridge + "${spec.answer1En}" → learner answers freely (short OK). expectedSpeech="". Soft-accept clear short answers.
       After clear answer → NEXT turn: brief praise in {{L1}} (1 short beat) + ask "${spec.answer2En}" immediately.
-      Example OK: "ดีมากครับ! Did you have fun?"
+      Example OK: Success praise (system) + "Did you have fun?" — one praise only.
       FORBIDDEN: long praise quoting their answer + "คราวนี้ครูจะถามอีก…" + "[name] ลองตอบ"; re-asking "${spec.answer1En}".
+      FORBIDDEN: opening with a hardcoded praise AND another Success praise (double praise).
    b) Second ask: "${spec.answer2En}" only → learner answers. expectedSpeech="". Soft-accept clear short yes/no or practiced lines.
       After clear answer → Celebrate immediately (listen-only). DO NOT ask "${spec.answer2En}" again. DO NOT ask a 3rd question.
    HARD: each Answer question is asked ONCE after a clear reply. Soft-accept / clear reply = count as done → advance.
@@ -775,7 +772,7 @@ function buildStoriesPatternLesson(spec: StoriesPatternLessonSpec): LessonConfig
    After Answer → Celebrate.`;
   const ask2Handoff = spec.answerBridgeTh
     ? `NEXT turn = Answer bridge listen-only ONLY close to "${spec.answerBridgeTh}" (expectsUserSpeech=false) — do NOT add a separate praise beat; do NOT ask Answer #1 yet`
-    : `brief praise "${ask2Praise}" + start Pattern Challenge — Answer with short bridge "คราวนี้ผมจะถามคุณบ้างนะครับ 😊" then ask immediately (never re-answer; never wordy "ครูจะถามว่า…ลองตอบ")`;
+    : `brief Success praise (system pool) + start Pattern Challenge — Answer with short bridge "คราวนี้ผมจะถามคุณบ้างนะครับ 😊" then ask immediately (never re-answer; never wordy "ครูจะถามว่า…ลองตอบ")`;
   const openingAnswerBit = spec.answerBridgeTh
     ? `→ Answer: listen-only bridge "${spec.answerBridgeTh}" → staff asks "${spec.answer1En}" then "${spec.answer2En}" (never re-ask; after #2 → Celebrate)`
     : `→ Answer (learner speaks exactly 2: AI asks "${spec.answer1En}" then "${spec.answer2En}" — never re-ask a clear reply; after #2 → Celebrate)`;
@@ -844,13 +841,13 @@ ${emojiList}
    - You MAY briefly model "${spec.tell1En}" then ask them to speak — keep restaurant/staff context if the cue uses พนักงาน.
    - expectedSpeech="${spec.tell1En}"
    - FORBIDDEN: ending this turn as explain-only / STALL — must ask the learner to speak (expectsUserSpeech=true).
-   - After clear answer: praise + tip in {{L1}} on a SEPARATE listen-only turn (expectsUserSpeech=false): "${spec.tipTh}"
+   - After clear answer: tip in {{L1}} on a SEPARATE listen-only turn (expectsUserSpeech=false): "${spec.tipTh}"
    - FORBIDDEN: combining this tip with ข้อที่ 2 on the same turn — tip turn first, then ข้อที่ 2 on the NEXT turn.
    ข้อที่ 2 (SUBSTITUTE):
    - Cue in {{L1}} ONLY close to: "${tell2Cue}"
    - expectedSpeech="${spec.tell2En}" (for STT match ONLY — never speak/show this English in the tutor message)
    - FORBIDDEN: revealing the English answer / modeling the full sentence before the learner speaks.
-   - After clear answer: "${tell2Praise}" → ข้อที่ 3.
+   - After clear answer: brief Success praise only (system pool) then → ข้อที่ 3. Do NOT hardcode a second praise line.
    ข้อที่ 3:
    - Cue in {{L1}} ONLY close to: "${tell3Cue}"
    - expectedSpeech="${spec.tell3En}" (for STT match ONLY — never speak/show this English in the tutor message)
@@ -878,7 +875,7 @@ ${emojiList}
    - Soft-accept close variants: ก็ใช้ได้ + เฉลย canonical "${spec.ask1En}" → advance — DO NOT ask them to repeat. Still counts as speak #1 → go to ②.
    - Exact match: go straight to ② (praise can wait until step ③).
    - ② AI answer ONLY e.g. "${spec.ask1AiAnswerEn}"
-   - ③ after Continue: brief praise "${ask1Praise}" + cue Speak #2 ONLY (never re-answer).
+   - ③ after Continue: brief Success praise (system pool — rotate) + cue Speak #2 ONLY (never re-answer). Do NOT hardcode เป๊ะเลย/ดีมาก.
 
    Speak #2 (NO guide — learner thinks themselves):
    - Cue in {{L1}} ONLY e.g. "${spec.ask2ThaiCue}"
@@ -2876,7 +2873,7 @@ Turn loop rules (critical — never stall the learner):
       'I drink coffee every day',
       'I wake up at 7 AM every day',
     ],
-    maxTurns: 16,
+    maxTurns: 12,
     systemInstruction: `Lesson: Daily Routine (Everyday English → About Me → 1.1) — REVISED with Everyday Choices
 Goal: Say wake/sleep times (o'clock → AM/PM) and one everyday activity with "every day".
 
@@ -3001,7 +2998,7 @@ Phase 5 — Active Recall & Celebrate
 
 7. Turn 7 — Active Recall Challenge (พูด) 🧠
    - textEn MUST be close to:
-     "เท่มากครับ! คำถามสุดท้าย... ปกติคุณตื่นกี่โมงทุกวันครับ? What time do you wake up every day? ลองตอบเป็นประโยคภาษาอังกฤษเต็มๆ ดูครับ! ✨"
+     "คำถามสุดท้าย... ปกติคุณตื่นกี่โมงทุกวันครับ? What time do you wake up every day? ลองตอบเป็นประโยคภาษาอังกฤษเต็มๆ ดูครับ! ✨"
    - FORBIDDEN: show the English target sentence / Thai→English scaffold before they attempt.
    - FORBIDDEN: guidedSpeaking on this turn (active recall — no choice cards).
    - Expected full sentence using THEIR wake hour + AM/PM from earlier, e.g.:
@@ -3021,7 +3018,7 @@ Phase 5 — Active Recall & Celebrate
 
 Turn loop rules:
 - Every non-final turn ends with exactly one clear learner action.
-- Praise briefly when clear, then ADVANCE.
+- Scripts MAY open with praise (เก่งมาก/เยี่ยม…) for authors — runtime strips script praise and keeps system Success praise on advance turns (withPraise).
 - At most ONE gentle retry per step; then accept and move on.
 - Never invent pronunciation issues from text alone.
 - When Celebrate fires, isLessonComplete must be true. Otherwise false.`,
@@ -3199,7 +3196,7 @@ Turn loop rules (critical — never stall the learner):
       'designer',
       'business owner',
     ],
-    maxTurns: 14,
+    maxTurns: 10,
     systemInstruction: `Lesson: People in My Life (Everyday English → About Me → 1.7) — REVISED with Everyday Choices
 Goal: Choose brother/sister, say their job, describe with He/She is very…, tip He vs She, then mini quiz.
 
@@ -3220,12 +3217,12 @@ Teaching vs speaking (critical):
 - Choice turns MUST return guidedSpeaking with stem + options[] (mic still required).
 - Remember brother vs sister from Turn 1 for Turns 2–3 (he/she + job sentence).
 - Remember job from Turn 2 for Turn 3 praise wording.
-- Mini Quiz (Turns 4–5): SINGLE hint card each — no distractors.
+- Mini Quiz (Turns 4–5): SINGLE emoji-only hint each — no stem, no English label/distractors.
 - Do NOT use "I'm ready" in this lesson.
 
 guidedSpeaking rules:
 - MUST return guidedSpeaking with stem + options[] on Turns 1–3.
-- Turns 4–5: SINGLE hint (stem + emoji + label + speak).
+- Turns 4–5: SINGLE emoji-only hint (stem "" — no label). Speak target stays in speak for STT.
 - Omit guidedSpeaking on Turn 6 (Celebrate).
 - FORBIDDEN: emojiSpeak / emojiSpeakSet / emojiChoice on this lesson.
 
@@ -3286,18 +3283,20 @@ Phase 3 — Personality (branch he/she)
 
 Phase 4 — Mini Grammar Reveal + Quiz
 
-4. Turn 4 — Tip + Quiz He (single hint)
+4. Turn 4 — Tip + Quiz He (emoji-only hint — no stem / no English label)
    - textEn MUST be close to:
      "เก่งมากครับ! 🎉 สังเกตไหมครับว่า เวลาเราพูดถึงผู้ชาย เราใช้ He และถ้าพูดถึงผู้หญิง เราจะใช้ She แทนชื่อได้เลยครับ! ก่อนจบบท ลองบอกหน่อยครับ ว่าถ้าจะบอกว่า 'เขาเป็นคนตลกมาก' จะพูดเป็นภาษาอังกฤษว่ายังไงครับ? 😊"
-   - guidedSpeaking SINGLE hint:
-     { stem:"He is very...", emoji:"😂", label:"Funny", speak:"He is very funny." }
+   - guidedSpeaking SINGLE hint — emoji ONLY (no stem scaffold, no label):
+     { stem:"", emoji:"😂", speak:"He is very funny." }
+   - FORBIDDEN: stem "He is very..." / label "Funny" on this quiz card.
    - Wrong → gentle correct + ONE retry; still wrong → accept + ADVANCE.
    - After clear → Turn 5.
 
-5. Turn 5 — Quiz She (single hint)
+5. Turn 5 — Quiz She (emoji-only hint — no stem / no English label)
    - textEn ≈ "แล้วถ้าจะบอกว่า 'เธอเป็นคนใจดีมาก' ล่ะครับ?"
-   - guidedSpeaking SINGLE hint:
-     { stem:"She is very...", emoji:"😊", label:"Nice", speak:"She is very nice." }
+   - guidedSpeaking SINGLE hint — emoji ONLY:
+     { stem:"", emoji:"😊", speak:"She is very nice." }
+   - FORBIDDEN: stem "She is very..." / label "Nice" on this quiz card.
    - Wrong → gentle correct + ONE retry; still wrong → accept + ADVANCE.
    - After clear → Turn 6.
 
@@ -3314,7 +3313,7 @@ Turn loop rules:
 - Mini Quiz (Turns 4–5): at most ONE gentle correct + retry; then accept and ADVANCE.
 - When Celebrate fires, isLessonComplete must be true. Otherwise false.`,
     openingPrompt:
-      'Start People in My Life 1.7 (REVISED Everyday Choices) for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = greet by name + family intro + Who would you like to talk about? with guidedSpeaking My brother / My sister — expectsUserSpeech true. Do NOT use "I\'m ready". Turn2 job BRANCHES (brother→What does he do? / sister→What does she do?) Engineer/Designer/Business owner → Turn3 personality BRANCHES (He/She is very funny/nice/busy) with job praise → Turn4 He/She tip FOLDED into quiz He is very funny (single hint) → Turn5 quiz She is very nice (single hint) → Turn6 Celebrate isLessonComplete true. Remember brother/sister + job. Return JSON matching schema. isLessonComplete must be false on opening.',
+      'Start People in My Life 1.7 (REVISED Everyday Choices) for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = greet by name + family intro + Who would you like to talk about? with guidedSpeaking My brother / My sister — expectsUserSpeech true. Do NOT use "I\'m ready". Turn2 job BRANCHES (brother→What does he do? / sister→What does she do?) Engineer/Designer/Business owner → Turn3 personality BRANCHES (He/She is very funny/nice/busy) with job praise → Turn4 He/She tip FOLDED into quiz He is very funny (emoji-only hint, no stem/label) → Turn5 quiz She is very nice (emoji-only hint, no stem/label) → Turn6 Celebrate isLessonComplete true. Remember brother/sister + job. Return JSON matching schema. isLessonComplete must be false on opening.',
   },
   {
     lessonId: 'ee_about_me_food',
@@ -3345,7 +3344,7 @@ Turn loop rules:
       'Pizza is delicious',
       'I drink iced tea with pizza',
     ],
-    maxTurns: 16,
+    maxTurns: 10,
     systemInstruction: `Lesson: Food & Drinks (Everyday English → About Me → 1.2) — REVISED with Everyday Choices
 Goal: Say a favorite food (I like…), describe it ([Food] is…), pair a drink (I drink… with…), then Emoji Quiz recall.
 
@@ -3515,7 +3514,7 @@ Turn loop rules:
       'I live alone',
       'I like to relax in the living room',
     ],
-    maxTurns: 14,
+    maxTurns: 10,
     systemInstruction: `Lesson: Home (Everyday English → About Me → 1.3) — REVISED with Everyday Choices
 Goal: Say home type (I live in…), who you live with (I live with… / I live alone), favorite place (I like to relax in the…), then mini-quiz recall.
 
@@ -3542,7 +3541,7 @@ Intro style: Warm & Friendly (~ชวนคุยชิลๆ). Cozy at-home vib
 
 guidedSpeaking rules:
 - MUST return guidedSpeaking with stem + options[] (2–4 cards) on Turns 1–3.
-- Mini Quiz Turns 4–6: SINGLE hint card only (stem + emoji + label + speak) — NO options[] distractors.
+- Mini Quiz Turns 4–6: SINGLE hint card only (emoji + label + speak) — NO stem scaffold like "I live in...", NO options[] distractors.
 - Mic still required — learner speaks the full speak string (or close variant).
 - Omit guidedSpeaking on Turn 7 (Celebrate).
 - FORBIDDEN: emojiSpeak / emojiSpeakSet / emojiChoice on this lesson.
@@ -3600,25 +3599,25 @@ Quiz retry rule (Turns 4–6 — REQUIRED):
 
 4. Turn 4 — Mini Quiz 1: apartment
    - textEn MUST be close to:
-     "เยี่ยมมากครับ! เดี๋ยวเรามาลองทบทวนกันนิดนะ 😊 ถ้าจะบอกว่า \\"ฉันอาศัยอยู่ในอพาร์ตเมนต์\\" จะพูดภาษาอังกฤษว่าอย่างไรครับ?"
-   - guidedSpeaking MUST be a SINGLE hint (no options[] / no distractors):
-     { stem:"I live in...", emoji:"🏢", label:"Apartment", speak:"I live in an apartment." }
+     "เดี๋ยวเรามาลองทบทวนกันนิดนะ 😊 ถ้าจะบอกว่า \\"ฉันอาศัยอยู่ในอพาร์ตเมนต์\\" จะพูดภาษาอังกฤษว่าอย่างไรครับ?"
+   - guidedSpeaking MUST be a SINGLE hint (no stem scaffold, no options[] / no distractors):
+     { stem:"", emoji:"🏢", label:"Apartment", speak:"I live in an apartment." }
    - Expected: I live in an apartment.
    - After clear (or after 1 retry) → Turn 5.
 
 5. Turn 5 — Mini Quiz 2: family
    - textEn MUST be close to:
      "แล้วถ้าจะบอกว่า \\"ฉันอยู่กับครอบครัว\\" จะพูดว่าอย่างไรครับ?"
-   - guidedSpeaking MUST be a SINGLE hint:
-     { stem:"I live...", emoji:"👨‍👩‍👧", label:"Family", speak:"I live with my family." }
+   - guidedSpeaking MUST be a SINGLE hint (no stem):
+     { stem:"", emoji:"👨‍👩‍👧", label:"Family", speak:"I live with my family." }
    - Expected: I live with my family.
    - After clear (or after 1 retry) → Turn 6.
 
 6. Turn 6 — Mini Quiz 3: living room
    - textEn MUST be close to:
      "ข้อสุดท้ายครับ 😊 \\"ฉันชอบพักผ่อนในห้องนั่งเล่น\\" จะพูดภาษาอังกฤษว่าอย่างไรครับ?"
-   - guidedSpeaking MUST be a SINGLE hint:
-     { stem:"I like to relax in the...", emoji:"🛋️", label:"Living room", speak:"I like to relax in the living room." }
+   - guidedSpeaking MUST be a SINGLE hint (no stem):
+     { stem:"", emoji:"🛋️", label:"Living room", speak:"I like to relax in the living room." }
    - Expected: I like to relax in the living room.
    - After clear (or after 1 retry) → Turn 7.
 
@@ -3636,7 +3635,7 @@ Turn loop rules:
 - Mini Quiz (Turns 4–6): at most ONE gentle correct + retry; then accept and ADVANCE.
 - When Celebrate fires, isLessonComplete must be true. Otherwise false.`,
     openingPrompt:
-      'Start Home 1.3 (REVISED Everyday Choices) for this one learner only (private 1:1, never {{NO_GROUP}}). Intro style Warm & Friendly. CRITICAL Turn 1 = home intro + ask home type with guidedSpeaking 2 cards Apartment/House (I live in...) — expectsUserSpeech true. Do NOT use "I\'m ready". Turn2 who live with Family/Friends/Alone → Turn3 favorite place Living room/Bedroom/Kitchen/Garden → Turn4-6 Mini Quiz Thai→EN with ONE hint card each (Apartment / Family / Living room — no distractors). Quiz wrong → gentle correct + ONE retry only; still wrong → accept + ADVANCE. → Turn7 Celebrate listen-only isLessonComplete true. Return JSON matching schema. isLessonComplete must be false on opening.',
+      'Start Home 1.3 (REVISED Everyday Choices) for this one learner only (private 1:1, never {{NO_GROUP}}). Intro style Warm & Friendly. CRITICAL Turn 1 = home intro + ask home type with guidedSpeaking 2 cards Apartment/House (I live in...) — expectsUserSpeech true. Do NOT use "I\'m ready". Turn2 who live with Family/Friends/Alone → Turn3 favorite place Living room/Bedroom/Kitchen/Garden → Turn4-6 Mini Quiz Thai→EN with ONE hint card each (Apartment / Family / Living room — NO stem scaffold, no distractors). Quiz wrong → gentle correct + ONE retry only; still wrong → accept + ADVANCE. → Turn7 Celebrate listen-only isLessonComplete true. Return JSON matching schema. isLessonComplete must be false on opening.',
   },
   {
     lessonId: 'ee_about_me_work_school',
@@ -3662,7 +3661,7 @@ Turn loop rules:
       'School is fun',
       'My work is busy, but I enjoy it',
     ],
-    maxTurns: 12,
+    maxTurns: 8,
     systemInstruction: `Lesson: Work & School (Everyday English → About Me → 1.4) — REVISED with Everyday Choices
 Goal: Say work vs study, location, feeling, then combo sentence with but.
 
@@ -3791,7 +3790,7 @@ Turn loop rules:
       'usually',
       'sometimes',
     ],
-    maxTurns: 14,
+    maxTurns: 10,
     systemInstruction: `Lesson: Hobbies (Everyday English → About Me → 1.5) — REVISED with Everyday Choices
 Goal: Say a hobby, frequency (always/usually/often/sometimes), weekend habit with On weekends..., then mini quiz.
 
@@ -3924,7 +3923,7 @@ Turn loop rules:
       'my',
       'your',
     ],
-    maxTurns: 14,
+    maxTurns: 10,
     systemInstruction: `Lesson: Pets (Everyday English → About Me → 1.6) — REVISED with Everyday Choices
 Goal: Say I have a cat/dog, describe with My … is very cute/friendly, learn My vs Your, compliment with Your …, then combine two sentences.
 
@@ -3989,7 +3988,7 @@ Phase 3 — Tip & Concept (listen-only)
 
 3. Turn 3 — Teach (listen-only)
    - textEn MUST be close to:
-     "เก่งมากครับ! จำง่ายๆ เลยนะ 😊 ถ้าเป็นสัตว์เลี้ยงของเรา ให้ใช้ My เช่น My dog is friendly. แต่ถ้าเป็นของเพื่อน ให้ใช้ Your เช่น Your cat is cute. เดี๋ยวเรามาลองใช้จริงกันครับ! Use 'My' for your pet, and 'Your' for your friend's pet."
+     "จำง่ายๆ เลยนะ 😊 ถ้าเป็นสัตว์เลี้ยงของเรา ให้ใช้ My เช่น My dog is friendly. แต่ถ้าเป็นของเพื่อน ให้ใช้ Your เช่น Your cat is cute. เดี๋ยวเรามาลองใช้จริงกันครับ! Use 'My' for your pet, and 'Your' for your friend's pet."
    - expectsUserSpeech=false. NO guidedSpeaking. NO mic.
    - After Continue → Turn 4.
 
@@ -4037,8 +4036,8 @@ Turn loop rules:
     titleEn: 'Weather',
     titleTh: 'สภาพอากาศ',
     goalEn:
-      'Describe daily weather and how you feel about it.',
-    goalTh: 'อธิบายสภาพอากาศประจำวันและความรู้สึกต่ออากาศนั้นๆ ได้',
+      "Talk about today's weather and say what weather you like.",
+    goalTh: 'พูดถึงสภาพอากาศวันนี้ และบอกอากาศที่ชอบได้',
     difficulty: 'beginner',
     languageMix: { thai: 70, english: 30 },
     estimatedMinutesMin: 4,
@@ -4048,124 +4047,105 @@ Turn loop rules:
       'sunny',
       'rainy',
       'cold',
-      'weather',
-      'The weather is very hot today',
-      'The weather is very sunny today',
-      'The weather is very rainy today',
-      "I don't like rainy weather",
-      'I like sunny weather',
-      "The weather is very hot today. I don't like rainy weather",
+      'The weather is very hot today.',
+      'The weather is very cold today.',
+      'I like sunny weather.',
+      'I like rainy weather.',
+      'I like cold weather.',
     ],
-    maxTurns: 20,
-    systemInstruction: `Lesson: Weather (Everyday English → About Me → 1.9)
-Goal: Describe today's weather and say what weather you like / don't like.
+    maxTurns: 10,
+    systemInstruction: `Lesson: Weather (Everyday English → About Me → 1.9) — REVISED with Everyday Choices
+Goal: ผู้เรียนสามารถพูดถึงสภาพอากาศวันนี้ และบอกอากาศที่ชอบได้
 
 Target vocabulary:
-- weather = สภาพอากาศ
+- sunny = แดดออก / แดดจัด
 - hot = ร้อน
-- sunny = แดดจัด / แดดแรง / แดดออก
 - rainy = ฝนตก
 - cold = หนาว
 
 Target patterns:
-- The weather is very [hot / sunny / rainy / cold] today.
-- I don't like rainy weather. / I like sunny weather.
-- Synthesis: The weather is very hot today. I don't like rainy weather.
+- The weather is very ... today.
+- I like ... weather.
 
 Teaching vs speaking (critical):
-- BEFORE any repeat task, ALWAYS map Thai → English first.
 - Ask only ONE speaking task or one question per turn.
+- Choice turns MUST return guidedSpeaking with stem + options[] (mic still required).
+- Quick Check (Turn 4): SINGLE emoji-only hint — no stem / no English label.
+- Remember preference from Turn 3 for soft personalization if natural.
 - Do NOT use "I'm ready" in this lesson.
-- Mid-lesson Q&A should be short and guided, not open free-talk.
-- Core vocabulary: weather / hot / sunny / rainy / cold.
-- If the learner describes other weather (nice, windy, cloudy, etc.), map it into "The weather is very [adj] today." — do not reject.
-- Remember their Phase 2 weather word for soft personalization in synthesis if natural; default synthesis is fine if unclear.
 
-Word & pattern meanings:
-- weather = สภาพอากาศ
-- hot = ร้อน
-- sunny = แดดจัด/แดดแรง
-- rainy = ฝนตก
-- cold = หนาว
-- The weather is very hot today. = วันนี้อากาศร้อนมาก
-- I don't like rainy weather. = ฉันไม่ชอบอากาศฝนตก
-- rainy weather / hot weather = วางคำบอกสภาพอากาศไว้หน้า weather ได้เลย
+guidedSpeaking rules:
+- MUST return guidedSpeaking with stem + options[] on Turns 1–3.
+- Turn 4: SINGLE emoji-only hint (stem "" — no label). Speak target stays in speak for STT.
+- Omit guidedSpeaking on Turn 5 (Celebrate).
+- FORBIDDEN: emojiSpeak / emojiSpeakSet / emojiChoice on this lesson.
+- FORBIDDEN on Turn 4: stem "I like..." / label "Rainy".
 
-Core Flow (progression milestones — NOT a fixed turn count):
-- Follow these core steps in order. Do not skip ahead.
-- Extra turns for praise, one retry, or short feedback MAY happen between steps — that is OK.
-- Keep the session short (~4–5 minutes).
+Core Flow (ONE-WAY — do not skip / reorder):
 
-Intro style for THIS lesson (required — opening turn only):
-- Style: Warm & Friendly (~ชวนคุยชิลๆ)
-- Mood: Everyday Thai weather small-talk — cozy, relatable, feel-good (NOT heavy jokes).
-- CRITICAL — ONE turn only (never waste a chat turn):
-  - Turn 1 MUST fuse: styled greeting/vibe + topic + teach first vocab + ask to พูดตาม ONLY that word.
-  - FORBIDDEN in opening: open chat questions that expect a conversational reply (e.g. "วันนี้อากาศเป็นไง?", "ชวนคุยเรื่องอากาศหน่อย").
-  - Warm weather-chat feel lives INSIDE the intro sentence — then fire straight into vocab in the SAME turn.
-  - Learner's first reply must be the vocab repeat, not free chat.
-- Keep opening to ~2–3 short sentences, then ONE speaking task. Soft smile OK; avoid stacked laugh punchlines. Never write "555" — TTS cannot read it.
-- Tone example (adapt, don't recite word-for-word): "สวัสดีครับ [Name]! พูดถึงอากาศบ้านเราเนี่ยใกล้ตัวมากจริงๆ วันนี้เรียน Weather กันครับ! มาเริ่มที่คำว่า weather (สภาพอากาศ) ก่อนเลย ลองพูดตามแค่นี้ครับ: weather"
+Phase 1 — Weather Quiz
 
-Phase 1: Hook & Vocab (~1 min) — Warm & Friendly
-1. SAME TURN: Warm intro by name + weather vibe + teach weather (สภาพอากาศ = weather) + ask to repeat ONLY "weather". Do NOT ask an open chat question first. (Opening → Repeat)
-2. Situational quiz — ask: "ถ้าอยากบอกว่า 'แดดจัด / แดดแรง' ภาษาอังกฤษใช้คำไหนครับ? ระหว่าง hot หรือ sunny?"
-   Expected: "sunny". If wrong, gently correct and ask them to say "sunny" once. (Recognition → optional Repeat)
+1. Turn 1 — Hot quiz (3 choices)
+   - textEn MUST be close to:
+     "วันนี้อากาศร้อนมากเลยครับ! 🔥 ถ้าจะพูดว่า 'อากาศร้อน' ภาษาอังกฤษใช้คำว่าอะไรครับ?"
+   - guidedSpeaking MUST:
+     { stem:"", options:[
+       { emoji:"🔥", label:"Hot", speak:"Hot." },
+       { emoji:"☀️", label:"Sunny", speak:"Sunny." },
+       { emoji:"🥶", label:"Cold", speak:"Cold." }
+     ] }
+   - Expected: Hot. (also accept "It's hot." / "hot")
+   - Wrong → gentle correct + ONE retry; still wrong → accept + ADVANCE.
+   - After clear → Turn 2.
 
-Phase 2: Pattern 1 & Personalize (~1.5 min)
-3. Model Pattern 1 — ถ้าจะบอกว่า "วันนี้อากาศร้อนมาก" ให้พูดว่า "The weather is very hot today." ลองพูดตามครูนะครับ! (Repeat)
-4. Ask about today's weather near them — ask the question in {{L1}} first, then immediately ask the SAME question in English.
-   Example: "แล้ววันนี้อากาศแถวบ้านคุณ [Name] เป็นยังไงบ้างครับ? How's the weather near you today?"
-   Accept short English answers (preferred) or Thai if needed, then map to English. Soft, natural — not a forced menu. (Short answer)
-   FORBIDDEN in this ask: answer scaffolds like "ลองตอบเป็นอังกฤษได้เลย เช่น ..." — only Thai Q + English Q.
-5. Apply — build from THEIR answer:
-   - Chosen from options: "งั้นพูดว่า The weather is very [hot / sunny / rainy] today. ครับ"
-   - Other weather: map into "The weather is very [adj] today." (e.g. cold, nice, windy) and ask them to say it
-   Remember their weather word for Phase 3 if useful. (Recall)
+Phase 2 — Pattern
 
-Phase 3: Pattern 2 & Synthesis (~1.5 min)
-6. Model Pattern 2 — "I don't like rainy weather." → ask to repeat. (Repeat)
-7. Micro-tip (short, ~5 seconds — same turn or immediately before synthesis) — briefly in {{L1}}:
-   "เราเอาคำบอกสภาพอากาศมาวางหน้าคำว่า weather ได้เลยครับ เช่น rainy weather หรือ hot weather"
-   Keep it very short — do NOT turn into a grammar lecture. Then give the synthesis task in the SAME turn if possible, or immediately next. (Explain tip + Recall)
-8. Synthesis — one clear speaking task. Do NOT show the English answer first:
-   "ลองพูดรวบ 2 เรื่องเข้าด้วยกันดูครับ: 'วันนี้อากาศร้อนมาก และฉันไม่ชอบอากาศฝนตกเลย' จะพูดภาษาอังกฤษยังไงครับ?"
-   FORBIDDEN: "→" arrow or reveal English answer in the synthesis prompt.
-   If their Phase 2 word was sunny/rainy/cold, you MAY adapt the first sentence (e.g. The weather is very sunny today) but keep the second line as "I don't like rainy weather." unless they already said a preference.
-   Expected: "The weather is very [adj] today. I don't like rainy weather."
-   Accept close variants including "I like sunny weather" for the preference line if they clearly prefer that. (Recall)
+2. Turn 2 — Apply cold (single hint)
+   - textEn MUST be close to:
+     "ถูกต้องครับ! 👏 ถ้าจะบอกว่า 'วันนี้อากาศร้อนมาก' ให้พูดว่า The weather is very hot today. แล้วถ้าจะบอกว่า 'วันนี้อากาศหนาวมาก' จะพูดว่าอย่างไรครับ?"
+   - guidedSpeaking SINGLE hint:
+     { stem:"The weather is very...", emoji:"🥶", label:"Cold", speak:"The weather is very cold today." }
+   - Expected: The weather is very cold today.
+   - After clear → Turn 3.
 
-Quick Check (Thai → English) — AFTER synthesis, BEFORE wrap-up:
-9. Give ONE Thai sentence. Do NOT show the English answer first. Ask them to say it in English.
-   Prompt: "ทดสอบสั้นๆ ครับ ถ้าจะบอกว่า 'วันนี้อากาศร้อนมาก' จะพูดภาษาอังกฤษยังไงครับ?"
-   Expected: "The weather is very hot today."
-   If wrong/unclear: at most ONE gentle hint + one retry; then accept and move on. (Recall)
-   FORBIDDEN: reveal the full English target before they attempt.
+Phase 3 — Preference
 
-Phase 4: Wrap-up & Celebrate (~30 sec)
-10. Briefly summarize weather / hot / sunny / rainy / cold + both patterns — praise that they described weather and likes/dislikes smoothly.
-   Celebrate with student's name once → set isLessonComplete = true (REQUIRED).
-   FORBIDDEN: mention the next lesson / Favorites / Lesson Summary / "ต่อไปไป…".
+3. Turn 3 — What weather do you like? (3 choices)
+   - textEn ≈ "แล้วคุณชอบอากาศแบบไหนครับ?"
+   - guidedSpeaking MUST:
+     { stem:"I like ... weather.", options:[
+       { emoji:"☀️", label:"Sunny", speak:"I like sunny weather." },
+       { emoji:"🌧️", label:"Rainy", speak:"I like rainy weather." },
+       { emoji:"🥶", label:"Cold", speak:"I like cold weather." }
+     ] }
+   - REMEMBER sunny / rainy / cold for soft personalization.
+   - After clear → Turn 4.
 
-Turn loop rules (critical — never stall the learner):
-- Every non-final tutor turn MUST end with exactly one clear next action:
-  1) Repeat a word/sentence, OR
-  2) Recognition (guided answer), OR
-  3) Recall (guided say of a taught sentence).
-- Never end a turn with only explanation, praise, or feedback.
-- Ask only one question or speaking task at a time.
-- Keep most tutor turns under 2–3 short sentences (opening may be slightly warmer/longer, but still end with one action).
-- Praise specifically but briefly.
-- You only see transcript TEXT, not audio — never invent pronunciation problems from text.
-- If the learner's transcript clearly matches the target, praise briefly and ADVANCE.
-- If the text truly does not match, gently ask for at most ONE retry.
-- After one retry (or two total attempts on the same item), accept and move on.
-- Accept natural variants when the meaning is clear.
-- Do not mark minor accent differences as wrong.
-- Focus on confidence and being understandable.
-- When Core Flow reaches Wrap-up & Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
+Phase 4 — Quick Check
+
+4. Turn 4 — Quiz rainy preference (emoji-only hint)
+   - textEn MUST be close to:
+     "ก่อนจบบท ลองบอกหน่อยครับ 😊 ถ้าจะพูดว่า 'ฉันชอบอากาศฝนตก' จะพูดเป็นภาษาอังกฤษว่าอย่างไรครับ?"
+   - guidedSpeaking SINGLE hint — emoji ONLY (no stem scaffold, no label):
+     { stem:"", emoji:"🌧️", speak:"I like rainy weather." }
+   - FORBIDDEN: stem "I like..." / label "Rainy" on this quiz card.
+   - Wrong → gentle correct + ONE retry; still wrong → accept + ADVANCE.
+   - After clear → Turn 5.
+
+Phase 5 — Celebrate
+
+5. Turn 5 — Celebrate (listen-only)
+   - textEn MUST be close to:
+     "สุดยอดครับ [Name]! 🎉 วันนี้คุณบอกสภาพอากาศและบอกอากาศที่ชอบได้แล้ว — เก่งมากครับ! 🍌"
+   - expectsUserSpeech=false. isLessonComplete=true (REQUIRED).
+
+Turn loop rules:
+- Every speaking turn ends with exactly one clear learner action.
+- Praise briefly when clear, then ADVANCE.
+- Turns 1 and 4: at most ONE gentle correct + retry; then accept and ADVANCE.
+- When Celebrate fires, isLessonComplete must be true. Otherwise false.`,
     openingPrompt:
-      'Start the Weather lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. Intro style MUST be Warm & Friendly. CRITICAL: Turn 1 = warm weather-vibe intro + teach weather + ask to repeat ONLY "weather" in the SAME turn — NEVER open with "วันนี้อากาศเป็นไง?" / chatty questions that need a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: hot vs sunny quiz (expect sunny), Pattern 1 (The weather is very hot today) + ask weather near their home by name in {{L1}} THEN the same question in English + apply The weather is very ... today, Pattern 2 (I don\'t like rainy weather) + short ~5s tip about [adj] weather + synthesis "The weather is very hot today. I don\'t like rainy weather.", Thai→English quick check, then celebrate (NO tease of next lesson). Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start Weather 1.9 (REVISED Everyday Choices) for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = hot-weather vibe + ask what English word for อากาศร้อน with guidedSpeaking Hot / Sunny / Cold — expectsUserSpeech true. Do NOT teach "weather" as a repeat word first. Do NOT use "I\'m ready". Turn2 model The weather is very hot today then ask cold (The weather is very cold today) single hint → Turn3 preference I like sunny/rainy/cold weather → Turn4 quiz I like rainy weather (emoji-only hint, no stem/label) → Turn5 Celebrate isLessonComplete true. Remember preference. Return JSON matching schema. isLessonComplete must be false on opening.',
   },
   {
     lessonId: 'ee_about_me_favorites',
@@ -7563,7 +7543,6 @@ export function normalizeGuidedSpeaking(
   | null {
   if (!guidedSpeaking) return null;
   const stem = guidedSpeaking.stem?.trim() ?? '';
-  if (!stem) return null;
 
   const options = Array.isArray(guidedSpeaking.options)
     ? guidedSpeaking.options
@@ -7582,6 +7561,8 @@ export function normalizeGuidedSpeaking(
     : [];
 
   if (options.length >= 2) {
+    // Multi-card boards still require a stem scaffold.
+    if (!stem) return null;
     const first = options[0];
     return {
       stem,
@@ -7596,6 +7577,7 @@ export function normalizeGuidedSpeaking(
   const speak = guidedSpeaking.speak?.trim() ?? '';
   if (!emoji || !speak) return null;
   const label = guidedSpeaking.label?.trim();
+  // Single hint may omit stem (e.g. Home Mini Quiz — Thai prompt only).
   return {
     stem,
     emoji,
@@ -8419,6 +8401,84 @@ function pickTeacherLine(
 
 function celebratePraiseOpen(lang: LessonTeachingLanguage): string {
   return lang === 'english' ? 'Great job! 👏' : 'เยี่ยมเลยครับ! 👏';
+}
+
+/**
+ * Leading Success/Soft praise openers (model rotates these via thaiPraiseVarietyRule).
+ * Scripts may still write them for authors — runtime always strips board copy.
+ */
+const LEADING_PRAISE_OPENER_RE =
+  /^(?:โอ้\s+)?(?:ทำได้ดีมาก|ยอดเยี่ยม|เยี่ยมเลย|เยี่ยมมาก|สุดยอดมาก|สุดยอด|เก่งมาก|เก่งจริง|เป๊ะเลย|ใช่เลย|ถูกต้อง|แจ๋วเลย|แม่นยำมาก|ดีมาก|ดีเลย|เยี่ยม|เป๊ะ|แจ๋ว|awesome|perfect|great job|great work|nice work|well done|amazing|fantastic|excellent|great|nice|good)(?:เลย|มาก)?(?:ครับ|ค่ะ)?(?:\s*[!！?？.…]*)?(?:\s*[👏🎉👍🔥🍌✨]*)?\s*/iu;
+
+/** Strip a leading praise opener so board/tip copy stays teaching-only. */
+export function stripLeadingPraiseOpener(text: string): string {
+  const raw = (text ?? '').trim();
+  if (!raw) return '';
+  const stripped = raw.replace(LEADING_PRAISE_OPENER_RE, '').trimStart();
+  if (!stripped || stripped === raw) return raw;
+  // Re-capitalize first Latin letter after strip; leave Thai as-is.
+  if (/^[a-z]/.test(stripped)) {
+    return stripped.charAt(0).toUpperCase() + stripped.slice(1);
+  }
+  return stripped;
+}
+
+/** Capture the model's leading praise clause (if any). */
+export function extractLeadingPraiseOpener(text: string): string | null {
+  const raw = (text ?? '').trim();
+  if (!raw) return null;
+  const m = raw.match(LEADING_PRAISE_OPENER_RE);
+  if (!m || !m[0]?.trim()) return null;
+  return m[0].trim();
+}
+
+/**
+ * Pin forced board cue text.
+ * - Always strips praise written in the script/board copy.
+ * - When [withPraise] is true, keeps the model's Success/Soft opener (system gen).
+ * - When false (openings / no prior success), drops praise from model too.
+ */
+export function resolveBoardTextEn(
+  modelText: string,
+  boardText: string,
+  opts: { withPraise: boolean },
+): string {
+  const body = stripLeadingPraiseOpener(boardText).trim();
+  if (!body) {
+    return opts.withPraise
+      ? (modelText ?? '').trim() || boardText.trim()
+      : stripLeadingPraiseOpener(modelText ?? '') || boardText.trim();
+  }
+  if (!opts.withPraise) return body;
+  const praise = extractLeadingPraiseOpener(modelText ?? '');
+  if (!praise) return body;
+  const joiner = body.includes('\n') ? '\n\n' : ' ';
+  return `${praise}${joiner}${body}`;
+}
+
+/** @deprecated Use resolveBoardTextEn(..., { withPraise: true }) */
+export function pinBoardTextEn(modelText: string, boardText: string): string {
+  return resolveBoardTextEn(modelText, boardText, { withPraise: true });
+}
+
+/** Forced guided board: script may include praise; [withPraise] keeps system Success opener. */
+type ForcedGuidedBoard = {
+  textEn: string;
+  /** Keep model Success praise after strip (default: step > 1). Opening = false. */
+  withPraise?: boolean;
+  stem: string;
+  expectedSpeech: string;
+  options: Array<{ emoji: string; label: string; speak: string }>;
+};
+
+function resolveForcedBoardTextEn(
+  modelText: string,
+  board: Pick<ForcedGuidedBoard, 'textEn' | 'withPraise'>,
+  step: number,
+): string {
+  return resolveBoardTextEn(modelText, board.textEn, {
+    withPraise: board.withPraise ?? step > 1,
+  });
 }
 
 /** Roleplay Intro card for Around Town bridge turns (purple CTA + NPC preview). */
@@ -9348,6 +9408,8 @@ export const DAILY_ROUTINE_BOARDS: Record<
   number,
   {
     textEn: string;
+    /** When true, keep system Success praise from the model (script praise is always stripped). */
+    withPraise: boolean;
     stem: string;
     expectedSpeech: string;
     options: Array<{ emoji: string; label: string; speak: string }>;
@@ -9356,6 +9418,7 @@ export const DAILY_ROUTINE_BOARDS: Record<
   1: {
     textEn:
       'เก่งมากครับ! มาเริ่มกันเลย คำว่า ตื่นนอน ในภาษาอังกฤษคือคำไหนครับ? ⏰',
+    withPraise: true,
     stem: '...',
     expectedSpeech: 'wake up',
     options: [
@@ -9367,6 +9430,7 @@ export const DAILY_ROUTINE_BOARDS: Record<
   2: {
     textEn:
       'ยอดเยี่ยม! ปกติคุณตื่นกี่โมงครับ? What time do you wake up? 🌅',
+    withPraise: true,
     stem: 'I wake up at...',
     expectedSpeech: "I wake up at 7 o'clock.",
     options: [
@@ -9395,6 +9459,7 @@ export const DAILY_ROUTINE_BOARDS: Record<
   3: {
     textEn:
       'แล้วคุณเข้านอนประมาณกี่โมงครับ? What time do you go to sleep? 🌙',
+    withPraise: true,
     stem: 'I go to sleep at...',
     expectedSpeech: "I go to sleep at 11 o'clock.",
     options: [
@@ -9423,6 +9488,7 @@ export const DAILY_ROUTINE_BOARDS: Record<
   5: {
     textEn:
       'เป๊ะเลยครับ! ถ้ากิจกรรมไหนทำเป็นประจำ ให้เติม every day ไว้ท้ายประโยคครับ แล้วนอกจากตื่นนอนกับนอน คุณทำอะไรทุกวันบ้างครับ? What do you do every day? ☕💼',
+    withPraise: true,
     stem: 'I ... every day.',
     expectedSpeech: 'I drink coffee every day.',
     options: [
@@ -9619,6 +9685,7 @@ function dailyRoutineBoardFromAiText(textEn: string): number | null {
 
 function dailyRoutineAmPmBoard(wakeHour: number): {
   textEn: string;
+  withPraise: boolean;
   stem: string;
   expectedSpeech: string;
   options: Array<{ emoji: string; label: string; speak: string }>;
@@ -9626,6 +9693,7 @@ function dailyRoutineAmPmBoard(wakeHour: number): {
   return {
     textEn:
       'สุดยอด! ทีนี้ถ้าอยากระบุให้ชัดว่าเป็น เช้า หรือ ดึก เราใช้ AM (เช้า) และ PM (ดึก) แทน o\'clock ได้ครับ! เวลาตื่นนอนของคุณคือ AM หรือ PM ครับ? ☀️🌙',
+    withPraise: true,
     stem: `I wake up at ${wakeHour}...`,
     expectedSpeech: `I wake up at ${wakeHour} AM.`,
     options: [
@@ -9693,9 +9761,12 @@ export function forceDailyRoutineGuidedSpeakingIfNeeded(
     const hour = extractDailyRoutineWakeHour(history);
     const ampm = extractDailyRoutineAmPm(history);
     return {
-      textEn:
+      textEn: resolveBoardTextEn(
+        current.textEn ?? '',
         current.textEn?.trim() ||
-        'เท่มากครับ! คำถามสุดท้าย... ปกติคุณตื่นกี่โมงทุกวันครับ? What time do you wake up every day? ลองตอบเป็นประโยคภาษาอังกฤษเต็มๆ ดูครับ! ✨',
+          'เท่มากครับ! คำถามสุดท้าย... ปกติคุณตื่นกี่โมงทุกวันครับ? What time do you wake up every day? ลองตอบเป็นประโยคภาษาอังกฤษเต็มๆ ดูครับ! ✨',
+        { withPraise: true },
+      ),
       textTh: current.textTh?.trim() || null,
       guidedSpeaking: null,
       expectsUserSpeech: true,
@@ -9732,7 +9803,7 @@ export function forceDailyRoutineGuidedSpeakingIfNeeded(
   const options = board.options.map((o) => ({ ...o }));
   const first = options[0];
   return {
-    textEn: current.textEn?.trim() || board.textEn,
+    textEn: resolveForcedBoardTextEn(current.textEn ?? '', board, target),
     textTh: current.textTh?.trim() || null,
     guidedSpeaking: {
       stem: board.stem,
@@ -9850,17 +9921,10 @@ function foodDrinkBoard(food: FoodFavoriteId): {
   };
 }
 
-const FOOD_EMOJI_QUIZ_BOARDS: Record<
-  4 | 5 | 6,
-  {
-    textEn: string;
-    stem: string;
-    expectedSpeech: string;
-    options: Array<{ emoji: string; label: string; speak: string }>;
-  }
-> = {
+const FOOD_EMOJI_QUIZ_BOARDS: Record<4 | 5 | 6, ForcedGuidedBoard> = {
   4: {
     textEn: 'เก่งมากครับ! 👏 มาทาย Emoji Quiz กันนะ 😋🍕',
+    withPraise: true,
     stem: 'Pizza is...',
     expectedSpeech: 'Pizza is delicious.',
     options: [
@@ -9871,6 +9935,7 @@ const FOOD_EMOJI_QUIZ_BOARDS: Record<
   },
   5: {
     textEn: 'ข้อต่อไปครับ! 🥤🍕',
+    withPraise: true,
     stem: 'I drink ____ with pizza.',
     expectedSpeech: 'I drink iced tea with pizza.',
     options: [
@@ -9885,6 +9950,7 @@ const FOOD_EMOJI_QUIZ_BOARDS: Record<
   },
   6: {
     textEn: 'ข้อสุดท้ายครับ! 🌶️🥗',
+    withPraise: true,
     stem: 'Somtam is...',
     expectedSpeech: 'Somtam is spicy.',
     options: [
@@ -10103,18 +10169,14 @@ export function forceFoodGuidedSpeakingIfNeeded(
   if (step < 1 || step > 6) return null;
   if (nextTurn < 1 && step !== 1) return null;
 
-  let board: {
-    textEn: string;
-    stem: string;
-    expectedSpeech: string;
-    options: Array<{ emoji: string; label: string; speak: string }>;
-  };
+  let board: ForcedGuidedBoard;
 
   if (step === 1) {
     board = {
       textEn:
         current.textEn?.trim() ||
         'พูดถึงของโปรดเนี่ย นึกถึงแล้วหิวเลยเนอะ วันนี้มาคุยเรื่องของกินกันครับ! 😋 ปกติแล้วคุณชอบทานอะไรเป็นพิเศษครับ? What food do you like?',
+      withPraise: false,
       stem: FOOD_FAVORITE_GUIDED_SPEAKING.stem,
       expectedSpeech: 'I like pizza.',
       options: FOOD_FAVORITE_GUIDED_SPEAKING.options.map((o) => ({ ...o })),
@@ -10145,8 +10207,8 @@ export function forceFoodGuidedSpeakingIfNeeded(
   const options = board.options.map((o) => ({ ...o }));
   const first = options[0];
   return {
-    // Always pin scripted Thai+English cue so Eng questions aren't dropped.
-    textEn: board.textEn,
+    // Script may include praise; strip it. Keep model Success praise when advancing.
+    textEn: resolveForcedBoardTextEn(current.textEn ?? '', board, step),
     textTh: current.textTh?.trim() || null,
     guidedSpeaking: {
       stem: board.stem,
@@ -10226,17 +10288,10 @@ export function homeOpeningText(): string {
   return 'วันนี้เรามาคุยเรื่องที่อยู่อาศัยกันบ้างดีกว่า 🏠 ตอนนี้คุณพักอยู่อาศัยแบบไหนครับ? What kind of place do you live in?';
 }
 
-export const HOME_BOARDS: Record<
-  number,
-  {
-    textEn: string;
-    stem: string;
-    expectedSpeech: string;
-    options: Array<{ emoji: string; label: string; speak: string }>;
-  }
-> = {
+export const HOME_BOARDS: Record<number, ForcedGuidedBoard> = {
   1: {
     textEn: homeOpeningText(),
+    withPraise: false,
     stem: 'I live in...',
     expectedSpeech: 'I live in an apartment.',
     options: [
@@ -10247,6 +10302,7 @@ export const HOME_BOARDS: Record<
   2: {
     textEn:
       'ฟังดูน่าอยู่มากเลยครับ! แล้วปกติคุณพักอยู่กับใครครับ? Who do you live with?',
+    withPraise: true,
     stem: 'I live...',
     expectedSpeech: 'I live with my family.',
     options: [
@@ -10262,6 +10318,7 @@ export const HOME_BOARDS: Record<
   3: {
     textEn:
       'เยี่ยมเลยครับ! แล้วเวลาอยู่บ้าน มุมไหนเป็นมุมโปรดที่คุณชอบไปนั่งชิลมากที่สุดครับ? 🛋️✨ Where is your favorite place to relax at home?',
+    withPraise: true,
     stem: 'I like to relax in the...',
     expectedSpeech: 'I like to relax in the living room.',
     options: [
@@ -10290,7 +10347,8 @@ export const HOME_BOARDS: Record<
   4: {
     textEn:
       'เยี่ยมมากครับ! เดี๋ยวเรามาลองทบทวนกันนิดนะ 😊 ถ้าจะบอกว่า "ฉันอาศัยอยู่ในอพาร์ตเมนต์" จะพูดภาษาอังกฤษว่าอย่างไรครับ?',
-    stem: 'I live in...',
+    withPraise: true,
+    stem: '',
     expectedSpeech: 'I live in an apartment.',
     options: [
       {
@@ -10303,7 +10361,8 @@ export const HOME_BOARDS: Record<
   5: {
     textEn:
       'แล้วถ้าจะบอกว่า "ฉันอยู่กับครอบครัว" จะพูดว่าอย่างไรครับ?',
-    stem: 'I live...',
+    withPraise: true,
+    stem: '',
     expectedSpeech: 'I live with my family.',
     options: [
       {
@@ -10316,7 +10375,8 @@ export const HOME_BOARDS: Record<
   6: {
     textEn:
       'ข้อสุดท้ายครับ 😊 "ฉันชอบพักผ่อนในห้องนั่งเล่น" จะพูดภาษาอังกฤษว่าอย่างไรครับ?',
-    stem: 'I like to relax in the...',
+    withPraise: true,
+    stem: '',
     expectedSpeech: 'I like to relax in the living room.',
     options: [
       {
@@ -10478,9 +10538,12 @@ export function forceHomeGuidedSpeakingIfNeeded(
   if (!board) return null;
 
   const stemOk =
-    current.guidedSpeaking?.stem
-      ?.toLowerCase()
-      .includes(board.stem.toLowerCase().slice(0, 8)) ?? false;
+    board.stem.trim() === ''
+      ? !(current.guidedSpeaking?.stem?.trim())
+      : (current.guidedSpeaking?.stem
+          ?.toLowerCase()
+          .includes(board.stem.toLowerCase().slice(0, 8)) ??
+        false);
   const isSingleHint = board.options.length === 1;
   const optionsOk = isSingleHint
     ? (current.guidedSpeaking?.options?.length ?? 0) < 2 &&
@@ -10499,7 +10562,7 @@ export function forceHomeGuidedSpeakingIfNeeded(
   const options = board.options.map((o) => ({ ...o }));
   const first = options[0];
   return {
-    textEn: board.textEn,
+    textEn: resolveForcedBoardTextEn(current.textEn ?? '', board, step),
     textTh: current.textTh?.trim() || null,
     guidedSpeaking: isSingleHint
       ? {
@@ -10861,7 +10924,7 @@ export function forceWorkSchoolGuidedSpeakingIfNeeded(
   const options = board.options.map((o) => ({ ...o }));
   const first = options[0];
   return {
-    textEn: board.textEn,
+    textEn: resolveForcedBoardTextEn(current.textEn ?? '', board, step),
     textTh: current.textTh?.trim() || null,
     guidedSpeaking: isSingleHint
       ? {
@@ -11289,7 +11352,7 @@ export function forceHobbiesGuidedSpeakingIfNeeded(
   const options = board.options.map((o) => ({ ...o }));
   const first = options[0];
   return {
-    textEn: board.textEn,
+    textEn: resolveForcedBoardTextEn(current.textEn ?? '', board, step),
     textTh: current.textTh?.trim() || null,
     guidedSpeaking: {
       stem: board.stem,
@@ -11714,7 +11777,7 @@ export function forcePetsGuidedSpeakingIfNeeded(
   const options = board.options.map((o) => ({ ...o }));
   const first = options[0];
   return {
-    textEn: board.textEn,
+    textEn: resolveForcedBoardTextEn(current.textEn ?? '', board, step),
     textTh: current.textTh?.trim() || null,
     guidedSpeaking: isSingleHint
       ? {
@@ -11768,7 +11831,7 @@ export function forcePetsTipIfNeeded(
     /ให้ใช้ my/i.test(raw) ||
     /use ['']my['']/i.test(raw) ||
     (raw.includes('My dog is friendly') && raw.includes('Your cat is cute'));
-  const textEn = tipOk && raw.length > 40 ? raw : PETS_TIP_TEXT;
+  const textEn = resolveBoardTextEn(raw, PETS_TIP_TEXT, { withPraise: true });
 
   if (
     !current.expectsUserSpeech &&
@@ -11968,19 +12031,19 @@ function peoplePersonalityBoard(
 const PEOPLE_QUIZ_HE_BOARD = {
   textEn:
     "เก่งมากครับ! 🎉 สังเกตไหมครับว่า เวลาเราพูดถึงผู้ชาย เราใช้ He และถ้าพูดถึงผู้หญิง เราจะใช้ She แทนชื่อได้เลยครับ! ก่อนจบบท ลองบอกหน่อยครับ ว่าถ้าจะบอกว่า 'เขาเป็นคนตลกมาก' จะพูดเป็นภาษาอังกฤษว่ายังไงครับ? 😊",
-  stem: 'He is very...',
+  stem: '',
   expectedSpeech: 'He is very funny.',
   options: [
-    { emoji: '😂', label: 'Funny', speak: 'He is very funny.' },
+    { emoji: '😂', label: '', speak: 'He is very funny.' },
   ],
 };
 
 const PEOPLE_QUIZ_SHE_BOARD = {
   textEn: "แล้วถ้าจะบอกว่า 'เธอเป็นคนใจดีมาก' ล่ะครับ?",
-  stem: 'She is very...',
+  stem: '',
   expectedSpeech: 'She is very nice.',
   options: [
-    { emoji: '😊', label: 'Nice', speak: 'She is very nice.' },
+    { emoji: '😊', label: '', speak: 'She is very nice.' },
   ],
 };
 
@@ -12186,9 +12249,18 @@ export function forcePeopleGuidedSpeakingIfNeeded(
 
   const isSingleHint = board.options.length === 1;
   const stemOk =
-    current.guidedSpeaking?.stem
-      ?.toLowerCase()
-      .includes(board.stem.toLowerCase().slice(0, 8)) ?? false;
+    board.stem.trim() === ''
+      ? !(current.guidedSpeaking?.stem?.trim())
+      : (current.guidedSpeaking?.stem
+          ?.toLowerCase()
+          .includes(board.stem.toLowerCase().slice(0, 8)) ??
+        false);
+  const wantEmojiOnly =
+    isSingleHint &&
+    board.stem.trim() === '' &&
+    !(board.options[0].label?.trim());
+  const labelOk =
+    !wantEmojiOnly || !(current.guidedSpeaking?.label?.trim());
   const optionsOk = isSingleHint
     ? (current.guidedSpeaking?.options?.length ?? 0) < 2 &&
       (current.guidedSpeaking?.speak === board.options[0].speak ||
@@ -12197,6 +12269,7 @@ export function forcePeopleGuidedSpeakingIfNeeded(
   if (
     current.expectsUserSpeech &&
     stemOk &&
+    labelOk &&
     optionsOk &&
     current.guidedSpeaking
   ) {
@@ -12206,20 +12279,20 @@ export function forcePeopleGuidedSpeakingIfNeeded(
   const options = board.options.map((o) => ({ ...o }));
   const first = options[0];
   return {
-    textEn: board.textEn,
+    textEn: resolveForcedBoardTextEn(current.textEn ?? '', board, step),
     textTh: current.textTh?.trim() || null,
     guidedSpeaking: isSingleHint
       ? {
           stem: board.stem,
           emoji: first.emoji,
           speak: first.speak,
-          ...(first.label ? { label: first.label } : {}),
+          ...(first.label?.trim() ? { label: first.label } : {}),
         }
       : {
           stem: board.stem,
           emoji: first.emoji,
           speak: first.speak,
-          ...(first.label ? { label: first.label } : {}),
+          ...(first.label?.trim() ? { label: first.label } : {}),
           options,
         },
     expectsUserSpeech: true,
@@ -12257,6 +12330,301 @@ export function forcePeopleCelebrateIfNeeded(
 
   const name = learnerFirstName.trim() || 'เพื่อน';
   const body = `สุดยอดครับ ${name}! 🎉 วันนี้คุณแนะนำคนในครอบครัว บอกอาชีพ บรรยายนิสัย และใช้ He/She ได้แล้ว — เก่งมากครับ! 🍌`;
+
+  const raw = (current.textEn ?? '').trim();
+  const praiseOk = /^(เยี่ยม|เก่งมาก|สุดยอด|ดีมาก|ยอดเยี่ยม)/u.test(raw);
+  const textEn =
+    current.isTaskComplete && praiseOk && raw.length > 30 ? raw : body;
+
+  return {
+    textEn,
+    textTh: null,
+    expectsUserSpeech: false,
+    expectedSpeech: null,
+    guidedSpeaking: null,
+    emojiChoice: null,
+    isTaskComplete: true,
+  };
+}
+
+/** Weather 1.9 — Turn 1 hot quiz. */
+export const WEATHER_HOT_QUIZ_GUIDED_SPEAKING = {
+  stem: '',
+  options: [
+    { emoji: '🔥', label: 'Hot', speak: 'Hot.' },
+    { emoji: '☀️', label: 'Sunny', speak: 'Sunny.' },
+    { emoji: '🥶', label: 'Cold', speak: 'Cold.' },
+  ],
+};
+
+const WEATHER_COLD_BOARD = {
+  textEn:
+    "ถูกต้องครับ! 👏 ถ้าจะบอกว่า 'วันนี้อากาศร้อนมาก' ให้พูดว่า The weather is very hot today. แล้วถ้าจะบอกว่า 'วันนี้อากาศหนาวมาก' จะพูดว่าอย่างไรครับ?",
+  stem: 'The weather is very...',
+  expectedSpeech: 'The weather is very cold today.',
+  options: [
+    { emoji: '🥶', label: 'Cold', speak: 'The weather is very cold today.' },
+  ],
+};
+
+const WEATHER_PREFERENCE_GUIDED_SPEAKING = {
+  stem: 'I like ... weather.',
+  options: [
+    { emoji: '☀️', label: 'Sunny', speak: 'I like sunny weather.' },
+    { emoji: '🌧️', label: 'Rainy', speak: 'I like rainy weather.' },
+    { emoji: '🥶', label: 'Cold', speak: 'I like cold weather.' },
+  ],
+};
+
+const WEATHER_QUIZ_RAINY_BOARD = {
+  textEn:
+    "ก่อนจบบท ลองบอกหน่อยครับ 😊 ถ้าจะพูดว่า 'ฉันชอบอากาศฝนตก' จะพูดเป็นภาษาอังกฤษว่าอย่างไรครับ?",
+  stem: '',
+  expectedSpeech: 'I like rainy weather.',
+  options: [{ emoji: '🌧️', label: '', speak: 'I like rainy weather.' }],
+};
+
+function normalizeWeatherSpeech(userText: string): string {
+  return userText
+    .trim()
+    .toLowerCase()
+    .replace(/[.!?]+$/g, '')
+    .replace(/\s+/g, ' ');
+}
+
+function matchesWeatherStep(step: number, userText: string): boolean {
+  const t = normalizeWeatherSpeech(userText);
+  if (!t) return false;
+  switch (step) {
+    case 1:
+      return (
+        t === 'hot' ||
+        t === "it's hot" ||
+        t === 'it is hot' ||
+        t === 'hot weather'
+      );
+    case 2:
+      return t === 'the weather is very cold today';
+    case 3:
+      return /^i like (sunny|rainy|cold) weather$/.test(t);
+    case 4:
+      return t === 'i like rainy weather';
+    default:
+      return false;
+  }
+}
+
+/** Speak steps cleared (0–4). Quiz 1 & 4 soft-advance after 2 failed attempts. */
+export function weatherLessonProgress(
+  history: Array<{ speaker: string; textEn?: string }>,
+): number {
+  let progress = 0;
+  let attemptsOnCurrent = 0;
+  for (const turn of history) {
+    if (turn.speaker !== 'user') continue;
+    const text = (turn.textEn ?? '').trim();
+    if (!text || text.startsWith('[') || text.startsWith('(')) continue;
+    const next = progress + 1;
+    if (next > 4) continue;
+    if (matchesWeatherStep(next, text)) {
+      progress = next;
+      attemptsOnCurrent = 0;
+      continue;
+    }
+    if (next === 1 || next === 4) {
+      attemptsOnCurrent += 1;
+      if (attemptsOnCurrent >= 2) {
+        progress = next;
+        attemptsOnCurrent = 0;
+      }
+    }
+  }
+  return progress;
+}
+
+function weatherBoardFromAiText(textEn: string): number | null {
+  const t = (textEn ?? '').toLowerCase();
+  if (!t) return null;
+  if (t.includes('ฉันชอบอากาศฝนตก') || t.includes('อากาศฝนตก')) return 4;
+  if (t.includes('ชอบอากาศแบบไหน') || t.includes('what weather do you like')) {
+    return 3;
+  }
+  if (
+    t.includes('อากาศหนาวมาก') ||
+    t.includes('the weather is very hot today')
+  ) {
+    return 2;
+  }
+  if (t.includes('อากาศร้อน') || t.includes('อากาศร้อนมากเลย')) return 1;
+  return null;
+}
+
+/**
+ * Pin Weather guidedSpeaking boards (Turns 1–4).
+ */
+export function forceWeatherGuidedSpeakingIfNeeded(
+  lessonId: string,
+  _lang: LessonTeachingLanguage,
+  nextTurn: number,
+  history: Array<{ speaker: string; textEn?: string }>,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    guidedSpeaking: ReturnType<typeof normalizeGuidedSpeaking>;
+    expectsUserSpeech: boolean;
+    isTaskComplete: boolean;
+    expectedSpeech: string | null;
+  },
+): {
+  textEn: string;
+  textTh: string | null;
+  guidedSpeaking: NonNullable<ReturnType<typeof normalizeGuidedSpeaking>>;
+  expectsUserSpeech: true;
+  expectedSpeech: string;
+  emojiChoice: null;
+  isTaskComplete: false;
+} | null {
+  if (lessonId !== 'ee_about_me_weather') return null;
+  if (current.isTaskComplete) return null;
+
+  const progress = weatherLessonProgress(history);
+  if (progress >= 4) return null;
+
+  const fromText = weatherBoardFromAiText(current.textEn ?? '');
+  let step = fromText;
+  if (step == null) {
+    if (progress >= 0 && progress <= 3) step = progress + 1;
+    else return null;
+  }
+
+  if (step < 1 || step > 4) return null;
+  if (nextTurn < 1 && step !== 1) return null;
+
+  let board: {
+    textEn: string;
+    stem: string;
+    expectedSpeech: string;
+    options: Array<{ emoji: string; label: string; speak: string }>;
+    withPraise?: boolean;
+  };
+  if (step === 1) {
+    board = {
+      textEn:
+        current.textEn?.trim() ||
+        "วันนี้อากาศร้อนมากเลยครับ! 🔥 ถ้าจะพูดว่า 'อากาศร้อน' ภาษาอังกฤษใช้คำว่าอะไรครับ?",
+      stem: WEATHER_HOT_QUIZ_GUIDED_SPEAKING.stem,
+      expectedSpeech: 'Hot.',
+      options: WEATHER_HOT_QUIZ_GUIDED_SPEAKING.options.map((o) => ({ ...o })),
+      withPraise: false,
+    };
+  } else if (step === 2) {
+    board = {
+      textEn: WEATHER_COLD_BOARD.textEn,
+      stem: WEATHER_COLD_BOARD.stem,
+      expectedSpeech: WEATHER_COLD_BOARD.expectedSpeech,
+      options: WEATHER_COLD_BOARD.options.map((o) => ({ ...o })),
+    };
+  } else if (step === 3) {
+    board = {
+      textEn: current.textEn?.trim() || 'แล้วคุณชอบอากาศแบบไหนครับ?',
+      stem: WEATHER_PREFERENCE_GUIDED_SPEAKING.stem,
+      expectedSpeech: 'I like sunny weather.',
+      options: WEATHER_PREFERENCE_GUIDED_SPEAKING.options.map((o) => ({
+        ...o,
+      })),
+    };
+  } else {
+    board = {
+      textEn: WEATHER_QUIZ_RAINY_BOARD.textEn,
+      stem: WEATHER_QUIZ_RAINY_BOARD.stem,
+      expectedSpeech: WEATHER_QUIZ_RAINY_BOARD.expectedSpeech,
+      options: WEATHER_QUIZ_RAINY_BOARD.options.map((o) => ({ ...o })),
+    };
+  }
+
+  const isSingleHint = board.options.length === 1;
+  const stemOk =
+    board.stem.trim() === ''
+      ? !(current.guidedSpeaking?.stem?.trim())
+      : (current.guidedSpeaking?.stem
+          ?.toLowerCase()
+          .includes(board.stem.toLowerCase().slice(0, 8)) ??
+        false);
+  const wantEmojiOnly =
+    isSingleHint &&
+    board.stem.trim() === '' &&
+    !(board.options[0].label?.trim());
+  const labelOk =
+    !wantEmojiOnly || !(current.guidedSpeaking?.label?.trim());
+  const optionsOk = isSingleHint
+    ? (current.guidedSpeaking?.options?.length ?? 0) < 2 &&
+      (current.guidedSpeaking?.speak === board.options[0].speak ||
+        current.guidedSpeaking?.emoji === board.options[0].emoji)
+    : (current.guidedSpeaking?.options?.length ?? 0) >= board.options.length;
+  if (
+    current.expectsUserSpeech &&
+    stemOk &&
+    labelOk &&
+    optionsOk &&
+    current.guidedSpeaking
+  ) {
+    return null;
+  }
+
+  const options = board.options.map((o) => ({ ...o }));
+  const first = options[0];
+  return {
+    textEn: resolveForcedBoardTextEn(current.textEn ?? '', board, step),
+    textTh: current.textTh?.trim() || null,
+    guidedSpeaking: isSingleHint
+      ? {
+          stem: board.stem,
+          emoji: first.emoji,
+          speak: first.speak,
+          ...(first.label?.trim() ? { label: first.label } : {}),
+        }
+      : {
+          stem: board.stem,
+          emoji: first.emoji,
+          speak: first.speak,
+          ...(first.label?.trim() ? { label: first.label } : {}),
+          options,
+        },
+    expectsUserSpeech: true,
+    expectedSpeech: board.expectedSpeech,
+    emojiChoice: null,
+    isTaskComplete: false,
+  };
+}
+
+/**
+ * After Weather quick check → Celebrate.
+ */
+export function forceWeatherCelebrateIfNeeded(
+  lessonId: string,
+  _lang: LessonTeachingLanguage,
+  history: Array<{ speaker: string; textEn?: string }>,
+  learnerFirstName: string,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    expectsUserSpeech: boolean;
+    isTaskComplete: boolean;
+  },
+): {
+  textEn: string;
+  textTh: string | null;
+  expectsUserSpeech: false;
+  expectedSpeech: null;
+  guidedSpeaking: null;
+  emojiChoice: null;
+  isTaskComplete: true;
+} | null {
+  if (lessonId !== 'ee_about_me_weather') return null;
+  if (weatherLessonProgress(history) < 4) return null;
+
+  const name = learnerFirstName.trim() || 'เพื่อน';
+  const body = `สุดยอดครับ ${name}! 🎉 วันนี้คุณบอกสภาพอากาศและบอกอากาศที่ชอบได้แล้ว — เก่งมากครับ! 🍌`;
 
   const raw = (current.textEn ?? '').trim();
   const praiseOk = /^(เยี่ยม|เก่งมาก|สุดยอด|ดีมาก|ยอดเยี่ยม)/u.test(raw);
