@@ -3380,7 +3380,7 @@ Phase 1 — Favorite Food
 
 1. Turn 1 — Favorite Food (พูด + 3 choices)
    - textEn MUST be close to:
-     "พูดถึงของโปรดเนี่ย นึกถึงแล้วหิวเลยเนอะ วันนี้มาคุยเรื่องของกินกัน! 😋 ปกติแล้วคุณชอบทานอะไรเป็นพิเศษครับ?"
+     "พูดถึงของโปรดเนี่ย นึกถึงแล้วหิวเลยเนอะ วันนี้มาคุยเรื่องของกินกันครับ! 😋 ปกติแล้วคุณชอบทานอะไรเป็นพิเศษครับ? What food do you like?"
    - guidedSpeaking MUST:
      { stem:"I like...", options:[
        { emoji:"🍕", label:"Pizza", speak:"I like pizza." },
@@ -3395,21 +3395,21 @@ Phase 2 — Describe Food (branch on Turn 1 food)
 
 2. Turn 2 — Describe Food (พูด + 3 choices)
    - IF pizza:
-     textEn ≈ "Pizza! ของโปรดเลยครับ 🍕 แล้วพิซซ่าถาดโปรดของคุณเป็นยังไงครับ?"
+     textEn ≈ "Pizza! ของโปรดเลยครับ 🍕 แล้วพิซซ่าถาดโปรดของคุณเป็นยังไงครับ? What is pizza like?"
      guidedSpeaking: { stem:"Pizza is...", options:[
        { emoji:"😋", label:"delicious", speak:"Pizza is delicious." },
        { emoji:"🧀", label:"cheesy", speak:"Pizza is cheesy." },
        { emoji:"🌶️", label:"spicy", speak:"Pizza is spicy." }
      ] }
    - IF sushi:
-     textEn ≈ "Sushi! น่าทานมากครับ 🍣 แล้วซูชิที่คุณชอบเป็นยังไงครับ?"
+     textEn ≈ "Sushi! น่าทานมากครับ 🍣 แล้วซูชิที่คุณชอบเป็นยังไงครับ? What is sushi like?"
      guidedSpeaking: { stem:"Sushi is...", options:[
        { emoji:"🐟", label:"fresh", speak:"Sushi is fresh." },
        { emoji:"😋", label:"delicious", speak:"Sushi is delicious." },
        { emoji:"❤️", label:"healthy", speak:"Sushi is healthy." }
      ] }
    - IF somtam:
-     textEn ≈ "Somtam! แซ่บแน่นอน 🌶️ แล้วส้มตำของคุณรสชาติเป็นยังไงครับ?"
+     textEn ≈ "Somtam! แซ่บแน่นอน 🌶️ แล้วส้มตำของคุณรสชาติเป็นยังไงครับ? What is somtam like?"
      guidedSpeaking: { stem:"Somtam is...", options:[
        { emoji:"🌶️", label:"spicy", speak:"Somtam is spicy." },
        { emoji:"😋", label:"delicious", speak:"Somtam is delicious." },
@@ -3422,7 +3422,7 @@ Phase 3 — Drink Pairing
 
 3. Turn 3 — Drink Pairing (พูด + 3 choices)
    - textEn MUST be close to (insert THEIR food):
-     "น่าทานมากครับ! แล้วปกติคุณชอบดื่มอะไรคู่กับ [Pizza / Sushi / Somtam] ครับ? 🥤"
+     "น่าทานมากครับ! แล้วปกติคุณชอบดื่มอะไรคู่กับ [Pizza / Sushi / Somtam] ครับ? What do you usually drink with [pizza / sushi / somtam]? 🥤"
    - guidedSpeaking MUST (replace Food with their food, lowercase in speak):
      { stem:"I drink... with [food].", options:[
        { emoji:"🥤", label:"iced tea", speak:"I drink iced tea with [food]." },
@@ -3456,131 +3456,152 @@ Turn loop rules:
     titleEn: 'Home',
     titleTh: 'บ้าน',
     goalEn:
-      'Talk about your home, who you live with, and simple activities at home.',
-    goalTh: 'บอกประเภทที่พัก อาศัยอยู่กับใคร และกิจกรรมในบ้านได้',
+      'Say where you live, who you live with, and your favorite place at home.',
+    goalTh: 'บอกที่พัก คนที่อาศัยด้วย และมุมโปรดในบ้านได้',
     difficulty: 'beginner',
     languageMix: { thai: 70, english: 30 },
     estimatedMinutesMin: 4,
     estimatedMinutesMax: 5,
     targetPhrases: [
-      'house',
       'apartment',
+      'house',
       'family',
       'friends',
-      'partner',
       'alone',
       'living room',
+      'bedroom',
+      'kitchen',
+      'garden',
       'relax',
-      'I live in an apartment with my family',
-      'I live in an apartment alone',
+      'I live in an apartment',
+      'I live in a house',
+      'I live with my family',
+      'I live with friends',
+      'I live alone',
       'I like to relax in the living room',
-      'I live in an apartment and I like to relax in the living room',
     ],
-    maxTurns: 20,
-    systemInstruction: `Lesson: Home (Everyday English → About Me → 1.3)
-Goal: Talk about your home, who you live with, and simple activities at home.
+    maxTurns: 14,
+    systemInstruction: `Lesson: Home (Everyday English → About Me → 1.3) — REVISED with Everyday Choices
+Goal: Say home type (I live in…), who you live with (I live with… / I live alone), favorite place (I like to relax in the…), then mini-quiz recall.
 
 Target vocabulary:
-- apartment = อพาร์ตเมนต์
-- house = บ้านเดี่ยว / บ้านเป็นหลัง
-- family = ครอบครัว
-- friends = เพื่อน
-- partner = คนรัก / คู่ชีวิต
-- alone = คนเดียว
-- living room = ห้องนั่งเล่น
-- relax = พักผ่อน / ผ่อนคลาย
+- apartment / house
+- family / friends / alone
+- living room / bedroom / kitchen / garden
+- relax
 
 Target patterns:
-- I live in an apartment with [person].
-- I live in an apartment alone. (when they live alone)
-- I like to relax in the living room.
-- Combined challenge: I live in an apartment and I like to relax in the living room.
+- I live in an apartment. / I live in a house.
+- I live with my family. / I live with friends. / I live alone.
+- I like to relax in the [room].
 
 Teaching vs speaking (critical):
-- BEFORE any repeat task, ALWAYS map Thai → English first.
 - Ask only ONE speaking task or one question per turn.
+- Choice turns MUST return guidedSpeaking with stem + options[] (mic still required).
+- Soft-accept close variants (with/without period).
+- STT is English-only for answers. Ask/explain in {{L1}} OK.
+- FORBIDDEN: open free-talk; invent words outside the boards below.
 - Do NOT use "I'm ready" in this lesson.
-- Mid-lesson Q&A should be short and guided, not open free-talk.
-- Vocabulary lock: ONLY use apartment / house / family / friends / partner / alone / living room / relax unless the learner introduces their own home words.
-- For personalization, ask who they live with only in this lesson's personal question.
 
-Word & pattern meanings:
-- apartment = อพาร์ตเมนต์
-- house = บ้านเดี่ยว / บ้านเป็นหลัง
-- living room = ห้องนั่งเล่น
-- relax = พักผ่อน / ผ่อนคลาย
-- I live in an apartment with [person]. = ฉันอาศัยอยู่ในอพาร์ตเมนต์กับ...
-- I live in an apartment alone. = ฉันอาศัยอยู่ในอพาร์ตเมนต์คนเดียว
-- I like to relax in the living room. = ฉันชอบพักผ่อนในห้องนั่งเล่น
-- I live in an apartment and I like to relax in the living room. = ฉันอาศัยอยู่ในอพาร์ตเมนต์ และฉันชอบพักผ่อนในห้องนั่งเล่น
+Intro style: Warm & Friendly (~ชวนคุยชิลๆ). Cozy at-home vibe.
 
-Core Flow (progression milestones — NOT a fixed turn count):
-- Follow these core steps in order. Do not skip ahead.
-- Extra turns for praise, one retry, or short feedback MAY happen between steps — that is OK.
-- Keep the session short (~4–5 minutes).
+guidedSpeaking rules:
+- MUST return guidedSpeaking with stem + options[] (2–4 cards) on Turns 1–3.
+- Mini Quiz Turns 4–6: SINGLE hint card only (stem + emoji + label + speak) — NO options[] distractors.
+- Mic still required — learner speaks the full speak string (or close variant).
+- Omit guidedSpeaking on Turn 7 (Celebrate).
+- FORBIDDEN: emojiSpeak / emojiSpeakSet / emojiChoice on this lesson.
 
-Intro style for THIS lesson (required — opening turn only):
-- Style: Warm & Friendly (~ชวนคุยชิลๆ)
-- Mood: Relaxed, at-home comfort — like chatting on the sofa.
-- CRITICAL — ONE turn only (never waste a chat turn):
-  - Turn 1 MUST fuse: styled greeting/vibe + topic + teach first vocab + ask to พูดตาม ONLY that word.
-  - FORBIDDEN in opening: open chat questions that expect a conversational reply (e.g. "อยู่บ้านคนเดียวไหม?", "ชวนคุยเรื่องบ้านหน่อย").
-  - Warm cozy feel lives INSIDE the intro sentence — then fire straight into vocab in the SAME turn.
-  - Learner's first reply must be the vocab repeat, not free chat.
-- Keep opening to ~2–3 short sentences, then ONE speaking task. No monologue. No forced jokes.
-- Tone example (adapt, don't recite word-for-word): "สวัสดีครับ [Name]! พูดถึงบ้านหรือที่พักเนี่ยผ่อนคลายดีจริงๆ วันนี้เรียน Home กันครับ! มาเริ่มที่คำว่า apartment (อพาร์ตเมนต์) ก่อนเลย ลองพูดตามแค่นี้ครับ: apartment"
+Core Flow (ONE-WAY — do not skip / reorder):
 
-Phase 1: Hook & Vocab (~1 min) — Warm & Friendly
-1. SAME TURN: Warm intro by name + home vibe + teach apartment (อพาร์ตเมนต์ = apartment) + ask to repeat ONLY "apartment". Do NOT ask an open chat question first. (Opening → Repeat)
-2. Situational quiz — ask: "ถ้า 'บ้านเดี่ยว/บ้านเป็นหลัง' ภาษาอังกฤษระหว่าง house กับ apartment อันไหนครับ?"
-   Expected: "house". If wrong, gently correct and ask them to say "house" once. (Recognition → optional Repeat)
+Phase 1 — Home Type
 
-Phase 2: Pattern 1 & Personalize (~1.5 min)
-3. Model Pattern 1 — ถ้าจะบอกว่า "ฉันอาศัยอยู่ในอพาร์ตเมนต์กับครอบครัว" ให้พูดว่า "I live in an apartment with my family." ลองพูดตามครูนะครับ! (Repeat)
-4. Ask who they live with — ask the question in {{L1}} first, then immediately ask the SAME question in English.
-   Example: "ปกติคุณพักอาศัยอยู่กับใครครับ? Who do you live with?"
-   Accept short English answers (preferred) or Thai if needed, then map to English. (Short answer)
-   FORBIDDEN in this ask: answer scaffolds like "ลองตอบเป็นอังกฤษได้เลย เช่น ..." — only Thai Q + English Q.
-5. Apply — using THEIR choice:
-   - If they live with someone: "งั้นพูดว่า I live in an apartment with [User Choice] ครับ"
-   - If they said alone / คนเดียว: "งั้นพูดว่า I live in an apartment alone ครับ"
-   (Recall)
+1. Turn 1 — Home Type (2 choices)
+   - textEn MUST be close to:
+     "วันนี้เรามาคุยเรื่องที่อยู่อาศัยกันบ้างดีกว่า 🏠 ตอนนี้คุณพักอยู่อาศัยแบบไหนครับ? What kind of place do you live in?"
+   - guidedSpeaking MUST:
+     { stem:"I live in...", options:[
+       { emoji:"🏢", label:"Apartment", speak:"I live in an apartment." },
+       { emoji:"🏠", label:"House", speak:"I live in a house." }
+     ] }
+   - Soft-accept I live in an apartment / a house.
+   - After clear → Turn 2.
 
-Phase 3: Pattern 2 & Synthesis (~1.5 min)
-6. Model Pattern 2 — ถ้าจะบอกว่า "ฉันชอบพักผ่อนในห้องนั่งเล่น" ให้พูดว่า "I like to relax in the living room." ลองพูดตามครับ! (Repeat)
-7. Real-life synthesis — challenge them to combine home + activity:
-   "แล้วถ้าจะบอกว่า 'ฉันอาศัยอยู่ในอพาร์ตเมนต์ และฉันชอบพักผ่อนในห้องนั่งเล่น' จะพูดว่ายังไงครับ?"
-   Expected: "I live in an apartment and I like to relax in the living room." Accept close variants and give positive feedback. (Recall)
+Phase 2 — Who Do You Live With?
 
-Quick Check (Thai → English) — AFTER synthesis, BEFORE wrap-up:
-8. Give ONE Thai sentence. Do NOT show the English answer first. Ask them to say it in English.
-   Prompt: "ทดสอบสั้นๆ ครับ ถ้าจะบอกว่า 'ฉันชอบพักผ่อนในห้องนั่งเล่น' จะพูดภาษาอังกฤษยังไงครับ?"
-   Expected: "I like to relax in the living room."
-   If wrong/unclear: at most ONE gentle hint + one retry; then accept and move on. (Recall)
-   FORBIDDEN: reveal the full English target before they attempt.
+2. Turn 2 — Live With (3 choices)
+   - textEn MUST be close to:
+     "ฟังดูน่าอยู่มากเลยครับ! แล้วปกติคุณพักอยู่กับใครครับ? Who do you live with?"
+   - guidedSpeaking MUST:
+     { stem:"I live...", options:[
+       { emoji:"👨‍👩‍👧", label:"Family", speak:"I live with my family." },
+       { emoji:"👬", label:"Friends", speak:"I live with friends." },
+       { emoji:"🙂", label:"Alone", speak:"I live alone." }
+     ] }
+   - Soft-accept full sentence or clear alone / with family / with friends.
+   - After clear → Turn 3.
 
-Phase 4: Wrap-up & Celebrate (~30 sec)
-9. Briefly summarize apartment, house, living room, relax, and their live-with sentence. Celebrate with student's name once → set isLessonComplete = true (REQUIRED).
+Phase 3 — Favorite Place
 
-Turn loop rules (critical — never stall the learner):
-- Every non-final tutor turn MUST end with exactly one clear next action:
-  1) Repeat a word/sentence, OR
-  2) Recognition (guided answer), OR
-  3) Recall (guided say of a taught sentence).
-- Never end a turn with only explanation, praise, or feedback.
-- Ask only one question or speaking task at a time.
-- Keep most tutor turns under 2–3 short sentences.
-- Praise specifically but briefly.
-- You only see transcript TEXT, not audio — never invent pronunciation problems from text.
-- If the learner's transcript clearly matches the target, praise briefly and ADVANCE.
-- If the text truly does not match, gently ask for at most ONE retry.
-- After one retry (or two total attempts on the same item), accept and move on.
-- Accept natural variants when the meaning is clear.
-- Do not mark minor accent differences as wrong.
-- Focus on confidence and being understandable.
-- When Core Flow reaches Wrap-up & Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
+3. Turn 3 — Favorite Place (4 choices)
+   - textEn MUST be close to:
+     "เยี่ยมเลยครับ! แล้วเวลาอยู่บ้าน มุมไหนเป็นมุมโปรดที่คุณชอบไปนั่งชิลมากที่สุดครับ? 🛋️✨ Where is your favorite place to relax at home?"
+   - guidedSpeaking MUST:
+     { stem:"I like to relax in the...", options:[
+       { emoji:"🛋️", label:"Living room", speak:"I like to relax in the living room." },
+       { emoji:"🛏️", label:"Bedroom", speak:"I like to relax in the bedroom." },
+       { emoji:"🍳", label:"Kitchen", speak:"I like to relax in the kitchen." },
+       { emoji:"🌳", label:"Garden", speak:"I like to relax in the garden." }
+     ] }
+   - Soft-accept I like to relax in the [room].
+   - After clear → Turn 4.
+
+Phase 4 — Mini Quiz (Thai → English — ONE hint card only, no distractors)
+
+Quiz retry rule (Turns 4–6 — REQUIRED):
+- If wrong/unclear: gently show the correct English once + ask to say it again (ONE retry only). Keep the SAME single hint card.
+- If still wrong on the retry: accept, show the correct line once, then ADVANCE immediately.
+- NEVER loop more than one retry on the same quiz item.
+
+4. Turn 4 — Mini Quiz 1: apartment
+   - textEn MUST be close to:
+     "เยี่ยมมากครับ! เดี๋ยวเรามาลองทบทวนกันนิดนะ 😊 ถ้าจะบอกว่า \\"ฉันอาศัยอยู่ในอพาร์ตเมนต์\\" จะพูดภาษาอังกฤษว่าอย่างไรครับ?"
+   - guidedSpeaking MUST be a SINGLE hint (no options[] / no distractors):
+     { stem:"I live in...", emoji:"🏢", label:"Apartment", speak:"I live in an apartment." }
+   - Expected: I live in an apartment.
+   - After clear (or after 1 retry) → Turn 5.
+
+5. Turn 5 — Mini Quiz 2: family
+   - textEn MUST be close to:
+     "แล้วถ้าจะบอกว่า \\"ฉันอยู่กับครอบครัว\\" จะพูดว่าอย่างไรครับ?"
+   - guidedSpeaking MUST be a SINGLE hint:
+     { stem:"I live...", emoji:"👨‍👩‍👧", label:"Family", speak:"I live with my family." }
+   - Expected: I live with my family.
+   - After clear (or after 1 retry) → Turn 6.
+
+6. Turn 6 — Mini Quiz 3: living room
+   - textEn MUST be close to:
+     "ข้อสุดท้ายครับ 😊 \\"ฉันชอบพักผ่อนในห้องนั่งเล่น\\" จะพูดภาษาอังกฤษว่าอย่างไรครับ?"
+   - guidedSpeaking MUST be a SINGLE hint:
+     { stem:"I like to relax in the...", emoji:"🛋️", label:"Living room", speak:"I like to relax in the living room." }
+   - Expected: I like to relax in the living room.
+   - After clear (or after 1 retry) → Turn 7.
+
+Phase 5 — Celebrate
+
+7. Turn 7 — Celebrate (listen-only)
+   - textEn MUST be close to:
+     "สุดยอดครับ! 🎉 วันนี้คุณสามารถพูดเรื่องบ้านของตัวเองได้แล้ว ทั้งที่พัก คนที่อาศัยอยู่ด้วย และมุมโปรดในบ้าน เก่งมากครับ! 🍌"
+   - expectsUserSpeech=false. isLessonComplete=true (REQUIRED).
+   - Omit guidedSpeaking.
+
+Turn loop rules:
+- Every non-final turn ends with exactly one clear learner action.
+- Praise briefly when clear, then ADVANCE.
+- Mini Quiz (Turns 4–6): at most ONE gentle correct + retry; then accept and ADVANCE.
+- When Celebrate fires, isLessonComplete must be true. Otherwise false.`,
     openingPrompt:
-      'Start the Home lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. Intro style MUST be Warm & Friendly. CRITICAL: Turn 1 = warm home-vibe intro + teach apartment + ask to repeat ONLY "apartment" in the SAME turn — NEVER open with a chatty question that needs a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: house vs apartment quiz, Pattern 1 (I live in an apartment with my family) + ask who they live with in {{L1}} THEN the same question in English + apply their sentence (alone → I live in an apartment alone), Pattern 2 (I like to relax in the living room) + synthesis "I live in an apartment and I like to relax in the living room", Thai→English quick check, then celebrate. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start Home 1.3 (REVISED Everyday Choices) for this one learner only (private 1:1, never {{NO_GROUP}}). Intro style Warm & Friendly. CRITICAL Turn 1 = home intro + ask home type with guidedSpeaking 2 cards Apartment/House (I live in...) — expectsUserSpeech true. Do NOT use "I\'m ready". Turn2 who live with Family/Friends/Alone → Turn3 favorite place Living room/Bedroom/Kitchen/Garden → Turn4-6 Mini Quiz Thai→EN with ONE hint card each (Apartment / Family / Living room — no distractors). Quiz wrong → gentle correct + ONE retry only; still wrong → accept + ADVANCE. → Turn7 Celebrate listen-only isLessonComplete true. Return JSON matching schema. isLessonComplete must be false on opening.',
   },
   {
     lessonId: 'ee_about_me_work_school',
@@ -9761,7 +9782,7 @@ export const FOOD_FAVORITE_GUIDED_SPEAKING = {
 } as const;
 
 export function foodFavoriteOpeningText(_learnerFirstName: string): string {
-  return 'พูดถึงของโปรดเนี่ย นึกถึงแล้วหิวเลยเนอะ วันนี้มาคุยเรื่องของกินกัน! 😋 ปกติแล้วคุณชอบทานอะไรเป็นพิเศษครับ?';
+  return 'พูดถึงของโปรดเนี่ย นึกถึงแล้วหิวเลยเนอะ วันนี้มาคุยเรื่องของกินกันครับ! 😋 ปกติแล้วคุณชอบทานอะไรเป็นพิเศษครับ? What food do you like?';
 }
 
 const FOOD_DESCRIBE_BOARDS: Record<
@@ -9774,7 +9795,8 @@ const FOOD_DESCRIBE_BOARDS: Record<
   }
 > = {
   pizza: {
-    textEn: 'Pizza! ของโปรดเลยครับ 🍕 แล้วพิซซ่าถาดโปรดของคุณเป็นยังไงครับ?',
+    textEn:
+      'Pizza! ของโปรดเลยครับ 🍕 แล้วพิซซ่าถาดโปรดของคุณเป็นยังไงครับ? What is pizza like?',
     stem: 'Pizza is...',
     expectedSpeech: 'Pizza is delicious.',
     options: [
@@ -9784,7 +9806,8 @@ const FOOD_DESCRIBE_BOARDS: Record<
     ],
   },
   sushi: {
-    textEn: 'Sushi! น่าทานมากครับ 🍣 แล้วซูชิที่คุณชอบเป็นยังไงครับ?',
+    textEn:
+      'Sushi! น่าทานมากครับ 🍣 แล้วซูชิที่คุณชอบเป็นยังไงครับ? What is sushi like?',
     stem: 'Sushi is...',
     expectedSpeech: 'Sushi is fresh.',
     options: [
@@ -9794,7 +9817,8 @@ const FOOD_DESCRIBE_BOARDS: Record<
     ],
   },
   somtam: {
-    textEn: 'Somtam! แซ่บแน่นอน 🌶️ แล้วส้มตำของคุณรสชาติเป็นยังไงครับ?',
+    textEn:
+      'Somtam! แซ่บแน่นอน 🌶️ แล้วส้มตำของคุณรสชาติเป็นยังไงครับ? What is somtam like?',
     stem: 'Somtam is...',
     expectedSpeech: 'Somtam is spicy.',
     options: [
@@ -9824,7 +9848,7 @@ function foodDrinkBoard(food: FoodFavoriteId): {
 } {
   const display = foodDisplayName(food);
   return {
-    textEn: `น่าทานมากครับ! แล้วปกติคุณชอบดื่มอะไรคู่กับ ${display} ครับ? 🥤`,
+    textEn: `น่าทานมากครับ! แล้วปกติคุณชอบดื่มอะไรคู่กับ ${display} ครับ? What do you usually drink with ${food}? 🥤`,
     stem: `I drink... with ${food}.`,
     expectedSpeech: `I drink iced tea with ${food}.`,
     options: [
@@ -9988,7 +10012,7 @@ export function forceFoodGuidedSpeakingIfNeeded(
     board = {
       textEn:
         current.textEn?.trim() ||
-        'พูดถึงของโปรดเนี่ย นึกถึงแล้วหิวเลยเนอะ วันนี้มาคุยเรื่องของกินกัน! 😋 ปกติแล้วคุณชอบทานอะไรเป็นพิเศษครับ?',
+        'พูดถึงของโปรดเนี่ย นึกถึงแล้วหิวเลยเนอะ วันนี้มาคุยเรื่องของกินกันครับ! 😋 ปกติแล้วคุณชอบทานอะไรเป็นพิเศษครับ? What food do you like?',
       stem: FOOD_FAVORITE_GUIDED_SPEAKING.stem,
       expectedSpeech: 'I like pizza.',
       options: FOOD_FAVORITE_GUIDED_SPEAKING.options.map((o) => ({ ...o })),
@@ -10023,7 +10047,8 @@ export function forceFoodGuidedSpeakingIfNeeded(
   const options = board.options.map((o) => ({ ...o }));
   const first = options[0];
   return {
-    textEn: current.textEn?.trim() || board.textEn,
+    // Always pin scripted Thai+English cue so Eng questions aren't dropped.
+    textEn: board.textEn,
     textTh: current.textTh?.trim() || null,
     guidedSpeaking: {
       stem: board.stem,
@@ -10076,6 +10101,359 @@ export function forceFoodCelebrateIfNeeded(
     lang === 'english'
       ? /^(great|awesome|nice work|well done|amazing)/i.test(raw)
       : /^(เยี่ยม|เก่งมาก|สุดยอด|ดีมาก|ยอดเยี่ยม)/u.test(raw);
+  const textEn =
+    current.isTaskComplete && praiseOk && raw.length > 30 ? raw : body;
+
+  return {
+    textEn,
+    textTh: null,
+    expectsUserSpeech: false,
+    expectedSpeech: null,
+    guidedSpeaking: null,
+    emojiChoice: null,
+    isTaskComplete: true,
+  };
+}
+
+/** Home 1.3 — Turn 1 home-type board (also used on opening). */
+export const HOME_TYPE_GUIDED_SPEAKING = {
+  stem: 'I live in...',
+  options: [
+    { emoji: '🏢', label: 'Apartment', speak: 'I live in an apartment.' },
+    { emoji: '🏠', label: 'House', speak: 'I live in a house.' },
+  ],
+} as const;
+
+export function homeOpeningText(): string {
+  return 'วันนี้เรามาคุยเรื่องที่อยู่อาศัยกันบ้างดีกว่า 🏠 ตอนนี้คุณพักอยู่อาศัยแบบไหนครับ? What kind of place do you live in?';
+}
+
+export const HOME_BOARDS: Record<
+  number,
+  {
+    textEn: string;
+    stem: string;
+    expectedSpeech: string;
+    options: Array<{ emoji: string; label: string; speak: string }>;
+  }
+> = {
+  1: {
+    textEn: homeOpeningText(),
+    stem: 'I live in...',
+    expectedSpeech: 'I live in an apartment.',
+    options: [
+      { emoji: '🏢', label: 'Apartment', speak: 'I live in an apartment.' },
+      { emoji: '🏠', label: 'House', speak: 'I live in a house.' },
+    ],
+  },
+  2: {
+    textEn:
+      'ฟังดูน่าอยู่มากเลยครับ! แล้วปกติคุณพักอยู่กับใครครับ? Who do you live with?',
+    stem: 'I live...',
+    expectedSpeech: 'I live with my family.',
+    options: [
+      {
+        emoji: '👨‍👩‍👧',
+        label: 'Family',
+        speak: 'I live with my family.',
+      },
+      { emoji: '👬', label: 'Friends', speak: 'I live with friends.' },
+      { emoji: '🙂', label: 'Alone', speak: 'I live alone.' },
+    ],
+  },
+  3: {
+    textEn:
+      'เยี่ยมเลยครับ! แล้วเวลาอยู่บ้าน มุมไหนเป็นมุมโปรดที่คุณชอบไปนั่งชิลมากที่สุดครับ? 🛋️✨ Where is your favorite place to relax at home?',
+    stem: 'I like to relax in the...',
+    expectedSpeech: 'I like to relax in the living room.',
+    options: [
+      {
+        emoji: '🛋️',
+        label: 'Living room',
+        speak: 'I like to relax in the living room.',
+      },
+      {
+        emoji: '🛏️',
+        label: 'Bedroom',
+        speak: 'I like to relax in the bedroom.',
+      },
+      {
+        emoji: '🍳',
+        label: 'Kitchen',
+        speak: 'I like to relax in the kitchen.',
+      },
+      {
+        emoji: '🌳',
+        label: 'Garden',
+        speak: 'I like to relax in the garden.',
+      },
+    ],
+  },
+  4: {
+    textEn:
+      'เยี่ยมมากครับ! เดี๋ยวเรามาลองทบทวนกันนิดนะ 😊 ถ้าจะบอกว่า "ฉันอาศัยอยู่ในอพาร์ตเมนต์" จะพูดภาษาอังกฤษว่าอย่างไรครับ?',
+    stem: 'I live in...',
+    expectedSpeech: 'I live in an apartment.',
+    options: [
+      {
+        emoji: '🏢',
+        label: 'Apartment',
+        speak: 'I live in an apartment.',
+      },
+    ],
+  },
+  5: {
+    textEn:
+      'แล้วถ้าจะบอกว่า "ฉันอยู่กับครอบครัว" จะพูดว่าอย่างไรครับ?',
+    stem: 'I live...',
+    expectedSpeech: 'I live with my family.',
+    options: [
+      {
+        emoji: '👨‍👩‍👧',
+        label: 'Family',
+        speak: 'I live with my family.',
+      },
+    ],
+  },
+  6: {
+    textEn:
+      'ข้อสุดท้ายครับ 😊 "ฉันชอบพักผ่อนในห้องนั่งเล่น" จะพูดภาษาอังกฤษว่าอย่างไรครับ?',
+    stem: 'I like to relax in the...',
+    expectedSpeech: 'I like to relax in the living room.',
+    options: [
+      {
+        emoji: '🛋️',
+        label: 'Living room',
+        speak: 'I like to relax in the living room.',
+      },
+    ],
+  },
+};
+
+function normalizeHomeSpeech(userText: string): string {
+  return userText
+    .trim()
+    .toLowerCase()
+    .replace(/[.!?]+$/g, '')
+    .replace(/\s+/g, ' ');
+}
+
+function matchesHomeStep(step: number, userText: string): boolean {
+  const t = normalizeHomeSpeech(userText);
+  if (!t) return false;
+  switch (step) {
+    case 1:
+      return (
+        /\bi live in\b/.test(t) &&
+        (/\ban apartment\b/.test(t) || /\ba house\b/.test(t))
+      );
+    case 2:
+      return (
+        /\bi live with my family\b/.test(t) ||
+        /\bi live with friends\b/.test(t) ||
+        /\bi live alone\b/.test(t)
+      );
+    case 3:
+      return (
+        /\bi like to relax in the\b/.test(t) &&
+        (/\bliving room\b/.test(t) ||
+          /\bbedroom\b/.test(t) ||
+          /\bkitchen\b/.test(t) ||
+          /\bgarden\b/.test(t))
+      );
+    case 4:
+      return /\bi live in an apartment\b/.test(t);
+    case 5:
+      return /\bi live with my family\b/.test(t);
+    case 6:
+      return /\bi like to relax in the living room\b/.test(t);
+    default:
+      return false;
+  }
+}
+
+/** How many Home speak steps are cleared (0–6).
+ * Mini Quiz steps 4–6: correct clears immediately; after 2 attempts
+ * (wrong then retry wrong) soft-advance so the board cannot stall.
+ */
+export function homeLessonProgress(
+  history: Array<{ speaker: string; textEn?: string }>,
+): number {
+  let progress = 0;
+  let attemptsOnCurrent = 0;
+  for (const turn of history) {
+    if (turn.speaker !== 'user') continue;
+    const text = (turn.textEn ?? '').trim();
+    if (!text || text.startsWith('[') || text.startsWith('(')) continue;
+    const next = progress + 1;
+    if (next > 6) continue;
+    if (matchesHomeStep(next, text)) {
+      progress = next;
+      attemptsOnCurrent = 0;
+      continue;
+    }
+    // Mini Quiz (4–6): count failed attempts; advance after 2 tries.
+    if (next >= 4 && next <= 6) {
+      attemptsOnCurrent += 1;
+      if (attemptsOnCurrent >= 2) {
+        progress = next;
+        attemptsOnCurrent = 0;
+      }
+    }
+  }
+  return progress;
+}
+
+function homeBoardFromAiText(textEn: string): number | null {
+  const t = (textEn ?? '').toLowerCase();
+  if (!t) return null;
+  if (t.includes('ห้องนั่งเล่น') || t.includes('ข้อสุดท้าย')) return 6;
+  if (t.includes('อยู่กับครอบครัว')) return 5;
+  if (t.includes('อพาร์ตเมนต์') && t.includes('ทบทวน')) return 4;
+  if (
+    t.includes('มุมโปรด') ||
+    t.includes('ชอบไปนั่งชิล') ||
+    t.includes('favorite place to relax')
+  ) {
+    return 3;
+  }
+  if (
+    t.includes('พักอยู่กับใคร') ||
+    t.includes('อาศัยอยู่กับใคร') ||
+    t.includes('who do you live with')
+  ) {
+    return 2;
+  }
+  if (
+    t.includes('พักอยู่อาศัยแบบไหน') ||
+    t.includes('อาศัยอยู่แบบไหน') ||
+    t.includes('what kind of place do you live in') ||
+    t.includes('ที่อยู่อาศัย')
+  ) {
+    return 1;
+  }
+  return null;
+}
+
+/**
+ * Pin Home guidedSpeaking boards (Turns 1–6).
+ */
+export function forceHomeGuidedSpeakingIfNeeded(
+  lessonId: string,
+  _lang: LessonTeachingLanguage,
+  nextTurn: number,
+  history: Array<{ speaker: string; textEn?: string }>,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    guidedSpeaking: ReturnType<typeof normalizeGuidedSpeaking>;
+    expectsUserSpeech: boolean;
+    isTaskComplete: boolean;
+    expectedSpeech: string | null;
+  },
+): {
+  textEn: string;
+  textTh: string | null;
+  guidedSpeaking: NonNullable<ReturnType<typeof normalizeGuidedSpeaking>>;
+  expectsUserSpeech: true;
+  expectedSpeech: string;
+  emojiChoice: null;
+  isTaskComplete: false;
+} | null {
+  if (lessonId !== 'ee_about_me_home') return null;
+  if (current.isTaskComplete) return null;
+
+  const progress = homeLessonProgress(history);
+  if (progress >= 6) return null;
+
+  const fromText = homeBoardFromAiText(current.textEn ?? '');
+  let step = fromText;
+  if (step == null) {
+    if (progress >= 0 && progress <= 5) step = progress + 1;
+    else return null;
+  }
+
+  if (step < 1 || step > 6) return null;
+  if (nextTurn < 1 && step !== 1) return null;
+
+  const board = HOME_BOARDS[step];
+  if (!board) return null;
+
+  const stemOk =
+    current.guidedSpeaking?.stem
+      ?.toLowerCase()
+      .includes(board.stem.toLowerCase().slice(0, 8)) ?? false;
+  const isSingleHint = board.options.length === 1;
+  const optionsOk = isSingleHint
+    ? (current.guidedSpeaking?.options?.length ?? 0) < 2 &&
+      (current.guidedSpeaking?.emoji === board.options[0].emoji ||
+        current.guidedSpeaking?.speak === board.options[0].speak)
+    : (current.guidedSpeaking?.options?.length ?? 0) >= board.options.length;
+  if (
+    current.expectsUserSpeech &&
+    stemOk &&
+    optionsOk &&
+    current.guidedSpeaking
+  ) {
+    return null;
+  }
+
+  const options = board.options.map((o) => ({ ...o }));
+  const first = options[0];
+  return {
+    textEn: board.textEn,
+    textTh: current.textTh?.trim() || null,
+    guidedSpeaking: isSingleHint
+      ? {
+          stem: board.stem,
+          emoji: first.emoji,
+          speak: first.speak,
+          ...(first.label ? { label: first.label } : {}),
+        }
+      : {
+          stem: board.stem,
+          emoji: first.emoji,
+          speak: first.speak,
+          ...(first.label ? { label: first.label } : {}),
+          options,
+        },
+    expectsUserSpeech: true,
+    expectedSpeech: board.expectedSpeech,
+    emojiChoice: null,
+    isTaskComplete: false,
+  };
+}
+
+/**
+ * After Home mini quiz → Celebrate.
+ */
+export function forceHomeCelebrateIfNeeded(
+  lessonId: string,
+  _lang: LessonTeachingLanguage,
+  history: Array<{ speaker: string; textEn?: string }>,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    expectsUserSpeech: boolean;
+    isTaskComplete: boolean;
+  },
+): {
+  textEn: string;
+  textTh: string | null;
+  expectsUserSpeech: false;
+  expectedSpeech: null;
+  guidedSpeaking: null;
+  emojiChoice: null;
+  isTaskComplete: true;
+} | null {
+  if (lessonId !== 'ee_about_me_home') return null;
+  if (homeLessonProgress(history) < 6) return null;
+
+  const body =
+    'สุดยอดครับ! 🎉 วันนี้คุณสามารถพูดเรื่องบ้านของตัวเองได้แล้ว ทั้งที่พัก คนที่อาศัยอยู่ด้วย และมุมโปรดในบ้าน เก่งมากครับ! 🍌';
+
+  const raw = (current.textEn ?? '').trim();
+  const praiseOk = /^(เยี่ยม|เก่งมาก|สุดยอด|ดีมาก|ยอดเยี่ยม)/u.test(raw);
   const textEn =
     current.isTaskComplete && praiseOk && raw.length > 30 ? raw : body;
 

@@ -79,8 +79,12 @@ import {
   forceDailyRoutineGuidedSpeakingIfNeeded,
   forceFoodGuidedSpeakingIfNeeded,
   forceFoodCelebrateIfNeeded,
+  forceHomeGuidedSpeakingIfNeeded,
+  forceHomeCelebrateIfNeeded,
   FOOD_FAVORITE_GUIDED_SPEAKING,
+  HOME_TYPE_GUIDED_SPEAKING,
   foodFavoriteOpeningText,
+  homeOpeningText,
   forceSurvivalEmojiSpeakIfNeeded,
   forceSurvivalCelebrateAfterEmojiSpeakIfNeeded,
   looksLikeAroundTownRoleplayBridge,
@@ -419,6 +423,14 @@ export class SessionsController {
         });
         openingEmojiChoice = null;
       }
+      if (config.lessonId === 'ee_about_me_home') {
+        // Pin Home Type board on opening (Apartment/House).
+        openingGuidedSpeaking = normalizeGuidedSpeaking({
+          stem: HOME_TYPE_GUIDED_SPEAKING.stem,
+          options: HOME_TYPE_GUIDED_SPEAKING.options.map((o) => ({ ...o })),
+        });
+        openingEmojiChoice = null;
+      }
       // Opening is Hook — never start mid-roleplay.
       const openingRoleplayIntro = null;
       const openingRoleplayNpc = null;
@@ -427,23 +439,29 @@ export class SessionsController {
           ? transportHookOpeningText(teachingLanguage, learnerFirstName)
           : config.lessonId === 'ee_about_me_food'
             ? foodFavoriteOpeningText(learnerFirstName)
-            : reply.textEn;
+            : config.lessonId === 'ee_about_me_home'
+              ? homeOpeningText()
+              : reply.textEn;
       const openingExpectsSpeechFinal =
-        config.lessonId === 'ee_about_me_food'
+        config.lessonId === 'ee_about_me_food' ||
+        config.lessonId === 'ee_about_me_home'
           ? true
           : openingExpectsUserSpeech;
       const openingExpectedSpeechFinal =
         config.lessonId === 'ee_about_me_food'
           ? 'I like pizza.'
-          : openingExpectsSpeechFinal
-            ? reply.expectedSpeech?.trim() || null
-            : null;
+          : config.lessonId === 'ee_about_me_home'
+            ? 'I live in an apartment.'
+            : openingExpectsSpeechFinal
+              ? reply.expectedSpeech?.trim() || null
+              : null;
       const opening = {
         speaker: 'ai' as const,
         textEn: openingTextEn,
         textTh:
           config.lessonId === 'ee_around_town_transport' ||
-          config.lessonId === 'ee_about_me_food'
+          config.lessonId === 'ee_about_me_food' ||
+          config.lessonId === 'ee_about_me_home'
             ? null
             : reply.textTh,
         audioUrl: null,
@@ -485,7 +503,8 @@ export class SessionsController {
           aiResponse: openingTextEn,
           textTh:
             config.lessonId === 'ee_around_town_transport' ||
-            config.lessonId === 'ee_about_me_food'
+            config.lessonId === 'ee_about_me_food' ||
+            config.lessonId === 'ee_about_me_home'
               ? null
               : reply.textTh,
           isTaskComplete: false,
@@ -907,6 +926,52 @@ export class SessionsController {
         guidedSpeaking = forcedFoodCelebrate.guidedSpeaking;
         emojiChoice = forcedFoodCelebrate.emojiChoice;
         isTaskComplete = forcedFoodCelebrate.isTaskComplete;
+      }
+
+      // Home 1.3: pin Home Type / Live With / Favorite / Mini Quiz boards.
+      const forcedHome = forceHomeGuidedSpeakingIfNeeded(
+        config.lessonId,
+        teachingLang,
+        nextTurn,
+        data.turns,
+        {
+          textEn,
+          textTh,
+          guidedSpeaking,
+          expectsUserSpeech,
+          isTaskComplete,
+          expectedSpeech,
+        },
+      );
+      if (forcedHome != null) {
+        textEn = forcedHome.textEn;
+        textTh = forcedHome.textTh;
+        guidedSpeaking = forcedHome.guidedSpeaking;
+        expectsUserSpeech = forcedHome.expectsUserSpeech;
+        expectedSpeech = forcedHome.expectedSpeech;
+        emojiChoice = forcedHome.emojiChoice;
+        isTaskComplete = forcedHome.isTaskComplete;
+      }
+
+      const forcedHomeCelebrate = forceHomeCelebrateIfNeeded(
+        config.lessonId,
+        teachingLang,
+        data.turns,
+        {
+          textEn,
+          textTh,
+          expectsUserSpeech,
+          isTaskComplete,
+        },
+      );
+      if (forcedHomeCelebrate != null) {
+        textEn = forcedHomeCelebrate.textEn;
+        textTh = forcedHomeCelebrate.textTh;
+        expectsUserSpeech = forcedHomeCelebrate.expectsUserSpeech;
+        expectedSpeech = forcedHomeCelebrate.expectedSpeech;
+        guidedSpeaking = forcedHomeCelebrate.guidedSpeaking;
+        emojiChoice = forcedHomeCelebrate.emojiChoice;
+        isTaskComplete = forcedHomeCelebrate.isTaskComplete;
       }
 
       const forcedSmartShopperCelebrate = forceSmartShopperCelebrateIfNeeded(
