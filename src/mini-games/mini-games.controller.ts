@@ -21,6 +21,7 @@ type AuthedRequest = { user: User };
 const ALLOWED_MINI_GAME_IDS = new Set([
   'emoji_speak_first_contact',
   'speak_challenge_ee_everyday_life_1',
+  'word_choice_ee_about_me_describe',
 ]);
 
 class EvaluateSpeakChallengeDto {
