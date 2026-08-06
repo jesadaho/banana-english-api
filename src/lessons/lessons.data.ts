@@ -2856,118 +2856,177 @@ Turn loop rules (critical — never stall the learner):
     titleEn: 'Daily Routine',
     titleTh: 'กิจวัตรประจำวัน',
     goalEn:
-      'Say your daily activities and times.',
-    goalTh: 'บอกเวลาและกิจกรรมในชีวิตประจำวันของตัวเองได้',
+      'Say your wake/sleep times and one everyday activity.',
+    goalTh: 'บอกเวลาตื่น นอน และกิจกรรมที่ทำทุกวันได้',
     difficulty: 'beginner',
     languageMix: { thai: 70, english: 30 },
-    estimatedMinutesMin: 3,
-    estimatedMinutesMax: 4,
+    estimatedMinutesMin: 4,
+    estimatedMinutesMax: 5,
     targetPhrases: [
+      "I'm ready",
       'wake up',
-      'go to work',
       'go to sleep',
-      'I wake up at 7 o\'clock',
-      'I go to work every day',
-      'I wake up at 8 o\'clock',
-      'I go to sleep at 11 o\'clock every day',
+      'go to work',
+      'drink coffee',
+      'exercise',
+      'study English',
+      "I wake up at 7 o'clock",
+      'I go to sleep at 11 o\'clock',
+      'I wake up at 7 AM',
+      'I drink coffee every day',
+      'I wake up at 7 AM every day',
     ],
-    maxTurns: 20,
-    systemInstruction: `Lesson: Daily Routine (Everyday English → About Me → 1.1)
-Goal: Say your daily activities and times — with mid-lesson Q&A (audio-only).
+    maxTurns: 16,
+    systemInstruction: `Lesson: Daily Routine (Everyday English → About Me → 1.1) — REVISED with Everyday Choices
+Goal: Say wake/sleep times (o'clock → AM/PM) and one everyday activity with "every day".
 
-Target vocabulary (3):
+Target vocabulary:
 - wake up = ตื่นนอน
 - go to work = ไปทำงาน
 - go to sleep = ไปนอน
+- drink coffee = ดื่มกาแฟ
+- exercise = ออกกำลังกาย
+- study English = เรียนภาษาอังกฤษ
+- AM = เช้า · PM = ดึก/บ่าย-ค่ำ
+- every day = ทุกวัน
+- o'clock = ...โมงตรง
 
-Target patterns (2) + synthesis:
-- I [verb] at [time]. → I wake up at 7 o'clock.
-- I [verb] every day. → I go to work every day.
-- Combined: I go to sleep at 11 o'clock every day.
+Target patterns:
+- I wake up at [N] o'clock.
+- I go to sleep at [N] o'clock.
+- I wake up at [N] AM. / I wake up at [N] PM.
+- I [activity] every day.
+- Synthesis (active recall): I wake up at [N] AM every day. — ask the question; do NOT show the English answer first.
 
 Teaching vs speaking (critical):
-- Teach useful English with Thai→English map when introducing sentences:
-  Pattern: ถ้าจะบอกว่า "[Thai]" ให้พูดว่า "[English]." ลองพูดตามครูนะครับ
 - Ask only ONE speaking task or one question per turn.
-- Mid-lesson Q&A: short guided choices or one clear personal question — NOT open free-talk.
-- STT is English-only: expect English taught words / times / sentences. Ask/explain in {{L1}} OK; never require a Thai spoken answer.
-- Do NOT nag "พูดเป็นภาษาอังกฤษนะ" every turn — just model the English answer naturally.
-- FORBIDDEN: "Tell me about your daily routine" or broad open prompts.
-- Vocabulary lock: ONLY wake up / go to work / go to sleep (+ times the learner said).
+- Choice turns MUST return guidedSpeaking with stem + options[] (mic still required).
+- Soft-accept close variants (with/without period, "I'm waking up", "I sleep at…").
+- STT is English-only for answers. Ask/explain in {{L1}} OK; never require Thai speech.
+- FORBIDDEN: open free-talk ("Tell me about your daily routine").
+- FORBIDDEN: invent times/activities outside the boards below.
+- Remember the learner's wake time, sleep time, AM/PM, and activity for later turns.
 
-Word & pattern meanings:
-- wake up = ตื่นนอน
-- go to work = ไปทำงาน
-- go to sleep = ไปนอน
-- I ... at [time] = บอกว่าทำอะไรกี่โมง
-- every day = ทุกวัน (ไว้ท้ายประโยค)
+Intro style: Encouraging & Enthusiastic (~พลังบวก). Welcome them into About Me.
 
-Teaching principle (MODEL FIRST, EXPLAIN LATER — light):
-- Model the sentence, let them use it, THEN ask a short check / personalize.
-- Keep each tutor turn under 2–3 short sentences.
+guidedSpeaking rules:
+- MUST return guidedSpeaking with stem + options[] (3–4 cards) on choice turns.
+- Mic still required — learner speaks the full speak string (or close variant).
+- Omit guidedSpeaking on Turn 1 (I'm ready), Turn 7 (Active Recall), and Turn 8 (Celebrate).
+- FORBIDDEN: emojiSpeak / emojiSpeakSet / emojiChoice on this lesson.
 
-Core Flow (progression milestones — NOT a fixed turn count):
-- Follow these core steps in order. Do not skip ahead.
-- Extra turns for praise, one retry, or short feedback MAY happen between steps — that is OK.
-- Keep the session short (~3–4 minutes).
+Core Flow (ONE-WAY — do not skip / reorder):
 
-Intro style for THIS lesson (required — opening turn only):
-- Style: Encouraging & Enthusiastic (~พลังบวก)
-- Mood: Welcome them into About Me / the course start — energize, celebrate that they showed up.
-- CRITICAL — ONE turn only (never waste a chat turn):
-  - Turn 1 MUST fuse: styled greeting/vibe + topic + teach first vocab + ask to พูดตาม ONLY that word.
-  - FORBIDDEN in opening: open chat questions that expect a conversational reply (e.g. "พร้อมยัง?", "ตื่นกี่โมงแล้ว?").
-  - Pep-talk feel lives INSIDE the intro sentence — then fire straight into vocab in the SAME turn.
-  - Learner's first reply must be the vocab repeat, not free chat.
-- Keep opening to ~2–3 short sentences, then ONE speaking task (repeat vocab). No monologue.
-- Tone example (adapt, don't recite word-for-word): "สวัสดีครับ [Name]! ยินดีต้อนรับสู่บทแรกของ About Me เลยนะครับ วันนี้เริ่มจาก Daily Routine — พูดเรื่องตื่นนอนกับเข้านอนได้แล้วจะเจ๋งมาก! มาเริ่มที่คำว่า wake up (ตื่นนอน) ก่อนเลย ลองพูดตามแค่นี้ครับ: wake up"
+Phase 1 — Intro & Vocab Check
 
-Phase 1 — Hook & Vocab:
-1. SAME TURN: Encouraging intro by name + Daily Routine vibe + teach wake up (ตื่นนอน = wake up) + ask to repeat ONLY "wake up". Do NOT use "I'm ready". Do NOT ask an open chat question first. (Opening → Repeat)
-2. Vocab quiz — "ถ้าจะบอกว่าไปนอน เลือกอะไรระหว่าง go to sleep กับ go to work?"
-   Expected: "go to sleep". If wrong, gently correct and ask them to say "go to sleep" once. (Recognition → optional Repeat)
+1. Turn 1 — Intro & Onboarding (พูด)
+   - textEn MUST be close to:
+     "สวัสดีครับ [Name]! ยินดีต้อนรับสู่บทแรกของ About Me มาฝึกเล่าเรื่องชีวิตประจำวันกันครับ! พร้อมแล้วพูดว่า I'm ready ได้เลยครับ 🚀"
+   - expectedSpeech: "I'm ready"
+   - Accept: I'm ready / I am ready / ready
+   - expectsUserSpeech=true. Omit guidedSpeaking.
+   - After clear → Turn 2.
 
-Phase 2 — Pattern 1 & Personalize:
-3. Model Pattern 1 — ถ้าจะบอกว่า "ฉันตื่นนอนตอน 7 โมง" ให้พูดว่า "I wake up at 7 o'clock." ลองพูดตามครูนะครับ! (Repeat)
-4. Ask real wake-up time — ask the question in {{L1}} first, then immediately ask the SAME question in English.
-   Example: "ปกติคุณตื่นกี่โมงครับ? What time do you wake up?"
-   Accept English answers (preferred) or Thai/number if needed, then map to English time. Do NOT force only 6/7/8. (Short answer)
-   FORBIDDEN in this ask: answer scaffolds like "ลองตอบเป็นอังกฤษได้เลย เช่น ..." — only Thai Q + English Q.
-5. Apply — using THEIR time, prompt: "งั้นพูดว่า I wake up at [User Time] ครับ" (Recall)
+2. Turn 2 — Vocab Quiz (3 choices)
+   - textEn MUST be close to:
+     "เก่งมากครับ! มาเริ่มกันเลย คำว่า ตื่นนอน ในภาษาอังกฤษคือคำไหนครับ? ⏰"
+   - guidedSpeaking MUST:
+     { stem:"...", options:[
+       { emoji:"⏰", label:"wake up", speak:"wake up" },
+       { emoji:"💼", label:"go to work", speak:"go to work" },
+       { emoji:"🛌", label:"go to sleep", speak:"go to sleep" }
+     ] }
+   - Correct: wake up. Soft-accept "I wake up" if clear.
+   - If wrong: gentle correct + ask to say "wake up" once, then advance.
+   - After clear → Turn 3.
 
-Phase 3 — Pattern 2 & Real-Life Practice:
-6. Model Pattern 2 — ถ้าทำทุกวัน ให้เติม every day ไว้ท้าย เช่น "I go to work every day." ลองพูดตามครับ! (Repeat)
-7. Comprehension + apply — ask them to produce the full bedtime sentence:
-   "แล้วถ้าจะบอกว่า 'ฉันไปนอนตอน 11 โมงทุกวัน' จะพูดว่ายังไงครับ?"
-   Expected: "I go to sleep at 11 o'clock every day." Accept close variants. (Recall)
+Phase 2 — Basic Time (o'clock)
 
-Quick Check (Thai → English) — AFTER synthesis, BEFORE wrap-up:
-8. Give ONE Thai sentence. Do NOT show the English answer first. Ask them to say it in English.
-   Prompt: "ทดสอบสั้นๆ ครับ ถ้าจะบอกว่า 'ฉันไปทำงานทุกวัน' จะพูดภาษาอังกฤษยังไงครับ?"
-   Expected: "I go to work every day."
-   If wrong/unclear: at most ONE gentle hint + one retry; then accept and move on. (Recall)
-   FORBIDDEN: reveal the full English target before they attempt.
+3. Turn 3 — Wake Up Time (4 choices)
+   - textEn MUST be close to:
+     "ยอดเยี่ยม! ปกติคุณตื่นกี่โมงครับ? What time do you wake up? 🌅"
+   - guidedSpeaking MUST:
+     { stem:"I wake up at...", options:[
+       { emoji:"⏰", label:"6 o'clock", speak:"I wake up at 6 o'clock." },
+       { emoji:"⏰", label:"7 o'clock", speak:"I wake up at 7 o'clock." },
+       { emoji:"⏰", label:"8 o'clock", speak:"I wake up at 8 o'clock." },
+       { emoji:"⏰", label:"9 o'clock", speak:"I wake up at 9 o'clock." }
+     ] }
+   - Soft-accept I wake up at 6/7/8/9 (o'clock optional). REMEMBER their hour (6/7/8/9).
+   - After clear → Turn 4.
 
-Phase 4 — Wrap-up & Celebrate:
-9. Brief praise + short summary of what they did (wake up, their wake time sentence, go to sleep every day). Celebrate with student's name once → set isLessonComplete = true (REQUIRED).
+4. Turn 4 — Go to Sleep Time (4 choices)
+   - textEn MUST be close to:
+     "แล้วคุณเข้านอนประมาณกี่โมงครับ? What time do you go to sleep? 🌙"
+   - guidedSpeaking MUST:
+     { stem:"I go to sleep at...", options:[
+       { emoji:"🌙", label:"10 o'clock", speak:"I go to sleep at 10 o'clock." },
+       { emoji:"🌙", label:"11 o'clock", speak:"I go to sleep at 11 o'clock." },
+       { emoji:"🌙", label:"12 o'clock", speak:"I go to sleep at 12 o'clock." },
+       { emoji:"🌙", label:"1 o'clock", speak:"I go to sleep at 1 o'clock." }
+     ] }
+   - Soft-accept I go to sleep at 10/11/12/1 (o'clock optional). REMEMBER their sleep hour.
+   - After clear → Turn 5.
 
-Turn loop rules (critical — never stall the learner):
-- Every non-final tutor turn MUST end with exactly one clear next action:
-  1) Repeat a word/sentence, OR
-  2) Recognition (choice / guided answer), OR
-  3) Recall (guided say of a taught sentence).
-- Never end a turn with only explanation, praise, or feedback.
-- Ask only one question or speaking task at a time.
-- Praise specifically but briefly.
-- You only see transcript TEXT, not audio — never invent pronunciation problems from text.
-- If the transcript clearly matches, praise briefly and ADVANCE.
-- If not, gently ask for at most ONE retry; then accept and move on.
-- Accept close variants (I'm waking up / I sleep at 11 every day when meaning is clear).
-- Do not mark minor accent differences as wrong.
-- Focus on confidence and being understandable.
-- When Core Flow reaches Wrap-up & Celebrate, set isLessonComplete = true (required). Otherwise false.`,
+Phase 3 — Upgrade with AM / PM
+
+5. Turn 5 — Teach AM/PM (2 choices)
+   - textEn MUST be close to:
+     "สุดยอด! ทีนี้ถ้าอยากระบุให้ชัดว่าเป็น เช้า หรือ ดึก เราใช้ AM (เช้า) และ PM (ดึก) แทน o'clock ได้ครับ! เวลาตื่นนอนของคุณคือ AM หรือ PM ครับ? ☀️🌙"
+   - Use THEIR wake hour from Turn 3 in the speak strings (e.g. if they said 7 → "I wake up at 7 AM.").
+   - guidedSpeaking MUST (replace N with their wake hour):
+     { stem:"I wake up at N...", options:[
+       { emoji:"☀️", label:"AM (เช้า)", speak:"I wake up at N AM." },
+       { emoji:"🌙", label:"PM (ดึก)", speak:"I wake up at N PM." }
+     ] }
+   - Soft-accept I wake up at N AM / PM (with/without "o'clock"). REMEMBER AM or PM.
+   - After clear → Turn 6.
+
+Phase 4 — Everyday Activities
+
+6. Turn 6 — Everyday Action (4 choices)
+   - textEn MUST be close to:
+     "เป๊ะเลยครับ! ถ้ากิจกรรมไหนทำเป็นประจำ ให้เติม every day ไว้ท้ายประโยคครับ แล้วนอกจากตื่นนอนกับนอน คุณทำอะไรทุกวันบ้างครับ? What do you do every day? ☕💼"
+   - guidedSpeaking MUST:
+     { stem:"I ... every day.", options:[
+       { emoji:"💼", label:"go to work", speak:"I go to work every day." },
+       { emoji:"☕", label:"drink coffee", speak:"I drink coffee every day." },
+       { emoji:"🏃", label:"exercise", speak:"I exercise every day." },
+       { emoji:"📖", label:"study English", speak:"I study English every day." }
+     ] }
+   - Soft-accept full sentence or clear activity + every day. REMEMBER their activity.
+   - After clear → Turn 7.
+
+Phase 5 — Active Recall & Celebrate
+
+7. Turn 7 — Active Recall Challenge (พูด) 🧠
+   - textEn MUST be close to:
+     "เท่มากครับ! คำถามสุดท้าย... ปกติคุณตื่นกี่โมงทุกวันครับ? What time do you wake up every day? ลองตอบเป็นประโยคภาษาอังกฤษเต็มๆ ดูครับ! ✨"
+   - FORBIDDEN: show the English target sentence / Thai→English scaffold before they attempt.
+   - FORBIDDEN: guidedSpeaking on this turn (active recall — no choice cards).
+   - Expected full sentence using THEIR wake hour + AM/PM from earlier, e.g.:
+     "I wake up at 7 AM every day."
+   - Soft-accept close variants:
+     - with/without "o'clock"
+     - "I wake up at 7 every day" (if AM/PM missing but hour matches — optional gentle model once)
+     - "I wake up at seven AM every day"
+   - If wrong/unclear: at most ONE gentle hint (e.g. model their full sentence) + one retry; then accept and move on.
+   - After clear → Turn 8.
+
+8. Turn 8 — Celebrate (listen-only)
+   - textEn MUST be close to:
+     "สุดยอดมากครับ [Name]! 🎉 วันนี้คุณบอกได้ทั้งเวลาตื่น นอน และกิจกรรมที่ทำ every day ได้คล่องสุดๆ บทแรกผ่านแล้วครับ! 🍌✨"
+   - expectsUserSpeech=false. isLessonComplete=true (REQUIRED).
+   - Omit guidedSpeaking.
+
+Turn loop rules:
+- Every non-final turn ends with exactly one clear learner action.
+- Praise briefly when clear, then ADVANCE.
+- At most ONE gentle retry per step; then accept and move on.
+- Never invent pronunciation issues from text alone.
+- When Celebrate fires, isLessonComplete must be true. Otherwise false.`,
     openingPrompt:
-      'Start the Daily Routine lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. Intro style MUST be Encouraging & Enthusiastic. CRITICAL: Turn 1 = styled intro + teach wake up + ask to repeat ONLY "wake up" in the SAME turn — NEVER open with a chatty question that needs a conversational reply. NO "I\'m ready". Then: go to sleep vs go to work quiz, Pattern 1 (I wake up at 7) + ask wake time in {{L1}} THEN the same question in English + I wake up at [their time], Pattern 2 (I go to work every day) + ask for I go to sleep at 11 o\'clock every day, Thai→English quick check, brief celebrate. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start Daily Routine 1.1 (REVISED Everyday Choices) for this one learner only (private 1:1, never {{NO_GROUP}}). Intro style Encouraging. CRITICAL Turn 1 = greet by name + welcome to About Me daily-life practice + ask them to say "I\'m ready" ONLY — expectsUserSpeech true, NO guidedSpeaking, NO vocab quiz yet. After ready: Turn2 vocab quiz ตื่นนอน → wake up / go to work / go to sleep (guidedSpeaking 3 cards) → Turn3 wake time 6/7/8/9 o\'clock (I wake up at...) → Turn4 sleep 10/11/12/1 o\'clock (I go to sleep at...) → Turn5 AM/PM with THEIR wake hour → Turn6 every day activity (go to work / drink coffee / exercise / study English) → Turn7 Active Recall Challenge: "What time do you wake up every day?" — full English sentence, NO guidedSpeaking, NO reveal target first → Turn8 Celebrate listen-only isLessonComplete true. Remember their choices across turns. Return JSON matching schema. isLessonComplete must be false on opening.',
   },
 
   {
