@@ -77,6 +77,10 @@ import {
   forceSmartShopperGuidedSpeakingIfNeeded,
   forceSmartShopperCelebrateIfNeeded,
   forceDailyRoutineGuidedSpeakingIfNeeded,
+  forceFoodGuidedSpeakingIfNeeded,
+  forceFoodCelebrateIfNeeded,
+  FOOD_FAVORITE_GUIDED_SPEAKING,
+  foodFavoriteOpeningText,
   forceSurvivalEmojiSpeakIfNeeded,
   forceSurvivalCelebrateAfterEmojiSpeakIfNeeded,
   looksLikeAroundTownRoleplayBridge,
@@ -405,23 +409,46 @@ export class SessionsController {
         });
         openingEmojiChoice = null;
       }
+      if (config.lessonId === 'ee_about_me_food') {
+        // Pin Favorite Food board on opening (I like pizza/sushi/somtam).
+        openingGuidedSpeaking = normalizeGuidedSpeaking({
+          stem: FOOD_FAVORITE_GUIDED_SPEAKING.stem,
+          options: FOOD_FAVORITE_GUIDED_SPEAKING.options.map((o) => ({
+            ...o,
+          })),
+        });
+        openingEmojiChoice = null;
+      }
       // Opening is Hook — never start mid-roleplay.
       const openingRoleplayIntro = null;
       const openingRoleplayNpc = null;
       const openingTextEn =
         config.lessonId === 'ee_around_town_transport'
           ? transportHookOpeningText(teachingLanguage, learnerFirstName)
-          : reply.textEn;
+          : config.lessonId === 'ee_about_me_food'
+            ? foodFavoriteOpeningText(learnerFirstName)
+            : reply.textEn;
+      const openingExpectsSpeechFinal =
+        config.lessonId === 'ee_about_me_food'
+          ? true
+          : openingExpectsUserSpeech;
+      const openingExpectedSpeechFinal =
+        config.lessonId === 'ee_about_me_food'
+          ? 'I like pizza.'
+          : openingExpectsSpeechFinal
+            ? reply.expectedSpeech?.trim() || null
+            : null;
       const opening = {
         speaker: 'ai' as const,
         textEn: openingTextEn,
         textTh:
-          config.lessonId === 'ee_around_town_transport' ? null : reply.textTh,
+          config.lessonId === 'ee_around_town_transport' ||
+          config.lessonId === 'ee_about_me_food'
+            ? null
+            : reply.textTh,
         audioUrl: null,
-        expectsUserSpeech: openingExpectsUserSpeech,
-        expectedSpeech: openingExpectsUserSpeech
-          ? reply.expectedSpeech?.trim() || null
-          : null,
+        expectsUserSpeech: openingExpectsSpeechFinal,
+        expectedSpeech: openingExpectedSpeechFinal,
         scene: reply.scene ?? null,
         emojiSpeak: enrichEmojiSpeakForLesson(
           config.lessonId,
@@ -457,15 +484,16 @@ export class SessionsController {
         opening: {
           aiResponse: openingTextEn,
           textTh:
-            config.lessonId === 'ee_around_town_transport' ? null : reply.textTh,
+            config.lessonId === 'ee_around_town_transport' ||
+            config.lessonId === 'ee_about_me_food'
+              ? null
+              : reply.textTh,
           isTaskComplete: false,
           updatedCheckpoints: {},
           feedbackHints: { mispronouncedWords: [] as string[] },
           currentTurn: 0,
-          expectsUserSpeech: openingExpectsUserSpeech,
-          expectedSpeech: openingExpectsUserSpeech
-            ? reply.expectedSpeech?.trim() || null
-            : null,
+          expectsUserSpeech: openingExpectsSpeechFinal,
+          expectedSpeech: openingExpectedSpeechFinal,
           scene: reply.scene,
           emojiSpeak: enrichEmojiSpeakForLesson(
             config.lessonId,
@@ -831,6 +859,54 @@ export class SessionsController {
         expectedSpeech = forcedDailyRoutine.expectedSpeech;
         emojiChoice = forcedDailyRoutine.emojiChoice;
         isTaskComplete = forcedDailyRoutine.isTaskComplete;
+      }
+
+      // Food & Drinks 1.2: pin Favorite / Describe / Drink boards.
+      const forcedFood = forceFoodGuidedSpeakingIfNeeded(
+        config.lessonId,
+        teachingLang,
+        nextTurn,
+        data.turns,
+        {
+          textEn,
+          textTh,
+          guidedSpeaking,
+          expectsUserSpeech,
+          isTaskComplete,
+          expectedSpeech,
+        },
+      );
+      if (forcedFood != null) {
+        textEn = forcedFood.textEn;
+        textTh = forcedFood.textTh;
+        guidedSpeaking = forcedFood.guidedSpeaking;
+        expectsUserSpeech = forcedFood.expectsUserSpeech;
+        expectedSpeech = forcedFood.expectedSpeech;
+        emojiChoice = forcedFood.emojiChoice;
+        isTaskComplete = forcedFood.isTaskComplete;
+      }
+
+      const forcedFoodCelebrate = forceFoodCelebrateIfNeeded(
+        config.lessonId,
+        teachingLang,
+        data.turns,
+        data.learnerFirstName ??
+          learnerNameFallback(teachingLanguageFromConfig(config)),
+        {
+          textEn,
+          textTh,
+          expectsUserSpeech,
+          isTaskComplete,
+        },
+      );
+      if (forcedFoodCelebrate != null) {
+        textEn = forcedFoodCelebrate.textEn;
+        textTh = forcedFoodCelebrate.textTh;
+        expectsUserSpeech = forcedFoodCelebrate.expectsUserSpeech;
+        expectedSpeech = forcedFoodCelebrate.expectedSpeech;
+        guidedSpeaking = forcedFoodCelebrate.guidedSpeaking;
+        emojiChoice = forcedFoodCelebrate.emojiChoice;
+        isTaskComplete = forcedFoodCelebrate.isTaskComplete;
       }
 
       const forcedSmartShopperCelebrate = forceSmartShopperCelebrateIfNeeded(

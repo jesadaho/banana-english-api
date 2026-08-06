@@ -2989,10 +2989,10 @@ Phase 4 — Everyday Activities
      "เป๊ะเลยครับ! ถ้ากิจกรรมไหนทำเป็นประจำ ให้เติม every day ไว้ท้ายประโยคครับ แล้วนอกจากตื่นนอนกับนอน คุณทำอะไรทุกวันบ้างครับ? What do you do every day? ☕💼"
    - guidedSpeaking MUST:
      { stem:"I ... every day.", options:[
-       { emoji:"💼", label:"go to work (ไปทำงาน)", speak:"I go to work every day." },
-       { emoji:"☕", label:"drink coffee (ดื่มกาแฟ)", speak:"I drink coffee every day." },
-       { emoji:"🏃", label:"exercise (ออกกำลังกาย)", speak:"I exercise every day." },
-       { emoji:"📖", label:"study English (เรียนภาษาอังกฤษ)", speak:"I study English every day." }
+       { emoji:"💼", label:"go to work", speak:"I go to work every day." },
+       { emoji:"☕", label:"drink coffee", speak:"I drink coffee every day." },
+       { emoji:"🏃", label:"exercise", speak:"I exercise every day." },
+       { emoji:"📖", label:"study English", speak:"I study English every day." }
      ] }
    - Soft-accept full sentence or clear activity + every day. REMEMBER their activity.
    - After clear → Turn 7.
@@ -3321,142 +3321,133 @@ Turn loop rules (critical — never stall the learner):
     titleEn: 'Food & Drinks',
     titleTh: 'อาหารและเครื่องดื่ม',
     goalEn:
-      'Talk about meals, preferences, and simple eating habits.',
-    goalTh: 'บอกมื้ออาหาร ความชอบ และนิสัยการกินพื้นฐานได้',
+      'Say a favorite food, describe it, and name a drink to go with it.',
+    goalTh: 'บอกอาหารโปรด อธิบายรสชาติ และเครื่องดื่มที่ดื่มคู่กันได้',
     difficulty: 'beginner',
     languageMix: { thai: 70, english: 30 },
-    estimatedMinutesMin: 5,
-    estimatedMinutesMax: 6,
+    estimatedMinutesMin: 3,
+    estimatedMinutesMax: 4,
     targetPhrases: [
-      'breakfast',
-      'lunch',
-      'dinner',
-      'coffee',
-      'tea',
-      'bread',
-      'spicy food',
+      'pizza',
+      'sushi',
+      'somtam',
       'delicious',
-      'I usually have coffee for breakfast',
-      'I usually have tea for breakfast',
-      'I usually have bread for breakfast',
-      'I love spicy food',
-      'Dinner is delicious',
-      'Dinner is delicious and I love spicy food',
+      'cheesy',
+      'spicy',
+      'fresh',
+      'healthy',
+      'iced tea',
+      'hot coffee',
+      'fruit juice',
+      'I like pizza',
+      'Pizza is delicious',
+      'I drink iced tea with pizza',
     ],
-    maxTurns: 24,
-    systemInstruction: `Lesson: Food & Drinks (Everyday English → About Me → 1.2)
-Goal: Talk about meals, preferences, and simple eating habits.
+    maxTurns: 12,
+    systemInstruction: `Lesson: Food & Drinks (Everyday English → About Me → 1.2) — REVISED with Everyday Choices
+Goal: Say a favorite food (I like…), describe it ([Food] is…), and pair a drink (I drink… with…).
 
 Target vocabulary:
-- breakfast = อาหารเช้า
-- lunch = อาหารเที่ยง
-- dinner = อาหารเย็น
-- coffee = กาแฟ
-- tea = ชา
-- bread = ขนมปัง
-- spicy food = อาหารเผ็ด
-- delicious = อร่อย
+- pizza / sushi / somtam
+- delicious / cheesy / spicy / fresh / healthy
+- iced tea / hot coffee / fruit juice
 
 Target patterns:
-- I usually have [item] for breakfast.
-- I love spicy food.
-- Combined challenge: Dinner is delicious and I love spicy food.
+- I like [food].
+- [Food] is [adjective].
+- I drink [drink] with [food].
 
 Teaching vs speaking (critical):
-- BEFORE any repeat task, ALWAYS map Thai → English first.
 - Ask only ONE speaking task or one question per turn.
+- Choice turns MUST return guidedSpeaking with stem + options[] (mic still required).
+- Soft-accept close variants (with/without period, "I like pizzas", "Som tam is spicy").
+- STT is English-only for answers. Ask/explain in {{L1}} OK; never require Thai speech.
+- FORBIDDEN: open free-talk; invent foods/drinks outside the boards.
+- Remember their food choice for Turns 2–3 (branch describe board + drink prompt).
 - Do NOT use "I'm ready" in this lesson.
-- Mid-lesson Q&A should be short and guided, not open free-talk.
-- Vocabulary lock: ONLY use breakfast / lunch / dinner / coffee / tea / bread / spicy food / delicious unless the learner introduces their own food.
-- For personalization, ask about breakfast only in this lesson's personal question.
 
-Word & pattern meanings:
-- breakfast = อาหารเช้า
-- lunch = อาหารเที่ยง
-- dinner = อาหารเย็น
-- coffee = กาแฟ
-- tea = ชา
-- bread = ขนมปัง
-- spicy food = อาหารเผ็ด
-- delicious = อร่อย
-- I usually have [item] for breakfast. = ปกติฉันกิน/ดื่ม...เป็นอาหารเช้า
-- I love spicy food. = ฉันชอบอาหารเผ็ดมาก
-- Dinner is delicious and I love spicy food. = มื้อเย็นอร่อย และฉันชอบอาหารเผ็ด
+Intro style: Warm & Friendly (~ชวนคุยชิลๆ). Food vibe inside the opening question.
 
-Core Flow (progression milestones — NOT a fixed turn count):
-- Follow these core steps in order. Do not skip ahead.
-- Extra turns for praise, one retry, or short feedback MAY happen between steps — that is OK.
-- Keep the session about 5–6 minutes.
+guidedSpeaking rules:
+- MUST return guidedSpeaking with stem + options[] on Turns 1–3.
+- Mic still required — learner speaks the full speak string (or close variant).
+- Omit guidedSpeaking on Turn 4 (Celebrate).
+- FORBIDDEN: emojiSpeak / emojiSpeakSet / emojiChoice on this lesson.
 
-Intro style for THIS lesson (required — opening turn only):
-- Style: Warm & Friendly (~ชวนคุยชิลๆ)
-- Mood: Like a friend inviting them to chat about food — cozy, easy, feel-good.
-- CRITICAL — ONE turn only (never waste a chat turn):
-  - Turn 1 MUST fuse: styled greeting/vibe + topic + teach first vocab + ask to พูดตาม ONLY that word.
-  - FORBIDDEN in opening: open chat questions that expect a conversational reply (e.g. "หิวยัง?", "เย็นนี้กินไรดี?", "ชวนคุยเรื่องของกินหน่อย").
-  - Warm "friend invites food chat" feel lives INSIDE the intro sentence — then fire straight into vocab in the SAME turn.
-  - Learner's first reply must be the vocab repeat, not free chat.
-- Keep opening to ~2–3 short sentences, then ONE speaking task. No monologue. No forced jokes.
-- Tone example (adapt, don't recite word-for-word): "สวัสดีครับ [Name]! พูดถึงของโปรดเนี่ย นึกถึงแล้วหิวเลยเนอะ วันนี้เรามาเรียนเรื่อง Food & Drinks กันครับ! มาเริ่มที่คำว่า breakfast (อาหารเช้า) ก่อนเลย ลองพูดตามแค่นี้ครับ: breakfast"
-- Never write "555" / "5555" in spoken text — TTS cannot read it; use "ฮ่าๆ" or "เนอะ" instead.
+Core Flow (ONE-WAY — do not skip / reorder):
 
-Phase 1: Hook & Vocab (~1.5 min) — Warm & Friendly
-1. SAME TURN: Warm intro by name + food vibe + teach breakfast (อาหารเช้า = breakfast) + ask to repeat ONLY "breakfast". Do NOT ask an open chat question first. (Opening → Repeat)
-2. Situational quiz — ask: "ถ้ามื้อเย็น ภาษาอังกฤษระหว่าง lunch กับ dinner อันไหนครับ?"
-   Expected: "dinner". (Recognition)
-3. Reinforce dinner — NEW TURN after they answer correctly (or after gentle correct):
-   Prompt: "ถูกต้องครับ! มื้อเย็นคือ dinner ลองพูดตามครูบีนะครับ: dinner"
-   Learner repeats "dinner". (Repeat)
-   If they already said "dinner" clearly on the quiz turn, still do this reinforce once — short praise + repeat.
+Phase 1 — Favorite Food
 
-Phase 2: Pattern 1 & Personalize (~1.5 min)
-4. Model Pattern 1 — ถ้าจะบอกว่า "ปกติฉันดื่มกาแฟเป็นอาหารเช้า" ให้พูดว่า "I usually have coffee for breakfast." ลองพูดตามครูนะครับ! (Repeat)
-5. Ask their real morning routine — Thai only (no English question echo, no answer scaffolds):
-   "ปกติกินหรือดื่มอะไรเป็นอาหารเช้าครับ?"
-   Accept Thai or English. Soft, natural. (Short answer)
-6. Apply — map THEIR answer into the pattern, then ask them to say it:
-   "งั้นพูดว่า I usually have [User Item] for breakfast ครับ"
-   (Recall)
+1. Turn 1 — Favorite Food (พูด + 3 choices)
+   - textEn MUST be close to:
+     "พูดถึงของโปรดเนี่ย นึกถึงแล้วหิวเลยเนอะ วันนี้มาคุยเรื่องของกินกัน! 😋 ปกติแล้วคุณชอบทานอะไรเป็นพิเศษครับ?"
+   - guidedSpeaking MUST:
+     { stem:"I like...", options:[
+       { emoji:"🍕", label:"Pizza", speak:"I like pizza." },
+       { emoji:"🍣", label:"Sushi", speak:"I like sushi." },
+       { emoji:"🌶️🥗", label:"Somtam", speak:"I like somtam." }
+     ] }
+   - Soft-accept I like pizza / sushi / somtam (som tum / papaya salad → treat as somtam if clear).
+   - REMEMBER their food: pizza | sushi | somtam.
+   - After clear → Turn 2.
 
-Phase 3: Pattern 2 & Synthesis (~2 min) — spicy + delicious
-7. Model Pattern 2a (spicy) — ถ้าจะบอกว่า "ฉันชอบอาหารเผ็ดมาก" ให้พูดว่า "I love spicy food." ลองพูดตามครับ! (Repeat)
-8. Model Pattern 2b (delicious) — NEW TURN — teach อร่อย = delicious, then model a short sentence:
-   Prompt: "ส่วนคำว่า 'อร่อย' คือ delicious ลองพูดประโยคนี้ตามครูบีครับ: Dinner is delicious."
-   Expected: "Dinner is delicious." (Repeat)
-9. Synthesis — combine both ideas. Do NOT show the English answer first:
-   Prompt: "เก่งมากครับ! คราวนี้ลองรวบแปลประโยคนี้เป็นภาษาอังกฤษดูครับ: 'มื้อเย็นอร่อย และฉันชอบอาหารเผ็ด'"
-   Expected: "Dinner is delicious and I love spicy food."
-   Accept close variants. If wrong/unclear: at most ONE gentle hint + one retry; then accept and move on. (Recall)
+Phase 2 — Describe Food (branch on Turn 1 food)
 
-Quick Check (Thai → English) — AFTER synthesis, BEFORE wrap-up:
-10. Give ONE Thai sentence. Do NOT show the English answer first. Ask them to say it in English.
-    Prompt: "อีกหนึ่งประโยคครับ ลองแปลประโยคนี้ดู: 'ฉันมักดื่มกาแฟเป็นอาหารเช้า'"
-    Expected: "I usually have coffee for breakfast."
-    If wrong/unclear: at most ONE gentle hint + one retry; then accept and move on. (Recall)
-    FORBIDDEN: reveal the full English target before they attempt.
+2. Turn 2 — Describe Food (พูด + 3 choices)
+   - IF pizza:
+     textEn ≈ "Pizza! ของโปรดเลยครับ 🍕 แล้วพิซซ่าถาดโปรดของคุณเป็นยังไงครับ?"
+     guidedSpeaking: { stem:"Pizza is...", options:[
+       { emoji:"😋", label:"delicious", speak:"Pizza is delicious." },
+       { emoji:"🧀", label:"cheesy", speak:"Pizza is cheesy." },
+       { emoji:"🌶️", label:"spicy", speak:"Pizza is spicy." }
+     ] }
+   - IF sushi:
+     textEn ≈ "Sushi! น่าทานมากครับ 🍣 แล้วซูชิที่คุณชอบเป็นยังไงครับ?"
+     guidedSpeaking: { stem:"Sushi is...", options:[
+       { emoji:"🐟", label:"fresh", speak:"Sushi is fresh." },
+       { emoji:"😋", label:"delicious", speak:"Sushi is delicious." },
+       { emoji:"❤️", label:"healthy", speak:"Sushi is healthy." }
+     ] }
+   - IF somtam:
+     textEn ≈ "Somtam! แซ่บแน่นอน 🌶️ แล้วส้มตำของคุณรสชาติเป็นยังไงครับ?"
+     guidedSpeaking: { stem:"Somtam is...", options:[
+       { emoji:"🌶️", label:"spicy", speak:"Somtam is spicy." },
+       { emoji:"😋", label:"delicious", speak:"Somtam is delicious." },
+       { emoji:"🥗", label:"healthy", speak:"Somtam is healthy." }
+     ] }
+   - Soft-accept [Food] is [adj]. REMEMBER their adjective.
+   - After clear → Turn 3.
 
-Phase 4: Wrap-up & Celebrate (~30 sec)
-11. Briefly summarize breakfast, dinner, spicy food, delicious, and their breakfast sentence. Celebrate with student's name once → set isLessonComplete = true (REQUIRED).
+Phase 3 — Drink Pairing
 
-Turn loop rules (critical — never stall the learner):
-- Every non-final tutor turn MUST end with exactly one clear next action:
-  1) Repeat a word/sentence, OR
-  2) Recognition (guided answer), OR
-  3) Recall (guided say of a taught sentence).
-- Never end a turn with only explanation, praise, or feedback.
-- Ask only one question or speaking task at a time.
-- Keep most tutor turns under 2–3 short sentences.
-- Praise specifically but briefly.
-- You only see transcript TEXT, not audio — never invent pronunciation problems from text.
-- If the learner's transcript clearly matches the target, praise briefly and ADVANCE.
-- If the text truly does not match, gently ask for at most ONE retry.
-- After one retry (or two total attempts on the same item), accept and move on.
-- Accept natural variants when the meaning is clear.
-- Do not mark minor accent differences as wrong.
-- Focus on confidence and being understandable.
-- When Core Flow reaches Wrap-up & Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
+3. Turn 3 — Drink Pairing (พูด + 3 choices)
+   - textEn MUST be close to (insert THEIR food):
+     "น่าทานมากครับ! แล้วปกติคุณชอบดื่มอะไรคู่กับ [Pizza / Sushi / Somtam] ครับ? 🥤"
+   - guidedSpeaking MUST (replace Food with their food, lowercase in speak):
+     { stem:"I drink... with [food].", options:[
+       { emoji:"🥤", label:"iced tea", speak:"I drink iced tea with [food]." },
+       { emoji:"☕", label:"hot coffee", speak:"I drink hot coffee with [food]." },
+       { emoji:"🧃", label:"fruit juice", speak:"I drink fruit juice with [food]." }
+     ] }
+   - Soft-accept I drink [drink] with [food].
+   - After clear → Turn 4.
+
+Phase 4 — Celebrate
+
+4. Turn 4 — Celebrate (listen-only)
+   - textEn MUST be close to:
+     "สุดยอดครับ [Name]! 🎉 วันนี้คุณบอกได้ทั้งของโปรด รสชาติ และเครื่องดื่มที่ดื่มคู่กันแล้วครับ ต่อไปไปฝึก Food Pack ได้เลย 🍌✨"
+   - expectsUserSpeech=false. isLessonComplete=true (REQUIRED).
+   - Omit guidedSpeaking.
+
+Turn loop rules:
+- Every non-final turn ends with exactly one clear learner action.
+- Praise briefly when clear, then ADVANCE.
+- At most ONE gentle retry per step; then accept and move on.
+- Never invent pronunciation issues from text alone.
+- When Celebrate fires, isLessonComplete must be true. Otherwise false.`,
     openingPrompt:
-      'Start the Food & Drinks lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. Intro style MUST be Warm & Friendly. CRITICAL: Turn 1 = warm food-vibe intro + teach breakfast + ask to repeat ONLY "breakfast" in the SAME turn — NEVER open with "หิวยัง?" / chatty questions that need a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: dinner vs lunch quiz (expect dinner) + reinforce speak "dinner", Pattern 1 (I usually have coffee for breakfast) + ask breakfast item in {{L1}} only + apply I usually have [item] for breakfast, Pattern 2a (I love spicy food) + Pattern 2b teach delicious and repeat "Dinner is delicious.", synthesis Thai→EN "Dinner is delicious and I love spicy food." (do not show English first), Thai→English quick check "I usually have coffee for breakfast.", then celebrate. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start Food & Drinks 1.2 (REVISED Everyday Choices) for this one learner only (private 1:1, never {{NO_GROUP}}). Intro style Warm & Friendly. CRITICAL Turn 1 = food vibe + ask favorite food with guidedSpeaking 3 cards Pizza/Sushi/Somtam (I like...) — NO "สวัสดีครับ [Name]!" — expectsUserSpeech true. Do NOT use "I\'m ready". After food: Turn2 describe board BRANCHES on their food (Pizza→delicious/cheesy/spicy; Sushi→fresh/delicious/healthy; Somtam→spicy/delicious/healthy) stem "[Food] is..." → Turn3 drink pairing iced tea/hot coffee/fruit juice stem "I drink... with [food]." → Turn4 Celebrate listen-only isLessonComplete true. Remember food across turns. Return JSON matching schema. isLessonComplete must be false on opening.',
   },
 
   {
@@ -9437,22 +9428,22 @@ export const DAILY_ROUTINE_BOARDS: Record<
     options: [
       {
         emoji: '💼',
-        label: 'go to work (ไปทำงาน)',
+        label: 'go to work',
         speak: 'I go to work every day.',
       },
       {
         emoji: '☕',
-        label: 'drink coffee (ดื่มกาแฟ)',
+        label: 'drink coffee',
         speak: 'I drink coffee every day.',
       },
       {
         emoji: '🏃',
-        label: 'exercise (ออกกำลังกาย)',
+        label: 'exercise',
         speak: 'I exercise every day.',
       },
       {
         emoji: '📖',
-        label: 'study English (เรียนภาษาอังกฤษ)',
+        label: 'study English',
         speak: 'I study English every day.',
       },
     ],
@@ -9754,6 +9745,348 @@ export function forceDailyRoutineGuidedSpeakingIfNeeded(
     expectedSpeech: board.expectedSpeech,
     emojiChoice: null,
     isTaskComplete: false,
+  };
+}
+
+export type FoodFavoriteId = 'pizza' | 'sushi' | 'somtam';
+
+/** Food & Drinks 1.2 — Turn 1 favorite-food board (also used on opening). */
+export const FOOD_FAVORITE_GUIDED_SPEAKING = {
+  stem: 'I like...',
+  options: [
+    { emoji: '🍕', label: 'Pizza', speak: 'I like pizza.' },
+    { emoji: '🍣', label: 'Sushi', speak: 'I like sushi.' },
+    { emoji: '🌶️🥗', label: 'Somtam', speak: 'I like somtam.' },
+  ],
+} as const;
+
+export function foodFavoriteOpeningText(_learnerFirstName: string): string {
+  return 'พูดถึงของโปรดเนี่ย นึกถึงแล้วหิวเลยเนอะ วันนี้มาคุยเรื่องของกินกัน! 😋 ปกติแล้วคุณชอบทานอะไรเป็นพิเศษครับ?';
+}
+
+const FOOD_DESCRIBE_BOARDS: Record<
+  FoodFavoriteId,
+  {
+    textEn: string;
+    stem: string;
+    expectedSpeech: string;
+    options: Array<{ emoji: string; label: string; speak: string }>;
+  }
+> = {
+  pizza: {
+    textEn: 'Pizza! ของโปรดเลยครับ 🍕 แล้วพิซซ่าถาดโปรดของคุณเป็นยังไงครับ?',
+    stem: 'Pizza is...',
+    expectedSpeech: 'Pizza is delicious.',
+    options: [
+      { emoji: '😋', label: 'delicious', speak: 'Pizza is delicious.' },
+      { emoji: '🧀', label: 'cheesy', speak: 'Pizza is cheesy.' },
+      { emoji: '🌶️', label: 'spicy', speak: 'Pizza is spicy.' },
+    ],
+  },
+  sushi: {
+    textEn: 'Sushi! น่าทานมากครับ 🍣 แล้วซูชิที่คุณชอบเป็นยังไงครับ?',
+    stem: 'Sushi is...',
+    expectedSpeech: 'Sushi is fresh.',
+    options: [
+      { emoji: '🐟', label: 'fresh', speak: 'Sushi is fresh.' },
+      { emoji: '😋', label: 'delicious', speak: 'Sushi is delicious.' },
+      { emoji: '❤️', label: 'healthy', speak: 'Sushi is healthy.' },
+    ],
+  },
+  somtam: {
+    textEn: 'Somtam! แซ่บแน่นอน 🌶️ แล้วส้มตำของคุณรสชาติเป็นยังไงครับ?',
+    stem: 'Somtam is...',
+    expectedSpeech: 'Somtam is spicy.',
+    options: [
+      { emoji: '🌶️', label: 'spicy', speak: 'Somtam is spicy.' },
+      { emoji: '😋', label: 'delicious', speak: 'Somtam is delicious.' },
+      { emoji: '🥗', label: 'healthy', speak: 'Somtam is healthy.' },
+    ],
+  },
+};
+
+function foodDisplayName(food: FoodFavoriteId): string {
+  switch (food) {
+    case 'pizza':
+      return 'Pizza';
+    case 'sushi':
+      return 'Sushi';
+    case 'somtam':
+      return 'Somtam';
+  }
+}
+
+function foodDrinkBoard(food: FoodFavoriteId): {
+  textEn: string;
+  stem: string;
+  expectedSpeech: string;
+  options: Array<{ emoji: string; label: string; speak: string }>;
+} {
+  const display = foodDisplayName(food);
+  return {
+    textEn: `น่าทานมากครับ! แล้วปกติคุณชอบดื่มอะไรคู่กับ ${display} ครับ? 🥤`,
+    stem: `I drink... with ${food}.`,
+    expectedSpeech: `I drink iced tea with ${food}.`,
+    options: [
+      {
+        emoji: '🥤',
+        label: 'iced tea',
+        speak: `I drink iced tea with ${food}.`,
+      },
+      {
+        emoji: '☕',
+        label: 'hot coffee',
+        speak: `I drink hot coffee with ${food}.`,
+      },
+      {
+        emoji: '🧃',
+        label: 'fruit juice',
+        speak: `I drink fruit juice with ${food}.`,
+      },
+    ],
+  };
+}
+
+function normalizeFoodSpeech(userText: string): string {
+  return userText
+    .trim()
+    .toLowerCase()
+    .replace(/[.!?]+$/g, '')
+    .replace(/\s+/g, ' ');
+}
+
+export function extractFoodFavorite(
+  history: Array<{ speaker: string; textEn?: string }>,
+): FoodFavoriteId | null {
+  for (const turn of history) {
+    if (turn.speaker !== 'user') continue;
+    const t = normalizeFoodSpeech(turn.textEn ?? '');
+    if (!t) continue;
+    if (/\bpizza\b/.test(t)) return 'pizza';
+    if (/\bsushi\b/.test(t)) return 'sushi';
+    if (
+      /\bsom\s*-?\s*tam\b/.test(t) ||
+      /\bsomtam\b/.test(t) ||
+      /\bpapaya salad\b/.test(t)
+    ) {
+      return 'somtam';
+    }
+  }
+  return null;
+}
+
+function matchesFoodStep(
+  step: number,
+  userText: string,
+  food: FoodFavoriteId | null,
+): boolean {
+  const t = normalizeFoodSpeech(userText);
+  if (!t) return false;
+  switch (step) {
+    case 1: // I like [food]
+      return (
+        /\bi like\b/.test(t) &&
+        (/\bpizza\b/.test(t) ||
+          /\bsushi\b/.test(t) ||
+          /\bsom\s*-?\s*tam\b/.test(t) ||
+          /\bsomtam\b/.test(t) ||
+          /\bpapaya salad\b/.test(t))
+      );
+    case 2: // [Food] is [adj]
+      if (!food) return false;
+      return (
+        new RegExp(`\\b${food}\\b`).test(t) &&
+        /\bis\b/.test(t) &&
+        (/\bdelicious\b/.test(t) ||
+          /\bcheesy\b/.test(t) ||
+          /\bspicy\b/.test(t) ||
+          /\bfresh\b/.test(t) ||
+          /\bhealthy\b/.test(t))
+      );
+    case 3: // I drink … with [food]
+      if (!food) return false;
+      return (
+        /\bi drink\b/.test(t) &&
+        /\bwith\b/.test(t) &&
+        new RegExp(`\\b${food}\\b`).test(t) &&
+        (/\biced tea\b/.test(t) ||
+          /\bhot coffee\b/.test(t) ||
+          /\bfruit juice\b/.test(t) ||
+          /\bcoffee\b/.test(t) ||
+          /\btea\b/.test(t) ||
+          /\bjuice\b/.test(t))
+      );
+    default:
+      return false;
+  }
+}
+
+/** How many Food & Drinks speak steps are cleared (0–3). */
+export function foodLessonProgress(
+  history: Array<{ speaker: string; textEn?: string }>,
+): number {
+  let progress = 0;
+  let food: FoodFavoriteId | null = null;
+  for (const turn of history) {
+    if (turn.speaker !== 'user') continue;
+    const text = (turn.textEn ?? '').trim();
+    if (!text || text.startsWith('[') || text.startsWith('(')) continue;
+    const next = progress + 1;
+    if (next <= 3 && matchesFoodStep(next, text, food)) {
+      progress = next;
+      if (progress === 1) {
+        food = extractFoodFavorite([{ speaker: 'user', textEn: text }]);
+      }
+    }
+  }
+  return progress;
+}
+
+/**
+ * Pin Food & Drinks guidedSpeaking boards (Turns 1–3) and Celebrate after drink.
+ */
+export function forceFoodGuidedSpeakingIfNeeded(
+  lessonId: string,
+  _lang: LessonTeachingLanguage,
+  nextTurn: number,
+  history: Array<{ speaker: string; textEn?: string }>,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    guidedSpeaking: ReturnType<typeof normalizeGuidedSpeaking>;
+    expectsUserSpeech: boolean;
+    isTaskComplete: boolean;
+    expectedSpeech: string | null;
+  },
+): {
+  textEn: string;
+  textTh: string | null;
+  guidedSpeaking: NonNullable<ReturnType<typeof normalizeGuidedSpeaking>>;
+  expectsUserSpeech: true;
+  expectedSpeech: string;
+  emojiChoice: null;
+  isTaskComplete: false;
+} | null {
+  if (lessonId !== 'ee_about_me_food') return null;
+  if (current.isTaskComplete) return null;
+
+  const progress = foodLessonProgress(history);
+  if (progress >= 3) return null;
+
+  const food = extractFoodFavorite(history);
+  // progress 0 → Turn 1 favorite; 1 → describe; 2 → drink
+  const step = progress + 1;
+
+  let board: {
+    textEn: string;
+    stem: string;
+    expectedSpeech: string;
+    options: Array<{ emoji: string; label: string; speak: string }>;
+  } | null = null;
+
+  if (step === 1) {
+    board = {
+      textEn:
+        current.textEn?.trim() ||
+        'พูดถึงของโปรดเนี่ย นึกถึงแล้วหิวเลยเนอะ วันนี้มาคุยเรื่องของกินกัน! 😋 ปกติแล้วคุณชอบทานอะไรเป็นพิเศษครับ?',
+      stem: FOOD_FAVORITE_GUIDED_SPEAKING.stem,
+      expectedSpeech: 'I like pizza.',
+      options: FOOD_FAVORITE_GUIDED_SPEAKING.options.map((o) => ({ ...o })),
+    };
+  } else if (step === 2) {
+    const id = food ?? 'pizza';
+    board = FOOD_DESCRIBE_BOARDS[id];
+  } else if (step === 3) {
+    board = foodDrinkBoard(food ?? 'pizza');
+  }
+
+  if (!board) return null;
+
+  // Opening (nextTurn 0) may still need pin — allow when step === 1
+  if (nextTurn < 1 && step !== 1) return null;
+
+  const stemOk =
+    current.guidedSpeaking?.stem
+      ?.toLowerCase()
+      .includes(board.stem.toLowerCase().slice(0, 8)) ?? false;
+  const optionsOk =
+    (current.guidedSpeaking?.options?.length ?? 0) >= board.options.length;
+  if (
+    current.expectsUserSpeech &&
+    stemOk &&
+    optionsOk &&
+    current.guidedSpeaking
+  ) {
+    return null;
+  }
+
+  const options = board.options.map((o) => ({ ...o }));
+  const first = options[0];
+  return {
+    textEn: current.textEn?.trim() || board.textEn,
+    textTh: current.textTh?.trim() || null,
+    guidedSpeaking: {
+      stem: board.stem,
+      emoji: first.emoji,
+      speak: first.speak,
+      ...(first.label ? { label: first.label } : {}),
+      options,
+    },
+    expectsUserSpeech: true,
+    expectedSpeech: board.expectedSpeech,
+    emojiChoice: null,
+    isTaskComplete: false,
+  };
+}
+
+/**
+ * After Food drink pairing → Celebrate.
+ */
+export function forceFoodCelebrateIfNeeded(
+  lessonId: string,
+  lang: LessonTeachingLanguage,
+  history: Array<{ speaker: string; textEn?: string }>,
+  learnerFirstName: string,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    expectsUserSpeech: boolean;
+    isTaskComplete: boolean;
+  },
+): {
+  textEn: string;
+  textTh: string | null;
+  expectsUserSpeech: false;
+  expectedSpeech: null;
+  guidedSpeaking: null;
+  emojiChoice: null;
+  isTaskComplete: true;
+} | null {
+  if (lessonId !== 'ee_about_me_food') return null;
+  if (foodLessonProgress(history) < 3) return null;
+
+  const name = learnerFirstName.trim() || 'เพื่อน';
+  const body =
+    lang === 'english'
+      ? `Awesome, ${name}! 🎉 You named a favorite food, described it, and paired a drink. Next up — Food Pack. 🍌✨`
+      : `สุดยอดครับ ${name}! 🎉 วันนี้คุณบอกได้ทั้งของโปรด รสชาติ และเครื่องดื่มที่ดื่มคู่กันแล้วครับ ต่อไปไปฝึก Food Pack ได้เลย 🍌✨`;
+
+  const raw = (current.textEn ?? '').trim();
+  const praiseOk =
+    lang === 'english'
+      ? /^(great|awesome|nice work|well done|amazing)/i.test(raw)
+      : /^(เยี่ยม|เก่งมาก|สุดยอด|ดีมาก|ยอดเยี่ยม)/u.test(raw);
+  const textEn =
+    current.isTaskComplete && praiseOk && raw.length > 30 ? raw : body;
+
+  return {
+    textEn,
+    textTh: null,
+    expectsUserSpeech: false,
+    expectedSpeech: null,
+    guidedSpeaking: null,
+    emojiChoice: null,
+    isTaskComplete: true,
   };
 }
 
