@@ -92,6 +92,8 @@ import {
   forcePeopleCelebrateIfNeeded,
   forceWeatherGuidedSpeakingIfNeeded,
   forceWeatherCelebrateIfNeeded,
+  forceFriendsGuidedSpeakingIfNeeded,
+  forceFriendsCelebrateIfNeeded,
   FOOD_FAVORITE_GUIDED_SPEAKING,
   HOME_TYPE_GUIDED_SPEAKING,
   WORK_SCHOOL_ACTIVITY_GUIDED_SPEAKING,
@@ -99,12 +101,14 @@ import {
   PETS_CHOICE_GUIDED_SPEAKING,
   PEOPLE_PERSON_GUIDED_SPEAKING,
   WEATHER_HOT_QUIZ_GUIDED_SPEAKING,
+  FRIENDS_ACTIVITY_GUIDED_SPEAKING,
   foodFavoriteOpeningText,
   homeOpeningText,
   workSchoolOpeningText,
   hobbiesOpeningText,
   petsOpeningText,
   peopleOpeningText,
+  friendsOpeningText,
   forceSurvivalEmojiSpeakIfNeeded,
   forceSurvivalCelebrateAfterEmojiSpeakIfNeeded,
   looksLikeAroundTownRoleplayBridge,
@@ -499,6 +503,16 @@ export class SessionsController {
         });
         openingEmojiChoice = null;
       }
+      if (config.lessonId === 'ee_about_me_friends') {
+        // Pin Play games / Eat out / Hang out board on opening.
+        openingGuidedSpeaking = normalizeGuidedSpeaking({
+          stem: FRIENDS_ACTIVITY_GUIDED_SPEAKING.stem,
+          options: FRIENDS_ACTIVITY_GUIDED_SPEAKING.options.map((o) => ({
+            ...o,
+          })),
+        });
+        openingEmojiChoice = null;
+      }
       // Opening is Hook — never start mid-roleplay.
       const openingRoleplayIntro = null;
       const openingRoleplayNpc = null;
@@ -519,7 +533,9 @@ export class SessionsController {
                       ? peopleOpeningText(learnerFirstName)
                       : config.lessonId === 'ee_about_me_weather'
                         ? "วันนี้อากาศร้อนมากเลยครับ! 🔥 ถ้าจะพูดว่า 'อากาศร้อน' ภาษาอังกฤษใช้คำว่าอะไรครับ?"
-                        : reply.textEn;
+                        : config.lessonId === 'ee_about_me_friends'
+                          ? friendsOpeningText(learnerFirstName)
+                          : reply.textEn;
       const openingExpectsSpeechFinal =
         config.lessonId === 'ee_about_me_food' ||
         config.lessonId === 'ee_about_me_home' ||
@@ -527,7 +543,8 @@ export class SessionsController {
         config.lessonId === 'ee_about_me_hobbies' ||
         config.lessonId === 'ee_about_me_pets' ||
         config.lessonId === 'ee_about_me_people' ||
-        config.lessonId === 'ee_about_me_weather'
+        config.lessonId === 'ee_about_me_weather' ||
+        config.lessonId === 'ee_about_me_friends'
           ? true
           : openingExpectsUserSpeech;
       const openingExpectedSpeechFinal =
@@ -545,9 +562,11 @@ export class SessionsController {
                     ? 'My brother.'
                     : config.lessonId === 'ee_about_me_weather'
                       ? 'Hot.'
-                      : openingExpectsSpeechFinal
-                        ? reply.expectedSpeech?.trim() || null
-                        : null;
+                      : config.lessonId === 'ee_about_me_friends'
+                        ? 'We play games together.'
+                        : openingExpectsSpeechFinal
+                          ? reply.expectedSpeech?.trim() || null
+                          : null;
       const opening = {
         speaker: 'ai' as const,
         textEn: openingTextEn,
@@ -559,7 +578,8 @@ export class SessionsController {
           config.lessonId === 'ee_about_me_hobbies' ||
           config.lessonId === 'ee_about_me_pets' ||
           config.lessonId === 'ee_about_me_people' ||
-          config.lessonId === 'ee_about_me_weather'
+          config.lessonId === 'ee_about_me_weather' ||
+          config.lessonId === 'ee_about_me_friends'
             ? null
             : reply.textTh,
         audioUrl: null,
@@ -607,7 +627,8 @@ export class SessionsController {
             config.lessonId === 'ee_about_me_hobbies' ||
             config.lessonId === 'ee_about_me_pets' ||
             config.lessonId === 'ee_about_me_people' ||
-            config.lessonId === 'ee_about_me_weather'
+            config.lessonId === 'ee_about_me_weather' ||
+            config.lessonId === 'ee_about_me_friends'
               ? null
               : reply.textTh,
           isTaskComplete: false,
@@ -1336,6 +1357,54 @@ export class SessionsController {
         guidedSpeaking = forcedWeatherCelebrate.guidedSpeaking;
         emojiChoice = forcedWeatherCelebrate.emojiChoice;
         isTaskComplete = forcedWeatherCelebrate.isTaskComplete;
+      }
+
+      // Friends 1.8: pin activity / eat out / They play / hang out / free recall.
+      const forcedFriends = forceFriendsGuidedSpeakingIfNeeded(
+        config.lessonId,
+        teachingLang,
+        nextTurn,
+        data.turns,
+        {
+          textEn,
+          textTh,
+          guidedSpeaking,
+          expectsUserSpeech,
+          isTaskComplete,
+          expectedSpeech,
+        },
+      );
+      if (forcedFriends != null) {
+        textEn = forcedFriends.textEn;
+        textTh = forcedFriends.textTh;
+        guidedSpeaking = forcedFriends.guidedSpeaking;
+        expectsUserSpeech = forcedFriends.expectsUserSpeech;
+        expectedSpeech = forcedFriends.expectedSpeech;
+        emojiChoice = forcedFriends.emojiChoice;
+        isTaskComplete = forcedFriends.isTaskComplete;
+      }
+
+      const forcedFriendsCelebrate = forceFriendsCelebrateIfNeeded(
+        config.lessonId,
+        teachingLang,
+        data.turns,
+        data.learnerFirstName ??
+          learnerNameFallback(teachingLanguageFromConfig(config)),
+        {
+          textEn,
+          textTh,
+          expectsUserSpeech,
+          isTaskComplete,
+        },
+      );
+      if (forcedFriendsCelebrate != null) {
+        textEn = forcedFriendsCelebrate.textEn;
+        textTh = forcedFriendsCelebrate.textTh;
+        expectsUserSpeech = forcedFriendsCelebrate.expectsUserSpeech;
+        expectedSpeech = forcedFriendsCelebrate.expectedSpeech;
+        guidedSpeaking = forcedFriendsCelebrate.guidedSpeaking;
+        emojiChoice = forcedFriendsCelebrate.emojiChoice;
+        isTaskComplete = forcedFriendsCelebrate.isTaskComplete;
       }
 
       const forcedSmartShopperCelebrate = forceSmartShopperCelebrateIfNeeded(

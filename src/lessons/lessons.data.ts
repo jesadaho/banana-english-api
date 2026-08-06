@@ -3032,144 +3032,119 @@ Turn loop rules:
     titleEn: 'Friends & Social',
     titleTh: 'เพื่อนและสังคม',
     goalEn:
-      'Talk about what you do with friends (We) and what other people do (They).',
-    goalTh: 'พูดถึงสิ่งที่ทำร่วมกับเพื่อน (We) หรือสิ่งที่กลุ่มอื่นทำ (They) ได้',
+      'Choose a friend activity with We … together, apply eat out, learn They … together, then quick-check hang out and They eat out.',
+    goalTh:
+      'เลือกกิจกรรมกับเพื่อนด้วย We … together, ฝึก eat out, เรียน They … together แล้วควิซ hang out และ They eat out',
     difficulty: 'beginner',
     languageMix: { thai: 70, english: 30 },
     estimatedMinutesMin: 4,
     estimatedMinutesMax: 5,
     targetPhrases: [
-      'friends',
-      'hang out',
-      'eat out',
       'play games',
-      'work at',
-      'We hang out together',
-      'We eat out together',
+      'eat out',
+      'hang out',
       'We play games together',
-      'They work at a company',
-      'We eat out together. They work at a company',
+      'We eat out together',
+      'We hang out together',
+      'They play games together',
+      'They eat out together',
     ],
-    maxTurns: 20,
-    systemInstruction: `Lesson: Friends & Social (Everyday English → About Me → 1.8)
-Goal: Talk about what you do with friends (We) and what other people do (They) — this is the course's first intro to We / They for groups.
+    maxTurns: 10,
+    systemInstruction: `Lesson: Friends & Social (Everyday English → About Me → 1.8) — REVISED with Everyday Choices
+Goal: Choose a weekend activity with friends (We … together), apply We eat out together, introduce They … together, then quick-check.
 
 Target vocabulary:
-- friends = เพื่อน
-- hang out = ไปเที่ยว / สังสรรค์ / อยู่ด้วยกัน
-- eat out = กินข้าวนอกบ้าน
 - play games = เล่นเกม
-- work at = ทำงานที่ (สถานที่)
+- eat out = กินข้าวนอกบ้าน
+- hang out = ไปเที่ยว / สังสรรค์
 
 Target patterns:
-- We [activity] together.  (first We for groups)
-- They work at [place].   (first They for groups + reinforce work at from lesson 1.4)
-- Synthesis: We eat out together. They work at a company.
+- We [activity] together.
+- They [activity] together.
 
 Teaching vs speaking (critical):
-- BEFORE any repeat task, ALWAYS map Thai → English first.
 - Ask only ONE speaking task or one question per turn.
+- Choice turns MUST return guidedSpeaking with stem + options[] (mic still required).
+- Turn 5 (They eat out): NO guidedSpeaking — free recall only.
+- Remember their Turn 1 activity for soft personalization if natural.
 - Do NOT use "I'm ready" in this lesson.
-- Mid-lesson Q&A should be short and guided, not open free-talk.
-- Core vocabulary: friends / hang out / eat out / play games / work at.
-- This lesson INTRODUCES We and They for talking about groups — keep We = พวกเรา (me + friends), They = พวกเขา (other people) light and natural; no long grammar lecture.
-- If the learner names another group activity (watch movies, go shopping, etc.), map it into "We [activity] together." — do not reject.
-- Remember their Phase 2 activity for soft personalization in synthesis if natural; default synthesis is fine if unclear.
+- Light We = พวกเรา / They = พวกเขา tip only if natural — no grammar lecture.
 
-Word & pattern meanings:
-- friends = เพื่อน
-- hang out = ไปเที่ยว/สังสรรค์
-- eat out = กินข้าวนอกบ้าน
-- play games = เล่นเกม
-- work at = ทำงานที่
-- We hang out together. = พวกเราไปเที่ยวด้วยกัน
-- They work at a company. = พวกเขาทำงานที่บริษัท
-- at = ใช้บอกสถานที่ (เช่น work at a company / work at an office จากบท 1.4)
+guidedSpeaking rules:
+- MUST return guidedSpeaking on Turns 1–4.
+- Turn 5: omit guidedSpeaking (no hint). Speak target stays in expectedSpeech only.
+- Omit guidedSpeaking on Turn 6 (Celebrate).
+- FORBIDDEN: emojiSpeak / emojiSpeakSet / emojiChoice on this lesson.
+- FORBIDDEN on Turn 5: any stem / emoji hint / label that reveals the answer.
 
-Core Flow (progression milestones — NOT a fixed turn count):
-- Follow these core steps in order. Do not skip ahead.
-- Extra turns for praise, one retry, or short feedback MAY happen between steps — that is OK.
-- Keep the session short (~4–5 minutes).
+Core Flow (ONE-WAY — do not skip / reorder):
 
-Intro style for THIS lesson (required — opening turn only):
-- Style: Funny & Playful (~มุกแบบไทยๆ)
-- Mood: Friend-group / late meetup insight — นัดเก้อ / มากินกาแฟสาย แบบที่เพื่อนไทยคุยกัน.
-- Thai-style humor ONLY (required):
-  - Insight ไทยๆ ที่จริงจนจุก — ชีวิตประจำวันที่คนไทยฟังแล้วรู้สึก "ใช่เลยว่ะ" ไม่ใช่มุกหลวมๆ
-  - จังหวะปู–ตบโบ๊ะบ๊ะ ไว: ปูสถานการณ์สั้นๆ → ตบจุดตลกทันที แล้วเข้าบทเรียนเลย ห้ามยืดเล่าเรื่องยาว
-  - ภาษาพูด (เนอะ / อ่ะ / จัง / ฮ่าๆ) — หยอกล้อเบาๆ ร่าเริง
-  - Prefer situations (pick ONE idea, vary each session — do NOT always use the same joke): นัด 7 มา 9, พร้อมกาแฟ, อ่านแชทช้า, มาสายแล้วโทษรถติด, เพื่อนบอกใกล้ถึงแต่ GPS คนละเขต
-  - FORBIDDEN: English standup / Western dad jokes / English puns / forced meme English
-  - FORBIDDEN: ตักเตือน เทศน์ สั่งสอน เสียดสีผู้เรียน หรือมุกแรงที่ทำให้รู้สึกถูกจิก
-  - FORBIDDEN: "555" / "5555" ในข้อความพูดออกเสียง — TTS อ่านไม่ได้ ใช้ "ฮ่าๆ" หรือลงท้าย "เนอะ" แทน
-  - FORBIDDEN: copy Tone example wording verbatim — invent a fresh jab each session (or follow the session jab seed if provided)
-  - One short Thai jab only — snappy and friendly, then teach vocab
-- CRITICAL — ONE turn only (never waste a chat turn):
-  - Turn 1 MUST fuse: Thai jab + topic + teach first vocab + ask to พูดตาม ONLY that word.
-  - FORBIDDEN in opening: open chat questions that expect a conversational reply (e.g. "นัดเพื่อนบ่อยไหม?", "ชวนคุยเรื่องเพื่อนหน่อย").
-  - Joke feel lives INSIDE the intro sentence — then fire straight into vocab in the SAME turn.
-  - Learner's first reply must be the vocab repeat, not free chat.
-- Keep opening to ~2–3 short sentences, then ONE speaking task. One มุขไทย max.
-- Structure hint only (DO NOT copy this jab — invent a different one): "สวัสดีครับ [Name]! [one fresh Thai jab]... วันนี้เรียน Friends & Social กันครับ! มาเริ่มที่คำว่า hang out (ไปเที่ยว/สังสรรค์) ก่อนเลย ลองพูดตามแค่นี้ครับ: hang out"
+Phase 1 — Choose Activity
 
-Phase 1: Hook & Vocab (~1 min) — Funny & Playful (มุขไทย)
-1. SAME TURN: Thai-style funny intro by name (one นัดเก้อ jab) + Friends topic + teach hang out (ไปเที่ยว/สังสรรค์ = hang out) + ask to repeat ONLY "hang out". Do NOT ask an open chat question first. (Opening → Repeat)
-2. Situational quiz — ask: "ถ้าเวลาไปเที่ยวสังสรรค์กับกลุ่มเพื่อน ภาษาอังกฤษใช้คำไหนครับ? ระหว่าง hang out หรือ work at?"
-   Expected: "hang out". If wrong, gently correct and ask them to say "hang out" once. (Recognition → optional Repeat)
+1. Turn 1 — Weekend with friends (3 choices)
+   - textEn MUST be close to:
+     "สวัสดีครับ [Name]! วันหยุด คุณกับเพื่อนชอบทำอะไรกันครับ?"
+   - guidedSpeaking MUST:
+     { stem:"We ....... together.", options:[
+       { emoji:"🎮", label:"Play games", speak:"We play games together." },
+       { emoji:"🍽️", label:"Eat out", speak:"We eat out together." },
+       { emoji:"🎳", label:"Hang out", speak:"We hang out together." }
+     ] }
+   - REMEMBER their activity for soft personalization.
+   - After clear → Turn 2.
 
-Phase 2: Pattern 1 & Personalize (~1.5 min) — introduce We
-3. Model Pattern 1 — lightly note We = พวกเรา (กลุ่มเรา) if helpful in one short phrase, then: ถ้าจะบอกว่า "พวกเราไปเที่ยวด้วยกัน" ให้พูดว่า "We hang out together." ลองพูดตามครูนะครับ! (Repeat)
-4. Ask about friend activities — ask the question in {{L1}} first, then immediately ask the SAME question in English.
-   Example: "เวลาเจอกับกลุ่มเพื่อน ปกติชอบทำอะไรกันเป็นหลักครับ? What do you usually do with your friends?"
-   Accept short English answers (preferred) or Thai if needed, then map to English. Soft, natural — not a forced menu. (Short answer)
-   FORBIDDEN in this ask: answer scaffolds like "ลองตอบเป็นอังกฤษได้เลย เช่น ..." — only Thai Q + English Q.
-5. Apply — build from THEIR answer:
-   - Chosen from options: "งั้นพูดว่า We [hang out / eat out / play games] together. ครับ"
-   - Other activity: map into "We [activity] together." (e.g. "We watch movies together.") and ask them to say it
-   Remember their activity for Phase 3 if useful. (Recall)
+Phase 2 — Apply
 
-Phase 3: Pattern 2 & Synthesis (~1.5 min) — introduce They + micro-tip on at
-6. Model Pattern 2 — lightly note They = พวกเขา if helpful in one short phrase, then: "They work at a company." → ask to repeat. (Repeat)
-7. Micro-tip (short, ~5 seconds — same turn or immediately before synthesis) — briefly in {{L1}}:
-   "สังเกตไหมครับ? เวลาบอกสถานที่ทำงาน เราใช้ work at ต่อด้วยสถานที่ได้เลย เช่น work at a company ครับ"
-   Optional soft link: they may recall work at an office from lesson 1.4 — mention only if natural, one short line max.
-   Keep it very short — do NOT turn into a grammar lecture. Then give the synthesis task in the SAME turn if possible, or immediately next. (Explain tip + Recall)
-8. Synthesis — one clear speaking task. Do NOT show the English answer first:
-   "ลองพูดรวม 2 ประโยคเข้าด้วยกันดูครับ: 'พวกรวมตัวไปกินข้าวด้วยกัน พวกเขาทำงานที่บริษัทเดียวกัน' จะพูดภาษาอังกฤษยังไงครับ?"
-   FORBIDDEN: "→" arrow or reveal English answer in the synthesis prompt.
-   If their Phase 2 activity was hang out / play games, you MAY adapt the We line (e.g. We hang out together) but keep the They line as "They work at a company." unless they already offered another place.
-   Expected: "We [activity] together. They work at a company."
-   Accept close variants. (Recall)
+2. Turn 2 — We eat out (single hint)
+   - textEn MUST be close to:
+     "แล้วถ้าจะพูดว่า พวกเรากินข้าวด้วยกัน จะพูดว่าอย่างไรครับ?"
+   - guidedSpeaking SINGLE hint:
+     { stem:"", emoji:"🍽️", label:"Eat out", speak:"We eat out together." }
+   - Expected: We eat out together.
+   - After clear → Turn 3.
 
-Quick Check (Thai → English) — AFTER synthesis, BEFORE wrap-up:
-9. Give ONE Thai sentence. Do NOT show the English answer first. Ask them to say it in English.
-   Prompt: "ทดสอบสั้นๆ ครับ ถ้าจะบอกว่า 'พวกเราไปเที่ยวด้วยกัน' จะพูดภาษาอังกฤษยังไงครับ?"
-   Expected: "We hang out together."
-   If wrong/unclear: at most ONE gentle hint + one retry; then accept and move on. (Recall)
-   FORBIDDEN: reveal the full English target before they attempt.
+Phase 3 — New Concept (They)
 
-Phase 4: Wrap-up & Celebrate (~30 sec)
-10. Briefly summarize We / They + hang out / eat out / play games / work at — praise that they used group pronouns and talked about activities and workplace naturally. Celebrate with student's name once → set isLessonComplete = true (REQUIRED).
+3. Turn 3 — They play games (single hint + stem)
+   - textEn MUST be close to:
+     "เยี่ยมครับ! 😊 แล้วถ้าจะพูดว่า พวกเขาเล่นเกมด้วยกัน จะพูดว่าอย่างไรครับ?"
+   - guidedSpeaking SINGLE hint:
+     { stem:"They ........ together.", emoji:"🎮", label:"Play games", speak:"They play games together." }
+   - Expected: They play games together.
+   - After clear → Turn 4.
 
-Turn loop rules (critical — never stall the learner):
-- Every non-final tutor turn MUST end with exactly one clear next action:
-  1) Repeat a word/sentence, OR
-  2) Recognition (guided answer), OR
-  3) Recall (guided say of a taught sentence).
-- Never end a turn with only explanation, praise, or feedback.
-- Ask only one question or speaking task at a time.
-- Keep most tutor turns under 2–3 short sentences.
-- Praise specifically but briefly.
-- You only see transcript TEXT, not audio — never invent pronunciation problems from text.
-- If the learner's transcript clearly matches the target, praise briefly and ADVANCE.
-- If the text truly does not match, gently ask for at most ONE retry.
-- After one retry (or two total attempts on the same item), accept and move on.
-- Accept natural variants when the meaning is clear.
-- Do not mark minor accent differences as wrong.
-- Focus on confidence and being understandable.
-- When Core Flow reaches Wrap-up & Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
+Phase 4 — Quick Check
+
+4. Turn 4 — We hang out (single hint)
+   - textEn MUST be close to:
+     "ก่อนจบบท ลองบอกหน่อยครับ 😊 พวกเราไปเที่ยวด้วยกัน"
+   - guidedSpeaking SINGLE hint:
+     { stem:"", emoji:"🎳", label:"Hang out", speak:"We hang out together." }
+   - Expected: We hang out together.
+   - Wrong → gentle correct + ONE retry; still wrong → accept + ADVANCE.
+   - After clear → Turn 5.
+
+5. Turn 5 — They eat out (NO hint)
+   - textEn ≈ "แล้ว พวกเขากินข้าวด้วยกัน"
+   - NO guidedSpeaking. NO emoji hint. NO stem.
+   - Expected: They eat out together.
+   - Wrong → gentle correct + ONE retry; still wrong → accept + ADVANCE.
+   - After clear → Turn 6.
+
+Phase 5 — Celebrate
+
+6. Turn 6 — Celebrate (listen-only)
+   - textEn MUST be close to:
+     "สุดยอดครับ [Name]! 🎉 วันนี้คุณพูด We/They … together กับเพื่อนได้แล้ว — เก่งมากครับ! 🍌"
+   - expectsUserSpeech=false. isLessonComplete=true (REQUIRED).
+
+Turn loop rules:
+- Every speaking turn ends with exactly one clear learner action.
+- Praise briefly when clear, then ADVANCE.
+- Turns 4 and 5: at most ONE gentle correct + retry; then accept and ADVANCE.
+- When Celebrate fires, isLessonComplete must be true. Otherwise false.`,
     openingPrompt:
-      'Start the Friends & Social lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. Intro style MUST be Funny & Playful with Thai-style humor (insight จริงจนจุก + ปู-ตบโบ๊ะบ๊ะไว + ไม่ตักเตือน — NOT English standup). CRITICAL: Turn 1 = joke/vibe intro + teach hang out + ask to repeat ONLY "hang out" in the SAME turn — NEVER open with a chatty question that needs a conversational reply. Do NOT use "I\'m ready". Then follow Core Flow: hang out vs work at quiz (expect hang out), Pattern 1 We (We hang out together) + ask friend activity in {{L1}} THEN the same question in English + apply We ... together, Pattern 2 They (They work at a company) + short ~5s tip about work at (link to work at an office from 1.4 if natural) + synthesis "We eat out together. They work at a company.", Thai→English quick check, then celebrate We/They. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start Friends & Social 1.8 (REVISED Everyday Choices) for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = greet by name + วันหยุด คุณกับเพื่อนชอบทำอะไรกันครับ? with guidedSpeaking Play games / Eat out / Hang out (We ....... together.) — expectsUserSpeech true. Do NOT use "I\'m ready". Do NOT teach hang out as a solo vocab repeat first. Turn2 พวกเรากินข้าวด้วยกัน → We eat out together (🍽️ Eat out hint) → Turn3 พวกเขาเล่นเกมด้วยกัน → They play games together (They ........ together. + Play games) → Turn4 พวกเราไปเที่ยวด้วยกัน → We hang out together (🎳 Hang out) → Turn5 พวกเขากินข้าวด้วยกัน NO guidedSpeaking → They eat out together → Turn6 Celebrate isLessonComplete true. Remember Turn 1 activity. Return JSON matching schema. isLessonComplete must be false on opening.',
   },
   {
     lessonId: 'ee_about_me_people',
@@ -12642,6 +12617,344 @@ export function forceWeatherCelebrateIfNeeded(
   };
 }
 
+/** Friends 1.8 — Turn 1 choose activity. */
+export const FRIENDS_ACTIVITY_GUIDED_SPEAKING = {
+  stem: 'We ....... together.',
+  options: [
+    {
+      emoji: '🎮',
+      label: 'Play games',
+      speak: 'We play games together.',
+    },
+    {
+      emoji: '🍽️',
+      label: 'Eat out',
+      speak: 'We eat out together.',
+    },
+    {
+      emoji: '🎳',
+      label: 'Hang out',
+      speak: 'We hang out together.',
+    },
+  ],
+};
+
+const FRIENDS_EAT_OUT_BOARD = {
+  textEn: 'แล้วถ้าจะพูดว่า พวกเรากินข้าวด้วยกัน จะพูดว่าอย่างไรครับ?',
+  stem: '',
+  expectedSpeech: 'We eat out together.',
+  options: [
+    { emoji: '🍽️', label: 'Eat out', speak: 'We eat out together.' },
+  ],
+};
+
+const FRIENDS_THEY_PLAY_BOARD = {
+  textEn:
+    'เยี่ยมครับ! 😊 แล้วถ้าจะพูดว่า พวกเขาเล่นเกมด้วยกัน จะพูดว่าอย่างไรครับ?',
+  stem: 'They ........ together.',
+  expectedSpeech: 'They play games together.',
+  options: [
+    {
+      emoji: '🎮',
+      label: 'Play games',
+      speak: 'They play games together.',
+    },
+  ],
+};
+
+const FRIENDS_HANG_OUT_BOARD = {
+  textEn: 'ก่อนจบบท ลองบอกหน่อยครับ 😊 พวกเราไปเที่ยวด้วยกัน',
+  stem: '',
+  expectedSpeech: 'We hang out together.',
+  options: [
+    { emoji: '🎳', label: 'Hang out', speak: 'We hang out together.' },
+  ],
+};
+
+const FRIENDS_THEY_EAT_OUT_BOARD = {
+  textEn: 'แล้ว พวกเขากินข้าวด้วยกัน',
+  expectedSpeech: 'They eat out together.',
+};
+
+export function friendsOpeningText(learnerFirstName: string): string {
+  const name = learnerFirstName.trim();
+  const greet = name ? `สวัสดีครับ ${name}! ` : 'สวัสดีครับ! ';
+  return `${greet}วันหยุด คุณกับเพื่อนชอบทำอะไรกันครับ?`;
+}
+
+function normalizeFriendsSpeech(userText: string): string {
+  return userText
+    .trim()
+    .toLowerCase()
+    .replace(/[.!?]+$/g, '')
+    .replace(/\s+/g, ' ');
+}
+
+function matchesFriendsStep(step: number, userText: string): boolean {
+  const t = normalizeFriendsSpeech(userText);
+  if (!t) return false;
+  switch (step) {
+    case 1:
+      return /^we (play games|eat out|hang out) together$/.test(t);
+    case 2:
+      return t === 'we eat out together';
+    case 3:
+      return t === 'they play games together';
+    case 4:
+      return t === 'we hang out together';
+    case 5:
+      return t === 'they eat out together';
+    default:
+      return false;
+  }
+}
+
+/** Speak steps cleared (0–5). Quick checks 4 & 5 soft-advance after 2 failed attempts. */
+export function friendsLessonProgress(
+  history: Array<{ speaker: string; textEn?: string }>,
+): number {
+  let progress = 0;
+  let attemptsOnCurrent = 0;
+  for (const turn of history) {
+    if (turn.speaker !== 'user') continue;
+    const text = (turn.textEn ?? '').trim();
+    if (!text || text.startsWith('[') || text.startsWith('(')) continue;
+    const next = progress + 1;
+    if (next > 5) continue;
+    if (matchesFriendsStep(next, text)) {
+      progress = next;
+      attemptsOnCurrent = 0;
+      continue;
+    }
+    if (next === 4 || next === 5) {
+      attemptsOnCurrent += 1;
+      if (attemptsOnCurrent >= 2) {
+        progress = next;
+        attemptsOnCurrent = 0;
+      }
+    }
+  }
+  return progress;
+}
+
+function friendsBoardFromAiText(textEn: string): number | null {
+  const t = (textEn ?? '').toLowerCase();
+  if (!t) return null;
+  if (t.includes('พวกเขากินข้าว')) return 5;
+  if (t.includes('พวกเราไปเที่ยว') || t.includes('ก่อนจบบท')) return 4;
+  if (t.includes('พวกเขาเล่นเกม') || t.includes('they ........ together')) {
+    return 3;
+  }
+  if (t.includes('พวกเรากินข้าว')) return 2;
+  if (
+    t.includes('วันหยุด') ||
+    t.includes('ชอบทำอะไรกัน') ||
+    t.includes('we ....... together')
+  ) {
+    return 1;
+  }
+  return null;
+}
+
+/**
+ * Pin Friends guidedSpeaking boards (Turns 1–4) and strip hints on Turn 5.
+ */
+export function forceFriendsGuidedSpeakingIfNeeded(
+  lessonId: string,
+  _lang: LessonTeachingLanguage,
+  nextTurn: number,
+  history: Array<{ speaker: string; textEn?: string }>,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    guidedSpeaking: ReturnType<typeof normalizeGuidedSpeaking>;
+    expectsUserSpeech: boolean;
+    isTaskComplete: boolean;
+    expectedSpeech: string | null;
+  },
+): {
+  textEn: string;
+  textTh: string | null;
+  guidedSpeaking: ReturnType<typeof normalizeGuidedSpeaking>;
+  expectsUserSpeech: true;
+  expectedSpeech: string;
+  emojiChoice: null;
+  isTaskComplete: false;
+} | null {
+  if (lessonId !== 'ee_about_me_friends') return null;
+  if (current.isTaskComplete) return null;
+
+  const progress = friendsLessonProgress(history);
+  if (progress >= 5) return null;
+
+  const fromText = friendsBoardFromAiText(current.textEn ?? '');
+  let step = fromText;
+  if (step == null) {
+    if (progress >= 0 && progress <= 4) step = progress + 1;
+    else return null;
+  }
+
+  if (step < 1 || step > 5) return null;
+  if (nextTurn < 1 && step !== 1) return null;
+
+  // Turn 5 — free recall, no choice cards.
+  if (step === 5) {
+    if (current.guidedSpeaking == null && current.expectsUserSpeech) {
+      return null;
+    }
+    return {
+      textEn: resolveBoardTextEn(
+        current.textEn ?? '',
+        FRIENDS_THEY_EAT_OUT_BOARD.textEn,
+        { withPraise: true },
+      ),
+      textTh: current.textTh?.trim() || null,
+      guidedSpeaking: null,
+      expectsUserSpeech: true,
+      expectedSpeech: FRIENDS_THEY_EAT_OUT_BOARD.expectedSpeech,
+      emojiChoice: null,
+      isTaskComplete: false,
+    };
+  }
+
+  let board: {
+    textEn: string;
+    stem: string;
+    expectedSpeech: string;
+    options: Array<{ emoji: string; label: string; speak: string }>;
+    withPraise?: boolean;
+  };
+  if (step === 1) {
+    board = {
+      textEn: current.textEn?.trim() || friendsOpeningText(''),
+      stem: FRIENDS_ACTIVITY_GUIDED_SPEAKING.stem,
+      expectedSpeech: 'We play games together.',
+      options: FRIENDS_ACTIVITY_GUIDED_SPEAKING.options.map((o) => ({ ...o })),
+      withPraise: false,
+    };
+  } else if (step === 2) {
+    board = {
+      textEn: FRIENDS_EAT_OUT_BOARD.textEn,
+      stem: FRIENDS_EAT_OUT_BOARD.stem,
+      expectedSpeech: FRIENDS_EAT_OUT_BOARD.expectedSpeech,
+      options: FRIENDS_EAT_OUT_BOARD.options.map((o) => ({ ...o })),
+    };
+  } else if (step === 3) {
+    board = {
+      textEn: FRIENDS_THEY_PLAY_BOARD.textEn,
+      stem: FRIENDS_THEY_PLAY_BOARD.stem,
+      expectedSpeech: FRIENDS_THEY_PLAY_BOARD.expectedSpeech,
+      options: FRIENDS_THEY_PLAY_BOARD.options.map((o) => ({ ...o })),
+    };
+  } else {
+    board = {
+      textEn: FRIENDS_HANG_OUT_BOARD.textEn,
+      stem: FRIENDS_HANG_OUT_BOARD.stem,
+      expectedSpeech: FRIENDS_HANG_OUT_BOARD.expectedSpeech,
+      options: FRIENDS_HANG_OUT_BOARD.options.map((o) => ({ ...o })),
+    };
+  }
+
+  const isSingleHint = board.options.length === 1;
+  const stemOk =
+    board.stem.trim() === ''
+      ? !(current.guidedSpeaking?.stem?.trim())
+      : (current.guidedSpeaking?.stem
+          ?.toLowerCase()
+          .includes(board.stem.toLowerCase().slice(0, 8)) ??
+        false);
+  const wantEmojiOnly =
+    isSingleHint &&
+    board.stem.trim() === '' &&
+    !(board.options[0].label?.trim());
+  const labelOk =
+    !wantEmojiOnly || !(current.guidedSpeaking?.label?.trim());
+  const optionsOk = isSingleHint
+    ? (current.guidedSpeaking?.options?.length ?? 0) < 2 &&
+      (current.guidedSpeaking?.speak === board.options[0].speak ||
+        current.guidedSpeaking?.emoji === board.options[0].emoji)
+    : (current.guidedSpeaking?.options?.length ?? 0) >= board.options.length;
+  if (
+    current.expectsUserSpeech &&
+    stemOk &&
+    labelOk &&
+    optionsOk &&
+    current.guidedSpeaking
+  ) {
+    return null;
+  }
+
+  const options = board.options.map((o) => ({ ...o }));
+  const first = options[0];
+  return {
+    textEn: resolveForcedBoardTextEn(current.textEn ?? '', board, step),
+    textTh: current.textTh?.trim() || null,
+    guidedSpeaking: isSingleHint
+      ? {
+          stem: board.stem,
+          emoji: first.emoji,
+          speak: first.speak,
+          ...(first.label?.trim() ? { label: first.label } : {}),
+        }
+      : {
+          stem: board.stem,
+          emoji: first.emoji,
+          speak: first.speak,
+          ...(first.label?.trim() ? { label: first.label } : {}),
+          options,
+        },
+    expectsUserSpeech: true,
+    expectedSpeech: board.expectedSpeech,
+    emojiChoice: null,
+    isTaskComplete: false,
+  };
+}
+
+/**
+ * After Friends quick checks → Celebrate.
+ */
+export function forceFriendsCelebrateIfNeeded(
+  lessonId: string,
+  _lang: LessonTeachingLanguage,
+  history: Array<{ speaker: string; textEn?: string }>,
+  learnerFirstName: string,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    expectsUserSpeech: boolean;
+    isTaskComplete: boolean;
+  },
+): {
+  textEn: string;
+  textTh: string | null;
+  expectsUserSpeech: false;
+  expectedSpeech: null;
+  guidedSpeaking: null;
+  emojiChoice: null;
+  isTaskComplete: true;
+} | null {
+  if (lessonId !== 'ee_about_me_friends') return null;
+  if (friendsLessonProgress(history) < 5) return null;
+
+  const name = learnerFirstName.trim() || 'เพื่อน';
+  const body = `สุดยอดครับ ${name}! 🎉 วันนี้คุณพูด We/They … together กับเพื่อนได้แล้ว — เก่งมากครับ! 🍌`;
+
+  const raw = (current.textEn ?? '').trim();
+  const praiseOk = /^(เยี่ยม|เก่งมาก|สุดยอด|ดีมาก|ยอดเยี่ยม)/u.test(raw);
+  const textEn =
+    current.isTaskComplete && praiseOk && raw.length > 30 ? raw : body;
+
+  return {
+    textEn,
+    textTh: null,
+    expectsUserSpeech: false,
+    expectedSpeech: null,
+    guidedSpeaking: null,
+    emojiChoice: null,
+    isTaskComplete: true,
+  };
+}
+
 /**
  * After Survival Step 3 (Can you speak…?) → Emoji Speak Intro + full batch.
  */
@@ -15006,14 +15319,6 @@ export function getAllLessons(): LessonConfig[] {
 
 /** Funny About Me intros — one seed picked per session so Turn 1 jabs vary. */
 const FUNNY_INTRO_JAB_SEEDS: Record<string, readonly string[]> = {
-  ee_about_me_friends: [
-    'นัดเพื่อน 7 โมง มา 9 โมงพร้อมกาแฟ',
-    'อ่านแชทช้า แล้วโทษว่าเพิ่งเห็น',
-    'มาสายแล้วโทษรถติดแบบชินๆ',
-    'นัดกินข้าว แต่เพื่อนบอก "กำลังออกจากบ้าน" อยู่ครึ่งชั่วโมง',
-    'ในกรุ๊ปแชทมีคนพิมพ์ "โอเค" แต่ไม่มีใครขยับจริง',
-    'เพื่อนบอกใกล้ถึงแล้ว แต่ GPS ยังอยู่คนละเขต',
-  ],
   ee_about_me_work_school: [
     'ตื่นเช้า รีบไปออฟฟิศ กาแฟคือเพื่อนแท้',
     'นั่งเรียนจนง่วง แต่ยังแกล้งตาเปิด',
