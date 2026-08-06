@@ -2989,10 +2989,10 @@ Phase 4 — Everyday Activities
      "เป๊ะเลยครับ! ถ้ากิจกรรมไหนทำเป็นประจำ ให้เติม every day ไว้ท้ายประโยคครับ แล้วนอกจากตื่นนอนกับนอน คุณทำอะไรทุกวันบ้างครับ? What do you do every day? ☕💼"
    - guidedSpeaking MUST:
      { stem:"I ... every day.", options:[
-       { emoji:"💼", label:"go to work", speak:"I go to work every day." },
-       { emoji:"☕", label:"drink coffee", speak:"I drink coffee every day." },
-       { emoji:"🏃", label:"exercise", speak:"I exercise every day." },
-       { emoji:"📖", label:"study English", speak:"I study English every day." }
+       { emoji:"💼", label:"go to work (ไปทำงาน)", speak:"I go to work every day." },
+       { emoji:"☕", label:"drink coffee (ดื่มกาแฟ)", speak:"I drink coffee every day." },
+       { emoji:"🏃", label:"exercise (ออกกำลังกาย)", speak:"I exercise every day." },
+       { emoji:"📖", label:"study English (เรียนภาษาอังกฤษ)", speak:"I study English every day." }
      ] }
    - Soft-accept full sentence or clear activity + every day. REMEMBER their activity.
    - After clear → Turn 7.
@@ -9349,6 +9349,411 @@ export function forceSmartShopperCelebrateIfNeeded(
     guidedSpeaking: null,
     emojiChoice: null,
     isTaskComplete: true,
+  };
+}
+
+/** Daily Routine 1.1 — fixed guidedSpeaking boards (Vocab → Wake → Sleep → AM/PM → Activity). */
+export const DAILY_ROUTINE_BOARDS: Record<
+  number,
+  {
+    textEn: string;
+    stem: string;
+    expectedSpeech: string;
+    options: Array<{ emoji: string; label: string; speak: string }>;
+  }
+> = {
+  1: {
+    textEn:
+      'เก่งมากครับ! มาเริ่มกันเลย คำว่า ตื่นนอน ในภาษาอังกฤษคือคำไหนครับ? ⏰',
+    stem: '...',
+    expectedSpeech: 'wake up',
+    options: [
+      { emoji: '⏰', label: 'wake up', speak: 'wake up' },
+      { emoji: '💼', label: 'go to work', speak: 'go to work' },
+      { emoji: '🛌', label: 'go to sleep', speak: 'go to sleep' },
+    ],
+  },
+  2: {
+    textEn:
+      'ยอดเยี่ยม! ปกติคุณตื่นกี่โมงครับ? What time do you wake up? 🌅',
+    stem: 'I wake up at...',
+    expectedSpeech: "I wake up at 7 o'clock.",
+    options: [
+      {
+        emoji: '⏰',
+        label: "6 o'clock",
+        speak: "I wake up at 6 o'clock.",
+      },
+      {
+        emoji: '⏰',
+        label: "7 o'clock",
+        speak: "I wake up at 7 o'clock.",
+      },
+      {
+        emoji: '⏰',
+        label: "8 o'clock",
+        speak: "I wake up at 8 o'clock.",
+      },
+      {
+        emoji: '⏰',
+        label: "9 o'clock",
+        speak: "I wake up at 9 o'clock.",
+      },
+    ],
+  },
+  3: {
+    textEn:
+      'แล้วคุณเข้านอนประมาณกี่โมงครับ? What time do you go to sleep? 🌙',
+    stem: 'I go to sleep at...',
+    expectedSpeech: "I go to sleep at 11 o'clock.",
+    options: [
+      {
+        emoji: '🌙',
+        label: "10 o'clock",
+        speak: "I go to sleep at 10 o'clock.",
+      },
+      {
+        emoji: '🌙',
+        label: "11 o'clock",
+        speak: "I go to sleep at 11 o'clock.",
+      },
+      {
+        emoji: '🌙',
+        label: "12 o'clock",
+        speak: "I go to sleep at 12 o'clock.",
+      },
+      {
+        emoji: '🌙',
+        label: "1 o'clock",
+        speak: "I go to sleep at 1 o'clock.",
+      },
+    ],
+  },
+  5: {
+    textEn:
+      'เป๊ะเลยครับ! ถ้ากิจกรรมไหนทำเป็นประจำ ให้เติม every day ไว้ท้ายประโยคครับ แล้วนอกจากตื่นนอนกับนอน คุณทำอะไรทุกวันบ้างครับ? What do you do every day? ☕💼',
+    stem: 'I ... every day.',
+    expectedSpeech: 'I drink coffee every day.',
+    options: [
+      {
+        emoji: '💼',
+        label: 'go to work (ไปทำงาน)',
+        speak: 'I go to work every day.',
+      },
+      {
+        emoji: '☕',
+        label: 'drink coffee (ดื่มกาแฟ)',
+        speak: 'I drink coffee every day.',
+      },
+      {
+        emoji: '🏃',
+        label: 'exercise (ออกกำลังกาย)',
+        speak: 'I exercise every day.',
+      },
+      {
+        emoji: '📖',
+        label: 'study English (เรียนภาษาอังกฤษ)',
+        speak: 'I study English every day.',
+      },
+    ],
+  },
+};
+
+function normalizeDailyRoutineSpeech(userText: string): string {
+  return userText
+    .trim()
+    .toLowerCase()
+    .replace(/[.!?]+$/g, '')
+    .replace(/\s+/g, ' ');
+}
+
+function matchesDailyRoutineStep(step: number, userText: string): boolean {
+  const t = normalizeDailyRoutineSpeech(userText);
+  if (!t) return false;
+  switch (step) {
+    case 1: // I'm ready
+      return (
+        /^(i(?:'m| am)\s+)?ready$/.test(t) ||
+        t === "i'm ready" ||
+        t === 'i am ready'
+      );
+    case 2: // vocab: wake up (not a time sentence)
+      return (
+        (t === 'wake up' ||
+          t === 'i wake up' ||
+          /^i(?:'m)?\s*waking up$/.test(t)) &&
+        !/\bat\b/.test(t)
+      );
+    case 3: // wake time o'clock
+      return (
+        /\bi wake up at\b/.test(t) &&
+        /\b([6-9]|six|seven|eight|nine)\b/.test(t) &&
+        !/\b(a\.?m\.?|p\.?m\.?)\b/.test(t) &&
+        !/\bevery day\b/.test(t)
+      );
+    case 4: // sleep time
+      return (
+        /\bi go to sleep at\b/.test(t) ||
+        /\bi sleep at\b/.test(t) ||
+        /\bi go to bed at\b/.test(t)
+      );
+    case 5: // AM/PM
+      return (
+        /\bi wake up at\b/.test(t) &&
+        /\b(a\.?m\.?|p\.?m\.?)\b/.test(t) &&
+        !/\bevery day\b/.test(t)
+      );
+    case 6: // every day activity
+      return (
+        /\bevery day\b/.test(t) &&
+        (/\bgo to work\b/.test(t) ||
+          /\bdrink coffee\b/.test(t) ||
+          /\bexercise\b/.test(t) ||
+          /\bstudy\b/.test(t))
+      );
+    case 7: // active recall
+      return /\bi wake up at\b/.test(t) && /\bevery day\b/.test(t);
+    default:
+      return false;
+  }
+}
+
+/** How many Daily Routine speak steps are cleared (0–7). */
+export function dailyRoutineProgress(
+  history: Array<{ speaker: string; textEn?: string }>,
+): number {
+  let progress = 0;
+  for (const turn of history) {
+    if (turn.speaker !== 'user') continue;
+    const text = (turn.textEn ?? '').trim();
+    if (!text || text.startsWith('[') || text.startsWith('(')) continue;
+    const next = progress + 1;
+    if (next <= 7 && matchesDailyRoutineStep(next, text)) {
+      progress = next;
+    }
+  }
+  return progress;
+}
+
+function extractDailyRoutineWakeHour(
+  history: Array<{ speaker: string; textEn?: string }>,
+): number {
+  for (const turn of history) {
+    if (turn.speaker !== 'user') continue;
+    const text = turn.textEn ?? '';
+    const m = text.match(/wake up at\s+(\d+)/i);
+    if (m) {
+      const h = parseInt(m[1], 10);
+      if ([6, 7, 8, 9].includes(h)) return h;
+    }
+    const word = text.match(
+      /wake up at\s+(six|seven|eight|nine)\b/i,
+    );
+    if (word) {
+      const map: Record<string, number> = {
+        six: 6,
+        seven: 7,
+        eight: 8,
+        nine: 9,
+      };
+      return map[word[1].toLowerCase()] ?? 7;
+    }
+  }
+  return 7;
+}
+
+function extractDailyRoutineAmPm(
+  history: Array<{ speaker: string; textEn?: string }>,
+): 'AM' | 'PM' {
+  for (let i = history.length - 1; i >= 0; i--) {
+    const turn = history[i];
+    if (turn.speaker !== 'user') continue;
+    const t = normalizeDailyRoutineSpeech(turn.textEn ?? '');
+    if (!/\bi wake up at\b/.test(t) || /\bevery day\b/.test(t)) continue;
+    if (/\bp\.?m\.?\b/.test(t)) return 'PM';
+    if (/\ba\.?m\.?\b/.test(t)) return 'AM';
+  }
+  return 'AM';
+}
+
+/**
+ * Detect Daily Routine board from AI question text.
+ * 1=vocab, 2=wake, 3=sleep, 4=ampm, 5=activity, 6=active-recall (no cards).
+ */
+function dailyRoutineBoardFromAiText(textEn: string): number | null {
+  const t = (textEn ?? '').toLowerCase();
+  if (!t) return null;
+  if (
+    t.includes('wake up every day') ||
+    (t.includes('ตื่นกี่โมง') && t.includes('ทุกวัน')) ||
+    t.includes('คำถามสุดท้าย')
+  ) {
+    return 6;
+  }
+  if (
+    t.includes('what do you do every day') ||
+    t.includes('ทำอะไรทุกวัน')
+  ) {
+    return 5;
+  }
+  if (
+    (/\bam\b/.test(t) && /\bpm\b/.test(t)) ||
+    t.includes('am หรือ pm') ||
+    (t.includes('เช้า') && t.includes('ดึก') && t.includes('am'))
+  ) {
+    return 4;
+  }
+  if (
+    t.includes('go to sleep') ||
+    t.includes('เข้านอน') ||
+    t.includes('ไปนอนประมาณ')
+  ) {
+    return 3;
+  }
+  if (
+    (t.includes('what time do you wake up') || t.includes('ตื่นกี่โมง')) &&
+    !t.includes('ทุกวัน') &&
+    !t.includes('every day')
+  ) {
+    return 2;
+  }
+  if (
+    t.includes('ตื่นนอน') &&
+    (t.includes('คือคำไหน') || t.includes('คำไหน'))
+  ) {
+    return 1;
+  }
+  return null;
+}
+
+function dailyRoutineAmPmBoard(wakeHour: number): {
+  textEn: string;
+  stem: string;
+  expectedSpeech: string;
+  options: Array<{ emoji: string; label: string; speak: string }>;
+} {
+  return {
+    textEn:
+      'สุดยอด! ทีนี้ถ้าอยากระบุให้ชัดว่าเป็น เช้า หรือ ดึก เราใช้ AM (เช้า) และ PM (ดึก) แทน o\'clock ได้ครับ! เวลาตื่นนอนของคุณคือ AM หรือ PM ครับ? ☀️🌙',
+    stem: `I wake up at ${wakeHour}...`,
+    expectedSpeech: `I wake up at ${wakeHour} AM.`,
+    options: [
+      {
+        emoji: '☀️',
+        label: 'AM (เช้า)',
+        speak: `I wake up at ${wakeHour} AM.`,
+      },
+      {
+        emoji: '🌙',
+        label: 'PM (ดึก)',
+        speak: `I wake up at ${wakeHour} PM.`,
+      },
+    ],
+  };
+}
+
+/**
+ * Pin Daily Routine guidedSpeaking boards (Turns 2–6).
+ * Also strips choice cards on Active Recall (Turn 7).
+ */
+export function forceDailyRoutineGuidedSpeakingIfNeeded(
+  lessonId: string,
+  _lang: LessonTeachingLanguage,
+  nextTurn: number,
+  history: Array<{ speaker: string; textEn?: string }>,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    guidedSpeaking: ReturnType<typeof normalizeGuidedSpeaking>;
+    expectsUserSpeech: boolean;
+    isTaskComplete: boolean;
+    expectedSpeech: string | null;
+  },
+): {
+  textEn: string;
+  textTh: string | null;
+  guidedSpeaking: ReturnType<typeof normalizeGuidedSpeaking>;
+  expectsUserSpeech: boolean;
+  expectedSpeech: string | null;
+  emojiChoice: null;
+  isTaskComplete: boolean;
+} | null {
+  if (lessonId !== 'ee_about_me_daily_routine') return null;
+  if (current.isTaskComplete) return null;
+  if (nextTurn < 1) return null;
+
+  const progress = dailyRoutineProgress(history);
+  if (progress >= 7) return null;
+
+  const fromText = dailyRoutineBoardFromAiText(current.textEn ?? '');
+  // After ready (progress=1) → board 1 (vocab); after vocab (2) → board 2, …
+  // progress N completed ⇒ next board key = N (for N=1..5), recall = 6.
+  let target = fromText;
+  if (target == null) {
+    if (progress >= 1 && progress <= 6) target = progress;
+    else return null;
+  }
+
+  // Active Recall — no choice cards.
+  if (target === 6) {
+    if (current.guidedSpeaking == null && current.expectsUserSpeech) {
+      return null;
+    }
+    const hour = extractDailyRoutineWakeHour(history);
+    const ampm = extractDailyRoutineAmPm(history);
+    return {
+      textEn:
+        current.textEn?.trim() ||
+        'เท่มากครับ! คำถามสุดท้าย... ปกติคุณตื่นกี่โมงทุกวันครับ? What time do you wake up every day? ลองตอบเป็นประโยคภาษาอังกฤษเต็มๆ ดูครับ! ✨',
+      textTh: current.textTh?.trim() || null,
+      guidedSpeaking: null,
+      expectsUserSpeech: true,
+      expectedSpeech: `I wake up at ${hour} ${ampm} every day.`,
+      emojiChoice: null,
+      isTaskComplete: false,
+    };
+  }
+
+  if (target < 1 || target > 5) return null;
+
+  const wakeHour = extractDailyRoutineWakeHour(history);
+  const board =
+    target === 4
+      ? dailyRoutineAmPmBoard(wakeHour)
+      : DAILY_ROUTINE_BOARDS[target];
+  if (!board) return null;
+
+  const stemOk =
+    current.guidedSpeaking?.stem
+      ?.toLowerCase()
+      .includes(board.stem.toLowerCase().slice(0, 10)) ?? false;
+  const optionsOk =
+    (current.guidedSpeaking?.options?.length ?? 0) >= board.options.length;
+  if (
+    current.expectsUserSpeech &&
+    stemOk &&
+    optionsOk &&
+    current.guidedSpeaking
+  ) {
+    return null;
+  }
+
+  const options = board.options.map((o) => ({ ...o }));
+  const first = options[0];
+  return {
+    textEn: current.textEn?.trim() || board.textEn,
+    textTh: current.textTh?.trim() || null,
+    guidedSpeaking: {
+      stem: board.stem,
+      emoji: first.emoji,
+      speak: first.speak,
+      ...(first.label ? { label: first.label } : {}),
+      options,
+    },
+    expectsUserSpeech: true,
+    expectedSpeech: board.expectedSpeech,
+    emojiChoice: null,
+    isTaskComplete: false,
   };
 }
 

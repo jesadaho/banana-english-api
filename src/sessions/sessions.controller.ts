@@ -76,6 +76,7 @@ import {
   forceFavoritesRoleplayBridgeIfNeeded,
   forceSmartShopperGuidedSpeakingIfNeeded,
   forceSmartShopperCelebrateIfNeeded,
+  forceDailyRoutineGuidedSpeakingIfNeeded,
   forceSurvivalEmojiSpeakIfNeeded,
   forceSurvivalCelebrateAfterEmojiSpeakIfNeeded,
   looksLikeAroundTownRoleplayBridge,
@@ -805,6 +806,31 @@ export class SessionsController {
         expectedSpeech = forcedSmartShopper.expectedSpeech;
         emojiChoice = forcedSmartShopper.emojiChoice;
         isTaskComplete = forcedSmartShopper.isTaskComplete;
+      }
+
+      // Daily Routine 1.1: pin Vocab / Wake / Sleep / AM-PM / Activity boards.
+      const forcedDailyRoutine = forceDailyRoutineGuidedSpeakingIfNeeded(
+        config.lessonId,
+        teachingLang,
+        nextTurn,
+        data.turns,
+        {
+          textEn,
+          textTh,
+          guidedSpeaking,
+          expectsUserSpeech,
+          isTaskComplete,
+          expectedSpeech,
+        },
+      );
+      if (forcedDailyRoutine != null) {
+        textEn = forcedDailyRoutine.textEn;
+        textTh = forcedDailyRoutine.textTh;
+        guidedSpeaking = forcedDailyRoutine.guidedSpeaking;
+        expectsUserSpeech = forcedDailyRoutine.expectsUserSpeech;
+        expectedSpeech = forcedDailyRoutine.expectedSpeech;
+        emojiChoice = forcedDailyRoutine.emojiChoice;
+        isTaskComplete = forcedDailyRoutine.isTaskComplete;
       }
 
       const forcedSmartShopperCelebrate = forceSmartShopperCelebrateIfNeeded(
