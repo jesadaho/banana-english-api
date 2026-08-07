@@ -66,6 +66,10 @@ export interface ConversationSession {
   durationLimitSeconds?: number;
   currentTurn?: number;
   maxTurns?: number;
+  /** Core Flow progress step (lessons with progressMax). */
+  progressTurn?: number;
+  /** Designed Core Flow beat count for progress bar. */
+  progressMax?: number;
   checkpointStates?: Record<string, boolean>;
   isComplete?: boolean;
 }
@@ -225,6 +229,8 @@ export class SessionStoreService {
       startedAt: new Date().toISOString(),
       currentTurn: 0,
       maxTurns: config.maxTurns,
+      progressTurn: 0,
+      progressMax: config.progressMax,
       isComplete: false,
     };
     const data: SessionData = {
@@ -281,11 +287,15 @@ export class SessionStoreService {
     updates: {
       currentTurn: number;
       isComplete: boolean;
+      progressTurn?: number;
     },
   ): void {
     const data = this.require(sessionId);
     data.session.currentTurn = updates.currentTurn;
     data.session.isComplete = updates.isComplete;
+    if (updates.progressTurn !== undefined) {
+      data.session.progressTurn = updates.progressTurn;
+    }
   }
 
   markEnded(sessionId: string): void {

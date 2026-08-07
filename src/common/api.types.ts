@@ -52,6 +52,13 @@ export interface TurnExchangeResponse {
   updatedCheckpoints: Record<string, boolean>;
   feedbackHints: FeedbackHints;
   currentTurn: number;
+  /**
+   * Core Flow progress step (monotone). Present when the lesson sets
+   * progressMax — soft-teach / retry / praise do not increment this.
+   */
+  progressTurn?: number;
+  /** Designed Core Flow beat count (progress bar denominator). */
+  progressMax?: number;
   /** False when the learner should tap Continue instead of speaking.
    * Omitted on paths that always expect speech. */
   expectsUserSpeech?: boolean;

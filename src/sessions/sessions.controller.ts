@@ -62,6 +62,7 @@ import {
   forceTransportPattern2IfNeeded,
   forceTransportRoleplayBridgeIfNeeded,
   forceShoppingLookingForSoftTeachIfNeeded,
+  resolveShoppingProgressTurn,
   ensureExploreCityCelebratePraiseFirst,
   forceExploreCityCelebrateAfterCloseIfNeeded,
   EXPLORE_CITY_ROLEPLAY_OBJECTIVE,
@@ -597,6 +598,32 @@ export class SessionsController {
       };
       this.sessionStore.addTurn(data.session.id, opening);
 
+      const openingProgressMax = config.progressMax;
+      const openingProgressTurn =
+        openingProgressMax != null && openingProgressMax > 0
+          ? resolveShoppingProgressTurn(
+              config.lessonId,
+              0,
+              openingProgressMax,
+              {
+                textEn: openingTextEn,
+                expectsUserSpeech: openingExpectsSpeechFinal,
+                expectedSpeech: openingExpectedSpeechFinal,
+                emojiChoice: openingEmojiChoice,
+                roleplayIntro: openingRoleplayIntro,
+                roleplayNpc: openingRoleplayNpc,
+                isTaskComplete: false,
+              },
+            )
+          : undefined;
+      if (openingProgressTurn != null) {
+        this.sessionStore.updateTrainingState(data.session.id, {
+          currentTurn: 0,
+          isComplete: false,
+          progressTurn: openingProgressTurn,
+        });
+      }
+
       return {
         session: {
           id: data.session.id,
@@ -605,6 +632,12 @@ export class SessionsController {
           startedAt: data.session.startedAt,
           currentTurn: 0,
           maxTurns: config.maxTurns,
+          ...(openingProgressMax != null
+            ? {
+                progressTurn: openingProgressTurn ?? 0,
+                progressMax: openingProgressMax,
+              }
+            : {}),
           isComplete: false,
         },
         lesson: {
@@ -616,6 +649,9 @@ export class SessionsController {
           estimatedMinutesMax: config.estimatedMinutesMax,
           targetPhrases: config.targetPhrases,
           maxTurns: config.maxTurns,
+          ...(openingProgressMax != null
+            ? { progressMax: openingProgressMax }
+            : {}),
         },
         opening: {
           aiResponse: openingTextEn,
@@ -635,6 +671,12 @@ export class SessionsController {
           updatedCheckpoints: {},
           feedbackHints: { mispronouncedWords: [] as string[] },
           currentTurn: 0,
+          ...(openingProgressMax != null
+            ? {
+                progressTurn: openingProgressTurn ?? 0,
+                progressMax: openingProgressMax,
+              }
+            : {}),
           expectsUserSpeech: openingExpectsSpeechFinal,
           expectedSpeech: openingExpectedSpeechFinal,
           scene: reply.scene,
@@ -825,6 +867,7 @@ export class SessionsController {
       }
 
       // Shopping Mini Challenge: first wrong → soft-teach + mic (block premature bridge).
+      let shoppingSoftTeachForced = false;
       const forcedShoppingSoftTeach = forceShoppingLookingForSoftTeachIfNeeded(
         config.lessonId,
         teachingLang,
@@ -839,6 +882,7 @@ export class SessionsController {
         },
       );
       if (forcedShoppingSoftTeach != null) {
+        shoppingSoftTeachForced = true;
         textEn = forcedShoppingSoftTeach.textEn;
         textTh = forcedShoppingSoftTeach.textTh;
         expectsUserSpeech = forcedShoppingSoftTeach.expectsUserSpeech;
@@ -1731,9 +1775,29 @@ export class SessionsController {
         expectsUserSpeech = false;
       }
 
+      const prevProgressTurn = data.session.progressTurn ?? 0;
+      const nextProgressTurn = resolveShoppingProgressTurn(
+        config.lessonId,
+        prevProgressTurn,
+        config.progressMax,
+        {
+          textEn: staffSpeech.textEn,
+          expectsUserSpeech,
+          expectedSpeech,
+          emojiChoice,
+          roleplayIntro,
+          roleplayNpc: isTaskComplete ? null : roleplayNpc,
+          isTaskComplete,
+          softTeachForced: shoppingSoftTeachForced,
+        },
+      );
+
       this.sessionStore.updateTrainingState(sessionId, {
         currentTurn: nextTurn,
         isComplete: isTaskComplete,
+        ...(config.progressMax != null
+          ? { progressTurn: nextProgressTurn }
+          : {}),
       });
 
       const aiTurn = {
@@ -1760,6 +1824,12 @@ export class SessionsController {
         updatedCheckpoints: {},
         feedbackHints: { mispronouncedWords: [] },
         currentTurn: nextTurn,
+        ...(config.progressMax != null
+          ? {
+              progressTurn: nextProgressTurn,
+              progressMax: config.progressMax,
+            }
+          : {}),
         // A completed lesson hands off to the drill, so never ask for speech.
         expectsUserSpeech,
         expectedSpeech,

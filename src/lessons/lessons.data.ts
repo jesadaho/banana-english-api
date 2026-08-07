@@ -20,6 +20,13 @@ export interface LessonConfig {
   /** How to refer to targets in shared Language style (e.g. phrase, number word). */
   targetLabel?: string;
   maxTurns: number;
+  /**
+   * Designed Core Flow beat count for the teaching progress bar.
+   * When set, the app uses progressTurn / progressMax instead of
+   * currentTurn / maxTurns. Soft-teach / retry / praise do not advance
+   * progressTurn. maxTurns remains the session force-complete ceiling.
+   */
+  progressMax?: number;
   systemInstruction: string;
   openingPrompt: string;
   /**
@@ -4704,6 +4711,8 @@ Core Flow (progression milestones — NOT a fixed turn count):
       'How much is this?',
     ],
     maxTurns: 22,
+    /** Hook → vocab×2 → pattern → looking-for → RP intro → help → size → price model → ask → $20 → celebrate */
+    progressMax: 12,
     listenOnlyTurns: 1,
     systemInstruction: `Lesson: Shopping (Everyday English → Everyday Life → 2.1)
 Goal: Buy clothes, ask the price, and talk to a shop assistant.
@@ -8669,6 +8678,169 @@ export function forceShoppingLookingForSoftTeachIfNeeded(
     emojiChoice: SHOPPING_LOOKING_FOR_BOARD,
     isTaskComplete: false,
   };
+}
+
+const SHOPPING_PROGRESS_MAX = 12;
+
+function normalizeStaffLine(text: string): string {
+  return text
+    .trim()
+    .toLowerCase()
+    .replace(/[.!?]+$/g, '')
+    .replace(/\s+/g, ' ');
+}
+
+function shoppingLooksLikeSoftTeachOrRetry(textEn: string): boolean {
+  const t = textEn.trim();
+  if (!t) return false;
+  const lower = t.toLowerCase();
+  const softTeach =
+    (t.includes('ไม่เป็นไร') || lower.includes('no worries')) &&
+    (t.includes('ลองพูด') ||
+      lower.includes('try saying') ||
+      lower.includes('say it') ||
+      /i'?m looking for/i.test(t));
+  if (softTeach) return true;
+  return /(อีกครั้ง|ลองใหม่|พูดใหม่|พูดอีกรอบ|one\s+more\s+time|try\s+again|once\s+more)/i.test(
+    t,
+  );
+}
+
+function shoppingEmojiChoiceHasLookingFor(
+  emojiChoice:
+    | { options?: Array<{ speak?: string }> }
+    | null
+    | undefined,
+): boolean {
+  const options = emojiChoice?.options;
+  if (!options?.length) return false;
+  return options.some((o) =>
+    /i'?m looking for/i.test((o.speak ?? '').trim()),
+  );
+}
+
+function shoppingEmojiChoiceIsAskPrice(
+  emojiChoice:
+    | { options?: Array<{ speak?: string }> }
+    | null
+    | undefined,
+): boolean {
+  const options = emojiChoice?.options;
+  if (!options?.length) return false;
+  return options.every((o) =>
+    /how much is this/i.test((o.speak ?? '').trim()),
+  );
+}
+
+/**
+ * Map the current Shopping tutor reply to a Core Flow beat (1–12).
+ * Returns null for soft-teach / retry / praise-only / unknown filler so
+ * progressTurn does not advance.
+ */
+function detectShoppingProgressBeat(current: {
+  textEn: string;
+  expectsUserSpeech: boolean;
+  expectedSpeech?: string | null;
+  emojiChoice?: { options?: Array<{ speak?: string }> } | null;
+  roleplayIntro?: unknown;
+  roleplayNpc?: unknown;
+  isTaskComplete: boolean;
+  softTeachForced?: boolean;
+}): number | null {
+  if (current.isTaskComplete) return SHOPPING_PROGRESS_MAX;
+  if (current.softTeachForced) return null;
+  if (shoppingLooksLikeSoftTeachOrRetry(current.textEn)) return null;
+
+  if (current.roleplayIntro != null) return 6;
+
+  const staff = normalizeStaffLine(current.textEn);
+  if (staff === 'can i help you') return 7;
+  if (staff === 'what size') return 8;
+  if (
+    staff === "it's twenty dollars" ||
+    staff === 'its twenty dollars' ||
+    staff === "it's 20 dollars" ||
+    staff === 'its 20 dollars'
+  ) {
+    return 11;
+  }
+
+  const expected = (current.expectedSpeech ?? '').trim().toLowerCase();
+  if (current.expectsUserSpeech) {
+    if (expected === 'shirt') return 2;
+    if (expected === 'pants' || expected === 'shoes' || expected === 'cap') {
+      return 3;
+    }
+    if (
+      expected === 'how much is this?' ||
+      expected === 'how much is this' ||
+      shoppingEmojiChoiceIsAskPrice(current.emojiChoice)
+    ) {
+      return 10;
+    }
+    if (
+      shoppingEmojiChoiceHasLookingFor(current.emojiChoice) ||
+      /กำลังหาอะไร|ไหนลองบอก|what are you looking for/i.test(current.textEn)
+    ) {
+      return 5;
+    }
+    // Size / looking-for speak during roleplay with staff chrome already counted
+    // via staff lines; bare speak scaffolds without a new milestone → no bump.
+    if (current.roleplayNpc != null) return null;
+  }
+
+  if (!current.expectsUserSpeech && current.roleplayNpc == null) {
+    const lower = current.textEn.toLowerCase();
+    if (
+      lower.includes("i'm looking for a shirt") ||
+      lower.includes('im looking for a shirt')
+    ) {
+      return 4;
+    }
+    if (lower.includes('how much is this')) {
+      return 9;
+    }
+    // Hook (opening / early listen with shopping vibe, no pattern yet).
+    if (
+      current.textEn.includes('ซื้อเสื้อผ้า') ||
+      current.textEn.includes('ร้านค้า') ||
+      lower.includes('shopping') ||
+      lower.includes('clothes')
+    ) {
+      return 1;
+    }
+  }
+
+  // Praise-only / filler between milestones — do not advance.
+  return null;
+}
+
+/**
+ * Monotone Core Flow progress for Shopping.
+ * Soft-teach / retry / praise keep the previous progressTurn.
+ */
+export function resolveShoppingProgressTurn(
+  lessonId: string,
+  prevProgressTurn: number,
+  progressMax: number | undefined,
+  current: {
+    textEn: string;
+    expectsUserSpeech: boolean;
+    expectedSpeech?: string | null;
+    emojiChoice?: { options?: Array<{ speak?: string }> } | null;
+    roleplayIntro?: unknown;
+    roleplayNpc?: unknown;
+    isTaskComplete: boolean;
+    softTeachForced?: boolean;
+  },
+): number {
+  if (lessonId !== 'ee_around_town_shopping' || !progressMax) {
+    return prevProgressTurn;
+  }
+  const beat = detectShoppingProgressBeat(current);
+  if (beat == null) return prevProgressTurn;
+  const capped = Math.min(beat, progressMax);
+  return Math.max(prevProgressTurn, capped);
 }
 
 export const SHOPPING_PRICE_SPEAK_CHALLENGE_TH =
