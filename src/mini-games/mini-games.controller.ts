@@ -21,6 +21,9 @@ type AuthedRequest = { user: User };
 const ALLOWED_MINI_GAME_IDS = new Set([
   'emoji_speak_first_contact',
   'speak_challenge_ee_everyday_life_1',
+  'speak_challenge_ee_everyday_life_hotel',
+  'speak_challenge_ee_everyday_life_pharmacy',
+  'speak_challenge_ee_everyday_life_survival',
   'word_choice_ee_about_me_describe',
   'word_choice_ee_around_town_compare',
 ]);
