@@ -42,6 +42,12 @@ export class CompleteOnboardingDto {
   displayName?: string;
 }
 
+export class EnglishLevelSurveyDto {
+  @IsString()
+  @IsIn(['beginner', 'elementary', 'intermediate', 'advanced'])
+  level!: 'beginner' | 'elementary' | 'intermediate' | 'advanced';
+}
+
 export class UnlockAvatarDto {
   @IsString()
   @MinLength(1)

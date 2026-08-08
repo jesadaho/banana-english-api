@@ -13,6 +13,7 @@ import { ActivityService } from './activity.service';
 import { AnonymousUserGuard } from './anonymous-user.guard';
 import {
   CompleteOnboardingDto,
+  EnglishLevelSurveyDto,
   RefillBananasByNameDto,
   UnlockAvatarDto,
   UpsertUserDto,
@@ -73,6 +74,14 @@ export class UsersController {
     @Body() body: CompleteOnboardingDto,
   ) {
     return this.users.completeOnboarding(req.user, body);
+  }
+
+  @Post('me/english-level-survey')
+  async saveEnglishLevelSurvey(
+    @Req() req: AuthedRequest,
+    @Body() body: EnglishLevelSurveyDto,
+  ) {
+    return this.users.saveEnglishLevelSurvey(req.user, body);
   }
 
   @Post('me/avatars/unlock')

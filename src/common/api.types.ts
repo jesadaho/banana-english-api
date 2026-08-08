@@ -409,6 +409,11 @@ export interface UserProfileResponse {
   timezone: string;
   unlockedAvatarIds: string[];
   lessonTeachingLanguage: 'thai' | 'english';
+  /**
+   * Self-reported English level from onboarding survey:
+   * beginner | elementary | intermediate | advanced
+   */
+  selfReportedEnglishLevel?: string | null;
   /** Banana Ticket sheet copy — kept in sync with economy env/defaults. */
   bananaTicket: {
     dailyDrop: number;

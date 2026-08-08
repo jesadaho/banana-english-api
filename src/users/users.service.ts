@@ -15,7 +15,20 @@ import {
   FREE_AVATAR_IDS,
   isKnownAvatarId,
 } from './avatar-catalog';
-import { CompleteOnboardingDto, UpsertUserDto } from './dto/users.dto';
+import { CompleteOnboardingDto, EnglishLevelSurveyDto, UpsertUserDto } from './dto/users.dto';
+
+export type SelfReportedEnglishLevel =
+  | 'beginner'
+  | 'elementary'
+  | 'intermediate'
+  | 'advanced';
+
+const SELF_REPORTED_ENGLISH_LEVELS = new Set<SelfReportedEnglishLevel>([
+  'beginner',
+  'elementary',
+  'intermediate',
+  'advanced',
+]);
 
 export interface UserProfileResponse {
   anonymousId: string;
@@ -29,6 +42,11 @@ export interface UserProfileResponse {
   timezone: string;
   unlockedAvatarIds: string[];
   lessonTeachingLanguage: 'thai' | 'english';
+  /**
+   * Self-reported English level from onboarding survey:
+   * beginner | elementary | intermediate | advanced
+   */
+  selfReportedEnglishLevel?: string | null;
   /** Banana Ticket sheet copy — kept in sync with economy env/defaults. */
   bananaTicket: {
     dailyDrop: number;
@@ -120,6 +138,21 @@ export class UsersService {
     }
 
     const updated = await this.economy.creditOnboardingBonus(user.id);
+    return this.getProfile(updated);
+  }
+
+  async saveEnglishLevelSurvey(
+    user: User,
+    dto: EnglishLevelSurveyDto,
+  ): Promise<UserProfileResponse> {
+    if (!SELF_REPORTED_ENGLISH_LEVELS.has(dto.level)) {
+      throw new BadRequestException('Invalid English level');
+    }
+
+    const updated = await this.prisma.user.update({
+      where: { id: user.id },
+      data: { selfReportedEnglishLevel: dto.level },
+    });
     return this.getProfile(updated);
   }
 
@@ -330,6 +363,12 @@ export class UsersService {
       .lessonTeachingLanguage;
     const lessonTeachingLanguage =
       rawLang === 'english' ? 'english' : 'thai';
+    const rawLevel = (user as User & { selfReportedEnglishLevel?: string | null })
+      .selfReportedEnglishLevel;
+    const selfReportedEnglishLevel =
+      rawLevel && SELF_REPORTED_ENGLISH_LEVELS.has(rawLevel as SelfReportedEnglishLevel)
+        ? rawLevel
+        : null;
     return {
       anonymousId: user.anonymousId,
       displayName: user.displayName ?? 'เพื่อน',
@@ -342,6 +381,7 @@ export class UsersService {
       timezone: user.timezone,
       unlockedAvatarIds,
       lessonTeachingLanguage,
+      selfReportedEnglishLevel,
       bananaTicket: this.economy.ticketRules(),
     };
   }

@@ -41,6 +41,12 @@ model User {
   /** How Teacher B speaks during lessons: "thai" | "english". */
   lessonTeachingLanguage  String    @default("thai")
 
+  /**
+   * Self-reported English level from onboarding survey:
+   * "beginner" | "elementary" | "intermediate" | "advanced"
+   */
+  selfReportedEnglishLevel String?
+
   /** True after the learner finishes any Vocab Drill with zero mistakes. */
   perfectVocabDrillCompleted Boolean @default(false)
 
