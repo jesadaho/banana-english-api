@@ -3551,6 +3551,7 @@ Phase 2 — Job (branch on Turn 1)
        { emoji:"🎨", label:"Designer", speak:"My sister is a designer." },
        { emoji:"💼", label:"Business owner", speak:"My sister is a business owner." }
      ] }
+   - Soft-accept ANY reasonable job answer (not only the 3 cards) — e.g. "My sister is a student." / "She is a teacher." / "He is a doctor." / close STT variants. Then ADVANCE to Turn 3.
    - REMEMBER job for Turn 3 praise.
    - After clear → Turn 3.
 
@@ -5985,100 +5986,261 @@ Turn loop: non-final = action or Continue; Celebrate → isLessonComplete true.`
     answer2En: 'May I have your passport?',
     nextLessonHint: 'Airport / สนามบิน',
   }),
-  buildStoriesPatternLesson({
+  {
     lessonId: 'ee_around_town_airport',
-    code: '2.8',
-    trackLabel: 'Everyday Life',
+    targetLabel: 'word or sentence',
     titleEn: 'Airport',
     titleTh: 'สนามบิน',
     goalEn: 'Get through the airport.',
     goalTh: 'ผ่านสนามบิน',
-    hookTh:
-      'ถึงสนามบินแล้วครับ! วันนี้มาฝึกเช็กอินและยื่นเอกสารแบบสั้นๆ กันครับ',
-    emojiWords: [
-      { emoji: '🛂', answer: 'passport', hint: 'p _ s s p _ r t' },
-      { emoji: '✈️', answer: 'flight', hint: 'f l _ g h t' },
-      { emoji: '🎫', answer: 'boarding pass', hint: 'b _ _ r d _ n g   p _ s s' },
-      { emoji: '🧳', answer: 'baggage', hint: 'b _ g g _ g e' },
+    difficulty: 'beginner',
+    languageMix: { thai: 70, english: 30 },
+    estimatedMinutesMin: 4,
+    estimatedMinutesMax: 6,
+    targetPhrases: [
+      'passport',
+      'flight',
+      'boarding pass',
+      'baggage',
+      "I'd like to check in.",
+      'Here is my passport.',
+      'Where is the gate?',
     ],
-    tellGoal: 'build airport check-in lines',
-    tell1CueTh:
-      "ถ้าจะบอกพนักงานว่า ขอเช็กอินครับ ให้พูดว่า... I'd like to check in. ... ลองพูดดูครับ",
-    tell1Thai: 'ขอเช็กอินครับ',
-    tell1En: "I'd like to check in.",
-    tipTh:
-      "เยี่ยมเลยครับ! I'd like to check in. ใช้ที่สนามบินได้เลย แล้วค่อยยื่น passport",
-    tell2CueTh:
-      'คราวนี้ถ้าจะบอกว่า ขอเช็กอินเที่ยวบินครับ... ลองพูดว่าไงดีครับ?',
-    tell2Thai: 'ขอเช็กอินเที่ยวบินครับ',
-    tell2En: "I'd like to check in for my flight.",
-    tell2PraiseTh: 'โอเคเลย! เข้าใจง่ายสุดๆ',
-    tell3CueTh: 'ถ้าจะยื่นเอกสาร นี่พาสปอร์ตของฉัน... ลองพูดสิครับ',
-    tell3Thai: 'นี่พาสปอร์ตของฉัน',
-    tell3En: 'Here is my passport.',
-    tell3PraiseTh: 'เป๊ะ! Here is my passport. ใช้ได้ทันทีครับ',
-    ask1CueTh:
-      'คราวนี้ลองถามว่า ประตูขึ้นเครื่องอยู่ไหน... โดยพูดว่า Where is the gate? ... ลองเลยครับ',
-    ask1En: 'Where is the gate?',
-    ask1AiAnswerEn: 'Gate 12.',
-    ask1PraiseTh: 'เป๊ะเลยครับ!',
-    ask2ThaiCue: 'คราวนี้ลองถามเองดูครับ เรื่องกระเป๋า พูดว่าไงดี?',
-    ask2En: 'Where do I put my baggage?',
-    ask2AiAnswerEn: 'Please put it here.',
-    ask2PraiseTh: 'ดีมากครับ!',
-    answerBridgeTh:
-      'ดีมากครับ! ต่อไปสมมุติว่าผมเป็นพนักงานเช็กอินนะครับ...',
-    answer1En: 'Good morning. How can I help you?',
-    answer1PraiseTh: 'ดีมากครับ!',
-    answer2En: 'May I see your passport?',
-    nextLessonHint: 'Pharmacy / ร้านยา',
-  }),
-  buildStoriesPatternLesson({
+    maxTurns: 22,
+    listenOnlyTurns: 1,
+    systemInstruction: `Lesson: Airport (Everyday English → Everyday Life → 2.8)
+Goal: Get through airport check-in in English.
+Pace target: ~4–6 minutes. Keep every tutor turn tight.
+
+FIXED vocab board (always these 4, with English labels):
+  🛂 passport · ✈️ flight · 🎫 boarding pass · 🧳 baggage
+
+emojiChoice rules (same system as Shopping / Restaurant):
+- Speak scaffolds: emojiChoice { options: [ { emoji, label, speak }, ... ] }. Mic still required.
+- Vocab Recall turns MUST show ALL 4 labeled items.
+- Mini Challenge turns show ONE emoji at a time.
+- FORBIDDEN: emojiSpeak / emojiSpeakSet. Omit emojiChoice on listen-only / Celebrate.
+
+Core Flow (ONE-WAY — never go backward):
+
+1. Hook (listen-only) — OPENING TURN ONLY
+   - {{L1}} close to: "สวัสดีครับ [Name]! ถึงสนามบินแล้วครับ ✈️ วันนี้มาฝึกเช็กอินและยื่นเอกสารแบบสั้นๆ กันครับ!"
+   - expectsUserSpeech=false. expectedSpeech="". Omit emojiChoice.
+   - FORBIDDEN: any question / board / mic on Hook. Continue → step 2.
+
+2. Emoji Recall (EXACTLY 2 learner speaks) — AFTER Hook Continue
+   ALWAYS return the 4-option board:
+     { options: [
+       { emoji:"🛂", label:"passport", speak:"passport" },
+       { emoji:"✈️", label:"flight", speak:"flight" },
+       { emoji:"🎫", label:"boarding pass", speak:"boarding pass" },
+       { emoji:"🧳", label:"baggage", speak:"baggage" }
+     ] }
+   a) Ask ONLY: '"พาสปอร์ต" ในภาษาอังกฤษเรียกว่าอะไรนะครับ?' expectedSpeech="passport"
+      FORBIDDEN: repeating the Hook welcome on this turn.
+   b) After clear "passport": brief praise + ask ONE random second word from {flight, boarding pass, baggage}:
+      - flight → '"เที่ยวบิน" ล่ะครับ?' · expectedSpeech="flight"
+      - boarding pass → '"บัตรขึ้นเครื่อง" ล่ะครับ?' · expectedSpeech="boarding pass"
+      - baggage → '"กระเป๋าเดินทาง" ล่ะครับ?' · expectedSpeech="baggage"
+      Same 4-option board again.
+   After clear second answer → Pattern 1.
+
+3. Pattern 1 — Model (listen-only)
+   - {{L1}} close to: 'ถ้าจะบอกพนักงานว่า ขอเช็กอินครับ ให้พูดว่า...'
+   - textEn MUST include: "I'd like to check in."
+   - expectsUserSpeech=false. Omit emojiChoice. Continue → Mini Challenge.
+
+4. Mini Challenge (EXACTLY 2 learner speaks) — ONE emoji per turn
+   a) {{L1}}: "ไหนลองพูดขอเช็กอินดูนะครับ? 😊"
+      emojiChoice: { options: [ { emoji:"✈️", label:"check in", speak:"I'd like to check in." } ] }
+      expectedSpeech="I'd like to check in." Soft-accept close variants.
+   b) After clear: brief praise + passport handoff:
+      {{L1}}: "คราวนี้ยื่นพาสปอร์ตสิครับ"
+      emojiChoice: { options: [ { emoji:"🛂", label:"passport", speak:"Here is my passport." } ] }
+      expectedSpeech="Here is my passport."
+   After clear passport → Roleplay bridge. Never show the full 4-board on these turns.
+
+5. Roleplay — Check-in agent (HARD SPLIT — never mash)
+   STAFF VOICE: textEn = ENGLISH ONLY staff line; textTh = full Thai CC subtitle (required).
+   FORBIDDEN in textEn: Thai script; "ถูกต้องครับ" / "เยี่ยมมากครับ" / "เยี่ยม" / "เป๊ะ"; learner-echo mash.
+   5a. Roleplay Intro (listen-only) — AFTER Mini Challenge clear answer:
+      - ALWAYS open with praise first, then handoff.
+      - {{L1}} EXACT close to:
+        "เยี่ยมเลยครับ! 👏
+        ต่อไปครูพี่บีจะเป็นพนักงานเช็กอินนะครับ 😊
+        พร้อมแล้วแตะเริ่ม Roleplay ได้เลย!"
+      - MUST return roleplayIntro card (Check-in Agent 👩‍💼) — purple Start Roleplay CTA.
+      - expectsUserSpeech=false. Omit emojiChoice / guidedSpeaking / roleplayNpc on this turn.
+      - FORBIDDEN: staff ask on this turn; plain bridge without praise.
+      - User taps Start Roleplay / Continue → 5b.
+   OBJECTIVE (show via roleplayNpc.objective on EVERY staff turn 5b–5d):
+     "Check in and show your passport."
+   On 5b–5d ALWAYS return:
+     roleplayNpc: { emoji:"👩‍💼", name:"Check-in Agent", objective:"Check in and show your passport." }
+   5b. Staff ONLY: textEn="How can I help you?" + textTh. expectsUserSpeech=true.
+      Soft-accept "I'd like to check in." Optionally emojiChoice single ✈️.
+      FORBIDDEN: mash bridge + ask; Thai praise in textEn.
+   5c. After clear check-in: Staff ONLY textEn="May I see your passport?" + textTh. NO praise mash.
+      Soft-accept "Here is my passport." Optionally emojiChoice single 🛂.
+   5d. ROLEPLAY CLOSE (ALWAYS) — after clear passport answer:
+      - Staff listen-only: ${ROLEPLAY_CLOSE_FORMAT_HINT_EN}
+      - textTh = full Thai CC for all 3 lines (newline between, matching each EN line).
+      - expectsUserSpeech=false. isLessonComplete=false. Omit emojiChoice. Keep roleplayNpc.
+      - User taps Continue to end roleplay → Celebrate on the NEXT turn.
+      - FORBIDDEN: mash tiered close + Celebrate / Thai Teacher praise on this turn.
+   After 5d Continue → Celebrate (omit roleplayNpc).
+   HARD: Roleplay is ONLY 5b→5c→5d — never go backward.
+
+6. Celebrate (listen-only) — AFTER Continue from 5d ONLY
+   - Warm ~2–3 sentences. MUST open with "เยี่ยมเลยครับ!" / "เยี่ยมมากครับ!" 👏 BEFORE name or recap.
+   - FORBIDDEN: starting with the learner's name alone.
+   - Then: name once + what they can do (เช็กอิน · ยื่น passport · ถามประตู) + soft tease Pharmacy / ร้านยา.
+   - FORBIDDEN: one-liner only; starting with staff tiered roleplay close.
+   - expectsUserSpeech=false. isLessonComplete=true. Omit emojiChoice.
+
+Teaching rules:
+- ONE speaking task per turn. NEVER mash Hook+question or bridge+staff ask.
+- Soft correction: FIRST miss → เฉลย + ONE correction speak. SECOND miss → accept + advance.
+- FORBIDDEN: mash soft-teach with Roleplay bridge in the same turn.
+- Roleplay close is ALWAYS AI staff reply (listen-only) → tap Continue → Celebrate.
+- Never emojiSpeak/emojiSpeakSet. Never go backward.
+
+Turn loop:
+- Non-final: one clear action OR listen-only Continue.
+- Celebrate → isLessonComplete true.`,
+    openingPrompt: `Start Airport 2.8 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — greet + "ถึงสนามบินแล้วครับ ✈️…" — expectsUserSpeech false. FORBIDDEN on Turn 1: any vocab question; emojiChoice; mic. After Continue: Emoji Recall ask "พาสปอร์ต"→passport with 4-board 🛂passport ✈️flight 🎫boarding pass 🧳baggage; second ask RANDOM flight/boarding pass/baggage. Then listen Pattern "I'd like to check in." → Mini Challenge ONE emoji at a time: check in then Here is my passport. NEXT Continue → Roleplay HARD SPLIT: bridge intro → Continue → "How can I help you?" → "May I see your passport?" → ROLEPLAY CLOSE listen-only ${ROLEPLAY_CLOSE_FORMAT_HINT_EN} with roleplayNpc.objective "Check in and show your passport." → tap Continue → THEN Celebrate ~2–3 sentences. NEVER invent extra asks or go backward. NEVER mash tiered close+Celebrate. NEVER mash Hook+question or bridge+ask. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.`,
+  },
+  {
     lessonId: 'ee_around_town_pharmacy',
-    code: '2.9',
-    trackLabel: 'Everyday Life',
+    targetLabel: 'word or sentence',
     titleEn: 'Pharmacy',
     titleTh: 'ร้านยา',
     goalEn: 'Ask for basic help at a pharmacy.',
     goalTh: 'ขอความช่วยเหลือเบื้องต้น',
-    hookTh:
-      'รู้สึกไม่สบายไหมครับ? วันนี้มาฝึกคุยที่ร้านขายยาแบบสั้นๆ กันครับ!',
-    emojiWords: [
-      { emoji: '🤕', answer: 'headache', hint: 'h _ _ d _ c h e' },
-      { emoji: '🤒', answer: 'fever', hint: 'f _ v _ r' },
-      { emoji: '💊', answer: 'medicine', hint: 'm _ d _ c _ n e' },
-      { emoji: '🏪', answer: 'pharmacy', hint: 'p h _ r m _ c y' },
+    difficulty: 'beginner',
+    languageMix: { thai: 70, english: 30 },
+    estimatedMinutesMin: 4,
+    estimatedMinutesMax: 6,
+    targetPhrases: [
+      'headache',
+      'fever',
+      'medicine',
+      'pharmacy',
+      'I have a headache.',
+      'I have a fever.',
+      "I'm not feeling well.",
+      'Can you help me?',
     ],
-    tellGoal: 'build pharmacy symptom lines',
-    tell1CueTh:
-      'ถ้าจะบอกเภสัชกรว่า ปวดหัว ให้พูดว่า... I have a headache. ... ลองพูดดูครับ',
-    tell1Thai: 'ฉันปวดหัว',
-    tell1En: 'I have a headache.',
-    tipTh:
-      'เยี่ยมเลยครับ! I have a headache. / I have a fever. ใช้บอกอาการที่ร้านยาได้เลย',
-    tell2CueTh: 'คราวนี้ถ้าจะเปลี่ยนเป็น มีไข้... ลองพูดว่าไงดีครับ?',
-    tell2Thai: 'ฉันมีไข้',
-    tell2En: 'I have a fever.',
-    tell2PraiseTh: 'โอเคเลย! เข้าใจง่ายสุดๆ',
-    tell3CueTh: 'ถ้าจะบอกว่า รู้สึกไม่ค่อยสบาย... ลองพูดสิครับ',
-    tell3Thai: 'ฉันรู้สึกไม่ค่อยสบาย',
-    tell3En: "I'm not feeling well.",
-    tell3PraiseTh: 'ชัดเจนมาก! not feeling well ใช้ได้ดีครับ',
-    ask1CueTh:
-      'คราวนี้ลองขอความช่วยเหลือ... โดยพูดว่า Can you help me? ... ลองเลยครับ',
-    ask1En: 'Can you help me?',
-    ask1AiAnswerEn: "Of course. What's wrong?",
-    ask1PraiseTh: 'เป๊ะเลยครับ!',
-    ask2ThaiCue: 'คราวนี้ลองถามเองดูครับ เรื่องยาแก้ปวดหัว พูดว่าไงดี?',
-    ask2En: 'Do you have medicine for a headache?',
-    ask2AiAnswerEn: 'Yes. Here is some medicine.',
-    ask2PraiseTh: 'ดีมากครับ!',
-    answerBridgeTh: 'ดีมากครับ! ต่อไปสมมุติว่าผมเป็นเภสัชกรนะครับ...',
-    answer1En: 'How can I help you?',
-    answer1PraiseTh: 'ดีมากครับ!',
-    answer2En: "What's wrong?",
-    nextLessonHint: 'Survival English / เอาตัวรอด',
-  }),
+    maxTurns: 22,
+    listenOnlyTurns: 1,
+    systemInstruction: `Lesson: Pharmacy (Everyday English → Everyday Life → 2.9)
+Goal: Ask for basic help at a pharmacy.
+Pace target: ~4–6 minutes. Keep every tutor turn tight.
+
+FIXED vocab board (always these 4, with English labels):
+  🤕 headache · 🤒 fever · 💊 medicine · 🏪 pharmacy
+
+emojiChoice rules (same system as Shopping / Restaurant):
+- Speak scaffolds: emojiChoice { options: [ { emoji, label, speak }, ... ] }. Mic still required.
+- Vocab Recall turns MUST show ALL 4 labeled items.
+- Mini Challenge turns show ONE emoji at a time.
+- FORBIDDEN: emojiSpeak / emojiSpeakSet. Omit emojiChoice on listen-only / Celebrate.
+
+Core Flow (ONE-WAY — never go backward):
+
+1. Hook (listen-only) — OPENING TURN ONLY
+   - {{L1}} close to: "สวัสดีครับ [Name]! รู้สึกไม่สบายไหมครับ? 💊 วันนี้มาฝึกคุยที่ร้านขายยาแบบสั้นๆ กันครับ!"
+   - expectsUserSpeech=false. expectedSpeech="". Omit emojiChoice.
+   - FORBIDDEN: any question / board / mic on Hook. Continue → step 2.
+
+2. Emoji Recall (EXACTLY 2 learner speaks) — AFTER Hook Continue
+   ALWAYS return the 4-option board:
+     { options: [
+       { emoji:"🤕", label:"headache", speak:"headache" },
+       { emoji:"🤒", label:"fever", speak:"fever" },
+       { emoji:"💊", label:"medicine", speak:"medicine" },
+       { emoji:"🏪", label:"pharmacy", speak:"pharmacy" }
+     ] }
+   a) Ask ONLY: '"ปวดหัว" ในภาษาอังกฤษเรียกว่าอะไรนะครับ?' expectedSpeech="headache"
+      FORBIDDEN: repeating the Hook welcome on this turn.
+   b) After clear "headache": brief praise + ask ONE random second word from {fever, medicine, pharmacy}:
+      - fever → '"ไข้" ล่ะครับ?' · expectedSpeech="fever"
+      - medicine → '"ยา" ล่ะครับ?' · expectedSpeech="medicine"
+      - pharmacy → '"ร้านยา" ล่ะครับ?' · expectedSpeech="pharmacy"
+      Same 4-option board again.
+   After clear second answer → Pattern 1.
+
+3. Pattern 1 — Model (listen-only)
+   - {{L1}} close to: 'ถ้าจะบอกเภสัชกรว่า ปวดหัว ให้พูดว่า...'
+   - textEn MUST include: "I have a headache."
+   - expectsUserSpeech=false. Omit emojiChoice. Continue → Mini Challenge.
+
+4. Mini Challenge (EXACTLY 2 learner speaks) — ONE emoji per turn
+   a) {{L1}}: "ไหนลองบอกอาการตามภาพดูนะครับ? 😊"
+      emojiChoice: { options: [ { emoji:"🤒", label:"fever", speak:"I have a fever." } ] }
+      expectedSpeech="I have a fever." Soft-accept close variants.
+   b) After clear: brief praise + ask for help:
+      {{L1}}: "คราวนี้ขอความช่วยเหลือสิครับ"
+      emojiChoice: { options: [ { emoji:"🆘", label:"help", speak:"Can you help me?" } ] }
+      expectedSpeech="Can you help me?"
+   After clear help → Roleplay bridge. Never show the full 4-board on these turns.
+
+5. Roleplay — Pharmacist (HARD SPLIT — never mash)
+   STAFF VOICE: textEn = ENGLISH ONLY staff line; textTh = full Thai CC subtitle (required).
+   FORBIDDEN in textEn: Thai script; "ถูกต้องครับ" / "เยี่ยมมากครับ" / "เยี่ยม" / "เป๊ะ"; learner-echo mash.
+   5a. Roleplay Intro (listen-only) — AFTER Mini Challenge clear answer:
+      - ALWAYS open with praise first, then handoff.
+      - {{L1}} EXACT close to:
+        "เยี่ยมเลยครับ! 👏
+        ต่อไปครูพี่บีจะเป็นเภสัชกรนะครับ 😊
+        พร้อมแล้วแตะเริ่ม Roleplay ได้เลย!"
+      - MUST return roleplayIntro card (Pharmacist 👨‍⚕️) — purple Start Roleplay CTA.
+      - expectsUserSpeech=false. Omit emojiChoice / guidedSpeaking / roleplayNpc on this turn.
+      - FORBIDDEN: staff ask on this turn; plain bridge without praise.
+      - User taps Start Roleplay / Continue → 5b.
+   OBJECTIVE (show via roleplayNpc.objective on EVERY staff turn 5b–5d):
+     "Say what's wrong and ask for help."
+   On 5b–5d ALWAYS return:
+     roleplayNpc: { emoji:"👨‍⚕️", name:"Pharmacist", objective:"Say what's wrong and ask for help." }
+   5b. Staff ONLY: textEn="How can I help you?" + textTh. expectsUserSpeech=true.
+      Soft-accept "Can you help me." / "I have a headache." Optionally emojiChoice single 🆘 or 🤕.
+      FORBIDDEN: mash bridge + ask; Thai praise in textEn.
+   5c. After clear reply: Staff ONLY textEn="What's wrong?" + textTh. NO praise mash.
+      Soft-accept "I have a headache." / "I have a fever." / "I'm not feeling well."
+      Optionally emojiChoice:
+        { options: [
+          { emoji:"🤕", label:"headache", speak:"I have a headache." },
+          { emoji:"🤒", label:"fever", speak:"I have a fever." },
+          { emoji:"🤢", label:"not well", speak:"I'm not feeling well." }
+        ] }
+   5d. ROLEPLAY CLOSE (ALWAYS) — after clear symptom answer:
+      - Staff listen-only: ${ROLEPLAY_CLOSE_FORMAT_HINT_EN}
+      - textTh = full Thai CC for all 3 lines (newline between, matching each EN line).
+      - expectsUserSpeech=false. isLessonComplete=false. Omit emojiChoice. Keep roleplayNpc.
+      - User taps Continue to end roleplay → Celebrate on the NEXT turn.
+      - FORBIDDEN: mash tiered close + Celebrate / Thai Teacher praise on this turn.
+   After 5d Continue → Celebrate (omit roleplayNpc).
+   HARD: Roleplay is ONLY 5b→5c→5d — never go backward.
+
+6. Celebrate (listen-only) — AFTER Continue from 5d ONLY
+   - Warm ~2–3 sentences. MUST open with "เยี่ยมเลยครับ!" / "เยี่ยมมากครับ!" 👏 BEFORE name or recap.
+   - FORBIDDEN: starting with the learner's name alone.
+   - Then: name once + what they can do (บอกอาการ · ขอความช่วยเหลือ · คุยเภสัชกร) + soft tease Survival English / เอาตัวรอด.
+   - FORBIDDEN: one-liner only; starting with staff tiered roleplay close.
+   - expectsUserSpeech=false. isLessonComplete=true. Omit emojiChoice.
+
+Teaching rules:
+- ONE speaking task per turn. NEVER mash Hook+question or bridge+staff ask.
+- Soft correction: FIRST miss → เฉลย + ONE correction speak. SECOND miss → accept + advance.
+- FORBIDDEN: mash soft-teach with Roleplay bridge in the same turn.
+- Roleplay close is ALWAYS AI staff reply (listen-only) → tap Continue → Celebrate.
+- Never emojiSpeak/emojiSpeakSet. Never go backward.
+
+Turn loop:
+- Non-final: one clear action OR listen-only Continue.
+- Celebrate → isLessonComplete true.`,
+    openingPrompt: `Start Pharmacy 2.9 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — greet + "รู้สึกไม่สบายไหมครับ? 💊…" — expectsUserSpeech false. FORBIDDEN on Turn 1: any vocab question; emojiChoice; mic. After Continue: Emoji Recall ask "ปวดหัว"→headache with 4-board 🤕headache 🤒fever 💊medicine 🏪pharmacy; second ask RANDOM fever/medicine/pharmacy. Then listen Pattern "I have a headache." → Mini Challenge ONE emoji at a time: I have a fever. then Can you help me?. NEXT Continue → Roleplay HARD SPLIT: bridge intro → Continue → "How can I help you?" → "What's wrong?" → ROLEPLAY CLOSE listen-only ${ROLEPLAY_CLOSE_FORMAT_HINT_EN} with roleplayNpc.objective "Say what's wrong and ask for help." → tap Continue → THEN Celebrate ~2–3 sentences. NEVER invent extra asks or go backward. NEVER mash tiered close+Celebrate. NEVER mash Hook+question or bridge+ask. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false.`,
+  },
   {
     lessonId: 'ee_around_town_survival',
     targetLabel: 'word or sentence',
@@ -8322,6 +8484,8 @@ export function ensureExploreCityCelebratePraiseFirst(
     lessonId === 'ee_around_town_coffee' ||
     lessonId === 'ee_around_town_transport' ||
     lessonId === 'ee_around_town_smart_shopper' ||
+    lessonId === 'ee_around_town_airport' ||
+    lessonId === 'ee_around_town_pharmacy' ||
     lessonId === 'ee_around_town_survival' ||
     lessonId === 'ee_about_me_favorites';
   if (!aroundTown) return null;
@@ -8548,6 +8712,10 @@ export const TRANSPORT_ROLEPLAY_OBJECTIVE =
   "Say where you're going and how you're traveling.";
 export const FAVORITES_ROLEPLAY_OBJECTIVE =
   'Talk about movies you and your friends like.';
+export const AIRPORT_ROLEPLAY_OBJECTIVE =
+  'Check in and show your passport.';
+export const PHARMACY_ROLEPLAY_OBJECTIVE =
+  "Say what's wrong and ask for help.";
 
 /** Teacher bridge before Transportation 2.5 roleplay. */
 export const TRANSPORT_ROLEPLAY_BRIDGE_TH =
@@ -8570,6 +8738,16 @@ export const COFFEE_ROLEPLAY_BRIDGE_TH =
   'ต่อไปครูพี่บีจะเป็นบาริสต้านะครับ ☕ พร้อมแล้ว แตะเพื่อเริ่มได้เลย!';
 export const COFFEE_ROLEPLAY_BRIDGE_EN =
   "Next I'll be the barista ☕ Tap when you're ready to start!";
+
+export const AIRPORT_ROLEPLAY_BRIDGE_TH =
+  'ต่อไปครูพี่บีจะเป็นพนักงานเช็กอินนะครับ 😊 พร้อมแล้ว แตะเพื่อเริ่มได้เลย!';
+export const AIRPORT_ROLEPLAY_BRIDGE_EN =
+  "Next I'll be the check-in agent 😊 Tap when you're ready to start!";
+
+export const PHARMACY_ROLEPLAY_BRIDGE_TH =
+  'ต่อไปครูพี่บีจะเป็นเภสัชกรนะครับ 😊 พร้อมแล้ว แตะเพื่อเริ่มได้เลย!';
+export const PHARMACY_ROLEPLAY_BRIDGE_EN =
+  "Next I'll be the pharmacist 😊 Tap when you're ready to start!";
 
 type AroundTownRoleplayIntroPayload = {
   textEn: string;
@@ -8640,6 +8818,34 @@ export const TRANSPORT_ROLEPLAY_INTRO: AroundTownRoleplayIntroPayload = {
   },
 };
 
+export const AIRPORT_ROLEPLAY_INTRO: AroundTownRoleplayIntroPayload = {
+  textEn:
+    'เยี่ยมเลยครับ! 👏\n\nต่อไปครูพี่บีจะเป็นพนักงานเช็กอินนะครับ 😊\n\nพร้อมแล้วแตะเริ่ม Roleplay ได้เลย!',
+  textEnEnglish:
+    "Great job! 👏\n\nNext I'll be the check-in agent 😊\n\nTap when you're ready to start!",
+  roleplayIntro: {
+    subtitle: 'คุณกำลังคุยกับพนักงานเช็กอิน',
+    npcEmoji: '👩‍💼',
+    npcLabel: 'พนักงาน',
+    npcName: 'Check-in Agent',
+    userLabel: 'คุณ',
+  },
+};
+
+export const PHARMACY_ROLEPLAY_INTRO: AroundTownRoleplayIntroPayload = {
+  textEn:
+    'เยี่ยมเลยครับ! 👏\n\nต่อไปครูพี่บีจะเป็นเภสัชกรนะครับ 😊\n\nพร้อมแล้วแตะเริ่ม Roleplay ได้เลย!',
+  textEnEnglish:
+    "Great job! 👏\n\nNext I'll be the pharmacist 😊\n\nTap when you're ready to start!",
+  roleplayIntro: {
+    subtitle: 'คุณกำลังคุยกับเภสัชกร',
+    npcEmoji: '👨‍⚕️',
+    npcLabel: 'เภสัชกร',
+    npcName: 'Pharmacist',
+    userLabel: 'คุณ',
+  },
+};
+
 export const FAVORITES_ROLEPLAY_INTRO: AroundTownRoleplayIntroPayload = {
   textEn:
     'เยี่ยมเลยครับ! 👏\n\nคราวนี้ลองคุยเรื่องหนังกันเล่นๆ นะครับ 😊\n\nพร้อมแล้วแตะเริ่ม Roleplay ได้เลย!',
@@ -8668,17 +8874,21 @@ export function aroundTownRoleplayIntroSpeech(
           ? COFFEE_ROLEPLAY_INTRO
           : lessonId === 'ee_around_town_transport'
             ? TRANSPORT_ROLEPLAY_INTRO
-            : lessonId === 'ee_about_me_favorites'
-              ? FAVORITES_ROLEPLAY_INTRO
-              : lessonId === 'ee_around_town_convenience'
-                ? {
-                    textEn: EXPLORE_CITY_ROLEPLAY_INTRO.textEn,
-                    textEnEnglish: EXPLORE_CITY_ROLEPLAY_INTRO.textEn,
-                    roleplayIntro: {
-                      ...EXPLORE_CITY_ROLEPLAY_INTRO.roleplayIntro,
-                    },
-                  }
-                : null;
+            : lessonId === 'ee_around_town_airport'
+              ? AIRPORT_ROLEPLAY_INTRO
+              : lessonId === 'ee_around_town_pharmacy'
+                ? PHARMACY_ROLEPLAY_INTRO
+                : lessonId === 'ee_about_me_favorites'
+                  ? FAVORITES_ROLEPLAY_INTRO
+                  : lessonId === 'ee_around_town_convenience'
+                    ? {
+                        textEn: EXPLORE_CITY_ROLEPLAY_INTRO.textEn,
+                        textEnEnglish: EXPLORE_CITY_ROLEPLAY_INTRO.textEn,
+                        roleplayIntro: {
+                          ...EXPLORE_CITY_ROLEPLAY_INTRO.roleplayIntro,
+                        },
+                      }
+                    : null;
   if (!payload) return null;
   return {
     textEn: pickTeacherLine(lang, payload.textEn, payload.textEnEnglish),
@@ -9634,6 +9844,172 @@ export function forceCoffeeRoleplayBridgeIfNeeded(
   };
 }
 
+function historyHasAirportPassportMiniCue(
+  history: Array<{
+    speaker: string;
+    textEn?: string;
+    roleplayNpc?: unknown;
+  }>,
+): boolean {
+  return history.some((t) => {
+    if (t.speaker !== 'ai' || t.roleplayNpc != null) return false;
+    const lower = (t.textEn ?? '').toLowerCase();
+    return (
+      lower.includes('here is my passport') ||
+      (lower.includes('passport') && lower.includes('ยื่น'))
+    );
+  });
+}
+
+function satisfiesAirportPassportAnswer(userText: string): boolean {
+  const t = userText
+    .trim()
+    .toLowerCase()
+    .replace(/[.!?]+$/g, '')
+    .replace(/\s+/g, ' ');
+  if (!t) return false;
+  return t.includes('passport') || t.includes('here is') || t.includes('here\'s');
+}
+
+/**
+ * After Airport Mini (Here is my passport) → Roleplay Intro.
+ */
+export function forceAirportRoleplayBridgeIfNeeded(
+  lessonId: string,
+  lang: LessonTeachingLanguage,
+  history: Array<{
+    speaker: string;
+    textEn?: string;
+    roleplayIntro?: unknown;
+    roleplayNpc?: unknown;
+  }>,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    roleplayIntro: unknown;
+    roleplayNpc: unknown;
+    expectsUserSpeech: boolean;
+    isTaskComplete: boolean;
+  },
+): AroundTownIntroForceResult | null {
+  if (lessonId !== 'ee_around_town_airport') return null;
+  if (!historyHasAirportPassportMiniCue(history)) return null;
+  if (aroundTownIntroAlreadyShown(history)) return null;
+  if (current.roleplayIntro != null) return null;
+
+  const userText = latestShoppingLookingForUserText(history);
+  if (!userText || !satisfiesAirportPassportAnswer(userText)) return null;
+
+  if (
+    current.expectsUserSpeech &&
+    !looksLikeAroundTownRoleplayBridge(current.textEn) &&
+    !/\bhow can i help you\b/i.test(current.textEn)
+  ) {
+    return null;
+  }
+
+  const intro = aroundTownRoleplayIntroSpeech(lessonId, lang);
+  if (!intro) return null;
+
+  return {
+    textEn: intro.textEn,
+    textTh: null,
+    expectsUserSpeech: false,
+    expectedSpeech: null,
+    roleplayIntro: intro.roleplayIntro,
+    roleplayNpc: null,
+    guidedSpeaking: null,
+    emojiChoice: null,
+    isTaskComplete: false,
+  };
+}
+
+function historyHasPharmacyHelpMiniCue(
+  history: Array<{
+    speaker: string;
+    textEn?: string;
+    roleplayNpc?: unknown;
+  }>,
+): boolean {
+  return history.some((t) => {
+    if (t.speaker !== 'ai' || t.roleplayNpc != null) return false;
+    const text = t.textEn ?? '';
+    const lower = text.toLowerCase();
+    return (
+      lower.includes('can you help me') ||
+      text.includes('ขอความช่วยเหลือ')
+    );
+  });
+}
+
+function satisfiesPharmacyHelpAnswer(userText: string): boolean {
+  const t = userText
+    .trim()
+    .toLowerCase()
+    .replace(/[.!?]+$/g, '')
+    .replace(/\s+/g, ' ');
+  if (!t) return false;
+  return (
+    t.includes('help') ||
+    t.includes('headache') ||
+    t.includes('fever') ||
+    t.includes('not feeling')
+  );
+}
+
+/**
+ * After Pharmacy Mini (Can you help me?) → Roleplay Intro.
+ */
+export function forcePharmacyRoleplayBridgeIfNeeded(
+  lessonId: string,
+  lang: LessonTeachingLanguage,
+  history: Array<{
+    speaker: string;
+    textEn?: string;
+    roleplayIntro?: unknown;
+    roleplayNpc?: unknown;
+  }>,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    roleplayIntro: unknown;
+    roleplayNpc: unknown;
+    expectsUserSpeech: boolean;
+    isTaskComplete: boolean;
+  },
+): AroundTownIntroForceResult | null {
+  if (lessonId !== 'ee_around_town_pharmacy') return null;
+  if (!historyHasPharmacyHelpMiniCue(history)) return null;
+  if (aroundTownIntroAlreadyShown(history)) return null;
+  if (current.roleplayIntro != null) return null;
+
+  const userText = latestShoppingLookingForUserText(history);
+  if (!userText || !satisfiesPharmacyHelpAnswer(userText)) return null;
+
+  if (
+    current.expectsUserSpeech &&
+    !looksLikeAroundTownRoleplayBridge(current.textEn) &&
+    !/\bhow can i help you\b/i.test(current.textEn)
+  ) {
+    return null;
+  }
+
+  const intro = aroundTownRoleplayIntroSpeech(lessonId, lang);
+  if (!intro) return null;
+
+  return {
+    textEn: intro.textEn,
+    textTh: null,
+    expectsUserSpeech: false,
+    expectedSpeech: null,
+    roleplayIntro: intro.roleplayIntro,
+    roleplayNpc: null,
+    guidedSpeaking: null,
+    emojiChoice: null,
+    isTaskComplete: false,
+  };
+}
+
 function historyHasFavoritesGroupStepCue(
   history: Array<{
     speaker: string;
@@ -10185,10 +10561,12 @@ function matchesDailyRoutineStep(step: number, userText: string): boolean {
           /^i(?:'m)?\s*waking up$/.test(t)) &&
         !/\bat\b/.test(t)
       );
-    case 3: // wake time o'clock
+    case 3: // wake time o'clock — any hour 1–12 (board or free)
       return (
         /\bi wake up at\b/.test(t) &&
-        /\b([6-9]|six|seven|eight|nine)\b/.test(t) &&
+        /\b([1-9]|1[0-2]|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|o'?clock)\b/.test(
+          t,
+        ) &&
         !/\b(a\.?m\.?|p\.?m\.?)\b/.test(t) &&
         !/\bevery day\b/.test(t)
       );
@@ -10204,13 +10582,15 @@ function matchesDailyRoutineStep(step: number, userText: string): boolean {
         /\b(a\.?m\.?|p\.?m\.?)\b/.test(t) &&
         !/\bevery day\b/.test(t)
       );
-    case 6: // every day activity
+    case 6: // every day activity — board OR any clear "I … every day"
       return (
         /\bevery day\b/.test(t) &&
-        (/\bgo to work\b/.test(t) ||
+        (/\bi\b/.test(t) ||
+          /\bgo to work\b/.test(t) ||
           /\bdrink coffee\b/.test(t) ||
           /\bexercise\b/.test(t) ||
-          /\bstudy\b/.test(t))
+          /\bstudy\b/.test(t)) &&
+        t.length >= 12
       );
     case 7: // active recall
       return /\bi wake up at\b/.test(t) && /\bevery day\b/.test(t);
@@ -10239,25 +10619,33 @@ export function dailyRoutineProgress(
 function extractDailyRoutineWakeHour(
   history: Array<{ speaker: string; textEn?: string }>,
 ): number {
+  const wordMap: Record<string, number> = {
+    one: 1,
+    two: 2,
+    three: 3,
+    four: 4,
+    five: 5,
+    six: 6,
+    seven: 7,
+    eight: 8,
+    nine: 9,
+    ten: 10,
+    eleven: 11,
+    twelve: 12,
+  };
   for (const turn of history) {
     if (turn.speaker !== 'user') continue;
     const text = turn.textEn ?? '';
-    const m = text.match(/wake up at\s+(\d+)/i);
+    const m = text.match(/wake up at\s+(\d{1,2})/i);
     if (m) {
       const h = parseInt(m[1], 10);
-      if ([6, 7, 8, 9].includes(h)) return h;
+      if (h >= 1 && h <= 12) return h;
     }
     const word = text.match(
-      /wake up at\s+(six|seven|eight|nine)\b/i,
+      /wake up at\s+(one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)\b/i,
     );
     if (word) {
-      const map: Record<string, number> = {
-        six: 6,
-        seven: 7,
-        eight: 8,
-        nine: 9,
-      };
-      return map[word[1].toLowerCase()] ?? 7;
+      return wordMap[word[1].toLowerCase()] ?? 7;
     }
   }
   return 7;
@@ -10657,40 +11045,22 @@ function matchesFoodStep(
 ): boolean {
   const t = normalizeFoodSpeech(userText);
   if (!t) return false;
+  const tasteAdj =
+    /\b(delicious|cheesy|spicy|fresh|healthy|yummy|tasty|sweet|sour|salty|good|great|nice)\b/.test(
+      t,
+    ) || /\bis [a-z][a-z'-]{1,20}$/.test(t);
   switch (step) {
-    case 1: // I like [food]
-      return (
-        /\bi like\b/.test(t) &&
-        (/\bpizza\b/.test(t) ||
-          /\bsushi\b/.test(t) ||
-          /\bsom\s*-?\s*tam\b/.test(t) ||
-          /\bsomtam\b/.test(t) ||
-          /\bpapaya salad\b/.test(t))
-      );
+    case 1: // I like [food] — board OR any clear food
+      return /\bi like\b/.test(t) && t.replace(/\bi like\b/, '').trim().length >= 2;
     case 2: // [Food] is [adj]
-      if (!food) return false;
-      return (
-        new RegExp(`\\b${food}\\b`).test(t) &&
-        /\bis\b/.test(t) &&
-        (/\bdelicious\b/.test(t) ||
-          /\bcheesy\b/.test(t) ||
-          /\bspicy\b/.test(t) ||
-          /\bfresh\b/.test(t) ||
-          /\bhealthy\b/.test(t))
-      );
+      if (!tasteAdj || !/\bis\b/.test(t) || /\bi like\b/.test(t)) return false;
+      if (food && new RegExp(`\\b${food}\\b`).test(t)) return true;
+      // Soft-accept "It is delicious" / free "[food] is [adj]"
+      return /^(it|.+) is\b/.test(t);
     case 3: // I drink … with [food]
-      if (!food) return false;
-      return (
-        /\bi drink\b/.test(t) &&
-        /\bwith\b/.test(t) &&
-        new RegExp(`\\b${food}\\b`).test(t) &&
-        (/\biced tea\b/.test(t) ||
-          /\bhot coffee\b/.test(t) ||
-          /\bfruit juice\b/.test(t) ||
-          /\bcoffee\b/.test(t) ||
-          /\btea\b/.test(t) ||
-          /\bjuice\b/.test(t))
-      );
+      if (!/\bi drink\b/.test(t) || !/\bwith\b/.test(t)) return false;
+      // Soft-accept any clear drink+with (board food optional)
+      return t.replace(/\bi drink\b/, '').trim().length >= 4;
     case 4: // Emoji Quiz: Pizza is delicious
       return (
         t === 'delicious' ||
@@ -11056,12 +11426,10 @@ function matchesHomeStep(step: number, userText: string): boolean {
         /\bi live alone\b/.test(t)
       );
     case 3:
+      // Soft-accept "I like to relax in (the) …"
       return (
-        /\bi like to relax in the\b/.test(t) &&
-        (/\bliving room\b/.test(t) ||
-          /\bbedroom\b/.test(t) ||
-          /\bkitchen\b/.test(t) ||
-          /\bgarden\b/.test(t))
+        /\bi like to relax in\b/.test(t) &&
+        t.replace(/\bi like to relax in (the )?\b/, '').trim().length >= 3
       );
     case 4:
       return /\bi live in an apartment\b/.test(t);
@@ -11410,19 +11778,19 @@ function matchesWorkSchoolStep(
       return t === 'i work' || t === 'i study';
     case 2:
       if (mode === 'study') {
-        return /\bi study at\b/.test(t) && (/\bschool\b/.test(t) || /\bhome\b/.test(t));
+        return /\bi study at\b/.test(t) && t.length > 12;
       }
-      return /\bi work at\b/.test(t) && (/\boffice\b/.test(t) || /\bhome\b/.test(t));
+      return /\bi work at\b/.test(t) && t.length > 11;
     case 3:
       if (mode === 'study') {
         return (
           /\bschool is\b/.test(t) &&
-          (/\bbusy\b/.test(t) || /\bfun\b/.test(t) || /\brelaxing\b/.test(t))
+          /[a-z]{3,}/.test(t.replace(/\bschool is\b/, ''))
         );
       }
       return (
         /\bmy work is\b/.test(t) &&
-        (/\bbusy\b/.test(t) || /\bfun\b/.test(t) || /\brelaxing\b/.test(t))
+        /[a-z]{3,}/.test(t.replace(/\bmy work is\b/, ''))
       );
     case 4:
       return /\bmy work is busy\b/.test(t) && /\bbut\b/.test(t) && /\benjoy\b/.test(t);
@@ -11775,23 +12143,13 @@ export function extractHobbiesActivity(
     const t = normalizeHobbiesSpeech(turn.textEn ?? '');
     if (!t) continue;
     // Prefer Turn-1 style: "I watch movies." / "I listen to music." / "I exercise."
-    if (t === 'i watch movies') return 'watch_movies';
-    if (t === 'i listen to music') return 'listen_music';
-    if (t === 'i exercise') return 'exercise';
-  }
-  for (const turn of history) {
-    if (turn.speaker !== 'user') continue;
-    const t = normalizeHobbiesSpeech(turn.textEn ?? '');
-    if (!t) continue;
-    if (/^i (always|usually|often|sometimes) watch movies\b/.test(t)) {
+    if (t === 'i watch movies' || /\bwatch movies\b/.test(t)) {
       return 'watch_movies';
     }
-    if (/^i (always|usually|often|sometimes) listen to music\b/.test(t)) {
+    if (t === 'i listen to music' || /\blisten to music\b/.test(t)) {
       return 'listen_music';
     }
-    if (/^i (always|usually|often|sometimes) exercise\b/.test(t)) {
-      return 'exercise';
-    }
+    if (t === 'i exercise' || /\bexercise\b/.test(t)) return 'exercise';
   }
   return 'watch_movies';
 }
@@ -11806,24 +12164,38 @@ function matchesHobbiesStep(
   const phrase = HOBBIES_ACTIVITY_META[activity].phrase;
   switch (step) {
     case 1:
-      return (
+      // Board hobbies OR any clear "I …" free-time activity
+      if (
         t === 'i watch movies' ||
         t === 'i listen to music' ||
         t === 'i exercise'
+      ) {
+        return true;
+      }
+      return (
+        /^i (?!am\b|was\b|will\b|can\b|like\b)[\w][\w\s'-]{1,40}$/.test(t) &&
+        !/\balways|usually|often|sometimes\b/.test(t)
       );
     case 2:
-      return (
+      if (
         new RegExp(
           `^i (always|usually|often|sometimes) ${phrase.replace(/\s+/g, '\\s+')}$`,
         ).test(t)
-      );
+      ) {
+        return true;
+      }
+      // Soft: I usually/often/… + any activity
+      return /^i (always|usually|often|sometimes) [\w][\w\s'-]{1,40}$/.test(t);
     case 3:
-      return (
+      if (
         /\bon weekends,?\s*i usually\b/.test(t) &&
         (/\bwatch movies\b/.test(t) ||
           /\blisten to music\b/.test(t) ||
           /\bexercise\b/.test(t))
-      );
+      ) {
+        return true;
+      }
+      return /\bon weekends,?\s*i usually\b/.test(t) && t.length > 22;
     case 4:
       return t === 'usually';
     case 5:
@@ -12157,15 +12529,8 @@ export function extractPetsAnimal(
     if (turn.speaker !== 'user') continue;
     const t = normalizePetsSpeech(turn.textEn ?? '');
     if (!t || isPetsContinueTurn(t)) continue;
-    if (t === 'i have a cat') return 'cat';
-    if (t === 'i have a dog') return 'dog';
-  }
-  for (const turn of history) {
-    if (turn.speaker !== 'user') continue;
-    const t = normalizePetsSpeech(turn.textEn ?? '');
-    if (!t || isPetsContinueTurn(t)) continue;
-    if (/^my cat is very\b/.test(t) || /\bi have a cat\b/.test(t)) return 'cat';
-    if (/^my dog is very\b/.test(t) || /\bi have a dog\b/.test(t)) return 'dog';
+    if (/\bcat\b/.test(t)) return 'cat';
+    if (/\bdog\b/.test(t)) return 'dog';
   }
   return 'dog';
 }
@@ -12180,8 +12545,8 @@ export function extractPetsAdjective(
     if (turn.speaker !== 'user') continue;
     const t = normalizePetsSpeech(turn.textEn ?? '');
     if (!t || isPetsContinueTurn(t)) continue;
-    const m = t.match(/^my (cat|dog) is very (cute|friendly)$/);
-    if (m) return m[2] as PetsAdjective;
+    if (/\bcute\b/.test(t)) return 'cute';
+    if (/\bfriendly\b/.test(t)) return 'friendly';
   }
   return animal === 'dog' ? 'friendly' : 'cute';
 }
@@ -12221,9 +12586,11 @@ function matchesPetsSpeakStep(
   if (!t || isPetsContinueTurn(t)) return false;
   switch (step) {
     case 1:
-      return t === 'i have a cat' || t === 'i have a dog';
+      // Soft-accept any "I have a/an …" pet (board or free)
+      return /^i have (a|an) [\w][\w\s'-]{1,30}$/.test(t);
     case 2:
-      return /^my (cat|dog) is very (cute|friendly)$/.test(t);
+      // Soft-accept "My [pet] is very [adj]"
+      return /^my [\w][\w\s'-]{0,20} is very [a-z][a-z'-]{1,20}$/.test(t);
     case 3:
       return (
         t === 'your dog is very friendly' || t === 'your cat is very cute'
@@ -12236,8 +12603,8 @@ function matchesPetsSpeakStep(
       return (
         t === expected ||
         compact === expectedCompact ||
-        (/\bi have a (cat|dog)\b/.test(t) &&
-          /\bmy (cat|dog) is very (cute|friendly)\b/.test(t))
+        (/\bi have (a|an) \w+\b/.test(t) &&
+          /\bmy \w+ is very \w+\b/.test(t))
       );
     }
     default:
@@ -12542,7 +12909,7 @@ export function forcePetsCelebrateIfNeeded(
 }
 
 export type PeoplePerson = 'brother' | 'sister';
-export type PeopleJob = 'engineer' | 'designer' | 'business_owner';
+export type PeopleJob = 'engineer' | 'designer' | 'business_owner' | 'other';
 
 const PEOPLE_JOB_META: Record<
   PeopleJob,
@@ -12564,6 +12931,12 @@ const PEOPLE_JOB_META: Record<
     th: 'เจ้าของธุรกิจ',
     speakArticle: 'a business owner',
     label: 'Business owner',
+    emoji: '💼',
+  },
+  other: {
+    th: 'อาชีพนั้น',
+    speakArticle: 'a professional',
+    label: 'Job',
     emoji: '💼',
   },
 };
@@ -12641,13 +13014,17 @@ function peopleJobBoard(person: PeoplePerson): {
 function peoplePersonalityBoard(
   person: PeoplePerson,
   job: PeopleJob,
+  jobPraiseLabel?: string,
 ): {
   textEn: string;
   stem: string;
   expectedSpeech: string;
   options: Array<{ emoji: string; label: string; speak: string }>;
 } {
-  const jobTh = PEOPLE_JOB_META[job].th;
+  const jobTh =
+    job === 'other' && jobPraiseLabel
+      ? jobPraiseLabel
+      : PEOPLE_JOB_META[job].th;
   if (person === 'sister') {
     return {
       textEn: `${jobTh}ซะด้วย เท่มากๆ ครับ! แล้วเธอเป็นคนสไตล์ไหน/นิสัยยังไงครับ? What is she like?`,
@@ -12719,11 +13096,59 @@ export function extractPeopleJob(
     if (turn.speaker !== 'user') continue;
     const t = normalizePeopleSpeech(turn.textEn ?? '');
     if (!t) continue;
-    if (/\ban engineer\b/.test(t)) return 'engineer';
-    if (/\ba designer\b/.test(t)) return 'designer';
+    if (/\ban engineer\b/.test(t) || /\bengineer\b/.test(t)) return 'engineer';
+    if (/\ba designer\b/.test(t) || /\bdesigner\b/.test(t)) return 'designer';
     if (/\bbusiness owner\b/.test(t)) return 'business_owner';
+    if (matchesPeopleJobAnswer(t)) return 'other';
   }
   return 'engineer';
+}
+
+/** Free-form job noun for Turn 3 praise (e.g. "student" from "She is a student"). */
+export function extractPeopleJobPraiseLabel(
+  history: Array<{ speaker: string; textEn?: string }>,
+): string | undefined {
+  const known = extractPeopleJob(history);
+  if (known !== 'other') return PEOPLE_JOB_META[known].th;
+
+  for (const turn of history) {
+    if (turn.speaker !== 'user') continue;
+    const t = normalizePeopleSpeech(turn.textEn ?? '');
+    if (!t || !matchesPeopleJobAnswer(t)) continue;
+    const m =
+      t.match(
+        /^(?:my (?:brother|sister)|he|she)(?:'s| is) (?:an? )?(.+)$/,
+      ) ?? t.match(/\bworks as (?:an? )?(.+)$/);
+    const raw = m?.[1]?.trim();
+    if (!raw || raw.length > 40) continue;
+    // Title-case first word for praise: "student" → "Student"
+    return raw.replace(/^\w/, (c) => c.toUpperCase());
+  }
+  return undefined;
+}
+
+/** True when speech is a job answer (board choice OR any reasonable free job). */
+function matchesPeopleJobAnswer(userText: string): boolean {
+  const t = normalizePeopleSpeech(userText);
+  if (!t) return false;
+  // Personality / person-only answers are not jobs.
+  if (/very (funny|nice|busy)\b/.test(t)) return false;
+  if (t === 'my brother' || t === 'my sister') return false;
+  // Board choices
+  if (
+    /^my (brother|sister) is (an engineer|a designer|a business owner)$/.test(t)
+  ) {
+    return true;
+  }
+  // Free job: My brother/sister / He/She is a/an …
+  if (
+    /^(my (brother|sister)|he|she)('s| is) (an? )?[\w][\w\s'-]{0,40}$/.test(t)
+  ) {
+    return true;
+  }
+  // works as …
+  if (/\bworks as\b/.test(t)) return true;
+  return false;
 }
 
 function matchesPeopleStep(step: number, userText: string): boolean {
@@ -12733,13 +13158,10 @@ function matchesPeopleStep(step: number, userText: string): boolean {
     case 1:
       return t === 'my brother' || t === 'my sister';
     case 2:
-      return (
-        /^my (brother|sister) is (an engineer|a designer|a business owner)$/.test(
-          t,
-        )
-      );
+      return matchesPeopleJobAnswer(t);
     case 3:
-      return /^((he|she) is very (funny|nice|busy))$/.test(t);
+      // Soft-accept any clear He/She + adjective (board or free).
+      return /^(he|she) is (very )?[a-z][a-z'-]{1,20}$/.test(t);
     case 4:
       return t === 'he is very funny';
     case 5:
@@ -12845,6 +13267,7 @@ export function forcePeopleGuidedSpeakingIfNeeded(
 
   const person = extractPeoplePerson(history);
   const job = extractPeopleJob(history);
+  const jobPraiseLabel = extractPeopleJobPraiseLabel(history);
   const fromText = peopleBoardFromAiText(current.textEn ?? '');
   let step = fromText;
   if (step == null) {
@@ -12874,7 +13297,7 @@ export function forcePeopleGuidedSpeakingIfNeeded(
   } else if (step === 2) {
     board = peopleJobBoard(person);
   } else if (step === 3) {
-    board = peoplePersonalityBoard(person, job);
+    board = peoplePersonalityBoard(person, job, jobPraiseLabel);
   } else if (step === 4) {
     board = {
       textEn: PEOPLE_QUIZ_HE_BOARD.textEn,
@@ -13050,7 +13473,8 @@ function matchesWeatherStep(step: number, userText: string): boolean {
     case 2:
       return t === 'the weather is very cold today';
     case 3:
-      return /^i like (sunny|rainy|cold) weather$/.test(t);
+      // Soft-accept any "I like [adj] weather"
+      return /^i like [\w][\w\s'-]{0,20} weather$/.test(t);
     case 4:
       return t === 'i like rainy weather';
     default:
@@ -13364,7 +13788,8 @@ function matchesFriendsStep(step: number, userText: string): boolean {
   if (!t) return false;
   switch (step) {
     case 1:
-      return /^we (play games|eat out|hang out) together$/.test(t);
+      // Soft-accept any clear "We … together"
+      return /^we .+ together$/.test(t) && t.length >= 14;
     case 2:
       return t === 'we eat out together';
     case 3:
@@ -13802,6 +14227,36 @@ const TRANSPORT_DESTINATION_CITIES: Array<{
   { label: 'Pattaya', re: /\bpattaya\b/i },
 ];
 
+function titleCaseTransportPlace(raw: string): string {
+  return raw
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+    .join(' ');
+}
+
+/** Known board cities OR free "I'm going to [place]". */
+function extractTransportDestinationFromText(text: string): string | null {
+  const trimmed = text.trim();
+  if (!trimmed || trimmed.startsWith('[')) return null;
+  for (const city of TRANSPORT_DESTINATION_CITIES) {
+    if (city.re.test(trimmed)) return city.label;
+  }
+  const going = trimmed.match(
+    /\bgoing to\s+([a-zA-Z][\w'.-]*(?:\s+[a-zA-Z][\w'.-]*){0,3})\s*[.!?]*$/i,
+  );
+  const place = going?.[1]?.trim();
+  if (
+    place &&
+    place.length >= 2 &&
+    !/^(there|home|work|school|bed|sleep|the)$/i.test(place)
+  ) {
+    return titleCaseTransportPlace(place);
+  }
+  return null;
+}
+
 /** First Hook destination city from learner speech (full sentence or bare city). */
 export function extractFirstTransportDestinationCity(
   history: Array<{ speaker: string; textEn?: string }>,
@@ -13810,9 +14265,8 @@ export function extractFirstTransportDestinationCity(
     if (t.speaker !== 'user') continue;
     const text = (t.textEn ?? '').trim();
     if (!text || text.startsWith('[')) continue;
-    for (const city of TRANSPORT_DESTINATION_CITIES) {
-      if (city.re.test(text)) return city.label;
-    }
+    const city = extractTransportDestinationFromText(text);
+    if (city) return city;
   }
   return null;
 }
@@ -13825,11 +14279,7 @@ function countTransportDestinationSpeaks(
     if (t.speaker !== 'user') continue;
     const text = (t.textEn ?? '').trim();
     if (!text || text.startsWith('[')) continue;
-    const lower = text.toLowerCase();
-    if (
-      /\bgoing to\b/.test(lower) ||
-      TRANSPORT_DESTINATION_CITIES.some((c) => c.re.test(text))
-    ) {
+    if (extractTransportDestinationFromText(text) || /\bgoing to\b/i.test(text)) {
       goingCount++;
     }
   }
@@ -13889,14 +14339,18 @@ function lastUserTransportText(
 
 function isBareTransportCityOnly(text: string, cityLabel: string): boolean {
   if (/\bgoing to\b/i.test(text)) return false;
-  const city = TRANSPORT_DESTINATION_CITIES.find((c) => c.label === cityLabel);
-  if (!city?.re.test(text)) return false;
-  // Strip city name — leftover should be tiny (punctuation / fillers).
-  const stripped = text
-    .replace(city.re, '')
-    .replace(/[.\s!?]+/g, '')
-    .toLowerCase();
-  return stripped.length === 0;
+  const known = TRANSPORT_DESTINATION_CITIES.find((c) => c.label === cityLabel);
+  if (known) {
+    if (!known.re.test(text)) return false;
+    const stripped = text
+      .replace(known.re, '')
+      .replace(/[.\s!?]+/g, '')
+      .toLowerCase();
+    return stripped.length === 0;
+  }
+  // Free place name spoken bare (no "going to")
+  const normalized = text.trim().toLowerCase().replace(/[.!?]+$/g, '');
+  return normalized === cityLabel.toLowerCase();
 }
 
 function transportSoftAcceptPrefix(
@@ -13952,10 +14406,7 @@ const TRANSPORT_CITY_OPTIONS: Array<{
 ];
 
 function transportCityLabelFromText(text: string): string | null {
-  for (const city of TRANSPORT_DESTINATION_CITIES) {
-    if (city.re.test(text)) return city.label;
-  }
-  return null;
+  return extractTransportDestinationFromText(text);
 }
 
 function transportCityFromScaffold(turn: {
@@ -14556,6 +15007,84 @@ const SCRIPTED_AROUND_TOWN_ROLEPLAYS: Record<string, ScriptedRoleplayConfig> = {
     ],
     closeWithSure: true,
   },
+  ee_around_town_airport: {
+    lessonId: 'ee_around_town_airport',
+    objective: AIRPORT_ROLEPLAY_OBJECTIVE,
+    npc: { emoji: '👩‍💼', name: 'Check-in Agent' },
+    asks: [
+      {
+        staffEn: 'How can I help you?',
+        staffTh: 'ต้องการให้ช่วยเหลือไหมครับ?',
+        emojiChoice: {
+          options: [
+            {
+              emoji: '✈️',
+              label: 'check in',
+              speak: "I'd like to check in.",
+            },
+          ],
+        },
+      },
+      {
+        staffEn: 'May I see your passport?',
+        staffTh: 'ขอดูพาสปอร์ตหน่อยได้ไหมครับ?',
+        emojiChoice: {
+          options: [
+            {
+              emoji: '🛂',
+              label: 'passport',
+              speak: 'Here is my passport.',
+            },
+          ],
+        },
+      },
+    ],
+    closeWithSure: true,
+  },
+  ee_around_town_pharmacy: {
+    lessonId: 'ee_around_town_pharmacy',
+    objective: PHARMACY_ROLEPLAY_OBJECTIVE,
+    npc: { emoji: '👨‍⚕️', name: 'Pharmacist' },
+    asks: [
+      {
+        staffEn: 'How can I help you?',
+        staffTh: 'ต้องการให้ช่วยเหลือไหมครับ?',
+        emojiChoice: {
+          options: [
+            {
+              emoji: '🆘',
+              label: 'help',
+              speak: 'Can you help me?',
+            },
+          ],
+        },
+      },
+      {
+        staffEn: "What's wrong?",
+        staffTh: 'เป็นอะไรครับ?',
+        emojiChoice: {
+          options: [
+            {
+              emoji: '🤕',
+              label: 'headache',
+              speak: 'I have a headache.',
+            },
+            {
+              emoji: '🤒',
+              label: 'fever',
+              speak: 'I have a fever.',
+            },
+            {
+              emoji: '🤢',
+              label: 'not well',
+              speak: "I'm not feeling well.",
+            },
+          ],
+        },
+      },
+    ],
+    closeWithSure: true,
+  },
   ee_around_town_transport: {
     lessonId: 'ee_around_town_transport',
     objective: TRANSPORT_ROLEPLAY_OBJECTIVE,
@@ -15011,6 +15540,35 @@ function userSatisfiesScriptedAsk(
     }
   }
 
+  if (lessonId === 'ee_around_town_airport') {
+    if (askIndex === 0) {
+      if (t.includes('check in') || t.includes('check-in')) return true;
+      if (/\b(flight|help)\b/.test(t)) return true;
+      return false;
+    }
+    if (askIndex === 1) {
+      return (
+        t.includes('passport') ||
+        t.includes('here is') ||
+        t.includes("here's")
+      );
+    }
+  }
+
+  if (lessonId === 'ee_around_town_pharmacy') {
+    if (askIndex === 0) {
+      if (t.includes('help')) return true;
+      if (/\b(headache|fever|medicine|sick)\b/.test(t)) return true;
+      if (t.includes('not feeling')) return true;
+      return false;
+    }
+    if (askIndex === 1) {
+      if (/\b(headache|fever|medicine|sick)\b/.test(t)) return true;
+      if (t.includes('not feeling') || t.includes('have a')) return true;
+      return false;
+    }
+  }
+
   if (lessonId === 'ee_around_town_transport') {
     if (askIndex === 0) {
       if (/\bgoing to\b/.test(t)) return true;
@@ -15154,6 +15712,26 @@ const SCRIPTED_SOFT_HINTS: Record<string, Record<number, ScriptedSoftHint>> = {
     2: {
       en: 'No worries. Hot?',
       th: 'ไม่เป็นไรครับ ร้อนนะครับ?',
+    },
+  },
+  ee_around_town_airport: {
+    0: {
+      en: "No worries. I'd like to check in?",
+      th: 'ไม่เป็นไรครับ ขอเช็กอินนะครับ?',
+    },
+    1: {
+      en: 'No worries. Here is my passport?',
+      th: 'ไม่เป็นไรครับ นี่พาสปอร์ตของฉันนะครับ?',
+    },
+  },
+  ee_around_town_pharmacy: {
+    0: {
+      en: 'No worries. Can you help me?',
+      th: 'ไม่เป็นไรครับ ช่วยหน่อยได้ไหมครับ?',
+    },
+    1: {
+      en: 'No worries. I have a headache?',
+      th: 'ไม่เป็นไรครับ ปวดหัวนะครับ?',
     },
   },
   ee_around_town_transport: {
@@ -15674,6 +16252,7 @@ export function guideScriptedAroundTownRoleplayIfNeeded(
 /** Known Around Town staff lines — used to strip Thai praise mash from textEn. */
 const AROUND_TOWN_STAFF_LINES = [
   'Can I help you?',
+  'How can I help you?',
   'What size?',
   "It's twenty dollars.",
   'Are you ready to order?',
@@ -15682,6 +16261,8 @@ const AROUND_TOWN_STAFF_LINES = [
   'What can I get for you?',
   'What type of coffee?',
   'Hot or iced?',
+  'May I see your passport?',
+  "What's wrong?",
   'Sure!',
   'Of course!',
   'Absolutely!',
@@ -15714,6 +16295,7 @@ const AROUND_TOWN_STAFF_LINES = [
 
 const AROUND_TOWN_STAFF_TEXT_TH: Record<string, string> = {
   'Can I help you?': 'ต้องการให้ช่วยเหลือไหมครับ?',
+  'How can I help you?': 'ต้องการให้ช่วยเหลือไหมครับ?',
   'What size?': 'ไซส์ไหนดีครับ?',
   "It's twenty dollars.": 'ยี่สิบดอลลาร์ครับ',
   'Are you ready to order?': 'พร้อมสั่งหรือยังครับ?',
@@ -15722,6 +16304,8 @@ const AROUND_TOWN_STAFF_TEXT_TH: Record<string, string> = {
   'What can I get for you?': 'รับอะไรดีครับ?',
   'What type of coffee?': 'กาแฟแบบไหนดีครับ?',
   'Hot or iced?': 'ร้อนหรือเย็นดีครับ?',
+  'May I see your passport?': 'ขอดูพาสปอร์ตหน่อยได้ไหมครับ?',
+  "What's wrong?": 'เป็นอะไรครับ?',
   'Sure!': 'ได้เลยครับ!',
   'Of course!': 'แน่นอนครับ!',
   'Absolutely!': 'แน่นอนครับ!',
@@ -16031,6 +16615,16 @@ const EMOJI_RECALL2_BY_LESSON: Record<
     { en: 'tea', th: 'ชา' },
     { en: 'milk', th: 'นม' },
     { en: 'cake', th: 'เค้ก' },
+  ],
+  ee_around_town_airport: [
+    { en: 'flight', th: 'เที่ยวบิน' },
+    { en: 'boarding pass', th: 'บัตรขึ้นเครื่อง' },
+    { en: 'baggage', th: 'กระเป๋าเดินทาง' },
+  ],
+  ee_around_town_pharmacy: [
+    { en: 'fever', th: 'ไข้' },
+    { en: 'medicine', th: 'ยา' },
+    { en: 'pharmacy', th: 'ร้านยา' },
   ],
 };
 

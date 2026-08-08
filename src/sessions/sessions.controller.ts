@@ -71,9 +71,13 @@ import {
   COFFEE_ROLEPLAY_OBJECTIVE,
   TRANSPORT_ROLEPLAY_OBJECTIVE,
   FAVORITES_ROLEPLAY_OBJECTIVE,
+  AIRPORT_ROLEPLAY_OBJECTIVE,
+  PHARMACY_ROLEPLAY_OBJECTIVE,
   aroundTownRoleplayIntroSpeech,
   forceShoppingRoleplayBridgeIfNeeded,
   forceCoffeeRoleplayBridgeIfNeeded,
+  forceAirportRoleplayBridgeIfNeeded,
+  forcePharmacyRoleplayBridgeIfNeeded,
   forceFavoritesRoleplayBridgeIfNeeded,
   forceSmartShopperGuidedSpeakingIfNeeded,
   forceSmartShopperCelebrateIfNeeded,
@@ -972,6 +976,58 @@ export class SessionsController {
         isTaskComplete = forcedCoffeeBridge.isTaskComplete;
       }
 
+      // After Airport Mini (Here is my passport) → Roleplay Intro.
+      const forcedAirportBridge = forceAirportRoleplayBridgeIfNeeded(
+        config.lessonId,
+        teachingLang,
+        data.turns,
+        {
+          textEn,
+          textTh,
+          roleplayIntro,
+          roleplayNpc,
+          expectsUserSpeech,
+          isTaskComplete,
+        },
+      );
+      if (forcedAirportBridge != null) {
+        textEn = forcedAirportBridge.textEn;
+        textTh = forcedAirportBridge.textTh;
+        expectsUserSpeech = forcedAirportBridge.expectsUserSpeech;
+        expectedSpeech = forcedAirportBridge.expectedSpeech;
+        roleplayNpc = forcedAirportBridge.roleplayNpc;
+        roleplayIntro = forcedAirportBridge.roleplayIntro;
+        guidedSpeaking = forcedAirportBridge.guidedSpeaking;
+        emojiChoice = forcedAirportBridge.emojiChoice;
+        isTaskComplete = forcedAirportBridge.isTaskComplete;
+      }
+
+      // After Pharmacy Mini (Can you help me?) → Roleplay Intro.
+      const forcedPharmacyBridge = forcePharmacyRoleplayBridgeIfNeeded(
+        config.lessonId,
+        teachingLang,
+        data.turns,
+        {
+          textEn,
+          textTh,
+          roleplayIntro,
+          roleplayNpc,
+          expectsUserSpeech,
+          isTaskComplete,
+        },
+      );
+      if (forcedPharmacyBridge != null) {
+        textEn = forcedPharmacyBridge.textEn;
+        textTh = forcedPharmacyBridge.textTh;
+        expectsUserSpeech = forcedPharmacyBridge.expectsUserSpeech;
+        expectedSpeech = forcedPharmacyBridge.expectedSpeech;
+        roleplayNpc = forcedPharmacyBridge.roleplayNpc;
+        roleplayIntro = forcedPharmacyBridge.roleplayIntro;
+        guidedSpeaking = forcedPharmacyBridge.guidedSpeaking;
+        emojiChoice = forcedPharmacyBridge.emojiChoice;
+        isTaskComplete = forcedPharmacyBridge.isTaskComplete;
+      }
+
       // After Favorites Step 4 (We…) → Movie Roleplay Intro.
       const forcedFavoritesBridge = forceFavoritesRoleplayBridgeIfNeeded(
         config.lessonId,
@@ -1722,9 +1778,13 @@ export class SessionsController {
                     ? COFFEE_ROLEPLAY_OBJECTIVE
                     : config.lessonId === 'ee_around_town_transport'
                       ? TRANSPORT_ROLEPLAY_OBJECTIVE
-                      : config.lessonId === 'ee_about_me_favorites'
-                        ? FAVORITES_ROLEPLAY_OBJECTIVE
-                      : null;
+                      : config.lessonId === 'ee_around_town_airport'
+                        ? AIRPORT_ROLEPLAY_OBJECTIVE
+                        : config.lessonId === 'ee_around_town_pharmacy'
+                          ? PHARMACY_ROLEPLAY_OBJECTIVE
+                          : config.lessonId === 'ee_about_me_favorites'
+                            ? FAVORITES_ROLEPLAY_OBJECTIVE
+                            : null;
           if (objective) {
             roleplayNpc = {
               ...roleplayNpc,
