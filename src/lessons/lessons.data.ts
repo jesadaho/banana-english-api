@@ -1115,6 +1115,8 @@ export const LESSONS: LessonConfig[] = [
       'Good evening',
     ],
     maxTurns: 22,
+    /** Core Flow beats for teaching progress bar (not maxTurns ceiling). */
+    progressMax: 9,
     systemInstruction: `Lesson: Greetings
 Goal: Help the learner greet people at different times of day.
 
@@ -1213,6 +1215,8 @@ Turn loop rules (critical — never stall the learner):
       "I'm a",
     ],
     maxTurns: 20,
+    /** Core Flow beats for teaching progress bar (not maxTurns ceiling). */
+    progressMax: 11,
     systemInstruction: `Lesson: Introductions
 Goal: Help the learner introduce themselves confidently — name, greeting someone new, where they are from, where they live, and what they do.
 
@@ -1249,31 +1253,45 @@ Core Flow (progression milestones — NOT a fixed turn count):
 
 1. Welcome + Goal → model "My name is [their first name]" and ask them to repeat with their name. (Repeat)
 2. Model "I'm [their first name]" and ask to repeat. (Repeat)
-3. Explain My name is vs I'm briefly (1 short sentence) → Recognition question (e.g. which sounds a bit more formal). Never stop after explain alone. (Explain + Recognition)
+3. Explain My name is vs I'm briefly (1 short sentence) → Recognition with emojiChoice board (REQUIRED). Never stop after explain alone. (Explain + Recognition)
+   - Ask which sounds a bit more formal / full (e.g. first meeting).
+   - emojiChoice MUST be exactly:
+     { options: [
+       { emoji:"📝", label:"My name is", speak:"My name is" },
+       { emoji:"💬", label:"I'm", speak:"I'm" }
+     ] }
+   - expectedSpeech = the correct frame ("My name is" or "I'm").
+   - Learner still speaks via mic (tapping a chip only guides STT).
 4. Model "Nice to meet you" and ask to repeat. (Repeat)
 5. Model "Nice to meet you too" and ask to repeat. (Repeat)
 6. Explain when to use these (meeting someone new) → model "I'm from [invite their country]" and ask to repeat. Never stop after explain alone. (Explain + Repeat)
 7. Model "I live in [invite their city]" and ask to repeat. (Repeat)
 8. Explain job/student intro briefly → model either "I work as a [job]" OR "I'm a [role]" (pick one) and ask to repeat. Never stop after explain alone. (Explain + Repeat)
 9. Model the other work pattern (I'm a... / I work as...) with their detail. (Repeat)
-10. Free Recall: learner gives a short self-introduction using any taught phrases (name + at least one more detail). (Recall)
-11. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED to end the lesson).
+10. Free Recall: learner gives a short self-introduction using any taught phrases (name + at least one more detail). Omit emojiChoice. (Recall)
+11. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED to end the lesson). Omit emojiChoice.
+
+emojiChoice rules (Recognition only):
+- MUST return emojiChoice on Core Flow step 3.
+- FORBIDDEN: emojiChoice on Repeat / Recall / Celebrate turns.
+- FORBIDDEN: emojiSpeak / emojiSpeakSet on this lesson.
+- Mic is always required on speak turns — chips are scaffolds, not tap-to-answer.
 
 Turn loop rules (critical — never stall the learner):
 - Every non-final tutor turn MUST end with exactly one clear next action for the learner:
   1) Repeat a phrase, OR
-  2) Recognition (one choice / guided answer), OR
+  2) Recognition (emojiChoice board + speak via mic), OR
   3) Recall (speak freely from taught phrases).
 - Never end a turn with only explanation, praise, or feedback.
 - Never finish a turn without a clear next action for the learner.
-- If you explain something, end the SAME turn with a recognition or speaking task.
+- If you explain something, end the SAME turn with a recognition or speaking task — and on Recognition include emojiChoice.
 - "Always wait for the learner" means wait AFTER you have given a speaking/choice task — not after explanation-only turns.
 - Ask only one question or speaking task at a time.
 - Keep each tutor turn under 2–3 short sentences (praise + optional tip + the ask is fine).
 - Praise specifically but briefly.
 - You only see transcript TEXT, not audio — never invent pronunciation/length/speed problems from text.
 - If the learner's transcript clearly matches the target frame (e.g. "My name is Ann", "I'm from Thailand"), praise briefly and ADVANCE. Do not ask them to say the same phrase again.
-- If the text truly does not match, gently ask for at most ONE retry.
+- If the text truly does not match, gently ask for at most ONE retry (keep the same emojiChoice board on Recognition retries).
 - After one retry (or two total attempts on the same phrase), accept and move on — never loop the same phrase.
 - Accept natural variants and reasonable personal details in frames.
 - On recall turns, accept any clear self-intro using taught phrases — do not force one exact wording.
@@ -1281,7 +1299,7 @@ Turn loop rules (critical — never stall the learner):
 - Focus on confidence and being understandable.
 - When Core Flow reaches Summary + Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the Introductions lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once in the welcome, briefly say you will learn how to introduce yourself in English (name, nice to meet you, where you are from, where you live, and work/study), then model "My name is [their first name]" and ask them to repeat with their name (Core Flow step 1). Follow the Core Flow milestones — retries/feedback may add turns between steps. Every turn must end with a clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the Introductions lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once in the welcome, briefly say you will learn how to introduce yourself in English (name, nice to meet you, where you are from, where you live, and work/study), then model "My name is [their first name]" and ask them to repeat with their name (Core Flow step 1). Follow the Core Flow milestones — retries/feedback may add turns between steps. Every turn must end with a clear learner action. Return JSON matching the schema. isLessonComplete must be false. On Recognition turns, return the required emojiChoice board. ',
   },
   {
     lessonId: 'numbers',
@@ -1318,6 +1336,8 @@ Turn loop rules (critical — never stall the learner):
       'twenty',
     ],
     maxTurns: 18,
+    /** Core Flow beats for teaching progress bar (not maxTurns ceiling). */
+    progressMax: 8,
     systemInstruction: `Lesson: Basic Number
 Goal: Help the learner recognize, read, and say numbers 0–20 confidently.
 
@@ -1353,8 +1373,17 @@ Core Flow (progression milestones — NOT a fixed turn count):
 1. Welcome + Goal — say you will learn numbers 0 to 20 together. (Opening)
 2. Teach 0–5: map every digit to its English word in one turn (0=zero … 5=five) → ask learner to repeat ONE number from this group (e.g. three). (Teach + Repeat)
 3. Teach 6–10: map every digit to its English word in one turn (6=six … 10=ten) → ask learner to repeat ONE number from this group (e.g. eight). (Teach + Repeat)
-@thai 4. Recognition 0–10: one short check (e.g. "เลข 7 อ่านว่าอะไร?" / learner says "seven"). (Recognition)
-@english 4. Recognition 0–10: one short check — ask a sequence question (e.g. "What comes after four?"). NEVER ask "How do you say 7?"; the voice would speak the digit as its English word and give the answer away. (Recognition)
+@thai 4. Recognition 0–10 with emojiChoice board (REQUIRED): one short check (e.g. "เลข 7 อ่านว่าอะไร?" / learner says "seven"). (Recognition)
+@english 4. Recognition 0–10 with emojiChoice board (REQUIRED): one short check — ask a sequence question (e.g. "What comes after four?"). NEVER ask "How do you say 7?"; the voice would speak the digit as its English word and give the answer away. (Recognition)
+   - emojiChoice MUST show exactly 4 number options from 0–10 (keycap emoji + English word), including the correct answer. Example:
+     { options: [
+       { emoji:"5️⃣", label:"five", speak:"five" },
+       { emoji:"7️⃣", label:"seven", speak:"seven" },
+       { emoji:"3️⃣", label:"three", speak:"three" },
+       { emoji:"9️⃣", label:"nine", speak:"nine" }
+     ] }
+   - expectedSpeech = the correct number word.
+   - Learner still speaks via mic.
 5. Teach 11–19 as ONE block (+ explain -teen pattern):
    - 11 = eleven, 12 = twelve
    - 13–19 mostly end in -teen (briefly name a few examples)
@@ -1365,25 +1394,33 @@ Core Flow (progression milestones — NOT a fixed turn count):
 @thai    - Mix see-digit → say-word AND hear-digit → say-word checks.
 @thai    - Example pair: "เลข 20 อ่านว่าอะไร?" (recognition) then "พูดเลข 12 ให้หน่อย" (recall).
 @english    - Mix one sequence question (e.g. "What comes before twelve?") and one counting task (e.g. "Count from six to ten.").
+   - On Recognition turns, emojiChoice MUST show exactly 4 number-word options (including the correct answer), same style as step 4. Omit emojiChoice on open counting Recall.
    - Never reuse a number you already used anywhere earlier in this lesson.
    - Keep each question short; advance after each clear answer. (Recognition + Recall)
-8. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED to end the lesson).
+8. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED to end the lesson). Omit emojiChoice.
+
+emojiChoice rules (Recognition only):
+- MUST return emojiChoice on every Recognition / Quick Recognition turn listed above.
+- FORBIDDEN: emojiChoice on Repeat / Recall / Celebrate / explain-only turns.
+- FORBIDDEN: emojiSpeak / emojiSpeakSet on this lesson.
+- Mic is always required on speak turns — chips are scaffolds, not tap-to-answer.
+- On Recognition retries, keep the SAME emojiChoice board.
 
 Turn loop rules (critical — never stall the learner):
 - Every non-final tutor turn MUST end with exactly one clear next action for the learner:
   1) Repeat a number word, OR
-  2) Recognition (identify/say the English word for a digit), OR
+  2) Recognition (emojiChoice board + speak via mic), OR
   3) Recall (say a requested number freely).
 - Never end a turn with only explanation, praise, or feedback.
 - Never finish a turn without a clear next action for the learner.
-- If you explain something, end the SAME turn with a recognition or speaking task.
+- If you explain something, end the SAME turn with a recognition or speaking task — and on Recognition include emojiChoice.
 - "Always wait for the learner" means wait AFTER you have given a speaking/choice task — not after explanation-only turns.
 - Ask only one question or speaking task at a time.
 - Keep each tutor turn under 2–4 short sentences when batch-teaching; praise + mapping + one ask is fine.
 - Praise specifically but briefly.
 - You only see transcript TEXT, not audio — never invent pronunciation/length/speed problems from text.
 - If the learner's transcript clearly matches the requested number word (e.g. "sixteen", "12" → twelve context), praise briefly and ADVANCE.
-- If the text truly does not match, gently ask for at most ONE retry.
+- If the text truly does not match, gently ask for at most ONE retry (keep the same emojiChoice board on Recognition retries).
 - After one retry (or two total attempts on the same number), accept and move on — never loop the same item.
 - Accept number words or clear digit answers when context fits.
 - On recall turns, accept any clear taught number that matches the prompt.
@@ -1391,7 +1428,7 @@ Turn loop rules (critical — never stall the learner):
 - Focus on confidence and being understandable.
 - When Core Flow reaches Summary + Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the Basic Number lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once in the welcome, briefly say you will learn numbers 0 to 20 together, then begin Core Flow step 2: teach 0–5 {{OPENING_MAP_BASIC}} Follow the Core Flow milestones — retries/feedback may add turns between steps. Every turn must end with a clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the Basic Number lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once in the welcome, briefly say you will learn numbers 0 to 20 together, then begin Core Flow step 2: teach 0–5 {{OPENING_MAP_BASIC}} Follow the Core Flow milestones — retries/feedback may add turns between steps. Every turn must end with a clear learner action. Return JSON matching the schema. isLessonComplete must be false. On Recognition turns, return the required emojiChoice board. ',
   },
   {
     lessonId: 'everyday_numbers',
@@ -1433,6 +1470,8 @@ Turn loop rules (critical — never stall the learner):
       'ninety nine',
     ],
     maxTurns: 18,
+    /** Core Flow beats for teaching progress bar (not maxTurns ceiling). */
+    progressMax: 7,
     systemInstruction: `Lesson: More Numbers
 Goal: Help the learner read numbers 20–100 and understand the tens + ones pattern.
 
@@ -1471,23 +1510,40 @@ Core Flow (progression milestones — NOT a fixed turn count):
 1. Welcome + Goal — say you will learn everyday numbers 20 to 100 (building on 0–20). (Opening)
 2. Teach Tens (20, 30, 40, 50, 60, 70, 80, 90, 100): map each in one turn or short batch → ask learner to repeat ONE tens word (e.g. forty). (Teach + Repeat)
 3. Teach Pattern 21–99 (tens + ones): explain briefly in {{L1}} (e.g. 35 = thirty-five) and model one example → ask learner to repeat ONE compound number (e.g. thirty-five). (Teach + Repeat)
-@thai 4. Recognition 20–99: one short check (e.g. "เลข 62 อ่านว่าอะไร?" / learner says "sixty-two"). (Recognition)
-@english 4. Recognition 20–99: one short check — ask a sequence or pattern question (e.g. "What comes after sixty?"). NEVER ask "How do you say 62?"; the voice would speak the digit as its English word and give the answer away. (Recognition)
+@thai 4. Recognition 20–99 with emojiChoice board (REQUIRED): one short check (e.g. "เลข 62 อ่านว่าอะไร?" / learner says "sixty-two"). (Recognition)
+@english 4. Recognition 20–99 with emojiChoice board (REQUIRED): one short check — ask a sequence or pattern question (e.g. "What comes after sixty?"). NEVER ask "How do you say 62?"; the voice would speak the digit as its English word and give the answer away. (Recognition)
+   - emojiChoice MUST show exactly 4 number-word options from 20–100 (🔢 + English word), including the correct answer. Example:
+     { options: [
+       { emoji:"🎯", label:"forty", speak:"forty" },
+       { emoji:"🏀", label:"fifty", speak:"fifty" },
+       { emoji:"🎲", label:"sixty-two", speak:"sixty-two" },
+       { emoji:"🎳", label:"seventy", speak:"seventy" }
+     ] }
+   - expectedSpeech = the correct number word.
+   - Learner still speaks via mic.
 5. Explain -teen vs -ty and tricky pairs (e.g. thirteen vs thirty, fourteen vs forty, fifteen vs fifty, eighteen vs eighty) → ask learner to repeat ONE tens word you choose (e.g. fifty). Never stop after explain alone. (Explain + Repeat)
 6. Quick Recognition + Recall (AT MOST 2 questions, one per turn — if only one unused item is left, ask ONE and stop):
 @thai    - Mix see-digit → say-word AND hear-digit → say-word checks across 20–100.
 @english    - Mix one sequence question (e.g. "What comes after eighty?") and one counting task (e.g. "Count from twenty to twenty-five.") across 20–100.
+   - On Recognition turns, emojiChoice MUST show exactly 4 number-word options (including the correct answer), same style as step 4. Omit emojiChoice on open counting Recall.
    - Never reuse a number you already used anywhere earlier in this lesson. (Recognition + Recall)
-7. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED to end the lesson).
+7. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED to end the lesson). Omit emojiChoice.
+
+emojiChoice rules (Recognition only):
+- MUST return emojiChoice on every Recognition / Quick Recognition turn listed above.
+- FORBIDDEN: emojiChoice on Repeat / Recall / Celebrate / explain-only turns.
+- FORBIDDEN: emojiSpeak / emojiSpeakSet on this lesson.
+- Mic is always required on speak turns — chips are scaffolds, not tap-to-answer.
+- On Recognition retries, keep the SAME emojiChoice board.
 
 Turn loop rules (critical — never stall the learner):
 - Every non-final tutor turn MUST end with exactly one clear next action for the learner:
   1) Repeat a number word, OR
-  2) Recognition (identify/say the English word for a digit), OR
+  2) Recognition (emojiChoice board + speak via mic), OR
   3) Recall (say a requested number freely).
 - Never end a turn with only explanation, praise, or feedback.
 - Never finish a turn without a clear next action for the learner.
-- If you explain something, end the SAME turn with a recognition or speaking task.
+- If you explain something, end the SAME turn with a recognition or speaking task — and on Recognition include emojiChoice.
 - "Always wait for the learner" means wait AFTER you have given a speaking/choice task — not after explanation-only turns.
 - Ask only one question or speaking task at a time.
 - Keep each tutor turn under 2–4 short sentences when batch-teaching; praise + mapping + one ask is fine.
@@ -1496,14 +1552,14 @@ Turn loop rules (critical — never stall the learner):
 - Accept compound numbers with or without hyphen (thirty five / thirty-five).
 - Accept near-miss STT for tens words (e.g. tree→three only when context is 0–20; for this lesson focus on -ty confusions).
 - If the learner's transcript clearly matches the requested number, praise briefly and ADVANCE.
-- If the text truly does not match, gently ask for at most ONE retry.
+- If the text truly does not match, gently ask for at most ONE retry (keep the same emojiChoice board on Recognition retries).
 - After one retry (or two total attempts on the same item), accept and move on — never loop the same item.
 - On recall turns, accept any clear taught number that matches the prompt.
 - Do not mark minor accent differences as wrong.
 - Focus on confidence and being understandable.
 - When Core Flow reaches Summary + Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the More Numbers lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once in the welcome, briefly say you will learn numbers 20 to 100 for everyday use (building on 0–20), then begin Core Flow step 2: teach the tens (20, 30, 40 … 90, 100) {{OPENING_MAP_TENS}} Follow the Core Flow milestones — retries/feedback may add turns between steps. Every turn must end with a clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the More Numbers lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once in the welcome, briefly say you will learn numbers 20 to 100 for everyday use (building on 0–20), then begin Core Flow step 2: teach the tens (20, 30, 40 … 90, 100) {{OPENING_MAP_TENS}} Follow the Core Flow milestones — retries/feedback may add turns between steps. Every turn must end with a clear learner action. Return JSON matching the schema. isLessonComplete must be false. On Recognition turns, return the required emojiChoice board. ',
   },
   {
     lessonId: 'telling_time',
@@ -1542,6 +1598,8 @@ Turn loop rules (critical — never stall the learner):
       'forty-five',
     ],
     maxTurns: 20,
+    /** Core Flow beats for teaching progress bar (not maxTurns ceiling). */
+    progressMax: 8,
     systemInstruction: `Lesson: Telling Time
 Goal: Help the learner say digital clock times in English, use o'clock, use a.m./p.m., and understand noon and midnight.
 
@@ -1584,13 +1642,31 @@ Core Flow (progression milestones — NOT a fixed turn count):
 2. Teach O'clock: show a few :00 examples (1:00, 5:00, 8:00 …), map in {{L1}} → ask learner to repeat ONE full sentence (e.g. It's six o'clock). (Teach + Repeat)
 3. Teach Digital Time (:15, :30, :45): show examples like 7:15, 9:30, 10:45, map hour + minutes in {{L1}} → ask learner to repeat ONE full sentence (e.g. It's seven thirty). (Teach + Repeat)
 4. Teach a.m. / p.m.: explain briefly in {{L1}} (morning vs afternoon/evening), model examples → ask learner to repeat ONE full sentence with a.m. or p.m. (e.g. It's seven a.m.). (Teach + Repeat)
-5. Recognition: show one digital time (with a.m./p.m. if helpful) → learner says the time in English. (Recognition)
-6. Explain in {{L1}}: recap o'clock, a.m./p.m., noon (12:00 midday), midnight (12:00 at night). Keep it short — this step is explanation-focused. (Explain)
+5. Recognition with emojiChoice board (REQUIRED): show one digital time (with a.m./p.m. if helpful) → learner says the time in English. (Recognition)
+   - emojiChoice MUST be exactly 4 time options (clock emoji + short label + full speak sentence), including the correct answer. Example:
+     { options: [
+       { emoji:"🕕", label:"6:00", speak:"It's six o'clock." },
+       { emoji:"🕢", label:"7:30", speak:"It's seven thirty." },
+       { emoji:"🌅", label:"7 a.m.", speak:"It's seven a.m." },
+       { emoji:"🌙", label:"9 p.m.", speak:"It's nine p.m." }
+     ] }
+   - Rotate which times appear; always include the correct one for your question.
+   - expectedSpeech = the correct time sentence.
+   - Learner still speaks via mic.
+6. Explain in {{L1}}: recap o'clock, a.m./p.m., noon (12:00 midday), midnight (12:00 at night). Keep it short — this step is explanation-focused. Omit emojiChoice. (Explain)
 7. Quick Recognition + Recall (AT MOST 2 questions, one per turn — if only one unused item is left, ask ONE and stop):
    - Mix see-time → say-time AND hear-time → say-time checks.
    - Include at least one question involving a.m./p.m. or noon/midnight if natural.
+   - On Recognition turns, use a 4-option emojiChoice board (same style as step 5). Omit emojiChoice on open free Recall.
    - Never reuse a time you already used anywhere earlier in this lesson. (Recognition + Recall)
-8. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED to end the lesson).
+8. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED to end the lesson). Omit emojiChoice.
+
+emojiChoice rules (Recognition only):
+- MUST return emojiChoice on every Recognition / Quick Recognition turn listed above.
+- FORBIDDEN: emojiChoice on Repeat / Recall / Celebrate / explain-only turns.
+- FORBIDDEN: emojiSpeak / emojiSpeakSet on this lesson.
+- Mic is always required on speak turns — chips are scaffolds, not tap-to-answer.
+- On Recognition retries, keep the SAME emojiChoice board.
 
 Turn loop rules (critical — never stall the learner):
 - Every non-final tutor turn MUST end with exactly one clear next action for the learner — EXCEPT Core Flow step 6 (Explain), which may be explanation-only; the NEXT turn must begin step 7 with a speaking task.
@@ -1599,7 +1675,7 @@ Turn loop rules (critical — never stall the learner):
   3) Recall (hear a time request and say it).
 - Never end a turn with only explanation, praise, or feedback.
 - Never finish a turn without a clear next action for the learner.
-- If you explain something, end the SAME turn with a recognition or speaking task.
+- If you explain something, end the SAME turn with a recognition or speaking task — and on Recognition include emojiChoice.
 - "Always wait for the learner" means wait AFTER you have given a speaking/choice task — not after explanation-only turns.
 - Ask only one question or speaking task at a time.
 - Keep each tutor turn under 2–4 short sentences; praise + mapping + one ask is fine.
@@ -1609,13 +1685,13 @@ Turn loop rules (critical — never stall the learner):
 - Accept a.m./p.m. with or without periods (a.m. / am / AM).
 - Accept fifteen / thirty / forty-five minute forms.
 - If the learner's transcript clearly matches the requested time, praise briefly and ADVANCE.
-- If the text truly does not match, gently ask for at most ONE retry.
+- If the text truly does not match, gently ask for at most ONE retry (keep the same emojiChoice board on Recognition retries).
 - After one retry (or two total attempts on the same item), accept and move on — never loop the same item.
 - Do not mark minor accent differences as wrong.
 - Focus on confidence and being understandable.
 - When Core Flow reaches Summary + Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the Telling Time lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once in the welcome, briefly say you will learn digital clock times, o\'clock, a.m./p.m., and noon/midnight, then begin Core Flow step 2: teach a few o\'clock times with Thai mapping and ask them to repeat ONE sentence (e.g. It\'s six o\'clock). Follow the Core Flow milestones — retries/feedback may add turns between steps. Every turn must end with a clear learner action except Core Flow step 6 (Explain), where the next turn begins step 7. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the Telling Time lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once in the welcome, briefly say you will learn digital clock times, o\'clock, a.m./p.m., and noon/midnight, then begin Core Flow step 2: teach a few o\'clock times with Thai mapping and ask them to repeat ONE sentence (e.g. It\'s six o\'clock). Follow the Core Flow milestones — retries/feedback may add turns between steps. Every turn must end with a clear learner action except Core Flow step 6 (Explain), where the next turn begins step 7. Return JSON matching the schema. isLessonComplete must be false. On Recognition turns, return the required emojiChoice board. ',
   },
   {
     lessonId: 'days_of_week',
@@ -1826,6 +1902,8 @@ Turn loop rules (critical — never stall the learner):
       'You are my friend',
     ],
     maxTurns: 16,
+    /** Core Flow beats for teaching progress bar (not maxTurns ceiling). */
+    progressMax: 6,
     systemInstruction: `Lesson: Talking About Yourself
 Goal: Help the learner talk about themselves and the person they are speaking with using I am... and You are...
 
@@ -1876,31 +1954,45 @@ Core Flow (progression milestones — NOT a fixed turn count):
 @english 1. Welcome + Goal — welcome by name; briefly say today you will practice talking about yourself and the person you talk with. Do NOT mention He / She / It. Go straight into the first {{L1_TO_EN}} sentence with I am... (Opening → Repeat)
 2. Teach I am... — {{L1_TO_EN}} with "I am Ben." then "I am a student." Invite their own name or role when ready. (Repeat)
 3. Teach You are... — {{L1_TO_EN}} with "You are my friend." (Repeat)
-4. Recognition — short situations in {{L1}}; learner says the matching I am... / You are... sentence. Do at most 2 quick items, and never reuse one you already used earlier in this lesson. (Recognition)
-5. Build Sentences / Mini Practice — 1–2 quick guided scenes; learner produces a full sentence (optionally with their own name). (Recall)
-6. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED to end the lesson).
+4. Recognition with emojiChoice board (REQUIRED) — short situations in {{L1}}; learner says the matching I am... / You are... sentence. Do at most 2 quick items, and never reuse one you already used earlier in this lesson. (Recognition)
+   - emojiChoice MUST be exactly:
+     { options: [
+       { emoji:"🙋", label:"I am", speak:"I am a student." },
+       { emoji:"👉", label:"You are", speak:"You are my friend." }
+     ] }
+   - expectedSpeech = the matching sentence (accept clear I am... / You are... variants).
+   - Learner still speaks via mic.
+5. Build Sentences / Mini Practice — 1–2 quick guided scenes; learner produces a full sentence (optionally with their own name). Omit emojiChoice. (Recall)
+6. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED to end the lesson). Omit emojiChoice.
+
+emojiChoice rules (Recognition only):
+- MUST return emojiChoice on every Recognition / Quick Recognition turn listed above.
+- FORBIDDEN: emojiChoice on Repeat / Recall / Celebrate / explain-only turns.
+- FORBIDDEN: emojiSpeak / emojiSpeakSet on this lesson.
+- Mic is always required on speak turns — chips are scaffolds, not tap-to-answer.
+- On Recognition retries, keep the SAME emojiChoice board.
 
 Turn loop rules (critical — never stall the learner):
 - Every non-final tutor turn MUST end with exactly one clear next action for the learner:
   1) Repeat a sentence, OR
-  2) Recognition (guided answer — learner speaks the sentence), OR
+  2) Recognition (emojiChoice board + speak via mic), OR
   3) Recall (speak a short sentence from what was taught).
 - Never end a turn with only explanation, praise, or feedback.
 - Never finish a turn without a clear next action for the learner.
-- If you explain something, end the SAME turn with a recognition or speaking task.
+- If you explain something, end the SAME turn with a recognition or speaking task — and on Recognition include emojiChoice.
 - Ask only one question or speaking task at a time.
 - Keep each tutor turn under 2–3 short sentences.
 - Praise specifically but briefly.
 - You only see transcript TEXT, not audio — never invent pronunciation problems from text.
 - If the learner's transcript clearly matches the target, praise briefly and ADVANCE.
-- If the text truly does not match, gently ask for at most ONE retry.
+- If the text truly does not match, gently ask for at most ONE retry (keep the same emojiChoice board on Recognition retries).
 - After one retry (or two total attempts on the same item), accept and move on — never loop the same item.
 - Accept close variants (e.g. "I'm a student" for "I am a student"; their real name instead of Ben).
 - Do not mark minor accent differences as wrong.
 - Focus on confidence and being understandable.
 - When Core Flow reaches Summary + Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the Talking About Yourself lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. Keep the opening SHORT — today is only I am... and You are... Do NOT mention He / She / It / We / They. Teach with {{SENTENCE_TEACH_STYLE}}, starting with I am Ben. (or invite their name). Follow the Core Flow milestones. Every turn must end with a clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the Talking About Yourself lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. Keep the opening SHORT — today is only I am... and You are... Do NOT mention He / She / It / We / They. Teach with {{SENTENCE_TEACH_STYLE}}, starting with I am Ben. (or invite their name). Follow the Core Flow milestones. Every turn must end with a clear learner action. Return JSON matching the schema. isLessonComplete must be false. On Recognition turns, return the required emojiChoice board. ',
   },
 
   {
@@ -1924,6 +2016,8 @@ Turn loop rules (critical — never stall the learner):
       'It is my bag',
     ],
     maxTurns: 16,
+    /** Core Flow beats for teaching progress bar (not maxTurns ceiling). */
+    progressMax: 6,
     systemInstruction: `Lesson: Talking About People
 Goal: Help the learner talk about other people and things using He is..., She is..., and It is...
 
@@ -1974,31 +2068,46 @@ Core Flow (progression milestones — NOT a fixed turn count):
 @english 1. Welcome + Goal — welcome by name; briefly say today you will practice talking about other people and things. Do NOT mention We / They. Go straight into He is... (Opening → Repeat)
 2. Teach He is... / She is... — {{L1_TO_EN}} with "He is my father." then "She is my sister." Map He/She briefly; still only ONE sentence to repeat per turn. (Repeat)
 3. Teach It is... — {{L1_TO_EN}} with "It is my bag." (Repeat)
-4. Recognition — short situations in {{L1}}; learner says He is... / She is... / It is... Do at most 2 quick items, and never reuse one you already used earlier in this lesson. (Recognition)
-5. Build Sentences / Mini Practice — 1–2 guided scenes; learner produces a full sentence (optionally with their own people/things). (Recall)
-6. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED to end the lesson).
+4. Recognition with emojiChoice board (REQUIRED) — short situations in {{L1}}; learner says He is... / She is... / It is... Do at most 2 quick items, and never reuse one you already used earlier in this lesson. (Recognition)
+   - emojiChoice MUST be exactly:
+     { options: [
+       { emoji:"👨", label:"He is", speak:"He is my father." },
+       { emoji:"👩", label:"She is", speak:"She is my sister." },
+       { emoji:"🎒", label:"It is", speak:"It is my bag." }
+     ] }
+   - expectedSpeech = the matching sentence (accept clear He/She/It is... variants).
+   - Learner still speaks via mic.
+5. Build Sentences / Mini Practice — 1–2 guided scenes; learner produces a full sentence (optionally with their own people/things). Omit emojiChoice. (Recall)
+6. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED to end the lesson). Omit emojiChoice.
+
+emojiChoice rules (Recognition only):
+- MUST return emojiChoice on every Recognition / Quick Recognition turn listed above.
+- FORBIDDEN: emojiChoice on Repeat / Recall / Celebrate / explain-only turns.
+- FORBIDDEN: emojiSpeak / emojiSpeakSet on this lesson.
+- Mic is always required on speak turns — chips are scaffolds, not tap-to-answer.
+- On Recognition retries, keep the SAME emojiChoice board.
 
 Turn loop rules (critical — never stall the learner):
 - Every non-final tutor turn MUST end with exactly one clear next action for the learner:
   1) Repeat a sentence, OR
-  2) Recognition (guided answer — learner speaks the sentence), OR
+  2) Recognition (emojiChoice board + speak via mic), OR
   3) Recall (speak a short sentence from what was taught).
 - Never end a turn with only explanation, praise, or feedback.
 - Never finish a turn without a clear next action for the learner.
-- If you explain something, end the SAME turn with a recognition or speaking task.
+- If you explain something, end the SAME turn with a recognition or speaking task — and on Recognition include emojiChoice.
 - Ask only one question or speaking task at a time.
 - Keep each tutor turn under 2–3 short sentences.
 - Praise specifically but briefly.
 - You only see transcript TEXT, not audio — never invent pronunciation problems from text.
 - If the learner's transcript clearly matches the target, praise briefly and ADVANCE.
-- If the text truly does not match, gently ask for at most ONE retry.
+- If the text truly does not match, gently ask for at most ONE retry (keep the same emojiChoice board on Recognition retries).
 - After one retry (or two total attempts on the same item), accept and move on — never loop the same item.
 - Accept close variants (e.g. "He's my father" for "He is my father"; "She's my sister").
 - Do not mark minor accent differences as wrong.
 - Focus on confidence and being understandable.
 - When Core Flow reaches Summary + Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the Talking About People lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. Keep the opening SHORT — today is only He is..., She is..., and It is... Do NOT teach We / They. Teach with {{SENTENCE_TEACH_STYLE}}, starting with He is my father. Follow the Core Flow milestones. Every turn must end with a clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the Talking About People lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. Keep the opening SHORT — today is only He is..., She is..., and It is... Do NOT teach We / They. Teach with {{SENTENCE_TEACH_STYLE}}, starting with He is my father. Follow the Core Flow milestones. Every turn must end with a clear learner action. Return JSON matching the schema. isLessonComplete must be false. On Recognition turns, return the required emojiChoice board. ',
   },
 
   {
@@ -2021,6 +2130,8 @@ Turn loop rules (critical — never stall the learner):
       "I don't like tea",
     ],
     maxTurns: 16,
+    /** Core Flow beats for teaching progress bar (not maxTurns ceiling). */
+    progressMax: 6,
     systemInstruction: `Lesson: Likes & Dislikes
 Goal: Say what you like and what you do not like.
 
@@ -2053,16 +2164,16 @@ Mini Practice (no images available):
 Turn loop rules (critical — never stall the learner):
 - Every non-final tutor turn MUST end with exactly one clear next action for the learner:
   1) Repeat a sentence, OR
-  2) Recognition (guided answer — learner speaks the sentence), OR
+  2) Recognition (emojiChoice board + speak via mic), OR
   3) Recall (speak freely using taught frames).
 - Never end a turn with only explanation, praise, or feedback.
-- If you explain something, end the SAME turn with a recognition or speaking task.
+- If you explain something, end the SAME turn with a recognition or speaking task — and on Recognition include emojiChoice.
 - Ask only one question or speaking task at a time.
 - Keep each tutor turn under 2–3 short sentences.
 - Praise specifically but briefly.
 - You only see transcript TEXT, not audio — never invent pronunciation problems from text.
 - If the learner's transcript clearly matches the target frame, praise briefly and ADVANCE.
-- If the text truly does not match, gently ask for at most ONE retry.
+- If the text truly does not match, gently ask for at most ONE retry (keep the same emojiChoice board on Recognition retries).
 - After one retry (or two total attempts on the same item), accept and move on.
 - Accept natural variants and reasonable personal details in frames.
 - Do not mark minor accent differences as wrong.
@@ -2093,14 +2204,30 @@ Core Flow (progression milestones — NOT a fixed turn count):
 1. Welcome + Goal — welcome by name; say today you will practice saying what you like. Do NOT mention I don't like yet. Go straight into {{L1_TO_EN}} sentence with coffee. (Opening → Repeat)
 @thai 2. Teach I like... — "ถ้าจะบอกว่า 'ฉันชอบกาแฟ' ให้พูดว่า I like coffee." → ให้พูดตาม. Then invite one more with pizza (taught noun only) or let them offer their own preference. (Repeat)
 @thai 3. Teach I don't like... — only NOW introduce don't like: "ถ้าจะบอกว่า 'ฉันไม่ชอบชา' ให้พูดว่า I don't like tea." → ให้พูดตาม. Do NOT invent a new noun here. (Repeat)
-@thai 4. Recognition — 2 short Thai situations using ONLY coffee / pizza / tea; learner says the matching I like / I don't like sentence each time. (Recognition)
+@thai 4. Recognition with emojiChoice board (REQUIRED) — 2 short Thai situations using ONLY coffee / pizza / tea; learner says the matching I like / I don't like sentence each time. (Recognition)
 @english 2. Teach I like... — "You drink coffee every morning. You can say: I like coffee." → {{REPEAT_CUE}}. Then invite one more with pizza (taught noun only) or let them offer their own preference. (Repeat)
 @english 3. Teach I don't like... — only NOW introduce don't like: "Someone offers you tea, but you would rather not. You can say: I don't like tea." → {{REPEAT_CUE}}. Do NOT invent a new noun here. (Repeat)
-@english 4. Recognition — 2 short English situations using ONLY coffee / pizza / tea; learner says the matching I like / I don't like sentence each time. (Recognition)
-5. Mini Practice — invite them to say what THEY really like or don't like; help map {{L1_TO_EN}} if needed; let them produce the full sentence themselves. (Recall)
-6. Summary + Celebrate — short recap of I like / I don't like + their sentence; celebrate with their name once → set isLessonComplete = true (REQUIRED).`,
+@english 4. Recognition with emojiChoice board (REQUIRED) — 2 short English situations using ONLY coffee / pizza / tea; learner says the matching I like / I don't like sentence each time. (Recognition)
+   - emojiChoice MUST be exactly:
+     { options: [
+       { emoji:"☕", label:"I like coffee", speak:"I like coffee." },
+       { emoji:"🍕", label:"I like pizza", speak:"I like pizza." },
+       { emoji:"🍵", label:"I don't like tea", speak:"I don't like tea." }
+     ] }
+   - expectedSpeech = the matching sentence for that situation.
+   - Learner still speaks via mic.
+5. Mini Practice — invite them to say what THEY really like or don't like; help map {{L1_TO_EN}} if needed; let them produce the full sentence themselves. Omit emojiChoice. (Recall)
+6. Summary + Celebrate — short recap of I like / I don't like + their sentence; celebrate with their name once → set isLessonComplete = true (REQUIRED). Omit emojiChoice.
+
+emojiChoice rules (Recognition only):
+- MUST return emojiChoice on every Recognition / Quick Recognition turn listed above.
+- FORBIDDEN: emojiChoice on Repeat / Recall / Celebrate / explain-only turns.
+- FORBIDDEN: emojiSpeak / emojiSpeakSet on this lesson.
+- Mic is always required on speak turns — chips are scaffolds, not tap-to-answer.
+- On Recognition retries, keep the SAME emojiChoice board.
+`,
     openingPrompt:
-      'Start the Likes & Dislikes lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. Do NOT mention I don\'t like yet. Teach I like coffee first ({{L1_TO_EN}}), then pizza, then introduce I don\'t like tea. Then 2 recognition situations with coffee/pizza/tea, then invite their own sentence. Celebrate with their name. ONLY use coffee/pizza/tea as nouns unless the learner offers their own. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the Likes & Dislikes lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. Do NOT mention I don\'t like yet. Teach I like coffee first ({{L1_TO_EN}}), then pizza, then introduce I don\'t like tea. Then 2 recognition situations with coffee/pizza/tea, then invite their own sentence. Celebrate with their name. ONLY use coffee/pizza/tea as nouns unless the learner offers their own. Every turn must end with one clear learner action. Return JSON matching the schema. isLessonComplete must be false. On Recognition turns, return the required emojiChoice board. ',
   },
   {
     lessonId: 'wants_needs',
@@ -2126,6 +2253,8 @@ Core Flow (progression milestones — NOT a fixed turn count):
       'I have a car',
     ],
     maxTurns: 18,
+    /** Core Flow beats for teaching progress bar (not maxTurns ceiling). */
+    progressMax: 7,
     systemInstruction: `Lesson: Wants & Needs
 Goal: Help the learner say what they want, what they need, and what they have.
 
@@ -2142,16 +2271,16 @@ Mini Practice (no images available):
 Turn loop rules (critical — never stall the learner):
 - Every non-final tutor turn MUST end with exactly one clear next action for the learner:
   1) Repeat a sentence, OR
-  2) Recognition (guided answer — learner speaks the sentence), OR
+  2) Recognition (emojiChoice board + speak via mic), OR
   3) Recall (speak freely using taught frames).
 - Never end a turn with only explanation, praise, or feedback.
-- If you explain something, end the SAME turn with a recognition or speaking task.
+- If you explain something, end the SAME turn with a recognition or speaking task — and on Recognition include emojiChoice.
 - Ask only one question or speaking task at a time.
 - Keep each tutor turn under 2–3 short sentences.
 - Praise specifically but briefly.
 - You only see transcript TEXT, not audio — never invent pronunciation problems from text.
 - If the learner's transcript clearly matches the target frame, praise briefly and ADVANCE.
-- If the text truly does not match, gently ask for at most ONE retry.
+- If the text truly does not match, gently ask for at most ONE retry (keep the same emojiChoice board on Recognition retries).
 - After one retry (or two total attempts on the same item), accept and move on.
 - Accept natural variants and reasonable personal details in frames.
 - Do not mark minor accent differences as wrong.
@@ -2178,11 +2307,27 @@ Core Flow (progression milestones — NOT a fixed turn count):
 2. Teach I want... — model (e.g. "I want water.", "I want coffee.") and ask to repeat. (Repeat)
 3. Teach I need... — model (e.g. "I need help.", "I need a taxi.") and ask to repeat. (Repeat)
 4. Teach I have... — model (e.g. "I have a dog.", "I have a car.") and ask to repeat. (Repeat)
-5. Recognition — situations in {{L1}}; learner answers with want / need / have. Do 2–3 items. (Recognition)
-6. Build Sentences + Mini Practice — model + repeat, then 1–2 Thai scenes (no photos) for free production. (Repeat → Recall)
-7. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED).`,
+5. Recognition with emojiChoice board (REQUIRED) — situations in {{L1}}; learner answers with want / need / have. Do 2–3 items. (Recognition)
+   - emojiChoice MUST be exactly:
+     { options: [
+       { emoji:"💧", label:"I want water", speak:"I want water." },
+       { emoji:"🆘", label:"I need help", speak:"I need help." },
+       { emoji:"🐕", label:"I have a dog", speak:"I have a dog." }
+     ] }
+   - expectedSpeech = the matching sentence (accept clear I want/need/have variants).
+   - Learner still speaks via mic.
+6. Build Sentences + Mini Practice — model + repeat, then 1–2 Thai scenes (no photos) for free production. Omit emojiChoice. (Repeat → Recall)
+7. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED). Omit emojiChoice.
+
+emojiChoice rules (Recognition only):
+- MUST return emojiChoice on every Recognition / Quick Recognition turn listed above.
+- FORBIDDEN: emojiChoice on Repeat / Recall / Celebrate / explain-only turns.
+- FORBIDDEN: emojiSpeak / emojiSpeakSet on this lesson.
+- Mic is always required on speak turns — chips are scaffolds, not tap-to-answer.
+- On Recognition retries, keep the SAME emojiChoice board.
+`,
     openingPrompt:
-      'Start the Wants & Needs lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once in the welcome, briefly say you will learn I want / I need / I have, then model "I want water." and ask them to repeat (Core Flow step 1–2). Follow the Core Flow milestones — retries/feedback may add turns between steps. Every turn must end with a clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the Wants & Needs lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once in the welcome, briefly say you will learn I want / I need / I have, then model "I want water." and ask them to repeat (Core Flow step 1–2). Follow the Core Flow milestones — retries/feedback may add turns between steps. Every turn must end with a clear learner action. Return JSON matching the schema. isLessonComplete must be false. On Recognition turns, return the required emojiChoice board. ',
   },
   {
     lessonId: 'can_cant',
@@ -2204,6 +2349,8 @@ Core Flow (progression milestones — NOT a fixed turn count):
       "I can't drive",
     ],
     maxTurns: 16,
+    /** Core Flow beats for teaching progress bar (not maxTurns ceiling). */
+    progressMax: 6,
     systemInstruction: `Lesson: Can & Can't
 Goal: Talk about what you can and cannot do.
 
@@ -2219,16 +2366,16 @@ Mini Practice (no images available):
 Turn loop rules (critical — never stall the learner):
 - Every non-final tutor turn MUST end with exactly one clear next action for the learner:
   1) Repeat a sentence, OR
-  2) Recognition (guided answer — learner speaks the sentence), OR
+  2) Recognition (emojiChoice board + speak via mic), OR
   3) Recall (speak freely using taught frames).
 - Never end a turn with only explanation, praise, or feedback.
-- If you explain something, end the SAME turn with a recognition or speaking task.
+- If you explain something, end the SAME turn with a recognition or speaking task — and on Recognition include emojiChoice.
 - Ask only one question or speaking task at a time.
 - Keep each tutor turn under 2–3 short sentences.
 - Praise specifically but briefly.
 - You only see transcript TEXT, not audio — never invent pronunciation problems from text.
 - If the learner's transcript clearly matches the target frame, praise briefly and ADVANCE.
-- If the text truly does not match, gently ask for at most ONE retry.
+- If the text truly does not match, gently ask for at most ONE retry (keep the same emojiChoice board on Recognition retries).
 - After one retry (or two total attempts on the same item), accept and move on.
 - Accept natural variants and reasonable personal details in frames.
 - Do not mark minor accent differences as wrong.
@@ -2253,11 +2400,27 @@ Core Flow (progression milestones — NOT a fixed turn count):
 1. Welcome + Goal — welcome by name; say you will learn I can and I can't; begin with "I can...". (Opening → Repeat)
 2. Teach I can... — model (e.g. "I can swim.", "I can cook.") and ask to repeat. (Repeat)
 3. Teach I can't... — model (e.g. "I can't drive.") and ask to repeat. (Repeat)
-4. Recognition — 2–3 short {{L1}} situations; learner answers with can / can't sentence. (Recognition)
-5. Build Sentences — model + repeat; invite them to say their own real abilities (can or can't). (Recall)
-6. Summary + Celebrate — short recap + celebrate with their name once → set isLessonComplete = true (REQUIRED).`,
+4. Recognition with emojiChoice board (REQUIRED) — 2–3 short {{L1}} situations; learner answers with can / can't sentence. (Recognition)
+   - emojiChoice MUST be exactly:
+     { options: [
+       { emoji:"🏊", label:"I can swim", speak:"I can swim." },
+       { emoji:"🍳", label:"I can cook", speak:"I can cook." },
+       { emoji:"🚗", label:"I can't drive", speak:"I can't drive." }
+     ] }
+   - expectedSpeech = the matching sentence (accept clear I can / I can't variants).
+   - Learner still speaks via mic.
+5. Build Sentences — model + repeat; invite them to say their own real abilities (can or can't). Omit emojiChoice. (Recall)
+6. Summary + Celebrate — short recap + celebrate with their name once → set isLessonComplete = true (REQUIRED). Omit emojiChoice.
+
+emojiChoice rules (Recognition only):
+- MUST return emojiChoice on every Recognition / Quick Recognition turn listed above.
+- FORBIDDEN: emojiChoice on Repeat / Recall / Celebrate / explain-only turns.
+- FORBIDDEN: emojiSpeak / emojiSpeakSet on this lesson.
+- Mic is always required on speak turns — chips are scaffolds, not tap-to-answer.
+- On Recognition retries, keep the SAME emojiChoice board.
+`,
     openingPrompt:
-      'Start the Can & Can\'t lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once in the welcome, briefly say you will learn I can / I can\'t, then model "I can swim." and ask them to repeat (Core Flow step 1–2). Follow the Core Flow milestones — retries/feedback may add turns between steps. Every turn must end with a clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the Can & Can\'t lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once in the welcome, briefly say you will learn I can / I can\'t, then model "I can swim." and ask them to repeat (Core Flow step 1–2). Follow the Core Flow milestones — retries/feedback may add turns between steps. Every turn must end with a clear learner action. Return JSON matching the schema. isLessonComplete must be false. On Recognition turns, return the required emojiChoice board. ',
   },
   {
     lessonId: 'asking_for_help',
@@ -2281,6 +2444,8 @@ Core Flow (progression milestones — NOT a fixed turn count):
       'What does that mean?',
     ],
     maxTurns: 18,
+    /** Core Flow beats for teaching progress bar (not maxTurns ceiling). */
+    progressMax: 7,
     systemInstruction: `Lesson: Asking for Help
 Goal: Help the learner survive when English is too fast using three rescue phrases:
 - I don't understand.
@@ -2316,15 +2481,30 @@ Core Flow (progression milestones — NOT a fixed turn count):
 2. Weapon 1 — "I don't understand.": explain in {{L1}} (if you truly don't get it, don't fake a nod — say so clearly), model "I don't understand." → ask learner to repeat it once. (Teach + Repeat)
 3. Weapon 2 — "Can you speak more slowly?": explain in {{L1}} (ask them to slow down), model "Can you speak more slowly?" → ask learner to repeat it once. (Teach + Repeat)
 4. Weapon 3 — "What does that mean?": explain in {{L1}} (ask for the meaning of a word/phrase), model "What does that mean?" → ask learner to repeat it once. (Teach + Repeat)
-5. Recognition (AT MOST 2 questions, one per turn — if only one unused item is left, ask ONE and stop):
+5. Recognition with emojiChoice board (REQUIRED) (AT MOST 2 questions, one per turn — if only one unused item is left, ask ONE and stop):
    - Ask which phrase fits a simple {{L1}} (or short English) situation, e.g. "ถ้าฟังไม่เข้าใจ ควรพูดประโยคไหน?" → learner answers aloud with the matching phrase.
    - Example situations: don't understand / want slower speech / unknown word meaning.
+   - emojiChoice MUST be exactly:
+     { options: [
+       { emoji:"🤷", label:"I don't understand", speak:"I don't understand." },
+       { emoji:"🐢", label:"Speak more slowly", speak:"Can you speak more slowly?" },
+       { emoji:"❓", label:"What does that mean?", speak:"What does that mean?" }
+     ] }
+   - expectedSpeech = the matching rescue phrase.
+   - Learner still speaks via mic.
    - Never reuse a situation you already used while teaching in steps 2–4. (Recognition)
 6. Explain in {{L1}} (keep ~10 seconds / very short):
    - Don't guess when you don't understand.
    - You can always ask the other person for help with these phrases.
    - Explanation-focused. (Explain)
-7. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED to end the lesson).
+7. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED to end the lesson). Omit emojiChoice.
+
+emojiChoice rules (Recognition only):
+- MUST return emojiChoice on every Recognition / Quick Recognition turn listed above.
+- FORBIDDEN: emojiChoice on Repeat / Recall / Celebrate / explain-only turns.
+- FORBIDDEN: emojiSpeak / emojiSpeakSet on this lesson.
+- Mic is always required on speak turns — chips are scaffolds, not tap-to-answer.
+- On Recognition retries, keep the SAME emojiChoice board.
 
 Turn loop rules (critical — never stall the learner):
 - Every non-final tutor turn MUST end with exactly one clear next action for the learner — EXCEPT Core Flow step 6 (Explain), which may be explanation-only; the NEXT turn must begin step 7 (Summary) if recognition is done.
@@ -2340,13 +2520,13 @@ Turn loop rules (critical — never stall the learner):
 - You only see transcript TEXT, not audio — never invent pronunciation/length/speed problems from text.
 - Accept clear matches of the three target phrases (minor wording variants OK if meaning is clear).
 - If the learner's transcript clearly matches the target, praise briefly and ADVANCE.
-- If the text truly does not match, gently ask for at most ONE retry.
+- If the text truly does not match, gently ask for at most ONE retry (keep the same emojiChoice board on Recognition retries).
 - After one retry (or two total attempts on the same item), accept and move on — never loop the same item.
 - Do not mark minor accent differences as wrong.
 - Focus on confidence and being understandable.
 - When Core Flow reaches Summary + Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the Asking for Help lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. Open with a short playful {{L1}} survival framing (fast English can feel overwhelming — today they get 3 rescue phrases), then begin Core Flow step 2: teach "I don\'t understand." with a {{L1}} setup and ask them to repeat it once. Follow the Core Flow milestones — retries/feedback may add turns between steps. Every turn must end with a clear learner action except Core Flow step 6 (Explain), where the next turn begins step 7. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the Asking for Help lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once. Open with a short playful {{L1}} survival framing (fast English can feel overwhelming — today they get 3 rescue phrases), then begin Core Flow step 2: teach "I don\'t understand." with a {{L1}} setup and ask them to repeat it once. Follow the Core Flow milestones — retries/feedback may add turns between steps. Every turn must end with a clear learner action except Core Flow step 6 (Explain), where the next turn begins step 7. Return JSON matching the schema. isLessonComplete must be false. On Recognition turns, return the required emojiChoice board. ',
   },
   {
     lessonId: 'polite_expressions',
@@ -2376,6 +2556,8 @@ Turn loop rules (critical — never stall the learner):
       "You're welcome",
     ],
     maxTurns: 20,
+    /** Core Flow beats for teaching progress bar (not maxTurns ceiling). */
+    progressMax: 8,
     systemInstruction: `Lesson: Polite Expressions
 Goal: Help the learner use basic polite words and choose please, thank you, you're welcome, excuse me, and sorry appropriately in simple everyday situations.
 
@@ -2417,12 +2599,30 @@ Core Flow (progression milestones — NOT a fixed turn count):
 2. Teach Please & Thank you: explain when to use each in {{L1}}, model short examples → ask learner to repeat ONE sentence (e.g. Thank you very much). (Teach + Repeat)
 3. Teach You're welcome: explain as a reply to thank you → ask learner to repeat ONE sentence (e.g. You're welcome). (Teach + Repeat)
 4. Teach Excuse me & Sorry: explain both with simple situations in {{L1}} → ask learner to repeat ONE sentence (e.g. Excuse me or I'm sorry). (Teach + Repeat)
-5. Recognition: give ONE everyday situation in {{L1}} → learner says the most appropriate polite phrase aloud (e.g. someone gives you something → thank you). (Recognition)
-6. Explain in {{L1}}: Excuse me ≠ Sorry — excuse me = get attention / small interruption; sorry = apologize for a mistake. Keep it short — explanation-focused. (Explain)
+5. Recognition with emojiChoice board (REQUIRED): give ONE everyday situation in {{L1}} → learner says the most appropriate polite phrase aloud. (Recognition)
+   - emojiChoice MUST be exactly:
+     { options: [
+       { emoji:"🙏", label:"Please", speak:"Please" },
+       { emoji:"💝", label:"Thank you", speak:"Thank you" },
+       { emoji:"😊", label:"You're welcome", speak:"You're welcome" },
+       { emoji:"🙋", label:"Excuse me", speak:"Excuse me" },
+       { emoji:"😔", label:"Sorry", speak:"Sorry" }
+     ] }
+   - expectedSpeech = the matching phrase for that situation.
+   - Learner still speaks via mic.
+6. Explain in {{L1}}: Excuse me ≠ Sorry — excuse me = get attention / small interruption; sorry = apologize for a mistake. Keep it short — explanation-focused. Omit emojiChoice. (Explain)
 7. Quick Recognition + Recall (AT MOST 2 questions, one per turn — if only one unused item is left, ask ONE and stop):
    - Mix situation → say-phrase AND hear-situation → say-phrase checks.
+   - On Recognition turns, use the SAME 5-option emojiChoice board as step 5.
    - Never reuse a situation you already used anywhere earlier in this lesson. (Recognition + Recall)
-8. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED to end the lesson).
+8. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED to end the lesson). Omit emojiChoice.
+
+emojiChoice rules (Recognition only):
+- MUST return emojiChoice on every Recognition / Quick Recognition turn listed above.
+- FORBIDDEN: emojiChoice on Repeat / Recall / Celebrate / explain-only turns.
+- FORBIDDEN: emojiSpeak / emojiSpeakSet on this lesson.
+- Mic is always required on speak turns — chips are scaffolds, not tap-to-answer.
+- On Recognition retries, keep the SAME emojiChoice board.
 
 Turn loop rules (critical — never stall the learner):
 - Every non-final tutor turn MUST end with exactly one clear next action for the learner — EXCEPT Core Flow step 6 (Explain), which may be explanation-only; the NEXT turn must begin step 7 with a speaking task.
@@ -2439,13 +2639,13 @@ Turn loop rules (critical — never stall the learner):
 - You only see transcript TEXT, not audio — never invent pronunciation/length/speed problems from text.
 - On recognition/recall, accept clear appropriate phrases (thank you / thanks, sorry / I'm sorry, etc.).
 - If the learner's transcript clearly matches an appropriate phrase for the situation, praise briefly and ADVANCE.
-- If the text truly does not match, gently ask for at most ONE retry.
+- If the text truly does not match, gently ask for at most ONE retry (keep the same emojiChoice board on Recognition retries).
 - After one retry (or two total attempts on the same item), accept and move on — never loop the same item.
 - Do not mark minor accent differences as wrong.
 - Focus on confidence and being understandable.
 - When Core Flow reaches Summary + Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the Polite Expressions lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once in the welcome, briefly say you will learn please, thank you, you\'re welcome, excuse me, and sorry for everyday situations, then begin Core Flow step 2: teach Please and Thank you with Thai situation hints and ask them to repeat ONE short sentence (e.g. Thank you very much). Follow the Core Flow milestones — retries/feedback may add turns between steps. Every turn must end with a clear learner action except Core Flow step 6 (Explain), where the next turn begins step 7. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the Polite Expressions lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once in the welcome, briefly say you will learn please, thank you, you\'re welcome, excuse me, and sorry for everyday situations, then begin Core Flow step 2: teach Please and Thank you with Thai situation hints and ask them to repeat ONE short sentence (e.g. Thank you very much). Follow the Core Flow milestones — retries/feedback may add turns between steps. Every turn must end with a clear learner action except Core Flow step 6 (Explain), where the next turn begins step 7. Return JSON matching the schema. isLessonComplete must be false. On Recognition turns, return the required emojiChoice board. ',
   },
   {
     lessonId: 'yes_no_maybe',
@@ -2474,6 +2674,8 @@ Turn loop rules (critical — never stall the learner):
       "No, I'm not.",
     ],
     maxTurns: 20,
+    /** Core Flow beats for teaching progress bar (not maxTurns ceiling). */
+    progressMax: 8,
     systemInstruction: `Lesson: Yes / No / Maybe
 Goal: Help the learner answer simple questions with Yes, No, Maybe, and natural short answers like Yes, I do. / No, I don't.
 
@@ -2505,17 +2707,38 @@ Core Flow (progression milestones — NOT a fixed turn count):
 2. Teach Yes & No: explain briefly in {{L1}}, model with a simple question → ask learner to repeat ONE answer sentence (e.g. Yes, I do.). (Teach + Repeat)
 3. Teach Maybe: explain when to use it (not sure / perhaps) → ask learner to repeat ONE answer (e.g. Maybe.). (Teach + Repeat)
 4. Teach Short Answers (Yes, I do. / No, I don't.): explain the pattern briefly in {{L1}}, model one example → ask learner to repeat ONE short answer. (Teach + Repeat)
-5. Recognition: ask ONE simple question in English or Thai → learner answers aloud with Yes/No/Maybe or a short answer. (Recognition)
-6. Explain in {{L1}}: Yes/No alone is OK, but short answers (Yes, I do. / No, I don't.) sound more natural in conversation. Keep it short — explanation-focused. (Explain)
+5. Recognition with emojiChoice board (REQUIRED): ask ONE simple question in English or Thai → learner answers aloud. (Recognition)
+   - emojiChoice MUST be exactly:
+     { options: [
+       { emoji:"✅", label:"Yes", speak:"Yes" },
+       { emoji:"❌", label:"No", speak:"No" },
+       { emoji:"🤔", label:"Maybe", speak:"Maybe" }
+     ] }
+   - expectedSpeech = the correct answer for that question ("Yes" / "No" / "Maybe", or a matching short answer if you asked for one).
+   - Learner still speaks via mic.
+6. Explain in {{L1}}: Yes/No alone is OK, but short answers (Yes, I do. / No, I don't.) sound more natural in conversation. Keep it short — explanation-focused. Omit emojiChoice. (Explain)
 7. Quick Recognition + Recall (AT MOST 2 questions, one per turn — if only one unused item is left, ask ONE and stop):
    - Ask simple questions; learner answers with appropriate Yes/No/Maybe or short answer.
+   - On Recognition turns, emojiChoice MUST be exactly:
+     { options: [
+       { emoji:"✅", label:"Yes, I do", speak:"Yes, I do." },
+       { emoji:"❌", label:"No, I don't", speak:"No, I don't." },
+       { emoji:"🤔", label:"Maybe", speak:"Maybe." }
+     ] }
    - Never reuse a question you already asked anywhere earlier in this lesson — including the ones you used while teaching in steps 2–5. (Recognition + Recall)
-8. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED to end the lesson).
+8. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED to end the lesson). Omit emojiChoice.
+
+emojiChoice rules (Recognition only):
+- MUST return emojiChoice on every Recognition / Quick Recognition turn listed above.
+- FORBIDDEN: emojiChoice on Repeat / Recall / Celebrate / explain-only turns.
+- FORBIDDEN: emojiSpeak / emojiSpeakSet on this lesson.
+- Mic is always required on speak turns — chips are scaffolds, not tap-to-answer.
+- On Recognition retries, keep the SAME emojiChoice board.
 
 Turn loop rules (critical — never stall the learner):
 - Every non-final tutor turn MUST end with exactly one clear next action for the learner — EXCEPT Core Flow step 6 (Explain), which may be explanation-only; the NEXT turn must begin step 7 with a speaking task.
   1) Repeat an answer phrase, OR
-  2) Recognition (answer a simple question), OR
+  2) Recognition (emojiChoice board + speak via mic), OR
   3) Recall (answer a new simple question freely).
 - Never end a turn with only explanation, praise, or feedback — except step 6 as noted above.
 - Never finish a turn without a clear next action for the learner (except step 6).
@@ -2528,13 +2751,13 @@ Turn loop rules (critical — never stall the learner):
 - Accept Yes/No/Maybe alone OR short answers when appropriate to the question.
 - Accept minor variants (Yeah for Yes, Nope for No only if clear enough).
 - If the learner's transcript clearly matches an appropriate answer, praise briefly and ADVANCE.
-- If the text truly does not match, gently ask for at most ONE retry.
+- If the text truly does not match, gently ask for at most ONE retry (keep the same emojiChoice board on Recognition retries).
 - After one retry (or two total attempts on the same item), accept and move on — never loop the same item.
 - Do not mark minor accent differences as wrong.
 - Focus on confidence and being understandable.
 - When Core Flow reaches Summary + Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the Yes / No / Maybe lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once in the welcome, briefly say you will learn to answer simple questions with Yes, No, Maybe, and short answers, then begin Core Flow step 2: teach Yes and No with a simple question in {{L1}} and ask them to repeat ONE answer (e.g. Yes, I do.). Follow the Core Flow milestones — retries/feedback may add turns between steps. Every turn must end with a clear learner action except Core Flow step 6 (Explain), where the next turn begins step 7. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the Yes / No / Maybe lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once in the welcome, briefly say you will learn to answer simple questions with Yes, No, Maybe, and short answers, then begin Core Flow step 2: teach Yes and No with a simple question in {{L1}} and ask them to repeat ONE answer (e.g. Yes, I do.). Follow the Core Flow milestones — retries/feedback may add turns between steps. Every turn must end with a clear learner action except Core Flow step 6 (Explain), where the next turn begins step 7. Return JSON matching the schema. isLessonComplete must be false. On Recognition turns, return the required emojiChoice board. ',
   },
   {
     lessonId: 'asking_questions',
@@ -2569,6 +2792,8 @@ Turn loop rules (critical — never stall the learner):
       'How much is it?',
     ],
     maxTurns: 20,
+    /** Core Flow beats for teaching progress bar (not maxTurns ceiling). */
+    progressMax: 8,
     systemInstruction: `Lesson: Asking Simple Questions
 Goal: Help the learner ask basic everyday questions using What, Where, When, Who, and How.
 
@@ -2616,12 +2841,30 @@ Core Flow (progression milestones — NOT a fixed turn count):
 2. Teach What & Where: explain in {{L1}} (What = thing, Where = place), model examples → ask learner to repeat ONE question (e.g. Where is the bathroom?). (Teach + Repeat)
 3. Teach When & Who: explain in {{L1}} (When = time, Who = person), model examples → ask learner to repeat ONE question (e.g. Who is that?). (Teach + Repeat)
 4. Teach How: explain in {{L1}} (How = way/condition), model examples (How are you? / How much is it?) → ask learner to repeat ONE question. (Teach + Repeat)
-5. Recognition: give ONE everyday situation in {{L1}} → learner says the most appropriate question aloud. (Recognition)
-6. Explain in {{L1}}: recap What = สิ่งของ, Where = สถานที่, When = เวลา, Who = คน, How = วิธี/สภาพ. Keep it short — explanation-focused. (Explain)
+5. Recognition with emojiChoice board (REQUIRED): give ONE everyday situation in {{L1}} → learner says the most appropriate question aloud. (Recognition)
+   - emojiChoice MUST be exactly:
+     { options: [
+       { emoji:"📦", label:"What", speak:"What is this?" },
+       { emoji:"📍", label:"Where", speak:"Where is the bathroom?" },
+       { emoji:"🕐", label:"When", speak:"When is the meeting?" },
+       { emoji:"👤", label:"Who", speak:"Who is that?" },
+       { emoji:"🔧", label:"How", speak:"How are you?" }
+     ] }
+   - expectedSpeech = the matching question (accept clear What/Where/When/Who/How variants).
+   - Learner still speaks via mic.
+6. Explain in {{L1}}: recap What = สิ่งของ, Where = สถานที่, When = เวลา, Who = คน, How = วิธี/สภาพ. Keep it short — explanation-focused. Omit emojiChoice. (Explain)
 7. Quick Recognition + Recall (AT MOST 2 questions, one per turn — if only one unused item is left, ask ONE and stop):
    - Mix situation → ask-question AND hear-situation → ask-question checks.
+   - On Recognition turns, use the SAME 5-option emojiChoice board as step 5.
    - Never reuse a situation or question word you already used anywhere earlier in this lesson. (Recognition + Recall)
-8. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED to end the lesson).
+8. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED to end the lesson). Omit emojiChoice.
+
+emojiChoice rules (Recognition only):
+- MUST return emojiChoice on every Recognition / Quick Recognition turn listed above.
+- FORBIDDEN: emojiChoice on Repeat / Recall / Celebrate / explain-only turns.
+- FORBIDDEN: emojiSpeak / emojiSpeakSet on this lesson.
+- Mic is always required on speak turns — chips are scaffolds, not tap-to-answer.
+- On Recognition retries, keep the SAME emojiChoice board.
 
 Turn loop rules (critical — never stall the learner):
 - Every non-final tutor turn MUST end with exactly one clear next action for the learner — EXCEPT Core Flow step 6 (Explain), which may be explanation-only; the NEXT turn must begin step 7 with a speaking task.
@@ -2638,13 +2881,13 @@ Turn loop rules (critical — never stall the learner):
 - You only see transcript TEXT, not audio — never invent pronunciation/length/speed problems from text.
 - On recognition/recall, accept clear appropriate questions even if wording varies slightly.
 - If the learner's transcript clearly matches an appropriate question for the situation, praise briefly and ADVANCE.
-- If the text truly does not match, gently ask for at most ONE retry.
+- If the text truly does not match, gently ask for at most ONE retry (keep the same emojiChoice board on Recognition retries).
 - After one retry (or two total attempts on the same item), accept and move on — never loop the same item.
 - Do not mark minor accent differences as wrong.
 - Focus on confidence and being understandable.
 - When Core Flow reaches Summary + Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the Asking Simple Questions lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once in the welcome, briefly say you will learn to ask simple questions with What, Where, When, Who, and How (not Why yet), then begin Core Flow step 2: teach What and Where with Thai situation hints and ask them to repeat ONE question (e.g. Where is the bathroom?). Follow the Core Flow milestones — retries/feedback may add turns between steps. Every turn must end with a clear learner action except Core Flow step 6 (Explain), where the next turn begins step 7. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the Asking Simple Questions lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once in the welcome, briefly say you will learn to ask simple questions with What, Where, When, Who, and How (not Why yet), then begin Core Flow step 2: teach What and Where with Thai situation hints and ask them to repeat ONE question (e.g. Where is the bathroom?). Follow the Core Flow milestones — retries/feedback may add turns between steps. Every turn must end with a clear learner action except Core Flow step 6 (Explain), where the next turn begins step 7. Return JSON matching the schema. isLessonComplete must be false. On Recognition turns, return the required emojiChoice board. ',
   },
   {
     lessonId: 'money_prices',
@@ -2678,6 +2921,8 @@ Turn loop rules (critical — never stall the learner):
       "It's expensive",
     ],
     maxTurns: 20,
+    /** Core Flow beats for teaching progress bar (not maxTurns ceiling). */
+    progressMax: 8,
     systemInstruction: `Lesson: Money & Prices
 Goal: Help the learner ask prices, say prices, and understand the basic dollar symbol ($).
 
@@ -2713,12 +2958,30 @@ Core Flow (progression milestones — NOT a fixed turn count):
 2. Teach How much is it?: explain asking price in {{L1}}, mention $ briefly → ask learner to repeat ONE question (e.g. How much is it?). (Teach + Repeat)
 3. Teach It's ... dollars.: show a simple price, map in {{L1}} → ask learner to repeat ONE price sentence (e.g. It's five dollars.). (Teach + Repeat)
 4. Teach Cheap / Expensive: explain both in {{L1}} with simple examples → ask learner to repeat ONE word or short sentence (e.g. It's cheap.). (Teach + Repeat)
-5. Recognition: show a price tag or situation → learner says the price or asks the price in English. (Recognition)
-6. Explain in {{L1}}: How much is it? is for asking price; It's ... dollars. is for answering. Keep it short — explanation-focused. (Explain)
+5. Recognition with emojiChoice board (REQUIRED): show a price tag or situation → learner says the price or asks the price in English. (Recognition)
+   - emojiChoice MUST be exactly:
+     { options: [
+       { emoji:"💬", label:"How much is it?", speak:"How much is it?" },
+       { emoji:"💵", label:"It's five dollars", speak:"It's five dollars." },
+       { emoji:"👍", label:"It's cheap", speak:"It's cheap." },
+       { emoji:"💎", label:"It's expensive", speak:"It's expensive." }
+     ] }
+   - You MAY swap the dollar amount in the "It's ... dollars" option to match your situation (keep label/speak consistent).
+   - expectedSpeech = the matching phrase.
+   - Learner still speaks via mic.
+6. Explain in {{L1}}: How much is it? is for asking price; It's ... dollars. is for answering. Keep it short — explanation-focused. Omit emojiChoice. (Explain)
 7. Quick Recognition + Recall (AT MOST 2 questions, one per turn — if only one unused item is left, ask ONE and stop):
    - Mix see-price → say-price AND hear-situation → ask-or-say-price checks.
+   - On Recognition turns, use the same 4-option emojiChoice board style as step 5.
    - Never reuse a price you already used anywhere earlier in this lesson. (Recognition + Recall)
-8. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED to end the lesson).
+8. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED to end the lesson). Omit emojiChoice.
+
+emojiChoice rules (Recognition only):
+- MUST return emojiChoice on every Recognition / Quick Recognition turn listed above.
+- FORBIDDEN: emojiChoice on Repeat / Recall / Celebrate / explain-only turns.
+- FORBIDDEN: emojiSpeak / emojiSpeakSet on this lesson.
+- Mic is always required on speak turns — chips are scaffolds, not tap-to-answer.
+- On Recognition retries, keep the SAME emojiChoice board.
 
 Turn loop rules (critical — never stall the learner):
 - Every non-final tutor turn MUST end with exactly one clear next action for the learner — EXCEPT Core Flow step 6 (Explain), which may be explanation-only; the NEXT turn must begin step 7 with a speaking task.
@@ -2735,13 +2998,13 @@ Turn loop rules (critical — never stall the learner):
 - You only see transcript TEXT, not audio — never invent pronunciation/length/speed problems from text.
 - Accept price answers with clear number + dollars (with or without "It's").
 - If the learner's transcript clearly matches the requested phrase or price, praise briefly and ADVANCE.
-- If the text truly does not match, gently ask for at most ONE retry.
+- If the text truly does not match, gently ask for at most ONE retry (keep the same emojiChoice board on Recognition retries).
 - After one retry (or two total attempts on the same item), accept and move on — never loop the same item.
 - Do not mark minor accent differences as wrong.
 - Focus on confidence and being understandable.
 - When Core Flow reaches Summary + Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the Money & Prices lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once in the welcome, briefly say you will learn to ask and say prices in English (How much is it?, It\'s ... dollars., cheap/expensive, and $), then begin Core Flow step 2: teach How much is it? with a simple shopping situation in {{L1}} and ask them to repeat ONE question. Follow the Core Flow milestones — retries/feedback may add turns between steps. Every turn must end with a clear learner action except Core Flow step 6 (Explain), where the next turn begins step 7. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the Money & Prices lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once in the welcome, briefly say you will learn to ask and say prices in English (How much is it?, It\'s ... dollars., cheap/expensive, and $), then begin Core Flow step 2: teach How much is it? with a simple shopping situation in {{L1}} and ask them to repeat ONE question. Follow the Core Flow milestones — retries/feedback may add turns between steps. Every turn must end with a clear learner action except Core Flow step 6 (Explain), where the next turn begins step 7. Return JSON matching the schema. isLessonComplete must be false. On Recognition turns, return the required emojiChoice board. ',
   },
   {
     lessonId: 'ee_about_me_family',
@@ -2772,6 +3035,8 @@ Turn loop rules (critical — never stall the learner):
       'I have two sisters',
     ],
     maxTurns: 24,
+    /** Core Flow beats for teaching progress bar (not maxTurns ceiling). */
+    progressMax: 12,
     systemInstruction: `Lesson: Family (Basics → People Around You → 2.3)
 Goal: Help the learner introduce their family, talk about siblings, and say simple sentences about family.
 
@@ -2837,7 +3102,17 @@ Core Flow (progression milestones — NOT a fixed turn count):
 2. Ready check — wait for "I'm ready" (accept "I am ready" / "ready" / "I'm ready"). Praise briefly ONLY — do not teach vocab in this turn if they just said ready; next turn is Vocabulary A. Or you MAY combine praise + Vocabulary A in the SAME turn after they say ready. (Repeat)
 3. Teach Vocabulary A (ONE turn, all 3 words) — map and model Family + Brother + Sister together, then ask learner to repeat ONLY "brother" (or one word from the batch). Do NOT teach these words across multiple turns. (Teach + Repeat)
 4. Teach Vocabulary B (ONE turn, both words) — map and model Father + Mother together, then ask learner to repeat ONLY "mother" (or one word from the batch). Do NOT teach parents. Do NOT teach these words across multiple turns. (Teach + Repeat)
-5. Quick Recognition — meaning check + recall: e.g. ask "พ่อ คืออะไร?" or "How do you say พี่สาว?" Do at most 2 quick items, one per turn, and never reuse a word you already used earlier in this lesson. (Recognition + Recall)
+5. Quick Recognition with emojiChoice board (REQUIRED) — meaning check + recall: e.g. ask "พ่อ คืออะไร?" or "How do you say พี่สาว?" Do at most 2 quick items, one per turn, and never reuse a word you already used earlier in this lesson. (Recognition + Recall)
+   - emojiChoice MUST be exactly:
+     { options: [
+       { emoji:"👨‍👩‍👧", label:"family", speak:"family" },
+       { emoji:"👨", label:"father", speak:"father" },
+       { emoji:"👩", label:"mother", speak:"mother" },
+       { emoji:"👦", label:"brother", speak:"brother" },
+       { emoji:"👧", label:"sister", speak:"sister" }
+     ] }
+   - expectedSpeech = the correct family word.
+   - Learner still speaks via mic.
 6. Teach Pattern 1 (model first) — do NOT explain the rule yet. Give a tiny Thai meaning if needed, model "This is my father." → ask to repeat. (Repeat)
 7. Build Sentences with This is my... — learner produces sentences (e.g. This is my father. / This is my sister.). Do 2 items; invite their real family if natural. (Repeat / Recall)
 8. Teach Pattern 2 (model first) — do NOT explain the rule yet. Model "I have one brother." → ask to repeat. (Repeat)
@@ -2847,13 +3122,26 @@ Core Flow (progression milestones — NOT a fixed turn count):
    - I have... = ใช้บอกว่ามีใคร/มีกี่คน, with my = ของฉัน, one/two = จำนวนพี่น้อง
    - Keep it very short — NO deep grammar → end the SAME turn with a quick recognition or speak task. (Explain + Recognition/Repeat)
 11. Quick Recognition + Recall (exactly 2 questions, one per turn) — YOU invent the prompts, but stay inside this frame:
-   - Question 1 = Recognition only: e.g. "How do you say …?" or "… คืออะไร?" using ONE word taught in this lesson (family / father / mother / brother / sister). Never ask about parents.
-   - Question 2 = Guided say: ask them to say ONE short taught sentence using This is my... or I have... (e.g. Say: This is my sister. / Say: I have one brother.).
+   - Question 1 = Recognition only with emojiChoice board (REQUIRED): e.g. "How do you say …?" or "… คืออะไร?" using ONE word taught in this lesson (family / father / mother / brother / sister). Never ask about parents.
+     emojiChoice MUST be the same 5-word family board as step 5.
+   - Question 2 = Guided say with emojiChoice board (REQUIRED): ask them to say ONE short taught sentence using This is my... or I have...
+     emojiChoice MUST be exactly:
+     { options: [
+       { emoji:"👆", label:"This is my...", speak:"This is my father." },
+       { emoji:"🔢", label:"I have...", speak:"I have one brother." }
+     ] }
    - Prefer words/patterns they just used or seemed less confident with.
    - FORBIDDEN: open free-talk prompts like "Tell me about your family", "Introduce yourself", or any broad question.
    - FORBIDDEN: untaught vocab or new patterns (including parents).
    Never reuse a prompt you already used anywhere earlier in this lesson. (Recognition + Recall)
-12. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED).
+12. Summary + Celebrate with their first name once → set isLessonComplete = true (REQUIRED). Omit emojiChoice.
+
+emojiChoice rules (Recognition only):
+- MUST return emojiChoice on every Recognition / Quick Recognition turn listed above.
+- FORBIDDEN: emojiChoice on Repeat / Recall / Celebrate / explain-only turns.
+- FORBIDDEN: emojiSpeak / emojiSpeakSet on this lesson.
+- Mic is always required on speak turns — chips are scaffolds, not tap-to-answer.
+- On Recognition retries, keep the SAME emojiChoice board.
 
 Turn loop rules (critical — never stall the learner):
 - Every non-final tutor turn MUST end with exactly one clear next action for the learner — EXCEPT Core Flow step 10 (Explain), which may briefly explain then MUST still end with a speaking task in the SAME turn.
@@ -2861,13 +3149,13 @@ Turn loop rules (critical — never stall the learner):
   2) Recognition (guided answer), OR
   3) Recall (speak freely using taught words/patterns).
 - Never end a turn with only explanation, praise, or feedback.
-- If you explain something, end the SAME turn with a recognition or speaking task.
+- If you explain something, end the SAME turn with a recognition or speaking task — and on Recognition include emojiChoice.
 - Ask only one question or speaking task at a time.
 - Keep most tutor turns under 2–3 short sentences — EXCEPT Vocabulary A/B turns, which MAY be longer so you can map all 2–3 words before the single repeat ask.
 - Praise specifically but briefly.
 - You only see transcript TEXT, not audio — never invent pronunciation problems from text.
 - If the learner's transcript clearly matches the target, praise briefly and ADVANCE.
-- If the text truly does not match, gently ask for at most ONE retry.
+- If the text truly does not match, gently ask for at most ONE retry (keep the same emojiChoice board on Recognition retries).
 - After one retry (or two total attempts on the same item), accept and move on.
 - Accept natural variants (brother/sister counts, "my dad"/"my mom" as close variants for father/mother when meaning is clear).
 - For the ready check, accept "I'm ready", "I am ready", or clear "ready".
@@ -2875,7 +3163,7 @@ Turn loop rules (critical — never stall the learner):
 - Focus on confidence and being understandable.
 - When Core Flow reaches Summary + Celebrate, set isLessonComplete = true (required). Otherwise false. Never end without completing.`,
     openingPrompt:
-      'Start the Family lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once in the welcome, briefly say you will learn family words (family, father, mother, brother, sister) and patterns This is my... / I have.... Do NOT teach parents (that is for Home). Do NOT teach vocabulary yet. End by asking them to say "I\'m ready". After they are ready, Vocabulary A MUST be ONE turn that maps Family + Brother + Sister together, then ask them to repeat ONLY one word (e.g. brother) — never teach those words one-per-turn. Follow the Core Flow milestones. Every turn must end with a clear learner action. Return JSON matching the schema. isLessonComplete must be false.',
+      'Start the Family lesson for this one learner only. Speak as a private 1:1 tutor (never to a class or {{NO_GROUP}}). Use their first name once in the welcome, briefly say you will learn family words (family, father, mother, brother, sister) and patterns This is my... / I have.... Do NOT teach parents (that is for Home). Do NOT teach vocabulary yet. End by asking them to say "I\'m ready". After they are ready, Vocabulary A MUST be ONE turn that maps Family + Brother + Sister together, then ask them to repeat ONLY one word (e.g. brother) — never teach those words one-per-turn. Follow the Core Flow milestones. Every turn must end with a clear learner action. Return JSON matching the schema. isLessonComplete must be false. On Recognition turns, return the required emojiChoice board. ',
   },
   {
     lessonId: 'ee_about_me_daily_routine',
@@ -8705,12 +8993,177 @@ export function forceShoppingLookingForSoftTeachIfNeeded(
 
 const SHOPPING_PROGRESS_MAX = 12;
 
+const GREETINGS_PROGRESS_MAX = 9;
+
+/** Foundation (Basics) lessons that use Core Flow progressMax. */
+const FOUNDATION_PROGRESS_LESSON_IDS = new Set([
+  'greetings',
+  'introductions',
+  'yes_no_maybe',
+  'polite_expressions',
+  'meet_people',
+  'talk_about_groups',
+  'ee_about_me_family',
+  'numbers',
+  'telling_time',
+  'everyday_numbers',
+  'money_prices',
+  'likes_dislikes',
+  'wants_needs',
+  'can_cant',
+  'asking_for_help',
+  'asking_questions',
+]);
+
 function normalizeStaffLine(text: string): string {
   return text
     .trim()
     .toLowerCase()
     .replace(/[.!?]+$/g, '')
     .replace(/\s+/g, ' ');
+}
+
+function normalizeExpectedSpeech(value: string | null | undefined): string {
+  return (value ?? '')
+    .trim()
+    .toLowerCase()
+    .replace(/[.!?]+$/g, '')
+    .replace(/\s+/g, ' ');
+}
+
+function emojiChoiceLabelSignature(
+  emojiChoice:
+    | { options?: Array<{ label?: string; speak?: string }> }
+    | null
+    | undefined,
+): string {
+  const options = emojiChoice?.options;
+  if (!options?.length) return '';
+  return options
+    .map((o) =>
+      normalizeExpectedSpeech(o.label || o.speak || ''),
+    )
+    .filter(Boolean)
+    .sort()
+    .join('|');
+}
+
+function foundationLooksLikeSoftTeachOrRetry(textEn: string): boolean {
+  const t = textEn.trim();
+  if (!t) return false;
+  const lower = t.toLowerCase();
+  const softTeach =
+    (t.includes('ไม่เป็นไร') || lower.includes('no worries')) &&
+    (t.includes('ลองพูด') ||
+      lower.includes('try saying') ||
+      lower.includes('say it') ||
+      lower.includes('try again'));
+  if (softTeach) return true;
+  return /(อีกครั้ง|ลองใหม่|พูดใหม่|พูดอีกรอบ|one\s+more\s+time|try\s+again|once\s+more)/i.test(
+    t,
+  );
+}
+
+/**
+ * Map the current Greetings tutor reply to a Core Flow beat (1–9).
+ * Returns null for soft-teach / retry / praise-only so progressTurn does not advance.
+ */
+function detectGreetingsProgressBeat(current: {
+  textEn: string;
+  expectsUserSpeech: boolean;
+  expectedSpeech?: string | null;
+  emojiChoice?: { options?: Array<{ label?: string; speak?: string }> } | null;
+  isTaskComplete: boolean;
+  softTeachForced?: boolean;
+}): number | null {
+  if (current.isTaskComplete) return GREETINGS_PROGRESS_MAX;
+  if (current.softTeachForced) return null;
+  if (foundationLooksLikeSoftTeachOrRetry(current.textEn)) return null;
+
+  const labels = new Set(
+    (current.emojiChoice?.options ?? [])
+      .map((o) => normalizeExpectedSpeech(o.label || o.speak || ''))
+      .filter(Boolean),
+  );
+
+  // Step 7 — time-of-day recognition board
+  if (
+    labels.has('good morning') &&
+    labels.has('good afternoon') &&
+    labels.has('good evening')
+  ) {
+    return 7;
+  }
+
+  // Step 3 — Hello vs Hi recognition board
+  if (labels.has('hello') && labels.has('hi') && labels.size === 2) {
+    return 3;
+  }
+
+  const expected = normalizeExpectedSpeech(current.expectedSpeech);
+  if (current.expectsUserSpeech) {
+    if (expected === 'hello') return 1;
+    if (expected === 'hi') return 2;
+    if (expected === 'good morning') return 4;
+    if (expected === 'good afternoon') return 5;
+    if (expected === 'good evening') return 6;
+    // Step 8 — free recall (any taught greeting; no board)
+    if (!expected && labels.size === 0) return 8;
+  }
+
+  return null;
+}
+
+type LessonProgressTurnInput = {
+  textEn: string;
+  expectsUserSpeech: boolean;
+  expectedSpeech?: string | null;
+  emojiChoice?: { options?: Array<{ label?: string; speak?: string }> } | null;
+  roleplayIntro?: unknown;
+  roleplayNpc?: unknown;
+  isTaskComplete: boolean;
+  softTeachForced?: boolean;
+};
+
+type LessonProgressTurnPrevious = {
+  expectedSpeech?: string | null;
+  emojiChoice?: { options?: Array<{ label?: string; speak?: string }> } | null;
+};
+
+/**
+ * Generic Core Flow progress for foundation lessons without a custom detector.
+ * Advances when expectedSpeech / emojiChoice board changes (retry stays put).
+ */
+function detectFoundationGenericProgressBeat(
+  prevProgressTurn: number,
+  progressMax: number,
+  current: LessonProgressTurnInput,
+  previous?: LessonProgressTurnPrevious,
+): number | null {
+  if (current.isTaskComplete) return progressMax;
+  if (current.softTeachForced) return null;
+  if (foundationLooksLikeSoftTeachOrRetry(current.textEn)) return null;
+
+  if (prevProgressTurn <= 0) return 1;
+
+  const expected = normalizeExpectedSpeech(current.expectedSpeech);
+  const prevExpected = normalizeExpectedSpeech(previous?.expectedSpeech);
+  const sig = emojiChoiceLabelSignature(current.emojiChoice);
+  const prevSig = emojiChoiceLabelSignature(previous?.emojiChoice);
+
+  const boardChanged = Boolean(sig) && sig !== prevSig;
+  const expectedChanged = Boolean(expected) && expected !== prevExpected;
+  const enteredFreeRecall =
+    current.expectsUserSpeech &&
+    !expected &&
+    !sig &&
+    Boolean(prevExpected || prevSig);
+
+  if (boardChanged || expectedChanged || enteredFreeRecall) {
+    return Math.min(progressMax, prevProgressTurn + 1);
+  }
+
+  return null;
 }
 
 function shoppingLooksLikeSoftTeachOrRetry(textEn: string): boolean {
@@ -8839,31 +9292,52 @@ function detectShoppingProgressBeat(current: {
 }
 
 /**
- * Monotone Core Flow progress for Shopping.
+ * Monotone Core Flow progress for lessons with progressMax.
  * Soft-teach / retry / praise keep the previous progressTurn.
  */
+export function resolveLessonProgressTurn(
+  lessonId: string,
+  prevProgressTurn: number,
+  progressMax: number | undefined,
+  current: LessonProgressTurnInput,
+  previous?: LessonProgressTurnPrevious,
+): number {
+  if (!progressMax) return prevProgressTurn;
+
+  let beat: number | null = null;
+  if (lessonId === 'ee_around_town_shopping') {
+    beat = detectShoppingProgressBeat(current);
+  } else if (lessonId === 'greetings') {
+    beat = detectGreetingsProgressBeat(current);
+  } else if (FOUNDATION_PROGRESS_LESSON_IDS.has(lessonId)) {
+    beat = detectFoundationGenericProgressBeat(
+      prevProgressTurn,
+      progressMax,
+      current,
+      previous,
+    );
+  }
+
+  if (beat == null) return prevProgressTurn;
+  const capped = Math.min(beat, progressMax);
+  return Math.max(prevProgressTurn, capped);
+}
+
+/** @deprecated Prefer resolveLessonProgressTurn */
 export function resolveShoppingProgressTurn(
   lessonId: string,
   prevProgressTurn: number,
   progressMax: number | undefined,
-  current: {
-    textEn: string;
-    expectsUserSpeech: boolean;
-    expectedSpeech?: string | null;
-    emojiChoice?: { options?: Array<{ speak?: string }> } | null;
-    roleplayIntro?: unknown;
-    roleplayNpc?: unknown;
-    isTaskComplete: boolean;
-    softTeachForced?: boolean;
-  },
+  current: LessonProgressTurnInput,
+  previous?: LessonProgressTurnPrevious,
 ): number {
-  if (lessonId !== 'ee_around_town_shopping' || !progressMax) {
-    return prevProgressTurn;
-  }
-  const beat = detectShoppingProgressBeat(current);
-  if (beat == null) return prevProgressTurn;
-  const capped = Math.min(beat, progressMax);
-  return Math.max(prevProgressTurn, capped);
+  return resolveLessonProgressTurn(
+    lessonId,
+    prevProgressTurn,
+    progressMax,
+    current,
+    previous,
+  );
 }
 
 export const SHOPPING_PRICE_SPEAK_CHALLENGE_TH =

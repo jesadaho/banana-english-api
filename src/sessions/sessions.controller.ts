@@ -62,7 +62,7 @@ import {
   forceTransportPattern2IfNeeded,
   forceTransportRoleplayBridgeIfNeeded,
   forceShoppingLookingForSoftTeachIfNeeded,
-  resolveShoppingProgressTurn,
+  resolveLessonProgressTurn,
   ensureExploreCityCelebratePraiseFirst,
   forceExploreCityCelebrateAfterCloseIfNeeded,
   EXPLORE_CITY_ROLEPLAY_OBJECTIVE,
@@ -601,7 +601,7 @@ export class SessionsController {
       const openingProgressMax = config.progressMax;
       const openingProgressTurn =
         openingProgressMax != null && openingProgressMax > 0
-          ? resolveShoppingProgressTurn(
+          ? resolveLessonProgressTurn(
               config.lessonId,
               0,
               openingProgressMax,
@@ -1776,7 +1776,10 @@ export class SessionsController {
       }
 
       const prevProgressTurn = data.session.progressTurn ?? 0;
-      const nextProgressTurn = resolveShoppingProgressTurn(
+      const lastAiTurn = [...data.turns]
+        .reverse()
+        .find((t) => t.speaker === 'ai');
+      const nextProgressTurn = resolveLessonProgressTurn(
         config.lessonId,
         prevProgressTurn,
         config.progressMax,
@@ -1790,6 +1793,12 @@ export class SessionsController {
           isTaskComplete,
           softTeachForced: shoppingSoftTeachForced,
         },
+        lastAiTurn
+          ? {
+              expectedSpeech: lastAiTurn.expectedSpeech,
+              emojiChoice: lastAiTurn.emojiChoice,
+            }
+          : undefined,
       );
 
       this.sessionStore.updateTrainingState(sessionId, {
