@@ -2402,6 +2402,39 @@ Payment closure (critical — no tap UI exists):
     });
   }
 
+  /** Short Thai coaching line for Daily Speak (Speak Today) result. */
+  async generateDailySpeakFeedback(params: {
+    systemInstruction: string;
+    userPrompt: string;
+  }): Promise<{ feedbackTh: string }> {
+    const schema = {
+      type: 'object',
+      properties: {
+        feedbackTh: { type: 'string' },
+      },
+      required: ['feedbackTh'],
+    };
+
+    const result = await this.generateJson<{ feedbackTh: string }>({
+      systemInstruction: params.systemInstruction,
+      contents: [
+        {
+          role: 'user',
+          parts: [{ text: params.userPrompt }],
+        },
+      ],
+      schema,
+      maxOutputTokens: 160,
+      temperature: 0.5,
+    });
+
+    return {
+      feedbackTh: teacherBThaiVoice(
+        this.normalizeFeedbackField(result.feedbackTh ?? ''),
+      ),
+    };
+  }
+
   async generateIntroReport(history: ChatTurn[]): Promise<GptIntroReport> {
     const context = this.formatHistory(history);
     const report = await this.generateJson<GptIntroReport>({
