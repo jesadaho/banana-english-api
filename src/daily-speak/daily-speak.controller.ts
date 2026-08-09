@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Get,
   Post,
   Req,
   UseGuards,
@@ -13,6 +14,7 @@ import {
   DailySpeakFeedbackService,
   type DailySpeakDiagnosisPayload,
 } from './daily-speak-feedback.service';
+import { DailySpeakService } from './daily-speak.service';
 
 type AuthedRequest = { user: User };
 
@@ -41,7 +43,14 @@ export class DailySpeakController {
   constructor(
     private readonly economy: EconomyService,
     private readonly feedback: DailySpeakFeedbackService,
+    private readonly dailySpeak: DailySpeakService,
   ) {}
+
+  /** Today's sentence for this user (mapped from dailySpeakCount). */
+  @Get('today')
+  today(@Req() req: AuthedRequest) {
+    return this.dailySpeak.todayForUser(req.user);
+  }
 
   @Post('complete')
   async complete(@Req() req: AuthedRequest) {
