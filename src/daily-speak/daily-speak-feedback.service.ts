@@ -1,19 +1,22 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { GeminiChatService } from '../gemini/gemini-chat.service';
 
-const FEEDBACK_SYSTEM = `You are Teacher Banana — a warm English coach for Thai adult beginners on Speak Today.
+const FEEDBACK_SYSTEM = `You are Teacher Banana speaking out loud to a Thai adult beginner on Speak Today.
 
-Ground feedback in the learner's STT transcript vs the target sentence.
+Write natural spoken Thai coaching — like a friendly teacher talking, not a report.
+
+Style example (follow this tone):
+ขาดคำว่า “just” อีกนิดเดียวครับ
+ลองพูดใหม่ว่า “I won't give up just because it's difficult.” นะ
 
 Hard rules:
-- Reply in Thai (friendly, short). Quote English only for exact words/phrases.
-- 1–2 short sentences max. No bullets, scores, or percentages.
-- Quote what the learner said (STT) exactly once using “...” .
-- Compare to the target: praise what matched, then name the missing/different part.
-- If only a prefix was said, tell them what to add next.
+- 1–2 short spoken lines. Use “ครับ”. No bullets, scores, or emoji.
+- Quote English only for missing words / the full model sentence.
+- Be specific: name the missing/wrong bit when possible.
+- End by inviting them to say the full target in quotes when helpful.
 - NEVER invent words they did not say.
-- NEVER say “พรุ่งนี้” or imply they finished for the day when they may still retry.
-- Do NOT penalize Thai accent if the words are intelligible.
+- NEVER say “พรุ่งนี้” or imply they finished for the day.
+- Do NOT penalize Thai accent if intelligible.
 - Return JSON only: { "feedbackTh": string }.`;
 
 function softNorm(raw: string): string {
@@ -64,23 +67,27 @@ export function localDailySpeakFeedback(params: {
   const targetNorm = softNorm(target);
 
   if (tier === 'perfect' || tier === 'alsocorrect' || tier === 'also_correct') {
-    return `สุดยอด! ที่พูดว่า “${spoken}” ใกล้เคียงเป้าหมายมากแล้ว`;
+    return `เยี่ยมมากครับ ที่พูดว่า “${spoken}” ได้ชัดเลย ลองฟังอีกครั้งนะ “${target}”`;
   }
 
   const missing = missingTail(spokenNorm, targetNorm, target);
   if (missing) {
-    return `เริ่มดีที่พูดว่า “${spoken}” — ลองต่อให้ครบว่า “${missing}”`;
+    const firstMissing = missing.split(/\s+/)[0] ?? missing;
+    if (firstMissing && !firstMissing.includes(' ')) {
+      return `ขาดคำว่า “${firstMissing}” อีกนิดเดียวครับ ลองพูดใหม่ว่า “${target}” นะ`;
+    }
+    return `ใกล้แล้วครับ ลองพูดใหม่ว่า “${target}” นะ`;
   }
 
   if (spokenNorm.includes(targetNorm) || targetNorm.includes(spokenNorm)) {
-    return `ใกล้แล้วที่พูดว่า “${spoken}” — ลองฟังตัวอย่างแล้วพูดให้ครบตาม “${target}” อีกครั้ง`;
+    return `ใกล้แล้วครับ ลองพูดใหม่ว่า “${target}” นะ`;
   }
 
   if (tier === 'closeenough' || tier === 'close_enough') {
-    return `สื่อความได้ดีที่พูดว่า “${spoken}” — ลองพูดใกล้ “${target}” อีกนิดจะเนียนขึ้น`;
+    return `ใกล้แล้วครับ ลองพูดใหม่ว่า “${target}” นะ`;
   }
 
-  return `คุณพูดว่า “${spoken}” ยังไม่ตรง “${target}” — ลองฟังตัวอย่างแล้วพูดตามอีกครั้งนะ`;
+  return `ไม่เป็นไรครับ ลองฟังตัวอย่างแล้วพูดใหม่ว่า “${target}” นะ`;
 }
 
 @Injectable()
