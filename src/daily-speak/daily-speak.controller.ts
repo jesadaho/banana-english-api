@@ -20,6 +20,8 @@ class DailySpeakFeedbackDto {
   tipWord?: string;
   tipIpa?: string;
   tier?: string;
+  /** great | almost | rough | unclear */
+  reviewCase?: string;
 }
 
 @Controller('daily-speak')
@@ -52,6 +54,7 @@ export class DailySpeakController {
       tipWord: body.tipWord?.trim(),
       tipIpa: body.tipIpa?.trim(),
       tier: body.tier?.trim(),
+      reviewCase: body.reviewCase?.trim(),
     });
 
     return { feedbackTh };

@@ -3,18 +3,18 @@ import { GeminiChatService } from '../gemini/gemini-chat.service';
 
 const FEEDBACK_SYSTEM = `You are Teacher Banana speaking out loud to a Thai adult beginner on Speak Today.
 
-Write natural spoken Thai coaching — like a friendly teacher talking, not a report.
+Invent a fresh, natural spoken line each time — like a real coach talking, not a template.
 
-Style example (follow this tone):
+Tone example:
 ขาดคำว่า “just” อีกนิดเดียวครับ
 ลองพูดใหม่ว่า “I won't give up just because it's difficult.” นะ
 
 Hard rules:
-- 1–2 short spoken lines. Use “ครับ”. No bullets, scores, or emoji.
-- Quote English only for missing words / the full model sentence.
-- Be specific: name the missing/wrong bit when possible.
-- End by inviting them to say the full target in quotes when helpful.
-- NEVER invent words they did not say.
+- Write 1–2 short spoken sentences in Thai. Use “ครับ”. No bullets, scores, or emoji.
+- Be specific to THIS transcript vs THIS target (missing word, wrong phrase, or celebrate).
+- Quote English only for key words / the model sentence.
+- Do NOT copy the example verbatim unless it truly fits.
+- NEVER invent words the learner did not say.
 - NEVER say “พรุ่งนี้” or imply they finished for the day.
 - Do NOT penalize Thai accent if intelligible.
 - Return JSON only: { "feedbackTh": string }.`;
@@ -50,44 +50,61 @@ function missingTail(
   return remainderNorm;
 }
 
-/** Deterministic fallback that always references transcript vs target. */
+/** Deterministic fallback when Gemini is unavailable. */
 export function localDailySpeakFeedback(params: {
   transcript: string;
   targetEn: string;
   tier?: string;
+  reviewCase?: string;
 }): string {
   const spoken = params.transcript.trim();
-  const target = params.targetEn.trim();
+  const target = params.targetEn.trim().replace(/[.!?]+$/, '');
   if (!spoken || spoken === '…') {
-    return 'ยังไม่ได้ยินประโยคชัด ๆ — ลองกดค้างไมค์แล้วพูดใหม่อีกครั้งนะ';
+    return 'ยังฟังไม่ค่อยชัดครับ ลองพูดอีกครั้งใกล้ไมค์หน่อยนะ';
   }
 
+  const reviewCase = (params.reviewCase ?? '').trim().toLowerCase();
   const tier = (params.tier ?? '').trim().toLowerCase();
   const spokenNorm = softNorm(spoken);
   const targetNorm = softNorm(target);
 
-  if (tier === 'perfect' || tier === 'alsocorrect' || tier === 'also_correct') {
-    return `เยี่ยมมากครับ ที่พูดว่า “${spoken}” ได้ชัดเลย ลองฟังอีกครั้งนะ “${target}”`;
+  if (
+    reviewCase === 'great' ||
+    tier === 'perfect' ||
+    tier === 'alsocorrect' ||
+    tier === 'also_correct'
+  ) {
+    return `เยี่ยมมากครับ ที่พูดว่า “${spoken}” ได้ชัดเลย ลองฟังอีกครั้งด้านล่างนะ`;
+  }
+
+  if (reviewCase === 'rough') {
+    return 'ไม่เป็นไรครับ เดี๋ยวลองทีละส่วนตามนี้เลยนะ';
   }
 
   const missing = missingTail(spokenNorm, targetNorm, target);
   if (missing) {
     const firstMissing = missing.split(/\s+/)[0] ?? missing;
     if (firstMissing && !firstMissing.includes(' ')) {
-      return `ขาดคำว่า “${firstMissing}” อีกนิดเดียวครับ ลองพูดใหม่ว่า “${target}” นะ`;
+      return `ขาดคำว่า “${firstMissing}” อีกนิดเดียวครับ ลองพูดใหม่ตามด้านล่างนะ`;
     }
-    return `ใกล้แล้วครับ ลองพูดใหม่ว่า “${target}” นะ`;
   }
 
-  if (spokenNorm.includes(targetNorm) || targetNorm.includes(spokenNorm)) {
-    return `ใกล้แล้วครับ ลองพูดใหม่ว่า “${target}” นะ`;
-  }
+  return `ใกล้แล้วครับ ลองพูดใหม่ตามด้านล่างนะ`;
+}
 
-  if (tier === 'closeenough' || tier === 'close_enough') {
-    return `ใกล้แล้วครับ ลองพูดใหม่ว่า “${target}” นะ`;
+function caseGuidance(reviewCase?: string): string {
+  switch ((reviewCase ?? '').trim().toLowerCase()) {
+    case 'great':
+      return 'Case: GREAT — celebrate briefly, invite them to listen to the model line below.';
+    case 'almost':
+      return 'Case: ALMOST — name the small gap (e.g. missing word) if clear, then invite them to say the full target (shown as a listen chip below — you may quote it).';
+    case 'rough':
+      return 'Case: ROUGH — encourage gently; say you will model it part by part (chips below). Do not dump a harsh correction list.';
+    case 'unclear':
+      return 'Case: UNCLEAR — ask them to speak closer to the mic; do not claim they said wrong words.';
+    default:
+      return 'Coach helpfully based on transcript vs target.';
   }
-
-  return `ไม่เป็นไรครับ ลองฟังตัวอย่างแล้วพูดใหม่ว่า “${target}” นะ`;
 }
 
 @Injectable()
@@ -103,27 +120,36 @@ export class DailySpeakFeedbackService {
     tipWord?: string;
     tipIpa?: string;
     tier?: string;
+    reviewCase?: string;
   }): Promise<string> {
     const transcript = params.transcript.trim();
     const targetEn = params.targetEn.trim();
     if (!transcript || !targetEn) {
-      return localDailySpeakFeedback({ transcript, targetEn, tier: params.tier });
+      return localDailySpeakFeedback({
+        transcript,
+        targetEn,
+        tier: params.tier,
+        reviewCase: params.reviewCase,
+      });
     }
 
     const tier = params.tier?.trim();
+    const reviewCase = params.reviewCase?.trim();
     const userPrompt = [
+      caseGuidance(reviewCase),
       params.promptTh?.trim()
         ? `Thai meaning: ${params.promptTh.trim()}`
         : null,
       `Target sentence: ${targetEn}`,
       `Learner said (STT): ${transcript}`,
       tier ? `Local match tier: ${tier}` : null,
+      reviewCase ? `Review case: ${reviewCase}` : null,
       params.tipWord?.trim()
         ? `Optional pronunciation tip: “${params.tipWord.trim()}”${
             params.tipIpa?.trim() ? ` → ${params.tipIpa.trim()}` : ''
           }`
         : null,
-      'Write feedback that quotes the STT line and compares it to the target.',
+      'Invent a short spoken coaching line for the learner now.',
     ]
       .filter(Boolean)
       .join('\n');
@@ -135,9 +161,11 @@ export class DailySpeakFeedbackService {
       });
       const text = result.feedbackTh?.trim() ?? '';
       if (text) {
-        // Reject finished-for-today style hallucinations when learner still retrying.
         const lower = text.toLowerCase();
         const stillPracticing =
+          reviewCase === 'almost' ||
+          reviewCase === 'rough' ||
+          reviewCase === 'unclear' ||
           tier === 'retry' ||
           tier === 'closeEnough' ||
           tier === 'close_enough';
@@ -145,7 +173,12 @@ export class DailySpeakFeedbackService {
           stillPracticing &&
           (text.includes('พรุ่งนี้') || lower.includes('tomorrow'))
         ) {
-          return localDailySpeakFeedback({ transcript, targetEn, tier });
+          return localDailySpeakFeedback({
+            transcript,
+            targetEn,
+            tier,
+            reviewCase,
+          });
         }
         return text;
       }
@@ -155,6 +188,11 @@ export class DailySpeakFeedbackService {
       );
     }
 
-    return localDailySpeakFeedback({ transcript, targetEn, tier });
+    return localDailySpeakFeedback({
+      transcript,
+      targetEn,
+      tier,
+      reviewCase,
+    });
   }
 }
