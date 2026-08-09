@@ -19,6 +19,7 @@ import { EconomyModule } from './economy/economy.module';
 import { UsersModule } from './users/users.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { MiniGamesModule } from './mini-games/mini-games.module';
+import { DailySpeakModule } from './daily-speak/daily-speak.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { MiniGamesModule } from './mini-games/mini-games.module';
     StatsModule,
     OutfitsModule,
     MiniGamesModule,
+    DailySpeakModule,
   ],
 })
 export class AppModule {}

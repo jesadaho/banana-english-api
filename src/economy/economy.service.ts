@@ -4,6 +4,8 @@ import { Currency, Prisma, User } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import {
   DAILY_BANANA_DROP,
+  DAILY_SPEAK_REWARD_SEEDS,
+  DAILY_SPEAK_REWARD_XP,
   DEBUG_BANANA_REFILL,
   ENV_DAILY_BANANA_DROP,
   ENV_DEBUG_BANANA_REFILL,
@@ -500,6 +502,113 @@ export class EconomyService {
     }
 
     return { streakDays: 1 };
+  }
+
+  /**
+   * Daily Speak: once-per-local-day XP/seeds + streak update.
+   * Idempotent via economyTransaction referenceId `daily_speak:YYYY-MM-DD`.
+   */
+  async applyDailySpeakRewards(params: {
+    userId: string;
+  }): Promise<{
+    xpEarned: number;
+    seedsEarned: number;
+    ratingLabel: string;
+    streakDays: number;
+    previousStreakDays: number;
+    balances: UserBalances;
+    isDailyMission: boolean;
+    alreadyClaimed: boolean;
+  }> {
+    const { userId } = params;
+
+    return this.prisma.$transaction(async (tx) => {
+      const user = await tx.user.findUniqueOrThrow({ where: { id: userId } });
+      const previousStreakDays = user.streakDays;
+      const local = getUserLocalTime(user.timezone);
+      const todayKey = local.dateKey;
+      const referenceId = `daily_speak:${todayKey}`;
+
+      const prior = await tx.economyTransaction.findFirst({
+        where: {
+          userId,
+          source: 'daily_speak_reward',
+          referenceId,
+          currency: Currency.XP,
+        },
+      });
+
+      const streakUpdate = this.computeStreakUpdate(user, todayKey);
+      const streakDays = streakUpdate.streakDays;
+
+      if (prior) {
+        // Still refresh lastSessionDate / streak if this is a new calendar day
+        // with a prior claim somehow missing date update (idempotent no-op when same day).
+        if (!isSameDateKey(user.lastSessionDate, todayKey)) {
+          await tx.user.update({
+            where: { id: userId },
+            data: {
+              streakDays,
+              longestStreakDays: Math.max(user.longestStreakDays, streakDays),
+              lastSessionDate: parseDateKey(todayKey),
+            },
+          });
+        }
+
+        return {
+          xpEarned: 0,
+          seedsEarned: 0,
+          ratingLabel: 'Speak Today',
+          streakDays: isSameDateKey(user.lastSessionDate, todayKey)
+            ? user.streakDays
+            : streakDays,
+          previousStreakDays,
+          balances: this.toBalances(user),
+          isDailyMission: false,
+          alreadyClaimed: true,
+        };
+      }
+
+      const xpEarned = DAILY_SPEAK_REWARD_XP;
+      const seedsEarned = DAILY_SPEAK_REWARD_SEEDS;
+
+      await this.recordTransaction(tx, {
+        userId,
+        currency: Currency.XP,
+        amount: xpEarned,
+        source: 'daily_speak_reward',
+        referenceId,
+      });
+      await this.recordTransaction(tx, {
+        userId,
+        currency: Currency.BANANA_SEED,
+        amount: seedsEarned,
+        source: 'daily_speak_reward',
+        referenceId,
+      });
+
+      const updated = await tx.user.update({
+        where: { id: userId },
+        data: {
+          xpBalance: { increment: xpEarned },
+          bananaSeedBalance: { increment: seedsEarned },
+          streakDays,
+          longestStreakDays: Math.max(user.longestStreakDays, streakDays),
+          lastSessionDate: parseDateKey(todayKey),
+        },
+      });
+
+      return {
+        xpEarned,
+        seedsEarned,
+        ratingLabel: 'Speak Today',
+        streakDays,
+        previousStreakDays,
+        balances: this.toBalances(updated),
+        isDailyMission: false,
+        alreadyClaimed: false,
+      };
+    });
   }
 
   async applyMiniGameRewards(params: {

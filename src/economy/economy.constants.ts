@@ -23,6 +23,10 @@ export const LESSON_BANANA_COST = 1;
 export const LESSON_REWARD_XP = 20;
 export const LESSON_REWARD_SEEDS = 10;
 
+/** Daily Speak (Speak Today) — once per local day. */
+export const DAILY_SPEAK_REWARD_XP = 10;
+export const DAILY_SPEAK_REWARD_SEEDS = 1;
+
 /** Free Talk pricing: 1 banana per 5 minutes (5→1, 10→2). */
 export const FREE_TALK_BANANA_PER_FIVE_MINUTES = 1;
 export const FREE_TALK_MINUTES_PER_BANANA = 5;
