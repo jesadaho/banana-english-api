@@ -1,109 +1,68 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { GeminiChatService } from '../gemini/gemini-chat.service';
 
-const FEEDBACK_SYSTEM = `You are Teacher Banana speaking out loud to a Thai adult beginner on Speak Today.
+const FEEDBACK_SYSTEM = `You are Teacher Banana (Teacher B) speaking to a Thai adult beginner on Speak Today.
 
-Invent a fresh, natural spoken line each time — like a real coach talking, not a template.
-
-Tone example:
-ขาดคำว่า “just” อีกนิดเดียวครับ
-ลองพูดใหม่ว่า “I won't give up just because it's difficult.” นะ
+You do NOT grade. Local diagnosis is 100% ground truth.
+Your only job: turn the diagnosis into a short, warm spoken coaching line.
 
 Hard rules:
-- Write 1–2 short spoken sentences in Thai. Use “ครับ”. No bullets, scores, or emoji.
-- Be specific to THIS transcript vs THIS target (missing word, wrong phrase, or celebrate).
-- Quote English only for key words / the model sentence.
-- Do NOT copy the example verbatim unless it truly fits.
-- NEVER invent words the learner did not say.
-- NEVER say “พรุ่งนี้” or imply they finished for the day.
-- Do NOT penalize Thai accent if intelligible.
+- Use ONLY facts in the diagnosis JSON. Never invent missing/wrong words.
+- 1–2 short spoken Thai sentences. End naturally with “ครับ”.
+- No bullets, scores, or emoji in the spoken line.
+- Fix / mention at most ONE issue (prefer the first missingWord).
+- Quote English only for that one word and/or the model sentence when helpful.
+- If reviewCase is "great": celebrate briefly; do not invent problems.
+- If reviewCase is "almost": mention the one missing/wrong fact, then invite them to say the full target.
+- If reviewCase is "rough": encourage gently; invite starting from listenLines[0] if present. Do not list many errors.
+- NEVER say “พรุ่งนี้” or imply the session is finished.
 - Return JSON only: { "feedbackTh": string }.`;
 
-function softNorm(raw: string): string {
-  return raw
-    .toLowerCase()
-    .replace(/[^a-z0-9\s']/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
-}
-
-function missingTail(
-  spokenNorm: string,
-  targetNorm: string,
-  targetRaw: string,
-): string | null {
-  if (
-    !spokenNorm ||
-    spokenNorm.length >= targetNorm.length ||
-    !targetNorm.startsWith(spokenNorm)
-  ) {
-    return null;
-  }
-  const remainderNorm = targetNorm.slice(spokenNorm.length).trim();
-  if (!remainderNorm) return null;
-
-  const first = remainderNorm.split(' ')[0] ?? '';
-  const idx = targetRaw.toLowerCase().indexOf(first);
-  if (idx >= 0) {
-    return targetRaw.slice(idx).trim().replace(/[.!?]+$/, '');
-  }
-  return remainderNorm;
-}
+export type DailySpeakDiagnosisPayload = {
+  target: string;
+  transcript: string;
+  tier?: string;
+  reviewCase: string;
+  missingWords?: string[];
+  extraWords?: string[];
+  wrongWords?: string[];
+  pronunciationIssues?: string[];
+  coverage?: number;
+  listenLines?: string[];
+};
 
 /** Deterministic fallback when Gemini is unavailable. */
-export function localDailySpeakFeedback(params: {
-  transcript: string;
-  targetEn: string;
-  tier?: string;
-  reviewCase?: string;
-}): string {
-  const spoken = params.transcript.trim();
-  const target = params.targetEn.trim().replace(/[.!?]+$/, '');
-  if (!spoken || spoken === '…') {
-    return 'ยังฟังไม่ค่อยชัดครับ ลองพูดอีกครั้งใกล้ไมค์หน่อยนะ';
-  }
+export function localDailySpeakFeedback(
+  diagnosis: DailySpeakDiagnosisPayload,
+): string {
+  const target = (diagnosis.target ?? '').trim().replace(/[.!?]+$/, '');
+  const transcript = (diagnosis.transcript ?? '').trim();
+  const reviewCase = (diagnosis.reviewCase ?? '').trim().toLowerCase();
+  const missing = diagnosis.missingWords ?? [];
+  const listenLines = diagnosis.listenLines ?? [];
 
-  const reviewCase = (params.reviewCase ?? '').trim().toLowerCase();
-  const tier = (params.tier ?? '').trim().toLowerCase();
-  const spokenNorm = softNorm(spoken);
-  const targetNorm = softNorm(target);
-
-  if (
-    reviewCase === 'great' ||
-    tier === 'perfect' ||
-    tier === 'alsocorrect' ||
-    tier === 'also_correct'
-  ) {
-    return `เยี่ยมมากครับ ที่พูดว่า “${spoken}” ได้ชัดเลย ลองฟังอีกครั้งด้านล่างนะ`;
-  }
-
-  if (reviewCase === 'rough') {
-    return 'ไม่เป็นไรครับ เดี๋ยวลองทีละส่วนตามนี้เลยนะ';
-  }
-
-  const missing = missingTail(spokenNorm, targetNorm, target);
-  if (missing) {
-    const firstMissing = missing.split(/\s+/)[0] ?? missing;
-    if (firstMissing && !firstMissing.includes(' ')) {
-      return `ขาดคำว่า “${firstMissing}” อีกนิดเดียวครับ ลองพูดใหม่ตามด้านล่างนะ`;
-    }
-  }
-
-  return `ใกล้แล้วครับ ลองพูดใหม่ตามด้านล่างนะ`;
-}
-
-function caseGuidance(reviewCase?: string): string {
-  switch ((reviewCase ?? '').trim().toLowerCase()) {
+  switch (reviewCase) {
     case 'great':
-      return 'Case: GREAT — celebrate briefly, invite them to listen to the model line below.';
+      return 'ดีมากครับ! ประโยคนี้พูดได้ชัดเจนเลย';
     case 'almost':
-      return 'Case: ALMOST — name the small gap (e.g. missing word) if clear, then invite them to say the full target (shown as a listen chip below — you may quote it).';
-    case 'rough':
-      return 'Case: ROUGH — encourage gently; say you will model it part by part (chips below). Do not dump a harsh correction list.';
+      if (missing.length === 1) {
+        return `ขาดคำว่า “${missing[0]}” อีกนิดเดียวครับ ลองพูดใหม่ว่า “${target}” นะ`;
+      }
+      if (missing.length > 1 && missing.length <= 3) {
+        const words = missing.map((w) => `“${w}”`).join(' ');
+        return `ใกล้แล้วครับ ยังขาด ${words} นิดหน่อย ลองพูดใหม่ว่า “${target}” นะ`;
+      }
+      return `ใกล้แล้วครับ ลองพูดใหม่ว่า “${target}” นะ`;
+    case 'rough': {
+      const first = listenLines[0] ?? target;
+      return `ไม่เป็นไรครับ ค่อย ๆ พูดไปทีละส่วนก็ได้ ลองเริ่มจาก “${first}” ก่อนนะ`;
+    }
     case 'unclear':
-      return 'Case: UNCLEAR — ask them to speak closer to the mic; do not claim they said wrong words.';
     default:
-      return 'Coach helpfully based on transcript vs target.';
+      if (!transcript) {
+        return 'ยังฟังไม่ค่อยชัดครับ ลองพูดอีกครั้งนะ';
+      }
+      return 'ยังฟังไม่ค่อยชัดครับ ลองพูดอีกครั้งนะ';
   }
 }
 
@@ -114,45 +73,27 @@ export class DailySpeakFeedbackService {
   constructor(private readonly gemini: GeminiChatService) {}
 
   async generate(params: {
-    transcript: string;
-    targetEn: string;
-    promptTh?: string;
-    tipWord?: string;
-    tipIpa?: string;
-    tier?: string;
-    reviewCase?: string;
+    diagnosis: DailySpeakDiagnosisPayload;
   }): Promise<string> {
-    const transcript = params.transcript.trim();
-    const targetEn = params.targetEn.trim();
-    if (!transcript || !targetEn) {
-      return localDailySpeakFeedback({
-        transcript,
-        targetEn,
-        tier: params.tier,
-        reviewCase: params.reviewCase,
-      });
+    const diagnosis = params.diagnosis;
+    const reviewCase = (diagnosis.reviewCase ?? '').trim().toLowerCase();
+
+    // Unclear / great: local only (no Gemini).
+    if (reviewCase === 'unclear' || reviewCase === 'great') {
+      return localDailySpeakFeedback(diagnosis);
     }
 
-    const tier = params.tier?.trim();
-    const reviewCase = params.reviewCase?.trim();
+    const target = (diagnosis.target ?? '').trim();
+    const transcript = (diagnosis.transcript ?? '').trim();
+    if (!target || !transcript) {
+      return localDailySpeakFeedback(diagnosis);
+    }
+
     const userPrompt = [
-      caseGuidance(reviewCase),
-      params.promptTh?.trim()
-        ? `Thai meaning: ${params.promptTh.trim()}`
-        : null,
-      `Target sentence: ${targetEn}`,
-      `Learner said (STT): ${transcript}`,
-      tier ? `Local match tier: ${tier}` : null,
-      reviewCase ? `Review case: ${reviewCase}` : null,
-      params.tipWord?.trim()
-        ? `Optional pronunciation tip: “${params.tipWord.trim()}”${
-            params.tipIpa?.trim() ? ` → ${params.tipIpa.trim()}` : ''
-          }`
-        : null,
-      'Invent a short spoken coaching line for the learner now.',
-    ]
-      .filter(Boolean)
-      .join('\n');
+      'Diagnosis (ground truth — do not contradict):',
+      JSON.stringify(diagnosis, null, 2),
+      'Write one short Teacher B spoken coaching line now.',
+    ].join('\n');
 
     try {
       const result = await this.gemini.generateDailySpeakFeedback({
@@ -161,24 +102,8 @@ export class DailySpeakFeedbackService {
       });
       const text = result.feedbackTh?.trim() ?? '';
       if (text) {
-        const lower = text.toLowerCase();
-        const stillPracticing =
-          reviewCase === 'almost' ||
-          reviewCase === 'rough' ||
-          reviewCase === 'unclear' ||
-          tier === 'retry' ||
-          tier === 'closeEnough' ||
-          tier === 'close_enough';
-        if (
-          stillPracticing &&
-          (text.includes('พรุ่งนี้') || lower.includes('tomorrow'))
-        ) {
-          return localDailySpeakFeedback({
-            transcript,
-            targetEn,
-            tier,
-            reviewCase,
-          });
+        if (text.includes('พรุ่งนี้') || text.toLowerCase().includes('tomorrow')) {
+          return localDailySpeakFeedback(diagnosis);
         }
         return text;
       }
@@ -188,11 +113,6 @@ export class DailySpeakFeedbackService {
       );
     }
 
-    return localDailySpeakFeedback({
-      transcript,
-      targetEn,
-      tier,
-      reviewCase,
-    });
+    return localDailySpeakFeedback(diagnosis);
   }
 }

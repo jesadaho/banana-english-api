@@ -9,19 +9,30 @@ import {
 import { User } from '@prisma/client';
 import { EconomyService } from '../economy/economy.service';
 import { AnonymousUserGuard } from '../users/anonymous-user.guard';
-import { DailySpeakFeedbackService } from './daily-speak-feedback.service';
+import {
+  DailySpeakFeedbackService,
+  type DailySpeakDiagnosisPayload,
+} from './daily-speak-feedback.service';
 
 type AuthedRequest = { user: User };
 
 class DailySpeakFeedbackDto {
-  transcript!: string;
-  targetEn!: string;
+  /** Preferred: full local diagnosis. */
+  diagnosis?: DailySpeakDiagnosisPayload;
+
+  /** Legacy flat fields (still accepted). */
+  transcript?: string;
+  targetEn?: string;
   promptTh?: string;
   tipWord?: string;
   tipIpa?: string;
   tier?: string;
-  /** great | almost | rough | unclear */
   reviewCase?: string;
+  missingWords?: string[];
+  extraWords?: string[];
+  wrongWords?: string[];
+  pronunciationIssues?: string[];
+  listenLines?: string[];
 }
 
 @Controller('daily-speak')
@@ -41,22 +52,31 @@ export class DailySpeakController {
 
   @Post('feedback')
   async feedbackForAttempt(@Body() body: DailySpeakFeedbackDto) {
-    const transcript = body.transcript?.trim() ?? '';
-    const targetEn = body.targetEn?.trim() ?? '';
-    if (!transcript || !targetEn) {
-      throw new BadRequestException('transcript and targetEn are required');
+    const diagnosis: DailySpeakDiagnosisPayload = body.diagnosis ?? {
+      target: body.targetEn?.trim() ?? '',
+      transcript: body.transcript?.trim() ?? '',
+      tier: body.tier?.trim(),
+      reviewCase: body.reviewCase?.trim() ?? 'almost',
+      missingWords: body.missingWords ?? [],
+      extraWords: body.extraWords ?? [],
+      wrongWords: body.wrongWords ?? [],
+      pronunciationIssues: body.pronunciationIssues ?? [],
+      listenLines: body.listenLines ?? [],
+    };
+
+    if (!diagnosis.target?.trim() || !diagnosis.reviewCase?.trim()) {
+      throw new BadRequestException('diagnosis.target and reviewCase are required');
     }
 
-    const feedbackTh = await this.feedback.generate({
-      transcript,
-      targetEn,
-      promptTh: body.promptTh?.trim(),
-      tipWord: body.tipWord?.trim(),
-      tipIpa: body.tipIpa?.trim(),
-      tier: body.tier?.trim(),
-      reviewCase: body.reviewCase?.trim(),
-    });
+    // Unclear may have empty transcript — still OK.
+    if (
+      diagnosis.reviewCase !== 'unclear' &&
+      !diagnosis.transcript?.trim()
+    ) {
+      throw new BadRequestException('diagnosis.transcript is required');
+    }
 
+    const feedbackTh = await this.feedback.generate({ diagnosis });
     return { feedbackTh };
   }
 }
