@@ -244,6 +244,26 @@ export class UsersService {
     return this.getProfile(updated);
   }
 
+  /** Clears today's Daily Speak claim so the banner / reward can be tested again. */
+  async resetDailySpeakDebug(user: User): Promise<UserProfileResponse> {
+    if (!this.isDebugEndpointsEnabled()) {
+      throw new ForbiddenException('Debug endpoints are disabled');
+    }
+
+    const local = getUserLocalTime(user.timezone);
+    const referenceId = `daily_speak:${local.dateKey}`;
+
+    await this.prisma.economyTransaction.deleteMany({
+      where: {
+        userId: user.id,
+        source: 'daily_speak_reward',
+        referenceId,
+      },
+    });
+
+    return this.getProfile(user);
+  }
+
   async unlockAvatar(
     user: User,
     avatarId: string,

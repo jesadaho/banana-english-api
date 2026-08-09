@@ -111,4 +111,9 @@ export class UsersController {
   async resetProgressDebug(@Req() req: AuthedRequest) {
     return this.users.resetProgressDebug(req.user);
   }
+
+  @Post('me/debug/reset-daily-speak')
+  async resetDailySpeakDebug(@Req() req: AuthedRequest) {
+    return this.users.resetDailySpeakDebug(req.user);
+  }
 }
