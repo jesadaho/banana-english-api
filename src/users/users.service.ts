@@ -38,6 +38,8 @@ export interface UserProfileResponse {
   xpBalance: number;
   bananaSeedBalance: number;
   streakDays: number;
+  /** Lifetime Daily Speak completions (once per local day). */
+  dailySpeakCount: number;
   dailyUsedToday: boolean;
   timezone: string;
   unlockedAvatarIds: string[];
@@ -237,7 +239,8 @@ export class UsersService {
           streakMilestonesClaimed: [],
           longestStreakDays: 0,
           perfectVocabDrillCompleted: false,
-        },
+          dailySpeakCount: 0,
+        } as Prisma.UserUpdateInput,
       });
     });
 
@@ -253,7 +256,7 @@ export class UsersService {
     const local = getUserLocalTime(user.timezone);
     const referenceId = `daily_speak:${local.dateKey}`;
 
-    await this.prisma.economyTransaction.deleteMany({
+    const deleted = await this.prisma.economyTransaction.deleteMany({
       where: {
         userId: user.id,
         source: 'daily_speak_reward',
@@ -261,7 +264,17 @@ export class UsersService {
       },
     });
 
-    return this.getProfile(user);
+    let updated = user;
+    const currentCount =
+      (user as User & { dailySpeakCount?: number }).dailySpeakCount ?? 0;
+    if (deleted.count > 0 && currentCount > 0) {
+      updated = await this.prisma.user.update({
+        where: { id: user.id },
+        data: { dailySpeakCount: { decrement: 1 } } as Prisma.UserUpdateInput,
+      });
+    }
+
+    return this.getProfile(updated);
   }
 
   async unlockAvatar(
@@ -397,6 +410,8 @@ export class UsersService {
       xpBalance: user.xpBalance,
       bananaSeedBalance: user.bananaSeedBalance,
       streakDays: user.streakDays,
+      dailySpeakCount:
+        (user as User & { dailySpeakCount?: number }).dailySpeakCount ?? 0,
       dailyUsedToday: isSameDateKey(user.dailyMissionUsedDate, local.dateKey),
       timezone: user.timezone,
       unlockedAvatarIds,

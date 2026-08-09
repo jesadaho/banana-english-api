@@ -516,6 +516,7 @@ export class EconomyService {
     ratingLabel: string;
     streakDays: number;
     previousStreakDays: number;
+    dailySpeakCount: number;
     balances: UserBalances;
     isDailyMission: boolean;
     alreadyClaimed: boolean;
@@ -563,6 +564,8 @@ export class EconomyService {
             ? user.streakDays
             : streakDays,
           previousStreakDays,
+          dailySpeakCount:
+            (user as User & { dailySpeakCount?: number }).dailySpeakCount ?? 0,
           balances: this.toBalances(user),
           isDailyMission: false,
           alreadyClaimed: true,
@@ -595,7 +598,8 @@ export class EconomyService {
           streakDays,
           longestStreakDays: Math.max(user.longestStreakDays, streakDays),
           lastSessionDate: parseDateKey(todayKey),
-        },
+          dailySpeakCount: { increment: 1 },
+        } as Prisma.UserUpdateInput,
       });
 
       return {
@@ -604,6 +608,11 @@ export class EconomyService {
         ratingLabel: 'Speak Today',
         streakDays,
         previousStreakDays,
+        dailySpeakCount:
+          (updated as typeof updated & { dailySpeakCount?: number })
+            .dailySpeakCount ??
+          ((user as typeof user & { dailySpeakCount?: number }).dailySpeakCount ??
+            0) + 1,
         balances: this.toBalances(updated),
         isDailyMission: false,
         alreadyClaimed: false,

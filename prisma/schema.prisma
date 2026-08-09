@@ -31,6 +31,9 @@ model User {
   /** Highest streakDays ever reached (survives streak resets). */
   longestStreakDays       Int       @default(0)
 
+  /** Lifetime Daily Speak completions (once per local day). */
+  dailySpeakCount         Int       @default(0)
+
   lastDailyBananaDate     DateTime? @db.Date
   lastAppOpenDate         DateTime? @db.Date
   dailyMissionUsedDate    DateTime? @db.Date

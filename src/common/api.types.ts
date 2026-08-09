@@ -405,6 +405,8 @@ export interface UserProfileResponse {
   xpBalance: number;
   bananaSeedBalance: number;
   streakDays: number;
+  /** Lifetime Daily Speak completions (once per local day). */
+  dailySpeakCount: number;
   dailyUsedToday: boolean;
   timezone: string;
   unlockedAvatarIds: string[];
