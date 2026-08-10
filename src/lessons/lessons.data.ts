@@ -6705,10 +6705,10 @@ Turn loop rules:
     hookTh:
       'เคยไปเที่ยวที่ไหนมาบ้างครับ? วันนี้มาลองเล่าทริปที่ประทับใจเป็นภาษาอังกฤษกันครับ!',
     emojiWords: [
-      { emoji: '✈️', answer: 'vacation', hint: 'v _ c _ t _ _ n', },
-      { emoji: '🏨', answer: 'hotel', hint: 'h _ t _ l', },
-      { emoji: '📷', answer: 'photos', hint: 'p h _ t _ s', },
-      { emoji: '🧳', answer: 'travel', hint: 't r _ v _ l', },
+      { emoji: '🥾', answer: 'hike', hint: 'h _ k e', },
+      { emoji: '⛺', answer: 'camp', hint: 'c _ m p', },
+      { emoji: '🧗', answer: 'climb', hint: 'c l _ m b', },
+      { emoji: '🏝️', answer: 'island', hint: '_ s l _ n d', },
     ],
     tell1Thai: 'ฉันไปญี่ปุ่น',
     tell1En: 'I went to Japan.',
@@ -6738,10 +6738,10 @@ Turn loop rules:
     hookTh:
       'วันเกิดครั้งล่าสุดเป็นยังไงบ้างครับ? ได้เค้ก ได้ของขวัญ หรือได้ฉลองกับใครบ้าง? วันนี้มาลองเล่าเรื่องวันเกิดกันครับ!',
     emojiWords: [
-      { emoji: '🎂', answer: 'birthday', hint: 'b _ r t h _ _ y', },
+      { emoji: '🎂', answer: 'birthday', hint: 'b _ r t h d _ y', },
+      { emoji: '🎉', answer: 'party', hint: 'p _ r t y', },
       { emoji: '🍰', answer: 'cake', hint: 'c _ k e', },
       { emoji: '🎁', answer: 'gift', hint: 'g _ f t', },
-      { emoji: '🎉', answer: 'party', hint: 'p _ r t y', },
     ],
     tell1Thai: 'ฉันจัดงานวันเกิด',
     tell1En: 'I had a birthday party.',
@@ -6837,10 +6837,10 @@ Turn loop rules:
     hookTh:
       'ทุกคนเคยมีวันที่ไม่ค่อยดีใช่ไหมครับ? วันนี้มาลองเล่าเรื่องวันที่แย่ๆ เป็นภาษาอังกฤษกันครับ!',
     emojiWords: [
-      { emoji: '🌧️', answer: 'rain', hint: 'r _ _ n', },
-      { emoji: '🚗', answer: 'traffic', hint: 't r _ f f _ c', },
-      { emoji: '🚌', answer: 'bus', hint: 'b _ s', },
-      { emoji: '😩', answer: 'tired', hint: 't _ r _ d', },
+      { emoji: '😫', answer: 'tired', hint: 't _ r _ d', },
+      { emoji: '🤒', answer: 'sick', hint: 's _ c k', },
+      { emoji: '⏰', answer: 'late', hint: 'l _ t e', },
+      { emoji: '😟', answer: 'worried', hint: 'w _ r r _ e d', },
     ],
     tell1Thai: 'ฉันมาสายเพราะรถติด',
     tell1En: 'I was late because of traffic.',
