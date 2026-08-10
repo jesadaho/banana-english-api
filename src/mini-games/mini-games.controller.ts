@@ -32,10 +32,16 @@ const ALLOWED_MINI_GAME_IDS = new Set([
   'speak_challenge_ee_everyday_life_survival',
   'speak_challenge_ee_stories_last_weekend',
   'speak_challenge_ee_stories_vacation',
+  'speak_challenge_ee_stories_school',
+  'speak_challenge_ee_stories_birthday',
+  'speak_challenge_ee_stories_last_night',
   'word_choice_ee_about_me_describe',
   'word_choice_ee_around_town_compare',
   'word_choice_ee_stories_yesterday',
+  'word_choice_ee_stories_first_time',
   'story_builder_ee_stories_birthday',
+  'story_builder_ee_stories_funny',
+  'story_builder_ee_stories_favorite',
 ]);
 
 class EvaluateSpeakChallengeDto {

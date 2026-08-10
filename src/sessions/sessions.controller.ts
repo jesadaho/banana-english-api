@@ -71,6 +71,7 @@ import {
   COFFEE_ROLEPLAY_OBJECTIVE,
   TRANSPORT_ROLEPLAY_OBJECTIVE,
   FAVORITES_ROLEPLAY_OBJECTIVE,
+  LAST_NIGHT_ROLEPLAY_OBJECTIVE,
   AIRPORT_ROLEPLAY_OBJECTIVE,
   PHARMACY_ROLEPLAY_OBJECTIVE,
   aroundTownRoleplayIntroSpeech,
@@ -79,6 +80,9 @@ import {
   forceAirportRoleplayBridgeIfNeeded,
   forcePharmacyRoleplayBridgeIfNeeded,
   forceFavoritesRoleplayBridgeIfNeeded,
+  forceLastNightGuidedSpeakingIfNeeded,
+  forceLastNightRoleplayBridgeIfNeeded,
+  forceLastNightCelebrateAfterCloseIfNeeded,
   forceSmartShopperGuidedSpeakingIfNeeded,
   forceSmartShopperCelebrateIfNeeded,
   forceDailyRoutineGuidedSpeakingIfNeeded,
@@ -1054,6 +1058,32 @@ export class SessionsController {
         isTaskComplete = forcedFavoritesBridge.isTaskComplete;
       }
 
+      // After Last Night Step 4b (when…) → Roleplay Intro.
+      const forcedLastNightBridge = forceLastNightRoleplayBridgeIfNeeded(
+        config.lessonId,
+        teachingLang,
+        data.turns,
+        {
+          textEn,
+          textTh,
+          roleplayIntro,
+          roleplayNpc,
+          expectsUserSpeech,
+          isTaskComplete,
+        },
+      );
+      if (forcedLastNightBridge != null) {
+        textEn = forcedLastNightBridge.textEn;
+        textTh = forcedLastNightBridge.textTh;
+        expectsUserSpeech = forcedLastNightBridge.expectsUserSpeech;
+        expectedSpeech = forcedLastNightBridge.expectedSpeech;
+        roleplayNpc = forcedLastNightBridge.roleplayNpc;
+        roleplayIntro = forcedLastNightBridge.roleplayIntro;
+        guidedSpeaking = forcedLastNightBridge.guidedSpeaking;
+        emojiChoice = forcedLastNightBridge.emojiChoice;
+        isTaskComplete = forcedLastNightBridge.isTaskComplete;
+      }
+
       // Smart Shopper 2.6: pin Teach/Mini guidedSpeaking boards.
       const forcedSmartShopper = forceSmartShopperGuidedSpeakingIfNeeded(
         config.lessonId,
@@ -1077,6 +1107,31 @@ export class SessionsController {
         expectedSpeech = forcedSmartShopper.expectedSpeech;
         emojiChoice = forcedSmartShopper.emojiChoice;
         isTaskComplete = forcedSmartShopper.isTaskComplete;
+      }
+
+      // Last Night 3.10: pin guidedSpeaking boards Steps 1–4.
+      const forcedLastNight = forceLastNightGuidedSpeakingIfNeeded(
+        config.lessonId,
+        teachingLang,
+        nextTurn,
+        data.turns,
+        {
+          textEn,
+          textTh,
+          guidedSpeaking,
+          expectsUserSpeech,
+          isTaskComplete,
+          expectedSpeech,
+        },
+      );
+      if (forcedLastNight != null) {
+        textEn = forcedLastNight.textEn;
+        textTh = forcedLastNight.textTh;
+        guidedSpeaking = forcedLastNight.guidedSpeaking;
+        expectsUserSpeech = forcedLastNight.expectsUserSpeech;
+        expectedSpeech = forcedLastNight.expectedSpeech;
+        emojiChoice = forcedLastNight.emojiChoice;
+        isTaskComplete = forcedLastNight.isTaskComplete;
       }
 
       // Daily Routine 1.1: pin Vocab / Wake / Sleep / AM-PM / Activity boards.
@@ -1675,6 +1730,32 @@ export class SessionsController {
       }
 
       // After You're welcome + Continue → Celebrate (never double the close).
+      const forcedLastNightCelebrate =
+        forceLastNightCelebrateAfterCloseIfNeeded(
+          config.lessonId,
+          teachingLang,
+          data.turns,
+          {
+            textEn,
+            textTh,
+            expectsUserSpeech,
+            roleplayIntro,
+            roleplayNpc,
+            isTaskComplete,
+          },
+        );
+      if (forcedLastNightCelebrate != null) {
+        textEn = forcedLastNightCelebrate.textEn;
+        textTh = forcedLastNightCelebrate.textTh;
+        expectsUserSpeech = forcedLastNightCelebrate.expectsUserSpeech;
+        expectedSpeech = forcedLastNightCelebrate.expectedSpeech;
+        roleplayNpc = forcedLastNightCelebrate.roleplayNpc;
+        roleplayIntro = null;
+        guidedSpeaking = null;
+        emojiChoice = null;
+        isTaskComplete = forcedLastNightCelebrate.isTaskComplete;
+      }
+
       const forcedCelebrate = forceExploreCityCelebrateAfterCloseIfNeeded(
         config.lessonId,
         teachingLang,
@@ -1784,7 +1865,9 @@ export class SessionsController {
                           ? PHARMACY_ROLEPLAY_OBJECTIVE
                           : config.lessonId === 'ee_about_me_favorites'
                             ? FAVORITES_ROLEPLAY_OBJECTIVE
-                            : null;
+                            : config.lessonId === 'ee_stories_last_night'
+                              ? LAST_NIGHT_ROLEPLAY_OBJECTIVE
+                              : null;
           if (objective) {
             roleplayNpc = {
               ...roleplayNpc,

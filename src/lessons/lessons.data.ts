@@ -6924,8 +6924,140 @@ Turn loop rules:
     ask2AiAnswerEn: 'Because we were together.',
     answer1En: "What's your favorite memory?",
     answer2En: 'Why was it special?',
-    nextLessonHint: 'Lesson Summary / สรุปบทเรียน',
+    nextLessonHint: 'Last Night / เมื่อคืน',
   }),
+  {
+    lessonId: 'ee_stories_last_night',
+    targetLabel: 'word or sentence',
+    titleEn: 'Last Night',
+    titleTh: 'เมื่อคืน',
+    goalEn: 'Talk about what you were doing and what happened using Past Continuous.',
+    goalTh: 'เล่าว่าเมื่อคืนกำลังทำอะไร และเกิดอะไรขึ้น ด้วย Past Continuous',
+    difficulty: 'beginner',
+    languageMix: { thai: 70, english: 30 },
+    estimatedMinutesMin: 5,
+    estimatedMinutesMax: 7,
+    targetPhrases: [
+      'watching TV',
+      'cooking',
+      'sleeping',
+      'I was watching TV.',
+      'I was cooking.',
+      'He was cooking.',
+      'She was reading.',
+      'They were eating.',
+      'They were talking.',
+      'I was watching TV when my friend called.',
+      'I was cooking when the lights went out.',
+      'What were you doing last night?',
+      'What happened?',
+    ],
+    maxTurns: 24,
+    listenOnlyTurns: 1,
+    systemInstruction: `Lesson: Last Night (Everyday English → Stories → 3.10)
+Goal: Past Continuous — I/He/She was + V-ing, They were + V-ing, then I was … when … + Last Night roleplay.
+Pace target: ~5–7 minutes. Keep every tutor turn tight.
+
+guidedSpeaking rules (Steps 1–4):
+- MUST return guidedSpeaking with stem + options[] (2–3 cards). Mic still required.
+- FORBIDDEN: emojiSpeak / emojiSpeakSet. Omit guidedSpeaking on Hook / Intro / Roleplay staff / Celebrate.
+- Soft-accept close variants (with/without period, bare V-ing on Good retry).
+
+Core Flow (ONE-WAY):
+
+1. Hook (listen-only) — OPENING ONLY
+   - {{L1}} EXACT close to:
+     "เมื่อคืนตอนเกิดเรื่องบางอย่างขึ้น คุณกำลังทำอะไรอยู่? วันนี้เราจะฝึกเล่าเหตุการณ์แบบนี้เป็นภาษาอังกฤษครับ!"
+   - expectsUserSpeech=false. Omit guidedSpeaking / emojiChoice / roleplayIntro.
+   - FORBIDDEN: mic on Hook. Continue → Step 1.
+
+2. Step 1 — I was + V-ing (พูด)
+   - textEn close to:
+     "ถ้าจะบอกว่า 'เมื่อคืนสองทุ่ม ฉันกำลังดูทีวี' พูดว่า I was watching TV ครับ I was + กิจกรรมที่กำลังทำอยู่ครับ"
+   - guidedSpeaking MUST:
+     { stem:"I was...", options:[
+       { emoji:"📺", label:"watching TV", speak:"I was watching TV." },
+       { emoji:"🍳", label:"cooking", speak:"I was cooking." },
+       { emoji:"😴", label:"sleeping", speak:"I was sleeping." }
+     ] }
+   - expectsUserSpeech=true. Soft-accept I was watching TV / cooking / sleeping.
+   - After clear → Step 2a.
+
+3. Step 2a — He was… (พูด)
+   - textEn close to:
+     "แล้วถ้าพูดถึงเพื่อนว่า 'เขากำลังทำอาหาร' ล่ะครับ?"
+   - guidedSpeaking MUST:
+     { stem:"He was...", options:[
+       { emoji:"🍳", label:"cooking", speak:"He was cooking." },
+       { emoji:"📱", label:"using his phone", speak:"He was using his phone." }
+     ] }
+   - After clear → Step 2b.
+
+4. Step 2b — She was… (พูด)
+   - textEn close to:
+     "He / She ก็ใช้ was เหมือนกันครับ"
+   - guidedSpeaking MUST:
+     { stem:"She was...", options:[
+       { emoji:"📖", label:"reading", speak:"She was reading." },
+       { emoji:"💻", label:"working", speak:"She was working." }
+     ] }
+   - After clear → Step 3.
+
+5. Step 3 — They were… (พูด)
+   - textEn close to:
+     "ถ้ามีหลายคนกำลังทำอะไรอยู่ เราใช้ were ครับ I / He / She → was · You / We / They → were"
+   - guidedSpeaking MUST:
+     { stem:"They were...", options:[
+       { emoji:"🎮", label:"playing games", speak:"They were playing games." },
+       { emoji:"🍽️", label:"eating", speak:"They were eating." },
+       { emoji:"🗣️", label:"talking", speak:"They were talking." }
+     ] }
+   - After clear → Step 4a.
+
+6. Step 4a — Something happened (พูด)
+   - textEn close to:
+     "ทีนี้เพิ่มความสนุกครับ... ระหว่างที่กำลังทำอะไรอยู่ มีบางอย่างเกิดขึ้น! สิ่งที่กำลังเกิดอยู่ใช้ was/were + ing ส่วนเหตุการณ์ที่เข้ามาแทรกใช้กริยาอดีตครับ"
+   - Show: 📺 I was watching TV… 📞 my friend called.
+   - guidedSpeaking full sentences:
+     { stem:"I was ___ when...", options:[
+       { emoji:"📺📞", label:"TV + call", speak:"I was watching TV when my friend called." },
+       { emoji:"🍳⚡", label:"cook + lights", speak:"I was cooking when the lights went out." }
+     ] }
+   - After clear → Step 4b.
+
+7. Step 4b — second when sentence (พูด)
+   - Same pattern; swap combo if needed.
+   - guidedSpeaking options (different pair OK):
+     { emoji:"🍳⚡", speak:"I was cooking when the lights went out." },
+     { emoji:"📺📞", speak:"I was watching TV when my friend called." }
+   - After clear → Roleplay Intro (NEXT turn).
+
+8. Roleplay Intro (listen-only)
+   - {{L1}} EXACT close to:
+     "เยี่ยมเลยครับ! 👏 คราวนี้ลองย้อนกลับไปเมื่อคืน แล้วเล่าให้เพื่อนฟังว่าเกิดอะไรขึ้นกันครับ!"
+   - roleplayIntro: { subtitle:"Talk about what you were doing and what happened.", npcEmoji:"🌙", npcLabel:"เพื่อน", npcName:"Friend", userLabel:"คุณ" }
+   - expectsUserSpeech=false. Continue → Roleplay.
+
+9. Roleplay — Last Night (scripted — speak every ask; listen only on Nice!)
+   OBJECTIVE: "Talk about what you were doing last night and what happened."
+   roleplayNpc: { emoji:"👤", name:"Friend", objective:"..." }
+   9a. What were you doing last night?
+   9b. What was your friend doing?
+   9c. What were your friends doing?
+   9d. What happened? — accept full when-clause (I was … when …)
+   Close: Nice! / ดีเลยครับ! → Continue → Celebrate.
+
+10. Celebrate (listen-only)
+   - Praise first + was/were/when recap + soft tease Lesson Summary / 3.R
+   - expectsUserSpeech=false. isLessonComplete=true.
+
+Teaching rules:
+- ONE speaking task per turn. Never mash Hook+ask or Intro+staff.
+- Soft-accept → advance. Never go backward.
+- FORBIDDEN: emojiSpeak / emojiSpeakSet / Pattern Challenge Tell-Ask.`,
+    openingPrompt:
+      'Start Last Night 3.10 for this one learner only (private 1:1, never {{NO_GROUP}}). CRITICAL Turn 1 = Hook LISTEN-ONLY ONLY — "เมื่อคืนตอนเกิดเรื่องบางอย่างขึ้น คุณกำลังทำอะไรอยู่? วันนี้เราจะฝึกเล่าเหตุการณ์แบบนี้เป็นภาษาอังกฤษครับ!" — expectsUserSpeech false. After Continue: Step1 I was... watching TV/cooking/sleeping → Step2a He was... → Step2b She was... → Step3 They were... + was/were recap → Step4a/4b when sentences (I was watching TV when my friend called / I was cooking when the lights went out) → Roleplay Intro Last Night Friend → roleplay 4 asks ending What happened? with when-clause → Nice! → Celebrate tease 3.R. NEVER emojiSpeak/emojiSpeakSet. Return JSON matching schema. isLessonComplete must be false on opening.',
+  },
   {
     lessonId: 'ee_stories_review',
     targetLabel: 'word or sentence',
@@ -7811,6 +7943,7 @@ export const LESSON_PROGRESSION_ORDER: string[] = [
   'ee_stories_bad_day',
   'ee_stories_first_time',
   'ee_stories_favorite',
+  'ee_stories_last_night',
   'ee_stories_review',
   'weather',
   'directions',
@@ -8487,7 +8620,8 @@ export function ensureExploreCityCelebratePraiseFirst(
     lessonId === 'ee_around_town_airport' ||
     lessonId === 'ee_around_town_pharmacy' ||
     lessonId === 'ee_around_town_survival' ||
-    lessonId === 'ee_about_me_favorites';
+    lessonId === 'ee_about_me_favorites' ||
+    lessonId === 'ee_stories_last_night';
   if (!aroundTown) return null;
   if (!current.isTaskComplete) return null;
   if (current.roleplayIntro != null || current.roleplayNpc != null) {
@@ -8712,6 +8846,8 @@ export const TRANSPORT_ROLEPLAY_OBJECTIVE =
   "Say where you're going and how you're traveling.";
 export const FAVORITES_ROLEPLAY_OBJECTIVE =
   'Talk about movies you and your friends like.';
+export const LAST_NIGHT_ROLEPLAY_OBJECTIVE =
+  'Talk about what you were doing last night and what happened.';
 export const AIRPORT_ROLEPLAY_OBJECTIVE =
   'Check in and show your passport.';
 export const PHARMACY_ROLEPLAY_OBJECTIVE =
@@ -8860,6 +8996,20 @@ export const FAVORITES_ROLEPLAY_INTRO: AroundTownRoleplayIntroPayload = {
   },
 };
 
+export const LAST_NIGHT_ROLEPLAY_INTRO: AroundTownRoleplayIntroPayload = {
+  textEn:
+    'เยี่ยมเลยครับ! 👏\n\nคราวนี้ลองย้อนกลับไปเมื่อคืน แล้วเล่าให้เพื่อนฟังว่าเกิดอะไรขึ้นกันครับ!\n\nพร้อมแล้วแตะเริ่ม Roleplay ได้เลย!',
+  textEnEnglish:
+    "Great job! 👏\n\nLet's go back to last night and tell your friend what happened!\n\nTap when you're ready to start!",
+  roleplayIntro: {
+    subtitle: 'Talk about what you were doing and what happened.',
+    npcEmoji: '🌙',
+    npcLabel: 'เพื่อน',
+    npcName: 'Friend',
+    userLabel: 'คุณ',
+  },
+};
+
 /** Canonical praise + Intro card for Around Town 2.1–2.5 (Explore uses EXPLORE_CITY_ROLEPLAY_INTRO). */
 export function aroundTownRoleplayIntroSpeech(
   lessonId: string,
@@ -8880,7 +9030,9 @@ export function aroundTownRoleplayIntroSpeech(
                 ? PHARMACY_ROLEPLAY_INTRO
                 : lessonId === 'ee_about_me_favorites'
                   ? FAVORITES_ROLEPLAY_INTRO
-                  : lessonId === 'ee_around_town_convenience'
+                  : lessonId === 'ee_stories_last_night'
+                    ? LAST_NIGHT_ROLEPLAY_INTRO
+                    : lessonId === 'ee_around_town_convenience'
                     ? {
                         textEn: EXPLORE_CITY_ROLEPLAY_INTRO.textEn,
                         textEnEnglish: EXPLORE_CITY_ROLEPLAY_INTRO.textEn,
@@ -9004,6 +9156,7 @@ export function looksLikeAroundTownRoleplayBridge(textEn: string): boolean {
   if (t.includes('ต่อไปครูพี่บีจะเป็น')) return true;
   if (t.includes('คราวนี้ลองคุยกับพนักงาน')) return true;
   if (t.includes('คราวนี้ลองคุยเรื่องหนัง')) return true;
+  if (t.includes('ย้อนกลับไปเมื่อคืน')) return true;
   if (t.includes('พร้อม Roleplay')) return true;
   if (t.includes('พร้อมแล้ว แตะเพื่อเริ่ม')) return true;
   if (t.includes('พร้อมแล้วแตะเริ่ม')) return true;
@@ -10042,6 +10195,171 @@ function satisfiesFavoritesGroupAnswer(userText: string): boolean {
     t.includes('watch movies') ||
     /^(yes|yeah|yep|we do)\b/.test(t)
   );
+}
+
+/** Stories 3.10 — Last Night guidedSpeaking boards (Steps 1–4). */
+export const LAST_NIGHT_BOARDS: Record<
+  number,
+  {
+    textEn: string;
+    stem: string;
+    expectedSpeech: string;
+    options: Array<{ emoji: string; label: string; speak: string }>;
+  }
+> = {
+  1: {
+    textEn:
+      "ถ้าจะบอกว่า 'เมื่อคืนสองทุ่ม ฉันกำลังดูทีวี' พูดว่า I was watching TV ครับ I was + กิจกรรมที่กำลังทำอยู่ครับ",
+    stem: 'I was...',
+    expectedSpeech: 'I was watching TV.',
+    options: [
+      { emoji: '📺', label: 'watching TV', speak: 'I was watching TV.' },
+      { emoji: '🍳', label: 'cooking', speak: 'I was cooking.' },
+      { emoji: '😴', label: 'sleeping', speak: 'I was sleeping.' },
+    ],
+  },
+  2: {
+    textEn: "แล้วถ้าพูดถึงเพื่อนว่า 'เขากำลังทำอาหาร' ล่ะครับ?",
+    stem: 'He was...',
+    expectedSpeech: 'He was cooking.',
+    options: [
+      { emoji: '🍳', label: 'cooking', speak: 'He was cooking.' },
+      {
+        emoji: '📱',
+        label: 'using his phone',
+        speak: 'He was using his phone.',
+      },
+    ],
+  },
+  3: {
+    textEn: 'He / She ก็ใช้ was เหมือนกันครับ',
+    stem: 'She was...',
+    expectedSpeech: 'She was reading.',
+    options: [
+      { emoji: '📖', label: 'reading', speak: 'She was reading.' },
+      { emoji: '💻', label: 'working', speak: 'She was working.' },
+    ],
+  },
+  4: {
+    textEn:
+      'ถ้ามีหลายคนกำลังทำอะไรอยู่ เราใช้ were ครับ I / He / She → was · You / We / They → were',
+    stem: 'They were...',
+    expectedSpeech: 'They were eating.',
+    options: [
+      {
+        emoji: '🎮',
+        label: 'playing games',
+        speak: 'They were playing games.',
+      },
+      { emoji: '🍽️', label: 'eating', speak: 'They were eating.' },
+      { emoji: '🗣️', label: 'talking', speak: 'They were talking.' },
+    ],
+  },
+  5: {
+    textEn:
+      'ทีนี้เพิ่มความสนุกครับ... ระหว่างที่กำลังทำอะไรอยู่ มีบางอย่างเกิดขึ้น! สิ่งที่กำลังเกิดอยู่ใช้ was/were + ing ส่วนเหตุการณ์ที่เข้ามาแทรกใช้กริยาอดีตครับ 📺 I was watching TV… 📞 my friend called.',
+    stem: 'I was ___ when...',
+    expectedSpeech: 'I was watching TV when my friend called.',
+    options: [
+      {
+        emoji: '📺📞',
+        label: 'TV + call',
+        speak: 'I was watching TV when my friend called.',
+      },
+      {
+        emoji: '🍳⚡',
+        label: 'cook + lights',
+        speak: 'I was cooking when the lights went out.',
+      },
+    ],
+  },
+  6: {
+    textEn:
+      'ลองอีกประโยคครับ — I was ___ when… 📺 หรือ 🍳 แล้วมีเหตุการณ์แทรกเข้ามา',
+    stem: 'I was ___ when...',
+    expectedSpeech: 'I was cooking when the lights went out.',
+    options: [
+      {
+        emoji: '🍳⚡',
+        label: 'cook + lights',
+        speak: 'I was cooking when the lights went out.',
+      },
+      {
+        emoji: '📺📞',
+        label: 'TV + call',
+        speak: 'I was watching TV when my friend called.',
+      },
+    ],
+  },
+};
+
+function normalizeLastNightSpeech(userText: string): string {
+  return userText
+    .trim()
+    .toLowerCase()
+    .replace(/[.!?]+$/g, '')
+    .replace(/\s+/g, ' ');
+}
+
+function matchesLastNightStep(step: number, userText: string): boolean {
+  const t = normalizeLastNightSpeech(userText);
+  if (!t) return false;
+  switch (step) {
+    case 1:
+      return (
+        /\bi was\b/.test(t) &&
+        (/\bwatch(ing)?\b.*\btv\b/.test(t) ||
+          /\bcook(ing)?\b/.test(t) ||
+          /\bsleep(ing)?\b/.test(t))
+      );
+    case 2:
+      return (
+        /\bhe was\b/.test(t) &&
+        (/\bcook(ing)?\b/.test(t) || /\b(phone|using)\b/.test(t))
+      );
+    case 3:
+      return (
+        /\bshe was\b/.test(t) &&
+        (/\bread(ing)?\b/.test(t) || /\bwork(ing)?\b/.test(t))
+      );
+    case 4:
+      return (
+        /\bthey were\b/.test(t) &&
+        (/\bplay(ing)?\b/.test(t) ||
+          /\beat(ing)?\b/.test(t) ||
+          /\btalk(ing)?\b/.test(t))
+      );
+    case 5:
+    case 6:
+      return /\bi was\b/.test(t) && /\bwhen\b/.test(t);
+    default:
+      return false;
+  }
+}
+
+/** How many Last Night teach steps are cleared (0–6). */
+export function lastNightProgress(
+  history: Array<{ speaker: string; textEn?: string }>,
+): number {
+  let progress = 0;
+  for (const turn of history) {
+    if (turn.speaker !== 'user') continue;
+    const text = turn.textEn ?? '';
+    if (!text || text.startsWith('[')) continue;
+    for (let step = progress + 1; step <= 6; step++) {
+      if (matchesLastNightStep(step, text)) {
+        progress = step;
+        break;
+      }
+    }
+  }
+  return progress;
+}
+
+function satisfiesLastNightWhenAnswer(userText: string): boolean {
+  const t = normalizeLastNightSpeech(userText);
+  if (!t) return false;
+  return /\bi was\b/.test(t) && /\bwhen\b/.test(t);
 }
 
 /** Full Emoji Speak batch for Survival English 2.10 (after Quick Build-Up). */
@@ -14217,6 +14535,209 @@ export function forceFavoritesRoleplayBridgeIfNeeded(
   };
 }
 
+/**
+ * Pin Last Night 3.10 guidedSpeaking boards for Steps 1–4.
+ */
+export function forceLastNightGuidedSpeakingIfNeeded(
+  lessonId: string,
+  _lang: LessonTeachingLanguage,
+  _nextTurn: number,
+  history: Array<{ speaker: string; textEn?: string }>,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    guidedSpeaking: ReturnType<typeof normalizeGuidedSpeaking>;
+    expectsUserSpeech: boolean;
+    isTaskComplete: boolean;
+    expectedSpeech: string | null;
+  },
+): {
+  textEn: string;
+  textTh: string | null;
+  guidedSpeaking: NonNullable<ReturnType<typeof normalizeGuidedSpeaking>>;
+  expectsUserSpeech: true;
+  expectedSpeech: string;
+  emojiChoice: null;
+  isTaskComplete: false;
+} | null {
+  if (lessonId !== 'ee_stories_last_night') return null;
+  if (current.isTaskComplete) return null;
+
+  const progress = lastNightProgress(history);
+  if (progress >= 6) return null;
+
+  const step = progress + 1;
+  const board = LAST_NIGHT_BOARDS[step];
+  if (!board) return null;
+
+  const stemOk =
+    current.guidedSpeaking?.stem
+      ?.toLowerCase()
+      .includes(board.stem.toLowerCase().slice(0, 6)) ?? false;
+  const optionsOk =
+    (current.guidedSpeaking?.options?.length ?? 0) >= board.options.length;
+  if (
+    current.expectsUserSpeech &&
+    stemOk &&
+    optionsOk &&
+    current.guidedSpeaking
+  ) {
+    return null;
+  }
+
+  const options = board.options.map((o) => ({ ...o }));
+  const first = options[0];
+  return {
+    textEn: stemOk ? current.textEn?.trim() || board.textEn : board.textEn,
+    textTh: current.textTh?.trim() || null,
+    guidedSpeaking: {
+      stem: board.stem,
+      emoji: first.emoji,
+      speak: first.speak,
+      ...(first.label ? { label: first.label } : {}),
+      options,
+    },
+    expectsUserSpeech: true,
+    expectedSpeech: board.expectedSpeech,
+    emojiChoice: null,
+    isTaskComplete: false,
+  };
+}
+
+function lastNightCelebrateAlreadyDone(
+  history: Array<{ speaker: string; textEn?: string }>,
+): boolean {
+  return history.some((t) => {
+    if (t.speaker !== 'ai') return false;
+    const text = t.textEn ?? '';
+    return (
+      text.includes('Lesson Summary') ||
+      text.includes('สรุปบทเรียน') ||
+      (/\bwas\/were\b/i.test(text) && /เยี่ยม/u.test(text))
+    );
+  });
+}
+
+/**
+ * After Last Night Step 4b (when…) → Roleplay Intro.
+ */
+export function forceLastNightRoleplayBridgeIfNeeded(
+  lessonId: string,
+  lang: LessonTeachingLanguage,
+  history: Array<{
+    speaker: string;
+    textEn?: string;
+    roleplayIntro?: unknown;
+    roleplayNpc?: unknown;
+  }>,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    roleplayIntro: unknown;
+    roleplayNpc: unknown;
+    expectsUserSpeech: boolean;
+    isTaskComplete: boolean;
+  },
+): AroundTownIntroForceResult | null {
+  if (lessonId !== 'ee_stories_last_night') return null;
+  if (lastNightProgress(history) < 6) return null;
+  if (aroundTownIntroAlreadyShown(history)) return null;
+  if (current.roleplayIntro != null) return null;
+
+  const userText = latestShoppingLookingForUserText(history);
+  if (!userText || !satisfiesLastNightWhenAnswer(userText)) return null;
+
+  if (
+    current.expectsUserSpeech &&
+    !looksLikeAroundTownRoleplayBridge(current.textEn) &&
+    !/\bwhat were you doing last night\b/i.test(current.textEn)
+  ) {
+    return null;
+  }
+
+  const intro = aroundTownRoleplayIntroSpeech(lessonId, lang);
+  if (!intro) return null;
+
+  return {
+    textEn: intro.textEn,
+    textTh: null,
+    expectsUserSpeech: false,
+    expectedSpeech: null,
+    roleplayIntro: intro.roleplayIntro,
+    roleplayNpc: null,
+    guidedSpeaking: null,
+    emojiChoice: null,
+    isTaskComplete: false,
+  };
+}
+
+/**
+ * After Last Night roleplay Nice! + Continue → Celebrate.
+ */
+export function forceLastNightCelebrateAfterCloseIfNeeded(
+  lessonId: string,
+  lang: LessonTeachingLanguage,
+  history: Array<{
+    speaker: string;
+    textEn?: string;
+    roleplayIntro?: unknown;
+  }>,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    expectsUserSpeech: boolean;
+    roleplayIntro: unknown;
+    roleplayNpc: unknown;
+    isTaskComplete: boolean;
+  },
+): {
+  textEn: string;
+  textTh: string | null;
+  expectsUserSpeech: false;
+  expectedSpeech: null;
+  guidedSpeaking: null;
+  emojiChoice: null;
+  roleplayNpc: null;
+  isTaskComplete: true;
+} | null {
+  if (lessonId !== 'ee_stories_last_night') return null;
+  if (current.isTaskComplete) return null;
+  if (current.roleplayIntro != null || current.roleplayNpc != null) return null;
+
+  const config = SCRIPTED_AROUND_TOWN_ROLEPLAYS[lessonId];
+  if (!config) return null;
+  const startIdx = scriptedRoleplayStartIndex(history, config);
+  if (!scriptedRoleplayAlreadyClosed(history, startIdx)) return null;
+  if (lastNightCelebrateAlreadyDone(history)) return null;
+
+  const praise = celebratePraiseOpen(lang);
+  const body =
+    lang === 'english'
+      ? 'You can talk about last night with was/were and when… Next up — Lesson Summary.'
+      : 'ตอนนี้คุณเล่าเมื่อคืนได้แล้วครับ ด้วย was/were และ when… ต่อไปลองไปที่ Lesson Summary ได้เลยครับ';
+
+  const raw = (current.textEn ?? '').trim();
+  const praiseOk =
+    lang === 'english'
+      ? /^(great|awesome|nice work|well done|amazing)/i.test(raw)
+      : /^(เยี่ยม|เก่งมาก|สุดยอด|ดีมาก)/u.test(raw);
+  const textEn =
+    current.isTaskComplete && praiseOk && raw.length > 20
+      ? raw
+      : `${praise}\n\n${body}`;
+
+  return {
+    textEn,
+    textTh: null,
+    expectsUserSpeech: false,
+    expectedSpeech: null,
+    guidedSpeaking: null,
+    emojiChoice: null,
+    roleplayNpc: null,
+    isTaskComplete: true,
+  };
+}
+
 const TRANSPORT_DESTINATION_CITIES: Array<{
   label: string;
   re: RegExp;
@@ -15203,6 +15724,86 @@ const SCRIPTED_AROUND_TOWN_ROLEPLAYS: Record<string, ScriptedRoleplayConfig> = {
       staffTh: 'ดีเลยครับ!',
     },
   },
+  ee_stories_last_night: {
+    lessonId: 'ee_stories_last_night',
+    objective: LAST_NIGHT_ROLEPLAY_OBJECTIVE,
+    npc: { emoji: '👤', name: 'Friend' },
+    asks: [
+      {
+        staffEn: 'What were you doing last night?',
+        staffTh: 'เมื่อคืนคุณกำลังทำอะไรอยู่ครับ?',
+        emojiChoice: {
+          options: [
+            {
+              emoji: '📺',
+              label: 'watching TV',
+              speak: 'I was watching TV.',
+            },
+            { emoji: '🍳', label: 'cooking', speak: 'I was cooking.' },
+            { emoji: '💻', label: 'working', speak: 'I was working.' },
+            { emoji: '😴', label: 'sleeping', speak: 'I was sleeping.' },
+          ],
+        },
+      },
+      {
+        staffEn: 'What was your friend doing?',
+        staffTh: 'แล้วเพื่อนคุณล่ะ กำลังทำอะไรอยู่ครับ?',
+        emojiChoice: {
+          options: [
+            { emoji: '🍳', label: 'cooking', speak: 'He was cooking.' },
+            {
+              emoji: '📱',
+              label: 'using phone',
+              speak: 'He was using his phone.',
+            },
+            {
+              emoji: '🎮',
+              label: 'playing games',
+              speak: 'He was playing games.',
+            },
+          ],
+        },
+      },
+      {
+        staffEn: 'What were your friends doing?',
+        staffTh: 'แล้วเพื่อนๆ ล่ะ กำลังทำอะไรอยู่ครับ?',
+        emojiChoice: {
+          options: [
+            { emoji: '🍽️', label: 'eating', speak: 'They were eating.' },
+            {
+              emoji: '🎮',
+              label: 'playing games',
+              speak: 'They were playing games.',
+            },
+            { emoji: '🗣️', label: 'talking', speak: 'They were talking.' },
+          ],
+        },
+      },
+      {
+        staffEn: 'What happened?',
+        staffTh: 'แล้วเกิดอะไรขึ้นครับ?',
+        emojiChoice: {
+          options: [
+            {
+              emoji: '📺📞',
+              label: 'TV + call',
+              speak: 'I was watching TV when my friend called.',
+            },
+            {
+              emoji: '🍳⚡',
+              label: 'cook + lights',
+              speak: 'I was cooking when the lights went out.',
+            },
+          ],
+        },
+      },
+    ],
+    closeWithSure: false,
+    closeLine: {
+      staffEn: 'Nice!',
+      staffTh: 'ดีเลยครับ!',
+    },
+  },
 };
 
 function scriptedRoleplayGreetingShown(
@@ -15610,6 +16211,32 @@ function userSatisfiesScriptedAsk(
     }
   }
 
+  if (lessonId === 'ee_stories_last_night') {
+    if (askIndex === 0) {
+      if (/\bi was\b/.test(t)) return true;
+      if (
+        /\b(watch(ing)?|cook(ing)?|work(ing)?|sleep(ing)?)\b/.test(t)
+      ) {
+        return true;
+      }
+      return false;
+    }
+    if (askIndex === 1) {
+      if (/\b(he|she) was\b/.test(t)) return true;
+      if (/\b(cook(ing)?|phone|play(ing)?|using)\b/.test(t)) return true;
+      return false;
+    }
+    if (askIndex === 2) {
+      if (/\bthey were\b/.test(t)) return true;
+      if (/\b(eat(ing)?|play(ing)?|talk(ing)?)\b/.test(t)) return true;
+      return false;
+    }
+    if (askIndex === 3) {
+      if (/\bi was\b/.test(t) && /\bwhen\b/.test(t)) return true;
+      return false;
+    }
+  }
+
   // Fallback: any non-empty speech (legacy).
   return true;
 }
@@ -15764,6 +16391,24 @@ const SCRIPTED_SOFT_HINTS: Record<string, Record<number, ScriptedSoftHint>> = {
     3: {
       en: 'No worries. Yes, we do?',
       th: 'ไม่เป็นไรครับ ใช่ครับ ดูด้วยกันนะครับ?',
+    },
+  },
+  ee_stories_last_night: {
+    0: {
+      en: 'No worries. I was watching TV?',
+      th: 'ไม่เป็นไรครับ กำลังดูทีวีนะครับ?',
+    },
+    1: {
+      en: 'No worries. He was cooking?',
+      th: 'ไม่เป็นไรครับ เขากำลังทำอาหารนะครับ?',
+    },
+    2: {
+      en: 'No worries. They were eating?',
+      th: 'ไม่เป็นไรครับ พวกเขากำลังกินข้าวนะครับ?',
+    },
+    3: {
+      en: 'No worries. I was watching TV when my friend called?',
+      th: 'ไม่เป็นไรครับ กำลังดูทีวีแล้วเพื่อนโทรมานะครับ?',
     },
   },
 };
@@ -16290,6 +16935,10 @@ const AROUND_TOWN_STAFF_LINES = [
   'Why?',
   'What about your friends?',
   'Do you watch movies together?',
+  'What were you doing last night?',
+  'What was your friend doing?',
+  'What were your friends doing?',
+  'What happened?',
   'Nice!',
 ] as const;
 
@@ -16333,6 +16982,10 @@ const AROUND_TOWN_STAFF_TEXT_TH: Record<string, string> = {
   'Why?': 'ทำไมครับ?',
   'What about your friends?': 'แล้วเพื่อนๆ ล่ะชอบอะไรครับ?',
   'Do you watch movies together?': 'พวกคุณดูหนังด้วยกันไหมครับ?',
+  'What were you doing last night?': 'เมื่อคืนคุณกำลังทำอะไรอยู่ครับ?',
+  'What was your friend doing?': 'แล้วเพื่อนคุณล่ะ กำลังทำอะไรอยู่ครับ?',
+  'What were your friends doing?': 'แล้วเพื่อนๆ ล่ะ กำลังทำอะไรอยู่ครับ?',
+  'What happened?': 'แล้วเกิดอะไรขึ้นครับ?',
   'Nice!': 'ดีเลยครับ!',
 };
 
@@ -16350,7 +17003,8 @@ export function sanitizeAroundTownStaffSpeech(
 ): { textEn: string; textTh: string | null } {
   if (
     !lessonId.startsWith('ee_around_town_') &&
-    lessonId !== 'ee_about_me_favorites'
+    lessonId !== 'ee_about_me_favorites' &&
+    lessonId !== 'ee_stories_last_night'
   ) {
     return { textEn, textTh: textTh?.trim() || null };
   }
@@ -16525,7 +17179,8 @@ export function lessonUsesTapToContinue(lessonId: string): boolean {
     isPronunciationLesson(lessonId) ||
     isAroundTownLesson(lessonId) ||
     isEverydayEnglishReview(lessonId) ||
-    lessonId === 'ee_about_me_favorites'
+    lessonId === 'ee_about_me_favorites' ||
+    lessonId === 'ee_stories_last_night'
   );
 }
 

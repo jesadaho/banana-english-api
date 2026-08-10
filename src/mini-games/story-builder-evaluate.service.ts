@@ -21,7 +21,9 @@ Rules:
   Reject "I have a party" / "I get a gift" → retry.
 - Accept synonyms: gift/present, photo/picture, friends/friend, celebrate/party.
 - Singular/plural and extra details OK if emoji story still fits.
-- Be generous when the learner clearly describes the birthday / party scene shown.
+- Be generous when the learner clearly describes the scene shown.
+- Picture sequences (frames joined by →): grade whether the past-tense story fits the funny story in order.
+  Example: 🎒 → 🏫 → 😱 → 🏃 ≈ forgot bag, went to school, panicked, ran back home.
 
 Return JSON only with field "tier".`;
 
@@ -42,10 +44,12 @@ export class StoryBuilderEvaluateService {
     if (!transcript || !targetEn || !emojiSet) return 'retry';
 
     const userPrompt = [
-      `Emojis: ${emojiSet}`,
+      emojiSet.includes('→')
+        ? `Picture sequence: ${emojiSet}`
+        : `Emojis: ${emojiSet}`,
       `Reference sentence: ${targetEn}`,
       `Learner said (STT): ${transcript}`,
-      'Does the learner sentence relate to the emojis as a past story?',
+      'Does the learner tell a past-tense story that fits the pictures?',
     ].join('\n');
 
     try {
