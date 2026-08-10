@@ -27,6 +27,7 @@ const ALLOWED_MINI_GAME_IDS = new Set([
   'speak_challenge_ee_everyday_life_pharmacy',
   'speak_challenge_ee_everyday_life_survival',
   'speak_challenge_ee_stories_last_weekend',
+  'speak_challenge_ee_stories_vacation',
   'word_choice_ee_about_me_describe',
   'word_choice_ee_around_town_compare',
   'word_choice_ee_stories_yesterday',

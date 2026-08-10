@@ -34,6 +34,9 @@ Rules:
 - Past Simple Q&A (weekend / yesterday stories): accept valid alternatives that answer the question.
   Examples: "I took a photo." / "I took photos." / "I took many photos." — all also_correct for a beach-photo question.
   "Yes!" / "Yeah, I did." ≈ "Yes, I did." · "It was good/great/fun." ≈ "It was great."
+- Vacation / past-story scenes (sentence hint with blank): learner must use PAST TENSE (verb form 2).
+  Reject present tense: "I go to Japan." → retry. Accept: "I flew to Japan." / "I went to Japan." / "I traveled to Japan." for a Japan-travel scene.
+  Different past verbs are OK if meaning fits the scene and key nouns match (Japan, hotel, ramen, beach, etc.).
 - Singular/plural and quantifiers (a / some / many) usually do NOT block also_correct if verb + key noun match.
 - Only use retry when communication would confuse a listener.
 
