@@ -14,6 +14,10 @@ import {
   SpeakChallengeEvaluateService,
   type SpeakChallengeEvalTier,
 } from './speak-challenge-evaluate.service';
+import {
+  StoryBuilderEvaluateService,
+  type StoryBuilderEvalTier,
+} from './story-builder-evaluate.service';
 
 type AuthedRequest = { user: User };
 
@@ -31,6 +35,7 @@ const ALLOWED_MINI_GAME_IDS = new Set([
   'word_choice_ee_about_me_describe',
   'word_choice_ee_around_town_compare',
   'word_choice_ee_stories_yesterday',
+  'story_builder_ee_stories_birthday',
 ]);
 
 class EvaluateSpeakChallengeDto {
@@ -40,12 +45,19 @@ class EvaluateSpeakChallengeDto {
   promptEn?: string;
 }
 
+class EvaluateStoryBuilderDto {
+  transcript!: string;
+  emojiSet!: string;
+  targetEn!: string;
+}
+
 @Controller('mini-games')
 @UseGuards(AnonymousUserGuard)
 export class MiniGamesController {
   constructor(
     private readonly economy: EconomyService,
     private readonly speakChallengeEval: SpeakChallengeEvaluateService,
+    private readonly storyBuilderEval: StoryBuilderEvaluateService,
   ) {}
 
   @Post('speak-challenge/evaluate')
@@ -63,6 +75,27 @@ export class MiniGamesController {
       targetEn,
       promptTh: body.promptTh?.trim(),
       promptEn: body.promptEn?.trim(),
+    });
+    return { tier };
+  }
+
+  @Post('story-builder/evaluate')
+  async evaluateStoryBuilder(@Body() body: EvaluateStoryBuilderDto): Promise<{
+    tier: StoryBuilderEvalTier;
+  }> {
+    const transcript = body.transcript?.trim() ?? '';
+    const emojiSet = body.emojiSet?.trim() ?? '';
+    const targetEn = body.targetEn?.trim() ?? '';
+    if (!transcript || !emojiSet || !targetEn) {
+      throw new BadRequestException(
+        'transcript, emojiSet, and targetEn are required',
+      );
+    }
+
+    const tier = await this.storyBuilderEval.evaluate({
+      transcript,
+      emojiSet,
+      targetEn,
     });
     return { tier };
   }
