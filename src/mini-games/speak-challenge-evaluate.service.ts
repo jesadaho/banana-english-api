@@ -31,6 +31,10 @@ Rules:
 - Ordering: Can I get/have, I'd like, A X please — all fine if the item matches.
 - Articles (a/an/the) and "one" are optional for also_correct / close_enough.
 - Minor STT noise is OK if intent is clear.
+- Past Simple Q&A (weekend / yesterday stories): accept valid alternatives that answer the question.
+  Examples: "I took a photo." / "I took photos." / "I took many photos." — all also_correct for a beach-photo question.
+  "Yes!" / "Yeah, I did." ≈ "Yes, I did." · "It was good/great/fun." ≈ "It was great."
+- Singular/plural and quantifiers (a / some / many) usually do NOT block also_correct if verb + key noun match.
 - Only use retry when communication would confuse a listener.
 
 Return JSON only with field "tier".`;
@@ -45,13 +49,16 @@ export class SpeakChallengeEvaluateService {
     transcript: string;
     targetEn: string;
     promptTh?: string;
+    promptEn?: string;
   }): Promise<SpeakChallengeEvalTier> {
     const transcript = params.transcript.trim();
     const targetEn = params.targetEn.trim();
     if (!transcript || !targetEn) return 'retry';
 
     const promptTh = params.promptTh?.trim();
+    const promptEn = params.promptEn?.trim();
     const userPrompt = [
+      promptEn ? `English question: ${promptEn}` : null,
       promptTh ? `Thai prompt: ${promptTh}` : null,
       `Reference answer: ${targetEn}`,
       `Learner said (STT): ${transcript}`,

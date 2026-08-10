@@ -21,17 +21,22 @@ type AuthedRequest = { user: User };
 const ALLOWED_MINI_GAME_IDS = new Set([
   'emoji_speak_first_contact',
   'speak_challenge_ee_everyday_life_1',
+  'speak_challenge_ee_about_me_social',
+  'speak_challenge_ee_about_me_weather',
   'speak_challenge_ee_everyday_life_hotel',
   'speak_challenge_ee_everyday_life_pharmacy',
   'speak_challenge_ee_everyday_life_survival',
+  'speak_challenge_ee_stories_last_weekend',
   'word_choice_ee_about_me_describe',
   'word_choice_ee_around_town_compare',
+  'word_choice_ee_stories_yesterday',
 ]);
 
 class EvaluateSpeakChallengeDto {
   transcript!: string;
   targetEn!: string;
   promptTh?: string;
+  promptEn?: string;
 }
 
 @Controller('mini-games')
@@ -56,6 +61,7 @@ export class MiniGamesController {
       transcript,
       targetEn,
       promptTh: body.promptTh?.trim(),
+      promptEn: body.promptEn?.trim(),
     });
     return { tier };
   }
