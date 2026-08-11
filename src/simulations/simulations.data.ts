@@ -736,36 +736,36 @@ Keep replies under 15 words. Accept because / so patterns.`,
     missionNumber: 8,
     missionTitleTh: 'เมื่อคืนคุณกำลังทำอะไรอยู่',
     scenarioTh:
-      'เช้าวันนี้คุณกำลังคุยกับเพื่อนเรื่องเมื่อคืน เพื่อนอยากรู้ว่าคุณกำลังทำอะไรอยู่ และเกิดอะไรขึ้นระหว่างคืนนั้น คุณต้องเล่าเหตุการณ์เมื่อคืนให้เพื่อนฟัง',
+      'เช้าวันนี้คุณกำลังคุยกับเพื่อนเรื่องเมื่อคืน ต่างคนต่างเล่าว่ากำลังทำอะไรอยู่ และเกิดอะไรขึ้นระหว่างนั้น',
     goalsTh: [
-      'บอกว่าตัวเองกำลังทำอะไร',
-      'ถามว่าเพื่อนกำลังทำอะไร',
-      'เล่าเหตุการณ์ที่เกิดขึ้นแทรก',
-      'เล่าให้จบว่าเมื่อคืนเกิดอะไรขึ้น',
+      'ตอบว่าเมื่อคืนกำลังทำอะไร',
+      'ถามว่าเพื่อนเมื่อคืนกำลังทำอะไร',
+      'ถามว่าอีกคนกำลังทำอะไร',
+      'ถามว่าเกิดอะไรขึ้น',
     ],
     goalsEn: [
-      'Say what you were doing',
-      'Ask what your friend was doing',
-      'Tell what happened in the middle',
-      'Finish the story about last night',
+      'Say what you were doing last night',
+      'Ask what your friend was doing last night',
+      'Ask what someone else was doing',
+      'Ask what happened',
     ],
     difficulty: 'easy',
     estimatedMinutes: 8,
     bananaCost: 1,
     systemInstruction:
-      `${AI_LEAD} You are Sam, a friend chatting over coffee about last night. Follow this arc (one topic per turn):
-1) Ask what they were doing last night (Past Continuous: I was watching TV, I was cooking).
-2) After they answer, briefly say what you were doing, then ask them back if they have not asked yet.
-3) Ask if anything happened while they were doing that — guide I was … when … (e.g. when my friend called, when the lights went out).
-4) React to their full story and close warmly (e.g. "Wow, what a night!").
-Keep replies under 15 words. Accept was/were + V-ing and when-clauses.`,
+      `${AI_LEAD} You are Sam, a friend chatting about last night. Follow this arc closely (one step per turn, wait for the learner before moving on):
+1) Open by asking what they were doing last night. When they answer with Past Continuous (e.g. "I was watching TV."), react warmly: "Oh, nice!"
+2) Wait for them to ask you: "What were you doing last night?" Then answer: "I was cooking dinner."
+3) Mention your brother was home too. Wait for them to ask: "What was your brother doing?" Then answer: "He was playing games."
+4) Wait for them to ask: "What happened?" Then answer: "The lights went out." Close warmly (e.g. "What a night!").
+Do NOT skip or reorder these steps. Keep every reply under 15 words. Accept natural Past Continuous variants.`,
     openingPrompt:
-      'Start the simulation. Open as Sam, a friend chatting in the morning. Follow this closely: "Good morning! So, what were you doing last night?" Do not add extra questions on this first turn.',
+      'Start the simulation. Open as Sam, a friend chatting in the morning about last night. Follow this closely: "Good morning! What were you doing last night?" Do not answer for the learner or ask anything else on this first turn.',
     successCriteria: [
       'said_what_doing',
       'asked_friend_doing',
-      'told_interruption_event',
-      'finished_last_night_story',
+      'asked_someone_else_doing',
+      'asked_what_happened',
     ],
     maxTurns: 14,
     vocabDrill: [
