@@ -82,3 +82,67 @@ export class TurnDto {
   @Min(0)
   remainingSeconds?: number;
 }
+
+class SttWordMetricDto {
+  @IsString()
+  word!: string;
+
+  @IsOptional()
+  @Type(() => Number)
+  start?: number;
+
+  @IsOptional()
+  @Type(() => Number)
+  end?: number;
+
+  @IsOptional()
+  @Type(() => Number)
+  segmentAvgLogprob?: number;
+}
+
+class TurnSpeakingMetricsDto {
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  @Min(0)
+  responseLatencyMs?: number;
+
+  @Type(() => Number)
+  @IsInt()
+  @Min(0)
+  micDurationMs!: number;
+
+  @Type(() => Number)
+  @IsInt()
+  @Min(0)
+  wordCount!: number;
+
+  @IsBoolean()
+  usedHint!: boolean;
+
+  @IsBoolean()
+  attempted!: boolean;
+
+  @IsOptional()
+  @IsString()
+  transcript?: string;
+
+  @IsOptional()
+  @Type(() => SttWordMetricDto)
+  sttWords?: SttWordMetricDto[];
+
+  @IsOptional()
+  @IsString({ each: true })
+  mispronouncedWords?: string[];
+}
+
+class SpeakingMetricsDto {
+  @Type(() => TurnSpeakingMetricsDto)
+  turns!: TurnSpeakingMetricsDto[];
+}
+
+export class EndSessionDto {
+  @IsOptional()
+  @Type(() => SpeakingMetricsDto)
+  speakingMetrics?: SpeakingMetricsDto;
+}

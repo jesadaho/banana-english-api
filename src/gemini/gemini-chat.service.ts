@@ -2372,6 +2372,123 @@ Payment closure (critical — no tap UI exists):
     };
   }
 
+  /** Count grammar errors across learner transcripts (stats only — no scores). */
+  async generateGrammarStats(transcripts: string[]): Promise<{
+    grammar_errors: number;
+    sentence_count: number;
+  }> {
+    const text = transcripts.filter((t) => t.trim()).join('\n');
+    if (!text.trim()) {
+      return { grammar_errors: 0, sentence_count: 0 };
+    }
+
+    const schema = {
+      type: 'object',
+      properties: {
+        grammar_errors: { type: 'integer' },
+        sentence_count: { type: 'integer' },
+      },
+      required: ['grammar_errors', 'sentence_count'],
+    };
+
+    return this.generateJson<{ grammar_errors: number; sentence_count: number }>({
+      systemInstruction: `You count grammar errors in English learner speech transcripts.
+Return ONLY structured counts — never a score or rating.
+Count each distinct grammar mistake once (subject-verb agreement, wrong tense, missing article, etc.).
+sentence_count = number of complete or partial sentences the learner attempted.
+Ignore spelling/STT artifacts unless they change grammar meaning.`,
+      contents: [
+        {
+          role: 'user',
+          parts: [{ text: `Learner transcripts:\n${text}` }],
+        },
+      ],
+      schema,
+      maxOutputTokens: 128,
+      temperature: 0.1,
+    });
+  }
+
+  /** Count vocabulary relevance/specificity signals (stats only — no scores). */
+  async generateVocabularyStats(params: {
+    transcripts: string[];
+    scenarioTh: string;
+    goalsEn: string[];
+    vocabDrillWords: string[];
+  }): Promise<{
+    content_word_count: number;
+    relevant_content_word_count: number;
+    specific_content_word_count: number;
+    repetition_count: number;
+  }> {
+    const text = params.transcripts.filter((t) => t.trim()).join('\n');
+    if (!text.trim()) {
+      return {
+        content_word_count: 0,
+        relevant_content_word_count: 0,
+        specific_content_word_count: 0,
+        repetition_count: 0,
+      };
+    }
+
+    const schema = {
+      type: 'object',
+      properties: {
+        content_word_count: { type: 'integer' },
+        relevant_content_word_count: { type: 'integer' },
+        specific_content_word_count: { type: 'integer' },
+        repetition_count: { type: 'integer' },
+      },
+      required: [
+        'content_word_count',
+        'relevant_content_word_count',
+        'specific_content_word_count',
+        'repetition_count',
+      ],
+    };
+
+    const goals = params.goalsEn.map((g) => `- ${g}`).join('\n');
+    const vocab = params.vocabDrillWords.map((w) => `- ${w}`).join('\n');
+
+    return this.generateJson<{
+      content_word_count: number;
+      relevant_content_word_count: number;
+      specific_content_word_count: number;
+      repetition_count: number;
+    }>({
+      systemInstruction: `You analyze vocabulary in English learner mission transcripts.
+Return ONLY structured counts — never a score or rating.
+
+Rules:
+- Count ONLY content words (nouns, verbs, adjectives, adverbs) for all three *_content_word_count fields.
+- Exclude function words from denominators: I, me, my, a, an, the, is, are, was, were, to, for, of, in, on, at, with, please, thanks, would, like, want, need, can, could, should, etc.
+- relevant_content_word_count: content words suited to the mission scenario/goals.
+- specific_content_word_count: precise/domain word choice vs generic ("iced latte" not "drink").
+- repetition_count: redundant repeats of the same content word across the session.
+- Do not penalize grammar/function words in content_word_count.`,
+      contents: [
+        {
+          role: 'user',
+          parts: [
+            {
+              text: `Scenario (Thai): ${params.scenarioTh}
+Goals:
+${goals}
+Mission vocabulary:
+${vocab}
+
+Learner transcripts:
+${text}`,
+            },
+          ],
+        },
+      ],
+      schema,
+      maxOutputTokens: 256,
+      temperature: 0.1,
+    });
+  }
+
   /** Fast utterance grading for Speak Challenge mini-game. */
   async evaluateSpeakChallengeUtterance(params: {
     systemInstruction: string;

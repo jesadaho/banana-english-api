@@ -248,6 +248,69 @@ export interface StoredChatTurn {
   feedback?: TurnFeedback | null;
 }
 
+export interface SttWordMetric {
+  word: string;
+  start?: number;
+  end?: number;
+  segmentAvgLogprob?: number;
+}
+
+export interface TurnSpeakingMetrics {
+  responseLatencyMs?: number;
+  micDurationMs: number;
+  wordCount: number;
+  usedHint: boolean;
+  attempted: boolean;
+  transcript?: string;
+  sttWords?: SttWordMetric[];
+  mispronouncedWords?: string[];
+}
+
+export interface SpeakingMetricsPayload {
+  turns: TurnSpeakingMetrics[];
+}
+
+export interface SpeakingSkills {
+  pronunciation: number;
+  fluency: number;
+  confidence: number;
+  vocabulary: number;
+  grammar: number;
+}
+
+export interface SpeakingSkillBreakdown {
+  pronunciation?: { recognitionRate: number };
+  fluency?: {
+    continuityProxy: number;
+    responseLatency: number;
+    completion: number;
+    wps: number;
+  };
+  confidence?: {
+    hintIndependence: number;
+    completion: number;
+    attemptRate: number;
+    hintRate: number;
+  };
+  vocabulary?: {
+    variety: number;
+    relevance: number;
+    specificity: number;
+  };
+}
+
+export interface GrammarStats {
+  grammar_errors: number;
+  sentence_count: number;
+}
+
+export interface VocabularyStats {
+  content_word_count: number;
+  relevant_content_word_count: number;
+  specific_content_word_count: number;
+  repetition_count: number;
+}
+
 export interface GptReport {
   feedbackEn: string;
   feedbackTh: string;
@@ -299,6 +362,10 @@ export interface MissionResultResponse extends GptReport {
   conversationSummaryEn?: string;
   conversationSummaryTh?: string;
   memories?: string[];
+  /** Post-mission speaking skill radar (simulation missions). */
+  speakingSkills?: SpeakingSkills;
+  speakingSkillBreakdown?: SpeakingSkillBreakdown;
+  speakingMetrics?: SpeakingMetricsPayload;
 }
 
 export interface ActivityItemResponse {

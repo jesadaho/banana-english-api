@@ -45,6 +45,34 @@ type StoredReportJson = {
   missionTitleTh?: string;
   topicId?: string;
   checkpointSummary?: Record<string, boolean>;
+  speakingMetrics?: unknown;
+  speakingSkills?: {
+    pronunciation: number;
+    fluency: number;
+    confidence: number;
+    vocabulary: number;
+    grammar: number;
+  };
+  speakingSkillBreakdown?: {
+    pronunciation?: { recognitionRate: number };
+    fluency?: {
+      continuityProxy: number;
+      responseLatency: number;
+      completion: number;
+      wps: number;
+    };
+    confidence?: {
+      hintIndependence: number;
+      completion: number;
+      attemptRate: number;
+      hintRate: number;
+    };
+    vocabulary?: {
+      variety: number;
+      relevance: number;
+      specificity: number;
+    };
+  };
   turns?: Array<{
     speaker: 'user' | 'ai';
     textEn: string;

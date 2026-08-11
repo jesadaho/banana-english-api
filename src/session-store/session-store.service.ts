@@ -10,6 +10,7 @@ import type {
   GptIntroReport,
   LessonScene,
   SessionType,
+  SpeakingMetricsPayload,
 } from '../common/api.types';
 import type { SimulationConfig } from '../simulations/simulations.data';
 import { initCheckpointStates } from '../simulations/simulations.data';
@@ -132,6 +133,8 @@ export interface SessionData {
   hintsUsed: number;
   /** True if Thai Mix was used on any turn. */
   thaiMixUsed: boolean;
+  /** Client-collected per-turn metrics for speaking assessment (simulations). */
+  speakingMetrics?: SpeakingMetricsPayload;
 }
 
 @Injectable()
@@ -316,6 +319,14 @@ export class SessionStoreService {
   setIntroReport(sessionId: string, report: GptIntroReport): void {
     const data = this.require(sessionId);
     data.introReport = report;
+  }
+
+  setSpeakingMetrics(
+    sessionId: string,
+    metrics: SpeakingMetricsPayload,
+  ): void {
+    const data = this.require(sessionId);
+    data.speakingMetrics = metrics;
   }
 
   private require(sessionId: string): SessionData {

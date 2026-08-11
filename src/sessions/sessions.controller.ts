@@ -30,6 +30,12 @@ import {
   TAP_TO_CONTINUE_SENTINEL,
   TAP_TO_CONTINUE_TURN_TEXT,
 } from '../common/api.types';
+import { EndSessionDto } from './dto/sessions.dto';
+import {
+  computeSpeakingAssessment,
+  type SpeakingAssessmentResult,
+} from './speaking-assessment.service';
+import type { SpeakingMetricsPayload } from '../common/api.types';
 import {
   ChatTurn,
   SessionStoreService,
@@ -2281,11 +2287,22 @@ export class SessionsController {
   async endSession(
     @Req() req: AuthedRequest,
     @Param('sessionId') sessionId: string,
+    @Body() body: EndSessionDto,
   ) {
     const data = this.sessionStore.get(sessionId);
     if (!data) {
       throw new NotFoundException('Session not found');
     }
+
+    if (
+      body.speakingMetrics?.turns?.length &&
+      data.session.sessionType === 'simulation'
+    ) {
+      this.sessionStore.setSpeakingMetrics(sessionId, {
+        turns: body.speakingMetrics.turns,
+      });
+    }
+
     this.sessionStore.markEnded(sessionId);
 
     if (data.session.topicId === 'intro') {
@@ -2484,6 +2501,14 @@ export class SessionsController {
 
         const report = await this.chat.generateReport(data.turns, duration);
 
+        let speakingAssessment: SpeakingAssessmentResult | undefined;
+        if (data.speakingMetrics?.turns?.length && data.simulationConfig) {
+          speakingAssessment = await this.buildSpeakingAssessment(
+            data.speakingMetrics,
+            data.simulationConfig,
+          );
+        }
+
         const userSession = await this.prisma.userSession.findUnique({
           where: { id: sessionId },
         });
@@ -2557,6 +2582,10 @@ export class SessionsController {
                     topicId: config.simulationId,
                     checkpointSummary: checkpoints,
                     turns: textTurns,
+                    speakingMetrics: data.speakingMetrics,
+                    speakingSkills: speakingAssessment?.speakingSkills,
+                    speakingSkillBreakdown:
+                      speakingAssessment?.speakingSkillBreakdown,
                   }),
                 ) as Prisma.InputJsonValue,
               },
@@ -2599,6 +2628,9 @@ export class SessionsController {
           seriesTitleTh: series?.titleTh,
           completedAt: (userSession?.completedAt ?? ended).toISOString(),
           turns: textTurns,
+          speakingSkills: speakingAssessment?.speakingSkills,
+          speakingSkillBreakdown: speakingAssessment?.speakingSkillBreakdown,
+          speakingMetrics: data.speakingMetrics,
         };
       }
 
@@ -2738,7 +2770,36 @@ export class SessionsController {
       seriesTitleTh: series?.titleTh,
       completedAt: userSession.completedAt?.toISOString(),
       turns: stored.turns ?? [],
+      speakingSkills: stored.speakingSkills,
+      speakingSkillBreakdown: stored.speakingSkillBreakdown,
+      speakingMetrics: stored.speakingMetrics as SpeakingMetricsPayload | undefined,
     };
+  }
+
+  private async buildSpeakingAssessment(
+    metrics: SpeakingMetricsPayload,
+    config: import('../simulations/simulations.data').SimulationConfig,
+  ): Promise<SpeakingAssessmentResult> {
+    const transcripts = metrics.turns
+      .map((t) => t.transcript?.trim() ?? '')
+      .filter((t) => t.length > 0);
+
+    const [grammarStats, vocabularyStats] = await Promise.all([
+      this.chat.generateGrammarStats(transcripts),
+      this.chat.generateVocabularyStats({
+        transcripts,
+        scenarioTh: config.scenarioTh,
+        goalsEn: config.goalsEn,
+        vocabDrillWords: config.vocabDrill.map((v) => v.word),
+      }),
+    ]);
+
+    return computeSpeakingAssessment({
+      metrics,
+      simulationConfig: config,
+      grammarStats,
+      vocabularyStats,
+    });
   }
 }
 
