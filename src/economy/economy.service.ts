@@ -516,6 +516,7 @@ export class EconomyService {
     ratingLabel: string;
     streakDays: number;
     previousStreakDays: number;
+    streakIncreased: boolean;
     dailySpeakCount: number;
     balances: UserBalances;
     isDailyMission: boolean;
@@ -564,6 +565,10 @@ export class EconomyService {
             ? user.streakDays
             : streakDays,
           previousStreakDays,
+          streakIncreased:
+            (isSameDateKey(user.lastSessionDate, todayKey)
+                ? user.streakDays
+                : streakDays) !== previousStreakDays,
           dailySpeakCount:
             (user as User & { dailySpeakCount?: number }).dailySpeakCount ?? 0,
           balances: this.toBalances(user),
@@ -608,6 +613,7 @@ export class EconomyService {
         ratingLabel: 'Speak Today',
         streakDays,
         previousStreakDays,
+        streakIncreased: streakDays !== previousStreakDays,
         dailySpeakCount:
           (updated as typeof updated & { dailySpeakCount?: number })
             .dailySpeakCount ??

@@ -458,6 +458,8 @@ export interface SessionRewardSummary {
   ratingLabel: string;
   streakDays: number;
   previousStreakDays: number;
+  /** True when this reward application changed the user's streak count. */
+  streakIncreased?: boolean;
   streakBonus?: { days: number; seedsEarned: number };
   balances: { bananas: number; xp: number; seeds: number };
   isDailyMission: boolean;
