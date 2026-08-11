@@ -42,6 +42,7 @@ const ALLOWED_MINI_GAME_IDS = new Set([
   'story_builder_ee_stories_birthday',
   'story_builder_ee_stories_funny',
   'story_builder_ee_stories_favorite',
+  'whats_happen_ee_stories_bad_day',
 ]);
 
 class EvaluateSpeakChallengeDto {

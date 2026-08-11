@@ -27,6 +27,10 @@ const ACTIVITY_TITLE_EN: Record<string, string> = {
   meet_new_friend_easy: 'Meet a New Friend',
   join_english_club_easy: 'Join an English Club',
   small_talk_easy: 'Talk About Yourself',
+  talk_about_trip_easy: 'Talk About Your Trip',
+  catch_up_old_friend_easy: 'Catch Up With an Old Friend',
+  explain_what_happened_easy: 'Explain What Happened',
+  what_were_you_doing_easy: 'What Were You Doing?',
 };
 
 type StoredReportJson = {

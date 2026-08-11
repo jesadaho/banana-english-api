@@ -592,6 +592,190 @@ Keep turns short and beginner-friendly. Accept natural variants. Do NOT skip, re
       { word: 'Enjoy', pronunciation: 'เอ็น-จอย', meaningTh: 'สนุก / ชอบ' },
     ],
   },
+  {
+    simulationId: 'talk_about_trip_easy',
+    title: 'เล่าเรื่องทริป',
+    missionNumber: 4,
+    missionTitleTh: 'เล่าเรื่องทริปของคุณ',
+    scenarioTh:
+      'คุณเพิ่งกลับจากทริป เพื่อนอยากรู้ว่าคุณไปไหนมา ทำอะไรบ้าง และทริปเป็นอย่างไร นี่เป็นโอกาสให้คุณเล่าเรื่องทริปและฝึกพูดภาษาอังกฤษกับเพื่อน',
+    goalsTh: [
+      'บอกว่าไปที่ไหน',
+      'เล่าว่าทำอะไร',
+      'บอกความรู้สึกเกี่ยวกับทริป',
+      'ตอบคำถามเพื่อนให้จบการสนทนา',
+    ],
+    goalsEn: [
+      'Say where you went',
+      'Talk about what you did',
+      'Share how you felt about the trip',
+      "Answer your friend's questions to wrap up",
+    ],
+    difficulty: 'easy',
+    estimatedMinutes: 8,
+    bananaCost: 1,
+    systemInstruction:
+      `${AI_LEAD} You are Jamie, a friendly friend excited to hear about the learner's trip. They just got back. Follow this arc (one topic per turn, wait for answers):
+1) Welcome them back and ask where they went (Past Simple: went, visited).
+2) Ask what they did there (hiked, stayed, ate, took photos).
+3) Ask how the trip felt (fun, amazing, tired, relaxing).
+4) Ask one short follow-up about something they said, react warmly, then close (e.g. "Sounds amazing! Glad you're back!").
+Keep replies under 15 words. Accept natural Past Simple variants.`,
+    openingPrompt:
+      'Start the simulation. Open as Jamie, a friend greeting someone who just returned from a trip. Follow this closely: "Hey! Welcome back! How was your trip?" Do not ask where they went yet on this first turn.',
+    successCriteria: [
+      'said_where_went',
+      'talked_about_activities',
+      'shared_feelings',
+      'answered_friend_questions',
+    ],
+    maxTurns: 12,
+    vocabDrill: [
+      { word: 'Went', pronunciation: 'เวนท์', meaningTh: 'ไป (อดีตของ go)' },
+      { word: 'Visited', pronunciation: 'วิ-ซิ-เทด', meaningTh: 'ไปเยี่ยม / ไปเที่ยว' },
+      { word: 'Stayed', pronunciation: 'สเตด', meaningTh: 'พักอยู่' },
+      { word: 'Had fun', pronunciation: 'แฮด-ฟัน', meaningTh: 'สนุก / มีความสุข' },
+      { word: 'Photos', pronunciation: 'โฟ-โทส', meaningTh: 'รูปถ่าย' },
+    ],
+  },
+  {
+    simulationId: 'catch_up_old_friend_easy',
+    title: 'เจอเพื่อนเก่า',
+    missionNumber: 5,
+    missionTitleTh: 'คุยกับเพื่อนเก่าที่ไม่ได้เจอนาน',
+    scenarioTh:
+      'คุณบังเอิญเจอเพื่อนเก่าที่ไม่ได้เจอกันมานาน เพื่อนชวนคุยถึงเรื่องสมัยเรียนและสิ่งที่เคยทำด้วยกัน คุณมีโอกาสเล่าความทรงจำเก่า ๆ และถามไถ่เพื่อนกลับ',
+    goalsTh: [
+      'เล่าว่าช่วงที่ผ่านมาเป็นอย่างไร',
+      'เล่าว่าสมัยเรียนเคยทำอะไร',
+      'บอกสิ่งที่ชอบ/ไม่ชอบในตอนนั้น',
+      'ถามเพื่อนกลับ',
+    ],
+    goalsEn: [
+      'Talk about how life has been lately',
+      'Share what you did in school',
+      'Say what you liked or disliked back then',
+      'Ask your friend questions back',
+    ],
+    difficulty: 'easy',
+    estimatedMinutes: 8,
+    bananaCost: 1,
+    systemInstruction:
+      `${AI_LEAD} You are Alex, an old school friend the learner has not seen in years. You bumped into each other. Follow this arc (one topic per turn):
+1) Express surprise, catch up briefly — ask how life has been lately (work, study, where they live now).
+2) Bring up school days — ask what they remember doing together or in class (Past Simple).
+3) Ask what they liked or did not like about school back then.
+4) After they answer, share one short memory of your own, then invite them to ask you something back. React warmly and close.
+Keep it nostalgic and friendly. Replies under 15 words.`,
+    openingPrompt:
+      'Start the simulation. Open as Alex, an old school friend who just bumped into the learner. Follow this closely: "Oh my gosh! Is that you? It\'s Alex! Long time no see!" Do not ask any follow-up questions on this first turn.',
+    successCriteria: [
+      'talked_about_recent_life',
+      'shared_school_memories',
+      'shared_likes_dislikes',
+      'asked_friend_back',
+    ],
+    maxTurns: 14,
+    vocabDrill: [
+      { word: 'Remember', pronunciation: 'รี-เมม-เบอร์', meaningTh: 'จำได้ / นึกถึง' },
+      { word: 'Classmate', pronunciation: 'คลาส-เมท', meaningTh: 'เพื่อนร่วมชั้น' },
+      { word: 'Used to', pronunciation: 'ยูส-ทู', meaningTh: 'เคย (ทำอะไร)' },
+      { word: 'Favorite', pronunciation: 'เฟ-vor-อิท', meaningTh: 'ที่ชอบที่สุด' },
+      { word: 'Long time no see', pronunciation: 'ลอง-ไทม์-โน-ซี', meaningTh: 'ไม่ได้เจอกันนานเลย' },
+    ],
+  },
+  {
+    simulationId: 'explain_what_happened_easy',
+    title: 'อธิบายเรื่องที่เกิดขึ้น',
+    missionNumber: 7,
+    missionTitleTh: 'อธิบายว่าเกิดอะไรขึ้น',
+    scenarioTh:
+      'วันนี้คุณมาสายและมีเรื่องไม่คาดคิดเกิดขึ้นระหว่างทาง เพื่อนร่วมงานถามว่าเกิดอะไรขึ้น คุณต้องอธิบายว่าเกิดอะไรขึ้น ทำไมถึงมาสาย และบอกว่าคุณรู้สึกอย่างไร',
+    goalsTh: [
+      'บอกว่าเกิดอะไรขึ้น',
+      'อธิบายสาเหตุ',
+      'บอกว่าคุณแก้ปัญหาอย่างไร',
+      'บอกความรู้สึกตอนนั้น',
+    ],
+    goalsEn: [
+      'Say what happened',
+      'Explain why',
+      'Say how you fixed the problem',
+      'Share how you felt',
+    ],
+    difficulty: 'easy',
+    estimatedMinutes: 8,
+    bananaCost: 1,
+    systemInstruction:
+      `${AI_LEAD} You are Taylor, a friendly coworker. The learner arrived late after a chaotic morning. Follow this arc (one topic per turn):
+1) Notice they are late — ask what happened (What happened?).
+2) Ask why it happened — guide them to use because / so (e.g. traffic, missed bus, rain).
+3) Ask how they solved it or what they did next.
+4) Ask how they felt (stressed, tired, worried, relieved). React with empathy and close warmly.
+Keep replies under 15 words. Accept because / so patterns.`,
+    openingPrompt:
+      'Start the simulation. Open as Taylor, a coworker noticing the learner is late. Follow this closely: "Hey, you\'re late! Is everything okay?" Do not ask for details yet on this first turn.',
+    successCriteria: [
+      'explained_what_happened',
+      'explained_cause',
+      'explained_solution',
+      'shared_feelings',
+    ],
+    maxTurns: 12,
+    vocabDrill: [
+      { word: 'Late', pronunciation: 'เลท', meaningTh: 'สาย' },
+      { word: 'Because', pronunciation: 'บี-คอส', meaningTh: 'เพราะว่า' },
+      { word: 'Traffic', pronunciation: 'แทรฟ-ฟิก', meaningTh: 'รถติด' },
+      { word: 'Missed the bus', pronunciation: 'มิสท์-ดะ-บัส', meaningTh: 'พลาดรถเมล์' },
+      { word: 'Stressed', pronunciation: 'สเตรสท', meaningTh: 'เครียด' },
+    ],
+  },
+  {
+    simulationId: 'what_were_you_doing_easy',
+    title: 'เมื่อคืนทำอะไรอยู่',
+    missionNumber: 8,
+    missionTitleTh: 'เมื่อคืนคุณกำลังทำอะไรอยู่',
+    scenarioTh:
+      'เช้าวันนี้คุณกำลังคุยกับเพื่อนเรื่องเมื่อคืน เพื่อนอยากรู้ว่าคุณกำลังทำอะไรอยู่ และเกิดอะไรขึ้นระหว่างคืนนั้น คุณต้องเล่าเหตุการณ์เมื่อคืนให้เพื่อนฟัง',
+    goalsTh: [
+      'บอกว่าตัวเองกำลังทำอะไร',
+      'ถามว่าเพื่อนกำลังทำอะไร',
+      'เล่าเหตุการณ์ที่เกิดขึ้นแทรก',
+      'เล่าให้จบว่าเมื่อคืนเกิดอะไรขึ้น',
+    ],
+    goalsEn: [
+      'Say what you were doing',
+      'Ask what your friend was doing',
+      'Tell what happened in the middle',
+      'Finish the story about last night',
+    ],
+    difficulty: 'easy',
+    estimatedMinutes: 8,
+    bananaCost: 1,
+    systemInstruction:
+      `${AI_LEAD} You are Sam, a friend chatting over coffee about last night. Follow this arc (one topic per turn):
+1) Ask what they were doing last night (Past Continuous: I was watching TV, I was cooking).
+2) After they answer, briefly say what you were doing, then ask them back if they have not asked yet.
+3) Ask if anything happened while they were doing that — guide I was … when … (e.g. when my friend called, when the lights went out).
+4) React to their full story and close warmly (e.g. "Wow, what a night!").
+Keep replies under 15 words. Accept was/were + V-ing and when-clauses.`,
+    openingPrompt:
+      'Start the simulation. Open as Sam, a friend chatting in the morning. Follow this closely: "Good morning! So, what were you doing last night?" Do not add extra questions on this first turn.',
+    successCriteria: [
+      'said_what_doing',
+      'asked_friend_doing',
+      'told_interruption_event',
+      'finished_last_night_story',
+    ],
+    maxTurns: 14,
+    vocabDrill: [
+      { word: 'Last night', pronunciation: 'ลาสท-ไนท์', meaningTh: 'เมื่อคืน' },
+      { word: 'Was watching', pronunciation: 'วอส-วอช-ชิง', meaningTh: 'กำลังดู (อดีต)' },
+      { word: 'Was cooking', pronunciation: 'วอส-คุ-กิง', meaningTh: 'กำลังทำอาหาร' },
+      { word: 'When', pronunciation: 'เวน', meaningTh: 'เมื่อ / ตอนที่' },
+      { word: 'What were you doing?', pronunciation: 'ว็อท-เวอร์-ยู-ดู-อิง', meaningTh: 'คุณกำลังทำอะไรอยู่?' },
+    ],
+  },
 ];
 
 const LEGACY_TOPIC_TO_SIMULATION: Record<string, string> = {

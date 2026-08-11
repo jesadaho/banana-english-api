@@ -5,13 +5,14 @@ RUN apk add --no-cache openssl
 
 WORKDIR /app
 
+# prisma/ must exist before npm install (no postinstall — generate runs explicitly below).
 COPY package.json ./
+COPY prisma ./prisma
 RUN npm install
 
 COPY . .
 RUN npx prisma generate
 RUN npm run build
-# nest build silently relocates output if any .ts outside src/ is compiled
 RUN test -f dist/main.js
 
 # Production stage
@@ -24,9 +25,8 @@ WORKDIR /app
 ENV NODE_ENV=production
 
 COPY package.json ./
-RUN npm install --omit=dev
-
 COPY prisma ./prisma
+RUN npm install --omit=dev
 RUN npx prisma generate
 
 COPY --from=builder /app/dist ./dist

@@ -36,6 +36,8 @@ export const SERIES: SeriesConfig[] = [
       'meet_new_friend_easy',
       'small_talk_easy',
       'join_english_club_easy',
+      'talk_about_trip_easy',
+      'catch_up_old_friend_easy',
     ],
   },
   {
@@ -53,6 +55,8 @@ export const SERIES: SeriesConfig[] = [
       'taxi_ride_easy',
       'hotel_checkin_easy',
       'airport_checkin_easy',
+      'explain_what_happened_easy',
+      'what_were_you_doing_easy',
     ],
   },
   {

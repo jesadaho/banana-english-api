@@ -6672,10 +6672,10 @@ Turn loop rules:
     hookTh:
       'สุดสัปดาห์ที่ผ่านมาได้ทำอะไรบ้างครับ? บางคนไปเที่ยว บางคนพักผ่อนอยู่บ้าน... วันนี้มาลองเล่าเรื่องสุดสัปดาห์เป็นภาษาอังกฤษกันครับ!',
     emojiWords: [
-      { emoji: '🌴', answer: 'weekend', hint: 'w _ _ k _ _ d', },
-      { emoji: '🏖️', answer: 'beach', hint: 'b _ _ c h', },
-      { emoji: '🎬', answer: 'movie', hint: 'm _ v _ e', },
-      { emoji: '🛍️', answer: 'shopping', hint: 's h _ p p _ _ g', },
+      { emoji: '🏄', answer: 'surf', hint: 's _ r f', },
+      { emoji: '🤿', answer: 'dive', hint: 'd _ v e', },
+      { emoji: '⛺', answer: 'camp', hint: 'c _ m p', },
+      { emoji: '💦', answer: 'waterfall', hint: 'w _ t _ r f _ l l', },
     ],
     tell1Thai: 'สุดสัปดาห์ที่แล้วฉันไปชายหาด',
     tell1En: 'I went to the beach.',
@@ -6771,10 +6771,10 @@ Turn loop rules:
     hookTh:
       'คิดถึงสมัยเรียนกันไหมครับ? วันนี้มาลองเล่าความทรงจำในโรงเรียนเป็นภาษาอังกฤษกันครับ!',
     emojiWords: [
-      { emoji: '🏫', answer: 'school', hint: 's c h _ _ l', },
-      { emoji: '📝', answer: 'homework', hint: 'h _ m _ w _ r k', },
-      { emoji: '👨‍🏫', answer: 'teacher', hint: 't _ _ c h _ r', },
-      { emoji: '📚', answer: 'study', hint: 's t _ d y', },
+      { emoji: '🕯️', answer: 'candle', hint: 'c _ n d l e', },
+      { emoji: '🎈', answer: 'balloon', hint: 'b _ l l _ o n', },
+      { emoji: '💌', answer: 'invite', hint: '_ n v _ t e', },
+      { emoji: '🥳', answer: 'celebrate', hint: 'c _ l _ b r _ t e', },
     ],
     tell1Thai: 'ฉันเรียนภาษาอังกฤษ',
     tell1En: 'I studied English.',
@@ -6804,10 +6804,10 @@ Turn loop rules:
     hookTh:
       'เคยมีเรื่องฮาๆ ที่ยังจำได้ไหมครับ? วันนี้มาลองเล่าเรื่องสนุกๆ เป็นภาษาอังกฤษกันครับ!',
     emojiWords: [
-      { emoji: '😂', answer: 'funny', hint: 'f _ n n y', },
-      { emoji: '👜', answer: 'bag', hint: 'b _ g', },
-      { emoji: '📱', answer: 'phone', hint: 'p h _ n e', },
-      { emoji: '😅', answer: 'laugh', hint: 'l _ _ g h', },
+      { emoji: '😲', answer: 'surprise', hint: 's u r p r _ s e', },
+      { emoji: '🃏', answer: 'card', hint: 'c _ r d', },
+      { emoji: '⭐', answer: 'wish', hint: 'w _ s h', },
+      { emoji: '👤', answer: 'guest', hint: 'g u _ s t', },
     ],
     tell1Thai: 'ก่อนอื่น ฉันลืมกระเป๋า',
     tell1En: 'First, I forgot my bag.',
@@ -6870,10 +6870,10 @@ Turn loop rules:
     hookTh:
       'จำครั้งแรกที่ลองทำอะไรใหม่ๆ ได้ไหมครับ? วันนี้มาลองเล่า First Time ของคุณกันครับ!',
     emojiWords: [
-      { emoji: '✨', answer: 'first time', hint: 'f _ r s t   t _ m e', },
-      { emoji: '✈️', answer: 'airplane', hint: 'a _ r p l _ n e', },
-      { emoji: '🤩', answer: 'excited', hint: 'e x c _ t _ d', },
-      { emoji: '😬', answer: 'nervous', hint: 'n _ r v _ _ s', },
+      { emoji: '😰', answer: 'nervous', hint: 'n _ r v _ _ s', },
+      { emoji: '😨', answer: 'scared', hint: 's c _ r _ d', },
+      { emoji: '🤔', answer: 'forget', hint: 'f _ r g _ t', },
+      { emoji: '😢', answer: 'miss', hint: 'm _ s s', },
     ],
     tell1Thai: 'เป็นครั้งแรกของฉัน',
     tell1En: 'It was my first time.',
@@ -6903,10 +6903,10 @@ Turn loop rules:
     hookTh:
       'ถ้าให้นึกถึงความทรงจำที่ชอบที่สุด คุณจะนึกถึงเรื่องอะไรครับ? วันนี้มาลองเล่าให้ AI ฟังกันครับ!',
     emojiWords: [
-      { emoji: '💛', answer: 'memory', hint: 'm _ m _ r y', },
-      { emoji: '👨‍👩‍👧‍👦', answer: 'family', hint: 'f _ m _ l y', },
-      { emoji: '🏖️', answer: 'holiday', hint: 'h _ l _ d _ y', },
-      { emoji: '🤝', answer: 'together', hint: 't _ g _ t h _ r', },
+      { emoji: '😞', answer: 'upset', hint: 'u p s _ t', },
+      { emoji: '😠', answer: 'angry', hint: '_ n g r y', },
+      { emoji: '🔧', answer: 'broken', hint: 'b r _ k _ n', },
+      { emoji: '🗺️', answer: 'lost', hint: 'l _ s t', },
     ],
     tell1Thai: 'ความทรงจำโปรดคือทริปครอบครัว',
     tell1En: 'My favorite memory was our family trip.',
