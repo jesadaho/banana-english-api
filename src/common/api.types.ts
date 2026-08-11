@@ -288,9 +288,12 @@ export interface SpeakingSkillBreakdown {
   };
   confidence?: {
     hintIndependence: number;
-    completion: number;
-    attemptRate: number;
     hintRate: number;
+    unaidedResponseRate: number;
+    unaidedResponse: number;
+    spontaneousLength: number;
+    avgUnaidedWordCount: number;
+    responseDecisiveness: number;
   };
   vocabulary?: {
     variety: number;

@@ -103,8 +103,22 @@ export function mapGrammarAccuracyToScore(accuracy: number): number {
   return 1;
 }
 
+/** Average word count on unaided turns (attempted && !usedHint). */
+export function mapSpontaneousLengthToScore(avgWords: number): number {
+  if (avgWords >= 7) return 5;
+  if (avgWords >= 5) return 4;
+  if (avgWords >= 3) return 3;
+  if (avgWords >= 2) return 2;
+  if (avgWords >= 1) return 1;
+  return 1;
+}
+
 export function roundSkill(value: number): number {
   return Math.round(value * 10) / 10;
+}
+
+function roundRatio(value: number): number {
+  return Math.round(value * 100) / 100;
 }
 
 function normalizeToken(word: string): string {
@@ -220,27 +234,46 @@ export function scoreConfidence(
 } {
   const totalPrompts = Math.max(expectedPrompts, metrics.turns.length, 1);
   const hintsUsed = metrics.turns.filter((t) => t.usedHint).length;
-  const attemptedTurns = metrics.turns.filter((t) => t.attempted).length;
   const hintRate = hintsUsed / totalPrompts;
-
   const hintIndependence = mapHintRateToScore(hintRate);
-  const completionRatio = attemptedTurns / totalPrompts;
-  const completion = mapRatioToScore(completionRatio);
-  const attemptRate = mapRatioToScore(attemptedTurns / totalPrompts);
+
+  const unaidedTurns = metrics.turns.filter((t) => t.attempted && !t.usedHint);
+  const unaidedResponseRate = unaidedTurns.length / totalPrompts;
+  const unaidedResponse = mapRatioToScore(unaidedResponseRate);
+
+  const avgUnaidedWords =
+    unaidedTurns.length > 0
+      ? unaidedTurns.reduce((sum, t) => sum + t.wordCount, 0) /
+        unaidedTurns.length
+      : 0;
+  const spontaneousLength = mapSpontaneousLengthToScore(avgUnaidedWords);
+
+  const latencySamples = metrics.turns
+    .map((t) => t.responseLatencyMs)
+    .filter((v): v is number => v != null && v >= 0);
+  const avgLatency =
+    latencySamples.length > 0
+      ? latencySamples.reduce((a, b) => a + b, 0) / latencySamples.length
+      : 2000;
+  const responseDecisiveness = mapLatencyMsToScore(avgLatency);
 
   const score = weightedAverage([
-    { score: hintIndependence, weight: 0.4 },
-    { score: completion, weight: 0.3 },
-    { score: attemptRate, weight: 0.3 },
+    { score: hintIndependence, weight: 0.35 },
+    { score: unaidedResponse, weight: 0.3 },
+    { score: spontaneousLength, weight: 0.2 },
+    { score: responseDecisiveness, weight: 0.15 },
   ]);
 
   return {
     score,
     breakdown: {
       hintIndependence,
-      completion,
-      attemptRate,
-      hintRate: roundSkill(hintRate),
+      hintRate: roundRatio(hintRate),
+      unaidedResponseRate: roundRatio(unaidedResponseRate),
+      unaidedResponse,
+      spontaneousLength,
+      avgUnaidedWordCount: roundSkill(avgUnaidedWords),
+      responseDecisiveness,
     },
   };
 }

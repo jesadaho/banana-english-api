@@ -75,6 +75,48 @@ describe('speaking-assessment mappers', () => {
     assert.ok(result.score >= 4);
   });
 
+  it('confidence: unaided response rate 6/8 prompts → 75%', () => {
+    const metrics: SpeakingMetricsPayload = {
+      turns: [
+        ...Array.from({ length: 6 }, () => ({
+          micDurationMs: 2000,
+          wordCount: 5,
+          usedHint: false,
+          attempted: true,
+          responseLatencyMs: 900,
+        })),
+        ...Array.from({ length: 2 }, () => ({
+          micDurationMs: 1500,
+          wordCount: 8,
+          usedHint: true,
+          attempted: true,
+          responseLatencyMs: 1100,
+        })),
+      ],
+    };
+    const { breakdown } = scoreConfidence(metrics, 8);
+    assert.equal(breakdown.unaidedResponseRate, 0.75);
+    assert.equal(breakdown.unaidedResponse, 3);
+    assert.ok(breakdown.hintIndependence >= 4);
+  });
+
+  it('confidence separates completion from unaided response (8 attempted, 4 hint)', () => {
+    const metrics: SpeakingMetricsPayload = {
+      turns: Array.from({ length: 8 }, (_, i) => ({
+        micDurationMs: 2000,
+        wordCount: i % 2 === 0 ? 6 : 8,
+        usedHint: i % 2 === 1,
+        attempted: true,
+        responseLatencyMs: 1000,
+      })),
+    };
+    const fluency = scoreFluency(metrics, 8);
+    const confidence = scoreConfidence(metrics, 8);
+    assert.equal(confidence.breakdown.unaidedResponseRate, 0.5);
+    assert.ok(fluency.breakdown.completion >= 4);
+    assert.ok(confidence.breakdown.unaidedResponse <= 3);
+  });
+
   it('fluency completion uses expected prompt count', () => {
     const metrics: SpeakingMetricsPayload = {
       turns: [
