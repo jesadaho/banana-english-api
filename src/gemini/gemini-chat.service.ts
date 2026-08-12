@@ -715,6 +715,20 @@ type GeminiContent = {
   parts: Array<{ text: string }>;
 };
 
+/** Live chat turns fail fast; background jobs keep fuller retry loops. */
+type GeminiRetryPolicy = 'liveTurn' | 'background';
+
+const GEMINI_LIVE_TURN: Pick<GenerateJsonOptions, 'retryPolicy'> = {
+  retryPolicy: 'liveTurn',
+};
+
+const GEMINI_BACKGROUND: Pick<GenerateJsonOptions, 'retryPolicy'> = {
+  retryPolicy: 'background',
+};
+
+const GEMINI_LIVE_TURN_TIMEOUT_MS = 12_000;
+const GEMINI_BACKGROUND_TIMEOUT_MS = 20_000;
+
 type GenerateJsonOptions = {
   systemInstruction?: string;
   contents: GeminiContent[];
@@ -723,6 +737,8 @@ type GenerateJsonOptions = {
   temperature?: number;
   /** When Gemini ignores JSON mode and returns prose, map it into the schema. */
   recoverFromPlainText?: (text: string) => unknown | null;
+  retryPolicy?: GeminiRetryPolicy;
+  timeoutMs?: number;
 };
 
 type GeminiResponse = {
@@ -765,6 +781,7 @@ export class GeminiChatService {
 
   async correctThaiMix(transcript: string): Promise<string> {
     const text = await this.generateText({
+      ...GEMINI_LIVE_TURN,
       systemInstruction: THAI_MIX_PROMPT,
       contents: [
         {
@@ -780,6 +797,7 @@ export class GeminiChatService {
 
   async generateOpening(topicId: string): Promise<GptReply> {
     return this.generateJson<GptReply>({
+      ...GEMINI_LIVE_TURN,
       systemInstruction:
         `${conversationSystemPrompt(topicId)}\n\n` +
         'Respond as Teacher B (ครูพี่บี). Return JSON with textEn (English greeting) ' +
@@ -826,6 +844,7 @@ export class GeminiChatService {
         : 'HARD RULE: textEn must include Thai script characters AND English — code-switch in one line.');
 
     let reply = await this.generateJson<FreeTalkTurnReply>({
+      ...GEMINI_LIVE_TURN,
       systemInstruction,
       contents: [
         {
@@ -927,6 +946,7 @@ export class GeminiChatService {
     });
 
     let reply = await this.generateJson<FreeTalkTurnReply>({
+      ...GEMINI_LIVE_TURN,
       systemInstruction,
       contents,
       schema: FREE_TALK_REPLY_SCHEMA,
@@ -996,6 +1016,7 @@ export class GeminiChatService {
     const context = this.formatHistoryForReport(history);
     const issueBlock = formatFreeTalkIssueLogForReport(issueLog);
     const report = await this.generateJson<FreeTalkSessionSummary>({
+      ...GEMINI_BACKGROUND,
       systemInstruction: FREE_TALK_SUMMARY_PROMPT,
       contents: [
         {
@@ -1183,6 +1204,7 @@ export class GeminiChatService {
 
     try {
       const retry = await this.generateJson<FreeTalkTurnReply>({
+        ...GEMINI_LIVE_TURN,
         systemInstruction: context.systemInstruction,
         contents: [
           ...context.priorContents,
@@ -1288,6 +1310,7 @@ export class GeminiChatService {
         'Return JSON matching the schema.';
 
     return this.generateJson<SimulationTurnReply>({
+      ...GEMINI_LIVE_TURN,
       systemInstruction: this.simulationSystemPrompt(config, 0),
       contents: [
         {
@@ -1317,6 +1340,7 @@ export class GeminiChatService {
     const speechFlag = lessonUsesTapToContinue(config.lessonId);
 
     return this.generateJson<TrainingTurnReply>({
+      ...GEMINI_LIVE_TURN,
       systemInstruction: this.trainingSystemPrompt(
         config,
         0,
@@ -1418,6 +1442,7 @@ export class GeminiChatService {
     });
 
     const reply = await this.generateJson<TrainingTurnReply>({
+      ...GEMINI_LIVE_TURN,
       systemInstruction: this.trainingSystemPrompt(
         config,
         currentTurn,
@@ -2223,6 +2248,7 @@ Return JSON ONLY (critical — never reply with bare prose):
     });
 
     return this.generateJson<SimulationTurnReply>({
+      ...GEMINI_LIVE_TURN,
       systemInstruction: this.simulationSystemPrompt(
         config,
         currentTurn,
@@ -2309,6 +2335,7 @@ Payment closure (critical — no tap UI exists):
     });
 
     return this.generateJson<GptReply>({
+      ...GEMINI_LIVE_TURN,
       systemInstruction: `${systemPrompt}\n\n${replyGuide}`,
       contents,
       schema: REPLY_SCHEMA,
@@ -2319,6 +2346,7 @@ Payment closure (critical — no tap UI exists):
   async generateHints(history: ChatTurn[]): Promise<HintOption[]> {
     const context = this.formatHistory(history);
     const result = await this.generateJson<HintsResponse>({
+      ...GEMINI_LIVE_TURN,
       systemInstruction: HINTS_PROMPT,
       contents: [
         {
@@ -2338,6 +2366,7 @@ Payment closure (critical — no tap UI exists):
   ): Promise<GptReport> {
     const context = this.formatHistoryForReport(history);
     const report = await this.generateJson<GptReport>({
+      ...GEMINI_BACKGROUND,
       systemInstruction: REPORT_PROMPT,
       contents: [
         {
@@ -2392,6 +2421,7 @@ Payment closure (critical — no tap UI exists):
     };
 
     return this.generateJson<{ grammar_errors: number; sentence_count: number }>({
+      ...GEMINI_BACKGROUND,
       systemInstruction: `You count grammar errors in English learner speech transcripts.
 Return ONLY structured counts — never a score or rating.
 Count each distinct grammar mistake once (subject-verb agreement, wrong tense, missing article, etc.).
@@ -2456,6 +2486,7 @@ Ignore spelling/STT artifacts unless they change grammar meaning.`,
       specific_content_word_count: number;
       repetition_count: number;
     }>({
+      ...GEMINI_BACKGROUND,
       systemInstruction: `You analyze vocabulary in English learner mission transcripts.
 Return ONLY structured counts — never a score or rating.
 
@@ -2506,6 +2537,7 @@ ${text}`,
     };
 
     return this.generateJson<{ tier: 'perfect' | 'also_correct' | 'close_enough' | 'retry' }>({
+      ...GEMINI_LIVE_TURN,
       systemInstruction: params.systemInstruction,
       contents: [
         {
@@ -2533,6 +2565,7 @@ ${text}`,
     };
 
     const result = await this.generateJson<{ feedbackTh: string }>({
+      ...GEMINI_BACKGROUND,
       systemInstruction: params.systemInstruction,
       contents: [
         {
@@ -2555,6 +2588,7 @@ ${text}`,
   async generateIntroReport(history: ChatTurn[]): Promise<GptIntroReport> {
     const context = this.formatHistory(history);
     const report = await this.generateJson<GptIntroReport>({
+      ...GEMINI_BACKGROUND,
       systemInstruction: INTRO_REPORT_PROMPT,
       contents: [
         {
@@ -2577,14 +2611,18 @@ ${text}`,
   }
 
   private async generateJson<T>(options: GenerateJsonOptions): Promise<T> {
+    const policy = options.retryPolicy ?? 'background';
     const baseTokens = options.maxOutputTokens ?? 1024;
-    const tokenLimits = [
-      baseTokens,
-      Math.max(baseTokens * 2, 1024),
-      Math.max(baseTokens * 3, 2048),
-      4096,
-    ];
-    const models = this.modelPool.activeModels();
+    const tokenLimits =
+      policy === 'liveTurn'
+        ? [baseTokens, Math.max(baseTokens * 2, 1024)]
+        : [
+            baseTokens,
+            Math.max(baseTokens * 2, 1024),
+            Math.max(baseTokens * 3, 2048),
+            4096,
+          ];
+    const models = this.modelsForPolicy(policy);
 
     let lastError: unknown;
     let lastPreview = '';
@@ -2618,6 +2656,11 @@ ${text}`,
                 return recovered as T;
               }
             }
+            if (policy === 'liveTurn') {
+              throw parseError instanceof Error
+                ? parseError
+                : new Error(String(parseError));
+            }
             throw parseError;
           }
         } catch (error) {
@@ -2626,9 +2669,9 @@ ${text}`,
             lastPreview = error.message;
           }
 
-          const retryable = this.isRetryableJsonError(error);
+          const retryable = this.isRetryableJsonError(error, policy);
           this.logger.warn(
-            `Gemini JSON attempt failed model=${model} tokens=${tokenLimits[attempt]}: ${lastPreview.slice(0, 180)}`,
+            `Gemini JSON attempt failed policy=${policy} model=${model} tokens=${tokenLimits[attempt]}: ${lastPreview.slice(0, 180)}`,
           );
 
           if (!retryable) {
@@ -2637,10 +2680,18 @@ ${text}`,
               : new Error(String(error));
           }
 
-          // 503/429/high-demand: do not burn the token-limit retry loop on the
-          // same overloaded model — jump to the next model immediately.
           if (error instanceof Error && this.isRetryableModelError(error)) {
             this.modelPool.markUnavailable(model);
+            switchModelNow = true;
+            break;
+          }
+
+          if (
+            policy === 'liveTurn' &&
+            error instanceof Error &&
+            this.isTokenLimitJsonError(error) &&
+            attempt >= tokenLimits.length - 1
+          ) {
             switchModelNow = true;
             break;
           }
@@ -2667,8 +2718,37 @@ ${text}`,
       : new Error(String(lastError));
   }
 
-  private isRetryableJsonError(error: unknown): boolean {
+  private modelsForPolicy(policy: GeminiRetryPolicy): string[] {
+    const active = this.modelPool.activeModels();
+    return policy === 'liveTurn' ? active.slice(0, 2) : active;
+  }
+
+  private timeoutForPolicy(
+    policy: GeminiRetryPolicy,
+    overrideMs?: number,
+  ): number {
+    if (overrideMs != null) return overrideMs;
+    return policy === 'liveTurn'
+      ? GEMINI_LIVE_TURN_TIMEOUT_MS
+      : GEMINI_BACKGROUND_TIMEOUT_MS;
+  }
+
+  private isTokenLimitJsonError(error: Error): boolean {
+    const message = error.message;
+    return (
+      message.includes('MAX_TOKENS') || message.includes('truncated')
+    );
+  }
+
+  private isRetryableJsonError(
+    error: unknown,
+    policy: GeminiRetryPolicy = 'background',
+  ): boolean {
     if (!(error instanceof Error)) return false;
+    if (this.isRetryableModelError(error)) return true;
+    if (policy === 'liveTurn') {
+      return this.isTokenLimitJsonError(error);
+    }
     const message = error.message;
     return (
       message.includes('MAX_TOKENS') ||
@@ -2677,8 +2757,7 @@ ${text}`,
       message.includes('Unterminated') ||
       message.includes('missing text') ||
       message.includes('Unexpected token') ||
-      message.includes('Unexpected end') ||
-      this.isRetryableModelError(error)
+      message.includes('Unexpected end')
     );
   }
 
@@ -2693,7 +2772,8 @@ ${text}`,
       );
     }
 
-    const models = this.modelPool.activeModels();
+    const policy = options.retryPolicy ?? 'background';
+    const models = this.modelsForPolicy(policy);
     let lastError: Error | null = null;
 
     for (let i = 0; i < models.length; i++) {
@@ -2729,6 +2809,8 @@ ${text}`,
     model: string,
     options: GenerateJsonOptions,
   ): Promise<string> {
+    const policy = options.retryPolicy ?? 'background';
+    const timeoutMs = this.timeoutForPolicy(policy, options.timeoutMs);
     const generationConfig: Record<string, unknown> = {
       maxOutputTokens: options.maxOutputTokens ?? 1024,
       temperature: options.temperature ?? 0.7,
@@ -2764,15 +2846,14 @@ ${text}`,
             'x-goog-api-key': this.apiKey,
           },
           body: JSON.stringify(body),
-          // 3.5 can hang under load without a quick 503 — cut over to fallback.
-          signal: AbortSignal.timeout(20_000),
+          signal: AbortSignal.timeout(timeoutMs),
         },
       );
     } catch (error) {
       const err = error instanceof Error ? error : new Error(String(error));
       if (err.name === 'TimeoutError' || err.name === 'AbortError') {
         throw new Error(
-          `Gemini API failed (504): timeout after 20s model=${model}`,
+          `Gemini API failed (504): timeout after ${Math.round(timeoutMs / 1000)}s model=${model}`,
         );
       }
       throw err;
