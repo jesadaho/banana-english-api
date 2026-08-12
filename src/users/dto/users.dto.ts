@@ -1,9 +1,11 @@
 import {
   IsBoolean,
   IsIn,
+  IsInt,
   IsOptional,
   IsString,
   MaxLength,
+  Min,
   MinLength,
 } from 'class-validator';
 
@@ -53,6 +55,12 @@ export class UnlockAvatarDto {
   @MinLength(1)
   @MaxLength(64)
   avatarId!: string;
+
+  /** Client-reported Perfect Star count (minigames). Used for gated avatars. */
+  @IsOptional()
+  @IsInt()
+  @Min(0)
+  perfectMinigameStars?: number;
 }
 
 export class RefillBananasByNameDto {

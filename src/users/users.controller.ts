@@ -89,7 +89,11 @@ export class UsersController {
     @Req() req: AuthedRequest,
     @Body() body: UnlockAvatarDto,
   ) {
-    return this.users.unlockAvatar(req.user, body.avatarId);
+    return this.users.unlockAvatar(
+      req.user,
+      body.avatarId,
+      body.perfectMinigameStars ?? 0,
+    );
   }
 
   @Post('me/debug/refill-bananas')

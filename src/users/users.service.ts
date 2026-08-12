@@ -12,6 +12,7 @@ import { getUserLocalTime, isSameDateKey } from '../common/timezone.util';
 import { PrismaService } from '../prisma/prisma.service';
 import {
   avatarSeedCost,
+  avatarMinPerfectStars,
   FREE_AVATAR_IDS,
   isKnownAvatarId,
 } from './avatar-catalog';
@@ -280,6 +281,7 @@ export class UsersService {
   async unlockAvatar(
     user: User,
     avatarId: string,
+    perfectMinigameStars = 0,
   ): Promise<UserProfileResponse> {
     const id = avatarId.trim();
     if (!isKnownAvatarId(id)) {
@@ -287,6 +289,7 @@ export class UsersService {
     }
 
     const cost = avatarSeedCost(id);
+    const minPerfectStars = avatarMinPerfectStars(id);
     const alreadyUnlocked =
       (FREE_AVATAR_IDS as readonly string[]).includes(id) ||
       user.unlockedAvatarIds.includes(id);
@@ -316,6 +319,10 @@ export class UsersService {
         },
       });
       return this.getProfile(updated);
+    }
+
+    if (minPerfectStars > 0 && perfectMinigameStars < minPerfectStars) {
+      throw new BadRequestException('Not enough Perfect Stars');
     }
 
     const updated = await this.prisma.$transaction(async (tx) => {
