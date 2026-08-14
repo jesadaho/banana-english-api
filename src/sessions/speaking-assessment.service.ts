@@ -1,4 +1,3 @@
-import type { SimulationConfig } from '../simulations/simulations.data';
 import type {
   GrammarStats,
   SpeakingMetricsPayload,
@@ -327,12 +326,11 @@ export interface SpeakingAssessmentResult {
 
 export function computeSpeakingAssessment(params: {
   metrics: SpeakingMetricsPayload;
-  simulationConfig: SimulationConfig;
+  expectedPrompts: number;
   grammarStats: GrammarStats;
   vocabularyStats: VocabularyStats;
 }): SpeakingAssessmentResult {
-  const { metrics, simulationConfig, grammarStats, vocabularyStats } = params;
-  const expectedPrompts = simulationConfig.successCriteria.length;
+  const { metrics, expectedPrompts, grammarStats, vocabularyStats } = params;
   const transcripts = metrics.turns
     .map((t) => t.transcript ?? '')
     .filter((t) => t.trim().length > 0);

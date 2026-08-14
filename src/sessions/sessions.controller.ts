@@ -2296,7 +2296,8 @@ export class SessionsController {
 
     if (
       body.speakingMetrics?.turns?.length &&
-      data.session.sessionType === 'simulation'
+      (data.session.sessionType === 'simulation' ||
+        data.session.topicId === 'free_talk')
     ) {
       this.sessionStore.setSpeakingMetrics(sessionId, {
         turns: body.speakingMetrics.turns,
@@ -2656,6 +2657,14 @@ export class SessionsController {
           await this.users.setFreeTalkMemories(req.user.id, report.memories);
         }
 
+        let speakingAssessment: SpeakingAssessmentResult | undefined;
+        if (data.speakingMetrics?.turns?.length) {
+          speakingAssessment = await this.buildFreeTalkSpeakingAssessment(
+            data.speakingMetrics,
+            data.turns,
+          );
+        }
+
         return {
           sessionId,
           feedbackEn: report.feedbackEn,
@@ -2673,6 +2682,10 @@ export class SessionsController {
           conversationSummaryTh: report.conversationSummaryTh,
           memories: report.memories,
           turns: mergeTurnsWithFeedback(data.turns, report.turnFeedback),
+          turnFeedback: report.turnFeedback ?? [],
+          speakingSkills: speakingAssessment?.speakingSkills,
+          speakingSkillBreakdown: speakingAssessment?.speakingSkillBreakdown,
+          speakingMetrics: data.speakingMetrics,
         };
       }
 
@@ -2796,7 +2809,40 @@ export class SessionsController {
 
     return computeSpeakingAssessment({
       metrics,
-      simulationConfig: config,
+      expectedPrompts: config.successCriteria.length,
+      grammarStats,
+      vocabularyStats,
+    });
+  }
+
+  private async buildFreeTalkSpeakingAssessment(
+    metrics: SpeakingMetricsPayload,
+    turns: ChatTurn[],
+  ): Promise<SpeakingAssessmentResult> {
+    const transcripts = metrics.turns
+      .map((t) => t.transcript?.trim() ?? '')
+      .filter((t) => t.length > 0);
+
+    const aiTurnCount = turns.filter((t) => t.speaker === 'ai').length;
+    const expectedPrompts = Math.max(aiTurnCount, metrics.turns.length, 1);
+
+    const [grammarStats, vocabularyStats] = await Promise.all([
+      this.chat.generateGrammarStats(transcripts),
+      this.chat.generateVocabularyStats({
+        transcripts,
+        scenarioTh: 'คุยเล่นกับครูพี่บี — ฝึกสนทนาภาษาอังกฤษอิสระ',
+        goalsEn: [
+          'natural conversation',
+          'express yourself clearly',
+          'practice spoken English',
+        ],
+        vocabDrillWords: [],
+      }),
+    ]);
+
+    return computeSpeakingAssessment({
+      metrics,
+      expectedPrompts,
       grammarStats,
       vocabularyStats,
     });
@@ -2823,18 +2869,35 @@ function mergeTurnsWithFeedback(
     base.originalTextEn = t.originalTextEn ?? t.textEn;
 
     const fb = byIndex.get(userIdx++);
-    if (!fb || !fb.headlineTh.trim()) return base;
+    if (!fb) return base;
+    const headlineTh =
+      fb.headlineTh.trim() || turnFeedbackHeadlineFallback(fb.status);
     return {
       ...base,
       feedback: {
         status: fb.status,
-        headlineTh: fb.headlineTh,
+        headlineTh,
         detailTh: fb.detailTh || null,
         suggestionEn: fb.suggestionEn || null,
         suggestionReasonTh: fb.suggestionReasonTh || null,
       },
     };
   });
+}
+
+function turnFeedbackHeadlineFallback(
+  status: TurnFeedbackItem['status'],
+): string {
+  switch (status) {
+    case 'great':
+      return 'ดีมาก';
+    case 'good':
+      return 'พูดได้ดี';
+    case 'needs_improvement':
+      return 'ควรปรับ';
+    default:
+      return 'พูดได้';
+  }
 }
 
 function firstNameFromDisplayName(
