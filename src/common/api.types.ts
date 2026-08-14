@@ -399,6 +399,22 @@ export interface ActivityDaysResponse {
   dates: string[];
 }
 
+export interface UserNotificationItem {
+  id: string;
+  type: string;
+  title: string;
+  body: string;
+  data?: Record<string, string>;
+  sentAt: string;
+  readAt: string | null;
+}
+
+export interface NotificationListResponse {
+  items: UserNotificationItem[];
+  nextCursor?: string;
+  unreadCount: number;
+}
+
 export interface LearningStatsResponse {
   lessonsCompleted: number;
   sentencesSpoken: number;

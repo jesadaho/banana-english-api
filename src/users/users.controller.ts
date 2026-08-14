@@ -2,6 +2,8 @@ import {
   Body,
   Controller,
   Get,
+  Patch,
+  Param,
   Post,
   Put,
   Query,
@@ -18,6 +20,7 @@ import {
   UnlockAvatarDto,
   UpsertUserDto,
 } from './dto/users.dto';
+import { UserNotificationsService } from './user-notifications.service';
 import { UsersService } from './users.service';
 
 type AuthedRequest = { user: User };
@@ -28,6 +31,7 @@ export class UsersController {
   constructor(
     private readonly users: UsersService,
     private readonly activity: ActivityService,
+    private readonly notifications: UserNotificationsService,
   ) {}
 
   @Put('me')
@@ -66,6 +70,31 @@ export class UsersController {
     const y = year ? Number(year) : now.getUTCFullYear();
     const m = month ? Number(month) : now.getUTCMonth() + 1;
     return this.activity.listActivityDays(req.user.id, y, m);
+  }
+
+  @Get('me/notifications')
+  async getNotifications(
+    @Req() req: AuthedRequest,
+    @Query('limit') limit?: string,
+    @Query('cursor') cursor?: string,
+  ) {
+    return this.notifications.listForUser(req.user.id, {
+      limit: limit ? Number(limit) : undefined,
+      cursor,
+    });
+  }
+
+  @Patch('me/notifications/read-all')
+  async markAllNotificationsRead(@Req() req: AuthedRequest) {
+    return this.notifications.markAllRead(req.user.id);
+  }
+
+  @Patch('me/notifications/:id/read')
+  async markNotificationRead(
+    @Req() req: AuthedRequest,
+    @Param('id') id: string,
+  ) {
+    return this.notifications.markRead(req.user.id, id);
   }
 
   @Post('me/complete-onboarding')

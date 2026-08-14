@@ -8,7 +8,7 @@ import { UsersService } from './users.service';
 @Module({
   imports: [EconomyModule],
   controllers: [UsersController],
-  providers: [UsersService, ActivityService, AnonymousUserGuard],
+  providers: [UsersService, ActivityService, UserNotificationsService, AnonymousUserGuard],
   exports: [UsersService, ActivityService, AnonymousUserGuard],
 })
 export class UsersModule {}

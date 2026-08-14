@@ -57,6 +57,7 @@ model User {
   transactions            EconomyTransaction[]
   sessions                UserSession[]
   notificationLogs        NotificationLog[]
+  userNotifications       UserNotification[]
   achievements            UserAchievement[]
   outfits                 UserOutfit[]
 
@@ -98,6 +99,22 @@ model NotificationLog {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, type, sentOn])
+}
+
+model UserNotification {
+  id     String    @id @default(uuid())
+  userId String
+  type   String
+  title  String
+  body   String
+  data   Json?
+  sentAt DateTime  @default(now())
+  readAt DateTime?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, sentAt])
+  @@index([userId, readAt])
 }
 
 model UserSession {

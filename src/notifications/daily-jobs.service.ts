@@ -10,6 +10,10 @@ import {
   previousDateKey,
 } from '../common/timezone.util';
 import { FcmService } from './fcm.service';
+import {
+  pushPayloadForType,
+  type PushNotificationType,
+} from './notification-templates';
 
 @Injectable()
 export class DailyJobsService {
@@ -67,10 +71,10 @@ export class DailyJobsService {
       );
       if (!sent) continue;
 
-      const invalid = await this.fcm.sendToTokens(
+      const invalid = await this.sendPush(
+        user.id,
         user.fcmTokens.map((token) => token.token),
-        'กล้วยมาแล้ว! 🍌',
-        'กล้วยของวันนี้มาส่งแล้วนะ!',
+        'first_banana',
       );
       await this.removeInvalidTokens(invalid);
     }
@@ -107,10 +111,10 @@ export class DailyJobsService {
       );
       if (!sent) continue;
 
-      const invalid = await this.fcm.sendToTokens(
+      const invalid = await this.sendPush(
+        user.id,
         user.fcmTokens.map((token) => token.token),
-        '🔥 Streak',
-        'อย่าให้ Streak หลุดนะ ครูพี่บีรออยู่ 🍌',
+        'streak_reminder',
       );
       await this.removeInvalidTokens(invalid);
     }
@@ -142,13 +146,22 @@ export class DailyJobsService {
       );
       if (!sent) continue;
 
-      const invalid = await this.fcm.sendToTokens(
+      const invalid = await this.sendPush(
+        user.id,
         user.fcmTokens.map((token) => token.token),
-        '😊 หายไปหลายวันเลย',
-        'ครูพี่บีคิดถึงนะ มาคุยกันไหม',
+        'miss_you',
       );
       await this.removeInvalidTokens(invalid);
     }
+  }
+
+  private async sendPush(
+    userId: string,
+    tokens: string[],
+    type: PushNotificationType,
+  ): Promise<string[]> {
+    const payload = pushPayloadForType(type);
+    return this.fcm.sendAndPersist({ userId, tokens, payload });
   }
 
   private async tryLogNotification(
