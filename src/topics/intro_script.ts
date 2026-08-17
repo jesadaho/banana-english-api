@@ -14,21 +14,12 @@ export const INTRO_TURN1_OPENING: IntroOpening = {
     'คุยสบายๆ เหมือนเพื่อนกัน ลองพูดตามผมนะครับ Hello!',
 };
 
-/** After Turn 1 (Hello): praise + ask name, or softer ask if they timed out. */
-export type IntroTurn2Case = 'afterHello' | 'fallback';
-
-const TURN2_AFTER_HELLO: IntroOpening = {
+/** After Turn 1: praise + ask name. */
+const TURN2: IntroOpening = {
   textEn:
     'เยี่ยมมากครับ! สำเนียงฟังดูดีเลย... ' +
     'บอกชื่อคุณสั้นๆ ให้ผมรู้จักหน่อยครับ... What is your name?',
   textTh: 'เยี่ยมมากครับ! บอกชื่อสั้นๆ ให้ผมรู้จักหน่อยครับ',
-};
-
-const TURN2_FALLBACK: IntroOpening = {
-  textEn:
-    'ไม่เป็นไรครับ มาทำความรู้จักกันต่อเลย... ' +
-    'บอกชื่อคุณสั้นๆ ให้ผมฟังหน่อยครับ... What is your name?',
-  textTh: 'ไม่เป็นไรครับ บอกชื่อสั้นๆ ให้ผมรู้จักหน่อยได้เลย',
 };
 
 /** Final onboard line after the name turn. */
@@ -101,16 +92,8 @@ export function extractUserName(userText: string): string | null {
   return null;
 }
 
-export function classifyTurn2Case(userText: string): IntroTurn2Case {
-  return matchesHello(userText) ? 'afterHello' : 'fallback';
-}
-
-export function getTurn2Script(userText: string): IntroOpening {
-  return getTurn2ScriptForCase(classifyTurn2Case(userText));
-}
-
-export function getTurn2ScriptForCase(turnCase: IntroTurn2Case): IntroOpening {
-  return turnCase === 'afterHello' ? TURN2_AFTER_HELLO : TURN2_FALLBACK;
+export function getTurn2Script(_userText?: string): IntroOpening {
+  return TURN2;
 }
 
 export function classifyTurn3Case(userText: string): IntroTurn3Case {

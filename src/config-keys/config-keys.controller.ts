@@ -19,7 +19,7 @@ export class ConfigKeysController {
   @Get('app')
   getAppConfig() {
     const groqApiKey = this.config.get<string>('GROQ_API_KEY');
-    const ttsEnv = this.config.get<string>('DEFAULT_TTS_MODE', 'device');
+    const ttsEnv = this.config.get<string>('DEFAULT_TTS_MODE', 'cloudGrpc');
     const defaultTtsMode = [
       'client',
       'server',
@@ -29,7 +29,7 @@ export class ConfigKeysController {
       'deviceAuto',
     ].includes(ttsEnv)
       ? ttsEnv
-      : 'device';
+      : 'cloudGrpc';
 
     const geminiApiKey = this.config.get<string>('GEMINI_API_KEY');
     const rawPrimary = this.config.get<string>(
