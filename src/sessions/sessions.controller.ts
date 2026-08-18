@@ -96,6 +96,7 @@ import {
   forceSmartShopperGuidedSpeakingIfNeeded,
   forceSmartShopperCelebrateIfNeeded,
   forceDailyRoutineGuidedSpeakingIfNeeded,
+  buildDailyRoutineFallbackTrainingReply,
   forceAboutMeSoftTeachForLesson,
   forceFoodGuidedSpeakingIfNeeded,
   forceFoodCelebrateIfNeeded,
@@ -770,15 +771,28 @@ export class SessionsController {
       });
 
       const nextTurn = expectedTurn + 1;
-      const reply = await this.chat.generateTrainingTurn(
-        config,
-        data.turns,
-        userText,
-        nextTurn,
-        data.learnerFirstName ??
-          learnerNameFallback(teachingLanguageFromConfig(config)),
-        originalText,
-      );
+      let reply: Awaited<ReturnType<GeminiChatService['generateTrainingTurn']>>;
+      try {
+        reply = await this.chat.generateTrainingTurn(
+          config,
+          data.turns,
+          userText,
+          nextTurn,
+          data.learnerFirstName ??
+            learnerNameFallback(teachingLanguageFromConfig(config)),
+          originalText,
+        );
+      } catch (aiErr) {
+        const fallback = buildDailyRoutineFallbackTrainingReply(
+          config.lessonId,
+          data.turns,
+          nextTurn,
+        );
+        if (!fallback) {
+          throw aiErr;
+        }
+        reply = fallback;
+      }
 
       const maxTurnsReached = nextTurn >= config.maxTurns;
       let isTaskComplete = Boolean(reply.isLessonComplete) || maxTurnsReached;

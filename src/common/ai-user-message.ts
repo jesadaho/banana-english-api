@@ -19,6 +19,14 @@ export function formatAiServiceUserMessage(err: unknown): string {
   const lower = raw.toLowerCase();
 
   if (
+    lower.includes('recitation') ||
+    lower.includes('finishreason=safety') ||
+    lower.includes('response blocked')
+  ) {
+    return 'ครูพี่บีข้ามประโยคนี้ไปก่อนนะ ลองพูดอีกครั้ง';
+  }
+
+  if (
     lower.includes('max_tokens') ||
     lower.includes('truncated')
   ) {

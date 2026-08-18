@@ -11493,6 +11493,60 @@ export function forceDailyRoutineGuidedSpeakingIfNeeded(
   };
 }
 
+/** Scripted turn when Gemini fails (RECITATION / empty / JSON errors) on Daily Routine. */
+export function buildDailyRoutineFallbackTrainingReply(
+  lessonId: string,
+  history: Array<{ speaker: string; textEn?: string }>,
+  nextTurn: number,
+): {
+  textEn: string;
+  textTh: string;
+  isLessonComplete: boolean;
+  expectsUserSpeech: boolean;
+  expectedSpeech?: string;
+  guidedSpeaking?: ReturnType<typeof normalizeGuidedSpeaking>;
+} | null {
+  if (lessonId !== 'ee_about_me_daily_routine' || nextTurn < 1) {
+    return null;
+  }
+
+  const progress = dailyRoutineProgress(history);
+  if (progress >= 7) {
+    return {
+      textEn:
+        'สุดยอดมากครับ! 🎉 วันนี้คุณบอกได้ทั้งเวลาตื่น นอน และกิจกรรมที่ทำ every day ได้คล่องสุดๆ บทแรกผ่านแล้วครับ! 🍌✨',
+      textTh: '',
+      isLessonComplete: true,
+      expectsUserSpeech: false,
+    };
+  }
+
+  const forced = forceDailyRoutineGuidedSpeakingIfNeeded(
+    lessonId,
+    'thai',
+    nextTurn,
+    history,
+    {
+      textEn: '',
+      textTh: null,
+      guidedSpeaking: null,
+      expectsUserSpeech: false,
+      isTaskComplete: false,
+      expectedSpeech: null,
+    },
+  );
+  if (!forced) return null;
+
+  return {
+    textEn: forced.textEn,
+    textTh: forced.textTh ?? '',
+    isLessonComplete: forced.isTaskComplete,
+    expectsUserSpeech: forced.expectsUserSpeech,
+    expectedSpeech: forced.expectedSpeech ?? undefined,
+    guidedSpeaking: forced.guidedSpeaking ?? undefined,
+  };
+}
+
 export type FoodFavoriteId = 'pizza' | 'sushi' | 'somtam';
 
 /** Food & Drinks 1.2 — Turn 1 favorite-food board (also used on opening). */

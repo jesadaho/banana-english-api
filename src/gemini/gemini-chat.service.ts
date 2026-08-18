@@ -1327,7 +1327,9 @@ export class GeminiChatService {
         },
       ],
       schema: buildSimulationReplySchema(config.successCriteria),
-      maxOutputTokens: 300,
+      maxOutputTokens: 512,
+      recoverFromPlainText: (text) =>
+        this.recoverSimulationReplyFromPlainText(text),
     }).then((reply) => this.normalizeSimulationReply(reply));
   }
 
@@ -2265,7 +2267,9 @@ Return JSON ONLY (critical — never reply with bare prose):
       ),
       contents,
       schema: buildSimulationReplySchema(config.successCriteria),
-      maxOutputTokens: 400,
+      maxOutputTokens: 512,
+      recoverFromPlainText: (text) =>
+        this.recoverSimulationReplyFromPlainText(text),
     }).then((reply) => this.normalizeSimulationReply(reply));
   }
 
@@ -2768,6 +2772,15 @@ ${text}`,
       : GEMINI_BACKGROUND_TIMEOUT_MS;
   }
 
+  private isBlockedResponseError(error: Error): boolean {
+    const message = error.message;
+    return (
+      message.includes('finishReason=RECITATION') ||
+      message.includes('finishReason=SAFETY') ||
+      message.includes('response blocked')
+    );
+  }
+
   private isTokenLimitJsonError(error: Error): boolean {
     const message = error.message;
     return (
@@ -2782,7 +2795,10 @@ ${text}`,
     if (!(error instanceof Error)) return false;
     if (this.isRetryableModelError(error)) return true;
     if (policy === 'liveTurn') {
-      return this.isTokenLimitJsonError(error);
+      return (
+        this.isTokenLimitJsonError(error) ||
+        this.isBlockedResponseError(error)
+      );
     }
     const message = error.message;
     return (
@@ -2914,6 +2930,13 @@ ${text}`,
       const blockReason = data.promptFeedback?.blockReason;
       const thoughtTokens = data.usageMetadata?.thoughtsTokenCount;
       const answerTokens = data.usageMetadata?.candidatesTokenCount;
+      if (finishReason === 'RECITATION' || finishReason === 'SAFETY') {
+        throw new Error(
+          `Gemini response blocked (finishReason=${finishReason}` +
+            (blockReason ? `, block=${blockReason}` : '') +
+            ')',
+        );
+      }
       throw new Error(
         'Gemini response missing text' +
           ` (finishReason=${finishReason}` +
@@ -2947,6 +2970,9 @@ ${text}`,
       message.includes('"status": "UNAVAILABLE"') ||
       message.includes('high demand') ||
       message.includes('RESOURCE_EXHAUSTED') ||
+      message.includes('finishReason=RECITATION') ||
+      message.includes('finishReason=SAFETY') ||
+      message.includes('response blocked') ||
       // Undici/Node: network blip or peer reset — switch model, don't hard-fail.
       message.includes('fetch failed') ||
       message.includes('ECONNRESET') ||
@@ -3115,9 +3141,12 @@ ${text}`,
     }
 
     const preview = cleaned.slice(0, 200);
+    const wrapped = this.wrapBareJsonObject(cleaned);
     const candidates = [
       cleaned,
+      wrapped,
       this.extractJsonObject(cleaned),
+      wrapped ? this.repairTruncatedJson(wrapped) : null,
       this.repairTruncatedJson(cleaned),
       this.repairTruncatedJson(this.extractJsonObject(cleaned) ?? ''),
     ].filter((value): value is string => Boolean(value && value.trim()));
@@ -3150,6 +3179,73 @@ ${text}`,
     const end = text.lastIndexOf('}');
     if (start < 0 || end <= start) return null;
     return text.slice(start, end + 1);
+  }
+
+  /** Gemini sometimes omits the outer `{` — body starts with `"aiResponse":` or `"textEn":`. */
+  private wrapBareJsonObject(text: string): string | null {
+    const trimmed = text.trim();
+    if (!trimmed || trimmed.startsWith('{')) return null;
+    if (!/^"(aiResponse|textEn|updatedCheckpoints)"\s*:/.test(trimmed)) {
+      return null;
+    }
+    const wrapped = `{${trimmed}`;
+    return this.repairTruncatedJson(wrapped) ?? wrapped;
+  }
+
+  private recoverSimulationReplyFromPlainText(
+    text: string,
+  ): SimulationTurnReply | null {
+    let plain = text.trim();
+    if (!plain) return null;
+
+    if (plain.startsWith('```')) {
+      plain = plain
+        .replace(/^```(?:json)?\s*/i, '')
+        .replace(/\s*```$/, '')
+        .trim();
+    }
+
+    const wrapped = this.wrapBareJsonObject(plain);
+    const candidates = [
+      plain.startsWith('{') ? plain : null,
+      wrapped,
+      wrapped ? this.repairTruncatedJson(wrapped) : null,
+    ].filter((value): value is string => Boolean(value && value.trim()));
+
+    for (const candidate of candidates) {
+      try {
+        const parsed = JSON.parse(candidate) as SimulationTurnReply;
+        if (parsed.aiResponse?.trim()) {
+          return parsed;
+        }
+      } catch {
+        // try regex extraction
+      }
+    }
+
+    const aiMatch = plain.match(
+      /"aiResponse"\s*:\s*"((?:[^"\\]|\\.)*)"/,
+    );
+    if (!aiMatch) return null;
+
+    try {
+      const aiResponse = JSON.parse(`"${aiMatch[1]}"`) as string;
+      const thMatch = plain.match(/"textTh"\s*:\s*"((?:[^"\\]|\\.)*)"/);
+      const textTh = thMatch
+        ? (JSON.parse(`"${thMatch[1]}"`) as string)
+        : '';
+      this.logger.warn(
+        `Simulation reply recovered from malformed JSON (${aiResponse.length} chars)`,
+      );
+      return {
+        aiResponse,
+        textTh,
+        updatedCheckpoints: {},
+        feedbackHints: { mispronouncedWords: [] },
+      };
+    } catch {
+      return null;
+    }
   }
 
   /** Best-effort close for truncated Gemini JSON (common with Thai/long textEn). */
