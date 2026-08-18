@@ -9504,9 +9504,11 @@ function forceGuidedBoardSoftTeachIfNeeded(
   if (step > cfg.maxStep) return null;
 
   let lastUserText = '';
+  let lastUserIdx = -1;
   for (let i = history.length - 1; i >= 0; i--) {
     if (history[i].speaker === 'user') {
       lastUserText = (history[i].textEn ?? '').trim();
+      lastUserIdx = i;
       break;
     }
   }
@@ -9525,7 +9527,8 @@ function forceGuidedBoardSoftTeachIfNeeded(
     return null;
   }
 
-  for (let i = history.length - 1; i >= 0; i--) {
+  // Soft-teach already fired for this user attempt (not any earlier step in the lesson).
+  for (let i = lastUserIdx + 1; i < history.length; i++) {
     const turn = history[i];
     if (turn.speaker === 'ai' && looksLikeSoftTeachReveal(turn.textEn ?? '')) {
       return null;

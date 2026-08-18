@@ -190,6 +190,38 @@ describe('Daily Routine 3-tier scoring', () => {
 });
 
 describe('Daily Routine unhappy paths (scripted)', () => {
+  it('wake-time near-miss still gets explain after earlier vocab soft-teach', () => {
+    const history: Turn[] = [
+      { speaker: 'ai', textEn: 'ready' },
+      { speaker: 'user', textEn: "I'm ready" },
+      { speaker: 'ai', textEn: 'vocab' },
+      { speaker: 'user', textEn: 'get up' },
+      {
+        speaker: 'ai',
+        textEn:
+          "ปกติแล้ว 'ตื่นนอน' ในภาษาอังกฤษจะใช้คำว่า wake up ครับ ลองพูดตามนะครับ",
+      },
+      { speaker: 'user', textEn: 'wake up' },
+      { speaker: 'ai', textEn: 'wake time board' },
+      { speaker: 'user', textEn: 'I get up at seven' },
+    ];
+    const reply = forceAboutMeSoftTeachForLesson(
+      LESSON_ID,
+      'thai',
+      history,
+      {
+        textEn: 'wake time board',
+        textTh: null,
+        guidedSpeaking: { stem: 'I wake up at...', emoji: '⏰', speak: "I wake up at 7 o'clock." },
+        expectsUserSpeech: true,
+        isTaskComplete: false,
+        expectedSpeech: "I wake up at 7 o'clock.",
+      },
+    );
+    assert.ok(reply);
+    assert.match(reply!.textEn, /ปกติแล้วถ้าจะบอกว่าตื่นกี่โมง เราจะพูดว่า/);
+  });
+
   it('soft-teach reveal uses natural explain + repeat cue', () => {
     const line = buildSoftTeachRevealLine('wake up', 'thai', 'ตื่นนอน');
     assert.equal(
