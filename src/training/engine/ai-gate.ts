@@ -14,13 +14,11 @@ import {
 const GREETINGS_STEP_HINTS: Record<number, string> = {
   1: 'Target phrase: "Hello".',
   2: 'Target phrase: "Hi".',
-  3:
-    'Recognition: friend scenario — correct answer is "Hi". Keep emojiChoice Hello/Hi board.',
+  3: 'Recognition: friend scenario — correct answer is "Hi".',
   4: 'Target phrase: "Good morning".',
   5: 'Target phrase: "Good afternoon".',
   6: 'Target phrase: "Good evening".',
-  7:
-    'Recognition: 7am scenario — correct answer is "Good morning". Keep time-of-day emojiChoice board.',
+  7: 'Recognition: 7am scenario — correct answer is "Good morning".',
   8: 'Free recall — accept any taught greeting phrase.',
   9: 'Summary + celebrate → isLessonComplete=true.',
 };
@@ -31,7 +29,7 @@ const SOFT_TEACH_RULES =
   'textEn MUST be Thai-primary — match scripted tutor tone. Never English-only textEn. ' +
   'Stay on the SAME core step — do NOT advance. expectsUserSpeech=true. ' +
   'Set expectedSpeech to the exact target phrase. ' +
-  'On recognition steps 3 and 7, keep the required emojiChoice board.';
+  'Do NOT return emojiChoice — server pins the board.';
 
 export type AiGateInput = {
   lessonTitle: string;

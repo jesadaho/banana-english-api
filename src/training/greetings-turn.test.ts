@@ -8,7 +8,9 @@ import {
 import {
   buildGreetingsAfterUser,
   buildGreetingsOpening,
+  greetingsEmojiChoiceForStep,
 } from './scripts/greetings.script';
+import { pinGreetingsReplyChrome } from './engine/pin-greetings-chrome';
 
 type Turn = { speaker: string; textEn?: string };
 
@@ -105,6 +107,47 @@ describe('greetings scripted flow', () => {
     });
     assert.ok(reply?.emojiChoice?.options?.some((o) => o.speak === 'Hi'));
     assert.equal(reply?.expectedSpeech, 'Hi');
+  });
+});
+
+describe('pinned greetings chrome', () => {
+  it('pins emojiChoice on step 3 and strips AI boards', () => {
+    const pinned = pinGreetingsReplyChrome(
+      {
+        textEn: 'ใกล้แล้วครับ!',
+        textTh: 'Almost!',
+        isLessonComplete: false,
+        expectsUserSpeech: true,
+        expectedSpeech: 'Hi',
+        emojiChoice: {
+          options: [{ emoji: '🐶', speak: 'wrong' }],
+        },
+        guidedSpeaking: { stem: 'bad' },
+      },
+      3,
+    );
+    assert.equal(pinned.emojiChoice?.options?.length, 2);
+    assert.equal(pinned.emojiChoice?.options?.[1]?.speak, 'Hi');
+    assert.equal(pinned.guidedSpeaking, undefined);
+    assert.deepEqual(
+      pinned.emojiChoice?.options?.map((o) => o.speak),
+      greetingsEmojiChoiceForStep(3)?.options.map((o) => o.speak),
+    );
+  });
+
+  it('clears emojiChoice off recognition steps', () => {
+    const pinned = pinGreetingsReplyChrome(
+      {
+        textEn: 'เยี่ยม!',
+        textTh: 'Great!',
+        isLessonComplete: false,
+        expectsUserSpeech: true,
+        expectedSpeech: 'Hi',
+        emojiChoice: { options: [{ emoji: '👋', speak: 'Hello' }] },
+      },
+      2,
+    );
+    assert.equal(pinned.emojiChoice, undefined);
   });
 });
 

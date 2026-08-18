@@ -15,6 +15,7 @@ import {
   buildGreetingsOpening,
   buildGreetingsAfterUser,
 } from '../scripts/greetings.script';
+import { pinGreetingsReplyChrome } from './pin-greetings-chrome';
 import type { ScriptTurnResult } from '../scripts/types';
 
 export type TrainingEngineTurnInput = {
@@ -35,7 +36,10 @@ export class TrainingTurnEngine {
   ): { reply: TrainingTurnReply; aiDebug: AiDebug } {
     if (config.lessonId === 'greetings') {
       const reply = buildGreetingsOpening(learnerFirstName);
-      return { reply, aiDebug: scriptedAiDebug() };
+      return {
+        reply: pinGreetingsReplyChrome(this.toReply(reply), 1),
+        aiDebug: scriptedAiDebug(),
+      };
     }
     throw new Error(`Training v2 opening not implemented: ${config.lessonId}`);
   }
@@ -69,8 +73,9 @@ export class TrainingTurnEngine {
     });
 
     if (scripted && !scripted.deferToAi) {
+      const replyStep = Math.min(step + 1, 9);
       return {
-        reply: this.toReply(scripted),
+        reply: pinGreetingsReplyChrome(this.toReply(scripted), replyStep),
         aiDebug: scriptedAiDebug(),
       };
     }
@@ -94,7 +99,10 @@ export class TrainingTurnEngine {
       mode: scripted?.aiMode ?? 'softTeach',
     });
 
-    return generated;
+    return {
+      reply: pinGreetingsReplyChrome(generated.reply, step),
+      aiDebug: generated.aiDebug,
+    };
   }
 
   private toReply(scripted: ScriptTurnResult): TrainingTurnReply {

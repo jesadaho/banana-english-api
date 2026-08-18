@@ -151,6 +151,24 @@ const FREE_TALK_REPLY_SCHEMA = {
   ],
 };
 
+function buildTrainingV2ReplySchema() {
+  return {
+    type: 'object',
+    properties: {
+      textEn: { type: 'string' },
+      textTh: { type: 'string' },
+      isLessonComplete: { type: 'boolean' },
+      expectsUserSpeech: { type: 'boolean' },
+      expectedSpeech: {
+        type: 'string',
+        description:
+          'Exact English the learner should say. Empty string for free recall.',
+      },
+    },
+    required: ['textEn', 'textTh', 'isLessonComplete', 'expectsUserSpeech'],
+  };
+}
+
 function buildTrainingReplySchema(withSpeechFlag: boolean) {
   const emojiChoiceSchema = {
     type: 'object',
@@ -1547,8 +1565,7 @@ export class GeminiChatService {
       `${languageRule}\n` +
       `Rules: Return ONE JSON object only. ≤2 short sentences. ` +
       `End with exactly ONE clear speaking task (พูดตาม). Learner first name: ${name}.\n` +
-      `emojiChoice ONLY on recognition steps 3 and 7 when instructed. ` +
-      `Never emojiSpeak/emojiSpeakSet/guidedSpeaking/roleplay. ` +
+      `Return text only — NEVER emojiChoice, guidedSpeaking, emojiSpeak, scene, or roleplay (server pins boards). ` +
       `isLessonComplete=true ONLY on step ${params.coreStepMax} celebrate.`;
 
     const contents: GeminiContent[] = [];
@@ -1576,8 +1593,8 @@ export class GeminiChatService {
         ...GEMINI_LIVE_TURN,
         systemInstruction,
         contents,
-        schema: buildTrainingReplySchema(true),
-        maxOutputTokens: 384,
+        schema: buildTrainingV2ReplySchema(),
+        maxOutputTokens: 256,
         temperature: 0.35,
         recoverFromPlainText: (text) =>
           this.recoverTrainingReplyFromPlainText(text),

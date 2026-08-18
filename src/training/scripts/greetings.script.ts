@@ -19,6 +19,15 @@ const TIME_OF_DAY_CHOICE = {
   ],
 } as const;
 
+/** Server-pinned emojiChoice boards — never from AI. */
+export function greetingsEmojiChoiceForStep(
+  step: number,
+): ScriptTurnResult['emojiChoice'] | null {
+  if (step === 3) return { options: [...HELLO_HI_CHOICE.options] };
+  if (step === 7) return { options: [...TIME_OF_DAY_CHOICE.options] };
+  return null;
+}
+
 /** Step content delivered AFTER the learner succeeds (or is accepted) on the prior step. */
 function teachStep(
   step: number,
@@ -42,7 +51,7 @@ function teachStep(
         isLessonComplete: false,
         expectsUserSpeech: true,
         expectedSpeech: GREETINGS_STEP3_EXPECTED,
-        emojiChoice: { options: [...HELLO_HI_CHOICE.options] },
+        emojiChoice: greetingsEmojiChoiceForStep(3) ?? undefined,
       };
     case 4:
       return {
@@ -80,7 +89,7 @@ function teachStep(
         isLessonComplete: false,
         expectsUserSpeech: true,
         expectedSpeech: GREETINGS_STEP7_EXPECTED,
-        emojiChoice: { options: [...TIME_OF_DAY_CHOICE.options] },
+        emojiChoice: greetingsEmojiChoiceForStep(7) ?? undefined,
       };
     case 8:
       return {
