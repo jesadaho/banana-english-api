@@ -94,6 +94,7 @@ import {
   forceCoffeeRoleplayBridgeIfNeeded,
   forceAirportRoleplayBridgeIfNeeded,
   forcePharmacyRoleplayBridgeIfNeeded,
+  forceFavoritesGuidedSpeakingIfNeeded,
   forceFavoritesRoleplayBridgeIfNeeded,
   forceLastNightGuidedSpeakingIfNeeded,
   forceLastNightRoleplayBridgeIfNeeded,
@@ -1906,6 +1907,33 @@ export class SessionsController {
         guidedSpeaking = forcedFriendsCelebrate.guidedSpeaking;
         emojiChoice = forcedFriendsCelebrate.emojiChoice;
         isTaskComplete = forcedFriendsCelebrate.isTaskComplete;
+      }
+
+      // Favorites 1.10: pin prefer / opinion / friends / group boards (pre-roleplay).
+      const forcedFavorites = forceFavoritesGuidedSpeakingIfNeeded(
+        config.lessonId,
+        teachingLang,
+        nextTurn,
+        data.turns,
+        {
+          textEn,
+          textTh,
+          guidedSpeaking,
+          expectsUserSpeech,
+          isTaskComplete,
+          expectedSpeech,
+          roleplayIntro,
+          roleplayNpc,
+        },
+      );
+      if (forcedFavorites != null) {
+        textEn = forcedFavorites.textEn;
+        textTh = forcedFavorites.textTh;
+        guidedSpeaking = forcedFavorites.guidedSpeaking;
+        expectsUserSpeech = forcedFavorites.expectsUserSpeech;
+        expectedSpeech = forcedFavorites.expectedSpeech;
+        emojiChoice = forcedFavorites.emojiChoice;
+        isTaskComplete = forcedFavorites.isTaskComplete;
       }
 
       const forcedSmartShopperCelebrate = forceSmartShopperCelebrateIfNeeded(

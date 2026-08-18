@@ -9339,6 +9339,48 @@ export function pendingThreeTierSoftTeach(
   return tier === 'near' || tier === 'wrong';
 }
 
+function choiceSpeechExactMatch(
+  normalizedUser: string,
+  normalizedTarget: string,
+): boolean {
+  return (
+    normalizedUser.length > 0 &&
+    normalizedTarget.length > 0 &&
+    normalizedUser === normalizedTarget
+  );
+}
+
+/**
+ * exact = board option / expectedSpeech; near = legacy soft-accept matcher; wrong = else.
+ * Reuse across About Me choice lessons (Daily Routine uses custom scoreDailyRoutineStep).
+ */
+export function createBoardChoiceScorer(
+  normalize: (text: string) => string,
+  getBoard: (step: number) => ForcedGuidedBoard | null,
+  matchesLoose: (step: number, text: string) => boolean,
+): (step: number, text: string) => ChoiceStepTier {
+  return (step, text) => {
+    const t = normalize(text);
+    if (!t) return 'wrong';
+    const board = getBoard(step);
+    if (board) {
+      for (const opt of board.options) {
+        if (choiceSpeechExactMatch(t, normalize(opt.speak))) return 'exact';
+      }
+      const expected = normalize(board.expectedSpeech);
+      if (expected && choiceSpeechExactMatch(t, expected)) return 'exact';
+    }
+    if (matchesLoose(step, text)) return 'near';
+    return 'wrong';
+  };
+}
+
+function matchesExactFromScorer(
+  scoreStep: (step: number, text: string) => ChoiceStepTier,
+): (step: number, text: string) => boolean {
+  return (step, text) => scoreStep(step, text) === 'exact';
+}
+
 /**
  * Choice-lesson progress with soft-teach: first wrong → wait for reveal;
  * after reveal, any speak advances; second wrong without reveal → soft-advance.
@@ -12080,14 +12122,26 @@ function matchesFoodStep(
   }
 }
 
+function scoreFoodStepForHistory(
+  history: Array<{ speaker: string; textEn?: string }>,
+  step: number,
+  userText: string,
+): ChoiceStepTier {
+  const food = extractFoodFavorite(history);
+  return createBoardChoiceScorer(
+    normalizeFoodSpeech,
+    (s) => foodBoardForStep(s, history),
+    (s, t) => matchesFoodStep(s, t, food),
+  )(step, userText);
+}
+
 /** How many Food & Drinks speak steps are cleared (0–6). */
 export function foodLessonProgress(
   history: Array<{ speaker: string; textEn?: string }>,
 ): number {
-  const food = extractFoodFavorite(history);
-  return computeSoftTeachChoiceProgress(history, 6, (step, text) =>
-    matchesFoodStep(step, text, food),
-  );
+  const score = (step: number, text: string) =>
+    scoreFoodStepForHistory(history, step, text);
+  return computeThreeTierChoiceProgress(history, 6, score);
 }
 
 function foodBoardFromAiText(textEn: string): number | null {
@@ -12142,11 +12196,11 @@ export function forceFoodGuidedSpeakingIfNeeded(
   if (current.isTaskComplete) return null;
   if (looksLikeSoftTeachReveal(current.textEn ?? '')) return null;
   if (
-    pendingSoftTeachForChoiceLesson(
+    pendingThreeTierSoftTeach(
       history,
       foodLessonProgress,
       6,
-      (step, text) => matchesFoodStep(step, text, extractFoodFavorite(history)),
+      (step, text) => scoreFoodStepForHistory(history, step, text),
     )
   ) {
     return null;
@@ -12425,11 +12479,19 @@ function matchesHomeStep(step: number, userText: string): boolean {
   }
 }
 
+function scoreHomeStep(step: number, userText: string): ChoiceStepTier {
+  return createBoardChoiceScorer(
+    normalizeHomeSpeech,
+    (s) => HOME_BOARDS[s] ?? null,
+    matchesHomeStep,
+  )(step, userText);
+}
+
 /** How many Home speak steps are cleared (0–6). */
 export function homeLessonProgress(
   history: Array<{ speaker: string; textEn?: string }>,
 ): number {
-  return computeSoftTeachChoiceProgress(history, 6, matchesHomeStep);
+  return computeThreeTierChoiceProgress(history, 6, scoreHomeStep);
 }
 
 function homeBoardFromAiText(textEn: string): number | null {
@@ -12492,11 +12554,11 @@ export function forceHomeGuidedSpeakingIfNeeded(
   if (current.isTaskComplete) return null;
   if (looksLikeSoftTeachReveal(current.textEn ?? '')) return null;
   if (
-    pendingSoftTeachForChoiceLesson(
+    pendingThreeTierSoftTeach(
       history,
       homeLessonProgress,
       6,
-      matchesHomeStep,
+      scoreHomeStep,
     )
   ) {
     return null;
@@ -12768,14 +12830,26 @@ function matchesWorkSchoolStep(
   }
 }
 
+function scoreWorkSchoolStepForHistory(
+  history: Array<{ speaker: string; textEn?: string }>,
+  step: number,
+  userText: string,
+): ChoiceStepTier {
+  const mode = extractWorkSchoolMode(history) ?? 'work';
+  return createBoardChoiceScorer(
+    normalizeWorkSchoolSpeech,
+    (s) => workSchoolBoardForStep(s, history),
+    (s, t) => matchesWorkSchoolStep(s, t, mode),
+  )(step, userText);
+}
+
 /** How many Work & School speak steps are cleared (0–4). */
 export function workSchoolLessonProgress(
   history: Array<{ speaker: string; textEn?: string }>,
 ): number {
-  const mode = extractWorkSchoolMode(history) ?? 'work';
-  return computeSoftTeachChoiceProgress(history, 4, (step, text) =>
-    matchesWorkSchoolStep(step, text, mode),
-  );
+  const score = (step: number, text: string) =>
+    scoreWorkSchoolStepForHistory(history, step, text);
+  return computeThreeTierChoiceProgress(history, 4, score);
 }
 
 function workSchoolBoardFromAiText(textEn: string): number | null {
@@ -12834,6 +12908,17 @@ export function forceWorkSchoolGuidedSpeakingIfNeeded(
 } | null {
   if (lessonId !== 'ee_about_me_work_school') return null;
   if (current.isTaskComplete) return null;
+  if (looksLikeSoftTeachReveal(current.textEn ?? '')) return null;
+  if (
+    pendingThreeTierSoftTeach(
+      history,
+      workSchoolLessonProgress,
+      4,
+      (step, text) => scoreWorkSchoolStepForHistory(history, step, text),
+    )
+  ) {
+    return null;
+  }
 
   const progress = workSchoolLessonProgress(history);
   if (progress >= 4) return null;
@@ -13169,13 +13254,46 @@ function matchesHobbiesStep(
 /** How many Hobbies speak steps are cleared (0–5).
  * Mini Quiz steps 4–5: soft-advance after 2 failed attempts.
  */
+function hobbiesBoardForStep(
+  step: number,
+  history: Array<{ speaker: string; textEn?: string }>,
+): ForcedGuidedBoard | null {
+  const activity = extractHobbiesActivity(history) ?? 'watch_movies';
+  const hobbyPhrase = HOBBIES_ACTIVITY_META[activity].phrase;
+  if (step === 1) {
+    return {
+      textEn: '',
+      stem: HOBBIES_HOBBY_GUIDED_SPEAKING.stem,
+      expectedSpeech: `I ${hobbyPhrase}.`,
+      options: HOBBIES_HOBBY_GUIDED_SPEAKING.options.map((o) => ({ ...o })),
+    };
+  }
+  if (step === 2) return hobbiesFrequencyBoard(activity);
+  if (step === 3) return HOBBIES_WEEKEND_BOARD;
+  if (step === 4) return HOBBIES_QUIZ_USUALLY_BOARD;
+  if (step === 5) return HOBBIES_QUIZ_SOMETIMES_BOARD;
+  return null;
+}
+
+function scoreHobbiesStepForHistory(
+  history: Array<{ speaker: string; textEn?: string }>,
+  step: number,
+  userText: string,
+): ChoiceStepTier {
+  const activity = extractHobbiesActivity(history) ?? 'watch_movies';
+  return createBoardChoiceScorer(
+    normalizeHobbiesSpeech,
+    (s) => hobbiesBoardForStep(s, history),
+    (s, t) => matchesHobbiesStep(s, t, activity),
+  )(step, userText);
+}
+
 export function hobbiesLessonProgress(
   history: Array<{ speaker: string; textEn?: string }>,
 ): number {
-  const activity = extractHobbiesActivity(history) ?? 'watch_movies';
-  return computeSoftTeachChoiceProgress(history, 5, (step, text) =>
-    matchesHobbiesStep(step, text, activity),
-  );
+  const score = (step: number, text: string) =>
+    scoreHobbiesStepForHistory(history, step, text);
+  return computeThreeTierChoiceProgress(history, 5, score);
 }
 
 function hobbiesBoardFromAiText(textEn: string): number | null {
@@ -13236,6 +13354,17 @@ export function forceHobbiesGuidedSpeakingIfNeeded(
 } | null {
   if (lessonId !== 'ee_about_me_hobbies') return null;
   if (current.isTaskComplete) return null;
+  if (looksLikeSoftTeachReveal(current.textEn ?? '')) return null;
+  if (
+    pendingThreeTierSoftTeach(
+      history,
+      hobbiesLessonProgress,
+      5,
+      (step, text) => scoreHobbiesStepForHistory(history, step, text),
+    )
+  ) {
+    return null;
+  }
 
   const progress = hobbiesLessonProgress(history);
   if (progress >= 5) return null;
@@ -13555,19 +13684,69 @@ function matchesPetsSpeakStep(
 }
 
 /** Speak steps cleared (0–4): have → describe → Your → combo. */
+function petsBoardForStep(
+  step: number,
+  animal: PetsAnimal,
+  adjective: PetsAdjective,
+): ForcedGuidedBoard | null {
+  if (step === 1) {
+    return {
+      textEn: '',
+      stem: PETS_CHOICE_GUIDED_SPEAKING.stem,
+      expectedSpeech: animal === 'dog' ? 'I have a dog.' : 'I have a cat.',
+      options: PETS_CHOICE_GUIDED_SPEAKING.options.map((o) => ({ ...o })),
+    };
+  }
+  if (step === 2) return petsDescribeBoard(animal);
+  if (step === 3) {
+    return {
+      textEn: PETS_YOUR_BOARD.textEn,
+      stem: PETS_YOUR_BOARD.stem,
+      expectedSpeech: PETS_YOUR_BOARD.expectedSpeech,
+      options: PETS_YOUR_BOARD.options.map((o) => ({ ...o })),
+    };
+  }
+  if (step === 4) {
+    return {
+      textEn: '',
+      stem: '',
+      expectedSpeech: `I have a ${animal}. My ${animal} is very ${adjective}.`,
+      options: [
+        {
+          emoji: '🐾',
+          label: 'combo',
+          speak: `I have a ${animal}. My ${animal} is very ${adjective}.`,
+        },
+      ],
+    };
+  }
+  return null;
+}
+
+function scorePetsStepForHistory(
+  history: Array<{ speaker: string; textEn?: string }>,
+  step: number,
+  userText: string,
+): ChoiceStepTier {
+  const animal = extractPetsAnimal(history);
+  const adjective = extractPetsAdjective(history, animal);
+  return createBoardChoiceScorer(
+    normalizePetsSpeech,
+    (s) => petsBoardForStep(s, animal, adjective),
+    (s, t) => matchesPetsSpeakStep(s, t, animal, adjective),
+  )(step, userText);
+}
+
 export function petsLessonProgress(
   history: Array<{ speaker: string; textEn?: string }>,
 ): number {
-  const animal = extractPetsAnimal(history);
-  const adjective = extractPetsAdjective(history, animal);
   const filtered = history.filter((turn) => {
     if (turn.speaker !== 'user') return true;
-    const text = (turn.textEn ?? '').trim();
-    return !text || !isPetsContinueTurn(text);
+    return !isPetsContinueTurn((turn.textEn ?? '').trim());
   });
-  return computeSoftTeachChoiceProgress(filtered, 4, (step, text) =>
-    matchesPetsSpeakStep(step, text, animal, adjective),
-  );
+  const score = (step: number, text: string) =>
+    scorePetsStepForHistory(history, step, text);
+  return computeThreeTierChoiceProgress(filtered, 4, score);
 }
 
 /** True when describe is done and learner has not yet tapped Continue after tip. */
@@ -13652,6 +13831,17 @@ export function forcePetsGuidedSpeakingIfNeeded(
 } | null {
   if (lessonId !== 'ee_about_me_pets') return null;
   if (current.isTaskComplete) return null;
+  if (looksLikeSoftTeachReveal(current.textEn ?? '')) return null;
+  if (
+    pendingThreeTierSoftTeach(
+      history,
+      petsLessonProgress,
+      4,
+      (step, text) => scorePetsStepForHistory(history, step, text),
+    )
+  ) {
+    return null;
+  }
 
   const progress = petsLessonProgress(history);
   if (progress >= 4) return null;
@@ -14110,11 +14300,51 @@ function matchesPeopleStep(step: number, userText: string): boolean {
   }
 }
 
+function peopleBoardForStep(
+  step: number,
+  person: PeoplePerson,
+  job: PeopleJob,
+  jobPraiseLabel: string | undefined,
+): ForcedGuidedBoard | null {
+  if (step === 1) {
+    return {
+      textEn: '',
+      stem: PEOPLE_PERSON_GUIDED_SPEAKING.stem,
+      expectedSpeech: 'My brother.',
+      options: PEOPLE_PERSON_GUIDED_SPEAKING.options.map((o) => ({ ...o })),
+    };
+  }
+  if (step === 2) return peopleJobBoard(person);
+  if (step === 3) {
+    return peoplePersonalityBoard(person, job, jobPraiseLabel);
+  }
+  if (step === 4) return PEOPLE_QUIZ_HE_BOARD;
+  if (step === 5) return PEOPLE_QUIZ_SHE_BOARD;
+  return null;
+}
+
+function scorePeopleStepForHistory(
+  history: Array<{ speaker: string; textEn?: string }>,
+  step: number,
+  userText: string,
+): ChoiceStepTier {
+  const person = extractPeoplePerson(history);
+  const job = extractPeopleJob(history);
+  const jobPraiseLabel = extractPeopleJobPraiseLabel(history);
+  return createBoardChoiceScorer(
+    normalizePeopleSpeech,
+    (s) => peopleBoardForStep(s, person, job, jobPraiseLabel),
+    matchesPeopleStep,
+  )(step, userText);
+}
+
 /** Speak steps cleared (0–5). Quiz 4–5 soft-advance after 2 failed attempts. */
 export function peopleLessonProgress(
   history: Array<{ speaker: string; textEn?: string }>,
 ): number {
-  return computeSoftTeachChoiceProgress(history, 5, matchesPeopleStep);
+  const score = (step: number, text: string) =>
+    scorePeopleStepForHistory(history, step, text);
+  return computeThreeTierChoiceProgress(history, 5, score);
 }
 
 function peopleBoardFromAiText(textEn: string): number | null {
@@ -14179,6 +14409,17 @@ export function forcePeopleGuidedSpeakingIfNeeded(
 } | null {
   if (lessonId !== 'ee_about_me_people') return null;
   if (current.isTaskComplete) return null;
+  if (looksLikeSoftTeachReveal(current.textEn ?? '')) return null;
+  if (
+    pendingThreeTierSoftTeach(
+      history,
+      peopleLessonProgress,
+      5,
+      (step, text) => scorePeopleStepForHistory(history, step, text),
+    )
+  ) {
+    return null;
+  }
 
   const progress = peopleLessonProgress(history);
   if (progress >= 5) return null;
@@ -14400,11 +14641,41 @@ function matchesWeatherStep(step: number, userText: string): boolean {
   }
 }
 
+function weatherBoardForStep(step: number): ForcedGuidedBoard | null {
+  if (step === 1) {
+    return {
+      textEn: '',
+      stem: WEATHER_HOT_QUIZ_GUIDED_SPEAKING.stem,
+      expectedSpeech: 'Hot.',
+      options: WEATHER_HOT_QUIZ_GUIDED_SPEAKING.options.map((o) => ({ ...o })),
+    };
+  }
+  if (step === 2) return WEATHER_COLD_BOARD;
+  if (step === 3) {
+    return {
+      textEn: '',
+      stem: WEATHER_PREFERENCE_GUIDED_SPEAKING.stem,
+      expectedSpeech: 'I like sunny weather.',
+      options: WEATHER_PREFERENCE_GUIDED_SPEAKING.options.map((o) => ({ ...o })),
+    };
+  }
+  if (step === 4) return WEATHER_QUIZ_RAINY_BOARD;
+  return null;
+}
+
+function scoreWeatherStep(step: number, userText: string): ChoiceStepTier {
+  return createBoardChoiceScorer(
+    normalizeWeatherSpeech,
+    weatherBoardForStep,
+    matchesWeatherStep,
+  )(step, userText);
+}
+
 /** Speak steps cleared (0–4). Quiz 1 & 4 soft-advance after 2 failed attempts. */
 export function weatherLessonProgress(
   history: Array<{ speaker: string; textEn?: string }>,
 ): number {
-  return computeSoftTeachChoiceProgress(history, 4, matchesWeatherStep);
+  return computeThreeTierChoiceProgress(history, 4, scoreWeatherStep);
 }
 
 function weatherBoardFromAiText(textEn: string): number | null {
@@ -14451,6 +14722,17 @@ export function forceWeatherGuidedSpeakingIfNeeded(
 } | null {
   if (lessonId !== 'ee_about_me_weather') return null;
   if (current.isTaskComplete) return null;
+  if (looksLikeSoftTeachReveal(current.textEn ?? '')) return null;
+  if (
+    pendingThreeTierSoftTeach(
+      history,
+      weatherLessonProgress,
+      4,
+      scoreWeatherStep,
+    )
+  ) {
+    return null;
+  }
 
   const progress = weatherLessonProgress(history);
   if (progress >= 4) return null;
@@ -14700,11 +14982,48 @@ function matchesFriendsStep(step: number, userText: string): boolean {
   }
 }
 
+function friendsBoardForStep(step: number): ForcedGuidedBoard | null {
+  if (step === 1) {
+    return {
+      textEn: '',
+      stem: FRIENDS_ACTIVITY_GUIDED_SPEAKING.stem,
+      expectedSpeech: 'We play games together.',
+      options: FRIENDS_ACTIVITY_GUIDED_SPEAKING.options.map((o) => ({ ...o })),
+    };
+  }
+  if (step === 2) return FRIENDS_EAT_OUT_BOARD;
+  if (step === 3) return FRIENDS_THEY_PLAY_BOARD;
+  if (step === 4) return FRIENDS_HANG_OUT_BOARD;
+  if (step === 5) {
+    return {
+      textEn: FRIENDS_THEY_EAT_OUT_BOARD.textEn,
+      stem: '',
+      expectedSpeech: FRIENDS_THEY_EAT_OUT_BOARD.expectedSpeech,
+      options: [
+        {
+          emoji: '🍽️',
+          label: 'Eat out',
+          speak: FRIENDS_THEY_EAT_OUT_BOARD.expectedSpeech,
+        },
+      ],
+    };
+  }
+  return null;
+}
+
+function scoreFriendsStep(step: number, userText: string): ChoiceStepTier {
+  return createBoardChoiceScorer(
+    normalizeFriendsSpeech,
+    friendsBoardForStep,
+    matchesFriendsStep,
+  )(step, userText);
+}
+
 /** Speak steps cleared (0–5). Quick checks 4 & 5 soft-advance after 2 failed attempts. */
 export function friendsLessonProgress(
   history: Array<{ speaker: string; textEn?: string }>,
 ): number {
-  return computeSoftTeachChoiceProgress(history, 5, matchesFriendsStep);
+  return computeThreeTierChoiceProgress(history, 5, scoreFriendsStep);
 }
 
 function friendsBoardFromAiText(textEn: string): number | null {
@@ -14753,6 +15072,17 @@ export function forceFriendsGuidedSpeakingIfNeeded(
 } | null {
   if (lessonId !== 'ee_about_me_friends') return null;
   if (current.isTaskComplete) return null;
+  if (looksLikeSoftTeachReveal(current.textEn ?? '')) return null;
+  if (
+    pendingThreeTierSoftTeach(
+      history,
+      friendsLessonProgress,
+      5,
+      scoreFriendsStep,
+    )
+  ) {
+    return null;
+  }
 
   const progress = friendsLessonProgress(history);
   if (progress >= 5) return null;
@@ -15037,6 +15367,275 @@ export function forceSurvivalCelebrateAfterEmojiSpeakIfNeeded(
     emojiChoice: null,
     emojiSpeakSet: null,
     isTaskComplete: true,
+  };
+}
+
+/** Favorites 1.10 — Step 1 food preference. */
+const FAVORITES_PREFER_GUIDED_SPEAKING = {
+  stem: 'I prefer...',
+  options: [
+    { emoji: '🍕', label: 'Pizza', speak: 'I prefer pizza.' },
+    { emoji: '🍣', label: 'Sushi', speak: 'I prefer sushi.' },
+  ],
+};
+
+const FAVORITES_OPINION_BOARD = {
+  textEn: 'Why do you like it? ทำไมถึงชอบครับ?',
+  stem: "I think it's...",
+  expectedSpeech: "I think it's delicious.",
+  softTeachHintTh: 'ถ้าจะบอกว่าชอบเพราะอะไร เราจะพูดว่า',
+  options: [
+    { emoji: '😋', label: 'delicious', speak: "I think it's delicious." },
+    { emoji: '🌶️', label: 'spicy', speak: "I think it's spicy." },
+  ],
+};
+
+const FAVORITES_FRIENDS_BOARD = {
+  textEn: 'What about your friends? แล้วเพื่อนๆ ล่ะชอบอะไร?',
+  stem: 'They like...',
+  expectedSpeech: 'They like pizza.',
+  softTeachHintTh: 'ถ้าจะบอกว่าเพื่อนชอบอะไร เราจะพูดว่า',
+  options: [
+    { emoji: '🍕', label: 'Pizza', speak: 'They like pizza.' },
+    { emoji: '🍔', label: 'Burger', speak: 'They like burgers.' },
+  ],
+};
+
+const FAVORITES_GROUP_BOARD = {
+  textEn: 'Do you eat together? พวกคุณกินด้วยกันไหม?',
+  stem: 'We...',
+  expectedSpeech: 'We eat together.',
+  softTeachHintTh: 'ถ้าจะบอกว่าทำอะไรด้วยกัน เราจะพูดว่า',
+  options: [
+    { emoji: '🍽️', label: 'eat together', speak: 'We eat together.' },
+    { emoji: '🎬', label: 'watch movies', speak: 'We watch movies.' },
+  ],
+};
+
+function normalizeFavoritesSpeech(userText: string): string {
+  return userText
+    .trim()
+    .toLowerCase()
+    .replace(/[.!?]+$/g, '')
+    .replace(/\s+/g, ' ');
+}
+
+function matchesFavoritesStep(step: number, userText: string): boolean {
+  const t = normalizeFavoritesSpeech(userText);
+  if (!t) return false;
+  switch (step) {
+    case 1:
+      return (
+        (/\bi prefer\b/.test(t) || /\bprefer\b/.test(t)) &&
+        (/\bpizza\b/.test(t) || /\bsushi\b/.test(t))
+      );
+    case 2:
+      return (
+        (/\bi think\b/.test(t) &&
+          (/\bdelicious\b/.test(t) || /\bspicy\b/.test(t))) ||
+        t === 'delicious' ||
+        t === 'spicy' ||
+        ((/\bit'?s\b/.test(t) || /\bit is\b/.test(t)) &&
+          (/\bdelicious\b/.test(t) || /\bspicy\b/.test(t)))
+      );
+    case 3:
+      return (
+        /\bthey like\b/.test(t) &&
+        (/\bpizza\b/.test(t) || /\bburger\b/.test(t) || /\bburgers\b/.test(t))
+      );
+    case 4:
+      return (
+        t === 'we eat together' ||
+        t === 'we watch movies' ||
+        /\bwe eat together\b/.test(t) ||
+        /\bwe watch movies\b/.test(t) ||
+        t === 'yes we do' ||
+        /^yes\b/.test(t)
+      );
+    default:
+      return false;
+  }
+}
+
+function favoritesBoardForStep(step: number): ForcedGuidedBoard | null {
+  if (step === 1) {
+    return {
+      textEn:
+        'Which food do you prefer? ระหว่างสองอย่างนี้ คุณชอบอันไหนมากกว่ากันครับ?',
+      stem: FAVORITES_PREFER_GUIDED_SPEAKING.stem,
+      expectedSpeech: 'I prefer pizza.',
+      softTeachHintTh: 'ถ้าจะบอกว่าชอบอาหารอันไหนมากกว่า เราจะพูดว่า',
+      options: FAVORITES_PREFER_GUIDED_SPEAKING.options.map((o) => ({ ...o })),
+      withPraise: false,
+    };
+  }
+  if (step === 2) return FAVORITES_OPINION_BOARD;
+  if (step === 3) return FAVORITES_FRIENDS_BOARD;
+  if (step === 4) return FAVORITES_GROUP_BOARD;
+  return null;
+}
+
+function scoreFavoritesStep(step: number, userText: string): ChoiceStepTier {
+  return createBoardChoiceScorer(
+    normalizeFavoritesSpeech,
+    favoritesBoardForStep,
+    matchesFavoritesStep,
+  )(step, userText);
+}
+
+/** Teaching speak steps cleared (0–4) before Movie roleplay. */
+export function favoritesLessonProgress(
+  history: Array<{ speaker: string; textEn?: string }>,
+): number {
+  return computeThreeTierChoiceProgress(history, 4, scoreFavoritesStep);
+}
+
+function favoritesBoardFromAiText(textEn: string): number | null {
+  const t = (textEn ?? '').toLowerCase();
+  if (!t) return null;
+  if (
+    t.includes('กินด้วยกัน') ||
+    (t.includes('do you') && t.includes('together')) ||
+    t.includes('eat together')
+  ) {
+    return 4;
+  }
+  if (
+    t.includes('what about your friends') ||
+    t.includes('เพื่อนๆ') ||
+    t.includes('เพื่อนล่ะ')
+  ) {
+    return 3;
+  }
+  if (
+    t.includes('why do you like') ||
+    t.includes('ทำไมถึงชอบ')
+  ) {
+    return 2;
+  }
+  if (
+    t.includes('which food do you prefer') ||
+    t.includes('ชอบอันไหน') ||
+    t.includes('i prefer')
+  ) {
+    return 1;
+  }
+  return null;
+}
+
+function favoritesRoleplayStarted(
+  history: Array<{
+    speaker: string;
+    textEn?: string;
+    roleplayIntro?: unknown;
+    roleplayNpc?: unknown;
+  }>,
+): boolean {
+  return history.some(
+    (t) =>
+      t.speaker === 'ai' &&
+      (t.roleplayIntro != null || t.roleplayNpc != null),
+  );
+}
+
+/**
+ * Pin Favorites teaching boards (Steps 1–4) before Movie roleplay.
+ */
+export function forceFavoritesGuidedSpeakingIfNeeded(
+  lessonId: string,
+  _lang: LessonTeachingLanguage,
+  nextTurn: number,
+  history: Array<{
+    speaker: string;
+    textEn?: string;
+    roleplayIntro?: unknown;
+    roleplayNpc?: unknown;
+  }>,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    guidedSpeaking: ReturnType<typeof normalizeGuidedSpeaking>;
+    expectsUserSpeech: boolean;
+    isTaskComplete: boolean;
+    expectedSpeech: string | null;
+    roleplayIntro?: unknown;
+    roleplayNpc?: unknown;
+  },
+): {
+  textEn: string;
+  textTh: string | null;
+  guidedSpeaking: NonNullable<ReturnType<typeof normalizeGuidedSpeaking>>;
+  expectsUserSpeech: true;
+  expectedSpeech: string;
+  emojiChoice: null;
+  isTaskComplete: false;
+} | null {
+  if (lessonId !== 'ee_about_me_favorites') return null;
+  if (current.isTaskComplete) return null;
+  if (current.roleplayIntro != null || current.roleplayNpc != null) return null;
+  if (favoritesRoleplayStarted(history)) return null;
+  if (looksLikeSoftTeachReveal(current.textEn ?? '')) return null;
+  if (
+    pendingThreeTierSoftTeach(
+      history,
+      favoritesLessonProgress,
+      4,
+      scoreFavoritesStep,
+    )
+  ) {
+    return null;
+  }
+
+  const progress = favoritesLessonProgress(history);
+  if (progress >= 4) return null;
+
+  const fromText = favoritesBoardFromAiText(current.textEn ?? '');
+  let step = fromText;
+  if (step == null) {
+    if (progress >= 0 && progress <= 3) step = progress + 1;
+    else return null;
+  }
+
+  if (step < 1 || step > 4) return null;
+  if (nextTurn < 1 && step !== 1) return null;
+
+  const board = favoritesBoardForStep(step);
+  if (!board) return null;
+
+  const stemOk =
+    board.stem.trim() === ''
+      ? !(current.guidedSpeaking?.stem?.trim())
+      : (current.guidedSpeaking?.stem
+          ?.toLowerCase()
+          .includes(board.stem.toLowerCase().slice(0, 8)) ??
+        false);
+  const optionsOk =
+    (current.guidedSpeaking?.options?.length ?? 0) >= board.options.length;
+  if (
+    current.expectsUserSpeech &&
+    stemOk &&
+    optionsOk &&
+    current.guidedSpeaking
+  ) {
+    return null;
+  }
+
+  const options = board.options.map((o) => ({ ...o }));
+  const first = options[0];
+  return {
+    textEn: resolveForcedBoardTextEn(current.textEn ?? '', board, step),
+    textTh: current.textTh?.trim() || null,
+    guidedSpeaking: {
+      stem: board.stem,
+      emoji: first.emoji,
+      speak: first.speak,
+      ...(first.label ? { label: first.label } : {}),
+      options,
+    },
+    expectsUserSpeech: true,
+    expectedSpeech: board.expectedSpeech,
+    emojiChoice: null,
+    isTaskComplete: false,
   };
 }
 
@@ -17962,7 +18561,8 @@ export function forceAboutMeSoftTeachForLesson(
         {
           progressFn: homeLessonProgress,
           maxStep: 6,
-          matchesStep: matchesHomeStep,
+          matchesStep: matchesExactFromScorer(scoreHomeStep),
+          scoreStep: scoreHomeStep,
           getBoard: (step) => HOME_BOARDS[step] ?? null,
         },
       );
@@ -17976,13 +18576,15 @@ export function forceAboutMeSoftTeachForLesson(
         {
           progressFn: foodLessonProgress,
           maxStep: 6,
-          matchesStep: (step, text) =>
-            matchesFoodStep(step, text, extractFoodFavorite(history)),
+          matchesStep: matchesExactFromScorer((step, text) =>
+            scoreFoodStepForHistory(history, step, text),
+          ),
+          scoreStep: (step, text) =>
+            scoreFoodStepForHistory(history, step, text),
           getBoard: (step) => foodBoardForStep(step, history),
         },
       );
-    case 'ee_about_me_work_school': {
-      const mode = extractWorkSchoolMode(history) ?? 'work';
+    case 'ee_about_me_work_school':
       return forceGuidedBoardSoftTeachIfNeeded(
         lessonId,
         lessonId,
@@ -17992,15 +18594,15 @@ export function forceAboutMeSoftTeachForLesson(
         {
           progressFn: workSchoolLessonProgress,
           maxStep: 4,
-          matchesStep: (step, text) =>
-            matchesWorkSchoolStep(step, text, mode),
+          matchesStep: matchesExactFromScorer((step, text) =>
+            scoreWorkSchoolStepForHistory(history, step, text),
+          ),
+          scoreStep: (step, text) =>
+            scoreWorkSchoolStepForHistory(history, step, text),
           getBoard: (step) => workSchoolBoardForStep(step, history),
         },
       );
-    }
-    case 'ee_about_me_hobbies': {
-      const activity = extractHobbiesActivity(history) ?? 'watch_movies';
-      const hobbyPhrase = HOBBIES_ACTIVITY_META[activity].phrase;
+    case 'ee_about_me_hobbies':
       return forceGuidedBoardSoftTeachIfNeeded(
         lessonId,
         lessonId,
@@ -18010,28 +18612,14 @@ export function forceAboutMeSoftTeachForLesson(
         {
           progressFn: hobbiesLessonProgress,
           maxStep: 5,
-          matchesStep: (step, text) =>
-            matchesHobbiesStep(step, text, activity),
-          getBoard: (step) => {
-            if (step === 1) {
-              return {
-                textEn: '',
-                stem: HOBBIES_HOBBY_GUIDED_SPEAKING.stem,
-                expectedSpeech: `I ${hobbyPhrase}.`,
-                options: HOBBIES_HOBBY_GUIDED_SPEAKING.options.map((o) => ({
-                  ...o,
-                })),
-              };
-            }
-            if (step === 2) return hobbiesFrequencyBoard(activity);
-            if (step === 3) return HOBBIES_WEEKEND_BOARD;
-            if (step === 4) return HOBBIES_QUIZ_USUALLY_BOARD;
-            if (step === 5) return HOBBIES_QUIZ_SOMETIMES_BOARD;
-            return null;
-          },
+          matchesStep: matchesExactFromScorer((step, text) =>
+            scoreHobbiesStepForHistory(history, step, text),
+          ),
+          scoreStep: (step, text) =>
+            scoreHobbiesStepForHistory(history, step, text),
+          getBoard: (step) => hobbiesBoardForStep(step, history),
         },
       );
-    }
     case 'ee_about_me_pets': {
       const animal = extractPetsAnimal(history);
       const adjective = extractPetsAdjective(history, animal);
@@ -18044,45 +18632,12 @@ export function forceAboutMeSoftTeachForLesson(
         {
           progressFn: petsLessonProgress,
           maxStep: 4,
-          matchesStep: (step, text) =>
-            matchesPetsSpeakStep(step, text, animal, adjective),
-          getBoard: (step) => {
-            if (step === 1) {
-              return {
-                textEn: '',
-                stem: PETS_CHOICE_GUIDED_SPEAKING.stem,
-                expectedSpeech:
-                  animal === 'dog' ? 'I have a dog.' : 'I have a cat.',
-                options: PETS_CHOICE_GUIDED_SPEAKING.options.map((o) => ({
-                  ...o,
-                })),
-              };
-            }
-            if (step === 2) return petsDescribeBoard(animal);
-            if (step === 3) {
-              return {
-                textEn: PETS_YOUR_BOARD.textEn,
-                stem: PETS_YOUR_BOARD.stem,
-                expectedSpeech: PETS_YOUR_BOARD.expectedSpeech,
-                options: PETS_YOUR_BOARD.options.map((o) => ({ ...o })),
-              };
-            }
-            if (step === 4) {
-              return {
-                textEn: '',
-                stem: '',
-                expectedSpeech: `I have a ${animal}. My ${animal} is very ${adjective}.`,
-                options: [
-                  {
-                    emoji: '🐾',
-                    label: 'combo',
-                    speak: `I have a ${animal}. My ${animal} is very ${adjective}.`,
-                  },
-                ],
-              };
-            }
-            return null;
-          },
+          matchesStep: matchesExactFromScorer((step, text) =>
+            scorePetsStepForHistory(history, step, text),
+          ),
+          scoreStep: (step, text) =>
+            scorePetsStepForHistory(history, step, text),
+          getBoard: (step) => petsBoardForStep(step, animal, adjective),
         },
       );
     }
@@ -18099,26 +18654,13 @@ export function forceAboutMeSoftTeachForLesson(
         {
           progressFn: peopleLessonProgress,
           maxStep: 5,
-          matchesStep: matchesPeopleStep,
-          getBoard: (step) => {
-            if (step === 1) {
-              return {
-                textEn: '',
-                stem: PEOPLE_PERSON_GUIDED_SPEAKING.stem,
-                expectedSpeech: 'My brother.',
-                options: PEOPLE_PERSON_GUIDED_SPEAKING.options.map((o) => ({
-                  ...o,
-                })),
-              };
-            }
-            if (step === 2) return peopleJobBoard(person);
-            if (step === 3) {
-              return peoplePersonalityBoard(person, job, jobPraiseLabel);
-            }
-            if (step === 4) return PEOPLE_QUIZ_HE_BOARD;
-            if (step === 5) return PEOPLE_QUIZ_SHE_BOARD;
-            return null;
-          },
+          matchesStep: matchesExactFromScorer((step, text) =>
+            scorePeopleStepForHistory(history, step, text),
+          ),
+          scoreStep: (step, text) =>
+            scorePeopleStepForHistory(history, step, text),
+          getBoard: (step) =>
+            peopleBoardForStep(step, person, job, jobPraiseLabel),
         },
       );
     }
@@ -18132,32 +18674,9 @@ export function forceAboutMeSoftTeachForLesson(
         {
           progressFn: weatherLessonProgress,
           maxStep: 4,
-          matchesStep: matchesWeatherStep,
-          getBoard: (step) => {
-            if (step === 1) {
-              return {
-                textEn: '',
-                stem: WEATHER_HOT_QUIZ_GUIDED_SPEAKING.stem,
-                expectedSpeech: 'Hot.',
-                options: WEATHER_HOT_QUIZ_GUIDED_SPEAKING.options.map(
-                  (o) => ({ ...o }),
-                ),
-              };
-            }
-            if (step === 2) return WEATHER_COLD_BOARD;
-            if (step === 3) {
-              return {
-                textEn: '',
-                stem: WEATHER_PREFERENCE_GUIDED_SPEAKING.stem,
-                expectedSpeech: 'I like sunny weather.',
-                options: WEATHER_PREFERENCE_GUIDED_SPEAKING.options.map(
-                  (o) => ({ ...o }),
-                ),
-              };
-            }
-            if (step === 4) return WEATHER_QUIZ_RAINY_BOARD;
-            return null;
-          },
+          matchesStep: matchesExactFromScorer(scoreWeatherStep),
+          scoreStep: scoreWeatherStep,
+          getBoard: weatherBoardForStep,
         },
       );
     case 'ee_about_me_friends':
@@ -18170,37 +18689,24 @@ export function forceAboutMeSoftTeachForLesson(
         {
           progressFn: friendsLessonProgress,
           maxStep: 5,
-          matchesStep: matchesFriendsStep,
-          getBoard: (step) => {
-            if (step === 1) {
-              return {
-                textEn: '',
-                stem: FRIENDS_ACTIVITY_GUIDED_SPEAKING.stem,
-                expectedSpeech: 'We play games together.',
-                options: FRIENDS_ACTIVITY_GUIDED_SPEAKING.options.map(
-                  (o) => ({ ...o }),
-                ),
-              };
-            }
-            if (step === 2) return FRIENDS_EAT_OUT_BOARD;
-            if (step === 3) return FRIENDS_THEY_PLAY_BOARD;
-            if (step === 4) return FRIENDS_HANG_OUT_BOARD;
-            if (step === 5) {
-              return {
-                textEn: '',
-                stem: '',
-                expectedSpeech: FRIENDS_THEY_EAT_OUT_BOARD.expectedSpeech,
-                options: [
-                  {
-                    emoji: '🍽️',
-                    label: 'Eat out',
-                    speak: FRIENDS_THEY_EAT_OUT_BOARD.expectedSpeech,
-                  },
-                ],
-              };
-            }
-            return null;
-          },
+          matchesStep: matchesExactFromScorer(scoreFriendsStep),
+          scoreStep: scoreFriendsStep,
+          getBoard: friendsBoardForStep,
+        },
+      );
+    case 'ee_about_me_favorites':
+      return forceGuidedBoardSoftTeachIfNeeded(
+        lessonId,
+        lessonId,
+        lang,
+        history,
+        current,
+        {
+          progressFn: favoritesLessonProgress,
+          maxStep: 4,
+          matchesStep: matchesExactFromScorer(scoreFavoritesStep),
+          scoreStep: scoreFavoritesStep,
+          getBoard: favoritesBoardForStep,
         },
       );
     default:
