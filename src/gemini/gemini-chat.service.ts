@@ -1458,7 +1458,7 @@ export class GeminiChatService {
       ),
       contents,
       schema: buildTrainingReplySchema(speechFlag),
-      maxOutputTokens: 600,
+      maxOutputTokens: 1024,
       temperature: 0.4,
       recoverFromPlainText: (text) =>
         this.recoverTrainingReplyFromPlainText(text),
@@ -2213,7 +2213,8 @@ ${this.thaiPraiseVarietyRule()}
 Turn ${currentTurn} of ${config.maxTurns} (${remaining} turns remaining).
 ${speechFlagBlock}
 Critical turn-loop rule:
-- If isLessonComplete is false, textEn MUST end with a clear next action for the learner (repeat, recognition choice/guided use, or free recall). Never return explanation/praise only.${
+- If isLessonComplete is false, textEn MUST end with a clear next action for the learner (repeat, recognition choice/guided use, or free recall). Never return explanation/praise only.
+- When returning guidedSpeaking, emojiChoice, or emojiSpeakSet: keep textEn under ~200 characters — short praise + one question only. Put card labels in the structured field, NOT duplicated in textEn.${
       speechFlagBlock
         ? '\n- EXCEPTION: on a listen-only turn (expectsUserSpeech false) the Continue button is the next action, so end after the content and ask for nothing.'
         : ''
@@ -2645,7 +2646,11 @@ ${text}`,
     const baseTokens = options.maxOutputTokens ?? 1024;
     const tokenLimits =
       policy === 'liveTurn'
-        ? [baseTokens, Math.max(baseTokens * 2, 1024)]
+        ? [
+            baseTokens,
+            Math.max(baseTokens * 2, 1024),
+            Math.max(baseTokens * 3, 2048),
+          ]
         : [
             baseTokens,
             Math.max(baseTokens * 2, 1024),
@@ -2920,6 +2925,12 @@ ${text}`,
     }
 
     if (candidate?.finishReason === 'MAX_TOKENS' && options.schema) {
+      if (text) {
+        this.logger.warn(
+          `Gemini JSON hit MAX_TOKENS (${text.length} chars) — attempting repair`,
+        );
+        return text;
+      }
       throw new Error(
         `Gemini JSON response truncated (MAX_TOKENS). Preview: ${text.slice(0, 120)}`,
       );
@@ -3047,8 +3058,40 @@ ${text}`,
         .trim();
     }
 
-    // Already looks like JSON — let the normal parser / repair path handle it.
-    if (plain.startsWith('{')) return null;
+    // Truncated JSON — try repair before plain-text fallback.
+    if (plain.startsWith('{')) {
+      const repaired =
+        this.repairTruncatedJson(plain) ??
+        this.repairTruncatedJson(this.extractJsonObject(plain) ?? '');
+      if (repaired) {
+        try {
+          return JSON.parse(repaired) as TrainingTurnReply;
+        } catch {
+          // fall through to textEn extraction
+        }
+      }
+      const textEnMatch = plain.match(
+        /"textEn"\s*:\s*"((?:[^"\\]|\\.)*)"/,
+      );
+      if (textEnMatch) {
+        try {
+          const textEn = JSON.parse(`"${textEnMatch[1]}"`) as string;
+          if (textEn.trim()) {
+            this.logger.warn(
+              `Training reply recovered textEn from truncated JSON (${textEn.length} chars)`,
+            );
+            return {
+              textEn,
+              textTh: '',
+              isLessonComplete: false,
+            };
+          }
+        } catch {
+          return null;
+        }
+      }
+      return null;
+    }
 
     // Model ignored JSON mode and returned Teacher B prose (common with Thai).
     this.logger.warn(

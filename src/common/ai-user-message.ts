@@ -19,6 +19,13 @@ export function formatAiServiceUserMessage(err: unknown): string {
   const lower = raw.toLowerCase();
 
   if (
+    lower.includes('max_tokens') ||
+    lower.includes('truncated')
+  ) {
+    return 'ครูพี่บีตอบยาวเกินไป ลองกดไมค์พูดอีกครั้งนะ';
+  }
+
+  if (
     lower.includes('high demand') ||
     lower.includes('unavailable') ||
     lower.includes('"code": 503') ||
