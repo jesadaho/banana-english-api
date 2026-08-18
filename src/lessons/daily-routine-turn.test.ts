@@ -2,7 +2,9 @@ import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   buildDailyRoutineFallbackTrainingReply,
+  buildSoftTeachRevealLine,
   dailyRoutineProgress,
+  forceAboutMeSoftTeachForLesson,
 } from './lessons.data';
 
 type Turn = { speaker: string; textEn?: string };
@@ -126,6 +128,42 @@ describe('Daily Routine scripted turns (no Gemini)', () => {
 });
 
 describe('Daily Routine unhappy paths (scripted)', () => {
+  it('soft-teach reveal uses natural explain + repeat cue', () => {
+    const line = buildSoftTeachRevealLine('wake up', 'thai', 'ตื่นนอน');
+    assert.equal(
+      line,
+      "ปกติแล้ว 'ตื่นนอน' ในภาษาอังกฤษจะใช้คำว่า wake up ครับ ลองพูดตามนะครับ",
+    );
+  });
+
+  it('wrong vocab answer triggers contextual soft-teach line', () => {
+    const history: Turn[] = [
+      { speaker: 'ai', textEn: 'Say ready' },
+      { speaker: 'user', textEn: "I'm ready" },
+      { speaker: 'ai', textEn: 'vocab quiz' },
+      { speaker: 'user', textEn: 'go to work' },
+    ];
+    const reply = forceAboutMeSoftTeachForLesson(
+      LESSON_ID,
+      'thai',
+      history,
+      {
+        textEn: 'vocab quiz',
+        textTh: null,
+        guidedSpeaking: { stem: '...', emoji: '⏰', speak: 'wake up' },
+        expectsUserSpeech: true,
+        isTaskComplete: false,
+        expectedSpeech: 'wake up',
+      },
+    );
+    assert.ok(reply);
+    assert.match(
+      reply!.textEn,
+      /ปกติแล้ว 'ตื่นนอน' ในภาษาอังกฤษจะใช้คำว่า wake up ครับ ลองพูดตามนะครับ/,
+    );
+    assert.equal(reply!.expectedSpeech, 'wake up');
+  });
+
   it('wrong vocab answer keeps progress at 1 and re-scripts vocab board', () => {
     const history: Turn[] = [
       { speaker: 'ai', textEn: 'Say ready' },

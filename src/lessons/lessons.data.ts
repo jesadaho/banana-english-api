@@ -9128,6 +9128,8 @@ type ForcedGuidedBoard = {
   withPraise?: boolean;
   stem: string;
   expectedSpeech: string;
+  /** Vocab = Thai concept only (e.g. "ตื่นนอน"); phrase = lead ending in เราจะพูดว่า. */
+  softTeachHintTh?: string;
   options: Array<{ emoji: string; label: string; speak: string }>;
 };
 
@@ -9141,13 +9143,60 @@ function resolveForcedBoardTextEn(
   });
 }
 
+function isVocabSoftTeachHint(hint: string): boolean {
+  return (
+    !hint.includes('ถ้า') &&
+    !hint.includes('เราจะพูดว่า') &&
+    hint.split(/\s+/).filter(Boolean).length <= 3
+  );
+}
+
+/** Natural scripted copy when scorer rejects and we reveal the canonical line once. */
+export function buildSoftTeachRevealLine(
+  expectedSpeech: string,
+  lang: LessonTeachingLanguage,
+  hintTh?: string | null,
+): string {
+  const target = expectedSpeech.trim();
+  if (!target) {
+    return lang === 'english'
+      ? 'Good try — say it with me once.'
+      : 'ลองพูดตามนะครับ';
+  }
+
+  if (lang === 'english') {
+    const wordCount = target.split(/\s+/).filter(Boolean).length;
+    if (wordCount <= 2) {
+      return `Usually we say "${target}". Try saying it with me once.`;
+    }
+    return `Try saying it like this: "${target}" — your turn.`;
+  }
+
+  const hint = hintTh?.trim();
+  if (hint) {
+    if (isVocabSoftTeachHint(hint)) {
+      return `ปกติแล้ว '${hint}' ในภาษาอังกฤษจะใช้คำว่า ${target} ครับ ลองพูดตามนะครับ`;
+    }
+    return `ปกติแล้ว${hint} ${target} ครับ ลองพูดตามนะครับ`;
+  }
+
+  const wordCount = target.split(/\s+/).filter(Boolean).length;
+  if (wordCount <= 2) {
+    return `ปกติแล้วในภาษาอังกฤษจะใช้คำว่า ${target} ครับ ลองพูดตามนะครับ`;
+  }
+  return `ลองพูดแบบนี้นะครับ: ${target} ครับ`;
+}
+
 /** AI or forced copy that reveals the canonical line and asks for one repeat. */
 export function looksLikeSoftTeachReveal(textEn: string): boolean {
   const t = textEn.trim();
   if (!t) return false;
   const lower = t.toLowerCase();
   if (t.includes('พูดตาม') || t.includes('เฉลย')) return true;
+  if (t.includes('ปกติแล้ว') && t.includes('ใช้คำว่า')) return true;
+  if (t.includes('ปกติแล้ว') && t.includes('เราจะพูดว่า')) return true;
   if (t.includes('ลองพูดว่า') || t.includes('ลองพูดตาม')) return true;
+  if (lower.startsWith('not quite.') || lower.startsWith('almost!')) return true;
   if (
     (t.includes('ไม่เป็นไร') || lower.includes('no worries')) &&
     (t.includes('พูด') || lower.includes('say') || lower.includes('try'))
@@ -9361,10 +9410,11 @@ function forceGuidedBoardSoftTeachIfNeeded(
     .trim();
   if (!expectedSpeech) return null;
 
-  const softTeachEn =
-    lang === 'english'
-      ? `No worries. The answer is: "${expectedSpeech}" — say it with me once.`
-      : `ไม่เป็นไรครับ เฉลยนะครับ: "${expectedSpeech}" — ลองพูดตามครับ`;
+  const softTeachEn = buildSoftTeachRevealLine(
+    expectedSpeech,
+    lang,
+    board?.softTeachHintTh,
+  );
 
   return {
     textEn: softTeachEn,
@@ -9580,10 +9630,11 @@ export function forceShoppingLookingForSoftTeachIfNeeded(
   if (!jumpingAhead) return null;
 
   const canonical = shoppingLookingForCanonical(userText);
-  const softTeach =
-    lang === 'english'
-      ? `No worries. Try saying "${canonical}" — say it once.`
-      : `ไม่เป็นไรครับ ลองพูดว่า "${canonical}" แล้วพูดตามนะครับ`;
+  const softTeach = buildSoftTeachRevealLine(
+    canonical,
+    lang,
+    'ถ้าจะบอกว่ากำลังมองหาสินค้า เราจะพูดว่า',
+  );
 
   return {
     textEn: softTeach,
@@ -11002,6 +11053,7 @@ export const DAILY_ROUTINE_BOARDS: Record<
     withPraise: true,
     stem: '...',
     expectedSpeech: 'wake up',
+    softTeachHintTh: 'ตื่นนอน',
     options: [
       { emoji: '⏰', label: 'wake up', speak: 'wake up' },
       { emoji: '💼', label: 'go to work', speak: 'go to work' },
@@ -11014,6 +11066,7 @@ export const DAILY_ROUTINE_BOARDS: Record<
     withPraise: true,
     stem: 'I wake up at...',
     expectedSpeech: "I wake up at 7 o'clock.",
+    softTeachHintTh: 'ถ้าจะบอกว่าตื่นกี่โมง เราจะพูดว่า',
     options: [
       {
         emoji: '⏰',
@@ -11043,6 +11096,7 @@ export const DAILY_ROUTINE_BOARDS: Record<
     withPraise: true,
     stem: 'I go to sleep at...',
     expectedSpeech: "I go to sleep at 11 o'clock.",
+    softTeachHintTh: 'ถ้าจะบอกว่าเข้านอนกี่โมง เราจะพูดว่า',
     options: [
       {
         emoji: '🌙',
@@ -11072,6 +11126,7 @@ export const DAILY_ROUTINE_BOARDS: Record<
     withPraise: true,
     stem: 'I ... every day.',
     expectedSpeech: 'I drink coffee every day.',
+    softTeachHintTh: 'ถ้าจะบอกกิจกรรมที่ทำทุกวัน เราจะพูดว่า',
     options: [
       {
         emoji: '💼',
@@ -11203,6 +11258,7 @@ function dailyRoutineBoardForStep(
       textEn: '',
       stem: 'I wake up at... every day.',
       expectedSpeech: `I wake up at ${hour} ${ampm} every day.`,
+      softTeachHintTh: 'ถ้าจะบอกว่าตื่นทุกวัน เราจะพูดว่า',
       options: [
         {
           emoji: '⏰',
@@ -11316,19 +11372,14 @@ function dailyRoutineBoardFromAiText(textEn: string): number | null {
   return null;
 }
 
-function dailyRoutineAmPmBoard(wakeHour: number): {
-  textEn: string;
-  withPraise: boolean;
-  stem: string;
-  expectedSpeech: string;
-  options: Array<{ emoji: string; label: string; speak: string }>;
-} {
+function dailyRoutineAmPmBoard(wakeHour: number): ForcedGuidedBoard {
   return {
     textEn:
       'สุดยอด! ทีนี้ถ้าอยากระบุให้ชัดว่าเป็น เช้า หรือ ดึก เราใช้ AM (เช้า) และ PM (ดึก) แทน o\'clock ได้ครับ! เวลาตื่นนอนของคุณคือ AM หรือ PM ครับ? ☀️🌙',
     withPraise: true,
     stem: `I wake up at ${wakeHour}...`,
     expectedSpeech: `I wake up at ${wakeHour} AM.`,
+    softTeachHintTh: 'ถ้าจะบอกว่าตื่นตอนเช้า เราจะพูดว่า',
     options: [
       {
         emoji: '☀️',
