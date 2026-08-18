@@ -57,6 +57,7 @@ import {
   renderOpeningPrompt,
   teachingLanguageFromConfig,
 } from '../lessons/lesson-prompt';
+import { GroqChatService } from '../groq/groq-chat.service';
 import { GeminiModelPool, parseGeminiChatModels } from './gemini-model-pool';
 
 const REPLY_SCHEMA = {
@@ -780,8 +781,18 @@ export class GeminiChatService {
   private readonly apiKey: string;
   private readonly modelPool: GeminiModelPool;
 
-  constructor(private readonly config: ConfigService) {
+  constructor(
+    private readonly config: ConfigService,
+    private readonly groq: GroqChatService,
+  ) {
     this.apiKey = this.config.get<string>('GEMINI_API_KEY') ?? '';
+
+    const trainingLlm = this.trainingLlmProvider();
+    if (trainingLlm === 'groq') {
+      this.logger.log(
+        `Training LLM provider: groq (${this.groq.activeModel()})`,
+      );
+    }
 
     const models = parseGeminiChatModels(
       this.config.get<string>('GEMINI_CHAT_MODEL'),
@@ -1358,6 +1369,7 @@ export class GeminiChatService {
   async generateTrainingOpening(
     config: LessonConfig,
     learnerFirstName: string,
+    providerOverride?: 'gemini' | 'groq',
   ): Promise<{ reply: TrainingTurnReply; aiDebug: AiDebug }> {
     const lang = teachingLanguageFromConfig(config);
     // Funny jab seeds are Thai-only (parked About Me lessons). Skip in English mode.
@@ -1371,7 +1383,8 @@ export class GeminiChatService {
     const openingPrompt = renderOpeningPrompt(config, lang);
     const speechFlag = lessonUsesTapToContinue(config.lessonId);
 
-    const { value, aiDebug } = await this.generateJson<TrainingTurnReply>({
+    const { value, aiDebug } = await this.generateTrainingJson<TrainingTurnReply>(
+      {
       ...GEMINI_LIVE_TURN,
       systemInstruction: this.trainingSystemPrompt(
         config,
@@ -1397,7 +1410,9 @@ export class GeminiChatService {
       maxOutputTokens: 512,
       temperature: jabSeed ? 0.85 : 0.4,
       recoverFromPlainText: (text) => this.recoverTrainingReplyFromPlainText(text),
-    });
+      },
+      providerOverride,
+    );
     return { reply: value, aiDebug };
   }
 
@@ -1409,6 +1424,7 @@ export class GeminiChatService {
     learnerFirstName: string,
     /** Raw STT text shown in the app (before Thai-mix repair). */
     originalUserMessage?: string,
+    providerOverride?: 'gemini' | 'groq',
   ): Promise<{ reply: TrainingTurnReply; aiDebug: AiDebug }> {
     const contents: GeminiContent[] = [];
     const speechFlag = lessonUsesTapToContinue(config.lessonId);
@@ -1458,7 +1474,8 @@ export class GeminiChatService {
       ],
     });
 
-    const { value: reply, aiDebug } = await this.generateJson<TrainingTurnReply>({
+    const { value: reply, aiDebug } = await this.generateTrainingJson<TrainingTurnReply>(
+      {
       ...GEMINI_LIVE_TURN,
       systemInstruction: this.trainingSystemPrompt(
         config,
@@ -1471,7 +1488,9 @@ export class GeminiChatService {
       temperature: 0.4,
       recoverFromPlainText: (text) =>
         this.recoverTrainingReplyFromPlainText(text),
-    });
+      },
+      providerOverride,
+    );
 
     if (
       userMessage === TAP_TO_CONTINUE_TURN_TEXT ||
@@ -2659,6 +2678,25 @@ ${text}`,
       confidenceScore: this.clampScore(report.confidenceScore),
       listeningScore: this.clampScore(report.listeningScore),
     };
+  }
+
+  private trainingLlmProvider(): 'gemini' | 'groq' {
+    const raw = (this.config.get<string>('TRAINING_LLM_PROVIDER') ?? 'gemini')
+      .trim()
+      .toLowerCase();
+    return raw === 'groq' ? 'groq' : 'gemini';
+  }
+
+  /** Training opening/turn — routes to Groq when TRAINING_LLM_PROVIDER=groq. */
+  private async generateTrainingJson<T>(
+    options: GenerateJsonOptions,
+    providerOverride?: 'gemini' | 'groq',
+  ): Promise<GeminiGenerationResult<T>> {
+    const provider = providerOverride ?? this.trainingLlmProvider();
+    if (provider === 'groq') {
+      return this.groq.generateJson<T>(options);
+    }
+    return this.generateJson<T>(options);
   }
 
   private async generateJson<T>(

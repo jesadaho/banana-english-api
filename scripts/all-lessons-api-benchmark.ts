@@ -37,12 +37,29 @@ type LessonBenchResult = {
   turns: number;
   apiCalls: number;
   avgMs: number;
+  avgGeminiMs: number;
+  avgHandlerMs: number;
   minMs: number;
   maxMs: number;
   totalMs: number;
   error?: string;
   timingsMs: number[];
+  geminiMs: number[];
+  handlerMs: number[];
 };
+
+function parseAiDebug(json: Record<string, unknown>): {
+  geminiMs?: number;
+  handlerMs?: number;
+} {
+  const raw = json.aiDebug;
+  if (raw == null || typeof raw !== 'object') return {};
+  const d = raw as Record<string, unknown>;
+  return {
+    geminiMs: typeof d.geminiMs === 'number' ? d.geminiMs : undefined,
+    handlerMs: typeof d.handlerMs === 'number' ? d.handlerMs : undefined,
+  };
+}
 
 function avg(nums: number[]): number {
   if (nums.length === 0) return 0;
@@ -71,12 +88,21 @@ async function runLesson(
   const anonUser = `${ANON_PREFIX}-${lessonId}-${Date.now()}-${runIndex}`;
   const client = new LessonApiClient(API_BASE, anonUser);
   const timingsMs: number[] = [];
+  const geminiMs: number[] = [];
+  const handlerMs: number[] = [];
+
+  const recordAiDebug = (json: Record<string, unknown>) => {
+    const dbg = parseAiDebug(json);
+    if (dbg.geminiMs != null) geminiMs.push(dbg.geminiMs);
+    if (dbg.handlerMs != null) handlerMs.push(dbg.handlerMs);
+  };
 
   try {
     await client.refillBananas();
 
     const opening = await client.startLesson(lessonId);
     timingsMs.push(opening.durationMs);
+    recordAiDebug((opening.json.opening ?? opening.json) as Record<string, unknown>);
 
     let turn: TurnResult = opening.turn;
     let currentTurn = turn.currentTurn;
@@ -103,6 +129,7 @@ async function runLesson(
 
       const res = await client.sendUserSpeech(sessionId, currentTurn, userSpeech);
       timingsMs.push(res.durationMs);
+      recordAiDebug(res.json);
       turn = res.turn;
       currentTurn = turn.currentTurn;
       steps++;
@@ -122,10 +149,14 @@ async function runLesson(
       turns: steps,
       apiCalls: timingsMs.length,
       avgMs: Math.round(avg(timingsMs)),
+      avgGeminiMs: Math.round(avg(geminiMs)),
+      avgHandlerMs: Math.round(avg(handlerMs)),
       minMs: timingsMs.length ? Math.min(...timingsMs) : 0,
       maxMs: timingsMs.length ? Math.max(...timingsMs) : 0,
       totalMs: Math.round(timingsMs.reduce((a, b) => a + b, 0)),
       timingsMs: timingsMs.map((n) => Math.round(n)),
+      geminiMs: geminiMs.map((n) => Math.round(n)),
+      handlerMs: handlerMs.map((n) => Math.round(n)),
       ...(ok
         ? {}
         : {
@@ -146,10 +177,14 @@ async function runLesson(
       turns: 0,
       apiCalls: timingsMs.length,
       avgMs: timingsMs.length ? Math.round(avg(timingsMs)) : 0,
+      avgGeminiMs: Math.round(avg(geminiMs)),
+      avgHandlerMs: Math.round(avg(handlerMs)),
       minMs: timingsMs.length ? Math.min(...timingsMs) : 0,
       maxMs: timingsMs.length ? Math.max(...timingsMs) : 0,
       totalMs: Math.round(timingsMs.reduce((a, b) => a + b, 0)),
       timingsMs: timingsMs.map((n) => Math.round(n)),
+      geminiMs: geminiMs.map((n) => Math.round(n)),
+      handlerMs: handlerMs.map((n) => Math.round(n)),
       error: err instanceof Error ? err.message : String(err),
     };
   }
@@ -157,14 +192,14 @@ async function runLesson(
 
 function printTable(results: LessonBenchResult[]): void {
   const header =
-    '| Lesson | Title | OK | Turns | Avg (ms) | Min | Max | Total (ms) |';
+    '| Lesson | Title | OK | Turns | Wall (ms) | Gemini (ms) | Handler (ms) |';
   const sep =
-    '|--------|-------|----|-------|----------|-----|-----|------------|';
+    '|--------|-------|----|-------|-----------|-------------|--------------|';
   console.log('\n' + header);
   console.log(sep);
   for (const r of results) {
     console.log(
-      `| ${r.lessonId} | ${r.titleEn.slice(0, 28)} | ${r.ok ? '✅' : '❌'} | ${r.turns} | ${r.avgMs} | ${r.minMs} | ${r.maxMs} | ${r.totalMs} |`,
+      `| ${r.lessonId} | ${r.titleEn.slice(0, 22)} | ${r.ok ? '✅' : '❌'} | ${r.turns} | ${r.avgMs} | ${r.avgGeminiMs} | ${r.avgHandlerMs} |`,
     );
     if (r.error) {
       console.log(`  ↳ ${r.error}`);
@@ -201,7 +236,7 @@ async function main(): Promise<void> {
     const result = await runLesson(lesson.lessonId, i);
     results.push(result);
     console.log(
-      `  → ${result.ok ? 'OK' : 'FAIL'} | turns=${result.turns} avg=${result.avgMs}ms`,
+      `  → ${result.ok ? 'OK' : 'FAIL'} | turns=${result.turns} wall=${result.avgMs}ms llm=${result.avgGeminiMs}ms handler=${result.avgHandlerMs}ms`,
     );
     if (result.error) console.log(`  → ${result.error}`);
 

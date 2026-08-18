@@ -44,7 +44,7 @@ export interface FeedbackHints {
 }
 
 /** How the tutor reply was produced (included when X-Chat-Debug: 1). */
-export type AiDebugSource = 'gemini' | 'scripted';
+export type AiDebugSource = 'gemini' | 'groq' | 'scripted';
 
 export interface AiDebug {
   source: AiDebugSource;

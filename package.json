@@ -21,7 +21,8 @@
     "test:lesson-driver": "node --import tsx --test src/lessons/lesson-turn-driver.test.ts",
     "smoke:daily-routine": "tsx scripts/daily-routine-api-turn-smoke.ts",
     "smoke:daily-routine:unhappy": "tsx scripts/daily-routine-api-unhappy-smoke.ts",
-    "smoke:all-lessons": "tsx scripts/all-lessons-api-benchmark.ts"
+    "smoke:all-lessons": "tsx scripts/all-lessons-api-benchmark.ts",
+    "bench:groq-spike": "tsx scripts/groq-training-latency-spike.ts"
   },
   "dependencies": {
     "@nestjs/common": "^10.4.15",
