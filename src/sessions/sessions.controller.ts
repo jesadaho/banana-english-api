@@ -163,7 +163,10 @@ import { getSeriesForSimulation } from '../series/series.data';
 import { ActivityService } from '../users/activity.service';
 import { AchievementsService } from '../achievements/achievements.service';
 
-type AuthedRequest = { user: User };
+type AuthedRequest = {
+  user: User;
+  headers?: Record<string, string | string[] | undefined>;
+};
 
 @Controller('sessions')
 @UseGuards(AnonymousUserGuard)
