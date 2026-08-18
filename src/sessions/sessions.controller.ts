@@ -772,26 +772,37 @@ export class SessionsController {
 
       const nextTurn = expectedTurn + 1;
       let reply: Awaited<ReturnType<GeminiChatService['generateTrainingTurn']>>;
-      try {
-        reply = await this.chat.generateTrainingTurn(
-          config,
-          data.turns,
-          userText,
-          nextTurn,
-          data.learnerFirstName ??
-            learnerNameFallback(teachingLanguageFromConfig(config)),
-          originalText,
-        );
-      } catch (aiErr) {
-        const fallback = buildDailyRoutineFallbackTrainingReply(
-          config.lessonId,
-          data.turns,
-          nextTurn,
-        );
-        if (!fallback) {
-          throw aiErr;
+
+      // Daily Routine board turns are fully scripted — skip Gemini when possible.
+      const scriptedFirst = buildDailyRoutineFallbackTrainingReply(
+        config.lessonId,
+        data.turns,
+        nextTurn,
+      );
+      if (scriptedFirst) {
+        reply = scriptedFirst;
+      } else {
+        try {
+          reply = await this.chat.generateTrainingTurn(
+            config,
+            data.turns,
+            userText,
+            nextTurn,
+            data.learnerFirstName ??
+              learnerNameFallback(teachingLanguageFromConfig(config)),
+            originalText,
+          );
+        } catch (aiErr) {
+          const fallback = buildDailyRoutineFallbackTrainingReply(
+            config.lessonId,
+            data.turns,
+            nextTurn,
+          );
+          if (!fallback) {
+            throw aiErr;
+          }
+          reply = fallback;
         }
-        reply = fallback;
       }
 
       const maxTurnsReached = nextTurn >= config.maxTurns;

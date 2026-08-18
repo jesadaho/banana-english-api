@@ -11504,7 +11504,7 @@ export function buildDailyRoutineFallbackTrainingReply(
   isLessonComplete: boolean;
   expectsUserSpeech: boolean;
   expectedSpeech?: string;
-  guidedSpeaking?: ReturnType<typeof normalizeGuidedSpeaking>;
+  guidedSpeaking?: NonNullable<ReturnType<typeof normalizeGuidedSpeaking>>;
 } | null {
   if (lessonId !== 'ee_about_me_daily_routine' || nextTurn < 1) {
     return null;

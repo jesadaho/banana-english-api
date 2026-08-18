@@ -734,7 +734,7 @@ const GEMINI_BACKGROUND: Pick<GenerateJsonOptions, 'retryPolicy'> = {
   retryPolicy: 'background',
 };
 
-const GEMINI_LIVE_TURN_TIMEOUT_MS = 12_000;
+const GEMINI_LIVE_TURN_TIMEOUT_MS = 20_000;
 const GEMINI_BACKGROUND_TIMEOUT_MS = 20_000;
 
 type GenerateJsonOptions = {
@@ -1396,7 +1396,9 @@ export class GeminiChatService {
     for (const turn of this.priorTurnsForModel(history, userMessage, 12)) {
       contents.push({
         role: turn.speaker === 'ai' ? 'model' : 'user',
-        // Keep model turns as JSON so responseSchema stays sticky across turns.
+        // Keep model turns as JSON so responseSchema stays sticky — but omit
+        // heavy boards (guidedSpeaking, emojiChoice, scene) from history so
+        // long lessons do not blow context / output limits by turn 4+.
         parts: [
           {
             text:
@@ -1405,26 +1407,8 @@ export class GeminiChatService {
                     textEn: turn.textEn,
                     textTh: turn.textTh ?? '',
                     isLessonComplete: false,
-                    // Replay what the app really showed: claiming every past
-                    // turn wanted speech taught the model to keep asking.
                     ...(speechFlag
                       ? { expectsUserSpeech: turn.expectsUserSpeech ?? true }
-                      : {}),
-                    ...(turn.scene ? { scene: turn.scene } : {}),
-                    ...(turn.emojiSpeak
-                      ? { emojiSpeak: turn.emojiSpeak }
-                      : {}),
-                    ...(turn.emojiChoice
-                      ? { emojiChoice: turn.emojiChoice }
-                      : {}),
-                    ...(turn.guidedSpeaking
-                      ? { guidedSpeaking: turn.guidedSpeaking }
-                      : {}),
-                    ...(turn.roleplayIntro
-                      ? { roleplayIntro: turn.roleplayIntro }
-                      : {}),
-                    ...(turn.roleplayNpc
-                      ? { roleplayNpc: turn.roleplayNpc }
                       : {}),
                   })
                 : turn.textEn,
@@ -2648,19 +2632,12 @@ ${text}`,
   private async generateJson<T>(options: GenerateJsonOptions): Promise<T> {
     const policy = options.retryPolicy ?? 'background';
     const baseTokens = options.maxOutputTokens ?? 1024;
-    const tokenLimits =
-      policy === 'liveTurn'
-        ? [
-            baseTokens,
-            Math.max(baseTokens * 2, 1024),
-            Math.max(baseTokens * 3, 2048),
-          ]
-        : [
-            baseTokens,
-            Math.max(baseTokens * 2, 1024),
-            Math.max(baseTokens * 3, 2048),
-            4096,
-          ];
+    const tokenLimits = [
+      baseTokens,
+      Math.max(baseTokens * 2, 1024),
+      Math.max(baseTokens * 3, 2048),
+      4096,
+    ];
     const models = this.modelsForPolicy(policy);
 
     let lastError: unknown;
@@ -2757,9 +2734,8 @@ ${text}`,
       : new Error(String(lastError));
   }
 
-  private modelsForPolicy(policy: GeminiRetryPolicy): string[] {
-    const active = this.modelPool.activeModels();
-    return policy === 'liveTurn' ? active.slice(0, 2) : active;
+  private modelsForPolicy(_policy: GeminiRetryPolicy): string[] {
+    return this.modelPool.activeModels();
   }
 
   private timeoutForPolicy(
@@ -2795,9 +2771,12 @@ ${text}`,
     if (!(error instanceof Error)) return false;
     if (this.isRetryableModelError(error)) return true;
     if (policy === 'liveTurn') {
+      const message = error.message;
       return (
         this.isTokenLimitJsonError(error) ||
-        this.isBlockedResponseError(error)
+        this.isBlockedResponseError(error) ||
+        message.includes('invalid JSON') ||
+        message.includes('Unexpected')
       );
     }
     const message = error.message;
