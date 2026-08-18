@@ -2299,7 +2299,11 @@ Payment closure (critical — no tap UI exists):
 - When the customer indicates CARD payment (even if speech-to-text is garbled, e.g. "hard plates" = "card please"), you MUST set payment_completed to true immediately in updatedCheckpoints.
 - Do NOT ask them to tap the screen, point anywhere, or wait for another turn. Close payment in this reply.
 - Example closing line: "Card, got it! Payment completed. Here is your latte! Enjoy your day!"
-- Never use half-open phrases like "Just tap here?" — always finish the transaction and hand over the drink.`;
+- Never use half-open phrases like "Just tap here?" — always finish the transaction and hand over the drink.
+
+Mission closure (critical):
+- When ${remainingTurns} turns remaining or fewer, wrap up warmly in this reply, set ALL checkpoints to true, and do NOT ask another question.
+- If every checkpoint is already complete, close the conversation — never loop on the same topic.`;
   }
 
   async generateReply(

@@ -10865,6 +10865,24 @@ function normalizeDailyRoutineSpeech(userText: string): string {
     .replace(/\s+/g, ' ');
 }
 
+function isStandaloneAmPm(userText: string): 'AM' | 'PM' | null {
+  const t = normalizeDailyRoutineSpeech(userText);
+  if (/^(p\.?m\.?|pm|p m)$/.test(t)) return 'PM';
+  if (/^(a\.?m\.?|am|em|aim|a m)$/.test(t)) return 'AM';
+  return null;
+}
+
+/** Step 5 — need a short sentence, not AM/PM alone (guided cards use full line). */
+function matchesDailyRoutineAmPmSentence(userText: string): boolean {
+  const t = normalizeDailyRoutineSpeech(userText);
+  if (!t || /\bevery day\b/.test(t)) return false;
+  if (isStandaloneAmPm(t) != null) return false;
+  return (
+    /\b(i\s+)?wake up at\b/.test(t) &&
+    /\b(a\.?m\.?|p\.?m\.?|am|pm|em)\b/.test(t)
+  );
+}
+
 function matchesDailyRoutineStep(step: number, userText: string): boolean {
   const t = normalizeDailyRoutineSpeech(userText);
   if (!t) return false;
@@ -10897,12 +10915,8 @@ function matchesDailyRoutineStep(step: number, userText: string): boolean {
         /\bi sleep at\b/.test(t) ||
         /\bi go to bed at\b/.test(t)
       );
-    case 5: // AM/PM
-      return (
-        /\bi wake up at\b/.test(t) &&
-        /\b(a\.?m\.?|p\.?m\.?)\b/.test(t) &&
-        !/\bevery day\b/.test(t)
-      );
+    case 5: // AM/PM — must be a sentence (e.g. I wake up at 7 AM), not "AM" alone
+      return matchesDailyRoutineAmPmSentence(userText);
     case 6: // every day activity — board OR any clear "I … every day"
       return (
         /\bevery day\b/.test(t) &&
@@ -10979,9 +10993,10 @@ function extractDailyRoutineAmPm(
     const turn = history[i];
     if (turn.speaker !== 'user') continue;
     const t = normalizeDailyRoutineSpeech(turn.textEn ?? '');
-    if (!/\bi wake up at\b/.test(t) || /\bevery day\b/.test(t)) continue;
-    if (/\bp\.?m\.?\b/.test(t)) return 'PM';
-    if (/\ba\.?m\.?\b/.test(t)) return 'AM';
+    if (/\bevery day\b/.test(t)) continue;
+    if (!matchesDailyRoutineAmPmSentence(t)) continue;
+    if (/\bp\.?m\.?\b/.test(t) || /\bpm\b/.test(t)) return 'PM';
+    if (/\ba\.?m\.?\b/.test(t) || /\b(am|em)\b/.test(t)) return 'AM';
   }
   return 'AM';
 }
@@ -11104,6 +11119,10 @@ export function forceDailyRoutineGuidedSpeakingIfNeeded(
   if (target == null) {
     if (progress >= 1 && progress <= 6) target = progress;
     else return null;
+  } else if (progress >= 1 && progress <= 6 && progress > target) {
+    // Learner already cleared this step — don't re-pin an earlier board because
+    // the model repeated the AM/PM (or other) question.
+    target = progress;
   }
 
   // Active Recall — no choice cards.

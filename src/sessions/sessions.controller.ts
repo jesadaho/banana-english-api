@@ -50,6 +50,8 @@ import {
   allCheckpointsComplete,
   applyPaymentClosureFromAiReply,
   applyPaymentClosureIfNeeded,
+  applySimulationCheckpointHeuristics,
+  finalizeSimulationTurnState,
   getSimulation,
   mergeCheckpoints,
 } from '../simulations/simulations.data';
@@ -2083,29 +2085,41 @@ export class SessionsController {
         ),
       );
 
-      const allComplete = allCheckpointsComplete(mergedCheckpoints);
-      const maxTurnsReached = nextTurn >= (data.session.maxTurns ?? config.maxTurns);
-      const isTaskComplete = allComplete || maxTurnsReached;
+      const heuristicCheckpoints = applySimulationCheckpointHeuristics(
+        config,
+        userText,
+        data.turns,
+        mergedCheckpoints,
+      );
+
+      const finalized = finalizeSimulationTurnState(
+        config,
+        nextTurn,
+        heuristicCheckpoints,
+        { aiResponse: reply.aiResponse, textTh: reply.textTh },
+      );
+
+      const isTaskComplete = finalized.isTaskComplete;
 
       this.sessionStore.updateSimulationState(sessionId, {
         currentTurn: nextTurn,
-        checkpointStates: mergedCheckpoints,
+        checkpointStates: finalized.checkpoints,
         isComplete: isTaskComplete,
       });
 
       const aiTurn = {
         speaker: 'ai' as const,
-        textEn: reply.aiResponse,
-        textTh: reply.textTh,
+        textEn: finalized.reply.aiResponse,
+        textTh: finalized.reply.textTh,
         audioUrl: null,
       };
       this.sessionStore.addTurn(sessionId, aiTurn);
 
       const response: TurnExchangeResponse = {
-        aiResponse: reply.aiResponse,
-        textTh: reply.textTh,
+        aiResponse: finalized.reply.aiResponse,
+        textTh: finalized.reply.textTh,
         isTaskComplete,
-        updatedCheckpoints: mergedCheckpoints,
+        updatedCheckpoints: finalized.checkpoints,
         feedbackHints: {
           grammarTip: reply.feedbackHints.grammarTip,
           mispronouncedWords: reply.feedbackHints.mispronouncedWords ?? [],
@@ -2114,7 +2128,9 @@ export class SessionsController {
       };
 
       if (body.generateAudio) {
-        const audio = await this.geminiTts.synthesizeSpeech(reply.aiResponse);
+        const audio = await this.geminiTts.synthesizeSpeech(
+          finalized.reply.aiResponse,
+        );
         response.audioBase64 = audio.toString('base64');
         response.contentType = 'audio/wav';
       }

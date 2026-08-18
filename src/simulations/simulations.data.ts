@@ -484,7 +484,20 @@ export const SIMULATIONS: SimulationConfig[] = [
     estimatedMinutes: 5,
     bananaCost: 1,
     systemInstruction:
-      `${AI_LEAD} You are Max, a friendly young man the learner meets while walking in the park. You just smiled and said hello. Warmly help them introduce themselves, ask simple questions about them (name, where they are from, what they do / work or school, what they like), and share a little about yourself so they get to know you. Keep it light and social — not a job interview. Speak as a male (use "ครับ" tone in any Thai). Celebrate when they share about themselves.`,
+      `${AI_LEAD} You are Max, a friendly young man the learner meets while walking in the park. You just smiled and said hello. Warmly help them introduce themselves, ask simple questions about them (name, where they are from, what they do / work or school, what they like), and share a little about yourself so they get to know you. Keep it light and social — not a job interview. Speak as a male (use "ครับ" tone in any Thai). Celebrate when they share about themselves.
+
+Follow this arc after the opening greeting (one question per turn — never dump multiple questions):
+1) Learner greets → ask their name (or react to it warmly).
+2) Ask where they are from.
+3) Ask what they do (work or study).
+4) Ask what they like / a hobby.
+5) Share one short thing about yourself (Max's job, hobby, or where you're from).
+6) Warm close only: "Nice talking to you!" — mark ALL checkpoints true. Do NOT ask another question.
+
+Closure rules (critical):
+- When 2 or fewer turns remain, you MUST close warmly and set every checkpoint to true.
+- Never loop on the same topic or re-ask name / hobby once already answered.
+- Accept STT quirks (e.g. "OV" may mean hobby/game) — acknowledge and move forward.`,
     openingPrompt:
       'Start the simulation. Open as Max, a friendly guy in the park. In one short reply, smile and greet them, say your name is Max, and end with "Nice to meet you." Follow this closely: "Hi! I\'m Max. Nice to meet you." Do not ask the learner any questions on this first turn.',
     successCriteria: [
@@ -907,4 +920,124 @@ export function applyPaymentClosureFromAiReply(
   }
 
   return { ...checkpoints, payment_completed: true };
+}
+
+type TurnLike = { speaker: string; textEn: string };
+
+/** Code-side checkpoint hints when Gemini is slow to mark social missions complete. */
+export function applySimulationCheckpointHeuristics(
+  config: SimulationConfig,
+  userText: string,
+  history: TurnLike[],
+  checkpoints: Record<string, boolean>,
+): Record<string, boolean> {
+  switch (config.simulationId) {
+    case 'meet_new_friend_easy':
+      return applyMeetNewFriendHeuristics(userText, history, checkpoints);
+    default:
+      return checkpoints;
+  }
+}
+
+function applyMeetNewFriendHeuristics(
+  userText: string,
+  history: TurnLike[],
+  checkpoints: Record<string, boolean>,
+): Record<string, boolean> {
+  const next = { ...checkpoints };
+  const t = userText.toLowerCase().trim();
+  const userTurnCount = history.filter((turn) => turn.speaker === 'user').length;
+
+  if (!next.introduced_self) {
+    if (
+      /\b(i'?m|i am|my name is|call me)\b/.test(t) ||
+      /\b(nice to meet you|hello|hi)\b/.test(t)
+    ) {
+      next.introduced_self = true;
+    }
+  }
+
+  if (!next.answered_about_self && userTurnCount >= 2) {
+    if (
+      /\b(from|live|work|study|student|school|job|like|love|enjoy|hobby|play|watch|read)\b/.test(
+        t,
+      ) ||
+      t.split(/\s+/).length >= 4
+    ) {
+      next.answered_about_self = true;
+    }
+  }
+
+  if (!next.got_to_know_friend) {
+    const lastAi = [...history].reverse().find((turn) => turn.speaker === 'ai');
+    if (
+      lastAi &&
+      /\b(i'?m|i am|my name|i like|i love|i work|i study)\b/.test(
+        lastAi.textEn.toLowerCase(),
+      )
+    ) {
+      next.got_to_know_friend = true;
+    }
+    if (/\b(you|your|max)\b/.test(t) && /\?/.test(userText)) {
+      next.got_to_know_friend = true;
+    }
+    if (
+      userTurnCount >= 5 &&
+      next.introduced_self &&
+      next.answered_about_self
+    ) {
+      next.got_to_know_friend = true;
+    }
+  }
+
+  return next;
+}
+
+/** Force wrap-up when near max turns or checkpoints are done but Gemini keeps chatting. */
+export function finalizeSimulationTurnState(
+  config: SimulationConfig,
+  nextTurn: number,
+  checkpoints: Record<string, boolean>,
+  reply: { aiResponse: string; textTh: string },
+): {
+  checkpoints: Record<string, boolean>;
+  reply: { aiResponse: string; textTh: string };
+  isTaskComplete: boolean;
+} {
+  const maxTurns = config.maxTurns;
+  const maxTurnsReached = nextTurn >= maxTurns;
+  const remainingTurns = maxTurns - nextTurn;
+  const merged = { ...checkpoints };
+  let aiResponse = reply.aiResponse;
+  let textTh = reply.textTh;
+
+  const completedCount = Object.values(merged).filter(Boolean).length;
+  const shouldForceClose =
+    maxTurnsReached ||
+    (remainingTurns <= 2 && completedCount >= 2) ||
+    (allCheckpointsComplete(merged) && remainingTurns <= 2);
+
+  if (shouldForceClose) {
+    for (const key of config.successCriteria) {
+      merged[key] = true;
+    }
+    const looksLikeClosing =
+      /nice talking|see you|goodbye|great meeting|take care|lovely meeting/i.test(
+        aiResponse,
+      );
+    const stillAsking = /\?/.test(aiResponse);
+    if (!looksLikeClosing && (maxTurnsReached || stillAsking)) {
+      aiResponse = 'Nice talking to you! See you around the park!';
+      textTh = 'ยินดีที่ได้คุยด้วยนะครับ! แล้วเจอกันในสวนครับ!';
+    }
+  }
+
+  const isTaskComplete =
+    allCheckpointsComplete(merged) || maxTurnsReached || shouldForceClose;
+
+  return {
+    checkpoints: merged,
+    reply: { aiResponse, textTh },
+    isTaskComplete,
+  };
 }
