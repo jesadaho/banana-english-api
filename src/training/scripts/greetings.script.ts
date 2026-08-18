@@ -19,22 +19,6 @@ const TIME_OF_DAY_CHOICE = {
   ],
 } as const;
 
-function softHint(
-  phrase: string,
-  th: string,
-  en: string,
-  extra?: Partial<ScriptTurnResult>,
-): ScriptTurnResult {
-  return {
-    textEn: th,
-    textTh: en,
-    isLessonComplete: false,
-    expectsUserSpeech: true,
-    expectedSpeech: phrase,
-    ...extra,
-  };
-}
-
 /** Step content delivered AFTER the learner succeeds (or is accepted) on the prior step. */
 function teachStep(
   step: number,
@@ -119,65 +103,19 @@ function teachStep(
   }
 }
 
-function softHintForStep(step: number): ScriptTurnResult {
-  switch (step) {
-    case 1:
-      return softHint(
-        'Hello',
-        'ใกล้แล้วครับ! ลองพูดว่า "Hello" ชัดๆ อีกครั้งนะ 👋',
-        'Almost! Try saying "Hello" clearly one more time.',
-      );
-    case 2:
-      return softHint(
-        'Hi',
-        'เกือบได้แล้ว! ลองพูด "Hi" อีกครั้งนะ ✌️',
-        'Almost! Try "Hi" once more.',
-      );
-    case 3:
-      return softHint(
-        GREETINGS_STEP3_EXPECTED,
-        'เพื่อนสนิทมักใช้คำสบายๆ — ลองพูด "Hi" อีกครั้งนะ',
-        'With a close friend, try "Hi" again.',
-        { emojiChoice: { options: [...HELLO_HI_CHOICE.options] } },
-      );
-    case 4:
-      return softHint(
-        'Good morning',
-        'ช่วงเช้าใช้ Good morning — ลองอีกครั้งนะ 🌅',
-        'In the morning, say Good morning — try again.',
-      );
-    case 5:
-      return softHint(
-        'Good afternoon',
-        'ช่วงบ่ายใช้ Good afternoon — ลองอีกครั้งนะ ☀️',
-        'In the afternoon, say Good afternoon — try again.',
-      );
-    case 6:
-      return softHint(
-        'Good evening',
-        'ตอนเย็นใช้ Good evening — ลองอีกครั้งนะ 🌙',
-        'In the evening, say Good evening — try again.',
-      );
-    case 7:
-      return softHint(
-        GREETINGS_STEP7_EXPECTED,
-        'เช้า 7 โมง — ลองพูด "Good morning" อีกครั้งนะ',
-        'At 7am, try "Good morning" again.',
-        { emojiChoice: { options: [...TIME_OF_DAY_CHOICE.options] } },
-      );
-    case 8:
-      return softHint(
-        '',
-        'ลองทักทายด้วย Hello, Hi หรือ Good morning/afternoon/evening นะ 👋',
-        'Try any greeting we learned — Hello, Hi, or a time-of-day phrase.',
-      );
-    default:
-      return softHint(
-        'Hello',
-        'ลองพูดอีกครั้งนะครับ',
-        'Try once more.',
-      );
-  }
+/** After 2nd wrong — accept and advance without blocking the learner. */
+function forceAdvanceStep(
+  step: number,
+  name: string,
+): ScriptTurnResult | null {
+  const next = teachStep(Math.min(step + 1, 9), name);
+  if (!next) return null;
+  if (next.isLessonComplete) return next;
+  return {
+    ...next,
+    textEn: `ไม่เป็นไรครับ ไปต่อกัน! ${next.textEn}`,
+    textTh: `No worries — let's move on! ${next.textTh}`,
+  };
 }
 
 export function buildGreetingsOpening(learnerFirstName: string): ScriptTurnResult {
@@ -204,16 +142,17 @@ export function buildGreetingsAfterUser(input: {
     return teachStep(9, name);
   }
 
-  if (!matched && attempt === 1) {
-    return softHintForStep(step);
+  if (matched) {
+    return teachStep(Math.min(step + 1, 9), name);
   }
 
-  if (!matched && attempt >= 2) {
-    return { deferToAi: true } as ScriptTurnResult;
+  // Wrong #1 → Gemini soft-teach (model correct phrase + ask repeat).
+  if (attempt === 1) {
+    return { deferToAi: true, aiMode: 'softTeach' } as ScriptTurnResult;
   }
 
-  const nextStep = Math.min(step + 1, 9);
-  return teachStep(nextStep, name);
+  // Wrong #2 → accept and advance (scripted, no LLM).
+  return forceAdvanceStep(step, name);
 }
 
 export const GREETINGS_SCRIPT = {

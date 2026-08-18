@@ -100,6 +100,12 @@ export function resolveGreetingsStep(
   return { step, attempt };
 }
 
+export function greetingsExpectedSpeechForStep(step: number): string | null {
+  if (step === 8) return null;
+  const phrases = expectedPhrasesForGreetingsStep(step);
+  return phrases[0] ?? null;
+}
+
 export function scoreGreetingsUserTurn(
   step: number,
   userText: string,

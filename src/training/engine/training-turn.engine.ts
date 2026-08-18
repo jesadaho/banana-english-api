@@ -8,6 +8,7 @@ import { TrainingAiGate } from './ai-gate';
 import {
   resolveGreetingsStep,
   scoreGreetingsUserTurn,
+  greetingsExpectedSpeechForStep,
 } from './lesson-step.resolver';
 import {
   buildGreetingsOpening,
@@ -80,11 +81,14 @@ export class TrainingTurnEngine {
       coreStepMax: input.config.progressMax ?? 9,
       attempt,
       matched: score.matched,
-      expectedSpeech: lastAi?.expectedSpeech?.trim() || null,
+      expectedSpeech:
+        greetingsExpectedSpeechForStep(step) ??
+        (lastAi?.expectedSpeech?.trim() || null),
       userText: input.userText,
       originalText: input.originalText,
       history: input.turns,
       learnerFirstName: input.learnerFirstName,
+      mode: scripted?.aiMode ?? 'softTeach',
     });
 
     return generated;

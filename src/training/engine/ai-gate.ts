@@ -8,21 +8,29 @@ import type { ChatTurn } from '../../session-store/session-store.service';
 import {
   GREETINGS_STEP3_EXPECTED,
   GREETINGS_STEP7_EXPECTED,
+  greetingsExpectedSpeechForStep,
 } from './lesson-step.resolver';
 
 const GREETINGS_STEP_HINTS: Record<number, string> = {
-  1: 'Repeat: learner should say "Hello".',
-  2: 'Repeat: learner should say "Hi".',
+  1: 'Target phrase: "Hello".',
+  2: 'Target phrase: "Hi".',
   3:
-    'Recognition: friend scenario — correct answer is "Hi". Keep emojiChoice Hello/Hi board on retries.',
-  4: 'Explain morning greeting briefly, then learner repeats "Good morning".',
-  5: 'Repeat: "Good afternoon".',
-  6: 'Repeat: "Good evening".',
+    'Recognition: friend scenario — correct answer is "Hi". Keep emojiChoice Hello/Hi board.',
+  4: 'Target phrase: "Good morning".',
+  5: 'Target phrase: "Good afternoon".',
+  6: 'Target phrase: "Good evening".',
   7:
     'Recognition: 7am scenario — correct answer is "Good morning". Keep time-of-day emojiChoice board.',
   8: 'Free recall — accept any taught greeting phrase.',
-  9: 'Summary + celebrate with learner first name → isLessonComplete=true.',
+  9: 'Summary + celebrate → isLessonComplete=true.',
 };
+
+const SOFT_TEACH_RULES =
+  'SOFT-TEACH (wrong attempt 1): Briefly acknowledge the mistake in a friendly way. ' +
+  'Model the EXACT correct target phrase clearly. Ask the learner to repeat it (พูดตาม). ' +
+  'Stay on the SAME core step — do NOT advance. expectsUserSpeech=true. ' +
+  'Set expectedSpeech to the exact target phrase. ' +
+  'On recognition steps 3 and 7, keep the required emojiChoice board.';
 
 export type AiGateInput = {
   lessonTitle: string;
@@ -35,6 +43,7 @@ export type AiGateInput = {
   originalText: string;
   history: ChatTurn[];
   learnerFirstName: string;
+  mode?: 'softTeach';
 };
 
 @Injectable()
@@ -48,13 +57,21 @@ export class TrainingAiGate {
     const historyLines = this.compactHistory(input.history, 4);
     const expected =
       input.expectedSpeech ??
+      greetingsExpectedSpeechForStep(input.coreStep) ??
       (input.coreStep === 3
         ? GREETINGS_STEP3_EXPECTED
         : input.coreStep === 7
           ? GREETINGS_STEP7_EXPECTED
           : null);
 
+    const baseHint = GREETINGS_STEP_HINTS[input.coreStep] ?? '';
+    const stepHint =
+      input.mode === 'softTeach'
+        ? `${baseHint}\n${SOFT_TEACH_RULES}`
+        : baseHint;
+
     const userPayload = [
+      `mode=${input.mode ?? 'default'}`,
       `step=${input.coreStep}`,
       `attempt=${input.attempt}`,
       `match=${input.matched ? 'yes' : 'wrong'}`,
@@ -66,7 +83,7 @@ export class TrainingAiGate {
       lessonTitle: input.lessonTitle,
       coreStep: input.coreStep,
       coreStepMax: input.coreStepMax,
-      stepHint: GREETINGS_STEP_HINTS[input.coreStep] ?? '',
+      stepHint,
       userPayload,
       historyLines,
       learnerFirstName: input.learnerFirstName,

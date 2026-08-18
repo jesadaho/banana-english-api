@@ -29,7 +29,8 @@ function replayGreetings(steps: string[]): Turn[] {
       matched,
       learnerFirstName: 'Nana',
     });
-    assert.ok(reply && !reply.deferToAi, `step=${step} attempt=${attempt}`);
+    assert.ok(reply, `step=${step} attempt=${attempt}`);
+    assert.ok(!reply!.deferToAi, `happy path should not defer at step=${step}`);
     history.push({ speaker: 'ai', textEn: reply!.textEn });
   }
   return history;
@@ -55,26 +56,27 @@ describe('greetings scripted flow', () => {
     assert.equal(opening.isLessonComplete, false);
   });
 
-  it('first wrong on Hello returns soft hint without AI', () => {
+  it('first wrong on Hello defers to Gemini soft-teach', () => {
     const reply = buildGreetingsAfterUser({
       step: 1,
       attempt: 1,
       matched: false,
       learnerFirstName: 'Nana',
     });
-    assert.ok(reply);
-    assert.equal(reply!.deferToAi, undefined);
-    assert.equal(reply!.expectedSpeech, 'Hello');
+    assert.equal(reply?.deferToAi, true);
+    assert.equal(reply?.aiMode, 'softTeach');
   });
 
-  it('second wrong on Hello defers to AI', () => {
+  it('second wrong on Hello force-advances scripted', () => {
     const reply = buildGreetingsAfterUser({
       step: 1,
       attempt: 2,
       matched: false,
       learnerFirstName: 'Nana',
     });
-    assert.equal(reply?.deferToAi, true);
+    assert.equal(reply?.deferToAi, undefined);
+    assert.match(reply!.textEn, /ไม่เป็นไร|ไปต่อ/i);
+    assert.equal(reply!.expectedSpeech, 'Hi');
   });
 
   it('completes core flow 1→9 on matched answers', () => {
@@ -115,5 +117,17 @@ describe('resolveGreetingsStep', () => {
     const ctx = resolveGreetingsStep(history);
     assert.equal(ctx.step, 1);
     assert.equal(ctx.attempt, 1);
+  });
+
+  it('advances step after two wrong attempts', () => {
+    const history: Turn[] = [
+      { speaker: 'ai', textEn: 'Say Hello' },
+      { speaker: 'user', textEn: 'hey' },
+      { speaker: 'ai', textEn: 'Try Hello' },
+      { speaker: 'user', textEn: 'bye' },
+    ];
+    const ctx = resolveGreetingsStep(history);
+    assert.equal(ctx.step, 2);
+    assert.equal(ctx.attempt, 0);
   });
 });
