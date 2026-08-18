@@ -9247,6 +9247,7 @@ export function pendingSoftTeachForChoiceLesson(
 
   const userText = (history[lastUserIdx].textEn ?? '').trim();
   if (!userText || matchesStep(step, userText)) return false;
+  if (progress >= 1 && matchesStep(progress, userText)) return false;
   if (
     progress >= 1 &&
     matchesStep(1, userText) &&
@@ -9334,6 +9335,8 @@ function forceGuidedBoardSoftTeachIfNeeded(
   }
   if (!lastUserText || lastUserText.startsWith('[')) return null;
   if (cfg.matchesStep(step, lastUserText)) return null;
+  // Just cleared step `progress` (e.g. "wake up" on vocab) — advance, don't soft-teach next step.
+  if (progress >= 1 && cfg.matchesStep(progress, lastUserText)) return null;
 
   // Duplicate step-1 ready phrase while step 2 is next — re-pin board, no soft-teach.
   if (progress === 1 && step === 2 && cfg.matchesStep(1, lastUserText)) {
@@ -11383,8 +11386,16 @@ export function forceDailyRoutineGuidedSpeakingIfNeeded(
     progress === 1 &&
     lastUserText.length > 0 &&
     matchesDailyRoutineStep(1, lastUserText);
+  const justClearedStep =
+    progress >= 1 &&
+    lastUserText.length > 0 &&
+    matchesDailyRoutineStep(progress, lastUserText);
 
-  if (looksLikeSoftTeachReveal(current.textEn ?? '') && !duplicateReady) {
+  if (
+    looksLikeSoftTeachReveal(current.textEn ?? '') &&
+    !duplicateReady &&
+    !justClearedStep
+  ) {
     return null;
   }
   if (
@@ -11394,7 +11405,8 @@ export function forceDailyRoutineGuidedSpeakingIfNeeded(
       7,
       matchesDailyRoutineStep,
     ) &&
-    !duplicateReady
+    !duplicateReady &&
+    !justClearedStep
   ) {
     return null;
   }
