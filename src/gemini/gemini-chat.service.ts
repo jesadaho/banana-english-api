@@ -40,6 +40,7 @@ import {
   GptReport,
   HintOption,
   HintsResponse,
+  type AiDebug,
 } from '../common/api.types';
 import {
   EMOJI_SPEAK_COMPLETE_TURN_TEXT,
@@ -749,6 +750,18 @@ type GenerateJsonOptions = {
   timeoutMs?: number;
 };
 
+export type GeminiGenerationResult<T> = {
+  value: T;
+  aiDebug: AiDebug;
+};
+
+type GeminiModelCallResult = {
+  text: string;
+  geminiMs: number;
+  model: string;
+  thoughtTokens?: number;
+};
+
 type GeminiResponse = {
   candidates?: Array<{
     content?: { parts?: Array<{ text?: string; thought?: boolean }> };
@@ -804,7 +817,7 @@ export class GeminiChatService {
   }
 
   async generateOpening(topicId: string): Promise<GptReply> {
-    return this.generateJson<GptReply>({
+    const { value } = await this.generateJson<GptReply>({
       ...GEMINI_LIVE_TURN,
       systemInstruction:
         `${conversationSystemPrompt(topicId)}\n\n` +
@@ -819,6 +832,7 @@ export class GeminiChatService {
       schema: REPLY_SCHEMA,
       maxOutputTokens: 200,
     });
+    return value;
   }
 
   async generateFreeTalkOpening(options: {
@@ -851,7 +865,7 @@ export class GeminiChatService {
         ? 'textEn is English-only.'
         : 'HARD RULE: textEn must include Thai script characters AND English — code-switch in one line.');
 
-    let reply = await this.generateJson<FreeTalkTurnReply>({
+    const { value } = await this.generateJson<FreeTalkTurnReply>({
       ...GEMINI_LIVE_TURN,
       systemInstruction,
       contents: [
@@ -863,6 +877,7 @@ export class GeminiChatService {
       schema: FREE_TALK_REPLY_SCHEMA,
       maxOutputTokens: 400,
     });
+    let reply = value;
     reply = this.normalizeFreeTalkReply(reply, 'greeting');
     reply = await this.enforceFreeTalkCodeSwitch(reply, languageLevel, {
       systemInstruction,
@@ -897,6 +912,7 @@ export class GeminiChatService {
   }): Promise<{
     reply: FreeTalkTurnReply;
     suggestion: FreeTalkSuggestionGateResult;
+    aiDebug: AiDebug;
   }> {
     const languageLevel = normalizeFreeTalkLanguageLevel(options.languageLevel);
     const rawSpoken = (options.originalUserMessage ?? options.userMessage).trim();
@@ -953,15 +969,16 @@ export class GeminiChatService {
       parts: [{ text: latestUserPrompt }],
     });
 
-    let reply = await this.generateJson<FreeTalkTurnReply>({
+    const { value: initialReply, aiDebug } =
+      await this.generateJson<FreeTalkTurnReply>({
       ...GEMINI_LIVE_TURN,
       systemInstruction,
       contents,
       schema: FREE_TALK_REPLY_SCHEMA,
       maxOutputTokens: 550,
     });
-    reply = this.normalizeFreeTalkReply(
-      reply,
+    let reply = this.normalizeFreeTalkReply(
+      initialReply,
       options.phase ?? 'conversation_loop',
     );
     const evaluation = {
@@ -1013,6 +1030,7 @@ export class GeminiChatService {
     return {
       reply: this.toClientFreeTalkReply(reply),
       suggestion,
+      aiDebug,
     };
   }
 
@@ -1023,7 +1041,7 @@ export class GeminiChatService {
   ): Promise<FreeTalkSessionSummary> {
     const context = this.formatHistoryForReport(history);
     const issueBlock = formatFreeTalkIssueLogForReport(issueLog);
-    const report = await this.generateJson<FreeTalkSessionSummary>({
+    const { value: report } = await this.generateJson<FreeTalkSessionSummary>({
       ...GEMINI_BACKGROUND,
       systemInstruction: FREE_TALK_SUMMARY_PROMPT,
       contents: [
@@ -1211,7 +1229,7 @@ export class GeminiChatService {
         : 'Mostly English ~60–70% with light Thai (e.g. "Hey Jim! มาแล้วครับ How are you feeling today?").';
 
     try {
-      const retry = await this.generateJson<FreeTalkTurnReply>({
+      const { value: retryReply } = await this.generateJson<FreeTalkTurnReply>({
         ...GEMINI_LIVE_TURN,
         systemInstruction: context.systemInstruction,
         contents: [
@@ -1234,7 +1252,7 @@ export class GeminiChatService {
         maxOutputTokens: 450,
         temperature: 0.4,
       });
-      const normalized = this.normalizeFreeTalkReply(retry, reply.phase);
+      const normalized = this.normalizeFreeTalkReply(retryReply, reply.phase);
       if (
         this.meetsFreeTalkMix(
           normalized.textEn,
@@ -1311,13 +1329,13 @@ export class GeminiChatService {
 
   async generateSimulationOpening(
     config: SimulationConfig,
-  ): Promise<SimulationTurnReply> {
+  ): Promise<{ reply: SimulationTurnReply; aiDebug: AiDebug }> {
     const openingUserText =
       config.openingPrompt ??
       'Start the simulation. Greet the customer and begin the scenario naturally. ' +
         'Return JSON matching the schema.';
 
-    return this.generateJson<SimulationTurnReply>({
+    const { value, aiDebug } = await this.generateJson<SimulationTurnReply>({
       ...GEMINI_LIVE_TURN,
       systemInstruction: this.simulationSystemPrompt(config, 0),
       contents: [
@@ -1330,13 +1348,17 @@ export class GeminiChatService {
       maxOutputTokens: 512,
       recoverFromPlainText: (text) =>
         this.recoverSimulationReplyFromPlainText(text),
-    }).then((reply) => this.normalizeSimulationReply(reply));
+    });
+    return {
+      reply: this.normalizeSimulationReply(value),
+      aiDebug,
+    };
   }
 
   async generateTrainingOpening(
     config: LessonConfig,
     learnerFirstName: string,
-  ): Promise<TrainingTurnReply> {
+  ): Promise<{ reply: TrainingTurnReply; aiDebug: AiDebug }> {
     const lang = teachingLanguageFromConfig(config);
     // Funny jab seeds are Thai-only (parked About Me lessons). Skip in English mode.
     const jabSeed =
@@ -1349,7 +1371,7 @@ export class GeminiChatService {
     const openingPrompt = renderOpeningPrompt(config, lang);
     const speechFlag = lessonUsesTapToContinue(config.lessonId);
 
-    return this.generateJson<TrainingTurnReply>({
+    const { value, aiDebug } = await this.generateJson<TrainingTurnReply>({
       ...GEMINI_LIVE_TURN,
       systemInstruction: this.trainingSystemPrompt(
         config,
@@ -1376,6 +1398,7 @@ export class GeminiChatService {
       temperature: jabSeed ? 0.85 : 0.4,
       recoverFromPlainText: (text) => this.recoverTrainingReplyFromPlainText(text),
     });
+    return { reply: value, aiDebug };
   }
 
   async generateTrainingTurn(
@@ -1386,7 +1409,7 @@ export class GeminiChatService {
     learnerFirstName: string,
     /** Raw STT text shown in the app (before Thai-mix repair). */
     originalUserMessage?: string,
-  ): Promise<TrainingTurnReply> {
+  ): Promise<{ reply: TrainingTurnReply; aiDebug: AiDebug }> {
     const contents: GeminiContent[] = [];
     const speechFlag = lessonUsesTapToContinue(config.lessonId);
     const displayTranscript = (originalUserMessage ?? userMessage).trim();
@@ -1435,7 +1458,7 @@ export class GeminiChatService {
       ],
     });
 
-    const reply = await this.generateJson<TrainingTurnReply>({
+    const { value: reply, aiDebug } = await this.generateJson<TrainingTurnReply>({
       ...GEMINI_LIVE_TURN,
       systemInstruction: this.trainingSystemPrompt(
         config,
@@ -1455,13 +1478,16 @@ export class GeminiChatService {
       userMessage === EMOJI_SPEAK_COMPLETE_TURN_TEXT
     ) {
       return {
-        ...reply,
-        textEn: this.stripPraiseOpener(reply.textEn),
-        textTh: this.stripPraiseOpener(reply.textTh),
+        reply: {
+          ...reply,
+          textEn: this.stripPraiseOpener(reply.textEn),
+          textTh: this.stripPraiseOpener(reply.textTh),
+        },
+        aiDebug,
       };
     }
 
-    return reply;
+    return { reply, aiDebug };
   }
 
   /** Praise openers, longest first so "เยี่ยมเลย" wins over "เยี่ยม". */
@@ -2227,7 +2253,7 @@ Return JSON ONLY (critical — never reply with bare prose):
     userMessage: string,
     checkpointStates: Record<string, boolean>,
     currentTurn: number,
-  ): Promise<SimulationTurnReply> {
+  ): Promise<{ reply: SimulationTurnReply; aiDebug: AiDebug }> {
     const contents: GeminiContent[] = [];
 
     for (const turn of this.priorTurnsForModel(history, userMessage, 10)) {
@@ -2242,7 +2268,7 @@ Return JSON ONLY (critical — never reply with bare prose):
       parts: [{ text: userMessage }],
     });
 
-    return this.generateJson<SimulationTurnReply>({
+    const { value, aiDebug } = await this.generateJson<SimulationTurnReply>({
       ...GEMINI_LIVE_TURN,
       systemInstruction: this.simulationSystemPrompt(
         config,
@@ -2254,7 +2280,11 @@ Return JSON ONLY (critical — never reply with bare prose):
       maxOutputTokens: 512,
       recoverFromPlainText: (text) =>
         this.recoverSimulationReplyFromPlainText(text),
-    }).then((reply) => this.normalizeSimulationReply(reply));
+    });
+    return {
+      reply: this.normalizeSimulationReply(value),
+      aiDebug,
+    };
   }
 
   /** Strip accidental Thai script/particles from NPC English lines. */
@@ -2325,7 +2355,7 @@ Mission closure (critical):
     topicId: string,
     history: ChatTurn[],
     userMessage: string,
-  ): Promise<GptReply> {
+  ): Promise<{ reply: GptReply; aiDebug: AiDebug }> {
     const userTurnCount = history.filter((t) => t.speaker === 'user').length;
 
     const systemPrompt =
@@ -2353,18 +2383,19 @@ Mission closure (critical):
       parts: [{ text: userMessage }],
     });
 
-    return this.generateJson<GptReply>({
+    const { value, aiDebug } = await this.generateJson<GptReply>({
       ...GEMINI_LIVE_TURN,
       systemInstruction: `${systemPrompt}\n\n${replyGuide}`,
       contents,
       schema: REPLY_SCHEMA,
       maxOutputTokens: topicId === 'intro' ? 350 : 200,
     });
+    return { reply: value, aiDebug };
   }
 
   async generateHints(history: ChatTurn[]): Promise<HintOption[]> {
     const context = this.formatHistory(history);
-    const result = await this.generateJson<HintsResponse>({
+    const { value: result } = await this.generateJson<HintsResponse>({
       ...GEMINI_LIVE_TURN,
       systemInstruction: HINTS_PROMPT,
       contents: [
@@ -2384,7 +2415,7 @@ Mission closure (critical):
     durationSeconds: number,
   ): Promise<GptReport> {
     const context = this.formatHistoryForReport(history);
-    const report = await this.generateJson<GptReport>({
+    const { value: report } = await this.generateJson<GptReport>({
       ...GEMINI_BACKGROUND,
       systemInstruction: REPORT_PROMPT,
       contents: [
@@ -2439,7 +2470,7 @@ Mission closure (critical):
       required: ['grammar_errors', 'sentence_count'],
     };
 
-    return this.generateJson<{ grammar_errors: number; sentence_count: number }>({
+    const { value } = await this.generateJson<{ grammar_errors: number; sentence_count: number }>({
       ...GEMINI_BACKGROUND,
       systemInstruction: `You count grammar errors in English learner speech transcripts.
 Return ONLY structured counts — never a score or rating.
@@ -2456,9 +2487,8 @@ Ignore spelling/STT artifacts unless they change grammar meaning.`,
       maxOutputTokens: 128,
       temperature: 0.1,
     });
+    return value;
   }
-
-  /** Count vocabulary relevance/specificity signals (stats only — no scores). */
   async generateVocabularyStats(params: {
     transcripts: string[];
     scenarioTh: string;
@@ -2499,7 +2529,7 @@ Ignore spelling/STT artifacts unless they change grammar meaning.`,
     const goals = params.goalsEn.map((g) => `- ${g}`).join('\n');
     const vocab = params.vocabDrillWords.map((w) => `- ${w}`).join('\n');
 
-    return this.generateJson<{
+    const { value } = await this.generateJson<{
       content_word_count: number;
       relevant_content_word_count: number;
       specific_content_word_count: number;
@@ -2537,6 +2567,7 @@ ${text}`,
       maxOutputTokens: 256,
       temperature: 0.1,
     });
+    return value;
   }
 
   /** Fast utterance grading for Speak Challenge mini-game. */
@@ -2555,7 +2586,7 @@ ${text}`,
       required: ['tier'],
     };
 
-    return this.generateJson<{ tier: 'perfect' | 'also_correct' | 'close_enough' | 'retry' }>({
+    const { value } = await this.generateJson<{ tier: 'perfect' | 'also_correct' | 'close_enough' | 'retry' }>({
       ...GEMINI_LIVE_TURN,
       systemInstruction: params.systemInstruction,
       contents: [
@@ -2568,6 +2599,7 @@ ${text}`,
       maxOutputTokens: 64,
       temperature: 0.1,
     });
+    return value;
   }
 
   /** Short Thai coaching line for Daily Speak (Speak Today) result. */
@@ -2583,7 +2615,7 @@ ${text}`,
       required: ['feedbackTh'],
     };
 
-    const result = await this.generateJson<{ feedbackTh: string }>({
+    const { value: result } = await this.generateJson<{ feedbackTh: string }>({
       ...GEMINI_BACKGROUND,
       systemInstruction: params.systemInstruction,
       contents: [
@@ -2606,7 +2638,7 @@ ${text}`,
 
   async generateIntroReport(history: ChatTurn[]): Promise<GptIntroReport> {
     const context = this.formatHistory(history);
-    const report = await this.generateJson<GptIntroReport>({
+    const { value: report } = await this.generateJson<GptIntroReport>({
       ...GEMINI_BACKGROUND,
       systemInstruction: INTRO_REPORT_PROMPT,
       contents: [
@@ -2629,7 +2661,9 @@ ${text}`,
     };
   }
 
-  private async generateJson<T>(options: GenerateJsonOptions): Promise<T> {
+  private async generateJson<T>(
+    options: GenerateJsonOptions,
+  ): Promise<GeminiGenerationResult<T>> {
     const policy = options.retryPolicy ?? 'background';
     const baseTokens = options.maxOutputTokens ?? 1024;
     const tokenLimits = [
@@ -2642,6 +2676,10 @@ ${text}`,
 
     let lastError: unknown;
     let lastPreview = '';
+    let totalGeminiMs = 0;
+    let attempts = 0;
+    let lastModel = '';
+    let lastThoughtTokens: number | undefined;
 
     for (let modelIndex = 0; modelIndex < models.length; modelIndex++) {
       const model = models[modelIndex];
@@ -2654,14 +2692,31 @@ ${text}`,
             : Math.min(options.temperature ?? 0.7, 0.35);
 
         try {
-          const text = await this.callGeminiWithModel(model, {
+          attempts++;
+          const call = await this.callGeminiWithModel(model, {
             ...options,
             schema: options.schema,
             maxOutputTokens: tokenLimits[attempt],
             temperature,
           });
+          totalGeminiMs += call.geminiMs;
+          lastModel = call.model;
+          lastThoughtTokens = call.thoughtTokens;
+          const text = call.text;
           try {
-            return this.parseJsonResponse<T>(text);
+            const parsed = this.parseJsonResponse<T>(text);
+            return {
+              value: parsed,
+              aiDebug: {
+                source: 'gemini',
+                geminiMs: totalGeminiMs,
+                geminiAttempts: attempts,
+                model: lastModel,
+                ...(lastThoughtTokens != null
+                  ? { thoughtTokens: lastThoughtTokens }
+                  : {}),
+              },
+            };
           } catch (parseError) {
             if (options.recoverFromPlainText) {
               const recovered = options.recoverFromPlainText(text);
@@ -2669,7 +2724,18 @@ ${text}`,
                 this.logger.warn(
                   `Recovered plain-text Gemini reply into schema (model=${model})`,
                 );
-                return recovered as T;
+                return {
+                  value: recovered as T,
+                  aiDebug: {
+                    source: 'gemini',
+                    geminiMs: totalGeminiMs,
+                    geminiAttempts: attempts,
+                    model: lastModel,
+                    ...(lastThoughtTokens != null
+                      ? { thoughtTokens: lastThoughtTokens }
+                      : {}),
+                  },
+                };
               }
             }
             if (policy === 'liveTurn') {
@@ -2809,7 +2875,8 @@ ${text}`,
     for (let i = 0; i < models.length; i++) {
       const model = models[i];
       try {
-        return await this.callGeminiWithModel(model, options);
+        const result = await this.callGeminiWithModel(model, options);
+        return result.text;
       } catch (error) {
         const err = error instanceof Error ? error : new Error(String(error));
         lastError = err;
@@ -2838,7 +2905,8 @@ ${text}`,
   private async callGeminiWithModel(
     model: string,
     options: GenerateJsonOptions,
-  ): Promise<string> {
+  ): Promise<GeminiModelCallResult> {
+    const started = performance.now();
     const policy = options.retryPolicy ?? 'background';
     const timeoutMs = this.timeoutForPolicy(policy, options.timeoutMs);
     const generationConfig: Record<string, unknown> = {
@@ -2895,6 +2963,8 @@ ${text}`,
     }
 
     const data = (await response.json()) as GeminiResponse;
+    const geminiMs = Math.round(performance.now() - started);
+    const thoughtTokens = data.usageMetadata?.thoughtsTokenCount;
 
     const candidate = data.candidates?.[0];
     const parts = candidate?.content?.parts ?? [];
@@ -2907,7 +2977,6 @@ ${text}`,
     if (!text) {
       const finishReason = candidate?.finishReason ?? 'unknown';
       const blockReason = data.promptFeedback?.blockReason;
-      const thoughtTokens = data.usageMetadata?.thoughtsTokenCount;
       const answerTokens = data.usageMetadata?.candidatesTokenCount;
       if (finishReason === 'RECITATION' || finishReason === 'SAFETY') {
         throw new Error(
@@ -2931,14 +3000,24 @@ ${text}`,
         this.logger.warn(
           `Gemini JSON hit MAX_TOKENS (${text.length} chars) — attempting repair`,
         );
-        return text;
+        return {
+          text,
+          geminiMs,
+          model,
+          ...(thoughtTokens != null ? { thoughtTokens } : {}),
+        };
       }
       throw new Error(
         `Gemini JSON response truncated (MAX_TOKENS). Preview: ${text.slice(0, 120)}`,
       );
     }
 
-    return text;
+    return {
+      text,
+      geminiMs,
+      model,
+      ...(thoughtTokens != null ? { thoughtTokens } : {}),
+    };
   }
 
   private isRetryableModelError(error: Error): boolean {

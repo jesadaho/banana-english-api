@@ -14,6 +14,7 @@ import {
   throwAiServiceBadGateway,
   isChatDebugRequest,
 } from '../common/ai-user-message';
+import { attachAiDebug, scriptedAiDebug } from '../common/ai-debug';
 import { Prisma, User } from '@prisma/client';
 import { GeminiChatService } from '../gemini/gemini-chat.service';
 import { GeminiTtsService } from '../gemini/gemini-tts.service';
@@ -25,6 +26,7 @@ import type {
   StoredChatTurn,
   TurnExchangeResponse,
   TurnFeedbackItem,
+  AiDebug,
 } from '../common/api.types';
 import {
   EMOJI_SPEAK_COMPLETE_SENTINEL,
@@ -322,7 +324,10 @@ export class SessionsController {
     });
 
     try {
-      const reply = await this.chat.generateSimulationOpening(config);
+      const handlerStartedAt = performance.now();
+      const { reply: openingReply, aiDebug: openingAiDebug } =
+        await this.chat.generateSimulationOpening(config);
+      const reply = openingReply;
       const normalizedCheckpoints = this.normalizeCheckpoints(
         config.successCriteria,
         reply.updatedCheckpoints,
@@ -336,17 +341,22 @@ export class SessionsController {
       };
       this.sessionStore.addTurn(data.session.id, openingTurn);
 
-      const opening: TurnExchangeResponse = {
-        aiResponse: reply.aiResponse,
-        textTh: reply.textTh,
-        isTaskComplete: false,
-        updatedCheckpoints: normalizedCheckpoints,
-        feedbackHints: {
-          grammarTip: reply.feedbackHints.grammarTip,
-          mispronouncedWords: reply.feedbackHints.mispronouncedWords ?? [],
+      const opening: TurnExchangeResponse = attachAiDebug(
+        {
+          aiResponse: reply.aiResponse,
+          textTh: reply.textTh,
+          isTaskComplete: false,
+          updatedCheckpoints: normalizedCheckpoints,
+          feedbackHints: {
+            grammarTip: reply.feedbackHints.grammarTip,
+            mispronouncedWords: reply.feedbackHints.mispronouncedWords ?? [],
+          },
+          currentTurn: 0,
         },
-        currentTurn: 0,
-      };
+        chatDebug,
+        openingAiDebug,
+        handlerStartedAt,
+      );
 
       return {
         session: {
@@ -438,7 +448,9 @@ export class SessionsController {
     });
 
     try {
-      const reply = await this.chat.generateTrainingOpening(
+      const handlerStartedAt = performance.now();
+      const { reply, aiDebug: openingAiDebug } =
+        await this.chat.generateTrainingOpening(
         config,
         learnerFirstName,
       );
@@ -683,42 +695,47 @@ export class SessionsController {
             ? { progressMax: openingProgressMax }
             : {}),
         },
-        opening: {
-          aiResponse: openingTextEn,
-          textTh:
-            config.lessonId === 'ee_around_town_transport' ||
-            config.lessonId === 'ee_about_me_food' ||
-            config.lessonId === 'ee_about_me_home' ||
-            config.lessonId === 'ee_about_me_work_school' ||
-            config.lessonId === 'ee_about_me_hobbies' ||
-            config.lessonId === 'ee_about_me_pets' ||
-            config.lessonId === 'ee_about_me_people' ||
-            config.lessonId === 'ee_about_me_weather' ||
-            config.lessonId === 'ee_about_me_friends'
-              ? null
-              : reply.textTh,
-          isTaskComplete: false,
-          updatedCheckpoints: {},
-          feedbackHints: { mispronouncedWords: [] as string[] },
-          currentTurn: 0,
-          ...(openingProgressMax != null
-            ? {
-                progressTurn: openingProgressTurn ?? 0,
-                progressMax: openingProgressMax,
-              }
-            : {}),
-          expectsUserSpeech: openingExpectsSpeechFinal,
-          expectedSpeech: openingExpectedSpeechFinal,
-          scene: reply.scene,
-          emojiSpeak: enrichEmojiSpeakForLesson(
-            config.lessonId,
-            reply.emojiSpeak,
-          ),
-          emojiChoice: openingEmojiChoice,
-          guidedSpeaking: openingGuidedSpeaking,
-          roleplayIntro: openingRoleplayIntro,
-          roleplayNpc: openingRoleplayNpc,
-        },
+        opening: attachAiDebug(
+          {
+            aiResponse: openingTextEn,
+            textTh:
+              config.lessonId === 'ee_around_town_transport' ||
+              config.lessonId === 'ee_about_me_food' ||
+              config.lessonId === 'ee_about_me_home' ||
+              config.lessonId === 'ee_about_me_work_school' ||
+              config.lessonId === 'ee_about_me_hobbies' ||
+              config.lessonId === 'ee_about_me_pets' ||
+              config.lessonId === 'ee_about_me_people' ||
+              config.lessonId === 'ee_about_me_weather' ||
+              config.lessonId === 'ee_about_me_friends'
+                ? ''
+                : (reply.textTh ?? ''),
+            isTaskComplete: false,
+            updatedCheckpoints: {},
+            feedbackHints: { mispronouncedWords: [] as string[] },
+            currentTurn: 0,
+            ...(openingProgressMax != null
+              ? {
+                  progressTurn: openingProgressTurn ?? 0,
+                  progressMax: openingProgressMax,
+                }
+              : {}),
+            expectsUserSpeech: openingExpectsSpeechFinal,
+            expectedSpeech: openingExpectedSpeechFinal,
+            scene: reply.scene,
+            emojiSpeak: enrichEmojiSpeakForLesson(
+              config.lessonId,
+              reply.emojiSpeak,
+            ),
+            emojiChoice: openingEmojiChoice,
+            guidedSpeaking: openingGuidedSpeaking,
+            roleplayIntro: openingRoleplayIntro,
+            roleplayNpc: openingRoleplayNpc,
+          },
+          chatDebug,
+          openingAiDebug,
+          handlerStartedAt,
+        ),
       };
     } catch (err) {
       throwAiServiceBadGateway(err, chatDebug);
@@ -764,6 +781,8 @@ export class SessionsController {
 
     let userText = originalText;
     let userTurnAdded = false;
+    const handlerStartedAt = performance.now();
+    let turnAiDebug: AiDebug | undefined;
     try {
       this.sessionStore.addTurn(sessionId, {
         speaker: 'user',
@@ -773,7 +792,7 @@ export class SessionsController {
       userTurnAdded = true;
 
       const nextTurn = expectedTurn + 1;
-      let reply: Awaited<ReturnType<GeminiChatService['generateTrainingTurn']>>;
+      let reply: import('../gemini/gemini-chat.service').TrainingTurnReply;
 
       // Daily Routine board turns are fully scripted — skip Gemini when possible.
       const scriptedFirst = buildDailyRoutineFallbackTrainingReply(
@@ -783,9 +802,10 @@ export class SessionsController {
       );
       if (scriptedFirst) {
         reply = scriptedFirst;
+        turnAiDebug = scriptedAiDebug();
       } else {
         try {
-          reply = await this.chat.generateTrainingTurn(
+          const generated = await this.chat.generateTrainingTurn(
             config,
             data.turns,
             userText,
@@ -794,6 +814,8 @@ export class SessionsController {
               learnerNameFallback(teachingLanguageFromConfig(config)),
             originalText,
           );
+          reply = generated.reply;
+          turnAiDebug = generated.aiDebug;
         } catch (aiErr) {
           const fallback = buildDailyRoutineFallbackTrainingReply(
             config.lessonId,
@@ -804,6 +826,7 @@ export class SessionsController {
             throw aiErr;
           }
           reply = fallback;
+          turnAiDebug = scriptedAiDebug();
         }
       }
 
@@ -2062,7 +2085,12 @@ export class SessionsController {
         response.contentType = 'audio/wav';
       }
 
-      return response;
+      return attachAiDebug(
+        response,
+        chatDebug,
+        turnAiDebug,
+        handlerStartedAt,
+      );
     } catch (err) {
       if (userTurnAdded) {
         this.sessionStore.removeLastTurn(sessionId);
@@ -2107,6 +2135,8 @@ export class SessionsController {
 
     let userText = originalText;
     let userTurnAdded = false;
+    const handlerStartedAt = performance.now();
+    let turnAiDebug: AiDebug | undefined;
     try {
       this.sessionStore.addTurn(sessionId, {
         speaker: 'user',
@@ -2116,13 +2146,15 @@ export class SessionsController {
       userTurnAdded = true;
 
       const nextTurn = expectedTurn + 1;
-      const reply = await this.chat.generateSimulationTurn(
+      const { reply, aiDebug: turnAiDebugFromGemini } =
+        await this.chat.generateSimulationTurn(
         config,
         data.turns,
         userText,
         data.session.checkpointStates ?? {},
         nextTurn,
       );
+      turnAiDebug = turnAiDebugFromGemini;
 
       const mergedCheckpoints = applyPaymentClosureFromAiReply(
         config,
@@ -2191,7 +2223,12 @@ export class SessionsController {
         response.contentType = 'audio/wav';
       }
 
-      return response;
+      return attachAiDebug(
+        response,
+        chatDebug,
+        turnAiDebug,
+        handlerStartedAt,
+      );
     } catch (err) {
       if (userTurnAdded) {
         this.sessionStore.removeLastTurn(sessionId);
@@ -2233,6 +2270,8 @@ export class SessionsController {
       }
     }
 
+    const handlerStartedAt = performance.now();
+    let turnAiDebug: AiDebug | undefined;
     try {
       this.sessionStore.addTurn(sessionId, {
         speaker: 'user',
@@ -2249,7 +2288,8 @@ export class SessionsController {
         const userTurnIndex = data.turns.filter(
           (turn) => turn.speaker === 'user',
         ).length;
-        const { reply, suggestion } = await this.chat.generateFreeTalkReply({
+        const { reply, suggestion, aiDebug } =
+          await this.chat.generateFreeTalkReply({
           history: data.turns,
           userMessage: userText,
           originalUserMessage: originalText,
@@ -2266,6 +2306,7 @@ export class SessionsController {
           grammarSuggestionMax: ft?.grammarSuggestionMax ?? 2,
           naturalnessSuggestionMax: ft?.naturalnessSuggestionMax ?? 1,
         });
+        turnAiDebug = aiDebug;
         const aiTurn = {
           speaker: 'ai' as const,
           textEn: reply.textEn,
@@ -2297,18 +2338,33 @@ export class SessionsController {
             ...suggestion.issueLogEntries,
           ],
         });
-        return {
-          ...aiTurn,
-          suggestionDebug: suggestion.debug,
-        };
+        return attachAiDebug(
+          {
+            ...aiTurn,
+            suggestionDebug: suggestion.debug,
+          },
+          chatDebug,
+          turnAiDebug,
+          handlerStartedAt,
+        );
       }
 
-      const reply =
-        topicId === 'intro' && userTurnCount === 1
-          ? getTurn2Script(userText)
-          : topicId === 'intro' && userTurnCount === 2
-            ? getTurn3Script(userText)
-            : await this.chat.generateReply(topicId, data.turns, userText);
+      let reply: { textEn: string; textTh: string };
+      if (topicId === 'intro' && userTurnCount === 1) {
+        reply = getTurn2Script(userText);
+        turnAiDebug = scriptedAiDebug();
+      } else if (topicId === 'intro' && userTurnCount === 2) {
+        reply = getTurn3Script(userText);
+        turnAiDebug = scriptedAiDebug();
+      } else {
+        const generated = await this.chat.generateReply(
+          topicId,
+          data.turns,
+          userText,
+        );
+        reply = generated.reply;
+        turnAiDebug = generated.aiDebug;
+      }
 
       const aiTurn = {
         speaker: 'ai' as const,
@@ -2319,7 +2375,7 @@ export class SessionsController {
       this.sessionStore.addTurn(sessionId, aiTurn);
       data.turns[data.turns.length - 1] = aiTurn;
 
-      return aiTurn;
+      return attachAiDebug(aiTurn, chatDebug, turnAiDebug, handlerStartedAt);
     } catch (err) {
       if (
         err instanceof NotFoundException ||

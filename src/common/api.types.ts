@@ -43,6 +43,23 @@ export interface FeedbackHints {
   mispronouncedWords: string[];
 }
 
+/** How the tutor reply was produced (included when X-Chat-Debug: 1). */
+export type AiDebugSource = 'gemini' | 'scripted';
+
+export interface AiDebug {
+  source: AiDebugSource;
+  /** Total Gemini HTTP time (ms), including retries. 0 when scripted. */
+  geminiMs: number;
+  /** Gemini generateContent attempts (including JSON repair retries). */
+  geminiAttempts: number;
+  /** Model id that produced the successful reply. */
+  model?: string;
+  /** thoughtsTokenCount from usageMetadata when present. */
+  thoughtTokens?: number;
+  /** Full API handler wall time (ms) for this turn/opening. */
+  handlerMs?: number;
+}
+
 export interface TurnExchangeResponse {
   aiResponse: string;
   textTh: string;
@@ -96,6 +113,8 @@ export interface TurnExchangeResponse {
    * Omit on Teacher / Celebrate turns.
    */
   roleplayNpc?: RoleplayNpcPrompt | null;
+  /** Timing breakdown — only when the client sends X-Chat-Debug: 1. */
+  aiDebug?: AiDebug;
 }
 
 /** One Emoji Speak prompt embedded in a training turn. */
