@@ -9321,8 +9321,7 @@ export function pendingThreeTierSoftTeach(
   if (progress >= 1 && scoreStep(progress, userText) === 'exact') return false;
   if (
     progress >= 1 &&
-    scoreStep(1, userText) === 'exact' &&
-    tier !== 'exact'
+    scoreStep(1, userText) === 'exact'
   ) {
     return false;
   }
