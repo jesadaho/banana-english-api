@@ -9197,6 +9197,12 @@ export function computeSoftTeachChoiceProgress(
         continue;
       }
 
+      // Benign repeat of step-1 phrase (e.g. second "I'm ready" on Daily Routine)
+      // while the next step expects vocab — not a wrong answer.
+      if (progress >= 1 && matchesStep(1, text) && !matchesStep(next, text)) {
+        continue;
+      }
+
       if (!pendingSoftTeach && !correctionTurn) {
         pendingSoftTeach = true;
         continue;
@@ -9241,6 +9247,13 @@ export function pendingSoftTeachForChoiceLesson(
 
   const userText = (history[lastUserIdx].textEn ?? '').trim();
   if (!userText || matchesStep(step, userText)) return false;
+  if (
+    progress >= 1 &&
+    matchesStep(1, userText) &&
+    !matchesStep(step, userText)
+  ) {
+    return false;
+  }
 
   for (let i = lastUserIdx + 1; i < history.length; i++) {
     const turn = history[i];
@@ -9321,6 +9334,11 @@ function forceGuidedBoardSoftTeachIfNeeded(
   }
   if (!lastUserText || lastUserText.startsWith('[')) return null;
   if (cfg.matchesStep(step, lastUserText)) return null;
+
+  // Duplicate step-1 ready phrase while step 2 is next — re-pin board, no soft-teach.
+  if (progress === 1 && step === 2 && cfg.matchesStep(1, lastUserText)) {
+    return null;
+  }
 
   for (let i = history.length - 1; i >= 0; i--) {
     const turn = history[i];
@@ -11351,20 +11369,37 @@ export function forceDailyRoutineGuidedSpeakingIfNeeded(
 } | null {
   if (lessonId !== 'ee_about_me_daily_routine') return null;
   if (current.isTaskComplete) return null;
-  if (looksLikeSoftTeachReveal(current.textEn ?? '')) return null;
+
+  const progress = dailyRoutineProgress(history);
+  const lastUserText = (() => {
+    for (let i = history.length - 1; i >= 0; i--) {
+      if (history[i].speaker === 'user') {
+        return (history[i].textEn ?? '').trim();
+      }
+    }
+    return '';
+  })();
+  const duplicateReady =
+    progress === 1 &&
+    lastUserText.length > 0 &&
+    matchesDailyRoutineStep(1, lastUserText);
+
+  if (looksLikeSoftTeachReveal(current.textEn ?? '') && !duplicateReady) {
+    return null;
+  }
   if (
     pendingSoftTeachForChoiceLesson(
       history,
       dailyRoutineProgress,
       7,
       matchesDailyRoutineStep,
-    )
+    ) &&
+    !duplicateReady
   ) {
     return null;
   }
   if (nextTurn < 1) return null;
 
-  const progress = dailyRoutineProgress(history);
   if (progress >= 7) return null;
 
   const fromText = dailyRoutineBoardFromAiText(current.textEn ?? '');

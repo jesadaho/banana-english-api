@@ -1,3 +1,18 @@
+import { BadGatewayException } from '@nestjs/common';
+
+/** App sends this when Settings → Chat debug logs is on. */
+export const CHAT_DEBUG_HEADER = 'x-chat-debug';
+
+export function isChatDebugRequest(req: {
+  headers?: Record<string, string | string[] | undefined>;
+}): boolean {
+  const raw =
+    req.headers?.[CHAT_DEBUG_HEADER] ?? req.headers?.['X-Chat-Debug'];
+  if (raw == null) return false;
+  const value = Array.isArray(raw) ? raw[0] : raw;
+  return value === '1' || value.toLowerCase() === 'true';
+}
+
 /** Maps Gemini / upstream AI failures to short user-facing copy. */
 export function formatAiServiceUserMessage(err: unknown): string {
   const raw = err instanceof Error ? err.message : String(err);
@@ -21,4 +36,27 @@ export function formatAiServiceUserMessage(err: unknown): string {
   }
 
   return 'ครูพี่บีตอบไม่สำเร็จ ลองใหม่อีกครั้งนะ';
+}
+
+function aiErrorDebugText(err: unknown): string {
+  if (err instanceof Error) {
+    return (err.stack ?? err.message).slice(0, 4000);
+  }
+  return String(err).slice(0, 4000);
+}
+
+export function aiServiceBadGatewayBody(
+  err: unknown,
+  chatDebug: boolean,
+): string | { message: string; debug: string } {
+  const message = formatAiServiceUserMessage(err);
+  if (!chatDebug) return message;
+  return { message, debug: aiErrorDebugText(err) };
+}
+
+export function throwAiServiceBadGateway(
+  err: unknown,
+  chatDebug = false,
+): never {
+  throw new BadGatewayException(aiServiceBadGatewayBody(err, chatDebug));
 }

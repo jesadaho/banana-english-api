@@ -1,5 +1,4 @@
 import {
-  BadGatewayException,
   BadRequestException,
   ConflictException,
   Controller,
@@ -11,7 +10,10 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { formatAiServiceUserMessage } from '../common/ai-user-message';
+import {
+  throwAiServiceBadGateway,
+  isChatDebugRequest,
+} from '../common/ai-user-message';
 import { Prisma, User } from '@prisma/client';
 import { GeminiChatService } from '../gemini/gemini-chat.service';
 import { GeminiTtsService } from '../gemini/gemini-tts.service';
@@ -184,11 +186,13 @@ export class SessionsController {
     @Req() req: AuthedRequest,
     @Body() body: StartSessionDto,
   ) {
+    const chatDebug = isChatDebugRequest(req);
     if (body.sessionType === 'simulation') {
       return this.startSimulationSession(
         req.user,
         body.simulationId!,
         body.isDailyMission ?? false,
+        chatDebug,
       );
     }
 
@@ -197,6 +201,7 @@ export class SessionsController {
         req.user,
         body.lessonId!,
         body.teachingLanguage,
+        chatDebug,
       );
     }
 
@@ -246,7 +251,7 @@ export class SessionsController {
 
         return { session: data.session, opening };
       } catch (err) {
-        throw new BadGatewayException(formatAiServiceUserMessage(err));
+        throwAiServiceBadGateway(err, chatDebug);
       }
     }
 
@@ -268,7 +273,7 @@ export class SessionsController {
 
       return { session: data.session, opening };
     } catch (err) {
-      throw new BadGatewayException(formatAiServiceUserMessage(err));
+      throwAiServiceBadGateway(err, chatDebug);
     }
   }
 
@@ -276,6 +281,7 @@ export class SessionsController {
     user: User,
     simulationId: string,
     isDailyMission: boolean,
+    chatDebug = false,
   ): Promise<StartSimulationResponse> {
     const config = getSimulation(simulationId);
     if (!config) {
@@ -353,7 +359,7 @@ export class SessionsController {
         opening,
       };
     } catch (err) {
-      throw new BadGatewayException(formatAiServiceUserMessage(err));
+      throwAiServiceBadGateway(err, chatDebug);
     }
   }
 
@@ -361,27 +367,30 @@ export class SessionsController {
   async processTurn(
     @Param('sessionId') sessionId: string,
     @Body() body: TurnDto,
+    @Req() req: AuthedRequest,
   ) {
+    const chatDebug = isChatDebugRequest(req);
     const data = this.sessionStore.get(sessionId);
     if (!data) {
       throw new NotFoundException('Session not found');
     }
 
     if (data.session.sessionType === 'simulation') {
-      return this.processSimulationTurn(sessionId, body);
+      return this.processSimulationTurn(sessionId, body, chatDebug);
     }
 
     if (data.session.sessionType === 'training') {
-      return this.processTrainingTurn(sessionId, body);
+      return this.processTrainingTurn(sessionId, body, chatDebug);
     }
 
-    return this.processLegacyTurn(sessionId, body);
+    return this.processLegacyTurn(sessionId, body, chatDebug);
   }
 
   private async startTrainingSession(
     user: User,
     lessonId: string,
     teachingLanguageRaw?: string,
+    chatDebug = false,
   ) {
     const baseConfig = getLesson(lessonId);
     if (!baseConfig) {
@@ -708,13 +717,14 @@ export class SessionsController {
         },
       };
     } catch (err) {
-      throw new BadGatewayException(formatAiServiceUserMessage(err));
+      throwAiServiceBadGateway(err, chatDebug);
     }
   }
 
   private async processTrainingTurn(
     sessionId: string,
     body: TurnDto,
+    chatDebug = false,
   ): Promise<TurnExchangeResponse> {
     const data = this.sessionStore.get(sessionId)!;
     const config = data.lessonConfig;
@@ -2031,13 +2041,14 @@ export class SessionsController {
       ) {
         throw err;
       }
-      throw new BadGatewayException(formatAiServiceUserMessage(err));
+      throwAiServiceBadGateway(err, chatDebug);
     }
   }
 
   private async processSimulationTurn(
     sessionId: string,
     body: TurnDto,
+    chatDebug = false,
   ): Promise<TurnExchangeResponse> {
     const data = this.sessionStore.get(sessionId)!;
     const config = data.simulationConfig;
@@ -2153,13 +2164,14 @@ export class SessionsController {
       ) {
         throw err;
       }
-      throw new BadGatewayException(formatAiServiceUserMessage(err));
+      throwAiServiceBadGateway(err, chatDebug);
     }
   }
 
   private async processLegacyTurn(
     sessionId: string,
     body: TurnDto,
+    chatDebug = false,
   ) {
     const data = this.sessionStore.get(sessionId)!;
 
@@ -2276,7 +2288,7 @@ export class SessionsController {
       ) {
         throw err;
       }
-      throw new BadGatewayException(formatAiServiceUserMessage(err));
+      throwAiServiceBadGateway(err, chatDebug);
     }
   }
 
@@ -2320,6 +2332,7 @@ export class SessionsController {
     @Param('sessionId') sessionId: string,
     @Body() body: EndSessionDto,
   ) {
+    const chatDebug = isChatDebugRequest(req);
     const data = this.sessionStore.get(sessionId);
     if (!data) {
       throw new NotFoundException('Session not found');
@@ -2344,7 +2357,7 @@ export class SessionsController {
         await this.users.updateDisplayName(req.user.id, introReport.userName);
         return { status: 'ended', introReport };
       } catch (err) {
-        throw new BadGatewayException(formatAiServiceUserMessage(err));
+        throwAiServiceBadGateway(err, chatDebug);
       }
     }
 
@@ -2471,7 +2484,7 @@ export class SessionsController {
           memories: summary.memories,
         };
       } catch (err) {
-        throw new BadGatewayException(formatAiServiceUserMessage(err));
+        throwAiServiceBadGateway(err, chatDebug);
       }
     }
 
@@ -2480,8 +2493,10 @@ export class SessionsController {
 
   @Get(':sessionId/intro-report')
   async getIntroReport(
+    @Req() req: AuthedRequest,
     @Param('sessionId') sessionId: string,
   ): Promise<IntroReportResponse> {
+    const chatDebug = isChatDebugRequest(req);
     const data = this.sessionStore.get(sessionId);
     if (!data) {
       throw new NotFoundException('Session not found');
@@ -2498,7 +2513,7 @@ export class SessionsController {
       const report = await this.chat.generateIntroReport(data.turns);
       return { sessionId, ...report };
     } catch (err) {
-      throw new BadGatewayException(formatAiServiceUserMessage(err));
+      throwAiServiceBadGateway(err, chatDebug);
     }
   }
 
@@ -2507,6 +2522,7 @@ export class SessionsController {
     @Req() req: AuthedRequest,
     @Param('sessionId') sessionId: string,
   ): Promise<MissionResultResponse> {
+    const chatDebug = isChatDebugRequest(req);
     const data = this.sessionStore.get(sessionId);
 
     if (!data) {
@@ -2736,7 +2752,7 @@ export class SessionsController {
         turns: mergeTurnsWithFeedback(data.turns, report.turnFeedback),
       };
     } catch (err) {
-      throw new BadGatewayException(formatAiServiceUserMessage(err));
+      throwAiServiceBadGateway(err, chatDebug);
     }
   }
 
