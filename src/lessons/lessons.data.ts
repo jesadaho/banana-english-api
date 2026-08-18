@@ -3296,7 +3296,8 @@ Phase 3 — Upgrade with AM / PM
        { emoji:"☀️", label:"AM (เช้า)", speak:"I wake up at N AM." },
        { emoji:"🌙", label:"PM (ดึก)", speak:"I wake up at N PM." }
      ] }
-   - Soft-accept I wake up at N AM / PM (with/without "o'clock"). REMEMBER AM or PM.
+   - Soft-accept I wake up at N AM / PM as a full sentence (with/without "o'clock"). REMEMBER AM or PM.
+   - Standalone "AM" / "PM" / "EM" alone is WRONG → เฉลย full sentence (e.g. "I wake up at 7 AM.") + พูดตาม — FORBIDDEN to re-ask "AM or PM?".
    - After clear → Turn 6.
 
 Phase 4 — Everyday Activities
@@ -3339,8 +3340,8 @@ Phase 5 — Active Recall & Celebrate
 Turn loop rules:
 - Every non-final turn ends with exactly one clear learner action.
 - Scripts MAY open with praise (เก่งมาก/เยี่ยม…) for authors — runtime strips script praise and keeps system Success praise on advance turns (withPraise).
-- At most ONE gentle retry per step; then accept and move on.
-- Never invent pronunciation issues from text alone.
+- Wrong / unclear answer: เฉลย canonical English once + พูดตาม (guidedSpeaking card) — FORBIDDEN to re-ask the same question. After they speak on the correction turn, advance immediately (do NOT loop).
+- At most ONE correction speak per step; never invent pronunciation issues from text alone.
 - When Celebrate fires, isLessonComplete must be true. Otherwise false.`,
     openingPrompt:
       'Start Daily Routine 1.1 (REVISED Everyday Choices) for this one learner only (private 1:1, never {{NO_GROUP}}). Intro style Encouraging. CRITICAL Turn 1 = greet by name + welcome to About Me daily-life practice + ask them to say "I\'m ready" ONLY — expectsUserSpeech true, NO guidedSpeaking, NO vocab quiz yet. After ready: Turn2 vocab quiz ตื่นนอน → wake up / go to work / go to sleep (guidedSpeaking 3 cards) → Turn3 wake time 6/7/8/9 o\'clock (I wake up at...) → Turn4 sleep 10/11/12/1 o\'clock (I go to sleep at...) → Turn5 AM/PM with THEIR wake hour → Turn6 every day activity (go to work / drink coffee / exercise / study English) → Turn7 Active Recall Challenge: "What time do you wake up every day?" — full English sentence, NO guidedSpeaking, NO reveal target first → Turn8 Celebrate listen-only isLessonComplete true. Remember their choices across turns. Return JSON matching schema. isLessonComplete must be false on opening.',
@@ -9140,6 +9141,224 @@ function resolveForcedBoardTextEn(
   });
 }
 
+/** AI or forced copy that reveals the canonical line and asks for one repeat. */
+export function looksLikeSoftTeachReveal(textEn: string): boolean {
+  const t = textEn.trim();
+  if (!t) return false;
+  const lower = t.toLowerCase();
+  if (t.includes('พูดตาม') || t.includes('เฉลย')) return true;
+  if (t.includes('ลองพูดว่า') || t.includes('ลองพูดตาม')) return true;
+  if (
+    (t.includes('ไม่เป็นไร') || lower.includes('no worries')) &&
+    (t.includes('พูด') || lower.includes('say') || lower.includes('try'))
+  ) {
+    return true;
+  }
+  return (
+    lower.includes('try saying') ||
+    lower.includes('you can say') ||
+    lower.includes('say it once') ||
+    lower.includes('say it with me') ||
+    lower.includes('the answer is')
+  );
+}
+
+/**
+ * Choice-lesson progress with soft-teach: first wrong → wait for reveal;
+ * after reveal, any speak advances; second wrong without reveal → soft-advance.
+ */
+export function computeSoftTeachChoiceProgress(
+  history: Array<{ speaker: string; textEn?: string }>,
+  maxStep: number,
+  matchesStep: (step: number, text: string) => boolean,
+): number {
+  let progress = 0;
+  let pendingSoftTeach = false;
+  let correctionTurn = false;
+
+  for (const turn of history) {
+    if (turn.speaker === 'user') {
+      const text = (turn.textEn ?? '').trim();
+      if (!text || text.startsWith('[') || text.startsWith('(')) continue;
+      const next = progress + 1;
+      if (next > maxStep) continue;
+
+      if (correctionTurn) {
+        progress = next;
+        correctionTurn = false;
+        pendingSoftTeach = false;
+        continue;
+      }
+
+      if (matchesStep(next, text)) {
+        progress = next;
+        pendingSoftTeach = false;
+        correctionTurn = false;
+        continue;
+      }
+
+      if (!pendingSoftTeach && !correctionTurn) {
+        pendingSoftTeach = true;
+        continue;
+      }
+
+      if (pendingSoftTeach) {
+        progress = next;
+        pendingSoftTeach = false;
+        correctionTurn = false;
+      }
+      continue;
+    }
+
+    if (turn.speaker === 'ai' && looksLikeSoftTeachReveal(turn.textEn ?? '')) {
+      pendingSoftTeach = false;
+      correctionTurn = true;
+    }
+  }
+
+  return progress;
+}
+
+/** True when the learner missed the current step and soft-teach has not fired yet. */
+export function pendingSoftTeachForChoiceLesson(
+  history: Array<{ speaker: string; textEn?: string }>,
+  progressFn: (history: Array<{ speaker: string; textEn?: string }>) => number,
+  maxStep: number,
+  matchesStep: (step: number, text: string) => boolean,
+): boolean {
+  const progress = progressFn(history);
+  const step = progress + 1;
+  if (step > maxStep) return false;
+
+  let lastUserIdx = -1;
+  for (let i = history.length - 1; i >= 0; i--) {
+    if (history[i].speaker === 'user') {
+      lastUserIdx = i;
+      break;
+    }
+  }
+  if (lastUserIdx < 0) return false;
+
+  const userText = (history[lastUserIdx].textEn ?? '').trim();
+  if (!userText || matchesStep(step, userText)) return false;
+
+  for (let i = lastUserIdx + 1; i < history.length; i++) {
+    const turn = history[i];
+    if (
+      turn.speaker === 'ai' &&
+      looksLikeSoftTeachReveal(turn.textEn ?? '')
+    ) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function buildGuidedSpeakingFromBoard(
+  board: ForcedGuidedBoard,
+): NonNullable<ReturnType<typeof normalizeGuidedSpeaking>> {
+  const first = board.options[0];
+  const options = board.options.map((o) => ({ ...o }));
+  const isSingleHint = options.length === 1;
+  if (isSingleHint) {
+    return {
+      stem: board.stem,
+      emoji: first.emoji,
+      speak: first.speak,
+      ...(first.label ? { label: first.label } : {}),
+    };
+  }
+  return {
+    stem: board.stem,
+    emoji: first.emoji,
+    speak: first.speak,
+    ...(first.label ? { label: first.label } : {}),
+    options,
+  };
+}
+
+function forceGuidedBoardSoftTeachIfNeeded(
+  lessonId: string,
+  expectedLessonId: string,
+  lang: LessonTeachingLanguage,
+  history: Array<{ speaker: string; textEn?: string }>,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    guidedSpeaking: ReturnType<typeof normalizeGuidedSpeaking>;
+    expectsUserSpeech: boolean;
+    isTaskComplete: boolean;
+    expectedSpeech: string | null;
+  },
+  cfg: {
+    progressFn: (history: Array<{ speaker: string; textEn?: string }>) => number;
+    maxStep: number;
+    matchesStep: (step: number, text: string) => boolean;
+    getBoard: (step: number) => ForcedGuidedBoard | null;
+  },
+): {
+  textEn: string;
+  textTh: string | null;
+  guidedSpeaking: ReturnType<typeof normalizeGuidedSpeaking>;
+  expectsUserSpeech: true;
+  expectedSpeech: string;
+  emojiChoice: null;
+  isTaskComplete: false;
+} | null {
+  if (lessonId !== expectedLessonId) return null;
+  if (current.isTaskComplete) return null;
+
+  const progress = cfg.progressFn(history);
+  const step = progress + 1;
+  if (step > cfg.maxStep) return null;
+
+  let lastUserText = '';
+  for (let i = history.length - 1; i >= 0; i--) {
+    if (history[i].speaker === 'user') {
+      lastUserText = (history[i].textEn ?? '').trim();
+      break;
+    }
+  }
+  if (!lastUserText || lastUserText.startsWith('[')) return null;
+  if (cfg.matchesStep(step, lastUserText)) return null;
+
+  for (let i = history.length - 1; i >= 0; i--) {
+    const turn = history[i];
+    if (turn.speaker === 'ai' && looksLikeSoftTeachReveal(turn.textEn ?? '')) {
+      return null;
+    }
+  }
+  if (
+    looksLikeSoftTeachReveal(current.textEn ?? '') &&
+    current.expectsUserSpeech
+  ) {
+    return null;
+  }
+
+  const board = cfg.getBoard(step);
+  const expectedSpeech = (board?.expectedSpeech ?? current.expectedSpeech ?? '')
+    .trim();
+  if (!expectedSpeech) return null;
+
+  const softTeachEn =
+    lang === 'english'
+      ? `No worries. The answer is: "${expectedSpeech}" — say it with me once.`
+      : `ไม่เป็นไรครับ เฉลยนะครับ: "${expectedSpeech}" — ลองพูดตามครับ`;
+
+  return {
+    textEn: softTeachEn,
+    textTh:
+      lang === 'english' ? 'พูดตามประโยคที่ถูกต้องครั้งเดียว' : null,
+    guidedSpeaking: board
+      ? buildGuidedSpeakingFromBoard(board)
+      : current.guidedSpeaking,
+    expectsUserSpeech: true,
+    expectedSpeech,
+    emojiChoice: null,
+    isTaskComplete: false,
+  };
+}
+
 /** Roleplay Intro card for Around Town bridge turns (purple CTA + NPC preview). */
 export function aroundTownRoleplayIntroForLesson(lessonId: string): {
   subtitle: string;
@@ -10938,17 +11157,42 @@ function matchesDailyRoutineStep(step: number, userText: string): boolean {
 export function dailyRoutineProgress(
   history: Array<{ speaker: string; textEn?: string }>,
 ): number {
-  let progress = 0;
-  for (const turn of history) {
-    if (turn.speaker !== 'user') continue;
-    const text = (turn.textEn ?? '').trim();
-    if (!text || text.startsWith('[') || text.startsWith('(')) continue;
-    const next = progress + 1;
-    if (next <= 7 && matchesDailyRoutineStep(next, text)) {
-      progress = next;
-    }
+  return computeSoftTeachChoiceProgress(history, 7, matchesDailyRoutineStep);
+}
+
+function dailyRoutineBoardForStep(
+  step: number,
+  history: Array<{ speaker: string; textEn?: string }>,
+): ForcedGuidedBoard | null {
+  if (step === 1) {
+    return {
+      textEn: '',
+      stem: '',
+      expectedSpeech: "I'm ready",
+      options: [{ emoji: '🚀', label: "I'm ready", speak: "I'm ready" }],
+    };
   }
-  return progress;
+  if (step === 5) {
+    return dailyRoutineAmPmBoard(extractDailyRoutineWakeHour(history));
+  }
+  if (step === 7) {
+    const hour = extractDailyRoutineWakeHour(history);
+    const ampm = extractDailyRoutineAmPm(history);
+    return {
+      textEn: '',
+      stem: 'I wake up at... every day.',
+      expectedSpeech: `I wake up at ${hour} ${ampm} every day.`,
+      options: [
+        {
+          emoji: '⏰',
+          label: 'every day',
+          speak: `I wake up at ${hour} ${ampm} every day.`,
+        },
+      ],
+    };
+  }
+  const boardKey = step === 6 ? 5 : step - 1;
+  return DAILY_ROUTINE_BOARDS[boardKey] ?? null;
 }
 
 function extractDailyRoutineWakeHour(
@@ -11107,6 +11351,17 @@ export function forceDailyRoutineGuidedSpeakingIfNeeded(
 } | null {
   if (lessonId !== 'ee_about_me_daily_routine') return null;
   if (current.isTaskComplete) return null;
+  if (looksLikeSoftTeachReveal(current.textEn ?? '')) return null;
+  if (
+    pendingSoftTeachForChoiceLesson(
+      history,
+      dailyRoutineProgress,
+      7,
+      matchesDailyRoutineStep,
+    )
+  ) {
+    return null;
+  }
   if (nextTurn < 1) return null;
 
   const progress = dailyRoutineProgress(history);
@@ -11424,38 +11679,14 @@ function matchesFoodStep(
   }
 }
 
-/** How many Food & Drinks speak steps are cleared (0–6).
- * Emoji Quiz steps 4–6: soft-advance after 2 failed attempts.
- */
+/** How many Food & Drinks speak steps are cleared (0–6). */
 export function foodLessonProgress(
   history: Array<{ speaker: string; textEn?: string }>,
 ): number {
-  let progress = 0;
-  let food: FoodFavoriteId | null = null;
-  let attemptsOnCurrent = 0;
-  for (const turn of history) {
-    if (turn.speaker !== 'user') continue;
-    const text = (turn.textEn ?? '').trim();
-    if (!text || text.startsWith('[') || text.startsWith('(')) continue;
-    const next = progress + 1;
-    if (next > 6) continue;
-    if (matchesFoodStep(next, text, food)) {
-      progress = next;
-      attemptsOnCurrent = 0;
-      if (progress === 1) {
-        food = extractFoodFavorite([{ speaker: 'user', textEn: text }]);
-      }
-      continue;
-    }
-    if (next >= 4 && next <= 6) {
-      attemptsOnCurrent += 1;
-      if (attemptsOnCurrent >= 2) {
-        progress = next;
-        attemptsOnCurrent = 0;
-      }
-    }
-  }
-  return progress;
+  const food = extractFoodFavorite(history);
+  return computeSoftTeachChoiceProgress(history, 6, (step, text) =>
+    matchesFoodStep(step, text, food),
+  );
 }
 
 function foodBoardFromAiText(textEn: string): number | null {
@@ -11508,6 +11739,17 @@ export function forceFoodGuidedSpeakingIfNeeded(
 } | null {
   if (lessonId !== 'ee_about_me_food') return null;
   if (current.isTaskComplete) return null;
+  if (looksLikeSoftTeachReveal(current.textEn ?? '')) return null;
+  if (
+    pendingSoftTeachForChoiceLesson(
+      history,
+      foodLessonProgress,
+      6,
+      (step, text) => matchesFoodStep(step, text, extractFoodFavorite(history)),
+    )
+  ) {
+    return null;
+  }
 
   const progress = foodLessonProgress(history);
   if (progress >= 6) return null;
@@ -11782,36 +12024,11 @@ function matchesHomeStep(step: number, userText: string): boolean {
   }
 }
 
-/** How many Home speak steps are cleared (0–6).
- * Mini Quiz steps 4–6: correct clears immediately; after 2 attempts
- * (wrong then retry wrong) soft-advance so the board cannot stall.
- */
+/** How many Home speak steps are cleared (0–6). */
 export function homeLessonProgress(
   history: Array<{ speaker: string; textEn?: string }>,
 ): number {
-  let progress = 0;
-  let attemptsOnCurrent = 0;
-  for (const turn of history) {
-    if (turn.speaker !== 'user') continue;
-    const text = (turn.textEn ?? '').trim();
-    if (!text || text.startsWith('[') || text.startsWith('(')) continue;
-    const next = progress + 1;
-    if (next > 6) continue;
-    if (matchesHomeStep(next, text)) {
-      progress = next;
-      attemptsOnCurrent = 0;
-      continue;
-    }
-    // Mini Quiz (4–6): count failed attempts; advance after 2 tries.
-    if (next >= 4 && next <= 6) {
-      attemptsOnCurrent += 1;
-      if (attemptsOnCurrent >= 2) {
-        progress = next;
-        attemptsOnCurrent = 0;
-      }
-    }
-  }
-  return progress;
+  return computeSoftTeachChoiceProgress(history, 6, matchesHomeStep);
 }
 
 function homeBoardFromAiText(textEn: string): number | null {
@@ -11872,6 +12089,17 @@ export function forceHomeGuidedSpeakingIfNeeded(
 } | null {
   if (lessonId !== 'ee_about_me_home') return null;
   if (current.isTaskComplete) return null;
+  if (looksLikeSoftTeachReveal(current.textEn ?? '')) return null;
+  if (
+    pendingSoftTeachForChoiceLesson(
+      history,
+      homeLessonProgress,
+      6,
+      matchesHomeStep,
+    )
+  ) {
+    return null;
+  }
 
   const progress = homeLessonProgress(history);
   if (progress >= 6) return null;
@@ -12144,17 +12372,9 @@ export function workSchoolLessonProgress(
   history: Array<{ speaker: string; textEn?: string }>,
 ): number {
   const mode = extractWorkSchoolMode(history) ?? 'work';
-  let progress = 0;
-  for (const turn of history) {
-    if (turn.speaker !== 'user') continue;
-    const text = (turn.textEn ?? '').trim();
-    if (!text || text.startsWith('[') || text.startsWith('(')) continue;
-    const next = progress + 1;
-    if (next <= 4 && matchesWorkSchoolStep(next, text, mode)) {
-      progress = next;
-    }
-  }
-  return progress;
+  return computeSoftTeachChoiceProgress(history, 4, (step, text) =>
+    matchesWorkSchoolStep(step, text, mode),
+  );
 }
 
 function workSchoolBoardFromAiText(textEn: string): number | null {
@@ -12552,28 +12772,9 @@ export function hobbiesLessonProgress(
   history: Array<{ speaker: string; textEn?: string }>,
 ): number {
   const activity = extractHobbiesActivity(history) ?? 'watch_movies';
-  let progress = 0;
-  let attemptsOnCurrent = 0;
-  for (const turn of history) {
-    if (turn.speaker !== 'user') continue;
-    const text = (turn.textEn ?? '').trim();
-    if (!text || text.startsWith('[') || text.startsWith('(')) continue;
-    const next = progress + 1;
-    if (next > 5) continue;
-    if (matchesHobbiesStep(next, text, activity)) {
-      progress = next;
-      attemptsOnCurrent = 0;
-      continue;
-    }
-    if (next >= 4 && next <= 5) {
-      attemptsOnCurrent += 1;
-      if (attemptsOnCurrent >= 2) {
-        progress = next;
-        attemptsOnCurrent = 0;
-      }
-    }
-  }
-  return progress;
+  return computeSoftTeachChoiceProgress(history, 5, (step, text) =>
+    matchesHobbiesStep(step, text, activity),
+  );
 }
 
 function hobbiesBoardFromAiText(textEn: string): number | null {
@@ -12958,17 +13159,14 @@ export function petsLessonProgress(
 ): number {
   const animal = extractPetsAnimal(history);
   const adjective = extractPetsAdjective(history, animal);
-  let progress = 0;
-  for (const turn of history) {
-    if (turn.speaker !== 'user') continue;
+  const filtered = history.filter((turn) => {
+    if (turn.speaker !== 'user') return true;
     const text = (turn.textEn ?? '').trim();
-    if (!text || text.startsWith('[') || isPetsContinueTurn(text)) continue;
-    const next = progress + 1;
-    if (next <= 4 && matchesPetsSpeakStep(next, text, animal, adjective)) {
-      progress = next;
-    }
-  }
-  return progress;
+    return !text || !isPetsContinueTurn(text);
+  });
+  return computeSoftTeachChoiceProgress(filtered, 4, (step, text) =>
+    matchesPetsSpeakStep(step, text, animal, adjective),
+  );
 }
 
 /** True when describe is done and learner has not yet tapped Continue after tip. */
@@ -13515,28 +13713,7 @@ function matchesPeopleStep(step: number, userText: string): boolean {
 export function peopleLessonProgress(
   history: Array<{ speaker: string; textEn?: string }>,
 ): number {
-  let progress = 0;
-  let attemptsOnCurrent = 0;
-  for (const turn of history) {
-    if (turn.speaker !== 'user') continue;
-    const text = (turn.textEn ?? '').trim();
-    if (!text || text.startsWith('[') || text.startsWith('(')) continue;
-    const next = progress + 1;
-    if (next > 5) continue;
-    if (matchesPeopleStep(next, text)) {
-      progress = next;
-      attemptsOnCurrent = 0;
-      continue;
-    }
-    if (next >= 4 && next <= 5) {
-      attemptsOnCurrent += 1;
-      if (attemptsOnCurrent >= 2) {
-        progress = next;
-        attemptsOnCurrent = 0;
-      }
-    }
-  }
-  return progress;
+  return computeSoftTeachChoiceProgress(history, 5, matchesPeopleStep);
 }
 
 function peopleBoardFromAiText(textEn: string): number | null {
@@ -13826,28 +14003,7 @@ function matchesWeatherStep(step: number, userText: string): boolean {
 export function weatherLessonProgress(
   history: Array<{ speaker: string; textEn?: string }>,
 ): number {
-  let progress = 0;
-  let attemptsOnCurrent = 0;
-  for (const turn of history) {
-    if (turn.speaker !== 'user') continue;
-    const text = (turn.textEn ?? '').trim();
-    if (!text || text.startsWith('[') || text.startsWith('(')) continue;
-    const next = progress + 1;
-    if (next > 4) continue;
-    if (matchesWeatherStep(next, text)) {
-      progress = next;
-      attemptsOnCurrent = 0;
-      continue;
-    }
-    if (next === 1 || next === 4) {
-      attemptsOnCurrent += 1;
-      if (attemptsOnCurrent >= 2) {
-        progress = next;
-        attemptsOnCurrent = 0;
-      }
-    }
-  }
-  return progress;
+  return computeSoftTeachChoiceProgress(history, 4, matchesWeatherStep);
 }
 
 function weatherBoardFromAiText(textEn: string): number | null {
@@ -14147,28 +14303,7 @@ function matchesFriendsStep(step: number, userText: string): boolean {
 export function friendsLessonProgress(
   history: Array<{ speaker: string; textEn?: string }>,
 ): number {
-  let progress = 0;
-  let attemptsOnCurrent = 0;
-  for (const turn of history) {
-    if (turn.speaker !== 'user') continue;
-    const text = (turn.textEn ?? '').trim();
-    if (!text || text.startsWith('[') || text.startsWith('(')) continue;
-    const next = progress + 1;
-    if (next > 5) continue;
-    if (matchesFriendsStep(next, text)) {
-      progress = next;
-      attemptsOnCurrent = 0;
-      continue;
-    }
-    if (next === 4 || next === 5) {
-      attemptsOnCurrent += 1;
-      if (attemptsOnCurrent >= 2) {
-        progress = next;
-        attemptsOnCurrent = 0;
-      }
-    }
-  }
-  return progress;
+  return computeSoftTeachChoiceProgress(history, 5, matchesFriendsStep);
 }
 
 function friendsBoardFromAiText(textEn: string): number | null {
@@ -17335,6 +17470,340 @@ export function withEmojiRecall2Seed(config: LessonConfig): LessonConfig {
     ...config,
     systemInstruction: `${config.systemInstruction}${seedLine}`,
   };
+}
+
+function foodBoardForStep(
+  step: number,
+  history: Array<{ speaker: string; textEn?: string }>,
+): ForcedGuidedBoard | null {
+  const food = extractFoodFavorite(history) ?? 'pizza';
+  if (step === 1) {
+    const speak =
+      food === 'pizza'
+        ? 'I like pizza.'
+        : food === 'sushi'
+          ? 'I like sushi.'
+          : 'I like somtam.';
+    return {
+      textEn: '',
+      withPraise: false,
+      stem: FOOD_FAVORITE_GUIDED_SPEAKING.stem,
+      expectedSpeech: speak,
+      options: FOOD_FAVORITE_GUIDED_SPEAKING.options.map((o) => ({ ...o })),
+    };
+  }
+  if (step === 2) return FOOD_DESCRIBE_BOARDS[food];
+  if (step === 3) return foodDrinkBoard(food);
+  if (step >= 4 && step <= 6) {
+    return FOOD_EMOJI_QUIZ_BOARDS[step as 4 | 5 | 6];
+  }
+  return null;
+}
+
+function workSchoolBoardForStep(
+  step: number,
+  history: Array<{ speaker: string; textEn?: string }>,
+): ForcedGuidedBoard | null {
+  const mode = extractWorkSchoolMode(history) ?? 'work';
+  if (step === 1) {
+    return {
+      textEn: '',
+      stem: WORK_SCHOOL_ACTIVITY_GUIDED_SPEAKING.stem,
+      expectedSpeech: mode === 'study' ? 'I study.' : 'I work.',
+      options: WORK_SCHOOL_ACTIVITY_GUIDED_SPEAKING.options.map((o) => ({
+        ...o,
+      })),
+    };
+  }
+  if (step === 2) return workSchoolLocationBoard(mode);
+  if (step === 3) return workSchoolFeelingBoard(mode);
+  if (step === 4) return WORK_SCHOOL_COMBO_BOARD;
+  return null;
+}
+
+/** Wrong answer → เฉลย + พูดตาม once; never re-ask the same About Me question. */
+export function forceAboutMeSoftTeachForLesson(
+  lessonId: string,
+  lang: LessonTeachingLanguage,
+  history: Array<{ speaker: string; textEn?: string }>,
+  current: {
+    textEn: string;
+    textTh: string | null | undefined;
+    guidedSpeaking: ReturnType<typeof normalizeGuidedSpeaking>;
+    expectsUserSpeech: boolean;
+    isTaskComplete: boolean;
+    expectedSpeech: string | null;
+  },
+): ReturnType<typeof forceGuidedBoardSoftTeachIfNeeded> {
+  switch (lessonId) {
+    case 'ee_about_me_daily_routine':
+      return forceGuidedBoardSoftTeachIfNeeded(
+        lessonId,
+        lessonId,
+        lang,
+        history,
+        current,
+        {
+          progressFn: dailyRoutineProgress,
+          maxStep: 7,
+          matchesStep: matchesDailyRoutineStep,
+          getBoard: (step) => dailyRoutineBoardForStep(step, history),
+        },
+      );
+    case 'ee_about_me_home':
+      return forceGuidedBoardSoftTeachIfNeeded(
+        lessonId,
+        lessonId,
+        lang,
+        history,
+        current,
+        {
+          progressFn: homeLessonProgress,
+          maxStep: 6,
+          matchesStep: matchesHomeStep,
+          getBoard: (step) => HOME_BOARDS[step] ?? null,
+        },
+      );
+    case 'ee_about_me_food':
+      return forceGuidedBoardSoftTeachIfNeeded(
+        lessonId,
+        lessonId,
+        lang,
+        history,
+        current,
+        {
+          progressFn: foodLessonProgress,
+          maxStep: 6,
+          matchesStep: (step, text) =>
+            matchesFoodStep(step, text, extractFoodFavorite(history)),
+          getBoard: (step) => foodBoardForStep(step, history),
+        },
+      );
+    case 'ee_about_me_work_school': {
+      const mode = extractWorkSchoolMode(history) ?? 'work';
+      return forceGuidedBoardSoftTeachIfNeeded(
+        lessonId,
+        lessonId,
+        lang,
+        history,
+        current,
+        {
+          progressFn: workSchoolLessonProgress,
+          maxStep: 4,
+          matchesStep: (step, text) =>
+            matchesWorkSchoolStep(step, text, mode),
+          getBoard: (step) => workSchoolBoardForStep(step, history),
+        },
+      );
+    }
+    case 'ee_about_me_hobbies': {
+      const activity = extractHobbiesActivity(history) ?? 'watch_movies';
+      const hobbyPhrase = HOBBIES_ACTIVITY_META[activity].phrase;
+      return forceGuidedBoardSoftTeachIfNeeded(
+        lessonId,
+        lessonId,
+        lang,
+        history,
+        current,
+        {
+          progressFn: hobbiesLessonProgress,
+          maxStep: 5,
+          matchesStep: (step, text) =>
+            matchesHobbiesStep(step, text, activity),
+          getBoard: (step) => {
+            if (step === 1) {
+              return {
+                textEn: '',
+                stem: HOBBIES_HOBBY_GUIDED_SPEAKING.stem,
+                expectedSpeech: `I ${hobbyPhrase}.`,
+                options: HOBBIES_HOBBY_GUIDED_SPEAKING.options.map((o) => ({
+                  ...o,
+                })),
+              };
+            }
+            if (step === 2) return hobbiesFrequencyBoard(activity);
+            if (step === 3) return HOBBIES_WEEKEND_BOARD;
+            if (step === 4) return HOBBIES_QUIZ_USUALLY_BOARD;
+            if (step === 5) return HOBBIES_QUIZ_SOMETIMES_BOARD;
+            return null;
+          },
+        },
+      );
+    }
+    case 'ee_about_me_pets': {
+      const animal = extractPetsAnimal(history);
+      const adjective = extractPetsAdjective(history, animal);
+      return forceGuidedBoardSoftTeachIfNeeded(
+        lessonId,
+        lessonId,
+        lang,
+        history,
+        current,
+        {
+          progressFn: petsLessonProgress,
+          maxStep: 4,
+          matchesStep: (step, text) =>
+            matchesPetsSpeakStep(step, text, animal, adjective),
+          getBoard: (step) => {
+            if (step === 1) {
+              return {
+                textEn: '',
+                stem: PETS_CHOICE_GUIDED_SPEAKING.stem,
+                expectedSpeech:
+                  animal === 'dog' ? 'I have a dog.' : 'I have a cat.',
+                options: PETS_CHOICE_GUIDED_SPEAKING.options.map((o) => ({
+                  ...o,
+                })),
+              };
+            }
+            if (step === 2) return petsDescribeBoard(animal);
+            if (step === 3) {
+              return {
+                textEn: PETS_YOUR_BOARD.textEn,
+                stem: PETS_YOUR_BOARD.stem,
+                expectedSpeech: PETS_YOUR_BOARD.expectedSpeech,
+                options: PETS_YOUR_BOARD.options.map((o) => ({ ...o })),
+              };
+            }
+            if (step === 4) {
+              return {
+                textEn: '',
+                stem: '',
+                expectedSpeech: `I have a ${animal}. My ${animal} is very ${adjective}.`,
+                options: [
+                  {
+                    emoji: '🐾',
+                    label: 'combo',
+                    speak: `I have a ${animal}. My ${animal} is very ${adjective}.`,
+                  },
+                ],
+              };
+            }
+            return null;
+          },
+        },
+      );
+    }
+    case 'ee_about_me_people': {
+      const person = extractPeoplePerson(history);
+      const job = extractPeopleJob(history);
+      const jobPraiseLabel = extractPeopleJobPraiseLabel(history);
+      return forceGuidedBoardSoftTeachIfNeeded(
+        lessonId,
+        lessonId,
+        lang,
+        history,
+        current,
+        {
+          progressFn: peopleLessonProgress,
+          maxStep: 5,
+          matchesStep: matchesPeopleStep,
+          getBoard: (step) => {
+            if (step === 1) {
+              return {
+                textEn: '',
+                stem: PEOPLE_PERSON_GUIDED_SPEAKING.stem,
+                expectedSpeech: 'My brother.',
+                options: PEOPLE_PERSON_GUIDED_SPEAKING.options.map((o) => ({
+                  ...o,
+                })),
+              };
+            }
+            if (step === 2) return peopleJobBoard(person);
+            if (step === 3) {
+              return peoplePersonalityBoard(person, job, jobPraiseLabel);
+            }
+            if (step === 4) return PEOPLE_QUIZ_HE_BOARD;
+            if (step === 5) return PEOPLE_QUIZ_SHE_BOARD;
+            return null;
+          },
+        },
+      );
+    }
+    case 'ee_about_me_weather':
+      return forceGuidedBoardSoftTeachIfNeeded(
+        lessonId,
+        lessonId,
+        lang,
+        history,
+        current,
+        {
+          progressFn: weatherLessonProgress,
+          maxStep: 4,
+          matchesStep: matchesWeatherStep,
+          getBoard: (step) => {
+            if (step === 1) {
+              return {
+                textEn: '',
+                stem: WEATHER_HOT_QUIZ_GUIDED_SPEAKING.stem,
+                expectedSpeech: 'Hot.',
+                options: WEATHER_HOT_QUIZ_GUIDED_SPEAKING.options.map(
+                  (o) => ({ ...o }),
+                ),
+              };
+            }
+            if (step === 2) return WEATHER_COLD_BOARD;
+            if (step === 3) {
+              return {
+                textEn: '',
+                stem: WEATHER_PREFERENCE_GUIDED_SPEAKING.stem,
+                expectedSpeech: 'I like sunny weather.',
+                options: WEATHER_PREFERENCE_GUIDED_SPEAKING.options.map(
+                  (o) => ({ ...o }),
+                ),
+              };
+            }
+            if (step === 4) return WEATHER_QUIZ_RAINY_BOARD;
+            return null;
+          },
+        },
+      );
+    case 'ee_about_me_friends':
+      return forceGuidedBoardSoftTeachIfNeeded(
+        lessonId,
+        lessonId,
+        lang,
+        history,
+        current,
+        {
+          progressFn: friendsLessonProgress,
+          maxStep: 5,
+          matchesStep: matchesFriendsStep,
+          getBoard: (step) => {
+            if (step === 1) {
+              return {
+                textEn: '',
+                stem: FRIENDS_ACTIVITY_GUIDED_SPEAKING.stem,
+                expectedSpeech: 'We play games together.',
+                options: FRIENDS_ACTIVITY_GUIDED_SPEAKING.options.map(
+                  (o) => ({ ...o }),
+                ),
+              };
+            }
+            if (step === 2) return FRIENDS_EAT_OUT_BOARD;
+            if (step === 3) return FRIENDS_THEY_PLAY_BOARD;
+            if (step === 4) return FRIENDS_HANG_OUT_BOARD;
+            if (step === 5) {
+              return {
+                textEn: '',
+                stem: '',
+                expectedSpeech: FRIENDS_THEY_EAT_OUT_BOARD.expectedSpeech,
+                options: [
+                  {
+                    emoji: '🍽️',
+                    label: 'Eat out',
+                    speak: FRIENDS_THEY_EAT_OUT_BOARD.expectedSpeech,
+                  },
+                ],
+              };
+            }
+            return null;
+          },
+        },
+      );
+    default:
+      return null;
+  }
 }
 
 /** @deprecated Use [withEmojiRecall2Seed]. */

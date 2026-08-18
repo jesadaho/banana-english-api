@@ -94,6 +94,7 @@ import {
   forceSmartShopperGuidedSpeakingIfNeeded,
   forceSmartShopperCelebrateIfNeeded,
   forceDailyRoutineGuidedSpeakingIfNeeded,
+  forceAboutMeSoftTeachForLesson,
   forceFoodGuidedSpeakingIfNeeded,
   forceFoodCelebrateIfNeeded,
   forceHomeGuidedSpeakingIfNeeded,
@@ -749,17 +750,6 @@ export class SessionsController {
 
     let userText = originalText;
     try {
-      // Pronunciation lessons match exact target words — Thai-mix "repair"
-      // can rewrite a correct "Seat." into something else and falsely fail.
-      const skipThaiMix =
-        isTapToContinue ||
-        isEmojiSpeakComplete ||
-        isPronunciationLesson(config.lessonId);
-      if (body.thaiMixEnabled && !skipThaiMix) {
-        this.sessionStore.markThaiMixUsed(sessionId);
-        userText = await this.chat.correctThaiMix(originalText);
-      }
-
       this.sessionStore.addTurn(sessionId, {
         speaker: 'user',
         textEn: userText,
@@ -1140,6 +1130,30 @@ export class SessionsController {
         expectedSpeech = forcedLastNight.expectedSpeech;
         emojiChoice = forcedLastNight.emojiChoice;
         isTaskComplete = forcedLastNight.isTaskComplete;
+      }
+
+      // About Me choice lessons: wrong answer → เฉลย + พูดตาม (never re-ask same question).
+      const aboutMeSoftTeach = forceAboutMeSoftTeachForLesson(
+        config.lessonId,
+        teachingLang,
+        data.turns,
+        {
+          textEn,
+          textTh,
+          guidedSpeaking,
+          expectsUserSpeech,
+          isTaskComplete,
+          expectedSpeech,
+        },
+      );
+      if (aboutMeSoftTeach != null) {
+        textEn = aboutMeSoftTeach.textEn;
+        textTh = aboutMeSoftTeach.textTh;
+        guidedSpeaking = aboutMeSoftTeach.guidedSpeaking;
+        expectsUserSpeech = aboutMeSoftTeach.expectsUserSpeech;
+        expectedSpeech = aboutMeSoftTeach.expectedSpeech;
+        emojiChoice = aboutMeSoftTeach.emojiChoice;
+        isTaskComplete = aboutMeSoftTeach.isTaskComplete;
       }
 
       // Daily Routine 1.1: pin Vocab / Wake / Sleep / AM-PM / Activity boards.
@@ -2049,11 +2063,6 @@ export class SessionsController {
 
     let userText = originalText;
     try {
-      if (body.thaiMixEnabled) {
-        this.sessionStore.markThaiMixUsed(sessionId);
-        userText = await this.chat.correctThaiMix(originalText);
-      }
-
       this.sessionStore.addTurn(sessionId, {
         speaker: 'user',
         textEn: userText,
@@ -2161,11 +2170,6 @@ export class SessionsController {
 
     let userText = originalText;
     try {
-      if (body.thaiMixEnabled) {
-        this.sessionStore.markThaiMixUsed(sessionId);
-        userText = await this.chat.correctThaiMix(originalText);
-      }
-
       this.sessionStore.addTurn(sessionId, {
         speaker: 'user',
         textEn: userText,
