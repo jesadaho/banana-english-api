@@ -11036,17 +11036,7 @@ export function forceSmartShopperCelebrateIfNeeded(
 }
 
 /** Daily Routine 1.1 — fixed guidedSpeaking boards (Vocab → Wake → Sleep → AM/PM → Activity). */
-export const DAILY_ROUTINE_BOARDS: Record<
-  number,
-  {
-    textEn: string;
-    /** When true, keep system Success praise from the model (script praise is always stripped). */
-    withPraise: boolean;
-    stem: string;
-    expectedSpeech: string;
-    options: Array<{ emoji: string; label: string; speak: string }>;
-  }
-> = {
+export const DAILY_ROUTINE_BOARDS: Record<number, ForcedGuidedBoard> = {
   1: {
     textEn:
       'เก่งมากครับ! มาเริ่มกันเลย คำว่า ตื่นนอน ในภาษาอังกฤษคือคำไหนครับ? ⏰',
