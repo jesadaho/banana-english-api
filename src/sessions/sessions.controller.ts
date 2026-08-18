@@ -2120,6 +2120,7 @@ export class SessionsController {
         nextTurn,
         heuristicCheckpoints,
         { aiResponse: reply.aiResponse, textTh: reply.textTh },
+        data.turns,
       );
 
       const isTaskComplete = finalized.isTaskComplete;

@@ -939,58 +939,122 @@ export function applySimulationCheckpointHeuristics(
   }
 }
 
-function applyMeetNewFriendHeuristics(
-  userText: string,
-  history: TurnLike[],
-  checkpoints: Record<string, boolean>,
-): Record<string, boolean> {
-  const next = { ...checkpoints };
-  const t = userText.toLowerCase().trim();
-  const userTurnCount = history.filter((turn) => turn.speaker === 'user').length;
+function meetNewFriendUserTurnCount(history: TurnLike[]): number {
+  return history.filter((turn) => turn.speaker === 'user').length;
+}
 
-  if (!next.introduced_self) {
+function meetNewFriendAiTurnCount(history: TurnLike[]): number {
+  return history.filter((turn) => turn.speaker === 'ai').length;
+}
+
+/** Intro / name only — not "where from" or work/hobby answers. */
+function isMeetNewFriendIntroUtterance(userText: string): boolean {
+  const t = userText.toLowerCase().trim();
+  if (!t) return true;
+  if (/\b(from|live in|work|study|student|job|school|like|love|enjoy|hobby)\b/.test(t)) {
+    return false;
+  }
+  return (
+    /^(hi|hello|hey)\b/.test(t) ||
+    /\b(i'?m|i am|my name is|call me)\b/.test(t) ||
+    /\bnice to meet you\b/.test(t)
+  );
+}
+
+/** Substantive self-disclosure turns (from, work, hobby, etc.) — not intro-only. */
+function countMeetNewFriendSelfAnswers(history: TurnLike[]): number {
+  let count = 0;
+  for (const turn of history) {
+    if (turn.speaker !== 'user') continue;
+    const text = (turn.textEn ?? '').trim();
+    if (!text || isMeetNewFriendIntroUtterance(text)) continue;
+    const t = text.toLowerCase();
+    if (
+      /\b(from|live in|work|study|student|job|school|like|love|enjoy|hobby|play|watch|read)\b/.test(
+        t,
+      ) ||
+      t.split(/\s+/).length >= 5
+    ) {
+      count++;
+    }
+  }
+  return count;
+}
+
+/** Max shared about himself — not the opening "Hi! I'm Max. Nice to meet you." */
+function maxSharedAboutHimself(textEn: string): boolean {
+  const t = textEn.toLowerCase().trim();
+  if (!t) return false;
+  if (/nice to meet you/.test(t) && !/\b(i work|i study|i like|i love|i enjoy)\b/.test(t)) {
+    return false;
+  }
+  if (/\b(where are you from|what'?s your name|what do you do|what do you like)\b/.test(t)) {
+    return false;
+  }
+  return /\b(i work|i study|i'?m a student|i like|i love|i enjoy|i'?m from)\b/.test(t);
+}
+
+/** Meet New Friend arc needs ~5 exchanges before mission can end. */
+export function meetNewFriendMinimumProgressMet(
+  nextTurn: number,
+  history: TurnLike[],
+): boolean {
+  return nextTurn >= 5 && meetNewFriendUserTurnCount(history) >= 4;
+}
+
+function meetNewFriendIntroducedSelfEarned(history: TurnLike[]): boolean {
+  for (const turn of history) {
+    if (turn.speaker !== 'user') continue;
+    const t = turn.textEn.toLowerCase().trim();
     if (
       /\b(i'?m|i am|my name is|call me)\b/.test(t) ||
       /\b(nice to meet you|hello|hi)\b/.test(t)
     ) {
-      next.introduced_self = true;
+      return true;
     }
   }
+  return false;
+}
 
-  if (!next.answered_about_self && userTurnCount >= 2) {
-    if (
-      /\b(from|live|work|study|student|school|job|like|love|enjoy|hobby|play|watch|read)\b/.test(
-        t,
-      ) ||
-      t.split(/\s+/).length >= 4
-    ) {
-      next.answered_about_self = true;
-    }
+function meetNewFriendGotToKnowFriendEarned(
+  history: TurnLike[],
+  latestUserText: string,
+): boolean {
+  const userTurnCount = meetNewFriendUserTurnCount(history);
+  const aiTurnCount = meetNewFriendAiTurnCount(history);
+  const t = latestUserText.toLowerCase();
+
+  if (/\b(you|your|max)\b/.test(t) && /\?/.test(latestUserText)) {
+    return true;
   }
 
-  if (!next.got_to_know_friend) {
+  if (aiTurnCount >= 2 && userTurnCount >= 3) {
     const lastAi = [...history].reverse().find((turn) => turn.speaker === 'ai');
-    if (
-      lastAi &&
-      /\b(i'?m|i am|my name|i like|i love|i work|i study)\b/.test(
-        lastAi.textEn.toLowerCase(),
-      )
-    ) {
-      next.got_to_know_friend = true;
-    }
-    if (/\b(you|your|max)\b/.test(t) && /\?/.test(userText)) {
-      next.got_to_know_friend = true;
-    }
-    if (
-      userTurnCount >= 5 &&
-      next.introduced_self &&
-      next.answered_about_self
-    ) {
-      next.got_to_know_friend = true;
+    if (lastAi && maxSharedAboutHimself(lastAi.textEn)) {
+      return true;
     }
   }
 
-  return next;
+  return (
+    userTurnCount >= 6 &&
+    meetNewFriendIntroducedSelfEarned(history) &&
+    countMeetNewFriendSelfAnswers(history) >= 2
+  );
+}
+
+function applyMeetNewFriendHeuristics(
+  userText: string,
+  history: TurnLike[],
+  _checkpoints: Record<string, boolean>,
+): Record<string, boolean> {
+  const selfAnswers = countMeetNewFriendSelfAnswers(history);
+
+  // Recompute from history — ignore Gemini marking all goals done after one answer.
+  return {
+    introduced_self: meetNewFriendIntroducedSelfEarned(history),
+    answered_about_self: selfAnswers >= 2,
+    got_to_know_friend: meetNewFriendGotToKnowFriendEarned(history, userText),
+  };
 }
 
 /** Force wrap-up when near max turns or checkpoints are done but Gemini keeps chatting. */
@@ -999,6 +1063,7 @@ export function finalizeSimulationTurnState(
   nextTurn: number,
   checkpoints: Record<string, boolean>,
   reply: { aiResponse: string; textTh: string },
+  history: TurnLike[] = [],
 ): {
   checkpoints: Record<string, boolean>;
   reply: { aiResponse: string; textTh: string };
@@ -1032,8 +1097,15 @@ export function finalizeSimulationTurnState(
     }
   }
 
+  const checkpointsDone = allCheckpointsComplete(merged);
+  const minArcMet =
+    config.simulationId !== 'meet_new_friend_easy' ||
+    meetNewFriendMinimumProgressMet(nextTurn, history);
+
   const isTaskComplete =
-    allCheckpointsComplete(merged) || maxTurnsReached || shouldForceClose;
+    (checkpointsDone && minArcMet) ||
+    maxTurnsReached ||
+    shouldForceClose;
 
   return {
     checkpoints: merged,
