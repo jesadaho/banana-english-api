@@ -26,8 +26,9 @@ const GREETINGS_STEP_HINTS: Record<number, string> = {
 };
 
 const SOFT_TEACH_RULES =
-  'SOFT-TEACH (wrong attempt 1): Briefly acknowledge the mistake in a friendly way. ' +
-  'Model the EXACT correct target phrase clearly. Ask the learner to repeat it (พูดตาม). ' +
+  'SOFT-TEACH (wrong attempt 1): Briefly acknowledge in Thai (ใกล้แล้ว/เกือบได้). ' +
+  'Model the EXACT English target phrase in quotes. Ask learner to repeat (ลองพูดตาม / พูดตาม). ' +
+  'textEn MUST be Thai-primary — match scripted tutor tone. Never English-only textEn. ' +
   'Stay on the SAME core step — do NOT advance. expectsUserSpeech=true. ' +
   'Set expectedSpeech to the exact target phrase. ' +
   'On recognition steps 3 and 7, keep the required emojiChoice board.';
@@ -43,6 +44,8 @@ export type AiGateInput = {
   originalText: string;
   history: ChatTurn[];
   learnerFirstName: string;
+  teachingLanguage?: 'thai' | 'english';
+  languageMix?: { thai: number; english: number };
   mode?: 'softTeach';
 };
 
@@ -87,6 +90,8 @@ export class TrainingAiGate {
       userPayload,
       historyLines,
       learnerFirstName: input.learnerFirstName,
+      teachingLanguage: input.teachingLanguage,
+      languageMix: input.languageMix,
     });
   }
 

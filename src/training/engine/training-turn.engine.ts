@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import type { AiDebug } from '../../common/api.types';
 import type { LessonConfig } from '../../lessons/lessons.data';
+import { teachingLanguageFromConfig } from '../../lessons/lesson-prompt';
 import type { ChatTurn } from '../../session-store/session-store.service';
 import type { TrainingTurnReply } from '../../gemini/gemini-chat.service';
 import { scriptedAiDebug } from '../../common/ai-debug';
@@ -88,6 +89,8 @@ export class TrainingTurnEngine {
       originalText: input.originalText,
       history: input.turns,
       learnerFirstName: input.learnerFirstName,
+      teachingLanguage: teachingLanguageFromConfig(input.config),
+      languageMix: input.config.languageMix,
       mode: scripted?.aiMode ?? 'softTeach',
     });
 

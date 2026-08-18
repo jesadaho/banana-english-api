@@ -1521,20 +1521,32 @@ export class GeminiChatService {
     userPayload: string;
     historyLines: string[];
     learnerFirstName: string;
+    teachingLanguage?: 'thai' | 'english';
+    languageMix?: { thai: number; english: number };
     providerOverride?: 'gemini' | 'groq';
   }): Promise<{ reply: TrainingTurnReply; aiDebug: AiDebug }> {
     const name = params.learnerFirstName.trim() || 'there';
+    const englishHeavy =
+      params.teachingLanguage === 'english' ||
+      (params.languageMix?.english ?? 0) >= 70;
     const historyBlock =
       params.historyLines.length > 0
         ? `\nRecent:\n${params.historyLines.join('\n')}`
         : '';
 
+    const languageRule = englishHeavy
+      ? 'textEn: mostly English tutor line; textTh: Thai subtitle.'
+      : 'HARD RULE: textEn MUST be MOSTLY Thai script (≥70%). English ONLY for the target phrase in quotes. Never English-only textEn. Use ครับ. ' +
+        'Example textEn: ใกล้แล้วครับ! ลองพูดว่า "Hello" ชัดๆ อีกครั้งนะ 👋 ' +
+        'textTh: English translation/subtitle of the same line.';
+
     const systemInstruction =
       `You are Teacher Banana — warm 1:1 English tutor for Thai learners.\n` +
       `Lesson: ${params.lessonTitle}. Core Flow step ${params.coreStep}/${params.coreStepMax}.\n` +
       `${params.stepHint}\n` +
-      `Rules: Return ONE JSON object only. ≤2 short sentences (Thai+English mix). ` +
-      `End with exactly ONE clear speaking task. Learner first name: ${name}.\n` +
+      `${languageRule}\n` +
+      `Rules: Return ONE JSON object only. ≤2 short sentences. ` +
+      `End with exactly ONE clear speaking task (พูดตาม). Learner first name: ${name}.\n` +
       `emojiChoice ONLY on recognition steps 3 and 7 when instructed. ` +
       `Never emojiSpeak/emojiSpeakSet/guidedSpeaking/roleplay. ` +
       `isLessonComplete=true ONLY on step ${params.coreStepMax} celebrate.`;
