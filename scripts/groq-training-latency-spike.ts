@@ -22,7 +22,7 @@ import { lessonUsesTapToContinue } from '../src/lessons/lessons.data';
 const LESSON_ID = process.env.LESSON_ID ?? 'greetings';
 const RUNS = Number(process.env.RUNS ?? '3');
 const GROQ_MODEL =
-  process.env.GROQ_CHAT_MODEL ?? 'llama-3.3-70b-versatile';
+  process.env.GROQ_CHAT_MODEL ?? 'openai/gpt-oss-120b';
 const GEMINI_MODEL =
   process.env.GEMINI_CHAT_MODEL ?? 'gemini-3.1-flash-lite';
 const GROQ_KEY = process.env.GROQ_API_KEY ?? '';

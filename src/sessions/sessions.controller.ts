@@ -15,6 +15,8 @@ import {
   isChatDebugRequest,
 } from '../common/ai-user-message';
 import { attachAiDebug, scriptedAiDebug } from '../common/ai-debug';
+import { TrainingTurnEngine } from '../training/engine/training-turn.engine';
+import { isTrainingV2Lesson } from '../training/training-v2.config';
 import { Prisma, User } from '@prisma/client';
 import { GeminiChatService } from '../gemini/gemini-chat.service';
 import { GeminiTtsService } from '../gemini/gemini-tts.service';
@@ -42,6 +44,7 @@ import {
 import type { SpeakingMetricsPayload } from '../common/api.types';
 import {
   ChatTurn,
+  SessionData,
   SessionStoreService,
 } from '../session-store/session-store.service';
 import { containsThaiScript, FALLBACK_HINTS, getTopic, normalizeFreeTalkLanguageLevel } from '../topics/topics.data';
@@ -145,6 +148,7 @@ import {
   isPronunciationLesson,
   lessonUsesTapToContinue,
   normalizeLessonTeachingLanguage,
+  type LessonConfig,
   withEmojiRecall2Seed,
   withTeachingLanguage,
 } from '../lessons/lessons.data';
@@ -185,6 +189,7 @@ export class SessionsController {
     private readonly lessonsService: LessonsService,
     private readonly activity: ActivityService,
     private readonly achievements: AchievementsService,
+    private readonly trainingEngine: TrainingTurnEngine,
   ) {}
 
   @Post()
@@ -435,7 +440,10 @@ export class SessionsController {
       user.displayName,
       teachingLanguage,
     );
-    const data = this.sessionStore.createTraining(config, learnerFirstName);
+    const useTrainingV2 = isTrainingV2Lesson(config.lessonId);
+    const data = this.sessionStore.createTraining(config, learnerFirstName, {
+      engineVersion: useTrainingV2 ? 2 : 1,
+    });
 
     await this.prisma.userSession.create({
       data: {
@@ -449,6 +457,16 @@ export class SessionsController {
 
     try {
       const handlerStartedAt = performance.now();
+      if (useTrainingV2) {
+        return this.finishTrainingV2Opening(
+          data,
+          config,
+          learnerFirstName,
+          teachingLanguage,
+          chatDebug,
+          handlerStartedAt,
+        );
+      }
       const { reply, aiDebug: openingAiDebug } =
         await this.chat.generateTrainingOpening(
         config,
@@ -742,6 +760,235 @@ export class SessionsController {
     }
   }
 
+  /** Training Engine v2 — scripted opening, no v1 force* chain. */
+  private finishTrainingV2Opening(
+    data: SessionData,
+    config: LessonConfig,
+    learnerFirstName: string,
+    _teachingLanguage: string,
+    chatDebug: boolean,
+    handlerStartedAt: number,
+  ) {
+    const { reply, aiDebug: openingAiDebug } = this.trainingEngine.buildOpening(
+      config,
+      learnerFirstName,
+    );
+    const openingExpectsUserSpeech = reply.expectsUserSpeech ?? true;
+    const openingExpectedSpeech = reply.expectedSpeech?.trim() || null;
+    const openingEmojiChoice = normalizeEmojiChoice(reply.emojiChoice);
+
+    const opening = {
+      speaker: 'ai' as const,
+      textEn: reply.textEn,
+      textTh: reply.textTh,
+      audioUrl: null,
+      expectsUserSpeech: openingExpectsUserSpeech,
+      expectedSpeech: openingExpectedSpeech,
+      scene: null,
+      emojiSpeak: null,
+      emojiChoice: openingEmojiChoice,
+      guidedSpeaking: null,
+      roleplayIntro: null,
+      roleplayNpc: null,
+    };
+    this.sessionStore.addTurn(data.session.id, opening);
+
+    const openingProgressMax = config.progressMax;
+    const openingProgressTurn =
+      openingProgressMax != null && openingProgressMax > 0
+        ? resolveLessonProgressTurn(
+            config.lessonId,
+            0,
+            openingProgressMax,
+            {
+              textEn: reply.textEn,
+              expectsUserSpeech: openingExpectsUserSpeech,
+              expectedSpeech: openingExpectedSpeech,
+              emojiChoice: openingEmojiChoice,
+              roleplayIntro: null,
+              roleplayNpc: null,
+              isTaskComplete: false,
+            },
+          )
+        : undefined;
+    if (openingProgressTurn != null) {
+      this.sessionStore.updateTrainingState(data.session.id, {
+        currentTurn: 0,
+        isComplete: false,
+        progressTurn: openingProgressTurn,
+      });
+    }
+
+    return {
+      session: {
+        id: data.session.id,
+        sessionType: 'training' as const,
+        lessonId: config.lessonId,
+        startedAt: data.session.startedAt,
+        currentTurn: 0,
+        maxTurns: config.maxTurns,
+        engineVersion: 2 as const,
+        ...(openingProgressMax != null
+          ? {
+              progressTurn: openingProgressTurn ?? 0,
+              progressMax: openingProgressMax,
+            }
+          : {}),
+        isComplete: false,
+      },
+      lesson: {
+        lessonId: config.lessonId,
+        titleEn: config.titleEn,
+        titleTh: config.titleTh,
+        difficulty: config.difficulty,
+        estimatedMinutesMin: config.estimatedMinutesMin,
+        estimatedMinutesMax: config.estimatedMinutesMax,
+        targetPhrases: config.targetPhrases,
+        maxTurns: config.maxTurns,
+        ...(openingProgressMax != null
+          ? { progressMax: openingProgressMax }
+          : {}),
+      },
+      opening: attachAiDebug(
+        {
+          aiResponse: reply.textEn,
+          textTh: reply.textTh ?? '',
+          isTaskComplete: false,
+          updatedCheckpoints: {},
+          feedbackHints: { mispronouncedWords: [] as string[] },
+          currentTurn: 0,
+          ...(openingProgressMax != null
+            ? {
+                progressTurn: openingProgressTurn ?? 0,
+                progressMax: openingProgressMax,
+              }
+            : {}),
+          expectsUserSpeech: openingExpectsUserSpeech,
+          expectedSpeech: openingExpectedSpeech,
+          emojiChoice: openingEmojiChoice,
+        },
+        chatDebug,
+        openingAiDebug,
+        handlerStartedAt,
+      ),
+    };
+  }
+
+  /** Training Engine v2 turn — hybrid scripted + AI gate, no v1 post-process chain. */
+  private async processTrainingTurnV2(
+    sessionId: string,
+    body: TurnDto,
+    data: SessionData,
+    config: LessonConfig,
+    chatDebug: boolean,
+    handlerStartedAt: number,
+    expectedTurn: number,
+    userText: string,
+    originalText: string,
+  ): Promise<TurnExchangeResponse> {
+    const nextTurn = expectedTurn + 1;
+    let turnAiDebug: AiDebug | undefined;
+
+    let reply: import('../gemini/gemini-chat.service').TrainingTurnReply;
+    try {
+      const generated = await this.trainingEngine.runTurn({
+        config,
+        turns: data.turns,
+        userText,
+        originalText,
+        learnerFirstName:
+          data.learnerFirstName ??
+          learnerNameFallback(teachingLanguageFromConfig(config)),
+      });
+      reply = generated.reply;
+      turnAiDebug = generated.aiDebug;
+    } catch (err) {
+      throwAiServiceBadGateway(err, chatDebug);
+    }
+
+    const maxTurnsReached = nextTurn >= config.maxTurns;
+    const isTaskComplete = Boolean(reply.isLessonComplete) || maxTurnsReached;
+    const expectsUserSpeech = isTaskComplete
+      ? false
+      : (reply.expectsUserSpeech ?? true);
+    const expectedSpeech = reply.expectedSpeech?.trim() || null;
+    const emojiChoice = normalizeEmojiChoice(reply.emojiChoice);
+
+    const prevProgressTurn = data.session.progressTurn ?? 0;
+    const lastAiTurn = [...data.turns]
+      .reverse()
+      .find((t) => t.speaker === 'ai');
+    const nextProgressTurn = resolveLessonProgressTurn(
+      config.lessonId,
+      prevProgressTurn,
+      config.progressMax,
+      {
+        textEn: reply.textEn,
+        expectsUserSpeech,
+        expectedSpeech,
+        emojiChoice,
+        roleplayIntro: null,
+        roleplayNpc: null,
+        isTaskComplete,
+      },
+      lastAiTurn
+        ? {
+            expectedSpeech: lastAiTurn.expectedSpeech,
+            emojiChoice: lastAiTurn.emojiChoice,
+          }
+        : undefined,
+    );
+
+    this.sessionStore.updateTrainingState(sessionId, {
+      currentTurn: nextTurn,
+      isComplete: isTaskComplete,
+      ...(config.progressMax != null
+        ? { progressTurn: nextProgressTurn }
+        : {}),
+    });
+
+    this.sessionStore.addTurn(sessionId, {
+      speaker: 'ai',
+      textEn: reply.textEn,
+      textTh: reply.textTh,
+      audioUrl: null,
+      expectsUserSpeech,
+      expectedSpeech,
+      emojiChoice,
+    });
+
+    const response: TurnExchangeResponse = {
+      aiResponse: reply.textEn,
+      textTh: reply.textTh ?? '',
+      isTaskComplete,
+      updatedCheckpoints: {},
+      feedbackHints: { mispronouncedWords: [] },
+      currentTurn: nextTurn,
+      ...(config.progressMax != null
+        ? {
+            progressTurn: nextProgressTurn,
+            progressMax: config.progressMax,
+          }
+        : {}),
+      expectsUserSpeech,
+      expectedSpeech,
+      emojiChoice,
+    };
+
+    if (body.generateAudio) {
+      const audio = await this.geminiTts.synthesizeSpeech(reply.textEn);
+      response.audioBase64 = audio.toString('base64');
+      response.contentType = 'audio/wav';
+    }
+
+    return attachAiDebug(
+      response,
+      chatDebug,
+      turnAiDebug,
+      handlerStartedAt,
+    );
+  }
+
   private async processTrainingTurn(
     sessionId: string,
     body: TurnDto,
@@ -790,6 +1037,20 @@ export class SessionsController {
         originalTextEn: originalText,
       });
       userTurnAdded = true;
+
+      if (data.session.engineVersion === 2) {
+        return this.processTrainingTurnV2(
+          sessionId,
+          body,
+          data,
+          config,
+          chatDebug,
+          handlerStartedAt,
+          expectedTurn,
+          userText,
+          originalText,
+        );
+      }
 
       const nextTurn = expectedTurn + 1;
       let reply: import('../gemini/gemini-chat.service').TrainingTurnReply;

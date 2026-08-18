@@ -1509,6 +1509,73 @@ export class GeminiChatService {
     return { reply, aiDebug };
   }
 
+  /**
+   * Training Engine v2 — slim LLM path (ABC optimized).
+   * A: short runtime system · B: ≤4 plain textEn lines · C: structured user payload.
+   */
+  async generateTrainingV2Turn(params: {
+    lessonTitle: string;
+    coreStep: number;
+    coreStepMax: number;
+    stepHint: string;
+    userPayload: string;
+    historyLines: string[];
+    learnerFirstName: string;
+    providerOverride?: 'gemini' | 'groq';
+  }): Promise<{ reply: TrainingTurnReply; aiDebug: AiDebug }> {
+    const name = params.learnerFirstName.trim() || 'there';
+    const historyBlock =
+      params.historyLines.length > 0
+        ? `\nRecent:\n${params.historyLines.join('\n')}`
+        : '';
+
+    const systemInstruction =
+      `You are Teacher Banana — warm 1:1 English tutor for Thai learners.\n` +
+      `Lesson: ${params.lessonTitle}. Core Flow step ${params.coreStep}/${params.coreStepMax}.\n` +
+      `${params.stepHint}\n` +
+      `Rules: Return ONE JSON object only. ≤2 short sentences (Thai+English mix). ` +
+      `End with exactly ONE clear speaking task. Learner first name: ${name}.\n` +
+      `emojiChoice ONLY on recognition steps 3 and 7 when instructed. ` +
+      `Never emojiSpeak/emojiSpeakSet/guidedSpeaking/roleplay. ` +
+      `isLessonComplete=true ONLY on step ${params.coreStepMax} celebrate.`;
+
+    const contents: GeminiContent[] = [];
+    for (const line of params.historyLines.slice(-8)) {
+      const isTutor = line.startsWith('Tutor:');
+      contents.push({
+        role: isTutor ? 'model' : 'user',
+        parts: [{ text: line.replace(/^(Tutor|Learner):\s*/, '') }],
+      });
+    }
+
+    contents.push({
+      role: 'user',
+      parts: [
+        {
+          text:
+            `${params.userPayload}${historyBlock}\n\n` +
+            'Respond with ONLY one JSON object matching the training schema. No markdown.',
+        },
+      ],
+    });
+
+    const { value, aiDebug } = await this.generateTrainingJson<TrainingTurnReply>(
+      {
+        ...GEMINI_LIVE_TURN,
+        systemInstruction,
+        contents,
+        schema: buildTrainingReplySchema(true),
+        maxOutputTokens: 384,
+        temperature: 0.35,
+        recoverFromPlainText: (text) =>
+          this.recoverTrainingReplyFromPlainText(text),
+      },
+      params.providerOverride,
+    );
+
+    return { reply: value, aiDebug };
+  }
+
   /** Praise openers, longest first so "เยี่ยมเลย" wins over "เยี่ยม". */
   private static readonly PRAISE_OPENERS: string[] = [
     'ทำได้ดีมาก',

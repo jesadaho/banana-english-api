@@ -37,8 +37,7 @@ export class GroqChatService {
   constructor(private readonly config: ConfigService) {
     this.apiKey = this.config.get<string>('GROQ_API_KEY') ?? '';
     this.model =
-      this.config.get<string>('GROQ_CHAT_MODEL') ??
-      'llama-3.3-70b-versatile';
+      this.config.get<string>('GROQ_CHAT_MODEL') ?? 'openai/gpt-oss-120b';
     this.logger.log(`Groq chat model: ${this.model}`);
   }
 

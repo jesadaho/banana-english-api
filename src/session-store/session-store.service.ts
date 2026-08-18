@@ -73,6 +73,8 @@ export interface ConversationSession {
   progressMax?: number;
   checkpointStates?: Record<string, boolean>;
   isComplete?: boolean;
+  /** Training Engine version (v2 = hybrid scripted + AI gate). */
+  engineVersion?: 1 | 2;
 }
 
 export interface FreeTalkSessionState {
@@ -221,6 +223,7 @@ export class SessionStoreService {
   createTraining(
     config: LessonConfig,
     learnerFirstName?: string,
+    options?: { engineVersion?: 1 | 2 },
   ): SessionData {
     const lang = teachingLanguageFromConfig(config);
     const name = learnerFirstName?.trim() || learnerNameFallback(lang);
@@ -235,6 +238,9 @@ export class SessionStoreService {
       progressTurn: 0,
       progressMax: config.progressMax,
       isComplete: false,
+      ...(options?.engineVersion != null
+        ? { engineVersion: options.engineVersion }
+        : {}),
     };
     const data: SessionData = {
       session,
