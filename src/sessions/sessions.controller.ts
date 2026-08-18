@@ -763,12 +763,14 @@ export class SessionsController {
     }
 
     let userText = originalText;
+    let userTurnAdded = false;
     try {
       this.sessionStore.addTurn(sessionId, {
         speaker: 'user',
         textEn: userText,
         originalTextEn: originalText,
       });
+      userTurnAdded = true;
 
       const nextTurn = expectedTurn + 1;
       let reply: Awaited<ReturnType<GeminiChatService['generateTrainingTurn']>>;
@@ -2062,6 +2064,9 @@ export class SessionsController {
 
       return response;
     } catch (err) {
+      if (userTurnAdded) {
+        this.sessionStore.removeLastTurn(sessionId);
+      }
       if (
         err instanceof NotFoundException ||
         err instanceof BadRequestException ||
@@ -2101,12 +2106,14 @@ export class SessionsController {
     }
 
     let userText = originalText;
+    let userTurnAdded = false;
     try {
       this.sessionStore.addTurn(sessionId, {
         speaker: 'user',
         textEn: userText,
         originalTextEn: originalText,
       });
+      userTurnAdded = true;
 
       const nextTurn = expectedTurn + 1;
       const reply = await this.chat.generateSimulationTurn(
@@ -2186,6 +2193,9 @@ export class SessionsController {
 
       return response;
     } catch (err) {
+      if (userTurnAdded) {
+        this.sessionStore.removeLastTurn(sessionId);
+      }
       if (
         err instanceof NotFoundException ||
         err instanceof BadRequestException ||

@@ -262,6 +262,14 @@ export class SessionStoreService {
     return data.turnCounter;
   }
 
+  /** Undo the last stored turn after a failed AI exchange (keeps turn counter in sync). */
+  removeLastTurn(sessionId: string): void {
+    const data = this.require(sessionId);
+    if (data.turns.length === 0) return;
+    data.turns.pop();
+    data.turnCounter = Math.max(0, data.turnCounter - 1);
+  }
+
   updateFreeTalkState(
     sessionId: string,
     updates: Partial<FreeTalkSessionState>,

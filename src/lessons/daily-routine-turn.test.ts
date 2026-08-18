@@ -1,0 +1,175 @@
+import { describe, it } from 'node:test';
+import assert from 'node:assert/strict';
+import {
+  buildDailyRoutineFallbackTrainingReply,
+  dailyRoutineProgress,
+} from './lessons.data';
+
+type Turn = { speaker: string; textEn?: string };
+
+const LESSON_ID = 'ee_about_me_daily_routine';
+
+/** Simulates stored session history (user + ai turns). */
+function replayTurns(steps: Turn[]): Turn[] {
+  return steps.map((t) => ({ ...t }));
+}
+
+function fallbackAfterUser(
+  history: Turn[],
+  nextTurn: number,
+): NonNullable<ReturnType<typeof buildDailyRoutineFallbackTrainingReply>> {
+  const reply = buildDailyRoutineFallbackTrainingReply(
+    LESSON_ID,
+    history,
+    nextTurn,
+  );
+  assert.ok(reply, `expected scripted reply at API turn ${nextTurn}, progress=${dailyRoutineProgress(history)}`);
+  return reply;
+}
+
+describe('Daily Routine scripted turns (no Gemini)', () => {
+  it('maps progress 1→7 to the correct boards', () => {
+    const history: Turn[] = [
+      { speaker: 'ai', textEn: "Welcome! Say I'm ready." },
+    ];
+
+    const steps: Array<{
+      user: string;
+      nextTurn: number;
+      expectStem?: string;
+      expectComplete?: boolean;
+    }> = [
+      { user: "I'm ready", nextTurn: 1, expectStem: '...' },
+      { user: 'wake up', nextTurn: 2, expectStem: 'I wake up at...' },
+      {
+        user: "I wake up at 7 o'clock.",
+        nextTurn: 3,
+        expectStem: 'I go to sleep at...',
+      },
+      {
+        user: "I go to sleep at 11 o'clock.",
+        nextTurn: 4,
+        expectStem: 'I wake up at 7...',
+      },
+      { user: 'I wake up at 7 AM.', nextTurn: 5, expectStem: 'I ... every day.' },
+      {
+        user: 'I drink coffee every day.',
+        nextTurn: 6,
+        expectComplete: false,
+      },
+      {
+        user: 'I wake up at 7 AM every day.',
+        nextTurn: 7,
+        expectComplete: true,
+      },
+    ];
+
+    for (const step of steps) {
+      history.push({ speaker: 'user', textEn: step.user });
+      const progress = dailyRoutineProgress(history);
+      const reply = fallbackAfterUser(history, step.nextTurn);
+
+      if (step.expectComplete) {
+        assert.equal(reply.isLessonComplete, true);
+        assert.equal(reply.expectsUserSpeech, false);
+      } else {
+        assert.equal(reply.isLessonComplete, false);
+        assert.equal(reply.expectsUserSpeech, true);
+        if (step.expectStem) {
+          assert.equal(
+            reply.guidedSpeaking?.stem,
+            step.expectStem,
+            `progress=${progress} user="${step.user}"`,
+          );
+        } else {
+          assert.equal(reply.guidedSpeaking, undefined);
+        }
+      }
+
+      history.push({ speaker: 'ai', textEn: reply.textEn });
+    }
+  });
+
+  it('never returns null on Core Flow turns 2–7 after a matched user answer', () => {
+    const history = replayTurns([
+      { speaker: 'ai', textEn: 'Say I\'m ready' },
+      { speaker: 'user', textEn: "I'm ready" },
+      { speaker: 'ai', textEn: 'Vocab quiz' },
+      { speaker: 'user', textEn: 'wake up' },
+      { speaker: 'ai', textEn: 'Wake time' },
+      { speaker: 'user', textEn: "I wake up at 7 o'clock." },
+    ]);
+
+    // Core Flow turn 4 = sleep board — this was failing in production.
+    const turn4 = buildDailyRoutineFallbackTrainingReply(LESSON_ID, history, 3);
+    assert.ok(turn4, 'sleep board must be scripted at API turn 3');
+    assert.match(turn4!.textEn, /go to sleep|เข้านอน/i);
+    assert.equal(turn4!.guidedSpeaking?.stem, 'I go to sleep at...');
+  });
+
+  it('AM/PM board uses the learner wake hour from history', () => {
+    const history = replayTurns([
+      { speaker: 'ai', textEn: 'intro' },
+      { speaker: 'user', textEn: "I'm ready" },
+      { speaker: 'ai', textEn: 'vocab' },
+      { speaker: 'user', textEn: 'wake up' },
+      { speaker: 'ai', textEn: 'wake time' },
+      { speaker: 'user', textEn: "I wake up at 8 o'clock." },
+      { speaker: 'ai', textEn: 'sleep time' },
+      { speaker: 'user', textEn: "I go to sleep at 10 o'clock." },
+    ]);
+
+    const reply = fallbackAfterUser(history, 4);
+    assert.equal(reply.guidedSpeaking?.stem, 'I wake up at 8...');
+    assert.equal(reply.expectedSpeech, 'I wake up at 8 AM.');
+  });
+});
+
+describe('Daily Routine unhappy paths (scripted)', () => {
+  it('wrong vocab answer keeps progress at 1 and re-scripts vocab board', () => {
+    const history: Turn[] = [
+      { speaker: 'ai', textEn: 'Say ready' },
+      { speaker: 'user', textEn: "I'm ready" },
+      { speaker: 'ai', textEn: 'vocab quiz' },
+      { speaker: 'user', textEn: 'go to work' },
+    ];
+    assert.equal(dailyRoutineProgress(history), 1);
+    const reply = buildDailyRoutineFallbackTrainingReply(LESSON_ID, history, 2);
+    assert.ok(reply);
+    assert.equal(reply!.guidedSpeaking?.stem, '...');
+  });
+
+  it('double wrong answer soft-advances progress to 2', () => {
+    const history: Turn[] = [
+      { speaker: 'ai', textEn: 'ready' },
+      { speaker: 'user', textEn: "I'm ready" },
+      { speaker: 'ai', textEn: 'vocab' },
+      { speaker: 'user', textEn: 'go to work' },
+      { speaker: 'ai', textEn: 'ลองพูดตาม wake up' },
+      { speaker: 'user', textEn: 'go to sleep' },
+    ];
+    assert.equal(dailyRoutineProgress(history), 2);
+    const reply = buildDailyRoutineFallbackTrainingReply(LESSON_ID, history, 3);
+    assert.ok(reply);
+    assert.equal(reply!.guidedSpeaking?.stem, 'I wake up at...');
+  });
+
+  it('standalone AM does not complete AM/PM step (progress stays 4)', () => {
+    const history: Turn[] = [
+      { speaker: 'ai', textEn: 'intro' },
+      { speaker: 'user', textEn: "I'm ready" },
+      { speaker: 'ai', textEn: 'vocab' },
+      { speaker: 'user', textEn: 'wake up' },
+      { speaker: 'ai', textEn: 'wake' },
+      { speaker: 'user', textEn: "I wake up at 7 o'clock." },
+      { speaker: 'ai', textEn: 'sleep' },
+      { speaker: 'user', textEn: "I go to sleep at 11 o'clock." },
+      { speaker: 'ai', textEn: 'ampm' },
+      { speaker: 'user', textEn: 'AM' },
+    ];
+    assert.equal(dailyRoutineProgress(history), 4);
+    const reply = buildDailyRoutineFallbackTrainingReply(LESSON_ID, history, 5);
+    assert.ok(reply);
+    assert.equal(reply!.guidedSpeaking?.stem, 'I wake up at 7...');
+  });
+});

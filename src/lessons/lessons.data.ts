@@ -11493,6 +11493,77 @@ export function forceDailyRoutineGuidedSpeakingIfNeeded(
   };
 }
 
+/**
+ * Deterministic Daily Routine tutor line from learner progress alone.
+ * Skips soft-teach guards so board turns never fall through to Gemini
+ * (which was failing deterministically around Core Flow turn 4 / AM-PM).
+ */
+function buildDailyRoutineScriptedReplyFromProgress(
+  history: Array<{ speaker: string; textEn?: string }>,
+): {
+  textEn: string;
+  textTh: string | null;
+  guidedSpeaking: ReturnType<typeof normalizeGuidedSpeaking>;
+  expectsUserSpeech: boolean;
+  expectedSpeech: string | null;
+  isTaskComplete: boolean;
+} | null {
+  const progress = dailyRoutineProgress(history);
+  if (progress >= 7) {
+    return {
+      textEn:
+        'สุดยอดมากครับ! 🎉 วันนี้คุณบอกได้ทั้งเวลาตื่น นอน และกิจกรรมที่ทำ every day ได้คล่องสุดๆ บทแรกผ่านแล้วครับ! 🍌✨',
+      textTh: '',
+      guidedSpeaking: null,
+      expectsUserSpeech: false,
+      expectedSpeech: null,
+      isTaskComplete: true,
+    };
+  }
+
+  // progress N cleared ⇒ next board key = N (1..5), or active recall at 6.
+  if (progress < 1 || progress > 6) return null;
+
+  if (progress === 6) {
+    const hour = extractDailyRoutineWakeHour(history);
+    const ampm = extractDailyRoutineAmPm(history);
+    return {
+      textEn:
+        'เท่มากครับ! คำถามสุดท้าย... ปกติคุณตื่นกี่โมงทุกวันครับ? What time do you wake up every day? ลองตอบเป็นประโยคภาษาอังกฤษเต็มๆ ดูครับ! ✨',
+      textTh: null,
+      guidedSpeaking: null,
+      expectsUserSpeech: true,
+      expectedSpeech: `I wake up at ${hour} ${ampm} every day.`,
+      isTaskComplete: false,
+    };
+  }
+
+  const target = progress;
+  const wakeHour = extractDailyRoutineWakeHour(history);
+  const board =
+    target === 4
+      ? dailyRoutineAmPmBoard(wakeHour)
+      : DAILY_ROUTINE_BOARDS[target];
+  if (!board) return null;
+
+  const options = board.options.map((o) => ({ ...o }));
+  const first = options[0];
+  return {
+    textEn: board.textEn,
+    textTh: null,
+    guidedSpeaking: {
+      stem: board.stem,
+      emoji: first.emoji,
+      speak: first.speak,
+      ...(first.label ? { label: first.label } : {}),
+      options,
+    },
+    expectsUserSpeech: true,
+    expectedSpeech: board.expectedSpeech,
+    isTaskComplete: false,
+  };
+}
+
 /** Scripted turn when Gemini fails (RECITATION / empty / JSON errors) on Daily Routine. */
 export function buildDailyRoutineFallbackTrainingReply(
   lessonId: string,
@@ -11510,40 +11581,16 @@ export function buildDailyRoutineFallbackTrainingReply(
     return null;
   }
 
-  const progress = dailyRoutineProgress(history);
-  if (progress >= 7) {
-    return {
-      textEn:
-        'สุดยอดมากครับ! 🎉 วันนี้คุณบอกได้ทั้งเวลาตื่น นอน และกิจกรรมที่ทำ every day ได้คล่องสุดๆ บทแรกผ่านแล้วครับ! 🍌✨',
-      textTh: '',
-      isLessonComplete: true,
-      expectsUserSpeech: false,
-    };
-  }
-
-  const forced = forceDailyRoutineGuidedSpeakingIfNeeded(
-    lessonId,
-    'thai',
-    nextTurn,
-    history,
-    {
-      textEn: '',
-      textTh: null,
-      guidedSpeaking: null,
-      expectsUserSpeech: false,
-      isTaskComplete: false,
-      expectedSpeech: null,
-    },
-  );
-  if (!forced) return null;
+  const scripted = buildDailyRoutineScriptedReplyFromProgress(history);
+  if (!scripted) return null;
 
   return {
-    textEn: forced.textEn,
-    textTh: forced.textTh ?? '',
-    isLessonComplete: forced.isTaskComplete,
-    expectsUserSpeech: forced.expectsUserSpeech,
-    expectedSpeech: forced.expectedSpeech ?? undefined,
-    guidedSpeaking: forced.guidedSpeaking ?? undefined,
+    textEn: scripted.textEn,
+    textTh: scripted.textTh ?? '',
+    isLessonComplete: scripted.isTaskComplete,
+    expectsUserSpeech: scripted.expectsUserSpeech,
+    expectedSpeech: scripted.expectedSpeech ?? undefined,
+    guidedSpeaking: scripted.guidedSpeaking ?? undefined,
   };
 }
 

@@ -16,7 +16,10 @@
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:deploy": "prisma migrate deploy",
-    "test": "node --import tsx --test src/sessions/speaking-assessment.service.test.ts"
+    "test": "node --import tsx --test src/sessions/speaking-assessment.service.test.ts src/lessons/daily-routine-turn.test.ts",
+    "test:daily-routine": "node --import tsx --test src/lessons/daily-routine-turn.test.ts",
+    "smoke:daily-routine": "tsx scripts/daily-routine-api-turn-smoke.ts",
+    "smoke:daily-routine:unhappy": "tsx scripts/daily-routine-api-unhappy-smoke.ts"
   },
   "dependencies": {
     "@nestjs/common": "^10.4.15",
