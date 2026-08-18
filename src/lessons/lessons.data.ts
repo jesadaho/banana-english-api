@@ -3192,6 +3192,8 @@ Turn loop rules (critical — never stall the learner):
       'I wake up at 7 AM every day',
     ],
     maxTurns: 12,
+    /** Core Flow beats for teaching progress bar (not maxTurns ceiling). */
+    progressMax: 8,
     systemInstruction: `Lesson: Daily Routine (Everyday English → About Me → 1.1) — REVISED with Everyday Choices
 Goal: Say wake/sleep times (o'clock → AM/PM) and one everyday activity with "every day".
 
@@ -9367,6 +9369,7 @@ const FOUNDATION_PROGRESS_LESSON_IDS = new Set([
   'meet_people',
   'talk_about_groups',
   'ee_about_me_family',
+  'ee_about_me_daily_routine',
   'numbers',
   'telling_time',
   'everyday_numbers',
