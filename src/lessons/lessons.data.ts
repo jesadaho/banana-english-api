@@ -9212,6 +9212,134 @@ export function looksLikeSoftTeachReveal(textEn: string): boolean {
   );
 }
 
+/** exact = happy pool; near = semantic close; wrong = off-topic / other option. */
+export type ChoiceStepTier = 'exact' | 'near' | 'wrong';
+
+/**
+ * Progress with 3 answer tiers:
+ * - exact → advance
+ * - near → explain soft-teach, stay until exact after teach
+ * - wrong → soft-teach once, then soft-advance on 2nd wrong
+ */
+export function computeThreeTierChoiceProgress(
+  history: Array<{ speaker: string; textEn?: string }>,
+  maxStep: number,
+  scoreStep: (step: number, text: string) => ChoiceStepTier,
+): number {
+  let progress = 0;
+  let awaitingCorrection = false;
+  let wrongAttempts = 0;
+
+  for (const turn of history) {
+    if (turn.speaker === 'user') {
+      const text = (turn.textEn ?? '').trim();
+      if (!text || text.startsWith('[') || text.startsWith('(')) continue;
+      const next = progress + 1;
+      if (next > maxStep) continue;
+
+      const tier = scoreStep(next, text);
+
+      if (
+        progress >= 1 &&
+        scoreStep(1, text) === 'exact' &&
+        tier !== 'exact' &&
+        next === 2
+      ) {
+        continue;
+      }
+
+      if (awaitingCorrection) {
+        if (tier === 'exact') {
+          progress = next;
+          awaitingCorrection = false;
+          wrongAttempts = 0;
+        } else if (tier === 'near') {
+          awaitingCorrection = false;
+          wrongAttempts = 0;
+        } else {
+          wrongAttempts++;
+          awaitingCorrection = false;
+          if (wrongAttempts >= 2) {
+            progress = next;
+            wrongAttempts = 0;
+          }
+        }
+        continue;
+      }
+
+      if (tier === 'exact') {
+        progress = next;
+        wrongAttempts = 0;
+        continue;
+      }
+
+      if (tier === 'near') {
+        wrongAttempts = 0;
+        continue;
+      }
+
+      wrongAttempts++;
+      if (wrongAttempts >= 2) {
+        progress = next;
+        wrongAttempts = 0;
+      }
+      continue;
+    }
+
+    if (turn.speaker === 'ai' && looksLikeSoftTeachReveal(turn.textEn ?? '')) {
+      awaitingCorrection = true;
+    }
+  }
+
+  return progress;
+}
+
+export function pendingThreeTierSoftTeach(
+  history: Array<{ speaker: string; textEn?: string }>,
+  progressFn: (history: Array<{ speaker: string; textEn?: string }>) => number,
+  maxStep: number,
+  scoreStep: (step: number, text: string) => ChoiceStepTier,
+): boolean {
+  const progress = progressFn(history);
+  const step = progress + 1;
+  if (step > maxStep) return false;
+
+  let lastUserIdx = -1;
+  for (let i = history.length - 1; i >= 0; i--) {
+    if (history[i].speaker === 'user') {
+      lastUserIdx = i;
+      break;
+    }
+  }
+  if (lastUserIdx < 0) return false;
+
+  const userText = (history[lastUserIdx].textEn ?? '').trim();
+  if (!userText) return false;
+
+  const tier = scoreStep(step, userText);
+  if (tier === 'exact') return false;
+  if (progress >= 1 && scoreStep(progress, userText) === 'exact') return false;
+  if (
+    progress >= 1 &&
+    scoreStep(1, userText) === 'exact' &&
+    tier !== 'exact'
+  ) {
+    return false;
+  }
+
+  for (let i = lastUserIdx + 1; i < history.length; i++) {
+    const turn = history[i];
+    if (
+      turn.speaker === 'ai' &&
+      looksLikeSoftTeachReveal(turn.textEn ?? '')
+    ) {
+      return false;
+    }
+  }
+
+  return tier === 'near' || tier === 'wrong';
+}
+
 /**
  * Choice-lesson progress with soft-teach: first wrong → wait for reveal;
  * after reveal, any speak advances; second wrong without reveal → soft-advance.
@@ -9357,6 +9485,7 @@ function forceGuidedBoardSoftTeachIfNeeded(
     progressFn: (history: Array<{ speaker: string; textEn?: string }>) => number;
     maxStep: number;
     matchesStep: (step: number, text: string) => boolean;
+    scoreStep?: (step: number, text: string) => ChoiceStepTier;
     getBoard: (step: number) => ForcedGuidedBoard | null;
   },
 ): {
@@ -9383,7 +9512,12 @@ function forceGuidedBoardSoftTeachIfNeeded(
     }
   }
   if (!lastUserText || lastUserText.startsWith('[')) return null;
-  if (cfg.matchesStep(step, lastUserText)) return null;
+  const tier = cfg.scoreStep
+    ? cfg.scoreStep(step, lastUserText)
+    : cfg.matchesStep(step, lastUserText)
+      ? 'exact'
+      : 'wrong';
+  if (tier === 'exact') return null;
   // Just cleared step `progress` (e.g. "wake up" on vocab) — advance, don't soft-teach next step.
   if (progress >= 1 && cfg.matchesStep(progress, lastUserText)) return null;
 
@@ -11168,42 +11302,104 @@ function matchesDailyRoutineAmPmSentence(userText: string): boolean {
   );
 }
 
-function matchesDailyRoutineStep(step: number, userText: string): boolean {
+const DAILY_ROUTINE_HOUR_TOKEN =
+  /\b([1-9]|1[0-2]|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|o'?clock)\b/;
+
+export function scoreDailyRoutineStep(
+  step: number,
+  userText: string,
+): ChoiceStepTier {
   const t = normalizeDailyRoutineSpeech(userText);
-  if (!t) return false;
+  if (!t) return 'wrong';
+
   switch (step) {
-    case 1: // I'm ready
-      return (
+    case 1:
+      if (
         /^(i(?:'m| am)\s+)?ready$/.test(t) ||
         t === "i'm ready" ||
         t === 'i am ready'
-      );
-    case 2: // vocab: wake up (not a time sentence)
-      return (
-        (t === 'wake up' ||
-          t === 'i wake up' ||
-          /^i(?:'m)?\s*waking up$/.test(t)) &&
+      ) {
+        return 'exact';
+      }
+      if (/\bready\b/.test(t)) return 'near';
+      return 'wrong';
+
+    case 2:
+      if (
+        (t === 'wake up' || t === 'i wake up') &&
         !/\bat\b/.test(t)
-      );
-    case 3: // wake time o'clock — any hour 1–12 (board or free)
-      return (
+      ) {
+        return 'exact';
+      }
+      if (
+        t === 'get up' ||
+        t === 'i get up' ||
+        /^i(?:'m)?\s*waking up$/.test(t)
+      ) {
+        return 'near';
+      }
+      return 'wrong';
+
+    case 3: {
+      const noAmPm = !/\b(a\.?m\.?|p\.?m\.?)\b/.test(t);
+      const noEveryDay = !/\bevery day\b/.test(t);
+      const hasHour = DAILY_ROUTINE_HOUR_TOKEN.test(t);
+      if (
         /\bi wake up at\b/.test(t) &&
-        /\b([1-9]|1[0-2]|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|o'?clock)\b/.test(
+        hasHour &&
+        noAmPm &&
+        noEveryDay
+      ) {
+        return 'exact';
+      }
+      if (
+        /\bi get up at\b/.test(t) &&
+        hasHour &&
+        noAmPm &&
+        noEveryDay
+      ) {
+        return 'near';
+      }
+      if (
+        (/\b(wake|get) up\b/.test(t) || hasHour) &&
+        noAmPm &&
+        noEveryDay
+      ) {
+        return 'near';
+      }
+      return 'wrong';
+    }
+
+    case 4:
+      if (/\bi go to sleep at\b/.test(t) || /\bi sleep at\b/.test(t)) {
+        return 'exact';
+      }
+      if (/\bi go to bed at\b/.test(t)) return 'near';
+      return 'wrong';
+
+    case 5:
+      if (matchesDailyRoutineAmPmSentence(userText)) return 'exact';
+      if (
+        /\b(seven|7|eight|8|nine|9|six|6)\b/.test(t) &&
+        /\b(morning|afternoon|evening|night)\b/.test(t)
+      ) {
+        return 'near';
+      }
+      if (/^(a\.?m\.?|p\.?m\.?|am|pm|em)$/.test(t.trim())) return 'wrong';
+      if (/\b(am|pm|em)\b/.test(t) && !/\bi wake up at\b/.test(t)) {
+        return 'near';
+      }
+      return 'wrong';
+
+    case 6:
+      if (
+        /\bi (go to work|drink coffee|exercise|study english) every day\b/.test(
           t,
-        ) &&
-        !/\b(a\.?m\.?|p\.?m\.?)\b/.test(t) &&
-        !/\bevery day\b/.test(t)
-      );
-    case 4: // sleep time
-      return (
-        /\bi go to sleep at\b/.test(t) ||
-        /\bi sleep at\b/.test(t) ||
-        /\bi go to bed at\b/.test(t)
-      );
-    case 5: // AM/PM — must be a sentence (e.g. I wake up at 7 AM), not "AM" alone
-      return matchesDailyRoutineAmPmSentence(userText);
-    case 6: // every day activity — board OR any clear "I … every day"
-      return (
+        )
+      ) {
+        return 'exact';
+      }
+      if (
         /\bevery day\b/.test(t) &&
         (/\bi\b/.test(t) ||
           /\bgo to work\b/.test(t) ||
@@ -11211,19 +11407,33 @@ function matchesDailyRoutineStep(step: number, userText: string): boolean {
           /\bexercise\b/.test(t) ||
           /\bstudy\b/.test(t)) &&
         t.length >= 12
-      );
-    case 7: // active recall
-      return /\bi wake up at\b/.test(t) && /\bevery day\b/.test(t);
+      ) {
+        return 'near';
+      }
+      if (/\bevery day\b/.test(t)) return 'near';
+      return 'wrong';
+
+    case 7:
+      if (/\bi wake up at\b/.test(t) && /\bevery day\b/.test(t)) {
+        return 'exact';
+      }
+      return 'wrong';
+
     default:
-      return false;
+      return 'wrong';
   }
+}
+
+/** Happy-path pool only (exact tier). */
+function matchesDailyRoutineStep(step: number, userText: string): boolean {
+  return scoreDailyRoutineStep(step, userText) === 'exact';
 }
 
 /** How many Daily Routine speak steps are cleared (0–7). */
 export function dailyRoutineProgress(
   history: Array<{ speaker: string; textEn?: string }>,
 ): number {
-  return computeSoftTeachChoiceProgress(history, 7, matchesDailyRoutineStep);
+  return computeThreeTierChoiceProgress(history, 7, scoreDailyRoutineStep);
 }
 
 function dailyRoutineBoardForStep(
@@ -11440,11 +11650,11 @@ export function forceDailyRoutineGuidedSpeakingIfNeeded(
     return null;
   }
   if (
-    pendingSoftTeachForChoiceLesson(
+    pendingThreeTierSoftTeach(
       history,
       dailyRoutineProgress,
       7,
-      matchesDailyRoutineStep,
+      scoreDailyRoutineStep,
     ) &&
     !duplicateReady &&
     !justClearedStep
@@ -17736,6 +17946,7 @@ export function forceAboutMeSoftTeachForLesson(
           progressFn: dailyRoutineProgress,
           maxStep: 7,
           matchesStep: matchesDailyRoutineStep,
+          scoreStep: scoreDailyRoutineStep,
           getBoard: (step) => dailyRoutineBoardForStep(step, history),
         },
       );

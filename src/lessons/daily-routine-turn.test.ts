@@ -5,6 +5,7 @@ import {
   buildSoftTeachRevealLine,
   dailyRoutineProgress,
   forceAboutMeSoftTeachForLesson,
+  scoreDailyRoutineStep,
 } from './lessons.data';
 
 type Turn = { speaker: string; textEn?: string };
@@ -124,6 +125,67 @@ describe('Daily Routine scripted turns (no Gemini)', () => {
     const reply = fallbackAfterUser(history, 4);
     assert.equal(reply.guidedSpeaking?.stem, 'I wake up at 8...');
     assert.equal(reply.expectedSpeech, 'I wake up at 8 AM.');
+  });
+});
+
+describe('Daily Routine 3-tier scoring', () => {
+  it('classifies exact / near / wrong', () => {
+    assert.equal(scoreDailyRoutineStep(2, 'wake up'), 'exact');
+    assert.equal(scoreDailyRoutineStep(2, 'get up'), 'near');
+    assert.equal(scoreDailyRoutineStep(2, 'go to work'), 'wrong');
+    assert.equal(scoreDailyRoutineStep(3, "I wake up at 7 o'clock."), 'exact');
+    assert.equal(scoreDailyRoutineStep(3, 'I get up at seven'), 'near');
+    assert.equal(
+      scoreDailyRoutineStep(4, "I go to sleep at 11 o'clock."),
+      'exact',
+    );
+    assert.equal(scoreDailyRoutineStep(4, 'I go to bed at 11'), 'near');
+    assert.equal(scoreDailyRoutineStep(5, 'AM'), 'wrong');
+    assert.equal(scoreDailyRoutineStep(5, 'seven in the morning'), 'near');
+  });
+
+  it('near-miss vocab does not advance progress', () => {
+    const history: Turn[] = [
+      { speaker: 'ai', textEn: 'ready' },
+      { speaker: 'user', textEn: "I'm ready" },
+      { speaker: 'ai', textEn: 'vocab' },
+      { speaker: 'user', textEn: 'get up' },
+    ];
+    assert.equal(dailyRoutineProgress(history), 1);
+  });
+
+  it('near-miss sleep does not soft-advance', () => {
+    const history: Turn[] = [
+      { speaker: 'ai', textEn: 'intro' },
+      { speaker: 'user', textEn: "I'm ready" },
+      { speaker: 'ai', textEn: 'vocab' },
+      { speaker: 'user', textEn: 'wake up' },
+      { speaker: 'ai', textEn: 'wake' },
+      { speaker: 'user', textEn: "I wake up at 7 o'clock." },
+      { speaker: 'ai', textEn: 'sleep' },
+      { speaker: 'user', textEn: 'I go to bed at 11' },
+    ];
+    assert.equal(dailyRoutineProgress(history), 3);
+  });
+
+  it('exact after near-miss sleep advances to AM/PM', () => {
+    const history: Turn[] = [
+      { speaker: 'ai', textEn: 'intro' },
+      { speaker: 'user', textEn: "I'm ready" },
+      { speaker: 'ai', textEn: 'vocab' },
+      { speaker: 'user', textEn: 'wake up' },
+      { speaker: 'ai', textEn: 'wake' },
+      { speaker: 'user', textEn: "I wake up at 7 o'clock." },
+      { speaker: 'ai', textEn: 'sleep' },
+      { speaker: 'user', textEn: 'I go to bed at 11' },
+      {
+        speaker: 'ai',
+        textEn:
+          "ปกติแล้วถ้าจะบอกว่าเข้านอนกี่โมง เราจะพูดว่า I go to sleep at 11 o'clock. ครับ ลองพูดตามนะครับ",
+      },
+      { speaker: 'user', textEn: "I go to sleep at 11 o'clock." },
+    ];
+    assert.equal(dailyRoutineProgress(history), 4);
   });
 });
 
