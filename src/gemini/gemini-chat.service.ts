@@ -484,8 +484,16 @@ function buildSimulationReplySchema(criteria: string[]) {
   return {
     type: 'object',
     properties: {
-      aiResponse: { type: 'string' },
-      textTh: { type: 'string' },
+      aiResponse: {
+        type: 'string',
+        description:
+          'NPC spoken line in ENGLISH ONLY — no Thai script, no ครับ/ค่ะ particles.',
+      },
+      textTh: {
+        type: 'string',
+        description:
+          'Full Thai translation/subtitle of aiResponse (male NPC may use ครับ).',
+      },
       updatedCheckpoints: {
         type: 'object',
         properties: checkpointProperties,
@@ -1320,7 +1328,7 @@ export class GeminiChatService {
       ],
       schema: buildSimulationReplySchema(config.successCriteria),
       maxOutputTokens: 300,
-    });
+    }).then((reply) => this.normalizeSimulationReply(reply));
   }
 
   async generateTrainingOpening(
@@ -2257,7 +2265,24 @@ Return JSON ONLY (critical — never reply with bare prose):
       contents,
       schema: buildSimulationReplySchema(config.successCriteria),
       maxOutputTokens: 400,
-    });
+    }).then((reply) => this.normalizeSimulationReply(reply));
+  }
+
+  /** Strip accidental Thai script/particles from NPC English lines. */
+  private normalizeSimulationReply(
+    reply: SimulationTurnReply,
+  ): SimulationTurnReply {
+    const aiResponse = this.sanitizeNpcEnglishLine(reply.aiResponse);
+    if (aiResponse === reply.aiResponse) {
+      return reply;
+    }
+    return { ...reply, aiResponse };
+  }
+
+  private sanitizeNpcEnglishLine(text: string): string {
+    let cleaned = text.replace(/[\u0E00-\u0E7F]+/g, '').replace(/\s{2,}/g, ' ');
+    cleaned = cleaned.replace(/,\s*([.!?]|$)/g, '$1').replace(/,\s*$/g, '');
+    return cleaned.trim();
   }
 
   private simulationSystemPrompt(
@@ -2289,9 +2314,10 @@ Turn ${currentTurn} of ${config.maxTurns} (${remainingTurns} turns remaining).
 
 Rules:
 - Stay in character. Keep aiResponse under 15 words (up to 25 words on payment-closure turns).
+- aiResponse MUST be English-only (NPC voice). NEVER put Thai script or particles (ครับ/ค่ะ) in aiResponse.
+- Provide textTh as natural Thai translation of aiResponse (male NPC may use ครับ; Teacher B voice uses ครับ, not ค่ะ).
 - For non-payment checkpoints, mark true only when clearly satisfied this turn.
 - updatedCheckpoints must include ALL criteria keys with boolean values.
-- Provide textTh as natural Thai translation of aiResponse (Teacher B voice: ครับ, not ค่ะ).
 - feedbackHints.grammarTip: optional short grammar tip if the user made a mistake.
 - feedbackHints.mispronouncedWords: list words the user mispronounced this turn (empty array if none).
 

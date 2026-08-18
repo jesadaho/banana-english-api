@@ -40,7 +40,7 @@ import {
   ChatTurn,
   SessionStoreService,
 } from '../session-store/session-store.service';
-import { FALLBACK_HINTS, getTopic, normalizeFreeTalkLanguageLevel } from '../topics/topics.data';
+import { containsThaiScript, FALLBACK_HINTS, getTopic, normalizeFreeTalkLanguageLevel } from '../topics/topics.data';
 import {
   INTRO_TURN1_OPENING,
   getTurn2Script,
@@ -2168,7 +2168,20 @@ export class SessionsController {
       throw new BadRequestException('transcript is required');
     }
 
+    const topicId = data.session.topicId ?? 'coffee';
     let userText = originalText;
+    if (topicId === 'free_talk') {
+      const level = data.freeTalk?.languageLevel ?? 'balanced';
+      const shouldCorrectThaiMix =
+        body.thaiMixEnabled &&
+        level !== 'englishOnly' &&
+        containsThaiScript(originalText);
+      if (shouldCorrectThaiMix) {
+        this.sessionStore.markThaiMixUsed(sessionId);
+        userText = await this.chat.correctThaiMix(originalText);
+      }
+    }
+
     try {
       this.sessionStore.addTurn(sessionId, {
         speaker: 'user',
@@ -2179,8 +2192,6 @@ export class SessionsController {
       const userTurnCount = data.turns.filter(
         (turn) => turn.speaker === 'user',
       ).length;
-
-      const topicId = data.session.topicId ?? 'coffee';
 
       if (topicId === 'free_talk') {
         const ft = data.freeTalk;

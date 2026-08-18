@@ -557,6 +557,11 @@ export const THAI_MIX_PROMPT = `The learner spoke English mixed with Thai words.
 Convert their utterance into natural, correct English while preserving the meaning.
 Return ONLY the corrected English sentence, nothing else.`;
 
+/** True when the utterance includes Thai script (U+0E00–U+0E7F). */
+export function containsThaiScript(text: string): boolean {
+  return /[\u0E00-\u0E7F]/.test(text);
+}
+
 export const HINTS_PROMPT = `Based on the last AI message in this conversation, generate exactly 3 short reply suggestions
 the learner could say next. Each hint needs:
 - id: hint_1, hint_2, hint_3
