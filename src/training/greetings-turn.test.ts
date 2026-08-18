@@ -89,7 +89,7 @@ describe('greetings scripted flow', () => {
       'Hello',
     ]);
     const lastAi = [...history].reverse().find((t) => t.speaker === 'ai');
-    assert.ok(lastAi?.textEn.includes('ยอดเยี่ยม'));
+    assert.ok(lastAi?.textEn?.includes('ยอดเยี่ยม'));
     const { step } = resolveGreetingsStep(history);
     assert.equal(step, 9);
   });
