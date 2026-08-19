@@ -3,7 +3,7 @@
  * Usage:
  *   node --import tsx scripts/introductions-scenario-step-report.mjs 1
  *   node --import tsx scripts/introductions-scenario-step-report.mjs 2
- *   … scenarios 1–4
+ *   … scenarios 1–5
  */
 import { performance } from 'node:perf_hooks';
 import { buildChoiceLessonAfterUser, boardToScriptTurn, pinChoiceLessonAiReply, choiceLessonEffectiveProgress } from '../src/training/scripts/choice-lesson.script.ts';
@@ -15,6 +15,7 @@ import {
   introductionsOutOfPoolNearMiss,
   introductionsOutOfPoolCloseMiss,
   introductionsOutOfPoolWrong,
+  introductionsOutOfPoolWrongAgain,
   mockGeminiReply,
 } from '../src/training/foundation/foundation-poolgate.harness.ts';
 
@@ -22,8 +23,8 @@ const LEARNER = 'Nana';
 const scenarioArg = process.argv[2] ?? '1';
 const scenario = Number(scenarioArg);
 
-if (!Number.isInteger(scenario) || scenario < 1 || scenario > 4) {
-  console.error('Usage: node --import tsx scripts/introductions-scenario-step-report.mjs <1-4>');
+if (!Number.isInteger(scenario) || scenario < 1 || scenario > 5) {
+  console.error('Usage: node --import tsx scripts/introductions-scenario-step-report.mjs <1-5>');
   process.exit(1);
 }
 
@@ -309,6 +310,125 @@ function runScenario3Steps() {
   });
 }
 
+/** Every step: out-of-pool wrong → incorrect → wrong again → soft-advance. */
+function runScenarioAllOutOfPoolWrongThenSoftAdvance(
+  wrongFn,
+  wrongAgainFn,
+) {
+  const opening = def.buildOpening(LEARNER);
+  const turns = [
+    {
+      speaker: 'ai',
+      textEn: opening.textEn ?? '',
+      expectedSpeech: opening.expectedSpeech,
+    },
+  ];
+  const rows = [];
+  let aiPrompt = opening.textEn ?? '';
+  let sessionProgressTurn = 1;
+  let reportStep = 0;
+
+  for (let step = 1; step <= def.maxStep; step++) {
+    const turnsBeforeWrong = turns.map((t) => ({ ...t }));
+    const exact = expectedInPoolSpeech(def, step, turns, LEARNER);
+    const wrongText = wrongFn(exact, step);
+    const turnsWithWrong = [...turns, { speaker: 'user', textEn: wrongText }];
+
+    const t0 = performance.now();
+    const route = buildChoiceLessonAfterUser(def, {
+      turns: turnsWithWrong,
+      learnerFirstName: LEARNER,
+      sessionProgressTurn,
+    });
+    const msRoute = performance.now() - t0;
+
+    if (!route?.deferToAi) {
+      throw new Error(
+        `step ${step}: expected defer for "${wrongText}", got ${route?.assessmentTier ?? 'null'}`,
+      );
+    }
+
+    const tPin = performance.now();
+    const pinned = pinGeminiAssess(
+      turnsWithWrong,
+      'incorrect',
+      GEMINI_PREFIX.incorrect,
+      sessionProgressTurn,
+    );
+    const msPin = performance.now() - tPin;
+
+    reportStep++;
+    rows.push(
+      makeRow({
+        step: reportStep,
+        aiPrompt,
+        userText: wrongText,
+        turnsBeforeUser: turnsBeforeWrong,
+        result: classifyResult(pinned, { gemini: true }),
+        ms: msRoute + msPin,
+        aiReply: pinned?.textEn ?? '',
+        nextReply: pinned,
+        sessionProgressTurn,
+      }),
+    );
+
+    turns.push({ speaker: 'user', textEn: wrongText });
+    turns.push({
+      speaker: 'ai',
+      textEn: pinned?.textEn ?? '',
+      expectedSpeech: pinned?.expectedSpeech,
+    });
+
+    const wrongAgainText = wrongAgainFn(exact, step);
+    const turnsBeforeAgain = turns.map((t) => ({ ...t }));
+    turns.push({ speaker: 'user', textEn: wrongAgainText });
+
+    const tSoft = performance.now();
+    const soft = buildChoiceLessonAfterUser(def, {
+      turns,
+      learnerFirstName: LEARNER,
+      sessionProgressTurn,
+    });
+    const msSoft = performance.now() - tSoft;
+
+    if (soft?.deferToAi) {
+      throw new Error(`step ${step}: 2nd wrong "${wrongAgainText}" should soft-advance`);
+    }
+
+    reportStep++;
+    rows.push(
+      makeRow({
+        step: reportStep,
+        aiPrompt: pinned?.textEn ?? '',
+        userText: wrongAgainText,
+        turnsBeforeUser: turnsBeforeAgain,
+        result: classifyResult(soft, { gemini: false }),
+        ms: msSoft,
+        aiReply: soft?.textEn ?? '',
+        nextReply: soft,
+        sessionProgressTurn,
+      }),
+    );
+
+    turns.push({
+      speaker: 'ai',
+      textEn: soft?.textEn ?? '',
+      expectedSpeech: soft?.expectedSpeech,
+    });
+    aiPrompt = soft?.textEn ?? '';
+    sessionProgressTurn++;
+  }
+
+  return rows;
+}
+
+function runScenario5Steps() {
+  return runScenarioAllOutOfPoolWrongThenSoftAdvance(
+    introductionsOutOfPoolWrong,
+    introductionsOutOfPoolWrongAgain,
+  );
+}
+
 function runScenario4Steps() {
   return runScenarioAllOutOfPoolGemini(introductionsOutOfPoolWrong, {
     tier: 'incorrect',
@@ -321,6 +441,7 @@ const SCENARIO_TITLES = {
   2: 'Scenario 2 — out-pool correct ทุก step → จบบท',
   3: 'Scenario 3 — out-pool close ทุก step → จบบท',
   4: 'Scenario 4 — out-pool wrong + in-pool พูดตาม recovery → จบบท',
+  5: 'Scenario 5 — out-pool wrong + พูดตามผิดอีกครั้ง → soft-advance → จบบท',
 };
 
 function getRowsForScenario(n) {
@@ -333,6 +454,8 @@ function getRowsForScenario(n) {
       return runScenario3Steps();
     case 4:
       return runScenario4Steps();
+    case 5:
+      return runScenario5Steps();
     default:
       throw new Error(`unknown scenario ${n}`);
   }

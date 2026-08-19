@@ -467,6 +467,14 @@ export function introductionsOutOfPoolWrong(_exact: string, _step?: number): str
   return 'Good morning.';
 }
 
+/** Second wrong while repeating — triggers scripted soft-advance. */
+export function introductionsOutOfPoolWrongAgain(
+  _exact: string,
+  _step?: number,
+): string {
+  return 'Hello there.';
+}
+
 export type OutOfPoolAnswerFn = (exact: string, step: number) => string;
 
 export type GeminiAssessTier = 'correct' | 'close' | 'incorrect';
@@ -605,6 +613,104 @@ export function runFoundationAllOutOfPoolGeminiCorrect(
     learnerFirstName,
     geminiPrefix: geminiPraise,
   });
+}
+
+/** Every step: wrong → พูดตาม (Gemini incorrect) → wrong again → scripted soft-advance → lesson end. */
+export function runFoundationAllOutOfPoolWrongThenSoftAdvance(
+  def: ChoiceLessonDef,
+  wrongFn: OutOfPoolAnswerFn = introductionsOutOfPoolWrong,
+  wrongAgainFn: OutOfPoolAnswerFn = introductionsOutOfPoolWrongAgain,
+  learnerFirstName = FOUNDATION_PROBE_LEARNER,
+): FullHappyPathResult {
+  const opening = def.buildOpening(learnerFirstName);
+  const turns: Turn[] = [
+    {
+      speaker: 'ai',
+      textEn: opening.textEn ?? '',
+      expectedSpeech: opening.expectedSpeech,
+    },
+  ];
+  const steps: FullHappyPathStep[] = [];
+  let sessionProgressTurn = 1;
+
+  for (let step = 1; step <= def.maxStep; step++) {
+    const exact = expectedInPoolSpeech(def, step, turns, learnerFirstName);
+    const wrongText = wrongFn(exact, step);
+    turns.push({ speaker: 'user', textEn: wrongText });
+
+    const route = buildChoiceLessonAfterUser(def, {
+      turns,
+      learnerFirstName,
+      sessionProgressTurn,
+    });
+    assert.ok(route, `${def.lessonId} step ${step}: missing route`);
+    assert.equal(
+      route!.deferToAi,
+      true,
+      `${def.lessonId} step ${step}: "${wrongText}" should defer to Gemini`,
+    );
+
+    const pinned = pinChoiceLessonAiReply(
+      def,
+      turns,
+      mockGeminiReply('incorrect', DEFAULT_GEMINI_PREFIX.incorrect),
+      sessionProgressTurn,
+      learnerFirstName,
+    );
+    assert.equal(pinned.assessmentTier, 'incorrect');
+    assert.match(pinned.textEn ?? '', /พูดตาม/);
+    turns.push({
+      speaker: 'ai',
+      textEn: pinned.textEn ?? '',
+      expectedSpeech: pinned.expectedSpeech,
+    });
+
+    const wrongAgainText = wrongAgainFn(exact, step);
+    turns.push({ speaker: 'user', textEn: wrongAgainText });
+    const soft = buildChoiceLessonAfterUser(def, {
+      turns,
+      learnerFirstName,
+      sessionProgressTurn,
+    });
+    assert.ok(soft, `${def.lessonId} step ${step}: missing soft-advance reply`);
+    assert.notEqual(
+      soft!.deferToAi,
+      true,
+      `${def.lessonId} step ${step}: 2nd wrong is scripted`,
+    );
+    assert.match(soft!.textEn ?? '', /คำตอบนี้เราพูดว่า/);
+    assert.match(soft!.textEn ?? '', /ไปต่อกันเลย —/);
+    assert.equal(soft!.assessmentTier, 'incorrect');
+    turns.push({
+      speaker: 'ai',
+      textEn: soft!.textEn ?? '',
+      expectedSpeech: soft!.expectedSpeech,
+    });
+
+    const progressAfter = choiceLessonEffectiveProgress(
+      def,
+      turns,
+      sessionProgressTurn,
+    );
+    steps.push({
+      step,
+      userText: wrongText,
+      aiTextEn: soft!.textEn ?? '',
+      expectedSpeech: soft!.expectedSpeech ?? null,
+      progressAfter,
+      isLessonComplete: soft!.isLessonComplete ?? false,
+    });
+    sessionProgressTurn++;
+  }
+
+  const last = steps.at(-1)!;
+  assert.equal(last.isLessonComplete, true, `${def.lessonId}: should complete`);
+  assert.match(
+    turns.at(-1)?.textEn ?? '',
+    /สุดยอด|🎉|🍌/,
+    `${def.lessonId}: celebrate copy`,
+  );
+  return { turns, steps, completionText: turns.at(-1)?.textEn ?? '' };
 }
 
 /** Two wrong answers on `atStep`, then exact in-pool recovery through lesson end. */

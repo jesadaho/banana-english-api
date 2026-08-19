@@ -19,6 +19,7 @@ import {
   introductionsOutOfPoolNearMiss,
   introductionsOutOfPoolCloseMiss,
   introductionsOutOfPoolWrong,
+  introductionsOutOfPoolWrongAgain,
 } from '../src/training/foundation/foundation-poolgate.harness.ts';
 
 const def = getDef(
@@ -38,15 +39,16 @@ const SCENARIO_TITLES: Record<number, string> = {
   2: 'Scenario 2 — out-pool correct ทุก step → จบบท',
   3: 'Scenario 3 — out-pool close ทุก step → จบบท',
   4: 'Scenario 4 — out-pool wrong + in-pool พูดตาม recovery → จบบท',
+  5: 'Scenario 5 — out-pool wrong + พูดตามผิดอีกครั้ง → soft-advance → จบบท',
 };
 
 const scenarioArg = process.argv[2];
 const scenariosToRun: number[] = scenarioArg
   ? [Number(scenarioArg)]
-  : [1, 2, 3, 4];
+  : [1, 2, 3, 4, 5];
 
-if (scenariosToRun.some((n) => !Number.isInteger(n) || n < 1 || n > 4)) {
-  console.error('Usage: npx tsx scripts/introductions-scenarios-prod.ts [1-4]');
+if (scenariosToRun.some((n) => !Number.isInteger(n) || n < 1 || n > 5)) {
+  console.error('Usage: npx tsx scripts/introductions-scenarios-prod.ts [1-5]');
   process.exit(1);
 }
 
@@ -165,7 +167,7 @@ function pickUserSpeech(
   scenario: number,
   turnBefore: TurnResult,
   step: number,
-): { speech: string; recoverExact?: string } {
+): { speech: string; recoverExact?: string; recoverWrong?: string } {
   const expected = pickExpected(turnBefore);
 
   switch (scenario) {
@@ -177,6 +179,11 @@ function pickUserSpeech(
       return { speech: outOfPoolCloseMiss(expected, step) };
     case 4:
       return { speech: outOfPoolWrong(expected), recoverExact: expected };
+    case 5:
+      return {
+        speech: outOfPoolWrong(expected),
+        recoverWrong: introductionsOutOfPoolWrongAgain(expected, step),
+      };
     default:
       return { speech: expected };
   }
@@ -227,7 +234,11 @@ async function runScenario(
     ];
 
     while (lessonStep <= def.maxStep) {
-      const { speech, recoverExact } = pickUserSpeech(scenario, turnBefore, lessonStep);
+      const { speech, recoverExact, recoverWrong } = pickUserSpeech(
+        scenario,
+        turnBefore,
+        lessonStep,
+      );
       const { hint, choices } = chromeBeforeAnswer(turnBefore, history);
 
       reportStep++;
@@ -310,6 +321,51 @@ async function runScenario(
         aiPrompt = recReply;
 
         if (recovery.turn.isTaskComplete) {
+          console.log(`\n${'─'.repeat(72)}`);
+          console.log(
+            `✅ Scenario ${scenario} complete · ${reportStep} turns · ${formatMs(totalMs)}`,
+          );
+          return { scenario, ok: true, steps: reportStep, totalMs };
+        }
+      } else if (recoverWrong && result === 'incorrect out pool') {
+        const { hint: recHint, choices: recChoices } = chromeBeforeAnswer(
+          turnBefore,
+          history,
+        );
+        reportStep++;
+        const secondWrong = await client.sendUserSpeech(
+          start.sessionId,
+          currentTurn,
+          recoverWrong,
+        );
+        totalMs += secondWrong.durationMs;
+        const softBlock = turnBlock(secondWrong.json);
+        const softReply = (softBlock.aiResponse as string | undefined) ?? '';
+        const softResult = classifyResult(softBlock);
+
+        printStepBlock(
+          reportStep,
+          reply,
+          recHint,
+          recChoices,
+          recoverWrong,
+          softResult,
+          secondWrong.durationMs,
+          softReply,
+        );
+
+        history.push({ speaker: 'user', textEn: recoverWrong });
+        history.push({
+          speaker: 'ai',
+          textEn: softReply,
+          expectedSpeech: secondWrong.turn.expectedSpeech,
+        });
+
+        currentTurn = secondWrong.turn.currentTurn;
+        turnBefore = secondWrong.turn;
+        aiPrompt = softReply;
+
+        if (secondWrong.turn.isTaskComplete) {
           console.log(`\n${'─'.repeat(72)}`);
           console.log(
             `✅ Scenario ${scenario} complete · ${reportStep} turns · ${formatMs(totalMs)}`,

@@ -29,6 +29,7 @@ import {
   replayChoiceLessonChat,
   runFoundationAllOutOfPoolGeminiAssess,
   runFoundationAllOutOfPoolGeminiCorrect,
+  runFoundationAllOutOfPoolWrongThenSoftAdvance,
   runFoundationFullHappyPath,
   runWrongTwiceThenFinishFromStep,
   withProbeUser,
@@ -501,6 +502,18 @@ describe('Foundation — introductions all-step scenarios', () => {
     assert.equal(result.steps.at(-1)?.isLessonComplete, true);
     for (const record of result.steps) {
       assert.equal(record.userText, 'Good morning.');
+    }
+  });
+
+  it('scenario 5 — out-pool wrong then wrong again soft-advances every step', () => {
+    const def = getDef(introductions);
+    const result = runFoundationAllOutOfPoolWrongThenSoftAdvance(def);
+    assert.equal(result.steps.length, def.maxStep);
+    assert.equal(result.steps.at(-1)?.isLessonComplete, true);
+    for (const record of result.steps) {
+      assert.equal(record.userText, 'Good morning.');
+      assert.match(record.aiTextEn, /คำตอบนี้เราพูดว่า/);
+      assert.match(record.aiTextEn, /ไปต่อกันเลย —/);
     }
   });
 });
