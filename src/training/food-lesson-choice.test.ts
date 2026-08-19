@@ -6,6 +6,7 @@ import {
 } from '../lessons/lessons.data';
 import {
   buildChoiceLessonAfterUser,
+  ensureIncorrectAssessCopy,
   pinChoiceLessonAiReply,
 } from './scripts/choice-lesson.script';
 import { ABOUT_ME_FOOD } from './scripts/about-me.registry';
@@ -85,6 +86,25 @@ describe('food v2 exact match on free-form I like', () => {
     assert.equal(reply?.deferToAi, undefined);
     assert.match(reply?.textEn ?? '', /Burger/i);
     assert.match(reply?.expectedSpeech ?? '', /Burger is delicious/i);
+  });
+});
+
+describe('food incorrect assess copy', () => {
+  it('patches Gemini incorrect when it only says ลองพูดว่า', () => {
+    const board = foodBoardForStep(1, []);
+    const patched = ensureIncorrectAssessCopy(
+      {
+        textEn:
+          'ยังไม่ใช่เรื่องของกินนะครับ เพื่อนลองพูดว่า "I like pizza" หรือบอกเมนูโปรดของคุณมาได้เลยครับ',
+        textTh: '',
+        isLessonComplete: false,
+        expectsUserSpeech: true,
+        assessmentTier: 'incorrect',
+      },
+      board,
+    );
+    assert.match(patched.textEn ?? '', /พูดตาม/);
+    assert.doesNotMatch(patched.textEn ?? '', /พูดตาม.*พูดตาม/);
   });
 });
 

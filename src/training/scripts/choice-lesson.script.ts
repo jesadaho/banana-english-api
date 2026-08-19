@@ -272,6 +272,35 @@ export function resolveChoiceAssessmentTier(
   return 'incorrect';
 }
 
+/** PoolGate incorrect — always include พูดตาม even if Gemini only says ลองพูดว่า. */
+export function ensureIncorrectAssessCopy(
+  aiReply: TrainingTurnReply,
+  board: GuidedBoard | null,
+): TrainingTurnReply {
+  const textEn = aiReply.textEn?.trim() ?? '';
+  if (/พูดตาม|ลองพูดตาม/i.test(textEn)) {
+    return aiReply;
+  }
+
+  const model = board?.expectedSpeech?.trim();
+  const modelBare = model?.replace(/[.!?]+$/g, '') ?? '';
+  const alreadyQuotesModel =
+    Boolean(model) &&
+    (textEn.includes(`"${model}"`) ||
+      (modelBare !== model && textEn.includes(`"${modelBare}"`)));
+
+  let patched: string;
+  if (model && !alreadyQuotesModel) {
+    patched = textEn
+      ? `${textEn} ลองพูดตามนะครับ "${model}"`
+      : `ลองพูดตามนะครับ "${model}"`;
+  } else {
+    patched = textEn ? `${textEn} ลองพูดตามนะครับ` : 'ลองพูดตามนะครับ';
+  }
+
+  return { ...aiReply, textEn: patched };
+}
+
 export function pinChoiceLessonAiReply(
   def: ChoiceLessonDef,
   turns: ChoiceLessonHistoryTurn[],
@@ -306,7 +335,9 @@ export function pinChoiceLessonAiReply(
   const priorTurns = turns.slice(0, -1);
   const answeredStep =
     choiceLessonEffectiveProgress(def, priorTurns, sessionProgressTurn) + 1;
-  return pinCurrentBoard(def, turns, answeredStep, aiReply);
+  const board = def.boardForStep(answeredStep, turns);
+  const withTeach = ensureIncorrectAssessCopy(aiReply, board);
+  return pinCurrentBoard(def, turns, answeredStep, withTeach);
 }
 
 /**

@@ -166,6 +166,7 @@ describe('daily routine v2 lanes (binary pool routing)', () => {
       expectsUserSpeech: true,
       assessmentTier: 'incorrect',
     });
+    assert.match(pinned.textEn ?? '', /พูดตาม/);
     assert.equal(pinned.expectedSpeech, 'wake up');
     assert.ok(pinned.guidedSpeaking?.options?.some((o) => o.speak === 'wake up'));
   });
