@@ -6,6 +6,7 @@ import {
   isRepeatOnlyBoard,
   type ChoiceLessonHistoryTurn,
 } from './scripts/choice-lesson.script';
+import { resolveLessonProgressTurn } from '../lessons/lessons.data';
 import {
   FOUNDATION_POOLGATE_FIXTURES,
   FOUNDATION_PROBE_LEARNER,
@@ -570,5 +571,98 @@ describe('Foundation — introductions prod chat (Tim / Tami screenshot)', () =>
       exchanges[2].aiTextEn,
       /ตรงนี้พูด(ว่า|ได้ว่า).*My name is Tim/i,
     );
+  });
+});
+
+describe('Foundation progress — yes_no_maybe out-pool does not rewind', () => {
+  const yesNo = FOUNDATION_POOLGATE_FIXTURES.find(
+    (f) => f.lessonId === 'yes_no_maybe',
+  )!;
+
+  it('opening ลองพูดตาม starts progressTurn at 1', () => {
+    const beat = resolveLessonProgressTurn('yes_no_maybe', 0, 8, {
+      textEn:
+        'สวัสดีครับ Nana! วันนี้เรามาเรียนรู้ตอบคำถาม Yes / No / Maybe กันครับ ✅ ลองพูดตามว่า Yes, I do. นะครับ',
+      expectsUserSpeech: true,
+      expectedSpeech: 'Yes, I do.',
+      isTaskComplete: false,
+    });
+    assert.equal(beat, 1);
+  });
+
+  it('correct advance still increments when next teach says ลองพูดตาม', () => {
+    const beat = resolveLessonProgressTurn('yes_no_maybe', 4, 8, {
+      textEn:
+        'ยอดเยี่ยมมากครับ Nana! เก่งมากครับ! เก่งมากครับ! ถ้ายังไม่แน่ใจ ใช้ Maybe ได้ครับ 🤔 ลองพูดตามว่า Maybe.',
+      expectsUserSpeech: true,
+      expectedSpeech: 'Maybe.',
+      isTaskComplete: false,
+      assessmentTier: 'correct',
+    });
+    assert.equal(beat, 5);
+  });
+
+  it('incorrect retry with ลองพูดตาม does not increment', () => {
+    const beat = resolveLessonProgressTurn('yes_no_maybe', 1, 8, {
+      textEn: 'ยังไม่ใช่ครับ ลองพูดตามนะครับ "Yes, I do."',
+      expectsUserSpeech: true,
+      expectedSpeech: 'Yes, I do.',
+      isTaskComplete: false,
+      assessmentTier: 'incorrect',
+    });
+    assert.equal(beat, 1);
+  });
+
+  it('pizza Yes, I do.... advances to Are you free tomorrow without session beat', () => {
+    const def = getDef(yesNo);
+    const learnerFirstName = 'Nana';
+    const opening = def.buildOpening(learnerFirstName);
+    const turns: ChoiceLessonHistoryTurn[] = [
+      {
+        speaker: 'ai',
+        textEn: opening.textEn ?? '',
+        expectedSpeech: opening.expectedSpeech,
+        guidedSpeaking: opening.guidedSpeaking ?? null,
+      },
+    ];
+
+    for (let step = 1; step <= 4; step++) {
+      const exact =
+        def.boardForStep(step, turns, learnerFirstName)?.expectedSpeech ?? '';
+      turns.push({
+        speaker: 'user',
+        textEn: introductionsOutOfPoolNearMiss(exact, step),
+      });
+      const pinned = pinChoiceLessonAiReply(
+        def,
+        turns,
+        mockGeminiReply('correct', 'ยอดเยี่ยมมากครับ Nana! เก่งมากครับ'),
+        undefined,
+        learnerFirstName,
+      );
+      turns.push({
+        speaker: 'ai',
+        textEn: pinned.textEn ?? '',
+        expectedSpeech: pinned.expectedSpeech,
+        guidedSpeaking: pinned.guidedSpeaking ?? null,
+      });
+    }
+
+    assert.match(turns.at(-1)?.textEn ?? '', /Are you free tomorrow/);
+    assert.equal(
+      choiceLessonEffectiveProgress(def, turns),
+      4,
+      'pizza board must pin step 4, not rewind to Yes, I do. step 1',
+    );
+
+    turns.push({ speaker: 'user', textEn: 'Maybe....' });
+    const last = pinChoiceLessonAiReply(
+      def,
+      turns,
+      mockGeminiReply('correct', 'ยอดเยี่ยมมากครับ Nana! เก่งมากครับ'),
+      undefined,
+      learnerFirstName,
+    );
+    assert.equal(last.isLessonComplete, true);
   });
 });

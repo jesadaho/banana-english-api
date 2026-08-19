@@ -7,6 +7,9 @@ export type ChoiceLessonHistoryTurn = {
   speaker: string;
   textEn?: string;
   expectedSpeech?: string | null;
+  guidedSpeaking?: {
+    options?: Array<{ speak?: string }>;
+  } | null;
 };
 
 export type ChoiceLessonBoard = {
@@ -64,6 +67,15 @@ function normalizeChoiceExpectedSpeech(value: string | null | undefined): string
     .replace(/\s+/g, ' ');
 }
 
+function optionSpeaksSignature(
+  options?: Array<{ speak?: string }> | null,
+): string {
+  return (options ?? [])
+    .map((o) => normalizeChoiceExpectedSpeech(o.speak ?? ''))
+    .filter(Boolean)
+    .join('|');
+}
+
 /** When Gemini advances ahead of replay (e.g. recognition accept), last AI expectedSpeech pins the beat. */
 function progressFromLastAiExpectedSpeech(
   def: ChoiceLessonDef,
@@ -74,14 +86,34 @@ function progressFromLastAiExpectedSpeech(
   if (!expected) return 0;
 
   const normalized = normalizeChoiceExpectedSpeech(expected);
+  const lastSig = optionSpeaksSignature(lastAi?.guidedSpeaking?.options);
+  const matches: number[] = [];
   for (let step = 1; step <= def.maxStep; step++) {
     const board = def.boardForStep(step, history);
     const boardExpected = normalizeChoiceExpectedSpeech(board?.expectedSpeech);
     if (boardExpected && boardExpected === normalized) {
-      return step - 1;
+      matches.push(step);
     }
   }
-  return 0;
+  if (matches.length === 0) return 0;
+
+  if (lastSig) {
+    const byOptions = matches.find((step) => {
+      const board = def.boardForStep(step, history);
+      return optionSpeaksSignature(board?.options) === lastSig;
+    });
+    if (byOptions) return byOptions - 1;
+  }
+
+  // Repeat-only replies omit guidedSpeaking — do not confuse with a later
+  // multi-choice board that reuses the same expectedSpeech (e.g. Yes, I do.).
+  const repeatOnly = matches.find((step) => {
+    const board = def.boardForStep(step, history);
+    return isRepeatOnlyBoard(board);
+  });
+  if (!lastSig && repeatOnly) return repeatOnly - 1;
+
+  return matches[0] - 1;
 }
 
 export function choiceLessonEffectiveProgress(

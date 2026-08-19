@@ -14,7 +14,12 @@ import { getFoundationChoiceLesson } from '../scripts/foundation.registry';
 import type { FoundationPoolGateFixture } from './foundation-poolgate.fixtures';
 import { FOUNDATION_PROBE_LEARNER } from './foundation-poolgate.fixtures';
 
-export type Turn = { speaker: string; textEn?: string; expectedSpeech?: string | null };
+export type Turn = {
+  speaker: string;
+  textEn?: string;
+  expectedSpeech?: string | null;
+  guidedSpeaking?: { options?: Array<{ speak?: string }> } | null;
+};
 
 export function getDef(fixture: FoundationPoolGateFixture): ChoiceLessonDef {
   const def = getFoundationChoiceLesson(fixture.lessonId);
@@ -600,6 +605,7 @@ export function runFoundationAllOutOfPoolGeminiAssess(
       speaker: 'ai',
       textEn: assessed.textEn ?? '',
       expectedSpeech: assessed.expectedSpeech,
+      guidedSpeaking: assessed.guidedSpeaking ?? null,
     });
 
     let replyForStep = assessed;

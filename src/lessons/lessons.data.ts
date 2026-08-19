@@ -9446,7 +9446,6 @@ function detectFoundationGenericProgressBeat(
 ): number | null {
   if (current.isTaskComplete) return progressMax;
   if (current.softTeachForced) return null;
-  if (foundationLooksLikeSoftTeachOrRetry(current.textEn)) return null;
   if (current.assessmentTier === 'incorrect') return null;
 
   if (
@@ -9456,7 +9455,10 @@ function detectFoundationGenericProgressBeat(
     return Math.min(progressMax, prevProgressTurn + 1);
   }
 
+  // Opening teach copy often includes ลองพูดตาม — that is the first beat, not a retry.
   if (prevProgressTurn <= 0) return 1;
+
+  if (foundationLooksLikeSoftTeachOrRetry(current.textEn)) return null;
 
   const expected = normalizeExpectedSpeech(current.expectedSpeech);
   const prevExpected = normalizeExpectedSpeech(previous?.expectedSpeech);
