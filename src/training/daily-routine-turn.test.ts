@@ -32,11 +32,26 @@ function replayDailyRoutine(steps: string[]): Turn[] {
 }
 
 describe('training v2 config', () => {
-  it('includes About Me lessons in default allowlist', () => {
+  it('includes Foundation + About Me in default allowlist (registry)', () => {
     resetTrainingV2ConfigCache();
+    assert.equal(isTrainingV2Lesson('greetings'), true);
+    assert.equal(isTrainingV2Lesson('introductions'), true);
+    assert.equal(isTrainingV2Lesson('numbers'), true);
     assert.equal(isTrainingV2Lesson('ee_about_me_daily_routine'), true);
     assert.equal(isTrainingV2Lesson('ee_about_me_home'), true);
     assert.equal(isTrainingV2Lesson('ee_about_me_favorites'), true);
+    assert.equal(isTrainingV2Lesson('weather'), false);
+  });
+
+  it('registry v2 survives TRAINING_V2_LESSONS env override', () => {
+    resetTrainingV2ConfigCache();
+    process.env.TRAINING_V2_LESSONS = 'ee_about_me_food';
+    resetTrainingV2ConfigCache();
+    assert.equal(isTrainingV2Lesson('introductions'), true);
+    assert.equal(isTrainingV2Lesson('ee_about_me_food'), true);
+    assert.equal(isTrainingV2Lesson('weather'), false);
+    delete process.env.TRAINING_V2_LESSONS;
+    resetTrainingV2ConfigCache();
   });
 });
 

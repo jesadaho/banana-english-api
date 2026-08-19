@@ -1,58 +1,52 @@
-/** Lessons routed through Training Engine v2 (PoolGate: exact pool → scripted, miss → Gemini assess). */
-const DEFAULT_V2_LESSONS = [
-  'greetings',
-  'introductions',
-  'yes_no_maybe',
-  'polite_expressions',
-  'meet_people',
-  'talk_about_groups',
-  'ee_about_me_family',
-  'numbers',
-  'telling_time',
-  'everyday_numbers',
-  'money_prices',
-  'likes_dislikes',
-  'wants_needs',
-  'can_cant',
-  'asking_for_help',
-  'asking_questions',
-  'ee_about_me_daily_routine',
-  'ee_about_me_food',
-  'ee_about_me_home',
-  'ee_about_me_work_school',
-  'ee_about_me_hobbies',
-  'ee_about_me_pets',
-  'ee_about_me_people',
-  'ee_about_me_weather',
-  'ee_about_me_friends',
-  'ee_about_me_favorites',
-];
+import { ABOUT_ME_CHOICE_LESSONS } from './scripts/about-me.registry';
+import {
+  FOUNDATION_LESSON_IDS,
+  isFoundationChoiceLesson,
+} from './scripts/foundation.registry';
+import { isAboutMeChoiceLesson } from './scripts/about-me.registry';
 
-let cachedAllowlist: Set<string> | null = null;
+/** Greetings uses a dedicated script but is always engine v2. */
+const GREETINGS_LESSON_ID = 'greetings';
 
-function parseAllowlist(raw: string | undefined): Set<string> {
-  if (raw == null || raw.trim() === '') {
-    return new Set(DEFAULT_V2_LESSONS);
-  }
-  const ids = raw
-    .split(',')
-    .map((s) => s.trim())
-    .filter(Boolean);
-  return new Set(ids.length > 0 ? ids : DEFAULT_V2_LESSONS);
+function registryV2LessonIds(): string[] {
+  return [
+    GREETINGS_LESSON_ID,
+    ...FOUNDATION_LESSON_IDS,
+    ...ABOUT_ME_CHOICE_LESSONS.map((d) => d.lessonId),
+  ];
 }
 
-export function trainingV2Allowlist(): Set<string> {
-  if (!cachedAllowlist) {
-    cachedAllowlist = parseAllowlist(process.env.TRAINING_V2_LESSONS);
+let cachedExtraAllowlist: Set<string> | null = null;
+
+/** Optional env extras (e.g. staging a non-registry lesson). Registry lessons are always v2. */
+function extraV2Allowlist(): Set<string> {
+  if (!cachedExtraAllowlist) {
+    const raw = process.env.TRAINING_V2_LESSONS;
+    const extras =
+      raw == null || raw.trim() === ''
+        ? []
+        : raw
+            .split(',')
+            .map((s) => s.trim())
+            .filter(Boolean);
+    cachedExtraAllowlist = new Set(extras);
   }
-  return cachedAllowlist;
+  return cachedExtraAllowlist;
+}
+
+/** All lesson IDs on engine v2 (registry + env extras). */
+export function trainingV2Allowlist(): Set<string> {
+  return new Set([...registryV2LessonIds(), ...extraV2Allowlist()]);
 }
 
 export function isTrainingV2Lesson(lessonId: string): boolean {
-  return trainingV2Allowlist().has(lessonId);
+  if (lessonId === GREETINGS_LESSON_ID) return true;
+  if (isFoundationChoiceLesson(lessonId)) return true;
+  if (isAboutMeChoiceLesson(lessonId)) return true;
+  return extraV2Allowlist().has(lessonId);
 }
 
 /** Test helper — reset env cache between tests. */
 export function resetTrainingV2ConfigCache(): void {
-  cachedAllowlist = null;
+  cachedExtraAllowlist = null;
 }
