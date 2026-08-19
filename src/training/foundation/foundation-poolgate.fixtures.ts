@@ -13,9 +13,9 @@ export type FoundationPoolGateFixture = {
 export const FOUNDATION_POOLGATE_FIXTURES: FoundationPoolGateFixture[] = [
   {
     lessonId: 'introductions',
-    setupExact: ['My name is Nana.', "I'm Nana."],
-    exactAtProbe: 'My name is Nana.',
-    outOfPoolAtProbe: 'My name is Nana and it sounds formal.',
+    setupExact: ['My name is Nana.'],
+    exactAtProbe: "I'm Nana.",
+    outOfPoolAtProbe: 'I am Nana.',
     wrongAtProbe: 'Good morning.',
     wrongAgainAtProbe: 'Hello there.',
   },

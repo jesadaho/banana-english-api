@@ -555,37 +555,21 @@ export function replayChoiceLessonChat(
   return { turns, exchanges };
 }
 
-/** Prod screenshot: Tim learner, Tami at recognition, STT trailing dots. */
+/** Prod screenshot replay: Tim learner with STT trailing dots. */
 export const INTRODUCTIONS_TIM_PROD_CHAT: ChatReplayLine[] = [
   { userText: 'My name is Tim..' },
   { userText: "I'm Tim..." },
-  {
-    userText: 'My name is Tami...',
-    gemini: {
-      tier: 'correct',
-      textEn:
-        'เยี่ยมครับ! ใช้ My name is Tami ได้เลยครับ เป็นทางการและสุภาพมากครับ',
-    },
-    mustMatch: /Nice to meet you/,
-  },
   {
     userText: 'Nice to meet you..',
     mustNotMatch: /คำตอบนี้เราพูดว่า.*My name is Tim/i,
     mustMatch: /Nice to meet you too/,
   },
-  {
-    userText: 'Nice to meet you, too.',
-    gemini: {
-      tier: 'correct',
-      textEn: 'ถูกต้องแล้วครับ! เก่งมากครับคุณ Tami',
-    },
-    mustMatch: /I'm from Thailand/,
-  },
+  { userText: 'Nice to meet you too.', mustMatch: /I'm from Thailand/ },
   { userText: "I'm from Thailand." },
   { userText: 'I live in Bangkok.' },
   { userText: 'I work as a teacher.' },
   {
-    userText: "My name is Tami. I'm from Thailand.",
+    userText: "My name is Tim. I'm from Thailand.",
     gemini: {
       tier: 'correct',
       textEn: 'เยี่ยมมากครับ! แนะนำตัวได้ครบเลยครับ',

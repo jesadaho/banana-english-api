@@ -23,13 +23,13 @@ export const FOUNDATION_LOOSE_MATCHERS: Record<
   introductions: (step, text) =>
     loose(step, text, {
       1: /^my name is /,
-      2: /^i['']?m /,
-      4: /^nice to meet you$/,
-      5: /^nice to meet you too$/,
-      6: /^i['']?m from /,
-      7: /^i live in /,
-      8: /^i (work as|am a) /,
-      9: /^(my name is|i['']?m|i am|nice to meet|i['']?m from|i live|i work)/,
+      2: /^(my name is|i['']?m) /,
+      3: /^nice to meet you$/,
+      4: /^nice to meet you,? too$/,
+      5: /^i['']?m from /,
+      6: /^i live in /,
+      7: /^(i work as|i['']?m a|i am a) /,
+      8: /^(my name is|i['']?m) .+ (i['']?m from|i live in|i work as|i['']?m a|i am a) /,
     }),
   yes_no_maybe: (step, text) =>
     loose(step, text, {
@@ -135,7 +135,7 @@ export const FOUNDATION_BOARDS: Record<
   introductions: {
     1: {
       textEn:
-        'สวัสดีครับ {name}! วันนี้เรามาเรียนรู้การแนะนำตัวเป็นภาษาอังกฤษกันครับ 📝 ลองพูดตามว่า My name is {name} นะครับ',
+        'สวัสดีครับ {name} วันนี้เรามาฝึกแนะนำตัวแบบง่ายๆ กันครับ ลองพูดตามว่า My name is {name}.',
       withPraise: false,
       stem: '',
       expectedSpeech: 'My name is {name}.',
@@ -143,26 +143,18 @@ export const FOUNDATION_BOARDS: Record<
     },
     2: {
       textEn:
-        'ดีมากครับ! My name is {name}. แปลว่า “ฉันชื่อ {name}” อีกแบบหนึ่งคือ I\'m {name}. ลองพูดตามนะครับ 💬',
+        'ดีมากครับ My name is {name}. แปลว่า “ฉันชื่อ {name}” อีกแบบคือ I\'m {name}. แปลว่า “ฉันชื่อ {name}” เหมือนกัน My name is ฟังสุภาพกว่านิดหน่อย ส่วน I\'m ฟังสั้นและเป็นกันเองกว่าครับ ช่วยบอกครูหน่อยครับ ว่าคุณชื่ออะไร?',
       withPraise: true,
       stem: '',
-      expectedSpeech: "I'm {name}.",
-      options: [{ emoji: '💬', label: "I'm", speak: "I'm {name}." }],
-    },
-    3: {
-      textEn:
-        'เยี่ยมเลยครับ! I\'m {name}. ก็แปลว่า “ฉันชื่อ {name}” เหมือนกันครับ โดย My name is ฟังเป็นทางการกว่านิดหน่อย 📝 ถ้าเจอคนใหม่ครั้งแรก คุณจะใช้แบบไหนครับ?',
-      withPraise: true,
-      stem: 'My name is...',
       expectedSpeech: 'My name is {name}.',
       options: [
         { emoji: '📝', label: 'My name is', speak: 'My name is {name}.' },
         { emoji: '💬', label: "I'm", speak: "I'm {name}." },
       ],
     },
-    4: {
+    3: {
       textEn:
-        'เยี่ยมเลยครับ! เวลาเจอคนใหม่ครั้งแรก เราทักว่า Nice to meet you 🤝 แปลว่า “ยินดีที่ได้รู้จัก” ลองพูดตามนะครับ',
+        'เยี่ยมเลยครับ ต่อไปเป็นประโยคที่ใช้เวลาเจอคนใหม่ครับ Nice to meet you. แปลว่า “ยินดีที่ได้รู้จัก” ลองพูดตามครับ',
       withPraise: true,
       stem: '',
       expectedSpeech: 'Nice to meet you.',
@@ -170,9 +162,10 @@ export const FOUNDATION_BOARDS: Record<
         { emoji: '🤝', label: 'Nice to meet you', speak: 'Nice to meet you.' },
       ],
     },
-    5: {
+    4: {
       textEn:
-        'ดีมากครับ! Nice to meet you แปลว่า “ยินดีที่ได้รู้จัก” ถ้าอีกฝ่ายพูดก่อน เราตอบว่า Nice to meet you too 😊 ลองพูดตามครับ',
+        'ดีมากครับ ถ้าครูพูดว่า Nice to meet you. คุณตอบว่า Nice to meet you too. แปลว่า “ยินดีที่ได้รู้จักเช่นกัน” ลองตอบเหมือนสถานการณ์จริงนะครับ ครูพูดว่า Nice to meet you. คุณจะตอบว่าอะไรครับ?',
+      advanceQuestionEn: 'Nice to meet you too.',
       withPraise: true,
       stem: '',
       expectedSpeech: 'Nice to meet you too.',
@@ -182,35 +175,36 @@ export const FOUNDATION_BOARDS: Record<
           label: 'Nice to meet you too',
           speak: 'Nice to meet you too.',
         },
+        { emoji: '🙏', label: 'Thank you', speak: 'Thank you.' },
       ],
     },
-    6: {
+    5: {
       textEn:
-        'เยี่ยมเลยครับ! Nice to meet you too แปลว่า “ยินดีที่ได้รู้จักเช่นกัน” ต่อไปมาฝึกบอกว่ามาจากไหนกันครับ — I\'m from Thailand 🇹🇭 ลองพูดตามนะครับ',
+        'เยี่ยมเลยครับ ต่อไปมาฝึกบอกว่าคุณมาจากไหนครับ I\'m from Thailand. แปลว่า “ฉันมาจากประเทศไทย” ลองพูดตามครับ',
       withPraise: true,
       stem: '',
       expectedSpeech: "I'm from Thailand.",
       options: [
         { emoji: '🇹🇭', label: 'Thailand', speak: "I'm from Thailand." },
-        { emoji: '🌏', label: 'Bangkok', speak: "I'm from Bangkok." },
+      ],
+    },
+    6: {
+      textEn:
+        'เก่งมากครับ I\'m from ใช้บอกว่ามาจากที่ไหน ส่วน I live in ใช้บอกว่าตอนนี้อาศัยอยู่ที่ไหน ถ้าจะบอกว่าเราอาศัยอยู่ที่กรุงเทพ พูดว่า I live in Bangkok. แปลว่า “ฉันอาศัยอยู่ที่กรุงเทพ” ช่วยบอกครูหน่อยครับ ว่าคุณอาศัยอยู่ที่ไหน?',
+      withPraise: true,
+      stem: 'I live in...',
+      expectedSpeech: 'I live in Bangkok.',
+      options: [
+        { emoji: '🏙️', label: 'Bangkok', speak: 'I live in Bangkok.' },
+        { emoji: '🌆', label: 'Chiang Mai', speak: 'I live in Chiang Mai.' },
+        { emoji: '🌊', label: 'Phuket', speak: 'I live in Phuket.' },
       ],
     },
     7: {
       textEn:
-        'เก่งมากครับ! I\'m from คือบอกว่ามาจากไหน ส่วน I live in คือบอกว่าอยู่ที่ไหนตอนนี้ 🏙️ I live in Bangkok แปลว่า “ฉันอยู่ที่กรุงเทพ” ลองพูดตามครับ',
+        'ดีมากครับ ถ้าจะบอกว่าเราทำงานอะไร พูดว่า I work as a teacher. แปลว่า “ฉันทำงานเป็นครู” ช่วยบอกครูหน่อยครับ ว่าคุณทำงานอะไร?',
       withPraise: true,
-      stem: '',
-      expectedSpeech: 'I live in Bangkok.',
-      options: [
-        { emoji: '🏙️', label: 'Bangkok', speak: 'I live in Bangkok.' },
-        { emoji: '🏡', label: 'Chiang Mai', speak: 'I live in Chiang Mai.' },
-      ],
-    },
-    8: {
-      textEn:
-        'เยี่ยมเลยครับ! ถ้าจะบอกอาชีพ พูดว่า I work as a teacher 👩‍🏫 แปลว่า “ฉันทำงานเป็นครู” ลองพูดตามนะครับ',
-      withPraise: true,
-      stem: '',
+      stem: "I work as... / I'm...",
       expectedSpeech: 'I work as a teacher.',
       options: [
         {
@@ -219,12 +213,16 @@ export const FOUNDATION_BOARDS: Record<
           speak: 'I work as a teacher.',
         },
         { emoji: '🎓', label: 'Student', speak: "I'm a student." },
+        {
+          emoji: '💼',
+          label: 'Office worker',
+          speak: 'I work as an office worker.',
+        },
       ],
     },
-    9: {
+    8: {
       textEn:
-        'ขั้นตอนสุดท้ายครับ 😊 ลองแนะนำตัวสั้นๆ เป็นภาษาอังกฤษ — ชื่อ + อีกอย่างที่เรียนมา (เช่น มาจากไหน / ทำงานอะไร)',
-      advanceQuestionEn: 'Introduce yourself in English.',
+        'มาลองรวมทั้งหมดกันครับ แนะนำตัวสั้นๆ ด้วยชื่อ และอีกหนึ่งอย่างเกี่ยวกับตัวคุณ จะบอกว่าคุณมาจากไหน อาศัยอยู่ที่ไหน หรือทำงานอะไรก็ได้ครับ',
       withPraise: true,
       stem: '',
       expectedSpeech: "My name is {name}. I'm from Thailand.",
@@ -1064,7 +1062,7 @@ export const FOUNDATION_BOARDS: Record<
 };
 
 export const FOUNDATION_MAX_STEPS: Record<FoundationLessonId, number> = {
-  introductions: 9,
+  introductions: 8,
   yes_no_maybe: 5,
   polite_expressions: 5,
   meet_people: 5,

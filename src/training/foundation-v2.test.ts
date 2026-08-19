@@ -143,13 +143,14 @@ describe('Foundation — full happy path (all steps → complete)', () => {
     const { steps } = runFoundationFullHappyPath(def);
 
     assert.match(steps[0].aiTextEn, /I'm Nana/);
-    assert.match(steps[2].aiTextEn, /Nice to meet you/);
-    assert.match(steps[4].aiTextEn, /I'm from Thailand/);
-    assert.match(steps[5].aiTextEn, /I live in Bangkok/);
-    assert.match(steps[6].aiTextEn, /I work as a teacher/);
-    assert.match(steps[7].aiTextEn, /แนะนำตัว/);
-    assert.match(steps[8].userText, /I'm from Thailand/);
-    assert.equal(steps[8].isLessonComplete, true);
+    assert.match(steps[1].aiTextEn, /Nice to meet you/);
+    assert.match(steps[2].aiTextEn, /Nice to meet you too/);
+    assert.match(steps[3].aiTextEn, /I'm from Thailand/);
+    assert.match(steps[4].aiTextEn, /I live in Bangkok/);
+    assert.match(steps[5].aiTextEn, /I work as a teacher/);
+    assert.match(steps[6].aiTextEn, /แนะนำตัว/);
+    assert.match(steps[7].userText, /I'm from Thailand/);
+    assert.equal(steps[7].isLessonComplete, true);
   });
 });
 
@@ -176,13 +177,13 @@ describe('Foundation — introductions cross-step regression', () => {
     (f) => f.lessonId === 'introductions',
   )!;
 
-  it('step 5 — saying step-6 answer defers then soft-advances with Nice to meet you too copy', () => {
+  it('step 3 — saying step-4 answer defers then soft-advances with Nice to meet you copy', () => {
     const def = getDef(introductions);
-    const turns = buildExactHistoryThroughProgress(def, 4);
-    const step5Board = def.boardForStep(5, turns);
-    assert.equal(step5Board?.expectedSpeech, 'Nice to meet you too.');
+    const turns = buildExactHistoryThroughProgress(def, 2);
+    const step3Board = def.boardForStep(3, turns);
+    assert.equal(step3Board?.expectedSpeech, 'Nice to meet you.');
 
-    turns.push({ speaker: 'user', textEn: "I'm from Thailand." });
+    turns.push({ speaker: 'user', textEn: 'Nice to meet you too.' });
     const first = buildChoiceLessonAfterUser(def, {
       turns,
       learnerFirstName: FOUNDATION_PROBE_LEARNER,
@@ -194,14 +195,14 @@ describe('Foundation — introductions cross-step regression', () => {
       turns,
       mockGeminiReply(
         'incorrect',
-        'ลองพูดตามนะครับ "Nice to meet you too"',
+        'ลองพูดตามนะครับ "Nice to meet you"',
       ),
       undefined,
       FOUNDATION_PROBE_LEARNER,
     );
-    assert.equal(pinned.expectedSpeech, 'Nice to meet you too.');
+    assert.equal(pinned.expectedSpeech, 'Nice to meet you.');
     turns.push({ speaker: 'ai', textEn: pinned.textEn ?? '' });
-    turns.push({ speaker: 'user', textEn: "I'm from Thailand." });
+    turns.push({ speaker: 'user', textEn: 'Nice to meet you too.' });
 
     const soft = buildChoiceLessonAfterUser(def, {
       turns,
@@ -209,22 +210,22 @@ describe('Foundation — introductions cross-step regression', () => {
     });
     assert.ok(soft);
     assert.notEqual(soft!.deferToAi, true);
-    assert.match(soft!.textEn ?? '', /Nice to meet you too/);
-    assert.match(soft!.textEn ?? '', /ไปต่อกันเลย — I'm from Thailand/);
-    assert.equal(soft!.expectedSpeech, "I'm from Thailand.");
+    assert.match(soft!.textEn ?? '', /Nice to meet you/);
+    assert.match(soft!.textEn ?? '', /ไปต่อกันเลย — Nice to meet you too/);
+    assert.equal(soft!.expectedSpeech, 'Nice to meet you too.');
   });
 
-  it('step 5 cross-step — soft-advance then exact answers finish lesson', () => {
+  it('step 3 cross-step — soft-advance then exact answers finish lesson', () => {
     const def = getDef(introductions);
     const result = runWrongTwiceThenFinishFromStep(
       def,
-      5,
-      "I'm from Thailand.",
+      3,
+      'Nice to meet you too.',
     );
     assert.equal(result.steps.at(-1)?.progressAfter, def.maxStep);
     assert.match(result.completionText, /สุดยอด/);
     assert.equal(
-      result.steps.some((s) => s.userText.includes("I'm from Thailand.")),
+      result.steps.some((s) => s.userText.includes('Nice to meet you too.')),
       true,
     );
   });
@@ -246,12 +247,12 @@ describe('Foundation — introductions prod chat (Tim / Tami screenshot)', () =>
     assert.match(exchanges.at(-1)?.aiTextEn ?? '', /สุดยอด/);
 
     assert.match(exchanges[0].aiTextEn, /แปลว่า.*ฉันชื่อ Tim/);
-    assert.match(exchanges[1].aiTextEn, /ก็แปลว่า/);
-    assert.match(exchanges[2].aiTextEn, /Nice to meet you/);
+    assert.match(exchanges[1].aiTextEn, /Nice to meet you/);
+    assert.match(exchanges[2].aiTextEn, /Nice to meet you too/);
     assert.equal(exchanges[3].assessmentTier, 'correct');
-    assert.match(exchanges[3].aiTextEn, /Nice to meet you too/);
+    assert.match(exchanges[3].aiTextEn, /I'm from Thailand/);
     assert.doesNotMatch(
-      exchanges[3].aiTextEn,
+      exchanges[2].aiTextEn,
       /คำตอบนี้เราพูดว่า.*My name is Tim/i,
     );
   });
