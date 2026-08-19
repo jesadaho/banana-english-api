@@ -6,7 +6,8 @@
  *   … lanes 1–5
  */
 import { performance } from 'node:perf_hooks';
-import { buildChoiceLessonAfterUser } from '../src/training/scripts/choice-lesson.script.ts';
+import { buildChoiceLessonAfterUser, boardToScriptTurn } from '../src/training/scripts/choice-lesson.script.ts';
+import { extractIntroducedName } from '../src/training/foundation/foundation.helpers.ts';
 import { FOUNDATION_POOLGATE_FIXTURES } from '../src/training/foundation/foundation-poolgate.fixtures.ts';
 import {
   buildHistoryAtProbe,
@@ -55,7 +56,67 @@ function classifyResult(reply, { gemini = false } = {}) {
   return tier;
 }
 
-/** @returns {{ step: number, aiPrompt: string, userText: string, result: string, ms: number, aiReply: string }[]} */
+function formatChrome(reply) {
+  if (!reply) {
+    return { hint: '(none)', choices: '(none)', expected: '(none)' };
+  }
+  const gs = reply.guidedSpeaking;
+  const stem = gs?.stem?.trim() ?? '';
+  const options = gs?.options ?? [];
+  const hint = stem || '(none)';
+  const choices =
+    options.length > 0
+      ? options
+          .map((o) => `${o.emoji ?? '·'} ${o.label ?? o.speak} → "${o.speak}"`)
+          .join('\n            ')
+      : '(none)';
+  const expected = reply.expectedSpeech?.trim() || '(none)';
+  return { hint, choices, expected };
+}
+
+function boardForChrome(step, turns) {
+  const name = extractIntroducedName(turns, LEARNER);
+  const history =
+    extractIntroducedName(turns) === name
+      ? turns
+      : [...turns, { speaker: 'user', textEn: `My name is ${name}.` }];
+  return def.boardForStep(step, history);
+}
+
+function chromeBeforeAnswer(turns) {
+  const step = def.progressFn(turns) + 1;
+  const board = boardForChrome(step, turns);
+  if (!board) return formatChrome(null);
+  const scripted = boardToScriptTurn(board);
+  const chrome = formatChrome(scripted);
+  if (chrome.choices === '(none)' && board.options?.length) {
+    chrome.choices = `${board.options
+      .map((o) => `${o.emoji ?? '·'} ${o.label ?? o.speak} → "${o.speak}"`)
+      .join('\n            ')} (repeat-only — choice bar hidden)`;
+  }
+  return chrome;
+}
+
+function makeRow({ step, aiPrompt, userText, turnsBeforeUser, result, ms, aiReply, nextReply }) {
+  const promptChrome = chromeBeforeAnswer(turnsBeforeUser);
+  const nextChrome = formatChrome(nextReply);
+  return {
+    step,
+    aiPrompt,
+    userText,
+    result,
+    ms,
+    aiReply,
+    hint: promptChrome.hint,
+    choices: promptChrome.choices,
+    expected: promptChrome.expected,
+    nextHint: nextChrome.hint,
+    nextChoices: nextChrome.choices,
+    nextExpected: nextChrome.expected,
+  };
+}
+
+/** @returns {ReturnType<typeof makeRow>[]} */
 function runLane1Steps() {
   const opening = def.buildOpening(LEARNER);
   const turns = [
@@ -69,6 +130,7 @@ function runLane1Steps() {
   let aiPrompt = opening.textEn ?? '';
 
   for (let step = 1; step <= def.maxStep; step++) {
+    const turnsBeforeUser = turns.map((t) => ({ ...t }));
     const userText = expectedInPoolSpeech(def, step, turns, LEARNER);
     turns.push({ speaker: 'user', textEn: userText });
 
@@ -76,14 +138,18 @@ function runLane1Steps() {
     const reply = buildChoiceLessonAfterUser(def, { turns, learnerFirstName: LEARNER });
     const ms = performance.now() - t0;
 
-    rows.push({
-      step,
-      aiPrompt,
-      userText,
-      result: classifyResult(reply),
-      ms,
-      aiReply: reply?.textEn ?? '',
-    });
+    rows.push(
+      makeRow({
+        step,
+        aiPrompt,
+        userText,
+        turnsBeforeUser,
+        result: classifyResult(reply),
+        ms,
+        aiReply: reply?.textEn ?? '',
+        nextReply: reply,
+      }),
+    );
 
     turns.push({
       speaker: 'ai',
@@ -111,64 +177,101 @@ function runLaneWithProbeAnswer(probeUserText, afterProbe) {
   let aiPrompt = opening.textEn ?? '';
 
   for (let step = 1; step < probeStep; step++) {
+    const turnsBeforeUser = turns.map((t) => ({ ...t }));
     const userText = expectedInPoolSpeech(def, step, turns, LEARNER);
     turns.push({ speaker: 'user', textEn: userText });
     const t0 = performance.now();
     const reply = buildChoiceLessonAfterUser(def, { turns, learnerFirstName: LEARNER });
     const ms = performance.now() - t0;
-    rows.push({ step, aiPrompt, userText, result: classifyResult(reply), ms, aiReply: reply?.textEn ?? '' });
+    rows.push(
+      makeRow({
+        step,
+        aiPrompt,
+        userText,
+        turnsBeforeUser,
+        result: classifyResult(reply),
+        ms,
+        aiReply: reply?.textEn ?? '',
+        nextReply: reply,
+      }),
+    );
     turns.push({ speaker: 'ai', textEn: reply?.textEn ?? '', expectedSpeech: reply?.expectedSpeech });
     aiPrompt = reply?.textEn ?? '';
   }
 
   // probe step
+  const turnsBeforeProbe = turns.map((t) => ({ ...t }));
   turns.push({ speaker: 'user', textEn: probeUserText });
   const tProbe = performance.now();
   let probeReply = buildChoiceLessonAfterUser(def, { turns, learnerFirstName: LEARNER });
   const msProbe = performance.now() - tProbe;
 
   if (probeReply?.deferToAi && afterProbe) {
-    rows.push({
-      step: probeStep,
-      aiPrompt,
-      userText: probeUserText,
-      result: classifyResult(probeReply),
-      ms: msProbe,
-      aiReply: '(defer → Gemini)',
-    });
+    rows.push(
+      makeRow({
+        step: probeStep,
+        aiPrompt,
+        userText: probeUserText,
+        turnsBeforeUser: turnsBeforeProbe,
+        result: classifyResult(probeReply),
+        ms: msProbe,
+        aiReply: '(defer → Gemini)',
+        nextReply: null,
+      }),
+    );
     const tPin = performance.now();
     probeReply = afterProbe();
     const msPin = performance.now() - tPin;
-    rows.push({
-      step: probeStep,
-      aiPrompt: '(Gemini assess)',
-      userText: probeUserText,
-      result: classifyResult(probeReply, { gemini: true }),
-      ms: msPin,
-      aiReply: probeReply?.textEn ?? '',
-    });
+    rows.push(
+      makeRow({
+        step: probeStep,
+        aiPrompt: '(Gemini assess)',
+        userText: probeUserText,
+        turnsBeforeUser: [...turnsBeforeProbe, { speaker: 'user', textEn: probeUserText }],
+        result: classifyResult(probeReply, { gemini: true }),
+        ms: msPin,
+        aiReply: probeReply?.textEn ?? '',
+        nextReply: probeReply,
+      }),
+    );
     turns.push({ speaker: 'ai', textEn: probeReply?.textEn ?? '', expectedSpeech: probeReply?.expectedSpeech });
     aiPrompt = probeReply?.textEn ?? '';
   } else {
-    rows.push({
-      step: probeStep,
-      aiPrompt,
-      userText: probeUserText,
-      result: classifyResult(probeReply),
-      ms: msProbe,
-      aiReply: probeReply?.textEn ?? '',
-    });
+    rows.push(
+      makeRow({
+        step: probeStep,
+        aiPrompt,
+        userText: probeUserText,
+        turnsBeforeUser: turnsBeforeProbe,
+        result: classifyResult(probeReply),
+        ms: msProbe,
+        aiReply: probeReply?.textEn ?? '',
+        nextReply: probeReply,
+      }),
+    );
     turns.push({ speaker: 'ai', textEn: probeReply?.textEn ?? '', expectedSpeech: probeReply?.expectedSpeech });
     aiPrompt = probeReply?.textEn ?? '';
   }
 
   for (let step = probeStep + 1; step <= def.maxStep; step++) {
+    const turnsBeforeUser = turns.map((t) => ({ ...t }));
     const userText = expectedInPoolSpeech(def, step, turns, LEARNER);
     turns.push({ speaker: 'user', textEn: userText });
     const t0 = performance.now();
     const reply = buildChoiceLessonAfterUser(def, { turns, learnerFirstName: LEARNER });
     const ms = performance.now() - t0;
-    rows.push({ step, aiPrompt, userText, result: classifyResult(reply), ms, aiReply: reply?.textEn ?? '' });
+    rows.push(
+      makeRow({
+        step,
+        aiPrompt,
+        userText,
+        turnsBeforeUser,
+        result: classifyResult(reply),
+        ms,
+        aiReply: reply?.textEn ?? '',
+        nextReply: reply,
+      }),
+    );
     turns.push({ speaker: 'ai', textEn: reply?.textEn ?? '', expectedSpeech: reply?.expectedSpeech });
     aiPrompt = reply?.textEn ?? '';
   }
@@ -183,50 +286,62 @@ function runLane5Steps() {
   const rows = [];
   let aiPrompt = base.at(-1)?.textEn ?? opening.textEn ?? '';
 
-  // wrong #1
+  const turnsBeforeWrong1 = [...base];
   const turns1 = [...base, { speaker: 'user', textEn: fixture.wrongAtProbe }];
   const t1 = performance.now();
   const route1 = buildChoiceLessonAfterUser(def, { turns: turns1, learnerFirstName: LEARNER });
   const ms1 = performance.now() - t1;
-  rows.push({
-    step: probeStep,
-    aiPrompt,
-    userText: fixture.wrongAtProbe,
-    result: classifyResult(route1),
-    ms: ms1,
-    aiReply: '(defer → Gemini)',
-  });
+  rows.push(
+    makeRow({
+      step: probeStep,
+      aiPrompt,
+      userText: fixture.wrongAtProbe,
+      turnsBeforeUser: turnsBeforeWrong1,
+      result: classifyResult(route1),
+      ms: ms1,
+      aiReply: '(defer → Gemini)',
+      nextReply: null,
+    }),
+  );
 
   const tPin1 = performance.now();
   const pin1 = pinGeminiAtProbe(def, fixture, fixture.wrongAtProbe, 'incorrect', 'ลองพูดตามนะครับ', LEARNER);
   const msPin1 = performance.now() - tPin1;
-  rows.push({
-    step: probeStep,
-    aiPrompt: '(Gemini assess)',
-    userText: fixture.wrongAtProbe,
-    result: classifyResult(pin1, { gemini: true }),
-    ms: msPin1,
-    aiReply: pin1.textEn ?? '',
-  });
+  rows.push(
+    makeRow({
+      step: probeStep,
+      aiPrompt: '(Gemini assess)',
+      userText: fixture.wrongAtProbe,
+      turnsBeforeUser: turns1,
+      result: classifyResult(pin1, { gemini: true }),
+      ms: msPin1,
+      aiReply: pin1.textEn ?? '',
+      nextReply: pin1,
+    }),
+  );
 
   aiPrompt = pin1.textEn ?? '';
-  const turns2 = [
+  const turnsBeforeWrong2 = [
     ...base,
     { speaker: 'user', textEn: fixture.wrongAtProbe },
     { speaker: 'ai', textEn: pin1.textEn ?? '' },
-    { speaker: 'user', textEn: fixture.wrongAgainAtProbe },
   ];
+  const turns2 = [...turnsBeforeWrong2, { speaker: 'user', textEn: fixture.wrongAgainAtProbe }];
   const t2 = performance.now();
   const soft = buildChoiceLessonAfterUser(def, { turns: turns2, learnerFirstName: LEARNER });
   const ms2 = performance.now() - t2;
-  rows.push({
-    step: probeStep,
-    aiPrompt,
-    userText: fixture.wrongAgainAtProbe,
-    result: classifyResult(soft),
-    ms: ms2,
-    aiReply: soft?.textEn ?? '',
-  });
+  rows.push(
+    makeRow({
+      step: probeStep,
+      aiPrompt,
+      userText: fixture.wrongAgainAtProbe,
+      turnsBeforeUser: turnsBeforeWrong2,
+      result: classifyResult(soft),
+      ms: ms2,
+      aiReply: soft?.textEn ?? '',
+      nextReply: soft,
+    }),
+  );
 
   const turns = [
     ...turns2,
@@ -235,12 +350,24 @@ function runLane5Steps() {
   aiPrompt = soft?.textEn ?? '';
 
   for (let step = probeStep + 1; step <= def.maxStep; step++) {
+    const turnsBeforeUser = turns.map((t) => ({ ...t }));
     const userText = expectedInPoolSpeech(def, step, turns, LEARNER);
     turns.push({ speaker: 'user', textEn: userText });
     const t0 = performance.now();
     const reply = buildChoiceLessonAfterUser(def, { turns, learnerFirstName: LEARNER });
     const ms = performance.now() - t0;
-    rows.push({ step, aiPrompt, userText, result: classifyResult(reply), ms, aiReply: reply?.textEn ?? '' });
+    rows.push(
+      makeRow({
+        step,
+        aiPrompt,
+        userText,
+        turnsBeforeUser,
+        result: classifyResult(reply),
+        ms,
+        aiReply: reply?.textEn ?? '',
+        nextReply: reply,
+      }),
+    );
     turns.push({ speaker: 'ai', textEn: reply?.textEn ?? '', expectedSpeech: reply?.expectedSpeech });
     aiPrompt = reply?.textEn ?? '';
   }
@@ -288,10 +415,18 @@ function printReport(rows) {
   for (const r of rows) {
     console.log(`\nStep ${r.step}`);
     console.log(`  AI:       ${fullText(r.aiPrompt)}`);
+    console.log(`  Hint:     ${r.hint}`);
+    console.log(`  Choices:  ${r.choices}`);
+    console.log(`  Expected: ${r.expected}`);
     console.log(`  User:     ${fullText(r.userText)}`);
     console.log(`  Result:   ${r.result}`);
     console.log(`  Response: ${formatMs(r.ms)}`);
     console.log(`  Reply:    ${fullText(r.aiReply)}`);
+    if (r.nextExpected !== '(none)') {
+      console.log(`  Next hint:     ${r.nextHint}`);
+      console.log(`  Next choices:  ${r.nextChoices}`);
+      console.log(`  Next expected: ${r.nextExpected}`);
+    }
   }
 
   const totalMs = rows.reduce((s, row) => s + row.ms, 0);

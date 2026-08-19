@@ -170,6 +170,7 @@ function buildSoftAdvanceTextTh(
 function boardToGuidedSpeaking(board: GuidedBoard) {
   const options = board.options.map((o) => ({ ...o }));
   const first = options[0];
+  if (!first) return undefined;
   return {
     stem: board.stem,
     emoji: first.emoji,
@@ -185,6 +186,7 @@ export function boardToScriptTurn(
 ): ScriptTurnResult {
   const options = board.options.map((o) => ({ ...o }));
   const first = options[0];
+  const hasOptions = options.length > 0;
   const isSingleHint = options.length === 1;
   return {
     textEn: board.textEn,
@@ -193,7 +195,7 @@ export function boardToScriptTurn(
     expectsUserSpeech: true,
     expectedSpeech: board.expectedSpeech,
     guidedSpeaking:
-      opts?.skipGuided || (board.stem.trim() === '' && isSingleHint)
+      opts?.skipGuided || !hasOptions || (board.stem.trim() === '' && isSingleHint)
         ? undefined
         : {
             stem: board.stem,

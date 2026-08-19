@@ -143,7 +143,7 @@ export const FOUNDATION_BOARDS: Record<
     },
     2: {
       textEn:
-        'ดีมากครับ My name is {name}. แปลว่า “ฉันชื่อ {name}” อีกแบบคือ I\'m {name}. แปลว่า “ฉันชื่อ {name}” เหมือนกัน My name is ฟังสุภาพกว่านิดหน่อย ส่วน I\'m ฟังสั้นและเป็นกันเองกว่าครับ ช่วยบอกครูหน่อยครับ ว่าคุณชื่ออะไร?',
+        'ดีมากครับ! My name is {name}. แปลว่า “ฉันชื่อ {name}” อีกแบบพูดสั้นๆ ว่า I\'m {name}. ก็ได้ครับ ช่วยบอกครูหน่อยครับ ว่าคุณชื่ออะไร?',
       withPraise: true,
       stem: '',
       expectedSpeech: 'My name is {name}.',
@@ -224,15 +224,9 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'มาลองรวมทั้งหมดกันครับ แนะนำตัวสั้นๆ ด้วยชื่อ และอีกหนึ่งอย่างเกี่ยวกับตัวคุณ จะบอกว่าคุณมาจากไหน อาศัยอยู่ที่ไหน หรือทำงานอะไรก็ได้ครับ',
       withPraise: true,
-      stem: '',
+      stem: 'My name is...',
       expectedSpeech: "My name is {name}. I'm from Thailand.",
-      options: [
-        {
-          emoji: '🙋',
-          label: 'Self intro',
-          speak: "My name is {name}. I'm from Thailand.",
-        },
-      ],
+      options: [],
     },
   },
 

@@ -54,7 +54,10 @@ const COMPLETION_TEXTS: Record<
   (name: string) => string
 > = {
   introductions: (name) =>
-    foundationCompletion(name, 'วันนี้คุณแนะนำตัวได้แล้ว ทั้งชื่อ ทักทาย และบอกที่อยู่/งาน'),
+    foundationCompletion(
+      name,
+      'วันนี้คุณแนะนำตัวเป็นภาษาอังกฤษได้แล้ว ทั้งบอกชื่อ บอกว่ามาจากไหน และตอบเวลาพบคนใหม่ได้',
+    ),
   yes_no_maybe: (name) =>
     foundationCompletion(name, 'วันนี้คุณตอบ Yes / No / Maybe และคำตอบสั้นๆ ได้แล้ว'),
   polite_expressions: (name) =>
