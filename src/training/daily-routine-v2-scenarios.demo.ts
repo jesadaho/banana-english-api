@@ -1,91 +1,82 @@
 /**
- * Demo script — Daily Routine v2 three lanes (exact / near / wrong#2).
- * Run: npx tsx src/training/daily-routine-v2-scenarios.demo.ts
+ * Demo — Daily Routine v2: pool exact (scripted) vs out-of-pool AI 3-tier assess.
  */
-import { scriptedAiDebug } from '../common/ai-debug';
-import { buildDailyRoutineAfterUser, buildDailyRoutineOpening } from './scripts/daily-routine.script';
-import { resolveChoiceStepContext } from './engine/choice-step.resolver';
-import { resolveTurnLane } from './engine/turn-lanes';
 import {
-  dailyRoutineProgress,
-  scoreDailyRoutineStep,
-} from '../lessons/lessons.data';
+  buildDailyRoutineAfterUser,
+  buildDailyRoutineOpening,
+  pinDailyRoutineAiReply,
+} from './scripts/daily-routine.script';
+import { scoreDailyRoutineStep } from '../lessons/lessons.data';
 
 type Turn = { speaker: string; textEn?: string };
 
-function laneLabel(tier: string, progressBefore: number, progressAfter: number): string {
-  if (tier === 'exact') return 'Lane 1 — scripted (exact, no LLM)';
-  if (progressAfter > progressBefore) return 'Lane 3 — scriptedAdvance (wrong #2, soft-advance)';
-  return 'Lane 2 — scriptedSoftTeach (near / wrong #1, no LLM)';
-}
+const VOCAB_SETUP: Turn[] = [
+  { speaker: 'user', textEn: "I'm ready" },
+  {
+    speaker: 'ai',
+    textEn: 'เก่งมากครับ! มาเริ่มกันเลย คำว่า ตื่นนอน ในภาษาอังกฤษคือคำไหนครับ? ⏰',
+  },
+];
 
-function runScenario(name: string, userSpeech: string, setup: Turn[]) {
+function show(
+  name: string,
+  userSpeech: string,
+  setup: Turn[],
+  ai?: { assessmentTier: 'correct' | 'close' | 'incorrect'; textEn: string },
+) {
   const history: Turn[] = [
     { speaker: 'ai', textEn: buildDailyRoutineOpening('Nana').textEn },
     ...setup,
     { speaker: 'user', textEn: userSpeech },
   ];
-  const prior = history.slice(0, -1);
-  const ctx = resolveChoiceStepContext(
-    history,
-    7,
-    scoreDailyRoutineStep,
-    dailyRoutineProgress,
-  );
-  const progressBefore = dailyRoutineProgress(prior);
-  const progressAfter = dailyRoutineProgress(history);
-  const lane = resolveTurnLane({
-    tier: ctx.tier,
-    attempt: ctx.attempt,
-    nearMeansSemantic: false,
-  });
-  const reply = buildDailyRoutineAfterUser({
-    turns: history,
-    learnerFirstName: 'Nana',
-  });
-  const debug = scriptedAiDebug();
+  const route = buildDailyRoutineAfterUser({ turns: history, learnerFirstName: 'Nana' });
+  const step = setup.filter((t) => t.speaker === 'user').length + 1;
+  const tier = scoreDailyRoutineStep(step, userSpeech);
 
   console.log('\n' + '═'.repeat(72));
-  console.log(`SCENARIO: ${name}`);
-  console.log('─'.repeat(72));
-  console.log(`User said     : "${userSpeech}"`);
-  console.log(`Tier          : ${ctx.tier}`);
-  console.log(`Attempt       : ${ctx.attempt}`);
-  console.log(`Progress      : ${progressBefore} → ${progressAfter}`);
-  console.log(`Resolve lane  : ${lane}`);
-  console.log(`Effective     : ${laneLabel(ctx.tier, progressBefore, progressAfter)}`);
-  console.log(`AI called?    : ${debug.source === 'scripted' ? 'NO (scripted)' : debug.source}`);
-  console.log(`deferToAi?    : ${reply?.deferToAi ?? false}`);
-  console.log('─'.repeat(72));
-  console.log(`textEn        : ${reply?.textEn?.slice(0, 120)}${(reply?.textEn?.length ?? 0) > 120 ? '…' : ''}`);
-  console.log(`expectedSpeech: ${reply?.expectedSpeech ?? '(none)'}`);
-  console.log(`guidedSpeaking: ${reply?.guidedSpeaking?.stem ?? '(none)'}`);
-  console.log(`isComplete    : ${reply?.isLessonComplete ?? false}`);
+  console.log(name);
+  console.log(`User: "${userSpeech}" | pool tier: ${tier}`);
+  console.log(`Route: ${route?.deferToAi ? '→ AI assess' : '→ scripted'}`);
+
+  const reply =
+    route?.deferToAi && ai
+      ? pinDailyRoutineAiReply(history, {
+          textEn: ai.textEn,
+          textTh: '',
+          isLessonComplete: false,
+          expectsUserSpeech: true,
+          assessmentTier: ai.assessmentTier,
+        })
+      : route;
+
+  if (ai) console.log(`AI tier: ${ai.assessmentTier}`);
+  console.log(`Reply: ${reply?.textEn?.slice(0, 110)}…`);
+  console.log(`Next expected: ${reply?.expectedSpeech ?? '(none)'}`);
 }
 
-console.log('Daily Routine — Training Engine v2 — 3 scenario smoke test');
-console.log('Lesson: ee_about_me_daily_routine');
+console.log('Daily Routine v2 — full lane model');
 
-runScenario('1) EXACT — I\'m ready', "I'm ready", []);
+show('A) IN POOL exact → scripted (no AI)', "I'm ready", []);
 
-runScenario('2) NEAR — get up (vocab step, close miss)', 'get up', [
-  { speaker: 'user', textEn: "I'm ready" },
-  {
-    speaker: 'ai',
-    textEn: 'เก่งมากครับ! มาเริ่มกันเลย คำว่า ตื่นนอน ในภาษาอังกฤษคือคำไหนครับ? ⏰',
-  },
-]);
+show('B) OUT OF POOL → AI incorrect → explain + repeat', 'go to work', VOCAB_SETUP, {
+  assessmentTier: 'incorrect',
+  textEn: 'ยังไม่ใช่ครับ คำที่ต้องการคือ "wake up" ลองพูดตามนะครับ',
+});
 
-runScenario('3) WRONG #2 — soft-advance after two wrong vocab answers', 'go to sleep', [
-  { speaker: 'user', textEn: "I'm ready" },
-  {
-    speaker: 'ai',
-    textEn: 'เก่งมากครับ! มาเริ่มกันเลย คำว่า ตื่นนอน ในภาษาอังกฤษคือคำไหนครับ? ⏰',
-  },
-  { speaker: 'user', textEn: 'go to work' },
-  { speaker: 'ai', textEn: 'ปกติแล้ว \'ตื่นนอน\' ในภาษาอังกฤษจะใช้คำว่า wake up ครับ ลองพูดตามนะครับ' },
-]);
+show('C) OUT OF POOL → AI close → tweak + advance', 'get up', VOCAB_SETUP, {
+  assessmentTier: 'close',
+  textEn: 'เกือบเป๊ะครับ! ปกติจะพูดว่า "wake up" ไปต่อกันเลย!',
+});
+
+show('D) OUT OF POOL → AI correct → praise + advance', "I get up at 7 o'clock.", [
+  ...VOCAB_SETUP,
+  { speaker: 'user', textEn: 'wake up' },
+  { speaker: 'ai', textEn: 'wake time ask' },
+], {
+  assessmentTier: 'correct',
+  textEn: 'ถูกต้องครับ! เก่งมาก',
+});
 
 console.log('\n' + '═'.repeat(72));
-console.log('Done — all 3 scenarios use scripted v2 (no Gemini).');
+console.log('incorrect ครั้งที่ 2 (ไม่ผ่าน AI): replay → scripted soft-advance');
 console.log('═'.repeat(72));

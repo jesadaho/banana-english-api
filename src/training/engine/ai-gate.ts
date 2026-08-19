@@ -37,6 +37,13 @@ const VALIDATE_RULES =
   'textEn MUST be Thai-primary. expectsUserSpeech=true on the next ask. ' +
   'Do NOT return emojiChoice or guidedSpeaking — server pins boards.';
 
+const ASSESS_RULES =
+  'ASSESS (answer NOT in the choice pool): REQUIRED assessmentTier = correct | close | incorrect.\n' +
+  '- correct: meaning fully OK (including valid off-pool wording). Brief Thai praise. Do NOT ask to repeat. Server advances.\n' +
+  '- close: almost right — gently note a better phrase or tiny fix in textEn, but learner may continue. Do NOT block or ask พูดตาม. Server advances.\n' +
+  '- incorrect: wrong or off-topic. Brief Thai explain + quote canonical target once + ask พูดตาม once. Stay on SAME step.\n' +
+  'textEn Thai-primary. NEVER return guidedSpeaking or emojiChoice — server pins boards.';
+
 export type AiGateInput = {
   lessonTitle: string;
   coreStep: number;
@@ -50,7 +57,11 @@ export type AiGateInput = {
   learnerFirstName: string;
   teachingLanguage?: 'thai' | 'english';
   languageMix?: { thai: number; english: number };
-  mode?: 'softTeach' | 'validate';
+  mode?: 'softTeach' | 'validate' | 'assess';
+};
+
+export type DailyRoutineAiGateInput = Omit<AiGateInput, 'attempt' | 'matched' | 'mode'> & {
+  poolOptions: string[];
 };
 
 @Injectable()
@@ -85,6 +96,49 @@ export class TrainingAiGate {
       `attempt=${input.attempt}`,
       `match=${input.matched ? 'yes' : 'wrong'}`,
       expected ? `expected=${expected}` : 'expected=any_greeting',
+      `transcript="${input.originalText.replace(/"/g, '\\"')}"`,
+    ].join(' ');
+
+    return this.chat.generateTrainingV2Turn({
+      lessonTitle: input.lessonTitle,
+      coreStep: input.coreStep,
+      coreStepMax: input.coreStepMax,
+      stepHint,
+      userPayload,
+      historyLines,
+      learnerFirstName: input.learnerFirstName,
+      teachingLanguage: input.teachingLanguage,
+      languageMix: input.languageMix,
+    });
+  }
+
+  async runDailyRoutine(input: DailyRoutineAiGateInput): Promise<{
+    reply: TrainingTurnReply;
+    aiDebug: AiDebug;
+  }> {
+    const historyLines = this.compactHistory(input.history, 4);
+    const pool =
+      input.poolOptions.length > 0
+        ? input.poolOptions.map((s) => `"${s}"`).join(', ')
+        : 'none';
+    const stepHint = [
+      `Daily Routine step ${input.coreStep}.`,
+      input.expectedSpeech
+        ? `Canonical target: "${input.expectedSpeech}".`
+        : '',
+      `Choice pool (exact match only — NOT required for acceptance): ${pool}.`,
+      ASSESS_RULES,
+    ]
+      .filter(Boolean)
+      .join('\n');
+
+    const userPayload = [
+      'mode=assess',
+      `step=${input.coreStep}`,
+      input.expectedSpeech
+        ? `expected="${input.expectedSpeech.replace(/"/g, '\\"')}"`
+        : 'expected=none',
+      `pool=${pool}`,
       `transcript="${input.originalText.replace(/"/g, '\\"')}"`,
     ].join(' ');
 

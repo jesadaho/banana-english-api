@@ -164,6 +164,12 @@ function buildTrainingV2ReplySchema() {
         description:
           'Exact English the learner should say. Empty string for free recall.',
       },
+      assessmentTier: {
+        type: 'string',
+        enum: ['correct', 'close', 'incorrect'],
+        description:
+          'Assess mode only. correct=praise+advance; close=gentle tweak+advance; incorrect=explain+repeat same step.',
+      },
     },
     required: ['textEn', 'textTh', 'isLessonComplete', 'expectsUserSpeech'],
   };
@@ -433,6 +439,11 @@ export interface TrainingTurnReply {
    * Prefer a word or short phrase; may be a full pattern sentence when scripted.
    */
   expectedSpeech?: string;
+  /**
+   * Training v2 assess mode — how to route an out-of-pool answer.
+   * correct / close → server advances; incorrect → soft-teach same step.
+   */
+  assessmentTier?: 'correct' | 'close' | 'incorrect';
   /** Multi-speaker Scene for Watch & Listen (Everyday Life, etc.). */
   scene?: {
     title?: string;

@@ -900,6 +900,7 @@ export class SessionsController {
         learnerFirstName:
           data.learnerFirstName ??
           learnerNameFallback(teachingLanguageFromConfig(config)),
+        sessionProgressTurn: data.session.progressTurn,
       });
       reply = generated.reply;
       turnAiDebug = generated.aiDebug;

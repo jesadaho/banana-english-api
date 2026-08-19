@@ -11795,6 +11795,7 @@ export function forceDailyRoutineGuidedSpeakingIfNeeded(
  */
 export function buildDailyRoutineScriptedReplyFromProgress(
   history: Array<{ speaker: string; textEn?: string }>,
+  progressOverride?: number,
 ): {
   textEn: string;
   textTh: string | null;
@@ -11803,7 +11804,7 @@ export function buildDailyRoutineScriptedReplyFromProgress(
   expectedSpeech: string | null;
   isTaskComplete: boolean;
 } | null {
-  const progress = dailyRoutineProgress(history);
+  const progress = progressOverride ?? dailyRoutineProgress(history);
   if (progress >= 7) {
     return {
       textEn:
