@@ -38,10 +38,12 @@ const VALIDATE_RULES =
   'Do NOT return emojiChoice or guidedSpeaking — server pins boards.';
 
 const ASSESS_RULES =
-  'ASSESS (answer NOT in the choice pool): REQUIRED assessmentTier = correct | close | incorrect.\n' +
-  '- correct: meaning fully OK (including valid off-pool wording). Brief Thai praise. Do NOT ask to repeat. Server advances.\n' +
-  '- close: almost right — gently note a better phrase or tiny fix in textEn, but learner may continue. Do NOT block or ask พูดตาม. Server advances.\n' +
-  '- incorrect: wrong or off-topic. Brief Thai explain + quote canonical target once + ask พูดตาม once. Stay on SAME step.\n' +
+  'ASSESS (exact pool miss — judge from the TUTOR QUESTION only):\n' +
+  'REQUIRED assessmentTier = correct | close | incorrect.\n' +
+  'Do NOT require matching board cards or any fixed phrase list.\n' +
+  '- correct: transcript answers the tutor question with acceptable English (any valid wording). Brief Thai praise. Do NOT ask to repeat. Server advances.\n' +
+  '- close: mostly answers the question — optional tiny fix in textEn. Do NOT block or ask พูดตาม. Server advances.\n' +
+  '- incorrect: does NOT answer the question, wrong language, or clearly off-topic. Brief Thai explain + one model phrase + ask พูดตาม once. Stay on SAME step.\n' +
   'textEn Thai-primary. NEVER return guidedSpeaking or emojiChoice — server pins boards.';
 
 export type AiGateInput = {
@@ -61,7 +63,10 @@ export type AiGateInput = {
 };
 
 export type ChoiceLessonAiGateInput = Omit<AiGateInput, 'attempt' | 'matched' | 'mode'> & {
-  poolOptions: string[];
+  /** The tutor line the learner is answering (primary assess context). */
+  tutorQuestion: string | null;
+  /** Example answer for incorrect-tier modeling only — NOT required for acceptance. */
+  exampleAnswer?: string | null;
 };
 
 /** @deprecated Use ChoiceLessonAiGateInput */
@@ -120,16 +125,22 @@ export class TrainingAiGate {
     aiDebug: AiDebug;
   }> {
     const historyLines = this.compactHistory(input.history, 4);
-    const pool =
-      input.poolOptions.length > 0
-        ? input.poolOptions.map((s) => `"${s}"`).join(', ')
-        : 'none';
+    const question =
+      input.tutorQuestion?.trim() ||
+      input.exampleAnswer ||
+      input.expectedSpeech ||
+      '';
+    const example =
+      input.exampleAnswer?.trim() ||
+      input.expectedSpeech?.trim() ||
+      null;
+
     const stepHint = [
       `${input.lessonTitle} step ${input.coreStep}.`,
-      input.expectedSpeech
-        ? `Canonical target: "${input.expectedSpeech}".`
+      question ? `TUTOR QUESTION (judge the learner against THIS):\n"${question}"` : '',
+      example
+        ? `Example OK answer (for incorrect-tier modeling only — NOT required): "${example}".`
         : '',
-      `Choice pool (exact match only — NOT required for acceptance): ${pool}.`,
       ASSESS_RULES,
     ]
       .filter(Boolean)
@@ -138,10 +149,9 @@ export class TrainingAiGate {
     const userPayload = [
       'mode=assess',
       `step=${input.coreStep}`,
-      input.expectedSpeech
-        ? `expected="${input.expectedSpeech.replace(/"/g, '\\"')}"`
-        : 'expected=none',
-      `pool=${pool}`,
+      question
+        ? `question="${question.replace(/"/g, '\\"')}"`
+        : 'question=unknown',
       `transcript="${input.originalText.replace(/"/g, '\\"')}"`,
     ].join(' ');
 
@@ -155,6 +165,7 @@ export class TrainingAiGate {
       learnerFirstName: input.learnerFirstName,
       teachingLanguage: input.teachingLanguage,
       languageMix: input.languageMix,
+      assessMode: true,
     });
   }
 

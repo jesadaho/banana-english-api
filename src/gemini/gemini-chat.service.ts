@@ -1553,6 +1553,8 @@ export class GeminiChatService {
     teachingLanguage?: 'thai' | 'english';
     languageMix?: { thai: number; english: number };
     providerOverride?: 'gemini' | 'groq';
+    /** PoolGate assess — correct/close must not ask พูดตาม. */
+    assessMode?: boolean;
   }): Promise<{ reply: TrainingTurnReply; aiDebug: AiDebug }> {
     const name = params.learnerFirstName.trim() || 'there';
     const englishHeavy =
@@ -1569,13 +1571,19 @@ export class GeminiChatService {
         'Example textEn: ใกล้แล้วครับ! ลองพูดว่า "Hello" ชัดๆ อีกครั้งนะ 👋 ' +
         'textTh: English translation/subtitle of the same line.';
 
+    const closingRule = params.assessMode
+      ? `Rules: Return ONE JSON object only. ≤2 short sentences. REQUIRED assessmentTier field. ` +
+        `If assessmentTier is correct or close: praise only — do NOT ask พูดตาม or repeat. ` +
+        `If assessmentTier is incorrect: model once + ask พูดตาม once. Learner first name: ${name}.\n`
+      : `Rules: Return ONE JSON object only. ≤2 short sentences. ` +
+        `End with exactly ONE clear speaking task (พูดตาม). Learner first name: ${name}.\n`;
+
     const systemInstruction =
       `You are Teacher Banana — warm 1:1 English tutor for Thai learners.\n` +
       `Lesson: ${params.lessonTitle}. Core Flow step ${params.coreStep}/${params.coreStepMax}.\n` +
       `${params.stepHint}\n` +
       `${languageRule}\n` +
-      `Rules: Return ONE JSON object only. ≤2 short sentences. ` +
-      `End with exactly ONE clear speaking task (พูดตาม). Learner first name: ${name}.\n` +
+      closingRule +
       `Return text only — NEVER emojiChoice, guidedSpeaking, emojiSpeak, scene, or roleplay (server pins boards). ` +
       `isLessonComplete=true ONLY on step ${params.coreStepMax} celebrate.`;
 

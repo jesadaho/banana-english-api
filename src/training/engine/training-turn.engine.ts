@@ -109,14 +109,18 @@ export class TrainingTurnEngine {
       ) + 1;
     const lastAi = [...input.turns].reverse().find((t) => t.speaker === 'ai');
     const board = def.boardForStep(step, input.turns);
+    const tutorQuestion =
+      lastAi?.textEn?.trim() || board?.textEn?.trim() || null;
+    const exampleAnswer =
+      board?.expectedSpeech?.trim() || lastAi?.expectedSpeech?.trim() || null;
 
     const generated = await this.aiGate.runChoiceLessonAssess({
       lessonTitle: input.config.titleEn,
       coreStep: step,
       coreStepMax: input.config.progressMax ?? def.maxStep + 1,
-      expectedSpeech:
-        (board?.expectedSpeech ?? lastAi?.expectedSpeech?.trim()) || null,
-      poolOptions: board?.options.map((o) => o.speak) ?? [],
+      expectedSpeech: exampleAnswer,
+      tutorQuestion,
+      exampleAnswer,
       userText: input.userText,
       originalText: input.originalText,
       history: input.turns,
