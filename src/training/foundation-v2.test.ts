@@ -289,6 +289,40 @@ describe('Foundation — introductions all-step scenarios', () => {
     assert.equal(result.steps.at(-1)?.isLessonComplete, true);
   });
 
+  it('scenario 3 — close with Gemini re-teach advances without repeat ask', () => {
+    const def = getDef(introductions);
+    const learnerFirstName = 'Nana';
+    const opening = def.buildOpening(learnerFirstName);
+    const turns: ChoiceLessonHistoryTurn[] = [
+      {
+        speaker: 'ai',
+        textEn: opening.textEn ?? '',
+        expectedSpeech: opening.expectedSpeech,
+      },
+      {
+        speaker: 'user',
+        textEn: introductionsOutOfPoolNearMiss('My name is Nana.', 1),
+      },
+    ];
+
+    const pinned = pinChoiceLessonAiReply(
+      def,
+      turns,
+      mockGeminiReply(
+        'close',
+        'เกือบถูกแล้วครับ! ลองพูดว่า "My name is Nana" อีกครั้งนะครับ',
+      ),
+      undefined,
+      learnerFirstName,
+    );
+    assert.equal(pinned.assessmentTier, 'close');
+    assert.doesNotMatch(
+      pinned.textEn ?? '',
+      /ลองพูดว่า "My name is Nana" อีกครั้ง/,
+    );
+    assert.match(pinned.textEn ?? '', /Nice to meet you|I'm|My name is/i);
+  });
+
   it('scenario 3 — out-pool close every step completes lesson', () => {
     const def = getDef(introductions);
     const result = runFoundationAllOutOfPoolGeminiAssess(

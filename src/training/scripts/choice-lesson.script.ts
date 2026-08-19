@@ -323,24 +323,47 @@ export function reconcileDeferredAssessmentTier(
     return {
       ...aiReply,
       assessmentTier: 'correct',
-      textEn: foundationNearCorrectPraise(''),
+      textEn: correctAdvancePraise(''),
       textTh: '',
     };
   }
   return aiReply;
 }
 
-const FOUNDATION_NEAR_RETEACH =
+const DEFERRED_RETEACH =
   /ลองพูดว่า.*อีกครั้ง|พูดตาม|ลองพูดตาม/i;
 
-/** Foundation near-miss + correct tier — praise only, never Gemini re-teach copy. */
-export function foundationNearCorrectPraise(textEn: string): string {
+function stripDeferredReteach(textEn: string): string {
+  return textEn
+    .replace(/\s*ลองพูดตาม[^.!?\n]*(?:["'][^"']*["'])?[^.!?\n]*[.!?]?/gi, '')
+    .replace(/\s*ลองพูดว่า[^.!?\n]*(?:อีกครั้ง)[^.!?\n]*[.!?]?/gi, '')
+    .replace(/\s*พูดตาม[^.!?\n]*[.!?]?/gi, '')
+    .trim();
+}
+
+/** Deferred assess + correct tier — praise only, never Gemini re-teach copy. */
+export function correctAdvancePraise(textEn: string): string {
   const text = textEn.trim();
-  if (!text || FOUNDATION_NEAR_RETEACH.test(text)) {
+  if (!text || DEFERRED_RETEACH.test(text)) {
+    const cleaned = stripDeferredReteach(text);
+    if (cleaned && !DEFERRED_RETEACH.test(cleaned)) return cleaned;
     return 'ถูกต้องแล้วครับ! เก่งมากครับ';
   }
   return text;
 }
+
+/** Deferred assess + close tier — tiny fix OK, never ask พูดตาม on current answer. */
+export function closeAdvancePraise(textEn: string): string {
+  const text = textEn.trim();
+  if (!text) return 'เกือบเป๊ะครับ! ไปต่อกันเลย';
+  if (!DEFERRED_RETEACH.test(text)) return text;
+  const cleaned = stripDeferredReteach(text);
+  if (cleaned && !DEFERRED_RETEACH.test(cleaned)) return cleaned;
+  return 'เกือบเป๊ะครับ! ไปต่อกันเลย';
+}
+
+/** @deprecated Use correctAdvancePraise */
+export const foundationNearCorrectPraise = correctAdvancePraise;
 
 /** PoolGate incorrect — always include พูดตาม even if Gemini only says ลองพูดว่า. */
 export function ensureIncorrectAssessCopy(
@@ -403,12 +426,10 @@ export function pinChoiceLessonAiReply(
     );
     if (!next) return aiReply;
     let praise = aiReply.textEn?.trim() ?? '';
-    if (
-      def.clampNearIncorrectToCorrect &&
-      scoreTier === 'near' &&
-      tier === 'correct'
-    ) {
-      praise = foundationNearCorrectPraise(praise);
+    if (tier === 'correct') {
+      praise = correctAdvancePraise(praise);
+    } else if (tier === 'close') {
+      praise = closeAdvancePraise(praise);
     }
     return {
       textEn: `${praise} ${next.textEn}`.trim(),
