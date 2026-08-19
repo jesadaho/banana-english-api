@@ -16,7 +16,7 @@
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:deploy": "prisma migrate deploy",
-    "test": "node --import tsx --test src/sessions/speaking-assessment.service.test.ts src/lessons/daily-routine-turn.test.ts src/lessons/lesson-turn-driver.test.ts src/training/greetings-turn.test.ts src/training/daily-routine-turn.test.ts src/training/foundation-v2.test.ts src/training/food-lesson-choice.test.ts",
+    "test": "node --import tsx --test src/sessions/speaking-assessment.service.test.ts src/lessons/daily-routine-turn.test.ts src/lessons/lesson-turn-driver.test.ts src/training/greetings-turn.test.ts src/training/daily-routine-turn.test.ts src/training/foundation-v2.test.ts src/training/food-lesson-choice.test.ts src/training/engine/ai-gate.test.ts",
     "test:daily-routine": "node --import tsx --test src/lessons/daily-routine-turn.test.ts",
     "test:lesson-driver": "node --import tsx --test src/lessons/lesson-turn-driver.test.ts",
     "smoke:daily-routine": "tsx scripts/daily-routine-api-turn-smoke.ts",

@@ -9425,6 +9425,7 @@ type LessonProgressTurnInput = {
   roleplayNpc?: unknown;
   isTaskComplete: boolean;
   softTeachForced?: boolean;
+  assessmentTier?: 'correct' | 'close' | 'incorrect';
 };
 
 type LessonProgressTurnPrevious = {
@@ -9445,6 +9446,13 @@ function detectFoundationGenericProgressBeat(
   if (current.isTaskComplete) return progressMax;
   if (current.softTeachForced) return null;
   if (foundationLooksLikeSoftTeachOrRetry(current.textEn)) return null;
+
+  if (
+    current.assessmentTier === 'correct' ||
+    current.assessmentTier === 'close'
+  ) {
+    return Math.min(progressMax, prevProgressTurn + 1);
+  }
 
   if (prevProgressTurn <= 0) return 1;
 

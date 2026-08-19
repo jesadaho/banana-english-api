@@ -2,6 +2,7 @@ import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   buildChoiceLessonAfterUser,
+  choiceLessonEffectiveProgress,
   type ChoiceLessonHistoryTurn,
 } from './scripts/choice-lesson.script';
 import {
@@ -288,6 +289,58 @@ describe('Foundation — introductions all-step scenarios', () => {
     );
     assert.equal(result.steps.length, def.maxStep);
     assert.equal(result.steps.at(-1)?.isLessonComplete, true);
+  });
+
+  it('scenario 3 — step 1 close advances to step 2 for I Nana close miss', () => {
+    const def = getDef(introductions);
+    const learnerFirstName = 'Nana';
+    const opening = def.buildOpening(learnerFirstName);
+    const turns: ChoiceLessonHistoryTurn[] = [
+      {
+        speaker: 'ai',
+        textEn: opening.textEn ?? '',
+        expectedSpeech: opening.expectedSpeech,
+      },
+      {
+        speaker: 'user',
+        textEn: introductionsOutOfPoolCloseMiss('My name is Nana.', 1),
+      },
+    ];
+
+    const pinned = pinChoiceLessonAiReply(
+      def,
+      turns,
+      mockGeminiReply('incorrect', 'bad'),
+      1,
+      learnerFirstName,
+    );
+    turns.push({
+      speaker: 'ai',
+      textEn: pinned.textEn ?? '',
+      expectedSpeech: pinned.expectedSpeech,
+    });
+
+    const userStep2 = introductionsOutOfPoolCloseMiss("I'm Nana.", 2);
+    turns.push({ speaker: 'user', textEn: userStep2 });
+    const answeredStep =
+      choiceLessonEffectiveProgress(def, turns.slice(0, -1), 2) + 1;
+    assert.equal(answeredStep, 2, 'progress should be on step 2 after close');
+    assert.equal(def.scoreStep(2, userStep2, turns.slice(0, -1)), 'close');
+
+    const route = buildChoiceLessonAfterUser(def, {
+      turns,
+      learnerFirstName,
+      sessionProgressTurn: 2,
+    });
+    assert.equal(route?.deferToAi, true);
+    const step2Pinned = pinChoiceLessonAiReply(
+      def,
+      turns,
+      mockGeminiReply('incorrect', 'bad'),
+      2,
+      learnerFirstName,
+    );
+    assert.equal(step2Pinned.assessmentTier, 'close');
   });
 
   it('scenario 3 — close with Gemini re-teach advances without repeat ask', () => {

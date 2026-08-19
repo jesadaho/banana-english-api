@@ -933,6 +933,7 @@ export class SessionsController {
         roleplayIntro: null,
         roleplayNpc: null,
         isTaskComplete,
+        assessmentTier: reply.assessmentTier,
       },
       lastAiTurn
         ? {

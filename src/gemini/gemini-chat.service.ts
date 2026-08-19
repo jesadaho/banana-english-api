@@ -168,7 +168,7 @@ function buildTrainingV2ReplySchema() {
         type: 'string',
         enum: ['correct', 'close', 'incorrect'],
         description:
-          'Assess mode only. correct=praise+advance; close=gentle tweak+advance; incorrect=explain+repeat same step.',
+          'Assess mode only. correct=meaning OK, any valid wording; close=meaning recognizable but English error worth teaching; incorrect=off-task or too unclear. correct/close→praise+advance; incorrect→explain+repeat same step.',
       },
     },
     required: ['textEn', 'textTh', 'isLessonComplete', 'expectsUserSpeech'],
@@ -1572,7 +1572,8 @@ export class GeminiChatService {
         'textTh: English translation/subtitle of the same line.';
 
     const closingRule = params.assessMode
-      ? `Rules: Return ONE JSON object only. ≤2 short sentences. REQUIRED assessmentTier field. ` +
+      ? `Rules: Return ONE JSON object only. ≤2 short sentences. REQUIRED assessmentTier field ` +
+        `(correct | close | incorrect — classify by meaning per stepHint rubric, not exact match). ` +
         `If assessmentTier is correct or close: praise only — do NOT ask พูดตาม or repeat. ` +
         `If assessmentTier is incorrect: model once + ask พูดตาม once. Learner first name: ${name}.\n`
       : `Rules: Return ONE JSON object only. ≤2 short sentences. ` +
