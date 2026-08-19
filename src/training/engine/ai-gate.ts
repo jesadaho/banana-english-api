@@ -81,7 +81,7 @@ export const ASSESS_CLASSIFICATION_RUBRIC =
 const ASSESS_OUTPUT_RULES =
   'OUTPUT (assess mode):\n' +
   'REQUIRED assessmentTier = correct | close | incorrect.\n' +
-  '- correct or close: brief Thai praise in textEn; optional tiny fix for close. Do NOT ask พูดตาม or repeat. Server advances.\n' +
+  '- correct or close: brief Thai praise in textEn. For close, model the correct phrase briefly (เราพูดว่า …) — server rebuilds full recast+advance copy. Do NOT ask พูดตาม or repeat. Server advances.\n' +
   '- incorrect: brief Thai explain + one model phrase + ask พูดตาม once. Stay on SAME step.\n' +
   'textEn MUST be Thai-primary. NEVER return guidedSpeaking or emojiChoice — server pins boards.';
 

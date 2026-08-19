@@ -1,4 +1,5 @@
 import type { TrainingTurnReply } from '../../gemini/gemini-chat.service';
+import { stripLeadingPraiseOpener } from '../../lessons/choice-board';
 import type { ChoiceStepTier } from '../../lessons/lessons.data';
 import type { ScriptTurnResult } from './types';
 
@@ -136,6 +137,54 @@ function resolveSoftAdvanceQuestion(
   if (nextExpected) return nextExpected;
 
   return nextFull;
+}
+
+/** Close out pool — recast canonical line, then next teaching (no double praise). */
+export function buildCloseAdvanceTextEn(
+  failedBoard: GuidedBoard | null,
+  nextBoard: GuidedBoard | null,
+  nextScripted: ScriptTurnResult,
+): string {
+  const model = failedBoard?.expectedSpeech?.trim() ?? '';
+  const emoji = failedBoard?.options?.[0]?.emoji ?? '';
+  const modelBare = model.replace(/[.!?]+$/g, '');
+  const recast = modelBare
+    ? `เกือบถูกแล้วครับ! เราพูดว่า ${modelBare}.${emoji ? ` ${emoji}` : ''}`
+    : 'เกือบถูกแล้วครับ!';
+
+  const nextRaw =
+    nextBoard?.textEn?.trim() || nextScripted.textEn?.trim() || '';
+  if (nextScripted.isLessonComplete) {
+    return nextRaw ? `${recast}\n${nextRaw}` : recast;
+  }
+  const nextBody = stripLeadingPraiseOpener(nextRaw).trim();
+  if (!nextBody) return recast;
+
+  const teaching = prefixCloseAdvanceTeachingLine(nextBody);
+  return `${recast}\n${teaching}`;
+}
+
+function prefixCloseAdvanceTeachingLine(body: string): string {
+  const trimmed = body.trim();
+  if (!trimmed) return '';
+  if (/^ต่อไป/u.test(trimmed)) return trimmed;
+  if (/^(ถ้า|เวลา|มาฝึก|ขั้นตอน)/u.test(trimmed)) {
+    return `ต่อไป${trimmed}`;
+  }
+  return trimmed;
+}
+
+export function buildCloseAdvanceTextTh(
+  failedBoard: GuidedBoard | null,
+  nextScripted: ScriptTurnResult,
+): string {
+  const model = failedBoard?.expectedSpeech?.trim() ?? '';
+  const nextTh = nextScripted.textTh?.trim() ?? '';
+  if (model && nextTh) {
+    return `Almost! We say "${model}". ${nextTh}`;
+  }
+  if (model) return `Almost! We say "${model}".`;
+  return nextTh;
 }
 
 /** 2nd wrong — model canonical answer, then next step question (no full praise block). */
@@ -434,12 +483,29 @@ export function pinChoiceLessonAiReply(
       learnerFirstName,
     );
     if (!next) return aiReply;
-    let praise = aiReply.textEn?.trim() ?? '';
-    if (tier === 'correct') {
-      praise = correctAdvancePraise(praise);
-    } else if (tier === 'close') {
-      praise = closeAdvancePraise(praise, scoreTier === 'close');
+    if (tier === 'close') {
+      const failedBoard = def.boardForStep(answeredStep, priorTurns);
+      const nextBoardStep = def.buildScriptedReplyFromProgress
+        ? answeredStep
+        : answeredStep + 1;
+      const nextBoard = def.boardForStep(nextBoardStep, turns);
+      return {
+        textEn: buildCloseAdvanceTextEn(failedBoard, nextBoard, next),
+        textTh:
+          buildCloseAdvanceTextTh(failedBoard, next) ||
+          aiReply.textTh?.trim() ||
+          next.textTh ||
+          '',
+        isLessonComplete: next.isLessonComplete ?? false,
+        expectsUserSpeech: next.expectsUserSpeech ?? true,
+        expectedSpeech: next.expectedSpeech,
+        guidedSpeaking: next.guidedSpeaking,
+        roleplayIntro: next.roleplayIntro,
+        roleplayNpc: next.roleplayNpc,
+        assessmentTier: tier,
+      };
     }
+    const praise = correctAdvancePraise(aiReply.textEn?.trim() ?? '');
     return {
       textEn: `${praise} ${next.textEn}`.trim(),
       textTh: aiReply.textTh?.trim() || next.textTh || '',

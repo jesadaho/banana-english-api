@@ -370,12 +370,43 @@ describe('Foundation — introductions all-step scenarios', () => {
       learnerFirstName,
     );
     assert.equal(pinned.assessmentTier, 'close');
-    assert.match(pinned.textEn ?? '', /^เกือบถูกแล้วครับ/);
+    assert.match(pinned.textEn ?? '', /^เกือบถูกแล้วครับ! เราพูดว่า My name is Nana\./);
+    assert.doesNotMatch(pinned.textEn ?? '', /เกือบถูกแล้วครับ.*เก่งมาก/);
     assert.doesNotMatch(
       pinned.textEn ?? '',
       /ลองพูดว่า "My name is Nana" อีกครั้ง/,
     );
     assert.match(pinned.textEn ?? '', /Nice to meet you|I'm|My name is/i);
+  });
+
+  it('scenario 3 — close recasts I live in before work step', () => {
+    const def = getDef(introductions);
+    const learnerFirstName = 'Nana';
+    const opening = def.buildOpening(learnerFirstName);
+    const userText = introductionsOutOfPoolCloseMiss('I live in Bangkok.', 6);
+    const turns: ChoiceLessonHistoryTurn[] = [
+      {
+        speaker: 'ai',
+        textEn: opening.textEn ?? '',
+        expectedSpeech: opening.expectedSpeech,
+      },
+      { speaker: 'user', textEn: userText },
+    ];
+
+    const pinned = pinChoiceLessonAiReply(
+      def,
+      turns,
+      mockGeminiReply('close', 'เกือบถูกแล้วครับ ดีมากครับ!'),
+      6,
+      learnerFirstName,
+    );
+    assert.equal(pinned.assessmentTier, 'close');
+    assert.match(
+      pinned.textEn ?? '',
+      /เกือบถูกแล้วครับ! เราพูดว่า I live in Bangkok\. 🏙️/,
+    );
+    assert.match(pinned.textEn ?? '', /ต่อไปถ้าจะบอกงาน.*I work as a teacher/i);
+    assert.doesNotMatch(pinned.textEn ?? '', /เกือบถูกแล้วครับ.*ดีมากครับ/);
   });
 
   it('scenario 3 — out-pool close every step completes lesson', () => {
