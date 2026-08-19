@@ -8,6 +8,7 @@ import {
 } from './foundation/foundation-poolgate.fixtures';
 import {
   buildHistoryAtProbe,
+  buildExactHistoryThroughProgress,
   getDef,
   runFoundationFullHappyPath,
   withProbeUser,
@@ -82,6 +83,11 @@ describe('greetings PoolGate flow', () => {
     assert.equal(result.steps.length, 8);
     assert.equal(result.steps.at(-1)?.isLessonComplete, true);
     assert.match(result.completionText, /ทักทาย/);
+  });
+
+  it('recognition step 5 rejects Good morning when Good afternoon expected', () => {
+    const history = buildExactHistoryThroughProgress(def!, 4, 'Nana');
+    assert.equal(def!.scoreStep(5, 'Good morning', history), 'wrong');
   });
 
   it('probe wrong defers; exact advances', () => {

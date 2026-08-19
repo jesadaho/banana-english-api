@@ -180,7 +180,7 @@ export const FOUNDATION_BOARDS: Record<
     },
     2: {
       textEn:
-        'เยี่ยมเลย {name}! Hello ใช้ทักทายได้ทั่วไปครับ 👋 ต่อไปคำสบายๆ: Hi! ลองพูดตามได้เลย',
+        'เยี่ยมเลยครับ! Hello ใช้ทักทายได้ทั่วไปครับ 👋 ต่อไปคำสบายๆ: Hi! ลองพูดตามได้เลย',
       withPraise: true,
       stem: '',
       expectedSpeech: 'Hi',
@@ -188,7 +188,7 @@ export const FOUNDATION_BOARDS: Record<
     },
     3: {
       textEn:
-        'Hello กับ Hi ต่างกันนิดหน่อย — Hello ฟังดูสุภาพกว่า Hi สบายๆ เหมาะกับเพื่อน ✌️ ถ้าเจอเพื่อนสนิท ควรทักว่าอะไรครับ?',
+        'Hello ใช้ทักทายได้ทั่วไป ส่วน Hi ฟังสบายๆ และเป็นกันเองกว่าครับ ✌️ ถ้าเจอเพื่อนสนิท ควรทักว่าอะไรครับ?',
       withPraise: true,
       stem: 'เพื่อนสนิท → ทักว่าอะไร?',
       expectedSpeech: 'Hi',
@@ -199,7 +199,7 @@ export const FOUNDATION_BOARDS: Record<
     },
     4: {
       textEn:
-        'ถูกต้องครับ! ต่อไปทักทายตามเวลา — ช่วงเช้า (ก่อนเที่ยง) ใช้ Good morning 🌅 ลองพูดตามครับ',
+        'ถูกต้องครับ! ช่วงเช้าใช้ Good morning. 🌅 ลองพูดตามครับ',
       withPraise: true,
       stem: '',
       expectedSpeech: 'Good morning',
@@ -209,17 +209,18 @@ export const FOUNDATION_BOARDS: Record<
     },
     5: {
       textEn:
-        'เก่งมาก! ช่วงบ่าย (หลังเที่ยงถึงเย็น) ใช้ Good afternoon ☀️ พูดตามได้เลยครับ',
+        'ส่วนช่วงบ่ายเราใช้ Good afternoon. ☀️ สมมติว่าตอนนี้บ่าย 2 โมง คุณจะทักครูว่าอะไรครับ?',
       withPraise: true,
-      stem: '',
+      stem: 'บ่าย 2 โมง → ทักว่าอะไร?',
       expectedSpeech: 'Good afternoon',
       options: [
         { emoji: '☀️', label: 'Good afternoon', speak: 'Good afternoon' },
+        { emoji: '🌅', label: 'Good morning', speak: 'Good morning' },
       ],
     },
     6: {
       textEn:
-        'ดีมากครับ! ตอนเย็น/กลางคืน ใช้ Good evening 🌙 ลองพูดตามนะ',
+        'ดีมากครับ! ช่วงเย็นใช้ Good evening. 🌙 ลองพูดตามนะ',
       withPraise: true,
       stem: '',
       expectedSpeech: 'Good evening',

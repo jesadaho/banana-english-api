@@ -172,12 +172,12 @@ export function createFoundationLessonDef(params: {
     if (params.boardForStep) {
       const board = params.boardForStep(step, history);
       if (!board) return null;
-      const name = nameOverride ?? extractIntroducedName(history);
+      const name = nameOverride?.trim() || extractIntroducedName(history);
       return personalizeBoard(board, name);
     }
     const raw = params.boards?.[step] ?? null;
     if (!raw) return null;
-    const name = nameOverride ?? extractIntroducedName(history);
+    const name = nameOverride?.trim() || extractIntroducedName(history);
     return personalizeBoard(raw, name);
   };
 
@@ -225,7 +225,8 @@ export function createFoundationLessonDef(params: {
         scoreStep(step, text, history),
       ),
     scoreStep: (step, text, history) => scoreStep(step, text, history),
-    boardForStep: (step, history) => resolveBoard(step, history),
+    boardForStep: (step, history, learnerFirstName?) =>
+      resolveBoard(step, history, learnerFirstName),
     progressFromSessionBeat: (sessionProgressTurn) => {
       if (sessionProgressTurn == null || sessionProgressTurn <= 0) return 0;
       return Math.min(sessionProgressTurn - 1, params.maxStep);

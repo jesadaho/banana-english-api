@@ -36,6 +36,7 @@ export type ChoiceLessonDef = {
   boardForStep: (
     step: number,
     history: ChoiceLessonHistoryTurn[],
+    learnerFirstName?: string,
   ) => ChoiceLessonBoard | null;
   buildOpening: (learnerFirstName: string) => ScriptTurnResult;
   buildScriptedReplyFromProgress?: (
@@ -362,7 +363,7 @@ export function buildGenericScriptedReplyFromProgress(
   }
 
   // Next board step (1-based): pin passes explicit step; replay uses cleared + 1.
-  const board = def.boardForStep(nextStep, history);
+  const board = def.boardForStep(nextStep, history, learnerFirstName);
   if (!board) return null;
   return boardToScriptTurn(board);
 }
@@ -388,8 +389,9 @@ function pinCurrentBoard(
   turns: ChoiceLessonHistoryTurn[],
   step: number,
   aiReply: TrainingTurnReply,
+  learnerFirstName = '',
 ): TrainingTurnReply {
-  const board = def.boardForStep(step, turns);
+  const board = def.boardForStep(step, turns, learnerFirstName);
   const skipGuided = def.pinWithoutGuidedSteps?.includes(step);
   if (!board || skipGuided) {
     return {
@@ -549,11 +551,11 @@ export function pinChoiceLessonAiReply(
     );
     if (!next) return aiReply;
     if (tier === 'close') {
-      const failedBoard = def.boardForStep(answeredStep, priorTurns);
+      const failedBoard = def.boardForStep(answeredStep, priorTurns, learnerFirstName);
       const nextBoardStep = def.buildScriptedReplyFromProgress
         ? answeredStep
         : answeredStep + 1;
-      const nextBoard = def.boardForStep(nextBoardStep, turns);
+      const nextBoard = def.boardForStep(nextBoardStep, turns, learnerFirstName);
       return {
         textEn: buildCloseAdvanceTextEn(failedBoard, nextBoard, next),
         textTh:
@@ -584,10 +586,10 @@ export function pinChoiceLessonAiReply(
     };
   }
 
-  const board = def.boardForStep(answeredStep, turns);
+  const board = def.boardForStep(answeredStep, turns, learnerFirstName);
   const withTeach = ensureIncorrectAssessCopy(aiReply, board);
   return {
-    ...pinCurrentBoard(def, turns, answeredStep, withTeach),
+    ...pinCurrentBoard(def, turns, answeredStep, withTeach, learnerFirstName),
     assessmentTier: 'incorrect' as const,
   };
 }
@@ -662,8 +664,8 @@ export function buildChoiceLessonAfterUser(
       learnerFirstName,
     );
     if (!next) return null;
-    const failedBoard = def.boardForStep(answeredStep, priorTurns);
-    const nextBoard = def.boardForStep(replayAfter + 1, turns);
+    const failedBoard = def.boardForStep(answeredStep, priorTurns, learnerFirstName);
+    const nextBoard = def.boardForStep(replayAfter + 1, turns, learnerFirstName);
     return {
       ...next,
       textEn: buildSoftAdvanceTextEn(failedBoard, nextBoard, next),

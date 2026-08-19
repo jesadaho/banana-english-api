@@ -107,7 +107,7 @@ function buildFoundationDef(
     pinWithoutGuidedSteps:
       lessonId === 'ee_about_me_family' ? [1] : undefined,
     exactExpectedOnlySteps:
-      lessonId === 'greetings' ? [3, 7] : undefined,
+      lessonId === 'greetings' ? [3, 5, 7] : undefined,
   });
 
   if (lessonId === 'ee_about_me_family') {

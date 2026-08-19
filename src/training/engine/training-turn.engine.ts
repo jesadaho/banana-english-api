@@ -104,7 +104,7 @@ export class TrainingTurnEngine {
         input.sessionProgressTurn,
       ) + 1;
     const lastAi = [...input.turns].reverse().find((t) => t.speaker === 'ai');
-    const board = def.boardForStep(step, input.turns);
+    const board = def.boardForStep(step, input.turns, input.learnerFirstName);
     const tutorQuestion =
       lastAi?.textEn?.trim() || board?.textEn?.trim() || null;
     const exampleAnswer =
