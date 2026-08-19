@@ -2,15 +2,18 @@ import assert from 'node:assert/strict';
 import type { TrainingTurnReply } from '../../gemini/gemini-chat.service';
 import {
   buildChoiceLessonAfterUser,
+  choiceLessonEffectiveProgress,
   pinChoiceLessonAiReply,
   type ChoiceLessonBoard,
   type ChoiceLessonDef,
 } from '../scripts/choice-lesson.script';
+
+export { pinChoiceLessonAiReply };
 import { getFoundationChoiceLesson } from '../scripts/foundation.registry';
 import type { FoundationPoolGateFixture } from './foundation-poolgate.fixtures';
 import { FOUNDATION_PROBE_LEARNER } from './foundation-poolgate.fixtures';
 
-export type Turn = { speaker: string; textEn?: string };
+export type Turn = { speaker: string; textEn?: string; expectedSpeech?: string | null };
 
 export function getDef(fixture: FoundationPoolGateFixture): ChoiceLessonDef {
   const def = getFoundationChoiceLesson(fixture.lessonId);
@@ -163,3 +166,430 @@ export function assertAdvancedFromProbe(
     `${fixture.lessonId}: should not stay on probe board`,
   );
 }
+
+export type FullHappyPathStep = {
+  step: number;
+  userText: string;
+  aiTextEn: string;
+  expectedSpeech: string | null;
+  progressAfter: number;
+  isLessonComplete: boolean;
+};
+
+export type FullHappyPathResult = {
+  turns: Turn[];
+  steps: FullHappyPathStep[];
+  completionText: string;
+};
+
+/** Expected in-pool speech for a step (step 1 uses opening name, not replay 'Ben'). */
+export function expectedInPoolSpeech(
+  def: ChoiceLessonDef,
+  step: number,
+  turns: Turn[],
+  learnerFirstName = FOUNDATION_PROBE_LEARNER,
+): string {
+  const board = def.boardForStep(step, turns);
+  assert.ok(board?.expectedSpeech, `${def.lessonId} step ${step}: missing board`);
+  if (step === 1) {
+    return (
+      def.buildOpening(learnerFirstName).expectedSpeech ?? board.expectedSpeech
+    );
+  }
+  return board.expectedSpeech;
+}
+
+/** Replay exact in-pool answers until `clearedSteps` steps are cleared (0 = opening only). */
+export function buildExactHistoryThroughProgress(
+  def: ChoiceLessonDef,
+  clearedSteps: number,
+  learnerFirstName = FOUNDATION_PROBE_LEARNER,
+): Turn[] {
+  const turns: Turn[] = [
+    { speaker: 'ai', textEn: def.buildOpening(learnerFirstName).textEn ?? '' },
+  ];
+
+  for (let step = 1; step <= clearedSteps; step++) {
+    const userText = expectedInPoolSpeech(def, step, turns, learnerFirstName);
+    turns.push({ speaker: 'user', textEn: userText });
+    const reply = buildChoiceLessonAfterUser(def, { turns, learnerFirstName });
+    assert.ok(reply, `${def.lessonId}: step ${step} setup reply missing`);
+    assert.notEqual(
+      reply.deferToAi,
+      true,
+      `${def.lessonId}: step ${step} setup should be in-pool`,
+    );
+    turns.push({ speaker: 'ai', textEn: reply.textEn ?? '' });
+  }
+
+  assert.equal(
+    def.progressFn(turns),
+    clearedSteps,
+    `${def.lessonId}: history should clear ${clearedSteps} steps`,
+  );
+  return turns;
+}
+
+/** Assert each happy-path step cleared progress and chained expectedSpeech to the next board. */
+export function assertFullHappyPathStepChain(
+  def: ChoiceLessonDef,
+  result: FullHappyPathResult,
+  learnerFirstName = FOUNDATION_PROBE_LEARNER,
+): void {
+  assert.equal(result.steps.length, def.maxStep, `${def.lessonId}: step count`);
+
+  const turns: Turn[] = [
+    { speaker: 'ai', textEn: def.buildOpening(learnerFirstName).textEn ?? '' },
+  ];
+
+  for (const record of result.steps) {
+    const { step } = record;
+    assert.equal(
+      def.progressFn(turns),
+      step - 1,
+      `${def.lessonId} step ${step}: progress before answer`,
+    );
+
+    const board = def.boardForStep(step, turns);
+    assert.ok(board?.expectedSpeech, `${def.lessonId} step ${step}: board missing`);
+    assert.equal(
+      record.userText,
+      expectedInPoolSpeech(def, step, turns, learnerFirstName),
+      `${def.lessonId} step ${step}: user answer`,
+    );
+
+    turns.push({ speaker: 'user', textEn: record.userText });
+    assert.equal(
+      def.progressFn(turns),
+      step,
+      `${def.lessonId} step ${step}: progress after answer`,
+    );
+    assert.equal(
+      record.progressAfter,
+      step,
+      `${def.lessonId} step ${step}: recorded progress`,
+    );
+
+    if (step < def.maxStep) {
+      const nextBoard = def.boardForStep(step + 1, turns);
+      assert.ok(
+        nextBoard?.expectedSpeech,
+        `${def.lessonId} step ${step}: next board missing`,
+      );
+      assert.equal(
+        record.expectedSpeech,
+        nextBoard.expectedSpeech,
+        `${def.lessonId} step ${step}: expectedSpeech should preview next board`,
+      );
+      assert.equal(record.isLessonComplete, false);
+    } else {
+      assert.equal(record.isLessonComplete, true);
+    }
+
+    turns.push({ speaker: 'ai', textEn: record.aiTextEn });
+  }
+
+  assert.equal(def.progressFn(turns), def.maxStep);
+}
+
+/** Exact in-pool answers for every step 1..maxStep; asserts scripted advance through completion. */
+export function runFoundationFullHappyPath(
+  def: ChoiceLessonDef,
+  learnerFirstName = FOUNDATION_PROBE_LEARNER,
+): FullHappyPathResult {
+  const turns: Turn[] = [
+    { speaker: 'ai', textEn: def.buildOpening(learnerFirstName).textEn ?? '' },
+  ];
+  const steps: FullHappyPathStep[] = [];
+
+  for (let step = 1; step <= def.maxStep; step++) {
+    const progressBefore = def.progressFn(turns);
+    assert.equal(
+      progressBefore,
+      step - 1,
+      `${def.lessonId} step ${step}: progress before answer`,
+    );
+
+    const userText = expectedInPoolSpeech(def, step, turns, learnerFirstName);
+    turns.push({ speaker: 'user', textEn: userText });
+
+    const reply = buildChoiceLessonAfterUser(def, {
+      turns,
+      learnerFirstName,
+    });
+    assert.ok(reply, `${def.lessonId} step ${step}: missing reply`);
+    assert.notEqual(
+      reply.deferToAi,
+      true,
+      `${def.lessonId} step ${step}: in-pool should not defer`,
+    );
+    assert.equal(
+      reply.assessmentTier ?? 'correct',
+      'correct',
+      `${def.lessonId} step ${step}: expected correct tier`,
+    );
+
+    const progressAfter = def.progressFn(turns);
+    assert.equal(
+      progressAfter,
+      step,
+      `${def.lessonId} step ${step}: progress after answer`,
+    );
+
+    if (step < def.maxStep) {
+      const nextBoard = def.boardForStep(step + 1, turns);
+      assert.equal(
+        reply.expectedSpeech,
+        nextBoard?.expectedSpeech,
+        `${def.lessonId} step ${step}: expectedSpeech chain`,
+      );
+    }
+
+    steps.push({
+      step,
+      userText,
+      aiTextEn: reply.textEn ?? '',
+      expectedSpeech: reply.expectedSpeech ?? null,
+      progressAfter,
+      isLessonComplete: reply.isLessonComplete ?? false,
+    });
+    turns.push({ speaker: 'ai', textEn: reply.textEn ?? '' });
+  }
+
+  const last = steps.at(-1)!;
+  assert.equal(
+    last.progressAfter,
+    def.maxStep,
+    `${def.lessonId}: should clear all ${def.maxStep} steps`,
+  );
+  assert.equal(
+    last.isLessonComplete,
+    true,
+    `${def.lessonId}: final reply should complete lesson`,
+  );
+  assert.match(
+    last.aiTextEn,
+    /สุดยอด/,
+    `${def.lessonId}: completion should include celebrate copy`,
+  );
+
+  const result = { turns, steps, completionText: last.aiTextEn };
+  assertFullHappyPathStepChain(def, result, learnerFirstName);
+  return result;
+}
+
+/** Two wrong answers on `atStep`, then exact in-pool recovery through lesson end. */
+export function runWrongTwiceThenFinishFromStep(
+  def: ChoiceLessonDef,
+  atStep: number,
+  wrongText: string,
+  learnerFirstName = FOUNDATION_PROBE_LEARNER,
+): FullHappyPathResult {
+  assert.ok(atStep >= 1 && atStep <= def.maxStep, `${def.lessonId}: bad atStep`);
+
+  const turns = buildExactHistoryThroughProgress(
+    def,
+    atStep - 1,
+    learnerFirstName,
+  );
+  const steps: FullHappyPathStep[] = [];
+  const currentBoard = def.boardForStep(atStep, turns);
+  assert.ok(currentBoard?.expectedSpeech, `${def.lessonId} step ${atStep}: board`);
+
+  for (let attempt = 1; attempt <= 2; attempt++) {
+    turns.push({ speaker: 'user', textEn: wrongText });
+    const route = buildChoiceLessonAfterUser(def, { turns, learnerFirstName });
+    assert.ok(route, `${def.lessonId} step ${atStep} wrong #${attempt}: route`);
+
+    if (attempt === 1) {
+      assert.equal(route.deferToAi, true, `${def.lessonId}: 1st wrong defers`);
+      const pinned = pinChoiceLessonAiReply(
+        def,
+        turns,
+        mockGeminiReply(
+          'incorrect',
+          `ลองพูดตามนะครับ "${currentBoard.expectedSpeech.replace(/\.$/, '')}"`,
+        ),
+        undefined,
+        learnerFirstName,
+      );
+      assert.equal(
+        pinned.expectedSpeech,
+        currentBoard.expectedSpeech,
+        `${def.lessonId}: 1st wrong pins current step`,
+      );
+      turns.push({ speaker: 'ai', textEn: pinned.textEn ?? '' });
+      continue;
+    }
+
+    assert.notEqual(route.deferToAi, true, `${def.lessonId}: 2nd wrong scripted`);
+    assert.match(route.textEn ?? '', /คำตอบนี้เราพูดว่า/);
+    assert.match(route.textEn ?? '', /ไปต่อกันเลย —/);
+    assert.equal(route.assessmentTier, 'incorrect');
+    turns.push({ speaker: 'ai', textEn: route.textEn ?? '' });
+
+    const softStep = atStep + 1;
+    if (softStep <= def.maxStep) {
+      const nextBoard = def.boardForStep(softStep, turns);
+      assert.equal(
+        route.expectedSpeech,
+        nextBoard?.expectedSpeech,
+        `${def.lessonId}: soft-advance previews step ${softStep}`,
+      );
+    }
+  }
+
+  for (let step = atStep + 1; step <= def.maxStep; step++) {
+    const userText = expectedInPoolSpeech(def, step, turns, learnerFirstName);
+    turns.push({ speaker: 'user', textEn: userText });
+    const reply = buildChoiceLessonAfterUser(def, { turns, learnerFirstName });
+    assert.ok(reply, `${def.lessonId} recovery step ${step}: missing reply`);
+    assert.notEqual(reply.deferToAi, true);
+    assert.equal(reply.assessmentTier ?? 'correct', 'correct');
+
+    steps.push({
+      step,
+      userText,
+      aiTextEn: reply.textEn ?? '',
+      expectedSpeech: reply.expectedSpeech ?? null,
+      progressAfter: def.progressFn(turns),
+      isLessonComplete: reply.isLessonComplete ?? false,
+    });
+    turns.push({ speaker: 'ai', textEn: reply.textEn ?? '' });
+  }
+
+  const last = steps.at(-1)!;
+  assert.equal(last.progressAfter, def.maxStep);
+  assert.equal(last.isLessonComplete, true);
+  assert.match(last.aiTextEn, /สุดยอด/);
+
+  return { turns, steps, completionText: last.aiTextEn };
+}
+
+export type ChatReplayLine = {
+  userText: string;
+  gemini?: {
+    textEn: string;
+    tier: 'correct' | 'close' | 'incorrect';
+  };
+  mustMatch?: RegExp;
+  mustNotMatch?: RegExp;
+};
+
+export type ChatReplayExchange = {
+  userText: string;
+  aiTextEn: string;
+  assessmentTier?: string;
+  deferToAi?: boolean;
+  expectedSpeech?: string | null;
+  effectiveProgressAfter: number;
+  isLessonComplete: boolean;
+};
+
+/** Replay a prod-style transcript (STT punctuation, Gemini pins, expectedSpeech on AI turns). */
+export function replayChoiceLessonChat(
+  def: ChoiceLessonDef,
+  learnerFirstName: string,
+  script: ChatReplayLine[],
+): { turns: Turn[]; exchanges: ChatReplayExchange[] } {
+  const opening = def.buildOpening(learnerFirstName);
+  const turns: Turn[] = [
+    {
+      speaker: 'ai',
+      textEn: opening.textEn ?? '',
+      expectedSpeech: opening.expectedSpeech,
+    },
+  ];
+  const exchanges: ChatReplayExchange[] = [];
+
+  for (const line of script) {
+    turns.push({ speaker: 'user', textEn: line.userText });
+    let reply = buildChoiceLessonAfterUser(def, { turns, learnerFirstName });
+
+    if (reply?.deferToAi) {
+      assert.ok(line.gemini, `unexpected defer for "${line.userText}"`);
+      reply = pinChoiceLessonAiReply(
+        def,
+        turns,
+        mockGeminiReply(line.gemini.tier, line.gemini.textEn),
+        undefined,
+        learnerFirstName,
+      );
+    }
+
+    assert.ok(reply, `missing reply for "${line.userText}"`);
+    const aiTextEn = reply.textEn ?? '';
+
+    if (line.mustNotMatch) {
+      assert.doesNotMatch(
+        aiTextEn,
+        line.mustNotMatch,
+        `"${line.userText}" must not match ${line.mustNotMatch}`,
+      );
+    }
+    if (line.mustMatch) {
+      assert.match(
+        aiTextEn,
+        line.mustMatch,
+        `"${line.userText}" must match ${line.mustMatch}`,
+      );
+    }
+
+    exchanges.push({
+      userText: line.userText,
+      aiTextEn,
+      assessmentTier: reply.assessmentTier,
+      deferToAi: reply.deferToAi,
+      expectedSpeech: reply.expectedSpeech ?? null,
+      effectiveProgressAfter: choiceLessonEffectiveProgress(def, turns),
+      isLessonComplete: reply.isLessonComplete ?? false,
+    });
+
+    turns.push({
+      speaker: 'ai',
+      textEn: aiTextEn,
+      expectedSpeech: reply.expectedSpeech,
+    });
+  }
+
+  return { turns, exchanges };
+}
+
+/** Prod screenshot: Tim learner, Tami at recognition, STT trailing dots. */
+export const INTRODUCTIONS_TIM_PROD_CHAT: ChatReplayLine[] = [
+  { userText: 'My name is Tim..' },
+  { userText: "I'm Tim..." },
+  {
+    userText: 'My name is Tami...',
+    gemini: {
+      tier: 'correct',
+      textEn:
+        'เยี่ยมครับ! ใช้ My name is Tami ได้เลยครับ เป็นทางการและสุภาพมากครับ',
+    },
+    mustMatch: /Nice to meet you/,
+  },
+  {
+    userText: 'Nice to meet you..',
+    mustNotMatch: /คำตอบนี้เราพูดว่า.*My name is Tim/i,
+    mustMatch: /Nice to meet you too/,
+  },
+  {
+    userText: 'Nice to meet you, too.',
+    gemini: {
+      tier: 'correct',
+      textEn: 'ถูกต้องแล้วครับ! เก่งมากครับคุณ Tami',
+    },
+    mustMatch: /I'm from Thailand/,
+  },
+  { userText: "I'm from Thailand." },
+  { userText: 'I live in Bangkok.' },
+  { userText: 'I work as a teacher.' },
+  {
+    userText: "My name is Tami. I'm from Thailand.",
+    gemini: {
+      tier: 'correct',
+      textEn: 'เยี่ยมมากครับ! แนะนำตัวได้ครบเลยครับ',
+    },
+    mustMatch: /สุดยอด/,
+  },
+];

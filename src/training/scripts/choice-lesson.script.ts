@@ -46,6 +46,34 @@ export type ChoiceLessonDef = {
   progressFromSessionBeat?: (sessionProgressTurn: number | undefined) => number;
 };
 
+function normalizeChoiceExpectedSpeech(value: string | null | undefined): string {
+  return (value ?? '')
+    .trim()
+    .toLowerCase()
+    .replace(/[.!?]+$/g, '')
+    .replace(/\s+/g, ' ');
+}
+
+/** When Gemini advances ahead of replay (e.g. recognition accept), last AI expectedSpeech pins the beat. */
+function progressFromLastAiExpectedSpeech(
+  def: ChoiceLessonDef,
+  history: ChoiceLessonHistoryTurn[],
+): number {
+  const lastAi = [...history].reverse().find((t) => t.speaker === 'ai');
+  const expected = lastAi?.expectedSpeech?.trim();
+  if (!expected) return 0;
+
+  const normalized = normalizeChoiceExpectedSpeech(expected);
+  for (let step = 1; step <= def.maxStep; step++) {
+    const board = def.boardForStep(step, history);
+    const boardExpected = normalizeChoiceExpectedSpeech(board?.expectedSpeech);
+    if (boardExpected && boardExpected === normalized) {
+      return step - 1;
+    }
+  }
+  return 0;
+}
+
 export function choiceLessonEffectiveProgress(
   def: ChoiceLessonDef,
   history: ChoiceLessonHistoryTurn[],
@@ -53,7 +81,8 @@ export function choiceLessonEffectiveProgress(
 ): number {
   const replay = def.progressFn(history);
   const fromSession = def.progressFromSessionBeat?.(sessionProgressTurn) ?? 0;
-  return Math.max(replay, fromSession);
+  const fromLastAi = progressFromLastAiExpectedSpeech(def, history);
+  return Math.max(replay, fromSession, fromLastAi);
 }
 
 export function choiceLessonCurrentStep(
@@ -368,20 +397,40 @@ export function buildChoiceLessonAfterUser(
 ): ScriptTurnResult | null {
   const { turns, sessionProgressTurn, learnerFirstName } = input;
   const priorTurns = turns.slice(0, -1);
-  const answeredStep =
-    choiceLessonEffectiveProgress(def, priorTurns, sessionProgressTurn) + 1;
+  const effectiveProgress = choiceLessonEffectiveProgress(
+    def,
+    priorTurns,
+    sessionProgressTurn,
+  );
+  const answeredStep = effectiveProgress + 1;
   const userText = lastUserText(turns);
   const inPool = def.scoreStep(answeredStep, userText, turns) === 'exact';
 
   if (inPool) {
-    const next = scriptedFromProgress(def, turns, undefined, learnerFirstName);
+    const nextProgress = def.buildScriptedReplyFromProgress
+      ? answeredStep
+      : answeredStep + 1;
+    const next = scriptedFromProgress(
+      def,
+      turns,
+      nextProgress,
+      learnerFirstName,
+    );
     return next ? { ...next, assessmentTier: 'correct' as const } : null;
   }
 
   const replayBefore = def.progressFn(priorTurns);
   const replayAfter = def.progressFn(turns);
   if (replayAfter > replayBefore) {
-    const next = scriptedFromProgress(def, turns, undefined, learnerFirstName);
+    const nextProgress = def.buildScriptedReplyFromProgress
+      ? replayAfter
+      : replayAfter + 1;
+    const next = scriptedFromProgress(
+      def,
+      turns,
+      nextProgress,
+      learnerFirstName,
+    );
     if (!next) return null;
     const failedBoard = def.boardForStep(answeredStep, priorTurns);
     const nextBoard = def.boardForStep(replayAfter + 1, turns);

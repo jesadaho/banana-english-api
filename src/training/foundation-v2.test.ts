@@ -7,13 +7,21 @@ import {
 } from './foundation/foundation-poolgate.fixtures';
 import {
   assertAdvancedFromProbe,
+  assertFullHappyPathStepChain,
   assertOutOfPool,
   boardAtProbe,
+  buildExactHistoryThroughProgress,
   buildHistoryAtProbe,
   buildSoftAdvanceHistory,
   getDef,
+  INTRODUCTIONS_TIM_PROD_CHAT,
+  mockGeminiReply,
   nextBoardAfterProbeExact,
+  pinChoiceLessonAiReply,
   pinGeminiAtProbe,
+  replayChoiceLessonChat,
+  runFoundationFullHappyPath,
+  runWrongTwiceThenFinishFromStep,
   withProbeUser,
 } from './foundation/foundation-poolgate.harness';
 
@@ -113,4 +121,138 @@ describe('Foundation PoolGate — 5-lane matrix (all lessons)', () => {
       });
     });
   }
+});
+
+describe('Foundation — full happy path (all steps → complete)', () => {
+  for (const fixture of FOUNDATION_POOLGATE_FIXTURES) {
+    const { lessonId } = fixture;
+
+    it(`${lessonId} — in-pool exact through step ${getDef(fixture).maxStep} completes lesson`, () => {
+      const def = getDef(fixture);
+      const result = runFoundationFullHappyPath(def);
+      assert.equal(result.steps.length, def.maxStep);
+      assert.equal(result.steps.at(-1)?.progressAfter, def.maxStep);
+      assertFullHappyPathStepChain(def, result);
+    });
+  }
+
+  it('introductions — hits every teaching milestone including I\'m from', () => {
+    const def = getDef(
+      FOUNDATION_POOLGATE_FIXTURES.find((f) => f.lessonId === 'introductions')!,
+    );
+    const { steps } = runFoundationFullHappyPath(def);
+
+    assert.match(steps[0].aiTextEn, /I'm Nana/);
+    assert.match(steps[2].aiTextEn, /Nice to meet you/);
+    assert.match(steps[4].aiTextEn, /I'm from Thailand/);
+    assert.match(steps[5].aiTextEn, /I live in Bangkok/);
+    assert.match(steps[6].aiTextEn, /I work as a teacher/);
+    assert.match(steps[7].aiTextEn, /แนะนำตัว/);
+    assert.match(steps[8].userText, /I'm from Thailand/);
+    assert.equal(steps[8].isLessonComplete, true);
+  });
+});
+
+describe('Foundation — soft-advance recovery (wrong ×2 then finish)', () => {
+  for (const fixture of FOUNDATION_POOLGATE_FIXTURES) {
+    const { lessonId } = fixture;
+
+    it(`${lessonId} — 2 wrongs at probe step then exact through completion`, () => {
+      const def = getDef(fixture);
+      const probeStep = def.progressFn(buildHistoryAtProbe(fixture)) + 1;
+      const result = runWrongTwiceThenFinishFromStep(
+        def,
+        probeStep,
+        fixture.wrongAtProbe,
+      );
+      assert.equal(result.steps.at(-1)?.progressAfter, def.maxStep);
+      assert.equal(result.steps.at(-1)?.isLessonComplete, true);
+    });
+  }
+});
+
+describe('Foundation — introductions cross-step regression', () => {
+  const introductions = FOUNDATION_POOLGATE_FIXTURES.find(
+    (f) => f.lessonId === 'introductions',
+  )!;
+
+  it('step 5 — saying step-6 answer defers then soft-advances with Nice to meet you too copy', () => {
+    const def = getDef(introductions);
+    const turns = buildExactHistoryThroughProgress(def, 4);
+    const step5Board = def.boardForStep(5, turns);
+    assert.equal(step5Board?.expectedSpeech, 'Nice to meet you too.');
+
+    turns.push({ speaker: 'user', textEn: "I'm from Thailand." });
+    const first = buildChoiceLessonAfterUser(def, {
+      turns,
+      learnerFirstName: FOUNDATION_PROBE_LEARNER,
+    });
+    assert.equal(first?.deferToAi, true, 'cross-step 1st try defers to Gemini');
+
+    const pinned = pinChoiceLessonAiReply(
+      def,
+      turns,
+      mockGeminiReply(
+        'incorrect',
+        'ลองพูดตามนะครับ "Nice to meet you too"',
+      ),
+      undefined,
+      FOUNDATION_PROBE_LEARNER,
+    );
+    assert.equal(pinned.expectedSpeech, 'Nice to meet you too.');
+    turns.push({ speaker: 'ai', textEn: pinned.textEn ?? '' });
+    turns.push({ speaker: 'user', textEn: "I'm from Thailand." });
+
+    const soft = buildChoiceLessonAfterUser(def, {
+      turns,
+      learnerFirstName: FOUNDATION_PROBE_LEARNER,
+    });
+    assert.ok(soft);
+    assert.notEqual(soft!.deferToAi, true);
+    assert.match(soft!.textEn ?? '', /Nice to meet you too/);
+    assert.match(soft!.textEn ?? '', /ไปต่อกันเลย — I'm from Thailand/);
+    assert.equal(soft!.expectedSpeech, "I'm from Thailand.");
+  });
+
+  it('step 5 cross-step — soft-advance then exact answers finish lesson', () => {
+    const def = getDef(introductions);
+    const result = runWrongTwiceThenFinishFromStep(
+      def,
+      5,
+      "I'm from Thailand.",
+    );
+    assert.equal(result.steps.at(-1)?.progressAfter, def.maxStep);
+    assert.match(result.completionText, /สุดยอด/);
+    assert.equal(
+      result.steps.some((s) => s.userText.includes("I'm from Thailand.")),
+      true,
+    );
+  });
+});
+
+describe('Foundation — introductions prod chat (Tim / Tami screenshot)', () => {
+  it('replays STT transcript without My-name-is-Tim soft-advance on Nice to meet you', () => {
+    const def = getDef(
+      FOUNDATION_POOLGATE_FIXTURES.find((f) => f.lessonId === 'introductions')!,
+    );
+    const { exchanges } = replayChoiceLessonChat(
+      def,
+      'Tim',
+      INTRODUCTIONS_TIM_PROD_CHAT,
+    );
+
+    assert.equal(exchanges.length, INTRODUCTIONS_TIM_PROD_CHAT.length);
+    assert.equal(exchanges.at(-1)?.isLessonComplete, true);
+    assert.match(exchanges.at(-1)?.aiTextEn ?? '', /สุดยอด/);
+
+    assert.match(exchanges[0].aiTextEn, /แปลว่า.*ฉันชื่อ Tim/);
+    assert.match(exchanges[1].aiTextEn, /ก็แปลว่า/);
+    assert.match(exchanges[2].aiTextEn, /Nice to meet you/);
+    assert.equal(exchanges[3].assessmentTier, 'correct');
+    assert.match(exchanges[3].aiTextEn, /Nice to meet you too/);
+    assert.doesNotMatch(
+      exchanges[3].aiTextEn,
+      /คำตอบนี้เราพูดว่า.*My name is Tim/i,
+    );
+  });
 });
