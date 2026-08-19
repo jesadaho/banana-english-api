@@ -87,3 +87,23 @@ describe('food v2 exact match on free-form I like', () => {
     assert.match(reply?.expectedSpeech ?? '', /Burger is delicious/i);
   });
 });
+
+describe('food soft-advance message', () => {
+  it('2nd wrong models I like pizza and asks What is pizza like?', () => {
+    const history: Turn[] = [
+      { speaker: 'ai', textEn: 'What food do you like?' },
+      { speaker: 'user', textEn: 'I work at an office.' },
+      { speaker: 'ai', textEn: 'ลองพูดตามว่า I like pizza.' },
+      { speaker: 'user', textEn: 'Good morning.' },
+    ];
+    const reply = buildChoiceLessonAfterUser(ABOUT_ME_FOOD, {
+      turns: history,
+      learnerFirstName: 'Nana',
+    });
+    assert.equal(reply?.deferToAi, undefined);
+    assert.match(reply?.textEn ?? '', /คำตอบนี้เราพูดว่า "I like pizza\." ได้ครับ/);
+    assert.match(reply?.textEn ?? '', /ไปต่อกันเลย — What is pizza like\?/);
+    assert.doesNotMatch(reply?.textEn ?? '', /ไม่เป็นไรครับ ไปต่อกัน! Pizza!/);
+    assert.match(reply?.expectedSpeech ?? '', /Pizza is delicious/i);
+  });
+});

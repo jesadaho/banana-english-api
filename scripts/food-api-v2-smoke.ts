@@ -22,6 +22,10 @@ function assert(condition: boolean, message: string): void {
   if (!condition) throw new Error(message);
 }
 
+function assertMatch(value: string, pattern: RegExp, message: string): void {
+  if (!pattern.test(value)) throw new Error(`${message}: got "${value}"`);
+}
+
 function aiDebug(json: Json): Record<string, unknown> | undefined {
   return json.aiDebug as Record<string, unknown> | undefined;
 }
@@ -35,7 +39,7 @@ function logTurn(label: string, user: string | null, turn: TurnResult, json: Jso
   const dbg = aiDebug(json);
   console.log(`\n── ${label} ──`);
   if (user) console.log(`  USER: ${user}`);
-  console.log(`  AI:   ${(turn.aiResponse ?? '').slice(0, 160)}`);
+  console.log(`  AI:   ${(turn.aiResponse ?? '').slice(0, 200)}`);
   console.log(
     `  progress: ${turn.progressTurn ?? '?'}/${turn.progressMax ?? '?'} | turn: ${turn.currentTurn}`,
   );
@@ -44,7 +48,7 @@ function logTurn(label: string, user: string | null, turn: TurnResult, json: Jso
   if (dbg) console.log(`  aiDebug:  ${JSON.stringify(dbg)}`);
 }
 
-async function runHappyPath(client: LessonApiClient): Promise<void> {
+async function runHappyPathPizza(client: LessonApiClient): Promise<void> {
   const lines = [
     'I like pizza.',
     'Pizza is delicious.',
@@ -76,36 +80,76 @@ async function runHappyPath(client: LessonApiClient): Promise<void> {
   throw new Error('happy path did not complete lesson');
 }
 
-async function runOutOfPoolAssess(client: LessonApiClient): Promise<void> {
+async function runBurgerMapsScripted(client: LessonApiClient): Promise<void> {
   const start = await client.startLesson(LESSON_ID);
   assert(engineVersion(start.json) === 2, 'expected engineVersion 2');
   let currentTurn = start.turn.currentTurn;
 
-  console.log('\n>>> USER out-of-pool: I like burger.');
-  const wrong = await client.sendUserSpeech(
+  const res = await client.sendUserSpeech(
     start.sessionId,
     currentTurn,
     'I like burger.',
   );
-  logTurn('out-of-pool wrong', 'I like burger.', wrong.turn, wrong.json);
+  logTurn('I like burger', 'I like burger.', res.turn, res.json);
 
-  const dbg = aiDebug(wrong.json);
   assert(
-    dbg?.source === 'gemini' || dbg?.source === 'scripted',
-    `expected gemini assess or scripted soft-advance, got ${JSON.stringify(dbg)}`,
+    aiDebug(res.json)?.source === 'scripted',
+    `burger should advance scripted (food map), got ${JSON.stringify(aiDebug(res.json))}`,
+  );
+  assertMatch(
+    res.turn.aiResponse ?? '',
+    /Burger/i,
+    'tutor should mention Burger on describe step',
+  );
+  assertMatch(
+    res.turn.expectedSpeech ?? '',
+    /Burger is delicious/i,
+    'expected speech should be Burger describe board',
+  );
+}
+
+async function runNoodlesMapsScripted(client: LessonApiClient): Promise<void> {
+  const start = await client.startLesson(LESSON_ID);
+  let currentTurn = start.turn.currentTurn;
+
+  const res = await client.sendUserSpeech(
+    start.sessionId,
+    currentTurn,
+    'I like noodles.',
+  );
+  logTurn('I like noodles', 'I like noodles.', res.turn, res.json);
+
+  assert(
+    aiDebug(res.json)?.source === 'scripted',
+    `noodles should advance scripted, got ${JSON.stringify(aiDebug(res.json))}`,
+  );
+  assertMatch(res.turn.aiResponse ?? '', /Noodles/i, 'tutor should mention Noodles');
+  assertMatch(
+    res.turn.expectedSpeech ?? '',
+    /Noodles is delicious/i,
+    'expected Noodles describe board',
+  );
+}
+
+async function runOffTopicGeminiAssess(client: LessonApiClient): Promise<void> {
+  const start = await client.startLesson(LESSON_ID);
+  let currentTurn = start.turn.currentTurn;
+
+  const res = await client.sendUserSpeech(
+    start.sessionId,
+    currentTurn,
+    'I work at an office.',
+  );
+  logTurn('off-topic', 'I work at an office.', res.turn, res.json);
+
+  assert(
+    aiDebug(res.json)?.source === 'gemini',
+    `off-topic should defer to Gemini, got ${JSON.stringify(aiDebug(res.json))}`,
   );
   assert(
-    (wrong.turn.progressTurn ?? 0) <= 2,
-    `progress should not jump past step 1 on first wrong, got ${wrong.turn.progressTurn}`,
+    (res.turn.currentTurn ?? 0) <= 2,
+    'should stay on step 1 after first off-topic wrong',
   );
-
-  if (dbg?.source === 'gemini') {
-    console.log('  ✅ out-of-pool triggered Gemini assess');
-    assert(
-      dbg.assessmentTier != null || (wrong.turn.aiResponse ?? '').length > 0,
-      'expected assessmentTier or AI reply text',
-    );
-  }
 }
 
 async function runDoubleWrongSoftAdvance(client: LessonApiClient): Promise<void> {
@@ -115,29 +159,22 @@ async function runDoubleWrongSoftAdvance(client: LessonApiClient): Promise<void>
   let res = await client.sendUserSpeech(
     start.sessionId,
     currentTurn,
-    'I like noodles.',
+    'I work at an office.',
   );
-  logTurn('wrong #1', 'I like noodles.', res.turn, res.json);
+  logTurn('wrong #1 off-topic', 'I work at an office.', res.turn, res.json);
+  assert(aiDebug(res.json)?.source === 'gemini', 'wrong #1 should be gemini');
   currentTurn = res.turn.currentTurn;
 
-  res = await client.sendUserSpeech(
-    start.sessionId,
-    currentTurn,
-    'I like ramen.',
-  );
-  logTurn('wrong #2 (soft-advance)', 'I like ramen.', res.turn, res.json);
+  res = await client.sendUserSpeech(start.sessionId, currentTurn, 'Good morning.');
+  logTurn('wrong #2 off-topic', 'Good morning.', res.turn, res.json);
 
   assert(
     aiDebug(res.json)?.source === 'scripted',
     `2nd wrong should soft-advance scripted, got ${JSON.stringify(aiDebug(res.json))}`,
   );
-  assert(
-    (res.turn.progressTurn ?? 0) >= 2,
-    `after double wrong progress should advance (>=2), got ${res.turn.progressTurn}`,
-  );
-  assert(
-    (res.turn.guidedStem ?? '').includes('Pizza is') ||
-      (res.turn.expectedSpeech ?? '').includes('Pizza is'),
+  assertMatch(
+    res.turn.expectedSpeech ?? '',
+    /Pizza is delicious/i,
     'after soft-advance should land on describe-food step',
   );
 }
@@ -166,15 +203,18 @@ async function main(): Promise<void> {
   console.log(`LESSON_ID=${LESSON_ID}`);
 
   const ts = Date.now();
-  const results = await Promise.all([
-    runScenario('happy path (all in-pool scripted)', `food-v2-happy-${ts}`, runHappyPath),
-    runScenario('out-of-pool → Gemini assess', `food-v2-assess-${ts}`, runOutOfPoolAssess),
-    runScenario(
-      'double wrong → soft-advance',
-      `food-v2-soft-${ts}`,
-      runDoubleWrongSoftAdvance,
-    ),
-  ]);
+  const results: ScenarioResult[] = [];
+  for (const [i, [name, fn]] of [
+    ['happy path pizza (scripted)', runHappyPathPizza],
+    ['I like burger → Burger board (scripted)', runBurgerMapsScripted],
+    ['I like noodles → Noodles board (scripted)', runNoodlesMapsScripted],
+    ['off-topic → Gemini assess', runOffTopicGeminiAssess],
+    ['double wrong off-topic → soft-advance', runDoubleWrongSoftAdvance],
+  ].entries()) {
+    results.push(
+      await runScenario(name, `food-v2-${ts}-${i}`, fn as (c: LessonApiClient) => Promise<void>),
+    );
+  }
 
   console.log(`\n${'='.repeat(60)}\nSUMMARY`);
   for (const r of results) {

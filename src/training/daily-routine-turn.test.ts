@@ -97,7 +97,8 @@ describe('daily routine v2 lanes (binary pool routing)', () => {
       learnerFirstName: 'Nana',
     });
     assert.equal(reply?.deferToAi, undefined);
-    assert.match(reply!.textEn, /ไม่เป็นไร|ไปต่อ/i);
+    assert.match(reply!.textEn, /คำตอบนี้เราพูดว่า "wake up"/);
+    assert.match(reply!.textEn, /ไปต่อกันเลย — What time do you wake up\?/);
     assert.match(reply!.expectedSpeech ?? '', /I wake up at/i);
   });
 

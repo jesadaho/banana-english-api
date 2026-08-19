@@ -72,6 +72,52 @@ function lastUserText(turns: ChoiceLessonHistoryTurn[]): string {
   return '';
 }
 
+function extractEnglishQuestion(textEn: string): string {
+  const matches = [...textEn.matchAll(/([A-Za-z][^?]*\?)/g)];
+  if (matches.length > 0) {
+    return matches[matches.length - 1][1].trim();
+  }
+  return textEn.trim();
+}
+
+/** 2nd wrong — model canonical answer, then next step question (no full praise block). */
+export function buildSoftAdvanceTextEn(
+  failedBoard: GuidedBoard | null,
+  nextBoard: GuidedBoard | null,
+  nextScripted: ScriptTurnResult,
+): string {
+  const model = failedBoard?.expectedSpeech?.trim() ?? '';
+  const emoji = failedBoard?.options?.[0]?.emoji ?? '';
+  const nextFull =
+    nextBoard?.textEn?.trim() || nextScripted.textEn?.trim() || '';
+  const nextQuestion = extractEnglishQuestion(nextFull);
+
+  if (model && nextQuestion) {
+    return `คำตอบนี้เราพูดว่า "${model}" ได้ครับ${emoji ? ` ${emoji}` : ''}\nไปต่อกันเลย — ${nextQuestion}`;
+  }
+  if (model) {
+    return `คำตอบนี้เราพูดว่า "${model}" ได้ครับ${emoji ? ` ${emoji}` : ''}\nไปต่อกันเลย — ${nextFull}`;
+  }
+  return `ไม่เป็นไรครับ ไปต่อกัน! ${nextScripted.textEn}`;
+}
+
+function buildSoftAdvanceTextTh(
+  failedBoard: GuidedBoard | null,
+  nextBoard: GuidedBoard | null,
+  nextScripted: ScriptTurnResult,
+): string {
+  const model = failedBoard?.expectedSpeech?.trim() ?? '';
+  const nextFull =
+    nextBoard?.textEn?.trim() || nextScripted.textEn?.trim() || '';
+  const nextQuestion = extractEnglishQuestion(nextFull);
+  if (model && nextQuestion) {
+    return `We can say "${model}". Let's move on — ${nextQuestion}`;
+  }
+  return nextScripted.textTh
+    ? `No worries — let's move on! ${nextScripted.textTh}`
+    : "No worries — let's move on!";
+}
+
 function boardToGuidedSpeaking(board: GuidedBoard) {
   const options = board.options.map((o) => ({ ...o }));
   const first = options[0];
@@ -279,12 +325,12 @@ export function buildChoiceLessonAfterUser(
   if (replayAfter > replayBefore) {
     const next = scriptedFromProgress(def, turns, undefined, learnerFirstName);
     if (!next) return null;
+    const failedBoard = def.boardForStep(answeredStep, priorTurns);
+    const nextBoard = def.boardForStep(replayAfter + 1, turns);
     return {
       ...next,
-      textEn: `ไม่เป็นไรครับ ไปต่อกัน! ${next.textEn}`,
-      textTh: next.textTh
-        ? `No worries — let's move on! ${next.textTh}`
-        : "No worries — let's move on!",
+      textEn: buildSoftAdvanceTextEn(failedBoard, nextBoard, next),
+      textTh: buildSoftAdvanceTextTh(failedBoard, nextBoard, next),
     };
   }
 
