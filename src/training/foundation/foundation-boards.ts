@@ -47,6 +47,8 @@ export const FOUNDATION_LOOSE_MATCHERS: Record<
       1: /^(yes|no)/,
       2: /^maybe$/,
       3: /^(yes|no)/,
+      4: /^yes,? i do|^no,? i don/,
+      5: /^maybe$|^yes\.?$|^no\.?$/,
     }),
   polite_expressions: (step, text) =>
     loose(step, text, {
@@ -385,26 +387,25 @@ export const FOUNDATION_BOARDS: Record<
     },
     4: {
       textEn:
-        'Do you speak English? 🇬🇧 คุณจะตอบว่าอะไรครับ?',
+        'Do you like pizza? 🍕 คุณจะตอบว่าอะไรครับ?',
       withPraise: true,
-      stem: 'Yes, I do. / No, I don\'t.',
-      expectedSpeech: 'Yes.',
-      options: [
-        { emoji: '✅', label: 'Yes', speak: 'Yes.' },
-        { emoji: '❌', label: 'No', speak: 'No.' },
-        { emoji: '🤔', label: 'Maybe', speak: 'Maybe.' },
-      ],
-    },
-    5: {
-      textEn:
-        'Do you like pizza? 🍕 ลองตอบด้วยคำตอบสั้นๆ ที่ฟังเป็นธรรมชาติครับ',
-      advanceQuestionEn: 'Do you like pizza?',
-      withPraise: true,
-      stem: 'Yes, I do.',
+      stem: "Yes, I do. / No, I don't.",
       expectedSpeech: 'Yes, I do.',
       options: [
         { emoji: '✅', label: 'Yes, I do', speak: 'Yes, I do.' },
         { emoji: '❌', label: "No, I don't", speak: "No, I don't." },
+      ],
+    },
+    5: {
+      textEn:
+        'Are you free tomorrow? 📅 ถ้ายังไม่แน่ใจ คุณจะตอบว่าอะไรครับ?',
+      advanceQuestionEn: 'Are you free tomorrow?',
+      withPraise: true,
+      stem: 'Yes. / No. / Maybe.',
+      expectedSpeech: 'Maybe.',
+      options: [
+        { emoji: '✅', label: 'Yes', speak: 'Yes.' },
+        { emoji: '❌', label: 'No', speak: 'No.' },
         { emoji: '🤔', label: 'Maybe', speak: 'Maybe.' },
       ],
     },

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { FOUNDATION_BOARDS } from './foundation/foundation-boards';
 import { FOUNDATION_LESSON_IDS, personalizeBoard } from './foundation/foundation.helpers';
 import {
-  boardAtProbe,
+  buildHistoryAtProbe,
   getDef,
 } from './foundation/foundation-poolgate.harness';
 import { FOUNDATION_POOLGATE_FIXTURES } from './foundation/foundation-poolgate.fixtures';
@@ -39,10 +39,13 @@ describe('Foundation incorrect hints — Introductions standard', () => {
 
   it('every foundation probe board follows repeat-only vs guided hint rule', () => {
     for (const fixture of FOUNDATION_POOLGATE_FIXTURES) {
-      const raw = boardAtProbe(fixture);
-      assert.ok(raw, `${fixture.lessonId}: probe board`);
-      const personalized = personalizeBoard(raw!, 'Nana');
-      if (isFoundationRepeatOnlyBoard(raw!)) {
+      const def = getDef(fixture);
+      const history = buildHistoryAtProbe(fixture);
+      const step = def.progressFn(history) + 1;
+      const raw = FOUNDATION_BOARDS[fixture.lessonId][step];
+      assert.ok(raw, `${fixture.lessonId}: probe board step ${step}`);
+      const personalized = personalizeBoard(raw, 'Nana');
+      if (isFoundationRepeatOnlyBoard(raw)) {
         assert.equal(
           personalized.incorrectHintTh,
           undefined,
