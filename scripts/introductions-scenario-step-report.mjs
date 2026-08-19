@@ -13,6 +13,7 @@ import {
   expectedInPoolSpeech,
   getDef,
   introductionsOutOfPoolNearMiss,
+  introductionsOutOfPoolCloseMiss,
   introductionsOutOfPoolWrong,
   mockGeminiReply,
 } from '../src/training/foundation/foundation-poolgate.harness.ts';
@@ -288,7 +289,7 @@ function runScenario2Steps() {
 }
 
 function runScenario3Steps() {
-  return runScenarioAllOutOfPoolGemini(introductionsOutOfPoolNearMiss, {
+  return runScenarioAllOutOfPoolGemini(introductionsOutOfPoolCloseMiss, {
     tier: 'close',
   });
 }

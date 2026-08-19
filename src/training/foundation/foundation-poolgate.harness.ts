@@ -414,7 +414,7 @@ export function outOfPoolEllipsisAnswer(exact: string): string {
   return exact.replace(/[.!?…]+$/g, '') + '....';
 }
 
-/** STT near-miss for Introductions: wrong name (Nano) or trailing .... */
+/** STT near-miss for Introductions scenario 2: wrong name (Nano) or trailing .... */
 export function introductionsOutOfPoolNearMiss(
   exact: string,
   _step?: number,
@@ -423,6 +423,43 @@ export function introductionsOutOfPoolNearMiss(
     return exact.replace(/Nana/gi, 'Nano');
   }
   return outOfPoolEllipsisAnswer(exact);
+}
+
+/** Structural close-miss for Introductions scenario 3 — missing function words. */
+export function introductionsOutOfPoolCloseMiss(
+  exact: string,
+  step = 1,
+): string {
+  const t = exact.trim();
+  switch (step) {
+    case 1:
+      return t.replace(/^My name is /i, 'My name ');
+    case 2: {
+      const name =
+        exact.match(/(?:My name is|I'm)\s+(\w+)/i)?.[1] ?? 'Nana';
+      return `I ${name}.`;
+    }
+    case 3:
+      return t.replace(/^Nice to meet you\.?$/i, 'Nice meet you.');
+    case 4:
+      return t.replace(/^Nice to meet you,? too\.?$/i, 'Nice to meet too.');
+    case 5:
+      return t.replace(/^I'm from /i, 'I from ');
+    case 6:
+      return t.replace(/^I live in /i, 'I live ');
+    case 7:
+      return t
+        .replace(/^I'm a /i, 'I a ')
+        .replace(/^I work as an /i, 'I work ')
+        .replace(/^I work as a /i, 'I work ');
+    case 8: {
+      let out = t.replace(/^My name is /i, 'My name ');
+      out = out.replace(/\bI'm from /gi, 'I from ');
+      return out;
+    }
+    default:
+      return t;
+  }
 }
 
 /** Off-topic wrong answer for out-of-pool wrong scenarios. */
@@ -436,7 +473,7 @@ export type GeminiAssessTier = 'correct' | 'close' | 'incorrect';
 
 const DEFAULT_GEMINI_PREFIX: Record<GeminiAssessTier, string> = {
   correct: 'ถูกต้องแล้วครับ! เก่งมากครับ',
-  close: 'เกือบเป๊ะครับ! ไปต่อกันเลย',
+  close: 'เกือบถูกแล้วครับ',
   incorrect: 'ยังไม่ใช่นะครับ ลองพูดว่า',
 };
 

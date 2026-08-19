@@ -52,7 +52,7 @@ export function resolveChoiceStepContext(
           awaitingCorrection = false;
           wrongAttempts = 0;
           attempt = 0;
-        } else if (tier === 'near') {
+        } else if (tier === 'near' || tier === 'close') {
           awaitingCorrection = false;
           wrongAttempts = 0;
         } else {
@@ -74,7 +74,7 @@ export function resolveChoiceStepContext(
         continue;
       }
 
-      if (tier === 'near') {
+      if (tier === 'near' || tier === 'close') {
         wrongAttempts = 0;
         continue;
       }

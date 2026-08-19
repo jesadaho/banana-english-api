@@ -17,6 +17,7 @@ import { FOUNDATION_POOLGATE_FIXTURES } from '../src/training/foundation/foundat
 import {
   getDef,
   introductionsOutOfPoolNearMiss,
+  introductionsOutOfPoolCloseMiss,
   introductionsOutOfPoolWrong,
 } from '../src/training/foundation/foundation-poolgate.harness.ts';
 
@@ -51,6 +52,10 @@ if (scenariosToRun.some((n) => !Number.isInteger(n) || n < 1 || n > 4)) {
 
 function outOfPoolNearMiss(exact: string): string {
   return introductionsOutOfPoolNearMiss(exact);
+}
+
+function outOfPoolCloseMiss(exact: string, step: number): string {
+  return introductionsOutOfPoolCloseMiss(exact, step);
 }
 
 function outOfPoolWrong(_exact: string): string {
@@ -159,6 +164,7 @@ function turnBlock(json: Json): Json {
 function pickUserSpeech(
   scenario: number,
   turnBefore: TurnResult,
+  step: number,
 ): { speech: string; recoverExact?: string } {
   const expected = pickExpected(turnBefore);
 
@@ -168,7 +174,7 @@ function pickUserSpeech(
     case 2:
       return { speech: outOfPoolNearMiss(expected) };
     case 3:
-      return { speech: outOfPoolNearMiss(expected) };
+      return { speech: outOfPoolCloseMiss(expected, step) };
     case 4:
       return { speech: outOfPoolWrong(expected), recoverExact: expected };
     default:
@@ -220,7 +226,7 @@ async function runScenario(
     ];
 
     for (let guard = 0; guard < MAX_TURNS; guard++) {
-      const { speech, recoverExact } = pickUserSpeech(scenario, turnBefore);
+      const { speech, recoverExact } = pickUserSpeech(scenario, turnBefore, step);
       const { hint, choices } = chromeBeforeAnswer(turnBefore, history);
 
       const res = await client.sendUserSpeech(

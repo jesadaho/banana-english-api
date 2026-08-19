@@ -128,6 +128,23 @@ export const FOUNDATION_LOOSE_MATCHERS: Record<
     }),
 };
 
+/** Structural close-miss (missing function words) — defer as close out pool. */
+export const FOUNDATION_CLOSE_MATCHERS: Partial<
+  Record<FoundationLessonId, (step: number, text: string) => boolean>
+> = {
+  introductions: (step, text) =>
+    loose(step, text, {
+      1: /^my name [a-z]+$/,
+      2: /^i [a-z]+$|^my name [a-z]+$/,
+      3: /^nice meet you$/,
+      4: /^nice to meet too$/,
+      5: /^i from /,
+      6: /^i live [a-z]+$/,
+      7: /^i work (?!as\b)/,
+      8: /^my name [a-z]+.*i from /,
+    }),
+};
+
 export const FOUNDATION_BOARDS: Record<
   FoundationLessonId,
   Record<number, ForcedGuidedBoard>

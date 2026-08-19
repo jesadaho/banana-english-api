@@ -154,6 +154,7 @@ export function createFoundationLessonDef(params: {
   openingText: string;
   completionText: string | ((learnerFirstName: string) => string);
   matchesLoose: (step: number, text: string) => boolean;
+  matchesClose?: (step: number, text: string) => boolean;
   pinWithoutGuidedSteps?: number[];
   buildOpening?: (learnerFirstName: string) => ScriptTurnResult;
 }): ChoiceLessonDef {
@@ -185,9 +186,13 @@ export function createFoundationLessonDef(params: {
       (s) => resolveBoard(s, boardHistory),
       params.matchesLoose,
     )(step, text);
-    if (tier !== 'exact') return tier;
-    const board = resolveBoard(step, boardHistory);
-    return isFoundationRawPoolMatch(text, board) ? 'exact' : 'near';
+    if (tier === 'exact') {
+      const board = resolveBoard(step, boardHistory);
+      return isFoundationRawPoolMatch(text, board) ? 'exact' : 'near';
+    }
+    if (tier === 'near') return 'near';
+    if (params.matchesClose?.(step, text)) return 'close';
+    return tier;
   };
 
   const completionText =

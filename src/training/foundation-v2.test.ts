@@ -19,6 +19,7 @@ import {
   getDef,
   INTRODUCTIONS_TIM_PROD_CHAT,
   introductionsOutOfPoolNearMiss,
+  introductionsOutOfPoolCloseMiss,
   mockGeminiReply,
   nextBoardAfterProbeExact,
   pinChoiceLessonAiReply,
@@ -293,29 +294,30 @@ describe('Foundation — introductions all-step scenarios', () => {
     const def = getDef(introductions);
     const learnerFirstName = 'Nana';
     const opening = def.buildOpening(learnerFirstName);
+    const userText = introductionsOutOfPoolCloseMiss('My name is Nana.', 1);
     const turns: ChoiceLessonHistoryTurn[] = [
       {
         speaker: 'ai',
         textEn: opening.textEn ?? '',
         expectedSpeech: opening.expectedSpeech,
       },
-      {
-        speaker: 'user',
-        textEn: introductionsOutOfPoolNearMiss('My name is Nana.', 1),
-      },
+      { speaker: 'user', textEn: userText },
     ];
+
+    assert.equal(def.scoreStep(1, userText, turns.slice(0, -1)), 'close');
 
     const pinned = pinChoiceLessonAiReply(
       def,
       turns,
       mockGeminiReply(
-        'close',
+        'incorrect',
         'เกือบถูกแล้วครับ! ลองพูดว่า "My name is Nana" อีกครั้งนะครับ',
       ),
       undefined,
       learnerFirstName,
     );
     assert.equal(pinned.assessmentTier, 'close');
+    assert.match(pinned.textEn ?? '', /^เกือบถูกแล้วครับ/);
     assert.doesNotMatch(
       pinned.textEn ?? '',
       /ลองพูดว่า "My name is Nana" อีกครั้ง/,
@@ -327,11 +329,18 @@ describe('Foundation — introductions all-step scenarios', () => {
     const def = getDef(introductions);
     const result = runFoundationAllOutOfPoolGeminiAssess(
       def,
-      introductionsOutOfPoolNearMiss,
+      introductionsOutOfPoolCloseMiss,
       'close',
     );
     assert.equal(result.steps.length, def.maxStep);
     assert.equal(result.steps.at(-1)?.isLessonComplete, true);
+    for (const record of result.steps) {
+      assert.equal(
+        def.scoreStep(record.step, record.userText, []),
+        'close',
+        `step ${record.step}: "${record.userText}" should score close`,
+      );
+    }
   });
 
   it('scenario 4 — out-pool wrong every step completes lesson', () => {

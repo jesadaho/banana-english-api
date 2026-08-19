@@ -311,11 +311,19 @@ export function resolveChoiceAssessmentTier(
   return 'incorrect';
 }
 
-/** PoolGate defer: engine `near` = valid alternate — never let Gemini downgrade to incorrect. */
+/** PoolGate defer: engine `near` = valid alternate; `close` = structural near-miss. */
 export function reconcileDeferredAssessmentTier(
   scoreTier: ChoiceStepTier,
   aiReply: TrainingTurnReply,
 ): TrainingTurnReply {
+  if (scoreTier === 'close') {
+    return {
+      ...aiReply,
+      assessmentTier: 'close',
+      textEn: closeAdvancePraise('', true),
+      textTh: '',
+    };
+  }
   if (
     scoreTier === 'near' &&
     resolveChoiceAssessmentTier(aiReply) === 'incorrect'
@@ -353,13 +361,14 @@ export function correctAdvancePraise(textEn: string): string {
 }
 
 /** Deferred assess + close tier — tiny fix OK, never ask พูดตาม on current answer. */
-export function closeAdvancePraise(textEn: string): string {
+export function closeAdvancePraise(textEn: string, forceClose = false): string {
+  if (forceClose) return 'เกือบถูกแล้วครับ';
   const text = textEn.trim();
-  if (!text) return 'เกือบเป๊ะครับ! ไปต่อกันเลย';
+  if (!text) return 'เกือบถูกแล้วครับ';
   if (!DEFERRED_RETEACH.test(text)) return text;
   const cleaned = stripDeferredReteach(text);
   if (cleaned && !DEFERRED_RETEACH.test(cleaned)) return cleaned;
-  return 'เกือบเป๊ะครับ! ไปต่อกันเลย';
+  return 'เกือบถูกแล้วครับ';
 }
 
 /** @deprecated Use correctAdvancePraise */
@@ -429,7 +438,7 @@ export function pinChoiceLessonAiReply(
     if (tier === 'correct') {
       praise = correctAdvancePraise(praise);
     } else if (tier === 'close') {
-      praise = closeAdvancePraise(praise);
+      praise = closeAdvancePraise(praise, scoreTier === 'close');
     }
     return {
       textEn: `${praise} ${next.textEn}`.trim(),

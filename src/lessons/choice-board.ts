@@ -158,8 +158,8 @@ export function looksLikeSoftTeachReveal(textEn: string): boolean {
   );
 }
 
-/** exact = happy pool; near = semantic close; wrong = off-topic / other option. */
-export type ChoiceStepTier = 'exact' | 'near' | 'wrong';
+/** exact = in pool; near = STT/alt OK; close = missing function words; wrong = off-topic. */
+export type ChoiceStepTier = 'exact' | 'near' | 'close' | 'wrong';
 
 /**
  * Progress with 3 answer tiers:
@@ -199,7 +199,7 @@ export function computeThreeTierChoiceProgress(
           progress = next;
           awaitingCorrection = false;
           wrongAttempts = 0;
-        } else if (tier === 'near') {
+        } else if (tier === 'near' || tier === 'close') {
           awaitingCorrection = false;
           wrongAttempts = 0;
         } else {
@@ -219,7 +219,7 @@ export function computeThreeTierChoiceProgress(
         continue;
       }
 
-      if (tier === 'near') {
+      if (tier === 'near' || tier === 'close') {
         wrongAttempts = 0;
         continue;
       }
@@ -282,7 +282,7 @@ export function pendingThreeTierSoftTeach(
     }
   }
 
-  return tier === 'near' || tier === 'wrong';
+  return tier === 'near' || tier === 'close' || tier === 'wrong';
 }
 
 function choiceSpeechExactMatch(

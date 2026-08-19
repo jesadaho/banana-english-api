@@ -6,6 +6,7 @@ import {
 } from '../foundation/foundation.helpers';
 import {
   FOUNDATION_BOARDS,
+  FOUNDATION_CLOSE_MATCHERS,
   FOUNDATION_LOOSE_MATCHERS,
   FOUNDATION_MAX_STEPS,
 } from '../foundation/foundation-boards';
@@ -98,6 +99,7 @@ function buildFoundationDef(
     openingText: OPENING_TEXTS[lessonId],
     completionText: COMPLETION_TEXTS[lessonId],
     matchesLoose: FOUNDATION_LOOSE_MATCHERS[lessonId],
+    matchesClose: FOUNDATION_CLOSE_MATCHERS[lessonId],
     pinWithoutGuidedSteps:
       lessonId === 'ee_about_me_family' ? [1] : undefined,
   });
