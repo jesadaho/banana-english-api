@@ -1,9 +1,9 @@
 import assert from 'node:assert/strict';
 import type { TrainingTurnReply } from '../../gemini/gemini-chat.service';
-import type { ForcedGuidedBoard } from '../../lessons/lessons.data';
 import {
   buildChoiceLessonAfterUser,
   pinChoiceLessonAiReply,
+  type ChoiceLessonBoard,
   type ChoiceLessonDef,
 } from '../scripts/choice-lesson.script';
 import { getFoundationChoiceLesson } from '../scripts/foundation.registry';
@@ -50,7 +50,7 @@ export function buildHistoryAtProbe(
 export function boardAtProbe(
   fixture: FoundationPoolGateFixture,
   name = FOUNDATION_PROBE_LEARNER,
-): ForcedGuidedBoard | null {
+): ChoiceLessonBoard | null {
   const def = getDef(fixture);
   const base = buildHistoryAtProbe(fixture, name);
   const step = def.progressFn(base) + 1;
@@ -61,7 +61,7 @@ export function boardAtProbe(
 export function nextBoardAfterProbeExact(
   fixture: FoundationPoolGateFixture,
   name = FOUNDATION_PROBE_LEARNER,
-): ForcedGuidedBoard | null {
+): ChoiceLessonBoard | null {
   const def = getDef(fixture);
   const turns = withProbeUser(fixture, fixture.exactAtProbe, name);
   const cleared = def.progressFn(turns);

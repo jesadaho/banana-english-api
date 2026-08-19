@@ -4,7 +4,7 @@ import type { ScriptTurnResult } from './types';
 
 export type ChoiceLessonHistoryTurn = { speaker: string; textEn?: string };
 
-type GuidedBoard = {
+export type ChoiceLessonBoard = {
   textEn: string;
   stem: string;
   expectedSpeech: string;
@@ -13,6 +13,8 @@ type GuidedBoard = {
   /** English cue for soft-advance when textEn has no trailing question. */
   advanceQuestionEn?: string;
 };
+
+type GuidedBoard = ChoiceLessonBoard;
 
 /** PoolGate — exact pool match → scripted; miss → Gemini assess (correct/close/incorrect). */
 export type ChoiceLessonDef = {
@@ -27,7 +29,7 @@ export type ChoiceLessonDef = {
   boardForStep: (
     step: number,
     history: ChoiceLessonHistoryTurn[],
-  ) => GuidedBoard | null;
+  ) => ChoiceLessonBoard | null;
   buildOpening: (learnerFirstName: string) => ScriptTurnResult;
   buildScriptedReplyFromProgress?: (
     history: ChoiceLessonHistoryTurn[],
