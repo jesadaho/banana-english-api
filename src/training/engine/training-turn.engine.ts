@@ -20,6 +20,7 @@ import {
   buildDailyRoutineOpening,
   buildDailyRoutineAfterUser,
   pinDailyRoutineAiReply,
+  dailyRoutineEffectiveProgress,
 } from '../scripts/daily-routine.script';
 import { pinGreetingsReplyChrome } from './pin-greetings-chrome';
 import type { ScriptTurnResult } from '../scripts/types';
@@ -103,8 +104,8 @@ export class TrainingTurnEngine {
       coreStep: step,
       coreStepMax: input.config.progressMax ?? 8,
       expectedSpeech:
-        board?.expectedSpeech ??
-        lastAi?.expectedSpeech?.trim() ||
+        (board?.expectedSpeech ??
+          lastAi?.expectedSpeech?.trim()) ||
         null,
       poolOptions: board?.options.map((o) => o.speak) ?? [],
       userText: input.userText,

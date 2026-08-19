@@ -157,7 +157,13 @@ export function buildGreetingsAfterUser(input: {
 
   // Wrong #1 → Gemini soft-teach (model correct phrase + ask repeat).
   if (attempt === 1) {
-    return { deferToAi: true, aiMode: 'softTeach' } as ScriptTurnResult;
+    return {
+      deferToAi: true,
+      aiMode: 'softTeach',
+      textEn: '',
+      textTh: '',
+      isLessonComplete: false,
+    };
   }
 
   // Wrong #2 → accept and advance (scripted, no LLM).

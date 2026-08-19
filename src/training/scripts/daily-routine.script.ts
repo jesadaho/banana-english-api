@@ -195,7 +195,13 @@ export function buildDailyRoutineAfterUser(input: {
     };
   }
 
-  return { deferToAi: true, aiMode: 'assess' };
+  return {
+    deferToAi: true,
+    aiMode: 'assess',
+    textEn: '',
+    textTh: '',
+    isLessonComplete: false,
+  };
 }
 
 export const DAILY_ROUTINE_SCRIPT = {
