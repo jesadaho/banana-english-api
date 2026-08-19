@@ -9130,6 +9130,8 @@ type ForcedGuidedBoard = {
   expectedSpeech: string;
   /** Vocab = Thai concept only (e.g. "ตื่นนอน"); phrase = lead ending in เราจะพูดว่า. */
   softTeachHintTh?: string;
+  /** English cue for PoolGate soft-advance when textEn has no trailing question. */
+  advanceQuestionEn?: string;
   options: Array<{ emoji: string; label: string; speak: string }>;
 };
 
@@ -12495,6 +12497,7 @@ export const HOME_BOARDS: Record<number, ForcedGuidedBoard> = {
   4: {
     textEn:
       'เยี่ยมมากครับ! เดี๋ยวเรามาลองทบทวนกันนิดนะ 😊 ถ้าจะบอกว่า "ฉันอาศัยอยู่ในอพาร์ตเมนต์" จะพูดภาษาอังกฤษว่าอย่างไรครับ?',
+    advanceQuestionEn: 'How do you say I live in an apartment?',
     withPraise: true,
     stem: '',
     expectedSpeech: 'I live in an apartment.',
@@ -12509,6 +12512,7 @@ export const HOME_BOARDS: Record<number, ForcedGuidedBoard> = {
   5: {
     textEn:
       'แล้วถ้าจะบอกว่า "ฉันอยู่กับครอบครัว" จะพูดว่าอย่างไรครับ?',
+    advanceQuestionEn: 'How do you say I live with my family?',
     withPraise: true,
     stem: '',
     expectedSpeech: 'I live with my family.',
@@ -12523,6 +12527,7 @@ export const HOME_BOARDS: Record<number, ForcedGuidedBoard> = {
   6: {
     textEn:
       'ข้อสุดท้ายครับ 😊 "ฉันชอบพักผ่อนในห้องนั่งเล่น" จะพูดภาษาอังกฤษว่าอย่างไรครับ?',
+    advanceQuestionEn: 'How do you say I like to relax in the living room?',
     withPraise: true,
     stem: '',
     expectedSpeech: 'I like to relax in the living room.',
@@ -13615,6 +13620,7 @@ export function petsOpeningText(learnerFirstName: string): string {
 
 function petsDescribeBoard(animal: PetsAnimal): {
   textEn: string;
+  advanceQuestionEn?: string;
   stem: string;
   expectedSpeech: string;
   options: Array<{ emoji: string; label: string; speak: string }>;
@@ -13623,6 +13629,7 @@ function petsDescribeBoard(animal: PetsAnimal): {
     return {
       textEn:
         'น่ารักมากครับ! แล้วน้องสัตว์เลี้ยงของคุณตัวนี้เป็นยังไงบ้างครับ?',
+      advanceQuestionEn: 'What is your dog like?',
       stem: 'My dog is very...',
       expectedSpeech: 'My dog is very friendly.',
       options: [
@@ -13638,6 +13645,7 @@ function petsDescribeBoard(animal: PetsAnimal): {
   return {
     textEn:
       'น่ารักมากครับ! แล้วน้องสัตว์เลี้ยงของคุณตัวนี้เป็นยังไงบ้างครับ?',
+    advanceQuestionEn: 'What is your cat like?',
     stem: 'My cat is very...',
     expectedSpeech: 'My cat is very cute.',
     options: [
@@ -14683,6 +14691,7 @@ export const WEATHER_HOT_QUIZ_GUIDED_SPEAKING = {
 const WEATHER_COLD_BOARD = {
   textEn:
     "ถูกต้องครับ! 👏 ถ้าจะบอกว่า 'วันนี้อากาศร้อนมาก' ให้พูดว่า The weather is very hot today. แล้วถ้าจะบอกว่า 'วันนี้อากาศหนาวมาก' จะพูดว่าอย่างไรครับ?",
+  advanceQuestionEn: 'How do you say the weather is very cold today?',
   stem: 'The weather is very...',
   expectedSpeech: 'The weather is very cold today.',
   options: [
@@ -14702,6 +14711,7 @@ const WEATHER_PREFERENCE_GUIDED_SPEAKING = {
 const WEATHER_QUIZ_RAINY_BOARD = {
   textEn:
     "ก่อนจบบท ลองบอกหน่อยครับ 😊 ถ้าจะพูดว่า 'ฉันชอบอากาศฝนตก' จะพูดเป็นภาษาอังกฤษว่าอย่างไรครับ?",
+  advanceQuestionEn: 'How do you say I like rainy weather?',
   stem: '',
   expectedSpeech: 'I like rainy weather.',
   options: [{ emoji: '🌧️', label: '', speak: 'I like rainy weather.' }],
@@ -15010,6 +15020,7 @@ export const FRIENDS_ACTIVITY_GUIDED_SPEAKING = {
 
 const FRIENDS_EAT_OUT_BOARD = {
   textEn: 'แล้วถ้าจะพูดว่า พวกเรากินข้าวด้วยกัน จะพูดว่าอย่างไรครับ?',
+  advanceQuestionEn: 'How do you say we eat out together?',
   stem: '',
   expectedSpeech: 'We eat out together.',
   options: [
@@ -15020,6 +15031,7 @@ const FRIENDS_EAT_OUT_BOARD = {
 const FRIENDS_THEY_PLAY_BOARD = {
   textEn:
     'เยี่ยมครับ! 😊 แล้วถ้าจะพูดว่า พวกเขาเล่นเกมด้วยกัน จะพูดว่าอย่างไรครับ?',
+  advanceQuestionEn: 'How do you say they play games together?',
   stem: 'They ........ together.',
   expectedSpeech: 'They play games together.',
   options: [
@@ -15033,6 +15045,7 @@ const FRIENDS_THEY_PLAY_BOARD = {
 
 const FRIENDS_HANG_OUT_BOARD = {
   textEn: 'ก่อนจบบท ลองบอกหน่อยครับ 😊 พวกเราไปเที่ยวด้วยกัน',
+  advanceQuestionEn: 'How do you say we hang out together?',
   stem: '',
   expectedSpeech: 'We hang out together.',
   options: [

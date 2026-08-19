@@ -10,6 +10,8 @@ type GuidedBoard = {
   expectedSpeech: string;
   options: Array<{ emoji: string; label?: string; speak: string }>;
   withPraise?: boolean;
+  /** English cue for soft-advance when textEn has no trailing question. */
+  advanceQuestionEn?: string;
 };
 
 /** PoolGate — exact pool match → scripted; miss → Gemini assess (correct/close/incorrect). */
@@ -77,7 +79,26 @@ function extractEnglishQuestion(textEn: string): string {
   if (matches.length > 0) {
     return matches[matches.length - 1][1].trim();
   }
-  return textEn.trim();
+  return '';
+}
+
+function resolveSoftAdvanceQuestion(
+  nextBoard: GuidedBoard | null,
+  nextScripted: ScriptTurnResult,
+): string {
+  const explicit = nextBoard?.advanceQuestionEn?.trim();
+  if (explicit) return explicit;
+
+  const nextFull =
+    nextBoard?.textEn?.trim() || nextScripted.textEn?.trim() || '';
+  const fromText = extractEnglishQuestion(nextFull);
+  if (fromText) return fromText;
+
+  const nextExpected =
+    nextBoard?.expectedSpeech?.trim() || nextScripted.expectedSpeech?.trim();
+  if (nextExpected) return nextExpected;
+
+  return nextFull;
 }
 
 /** 2nd wrong — model canonical answer, then next step question (no full praise block). */
@@ -88,15 +109,10 @@ export function buildSoftAdvanceTextEn(
 ): string {
   const model = failedBoard?.expectedSpeech?.trim() ?? '';
   const emoji = failedBoard?.options?.[0]?.emoji ?? '';
-  const nextFull =
-    nextBoard?.textEn?.trim() || nextScripted.textEn?.trim() || '';
-  const nextQuestion = extractEnglishQuestion(nextFull);
+  const nextQuestion = resolveSoftAdvanceQuestion(nextBoard, nextScripted);
 
   if (model && nextQuestion) {
     return `คำตอบนี้เราพูดว่า "${model}" ได้ครับ${emoji ? ` ${emoji}` : ''}\nไปต่อกันเลย — ${nextQuestion}`;
-  }
-  if (model) {
-    return `คำตอบนี้เราพูดว่า "${model}" ได้ครับ${emoji ? ` ${emoji}` : ''}\nไปต่อกันเลย — ${nextFull}`;
   }
   return `ไม่เป็นไรครับ ไปต่อกัน! ${nextScripted.textEn}`;
 }
@@ -107,9 +123,7 @@ function buildSoftAdvanceTextTh(
   nextScripted: ScriptTurnResult,
 ): string {
   const model = failedBoard?.expectedSpeech?.trim() ?? '';
-  const nextFull =
-    nextBoard?.textEn?.trim() || nextScripted.textEn?.trim() || '';
-  const nextQuestion = extractEnglishQuestion(nextFull);
+  const nextQuestion = resolveSoftAdvanceQuestion(nextBoard, nextScripted);
   if (model && nextQuestion) {
     return `We can say "${model}". Let's move on — ${nextQuestion}`;
   }
