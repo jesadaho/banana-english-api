@@ -914,6 +914,7 @@ export class SessionsController {
       : (reply.expectsUserSpeech ?? true);
     const expectedSpeech = reply.expectedSpeech?.trim() || null;
     const emojiChoice = normalizeEmojiChoice(reply.emojiChoice);
+    const guidedSpeaking = normalizeGuidedSpeaking(reply.guidedSpeaking);
 
     const prevProgressTurn = data.session.progressTurn ?? 0;
     const lastAiTurn = [...data.turns]
@@ -956,6 +957,7 @@ export class SessionsController {
       expectsUserSpeech,
       expectedSpeech,
       emojiChoice,
+      guidedSpeaking,
     });
 
     const response: TurnExchangeResponse = {
@@ -974,6 +976,7 @@ export class SessionsController {
       expectsUserSpeech,
       expectedSpeech,
       emojiChoice,
+      guidedSpeaking,
     };
 
     if (body.generateAudio) {

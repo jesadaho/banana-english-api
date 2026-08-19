@@ -31,6 +31,12 @@ const SOFT_TEACH_RULES =
   'Set expectedSpeech to the exact target phrase. ' +
   'Do NOT return emojiChoice — server pins the board.';
 
+const VALIDATE_RULES =
+  'VALIDATE (acceptable alternate phrasing): Brief Thai praise (ถูกต้อง/ได้เลย). ' +
+  'Accept their wording as OK — do NOT re-teach. Advance to the next teaching step. ' +
+  'textEn MUST be Thai-primary. expectsUserSpeech=true on the next ask. ' +
+  'Do NOT return emojiChoice or guidedSpeaking — server pins boards.';
+
 export type AiGateInput = {
   lessonTitle: string;
   coreStep: number;
@@ -44,7 +50,7 @@ export type AiGateInput = {
   learnerFirstName: string;
   teachingLanguage?: 'thai' | 'english';
   languageMix?: { thai: number; english: number };
-  mode?: 'softTeach';
+  mode?: 'softTeach' | 'validate';
 };
 
 @Injectable()
@@ -69,7 +75,9 @@ export class TrainingAiGate {
     const stepHint =
       input.mode === 'softTeach'
         ? `${baseHint}\n${SOFT_TEACH_RULES}`
-        : baseHint;
+        : input.mode === 'validate'
+          ? `${baseHint}\n${VALIDATE_RULES}`
+          : baseHint;
 
     const userPayload = [
       `mode=${input.mode ?? 'default'}`,

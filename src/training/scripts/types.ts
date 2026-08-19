@@ -4,7 +4,7 @@ export type ScriptTurnResult = TrainingTurnReply & {
   /** When true the engine should call the AI gate instead of returning this turn. */
   deferToAi?: boolean;
   /** AI gate mode when deferToAi is set. */
-  aiMode?: 'softTeach';
+  aiMode?: 'softTeach' | 'validate';
 };
 
 export interface LessonScript {

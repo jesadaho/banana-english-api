@@ -11480,7 +11480,7 @@ export function dailyRoutineProgress(
   return computeThreeTierChoiceProgress(history, 7, scoreDailyRoutineStep);
 }
 
-function dailyRoutineBoardForStep(
+export function dailyRoutineBoardForStep(
   step: number,
   history: Array<{ speaker: string; textEn?: string }>,
 ): ForcedGuidedBoard | null {
@@ -11793,7 +11793,7 @@ export function forceDailyRoutineGuidedSpeakingIfNeeded(
  * Skips soft-teach guards so board turns never fall through to Gemini
  * (which was failing deterministically around Core Flow turn 4 / AM-PM).
  */
-function buildDailyRoutineScriptedReplyFromProgress(
+export function buildDailyRoutineScriptedReplyFromProgress(
   history: Array<{ speaker: string; textEn?: string }>,
 ): {
   textEn: string;

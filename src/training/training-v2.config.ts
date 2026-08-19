@@ -1,5 +1,5 @@
 /** Lessons routed through Training Engine v2 (hybrid scripted + AI on miss). */
-const DEFAULT_V2_LESSONS = ['greetings'];
+const DEFAULT_V2_LESSONS = ['greetings', 'ee_about_me_daily_routine'];
 
 let cachedAllowlist: Set<string> | null = null;
 

@@ -15,6 +15,10 @@ import {
   buildGreetingsOpening,
   buildGreetingsAfterUser,
 } from '../scripts/greetings.script';
+import {
+  buildDailyRoutineOpening,
+  buildDailyRoutineAfterUser,
+} from '../scripts/daily-routine.script';
 import { pinGreetingsReplyChrome } from './pin-greetings-chrome';
 import type { ScriptTurnResult } from '../scripts/types';
 
@@ -41,6 +45,13 @@ export class TrainingTurnEngine {
         aiDebug: scriptedAiDebug(),
       };
     }
+    if (config.lessonId === 'ee_about_me_daily_routine') {
+      const reply = buildDailyRoutineOpening(learnerFirstName);
+      return {
+        reply: this.toReply(reply),
+        aiDebug: scriptedAiDebug(),
+      };
+    }
     throw new Error(`Training v2 opening not implemented: ${config.lessonId}`);
   }
 
@@ -50,7 +61,26 @@ export class TrainingTurnEngine {
     if (input.config.lessonId === 'greetings') {
       return this.runGreetingsTurn(input);
     }
+    if (input.config.lessonId === 'ee_about_me_daily_routine') {
+      return this.runDailyRoutineTurn(input);
+    }
     throw new Error(`Training v2 turn not implemented: ${input.config.lessonId}`);
+  }
+
+  private runDailyRoutineTurn(
+    input: TrainingEngineTurnInput,
+  ): Promise<{ reply: TrainingTurnReply; aiDebug: AiDebug }> {
+    const scripted = buildDailyRoutineAfterUser({
+      turns: input.turns,
+      learnerFirstName: input.learnerFirstName,
+    });
+    if (!scripted) {
+      throw new Error('Daily Routine v2: no scripted reply');
+    }
+    return Promise.resolve({
+      reply: this.toReply(scripted),
+      aiDebug: scriptedAiDebug(),
+    });
   }
 
   private async runGreetingsTurn(
