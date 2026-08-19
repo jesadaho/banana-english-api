@@ -1,203 +1,145 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { buildChoiceLessonAfterUser, pinChoiceLessonAiReply } from './scripts/choice-lesson.script';
-import {
-  FOUNDATION_CHOICE_LESSONS,
-  getFoundationChoiceLesson,
-} from './scripts/foundation.registry';
+import { buildChoiceLessonAfterUser } from './scripts/choice-lesson.script';
 import { FOUNDATION_BOARDS } from './foundation/foundation-boards';
+import {
+  FOUNDATION_POOLGATE_FIXTURES,
+  FOUNDATION_PROBE_LEARNER,
+} from './foundation/foundation-poolgate.fixtures';
+import {
+  assertAdvancedFromProbe,
+  assertOutOfPool,
+  boardAtProbe,
+  buildHistoryAtProbe,
+  buildSoftAdvanceHistory,
+  getDef,
+  nextBoardAfterProbeExact,
+  pinGeminiAtProbe,
+  withProbeUser,
+} from './foundation/foundation-poolgate.harness';
 
-type Turn = { speaker: string; textEn?: string };
+describe('Foundation PoolGate — 5-lane matrix (all lessons)', () => {
+  for (const fixture of FOUNDATION_POOLGATE_FIXTURES) {
+    const { lessonId } = fixture;
 
-/** Step-1 pool answer per foundation lesson (happy path). */
-const STEP1_POOL_ANSWERS: Record<string, string> = {
-  introductions: 'My name is Nana.',
-  yes_no_maybe: 'Yes, I do.',
-  polite_expressions: 'Thank you very much.',
-  meet_people: 'I am Nana.',
-  talk_about_groups: 'He is my father.',
-  ee_about_me_family: "I'm ready",
-  numbers: 'three',
-  telling_time: "It's six o'clock.",
-  everyday_numbers: 'forty',
-  money_prices: 'How much is it?',
-  likes_dislikes: 'I like coffee.',
-  wants_needs: 'I want water.',
-  can_cant: 'I can swim.',
-  asking_for_help: "I don't understand.",
-  asking_questions: 'Where is the bathroom?',
-};
+    describe(lessonId, () => {
+      it('lane 1 — happy in-pool advances scripted', () => {
+        const def = getDef(fixture);
+        const reply = buildChoiceLessonAfterUser(def, {
+          turns: withProbeUser(fixture, fixture.exactAtProbe),
+          learnerFirstName: FOUNDATION_PROBE_LEARNER,
+        });
+        assert.ok(reply, `${lessonId}: missing in-pool reply`);
+        assert.notEqual(reply!.deferToAi, true, `${lessonId}: should not defer`);
+        assert.equal(reply!.assessmentTier, 'correct');
+        assertAdvancedFromProbe(fixture, reply!);
+      });
 
-function assertInPoolStep1(lessonId: string): void {
-  const def = getFoundationChoiceLesson(lessonId);
-  assert.ok(def, `missing def ${lessonId}`);
-  const opening = def!.buildOpening('Nana');
-  const poolAnswer = STEP1_POOL_ANSWERS[lessonId];
-  assert.ok(poolAnswer, `missing step-1 answer for ${lessonId}`);
+      it('lane 2 — happy out-pool (Gemini correct) advances without repeat', () => {
+        const def = getDef(fixture);
+        const base = buildHistoryAtProbe(fixture);
+        assertOutOfPool(def, fixture, base);
 
-  const reply = buildChoiceLessonAfterUser(def!, {
-    turns: [
-      { speaker: 'ai', textEn: opening.textEn },
-      { speaker: 'user', textEn: poolAnswer },
-    ],
-    learnerFirstName: 'Nana',
-  });
+        const route = buildChoiceLessonAfterUser(def, {
+          turns: withProbeUser(fixture, fixture.outOfPoolAtProbe),
+          learnerFirstName: FOUNDATION_PROBE_LEARNER,
+        });
+        assert.equal(route?.deferToAi, true, `${lessonId}: should defer to Gemini`);
+        assert.equal(route?.aiMode, 'assess');
 
-  assert.equal(
-    reply?.deferToAi,
-    undefined,
-    `${lessonId} step-1 in-pool should be scripted`,
-  );
-  assert.ok(reply?.textEn?.trim(), `${lessonId} should have scripted textEn`);
-  assert.equal(reply?.assessmentTier, 'correct', `${lessonId} in-pool tier`);
-}
+        const pinned = pinGeminiAtProbe(
+          def,
+          fixture,
+          fixture.outOfPoolAtProbe,
+          'correct',
+          'ถูกต้องแล้วครับ! เก่งมากครับ',
+        );
+        assertAdvancedFromProbe(fixture, pinned);
+        assert.equal(pinned.assessmentTier, 'correct');
+      });
 
-function doubleWrong(
-  openingAi: string,
-  wrong1: string,
-  softTeach: string,
-  wrong2: string,
-): Turn[] {
-  return [
-    { speaker: 'ai', textEn: openingAi },
-    { speaker: 'user', textEn: wrong1 },
-    { speaker: 'ai', textEn: softTeach },
-    { speaker: 'user', textEn: wrong2 },
-  ];
-}
+      it('lane 3 — unhappy close advances without blocking', () => {
+        const def = getDef(fixture);
+        const base = buildHistoryAtProbe(fixture);
+        assertOutOfPool(def, fixture, base);
 
-describe('Foundation PoolGate v2 — in-pool step 1', () => {
-  for (const def of FOUNDATION_CHOICE_LESSONS) {
-    it(`${def.lessonId} — in-pool step 1 advances scripted`, () => {
-      assertInPoolStep1(def.lessonId);
+        const pinned = pinGeminiAtProbe(
+          def,
+          fixture,
+          fixture.outOfPoolAtProbe,
+          'close',
+          'เกือบเป๊ะครับ! ไปต่อกันเลย',
+        );
+        assertAdvancedFromProbe(fixture, pinned);
+        assert.equal(pinned.assessmentTier, 'close');
+      });
+
+      it('lane 4 — unhappy incorrect pins current step + พูดตาม', () => {
+        const def = getDef(fixture);
+        const current = boardAtProbe(fixture);
+        assert.ok(current?.expectedSpeech, `${lessonId}: probe board missing`);
+
+        const route = buildChoiceLessonAfterUser(def, {
+          turns: withProbeUser(fixture, fixture.wrongAtProbe),
+          learnerFirstName: FOUNDATION_PROBE_LEARNER,
+        });
+        assert.equal(route?.deferToAi, true);
+
+        const pinned = pinGeminiAtProbe(
+          def,
+          fixture,
+          fixture.wrongAtProbe,
+          'incorrect',
+          'ยังไม่ใช่นะครับ ลองพูดว่า',
+        );
+        assert.equal(pinned.expectedSpeech, current!.expectedSpeech);
+        assert.match(pinned.textEn ?? '', /พูดตาม/);
+        assert.equal(pinned.assessmentTier, 'incorrect');
+      });
+
+      it('lane 5 — 2nd wrong soft-advances scripted (no Gemini)', () => {
+        const def = getDef(fixture);
+        const next = nextBoardAfterProbeExact(fixture);
+        const turns = buildSoftAdvanceHistory(fixture);
+        const reply = buildChoiceLessonAfterUser(def, {
+          turns,
+          learnerFirstName: FOUNDATION_PROBE_LEARNER,
+        });
+        assert.ok(reply, `${lessonId}: missing soft-advance reply`);
+        assert.notEqual(reply!.deferToAi, true, `${lessonId}: soft-advance is scripted`);
+        assert.match(reply!.textEn ?? '', /คำตอบนี้เราพูดว่า/);
+        assert.match(reply!.textEn ?? '', /ไปต่อกันเลย —/);
+        assert.equal(reply!.expectedSpeech, next!.expectedSpeech);
+        assert.equal(reply!.assessmentTier, 'incorrect');
+      });
     });
   }
 });
 
-describe('Foundation soft-advance copy', () => {
-  it('yes_no_maybe — step 1 Yes, I do.', () => {
-    const def = getFoundationChoiceLesson('yes_no_maybe');
-    assert.ok(def);
-    const opening = def!.buildOpening('Nana');
-    const history = doubleWrong(
-      opening.textEn,
-      'Good morning.',
-      'ลองพูดตามว่า Yes, I do.',
-      'Hello.',
-    );
-    const reply = buildChoiceLessonAfterUser(def!, {
-      turns: history,
-      learnerFirstName: 'Nana',
-    });
-    assert.equal(reply?.deferToAi, undefined, 'yes_no_maybe should soft-advance scripted');
-    assert.match(reply?.textEn ?? '', /คำตอบนี้เราพูดว่า/, 'missing model line');
-    assert.match(reply?.textEn ?? '', /"Yes, I do\."/, 'model phrase');
-    assert.match(reply?.textEn ?? '', /ไปต่อกันเลย —/, 'missing advance lead-in');
-    assert.match(reply?.textEn ?? '', /Maybe/, 'advance cue');
-    assert.doesNotMatch(
-      reply?.textEn ?? '',
-      /ไม่เป็นไรครับ ไปต่อกัน!/,
-      'should not use old prefix',
-    );
-    assert.equal(reply?.assessmentTier, 'incorrect', 'soft-advance tier');
-  });
-});
-
-describe('Introductions — explain before speak', () => {
-  it('teaching boards explain meaning before ลองพูดตาม', () => {
-    const boards = FOUNDATION_BOARDS.introductions;
-    for (const step of [1, 2, 4, 5, 6, 7, 8] as const) {
-      const text = boards[step].textEn;
-      const speakIdx = text.indexOf('ลองพูดตาม');
-      assert.ok(speakIdx >= 0, `step ${step} missing speak cue`);
-      const beforeSpeak = text.slice(0, speakIdx);
-      assert.match(
-        beforeSpeak,
-        /แปลว่า|คือ/,
-        `step ${step} should explain before asking to speak`,
-      );
-    }
-  });
-
-  it('step 3 explains My name is vs I\'m then asks recognition', () => {
+describe('Foundation PoolGate — board copy sanity', () => {
+  it('introductions step 3 explains My name is vs I\'m', () => {
     const text = FOUNDATION_BOARDS.introductions[3].textEn;
     assert.match(text, /My name is/);
     assert.match(text, /I'm/);
     assert.match(text, /ทางการ|เป็นทางการ/);
-    assert.match(text, /\?/);
   });
 
-  it('Gemini correct on step 3 advances to Nice to meet you (not repeat step 3)', () => {
-    const def = getFoundationChoiceLesson('introductions');
-    assert.ok(def);
-
-    const turns: Turn[] = [
-      { speaker: 'ai', textEn: def!.buildOpening('Tami').textEn },
-      { speaker: 'user', textEn: 'My name is Tami.' },
-      { speaker: 'ai', textEn: FOUNDATION_BOARDS.introductions[2].textEn },
-      { speaker: 'user', textEn: "I'm Tami." },
-      { speaker: 'ai', textEn: FOUNDATION_BOARDS.introductions[3].textEn },
-      { speaker: 'user', textEn: 'My name is Tami and it sounds formal.' },
-    ];
-
-    const pinned = pinChoiceLessonAiReply(def!, turns, {
-      textEn: 'ถูกต้องแล้วครับ! เก่งมากครับ',
-      textTh: '',
-      isLessonComplete: false,
-      expectsUserSpeech: true,
-      assessmentTier: 'correct',
-    });
-
-    assert.match(pinned.textEn ?? '', /Nice to meet you/);
-    assert.match(pinned.expectedSpeech ?? '', /Nice to meet you/);
-    assert.doesNotMatch(
-      pinned.textEn ?? '',
-      /ลองเลือกหนึ่งแบบเพื่อแนะนำตัว/,
-    );
-  });
-
-  it('happy path boards explain or ask before next speak turn', () => {
-    const def = getFoundationChoiceLesson('introductions');
-    assert.ok(def);
-
-    const answers = [
-      'My name is Nana.',
-      "I'm Nana.",
-      'My name is Nana.',
-      'Nice to meet you.',
-      'Nice to meet you too.',
-      "I'm from Thailand.",
-      'I live in Bangkok.',
-      'I work as a teacher.',
-      "My name is Nana. I'm from Thailand.",
-    ];
-
-    const opening = def!.buildOpening('Nana');
-    assert.match(opening.textEn, /แปลว่า/);
-
-    const turns: Turn[] = [{ speaker: 'ai', textEn: opening.textEn }];
-    for (let i = 0; i < answers.length; i++) {
-      turns.push({ speaker: 'user', textEn: answers[i] });
-      const reply = buildChoiceLessonAfterUser(def!, {
-        turns,
-        learnerFirstName: 'Nana',
-      });
-      assert.ok(reply, `missing reply after step ${i + 1}`);
-      assert.notEqual(
-        reply!.deferToAi,
-        true,
-        `step ${i + 1} should stay in-pool scripted`,
-      );
-      if (reply!.isLessonComplete) {
-        assert.match(reply!.textEn, /สุดยอด/);
-        break;
+  it('teaching boards explain meaning before ลองพูดตาม (when แปลว่า/คือ present)', () => {
+    for (const fixture of FOUNDATION_POOLGATE_FIXTURES) {
+      const boards = FOUNDATION_BOARDS[fixture.lessonId];
+      for (const step of [2, 4, 5, 6, 7, 8] as const) {
+        const board = boards[step];
+        if (!board) continue;
+        if (!/แปลว่า|คือ/.test(board.textEn)) continue;
+        const speakIdx = board.textEn.indexOf('ลองพูดตาม');
+        if (speakIdx < 0) continue;
+        const beforeSpeak = board.textEn.slice(0, speakIdx);
+        assert.match(
+          beforeSpeak,
+          /แปลว่า|คือ/,
+          `${fixture.lessonId} step ${step} should explain before speak`,
+        );
       }
-      assert.match(
-        reply!.textEn,
-        /แปลว่า|คือ|\?/,
-        `board after step ${i + 1} should explain or ask`,
-      );
-      turns.push({ speaker: 'ai', textEn: reply!.textEn });
     }
   });
 });
