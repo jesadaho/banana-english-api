@@ -1,6 +1,9 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { buildChoiceLessonAfterUser } from './scripts/choice-lesson.script';
+import {
+  buildChoiceLessonAfterUser,
+  type ChoiceLessonHistoryTurn,
+} from './scripts/choice-lesson.script';
 import {
   FOUNDATION_POOLGATE_FIXTURES,
   FOUNDATION_PROBE_LEARNER,
@@ -238,6 +241,42 @@ describe('Foundation — introductions all-step scenarios', () => {
   const introductions = FOUNDATION_POOLGATE_FIXTURES.find(
     (f) => f.lessonId === 'introductions',
   )!;
+
+  it('scenario 2 — near-miss advances when Gemini incorrectly rejects', () => {
+    const def = getDef(introductions);
+    const learnerFirstName = 'Nana';
+    const opening = def.buildOpening(learnerFirstName);
+    const turns: ChoiceLessonHistoryTurn[] = [
+      {
+        speaker: 'ai',
+        textEn: opening.textEn ?? '',
+        expectedSpeech: opening.expectedSpeech,
+      },
+      {
+        speaker: 'user',
+        textEn: introductionsOutOfPoolNearMiss('My name is Nana.', 1),
+      },
+    ];
+
+    const route = buildChoiceLessonAfterUser(def, {
+      turns,
+      learnerFirstName,
+    });
+    assert.equal(route?.deferToAi, true);
+
+    const pinned = pinChoiceLessonAiReply(
+      def,
+      turns,
+      mockGeminiReply(
+        'incorrect',
+        'เกือบแล้วครับ Nana! ลองพูดว่า "My name is Nana" อีกครั้งนะครับ',
+      ),
+      undefined,
+      learnerFirstName,
+    );
+    assert.equal(pinned.assessmentTier, 'correct');
+    assert.match(pinned.textEn ?? '', /Nice to meet you|I'm|My name is/i);
+  });
 
   it('scenario 2 — out-pool correct every step completes lesson', () => {
     const def = getDef(introductions);

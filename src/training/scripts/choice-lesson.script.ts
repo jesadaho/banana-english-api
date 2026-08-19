@@ -47,7 +47,8 @@ export type ChoiceLessonDef = {
     learnerFirstName: string,
   ) => ScriptTurnResult | null;
   pinWithoutGuidedSteps?: number[];
-  progressFromSessionBeat?: (sessionProgressTurn: number | undefined) => number;
+  /** When set, defer+`near` never stays Gemini `incorrect` (Foundation STT tolerance). */
+  clampNearIncorrectToCorrect?: boolean;
 };
 
 function normalizeChoiceExpectedSpeech(value: string | null | undefined): string {
@@ -309,6 +310,20 @@ export function resolveChoiceAssessmentTier(
   return 'incorrect';
 }
 
+/** PoolGate defer: engine `near` = valid alternate — never let Gemini downgrade to incorrect. */
+export function reconcileDeferredAssessmentTier(
+  scoreTier: ChoiceStepTier,
+  aiReply: TrainingTurnReply,
+): TrainingTurnReply {
+  if (
+    scoreTier === 'near' &&
+    resolveChoiceAssessmentTier(aiReply) === 'incorrect'
+  ) {
+    return { ...aiReply, assessmentTier: 'correct' };
+  }
+  return aiReply;
+}
+
 /** PoolGate incorrect — always include พูดตาม even if Gemini only says ลองพูดว่า. */
 export function ensureIncorrectAssessCopy(
   aiReply: TrainingTurnReply,
@@ -345,12 +360,18 @@ export function pinChoiceLessonAiReply(
   sessionProgressTurn?: number,
   learnerFirstName = '',
 ): TrainingTurnReply {
+  const priorTurns = turns.slice(0, -1);
+  const answeredStep =
+    choiceLessonEffectiveProgress(def, priorTurns, sessionProgressTurn) + 1;
+  const userText = lastUserText(turns);
+  const scoreTier = def.scoreStep(answeredStep, userText, priorTurns);
+  if (def.clampNearIncorrectToCorrect) {
+    aiReply = reconcileDeferredAssessmentTier(scoreTier, aiReply);
+  }
+
   const tier = resolveChoiceAssessmentTier(aiReply);
 
   if (tier === 'correct' || tier === 'close') {
-    const priorTurns = turns.slice(0, -1);
-    const answeredStep =
-      choiceLessonEffectiveProgress(def, priorTurns, sessionProgressTurn) + 1;
     // Generic lessons: progressOverride is the 1-based board step to show.
     // Daily Routine custom builder: progressOverride is cleared speak steps (= answeredStep).
     const nextStep = def.buildScriptedReplyFromProgress
@@ -376,9 +397,6 @@ export function pinChoiceLessonAiReply(
     };
   }
 
-  const priorTurns = turns.slice(0, -1);
-  const answeredStep =
-    choiceLessonEffectiveProgress(def, priorTurns, sessionProgressTurn) + 1;
   const board = def.boardForStep(answeredStep, turns);
   const withTeach = ensureIncorrectAssessCopy(aiReply, board);
   return {

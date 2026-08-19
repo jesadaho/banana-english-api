@@ -209,6 +209,7 @@ export function createFoundationLessonDef(params: {
       return Math.min(sessionProgressTurn - 1, params.maxStep);
     },
     pinWithoutGuidedSteps: params.pinWithoutGuidedSteps,
+    clampNearIncorrectToCorrect: true,
     completionText,
     buildOpening:
       params.buildOpening ??
