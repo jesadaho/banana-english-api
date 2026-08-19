@@ -15,7 +15,7 @@ export const FOUNDATION_POOLGATE_FIXTURES: FoundationPoolGateFixture[] = [
     lessonId: 'introductions',
     setupExact: ['My name is Nana.'],
     exactAtProbe: "I'm Nana.",
-    outOfPoolAtProbe: 'I am Nana.',
+    outOfPoolAtProbe: 'My name is Nano.',
     wrongAtProbe: 'Good morning.',
     wrongAgainAtProbe: 'Hello there.',
   },
@@ -37,7 +37,7 @@ export const FOUNDATION_POOLGATE_FIXTURES: FoundationPoolGateFixture[] = [
   },
   {
     lessonId: 'meet_people',
-    setupExact: ['I am happy.'],
+    setupExact: ['I am Nana.'],
     exactAtProbe: 'I am a student.',
     outOfPoolAtProbe: "I'm a student.",
     wrongAtProbe: 'Good morning.',

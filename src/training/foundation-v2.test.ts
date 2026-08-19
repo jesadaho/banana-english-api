@@ -15,11 +15,14 @@ import {
   buildSoftAdvanceHistory,
   getDef,
   INTRODUCTIONS_TIM_PROD_CHAT,
+  introductionsOutOfPoolNearMiss,
   mockGeminiReply,
   nextBoardAfterProbeExact,
   pinChoiceLessonAiReply,
   pinGeminiAtProbe,
   replayChoiceLessonChat,
+  runFoundationAllOutOfPoolGeminiAssess,
+  runFoundationAllOutOfPoolGeminiCorrect,
   runFoundationFullHappyPath,
   runWrongTwiceThenFinishFromStep,
   withProbeUser,
@@ -30,7 +33,7 @@ describe('Foundation PoolGate — 5-lane matrix (all lessons)', () => {
     const { lessonId } = fixture;
 
     describe(lessonId, () => {
-      it('lane 1 — happy in-pool advances scripted', () => {
+      it('scenario 1 — happy in-pool advances scripted', () => {
         const def = getDef(fixture);
         const reply = buildChoiceLessonAfterUser(def, {
           turns: withProbeUser(fixture, fixture.exactAtProbe),
@@ -42,7 +45,7 @@ describe('Foundation PoolGate — 5-lane matrix (all lessons)', () => {
         assertAdvancedFromProbe(fixture, reply!);
       });
 
-      it('lane 2 — happy out-pool (Gemini correct) advances without repeat', () => {
+      it('scenario 2 — happy out-pool (Gemini correct) advances without repeat', () => {
         const def = getDef(fixture);
         const base = buildHistoryAtProbe(fixture);
         assertOutOfPool(def, fixture, base);
@@ -65,7 +68,7 @@ describe('Foundation PoolGate — 5-lane matrix (all lessons)', () => {
         assert.equal(pinned.assessmentTier, 'correct');
       });
 
-      it('lane 3 — unhappy close advances without blocking', () => {
+      it('scenario 3 — unhappy close advances without blocking', () => {
         const def = getDef(fixture);
         const base = buildHistoryAtProbe(fixture);
         assertOutOfPool(def, fixture, base);
@@ -81,7 +84,7 @@ describe('Foundation PoolGate — 5-lane matrix (all lessons)', () => {
         assert.equal(pinned.assessmentTier, 'close');
       });
 
-      it('lane 4 — unhappy incorrect pins current step + พูดตาม', () => {
+      it('scenario 4 — unhappy incorrect pins current step + พูดตาม', () => {
         const def = getDef(fixture);
         const current = boardAtProbe(fixture);
         assert.ok(current?.expectedSpeech, `${lessonId}: probe board missing`);
@@ -104,7 +107,7 @@ describe('Foundation PoolGate — 5-lane matrix (all lessons)', () => {
         assert.equal(pinned.assessmentTier, 'incorrect');
       });
 
-      it('lane 5 — 2nd wrong soft-advances scripted (no Gemini)', () => {
+      it('scenario 5 — 2nd wrong soft-advances scripted (no Gemini)', () => {
         const def = getDef(fixture);
         const next = nextBoardAfterProbeExact(fixture);
         const turns = buildSoftAdvanceHistory(fixture);
@@ -228,6 +231,47 @@ describe('Foundation — introductions cross-step regression', () => {
       result.steps.some((s) => s.userText.includes('Nice to meet you too.')),
       true,
     );
+  });
+});
+
+describe('Foundation — introductions all-step scenarios', () => {
+  const introductions = FOUNDATION_POOLGATE_FIXTURES.find(
+    (f) => f.lessonId === 'introductions',
+  )!;
+
+  it('scenario 2 — out-pool correct every step completes lesson', () => {
+    const def = getDef(introductions);
+    const result = runFoundationAllOutOfPoolGeminiCorrect(
+      def,
+      introductionsOutOfPoolNearMiss,
+    );
+    assert.equal(result.steps.length, def.maxStep);
+    assert.equal(result.steps.at(-1)?.isLessonComplete, true);
+  });
+
+  it('scenario 3 — out-pool close every step completes lesson', () => {
+    const def = getDef(introductions);
+    const result = runFoundationAllOutOfPoolGeminiAssess(
+      def,
+      introductionsOutOfPoolNearMiss,
+      'close',
+    );
+    assert.equal(result.steps.length, def.maxStep);
+    assert.equal(result.steps.at(-1)?.isLessonComplete, true);
+  });
+
+  it('scenario 4 — out-pool wrong every step completes lesson', () => {
+    const def = getDef(introductions);
+    const result = runFoundationAllOutOfPoolGeminiAssess(
+      def,
+      (exact) => 'Good morning.',
+      'incorrect',
+    );
+    assert.equal(result.steps.length, def.maxStep);
+    assert.equal(result.steps.at(-1)?.isLessonComplete, true);
+    for (const record of result.steps) {
+      assert.equal(record.userText, 'Good morning.');
+    }
   });
 });
 

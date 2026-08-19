@@ -1,6 +1,6 @@
 /**
- * Run Introductions PoolGate lanes one-by-one with verbose output.
- * Usage: node --import tsx scripts/introductions-lane-report.mjs
+ * Run Introductions PoolGate scenarios one-by-one with verbose output.
+ * Usage: node --import tsx scripts/introductions-scenario-report.mjs
  */
 import assert from 'node:assert/strict';
 import { buildChoiceLessonAfterUser } from '../src/training/scripts/choice-lesson.script.ts';
@@ -63,22 +63,22 @@ function stepInfo() {
 
 const results = [];
 
-function runLane(name, fn) {
+function runScenario(name, fn) {
   hr(name);
   try {
     stepInfo();
     fn();
     console.log('\n✅ PASS');
-    results.push({ lane: name, pass: true });
+    results.push({ scenario: name, pass: true });
   } catch (err) {
     console.log('\n❌ FAIL');
     console.log(String(err?.message ?? err));
     if (err?.stack) console.log(err.stack.split('\n').slice(0, 4).join('\n'));
-    results.push({ lane: name, pass: false, error: String(err?.message ?? err) });
+    results.push({ scenario: name, pass: false, error: String(err?.message ?? err) });
   }
 }
 
-runLane('Lane 1 — happy in-pool (exact scripted advance)', () => {
+runScenario('Scenario 1 — happy in-pool (exact scripted advance)', () => {
   const reply = buildChoiceLessonAfterUser(def, {
     turns: withProbeUser(fixture, fixture.exactAtProbe, LEARNER),
     learnerFirstName: LEARNER,
@@ -90,7 +90,7 @@ runLane('Lane 1 — happy in-pool (exact scripted advance)', () => {
   assertAdvancedFromProbe(fixture, reply);
 });
 
-runLane('Lane 2 — out-pool + Gemini correct', () => {
+runScenario('Scenario 2 — out-pool + Gemini correct', () => {
   const base = buildHistoryAtProbe(fixture, LEARNER);
   assertOutOfPool(def, fixture, base);
   const route = buildChoiceLessonAfterUser(def, {
@@ -114,7 +114,7 @@ runLane('Lane 2 — out-pool + Gemini correct', () => {
   assert.equal(pinned.assessmentTier, 'correct');
 });
 
-runLane('Lane 3 — out-pool + Gemini close', () => {
+runScenario('Scenario 3 — out-pool + Gemini close', () => {
   const base = buildHistoryAtProbe(fixture, LEARNER);
   assertOutOfPool(def, fixture, base);
   const pinned = pinGeminiAtProbe(
@@ -130,7 +130,7 @@ runLane('Lane 3 — out-pool + Gemini close', () => {
   assert.equal(pinned.assessmentTier, 'close');
 });
 
-runLane('Lane 4 — wrong + Gemini incorrect (pin + พูดตาม)', () => {
+runScenario('Scenario 4 — wrong + Gemini incorrect (pin + พูดตาม)', () => {
   const current = boardAtProbe(fixture, LEARNER);
   snap('probe board', current);
   const route = buildChoiceLessonAfterUser(def, {
@@ -154,7 +154,7 @@ runLane('Lane 4 — wrong + Gemini incorrect (pin + พูดตาม)', () => 
   assert.equal(pinned.assessmentTier, 'incorrect');
 });
 
-runLane('Lane 5 — 2nd wrong soft-advance (scripted)', () => {
+runScenario('Scenario 5 — 2nd wrong soft-advance (engine regression)', () => {
   const next = nextBoardAfterProbeExact(fixture, LEARNER);
   const turns = buildSoftAdvanceHistory(fixture, LEARNER);
   console.log(`\nsoft-advance turn count: ${turns.length}`);
@@ -178,8 +178,8 @@ runLane('Lane 5 — 2nd wrong soft-advance (scripted)', () => {
 
 hr('SUMMARY');
 for (const r of results) {
-  console.log(`${r.pass ? '✅' : '❌'} ${r.lane}${r.error ? ` — ${r.error}` : ''}`);
+  console.log(`${r.pass ? '✅' : '❌'} ${r.scenario}${r.error ? ` — ${r.error}` : ''}`);
 }
 const failed = results.filter((r) => !r.pass).length;
-console.log(`\n${results.length - failed}/${results.length} lanes passed`);
+console.log(`\n${results.length - failed}/${results.length} scenarios passed`);
 process.exit(failed > 0 ? 1 : 0);

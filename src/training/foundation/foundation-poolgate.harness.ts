@@ -29,8 +29,13 @@ export function buildHistoryAtProbe(
   name = FOUNDATION_PROBE_LEARNER,
 ): Turn[] {
   const def = getDef(fixture);
+  const opening = def.buildOpening(name);
   const turns: Turn[] = [
-    { speaker: 'ai', textEn: def.buildOpening(name).textEn },
+    {
+      speaker: 'ai',
+      textEn: opening.textEn,
+      expectedSpeech: opening.expectedSpeech,
+    },
   ];
 
   for (const exact of fixture.setupExact) {
@@ -44,7 +49,11 @@ export function buildHistoryAtProbe(
         `${fixture.lessonId}: setup "${exact}" should be in-pool scripted`,
       );
     }
-    turns.push({ speaker: 'ai', textEn: reply.textEn });
+    turns.push({
+      speaker: 'ai',
+      textEn: reply.textEn,
+      expectedSpeech: reply.expectedSpeech,
+    });
   }
 
   return turns;
@@ -205,8 +214,13 @@ export function buildExactHistoryThroughProgress(
   clearedSteps: number,
   learnerFirstName = FOUNDATION_PROBE_LEARNER,
 ): Turn[] {
+  const opening = def.buildOpening(learnerFirstName);
   const turns: Turn[] = [
-    { speaker: 'ai', textEn: def.buildOpening(learnerFirstName).textEn ?? '' },
+    {
+      speaker: 'ai',
+      textEn: opening.textEn ?? '',
+      expectedSpeech: opening.expectedSpeech,
+    },
   ];
 
   for (let step = 1; step <= clearedSteps; step++) {
@@ -219,7 +233,11 @@ export function buildExactHistoryThroughProgress(
       true,
       `${def.lessonId}: step ${step} setup should be in-pool`,
     );
-    turns.push({ speaker: 'ai', textEn: reply.textEn ?? '' });
+    turns.push({
+      speaker: 'ai',
+      textEn: reply.textEn ?? '',
+      expectedSpeech: reply.expectedSpeech,
+    });
   }
 
   assert.equal(
@@ -238,8 +256,13 @@ export function assertFullHappyPathStepChain(
 ): void {
   assert.equal(result.steps.length, def.maxStep, `${def.lessonId}: step count`);
 
+  const opening = def.buildOpening(learnerFirstName);
   const turns: Turn[] = [
-    { speaker: 'ai', textEn: def.buildOpening(learnerFirstName).textEn ?? '' },
+    {
+      speaker: 'ai',
+      textEn: opening.textEn ?? '',
+      expectedSpeech: opening.expectedSpeech,
+    },
   ];
 
   for (const record of result.steps) {
@@ -297,8 +320,13 @@ export function runFoundationFullHappyPath(
   def: ChoiceLessonDef,
   learnerFirstName = FOUNDATION_PROBE_LEARNER,
 ): FullHappyPathResult {
+  const opening = def.buildOpening(learnerFirstName);
   const turns: Turn[] = [
-    { speaker: 'ai', textEn: def.buildOpening(learnerFirstName).textEn ?? '' },
+    {
+      speaker: 'ai',
+      textEn: opening.textEn ?? '',
+      expectedSpeech: opening.expectedSpeech,
+    },
   ];
   const steps: FullHappyPathStep[] = [];
 
@@ -353,7 +381,11 @@ export function runFoundationFullHappyPath(
       progressAfter,
       isLessonComplete: reply.isLessonComplete ?? false,
     });
-    turns.push({ speaker: 'ai', textEn: reply.textEn ?? '' });
+    turns.push({
+      speaker: 'ai',
+      textEn: reply.textEn ?? '',
+      expectedSpeech: reply.expectedSpeech,
+    });
   }
 
   const last = steps.at(-1)!;
@@ -376,6 +408,166 @@ export function runFoundationFullHappyPath(
   const result = { turns, steps, completionText: last.aiTextEn };
   assertFullHappyPathStepChain(def, result, learnerFirstName);
   return result;
+}
+
+export function outOfPoolEllipsisAnswer(exact: string): string {
+  return exact.replace(/[.!?…]+$/g, '') + '....';
+}
+
+/** STT near-miss for Introductions: wrong name (Nano) or trailing .... */
+export function introductionsOutOfPoolNearMiss(
+  exact: string,
+  _step?: number,
+): string {
+  if (/nana/i.test(exact)) {
+    return exact.replace(/Nana/gi, 'Nano');
+  }
+  return outOfPoolEllipsisAnswer(exact);
+}
+
+/** Off-topic wrong answer for out-of-pool wrong scenarios. */
+export function introductionsOutOfPoolWrong(_exact: string, _step?: number): string {
+  return 'Good morning.';
+}
+
+export type OutOfPoolAnswerFn = (exact: string, step: number) => string;
+
+export type GeminiAssessTier = 'correct' | 'close' | 'incorrect';
+
+const DEFAULT_GEMINI_PREFIX: Record<GeminiAssessTier, string> = {
+  correct: 'ถูกต้องแล้วครับ! เก่งมากครับ',
+  close: 'เกือบเป๊ะครับ! ไปต่อกันเลย',
+  incorrect: 'ยังไม่ใช่นะครับ ลองพูดว่า',
+};
+
+/** Every step: out-of-pool → defer → pinned Gemini assess tier → advance (with exact recovery after incorrect). */
+export function runFoundationAllOutOfPoolGeminiAssess(
+  def: ChoiceLessonDef,
+  outOfPoolFn: OutOfPoolAnswerFn,
+  tier: GeminiAssessTier,
+  options: {
+    learnerFirstName?: string;
+    geminiPrefix?: string;
+    recoverAfterIncorrect?: boolean;
+  } = {},
+): FullHappyPathResult {
+  const learnerFirstName = options.learnerFirstName ?? FOUNDATION_PROBE_LEARNER;
+  const geminiPrefix = options.geminiPrefix ?? DEFAULT_GEMINI_PREFIX[tier];
+  const recoverAfterIncorrect =
+    tier === 'incorrect' && (options.recoverAfterIncorrect ?? true);
+
+  const opening = def.buildOpening(learnerFirstName);
+  const turns: Turn[] = [
+    {
+      speaker: 'ai',
+      textEn: opening.textEn ?? '',
+      expectedSpeech: opening.expectedSpeech,
+    },
+  ];
+  const steps: FullHappyPathStep[] = [];
+  let sessionProgressTurn = 1;
+
+  for (let step = 1; step <= def.maxStep; step++) {
+    const exact = expectedInPoolSpeech(def, step, turns, learnerFirstName);
+    const userText = outOfPoolFn(exact, step);
+    turns.push({ speaker: 'user', textEn: userText });
+
+    const route = buildChoiceLessonAfterUser(def, {
+      turns,
+      learnerFirstName,
+      sessionProgressTurn,
+    });
+    assert.ok(route, `${def.lessonId} step ${step}: missing route`);
+    assert.equal(
+      route!.deferToAi,
+      true,
+      `${def.lessonId} step ${step}: "${userText}" should defer to Gemini`,
+    );
+
+    const assessed = pinChoiceLessonAiReply(
+      def,
+      turns,
+      mockGeminiReply(tier, geminiPrefix),
+      sessionProgressTurn,
+      learnerFirstName,
+    );
+    assert.equal(
+      assessed.assessmentTier,
+      tier,
+      `${def.lessonId} step ${step}: Gemini tier`,
+    );
+
+    turns.push({
+      speaker: 'ai',
+      textEn: assessed.textEn ?? '',
+      expectedSpeech: assessed.expectedSpeech,
+    });
+
+    let replyForStep = assessed;
+    if (recoverAfterIncorrect) {
+      assert.match(
+        assessed.textEn ?? '',
+        /พูดตาม/,
+        `${def.lessonId} step ${step}: incorrect should ask repeat`,
+      );
+      const recoveryText = exact;
+      turns.push({ speaker: 'user', textEn: recoveryText });
+      const recovery = buildChoiceLessonAfterUser(def, {
+        turns,
+        learnerFirstName,
+        sessionProgressTurn,
+      });
+      assert.ok(recovery, `${def.lessonId} step ${step}: recovery reply`);
+      assert.notEqual(
+        recovery!.deferToAi,
+        true,
+        `${def.lessonId} step ${step}: recovery should be in-pool`,
+      );
+      turns.push({
+        speaker: 'ai',
+        textEn: recovery!.textEn ?? '',
+        expectedSpeech: recovery!.expectedSpeech,
+      });
+      replyForStep = recovery!;
+    }
+
+    const progressAfter = choiceLessonEffectiveProgress(
+      def,
+      turns,
+      sessionProgressTurn,
+    );
+    steps.push({
+      step,
+      userText,
+      aiTextEn: assessed.textEn ?? '',
+      expectedSpeech: assessed.expectedSpeech ?? null,
+      progressAfter,
+      isLessonComplete: replyForStep.isLessonComplete ?? false,
+    });
+    sessionProgressTurn++;
+  }
+
+  const last = steps.at(-1)!;
+  assert.equal(last.isLessonComplete, true, `${def.lessonId}: should complete`);
+  assert.match(
+    turns.at(-1)?.textEn ?? '',
+    /สุดยอด|🎉|🍌/,
+    `${def.lessonId}: celebrate copy`,
+  );
+  return { turns, steps, completionText: turns.at(-1)?.textEn ?? '' };
+}
+
+/** Every step: out-of-pool user line → defer → pinned Gemini correct → advance to completion. */
+export function runFoundationAllOutOfPoolGeminiCorrect(
+  def: ChoiceLessonDef,
+  outOfPoolFn: OutOfPoolAnswerFn,
+  learnerFirstName = FOUNDATION_PROBE_LEARNER,
+  geminiPraise = DEFAULT_GEMINI_PREFIX.correct,
+): FullHappyPathResult {
+  return runFoundationAllOutOfPoolGeminiAssess(def, outOfPoolFn, 'correct', {
+    learnerFirstName,
+    geminiPrefix: geminiPraise,
+  });
 }
 
 /** Two wrong answers on `atStep`, then exact in-pool recovery through lesson end. */

@@ -36,6 +36,38 @@ export function personalize(text: string, name: string): string {
   return text.replace(/\{name\}/g, n);
 }
 
+function cleanIntroducedName(raw: string): string {
+  return raw.trim().replace(/[.!?…]+$/g, '').trim();
+}
+
+/** In-pool if raw matches, or STT added at most one extra trailing dot. */
+export function isFoundationRawPoolMatch(
+  userText: string,
+  board: ForcedGuidedBoard | null,
+): boolean {
+  if (!board) return false;
+  const raw = userText.trim();
+  if (!raw) return false;
+  const poolLines = [
+    board.expectedSpeech,
+    ...board.options.map((o) => o.speak),
+  ];
+
+  for (const line of poolLines) {
+    const pool = line.trim();
+    if (!pool) continue;
+    if (raw === pool) return true;
+
+    const core = pool.replace(/\.+$/, '');
+    if (!core || !raw.startsWith(core)) continue;
+    const suffix = raw.slice(core.length);
+    if (!/^\.+$/.test(suffix)) continue;
+    const poolDotCount = pool.length - core.length;
+    if (suffix.length - poolDotCount <= 2) return true;
+  }
+  return false;
+}
+
 export function extractIntroducedName(
   history: ChoiceLessonHistoryTurn[],
   fallback = 'Ben',
@@ -46,18 +78,30 @@ export function extractIntroducedName(
     if (!text) continue;
 
     const myName = text.match(/^my name is (.+?)\.?$/i);
-    if (myName?.[1]) return myName[1].trim();
+    if (myName?.[1]) return cleanIntroducedName(myName[1]);
 
     const im = text.match(/^i['']?m (.+?)\.?$/i);
     if (im?.[1] && !/^(ready|from|a |an |the )/i.test(im[1])) {
-      return im[1].trim();
+      return cleanIntroducedName(im[1]);
     }
 
     const iAm = text.match(/^i am (.+?)\.?$/i);
     if (iAm?.[1] && !/^(ready|from|a |an |the )/i.test(iAm[1])) {
-      return iAm[1].trim();
+      return cleanIntroducedName(iAm[1]);
     }
   }
+
+  for (const turn of history) {
+    if (turn.speaker !== 'ai' || !turn.expectedSpeech) continue;
+    const fromMyName = turn.expectedSpeech.match(/^my name is (.+?)\.?$/i);
+    if (fromMyName?.[1]) return cleanIntroducedName(fromMyName[1]);
+
+    const fromIAm = turn.expectedSpeech.match(/^i am (.+?)\.?$/i);
+    if (fromIAm?.[1] && !/^(a |an |the )/i.test(fromIAm[1])) {
+      return cleanIntroducedName(fromIAm[1]);
+    }
+  }
+
   return fallback;
 }
 
@@ -82,6 +126,21 @@ export function personalizeBoard(
       speak: personalize(o.speak, name),
     })),
   };
+}
+
+function historyForScoring(
+  history: ChoiceLessonHistoryTurn[],
+  scoringText: string,
+): ChoiceLessonHistoryTurn[] {
+  if (history.length === 0) return history;
+  const last = history[history.length - 1];
+  if (
+    last.speaker === 'user' &&
+    (last.textEn ?? '').trim() === scoringText.trim()
+  ) {
+    return history.slice(0, -1);
+  }
+  return history;
 }
 
 export function createFoundationLessonDef(params: {
@@ -119,12 +178,17 @@ export function createFoundationLessonDef(params: {
     step: number,
     text: string,
     history: ChoiceLessonHistoryTurn[] = [],
-  ): ChoiceStepTier =>
-    createBoardChoiceScorer(
+  ): ChoiceStepTier => {
+    const boardHistory = historyForScoring(history, text);
+    const tier = createBoardChoiceScorer(
       normalizeFoundationSpeech,
-      (s) => resolveBoard(s, history),
+      (s) => resolveBoard(s, boardHistory),
       params.matchesLoose,
     )(step, text);
+    if (tier !== 'exact') return tier;
+    const board = resolveBoard(step, boardHistory);
+    return isFoundationRawPoolMatch(text, board) ? 'exact' : 'near';
+  };
 
   const completionText =
     typeof params.completionText === 'function'
@@ -140,6 +204,10 @@ export function createFoundationLessonDef(params: {
       ),
     scoreStep: (step, text, history) => scoreStep(step, text, history),
     boardForStep: (step, history) => resolveBoard(step, history),
+    progressFromSessionBeat: (sessionProgressTurn) => {
+      if (sessionProgressTurn == null || sessionProgressTurn <= 0) return 0;
+      return Math.min(sessionProgressTurn - 1, params.maxStep);
+    },
     pinWithoutGuidedSteps: params.pinWithoutGuidedSteps,
     completionText,
     buildOpening:

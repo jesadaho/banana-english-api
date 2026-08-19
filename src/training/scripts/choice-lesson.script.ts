@@ -387,6 +387,15 @@ export function pinChoiceLessonAiReply(
   };
 }
 
+function isInPoolExactMatch(
+  def: ChoiceLessonDef,
+  answeredStep: number,
+  userText: string,
+  priorTurns: ChoiceLessonHistoryTurn[],
+): boolean {
+  return def.scoreStep(answeredStep, userText, priorTurns) === 'exact';
+}
+
 /**
  * PoolGate routing:
  * - exact (in pool) → scripted advance
@@ -410,7 +419,12 @@ export function buildChoiceLessonAfterUser(
   );
   const answeredStep = effectiveProgress + 1;
   const userText = lastUserText(turns);
-  const inPool = def.scoreStep(answeredStep, userText, turns) === 'exact';
+  const inPool = isInPoolExactMatch(
+    def,
+    answeredStep,
+    userText,
+    priorTurns,
+  );
 
   if (inPool) {
     const nextProgress = def.buildScriptedReplyFromProgress
@@ -427,7 +441,12 @@ export function buildChoiceLessonAfterUser(
 
   const replayBefore = def.progressFn(priorTurns);
   const replayAfter = def.progressFn(turns);
-  if (replayAfter > replayBefore) {
+  const effectiveBefore = choiceLessonEffectiveProgress(
+    def,
+    priorTurns,
+    sessionProgressTurn,
+  );
+  if (replayAfter > replayBefore && replayAfter === effectiveBefore + 1) {
     const nextProgress = def.buildScriptedReplyFromProgress
       ? replayAfter
       : replayAfter + 1;
