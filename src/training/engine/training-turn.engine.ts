@@ -181,7 +181,13 @@ export class TrainingTurnEngine {
     if (scripted && !scripted.deferToAi) {
       const replyStep = Math.min(step + 1, 9);
       return {
-        reply: pinGreetingsReplyChrome(this.toReply(scripted), replyStep),
+        reply: pinGreetingsReplyChrome(
+          {
+            ...this.toReply(scripted),
+            assessmentTier: score.matched ? 'correct' : 'incorrect',
+          },
+          replyStep,
+        ),
         aiDebug: scriptedAiDebug(),
       };
     }

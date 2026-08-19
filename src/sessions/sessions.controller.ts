@@ -978,6 +978,7 @@ export class SessionsController {
       expectedSpeech,
       emojiChoice,
       guidedSpeaking,
+      ...(reply.assessmentTier ? { assessmentTier: reply.assessmentTier } : {}),
     };
 
     if (body.generateAudio) {
@@ -2370,6 +2371,7 @@ export class SessionsController {
         guidedSpeaking,
         roleplayIntro,
         roleplayNpc: isTaskComplete ? null : roleplayNpc,
+        ...(reply.assessmentTier ? { assessmentTier: reply.assessmentTier } : {}),
       };
 
       if (body.generateAudio) {

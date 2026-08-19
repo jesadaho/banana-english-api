@@ -329,6 +329,7 @@ export function pinChoiceLessonAiReply(
       guidedSpeaking: next.guidedSpeaking,
       roleplayIntro: next.roleplayIntro,
       roleplayNpc: next.roleplayNpc,
+      assessmentTier: tier,
     };
   }
 
@@ -337,7 +338,10 @@ export function pinChoiceLessonAiReply(
     choiceLessonEffectiveProgress(def, priorTurns, sessionProgressTurn) + 1;
   const board = def.boardForStep(answeredStep, turns);
   const withTeach = ensureIncorrectAssessCopy(aiReply, board);
-  return pinCurrentBoard(def, turns, answeredStep, withTeach);
+  return {
+    ...pinCurrentBoard(def, turns, answeredStep, withTeach),
+    assessmentTier: 'incorrect' as const,
+  };
 }
 
 /**
@@ -362,7 +366,8 @@ export function buildChoiceLessonAfterUser(
   const inPool = def.scoreStep(answeredStep, userText, turns) === 'exact';
 
   if (inPool) {
-    return scriptedFromProgress(def, turns, undefined, learnerFirstName);
+    const next = scriptedFromProgress(def, turns, undefined, learnerFirstName);
+    return next ? { ...next, assessmentTier: 'correct' as const } : null;
   }
 
   const replayBefore = def.progressFn(priorTurns);
@@ -376,6 +381,7 @@ export function buildChoiceLessonAfterUser(
       ...next,
       textEn: buildSoftAdvanceTextEn(failedBoard, nextBoard, next),
       textTh: buildSoftAdvanceTextTh(failedBoard, nextBoard, next),
+      assessmentTier: 'incorrect' as const,
     };
   }
 

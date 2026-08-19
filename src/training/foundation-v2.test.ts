@@ -48,6 +48,7 @@ function assertInPoolStep1(lessonId: string): void {
     `${lessonId} step-1 in-pool should be scripted`,
   );
   assert.ok(reply?.textEn?.trim(), `${lessonId} should have scripted textEn`);
+  assert.equal(reply?.assessmentTier, 'correct', `${lessonId} in-pool tier`);
 }
 
 function doubleWrong(
@@ -97,5 +98,6 @@ describe('Foundation soft-advance copy', () => {
       /ไม่เป็นไรครับ ไปต่อกัน!/,
       'should not use old prefix',
     );
+    assert.equal(reply?.assessmentTier, 'incorrect', 'soft-advance tier');
   });
 });

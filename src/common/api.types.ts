@@ -113,6 +113,11 @@ export interface TurnExchangeResponse {
    * Omit on Teacher / Celebrate turns.
    */
   roleplayNpc?: RoleplayNpcPrompt | null;
+  /**
+   * Training v2 — how the learner's last spoken answer was assessed.
+   * correct / close → praise + advance; incorrect → soft-teach same step.
+   */
+  assessmentTier?: 'correct' | 'close' | 'incorrect';
   /** Timing breakdown — only when the client sends X-Chat-Debug: 1. */
   aiDebug?: AiDebug;
 }
