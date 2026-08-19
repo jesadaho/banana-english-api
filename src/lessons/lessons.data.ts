@@ -9619,8 +9619,6 @@ export function resolveLessonProgressTurn(
   let beat: number | null = null;
   if (lessonId === 'ee_around_town_shopping') {
     beat = detectShoppingProgressBeat(current);
-  } else if (lessonId === 'greetings') {
-    beat = detectGreetingsProgressBeat(current);
   } else if (FOUNDATION_PROGRESS_LESSON_IDS.has(lessonId)) {
     beat = detectFoundationGenericProgressBeat(
       prevProgressTurn,

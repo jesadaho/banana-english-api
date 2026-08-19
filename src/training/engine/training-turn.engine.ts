@@ -6,16 +6,6 @@ import type { ChatTurn } from '../../session-store/session-store.service';
 import type { TrainingTurnReply } from '../../gemini/gemini-chat.service';
 import { scriptedAiDebug } from '../../common/ai-debug';
 import { TrainingAiGate } from './ai-gate';
-import {
-  resolveGreetingsStep,
-  scoreGreetingsUserTurn,
-  greetingsExpectedSpeechForStep,
-} from './lesson-step.resolver';
-import {
-  buildGreetingsOpening,
-  buildGreetingsAfterUser,
-} from '../scripts/greetings.script';
-import { pinGreetingsReplyChrome } from './pin-greetings-chrome';
 import type { ScriptTurnResult } from '../scripts/types';
 import {
   buildChoiceLessonAfterUser,
@@ -50,14 +40,6 @@ export class TrainingTurnEngine {
     config: LessonConfig,
     learnerFirstName: string,
   ): { reply: TrainingTurnReply; aiDebug: AiDebug } {
-    if (config.lessonId === 'greetings') {
-      const reply = buildGreetingsOpening(learnerFirstName);
-      return {
-        reply: pinGreetingsReplyChrome(this.toReply(reply), 1),
-        aiDebug: scriptedAiDebug(),
-      };
-    }
-
     const foundation = getFoundationChoiceLesson(config.lessonId);
     if (foundation) {
       const reply = foundation.buildOpening(learnerFirstName);
@@ -82,10 +64,6 @@ export class TrainingTurnEngine {
   async runTurn(
     input: TrainingEngineTurnInput,
   ): Promise<{ reply: TrainingTurnReply; aiDebug: AiDebug }> {
-    if (input.config.lessonId === 'greetings') {
-      return this.runGreetingsTurn(input);
-    }
-
     const foundation = getFoundationChoiceLesson(input.config.lessonId);
     if (foundation) {
       return this.runChoiceLessonTurn(input, foundation);
@@ -156,64 +134,6 @@ export class TrainingTurnEngine {
         input.sessionProgressTurn,
         input.learnerFirstName,
       ),
-      aiDebug: generated.aiDebug,
-    };
-  }
-
-  private async runGreetingsTurn(
-    input: TrainingEngineTurnInput,
-  ): Promise<{ reply: TrainingTurnReply; aiDebug: AiDebug }> {
-    const priorTurns = input.turns.slice(0, -1);
-    const { step, attempt: priorAttempt } = resolveGreetingsStep(priorTurns);
-    const attempt = priorAttempt + 1;
-    const score = scoreGreetingsUserTurn(
-      step,
-      input.userText,
-      input.originalText,
-    );
-
-    const scripted = buildGreetingsAfterUser({
-      step,
-      attempt,
-      matched: score.matched,
-      learnerFirstName: input.learnerFirstName,
-    });
-
-    if (scripted && !scripted.deferToAi) {
-      const replyStep = Math.min(step + 1, 9);
-      return {
-        reply: pinGreetingsReplyChrome(
-          {
-            ...this.toReply(scripted),
-            assessmentTier: score.matched ? 'correct' : 'incorrect',
-          },
-          replyStep,
-        ),
-        aiDebug: scriptedAiDebug(),
-      };
-    }
-
-    const lastAi = [...input.turns].reverse().find((t) => t.speaker === 'ai');
-    const generated = await this.aiGate.runGreetings({
-      lessonTitle: input.config.titleEn,
-      coreStep: step,
-      coreStepMax: input.config.progressMax ?? 9,
-      attempt,
-      matched: score.matched,
-      expectedSpeech:
-        greetingsExpectedSpeechForStep(step) ??
-        (lastAi?.expectedSpeech?.trim() || null),
-      userText: input.userText,
-      originalText: input.originalText,
-      history: input.turns,
-      learnerFirstName: input.learnerFirstName,
-      teachingLanguage: teachingLanguageFromConfig(input.config),
-      languageMix: input.config.languageMix,
-      mode: scripted?.aiMode ?? 'softTeach',
-    });
-
-    return {
-      reply: pinGreetingsReplyChrome(generated.reply, step),
       aiDebug: generated.aiDebug,
     };
   }

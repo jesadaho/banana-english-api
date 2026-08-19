@@ -5,12 +5,10 @@ import {
 } from './scripts/foundation.registry';
 import { isAboutMeChoiceLesson } from './scripts/about-me.registry';
 
-/** Greetings uses a dedicated script but is always engine v2. */
-const GREETINGS_LESSON_ID = 'greetings';
+/** Foundation + About Me lessons use the PoolGate / choice-lesson registry. */
 
 function registryV2LessonIds(): string[] {
   return [
-    GREETINGS_LESSON_ID,
     ...FOUNDATION_LESSON_IDS,
     ...ABOUT_ME_CHOICE_LESSONS.map((d) => d.lessonId),
   ];
@@ -40,7 +38,6 @@ export function trainingV2Allowlist(): Set<string> {
 }
 
 export function isTrainingV2Lesson(lessonId: string): boolean {
-  if (lessonId === GREETINGS_LESSON_ID) return true;
   if (isFoundationChoiceLesson(lessonId)) return true;
   if (isAboutMeChoiceLesson(lessonId)) return true;
   return extraV2Allowlist().has(lessonId);

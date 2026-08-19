@@ -426,6 +426,42 @@ export function introductionsOutOfPoolNearMiss(
   return outOfPoolEllipsisAnswer(exact);
 }
 
+/** Generic close-miss for Foundation scenario 3 (non-Introductions lessons). */
+export function foundationOutOfPoolCloseMiss(
+  exact: string,
+  step: number,
+  lessonId: string,
+): string {
+  if (lessonId === 'introductions') {
+    return introductionsOutOfPoolCloseMiss(exact, step);
+  }
+
+  const t = exact.trim();
+  if (/^I'm\b/i.test(t)) return t.replace(/^I'm\b/i, 'I am');
+  if (/^I am\b/i.test(t)) return t.replace(/^I am\b/i, "I'm");
+  if (/^It's\b/i.test(t)) return t.replace(/^It's\b/i, 'It is');
+  if (/^It is\b/i.test(t)) return t.replace(/^It is\b/i, "It's");
+  if (/^You're\b/i.test(t)) return t.replace(/^You're\b/i, 'You are');
+  if (/^You are\b/i.test(t)) return t.replace(/^You are\b/i, "You're");
+  if (/^I can't\b/i.test(t)) return t.replace(/^I can't\b/i, 'I cannot');
+  if (/^I cannot\b/i.test(t)) return t.replace(/^I cannot\b/i, "I can't");
+  if (/^I don't\b/i.test(t)) return t.replace(/^I don't\b/i, 'I do not');
+  if (/^I like /i.test(t)) {
+    return `I really like ${t.slice(7).replace(/[.!?]+$/, '')}`;
+  }
+  if (/^I want /i.test(t)) {
+    return `I really want ${t.slice(7).replace(/[.!?]+$/, '')}`;
+  }
+  if (/^I need /i.test(t)) {
+    return `I really need ${t.slice(7).replace(/[.!?]+$/, '')}`;
+  }
+  if (/^Where is the /i.test(t)) return t.replace(/^Where is the /i, 'Where is ');
+  if (/^Can you /i.test(t)) return t.replace(/^Can you /i, 'Could you please ');
+  if (/^How much/i.test(t)) return `${t.replace(/\?$/, '')} please`;
+  if (/^[a-z-]+$/i.test(t) && !/\s/.test(t)) return `the number ${t}`;
+  return outOfPoolEllipsisAnswer(exact);
+}
+
 /** Structural close-miss for Introductions scenario 3 — missing function words. */
 export function introductionsOutOfPoolCloseMiss(
   exact: string,

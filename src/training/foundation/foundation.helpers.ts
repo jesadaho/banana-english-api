@@ -13,6 +13,7 @@ import type { ScriptTurnResult } from '../scripts/types';
 import { resolveIncorrectHintTh } from './foundation-incorrect-hints';
 
 export const FOUNDATION_LESSON_IDS = [
+  'greetings',
   'introductions',
   'yes_no_maybe',
   'polite_expressions',
@@ -159,6 +160,8 @@ export function createFoundationLessonDef(params: {
   matchesLoose: (step: number, text: string) => boolean;
   matchesClose?: (step: number, text: string) => boolean;
   pinWithoutGuidedSteps?: number[];
+  /** Recognition steps — only expectedSpeech is in-pool exact, not sibling options. */
+  exactExpectedOnlySteps?: number[];
   buildOpening?: (learnerFirstName: string) => ScriptTurnResult;
 }): ChoiceLessonDef {
   const resolveBoard = (
@@ -184,6 +187,17 @@ export function createFoundationLessonDef(params: {
     history: ChoiceLessonHistoryTurn[] = [],
   ): ChoiceStepTier => {
     const boardHistory = historyForScoring(history, text);
+    if (params.exactExpectedOnlySteps?.includes(step)) {
+      const board = resolveBoard(step, boardHistory);
+      const normalized = normalizeFoundationSpeech(text);
+      const expected = normalizeFoundationSpeech(board?.expectedSpeech ?? '');
+      if (expected && normalized === expected) {
+        return isFoundationRawPoolMatch(text, board) ? 'exact' : 'near';
+      }
+      if (params.matchesLoose(step, text)) return 'near';
+      if (params.matchesClose?.(step, text)) return 'close';
+      return 'wrong';
+    }
     const tier = createBoardChoiceScorer(
       normalizeFoundationSpeech,
       (s) => resolveBoard(s, boardHistory),

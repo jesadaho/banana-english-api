@@ -20,6 +20,17 @@ export const FOUNDATION_LOOSE_MATCHERS: Record<
   FoundationLessonId,
   (step: number, text: string) => boolean
 > = {
+  greetings: (step, text) =>
+    loose(step, text, {
+      1: /^hello$/,
+      2: /^hi$/,
+      3: /^hi$/,
+      4: /^good morning$/,
+      5: /^good afternoon$/,
+      6: /^good evening$/,
+      7: /^good morning$/,
+      8: /^(hello|hi|good morning|good afternoon|good evening)$/,
+    }),
   introductions: (step, text) =>
     loose(step, text, {
       1: /^my name is /,
@@ -132,6 +143,13 @@ export const FOUNDATION_LOOSE_MATCHERS: Record<
 export const FOUNDATION_CLOSE_MATCHERS: Partial<
   Record<FoundationLessonId, (step: number, text: string) => boolean>
 > = {
+  greetings: (step, text) =>
+    loose(step, text, {
+      4: /^morning$/,
+      5: /^afternoon$/,
+      6: /^evening$/,
+      7: /^morning$/,
+    }),
   introductions: (step, text) =>
     loose(step, text, {
       1: /^my name [a-z]+$/,
@@ -149,6 +167,89 @@ export const FOUNDATION_BOARDS: Record<
   FoundationLessonId,
   Record<number, ForcedGuidedBoard>
 > = {
+  greetings: {
+    1: {
+      textEn:
+        'สวัสดีครับ {name}! วันนี้เรามาเรียนการทักทายกันครับ — Hello, Hi และทักทายตามเวลาในวัน 😊 เริ่มจากคำแรก: Hello! ลองพูดตามครับ',
+      withPraise: false,
+      stem: '',
+      expectedSpeech: 'Hello',
+      options: [{ emoji: '👋', label: 'Hello', speak: 'Hello' }],
+    },
+    2: {
+      textEn:
+        'เยี่ยมเลย {name}! Hello ใช้ทักทายได้ทั่วไปครับ 👋 ต่อไปคำสบายๆ: Hi! ลองพูดตามได้เลย',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'Hi',
+      options: [{ emoji: '✌️', label: 'Hi', speak: 'Hi' }],
+    },
+    3: {
+      textEn:
+        'Hello กับ Hi ต่างกันนิดหน่อย — Hello ฟังดูสุภาพกว่า Hi สบายๆ เหมาะกับเพื่อน ✌️ ถ้าเจอเพื่อนสนิท ควรทักว่าอะไรครับ?',
+      withPraise: true,
+      stem: 'เพื่อนสนิท → ทักว่าอะไร?',
+      expectedSpeech: 'Hi',
+      options: [
+        { emoji: '👋', label: 'Hello', speak: 'Hello' },
+        { emoji: '✌️', label: 'Hi', speak: 'Hi' },
+      ],
+    },
+    4: {
+      textEn:
+        'ถูกต้องครับ! ต่อไปทักทายตามเวลา — ช่วงเช้า (ก่อนเที่ยง) ใช้ Good morning 🌅 ลองพูดตามครับ',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'Good morning',
+      options: [
+        { emoji: '🌅', label: 'Good morning', speak: 'Good morning' },
+      ],
+    },
+    5: {
+      textEn:
+        'เก่งมาก! ช่วงบ่าย (หลังเที่ยงถึงเย็น) ใช้ Good afternoon ☀️ พูดตามได้เลยครับ',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'Good afternoon',
+      options: [
+        { emoji: '☀️', label: 'Good afternoon', speak: 'Good afternoon' },
+      ],
+    },
+    6: {
+      textEn:
+        'ดีมากครับ! ตอนเย็น/กลางคืน ใช้ Good evening 🌙 ลองพูดตามนะ',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'Good evening',
+      options: [
+        { emoji: '🌙', label: 'Good evening', speak: 'Good evening' },
+      ],
+    },
+    7: {
+      textEn:
+        'เช้า 7 โมง ควรทักว่าอะไรครับ? เลือกแล้วพูดทักทายผ่านไมค์ได้เลย 🕖',
+      withPraise: true,
+      stem: '7 โมงเช้า → ทักว่าอะไร?',
+      expectedSpeech: 'Good morning',
+      options: [
+        { emoji: '🌅', label: 'Good morning', speak: 'Good morning' },
+        { emoji: '☀️', label: 'Good afternoon', speak: 'Good afternoon' },
+        { emoji: '🌙', label: 'Good evening', speak: 'Good evening' },
+      ],
+    },
+    8: {
+      textEn:
+        'เก่งมากครับ! คราวนี้ลองทักทายผมสักประโยค — ใช้คำไหนก็ได้ที่เรียนไป 👋',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'Hello',
+      options: [
+        { emoji: '👋', label: 'Hello', speak: 'Hello' },
+        { emoji: '✌️', label: 'Hi', speak: 'Hi' },
+        { emoji: '🌅', label: 'Good morning', speak: 'Good morning' },
+      ],
+    },
+  },
   introductions: {
     1: {
       textEn:
@@ -1081,6 +1182,7 @@ export const FOUNDATION_BOARDS: Record<
 };
 
 export const FOUNDATION_MAX_STEPS: Record<FoundationLessonId, number> = {
+  greetings: 8,
   introductions: 8,
   yes_no_maybe: 5,
   polite_expressions: 5,

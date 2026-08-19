@@ -52,6 +52,7 @@ def parse_turn(payload: dict) -> dict:
         "aiResponse": block.get("aiResponse", "") or "",
         "textTh": block.get("textTh", "") or "",
         "emojiChoice": block.get("emojiChoice"),
+        "guidedSpeaking": block.get("guidedSpeaking"),
         "source": dbg.get("source"),
         "geminiMs": dbg.get("geminiMs"),
         "handlerMs": dbg.get("handlerMs"),
@@ -120,7 +121,7 @@ def scenario_wrong_then_fix() -> None:
 
     turn, _, ms = c.say(turn["currentTurn"], "hey there")
     log_turn("wrong #1 on Hello (Gemini soft-teach)", turn, ms)
-    assert_true(turn["source"] == "gemini", "1st wrong should use Gemini soft-teach")
+    assert_true(turn["source"] == "gemini", "1st wrong should use Gemini assess")
     assert_true(turn["expectedSpeech"] == "Hello", "should retry Hello after teach")
     assert_true((turn["progressTurn"] or 0) <= 1, "progress should stay at step 1")
 
@@ -137,18 +138,18 @@ def scenario_double_wrong_force_advance() -> None:
     turn = c.start()
 
     turn, _, ms = c.say(turn["currentTurn"], "goodbye")
-    log_turn("wrong #1 (Gemini teach)", turn, ms)
-    assert_true(turn["source"] == "gemini", "1st wrong = Gemini soft-teach")
+    log_turn("wrong #1 (Gemini assess)", turn, ms)
+    assert_true(turn["source"] == "gemini", "1st wrong = Gemini assess")
 
     turn, _, ms = c.say(turn["currentTurn"], "see you")
-    log_turn("wrong #2 (force advance)", turn, ms)
+    log_turn("wrong #2 (soft-advance)", turn, ms)
     assert_true(
         turn["source"] == "scripted",
-        f"2nd wrong should force-advance scripted, got source={turn['source']}",
+        f"2nd wrong should soft-advance scripted, got source={turn['source']}",
     )
     assert_true(
-        "ไม่เป็นไร" in turn["aiResponse"] or "move on" in (turn["textTh"] or "").lower(),
-        "should gently move on",
+        "ตรงนี้พูด" in turn["aiResponse"] or "move on" in (turn["textTh"] or "").lower(),
+        "should model answer and move on",
     )
     assert_true(turn["expectedSpeech"] == "Hi", "should land on Hi step")
     assert_true((turn.get("geminiMs") or 0) == 0, "2nd wrong should not call Gemini")
@@ -166,8 +167,12 @@ def scenario_wrong_recognition_then_fix() -> None:
     # Step 3 recognition — friend scenario expects Hi
     turn, _, ms = c.say(turn["currentTurn"], "Hello")
     log_turn("wrong on recognition (said Hello)", turn, ms)
-    assert_true(turn["source"] == "gemini", "1st wrong on recognition = Gemini soft-teach")
-    assert_true(turn.get("emojiChoice") is not None, "should keep emojiChoice board")
+    assert_true(turn["source"] == "gemini", "1st wrong on recognition = Gemini assess")
+    gs = turn.get("guidedSpeaking") or {}
+    assert_true(
+        gs.get("options") or turn.get("emojiChoice") is not None,
+        "should keep choice board",
+    )
 
     turn, _, ms = c.say(turn["currentTurn"], "Hi")
     log_turn("fix recognition", turn, ms)

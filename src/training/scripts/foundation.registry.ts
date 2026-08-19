@@ -18,6 +18,8 @@ function foundationCompletion(name: string, thai: string): string {
 }
 
 const OPENING_TEXTS: Record<(typeof FOUNDATION_LESSON_IDS)[number], string> = {
+  greetings:
+    'สวัสดีครับ {name}! วันนี้เรามาเรียนการทักทายกันครับ — Hello, Hi และทักทายตามเวลาในวัน 😊 เริ่มจากคำแรก: Hello! ลองพูดตามครับ',
   introductions:
     'สวัสดีครับ {name}! วันนี้เรามาเรียนรู้การแนะนำตัวเป็นภาษาอังกฤษกันครับ 📝 ลองพูดตามว่า My name is {name} นะครับ',
   yes_no_maybe:
@@ -54,6 +56,8 @@ const COMPLETION_TEXTS: Record<
   (typeof FOUNDATION_LESSON_IDS)[number],
   (name: string) => string
 > = {
+  greetings: (name) =>
+    foundationCompletion(name, 'วันนี้คุณทักทายได้หลายแบบแล้ว ทั้ง Hello, Hi และทักทายตามเวลาในวัน'),
   introductions: (name) =>
     foundationCompletion(
       name,
@@ -102,6 +106,8 @@ function buildFoundationDef(
     matchesClose: FOUNDATION_CLOSE_MATCHERS[lessonId],
     pinWithoutGuidedSteps:
       lessonId === 'ee_about_me_family' ? [1] : undefined,
+    exactExpectedOnlySteps:
+      lessonId === 'greetings' ? [3, 7] : undefined,
   });
 
   if (lessonId === 'ee_about_me_family') {
