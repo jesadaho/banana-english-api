@@ -108,6 +108,8 @@ export type ChoiceLessonAiGateInput = Omit<AiGateInput, 'attempt' | 'matched' | 
   tutorQuestion: string | null;
   /** Example answer for incorrect-tier modeling only — NOT required for acceptance. */
   exampleAnswer?: string | null;
+  /** Board-authored Thai guide for incorrect-tier feedback. */
+  incorrectHintTh?: string | null;
 };
 
 /** @deprecated Use ChoiceLessonAiGateInput */
@@ -181,6 +183,9 @@ export class TrainingAiGate {
       question ? `TUTOR QUESTION (judge the learner against THIS):\n"${question}"` : '',
       example
         ? `Example OK answer (for incorrect-tier modeling only — NOT required): "${example}".`
+        : '',
+      input.incorrectHintTh?.trim()
+        ? `Incorrect-tier feedback guide (when tier=incorrect, use as textEn base; keep Thai-primary tone):\n"${input.incorrectHintTh.trim()}"`
         : '',
       ASSESS_RULES,
     ]

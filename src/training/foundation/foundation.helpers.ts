@@ -121,6 +121,9 @@ export function personalizeBoard(
     ...board,
     textEn: personalize(board.textEn, name),
     expectedSpeech: personalize(board.expectedSpeech, name),
+    incorrectHintTh: board.incorrectHintTh
+      ? personalize(board.incorrectHintTh, name)
+      : undefined,
     options: board.options.map((o) => ({
       ...o,
       speak: personalize(o.speak, name),

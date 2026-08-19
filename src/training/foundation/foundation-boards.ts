@@ -164,6 +164,8 @@ export const FOUNDATION_BOARDS: Record<
       withPraise: true,
       stem: '',
       expectedSpeech: 'My name is {name}.',
+      incorrectHintTh:
+        'ยังไม่ตรงครับ ลองใช้ “My name is...” หรือ “I\'m...” แล้วตามด้วยชื่อของคุณครับ',
       options: [
         { emoji: '📝', label: 'My name is', speak: 'My name is {name}.' },
         { emoji: '💬', label: "I'm", speak: "I'm {name}." },
@@ -211,6 +213,8 @@ export const FOUNDATION_BOARDS: Record<
       withPraise: true,
       stem: 'I live in...',
       expectedSpeech: 'I live in Bangkok.',
+      incorrectHintTh:
+        'ยังไม่ตรงครับ ลองใช้ “I live in...” แล้วตามด้วยชื่อเมืองที่คุณอยู่ครับ',
       options: [
         { emoji: '🏙️', label: 'Bangkok', speak: 'I live in Bangkok.' },
         { emoji: '🌆', label: 'Chiang Mai', speak: 'I live in Chiang Mai.' },
@@ -223,6 +227,8 @@ export const FOUNDATION_BOARDS: Record<
       withPraise: true,
       stem: "I work as... / I'm...",
       expectedSpeech: 'I work as a teacher.',
+      incorrectHintTh:
+        'ยังไม่ตรงครับ ลองใช้ “I work as a...” หรือถ้าเป็นนักเรียน/นักศึกษา พูดว่า “I\'m a student.” ครับ',
       options: [
         {
           emoji: '👩‍🏫',
@@ -243,6 +249,8 @@ export const FOUNDATION_BOARDS: Record<
       withPraise: true,
       stem: 'My name is...',
       expectedSpeech: "My name is {name}. I'm from Thailand.",
+      incorrectHintTh:
+        'ยังไม่ตรงครับ ลองเริ่มด้วย “I\'m {name}.” แล้วเพิ่มอีกหนึ่งอย่าง เช่น “I\'m from...”, “I live in...” หรือ “I work as...” ครับ',
       options: [],
     },
   },

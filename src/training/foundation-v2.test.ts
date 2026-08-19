@@ -429,6 +429,22 @@ describe('Foundation — introductions all-step scenarios', () => {
     }
   });
 
+  it('step 2 incorrect uses board incorrectHintTh', () => {
+    const def = getDef(introductions);
+    const turns = buildExactHistoryThroughProgress(def, 1, 'Nana');
+    turns.push({ speaker: 'user', textEn: 'Good morning.' });
+    const pinned = pinChoiceLessonAiReply(
+      def,
+      turns,
+      mockGeminiReply('incorrect', 'ignored gemini copy'),
+      2,
+      'Nana',
+    );
+    assert.match(pinned.textEn ?? '', /My name is/);
+    assert.match(pinned.textEn ?? '', /I'm/);
+    assert.match(pinned.textEn ?? '', /พูดตาม/);
+  });
+
   it('scenario 4 — incorrect stays on step until in-pool recovery', () => {
     const def = getDef(introductions);
     const learnerFirstName = 'Nana';

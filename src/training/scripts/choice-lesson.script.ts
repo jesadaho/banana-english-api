@@ -17,6 +17,8 @@ export type ChoiceLessonBoard = {
   withPraise?: boolean;
   /** English cue for soft-advance when textEn has no trailing question. */
   advanceQuestionEn?: string;
+  /** Thai guide for incorrect-tier feedback (PoolGate assess). */
+  incorrectHintTh?: string;
 };
 
 type GuidedBoard = ChoiceLessonBoard;
@@ -428,9 +430,10 @@ export function ensureIncorrectAssessCopy(
   aiReply: TrainingTurnReply,
   board: GuidedBoard | null,
 ): TrainingTurnReply {
-  const textEn = aiReply.textEn?.trim() ?? '';
+  const hintTh = board?.incorrectHintTh?.trim();
+  const textEn = hintTh || aiReply.textEn?.trim() || '';
   if (/พูดตาม|ลองพูดตาม/i.test(textEn)) {
-    return aiReply;
+    return { ...aiReply, textEn };
   }
 
   const model = board?.expectedSpeech?.trim();

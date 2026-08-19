@@ -76,6 +76,8 @@ export type ForcedGuidedBoard = {
   softTeachHintTh?: string;
   /** English cue for PoolGate soft-advance when textEn has no trailing question. */
   advanceQuestionEn?: string;
+  /** Thai guide for incorrect-tier feedback (PoolGate assess). */
+  incorrectHintTh?: string;
   options: Array<{ emoji: string; label: string; speak: string }>;
 };
 

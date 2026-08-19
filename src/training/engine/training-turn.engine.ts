@@ -139,6 +139,7 @@ export class TrainingTurnEngine {
       expectedSpeech: exampleAnswer,
       tutorQuestion,
       exampleAnswer,
+      incorrectHintTh: board?.incorrectHintTh ?? null,
       userText: input.userText,
       originalText: input.originalText,
       history: input.turns,
