@@ -1,5 +1,17 @@
-/** Lessons routed through Training Engine v2 (hybrid scripted + AI on miss). */
-const DEFAULT_V2_LESSONS = ['greetings', 'ee_about_me_daily_routine'];
+/** Lessons routed through Training Engine v2 (PoolGate: exact pool → scripted, miss → Gemini assess). */
+const DEFAULT_V2_LESSONS = [
+  'greetings',
+  'ee_about_me_daily_routine',
+  'ee_about_me_food',
+  'ee_about_me_home',
+  'ee_about_me_work_school',
+  'ee_about_me_hobbies',
+  'ee_about_me_pets',
+  'ee_about_me_people',
+  'ee_about_me_weather',
+  'ee_about_me_friends',
+  'ee_about_me_favorites',
+];
 
 let cachedAllowlist: Set<string> | null = null;
 

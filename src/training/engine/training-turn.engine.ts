@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import type { AiDebug } from '../../common/api.types';
 import type { LessonConfig } from '../../lessons/lessons.data';
-import { dailyRoutineBoardForStep } from '../../lessons/lessons.data';
 import { teachingLanguageFromConfig } from '../../lessons/lesson-prompt';
 import type { ChatTurn } from '../../session-store/session-store.service';
 import type { TrainingTurnReply } from '../../gemini/gemini-chat.service';
@@ -16,14 +15,18 @@ import {
   buildGreetingsOpening,
   buildGreetingsAfterUser,
 } from '../scripts/greetings.script';
-import {
-  buildDailyRoutineOpening,
-  buildDailyRoutineAfterUser,
-  pinDailyRoutineAiReply,
-  dailyRoutineEffectiveProgress,
-} from '../scripts/daily-routine.script';
 import { pinGreetingsReplyChrome } from './pin-greetings-chrome';
 import type { ScriptTurnResult } from '../scripts/types';
+import {
+  buildChoiceLessonAfterUser,
+  choiceLessonEffectiveProgress,
+  pinChoiceLessonAiReply,
+  type ChoiceLessonDef,
+} from '../scripts/choice-lesson.script';
+import {
+  getAboutMeChoiceLesson,
+  isAboutMeChoiceLesson,
+} from '../scripts/about-me.registry';
 
 export type TrainingEngineTurnInput = {
   config: LessonConfig;
@@ -50,13 +53,16 @@ export class TrainingTurnEngine {
         aiDebug: scriptedAiDebug(),
       };
     }
-    if (config.lessonId === 'ee_about_me_daily_routine') {
-      const reply = buildDailyRoutineOpening(learnerFirstName);
+
+    const choice = getAboutMeChoiceLesson(config.lessonId);
+    if (choice) {
+      const reply = choice.buildOpening(learnerFirstName);
       return {
         reply: this.toReply(reply),
         aiDebug: scriptedAiDebug(),
       };
     }
+
     throw new Error(`Training v2 opening not implemented: ${config.lessonId}`);
   }
 
@@ -66,22 +72,26 @@ export class TrainingTurnEngine {
     if (input.config.lessonId === 'greetings') {
       return this.runGreetingsTurn(input);
     }
-    if (input.config.lessonId === 'ee_about_me_daily_routine') {
-      return this.runDailyRoutineTurn(input);
+
+    const choice = getAboutMeChoiceLesson(input.config.lessonId);
+    if (choice) {
+      return this.runChoiceLessonTurn(input, choice);
     }
+
     throw new Error(`Training v2 turn not implemented: ${input.config.lessonId}`);
   }
 
-  private async runDailyRoutineTurn(
+  private async runChoiceLessonTurn(
     input: TrainingEngineTurnInput,
+    def: ChoiceLessonDef,
   ): Promise<{ reply: TrainingTurnReply; aiDebug: AiDebug }> {
-    const scripted = buildDailyRoutineAfterUser({
+    const scripted = buildChoiceLessonAfterUser(def, {
       turns: input.turns,
       learnerFirstName: input.learnerFirstName,
       sessionProgressTurn: input.sessionProgressTurn,
     });
     if (!scripted) {
-      throw new Error('Daily Routine v2: no scripted reply');
+      throw new Error(`PoolGate v2: no scripted reply (${def.lessonId})`);
     }
 
     if (!scripted.deferToAi) {
@@ -92,21 +102,20 @@ export class TrainingTurnEngine {
     }
 
     const step =
-      dailyRoutineEffectiveProgress(
+      choiceLessonEffectiveProgress(
+        def,
         input.turns.slice(0, -1),
         input.sessionProgressTurn,
       ) + 1;
     const lastAi = [...input.turns].reverse().find((t) => t.speaker === 'ai');
-    const board = dailyRoutineBoardForStep(step, input.turns);
+    const board = def.boardForStep(step, input.turns);
 
-    const generated = await this.aiGate.runDailyRoutine({
+    const generated = await this.aiGate.runChoiceLessonAssess({
       lessonTitle: input.config.titleEn,
       coreStep: step,
-      coreStepMax: input.config.progressMax ?? 8,
+      coreStepMax: input.config.progressMax ?? def.maxStep + 1,
       expectedSpeech:
-        (board?.expectedSpeech ??
-          lastAi?.expectedSpeech?.trim()) ||
-        null,
+        (board?.expectedSpeech ?? lastAi?.expectedSpeech?.trim()) || null,
       poolOptions: board?.options.map((o) => o.speak) ?? [],
       userText: input.userText,
       originalText: input.originalText,
@@ -117,10 +126,12 @@ export class TrainingTurnEngine {
     });
 
     return {
-      reply: pinDailyRoutineAiReply(
+      reply: pinChoiceLessonAiReply(
+        def,
         input.turns,
         generated.reply,
         input.sessionProgressTurn,
+        input.learnerFirstName,
       ),
       aiDebug: generated.aiDebug,
     };
@@ -179,10 +190,12 @@ export class TrainingTurnEngine {
   }
 
   private toReply(scripted: ScriptTurnResult): TrainingTurnReply {
-    const { deferToAi: _defer, ...reply } = scripted;
+    const { deferToAi: _defer, aiMode: _mode, ...reply } = scripted;
     return {
       ...reply,
       expectedSpeech: reply.expectedSpeech || undefined,
     };
   }
 }
+
+export { isAboutMeChoiceLesson };

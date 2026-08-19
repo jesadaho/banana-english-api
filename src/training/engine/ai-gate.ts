@@ -60,9 +60,12 @@ export type AiGateInput = {
   mode?: 'softTeach' | 'validate' | 'assess';
 };
 
-export type DailyRoutineAiGateInput = Omit<AiGateInput, 'attempt' | 'matched' | 'mode'> & {
+export type ChoiceLessonAiGateInput = Omit<AiGateInput, 'attempt' | 'matched' | 'mode'> & {
   poolOptions: string[];
 };
+
+/** @deprecated Use ChoiceLessonAiGateInput */
+export type DailyRoutineAiGateInput = ChoiceLessonAiGateInput;
 
 @Injectable()
 export class TrainingAiGate {
@@ -112,7 +115,7 @@ export class TrainingAiGate {
     });
   }
 
-  async runDailyRoutine(input: DailyRoutineAiGateInput): Promise<{
+  async runChoiceLessonAssess(input: ChoiceLessonAiGateInput): Promise<{
     reply: TrainingTurnReply;
     aiDebug: AiDebug;
   }> {
@@ -122,7 +125,7 @@ export class TrainingAiGate {
         ? input.poolOptions.map((s) => `"${s}"`).join(', ')
         : 'none';
     const stepHint = [
-      `Daily Routine step ${input.coreStep}.`,
+      `${input.lessonTitle} step ${input.coreStep}.`,
       input.expectedSpeech
         ? `Canonical target: "${input.expectedSpeech}".`
         : '',
@@ -153,6 +156,14 @@ export class TrainingAiGate {
       teachingLanguage: input.teachingLanguage,
       languageMix: input.languageMix,
     });
+  }
+
+  /** @deprecated Use runChoiceLessonAssess */
+  async runDailyRoutine(input: ChoiceLessonAiGateInput): Promise<{
+    reply: TrainingTurnReply;
+    aiDebug: AiDebug;
+  }> {
+    return this.runChoiceLessonAssess(input);
   }
 
   private compactHistory(history: ChatTurn[], maxTurns: number): string[] {

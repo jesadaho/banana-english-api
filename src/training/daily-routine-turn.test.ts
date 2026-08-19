@@ -32,10 +32,11 @@ function replayDailyRoutine(steps: string[]): Turn[] {
 }
 
 describe('training v2 config', () => {
-  it('includes Daily Routine in default allowlist', () => {
+  it('includes About Me lessons in default allowlist', () => {
     resetTrainingV2ConfigCache();
     assert.equal(isTrainingV2Lesson('ee_about_me_daily_routine'), true);
-    assert.equal(isTrainingV2Lesson('ee_about_me_home'), false);
+    assert.equal(isTrainingV2Lesson('ee_about_me_home'), true);
+    assert.equal(isTrainingV2Lesson('ee_about_me_favorites'), true);
   });
 });
 

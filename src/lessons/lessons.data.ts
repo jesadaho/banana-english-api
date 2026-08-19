@@ -12123,7 +12123,7 @@ function matchesFoodStep(
   }
 }
 
-function scoreFoodStepForHistory(
+export function scoreFoodStepForHistory(
   history: Array<{ speaker: string; textEn?: string }>,
   step: number,
   userText: string,
@@ -12480,7 +12480,7 @@ function matchesHomeStep(step: number, userText: string): boolean {
   }
 }
 
-function scoreHomeStep(step: number, userText: string): ChoiceStepTier {
+export function scoreHomeStep(step: number, userText: string): ChoiceStepTier {
   return createBoardChoiceScorer(
     normalizeHomeSpeech,
     (s) => HOME_BOARDS[s] ?? null,
@@ -12831,7 +12831,7 @@ function matchesWorkSchoolStep(
   }
 }
 
-function scoreWorkSchoolStepForHistory(
+export function scoreWorkSchoolStepForHistory(
   history: Array<{ speaker: string; textEn?: string }>,
   step: number,
   userText: string,
@@ -13255,7 +13255,7 @@ function matchesHobbiesStep(
 /** How many Hobbies speak steps are cleared (0–5).
  * Mini Quiz steps 4–5: soft-advance after 2 failed attempts.
  */
-function hobbiesBoardForStep(
+export function hobbiesBoardForStep(
   step: number,
   history: Array<{ speaker: string; textEn?: string }>,
 ): ForcedGuidedBoard | null {
@@ -13276,7 +13276,7 @@ function hobbiesBoardForStep(
   return null;
 }
 
-function scoreHobbiesStepForHistory(
+export function scoreHobbiesStepForHistory(
   history: Array<{ speaker: string; textEn?: string }>,
   step: number,
   userText: string,
@@ -13685,7 +13685,7 @@ function matchesPetsSpeakStep(
 }
 
 /** Speak steps cleared (0–4): have → describe → Your → combo. */
-function petsBoardForStep(
+export function petsBoardForStep(
   step: number,
   animal: PetsAnimal,
   adjective: PetsAdjective,
@@ -13724,7 +13724,7 @@ function petsBoardForStep(
   return null;
 }
 
-function scorePetsStepForHistory(
+export function scorePetsStepForHistory(
   history: Array<{ speaker: string; textEn?: string }>,
   step: number,
   userText: string,
@@ -14301,7 +14301,7 @@ function matchesPeopleStep(step: number, userText: string): boolean {
   }
 }
 
-function peopleBoardForStep(
+export function peopleBoardForStep(
   step: number,
   person: PeoplePerson,
   job: PeopleJob,
@@ -14324,7 +14324,7 @@ function peopleBoardForStep(
   return null;
 }
 
-function scorePeopleStepForHistory(
+export function scorePeopleStepForHistory(
   history: Array<{ speaker: string; textEn?: string }>,
   step: number,
   userText: string,
@@ -14642,7 +14642,7 @@ function matchesWeatherStep(step: number, userText: string): boolean {
   }
 }
 
-function weatherBoardForStep(step: number): ForcedGuidedBoard | null {
+export function weatherBoardForStep(step: number): ForcedGuidedBoard | null {
   if (step === 1) {
     return {
       textEn: '',
@@ -14664,7 +14664,7 @@ function weatherBoardForStep(step: number): ForcedGuidedBoard | null {
   return null;
 }
 
-function scoreWeatherStep(step: number, userText: string): ChoiceStepTier {
+export function scoreWeatherStep(step: number, userText: string): ChoiceStepTier {
   return createBoardChoiceScorer(
     normalizeWeatherSpeech,
     weatherBoardForStep,
@@ -14983,7 +14983,7 @@ function matchesFriendsStep(step: number, userText: string): boolean {
   }
 }
 
-function friendsBoardForStep(step: number): ForcedGuidedBoard | null {
+export function friendsBoardForStep(step: number): ForcedGuidedBoard | null {
   if (step === 1) {
     return {
       textEn: '',
@@ -15012,7 +15012,7 @@ function friendsBoardForStep(step: number): ForcedGuidedBoard | null {
   return null;
 }
 
-function scoreFriendsStep(step: number, userText: string): ChoiceStepTier {
+export function scoreFriendsStep(step: number, userText: string): ChoiceStepTier {
   return createBoardChoiceScorer(
     normalizeFriendsSpeech,
     friendsBoardForStep,
@@ -15458,7 +15458,7 @@ function matchesFavoritesStep(step: number, userText: string): boolean {
   }
 }
 
-function favoritesBoardForStep(step: number): ForcedGuidedBoard | null {
+export function favoritesBoardForStep(step: number): ForcedGuidedBoard | null {
   if (step === 1) {
     return {
       textEn:
@@ -15476,7 +15476,7 @@ function favoritesBoardForStep(step: number): ForcedGuidedBoard | null {
   return null;
 }
 
-function scoreFavoritesStep(step: number, userText: string): ChoiceStepTier {
+export function scoreFavoritesStep(step: number, userText: string): ChoiceStepTier {
   return createBoardChoiceScorer(
     normalizeFavoritesSpeech,
     favoritesBoardForStep,
@@ -18473,7 +18473,7 @@ export function withEmojiRecall2Seed(config: LessonConfig): LessonConfig {
   };
 }
 
-function foodBoardForStep(
+export function foodBoardForStep(
   step: number,
   history: Array<{ speaker: string; textEn?: string }>,
 ): ForcedGuidedBoard | null {
@@ -18501,7 +18501,7 @@ function foodBoardForStep(
   return null;
 }
 
-function workSchoolBoardForStep(
+export function workSchoolBoardForStep(
   step: number,
   history: Array<{ speaker: string; textEn?: string }>,
 ): ForcedGuidedBoard | null {
@@ -18718,4 +18718,39 @@ export function forceAboutMeSoftTeachForLesson(
 /** @deprecated Use [withEmojiRecall2Seed]. */
 export function withShoppingRecall2Seed(config: LessonConfig): LessonConfig {
   return withEmojiRecall2Seed(config);
+}
+
+/** v2 PoolGate — Home board lookup by speak step (1–6). */
+export function homeBoardForStep(step: number): ForcedGuidedBoard | null {
+  return HOME_BOARDS[step] ?? null;
+}
+
+/** v2 PoolGate — Pets board with animal/adjective from history. */
+export function petsBoardForStepFromHistory(
+  step: number,
+  history: Array<{ speaker: string; textEn?: string }>,
+): ForcedGuidedBoard | null {
+  const animal = extractPetsAnimal(history) ?? 'dog';
+  const adjective = extractPetsAdjective(history, animal);
+  return petsBoardForStep(step, animal, adjective);
+}
+
+/** v2 PoolGate — People board with sibling/job context from history. */
+export function peopleBoardForStepFromHistory(
+  step: number,
+  history: Array<{ speaker: string; textEn?: string }>,
+): ForcedGuidedBoard | null {
+  const person = extractPeoplePerson(history);
+  const job = extractPeopleJob(history);
+  const jobPraiseLabel = extractPeopleJobPraiseLabel(history);
+  return peopleBoardForStep(step, person, job, jobPraiseLabel);
+}
+
+export function weatherOpeningText(): string {
+  return "วันนี้อากาศร้อนมากเลยครับ! 🔥 ถ้าจะพูดว่า 'อากาศร้อน' ภาษาอังกฤษใช้คำว่าอะไรครับ?";
+}
+
+export function favoritesOpeningText(learnerFirstName: string): string {
+  const name = learnerFirstName.trim();
+  return `สวัสดีครับ${name ? ` ${name}` : ''}! วันนี้มาคุยเรื่องของโปรดกันครับ 🍕 Which food do you prefer? ระหว่างสองอย่างนี้ คุณชอบอันไหนมากกว่ากันครับ?`;
 }
