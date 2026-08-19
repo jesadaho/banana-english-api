@@ -2,7 +2,11 @@ import type { TrainingTurnReply } from '../../gemini/gemini-chat.service';
 import type { ChoiceStepTier } from '../../lessons/lessons.data';
 import type { ScriptTurnResult } from './types';
 
-export type ChoiceLessonHistoryTurn = { speaker: string; textEn?: string };
+export type ChoiceLessonHistoryTurn = {
+  speaker: string;
+  textEn?: string;
+  expectedSpeech?: string | null;
+};
 
 export type ChoiceLessonBoard = {
   textEn: string;
