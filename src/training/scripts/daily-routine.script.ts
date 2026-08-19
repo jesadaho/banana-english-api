@@ -32,7 +32,7 @@ function scriptedFromProgress(turns: HistoryTurn[]): ScriptTurnResult | null {
   if (!scripted) return null;
   return {
     textEn: scripted.textEn,
-    textTh: scripted.textTh ?? undefined,
+    textTh: scripted.textTh ?? '',
     isLessonComplete: scripted.isTaskComplete,
     expectsUserSpeech: scripted.expectsUserSpeech,
     expectedSpeech: scripted.expectedSpeech ?? undefined,
