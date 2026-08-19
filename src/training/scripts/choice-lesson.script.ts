@@ -140,8 +140,8 @@ export function buildGenericScriptedReplyFromProgress(
     );
   }
 
-  const progress = progressOverride ?? def.progressFn(history);
-  if (progress >= def.maxStep) {
+  const cleared = progressOverride ?? def.progressFn(history);
+  if (def.progressFn(history) >= def.maxStep) {
     if (def.afterTeachingComplete) {
       return def.afterTeachingComplete(history, learnerFirstName);
     }
@@ -155,7 +155,9 @@ export function buildGenericScriptedReplyFromProgress(
     };
   }
 
-  const nextStep = progress + 1;
+  // Next board step (1-based): pin passes explicit step; replay uses cleared + 1.
+  const nextStep =
+    progressOverride != null ? progressOverride : def.progressFn(history) + 1;
   const board = def.boardForStep(nextStep, history);
   if (!board) return null;
   return boardToScriptTurn(board);

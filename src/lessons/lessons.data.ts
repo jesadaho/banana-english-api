@@ -11892,6 +11892,93 @@ export function buildDailyRoutineFallbackTrainingReply(
 
 export type FoodFavoriteId = 'pizza' | 'sushi' | 'somtam';
 
+/** Learner's food choice — board branch (pizza/sushi/somtam) or free-form spoken word. */
+export type FoodLessonChoice = {
+  /** Lowercase token used in English patterns, e.g. "burger", "pizza". */
+  spoken: string;
+  /** Title case for tutor lines, e.g. "Burger". */
+  display: string;
+  /** Curriculum board branch when pizza/sushi/somtam; null for free-form food. */
+  boardId: FoodFavoriteId | null;
+};
+
+function foodDisplayFromSpoken(spoken: string): string {
+  return spoken
+    .split(/[\s-]+/)
+    .filter(Boolean)
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ');
+}
+
+function resolveFoodBoardId(spoken: string): FoodFavoriteId | null {
+  const t = spoken.toLowerCase().trim();
+  if (t === 'pizza' || t === 'pizzas') return 'pizza';
+  if (t === 'sushi') return 'sushi';
+  if (t === 'somtam' || t === 'som tam' || t === 'papaya salad') return 'somtam';
+  return null;
+}
+
+function parseFoodFromILike(normalized: string): string | null {
+  const m = normalized.match(/\bi like(?: to eat)?\s+(.+)$/i);
+  if (!m) return null;
+  const food = m[1]
+    .trim()
+    .replace(/\b(please|too|a lot|very much|so much)\b.*$/i, '')
+    .replace(/^the\s+/, '')
+    .replace(/[.!?]+$/g, '')
+    .trim();
+  if (!food || food.length < 2) return null;
+  return food;
+}
+
+function foodChoiceFromSpoken(spoken: string): FoodLessonChoice {
+  const cleaned = spoken.trim().toLowerCase();
+  const boardId = resolveFoodBoardId(cleaned);
+  const canonical = boardId ?? cleaned;
+  return {
+    spoken: canonical,
+    display: foodDisplayFromSpoken(canonical),
+    boardId,
+  };
+}
+
+/** Food the learner picked (from "I like …" or later mentions). Defaults to pizza. */
+export function extractFoodLessonChoice(
+  history: Array<{ speaker: string; textEn?: string }>,
+): FoodLessonChoice {
+  for (const turn of history) {
+    if (turn.speaker !== 'user') continue;
+    const t = normalizeFoodSpeech(turn.textEn ?? '');
+    if (!t || !/\bi like\b/.test(t)) continue;
+    const parsed = parseFoodFromILike(t);
+    if (parsed) return foodChoiceFromSpoken(parsed);
+    if (/\bpizza\b/.test(t)) return foodChoiceFromSpoken('pizza');
+    if (/\bsushi\b/.test(t)) return foodChoiceFromSpoken('sushi');
+    if (
+      /\bsom\s*-?\s*tam\b/.test(t) ||
+      /\bsomtam\b/.test(t) ||
+      /\bpapaya salad\b/.test(t)
+    ) {
+      return foodChoiceFromSpoken('somtam');
+    }
+  }
+  for (const turn of history) {
+    if (turn.speaker !== 'user') continue;
+    const t = normalizeFoodSpeech(turn.textEn ?? '');
+    if (!t) continue;
+    if (/\bpizza\b/.test(t)) return foodChoiceFromSpoken('pizza');
+    if (/\bsushi\b/.test(t)) return foodChoiceFromSpoken('sushi');
+    if (
+      /\bsom\s*-?\s*tam\b/.test(t) ||
+      /\bsomtam\b/.test(t) ||
+      /\bpapaya salad\b/.test(t)
+    ) {
+      return foodChoiceFromSpoken('somtam');
+    }
+  }
+  return foodChoiceFromSpoken('pizza');
+}
+
 /** Food & Drinks 1.2 — Turn 1 favorite-food board (also used on opening). */
 export const FOOD_FAVORITE_GUIDED_SPEAKING = {
   stem: 'I like...',
@@ -11992,6 +12079,50 @@ function foodDrinkBoard(food: FoodFavoriteId): {
   };
 }
 
+function foodDescribeBoardForChoice(choice: FoodLessonChoice): ForcedGuidedBoard {
+  if (choice.boardId) return FOOD_DESCRIBE_BOARDS[choice.boardId];
+  const { spoken, display } = choice;
+  return {
+    textEn: `${display}! ของโปรดเลยครับ 🍽️ แล้ว${display}ที่คุณชอบเป็นยังไงครับ? What is ${spoken} like?`,
+    withPraise: true,
+    stem: `${display} is...`,
+    expectedSpeech: `${display} is delicious.`,
+    options: [
+      { emoji: '😋', label: 'delicious', speak: `${display} is delicious.` },
+      { emoji: '😋', label: 'tasty', speak: `${display} is tasty.` },
+      { emoji: '🌶️', label: 'spicy', speak: `${display} is spicy.` },
+    ],
+  };
+}
+
+function foodDrinkBoardForChoice(choice: FoodLessonChoice): ForcedGuidedBoard {
+  if (choice.boardId) return foodDrinkBoard(choice.boardId);
+  const { spoken, display } = choice;
+  return {
+    textEn: `น่าทานมากครับ! แล้วปกติคุณชอบดื่มอะไรคู่กับ ${display} ครับ? What do you usually drink with ${spoken}? 🥤`,
+    withPraise: true,
+    stem: `I drink... with ${spoken}.`,
+    expectedSpeech: `I drink iced tea with ${spoken}.`,
+    options: [
+      {
+        emoji: '🥤',
+        label: 'iced tea',
+        speak: `I drink iced tea with ${spoken}.`,
+      },
+      {
+        emoji: '☕',
+        label: 'hot coffee',
+        speak: `I drink hot coffee with ${spoken}.`,
+      },
+      {
+        emoji: '🧃',
+        label: 'fruit juice',
+        speak: `I drink fruit juice with ${spoken}.`,
+      },
+    ],
+  };
+}
+
 const FOOD_EMOJI_QUIZ_BOARDS: Record<4 | 5 | 6, ForcedGuidedBoard> = {
   4: {
     textEn: 'เก่งมากครับ! 👏 มาทาย Emoji Quiz กันนะ 😋🍕',
@@ -12043,47 +12174,17 @@ function normalizeFoodSpeech(userText: string): string {
 export function extractFoodFavorite(
   history: Array<{ speaker: string; textEn?: string }>,
 ): FoodFavoriteId | null {
-  for (const turn of history) {
-    if (turn.speaker !== 'user') continue;
-    const t = normalizeFoodSpeech(turn.textEn ?? '');
-    if (!t) continue;
-    // Prefer Turn-1 style "I like …" so quiz "Pizza is delicious" doesn't overwrite.
-    if (/\bi like\b/.test(t)) {
-      if (/\bpizza\b/.test(t)) return 'pizza';
-      if (/\bsushi\b/.test(t)) return 'sushi';
-      if (
-        /\bsom\s*-?\s*tam\b/.test(t) ||
-        /\bsomtam\b/.test(t) ||
-        /\bpapaya salad\b/.test(t)
-      ) {
-        return 'somtam';
-      }
-    }
-  }
-  for (const turn of history) {
-    if (turn.speaker !== 'user') continue;
-    const t = normalizeFoodSpeech(turn.textEn ?? '');
-    if (!t) continue;
-    if (/\bpizza\b/.test(t)) return 'pizza';
-    if (/\bsushi\b/.test(t)) return 'sushi';
-    if (
-      /\bsom\s*-?\s*tam\b/.test(t) ||
-      /\bsomtam\b/.test(t) ||
-      /\bpapaya salad\b/.test(t)
-    ) {
-      return 'somtam';
-    }
-  }
-  return null;
+  return extractFoodLessonChoice(history).boardId;
 }
 
 function matchesFoodStep(
   step: number,
   userText: string,
-  food: FoodFavoriteId | null,
+  choice: FoodLessonChoice,
 ): boolean {
   const t = normalizeFoodSpeech(userText);
   if (!t) return false;
+  const spokenRe = choice.spoken.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const tasteAdj =
     /\b(delicious|cheesy|spicy|fresh|healthy|yummy|tasty|sweet|sour|salty|good|great|nice)\b/.test(
       t,
@@ -12093,7 +12194,7 @@ function matchesFoodStep(
       return /\bi like\b/.test(t) && t.replace(/\bi like\b/, '').trim().length >= 2;
     case 2: // [Food] is [adj]
       if (!tasteAdj || !/\bis\b/.test(t) || /\bi like\b/.test(t)) return false;
-      if (food && new RegExp(`\\b${food}\\b`).test(t)) return true;
+      if (spokenRe && new RegExp(`\\b${spokenRe}\\b`).test(t)) return true;
       // Soft-accept "It is delicious" / free "[food] is [adj]"
       return /^(it|.+) is\b/.test(t);
     case 3: // I drink … with [food]
@@ -12128,11 +12229,11 @@ export function scoreFoodStepForHistory(
   step: number,
   userText: string,
 ): ChoiceStepTier {
-  const food = extractFoodFavorite(history);
+  const choice = extractFoodLessonChoice(history);
   return createBoardChoiceScorer(
     normalizeFoodSpeech,
     (s) => foodBoardForStep(s, history),
-    (s, t) => matchesFoodStep(s, t, food),
+    (s, t) => matchesFoodStep(s, t, choice),
   )(step, userText);
 }
 
@@ -12210,7 +12311,6 @@ export function forceFoodGuidedSpeakingIfNeeded(
   const progress = foodLessonProgress(history);
   if (progress >= 6) return null;
 
-  const food = extractFoodFavorite(history);
   const fromText = foodBoardFromAiText(current.textEn ?? '');
   let step = fromText;
   if (step == null) {
@@ -12233,12 +12333,8 @@ export function forceFoodGuidedSpeakingIfNeeded(
       expectedSpeech: 'I like pizza.',
       options: FOOD_FAVORITE_GUIDED_SPEAKING.options.map((o) => ({ ...o })),
     };
-  } else if (step === 2) {
-    board = FOOD_DESCRIBE_BOARDS[food ?? 'pizza'];
-  } else if (step === 3) {
-    board = foodDrinkBoard(food ?? 'pizza');
   } else {
-    board = FOOD_EMOJI_QUIZ_BOARDS[step as 4 | 5 | 6];
+    board = foodBoardForStep(step, history)!;
   }
 
   const stemOk =
@@ -18477,24 +18573,20 @@ export function foodBoardForStep(
   step: number,
   history: Array<{ speaker: string; textEn?: string }>,
 ): ForcedGuidedBoard | null {
-  const food = extractFoodFavorite(history) ?? 'pizza';
+  const choice = extractFoodLessonChoice(history);
   if (step === 1) {
-    const speak =
-      food === 'pizza'
-        ? 'I like pizza.'
-        : food === 'sushi'
-          ? 'I like sushi.'
-          : 'I like somtam.';
     return {
       textEn: '',
       withPraise: false,
       stem: FOOD_FAVORITE_GUIDED_SPEAKING.stem,
-      expectedSpeech: speak,
+      expectedSpeech: choice.boardId
+        ? `I like ${choice.boardId === 'somtam' ? 'somtam' : choice.boardId}.`
+        : `I like ${choice.spoken}.`,
       options: FOOD_FAVORITE_GUIDED_SPEAKING.options.map((o) => ({ ...o })),
     };
   }
-  if (step === 2) return FOOD_DESCRIBE_BOARDS[food];
-  if (step === 3) return foodDrinkBoard(food);
+  if (step === 2) return foodDescribeBoardForChoice(choice);
+  if (step === 3) return foodDrinkBoardForChoice(choice);
   if (step >= 4 && step <= 6) {
     return FOOD_EMOJI_QUIZ_BOARDS[step as 4 | 5 | 6];
   }
