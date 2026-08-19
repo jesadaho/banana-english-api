@@ -3,6 +3,7 @@ import type { TrainingTurnReply } from '../../gemini/gemini-chat.service';
 import {
   buildChoiceLessonAfterUser,
   choiceLessonEffectiveProgress,
+  isRepeatOnlyBoard,
   pinChoiceLessonAiReply,
   type ChoiceLessonBoard,
   type ChoiceLessonDef,
@@ -485,6 +486,23 @@ const DEFAULT_GEMINI_PREFIX: Record<GeminiAssessTier, string> = {
   incorrect: 'ยังไม่ใช่นะครับ ลองพูดว่า',
 };
 
+function assertIncorrectPinCopy(
+  def: ChoiceLessonDef,
+  step: number,
+  priorTurns: Turn[],
+  textEn: string,
+  label: string,
+): void {
+  const board = def.boardForStep(step, priorTurns);
+  if (board?.incorrectHintTh?.trim()) {
+    assert.doesNotMatch(textEn, /ลองพูดตามนะครับ/u, label);
+    return;
+  }
+  if (isRepeatOnlyBoard(board)) {
+    assert.match(textEn, /พูดตาม/u, label);
+  }
+}
+
 /** Every step: out-of-pool → defer → pinned Gemini assess tier → advance (with exact recovery after incorrect). */
 export function runFoundationAllOutOfPoolGeminiAssess(
   def: ChoiceLessonDef,
@@ -550,10 +568,12 @@ export function runFoundationAllOutOfPoolGeminiAssess(
 
     let replyForStep = assessed;
     if (recoverAfterIncorrect) {
-      assert.match(
+      assertIncorrectPinCopy(
+        def,
+        step,
+        turns.slice(0, -1),
         assessed.textEn ?? '',
-        /พูดตาม/,
-        `${def.lessonId} step ${step}: incorrect should ask repeat`,
+        `${def.lessonId} step ${step}: incorrect teach copy`,
       );
       const recoveryText = exact;
       turns.push({ speaker: 'user', textEn: recoveryText });
@@ -658,7 +678,13 @@ export function runFoundationAllOutOfPoolWrongThenSoftAdvance(
       learnerFirstName,
     );
     assert.equal(pinned.assessmentTier, 'incorrect');
-    assert.match(pinned.textEn ?? '', /พูดตาม/);
+    assertIncorrectPinCopy(
+      def,
+      step,
+      turns.slice(0, -1),
+      pinned.textEn ?? '',
+      `${def.lessonId} step ${step}: incorrect teach copy`,
+    );
     turns.push({
       speaker: 'ai',
       textEn: pinned.textEn ?? '',
@@ -678,8 +704,13 @@ export function runFoundationAllOutOfPoolWrongThenSoftAdvance(
       true,
       `${def.lessonId} step ${step}: 2nd wrong is scripted`,
     );
-    assert.match(soft!.textEn ?? '', /คำตอบนี้เราพูดว่า/);
-    assert.match(soft!.textEn ?? '', /ไปต่อกันเลย —/);
+    assert.match(soft!.textEn ?? '', /ตรงนี้พูด(ว่า|ได้ว่า)/);
+    if (step < def.maxStep) {
+      assert.match(soft!.textEn ?? '', /ไปต่อกันเลย —/);
+    } else {
+      assert.match(soft!.textEn ?? '', /จบบทแล้วครับ/);
+      assert.doesNotMatch(soft!.textEn ?? '', /ไปต่อกันเลย —/);
+    }
     assert.equal(soft!.assessmentTier, 'incorrect');
     turns.push({
       speaker: 'ai',
@@ -758,12 +789,17 @@ export function runWrongTwiceThenFinishFromStep(
     }
 
     assert.notEqual(route.deferToAi, true, `${def.lessonId}: 2nd wrong scripted`);
-    assert.match(route.textEn ?? '', /คำตอบนี้เราพูดว่า/);
-    assert.match(route.textEn ?? '', /ไปต่อกันเลย —/);
+    assert.match(route.textEn ?? '', /ตรงนี้พูด(ว่า|ได้ว่า)/);
+    const softStep = atStep + 1;
+    if (atStep < def.maxStep) {
+      assert.match(route.textEn ?? '', /ไปต่อกันเลย —/);
+    } else {
+      assert.match(route.textEn ?? '', /จบบทแล้วครับ/);
+      assert.doesNotMatch(route.textEn ?? '', /ไปต่อกันเลย —/);
+    }
     assert.equal(route.assessmentTier, 'incorrect');
     turns.push({ speaker: 'ai', textEn: route.textEn ?? '' });
 
-    const softStep = atStep + 1;
     if (softStep <= def.maxStep) {
       const nextBoard = def.boardForStep(softStep, turns);
       assert.equal(
@@ -896,7 +932,7 @@ export const INTRODUCTIONS_TIM_PROD_CHAT: ChatReplayLine[] = [
   { userText: "I'm Tim..." },
   {
     userText: 'Nice to meet you..',
-    mustNotMatch: /คำตอบนี้เราพูดว่า.*My name is Tim/i,
+    mustNotMatch: /ตรงนี้พูดว่า.*My name is Tim/i,
     mustMatch: /Nice to meet you too/,
   },
   { userText: 'Nice to meet you too.', mustMatch: /I'm from Thailand/ },

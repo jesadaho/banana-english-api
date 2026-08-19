@@ -44,7 +44,7 @@ function assertSoftAdvance(
     learnerFirstName: 'Nana',
   });
   assert.equal(reply?.deferToAi, undefined, `${lessonId} should soft-advance scripted`);
-  assert.match(reply?.textEn ?? '', /คำตอบนี้เราพูดว่า/, `${lessonId} missing model line`);
+  assert.match(reply?.textEn ?? '', /ตรงนี้พูดว่า/, `${lessonId} missing model line`);
   assert.match(reply?.textEn ?? '', modelPattern, `${lessonId} model phrase`);
   assert.match(reply?.textEn ?? '', /ไปต่อกันเลย —/, `${lessonId} missing advance lead-in`);
   assert.match(reply?.textEn ?? '', advancePattern, `${lessonId} advance cue`);

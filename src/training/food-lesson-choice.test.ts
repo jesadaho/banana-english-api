@@ -90,12 +90,13 @@ describe('food v2 exact match on free-form I like', () => {
 });
 
 describe('food incorrect assess copy', () => {
-  it('patches Gemini incorrect when it only says ลองพูดว่า', () => {
+  it('keeps guided-board Gemini copy without forced repeat append', () => {
     const board = foodBoardForStep(1, []);
+    const geminiCopy =
+      'ยังไม่ใช่เรื่องของกินนะครับ เพื่อนลองพูดว่า "I like pizza" หรือบอกเมนูโปรดของคุณมาได้เลยครับ';
     const patched = ensureIncorrectAssessCopy(
       {
-        textEn:
-          'ยังไม่ใช่เรื่องของกินนะครับ เพื่อนลองพูดว่า "I like pizza" หรือบอกเมนูโปรดของคุณมาได้เลยครับ',
+        textEn: geminiCopy,
         textTh: '',
         isLessonComplete: false,
         expectsUserSpeech: true,
@@ -103,8 +104,7 @@ describe('food incorrect assess copy', () => {
       },
       board,
     );
-    assert.match(patched.textEn ?? '', /พูดตาม/);
-    assert.doesNotMatch(patched.textEn ?? '', /พูดตาม.*พูดตาม/);
+    assert.equal(patched.textEn, geminiCopy);
   });
 });
 
@@ -121,7 +121,7 @@ describe('food soft-advance message', () => {
       learnerFirstName: 'Nana',
     });
     assert.equal(reply?.deferToAi, undefined);
-    assert.match(reply?.textEn ?? '', /คำตอบนี้เราพูดว่า "I like pizza\." ได้ครับ/);
+    assert.match(reply?.textEn ?? '', /ตรงนี้พูดว่า "I like pizza\."/);
     assert.match(reply?.textEn ?? '', /ไปต่อกันเลย — What is pizza like\?/);
     assert.doesNotMatch(reply?.textEn ?? '', /ไม่เป็นไรครับ ไปต่อกัน! Pizza!/);
     assert.match(reply?.expectedSpeech ?? '', /Pizza is delicious/i);

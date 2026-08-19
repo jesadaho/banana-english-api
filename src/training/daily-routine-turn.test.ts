@@ -112,7 +112,7 @@ describe('daily routine v2 lanes (binary pool routing)', () => {
       learnerFirstName: 'Nana',
     });
     assert.equal(reply?.deferToAi, undefined);
-    assert.match(reply!.textEn, /คำตอบนี้เราพูดว่า "wake up"/);
+    assert.match(reply!.textEn, /ตรงนี้พูดว่า "wake up"/);
     assert.match(reply!.textEn, /ไปต่อกันเลย — What time do you wake up\?/);
     assert.match(reply!.expectedSpeech ?? '', /I wake up at/i);
   });
@@ -181,7 +181,7 @@ describe('daily routine v2 lanes (binary pool routing)', () => {
       expectsUserSpeech: true,
       assessmentTier: 'incorrect',
     });
-    assert.match(pinned.textEn ?? '', /พูดตาม/);
+    assert.match(pinned.textEn ?? '', /ลองพูดว่า|พูดตาม/u);
     assert.equal(pinned.expectedSpeech, 'wake up');
     assert.ok(pinned.guidedSpeaking?.options?.some((o) => o.speak === 'wake up'));
   });

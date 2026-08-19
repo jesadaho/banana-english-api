@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {
   buildChoiceLessonAfterUser,
   choiceLessonEffectiveProgress,
+  isRepeatOnlyBoard,
   type ChoiceLessonHistoryTurn,
 } from './scripts/choice-lesson.script';
 import {
@@ -91,7 +92,7 @@ describe('Foundation PoolGate — 5-lane matrix (all lessons)', () => {
         assert.equal(pinned.assessmentTier, 'close');
       });
 
-      it('scenario 4 — unhappy incorrect pins current step + พูดตาม', () => {
+      it('scenario 4 — unhappy incorrect pins current step + teach copy', () => {
         const def = getDef(fixture);
         const current = boardAtProbe(fixture);
         assert.ok(current?.expectedSpeech, `${lessonId}: probe board missing`);
@@ -110,7 +111,13 @@ describe('Foundation PoolGate — 5-lane matrix (all lessons)', () => {
           'ยังไม่ใช่นะครับ ลองพูดว่า',
         );
         assert.equal(pinned.expectedSpeech, current!.expectedSpeech);
-        assert.match(pinned.textEn ?? '', /พูดตาม/);
+        if (current!.incorrectHintTh?.trim()) {
+          assert.doesNotMatch(pinned.textEn ?? '', /ลองพูดตามนะครับ/u);
+        } else if (isRepeatOnlyBoard(current)) {
+          assert.match(pinned.textEn ?? '', /พูดตาม/u);
+        } else {
+          assert.ok((pinned.textEn ?? '').trim().length > 0);
+        }
         assert.equal(pinned.assessmentTier, 'incorrect');
       });
 
@@ -124,7 +131,7 @@ describe('Foundation PoolGate — 5-lane matrix (all lessons)', () => {
         });
         assert.ok(reply, `${lessonId}: missing soft-advance reply`);
         assert.notEqual(reply!.deferToAi, true, `${lessonId}: soft-advance is scripted`);
-        assert.match(reply!.textEn ?? '', /คำตอบนี้เราพูดว่า/);
+        assert.match(reply!.textEn ?? '', /ตรงนี้พูดว่า/);
         assert.match(reply!.textEn ?? '', /ไปต่อกันเลย —/);
         assert.equal(reply!.expectedSpeech, next!.expectedSpeech);
         assert.equal(reply!.assessmentTier, 'incorrect');
@@ -442,7 +449,7 @@ describe('Foundation — introductions all-step scenarios', () => {
     );
     assert.match(pinned.textEn ?? '', /My name is/);
     assert.match(pinned.textEn ?? '', /I'm/);
-    assert.match(pinned.textEn ?? '', /พูดตาม/);
+    assert.doesNotMatch(pinned.textEn ?? '', /ลองพูดตามนะครับ/);
   });
 
   it('scenario 4 — incorrect stays on step until in-pool recovery', () => {
@@ -528,8 +535,13 @@ describe('Foundation — introductions all-step scenarios', () => {
     assert.equal(result.steps.at(-1)?.isLessonComplete, true);
     for (const record of result.steps) {
       assert.equal(record.userText, 'Good morning.');
-      assert.match(record.aiTextEn, /คำตอบนี้เราพูดว่า/);
-      assert.match(record.aiTextEn, /ไปต่อกันเลย —/);
+      assert.match(record.aiTextEn, /ตรงนี้พูด(ว่า|ได้ว่า)/);
+      if (record.step < def.maxStep) {
+        assert.match(record.aiTextEn, /ไปต่อกันเลย —/);
+      } else {
+        assert.match(record.aiTextEn, /จบบทแล้วครับ/);
+        assert.doesNotMatch(record.aiTextEn, /ไปต่อกันเลย —/);
+      }
     }
   });
 });
@@ -556,7 +568,7 @@ describe('Foundation — introductions prod chat (Tim / Tami screenshot)', () =>
     assert.match(exchanges[3].aiTextEn, /I'm from Thailand/);
     assert.doesNotMatch(
       exchanges[2].aiTextEn,
-      /คำตอบนี้เราพูดว่า.*My name is Tim/i,
+      /ตรงนี้พูด(ว่า|ได้ว่า).*My name is Tim/i,
     );
   });
 });

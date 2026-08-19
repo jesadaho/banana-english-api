@@ -51,7 +51,7 @@ function classifyResult(reply, { gemini = false } = {}) {
   if (tier === 'correct') return 'correct in pool';
   if (tier === 'close') return gemini ? 'close out pool' : 'close';
   if (tier === 'incorrect') {
-    if (/คำตอบนี้เราพูดว่า/.test(reply.textEn ?? '')) return 'wrong (soft-advance)';
+    if (/ตรงนี้พูด(ว่า|ได้ว่า)/.test(reply.textEn ?? '')) return 'wrong (soft-advance)';
     return gemini ? 'incorrect out pool' : 'wrong';
   }
   return tier;

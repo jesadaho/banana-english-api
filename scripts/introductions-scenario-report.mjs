@@ -170,7 +170,7 @@ runScenario('Scenario 5 — 2nd wrong soft-advance (engine regression)', () => {
   snap('soft-advance reply', reply);
   assert.ok(reply, 'missing soft-advance reply');
   assert.notEqual(reply.deferToAi, true);
-  assert.match(reply.textEn ?? '', /คำตอบนี้เราพูดว่า/);
+  assert.match(reply.textEn ?? '', /ตรงนี้พูดว่า/);
   assert.match(reply.textEn ?? '', /ไปต่อกันเลย —/);
   assert.equal(reply.expectedSpeech, next.expectedSpeech);
   assert.equal(reply.assessmentTier, 'incorrect');

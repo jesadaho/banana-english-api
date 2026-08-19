@@ -159,7 +159,7 @@ async function smokeLesson(
     `${lesson.label}: wrong #2 should be scripted soft-advance`,
   );
   const ai = res.turn.aiResponse ?? '';
-  assertMatch(ai, /คำตอบนี้เราพูดว่า/, `${lesson.label}: soft-advance model line`);
+  assertMatch(ai, /ตรงนี้พูดว่า/, `${lesson.label}: soft-advance model line`);
   assertMatch(ai, /ไปต่อกันเลย —/, `${lesson.label}: soft-advance lead-in`);
   assertMatch(ai, lesson.modelPattern, `${lesson.label}: model phrase`);
   assertMatch(ai, lesson.advancePattern, `${lesson.label}: next question`);

@@ -141,6 +141,39 @@ function resolveSoftAdvanceQuestion(
   return nextFull;
 }
 
+/** Single-option repeat board — append ลองพูดตาม on incorrect. */
+export function isRepeatOnlyBoard(board: GuidedBoard | null): boolean {
+  if (!board) return false;
+  return board.stem.trim() === '' && board.options.length === 1;
+}
+
+function shouldAppendRepeatCue(board: GuidedBoard | null): boolean {
+  if (!board) return true;
+  if (board.incorrectHintTh?.trim()) return false;
+  return isRepeatOnlyBoard(board);
+}
+
+function formatFinalSoftAdvanceCelebration(completionText: string): string {
+  const trimmed = completionText.trim();
+  if (!trimmed) return '🎉 จบบทแล้วครับ! 🍌';
+
+  const match = trimmed.match(
+    /^สุดยอดครับ\s+(.+?)!\s*🎉\s*(.+?)(?:\s*—\s*เก่งมากครับ!)?\s*🍌?\s*$/u,
+  );
+  if (match) {
+    const [, name, body] = match;
+    const normalizedBody = body
+      .trim()
+      .replace(/ได้แล้ว\s*$/u, 'แล้ว')
+      .replace(/ได้\s*$/u, 'แล้ว');
+    return `🎉 จบบทแล้วครับ ${name}! ${normalizedBody}ครับ 🍌`;
+  }
+
+  return trimmed
+    .replace(/^สุดยอดครับ/u, '🎉 จบบทแล้วครับ')
+    .replace(/\s*—\s*เก่งมากครับ!\s*🍌?\s*$/u, ' 🍌');
+}
+
 /** Close out pool — recast canonical line, then next teaching (no double praise). */
 export function buildCloseAdvanceTextEn(
   failedBoard: GuidedBoard | null,
@@ -198,9 +231,22 @@ export function buildSoftAdvanceTextEn(
   const model = failedBoard?.expectedSpeech?.trim() ?? '';
   const emoji = failedBoard?.options?.[0]?.emoji ?? '';
   const nextQuestion = resolveSoftAdvanceQuestion(nextBoard, nextScripted);
+  const modelLine = model
+    ? `ตรงนี้พูดว่า "${model}" ครับ${emoji ? ` ${emoji}` : ''}`
+    : '';
 
-  if (model && nextQuestion) {
-    return `คำตอบนี้เราพูดว่า "${model}" ได้ครับ${emoji ? ` ${emoji}` : ''}\nไปต่อกันเลย — ${nextQuestion}`;
+  if (nextScripted.isLessonComplete) {
+    const finalModel = model
+      ? `ตรงนี้พูดได้ว่า "${model}" ครับ${emoji ? ` ${emoji}` : ''}`
+      : '';
+    const celebration = formatFinalSoftAdvanceCelebration(
+      nextScripted.textEn?.trim() ?? '',
+    );
+    return finalModel ? `${finalModel}\n\n${celebration}` : celebration;
+  }
+
+  if (modelLine && nextQuestion) {
+    return `${modelLine}\nไปต่อกันเลย — ${nextQuestion}`;
   }
   return `ไม่เป็นไรครับ ไปต่อกัน! ${nextScripted.textEn}`;
 }
@@ -212,6 +258,14 @@ function buildSoftAdvanceTextTh(
 ): string {
   const model = failedBoard?.expectedSpeech?.trim() ?? '';
   const nextQuestion = resolveSoftAdvanceQuestion(nextBoard, nextScripted);
+  if (nextScripted.isLessonComplete) {
+    const celebration = formatFinalSoftAdvanceCelebration(
+      nextScripted.textEn?.trim() ?? '',
+    );
+    return model
+      ? `You can say "${model}". ${celebration}`
+      : celebration;
+  }
   if (model && nextQuestion) {
     return `We can say "${model}". Let's move on — ${nextQuestion}`;
   }
@@ -425,15 +479,23 @@ export function closeAdvancePraise(textEn: string, forceClose = false): string {
 /** @deprecated Use correctAdvancePraise */
 export const foundationNearCorrectPraise = correctAdvancePraise;
 
-/** PoolGate incorrect — always include พูดตาม even if Gemini only says ลองพูดว่า. */
+/** PoolGate incorrect — repeat-only boards get ลองพูดตาม + model; guided/open keep hint only. */
 export function ensureIncorrectAssessCopy(
   aiReply: TrainingTurnReply,
   board: GuidedBoard | null,
 ): TrainingTurnReply {
   const hintTh = board?.incorrectHintTh?.trim();
-  const textEn = hintTh || aiReply.textEn?.trim() || '';
+  if (hintTh) {
+    return { ...aiReply, textEn: hintTh };
+  }
+
+  const textEn = aiReply.textEn?.trim() || '';
   if (/พูดตาม|ลองพูดตาม/i.test(textEn)) {
     return { ...aiReply, textEn };
+  }
+
+  if (!shouldAppendRepeatCue(board)) {
+    return { ...aiReply, textEn: textEn || aiReply.textEn };
   }
 
   const model = board?.expectedSpeech?.trim();

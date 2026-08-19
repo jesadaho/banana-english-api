@@ -137,7 +137,7 @@ async function smokeLesson(
     `${label}: wrong #2 should be scripted soft-advance`,
   );
   const ai = res.turn.aiResponse ?? '';
-  assert(/คำตอบนี้เราพูดว่า/.test(ai), `${label}: soft-advance model line`);
+  assert(/ตรงนี้พูดว่า/.test(ai), `${label}: soft-advance model line`);
   assert(/ไปต่อกันเลย —/.test(ai), `${label}: soft-advance lead-in`);
 }
 
