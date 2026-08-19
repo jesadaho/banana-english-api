@@ -27,6 +27,10 @@ import {
   getAboutMeChoiceLesson,
   isAboutMeChoiceLesson,
 } from '../scripts/about-me.registry';
+import {
+  getFoundationChoiceLesson,
+  isFoundationChoiceLesson,
+} from '../scripts/foundation.registry';
 
 export type TrainingEngineTurnInput = {
   config: LessonConfig;
@@ -54,6 +58,15 @@ export class TrainingTurnEngine {
       };
     }
 
+    const foundation = getFoundationChoiceLesson(config.lessonId);
+    if (foundation) {
+      const reply = foundation.buildOpening(learnerFirstName);
+      return {
+        reply: this.toReply(reply),
+        aiDebug: scriptedAiDebug(),
+      };
+    }
+
     const choice = getAboutMeChoiceLesson(config.lessonId);
     if (choice) {
       const reply = choice.buildOpening(learnerFirstName);
@@ -71,6 +84,11 @@ export class TrainingTurnEngine {
   ): Promise<{ reply: TrainingTurnReply; aiDebug: AiDebug }> {
     if (input.config.lessonId === 'greetings') {
       return this.runGreetingsTurn(input);
+    }
+
+    const foundation = getFoundationChoiceLesson(input.config.lessonId);
+    if (foundation) {
+      return this.runChoiceLessonTurn(input, foundation);
     }
 
     const choice = getAboutMeChoiceLesson(input.config.lessonId);
@@ -202,4 +220,4 @@ export class TrainingTurnEngine {
   }
 }
 
-export { isAboutMeChoiceLesson };
+export { isAboutMeChoiceLesson, isFoundationChoiceLesson };

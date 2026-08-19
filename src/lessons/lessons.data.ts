@@ -9122,7 +9122,7 @@ export function pinBoardTextEn(modelText: string, boardText: string): string {
 }
 
 /** Forced guided board: script may include praise; [withPraise] keeps system Success opener. */
-type ForcedGuidedBoard = {
+export type ForcedGuidedBoard = {
   textEn: string;
   /** Keep model Success praise after strip (default: step > 1). Opening = false. */
   withPraise?: boolean;
