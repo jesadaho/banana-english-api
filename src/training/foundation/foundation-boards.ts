@@ -135,7 +135,7 @@ export const FOUNDATION_BOARDS: Record<
   introductions: {
     1: {
       textEn:
-        'สวัสดีครับ {name} วันนี้เรามาฝึกแนะนำตัวแบบง่ายๆ กันครับ ลองพูดตามว่า My name is {name}.',
+        'สวัสดีครับ {name}! วันนี้เรามาเรียนรู้การแนะนำตัวเป็นภาษาอังกฤษกันครับ ลองพูดตามว่า My name is {name}.',
       withPraise: false,
       stem: '',
       expectedSpeech: 'My name is {name}.',
@@ -143,7 +143,7 @@ export const FOUNDATION_BOARDS: Record<
     },
     2: {
       textEn:
-        'ดีมากครับ! My name is {name}. แปลว่า “ฉันชื่อ {name}” อีกแบบพูดสั้นๆ ว่า I\'m {name}. ก็ได้ครับ ช่วยบอกครูหน่อยครับ ว่าคุณชื่ออะไร?',
+        'เก่งมากครับ! My name is {name}. แปลว่า “ฉันชื่อ {name}” อีกแบบพูดสั้นๆ ว่า I\'m {name}. ก็ได้ครับ ช่วยบอกครูหน่อยครับ ว่าคุณชื่ออะไร?',
       withPraise: true,
       stem: '',
       expectedSpeech: 'My name is {name}.',
@@ -154,7 +154,7 @@ export const FOUNDATION_BOARDS: Record<
     },
     3: {
       textEn:
-        'เยี่ยมเลยครับ ต่อไปเป็นประโยคที่ใช้เวลาเจอคนใหม่ครับ Nice to meet you. แปลว่า “ยินดีที่ได้รู้จัก” ลองพูดตามครับ',
+        'เยี่ยมเลยครับ! ต่อไปเวลาเจอคนใหม่ เราพูดว่า Nice to meet you. แปลว่า “ยินดีที่ได้รู้จัก” ลองพูดตามนะครับ',
       withPraise: true,
       stem: '',
       expectedSpeech: 'Nice to meet you.',
@@ -164,7 +164,7 @@ export const FOUNDATION_BOARDS: Record<
     },
     4: {
       textEn:
-        'ดีมากครับ ถ้าครูพูดว่า Nice to meet you. คุณตอบว่า Nice to meet you too. แปลว่า “ยินดีที่ได้รู้จักเช่นกัน” ลองตอบเหมือนสถานการณ์จริงนะครับ ครูพูดว่า Nice to meet you. คุณจะตอบว่าอะไรครับ?',
+        'ดีมากครับ! ถ้าครูพูดว่า Nice to meet you. ให้ตอบว่า Nice to meet you too. แปลว่า “ยินดีที่ได้รู้จักเช่นกัน” ลองตอบเหมือนสถานการณ์จริงนะครับ: Nice to meet you.',
       advanceQuestionEn: 'Nice to meet you too.',
       withPraise: true,
       stem: '',
@@ -180,7 +180,7 @@ export const FOUNDATION_BOARDS: Record<
     },
     5: {
       textEn:
-        'เยี่ยมเลยครับ ต่อไปมาฝึกบอกว่าคุณมาจากไหนครับ I\'m from Thailand. แปลว่า “ฉันมาจากประเทศไทย” ลองพูดตามครับ',
+        'เก่งมากครับ! ต่อไปมาฝึกบอกว่าคุณมาจากไหนกันครับ I\'m from Thailand. แปลว่า “ฉันมาจากประเทศไทย” ลองพูดตามนะครับ',
       withPraise: true,
       stem: '',
       expectedSpeech: "I'm from Thailand.",
@@ -190,7 +190,7 @@ export const FOUNDATION_BOARDS: Record<
     },
     6: {
       textEn:
-        'เก่งมากครับ I\'m from ใช้บอกว่ามาจากที่ไหน ส่วน I live in ใช้บอกว่าตอนนี้อาศัยอยู่ที่ไหน ถ้าจะบอกว่าเราอาศัยอยู่ที่กรุงเทพ พูดว่า I live in Bangkok. แปลว่า “ฉันอาศัยอยู่ที่กรุงเทพ” ช่วยบอกครูหน่อยครับ ว่าคุณอาศัยอยู่ที่ไหน?',
+        'เยี่ยมเลยครับ! I\'m from ใช้บอกว่ามาจากไหน ส่วน I live in ใช้บอกว่าตอนนี้อยู่ที่ไหน เช่น I live in Bangkok. แปลว่า “ฉันอยู่ที่กรุงเทพ” ช่วยบอกครูหน่อยครับ ว่าคุณอยู่ที่ไหน?',
       withPraise: true,
       stem: 'I live in...',
       expectedSpeech: 'I live in Bangkok.',
@@ -202,7 +202,7 @@ export const FOUNDATION_BOARDS: Record<
     },
     7: {
       textEn:
-        'ดีมากครับ ถ้าจะบอกว่าเราทำงานอะไร พูดว่า I work as a teacher. แปลว่า “ฉันทำงานเป็นครู” ช่วยบอกครูหน่อยครับ ว่าคุณทำงานอะไร?',
+        'ดีมากครับ! ถ้าจะบอกงานหรือสิ่งที่ทำ พูดได้ว่า I work as a teacher. แปลว่า “ฉันทำงานเป็นครู” ช่วยบอกครูหน่อยครับ ว่าคุณทำอะไร?',
       withPraise: true,
       stem: "I work as... / I'm...",
       expectedSpeech: 'I work as a teacher.',
@@ -222,7 +222,7 @@ export const FOUNDATION_BOARDS: Record<
     },
     8: {
       textEn:
-        'มาลองรวมทั้งหมดกันครับ แนะนำตัวสั้นๆ ด้วยชื่อ และอีกหนึ่งอย่างเกี่ยวกับตัวคุณ จะบอกว่าคุณมาจากไหน อาศัยอยู่ที่ไหน หรือทำงานอะไรก็ได้ครับ',
+        'ขั้นตอนสุดท้ายครับ ลองแนะนำตัวสั้นๆ เป็นภาษาอังกฤษด้วยชื่อ และอีกหนึ่งอย่างเกี่ยวกับตัวคุณ จะบอกว่ามาจากไหน อยู่ที่ไหน หรือทำงานอะไรก็ได้ครับ',
       withPraise: true,
       stem: 'My name is...',
       expectedSpeech: "My name is {name}. I'm from Thailand.",
