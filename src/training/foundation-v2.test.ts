@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { buildChoiceLessonAfterUser } from './scripts/choice-lesson.script';
+import { buildChoiceLessonAfterUser, pinChoiceLessonAiReply } from './scripts/choice-lesson.script';
 import {
   FOUNDATION_CHOICE_LESSONS,
   getFoundationChoiceLesson,
@@ -125,6 +125,35 @@ describe('Introductions — explain before speak', () => {
     assert.match(text, /I'm/);
     assert.match(text, /ทางการ|เป็นทางการ/);
     assert.match(text, /\?/);
+  });
+
+  it('Gemini correct on step 3 advances to Nice to meet you (not repeat step 3)', () => {
+    const def = getFoundationChoiceLesson('introductions');
+    assert.ok(def);
+
+    const turns: Turn[] = [
+      { speaker: 'ai', textEn: def!.buildOpening('Tami').textEn },
+      { speaker: 'user', textEn: 'My name is Tami.' },
+      { speaker: 'ai', textEn: FOUNDATION_BOARDS.introductions[2].textEn },
+      { speaker: 'user', textEn: "I'm Tami." },
+      { speaker: 'ai', textEn: FOUNDATION_BOARDS.introductions[3].textEn },
+      { speaker: 'user', textEn: 'My name is Tami and it sounds formal.' },
+    ];
+
+    const pinned = pinChoiceLessonAiReply(def!, turns, {
+      textEn: 'ถูกต้องแล้วครับ! เก่งมากครับ',
+      textTh: '',
+      isLessonComplete: false,
+      expectsUserSpeech: true,
+      assessmentTier: 'correct',
+    });
+
+    assert.match(pinned.textEn ?? '', /Nice to meet you/);
+    assert.match(pinned.expectedSpeech ?? '', /Nice to meet you/);
+    assert.doesNotMatch(
+      pinned.textEn ?? '',
+      /ลองเลือกหนึ่งแบบเพื่อแนะนำตัว/,
+    );
   });
 
   it('happy path boards explain or ask before next speak turn', () => {

@@ -200,8 +200,10 @@ export function buildGenericScriptedReplyFromProgress(
     );
   }
 
-  const cleared = progressOverride ?? def.progressFn(history);
-  if (def.progressFn(history) >= def.maxStep) {
+  const nextStep =
+    progressOverride != null ? progressOverride : def.progressFn(history) + 1;
+
+  if (def.progressFn(history) >= def.maxStep || nextStep > def.maxStep) {
     if (def.afterTeachingComplete) {
       return def.afterTeachingComplete(history, learnerFirstName);
     }
@@ -216,8 +218,6 @@ export function buildGenericScriptedReplyFromProgress(
   }
 
   // Next board step (1-based): pin passes explicit step; replay uses cleared + 1.
-  const nextStep =
-    progressOverride != null ? progressOverride : def.progressFn(history) + 1;
   const board = def.boardForStep(nextStep, history);
   if (!board) return null;
   return boardToScriptTurn(board);
@@ -311,12 +311,18 @@ export function pinChoiceLessonAiReply(
   const tier = resolveChoiceAssessmentTier(aiReply);
 
   if (tier === 'correct' || tier === 'close') {
-    const nextProgress =
-      choiceLessonEffectiveProgress(def, turns, sessionProgressTurn) + 1;
+    const priorTurns = turns.slice(0, -1);
+    const answeredStep =
+      choiceLessonEffectiveProgress(def, priorTurns, sessionProgressTurn) + 1;
+    // Generic lessons: progressOverride is the 1-based board step to show.
+    // Daily Routine custom builder: progressOverride is cleared speak steps (= answeredStep).
+    const nextStep = def.buildScriptedReplyFromProgress
+      ? answeredStep
+      : answeredStep + 1;
     const next = scriptedFromProgress(
       def,
       turns,
-      nextProgress,
+      nextStep,
       learnerFirstName,
     );
     if (!next) return aiReply;
