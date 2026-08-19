@@ -202,6 +202,7 @@ function runScenarioAllOutOfPoolGemini(outOfPoolFn, { tier, recoverAfterIncorrec
   const rows = [];
   let aiPrompt = opening.textEn ?? '';
   let sessionProgressTurn = 1;
+  let reportStep = 0;
 
   for (let step = 1; step <= def.maxStep; step++) {
     const turnsBeforeUser = turns.map((t) => ({ ...t }));
@@ -232,9 +233,10 @@ function runScenarioAllOutOfPoolGemini(outOfPoolFn, { tier, recoverAfterIncorrec
     );
     const msPin = performance.now() - tPin;
 
+    reportStep++;
     rows.push(
       makeRow({
-        step,
+        step: reportStep,
         aiPrompt,
         userText,
         turnsBeforeUser,
@@ -265,13 +267,26 @@ function runScenarioAllOutOfPoolGemini(outOfPoolFn, { tier, recoverAfterIncorrec
       if (recovery?.deferToAi) {
         throw new Error(`step ${step}: recovery "${exact}" should be in-pool`);
       }
+      reportStep++;
+      rows.push(
+        makeRow({
+          step: reportStep,
+          aiPrompt: pinned?.textEn ?? '',
+          userText: exact,
+          turnsBeforeUser: turns.slice(0, -1).map((t) => ({ ...t })),
+          result: classifyResult(recovery, { gemini: false }),
+          ms: msRec,
+          aiReply: recovery?.textEn ?? '',
+          nextReply: recovery,
+          sessionProgressTurn,
+        }),
+      );
       turns.push({
         speaker: 'ai',
         textEn: recovery?.textEn ?? '',
         expectedSpeech: recovery?.expectedSpeech,
       });
       aiPrompt = recovery?.textEn ?? '';
-      void msRec;
     } else {
       aiPrompt = pinned?.textEn ?? '';
     }
@@ -305,7 +320,7 @@ const SCENARIO_TITLES = {
   1: 'Scenario 1 — in-pool correct ทุก step → จบบท',
   2: 'Scenario 2 — out-pool correct ทุก step → จบบท',
   3: 'Scenario 3 — out-pool close ทุก step → จบบท',
-  4: 'Scenario 4 — out-pool wrong ทุก step → จบบท',
+  4: 'Scenario 4 — out-pool wrong + in-pool พูดตาม recovery → จบบท',
 };
 
 function getRowsForScenario(n) {

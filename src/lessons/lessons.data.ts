@@ -9361,6 +9361,7 @@ function foundationLooksLikeSoftTeachOrRetry(textEn: string): boolean {
       lower.includes('say it') ||
       lower.includes('try again'));
   if (softTeach) return true;
+  if (/พูดตาม|ลองพูดตาม/i.test(t)) return true;
   return /(อีกครั้ง|ลองใหม่|พูดใหม่|พูดอีกรอบ|one\s+more\s+time|try\s+again|once\s+more)/i.test(
     t,
   );
@@ -9446,6 +9447,7 @@ function detectFoundationGenericProgressBeat(
   if (current.isTaskComplete) return progressMax;
   if (current.softTeachForced) return null;
   if (foundationLooksLikeSoftTeachOrRetry(current.textEn)) return null;
+  if (current.assessmentTier === 'incorrect') return null;
 
   if (
     current.assessmentTier === 'correct' ||

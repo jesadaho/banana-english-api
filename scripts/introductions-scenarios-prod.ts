@@ -37,7 +37,7 @@ const SCENARIO_TITLES: Record<number, string> = {
   1: 'Scenario 1 — in-pool correct ทุก step → จบบท',
   2: 'Scenario 2 — out-pool correct ทุก step → จบบท',
   3: 'Scenario 3 — out-pool close ทุก step → จบบท',
-  4: 'Scenario 4 — out-pool wrong ทุก step → จบบท',
+  4: 'Scenario 4 — out-pool wrong + in-pool พูดตาม recovery → จบบท',
 };
 
 const scenarioArg = process.argv[2];
@@ -216,7 +216,8 @@ async function runScenario(
     let aiPrompt = start.turn.aiResponse ?? '';
     let currentTurn = start.turn.currentTurn;
     let totalMs = 0;
-    let step = 1;
+    let reportStep = 0;
+    let lessonStep = 1;
     const history: HistoryTurn[] = [
       {
         speaker: 'ai',
@@ -225,10 +226,11 @@ async function runScenario(
       },
     ];
 
-    for (let guard = 0; guard < MAX_TURNS; guard++) {
-      const { speech, recoverExact } = pickUserSpeech(scenario, turnBefore, step);
+    while (lessonStep <= def.maxStep) {
+      const { speech, recoverExact } = pickUserSpeech(scenario, turnBefore, lessonStep);
       const { hint, choices } = chromeBeforeAnswer(turnBefore, history);
 
+      reportStep++;
       const res = await client.sendUserSpeech(
         start.sessionId,
         currentTurn,
@@ -240,7 +242,16 @@ async function runScenario(
       const reply = (block.aiResponse as string | undefined) ?? '';
       const result = classifyResult(block);
 
-      printStepBlock(step, aiPrompt, hint, choices, speech, result, res.durationMs, reply);
+      printStepBlock(
+        reportStep,
+        aiPrompt,
+        hint,
+        choices,
+        speech,
+        result,
+        res.durationMs,
+        reply,
+      );
 
       history.push({ speaker: 'user', textEn: speech });
       history.push({
@@ -251,44 +262,65 @@ async function runScenario(
 
       currentTurn = res.turn.currentTurn;
       turnBefore = res.turn;
-      step++;
 
       if (res.turn.isTaskComplete) {
         console.log(`\n${'─'.repeat(72)}`);
         console.log(
-          `✅ Scenario ${scenario} complete · ${step - 1} steps · ${formatMs(totalMs)}`,
+          `✅ Scenario ${scenario} complete · ${reportStep} turns · ${formatMs(totalMs)}`,
         );
-        return { scenario, ok: true, steps: step - 1, totalMs };
+        return { scenario, ok: true, steps: reportStep, totalMs };
       }
 
-      if (recoverExact) {
+      if (recoverExact && result === 'incorrect out pool') {
+        const { hint: recHint, choices: recChoices } = chromeBeforeAnswer(
+          turnBefore,
+          history,
+        );
+        reportStep++;
         const recovery = await client.sendUserSpeech(
           start.sessionId,
           currentTurn,
           recoverExact,
         );
         totalMs += recovery.durationMs;
+        const recBlock = turnBlock(recovery.json);
+        const recReply = (recBlock.aiResponse as string | undefined) ?? '';
+        const recResult = classifyResult(recBlock);
+
+        printStepBlock(
+          reportStep,
+          reply,
+          recHint,
+          recChoices,
+          recoverExact,
+          recResult,
+          recovery.durationMs,
+          recReply,
+        );
+
         history.push({ speaker: 'user', textEn: recoverExact });
         history.push({
           speaker: 'ai',
-          textEn: recovery.turn.aiResponse ?? '',
+          textEn: recReply,
           expectedSpeech: recovery.turn.expectedSpeech,
         });
+
         currentTurn = recovery.turn.currentTurn;
         turnBefore = recovery.turn;
-        aiPrompt = recovery.turn.aiResponse ?? '';
+        aiPrompt = recReply;
 
         if (recovery.turn.isTaskComplete) {
           console.log(`\n${'─'.repeat(72)}`);
           console.log(
-            `✅ Scenario ${scenario} complete · ${step - 1} steps · ${formatMs(totalMs)}`,
+            `✅ Scenario ${scenario} complete · ${reportStep} turns · ${formatMs(totalMs)}`,
           );
-          return { scenario, ok: true, steps: step - 1, totalMs };
+          return { scenario, ok: true, steps: reportStep, totalMs };
         }
-        continue;
+      } else {
+        aiPrompt = reply;
       }
 
-      aiPrompt = reply;
+      lessonStep++;
     }
 
     throw new Error(`did not complete within ${MAX_TURNS} turns`);

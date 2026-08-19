@@ -149,7 +149,7 @@ export function buildCloseAdvanceTextEn(
   const emoji = failedBoard?.options?.[0]?.emoji ?? '';
   const modelBare = model.replace(/[.!?]+$/g, '');
   const recast = modelBare
-    ? `เกือบถูกแล้วครับ! เราพูดว่า ${modelBare}.${emoji ? ` ${emoji}` : ''}`
+    ? `เกือบถูกแล้วครับ! พูดว่า ${modelBare}.${emoji ? ` ${emoji}` : ''}`
     : 'เกือบถูกแล้วครับ!';
 
   const nextRaw =

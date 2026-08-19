@@ -21,6 +21,7 @@ import {
   INTRODUCTIONS_TIM_PROD_CHAT,
   introductionsOutOfPoolNearMiss,
   introductionsOutOfPoolCloseMiss,
+  introductionsOutOfPoolWrong,
   mockGeminiReply,
   nextBoardAfterProbeExact,
   pinChoiceLessonAiReply,
@@ -370,7 +371,7 @@ describe('Foundation — introductions all-step scenarios', () => {
       learnerFirstName,
     );
     assert.equal(pinned.assessmentTier, 'close');
-    assert.match(pinned.textEn ?? '', /^เกือบถูกแล้วครับ! เราพูดว่า My name is Nana\./);
+    assert.match(pinned.textEn ?? '', /^เกือบถูกแล้วครับ! พูดว่า My name is Nana\./);
     assert.doesNotMatch(pinned.textEn ?? '', /เกือบถูกแล้วครับ.*เก่งมาก/);
     assert.doesNotMatch(
       pinned.textEn ?? '',
@@ -403,7 +404,7 @@ describe('Foundation — introductions all-step scenarios', () => {
     assert.equal(pinned.assessmentTier, 'close');
     assert.match(
       pinned.textEn ?? '',
-      /เกือบถูกแล้วครับ! เราพูดว่า I live in Bangkok\. 🏙️/,
+      /เกือบถูกแล้วครับ! พูดว่า I live in Bangkok\. 🏙️/,
     );
     assert.match(pinned.textEn ?? '', /ต่อไปถ้าจะบอกงาน.*I work as a teacher/i);
     assert.doesNotMatch(pinned.textEn ?? '', /เกือบถูกแล้วครับ.*ดีมากครับ/);
@@ -425,6 +426,68 @@ describe('Foundation — introductions all-step scenarios', () => {
         `step ${record.step}: "${record.userText}" should score close`,
       );
     }
+  });
+
+  it('scenario 4 — incorrect stays on step until in-pool recovery', () => {
+    const def = getDef(introductions);
+    const learnerFirstName = 'Nana';
+    const opening = def.buildOpening(learnerFirstName);
+    const wrong = introductionsOutOfPoolWrong('My name is Nana.', 1);
+    const turns: ChoiceLessonHistoryTurn[] = [
+      {
+        speaker: 'ai',
+        textEn: opening.textEn ?? '',
+        expectedSpeech: opening.expectedSpeech,
+      },
+      { speaker: 'user', textEn: wrong },
+    ];
+
+    const pinned = pinChoiceLessonAiReply(
+      def,
+      turns,
+      mockGeminiReply('incorrect', 'ยังไม่ใช่นะครับ ลองพูดว่า'),
+      1,
+      learnerFirstName,
+    );
+    assert.equal(pinned.assessmentTier, 'incorrect');
+    assert.match(pinned.textEn ?? '', /พูดตาม/);
+    assert.equal(pinned.expectedSpeech, 'My name is Nana.');
+
+    const afterWrong = [
+      ...turns,
+      {
+        speaker: 'ai',
+        textEn: pinned.textEn ?? '',
+        expectedSpeech: pinned.expectedSpeech,
+      },
+    ];
+    assert.equal(
+      choiceLessonEffectiveProgress(def, afterWrong, 1),
+      0,
+      'incorrect must not advance progress before recovery',
+    );
+
+    const recoveryTurns: ChoiceLessonHistoryTurn[] = [
+      ...afterWrong,
+      { speaker: 'user', textEn: 'My name is Nana.' },
+    ];
+    const recovery = buildChoiceLessonAfterUser(def, {
+      turns: recoveryTurns,
+      learnerFirstName,
+      sessionProgressTurn: 1,
+    });
+    assert.notEqual(recovery?.deferToAi, true);
+    assert.equal(recovery?.assessmentTier, 'correct');
+    assert.ok(
+      choiceLessonEffectiveProgress(def, [
+        ...recoveryTurns,
+        {
+          speaker: 'ai',
+          textEn: recovery?.textEn ?? '',
+          expectedSpeech: recovery?.expectedSpeech,
+        },
+      ]) >= 1,
+    );
   });
 
   it('scenario 4 — out-pool wrong every step completes lesson', () => {
