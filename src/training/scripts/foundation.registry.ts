@@ -18,7 +18,7 @@ function foundationCompletion(name: string, thai: string): string {
 
 const OPENING_TEXTS: Record<(typeof FOUNDATION_LESSON_IDS)[number], string> = {
   introductions:
-    'สวัสดีครับ {name}! วันนี้เรามาเรียนรู้การแนะนำตัวเป็นภาษาอังกฤษกันครับ 📝 ลองพูดตามว่า My name is {name} นะครับ',
+    'สวัสดีครับ {name}! วันนี้เรามาเรียนรู้การแนะนำตัวเป็นภาษาอังกฤษกันครับ 📝 My name is {name} แปลว่า “ฉันชื่อ {name}” ลองพูดตามนะครับ',
   yes_no_maybe:
     'สวัสดีครับ {name}! วันนี้เรามาเรียนรู้ตอบคำถาม Yes / No / Maybe กันครับ ✅ ลองพูดตามว่า Yes, I do. นะครับ',
   polite_expressions:

@@ -5,6 +5,7 @@ import {
   FOUNDATION_CHOICE_LESSONS,
   getFoundationChoiceLesson,
 } from './scripts/foundation.registry';
+import { FOUNDATION_BOARDS } from './foundation/foundation-boards';
 
 type Turn = { speaker: string; textEn?: string };
 
@@ -99,5 +100,75 @@ describe('Foundation soft-advance copy', () => {
       'should not use old prefix',
     );
     assert.equal(reply?.assessmentTier, 'incorrect', 'soft-advance tier');
+  });
+});
+
+describe('Introductions — explain before speak', () => {
+  it('teaching boards explain meaning before ลองพูดตาม', () => {
+    const boards = FOUNDATION_BOARDS.introductions;
+    for (const step of [1, 2, 4, 5, 6, 7, 8] as const) {
+      const text = boards[step].textEn;
+      const speakIdx = text.indexOf('ลองพูดตาม');
+      assert.ok(speakIdx >= 0, `step ${step} missing speak cue`);
+      const beforeSpeak = text.slice(0, speakIdx);
+      assert.match(
+        beforeSpeak,
+        /แปลว่า|คือ/,
+        `step ${step} should explain before asking to speak`,
+      );
+    }
+  });
+
+  it('step 3 explains My name is vs I\'m then asks recognition', () => {
+    const text = FOUNDATION_BOARDS.introductions[3].textEn;
+    assert.match(text, /My name is/);
+    assert.match(text, /I'm/);
+    assert.match(text, /ทางการ|เป็นทางการ/);
+    assert.match(text, /\?/);
+  });
+
+  it('happy path boards explain or ask before next speak turn', () => {
+    const def = getFoundationChoiceLesson('introductions');
+    assert.ok(def);
+
+    const answers = [
+      'My name is Nana.',
+      "I'm Nana.",
+      'My name is Nana.',
+      'Nice to meet you.',
+      'Nice to meet you too.',
+      "I'm from Thailand.",
+      'I live in Bangkok.',
+      'I work as a teacher.',
+      "My name is Nana. I'm from Thailand.",
+    ];
+
+    const opening = def!.buildOpening('Nana');
+    assert.match(opening.textEn, /แปลว่า/);
+
+    const turns: Turn[] = [{ speaker: 'ai', textEn: opening.textEn }];
+    for (let i = 0; i < answers.length; i++) {
+      turns.push({ speaker: 'user', textEn: answers[i] });
+      const reply = buildChoiceLessonAfterUser(def!, {
+        turns,
+        learnerFirstName: 'Nana',
+      });
+      assert.ok(reply, `missing reply after step ${i + 1}`);
+      assert.notEqual(
+        reply!.deferToAi,
+        true,
+        `step ${i + 1} should stay in-pool scripted`,
+      );
+      if (reply!.isLessonComplete) {
+        assert.match(reply!.textEn, /สุดยอด/);
+        break;
+      }
+      assert.match(
+        reply!.textEn,
+        /แปลว่า|คือ|\?/,
+        `board after step ${i + 1} should explain or ask`,
+      );
+      turns.push({ speaker: 'ai', textEn: reply!.textEn });
+    }
   });
 });

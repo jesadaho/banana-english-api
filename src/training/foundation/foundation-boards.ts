@@ -24,6 +24,7 @@ export const FOUNDATION_LOOSE_MATCHERS: Record<
     loose(step, text, {
       1: /^my name is /,
       2: /^i['']?m /,
+      3: /^(my name is|i['']?m) /,
       4: /^nice to meet you$/,
       5: /^nice to meet you too$/,
       6: /^i['']?m from /,
@@ -36,6 +37,8 @@ export const FOUNDATION_LOOSE_MATCHERS: Record<
       1: /^(yes|no)/,
       2: /^maybe$/,
       3: /^(yes|no)/,
+      4: /^(yes i do|no i don['']?t)$/,
+      5: /^(yes i do|no i don['']?t)$/,
     }),
   polite_expressions: (step, text) =>
     loose(step, text, {
@@ -60,10 +63,11 @@ export const FOUNDATION_LOOSE_MATCHERS: Record<
   ee_about_me_family: (step, text) =>
     loose(step, text, {
       1: /^(i['']?m ready|i am ready|ready)$/,
+      5: /^this is my /,
       6: /^this is my /,
-      7: /^this is my /,
+      7: /^i have /,
       8: /^i have /,
-      9: /^i have /,
+      9: /^(this is my|i have) /,
     }),
   numbers: (step, text) =>
     loose(step, text, {
@@ -77,7 +81,7 @@ export const FOUNDATION_LOOSE_MATCHERS: Record<
       1: /^it['']?s .+ o['']?clock$/,
       2: /^it['']?s /,
       3: /^it['']?s .+ (a\.m|p\.m|am|pm)/,
-      5: /^it['']?s /,
+      5: /^i wake up at /,
     }),
   everyday_numbers: (step, text) =>
     loose(step, text, {
@@ -135,9 +139,9 @@ export const FOUNDATION_BOARDS: Record<
   introductions: {
     1: {
       textEn:
-        'สวัสดีครับ {name}! วันนี้เรามาเรียนรู้การแนะนำตัวเป็นภาษาอังกฤษกันครับ 📝 ลองพูดตามว่า My name is {name} นะครับ',
+        'สวัสดีครับ {name}! วันนี้เรามาฝึกแนะนำตัวเป็นภาษาอังกฤษกันครับ 📝 ลองพูดตามว่า My name is {name}.',
       withPraise: false,
-      stem: 'My name is...',
+      stem: '',
       expectedSpeech: 'My name is {name}.',
       options: [{ emoji: '📝', label: 'My name is', speak: 'My name is {name}.' }],
     },
@@ -145,13 +149,13 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'ดีมากครับ! My name is {name}. แปลว่า “ฉันชื่อ {name}” อีกแบบหนึ่งคือ I\'m {name}. ลองพูดตามนะครับ 💬',
       withPraise: true,
-      stem: "I'm...",
+      stem: '',
       expectedSpeech: "I'm {name}.",
       options: [{ emoji: '💬', label: "I'm", speak: "I'm {name}." }],
     },
     3: {
       textEn:
-        'เยี่ยมเลยครับ! I\'m {name}. ก็แปลว่า “ฉันชื่อ {name}” เหมือนกันครับ โดย My name is ฟังเป็นทางการกว่านิดหน่อย 📝 ถ้าเจอคนใหม่ครั้งแรก คุณจะใช้แบบไหนครับ?',
+        'เยี่ยมเลยครับ! I\'m {name}. ก็แปลว่า “ฉันชื่อ {name}” เหมือนกันครับ โดย My name is ฟังเป็นทางการกว่านิดหน่อย 📝 ลองเลือกหนึ่งแบบเพื่อแนะนำตัวครับ',
       withPraise: true,
       stem: 'My name is...',
       expectedSpeech: 'My name is {name}.',
@@ -162,9 +166,9 @@ export const FOUNDATION_BOARDS: Record<
     },
     4: {
       textEn:
-        'เยี่ยมเลยครับ! ต่อไปเวลาเจอคนใหม่เราพูดว่า Nice to meet you 🤝 ลองพูดตามนะครับ',
+        'เยี่ยมเลยครับ! เวลาเจอคนใหม่ครั้งแรก เราทักว่า Nice to meet you 🤝 แปลว่า “ยินดีที่ได้รู้จัก” ลองพูดตามนะครับ',
       withPraise: true,
-      stem: 'Nice to meet you',
+      stem: '',
       expectedSpeech: 'Nice to meet you.',
       options: [
         { emoji: '🤝', label: 'Nice to meet you', speak: 'Nice to meet you.' },
@@ -172,9 +176,9 @@ export const FOUNDATION_BOARDS: Record<
     },
     5: {
       textEn:
-        'ดีมากครับ! Nice to meet you แปลว่า “ยินดีที่ได้รู้จัก” ถ้าอีกฝ่ายพูดก่อน เราตอบว่า Nice to meet you too 😊 ลองพูดตามครับ',
+        'ดีมากครับ! ถ้าอีกฝ่ายพูด Nice to meet you ก่อน เราตอบว่า Nice to meet you too 😊 แปลว่า “ยินดีที่ได้รู้จักเช่นกัน” ลองพูดตามครับ',
       withPraise: true,
-      stem: 'Nice to meet you too',
+      stem: '',
       expectedSpeech: 'Nice to meet you too.',
       options: [
         {
@@ -186,31 +190,29 @@ export const FOUNDATION_BOARDS: Record<
     },
     6: {
       textEn:
-        'เยี่ยมเลยครับ! Nice to meet you too แปลว่า “ยินดีที่ได้รู้จักเช่นกัน” ต่อไปมาฝึกบอกว่ามาจากไหนกันครับ — I\'m from Thailand 🇹🇭 ลองพูดตามนะครับ',
+        'เยี่ยมเลยครับ! ต่อไปมาฝึกบอกว่ามาจากไหนกันครับ — I\'m from Thailand 🇹🇭 แปลว่า “ฉันมาจากประเทศไทย” ลองพูดตามนะครับ',
       withPraise: true,
-      stem: "I'm from...",
+      stem: '',
       expectedSpeech: "I'm from Thailand.",
       options: [
         { emoji: '🇹🇭', label: 'Thailand', speak: "I'm from Thailand." },
-        { emoji: '🌏', label: 'Bangkok', speak: "I'm from Bangkok." },
       ],
     },
     7: {
       textEn:
-        'แล้วถ้าจะบอกว่าอยู่ที่ไหน — I live in Bangkok 🏙️ ลองพูดตามครับ',
+        'เก่งมากครับ! I\'m from คือบอกว่ามาจากไหน ส่วน I live in คือบอกว่าอยู่ที่ไหนตอนนี้ 🏙️ I live in Bangkok แปลว่า “ฉันอยู่ที่กรุงเทพ” ลองพูดตามครับ',
       withPraise: true,
-      stem: 'I live in...',
+      stem: '',
       expectedSpeech: 'I live in Bangkok.',
       options: [
         { emoji: '🏙️', label: 'Bangkok', speak: 'I live in Bangkok.' },
-        { emoji: '🏡', label: 'Chiang Mai', speak: 'I live in Chiang Mai.' },
       ],
     },
     8: {
       textEn:
-        'เยี่ยมเลยครับ! บอกอาชีพหรือว่าเป็นนักเรียนได้ด้วย — I work as a teacher 👩‍🏫 ลองพูดตามนะครับ',
+        'เยี่ยมเลยครับ! ถ้าจะบอกอาชีพ พูดว่า I work as a teacher 👩‍🏫 แปลว่า “ฉันทำงานเป็นครู” ลองพูดตามนะครับ',
       withPraise: true,
-      stem: 'I work as a...',
+      stem: '',
       expectedSpeech: 'I work as a teacher.',
       options: [
         {
@@ -218,13 +220,12 @@ export const FOUNDATION_BOARDS: Record<
           label: 'Teacher',
           speak: 'I work as a teacher.',
         },
-        { emoji: '🎓', label: 'Student', speak: "I'm a student." },
       ],
     },
     9: {
       textEn:
-        'ขั้นตอนสุดท้ายครับ 😊 ลองแนะนำตัวสั้นๆ เป็นภาษาอังกฤษ — ชื่อ + อีกอย่างที่เรียนมา (เช่น มาจากไหน / ทำงานอะไร)',
-      advanceQuestionEn: 'Introduce yourself in English.',
+        'มาลองทบทวนกันครับ 😊 แนะนำตัวโดยบอกชื่อและบอกว่ามาจากประเทศไทยครับ',
+      advanceQuestionEn: 'Introduce yourself and say you are from Thailand.',
       withPraise: true,
       stem: '',
       expectedSpeech: "My name is {name}. I'm from Thailand.",
@@ -241,7 +242,7 @@ export const FOUNDATION_BOARDS: Record<
   yes_no_maybe: {
     1: {
       textEn:
-        'สวัสดีครับ {name}! วันนี้เรามาเรียนรู้ตอบคำถม Yes / No กันครับ ✅❌ ถ้าถามว่า Do you like coffee? ลองตอบว่า Yes, I do. นะครับ',
+        'สวัสดีครับ {name}! วันนี้เรามาฝึกตอบคำถามแบบ Yes/No กันครับ ✅❌ ถ้าถามว่า Do you like coffee? ลองตอบว่า Yes, I do. นะครับ',
       withPraise: false,
       stem: 'Yes, I do.',
       expectedSpeech: 'Yes, I do.',
@@ -249,9 +250,9 @@ export const FOUNDATION_BOARDS: Record<
     },
     2: {
       textEn:
-        'เก่งมากครับ! ถ้ายังไม่แน่ใจ ใช้ Maybe ได้ครับ 🤔 ลองพูดตามว่า Maybe.',
+        'เก่งมากครับ! ถ้ายังไม่แน่ใจ เช่น มีคนถามว่า Are you free tomorrow? เราตอบว่า Maybe. ได้ครับ 🤔 ลองพูดตามนะครับ',
       withPraise: true,
-      stem: 'Maybe.',
+      stem: '',
       expectedSpeech: 'Maybe.',
       options: [{ emoji: '🤔', label: 'Maybe', speak: 'Maybe.' }],
     },
@@ -259,7 +260,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'แล้วถ้าไม่ชอบ ตอบว่า No, I don\'t. ได้ครับ ❌ ลองพูดตามนะครับ',
       withPraise: true,
-      stem: "No, I don't.",
+      stem: '',
       expectedSpeech: "No, I don't.",
       options: [
         { emoji: '❌', label: "No, I don't", speak: "No, I don't." },
@@ -269,12 +270,11 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'Do you speak English? 🇬🇧 คุณจะตอบว่าอะไรครับ?',
       withPraise: true,
-      stem: 'Yes / No / Maybe',
-      expectedSpeech: 'Yes.',
+      stem: 'Yes, I do. / No, I don\'t.',
+      expectedSpeech: 'Yes, I do.',
       options: [
-        { emoji: '✅', label: 'Yes', speak: 'Yes.' },
-        { emoji: '❌', label: 'No', speak: 'No.' },
-        { emoji: '🤔', label: 'Maybe', speak: 'Maybe.' },
+        { emoji: '✅', label: 'Yes, I do', speak: 'Yes, I do.' },
+        { emoji: '❌', label: "No, I don't", speak: "No, I don't." },
       ],
     },
     5: {
@@ -287,7 +287,6 @@ export const FOUNDATION_BOARDS: Record<
       options: [
         { emoji: '✅', label: 'Yes, I do', speak: 'Yes, I do.' },
         { emoji: '❌', label: "No, I don't", speak: "No, I don't." },
-        { emoji: '🤔', label: 'Maybe', speak: 'Maybe.' },
       ],
     },
   },
@@ -297,7 +296,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'สวัสดีครับ {name}! วันนี้เรามาเรียนคำสุภาพที่ใช้ทุกวันครับ 🙏 เริ่มจาก Thank you — ลองพูดตามว่า Thank you very much.',
       withPraise: false,
-      stem: 'Thank you very much',
+      stem: '',
       expectedSpeech: 'Thank you very much.',
       options: [
         {
@@ -311,7 +310,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'ดีมากครับ! Thank you very much แปลว่า “ขอบคุณมาก” ถ้ามีคนขอบคุณเรา ให้ตอบว่า You\'re welcome 😊 ลองพูดตามนะครับ',
       withPraise: true,
-      stem: "You're welcome",
+      stem: '',
       expectedSpeech: "You're welcome.",
       options: [
         { emoji: '😊', label: "You're welcome", speak: "You're welcome." },
@@ -321,11 +320,10 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'ต่อไป Excuse me ใช้ทักคน หรือขอผ่าน 🙋 และ Sorry ใช้ขอโทษ 😔 ลองพูดตามว่า Excuse me.',
       withPraise: true,
-      stem: 'Excuse me',
+      stem: '',
       expectedSpeech: 'Excuse me.',
       options: [
         { emoji: '🙋', label: 'Excuse me', speak: 'Excuse me.' },
-        { emoji: '😔', label: 'Sorry', speak: "I'm sorry." },
       ],
     },
     4: {
@@ -362,48 +360,47 @@ export const FOUNDATION_BOARDS: Record<
   meet_people: {
     1: {
       textEn:
-        'สวัสดีครับ {name}! วันนี้เรามาฝึกพูดเกี่ยวกับตัวเองและคู่สนทนาครับ 🙋 ถ้าจะบอกว่า "ฉันชื่อเบน" ให้พูดว่า I am {name}. ลองพูดตามนะครับ',
+        'สวัสดีครับ {name}! วันนี้เรามาฝึกใช้ I am เพื่อพูดเกี่ยวกับตัวเองกันครับ 🙋 ถ้าจะบอกว่า “ฉันมีความสุข” ให้พูดว่า I am happy. ลองพูดตามนะครับ',
       withPraise: false,
-      stem: 'I am...',
-      expectedSpeech: 'I am {name}.',
-      options: [{ emoji: '🙋', label: 'I am', speak: 'I am {name}.' }],
+      stem: '',
+      expectedSpeech: 'I am happy.',
+      options: [{ emoji: '😊', label: 'I am happy', speak: 'I am happy.' }],
     },
     2: {
       textEn:
         'เก่งมากครับ! ถ้าจะบอกว่าเป็นนักเรียน — I am a student. 🎓 ลองพูดตามครับ',
       withPraise: true,
-      stem: 'I am a...',
+      stem: '',
       expectedSpeech: 'I am a student.',
       options: [
         { emoji: '🎓', label: 'Student', speak: 'I am a student.' },
-        { emoji: '💼', label: 'Worker', speak: 'I am a worker.' },
       ],
     },
     3: {
       textEn:
-        'ต่อไปพูดกับคนที่คุยด้วย — You are my friend. 👉 ลองพูดตามนะครับ',
+        'ต่อไป ถ้าจะชมคนที่คุยด้วยว่า “คุณใจดีมาก” ให้พูดว่า You are very kind. 👉 ลองพูดตามนะครับ',
       withPraise: true,
-      stem: 'You are...',
-      expectedSpeech: 'You are my friend.',
+      stem: '',
+      expectedSpeech: 'You are very kind.',
       options: [
-        { emoji: '👉', label: 'You are', speak: 'You are my friend.' },
+        { emoji: '👉', label: 'You are very kind', speak: 'You are very kind.' },
       ],
     },
     4: {
       textEn:
-        'ดีมากครับ! You are my friend. แปลว่า “คุณคือเพื่อนของฉัน” ต่อไปลองทบทวน I am กันครับ ถ้าจะบอกเพื่อนว่าคุณเป็นนักเรียน จะพูดว่าอะไรครับ? 🎓',
+        'ดีมากครับ! You are very kind. แปลว่า “คุณใจดีมาก” ต่อไปลองทบทวน I am กันครับ ถ้าจะบอกว่าคุณเป็นนักเรียน จะพูดว่าอะไรครับ? 🎓',
       withPraise: true,
       stem: 'I am a student.',
       expectedSpeech: 'I am a student.',
       options: [
         { emoji: '🙋', label: 'I am a student.', speak: 'I am a student.' },
-        { emoji: '👉', label: 'You are my friend.', speak: 'You are my friend.' },
+        { emoji: '👉', label: 'You are very kind.', speak: 'You are very kind.' },
       ],
     },
     5: {
       textEn:
-        'ลองพูดประโยคสั้นๆ เกี่ยวกับตัวคุณหรือคู่สนทนาครับ 😊',
-      advanceQuestionEn: 'Say a short sentence about yourself.',
+        'มาทบทวนกันครับ ลองพูดว่า “ฉันเป็นนักเรียน” เป็นภาษาอังกฤษครับ 😊',
+      advanceQuestionEn: 'Say that you are a student.',
       withPraise: true,
       stem: 'I am...',
       expectedSpeech: 'I am a student.',
@@ -418,7 +415,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'สวัสดีครับ {name}! วันนี้เรามาพูดถึงคนอื่นและสิ่งของครับ 👨 ถ้าจะบอกว่า "เขาคือพ่อของฉัน" ให้พูดว่า He is my father. ลองพูดตามนะครับ',
       withPraise: false,
-      stem: 'He is...',
+      stem: '',
       expectedSpeech: 'He is my father.',
       options: [
         { emoji: '👨', label: 'He is my father.', speak: 'He is my father.' },
@@ -428,7 +425,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'เก่งมากครับ! ถ้าเป็นผู้หญิง — She is my sister. 👩 ลองพูดตามครับ',
       withPraise: true,
-      stem: 'She is...',
+      stem: '',
       expectedSpeech: 'She is my sister.',
       options: [
         { emoji: '👩', label: 'She is my sister.', speak: 'She is my sister.' },
@@ -436,9 +433,9 @@ export const FOUNDATION_BOARDS: Record<
     },
     3: {
       textEn:
-        'ดีมากครับ! She is my sister. แปลว่า “เธอคือพี่สาวหรือน้องสาวของฉัน” ต่อไป ถ้าพูดถึงสิ่งของ เราใช้ It ครับ — It is my bag. 🎒 ลองพูดตามนะครับ',
+        'ดีมากครับ! She is my sister. แปลว่า “เธอคือพี่สาวหรือน้องสาวของฉัน” ถ้ามีคนถามว่า Whose bag is it? เราตอบว่า It is my bag. 🎒 ลองพูดตามนะครับ',
       withPraise: true,
-      stem: 'It is...',
+      stem: '',
       expectedSpeech: 'It is my bag.',
       options: [
         { emoji: '🎒', label: 'It is my bag.', speak: 'It is my bag.' },
@@ -446,7 +443,7 @@ export const FOUNDATION_BOARDS: Record<
     },
     4: {
       textEn:
-        'ดีมากครับ! It is my bag. แปลว่า “มันคือกระเป๋าของฉัน” ถ้าจะพูดถึงกระเป๋าของคุณ ควรเลือกประโยคไหนครับ? 🎒',
+        'ดีมากครับ! It is my bag. แปลว่า “มันเป็นกระเป๋าของฉัน” ถ้ามีคนถามว่า Whose bag is it? ควรตอบว่าอะไรครับ? 🎒',
       withPraise: true,
       stem: 'It is my bag.',
       expectedSpeech: 'It is my bag.',
@@ -458,8 +455,8 @@ export const FOUNDATION_BOARDS: Record<
     },
     5: {
       textEn:
-        'ลองพูดประโยคสั้นๆ เกี่ยวกับคนหรือสิ่งของครับ 😊',
-      advanceQuestionEn: 'Say a sentence about someone or something.',
+        'มาทบทวนกันครับ ลองพูดว่า “เขาคือพ่อของฉัน” เป็นภาษาอังกฤษครับ 😊',
+      advanceQuestionEn: 'Say that he is your father.',
       withPraise: true,
       stem: 'He is...',
       expectedSpeech: 'He is my father.',
@@ -482,7 +479,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'เก่งมากครับ! คำชุดแรก — ครอบครัว คือ family, พี่ชาย/น้องชาย คือ brother, พี่สาว/น้องสาว คือ sister 👦 ลองพูดตามคำว่า brother ครับ',
       withPraise: true,
-      stem: 'brother',
+      stem: '',
       expectedSpeech: 'brother',
       options: [{ emoji: '👦', label: 'brother', speak: 'brother' }],
     },
@@ -490,7 +487,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'ต่อไป พ่อ คือ father, แม่ คือ mother 👩 ลองพูดตามคำว่า mother ครับ',
       withPraise: true,
-      stem: 'mother',
+      stem: '',
       expectedSpeech: 'mother',
       options: [{ emoji: '👩', label: 'mother', speak: 'mother' }],
     },
@@ -505,7 +502,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'เยี่ยมเลยครับ! แนะนำคนหนึ่งคน — This is my father. 👨 ลองพูดตามนะครับ',
       withPraise: true,
-      stem: 'This is my...',
+      stem: '',
       expectedSpeech: 'This is my father.',
       options: [
         { emoji: '👨', label: 'This is my father.', speak: 'This is my father.' },
@@ -525,7 +522,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'ต่อไปบอกว่ามีพี่น้องกี่คน — I have one brother. 👦 ลองพูดตามครับ',
       withPraise: true,
-      stem: 'I have...',
+      stem: '',
       expectedSpeech: 'I have one brother.',
       options: [
         {
@@ -539,7 +536,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'แล้วถ้ามีพี่สาว/น้องสาวสองคน — I have two sisters. 👧👧 ลองพูดตามนะครับ',
       withPraise: true,
-      stem: 'I have...',
+      stem: '',
       expectedSpeech: 'I have two sisters.',
       options: [
         {
@@ -566,9 +563,9 @@ export const FOUNDATION_BOARDS: Record<
   numbers: {
     1: {
       textEn:
-        'สวัสดีครับ {name}! วันนี้เรามาเรียนตัวเลข 0–20 กันครับ 🔢 เลข 3 อ่านว่า three — ลองพูดตามนะครับ',
+        'สวัสดีครับ {name}! วันนี้เรามาฝึกตัวเลขภาษาอังกฤษพื้นฐานกันครับ 🔢 เลข 3 อ่านว่า three — ลองพูดตามนะครับ',
       withPraise: false,
-      stem: 'three',
+      stem: '',
       expectedSpeech: 'three',
       options: [{ emoji: '3️⃣', label: 'three', speak: 'three' }],
     },
@@ -576,7 +573,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'เก่งมากครับ! เลข 8 อ่านว่า eight ⏰ ลองพูดตามครับ',
       withPraise: true,
-      stem: 'eight',
+      stem: '',
       expectedSpeech: 'eight',
       options: [{ emoji: '8️⃣', label: 'eight', speak: 'eight' }],
     },
@@ -596,7 +593,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'ต่อไปเลข 11–19 ส่วนใหญ่ลงท้าย -teen ครับ เลข 16 อ่านว่า sixteen 🔢 ลองพูดตามนะครับ',
       withPraise: true,
-      stem: 'sixteen',
+      stem: '',
       expectedSpeech: 'sixteen',
       options: [{ emoji: '🔢', label: 'sixteen', speak: 'sixteen' }],
     },
@@ -615,7 +612,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'สวัสดีครับ {name}! วันนี้เรามาเรียนบอกเวลาเป็นภาษาอังกฤษครับ ⏰ 6:00 อ่านว่า It\'s six o\'clock — ลองพูดตามนะครับ',
       withPraise: false,
-      stem: "It's ... o'clock",
+      stem: '',
       expectedSpeech: "It's six o'clock.",
       options: [
         { emoji: '🕕', label: "six o'clock", speak: "It's six o'clock." },
@@ -625,7 +622,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'เก่งมากครับ! 7:30 อ่านว่า It\'s seven thirty 🕢 ลองพูดตามครับ',
       withPraise: true,
-      stem: "It's seven thirty",
+      stem: '',
       expectedSpeech: "It's seven thirty.",
       options: [
         { emoji: '🕢', label: 'seven thirty', speak: "It's seven thirty." },
@@ -635,15 +632,14 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'ตอนเช้าใช้ a.m. — It\'s seven a.m. 🌅 ลองพูดตามนะครับ',
       withPraise: true,
-      stem: "It's seven a.m.",
+      stem: '',
       expectedSpeech: "It's seven a.m.",
       options: [
         { emoji: '🌅', label: 'seven a.m.', speak: "It's seven a.m." },
-        { emoji: '🌙', label: 'nine p.m.', speak: "It's nine p.m." },
       ],
     },
     4: {
-      textEn: '9:00 ตอนเย็น อ่านว่าอะไรครับ? 🌙',
+      textEn: 'เวลา 9:00 ตอนกลางคืน พูดเป็นภาษาอังกฤษว่าอย่างไรครับ? 🌙',
       withPraise: true,
       stem: "It's nine p.m.",
       expectedSpeech: "It's nine p.m.",
@@ -655,13 +651,17 @@ export const FOUNDATION_BOARDS: Record<
       ],
     },
     5: {
-      textEn: 'ลองบอกเวลาที่คุณตื่นเป็นภาษาอังกฤษครับ ⏰',
+      textEn: 'ถ้าคุณตื่นเวลา 7:00 ตอนเช้า ให้พูดว่า I wake up at seven a.m. ครับ ⏰',
       advanceQuestionEn: 'What time do you wake up?',
       withPraise: true,
-      stem: "It's seven a.m.",
-      expectedSpeech: "It's seven a.m.",
+      stem: 'I wake up at seven a.m.',
+      expectedSpeech: 'I wake up at seven a.m.',
       options: [
-        { emoji: '🌅', label: 'seven a.m.', speak: "It's seven a.m." },
+        {
+          emoji: '🌅',
+          label: 'I wake up at seven a.m.',
+          speak: 'I wake up at seven a.m.',
+        },
       ],
     },
   },
@@ -671,7 +671,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'สวัสดีครับ {name}! วันนี้เรามาเรียนตัวเลข 20–100 กันครับ 🔢 เลข 40 อ่านว่า forty — ลองพูดตามนะครับ',
       withPraise: false,
-      stem: 'forty',
+      stem: '',
       expectedSpeech: 'forty',
       options: [{ emoji: '4️⃣0️⃣', label: 'forty', speak: 'forty' }],
     },
@@ -679,7 +679,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'เก่งมากครับ! เลข 35 อ่านว่า thirty-five (สามสิบห้า) 🎯 ลองพูดตามครับ',
       withPraise: true,
-      stem: 'thirty-five',
+      stem: '',
       expectedSpeech: 'thirty-five',
       options: [
         { emoji: '🎯', label: 'thirty-five', speak: 'thirty-five' },
@@ -699,11 +699,11 @@ export const FOUNDATION_BOARDS: Record<
     },
     4: {
       textEn:
-        'ระวัง thirteen (13) กับ thirty (30) ไม่เหมือนกันนะครับ 😊 เลข 50 อ่านว่า fifty — ลองพูดตาม',
+        'ระวัง thirteen (13) กับ thirty (30) ออกเสียงต่างกันนะครับ 😊 ลองพูดตามว่า thirty.',
       withPraise: true,
-      stem: 'fifty',
-      expectedSpeech: 'fifty',
-      options: [{ emoji: '5️⃣0️⃣', label: 'fifty', speak: 'fifty' }],
+      stem: '',
+      expectedSpeech: 'thirty',
+      options: [{ emoji: '3️⃣0️⃣', label: 'thirty', speak: 'thirty' }],
     },
     5: {
       textEn: 'เลข 80 อ่านว่าอะไรครับ? 🔢',
@@ -720,7 +720,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'สวัสดีครับ {name}! วันนี้เรามาเรียนถามและบอกราคาเป็นภาษาอังกฤษครับ 💵 ถามราคาใช้ How much is it? — ลองพูดตามนะครับ',
       withPraise: false,
-      stem: 'How much is it?',
+      stem: '',
       expectedSpeech: 'How much is it?',
       options: [
         { emoji: '💬', label: 'How much is it?', speak: 'How much is it?' },
@@ -730,7 +730,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'เก่งมากครับ! ตอบราคา — It\'s five dollars. 💵 ลองพูดตามครับ',
       withPraise: true,
-      stem: "It's five dollars.",
+      stem: '',
       expectedSpeech: "It's five dollars.",
       options: [
         { emoji: '💵', label: "It's five dollars", speak: "It's five dollars." },
@@ -740,11 +740,10 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'ถ้าราคาถูก ใช้ It\'s cheap. 👍 ลองพูดตามนะครับ',
       withPraise: true,
-      stem: "It's cheap.",
+      stem: '',
       expectedSpeech: "It's cheap.",
       options: [
         { emoji: '👍', label: "It's cheap", speak: "It's cheap." },
-        { emoji: '💎', label: "It's expensive", speak: "It's expensive." },
       ],
     },
     4: {
@@ -762,8 +761,8 @@ export const FOUNDATION_BOARDS: Record<
     },
     5: {
       textEn:
-        'ลองบอกราคาสินค้าที่คุณชอบซื้อเป็นภาษาอังกฤษครับ 🛒',
-      advanceQuestionEn: 'Say a price in English.',
+        'มาทบทวนกันครับ ถ้าสินค้าราคา 10 ดอลลาร์ ให้บอกราคาเป็นภาษาอังกฤษครับ 🛒',
+      advanceQuestionEn: 'Say that it costs ten dollars.',
       withPraise: true,
       stem: "It's ten dollars.",
       expectedSpeech: "It's ten dollars.",
@@ -778,7 +777,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'สวัสดีครับ {name}! วันนี้เรามาเรียนบอกสิ่งที่ชอบครับ ☕ ถ้าชอบกาแฟ พูดว่า I like coffee. ลองพูดตามนะครับ',
       withPraise: false,
-      stem: 'I like coffee.',
+      stem: '',
       expectedSpeech: 'I like coffee.',
       options: [
         { emoji: '☕', label: 'I like coffee', speak: 'I like coffee.' },
@@ -788,7 +787,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'เก่งมากครับ! ถ้าชอบพิซซ่า — I like pizza. 🍕 ลองพูดตามครับ',
       withPraise: true,
-      stem: 'I like pizza.',
+      stem: '',
       expectedSpeech: 'I like pizza.',
       options: [
         { emoji: '🍕', label: 'I like pizza', speak: 'I like pizza.' },
@@ -798,7 +797,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'ถ้าไม่ชอบชา ใช้ I don\'t like tea. 🍵 ลองพูดตามนะครับ',
       withPraise: true,
-      stem: "I don't like tea.",
+      stem: '',
       expectedSpeech: "I don't like tea.",
       options: [
         { emoji: '🍵', label: "I don't like tea", speak: "I don't like tea." },
@@ -806,7 +805,7 @@ export const FOUNDATION_BOARDS: Record<
     },
     4: {
       textEn:
-        'ถ้ามีคนเสนอชาให้ แต่คุณไม่ชอบ จะพูดว่าอะไรครับ? 🍵',
+        'ถ้ามีคนถามว่า Do you like tea? แต่คุณไม่ชอบ จะตอบว่าอะไรครับ? 🍵',
       withPraise: true,
       stem: "I don't like tea.",
       expectedSpeech: "I don't like tea.",
@@ -818,8 +817,8 @@ export const FOUNDATION_BOARDS: Record<
     },
     5: {
       textEn:
-        'ลองบอกสิ่งที่คุณชอบหรือไม่ชอบจริงๆ เป็นภาษาอังกฤษครับ 😊',
-      advanceQuestionEn: 'What do you like or dislike?',
+        'มาทบทวนกันครับ ลองพูดว่า “ฉันชอบกาแฟ” เป็นภาษาอังกฤษครับ 😊',
+      advanceQuestionEn: 'Say that you like coffee.',
       withPraise: true,
       stem: 'I like...',
       expectedSpeech: 'I like coffee.',
@@ -834,7 +833,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'สวัสดีครับ {name}! วันนี้เรามาเรียน I want / I need / I have ครับ 💧 ถ้าอยากได้น้ำ พูดว่า I want water. ลองพูดตามนะครับ',
       withPraise: false,
-      stem: 'I want water.',
+      stem: '',
       expectedSpeech: 'I want water.',
       options: [
         { emoji: '💧', label: 'I want water', speak: 'I want water.' },
@@ -844,7 +843,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'เก่งมากครับ! ถ้าต้องการความช่วยเหลือ — I need help. 🆘 ลองพูดตามครับ',
       withPraise: true,
-      stem: 'I need help.',
+      stem: '',
       expectedSpeech: 'I need help.',
       options: [
         { emoji: '🆘', label: 'I need help', speak: 'I need help.' },
@@ -854,16 +853,15 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'บอกว่ามีอะไร — I have a dog. 🐕 ลองพูดตามนะครับ',
       withPraise: true,
-      stem: 'I have a dog.',
+      stem: '',
       expectedSpeech: 'I have a dog.',
       options: [
         { emoji: '🐕', label: 'I have a dog', speak: 'I have a dog.' },
-        { emoji: '🚗', label: 'I have a car', speak: 'I have a car.' },
       ],
     },
     4: {
       textEn:
-        'ถ้าคุณกระหายน้ำ จะพูดว่าอะไรครับ? 💧',
+        'ถ้าจะบอกว่า “ฉันอยากได้น้ำ” จะพูดเป็นภาษาอังกฤษว่าอย่างไรครับ? 💧',
       withPraise: true,
       stem: 'I want water.',
       expectedSpeech: 'I want water.',
@@ -875,8 +873,8 @@ export const FOUNDATION_BOARDS: Record<
     },
     5: {
       textEn:
-        'ลองพูดประโยคสั้นๆ ว่าคุณอยากได้ / ต้องการ / มีอะไรครับ 😊',
-      advanceQuestionEn: 'Say what you want, need, or have.',
+        'มาทบทวนกันครับ ลองพูดว่า “ฉันอยากได้กาแฟ” เป็นภาษาอังกฤษครับ 😊',
+      advanceQuestionEn: 'Say that you want coffee.',
       withPraise: true,
       stem: 'I want...',
       expectedSpeech: 'I want coffee.',
@@ -891,7 +889,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'สวัสดีครับ {name}! วันนี้เรามาเรียน I can / I can\'t ครับ 🏊 ถ้าว่ายน้ำได้ พูดว่า I can swim. ลองพูดตามนะครับ',
       withPraise: false,
-      stem: 'I can swim.',
+      stem: '',
       expectedSpeech: 'I can swim.',
       options: [
         { emoji: '🏊', label: 'I can swim', speak: 'I can swim.' },
@@ -901,7 +899,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'เก่งมากครับ! ถ้าขับรถไม่ได้ — I can\'t drive. 🚗 ลองพูดตามครับ',
       withPraise: true,
-      stem: "I can't drive.",
+      stem: '',
       expectedSpeech: "I can't drive.",
       options: [
         { emoji: '🚗', label: "I can't drive", speak: "I can't drive." },
@@ -921,8 +919,8 @@ export const FOUNDATION_BOARDS: Record<
     },
     4: {
       textEn:
-        'ลองบอกความสามารถของคุณเป็นภาษาอังกฤษครับ 😊',
-      advanceQuestionEn: 'What can or can\'t you do?',
+        'มาทบทวนกันครับ ลองพูดว่า “ฉันทำอาหารได้” เป็นภาษาอังกฤษครับ 😊',
+      advanceQuestionEn: 'Say that you can cook.',
       withPraise: true,
       stem: 'I can...',
       expectedSpeech: 'I can cook.',
@@ -937,7 +935,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'สวัสดีครับ {name}! วันนี้เรามาเรียน 3 ประโยคช่วยชีวิตเวลาฟังอังกฤษไม่ทัน 🆘 อาวุธแรก — I don\'t understand. ลองพูดตามนะครับ',
       withPraise: false,
-      stem: "I don't understand.",
+      stem: '',
       expectedSpeech: "I don't understand.",
       options: [
         {
@@ -951,7 +949,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'เก่งมากครับ! อาวุธที่สอง — ขอให้พูดช้าลง Can you speak more slowly? 🐢 ลองพูดตามครับ',
       withPraise: true,
-      stem: 'Can you speak more slowly?',
+      stem: '',
       expectedSpeech: 'Can you speak more slowly?',
       options: [
         {
@@ -965,7 +963,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'อาวุธที่สาม — ถามความหมาย What does that mean? ❓ ลองพูดตามนะครับ',
       withPraise: true,
-      stem: 'What does that mean?',
+      stem: '',
       expectedSpeech: 'What does that mean?',
       options: [
         {
@@ -1004,9 +1002,9 @@ export const FOUNDATION_BOARDS: Record<
   asking_questions: {
     1: {
       textEn:
-        'สวัสดีครับ {name}! วันนี้เรามาเรียนถามคำถมง่ายๆ ครับ 🚻 Where = สถานที่ — Where is the bathroom? ลองพูดตามนะครับ',
+        'สวัสดีครับ {name}! วันนี้เรามาฝึกตั้งคำถามง่ายๆ กันครับ 🚻 ถ้าต้องการถามว่าห้องน้ำอยู่ที่ไหน ให้พูดว่า Where is the bathroom? ลองพูดตามนะครับ',
       withPraise: false,
-      stem: 'Where is the bathroom?',
+      stem: '',
       expectedSpeech: 'Where is the bathroom?',
       options: [
         {
@@ -1020,7 +1018,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'ดีมากครับ! Where is the bathroom? แปลว่า “ห้องน้ำอยู่ที่ไหน” ต่อไป ถ้าต้องการถามว่า “ใคร” เราใช้ Who ครับ — Who is that? 👤 ลองพูดตามครับ',
       withPraise: true,
-      stem: 'Who is that?',
+      stem: '',
       expectedSpeech: 'Who is that?',
       options: [
         { emoji: '👤', label: 'Who is that?', speak: 'Who is that?' },
@@ -1030,7 +1028,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'เยี่ยมเลยครับ! Who is that? แปลว่า “คนนั้นคือใคร” ต่อไป ถ้าต้องการถามว่า “เป็นอย่างไร” เราใช้ How ครับ — How are you? 👋 ลองพูดตามนะครับ',
       withPraise: true,
-      stem: 'How are you?',
+      stem: '',
       expectedSpeech: 'How are you?',
       options: [
         { emoji: '👋', label: 'How are you?', speak: 'How are you?' },
@@ -1051,8 +1049,8 @@ export const FOUNDATION_BOARDS: Record<
     },
     5: {
       textEn:
-        'ลองถามคำถามง่ายๆ ที่คุณใช้บ่อยเป็นภาษาอังกฤษครับ 😊',
-      advanceQuestionEn: 'Ask a simple question in English.',
+        'มาทบทวนกันครับ ถ้าต้องการถามว่า “นี่คืออะไร” ให้พูดเป็นภาษาอังกฤษครับ 😊',
+      advanceQuestionEn: 'Ask what this is.',
       withPraise: true,
       stem: 'What is this?',
       expectedSpeech: 'What is this?',
