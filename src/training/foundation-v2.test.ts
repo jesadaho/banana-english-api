@@ -275,6 +275,7 @@ describe('Foundation — introductions all-step scenarios', () => {
       learnerFirstName,
     );
     assert.equal(pinned.assessmentTier, 'correct');
+    assert.doesNotMatch(pinned.textEn ?? '', /ลองพูดว่า.*อีกครั้ง|พูดตาม/);
     assert.match(pinned.textEn ?? '', /Nice to meet you|I'm|My name is/i);
   });
 

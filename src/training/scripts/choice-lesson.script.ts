@@ -320,9 +320,26 @@ export function reconcileDeferredAssessmentTier(
     scoreTier === 'near' &&
     resolveChoiceAssessmentTier(aiReply) === 'incorrect'
   ) {
-    return { ...aiReply, assessmentTier: 'correct' };
+    return {
+      ...aiReply,
+      assessmentTier: 'correct',
+      textEn: foundationNearCorrectPraise(''),
+      textTh: '',
+    };
   }
   return aiReply;
+}
+
+const FOUNDATION_NEAR_RETEACH =
+  /ลองพูดว่า.*อีกครั้ง|พูดตาม|ลองพูดตาม/i;
+
+/** Foundation near-miss + correct tier — praise only, never Gemini re-teach copy. */
+export function foundationNearCorrectPraise(textEn: string): string {
+  const text = textEn.trim();
+  if (!text || FOUNDATION_NEAR_RETEACH.test(text)) {
+    return 'ถูกต้องแล้วครับ! เก่งมากครับ';
+  }
+  return text;
 }
 
 /** PoolGate incorrect — always include พูดตาม even if Gemini only says ลองพูดว่า. */
@@ -385,8 +402,16 @@ export function pinChoiceLessonAiReply(
       learnerFirstName,
     );
     if (!next) return aiReply;
+    let praise = aiReply.textEn?.trim() ?? '';
+    if (
+      def.clampNearIncorrectToCorrect &&
+      scoreTier === 'near' &&
+      tier === 'correct'
+    ) {
+      praise = foundationNearCorrectPraise(praise);
+    }
     return {
-      textEn: `${aiReply.textEn.trim()} ${next.textEn}`.trim(),
+      textEn: `${praise} ${next.textEn}`.trim(),
       textTh: aiReply.textTh?.trim() || next.textTh || '',
       isLessonComplete: next.isLessonComplete ?? false,
       expectsUserSpeech: next.expectsUserSpeech ?? true,
