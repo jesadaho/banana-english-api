@@ -143,7 +143,7 @@ export const FOUNDATION_BOARDS: Record<
     },
     2: {
       textEn:
-        'เก่งมากครับ! อีกแบบหนึ่งที่ใช้บ่อยคือ I\'m {name} ลองพูดตามนะครับ 💬',
+        'ดีมากครับ! My name is {name}. แปลว่า “ฉันชื่อ {name}” อีกแบบหนึ่งคือ I\'m {name}. ลองพูดตามนะครับ 💬',
       withPraise: true,
       stem: '',
       expectedSpeech: "I'm {name}.",
@@ -151,7 +151,7 @@ export const FOUNDATION_BOARDS: Record<
     },
     3: {
       textEn:
-        'My name is กับ I\'m ใช้ได้ทั้งคู่ครับ แต่ My name is ฟังเป็นทางการกว่านิดหน่อย 📝 ถ้าเจอคนใหม่ครั้งแรก คุณจะใช้แบบไหนครับ?',
+        'เยี่ยมเลยครับ! I\'m {name}. ก็แปลว่า “ฉันชื่อ {name}” เหมือนกันครับ โดย My name is ฟังเป็นทางการกว่านิดหน่อย 📝 ถ้าเจอคนใหม่ครั้งแรก คุณจะใช้แบบไหนครับ?',
       withPraise: true,
       stem: 'My name is...',
       expectedSpeech: 'My name is {name}.',
@@ -162,7 +162,7 @@ export const FOUNDATION_BOARDS: Record<
     },
     4: {
       textEn:
-        'เยี่ยมเลยครับ! ต่อไปเวลาเจอคนใหม่เราพูดว่า Nice to meet you 🤝 ลองพูดตามนะครับ',
+        'เยี่ยมเลยครับ! เวลาเจอคนใหม่ครั้งแรก เราทักว่า Nice to meet you 🤝 แปลว่า “ยินดีที่ได้รู้จัก” ลองพูดตามนะครับ',
       withPraise: true,
       stem: '',
       expectedSpeech: 'Nice to meet you.',
@@ -172,7 +172,7 @@ export const FOUNDATION_BOARDS: Record<
     },
     5: {
       textEn:
-        'แล้วถ้าอีกฝ่ายพูดก่อน เราตอบว่า Nice to meet you too 😊 ลองพูดตามครับ',
+        'ดีมากครับ! Nice to meet you แปลว่า “ยินดีที่ได้รู้จัก” ถ้าอีกฝ่ายพูดก่อน เราตอบว่า Nice to meet you too 😊 ลองพูดตามครับ',
       withPraise: true,
       stem: '',
       expectedSpeech: 'Nice to meet you too.',
@@ -186,7 +186,7 @@ export const FOUNDATION_BOARDS: Record<
     },
     6: {
       textEn:
-        'เก่งมากครับ! ต่อไปบอกว่ามาจากไหน — I\'m from Thailand 🇹🇭 ลองพูดตามนะครับ',
+        'เยี่ยมเลยครับ! Nice to meet you too แปลว่า “ยินดีที่ได้รู้จักเช่นกัน” ต่อไปมาฝึกบอกว่ามาจากไหนกันครับ — I\'m from Thailand 🇹🇭 ลองพูดตามนะครับ',
       withPraise: true,
       stem: '',
       expectedSpeech: "I'm from Thailand.",
@@ -197,7 +197,7 @@ export const FOUNDATION_BOARDS: Record<
     },
     7: {
       textEn:
-        'แล้วถ้าจะบอกว่าอยู่ที่ไหน — I live in Bangkok 🏙️ ลองพูดตามครับ',
+        'เก่งมากครับ! I\'m from คือบอกว่ามาจากไหน ส่วน I live in คือบอกว่าอยู่ที่ไหนตอนนี้ 🏙️ I live in Bangkok แปลว่า “ฉันอยู่ที่กรุงเทพ” ลองพูดตามครับ',
       withPraise: true,
       stem: '',
       expectedSpeech: 'I live in Bangkok.',
@@ -208,7 +208,7 @@ export const FOUNDATION_BOARDS: Record<
     },
     8: {
       textEn:
-        'เยี่ยมเลยครับ! บอกอาชีพหรือว่าเป็นนักเรียนได้ด้วย — I work as a teacher 👩‍🏫 ลองพูดตามนะครับ',
+        'เยี่ยมเลยครับ! ถ้าจะบอกอาชีพ พูดว่า I work as a teacher 👩‍🏫 แปลว่า “ฉันทำงานเป็นครู” ลองพูดตามนะครับ',
       withPraise: true,
       stem: '',
       expectedSpeech: 'I work as a teacher.',
@@ -309,7 +309,7 @@ export const FOUNDATION_BOARDS: Record<
     },
     2: {
       textEn:
-        'เก่งมากครับ! ถ้ามีคนขอบคุณ เราตอบว่า You\'re welcome 😊 ลองพูดตามนะครับ',
+        'ดีมากครับ! Thank you very much แปลว่า “ขอบคุณมาก” ถ้ามีคนขอบคุณเรา ให้ตอบว่า You\'re welcome 😊 ลองพูดตามนะครับ',
       withPraise: true,
       stem: '',
       expectedSpeech: "You're welcome.",
@@ -391,7 +391,7 @@ export const FOUNDATION_BOARDS: Record<
     },
     4: {
       textEn:
-        'ถ้าจะบอกเพื่อนว่าคุณเป็นนักเรียน จะพูดว่าอะไรครับ? 🎓',
+        'ดีมากครับ! You are my friend. แปลว่า “คุณคือเพื่อนของฉัน” ต่อไปลองทบทวน I am กันครับ ถ้าจะบอกเพื่อนว่าคุณเป็นนักเรียน จะพูดว่าอะไรครับ? 🎓',
       withPraise: true,
       stem: 'I am a student.',
       expectedSpeech: 'I am a student.',
@@ -436,7 +436,7 @@ export const FOUNDATION_BOARDS: Record<
     },
     3: {
       textEn:
-        'สำหรับสิ่งของ ใช้ It is my bag. 🎒 ลองพูดตามนะครับ',
+        'ดีมากครับ! She is my sister. แปลว่า “เธอคือพี่สาวหรือน้องสาวของฉัน” ต่อไป ถ้าพูดถึงสิ่งของ เราใช้ It ครับ — It is my bag. 🎒 ลองพูดตามนะครับ',
       withPraise: true,
       stem: '',
       expectedSpeech: 'It is my bag.',
@@ -446,7 +446,7 @@ export const FOUNDATION_BOARDS: Record<
     },
     4: {
       textEn:
-        'นึกถึงกระเป๋าของคุณครับ 🎒 จะพูดภาษาอังกฤษว่าอะไร?',
+        'ดีมากครับ! It is my bag. แปลว่า “มันคือกระเป๋าของฉัน” ถ้าจะพูดถึงกระเป๋าของคุณ ควรเลือกประโยคไหนครับ? 🎒',
       withPraise: true,
       stem: 'It is my bag.',
       expectedSpeech: 'It is my bag.',
@@ -1018,7 +1018,7 @@ export const FOUNDATION_BOARDS: Record<
     },
     2: {
       textEn:
-        'เก่งมากครับ! Who = คน — Who is that? 👤 ลองพูดตามครับ',
+        'ดีมากครับ! Where is the bathroom? แปลว่า “ห้องน้ำอยู่ที่ไหน” ต่อไป ถ้าต้องการถามว่า “ใคร” เราใช้ Who ครับ — Who is that? 👤 ลองพูดตามครับ',
       withPraise: true,
       stem: '',
       expectedSpeech: 'Who is that?',
@@ -1028,7 +1028,7 @@ export const FOUNDATION_BOARDS: Record<
     },
     3: {
       textEn:
-        'How = อย่างไร — How are you? 👋 ลองพูดตามนะครับ',
+        'เยี่ยมเลยครับ! Who is that? แปลว่า “คนนั้นคือใคร” ต่อไป ถ้าต้องการถามว่า “เป็นอย่างไร” เราใช้ How ครับ — How are you? 👋 ลองพูดตามนะครับ',
       withPraise: true,
       stem: '',
       expectedSpeech: 'How are you?',
@@ -1038,7 +1038,7 @@ export const FOUNDATION_BOARDS: Record<
     },
     4: {
       textEn:
-        'ถ้าอยากรู้ว่าสิ่งนี้คืออะไร จะถามว่าอะไรครับ? ❓',
+        'ดีมากครับ! How are you? แปลว่า “คุณเป็นอย่างไรบ้าง” ถ้าอยากรู้ว่าสิ่งนี้คืออะไร จะถามว่าอะไรครับ? ❓',
       withPraise: true,
       stem: 'What is this?',
       expectedSpeech: 'What is this?',
