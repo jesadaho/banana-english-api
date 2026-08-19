@@ -10,6 +10,7 @@ import {
   type ChoiceLessonHistoryTurn,
 } from '../scripts/choice-lesson.script';
 import type { ScriptTurnResult } from '../scripts/types';
+import { resolveIncorrectHintTh } from './foundation-incorrect-hints';
 
 export const FOUNDATION_LESSON_IDS = [
   'introductions',
@@ -117,13 +118,12 @@ export function personalizeBoard(
   board: ForcedGuidedBoard,
   name: string,
 ): ForcedGuidedBoard {
+  const hint = resolveIncorrectHintTh(board);
   return {
     ...board,
     textEn: personalize(board.textEn, name),
     expectedSpeech: personalize(board.expectedSpeech, name),
-    incorrectHintTh: board.incorrectHintTh
-      ? personalize(board.incorrectHintTh, name)
-      : undefined,
+    incorrectHintTh: hint ? personalize(hint, name) : undefined,
     options: board.options.map((o) => ({
       ...o,
       speak: personalize(o.speak, name),
