@@ -47,6 +47,7 @@ export type ChoiceLessonDef = {
     learnerFirstName: string,
   ) => ScriptTurnResult | null;
   pinWithoutGuidedSteps?: number[];
+  progressFromSessionBeat?: (sessionProgressTurn: number | undefined) => number;
   /** When set, defer+`near` never stays Gemini `incorrect` (Foundation STT tolerance). */
   clampNearIncorrectToCorrect?: boolean;
 };
