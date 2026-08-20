@@ -59,10 +59,11 @@ export const FOUNDATION_LOOSE_MATCHERS: Record<
     }),
   meet_people: (step, text) =>
     loose(step, text, {
-      1: /^i am /,
-      2: /^i am a /,
-      3: /^you are /,
-      5: /^i am /,
+      1: /^(i am|i['’]?m) new here$/,
+      2: /^(i am|i['’]?m) excited$/,
+      3: /^(you are|you['’]?re) my classmate$/,
+      4: /^(you are|you['’]?re) very kind$/,
+      5: /^(i am|i['’]?m) .+ (you are|you['’]?re) /,
     }),
   talk_about_groups: (step, text) =>
     loose(step, text, {
@@ -168,7 +169,11 @@ export const FOUNDATION_CLOSE_MATCHERS: Partial<
     1: /^thank you very$/, 2: /^you welcome$/, 3: /^excuse$/, 4: /^thank$/, 5: /^i sorry$/,
   }),
   meet_people: (step, text) => loose(step, text, {
-    1: /^i [a-z]+$/, 2: /^i am student$/, 3: /^you my friend$/, 4: /^i student$/, 5: /^i student$/,
+    1: /^i new here$/,
+    2: /^i excited$/,
+    3: /^you my classmate$/,
+    4: /^you very kind$/,
+    5: /^i new here,? you my classmate$/,
   }),
   talk_about_groups: (step, text) => loose(step, text, {
     1: /^he my father$/, 2: /^she my sister$/, 3: /^it my bag$/, 4: /^it my bag$/, 5: /^he my father$/,
@@ -197,8 +202,8 @@ export const FOUNDATION_CLOSE_MATCHERS: Partial<
     2: /^fivty$/,
     3: /^eightty$/,
     4: /^sebenty$/,
-    5: /^thirty five$/,
-    6: /^sixty two$/,
+    5: /^thirty fiv$/,
+    6: /^sixty tw$/,
   }),
   money_prices: (step, text) => loose(step, text, {
     1: /^how much it is$/, 2: /^it five dollars$/, 3: /^it cheap$/,
@@ -595,51 +600,53 @@ export const FOUNDATION_BOARDS: Record<
   meet_people: {
     1: {
       textEn:
-        'สวัสดีครับ {name}! วันนี้เรามาฝึกพูดถึงตัวเองและคู่สนทนาครับ 🙋 I am {name}. แปลว่า “ฉันคือ {name}” และ I am ใช้พูดถึงตัวเรา ลองพูดตามว่า “I am {name}.” ครับ',
+        'สวัสดีครับ {name}! วันนี้เป็นวันแรกในคลาสครับ 🙋 ถ้าเราเพิ่งมาใหม่ พูดว่า “I\'m new here.” แปลว่า “ฉันเพิ่งมาใหม่” โดย I\'m เป็นรูปสั้นของ I am ลองพูดตามครับ',
       withPraise: false,
       stem: '',
-      expectedSpeech: 'I am {name}.',
-      options: [{ emoji: '🙋', label: 'I am', speak: 'I am {name}.' }],
+      expectedSpeech: "I'm new here.",
+      incorrectHintTh: 'ยังไม่ถูกครับ ลองพูดตามว่า “I\'m new here.” ครับ',
+      options: [],
     },
     2: {
       textEn:
-        'ถ้าจะบอกว่าเป็นนักเรียน — I am a student. 🎓 ลองพูดตามครับ',
+        'วันแรกในคลาส คุณรู้สึกตื่นเต้นครับ 😊 พูดว่า “I\'m excited.” แปลว่า “ฉันรู้สึกตื่นเต้น” ลองพูดตามครับ',
       withPraise: true,
       stem: '',
-      expectedSpeech: 'I am a student.',
-      options: [
-        { emoji: '🎓', label: 'Student', speak: 'I am a student.' },
-      ],
+      expectedSpeech: "I'm excited.",
+      incorrectHintTh: 'ยังไม่ถูกครับ ลองพูดตามว่า “I\'m excited.” ครับ',
+      options: [],
     },
     3: {
       textEn:
-        'ต่อไปพูดกับคนที่คุยด้วย — You are my friend. 👉 ลองพูดตามนะครับ',
+        'คุณเจอ Ben ซึ่งเรียนห้องเดียวกับคุณครับ 👋 พูดว่า “You\'re my classmate.” แปลว่า “คุณเป็นเพื่อนร่วมชั้นของฉัน” โดย You\'re เป็นรูปสั้นของ You are ลองพูดตามครับ',
       withPraise: true,
       stem: '',
-      expectedSpeech: 'You are my friend.',
-      options: [
-        { emoji: '👉', label: 'You are', speak: 'You are my friend.' },
-      ],
+      expectedSpeech: "You're my classmate.",
+      incorrectHintTh: 'ยังไม่ถูกครับ ลองพูดตามว่า “You\'re my classmate.” ครับ',
+      options: [],
     },
     4: {
       textEn:
-        'You are my friend. แปลว่า “คุณคือเพื่อนของฉัน” ต่อไปลองทบทวน I am กันครับ ถ้าจะบอกเพื่อนว่าคุณเป็นนักเรียน จะพูดว่าอะไรครับ? 🎓',
+        'Ben ช่วยคุณหาห้องเรียนครับ 😊 ถ้าจะบอกเขาว่า “คุณใจดีมาก” ควรพูดว่าอะไร?',
       withPraise: true,
       stem: '',
-      expectedSpeech: 'I am a student.',
+      expectedSpeech: "You're very kind.",
+      incorrectHintTh: 'ยังไม่ตรงครับ เรากำลังพูดถึง Ben ลองเริ่มด้วย “You\'re...” ครับ',
       options: [
-        { emoji: '🙋', label: 'I am a student.', speak: 'I am a student.' },
-        { emoji: '👉', label: 'You are my friend.', speak: 'You are my friend.' },
+        { emoji: '😊', label: "You're very kind.", speak: "You're very kind." },
+        { emoji: '🙋', label: "I'm new here.", speak: "I'm new here." },
+        { emoji: '👋', label: "You're my classmate.", speak: "You're my classmate." },
       ],
     },
     5: {
       textEn:
-        'ลองพูดประโยคสั้นๆ เกี่ยวกับตัวคุณหรือคู่สนทนาครับ 😊',
-      advanceQuestionEn: 'Say a short sentence about yourself.',
+        'ลองคุยกับ Ben จริงๆ ครับ 👋 Ben พูดว่า “Hi! I\'m Ben. I\'m new here.” ตอบสองประโยคสั้นๆ: บอกหนึ่งอย่างเกี่ยวกับตัวคุณด้วย I\'m... และพูดถึง Ben ด้วย You\'re... ครับ',
+      advanceQuestionEn:
+        'ตอบ Ben สองประโยคสั้นๆ โดยใช้ I\'m... และ You\'re... ครับ',
       withPraise: true,
-      stem: '',
-      expectedSpeech: 'I am a student.',
-      incorrectHintTh: 'ยังไม่ตรงครับ ลองเริ่มด้วย “I am...” หรือ “You are...” แล้วพูดต่อให้ครบประโยคครับ',
+      stem: "I'm... You're...",
+      expectedSpeech: "I'm new here too. You're my classmate.",
+      incorrectHintTh: 'ยังไม่ตรงครับ ลองพูดสองส่วน โดยเริ่มด้วย “I\'m...” แล้วตามด้วย “You\'re...” ครับ',
       options: [],
     },
   },

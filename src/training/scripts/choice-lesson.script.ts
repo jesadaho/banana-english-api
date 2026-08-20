@@ -619,6 +619,12 @@ export function pinChoiceLessonAiReply(
         assessmentTier: tier,
       };
     }
+    if (next.isLessonComplete) {
+      return {
+        ...next,
+        assessmentTier: tier,
+      };
+    }
     const praise = correctAdvancePraise(aiReply.textEn?.trim() ?? '');
     const nextBody = stripLeadingPraiseOpener(next.textEn?.trim() ?? '').trim();
     return {

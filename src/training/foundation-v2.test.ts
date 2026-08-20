@@ -7,6 +7,7 @@ import {
   type ChoiceLessonHistoryTurn,
 } from './scripts/choice-lesson.script';
 import { resolveLessonProgressTurn } from '../lessons/lessons.data';
+import { FOUNDATION_BOARDS } from './foundation/foundation-boards';
 import {
   FOUNDATION_POOLGATE_FIXTURES,
   FOUNDATION_PROBE_LEARNER,
@@ -197,6 +198,22 @@ describe('Foundation — full happy path (all steps → complete)', () => {
       result.completionText,
       /อ่านเลขหลักสิบ และประกอบเลขสองหลักตั้งแต่ 20–100 ได้แล้ว/,
     );
+  });
+
+  it('meet people — repeat turns hide choices and final uses both contractions', () => {
+    const def = getDef(
+      FOUNDATION_POOLGATE_FIXTURES.find((f) => f.lessonId === 'meet_people')!,
+    );
+    const result = runFoundationFullHappyPath(def);
+
+    assert.equal(FOUNDATION_BOARDS.meet_people[1].options.length, 0);
+    assert.equal(FOUNDATION_BOARDS.meet_people[2].options.length, 0);
+    assert.equal(FOUNDATION_BOARDS.meet_people[3].options.length, 0);
+    assert.ok(FOUNDATION_BOARDS.meet_people[4].options.length >= 2);
+    assert.equal(FOUNDATION_BOARDS.meet_people[5].options.length, 0);
+    assert.match(result.steps[4].userText, /I['’]m/);
+    assert.match(result.steps[4].userText, /You['’]re/);
+    assert.match(result.completionText, /I['’]m\.\.\..*You['’]re\.\.\./);
   });
 });
 

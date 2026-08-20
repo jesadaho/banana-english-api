@@ -479,7 +479,13 @@ export function foundationOutOfPoolCloseMiss(
 
   const closeByLesson: Partial<Record<string, Record<number, string>>> = {
     polite_expressions: { 1: 'Thank you very.', 2: 'You welcome.', 3: 'Excuse.', 4: 'Thank.', 5: 'I sorry.' },
-    meet_people: { 1: 'I Nana.', 2: 'I am student.', 3: 'You my friend.', 4: 'I student.', 5: 'I student.' },
+    meet_people: {
+      1: 'I new here.',
+      2: 'I excited.',
+      3: 'You my classmate.',
+      4: 'You very kind.',
+      5: 'I new here. You my classmate.',
+    },
     talk_about_groups: { 1: 'He my father.', 2: 'She my sister.', 3: 'It my bag.', 4: 'It my bag.', 5: 'He my father.' },
     ee_about_me_family: { 1: 'brotha', 2: 'motha', 3: 'fatha', 4: 'This my father.', 5: 'This my sister.', 6: 'I have brother.', 7: 'I have two sister.', 8: 'This my father.' },
     numbers: {
@@ -498,8 +504,8 @@ export function foundationOutOfPoolCloseMiss(
       2: 'fivty',
       3: 'eightty',
       4: 'sebenty',
-      5: 'thirty five',
-      6: 'sixty two',
+      5: 'thirty fiv',
+      6: 'sixty tw',
     },
     money_prices: { 1: 'How much it is?', 2: 'It five dollars.', 3: 'It cheap.', 4: 'It ten dollars.', 5: 'It ten dollars.' },
     likes_dislikes: { 1: 'I like coffee very.', 2: 'I like pizza very.', 3: 'I no like tea.', 4: 'I no like tea.', 5: 'I like coffee very.' },
@@ -765,6 +771,11 @@ export function runFoundationAllOutOfPoolGeminiAssess(
     turns.at(-1)?.textEn ?? '',
     tier === 'incorrect' ? /เรียนครบแล้วครับ/ : /สุดยอด|🎉|🍌/,
     `${def.lessonId}: performance-aware completion copy`,
+  );
+  assert.doesNotMatch(
+    turns.at(-1)?.textEn ?? '',
+    /(?:ถูกต้อง|ดีมาก|เยี่ยม)ครับ!\s+[^!]+!\s*🎉/u,
+    `${def.lessonId}: completion must not prepend a detached praise sentence before the learner name`,
   );
   return { turns, steps, completionText: turns.at(-1)?.textEn ?? '' };
 }

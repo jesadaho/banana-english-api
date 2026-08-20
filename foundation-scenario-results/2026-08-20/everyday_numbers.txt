@@ -10,52 +10,61 @@ Hint: (none)
 Choices: 4️⃣0️⃣ forty → "forty"
 User: forty
 Result: correct in pool
-response time : 126.77 ms
-Reply: เก่งมากครับ! เลข 35 อ่านว่า thirty-five (สามสิบห้า) 🎯 ลองพูดตามครับ
+response time : 118.31 ms
+Reply: ป้ายราคานี้อ่านว่าเท่าไรครับ? 🏷️ 50
 
 Step 2
-AI: เก่งมากครับ! เลข 35 อ่านว่า thirty-five (สามสิบห้า) 🎯 ลองพูดตามครับ
+AI: ป้ายราคานี้อ่านว่าเท่าไรครับ? 🏷️ 50
 Hint: (none)
-Choices: 🎯 thirty-five → "thirty-five"
-User: thirty-five
-Result: correct in pool
-response time : 96.77 ms
-Reply: เลข 62 อ่านว่าอะไรครับ? 🔢
-
-Step 3
-AI: เลข 62 อ่านว่าอะไรครับ? 🔢
-Hint: (none)
-Choices: 🎯 forty → "forty"
-         🏀 fifty → "fifty"
-         🎲 sixty-two → "sixty-two"
-         🎳 seventy → "seventy"
-User: sixty-two
-Result: correct in pool
-response time : 96.08 ms
-Reply: ต่อไปเลข 50 อ่านว่า fifty ครับ 5️⃣0️⃣ ลองพูดตามว่า “fifty” ครับ
-
-Step 4
-AI: ต่อไปเลข 50 อ่านว่า fifty ครับ 5️⃣0️⃣ ลองพูดตามว่า “fifty” ครับ
-Hint: (none)
-Choices: 5️⃣0️⃣ fifty → "fifty"
+Choices: 3️⃣0️⃣ thirty → "thirty"
+         4️⃣0️⃣ forty → "forty"
+         5️⃣0️⃣ fifty → "fifty"
 User: fifty
 Result: correct in pool
-response time : 93.84 ms
-Reply: เลข 80 อ่านว่าอะไรครับ? 🔢
+response time : 115.73 ms
+Reply: ต่อไป 60 sixty, 70 seventy, 80 eighty, 90 ninety และ 100 one hundred ครับ ลองพูดตามคำว่า “eighty” ครับ
 
-Step 5
-AI: เลข 80 อ่านว่าอะไรครับ? 🔢
+Step 3
+AI: ต่อไป 60 sixty, 70 seventy, 80 eighty, 90 ninety และ 100 one hundred ครับ ลองพูดตามคำว่า “eighty” ครับ
 Hint: (none)
-Choices: 8️⃣ eight → "eight"
-         1️⃣8️⃣ eighteen → "eighteen"
-         8️⃣0️⃣ eighty → "eighty"
+Choices: 8️⃣0️⃣ eighty → "eighty"
 User: eighty
 Result: correct in pool
-response time : 126.87 ms
-Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณฝึกอ่านหลักสิบและเลขสองหลักบางตัวแล้ว 🍌
+response time : 97.72 ms
+Reply: รถเมล์สายนี้คือหมายเลขอะไรครับ? 🚌 70
+
+Step 4
+AI: รถเมล์สายนี้คือหมายเลขอะไรครับ? 🚌 70
+Hint: (none)
+Choices: 6️⃣0️⃣ sixty → "sixty"
+         7️⃣0️⃣ seventy → "seventy"
+         8️⃣0️⃣ eighty → "eighty"
+         9️⃣0️⃣ ninety → "ninety"
+User: seventy
+Result: correct in pool
+response time : 110.81 ms
+Reply: เลขสองหลักประกอบจากหลักสิบและหลักหน่วยครับ เช่น 30 thirty กับ 5 five รวมเป็น 35 thirty-five ลองพูดตามว่า “thirty-five” ครับ
+
+Step 5
+AI: เลขสองหลักประกอบจากหลักสิบและหลักหน่วยครับ เช่น 30 thirty กับ 5 five รวมเป็น 35 thirty-five ลองพูดตามว่า “thirty-five” ครับ
+Hint: (none)
+Choices: 3️⃣5️⃣ thirty-five → "thirty-five"
+User: thirty-five
+Result: correct in pool
+response time : 129.66 ms
+Reply: ขั้นตอนสุดท้ายครับ หมายเลขห้องนี้อ่านว่าอะไร? 🚪 62
+
+Step 6
+AI: ขั้นตอนสุดท้ายครับ หมายเลขห้องนี้อ่านว่าอะไร? 🚪 62
+Hint: (none)
+Choices: (none)
+User: sixty-two
+Result: correct in pool
+response time : 104.60 ms
+Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณอ่านเลขหลักสิบ และประกอบเลขสองหลักตั้งแต่ 20–100 ได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ everyday_numbers scenario 1 complete · 5 turns · 540.33 ms
+✅ everyday_numbers scenario 1 complete · 6 turns · 676.82 ms
 
 ================================================================================
 everyday_numbers — Scenario 2 — out-pool correct ทุก step → จบบท
@@ -68,52 +77,61 @@ Hint: (none)
 Choices: 4️⃣0️⃣ forty → "forty"
 User: forty....
 Result: correct out pool
-response time : 1.20 s
-Reply: เยี่ยมครับ! เลข 35 อ่านว่า thirty-five (สามสิบห้า) 🎯 ลองพูดตามครับ
+response time : 1.35 s
+Reply: เยี่ยมครับ! ป้ายราคานี้อ่านว่าเท่าไรครับ? 🏷️ 50
 
 Step 2
-AI: เยี่ยมครับ! เลข 35 อ่านว่า thirty-five (สามสิบห้า) 🎯 ลองพูดตามครับ
+AI: เยี่ยมครับ! ป้ายราคานี้อ่านว่าเท่าไรครับ? 🏷️ 50
 Hint: (none)
-Choices: 🎯 thirty-five → "thirty-five"
-User: thirty-five....
-Result: correct out pool
-response time : 1.33 s
-Reply: ถูกต้องครับ! เลข 62 อ่านว่าอะไรครับ? 🔢
-
-Step 3
-AI: ถูกต้องครับ! เลข 62 อ่านว่าอะไรครับ? 🔢
-Hint: (none)
-Choices: 🎯 forty → "forty"
-         🏀 fifty → "fifty"
-         🎲 sixty-two → "sixty-two"
-         🎳 seventy → "seventy"
-User: sixty-two....
-Result: correct out pool
-response time : 1.33 s
-Reply: ดีมากครับ! ต่อไปเลข 50 อ่านว่า fifty ครับ 5️⃣0️⃣ ลองพูดตามว่า “fifty” ครับ
-
-Step 4
-AI: ดีมากครับ! ต่อไปเลข 50 อ่านว่า fifty ครับ 5️⃣0️⃣ ลองพูดตามว่า “fifty” ครับ
-Hint: (none)
-Choices: 5️⃣0️⃣ fifty → "fifty"
+Choices: 3️⃣0️⃣ thirty → "thirty"
+         4️⃣0️⃣ forty → "forty"
+         5️⃣0️⃣ fifty → "fifty"
 User: fifty....
 Result: correct out pool
-response time : 1.64 s
-Reply: ถูกต้องครับ! เลข 80 อ่านว่าอะไรครับ? 🔢
+response time : 1.38 s
+Reply: ถูกต้องครับ! ต่อไป 60 sixty, 70 seventy, 80 eighty, 90 ninety และ 100 one hundred ครับ ลองพูดตามคำว่า “eighty” ครับ
 
-Step 5
-AI: ถูกต้องครับ! เลข 80 อ่านว่าอะไรครับ? 🔢
+Step 3
+AI: ถูกต้องครับ! ต่อไป 60 sixty, 70 seventy, 80 eighty, 90 ninety และ 100 one hundred ครับ ลองพูดตามคำว่า “eighty” ครับ
 Hint: (none)
-Choices: 8️⃣ eight → "eight"
-         1️⃣8️⃣ eighteen → "eighteen"
-         8️⃣0️⃣ eighty → "eighty"
+Choices: 8️⃣0️⃣ eighty → "eighty"
 User: eighty....
 Result: correct out pool
+response time : 1.25 s
+Reply: ดีมากครับ! รถเมล์สายนี้คือหมายเลขอะไรครับ? 🚌 70
+
+Step 4
+AI: ดีมากครับ! รถเมล์สายนี้คือหมายเลขอะไรครับ? 🚌 70
+Hint: (none)
+Choices: 6️⃣0️⃣ sixty → "sixty"
+         7️⃣0️⃣ seventy → "seventy"
+         8️⃣0️⃣ eighty → "eighty"
+         9️⃣0️⃣ ninety → "ninety"
+User: seventy....
+Result: correct out pool
+response time : 1.22 s
+Reply: ดีมากครับ! เลขสองหลักประกอบจากหลักสิบและหลักหน่วยครับ เช่น 30 thirty กับ 5 five รวมเป็น 35 thirty-five ลองพูดตามว่า “thirty-five” ครับ
+
+Step 5
+AI: ดีมากครับ! เลขสองหลักประกอบจากหลักสิบและหลักหน่วยครับ เช่น 30 thirty กับ 5 five รวมเป็น 35 thirty-five ลองพูดตามว่า “thirty-five” ครับ
+Hint: (none)
+Choices: 3️⃣5️⃣ thirty-five → "thirty-five"
+User: thirty-five....
+Result: correct out pool
+response time : 1.20 s
+Reply: เยี่ยมครับ! ขั้นตอนสุดท้ายครับ หมายเลขห้องนี้อ่านว่าอะไร? 🚪 62
+
+Step 6
+AI: เยี่ยมครับ! ขั้นตอนสุดท้ายครับ หมายเลขห้องนี้อ่านว่าอะไร? 🚪 62
+Hint: (none)
+Choices: (none)
+User: sixty-two....
+Result: correct out pool
 response time : 1.17 s
-Reply: ดีมากครับ! Nana! 🎉 วันนี้คุณฝึกอ่านหลักสิบและเลขสองหลักบางตัวแล้ว 🍌
+Reply: ถูกต้องครับ! Nana! 🎉 วันนี้คุณอ่านเลขหลักสิบ และประกอบเลขสองหลักตั้งแต่ 20–100 ได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ everyday_numbers scenario 2 complete · 5 turns · 6.68 s
+✅ everyday_numbers scenario 2 complete · 6 turns · 7.57 s
 
 ================================================================================
 everyday_numbers — Scenario 3 — out-pool close ทุก step → จบบท
@@ -126,61 +144,69 @@ Hint: (none)
 Choices: 4️⃣0️⃣ forty → "forty"
 User: fourty
 Result: close out pool
-response time : 1.16 s
+response time : 1.25 s
 Reply: เกือบถูกแล้วครับ! พูดว่า forty. 4️⃣0️⃣
-เลข 35 อ่านว่า thirty-five (สามสิบห้า) 🎯 ลองพูดตามครับ
+ป้ายราคานี้อ่านว่าเท่าไรครับ? 🏷️ 50
 
 Step 2
 AI: เกือบถูกแล้วครับ! พูดว่า forty. 4️⃣0️⃣
-เลข 35 อ่านว่า thirty-five (สามสิบห้า) 🎯 ลองพูดตามครับ
+ป้ายราคานี้อ่านว่าเท่าไรครับ? 🏷️ 50
 Hint: (none)
-Choices: 🎯 thirty-five → "thirty-five"
-User: thirty five
-Result: close out pool
-response time : 1.17 s
-Reply: เกือบถูกแล้วครับ! พูดว่า thirty-five. 🎯
-เลข 62 อ่านว่าอะไรครับ? 🔢
-
-Step 3
-AI: เกือบถูกแล้วครับ! พูดว่า thirty-five. 🎯
-เลข 62 อ่านว่าอะไรครับ? 🔢
-Hint: (none)
-Choices: 🎯 forty → "forty"
-         🏀 fifty → "fifty"
-         🎲 sixty-two → "sixty-two"
-         🎳 seventy → "seventy"
-User: sixty two
-Result: close out pool
-response time : 1.84 s
-Reply: เกือบถูกแล้วครับ! พูดว่า sixty-two. 🎲
-ต่อไปเลข 50 อ่านว่า fifty ครับ 5️⃣0️⃣ ลองพูดตามว่า “fifty” ครับ
-
-Step 4
-AI: เกือบถูกแล้วครับ! พูดว่า sixty-two. 🎲
-ต่อไปเลข 50 อ่านว่า fifty ครับ 5️⃣0️⃣ ลองพูดตามว่า “fifty” ครับ
-Hint: (none)
-Choices: 5️⃣0️⃣ fifty → "fifty"
+Choices: 3️⃣0️⃣ thirty → "thirty"
+         4️⃣0️⃣ forty → "forty"
+         5️⃣0️⃣ fifty → "fifty"
 User: fivty
 Result: close out pool
-response time : 1.43 s
+response time : 1.30 s
 Reply: เกือบถูกแล้วครับ! พูดว่า fifty. 5️⃣0️⃣
-เลข 80 อ่านว่าอะไรครับ? 🔢
+ต่อไป 60 sixty, 70 seventy, 80 eighty, 90 ninety และ 100 one hundred ครับ ลองพูดตามคำว่า “eighty” ครับ
 
-Step 5
+Step 3
 AI: เกือบถูกแล้วครับ! พูดว่า fifty. 5️⃣0️⃣
-เลข 80 อ่านว่าอะไรครับ? 🔢
+ต่อไป 60 sixty, 70 seventy, 80 eighty, 90 ninety และ 100 one hundred ครับ ลองพูดตามคำว่า “eighty” ครับ
 Hint: (none)
-Choices: 8️⃣ eight → "eight"
-         1️⃣8️⃣ eighteen → "eighteen"
-         8️⃣0️⃣ eighty → "eighty"
+Choices: 8️⃣0️⃣ eighty → "eighty"
 User: eightty
 Result: close out pool
-response time : 1.38 s
+response time : 1.51 s
 Reply: เกือบถูกแล้วครับ! พูดว่า eighty. 8️⃣0️⃣
-สุดยอดครับ Nana! 🎉 วันนี้คุณฝึกอ่านหลักสิบและเลขสองหลักบางตัวแล้ว 🍌
+รถเมล์สายนี้คือหมายเลขอะไรครับ? 🚌 70
+
+Step 4
+AI: เกือบถูกแล้วครับ! พูดว่า eighty. 8️⃣0️⃣
+รถเมล์สายนี้คือหมายเลขอะไรครับ? 🚌 70
+Hint: (none)
+Choices: 6️⃣0️⃣ sixty → "sixty"
+         7️⃣0️⃣ seventy → "seventy"
+         8️⃣0️⃣ eighty → "eighty"
+         9️⃣0️⃣ ninety → "ninety"
+User: sebenty
+Result: close out pool
+response time : 1.44 s
+Reply: เกือบถูกแล้วครับ! พูดว่า seventy. 7️⃣0️⃣
+เลขสองหลักประกอบจากหลักสิบและหลักหน่วยครับ เช่น 30 thirty กับ 5 five รวมเป็น 35 thirty-five ลองพูดตามว่า “thirty-five” ครับ
+
+Step 5
+AI: เกือบถูกแล้วครับ! พูดว่า seventy. 7️⃣0️⃣
+เลขสองหลักประกอบจากหลักสิบและหลักหน่วยครับ เช่น 30 thirty กับ 5 five รวมเป็น 35 thirty-five ลองพูดตามว่า “thirty-five” ครับ
+Hint: (none)
+Choices: 3️⃣5️⃣ thirty-five → "thirty-five"
+User: thirty five
+Result: correct out pool
+response time : 1.18 s
+Reply: ถูกต้องครับ! ขั้นตอนสุดท้ายครับ หมายเลขห้องนี้อ่านว่าอะไร? 🚪 62
+
+Step 6
+AI: ถูกต้องครับ! ขั้นตอนสุดท้ายครับ หมายเลขห้องนี้อ่านว่าอะไร? 🚪 62
+Hint: (none)
+Choices: (none)
+User: sixty two
+Result: correct out pool
+response time : 1.19 s
+Reply: เยี่ยมครับ! Nana! 🎉 วันนี้คุณอ่านเลขหลักสิบ และประกอบเลขสองหลักตั้งแต่ 20–100 ได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ everyday_numbers scenario 3 complete · 5 turns · 7.00 s
+✅ everyday_numbers scenario 3 complete · 6 turns · 7.88 s
 
 ================================================================================
 everyday_numbers — Scenario 4 — out-pool wrong + in-pool พูดตาม recovery → จบบท
@@ -193,7 +219,7 @@ Hint: (none)
 Choices: 4️⃣0️⃣ forty → "forty"
 User: Good morning.
 Result: incorrect out pool
-response time : 1.19 s
+response time : 1.18 s
 Reply: เก่งมากครับ Nana! แต่ลองพูดว่า "forty" ตามที่พี่สอนนะครับ ลองพูดตามนะครับ
 
 Step 2
@@ -202,93 +228,111 @@ Hint: (none)
 Choices: 4️⃣0️⃣ forty → "forty"
 User: forty
 Result: correct in pool
-response time : 91.85 ms
-Reply: เก่งมากครับ! เลข 35 อ่านว่า thirty-five (สามสิบห้า) 🎯 ลองพูดตามครับ
+response time : 97.46 ms
+Reply: ป้ายราคานี้อ่านว่าเท่าไรครับ? 🏷️ 50
 
 Step 3
-AI: เก่งมากครับ! เลข 35 อ่านว่า thirty-five (สามสิบห้า) 🎯 ลองพูดตามครับ
+AI: ป้ายราคานี้อ่านว่าเท่าไรครับ? 🏷️ 50
 Hint: (none)
-Choices: 🎯 thirty-five → "thirty-five"
+Choices: 3️⃣0️⃣ thirty → "thirty"
+         4️⃣0️⃣ forty → "forty"
+         5️⃣0️⃣ fifty → "fifty"
 User: Good morning.
 Result: incorrect out pool
-response time : 1.23 s
-Reply: ยังไม่ใช่ครับ Nana ลองพูดว่า "thirty-five" นะครับ ลองพูดตามนะครับ
+response time : 1.28 s
+Reply: ยังไม่ตรงครับ เลข 50 อ่านว่า “fifty” ครับ
 
 Step 4
-AI: ยังไม่ใช่ครับ Nana ลองพูดว่า "thirty-five" นะครับ ลองพูดตามนะครับ
+AI: ยังไม่ตรงครับ เลข 50 อ่านว่า “fifty” ครับ
 Hint: (none)
-Choices: 🎯 thirty-five → "thirty-five"
-User: thirty-five
-Result: correct in pool
-response time : 110.86 ms
-Reply: เลข 62 อ่านว่าอะไรครับ? 🔢
-
-Step 5
-AI: เลข 62 อ่านว่าอะไรครับ? 🔢
-Hint: (none)
-Choices: 🎯 forty → "forty"
-         🏀 fifty → "fifty"
-         🎲 sixty-two → "sixty-two"
-         🎳 seventy → "seventy"
-User: Good morning.
-Result: incorrect out pool
-response time : 1.24 s
-Reply: ยังไม่ตรงครับ ลองประกอบคำอ่านหลักสิบกับเลข 2 ครับ
-
-Step 6
-AI: ยังไม่ตรงครับ ลองประกอบคำอ่านหลักสิบกับเลข 2 ครับ
-Hint: (none)
-Choices: 🎯 forty → "forty"
-         🏀 fifty → "fifty"
-         🎲 sixty-two → "sixty-two"
-         🎳 seventy → "seventy"
-User: sixty-two
-Result: correct in pool
-response time : 132.26 ms
-Reply: ต่อไปเลข 50 อ่านว่า fifty ครับ 5️⃣0️⃣ ลองพูดตามว่า “fifty” ครับ
-
-Step 7
-AI: ต่อไปเลข 50 อ่านว่า fifty ครับ 5️⃣0️⃣ ลองพูดตามว่า “fifty” ครับ
-Hint: (none)
-Choices: 5️⃣0️⃣ fifty → "fifty"
-User: Good morning.
-Result: incorrect out pool
-response time : 1.73 s
-Reply: ยังไม่ถูกครับ Nana ลองพูดว่า "fifty" อีกครั้งนะครับ ลองพูดตามนะครับ
-
-Step 8
-AI: ยังไม่ถูกครับ Nana ลองพูดว่า "fifty" อีกครั้งนะครับ ลองพูดตามนะครับ
-Hint: (none)
-Choices: 5️⃣0️⃣ fifty → "fifty"
+Choices: 3️⃣0️⃣ thirty → "thirty"
+         4️⃣0️⃣ forty → "forty"
+         5️⃣0️⃣ fifty → "fifty"
 User: fifty
 Result: correct in pool
-response time : 92.46 ms
-Reply: เลข 80 อ่านว่าอะไรครับ? 🔢
+response time : 123.80 ms
+Reply: ต่อไป 60 sixty, 70 seventy, 80 eighty, 90 ninety และ 100 one hundred ครับ ลองพูดตามคำว่า “eighty” ครับ
 
-Step 9
-AI: เลข 80 อ่านว่าอะไรครับ? 🔢
+Step 5
+AI: ต่อไป 60 sixty, 70 seventy, 80 eighty, 90 ninety และ 100 one hundred ครับ ลองพูดตามคำว่า “eighty” ครับ
 Hint: (none)
-Choices: 8️⃣ eight → "eight"
-         1️⃣8️⃣ eighteen → "eighteen"
-         8️⃣0️⃣ eighty → "eighty"
+Choices: 8️⃣0️⃣ eighty → "eighty"
 User: Good morning.
 Result: incorrect out pool
-response time : 1.65 s
-Reply: ยังไม่ตรงครับ คำนี้เริ่มจาก eight และลงท้ายด้วยเสียง “-ty” ครับ
+response time : 1.31 s
+Reply: ยังไม่ตรงครับ ลองพูดว่า "eighty" อีกครั้งนะครับ ลองพูดตามนะครับ
 
-Step 10
-AI: ยังไม่ตรงครับ คำนี้เริ่มจาก eight และลงท้ายด้วยเสียง “-ty” ครับ
+Step 6
+AI: ยังไม่ตรงครับ ลองพูดว่า "eighty" อีกครั้งนะครับ ลองพูดตามนะครับ
 Hint: (none)
-Choices: 8️⃣ eight → "eight"
-         1️⃣8️⃣ eighteen → "eighteen"
-         8️⃣0️⃣ eighty → "eighty"
+Choices: 8️⃣0️⃣ eighty → "eighty"
 User: eighty
 Result: correct in pool
-response time : 117.57 ms
+response time : 426.17 ms
+Reply: รถเมล์สายนี้คือหมายเลขอะไรครับ? 🚌 70
+
+Step 7
+AI: รถเมล์สายนี้คือหมายเลขอะไรครับ? 🚌 70
+Hint: (none)
+Choices: 6️⃣0️⃣ sixty → "sixty"
+         7️⃣0️⃣ seventy → "seventy"
+         8️⃣0️⃣ eighty → "eighty"
+         9️⃣0️⃣ ninety → "ninety"
+User: Good morning.
+Result: incorrect out pool
+response time : 1.84 s
+Reply: ยังไม่ตรงครับ เลข 70 อ่านว่า “seventy” ครับ
+
+Step 8
+AI: ยังไม่ตรงครับ เลข 70 อ่านว่า “seventy” ครับ
+Hint: (none)
+Choices: 6️⃣0️⃣ sixty → "sixty"
+         7️⃣0️⃣ seventy → "seventy"
+         8️⃣0️⃣ eighty → "eighty"
+         9️⃣0️⃣ ninety → "ninety"
+User: seventy
+Result: correct in pool
+response time : 92.47 ms
+Reply: เลขสองหลักประกอบจากหลักสิบและหลักหน่วยครับ เช่น 30 thirty กับ 5 five รวมเป็น 35 thirty-five ลองพูดตามว่า “thirty-five” ครับ
+
+Step 9
+AI: เลขสองหลักประกอบจากหลักสิบและหลักหน่วยครับ เช่น 30 thirty กับ 5 five รวมเป็น 35 thirty-five ลองพูดตามว่า “thirty-five” ครับ
+Hint: (none)
+Choices: 3️⃣5️⃣ thirty-five → "thirty-five"
+User: Good morning.
+Result: incorrect out pool
+response time : 1.20 s
+Reply: ยังไม่ตรงครับ ลองพูดว่า "thirty-five" อีกครั้งนะครับ ลองพูดตามนะครับ
+
+Step 10
+AI: ยังไม่ตรงครับ ลองพูดว่า "thirty-five" อีกครั้งนะครับ ลองพูดตามนะครับ
+Hint: (none)
+Choices: 3️⃣5️⃣ thirty-five → "thirty-five"
+User: thirty-five
+Result: correct in pool
+response time : 107.62 ms
+Reply: ขั้นตอนสุดท้ายครับ หมายเลขห้องนี้อ่านว่าอะไร? 🚪 62
+
+Step 11
+AI: ขั้นตอนสุดท้ายครับ หมายเลขห้องนี้อ่านว่าอะไร? 🚪 62
+Hint: (none)
+Choices: (none)
+User: Good morning.
+Result: incorrect out pool
+response time : 1.30 s
+Reply: ลองประกอบ 60 sixty กับ 2 two เป็น “sixty-two” ครับ
+
+Step 12
+AI: ลองประกอบ 60 sixty กับ 2 two เป็น “sixty-two” ครับ
+Hint: (none)
+Choices: (none)
+User: sixty-two
+Result: correct in pool
+response time : 181.81 ms
 Reply: เรียนครบแล้วครับ Nana คุณทำบทเรียนจบโดยได้รับคำแนะนำบางส่วน ลองฝึกอีกครั้งเพื่อให้คล่องขึ้นนะครับ
 
 ────────────────────────────────────────────────────────────────────────
-✅ everyday_numbers scenario 4 complete · 10 turns · 7.59 s
+✅ everyday_numbers scenario 4 complete · 12 turns · 9.14 s
 
 ================================================================================
 everyday_numbers — Scenario 5 — out-pool wrong + พูดตามผิดอีกครั้ง → soft-advance → จบบท
@@ -301,109 +345,129 @@ Hint: (none)
 Choices: 4️⃣0️⃣ forty → "forty"
 User: Good morning.
 Result: incorrect out pool
-response time : 1.27 s
-Reply: ยังไม่ใช่ครับ Nana ลองพูดว่า "forty" อีกครั้งนะครับ ลองพูดตามนะครับ
+response time : 1.26 s
+Reply: เก่งมากครับ Nana! แต่ลองพูดว่า "forty" ตามที่พี่สอนนะครับ ลองพูดตามนะครับ
 
 Step 2
-AI: ยังไม่ใช่ครับ Nana ลองพูดว่า "forty" อีกครั้งนะครับ ลองพูดตามนะครับ
+AI: เก่งมากครับ Nana! แต่ลองพูดว่า "forty" ตามที่พี่สอนนะครับ ลองพูดตามนะครับ
 Hint: (none)
 Choices: 4️⃣0️⃣ forty → "forty"
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 102.77 ms
+response time : 110.19 ms
 Reply: ตรงนี้พูดว่า "forty" ครับ 4️⃣0️⃣
-ไปต่อกันเลย — เลข 35 อ่านว่า thirty-five (สามสิบห้า) 🎯 ลองพูดตามครับ
+ไปต่อกันเลย — ป้ายราคานี้อ่านว่าเท่าไรครับ? 🏷️ 50
 
 Step 3
 AI: ตรงนี้พูดว่า "forty" ครับ 4️⃣0️⃣
-ไปต่อกันเลย — เลข 35 อ่านว่า thirty-five (สามสิบห้า) 🎯 ลองพูดตามครับ
+ไปต่อกันเลย — ป้ายราคานี้อ่านว่าเท่าไรครับ? 🏷️ 50
 Hint: (none)
-Choices: 🎯 thirty-five → "thirty-five"
+Choices: 3️⃣0️⃣ thirty → "thirty"
+         4️⃣0️⃣ forty → "forty"
+         5️⃣0️⃣ fifty → "fifty"
 User: Good morning.
 Result: incorrect out pool
-response time : 1.30 s
-Reply: ยังไม่ถูกครับ Nana ลองพูดว่า "thirty-five" อีกครั้งนะครับ ลองพูดตามนะครับ
+response time : 1.10 s
+Reply: ยังไม่ตรงครับ เลข 50 อ่านว่า “fifty” ครับ
 
 Step 4
-AI: ยังไม่ถูกครับ Nana ลองพูดว่า "thirty-five" อีกครั้งนะครับ ลองพูดตามนะครับ
+AI: ยังไม่ตรงครับ เลข 50 อ่านว่า “fifty” ครับ
 Hint: (none)
-Choices: 🎯 thirty-five → "thirty-five"
+Choices: 3️⃣0️⃣ thirty → "thirty"
+         4️⃣0️⃣ forty → "forty"
+         5️⃣0️⃣ fifty → "fifty"
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 127.30 ms
-Reply: ตรงนี้พูดว่า "thirty-five" ครับ 🎯
-ไปต่อกันเลย — เลข 62 อ่านว่าอะไรครับ? 🔢
+response time : 145.61 ms
+Reply: ตรงนี้พูดว่า "fifty" ครับ 5️⃣0️⃣
+ไปต่อกันเลย — ต่อไป 60 sixty, 70 seventy, 80 eighty, 90 ninety และ 100 one hundred ครับ ลองพูดตามคำว่า “eighty” ครับ
 
 Step 5
-AI: ตรงนี้พูดว่า "thirty-five" ครับ 🎯
-ไปต่อกันเลย — เลข 62 อ่านว่าอะไรครับ? 🔢
+AI: ตรงนี้พูดว่า "fifty" ครับ 5️⃣0️⃣
+ไปต่อกันเลย — ต่อไป 60 sixty, 70 seventy, 80 eighty, 90 ninety และ 100 one hundred ครับ ลองพูดตามคำว่า “eighty” ครับ
 Hint: (none)
-Choices: 🎯 forty → "forty"
-         🏀 fifty → "fifty"
-         🎲 sixty-two → "sixty-two"
-         🎳 seventy → "seventy"
+Choices: 8️⃣0️⃣ eighty → "eighty"
 User: Good morning.
 Result: incorrect out pool
-response time : 1.41 s
-Reply: ยังไม่ตรงครับ ลองประกอบคำอ่านหลักสิบกับเลข 2 ครับ
+response time : 1.37 s
+Reply: ยังไม่ตรงครับ ลองพูดว่า "eighty" อีกครั้งนะครับ ลองพูดตามนะครับ
 
 Step 6
-AI: ยังไม่ตรงครับ ลองประกอบคำอ่านหลักสิบกับเลข 2 ครับ
+AI: ยังไม่ตรงครับ ลองพูดว่า "eighty" อีกครั้งนะครับ ลองพูดตามนะครับ
 Hint: (none)
-Choices: 🎯 forty → "forty"
-         🏀 fifty → "fifty"
-         🎲 sixty-two → "sixty-two"
-         🎳 seventy → "seventy"
+Choices: 8️⃣0️⃣ eighty → "eighty"
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 117.93 ms
-Reply: ตรงนี้พูดว่า "sixty-two" ครับ 🎲
-ไปต่อกันเลย — ต่อไปเลข 50 อ่านว่า fifty ครับ 5️⃣0️⃣ ลองพูดตามว่า “fifty” ครับ
+response time : 119.30 ms
+Reply: ตรงนี้พูดว่า "eighty" ครับ 8️⃣0️⃣
+ไปต่อกันเลย — รถเมล์สายนี้คือหมายเลขอะไรครับ? 🚌 70
 
 Step 7
-AI: ตรงนี้พูดว่า "sixty-two" ครับ 🎲
-ไปต่อกันเลย — ต่อไปเลข 50 อ่านว่า fifty ครับ 5️⃣0️⃣ ลองพูดตามว่า “fifty” ครับ
+AI: ตรงนี้พูดว่า "eighty" ครับ 8️⃣0️⃣
+ไปต่อกันเลย — รถเมล์สายนี้คือหมายเลขอะไรครับ? 🚌 70
 Hint: (none)
-Choices: 5️⃣0️⃣ fifty → "fifty"
+Choices: 6️⃣0️⃣ sixty → "sixty"
+         7️⃣0️⃣ seventy → "seventy"
+         8️⃣0️⃣ eighty → "eighty"
+         9️⃣0️⃣ ninety → "ninety"
 User: Good morning.
 Result: incorrect out pool
 response time : 1.29 s
-Reply: ยังไม่ถูกครับ Nana ลองพูดว่า "fifty" อีกครั้งนะครับ ลองพูดตามนะครับ
+Reply: ยังไม่ตรงครับ เลข 70 อ่านว่า “seventy” ครับ
 
 Step 8
-AI: ยังไม่ถูกครับ Nana ลองพูดว่า "fifty" อีกครั้งนะครับ ลองพูดตามนะครับ
+AI: ยังไม่ตรงครับ เลข 70 อ่านว่า “seventy” ครับ
 Hint: (none)
-Choices: 5️⃣0️⃣ fifty → "fifty"
+Choices: 6️⃣0️⃣ sixty → "sixty"
+         7️⃣0️⃣ seventy → "seventy"
+         8️⃣0️⃣ eighty → "eighty"
+         9️⃣0️⃣ ninety → "ninety"
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 88.10 ms
-Reply: ตรงนี้พูดว่า "fifty" ครับ 5️⃣0️⃣
-ไปต่อกันเลย — เลข 80 อ่านว่าอะไรครับ? 🔢
+response time : 109.73 ms
+Reply: ตรงนี้พูดว่า "seventy" ครับ 7️⃣0️⃣
+ไปต่อกันเลย — เลขสองหลักประกอบจากหลักสิบและหลักหน่วยครับ เช่น 30 thirty กับ 5 five รวมเป็น 35 thirty-five ลองพูดตามว่า “thirty-five” ครับ
 
 Step 9
-AI: ตรงนี้พูดว่า "fifty" ครับ 5️⃣0️⃣
-ไปต่อกันเลย — เลข 80 อ่านว่าอะไรครับ? 🔢
+AI: ตรงนี้พูดว่า "seventy" ครับ 7️⃣0️⃣
+ไปต่อกันเลย — เลขสองหลักประกอบจากหลักสิบและหลักหน่วยครับ เช่น 30 thirty กับ 5 five รวมเป็น 35 thirty-five ลองพูดตามว่า “thirty-five” ครับ
 Hint: (none)
-Choices: 8️⃣ eight → "eight"
-         1️⃣8️⃣ eighteen → "eighteen"
-         8️⃣0️⃣ eighty → "eighty"
+Choices: 3️⃣5️⃣ thirty-five → "thirty-five"
 User: Good morning.
 Result: incorrect out pool
-response time : 1.81 s
-Reply: ยังไม่ตรงครับ คำนี้เริ่มจาก eight และลงท้ายด้วยเสียง “-ty” ครับ
+response time : 1.20 s
+Reply: ยังไม่ตรงครับ ลองพูดว่า "thirty-five" อีกครั้งนะครับ ลองพูดตามนะครับ
 
 Step 10
-AI: ยังไม่ตรงครับ คำนี้เริ่มจาก eight และลงท้ายด้วยเสียง “-ty” ครับ
+AI: ยังไม่ตรงครับ ลองพูดว่า "thirty-five" อีกครั้งนะครับ ลองพูดตามนะครับ
 Hint: (none)
-Choices: 8️⃣ eight → "eight"
-         1️⃣8️⃣ eighteen → "eighteen"
-         8️⃣0️⃣ eighty → "eighty"
+Choices: 3️⃣5️⃣ thirty-five → "thirty-five"
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 132.48 ms
-Reply: ตรงนี้พูดได้ว่า "eighty" ครับ 8️⃣0️⃣
+response time : 104.57 ms
+Reply: ตรงนี้พูดว่า "thirty-five" ครับ 3️⃣5️⃣
+ไปต่อกันเลย — ขั้นตอนสุดท้ายครับ หมายเลขห้องนี้อ่านว่าอะไร? 🚪 62
+
+Step 11
+AI: ตรงนี้พูดว่า "thirty-five" ครับ 3️⃣5️⃣
+ไปต่อกันเลย — ขั้นตอนสุดท้ายครับ หมายเลขห้องนี้อ่านว่าอะไร? 🚪 62
+Hint: (none)
+Choices: (none)
+User: Good morning.
+Result: incorrect out pool
+response time : 1.25 s
+Reply: ลองประกอบ 60 sixty กับ 2 two เป็น “sixty-two” ครับ
+
+Step 12
+AI: ลองประกอบ 60 sixty กับ 2 two เป็น “sixty-two” ครับ
+Hint: (none)
+Choices: (none)
+User: Hello there.
+Result: wrong (soft-advance)
+response time : 99.26 ms
+Reply: ตรงนี้พูดได้ว่า "sixty-two" ครับ
 
 เรียนครบแล้วครับ Nana ลองทบทวนบทนี้อีกครั้งนะครับ
 
 ────────────────────────────────────────────────────────────────────────
-✅ everyday_numbers scenario 5 complete · 10 turns · 7.65 s
+✅ everyday_numbers scenario 5 complete · 12 turns · 8.16 s

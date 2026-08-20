@@ -1,12 +1,12 @@
 SUMMARY
 ================================================================================
 
-numbers
-  ✅ Scenario 1 — 8 steps · 974.96 ms
-  ✅ Scenario 2 — 8 steps · 10.95 s
-  ✅ Scenario 3 — 8 steps · 10.03 s
-  ✅ Scenario 4 — 16 steps · 10.30 s
-  ✅ Scenario 5 — 16 steps · 11.06 s
+everyday_numbers
+  ✅ Scenario 1 — 6 steps · 676.82 ms
+  ✅ Scenario 2 — 6 steps · 7.57 s
+  ✅ Scenario 3 — 6 steps · 7.88 s
+  ✅ Scenario 4 — 12 steps · 9.14 s
+  ✅ Scenario 5 — 12 steps · 8.16 s
 
 Total: 5/5 passed
 

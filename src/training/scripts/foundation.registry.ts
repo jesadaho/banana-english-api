@@ -25,17 +25,17 @@ const OPENING_TEXTS: Record<(typeof FOUNDATION_LESSON_IDS)[number], string> = {
   polite_expressions:
     'สวัสดีครับ {name}! วันนี้เรามาเรียนคำสุภาพที่ใช้ทุกวันครับ 🙏 Thank you very much. แปลว่า “ขอบคุณมาก” ใช้เมื่ออยากขอบคุณใคร ลองพูดตามว่า “Thank you very much.” ครับ',
   meet_people:
-    'สวัสดีครับ {name}! วันนี้เรามาฝึกพูดถึงตัวเองและคู่สนทนาครับ 🙋 I am {name}. แปลว่า “ฉันคือ {name}” และ I am ใช้พูดถึงตัวเรา ลองพูดตามว่า “I am {name}.” ครับ',
+    'สวัสดีครับ {name}! วันนี้เป็นวันแรกในคลาสครับ 🙋 ถ้าเราเพิ่งมาใหม่ พูดว่า “I\'m new here.” แปลว่า “ฉันเพิ่งมาใหม่” โดย I\'m เป็นรูปสั้นของ I am ลองพูดตามครับ',
   talk_about_groups:
     'สวัสดีครับ {name}! วันนี้เรามาพูดถึงคนอื่นและสิ่งของครับ 👨 ลองพูดตามว่า He is my father.',
   ee_about_me_family:
     'สวัสดีครับ {name}! วันนี้เรามาเรียนคำศัพท์ครอบครัวครับ 👨‍👩‍👧 เริ่มจาก brother แปลว่า “พี่ชายหรือน้องชาย” ลองพูดตามว่า “brother” ครับ',
   numbers:
-    'สวัสดีครับ {name}! วันนี้เรามาเรียนตัวเลข 0–20 กันครับ 🔢 ลองพูดตามว่า three นะครับ',
+    'สวัสดีครับ {name}! วันนี้เราจะฝึกตัวเลข 0–20 กันครับ 🔢 เริ่มจาก 0–5: 0 zero, 1 one, 2 two, 3 three, 4 four, 5 five ลองพูดตามคำว่า “three” ครับ',
   telling_time:
     'สวัสดีครับ {name}! วันนี้เรามาเรียนบอกเวลาเป็นภาษาอังกฤษครับ ⏰ ลองพูดตามว่า It\'s six o\'clock.',
   everyday_numbers:
-    'สวัสดีครับ {name}! วันนี้เรามาเรียนตัวเลข 20–100 กันครับ 🔢 ลองพูดตามว่า forty นะครับ',
+    'สวัสดีครับ {name}! วันนี้เราจะฝึกตัวเลข 20–100 กันครับ 🔢 เริ่มจาก 20 twenty, 30 thirty, 40 forty, 50 fifty ลองพูดตามคำว่า “forty” ครับ',
   money_prices:
     'สวัสดีครับ {name}! วันนี้เรามาเรียนถามและบอกราคาเป็นภาษาอังกฤษครับ 💵 ลองพูดตามว่า How much is it?',
   likes_dislikes:
@@ -66,7 +66,7 @@ const COMPLETION_TEXTS: Record<
   polite_expressions: (name) =>
     foundationCompletion(name, 'วันนี้คุณใช้ thank you, you\'re welcome, excuse me และ sorry ได้แล้ว'),
   meet_people: (name) =>
-    foundationCompletion(name, 'วันนี้คุณพูด I am... และ You are... ได้แล้ว'),
+    foundationCompletion(name, 'วันนี้คุณใช้ I\'m... เพื่อพูดเกี่ยวกับตัวเอง และ You\'re... เพื่อพูดกับคนอื่นได้แล้ว'),
   talk_about_groups: (name) =>
     foundationCompletion(name, 'วันนี้คุณพูด He is..., She is... และ It is... ได้แล้ว'),
   ee_about_me_family: (name) =>

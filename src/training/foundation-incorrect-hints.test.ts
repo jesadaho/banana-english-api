@@ -71,7 +71,9 @@ describe('Foundation incorrect hints — Introductions standard', () => {
     for (const [lessonId, step] of cases) {
       const board = FOUNDATION_BOARDS[lessonId][step];
       assert.ok(board.options.length <= 1, `${lessonId} step ${step}`);
-      assert.equal(board.options[0]?.speak, board.expectedSpeech, `${lessonId} step ${step}`);
+      if (board.options.length === 1) {
+        assert.equal(board.options[0]?.speak, board.expectedSpeech, `${lessonId} step ${step}`);
+      }
     }
   });
 
