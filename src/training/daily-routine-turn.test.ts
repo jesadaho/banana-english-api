@@ -32,7 +32,7 @@ function replayDailyRoutine(steps: string[]): Turn[] {
 }
 
 describe('training v2 config', () => {
-  it('includes Foundation + About Me in default allowlist (registry)', () => {
+  it('includes Foundation + About Me + Around Town in default allowlist (registry)', () => {
     resetTrainingV2ConfigCache();
     assert.equal(isTrainingV2Lesson('greetings'), true);
     assert.equal(isTrainingV2Lesson('introductions'), true);
@@ -40,6 +40,10 @@ describe('training v2 config', () => {
     assert.equal(isTrainingV2Lesson('ee_about_me_daily_routine'), true);
     assert.equal(isTrainingV2Lesson('ee_about_me_home'), true);
     assert.equal(isTrainingV2Lesson('ee_about_me_favorites'), true);
+    assert.equal(isTrainingV2Lesson('ee_around_town_shopping'), true);
+    assert.equal(isTrainingV2Lesson('ee_around_town_smart_shopper'), true);
+    assert.equal(isTrainingV2Lesson('ee_around_town_survival'), true);
+    assert.equal(isTrainingV2Lesson('ee_around_town_review'), false);
     assert.equal(isTrainingV2Lesson('weather'), false);
   });
 

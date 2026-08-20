@@ -18,6 +18,10 @@ import {
   isAboutMeChoiceLesson,
 } from '../scripts/about-me.registry';
 import {
+  getAroundTownChoiceLesson,
+  isAroundTownChoiceLesson,
+} from '../scripts/around-town.registry';
+import {
   getFoundationChoiceLesson,
   isFoundationChoiceLesson,
 } from '../scripts/foundation.registry';
@@ -49,9 +53,18 @@ export class TrainingTurnEngine {
       };
     }
 
-    const choice = getAboutMeChoiceLesson(config.lessonId);
-    if (choice) {
-      const reply = choice.buildOpening(learnerFirstName);
+    const aboutMe = getAboutMeChoiceLesson(config.lessonId);
+    if (aboutMe) {
+      const reply = aboutMe.buildOpening(learnerFirstName);
+      return {
+        reply: this.toReply(reply),
+        aiDebug: scriptedAiDebug(),
+      };
+    }
+
+    const aroundTown = getAroundTownChoiceLesson(config.lessonId);
+    if (aroundTown) {
+      const reply = aroundTown.buildOpening(learnerFirstName);
       return {
         reply: this.toReply(reply),
         aiDebug: scriptedAiDebug(),
@@ -69,9 +82,14 @@ export class TrainingTurnEngine {
       return this.runChoiceLessonTurn(input, foundation);
     }
 
-    const choice = getAboutMeChoiceLesson(input.config.lessonId);
-    if (choice) {
-      return this.runChoiceLessonTurn(input, choice);
+    const aboutMe = getAboutMeChoiceLesson(input.config.lessonId);
+    if (aboutMe) {
+      return this.runChoiceLessonTurn(input, aboutMe);
+    }
+
+    const aroundTown = getAroundTownChoiceLesson(input.config.lessonId);
+    if (aroundTown) {
+      return this.runChoiceLessonTurn(input, aroundTown);
     }
 
     throw new Error(`Training v2 turn not implemented: ${input.config.lessonId}`);
@@ -147,4 +165,8 @@ export class TrainingTurnEngine {
   }
 }
 
-export { isAboutMeChoiceLesson, isFoundationChoiceLesson };
+export {
+  isAboutMeChoiceLesson,
+  isAroundTownChoiceLesson,
+  isFoundationChoiceLesson,
+};
