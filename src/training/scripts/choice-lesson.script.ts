@@ -493,10 +493,23 @@ export function correctAdvancePraise(textEn: string): string {
   const text = textEn.trim();
   if (!text || DEFERRED_RETEACH.test(text)) {
     const cleaned = stripDeferredReteach(text);
-    if (cleaned && !DEFERRED_RETEACH.test(cleaned)) return cleaned;
-    return 'ถูกต้องแล้วครับ! เก่งมากครับ';
+    if (cleaned && !DEFERRED_RETEACH.test(cleaned)) {
+      return concisePraise(cleaned);
+    }
+    return 'ถูกต้องครับ!';
   }
-  return text;
+  return concisePraise(text);
+}
+
+const CONCISE_PRAISES = ['ถูกต้องครับ!', 'ดีมากครับ!', 'เยี่ยมครับ!'] as const;
+
+/** Keep AI assessment feedback to one short sentence before the next lesson beat. */
+function concisePraise(text: string): string {
+  const normalized = text.trim();
+  if (!normalized) return CONCISE_PRAISES[0];
+  let hash = 0;
+  for (const char of normalized) hash = (hash * 31 + char.charCodeAt(0)) >>> 0;
+  return CONCISE_PRAISES[hash % CONCISE_PRAISES.length];
 }
 
 /** Deferred assess + close tier — tiny fix OK, never ask พูดตาม on current answer. */

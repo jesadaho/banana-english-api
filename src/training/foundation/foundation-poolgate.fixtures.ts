@@ -30,8 +30,8 @@ export const FOUNDATION_POOLGATE_FIXTURES: FoundationPoolGateFixture[] = [
   {
     lessonId: 'yes_no_maybe',
     setupExact: ['Yes, I do.'],
-    exactAtProbe: 'Maybe.',
-    outOfPoolAtProbe: 'I think maybe.',
+    exactAtProbe: 'Yes, I do.',
+    outOfPoolAtProbe: 'Yes, I do....',
     wrongAtProbe: 'Good morning.',
     wrongAgainAtProbe: 'Hello.',
   },

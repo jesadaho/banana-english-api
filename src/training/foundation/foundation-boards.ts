@@ -170,8 +170,8 @@ export const FOUNDATION_CLOSE_MATCHERS: Partial<
       2: /^yeah,? i do$/,
       3: /^no,? i dont$/,
       4: /^no,? i dont$/,
-      5: /^(meybe|may be)$/,
-      6: /^(meybe|may be)$/,
+      5: /^(maybee|meybe|may be)$/,
+      6: /^(maybee|meybe|may be)$/,
     }),
 };
 

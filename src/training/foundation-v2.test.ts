@@ -614,7 +614,7 @@ describe('Foundation progress — yes_no_maybe out-pool does not rewind', () => 
     assert.equal(beat, 1);
   });
 
-  it('pizza Yes, I do.... advances to Are you free tomorrow without session beat', () => {
+  it('keeps prompt, target, hint, and choices on the same beat without session state', () => {
     const def = getDef(yesNo);
     const learnerFirstName = 'Nana';
     const opening = def.buildOpening(learnerFirstName);
@@ -627,9 +627,35 @@ describe('Foundation progress — yes_no_maybe out-pool does not rewind', () => 
       },
     ];
 
-    for (let step = 1; step <= 4; step++) {
+    const expectedTargets = [
+      'Yes, I do.',
+      'Yes, I do.',
+      "No, I don't.",
+      "No, I don't.",
+      'Maybe.',
+      'Maybe.',
+    ];
+
+    for (let step = 1; step <= def.maxStep; step++) {
+      const currentBoard = def.boardForStep(step, turns, learnerFirstName)!;
+      assert.equal(currentBoard.expectedSpeech, expectedTargets[step - 1]);
+      assert.ok(
+        currentBoard.options.some(
+          (option) => option.speak === currentBoard.expectedSpeech,
+        ),
+        `step ${step}: choices must contain the current target`,
+      );
+      assert.match(
+        currentBoard.incorrectHintTh ?? '',
+        new RegExp(
+          currentBoard.expectedSpeech.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'),
+          'i',
+        ),
+        `step ${step}: hint must name the current target`,
+      );
+
       const exact =
-        def.boardForStep(step, turns, learnerFirstName)?.expectedSpeech ?? '';
+        currentBoard.expectedSpeech;
       turns.push({
         speaker: 'user',
         textEn: introductionsOutOfPoolNearMiss(exact, step),
@@ -641,6 +667,28 @@ describe('Foundation progress — yes_no_maybe out-pool does not rewind', () => 
         undefined,
         learnerFirstName,
       );
+
+      if (step < def.maxStep) {
+        const nextBoard = def.boardForStep(step + 1, turns, learnerFirstName)!;
+        assert.equal(pinned.expectedSpeech, nextBoard.expectedSpeech);
+        if (nextBoard.stem || nextBoard.options.length > 1) {
+          assert.deepEqual(
+            pinned.guidedSpeaking?.options,
+            nextBoard.options.map((option) => ({
+              emoji: option.emoji,
+              label: option.label,
+              speak: option.speak,
+            })),
+          );
+        } else {
+          assert.equal(
+            pinned.guidedSpeaking,
+            undefined,
+            `step ${step + 1}: repeat-only beat must not expose a choice board`,
+          );
+        }
+      }
+
       turns.push({
         speaker: 'ai',
         textEn: pinned.textEn ?? '',
@@ -649,22 +697,7 @@ describe('Foundation progress — yes_no_maybe out-pool does not rewind', () => 
       });
     }
 
-    assert.match(turns.at(-1)?.textEn ?? '', /Are you free tomorrow/);
-    assert.equal(
-      choiceLessonEffectiveProgress(def, turns),
-      4,
-      'pizza board must pin step 4, not rewind to Yes, I do. step 1',
-    );
-
-    turns.push({ speaker: 'user', textEn: 'Maybe....' });
-    const last = pinChoiceLessonAiReply(
-      def,
-      turns,
-      mockGeminiReply('correct', 'ยอดเยี่ยมมากครับ Nana! เก่งมากครับ'),
-      undefined,
-      learnerFirstName,
-    );
-    assert.equal(last.isLessonComplete, true);
+    assert.equal(turns.at(-1)?.textEn?.includes('สุดยอดครับ'), true);
   });
 });
 

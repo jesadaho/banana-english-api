@@ -23,7 +23,7 @@ const OPENING_TEXTS: Record<(typeof FOUNDATION_LESSON_IDS)[number], string> = {
   introductions:
     'สวัสดีครับ {name}! วันนี้เรามาเรียนรู้การแนะนำตัวเป็นภาษาอังกฤษกันครับ 📝 ลองพูดตามว่า My name is {name} นะครับ',
   yes_no_maybe:
-    'สวัสดีครับ {name}! วันนี้เรามาเรียนรู้ตอบคำถาม Yes / No / Maybe กันครับ ✅ ลองพูดตามว่า Yes, I do. นะครับ',
+    'สวัสดีครับ {name}! วันนี้เราจะฝึกตอบ Yes, No และ Maybe ครับ ✅ ถ้ามีคนถาม Do you like coffee? แปลว่า “คุณชอบกาแฟไหม” และเราชอบ ให้ตอบ Yes, I do. แปลว่า “ใช่ ฉันชอบ” ลองพูดตามว่า “Yes, I do.” ครับ',
   polite_expressions:
     'สวัสดีครับ {name}! วันนี้เรามาเรียนคำสุภาพที่ใช้ทุกวันครับ 🙏 ลองพูดตามว่า Thank you very much.',
   meet_people:

@@ -441,6 +441,12 @@ export function foundationOutOfPoolCloseMiss(
     return introductionsOutOfPoolCloseMiss(exact, step);
   }
 
+  if (lessonId === 'yes_no_maybe') {
+    if (/^Yes,? I do/i.test(exact)) return 'Yeah, I do.';
+    if (/^No,? I don['’]?t/i.test(exact)) return 'No, I dont.';
+    if (/^Maybe/i.test(exact)) return 'Maybee.';
+  }
+
   const t = exact.trim();
   if (/^I'm\b/i.test(t)) return t.replace(/^I'm\b/i, 'I am');
   if (/^I am\b/i.test(t)) return t.replace(/^I am\b/i, "I'm");
