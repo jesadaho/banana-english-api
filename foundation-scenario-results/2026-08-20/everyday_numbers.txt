@@ -1,0 +1,422 @@
+API_BASE=https://banana-english-api-production.up.railway.app
+Lessons: everyday_numbers
+Scenarios: 1, 2, 3, 4, 5
+  1: Scenario 1 — in-pool correct ทุก step → จบบท
+  2: Scenario 2 — out-pool correct ทุก step → จบบท
+  3: Scenario 3 — out-pool close ทุก step → จบบท
+  4: Scenario 4 — out-pool wrong + in-pool พูดตาม recovery → จบบท
+  5: Scenario 5 — out-pool wrong + พูดตามผิดอีกครั้ง → soft-advance → จบบท
+
+================================================================================
+everyday_numbers — Scenario 1 — in-pool correct ทุก step → จบบท
+API: https://banana-english-api-production.up.railway.app · Learner: Nana
+================================================================================
+
+Step 1
+AI: สวัสดีครับ Nana! วันนี้เรามาเรียนตัวเลข 20–100 กันครับ 🔢 ลองพูดตามว่า forty นะครับ
+Hint: (none)
+Choices: 🎯 thirty-five → "thirty-five" (repeat-only)
+User: forty
+Result: correct in pool
+response time : 92.64 ms
+Reply: เก่งมากครับ! เลข 35 อ่านว่า thirty-five (สามสิบห้า) 🎯 ลองพูดตามครับ
+
+Step 2
+AI: เก่งมากครับ! เลข 35 อ่านว่า thirty-five (สามสิบห้า) 🎯 ลองพูดตามครับ
+Hint: sixty-two
+Choices: 🎯 forty → "forty"
+         🏀 fifty → "fifty"
+         🎲 sixty-two → "sixty-two"
+         🎳 seventy → "seventy"
+User: thirty-five
+Result: correct in pool
+response time : 101.78 ms
+Reply: เลข 62 อ่านว่าอะไรครับ? 🔢
+
+Step 3
+AI: เลข 62 อ่านว่าอะไรครับ? 🔢
+Hint: sixty-two
+Choices: 🎯 forty → "forty"
+         🏀 fifty → "fifty"
+         🎲 sixty-two → "sixty-two"
+         🎳 seventy → "seventy"
+User: sixty-two
+Result: correct in pool
+response time : 78.31 ms
+Reply: ระวัง thirteen (13) กับ thirty (30) ไม่เหมือนกันนะครับ 😊 เลข 50 อ่านว่า fifty — ลองพูดตาม
+
+Step 4
+AI: ระวัง thirteen (13) กับ thirty (30) ไม่เหมือนกันนะครับ 😊 เลข 50 อ่านว่า fifty — ลองพูดตาม
+Hint: eighty
+Choices: 8️⃣0️⃣ eighty → "eighty"
+User: fifty
+Result: correct in pool
+response time : 101.83 ms
+Reply: เลข 80 อ่านว่าอะไรครับ? 🔢
+
+Step 5
+AI: เลข 80 อ่านว่าอะไรครับ? 🔢
+Hint: (none)
+Choices: (none)
+User: eighty
+Result: correct in pool
+response time : 105.32 ms
+Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณอ่านตัวเลข 20–100 ได้แล้ว — เก่งมากครับ! 🍌
+
+────────────────────────────────────────────────────────────────────────
+✅ everyday_numbers scenario 1 complete · 5 turns · 479.88 ms
+
+================================================================================
+everyday_numbers — Scenario 2 — out-pool correct ทุก step → จบบท
+API: https://banana-english-api-production.up.railway.app · Learner: Nana
+================================================================================
+
+Step 1
+AI: สวัสดีครับ Nana! วันนี้เรามาเรียนตัวเลข 20–100 กันครับ 🔢 ลองพูดตามว่า forty นะครับ
+Hint: (none)
+Choices: 🎯 thirty-five → "thirty-five" (repeat-only)
+User: forty....
+Result: correct out pool
+response time : 1.14 s
+Reply: เก่งมากครับ Nana ออกเสียง "forty" ได้ถูกต้องชัดเจนเลยครับ เก่งมากครับ! เลข 35 อ่านว่า thirty-five (สามสิบห้า) 🎯 ลองพูดตามครับ
+
+Step 2
+AI: เก่งมากครับ Nana ออกเสียง "forty" ได้ถูกต้องชัดเจนเลยครับ เก่งมากครับ! เลข 35 อ่านว่า thirty-five (สามสิบห้า) 🎯 ลองพูดตามครับ
+Hint: sixty-two
+Choices: 🎯 forty → "forty"
+         🏀 fifty → "fifty"
+         🎲 sixty-two → "sixty-two"
+         🎳 seventy → "seventy"
+User: thirty-five....
+Result: correct out pool
+response time : 1.23 s
+Reply: ถูกต้องครับ Nana ออกเสียง "thirty-five" ได้ชัดเจนมากครับ เก่งจริงๆ เลข 62 อ่านว่าอะไรครับ? 🔢
+
+Step 3
+AI: ถูกต้องครับ Nana ออกเสียง "thirty-five" ได้ชัดเจนมากครับ เก่งจริงๆ เลข 62 อ่านว่าอะไรครับ? 🔢
+Hint: sixty-two
+Choices: 🎯 forty → "forty"
+         🏀 fifty → "fifty"
+         🎲 sixty-two → "sixty-two"
+         🎳 seventy → "seventy"
+User: sixty-two....
+Result: correct out pool
+response time : 1.32 s
+Reply: ถูกต้องครับ Nana ออกเสียง "sixty-two" ได้ชัดเจนมากครับ เก่งจริงๆ ระวัง thirteen (13) กับ thirty (30) ไม่เหมือนกันนะครับ 😊 เลข 50 อ่านว่า fifty — ลองพูดตาม
+
+Step 4
+AI: ถูกต้องครับ Nana ออกเสียง "sixty-two" ได้ชัดเจนมากครับ เก่งจริงๆ ระวัง thirteen (13) กับ thirty (30) ไม่เหมือนกันนะครับ 😊 เลข 50 อ่านว่า fifty — ลองพูดตาม
+Hint: eighty
+Choices: 8️⃣0️⃣ eighty → "eighty"
+User: fifty....
+Result: correct out pool
+response time : 1.34 s
+Reply: ถูกต้องครับ Nana ออกเสียง "fifty" ได้ชัดเจนมากครับ เก่งจริงๆ เลข 80 อ่านว่าอะไรครับ? 🔢
+
+Step 5
+AI: ถูกต้องครับ Nana ออกเสียง "fifty" ได้ชัดเจนมากครับ เก่งจริงๆ เลข 80 อ่านว่าอะไรครับ? 🔢
+Hint: (none)
+Choices: (none)
+User: eighty....
+Result: correct out pool
+response time : 1.26 s
+Reply: ยอดเยี่ยมครับ Nana ออกเสียง "eighty" ได้ชัดเจนมากครับ เก่งจริงๆ ต่อไปเรามาลองนับเลขหลักร้อยกันดูนะครับ สุดยอดครับ Nana! 🎉 วันนี้คุณอ่านตัวเลข 20–100 ได้แล้ว — เก่งมากครับ! 🍌
+
+────────────────────────────────────────────────────────────────────────
+✅ everyday_numbers scenario 2 complete · 5 turns · 6.30 s
+
+================================================================================
+everyday_numbers — Scenario 3 — out-pool close ทุก step → จบบท
+API: https://banana-english-api-production.up.railway.app · Learner: Nana
+================================================================================
+
+Step 1
+AI: สวัสดีครับ Nana! วันนี้เรามาเรียนตัวเลข 20–100 กันครับ 🔢 ลองพูดตามว่า forty นะครับ
+Hint: (none)
+Choices: 🎯 thirty-five → "thirty-five" (repeat-only)
+User: the number forty
+Result: correct out pool
+response time : 1.10 s
+Reply: เก่งมากครับ Nana! ออกเสียงได้ชัดเจนเลยครับ เก่งมากครับ! เลข 35 อ่านว่า thirty-five (สามสิบห้า) 🎯 ลองพูดตามครับ
+
+Step 2
+AI: เก่งมากครับ Nana! ออกเสียงได้ชัดเจนเลยครับ เก่งมากครับ! เลข 35 อ่านว่า thirty-five (สามสิบห้า) 🎯 ลองพูดตามครับ
+Hint: sixty-two
+Choices: 🎯 forty → "forty"
+         🏀 fifty → "fifty"
+         🎲 sixty-two → "sixty-two"
+         🎳 seventy → "seventy"
+User: the number thirty-five
+Result: correct out pool
+response time : 1.24 s
+Reply: ยอดเยี่ยมมากครับ Nana! ออกเสียงได้ถูกต้องชัดเจนเลยครับ เลข 62 อ่านว่าอะไรครับ? 🔢
+
+Step 3
+AI: ยอดเยี่ยมมากครับ Nana! ออกเสียงได้ถูกต้องชัดเจนเลยครับ เลข 62 อ่านว่าอะไรครับ? 🔢
+Hint: sixty-two
+Choices: 🎯 forty → "forty"
+         🏀 fifty → "fifty"
+         🎲 sixty-two → "sixty-two"
+         🎳 seventy → "seventy"
+User: the number sixty-two
+Result: correct out pool
+response time : 2.87 s
+Reply: ถูกต้องแล้วครับ Nana! เก่งมากครับ อ่านว่า "sixty-two" ได้เป๊ะเลยครับ ระวัง thirteen (13) กับ thirty (30) ไม่เหมือนกันนะครับ 😊 เลข 50 อ่านว่า fifty — ลองพูดตาม
+
+Step 4
+AI: ถูกต้องแล้วครับ Nana! เก่งมากครับ อ่านว่า "sixty-two" ได้เป๊ะเลยครับ ระวัง thirteen (13) กับ thirty (30) ไม่เหมือนกันนะครับ 😊 เลข 50 อ่านว่า fifty — ลองพูดตาม
+Hint: eighty
+Choices: 8️⃣0️⃣ eighty → "eighty"
+User: the number fifty
+Result: correct out pool
+response time : 1.43 s
+Reply: ถูกต้องแล้วครับ Nana! ออกเสียง "fifty" ได้ชัดเจนมากครับ เก่งมากครับ! เลข 80 อ่านว่าอะไรครับ? 🔢
+
+Step 5
+AI: ถูกต้องแล้วครับ Nana! ออกเสียง "fifty" ได้ชัดเจนมากครับ เก่งมากครับ! เลข 80 อ่านว่าอะไรครับ? 🔢
+Hint: (none)
+Choices: (none)
+User: the number eighty
+Result: correct out pool
+response time : 1.55 s
+Reply: ถูกต้องแล้วครับ Nana! ออกเสียง "eighty" ได้ชัดเจนมากครับ เก่งมากครับ! สุดยอดครับ Nana! 🎉 วันนี้คุณอ่านตัวเลข 20–100 ได้แล้ว — เก่งมากครับ! 🍌
+
+────────────────────────────────────────────────────────────────────────
+✅ everyday_numbers scenario 3 complete · 5 turns · 8.19 s
+
+================================================================================
+everyday_numbers — Scenario 4 — out-pool wrong + in-pool พูดตาม recovery → จบบท
+API: https://banana-english-api-production.up.railway.app · Learner: Nana
+================================================================================
+
+Step 1
+AI: สวัสดีครับ Nana! วันนี้เรามาเรียนตัวเลข 20–100 กันครับ 🔢 ลองพูดตามว่า forty นะครับ
+Hint: (none)
+Choices: 🎯 thirty-five → "thirty-five" (repeat-only)
+User: Good morning.
+Result: incorrect out pool
+response time : 1.54 s
+Reply: ยังไม่ใช่นะครับ ลองพูดตามว่า "forty" อีกครั้งนะครับ
+
+Step 2
+AI: ยังไม่ใช่นะครับ ลองพูดตามว่า "forty" อีกครั้งนะครับ
+Hint: (none)
+Choices: 🎯 thirty-five → "thirty-five" (repeat-only)
+User: forty
+Result: correct in pool
+response time : 115.97 ms
+Reply: เก่งมากครับ! เลข 35 อ่านว่า thirty-five (สามสิบห้า) 🎯 ลองพูดตามครับ
+
+Step 3
+AI: เก่งมากครับ! เลข 35 อ่านว่า thirty-five (สามสิบห้า) 🎯 ลองพูดตามครับ
+Hint: sixty-two
+Choices: 🎯 forty → "forty"
+         🏀 fifty → "fifty"
+         🎲 sixty-two → "sixty-two"
+         🎳 seventy → "seventy"
+User: Good morning.
+Result: incorrect out pool
+response time : 1.14 s
+Reply: ยังไม่ถูกครับ ลองพูดว่า "thirty-five" อีกครั้งนะครับ ลองพูดตามนะครับ
+
+Step 4
+AI: ยังไม่ถูกครับ ลองพูดว่า "thirty-five" อีกครั้งนะครับ ลองพูดตามนะครับ
+Hint: sixty-two
+Choices: 🎯 forty → "forty"
+         🏀 fifty → "fifty"
+         🎲 sixty-two → "sixty-two"
+         🎳 seventy → "seventy"
+User: thirty-five
+Result: correct in pool
+response time : 112.93 ms
+Reply: เลข 62 อ่านว่าอะไรครับ? 🔢
+
+Step 5
+AI: เลข 62 อ่านว่าอะไรครับ? 🔢
+Hint: sixty-two
+Choices: 🎯 forty → "forty"
+         🏀 fifty → "fifty"
+         🎲 sixty-two → "sixty-two"
+         🎳 seventy → "seventy"
+User: Good morning.
+Result: incorrect out pool
+response time : 1.18 s
+Reply: ยังไม่ตรงครับ ลองใช้ “sixty-two...” แล้วพูดต่อให้ครบประโยคครับ
+
+Step 6
+AI: ยังไม่ตรงครับ ลองใช้ “sixty-two...” แล้วพูดต่อให้ครบประโยคครับ
+Hint: sixty-two
+Choices: 🎯 forty → "forty"
+         🏀 fifty → "fifty"
+         🎲 sixty-two → "sixty-two"
+         🎳 seventy → "seventy"
+User: sixty-two
+Result: correct in pool
+response time : 88.45 ms
+Reply: ระวัง thirteen (13) กับ thirty (30) ไม่เหมือนกันนะครับ 😊 เลข 50 อ่านว่า fifty — ลองพูดตาม
+
+Step 7
+AI: ระวัง thirteen (13) กับ thirty (30) ไม่เหมือนกันนะครับ 😊 เลข 50 อ่านว่า fifty — ลองพูดตาม
+Hint: eighty
+Choices: 8️⃣0️⃣ eighty → "eighty"
+User: Good morning.
+Result: incorrect out pool
+response time : 1.46 s
+Reply: ยังไม่ถูกครับ ลองพูดว่า "fifty" ชัดๆ อีกครั้งนะครับ พูดตามนะครับ
+
+Step 8
+AI: ยังไม่ถูกครับ ลองพูดว่า "fifty" ชัดๆ อีกครั้งนะครับ พูดตามนะครับ
+Hint: eighty
+Choices: 8️⃣0️⃣ eighty → "eighty"
+User: fifty
+Result: correct in pool
+response time : 83.20 ms
+Reply: เลข 80 อ่านว่าอะไรครับ? 🔢
+
+Step 9
+AI: เลข 80 อ่านว่าอะไรครับ? 🔢
+Hint: (none)
+Choices: (none)
+User: Good morning.
+Result: incorrect out pool
+response time : 1.25 s
+Reply: ยังไม่ตรงครับ ลองใช้ “eighty...” แล้วพูดต่อให้ครบประโยคครับ
+
+Step 10
+AI: ยังไม่ตรงครับ ลองใช้ “eighty...” แล้วพูดต่อให้ครบประโยคครับ
+Hint: (none)
+Choices: (none)
+User: eighty
+Result: correct in pool
+response time : 104.00 ms
+Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณอ่านตัวเลข 20–100 ได้แล้ว — เก่งมากครับ! 🍌
+
+────────────────────────────────────────────────────────────────────────
+✅ everyday_numbers scenario 4 complete · 10 turns · 7.07 s
+
+================================================================================
+everyday_numbers — Scenario 5 — out-pool wrong + พูดตามผิดอีกครั้ง → soft-advance → จบบท
+API: https://banana-english-api-production.up.railway.app · Learner: Nana
+================================================================================
+
+Step 1
+AI: สวัสดีครับ Nana! วันนี้เรามาเรียนตัวเลข 20–100 กันครับ 🔢 ลองพูดตามว่า forty นะครับ
+Hint: (none)
+Choices: 🎯 thirty-five → "thirty-five" (repeat-only)
+User: Good morning.
+Result: incorrect out pool
+response time : 1.29 s
+Reply: ยังไม่ใช่นะครับ Nana ลองพูดตามว่า "forty" อีกครั้งนะครับ
+
+Step 2
+AI: ยังไม่ใช่นะครับ Nana ลองพูดตามว่า "forty" อีกครั้งนะครับ
+Hint: (none)
+Choices: 🎯 thirty-five → "thirty-five" (repeat-only)
+User: Hello there.
+Result: wrong (soft-advance)
+response time : 85.93 ms
+Reply: ตรงนี้พูดว่า "forty" ครับ 4️⃣0️⃣
+ไปต่อกันเลย — thirty-five
+
+Step 3
+AI: ตรงนี้พูดว่า "forty" ครับ 4️⃣0️⃣
+ไปต่อกันเลย — thirty-five
+Hint: (none)
+Choices: 🎯 thirty-five → "thirty-five" (repeat-only)
+User: Good morning.
+Result: incorrect out pool
+response time : 1.27 s
+Reply: ยังไม่ถูกต้องครับ Nana ลองพูดว่า "thirty-five" อีกครั้งนะครับ ลองพูดตามนะครับ
+
+Step 4
+AI: ยังไม่ถูกต้องครับ Nana ลองพูดว่า "thirty-five" อีกครั้งนะครับ ลองพูดตามนะครับ
+Hint: (none)
+Choices: 🎯 thirty-five → "thirty-five" (repeat-only)
+User: Hello there.
+Result: wrong (soft-advance)
+response time : 105.90 ms
+Reply: ตรงนี้พูดว่า "thirty-five" ครับ 🎯
+ไปต่อกันเลย — sixty-two
+
+Step 5
+AI: ตรงนี้พูดว่า "thirty-five" ครับ 🎯
+ไปต่อกันเลย — sixty-two
+Hint: sixty-two
+Choices: 🎯 forty → "forty"
+         🏀 fifty → "fifty"
+         🎲 sixty-two → "sixty-two"
+         🎳 seventy → "seventy"
+User: Good morning.
+Result: incorrect out pool
+response time : 1.21 s
+Reply: ยังไม่ตรงครับ ลองใช้ “sixty-two...” แล้วพูดต่อให้ครบประโยคครับ
+
+Step 6
+AI: ยังไม่ตรงครับ ลองใช้ “sixty-two...” แล้วพูดต่อให้ครบประโยคครับ
+Hint: sixty-two
+Choices: 🎯 forty → "forty"
+         🏀 fifty → "fifty"
+         🎲 sixty-two → "sixty-two"
+         🎳 seventy → "seventy"
+User: Hello there.
+Result: wrong (soft-advance)
+response time : 97.68 ms
+Reply: ตรงนี้พูดว่า "sixty-two" ครับ 🎯
+ไปต่อกันเลย — fifty
+
+Step 7
+AI: ตรงนี้พูดว่า "sixty-two" ครับ 🎯
+ไปต่อกันเลย — fifty
+Hint: (none)
+Choices: 🎯 thirty-five → "thirty-five" (repeat-only)
+User: Good morning.
+Result: incorrect out pool
+response time : 1.03 s
+Reply: ยังไม่ถูกต้องครับ Nana ลองพูดว่า "fifty" อีกครั้งนะครับ ลองพูดตามนะครับ
+
+Step 8
+AI: ยังไม่ถูกต้องครับ Nana ลองพูดว่า "fifty" อีกครั้งนะครับ ลองพูดตามนะครับ
+Hint: (none)
+Choices: 🎯 thirty-five → "thirty-five" (repeat-only)
+User: Hello there.
+Result: wrong (soft-advance)
+response time : 91.58 ms
+Reply: ตรงนี้พูดว่า "fifty" ครับ 5️⃣0️⃣
+ไปต่อกันเลย — How do you say eighty?
+
+Step 9
+AI: ตรงนี้พูดว่า "fifty" ครับ 5️⃣0️⃣
+ไปต่อกันเลย — How do you say eighty?
+Hint: (none)
+Choices: 🎯 thirty-five → "thirty-five" (repeat-only)
+User: Good morning.
+Result: incorrect out pool
+response time : 1.05 s
+Reply: ยังไม่ตรงครับ ลองใช้ “eighty...” แล้วพูดต่อให้ครบประโยคครับ
+
+Step 10
+AI: ยังไม่ตรงครับ ลองใช้ “eighty...” แล้วพูดต่อให้ครบประโยคครับ
+Hint: (none)
+Choices: 🎯 thirty-five → "thirty-five" (repeat-only)
+User: Hello there.
+Result: wrong (soft-advance)
+response time : 88.83 ms
+Reply: ตรงนี้พูดได้ว่า "eighty" ครับ 8️⃣0️⃣
+
+🎉 จบบทแล้วครับ Nana! วันนี้คุณอ่านตัวเลข 20–100 แล้วครับ 🍌
+
+────────────────────────────────────────────────────────────────────────
+✅ everyday_numbers scenario 5 complete · 10 turns · 6.32 s
+
+================================================================================
+SUMMARY
+================================================================================
+
+everyday_numbers
+  ✅ Scenario 1 — 5 steps · 479.88 ms
+  ✅ Scenario 2 — 5 steps · 6.30 s
+  ✅ Scenario 3 — 5 steps · 8.19 s
+  ✅ Scenario 4 — 10 steps · 7.07 s
+  ✅ Scenario 5 — 10 steps · 6.32 s
+
+Total: 5/5 passed

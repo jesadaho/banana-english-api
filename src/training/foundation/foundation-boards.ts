@@ -44,11 +44,12 @@ export const FOUNDATION_LOOSE_MATCHERS: Record<
     }),
   yes_no_maybe: (step, text) =>
     loose(step, text, {
-      1: /^(yes|no)/,
-      2: /^maybe$/,
-      3: /^(yes|no)/,
-      4: /^yes,? i do|^no,? i don/,
-      5: /^maybe$|^yes\.?$|^no\.?$/,
+      1: /^yes,? i do$/,
+      2: /^yes,? i do$/,
+      3: /^no,? i don['’]?t$/,
+      4: /^no,? i don['’]?t$/,
+      5: /^maybe$/,
+      6: /^maybe$/,
     }),
   polite_expressions: (step, text) =>
     loose(step, text, {
@@ -162,6 +163,15 @@ export const FOUNDATION_CLOSE_MATCHERS: Partial<
       6: /^i live [a-z]+$/,
       7: /^i work (?!as\b)/,
       8: /^my name [a-z]+.*i from /,
+    }),
+  yes_no_maybe: (step, text) =>
+    loose(step, text, {
+      1: /^yeah,? i do$/,
+      2: /^yeah,? i do$/,
+      3: /^no,? i dont$/,
+      4: /^no,? i dont$/,
+      5: /^(meybe|may be)$/,
+      6: /^(meybe|may be)$/,
     }),
 };
 
@@ -362,52 +372,71 @@ export const FOUNDATION_BOARDS: Record<
   yes_no_maybe: {
     1: {
       textEn:
-        'สวัสดีครับ {name}! วันนี้เรามาเรียนรู้ตอบคำถม Yes / No กันครับ ✅❌ ถ้าถามว่า Do you like coffee? ลองตอบว่า Yes, I do. นะครับ',
+        'สวัสดีครับ {name}! วันนี้เราจะฝึกตอบ Yes, No และ Maybe ครับ ✅ ถ้ามีคนถาม Do you like coffee? แปลว่า “คุณชอบกาแฟไหม” และเราชอบ ให้ตอบ Yes, I do. แปลว่า “ใช่ ฉันชอบ” ลองพูดตามว่า “Yes, I do.” ครับ',
       withPraise: false,
-      stem: 'Yes, I do.',
+      stem: '',
       expectedSpeech: 'Yes, I do.',
+      incorrectHintTh: 'ยังไม่ถูกครับ ลองพูดตามว่า “Yes, I do.” ครับ',
       options: [{ emoji: '✅', label: 'Yes, I do', speak: 'Yes, I do.' }],
     },
     2: {
       textEn:
-        'เก่งมากครับ! ถ้ายังไม่แน่ใจ ใช้ Maybe ได้ครับ 🤔 ลองพูดตามว่า Maybe.',
-      withPraise: true,
-      stem: '',
-      expectedSpeech: 'Maybe.',
-      options: [{ emoji: '🤔', label: 'Maybe', speak: 'Maybe.' }],
+        'ทีนี้ลองใช้จริงครับ — Do you like pizza? 🍕 ถ้าคุณชอบ ให้ตอบว่าอะไรครับ?',
+      advanceQuestionEn: 'Do you like pizza?',
+      withPraise: false,
+      stem: 'Yes, I do.',
+      expectedSpeech: 'Yes, I do.',
+      incorrectHintTh: 'ยังไม่ตรงครับ ถ้าคุณชอบ ให้ตอบว่า “Yes, I do.” ครับ',
+      options: [
+        { emoji: '✅', label: 'Yes, I do', speak: 'Yes, I do.' },
+        { emoji: '👍', label: 'Yes', speak: 'Yes.' },
+      ],
     },
     3: {
       textEn:
-        'แล้วถ้าไม่ชอบ ตอบว่า No, I don\'t. ได้ครับ ❌ ลองพูดตามนะครับ',
-      withPraise: true,
+        'ต่อไป No, I don\'t. แปลว่า “ไม่ ฉันไม่ชอบ” ใช้ตอบเมื่อคำตอบเป็นปฏิเสธ เช่น Do you like rain? — No, I don\'t. ลองพูดตามว่า “No, I don\'t.” ครับ ❌',
+      withPraise: false,
       stem: '',
       expectedSpeech: "No, I don't.",
+      incorrectHintTh: 'ยังไม่ถูกครับ ลองพูดตามว่า “No, I don\'t.” ครับ',
       options: [
         { emoji: '❌', label: "No, I don't", speak: "No, I don't." },
       ],
     },
     4: {
       textEn:
-        'Do you like pizza? 🍕 คุณจะตอบว่าอะไรครับ?',
-      withPraise: true,
-      stem: "Yes, I do. / No, I don't.",
-      expectedSpeech: 'Yes, I do.',
+        'ลองใช้ No จริงครับ — Do you like rain? 🌧️ ถ้าคุณไม่ชอบ ให้ตอบว่าอะไรครับ?',
+      advanceQuestionEn: 'Do you like rain?',
+      withPraise: false,
+      stem: "No, I don't.",
+      expectedSpeech: "No, I don't.",
+      incorrectHintTh:
+        'ยังไม่ตรงครับ ถ้าคุณไม่ชอบ ให้ตอบว่า “No, I don\'t.” ครับ',
       options: [
-        { emoji: '✅', label: 'Yes, I do', speak: 'Yes, I do.' },
         { emoji: '❌', label: "No, I don't", speak: "No, I don't." },
+        { emoji: '👎', label: 'No', speak: 'No.' },
       ],
     },
     5: {
       textEn:
-        'Are you free tomorrow? 📅 ถ้ายังไม่แน่ใจ คุณจะตอบว่าอะไรครับ?',
-      advanceQuestionEn: 'Are you free tomorrow?',
-      withPraise: true,
-      stem: 'Yes. / No. / Maybe.',
+        'สุดท้าย Maybe แปลว่า “อาจจะ” ใช้เมื่อเรายังไม่แน่ใจ เช่น Are you free tomorrow? — Maybe. ลองพูดตามว่า “Maybe.” ครับ 🤔',
+      withPraise: false,
+      stem: '',
       expectedSpeech: 'Maybe.',
+      incorrectHintTh: 'ยังไม่ถูกครับ ลองพูดตามว่า “Maybe.” ครับ',
+      options: [{ emoji: '🤔', label: 'Maybe', speak: 'Maybe.' }],
+    },
+    6: {
+      textEn:
+        'ลองใช้ Maybe จริงครับ — Are you free tomorrow? 📅 ถ้ายังไม่แน่ใจ ให้ตอบว่าอะไรครับ?',
+      advanceQuestionEn: 'Are you free tomorrow?',
+      withPraise: false,
+      stem: 'Maybe.',
+      expectedSpeech: 'Maybe.',
+      incorrectHintTh: 'ยังไม่ตรงครับ ถ้ายังไม่แน่ใจ ให้ตอบว่า “Maybe.” ครับ',
       options: [
-        { emoji: '✅', label: 'Yes', speak: 'Yes.' },
-        { emoji: '❌', label: 'No', speak: 'No.' },
         { emoji: '🤔', label: 'Maybe', speak: 'Maybe.' },
+        { emoji: '💭', label: "I'm not sure", speak: "I'm not sure." },
       ],
     },
   },
@@ -1186,7 +1215,7 @@ export const FOUNDATION_BOARDS: Record<
 export const FOUNDATION_MAX_STEPS: Record<FoundationLessonId, number> = {
   greetings: 8,
   introductions: 8,
-  yes_no_maybe: 5,
+  yes_no_maybe: 6,
   polite_expressions: 5,
   meet_people: 5,
   talk_about_groups: 5,

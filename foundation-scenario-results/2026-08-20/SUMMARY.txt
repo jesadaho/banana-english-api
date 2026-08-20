@@ -1,0 +1,212 @@
+Foundation scenarios vs production
+Finished: Thu Aug 20 01:34:35 +07 2026
+
+======== greetings ========
+SUMMARY
+================================================================================
+
+greetings
+  ✅ Scenario 1 — 8 steps · 779.61 ms
+  ✅ Scenario 2 — 8 steps · 12.47 s
+  ✅ Scenario 3 — 8 steps · 11.52 s
+  ✅ Scenario 4 — 16 steps · 12.58 s
+  ✅ Scenario 5 — 16 steps · 10.70 s
+
+Total: 5/5 passed
+(greetings.txt is the re-run after S5 wrong-answer fix; first-run S5 fail is in ALL.txt)
+
+======== introductions ========
+SUMMARY
+================================================================================
+
+introductions
+  ✅ Scenario 1 — 8 steps · 876.11 ms
+  ✅ Scenario 2 — 8 steps · 9.37 s
+  ✅ Scenario 3 — 8 steps · 10.11 s
+  ✅ Scenario 4 — 16 steps · 10.79 s
+  ✅ Scenario 5 — 16 steps · 11.03 s
+
+Total: 5/5 passed
+
+======== yes_no_maybe ========
+SUMMARY
+================================================================================
+
+yes_no_maybe
+  ✅ Scenario 1 — 5 steps · 485.26 ms
+  ✅ Scenario 2 — 5 steps · 7.10 s
+  ✅ Scenario 3 — 5 steps · 7.06 s
+  ✅ Scenario 4 — 10 steps · 8.65 s
+  ✅ Scenario 5 — 10 steps · 9.70 s
+
+Total: 5/5 passed
+
+======== polite_expressions ========
+SUMMARY
+================================================================================
+
+polite_expressions
+  ✅ Scenario 1 — 5 steps · 514.78 ms
+  ✅ Scenario 2 — 5 steps · 8.83 s
+  ✅ Scenario 3 — 5 steps · 7.13 s
+  ✅ Scenario 4 — 10 steps · 7.12 s
+  ✅ Scenario 5 — 10 steps · 8.89 s
+
+Total: 5/5 passed
+
+======== meet_people ========
+SUMMARY
+================================================================================
+
+meet_people
+  ✅ Scenario 1 — 5 steps · 622.76 ms
+  ✅ Scenario 2 — 5 steps · 6.87 s
+  ✅ Scenario 3 — 5 steps · 6.11 s
+  ✅ Scenario 4 — 10 steps · 6.76 s
+  ✅ Scenario 5 — 10 steps · 9.92 s
+
+Total: 5/5 passed
+
+======== talk_about_groups ========
+SUMMARY
+================================================================================
+
+talk_about_groups
+  ✅ Scenario 1 — 5 steps · 849.15 ms
+  ✅ Scenario 2 — 5 steps · 6.65 s
+  ✅ Scenario 3 — 5 steps · 6.26 s
+  ✅ Scenario 4 — 10 steps · 6.60 s
+  ✅ Scenario 5 — 10 steps · 8.58 s
+
+Total: 5/5 passed
+
+======== ee_about_me_family ========
+SUMMARY
+================================================================================
+
+ee_about_me_family
+  ✅ Scenario 1 — 9 steps · 1.04 s
+  ✅ Scenario 2 — 9 steps · 10.35 s
+  ✅ Scenario 3 — 9 steps · 10.39 s
+  ✅ Scenario 4 — 18 steps · 13.70 s
+  ✅ Scenario 5 — 18 steps · 12.33 s
+
+Total: 5/5 passed
+
+======== numbers ========
+SUMMARY
+================================================================================
+
+numbers
+  ✅ Scenario 1 — 5 steps · 512.20 ms
+  ✅ Scenario 2 — 5 steps · 6.60 s
+  ✅ Scenario 3 — 5 steps · 6.75 s
+  ✅ Scenario 4 — 10 steps · 6.85 s
+  ✅ Scenario 5 — 10 steps · 7.92 s
+
+Total: 5/5 passed
+
+======== telling_time ========
+SUMMARY
+================================================================================
+
+telling_time
+  ✅ Scenario 1 — 5 steps · 534.11 ms
+  ✅ Scenario 2 — 5 steps · 6.89 s
+  ✅ Scenario 3 — 5 steps · 6.47 s
+  ✅ Scenario 4 — 10 steps · 8.06 s
+  ✅ Scenario 5 — 10 steps · 7.16 s
+
+Total: 5/5 passed
+
+======== everyday_numbers ========
+SUMMARY
+================================================================================
+
+everyday_numbers
+  ✅ Scenario 1 — 5 steps · 479.88 ms
+  ✅ Scenario 2 — 5 steps · 6.30 s
+  ✅ Scenario 3 — 5 steps · 8.19 s
+  ✅ Scenario 4 — 10 steps · 7.07 s
+  ✅ Scenario 5 — 10 steps · 6.32 s
+
+Total: 5/5 passed
+
+======== money_prices ========
+SUMMARY
+================================================================================
+
+money_prices
+  ✅ Scenario 1 — 5 steps · 483.01 ms
+  ✅ Scenario 2 — 5 steps · 6.29 s
+  ✅ Scenario 3 — 5 steps · 5.69 s
+  ✅ Scenario 4 — 10 steps · 6.75 s
+  ✅ Scenario 5 — 10 steps · 7.44 s
+
+Total: 5/5 passed
+
+======== likes_dislikes ========
+SUMMARY
+================================================================================
+
+likes_dislikes
+  ✅ Scenario 1 — 5 steps · 477.12 ms
+  ✅ Scenario 2 — 5 steps · 6.38 s
+  ✅ Scenario 3 — 5 steps · 5.61 s
+  ✅ Scenario 4 — 10 steps · 6.34 s
+  ✅ Scenario 5 — 10 steps · 5.87 s
+
+Total: 5/5 passed
+
+======== wants_needs ========
+SUMMARY
+================================================================================
+
+wants_needs
+  ✅ Scenario 1 — 5 steps · 536.40 ms
+  ✅ Scenario 2 — 5 steps · 5.45 s
+  ✅ Scenario 3 — 5 steps · 6.97 s
+  ✅ Scenario 4 — 10 steps · 6.25 s
+  ✅ Scenario 5 — 10 steps · 6.86 s
+
+Total: 5/5 passed
+
+======== can_cant ========
+SUMMARY
+================================================================================
+
+can_cant
+  ✅ Scenario 1 — 4 steps · 445.41 ms
+  ✅ Scenario 2 — 4 steps · 4.77 s
+  ✅ Scenario 3 — 4 steps · 5.07 s
+  ✅ Scenario 4 — 8 steps · 4.79 s
+  ✅ Scenario 5 — 8 steps · 4.89 s
+
+Total: 5/5 passed
+
+======== asking_for_help ========
+SUMMARY
+================================================================================
+
+asking_for_help
+  ✅ Scenario 1 — 4 steps · 325.56 ms
+  ✅ Scenario 2 — 4 steps · 5.19 s
+  ✅ Scenario 3 — 4 steps · 4.64 s
+  ✅ Scenario 4 — 8 steps · 5.63 s
+  ✅ Scenario 5 — 8 steps · 8.84 s
+
+Total: 5/5 passed
+
+======== asking_questions ========
+SUMMARY
+================================================================================
+
+asking_questions
+  ✅ Scenario 1 — 5 steps · 494.01 ms
+  ✅ Scenario 2 — 5 steps · 5.74 s
+  ✅ Scenario 3 — 5 steps · 6.43 s
+  ✅ Scenario 4 — 10 steps · 6.60 s
+  ✅ Scenario 5 — 10 steps · 6.12 s
+
+Total: 5/5 passed
+

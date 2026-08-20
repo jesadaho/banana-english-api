@@ -24,6 +24,7 @@ import {
   introductionsOutOfPoolNearMiss,
   introductionsOutOfPoolCloseMiss,
   introductionsOutOfPoolWrong,
+  foundationOutOfPoolWrong,
   mockGeminiReply,
   nextBoardAfterProbeExact,
   pinChoiceLessonAiReply,
@@ -664,5 +665,19 @@ describe('Foundation progress — yes_no_maybe out-pool does not rewind', () => 
       learnerFirstName,
     );
     assert.equal(last.isLessonComplete, true);
+  });
+});
+
+describe('Foundation — greetings scenario 5', () => {
+  it('wrong then wrong-again soft-advances every step to completion', () => {
+    const def = getDef(
+      FOUNDATION_POOLGATE_FIXTURES.find((f) => f.lessonId === 'greetings')!,
+    );
+    const result = runFoundationAllOutOfPoolWrongThenSoftAdvance(
+      def,
+      (exact, step) => foundationOutOfPoolWrong(exact, step, 'greetings'),
+    );
+    assert.equal(result.steps.length, def.maxStep);
+    assert.equal(result.steps.at(-1)?.isLessonComplete, true);
   });
 });

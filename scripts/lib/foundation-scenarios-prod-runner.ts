@@ -10,9 +10,9 @@ import { FOUNDATION_LESSON_IDS } from '../../src/training/foundation/foundation.
 import { FOUNDATION_POOLGATE_FIXTURES } from '../../src/training/foundation/foundation-poolgate.fixtures.ts';
 import {
   foundationOutOfPoolCloseMiss,
+  foundationOutOfPoolWrong,
   getDef,
   introductionsOutOfPoolNearMiss,
-  introductionsOutOfPoolWrong,
   introductionsOutOfPoolWrongAgain,
 } from '../../src/training/foundation/foundation-poolgate.harness.ts';
 import type { ChoiceLessonDef } from '../../src/training/scripts/choice-lesson.script.ts';
@@ -161,10 +161,13 @@ function pickUserSpeech(
     case 3:
       return { speech: foundationOutOfPoolCloseMiss(expected, step, lessonId) };
     case 4:
-      return { speech: introductionsOutOfPoolWrong(expected, step), recoverExact: expected };
+      return {
+        speech: foundationOutOfPoolWrong(expected, step, lessonId),
+        recoverExact: expected,
+      };
     case 5:
       return {
-        speech: introductionsOutOfPoolWrong(expected, step),
+        speech: foundationOutOfPoolWrong(expected, step, lessonId),
         recoverWrong: introductionsOutOfPoolWrongAgain(expected, step),
       };
     default:
@@ -223,7 +226,7 @@ export async function runFoundationScenario(
       },
     ];
 
-    while (lessonStep <= def.maxStep) {
+    while (reportStep < MAX_TURNS) {
       const { speech, recoverExact, recoverWrong } = pickUserSpeech(
         lessonId,
         scenario,

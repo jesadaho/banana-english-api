@@ -1,0 +1,71 @@
+Foundation PoolGate — 16 lessons × 5 scenarios vs production
+API: https://banana-english-api-production.up.railway.app
+Learner: Nana
+Run: Thu Aug 20 01:25–01:34 +07 2026 (full matrix)
+Greetings re-run: after fixing scenario 5 wrong-answer (Thank you. instead of Good morning.)
+
+Result: 80/80 passed after greetings scenario 5 script fix
+
+Per-lesson transcripts:
+  greetings.txt
+  introductions.txt
+  yes_no_maybe.txt
+  polite_expressions.txt
+  meet_people.txt
+  talk_about_groups.txt
+  ee_about_me_family.txt
+  numbers.txt
+  telling_time.txt
+  everyday_numbers.txt
+  money_prices.txt
+  likes_dislikes.txt
+  wants_needs.txt
+  can_cant.txt
+  asking_for_help.txt
+  asking_questions.txt
+
+Also:
+  ALL.txt              first full run (greetings S5 failed — see note)
+  greetings-rerun.txt  greetings 1–5 after script fix (same as greetings.txt)
+  SUMMARY.txt          pass/fail lines only
+
+Scenarios
+  1  in-pool correct every step → complete
+  2  out-pool correct every step → complete
+  3  out-pool close every step → complete
+  4  out-pool wrong + in-pool recovery → complete
+  5  out-pool wrong + wrong again → soft-advance → complete
+
+--------------------------------------------------------------------------------
+PASS TABLE
+--------------------------------------------------------------------------------
+greetings              5/5  (S5 failed on first run; passed on re-run)
+introductions          5/5
+yes_no_maybe           5/5
+polite_expressions     5/5
+meet_people            5/5
+talk_about_groups      5/5
+ee_about_me_family     5/5
+numbers                5/5
+telling_time           5/5
+everyday_numbers       5/5
+money_prices           5/5
+likes_dislikes         5/5
+wants_needs            5/5
+can_cant               5/5
+asking_for_help        5/5
+asking_questions       5/5
+
+--------------------------------------------------------------------------------
+NOTE — greetings scenario 5 (first run)
+--------------------------------------------------------------------------------
+Script used "Good morning." as the off-topic wrong answer. That is a taught
+greeting, so Gemini often scored it correct and the runner ran out of steps
+before the free-greeting close.
+
+Fix: greetings wrong-answer is now "Thank you." (not a greeting).
+Re-run: greetings S5 complete · 16 turns · 10.70 s
+
+Chrome Hint/Choices in the transcripts can lag one step (display in the
+prod runner). Teaching Reply text is the source of truth for what the API
+asked next.

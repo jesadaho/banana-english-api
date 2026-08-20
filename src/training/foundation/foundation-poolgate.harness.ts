@@ -509,6 +509,16 @@ export function introductionsOutOfPoolWrong(_exact: string, _step?: number): str
   return 'Good morning.';
 }
 
+/** Off-topic wrong that is not a valid answer in this lesson. */
+export function foundationOutOfPoolWrong(
+  exact: string,
+  step: number,
+  lessonId: string,
+): string {
+  if (lessonId === 'greetings') return 'Thank you.';
+  return introductionsOutOfPoolWrong(exact, step);
+}
+
 /** Second wrong while repeating — triggers scripted soft-advance. */
 export function introductionsOutOfPoolWrongAgain(
   _exact: string,
