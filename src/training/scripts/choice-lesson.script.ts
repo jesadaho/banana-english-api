@@ -158,8 +158,25 @@ function localizedNextInstruction(
   nextScripted: ScriptTurnResult,
 ): string {
   const localized =
-    nextBoard?.textEn?.trim() || nextScripted.textEn?.trim() || '';
+    nextBoard?.textEn?.trim() ||
+    nextBoard?.advanceQuestionEn?.trim() ||
+    nextScripted.textEn?.trim() ||
+    '';
   return stripLeadingPraiseOpener(localized).trim();
+}
+
+/** Never advance with a blank teacher line — fall back to board cue / stem. */
+function ensureAdvanceHasText(
+  next: ScriptTurnResult,
+  nextBoard: GuidedBoard | null,
+): ScriptTurnResult {
+  if (next.isLessonComplete || next.textEn?.trim()) return next;
+  const fallback =
+    nextBoard?.advanceQuestionEn?.trim() ||
+    nextBoard?.textEn?.trim() ||
+    nextBoard?.stem?.trim() ||
+    'มาลองข้อต่อไปกันครับ';
+  return { ...next, textEn: fallback };
 }
 
 function asTtsBoard(board: GuidedBoard | null): GuidedBoard | null {
@@ -228,7 +245,10 @@ export function buildCloseAdvanceTextEn(
     : 'เกือบถูกแล้วครับ!';
 
   const nextRaw =
-    nextBoard?.textEn?.trim() || nextScripted.textEn?.trim() || '';
+    nextBoard?.textEn?.trim() ||
+    nextBoard?.advanceQuestionEn?.trim() ||
+    nextScripted.textEn?.trim() ||
+    '';
   if (nextScripted.isLessonComplete) {
     return nextRaw ? `${recast}\n${nextRaw}` : recast;
   }
@@ -296,7 +316,20 @@ export function buildSoftAdvanceTextEn(
   if (modelLine && nextInstruction) {
     return `${modelLine}\nไปต่อกันเลย — ${nextInstruction}`;
   }
-  return `ไม่เป็นไรครับ ไปต่อกัน! ${nextScripted.textEn}`;
+  if (modelLine) {
+    const fallback =
+      nextBoard?.advanceQuestionEn?.trim() ||
+      nextBoard?.stem?.trim() ||
+      nextScripted.textEn?.trim() ||
+      'มาลองข้อต่อไปกันครับ';
+    return `${modelLine}\nไปต่อกันเลย — ${stripLeadingPraiseOpener(fallback).trim()}`;
+  }
+  return `ไม่เป็นไรครับ ไปต่อกัน! ${
+    nextScripted.textEn?.trim() ||
+    nextBoard?.advanceQuestionEn?.trim() ||
+    nextBoard?.stem?.trim() ||
+    'มาลองข้อต่อไปกันครับ'
+  }`;
 }
 
 function buildSoftAdvanceTextTh(
@@ -422,7 +455,7 @@ export function buildGenericScriptedReplyFromProgress(
   // Next board step (1-based): pin passes explicit step; replay uses cleared + 1.
   const board = def.boardForStep(nextStep, history, learnerFirstName);
   if (!board) return null;
-  return boardToScriptTurn(board);
+  return ensureAdvanceHasText(boardToScriptTurn(board), board);
 }
 
 function scriptedFromProgress(
@@ -654,21 +687,30 @@ export function pinChoiceLessonAiReply(
         assessmentTier: tier,
       };
     }
-    const nextBody = stripLeadingPraiseOpener(next.textEn?.trim() ?? '').trim();
-    const nextTtsBody = stripLeadingPraiseOpener(
-      next.ttsText?.trim() || next.textEn?.trim() || '',
-    ).trim();
     const nextBoardForPraise = def.boardForStep(
       nextStep,
       turns,
       learnerFirstName,
     );
+    const nextBody = (
+      stripLeadingPraiseOpener(next.textEn?.trim() ?? '').trim() ||
+      nextBoardForPraise?.advanceQuestionEn?.trim() ||
+      nextBoardForPraise?.stem?.trim() ||
+      ''
+    ).trim();
+    const nextTtsBody = (
+      stripLeadingPraiseOpener(
+        next.ttsText?.trim() || next.textEn?.trim() || '',
+      ).trim() ||
+      nextBoardForPraise?.advanceQuestionEn?.trim() ||
+      nextBody
+    ).trim();
     const praise = nextBoardForPraise?.withPraise === false
       ? ''
       : correctAdvancePraise(aiReply.textEn?.trim() ?? '');
     return {
-      textEn: `${praise} ${nextBody}`.trim(),
-      ttsText: `${praise} ${nextTtsBody}`.trim(),
+      textEn: `${praise} ${nextBody}`.trim() || 'มาลองข้อต่อไปกันครับ',
+      ttsText: `${praise} ${nextTtsBody}`.trim() || 'มาลองข้อต่อไปกันครับ',
       textTh: aiReply.textTh?.trim() || next.textTh || '',
       isLessonComplete: next.isLessonComplete ?? false,
       expectsUserSpeech: next.expectsUserSpeech ?? true,

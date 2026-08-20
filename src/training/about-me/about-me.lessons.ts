@@ -2678,21 +2678,34 @@ export function petsBoardForStep(
       stem: PETS_CHOICE_GUIDED_SPEAKING.stem,
       expectedSpeech: animal === 'dog' ? 'I have a dog.' : 'I have a cat.',
       options: PETS_CHOICE_GUIDED_SPEAKING.options.map((o) => ({ ...o })),
+      incorrectHintTh:
+        'ยังไม่ตรงครับ ลองเริ่มด้วย I have a... แล้วเลือก cat หรือ dog ครับ',
     };
   }
-  if (step === 2) return petsDescribeBoard(animal);
+  if (step === 2) {
+    const board = petsDescribeBoard(animal);
+    return {
+      ...board,
+      advanceQuestionEn: board.advanceQuestionEn ?? `What is your ${animal} like?`,
+      incorrectHintTh: `ยังไม่ตรงครับ ลองใช้โครง My ${animal} is very... ครับ`,
+    };
+  }
   if (step === 3) {
     return {
       textEn: PETS_YOUR_BOARD.textEn,
       stem: PETS_YOUR_BOARD.stem,
       expectedSpeech: PETS_YOUR_BOARD.expectedSpeech,
       options: PETS_YOUR_BOARD.options.map((o) => ({ ...o })),
+      incorrectHintTh:
+        'ยังไม่ตรงครับ ลองใช้โครง Your ... is very... แล้วใส่สัตว์เลี้ยงกับคำชม ครับ',
     };
   }
   if (step === 4) {
     return {
-      textEn: '',
-      stem: '',
+      textEn:
+        'เก่งมากครับ! มาลองพูดสองประโยคติดกันนะครับ บอกว่ามีสัตว์เลี้ยงอะไร แล้วตามด้วยลักษณะของมัน 🐾',
+      advanceQuestionEn: 'Can you say both sentences together?',
+      stem: `I have a.... My ${animal} is very...`,
       expectedSpeech: `I have a ${animal}. My ${animal} is very ${adjective}.`,
       options: [
         {
@@ -2701,6 +2714,8 @@ export function petsBoardForStep(
           speak: `I have a ${animal}. My ${animal} is very ${adjective}.`,
         },
       ],
+      incorrectHintTh:
+        'ยังไม่ตรงครับ เริ่มด้วย I have a... ก่อน แล้วค่อยตามด้วย My ... is very... ครับ',
     };
   }
   return null;
@@ -3575,6 +3590,8 @@ const WEATHER_COLD_BOARD = {
   options: [
     { emoji: '🥶', label: 'Cold', speak: 'The weather is very cold today.' },
   ],
+  incorrectHintTh:
+    'ยังไม่ตรงครับ ประโยคเริ่มด้วย The weather is very... แล้วใส่ cold ครับ',
 };
 
 const WEATHER_PREFERENCE_GUIDED_SPEAKING = {
@@ -3593,6 +3610,8 @@ const WEATHER_QUIZ_RAINY_BOARD = {
   stem: '',
   expectedSpeech: 'I like rainy weather.',
   options: [{ emoji: '🌧️', label: '', speak: 'I like rainy weather.' }],
+  incorrectHintTh:
+    'ยังไม่ตรงครับ ลองใช้โครง I like ... weather โดยเน้น rainy ครับ',
 };
 
 function normalizeWeatherSpeech(userText: string): string {
@@ -3633,15 +3652,19 @@ export function weatherBoardForStep(step: number): ForcedGuidedBoard | null {
       stem: WEATHER_HOT_QUIZ_GUIDED_SPEAKING.stem,
       expectedSpeech: 'Hot.',
       options: WEATHER_HOT_QUIZ_GUIDED_SPEAKING.options.map((o) => ({ ...o })),
+      incorrectHintTh: 'ยังไม่ตรงครับ คำนี้คือ hot — ลองพูด Hot. ครับ',
     };
   }
   if (step === 2) return WEATHER_COLD_BOARD;
   if (step === 3) {
     return {
-      textEn: '',
+      textEn: 'แล้วคุณชอบอากาศแบบไหนครับ? What weather do you like? ☀️🌧️',
+      advanceQuestionEn: 'What weather do you like?',
       stem: WEATHER_PREFERENCE_GUIDED_SPEAKING.stem,
       expectedSpeech: 'I like sunny weather.',
       options: WEATHER_PREFERENCE_GUIDED_SPEAKING.options.map((o) => ({ ...o })),
+      incorrectHintTh:
+        'ยังไม่ตรงครับ ลองใช้โครง I like ... weather ครับ',
     };
   }
   if (step === 4) return WEATHER_QUIZ_RAINY_BOARD;
@@ -3977,9 +4000,17 @@ export function friendsBoardForStep(step: number): ForcedGuidedBoard | null {
       stem: FRIENDS_ACTIVITY_GUIDED_SPEAKING.stem,
       expectedSpeech: 'We play games together.',
       options: FRIENDS_ACTIVITY_GUIDED_SPEAKING.options.map((o) => ({ ...o })),
+      incorrectHintTh:
+        'ยังไม่ตรงครับ ลองใช้โครง We ... together แล้วเลือกกิจกรรมกับเพื่อน ครับ',
     };
   }
-  if (step === 2) return FRIENDS_EAT_OUT_BOARD;
+  if (step === 2) {
+    return {
+      ...FRIENDS_EAT_OUT_BOARD,
+      incorrectHintTh:
+        'ยังไม่ตรงครับ ลองใช้โครง We ... together โดยเน้น eat out ครับ',
+    };
+  }
   if (step === 3) return FRIENDS_THEY_PLAY_BOARD;
   if (step === 4) return FRIENDS_HANG_OUT_BOARD;
   if (step === 5) {

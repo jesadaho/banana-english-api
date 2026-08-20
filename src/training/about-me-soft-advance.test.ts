@@ -141,7 +141,7 @@ describe('About Me soft-advance copy (all 10 lessons)', () => {
       ),
       ABOUT_ME_PETS.lessonId,
       /"I have a dog\."/,
-      /What is your dog like\?/,
+      /น้องสัตว์เลี้ยง|เป็นยังไงบ้าง|What is your dog like\?/,
     );
   });
 
@@ -169,7 +169,7 @@ describe('About Me soft-advance copy (all 10 lessons)', () => {
       ),
       ABOUT_ME_WEATHER.lessonId,
       /"Hot\."/,
-      /How do you say the weather is very cold today\?/,
+      /อากาศหนาวมาก|The weather is very hot today|How do you say the weather is very cold today\?/,
     );
   });
 
@@ -183,7 +183,7 @@ describe('About Me soft-advance copy (all 10 lessons)', () => {
       ),
       ABOUT_ME_FRIENDS.lessonId,
       /"We play games together\."/,
-      /How do you say we eat out together\?/,
+      /กินข้าวด้วยกัน|How do you say we eat out together\?/,
     );
   });
 

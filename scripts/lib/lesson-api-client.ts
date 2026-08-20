@@ -39,26 +39,34 @@ export class LessonApiClient {
     body?: unknown,
     expectOk = true,
   ): Promise<{ status: number; json: Json; durationMs: number }> {
-    const started = performance.now();
-    const res = await fetch(`${this.apiBase}${path}`, {
-      method,
-      headers: this.headers(),
-      body: body == null ? undefined : JSON.stringify(body),
-    });
+    const maxAttempts = 3;
+    let lastError: Error | undefined;
+    let totalMs = 0;
 
-    const text = await res.text();
-    let json: Json = {};
-    if (text) {
-      try {
-        json = JSON.parse(text) as Json;
-      } catch {
-        json = { raw: text };
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+      const started = performance.now();
+      const res = await fetch(`${this.apiBase}${path}`, {
+        method,
+        headers: this.headers(),
+        body: body == null ? undefined : JSON.stringify(body),
+      });
+
+      const text = await res.text();
+      let json: Json = {};
+      if (text) {
+        try {
+          json = JSON.parse(text) as Json;
+        } catch {
+          json = { raw: text };
+        }
       }
-    }
 
-    const durationMs = performance.now() - started;
+      totalMs += performance.now() - started;
 
-    if (expectOk && !res.ok) {
+      if (res.ok || !expectOk) {
+        return { status: res.status, json, durationMs: totalMs };
+      }
+
       const detail =
         typeof json.message === 'string'
           ? json.message
@@ -67,10 +75,22 @@ export class LessonApiClient {
             : text.slice(0, 500);
       const debug =
         typeof json.debug === 'string' ? `\nDEBUG: ${json.debug}` : '';
-      throw new Error(`${method} ${path} → ${res.status}: ${detail}${debug}`);
+      lastError = new Error(
+        `${method} ${path} → ${res.status}: ${detail}${debug}`,
+      );
+
+      const retryable =
+        res.status === 502 || res.status === 503 || res.status === 504;
+      if (!retryable || attempt === maxAttempts) break;
+
+      const waitMs = 1000 * attempt;
+      console.warn(
+        `⚠️  ${method} ${path} → ${res.status} (attempt ${attempt}/${maxAttempts}), retry in ${waitMs}ms…`,
+      );
+      await new Promise((r) => setTimeout(r, waitMs));
     }
 
-    return { status: res.status, json, durationMs };
+    throw lastError ?? new Error(`${method} ${path} failed`);
   }
 
   parseTurn(payload: Json): TurnResult {
