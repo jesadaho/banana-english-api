@@ -10,7 +10,7 @@ Hint: (none)
 Choices: 💬 How much is it? → "How much is it?"
 User: How much is it?
 Result: correct in pool
-response time : 95.35 ms
+response time : 119.26 ms
 Reply: เก่งมากครับ! ตอบราคา — It's five dollars. 💵 ลองพูดตามครับ
 
 Step 2
@@ -19,7 +19,7 @@ Hint: (none)
 Choices: 💵 It's five dollars → "It's five dollars."
 User: It's five dollars.
 Result: correct in pool
-response time : 96.11 ms
+response time : 97.16 ms
 Reply: สมมติกาแฟราคา 1 ดอลลาร์ ซึ่งราคาถูก เราพูดว่า It's cheap. แปลว่า “มันราคาถูก” 👍 ลองพูดตามนะครับ
 
 Step 3
@@ -29,7 +29,7 @@ Choices: 👍 It's cheap → "It's cheap."
          💎 It's expensive → "It's expensive."
 User: It's cheap.
 Result: correct in pool
-response time : 100.85 ms
+response time : 124.08 ms
 Reply: ถ้าเห็นป้ายราคา $10 คุณจะพูดว่าอะไรครับ? 💵
 
 Step 4
@@ -38,7 +38,7 @@ Hint: (none)
 Choices: (none)
 User: It's ten dollars.
 Result: correct in pool
-response time : 77.78 ms
+response time : 112.06 ms
 Reply: ลองบอกราคาสินค้าที่คุณชอบซื้อเป็นภาษาอังกฤษครับ 🛒
 
 Step 5
@@ -47,11 +47,11 @@ Hint: (none)
 Choices: (none)
 User: It's ten dollars.
 Result: correct in pool
-response time : 96.39 ms
+response time : 114.04 ms
 Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณถามและบอกราคาเป็นภาษาอังกฤษได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ money_prices scenario 1 complete · 5 turns · 466.48 ms
+✅ money_prices scenario 1 complete · 5 turns · 566.60 ms
 
 ================================================================================
 money_prices — Scenario 2 — out-pool correct ทุก step → จบบท
@@ -64,48 +64,48 @@ Hint: (none)
 Choices: 💬 How much is it? → "How much is it?"
 User: How much is it....
 Result: correct out pool
-response time : 1.06 s
-Reply: เยี่ยมครับ! เก่งมากครับ! ตอบราคา — It's five dollars. 💵 ลองพูดตามครับ
+response time : 1.32 s
+Reply: เยี่ยมครับ! ตอบราคา — It's five dollars. 💵 ลองพูดตามครับ
 
 Step 2
-AI: เยี่ยมครับ! เก่งมากครับ! ตอบราคา — It's five dollars. 💵 ลองพูดตามครับ
+AI: เยี่ยมครับ! ตอบราคา — It's five dollars. 💵 ลองพูดตามครับ
 Hint: (none)
 Choices: 💵 It's five dollars → "It's five dollars."
 User: It's five dollars....
 Result: correct out pool
-response time : 1.26 s
-Reply: เยี่ยมครับ! สมมติกาแฟราคา 1 ดอลลาร์ ซึ่งราคาถูก เราพูดว่า It's cheap. แปลว่า “มันราคาถูก” 👍 ลองพูดตามนะครับ
+response time : 1.64 s
+Reply: ถูกต้องครับ! สมมติกาแฟราคา 1 ดอลลาร์ ซึ่งราคาถูก เราพูดว่า It's cheap. แปลว่า “มันราคาถูก” 👍 ลองพูดตามนะครับ
 
 Step 3
-AI: เยี่ยมครับ! สมมติกาแฟราคา 1 ดอลลาร์ ซึ่งราคาถูก เราพูดว่า It's cheap. แปลว่า “มันราคาถูก” 👍 ลองพูดตามนะครับ
+AI: ถูกต้องครับ! สมมติกาแฟราคา 1 ดอลลาร์ ซึ่งราคาถูก เราพูดว่า It's cheap. แปลว่า “มันราคาถูก” 👍 ลองพูดตามนะครับ
 Hint: (none)
 Choices: 👍 It's cheap → "It's cheap."
          💎 It's expensive → "It's expensive."
 User: It's cheap....
 Result: correct out pool
-response time : 1.23 s
-Reply: ดีมากครับ! ถ้าเห็นป้ายราคา $10 คุณจะพูดว่าอะไรครับ? 💵
+response time : 1.20 s
+Reply: เยี่ยมครับ! ถ้าเห็นป้ายราคา $10 คุณจะพูดว่าอะไรครับ? 💵
 
 Step 4
-AI: ดีมากครับ! ถ้าเห็นป้ายราคา $10 คุณจะพูดว่าอะไรครับ? 💵
+AI: เยี่ยมครับ! ถ้าเห็นป้ายราคา $10 คุณจะพูดว่าอะไรครับ? 💵
 Hint: (none)
 Choices: (none)
 User: It's ten dollars....
 Result: correct out pool
-response time : 1.13 s
-Reply: ถูกต้องครับ! ลองบอกราคาสินค้าที่คุณชอบซื้อเป็นภาษาอังกฤษครับ 🛒
+response time : 1.08 s
+Reply: ดีมากครับ! ลองบอกราคาสินค้าที่คุณชอบซื้อเป็นภาษาอังกฤษครับ 🛒
 
 Step 5
-AI: ถูกต้องครับ! ลองบอกราคาสินค้าที่คุณชอบซื้อเป็นภาษาอังกฤษครับ 🛒
+AI: ดีมากครับ! ลองบอกราคาสินค้าที่คุณชอบซื้อเป็นภาษาอังกฤษครับ 🛒
 Hint: (none)
 Choices: (none)
 User: It's ten dollars....
 Result: correct out pool
-response time : 1.15 s
-Reply: ดีมากครับ! สุดยอดครับ Nana! 🎉 วันนี้คุณถามและบอกราคาเป็นภาษาอังกฤษได้แล้ว 🍌
+response time : 1.29 s
+Reply: เยี่ยมครับ! Nana! 🎉 วันนี้คุณถามและบอกราคาเป็นภาษาอังกฤษได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ money_prices scenario 2 complete · 5 turns · 5.83 s
+✅ money_prices scenario 2 complete · 5 turns · 6.52 s
 
 ================================================================================
 money_prices — Scenario 3 — out-pool close ทุก step → จบบท
@@ -118,7 +118,7 @@ Hint: (none)
 Choices: 💬 How much is it? → "How much is it?"
 User: How much it is?
 Result: close out pool
-response time : 1.14 s
+response time : 1.63 s
 Reply: เกือบถูกแล้วครับ! พูดว่า How much is it. 💬
 ตอบราคา — It's five dollars. 💵 ลองพูดตามครับ
 
@@ -129,7 +129,7 @@ Hint: (none)
 Choices: 💵 It's five dollars → "It's five dollars."
 User: It five dollars.
 Result: close out pool
-response time : 1.37 s
+response time : 1.10 s
 Reply: เกือบถูกแล้วครับ! พูดว่า It's five dollars. 💵
 สมมติกาแฟราคา 1 ดอลลาร์ ซึ่งราคาถูก เราพูดว่า It's cheap. แปลว่า “มันราคาถูก” 👍 ลองพูดตามนะครับ
 
@@ -141,7 +141,7 @@ Choices: 👍 It's cheap → "It's cheap."
          💎 It's expensive → "It's expensive."
 User: It cheap.
 Result: close out pool
-response time : 1.27 s
+response time : 1.62 s
 Reply: เกือบถูกแล้วครับ! พูดว่า It's cheap. 👍
 ต่อไปถ้าเห็นป้ายราคา $10 คุณจะพูดว่าอะไรครับ? 💵
 
@@ -152,7 +152,7 @@ Hint: (none)
 Choices: (none)
 User: It ten dollars.
 Result: close out pool
-response time : 1.31 s
+response time : 1.64 s
 Reply: เกือบถูกแล้วครับ! พูดว่า It's ten dollars. 💵
 ลองบอกราคาสินค้าที่คุณชอบซื้อเป็นภาษาอังกฤษครับ 🛒
 
@@ -163,12 +163,12 @@ Hint: (none)
 Choices: (none)
 User: It ten dollars.
 Result: close out pool
-response time : 1.32 s
+response time : 1.37 s
 Reply: เกือบถูกแล้วครับ! พูดว่า It's ten dollars.
 สุดยอดครับ Nana! 🎉 วันนี้คุณถามและบอกราคาเป็นภาษาอังกฤษได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ money_prices scenario 3 complete · 5 turns · 6.41 s
+✅ money_prices scenario 3 complete · 5 turns · 7.36 s
 
 ================================================================================
 money_prices — Scenario 4 — out-pool wrong + in-pool พูดตาม recovery → จบบท
@@ -181,16 +181,16 @@ Hint: (none)
 Choices: 💬 How much is it? → "How much is it?"
 User: Good morning.
 Result: incorrect out pool
-response time : 1.32 s
-Reply: ยังไม่ถูกต้องครับ Nana ลองพูดว่า "How much is it?" อีกครั้งนะครับ ลองพูดตามนะครับ
+response time : 1.26 s
+Reply: เก่งมากครับ Nana! แต่ลองพูดตามประโยคนี้ดูนะครับ "How much is it?"
 
 Step 2
-AI: ยังไม่ถูกต้องครับ Nana ลองพูดว่า "How much is it?" อีกครั้งนะครับ ลองพูดตามนะครับ
+AI: เก่งมากครับ Nana! แต่ลองพูดตามประโยคนี้ดูนะครับ "How much is it?"
 Hint: (none)
 Choices: 💬 How much is it? → "How much is it?"
 User: How much is it?
 Result: correct in pool
-response time : 91.97 ms
+response time : 105.25 ms
 Reply: เก่งมากครับ! ตอบราคา — It's five dollars. 💵 ลองพูดตามครับ
 
 Step 3
@@ -199,16 +199,16 @@ Hint: (none)
 Choices: 💵 It's five dollars → "It's five dollars."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.25 s
-Reply: ยังไม่ถูกต้องครับ Nana ลองพูดว่า "It's five dollars." อีกครั้งนะครับ ลองพูดตามนะครับ
+response time : 1.48 s
+Reply: ยังไม่ใช่ครับ ลองพูดว่า "It's five dollars." อีกครั้งนะครับ ลองพูดตามนะครับ
 
 Step 4
-AI: ยังไม่ถูกต้องครับ Nana ลองพูดว่า "It's five dollars." อีกครั้งนะครับ ลองพูดตามนะครับ
+AI: ยังไม่ใช่ครับ ลองพูดว่า "It's five dollars." อีกครั้งนะครับ ลองพูดตามนะครับ
 Hint: (none)
 Choices: 💵 It's five dollars → "It's five dollars."
 User: It's five dollars.
 Result: correct in pool
-response time : 90.60 ms
+response time : 99.44 ms
 Reply: สมมติกาแฟราคา 1 ดอลลาร์ ซึ่งราคาถูก เราพูดว่า It's cheap. แปลว่า “มันราคาถูก” 👍 ลองพูดตามนะครับ
 
 Step 5
@@ -218,7 +218,7 @@ Choices: 👍 It's cheap → "It's cheap."
          💎 It's expensive → "It's expensive."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.16 s
+response time : 1.62 s
 Reply: ยังไม่ตรงครับ ลองใช้ “It's cheap” หรือ “It's expensive” ครับ
 
 Step 6
@@ -228,7 +228,7 @@ Choices: 👍 It's cheap → "It's cheap."
          💎 It's expensive → "It's expensive."
 User: It's cheap.
 Result: correct in pool
-response time : 89.28 ms
+response time : 106.70 ms
 Reply: ถ้าเห็นป้ายราคา $10 คุณจะพูดว่าอะไรครับ? 💵
 
 Step 7
@@ -237,7 +237,7 @@ Hint: (none)
 Choices: (none)
 User: Good morning.
 Result: incorrect out pool
-response time : 1.14 s
+response time : 1.45 s
 Reply: ยังไม่ตรงครับ เมื่อป้ายราคาเป็น $10 ให้พูดว่า “It's ten dollars.” ครับ
 
 Step 8
@@ -246,7 +246,7 @@ Hint: (none)
 Choices: (none)
 User: It's ten dollars.
 Result: correct in pool
-response time : 95.71 ms
+response time : 88.04 ms
 Reply: ลองบอกราคาสินค้าที่คุณชอบซื้อเป็นภาษาอังกฤษครับ 🛒
 
 Step 9
@@ -255,7 +255,7 @@ Hint: (none)
 Choices: (none)
 User: Good morning.
 Result: incorrect out pool
-response time : 1.27 s
+response time : 1.25 s
 Reply: ยังไม่ตรงครับ ลองเริ่มด้วย “It's...” แล้วตามด้วยราคาและคำว่า dollars ครับ
 
 Step 10
@@ -264,11 +264,11 @@ Hint: (none)
 Choices: (none)
 User: It's ten dollars.
 Result: correct in pool
-response time : 131.94 ms
-Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณถามและบอกราคาเป็นภาษาอังกฤษได้แล้ว 🍌
+response time : 113.97 ms
+Reply: เรียนครบแล้วครับ Nana คุณทำบทเรียนจบโดยได้รับคำแนะนำบางส่วน ลองฝึกอีกครั้งเพื่อให้คล่องขึ้นนะครับ
 
 ────────────────────────────────────────────────────────────────────────
-✅ money_prices scenario 4 complete · 10 turns · 6.65 s
+✅ money_prices scenario 4 complete · 10 turns · 7.57 s
 
 ================================================================================
 money_prices — Scenario 5 — out-pool wrong + พูดตามผิดอีกครั้ง → soft-advance → จบบท
@@ -281,48 +281,48 @@ Hint: (none)
 Choices: 💬 How much is it? → "How much is it?"
 User: Good morning.
 Result: incorrect out pool
-response time : 1.40 s
-Reply: ยังไม่ใช่ครับ Nana ลองพูดว่า "How much is it?" เพื่อถามราคาดูนะครับ ลองพูดตามนะครับ
+response time : 1.47 s
+Reply: ยังไม่ใช่นะครับ Nana ลองพูดว่า "How much is it?" ตามผมอีกครั้งนะครับ ลองพูดตามนะครับ
 
 Step 2
-AI: ยังไม่ใช่ครับ Nana ลองพูดว่า "How much is it?" เพื่อถามราคาดูนะครับ ลองพูดตามนะครับ
+AI: ยังไม่ใช่นะครับ Nana ลองพูดว่า "How much is it?" ตามผมอีกครั้งนะครับ ลองพูดตามนะครับ
 Hint: (none)
 Choices: 💬 How much is it? → "How much is it?"
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 92.07 ms
+response time : 102.78 ms
 Reply: ตรงนี้พูดว่า "How much is it?" ครับ 💬
-ไปต่อกันเลย — เก่งมากครับ! ตอบราคา — It's five dollars. 💵 ลองพูดตามครับ
+ไปต่อกันเลย — ตอบราคา — It's five dollars. 💵 ลองพูดตามครับ
 
 Step 3
 AI: ตรงนี้พูดว่า "How much is it?" ครับ 💬
-ไปต่อกันเลย — เก่งมากครับ! ตอบราคา — It's five dollars. 💵 ลองพูดตามครับ
+ไปต่อกันเลย — ตอบราคา — It's five dollars. 💵 ลองพูดตามครับ
 Hint: (none)
 Choices: 💵 It's five dollars → "It's five dollars."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.35 s
-Reply: ยังไม่ถูกต้องครับ Nana ลองพูดว่า "It's five dollars." เพื่อบอกราคาดูนะครับ ลองพูดตามอีกครั้งครับ
+response time : 1.33 s
+Reply: ยังไม่ถูกต้องครับ Nana ลองพูดว่า "It's five dollars." อีกครั้งนะครับ ลองพูดตามนะครับ
 
 Step 4
-AI: ยังไม่ถูกต้องครับ Nana ลองพูดว่า "It's five dollars." เพื่อบอกราคาดูนะครับ ลองพูดตามอีกครั้งครับ
+AI: ยังไม่ถูกต้องครับ Nana ลองพูดว่า "It's five dollars." อีกครั้งนะครับ ลองพูดตามนะครับ
 Hint: (none)
 Choices: 💵 It's five dollars → "It's five dollars."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 96.97 ms
+response time : 98.98 ms
 Reply: ตรงนี้พูดว่า "It's five dollars." ครับ 💵
-ไปต่อกันเลย — It's cheap.
+ไปต่อกันเลย — สมมติกาแฟราคา 1 ดอลลาร์ ซึ่งราคาถูก เราพูดว่า It's cheap. แปลว่า “มันราคาถูก” 👍 ลองพูดตามนะครับ
 
 Step 5
 AI: ตรงนี้พูดว่า "It's five dollars." ครับ 💵
-ไปต่อกันเลย — It's cheap.
+ไปต่อกันเลย — สมมติกาแฟราคา 1 ดอลลาร์ ซึ่งราคาถูก เราพูดว่า It's cheap. แปลว่า “มันราคาถูก” 👍 ลองพูดตามนะครับ
 Hint: (none)
 Choices: 👍 It's cheap → "It's cheap."
          💎 It's expensive → "It's expensive."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.15 s
+response time : 1.23 s
 Reply: ยังไม่ตรงครับ ลองใช้ “It's cheap” หรือ “It's expensive” ครับ
 
 Step 6
@@ -332,18 +332,18 @@ Choices: 👍 It's cheap → "It's cheap."
          💎 It's expensive → "It's expensive."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 139.03 ms
+response time : 158.80 ms
 Reply: ตรงนี้พูดว่า "It's cheap." ครับ 👍
-ไปต่อกันเลย — It's ten dollars.
+ไปต่อกันเลย — ถ้าเห็นป้ายราคา $10 คุณจะพูดว่าอะไรครับ? 💵
 
 Step 7
 AI: ตรงนี้พูดว่า "It's cheap." ครับ 👍
-ไปต่อกันเลย — It's ten dollars.
+ไปต่อกันเลย — ถ้าเห็นป้ายราคา $10 คุณจะพูดว่าอะไรครับ? 💵
 Hint: (none)
 Choices: (none)
 User: Good morning.
 Result: incorrect out pool
-response time : 1.27 s
+response time : 1.89 s
 Reply: ยังไม่ตรงครับ เมื่อป้ายราคาเป็น $10 ให้พูดว่า “It's ten dollars.” ครับ
 
 Step 8
@@ -352,18 +352,18 @@ Hint: (none)
 Choices: (none)
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 93.58 ms
+response time : 138.13 ms
 Reply: ตรงนี้พูดว่า "It's ten dollars." ครับ 💵
-ไปต่อกันเลย — Say a price in English.
+ไปต่อกันเลย — ลองบอกราคาสินค้าที่คุณชอบซื้อเป็นภาษาอังกฤษครับ 🛒
 
 Step 9
 AI: ตรงนี้พูดว่า "It's ten dollars." ครับ 💵
-ไปต่อกันเลย — Say a price in English.
+ไปต่อกันเลย — ลองบอกราคาสินค้าที่คุณชอบซื้อเป็นภาษาอังกฤษครับ 🛒
 Hint: (none)
 Choices: (none)
 User: Good morning.
 Result: incorrect out pool
-response time : 1.18 s
+response time : 1.40 s
 Reply: ยังไม่ตรงครับ ลองเริ่มด้วย “It's...” แล้วตามด้วยราคาและคำว่า dollars ครับ
 
 Step 10
@@ -372,10 +372,10 @@ Hint: (none)
 Choices: (none)
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 112.34 ms
+response time : 115.82 ms
 Reply: ตรงนี้พูดได้ว่า "It's ten dollars." ครับ
 
-🎉 จบบทแล้วครับ Nana! วันนี้คุณถามและบอกราคาเป็นภาษาอังกฤษแล้วครับ 🍌
+เรียนครบแล้วครับ Nana ลองทบทวนบทนี้อีกครั้งนะครับ
 
 ────────────────────────────────────────────────────────────────────────
-✅ money_prices scenario 5 complete · 10 turns · 6.89 s
+✅ money_prices scenario 5 complete · 10 turns · 7.94 s

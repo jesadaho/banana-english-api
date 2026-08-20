@@ -2,95 +2,95 @@ SUMMARY
 ================================================================================
 
 polite_expressions
-  ✅ Scenario 1 — 5 steps · 484.62 ms
-  ✅ Scenario 2 — 5 steps · 6.72 s
-  ✅ Scenario 3 — 5 steps · 6.38 s
-  ✅ Scenario 4 — 10 steps · 12.50 s
-  ✅ Scenario 5 — 10 steps · 7.41 s
+  ✅ Scenario 1 — 5 steps · 529.58 ms
+  ✅ Scenario 2 — 5 steps · 7.12 s
+  ✅ Scenario 3 — 5 steps · 6.86 s
+  ✅ Scenario 4 — 10 steps · 7.68 s
+  ✅ Scenario 5 — 10 steps · 7.24 s
 
 meet_people
-  ✅ Scenario 1 — 5 steps · 521.93 ms
-  ✅ Scenario 2 — 5 steps · 6.87 s
-  ✅ Scenario 3 — 5 steps · 7.08 s
-  ✅ Scenario 4 — 10 steps · 7.41 s
-  ✅ Scenario 5 — 10 steps · 14.64 s
+  ✅ Scenario 1 — 5 steps · 553.55 ms
+  ✅ Scenario 2 — 5 steps · 6.97 s
+  ✅ Scenario 3 — 5 steps · 6.29 s
+  ✅ Scenario 4 — 10 steps · 7.36 s
+  ✅ Scenario 5 — 10 steps · 7.43 s
 
 talk_about_groups
-  ✅ Scenario 1 — 5 steps · 960.91 ms
-  ✅ Scenario 2 — 5 steps · 6.52 s
-  ✅ Scenario 3 — 5 steps · 7.60 s
-  ✅ Scenario 4 — 10 steps · 7.01 s
-  ✅ Scenario 5 — 10 steps · 7.83 s
+  ✅ Scenario 1 — 5 steps · 507.29 ms
+  ✅ Scenario 2 — 5 steps · 6.41 s
+  ✅ Scenario 3 — 5 steps · 7.51 s
+  ✅ Scenario 4 — 10 steps · 6.88 s
+  ✅ Scenario 5 — 10 steps · 7.65 s
 
 ee_about_me_family
-  ✅ Scenario 1 — 8 steps · 1.42 s
-  ✅ Scenario 2 — 8 steps · 10.97 s
-  ✅ Scenario 3 — 8 steps · 11.20 s
-  ✅ Scenario 4 — 16 steps · 11.45 s
-  ✅ Scenario 5 — 16 steps · 11.75 s
+  ✅ Scenario 1 — 8 steps · 806.16 ms
+  ✅ Scenario 2 — 8 steps · 11.53 s
+  ✅ Scenario 3 — 8 steps · 11.72 s
+  ✅ Scenario 4 — 16 steps · 12.87 s
+  ✅ Scenario 5 — 16 steps · 13.90 s
 
 numbers
-  ✅ Scenario 1 — 5 steps · 512.79 ms
-  ✅ Scenario 2 — 5 steps · 6.37 s
-  ✅ Scenario 3 — 5 steps · 6.63 s
-  ✅ Scenario 4 — 10 steps · 7.32 s
-  ✅ Scenario 5 — 10 steps · 7.13 s
+  ✅ Scenario 1 — 5 steps · 588.96 ms
+  ✅ Scenario 2 — 5 steps · 6.41 s
+  ✅ Scenario 3 — 5 steps · 7.33 s
+  ✅ Scenario 4 — 10 steps · 6.85 s
+  ✅ Scenario 5 — 10 steps · 8.04 s
 
 telling_time
-  ✅ Scenario 1 — 5 steps · 564.60 ms
-  ✅ Scenario 2 — 5 steps · 6.64 s
-  ✅ Scenario 3 — 5 steps · 6.81 s
-  ✅ Scenario 4 — 10 steps · 7.32 s
-  ✅ Scenario 5 — 10 steps · 8.64 s
+  ✅ Scenario 1 — 5 steps · 509.91 ms
+  ✅ Scenario 2 — 5 steps · 7.28 s
+  ✅ Scenario 3 — 5 steps · 8.45 s
+  ✅ Scenario 4 — 10 steps · 7.68 s
+  ✅ Scenario 5 — 10 steps · 7.98 s
 
 everyday_numbers
-  ✅ Scenario 1 — 5 steps · 485.32 ms
-  ✅ Scenario 2 — 5 steps · 6.39 s
-  ✅ Scenario 3 — 5 steps · 6.30 s
-  ✅ Scenario 4 — 10 steps · 6.45 s
-  ✅ Scenario 5 — 10 steps · 9.28 s
+  ✅ Scenario 1 — 5 steps · 540.33 ms
+  ✅ Scenario 2 — 5 steps · 6.68 s
+  ✅ Scenario 3 — 5 steps · 7.00 s
+  ✅ Scenario 4 — 10 steps · 7.59 s
+  ✅ Scenario 5 — 10 steps · 7.65 s
 
 money_prices
-  ✅ Scenario 1 — 5 steps · 466.48 ms
-  ✅ Scenario 2 — 5 steps · 5.83 s
-  ✅ Scenario 3 — 5 steps · 6.41 s
-  ✅ Scenario 4 — 10 steps · 6.65 s
-  ✅ Scenario 5 — 10 steps · 6.89 s
+  ✅ Scenario 1 — 5 steps · 566.60 ms
+  ✅ Scenario 2 — 5 steps · 6.52 s
+  ✅ Scenario 3 — 5 steps · 7.36 s
+  ✅ Scenario 4 — 10 steps · 7.57 s
+  ✅ Scenario 5 — 10 steps · 7.94 s
 
 likes_dislikes
-  ✅ Scenario 1 — 5 steps · 490.39 ms
-  ✅ Scenario 2 — 5 steps · 5.89 s
-  ✅ Scenario 3 — 5 steps · 5.97 s
-  ✅ Scenario 4 — 10 steps · 6.29 s
-  ✅ Scenario 5 — 10 steps · 7.00 s
+  ✅ Scenario 1 — 5 steps · 521.49 ms
+  ✅ Scenario 2 — 5 steps · 6.59 s
+  ✅ Scenario 3 — 5 steps · 7.23 s
+  ✅ Scenario 4 — 10 steps · 7.69 s
+  ✅ Scenario 5 — 10 steps · 7.66 s
 
 wants_needs
-  ✅ Scenario 1 — 5 steps · 507.90 ms
-  ✅ Scenario 2 — 5 steps · 5.78 s
-  ✅ Scenario 3 — 5 steps · 5.43 s
-  ✅ Scenario 4 — 10 steps · 6.19 s
-  ✅ Scenario 5 — 10 steps · 8.21 s
+  ✅ Scenario 1 — 5 steps · 557.93 ms
+  ✅ Scenario 2 — 5 steps · 6.65 s
+  ✅ Scenario 3 — 5 steps · 6.66 s
+  ✅ Scenario 4 — 10 steps · 8.33 s
+  ✅ Scenario 5 — 10 steps · 7.98 s
 
 can_cant
-  ✅ Scenario 1 — 4 steps · 338.85 ms
-  ✅ Scenario 2 — 4 steps · 4.59 s
-  ✅ Scenario 3 — 4 steps · 4.63 s
-  ✅ Scenario 4 — 8 steps · 5.21 s
-  ✅ Scenario 5 — 8 steps · 10.58 s
+  ✅ Scenario 1 — 4 steps · 463.74 ms
+  ✅ Scenario 2 — 4 steps · 5.20 s
+  ✅ Scenario 3 — 4 steps · 5.33 s
+  ✅ Scenario 4 — 8 steps · 5.77 s
+  ✅ Scenario 5 — 8 steps · 6.19 s
 
 asking_for_help
-  ✅ Scenario 1 — 4 steps · 557.46 ms
-  ✅ Scenario 2 — 4 steps · 5.36 s
-  ✅ Scenario 3 — 4 steps · 4.49 s
-  ✅ Scenario 4 — 8 steps · 5.40 s
-  ✅ Scenario 5 — 8 steps · 5.45 s
+  ✅ Scenario 1 — 4 steps · 413.78 ms
+  ✅ Scenario 2 — 4 steps · 5.22 s
+  ✅ Scenario 3 — 4 steps · 5.69 s
+  ✅ Scenario 4 — 8 steps · 6.04 s
+  ✅ Scenario 5 — 8 steps · 6.01 s
 
 asking_questions
-  ✅ Scenario 1 — 5 steps · 567.64 ms
-  ✅ Scenario 2 — 5 steps · 5.44 s
-  ✅ Scenario 3 — 5 steps · 9.65 s
-  ✅ Scenario 4 — 10 steps · 7.59 s
-  ✅ Scenario 5 — 10 steps · 6.27 s
+  ✅ Scenario 1 — 5 steps · 493.19 ms
+  ✅ Scenario 2 — 5 steps · 6.81 s
+  ✅ Scenario 3 — 5 steps · 7.03 s
+  ✅ Scenario 4 — 10 steps · 8.06 s
+  ✅ Scenario 5 — 10 steps · 7.58 s
 
 Total: 65/65 passed
 

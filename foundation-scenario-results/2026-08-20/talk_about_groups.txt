@@ -10,7 +10,7 @@ Hint: (none)
 Choices: (none)
 User: He is my father.
 Result: correct in pool
-response time : 104.23 ms
+response time : 78.90 ms
 Reply: เก่งมากครับ! ถ้าเป็นผู้หญิง — She is my sister. 👩 ลองพูดตามครับ
 
 Step 2
@@ -19,7 +19,7 @@ Hint: (none)
 Choices: 👩 She is my sister. → "She is my sister."
 User: She is my sister.
 Result: correct in pool
-response time : 95.18 ms
+response time : 95.58 ms
 Reply: ดีมากครับ! She is my sister. แปลว่า “เธอคือพี่สาวหรือน้องสาวของฉัน” ต่อไป ถ้าพูดถึงสิ่งของ เราใช้ It ครับ — It is my bag. 🎒 ลองพูดตามนะครับ
 
 Step 3
@@ -30,7 +30,7 @@ Choices: 👨 He is my father. → "He is my father."
          🎒 It is my bag. → "It is my bag."
 User: It is my bag.
 Result: correct in pool
-response time : 562.94 ms
+response time : 88.39 ms
 Reply: ดีมากครับ! It is my bag. แปลว่า “มันคือกระเป๋าของฉัน” ถ้าจะพูดถึงกระเป๋าของคุณ ควรเลือกประโยคไหนครับ? 🎒
 
 Step 4
@@ -41,7 +41,7 @@ Choices: 👨 He is my father. → "He is my father."
          🎒 It is my bag. → "It is my bag."
 User: It is my bag.
 Result: correct in pool
-response time : 89.81 ms
+response time : 98.84 ms
 Reply: ลองพูดประโยคสั้นๆ เกี่ยวกับคนหรือสิ่งของครับ 😊
 
 Step 5
@@ -50,11 +50,11 @@ Hint: (none)
 Choices: (none)
 User: He is my father.
 Result: correct in pool
-response time : 108.74 ms
+response time : 145.58 ms
 Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณพูด He is..., She is... และ It is... ได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ talk_about_groups scenario 1 complete · 5 turns · 960.91 ms
+✅ talk_about_groups scenario 1 complete · 5 turns · 507.29 ms
 
 ================================================================================
 talk_about_groups — Scenario 2 — out-pool correct ทุก step → จบบท
@@ -67,51 +67,51 @@ Hint: (none)
 Choices: (none)
 User: He is my father....
 Result: correct out pool
-response time : 1.35 s
-Reply: เยี่ยมครับ! เก่งมากครับ! ถ้าเป็นผู้หญิง — She is my sister. 👩 ลองพูดตามครับ
+response time : 1.36 s
+Reply: ถูกต้องครับ! ถ้าเป็นผู้หญิง — She is my sister. 👩 ลองพูดตามครับ
 
 Step 2
-AI: เยี่ยมครับ! เก่งมากครับ! ถ้าเป็นผู้หญิง — She is my sister. 👩 ลองพูดตามครับ
+AI: ถูกต้องครับ! ถ้าเป็นผู้หญิง — She is my sister. 👩 ลองพูดตามครับ
 Hint: (none)
 Choices: 👩 She is my sister. → "She is my sister."
 User: She is my sister....
 Result: correct out pool
-response time : 1.27 s
-Reply: ดีมากครับ! ดีมากครับ! She is my sister. แปลว่า “เธอคือพี่สาวหรือน้องสาวของฉัน” ต่อไป ถ้าพูดถึงสิ่งของ เราใช้ It ครับ — It is my bag. 🎒 ลองพูดตามนะครับ
+response time : 1.33 s
+Reply: ดีมากครับ! She is my sister. แปลว่า “เธอคือพี่สาวหรือน้องสาวของฉัน” ต่อไป ถ้าพูดถึงสิ่งของ เราใช้ It ครับ — It is my bag. 🎒 ลองพูดตามนะครับ
 
 Step 3
-AI: ดีมากครับ! ดีมากครับ! She is my sister. แปลว่า “เธอคือพี่สาวหรือน้องสาวของฉัน” ต่อไป ถ้าพูดถึงสิ่งของ เราใช้ It ครับ — It is my bag. 🎒 ลองพูดตามนะครับ
+AI: ดีมากครับ! She is my sister. แปลว่า “เธอคือพี่สาวหรือน้องสาวของฉัน” ต่อไป ถ้าพูดถึงสิ่งของ เราใช้ It ครับ — It is my bag. 🎒 ลองพูดตามนะครับ
 Hint: (none)
 Choices: 👨 He is my father. → "He is my father."
          👩 She is my sister. → "She is my sister."
          🎒 It is my bag. → "It is my bag."
 User: It is my bag....
 Result: correct out pool
-response time : 1.34 s
-Reply: ดีมากครับ! ดีมากครับ! It is my bag. แปลว่า “มันคือกระเป๋าของฉัน” ถ้าจะพูดถึงกระเป๋าของคุณ ควรเลือกประโยคไหนครับ? 🎒
+response time : 1.24 s
+Reply: ถูกต้องครับ! It is my bag. แปลว่า “มันคือกระเป๋าของฉัน” ถ้าจะพูดถึงกระเป๋าของคุณ ควรเลือกประโยคไหนครับ? 🎒
 
 Step 4
-AI: ดีมากครับ! ดีมากครับ! It is my bag. แปลว่า “มันคือกระเป๋าของฉัน” ถ้าจะพูดถึงกระเป๋าของคุณ ควรเลือกประโยคไหนครับ? 🎒
+AI: ถูกต้องครับ! It is my bag. แปลว่า “มันคือกระเป๋าของฉัน” ถ้าจะพูดถึงกระเป๋าของคุณ ควรเลือกประโยคไหนครับ? 🎒
 Hint: (none)
 Choices: 👨 He is my father. → "He is my father."
          👩 She is my sister. → "She is my sister."
          🎒 It is my bag. → "It is my bag."
 User: It is my bag....
 Result: correct out pool
-response time : 1.34 s
-Reply: ดีมากครับ! ลองพูดประโยคสั้นๆ เกี่ยวกับคนหรือสิ่งของครับ 😊
+response time : 1.25 s
+Reply: เยี่ยมครับ! ลองพูดประโยคสั้นๆ เกี่ยวกับคนหรือสิ่งของครับ 😊
 
 Step 5
-AI: ดีมากครับ! ลองพูดประโยคสั้นๆ เกี่ยวกับคนหรือสิ่งของครับ 😊
+AI: เยี่ยมครับ! ลองพูดประโยคสั้นๆ เกี่ยวกับคนหรือสิ่งของครับ 😊
 Hint: (none)
 Choices: (none)
 User: He is my father....
 Result: correct out pool
-response time : 1.22 s
-Reply: ดีมากครับ! สุดยอดครับ Nana! 🎉 วันนี้คุณพูด He is..., She is... และ It is... ได้แล้ว 🍌
+response time : 1.23 s
+Reply: เยี่ยมครับ! Nana! 🎉 วันนี้คุณพูด He is..., She is... และ It is... ได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ talk_about_groups scenario 2 complete · 5 turns · 6.52 s
+✅ talk_about_groups scenario 2 complete · 5 turns · 6.41 s
 
 ================================================================================
 talk_about_groups — Scenario 3 — out-pool close ทุก step → จบบท
@@ -124,7 +124,7 @@ Hint: (none)
 Choices: (none)
 User: He my father.
 Result: close out pool
-response time : 1.20 s
+response time : 1.30 s
 Reply: เกือบถูกแล้วครับ! พูดว่า He is my father. 👨
 ต่อไปถ้าเป็นผู้หญิง — She is my sister. 👩 ลองพูดตามครับ
 
@@ -135,7 +135,7 @@ Hint: (none)
 Choices: 👩 She is my sister. → "She is my sister."
 User: She my sister.
 Result: close out pool
-response time : 1.15 s
+response time : 1.33 s
 Reply: เกือบถูกแล้วครับ! พูดว่า She is my sister. 👩
 She is my sister. แปลว่า “เธอคือพี่สาวหรือน้องสาวของฉัน” ต่อไป ถ้าพูดถึงสิ่งของ เราใช้ It ครับ — It is my bag. 🎒 ลองพูดตามนะครับ
 
@@ -148,7 +148,7 @@ Choices: 👨 He is my father. → "He is my father."
          🎒 It is my bag. → "It is my bag."
 User: It my bag.
 Result: close out pool
-response time : 1.59 s
+response time : 1.85 s
 Reply: เกือบถูกแล้วครับ! พูดว่า It is my bag. 🎒
 It is my bag. แปลว่า “มันคือกระเป๋าของฉัน” ถ้าจะพูดถึงกระเป๋าของคุณ ควรเลือกประโยคไหนครับ? 🎒
 
@@ -161,7 +161,7 @@ Choices: 👨 He is my father. → "He is my father."
          🎒 It is my bag. → "It is my bag."
 User: It my bag.
 Result: close out pool
-response time : 2.03 s
+response time : 1.57 s
 Reply: เกือบถูกแล้วครับ! พูดว่า It is my bag. 🎒
 ลองพูดประโยคสั้นๆ เกี่ยวกับคนหรือสิ่งของครับ 😊
 
@@ -172,12 +172,12 @@ Hint: (none)
 Choices: (none)
 User: He my father.
 Result: close out pool
-response time : 1.63 s
+response time : 1.46 s
 Reply: เกือบถูกแล้วครับ! พูดว่า He is my father.
 สุดยอดครับ Nana! 🎉 วันนี้คุณพูด He is..., She is... และ It is... ได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ talk_about_groups scenario 3 complete · 5 turns · 7.60 s
+✅ talk_about_groups scenario 3 complete · 5 turns · 7.51 s
 
 ================================================================================
 talk_about_groups — Scenario 4 — out-pool wrong + in-pool พูดตาม recovery → จบบท
@@ -190,16 +190,16 @@ Hint: (none)
 Choices: (none)
 User: Good morning.
 Result: incorrect out pool
-response time : 1.23 s
-Reply: ยังไม่ใช่ครับ Nana ลองพูดว่า "He is my father." อีกครั้งนะครับ ลองพูดตามนะครับ
+response time : 1.39 s
+Reply: ยังไม่ถูกต้องครับ ลองพูดว่า "He is my father." อีกครั้งนะครับ ลองพูดตามนะครับ
 
 Step 2
-AI: ยังไม่ใช่ครับ Nana ลองพูดว่า "He is my father." อีกครั้งนะครับ ลองพูดตามนะครับ
+AI: ยังไม่ถูกต้องครับ ลองพูดว่า "He is my father." อีกครั้งนะครับ ลองพูดตามนะครับ
 Hint: (none)
 Choices: (none)
 User: He is my father.
 Result: correct in pool
-response time : 93.62 ms
+response time : 101.12 ms
 Reply: เก่งมากครับ! ถ้าเป็นผู้หญิง — She is my sister. 👩 ลองพูดตามครับ
 
 Step 3
@@ -208,16 +208,16 @@ Hint: (none)
 Choices: 👩 She is my sister. → "She is my sister."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.23 s
-Reply: ยังไม่ถูกครับ Nana ลองพูดว่า "She is my sister." อีกครั้งนะครับ ลองพูดตามนะครับ
+response time : 1.14 s
+Reply: ยังไม่ถูกต้องครับ ลองพูดว่า "She is my sister." อีกครั้งนะครับ ลองพูดตามนะครับ
 
 Step 4
-AI: ยังไม่ถูกครับ Nana ลองพูดว่า "She is my sister." อีกครั้งนะครับ ลองพูดตามนะครับ
+AI: ยังไม่ถูกต้องครับ ลองพูดว่า "She is my sister." อีกครั้งนะครับ ลองพูดตามนะครับ
 Hint: (none)
 Choices: 👩 She is my sister. → "She is my sister."
 User: She is my sister.
 Result: correct in pool
-response time : 93.11 ms
+response time : 109.68 ms
 Reply: ดีมากครับ! She is my sister. แปลว่า “เธอคือพี่สาวหรือน้องสาวของฉัน” ต่อไป ถ้าพูดถึงสิ่งของ เราใช้ It ครับ — It is my bag. 🎒 ลองพูดตามนะครับ
 
 Step 5
@@ -228,18 +228,18 @@ Choices: 👨 He is my father. → "He is my father."
          🎒 It is my bag. → "It is my bag."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.37 s
-Reply: ยังไม่ถูกครับ Nana ลองพูดว่า "It is my bag." อีกครั้งนะครับ ลองพูดตามนะครับ
+response time : 1.32 s
+Reply: ยังไม่ถูกต้องครับ ลองพูดว่า "It is my bag." อีกครั้งนะครับ ลองพูดตามนะครับ
 
 Step 6
-AI: ยังไม่ถูกครับ Nana ลองพูดว่า "It is my bag." อีกครั้งนะครับ ลองพูดตามนะครับ
+AI: ยังไม่ถูกต้องครับ ลองพูดว่า "It is my bag." อีกครั้งนะครับ ลองพูดตามนะครับ
 Hint: (none)
 Choices: 👨 He is my father. → "He is my father."
          👩 She is my sister. → "She is my sister."
          🎒 It is my bag. → "It is my bag."
 User: It is my bag.
 Result: correct in pool
-response time : 139.97 ms
+response time : 102.14 ms
 Reply: ดีมากครับ! It is my bag. แปลว่า “มันคือกระเป๋าของฉัน” ถ้าจะพูดถึงกระเป๋าของคุณ ควรเลือกประโยคไหนครับ? 🎒
 
 Step 7
@@ -250,7 +250,7 @@ Choices: 👨 He is my father. → "He is my father."
          🎒 It is my bag. → "It is my bag."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.24 s
+response time : 1.15 s
 Reply: ยังไม่ตรงครับ เมื่อพูดถึงกระเป๋า ให้พูดว่า “It is my bag.” ครับ
 
 Step 8
@@ -261,7 +261,7 @@ Choices: 👨 He is my father. → "He is my father."
          🎒 It is my bag. → "It is my bag."
 User: It is my bag.
 Result: correct in pool
-response time : 122.11 ms
+response time : 89.33 ms
 Reply: ลองพูดประโยคสั้นๆ เกี่ยวกับคนหรือสิ่งของครับ 😊
 
 Step 9
@@ -279,11 +279,11 @@ Hint: (none)
 Choices: (none)
 User: He is my father.
 Result: correct in pool
-response time : 96.56 ms
-Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณพูด He is..., She is... และ It is... ได้แล้ว 🍌
+response time : 103.31 ms
+Reply: เรียนครบแล้วครับ Nana คุณทำบทเรียนจบโดยได้รับคำแนะนำบางส่วน ลองฝึกอีกครั้งเพื่อให้คล่องขึ้นนะครับ
 
 ────────────────────────────────────────────────────────────────────────
-✅ talk_about_groups scenario 4 complete · 10 turns · 7.01 s
+✅ talk_about_groups scenario 4 complete · 10 turns · 6.88 s
 
 ================================================================================
 talk_about_groups — Scenario 5 — out-pool wrong + พูดตามผิดอีกครั้ง → soft-advance → จบบท
@@ -296,73 +296,73 @@ Hint: (none)
 Choices: (none)
 User: Good morning.
 Result: incorrect out pool
-response time : 1.22 s
-Reply: ยังไม่ถูกต้องครับ ลองพูดว่า "He is my father." อีกครั้งนะครับ ลองพูดตามนะครับ
+response time : 1.29 s
+Reply: ยังไม่ใช่ครับ Nana ลองพูดว่า "He is my father." อีกครั้งนะครับ ลองพูดตามนะครับ
 
 Step 2
-AI: ยังไม่ถูกต้องครับ ลองพูดว่า "He is my father." อีกครั้งนะครับ ลองพูดตามนะครับ
+AI: ยังไม่ใช่ครับ Nana ลองพูดว่า "He is my father." อีกครั้งนะครับ ลองพูดตามนะครับ
 Hint: (none)
 Choices: (none)
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 147.66 ms
+response time : 104.86 ms
 Reply: ตรงนี้พูดว่า "He is my father." ครับ 👨
-ไปต่อกันเลย — เก่งมากครับ! ถ้าเป็นผู้หญิง — She is my sister. 👩 ลองพูดตามครับ
+ไปต่อกันเลย — ถ้าเป็นผู้หญิง — She is my sister. 👩 ลองพูดตามครับ
 
 Step 3
 AI: ตรงนี้พูดว่า "He is my father." ครับ 👨
-ไปต่อกันเลย — เก่งมากครับ! ถ้าเป็นผู้หญิง — She is my sister. 👩 ลองพูดตามครับ
+ไปต่อกันเลย — ถ้าเป็นผู้หญิง — She is my sister. 👩 ลองพูดตามครับ
 Hint: (none)
 Choices: 👩 She is my sister. → "She is my sister."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.33 s
-Reply: ยังไม่ถูกครับ ลองพูดว่า "She is my sister." นะครับ ลองพูดตามอีกครั้งครับ
+response time : 1.48 s
+Reply: ยังไม่ถูกครับ Nana ลองพูดว่า "She is my sister." อีกครั้งนะครับ ลองพูดตามนะครับ
 
 Step 4
-AI: ยังไม่ถูกครับ ลองพูดว่า "She is my sister." นะครับ ลองพูดตามอีกครั้งครับ
+AI: ยังไม่ถูกครับ Nana ลองพูดว่า "She is my sister." อีกครั้งนะครับ ลองพูดตามนะครับ
 Hint: (none)
 Choices: 👩 She is my sister. → "She is my sister."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 245.46 ms
+response time : 127.51 ms
 Reply: ตรงนี้พูดว่า "She is my sister." ครับ 👩
-ไปต่อกันเลย — ดีมากครับ! She is my sister. แปลว่า “เธอคือพี่สาวหรือน้องสาวของฉัน” ต่อไป ถ้าพูดถึงสิ่งของ เราใช้ It ครับ — It is my bag. 🎒 ลองพูดตามนะครับ
+ไปต่อกันเลย — She is my sister. แปลว่า “เธอคือพี่สาวหรือน้องสาวของฉัน” ต่อไป ถ้าพูดถึงสิ่งของ เราใช้ It ครับ — It is my bag. 🎒 ลองพูดตามนะครับ
 
 Step 5
 AI: ตรงนี้พูดว่า "She is my sister." ครับ 👩
-ไปต่อกันเลย — ดีมากครับ! She is my sister. แปลว่า “เธอคือพี่สาวหรือน้องสาวของฉัน” ต่อไป ถ้าพูดถึงสิ่งของ เราใช้ It ครับ — It is my bag. 🎒 ลองพูดตามนะครับ
+ไปต่อกันเลย — She is my sister. แปลว่า “เธอคือพี่สาวหรือน้องสาวของฉัน” ต่อไป ถ้าพูดถึงสิ่งของ เราใช้ It ครับ — It is my bag. 🎒 ลองพูดตามนะครับ
 Hint: (none)
 Choices: 👨 He is my father. → "He is my father."
          👩 She is my sister. → "She is my sister."
          🎒 It is my bag. → "It is my bag."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.45 s
-Reply: ยังไม่ถูกต้องครับ ลองพูดว่า "It is my bag." นะครับ ลองพูดตามอีกครั้งครับ
+response time : 1.50 s
+Reply: ยังไม่ถูกครับ Nana ลองพูดว่า "It is my bag." อีกครั้งนะครับ ลองพูดตามนะครับ
 
 Step 6
-AI: ยังไม่ถูกต้องครับ ลองพูดว่า "It is my bag." นะครับ ลองพูดตามอีกครั้งครับ
+AI: ยังไม่ถูกครับ Nana ลองพูดว่า "It is my bag." อีกครั้งนะครับ ลองพูดตามนะครับ
 Hint: (none)
 Choices: 👨 He is my father. → "He is my father."
          👩 She is my sister. → "She is my sister."
          🎒 It is my bag. → "It is my bag."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 116.19 ms
+response time : 108.83 ms
 Reply: ตรงนี้พูดว่า "It is my bag." ครับ 🎒
-ไปต่อกันเลย — It is my bag. แปลว่า “มันคือกระเป๋าของฉัน” ถ้าจะพูดถึงกระเป๋าของคุณ ควรเลือกประโยคไหนครับ?
+ไปต่อกันเลย — It is my bag. แปลว่า “มันคือกระเป๋าของฉัน” ถ้าจะพูดถึงกระเป๋าของคุณ ควรเลือกประโยคไหนครับ? 🎒
 
 Step 7
 AI: ตรงนี้พูดว่า "It is my bag." ครับ 🎒
-ไปต่อกันเลย — It is my bag. แปลว่า “มันคือกระเป๋าของฉัน” ถ้าจะพูดถึงกระเป๋าของคุณ ควรเลือกประโยคไหนครับ?
+ไปต่อกันเลย — It is my bag. แปลว่า “มันคือกระเป๋าของฉัน” ถ้าจะพูดถึงกระเป๋าของคุณ ควรเลือกประโยคไหนครับ? 🎒
 Hint: (none)
 Choices: 👨 He is my father. → "He is my father."
          👩 She is my sister. → "She is my sister."
          🎒 It is my bag. → "It is my bag."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.31 s
+response time : 1.40 s
 Reply: ยังไม่ตรงครับ เมื่อพูดถึงกระเป๋า ให้พูดว่า “It is my bag.” ครับ
 
 Step 8
@@ -373,18 +373,18 @@ Choices: 👨 He is my father. → "He is my father."
          🎒 It is my bag. → "It is my bag."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 160.49 ms
+response time : 107.11 ms
 Reply: ตรงนี้พูดว่า "It is my bag." ครับ 🎒
-ไปต่อกันเลย — Say a sentence about someone or something.
+ไปต่อกันเลย — ลองพูดประโยคสั้นๆ เกี่ยวกับคนหรือสิ่งของครับ 😊
 
 Step 9
 AI: ตรงนี้พูดว่า "It is my bag." ครับ 🎒
-ไปต่อกันเลย — Say a sentence about someone or something.
+ไปต่อกันเลย — ลองพูดประโยคสั้นๆ เกี่ยวกับคนหรือสิ่งของครับ 😊
 Hint: (none)
 Choices: (none)
 User: Good morning.
 Result: incorrect out pool
-response time : 1.73 s
+response time : 1.42 s
 Reply: ยังไม่ตรงครับ ลองเริ่มด้วย “He is...”, “She is...” หรือ “It is...” แล้วพูดต่อให้ครบประโยคครับ
 
 Step 10
@@ -393,10 +393,10 @@ Hint: (none)
 Choices: (none)
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 132.27 ms
+response time : 118.87 ms
 Reply: ตรงนี้พูดได้ว่า "He is my father." ครับ
 
-🎉 จบบทแล้วครับ Nana! วันนี้คุณพูด He is..., She is... และ It is... แล้วครับ 🍌
+เรียนครบแล้วครับ Nana ลองทบทวนบทนี้อีกครั้งนะครับ
 
 ────────────────────────────────────────────────────────────────────────
-✅ talk_about_groups scenario 5 complete · 10 turns · 7.83 s
+✅ talk_about_groups scenario 5 complete · 10 turns · 7.65 s

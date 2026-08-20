@@ -82,10 +82,14 @@ export const FOUNDATION_LOOSE_MATCHERS: Record<
     }),
   numbers: (step, text) =>
     loose(step, text, {
-      1: /^(zero|one|two|three|four|five)$/,
-      2: /^(six|seven|eight|nine|ten)$/,
-      4: /^(eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen)$/,
-      5: /^twenty$/,
+      1: /^three$/,
+      2: /^four$/,
+      3: /^eight$/,
+      4: /^seven$/,
+      5: /^thirteen$/,
+      6: /^fourteen$/,
+      7: /^eighteen$/,
+      8: /^twenty$/,
     }),
   telling_time: (step, text) =>
     loose(step, text, {
@@ -173,7 +177,14 @@ export const FOUNDATION_CLOSE_MATCHERS: Partial<
     7: /^i have two sister$/, 8: /^this my father$/,
   }),
   numbers: (step, text) => loose(step, text, {
-    1: /^tree$/, 2: /^ate$/, 3: /^seben$/, 4: /^six teen$/, 5: /^twentee$/,
+    1: /^tree$/,
+    2: /^for$/,
+    3: /^ate$/,
+    4: /^seben$/,
+    5: /^thir teen$/,
+    6: /^four teen$/,
+    7: /^eight teen$/,
+    8: /^twentee$/,
   }),
   telling_time: (step, text) => loose(step, text, {
     1: /^it['’]?s six clock$/, 2: /^it['’]?s seven thirty clock$/,
@@ -772,7 +783,7 @@ export const FOUNDATION_BOARDS: Record<
   numbers: {
     1: {
       textEn:
-        'สวัสดีครับ {name}! วันนี้เรามาเรียนตัวเลข 0–20 กันครับ 🔢 เลข 3 อ่านว่า three — ลองพูดตามนะครับ',
+        'สวัสดีครับ {name}! วันนี้เราจะฝึกตัวเลข 0–20 กันครับ 🔢 เริ่มจาก 0–5: 0 zero, 1 one, 2 two, 3 three, 4 four, 5 five ลองพูดตามคำว่า “three” ครับ',
       withPraise: false,
       stem: '',
       expectedSpeech: 'three',
@@ -780,45 +791,75 @@ export const FOUNDATION_BOARDS: Record<
     },
     2: {
       textEn:
-        'เก่งมากครับ! เลข 8 อ่านว่า eight ⏰ ลองพูดตามครับ',
+        'เก่งมากครับ! ลองเช็กเลขกลุ่มแรกนะครับ มีแอปเปิลกี่ลูก? 🍎🍎🍎🍎',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'four',
+      incorrectHintTh: 'ลองนับอีกครั้งนะครับ มี 4 ลูก เลข 4 อ่านว่า “four” ครับ',
+      options: [
+        { emoji: '2️⃣', label: 'two', speak: 'two' },
+        { emoji: '4️⃣', label: 'four', speak: 'four' },
+        { emoji: '5️⃣', label: 'five', speak: 'five' },
+      ],
+    },
+    3: {
+      textEn:
+        'ต่อไป 6–10 ครับ: 6 six, 7 seven, 8 eight, 9 nine, 10 ten ลองพูดตามคำว่า “eight” ครับ',
       withPraise: true,
       stem: '',
       expectedSpeech: 'eight',
       options: [{ emoji: '8️⃣', label: 'eight', speak: 'eight' }],
     },
-    3: {
-      textEn: 'เลข 7 อ่านว่าอะไรครับ? 7️⃣',
+    4: {
+      textEn: 'บัตรคิวของคุณคือหมายเลขอะไรครับ? 🎫 7',
       withPraise: true,
       stem: '',
       expectedSpeech: 'seven',
       incorrectHintTh: 'ยังไม่ตรงครับ คำอ่านเลข 7 ขึ้นต้นด้วยเสียง /s/ ครับ',
       options: [
-        { emoji: '5️⃣', label: 'five', speak: 'five' },
+        { emoji: '6️⃣', label: 'six', speak: 'six' },
         { emoji: '7️⃣', label: 'seven', speak: 'seven' },
-        { emoji: '3️⃣', label: 'three', speak: 'three' },
         { emoji: '9️⃣', label: 'nine', speak: 'nine' },
+        { emoji: '🔟', label: 'ten', speak: 'ten' },
       ],
     },
-    4: {
+    5: {
       textEn:
-        'ต่อไปเลข 11–19 ส่วนใหญ่ลงท้าย -teen ครับ เลข 16 อ่านว่า sixteen 🔢 ลองพูดตามนะครับ',
+        'ต่อไป 11–15 ครับ: 11 eleven, 12 twelve, 13 thirteen, 14 fourteen, 15 fifteen ตั้งแต่ 13 จะเริ่มได้ยินเสียง -teen ลองพูดตามคำว่า “thirteen” ครับ',
       withPraise: true,
       stem: '',
-      expectedSpeech: 'sixteen',
-      options: [{ emoji: '🔢', label: 'sixteen', speak: 'sixteen' }],
+      expectedSpeech: 'thirteen',
+      options: [{ emoji: '1️⃣3️⃣', label: 'thirteen', speak: 'thirteen' }],
     },
-    5: {
-      textEn: 'เลข 20 อ่านว่าอะไรครับ? 2️⃣0️⃣',
-      advanceQuestionEn: 'How do you say twenty?',
+    6: {
+      textEn: 'หมายเลขห้องนี้อ่านว่าอะไรครับ? 🚪 14',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'fourteen',
+      incorrectHintTh: 'เลขนี้ขึ้นต้นด้วย four และลงท้ายด้วยเสียง -teen ครับ',
+      options: [
+        { emoji: '1️⃣2️⃣', label: 'twelve', speak: 'twelve' },
+        { emoji: '1️⃣3️⃣', label: 'thirteen', speak: 'thirteen' },
+        { emoji: '1️⃣4️⃣', label: 'fourteen', speak: 'fourteen' },
+        { emoji: '1️⃣5️⃣', label: 'fifteen', speak: 'fifteen' },
+      ],
+    },
+    7: {
+      textEn:
+        'กลุ่มสุดท้ายครับ: 16 sixteen, 17 seventeen, 18 eighteen, 19 nineteen, 20 twenty ระวังว่า 20 ลงท้ายด้วยเสียง -ty ลองพูดตามคำว่า “eighteen” ครับ',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'eighteen',
+      options: [{ emoji: '1️⃣8️⃣', label: 'eighteen', speak: 'eighteen' }],
+    },
+    8: {
+      textEn: 'ขั้นตอนสุดท้ายครับ รถเมล์สายนี้คือหมายเลขอะไร? 🚌 20',
+      advanceQuestionEn: 'รถเมล์สายนี้คือหมายเลขอะไรครับ? 🚌 20',
       withPraise: true,
       stem: '',
       expectedSpeech: 'twenty',
-      incorrectHintTh: 'ยังไม่ตรงครับ เลขหลักสิบคำนี้ลงท้ายด้วยเสียง “-ty” ครับ',
-      options: [
-        { emoji: '1️⃣2️⃣', label: 'twelve', speak: 'twelve' },
-        { emoji: '2️⃣0️⃣', label: 'twenty', speak: 'twenty' },
-        { emoji: '2️⃣', label: 'two', speak: 'two' },
-      ],
+      incorrectHintTh: 'เลข 20 อ่านว่า “twenty” และลงท้ายด้วยเสียง -ty ครับ',
+      options: [],
     },
   },
 
@@ -1286,7 +1327,7 @@ export const FOUNDATION_MAX_STEPS: Record<FoundationLessonId, number> = {
   meet_people: 5,
   talk_about_groups: 5,
   ee_about_me_family: 8,
-  numbers: 5,
+  numbers: 8,
   telling_time: 5,
   everyday_numbers: 5,
   money_prices: 5,

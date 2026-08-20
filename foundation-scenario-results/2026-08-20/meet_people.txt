@@ -10,7 +10,7 @@ Hint: (none)
 Choices: 🙋 I am → "I am Nana."
 User: I am Nana.
 Result: correct in pool
-response time : 85.41 ms
+response time : 108.03 ms
 Reply: ถ้าจะบอกว่าเป็นนักเรียน — I am a student. 🎓 ลองพูดตามครับ
 
 Step 2
@@ -20,7 +20,7 @@ Choices: 🙋 I am a student. → "I am a student."
          👉 You are my friend. → "You are my friend."
 User: I am a student.
 Result: correct in pool
-response time : 120.88 ms
+response time : 118.52 ms
 Reply: ต่อไปพูดกับคนที่คุยด้วย — You are my friend. 👉 ลองพูดตามนะครับ
 
 Step 3
@@ -29,7 +29,7 @@ Hint: (none)
 Choices: 👉 You are → "You are my friend."
 User: You are my friend.
 Result: correct in pool
-response time : 88.55 ms
+response time : 110.27 ms
 Reply: You are my friend. แปลว่า “คุณคือเพื่อนของฉัน” ต่อไปลองทบทวน I am กันครับ ถ้าจะบอกเพื่อนว่าคุณเป็นนักเรียน จะพูดว่าอะไรครับ? 🎓
 
 Step 4
@@ -38,7 +38,7 @@ Hint: (none)
 Choices: (none)
 User: I am a student.
 Result: correct in pool
-response time : 112.94 ms
+response time : 99.83 ms
 Reply: ลองพูดประโยคสั้นๆ เกี่ยวกับตัวคุณหรือคู่สนทนาครับ 😊
 
 Step 5
@@ -47,11 +47,11 @@ Hint: (none)
 Choices: (none)
 User: I am a student.
 Result: correct in pool
-response time : 114.15 ms
+response time : 116.90 ms
 Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณพูด I am... และ You are... ได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ meet_people scenario 1 complete · 5 turns · 521.93 ms
+✅ meet_people scenario 1 complete · 5 turns · 553.55 ms
 
 ================================================================================
 meet_people — Scenario 2 — out-pool correct ทุก step → จบบท
@@ -64,7 +64,7 @@ Hint: (none)
 Choices: 🙋 I am → "I am Nana."
 User: I am Nano.
 Result: correct out pool
-response time : 1.56 s
+response time : 1.26 s
 Reply: ถูกต้องครับ! ถ้าจะบอกว่าเป็นนักเรียน — I am a student. 🎓 ลองพูดตามครับ
 
 Step 2
@@ -74,16 +74,16 @@ Choices: 🙋 I am a student. → "I am a student."
          👉 You are my friend. → "You are my friend."
 User: I am a student....
 Result: correct out pool
-response time : 1.24 s
-Reply: ดีมากครับ! ต่อไปพูดกับคนที่คุยด้วย — You are my friend. 👉 ลองพูดตามนะครับ
+response time : 1.59 s
+Reply: ถูกต้องครับ! ต่อไปพูดกับคนที่คุยด้วย — You are my friend. 👉 ลองพูดตามนะครับ
 
 Step 3
-AI: ดีมากครับ! ต่อไปพูดกับคนที่คุยด้วย — You are my friend. 👉 ลองพูดตามนะครับ
+AI: ถูกต้องครับ! ต่อไปพูดกับคนที่คุยด้วย — You are my friend. 👉 ลองพูดตามนะครับ
 Hint: (none)
 Choices: 👉 You are → "You are my friend."
 User: You are my friend....
 Result: correct out pool
-response time : 1.39 s
+response time : 1.42 s
 Reply: เยี่ยมครับ! You are my friend. แปลว่า “คุณคือเพื่อนของฉัน” ต่อไปลองทบทวน I am กันครับ ถ้าจะบอกเพื่อนว่าคุณเป็นนักเรียน จะพูดว่าอะไรครับ? 🎓
 
 Step 4
@@ -92,20 +92,20 @@ Hint: (none)
 Choices: (none)
 User: I am a student....
 Result: correct out pool
-response time : 1.39 s
-Reply: เยี่ยมครับ! ลองพูดประโยคสั้นๆ เกี่ยวกับตัวคุณหรือคู่สนทนาครับ 😊
+response time : 1.28 s
+Reply: ดีมากครับ! ลองพูดประโยคสั้นๆ เกี่ยวกับตัวคุณหรือคู่สนทนาครับ 😊
 
 Step 5
-AI: เยี่ยมครับ! ลองพูดประโยคสั้นๆ เกี่ยวกับตัวคุณหรือคู่สนทนาครับ 😊
+AI: ดีมากครับ! ลองพูดประโยคสั้นๆ เกี่ยวกับตัวคุณหรือคู่สนทนาครับ 😊
 Hint: (none)
 Choices: (none)
 User: I am a student....
 Result: correct out pool
-response time : 1.28 s
-Reply: ดีมากครับ! สุดยอดครับ Nana! 🎉 วันนี้คุณพูด I am... และ You are... ได้แล้ว 🍌
+response time : 1.42 s
+Reply: เยี่ยมครับ! Nana! 🎉 วันนี้คุณพูด I am... และ You are... ได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ meet_people scenario 2 complete · 5 turns · 6.87 s
+✅ meet_people scenario 2 complete · 5 turns · 6.97 s
 
 ================================================================================
 meet_people — Scenario 3 — out-pool close ทุก step → จบบท
@@ -118,7 +118,7 @@ Hint: (none)
 Choices: 🙋 I am → "I am Nana."
 User: I Nana.
 Result: close out pool
-response time : 1.51 s
+response time : 1.17 s
 Reply: เกือบถูกแล้วครับ! พูดว่า I am Nana. 🙋
 ต่อไปถ้าจะบอกว่าเป็นนักเรียน — I am a student. 🎓 ลองพูดตามครับ
 
@@ -130,7 +130,7 @@ Choices: 🙋 I am a student. → "I am a student."
          👉 You are my friend. → "You are my friend."
 User: I am student.
 Result: close out pool
-response time : 1.52 s
+response time : 1.33 s
 Reply: เกือบถูกแล้วครับ! พูดว่า I am a student. 🎓
 ต่อไปพูดกับคนที่คุยด้วย — You are my friend. 👉 ลองพูดตามนะครับ
 
@@ -141,7 +141,7 @@ Hint: (none)
 Choices: 👉 You are → "You are my friend."
 User: You my friend.
 Result: close out pool
-response time : 1.26 s
+response time : 1.15 s
 Reply: เกือบถูกแล้วครับ! พูดว่า You are my friend. 👉
 You are my friend. แปลว่า “คุณคือเพื่อนของฉัน” ต่อไปลองทบทวน I am กันครับ ถ้าจะบอกเพื่อนว่าคุณเป็นนักเรียน จะพูดว่าอะไรครับ? 🎓
 
@@ -152,7 +152,7 @@ Hint: (none)
 Choices: (none)
 User: I student.
 Result: close out pool
-response time : 1.49 s
+response time : 1.24 s
 Reply: เกือบถูกแล้วครับ! พูดว่า I am a student. 🙋
 ลองพูดประโยคสั้นๆ เกี่ยวกับตัวคุณหรือคู่สนทนาครับ 😊
 
@@ -163,12 +163,12 @@ Hint: (none)
 Choices: (none)
 User: I student.
 Result: close out pool
-response time : 1.29 s
+response time : 1.39 s
 Reply: เกือบถูกแล้วครับ! พูดว่า I am a student.
 สุดยอดครับ Nana! 🎉 วันนี้คุณพูด I am... และ You are... ได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ meet_people scenario 3 complete · 5 turns · 7.08 s
+✅ meet_people scenario 3 complete · 5 turns · 6.29 s
 
 ================================================================================
 meet_people — Scenario 4 — out-pool wrong + in-pool พูดตาม recovery → จบบท
@@ -181,16 +181,16 @@ Hint: (none)
 Choices: 🙋 I am → "I am Nana."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.38 s
-Reply: เก่งมากครับ แต่ลองพูดแนะนำตัวเองโดยใช้ประโยคว่า "I am Nana." ดูนะครับ ลองพูดตามนะครับ
+response time : 1.57 s
+Reply: เกือบถูกแล้วครับ! ลองพูดว่า "I am Nana." เพื่อแนะนำตัวเองดูนะครับ ลองพูดตามนะครับ
 
 Step 2
-AI: เก่งมากครับ แต่ลองพูดแนะนำตัวเองโดยใช้ประโยคว่า "I am Nana." ดูนะครับ ลองพูดตามนะครับ
+AI: เกือบถูกแล้วครับ! ลองพูดว่า "I am Nana." เพื่อแนะนำตัวเองดูนะครับ ลองพูดตามนะครับ
 Hint: (none)
 Choices: 🙋 I am → "I am Nana."
 User: I am Nana.
 Result: correct in pool
-response time : 103.83 ms
+response time : 87.63 ms
 Reply: ถ้าจะบอกว่าเป็นนักเรียน — I am a student. 🎓 ลองพูดตามครับ
 
 Step 3
@@ -200,17 +200,17 @@ Choices: 🙋 I am a student. → "I am a student."
          👉 You are my friend. → "You are my friend."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.22 s
-Reply: ยังไม่ใช่นะครับ ลองพูดว่า "I am a student." เพื่อบอกว่าเป็นนักเรียนครับ ลองพูดตามนะครับ
+response time : 1.24 s
+Reply: ยังไม่ใช่นะครับ ลองพูดว่า "I am a student." เพื่อบอกว่าเป็นนักเรียนดูนะครับ ลองพูดตามครับ
 
 Step 4
-AI: ยังไม่ใช่นะครับ ลองพูดว่า "I am a student." เพื่อบอกว่าเป็นนักเรียนครับ ลองพูดตามนะครับ
+AI: ยังไม่ใช่นะครับ ลองพูดว่า "I am a student." เพื่อบอกว่าเป็นนักเรียนดูนะครับ ลองพูดตามครับ
 Hint: (none)
 Choices: 🙋 I am a student. → "I am a student."
          👉 You are my friend. → "You are my friend."
 User: I am a student.
 Result: correct in pool
-response time : 141.29 ms
+response time : 105.17 ms
 Reply: ต่อไปพูดกับคนที่คุยด้วย — You are my friend. 👉 ลองพูดตามนะครับ
 
 Step 5
@@ -219,16 +219,16 @@ Hint: (none)
 Choices: 👉 You are → "You are my friend."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.63 s
-Reply: ยังไม่ใช่นะครับ ลองพูดว่า "You are my friend." เพื่อบอกว่าเป็นเพื่อนกันครับ ลองพูดตามนะครับ
+response time : 1.43 s
+Reply: ยังไม่ใช่นะครับ ลองพูดว่า "You are my friend." เพื่อบอกว่าเป็นเพื่อนกันดูนะครับ ลองพูดตามครับ
 
 Step 6
-AI: ยังไม่ใช่นะครับ ลองพูดว่า "You are my friend." เพื่อบอกว่าเป็นเพื่อนกันครับ ลองพูดตามนะครับ
+AI: ยังไม่ใช่นะครับ ลองพูดว่า "You are my friend." เพื่อบอกว่าเป็นเพื่อนกันดูนะครับ ลองพูดตามครับ
 Hint: (none)
 Choices: 👉 You are → "You are my friend."
 User: You are my friend.
 Result: correct in pool
-response time : 119.32 ms
+response time : 114.47 ms
 Reply: You are my friend. แปลว่า “คุณคือเพื่อนของฉัน” ต่อไปลองทบทวน I am กันครับ ถ้าจะบอกเพื่อนว่าคุณเป็นนักเรียน จะพูดว่าอะไรครับ? 🎓
 
 Step 7
@@ -237,7 +237,7 @@ Hint: (none)
 Choices: (none)
 User: Good morning.
 Result: incorrect out pool
-response time : 1.23 s
+response time : 1.24 s
 Reply: ยังไม่ตรงครับ ลองใช้ “I am a student” หรือ “You are my friend” ครับ
 
 Step 8
@@ -246,7 +246,7 @@ Hint: (none)
 Choices: (none)
 User: I am a student.
 Result: correct in pool
-response time : 86.22 ms
+response time : 91.23 ms
 Reply: ลองพูดประโยคสั้นๆ เกี่ยวกับตัวคุณหรือคู่สนทนาครับ 😊
 
 Step 9
@@ -264,11 +264,11 @@ Hint: (none)
 Choices: (none)
 User: I am a student.
 Result: correct in pool
-response time : 125.33 ms
-Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณพูด I am... และ You are... ได้แล้ว 🍌
+response time : 102.14 ms
+Reply: เรียนครบแล้วครับ Nana คุณทำบทเรียนจบโดยได้รับคำแนะนำบางส่วน ลองฝึกอีกครั้งเพื่อให้คล่องขึ้นนะครับ
 
 ────────────────────────────────────────────────────────────────────────
-✅ meet_people scenario 4 complete · 10 turns · 7.41 s
+✅ meet_people scenario 4 complete · 10 turns · 7.36 s
 
 ================================================================================
 meet_people — Scenario 5 — out-pool wrong + พูดตามผิดอีกครั้ง → soft-advance → จบบท
@@ -281,16 +281,16 @@ Hint: (none)
 Choices: 🙋 I am → "I am Nana."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.13 s
-Reply: ยังไม่ถูกต้องครับ ลองพูดว่า "I am Nana." เพื่อแนะนำตัวเองนะครับ ลองพูดตามนะครับ
+response time : 1.22 s
+Reply: เกือบถูกแล้วครับ! ลองพูดว่า "I am Nana." เพื่อแนะนำตัวเองนะครับ ลองพูดตามนะครับ
 
 Step 2
-AI: ยังไม่ถูกต้องครับ ลองพูดว่า "I am Nana." เพื่อแนะนำตัวเองนะครับ ลองพูดตามนะครับ
+AI: เกือบถูกแล้วครับ! ลองพูดว่า "I am Nana." เพื่อแนะนำตัวเองนะครับ ลองพูดตามนะครับ
 Hint: (none)
 Choices: 🙋 I am → "I am Nana."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 127.75 ms
+response time : 112.49 ms
 Reply: ตรงนี้พูดว่า "I am Nana." ครับ 🙋
 ไปต่อกันเลย — ถ้าจะบอกว่าเป็นนักเรียน — I am a student. 🎓 ลองพูดตามครับ
 
@@ -302,17 +302,17 @@ Choices: 🙋 I am a student. → "I am a student."
          👉 You are my friend. → "You are my friend."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.28 s
-Reply: ยังไม่ถูกต้องครับ ลองพูดว่า "I am a student." เพื่อบอกว่าเป็นนักเรียนนะครับ ลองพูดตามอีกครั้งครับ
+response time : 1.33 s
+Reply: ยังไม่ใช่ครับ ลองพูดตามว่า "I am a student." นะครับ
 
 Step 4
-AI: ยังไม่ถูกต้องครับ ลองพูดว่า "I am a student." เพื่อบอกว่าเป็นนักเรียนนะครับ ลองพูดตามอีกครั้งครับ
+AI: ยังไม่ใช่ครับ ลองพูดตามว่า "I am a student." นะครับ
 Hint: (none)
 Choices: 🙋 I am a student. → "I am a student."
          👉 You are my friend. → "You are my friend."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 86.68 ms
+response time : 115.07 ms
 Reply: ตรงนี้พูดว่า "I am a student." ครับ 🎓
 ไปต่อกันเลย — ต่อไปพูดกับคนที่คุยด้วย — You are my friend. 👉 ลองพูดตามนะครับ
 
@@ -323,27 +323,27 @@ Hint: (none)
 Choices: 👉 You are → "You are my friend."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.86 s
-Reply: ยังไม่ถูกต้องครับ ลองพูดว่า "You are my friend." เพื่อบอกว่าเป็นเพื่อนกันนะครับ ลองพูดตามนะครับ
+response time : 1.66 s
+Reply: ยังไม่ถูกต้องครับ ลองพูดว่า "You are my friend." อีกครั้งนะครับ ลองพูดตามนะครับ
 
 Step 6
-AI: ยังไม่ถูกต้องครับ ลองพูดว่า "You are my friend." เพื่อบอกว่าเป็นเพื่อนกันนะครับ ลองพูดตามนะครับ
+AI: ยังไม่ถูกต้องครับ ลองพูดว่า "You are my friend." อีกครั้งนะครับ ลองพูดตามนะครับ
 Hint: (none)
 Choices: 👉 You are → "You are my friend."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 7.38 s
+response time : 112.06 ms
 Reply: ตรงนี้พูดว่า "You are my friend." ครับ 👉
-ไปต่อกันเลย — You are my friend. แปลว่า “คุณคือเพื่อนของฉัน” ต่อไปลองทบทวน I am กันครับ ถ้าจะบอกเพื่อนว่าคุณเป็นนักเรียน จะพูดว่าอะไรครับ?
+ไปต่อกันเลย — You are my friend. แปลว่า “คุณคือเพื่อนของฉัน” ต่อไปลองทบทวน I am กันครับ ถ้าจะบอกเพื่อนว่าคุณเป็นนักเรียน จะพูดว่าอะไรครับ? 🎓
 
 Step 7
 AI: ตรงนี้พูดว่า "You are my friend." ครับ 👉
-ไปต่อกันเลย — You are my friend. แปลว่า “คุณคือเพื่อนของฉัน” ต่อไปลองทบทวน I am กันครับ ถ้าจะบอกเพื่อนว่าคุณเป็นนักเรียน จะพูดว่าอะไรครับ?
+ไปต่อกันเลย — You are my friend. แปลว่า “คุณคือเพื่อนของฉัน” ต่อไปลองทบทวน I am กันครับ ถ้าจะบอกเพื่อนว่าคุณเป็นนักเรียน จะพูดว่าอะไรครับ? 🎓
 Hint: (none)
 Choices: (none)
 User: Good morning.
 Result: incorrect out pool
-response time : 1.23 s
+response time : 1.32 s
 Reply: ยังไม่ตรงครับ ลองใช้ “I am a student” หรือ “You are my friend” ครับ
 
 Step 8
@@ -352,18 +352,18 @@ Hint: (none)
 Choices: (none)
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 133.59 ms
+response time : 104.35 ms
 Reply: ตรงนี้พูดว่า "I am a student." ครับ 🙋
-ไปต่อกันเลย — Say a short sentence about yourself.
+ไปต่อกันเลย — ลองพูดประโยคสั้นๆ เกี่ยวกับตัวคุณหรือคู่สนทนาครับ 😊
 
 Step 9
 AI: ตรงนี้พูดว่า "I am a student." ครับ 🙋
-ไปต่อกันเลย — Say a short sentence about yourself.
+ไปต่อกันเลย — ลองพูดประโยคสั้นๆ เกี่ยวกับตัวคุณหรือคู่สนทนาครับ 😊
 Hint: (none)
 Choices: (none)
 User: Good morning.
 Result: incorrect out pool
-response time : 1.30 s
+response time : 1.35 s
 Reply: ยังไม่ตรงครับ ลองเริ่มด้วย “I am...” หรือ “You are...” แล้วพูดต่อให้ครบประโยคครับ
 
 Step 10
@@ -372,10 +372,10 @@ Hint: (none)
 Choices: (none)
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 107.22 ms
+response time : 102.70 ms
 Reply: ตรงนี้พูดได้ว่า "I am a student." ครับ
 
-🎉 จบบทแล้วครับ Nana! วันนี้คุณพูด I am... และ You are... แล้วครับ 🍌
+เรียนครบแล้วครับ Nana ลองทบทวนบทนี้อีกครั้งนะครับ
 
 ────────────────────────────────────────────────────────────────────────
-✅ meet_people scenario 5 complete · 10 turns · 14.64 s
+✅ meet_people scenario 5 complete · 10 turns · 7.43 s

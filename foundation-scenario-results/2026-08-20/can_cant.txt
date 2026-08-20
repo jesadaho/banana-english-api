@@ -10,7 +10,7 @@ Hint: (none)
 Choices: 🏊 I can swim → "I can swim."
 User: I can swim.
 Result: correct in pool
-response time : 89.10 ms
+response time : 90.53 ms
 Reply: เก่งมากครับ! ถ้าขับรถไม่ได้ — I can't drive. 🚗 ลองพูดตามครับ
 
 Step 2
@@ -19,7 +19,7 @@ Hint: (none)
 Choices: 🚗 I can't drive → "I can't drive."
 User: I can't drive.
 Result: correct in pool
-response time : 89.00 ms
+response time : 138.02 ms
 Reply: ถ้าคุณทำอาหารได้ จะพูดว่าอะไรครับ? 🍳
 
 Step 3
@@ -28,7 +28,7 @@ Hint: (none)
 Choices: (none)
 User: I can cook.
 Result: correct in pool
-response time : 82.16 ms
+response time : 126.78 ms
 Reply: ลองบอกความสามารถของคุณเป็นภาษาอังกฤษครับ 😊
 
 Step 4
@@ -37,11 +37,11 @@ Hint: (none)
 Choices: (none)
 User: I can cook.
 Result: correct in pool
-response time : 78.59 ms
+response time : 108.39 ms
 Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณพูด I can / I can't ได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ can_cant scenario 1 complete · 4 turns · 338.85 ms
+✅ can_cant scenario 1 complete · 4 turns · 463.74 ms
 
 ================================================================================
 can_cant — Scenario 2 — out-pool correct ทุก step → จบบท
@@ -54,16 +54,16 @@ Hint: (none)
 Choices: 🏊 I can swim → "I can swim."
 User: I can swim....
 Result: correct out pool
-response time : 1.18 s
-Reply: เยี่ยมครับ! เก่งมากครับ! ถ้าขับรถไม่ได้ — I can't drive. 🚗 ลองพูดตามครับ
+response time : 1.34 s
+Reply: เยี่ยมครับ! ถ้าขับรถไม่ได้ — I can't drive. 🚗 ลองพูดตามครับ
 
 Step 2
-AI: เยี่ยมครับ! เก่งมากครับ! ถ้าขับรถไม่ได้ — I can't drive. 🚗 ลองพูดตามครับ
+AI: เยี่ยมครับ! ถ้าขับรถไม่ได้ — I can't drive. 🚗 ลองพูดตามครับ
 Hint: (none)
 Choices: 🚗 I can't drive → "I can't drive."
 User: I can't drive....
 Result: correct out pool
-response time : 1.22 s
+response time : 1.19 s
 Reply: เยี่ยมครับ! ถ้าคุณทำอาหารได้ จะพูดว่าอะไรครับ? 🍳
 
 Step 3
@@ -72,20 +72,20 @@ Hint: (none)
 Choices: (none)
 User: I can cook....
 Result: correct out pool
-response time : 988.32 ms
-Reply: ถูกต้องครับ! ลองบอกความสามารถของคุณเป็นภาษาอังกฤษครับ 😊
+response time : 1.28 s
+Reply: ดีมากครับ! ลองบอกความสามารถของคุณเป็นภาษาอังกฤษครับ 😊
 
 Step 4
-AI: ถูกต้องครับ! ลองบอกความสามารถของคุณเป็นภาษาอังกฤษครับ 😊
+AI: ดีมากครับ! ลองบอกความสามารถของคุณเป็นภาษาอังกฤษครับ 😊
 Hint: (none)
 Choices: (none)
 User: I can cook....
 Result: correct out pool
-response time : 1.20 s
-Reply: ดีมากครับ! สุดยอดครับ Nana! 🎉 วันนี้คุณพูด I can / I can't ได้แล้ว 🍌
+response time : 1.39 s
+Reply: เยี่ยมครับ! Nana! 🎉 วันนี้คุณพูด I can / I can't ได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ can_cant scenario 2 complete · 4 turns · 4.59 s
+✅ can_cant scenario 2 complete · 4 turns · 5.20 s
 
 ================================================================================
 can_cant — Scenario 3 — out-pool close ทุก step → จบบท
@@ -98,7 +98,7 @@ Hint: (none)
 Choices: 🏊 I can swim → "I can swim."
 User: I swim.
 Result: close out pool
-response time : 1.11 s
+response time : 1.12 s
 Reply: เกือบถูกแล้วครับ! พูดว่า I can swim. 🏊
 ต่อไปถ้าขับรถไม่ได้ — I can't drive. 🚗 ลองพูดตามครับ
 
@@ -109,7 +109,7 @@ Hint: (none)
 Choices: 🚗 I can't drive → "I can't drive."
 User: I no can drive.
 Result: close out pool
-response time : 1.23 s
+response time : 1.41 s
 Reply: เกือบถูกแล้วครับ! พูดว่า I can't drive. 🚗
 ต่อไปถ้าคุณทำอาหารได้ จะพูดว่าอะไรครับ? 🍳
 
@@ -120,7 +120,7 @@ Hint: (none)
 Choices: (none)
 User: I can cooking.
 Result: close out pool
-response time : 1.08 s
+response time : 1.26 s
 Reply: เกือบถูกแล้วครับ! พูดว่า I can cook. 🍳
 ลองบอกความสามารถของคุณเป็นภาษาอังกฤษครับ 😊
 
@@ -131,12 +131,12 @@ Hint: (none)
 Choices: (none)
 User: I can cooking.
 Result: close out pool
-response time : 1.21 s
+response time : 1.54 s
 Reply: เกือบถูกแล้วครับ! พูดว่า I can cook.
 สุดยอดครับ Nana! 🎉 วันนี้คุณพูด I can / I can't ได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ can_cant scenario 3 complete · 4 turns · 4.63 s
+✅ can_cant scenario 3 complete · 4 turns · 5.33 s
 
 ================================================================================
 can_cant — Scenario 4 — out-pool wrong + in-pool พูดตาม recovery → จบบท
@@ -149,16 +149,16 @@ Hint: (none)
 Choices: 🏊 I can swim → "I can swim."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.18 s
-Reply: ยังไม่ใช่ครับ Nana ลองพูดตามว่า "I can swim." นะครับ
+response time : 1.25 s
+Reply: ยังไม่ใช่นะครับ ลองพูดตามว่า "I can swim." อีกครั้งนะครับ
 
 Step 2
-AI: ยังไม่ใช่ครับ Nana ลองพูดตามว่า "I can swim." นะครับ
+AI: ยังไม่ใช่นะครับ ลองพูดตามว่า "I can swim." อีกครั้งนะครับ
 Hint: (none)
 Choices: 🏊 I can swim → "I can swim."
 User: I can swim.
 Result: correct in pool
-response time : 106.65 ms
+response time : 102.30 ms
 Reply: เก่งมากครับ! ถ้าขับรถไม่ได้ — I can't drive. 🚗 ลองพูดตามครับ
 
 Step 3
@@ -167,16 +167,16 @@ Hint: (none)
 Choices: 🚗 I can't drive → "I can't drive."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.10 s
-Reply: ยังไม่ใช่ครับ Nana ลองพูดว่า "I can't drive." นะครับ ลองพูดตามนะครับ
+response time : 1.44 s
+Reply: ยังไม่ถูกครับ ลองพูดว่า "I can't drive." อีกครั้งนะครับ ลองพูดตามนะครับ
 
 Step 4
-AI: ยังไม่ใช่ครับ Nana ลองพูดว่า "I can't drive." นะครับ ลองพูดตามนะครับ
+AI: ยังไม่ถูกครับ ลองพูดว่า "I can't drive." อีกครั้งนะครับ ลองพูดตามนะครับ
 Hint: (none)
 Choices: 🚗 I can't drive → "I can't drive."
 User: I can't drive.
 Result: correct in pool
-response time : 161.79 ms
+response time : 103.71 ms
 Reply: ถ้าคุณทำอาหารได้ จะพูดว่าอะไรครับ? 🍳
 
 Step 5
@@ -185,7 +185,7 @@ Hint: (none)
 Choices: (none)
 User: Good morning.
 Result: incorrect out pool
-response time : 1.25 s
+response time : 1.35 s
 Reply: ยังไม่ตรงครับ ถ้าทำอาหารได้ ให้พูดว่า “I can cook.” ครับ
 
 Step 6
@@ -194,7 +194,7 @@ Hint: (none)
 Choices: (none)
 User: I can cook.
 Result: correct in pool
-response time : 93.48 ms
+response time : 112.58 ms
 Reply: ลองบอกความสามารถของคุณเป็นภาษาอังกฤษครับ 😊
 
 Step 7
@@ -203,7 +203,7 @@ Hint: (none)
 Choices: (none)
 User: Good morning.
 Result: incorrect out pool
-response time : 1.21 s
+response time : 1.31 s
 Reply: ยังไม่ตรงครับ ลองเริ่มด้วย “I can...” หรือ “I can't...” แล้วพูดต่อครับ
 
 Step 8
@@ -212,11 +212,11 @@ Hint: (none)
 Choices: (none)
 User: I can cook.
 Result: correct in pool
-response time : 108.39 ms
-Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณพูด I can / I can't ได้แล้ว 🍌
+response time : 104.83 ms
+Reply: เรียนครบแล้วครับ Nana คุณทำบทเรียนจบโดยได้รับคำแนะนำบางส่วน ลองฝึกอีกครั้งเพื่อให้คล่องขึ้นนะครับ
 
 ────────────────────────────────────────────────────────────────────────
-✅ can_cant scenario 4 complete · 8 turns · 5.21 s
+✅ can_cant scenario 4 complete · 8 turns · 5.77 s
 
 ================================================================================
 can_cant — Scenario 5 — out-pool wrong + พูดตามผิดอีกครั้ง → soft-advance → จบบท
@@ -229,47 +229,47 @@ Hint: (none)
 Choices: 🏊 I can swim → "I can swim."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.36 s
-Reply: ยังไม่ถูกครับ ลองพูดตามว่า "I can swim." อีกครั้งนะครับ
+response time : 1.31 s
+Reply: ยังไม่ใช่ครับ Nana ลองพูดว่า "I can swim." เพื่อฝึกประโยคนี้ดูนะครับ ลองพูดตามนะครับ
 
 Step 2
-AI: ยังไม่ถูกครับ ลองพูดตามว่า "I can swim." อีกครั้งนะครับ
+AI: ยังไม่ใช่ครับ Nana ลองพูดว่า "I can swim." เพื่อฝึกประโยคนี้ดูนะครับ ลองพูดตามนะครับ
 Hint: (none)
 Choices: 🏊 I can swim → "I can swim."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 140.13 ms
+response time : 99.89 ms
 Reply: ตรงนี้พูดว่า "I can swim." ครับ 🏊
-ไปต่อกันเลย — เก่งมากครับ! ถ้าขับรถไม่ได้ — I can't drive. 🚗 ลองพูดตามครับ
+ไปต่อกันเลย — ถ้าขับรถไม่ได้ — I can't drive. 🚗 ลองพูดตามครับ
 
 Step 3
 AI: ตรงนี้พูดว่า "I can swim." ครับ 🏊
-ไปต่อกันเลย — เก่งมากครับ! ถ้าขับรถไม่ได้ — I can't drive. 🚗 ลองพูดตามครับ
+ไปต่อกันเลย — ถ้าขับรถไม่ได้ — I can't drive. 🚗 ลองพูดตามครับ
 Hint: (none)
 Choices: 🚗 I can't drive → "I can't drive."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.57 s
-Reply: ยังไม่ถูกครับ ลองพูดตามว่า "I can't drive." อีกครั้งนะครับ
+response time : 1.40 s
+Reply: ยังไม่ถูกครับ Nana ลองพูดว่า "I can't drive." เพื่อบอกว่าขับรถไม่ได้นะครับ ลองพูดตามอีกครั้งครับ
 
 Step 4
-AI: ยังไม่ถูกครับ ลองพูดตามว่า "I can't drive." อีกครั้งนะครับ
+AI: ยังไม่ถูกครับ Nana ลองพูดว่า "I can't drive." เพื่อบอกว่าขับรถไม่ได้นะครับ ลองพูดตามอีกครั้งครับ
 Hint: (none)
 Choices: 🚗 I can't drive → "I can't drive."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 304.82 ms
+response time : 109.75 ms
 Reply: ตรงนี้พูดว่า "I can't drive." ครับ 🚗
-ไปต่อกันเลย — I can cook.
+ไปต่อกันเลย — ถ้าคุณทำอาหารได้ จะพูดว่าอะไรครับ? 🍳
 
 Step 5
 AI: ตรงนี้พูดว่า "I can't drive." ครับ 🚗
-ไปต่อกันเลย — I can cook.
+ไปต่อกันเลย — ถ้าคุณทำอาหารได้ จะพูดว่าอะไรครับ? 🍳
 Hint: (none)
 Choices: (none)
 User: Good morning.
 Result: incorrect out pool
-response time : 5.80 s
+response time : 1.18 s
 Reply: ยังไม่ตรงครับ ถ้าทำอาหารได้ ให้พูดว่า “I can cook.” ครับ
 
 Step 6
@@ -278,18 +278,18 @@ Hint: (none)
 Choices: (none)
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 119.18 ms
+response time : 93.81 ms
 Reply: ตรงนี้พูดว่า "I can cook." ครับ 🍳
-ไปต่อกันเลย — What can or can't you do?
+ไปต่อกันเลย — ลองบอกความสามารถของคุณเป็นภาษาอังกฤษครับ 😊
 
 Step 7
 AI: ตรงนี้พูดว่า "I can cook." ครับ 🍳
-ไปต่อกันเลย — What can or can't you do?
+ไปต่อกันเลย — ลองบอกความสามารถของคุณเป็นภาษาอังกฤษครับ 😊
 Hint: (none)
 Choices: (none)
 User: Good morning.
 Result: incorrect out pool
-response time : 1.16 s
+response time : 1.91 s
 Reply: ยังไม่ตรงครับ ลองเริ่มด้วย “I can...” หรือ “I can't...” แล้วพูดต่อครับ
 
 Step 8
@@ -298,10 +298,10 @@ Hint: (none)
 Choices: (none)
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 123.02 ms
+response time : 91.15 ms
 Reply: ตรงนี้พูดได้ว่า "I can cook." ครับ
 
-🎉 จบบทแล้วครับ Nana! วันนี้คุณพูด I can / I can't แล้วครับ 🍌
+เรียนครบแล้วครับ Nana ลองทบทวนบทนี้อีกครั้งนะครับ
 
 ────────────────────────────────────────────────────────────────────────
-✅ can_cant scenario 5 complete · 8 turns · 10.58 s
+✅ can_cant scenario 5 complete · 8 turns · 6.19 s
