@@ -22,6 +22,10 @@ import {
   isAroundTownChoiceLesson,
 } from '../scripts/around-town.registry';
 import {
+  getStoriesChoiceLesson,
+  isStoriesChoiceLesson,
+} from '../scripts/stories.registry';
+import {
   getFoundationChoiceLesson,
   isFoundationChoiceLesson,
 } from '../scripts/foundation.registry';
@@ -71,6 +75,15 @@ export class TrainingTurnEngine {
       };
     }
 
+    const stories = getStoriesChoiceLesson(config.lessonId);
+    if (stories) {
+      const reply = stories.buildOpening(learnerFirstName);
+      return {
+        reply: this.toReply(reply),
+        aiDebug: scriptedAiDebug(),
+      };
+    }
+
     throw new Error(`Training v2 opening not implemented: ${config.lessonId}`);
   }
 
@@ -90,6 +103,11 @@ export class TrainingTurnEngine {
     const aroundTown = getAroundTownChoiceLesson(input.config.lessonId);
     if (aroundTown) {
       return this.runChoiceLessonTurn(input, aroundTown);
+    }
+
+    const stories = getStoriesChoiceLesson(input.config.lessonId);
+    if (stories) {
+      return this.runChoiceLessonTurn(input, stories);
     }
 
     throw new Error(`Training v2 turn not implemented: ${input.config.lessonId}`);
@@ -169,4 +187,5 @@ export {
   isAboutMeChoiceLesson,
   isAroundTownChoiceLesson,
   isFoundationChoiceLesson,
+  isStoriesChoiceLesson,
 };

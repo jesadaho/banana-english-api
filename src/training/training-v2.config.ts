@@ -1,19 +1,22 @@
 import { ABOUT_ME_CHOICE_LESSONS } from './scripts/about-me.registry';
 import { AROUND_TOWN_CHOICE_LESSONS } from './scripts/around-town.registry';
+import { STORIES_CHOICE_LESSONS } from './scripts/stories.registry';
 import {
   FOUNDATION_LESSON_IDS,
   isFoundationChoiceLesson,
 } from './scripts/foundation.registry';
 import { isAboutMeChoiceLesson } from './scripts/about-me.registry';
 import { isAroundTownChoiceLesson } from './scripts/around-town.registry';
+import { isStoriesChoiceLesson } from './scripts/stories.registry';
 
-/** Foundation + About Me + Around Town lessons use the PoolGate / choice-lesson registry. */
+/** Foundation + About Me + Around Town + Stories lessons use the PoolGate / choice-lesson registry. */
 
 function registryV2LessonIds(): string[] {
   return [
     ...FOUNDATION_LESSON_IDS,
     ...ABOUT_ME_CHOICE_LESSONS.map((d) => d.lessonId),
     ...AROUND_TOWN_CHOICE_LESSONS.map((d) => d.lessonId),
+    ...STORIES_CHOICE_LESSONS.map((d) => d.lessonId),
   ];
 }
 
@@ -44,6 +47,7 @@ export function isTrainingV2Lesson(lessonId: string): boolean {
   if (isFoundationChoiceLesson(lessonId)) return true;
   if (isAboutMeChoiceLesson(lessonId)) return true;
   if (isAroundTownChoiceLesson(lessonId)) return true;
+  if (isStoriesChoiceLesson(lessonId)) return true;
   return extraV2Allowlist().has(lessonId);
 }
 
