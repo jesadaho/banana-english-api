@@ -1,11 +1,3 @@
-API_BASE=https://banana-english-api-production.up.railway.app
-Lessons: greetings
-Scenarios: 1, 2, 3, 4, 5
-  1: Scenario 1 — in-pool correct ทุก step → จบบท
-  2: Scenario 2 — out-pool correct ทุก step → จบบท
-  3: Scenario 3 — out-pool close ทุก step → จบบท
-  4: Scenario 4 — out-pool wrong + in-pool พูดตาม recovery → จบบท
-  5: Scenario 5 — out-pool wrong + พูดตามผิดอีกครั้ง → soft-advance → จบบท
 
 ================================================================================
 greetings — Scenario 1 — in-pool correct ทุก step → จบบท
@@ -15,20 +7,22 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 Step 1
 AI: สวัสดีครับ Nana! วันนี้เรามาเรียนการทักทายกันครับ — Hello, Hi และทักทายตามเวลาในวัน 😊 เริ่มจากคำแรก: Hello! ลองพูดตามครับ
 Hint: (none)
-Choices: ✌️ Hi → "Hi" (repeat-only)
+Choices: 👋 Hello → "Hello"
+         ✌️ Hi → "Hi"
+         🌅 Good morning → "Good morning"
 User: Hello
 Result: correct in pool
-response time : 87.11 ms
-Reply: เยี่ยมเลยครับ! Hello ใช้ทักทายได้ทั่วไปครับ 👋 ต่อไปคำสบายๆ: Hi! ลองพูดตามได้เลย
+response time : 107.07 ms
+Reply: Hello ใช้ทักทายได้ทั่วไปครับ 👋 ต่อไปคำสบายๆ: Hi! ลองพูดตามว่า “Hi” ครับ
 
 Step 2
-AI: เยี่ยมเลยครับ! Hello ใช้ทักทายได้ทั่วไปครับ 👋 ต่อไปคำสบายๆ: Hi! ลองพูดตามได้เลย
+AI: Hello ใช้ทักทายได้ทั่วไปครับ 👋 ต่อไปคำสบายๆ: Hi! ลองพูดตามว่า “Hi” ครับ
 Hint: เพื่อนสนิท → ทักว่าอะไร?
 Choices: 👋 Hello → "Hello"
          ✌️ Hi → "Hi"
 User: Hi
 Result: correct in pool
-response time : 88.77 ms
+response time : 114.12 ms
 Reply: Hello ใช้ทักทายได้ทั่วไป ส่วน Hi ฟังสบายๆ และเป็นกันเองกว่าครับ ✌️ ถ้าเจอเพื่อนสนิท ควรทักว่าอะไรครับ?
 
 Step 3
@@ -38,17 +32,18 @@ Choices: 👋 Hello → "Hello"
          ✌️ Hi → "Hi"
 User: Hi
 Result: correct in pool
-response time : 101.06 ms
-Reply: ถูกต้องครับ! ช่วงเช้าใช้ Good morning. 🌅 ลองพูดตามครับ
+response time : 107.96 ms
+Reply: ช่วงเช้าใช้ Good morning. 🌅 ลองพูดตามว่า “Good morning” ครับ
 
 Step 4
-AI: ถูกต้องครับ! ช่วงเช้าใช้ Good morning. 🌅 ลองพูดตามครับ
-Hint: บ่าย 2 โมง → ทักว่าอะไร?
-Choices: ☀️ Good afternoon → "Good afternoon"
-         🌅 Good morning → "Good morning"
+AI: ช่วงเช้าใช้ Good morning. 🌅 ลองพูดตามว่า “Good morning” ครับ
+Hint: 7 โมงเช้า → ทักว่าอะไร?
+Choices: 🌅 Good morning → "Good morning"
+         ☀️ Good afternoon → "Good afternoon"
+         🌙 Good evening → "Good evening"
 User: Good morning
 Result: correct in pool
-response time : 106.54 ms
+response time : 96.54 ms
 Reply: ส่วนช่วงบ่ายเราใช้ Good afternoon. ☀️ สมมติว่าตอนนี้บ่าย 2 โมง คุณจะทักครูว่าอะไรครับ?
 
 Step 5
@@ -58,18 +53,16 @@ Choices: ☀️ Good afternoon → "Good afternoon"
          🌅 Good morning → "Good morning"
 User: Good afternoon
 Result: correct in pool
-response time : 87.62 ms
-Reply: ดีมากครับ! ช่วงเย็นใช้ Good evening. 🌙 ลองพูดตามนะ
+response time : 145.00 ms
+Reply: ช่วงเย็นใช้ Good evening. เป็นคำทักทายครับ 🌙 ลองพูดตามว่า “Good evening” ครับ
 
 Step 6
-AI: ดีมากครับ! ช่วงเย็นใช้ Good evening. 🌙 ลองพูดตามนะ
-Hint: 7 โมงเช้า → ทักว่าอะไร?
-Choices: 🌅 Good morning → "Good morning"
-         ☀️ Good afternoon → "Good afternoon"
-         🌙 Good evening → "Good evening"
+AI: ช่วงเย็นใช้ Good evening. เป็นคำทักทายครับ 🌙 ลองพูดตามว่า “Good evening” ครับ
+Hint: (none)
+Choices: 🌙 Good evening → "Good evening"
 User: Good evening
 Result: correct in pool
-response time : 97.18 ms
+response time : 99.85 ms
 Reply: เช้า 7 โมง ควรทักว่าอะไรครับ? เลือกแล้วพูดทักทายผ่านไมค์ได้เลย 🕖
 
 Step 7
@@ -80,20 +73,22 @@ Choices: 🌅 Good morning → "Good morning"
          🌙 Good evening → "Good evening"
 User: Good morning
 Result: correct in pool
-response time : 118.14 ms
-Reply: เก่งมากครับ! คราวนี้ลองทักทายผมสักประโยค — ใช้คำไหนก็ได้ที่เรียนไป 👋
+response time : 108.63 ms
+Reply: คราวนี้ลองทักทายผมสักประโยค — ใช้ Hello, Hi หรือคำทักทายตามเวลาที่เรียนไปก็ได้ครับ 👋
 
 Step 8
-AI: เก่งมากครับ! คราวนี้ลองทักทายผมสักประโยค — ใช้คำไหนก็ได้ที่เรียนไป 👋
+AI: คราวนี้ลองทักทายผมสักประโยค — ใช้ Hello, Hi หรือคำทักทายตามเวลาที่เรียนไปก็ได้ครับ 👋
 Hint: (none)
-Choices: (none)
+Choices: 👋 Hello → "Hello"
+         ✌️ Hi → "Hi"
+         🌅 Good morning → "Good morning"
 User: Hello
 Result: correct in pool
-response time : 93.20 ms
-Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณทักทายได้หลายแบบแล้ว ทั้ง Hello, Hi และทักทายตามเวลาในวัน — เก่งมากครับ! 🍌
+response time : 96.78 ms
+Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณทักทายได้หลายแบบแล้ว ทั้ง Hello, Hi และทักทายตามเวลาในวัน 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ greetings scenario 1 complete · 8 turns · 779.61 ms
+✅ greetings scenario 1 complete · 8 turns · 875.94 ms
 
 ================================================================================
 greetings — Scenario 2 — out-pool correct ทุก step → จบบท
@@ -103,85 +98,88 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 Step 1
 AI: สวัสดีครับ Nana! วันนี้เรามาเรียนการทักทายกันครับ — Hello, Hi และทักทายตามเวลาในวัน 😊 เริ่มจากคำแรก: Hello! ลองพูดตามครับ
 Hint: (none)
-Choices: ✌️ Hi → "Hi" (repeat-only)
+Choices: 👋 Hello → "Hello"
+         ✌️ Hi → "Hi"
+         🌅 Good morning → "Good morning"
 User: Hello....
 Result: correct out pool
-response time : 1.43 s
-Reply: เก่งมากครับ Nana! ออกเสียงได้ชัดเจนเลยครับ เยี่ยมเลยครับ! Hello ใช้ทักทายได้ทั่วไปครับ 👋 ต่อไปคำสบายๆ: Hi! ลองพูดตามได้เลย
+response time : 1.32 s
+Reply: ถูกต้องครับ! Hello ใช้ทักทายได้ทั่วไปครับ 👋 ต่อไปคำสบายๆ: Hi! ลองพูดตามว่า “Hi” ครับ
 
 Step 2
-AI: เก่งมากครับ Nana! ออกเสียงได้ชัดเจนเลยครับ เยี่ยมเลยครับ! Hello ใช้ทักทายได้ทั่วไปครับ 👋 ต่อไปคำสบายๆ: Hi! ลองพูดตามได้เลย
+AI: ถูกต้องครับ! Hello ใช้ทักทายได้ทั่วไปครับ 👋 ต่อไปคำสบายๆ: Hi! ลองพูดตามว่า “Hi” ครับ
 Hint: เพื่อนสนิท → ทักว่าอะไร?
 Choices: 👋 Hello → "Hello"
          ✌️ Hi → "Hi"
 User: Hi....
 Result: correct out pool
-response time : 3.05 s
-Reply: ยอดเยี่ยมครับ Nana! ออกเสียงได้เป็นธรรมชาติมากครับ Hello ใช้ทักทายได้ทั่วไป ส่วน Hi ฟังสบายๆ และเป็นกันเองกว่าครับ ✌️ ถ้าเจอเพื่อนสนิท ควรทักว่าอะไรครับ?
+response time : 1.59 s
+Reply: ดีมากครับ! Hello ใช้ทักทายได้ทั่วไป ส่วน Hi ฟังสบายๆ และเป็นกันเองกว่าครับ ✌️ ถ้าเจอเพื่อนสนิท ควรทักว่าอะไรครับ?
 
 Step 3
-AI: ยอดเยี่ยมครับ Nana! ออกเสียงได้เป็นธรรมชาติมากครับ Hello ใช้ทักทายได้ทั่วไป ส่วน Hi ฟังสบายๆ และเป็นกันเองกว่าครับ ✌️ ถ้าเจอเพื่อนสนิท ควรทักว่าอะไรครับ?
+AI: ดีมากครับ! Hello ใช้ทักทายได้ทั่วไป ส่วน Hi ฟังสบายๆ และเป็นกันเองกว่าครับ ✌️ ถ้าเจอเพื่อนสนิท ควรทักว่าอะไรครับ?
 Hint: เพื่อนสนิท → ทักว่าอะไร?
 Choices: 👋 Hello → "Hello"
          ✌️ Hi → "Hi"
 User: Hi....
 Result: correct out pool
-response time : 1.21 s
-Reply: ถูกต้องแล้วครับ Nana! เพื่อนสนิทเราก็ทักว่า "Hi" หรือ "Hey" ได้เลยครับ เก่งมากครับ! ถูกต้องครับ! ช่วงเช้าใช้ Good morning. 🌅 ลองพูดตามครับ
+response time : 1.25 s
+Reply: ดีมากครับ! ช่วงเช้าใช้ Good morning. 🌅 ลองพูดตามว่า “Good morning” ครับ
 
 Step 4
-AI: ถูกต้องแล้วครับ Nana! เพื่อนสนิทเราก็ทักว่า "Hi" หรือ "Hey" ได้เลยครับ เก่งมากครับ! ถูกต้องครับ! ช่วงเช้าใช้ Good morning. 🌅 ลองพูดตามครับ
-Hint: บ่าย 2 โมง → ทักว่าอะไร?
-Choices: ☀️ Good afternoon → "Good afternoon"
-         🌅 Good morning → "Good morning"
+AI: ดีมากครับ! ช่วงเช้าใช้ Good morning. 🌅 ลองพูดตามว่า “Good morning” ครับ
+Hint: 7 โมงเช้า → ทักว่าอะไร?
+Choices: 🌅 Good morning → "Good morning"
+         ☀️ Good afternoon → "Good afternoon"
+         🌙 Good evening → "Good evening"
 User: Good morning....
 Result: correct out pool
-response time : 1.12 s
-Reply: ยอดเยี่ยมมากครับ Nana! ออกเสียงได้ถูกต้องและชัดเจนครับ ส่วนช่วงบ่ายเราใช้ Good afternoon. ☀️ สมมติว่าตอนนี้บ่าย 2 โมง คุณจะทักครูว่าอะไรครับ?
+response time : 1.35 s
+Reply: เยี่ยมครับ! ส่วนช่วงบ่ายเราใช้ Good afternoon. ☀️ สมมติว่าตอนนี้บ่าย 2 โมง คุณจะทักครูว่าอะไรครับ?
 
 Step 5
-AI: ยอดเยี่ยมมากครับ Nana! ออกเสียงได้ถูกต้องและชัดเจนครับ ส่วนช่วงบ่ายเราใช้ Good afternoon. ☀️ สมมติว่าตอนนี้บ่าย 2 โมง คุณจะทักครูว่าอะไรครับ?
+AI: เยี่ยมครับ! ส่วนช่วงบ่ายเราใช้ Good afternoon. ☀️ สมมติว่าตอนนี้บ่าย 2 โมง คุณจะทักครูว่าอะไรครับ?
 Hint: บ่าย 2 โมง → ทักว่าอะไร?
 Choices: ☀️ Good afternoon → "Good afternoon"
          🌅 Good morning → "Good morning"
 User: Good afternoon....
 Result: correct out pool
-response time : 1.32 s
-Reply: ยอดเยี่ยมมากครับ Nana! ออกเสียงได้ถูกต้องและชัดเจนครับ เก่งมากครับ! ดีมากครับ! ช่วงเย็นใช้ Good evening. 🌙 ลองพูดตามนะ
+response time : 1.27 s
+Reply: ถูกต้องครับ! ช่วงเย็นใช้ Good evening. เป็นคำทักทายครับ 🌙 ลองพูดตามว่า “Good evening” ครับ
 
 Step 6
-AI: ยอดเยี่ยมมากครับ Nana! ออกเสียงได้ถูกต้องและชัดเจนครับ เก่งมากครับ! ดีมากครับ! ช่วงเย็นใช้ Good evening. 🌙 ลองพูดตามนะ
-Hint: 7 โมงเช้า → ทักว่าอะไร?
-Choices: 🌅 Good morning → "Good morning"
-         ☀️ Good afternoon → "Good afternoon"
-         🌙 Good evening → "Good evening"
+AI: ถูกต้องครับ! ช่วงเย็นใช้ Good evening. เป็นคำทักทายครับ 🌙 ลองพูดตามว่า “Good evening” ครับ
+Hint: (none)
+Choices: 🌙 Good evening → "Good evening"
 User: Good evening....
 Result: correct out pool
-response time : 1.60 s
-Reply: ยอดเยี่ยมครับ Nana! ออกเสียงได้ถูกต้องและชัดเจนมากครับ เก่งมากครับ! เช้า 7 โมง ควรทักว่าอะไรครับ? เลือกแล้วพูดทักทายผ่านไมค์ได้เลย 🕖
+response time : 1.23 s
+Reply: เยี่ยมครับ! เช้า 7 โมง ควรทักว่าอะไรครับ? เลือกแล้วพูดทักทายผ่านไมค์ได้เลย 🕖
 
 Step 7
-AI: ยอดเยี่ยมครับ Nana! ออกเสียงได้ถูกต้องและชัดเจนมากครับ เก่งมากครับ! เช้า 7 โมง ควรทักว่าอะไรครับ? เลือกแล้วพูดทักทายผ่านไมค์ได้เลย 🕖
+AI: เยี่ยมครับ! เช้า 7 โมง ควรทักว่าอะไรครับ? เลือกแล้วพูดทักทายผ่านไมค์ได้เลย 🕖
 Hint: 7 โมงเช้า → ทักว่าอะไร?
 Choices: 🌅 Good morning → "Good morning"
          ☀️ Good afternoon → "Good afternoon"
          🌙 Good evening → "Good evening"
 User: Good morning....
 Result: correct out pool
-response time : 1.42 s
-Reply: ยอดเยี่ยมครับ Nana! ออกเสียงได้ถูกต้องและชัดเจนมากครับ เก่งมากครับ! เก่งมากครับ! คราวนี้ลองทักทายผมสักประโยค — ใช้คำไหนก็ได้ที่เรียนไป 👋
+response time : 1.16 s
+Reply: ดีมากครับ! คราวนี้ลองทักทายผมสักประโยค — ใช้ Hello, Hi หรือคำทักทายตามเวลาที่เรียนไปก็ได้ครับ 👋
 
 Step 8
-AI: ยอดเยี่ยมครับ Nana! ออกเสียงได้ถูกต้องและชัดเจนมากครับ เก่งมากครับ! เก่งมากครับ! คราวนี้ลองทักทายผมสักประโยค — ใช้คำไหนก็ได้ที่เรียนไป 👋
+AI: ดีมากครับ! คราวนี้ลองทักทายผมสักประโยค — ใช้ Hello, Hi หรือคำทักทายตามเวลาที่เรียนไปก็ได้ครับ 👋
 Hint: (none)
-Choices: (none)
+Choices: 👋 Hello → "Hello"
+         ✌️ Hi → "Hi"
+         🌅 Good morning → "Good morning"
 User: Hello....
 Result: correct out pool
-response time : 1.31 s
-Reply: ยอดเยี่ยมครับ Nana! ออกเสียงได้ถูกต้องและชัดเจนมากครับ เก่งมากครับ! สุดยอดครับ Nana! 🎉 วันนี้คุณทักทายได้หลายแบบแล้ว ทั้ง Hello, Hi และทักทายตามเวลาในวัน — เก่งมากครับ! 🍌
+response time : 1.26 s
+Reply: ถูกต้องครับ! สุดยอดครับ Nana! 🎉 วันนี้คุณทักทายได้หลายแบบแล้ว ทั้ง Hello, Hi และทักทายตามเวลาในวัน 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ greetings scenario 2 complete · 8 turns · 12.47 s
+✅ greetings scenario 2 complete · 8 turns · 10.43 s
 
 ================================================================================
 greetings — Scenario 3 — out-pool close ทุก step → จบบท
@@ -191,85 +189,103 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 Step 1
 AI: สวัสดีครับ Nana! วันนี้เรามาเรียนการทักทายกันครับ — Hello, Hi และทักทายตามเวลาในวัน 😊 เริ่มจากคำแรก: Hello! ลองพูดตามครับ
 Hint: (none)
-Choices: ✌️ Hi → "Hi" (repeat-only)
-User: the number Hello
-Result: correct out pool
-response time : 1.42 s
-Reply: เก่งมากครับ Nana! ออกเสียงคำว่า "Hello" ได้ถูกต้องแล้วครับ เยี่ยมเลยครับ! Hello ใช้ทักทายได้ทั่วไปครับ 👋 ต่อไปคำสบายๆ: Hi! ลองพูดตามได้เลย
+Choices: 👋 Hello → "Hello"
+         ✌️ Hi → "Hi"
+         🌅 Good morning → "Good morning"
+User: Helo
+Result: close out pool
+response time : 1.26 s
+Reply: เกือบถูกแล้วครับ! พูดว่า Hello. 👋
+Hello ใช้ทักทายได้ทั่วไปครับ 👋 ต่อไปคำสบายๆ: Hi! ลองพูดตามว่า “Hi” ครับ
 
 Step 2
-AI: เก่งมากครับ Nana! ออกเสียงคำว่า "Hello" ได้ถูกต้องแล้วครับ เยี่ยมเลยครับ! Hello ใช้ทักทายได้ทั่วไปครับ 👋 ต่อไปคำสบายๆ: Hi! ลองพูดตามได้เลย
+AI: เกือบถูกแล้วครับ! พูดว่า Hello. 👋
+Hello ใช้ทักทายได้ทั่วไปครับ 👋 ต่อไปคำสบายๆ: Hi! ลองพูดตามว่า “Hi” ครับ
 Hint: เพื่อนสนิท → ทักว่าอะไร?
 Choices: 👋 Hello → "Hello"
          ✌️ Hi → "Hi"
-User: the number Hi
-Result: correct out pool
-response time : 1.34 s
-Reply: ยอดเยี่ยมครับ Nana! ออกเสียงคำว่า "Hi" ได้ถูกต้องและเป็นธรรมชาติมากครับ Hello ใช้ทักทายได้ทั่วไป ส่วน Hi ฟังสบายๆ และเป็นกันเองกว่าครับ ✌️ ถ้าเจอเพื่อนสนิท ควรทักว่าอะไรครับ?
+User: Hii
+Result: close out pool
+response time : 1.16 s
+Reply: เกือบถูกแล้วครับ! พูดว่า Hi. ✌️
+Hello ใช้ทักทายได้ทั่วไป ส่วน Hi ฟังสบายๆ และเป็นกันเองกว่าครับ ✌️ ถ้าเจอเพื่อนสนิท ควรทักว่าอะไรครับ?
 
 Step 3
-AI: ยอดเยี่ยมครับ Nana! ออกเสียงคำว่า "Hi" ได้ถูกต้องและเป็นธรรมชาติมากครับ Hello ใช้ทักทายได้ทั่วไป ส่วน Hi ฟังสบายๆ และเป็นกันเองกว่าครับ ✌️ ถ้าเจอเพื่อนสนิท ควรทักว่าอะไรครับ?
+AI: เกือบถูกแล้วครับ! พูดว่า Hi. ✌️
+Hello ใช้ทักทายได้ทั่วไป ส่วน Hi ฟังสบายๆ และเป็นกันเองกว่าครับ ✌️ ถ้าเจอเพื่อนสนิท ควรทักว่าอะไรครับ?
 Hint: เพื่อนสนิท → ทักว่าอะไร?
 Choices: 👋 Hello → "Hello"
          ✌️ Hi → "Hi"
-User: the number Hi
-Result: correct out pool
-response time : 1.54 s
-Reply: ถูกต้องครับ Nana! ถ้าเจอเพื่อนสนิทเราทักว่า "Hi" หรือ "Hey" ได้เลยครับ เก่งมากครับ! ถูกต้องครับ! ช่วงเช้าใช้ Good morning. 🌅 ลองพูดตามครับ
+User: Hii
+Result: close out pool
+response time : 1.25 s
+Reply: เกือบถูกแล้วครับ! พูดว่า Hi. 👋
+ช่วงเช้าใช้ Good morning. 🌅 ลองพูดตามว่า “Good morning” ครับ
 
 Step 4
-AI: ถูกต้องครับ Nana! ถ้าเจอเพื่อนสนิทเราทักว่า "Hi" หรือ "Hey" ได้เลยครับ เก่งมากครับ! ถูกต้องครับ! ช่วงเช้าใช้ Good morning. 🌅 ลองพูดตามครับ
-Hint: บ่าย 2 โมง → ทักว่าอะไร?
-Choices: ☀️ Good afternoon → "Good afternoon"
-         🌅 Good morning → "Good morning"
-User: Good morning....
-Result: correct out pool
-response time : 1.57 s
-Reply: ถูกต้องครับ Nana! ออกเสียงได้ชัดเจนและถูกต้องมากครับ เก่งมากครับ! ส่วนช่วงบ่ายเราใช้ Good afternoon. ☀️ สมมติว่าตอนนี้บ่าย 2 โมง คุณจะทักครูว่าอะไรครับ?
+AI: เกือบถูกแล้วครับ! พูดว่า Hi. 👋
+ช่วงเช้าใช้ Good morning. 🌅 ลองพูดตามว่า “Good morning” ครับ
+Hint: 7 โมงเช้า → ทักว่าอะไร?
+Choices: 🌅 Good morning → "Good morning"
+         ☀️ Good afternoon → "Good afternoon"
+         🌙 Good evening → "Good evening"
+User: Good mornin
+Result: close out pool
+response time : 1.26 s
+Reply: เกือบถูกแล้วครับ! พูดว่า Good morning. 🌅
+ส่วนช่วงบ่ายเราใช้ Good afternoon. ☀️ สมมติว่าตอนนี้บ่าย 2 โมง คุณจะทักครูว่าอะไรครับ?
 
 Step 5
-AI: ถูกต้องครับ Nana! ออกเสียงได้ชัดเจนและถูกต้องมากครับ เก่งมากครับ! ส่วนช่วงบ่ายเราใช้ Good afternoon. ☀️ สมมติว่าตอนนี้บ่าย 2 โมง คุณจะทักครูว่าอะไรครับ?
+AI: เกือบถูกแล้วครับ! พูดว่า Good morning. 🌅
+ส่วนช่วงบ่ายเราใช้ Good afternoon. ☀️ สมมติว่าตอนนี้บ่าย 2 โมง คุณจะทักครูว่าอะไรครับ?
 Hint: บ่าย 2 โมง → ทักว่าอะไร?
 Choices: ☀️ Good afternoon → "Good afternoon"
          🌅 Good morning → "Good morning"
-User: Good afternoon....
-Result: correct out pool
-response time : 1.26 s
-Reply: ถูกต้องครับ Nana! ออกเสียงได้ชัดเจนและถูกต้องมากครับ เก่งมากครับ! ดีมากครับ! ช่วงเย็นใช้ Good evening. 🌙 ลองพูดตามนะ
+User: Good after
+Result: close out pool
+response time : 1.15 s
+Reply: เกือบถูกแล้วครับ! พูดว่า Good afternoon. ☀️
+ช่วงเย็นใช้ Good evening. เป็นคำทักทายครับ 🌙 ลองพูดตามว่า “Good evening” ครับ
 
 Step 6
-AI: ถูกต้องครับ Nana! ออกเสียงได้ชัดเจนและถูกต้องมากครับ เก่งมากครับ! ดีมากครับ! ช่วงเย็นใช้ Good evening. 🌙 ลองพูดตามนะ
-Hint: 7 โมงเช้า → ทักว่าอะไร?
-Choices: 🌅 Good morning → "Good morning"
-         ☀️ Good afternoon → "Good afternoon"
-         🌙 Good evening → "Good evening"
-User: Good evening....
-Result: correct out pool
-response time : 1.47 s
-Reply: ยอดเยี่ยมครับ Nana! ออกเสียงได้ชัดเจนและถูกต้องมากครับ เก่งมากครับ! ต่อไปเรามาดูการกล่าวลาในภาษาอังกฤษกันครับ เช้า 7 โมง ควรทักว่าอะไรครับ? เลือกแล้วพูดทักทายผ่านไมค์ได้เลย 🕖
+AI: เกือบถูกแล้วครับ! พูดว่า Good afternoon. ☀️
+ช่วงเย็นใช้ Good evening. เป็นคำทักทายครับ 🌙 ลองพูดตามว่า “Good evening” ครับ
+Hint: (none)
+Choices: 🌙 Good evening → "Good evening"
+User: Good evenin
+Result: close out pool
+response time : 1.16 s
+Reply: เกือบถูกแล้วครับ! พูดว่า Good evening. 🌙
+เช้า 7 โมง ควรทักว่าอะไรครับ? เลือกแล้วพูดทักทายผ่านไมค์ได้เลย 🕖
 
 Step 7
-AI: ยอดเยี่ยมครับ Nana! ออกเสียงได้ชัดเจนและถูกต้องมากครับ เก่งมากครับ! ต่อไปเรามาดูการกล่าวลาในภาษาอังกฤษกันครับ เช้า 7 โมง ควรทักว่าอะไรครับ? เลือกแล้วพูดทักทายผ่านไมค์ได้เลย 🕖
+AI: เกือบถูกแล้วครับ! พูดว่า Good evening. 🌙
+เช้า 7 โมง ควรทักว่าอะไรครับ? เลือกแล้วพูดทักทายผ่านไมค์ได้เลย 🕖
 Hint: 7 โมงเช้า → ทักว่าอะไร?
 Choices: 🌅 Good morning → "Good morning"
          ☀️ Good afternoon → "Good afternoon"
          🌙 Good evening → "Good evening"
-User: Good morning....
-Result: correct out pool
-response time : 1.62 s
-Reply: ถูกต้องครับ Nana! เก่งมากครับ! ต่อไปเรามาดูการกล่าวลาในภาษาอังกฤษกันครับ ถ้าจะบอกลาตอนเย็น ควรพูดว่าอะไรครับ? เก่งมากครับ! คราวนี้ลองทักทายผมสักประโยค — ใช้คำไหนก็ได้ที่เรียนไป 👋
+User: Good mornin
+Result: close out pool
+response time : 1.37 s
+Reply: เกือบถูกแล้วครับ! พูดว่า Good morning. 🌅
+คราวนี้ลองทักทายผมสักประโยค — ใช้ Hello, Hi หรือคำทักทายตามเวลาที่เรียนไปก็ได้ครับ 👋
 
 Step 8
-AI: ถูกต้องครับ Nana! เก่งมากครับ! ต่อไปเรามาดูการกล่าวลาในภาษาอังกฤษกันครับ ถ้าจะบอกลาตอนเย็น ควรพูดว่าอะไรครับ? เก่งมากครับ! คราวนี้ลองทักทายผมสักประโยค — ใช้คำไหนก็ได้ที่เรียนไป 👋
+AI: เกือบถูกแล้วครับ! พูดว่า Good morning. 🌅
+คราวนี้ลองทักทายผมสักประโยค — ใช้ Hello, Hi หรือคำทักทายตามเวลาที่เรียนไปก็ได้ครับ 👋
 Hint: (none)
-Choices: (none)
-User: the number Hello
-Result: correct out pool
-response time : 1.31 s
-Reply: ถูกต้องครับ Nana! ออกเสียงได้ชัดเจนมากครับ เก่งมากครับ! ต่อไปเรามาดูการกล่าวลาในภาษาอังกฤษกันครับ ถ้าจะบอกลาตอนเย็น ควรพูดว่า "Good evening" ครับ สุดยอดครับ Nana! 🎉 วันนี้คุณทักทายได้หลายแบบแล้ว ทั้ง Hello, Hi และทักทายตามเวลาในวัน — เก่งมากครับ! 🍌
+Choices: 👋 Hello → "Hello"
+         ✌️ Hi → "Hi"
+         🌅 Good morning → "Good morning"
+User: Helo
+Result: close out pool
+response time : 1.23 s
+Reply: เกือบถูกแล้วครับ! พูดว่า Hello. 👋
+สุดยอดครับ Nana! 🎉 วันนี้คุณทักทายได้หลายแบบแล้ว ทั้ง Hello, Hi และทักทายตามเวลาในวัน 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ greetings scenario 3 complete · 8 turns · 11.52 s
+✅ greetings scenario 3 complete · 8 turns · 9.84 s
 
 ================================================================================
 greetings — Scenario 4 — out-pool wrong + in-pool พูดตาม recovery → จบบท
@@ -279,39 +295,43 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 Step 1
 AI: สวัสดีครับ Nana! วันนี้เรามาเรียนการทักทายกันครับ — Hello, Hi และทักทายตามเวลาในวัน 😊 เริ่มจากคำแรก: Hello! ลองพูดตามครับ
 Hint: (none)
-Choices: ✌️ Hi → "Hi" (repeat-only)
+Choices: 👋 Hello → "Hello"
+         ✌️ Hi → "Hi"
+         🌅 Good morning → "Good morning"
 User: Thank you.
 Result: incorrect out pool
-response time : 1.54 s
-Reply: ยังไม่ใช่ครับ Nana ลองพูดว่า "Hello" ตามผมนะครับ ลองพูดตามนะครับ
+response time : 1.44 s
+Reply: ยังไม่ถูกครับ ลองพูดตามว่า “Hello” ครับ
 
 Step 2
-AI: ยังไม่ใช่ครับ Nana ลองพูดว่า "Hello" ตามผมนะครับ ลองพูดตามนะครับ
+AI: ยังไม่ถูกครับ ลองพูดตามว่า “Hello” ครับ
 Hint: (none)
-Choices: ✌️ Hi → "Hi" (repeat-only)
+Choices: 👋 Hello → "Hello"
+         ✌️ Hi → "Hi"
+         🌅 Good morning → "Good morning"
 User: Hello
 Result: correct in pool
-response time : 99.70 ms
-Reply: เยี่ยมเลยครับ! Hello ใช้ทักทายได้ทั่วไปครับ 👋 ต่อไปคำสบายๆ: Hi! ลองพูดตามได้เลย
+response time : 99.30 ms
+Reply: Hello ใช้ทักทายได้ทั่วไปครับ 👋 ต่อไปคำสบายๆ: Hi! ลองพูดตามว่า “Hi” ครับ
 
 Step 3
-AI: เยี่ยมเลยครับ! Hello ใช้ทักทายได้ทั่วไปครับ 👋 ต่อไปคำสบายๆ: Hi! ลองพูดตามได้เลย
+AI: Hello ใช้ทักทายได้ทั่วไปครับ 👋 ต่อไปคำสบายๆ: Hi! ลองพูดตามว่า “Hi” ครับ
 Hint: เพื่อนสนิท → ทักว่าอะไร?
 Choices: 👋 Hello → "Hello"
          ✌️ Hi → "Hi"
 User: Thank you.
 Result: incorrect out pool
-response time : 1.22 s
-Reply: ยังไม่ใช่ครับ Nana ลองพูดว่า "Hi" ตามผมนะครับ ลองพูดตามนะครับ
+response time : 1.17 s
+Reply: ยังไม่ถูกครับ ลองพูดตามว่า “Hi” ครับ
 
 Step 4
-AI: ยังไม่ใช่ครับ Nana ลองพูดว่า "Hi" ตามผมนะครับ ลองพูดตามนะครับ
+AI: ยังไม่ถูกครับ ลองพูดตามว่า “Hi” ครับ
 Hint: เพื่อนสนิท → ทักว่าอะไร?
 Choices: 👋 Hello → "Hello"
          ✌️ Hi → "Hi"
 User: Hi
 Result: correct in pool
-response time : 140.39 ms
+response time : 115.71 ms
 Reply: Hello ใช้ทักทายได้ทั่วไป ส่วน Hi ฟังสบายๆ และเป็นกันเองกว่าครับ ✌️ ถ้าเจอเพื่อนสนิท ควรทักว่าอะไรครับ?
 
 Step 5
@@ -321,37 +341,39 @@ Choices: 👋 Hello → "Hello"
          ✌️ Hi → "Hi"
 User: Thank you.
 Result: incorrect out pool
-response time : 1.59 s
-Reply: ยังไม่ตรงครับ ลองใช้ “เพื่อนสนิท → ทักว่าอะไร?...” แล้วพูดต่อให้ครบประโยคครับ
+response time : 1.24 s
+Reply: ยังไม่ตรงครับ ถ้าเจอเพื่อนสนิท ให้ตอบว่า “Hi” ครับ
 
 Step 6
-AI: ยังไม่ตรงครับ ลองใช้ “เพื่อนสนิท → ทักว่าอะไร?...” แล้วพูดต่อให้ครบประโยคครับ
+AI: ยังไม่ตรงครับ ถ้าเจอเพื่อนสนิท ให้ตอบว่า “Hi” ครับ
 Hint: เพื่อนสนิท → ทักว่าอะไร?
 Choices: 👋 Hello → "Hello"
          ✌️ Hi → "Hi"
 User: Hi
 Result: correct in pool
-response time : 95.57 ms
-Reply: ถูกต้องครับ! ช่วงเช้าใช้ Good morning. 🌅 ลองพูดตามครับ
+response time : 195.48 ms
+Reply: ช่วงเช้าใช้ Good morning. 🌅 ลองพูดตามว่า “Good morning” ครับ
 
 Step 7
-AI: ถูกต้องครับ! ช่วงเช้าใช้ Good morning. 🌅 ลองพูดตามครับ
-Hint: บ่าย 2 โมง → ทักว่าอะไร?
-Choices: ☀️ Good afternoon → "Good afternoon"
-         🌅 Good morning → "Good morning"
+AI: ช่วงเช้าใช้ Good morning. 🌅 ลองพูดตามว่า “Good morning” ครับ
+Hint: 7 โมงเช้า → ทักว่าอะไร?
+Choices: 🌅 Good morning → "Good morning"
+         ☀️ Good afternoon → "Good afternoon"
+         🌙 Good evening → "Good evening"
 User: Thank you.
 Result: incorrect out pool
-response time : 1.47 s
-Reply: ยังไม่ถูกครับ Nana ลองพูดว่า "Good morning" นะครับ ลองพูดตามนะครับ
+response time : 1.38 s
+Reply: ยังไม่ถูกครับ ลองพูดตามว่า “Good morning” ครับ
 
 Step 8
-AI: ยังไม่ถูกครับ Nana ลองพูดว่า "Good morning" นะครับ ลองพูดตามนะครับ
-Hint: บ่าย 2 โมง → ทักว่าอะไร?
-Choices: ☀️ Good afternoon → "Good afternoon"
-         🌅 Good morning → "Good morning"
+AI: ยังไม่ถูกครับ ลองพูดตามว่า “Good morning” ครับ
+Hint: 7 โมงเช้า → ทักว่าอะไร?
+Choices: 🌅 Good morning → "Good morning"
+         ☀️ Good afternoon → "Good afternoon"
+         🌙 Good evening → "Good evening"
 User: Good morning
 Result: correct in pool
-response time : 95.63 ms
+response time : 1.13 s
 Reply: ส่วนช่วงบ่ายเราใช้ Good afternoon. ☀️ สมมติว่าตอนนี้บ่าย 2 โมง คุณจะทักครูว่าอะไรครับ?
 
 Step 9
@@ -361,39 +383,35 @@ Choices: ☀️ Good afternoon → "Good afternoon"
          🌅 Good morning → "Good morning"
 User: Thank you.
 Result: incorrect out pool
-response time : 1.22 s
-Reply: ยังไม่ตรงครับ ลองใช้ “บ่าย 2 โมง → ทักว่าอะไร?...” แล้วพูดต่อให้ครบประโยคครับ
+response time : 1.18 s
+Reply: ยังไม่ตรงครับ ตอนบ่ายให้ตอบว่า “Good afternoon” ครับ
 
 Step 10
-AI: ยังไม่ตรงครับ ลองใช้ “บ่าย 2 โมง → ทักว่าอะไร?...” แล้วพูดต่อให้ครบประโยคครับ
+AI: ยังไม่ตรงครับ ตอนบ่ายให้ตอบว่า “Good afternoon” ครับ
 Hint: บ่าย 2 โมง → ทักว่าอะไร?
 Choices: ☀️ Good afternoon → "Good afternoon"
          🌅 Good morning → "Good morning"
 User: Good afternoon
 Result: correct in pool
-response time : 89.81 ms
-Reply: ดีมากครับ! ช่วงเย็นใช้ Good evening. 🌙 ลองพูดตามนะ
+response time : 85.40 ms
+Reply: ช่วงเย็นใช้ Good evening. เป็นคำทักทายครับ 🌙 ลองพูดตามว่า “Good evening” ครับ
 
 Step 11
-AI: ดีมากครับ! ช่วงเย็นใช้ Good evening. 🌙 ลองพูดตามนะ
-Hint: 7 โมงเช้า → ทักว่าอะไร?
-Choices: 🌅 Good morning → "Good morning"
-         ☀️ Good afternoon → "Good afternoon"
-         🌙 Good evening → "Good evening"
+AI: ช่วงเย็นใช้ Good evening. เป็นคำทักทายครับ 🌙 ลองพูดตามว่า “Good evening” ครับ
+Hint: (none)
+Choices: 🌙 Good evening → "Good evening"
 User: Thank you.
 Result: incorrect out pool
-response time : 1.40 s
-Reply: ยังไม่ถูกครับ Nana ลองพูดว่า "Good evening" นะครับ ลองพูดตามนะครับ
+response time : 1.27 s
+Reply: ยังไม่ถูกครับ ลองพูดตามว่า “Good evening” ครับ
 
 Step 12
-AI: ยังไม่ถูกครับ Nana ลองพูดว่า "Good evening" นะครับ ลองพูดตามนะครับ
-Hint: 7 โมงเช้า → ทักว่าอะไร?
-Choices: 🌅 Good morning → "Good morning"
-         ☀️ Good afternoon → "Good afternoon"
-         🌙 Good evening → "Good evening"
+AI: ยังไม่ถูกครับ ลองพูดตามว่า “Good evening” ครับ
+Hint: (none)
+Choices: 🌙 Good evening → "Good evening"
 User: Good evening
 Result: correct in pool
-response time : 90.71 ms
+response time : 96.78 ms
 Reply: เช้า 7 โมง ควรทักว่าอะไรครับ? เลือกแล้วพูดทักทายผ่านไมค์ได้เลย 🕖
 
 Step 13
@@ -404,40 +422,44 @@ Choices: 🌅 Good morning → "Good morning"
          🌙 Good evening → "Good evening"
 User: Thank you.
 Result: incorrect out pool
-response time : 1.98 s
-Reply: ยังไม่ตรงครับ ลองใช้ “7 โมงเช้า → ทักว่าอะไร?...” แล้วพูดต่อให้ครบประโยคครับ
+response time : 1.28 s
+Reply: ยังไม่ตรงครับ เวลา 7 โมงเช้าให้ตอบว่า “Good morning” ครับ
 
 Step 14
-AI: ยังไม่ตรงครับ ลองใช้ “7 โมงเช้า → ทักว่าอะไร?...” แล้วพูดต่อให้ครบประโยคครับ
+AI: ยังไม่ตรงครับ เวลา 7 โมงเช้าให้ตอบว่า “Good morning” ครับ
 Hint: 7 โมงเช้า → ทักว่าอะไร?
 Choices: 🌅 Good morning → "Good morning"
          ☀️ Good afternoon → "Good afternoon"
          🌙 Good evening → "Good evening"
 User: Good morning
 Result: correct in pool
-response time : 154.07 ms
-Reply: เก่งมากครับ! คราวนี้ลองทักทายผมสักประโยค — ใช้คำไหนก็ได้ที่เรียนไป 👋
+response time : 121.50 ms
+Reply: คราวนี้ลองทักทายผมสักประโยค — ใช้ Hello, Hi หรือคำทักทายตามเวลาที่เรียนไปก็ได้ครับ 👋
 
 Step 15
-AI: เก่งมากครับ! คราวนี้ลองทักทายผมสักประโยค — ใช้คำไหนก็ได้ที่เรียนไป 👋
+AI: คราวนี้ลองทักทายผมสักประโยค — ใช้ Hello, Hi หรือคำทักทายตามเวลาที่เรียนไปก็ได้ครับ 👋
 Hint: (none)
-Choices: (none)
+Choices: 👋 Hello → "Hello"
+         ✌️ Hi → "Hi"
+         🌅 Good morning → "Good morning"
 User: Thank you.
 Result: incorrect out pool
-response time : 1.31 s
-Reply: ยังไม่ตรงครับ ลองเลือกคำตอบที่ตรงกับคำถาม เช่น “Hello” ครับ
+response time : 1.55 s
+Reply: ยังไม่ตรงครับ ลองทักทายด้วย “Hello”, “Hi” หรือคำทักทายตามเวลาครับ
 
 Step 16
-AI: ยังไม่ตรงครับ ลองเลือกคำตอบที่ตรงกับคำถาม เช่น “Hello” ครับ
+AI: ยังไม่ตรงครับ ลองทักทายด้วย “Hello”, “Hi” หรือคำทักทายตามเวลาครับ
 Hint: (none)
-Choices: (none)
+Choices: 👋 Hello → "Hello"
+         ✌️ Hi → "Hi"
+         🌅 Good morning → "Good morning"
 User: Hello
 Result: correct in pool
-response time : 93.93 ms
-Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณทักทายได้หลายแบบแล้ว ทั้ง Hello, Hi และทักทายตามเวลาในวัน — เก่งมากครับ! 🍌
+response time : 96.47 ms
+Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณทักทายได้หลายแบบแล้ว ทั้ง Hello, Hi และทักทายตามเวลาในวัน 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ greetings scenario 4 complete · 16 turns · 12.58 s
+✅ greetings scenario 4 complete · 16 turns · 12.44 s
 
 ================================================================================
 greetings — Scenario 5 — out-pool wrong + พูดตามผิดอีกครั้ง → soft-advance → จบบท
@@ -447,39 +469,45 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 Step 1
 AI: สวัสดีครับ Nana! วันนี้เรามาเรียนการทักทายกันครับ — Hello, Hi และทักทายตามเวลาในวัน 😊 เริ่มจากคำแรก: Hello! ลองพูดตามครับ
 Hint: (none)
-Choices: ✌️ Hi → "Hi" (repeat-only)
+Choices: 👋 Hello → "Hello"
+         ✌️ Hi → "Hi"
+         🌅 Good morning → "Good morning"
 User: Thank you.
 Result: incorrect out pool
-response time : 1.27 s
-Reply: ยังไม่ใช่ครับ Nana ลองพูดว่า "Hello" นะครับ ลองพูดตามนะครับ
+response time : 1.24 s
+Reply: ยังไม่ถูกครับ ลองพูดตามว่า “Hello” ครับ
 
 Step 2
-AI: ยังไม่ใช่ครับ Nana ลองพูดว่า "Hello" นะครับ ลองพูดตามนะครับ
+AI: ยังไม่ถูกครับ ลองพูดตามว่า “Hello” ครับ
 Hint: (none)
-Choices: ✌️ Hi → "Hi" (repeat-only)
+Choices: 👋 Hello → "Hello"
+         ✌️ Hi → "Hi"
+         🌅 Good morning → "Good morning"
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 94.98 ms
+response time : 109.89 ms
 Reply: ตรงนี้พูดว่า "Hello" ครับ 👋
-ไปต่อกันเลย — Hi
+ไปต่อกันเลย — Hello ใช้ทักทายได้ทั่วไปครับ 👋 ต่อไปคำสบายๆ: Hi! ลองพูดตามว่า “Hi” ครับ
 
 Step 3
 AI: ตรงนี้พูดว่า "Hello" ครับ 👋
-ไปต่อกันเลย — Hi
-Hint: (none)
-Choices: ✌️ Hi → "Hi" (repeat-only)
+ไปต่อกันเลย — Hello ใช้ทักทายได้ทั่วไปครับ 👋 ต่อไปคำสบายๆ: Hi! ลองพูดตามว่า “Hi” ครับ
+Hint: เพื่อนสนิท → ทักว่าอะไร?
+Choices: 👋 Hello → "Hello"
+         ✌️ Hi → "Hi"
 User: Thank you.
 Result: incorrect out pool
-response time : 1.10 s
-Reply: เก่งมากครับ Nana! ลองพูดว่า "Hi" ดูนะครับ ลองพูดตามนะครับ
+response time : 1.16 s
+Reply: ยังไม่ถูกครับ ลองพูดตามว่า “Hi” ครับ
 
 Step 4
-AI: เก่งมากครับ Nana! ลองพูดว่า "Hi" ดูนะครับ ลองพูดตามนะครับ
-Hint: (none)
-Choices: ✌️ Hi → "Hi" (repeat-only)
+AI: ยังไม่ถูกครับ ลองพูดตามว่า “Hi” ครับ
+Hint: เพื่อนสนิท → ทักว่าอะไร?
+Choices: 👋 Hello → "Hello"
+         ✌️ Hi → "Hi"
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 150.42 ms
+response time : 105.98 ms
 Reply: ตรงนี้พูดว่า "Hi" ครับ ✌️
 ไปต่อกันเลย — Hello ใช้ทักทายได้ทั่วไป ส่วน Hi ฟังสบายๆ และเป็นกันเองกว่าครับ ✌️ ถ้าเจอเพื่อนสนิท ควรทักว่าอะไรครับ?
 
@@ -491,37 +519,37 @@ Choices: 👋 Hello → "Hello"
          ✌️ Hi → "Hi"
 User: Thank you.
 Result: incorrect out pool
-response time : 1.18 s
-Reply: ยังไม่ตรงครับ ลองใช้ “เพื่อนสนิท → ทักว่าอะไร?...” แล้วพูดต่อให้ครบประโยคครับ
+response time : 1.26 s
+Reply: ยังไม่ตรงครับ ถ้าเจอเพื่อนสนิท ให้ตอบว่า “Hi” ครับ
 
 Step 6
-AI: ยังไม่ตรงครับ ลองใช้ “เพื่อนสนิท → ทักว่าอะไร?...” แล้วพูดต่อให้ครบประโยคครับ
+AI: ยังไม่ตรงครับ ถ้าเจอเพื่อนสนิท ให้ตอบว่า “Hi” ครับ
 Hint: เพื่อนสนิท → ทักว่าอะไร?
 Choices: 👋 Hello → "Hello"
          ✌️ Hi → "Hi"
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 114.32 ms
+response time : 92.51 ms
 Reply: ตรงนี้พูดว่า "Hi" ครับ 👋
-ไปต่อกันเลย — Good morning
+ไปต่อกันเลย — ช่วงเช้าใช้ Good morning. 🌅 ลองพูดตามว่า “Good morning” ครับ
 
 Step 7
 AI: ตรงนี้พูดว่า "Hi" ครับ 👋
-ไปต่อกันเลย — Good morning
+ไปต่อกันเลย — ช่วงเช้าใช้ Good morning. 🌅 ลองพูดตามว่า “Good morning” ครับ
 Hint: (none)
-Choices: ✌️ Hi → "Hi" (repeat-only)
+Choices: 🌅 Good morning → "Good morning"
 User: Thank you.
 Result: incorrect out pool
-response time : 1.32 s
-Reply: เกือบถูกแล้วครับ ลองพูดว่า "Good morning" ดูนะครับ ลองพูดตามนะครับ
+response time : 1.16 s
+Reply: ยังไม่ถูกครับ ลองพูดตามว่า “Good morning” ครับ
 
 Step 8
-AI: เกือบถูกแล้วครับ ลองพูดว่า "Good morning" ดูนะครับ ลองพูดตามนะครับ
+AI: ยังไม่ถูกครับ ลองพูดตามว่า “Good morning” ครับ
 Hint: (none)
-Choices: ✌️ Hi → "Hi" (repeat-only)
+Choices: 🌅 Good morning → "Good morning"
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 116.58 ms
+response time : 90.25 ms
 Reply: ตรงนี้พูดว่า "Good morning" ครับ 🌅
 ไปต่อกันเลย — Good afternoon. ☀️ สมมติว่าตอนนี้บ่าย 2 โมง คุณจะทักครูว่าอะไรครับ?
 
@@ -533,37 +561,37 @@ Choices: ☀️ Good afternoon → "Good afternoon"
          🌅 Good morning → "Good morning"
 User: Thank you.
 Result: incorrect out pool
-response time : 1.31 s
-Reply: ยังไม่ตรงครับ ลองใช้ “บ่าย 2 โมง → ทักว่าอะไร?...” แล้วพูดต่อให้ครบประโยคครับ
+response time : 1.28 s
+Reply: ยังไม่ตรงครับ ตอนบ่ายให้ตอบว่า “Good afternoon” ครับ
 
 Step 10
-AI: ยังไม่ตรงครับ ลองใช้ “บ่าย 2 โมง → ทักว่าอะไร?...” แล้วพูดต่อให้ครบประโยคครับ
+AI: ยังไม่ตรงครับ ตอนบ่ายให้ตอบว่า “Good afternoon” ครับ
 Hint: บ่าย 2 โมง → ทักว่าอะไร?
 Choices: ☀️ Good afternoon → "Good afternoon"
          🌅 Good morning → "Good morning"
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 156.56 ms
+response time : 90.51 ms
 Reply: ตรงนี้พูดว่า "Good afternoon" ครับ ☀️
-ไปต่อกันเลย — Good evening
+ไปต่อกันเลย — ช่วงเย็นใช้ Good evening. เป็นคำทักทายครับ 🌙 ลองพูดตามว่า “Good evening” ครับ
 
 Step 11
 AI: ตรงนี้พูดว่า "Good afternoon" ครับ ☀️
-ไปต่อกันเลย — Good evening
+ไปต่อกันเลย — ช่วงเย็นใช้ Good evening. เป็นคำทักทายครับ 🌙 ลองพูดตามว่า “Good evening” ครับ
 Hint: (none)
-Choices: ✌️ Hi → "Hi" (repeat-only)
+Choices: 🌙 Good evening → "Good evening"
 User: Thank you.
 Result: incorrect out pool
-response time : 1.14 s
-Reply: ยังไม่ถูกครับ ลองพูดว่า "Good evening" นะครับ ลองพูดตามนะครับ
+response time : 1.36 s
+Reply: ยังไม่ถูกครับ ลองพูดตามว่า “Good evening” ครับ
 
 Step 12
-AI: ยังไม่ถูกครับ ลองพูดว่า "Good evening" นะครับ ลองพูดตามนะครับ
+AI: ยังไม่ถูกครับ ลองพูดตามว่า “Good evening” ครับ
 Hint: (none)
-Choices: ✌️ Hi → "Hi" (repeat-only)
+Choices: 🌙 Good evening → "Good evening"
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 89.88 ms
+response time : 99.04 ms
 Reply: ตรงนี้พูดว่า "Good evening" ครับ 🌙
 ไปต่อกันเลย — Good morning
 
@@ -576,18 +604,18 @@ Choices: 🌅 Good morning → "Good morning"
          🌙 Good evening → "Good evening"
 User: Thank you.
 Result: incorrect out pool
-response time : 1.33 s
-Reply: ยังไม่ตรงครับ ลองใช้ “7 โมงเช้า → ทักว่าอะไร?...” แล้วพูดต่อให้ครบประโยคครับ
+response time : 1.15 s
+Reply: ยังไม่ตรงครับ เวลา 7 โมงเช้าให้ตอบว่า “Good morning” ครับ
 
 Step 14
-AI: ยังไม่ตรงครับ ลองใช้ “7 โมงเช้า → ทักว่าอะไร?...” แล้วพูดต่อให้ครบประโยคครับ
+AI: ยังไม่ตรงครับ เวลา 7 โมงเช้าให้ตอบว่า “Good morning” ครับ
 Hint: 7 โมงเช้า → ทักว่าอะไร?
 Choices: 🌅 Good morning → "Good morning"
          ☀️ Good afternoon → "Good afternoon"
          🌙 Good evening → "Good evening"
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 97.21 ms
+response time : 85.94 ms
 Reply: ตรงนี้พูดว่า "Good morning" ครับ 🌅
 ไปต่อกันเลย — Hello
 
@@ -595,35 +623,26 @@ Step 15
 AI: ตรงนี้พูดว่า "Good morning" ครับ 🌅
 ไปต่อกันเลย — Hello
 Hint: (none)
-Choices: ✌️ Hi → "Hi" (repeat-only)
+Choices: 👋 Hello → "Hello"
+         ✌️ Hi → "Hi"
+         🌅 Good morning → "Good morning"
 User: Thank you.
 Result: incorrect out pool
-response time : 1.14 s
-Reply: ยังไม่ตรงครับ ลองเลือกคำตอบที่ตรงกับคำถาม เช่น “Hello” ครับ
+response time : 1.06 s
+Reply: ยังไม่ตรงครับ ลองทักทายด้วย “Hello”, “Hi” หรือคำทักทายตามเวลาครับ
 
 Step 16
-AI: ยังไม่ตรงครับ ลองเลือกคำตอบที่ตรงกับคำถาม เช่น “Hello” ครับ
+AI: ยังไม่ตรงครับ ลองทักทายด้วย “Hello”, “Hi” หรือคำทักทายตามเวลาครับ
 Hint: (none)
-Choices: ✌️ Hi → "Hi" (repeat-only)
+Choices: 👋 Hello → "Hello"
+         ✌️ Hi → "Hi"
+         🌅 Good morning → "Good morning"
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 91.29 ms
+response time : 94.86 ms
 Reply: ตรงนี้พูดได้ว่า "Hello" ครับ 👋
 
 🎉 จบบทแล้วครับ Nana! วันนี้คุณทักทายได้หลายแบบแล้ว ทั้ง Hello, Hi และทักทายตามเวลาในวันครับ 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ greetings scenario 5 complete · 16 turns · 10.70 s
-
-================================================================================
-SUMMARY
-================================================================================
-
-greetings
-  ✅ Scenario 1 — 8 steps · 779.61 ms
-  ✅ Scenario 2 — 8 steps · 12.47 s
-  ✅ Scenario 3 — 8 steps · 11.52 s
-  ✅ Scenario 4 — 16 steps · 12.58 s
-  ✅ Scenario 5 — 16 steps · 10.70 s
-
-Total: 5/5 passed
+✅ greetings scenario 5 complete · 16 turns · 10.44 s

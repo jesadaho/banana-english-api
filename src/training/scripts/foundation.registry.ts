@@ -1,8 +1,6 @@
-import type { ScriptTurnResult } from './types';
 import {
   createFoundationLessonDef,
   FOUNDATION_LESSON_IDS,
-  personalize,
 } from '../foundation/foundation.helpers';
 import {
   FOUNDATION_BOARDS,
@@ -25,13 +23,13 @@ const OPENING_TEXTS: Record<(typeof FOUNDATION_LESSON_IDS)[number], string> = {
   yes_no_maybe:
     'สวัสดีครับ {name}! วันนี้เราจะฝึกตอบ Yes, No และ Maybe ครับ ✅ ถ้ามีคนถาม Do you like coffee? แปลว่า “คุณชอบกาแฟไหม” และเราชอบ ให้ตอบ Yes, I do. แปลว่า “ใช่ ฉันชอบ” ลองพูดตามว่า “Yes, I do.” ครับ',
   polite_expressions:
-    'สวัสดีครับ {name}! วันนี้เรามาเรียนคำสุภาพที่ใช้ทุกวันครับ 🙏 ลองพูดตามว่า Thank you very much.',
+    'สวัสดีครับ {name}! วันนี้เรามาเรียนคำสุภาพที่ใช้ทุกวันครับ 🙏 Thank you very much. แปลว่า “ขอบคุณมาก” ใช้เมื่ออยากขอบคุณใคร ลองพูดตามว่า “Thank you very much.” ครับ',
   meet_people:
-    'สวัสดีครับ {name}! วันนี้เรามาฝึกพูดเกี่ยวกับตัวเองและคู่สนทนาครับ 🙋 ลองพูดตามว่า I am {name}.',
+    'สวัสดีครับ {name}! วันนี้เรามาฝึกพูดถึงตัวเองและคู่สนทนาครับ 🙋 I am {name}. แปลว่า “ฉันคือ {name}” และ I am ใช้พูดถึงตัวเรา ลองพูดตามว่า “I am {name}.” ครับ',
   talk_about_groups:
     'สวัสดีครับ {name}! วันนี้เรามาพูดถึงคนอื่นและสิ่งของครับ 👨 ลองพูดตามว่า He is my father.',
   ee_about_me_family:
-    'สวัสดีครับ {name}! วันนี้เรามาเรียนคำศัพท์ครอบครัวและประโยคง่ายๆ กันครับ 👨‍👩‍👧 พร้อมแล้วพูดว่า I\'m ready ได้เลยครับ 🚀',
+    'สวัสดีครับ {name}! วันนี้เรามาเรียนคำศัพท์ครอบครัวครับ 👨‍👩‍👧 เริ่มจาก brother แปลว่า “พี่ชายหรือน้องชาย” ลองพูดตามว่า “brother” ครับ',
   numbers:
     'สวัสดีครับ {name}! วันนี้เรามาเรียนตัวเลข 0–20 กันครับ 🔢 ลองพูดตามว่า three นะครับ',
   telling_time:
@@ -41,15 +39,15 @@ const OPENING_TEXTS: Record<(typeof FOUNDATION_LESSON_IDS)[number], string> = {
   money_prices:
     'สวัสดีครับ {name}! วันนี้เรามาเรียนถามและบอกราคาเป็นภาษาอังกฤษครับ 💵 ลองพูดตามว่า How much is it?',
   likes_dislikes:
-    'สวัสดีครับ {name}! วันนี้เรามาเรียนบอกสิ่งที่ชอบและไม่ชอบครับ ☕ ลองพูดตามว่า I like coffee.',
+    'สวัสดีครับ {name}! วันนี้เรามาเรียนบอกสิ่งที่ชอบและไม่ชอบครับ ☕ I like... แปลว่า “ฉันชอบ...” เช่น I like coffee. แปลว่า “ฉันชอบกาแฟ” ลองพูดตามว่า “I like coffee.” ครับ',
   wants_needs:
-    'สวัสดีครับ {name}! วันนี้เรามาเรียน I want / I need / I have ครับ 💧 ลองพูดตามว่า I want water.',
+    'สวัสดีครับ {name}! วันนี้เรามาเรียน I want / I need / I have ครับ 💧 I want ใช้บอกสิ่งที่อยากได้, I need ใช้บอกสิ่งที่จำเป็นต้องใช้ และ I have ใช้บอกสิ่งที่มีอยู่แล้ว เริ่มจาก I want water. แปลว่า “ฉันอยากได้น้ำ” ลองพูดตามครับ',
   can_cant:
-    'สวัสดีครับ {name}! วันนี้เรามาเรียน I can / I can\'t ครับ 🏊 ลองพูดตามว่า I can swim.',
+    'สวัสดีครับ {name}! วันนี้เรามาเรียน I can / I can\'t ครับ 🏊 can แปลว่า “ทำได้” ส่วน can\'t แปลว่า “ทำไม่ได้” เช่น I can swim. คือ “ฉันว่ายน้ำได้” ลองพูดตามว่า “I can swim.” ครับ',
   asking_for_help:
-    'สวัสดีครับ {name}! วันนี้เรามาเรียน 3 ประโยคช่วยชีวิตเวลาฟังอังกฤษไม่ทัน 🆘 ลองพูดตามว่า I don\'t understand.',
+    'สวัสดีครับ {name}! วันนี้เรามาเรียน 3 ประโยคช่วยชีวิตเวลาฟังอังกฤษไม่ทัน 🆘 I don\'t understand. แปลว่า “ฉันไม่เข้าใจ” ใช้เมื่อฟังแล้วไม่เข้าใจ ลองพูดตามว่า “I don\'t understand.” ครับ',
   asking_questions:
-    'สวัสดีครับ {name}! วันนี้เรามาเรียนถามคำถามง่ายๆ ครับ 🚻 ลองพูดตามว่า Where is the bathroom?',
+    'สวัสดีครับ {name}! วันนี้เรามาเรียนถามคำถามง่ายๆ ครับ 🚻 Where ใช้ถามสถานที่ และ Where is the bathroom? แปลว่า “ห้องน้ำอยู่ที่ไหน” ใช้เมื่อต้องการหาห้องน้ำ ลองพูดตามครับ',
 };
 
 const COMPLETION_TEXTS: Record<
@@ -66,7 +64,7 @@ const COMPLETION_TEXTS: Record<
   yes_no_maybe: (name) =>
     foundationCompletion(name, 'วันนี้คุณตอบ Yes / No / Maybe และคำตอบสั้นๆ ได้แล้ว'),
   polite_expressions: (name) =>
-    foundationCompletion(name, 'วันนี้คุณใช้ please, thank you, excuse me และ sorry ได้แล้ว'),
+    foundationCompletion(name, 'วันนี้คุณใช้ thank you, you\'re welcome, excuse me และ sorry ได้แล้ว'),
   meet_people: (name) =>
     foundationCompletion(name, 'วันนี้คุณพูด I am... และ You are... ได้แล้ว'),
   talk_about_groups: (name) =>
@@ -74,11 +72,11 @@ const COMPLETION_TEXTS: Record<
   ee_about_me_family: (name) =>
     foundationCompletion(name, 'วันนี้คุณแนะนำครอบครัวด้วย This is my... และ I have... ได้แล้ว'),
   numbers: (name) =>
-    foundationCompletion(name, 'วันนี้คุณพูดตัวเลข 0–20 ได้แล้ว'),
+    foundationCompletion(name, 'วันนี้คุณฝึกพูดตัวเลข 3, 7, 8, 16 และ 20 แล้ว'),
   telling_time: (name) =>
-    foundationCompletion(name, 'วันนี้คุณบอกเวลาและใช้ a.m./p.m. ได้แล้ว'),
+    foundationCompletion(name, 'วันนี้คุณฝึกบอกเวลาพื้นฐานด้วย o\'clock ตัวเลข และ a.m./p.m. แล้ว'),
   everyday_numbers: (name) =>
-    foundationCompletion(name, 'วันนี้คุณอ่านตัวเลข 20–100 ได้แล้ว'),
+    foundationCompletion(name, 'วันนี้คุณฝึกอ่านหลักสิบและเลขสองหลักบางตัวแล้ว'),
   money_prices: (name) =>
     foundationCompletion(name, 'วันนี้คุณถามและบอกราคาเป็นภาษาอังกฤษได้แล้ว'),
   likes_dislikes: (name) =>
@@ -90,7 +88,7 @@ const COMPLETION_TEXTS: Record<
   asking_for_help: (name) =>
     foundationCompletion(name, 'วันนี้คุณมี 3 ประโยคช่วยชีวิตเมื่อฟังอังกฤษไม่ทันแล้ว'),
   asking_questions: (name) =>
-    foundationCompletion(name, 'วันนี้คุณถามคำถามง่ายๆ ด้วย What/Where/When/Who/How ได้แล้ว'),
+    foundationCompletion(name, 'วันนี้คุณถามคำถามง่ายๆ ด้วย What, Where, Who และ How ได้แล้ว'),
 };
 
 function buildFoundationDef(
@@ -104,27 +102,9 @@ function buildFoundationDef(
     completionText: COMPLETION_TEXTS[lessonId],
     matchesLoose: FOUNDATION_LOOSE_MATCHERS[lessonId],
     matchesClose: FOUNDATION_CLOSE_MATCHERS[lessonId],
-    pinWithoutGuidedSteps:
-      lessonId === 'ee_about_me_family' ? [1] : undefined,
     exactExpectedOnlySteps:
       lessonId === 'greetings' ? [3, 5, 7] : undefined,
   });
-
-  if (lessonId === 'ee_about_me_family') {
-    return {
-      ...base,
-      buildOpening(learnerFirstName: string): ScriptTurnResult {
-        const name = learnerFirstName.trim();
-        return {
-          textEn: personalize(OPENING_TEXTS.ee_about_me_family, name || 'Ben'),
-          textTh: '',
-          isLessonComplete: false,
-          expectsUserSpeech: true,
-          expectedSpeech: "I'm ready",
-        };
-      },
-    };
-  }
 
   return base;
 }

@@ -61,7 +61,7 @@ export const FOUNDATION_POOLGATE_FIXTURES: FoundationPoolGateFixture[] = [
   },
   {
     lessonId: 'ee_about_me_family',
-    setupExact: ["I'm ready"],
+    setupExact: [],
     exactAtProbe: 'brother',
     outOfPoolAtProbe: 'my brother',
     wrongAtProbe: 'Good morning.',

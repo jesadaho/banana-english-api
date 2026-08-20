@@ -69,7 +69,8 @@ export const FOUNDATION_LOOSE_MATCHERS: Record<
       1: /^he is /,
       2: /^she is /,
       3: /^it is /,
-      5: /^(he is|she is|it is) /,
+      4: /^(he is|she is|it is|it['’]s) /,
+      5: /^(he is|she is|it is|it['’]s) /,
     }),
   ee_about_me_family: (step, text) =>
     loose(step, text, {
@@ -157,6 +158,53 @@ export const FOUNDATION_CLOSE_MATCHERS: Partial<
       7: /^(morning|good mornin)$/,
       8: /^(helo|hii|good mornin|good after|good evenin)$/,
     }),
+  polite_expressions: (step, text) => loose(step, text, {
+    1: /^thank you very$/, 2: /^you welcome$/, 3: /^excuse$/, 4: /^thank$/, 5: /^i sorry$/,
+  }),
+  meet_people: (step, text) => loose(step, text, {
+    1: /^i [a-z]+$/, 2: /^i am student$/, 3: /^you my friend$/, 4: /^i student$/, 5: /^i student$/,
+  }),
+  talk_about_groups: (step, text) => loose(step, text, {
+    1: /^he my father$/, 2: /^she my sister$/, 3: /^it my bag$/, 4: /^it my bag$/, 5: /^he my father$/,
+  }),
+  ee_about_me_family: (step, text) => loose(step, text, {
+    1: /^brotha$/, 2: /^motha$/, 3: /^fatha$/, 4: /^this my father$/,
+    5: /^this my sister$/, 6: /^i have brother$/,
+    7: /^i have two sister$/, 8: /^this my father$/,
+  }),
+  numbers: (step, text) => loose(step, text, {
+    1: /^tree$/, 2: /^ate$/, 3: /^seben$/, 4: /^six teen$/, 5: /^twentee$/,
+  }),
+  telling_time: (step, text) => loose(step, text, {
+    1: /^it['’]?s six clock$/, 2: /^it['’]?s seven thirty clock$/,
+    3: /^it['’]?s seven$/, 4: /^it['’]?s nine$/, 5: /^it['’]?s seven morning$/,
+  }),
+  everyday_numbers: (step, text) => loose(step, text, {
+    1: /^fourty$/, 2: /^thirty five$/, 3: /^sixty two$/, 4: /^fivty$/, 5: /^eightty$/,
+  }),
+  money_prices: (step, text) => loose(step, text, {
+    1: /^how much it is$/, 2: /^it five dollars$/, 3: /^it cheap$/,
+    4: /^it ten dollars$/, 5: /^it ten dollars$/,
+  }),
+  likes_dislikes: (step, text) => loose(step, text, {
+    1: /^i like coffee very$/, 2: /^i like pizza very$/, 3: /^i no like tea$/,
+    4: /^i no like tea$/, 5: /^i like coffee very$/,
+  }),
+  wants_needs: (step, text) => loose(step, text, {
+    1: /^i want waters$/, 2: /^i need helps$/, 3: /^i have dog$/,
+    4: /^i want waters$/, 5: /^i want coffees$/,
+  }),
+  can_cant: (step, text) => loose(step, text, {
+    1: /^i swim$/, 2: /^i no can drive$/, 3: /^i can cooking$/, 4: /^i can cooking$/,
+  }),
+  asking_for_help: (step, text) => loose(step, text, {
+    1: /^i not understand$/, 2: /^can speak more slowly$/,
+    3: /^what that mean$/, 4: /^i not understand$/,
+  }),
+  asking_questions: (step, text) => loose(step, text, {
+    1: /^where the bathroom$/, 2: /^who that$/, 3: /^how you$/,
+    4: /^what this$/, 5: /^what this$/,
+  }),
   introductions: (step, text) =>
     loose(step, text, {
       1: /^my name [a-z]+$/,
@@ -461,7 +509,7 @@ export const FOUNDATION_BOARDS: Record<
   polite_expressions: {
     1: {
       textEn:
-        'สวัสดีครับ {name}! วันนี้เรามาเรียนคำสุภาพที่ใช้ทุกวันครับ 🙏 เริ่มจาก Thank you — ลองพูดตามว่า Thank you very much.',
+        'สวัสดีครับ {name}! วันนี้เรามาเรียนคำสุภาพที่ใช้ทุกวันครับ 🙏 Thank you very much. แปลว่า “ขอบคุณมาก” ใช้เมื่ออยากขอบคุณใคร ลองพูดตามว่า “Thank you very much.” ครับ',
       withPraise: false,
       stem: '',
       expectedSpeech: 'Thank you very much.',
@@ -528,7 +576,7 @@ export const FOUNDATION_BOARDS: Record<
   meet_people: {
     1: {
       textEn:
-        'สวัสดีครับ {name}! วันนี้เรามาฝึกพูดเกี่ยวกับตัวเองและคู่สนทนาครับ 🙋 ถ้าจะบอกว่า "ฉันชื่อเบน" ให้พูดว่า I am {name}. ลองพูดตามนะครับ',
+        'สวัสดีครับ {name}! วันนี้เรามาฝึกพูดถึงตัวเองและคู่สนทนาครับ 🙋 I am {name}. แปลว่า “ฉันคือ {name}” และ I am ใช้พูดถึงตัวเรา ลองพูดตามว่า “I am {name}.” ครับ',
       withPraise: false,
       stem: '',
       expectedSpeech: 'I am {name}.',
@@ -536,7 +584,7 @@ export const FOUNDATION_BOARDS: Record<
     },
     2: {
       textEn:
-        'เก่งมากครับ! ถ้าจะบอกว่าเป็นนักเรียน — I am a student. 🎓 ลองพูดตามครับ',
+        'ถ้าจะบอกว่าเป็นนักเรียน — I am a student. 🎓 ลองพูดตามครับ',
       withPraise: true,
       stem: '',
       expectedSpeech: 'I am a student.',
@@ -557,7 +605,7 @@ export const FOUNDATION_BOARDS: Record<
     },
     4: {
       textEn:
-        'ดีมากครับ! You are my friend. แปลว่า “คุณคือเพื่อนของฉัน” ต่อไปลองทบทวน I am กันครับ ถ้าจะบอกเพื่อนว่าคุณเป็นนักเรียน จะพูดว่าอะไรครับ? 🎓',
+        'You are my friend. แปลว่า “คุณคือเพื่อนของฉัน” ต่อไปลองทบทวน I am กันครับ ถ้าจะบอกเพื่อนว่าคุณเป็นนักเรียน จะพูดว่าอะไรครับ? 🎓',
       withPraise: true,
       stem: 'I am a student.',
       expectedSpeech: 'I am a student.',
@@ -638,36 +686,28 @@ export const FOUNDATION_BOARDS: Record<
   ee_about_me_family: {
     1: {
       textEn:
-        'สวัสดีครับ {name}! วันนี้เรามาเรียนคำศัพท์ครอบครัวและประโยคง่ายๆ กันครับ 👨‍👩‍👧 พร้อมแล้วพูดว่า I\'m ready ได้เลยครับ 🚀',
+        'สวัสดีครับ {name}! วันนี้เรามาเรียนคำศัพท์ครอบครัวครับ 👨‍👩‍👧 เริ่มจาก brother แปลว่า “พี่ชายหรือน้องชาย” ลองพูดตามว่า “brother” ครับ',
       withPraise: false,
-      stem: "I'm ready",
-      expectedSpeech: "I'm ready",
-      options: [{ emoji: '🚀', label: "I'm ready", speak: "I'm ready" }],
-    },
-    2: {
-      textEn:
-        'เก่งมากครับ! คำชุดแรก — ครอบครัว คือ family, พี่ชาย/น้องชาย คือ brother, พี่สาว/น้องสาว คือ sister 👦 ลองพูดตามคำว่า brother ครับ',
-      withPraise: true,
       stem: '',
       expectedSpeech: 'brother',
       options: [{ emoji: '👦', label: 'brother', speak: 'brother' }],
     },
-    3: {
+    2: {
       textEn:
-        'ต่อไป พ่อ คือ father, แม่ คือ mother 👩 ลองพูดตามคำว่า mother ครับ',
+        'ต่อไป mother แปลว่า “แม่” 👩 ลองพูดตามคำว่า mother ครับ',
       withPraise: true,
       stem: '',
       expectedSpeech: 'mother',
       options: [{ emoji: '👩', label: 'mother', speak: 'mother' }],
     },
-    4: {
-      textEn: 'พ่อ ภาษาอังกฤษพูดว่าอะไรครับ? 👨',
+    3: {
+      textEn: 'father แปลว่า “พ่อ” 👨 พ่อ ภาษาอังกฤษพูดว่าอะไรครับ?',
       withPraise: true,
       stem: 'father',
       expectedSpeech: 'father',
       options: [...FAMILY_VOCAB_OPTIONS],
     },
-    5: {
+    4: {
       textEn:
         'เยี่ยมเลยครับ! แนะนำคนหนึ่งคน — This is my father. 👨 ลองพูดตามนะครับ',
       withPraise: true,
@@ -677,7 +717,7 @@ export const FOUNDATION_BOARDS: Record<
         { emoji: '👨', label: 'This is my father.', speak: 'This is my father.' },
       ],
     },
-    6: {
+    5: {
       textEn:
         'ลองแนะนำคนในครอบครัวอีกคนครับ — This is my sister. 👧',
       withPraise: true,
@@ -687,7 +727,7 @@ export const FOUNDATION_BOARDS: Record<
         { emoji: '👧', label: 'This is my sister.', speak: 'This is my sister.' },
       ],
     },
-    7: {
+    6: {
       textEn:
         'ต่อไปบอกว่ามีพี่น้องกี่คน — I have one brother. 👦 ลองพูดตามครับ',
       withPraise: true,
@@ -701,7 +741,7 @@ export const FOUNDATION_BOARDS: Record<
         },
       ],
     },
-    8: {
+    7: {
       textEn:
         'แล้วถ้ามีพี่สาว/น้องสาวสองคน — I have two sisters. 👧👧 ลองพูดตามนะครับ',
       withPraise: true,
@@ -715,7 +755,7 @@ export const FOUNDATION_BOARDS: Record<
         },
       ],
     },
-    9: {
+    8: {
       textEn:
         'ขั้นตอนสุดท้ายครับ 😊 เลือกประโยคสั้นๆ เกี่ยวกับครอบครัวแล้วพูดตามนะครับ',
       advanceQuestionEn: 'Say a short family sentence.',
@@ -865,7 +905,7 @@ export const FOUNDATION_BOARDS: Record<
     },
     4: {
       textEn:
-        'ระวัง thirteen (13) กับ thirty (30) ไม่เหมือนกันนะครับ 😊 เลข 50 อ่านว่า fifty — ลองพูดตาม',
+        'ต่อไปเลข 50 อ่านว่า fifty ครับ 5️⃣0️⃣ ลองพูดตามว่า “fifty” ครับ',
       withPraise: true,
       stem: '',
       expectedSpeech: 'fifty',
@@ -904,7 +944,7 @@ export const FOUNDATION_BOARDS: Record<
     },
     3: {
       textEn:
-        'ถ้าราคาถูก ใช้ It\'s cheap. 👍 ลองพูดตามนะครับ',
+        'สมมติกาแฟราคา 1 ดอลลาร์ ซึ่งราคาถูก เราพูดว่า It\'s cheap. แปลว่า “มันราคาถูก” 👍 ลองพูดตามนะครับ',
       withPraise: true,
       stem: '',
       expectedSpeech: "It's cheap.",
@@ -942,7 +982,7 @@ export const FOUNDATION_BOARDS: Record<
   likes_dislikes: {
     1: {
       textEn:
-        'สวัสดีครับ {name}! วันนี้เรามาเรียนบอกสิ่งที่ชอบครับ ☕ ถ้าชอบกาแฟ พูดว่า I like coffee. ลองพูดตามนะครับ',
+        'สวัสดีครับ {name}! วันนี้เรามาเรียนบอกสิ่งที่ชอบและไม่ชอบครับ ☕ I like... แปลว่า “ฉันชอบ...” เช่น I like coffee. แปลว่า “ฉันชอบกาแฟ” ลองพูดตามว่า “I like coffee.” ครับ',
       withPraise: false,
       stem: '',
       expectedSpeech: 'I like coffee.',
@@ -998,7 +1038,7 @@ export const FOUNDATION_BOARDS: Record<
   wants_needs: {
     1: {
       textEn:
-        'สวัสดีครับ {name}! วันนี้เรามาเรียน I want / I need / I have ครับ 💧 ถ้าอยากได้น้ำ พูดว่า I want water. ลองพูดตามนะครับ',
+        'สวัสดีครับ {name}! วันนี้เรามาเรียน I want / I need / I have ครับ 💧 I want ใช้บอกสิ่งที่อยากได้, I need ใช้บอกสิ่งที่จำเป็นต้องใช้ และ I have ใช้บอกสิ่งที่มีอยู่แล้ว เริ่มจาก I want water. แปลว่า “ฉันอยากได้น้ำ” ลองพูดตามครับ',
       withPraise: false,
       stem: '',
       expectedSpeech: 'I want water.',
@@ -1044,7 +1084,7 @@ export const FOUNDATION_BOARDS: Record<
         'ลองพูดประโยคสั้นๆ ว่าคุณอยากได้ / ต้องการ / มีอะไรครับ 😊',
       advanceQuestionEn: 'Say what you want, need, or have.',
       withPraise: true,
-      stem: 'I want...',
+      stem: 'I want... / I need... / I have...',
       expectedSpeech: 'I want coffee.',
       options: [
         { emoji: '☕', label: 'I want coffee', speak: 'I want coffee.' },
@@ -1055,7 +1095,7 @@ export const FOUNDATION_BOARDS: Record<
   can_cant: {
     1: {
       textEn:
-        'สวัสดีครับ {name}! วันนี้เรามาเรียน I can / I can\'t ครับ 🏊 ถ้าว่ายน้ำได้ พูดว่า I can swim. ลองพูดตามนะครับ',
+        'สวัสดีครับ {name}! วันนี้เรามาเรียน I can / I can\'t ครับ 🏊 can แปลว่า “ทำได้” ส่วน can\'t แปลว่า “ทำไม่ได้” เช่น I can swim. คือ “ฉันว่ายน้ำได้” ลองพูดตามว่า “I can swim.” ครับ',
       withPraise: false,
       stem: '',
       expectedSpeech: 'I can swim.',
@@ -1101,7 +1141,7 @@ export const FOUNDATION_BOARDS: Record<
   asking_for_help: {
     1: {
       textEn:
-        'สวัสดีครับ {name}! วันนี้เรามาเรียน 3 ประโยคช่วยชีวิตเวลาฟังอังกฤษไม่ทัน 🆘 อาวุธแรก — I don\'t understand. ลองพูดตามนะครับ',
+        'สวัสดีครับ {name}! วันนี้เรามาเรียน 3 ประโยคช่วยชีวิตเวลาฟังอังกฤษไม่ทัน 🆘 I don\'t understand. แปลว่า “ฉันไม่เข้าใจ” ใช้เมื่อฟังแล้วไม่เข้าใจ ลองพูดตามว่า “I don\'t understand.” ครับ',
       withPraise: false,
       stem: '',
       expectedSpeech: "I don't understand.",
@@ -1170,7 +1210,7 @@ export const FOUNDATION_BOARDS: Record<
   asking_questions: {
     1: {
       textEn:
-        'สวัสดีครับ {name}! วันนี้เรามาเรียนถามคำถมง่ายๆ ครับ 🚻 Where = สถานที่ — Where is the bathroom? ลองพูดตามนะครับ',
+        'สวัสดีครับ {name}! วันนี้เรามาเรียนถามคำถามง่ายๆ ครับ 🚻 Where ใช้ถามสถานที่ และ Where is the bathroom? แปลว่า “ห้องน้ำอยู่ที่ไหน” ใช้เมื่อต้องการหาห้องน้ำ ลองพูดตามครับ',
       withPraise: false,
       stem: '',
       expectedSpeech: 'Where is the bathroom?',
@@ -1236,7 +1276,7 @@ export const FOUNDATION_MAX_STEPS: Record<FoundationLessonId, number> = {
   polite_expressions: 5,
   meet_people: 5,
   talk_about_groups: 5,
-  ee_about_me_family: 9,
+  ee_about_me_family: 8,
   numbers: 5,
   telling_time: 5,
   everyday_numbers: 5,

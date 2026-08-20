@@ -214,7 +214,7 @@ export function buildCloseAdvanceTextEn(
   nextScripted: ScriptTurnResult,
 ): string {
   const model = failedBoard?.expectedSpeech?.trim() ?? '';
-  const emoji = failedBoard?.options?.[0]?.emoji ?? '';
+  const emoji = boardTargetEmoji(failedBoard);
   const modelBare = model.replace(/[.!?]+$/g, '');
   const recast = modelBare
     ? `เกือบถูกแล้วครับ! พูดว่า ${modelBare}.${emoji ? ` ${emoji}` : ''}`
@@ -242,6 +242,16 @@ function prefixCloseAdvanceTeachingLine(body: string): string {
   return trimmed;
 }
 
+function boardTargetEmoji(board: GuidedBoard | null): string {
+  if (!board) return '';
+  const target = normalizeChoiceExpectedSpeech(board.expectedSpeech);
+  return (
+    board.options.find(
+      (option) => normalizeChoiceExpectedSpeech(option.speak) === target,
+    )?.emoji ?? board.options[0]?.emoji ?? ''
+  );
+}
+
 export function buildCloseAdvanceTextTh(
   failedBoard: GuidedBoard | null,
   nextScripted: ScriptTurnResult,
@@ -262,7 +272,7 @@ export function buildSoftAdvanceTextEn(
   nextScripted: ScriptTurnResult,
 ): string {
   const model = failedBoard?.expectedSpeech?.trim() ?? '';
-  const emoji = failedBoard?.options?.[0]?.emoji ?? '';
+  const emoji = boardTargetEmoji(failedBoard);
   const nextQuestion = resolveSoftAdvanceQuestion(nextBoard, nextScripted);
   const nextInstruction = isRepeatOnlyBoard(nextBoard)
     ? nextBoard?.textEn?.trim() || nextScripted.textEn?.trim() || nextQuestion

@@ -377,6 +377,11 @@ export function runFoundationFullHappyPath(
         nextBoard?.expectedSpeech,
         `${def.lessonId} step ${step}: expectedSpeech chain`,
       );
+      assert.deepEqual(
+        reply.guidedSpeaking?.options,
+        nextBoard?.options.length ? nextBoard.options : undefined,
+        `${def.lessonId} step ${step}: choices must match next step`,
+      );
     }
 
     steps.push({
@@ -469,6 +474,24 @@ export function foundationOutOfPoolCloseMiss(
         return 'Maybee.';
     }
   }
+
+  const closeByLesson: Partial<Record<string, Record<number, string>>> = {
+    polite_expressions: { 1: 'Thank you very.', 2: 'You welcome.', 3: 'Excuse.', 4: 'Thank.', 5: 'I sorry.' },
+    meet_people: { 1: 'I Nana.', 2: 'I am student.', 3: 'You my friend.', 4: 'I student.', 5: 'I student.' },
+    talk_about_groups: { 1: 'He my father.', 2: 'She my sister.', 3: 'It my bag.', 4: 'It my bag.', 5: 'He my father.' },
+    ee_about_me_family: { 1: 'brotha', 2: 'motha', 3: 'fatha', 4: 'This my father.', 5: 'This my sister.', 6: 'I have brother.', 7: 'I have two sister.', 8: 'This my father.' },
+    numbers: { 1: 'tree', 2: 'ate', 3: 'seben', 4: 'six teen', 5: 'twentee' },
+    telling_time: { 1: "It's six clock.", 2: "It's seven thirty clock.", 3: "It's seven.", 4: "It's nine.", 5: "It's seven morning." },
+    everyday_numbers: { 1: 'fourty', 2: 'thirty five', 3: 'sixty two', 4: 'fivty', 5: 'eightty' },
+    money_prices: { 1: 'How much it is?', 2: 'It five dollars.', 3: 'It cheap.', 4: 'It ten dollars.', 5: 'It ten dollars.' },
+    likes_dislikes: { 1: 'I like coffee very.', 2: 'I like pizza very.', 3: 'I no like tea.', 4: 'I no like tea.', 5: 'I like coffee very.' },
+    wants_needs: { 1: 'I want waters.', 2: 'I need helps.', 3: 'I have dog.', 4: 'I want waters.', 5: 'I want coffees.' },
+    can_cant: { 1: 'I swim.', 2: 'I no can drive.', 3: 'I can cooking.', 4: 'I can cooking.' },
+    asking_for_help: { 1: 'I not understand.', 2: 'Can speak more slowly?', 3: 'What that mean?', 4: 'I not understand.' },
+    asking_questions: { 1: 'Where the bathroom?', 2: 'Who that?', 3: 'How you?', 4: 'What this?', 5: 'What this?' },
+  };
+  const authoredClose = closeByLesson[lessonId]?.[step];
+  if (authoredClose) return authoredClose;
 
   const t = exact.trim();
   if (/^I'm\b/i.test(t)) return t.replace(/^I'm\b/i, 'I am');
@@ -613,6 +636,13 @@ export function runFoundationAllOutOfPoolGeminiAssess(
   for (let step = 1; step <= def.maxStep; step++) {
     const exact = expectedInPoolSpeech(def, step, turns, learnerFirstName);
     const userText = outOfPoolFn(exact, step);
+    if (tier === 'close') {
+      assert.equal(
+        def.scoreStep(step, userText, turns),
+        'close',
+        `${def.lessonId} step ${step}: authored close input must classify as close`,
+      );
+    }
     turns.push({ speaker: 'user', textEn: userText });
 
     const route = buildChoiceLessonAfterUser(def, {
@@ -639,6 +669,22 @@ export function runFoundationAllOutOfPoolGeminiAssess(
       tier,
       `${def.lessonId} step ${step}: Gemini tier`,
     );
+
+    if (tier === 'incorrect') {
+      const currentBoard = def.boardForStep(step, turns, learnerFirstName);
+      assert.equal(
+        assessed.expectedSpeech,
+        currentBoard?.expectedSpeech,
+        `${def.lessonId} step ${step}: incorrect target must stay on current step`,
+      );
+      if (!def.pinWithoutGuidedSteps?.includes(step)) {
+        assert.deepEqual(
+          assessed.guidedSpeaking?.options,
+          currentBoard?.options.length ? currentBoard.options : undefined,
+          `${def.lessonId} step ${step}: incorrect choices must stay on current step`,
+        );
+      }
+    }
 
     turns.push({
       speaker: 'ai',

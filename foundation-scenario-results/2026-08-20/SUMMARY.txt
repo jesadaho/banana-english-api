@@ -1,12 +1,12 @@
 SUMMARY
 ================================================================================
 
-yes_no_maybe
-  ✅ Scenario 1 — 6 steps · 663.79 ms
-  ✅ Scenario 2 — 6 steps · 7.48 s
-  ✅ Scenario 3 — 6 steps · 7.37 s
-  ✅ Scenario 4 — 12 steps · 8.72 s
-  ✅ Scenario 5 — 12 steps · 10.12 s
+greetings
+  ✅ Scenario 1 — 8 steps · 875.94 ms
+  ✅ Scenario 2 — 8 steps · 10.43 s
+  ✅ Scenario 3 — 8 steps · 9.84 s
+  ✅ Scenario 4 — 16 steps · 12.44 s
+  ✅ Scenario 5 — 16 steps · 10.44 s
 
 Total: 5/5 passed
 
