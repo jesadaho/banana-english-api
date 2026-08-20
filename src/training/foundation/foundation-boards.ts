@@ -797,7 +797,7 @@ export const FOUNDATION_BOARDS: Record<
       withPraise: false,
       stem: '',
       expectedSpeech: 'four',
-      incorrectHintTh: 'ลองนับอีกครั้งนะครับ มี 4 ลูก เลข 4 อ่านว่า “four” ครับ',
+      incorrectHintTh: 'ลองนับแอปเปิลอีกครั้งครับ',
       options: [
         { emoji: '0️⃣', label: 'zero', speak: 'zero' },
         { emoji: '3️⃣', label: 'three', speak: 'three' },
@@ -808,7 +808,7 @@ export const FOUNDATION_BOARDS: Record<
     2: {
       textEn:
         'ต่อไป 6–10 ครับ: 6 six, 7 seven, 8 eight, 9 nine, 10 ten บัตรคิวของคุณคือหมายเลขอะไรครับ? 🎫 7',
-      withPraise: true,
+      withPraise: false,
       stem: '',
       expectedSpeech: 'seven',
       incorrectHintTh: 'ยังไม่ตรงครับ คำอ่านเลข 7 ขึ้นต้นด้วยเสียง /s/ ครับ',
@@ -839,7 +839,7 @@ export const FOUNDATION_BOARDS: Record<
       withPraise: true,
       stem: '',
       expectedSpeech: 'twenty',
-      incorrectHintTh: 'เลข 20 อ่านว่า “twenty” และลงท้ายด้วยเสียง -ty ครับ',
+      incorrectHintTh: 'คำนี้ลงท้ายด้วยเสียง -ty ครับ',
       options: [
         { emoji: '1️⃣6️⃣', label: 'sixteen', speak: 'sixteen' },
         { emoji: '1️⃣8️⃣', label: 'eighteen', speak: 'eighteen' },

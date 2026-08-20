@@ -625,8 +625,15 @@ export function pinChoiceLessonAiReply(
         assessmentTier: tier,
       };
     }
-    const praise = correctAdvancePraise(aiReply.textEn?.trim() ?? '');
     const nextBody = stripLeadingPraiseOpener(next.textEn?.trim() ?? '').trim();
+    const nextBoardForPraise = def.boardForStep(
+      nextStep,
+      turns,
+      learnerFirstName,
+    );
+    const praise = nextBoardForPraise?.withPraise === false
+      ? ''
+      : correctAdvancePraise(aiReply.textEn?.trim() ?? '');
     return {
       textEn: `${praise} ${nextBody}`.trim(),
       textTh: aiReply.textTh?.trim() || next.textTh || '',

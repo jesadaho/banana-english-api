@@ -85,6 +85,16 @@ describe('Foundation incorrect hints — Introductions standard', () => {
     }
   });
 
+  it('numbers recovery hints guide without revealing the answer', () => {
+    const appleHint = resolveIncorrectHintTh(FOUNDATION_BOARDS.numbers[1]) ?? '';
+    assert.equal(appleHint, 'ลองนับแอปเปิลอีกครั้งครับ');
+    assert.doesNotMatch(appleHint, /4|four/i);
+
+    const twentyHint = resolveIncorrectHintTh(FOUNDATION_BOARDS.numbers[4]) ?? '';
+    assert.equal(twentyHint, 'คำนี้ลงท้ายด้วยเสียง -ty ครับ');
+    assert.doesNotMatch(twentyHint, /20|twenty/i);
+  });
+
   it('every foundation probe board follows repeat-only vs guided hint rule', () => {
     for (const fixture of FOUNDATION_POOLGATE_FIXTURES) {
       const def = getDef(fixture);
