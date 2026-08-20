@@ -441,6 +441,20 @@ export function foundationOutOfPoolCloseMiss(
     return introductionsOutOfPoolCloseMiss(exact, step);
   }
 
+  if (lessonId === 'greetings') {
+    const closeByStep: Record<number, string> = {
+      1: 'Helo',
+      2: 'Hii',
+      3: 'Hii',
+      4: 'Good mornin',
+      5: 'Good after',
+      6: 'Good evenin',
+      7: 'Good mornin',
+      8: 'Helo',
+    };
+    return closeByStep[step] ?? 'Helo';
+  }
+
   if (lessonId === 'yes_no_maybe') {
     switch (step) {
       case 1:
@@ -774,6 +788,17 @@ export function runFoundationAllOutOfPoolWrongThenSoftAdvance(
     assert.match(soft!.textEn ?? '', /ตรงนี้พูด(ว่า|ได้ว่า)/);
     if (step < def.maxStep) {
       assert.match(soft!.textEn ?? '', /ไปต่อกันเลย —/);
+      const nextBoard = def.boardForStep(step + 1, turns, learnerFirstName);
+      assert.equal(
+        soft!.expectedSpeech,
+        nextBoard?.expectedSpeech,
+        `${def.lessonId} step ${step}: soft-advance target must match step ${step + 1}`,
+      );
+      assert.deepEqual(
+        soft!.guidedSpeaking?.options,
+        nextBoard?.options.length ? nextBoard.options : undefined,
+        `${def.lessonId} step ${step}: soft-advance choices must match step ${step + 1}`,
+      );
     } else {
       assert.match(soft!.textEn ?? '', /จบบทแล้วครับ/);
       assert.doesNotMatch(soft!.textEn ?? '', /ไปต่อกันเลย —/);

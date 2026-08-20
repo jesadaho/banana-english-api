@@ -11,7 +11,7 @@ Choices: ✅ Yes, I do → "Yes, I do."
          👍 Yes → "Yes."
 User: Yes, I do.
 Result: correct in pool
-response time : 87.41 ms
+response time : 108.31 ms
 Reply: ทีนี้ลองใช้จริงครับ — Do you like pizza? 🍕 ถ้าคุณชอบ ให้ตอบว่าอะไรครับ?
 
 Step 2
@@ -21,7 +21,7 @@ Choices: ✅ Yes, I do → "Yes, I do."
          👍 Yes → "Yes."
 User: Yes, I do.
 Result: correct in pool
-response time : 104.65 ms
+response time : 128.49 ms
 Reply: ต่อไป No, I don't. แปลว่า “ไม่ ฉันไม่ชอบ” ใช้ตอบเมื่อคำตอบเป็นปฏิเสธ เช่น Do you like rain? — No, I don't. ลองพูดตามว่า “No, I don't.” ครับ ❌
 
 Step 3
@@ -31,7 +31,7 @@ Choices: ❌ No, I don't → "No, I don't."
          👎 No → "No."
 User: No, I don't.
 Result: correct in pool
-response time : 90.32 ms
+response time : 114.52 ms
 Reply: ลองใช้ No จริงครับ — Do you like rain? 🌧️ ถ้าคุณไม่ชอบ ให้ตอบว่าอะไรครับ?
 
 Step 4
@@ -41,7 +41,7 @@ Choices: ❌ No, I don't → "No, I don't."
          👎 No → "No."
 User: No, I don't.
 Result: correct in pool
-response time : 89.09 ms
+response time : 106.07 ms
 Reply: สุดท้าย Maybe แปลว่า “อาจจะ” ใช้เมื่อเรายังไม่แน่ใจ เช่น Are you free tomorrow? — Maybe. ลองพูดตามว่า “Maybe.” ครับ 🤔
 
 Step 5
@@ -51,7 +51,7 @@ Choices: 🤔 Maybe → "Maybe."
          💭 I'm not sure → "I'm not sure."
 User: Maybe.
 Result: correct in pool
-response time : 84.73 ms
+response time : 115.60 ms
 Reply: ลองใช้ Maybe จริงครับ — Are you free tomorrow? 📅 ถ้ายังไม่แน่ใจ ให้ตอบว่าอะไรครับ?
 
 Step 6
@@ -61,11 +61,11 @@ Choices: 🤔 Maybe → "Maybe."
          💭 I'm not sure → "I'm not sure."
 User: Maybe.
 Result: correct in pool
-response time : 96.27 ms
-Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณตอบ Yes / No / Maybe และคำตอบสั้นๆ ได้แล้ว — เก่งมากครับ! 🍌
+response time : 90.80 ms
+Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณตอบ Yes / No / Maybe และคำตอบสั้นๆ ได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ yes_no_maybe scenario 1 complete · 6 turns · 552.47 ms
+✅ yes_no_maybe scenario 1 complete · 6 turns · 663.79 ms
 
 ================================================================================
 yes_no_maybe — Scenario 2 — out-pool correct ทุก step → จบบท
@@ -79,47 +79,47 @@ Choices: ✅ Yes, I do → "Yes, I do."
          👍 Yes → "Yes."
 User: Yes, I do....
 Result: correct out pool
-response time : 1.40 s
-Reply: ถูกต้องครับ! ทีนี้ลองใช้จริงครับ — Do you like pizza? 🍕 ถ้าคุณชอบ ให้ตอบว่าอะไรครับ?
+response time : 1.49 s
+Reply: ดีมากครับ! ทีนี้ลองใช้จริงครับ — Do you like pizza? 🍕 ถ้าคุณชอบ ให้ตอบว่าอะไรครับ?
 
 Step 2
-AI: ถูกต้องครับ! ทีนี้ลองใช้จริงครับ — Do you like pizza? 🍕 ถ้าคุณชอบ ให้ตอบว่าอะไรครับ?
+AI: ดีมากครับ! ทีนี้ลองใช้จริงครับ — Do you like pizza? 🍕 ถ้าคุณชอบ ให้ตอบว่าอะไรครับ?
 Hint: Yes, I do.
 Choices: ✅ Yes, I do → "Yes, I do."
          👍 Yes → "Yes."
 User: Yes, I do....
 Result: correct out pool
-response time : 1.34 s
-Reply: ดีมากครับ! ต่อไป No, I don't. แปลว่า “ไม่ ฉันไม่ชอบ” ใช้ตอบเมื่อคำตอบเป็นปฏิเสธ เช่น Do you like rain? — No, I don't. ลองพูดตามว่า “No, I don't.” ครับ ❌
+response time : 1.10 s
+Reply: ถูกต้องครับ! ต่อไป No, I don't. แปลว่า “ไม่ ฉันไม่ชอบ” ใช้ตอบเมื่อคำตอบเป็นปฏิเสธ เช่น Do you like rain? — No, I don't. ลองพูดตามว่า “No, I don't.” ครับ ❌
 
 Step 3
-AI: ดีมากครับ! ต่อไป No, I don't. แปลว่า “ไม่ ฉันไม่ชอบ” ใช้ตอบเมื่อคำตอบเป็นปฏิเสธ เช่น Do you like rain? — No, I don't. ลองพูดตามว่า “No, I don't.” ครับ ❌
+AI: ถูกต้องครับ! ต่อไป No, I don't. แปลว่า “ไม่ ฉันไม่ชอบ” ใช้ตอบเมื่อคำตอบเป็นปฏิเสธ เช่น Do you like rain? — No, I don't. ลองพูดตามว่า “No, I don't.” ครับ ❌
+Hint: No, I don't.
+Choices: ❌ No, I don't → "No, I don't."
+         👎 No → "No."
+User: No, I don't....
+Result: correct out pool
+response time : 1.19 s
+Reply: ดีมากครับ! ลองใช้ No จริงครับ — Do you like rain? 🌧️ ถ้าคุณไม่ชอบ ให้ตอบว่าอะไรครับ?
+
+Step 4
+AI: ดีมากครับ! ลองใช้ No จริงครับ — Do you like rain? 🌧️ ถ้าคุณไม่ชอบ ให้ตอบว่าอะไรครับ?
 Hint: No, I don't.
 Choices: ❌ No, I don't → "No, I don't."
          👎 No → "No."
 User: No, I don't....
 Result: correct out pool
 response time : 1.22 s
-Reply: เยี่ยมครับ! ลองใช้ No จริงครับ — Do you like rain? 🌧️ ถ้าคุณไม่ชอบ ให้ตอบว่าอะไรครับ?
-
-Step 4
-AI: เยี่ยมครับ! ลองใช้ No จริงครับ — Do you like rain? 🌧️ ถ้าคุณไม่ชอบ ให้ตอบว่าอะไรครับ?
-Hint: No, I don't.
-Choices: ❌ No, I don't → "No, I don't."
-         👎 No → "No."
-User: No, I don't....
-Result: correct out pool
-response time : 1.21 s
-Reply: ถูกต้องครับ! สุดท้าย Maybe แปลว่า “อาจจะ” ใช้เมื่อเรายังไม่แน่ใจ เช่น Are you free tomorrow? — Maybe. ลองพูดตามว่า “Maybe.” ครับ 🤔
+Reply: ดีมากครับ! สุดท้าย Maybe แปลว่า “อาจจะ” ใช้เมื่อเรายังไม่แน่ใจ เช่น Are you free tomorrow? — Maybe. ลองพูดตามว่า “Maybe.” ครับ 🤔
 
 Step 5
-AI: ถูกต้องครับ! สุดท้าย Maybe แปลว่า “อาจจะ” ใช้เมื่อเรายังไม่แน่ใจ เช่น Are you free tomorrow? — Maybe. ลองพูดตามว่า “Maybe.” ครับ 🤔
+AI: ดีมากครับ! สุดท้าย Maybe แปลว่า “อาจจะ” ใช้เมื่อเรายังไม่แน่ใจ เช่น Are you free tomorrow? — Maybe. ลองพูดตามว่า “Maybe.” ครับ 🤔
 Hint: Maybe.
 Choices: 🤔 Maybe → "Maybe."
          💭 I'm not sure → "I'm not sure."
 User: Maybe....
 Result: correct out pool
-response time : 1.23 s
+response time : 1.30 s
 Reply: ถูกต้องครับ! ลองใช้ Maybe จริงครับ — Are you free tomorrow? 📅 ถ้ายังไม่แน่ใจ ให้ตอบว่าอะไรครับ?
 
 Step 6
@@ -129,11 +129,11 @@ Choices: 🤔 Maybe → "Maybe."
          💭 I'm not sure → "I'm not sure."
 User: Maybe....
 Result: correct out pool
-response time : 1.10 s
-Reply: ดีมากครับ! สุดยอดครับ Nana! 🎉 วันนี้คุณตอบ Yes / No / Maybe และคำตอบสั้นๆ ได้แล้ว — เก่งมากครับ! 🍌
+response time : 1.20 s
+Reply: ดีมากครับ! สุดยอดครับ Nana! 🎉 วันนี้คุณตอบ Yes / No / Maybe และคำตอบสั้นๆ ได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ yes_no_maybe scenario 2 complete · 6 turns · 7.50 s
+✅ yes_no_maybe scenario 2 complete · 6 turns · 7.48 s
 
 ================================================================================
 yes_no_maybe — Scenario 3 — out-pool close ทุก step → จบบท
@@ -147,7 +147,7 @@ Choices: ✅ Yes, I do → "Yes, I do."
          👍 Yes → "Yes."
 User: Yeah, I do.
 Result: close out pool
-response time : 1.12 s
+response time : 1.14 s
 Reply: เกือบถูกแล้วครับ! พูดว่า Yes, I do. ✅
 ทีนี้ลองใช้จริงครับ — Do you like pizza? 🍕 ถ้าคุณชอบ ให้ตอบว่าอะไรครับ?
 
@@ -159,7 +159,7 @@ Choices: ✅ Yes, I do → "Yes, I do."
          👍 Yes → "Yes."
 User: Yes I.
 Result: close out pool
-response time : 1.22 s
+response time : 1.30 s
 Reply: เกือบถูกแล้วครับ! พูดว่า Yes, I do. ✅
 ต่อไป No, I don't. แปลว่า “ไม่ ฉันไม่ชอบ” ใช้ตอบเมื่อคำตอบเป็นปฏิเสธ เช่น Do you like rain? — No, I don't. ลองพูดตามว่า “No, I don't.” ครับ ❌
 
@@ -171,7 +171,7 @@ Choices: ❌ No, I don't → "No, I don't."
          👎 No → "No."
 User: No, I dont.
 Result: close out pool
-response time : 1.37 s
+response time : 1.11 s
 Reply: เกือบถูกแล้วครับ! พูดว่า No, I don't. ❌
 ลองใช้ No จริงครับ — Do you like rain? 🌧️ ถ้าคุณไม่ชอบ ให้ตอบว่าอะไรครับ?
 
@@ -183,7 +183,7 @@ Choices: ❌ No, I don't → "No, I don't."
          👎 No → "No."
 User: No I.
 Result: close out pool
-response time : 1.16 s
+response time : 1.30 s
 Reply: เกือบถูกแล้วครับ! พูดว่า No, I don't. ❌
 สุดท้าย Maybe แปลว่า “อาจจะ” ใช้เมื่อเรายังไม่แน่ใจ เช่น Are you free tomorrow? — Maybe. ลองพูดตามว่า “Maybe.” ครับ 🤔
 
@@ -195,7 +195,7 @@ Choices: 🤔 Maybe → "Maybe."
          💭 I'm not sure → "I'm not sure."
 User: Maybee.
 Result: close out pool
-response time : 1.15 s
+response time : 1.29 s
 Reply: เกือบถูกแล้วครับ! พูดว่า Maybe. 🤔
 ลองใช้ Maybe จริงครับ — Are you free tomorrow? 📅 ถ้ายังไม่แน่ใจ ให้ตอบว่าอะไรครับ?
 
@@ -207,12 +207,12 @@ Choices: 🤔 Maybe → "Maybe."
          💭 I'm not sure → "I'm not sure."
 User: Maybee.
 Result: close out pool
-response time : 1.14 s
+response time : 1.22 s
 Reply: เกือบถูกแล้วครับ! พูดว่า Maybe. 🤔
-สุดยอดครับ Nana! 🎉 วันนี้คุณตอบ Yes / No / Maybe และคำตอบสั้นๆ ได้แล้ว — เก่งมากครับ! 🍌
+สุดยอดครับ Nana! 🎉 วันนี้คุณตอบ Yes / No / Maybe และคำตอบสั้นๆ ได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ yes_no_maybe scenario 3 complete · 6 turns · 7.16 s
+✅ yes_no_maybe scenario 3 complete · 6 turns · 7.37 s
 
 ================================================================================
 yes_no_maybe — Scenario 4 — out-pool wrong + in-pool พูดตาม recovery → จบบท
@@ -226,7 +226,7 @@ Choices: ✅ Yes, I do → "Yes, I do."
          👍 Yes → "Yes."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.53 s
+response time : 1.22 s
 Reply: ยังไม่ถูกครับ ลองพูดตามว่า “Yes, I do.” ครับ
 
 Step 2
@@ -236,7 +236,7 @@ Choices: ✅ Yes, I do → "Yes, I do."
          👍 Yes → "Yes."
 User: Yes, I do.
 Result: correct in pool
-response time : 103.24 ms
+response time : 114.79 ms
 Reply: ทีนี้ลองใช้จริงครับ — Do you like pizza? 🍕 ถ้าคุณชอบ ให้ตอบว่าอะไรครับ?
 
 Step 3
@@ -246,7 +246,7 @@ Choices: ✅ Yes, I do → "Yes, I do."
          👍 Yes → "Yes."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.15 s
+response time : 1.32 s
 Reply: ยังไม่ตรงครับ ถ้าคุณชอบ ให้ตอบว่า “Yes, I do.” ครับ
 
 Step 4
@@ -256,7 +256,7 @@ Choices: ✅ Yes, I do → "Yes, I do."
          👍 Yes → "Yes."
 User: Yes, I do.
 Result: correct in pool
-response time : 85.88 ms
+response time : 91.45 ms
 Reply: ต่อไป No, I don't. แปลว่า “ไม่ ฉันไม่ชอบ” ใช้ตอบเมื่อคำตอบเป็นปฏิเสธ เช่น Do you like rain? — No, I don't. ลองพูดตามว่า “No, I don't.” ครับ ❌
 
 Step 5
@@ -266,7 +266,7 @@ Choices: ❌ No, I don't → "No, I don't."
          👎 No → "No."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.37 s
+response time : 1.18 s
 Reply: ยังไม่ถูกครับ ลองพูดตามว่า “No, I don't.” ครับ
 
 Step 6
@@ -276,7 +276,7 @@ Choices: ❌ No, I don't → "No, I don't."
          👎 No → "No."
 User: No, I don't.
 Result: correct in pool
-response time : 102.28 ms
+response time : 99.70 ms
 Reply: ลองใช้ No จริงครับ — Do you like rain? 🌧️ ถ้าคุณไม่ชอบ ให้ตอบว่าอะไรครับ?
 
 Step 7
@@ -286,7 +286,7 @@ Choices: ❌ No, I don't → "No, I don't."
          👎 No → "No."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.24 s
+response time : 1.54 s
 Reply: ยังไม่ตรงครับ ถ้าคุณไม่ชอบ ให้ตอบว่า “No, I don't.” ครับ
 
 Step 8
@@ -296,7 +296,7 @@ Choices: ❌ No, I don't → "No, I don't."
          👎 No → "No."
 User: No, I don't.
 Result: correct in pool
-response time : 99.05 ms
+response time : 90.75 ms
 Reply: สุดท้าย Maybe แปลว่า “อาจจะ” ใช้เมื่อเรายังไม่แน่ใจ เช่น Are you free tomorrow? — Maybe. ลองพูดตามว่า “Maybe.” ครับ 🤔
 
 Step 9
@@ -316,7 +316,7 @@ Choices: 🤔 Maybe → "Maybe."
          💭 I'm not sure → "I'm not sure."
 User: Maybe.
 Result: correct in pool
-response time : 87.64 ms
+response time : 112.87 ms
 Reply: ลองใช้ Maybe จริงครับ — Are you free tomorrow? 📅 ถ้ายังไม่แน่ใจ ให้ตอบว่าอะไรครับ?
 
 Step 11
@@ -326,7 +326,7 @@ Choices: 🤔 Maybe → "Maybe."
          💭 I'm not sure → "I'm not sure."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.25 s
+response time : 1.37 s
 Reply: ยังไม่ตรงครับ ถ้ายังไม่แน่ใจ ให้ตอบว่า “Maybe.” ครับ
 
 Step 12
@@ -336,11 +336,11 @@ Choices: 🤔 Maybe → "Maybe."
          💭 I'm not sure → "I'm not sure."
 User: Maybe.
 Result: correct in pool
-response time : 152.52 ms
-Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณตอบ Yes / No / Maybe และคำตอบสั้นๆ ได้แล้ว — เก่งมากครับ! 🍌
+response time : 125.92 ms
+Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณตอบ Yes / No / Maybe และคำตอบสั้นๆ ได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ yes_no_maybe scenario 4 complete · 12 turns · 8.64 s
+✅ yes_no_maybe scenario 4 complete · 12 turns · 8.72 s
 
 ================================================================================
 yes_no_maybe — Scenario 5 — out-pool wrong + พูดตามผิดอีกครั้ง → soft-advance → จบบท
@@ -354,7 +354,7 @@ Choices: ✅ Yes, I do → "Yes, I do."
          👍 Yes → "Yes."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.20 s
+response time : 1.15 s
 Reply: ยังไม่ถูกครับ ลองพูดตามว่า “Yes, I do.” ครับ
 
 Step 2
@@ -364,7 +364,7 @@ Choices: ✅ Yes, I do → "Yes, I do."
          👍 Yes → "Yes."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 106.71 ms
+response time : 85.46 ms
 Reply: ตรงนี้พูดว่า "Yes, I do." ครับ ✅
 ไปต่อกันเลย — Do you like pizza?
 
@@ -376,7 +376,7 @@ Choices: ✅ Yes, I do → "Yes, I do."
          👍 Yes → "Yes."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.12 s
+response time : 1.27 s
 Reply: ยังไม่ตรงครับ ถ้าคุณชอบ ให้ตอบว่า “Yes, I do.” ครับ
 
 Step 4
@@ -386,18 +386,18 @@ Choices: ✅ Yes, I do → "Yes, I do."
          👍 Yes → "Yes."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 131.08 ms
+response time : 104.71 ms
 Reply: ตรงนี้พูดว่า "Yes, I do." ครับ ✅
-ไปต่อกันเลย — No, I don't. แปลว่า “ไม่ ฉันไม่ชอบ” ใช้ตอบเมื่อคำตอบเป็นปฏิเสธ เช่น Do you like rain?
+ไปต่อกันเลย — ต่อไป No, I don't. แปลว่า “ไม่ ฉันไม่ชอบ” ใช้ตอบเมื่อคำตอบเป็นปฏิเสธ เช่น Do you like rain? — No, I don't. ลองพูดตามว่า “No, I don't.” ครับ ❌
 
 Step 5
 AI: ตรงนี้พูดว่า "Yes, I do." ครับ ✅
-ไปต่อกันเลย — No, I don't. แปลว่า “ไม่ ฉันไม่ชอบ” ใช้ตอบเมื่อคำตอบเป็นปฏิเสธ เช่น Do you like rain?
+ไปต่อกันเลย — ต่อไป No, I don't. แปลว่า “ไม่ ฉันไม่ชอบ” ใช้ตอบเมื่อคำตอบเป็นปฏิเสธ เช่น Do you like rain? — No, I don't. ลองพูดตามว่า “No, I don't.” ครับ ❌
 Hint: (none)
 Choices: ❌ No, I don't → "No, I don't."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.21 s
+response time : 1.24 s
 Reply: ยังไม่ถูกครับ ลองพูดตามว่า “No, I don't.” ครับ
 
 Step 6
@@ -406,7 +406,7 @@ Hint: (none)
 Choices: ❌ No, I don't → "No, I don't."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 95.10 ms
+response time : 130.24 ms
 Reply: ตรงนี้พูดว่า "No, I don't." ครับ ❌
 ไปต่อกันเลย — Do you like rain?
 
@@ -418,7 +418,7 @@ Choices: ❌ No, I don't → "No, I don't."
          👎 No → "No."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.48 s
+response time : 1.35 s
 Reply: ยังไม่ตรงครับ ถ้าคุณไม่ชอบ ให้ตอบว่า “No, I don't.” ครับ
 
 Step 8
@@ -428,18 +428,18 @@ Choices: ❌ No, I don't → "No, I don't."
          👎 No → "No."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 118.74 ms
+response time : 506.76 ms
 Reply: ตรงนี้พูดว่า "No, I don't." ครับ ❌
-ไปต่อกันเลย — Maybe แปลว่า “อาจจะ” ใช้เมื่อเรายังไม่แน่ใจ เช่น Are you free tomorrow?
+ไปต่อกันเลย — สุดท้าย Maybe แปลว่า “อาจจะ” ใช้เมื่อเรายังไม่แน่ใจ เช่น Are you free tomorrow? — Maybe. ลองพูดตามว่า “Maybe.” ครับ 🤔
 
 Step 9
 AI: ตรงนี้พูดว่า "No, I don't." ครับ ❌
-ไปต่อกันเลย — Maybe แปลว่า “อาจจะ” ใช้เมื่อเรายังไม่แน่ใจ เช่น Are you free tomorrow?
+ไปต่อกันเลย — สุดท้าย Maybe แปลว่า “อาจจะ” ใช้เมื่อเรายังไม่แน่ใจ เช่น Are you free tomorrow? — Maybe. ลองพูดตามว่า “Maybe.” ครับ 🤔
 Hint: (none)
 Choices: 🤔 Maybe → "Maybe."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.42 s
+response time : 1.99 s
 Reply: ยังไม่ถูกครับ ลองพูดตามว่า “Maybe.” ครับ
 
 Step 10
@@ -448,7 +448,7 @@ Hint: (none)
 Choices: 🤔 Maybe → "Maybe."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 391.28 ms
+response time : 153.33 ms
 Reply: ตรงนี้พูดว่า "Maybe." ครับ 🤔
 ไปต่อกันเลย — Are you free tomorrow?
 
@@ -460,7 +460,7 @@ Choices: 🤔 Maybe → "Maybe."
          💭 I'm not sure → "I'm not sure."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.33 s
+response time : 1.62 s
 Reply: ยังไม่ตรงครับ ถ้ายังไม่แน่ใจ ให้ตอบว่า “Maybe.” ครับ
 
 Step 12
@@ -470,10 +470,10 @@ Choices: 🤔 Maybe → "Maybe."
          💭 I'm not sure → "I'm not sure."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 680.54 ms
+response time : 527.21 ms
 Reply: ตรงนี้พูดได้ว่า "Maybe." ครับ 🤔
 
 🎉 จบบทแล้วครับ Nana! วันนี้คุณตอบ Yes / No / Maybe และคำตอบสั้นๆ แล้วครับ 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ yes_no_maybe scenario 5 complete · 12 turns · 9.28 s
+✅ yes_no_maybe scenario 5 complete · 12 turns · 10.12 s

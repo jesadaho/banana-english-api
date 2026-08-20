@@ -1,11 +1,3 @@
-API_BASE=https://banana-english-api-production.up.railway.app
-Lessons: introductions
-Scenarios: 1, 2, 3, 4, 5
-  1: Scenario 1 — in-pool correct ทุก step → จบบท
-  2: Scenario 2 — out-pool correct ทุก step → จบบท
-  3: Scenario 3 — out-pool close ทุก step → จบบท
-  4: Scenario 4 — out-pool wrong + in-pool พูดตาม recovery → จบบท
-  5: Scenario 5 — out-pool wrong + พูดตามผิดอีกครั้ง → soft-advance → จบบท
 
 ================================================================================
 introductions — Scenario 1 — in-pool correct ทุก step → จบบท
@@ -13,74 +5,72 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 ================================================================================
 
 Step 1
-AI: สวัสดีครับ Nana! วันนี้เรามาเรียนรู้การแนะนำตัวเป็นภาษาอังกฤษกันครับ 📝 ลองพูดตามว่า My name is Nana นะครับ
+AI: สวัสดีครับ Nana! วันนี้เราจะฝึกแนะนำตัวครับ 📝 My name is Nana. แปลว่า “ฉันชื่อ Nana” และพูดแบบสั้นว่า I'm Nana. ได้ ใช้สองแบบนี้เพื่อบอกชื่อของเรา ลองพูดตามว่า “My name is Nana.” ครับ
+Hint: (none)
+Choices: 📝 My name is → "My name is Nana."
+User: My name is Nana.
+Result: correct in pool
+response time : 98.63 ms
+Reply: My name is Nana. แปลว่า “ฉันชื่อ Nana” และแบบสั้นคือ I'm Nana. ทีนี้ลองใช้แบบสั้นในสถานการณ์จริงครับ ช่วยบอกครูหน่อยว่าคุณชื่ออะไร?
+
+Step 2
+AI: My name is Nana. แปลว่า “ฉันชื่อ Nana” และแบบสั้นคือ I'm Nana. ทีนี้ลองใช้แบบสั้นในสถานการณ์จริงครับ ช่วยบอกครูหน่อยว่าคุณชื่ออะไร?
 Hint: (none)
 Choices: 📝 My name is → "My name is Nana."
          💬 I'm → "I'm Nana."
-User: My name is Nana.
+User: I'm Nana.
 Result: correct in pool
-response time : 105.10 ms
-Reply: เก่งมากครับ! My name is Nana. แปลว่า “ฉันชื่อ Nana” อีกแบบพูดสั้นๆ ว่า I'm Nana. ก็ได้ครับ ช่วยบอกครูหน่อยครับ ว่าคุณชื่ออะไร?
-
-Step 2
-AI: เก่งมากครับ! My name is Nana. แปลว่า “ฉันชื่อ Nana” อีกแบบพูดสั้นๆ ว่า I'm Nana. ก็ได้ครับ ช่วยบอกครูหน่อยครับ ว่าคุณชื่ออะไร?
-Hint: (none)
-Choices: 🤝 Nice to meet you → "Nice to meet you." (repeat-only)
-User: My name is Nana.
-Result: correct in pool
-response time : 110.07 ms
-Reply: เยี่ยมเลยครับ! ต่อไปเวลาเจอคนใหม่ เราพูดว่า Nice to meet you. แปลว่า “ยินดีที่ได้รู้จัก” ลองพูดตามนะครับ
+response time : 109.89 ms
+Reply: ต่อไปเวลาเจอคนใหม่ เราพูดว่า Nice to meet you. แปลว่า “ยินดีที่ได้รู้จัก” ลองพูดตามว่า “Nice to meet you.” ครับ
 
 Step 3
-AI: เยี่ยมเลยครับ! ต่อไปเวลาเจอคนใหม่ เราพูดว่า Nice to meet you. แปลว่า “ยินดีที่ได้รู้จัก” ลองพูดตามนะครับ
+AI: ต่อไปเวลาเจอคนใหม่ เราพูดว่า Nice to meet you. แปลว่า “ยินดีที่ได้รู้จัก” ลองพูดตามว่า “Nice to meet you.” ครับ
+Hint: (none)
+Choices: 🤝 Nice to meet you → "Nice to meet you."
+User: Nice to meet you.
+Result: correct in pool
+response time : 130.20 ms
+Reply: ถ้าครูพูดว่า Nice to meet you. ให้ตอบว่า Nice to meet you too. แปลว่า “ยินดีที่ได้รู้จักเช่นกัน” ลองตอบเหมือนสถานการณ์จริงนะครับ: Nice to meet you.
+
+Step 4
+AI: ถ้าครูพูดว่า Nice to meet you. ให้ตอบว่า Nice to meet you too. แปลว่า “ยินดีที่ได้รู้จักเช่นกัน” ลองตอบเหมือนสถานการณ์จริงนะครับ: Nice to meet you.
 Hint: (none)
 Choices: 😊 Nice to meet you too → "Nice to meet you too."
          🙏 Thank you → "Thank you."
-User: Nice to meet you.
-Result: correct in pool
-response time : 118.21 ms
-Reply: ดีมากครับ! ถ้าครูพูดว่า Nice to meet you. ให้ตอบว่า Nice to meet you too. แปลว่า “ยินดีที่ได้รู้จักเช่นกัน” ลองตอบเหมือนสถานการณ์จริงนะครับ: Nice to meet you.
-
-Step 4
-AI: ดีมากครับ! ถ้าครูพูดว่า Nice to meet you. ให้ตอบว่า Nice to meet you too. แปลว่า “ยินดีที่ได้รู้จักเช่นกัน” ลองตอบเหมือนสถานการณ์จริงนะครับ: Nice to meet you.
-Hint: (none)
-Choices: 🇹🇭 Thailand → "I'm from Thailand." (repeat-only)
 User: Nice to meet you too.
 Result: correct in pool
-response time : 120.93 ms
-Reply: เก่งมากครับ! ต่อไปมาฝึกบอกว่าคุณมาจากไหนกันครับ I'm from Thailand. แปลว่า “ฉันมาจากประเทศไทย” ลองพูดตามนะครับ
+response time : 97.31 ms
+Reply: ต่อไปมาฝึกบอกว่าคุณมาจากไหนครับ I'm from Thailand. แปลว่า “ฉันมาจากประเทศไทย” ลองพูดตามว่า “I'm from Thailand.” ครับ
 
 Step 5
-AI: เก่งมากครับ! ต่อไปมาฝึกบอกว่าคุณมาจากไหนกันครับ I'm from Thailand. แปลว่า “ฉันมาจากประเทศไทย” ลองพูดตามนะครับ
-Hint: I live in...
-Choices: 🏙️ Bangkok → "I live in Bangkok."
-         🌆 Chiang Mai → "I live in Chiang Mai."
-         🌊 Phuket → "I live in Phuket."
+AI: ต่อไปมาฝึกบอกว่าคุณมาจากไหนครับ I'm from Thailand. แปลว่า “ฉันมาจากประเทศไทย” ลองพูดตามว่า “I'm from Thailand.” ครับ
+Hint: (none)
+Choices: 🇹🇭 Thailand → "I'm from Thailand."
 User: I'm from Thailand.
 Result: correct in pool
-response time : 96.65 ms
-Reply: เยี่ยมเลยครับ! I'm from ใช้บอกว่ามาจากไหน ส่วน I live in ใช้บอกว่าตอนนี้อยู่ที่ไหน เช่น I live in Bangkok. แปลว่า “ฉันอยู่ที่กรุงเทพ” ช่วยบอกครูหน่อยครับ ว่าคุณอยู่ที่ไหน?
+response time : 127.48 ms
+Reply: I'm from ใช้บอกว่ามาจากไหน ส่วน I live in ใช้บอกว่าตอนนี้อยู่ที่ไหน เช่น I live in Bangkok. แปลว่า “ฉันอยู่ที่กรุงเทพ” ช่วยบอกครูหน่อยครับว่าคุณอยู่ที่ไหน?
 
 Step 6
-AI: เยี่ยมเลยครับ! I'm from ใช้บอกว่ามาจากไหน ส่วน I live in ใช้บอกว่าตอนนี้อยู่ที่ไหน เช่น I live in Bangkok. แปลว่า “ฉันอยู่ที่กรุงเทพ” ช่วยบอกครูหน่อยครับ ว่าคุณอยู่ที่ไหน?
+AI: I'm from ใช้บอกว่ามาจากไหน ส่วน I live in ใช้บอกว่าตอนนี้อยู่ที่ไหน เช่น I live in Bangkok. แปลว่า “ฉันอยู่ที่กรุงเทพ” ช่วยบอกครูหน่อยครับว่าคุณอยู่ที่ไหน?
 Hint: I live in...
 Choices: 🏙️ Bangkok → "I live in Bangkok."
          🌆 Chiang Mai → "I live in Chiang Mai."
          🌊 Phuket → "I live in Phuket."
 User: I live in Bangkok.
 Result: correct in pool
-response time : 93.88 ms
-Reply: ดีมากครับ! ถ้าจะบอกงานหรือสิ่งที่ทำ พูดได้ว่า I work as a teacher. แปลว่า “ฉันทำงานเป็นครู” ช่วยบอกครูหน่อยครับ ว่าคุณทำอะไร?
+response time : 132.98 ms
+Reply: ถ้าจะบอกงานหรือสิ่งที่ทำ พูดได้ว่า I work as a teacher. แปลว่า “ฉันทำงานเป็นครู” ช่วยบอกครูหน่อยครับว่าคุณทำอะไร?
 
 Step 7
-AI: ดีมากครับ! ถ้าจะบอกงานหรือสิ่งที่ทำ พูดได้ว่า I work as a teacher. แปลว่า “ฉันทำงานเป็นครู” ช่วยบอกครูหน่อยครับ ว่าคุณทำอะไร?
+AI: ถ้าจะบอกงานหรือสิ่งที่ทำ พูดได้ว่า I work as a teacher. แปลว่า “ฉันทำงานเป็นครู” ช่วยบอกครูหน่อยครับว่าคุณทำอะไร?
 Hint: I work as... / I'm...
 Choices: 👩‍🏫 Teacher → "I work as a teacher."
          🎓 Student → "I'm a student."
          💼 Office worker → "I work as an office worker."
 User: I work as a teacher.
 Result: correct in pool
-response time : 104.18 ms
+response time : 104.88 ms
 Reply: ขั้นตอนสุดท้ายครับ ลองแนะนำตัวสั้นๆ เป็นภาษาอังกฤษด้วยชื่อ และอีกหนึ่งอย่างเกี่ยวกับตัวคุณ จะบอกว่ามาจากไหน อยู่ที่ไหน หรือทำงานอะไรก็ได้ครับ
 
 Step 8
@@ -89,11 +79,11 @@ Hint: (none)
 Choices: (none)
 User: My name is Nana. I'm from Thailand.
 Result: correct in pool
-response time : 127.08 ms
-Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณแนะนำตัวเป็นภาษาอังกฤษได้แล้ว ทั้งบอกชื่อ บอกว่ามาจากไหน และตอบเวลาพบคนใหม่ได้ — เก่งมากครับ! 🍌
+response time : 99.81 ms
+Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณแนะนำตัวเป็นภาษาอังกฤษได้แล้ว ทั้งบอกชื่อ บอกว่ามาจากไหน และตอบเวลาพบคนใหม่ได้ 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ introductions scenario 1 complete · 8 turns · 876.11 ms
+✅ introductions scenario 1 complete · 8 turns · 901.19 ms
 
 ================================================================================
 introductions — Scenario 2 — out-pool correct ทุก step → จบบท
@@ -101,87 +91,84 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 ================================================================================
 
 Step 1
-AI: สวัสดีครับ Nana! วันนี้เรามาเรียนรู้การแนะนำตัวเป็นภาษาอังกฤษกันครับ 📝 ลองพูดตามว่า My name is Nana นะครับ
+AI: สวัสดีครับ Nana! วันนี้เราจะฝึกแนะนำตัวครับ 📝 My name is Nana. แปลว่า “ฉันชื่อ Nana” และพูดแบบสั้นว่า I'm Nana. ได้ ใช้สองแบบนี้เพื่อบอกชื่อของเรา ลองพูดตามว่า “My name is Nana.” ครับ
 Hint: (none)
 Choices: 📝 My name is → "My name is Nana."
-         💬 I'm → "I'm Nana."
 User: My name is Nano.
 Result: correct out pool
-response time : 1.52 s
-Reply: ยอดเยี่ยมมากครับ Nana! ออกเสียงได้ชัดเจนและถูกต้องแล้วครับ เก่งมากครับ! My name is Nana. แปลว่า “ฉันชื่อ Nana” อีกแบบพูดสั้นๆ ว่า I'm Nana. ก็ได้ครับ ช่วยบอกครูหน่อยครับ ว่าคุณชื่ออะไร?
+response time : 1.40 s
+Reply: ถูกต้องครับ! My name is Nana. แปลว่า “ฉันชื่อ Nana” และแบบสั้นคือ I'm Nana. ทีนี้ลองใช้แบบสั้นในสถานการณ์จริงครับ ช่วยบอกครูหน่อยว่าคุณชื่ออะไร?
 
 Step 2
-AI: ยอดเยี่ยมมากครับ Nana! ออกเสียงได้ชัดเจนและถูกต้องแล้วครับ เก่งมากครับ! My name is Nana. แปลว่า “ฉันชื่อ Nana” อีกแบบพูดสั้นๆ ว่า I'm Nana. ก็ได้ครับ ช่วยบอกครูหน่อยครับ ว่าคุณชื่ออะไร?
+AI: ถูกต้องครับ! My name is Nana. แปลว่า “ฉันชื่อ Nana” และแบบสั้นคือ I'm Nana. ทีนี้ลองใช้แบบสั้นในสถานการณ์จริงครับ ช่วยบอกครูหน่อยว่าคุณชื่ออะไร?
 Hint: (none)
-Choices: 🤝 Nice to meet you → "Nice to meet you." (repeat-only)
-User: My name is Nano.
+Choices: 🤝 Nice to meet you → "Nice to meet you."
+User: I'm Nano.
 Result: correct in pool
-response time : 89.80 ms
-Reply: เยี่ยมเลยครับ! ต่อไปเวลาเจอคนใหม่ เราพูดว่า Nice to meet you. แปลว่า “ยินดีที่ได้รู้จัก” ลองพูดตามนะครับ
+response time : 120.10 ms
+Reply: ต่อไปเวลาเจอคนใหม่ เราพูดว่า Nice to meet you. แปลว่า “ยินดีที่ได้รู้จัก” ลองพูดตามว่า “Nice to meet you.” ครับ
 
 Step 3
-AI: เยี่ยมเลยครับ! ต่อไปเวลาเจอคนใหม่ เราพูดว่า Nice to meet you. แปลว่า “ยินดีที่ได้รู้จัก” ลองพูดตามนะครับ
+AI: ต่อไปเวลาเจอคนใหม่ เราพูดว่า Nice to meet you. แปลว่า “ยินดีที่ได้รู้จัก” ลองพูดตามว่า “Nice to meet you.” ครับ
+Hint: (none)
+Choices: 🤝 Nice to meet you → "Nice to meet you."
+User: Nice to meet you....
+Result: correct out pool
+response time : 1.48 s
+Reply: ถูกต้องครับ! ถ้าครูพูดว่า Nice to meet you. ให้ตอบว่า Nice to meet you too. แปลว่า “ยินดีที่ได้รู้จักเช่นกัน” ลองตอบเหมือนสถานการณ์จริงนะครับ: Nice to meet you.
+
+Step 4
+AI: ถูกต้องครับ! ถ้าครูพูดว่า Nice to meet you. ให้ตอบว่า Nice to meet you too. แปลว่า “ยินดีที่ได้รู้จักเช่นกัน” ลองตอบเหมือนสถานการณ์จริงนะครับ: Nice to meet you.
 Hint: (none)
 Choices: 😊 Nice to meet you too → "Nice to meet you too."
          🙏 Thank you → "Thank you."
-User: Nice to meet you....
-Result: correct out pool
-response time : 1.25 s
-Reply: เก่งมากครับ Nana! ออกเสียงได้ถูกต้องและชัดเจนมากครับ ดีมากครับ! ถ้าครูพูดว่า Nice to meet you. ให้ตอบว่า Nice to meet you too. แปลว่า “ยินดีที่ได้รู้จักเช่นกัน” ลองตอบเหมือนสถานการณ์จริงนะครับ: Nice to meet you.
-
-Step 4
-AI: เก่งมากครับ Nana! ออกเสียงได้ถูกต้องและชัดเจนมากครับ ดีมากครับ! ถ้าครูพูดว่า Nice to meet you. ให้ตอบว่า Nice to meet you too. แปลว่า “ยินดีที่ได้รู้จักเช่นกัน” ลองตอบเหมือนสถานการณ์จริงนะครับ: Nice to meet you.
-Hint: (none)
-Choices: 🇹🇭 Thailand → "I'm from Thailand." (repeat-only)
 User: Nice to meet you too....
 Result: correct out pool
-response time : 2.15 s
-Reply: ถูกต้องแล้วครับ Nana! เก่งมากครับที่ตอบกลับได้ถูกต้องและเป็นธรรมชาติครับ เก่งมากครับ! ต่อไปมาฝึกบอกว่าคุณมาจากไหนกันครับ I'm from Thailand. แปลว่า “ฉันมาจากประเทศไทย” ลองพูดตามนะครับ
+response time : 1.20 s
+Reply: ดีมากครับ! ต่อไปมาฝึกบอกว่าคุณมาจากไหนครับ I'm from Thailand. แปลว่า “ฉันมาจากประเทศไทย” ลองพูดตามว่า “I'm from Thailand.” ครับ
 
 Step 5
-AI: ถูกต้องแล้วครับ Nana! เก่งมากครับที่ตอบกลับได้ถูกต้องและเป็นธรรมชาติครับ เก่งมากครับ! ต่อไปมาฝึกบอกว่าคุณมาจากไหนกันครับ I'm from Thailand. แปลว่า “ฉันมาจากประเทศไทย” ลองพูดตามนะครับ
-Hint: I live in...
-Choices: 🏙️ Bangkok → "I live in Bangkok."
-         🌆 Chiang Mai → "I live in Chiang Mai."
-         🌊 Phuket → "I live in Phuket."
+AI: ดีมากครับ! ต่อไปมาฝึกบอกว่าคุณมาจากไหนครับ I'm from Thailand. แปลว่า “ฉันมาจากประเทศไทย” ลองพูดตามว่า “I'm from Thailand.” ครับ
+Hint: (none)
+Choices: 🇹🇭 Thailand → "I'm from Thailand."
 User: I'm from Thailand....
 Result: correct out pool
-response time : 1.89 s
-Reply: ยอดเยี่ยมมากครับ Nana! คุณออกเสียงได้ถูกต้องและเป็นธรรมชาติมากครับ เก่งมากครับ! เยี่ยมเลยครับ! I'm from ใช้บอกว่ามาจากไหน ส่วน I live in ใช้บอกว่าตอนนี้อยู่ที่ไหน เช่น I live in Bangkok. แปลว่า “ฉันอยู่ที่กรุงเทพ” ช่วยบอกครูหน่อยครับ ว่าคุณอยู่ที่ไหน?
+response time : 1.21 s
+Reply: เยี่ยมครับ! I'm from ใช้บอกว่ามาจากไหน ส่วน I live in ใช้บอกว่าตอนนี้อยู่ที่ไหน เช่น I live in Bangkok. แปลว่า “ฉันอยู่ที่กรุงเทพ” ช่วยบอกครูหน่อยครับว่าคุณอยู่ที่ไหน?
 
 Step 6
-AI: ยอดเยี่ยมมากครับ Nana! คุณออกเสียงได้ถูกต้องและเป็นธรรมชาติมากครับ เก่งมากครับ! เยี่ยมเลยครับ! I'm from ใช้บอกว่ามาจากไหน ส่วน I live in ใช้บอกว่าตอนนี้อยู่ที่ไหน เช่น I live in Bangkok. แปลว่า “ฉันอยู่ที่กรุงเทพ” ช่วยบอกครูหน่อยครับ ว่าคุณอยู่ที่ไหน?
+AI: เยี่ยมครับ! I'm from ใช้บอกว่ามาจากไหน ส่วน I live in ใช้บอกว่าตอนนี้อยู่ที่ไหน เช่น I live in Bangkok. แปลว่า “ฉันอยู่ที่กรุงเทพ” ช่วยบอกครูหน่อยครับว่าคุณอยู่ที่ไหน?
 Hint: I live in...
 Choices: 🏙️ Bangkok → "I live in Bangkok."
          🌆 Chiang Mai → "I live in Chiang Mai."
          🌊 Phuket → "I live in Phuket."
 User: I live in Bangkok....
 Result: correct out pool
-response time : 1.16 s
-Reply: ถูกต้องแล้วครับ Nana! เก่งมากครับ คุณเข้าใจการใช้ I live in ได้ถูกต้องเลยครับ ดีมากครับ! ถ้าจะบอกงานหรือสิ่งที่ทำ พูดได้ว่า I work as a teacher. แปลว่า “ฉันทำงานเป็นครู” ช่วยบอกครูหน่อยครับ ว่าคุณทำอะไร?
+response time : 1.62 s
+Reply: ดีมากครับ! ถ้าจะบอกงานหรือสิ่งที่ทำ พูดได้ว่า I work as a teacher. แปลว่า “ฉันทำงานเป็นครู” ช่วยบอกครูหน่อยครับว่าคุณทำอะไร?
 
 Step 7
-AI: ถูกต้องแล้วครับ Nana! เก่งมากครับ คุณเข้าใจการใช้ I live in ได้ถูกต้องเลยครับ ดีมากครับ! ถ้าจะบอกงานหรือสิ่งที่ทำ พูดได้ว่า I work as a teacher. แปลว่า “ฉันทำงานเป็นครู” ช่วยบอกครูหน่อยครับ ว่าคุณทำอะไร?
+AI: ดีมากครับ! ถ้าจะบอกงานหรือสิ่งที่ทำ พูดได้ว่า I work as a teacher. แปลว่า “ฉันทำงานเป็นครู” ช่วยบอกครูหน่อยครับว่าคุณทำอะไร?
 Hint: I work as... / I'm...
 Choices: 👩‍🏫 Teacher → "I work as a teacher."
          🎓 Student → "I'm a student."
          💼 Office worker → "I work as an office worker."
 User: I work as a teacher....
 Result: correct out pool
-response time : 1.22 s
-Reply: ถูกต้องแล้วครับ Nana! คุณใช้ประโยค "I work as a teacher." ได้ถูกต้องและชัดเจนมากครับ เก่งมากครับ! ขั้นตอนสุดท้ายครับ ลองแนะนำตัวสั้นๆ เป็นภาษาอังกฤษด้วยชื่อ และอีกหนึ่งอย่างเกี่ยวกับตัวคุณ จะบอกว่ามาจากไหน อยู่ที่ไหน หรือทำงานอะไรก็ได้ครับ
+response time : 1.38 s
+Reply: ถูกต้องครับ! ขั้นตอนสุดท้ายครับ ลองแนะนำตัวสั้นๆ เป็นภาษาอังกฤษด้วยชื่อ และอีกหนึ่งอย่างเกี่ยวกับตัวคุณ จะบอกว่ามาจากไหน อยู่ที่ไหน หรือทำงานอะไรก็ได้ครับ
 
 Step 8
-AI: ถูกต้องแล้วครับ Nana! คุณใช้ประโยค "I work as a teacher." ได้ถูกต้องและชัดเจนมากครับ เก่งมากครับ! ขั้นตอนสุดท้ายครับ ลองแนะนำตัวสั้นๆ เป็นภาษาอังกฤษด้วยชื่อ และอีกหนึ่งอย่างเกี่ยวกับตัวคุณ จะบอกว่ามาจากไหน อยู่ที่ไหน หรือทำงานอะไรก็ได้ครับ
+AI: ถูกต้องครับ! ขั้นตอนสุดท้ายครับ ลองแนะนำตัวสั้นๆ เป็นภาษาอังกฤษด้วยชื่อ และอีกหนึ่งอย่างเกี่ยวกับตัวคุณ จะบอกว่ามาจากไหน อยู่ที่ไหน หรือทำงานอะไรก็ได้ครับ
 Hint: (none)
 Choices: (none)
 User: My name is Nano. I'm from Thailand.
 Result: correct in pool
-response time : 94.54 ms
-Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณแนะนำตัวเป็นภาษาอังกฤษได้แล้ว ทั้งบอกชื่อ บอกว่ามาจากไหน และตอบเวลาพบคนใหม่ได้ — เก่งมากครับ! 🍌
+response time : 875.12 ms
+Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณแนะนำตัวเป็นภาษาอังกฤษได้แล้ว ทั้งบอกชื่อ บอกว่ามาจากไหน และตอบเวลาพบคนใหม่ได้ 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ introductions scenario 2 complete · 8 turns · 9.37 s
+✅ introductions scenario 2 complete · 8 turns · 9.28 s
 
 ================================================================================
 introductions — Scenario 3 — out-pool close ทุก step → จบบท
@@ -189,36 +176,35 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 ================================================================================
 
 Step 1
-AI: สวัสดีครับ Nana! วันนี้เรามาเรียนรู้การแนะนำตัวเป็นภาษาอังกฤษกันครับ 📝 ลองพูดตามว่า My name is Nana นะครับ
+AI: สวัสดีครับ Nana! วันนี้เราจะฝึกแนะนำตัวครับ 📝 My name is Nana. แปลว่า “ฉันชื่อ Nana” และพูดแบบสั้นว่า I'm Nana. ได้ ใช้สองแบบนี้เพื่อบอกชื่อของเรา ลองพูดตามว่า “My name is Nana.” ครับ
 Hint: (none)
 Choices: 📝 My name is → "My name is Nana."
-         💬 I'm → "I'm Nana."
 User: My name Nana.
 Result: close out pool
-response time : 1.24 s
+response time : 1.54 s
 Reply: เกือบถูกแล้วครับ! พูดว่า My name is Nana. 📝
-My name is Nana. แปลว่า “ฉันชื่อ Nana” อีกแบบพูดสั้นๆ ว่า I'm Nana. ก็ได้ครับ ช่วยบอกครูหน่อยครับ ว่าคุณชื่ออะไร?
+My name is Nana. แปลว่า “ฉันชื่อ Nana” และแบบสั้นคือ I'm Nana. ทีนี้ลองใช้แบบสั้นในสถานการณ์จริงครับ ช่วยบอกครูหน่อยว่าคุณชื่ออะไร?
 
 Step 2
 AI: เกือบถูกแล้วครับ! พูดว่า My name is Nana. 📝
-My name is Nana. แปลว่า “ฉันชื่อ Nana” อีกแบบพูดสั้นๆ ว่า I'm Nana. ก็ได้ครับ ช่วยบอกครูหน่อยครับ ว่าคุณชื่ออะไร?
+My name is Nana. แปลว่า “ฉันชื่อ Nana” และแบบสั้นคือ I'm Nana. ทีนี้ลองใช้แบบสั้นในสถานการณ์จริงครับ ช่วยบอกครูหน่อยว่าคุณชื่ออะไร?
 Hint: (none)
-Choices: 🤝 Nice to meet you → "Nice to meet you." (repeat-only)
+Choices: 📝 My name is → "My name is Nana."
+         💬 I'm → "I'm Nana."
 User: I Nana.
 Result: close out pool
-response time : 1.12 s
-Reply: เกือบถูกแล้วครับ! พูดว่า My name is Nana. 📝
-ต่อไปเวลาเจอคนใหม่ เราพูดว่า Nice to meet you. แปลว่า “ยินดีที่ได้รู้จัก” ลองพูดตามนะครับ
+response time : 1.31 s
+Reply: เกือบถูกแล้วครับ! พูดว่า I'm Nana. 📝
+ต่อไปเวลาเจอคนใหม่ เราพูดว่า Nice to meet you. แปลว่า “ยินดีที่ได้รู้จัก” ลองพูดตามว่า “Nice to meet you.” ครับ
 
 Step 3
-AI: เกือบถูกแล้วครับ! พูดว่า My name is Nana. 📝
-ต่อไปเวลาเจอคนใหม่ เราพูดว่า Nice to meet you. แปลว่า “ยินดีที่ได้รู้จัก” ลองพูดตามนะครับ
+AI: เกือบถูกแล้วครับ! พูดว่า I'm Nana. 📝
+ต่อไปเวลาเจอคนใหม่ เราพูดว่า Nice to meet you. แปลว่า “ยินดีที่ได้รู้จัก” ลองพูดตามว่า “Nice to meet you.” ครับ
 Hint: (none)
-Choices: 😊 Nice to meet you too → "Nice to meet you too."
-         🙏 Thank you → "Thank you."
+Choices: 🤝 Nice to meet you → "Nice to meet you."
 User: Nice meet you.
 Result: close out pool
-response time : 1.24 s
+response time : 1.21 s
 Reply: เกือบถูกแล้วครับ! พูดว่า Nice to meet you. 🤝
 ต่อไปถ้าครูพูดว่า Nice to meet you. ให้ตอบว่า Nice to meet you too. แปลว่า “ยินดีที่ได้รู้จักเช่นกัน” ลองตอบเหมือนสถานการณ์จริงนะครับ: Nice to meet you.
 
@@ -226,49 +212,48 @@ Step 4
 AI: เกือบถูกแล้วครับ! พูดว่า Nice to meet you. 🤝
 ต่อไปถ้าครูพูดว่า Nice to meet you. ให้ตอบว่า Nice to meet you too. แปลว่า “ยินดีที่ได้รู้จักเช่นกัน” ลองตอบเหมือนสถานการณ์จริงนะครับ: Nice to meet you.
 Hint: (none)
-Choices: 🇹🇭 Thailand → "I'm from Thailand." (repeat-only)
+Choices: 😊 Nice to meet you too → "Nice to meet you too."
+         🙏 Thank you → "Thank you."
 User: Nice to meet too.
 Result: close out pool
-response time : 1.19 s
+response time : 1.76 s
 Reply: เกือบถูกแล้วครับ! พูดว่า Nice to meet you too. 😊
-ต่อไปมาฝึกบอกว่าคุณมาจากไหนกันครับ I'm from Thailand. แปลว่า “ฉันมาจากประเทศไทย” ลองพูดตามนะครับ
+ต่อไปมาฝึกบอกว่าคุณมาจากไหนครับ I'm from Thailand. แปลว่า “ฉันมาจากประเทศไทย” ลองพูดตามว่า “I'm from Thailand.” ครับ
 
 Step 5
 AI: เกือบถูกแล้วครับ! พูดว่า Nice to meet you too. 😊
-ต่อไปมาฝึกบอกว่าคุณมาจากไหนกันครับ I'm from Thailand. แปลว่า “ฉันมาจากประเทศไทย” ลองพูดตามนะครับ
-Hint: I live in...
-Choices: 🏙️ Bangkok → "I live in Bangkok."
-         🌆 Chiang Mai → "I live in Chiang Mai."
-         🌊 Phuket → "I live in Phuket."
+ต่อไปมาฝึกบอกว่าคุณมาจากไหนครับ I'm from Thailand. แปลว่า “ฉันมาจากประเทศไทย” ลองพูดตามว่า “I'm from Thailand.” ครับ
+Hint: (none)
+Choices: 🇹🇭 Thailand → "I'm from Thailand."
 User: I from Thailand.
 Result: close out pool
-response time : 1.12 s
+response time : 1.23 s
 Reply: เกือบถูกแล้วครับ! พูดว่า I'm from Thailand. 🇹🇭
-I'm from ใช้บอกว่ามาจากไหน ส่วน I live in ใช้บอกว่าตอนนี้อยู่ที่ไหน เช่น I live in Bangkok. แปลว่า “ฉันอยู่ที่กรุงเทพ” ช่วยบอกครูหน่อยครับ ว่าคุณอยู่ที่ไหน?
+I'm from ใช้บอกว่ามาจากไหน ส่วน I live in ใช้บอกว่าตอนนี้อยู่ที่ไหน เช่น I live in Bangkok. แปลว่า “ฉันอยู่ที่กรุงเทพ” ช่วยบอกครูหน่อยครับว่าคุณอยู่ที่ไหน?
 
 Step 6
 AI: เกือบถูกแล้วครับ! พูดว่า I'm from Thailand. 🇹🇭
-I'm from ใช้บอกว่ามาจากไหน ส่วน I live in ใช้บอกว่าตอนนี้อยู่ที่ไหน เช่น I live in Bangkok. แปลว่า “ฉันอยู่ที่กรุงเทพ” ช่วยบอกครูหน่อยครับ ว่าคุณอยู่ที่ไหน?
+I'm from ใช้บอกว่ามาจากไหน ส่วน I live in ใช้บอกว่าตอนนี้อยู่ที่ไหน เช่น I live in Bangkok. แปลว่า “ฉันอยู่ที่กรุงเทพ” ช่วยบอกครูหน่อยครับว่าคุณอยู่ที่ไหน?
 Hint: I live in...
 Choices: 🏙️ Bangkok → "I live in Bangkok."
          🌆 Chiang Mai → "I live in Chiang Mai."
          🌊 Phuket → "I live in Phuket."
 User: I live Bangkok.
 Result: close out pool
-response time : 1.19 s
+response time : 1.20 s
 Reply: เกือบถูกแล้วครับ! พูดว่า I live in Bangkok. 🏙️
-ต่อไปถ้าจะบอกงานหรือสิ่งที่ทำ พูดได้ว่า I work as a teacher. แปลว่า “ฉันทำงานเป็นครู” ช่วยบอกครูหน่อยครับ ว่าคุณทำอะไร?
+ต่อไปถ้าจะบอกงานหรือสิ่งที่ทำ พูดได้ว่า I work as a teacher. แปลว่า “ฉันทำงานเป็นครู” ช่วยบอกครูหน่อยครับว่าคุณทำอะไร?
 
 Step 7
 AI: เกือบถูกแล้วครับ! พูดว่า I live in Bangkok. 🏙️
-ต่อไปถ้าจะบอกงานหรือสิ่งที่ทำ พูดได้ว่า I work as a teacher. แปลว่า “ฉันทำงานเป็นครู” ช่วยบอกครูหน่อยครับ ว่าคุณทำอะไร?
+ต่อไปถ้าจะบอกงานหรือสิ่งที่ทำ พูดได้ว่า I work as a teacher. แปลว่า “ฉันทำงานเป็นครู” ช่วยบอกครูหน่อยครับว่าคุณทำอะไร?
 Hint: I work as... / I'm...
 Choices: 👩‍🏫 Teacher → "I work as a teacher."
          🎓 Student → "I'm a student."
          💼 Office worker → "I work as an office worker."
 User: I work teacher.
 Result: close out pool
-response time : 1.68 s
+response time : 1.25 s
 Reply: เกือบถูกแล้วครับ! พูดว่า I work as a teacher. 👩‍🏫
 ต่อไปขั้นตอนสุดท้ายครับ ลองแนะนำตัวสั้นๆ เป็นภาษาอังกฤษด้วยชื่อ และอีกหนึ่งอย่างเกี่ยวกับตัวคุณ จะบอกว่ามาจากไหน อยู่ที่ไหน หรือทำงานอะไรก็ได้ครับ
 
@@ -279,12 +264,12 @@ Hint: (none)
 Choices: (none)
 User: My name Nana. I from Thailand.
 Result: close out pool
-response time : 1.33 s
+response time : 1.38 s
 Reply: เกือบถูกแล้วครับ! พูดว่า My name is Nana. I'm from Thailand.
-สุดยอดครับ Nana! 🎉 วันนี้คุณแนะนำตัวเป็นภาษาอังกฤษได้แล้ว ทั้งบอกชื่อ บอกว่ามาจากไหน และตอบเวลาพบคนใหม่ได้ — เก่งมากครับ! 🍌
+สุดยอดครับ Nana! 🎉 วันนี้คุณแนะนำตัวเป็นภาษาอังกฤษได้แล้ว ทั้งบอกชื่อ บอกว่ามาจากไหน และตอบเวลาพบคนใหม่ได้ 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ introductions scenario 3 complete · 8 turns · 10.11 s
+✅ introductions scenario 3 complete · 8 turns · 10.88 s
 
 ================================================================================
 introductions — Scenario 4 — out-pool wrong + in-pool พูดตาม recovery → จบบท
@@ -292,112 +277,108 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 ================================================================================
 
 Step 1
-AI: สวัสดีครับ Nana! วันนี้เรามาเรียนรู้การแนะนำตัวเป็นภาษาอังกฤษกันครับ 📝 ลองพูดตามว่า My name is Nana นะครับ
+AI: สวัสดีครับ Nana! วันนี้เราจะฝึกแนะนำตัวครับ 📝 My name is Nana. แปลว่า “ฉันชื่อ Nana” และพูดแบบสั้นว่า I'm Nana. ได้ ใช้สองแบบนี้เพื่อบอกชื่อของเรา ลองพูดตามว่า “My name is Nana.” ครับ
 Hint: (none)
 Choices: 📝 My name is → "My name is Nana."
-         💬 I'm → "I'm Nana."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.20 s
-Reply: ยังไม่ใช่ครับ Nana ลองพูดแนะนำตัวว่า "My name is Nana" นะครับ ลองพูดตามนะครับ
+response time : 1.43 s
+Reply: เก่งมากครับ Nana! แต่ตอนนี้เรามาลองฝึกแนะนำชื่อตัวเองกันก่อนนะครับ ลองพูดว่า "My name is Nana." อีกครั้งนะครับ ลองพูดตามนะครับ
 
 Step 2
-AI: ยังไม่ใช่ครับ Nana ลองพูดแนะนำตัวว่า "My name is Nana" นะครับ ลองพูดตามนะครับ
+AI: เก่งมากครับ Nana! แต่ตอนนี้เรามาลองฝึกแนะนำชื่อตัวเองกันก่อนนะครับ ลองพูดว่า "My name is Nana." อีกครั้งนะครับ ลองพูดตามนะครับ
+Hint: (none)
+Choices: 📝 My name is → "My name is Nana."
+User: My name is Nana.
+Result: correct in pool
+response time : 97.13 ms
+Reply: My name is Nana. แปลว่า “ฉันชื่อ Nana” และแบบสั้นคือ I'm Nana. ทีนี้ลองใช้แบบสั้นในสถานการณ์จริงครับ ช่วยบอกครูหน่อยว่าคุณชื่ออะไร?
+
+Step 3
+AI: My name is Nana. แปลว่า “ฉันชื่อ Nana” และแบบสั้นคือ I'm Nana. ทีนี้ลองใช้แบบสั้นในสถานการณ์จริงครับ ช่วยบอกครูหน่อยว่าคุณชื่ออะไร?
 Hint: (none)
 Choices: 📝 My name is → "My name is Nana."
          💬 I'm → "I'm Nana."
-User: My name is Nana.
-Result: correct in pool
-response time : 229.96 ms
-Reply: เก่งมากครับ! My name is Nana. แปลว่า “ฉันชื่อ Nana” อีกแบบพูดสั้นๆ ว่า I'm Nana. ก็ได้ครับ ช่วยบอกครูหน่อยครับ ว่าคุณชื่ออะไร?
-
-Step 3
-AI: เก่งมากครับ! My name is Nana. แปลว่า “ฉันชื่อ Nana” อีกแบบพูดสั้นๆ ว่า I'm Nana. ก็ได้ครับ ช่วยบอกครูหน่อยครับ ว่าคุณชื่ออะไร?
-Hint: (none)
-Choices: 🤝 Nice to meet you → "Nice to meet you." (repeat-only)
 User: Good morning.
 Result: incorrect out pool
-response time : 1.12 s
+response time : 1.22 s
 Reply: ยังไม่ตรงครับ ลองใช้ “My name is...” หรือ “I'm...” แล้วตามด้วยชื่อของคุณครับ
 
 Step 4
 AI: ยังไม่ตรงครับ ลองใช้ “My name is...” หรือ “I'm...” แล้วตามด้วยชื่อของคุณครับ
 Hint: (none)
-Choices: 🤝 Nice to meet you → "Nice to meet you." (repeat-only)
-User: My name is Nana.
+Choices: 📝 My name is → "My name is Nana."
+         💬 I'm → "I'm Nana."
+User: I'm Nana.
 Result: correct in pool
-response time : 166.44 ms
-Reply: เยี่ยมเลยครับ! ต่อไปเวลาเจอคนใหม่ เราพูดว่า Nice to meet you. แปลว่า “ยินดีที่ได้รู้จัก” ลองพูดตามนะครับ
+response time : 138.40 ms
+Reply: ต่อไปเวลาเจอคนใหม่ เราพูดว่า Nice to meet you. แปลว่า “ยินดีที่ได้รู้จัก” ลองพูดตามว่า “Nice to meet you.” ครับ
 
 Step 5
-AI: เยี่ยมเลยครับ! ต่อไปเวลาเจอคนใหม่ เราพูดว่า Nice to meet you. แปลว่า “ยินดีที่ได้รู้จัก” ลองพูดตามนะครับ
+AI: ต่อไปเวลาเจอคนใหม่ เราพูดว่า Nice to meet you. แปลว่า “ยินดีที่ได้รู้จัก” ลองพูดตามว่า “Nice to meet you.” ครับ
 Hint: (none)
-Choices: 😊 Nice to meet you too → "Nice to meet you too."
-         🙏 Thank you → "Thank you."
+Choices: 🤝 Nice to meet you → "Nice to meet you."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.28 s
-Reply: ยังไม่ตรงครับ ลองพูดว่า "Nice to meet you." นะครับ พูดตามครูอีกครั้งนะครับ
+response time : 1.60 s
+Reply: ยังไม่ตรงครับ ลองพูดว่า "Nice to meet you." อีกครั้งนะครับ ลองพูดตามนะครับ
 
 Step 6
-AI: ยังไม่ตรงครับ ลองพูดว่า "Nice to meet you." นะครับ พูดตามครูอีกครั้งนะครับ
+AI: ยังไม่ตรงครับ ลองพูดว่า "Nice to meet you." อีกครั้งนะครับ ลองพูดตามนะครับ
+Hint: (none)
+Choices: 🤝 Nice to meet you → "Nice to meet you."
+User: Nice to meet you.
+Result: correct in pool
+response time : 108.10 ms
+Reply: ถ้าครูพูดว่า Nice to meet you. ให้ตอบว่า Nice to meet you too. แปลว่า “ยินดีที่ได้รู้จักเช่นกัน” ลองตอบเหมือนสถานการณ์จริงนะครับ: Nice to meet you.
+
+Step 7
+AI: ถ้าครูพูดว่า Nice to meet you. ให้ตอบว่า Nice to meet you too. แปลว่า “ยินดีที่ได้รู้จักเช่นกัน” ลองตอบเหมือนสถานการณ์จริงนะครับ: Nice to meet you.
 Hint: (none)
 Choices: 😊 Nice to meet you too → "Nice to meet you too."
          🙏 Thank you → "Thank you."
-User: Nice to meet you.
-Result: correct in pool
-response time : 91.93 ms
-Reply: ดีมากครับ! ถ้าครูพูดว่า Nice to meet you. ให้ตอบว่า Nice to meet you too. แปลว่า “ยินดีที่ได้รู้จักเช่นกัน” ลองตอบเหมือนสถานการณ์จริงนะครับ: Nice to meet you.
-
-Step 7
-AI: ดีมากครับ! ถ้าครูพูดว่า Nice to meet you. ให้ตอบว่า Nice to meet you too. แปลว่า “ยินดีที่ได้รู้จักเช่นกัน” ลองตอบเหมือนสถานการณ์จริงนะครับ: Nice to meet you.
-Hint: (none)
-Choices: 🇹🇭 Thailand → "I'm from Thailand." (repeat-only)
 User: Good morning.
 Result: incorrect out pool
-response time : 1.17 s
+response time : 1.66 s
 Reply: ยังไม่ตรงครับ ลองใช้ “Nice to meet you too” หรือ “Thank you” ครับ
 
 Step 8
 AI: ยังไม่ตรงครับ ลองใช้ “Nice to meet you too” หรือ “Thank you” ครับ
 Hint: (none)
-Choices: 🇹🇭 Thailand → "I'm from Thailand." (repeat-only)
+Choices: 😊 Nice to meet you too → "Nice to meet you too."
+         🙏 Thank you → "Thank you."
 User: Nice to meet you too.
 Result: correct in pool
-response time : 100.18 ms
-Reply: เก่งมากครับ! ต่อไปมาฝึกบอกว่าคุณมาจากไหนกันครับ I'm from Thailand. แปลว่า “ฉันมาจากประเทศไทย” ลองพูดตามนะครับ
+response time : 425.31 ms
+Reply: ต่อไปมาฝึกบอกว่าคุณมาจากไหนครับ I'm from Thailand. แปลว่า “ฉันมาจากประเทศไทย” ลองพูดตามว่า “I'm from Thailand.” ครับ
 
 Step 9
-AI: เก่งมากครับ! ต่อไปมาฝึกบอกว่าคุณมาจากไหนกันครับ I'm from Thailand. แปลว่า “ฉันมาจากประเทศไทย” ลองพูดตามนะครับ
-Hint: I live in...
-Choices: 🏙️ Bangkok → "I live in Bangkok."
-         🌆 Chiang Mai → "I live in Chiang Mai."
-         🌊 Phuket → "I live in Phuket."
+AI: ต่อไปมาฝึกบอกว่าคุณมาจากไหนครับ I'm from Thailand. แปลว่า “ฉันมาจากประเทศไทย” ลองพูดตามว่า “I'm from Thailand.” ครับ
+Hint: (none)
+Choices: 🇹🇭 Thailand → "I'm from Thailand."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.12 s
-Reply: ยังไม่ตรงครับ ลองพูดว่า "I'm from Thailand." นะครับ พูดตามครูอีกครั้งนะครับ
+response time : 1.56 s
+Reply: ยังไม่ถูกต้องครับ ลองพูดว่า "I'm from Thailand." อีกครั้งนะครับ ลองพูดตามนะครับ
 
 Step 10
-AI: ยังไม่ตรงครับ ลองพูดว่า "I'm from Thailand." นะครับ พูดตามครูอีกครั้งนะครับ
-Hint: I live in...
-Choices: 🏙️ Bangkok → "I live in Bangkok."
-         🌆 Chiang Mai → "I live in Chiang Mai."
-         🌊 Phuket → "I live in Phuket."
+AI: ยังไม่ถูกต้องครับ ลองพูดว่า "I'm from Thailand." อีกครั้งนะครับ ลองพูดตามนะครับ
+Hint: (none)
+Choices: 🇹🇭 Thailand → "I'm from Thailand."
 User: I'm from Thailand.
 Result: correct in pool
-response time : 124.06 ms
-Reply: เยี่ยมเลยครับ! I'm from ใช้บอกว่ามาจากไหน ส่วน I live in ใช้บอกว่าตอนนี้อยู่ที่ไหน เช่น I live in Bangkok. แปลว่า “ฉันอยู่ที่กรุงเทพ” ช่วยบอกครูหน่อยครับ ว่าคุณอยู่ที่ไหน?
+response time : 447.41 ms
+Reply: I'm from ใช้บอกว่ามาจากไหน ส่วน I live in ใช้บอกว่าตอนนี้อยู่ที่ไหน เช่น I live in Bangkok. แปลว่า “ฉันอยู่ที่กรุงเทพ” ช่วยบอกครูหน่อยครับว่าคุณอยู่ที่ไหน?
 
 Step 11
-AI: เยี่ยมเลยครับ! I'm from ใช้บอกว่ามาจากไหน ส่วน I live in ใช้บอกว่าตอนนี้อยู่ที่ไหน เช่น I live in Bangkok. แปลว่า “ฉันอยู่ที่กรุงเทพ” ช่วยบอกครูหน่อยครับ ว่าคุณอยู่ที่ไหน?
+AI: I'm from ใช้บอกว่ามาจากไหน ส่วน I live in ใช้บอกว่าตอนนี้อยู่ที่ไหน เช่น I live in Bangkok. แปลว่า “ฉันอยู่ที่กรุงเทพ” ช่วยบอกครูหน่อยครับว่าคุณอยู่ที่ไหน?
 Hint: I live in...
 Choices: 🏙️ Bangkok → "I live in Bangkok."
          🌆 Chiang Mai → "I live in Chiang Mai."
          🌊 Phuket → "I live in Phuket."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.09 s
+response time : 1.23 s
 Reply: ยังไม่ตรงครับ ลองใช้ “I live in...” แล้วตามด้วยชื่อเมืองที่คุณอยู่ครับ
 
 Step 12
@@ -408,18 +389,18 @@ Choices: 🏙️ Bangkok → "I live in Bangkok."
          🌊 Phuket → "I live in Phuket."
 User: I live in Bangkok.
 Result: correct in pool
-response time : 106.92 ms
-Reply: ดีมากครับ! ถ้าจะบอกงานหรือสิ่งที่ทำ พูดได้ว่า I work as a teacher. แปลว่า “ฉันทำงานเป็นครู” ช่วยบอกครูหน่อยครับ ว่าคุณทำอะไร?
+response time : 88.13 ms
+Reply: ถ้าจะบอกงานหรือสิ่งที่ทำ พูดได้ว่า I work as a teacher. แปลว่า “ฉันทำงานเป็นครู” ช่วยบอกครูหน่อยครับว่าคุณทำอะไร?
 
 Step 13
-AI: ดีมากครับ! ถ้าจะบอกงานหรือสิ่งที่ทำ พูดได้ว่า I work as a teacher. แปลว่า “ฉันทำงานเป็นครู” ช่วยบอกครูหน่อยครับ ว่าคุณทำอะไร?
+AI: ถ้าจะบอกงานหรือสิ่งที่ทำ พูดได้ว่า I work as a teacher. แปลว่า “ฉันทำงานเป็นครู” ช่วยบอกครูหน่อยครับว่าคุณทำอะไร?
 Hint: I work as... / I'm...
 Choices: 👩‍🏫 Teacher → "I work as a teacher."
          🎓 Student → "I'm a student."
          💼 Office worker → "I work as an office worker."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.43 s
+response time : 1.27 s
 Reply: ยังไม่ตรงครับ ลองใช้ “I work as a...” หรือถ้าเป็นนักเรียน/นักศึกษา พูดว่า “I'm a student.” ครับ
 
 Step 14
@@ -430,7 +411,7 @@ Choices: 👩‍🏫 Teacher → "I work as a teacher."
          💼 Office worker → "I work as an office worker."
 User: I work as a teacher.
 Result: correct in pool
-response time : 92.86 ms
+response time : 97.24 ms
 Reply: ขั้นตอนสุดท้ายครับ ลองแนะนำตัวสั้นๆ เป็นภาษาอังกฤษด้วยชื่อ และอีกหนึ่งอย่างเกี่ยวกับตัวคุณ จะบอกว่ามาจากไหน อยู่ที่ไหน หรือทำงานอะไรก็ได้ครับ
 
 Step 15
@@ -439,7 +420,7 @@ Hint: (none)
 Choices: (none)
 User: Good morning.
 Result: incorrect out pool
-response time : 1.35 s
+response time : 2.30 s
 Reply: ยังไม่ตรงครับ ลองเริ่มด้วย “I'm Nana.” แล้วเพิ่มอีกหนึ่งอย่าง เช่น “I'm from...”, “I live in...” หรือ “I work as...” ครับ
 
 Step 16
@@ -448,11 +429,11 @@ Hint: (none)
 Choices: (none)
 User: My name is Nana. I'm from Thailand.
 Result: correct in pool
-response time : 129.78 ms
-Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณแนะนำตัวเป็นภาษาอังกฤษได้แล้ว ทั้งบอกชื่อ บอกว่ามาจากไหน และตอบเวลาพบคนใหม่ได้ — เก่งมากครับ! 🍌
+response time : 128.37 ms
+Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณแนะนำตัวเป็นภาษาอังกฤษได้แล้ว ทั้งบอกชื่อ บอกว่ามาจากไหน และตอบเวลาพบคนใหม่ได้ 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ introductions scenario 4 complete · 16 turns · 10.79 s
+✅ introductions scenario 4 complete · 16 turns · 13.80 s
 
 ================================================================================
 introductions — Scenario 5 — out-pool wrong + พูดตามผิดอีกครั้ง → soft-advance → จบบท
@@ -460,35 +441,33 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 ================================================================================
 
 Step 1
-AI: สวัสดีครับ Nana! วันนี้เรามาเรียนรู้การแนะนำตัวเป็นภาษาอังกฤษกันครับ 📝 ลองพูดตามว่า My name is Nana นะครับ
+AI: สวัสดีครับ Nana! วันนี้เราจะฝึกแนะนำตัวครับ 📝 My name is Nana. แปลว่า “ฉันชื่อ Nana” และพูดแบบสั้นว่า I'm Nana. ได้ ใช้สองแบบนี้เพื่อบอกชื่อของเรา ลองพูดตามว่า “My name is Nana.” ครับ
 Hint: (none)
 Choices: 📝 My name is → "My name is Nana."
-         💬 I'm → "I'm Nana."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.30 s
-Reply: ยังไม่ใช่ครับ ลองพูดแนะนำชื่อตัวเองว่า "My name is Nana" นะครับ ลองพูดตามนะครับ
+response time : 1.49 s
+Reply: เก่งมากครับ Nana! แต่ตอนนี้เรามาลองฝึกแนะนำชื่อตัวเองกันก่อนนะครับ ลองพูดว่า "My name is Nana." ครับ ลองพูดตามนะครับ
 
 Step 2
-AI: ยังไม่ใช่ครับ ลองพูดแนะนำชื่อตัวเองว่า "My name is Nana" นะครับ ลองพูดตามนะครับ
+AI: เก่งมากครับ Nana! แต่ตอนนี้เรามาลองฝึกแนะนำชื่อตัวเองกันก่อนนะครับ ลองพูดว่า "My name is Nana." ครับ ลองพูดตามนะครับ
 Hint: (none)
 Choices: 📝 My name is → "My name is Nana."
-         💬 I'm → "I'm Nana."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 98.25 ms
+response time : 114.92 ms
 Reply: ตรงนี้พูดว่า "My name is Nana." ครับ 📝
-ไปต่อกันเลย — My name is Nana. แปลว่า “ฉันชื่อ Nana” อีกแบบพูดสั้นๆ ว่า I'm Nana. ก็ได้ครับ ช่วยบอกครูหน่อยครับ ว่าคุณชื่ออะไร?
+ไปต่อกันเลย — My name is Nana. แปลว่า “ฉันชื่อ Nana” และแบบสั้นคือ I'm Nana. ทีนี้ลองใช้แบบสั้นในสถานการณ์จริงครับ ช่วยบอกครูหน่อยว่าคุณชื่ออะไร?
 
 Step 3
 AI: ตรงนี้พูดว่า "My name is Nana." ครับ 📝
-ไปต่อกันเลย — My name is Nana. แปลว่า “ฉันชื่อ Nana” อีกแบบพูดสั้นๆ ว่า I'm Nana. ก็ได้ครับ ช่วยบอกครูหน่อยครับ ว่าคุณชื่ออะไร?
+ไปต่อกันเลย — My name is Nana. แปลว่า “ฉันชื่อ Nana” และแบบสั้นคือ I'm Nana. ทีนี้ลองใช้แบบสั้นในสถานการณ์จริงครับ ช่วยบอกครูหน่อยว่าคุณชื่ออะไร?
 Hint: (none)
 Choices: 📝 My name is → "My name is Nana."
          💬 I'm → "I'm Nana."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.42 s
+response time : 1.34 s
 Reply: ยังไม่ตรงครับ ลองใช้ “My name is...” หรือ “I'm...” แล้วตามด้วยชื่อของคุณครับ
 
 Step 4
@@ -498,29 +477,27 @@ Choices: 📝 My name is → "My name is Nana."
          💬 I'm → "I'm Nana."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 104.79 ms
-Reply: ตรงนี้พูดว่า "My name is Nana." ครับ 📝
-ไปต่อกันเลย — Nice to meet you.
+response time : 95.80 ms
+Reply: ตรงนี้พูดว่า "I'm Nana." ครับ 📝
+ไปต่อกันเลย — ต่อไปเวลาเจอคนใหม่ เราพูดว่า Nice to meet you. แปลว่า “ยินดีที่ได้รู้จัก” ลองพูดตามว่า “Nice to meet you.” ครับ
 
 Step 5
-AI: ตรงนี้พูดว่า "My name is Nana." ครับ 📝
-ไปต่อกันเลย — Nice to meet you.
+AI: ตรงนี้พูดว่า "I'm Nana." ครับ 📝
+ไปต่อกันเลย — ต่อไปเวลาเจอคนใหม่ เราพูดว่า Nice to meet you. แปลว่า “ยินดีที่ได้รู้จัก” ลองพูดตามว่า “Nice to meet you.” ครับ
 Hint: (none)
-Choices: 📝 My name is → "My name is Nana."
-         💬 I'm → "I'm Nana."
+Choices: 🤝 Nice to meet you → "Nice to meet you."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.12 s
-Reply: ยังไม่ถูกครับ ลองพูดว่า "Nice to meet you." นะครับ ลองพูดตามนะครับ
+response time : 1.25 s
+Reply: ยังไม่ตรงครับ ลองพูดว่า "Nice to meet you." อีกครั้งนะครับ ลองพูดตามนะครับ
 
 Step 6
-AI: ยังไม่ถูกครับ ลองพูดว่า "Nice to meet you." นะครับ ลองพูดตามนะครับ
+AI: ยังไม่ตรงครับ ลองพูดว่า "Nice to meet you." อีกครั้งนะครับ ลองพูดตามนะครับ
 Hint: (none)
-Choices: 📝 My name is → "My name is Nana."
-         💬 I'm → "I'm Nana."
+Choices: 🤝 Nice to meet you → "Nice to meet you."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 104.81 ms
+response time : 91.32 ms
 Reply: ตรงนี้พูดว่า "Nice to meet you." ครับ 🤝
 ไปต่อกันเลย — Nice to meet you too.
 
@@ -528,56 +505,54 @@ Step 7
 AI: ตรงนี้พูดว่า "Nice to meet you." ครับ 🤝
 ไปต่อกันเลย — Nice to meet you too.
 Hint: (none)
-Choices: 📝 My name is → "My name is Nana."
-         💬 I'm → "I'm Nana."
+Choices: 😊 Nice to meet you too → "Nice to meet you too."
+         🙏 Thank you → "Thank you."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.11 s
+response time : 1.32 s
 Reply: ยังไม่ตรงครับ ลองใช้ “Nice to meet you too” หรือ “Thank you” ครับ
 
 Step 8
 AI: ยังไม่ตรงครับ ลองใช้ “Nice to meet you too” หรือ “Thank you” ครับ
 Hint: (none)
-Choices: 📝 My name is → "My name is Nana."
-         💬 I'm → "I'm Nana."
+Choices: 😊 Nice to meet you too → "Nice to meet you too."
+         🙏 Thank you → "Thank you."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 118.58 ms
+response time : 93.32 ms
 Reply: ตรงนี้พูดว่า "Nice to meet you too." ครับ 😊
-ไปต่อกันเลย — I'm from Thailand.
+ไปต่อกันเลย — ต่อไปมาฝึกบอกว่าคุณมาจากไหนครับ I'm from Thailand. แปลว่า “ฉันมาจากประเทศไทย” ลองพูดตามว่า “I'm from Thailand.” ครับ
 
 Step 9
 AI: ตรงนี้พูดว่า "Nice to meet you too." ครับ 😊
-ไปต่อกันเลย — I'm from Thailand.
+ไปต่อกันเลย — ต่อไปมาฝึกบอกว่าคุณมาจากไหนครับ I'm from Thailand. แปลว่า “ฉันมาจากประเทศไทย” ลองพูดตามว่า “I'm from Thailand.” ครับ
 Hint: (none)
-Choices: 📝 My name is → "My name is Nana."
-         💬 I'm → "I'm Nana."
+Choices: 🇹🇭 Thailand → "I'm from Thailand."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.32 s
-Reply: ยังไม่ถูกครับ ลองพูดว่า "I'm from Thailand." นะครับ ลองพูดตามนะครับ
+response time : 2.01 s
+Reply: ยังไม่ตรงครับ ลองพูดว่า "I'm from Thailand." อีกครั้งนะครับ ลองพูดตามนะครับ
 
 Step 10
-AI: ยังไม่ถูกครับ ลองพูดว่า "I'm from Thailand." นะครับ ลองพูดตามนะครับ
+AI: ยังไม่ตรงครับ ลองพูดว่า "I'm from Thailand." อีกครั้งนะครับ ลองพูดตามนะครับ
 Hint: (none)
-Choices: 📝 My name is → "My name is Nana."
-         💬 I'm → "I'm Nana."
+Choices: 🇹🇭 Thailand → "I'm from Thailand."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 145.82 ms
+response time : 119.49 ms
 Reply: ตรงนี้พูดว่า "I'm from Thailand." ครับ 🇹🇭
-ไปต่อกันเลย — I'm from ใช้บอกว่ามาจากไหน ส่วน I live in ใช้บอกว่าตอนนี้อยู่ที่ไหน เช่น I live in Bangkok. แปลว่า “ฉันอยู่ที่กรุงเทพ” ช่วยบอกครูหน่อยครับ ว่าคุณอยู่ที่ไหน?
+ไปต่อกันเลย — I'm from ใช้บอกว่ามาจากไหน ส่วน I live in ใช้บอกว่าตอนนี้อยู่ที่ไหน เช่น I live in Bangkok. แปลว่า “ฉันอยู่ที่กรุงเทพ” ช่วยบอกครูหน่อยครับว่าคุณอยู่ที่ไหน?
 
 Step 11
 AI: ตรงนี้พูดว่า "I'm from Thailand." ครับ 🇹🇭
-ไปต่อกันเลย — I'm from ใช้บอกว่ามาจากไหน ส่วน I live in ใช้บอกว่าตอนนี้อยู่ที่ไหน เช่น I live in Bangkok. แปลว่า “ฉันอยู่ที่กรุงเทพ” ช่วยบอกครูหน่อยครับ ว่าคุณอยู่ที่ไหน?
+ไปต่อกันเลย — I'm from ใช้บอกว่ามาจากไหน ส่วน I live in ใช้บอกว่าตอนนี้อยู่ที่ไหน เช่น I live in Bangkok. แปลว่า “ฉันอยู่ที่กรุงเทพ” ช่วยบอกครูหน่อยครับว่าคุณอยู่ที่ไหน?
 Hint: I live in...
 Choices: 🏙️ Bangkok → "I live in Bangkok."
          🌆 Chiang Mai → "I live in Chiang Mai."
          🌊 Phuket → "I live in Phuket."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.26 s
+response time : 1.19 s
 Reply: ยังไม่ตรงครับ ลองใช้ “I live in...” แล้วตามด้วยชื่อเมืองที่คุณอยู่ครับ
 
 Step 12
@@ -588,20 +563,20 @@ Choices: 🏙️ Bangkok → "I live in Bangkok."
          🌊 Phuket → "I live in Phuket."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 85.73 ms
+response time : 98.73 ms
 Reply: ตรงนี้พูดว่า "I live in Bangkok." ครับ 🏙️
-ไปต่อกันเลย — I work as a teacher. แปลว่า “ฉันทำงานเป็นครู” ช่วยบอกครูหน่อยครับ ว่าคุณทำอะไร?
+ไปต่อกันเลย — I work as a teacher. แปลว่า “ฉันทำงานเป็นครู” ช่วยบอกครูหน่อยครับว่าคุณทำอะไร?
 
 Step 13
 AI: ตรงนี้พูดว่า "I live in Bangkok." ครับ 🏙️
-ไปต่อกันเลย — I work as a teacher. แปลว่า “ฉันทำงานเป็นครู” ช่วยบอกครูหน่อยครับ ว่าคุณทำอะไร?
+ไปต่อกันเลย — I work as a teacher. แปลว่า “ฉันทำงานเป็นครู” ช่วยบอกครูหน่อยครับว่าคุณทำอะไร?
 Hint: I work as... / I'm...
 Choices: 👩‍🏫 Teacher → "I work as a teacher."
          🎓 Student → "I'm a student."
          💼 Office worker → "I work as an office worker."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.34 s
+response time : 1.30 s
 Reply: ยังไม่ตรงครับ ลองใช้ “I work as a...” หรือถ้าเป็นนักเรียน/นักศึกษา พูดว่า “I'm a student.” ครับ
 
 Step 14
@@ -612,7 +587,7 @@ Choices: 👩‍🏫 Teacher → "I work as a teacher."
          💼 Office worker → "I work as an office worker."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 116.41 ms
+response time : 94.71 ms
 Reply: ตรงนี้พูดว่า "I work as a teacher." ครับ 👩‍🏫
 ไปต่อกันเลย — My name is Nana. I'm from Thailand.
 
@@ -620,37 +595,22 @@ Step 15
 AI: ตรงนี้พูดว่า "I work as a teacher." ครับ 👩‍🏫
 ไปต่อกันเลย — My name is Nana. I'm from Thailand.
 Hint: (none)
-Choices: 📝 My name is → "My name is Nana."
-         💬 I'm → "I'm Nana."
+Choices: (none)
 User: Good morning.
 Result: incorrect out pool
-response time : 1.29 s
+response time : 1.12 s
 Reply: ยังไม่ตรงครับ ลองเริ่มด้วย “I'm Nana.” แล้วเพิ่มอีกหนึ่งอย่าง เช่น “I'm from...”, “I live in...” หรือ “I work as...” ครับ
 
 Step 16
 AI: ยังไม่ตรงครับ ลองเริ่มด้วย “I'm Nana.” แล้วเพิ่มอีกหนึ่งอย่าง เช่น “I'm from...”, “I live in...” หรือ “I work as...” ครับ
 Hint: (none)
-Choices: 📝 My name is → "My name is Nana."
-         💬 I'm → "I'm Nana."
+Choices: (none)
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 106.58 ms
+response time : 128.17 ms
 Reply: ตรงนี้พูดได้ว่า "My name is Nana. I'm from Thailand." ครับ
 
 🎉 จบบทแล้วครับ Nana! วันนี้คุณแนะนำตัวเป็นภาษาอังกฤษได้แล้ว ทั้งบอกชื่อ บอกว่ามาจากไหน และตอบเวลาพบคนใหม่แล้วครับ 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ introductions scenario 5 complete · 16 turns · 11.03 s
-
-================================================================================
-SUMMARY
-================================================================================
-
-introductions
-  ✅ Scenario 1 — 8 steps · 876.11 ms
-  ✅ Scenario 2 — 8 steps · 9.37 s
-  ✅ Scenario 3 — 8 steps · 10.11 s
-  ✅ Scenario 4 — 16 steps · 10.79 s
-  ✅ Scenario 5 — 16 steps · 11.03 s
-
-Total: 5/5 passed
+✅ introductions scenario 5 complete · 16 turns · 11.86 s

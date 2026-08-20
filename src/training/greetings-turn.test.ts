@@ -9,7 +9,10 @@ import {
 import {
   buildHistoryAtProbe,
   buildExactHistoryThroughProgress,
+  foundationOutOfPoolCloseMiss,
   getDef,
+  runFoundationAllOutOfPoolGeminiAssess,
+  runFoundationAllOutOfPoolGeminiCorrect,
   runFoundationFullHappyPath,
   withProbeUser,
 } from './foundation/foundation-poolgate.harness';
@@ -83,6 +86,43 @@ describe('greetings PoolGate flow', () => {
     assert.equal(result.steps.length, 8);
     assert.equal(result.steps.at(-1)?.isLessonComplete, true);
     assert.match(result.completionText, /ทักทาย/);
+  });
+
+  it('classifies a real typo as close on every step', () => {
+    const history = buildExactHistoryThroughProgress(def!, 0, 'Nana');
+    for (let step = 1; step <= def!.maxStep; step++) {
+      const board = def!.boardForStep(step, history, 'Nana')!;
+      const typo = foundationOutOfPoolCloseMiss(
+        board.expectedSpeech,
+        step,
+        'greetings',
+      );
+      assert.equal(def!.scoreStep(step, typo, history), 'close', `step ${step}: ${typo}`);
+    }
+  });
+
+  it('close flow stays inside greeting content and never teaches farewells', () => {
+    const result = runFoundationAllOutOfPoolGeminiAssess(
+      def!,
+      (exact, step) => foundationOutOfPoolCloseMiss(exact, step, 'greetings'),
+      'close',
+    );
+    for (const record of result.steps) {
+      assert.doesNotMatch(record.aiTextEn, /กล่าวลา|goodbye|good night/i);
+    }
+  });
+
+  it('scenario 2 uses no more than one short praise per step', () => {
+    const result = runFoundationAllOutOfPoolGeminiCorrect(
+      def!,
+      (exact) => `${exact}....`,
+    );
+    for (const record of result.steps) {
+      const praise = record.aiTextEn.match(
+        /ยอดเยี่ยม|ถูกต้อง|เก่งมาก|ดีมาก|เยี่ยมครับ/g,
+      );
+      assert.ok((praise?.length ?? 0) <= 1, `step ${record.step}: duplicate praise`);
+    }
   });
 
   it('recognition step 5 rejects Good morning when Good afternoon expected', () => {

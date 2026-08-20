@@ -148,10 +148,14 @@ export const FOUNDATION_CLOSE_MATCHERS: Partial<
 > = {
   greetings: (step, text) =>
     loose(step, text, {
-      4: /^morning$/,
-      5: /^afternoon$/,
-      6: /^evening$/,
-      7: /^morning$/,
+      1: /^helo$/,
+      2: /^hii$/,
+      3: /^hii$/,
+      4: /^(morning|good mornin)$/,
+      5: /^(afternoon|good after)$/,
+      6: /^(evening|good evenin)$/,
+      7: /^(morning|good mornin)$/,
+      8: /^(helo|hii|good mornin|good after|good evenin)$/,
     }),
   introductions: (step, text) =>
     loose(step, text, {
@@ -186,22 +190,25 @@ export const FOUNDATION_BOARDS: Record<
       withPraise: false,
       stem: '',
       expectedSpeech: 'Hello',
+      incorrectHintTh: 'ยังไม่ถูกครับ ลองพูดตามว่า “Hello” ครับ',
       options: [{ emoji: '👋', label: 'Hello', speak: 'Hello' }],
     },
     2: {
       textEn:
-        'เยี่ยมเลยครับ! Hello ใช้ทักทายได้ทั่วไปครับ 👋 ต่อไปคำสบายๆ: Hi! ลองพูดตามได้เลย',
-      withPraise: true,
+        'Hello ใช้ทักทายได้ทั่วไปครับ 👋 ต่อไปคำสบายๆ: Hi! ลองพูดตามว่า “Hi” ครับ',
+      withPraise: false,
       stem: '',
       expectedSpeech: 'Hi',
+      incorrectHintTh: 'ยังไม่ถูกครับ ลองพูดตามว่า “Hi” ครับ',
       options: [{ emoji: '✌️', label: 'Hi', speak: 'Hi' }],
     },
     3: {
       textEn:
         'Hello ใช้ทักทายได้ทั่วไป ส่วน Hi ฟังสบายๆ และเป็นกันเองกว่าครับ ✌️ ถ้าเจอเพื่อนสนิท ควรทักว่าอะไรครับ?',
-      withPraise: true,
+      withPraise: false,
       stem: 'เพื่อนสนิท → ทักว่าอะไร?',
       expectedSpeech: 'Hi',
+      incorrectHintTh: 'ยังไม่ตรงครับ ถ้าเจอเพื่อนสนิท ให้ตอบว่า “Hi” ครับ',
       options: [
         { emoji: '👋', label: 'Hello', speak: 'Hello' },
         { emoji: '✌️', label: 'Hi', speak: 'Hi' },
@@ -209,10 +216,12 @@ export const FOUNDATION_BOARDS: Record<
     },
     4: {
       textEn:
-        'ถูกต้องครับ! ช่วงเช้าใช้ Good morning. 🌅 ลองพูดตามครับ',
-      withPraise: true,
+        'ช่วงเช้าใช้ Good morning. 🌅 ลองพูดตามว่า “Good morning” ครับ',
+      withPraise: false,
       stem: '',
       expectedSpeech: 'Good morning',
+      incorrectHintTh:
+        'ยังไม่ถูกครับ ลองพูดตามว่า “Good morning” ครับ',
       options: [
         { emoji: '🌅', label: 'Good morning', speak: 'Good morning' },
       ],
@@ -220,9 +229,11 @@ export const FOUNDATION_BOARDS: Record<
     5: {
       textEn:
         'ส่วนช่วงบ่ายเราใช้ Good afternoon. ☀️ สมมติว่าตอนนี้บ่าย 2 โมง คุณจะทักครูว่าอะไรครับ?',
-      withPraise: true,
+      withPraise: false,
       stem: 'บ่าย 2 โมง → ทักว่าอะไร?',
       expectedSpeech: 'Good afternoon',
+      incorrectHintTh:
+        'ยังไม่ตรงครับ ตอนบ่ายให้ตอบว่า “Good afternoon” ครับ',
       options: [
         { emoji: '☀️', label: 'Good afternoon', speak: 'Good afternoon' },
         { emoji: '🌅', label: 'Good morning', speak: 'Good morning' },
@@ -230,10 +241,12 @@ export const FOUNDATION_BOARDS: Record<
     },
     6: {
       textEn:
-        'ดีมากครับ! ช่วงเย็นใช้ Good evening. 🌙 ลองพูดตามนะ',
-      withPraise: true,
+        'ช่วงเย็นใช้ Good evening. เป็นคำทักทายครับ 🌙 ลองพูดตามว่า “Good evening” ครับ',
+      withPraise: false,
       stem: '',
       expectedSpeech: 'Good evening',
+      incorrectHintTh:
+        'ยังไม่ถูกครับ ลองพูดตามว่า “Good evening” ครับ',
       options: [
         { emoji: '🌙', label: 'Good evening', speak: 'Good evening' },
       ],
@@ -241,9 +254,11 @@ export const FOUNDATION_BOARDS: Record<
     7: {
       textEn:
         'เช้า 7 โมง ควรทักว่าอะไรครับ? เลือกแล้วพูดทักทายผ่านไมค์ได้เลย 🕖',
-      withPraise: true,
+      withPraise: false,
       stem: '7 โมงเช้า → ทักว่าอะไร?',
       expectedSpeech: 'Good morning',
+      incorrectHintTh:
+        'ยังไม่ตรงครับ เวลา 7 โมงเช้าให้ตอบว่า “Good morning” ครับ',
       options: [
         { emoji: '🌅', label: 'Good morning', speak: 'Good morning' },
         { emoji: '☀️', label: 'Good afternoon', speak: 'Good afternoon' },
@@ -252,10 +267,12 @@ export const FOUNDATION_BOARDS: Record<
     },
     8: {
       textEn:
-        'เก่งมากครับ! คราวนี้ลองทักทายผมสักประโยค — ใช้คำไหนก็ได้ที่เรียนไป 👋',
-      withPraise: true,
+        'คราวนี้ลองทักทายผมสักประโยค — ใช้ Hello, Hi หรือคำทักทายตามเวลาที่เรียนไปก็ได้ครับ 👋',
+      withPraise: false,
       stem: '',
       expectedSpeech: 'Hello',
+      incorrectHintTh:
+        'ยังไม่ตรงครับ ลองทักทายด้วย “Hello”, “Hi” หรือคำทักทายตามเวลาครับ',
       options: [
         { emoji: '👋', label: 'Hello', speak: 'Hello' },
         { emoji: '✌️', label: 'Hi', speak: 'Hi' },
