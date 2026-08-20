@@ -62,6 +62,8 @@ export interface AiDebug {
 
 export interface TurnExchangeResponse {
   aiResponse: string;
+  /** Speech-only copy; clients should use this instead of aiResponse for TTS. */
+  ttsText?: string;
   textTh: string;
   audioBase64?: string;
   contentType?: string;

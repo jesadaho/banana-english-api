@@ -430,6 +430,8 @@ export interface SimulationTurnReply {
 
 export interface TrainingTurnReply {
   textEn: string;
+  /** Optional speech-only copy for Cloud gRPC / server-side TTS. */
+  ttsText?: string;
   textTh: string;
   isLessonComplete: boolean;
   /** Only present for lessons that expose a tap-to-continue button. */

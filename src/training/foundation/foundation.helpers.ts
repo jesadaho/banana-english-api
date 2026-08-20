@@ -123,6 +123,7 @@ export function personalizeBoard(
   return {
     ...board,
     textEn: personalize(board.textEn, name),
+    ttsText: board.ttsText ? personalize(board.ttsText, name) : undefined,
     expectedSpeech: personalize(board.expectedSpeech, name),
     incorrectHintTh: hint ? personalize(hint, name) : undefined,
     options: board.options.map((o) => ({
@@ -157,6 +158,7 @@ export function createFoundationLessonDef(params: {
   ) => ForcedGuidedBoard | null;
   openingText: string;
   completionText: string | ((learnerFirstName: string) => string);
+  completionTtsText?: string | ((learnerFirstName: string) => string);
   matchesLoose: (step: number, text: string) => boolean;
   matchesClose?: (step: number, text: string) => boolean;
   pinWithoutGuidedSteps?: number[];
@@ -216,6 +218,11 @@ export function createFoundationLessonDef(params: {
     typeof params.completionText === 'function'
       ? params.completionText
       : () => params.completionText as string;
+  const completionTtsText = params.completionTtsText == null
+    ? undefined
+    : typeof params.completionTtsText === 'function'
+      ? params.completionTtsText
+      : () => params.completionTtsText as string;
 
   return {
     lessonId: params.lessonId,
@@ -234,6 +241,7 @@ export function createFoundationLessonDef(params: {
     pinWithoutGuidedSteps: params.pinWithoutGuidedSteps,
     clampNearIncorrectToCorrect: true,
     completionText,
+    completionTtsText,
     buildOpening:
       params.buildOpening ??
       ((learnerFirstName: string): ScriptTurnResult => {

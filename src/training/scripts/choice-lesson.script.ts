@@ -16,6 +16,7 @@ export type ChoiceLessonHistoryTurn = {
 
 export type ChoiceLessonBoard = {
   textEn: string;
+  ttsText?: string;
   stem: string;
   expectedSpeech: string;
   options: Array<{ emoji: string; label?: string; speak: string }>;
@@ -50,6 +51,7 @@ export type ChoiceLessonDef = {
     learnerFirstName?: string,
   ) => ScriptTurnResult | null;
   completionText?: (learnerFirstName: string) => string;
+  completionTtsText?: (learnerFirstName: string) => string;
   /** When set, replaces celebrate after maxStep (e.g. Favorites → roleplay bridge). */
   afterTeachingComplete?: (
     history: ChoiceLessonHistoryTurn[],
@@ -156,6 +158,14 @@ function localizedNextInstruction(
   const localized =
     nextBoard?.textEn?.trim() || nextScripted.textEn?.trim() || '';
   return stripLeadingPraiseOpener(localized).trim();
+}
+
+function asTtsBoard(board: GuidedBoard | null): GuidedBoard | null {
+  return board ? { ...board, textEn: board.ttsText?.trim() || board.textEn } : null;
+}
+
+function asTtsTurn(turn: ScriptTurnResult): ScriptTurnResult {
+  return { ...turn, textEn: turn.ttsText?.trim() || turn.textEn };
 }
 
 /** Single-option repeat board — append ลองพูดตาม on incorrect. */
@@ -329,6 +339,7 @@ export function boardToScriptTurn(
   const hasOptions = options.length > 0;
   return {
     textEn: board.textEn,
+    ...(board.ttsText?.trim() ? { ttsText: board.ttsText.trim() } : {}),
     textTh: '',
     isLessonComplete: false,
     expectsUserSpeech: true,
@@ -387,8 +398,12 @@ export function buildGenericScriptedReplyFromProgress(
     const text = completionStatus === 'completed_independently'
       ? def.completionText?.(learnerFirstName) ?? 'สุดยอดครับ! 🎉 เก่งมากครับ! 🍌'
       : supportedCompletionText(completionStatus, learnerFirstName);
+    const ttsText = completionStatus === 'completed_independently'
+      ? def.completionTtsText?.(learnerFirstName)
+      : undefined;
     return {
       textEn: text,
+      ...(ttsText?.trim() ? { ttsText: ttsText.trim() } : {}),
       textTh: '',
       isLessonComplete: true,
       expectsUserSpeech: false,
@@ -605,6 +620,11 @@ export function pinChoiceLessonAiReply(
       const nextBoard = def.boardForStep(nextBoardStep, turns, learnerFirstName);
       return {
         textEn: buildCloseAdvanceTextEn(failedBoard, nextBoard, next),
+        ttsText: buildCloseAdvanceTextEn(
+          failedBoard,
+          asTtsBoard(nextBoard),
+          asTtsTurn(next),
+        ),
         textTh:
           buildCloseAdvanceTextTh(failedBoard, next) ||
           aiReply.textTh?.trim() ||
@@ -626,6 +646,9 @@ export function pinChoiceLessonAiReply(
       };
     }
     const nextBody = stripLeadingPraiseOpener(next.textEn?.trim() ?? '').trim();
+    const nextTtsBody = stripLeadingPraiseOpener(
+      next.ttsText?.trim() || next.textEn?.trim() || '',
+    ).trim();
     const nextBoardForPraise = def.boardForStep(
       nextStep,
       turns,
@@ -636,6 +659,7 @@ export function pinChoiceLessonAiReply(
       : correctAdvancePraise(aiReply.textEn?.trim() ?? '');
     return {
       textEn: `${praise} ${nextBody}`.trim(),
+      ttsText: `${praise} ${nextTtsBody}`.trim(),
       textTh: aiReply.textTh?.trim() || next.textTh || '',
       isLessonComplete: next.isLessonComplete ?? false,
       expectsUserSpeech: next.expectsUserSpeech ?? true,
@@ -740,6 +764,11 @@ export function buildChoiceLessonAfterUser(
     return {
       ...composedNext,
       textEn: buildSoftAdvanceTextEn(failedBoard, nextBoard, composedNext),
+      ttsText: buildSoftAdvanceTextEn(
+        failedBoard,
+        asTtsBoard(nextBoard),
+        asTtsTurn(composedNext),
+      ),
       textTh: buildSoftAdvanceTextTh(failedBoard, nextBoard, composedNext),
       assessmentTier: 'incorrect' as const,
       wasSoftAdvance: true,

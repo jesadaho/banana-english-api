@@ -794,6 +794,8 @@ export const FOUNDATION_BOARDS: Record<
     1: {
       textEn:
         'สวัสดีครับ {name}! วันนี้เราจะฝึกตัวเลข 0–20 กันครับ 🔢 เริ่มจาก 0–5: 0 zero, 1 one, 2 two, 3 three, 4 four, 5 five มีแอปเปิลกี่ลูกครับ? 🍎🍎🍎🍎',
+      ttsText:
+        'สวัสดีครับ {name}! วันนี้เราจะฝึกคำอ่านภาษาอังกฤษของตัวเลขศูนย์ถึงยี่สิบกันครับ 🔢 เลขศูนย์ถึงห้า ในภาษาอังกฤษอ่านว่า “zero, one, two, three, four, five” มีแอปเปิลกี่ลูกครับ? 🍎🍎🍎🍎',
       withPraise: false,
       stem: '',
       expectedSpeech: 'four',
@@ -808,10 +810,12 @@ export const FOUNDATION_BOARDS: Record<
     2: {
       textEn:
         'ต่อไป 6–10 ครับ: 6 six, 7 seven, 8 eight, 9 nine, 10 ten บัตรคิวของคุณคือหมายเลขอะไรครับ? 🎫 7',
+      ttsText:
+        'ต่อไปเลขหกถึงสิบ ในภาษาอังกฤษอ่านว่า “six, seven, eight, nine, ten” บัตรคิวของคุณคือหมายเลขเจ็ด อ่านเป็นภาษาอังกฤษว่าอะไรครับ? 🎫',
       withPraise: false,
       stem: '',
       expectedSpeech: 'seven',
-      incorrectHintTh: 'ยังไม่ตรงครับ คำอ่านเลข 7 ขึ้นต้นด้วยเสียง /s/ ครับ',
+      incorrectHintTh: 'ยังไม่ตรงครับ คำอ่านภาษาอังกฤษของเลขเจ็ดขึ้นต้นด้วยเสียง /s/ ครับ',
       options: [
         { emoji: '6️⃣', label: 'six', speak: 'six' },
         { emoji: '7️⃣', label: 'seven', speak: 'seven' },
@@ -822,6 +826,8 @@ export const FOUNDATION_BOARDS: Record<
     3: {
       textEn:
         'ต่อไป 11–15 ครับ: 11 eleven, 12 twelve, 13 thirteen, 14 fourteen, 15 fifteen ตั้งแต่ 13 จะเริ่มได้ยินเสียง -teen หมายเลขห้องนี้อ่านว่าอะไรครับ? 🚪 14',
+      ttsText:
+        'ต่อไปเลขสิบเอ็ดถึงสิบห้า ในภาษาอังกฤษอ่านว่า “eleven, twelve, thirteen, fourteen, fifteen” ตั้งแต่เลขสิบสามจะเริ่มได้ยินเสียง -teen หมายเลขห้องสิบสี่อ่านเป็นภาษาอังกฤษว่าอะไรครับ? 🚪',
       withPraise: true,
       stem: '',
       expectedSpeech: 'fourteen',
@@ -836,6 +842,8 @@ export const FOUNDATION_BOARDS: Record<
     4: {
       textEn:
         'กลุ่มสุดท้ายครับ: 16 sixteen, 17 seventeen, 18 eighteen, 19 nineteen, 20 twenty ระวังว่า 20 ลงท้ายด้วยเสียง -ty รถเมล์สายนี้คือหมายเลขอะไรครับ? 🚌 20',
+      ttsText:
+        'กลุ่มสุดท้ายครับ เลขสิบหกถึงยี่สิบ ในภาษาอังกฤษอ่านว่า “sixteen, seventeen, eighteen, nineteen, twenty” ระวังว่า twenty ลงท้ายด้วยเสียง -ty รถเมล์สายนี้คือหมายเลขยี่สิบ อ่านเป็นภาษาอังกฤษว่าอะไรครับ? 🚌',
       withPraise: true,
       stem: '',
       expectedSpeech: 'twenty',
@@ -849,11 +857,12 @@ export const FOUNDATION_BOARDS: Record<
     },
     5: {
       textEn: 'ขั้นตอนสุดท้ายครับ โดยไม่มีตัวเลือก หมายเลขล็อกเกอร์นี้อ่านว่าอะไร? 🔐 12',
+      ttsText: 'ขั้นตอนสุดท้ายครับ โดยไม่มีตัวเลือก หมายเลขล็อกเกอร์สิบสองอ่านเป็นภาษาอังกฤษว่าอะไรครับ? 🔐',
       advanceQuestionEn: 'หมายเลขล็อกเกอร์นี้อ่านว่าอะไรครับ? 🔐 12',
       withPraise: true,
       stem: '',
       expectedSpeech: 'twelve',
-      incorrectHintTh: 'เลข 12 อ่านว่า “twelve” ครับ',
+      incorrectHintTh: 'เลขสิบสองอ่านเป็นภาษาอังกฤษว่า “twelve” ครับ',
       options: [],
     },
   },
@@ -917,6 +926,8 @@ export const FOUNDATION_BOARDS: Record<
   everyday_numbers: {
     1: {
       textEn:
+        'สวัสดีครับ {name}! วันนี้เราจะฝึกตัวเลข 20–100 กันครับ 🔢 เริ่มจาก 20 twenty, 30 thirty, 40 forty, 50 fifty ลองพูดตามคำว่า “forty” ครับ',
+      ttsText:
         'สวัสดีครับ {name}! วันนี้เราจะฝึกตัวเลขยี่สิบถึงหนึ่งร้อยกันครับ 🔢 เริ่มจาก ยี่สิบ twenty, สามสิบ thirty, สี่สิบ forty และห้าสิบ fifty ลองพูดตามคำว่า “forty” ครับ',
       withPraise: false,
       stem: '',
@@ -924,7 +935,8 @@ export const FOUNDATION_BOARDS: Record<
       options: [{ emoji: '4️⃣0️⃣', label: 'forty', speak: 'forty' }],
     },
     2: {
-      textEn: 'ป้ายราคานี้เขียนว่าเลขห้าสิบ อ่านเป็นภาษาอังกฤษว่าอะไรครับ? 🏷️',
+      textEn: 'ป้ายราคานี้อ่านว่าเท่าไรครับ? 🏷️ 50',
+      ttsText: 'ป้ายราคานี้เขียนว่าเลขห้าสิบ อ่านเป็นภาษาอังกฤษว่าอะไรครับ? 🏷️',
       withPraise: true,
       stem: '',
       expectedSpeech: 'fifty',
@@ -937,6 +949,8 @@ export const FOUNDATION_BOARDS: Record<
     },
     3: {
       textEn:
+        'ต่อไป 60 sixty, 70 seventy, 80 eighty, 90 ninety และ 100 one hundred ครับ ลองพูดตามคำว่า “eighty” ครับ',
+      ttsText:
         'ต่อไป หกสิบ sixty, เจ็ดสิบ seventy, แปดสิบ eighty, เก้าสิบ ninety และหนึ่งร้อย one hundred ครับ ลองพูดตามคำว่า “eighty” ครับ',
       withPraise: true,
       stem: '',
@@ -944,7 +958,8 @@ export const FOUNDATION_BOARDS: Record<
       options: [{ emoji: '8️⃣0️⃣', label: 'eighty', speak: 'eighty' }],
     },
     4: {
-      textEn: 'รถเมล์สายนี้คือหมายเลขเจ็ดสิบ อ่านเป็นภาษาอังกฤษว่าอะไรครับ? 🚌',
+      textEn: 'รถเมล์สายนี้คือหมายเลขอะไรครับ? 🚌 70',
+      ttsText: 'รถเมล์สายนี้คือหมายเลขเจ็ดสิบ อ่านเป็นภาษาอังกฤษว่าอะไรครับ? 🚌',
       withPraise: true,
       stem: '',
       expectedSpeech: 'seventy',
@@ -958,6 +973,8 @@ export const FOUNDATION_BOARDS: Record<
     },
     5: {
       textEn:
+        'เลขสองหลักประกอบจากหลักสิบและหลักหน่วยครับ เช่น 30 thirty กับ 5 five รวมเป็น 35 thirty-five ลองพูดตามว่า “thirty-five” ครับ',
+      ttsText:
         'เลขสองหลักประกอบจากหลักสิบและหลักหน่วยครับ เช่น สามสิบ thirty กับ ห้า five รวมเป็น สามสิบห้า thirty-five ลองพูดตามว่า “thirty-five” ครับ',
       withPraise: true,
       stem: '',
@@ -965,8 +982,9 @@ export const FOUNDATION_BOARDS: Record<
       options: [{ emoji: '3️⃣5️⃣', label: 'thirty-five', speak: 'thirty-five' }],
     },
     6: {
-      textEn: 'ขั้นตอนสุดท้ายครับ หมายเลขห้องหกสิบสองอ่านเป็นภาษาอังกฤษว่าอะไรครับ? 🚪',
-      advanceQuestionEn: 'หมายเลขห้องหกสิบสองอ่านเป็นภาษาอังกฤษว่าอะไรครับ? 🚪',
+      textEn: 'ขั้นตอนสุดท้ายครับ หมายเลขห้องนี้อ่านว่าอะไร? 🚪 62',
+      ttsText: 'ขั้นตอนสุดท้ายครับ หมายเลขห้องหกสิบสองอ่านเป็นภาษาอังกฤษว่าอะไรครับ? 🚪',
+      advanceQuestionEn: 'หมายเลขห้องนี้อ่านว่าอะไรครับ? 🚪 62',
       withPraise: true,
       stem: '',
       expectedSpeech: 'sixty-two',

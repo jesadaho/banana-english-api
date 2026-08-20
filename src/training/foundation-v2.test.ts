@@ -196,7 +196,7 @@ describe('Foundation — full happy path (all steps → complete)', () => {
 
     assert.match(
       result.completionText,
-      /อ่านเลขหลักสิบ และประกอบเลขสองหลักตั้งแต่ยี่สิบถึงหนึ่งร้อยได้แล้ว/,
+      /อ่านเลขหลักสิบ และประกอบเลขสองหลักตั้งแต่ 20–100 ได้แล้ว/,
     );
   });
 

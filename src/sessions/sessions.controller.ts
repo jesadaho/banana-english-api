@@ -782,6 +782,7 @@ export class SessionsController {
     const opening = {
       speaker: 'ai' as const,
       textEn: reply.textEn,
+      ttsText: reply.ttsText ?? null,
       textTh: reply.textTh,
       audioUrl: null,
       expectsUserSpeech: openingExpectsUserSpeech,
@@ -855,6 +856,7 @@ export class SessionsController {
       opening: attachAiDebug(
         {
           aiResponse: reply.textEn,
+          ...(reply.ttsText?.trim() ? { ttsText: reply.ttsText.trim() } : {}),
           textTh: reply.textTh ?? '',
           isTaskComplete: false,
           updatedCheckpoints: {},
@@ -959,6 +961,7 @@ export class SessionsController {
     this.sessionStore.addTurn(sessionId, {
       speaker: 'ai',
       textEn: reply.textEn,
+      ttsText: reply.ttsText ?? null,
       textTh: reply.textTh,
       audioUrl: null,
       expectsUserSpeech,
@@ -972,6 +975,7 @@ export class SessionsController {
 
     const response: TurnExchangeResponse = {
       aiResponse: reply.textEn,
+      ...(reply.ttsText?.trim() ? { ttsText: reply.ttsText.trim() } : {}),
       textTh: reply.textTh ?? '',
       isTaskComplete,
       updatedCheckpoints: {},
@@ -993,7 +997,9 @@ export class SessionsController {
     };
 
     if (body.generateAudio) {
-      const audio = await this.geminiTts.synthesizeSpeech(reply.textEn);
+      const audio = await this.geminiTts.synthesizeSpeech(
+        reply.ttsText?.trim() || reply.textEn,
+      );
       response.audioBase64 = audio.toString('base64');
       response.contentType = 'audio/wav';
     }

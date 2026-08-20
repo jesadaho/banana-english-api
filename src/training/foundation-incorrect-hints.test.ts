@@ -79,9 +79,9 @@ describe('Foundation incorrect hints — Introductions standard', () => {
 
   it('everyday_numbers keeps Arabic digits out of Thai TTS copy', () => {
     for (const board of Object.values(FOUNDATION_BOARDS.everyday_numbers)) {
-      assert.doesNotMatch(board.textEn, /\d/);
+      assert.match(board.ttsText ?? '', /\S/);
+      assert.doesNotMatch(board.ttsText ?? '', /\d/);
       assert.doesNotMatch(board.incorrectHintTh ?? '', /\d/);
-      assert.doesNotMatch(board.advanceQuestionEn ?? '', /\d/);
     }
   });
 
@@ -93,6 +93,16 @@ describe('Foundation incorrect hints — Introductions standard', () => {
     const twentyHint = resolveIncorrectHintTh(FOUNDATION_BOARDS.numbers[4]) ?? '';
     assert.equal(twentyHint, 'คำนี้ลงท้ายด้วยเสียง -ty ครับ');
     assert.doesNotMatch(twentyHint, /20|twenty/i);
+  });
+
+  it('numbers separates Thai number context from English target pronunciation', () => {
+    for (const board of Object.values(FOUNDATION_BOARDS.numbers)) {
+      assert.match(board.ttsText ?? '', /\S/);
+      assert.doesNotMatch(board.ttsText ?? '', /\d/);
+      assert.doesNotMatch(board.incorrectHintTh ?? '', /\d/);
+    }
+    assert.match(FOUNDATION_BOARDS.numbers[1].textEn, /0–20/u);
+    assert.match(FOUNDATION_BOARDS.numbers[1].ttsText ?? '', /ภาษาอังกฤษอ่านว่า.*zero/u);
   });
 
   it('every foundation probe board follows repeat-only vs guided hint rule', () => {
