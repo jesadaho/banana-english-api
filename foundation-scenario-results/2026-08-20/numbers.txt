@@ -10,7 +10,7 @@ Hint: (none)
 Choices: 3️⃣ three → "three"
 User: three
 Result: correct in pool
-response time : 99.28 ms
+response time : 86.00 ms
 Reply: เก่งมากครับ! เลข 8 อ่านว่า eight ⏰ ลองพูดตามครับ
 
 Step 2
@@ -19,19 +19,19 @@ Hint: (none)
 Choices: 8️⃣ eight → "eight"
 User: eight
 Result: correct in pool
-response time : 115.71 ms
+response time : 133.32 ms
 Reply: เลข 7 อ่านว่าอะไรครับ? 7️⃣
 
 Step 3
 AI: เลข 7 อ่านว่าอะไรครับ? 7️⃣
-Hint: seven
+Hint: (none)
 Choices: 5️⃣ five → "five"
          7️⃣ seven → "seven"
          3️⃣ three → "three"
          9️⃣ nine → "nine"
 User: seven
 Result: correct in pool
-response time : 94.97 ms
+response time : 150.74 ms
 Reply: ต่อไปเลข 11–19 ส่วนใหญ่ลงท้าย -teen ครับ เลข 16 อ่านว่า sixteen 🔢 ลองพูดตามนะครับ
 
 Step 4
@@ -40,20 +40,22 @@ Hint: (none)
 Choices: 🔢 sixteen → "sixteen"
 User: sixteen
 Result: correct in pool
-response time : 106.82 ms
+response time : 131.75 ms
 Reply: เลข 20 อ่านว่าอะไรครับ? 2️⃣0️⃣
 
 Step 5
 AI: เลข 20 อ่านว่าอะไรครับ? 2️⃣0️⃣
-Hint: twenty
-Choices: 2️⃣0️⃣ twenty → "twenty"
+Hint: (none)
+Choices: 1️⃣2️⃣ twelve → "twelve"
+         2️⃣0️⃣ twenty → "twenty"
+         2️⃣ two → "two"
 User: twenty
 Result: correct in pool
-response time : 117.96 ms
+response time : 104.15 ms
 Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณฝึกพูดตัวเลข 3, 7, 8, 16 และ 20 แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ numbers scenario 1 complete · 5 turns · 534.74 ms
+✅ numbers scenario 1 complete · 5 turns · 605.96 ms
 
 ================================================================================
 numbers — Scenario 2 — out-pool correct ทุก step → จบบท
@@ -66,7 +68,7 @@ Hint: (none)
 Choices: 3️⃣ three → "three"
 User: three....
 Result: correct out pool
-response time : 1.06 s
+response time : 1.17 s
 Reply: เยี่ยมครับ! เก่งมากครับ! เลข 8 อ่านว่า eight ⏰ ลองพูดตามครับ
 
 Step 2
@@ -75,19 +77,19 @@ Hint: (none)
 Choices: 8️⃣ eight → "eight"
 User: eight....
 Result: correct out pool
-response time : 1.10 s
+response time : 1.33 s
 Reply: ดีมากครับ! เลข 7 อ่านว่าอะไรครับ? 7️⃣
 
 Step 3
 AI: ดีมากครับ! เลข 7 อ่านว่าอะไรครับ? 7️⃣
-Hint: seven
+Hint: (none)
 Choices: 5️⃣ five → "five"
          7️⃣ seven → "seven"
          3️⃣ three → "three"
          9️⃣ nine → "nine"
 User: seven....
 Result: correct out pool
-response time : 1.18 s
+response time : 1.27 s
 Reply: ถูกต้องครับ! ต่อไปเลข 11–19 ส่วนใหญ่ลงท้าย -teen ครับ เลข 16 อ่านว่า sixteen 🔢 ลองพูดตามนะครับ
 
 Step 4
@@ -96,20 +98,22 @@ Hint: (none)
 Choices: 🔢 sixteen → "sixteen"
 User: sixteen....
 Result: correct out pool
-response time : 984.08 ms
-Reply: ถูกต้องครับ! เลข 20 อ่านว่าอะไรครับ? 2️⃣0️⃣
+response time : 1.20 s
+Reply: ดีมากครับ! เลข 20 อ่านว่าอะไรครับ? 2️⃣0️⃣
 
 Step 5
-AI: ถูกต้องครับ! เลข 20 อ่านว่าอะไรครับ? 2️⃣0️⃣
-Hint: twenty
-Choices: 2️⃣0️⃣ twenty → "twenty"
+AI: ดีมากครับ! เลข 20 อ่านว่าอะไรครับ? 2️⃣0️⃣
+Hint: (none)
+Choices: 1️⃣2️⃣ twelve → "twelve"
+         2️⃣0️⃣ twenty → "twenty"
+         2️⃣ two → "two"
 User: twenty....
 Result: correct out pool
-response time : 1.21 s
+response time : 1.05 s
 Reply: ดีมากครับ! สุดยอดครับ Nana! 🎉 วันนี้คุณฝึกพูดตัวเลข 3, 7, 8, 16 และ 20 แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ numbers scenario 2 complete · 5 turns · 5.54 s
+✅ numbers scenario 2 complete · 5 turns · 6.03 s
 
 ================================================================================
 numbers — Scenario 3 — out-pool close ทุก step → จบบท
@@ -122,7 +126,7 @@ Hint: (none)
 Choices: 3️⃣ three → "three"
 User: tree
 Result: close out pool
-response time : 1.23 s
+response time : 1.31 s
 Reply: เกือบถูกแล้วครับ! พูดว่า three. 3️⃣
 เลข 8 อ่านว่า eight ⏰ ลองพูดตามครับ
 
@@ -133,21 +137,21 @@ Hint: (none)
 Choices: 8️⃣ eight → "eight"
 User: ate
 Result: close out pool
-response time : 1.13 s
+response time : 1.29 s
 Reply: เกือบถูกแล้วครับ! พูดว่า eight. 8️⃣
 เลข 7 อ่านว่าอะไรครับ? 7️⃣
 
 Step 3
 AI: เกือบถูกแล้วครับ! พูดว่า eight. 8️⃣
 เลข 7 อ่านว่าอะไรครับ? 7️⃣
-Hint: seven
+Hint: (none)
 Choices: 5️⃣ five → "five"
          7️⃣ seven → "seven"
          3️⃣ three → "three"
          9️⃣ nine → "nine"
 User: seben
 Result: close out pool
-response time : 1.31 s
+response time : 1.45 s
 Reply: เกือบถูกแล้วครับ! พูดว่า seven. 7️⃣
 ต่อไปเลข 11–19 ส่วนใหญ่ลงท้าย -teen ครับ เลข 16 อ่านว่า sixteen 🔢 ลองพูดตามนะครับ
 
@@ -158,23 +162,25 @@ Hint: (none)
 Choices: 🔢 sixteen → "sixteen"
 User: six teen
 Result: close out pool
-response time : 1.92 s
+response time : 1.16 s
 Reply: เกือบถูกแล้วครับ! พูดว่า sixteen. 🔢
 เลข 20 อ่านว่าอะไรครับ? 2️⃣0️⃣
 
 Step 5
 AI: เกือบถูกแล้วครับ! พูดว่า sixteen. 🔢
 เลข 20 อ่านว่าอะไรครับ? 2️⃣0️⃣
-Hint: twenty
-Choices: 2️⃣0️⃣ twenty → "twenty"
+Hint: (none)
+Choices: 1️⃣2️⃣ twelve → "twelve"
+         2️⃣0️⃣ twenty → "twenty"
+         2️⃣ two → "two"
 User: twentee
 Result: close out pool
-response time : 1.90 s
+response time : 1.47 s
 Reply: เกือบถูกแล้วครับ! พูดว่า twenty. 2️⃣0️⃣
 สุดยอดครับ Nana! 🎉 วันนี้คุณฝึกพูดตัวเลข 3, 7, 8, 16 และ 20 แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ numbers scenario 3 complete · 5 turns · 7.49 s
+✅ numbers scenario 3 complete · 5 turns · 6.69 s
 
 ================================================================================
 numbers — Scenario 4 — out-pool wrong + in-pool พูดตาม recovery → จบบท
@@ -187,16 +193,16 @@ Hint: (none)
 Choices: 3️⃣ three → "three"
 User: Good morning.
 Result: incorrect out pool
-response time : 1.21 s
-Reply: เกือบถูกแล้วครับ Nana ลองพูดว่า "three" ตามครูอีกครั้งนะครับ ลองพูดตามนะครับ
+response time : 1.16 s
+Reply: ยังไม่ใช่ครับ Nana ลองพูดตามว่า "three" อีกครั้งนะครับ
 
 Step 2
-AI: เกือบถูกแล้วครับ Nana ลองพูดว่า "three" ตามครูอีกครั้งนะครับ ลองพูดตามนะครับ
+AI: ยังไม่ใช่ครับ Nana ลองพูดตามว่า "three" อีกครั้งนะครับ
 Hint: (none)
 Choices: 3️⃣ three → "three"
 User: three
 Result: correct in pool
-response time : 100.01 ms
+response time : 128.65 ms
 Reply: เก่งมากครับ! เลข 8 อ่านว่า eight ⏰ ลองพูดตามครับ
 
 Step 3
@@ -205,7 +211,7 @@ Hint: (none)
 Choices: 8️⃣ eight → "eight"
 User: Good morning.
 Result: incorrect out pool
-response time : 1.20 s
+response time : 1.42 s
 Reply: ยังไม่ใช่ครับ Nana ลองพูดว่า "eight" อีกครั้งนะครับ ลองพูดตามนะครับ
 
 Step 4
@@ -214,31 +220,31 @@ Hint: (none)
 Choices: 8️⃣ eight → "eight"
 User: eight
 Result: correct in pool
-response time : 106.22 ms
+response time : 104.34 ms
 Reply: เลข 7 อ่านว่าอะไรครับ? 7️⃣
 
 Step 5
 AI: เลข 7 อ่านว่าอะไรครับ? 7️⃣
-Hint: seven
+Hint: (none)
 Choices: 5️⃣ five → "five"
          7️⃣ seven → "seven"
          3️⃣ three → "three"
          9️⃣ nine → "nine"
 User: Good morning.
 Result: incorrect out pool
-response time : 1.08 s
-Reply: ยังไม่ตรงครับ ลองใช้ “seven...” แล้วพูดต่อให้ครบประโยคครับ
+response time : 1.24 s
+Reply: ยังไม่ตรงครับ คำอ่านเลข 7 ขึ้นต้นด้วยเสียง /s/ ครับ
 
 Step 6
-AI: ยังไม่ตรงครับ ลองใช้ “seven...” แล้วพูดต่อให้ครบประโยคครับ
-Hint: seven
+AI: ยังไม่ตรงครับ คำอ่านเลข 7 ขึ้นต้นด้วยเสียง /s/ ครับ
+Hint: (none)
 Choices: 5️⃣ five → "five"
          7️⃣ seven → "seven"
          3️⃣ three → "three"
          9️⃣ nine → "nine"
 User: seven
 Result: correct in pool
-response time : 149.86 ms
+response time : 100.57 ms
 Reply: ต่อไปเลข 11–19 ส่วนใหญ่ลงท้าย -teen ครับ เลข 16 อ่านว่า sixteen 🔢 ลองพูดตามนะครับ
 
 Step 7
@@ -247,38 +253,42 @@ Hint: (none)
 Choices: 🔢 sixteen → "sixteen"
 User: Good morning.
 Result: incorrect out pool
-response time : 1.24 s
-Reply: ยังไม่ถูกครับ Nana ลองพูดว่า "sixteen" อีกครั้งนะครับ พูดตามนะครับ
+response time : 1.46 s
+Reply: ยังไม่ใช่ครับ Nana ลองพูดว่า "sixteen" อีกครั้งนะครับ ลองพูดตามนะครับ
 
 Step 8
-AI: ยังไม่ถูกครับ Nana ลองพูดว่า "sixteen" อีกครั้งนะครับ พูดตามนะครับ
+AI: ยังไม่ใช่ครับ Nana ลองพูดว่า "sixteen" อีกครั้งนะครับ ลองพูดตามนะครับ
 Hint: (none)
 Choices: 🔢 sixteen → "sixteen"
 User: sixteen
 Result: correct in pool
-response time : 206.49 ms
+response time : 79.57 ms
 Reply: เลข 20 อ่านว่าอะไรครับ? 2️⃣0️⃣
 
 Step 9
 AI: เลข 20 อ่านว่าอะไรครับ? 2️⃣0️⃣
-Hint: twenty
-Choices: 2️⃣0️⃣ twenty → "twenty"
+Hint: (none)
+Choices: 1️⃣2️⃣ twelve → "twelve"
+         2️⃣0️⃣ twenty → "twenty"
+         2️⃣ two → "two"
 User: Good morning.
 Result: incorrect out pool
-response time : 1.39 s
-Reply: ยังไม่ตรงครับ ลองใช้ “twenty...” แล้วพูดต่อให้ครบประโยคครับ
+response time : 1.26 s
+Reply: ยังไม่ตรงครับ เลขหลักสิบคำนี้ลงท้ายด้วยเสียง “-ty” ครับ
 
 Step 10
-AI: ยังไม่ตรงครับ ลองใช้ “twenty...” แล้วพูดต่อให้ครบประโยคครับ
-Hint: twenty
-Choices: 2️⃣0️⃣ twenty → "twenty"
+AI: ยังไม่ตรงครับ เลขหลักสิบคำนี้ลงท้ายด้วยเสียง “-ty” ครับ
+Hint: (none)
+Choices: 1️⃣2️⃣ twelve → "twelve"
+         2️⃣0️⃣ twenty → "twenty"
+         2️⃣ two → "two"
 User: twenty
 Result: correct in pool
-response time : 134.51 ms
+response time : 140.05 ms
 Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณฝึกพูดตัวเลข 3, 7, 8, 16 และ 20 แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ numbers scenario 4 complete · 10 turns · 6.81 s
+✅ numbers scenario 4 complete · 10 turns · 7.08 s
 
 ================================================================================
 numbers — Scenario 5 — out-pool wrong + พูดตามผิดอีกครั้ง → soft-advance → จบบท
@@ -291,16 +301,16 @@ Hint: (none)
 Choices: 3️⃣ three → "three"
 User: Good morning.
 Result: incorrect out pool
-response time : 1.10 s
-Reply: ยังไม่ใช่ครับ Nana ลองพูดตามว่า "three" อีกครั้งนะครับ
+response time : 1.08 s
+Reply: ยังไม่ใช่ครับ Nana ลองพูดตามว่า "three" นะครับ
 
 Step 2
-AI: ยังไม่ใช่ครับ Nana ลองพูดตามว่า "three" อีกครั้งนะครับ
+AI: ยังไม่ใช่ครับ Nana ลองพูดตามว่า "three" นะครับ
 Hint: (none)
 Choices: 3️⃣ three → "three"
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 104.46 ms
+response time : 102.67 ms
 Reply: ตรงนี้พูดว่า "three" ครับ 3️⃣
 ไปต่อกันเลย — เก่งมากครับ! เลข 8 อ่านว่า eight ⏰ ลองพูดตามครับ
 
@@ -311,7 +321,7 @@ Hint: (none)
 Choices: 8️⃣ eight → "eight"
 User: Good morning.
 Result: incorrect out pool
-response time : 1.19 s
+response time : 1.33 s
 Reply: ยังไม่ถูกครับ Nana ลองพูดว่า "eight" นะครับ ลองพูดตามนะครับ
 
 Step 4
@@ -320,33 +330,33 @@ Hint: (none)
 Choices: 8️⃣ eight → "eight"
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 105.02 ms
+response time : 91.09 ms
 Reply: ตรงนี้พูดว่า "eight" ครับ 8️⃣
 ไปต่อกันเลย — seven
 
 Step 5
 AI: ตรงนี้พูดว่า "eight" ครับ 8️⃣
 ไปต่อกันเลย — seven
-Hint: seven
+Hint: (none)
 Choices: 5️⃣ five → "five"
          7️⃣ seven → "seven"
          3️⃣ three → "three"
          9️⃣ nine → "nine"
 User: Good morning.
 Result: incorrect out pool
-response time : 1.12 s
-Reply: ยังไม่ตรงครับ ลองใช้ “seven...” แล้วพูดต่อให้ครบประโยคครับ
+response time : 1.30 s
+Reply: ยังไม่ตรงครับ คำอ่านเลข 7 ขึ้นต้นด้วยเสียง /s/ ครับ
 
 Step 6
-AI: ยังไม่ตรงครับ ลองใช้ “seven...” แล้วพูดต่อให้ครบประโยคครับ
-Hint: seven
+AI: ยังไม่ตรงครับ คำอ่านเลข 7 ขึ้นต้นด้วยเสียง /s/ ครับ
+Hint: (none)
 Choices: 5️⃣ five → "five"
          7️⃣ seven → "seven"
          3️⃣ three → "three"
          9️⃣ nine → "nine"
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 107.82 ms
+response time : 92.84 ms
 Reply: ตรงนี้พูดว่า "seven" ครับ 7️⃣
 ไปต่อกันเลย — ต่อไปเลข 11–19 ส่วนใหญ่ลงท้าย -teen ครับ เลข 16 อ่านว่า sixteen 🔢 ลองพูดตามนะครับ
 
@@ -357,7 +367,7 @@ Hint: (none)
 Choices: 🔢 sixteen → "sixteen"
 User: Good morning.
 Result: incorrect out pool
-response time : 1.18 s
+response time : 1.21 s
 Reply: ยังไม่ถูกครับ Nana ลองพูดว่า "sixteen" นะครับ ลองพูดตามนะครับ
 
 Step 8
@@ -366,30 +376,34 @@ Hint: (none)
 Choices: 🔢 sixteen → "sixteen"
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 102.21 ms
+response time : 426.52 ms
 Reply: ตรงนี้พูดว่า "sixteen" ครับ 🔢
 ไปต่อกันเลย — How do you say twenty?
 
 Step 9
 AI: ตรงนี้พูดว่า "sixteen" ครับ 🔢
 ไปต่อกันเลย — How do you say twenty?
-Hint: twenty
-Choices: 2️⃣0️⃣ twenty → "twenty"
+Hint: (none)
+Choices: 1️⃣2️⃣ twelve → "twelve"
+         2️⃣0️⃣ twenty → "twenty"
+         2️⃣ two → "two"
 User: Good morning.
 Result: incorrect out pool
-response time : 1.20 s
-Reply: ยังไม่ตรงครับ ลองใช้ “twenty...” แล้วพูดต่อให้ครบประโยคครับ
+response time : 1.21 s
+Reply: ยังไม่ตรงครับ เลขหลักสิบคำนี้ลงท้ายด้วยเสียง “-ty” ครับ
 
 Step 10
-AI: ยังไม่ตรงครับ ลองใช้ “twenty...” แล้วพูดต่อให้ครบประโยคครับ
-Hint: twenty
-Choices: 2️⃣0️⃣ twenty → "twenty"
+AI: ยังไม่ตรงครับ เลขหลักสิบคำนี้ลงท้ายด้วยเสียง “-ty” ครับ
+Hint: (none)
+Choices: 1️⃣2️⃣ twelve → "twelve"
+         2️⃣0️⃣ twenty → "twenty"
+         2️⃣ two → "two"
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 107.84 ms
+response time : 96.59 ms
 Reply: ตรงนี้พูดได้ว่า "twenty" ครับ 2️⃣0️⃣
 
 🎉 จบบทแล้วครับ Nana! วันนี้คุณฝึกพูดตัวเลข 3, 7, 8, 16 และ 20 แล้วครับ 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ numbers scenario 5 complete · 10 turns · 6.31 s
+✅ numbers scenario 5 complete · 10 turns · 6.94 s

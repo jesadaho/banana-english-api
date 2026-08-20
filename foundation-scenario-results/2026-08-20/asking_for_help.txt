@@ -6,13 +6,13 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 
 Step 1
 AI: สวัสดีครับ Nana! วันนี้เรามาเรียน 3 ประโยคช่วยชีวิตเวลาฟังอังกฤษไม่ทัน 🆘 I don't understand. แปลว่า “ฉันไม่เข้าใจ” ใช้เมื่อฟังแล้วไม่เข้าใจ ลองพูดตามว่า “I don't understand.” ครับ
-Hint: I don't understand.
+Hint: (none)
 Choices: 🤷 I don't understand → "I don't understand."
          🐢 Speak more slowly → "Can you speak more slowly?"
          ❓ What does that mean? → "What does that mean?"
 User: I don't understand.
 Result: correct in pool
-response time : 114.40 ms
+response time : 258.92 ms
 Reply: เก่งมากครับ! อาวุธที่สอง — ขอให้พูดช้าลง Can you speak more slowly? 🐢 ลองพูดตามครับ
 
 Step 2
@@ -21,7 +21,7 @@ Hint: (none)
 Choices: 🐢 Speak more slowly → "Can you speak more slowly?"
 User: Can you speak more slowly?
 Result: correct in pool
-response time : 102.93 ms
+response time : 94.88 ms
 Reply: อาวุธที่สาม — ถามความหมาย What does that mean? ❓ ลองพูดตามนะครับ
 
 Step 3
@@ -30,22 +30,22 @@ Hint: (none)
 Choices: ❓ What does that mean? → "What does that mean?"
 User: What does that mean?
 Result: correct in pool
-response time : 104.53 ms
+response time : 99.51 ms
 Reply: ถ้าฟังไม่เข้าใจเลย ควรพูดประโยคไหนครับ? 🤷
 
 Step 4
 AI: ถ้าฟังไม่เข้าใจเลย ควรพูดประโยคไหนครับ? 🤷
-Hint: I don't understand.
+Hint: (none)
 Choices: 🤷 I don't understand → "I don't understand."
          🐢 Speak more slowly → "Can you speak more slowly?"
          ❓ What does that mean? → "What does that mean?"
 User: I don't understand.
 Result: correct in pool
-response time : 112.00 ms
+response time : 159.59 ms
 Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณมี 3 ประโยคช่วยชีวิตเมื่อฟังอังกฤษไม่ทันแล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ asking_for_help scenario 1 complete · 4 turns · 433.85 ms
+✅ asking_for_help scenario 1 complete · 4 turns · 612.89 ms
 
 ================================================================================
 asking_for_help — Scenario 2 — out-pool correct ทุก step → จบบท
@@ -54,46 +54,46 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 
 Step 1
 AI: สวัสดีครับ Nana! วันนี้เรามาเรียน 3 ประโยคช่วยชีวิตเวลาฟังอังกฤษไม่ทัน 🆘 I don't understand. แปลว่า “ฉันไม่เข้าใจ” ใช้เมื่อฟังแล้วไม่เข้าใจ ลองพูดตามว่า “I don't understand.” ครับ
-Hint: I don't understand.
+Hint: (none)
 Choices: 🤷 I don't understand → "I don't understand."
          🐢 Speak more slowly → "Can you speak more slowly?"
          ❓ What does that mean? → "What does that mean?"
 User: I don't understand....
 Result: correct out pool
-response time : 1.17 s
-Reply: ถูกต้องครับ! เก่งมากครับ! อาวุธที่สอง — ขอให้พูดช้าลง Can you speak more slowly? 🐢 ลองพูดตามครับ
+response time : 1.08 s
+Reply: เยี่ยมครับ! เก่งมากครับ! อาวุธที่สอง — ขอให้พูดช้าลง Can you speak more slowly? 🐢 ลองพูดตามครับ
 
 Step 2
-AI: ถูกต้องครับ! เก่งมากครับ! อาวุธที่สอง — ขอให้พูดช้าลง Can you speak more slowly? 🐢 ลองพูดตามครับ
+AI: เยี่ยมครับ! เก่งมากครับ! อาวุธที่สอง — ขอให้พูดช้าลง Can you speak more slowly? 🐢 ลองพูดตามครับ
 Hint: (none)
 Choices: 🐢 Speak more slowly → "Can you speak more slowly?"
 User: Can you speak more slowly....
 Result: correct out pool
 response time : 1.17 s
-Reply: เยี่ยมครับ! อาวุธที่สาม — ถามความหมาย What does that mean? ❓ ลองพูดตามนะครับ
+Reply: ถูกต้องครับ! อาวุธที่สาม — ถามความหมาย What does that mean? ❓ ลองพูดตามนะครับ
 
 Step 3
-AI: เยี่ยมครับ! อาวุธที่สาม — ถามความหมาย What does that mean? ❓ ลองพูดตามนะครับ
+AI: ถูกต้องครับ! อาวุธที่สาม — ถามความหมาย What does that mean? ❓ ลองพูดตามนะครับ
 Hint: (none)
 Choices: ❓ What does that mean? → "What does that mean?"
 User: What does that mean....
 Result: correct out pool
-response time : 1.32 s
+response time : 1.11 s
 Reply: ถูกต้องครับ! ถ้าฟังไม่เข้าใจเลย ควรพูดประโยคไหนครับ? 🤷
 
 Step 4
 AI: ถูกต้องครับ! ถ้าฟังไม่เข้าใจเลย ควรพูดประโยคไหนครับ? 🤷
-Hint: I don't understand.
+Hint: (none)
 Choices: 🤷 I don't understand → "I don't understand."
          🐢 Speak more slowly → "Can you speak more slowly?"
          ❓ What does that mean? → "What does that mean?"
 User: I don't understand....
 Result: correct out pool
-response time : 1.07 s
-Reply: ดีมากครับ! สุดยอดครับ Nana! 🎉 วันนี้คุณมี 3 ประโยคช่วยชีวิตเมื่อฟังอังกฤษไม่ทันแล้ว 🍌
+response time : 1.17 s
+Reply: เยี่ยมครับ! สุดยอดครับ Nana! 🎉 วันนี้คุณมี 3 ประโยคช่วยชีวิตเมื่อฟังอังกฤษไม่ทันแล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ asking_for_help scenario 2 complete · 4 turns · 4.74 s
+✅ asking_for_help scenario 2 complete · 4 turns · 4.54 s
 
 ================================================================================
 asking_for_help — Scenario 3 — out-pool close ทุก step → จบบท
@@ -102,13 +102,13 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 
 Step 1
 AI: สวัสดีครับ Nana! วันนี้เรามาเรียน 3 ประโยคช่วยชีวิตเวลาฟังอังกฤษไม่ทัน 🆘 I don't understand. แปลว่า “ฉันไม่เข้าใจ” ใช้เมื่อฟังแล้วไม่เข้าใจ ลองพูดตามว่า “I don't understand.” ครับ
-Hint: I don't understand.
+Hint: (none)
 Choices: 🤷 I don't understand → "I don't understand."
          🐢 Speak more slowly → "Can you speak more slowly?"
          ❓ What does that mean? → "What does that mean?"
 User: I not understand.
 Result: close out pool
-response time : 1.15 s
+response time : 1.07 s
 Reply: เกือบถูกแล้วครับ! พูดว่า I don't understand. 🤷
 อาวุธที่สอง — ขอให้พูดช้าลง Can you speak more slowly? 🐢 ลองพูดตามครับ
 
@@ -119,7 +119,7 @@ Hint: (none)
 Choices: 🐢 Speak more slowly → "Can you speak more slowly?"
 User: Can speak more slowly?
 Result: close out pool
-response time : 1.13 s
+response time : 1.47 s
 Reply: เกือบถูกแล้วครับ! พูดว่า Can you speak more slowly. 🐢
 อาวุธที่สาม — ถามความหมาย What does that mean? ❓ ลองพูดตามนะครับ
 
@@ -130,25 +130,25 @@ Hint: (none)
 Choices: ❓ What does that mean? → "What does that mean?"
 User: What that mean?
 Result: close out pool
-response time : 1.09 s
+response time : 1.11 s
 Reply: เกือบถูกแล้วครับ! พูดว่า What does that mean. ❓
 ต่อไปถ้าฟังไม่เข้าใจเลย ควรพูดประโยคไหนครับ? 🤷
 
 Step 4
 AI: เกือบถูกแล้วครับ! พูดว่า What does that mean. ❓
 ต่อไปถ้าฟังไม่เข้าใจเลย ควรพูดประโยคไหนครับ? 🤷
-Hint: I don't understand.
+Hint: (none)
 Choices: 🤷 I don't understand → "I don't understand."
          🐢 Speak more slowly → "Can you speak more slowly?"
          ❓ What does that mean? → "What does that mean?"
 User: I not understand.
 Result: close out pool
-response time : 1.19 s
+response time : 1.15 s
 Reply: เกือบถูกแล้วครับ! พูดว่า I don't understand. 🤷
 สุดยอดครับ Nana! 🎉 วันนี้คุณมี 3 ประโยคช่วยชีวิตเมื่อฟังอังกฤษไม่ทันแล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ asking_for_help scenario 3 complete · 4 turns · 4.55 s
+✅ asking_for_help scenario 3 complete · 4 turns · 4.80 s
 
 ================================================================================
 asking_for_help — Scenario 4 — out-pool wrong + in-pool พูดตาม recovery → จบบท
@@ -157,24 +157,24 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 
 Step 1
 AI: สวัสดีครับ Nana! วันนี้เรามาเรียน 3 ประโยคช่วยชีวิตเวลาฟังอังกฤษไม่ทัน 🆘 I don't understand. แปลว่า “ฉันไม่เข้าใจ” ใช้เมื่อฟังแล้วไม่เข้าใจ ลองพูดตามว่า “I don't understand.” ครับ
-Hint: I don't understand.
+Hint: (none)
 Choices: 🤷 I don't understand → "I don't understand."
          🐢 Speak more slowly → "Can you speak more slowly?"
          ❓ What does that mean? → "What does that mean?"
 User: Good morning.
 Result: incorrect out pool
-response time : 1.24 s
-Reply: ยังไม่ใช่นะครับ ลองพูดตามประโยคที่ว่า "I don't understand." อีกครั้งนะครับ
+response time : 1.20 s
+Reply: ยังไม่ใช่นะครับ ลองพูดตามประโยคที่สอนว่า "I don't understand." อีกครั้งนะครับ
 
 Step 2
-AI: ยังไม่ใช่นะครับ ลองพูดตามประโยคที่ว่า "I don't understand." อีกครั้งนะครับ
-Hint: I don't understand.
+AI: ยังไม่ใช่นะครับ ลองพูดตามประโยคที่สอนว่า "I don't understand." อีกครั้งนะครับ
+Hint: (none)
 Choices: 🤷 I don't understand → "I don't understand."
          🐢 Speak more slowly → "Can you speak more slowly?"
          ❓ What does that mean? → "What does that mean?"
 User: I don't understand.
 Result: correct in pool
-response time : 106.83 ms
+response time : 93.85 ms
 Reply: เก่งมากครับ! อาวุธที่สอง — ขอให้พูดช้าลง Can you speak more slowly? 🐢 ลองพูดตามครับ
 
 Step 3
@@ -183,7 +183,7 @@ Hint: (none)
 Choices: 🐢 Speak more slowly → "Can you speak more slowly?"
 User: Good morning.
 Result: incorrect out pool
-response time : 1.15 s
+response time : 1.22 s
 Reply: ยังไม่ถูกครับ ลองพูดว่า "Can you speak more slowly?" อีกครั้งนะครับ ลองพูดตามนะครับ
 
 Step 4
@@ -192,7 +192,7 @@ Hint: (none)
 Choices: 🐢 Speak more slowly → "Can you speak more slowly?"
 User: Can you speak more slowly?
 Result: correct in pool
-response time : 88.27 ms
+response time : 355.63 ms
 Reply: อาวุธที่สาม — ถามความหมาย What does that mean? ❓ ลองพูดตามนะครับ
 
 Step 5
@@ -201,42 +201,42 @@ Hint: (none)
 Choices: ❓ What does that mean? → "What does that mean?"
 User: Good morning.
 Result: incorrect out pool
-response time : 1.55 s
-Reply: ยังไม่ใช่นะครับ ลองพูดว่า "What does that mean?" อีกครั้งนะครับ ลองพูดตามนะครับ
+response time : 1.23 s
+Reply: ยังไม่ถูกครับ ลองพูดว่า "What does that mean?" อีกครั้งนะครับ ลองพูดตามนะครับ
 
 Step 6
-AI: ยังไม่ใช่นะครับ ลองพูดว่า "What does that mean?" อีกครั้งนะครับ ลองพูดตามนะครับ
+AI: ยังไม่ถูกครับ ลองพูดว่า "What does that mean?" อีกครั้งนะครับ ลองพูดตามนะครับ
 Hint: (none)
 Choices: ❓ What does that mean? → "What does that mean?"
 User: What does that mean?
 Result: correct in pool
-response time : 138.87 ms
+response time : 91.21 ms
 Reply: ถ้าฟังไม่เข้าใจเลย ควรพูดประโยคไหนครับ? 🤷
 
 Step 7
 AI: ถ้าฟังไม่เข้าใจเลย ควรพูดประโยคไหนครับ? 🤷
-Hint: I don't understand.
+Hint: (none)
 Choices: 🤷 I don't understand → "I don't understand."
          🐢 Speak more slowly → "Can you speak more slowly?"
          ❓ What does that mean? → "What does that mean?"
 User: Good morning.
 Result: incorrect out pool
-response time : 1.18 s
-Reply: ยังไม่ตรงครับ ลองใช้ “I don't understand...” แล้วพูดต่อให้ครบประโยคครับ
+response time : 1.15 s
+Reply: ยังไม่ตรงครับ ลองเลือกคำตอบที่ตรงกับคำถาม เช่น “I don't understand” ครับ
 
 Step 8
-AI: ยังไม่ตรงครับ ลองใช้ “I don't understand...” แล้วพูดต่อให้ครบประโยคครับ
-Hint: I don't understand.
+AI: ยังไม่ตรงครับ ลองเลือกคำตอบที่ตรงกับคำถาม เช่น “I don't understand” ครับ
+Hint: (none)
 Choices: 🤷 I don't understand → "I don't understand."
          🐢 Speak more slowly → "Can you speak more slowly?"
          ❓ What does that mean? → "What does that mean?"
 User: I don't understand.
 Result: correct in pool
-response time : 127.58 ms
+response time : 105.61 ms
 Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณมี 3 ประโยคช่วยชีวิตเมื่อฟังอังกฤษไม่ทันแล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ asking_for_help scenario 4 complete · 8 turns · 5.59 s
+✅ asking_for_help scenario 4 complete · 8 turns · 5.44 s
 
 ================================================================================
 asking_for_help — Scenario 5 — out-pool wrong + พูดตามผิดอีกครั้ง → soft-advance → จบบท
@@ -245,24 +245,24 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 
 Step 1
 AI: สวัสดีครับ Nana! วันนี้เรามาเรียน 3 ประโยคช่วยชีวิตเวลาฟังอังกฤษไม่ทัน 🆘 I don't understand. แปลว่า “ฉันไม่เข้าใจ” ใช้เมื่อฟังแล้วไม่เข้าใจ ลองพูดตามว่า “I don't understand.” ครับ
-Hint: I don't understand.
+Hint: (none)
 Choices: 🤷 I don't understand → "I don't understand."
          🐢 Speak more slowly → "Can you speak more slowly?"
          ❓ What does that mean? → "What does that mean?"
 User: Good morning.
 Result: incorrect out pool
-response time : 1.23 s
+response time : 1.34 s
 Reply: ยังไม่ใช่ครับ ลองพูดตามประโยคที่ครูสอนว่า "I don't understand." อีกครั้งนะครับ
 
 Step 2
 AI: ยังไม่ใช่ครับ ลองพูดตามประโยคที่ครูสอนว่า "I don't understand." อีกครั้งนะครับ
-Hint: I don't understand.
+Hint: (none)
 Choices: 🤷 I don't understand → "I don't understand."
          🐢 Speak more slowly → "Can you speak more slowly?"
          ❓ What does that mean? → "What does that mean?"
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 102.40 ms
+response time : 84.65 ms
 Reply: ตรงนี้พูดว่า "I don't understand." ครับ 🤷
 ไปต่อกันเลย — เก่งมากครับ! อาวุธที่สอง — ขอให้พูดช้าลง Can you speak more slowly? 🐢 ลองพูดตามครับ
 
@@ -273,7 +273,7 @@ Hint: (none)
 Choices: 🐢 Speak more slowly → "Can you speak more slowly?"
 User: Good morning.
 Result: incorrect out pool
-response time : 1.24 s
+response time : 1.27 s
 Reply: ยังไม่ถูกครับ ลองพูดตามว่า "Can you speak more slowly?" อีกครั้งนะครับ
 
 Step 4
@@ -282,7 +282,7 @@ Hint: (none)
 Choices: 🐢 Speak more slowly → "Can you speak more slowly?"
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 98.92 ms
+response time : 137.82 ms
 Reply: ตรงนี้พูดว่า "Can you speak more slowly?" ครับ 🐢
 ไปต่อกันเลย — อาวุธที่สาม — ถามความหมาย What does that mean? ❓ ลองพูดตามนะครับ
 
@@ -293,7 +293,7 @@ Hint: (none)
 Choices: ❓ What does that mean? → "What does that mean?"
 User: Good morning.
 Result: incorrect out pool
-response time : 1.14 s
+response time : 1.10 s
 Reply: ยังไม่ถูกครับ ลองพูดตามว่า "What does that mean?" อีกครั้งนะครับ
 
 Step 6
@@ -302,34 +302,34 @@ Hint: (none)
 Choices: ❓ What does that mean? → "What does that mean?"
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 120.67 ms
+response time : 108.52 ms
 Reply: ตรงนี้พูดว่า "What does that mean?" ครับ ❓
 ไปต่อกันเลย — I don't understand.
 
 Step 7
 AI: ตรงนี้พูดว่า "What does that mean?" ครับ ❓
 ไปต่อกันเลย — I don't understand.
-Hint: I don't understand.
+Hint: (none)
 Choices: 🤷 I don't understand → "I don't understand."
          🐢 Speak more slowly → "Can you speak more slowly?"
          ❓ What does that mean? → "What does that mean?"
 User: Good morning.
 Result: incorrect out pool
-response time : 1.17 s
-Reply: ยังไม่ตรงครับ ลองใช้ “I don't understand...” แล้วพูดต่อให้ครบประโยคครับ
+response time : 1.03 s
+Reply: ยังไม่ตรงครับ ลองเลือกคำตอบที่ตรงกับคำถาม เช่น “I don't understand” ครับ
 
 Step 8
-AI: ยังไม่ตรงครับ ลองใช้ “I don't understand...” แล้วพูดต่อให้ครบประโยคครับ
-Hint: I don't understand.
+AI: ยังไม่ตรงครับ ลองเลือกคำตอบที่ตรงกับคำถาม เช่น “I don't understand” ครับ
+Hint: (none)
 Choices: 🤷 I don't understand → "I don't understand."
          🐢 Speak more slowly → "Can you speak more slowly?"
          ❓ What does that mean? → "What does that mean?"
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 89.57 ms
+response time : 124.09 ms
 Reply: ตรงนี้พูดได้ว่า "I don't understand." ครับ 🤷
 
 🎉 จบบทแล้วครับ Nana! วันนี้คุณมี 3 ประโยคช่วยชีวิตเมื่อฟังอังกฤษไม่ทันแล้วครับ 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ asking_for_help scenario 5 complete · 8 turns · 5.19 s
+✅ asking_for_help scenario 5 complete · 8 turns · 5.18 s

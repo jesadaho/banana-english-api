@@ -539,7 +539,6 @@ export const FOUNDATION_BOARDS: Record<
       expectedSpeech: 'Excuse me.',
       options: [
         { emoji: '🙋', label: 'Excuse me', speak: 'Excuse me.' },
-        { emoji: '😔', label: 'Sorry', speak: "I'm sorry." },
       ],
     },
     4: {
@@ -548,6 +547,7 @@ export const FOUNDATION_BOARDS: Record<
       withPraise: true,
       stem: '',
       expectedSpeech: 'Thank you.',
+      incorrectHintTh: 'ยังไม่ตรงครับ ถ้ามีคนช่วย ให้พูดว่า “Thank you.” ครับ',
       options: [
         { emoji: '🙏', label: 'Please', speak: 'Please.' },
         { emoji: '💝', label: 'Thank you', speak: 'Thank you.' },
@@ -563,6 +563,7 @@ export const FOUNDATION_BOARDS: Record<
       withPraise: true,
       stem: '',
       expectedSpeech: "I'm sorry.",
+      incorrectHintTh: 'ยังไม่ตรงครับ ถ้าเดินชนคนโดยไม่ตั้งใจ ให้พูดว่า “I\'m sorry.” หรือ “Sorry.” ครับ',
       options: [
         { emoji: '🙏', label: 'Please', speak: 'Please.' },
         { emoji: '💝', label: 'Thank you', speak: 'Thank you.' },
@@ -590,7 +591,6 @@ export const FOUNDATION_BOARDS: Record<
       expectedSpeech: 'I am a student.',
       options: [
         { emoji: '🎓', label: 'Student', speak: 'I am a student.' },
-        { emoji: '💼', label: 'Worker', speak: 'I am a worker.' },
       ],
     },
     3: {
@@ -663,6 +663,7 @@ export const FOUNDATION_BOARDS: Record<
       withPraise: true,
       stem: '',
       expectedSpeech: 'It is my bag.',
+      incorrectHintTh: 'ยังไม่ตรงครับ เมื่อพูดถึงกระเป๋า ให้พูดว่า “It is my bag.” ครับ',
       options: [
         { emoji: '👨', label: 'He is my father.', speak: 'He is my father.' },
         { emoji: '👩', label: 'She is my sister.', speak: 'She is my sister.' },
@@ -858,6 +859,7 @@ export const FOUNDATION_BOARDS: Record<
       withPraise: true,
       stem: '',
       expectedSpeech: "It's nine p.m.",
+      incorrectHintTh: 'ยังไม่ตรงครับ เวลา 9:00 ตอนเย็น ให้พูดว่า “It\'s nine p.m.” ครับ',
       options: [
         { emoji: '🕕', label: "six o'clock", speak: "It's six o'clock." },
         { emoji: '🕢', label: 'seven thirty', speak: "It's seven thirty." },
@@ -969,6 +971,7 @@ export const FOUNDATION_BOARDS: Record<
       withPraise: true,
       stem: '',
       expectedSpeech: "It's ten dollars.",
+      incorrectHintTh: 'ยังไม่ตรงครับ เมื่อป้ายราคาเป็น $10 ให้พูดว่า “It\'s ten dollars.” ครับ',
       options: [
         { emoji: '💬', label: 'How much is it?', speak: 'How much is it?' },
         { emoji: '💵', label: "It's ten dollars", speak: "It's ten dollars." },
@@ -1025,6 +1028,7 @@ export const FOUNDATION_BOARDS: Record<
       withPraise: true,
       stem: '',
       expectedSpeech: "I don't like tea.",
+      incorrectHintTh: 'ยังไม่ตรงครับ ถ้าไม่ชอบชา ให้พูดว่า “I don\'t like tea.” ครับ',
       options: [
         { emoji: '☕', label: 'I like coffee', speak: 'I like coffee.' },
         { emoji: '🍕', label: 'I like pizza', speak: 'I like pizza.' },
@@ -1072,7 +1076,6 @@ export const FOUNDATION_BOARDS: Record<
       expectedSpeech: 'I have a dog.',
       options: [
         { emoji: '🐕', label: 'I have a dog', speak: 'I have a dog.' },
-        { emoji: '🚗', label: 'I have a car', speak: 'I have a car.' },
       ],
     },
     4: {
@@ -1126,6 +1129,7 @@ export const FOUNDATION_BOARDS: Record<
       withPraise: true,
       stem: '',
       expectedSpeech: 'I can cook.',
+      incorrectHintTh: 'ยังไม่ตรงครับ ถ้าทำอาหารได้ ให้พูดว่า “I can cook.” ครับ',
       options: [
         { emoji: '🏊', label: 'I can swim', speak: 'I can swim.' },
         { emoji: '🍳', label: 'I can cook', speak: 'I can cook.' },

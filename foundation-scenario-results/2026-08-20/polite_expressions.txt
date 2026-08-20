@@ -10,7 +10,7 @@ Hint: (none)
 Choices: 💝 Thank you → "Thank you very much."
 User: Thank you very much.
 Result: correct in pool
-response time : 102.42 ms
+response time : 116.99 ms
 Reply: ดีมากครับ! Thank you very much แปลว่า “ขอบคุณมาก” ถ้ามีคนขอบคุณเรา ให้ตอบว่า You're welcome 😊 ลองพูดตามนะครับ
 
 Step 2
@@ -19,7 +19,7 @@ Hint: (none)
 Choices: 😊 You're welcome → "You're welcome."
 User: You're welcome.
 Result: correct in pool
-response time : 169.47 ms
+response time : 189.56 ms
 Reply: ต่อไป Excuse me ใช้ทักคน หรือขอผ่าน 🙋 และ Sorry ใช้ขอโทษ 😔 ลองพูดตามว่า Excuse me.
 
 Step 3
@@ -29,12 +29,12 @@ Choices: 🙋 Excuse me → "Excuse me."
          😔 Sorry → "I'm sorry."
 User: Excuse me.
 Result: correct in pool
-response time : 107.59 ms
+response time : 117.90 ms
 Reply: ถ้ามีคนช่วยคุณยกของหนัก คุณจะพูดว่าอะไรครับ? 🙏
 
 Step 4
 AI: ถ้ามีคนช่วยคุณยกของหนัก คุณจะพูดว่าอะไรครับ? 🙏
-Hint: Thank you
+Hint: (none)
 Choices: 🙏 Please → "Please."
          💝 Thank you → "Thank you."
          😊 You're welcome → "You're welcome."
@@ -42,12 +42,12 @@ Choices: 🙏 Please → "Please."
          😔 Sorry → "Sorry."
 User: Thank you.
 Result: correct in pool
-response time : 97.87 ms
+response time : 118.31 ms
 Reply: ถ้าคุณเดินชนคนโดยไม่ตั้งใจ ควรพูดว่าอะไรครับ? 😔
 
 Step 5
 AI: ถ้าคุณเดินชนคนโดยไม่ตั้งใจ ควรพูดว่าอะไรครับ? 😔
-Hint: Sorry
+Hint: (none)
 Choices: 🙏 Please → "Please."
          💝 Thank you → "Thank you."
          😊 You're welcome → "You're welcome."
@@ -55,11 +55,11 @@ Choices: 🙏 Please → "Please."
          😔 Sorry → "I'm sorry."
 User: I'm sorry.
 Result: correct in pool
-response time : 146.60 ms
+response time : 96.84 ms
 Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณใช้ thank you, you're welcome, excuse me และ sorry ได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ polite_expressions scenario 1 complete · 5 turns · 623.95 ms
+✅ polite_expressions scenario 1 complete · 5 turns · 639.59 ms
 
 ================================================================================
 polite_expressions — Scenario 2 — out-pool correct ทุก step → จบบท
@@ -72,7 +72,7 @@ Hint: (none)
 Choices: 💝 Thank you → "Thank you very much."
 User: Thank you very much....
 Result: correct out pool
-response time : 1.27 s
+response time : 1.22 s
 Reply: ถูกต้องครับ! ดีมากครับ! Thank you very much แปลว่า “ขอบคุณมาก” ถ้ามีคนขอบคุณเรา ให้ตอบว่า You're welcome 😊 ลองพูดตามนะครับ
 
 Step 2
@@ -81,22 +81,22 @@ Hint: (none)
 Choices: 😊 You're welcome → "You're welcome."
 User: You're welcome....
 Result: correct out pool
-response time : 1.15 s
-Reply: เยี่ยมครับ! ต่อไป Excuse me ใช้ทักคน หรือขอผ่าน 🙋 และ Sorry ใช้ขอโทษ 😔 ลองพูดตามว่า Excuse me.
+response time : 1.13 s
+Reply: ดีมากครับ! ต่อไป Excuse me ใช้ทักคน หรือขอผ่าน 🙋 และ Sorry ใช้ขอโทษ 😔 ลองพูดตามว่า Excuse me.
 
 Step 3
-AI: เยี่ยมครับ! ต่อไป Excuse me ใช้ทักคน หรือขอผ่าน 🙋 และ Sorry ใช้ขอโทษ 😔 ลองพูดตามว่า Excuse me.
+AI: ดีมากครับ! ต่อไป Excuse me ใช้ทักคน หรือขอผ่าน 🙋 และ Sorry ใช้ขอโทษ 😔 ลองพูดตามว่า Excuse me.
 Hint: (none)
 Choices: 🙋 Excuse me → "Excuse me."
          😔 Sorry → "I'm sorry."
 User: Excuse me....
 Result: correct out pool
-response time : 1.21 s
-Reply: ถูกต้องครับ! ถ้ามีคนช่วยคุณยกของหนัก คุณจะพูดว่าอะไรครับ? 🙏
+response time : 1.27 s
+Reply: ดีมากครับ! ถ้ามีคนช่วยคุณยกของหนัก คุณจะพูดว่าอะไรครับ? 🙏
 
 Step 4
-AI: ถูกต้องครับ! ถ้ามีคนช่วยคุณยกของหนัก คุณจะพูดว่าอะไรครับ? 🙏
-Hint: Thank you
+AI: ดีมากครับ! ถ้ามีคนช่วยคุณยกของหนัก คุณจะพูดว่าอะไรครับ? 🙏
+Hint: (none)
 Choices: 🙏 Please → "Please."
          💝 Thank you → "Thank you."
          😊 You're welcome → "You're welcome."
@@ -104,12 +104,12 @@ Choices: 🙏 Please → "Please."
          😔 Sorry → "Sorry."
 User: Thank you....
 Result: correct out pool
-response time : 1.31 s
-Reply: เยี่ยมครับ! ถ้าคุณเดินชนคนโดยไม่ตั้งใจ ควรพูดว่าอะไรครับ? 😔
+response time : 1.19 s
+Reply: ดีมากครับ! ถ้าคุณเดินชนคนโดยไม่ตั้งใจ ควรพูดว่าอะไรครับ? 😔
 
 Step 5
-AI: เยี่ยมครับ! ถ้าคุณเดินชนคนโดยไม่ตั้งใจ ควรพูดว่าอะไรครับ? 😔
-Hint: Sorry
+AI: ดีมากครับ! ถ้าคุณเดินชนคนโดยไม่ตั้งใจ ควรพูดว่าอะไรครับ? 😔
+Hint: (none)
 Choices: 🙏 Please → "Please."
          💝 Thank you → "Thank you."
          😊 You're welcome → "You're welcome."
@@ -117,11 +117,11 @@ Choices: 🙏 Please → "Please."
          😔 Sorry → "I'm sorry."
 User: I'm sorry....
 Result: correct out pool
-response time : 1.07 s
+response time : 1.06 s
 Reply: ดีมากครับ! สุดยอดครับ Nana! 🎉 วันนี้คุณใช้ thank you, you're welcome, excuse me และ sorry ได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ polite_expressions scenario 2 complete · 5 turns · 6.01 s
+✅ polite_expressions scenario 2 complete · 5 turns · 5.87 s
 
 ================================================================================
 polite_expressions — Scenario 3 — out-pool close ทุก step → จบบท
@@ -134,7 +134,7 @@ Hint: (none)
 Choices: 💝 Thank you → "Thank you very much."
 User: Thank you very.
 Result: close out pool
-response time : 1.28 s
+response time : 1.23 s
 Reply: เกือบถูกแล้วครับ! พูดว่า Thank you very much. 💝
 Thank you very much แปลว่า “ขอบคุณมาก” ถ้ามีคนขอบคุณเรา ให้ตอบว่า You're welcome 😊 ลองพูดตามนะครับ
 
@@ -145,7 +145,7 @@ Hint: (none)
 Choices: 😊 You're welcome → "You're welcome."
 User: You welcome.
 Result: close out pool
-response time : 1.29 s
+response time : 1.13 s
 Reply: เกือบถูกแล้วครับ! พูดว่า You're welcome. 😊
 ต่อไป Excuse me ใช้ทักคน หรือขอผ่าน 🙋 และ Sorry ใช้ขอโทษ 😔 ลองพูดตามว่า Excuse me.
 
@@ -157,14 +157,14 @@ Choices: 🙋 Excuse me → "Excuse me."
          😔 Sorry → "I'm sorry."
 User: Excuse.
 Result: close out pool
-response time : 1.20 s
+response time : 1.05 s
 Reply: เกือบถูกแล้วครับ! พูดว่า Excuse me. 🙋
 ต่อไปถ้ามีคนช่วยคุณยกของหนัก คุณจะพูดว่าอะไรครับ? 🙏
 
 Step 4
 AI: เกือบถูกแล้วครับ! พูดว่า Excuse me. 🙋
 ต่อไปถ้ามีคนช่วยคุณยกของหนัก คุณจะพูดว่าอะไรครับ? 🙏
-Hint: Thank you
+Hint: (none)
 Choices: 🙏 Please → "Please."
          💝 Thank you → "Thank you."
          😊 You're welcome → "You're welcome."
@@ -172,14 +172,14 @@ Choices: 🙏 Please → "Please."
          😔 Sorry → "Sorry."
 User: Thank.
 Result: close out pool
-response time : 1.25 s
+response time : 1.29 s
 Reply: เกือบถูกแล้วครับ! พูดว่า Thank you. 💝
 ต่อไปถ้าคุณเดินชนคนโดยไม่ตั้งใจ ควรพูดว่าอะไรครับ? 😔
 
 Step 5
 AI: เกือบถูกแล้วครับ! พูดว่า Thank you. 💝
 ต่อไปถ้าคุณเดินชนคนโดยไม่ตั้งใจ ควรพูดว่าอะไรครับ? 😔
-Hint: Sorry
+Hint: (none)
 Choices: 🙏 Please → "Please."
          💝 Thank you → "Thank you."
          😊 You're welcome → "You're welcome."
@@ -187,12 +187,12 @@ Choices: 🙏 Please → "Please."
          😔 Sorry → "I'm sorry."
 User: I sorry.
 Result: close out pool
-response time : 1.26 s
+response time : 1.04 s
 Reply: เกือบถูกแล้วครับ! พูดว่า I'm sorry. 😔
 สุดยอดครับ Nana! 🎉 วันนี้คุณใช้ thank you, you're welcome, excuse me และ sorry ได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ polite_expressions scenario 3 complete · 5 turns · 6.28 s
+✅ polite_expressions scenario 3 complete · 5 turns · 5.74 s
 
 ================================================================================
 polite_expressions — Scenario 4 — out-pool wrong + in-pool พูดตาม recovery → จบบท
@@ -205,16 +205,16 @@ Hint: (none)
 Choices: 💝 Thank you → "Thank you very much."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.25 s
-Reply: ยังไม่ใช่ครับ Nana ลองพูดตามว่า "Thank you very much." อีกครั้งนะครับ
+response time : 1.10 s
+Reply: ยังไม่ใช่ครับ Nana ลองพูดว่า "Thank you very much." อีกครั้งนะครับ ลองพูดตามนะครับ
 
 Step 2
-AI: ยังไม่ใช่ครับ Nana ลองพูดตามว่า "Thank you very much." อีกครั้งนะครับ
+AI: ยังไม่ใช่ครับ Nana ลองพูดว่า "Thank you very much." อีกครั้งนะครับ ลองพูดตามนะครับ
 Hint: (none)
 Choices: 💝 Thank you → "Thank you very much."
 User: Thank you very much.
 Result: correct in pool
-response time : 100.14 ms
+response time : 164.68 ms
 Reply: ดีมากครับ! Thank you very much แปลว่า “ขอบคุณมาก” ถ้ามีคนขอบคุณเรา ให้ตอบว่า You're welcome 😊 ลองพูดตามนะครับ
 
 Step 3
@@ -223,16 +223,16 @@ Hint: (none)
 Choices: 😊 You're welcome → "You're welcome."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.20 s
-Reply: ยังไม่ใช่ครับ Nana ลองพูดว่า "You're welcome" เพื่อตอบรับคำขอบคุณนะครับ ลองพูดตามนะครับ
+response time : 1.37 s
+Reply: ยังไม่ถูกครับ Nana ลองพูดว่า "You're welcome" เพื่อตอบรับคำขอบคุณนะครับ ลองพูดตามอีกครั้งครับ
 
 Step 4
-AI: ยังไม่ใช่ครับ Nana ลองพูดว่า "You're welcome" เพื่อตอบรับคำขอบคุณนะครับ ลองพูดตามนะครับ
+AI: ยังไม่ถูกครับ Nana ลองพูดว่า "You're welcome" เพื่อตอบรับคำขอบคุณนะครับ ลองพูดตามอีกครั้งครับ
 Hint: (none)
 Choices: 😊 You're welcome → "You're welcome."
 User: You're welcome.
 Result: correct in pool
-response time : 94.69 ms
+response time : 102.02 ms
 Reply: ต่อไป Excuse me ใช้ทักคน หรือขอผ่าน 🙋 และ Sorry ใช้ขอโทษ 😔 ลองพูดตามว่า Excuse me.
 
 Step 5
@@ -242,7 +242,7 @@ Choices: 🙋 Excuse me → "Excuse me."
          😔 Sorry → "I'm sorry."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.19 s
+response time : 1.43 s
 Reply: ยังไม่ตรงครับ ลองใช้ “Excuse me” หรือ “I'm sorry” ครับ
 
 Step 6
@@ -252,12 +252,12 @@ Choices: 🙋 Excuse me → "Excuse me."
          😔 Sorry → "I'm sorry."
 User: Excuse me.
 Result: correct in pool
-response time : 112.59 ms
+response time : 138.67 ms
 Reply: ถ้ามีคนช่วยคุณยกของหนัก คุณจะพูดว่าอะไรครับ? 🙏
 
 Step 7
 AI: ถ้ามีคนช่วยคุณยกของหนัก คุณจะพูดว่าอะไรครับ? 🙏
-Hint: Thank you
+Hint: (none)
 Choices: 🙏 Please → "Please."
          💝 Thank you → "Thank you."
          😊 You're welcome → "You're welcome."
@@ -265,12 +265,12 @@ Choices: 🙏 Please → "Please."
          😔 Sorry → "Sorry."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.28 s
-Reply: ยังไม่ตรงครับ ลองใช้ “Thank you...” แล้วพูดต่อให้ครบประโยคครับ
+response time : 1.06 s
+Reply: ยังไม่ตรงครับ ลองเลือกคำตอบที่ตรงกับคำถาม เช่น “Please” ครับ
 
 Step 8
-AI: ยังไม่ตรงครับ ลองใช้ “Thank you...” แล้วพูดต่อให้ครบประโยคครับ
-Hint: Thank you
+AI: ยังไม่ตรงครับ ลองเลือกคำตอบที่ตรงกับคำถาม เช่น “Please” ครับ
+Hint: (none)
 Choices: 🙏 Please → "Please."
          💝 Thank you → "Thank you."
          😊 You're welcome → "You're welcome."
@@ -278,12 +278,12 @@ Choices: 🙏 Please → "Please."
          😔 Sorry → "Sorry."
 User: Thank you.
 Result: correct in pool
-response time : 88.96 ms
+response time : 175.44 ms
 Reply: ถ้าคุณเดินชนคนโดยไม่ตั้งใจ ควรพูดว่าอะไรครับ? 😔
 
 Step 9
 AI: ถ้าคุณเดินชนคนโดยไม่ตั้งใจ ควรพูดว่าอะไรครับ? 😔
-Hint: Sorry
+Hint: (none)
 Choices: 🙏 Please → "Please."
          💝 Thank you → "Thank you."
          😊 You're welcome → "You're welcome."
@@ -291,12 +291,12 @@ Choices: 🙏 Please → "Please."
          😔 Sorry → "I'm sorry."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.33 s
-Reply: ยังไม่ตรงครับ ลองใช้ “Sorry...” แล้วพูดต่อให้ครบประโยคครับ
+response time : 1.29 s
+Reply: ยังไม่ตรงครับ ลองเลือกคำตอบที่ตรงกับคำถาม เช่น “Please” ครับ
 
 Step 10
-AI: ยังไม่ตรงครับ ลองใช้ “Sorry...” แล้วพูดต่อให้ครบประโยคครับ
-Hint: Sorry
+AI: ยังไม่ตรงครับ ลองเลือกคำตอบที่ตรงกับคำถาม เช่น “Please” ครับ
+Hint: (none)
 Choices: 🙏 Please → "Please."
          💝 Thank you → "Thank you."
          😊 You're welcome → "You're welcome."
@@ -304,11 +304,11 @@ Choices: 🙏 Please → "Please."
          😔 Sorry → "I'm sorry."
 User: I'm sorry.
 Result: correct in pool
-response time : 105.23 ms
+response time : 248.54 ms
 Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณใช้ thank you, you're welcome, excuse me และ sorry ได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ polite_expressions scenario 4 complete · 10 turns · 6.75 s
+✅ polite_expressions scenario 4 complete · 10 turns · 7.08 s
 
 ================================================================================
 polite_expressions — Scenario 5 — out-pool wrong + พูดตามผิดอีกครั้ง → soft-advance → จบบท
@@ -321,16 +321,16 @@ Hint: (none)
 Choices: 💝 Thank you → "Thank you very much."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.25 s
-Reply: ยังไม่ใช่ครับ Nana ลองพูดตามว่า "Thank you very much." อีกครั้งนะครับ
+response time : 1.12 s
+Reply: ยังไม่ถูกต้องครับ ลองพูดว่า "Thank you very much." เพื่อฝึกขอบคุณนะครับ ลองพูดตามนะครับ
 
 Step 2
-AI: ยังไม่ใช่ครับ Nana ลองพูดตามว่า "Thank you very much." อีกครั้งนะครับ
+AI: ยังไม่ถูกต้องครับ ลองพูดว่า "Thank you very much." เพื่อฝึกขอบคุณนะครับ ลองพูดตามนะครับ
 Hint: (none)
 Choices: 💝 Thank you → "Thank you very much."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 103.84 ms
+response time : 111.97 ms
 Reply: ตรงนี้พูดว่า "Thank you very much." ครับ 💝
 ไปต่อกันเลย — ดีมากครับ! Thank you very much แปลว่า “ขอบคุณมาก” ถ้ามีคนขอบคุณเรา ให้ตอบว่า You're welcome 😊 ลองพูดตามนะครับ
 
@@ -342,15 +342,15 @@ Choices: 😊 You're welcome → "You're welcome."
 User: Good morning.
 Result: incorrect out pool
 response time : 1.18 s
-Reply: ยังไม่ถูกต้องครับ Nana ลองพูดว่า "You're welcome." เพื่อตอบรับคำขอบคุณนะครับ ลองพูดตามนะครับ
+Reply: ยังไม่ถูกต้องครับ ลองพูดว่า "You're welcome." เพื่อตอบรับคำขอบคุณนะครับ ลองพูดตามอีกครั้งครับ
 
 Step 4
-AI: ยังไม่ถูกต้องครับ Nana ลองพูดว่า "You're welcome." เพื่อตอบรับคำขอบคุณนะครับ ลองพูดตามนะครับ
+AI: ยังไม่ถูกต้องครับ ลองพูดว่า "You're welcome." เพื่อตอบรับคำขอบคุณนะครับ ลองพูดตามอีกครั้งครับ
 Hint: (none)
 Choices: 😊 You're welcome → "You're welcome."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 105.08 ms
+response time : 93.35 ms
 Reply: ตรงนี้พูดว่า "You're welcome." ครับ 😊
 ไปต่อกันเลย — Excuse me.
 
@@ -362,7 +362,7 @@ Choices: 🙋 Excuse me → "Excuse me."
          😔 Sorry → "I'm sorry."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.20 s
+response time : 1.17 s
 Reply: ยังไม่ตรงครับ ลองใช้ “Excuse me” หรือ “I'm sorry” ครับ
 
 Step 6
@@ -372,14 +372,14 @@ Choices: 🙋 Excuse me → "Excuse me."
          😔 Sorry → "I'm sorry."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 100.44 ms
+response time : 105.46 ms
 Reply: ตรงนี้พูดว่า "Excuse me." ครับ 🙋
 ไปต่อกันเลย — Thank you.
 
 Step 7
 AI: ตรงนี้พูดว่า "Excuse me." ครับ 🙋
 ไปต่อกันเลย — Thank you.
-Hint: Thank you
+Hint: (none)
 Choices: 🙏 Please → "Please."
          💝 Thank you → "Thank you."
          😊 You're welcome → "You're welcome."
@@ -387,12 +387,12 @@ Choices: 🙏 Please → "Please."
          😔 Sorry → "Sorry."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.21 s
-Reply: ยังไม่ตรงครับ ลองใช้ “Thank you...” แล้วพูดต่อให้ครบประโยคครับ
+response time : 1.28 s
+Reply: ยังไม่ตรงครับ ลองเลือกคำตอบที่ตรงกับคำถาม เช่น “Please” ครับ
 
 Step 8
-AI: ยังไม่ตรงครับ ลองใช้ “Thank you...” แล้วพูดต่อให้ครบประโยคครับ
-Hint: Thank you
+AI: ยังไม่ตรงครับ ลองเลือกคำตอบที่ตรงกับคำถาม เช่น “Please” ครับ
+Hint: (none)
 Choices: 🙏 Please → "Please."
          💝 Thank you → "Thank you."
          😊 You're welcome → "You're welcome."
@@ -400,14 +400,14 @@ Choices: 🙏 Please → "Please."
          😔 Sorry → "Sorry."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 102.34 ms
+response time : 180.63 ms
 Reply: ตรงนี้พูดว่า "Thank you." ครับ 💝
 ไปต่อกันเลย — What do you say if you bump into someone?
 
 Step 9
 AI: ตรงนี้พูดว่า "Thank you." ครับ 💝
 ไปต่อกันเลย — What do you say if you bump into someone?
-Hint: Sorry
+Hint: (none)
 Choices: 🙏 Please → "Please."
          💝 Thank you → "Thank you."
          😊 You're welcome → "You're welcome."
@@ -415,12 +415,12 @@ Choices: 🙏 Please → "Please."
          😔 Sorry → "I'm sorry."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.92 s
-Reply: ยังไม่ตรงครับ ลองใช้ “Sorry...” แล้วพูดต่อให้ครบประโยคครับ
+response time : 1.22 s
+Reply: ยังไม่ตรงครับ ลองเลือกคำตอบที่ตรงกับคำถาม เช่น “Please” ครับ
 
 Step 10
-AI: ยังไม่ตรงครับ ลองใช้ “Sorry...” แล้วพูดต่อให้ครบประโยคครับ
-Hint: Sorry
+AI: ยังไม่ตรงครับ ลองเลือกคำตอบที่ตรงกับคำถาม เช่น “Please” ครับ
+Hint: (none)
 Choices: 🙏 Please → "Please."
          💝 Thank you → "Thank you."
          😊 You're welcome → "You're welcome."
@@ -428,10 +428,10 @@ Choices: 🙏 Please → "Please."
          😔 Sorry → "I'm sorry."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 393.41 ms
+response time : 140.66 ms
 Reply: ตรงนี้พูดได้ว่า "I'm sorry." ครับ 😔
 
 🎉 จบบทแล้วครับ Nana! วันนี้คุณใช้ thank you, you're welcome, excuse me และ sorry แล้วครับ 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ polite_expressions scenario 5 complete · 10 turns · 7.55 s
+✅ polite_expressions scenario 5 complete · 10 turns · 6.60 s

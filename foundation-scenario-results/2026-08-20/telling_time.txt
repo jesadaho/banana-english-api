@@ -10,7 +10,7 @@ Hint: (none)
 Choices: 🕕 six o'clock → "It's six o'clock."
 User: It's six o'clock.
 Result: correct in pool
-response time : 98.07 ms
+response time : 103.82 ms
 Reply: เก่งมากครับ! 7:30 อ่านว่า It's seven thirty 🕢 ลองพูดตามครับ
 
 Step 2
@@ -19,41 +19,41 @@ Hint: (none)
 Choices: 🕢 seven thirty → "It's seven thirty."
 User: It's seven thirty.
 Result: correct in pool
-response time : 115.28 ms
+response time : 92.04 ms
 Reply: ตอนเช้าใช้ a.m. — It's seven a.m. 🌅 ลองพูดตามนะครับ
 
 Step 3
 AI: ตอนเช้าใช้ a.m. — It's seven a.m. 🌅 ลองพูดตามนะครับ
-Hint: It's seven a.m.
-Choices: 🌅 seven a.m. → "It's seven a.m."
+Hint: (none)
+Choices: (none)
 User: It's seven a.m.
 Result: correct in pool
-response time : 89.64 ms
+response time : 95.82 ms
 Reply: 9:00 ตอนเย็น อ่านว่าอะไรครับ? 🌙
 
 Step 4
 AI: 9:00 ตอนเย็น อ่านว่าอะไรครับ? 🌙
-Hint: It's nine p.m.
+Hint: (none)
 Choices: 🕕 six o'clock → "It's six o'clock."
          🕢 seven thirty → "It's seven thirty."
          🌅 seven a.m. → "It's seven a.m."
          🌙 nine p.m. → "It's nine p.m."
 User: It's nine p.m.
 Result: correct in pool
-response time : 89.88 ms
+response time : 107.13 ms
 Reply: ลองบอกเวลาที่คุณตื่นเป็นภาษาอังกฤษครับ ⏰
 
 Step 5
 AI: ลองบอกเวลาที่คุณตื่นเป็นภาษาอังกฤษครับ ⏰
-Hint: It's seven a.m.
-Choices: 🌅 seven a.m. → "It's seven a.m."
+Hint: (none)
+Choices: (none)
 User: It's seven a.m.
 Result: correct in pool
-response time : 101.74 ms
+response time : 94.37 ms
 Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณฝึกบอกเวลาพื้นฐานด้วย o'clock ตัวเลข และ a.m./p.m. แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ telling_time scenario 1 complete · 5 turns · 494.62 ms
+✅ telling_time scenario 1 complete · 5 turns · 493.18 ms
 
 ================================================================================
 telling_time — Scenario 2 — out-pool correct ทุก step → จบบท
@@ -66,7 +66,7 @@ Hint: (none)
 Choices: 🕕 six o'clock → "It's six o'clock."
 User: It's six o'clock....
 Result: correct out pool
-response time : 1.16 s
+response time : 1.27 s
 Reply: ถูกต้องครับ! เก่งมากครับ! 7:30 อ่านว่า It's seven thirty 🕢 ลองพูดตามครับ
 
 Step 2
@@ -75,41 +75,41 @@ Hint: (none)
 Choices: 🕢 seven thirty → "It's seven thirty."
 User: It's seven thirty....
 Result: correct out pool
-response time : 1.07 s
-Reply: เยี่ยมครับ! ตอนเช้าใช้ a.m. — It's seven a.m. 🌅 ลองพูดตามนะครับ
+response time : 1.24 s
+Reply: ดีมากครับ! ตอนเช้าใช้ a.m. — It's seven a.m. 🌅 ลองพูดตามนะครับ
 
 Step 3
-AI: เยี่ยมครับ! ตอนเช้าใช้ a.m. — It's seven a.m. 🌅 ลองพูดตามนะครับ
-Hint: It's seven a.m.
-Choices: 🌅 seven a.m. → "It's seven a.m."
+AI: ดีมากครับ! ตอนเช้าใช้ a.m. — It's seven a.m. 🌅 ลองพูดตามนะครับ
+Hint: (none)
+Choices: (none)
 User: It's seven a.m....
 Result: correct out pool
 response time : 1.22 s
-Reply: ดีมากครับ! 9:00 ตอนเย็น อ่านว่าอะไรครับ? 🌙
+Reply: เยี่ยมครับ! 9:00 ตอนเย็น อ่านว่าอะไรครับ? 🌙
 
 Step 4
-AI: ดีมากครับ! 9:00 ตอนเย็น อ่านว่าอะไรครับ? 🌙
-Hint: It's nine p.m.
+AI: เยี่ยมครับ! 9:00 ตอนเย็น อ่านว่าอะไรครับ? 🌙
+Hint: (none)
 Choices: 🕕 six o'clock → "It's six o'clock."
          🕢 seven thirty → "It's seven thirty."
          🌅 seven a.m. → "It's seven a.m."
          🌙 nine p.m. → "It's nine p.m."
 User: It's nine p.m....
 Result: correct out pool
-response time : 1.28 s
-Reply: ดีมากครับ! ลองบอกเวลาที่คุณตื่นเป็นภาษาอังกฤษครับ ⏰
+response time : 1.15 s
+Reply: เยี่ยมครับ! ลองบอกเวลาที่คุณตื่นเป็นภาษาอังกฤษครับ ⏰
 
 Step 5
-AI: ดีมากครับ! ลองบอกเวลาที่คุณตื่นเป็นภาษาอังกฤษครับ ⏰
-Hint: It's seven a.m.
-Choices: 🌅 seven a.m. → "It's seven a.m."
+AI: เยี่ยมครับ! ลองบอกเวลาที่คุณตื่นเป็นภาษาอังกฤษครับ ⏰
+Hint: (none)
+Choices: (none)
 User: It's seven a.m....
 Result: correct out pool
-response time : 1.18 s
-Reply: ถูกต้องครับ! สุดยอดครับ Nana! 🎉 วันนี้คุณฝึกบอกเวลาพื้นฐานด้วย o'clock ตัวเลข และ a.m./p.m. แล้ว 🍌
+response time : 1.27 s
+Reply: เยี่ยมครับ! สุดยอดครับ Nana! 🎉 วันนี้คุณฝึกบอกเวลาพื้นฐานด้วย o'clock ตัวเลข และ a.m./p.m. แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ telling_time scenario 2 complete · 5 turns · 5.92 s
+✅ telling_time scenario 2 complete · 5 turns · 6.14 s
 
 ================================================================================
 telling_time — Scenario 3 — out-pool close ทุก step → จบบท
@@ -122,7 +122,7 @@ Hint: (none)
 Choices: 🕕 six o'clock → "It's six o'clock."
 User: It's six clock.
 Result: close out pool
-response time : 1.32 s
+response time : 1.25 s
 Reply: เกือบถูกแล้วครับ! พูดว่า It's six o'clock. 🕕
 7:30 อ่านว่า It's seven thirty 🕢 ลองพูดตามครับ
 
@@ -133,48 +133,48 @@ Hint: (none)
 Choices: 🕢 seven thirty → "It's seven thirty."
 User: It's seven thirty clock.
 Result: close out pool
-response time : 1.18 s
+response time : 1.24 s
 Reply: เกือบถูกแล้วครับ! พูดว่า It's seven thirty. 🕢
 ตอนเช้าใช้ a.m. — It's seven a.m. 🌅 ลองพูดตามนะครับ
 
 Step 3
 AI: เกือบถูกแล้วครับ! พูดว่า It's seven thirty. 🕢
 ตอนเช้าใช้ a.m. — It's seven a.m. 🌅 ลองพูดตามนะครับ
-Hint: It's seven a.m.
-Choices: 🌅 seven a.m. → "It's seven a.m."
+Hint: (none)
+Choices: (none)
 User: It's seven.
 Result: close out pool
-response time : 1.15 s
+response time : 1.13 s
 Reply: เกือบถูกแล้วครับ! พูดว่า It's seven a.m. 🌅
 9:00 ตอนเย็น อ่านว่าอะไรครับ? 🌙
 
 Step 4
 AI: เกือบถูกแล้วครับ! พูดว่า It's seven a.m. 🌅
 9:00 ตอนเย็น อ่านว่าอะไรครับ? 🌙
-Hint: It's nine p.m.
+Hint: (none)
 Choices: 🕕 six o'clock → "It's six o'clock."
          🕢 seven thirty → "It's seven thirty."
          🌅 seven a.m. → "It's seven a.m."
          🌙 nine p.m. → "It's nine p.m."
 User: It's nine.
 Result: close out pool
-response time : 1.39 s
+response time : 1.26 s
 Reply: เกือบถูกแล้วครับ! พูดว่า It's nine p.m. 🌙
 ลองบอกเวลาที่คุณตื่นเป็นภาษาอังกฤษครับ ⏰
 
 Step 5
 AI: เกือบถูกแล้วครับ! พูดว่า It's nine p.m. 🌙
 ลองบอกเวลาที่คุณตื่นเป็นภาษาอังกฤษครับ ⏰
-Hint: It's seven a.m.
-Choices: 🌅 seven a.m. → "It's seven a.m."
+Hint: (none)
+Choices: (none)
 User: It's seven morning.
 Result: close out pool
-response time : 1.19 s
-Reply: เกือบถูกแล้วครับ! พูดว่า It's seven a.m. 🌅
+response time : 1.34 s
+Reply: เกือบถูกแล้วครับ! พูดว่า It's seven a.m.
 สุดยอดครับ Nana! 🎉 วันนี้คุณฝึกบอกเวลาพื้นฐานด้วย o'clock ตัวเลข และ a.m./p.m. แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ telling_time scenario 3 complete · 5 turns · 6.23 s
+✅ telling_time scenario 3 complete · 5 turns · 6.22 s
 
 ================================================================================
 telling_time — Scenario 4 — out-pool wrong + in-pool พูดตาม recovery → จบบท
@@ -187,16 +187,16 @@ Hint: (none)
 Choices: 🕕 six o'clock → "It's six o'clock."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.16 s
-Reply: ยังไม่ถูกต้องครับ ลองพูดตามว่า "It's six o'clock." อีกครั้งนะครับ
+response time : 1.49 s
+Reply: ยังไม่ถูกต้องครับ ลองพูดว่า "It's six o'clock." ตามครูอีกครั้งนะครับ ลองพูดตามนะครับ
 
 Step 2
-AI: ยังไม่ถูกต้องครับ ลองพูดตามว่า "It's six o'clock." อีกครั้งนะครับ
+AI: ยังไม่ถูกต้องครับ ลองพูดว่า "It's six o'clock." ตามครูอีกครั้งนะครับ ลองพูดตามนะครับ
 Hint: (none)
 Choices: 🕕 six o'clock → "It's six o'clock."
 User: It's six o'clock.
 Result: correct in pool
-response time : 143.96 ms
+response time : 241.90 ms
 Reply: เก่งมากครับ! 7:30 อ่านว่า It's seven thirty 🕢 ลองพูดตามครับ
 
 Step 3
@@ -205,80 +205,80 @@ Hint: (none)
 Choices: 🕢 seven thirty → "It's seven thirty."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.23 s
-Reply: ยังไม่ถูกต้องครับ ลองพูดว่า "It's seven thirty" อีกครั้งนะครับ ลองพูดตามนะครับ
+response time : 1.30 s
+Reply: ยังไม่ถูกต้องครับ ลองพูดว่า "It's seven thirty" ตามครูอีกครั้งนะครับ ลองพูดตามนะครับ
 
 Step 4
-AI: ยังไม่ถูกต้องครับ ลองพูดว่า "It's seven thirty" อีกครั้งนะครับ ลองพูดตามนะครับ
+AI: ยังไม่ถูกต้องครับ ลองพูดว่า "It's seven thirty" ตามครูอีกครั้งนะครับ ลองพูดตามนะครับ
 Hint: (none)
 Choices: 🕢 seven thirty → "It's seven thirty."
 User: It's seven thirty.
 Result: correct in pool
-response time : 102.85 ms
+response time : 81.72 ms
 Reply: ตอนเช้าใช้ a.m. — It's seven a.m. 🌅 ลองพูดตามนะครับ
 
 Step 5
 AI: ตอนเช้าใช้ a.m. — It's seven a.m. 🌅 ลองพูดตามนะครับ
-Hint: It's seven a.m.
-Choices: 🌅 seven a.m. → "It's seven a.m."
+Hint: (none)
+Choices: (none)
 User: Good morning.
 Result: incorrect out pool
-response time : 1.32 s
+response time : 1.59 s
 Reply: ยังไม่ตรงครับ ลองใช้ “It's seven a.m” หรือ “It's nine p.m” ครับ
 
 Step 6
 AI: ยังไม่ตรงครับ ลองใช้ “It's seven a.m” หรือ “It's nine p.m” ครับ
-Hint: It's seven a.m.
-Choices: 🌅 seven a.m. → "It's seven a.m."
+Hint: (none)
+Choices: (none)
 User: It's seven a.m.
 Result: correct in pool
-response time : 143.09 ms
+response time : 87.04 ms
 Reply: 9:00 ตอนเย็น อ่านว่าอะไรครับ? 🌙
 
 Step 7
 AI: 9:00 ตอนเย็น อ่านว่าอะไรครับ? 🌙
-Hint: It's nine p.m.
+Hint: (none)
 Choices: 🕕 six o'clock → "It's six o'clock."
          🕢 seven thirty → "It's seven thirty."
          🌅 seven a.m. → "It's seven a.m."
          🌙 nine p.m. → "It's nine p.m."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.98 s
-Reply: ยังไม่ตรงครับ ลองใช้ “It's nine p.m...” แล้วพูดต่อให้ครบประโยคครับ
+response time : 1.26 s
+Reply: ยังไม่ตรงครับ ลองเลือกคำตอบที่ตรงกับคำถาม เช่น “It's six o'clock” ครับ
 
 Step 8
-AI: ยังไม่ตรงครับ ลองใช้ “It's nine p.m...” แล้วพูดต่อให้ครบประโยคครับ
-Hint: It's nine p.m.
+AI: ยังไม่ตรงครับ ลองเลือกคำตอบที่ตรงกับคำถาม เช่น “It's six o'clock” ครับ
+Hint: (none)
 Choices: 🕕 six o'clock → "It's six o'clock."
          🕢 seven thirty → "It's seven thirty."
          🌅 seven a.m. → "It's seven a.m."
          🌙 nine p.m. → "It's nine p.m."
 User: It's nine p.m.
 Result: correct in pool
-response time : 1.66 s
+response time : 112.17 ms
 Reply: ลองบอกเวลาที่คุณตื่นเป็นภาษาอังกฤษครับ ⏰
 
 Step 9
 AI: ลองบอกเวลาที่คุณตื่นเป็นภาษาอังกฤษครับ ⏰
-Hint: It's seven a.m.
-Choices: 🌅 seven a.m. → "It's seven a.m."
+Hint: (none)
+Choices: (none)
 User: Good morning.
 Result: incorrect out pool
-response time : 3.08 s
-Reply: ยังไม่ตรงครับ ลองใช้ “It's seven a.m...” แล้วพูดต่อให้ครบประโยคครับ
+response time : 1.15 s
+Reply: ยังไม่ตรงครับ ลองเริ่มด้วย “It's...” แล้วตามด้วยเวลาที่คุณตื่นและ a.m. ครับ
 
 Step 10
-AI: ยังไม่ตรงครับ ลองใช้ “It's seven a.m...” แล้วพูดต่อให้ครบประโยคครับ
-Hint: It's seven a.m.
-Choices: 🌅 seven a.m. → "It's seven a.m."
+AI: ยังไม่ตรงครับ ลองเริ่มด้วย “It's...” แล้วตามด้วยเวลาที่คุณตื่นและ a.m. ครับ
+Hint: (none)
+Choices: (none)
 User: It's seven a.m.
 Result: correct in pool
-response time : 95.32 ms
+response time : 92.64 ms
 Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณฝึกบอกเวลาพื้นฐานด้วย o'clock ตัวเลข และ a.m./p.m. แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ telling_time scenario 4 complete · 10 turns · 10.92 s
+✅ telling_time scenario 4 complete · 10 turns · 7.40 s
 
 ================================================================================
 telling_time — Scenario 5 — out-pool wrong + พูดตามผิดอีกครั้ง → soft-advance → จบบท
@@ -291,16 +291,16 @@ Hint: (none)
 Choices: 🕕 six o'clock → "It's six o'clock."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.21 s
-Reply: ยังไม่ถูกต้องครับ ลองพูดตามว่า "It's six o'clock." อีกครั้งนะครับ
+response time : 1.63 s
+Reply: ยังไม่ใช่ครับ ลองพูดว่า "It's six o'clock." ตามครูอีกครั้งนะครับ ลองพูดตามนะครับ
 
 Step 2
-AI: ยังไม่ถูกต้องครับ ลองพูดตามว่า "It's six o'clock." อีกครั้งนะครับ
+AI: ยังไม่ใช่ครับ ลองพูดว่า "It's six o'clock." ตามครูอีกครั้งนะครับ ลองพูดตามนะครับ
 Hint: (none)
 Choices: 🕕 six o'clock → "It's six o'clock."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 101.98 ms
+response time : 91.83 ms
 Reply: ตรงนี้พูดว่า "It's six o'clock." ครับ 🕕
 ไปต่อกันเลย — เก่งมากครับ! 7:30 อ่านว่า It's seven thirty 🕢 ลองพูดตามครับ
 
@@ -311,85 +311,85 @@ Hint: (none)
 Choices: 🕢 seven thirty → "It's seven thirty."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.07 s
-Reply: ยังไม่ถูกต้องครับ ลองพูดตามว่า "It's seven thirty." นะครับ
+response time : 1.11 s
+Reply: ยังไม่ถูกต้องครับ ลองพูดว่า "It's seven thirty." อีกครั้งนะครับ ลองพูดตามนะครับ
 
 Step 4
-AI: ยังไม่ถูกต้องครับ ลองพูดตามว่า "It's seven thirty." นะครับ
+AI: ยังไม่ถูกต้องครับ ลองพูดว่า "It's seven thirty." อีกครั้งนะครับ ลองพูดตามนะครับ
 Hint: (none)
 Choices: 🕢 seven thirty → "It's seven thirty."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 94.45 ms
+response time : 108.62 ms
 Reply: ตรงนี้พูดว่า "It's seven thirty." ครับ 🕢
 ไปต่อกันเลย — It's seven a.m.
 
 Step 5
 AI: ตรงนี้พูดว่า "It's seven thirty." ครับ 🕢
 ไปต่อกันเลย — It's seven a.m.
-Hint: It's seven a.m.
-Choices: 🌅 seven a.m. → "It's seven a.m."
+Hint: (none)
+Choices: (none)
 User: Good morning.
 Result: incorrect out pool
-response time : 1.20 s
+response time : 1.15 s
 Reply: ยังไม่ตรงครับ ลองใช้ “It's seven a.m” หรือ “It's nine p.m” ครับ
 
 Step 6
 AI: ยังไม่ตรงครับ ลองใช้ “It's seven a.m” หรือ “It's nine p.m” ครับ
-Hint: It's seven a.m.
-Choices: 🌅 seven a.m. → "It's seven a.m."
+Hint: (none)
+Choices: (none)
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 108.30 ms
+response time : 91.61 ms
 Reply: ตรงนี้พูดว่า "It's seven a.m." ครับ 🌅
 ไปต่อกันเลย — It's nine p.m.
 
 Step 7
 AI: ตรงนี้พูดว่า "It's seven a.m." ครับ 🌅
 ไปต่อกันเลย — It's nine p.m.
-Hint: It's nine p.m.
+Hint: (none)
 Choices: 🕕 six o'clock → "It's six o'clock."
          🕢 seven thirty → "It's seven thirty."
          🌅 seven a.m. → "It's seven a.m."
          🌙 nine p.m. → "It's nine p.m."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.18 s
-Reply: ยังไม่ตรงครับ ลองใช้ “It's nine p.m...” แล้วพูดต่อให้ครบประโยคครับ
+response time : 1.23 s
+Reply: ยังไม่ตรงครับ ลองเลือกคำตอบที่ตรงกับคำถาม เช่น “It's six o'clock” ครับ
 
 Step 8
-AI: ยังไม่ตรงครับ ลองใช้ “It's nine p.m...” แล้วพูดต่อให้ครบประโยคครับ
-Hint: It's nine p.m.
+AI: ยังไม่ตรงครับ ลองเลือกคำตอบที่ตรงกับคำถาม เช่น “It's six o'clock” ครับ
+Hint: (none)
 Choices: 🕕 six o'clock → "It's six o'clock."
          🕢 seven thirty → "It's seven thirty."
          🌅 seven a.m. → "It's seven a.m."
          🌙 nine p.m. → "It's nine p.m."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 109.65 ms
+response time : 99.09 ms
 Reply: ตรงนี้พูดว่า "It's nine p.m." ครับ 🌙
 ไปต่อกันเลย — What time do you wake up?
 
 Step 9
 AI: ตรงนี้พูดว่า "It's nine p.m." ครับ 🌙
 ไปต่อกันเลย — What time do you wake up?
-Hint: It's seven a.m.
-Choices: 🌅 seven a.m. → "It's seven a.m."
+Hint: (none)
+Choices: (none)
 User: Good morning.
 Result: incorrect out pool
-response time : 1.19 s
-Reply: ยังไม่ตรงครับ ลองใช้ “It's seven a.m...” แล้วพูดต่อให้ครบประโยคครับ
+response time : 1.36 s
+Reply: ยังไม่ตรงครับ ลองเริ่มด้วย “It's...” แล้วตามด้วยเวลาที่คุณตื่นและ a.m. ครับ
 
 Step 10
-AI: ยังไม่ตรงครับ ลองใช้ “It's seven a.m...” แล้วพูดต่อให้ครบประโยคครับ
-Hint: It's seven a.m.
-Choices: 🌅 seven a.m. → "It's seven a.m."
+AI: ยังไม่ตรงครับ ลองเริ่มด้วย “It's...” แล้วตามด้วยเวลาที่คุณตื่นและ a.m. ครับ
+Hint: (none)
+Choices: (none)
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 117.98 ms
-Reply: ตรงนี้พูดได้ว่า "It's seven a.m." ครับ 🌅
+response time : 93.37 ms
+Reply: ตรงนี้พูดได้ว่า "It's seven a.m." ครับ
 
 🎉 จบบทแล้วครับ Nana! วันนี้คุณฝึกบอกเวลาพื้นฐานด้วย o'clock ตัวเลข และ a.m./p.m. แล้วครับ 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ telling_time scenario 5 complete · 10 turns · 6.38 s
+✅ telling_time scenario 5 complete · 10 turns · 6.98 s

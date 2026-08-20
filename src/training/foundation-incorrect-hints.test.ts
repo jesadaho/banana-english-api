@@ -20,10 +20,10 @@ describe('Foundation incorrect hints — Introductions standard', () => {
   });
 
   it('guided multi-option steps get ยังไม่ตรง hint', () => {
-    const board = FOUNDATION_BOARDS.meet_people[2];
+    const board = FOUNDATION_BOARDS.greetings[3];
     const hint = resolveIncorrectHintTh(board);
     assert.match(hint ?? '', /ยังไม่ตรงครับ/);
-    assert.match(hint ?? '', /I am a student|I am a worker/);
+    assert.match(hint ?? '', /Hi/);
   });
 
   it('recall steps reveal a sound cue only after an incorrect answer', () => {
@@ -37,6 +37,42 @@ describe('Foundation incorrect hints — Introductions standard', () => {
   it('introductions keeps explicit hints over auto', () => {
     const board = FOUNDATION_BOARDS.introductions[6];
     assert.match(resolveIncorrectHintTh(board) ?? '', /I live in\.\.\./);
+  });
+
+  it('recognition recovery uses the current target, not the first distractor', () => {
+    const cases = [
+      ['polite_expressions', 4, /Thank you/i],
+      ['polite_expressions', 5, /I['’]m sorry|Sorry/i],
+      ['talk_about_groups', 4, /It is my bag/i],
+      ['telling_time', 4, /nine p\.m/i],
+      ['money_prices', 4, /ten dollars/i],
+      ['likes_dislikes', 4, /don['’]t like tea/i],
+      ['can_cant', 3, /I can cook/i],
+    ] as const;
+
+    for (const [lessonId, step, target] of cases) {
+      const hint = resolveIncorrectHintTh(FOUNDATION_BOARDS[lessonId][step]);
+      assert.match(hint ?? '', target, `${lessonId} step ${step}`);
+    }
+  });
+
+  it('repeat steps expose only their current target choice', () => {
+    const cases = [
+      ['polite_expressions', 3],
+      ['meet_people', 2],
+      ['talk_about_groups', 3],
+      ['ee_about_me_family', 4],
+      ['likes_dislikes', 3],
+      ['wants_needs', 1],
+      ['wants_needs', 3],
+      ['asking_for_help', 1],
+    ] as const;
+
+    for (const [lessonId, step] of cases) {
+      const board = FOUNDATION_BOARDS[lessonId][step];
+      assert.ok(board.options.length <= 1, `${lessonId} step ${step}`);
+      assert.equal(board.options[0]?.speak, board.expectedSpeech, `${lessonId} step ${step}`);
+    }
   });
 
   it('every foundation probe board follows repeat-only vs guided hint rule', () => {
