@@ -777,6 +777,7 @@ export class SessionsController {
     const openingExpectsUserSpeech = reply.expectsUserSpeech ?? true;
     const openingExpectedSpeech = reply.expectedSpeech?.trim() || null;
     const openingEmojiChoice = normalizeEmojiChoice(reply.emojiChoice);
+    const openingGuidedSpeaking = normalizeGuidedSpeaking(reply.guidedSpeaking);
 
     const opening = {
       speaker: 'ai' as const,
@@ -788,7 +789,7 @@ export class SessionsController {
       scene: null,
       emojiSpeak: null,
       emojiChoice: openingEmojiChoice,
-      guidedSpeaking: null,
+      guidedSpeaking: openingGuidedSpeaking,
       roleplayIntro: null,
       roleplayNpc: null,
     };
@@ -802,14 +803,15 @@ export class SessionsController {
             0,
             openingProgressMax,
             {
-              textEn: reply.textEn,
-              expectsUserSpeech: openingExpectsUserSpeech,
-              expectedSpeech: openingExpectedSpeech,
-              emojiChoice: openingEmojiChoice,
-              roleplayIntro: null,
-              roleplayNpc: null,
-              isTaskComplete: false,
-            },
+                textEn: reply.textEn,
+                expectsUserSpeech: openingExpectsUserSpeech,
+                expectedSpeech: openingExpectedSpeech,
+                emojiChoice: openingEmojiChoice,
+                guidedSpeaking: openingGuidedSpeaking,
+                roleplayIntro: null,
+                roleplayNpc: null,
+                isTaskComplete: false,
+              },
           )
         : undefined;
     if (openingProgressTurn != null) {
@@ -867,6 +869,7 @@ export class SessionsController {
           expectsUserSpeech: openingExpectsUserSpeech,
           expectedSpeech: openingExpectedSpeech,
           emojiChoice: openingEmojiChoice,
+          guidedSpeaking: openingGuidedSpeaking,
         },
         chatDebug,
         openingAiDebug,
@@ -925,22 +928,24 @@ export class SessionsController {
       config.lessonId,
       prevProgressTurn,
       config.progressMax,
-      {
-        textEn: reply.textEn,
-        expectsUserSpeech,
-        expectedSpeech,
-        emojiChoice,
-        roleplayIntro: null,
-        roleplayNpc: null,
-        isTaskComplete,
-        assessmentTier: reply.assessmentTier,
-      },
-      lastAiTurn
-        ? {
-            expectedSpeech: lastAiTurn.expectedSpeech,
-            emojiChoice: lastAiTurn.emojiChoice,
-          }
-        : undefined,
+        {
+          textEn: reply.textEn,
+          expectsUserSpeech,
+          expectedSpeech,
+          emojiChoice,
+          guidedSpeaking,
+          roleplayIntro: null,
+          roleplayNpc: null,
+          isTaskComplete,
+          assessmentTier: reply.assessmentTier,
+        },
+        lastAiTurn
+          ? {
+              expectedSpeech: lastAiTurn.expectedSpeech,
+              emojiChoice: lastAiTurn.emojiChoice,
+              guidedSpeaking: lastAiTurn.guidedSpeaking,
+            }
+          : undefined,
     );
 
     this.sessionStore.updateTrainingState(sessionId, {

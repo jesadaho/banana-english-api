@@ -442,9 +442,18 @@ export function foundationOutOfPoolCloseMiss(
   }
 
   if (lessonId === 'yes_no_maybe') {
-    if (/^Yes,? I do/i.test(exact)) return 'Yeah, I do.';
-    if (/^No,? I don['’]?t/i.test(exact)) return 'No, I dont.';
-    if (/^Maybe/i.test(exact)) return 'Maybee.';
+    switch (step) {
+      case 1:
+        return 'Yeah, I do.';
+      case 2:
+        return 'Yes I.';
+      case 3:
+        return 'No, I dont.';
+      case 4:
+        return 'No I.';
+      default:
+        return 'Maybee.';
+    }
   }
 
   const t = exact.trim();

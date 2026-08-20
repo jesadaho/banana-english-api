@@ -327,7 +327,6 @@ export function boardToScriptTurn(
   const options = board.options.map((o) => ({ ...o }));
   const first = options[0];
   const hasOptions = options.length > 0;
-  const isSingleHint = options.length === 1;
   return {
     textEn: board.textEn,
     textTh: '',
@@ -335,7 +334,7 @@ export function boardToScriptTurn(
     expectsUserSpeech: true,
     expectedSpeech: board.expectedSpeech,
     guidedSpeaking:
-      opts?.skipGuided || !hasOptions || (board.stem.trim() === '' && isSingleHint)
+      opts?.skipGuided || !hasOptions
         ? undefined
         : {
             stem: board.stem,

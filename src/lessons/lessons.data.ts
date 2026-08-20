@@ -9333,6 +9333,15 @@ function normalizeExpectedSpeech(value: string | null | undefined): string {
     .replace(/\s+/g, ' ');
 }
 
+function speakOptionsSignature(
+  options?: Array<{ speak?: string; label?: string }> | null,
+): string {
+  return (options ?? [])
+    .map((o) => normalizeExpectedSpeech(o.speak || o.label || ''))
+    .filter(Boolean)
+    .join('|');
+}
+
 function emojiChoiceLabelSignature(
   emojiChoice:
     | { options?: Array<{ label?: string; speak?: string }> }
@@ -9422,6 +9431,7 @@ type LessonProgressTurnInput = {
   expectsUserSpeech: boolean;
   expectedSpeech?: string | null;
   emojiChoice?: { options?: Array<{ label?: string; speak?: string }> } | null;
+  guidedSpeaking?: { options?: Array<{ speak?: string; label?: string }> } | null;
   roleplayIntro?: unknown;
   roleplayNpc?: unknown;
   isTaskComplete: boolean;
@@ -9432,6 +9442,7 @@ type LessonProgressTurnInput = {
 type LessonProgressTurnPrevious = {
   expectedSpeech?: string | null;
   emojiChoice?: { options?: Array<{ label?: string; speak?: string }> } | null;
+  guidedSpeaking?: { options?: Array<{ speak?: string; label?: string }> } | null;
 };
 
 /**
@@ -9446,7 +9457,27 @@ function detectFoundationGenericProgressBeat(
 ): number | null {
   if (current.isTaskComplete) return progressMax;
   if (current.softTeachForced) return null;
-  if (current.assessmentTier === 'incorrect') return null;
+
+  const expected = normalizeExpectedSpeech(current.expectedSpeech);
+  const prevExpected = normalizeExpectedSpeech(previous?.expectedSpeech);
+  const sig =
+    speakOptionsSignature(current.guidedSpeaking?.options) ||
+    emojiChoiceLabelSignature(current.emojiChoice);
+  const prevSig =
+    speakOptionsSignature(previous?.guidedSpeaking?.options) ||
+    emojiChoiceLabelSignature(previous?.emojiChoice);
+  const boardChanged = Boolean(sig) && Boolean(prevSig) && sig !== prevSig;
+  const expectedChanged =
+    Boolean(expected) && Boolean(prevExpected) && expected !== prevExpected;
+
+  if (current.assessmentTier === 'incorrect') {
+    // Soft-advance moves the whole beat (prompt + target + choices).
+    // Retry pins the same board and must not increment.
+    if (boardChanged || expectedChanged) {
+      return Math.min(progressMax, prevProgressTurn + 1);
+    }
+    return null;
+  }
 
   if (
     current.assessmentTier === 'correct' ||
@@ -9460,13 +9491,6 @@ function detectFoundationGenericProgressBeat(
 
   if (foundationLooksLikeSoftTeachOrRetry(current.textEn)) return null;
 
-  const expected = normalizeExpectedSpeech(current.expectedSpeech);
-  const prevExpected = normalizeExpectedSpeech(previous?.expectedSpeech);
-  const sig = emojiChoiceLabelSignature(current.emojiChoice);
-  const prevSig = emojiChoiceLabelSignature(previous?.emojiChoice);
-
-  const boardChanged = Boolean(sig) && sig !== prevSig;
-  const expectedChanged = Boolean(expected) && expected !== prevExpected;
   const enteredFreeRecall =
     current.expectsUserSpeech &&
     !expected &&

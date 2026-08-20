@@ -45,11 +45,11 @@ export const FOUNDATION_LOOSE_MATCHERS: Record<
   yes_no_maybe: (step, text) =>
     loose(step, text, {
       1: /^yes,? i do$/,
-      2: /^yes,? i do$/,
-      3: /^no,? i don['’]?t$/,
+      2: /^yeah,? i do$|^yes,? i do$/,
+      3: /^no,? i don['’]t$/,
       4: /^no,? i don['’]?t$/,
       5: /^maybe$/,
-      6: /^maybe$/,
+      6: /^maybe$|^i['’]?m not sure$/,
     }),
   polite_expressions: (step, text) =>
     loose(step, text, {
@@ -167,9 +167,9 @@ export const FOUNDATION_CLOSE_MATCHERS: Partial<
   yes_no_maybe: (step, text) =>
     loose(step, text, {
       1: /^yeah,? i do$/,
-      2: /^yeah,? i do$/,
+      2: /^yes i$/,
       3: /^no,? i dont$/,
-      4: /^no,? i dont$/,
+      4: /^no i$/,
       5: /^(maybee|meybe|may be)$/,
       6: /^(maybee|meybe|may be)$/,
     }),

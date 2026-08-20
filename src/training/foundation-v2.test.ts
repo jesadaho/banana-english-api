@@ -614,6 +614,45 @@ describe('Foundation progress — yes_no_maybe out-pool does not rewind', () => 
     assert.equal(beat, 1);
   });
 
+  it('Yeah, I do. is close on repeat and accepted on application', () => {
+    const def = getDef(yesNo);
+    assert.equal(def.scoreStep(1, 'Yeah, I do.', []), 'close');
+    assert.equal(def.scoreStep(2, 'Yeah, I do.', []), 'near');
+  });
+
+  it('No, I dont. is close on repeat and accepted on application', () => {
+    const def = getDef(yesNo);
+    assert.equal(def.scoreStep(3, 'No, I dont.', []), 'close');
+    assert.equal(def.scoreStep(4, 'No, I dont.', []), 'near');
+  });
+
+  it('soft-advance with a new choice board increments progressTurn', () => {
+    const beat = resolveLessonProgressTurn(
+      'yes_no_maybe',
+      1,
+      8,
+      {
+        textEn:
+          'ตรงนี้พูดว่า "Yes, I do." ครับ ✅\nไปต่อกันเลย — Do you like pizza?',
+        expectsUserSpeech: true,
+        expectedSpeech: 'Yes, I do.',
+        isTaskComplete: false,
+        assessmentTier: 'incorrect',
+        guidedSpeaking: {
+          options: [
+            { speak: 'Yes, I do.' },
+            { speak: 'Yes.' },
+          ],
+        },
+      },
+      {
+        expectedSpeech: 'Yes, I do.',
+        guidedSpeaking: { options: [{ speak: 'Yes, I do.' }] },
+      },
+    );
+    assert.equal(beat, 2);
+  });
+
   it('keeps prompt, target, hint, and choices on the same beat without session state', () => {
     const def = getDef(yesNo);
     const learnerFirstName = 'Nana';
@@ -671,22 +710,15 @@ describe('Foundation progress — yes_no_maybe out-pool does not rewind', () => 
       if (step < def.maxStep) {
         const nextBoard = def.boardForStep(step + 1, turns, learnerFirstName)!;
         assert.equal(pinned.expectedSpeech, nextBoard.expectedSpeech);
-        if (nextBoard.stem || nextBoard.options.length > 1) {
-          assert.deepEqual(
-            pinned.guidedSpeaking?.options,
-            nextBoard.options.map((option) => ({
-              emoji: option.emoji,
-              label: option.label,
-              speak: option.speak,
-            })),
-          );
-        } else {
-          assert.equal(
-            pinned.guidedSpeaking,
-            undefined,
-            `step ${step + 1}: repeat-only beat must not expose a choice board`,
-          );
-        }
+        assert.deepEqual(
+          pinned.guidedSpeaking?.options,
+          nextBoard.options.map((option) => ({
+            emoji: option.emoji,
+            label: option.label,
+            speak: option.speak,
+          })),
+          `step ${step + 1}: choices must move with the prompt`,
+        );
       }
 
       turns.push({

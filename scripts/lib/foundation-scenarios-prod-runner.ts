@@ -73,12 +73,36 @@ export function chromeBeforeAnswer(
     return { hint, choices: body };
   }
 
-  const step = (turnBefore.progressTurn ?? 0) + 1;
   const name = extractIntroducedName(history, LEARNER);
   const boardHistory =
     extractIntroducedName(history) === name
       ? history
       : [...history, { speaker: 'user' as const, textEn: `My name is ${name}.` }];
+  const progressStep = (turnBefore.progressTurn ?? 0) + 1;
+  const expected = turnBefore.expectedSpeech?.trim() ?? '';
+  const normalizedExpected = expected
+    .toLowerCase()
+    .replace(/[.!?]+$/g, '')
+    .replace(/\s+/g, ' ');
+  const matchingSteps: number[] = [];
+  if (normalizedExpected) {
+    for (let step = 1; step <= def.maxStep; step++) {
+      const candidate = def.boardForStep(step, boardHistory);
+      const boardExpected = (candidate?.expectedSpeech ?? '')
+        .trim()
+        .toLowerCase()
+        .replace(/[.!?]+$/g, '')
+        .replace(/\s+/g, ' ');
+      if (boardExpected && boardExpected === normalizedExpected) {
+        matchingSteps.push(step);
+      }
+    }
+  }
+  const step = matchingSteps.includes(progressStep)
+    ? progressStep
+    : (matchingSteps.find((s) => s >= progressStep) ??
+      matchingSteps.at(-1) ??
+      progressStep);
   const board = def.boardForStep(step, boardHistory);
   if (!board) return { hint: '(none)', choices: '(none)' };
   const scripted = boardToScriptTurn(board);
