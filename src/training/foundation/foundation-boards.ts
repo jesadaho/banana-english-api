@@ -266,7 +266,7 @@ export const FOUNDATION_BOARDS: Record<
   introductions: {
     1: {
       textEn:
-        'สวัสดีครับ {name}! วันนี้เรามาเรียนรู้การแนะนำตัวเป็นภาษาอังกฤษกันครับ ลองพูดตามว่า My name is {name}.',
+        'สวัสดีครับ {name}! วันนี้เราจะฝึกแนะนำตัวครับ 📝 My name is {name}. แปลว่า “ฉันชื่อ {name}” และพูดแบบสั้นว่า I\'m {name}. ได้ ใช้สองแบบนี้เพื่อบอกชื่อของเรา ลองพูดตามว่า “My name is {name}.” ครับ',
       withPraise: false,
       stem: '',
       expectedSpeech: 'My name is {name}.',
@@ -274,10 +274,10 @@ export const FOUNDATION_BOARDS: Record<
     },
     2: {
       textEn:
-        'เก่งมากครับ! My name is {name}. แปลว่า “ฉันชื่อ {name}” อีกแบบพูดสั้นๆ ว่า I\'m {name}. ก็ได้ครับ ช่วยบอกครูหน่อยครับ ว่าคุณชื่ออะไร?',
-      withPraise: true,
+        'My name is {name}. แปลว่า “ฉันชื่อ {name}” และแบบสั้นคือ I\'m {name}. ทีนี้ลองใช้แบบสั้นในสถานการณ์จริงครับ ช่วยบอกครูหน่อยว่าคุณชื่ออะไร?',
+      withPraise: false,
       stem: '',
-      expectedSpeech: 'My name is {name}.',
+      expectedSpeech: "I'm {name}.",
       incorrectHintTh:
         'ยังไม่ตรงครับ ลองใช้ “My name is...” หรือ “I\'m...” แล้วตามด้วยชื่อของคุณครับ',
       options: [
@@ -287,8 +287,8 @@ export const FOUNDATION_BOARDS: Record<
     },
     3: {
       textEn:
-        'เยี่ยมเลยครับ! ต่อไปเวลาเจอคนใหม่ เราพูดว่า Nice to meet you. แปลว่า “ยินดีที่ได้รู้จัก” ลองพูดตามนะครับ',
-      withPraise: true,
+        'ต่อไปเวลาเจอคนใหม่ เราพูดว่า Nice to meet you. แปลว่า “ยินดีที่ได้รู้จัก” ลองพูดตามว่า “Nice to meet you.” ครับ',
+      withPraise: false,
       stem: '',
       expectedSpeech: 'Nice to meet you.',
       options: [
@@ -297,9 +297,9 @@ export const FOUNDATION_BOARDS: Record<
     },
     4: {
       textEn:
-        'ดีมากครับ! ถ้าครูพูดว่า Nice to meet you. ให้ตอบว่า Nice to meet you too. แปลว่า “ยินดีที่ได้รู้จักเช่นกัน” ลองตอบเหมือนสถานการณ์จริงนะครับ: Nice to meet you.',
+        'ถ้าครูพูดว่า Nice to meet you. ให้ตอบว่า Nice to meet you too. แปลว่า “ยินดีที่ได้รู้จักเช่นกัน” ลองตอบเหมือนสถานการณ์จริงนะครับ: Nice to meet you.',
       advanceQuestionEn: 'Nice to meet you too.',
-      withPraise: true,
+      withPraise: false,
       stem: '',
       expectedSpeech: 'Nice to meet you too.',
       options: [
@@ -313,8 +313,8 @@ export const FOUNDATION_BOARDS: Record<
     },
     5: {
       textEn:
-        'เก่งมากครับ! ต่อไปมาฝึกบอกว่าคุณมาจากไหนกันครับ I\'m from Thailand. แปลว่า “ฉันมาจากประเทศไทย” ลองพูดตามนะครับ',
-      withPraise: true,
+        'ต่อไปมาฝึกบอกว่าคุณมาจากไหนครับ I\'m from Thailand. แปลว่า “ฉันมาจากประเทศไทย” ลองพูดตามว่า “I\'m from Thailand.” ครับ',
+      withPraise: false,
       stem: '',
       expectedSpeech: "I'm from Thailand.",
       options: [
@@ -323,8 +323,8 @@ export const FOUNDATION_BOARDS: Record<
     },
     6: {
       textEn:
-        'เยี่ยมเลยครับ! I\'m from ใช้บอกว่ามาจากไหน ส่วน I live in ใช้บอกว่าตอนนี้อยู่ที่ไหน เช่น I live in Bangkok. แปลว่า “ฉันอยู่ที่กรุงเทพ” ช่วยบอกครูหน่อยครับ ว่าคุณอยู่ที่ไหน?',
-      withPraise: true,
+        'I\'m from ใช้บอกว่ามาจากไหน ส่วน I live in ใช้บอกว่าตอนนี้อยู่ที่ไหน เช่น I live in Bangkok. แปลว่า “ฉันอยู่ที่กรุงเทพ” ช่วยบอกครูหน่อยครับว่าคุณอยู่ที่ไหน?',
+      withPraise: false,
       stem: 'I live in...',
       expectedSpeech: 'I live in Bangkok.',
       incorrectHintTh:
@@ -337,8 +337,8 @@ export const FOUNDATION_BOARDS: Record<
     },
     7: {
       textEn:
-        'ดีมากครับ! ถ้าจะบอกงานหรือสิ่งที่ทำ พูดได้ว่า I work as a teacher. แปลว่า “ฉันทำงานเป็นครู” ช่วยบอกครูหน่อยครับ ว่าคุณทำอะไร?',
-      withPraise: true,
+        'ถ้าจะบอกงานหรือสิ่งที่ทำ พูดได้ว่า I work as a teacher. แปลว่า “ฉันทำงานเป็นครู” ช่วยบอกครูหน่อยครับว่าคุณทำอะไร?',
+      withPraise: false,
       stem: "I work as... / I'm...",
       expectedSpeech: 'I work as a teacher.',
       incorrectHintTh:
@@ -360,7 +360,7 @@ export const FOUNDATION_BOARDS: Record<
     8: {
       textEn:
         'ขั้นตอนสุดท้ายครับ ลองแนะนำตัวสั้นๆ เป็นภาษาอังกฤษด้วยชื่อ และอีกหนึ่งอย่างเกี่ยวกับตัวคุณ จะบอกว่ามาจากไหน อยู่ที่ไหน หรือทำงานอะไรก็ได้ครับ',
-      withPraise: true,
+      withPraise: false,
       stem: 'My name is...',
       expectedSpeech: "My name is {name}. I'm from Thailand.",
       incorrectHintTh:

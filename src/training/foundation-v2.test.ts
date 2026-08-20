@@ -300,6 +300,44 @@ describe('Foundation — introductions all-step scenarios', () => {
     );
     assert.equal(result.steps.length, def.maxStep);
     assert.equal(result.steps.at(-1)?.isLessonComplete, true);
+    for (const record of result.steps) {
+      const praiseWords = record.aiTextEn.match(
+        /ยอดเยี่ยม|ถูกต้อง|เก่งมาก|ดีมาก|เยี่ยมครับ/g,
+      );
+      assert.ok(
+        (praiseWords?.length ?? 0) <= 1,
+        `step ${record.step}: feedback must contain at most one praise sentence`,
+      );
+    }
+  });
+
+  it('keeps each prompt, target, hint, and choices on one unique state', () => {
+    const def = getDef(introductions);
+    const targets: string[] = [];
+
+    for (let step = 1; step <= def.maxStep; step++) {
+      const board = def.boardForStep(step, [], 'Nana');
+      assert.ok(board, `step ${step}: board is required`);
+      targets.push(board!.expectedSpeech);
+
+      if (board!.options.length > 0) {
+        assert.ok(
+          board!.options.some(
+            (option) => option.speak === board!.expectedSpeech,
+          ),
+          `step ${step}: choices must contain the current target`,
+        );
+      }
+      if (board!.incorrectHintTh) {
+        assert.match(board!.incorrectHintTh, /ยังไม่ตรงครับ/);
+      }
+    }
+
+    assert.equal(
+      new Set(targets).size,
+      targets.length,
+      'every introductions step must have an unambiguous target signature',
+    );
   });
 
   it('scenario 3 — step 1 close advances to step 2 for I Nana close miss', () => {

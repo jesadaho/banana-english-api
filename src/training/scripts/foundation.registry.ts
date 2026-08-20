@@ -14,14 +14,14 @@ import type { ChoiceLessonDef } from './choice-lesson.script';
 
 function foundationCompletion(name: string, thai: string): string {
   const n = name.trim() || 'เพื่อน';
-  return `สุดยอดครับ ${n}! 🎉 ${thai} — เก่งมากครับ! 🍌`;
+  return `สุดยอดครับ ${n}! 🎉 ${thai} 🍌`;
 }
 
 const OPENING_TEXTS: Record<(typeof FOUNDATION_LESSON_IDS)[number], string> = {
   greetings:
     'สวัสดีครับ {name}! วันนี้เรามาเรียนการทักทายกันครับ — Hello, Hi และทักทายตามเวลาในวัน 😊 เริ่มจากคำแรก: Hello! ลองพูดตามครับ',
   introductions:
-    'สวัสดีครับ {name}! วันนี้เรามาเรียนรู้การแนะนำตัวเป็นภาษาอังกฤษกันครับ 📝 ลองพูดตามว่า My name is {name} นะครับ',
+    'สวัสดีครับ {name}! วันนี้เราจะฝึกแนะนำตัวครับ 📝 My name is {name}. แปลว่า “ฉันชื่อ {name}” และพูดแบบสั้นว่า I\'m {name}. ได้ ใช้สองแบบนี้เพื่อบอกชื่อของเรา ลองพูดตามว่า “My name is {name}.” ครับ',
   yes_no_maybe:
     'สวัสดีครับ {name}! วันนี้เราจะฝึกตอบ Yes, No และ Maybe ครับ ✅ ถ้ามีคนถาม Do you like coffee? แปลว่า “คุณชอบกาแฟไหม” และเราชอบ ให้ตอบ Yes, I do. แปลว่า “ใช่ ฉันชอบ” ลองพูดตามว่า “Yes, I do.” ครับ',
   polite_expressions:
