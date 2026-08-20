@@ -64,6 +64,8 @@ export interface TurnExchangeResponse {
   aiResponse: string;
   /** Speech-only copy; clients should use this instead of aiResponse for TTS. */
   ttsText?: string;
+  /** Pass separately to instruction-aware TTS; never concatenate into spoken text. */
+  ttsInstruction?: string;
   textTh: string;
   audioBase64?: string;
   contentType?: string;

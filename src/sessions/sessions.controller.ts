@@ -783,6 +783,7 @@ export class SessionsController {
       speaker: 'ai' as const,
       textEn: reply.textEn,
       ttsText: reply.ttsText ?? null,
+      ttsInstruction: reply.ttsInstruction ?? null,
       textTh: reply.textTh,
       audioUrl: null,
       expectsUserSpeech: openingExpectsUserSpeech,
@@ -857,6 +858,9 @@ export class SessionsController {
         {
           aiResponse: reply.textEn,
           ...(reply.ttsText?.trim() ? { ttsText: reply.ttsText.trim() } : {}),
+          ...(reply.ttsInstruction?.trim()
+            ? { ttsInstruction: reply.ttsInstruction.trim() }
+            : {}),
           textTh: reply.textTh ?? '',
           isTaskComplete: false,
           updatedCheckpoints: {},
@@ -962,6 +966,7 @@ export class SessionsController {
       speaker: 'ai',
       textEn: reply.textEn,
       ttsText: reply.ttsText ?? null,
+      ttsInstruction: reply.ttsInstruction ?? null,
       textTh: reply.textTh,
       audioUrl: null,
       expectsUserSpeech,
@@ -976,6 +981,9 @@ export class SessionsController {
     const response: TurnExchangeResponse = {
       aiResponse: reply.textEn,
       ...(reply.ttsText?.trim() ? { ttsText: reply.ttsText.trim() } : {}),
+      ...(reply.ttsInstruction?.trim()
+        ? { ttsInstruction: reply.ttsInstruction.trim() }
+        : {}),
       textTh: reply.textTh ?? '',
       isTaskComplete,
       updatedCheckpoints: {},

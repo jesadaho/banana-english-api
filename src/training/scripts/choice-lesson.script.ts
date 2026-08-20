@@ -17,6 +17,7 @@ export type ChoiceLessonHistoryTurn = {
 export type ChoiceLessonBoard = {
   textEn: string;
   ttsText?: string;
+  ttsInstruction?: string;
   stem: string;
   expectedSpeech: string;
   options: Array<{ emoji: string; label?: string; speak: string }>;
@@ -52,6 +53,7 @@ export type ChoiceLessonDef = {
   ) => ScriptTurnResult | null;
   completionText?: (learnerFirstName: string) => string;
   completionTtsText?: (learnerFirstName: string) => string;
+  ttsInstruction?: string;
   /** When set, replaces celebrate after maxStep (e.g. Favorites → roleplay bridge). */
   afterTeachingComplete?: (
     history: ChoiceLessonHistoryTurn[],
@@ -340,6 +342,9 @@ export function boardToScriptTurn(
   return {
     textEn: board.textEn,
     ...(board.ttsText?.trim() ? { ttsText: board.ttsText.trim() } : {}),
+    ...(board.ttsInstruction?.trim()
+      ? { ttsInstruction: board.ttsInstruction.trim() }
+      : {}),
     textTh: '',
     isLessonComplete: false,
     expectsUserSpeech: true,
@@ -404,6 +409,9 @@ export function buildGenericScriptedReplyFromProgress(
     return {
       textEn: text,
       ...(ttsText?.trim() ? { ttsText: ttsText.trim() } : {}),
+      ...(def.ttsInstruction?.trim()
+        ? { ttsInstruction: def.ttsInstruction.trim() }
+        : {}),
       textTh: '',
       isLessonComplete: true,
       expectsUserSpeech: false,
@@ -636,6 +644,7 @@ export function pinChoiceLessonAiReply(
         guidedSpeaking: next.guidedSpeaking,
         roleplayIntro: next.roleplayIntro,
         roleplayNpc: next.roleplayNpc,
+        ttsInstruction: next.ttsInstruction,
         assessmentTier: tier,
       };
     }
@@ -667,6 +676,7 @@ export function pinChoiceLessonAiReply(
       guidedSpeaking: next.guidedSpeaking,
       roleplayIntro: next.roleplayIntro,
       roleplayNpc: next.roleplayNpc,
+      ttsInstruction: next.ttsInstruction,
       assessmentTier: tier,
     };
   }

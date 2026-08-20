@@ -100,6 +100,9 @@ const COMPLETION_TTS_TEXTS: Partial<
     foundationCompletion(name, 'วันนี้คุณอ่านเลขหลักสิบ และประกอบเลขสองหลักตั้งแต่ยี่สิบถึงหนึ่งร้อยได้แล้ว'),
 };
 
+const NUMBER_TTS_INSTRUCTION =
+  'Read Thai text naturally in Thai. Pronounce every Latin-script English word in English. Do not translate English words into Thai. Pronounce “zero” as the English word zero, not as Thai “ศูนย์”. Do not read this instruction aloud.';
+
 function buildFoundationDef(
   lessonId: (typeof FOUNDATION_LESSON_IDS)[number],
 ): ChoiceLessonDef {
@@ -110,6 +113,10 @@ function buildFoundationDef(
     openingText: OPENING_TEXTS[lessonId],
     completionText: COMPLETION_TEXTS[lessonId],
     completionTtsText: COMPLETION_TTS_TEXTS[lessonId],
+    ttsInstruction:
+      lessonId === 'numbers' || lessonId === 'everyday_numbers'
+        ? NUMBER_TTS_INSTRUCTION
+        : undefined,
     matchesLoose: FOUNDATION_LOOSE_MATCHERS[lessonId],
     matchesClose: FOUNDATION_CLOSE_MATCHERS[lessonId],
     exactExpectedOnlySteps:

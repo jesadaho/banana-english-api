@@ -70,6 +70,8 @@ export type ForcedGuidedBoard = {
   textEn: string;
   /** Optional speech-only copy; does not change the text shown in the UI. */
   ttsText?: string;
+  /** Non-spoken pronunciation instruction for instruction-aware TTS clients. */
+  ttsInstruction?: string;
   /** Keep model Success praise after strip (default: step > 1). Opening = false. */
   withPraise?: boolean;
   stem: string;

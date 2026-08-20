@@ -432,6 +432,8 @@ export interface TrainingTurnReply {
   textEn: string;
   /** Optional speech-only copy for Cloud gRPC / server-side TTS. */
   ttsText?: string;
+  /** Optional non-spoken instruction for clients using instruction-aware TTS. */
+  ttsInstruction?: string;
   textTh: string;
   isLessonComplete: boolean;
   /** Only present for lessons that expose a tap-to-continue button. */

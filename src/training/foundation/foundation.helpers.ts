@@ -159,6 +159,7 @@ export function createFoundationLessonDef(params: {
   openingText: string;
   completionText: string | ((learnerFirstName: string) => string);
   completionTtsText?: string | ((learnerFirstName: string) => string);
+  ttsInstruction?: string;
   matchesLoose: (step: number, text: string) => boolean;
   matchesClose?: (step: number, text: string) => boolean;
   pinWithoutGuidedSteps?: number[];
@@ -175,12 +176,18 @@ export function createFoundationLessonDef(params: {
       const board = params.boardForStep(step, history);
       if (!board) return null;
       const name = nameOverride?.trim() || extractIntroducedName(history);
-      return personalizeBoard(board, name);
+      return {
+        ...personalizeBoard(board, name),
+        ...(params.ttsInstruction ? { ttsInstruction: params.ttsInstruction } : {}),
+      };
     }
     const raw = params.boards?.[step] ?? null;
     if (!raw) return null;
     const name = nameOverride?.trim() || extractIntroducedName(history);
-    return personalizeBoard(raw, name);
+    return {
+      ...personalizeBoard(raw, name),
+      ...(params.ttsInstruction ? { ttsInstruction: params.ttsInstruction } : {}),
+    };
   };
 
   const scoreStep = (
@@ -242,6 +249,7 @@ export function createFoundationLessonDef(params: {
     clampNearIncorrectToCorrect: true,
     completionText,
     completionTtsText,
+    ttsInstruction: params.ttsInstruction,
     buildOpening:
       params.buildOpening ??
       ((learnerFirstName: string): ScriptTurnResult => {

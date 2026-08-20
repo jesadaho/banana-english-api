@@ -102,8 +102,21 @@ describe('Foundation incorrect hints — Introductions standard', () => {
       assert.doesNotMatch(board.incorrectHintTh ?? '', /\d/);
     }
     assert.match(FOUNDATION_BOARDS.numbers[1].textEn, /0–20/u);
-    assert.match(FOUNDATION_BOARDS.numbers[1].ttsText ?? '', /เลขศูนย์อ่านว่า ซีโร/u);
-    assert.doesNotMatch(FOUNDATION_BOARDS.numbers[1].ttsText ?? '', /\bzero\b/i);
+    assert.match(FOUNDATION_BOARDS.numbers[1].ttsText ?? '', /เลขศูนย์อ่านว่า zero/u);
+  });
+
+  it('adds the pronunciation instruction only to the two number lessons', () => {
+    for (const lessonId of FOUNDATION_LESSON_IDS) {
+      const fixture = FOUNDATION_POOLGATE_FIXTURES.find(
+        (candidate) => candidate.lessonId === lessonId,
+      )!;
+      const board = getDef(fixture).boardForStep(1, [], 'Nana');
+      if (lessonId === 'numbers' || lessonId === 'everyday_numbers') {
+        assert.match(board?.ttsInstruction ?? '', /Pronounce every Latin-script English word in English/);
+      } else {
+        assert.equal(board?.ttsInstruction, undefined, lessonId);
+      }
+    }
   });
 
   it('every foundation probe board follows repeat-only vs guided hint rule', () => {

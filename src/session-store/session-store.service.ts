@@ -28,6 +28,7 @@ export interface ChatTurn {
   speaker: 'user' | 'ai';
   textEn: string;
   ttsText?: string | null;
+  ttsInstruction?: string | null;
   textTh?: string | null;
   audioUrl?: string | null;
   /** Raw learner utterance before Thai Mix (user turns only). */
