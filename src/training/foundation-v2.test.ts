@@ -731,6 +731,23 @@ describe('Foundation progress — yes_no_maybe out-pool does not rewind', () => 
 
     assert.equal(turns.at(-1)?.textEn?.includes('สุดยอดครับ'), true);
   });
+
+  it('soft-advance into No and Maybe states gives an explicit repeat instruction', () => {
+    const def = getDef(yesNo);
+    const result = runFoundationAllOutOfPoolWrongThenSoftAdvance(
+      def,
+      (exact, step) => foundationOutOfPoolWrong(exact, step, 'yes_no_maybe'),
+    );
+
+    const intoNo = result.steps.find((record) => record.step === 2);
+    assert.match(
+      intoNo?.aiTextEn ?? '',
+      /ลองพูดตามว่า.*No, I don't/u,
+    );
+
+    const intoMaybe = result.steps.find((record) => record.step === 4);
+    assert.match(intoMaybe?.aiTextEn ?? '', /ลองพูดตามว่า.*Maybe/u);
+  });
 });
 
 describe('Foundation — greetings scenario 5', () => {

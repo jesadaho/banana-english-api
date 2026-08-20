@@ -264,6 +264,9 @@ export function buildSoftAdvanceTextEn(
   const model = failedBoard?.expectedSpeech?.trim() ?? '';
   const emoji = failedBoard?.options?.[0]?.emoji ?? '';
   const nextQuestion = resolveSoftAdvanceQuestion(nextBoard, nextScripted);
+  const nextInstruction = isRepeatOnlyBoard(nextBoard)
+    ? nextBoard?.textEn?.trim() || nextScripted.textEn?.trim() || nextQuestion
+    : nextQuestion;
   const modelLine = model
     ? `ตรงนี้พูดว่า "${model}" ครับ${emoji ? ` ${emoji}` : ''}`
     : '';
@@ -278,8 +281,8 @@ export function buildSoftAdvanceTextEn(
     return finalModel ? `${finalModel}\n\n${celebration}` : celebration;
   }
 
-  if (modelLine && nextQuestion) {
-    return `${modelLine}\nไปต่อกันเลย — ${nextQuestion}`;
+  if (modelLine && nextInstruction) {
+    return `${modelLine}\nไปต่อกันเลย — ${nextInstruction}`;
   }
   return `ไม่เป็นไรครับ ไปต่อกัน! ${nextScripted.textEn}`;
 }
