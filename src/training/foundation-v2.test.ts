@@ -171,6 +171,33 @@ describe('Foundation — full happy path (all steps → complete)', () => {
     assert.match(steps[7].userText, /I'm from Thailand/);
     assert.equal(steps[7].isLessonComplete, true);
   });
+
+  it('numbers — completion summarizes the full 0–20 range', () => {
+    const def = getDef(
+      FOUNDATION_POOLGATE_FIXTURES.find((f) => f.lessonId === 'numbers')!,
+    );
+    const result = runFoundationFullHappyPath(def);
+
+    assert.match(
+      result.completionText,
+      /ฝึกอ่านและใช้ตัวเลขหลายกลุ่มตั้งแต่ 0–20 แล้ว/,
+    );
+    assert.doesNotMatch(result.completionText, /3, 7, 8, 16 และ 20/);
+  });
+
+  it('everyday numbers — completion summarizes tens and two-digit composition', () => {
+    const def = getDef(
+      FOUNDATION_POOLGATE_FIXTURES.find(
+        (f) => f.lessonId === 'everyday_numbers',
+      )!,
+    );
+    const result = runFoundationFullHappyPath(def);
+
+    assert.match(
+      result.completionText,
+      /อ่านเลขหลักสิบ และประกอบเลขสองหลักตั้งแต่ 20–100 ได้แล้ว/,
+    );
+  });
 });
 
 describe('Foundation — soft-advance recovery (wrong ×2 then finish)', () => {

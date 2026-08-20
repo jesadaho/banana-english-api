@@ -86,8 +86,8 @@ export const FOUNDATION_POOLGATE_FIXTURES: FoundationPoolGateFixture[] = [
   {
     lessonId: 'everyday_numbers',
     setupExact: ['forty'],
-    exactAtProbe: 'thirty-five',
-    outOfPoolAtProbe: 'the number thirty-five',
+    exactAtProbe: 'fifty',
+    outOfPoolAtProbe: 'the number fifty',
     wrongAtProbe: 'Good morning.',
     wrongAgainAtProbe: 'Hello.',
   },

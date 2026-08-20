@@ -72,11 +72,11 @@ const COMPLETION_TEXTS: Record<
   ee_about_me_family: (name) =>
     foundationCompletion(name, 'วันนี้คุณแนะนำครอบครัวด้วย This is my... และ I have... ได้แล้ว'),
   numbers: (name) =>
-    foundationCompletion(name, 'วันนี้คุณฝึกพูดตัวเลข 3, 7, 8, 16 และ 20 แล้ว'),
+    foundationCompletion(name, 'วันนี้คุณฝึกอ่านและใช้ตัวเลขหลายกลุ่มตั้งแต่ 0–20 แล้ว'),
   telling_time: (name) =>
     foundationCompletion(name, 'วันนี้คุณฝึกบอกเวลาพื้นฐานด้วย o\'clock ตัวเลข และ a.m./p.m. แล้ว'),
   everyday_numbers: (name) =>
-    foundationCompletion(name, 'วันนี้คุณฝึกอ่านหลักสิบและเลขสองหลักบางตัวแล้ว'),
+    foundationCompletion(name, 'วันนี้คุณอ่านเลขหลักสิบ และประกอบเลขสองหลักตั้งแต่ 20–100 ได้แล้ว'),
   money_prices: (name) =>
     foundationCompletion(name, 'วันนี้คุณถามและบอกราคาเป็นภาษาอังกฤษได้แล้ว'),
   likes_dislikes: (name) =>

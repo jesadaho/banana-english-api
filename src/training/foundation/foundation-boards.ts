@@ -100,10 +100,12 @@ export const FOUNDATION_LOOSE_MATCHERS: Record<
     }),
   everyday_numbers: (step, text) =>
     loose(step, text, {
-      1: /^(twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|one hundred)$/,
-      2: /^(twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety)-/,
-      4: /^(twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety)$/,
-      5: /^(twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety)/,
+      1: /^forty$/,
+      2: /^fifty$/,
+      3: /^eighty$/,
+      4: /^seventy$/,
+      5: /^thirty[- ]five$/,
+      6: /^sixty[- ]two$/,
     }),
   money_prices: (step, text) =>
     loose(step, text, {
@@ -191,7 +193,12 @@ export const FOUNDATION_CLOSE_MATCHERS: Partial<
     3: /^it['’]?s seven$/, 4: /^it['’]?s nine$/, 5: /^it['’]?s seven morning$/,
   }),
   everyday_numbers: (step, text) => loose(step, text, {
-    1: /^fourty$/, 2: /^thirty five$/, 3: /^sixty two$/, 4: /^fivty$/, 5: /^eightty$/,
+    1: /^fourty$/,
+    2: /^fivty$/,
+    3: /^eightty$/,
+    4: /^sebenty$/,
+    5: /^thirty five$/,
+    6: /^sixty two$/,
   }),
   money_prices: (step, text) => loose(step, text, {
     1: /^how much it is$/, 2: /^it five dollars$/, 3: /^it cheap$/,
@@ -922,55 +929,61 @@ export const FOUNDATION_BOARDS: Record<
   everyday_numbers: {
     1: {
       textEn:
-        'สวัสดีครับ {name}! วันนี้เรามาเรียนตัวเลข 20–100 กันครับ 🔢 เลข 40 อ่านว่า forty — ลองพูดตามนะครับ',
+        'สวัสดีครับ {name}! วันนี้เราจะฝึกตัวเลข 20–100 กันครับ 🔢 เริ่มจาก 20 twenty, 30 thirty, 40 forty, 50 fifty ลองพูดตามคำว่า “forty” ครับ',
       withPraise: false,
       stem: '',
       expectedSpeech: 'forty',
       options: [{ emoji: '4️⃣0️⃣', label: 'forty', speak: 'forty' }],
     },
     2: {
-      textEn:
-        'เก่งมากครับ! เลข 35 อ่านว่า thirty-five (สามสิบห้า) 🎯 ลองพูดตามครับ',
-      withPraise: true,
-      stem: '',
-      expectedSpeech: 'thirty-five',
-      options: [
-        { emoji: '🎯', label: 'thirty-five', speak: 'thirty-five' },
-      ],
-    },
-    3: {
-      textEn: 'เลข 62 อ่านว่าอะไรครับ? 🔢',
-      withPraise: true,
-      stem: '',
-      expectedSpeech: 'sixty-two',
-      incorrectHintTh: 'ยังไม่ตรงครับ ลองประกอบคำอ่านหลักสิบกับเลข 2 ครับ',
-      options: [
-        { emoji: '🎯', label: 'forty', speak: 'forty' },
-        { emoji: '🏀', label: 'fifty', speak: 'fifty' },
-        { emoji: '🎲', label: 'sixty-two', speak: 'sixty-two' },
-        { emoji: '🎳', label: 'seventy', speak: 'seventy' },
-      ],
-    },
-    4: {
-      textEn:
-        'ต่อไปเลข 50 อ่านว่า fifty ครับ 5️⃣0️⃣ ลองพูดตามว่า “fifty” ครับ',
+      textEn: 'ป้ายราคานี้อ่านว่าเท่าไรครับ? 🏷️ 50',
       withPraise: true,
       stem: '',
       expectedSpeech: 'fifty',
-      options: [{ emoji: '5️⃣0️⃣', label: 'fifty', speak: 'fifty' }],
+      incorrectHintTh: 'ยังไม่ตรงครับ เลข 50 อ่านว่า “fifty” ครับ',
+      options: [
+        { emoji: '3️⃣0️⃣', label: 'thirty', speak: 'thirty' },
+        { emoji: '4️⃣0️⃣', label: 'forty', speak: 'forty' },
+        { emoji: '5️⃣0️⃣', label: 'fifty', speak: 'fifty' },
+      ],
     },
-    5: {
-      textEn: 'เลข 80 อ่านว่าอะไรครับ? 🔢',
-      advanceQuestionEn: 'How do you say eighty?',
+    3: {
+      textEn:
+        'ต่อไป 60 sixty, 70 seventy, 80 eighty, 90 ninety และ 100 one hundred ครับ ลองพูดตามคำว่า “eighty” ครับ',
       withPraise: true,
       stem: '',
       expectedSpeech: 'eighty',
-      incorrectHintTh: 'ยังไม่ตรงครับ คำนี้เริ่มจาก eight และลงท้ายด้วยเสียง “-ty” ครับ',
+      options: [{ emoji: '8️⃣0️⃣', label: 'eighty', speak: 'eighty' }],
+    },
+    4: {
+      textEn: 'รถเมล์สายนี้คือหมายเลขอะไรครับ? 🚌 70',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'seventy',
+      incorrectHintTh: 'ยังไม่ตรงครับ เลข 70 อ่านว่า “seventy” ครับ',
       options: [
-        { emoji: '8️⃣', label: 'eight', speak: 'eight' },
-        { emoji: '1️⃣8️⃣', label: 'eighteen', speak: 'eighteen' },
+        { emoji: '6️⃣0️⃣', label: 'sixty', speak: 'sixty' },
+        { emoji: '7️⃣0️⃣', label: 'seventy', speak: 'seventy' },
         { emoji: '8️⃣0️⃣', label: 'eighty', speak: 'eighty' },
+        { emoji: '9️⃣0️⃣', label: 'ninety', speak: 'ninety' },
       ],
+    },
+    5: {
+      textEn:
+        'เลขสองหลักประกอบจากหลักสิบและหลักหน่วยครับ เช่น 30 thirty กับ 5 five รวมเป็น 35 thirty-five ลองพูดตามว่า “thirty-five” ครับ',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'thirty-five',
+      options: [{ emoji: '3️⃣5️⃣', label: 'thirty-five', speak: 'thirty-five' }],
+    },
+    6: {
+      textEn: 'ขั้นตอนสุดท้ายครับ หมายเลขห้องนี้อ่านว่าอะไร? 🚪 62',
+      advanceQuestionEn: 'หมายเลขห้องนี้อ่านว่าอะไรครับ? 🚪 62',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'sixty-two',
+      incorrectHintTh: 'ลองประกอบ 60 sixty กับ 2 two เป็น “sixty-two” ครับ',
+      options: [],
     },
   },
 
@@ -1329,7 +1342,7 @@ export const FOUNDATION_MAX_STEPS: Record<FoundationLessonId, number> = {
   ee_about_me_family: 8,
   numbers: 8,
   telling_time: 5,
-  everyday_numbers: 5,
+  everyday_numbers: 6,
   money_prices: 5,
   likes_dislikes: 5,
   wants_needs: 5,
