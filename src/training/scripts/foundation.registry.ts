@@ -35,7 +35,7 @@ const OPENING_TEXTS: Record<(typeof FOUNDATION_LESSON_IDS)[number], string> = {
   telling_time:
     'สวัสดีครับ {name}! วันนี้เรามาเรียนบอกเวลาเป็นภาษาอังกฤษครับ ⏰ ลองพูดตามว่า It\'s six o\'clock.',
   everyday_numbers:
-    'สวัสดีครับ {name}! วันนี้เราจะฝึกตัวเลข 20–100 กันครับ 🔢 เริ่มจาก 20 twenty, 30 thirty, 40 forty, 50 fifty ลองพูดตามคำว่า “forty” ครับ',
+    'สวัสดีครับ {name}! วันนี้เราจะฝึกตัวเลขยี่สิบถึงหนึ่งร้อยกันครับ 🔢 เริ่มจาก ยี่สิบ twenty, สามสิบ thirty, สี่สิบ forty และห้าสิบ fifty ลองพูดตามคำว่า “forty” ครับ',
   money_prices:
     'สวัสดีครับ {name}! วันนี้เรามาเรียนถามและบอกราคาเป็นภาษาอังกฤษครับ 💵 ลองพูดตามว่า How much is it?',
   likes_dislikes:
@@ -76,7 +76,7 @@ const COMPLETION_TEXTS: Record<
   telling_time: (name) =>
     foundationCompletion(name, 'วันนี้คุณฝึกบอกเวลาพื้นฐานด้วย o\'clock ตัวเลข และ a.m./p.m. แล้ว'),
   everyday_numbers: (name) =>
-    foundationCompletion(name, 'วันนี้คุณอ่านเลขหลักสิบ และประกอบเลขสองหลักตั้งแต่ 20–100 ได้แล้ว'),
+    foundationCompletion(name, 'วันนี้คุณอ่านเลขหลักสิบ และประกอบเลขสองหลักตั้งแต่ยี่สิบถึงหนึ่งร้อยได้แล้ว'),
   money_prices: (name) =>
     foundationCompletion(name, 'วันนี้คุณถามและบอกราคาเป็นภาษาอังกฤษได้แล้ว'),
   likes_dislikes: (name) =>

@@ -5,56 +5,54 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 ================================================================================
 
 Step 1
-AI: สวัสดีครับ Nana! วันนี้เรามาพูดถึงคนอื่นและสิ่งของครับ 👨 ลองพูดตามว่า He is my father.
+AI: สวัสดีครับ Nana! วันนี้เราจะพูดถึงคนอื่นและสิ่งของครับ 👨 Ben เรียนห้องเดียวกับคุณ พูดว่า “He's my classmate.” โดย He's เป็นรูปสั้นของ He is ลองพูดตามครับ
 Hint: (none)
 Choices: (none)
-User: He is my father.
+User: He's my classmate.
 Result: correct in pool
-response time : 78.90 ms
-Reply: เก่งมากครับ! ถ้าเป็นผู้หญิง — She is my sister. 👩 ลองพูดตามครับ
+response time : 121.93 ms
+Reply: Anna เป็นครูของคุณครับ 👩 พูดว่า “She's my teacher.” โดย She's เป็นรูปสั้นของ She is ลองพูดตามครับ
 
 Step 2
-AI: เก่งมากครับ! ถ้าเป็นผู้หญิง — She is my sister. 👩 ลองพูดตามครับ
-Hint: (none)
-Choices: 👩 She is my sister. → "She is my sister."
-User: She is my sister.
-Result: correct in pool
-response time : 95.58 ms
-Reply: ดีมากครับ! She is my sister. แปลว่า “เธอคือพี่สาวหรือน้องสาวของฉัน” ต่อไป ถ้าพูดถึงสิ่งของ เราใช้ It ครับ — It is my bag. 🎒 ลองพูดตามนะครับ
-
-Step 3
-AI: ดีมากครับ! She is my sister. แปลว่า “เธอคือพี่สาวหรือน้องสาวของฉัน” ต่อไป ถ้าพูดถึงสิ่งของ เราใช้ It ครับ — It is my bag. 🎒 ลองพูดตามนะครับ
-Hint: (none)
-Choices: 👨 He is my father. → "He is my father."
-         👩 She is my sister. → "She is my sister."
-         🎒 It is my bag. → "It is my bag."
-User: It is my bag.
-Result: correct in pool
-response time : 88.39 ms
-Reply: ดีมากครับ! It is my bag. แปลว่า “มันคือกระเป๋าของฉัน” ถ้าจะพูดถึงกระเป๋าของคุณ ควรเลือกประโยคไหนครับ? 🎒
-
-Step 4
-AI: ดีมากครับ! It is my bag. แปลว่า “มันคือกระเป๋าของฉัน” ถ้าจะพูดถึงกระเป๋าของคุณ ควรเลือกประโยคไหนครับ? 🎒
-Hint: (none)
-Choices: 👨 He is my father. → "He is my father."
-         👩 She is my sister. → "She is my sister."
-         🎒 It is my bag. → "It is my bag."
-User: It is my bag.
-Result: correct in pool
-response time : 98.84 ms
-Reply: ลองพูดประโยคสั้นๆ เกี่ยวกับคนหรือสิ่งของครับ 😊
-
-Step 5
-AI: ลองพูดประโยคสั้นๆ เกี่ยวกับคนหรือสิ่งของครับ 😊
+AI: Anna เป็นครูของคุณครับ 👩 พูดว่า “She's my teacher.” โดย She's เป็นรูปสั้นของ She is ลองพูดตามครับ
 Hint: (none)
 Choices: (none)
-User: He is my father.
+User: She's my teacher.
 Result: correct in pool
-response time : 145.58 ms
-Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณพูด He is..., She is... และ It is... ได้แล้ว 🍌
+response time : 118.60 ms
+Reply: ถ้าพูดถึงสิ่งของ เราใช้ It ครับ 🎒 กระเป๋าใบนี้เป็นของคุณ พูดว่า “It's my bag.” โดย It's เป็นรูปสั้นของ It is ลองพูดตามครับ
+
+Step 3
+AI: ถ้าพูดถึงสิ่งของ เราใช้ It ครับ 🎒 กระเป๋าใบนี้เป็นของคุณ พูดว่า “It's my bag.” โดย It's เป็นรูปสั้นของ It is ลองพูดตามครับ
+Hint: (none)
+Choices: (none)
+User: It's my bag.
+Result: correct in pool
+response time : 94.66 ms
+Reply: Anna ช่วยคุณหาห้องเรียนครับ 👩😊 ถ้าจะบอกว่า “เธอใจดีมาก” ควรพูดว่าอะไร?
+
+Step 4
+AI: Anna ช่วยคุณหาห้องเรียนครับ 👩😊 ถ้าจะบอกว่า “เธอใจดีมาก” ควรพูดว่าอะไร?
+Hint: (none)
+Choices: 👨 He's very kind. → "He's very kind."
+         👩 She's very kind. → "She's very kind."
+         🎒 It's very kind. → "It's very kind."
+User: She's very kind.
+Result: correct in pool
+response time : 113.60 ms
+Reply: ขั้นตอนสุดท้ายครับ 😊 Ben ช่วยถือกระเป๋าให้คุณ และโทรศัพท์เครื่องนี้เป็นของใหม่ พูดสองประโยคว่า “เขาใจดีมาก” และ “มันใหม่” โดยใช้ He's... และ It's... ครับ
+
+Step 5
+AI: ขั้นตอนสุดท้ายครับ 😊 Ben ช่วยถือกระเป๋าให้คุณ และโทรศัพท์เครื่องนี้เป็นของใหม่ พูดสองประโยคว่า “เขาใจดีมาก” และ “มันใหม่” โดยใช้ He's... และ It's... ครับ
+Hint: (none)
+Choices: (none)
+User: He's very kind. It's new.
+Result: correct in pool
+response time : 91.27 ms
+Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณใช้ He's..., She's... และ It's... เพื่อพูดถึงคนและสิ่งของได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ talk_about_groups scenario 1 complete · 5 turns · 507.29 ms
+✅ talk_about_groups scenario 1 complete · 5 turns · 540.06 ms
 
 ================================================================================
 talk_about_groups — Scenario 2 — out-pool correct ทุก step → จบบท
@@ -62,56 +60,54 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 ================================================================================
 
 Step 1
-AI: สวัสดีครับ Nana! วันนี้เรามาพูดถึงคนอื่นและสิ่งของครับ 👨 ลองพูดตามว่า He is my father.
+AI: สวัสดีครับ Nana! วันนี้เราจะพูดถึงคนอื่นและสิ่งของครับ 👨 Ben เรียนห้องเดียวกับคุณ พูดว่า “He's my classmate.” โดย He's เป็นรูปสั้นของ He is ลองพูดตามครับ
 Hint: (none)
 Choices: (none)
-User: He is my father....
+User: He's my classmate....
 Result: correct out pool
-response time : 1.36 s
-Reply: ถูกต้องครับ! ถ้าเป็นผู้หญิง — She is my sister. 👩 ลองพูดตามครับ
+response time : 1.51 s
+Reply: ถูกต้องครับ! Anna เป็นครูของคุณครับ 👩 พูดว่า “She's my teacher.” โดย She's เป็นรูปสั้นของ She is ลองพูดตามครับ
 
 Step 2
-AI: ถูกต้องครับ! ถ้าเป็นผู้หญิง — She is my sister. 👩 ลองพูดตามครับ
-Hint: (none)
-Choices: 👩 She is my sister. → "She is my sister."
-User: She is my sister....
-Result: correct out pool
-response time : 1.33 s
-Reply: ดีมากครับ! She is my sister. แปลว่า “เธอคือพี่สาวหรือน้องสาวของฉัน” ต่อไป ถ้าพูดถึงสิ่งของ เราใช้ It ครับ — It is my bag. 🎒 ลองพูดตามนะครับ
-
-Step 3
-AI: ดีมากครับ! She is my sister. แปลว่า “เธอคือพี่สาวหรือน้องสาวของฉัน” ต่อไป ถ้าพูดถึงสิ่งของ เราใช้ It ครับ — It is my bag. 🎒 ลองพูดตามนะครับ
-Hint: (none)
-Choices: 👨 He is my father. → "He is my father."
-         👩 She is my sister. → "She is my sister."
-         🎒 It is my bag. → "It is my bag."
-User: It is my bag....
-Result: correct out pool
-response time : 1.24 s
-Reply: ถูกต้องครับ! It is my bag. แปลว่า “มันคือกระเป๋าของฉัน” ถ้าจะพูดถึงกระเป๋าของคุณ ควรเลือกประโยคไหนครับ? 🎒
-
-Step 4
-AI: ถูกต้องครับ! It is my bag. แปลว่า “มันคือกระเป๋าของฉัน” ถ้าจะพูดถึงกระเป๋าของคุณ ควรเลือกประโยคไหนครับ? 🎒
-Hint: (none)
-Choices: 👨 He is my father. → "He is my father."
-         👩 She is my sister. → "She is my sister."
-         🎒 It is my bag. → "It is my bag."
-User: It is my bag....
-Result: correct out pool
-response time : 1.25 s
-Reply: เยี่ยมครับ! ลองพูดประโยคสั้นๆ เกี่ยวกับคนหรือสิ่งของครับ 😊
-
-Step 5
-AI: เยี่ยมครับ! ลองพูดประโยคสั้นๆ เกี่ยวกับคนหรือสิ่งของครับ 😊
+AI: ถูกต้องครับ! Anna เป็นครูของคุณครับ 👩 พูดว่า “She's my teacher.” โดย She's เป็นรูปสั้นของ She is ลองพูดตามครับ
 Hint: (none)
 Choices: (none)
-User: He is my father....
+User: She's my teacher....
 Result: correct out pool
-response time : 1.23 s
-Reply: เยี่ยมครับ! Nana! 🎉 วันนี้คุณพูด He is..., She is... และ It is... ได้แล้ว 🍌
+response time : 1.46 s
+Reply: ถูกต้องครับ! ถ้าพูดถึงสิ่งของ เราใช้ It ครับ 🎒 กระเป๋าใบนี้เป็นของคุณ พูดว่า “It's my bag.” โดย It's เป็นรูปสั้นของ It is ลองพูดตามครับ
+
+Step 3
+AI: ถูกต้องครับ! ถ้าพูดถึงสิ่งของ เราใช้ It ครับ 🎒 กระเป๋าใบนี้เป็นของคุณ พูดว่า “It's my bag.” โดย It's เป็นรูปสั้นของ It is ลองพูดตามครับ
+Hint: (none)
+Choices: (none)
+User: It's my bag....
+Result: correct out pool
+response time : 1.25 s
+Reply: ถูกต้องครับ! Anna ช่วยคุณหาห้องเรียนครับ 👩😊 ถ้าจะบอกว่า “เธอใจดีมาก” ควรพูดว่าอะไร?
+
+Step 4
+AI: ถูกต้องครับ! Anna ช่วยคุณหาห้องเรียนครับ 👩😊 ถ้าจะบอกว่า “เธอใจดีมาก” ควรพูดว่าอะไร?
+Hint: (none)
+Choices: 👨 He's very kind. → "He's very kind."
+         👩 She's very kind. → "She's very kind."
+         🎒 It's very kind. → "It's very kind."
+User: She's very kind....
+Result: correct out pool
+response time : 1.31 s
+Reply: เยี่ยมครับ! ขั้นตอนสุดท้ายครับ 😊 Ben ช่วยถือกระเป๋าให้คุณ และโทรศัพท์เครื่องนี้เป็นของใหม่ พูดสองประโยคว่า “เขาใจดีมาก” และ “มันใหม่” โดยใช้ He's... และ It's... ครับ
+
+Step 5
+AI: เยี่ยมครับ! ขั้นตอนสุดท้ายครับ 😊 Ben ช่วยถือกระเป๋าให้คุณ และโทรศัพท์เครื่องนี้เป็นของใหม่ พูดสองประโยคว่า “เขาใจดีมาก” และ “มันใหม่” โดยใช้ He's... และ It's... ครับ
+Hint: (none)
+Choices: (none)
+User: He's very kind. It's new....
+Result: correct out pool
+response time : 1.39 s
+Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณใช้ He's..., She's... และ It's... เพื่อพูดถึงคนและสิ่งของได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ talk_about_groups scenario 2 complete · 5 turns · 6.41 s
+✅ talk_about_groups scenario 2 complete · 5 turns · 6.92 s
 
 ================================================================================
 talk_about_groups — Scenario 3 — out-pool close ทุก step → จบบท
@@ -119,65 +115,63 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 ================================================================================
 
 Step 1
-AI: สวัสดีครับ Nana! วันนี้เรามาพูดถึงคนอื่นและสิ่งของครับ 👨 ลองพูดตามว่า He is my father.
+AI: สวัสดีครับ Nana! วันนี้เราจะพูดถึงคนอื่นและสิ่งของครับ 👨 Ben เรียนห้องเดียวกับคุณ พูดว่า “He's my classmate.” โดย He's เป็นรูปสั้นของ He is ลองพูดตามครับ
 Hint: (none)
 Choices: (none)
-User: He my father.
+User: He my classmate.
 Result: close out pool
-response time : 1.30 s
-Reply: เกือบถูกแล้วครับ! พูดว่า He is my father. 👨
-ต่อไปถ้าเป็นผู้หญิง — She is my sister. 👩 ลองพูดตามครับ
+response time : 1.89 s
+Reply: เกือบถูกแล้วครับ! พูดว่า He's my classmate.
+Anna เป็นครูของคุณครับ 👩 พูดว่า “She's my teacher.” โดย She's เป็นรูปสั้นของ She is ลองพูดตามครับ
 
 Step 2
-AI: เกือบถูกแล้วครับ! พูดว่า He is my father. 👨
-ต่อไปถ้าเป็นผู้หญิง — She is my sister. 👩 ลองพูดตามครับ
-Hint: (none)
-Choices: 👩 She is my sister. → "She is my sister."
-User: She my sister.
-Result: close out pool
-response time : 1.33 s
-Reply: เกือบถูกแล้วครับ! พูดว่า She is my sister. 👩
-She is my sister. แปลว่า “เธอคือพี่สาวหรือน้องสาวของฉัน” ต่อไป ถ้าพูดถึงสิ่งของ เราใช้ It ครับ — It is my bag. 🎒 ลองพูดตามนะครับ
-
-Step 3
-AI: เกือบถูกแล้วครับ! พูดว่า She is my sister. 👩
-She is my sister. แปลว่า “เธอคือพี่สาวหรือน้องสาวของฉัน” ต่อไป ถ้าพูดถึงสิ่งของ เราใช้ It ครับ — It is my bag. 🎒 ลองพูดตามนะครับ
-Hint: (none)
-Choices: 👨 He is my father. → "He is my father."
-         👩 She is my sister. → "She is my sister."
-         🎒 It is my bag. → "It is my bag."
-User: It my bag.
-Result: close out pool
-response time : 1.85 s
-Reply: เกือบถูกแล้วครับ! พูดว่า It is my bag. 🎒
-It is my bag. แปลว่า “มันคือกระเป๋าของฉัน” ถ้าจะพูดถึงกระเป๋าของคุณ ควรเลือกประโยคไหนครับ? 🎒
-
-Step 4
-AI: เกือบถูกแล้วครับ! พูดว่า It is my bag. 🎒
-It is my bag. แปลว่า “มันคือกระเป๋าของฉัน” ถ้าจะพูดถึงกระเป๋าของคุณ ควรเลือกประโยคไหนครับ? 🎒
-Hint: (none)
-Choices: 👨 He is my father. → "He is my father."
-         👩 She is my sister. → "She is my sister."
-         🎒 It is my bag. → "It is my bag."
-User: It my bag.
-Result: close out pool
-response time : 1.57 s
-Reply: เกือบถูกแล้วครับ! พูดว่า It is my bag. 🎒
-ลองพูดประโยคสั้นๆ เกี่ยวกับคนหรือสิ่งของครับ 😊
-
-Step 5
-AI: เกือบถูกแล้วครับ! พูดว่า It is my bag. 🎒
-ลองพูดประโยคสั้นๆ เกี่ยวกับคนหรือสิ่งของครับ 😊
+AI: เกือบถูกแล้วครับ! พูดว่า He's my classmate.
+Anna เป็นครูของคุณครับ 👩 พูดว่า “She's my teacher.” โดย She's เป็นรูปสั้นของ She is ลองพูดตามครับ
 Hint: (none)
 Choices: (none)
-User: He my father.
+User: She my teacher.
 Result: close out pool
-response time : 1.46 s
-Reply: เกือบถูกแล้วครับ! พูดว่า He is my father.
-สุดยอดครับ Nana! 🎉 วันนี้คุณพูด He is..., She is... และ It is... ได้แล้ว 🍌
+response time : 1.39 s
+Reply: เกือบถูกแล้วครับ! พูดว่า She's my teacher.
+ต่อไปถ้าพูดถึงสิ่งของ เราใช้ It ครับ 🎒 กระเป๋าใบนี้เป็นของคุณ พูดว่า “It's my bag.” โดย It's เป็นรูปสั้นของ It is ลองพูดตามครับ
+
+Step 3
+AI: เกือบถูกแล้วครับ! พูดว่า She's my teacher.
+ต่อไปถ้าพูดถึงสิ่งของ เราใช้ It ครับ 🎒 กระเป๋าใบนี้เป็นของคุณ พูดว่า “It's my bag.” โดย It's เป็นรูปสั้นของ It is ลองพูดตามครับ
+Hint: (none)
+Choices: (none)
+User: It my bag.
+Result: close out pool
+response time : 1.35 s
+Reply: เกือบถูกแล้วครับ! พูดว่า It's my bag.
+Anna ช่วยคุณหาห้องเรียนครับ 👩😊 ถ้าจะบอกว่า “เธอใจดีมาก” ควรพูดว่าอะไร?
+
+Step 4
+AI: เกือบถูกแล้วครับ! พูดว่า It's my bag.
+Anna ช่วยคุณหาห้องเรียนครับ 👩😊 ถ้าจะบอกว่า “เธอใจดีมาก” ควรพูดว่าอะไร?
+Hint: (none)
+Choices: 👨 He's very kind. → "He's very kind."
+         👩 She's very kind. → "She's very kind."
+         🎒 It's very kind. → "It's very kind."
+User: She very kind.
+Result: close out pool
+response time : 1.32 s
+Reply: เกือบถูกแล้วครับ! พูดว่า She's very kind. 👩
+ต่อไปขั้นตอนสุดท้ายครับ 😊 Ben ช่วยถือกระเป๋าให้คุณ และโทรศัพท์เครื่องนี้เป็นของใหม่ พูดสองประโยคว่า “เขาใจดีมาก” และ “มันใหม่” โดยใช้ He's... และ It's... ครับ
+
+Step 5
+AI: เกือบถูกแล้วครับ! พูดว่า She's very kind. 👩
+ต่อไปขั้นตอนสุดท้ายครับ 😊 Ben ช่วยถือกระเป๋าให้คุณ และโทรศัพท์เครื่องนี้เป็นของใหม่ พูดสองประโยคว่า “เขาใจดีมาก” และ “มันใหม่” โดยใช้ He's... และ It's... ครับ
+Hint: (none)
+Choices: (none)
+User: He very kind. It new.
+Result: close out pool
+response time : 1.34 s
+Reply: เกือบถูกแล้วครับ! พูดว่า He's very kind. It's new.
+สุดยอดครับ Nana! 🎉 วันนี้คุณใช้ He's..., She's... และ It's... เพื่อพูดถึงคนและสิ่งของได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ talk_about_groups scenario 3 complete · 5 turns · 7.51 s
+✅ talk_about_groups scenario 3 complete · 5 turns · 7.28 s
 
 ================================================================================
 talk_about_groups — Scenario 4 — out-pool wrong + in-pool พูดตาม recovery → จบบท
@@ -185,105 +179,101 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 ================================================================================
 
 Step 1
-AI: สวัสดีครับ Nana! วันนี้เรามาพูดถึงคนอื่นและสิ่งของครับ 👨 ลองพูดตามว่า He is my father.
+AI: สวัสดีครับ Nana! วันนี้เราจะพูดถึงคนอื่นและสิ่งของครับ 👨 Ben เรียนห้องเดียวกับคุณ พูดว่า “He's my classmate.” โดย He's เป็นรูปสั้นของ He is ลองพูดตามครับ
 Hint: (none)
 Choices: (none)
 User: Good morning.
 Result: incorrect out pool
-response time : 1.39 s
-Reply: ยังไม่ถูกต้องครับ ลองพูดว่า "He is my father." อีกครั้งนะครับ ลองพูดตามนะครับ
+response time : 1.53 s
+Reply: ยังไม่ถูกครับ ลองพูดตามว่า “He's my classmate.” ครับ
 
 Step 2
-AI: ยังไม่ถูกต้องครับ ลองพูดว่า "He is my father." อีกครั้งนะครับ ลองพูดตามนะครับ
+AI: ยังไม่ถูกครับ ลองพูดตามว่า “He's my classmate.” ครับ
 Hint: (none)
 Choices: (none)
-User: He is my father.
+User: He's my classmate.
 Result: correct in pool
-response time : 101.12 ms
-Reply: เก่งมากครับ! ถ้าเป็นผู้หญิง — She is my sister. 👩 ลองพูดตามครับ
+response time : 254.71 ms
+Reply: Anna เป็นครูของคุณครับ 👩 พูดว่า “She's my teacher.” โดย She's เป็นรูปสั้นของ She is ลองพูดตามครับ
 
 Step 3
-AI: เก่งมากครับ! ถ้าเป็นผู้หญิง — She is my sister. 👩 ลองพูดตามครับ
+AI: Anna เป็นครูของคุณครับ 👩 พูดว่า “She's my teacher.” โดย She's เป็นรูปสั้นของ She is ลองพูดตามครับ
 Hint: (none)
-Choices: 👩 She is my sister. → "She is my sister."
+Choices: (none)
 User: Good morning.
 Result: incorrect out pool
-response time : 1.14 s
-Reply: ยังไม่ถูกต้องครับ ลองพูดว่า "She is my sister." อีกครั้งนะครับ ลองพูดตามนะครับ
+response time : 1.23 s
+Reply: ยังไม่ถูกครับ ลองพูดตามว่า “She's my teacher.” ครับ
 
 Step 4
-AI: ยังไม่ถูกต้องครับ ลองพูดว่า "She is my sister." อีกครั้งนะครับ ลองพูดตามนะครับ
+AI: ยังไม่ถูกครับ ลองพูดตามว่า “She's my teacher.” ครับ
 Hint: (none)
-Choices: 👩 She is my sister. → "She is my sister."
-User: She is my sister.
+Choices: (none)
+User: She's my teacher.
 Result: correct in pool
-response time : 109.68 ms
-Reply: ดีมากครับ! She is my sister. แปลว่า “เธอคือพี่สาวหรือน้องสาวของฉัน” ต่อไป ถ้าพูดถึงสิ่งของ เราใช้ It ครับ — It is my bag. 🎒 ลองพูดตามนะครับ
+response time : 173.16 ms
+Reply: ถ้าพูดถึงสิ่งของ เราใช้ It ครับ 🎒 กระเป๋าใบนี้เป็นของคุณ พูดว่า “It's my bag.” โดย It's เป็นรูปสั้นของ It is ลองพูดตามครับ
 
 Step 5
-AI: ดีมากครับ! She is my sister. แปลว่า “เธอคือพี่สาวหรือน้องสาวของฉัน” ต่อไป ถ้าพูดถึงสิ่งของ เราใช้ It ครับ — It is my bag. 🎒 ลองพูดตามนะครับ
+AI: ถ้าพูดถึงสิ่งของ เราใช้ It ครับ 🎒 กระเป๋าใบนี้เป็นของคุณ พูดว่า “It's my bag.” โดย It's เป็นรูปสั้นของ It is ลองพูดตามครับ
 Hint: (none)
-Choices: 👨 He is my father. → "He is my father."
-         👩 She is my sister. → "She is my sister."
-         🎒 It is my bag. → "It is my bag."
+Choices: (none)
 User: Good morning.
 Result: incorrect out pool
-response time : 1.32 s
-Reply: ยังไม่ถูกต้องครับ ลองพูดว่า "It is my bag." อีกครั้งนะครับ ลองพูดตามนะครับ
+response time : 1.23 s
+Reply: ยังไม่ถูกครับ ลองพูดตามว่า “It's my bag.” ครับ
 
 Step 6
-AI: ยังไม่ถูกต้องครับ ลองพูดว่า "It is my bag." อีกครั้งนะครับ ลองพูดตามนะครับ
+AI: ยังไม่ถูกครับ ลองพูดตามว่า “It's my bag.” ครับ
 Hint: (none)
-Choices: 👨 He is my father. → "He is my father."
-         👩 She is my sister. → "She is my sister."
-         🎒 It is my bag. → "It is my bag."
-User: It is my bag.
+Choices: (none)
+User: It's my bag.
 Result: correct in pool
-response time : 102.14 ms
-Reply: ดีมากครับ! It is my bag. แปลว่า “มันคือกระเป๋าของฉัน” ถ้าจะพูดถึงกระเป๋าของคุณ ควรเลือกประโยคไหนครับ? 🎒
+response time : 101.86 ms
+Reply: Anna ช่วยคุณหาห้องเรียนครับ 👩😊 ถ้าจะบอกว่า “เธอใจดีมาก” ควรพูดว่าอะไร?
 
 Step 7
-AI: ดีมากครับ! It is my bag. แปลว่า “มันคือกระเป๋าของฉัน” ถ้าจะพูดถึงกระเป๋าของคุณ ควรเลือกประโยคไหนครับ? 🎒
+AI: Anna ช่วยคุณหาห้องเรียนครับ 👩😊 ถ้าจะบอกว่า “เธอใจดีมาก” ควรพูดว่าอะไร?
 Hint: (none)
-Choices: 👨 He is my father. → "He is my father."
-         👩 She is my sister. → "She is my sister."
-         🎒 It is my bag. → "It is my bag."
+Choices: 👨 He's very kind. → "He's very kind."
+         👩 She's very kind. → "She's very kind."
+         🎒 It's very kind. → "It's very kind."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.15 s
-Reply: ยังไม่ตรงครับ เมื่อพูดถึงกระเป๋า ให้พูดว่า “It is my bag.” ครับ
+response time : 1.45 s
+Reply: ยังไม่ตรงครับ เรากำลังพูดถึง Anna ลองเริ่มด้วย “She's...” ครับ
 
 Step 8
-AI: ยังไม่ตรงครับ เมื่อพูดถึงกระเป๋า ให้พูดว่า “It is my bag.” ครับ
+AI: ยังไม่ตรงครับ เรากำลังพูดถึง Anna ลองเริ่มด้วย “She's...” ครับ
 Hint: (none)
-Choices: 👨 He is my father. → "He is my father."
-         👩 She is my sister. → "She is my sister."
-         🎒 It is my bag. → "It is my bag."
-User: It is my bag.
+Choices: 👨 He's very kind. → "He's very kind."
+         👩 She's very kind. → "She's very kind."
+         🎒 It's very kind. → "It's very kind."
+User: She's very kind.
 Result: correct in pool
-response time : 89.33 ms
-Reply: ลองพูดประโยคสั้นๆ เกี่ยวกับคนหรือสิ่งของครับ 😊
+response time : 99.01 ms
+Reply: ขั้นตอนสุดท้ายครับ 😊 Ben ช่วยถือกระเป๋าให้คุณ และโทรศัพท์เครื่องนี้เป็นของใหม่ พูดสองประโยคว่า “เขาใจดีมาก” และ “มันใหม่” โดยใช้ He's... และ It's... ครับ
 
 Step 9
-AI: ลองพูดประโยคสั้นๆ เกี่ยวกับคนหรือสิ่งของครับ 😊
+AI: ขั้นตอนสุดท้ายครับ 😊 Ben ช่วยถือกระเป๋าให้คุณ และโทรศัพท์เครื่องนี้เป็นของใหม่ พูดสองประโยคว่า “เขาใจดีมาก” และ “มันใหม่” โดยใช้ He's... และ It's... ครับ
 Hint: (none)
 Choices: (none)
 User: Good morning.
 Result: incorrect out pool
-response time : 1.38 s
-Reply: ยังไม่ตรงครับ ลองเริ่มด้วย “He is...”, “She is...” หรือ “It is...” แล้วพูดต่อให้ครบประโยคครับ
+response time : 1.29 s
+Reply: ยังไม่ตรงครับ ลองพูดสองส่วน โดยเริ่มด้วย “He's...” แล้วตามด้วย “It's...” ครับ
 
 Step 10
-AI: ยังไม่ตรงครับ ลองเริ่มด้วย “He is...”, “She is...” หรือ “It is...” แล้วพูดต่อให้ครบประโยคครับ
+AI: ยังไม่ตรงครับ ลองพูดสองส่วน โดยเริ่มด้วย “He's...” แล้วตามด้วย “It's...” ครับ
 Hint: (none)
 Choices: (none)
-User: He is my father.
+User: He's very kind. It's new.
 Result: correct in pool
-response time : 103.31 ms
+response time : 163.00 ms
 Reply: เรียนครบแล้วครับ Nana คุณทำบทเรียนจบโดยได้รับคำแนะนำบางส่วน ลองฝึกอีกครั้งเพื่อให้คล่องขึ้นนะครับ
 
 ────────────────────────────────────────────────────────────────────────
-✅ talk_about_groups scenario 4 complete · 10 turns · 6.88 s
+✅ talk_about_groups scenario 4 complete · 10 turns · 7.52 s
 
 ================================================================================
 talk_about_groups — Scenario 5 — out-pool wrong + พูดตามผิดอีกครั้ง → soft-advance → จบบท
@@ -291,112 +281,108 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 ================================================================================
 
 Step 1
-AI: สวัสดีครับ Nana! วันนี้เรามาพูดถึงคนอื่นและสิ่งของครับ 👨 ลองพูดตามว่า He is my father.
+AI: สวัสดีครับ Nana! วันนี้เราจะพูดถึงคนอื่นและสิ่งของครับ 👨 Ben เรียนห้องเดียวกับคุณ พูดว่า “He's my classmate.” โดย He's เป็นรูปสั้นของ He is ลองพูดตามครับ
+Hint: (none)
+Choices: (none)
+User: Good morning.
+Result: incorrect out pool
+response time : 1.40 s
+Reply: ยังไม่ถูกครับ ลองพูดตามว่า “He's my classmate.” ครับ
+
+Step 2
+AI: ยังไม่ถูกครับ ลองพูดตามว่า “He's my classmate.” ครับ
+Hint: (none)
+Choices: (none)
+User: Hello there.
+Result: wrong (soft-advance)
+response time : 89.27 ms
+Reply: ตรงนี้พูดว่า "He's my classmate." ครับ
+ไปต่อกันเลย — Anna เป็นครูของคุณครับ 👩 พูดว่า “She's my teacher.” โดย She's เป็นรูปสั้นของ She is ลองพูดตามครับ
+
+Step 3
+AI: ตรงนี้พูดว่า "He's my classmate." ครับ
+ไปต่อกันเลย — Anna เป็นครูของคุณครับ 👩 พูดว่า “She's my teacher.” โดย She's เป็นรูปสั้นของ She is ลองพูดตามครับ
 Hint: (none)
 Choices: (none)
 User: Good morning.
 Result: incorrect out pool
 response time : 1.29 s
-Reply: ยังไม่ใช่ครับ Nana ลองพูดว่า "He is my father." อีกครั้งนะครับ ลองพูดตามนะครับ
-
-Step 2
-AI: ยังไม่ใช่ครับ Nana ลองพูดว่า "He is my father." อีกครั้งนะครับ ลองพูดตามนะครับ
-Hint: (none)
-Choices: (none)
-User: Hello there.
-Result: wrong (soft-advance)
-response time : 104.86 ms
-Reply: ตรงนี้พูดว่า "He is my father." ครับ 👨
-ไปต่อกันเลย — ถ้าเป็นผู้หญิง — She is my sister. 👩 ลองพูดตามครับ
-
-Step 3
-AI: ตรงนี้พูดว่า "He is my father." ครับ 👨
-ไปต่อกันเลย — ถ้าเป็นผู้หญิง — She is my sister. 👩 ลองพูดตามครับ
-Hint: (none)
-Choices: 👩 She is my sister. → "She is my sister."
-User: Good morning.
-Result: incorrect out pool
-response time : 1.48 s
-Reply: ยังไม่ถูกครับ Nana ลองพูดว่า "She is my sister." อีกครั้งนะครับ ลองพูดตามนะครับ
+Reply: ยังไม่ถูกครับ ลองพูดตามว่า “She's my teacher.” ครับ
 
 Step 4
-AI: ยังไม่ถูกครับ Nana ลองพูดว่า "She is my sister." อีกครั้งนะครับ ลองพูดตามนะครับ
+AI: ยังไม่ถูกครับ ลองพูดตามว่า “She's my teacher.” ครับ
 Hint: (none)
-Choices: 👩 She is my sister. → "She is my sister."
+Choices: (none)
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 127.51 ms
-Reply: ตรงนี้พูดว่า "She is my sister." ครับ 👩
-ไปต่อกันเลย — She is my sister. แปลว่า “เธอคือพี่สาวหรือน้องสาวของฉัน” ต่อไป ถ้าพูดถึงสิ่งของ เราใช้ It ครับ — It is my bag. 🎒 ลองพูดตามนะครับ
+response time : 125.33 ms
+Reply: ตรงนี้พูดว่า "She's my teacher." ครับ
+ไปต่อกันเลย — ถ้าพูดถึงสิ่งของ เราใช้ It ครับ 🎒 กระเป๋าใบนี้เป็นของคุณ พูดว่า “It's my bag.” โดย It's เป็นรูปสั้นของ It is ลองพูดตามครับ
 
 Step 5
-AI: ตรงนี้พูดว่า "She is my sister." ครับ 👩
-ไปต่อกันเลย — She is my sister. แปลว่า “เธอคือพี่สาวหรือน้องสาวของฉัน” ต่อไป ถ้าพูดถึงสิ่งของ เราใช้ It ครับ — It is my bag. 🎒 ลองพูดตามนะครับ
+AI: ตรงนี้พูดว่า "She's my teacher." ครับ
+ไปต่อกันเลย — ถ้าพูดถึงสิ่งของ เราใช้ It ครับ 🎒 กระเป๋าใบนี้เป็นของคุณ พูดว่า “It's my bag.” โดย It's เป็นรูปสั้นของ It is ลองพูดตามครับ
 Hint: (none)
-Choices: 👨 He is my father. → "He is my father."
-         👩 She is my sister. → "She is my sister."
-         🎒 It is my bag. → "It is my bag."
+Choices: (none)
 User: Good morning.
 Result: incorrect out pool
-response time : 1.50 s
-Reply: ยังไม่ถูกครับ Nana ลองพูดว่า "It is my bag." อีกครั้งนะครับ ลองพูดตามนะครับ
+response time : 1.31 s
+Reply: ยังไม่ถูกครับ ลองพูดตามว่า “It's my bag.” ครับ
 
 Step 6
-AI: ยังไม่ถูกครับ Nana ลองพูดว่า "It is my bag." อีกครั้งนะครับ ลองพูดตามนะครับ
+AI: ยังไม่ถูกครับ ลองพูดตามว่า “It's my bag.” ครับ
 Hint: (none)
-Choices: 👨 He is my father. → "He is my father."
-         👩 She is my sister. → "She is my sister."
-         🎒 It is my bag. → "It is my bag."
+Choices: (none)
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 108.83 ms
-Reply: ตรงนี้พูดว่า "It is my bag." ครับ 🎒
-ไปต่อกันเลย — It is my bag. แปลว่า “มันคือกระเป๋าของฉัน” ถ้าจะพูดถึงกระเป๋าของคุณ ควรเลือกประโยคไหนครับ? 🎒
+response time : 129.79 ms
+Reply: ตรงนี้พูดว่า "It's my bag." ครับ
+ไปต่อกันเลย — Anna ช่วยคุณหาห้องเรียนครับ 👩😊 ถ้าจะบอกว่า “เธอใจดีมาก” ควรพูดว่าอะไร?
 
 Step 7
-AI: ตรงนี้พูดว่า "It is my bag." ครับ 🎒
-ไปต่อกันเลย — It is my bag. แปลว่า “มันคือกระเป๋าของฉัน” ถ้าจะพูดถึงกระเป๋าของคุณ ควรเลือกประโยคไหนครับ? 🎒
+AI: ตรงนี้พูดว่า "It's my bag." ครับ
+ไปต่อกันเลย — Anna ช่วยคุณหาห้องเรียนครับ 👩😊 ถ้าจะบอกว่า “เธอใจดีมาก” ควรพูดว่าอะไร?
 Hint: (none)
-Choices: 👨 He is my father. → "He is my father."
-         👩 She is my sister. → "She is my sister."
-         🎒 It is my bag. → "It is my bag."
+Choices: 👨 He's very kind. → "He's very kind."
+         👩 She's very kind. → "She's very kind."
+         🎒 It's very kind. → "It's very kind."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.40 s
-Reply: ยังไม่ตรงครับ เมื่อพูดถึงกระเป๋า ให้พูดว่า “It is my bag.” ครับ
+response time : 1.35 s
+Reply: ยังไม่ตรงครับ เรากำลังพูดถึง Anna ลองเริ่มด้วย “She's...” ครับ
 
 Step 8
-AI: ยังไม่ตรงครับ เมื่อพูดถึงกระเป๋า ให้พูดว่า “It is my bag.” ครับ
+AI: ยังไม่ตรงครับ เรากำลังพูดถึง Anna ลองเริ่มด้วย “She's...” ครับ
 Hint: (none)
-Choices: 👨 He is my father. → "He is my father."
-         👩 She is my sister. → "She is my sister."
-         🎒 It is my bag. → "It is my bag."
+Choices: 👨 He's very kind. → "He's very kind."
+         👩 She's very kind. → "She's very kind."
+         🎒 It's very kind. → "It's very kind."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 107.11 ms
-Reply: ตรงนี้พูดว่า "It is my bag." ครับ 🎒
-ไปต่อกันเลย — ลองพูดประโยคสั้นๆ เกี่ยวกับคนหรือสิ่งของครับ 😊
+response time : 125.36 ms
+Reply: ตรงนี้พูดว่า "She's very kind." ครับ 👩
+ไปต่อกันเลย — ขั้นตอนสุดท้ายครับ 😊 Ben ช่วยถือกระเป๋าให้คุณ และโทรศัพท์เครื่องนี้เป็นของใหม่ พูดสองประโยคว่า “เขาใจดีมาก” และ “มันใหม่” โดยใช้ He's... และ It's... ครับ
 
 Step 9
-AI: ตรงนี้พูดว่า "It is my bag." ครับ 🎒
-ไปต่อกันเลย — ลองพูดประโยคสั้นๆ เกี่ยวกับคนหรือสิ่งของครับ 😊
+AI: ตรงนี้พูดว่า "She's very kind." ครับ 👩
+ไปต่อกันเลย — ขั้นตอนสุดท้ายครับ 😊 Ben ช่วยถือกระเป๋าให้คุณ และโทรศัพท์เครื่องนี้เป็นของใหม่ พูดสองประโยคว่า “เขาใจดีมาก” และ “มันใหม่” โดยใช้ He's... และ It's... ครับ
 Hint: (none)
 Choices: (none)
 User: Good morning.
 Result: incorrect out pool
-response time : 1.42 s
-Reply: ยังไม่ตรงครับ ลองเริ่มด้วย “He is...”, “She is...” หรือ “It is...” แล้วพูดต่อให้ครบประโยคครับ
+response time : 1.58 s
+Reply: ยังไม่ตรงครับ ลองพูดสองส่วน โดยเริ่มด้วย “He's...” แล้วตามด้วย “It's...” ครับ
 
 Step 10
-AI: ยังไม่ตรงครับ ลองเริ่มด้วย “He is...”, “She is...” หรือ “It is...” แล้วพูดต่อให้ครบประโยคครับ
+AI: ยังไม่ตรงครับ ลองพูดสองส่วน โดยเริ่มด้วย “He's...” แล้วตามด้วย “It's...” ครับ
 Hint: (none)
 Choices: (none)
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 118.87 ms
-Reply: ตรงนี้พูดได้ว่า "He is my father." ครับ
+response time : 1.08 s
+Reply: ตรงนี้พูดได้ว่า "He's very kind. It's new." ครับ
 
 เรียนครบแล้วครับ Nana ลองทบทวนบทนี้อีกครั้งนะครับ
 
 ────────────────────────────────────────────────────────────────────────
-✅ talk_about_groups scenario 5 complete · 10 turns · 7.65 s
+✅ talk_about_groups scenario 5 complete · 10 turns · 8.48 s

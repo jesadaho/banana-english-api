@@ -77,6 +77,14 @@ describe('Foundation incorrect hints — Introductions standard', () => {
     }
   });
 
+  it('everyday_numbers keeps Arabic digits out of Thai TTS copy', () => {
+    for (const board of Object.values(FOUNDATION_BOARDS.everyday_numbers)) {
+      assert.doesNotMatch(board.textEn, /\d/);
+      assert.doesNotMatch(board.incorrectHintTh ?? '', /\d/);
+      assert.doesNotMatch(board.advanceQuestionEn ?? '', /\d/);
+    }
+  });
+
   it('every foundation probe board follows repeat-only vs guided hint rule', () => {
     for (const fixture of FOUNDATION_POOLGATE_FIXTURES) {
       const def = getDef(fixture);
