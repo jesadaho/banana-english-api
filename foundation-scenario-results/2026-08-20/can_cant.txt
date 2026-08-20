@@ -1,11 +1,3 @@
-API_BASE=https://banana-english-api-production.up.railway.app
-Lessons: can_cant
-Scenarios: 1, 2, 3, 4, 5
-  1: Scenario 1 — in-pool correct ทุก step → จบบท
-  2: Scenario 2 — out-pool correct ทุก step → จบบท
-  3: Scenario 3 — out-pool close ทุก step → จบบท
-  4: Scenario 4 — out-pool wrong + in-pool พูดตาม recovery → จบบท
-  5: Scenario 5 — out-pool wrong + พูดตามผิดอีกครั้ง → soft-advance → จบบท
 
 ================================================================================
 can_cant — Scenario 1 — in-pool correct ทุก step → จบบท
@@ -13,23 +5,21 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 ================================================================================
 
 Step 1
-AI: สวัสดีครับ Nana! วันนี้เรามาเรียน I can / I can't ครับ 🏊 ลองพูดตามว่า I can swim.
+AI: สวัสดีครับ Nana! วันนี้เรามาเรียน I can / I can't ครับ 🏊 can แปลว่า “ทำได้” ส่วน can't แปลว่า “ทำไม่ได้” เช่น I can swim. คือ “ฉันว่ายน้ำได้” ลองพูดตามว่า “I can swim.” ครับ
 Hint: (none)
-Choices: 🚗 I can't drive → "I can't drive." (repeat-only)
+Choices: 🏊 I can swim → "I can swim."
 User: I can swim.
 Result: correct in pool
-response time : 95.52 ms
+response time : 96.90 ms
 Reply: เก่งมากครับ! ถ้าขับรถไม่ได้ — I can't drive. 🚗 ลองพูดตามครับ
 
 Step 2
 AI: เก่งมากครับ! ถ้าขับรถไม่ได้ — I can't drive. 🚗 ลองพูดตามครับ
-Hint: I can cook.
-Choices: 🏊 I can swim → "I can swim."
-         🍳 I can cook → "I can cook."
-         🚗 I can't drive → "I can't drive."
+Hint: (none)
+Choices: 🚗 I can't drive → "I can't drive."
 User: I can't drive.
 Result: correct in pool
-response time : 129.12 ms
+response time : 101.92 ms
 Reply: ถ้าคุณทำอาหารได้ จะพูดว่าอะไรครับ? 🍳
 
 Step 3
@@ -40,20 +30,20 @@ Choices: 🏊 I can swim → "I can swim."
          🚗 I can't drive → "I can't drive."
 User: I can cook.
 Result: correct in pool
-response time : 109.85 ms
+response time : 180.50 ms
 Reply: ลองบอกความสามารถของคุณเป็นภาษาอังกฤษครับ 😊
 
 Step 4
 AI: ลองบอกความสามารถของคุณเป็นภาษาอังกฤษครับ 😊
-Hint: (none)
-Choices: (none)
+Hint: I can...
+Choices: 🍳 I can cook → "I can cook."
 User: I can cook.
 Result: correct in pool
-response time : 110.93 ms
-Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณพูด I can / I can't ได้แล้ว — เก่งมากครับ! 🍌
+response time : 86.63 ms
+Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณพูด I can / I can't ได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ can_cant scenario 1 complete · 4 turns · 445.41 ms
+✅ can_cant scenario 1 complete · 4 turns · 465.95 ms
 
 ================================================================================
 can_cant — Scenario 2 — out-pool correct ทุก step → จบบท
@@ -61,47 +51,45 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 ================================================================================
 
 Step 1
-AI: สวัสดีครับ Nana! วันนี้เรามาเรียน I can / I can't ครับ 🏊 ลองพูดตามว่า I can swim.
+AI: สวัสดีครับ Nana! วันนี้เรามาเรียน I can / I can't ครับ 🏊 can แปลว่า “ทำได้” ส่วน can't แปลว่า “ทำไม่ได้” เช่น I can swim. คือ “ฉันว่ายน้ำได้” ลองพูดตามว่า “I can swim.” ครับ
 Hint: (none)
-Choices: 🚗 I can't drive → "I can't drive." (repeat-only)
+Choices: 🏊 I can swim → "I can swim."
 User: I can swim....
 Result: correct out pool
-response time : 1.39 s
-Reply: เก่งมากครับ Nana! ออกเสียงได้ชัดเจนเลยครับ เก่งมากครับ! ถ้าขับรถไม่ได้ — I can't drive. 🚗 ลองพูดตามครับ
+response time : 1.12 s
+Reply: เยี่ยมครับ! เก่งมากครับ! ถ้าขับรถไม่ได้ — I can't drive. 🚗 ลองพูดตามครับ
 
 Step 2
-AI: เก่งมากครับ Nana! ออกเสียงได้ชัดเจนเลยครับ เก่งมากครับ! ถ้าขับรถไม่ได้ — I can't drive. 🚗 ลองพูดตามครับ
-Hint: I can cook.
-Choices: 🏊 I can swim → "I can swim."
-         🍳 I can cook → "I can cook."
-         🚗 I can't drive → "I can't drive."
+AI: เยี่ยมครับ! เก่งมากครับ! ถ้าขับรถไม่ได้ — I can't drive. 🚗 ลองพูดตามครับ
+Hint: (none)
+Choices: 🚗 I can't drive → "I can't drive."
 User: I can't drive....
 Result: correct out pool
-response time : 1.11 s
-Reply: ยอดเยี่ยมมากครับ Nana! ออกเสียงได้ถูกต้องและชัดเจนมากครับ ถ้าคุณทำอาหารได้ จะพูดว่าอะไรครับ? 🍳
+response time : 1.22 s
+Reply: เยี่ยมครับ! ถ้าคุณทำอาหารได้ จะพูดว่าอะไรครับ? 🍳
 
 Step 3
-AI: ยอดเยี่ยมมากครับ Nana! ออกเสียงได้ถูกต้องและชัดเจนมากครับ ถ้าคุณทำอาหารได้ จะพูดว่าอะไรครับ? 🍳
+AI: เยี่ยมครับ! ถ้าคุณทำอาหารได้ จะพูดว่าอะไรครับ? 🍳
 Hint: I can cook.
 Choices: 🏊 I can swim → "I can swim."
          🍳 I can cook → "I can cook."
          🚗 I can't drive → "I can't drive."
+User: I can cook....
+Result: correct out pool
+response time : 1.17 s
+Reply: ถูกต้องครับ! ลองบอกความสามารถของคุณเป็นภาษาอังกฤษครับ 😊
+
+Step 4
+AI: ถูกต้องครับ! ลองบอกความสามารถของคุณเป็นภาษาอังกฤษครับ 😊
+Hint: I can...
+Choices: 🍳 I can cook → "I can cook."
 User: I can cook....
 Result: correct out pool
 response time : 1.24 s
-Reply: ถูกต้องแล้วครับ Nana! เก่งมากครับที่ใช้โครงสร้างประโยคได้ถูกต้องครับ ลองบอกความสามารถของคุณเป็นภาษาอังกฤษครับ 😊
-
-Step 4
-AI: ถูกต้องแล้วครับ Nana! เก่งมากครับที่ใช้โครงสร้างประโยคได้ถูกต้องครับ ลองบอกความสามารถของคุณเป็นภาษาอังกฤษครับ 😊
-Hint: (none)
-Choices: (none)
-User: I can cook....
-Result: correct out pool
-response time : 1.02 s
-Reply: ถูกต้องแล้วครับ Nana! เก่งมากครับ คุณใช้ประโยคได้ยอดเยี่ยมเลยครับ สุดยอดครับ Nana! 🎉 วันนี้คุณพูด I can / I can't ได้แล้ว — เก่งมากครับ! 🍌
+Reply: ถูกต้องครับ! สุดยอดครับ Nana! 🎉 วันนี้คุณพูด I can / I can't ได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ can_cant scenario 2 complete · 4 turns · 4.77 s
+✅ can_cant scenario 2 complete · 4 turns · 4.75 s
 
 ================================================================================
 can_cant — Scenario 3 — out-pool close ทุก step → จบบท
@@ -109,47 +97,52 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 ================================================================================
 
 Step 1
-AI: สวัสดีครับ Nana! วันนี้เรามาเรียน I can / I can't ครับ 🏊 ลองพูดตามว่า I can swim.
+AI: สวัสดีครับ Nana! วันนี้เรามาเรียน I can / I can't ครับ 🏊 can แปลว่า “ทำได้” ส่วน can't แปลว่า “ทำไม่ได้” เช่น I can swim. คือ “ฉันว่ายน้ำได้” ลองพูดตามว่า “I can swim.” ครับ
 Hint: (none)
-Choices: 🚗 I can't drive → "I can't drive." (repeat-only)
-User: I can swim....
-Result: correct out pool
-response time : 1.03 s
-Reply: เก่งมากครับ Nana! ออกเสียงได้ชัดเจนเลยครับ เก่งมากครับ! ถ้าขับรถไม่ได้ — I can't drive. 🚗 ลองพูดตามครับ
+Choices: 🏊 I can swim → "I can swim."
+User: I swim.
+Result: close out pool
+response time : 1.55 s
+Reply: เกือบถูกแล้วครับ! พูดว่า I can swim. 🏊
+ต่อไปถ้าขับรถไม่ได้ — I can't drive. 🚗 ลองพูดตามครับ
 
 Step 2
-AI: เก่งมากครับ Nana! ออกเสียงได้ชัดเจนเลยครับ เก่งมากครับ! ถ้าขับรถไม่ได้ — I can't drive. 🚗 ลองพูดตามครับ
-Hint: I can cook.
-Choices: 🏊 I can swim → "I can swim."
-         🍳 I can cook → "I can cook."
-         🚗 I can't drive → "I can't drive."
-User: I cannot drive.
-Result: correct out pool
-response time : 1.79 s
-Reply: ยอดเยี่ยมมากครับ Nana! ออกเสียงได้ถูกต้องและชัดเจนมากครับ ถ้าคุณทำอาหารได้ จะพูดว่าอะไรครับ? 🍳
+AI: เกือบถูกแล้วครับ! พูดว่า I can swim. 🏊
+ต่อไปถ้าขับรถไม่ได้ — I can't drive. 🚗 ลองพูดตามครับ
+Hint: (none)
+Choices: 🚗 I can't drive → "I can't drive."
+User: I no can drive.
+Result: close out pool
+response time : 1.10 s
+Reply: เกือบถูกแล้วครับ! พูดว่า I can't drive. 🚗
+ต่อไปถ้าคุณทำอาหารได้ จะพูดว่าอะไรครับ? 🍳
 
 Step 3
-AI: ยอดเยี่ยมมากครับ Nana! ออกเสียงได้ถูกต้องและชัดเจนมากครับ ถ้าคุณทำอาหารได้ จะพูดว่าอะไรครับ? 🍳
+AI: เกือบถูกแล้วครับ! พูดว่า I can't drive. 🚗
+ต่อไปถ้าคุณทำอาหารได้ จะพูดว่าอะไรครับ? 🍳
 Hint: I can cook.
 Choices: 🏊 I can swim → "I can swim."
          🍳 I can cook → "I can cook."
          🚗 I can't drive → "I can't drive."
-User: I can cook....
-Result: correct out pool
-response time : 1.11 s
-Reply: ถูกต้องครับ Nana! เก่งมากครับที่ใช้โครงสร้างประโยคได้ถูกต้อง ลองบอกความสามารถของคุณเป็นภาษาอังกฤษครับ 😊
+User: I can cooking.
+Result: close out pool
+response time : 1.26 s
+Reply: เกือบถูกแล้วครับ! พูดว่า I can cook. 🍳
+ลองบอกความสามารถของคุณเป็นภาษาอังกฤษครับ 😊
 
 Step 4
-AI: ถูกต้องครับ Nana! เก่งมากครับที่ใช้โครงสร้างประโยคได้ถูกต้อง ลองบอกความสามารถของคุณเป็นภาษาอังกฤษครับ 😊
-Hint: (none)
-Choices: (none)
-User: I can cook....
-Result: correct out pool
-response time : 1.14 s
-Reply: ถูกต้องครับ Nana! เก่งมากครับที่คุณบอกความสามารถของตัวเองได้ถูกต้อง สุดยอดครับ Nana! 🎉 วันนี้คุณพูด I can / I can't ได้แล้ว — เก่งมากครับ! 🍌
+AI: เกือบถูกแล้วครับ! พูดว่า I can cook. 🍳
+ลองบอกความสามารถของคุณเป็นภาษาอังกฤษครับ 😊
+Hint: I can...
+Choices: 🍳 I can cook → "I can cook."
+User: I can cooking.
+Result: close out pool
+response time : 1.17 s
+Reply: เกือบถูกแล้วครับ! พูดว่า I can cook. 🍳
+สุดยอดครับ Nana! 🎉 วันนี้คุณพูด I can / I can't ได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ can_cant scenario 3 complete · 4 turns · 5.07 s
+✅ can_cant scenario 3 complete · 4 turns · 5.08 s
 
 ================================================================================
 can_cant — Scenario 4 — out-pool wrong + in-pool พูดตาม recovery → จบบท
@@ -157,43 +150,39 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 ================================================================================
 
 Step 1
-AI: สวัสดีครับ Nana! วันนี้เรามาเรียน I can / I can't ครับ 🏊 ลองพูดตามว่า I can swim.
+AI: สวัสดีครับ Nana! วันนี้เรามาเรียน I can / I can't ครับ 🏊 can แปลว่า “ทำได้” ส่วน can't แปลว่า “ทำไม่ได้” เช่น I can swim. คือ “ฉันว่ายน้ำได้” ลองพูดตามว่า “I can swim.” ครับ
 Hint: (none)
-Choices: 🚗 I can't drive → "I can't drive." (repeat-only)
+Choices: 🏊 I can swim → "I can swim."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.19 s
-Reply: ยังไม่ถูกครับ ลองพูดตามว่า "I can swim" นะครับ
+response time : 1.23 s
+Reply: ยังไม่ใช่ครับ Nana ลองพูดตามประโยคนี้ว่า "I can swim." อีกครั้งนะครับ
 
 Step 2
-AI: ยังไม่ถูกครับ ลองพูดตามว่า "I can swim" นะครับ
+AI: ยังไม่ใช่ครับ Nana ลองพูดตามประโยคนี้ว่า "I can swim." อีกครั้งนะครับ
 Hint: (none)
-Choices: 🚗 I can't drive → "I can't drive." (repeat-only)
+Choices: 🏊 I can swim → "I can swim."
 User: I can swim.
 Result: correct in pool
-response time : 89.69 ms
+response time : 125.61 ms
 Reply: เก่งมากครับ! ถ้าขับรถไม่ได้ — I can't drive. 🚗 ลองพูดตามครับ
 
 Step 3
 AI: เก่งมากครับ! ถ้าขับรถไม่ได้ — I can't drive. 🚗 ลองพูดตามครับ
-Hint: I can cook.
-Choices: 🏊 I can swim → "I can swim."
-         🍳 I can cook → "I can cook."
-         🚗 I can't drive → "I can't drive."
+Hint: (none)
+Choices: 🚗 I can't drive → "I can't drive."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.16 s
-Reply: ยังไม่ถูกครับ ลองพูดตามว่า "I can't drive" นะครับ
+response time : 1.28 s
+Reply: ยังไม่ใช่ครับ Nana ลองพูดตามว่า "I can't drive." อีกครั้งนะครับ
 
 Step 4
-AI: ยังไม่ถูกครับ ลองพูดตามว่า "I can't drive" นะครับ
-Hint: I can cook.
-Choices: 🏊 I can swim → "I can swim."
-         🍳 I can cook → "I can cook."
-         🚗 I can't drive → "I can't drive."
+AI: ยังไม่ใช่ครับ Nana ลองพูดตามว่า "I can't drive." อีกครั้งนะครับ
+Hint: (none)
+Choices: 🚗 I can't drive → "I can't drive."
 User: I can't drive.
 Result: correct in pool
-response time : 101.31 ms
+response time : 108.96 ms
 Reply: ถ้าคุณทำอาหารได้ จะพูดว่าอะไรครับ? 🍳
 
 Step 5
@@ -204,7 +193,7 @@ Choices: 🏊 I can swim → "I can swim."
          🚗 I can't drive → "I can't drive."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.03 s
+response time : 1.08 s
 Reply: ยังไม่ตรงครับ ลองใช้ “I can cook...” แล้วพูดต่อให้ครบประโยคครับ
 
 Step 6
@@ -215,29 +204,29 @@ Choices: 🏊 I can swim → "I can swim."
          🚗 I can't drive → "I can't drive."
 User: I can cook.
 Result: correct in pool
-response time : 92.24 ms
+response time : 144.23 ms
 Reply: ลองบอกความสามารถของคุณเป็นภาษาอังกฤษครับ 😊
 
 Step 7
 AI: ลองบอกความสามารถของคุณเป็นภาษาอังกฤษครับ 😊
-Hint: (none)
-Choices: (none)
+Hint: I can...
+Choices: 🍳 I can cook → "I can cook."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.04 s
+response time : 1.17 s
 Reply: ยังไม่ตรงครับ ลองใช้ “I can...” แล้วพูดต่อให้ครบประโยคครับ
 
 Step 8
 AI: ยังไม่ตรงครับ ลองใช้ “I can...” แล้วพูดต่อให้ครบประโยคครับ
-Hint: (none)
-Choices: (none)
+Hint: I can...
+Choices: 🍳 I can cook → "I can cook."
 User: I can cook.
 Result: correct in pool
-response time : 100.82 ms
-Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณพูด I can / I can't ได้แล้ว — เก่งมากครับ! 🍌
+response time : 97.44 ms
+Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณพูด I can / I can't ได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ can_cant scenario 4 complete · 8 turns · 4.79 s
+✅ can_cant scenario 4 complete · 8 turns · 5.23 s
 
 ================================================================================
 can_cant — Scenario 5 — out-pool wrong + พูดตามผิดอีกครั้ง → soft-advance → จบบท
@@ -245,41 +234,41 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 ================================================================================
 
 Step 1
-AI: สวัสดีครับ Nana! วันนี้เรามาเรียน I can / I can't ครับ 🏊 ลองพูดตามว่า I can swim.
+AI: สวัสดีครับ Nana! วันนี้เรามาเรียน I can / I can't ครับ 🏊 can แปลว่า “ทำได้” ส่วน can't แปลว่า “ทำไม่ได้” เช่น I can swim. คือ “ฉันว่ายน้ำได้” ลองพูดตามว่า “I can swim.” ครับ
 Hint: (none)
-Choices: 🚗 I can't drive → "I can't drive." (repeat-only)
+Choices: 🏊 I can swim → "I can swim."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.33 s
-Reply: ยังไม่ถูกครับ ลองพูดตามว่า "I can swim" นะครับ
+response time : 1.30 s
+Reply: ยังไม่ใช่นะครับ ลองพูดตามว่า "I can swim." อีกครั้งนะครับ
 
 Step 2
-AI: ยังไม่ถูกครับ ลองพูดตามว่า "I can swim" นะครับ
+AI: ยังไม่ใช่นะครับ ลองพูดตามว่า "I can swim." อีกครั้งนะครับ
 Hint: (none)
-Choices: 🚗 I can't drive → "I can't drive." (repeat-only)
+Choices: 🏊 I can swim → "I can swim."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 114.34 ms
+response time : 137.62 ms
 Reply: ตรงนี้พูดว่า "I can swim." ครับ 🏊
-ไปต่อกันเลย — I can't drive.
+ไปต่อกันเลย — เก่งมากครับ! ถ้าขับรถไม่ได้ — I can't drive. 🚗 ลองพูดตามครับ
 
 Step 3
 AI: ตรงนี้พูดว่า "I can swim." ครับ 🏊
-ไปต่อกันเลย — I can't drive.
+ไปต่อกันเลย — เก่งมากครับ! ถ้าขับรถไม่ได้ — I can't drive. 🚗 ลองพูดตามครับ
 Hint: (none)
-Choices: 🚗 I can't drive → "I can't drive." (repeat-only)
+Choices: 🚗 I can't drive → "I can't drive."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.01 s
-Reply: ยังไม่ถูกครับ ลองพูดว่า "I can't drive." นะครับ ลองพูดตามนะครับ
+response time : 1.25 s
+Reply: ยังไม่ถูกครับ ลองพูดว่า "I can't drive." อีกครั้งนะครับ ลองพูดตามนะครับ
 
 Step 4
-AI: ยังไม่ถูกครับ ลองพูดว่า "I can't drive." นะครับ ลองพูดตามนะครับ
+AI: ยังไม่ถูกครับ ลองพูดว่า "I can't drive." อีกครั้งนะครับ ลองพูดตามนะครับ
 Hint: (none)
-Choices: 🚗 I can't drive → "I can't drive." (repeat-only)
+Choices: 🚗 I can't drive → "I can't drive."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 81.08 ms
+response time : 96.00 ms
 Reply: ตรงนี้พูดว่า "I can't drive." ครับ 🚗
 ไปต่อกันเลย — I can cook.
 
@@ -292,7 +281,7 @@ Choices: 🏊 I can swim → "I can swim."
          🚗 I can't drive → "I can't drive."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.03 s
+response time : 1.10 s
 Reply: ยังไม่ตรงครับ ลองใช้ “I can cook...” แล้วพูดต่อให้ครบประโยคครับ
 
 Step 6
@@ -303,43 +292,30 @@ Choices: 🏊 I can swim → "I can swim."
          🚗 I can't drive → "I can't drive."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 84.60 ms
-Reply: ตรงนี้พูดว่า "I can cook." ครับ 🏊
+response time : 125.82 ms
+Reply: ตรงนี้พูดว่า "I can cook." ครับ 🍳
 ไปต่อกันเลย — What can or can't you do?
 
 Step 7
-AI: ตรงนี้พูดว่า "I can cook." ครับ 🏊
+AI: ตรงนี้พูดว่า "I can cook." ครับ 🍳
 ไปต่อกันเลย — What can or can't you do?
-Hint: (none)
-Choices: 🚗 I can't drive → "I can't drive." (repeat-only)
+Hint: I can...
+Choices: 🍳 I can cook → "I can cook."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.16 s
+response time : 1.37 s
 Reply: ยังไม่ตรงครับ ลองใช้ “I can...” แล้วพูดต่อให้ครบประโยคครับ
 
 Step 8
 AI: ยังไม่ตรงครับ ลองใช้ “I can...” แล้วพูดต่อให้ครบประโยคครับ
-Hint: (none)
-Choices: 🚗 I can't drive → "I can't drive." (repeat-only)
+Hint: I can...
+Choices: 🍳 I can cook → "I can cook."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 81.75 ms
+response time : 93.28 ms
 Reply: ตรงนี้พูดได้ว่า "I can cook." ครับ 🍳
 
 🎉 จบบทแล้วครับ Nana! วันนี้คุณพูด I can / I can't แล้วครับ 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ can_cant scenario 5 complete · 8 turns · 4.89 s
-
-================================================================================
-SUMMARY
-================================================================================
-
-can_cant
-  ✅ Scenario 1 — 4 steps · 445.41 ms
-  ✅ Scenario 2 — 4 steps · 4.77 s
-  ✅ Scenario 3 — 4 steps · 5.07 s
-  ✅ Scenario 4 — 8 steps · 4.79 s
-  ✅ Scenario 5 — 8 steps · 4.89 s
-
-Total: 5/5 passed
+✅ can_cant scenario 5 complete · 8 turns · 5.47 s

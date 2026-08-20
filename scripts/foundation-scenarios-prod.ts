@@ -11,6 +11,8 @@
  *     npx tsx scripts/foundation-scenarios-prod.ts
  *
  *   npx tsx scripts/foundation-scenarios-prod.ts greetings 1
+ *   npx tsx scripts/foundation-scenarios-prod.ts greetings yes_no_maybe
+ *   npx tsx scripts/foundation-scenarios-prod.ts greetings yes_no_maybe 3
  *   npx tsx scripts/foundation-scenarios-prod.ts 3              # all lessons, scenario 3
  *   npx tsx scripts/foundation-scenarios-prod.ts introductions  # one lesson, all scenarios
  */
@@ -36,7 +38,10 @@ try {
   ({ lessonIds, scenarios } = parseFoundationScenarioArgs(process.argv));
 } catch (err) {
   console.error(
-    'Usage: npx tsx scripts/foundation-scenarios-prod.ts [lessonId] [scenario 1-5]',
+    'Usage: npx tsx scripts/foundation-scenarios-prod.ts [lessonId ...] [scenario 1-5]',
+  );
+  console.error(
+    '       npx tsx scripts/foundation-scenarios-prod.ts greetings yes_no_maybe',
   );
   console.error(
     '       npx tsx scripts/foundation-scenarios-prod.ts [scenario 1-5]   # all lessons',

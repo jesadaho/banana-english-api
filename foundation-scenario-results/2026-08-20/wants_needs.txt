@@ -1,11 +1,3 @@
-API_BASE=https://banana-english-api-production.up.railway.app
-Lessons: wants_needs
-Scenarios: 1, 2, 3, 4, 5
-  1: Scenario 1 — in-pool correct ทุก step → จบบท
-  2: Scenario 2 — out-pool correct ทุก step → จบบท
-  3: Scenario 3 — out-pool close ทุก step → จบบท
-  4: Scenario 4 — out-pool wrong + in-pool พูดตาม recovery → จบบท
-  5: Scenario 5 — out-pool wrong + พูดตามผิดอีกครั้ง → soft-advance → จบบท
 
 ================================================================================
 wants_needs — Scenario 1 — in-pool correct ทุก step → จบบท
@@ -13,33 +5,33 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 ================================================================================
 
 Step 1
-AI: สวัสดีครับ Nana! วันนี้เรามาเรียน I want / I need / I have ครับ 💧 ลองพูดตามว่า I want water.
-Hint: (none)
-Choices: 🆘 I need help → "I need help." (repeat-only)
+AI: สวัสดีครับ Nana! วันนี้เรามาเรียน I want / I need / I have ครับ 💧 I want ใช้บอกสิ่งที่อยากได้, I need ใช้บอกสิ่งที่จำเป็นต้องใช้ และ I have ใช้บอกสิ่งที่มีอยู่แล้ว เริ่มจาก I want water. แปลว่า “ฉันอยากได้น้ำ” ลองพูดตามครับ
+Hint: I want water.
+Choices: 💧 I want water → "I want water."
+         🆘 I need help → "I need help."
+         🐕 I have a dog → "I have a dog."
 User: I want water.
 Result: correct in pool
-response time : 93.52 ms
+response time : 678.50 ms
 Reply: เก่งมากครับ! ถ้าต้องการความช่วยเหลือ — I need help. 🆘 ลองพูดตามครับ
 
 Step 2
 AI: เก่งมากครับ! ถ้าต้องการความช่วยเหลือ — I need help. 🆘 ลองพูดตามครับ
 Hint: (none)
-Choices: 🐕 I have a dog → "I have a dog."
-         🚗 I have a car → "I have a car."
+Choices: 🆘 I need help → "I need help."
 User: I need help.
 Result: correct in pool
-response time : 102.40 ms
+response time : 104.81 ms
 Reply: บอกว่ามีอะไร — I have a dog. 🐕 ลองพูดตามนะครับ
 
 Step 3
 AI: บอกว่ามีอะไร — I have a dog. 🐕 ลองพูดตามนะครับ
-Hint: I want water.
-Choices: 💧 I want water → "I want water."
-         🆘 I need help → "I need help."
-         🐕 I have a dog → "I have a dog."
+Hint: (none)
+Choices: 🐕 I have a dog → "I have a dog."
+         🚗 I have a car → "I have a car."
 User: I have a dog.
 Result: correct in pool
-response time : 128.86 ms
+response time : 94.82 ms
 Reply: ถ้าคุณกระหายน้ำ จะพูดว่าอะไรครับ? 💧
 
 Step 4
@@ -50,20 +42,20 @@ Choices: 💧 I want water → "I want water."
          🐕 I have a dog → "I have a dog."
 User: I want water.
 Result: correct in pool
-response time : 126.62 ms
+response time : 119.59 ms
 Reply: ลองพูดประโยคสั้นๆ ว่าคุณอยากได้ / ต้องการ / มีอะไรครับ 😊
 
 Step 5
 AI: ลองพูดประโยคสั้นๆ ว่าคุณอยากได้ / ต้องการ / มีอะไรครับ 😊
-Hint: (none)
-Choices: (none)
+Hint: I want... / I need... / I have...
+Choices: ☕ I want coffee → "I want coffee."
 User: I want coffee.
 Result: correct in pool
-response time : 85.01 ms
-Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณพูด I want / I need / I have ได้แล้ว — เก่งมากครับ! 🍌
+response time : 129.72 ms
+Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณพูด I want / I need / I have ได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ wants_needs scenario 1 complete · 5 turns · 536.40 ms
+✅ wants_needs scenario 1 complete · 5 turns · 1.13 s
 
 ================================================================================
 wants_needs — Scenario 2 — out-pool correct ทุก step → จบบท
@@ -71,57 +63,57 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 ================================================================================
 
 Step 1
-AI: สวัสดีครับ Nana! วันนี้เรามาเรียน I want / I need / I have ครับ 💧 ลองพูดตามว่า I want water.
-Hint: (none)
-Choices: 🆘 I need help → "I need help." (repeat-only)
+AI: สวัสดีครับ Nana! วันนี้เรามาเรียน I want / I need / I have ครับ 💧 I want ใช้บอกสิ่งที่อยากได้, I need ใช้บอกสิ่งที่จำเป็นต้องใช้ และ I have ใช้บอกสิ่งที่มีอยู่แล้ว เริ่มจาก I want water. แปลว่า “ฉันอยากได้น้ำ” ลองพูดตามครับ
+Hint: I want water.
+Choices: 💧 I want water → "I want water."
+         🆘 I need help → "I need help."
+         🐕 I have a dog → "I have a dog."
 User: I want water....
 Result: correct out pool
-response time : 1.04 s
-Reply: เก่งมากครับ Nana! ออกเสียงได้ชัดเจนและถูกต้องเลยครับ เก่งมากครับ! ถ้าต้องการความช่วยเหลือ — I need help. 🆘 ลองพูดตามครับ
+response time : 1.20 s
+Reply: เยี่ยมครับ! เก่งมากครับ! ถ้าต้องการความช่วยเหลือ — I need help. 🆘 ลองพูดตามครับ
 
 Step 2
-AI: เก่งมากครับ Nana! ออกเสียงได้ชัดเจนและถูกต้องเลยครับ เก่งมากครับ! ถ้าต้องการความช่วยเหลือ — I need help. 🆘 ลองพูดตามครับ
+AI: เยี่ยมครับ! เก่งมากครับ! ถ้าต้องการความช่วยเหลือ — I need help. 🆘 ลองพูดตามครับ
+Hint: (none)
+Choices: 🆘 I need help → "I need help."
+User: I need help....
+Result: correct out pool
+response time : 1.30 s
+Reply: เยี่ยมครับ! บอกว่ามีอะไร — I have a dog. 🐕 ลองพูดตามนะครับ
+
+Step 3
+AI: เยี่ยมครับ! บอกว่ามีอะไร — I have a dog. 🐕 ลองพูดตามนะครับ
 Hint: (none)
 Choices: 🐕 I have a dog → "I have a dog."
          🚗 I have a car → "I have a car."
-User: I need help....
-Result: correct out pool
-response time : 914.64 ms
-Reply: ยอดเยี่ยมมากครับ Nana! ออกเสียงได้ชัดเจนและถูกต้องเลยครับ บอกว่ามีอะไร — I have a dog. 🐕 ลองพูดตามนะครับ
-
-Step 3
-AI: ยอดเยี่ยมมากครับ Nana! ออกเสียงได้ชัดเจนและถูกต้องเลยครับ บอกว่ามีอะไร — I have a dog. 🐕 ลองพูดตามนะครับ
-Hint: I want water.
-Choices: 💧 I want water → "I want water."
-         🆘 I need help → "I need help."
-         🐕 I have a dog → "I have a dog."
 User: I have a dog....
 Result: correct out pool
-response time : 1.15 s
-Reply: ยอดเยี่ยมมากครับ Nana! ออกเสียงได้ชัดเจนและถูกต้องเลยครับ ถ้าคุณกระหายน้ำ จะพูดว่าอะไรครับ? 💧
+response time : 1.30 s
+Reply: ถูกต้องครับ! ถ้าคุณกระหายน้ำ จะพูดว่าอะไรครับ? 💧
 
 Step 4
-AI: ยอดเยี่ยมมากครับ Nana! ออกเสียงได้ชัดเจนและถูกต้องเลยครับ ถ้าคุณกระหายน้ำ จะพูดว่าอะไรครับ? 💧
+AI: ถูกต้องครับ! ถ้าคุณกระหายน้ำ จะพูดว่าอะไรครับ? 💧
 Hint: I want water.
 Choices: 💧 I want water → "I want water."
          🆘 I need help → "I need help."
          🐕 I have a dog → "I have a dog."
 User: I want water....
 Result: correct out pool
-response time : 1.22 s
-Reply: ถูกต้องแล้วครับ Nana! เก่งมากครับที่จำได้แม่นยำครับ ลองพูดประโยคสั้นๆ ว่าคุณอยากได้ / ต้องการ / มีอะไรครับ 😊
+response time : 1.49 s
+Reply: ถูกต้องครับ! ลองพูดประโยคสั้นๆ ว่าคุณอยากได้ / ต้องการ / มีอะไรครับ 😊
 
 Step 5
-AI: ถูกต้องแล้วครับ Nana! เก่งมากครับที่จำได้แม่นยำครับ ลองพูดประโยคสั้นๆ ว่าคุณอยากได้ / ต้องการ / มีอะไรครับ 😊
-Hint: (none)
-Choices: (none)
+AI: ถูกต้องครับ! ลองพูดประโยคสั้นๆ ว่าคุณอยากได้ / ต้องการ / มีอะไรครับ 😊
+Hint: I want... / I need... / I have...
+Choices: ☕ I want coffee → "I want coffee."
 User: I want coffee....
 Result: correct out pool
-response time : 1.13 s
-Reply: ถูกต้องแล้วครับ Nana! เก่งมากครับ ประโยคนี้สมบูรณ์และถูกต้องเลยครับ สุดยอดครับ Nana! 🎉 วันนี้คุณพูด I want / I need / I have ได้แล้ว — เก่งมากครับ! 🍌
+response time : 1.32 s
+Reply: ดีมากครับ! สุดยอดครับ Nana! 🎉 วันนี้คุณพูด I want / I need / I have ได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ wants_needs scenario 2 complete · 5 turns · 5.45 s
+✅ wants_needs scenario 2 complete · 5 turns · 6.62 s
 
 ================================================================================
 wants_needs — Scenario 3 — out-pool close ทุก step → จบบท
@@ -129,57 +121,66 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 ================================================================================
 
 Step 1
-AI: สวัสดีครับ Nana! วันนี้เรามาเรียน I want / I need / I have ครับ 💧 ลองพูดตามว่า I want water.
-Hint: (none)
-Choices: 🆘 I need help → "I need help." (repeat-only)
-User: I really want water
-Result: correct out pool
-response time : 1.39 s
-Reply: เก่งมากครับ Nana! ประโยคนี้ถูกต้องและชัดเจนมากครับ เก่งมากครับ! ถ้าต้องการความช่วยเหลือ — I need help. 🆘 ลองพูดตามครับ
+AI: สวัสดีครับ Nana! วันนี้เรามาเรียน I want / I need / I have ครับ 💧 I want ใช้บอกสิ่งที่อยากได้, I need ใช้บอกสิ่งที่จำเป็นต้องใช้ และ I have ใช้บอกสิ่งที่มีอยู่แล้ว เริ่มจาก I want water. แปลว่า “ฉันอยากได้น้ำ” ลองพูดตามครับ
+Hint: I want water.
+Choices: 💧 I want water → "I want water."
+         🆘 I need help → "I need help."
+         🐕 I have a dog → "I have a dog."
+User: I want waters.
+Result: close out pool
+response time : 1.37 s
+Reply: เกือบถูกแล้วครับ! พูดว่า I want water. 💧
+ต่อไปถ้าต้องการความช่วยเหลือ — I need help. 🆘 ลองพูดตามครับ
 
 Step 2
-AI: เก่งมากครับ Nana! ประโยคนี้ถูกต้องและชัดเจนมากครับ เก่งมากครับ! ถ้าต้องการความช่วยเหลือ — I need help. 🆘 ลองพูดตามครับ
+AI: เกือบถูกแล้วครับ! พูดว่า I want water. 💧
+ต่อไปถ้าต้องการความช่วยเหลือ — I need help. 🆘 ลองพูดตามครับ
+Hint: (none)
+Choices: 🆘 I need help → "I need help."
+User: I need helps.
+Result: close out pool
+response time : 1.66 s
+Reply: เกือบถูกแล้วครับ! พูดว่า I need help. 🆘
+บอกว่ามีอะไร — I have a dog. 🐕 ลองพูดตามนะครับ
+
+Step 3
+AI: เกือบถูกแล้วครับ! พูดว่า I need help. 🆘
+บอกว่ามีอะไร — I have a dog. 🐕 ลองพูดตามนะครับ
 Hint: (none)
 Choices: 🐕 I have a dog → "I have a dog."
          🚗 I have a car → "I have a car."
-User: I really need help
-Result: correct out pool
-response time : 1.14 s
-Reply: ยอดเยี่ยมครับ Nana! ประโยคนี้ถูกต้องและเป็นธรรมชาติมากครับ บอกว่ามีอะไร — I have a dog. 🐕 ลองพูดตามนะครับ
-
-Step 3
-AI: ยอดเยี่ยมครับ Nana! ประโยคนี้ถูกต้องและเป็นธรรมชาติมากครับ บอกว่ามีอะไร — I have a dog. 🐕 ลองพูดตามนะครับ
-Hint: I want water.
-Choices: 💧 I want water → "I want water."
-         🆘 I need help → "I need help."
-         🐕 I have a dog → "I have a dog."
-User: I have a dog....
-Result: correct out pool
-response time : 1.37 s
-Reply: ยอดเยี่ยมครับ Nana! ออกเสียงชัดเจนและถูกต้องมากครับ ถ้าคุณกระหายน้ำ จะพูดว่าอะไรครับ? 💧
+User: I have dog.
+Result: close out pool
+response time : 1.48 s
+Reply: เกือบถูกแล้วครับ! พูดว่า I have a dog. 🐕
+ต่อไปถ้าคุณกระหายน้ำ จะพูดว่าอะไรครับ? 💧
 
 Step 4
-AI: ยอดเยี่ยมครับ Nana! ออกเสียงชัดเจนและถูกต้องมากครับ ถ้าคุณกระหายน้ำ จะพูดว่าอะไรครับ? 💧
+AI: เกือบถูกแล้วครับ! พูดว่า I have a dog. 🐕
+ต่อไปถ้าคุณกระหายน้ำ จะพูดว่าอะไรครับ? 💧
 Hint: I want water.
 Choices: 💧 I want water → "I want water."
          🆘 I need help → "I need help."
          🐕 I have a dog → "I have a dog."
-User: I really want water
-Result: correct out pool
-response time : 1.54 s
-Reply: ถูกต้องครับ Nana! เก่งมากครับที่ใช้ประโยคได้ถูกต้องและเป็นธรรมชาติครับ ลองพูดประโยคสั้นๆ ว่าคุณอยากได้ / ต้องการ / มีอะไรครับ 😊
+User: I want waters.
+Result: close out pool
+response time : 1.18 s
+Reply: เกือบถูกแล้วครับ! พูดว่า I want water. 💧
+ลองพูดประโยคสั้นๆ ว่าคุณอยากได้ / ต้องการ / มีอะไรครับ 😊
 
 Step 5
-AI: ถูกต้องครับ Nana! เก่งมากครับที่ใช้ประโยคได้ถูกต้องและเป็นธรรมชาติครับ ลองพูดประโยคสั้นๆ ว่าคุณอยากได้ / ต้องการ / มีอะไรครับ 😊
-Hint: (none)
-Choices: (none)
-User: I really want coffee
-Result: correct out pool
-response time : 1.52 s
-Reply: ถูกต้องครับ Nana! ประโยคนี้ถูกต้องและเป็นธรรมชาติมากครับ เก่งมากครับ! สุดยอดครับ Nana! 🎉 วันนี้คุณพูด I want / I need / I have ได้แล้ว — เก่งมากครับ! 🍌
+AI: เกือบถูกแล้วครับ! พูดว่า I want water. 💧
+ลองพูดประโยคสั้นๆ ว่าคุณอยากได้ / ต้องการ / มีอะไรครับ 😊
+Hint: I want... / I need... / I have...
+Choices: ☕ I want coffee → "I want coffee."
+User: I want coffees.
+Result: close out pool
+response time : 1.48 s
+Reply: เกือบถูกแล้วครับ! พูดว่า I want coffee. ☕
+สุดยอดครับ Nana! 🎉 วันนี้คุณพูด I want / I need / I have ได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ wants_needs scenario 3 complete · 5 turns · 6.97 s
+✅ wants_needs scenario 3 complete · 5 turns · 7.17 s
 
 ================================================================================
 wants_needs — Scenario 4 — out-pool wrong + in-pool พูดตาม recovery → จบบท
@@ -187,63 +188,63 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 ================================================================================
 
 Step 1
-AI: สวัสดีครับ Nana! วันนี้เรามาเรียน I want / I need / I have ครับ 💧 ลองพูดตามว่า I want water.
-Hint: (none)
-Choices: 🆘 I need help → "I need help." (repeat-only)
+AI: สวัสดีครับ Nana! วันนี้เรามาเรียน I want / I need / I have ครับ 💧 I want ใช้บอกสิ่งที่อยากได้, I need ใช้บอกสิ่งที่จำเป็นต้องใช้ และ I have ใช้บอกสิ่งที่มีอยู่แล้ว เริ่มจาก I want water. แปลว่า “ฉันอยากได้น้ำ” ลองพูดตามครับ
+Hint: I want water.
+Choices: 💧 I want water → "I want water."
+         🆘 I need help → "I need help."
+         🐕 I have a dog → "I have a dog."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.11 s
-Reply: ยังไม่ใช่ครับ Nana ลองพูดตามว่า "I want water" นะครับ
+response time : 1.30 s
+Reply: เก่งมากครับ Nana! ลองพูดประโยคนี้ตามครูนะครับ "I want water." ลองพูดตามนะครับ
 
 Step 2
-AI: ยังไม่ใช่ครับ Nana ลองพูดตามว่า "I want water" นะครับ
-Hint: (none)
-Choices: 🆘 I need help → "I need help." (repeat-only)
+AI: เก่งมากครับ Nana! ลองพูดประโยคนี้ตามครูนะครับ "I want water." ลองพูดตามนะครับ
+Hint: I want water.
+Choices: 💧 I want water → "I want water."
+         🆘 I need help → "I need help."
+         🐕 I have a dog → "I have a dog."
 User: I want water.
 Result: correct in pool
-response time : 116.95 ms
+response time : 259.67 ms
 Reply: เก่งมากครับ! ถ้าต้องการความช่วยเหลือ — I need help. 🆘 ลองพูดตามครับ
 
 Step 3
 AI: เก่งมากครับ! ถ้าต้องการความช่วยเหลือ — I need help. 🆘 ลองพูดตามครับ
 Hint: (none)
-Choices: 🐕 I have a dog → "I have a dog."
-         🚗 I have a car → "I have a car."
+Choices: 🆘 I need help → "I need help."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.01 s
-Reply: ยังไม่ถูกครับ Nana ลองพูดว่า "I need help" นะครับ ลองพูดตามนะครับ
+response time : 1.24 s
+Reply: ยังไม่ถูกครับ Nana ลองพูดว่า "I need help." นะครับ ลองพูดตามนะครับ
 
 Step 4
-AI: ยังไม่ถูกครับ Nana ลองพูดว่า "I need help" นะครับ ลองพูดตามนะครับ
+AI: ยังไม่ถูกครับ Nana ลองพูดว่า "I need help." นะครับ ลองพูดตามนะครับ
 Hint: (none)
-Choices: 🐕 I have a dog → "I have a dog."
-         🚗 I have a car → "I have a car."
+Choices: 🆘 I need help → "I need help."
 User: I need help.
 Result: correct in pool
-response time : 104.03 ms
+response time : 107.11 ms
 Reply: บอกว่ามีอะไร — I have a dog. 🐕 ลองพูดตามนะครับ
 
 Step 5
 AI: บอกว่ามีอะไร — I have a dog. 🐕 ลองพูดตามนะครับ
-Hint: I want water.
-Choices: 💧 I want water → "I want water."
-         🆘 I need help → "I need help."
-         🐕 I have a dog → "I have a dog."
+Hint: (none)
+Choices: 🐕 I have a dog → "I have a dog."
+         🚗 I have a car → "I have a car."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.34 s
+response time : 1.90 s
 Reply: ยังไม่ตรงครับ ลองใช้ “I have a dog” หรือ “I have a car” ครับ
 
 Step 6
 AI: ยังไม่ตรงครับ ลองใช้ “I have a dog” หรือ “I have a car” ครับ
-Hint: I want water.
-Choices: 💧 I want water → "I want water."
-         🆘 I need help → "I need help."
-         🐕 I have a dog → "I have a dog."
+Hint: (none)
+Choices: 🐕 I have a dog → "I have a dog."
+         🚗 I have a car → "I have a car."
 User: I have a dog.
 Result: correct in pool
-response time : 89.13 ms
+response time : 541.78 ms
 Reply: ถ้าคุณกระหายน้ำ จะพูดว่าอะไรครับ? 💧
 
 Step 7
@@ -254,7 +255,7 @@ Choices: 💧 I want water → "I want water."
          🐕 I have a dog → "I have a dog."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.18 s
+response time : 1.13 s
 Reply: ยังไม่ตรงครับ ลองใช้ “I want water...” แล้วพูดต่อให้ครบประโยคครับ
 
 Step 8
@@ -265,29 +266,29 @@ Choices: 💧 I want water → "I want water."
          🐕 I have a dog → "I have a dog."
 User: I want water.
 Result: correct in pool
-response time : 110.13 ms
+response time : 116.50 ms
 Reply: ลองพูดประโยคสั้นๆ ว่าคุณอยากได้ / ต้องการ / มีอะไรครับ 😊
 
 Step 9
 AI: ลองพูดประโยคสั้นๆ ว่าคุณอยากได้ / ต้องการ / มีอะไรครับ 😊
-Hint: (none)
-Choices: (none)
+Hint: I want... / I need... / I have...
+Choices: ☕ I want coffee → "I want coffee."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.11 s
-Reply: ยังไม่ตรงครับ ลองใช้ “I want...” แล้วพูดต่อให้ครบประโยคครับ
+response time : 1.19 s
+Reply: ยังไม่ตรงครับ ลองใช้ “I want...” หรือ “I need...” ครับ
 
 Step 10
-AI: ยังไม่ตรงครับ ลองใช้ “I want...” แล้วพูดต่อให้ครบประโยคครับ
-Hint: (none)
-Choices: (none)
+AI: ยังไม่ตรงครับ ลองใช้ “I want...” หรือ “I need...” ครับ
+Hint: I want... / I need... / I have...
+Choices: ☕ I want coffee → "I want coffee."
 User: I want coffee.
 Result: correct in pool
-response time : 88.90 ms
-Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณพูด I want / I need / I have ได้แล้ว — เก่งมากครับ! 🍌
+response time : 96.13 ms
+Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณพูด I want / I need / I have ได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ wants_needs scenario 4 complete · 10 turns · 6.25 s
+✅ wants_needs scenario 4 complete · 10 turns · 7.87 s
 
 ================================================================================
 wants_needs — Scenario 5 — out-pool wrong + พูดตามผิดอีกครั้ง → soft-advance → จบบท
@@ -295,41 +296,45 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 ================================================================================
 
 Step 1
-AI: สวัสดีครับ Nana! วันนี้เรามาเรียน I want / I need / I have ครับ 💧 ลองพูดตามว่า I want water.
-Hint: (none)
-Choices: 🆘 I need help → "I need help." (repeat-only)
+AI: สวัสดีครับ Nana! วันนี้เรามาเรียน I want / I need / I have ครับ 💧 I want ใช้บอกสิ่งที่อยากได้, I need ใช้บอกสิ่งที่จำเป็นต้องใช้ และ I have ใช้บอกสิ่งที่มีอยู่แล้ว เริ่มจาก I want water. แปลว่า “ฉันอยากได้น้ำ” ลองพูดตามครับ
+Hint: I want water.
+Choices: 💧 I want water → "I want water."
+         🆘 I need help → "I need help."
+         🐕 I have a dog → "I have a dog."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.18 s
-Reply: เกือบถูกแล้วครับ Nana! ลองพูดตามว่า "I want water" อีกครั้งนะครับ
+response time : 1.28 s
+Reply: เก่งมากครับ Nana! ลองพูดประโยคนี้ตามครูนะครับ "I want water." ลองพูดตามนะครับ
 
 Step 2
-AI: เกือบถูกแล้วครับ Nana! ลองพูดตามว่า "I want water" อีกครั้งนะครับ
-Hint: (none)
-Choices: 🆘 I need help → "I need help." (repeat-only)
+AI: เก่งมากครับ Nana! ลองพูดประโยคนี้ตามครูนะครับ "I want water." ลองพูดตามนะครับ
+Hint: I want water.
+Choices: 💧 I want water → "I want water."
+         🆘 I need help → "I need help."
+         🐕 I have a dog → "I have a dog."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 93.00 ms
+response time : 85.68 ms
 Reply: ตรงนี้พูดว่า "I want water." ครับ 💧
-ไปต่อกันเลย — I need help.
+ไปต่อกันเลย — เก่งมากครับ! ถ้าต้องการความช่วยเหลือ — I need help. 🆘 ลองพูดตามครับ
 
 Step 3
 AI: ตรงนี้พูดว่า "I want water." ครับ 💧
-ไปต่อกันเลย — I need help.
+ไปต่อกันเลย — เก่งมากครับ! ถ้าต้องการความช่วยเหลือ — I need help. 🆘 ลองพูดตามครับ
 Hint: (none)
-Choices: 🆘 I need help → "I need help." (repeat-only)
+Choices: 🆘 I need help → "I need help."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.15 s
-Reply: ยังไม่ถูกครับ Nana ลองพูดว่า "I need help." นะครับ ลองพูดตามนะครับ
+response time : 1.16 s
+Reply: เกือบถูกแล้วครับ ลองพูดว่า "I need help." ชัดๆ อีกครั้งนะครับ ลองพูดตามนะครับ
 
 Step 4
-AI: ยังไม่ถูกครับ Nana ลองพูดว่า "I need help." นะครับ ลองพูดตามนะครับ
+AI: เกือบถูกแล้วครับ ลองพูดว่า "I need help." ชัดๆ อีกครั้งนะครับ ลองพูดตามนะครับ
 Hint: (none)
-Choices: 🆘 I need help → "I need help." (repeat-only)
+Choices: 🆘 I need help → "I need help."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 104.44 ms
+response time : 83.72 ms
 Reply: ตรงนี้พูดว่า "I need help." ครับ 🆘
 ไปต่อกันเลย — I have a dog.
 
@@ -337,19 +342,21 @@ Step 5
 AI: ตรงนี้พูดว่า "I need help." ครับ 🆘
 ไปต่อกันเลย — I have a dog.
 Hint: (none)
-Choices: 🆘 I need help → "I need help." (repeat-only)
+Choices: 🐕 I have a dog → "I have a dog."
+         🚗 I have a car → "I have a car."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.36 s
+response time : 1.59 s
 Reply: ยังไม่ตรงครับ ลองใช้ “I have a dog” หรือ “I have a car” ครับ
 
 Step 6
 AI: ยังไม่ตรงครับ ลองใช้ “I have a dog” หรือ “I have a car” ครับ
 Hint: (none)
-Choices: 🆘 I need help → "I need help." (repeat-only)
+Choices: 🐕 I have a dog → "I have a dog."
+         🚗 I have a car → "I have a car."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 109.19 ms
+response time : 93.69 ms
 Reply: ตรงนี้พูดว่า "I have a dog." ครับ 🐕
 ไปต่อกันเลย — I want water.
 
@@ -362,7 +369,7 @@ Choices: 💧 I want water → "I want water."
          🐕 I have a dog → "I have a dog."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.34 s
+response time : 1.21 s
 Reply: ยังไม่ตรงครับ ลองใช้ “I want water...” แล้วพูดต่อให้ครบประโยคครับ
 
 Step 8
@@ -373,43 +380,30 @@ Choices: 💧 I want water → "I want water."
          🐕 I have a dog → "I have a dog."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 101.89 ms
+response time : 93.85 ms
 Reply: ตรงนี้พูดว่า "I want water." ครับ 💧
 ไปต่อกันเลย — Say what you want, need, or have.
 
 Step 9
 AI: ตรงนี้พูดว่า "I want water." ครับ 💧
 ไปต่อกันเลย — Say what you want, need, or have.
-Hint: (none)
-Choices: 🆘 I need help → "I need help." (repeat-only)
+Hint: I want... / I need... / I have...
+Choices: ☕ I want coffee → "I want coffee."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.33 s
-Reply: ยังไม่ตรงครับ ลองใช้ “I want...” แล้วพูดต่อให้ครบประโยคครับ
+response time : 1.31 s
+Reply: ยังไม่ตรงครับ ลองใช้ “I want...” หรือ “I need...” ครับ
 
 Step 10
-AI: ยังไม่ตรงครับ ลองใช้ “I want...” แล้วพูดต่อให้ครบประโยคครับ
-Hint: (none)
-Choices: 🆘 I need help → "I need help." (repeat-only)
+AI: ยังไม่ตรงครับ ลองใช้ “I want...” หรือ “I need...” ครับ
+Hint: I want... / I need... / I have...
+Choices: ☕ I want coffee → "I want coffee."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 83.45 ms
+response time : 106.39 ms
 Reply: ตรงนี้พูดได้ว่า "I want coffee." ครับ ☕
 
 🎉 จบบทแล้วครับ Nana! วันนี้คุณพูด I want / I need / I have แล้วครับ 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ wants_needs scenario 5 complete · 10 turns · 6.86 s
-
-================================================================================
-SUMMARY
-================================================================================
-
-wants_needs
-  ✅ Scenario 1 — 5 steps · 536.40 ms
-  ✅ Scenario 2 — 5 steps · 5.45 s
-  ✅ Scenario 3 — 5 steps · 6.97 s
-  ✅ Scenario 4 — 10 steps · 6.25 s
-  ✅ Scenario 5 — 10 steps · 6.86 s
-
-Total: 5/5 passed
+✅ wants_needs scenario 5 complete · 10 turns · 7.02 s

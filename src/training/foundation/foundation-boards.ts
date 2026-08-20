@@ -546,7 +546,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'ถ้ามีคนช่วยคุณยกของหนัก คุณจะพูดว่าอะไรครับ? 🙏',
       withPraise: true,
-      stem: 'Thank you',
+      stem: '',
       expectedSpeech: 'Thank you.',
       options: [
         { emoji: '🙏', label: 'Please', speak: 'Please.' },
@@ -561,7 +561,7 @@ export const FOUNDATION_BOARDS: Record<
         'ถ้าคุณเดินชนคนโดยไม่ตั้งใจ ควรพูดว่าอะไรครับ? 😔',
       advanceQuestionEn: 'What do you say if you bump into someone?',
       withPraise: true,
-      stem: 'Sorry',
+      stem: '',
       expectedSpeech: "I'm sorry.",
       options: [
         { emoji: '🙏', label: 'Please', speak: 'Please.' },
@@ -607,7 +607,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'You are my friend. แปลว่า “คุณคือเพื่อนของฉัน” ต่อไปลองทบทวน I am กันครับ ถ้าจะบอกเพื่อนว่าคุณเป็นนักเรียน จะพูดว่าอะไรครับ? 🎓',
       withPraise: true,
-      stem: 'I am a student.',
+      stem: '',
       expectedSpeech: 'I am a student.',
       options: [
         { emoji: '🙋', label: 'I am a student.', speak: 'I am a student.' },
@@ -619,11 +619,10 @@ export const FOUNDATION_BOARDS: Record<
         'ลองพูดประโยคสั้นๆ เกี่ยวกับตัวคุณหรือคู่สนทนาครับ 😊',
       advanceQuestionEn: 'Say a short sentence about yourself.',
       withPraise: true,
-      stem: 'I am...',
+      stem: '',
       expectedSpeech: 'I am a student.',
-      options: [
-        { emoji: '🙋', label: 'I am a student.', speak: 'I am a student.' },
-      ],
+      incorrectHintTh: 'ยังไม่ตรงครับ ลองเริ่มด้วย “I am...” หรือ “You are...” แล้วพูดต่อให้ครบประโยคครับ',
+      options: [],
     },
   },
 
@@ -662,7 +661,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'ดีมากครับ! It is my bag. แปลว่า “มันคือกระเป๋าของฉัน” ถ้าจะพูดถึงกระเป๋าของคุณ ควรเลือกประโยคไหนครับ? 🎒',
       withPraise: true,
-      stem: 'It is my bag.',
+      stem: '',
       expectedSpeech: 'It is my bag.',
       options: [
         { emoji: '👨', label: 'He is my father.', speak: 'He is my father.' },
@@ -675,11 +674,10 @@ export const FOUNDATION_BOARDS: Record<
         'ลองพูดประโยคสั้นๆ เกี่ยวกับคนหรือสิ่งของครับ 😊',
       advanceQuestionEn: 'Say a sentence about someone or something.',
       withPraise: true,
-      stem: 'He is...',
+      stem: '',
       expectedSpeech: 'He is my father.',
-      options: [
-        { emoji: '👨', label: 'He is my father.', speak: 'He is my father.' },
-      ],
+      incorrectHintTh: 'ยังไม่ตรงครับ ลองเริ่มด้วย “He is...”, “She is...” หรือ “It is...” แล้วพูดต่อให้ครบประโยคครับ',
+      options: [],
     },
   },
 
@@ -694,17 +692,18 @@ export const FOUNDATION_BOARDS: Record<
     },
     2: {
       textEn:
-        'ต่อไป mother แปลว่า “แม่” 👩 ลองพูดตามคำว่า mother ครับ',
+        'ต่อไป mother แปลว่า “แม่” 👩 และจำไว้อีกคำว่า father แปลว่า “พ่อ” รอบนี้ลองพูดตามคำว่า mother ครับ',
       withPraise: true,
       stem: '',
       expectedSpeech: 'mother',
       options: [{ emoji: '👩', label: 'mother', speak: 'mother' }],
     },
     3: {
-      textEn: 'father แปลว่า “พ่อ” 👨 พ่อ ภาษาอังกฤษพูดว่าอะไรครับ?',
+      textEn: 'จากคำที่เพิ่งเรียน “พ่อ” ภาษาอังกฤษพูดว่าอะไรครับ? 👨',
       withPraise: true,
-      stem: 'father',
+      stem: '',
       expectedSpeech: 'father',
+      incorrectHintTh: 'ยังไม่ตรงครับ คำนี้ขึ้นต้นด้วยเสียง /f/ ครับ',
       options: [...FAMILY_VOCAB_OPTIONS],
     },
     4: {
@@ -789,8 +788,9 @@ export const FOUNDATION_BOARDS: Record<
     3: {
       textEn: 'เลข 7 อ่านว่าอะไรครับ? 7️⃣',
       withPraise: true,
-      stem: 'seven',
+      stem: '',
       expectedSpeech: 'seven',
+      incorrectHintTh: 'ยังไม่ตรงครับ คำอ่านเลข 7 ขึ้นต้นด้วยเสียง /s/ ครับ',
       options: [
         { emoji: '5️⃣', label: 'five', speak: 'five' },
         { emoji: '7️⃣', label: 'seven', speak: 'seven' },
@@ -810,9 +810,14 @@ export const FOUNDATION_BOARDS: Record<
       textEn: 'เลข 20 อ่านว่าอะไรครับ? 2️⃣0️⃣',
       advanceQuestionEn: 'How do you say twenty?',
       withPraise: true,
-      stem: 'twenty',
+      stem: '',
       expectedSpeech: 'twenty',
-      options: [{ emoji: '2️⃣0️⃣', label: 'twenty', speak: 'twenty' }],
+      incorrectHintTh: 'ยังไม่ตรงครับ เลขหลักสิบคำนี้ลงท้ายด้วยเสียง “-ty” ครับ',
+      options: [
+        { emoji: '1️⃣2️⃣', label: 'twelve', speak: 'twelve' },
+        { emoji: '2️⃣0️⃣', label: 'twenty', speak: 'twenty' },
+        { emoji: '2️⃣', label: 'two', speak: 'two' },
+      ],
     },
   },
 
@@ -851,7 +856,7 @@ export const FOUNDATION_BOARDS: Record<
     4: {
       textEn: '9:00 ตอนเย็น อ่านว่าอะไรครับ? 🌙',
       withPraise: true,
-      stem: "It's nine p.m.",
+      stem: '',
       expectedSpeech: "It's nine p.m.",
       options: [
         { emoji: '🕕', label: "six o'clock", speak: "It's six o'clock." },
@@ -864,11 +869,10 @@ export const FOUNDATION_BOARDS: Record<
       textEn: 'ลองบอกเวลาที่คุณตื่นเป็นภาษาอังกฤษครับ ⏰',
       advanceQuestionEn: 'What time do you wake up?',
       withPraise: true,
-      stem: "It's seven a.m.",
+      stem: '',
       expectedSpeech: "It's seven a.m.",
-      options: [
-        { emoji: '🌅', label: 'seven a.m.', speak: "It's seven a.m." },
-      ],
+      incorrectHintTh: 'ยังไม่ตรงครับ ลองเริ่มด้วย “It\'s...” แล้วตามด้วยเวลาที่คุณตื่นและ a.m. ครับ',
+      options: [],
     },
   },
 
@@ -894,8 +898,9 @@ export const FOUNDATION_BOARDS: Record<
     3: {
       textEn: 'เลข 62 อ่านว่าอะไรครับ? 🔢',
       withPraise: true,
-      stem: 'sixty-two',
+      stem: '',
       expectedSpeech: 'sixty-two',
+      incorrectHintTh: 'ยังไม่ตรงครับ ลองประกอบคำอ่านหลักสิบกับเลข 2 ครับ',
       options: [
         { emoji: '🎯', label: 'forty', speak: 'forty' },
         { emoji: '🏀', label: 'fifty', speak: 'fifty' },
@@ -915,9 +920,14 @@ export const FOUNDATION_BOARDS: Record<
       textEn: 'เลข 80 อ่านว่าอะไรครับ? 🔢',
       advanceQuestionEn: 'How do you say eighty?',
       withPraise: true,
-      stem: 'eighty',
+      stem: '',
       expectedSpeech: 'eighty',
-      options: [{ emoji: '8️⃣0️⃣', label: 'eighty', speak: 'eighty' }],
+      incorrectHintTh: 'ยังไม่ตรงครับ คำนี้เริ่มจาก eight และลงท้ายด้วยเสียง “-ty” ครับ',
+      options: [
+        { emoji: '8️⃣', label: 'eight', speak: 'eight' },
+        { emoji: '1️⃣8️⃣', label: 'eighteen', speak: 'eighteen' },
+        { emoji: '8️⃣0️⃣', label: 'eighty', speak: 'eighty' },
+      ],
     },
   },
 
@@ -957,7 +967,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'ถ้าเห็นป้ายราคา $10 คุณจะพูดว่าอะไรครับ? 💵',
       withPraise: true,
-      stem: "It's ten dollars.",
+      stem: '',
       expectedSpeech: "It's ten dollars.",
       options: [
         { emoji: '💬', label: 'How much is it?', speak: 'How much is it?' },
@@ -971,11 +981,10 @@ export const FOUNDATION_BOARDS: Record<
         'ลองบอกราคาสินค้าที่คุณชอบซื้อเป็นภาษาอังกฤษครับ 🛒',
       advanceQuestionEn: 'Say a price in English.',
       withPraise: true,
-      stem: "It's ten dollars.",
+      stem: '',
       expectedSpeech: "It's ten dollars.",
-      options: [
-        { emoji: '💵', label: "It's ten dollars", speak: "It's ten dollars." },
-      ],
+      incorrectHintTh: 'ยังไม่ตรงครับ ลองเริ่มด้วย “It\'s...” แล้วตามด้วยราคาและคำว่า dollars ครับ',
+      options: [],
     },
   },
 
@@ -1014,7 +1023,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'ถ้ามีคนเสนอชาให้ แต่คุณไม่ชอบ จะพูดว่าอะไรครับ? 🍵',
       withPraise: true,
-      stem: "I don't like tea.",
+      stem: '',
       expectedSpeech: "I don't like tea.",
       options: [
         { emoji: '☕', label: 'I like coffee', speak: 'I like coffee.' },
@@ -1027,11 +1036,10 @@ export const FOUNDATION_BOARDS: Record<
         'ลองบอกสิ่งที่คุณชอบหรือไม่ชอบจริงๆ เป็นภาษาอังกฤษครับ 😊',
       advanceQuestionEn: 'What do you like or dislike?',
       withPraise: true,
-      stem: 'I like...',
+      stem: '',
       expectedSpeech: 'I like coffee.',
-      options: [
-        { emoji: '☕', label: 'I like coffee', speak: 'I like coffee.' },
-      ],
+      incorrectHintTh: 'ยังไม่ตรงครับ ลองเริ่มด้วย “I like...” หรือ “I don\'t like...” แล้วพูดต่อครับ',
+      options: [],
     },
   },
 
@@ -1071,7 +1079,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'ถ้าคุณกระหายน้ำ จะพูดว่าอะไรครับ? 💧',
       withPraise: true,
-      stem: 'I want water.',
+      stem: '',
       expectedSpeech: 'I want water.',
       options: [
         { emoji: '💧', label: 'I want water', speak: 'I want water.' },
@@ -1084,11 +1092,10 @@ export const FOUNDATION_BOARDS: Record<
         'ลองพูดประโยคสั้นๆ ว่าคุณอยากได้ / ต้องการ / มีอะไรครับ 😊',
       advanceQuestionEn: 'Say what you want, need, or have.',
       withPraise: true,
-      stem: 'I want... / I need... / I have...',
+      stem: '',
       expectedSpeech: 'I want coffee.',
-      options: [
-        { emoji: '☕', label: 'I want coffee', speak: 'I want coffee.' },
-      ],
+      incorrectHintTh: 'ยังไม่ตรงครับ ลองเริ่มด้วย “I want...”, “I need...” หรือ “I have...” แล้วพูดต่อครับ',
+      options: [],
     },
   },
 
@@ -1117,7 +1124,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'ถ้าคุณทำอาหารได้ จะพูดว่าอะไรครับ? 🍳',
       withPraise: true,
-      stem: 'I can cook.',
+      stem: '',
       expectedSpeech: 'I can cook.',
       options: [
         { emoji: '🏊', label: 'I can swim', speak: 'I can swim.' },
@@ -1130,11 +1137,10 @@ export const FOUNDATION_BOARDS: Record<
         'ลองบอกความสามารถของคุณเป็นภาษาอังกฤษครับ 😊',
       advanceQuestionEn: 'What can or can\'t you do?',
       withPraise: true,
-      stem: 'I can...',
+      stem: '',
       expectedSpeech: 'I can cook.',
-      options: [
-        { emoji: '🍳', label: 'I can cook', speak: 'I can cook.' },
-      ],
+      incorrectHintTh: 'ยังไม่ตรงครับ ลองเริ่มด้วย “I can...” หรือ “I can\'t...” แล้วพูดต่อครับ',
+      options: [],
     },
   },
 
@@ -1185,7 +1191,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'ถ้าฟังไม่เข้าใจเลย ควรพูดประโยคไหนครับ? 🤷',
       withPraise: true,
-      stem: "I don't understand.",
+      stem: '',
       expectedSpeech: "I don't understand.",
       options: [
         {
@@ -1246,7 +1252,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'ดีมากครับ! How are you? แปลว่า “คุณเป็นอย่างไรบ้าง” ถ้าอยากรู้ว่าสิ่งนี้คืออะไร จะถามว่าอะไรครับ? ❓',
       withPraise: true,
-      stem: 'What is this?',
+      stem: '',
       expectedSpeech: 'What is this?',
       options: [
         { emoji: '❓', label: 'What is this?', speak: 'What is this?' },
@@ -1260,11 +1266,10 @@ export const FOUNDATION_BOARDS: Record<
         'ลองถามคำถามง่ายๆ ที่คุณใช้บ่อยเป็นภาษาอังกฤษครับ 😊',
       advanceQuestionEn: 'Ask a simple question in English.',
       withPraise: true,
-      stem: 'What is this?',
+      stem: '',
       expectedSpeech: 'What is this?',
-      options: [
-        { emoji: '❓', label: 'What is this?', speak: 'What is this?' },
-      ],
+      incorrectHintTh: 'ยังไม่ตรงครับ ลองเริ่มคำถามด้วย “What...”, “Where...”, “Who...” หรือ “How...” ครับ',
+      options: [],
     },
   },
 };

@@ -418,32 +418,30 @@ export function parseFoundationScenarioArgs(argv: string[]): {
   lessonIds: ScenarioLessonId[];
   scenarios: number[];
 } {
-  let lessonIds: ScenarioLessonId[] = [...ALL_SCENARIO_LESSON_IDS];
-  let scenarios = [1, 2, 3, 4, 5];
+  const args = argv.slice(2);
+  const known = ALL_SCENARIO_LESSON_IDS as readonly string[];
+  const lessonIds: ScenarioLessonId[] = [];
+  const scenarios: number[] = [];
 
-  const arg1 = argv[2];
-  const arg2 = argv[3];
-
-  if (arg1) {
-    if (/^\d+$/.test(arg1)) {
-      const n = Number(arg1);
+  for (const arg of args) {
+    if (/^\d+$/.test(arg)) {
+      const n = Number(arg);
       if (!Number.isInteger(n) || n < 1 || n > 5) {
         throw new Error('scenario must be 1–5');
       }
-      scenarios = [n];
-    } else if ((ALL_SCENARIO_LESSON_IDS as readonly string[]).includes(arg1)) {
-      lessonIds = [arg1 as ScenarioLessonId];
-      if (arg2) {
-        const n = Number(arg2);
-        if (!Number.isInteger(n) || n < 1 || n > 5) {
-          throw new Error('scenario must be 1–5');
-        }
-        scenarios = [n];
-      }
-    } else {
-      throw new Error(`unknown lesson: ${arg1}`);
+      if (!scenarios.includes(n)) scenarios.push(n);
+      continue;
+    }
+    if (!known.includes(arg)) {
+      throw new Error(`unknown lesson: ${arg}`);
+    }
+    if (!lessonIds.includes(arg as ScenarioLessonId)) {
+      lessonIds.push(arg as ScenarioLessonId);
     }
   }
 
-  return { lessonIds, scenarios };
+  return {
+    lessonIds: lessonIds.length > 0 ? lessonIds : [...ALL_SCENARIO_LESSON_IDS],
+    scenarios: scenarios.length > 0 ? scenarios : [1, 2, 3, 4, 5],
+  };
 }

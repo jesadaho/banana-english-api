@@ -26,10 +26,12 @@ describe('Foundation incorrect hints — Introductions standard', () => {
     assert.match(hint ?? '', /I am a student|I am a worker/);
   });
 
-  it('stem-guided steps get pattern hint', () => {
+  it('recall steps reveal a sound cue only after an incorrect answer', () => {
     const board = FOUNDATION_BOARDS.numbers[3];
+    assert.equal(board.stem, '');
     const hint = resolveIncorrectHintTh(board);
-    assert.match(hint ?? '', /seven/);
+    assert.match(hint ?? '', /เสียง \/s\//);
+    assert.doesNotMatch(hint ?? '', /seven/i);
   });
 
   it('introductions keeps explicit hints over auto', () => {

@@ -1,11 +1,3 @@
-API_BASE=https://banana-english-api-production.up.railway.app
-Lessons: likes_dislikes
-Scenarios: 1, 2, 3, 4, 5
-  1: Scenario 1 — in-pool correct ทุก step → จบบท
-  2: Scenario 2 — out-pool correct ทุก step → จบบท
-  3: Scenario 3 — out-pool close ทุก step → จบบท
-  4: Scenario 4 — out-pool wrong + in-pool พูดตาม recovery → จบบท
-  5: Scenario 5 — out-pool wrong + พูดตามผิดอีกครั้ง → soft-advance → จบบท
 
 ================================================================================
 likes_dislikes — Scenario 1 — in-pool correct ทุก step → จบบท
@@ -13,21 +5,21 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 ================================================================================
 
 Step 1
-AI: สวัสดีครับ Nana! วันนี้เรามาเรียนบอกสิ่งที่ชอบและไม่ชอบครับ ☕ ลองพูดตามว่า I like coffee.
-Hint: (none)
-Choices: 🍕 I like pizza → "I like pizza." (repeat-only)
+AI: สวัสดีครับ Nana! วันนี้เรามาเรียนบอกสิ่งที่ชอบและไม่ชอบครับ ☕ I like... แปลว่า “ฉันชอบ...” เช่น I like coffee. แปลว่า “ฉันชอบกาแฟ” ลองพูดตามว่า “I like coffee.” ครับ
+Hint: I like...
+Choices: ☕ I like coffee → "I like coffee."
 User: I like coffee.
 Result: correct in pool
-response time : 108.38 ms
+response time : 112.39 ms
 Reply: เก่งมากครับ! ถ้าชอบพิซซ่า — I like pizza. 🍕 ลองพูดตามครับ
 
 Step 2
 AI: เก่งมากครับ! ถ้าชอบพิซซ่า — I like pizza. 🍕 ลองพูดตามครับ
 Hint: (none)
-Choices: 🍵 I don't like tea → "I don't like tea." (repeat-only)
+Choices: 🍕 I like pizza → "I like pizza."
 User: I like pizza.
 Result: correct in pool
-response time : 91.95 ms
+response time : 88.48 ms
 Reply: ถ้าไม่ชอบชา ใช้ I don't like tea. 🍵 ลองพูดตามนะครับ
 
 Step 3
@@ -38,7 +30,7 @@ Choices: ☕ I like coffee → "I like coffee."
          🍵 I don't like tea → "I don't like tea."
 User: I don't like tea.
 Result: correct in pool
-response time : 86.79 ms
+response time : 184.56 ms
 Reply: ถ้ามีคนเสนอชาให้ แต่คุณไม่ชอบ จะพูดว่าอะไรครับ? 🍵
 
 Step 4
@@ -49,20 +41,20 @@ Choices: ☕ I like coffee → "I like coffee."
          🍵 I don't like tea → "I don't like tea."
 User: I don't like tea.
 Result: correct in pool
-response time : 108.17 ms
+response time : 99.70 ms
 Reply: ลองบอกสิ่งที่คุณชอบหรือไม่ชอบจริงๆ เป็นภาษาอังกฤษครับ 😊
 
 Step 5
 AI: ลองบอกสิ่งที่คุณชอบหรือไม่ชอบจริงๆ เป็นภาษาอังกฤษครับ 😊
-Hint: (none)
-Choices: (none)
+Hint: I like...
+Choices: ☕ I like coffee → "I like coffee."
 User: I like coffee.
 Result: correct in pool
-response time : 81.83 ms
-Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณบอกสิ่งที่ชอบและไม่ชอบได้แล้ว — เก่งมากครับ! 🍌
+response time : 126.91 ms
+Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณบอกสิ่งที่ชอบและไม่ชอบได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ likes_dislikes scenario 1 complete · 5 turns · 477.12 ms
+✅ likes_dislikes scenario 1 complete · 5 turns · 612.04 ms
 
 ================================================================================
 likes_dislikes — Scenario 2 — out-pool correct ทุก step → จบบท
@@ -70,56 +62,56 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 ================================================================================
 
 Step 1
-AI: สวัสดีครับ Nana! วันนี้เรามาเรียนบอกสิ่งที่ชอบและไม่ชอบครับ ☕ ลองพูดตามว่า I like coffee.
-Hint: (none)
-Choices: 🍕 I like pizza → "I like pizza." (repeat-only)
+AI: สวัสดีครับ Nana! วันนี้เรามาเรียนบอกสิ่งที่ชอบและไม่ชอบครับ ☕ I like... แปลว่า “ฉันชอบ...” เช่น I like coffee. แปลว่า “ฉันชอบกาแฟ” ลองพูดตามว่า “I like coffee.” ครับ
+Hint: I like...
+Choices: ☕ I like coffee → "I like coffee."
 User: I like coffee....
 Result: correct out pool
-response time : 1.66 s
-Reply: เก่งมากครับ Nana! ออกเสียงได้ชัดเจนและถูกต้องเลยครับ เก่งมากครับ! ถ้าชอบพิซซ่า — I like pizza. 🍕 ลองพูดตามครับ
+response time : 1.14 s
+Reply: เยี่ยมครับ! เก่งมากครับ! ถ้าชอบพิซซ่า — I like pizza. 🍕 ลองพูดตามครับ
 
 Step 2
-AI: เก่งมากครับ Nana! ออกเสียงได้ชัดเจนและถูกต้องเลยครับ เก่งมากครับ! ถ้าชอบพิซซ่า — I like pizza. 🍕 ลองพูดตามครับ
+AI: เยี่ยมครับ! เก่งมากครับ! ถ้าชอบพิซซ่า — I like pizza. 🍕 ลองพูดตามครับ
 Hint: (none)
-Choices: 🍵 I don't like tea → "I don't like tea." (repeat-only)
+Choices: 🍕 I like pizza → "I like pizza."
 User: I like pizza....
 Result: correct out pool
-response time : 1.16 s
-Reply: ยอดเยี่ยมมากครับ Nana! ออกเสียงได้ถูกต้องชัดเจนเลยครับ ถ้าไม่ชอบชา ใช้ I don't like tea. 🍵 ลองพูดตามนะครับ
+response time : 1.20 s
+Reply: เยี่ยมครับ! ถ้าไม่ชอบชา ใช้ I don't like tea. 🍵 ลองพูดตามนะครับ
 
 Step 3
-AI: ยอดเยี่ยมมากครับ Nana! ออกเสียงได้ถูกต้องชัดเจนเลยครับ ถ้าไม่ชอบชา ใช้ I don't like tea. 🍵 ลองพูดตามนะครับ
+AI: เยี่ยมครับ! ถ้าไม่ชอบชา ใช้ I don't like tea. 🍵 ลองพูดตามนะครับ
 Hint: I don't like tea.
 Choices: ☕ I like coffee → "I like coffee."
          🍕 I like pizza → "I like pizza."
          🍵 I don't like tea → "I don't like tea."
 User: I don't like tea....
 Result: correct out pool
-response time : 1.34 s
-Reply: ยอดเยี่ยมมากครับ Nana! ออกเสียงได้ถูกต้องชัดเจนเลยครับ ถ้ามีคนเสนอชาให้ แต่คุณไม่ชอบ จะพูดว่าอะไรครับ? 🍵
+response time : 1.86 s
+Reply: ดีมากครับ! ถ้ามีคนเสนอชาให้ แต่คุณไม่ชอบ จะพูดว่าอะไรครับ? 🍵
 
 Step 4
-AI: ยอดเยี่ยมมากครับ Nana! ออกเสียงได้ถูกต้องชัดเจนเลยครับ ถ้ามีคนเสนอชาให้ แต่คุณไม่ชอบ จะพูดว่าอะไรครับ? 🍵
+AI: ดีมากครับ! ถ้ามีคนเสนอชาให้ แต่คุณไม่ชอบ จะพูดว่าอะไรครับ? 🍵
 Hint: I don't like tea.
 Choices: ☕ I like coffee → "I like coffee."
          🍕 I like pizza → "I like pizza."
          🍵 I don't like tea → "I don't like tea."
 User: I don't like tea....
 Result: correct out pool
-response time : 1.10 s
-Reply: ถูกต้องแล้วครับ Nana! เก่งมากครับที่จำได้แม่นยำครับ ลองบอกสิ่งที่คุณชอบหรือไม่ชอบจริงๆ เป็นภาษาอังกฤษครับ 😊
+response time : 1.49 s
+Reply: ถูกต้องครับ! ลองบอกสิ่งที่คุณชอบหรือไม่ชอบจริงๆ เป็นภาษาอังกฤษครับ 😊
 
 Step 5
-AI: ถูกต้องแล้วครับ Nana! เก่งมากครับที่จำได้แม่นยำครับ ลองบอกสิ่งที่คุณชอบหรือไม่ชอบจริงๆ เป็นภาษาอังกฤษครับ 😊
-Hint: (none)
-Choices: (none)
+AI: ถูกต้องครับ! ลองบอกสิ่งที่คุณชอบหรือไม่ชอบจริงๆ เป็นภาษาอังกฤษครับ 😊
+Hint: I like...
+Choices: ☕ I like coffee → "I like coffee."
 User: I like coffee....
 Result: correct out pool
-response time : 1.12 s
-Reply: ถูกต้องครับ Nana! ประโยค "I like coffee." ถูกต้องและเป็นธรรมชาติมากครับ เก่งมากครับ! สุดยอดครับ Nana! 🎉 วันนี้คุณบอกสิ่งที่ชอบและไม่ชอบได้แล้ว — เก่งมากครับ! 🍌
+response time : 1.10 s
+Reply: เยี่ยมครับ! สุดยอดครับ Nana! 🎉 วันนี้คุณบอกสิ่งที่ชอบและไม่ชอบได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ likes_dislikes scenario 2 complete · 5 turns · 6.38 s
+✅ likes_dislikes scenario 2 complete · 5 turns · 6.79 s
 
 ================================================================================
 likes_dislikes — Scenario 3 — out-pool close ทุก step → จบบท
@@ -127,56 +119,65 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 ================================================================================
 
 Step 1
-AI: สวัสดีครับ Nana! วันนี้เรามาเรียนบอกสิ่งที่ชอบและไม่ชอบครับ ☕ ลองพูดตามว่า I like coffee.
-Hint: (none)
-Choices: 🍕 I like pizza → "I like pizza." (repeat-only)
-User: I really like coffee
-Result: correct out pool
-response time : 1.11 s
-Reply: ยอดเยี่ยมมากครับ Nana! เก่งมากครับ เก่งมากครับ! ถ้าชอบพิซซ่า — I like pizza. 🍕 ลองพูดตามครับ
+AI: สวัสดีครับ Nana! วันนี้เรามาเรียนบอกสิ่งที่ชอบและไม่ชอบครับ ☕ I like... แปลว่า “ฉันชอบ...” เช่น I like coffee. แปลว่า “ฉันชอบกาแฟ” ลองพูดตามว่า “I like coffee.” ครับ
+Hint: I like...
+Choices: ☕ I like coffee → "I like coffee."
+User: I like coffee very.
+Result: close out pool
+response time : 1.24 s
+Reply: เกือบถูกแล้วครับ! พูดว่า I like coffee. ☕
+ต่อไปถ้าชอบพิซซ่า — I like pizza. 🍕 ลองพูดตามครับ
 
 Step 2
-AI: ยอดเยี่ยมมากครับ Nana! เก่งมากครับ เก่งมากครับ! ถ้าชอบพิซซ่า — I like pizza. 🍕 ลองพูดตามครับ
+AI: เกือบถูกแล้วครับ! พูดว่า I like coffee. ☕
+ต่อไปถ้าชอบพิซซ่า — I like pizza. 🍕 ลองพูดตามครับ
 Hint: (none)
-Choices: 🍵 I don't like tea → "I don't like tea." (repeat-only)
-User: I really like pizza
-Result: correct out pool
-response time : 1.02 s
-Reply: ยอดเยี่ยมมากครับ Nana! เก่งมากครับ! ถ้าไม่ชอบชา ใช้ I don't like tea. 🍵 ลองพูดตามนะครับ
+Choices: 🍕 I like pizza → "I like pizza."
+User: I like pizza very.
+Result: close out pool
+response time : 1.51 s
+Reply: เกือบถูกแล้วครับ! พูดว่า I like pizza. 🍕
+ต่อไปถ้าไม่ชอบชา ใช้ I don't like tea. 🍵 ลองพูดตามนะครับ
 
 Step 3
-AI: ยอดเยี่ยมมากครับ Nana! เก่งมากครับ! ถ้าไม่ชอบชา ใช้ I don't like tea. 🍵 ลองพูดตามนะครับ
+AI: เกือบถูกแล้วครับ! พูดว่า I like pizza. 🍕
+ต่อไปถ้าไม่ชอบชา ใช้ I don't like tea. 🍵 ลองพูดตามนะครับ
 Hint: I don't like tea.
 Choices: ☕ I like coffee → "I like coffee."
          🍕 I like pizza → "I like pizza."
          🍵 I don't like tea → "I don't like tea."
-User: I do not like tea.
-Result: correct out pool
-response time : 1.14 s
-Reply: ยอดเยี่ยมมากครับ Nana! เก่งมากครับ! ถ้ามีคนเสนอชาให้ แต่คุณไม่ชอบ จะพูดว่าอะไรครับ? 🍵
+User: I no like tea.
+Result: close out pool
+response time : 1.32 s
+Reply: เกือบถูกแล้วครับ! พูดว่า I don't like tea. 🍵
+ต่อไปถ้ามีคนเสนอชาให้ แต่คุณไม่ชอบ จะพูดว่าอะไรครับ? 🍵
 
 Step 4
-AI: ยอดเยี่ยมมากครับ Nana! เก่งมากครับ! ถ้ามีคนเสนอชาให้ แต่คุณไม่ชอบ จะพูดว่าอะไรครับ? 🍵
+AI: เกือบถูกแล้วครับ! พูดว่า I don't like tea. 🍵
+ต่อไปถ้ามีคนเสนอชาให้ แต่คุณไม่ชอบ จะพูดว่าอะไรครับ? 🍵
 Hint: I don't like tea.
 Choices: ☕ I like coffee → "I like coffee."
          🍕 I like pizza → "I like pizza."
          🍵 I don't like tea → "I don't like tea."
-User: I do not like tea.
-Result: correct out pool
-response time : 1.13 s
-Reply: ถูกต้องแล้วครับ Nana! เก่งมากครับ! ต่อไปเรามาลองพูดถึงสิ่งที่เพื่อนชอบกันบ้างนะครับ ลองบอกสิ่งที่คุณชอบหรือไม่ชอบจริงๆ เป็นภาษาอังกฤษครับ 😊
+User: I no like tea.
+Result: close out pool
+response time : 1.30 s
+Reply: เกือบถูกแล้วครับ! พูดว่า I don't like tea. 🍵
+ลองบอกสิ่งที่คุณชอบหรือไม่ชอบจริงๆ เป็นภาษาอังกฤษครับ 😊
 
 Step 5
-AI: ถูกต้องแล้วครับ Nana! เก่งมากครับ! ต่อไปเรามาลองพูดถึงสิ่งที่เพื่อนชอบกันบ้างนะครับ ลองบอกสิ่งที่คุณชอบหรือไม่ชอบจริงๆ เป็นภาษาอังกฤษครับ 😊
-Hint: (none)
-Choices: (none)
-User: I really like coffee
-Result: correct out pool
-response time : 1.21 s
-Reply: ถูกต้องแล้วครับ Nana! เก่งมากครับ! คุณชอบดื่มกาแฟเหรอครับ? สุดยอดครับ Nana! 🎉 วันนี้คุณบอกสิ่งที่ชอบและไม่ชอบได้แล้ว — เก่งมากครับ! 🍌
+AI: เกือบถูกแล้วครับ! พูดว่า I don't like tea. 🍵
+ลองบอกสิ่งที่คุณชอบหรือไม่ชอบจริงๆ เป็นภาษาอังกฤษครับ 😊
+Hint: I like...
+Choices: ☕ I like coffee → "I like coffee."
+User: I like coffee very.
+Result: close out pool
+response time : 1.18 s
+Reply: เกือบถูกแล้วครับ! พูดว่า I like coffee. ☕
+สุดยอดครับ Nana! 🎉 วันนี้คุณบอกสิ่งที่ชอบและไม่ชอบได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ likes_dislikes scenario 3 complete · 5 turns · 5.61 s
+✅ likes_dislikes scenario 3 complete · 5 turns · 6.55 s
 
 ================================================================================
 likes_dislikes — Scenario 4 — out-pool wrong + in-pool พูดตาม recovery → จบบท
@@ -184,39 +185,39 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 ================================================================================
 
 Step 1
-AI: สวัสดีครับ Nana! วันนี้เรามาเรียนบอกสิ่งที่ชอบและไม่ชอบครับ ☕ ลองพูดตามว่า I like coffee.
-Hint: (none)
-Choices: 🍕 I like pizza → "I like pizza." (repeat-only)
+AI: สวัสดีครับ Nana! วันนี้เรามาเรียนบอกสิ่งที่ชอบและไม่ชอบครับ ☕ I like... แปลว่า “ฉันชอบ...” เช่น I like coffee. แปลว่า “ฉันชอบกาแฟ” ลองพูดตามว่า “I like coffee.” ครับ
+Hint: I like...
+Choices: ☕ I like coffee → "I like coffee."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.18 s
-Reply: เกือบถูกแล้วครับ! ลองพูดตามว่า "I like coffee." อีกครั้งนะครับ
+response time : 1.23 s
+Reply: ยังไม่ใช่ครับ ลองพูดว่า "I like coffee." เพื่อฝึกบอกสิ่งที่ชอบนะครับ ลองพูดตามนะครับ
 
 Step 2
-AI: เกือบถูกแล้วครับ! ลองพูดตามว่า "I like coffee." อีกครั้งนะครับ
-Hint: (none)
-Choices: 🍕 I like pizza → "I like pizza." (repeat-only)
+AI: ยังไม่ใช่ครับ ลองพูดว่า "I like coffee." เพื่อฝึกบอกสิ่งที่ชอบนะครับ ลองพูดตามนะครับ
+Hint: I like...
+Choices: ☕ I like coffee → "I like coffee."
 User: I like coffee.
 Result: correct in pool
-response time : 120.13 ms
+response time : 105.11 ms
 Reply: เก่งมากครับ! ถ้าชอบพิซซ่า — I like pizza. 🍕 ลองพูดตามครับ
 
 Step 3
 AI: เก่งมากครับ! ถ้าชอบพิซซ่า — I like pizza. 🍕 ลองพูดตามครับ
 Hint: (none)
-Choices: 🍵 I don't like tea → "I don't like tea." (repeat-only)
+Choices: 🍕 I like pizza → "I like pizza."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.14 s
-Reply: ยังไม่ใช่นะครับ ลองพูดว่า "I like pizza." อีกครั้งนะครับ ลองพูดตามนะครับ
+response time : 1.21 s
+Reply: ยังไม่ใช่ครับ ลองพูดว่า "I like pizza." นะครับ ลองพูดตามอีกครั้งนะครับ
 
 Step 4
-AI: ยังไม่ใช่นะครับ ลองพูดว่า "I like pizza." อีกครั้งนะครับ ลองพูดตามนะครับ
+AI: ยังไม่ใช่ครับ ลองพูดว่า "I like pizza." นะครับ ลองพูดตามอีกครั้งนะครับ
 Hint: (none)
-Choices: 🍵 I don't like tea → "I don't like tea." (repeat-only)
+Choices: 🍕 I like pizza → "I like pizza."
 User: I like pizza.
 Result: correct in pool
-response time : 107.90 ms
+response time : 117.57 ms
 Reply: ถ้าไม่ชอบชา ใช้ I don't like tea. 🍵 ลองพูดตามนะครับ
 
 Step 5
@@ -227,18 +228,18 @@ Choices: ☕ I like coffee → "I like coffee."
          🍵 I don't like tea → "I don't like tea."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.12 s
-Reply: ยังไม่ใช่นะครับ ลองพูดว่า "I don't like tea." อีกครั้งนะครับ ลองพูดตามนะครับ
+response time : 1.21 s
+Reply: ยังไม่ใช่ครับ ลองพูดว่า "I don't like tea." นะครับ ลองพูดตามอีกครั้งนะครับ
 
 Step 6
-AI: ยังไม่ใช่นะครับ ลองพูดว่า "I don't like tea." อีกครั้งนะครับ ลองพูดตามนะครับ
+AI: ยังไม่ใช่ครับ ลองพูดว่า "I don't like tea." นะครับ ลองพูดตามอีกครั้งนะครับ
 Hint: I don't like tea.
 Choices: ☕ I like coffee → "I like coffee."
          🍕 I like pizza → "I like pizza."
          🍵 I don't like tea → "I don't like tea."
 User: I don't like tea.
 Result: correct in pool
-response time : 106.90 ms
+response time : 132.72 ms
 Reply: ถ้ามีคนเสนอชาให้ แต่คุณไม่ชอบ จะพูดว่าอะไรครับ? 🍵
 
 Step 7
@@ -249,7 +250,7 @@ Choices: ☕ I like coffee → "I like coffee."
          🍵 I don't like tea → "I don't like tea."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.22 s
+response time : 1.16 s
 Reply: ยังไม่ตรงครับ ลองใช้ “I don't like tea...” แล้วพูดต่อให้ครบประโยคครับ
 
 Step 8
@@ -260,29 +261,29 @@ Choices: ☕ I like coffee → "I like coffee."
          🍵 I don't like tea → "I don't like tea."
 User: I don't like tea.
 Result: correct in pool
-response time : 84.20 ms
+response time : 106.25 ms
 Reply: ลองบอกสิ่งที่คุณชอบหรือไม่ชอบจริงๆ เป็นภาษาอังกฤษครับ 😊
 
 Step 9
 AI: ลองบอกสิ่งที่คุณชอบหรือไม่ชอบจริงๆ เป็นภาษาอังกฤษครับ 😊
-Hint: (none)
-Choices: (none)
+Hint: I like...
+Choices: ☕ I like coffee → "I like coffee."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.15 s
+response time : 1.72 s
 Reply: ยังไม่ตรงครับ ลองใช้ “I like...” แล้วพูดต่อให้ครบประโยคครับ
 
 Step 10
 AI: ยังไม่ตรงครับ ลองใช้ “I like...” แล้วพูดต่อให้ครบประโยคครับ
-Hint: (none)
-Choices: (none)
+Hint: I like...
+Choices: ☕ I like coffee → "I like coffee."
 User: I like coffee.
 Result: correct in pool
-response time : 114.90 ms
-Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณบอกสิ่งที่ชอบและไม่ชอบได้แล้ว — เก่งมากครับ! 🍌
+response time : 116.98 ms
+Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณบอกสิ่งที่ชอบและไม่ชอบได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ likes_dislikes scenario 4 complete · 10 turns · 6.34 s
+✅ likes_dislikes scenario 4 complete · 10 turns · 7.10 s
 
 ================================================================================
 likes_dislikes — Scenario 5 — out-pool wrong + พูดตามผิดอีกครั้ง → soft-advance → จบบท
@@ -290,61 +291,65 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 ================================================================================
 
 Step 1
-AI: สวัสดีครับ Nana! วันนี้เรามาเรียนบอกสิ่งที่ชอบและไม่ชอบครับ ☕ ลองพูดตามว่า I like coffee.
-Hint: (none)
-Choices: 🍕 I like pizza → "I like pizza." (repeat-only)
+AI: สวัสดีครับ Nana! วันนี้เรามาเรียนบอกสิ่งที่ชอบและไม่ชอบครับ ☕ I like... แปลว่า “ฉันชอบ...” เช่น I like coffee. แปลว่า “ฉันชอบกาแฟ” ลองพูดตามว่า “I like coffee.” ครับ
+Hint: I like...
+Choices: ☕ I like coffee → "I like coffee."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.08 s
-Reply: ยังไม่ใช่นะครับ ลองพูดตามว่า "I like coffee." อีกครั้งนะครับ
+response time : 1.80 s
+Reply: เก่งมากครับ แต่ลองพูดประโยคที่ครูสอนว่า "I like coffee." เพื่อฝึกใช้คำว่าชอบดูนะครับ ลองพูดตามนะครับ
 
 Step 2
-AI: ยังไม่ใช่นะครับ ลองพูดตามว่า "I like coffee." อีกครั้งนะครับ
-Hint: (none)
-Choices: 🍕 I like pizza → "I like pizza." (repeat-only)
+AI: เก่งมากครับ แต่ลองพูดประโยคที่ครูสอนว่า "I like coffee." เพื่อฝึกใช้คำว่าชอบดูนะครับ ลองพูดตามนะครับ
+Hint: I like...
+Choices: ☕ I like coffee → "I like coffee."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 144.94 ms
+response time : 101.26 ms
 Reply: ตรงนี้พูดว่า "I like coffee." ครับ ☕
-ไปต่อกันเลย — I like pizza.
+ไปต่อกันเลย — เก่งมากครับ! ถ้าชอบพิซซ่า — I like pizza. 🍕 ลองพูดตามครับ
 
 Step 3
 AI: ตรงนี้พูดว่า "I like coffee." ครับ ☕
-ไปต่อกันเลย — I like pizza.
+ไปต่อกันเลย — เก่งมากครับ! ถ้าชอบพิซซ่า — I like pizza. 🍕 ลองพูดตามครับ
 Hint: (none)
-Choices: 🍕 I like pizza → "I like pizza." (repeat-only)
+Choices: 🍕 I like pizza → "I like pizza."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.10 s
-Reply: ยังไม่ถูกครับ ลองพูดว่า "I like pizza." นะครับ ลองพูดตามนะครับ
+response time : 1.60 s
+Reply: ยังไม่ใช่นะครับ ลองพูดว่า "I like pizza." ตามครูนะครับ ลองพูดตามนะครับ
 
 Step 4
-AI: ยังไม่ถูกครับ ลองพูดว่า "I like pizza." นะครับ ลองพูดตามนะครับ
+AI: ยังไม่ใช่นะครับ ลองพูดว่า "I like pizza." ตามครูนะครับ ลองพูดตามนะครับ
 Hint: (none)
-Choices: 🍕 I like pizza → "I like pizza." (repeat-only)
+Choices: 🍕 I like pizza → "I like pizza."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 98.35 ms
+response time : 92.25 ms
 Reply: ตรงนี้พูดว่า "I like pizza." ครับ 🍕
-ไปต่อกันเลย — I don't like tea.
+ไปต่อกันเลย — ถ้าไม่ชอบชา ใช้ I don't like tea. 🍵 ลองพูดตามนะครับ
 
 Step 5
 AI: ตรงนี้พูดว่า "I like pizza." ครับ 🍕
-ไปต่อกันเลย — I don't like tea.
-Hint: (none)
-Choices: 🍕 I like pizza → "I like pizza." (repeat-only)
+ไปต่อกันเลย — ถ้าไม่ชอบชา ใช้ I don't like tea. 🍵 ลองพูดตามนะครับ
+Hint: I don't like tea.
+Choices: ☕ I like coffee → "I like coffee."
+         🍕 I like pizza → "I like pizza."
+         🍵 I don't like tea → "I don't like tea."
 User: Good morning.
 Result: incorrect out pool
-response time : 996.26 ms
-Reply: ยังไม่ถูกครับ ลองพูดว่า "I don't like tea." นะครับ ลองพูดตามนะครับ
+response time : 1.30 s
+Reply: ยังไม่ถูกครับ ลองพูดว่า "I don't like tea." ตามครูนะครับ ลองพูดตามนะครับ
 
 Step 6
-AI: ยังไม่ถูกครับ ลองพูดว่า "I don't like tea." นะครับ ลองพูดตามนะครับ
-Hint: (none)
-Choices: 🍕 I like pizza → "I like pizza." (repeat-only)
+AI: ยังไม่ถูกครับ ลองพูดว่า "I don't like tea." ตามครูนะครับ ลองพูดตามนะครับ
+Hint: I don't like tea.
+Choices: ☕ I like coffee → "I like coffee."
+         🍕 I like pizza → "I like pizza."
+         🍵 I don't like tea → "I don't like tea."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 99.71 ms
+response time : 89.28 ms
 Reply: ตรงนี้พูดว่า "I don't like tea." ครับ 🍵
 ไปต่อกันเลย — I don't like tea.
 
@@ -357,7 +362,7 @@ Choices: ☕ I like coffee → "I like coffee."
          🍵 I don't like tea → "I don't like tea."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.13 s
+response time : 1.31 s
 Reply: ยังไม่ตรงครับ ลองใช้ “I don't like tea...” แล้วพูดต่อให้ครบประโยคครับ
 
 Step 8
@@ -368,43 +373,30 @@ Choices: ☕ I like coffee → "I like coffee."
          🍵 I don't like tea → "I don't like tea."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 114.08 ms
-Reply: ตรงนี้พูดว่า "I don't like tea." ครับ ☕
+response time : 121.78 ms
+Reply: ตรงนี้พูดว่า "I don't like tea." ครับ 🍵
 ไปต่อกันเลย — What do you like or dislike?
 
 Step 9
-AI: ตรงนี้พูดว่า "I don't like tea." ครับ ☕
+AI: ตรงนี้พูดว่า "I don't like tea." ครับ 🍵
 ไปต่อกันเลย — What do you like or dislike?
-Hint: (none)
-Choices: 🍕 I like pizza → "I like pizza." (repeat-only)
+Hint: I like...
+Choices: ☕ I like coffee → "I like coffee."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.03 s
+response time : 1.69 s
 Reply: ยังไม่ตรงครับ ลองใช้ “I like...” แล้วพูดต่อให้ครบประโยคครับ
 
 Step 10
 AI: ยังไม่ตรงครับ ลองใช้ “I like...” แล้วพูดต่อให้ครบประโยคครับ
-Hint: (none)
-Choices: 🍕 I like pizza → "I like pizza." (repeat-only)
+Hint: I like...
+Choices: ☕ I like coffee → "I like coffee."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 89.92 ms
+response time : 701.52 ms
 Reply: ตรงนี้พูดได้ว่า "I like coffee." ครับ ☕
 
 🎉 จบบทแล้วครับ Nana! วันนี้คุณบอกสิ่งที่ชอบและไม่ชอบแล้วครับ 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ likes_dislikes scenario 5 complete · 10 turns · 5.87 s
-
-================================================================================
-SUMMARY
-================================================================================
-
-likes_dislikes
-  ✅ Scenario 1 — 5 steps · 477.12 ms
-  ✅ Scenario 2 — 5 steps · 6.38 s
-  ✅ Scenario 3 — 5 steps · 5.61 s
-  ✅ Scenario 4 — 10 steps · 6.34 s
-  ✅ Scenario 5 — 10 steps · 5.87 s
-
-Total: 5/5 passed
+✅ likes_dislikes scenario 5 complete · 10 turns · 8.80 s
