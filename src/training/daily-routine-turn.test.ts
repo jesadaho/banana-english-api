@@ -113,7 +113,7 @@ describe('daily routine v2 lanes (binary pool routing)', () => {
     });
     assert.equal(reply?.deferToAi, undefined);
     assert.match(reply!.textEn, /ตรงนี้พูดว่า "wake up"/);
-    assert.match(reply!.textEn, /ไปต่อกันเลย — What time do you wake up\?/);
+    assert.match(reply!.textEn, /ไปต่อกันเลย — ปกติคุณตื่นกี่โมงครับ/);
     assert.match(reply!.expectedSpeech ?? '', /I wake up at/i);
   });
 

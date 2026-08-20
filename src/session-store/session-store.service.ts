@@ -43,6 +43,12 @@ export interface ChatTurn {
    * Used by the app to bias Whisper on single-word repeat turns.
    */
   expectedSpeech?: string | null;
+  assessmentTier?: 'correct' | 'close' | 'incorrect';
+  wasSoftAdvance?: boolean;
+  completionStatus?:
+    | 'completed_independently'
+    | 'completed_with_support'
+    | 'needs_review';
   /** In-chat Emoji Speak card (ai turns only). */
   emojiSpeak?: EmojiSpeakPrompt | null;
   /** Full Emoji Speak batch (ai turns only). */

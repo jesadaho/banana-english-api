@@ -122,7 +122,7 @@ describe('food soft-advance message', () => {
     });
     assert.equal(reply?.deferToAi, undefined);
     assert.match(reply?.textEn ?? '', /ตรงนี้พูดว่า "I like pizza\."/);
-    assert.match(reply?.textEn ?? '', /ไปต่อกันเลย — What is pizza like\?/);
+    assert.match(reply?.textEn ?? '', /ไปต่อกันเลย — Pizza! ของโปรดเลยครับ/);
     assert.doesNotMatch(reply?.textEn ?? '', /ไม่เป็นไรครับ ไปต่อกัน! Pizza!/);
     assert.match(reply?.expectedSpeech ?? '', /Pizza is delicious/i);
   });

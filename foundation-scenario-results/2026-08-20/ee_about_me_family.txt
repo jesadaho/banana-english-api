@@ -10,7 +10,7 @@ Hint: (none)
 Choices: 👦 brother → "brother"
 User: brother
 Result: correct in pool
-response time : 97.08 ms
+response time : 98.47 ms
 Reply: ต่อไป mother แปลว่า “แม่” 👩 และจำไว้อีกคำว่า father แปลว่า “พ่อ” รอบนี้ลองพูดตามคำว่า mother ครับ
 
 Step 2
@@ -19,7 +19,7 @@ Hint: (none)
 Choices: 👩 mother → "mother"
 User: mother
 Result: correct in pool
-response time : 77.55 ms
+response time : 174.42 ms
 Reply: จากคำที่เพิ่งเรียน “พ่อ” ภาษาอังกฤษพูดว่าอะไรครับ? 👨
 
 Step 3
@@ -32,7 +32,7 @@ Choices: 👨‍👩‍👧 family → "family"
          👧 sister → "sister"
 User: father
 Result: correct in pool
-response time : 103.18 ms
+response time : 148.51 ms
 Reply: เยี่ยมเลยครับ! แนะนำคนหนึ่งคน — This is my father. 👨 ลองพูดตามนะครับ
 
 Step 4
@@ -42,7 +42,7 @@ Choices: 👆 This is my... → "This is my father."
          🔢 I have... → "I have one brother."
 User: This is my father.
 Result: correct in pool
-response time : 144.21 ms
+response time : 103.03 ms
 Reply: ลองแนะนำคนในครอบครัวอีกคนครับ — This is my sister. 👧
 
 Step 5
@@ -51,7 +51,7 @@ Hint: This is my...
 Choices: 👧 This is my sister. → "This is my sister."
 User: This is my sister.
 Result: correct in pool
-response time : 147.39 ms
+response time : 94.68 ms
 Reply: ต่อไปบอกว่ามีพี่น้องกี่คน — I have one brother. 👦 ลองพูดตามครับ
 
 Step 6
@@ -60,7 +60,7 @@ Hint: (none)
 Choices: 👦 I have one brother. → "I have one brother."
 User: I have one brother.
 Result: correct in pool
-response time : 101.07 ms
+response time : 114.66 ms
 Reply: แล้วถ้ามีพี่สาว/น้องสาวสองคน — I have two sisters. 👧👧 ลองพูดตามนะครับ
 
 Step 7
@@ -69,7 +69,7 @@ Hint: (none)
 Choices: 👧 I have two sisters. → "I have two sisters."
 User: I have two sisters.
 Result: correct in pool
-response time : 124.72 ms
+response time : 487.74 ms
 Reply: ขั้นตอนสุดท้ายครับ 😊 เลือกประโยคสั้นๆ เกี่ยวกับครอบครัวแล้วพูดตามนะครับ
 
 Step 8
@@ -79,11 +79,11 @@ Choices: 👆 This is my... → "This is my father."
          🔢 I have... → "I have one brother."
 User: This is my father.
 Result: correct in pool
-response time : 157.67 ms
+response time : 195.47 ms
 Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณแนะนำครอบครัวด้วย This is my... และ I have... ได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ ee_about_me_family scenario 1 complete · 8 turns · 952.87 ms
+✅ ee_about_me_family scenario 1 complete · 8 turns · 1.42 s
 
 ================================================================================
 ee_about_me_family — Scenario 2 — out-pool correct ทุก step → จบบท
@@ -96,7 +96,7 @@ Hint: (none)
 Choices: 👦 brother → "brother"
 User: brother....
 Result: correct out pool
-response time : 1.07 s
+response time : 1.19 s
 Reply: ดีมากครับ! ต่อไป mother แปลว่า “แม่” 👩 และจำไว้อีกคำว่า father แปลว่า “พ่อ” รอบนี้ลองพูดตามคำว่า mother ครับ
 
 Step 2
@@ -105,7 +105,7 @@ Hint: (none)
 Choices: 👩 mother → "mother"
 User: mother....
 Result: correct out pool
-response time : 1.06 s
+response time : 1.45 s
 Reply: ถูกต้องครับ! จากคำที่เพิ่งเรียน “พ่อ” ภาษาอังกฤษพูดว่าอะไรครับ? 👨
 
 Step 3
@@ -118,17 +118,17 @@ Choices: 👨‍👩‍👧 family → "family"
          👧 sister → "sister"
 User: father....
 Result: correct out pool
-response time : 1.18 s
-Reply: เยี่ยมครับ! เยี่ยมเลยครับ! แนะนำคนหนึ่งคน — This is my father. 👨 ลองพูดตามนะครับ
+response time : 1.90 s
+Reply: ถูกต้องครับ! เยี่ยมเลยครับ! แนะนำคนหนึ่งคน — This is my father. 👨 ลองพูดตามนะครับ
 
 Step 4
-AI: เยี่ยมครับ! เยี่ยมเลยครับ! แนะนำคนหนึ่งคน — This is my father. 👨 ลองพูดตามนะครับ
+AI: ถูกต้องครับ! เยี่ยมเลยครับ! แนะนำคนหนึ่งคน — This is my father. 👨 ลองพูดตามนะครับ
 Hint: This is my...
 Choices: 👆 This is my... → "This is my father."
          🔢 I have... → "I have one brother."
 User: This is my father....
 Result: correct out pool
-response time : 1.18 s
+response time : 1.47 s
 Reply: ดีมากครับ! ลองแนะนำคนในครอบครัวอีกคนครับ — This is my sister. 👧
 
 Step 5
@@ -137,39 +137,39 @@ Hint: This is my...
 Choices: 👧 This is my sister. → "This is my sister."
 User: This is my sister....
 Result: correct out pool
-response time : 1.40 s
-Reply: ดีมากครับ! ต่อไปบอกว่ามีพี่น้องกี่คน — I have one brother. 👦 ลองพูดตามครับ
+response time : 1.25 s
+Reply: เยี่ยมครับ! ต่อไปบอกว่ามีพี่น้องกี่คน — I have one brother. 👦 ลองพูดตามครับ
 
 Step 6
-AI: ดีมากครับ! ต่อไปบอกว่ามีพี่น้องกี่คน — I have one brother. 👦 ลองพูดตามครับ
+AI: เยี่ยมครับ! ต่อไปบอกว่ามีพี่น้องกี่คน — I have one brother. 👦 ลองพูดตามครับ
 Hint: (none)
 Choices: 👦 I have one brother. → "I have one brother."
 User: I have one brother....
 Result: correct out pool
-response time : 1.61 s
-Reply: ดีมากครับ! แล้วถ้ามีพี่สาว/น้องสาวสองคน — I have two sisters. 👧👧 ลองพูดตามนะครับ
+response time : 1.12 s
+Reply: ถูกต้องครับ! แล้วถ้ามีพี่สาว/น้องสาวสองคน — I have two sisters. 👧👧 ลองพูดตามนะครับ
 
 Step 7
-AI: ดีมากครับ! แล้วถ้ามีพี่สาว/น้องสาวสองคน — I have two sisters. 👧👧 ลองพูดตามนะครับ
+AI: ถูกต้องครับ! แล้วถ้ามีพี่สาว/น้องสาวสองคน — I have two sisters. 👧👧 ลองพูดตามนะครับ
 Hint: (none)
 Choices: 👧 I have two sisters. → "I have two sisters."
 User: I have two sisters....
 Result: correct out pool
-response time : 1.47 s
-Reply: เยี่ยมครับ! ขั้นตอนสุดท้ายครับ 😊 เลือกประโยคสั้นๆ เกี่ยวกับครอบครัวแล้วพูดตามนะครับ
+response time : 1.25 s
+Reply: ดีมากครับ! ขั้นตอนสุดท้ายครับ 😊 เลือกประโยคสั้นๆ เกี่ยวกับครอบครัวแล้วพูดตามนะครับ
 
 Step 8
-AI: เยี่ยมครับ! ขั้นตอนสุดท้ายครับ 😊 เลือกประโยคสั้นๆ เกี่ยวกับครอบครัวแล้วพูดตามนะครับ
+AI: ดีมากครับ! ขั้นตอนสุดท้ายครับ 😊 เลือกประโยคสั้นๆ เกี่ยวกับครอบครัวแล้วพูดตามนะครับ
 Hint: This is my...
 Choices: 👆 This is my... → "This is my father."
          🔢 I have... → "I have one brother."
 User: This is my father....
 Result: correct out pool
-response time : 1.27 s
+response time : 1.36 s
 Reply: ถูกต้องครับ! สุดยอดครับ Nana! 🎉 วันนี้คุณแนะนำครอบครัวด้วย This is my... และ I have... ได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ ee_about_me_family scenario 2 complete · 8 turns · 10.23 s
+✅ ee_about_me_family scenario 2 complete · 8 turns · 10.97 s
 
 ================================================================================
 ee_about_me_family — Scenario 3 — out-pool close ทุก step → จบบท
@@ -182,7 +182,7 @@ Hint: (none)
 Choices: 👦 brother → "brother"
 User: brotha
 Result: close out pool
-response time : 1.23 s
+response time : 1.14 s
 Reply: เกือบถูกแล้วครับ! พูดว่า brother. 👦
 ต่อไป mother แปลว่า “แม่” 👩 และจำไว้อีกคำว่า father แปลว่า “พ่อ” รอบนี้ลองพูดตามคำว่า mother ครับ
 
@@ -193,7 +193,7 @@ Hint: (none)
 Choices: 👩 mother → "mother"
 User: motha
 Result: close out pool
-response time : 1.30 s
+response time : 1.79 s
 Reply: เกือบถูกแล้วครับ! พูดว่า mother. 👩
 จากคำที่เพิ่งเรียน “พ่อ” ภาษาอังกฤษพูดว่าอะไรครับ? 👨
 
@@ -208,7 +208,7 @@ Choices: 👨‍👩‍👧 family → "family"
          👧 sister → "sister"
 User: fatha
 Result: close out pool
-response time : 1.40 s
+response time : 1.77 s
 Reply: เกือบถูกแล้วครับ! พูดว่า father. 👨
 แนะนำคนหนึ่งคน — This is my father. 👨 ลองพูดตามนะครับ
 
@@ -220,7 +220,7 @@ Choices: 👆 This is my... → "This is my father."
          🔢 I have... → "I have one brother."
 User: This my father.
 Result: close out pool
-response time : 1.25 s
+response time : 1.22 s
 Reply: เกือบถูกแล้วครับ! พูดว่า This is my father. 👨
 ลองแนะนำคนในครอบครัวอีกคนครับ — This is my sister. 👧
 
@@ -231,7 +231,7 @@ Hint: This is my...
 Choices: 👧 This is my sister. → "This is my sister."
 User: This my sister.
 Result: close out pool
-response time : 1.35 s
+response time : 1.14 s
 Reply: เกือบถูกแล้วครับ! พูดว่า This is my sister. 👧
 ต่อไปบอกว่ามีพี่น้องกี่คน — I have one brother. 👦 ลองพูดตามครับ
 
@@ -242,7 +242,7 @@ Hint: (none)
 Choices: 👦 I have one brother. → "I have one brother."
 User: I have brother.
 Result: close out pool
-response time : 1.14 s
+response time : 1.68 s
 Reply: เกือบถูกแล้วครับ! พูดว่า I have one brother. 👦
 แล้วถ้ามีพี่สาว/น้องสาวสองคน — I have two sisters. 👧👧 ลองพูดตามนะครับ
 
@@ -253,7 +253,7 @@ Hint: (none)
 Choices: 👧 I have two sisters. → "I have two sisters."
 User: I have two sister.
 Result: close out pool
-response time : 1.26 s
+response time : 1.32 s
 Reply: เกือบถูกแล้วครับ! พูดว่า I have two sisters. 👧
 ต่อไปขั้นตอนสุดท้ายครับ 😊 เลือกประโยคสั้นๆ เกี่ยวกับครอบครัวแล้วพูดตามนะครับ
 
@@ -265,12 +265,12 @@ Choices: 👆 This is my... → "This is my father."
          🔢 I have... → "I have one brother."
 User: This my father.
 Result: close out pool
-response time : 1.13 s
+response time : 1.15 s
 Reply: เกือบถูกแล้วครับ! พูดว่า This is my father. 👆
 สุดยอดครับ Nana! 🎉 วันนี้คุณแนะนำครอบครัวด้วย This is my... และ I have... ได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ ee_about_me_family scenario 3 complete · 8 turns · 10.06 s
+✅ ee_about_me_family scenario 3 complete · 8 turns · 11.20 s
 
 ================================================================================
 ee_about_me_family — Scenario 4 — out-pool wrong + in-pool พูดตาม recovery → จบบท
@@ -283,16 +283,16 @@ Hint: (none)
 Choices: 👦 brother → "brother"
 User: Good morning.
 Result: incorrect out pool
-response time : 1.22 s
-Reply: ยังไม่ใช่นะครับ ลองพูดตามว่า "brother" อีกครั้งนะครับ
+response time : 1.50 s
+Reply: ยังไม่ถูกต้องครับ ลองพูดคำว่า "brother" ตามครูอีกครั้งนะครับ ลองพูดตามนะครับ
 
 Step 2
-AI: ยังไม่ใช่นะครับ ลองพูดตามว่า "brother" อีกครั้งนะครับ
+AI: ยังไม่ถูกต้องครับ ลองพูดคำว่า "brother" ตามครูอีกครั้งนะครับ ลองพูดตามนะครับ
 Hint: (none)
 Choices: 👦 brother → "brother"
 User: brother
 Result: correct in pool
-response time : 86.92 ms
+response time : 95.08 ms
 Reply: ต่อไป mother แปลว่า “แม่” 👩 และจำไว้อีกคำว่า father แปลว่า “พ่อ” รอบนี้ลองพูดตามคำว่า mother ครับ
 
 Step 3
@@ -301,16 +301,16 @@ Hint: (none)
 Choices: 👩 mother → "mother"
 User: Good morning.
 Result: incorrect out pool
-response time : 1.26 s
-Reply: ยังไม่ถูกครับ ลองพูดว่า "mother" อีกครั้งนะครับ ลองพูดตามนะครับ
+response time : 1.24 s
+Reply: ยังไม่ถูกต้องครับ ลองพูดคำว่า "mother" ตามครูอีกครั้งนะครับ ลองพูดตามนะครับ
 
 Step 4
-AI: ยังไม่ถูกครับ ลองพูดว่า "mother" อีกครั้งนะครับ ลองพูดตามนะครับ
+AI: ยังไม่ถูกต้องครับ ลองพูดคำว่า "mother" ตามครูอีกครั้งนะครับ ลองพูดตามนะครับ
 Hint: (none)
 Choices: 👩 mother → "mother"
 User: mother
 Result: correct in pool
-response time : 104.87 ms
+response time : 104.86 ms
 Reply: จากคำที่เพิ่งเรียน “พ่อ” ภาษาอังกฤษพูดว่าอะไรครับ? 👨
 
 Step 5
@@ -323,7 +323,7 @@ Choices: 👨‍👩‍👧 family → "family"
          👧 sister → "sister"
 User: Good morning.
 Result: incorrect out pool
-response time : 1.26 s
+response time : 1.23 s
 Reply: ยังไม่ตรงครับ คำนี้ขึ้นต้นด้วยเสียง /f/ ครับ
 
 Step 6
@@ -336,7 +336,7 @@ Choices: 👨‍👩‍👧 family → "family"
          👧 sister → "sister"
 User: father
 Result: correct in pool
-response time : 217.92 ms
+response time : 107.49 ms
 Reply: เยี่ยมเลยครับ! แนะนำคนหนึ่งคน — This is my father. 👨 ลองพูดตามนะครับ
 
 Step 7
@@ -345,88 +345,96 @@ Hint: This is my...
 Choices: 👆 This is my... → "This is my father."
          🔢 I have... → "I have one brother."
 User: Good morning.
-Result: close out pool
-response time : 1.21 s
-Reply: เกือบถูกแล้วครับ! พูดว่า This is my father. 👨
-ลองแนะนำคนในครอบครัวอีกคนครับ — This is my sister. 👧
+Result: incorrect out pool
+response time : 1.37 s
+Reply: ยังไม่ถูกต้องครับ ลองพูดว่า "This is my father." อีกครั้งนะครับ ลองพูดตามนะครับ
 
 Step 8
-AI: เกือบถูกแล้วครับ! พูดว่า This is my father. 👨
-ลองแนะนำคนในครอบครัวอีกคนครับ — This is my sister. 👧
+AI: ยังไม่ถูกต้องครับ ลองพูดว่า "This is my father." อีกครั้งนะครับ ลองพูดตามนะครับ
+Hint: This is my...
+Choices: 👆 This is my... → "This is my father."
+         🔢 I have... → "I have one brother."
+User: This is my father.
+Result: correct in pool
+response time : 89.35 ms
+Reply: ลองแนะนำคนในครอบครัวอีกคนครับ — This is my sister. 👧
+
+Step 9
+AI: ลองแนะนำคนในครอบครัวอีกคนครับ — This is my sister. 👧
 Hint: This is my...
 Choices: 👧 This is my sister. → "This is my sister."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.27 s
+response time : 1.24 s
 Reply: ยังไม่ตรงครับ ลองใช้ “This is my...” แล้วพูดต่อให้ครบประโยคครับ
 
-Step 9
+Step 10
 AI: ยังไม่ตรงครับ ลองใช้ “This is my...” แล้วพูดต่อให้ครบประโยคครับ
 Hint: This is my...
 Choices: 👧 This is my sister. → "This is my sister."
 User: This is my sister.
 Result: correct in pool
-response time : 484.32 ms
+response time : 199.09 ms
 Reply: ต่อไปบอกว่ามีพี่น้องกี่คน — I have one brother. 👦 ลองพูดตามครับ
 
-Step 10
+Step 11
 AI: ต่อไปบอกว่ามีพี่น้องกี่คน — I have one brother. 👦 ลองพูดตามครับ
 Hint: (none)
 Choices: 👦 I have one brother. → "I have one brother."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.19 s
-Reply: ยังไม่ตรงครับ ลองพูดว่า "I have one brother." อีกครั้งนะครับ ลองพูดตามนะครับ
+response time : 1.34 s
+Reply: ยังไม่ถูกต้องครับ ลองพูดว่า "I have one brother." อีกครั้งนะครับ ลองพูดตามนะครับ
 
-Step 11
-AI: ยังไม่ตรงครับ ลองพูดว่า "I have one brother." อีกครั้งนะครับ ลองพูดตามนะครับ
+Step 12
+AI: ยังไม่ถูกต้องครับ ลองพูดว่า "I have one brother." อีกครั้งนะครับ ลองพูดตามนะครับ
 Hint: (none)
 Choices: 👦 I have one brother. → "I have one brother."
 User: I have one brother.
 Result: correct in pool
-response time : 108.25 ms
+response time : 148.68 ms
 Reply: แล้วถ้ามีพี่สาว/น้องสาวสองคน — I have two sisters. 👧👧 ลองพูดตามนะครับ
 
-Step 12
+Step 13
 AI: แล้วถ้ามีพี่สาว/น้องสาวสองคน — I have two sisters. 👧👧 ลองพูดตามนะครับ
 Hint: (none)
 Choices: 👧 I have two sisters. → "I have two sisters."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.28 s
-Reply: ยังไม่ตรงครับ ลองพูดว่า "I have two sisters." อีกครั้งนะครับ ลองพูดตามนะครับ
+response time : 1.14 s
+Reply: ยังไม่ถูกต้องครับ ลองพูดว่า "I have two sisters." อีกครั้งนะครับ ลองพูดตามนะครับ
 
-Step 13
-AI: ยังไม่ตรงครับ ลองพูดว่า "I have two sisters." อีกครั้งนะครับ ลองพูดตามนะครับ
+Step 14
+AI: ยังไม่ถูกต้องครับ ลองพูดว่า "I have two sisters." อีกครั้งนะครับ ลองพูดตามนะครับ
 Hint: (none)
 Choices: 👧 I have two sisters. → "I have two sisters."
 User: I have two sisters.
 Result: correct in pool
-response time : 108.25 ms
+response time : 108.84 ms
 Reply: ขั้นตอนสุดท้ายครับ 😊 เลือกประโยคสั้นๆ เกี่ยวกับครอบครัวแล้วพูดตามนะครับ
 
-Step 14
+Step 15
 AI: ขั้นตอนสุดท้ายครับ 😊 เลือกประโยคสั้นๆ เกี่ยวกับครอบครัวแล้วพูดตามนะครับ
 Hint: This is my...
 Choices: 👆 This is my... → "This is my father."
          🔢 I have... → "I have one brother."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.18 s
+response time : 1.42 s
 Reply: ยังไม่ตรงครับ ลองใช้ “This is my...” แล้วพูดต่อให้ครบประโยคครับ
 
-Step 15
+Step 16
 AI: ยังไม่ตรงครับ ลองใช้ “This is my...” แล้วพูดต่อให้ครบประโยคครับ
 Hint: This is my...
 Choices: 👆 This is my... → "This is my father."
          🔢 I have... → "I have one brother."
 User: This is my father.
 Result: correct in pool
-response time : 128.67 ms
+response time : 126.72 ms
 Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณแนะนำครอบครัวด้วย This is my... และ I have... ได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ ee_about_me_family scenario 4 complete · 15 turns · 11.12 s
+✅ ee_about_me_family scenario 4 complete · 16 turns · 11.45 s
 
 ================================================================================
 ee_about_me_family — Scenario 5 — out-pool wrong + พูดตามผิดอีกครั้ง → soft-advance → จบบท
@@ -439,16 +447,16 @@ Hint: (none)
 Choices: 👦 brother → "brother"
 User: Good morning.
 Result: incorrect out pool
-response time : 1.19 s
-Reply: ยังไม่ใช่นะครับ ลองพูดตามว่า "brother" อีกครั้งนะครับ
+response time : 1.43 s
+Reply: ยังไม่ใช่ครับ Nana ลองพูดคำว่า "brother" ตามครูอีกครั้งนะครับ ลองพูดตามนะครับ
 
 Step 2
-AI: ยังไม่ใช่นะครับ ลองพูดตามว่า "brother" อีกครั้งนะครับ
+AI: ยังไม่ใช่ครับ Nana ลองพูดคำว่า "brother" ตามครูอีกครั้งนะครับ ลองพูดตามนะครับ
 Hint: (none)
 Choices: 👦 brother → "brother"
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 151.26 ms
+response time : 208.03 ms
 Reply: ตรงนี้พูดว่า "brother" ครับ 👦
 ไปต่อกันเลย — ต่อไป mother แปลว่า “แม่” 👩 และจำไว้อีกคำว่า father แปลว่า “พ่อ” รอบนี้ลองพูดตามคำว่า mother ครับ
 
@@ -459,16 +467,16 @@ Hint: (none)
 Choices: 👩 mother → "mother"
 User: Good morning.
 Result: incorrect out pool
-response time : 1.84 s
-Reply: ยังไม่ถูกครับ ลองพูดว่า "mother" อีกครั้งนะครับ ลองพูดตามนะครับ
+response time : 1.24 s
+Reply: ยังไม่ถูกครับ Nana ลองพูดคำว่า "mother" ตามครูอีกครั้งนะครับ ลองพูดตามนะครับ
 
 Step 4
-AI: ยังไม่ถูกครับ ลองพูดว่า "mother" อีกครั้งนะครับ ลองพูดตามนะครับ
+AI: ยังไม่ถูกครับ Nana ลองพูดคำว่า "mother" ตามครูอีกครั้งนะครับ ลองพูดตามนะครับ
 Hint: (none)
 Choices: 👩 mother → "mother"
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 507.60 ms
+response time : 74.95 ms
 Reply: ตรงนี้พูดว่า "mother" ครับ 👩
 ไปต่อกันเลย — father
 
@@ -483,7 +491,7 @@ Choices: 👨‍👩‍👧 family → "family"
          👧 sister → "sister"
 User: Good morning.
 Result: incorrect out pool
-response time : 2.53 s
+response time : 1.50 s
 Reply: ยังไม่ตรงครับ คำนี้ขึ้นต้นด้วยเสียง /f/ ครับ
 
 Step 6
@@ -496,7 +504,7 @@ Choices: 👨‍👩‍👧 family → "family"
          👧 sister → "sister"
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 90.43 ms
+response time : 91.08 ms
 Reply: ตรงนี้พูดว่า "father" ครับ 👨
 ไปต่อกันเลย — เยี่ยมเลยครับ! แนะนำคนหนึ่งคน — This is my father. 👨 ลองพูดตามนะครับ
 
@@ -508,17 +516,17 @@ Choices: 👆 This is my... → "This is my father."
          🔢 I have... → "I have one brother."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.26 s
-Reply: ยังไม่ถูกครับ ลองพูดว่า "This is my father." อีกครั้งนะครับ ลองพูดตามนะครับ
+response time : 1.23 s
+Reply: ยังไม่ถูกครับ Nana ลองพูดว่า "This is my father." นะครับ ลองพูดตามนะครับ
 
 Step 8
-AI: ยังไม่ถูกครับ ลองพูดว่า "This is my father." อีกครั้งนะครับ ลองพูดตามนะครับ
+AI: ยังไม่ถูกครับ Nana ลองพูดว่า "This is my father." นะครับ ลองพูดตามนะครับ
 Hint: This is my...
 Choices: 👆 This is my... → "This is my father."
          🔢 I have... → "I have one brother."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 121.90 ms
+response time : 97.06 ms
 Reply: ตรงนี้พูดว่า "This is my father." ครับ 👨
 ไปต่อกันเลย — This is my sister.
 
@@ -529,7 +537,7 @@ Hint: This is my...
 Choices: 👧 This is my sister. → "This is my sister."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.22 s
+response time : 1.25 s
 Reply: ยังไม่ตรงครับ ลองใช้ “This is my...” แล้วพูดต่อให้ครบประโยคครับ
 
 Step 10
@@ -538,7 +546,7 @@ Hint: This is my...
 Choices: 👧 This is my sister. → "This is my sister."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 94.97 ms
+response time : 102.89 ms
 Reply: ตรงนี้พูดว่า "This is my sister." ครับ 👧
 ไปต่อกันเลย — ต่อไปบอกว่ามีพี่น้องกี่คน — I have one brother. 👦 ลองพูดตามครับ
 
@@ -549,16 +557,16 @@ Hint: (none)
 Choices: 👦 I have one brother. → "I have one brother."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.07 s
-Reply: ยังไม่ถูกต้องครับ ลองพูดว่า "I have one brother." อีกครั้งนะครับ ลองพูดตามนะครับ
+response time : 1.15 s
+Reply: ยังไม่ถูกครับ Nana ลองพูดว่า "I have one brother." นะครับ ลองพูดตามนะครับ
 
 Step 12
-AI: ยังไม่ถูกต้องครับ ลองพูดว่า "I have one brother." อีกครั้งนะครับ ลองพูดตามนะครับ
+AI: ยังไม่ถูกครับ Nana ลองพูดว่า "I have one brother." นะครับ ลองพูดตามนะครับ
 Hint: (none)
 Choices: 👦 I have one brother. → "I have one brother."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 98.04 ms
+response time : 120.92 ms
 Reply: ตรงนี้พูดว่า "I have one brother." ครับ 👦
 ไปต่อกันเลย — แล้วถ้ามีพี่สาว/น้องสาวสองคน — I have two sisters. 👧👧 ลองพูดตามนะครับ
 
@@ -569,16 +577,16 @@ Hint: (none)
 Choices: 👧 I have two sisters. → "I have two sisters."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.23 s
-Reply: ยังไม่ถูกต้องครับ ลองพูดว่า "I have two sisters." อีกครั้งนะครับ ลองพูดตามนะครับ
+response time : 1.63 s
+Reply: ยังไม่ถูกครับ Nana ลองพูดว่า "I have two sisters." นะครับ ลองพูดตามนะครับ
 
 Step 14
-AI: ยังไม่ถูกต้องครับ ลองพูดว่า "I have two sisters." อีกครั้งนะครับ ลองพูดตามนะครับ
+AI: ยังไม่ถูกครับ Nana ลองพูดว่า "I have two sisters." นะครับ ลองพูดตามนะครับ
 Hint: (none)
 Choices: 👧 I have two sisters. → "I have two sisters."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 123.20 ms
+response time : 102.29 ms
 Reply: ตรงนี้พูดว่า "I have two sisters." ครับ 👧
 ไปต่อกันเลย — Say a short family sentence.
 
@@ -590,7 +598,7 @@ Choices: 👆 This is my... → "This is my father."
          🔢 I have... → "I have one brother."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.32 s
+response time : 1.35 s
 Reply: ยังไม่ตรงครับ ลองใช้ “This is my...” แล้วพูดต่อให้ครบประโยคครับ
 
 Step 16
@@ -600,10 +608,10 @@ Choices: 👆 This is my... → "This is my father."
          🔢 I have... → "I have one brother."
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 110.68 ms
+response time : 166.88 ms
 Reply: ตรงนี้พูดได้ว่า "This is my father." ครับ 👆
 
 🎉 จบบทแล้วครับ Nana! วันนี้คุณแนะนำครอบครัวด้วย This is my... และ I have... แล้วครับ 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ ee_about_me_family scenario 5 complete · 16 turns · 12.95 s
+✅ ee_about_me_family scenario 5 complete · 16 turns · 11.75 s

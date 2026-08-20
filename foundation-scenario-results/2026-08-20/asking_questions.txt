@@ -10,7 +10,7 @@ Hint: (none)
 Choices: 🚻 Where is the bathroom? → "Where is the bathroom?"
 User: Where is the bathroom?
 Result: correct in pool
-response time : 99.35 ms
+response time : 186.85 ms
 Reply: ดีมากครับ! Where is the bathroom? แปลว่า “ห้องน้ำอยู่ที่ไหน” ต่อไป ถ้าต้องการถามว่า “ใคร” เราใช้ Who ครับ — Who is that? 👤 ลองพูดตามครับ
 
 Step 2
@@ -19,7 +19,7 @@ Hint: (none)
 Choices: 👤 Who is that? → "Who is that?"
 User: Who is that?
 Result: correct in pool
-response time : 109.37 ms
+response time : 73.21 ms
 Reply: เยี่ยมเลยครับ! Who is that? แปลว่า “คนนั้นคือใคร” ต่อไป ถ้าต้องการถามว่า “เป็นอย่างไร” เราใช้ How ครับ — How are you? 👋 ลองพูดตามนะครับ
 
 Step 3
@@ -28,7 +28,7 @@ Hint: (none)
 Choices: 👋 How are you? → "How are you?"
 User: How are you?
 Result: correct in pool
-response time : 101.26 ms
+response time : 74.09 ms
 Reply: ดีมากครับ! How are you? แปลว่า “คุณเป็นอย่างไรบ้าง” ถ้าอยากรู้ว่าสิ่งนี้คืออะไร จะถามว่าอะไรครับ? ❓
 
 Step 4
@@ -37,7 +37,7 @@ Hint: (none)
 Choices: (none)
 User: What is this?
 Result: correct in pool
-response time : 109.33 ms
+response time : 105.38 ms
 Reply: ลองถามคำถามง่ายๆ ที่คุณใช้บ่อยเป็นภาษาอังกฤษครับ 😊
 
 Step 5
@@ -46,11 +46,11 @@ Hint: (none)
 Choices: (none)
 User: What is this?
 Result: correct in pool
-response time : 105.72 ms
+response time : 128.11 ms
 Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณถามคำถามง่ายๆ ด้วย What, Where, Who และ How ได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ asking_questions scenario 1 complete · 5 turns · 525.04 ms
+✅ asking_questions scenario 1 complete · 5 turns · 567.64 ms
 
 ================================================================================
 asking_questions — Scenario 2 — out-pool correct ทุก step → จบบท
@@ -63,34 +63,34 @@ Hint: (none)
 Choices: 🚻 Where is the bathroom? → "Where is the bathroom?"
 User: Where is the bathroom....
 Result: correct out pool
-response time : 1.19 s
-Reply: เยี่ยมครับ! ดีมากครับ! Where is the bathroom? แปลว่า “ห้องน้ำอยู่ที่ไหน” ต่อไป ถ้าต้องการถามว่า “ใคร” เราใช้ Who ครับ — Who is that? 👤 ลองพูดตามครับ
+response time : 1.02 s
+Reply: ดีมากครับ! ดีมากครับ! Where is the bathroom? แปลว่า “ห้องน้ำอยู่ที่ไหน” ต่อไป ถ้าต้องการถามว่า “ใคร” เราใช้ Who ครับ — Who is that? 👤 ลองพูดตามครับ
 
 Step 2
-AI: เยี่ยมครับ! ดีมากครับ! Where is the bathroom? แปลว่า “ห้องน้ำอยู่ที่ไหน” ต่อไป ถ้าต้องการถามว่า “ใคร” เราใช้ Who ครับ — Who is that? 👤 ลองพูดตามครับ
+AI: ดีมากครับ! ดีมากครับ! Where is the bathroom? แปลว่า “ห้องน้ำอยู่ที่ไหน” ต่อไป ถ้าต้องการถามว่า “ใคร” เราใช้ Who ครับ — Who is that? 👤 ลองพูดตามครับ
 Hint: (none)
 Choices: 👤 Who is that? → "Who is that?"
 User: Who is that....
 Result: correct out pool
-response time : 1.23 s
-Reply: ถูกต้องครับ! เยี่ยมเลยครับ! Who is that? แปลว่า “คนนั้นคือใคร” ต่อไป ถ้าต้องการถามว่า “เป็นอย่างไร” เราใช้ How ครับ — How are you? 👋 ลองพูดตามนะครับ
+response time : 1.12 s
+Reply: ดีมากครับ! เยี่ยมเลยครับ! Who is that? แปลว่า “คนนั้นคือใคร” ต่อไป ถ้าต้องการถามว่า “เป็นอย่างไร” เราใช้ How ครับ — How are you? 👋 ลองพูดตามนะครับ
 
 Step 3
-AI: ถูกต้องครับ! เยี่ยมเลยครับ! Who is that? แปลว่า “คนนั้นคือใคร” ต่อไป ถ้าต้องการถามว่า “เป็นอย่างไร” เราใช้ How ครับ — How are you? 👋 ลองพูดตามนะครับ
+AI: ดีมากครับ! เยี่ยมเลยครับ! Who is that? แปลว่า “คนนั้นคือใคร” ต่อไป ถ้าต้องการถามว่า “เป็นอย่างไร” เราใช้ How ครับ — How are you? 👋 ลองพูดตามนะครับ
 Hint: (none)
 Choices: 👋 How are you? → "How are you?"
 User: How are you....
 Result: correct out pool
-response time : 1.17 s
-Reply: ดีมากครับ! ดีมากครับ! How are you? แปลว่า “คุณเป็นอย่างไรบ้าง” ถ้าอยากรู้ว่าสิ่งนี้คืออะไร จะถามว่าอะไรครับ? ❓
+response time : 1.09 s
+Reply: เยี่ยมครับ! ดีมากครับ! How are you? แปลว่า “คุณเป็นอย่างไรบ้าง” ถ้าอยากรู้ว่าสิ่งนี้คืออะไร จะถามว่าอะไรครับ? ❓
 
 Step 4
-AI: ดีมากครับ! ดีมากครับ! How are you? แปลว่า “คุณเป็นอย่างไรบ้าง” ถ้าอยากรู้ว่าสิ่งนี้คืออะไร จะถามว่าอะไรครับ? ❓
+AI: เยี่ยมครับ! ดีมากครับ! How are you? แปลว่า “คุณเป็นอย่างไรบ้าง” ถ้าอยากรู้ว่าสิ่งนี้คืออะไร จะถามว่าอะไรครับ? ❓
 Hint: (none)
 Choices: (none)
 User: What is this....
 Result: correct out pool
-response time : 1.12 s
+response time : 1.09 s
 Reply: ดีมากครับ! ลองถามคำถามง่ายๆ ที่คุณใช้บ่อยเป็นภาษาอังกฤษครับ 😊
 
 Step 5
@@ -99,11 +99,11 @@ Hint: (none)
 Choices: (none)
 User: What is this....
 Result: correct out pool
-response time : 1.14 s
-Reply: เยี่ยมครับ! สุดยอดครับ Nana! 🎉 วันนี้คุณถามคำถามง่ายๆ ด้วย What, Where, Who และ How ได้แล้ว 🍌
+response time : 1.12 s
+Reply: ดีมากครับ! สุดยอดครับ Nana! 🎉 วันนี้คุณถามคำถามง่ายๆ ด้วย What, Where, Who และ How ได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ asking_questions scenario 2 complete · 5 turns · 5.84 s
+✅ asking_questions scenario 2 complete · 5 turns · 5.44 s
 
 ================================================================================
 asking_questions — Scenario 3 — out-pool close ทุก step → จบบท
@@ -116,7 +116,7 @@ Hint: (none)
 Choices: 🚻 Where is the bathroom? → "Where is the bathroom?"
 User: Where the bathroom?
 Result: close out pool
-response time : 1.60 s
+response time : 1.40 s
 Reply: เกือบถูกแล้วครับ! พูดว่า Where is the bathroom. 🚻
 Where is the bathroom? แปลว่า “ห้องน้ำอยู่ที่ไหน” ต่อไป ถ้าต้องการถามว่า “ใคร” เราใช้ Who ครับ — Who is that? 👤 ลองพูดตามครับ
 
@@ -127,7 +127,7 @@ Hint: (none)
 Choices: 👤 Who is that? → "Who is that?"
 User: Who that?
 Result: close out pool
-response time : 1.24 s
+response time : 4.36 s
 Reply: เกือบถูกแล้วครับ! พูดว่า Who is that. 👤
 Who is that? แปลว่า “คนนั้นคือใคร” ต่อไป ถ้าต้องการถามว่า “เป็นอย่างไร” เราใช้ How ครับ — How are you? 👋 ลองพูดตามนะครับ
 
@@ -138,7 +138,7 @@ Hint: (none)
 Choices: 👋 How are you? → "How are you?"
 User: How you?
 Result: close out pool
-response time : 1.06 s
+response time : 1.19 s
 Reply: เกือบถูกแล้วครับ! พูดว่า How are you. 👋
 How are you? แปลว่า “คุณเป็นอย่างไรบ้าง” ถ้าอยากรู้ว่าสิ่งนี้คืออะไร จะถามว่าอะไรครับ? ❓
 
@@ -149,7 +149,7 @@ Hint: (none)
 Choices: (none)
 User: What this?
 Result: close out pool
-response time : 1.74 s
+response time : 1.24 s
 Reply: เกือบถูกแล้วครับ! พูดว่า What is this. ❓
 ลองถามคำถามง่ายๆ ที่คุณใช้บ่อยเป็นภาษาอังกฤษครับ 😊
 
@@ -160,12 +160,12 @@ Hint: (none)
 Choices: (none)
 User: What this?
 Result: close out pool
-response time : 1.28 s
+response time : 1.46 s
 Reply: เกือบถูกแล้วครับ! พูดว่า What is this.
 สุดยอดครับ Nana! 🎉 วันนี้คุณถามคำถามง่ายๆ ด้วย What, Where, Who และ How ได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ asking_questions scenario 3 complete · 5 turns · 6.92 s
+✅ asking_questions scenario 3 complete · 5 turns · 9.65 s
 
 ================================================================================
 asking_questions — Scenario 4 — out-pool wrong + in-pool พูดตาม recovery → จบบท
@@ -178,16 +178,16 @@ Hint: (none)
 Choices: 🚻 Where is the bathroom? → "Where is the bathroom?"
 User: Good morning.
 Result: incorrect out pool
-response time : 1.34 s
-Reply: ยังไม่ใช่ครับ Nana ลองพูดตามประโยคนี้ดูนะครับ "Where is the bathroom?"
+response time : 1.20 s
+Reply: ยังไม่ใช่นะครับ Nana ลองพูดว่า "Where is the bathroom?" เพื่อถามหาห้องน้ำดูนะครับ ลองพูดตามนะครับ
 
 Step 2
-AI: ยังไม่ใช่ครับ Nana ลองพูดตามประโยคนี้ดูนะครับ "Where is the bathroom?"
+AI: ยังไม่ใช่นะครับ Nana ลองพูดว่า "Where is the bathroom?" เพื่อถามหาห้องน้ำดูนะครับ ลองพูดตามนะครับ
 Hint: (none)
 Choices: 🚻 Where is the bathroom? → "Where is the bathroom?"
 User: Where is the bathroom?
 Result: correct in pool
-response time : 134.56 ms
+response time : 99.05 ms
 Reply: ดีมากครับ! Where is the bathroom? แปลว่า “ห้องน้ำอยู่ที่ไหน” ต่อไป ถ้าต้องการถามว่า “ใคร” เราใช้ Who ครับ — Who is that? 👤 ลองพูดตามครับ
 
 Step 3
@@ -196,16 +196,16 @@ Hint: (none)
 Choices: 👤 Who is that? → "Who is that?"
 User: Good morning.
 Result: incorrect out pool
-response time : 1.21 s
-Reply: ยังไม่ใช่ครับ Nana ลองพูดตามประโยคนี้ดูนะครับ "Who is that?"
+response time : 1.20 s
+Reply: ยังไม่ถูกครับ Nana ลองพูดว่า "Who is that?" เพื่อถามว่าคนนั้นคือใครนะครับ ลองพูดตามอีกครั้งครับ
 
 Step 4
-AI: ยังไม่ใช่ครับ Nana ลองพูดตามประโยคนี้ดูนะครับ "Who is that?"
+AI: ยังไม่ถูกครับ Nana ลองพูดว่า "Who is that?" เพื่อถามว่าคนนั้นคือใครนะครับ ลองพูดตามอีกครั้งครับ
 Hint: (none)
 Choices: 👤 Who is that? → "Who is that?"
 User: Who is that?
 Result: correct in pool
-response time : 89.23 ms
+response time : 122.43 ms
 Reply: เยี่ยมเลยครับ! Who is that? แปลว่า “คนนั้นคือใคร” ต่อไป ถ้าต้องการถามว่า “เป็นอย่างไร” เราใช้ How ครับ — How are you? 👋 ลองพูดตามนะครับ
 
 Step 5
@@ -214,16 +214,16 @@ Hint: (none)
 Choices: 👋 How are you? → "How are you?"
 User: Good morning.
 Result: incorrect out pool
-response time : 1.47 s
-Reply: ยังไม่ใช่ครับ Nana ลองพูดตามประโยคนี้ดูนะครับ "How are you?"
+response time : 1.31 s
+Reply: ยังไม่ถูกครับ Nana ลองพูดว่า "How are you?" เพื่อถามว่าเป็นอย่างไรบ้างนะครับ ลองพูดตามอีกครั้งครับ
 
 Step 6
-AI: ยังไม่ใช่ครับ Nana ลองพูดตามประโยคนี้ดูนะครับ "How are you?"
+AI: ยังไม่ถูกครับ Nana ลองพูดว่า "How are you?" เพื่อถามว่าเป็นอย่างไรบ้างนะครับ ลองพูดตามอีกครั้งครับ
 Hint: (none)
 Choices: 👋 How are you? → "How are you?"
 User: How are you?
 Result: correct in pool
-response time : 97.89 ms
+response time : 177.58 ms
 Reply: ดีมากครับ! How are you? แปลว่า “คุณเป็นอย่างไรบ้าง” ถ้าอยากรู้ว่าสิ่งนี้คืออะไร จะถามว่าอะไรครับ? ❓
 
 Step 7
@@ -232,7 +232,7 @@ Hint: (none)
 Choices: (none)
 User: Good morning.
 Result: incorrect out pool
-response time : 1.18 s
+response time : 1.50 s
 Reply: ยังไม่ตรงครับ ลองเลือกคำตอบที่ตรงกับคำถาม เช่น “What is this?” ครับ
 
 Step 8
@@ -241,7 +241,7 @@ Hint: (none)
 Choices: (none)
 User: What is this?
 Result: correct in pool
-response time : 153.33 ms
+response time : 320.44 ms
 Reply: ลองถามคำถามง่ายๆ ที่คุณใช้บ่อยเป็นภาษาอังกฤษครับ 😊
 
 Step 9
@@ -250,7 +250,7 @@ Hint: (none)
 Choices: (none)
 User: Good morning.
 Result: incorrect out pool
-response time : 1.24 s
+response time : 1.55 s
 Reply: ยังไม่ตรงครับ ลองเริ่มคำถามด้วย “What...”, “Where...”, “Who...” หรือ “How...” ครับ
 
 Step 10
@@ -259,11 +259,11 @@ Hint: (none)
 Choices: (none)
 User: What is this?
 Result: correct in pool
-response time : 92.48 ms
+response time : 97.52 ms
 Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณถามคำถามง่ายๆ ด้วย What, Where, Who และ How ได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ asking_questions scenario 4 complete · 10 turns · 7.01 s
+✅ asking_questions scenario 4 complete · 10 turns · 7.59 s
 
 ================================================================================
 asking_questions — Scenario 5 — out-pool wrong + พูดตามผิดอีกครั้ง → soft-advance → จบบท
@@ -276,16 +276,16 @@ Hint: (none)
 Choices: 🚻 Where is the bathroom? → "Where is the bathroom?"
 User: Good morning.
 Result: incorrect out pool
-response time : 1.27 s
-Reply: ยังไม่ใช่ครับ Nana ลองพูดว่า "Where is the bathroom?" เพื่อถามหาห้องน้ำดูนะครับ ลองพูดตามนะครับ
+response time : 1.33 s
+Reply: ยังไม่ถูกต้องครับ ลองพูดว่า "Where is the bathroom?" ตามครูอีกครั้งนะครับ ลองพูดตามนะครับ
 
 Step 2
-AI: ยังไม่ใช่ครับ Nana ลองพูดว่า "Where is the bathroom?" เพื่อถามหาห้องน้ำดูนะครับ ลองพูดตามนะครับ
+AI: ยังไม่ถูกต้องครับ ลองพูดว่า "Where is the bathroom?" ตามครูอีกครั้งนะครับ ลองพูดตามนะครับ
 Hint: (none)
 Choices: 🚻 Where is the bathroom? → "Where is the bathroom?"
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 187.38 ms
+response time : 110.85 ms
 Reply: ตรงนี้พูดว่า "Where is the bathroom?" ครับ 🚻
 ไปต่อกันเลย — ดีมากครับ! Where is the bathroom? แปลว่า “ห้องน้ำอยู่ที่ไหน” ต่อไป ถ้าต้องการถามว่า “ใคร” เราใช้ Who ครับ — Who is that? 👤 ลองพูดตามครับ
 
@@ -296,16 +296,16 @@ Hint: (none)
 Choices: 👤 Who is that? → "Who is that?"
 User: Good morning.
 Result: incorrect out pool
-response time : 1.55 s
-Reply: ยังไม่ถูกครับ Nana ลองพูดว่า "Who is that?" เพื่อถามว่า "นั่นคือใคร" นะครับ ลองพูดตามครับ
+response time : 1.07 s
+Reply: ยังไม่ถูกต้องครับ ลองพูดว่า "Who is that?" ตามครูอีกครั้งนะครับ ลองพูดตามนะครับ
 
 Step 4
-AI: ยังไม่ถูกครับ Nana ลองพูดว่า "Who is that?" เพื่อถามว่า "นั่นคือใคร" นะครับ ลองพูดตามครับ
+AI: ยังไม่ถูกต้องครับ ลองพูดว่า "Who is that?" ตามครูอีกครั้งนะครับ ลองพูดตามนะครับ
 Hint: (none)
 Choices: 👤 Who is that? → "Who is that?"
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 140.29 ms
+response time : 126.88 ms
 Reply: ตรงนี้พูดว่า "Who is that?" ครับ 👤
 ไปต่อกันเลย — เยี่ยมเลยครับ! Who is that? แปลว่า “คนนั้นคือใคร” ต่อไป ถ้าต้องการถามว่า “เป็นอย่างไร” เราใช้ How ครับ — How are you? 👋 ลองพูดตามนะครับ
 
@@ -316,16 +316,16 @@ Hint: (none)
 Choices: 👋 How are you? → "How are you?"
 User: Good morning.
 Result: incorrect out pool
-response time : 1.31 s
-Reply: ยังไม่ถูกครับ Nana ลองพูดว่า "How are you?" เพื่อถามว่า "เป็นอย่างไรบ้าง" นะครับ ลองพูดตามครับ
+response time : 1.08 s
+Reply: ยังไม่ถูกต้องครับ ลองพูดว่า "How are you?" ตามครูอีกครั้งนะครับ ลองพูดตามนะครับ
 
 Step 6
-AI: ยังไม่ถูกครับ Nana ลองพูดว่า "How are you?" เพื่อถามว่า "เป็นอย่างไรบ้าง" นะครับ ลองพูดตามครับ
+AI: ยังไม่ถูกต้องครับ ลองพูดว่า "How are you?" ตามครูอีกครั้งนะครับ ลองพูดตามนะครับ
 Hint: (none)
 Choices: 👋 How are you? → "How are you?"
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 110.92 ms
+response time : 93.61 ms
 Reply: ตรงนี้พูดว่า "How are you?" ครับ 👋
 ไปต่อกันเลย — How are you?
 
@@ -336,7 +336,7 @@ Hint: (none)
 Choices: (none)
 User: Good morning.
 Result: incorrect out pool
-response time : 1.25 s
+response time : 1.10 s
 Reply: ยังไม่ตรงครับ ลองเลือกคำตอบที่ตรงกับคำถาม เช่น “What is this?” ครับ
 
 Step 8
@@ -345,7 +345,7 @@ Hint: (none)
 Choices: (none)
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 119.03 ms
+response time : 115.90 ms
 Reply: ตรงนี้พูดว่า "What is this?" ครับ ❓
 ไปต่อกันเลย — Ask a simple question in English.
 
@@ -356,7 +356,7 @@ Hint: (none)
 Choices: (none)
 User: Good morning.
 Result: incorrect out pool
-response time : 1.31 s
+response time : 1.14 s
 Reply: ยังไม่ตรงครับ ลองเริ่มคำถามด้วย “What...”, “Where...”, “Who...” หรือ “How...” ครับ
 
 Step 10
@@ -365,10 +365,10 @@ Hint: (none)
 Choices: (none)
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 121.15 ms
+response time : 110.02 ms
 Reply: ตรงนี้พูดได้ว่า "What is this?" ครับ
 
 🎉 จบบทแล้วครับ Nana! วันนี้คุณถามคำถามง่ายๆ ด้วย What, Where, Who และ How แล้วครับ 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ asking_questions scenario 5 complete · 10 turns · 7.37 s
+✅ asking_questions scenario 5 complete · 10 turns · 6.27 s

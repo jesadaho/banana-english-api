@@ -230,7 +230,7 @@ describe('Foundation — introductions cross-step regression', () => {
     assert.ok(soft);
     assert.notEqual(soft!.deferToAi, true);
     assert.match(soft!.textEn ?? '', /Nice to meet you/);
-    assert.match(soft!.textEn ?? '', /ไปต่อกันเลย — Nice to meet you too/);
+    assert.match(soft!.textEn ?? '', /ไปต่อกันเลย — ถ้าครูพูดว่า Nice to meet you/);
     assert.equal(soft!.expectedSpeech, 'Nice to meet you too.');
   });
 
@@ -242,7 +242,7 @@ describe('Foundation — introductions cross-step regression', () => {
       'Nice to meet you too.',
     );
     assert.equal(result.steps.at(-1)?.progressAfter, def.maxStep);
-    assert.match(result.completionText, /สุดยอด/);
+    assert.match(result.completionText, /เรียนครบแล้วครับ/);
     assert.equal(
       result.steps.some((s) => s.userText.includes('Nice to meet you too.')),
       true,
@@ -579,7 +579,8 @@ describe('Foundation — introductions all-step scenarios', () => {
       if (record.step < def.maxStep) {
         assert.match(record.aiTextEn, /ไปต่อกันเลย —/);
       } else {
-        assert.match(record.aiTextEn, /จบบทแล้วครับ/);
+        assert.match(record.aiTextEn, /เรียนครบแล้วครับ/);
+        assert.doesNotMatch(record.aiTextEn, /🎉|สุดยอด|เก่งมาก/);
         assert.doesNotMatch(record.aiTextEn, /ไปต่อกันเลย —/);
       }
     }
@@ -767,7 +768,7 @@ describe('Foundation progress — yes_no_maybe out-pool does not rewind', () => 
       });
     }
 
-    assert.equal(turns.at(-1)?.textEn?.includes('สุดยอดครับ'), true);
+    assert.match(turns.at(-1)?.textEn ?? '', /🎉|🍌/);
   });
 
   it('soft-advance into No and Maybe states gives an explicit repeat instruction', () => {

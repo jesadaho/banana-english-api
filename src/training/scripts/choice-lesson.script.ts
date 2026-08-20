@@ -7,6 +7,8 @@ export type ChoiceLessonHistoryTurn = {
   speaker: string;
   textEn?: string;
   expectedSpeech?: string | null;
+  assessmentTier?: 'correct' | 'close' | 'incorrect';
+  wasSoftAdvance?: boolean;
   guidedSpeaking?: {
     options?: Array<{ speak?: string }>;
   } | null;
@@ -147,31 +149,13 @@ function lastUserText(turns: ChoiceLessonHistoryTurn[]): string {
   return '';
 }
 
-function extractEnglishQuestion(textEn: string): string {
-  const matches = [...textEn.matchAll(/([A-Za-z][^?]*\?)/g)];
-  if (matches.length > 0) {
-    return matches[matches.length - 1][1].trim();
-  }
-  return '';
-}
-
-function resolveSoftAdvanceQuestion(
+function localizedNextInstruction(
   nextBoard: GuidedBoard | null,
   nextScripted: ScriptTurnResult,
 ): string {
-  const explicit = nextBoard?.advanceQuestionEn?.trim();
-  if (explicit) return explicit;
-
-  const nextFull =
+  const localized =
     nextBoard?.textEn?.trim() || nextScripted.textEn?.trim() || '';
-  const fromText = extractEnglishQuestion(nextFull);
-  if (fromText) return fromText;
-
-  const nextExpected =
-    nextBoard?.expectedSpeech?.trim() || nextScripted.expectedSpeech?.trim();
-  if (nextExpected) return nextExpected;
-
-  return nextFull;
+  return stripLeadingPraiseOpener(localized).trim();
 }
 
 /** Single-option repeat board — append ลองพูดตาม on incorrect. */
@@ -186,25 +170,36 @@ function shouldAppendRepeatCue(board: GuidedBoard | null): boolean {
   return isRepeatOnlyBoard(board);
 }
 
-function formatFinalSoftAdvanceCelebration(completionText: string): string {
-  const trimmed = completionText.trim();
-  if (!trimmed) return '🎉 จบบทแล้วครับ! 🍌';
+export type LessonCompletionStatus =
+  | 'completed_independently'
+  | 'completed_with_support'
+  | 'needs_review';
 
-  const match = trimmed.match(
-    /^สุดยอดครับ\s+(.+?)!\s*🎉\s*(.+?)(?:\s*—\s*เก่งมากครับ!)?\s*🍌?\s*$/u,
+function completionStatusFromHistory(
+  history: ChoiceLessonHistoryTurn[],
+  maxStep: number,
+  extraSoftAdvances = 0,
+): LessonCompletionStatus {
+  const softAdvances =
+    history.filter((turn) => turn.speaker === 'ai' && turn.wasSoftAdvance).length +
+    extraSoftAdvances;
+  if (softAdvances >= Math.ceil(maxStep / 2)) return 'needs_review';
+  const receivedSupport = history.some(
+    (turn) => turn.speaker === 'ai' && turn.assessmentTier === 'incorrect',
   );
-  if (match) {
-    const [, name, body] = match;
-    const normalizedBody = body
-      .trim()
-      .replace(/ได้แล้ว\s*$/u, 'แล้ว')
-      .replace(/ได้\s*$/u, 'แล้ว');
-    return `🎉 จบบทแล้วครับ ${name}! ${normalizedBody}ครับ 🍌`;
-  }
+  return softAdvances > 0 || receivedSupport
+    ? 'completed_with_support'
+    : 'completed_independently';
+}
 
-  return trimmed
-    .replace(/^สุดยอดครับ/u, '🎉 จบบทแล้วครับ')
-    .replace(/\s*—\s*เก่งมากครับ!\s*🍌?\s*$/u, ' 🍌');
+function supportedCompletionText(
+  status: LessonCompletionStatus,
+  learnerFirstName: string,
+): string {
+  const name = learnerFirstName.trim() || 'เพื่อน';
+  return status === 'needs_review'
+    ? `เรียนครบแล้วครับ ${name} ลองทบทวนบทนี้อีกครั้งนะครับ`
+    : `เรียนครบแล้วครับ ${name} คุณทำบทเรียนจบโดยได้รับคำแนะนำบางส่วน ลองฝึกอีกครั้งเพื่อให้คล่องขึ้นนะครับ`;
 }
 
 /** Close out pool — recast canonical line, then next teaching (no double praise). */
@@ -273,10 +268,7 @@ export function buildSoftAdvanceTextEn(
 ): string {
   const model = failedBoard?.expectedSpeech?.trim() ?? '';
   const emoji = boardTargetEmoji(failedBoard);
-  const nextQuestion = resolveSoftAdvanceQuestion(nextBoard, nextScripted);
-  const nextInstruction = isRepeatOnlyBoard(nextBoard)
-    ? nextBoard?.textEn?.trim() || nextScripted.textEn?.trim() || nextQuestion
-    : nextQuestion;
+  const nextInstruction = localizedNextInstruction(nextBoard, nextScripted);
   const modelLine = model
     ? `ตรงนี้พูดว่า "${model}" ครับ${emoji ? ` ${emoji}` : ''}`
     : '';
@@ -285,10 +277,8 @@ export function buildSoftAdvanceTextEn(
     const finalModel = model
       ? `ตรงนี้พูดได้ว่า "${model}" ครับ${emoji ? ` ${emoji}` : ''}`
       : '';
-    const celebration = formatFinalSoftAdvanceCelebration(
-      nextScripted.textEn?.trim() ?? '',
-    );
-    return finalModel ? `${finalModel}\n\n${celebration}` : celebration;
+    const completion = nextScripted.textEn?.trim() ?? '';
+    return finalModel ? `${finalModel}\n\n${completion}` : completion;
   }
 
   if (modelLine && nextInstruction) {
@@ -303,14 +293,11 @@ function buildSoftAdvanceTextTh(
   nextScripted: ScriptTurnResult,
 ): string {
   const model = failedBoard?.expectedSpeech?.trim() ?? '';
-  const nextQuestion = resolveSoftAdvanceQuestion(nextBoard, nextScripted);
+  const nextQuestion = localizedNextInstruction(nextBoard, nextScripted);
   if (nextScripted.isLessonComplete) {
-    const celebration = formatFinalSoftAdvanceCelebration(
-      nextScripted.textEn?.trim() ?? '',
-    );
     return model
-      ? `You can say "${model}". ${celebration}`
-      : celebration;
+      ? `You can say "${model}". ${nextScripted.textEn?.trim() ?? ''}`
+      : nextScripted.textEn?.trim() ?? '';
   }
   if (model && nextQuestion) {
     return `We can say "${model}". Let's move on — ${nextQuestion}`;
@@ -396,13 +383,16 @@ export function buildGenericScriptedReplyFromProgress(
     if (def.afterTeachingComplete) {
       return def.afterTeachingComplete(history, learnerFirstName);
     }
-    const text =
-      def.completionText?.(learnerFirstName) ?? 'สุดยอดครับ! 🎉 เก่งมากครับ! 🍌';
+    const completionStatus = completionStatusFromHistory(history, def.maxStep);
+    const text = completionStatus === 'completed_independently'
+      ? def.completionText?.(learnerFirstName) ?? 'สุดยอดครับ! 🎉 เก่งมากครับ! 🍌'
+      : supportedCompletionText(completionStatus, learnerFirstName);
     return {
       textEn: text,
       textTh: '',
       isLessonComplete: true,
       expectsUserSpeech: false,
+      completionStatus,
     };
   }
 
@@ -630,8 +620,9 @@ export function pinChoiceLessonAiReply(
       };
     }
     const praise = correctAdvancePraise(aiReply.textEn?.trim() ?? '');
+    const nextBody = stripLeadingPraiseOpener(next.textEn?.trim() ?? '').trim();
     return {
-      textEn: `${praise} ${next.textEn}`.trim(),
+      textEn: `${praise} ${nextBody}`.trim(),
       textTh: aiReply.textTh?.trim() || next.textTh || '',
       isLessonComplete: next.isLessonComplete ?? false,
       expectsUserSpeech: next.expectsUserSpeech ?? true,
@@ -723,11 +714,22 @@ export function buildChoiceLessonAfterUser(
     if (!next) return null;
     const failedBoard = def.boardForStep(answeredStep, priorTurns, learnerFirstName);
     const nextBoard = def.boardForStep(replayAfter + 1, turns, learnerFirstName);
+    const completionStatus = next.isLessonComplete
+      ? completionStatusFromHistory(turns, def.maxStep, 1)
+      : undefined;
+    const composedNext = completionStatus
+      ? {
+          ...next,
+          completionStatus,
+          textEn: supportedCompletionText(completionStatus, learnerFirstName),
+        }
+      : next;
     return {
-      ...next,
-      textEn: buildSoftAdvanceTextEn(failedBoard, nextBoard, next),
-      textTh: buildSoftAdvanceTextTh(failedBoard, nextBoard, next),
+      ...composedNext,
+      textEn: buildSoftAdvanceTextEn(failedBoard, nextBoard, composedNext),
+      textTh: buildSoftAdvanceTextTh(failedBoard, nextBoard, composedNext),
       assessmentTier: 'incorrect' as const,
+      wasSoftAdvance: true,
     };
   }
 

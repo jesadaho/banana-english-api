@@ -18,6 +18,8 @@ export type Turn = {
   speaker: string;
   textEn?: string;
   expectedSpeech?: string | null;
+  assessmentTier?: 'correct' | 'close' | 'incorrect';
+  wasSoftAdvance?: boolean;
   guidedSpeaking?: { options?: Array<{ speak?: string }> } | null;
 };
 
@@ -691,6 +693,7 @@ export function runFoundationAllOutOfPoolGeminiAssess(
       textEn: assessed.textEn ?? '',
       expectedSpeech: assessed.expectedSpeech,
       guidedSpeaking: assessed.guidedSpeaking ?? null,
+      assessmentTier: assessed.assessmentTier,
     });
 
     let replyForStep = assessed;
@@ -719,6 +722,7 @@ export function runFoundationAllOutOfPoolGeminiAssess(
         speaker: 'ai',
         textEn: recovery!.textEn ?? '',
         expectedSpeech: recovery!.expectedSpeech,
+        assessmentTier: recovery!.assessmentTier,
       });
       replyForStep = recovery!;
     }
@@ -743,8 +747,8 @@ export function runFoundationAllOutOfPoolGeminiAssess(
   assert.equal(last.isLessonComplete, true, `${def.lessonId}: should complete`);
   assert.match(
     turns.at(-1)?.textEn ?? '',
-    /สุดยอด|🎉|🍌/,
-    `${def.lessonId}: celebrate copy`,
+    tier === 'incorrect' ? /เรียนครบแล้วครับ/ : /สุดยอด|🎉|🍌/,
+    `${def.lessonId}: performance-aware completion copy`,
   );
   return { turns, steps, completionText: turns.at(-1)?.textEn ?? '' };
 }
@@ -816,6 +820,7 @@ export function runFoundationAllOutOfPoolWrongThenSoftAdvance(
       speaker: 'ai',
       textEn: pinned.textEn ?? '',
       expectedSpeech: pinned.expectedSpeech,
+      assessmentTier: pinned.assessmentTier,
     });
 
     const wrongAgainText = wrongAgainFn(exact, step);
@@ -846,14 +851,18 @@ export function runFoundationAllOutOfPoolWrongThenSoftAdvance(
         `${def.lessonId} step ${step}: soft-advance choices must match step ${step + 1}`,
       );
     } else {
-      assert.match(soft!.textEn ?? '', /จบบทแล้วครับ/);
+      assert.match(soft!.textEn ?? '', /เรียนครบแล้วครับ/);
       assert.doesNotMatch(soft!.textEn ?? '', /ไปต่อกันเลย —/);
+      assert.equal(soft!.completionStatus, 'needs_review');
+      assert.doesNotMatch(soft!.textEn ?? '', /🎉|สุดยอด|เก่งมาก/);
     }
     assert.equal(soft!.assessmentTier, 'incorrect');
     turns.push({
       speaker: 'ai',
       textEn: soft!.textEn ?? '',
       expectedSpeech: soft!.expectedSpeech,
+      assessmentTier: soft!.assessmentTier,
+      wasSoftAdvance: soft!.wasSoftAdvance,
     });
 
     const progressAfter = choiceLessonEffectiveProgress(
@@ -876,8 +885,8 @@ export function runFoundationAllOutOfPoolWrongThenSoftAdvance(
   assert.equal(last.isLessonComplete, true, `${def.lessonId}: should complete`);
   assert.match(
     turns.at(-1)?.textEn ?? '',
-    /สุดยอด|🎉|🍌/,
-    `${def.lessonId}: celebrate copy`,
+    /เรียนครบแล้วครับ/,
+    `${def.lessonId}: needs-review completion copy`,
   );
   return { turns, steps, completionText: turns.at(-1)?.textEn ?? '' };
 }
@@ -922,7 +931,11 @@ export function runWrongTwiceThenFinishFromStep(
         currentBoard.expectedSpeech,
         `${def.lessonId}: 1st wrong pins current step`,
       );
-      turns.push({ speaker: 'ai', textEn: pinned.textEn ?? '' });
+      turns.push({
+        speaker: 'ai',
+        textEn: pinned.textEn ?? '',
+        assessmentTier: pinned.assessmentTier,
+      });
       continue;
     }
 
@@ -932,11 +945,16 @@ export function runWrongTwiceThenFinishFromStep(
     if (atStep < def.maxStep) {
       assert.match(route.textEn ?? '', /ไปต่อกันเลย —/);
     } else {
-      assert.match(route.textEn ?? '', /จบบทแล้วครับ/);
+      assert.match(route.textEn ?? '', /เรียนครบแล้วครับ/);
       assert.doesNotMatch(route.textEn ?? '', /ไปต่อกันเลย —/);
     }
     assert.equal(route.assessmentTier, 'incorrect');
-    turns.push({ speaker: 'ai', textEn: route.textEn ?? '' });
+    turns.push({
+      speaker: 'ai',
+      textEn: route.textEn ?? '',
+      assessmentTier: route.assessmentTier,
+      wasSoftAdvance: route.wasSoftAdvance,
+    });
 
     if (softStep <= def.maxStep) {
       const nextBoard = def.boardForStep(softStep, turns);
@@ -964,13 +982,18 @@ export function runWrongTwiceThenFinishFromStep(
       progressAfter: def.progressFn(turns),
       isLessonComplete: reply.isLessonComplete ?? false,
     });
-    turns.push({ speaker: 'ai', textEn: reply.textEn ?? '' });
+    turns.push({
+      speaker: 'ai',
+      textEn: reply.textEn ?? '',
+      assessmentTier: reply.assessmentTier,
+      wasSoftAdvance: reply.wasSoftAdvance,
+    });
   }
 
   const last = steps.at(-1)!;
   assert.equal(last.progressAfter, def.maxStep);
   assert.equal(last.isLessonComplete, true);
-  assert.match(last.aiTextEn, /สุดยอด/);
+  assert.match(last.aiTextEn, /เรียนครบแล้วครับ/);
 
   return { turns, steps, completionText: last.aiTextEn };
 }

@@ -965,6 +965,9 @@ export class SessionsController {
       expectedSpeech,
       emojiChoice,
       guidedSpeaking,
+      assessmentTier: reply.assessmentTier,
+      wasSoftAdvance: reply.wasSoftAdvance,
+      completionStatus: reply.completionStatus,
     });
 
     const response: TurnExchangeResponse = {
@@ -985,6 +988,8 @@ export class SessionsController {
       emojiChoice,
       guidedSpeaking,
       ...(reply.assessmentTier ? { assessmentTier: reply.assessmentTier } : {}),
+      ...(reply.wasSoftAdvance ? { wasSoftAdvance: true } : {}),
+      ...(reply.completionStatus ? { completionStatus: reply.completionStatus } : {}),
     };
 
     if (body.generateAudio) {

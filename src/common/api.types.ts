@@ -118,6 +118,11 @@ export interface TurnExchangeResponse {
    * correct / close → praise + advance; incorrect → soft-teach same step.
    */
   assessmentTier?: 'correct' | 'close' | 'incorrect';
+  wasSoftAdvance?: boolean;
+  completionStatus?:
+    | 'completed_independently'
+    | 'completed_with_support'
+    | 'needs_review';
   /** Timing breakdown — only when the client sends X-Chat-Debug: 1. */
   aiDebug?: AiDebug;
 }

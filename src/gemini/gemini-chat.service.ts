@@ -444,6 +444,13 @@ export interface TrainingTurnReply {
    * correct / close → server advances; incorrect → soft-teach same step.
    */
   assessmentTier?: 'correct' | 'close' | 'incorrect';
+  /** Scripted recovery advanced past the previous step after repeated misses. */
+  wasSoftAdvance?: boolean;
+  /** How independently the learner completed this lesson. */
+  completionStatus?:
+    | 'completed_independently'
+    | 'completed_with_support'
+    | 'needs_review';
   /** Multi-speaker Scene for Watch & Listen (Everyday Life, etc.). */
   scene?: {
     title?: string;
