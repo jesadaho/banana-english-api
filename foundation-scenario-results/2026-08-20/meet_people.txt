@@ -5,53 +5,54 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 ================================================================================
 
 Step 1
-AI: สวัสดีครับ Nana! วันนี้เรามาฝึกพูดถึงตัวเองและคู่สนทนาครับ 🙋 I am Nana. แปลว่า “ฉันคือ Nana” และ I am ใช้พูดถึงตัวเรา ลองพูดตามว่า “I am Nana.” ครับ
+AI: สวัสดีครับ Nana! วันนี้เป็นวันแรกในคลาสครับ 🙋 ถ้าเราเพิ่งมาใหม่ พูดว่า “I'm new here.” แปลว่า “ฉันเพิ่งมาใหม่” โดย I'm เป็นรูปสั้นของ I am ลองพูดตามครับ
 Hint: (none)
-Choices: 🙋 I am → "I am Nana."
-User: I am Nana.
+Choices: (none)
+User: I'm new here.
 Result: correct in pool
-response time : 108.03 ms
-Reply: ถ้าจะบอกว่าเป็นนักเรียน — I am a student. 🎓 ลองพูดตามครับ
+response time : 91.11 ms
+Reply: วันแรกในคลาส คุณรู้สึกตื่นเต้นครับ 😊 พูดว่า “I'm excited.” แปลว่า “ฉันรู้สึกตื่นเต้น” ลองพูดตามครับ
 
 Step 2
-AI: ถ้าจะบอกว่าเป็นนักเรียน — I am a student. 🎓 ลองพูดตามครับ
+AI: วันแรกในคลาส คุณรู้สึกตื่นเต้นครับ 😊 พูดว่า “I'm excited.” แปลว่า “ฉันรู้สึกตื่นเต้น” ลองพูดตามครับ
 Hint: (none)
-Choices: 🙋 I am a student. → "I am a student."
-         👉 You are my friend. → "You are my friend."
-User: I am a student.
+Choices: (none)
+User: I'm excited.
 Result: correct in pool
-response time : 118.52 ms
-Reply: ต่อไปพูดกับคนที่คุยด้วย — You are my friend. 👉 ลองพูดตามนะครับ
+response time : 130.18 ms
+Reply: คุณเจอ Ben ซึ่งเรียนห้องเดียวกับคุณครับ 👋 พูดว่า “You're my classmate.” แปลว่า “คุณเป็นเพื่อนร่วมชั้นของฉัน” โดย You're เป็นรูปสั้นของ You are ลองพูดตามครับ
 
 Step 3
-AI: ต่อไปพูดกับคนที่คุยด้วย — You are my friend. 👉 ลองพูดตามนะครับ
+AI: คุณเจอ Ben ซึ่งเรียนห้องเดียวกับคุณครับ 👋 พูดว่า “You're my classmate.” แปลว่า “คุณเป็นเพื่อนร่วมชั้นของฉัน” โดย You're เป็นรูปสั้นของ You are ลองพูดตามครับ
 Hint: (none)
-Choices: 👉 You are → "You are my friend."
-User: You are my friend.
+Choices: (none)
+User: You're my classmate.
 Result: correct in pool
-response time : 110.27 ms
-Reply: You are my friend. แปลว่า “คุณคือเพื่อนของฉัน” ต่อไปลองทบทวน I am กันครับ ถ้าจะบอกเพื่อนว่าคุณเป็นนักเรียน จะพูดว่าอะไรครับ? 🎓
+response time : 123.80 ms
+Reply: Ben ช่วยคุณหาห้องเรียนครับ 😊 ถ้าจะบอกเขาว่า “คุณใจดีมาก” ควรพูดว่าอะไร?
 
 Step 4
-AI: You are my friend. แปลว่า “คุณคือเพื่อนของฉัน” ต่อไปลองทบทวน I am กันครับ ถ้าจะบอกเพื่อนว่าคุณเป็นนักเรียน จะพูดว่าอะไรครับ? 🎓
+AI: Ben ช่วยคุณหาห้องเรียนครับ 😊 ถ้าจะบอกเขาว่า “คุณใจดีมาก” ควรพูดว่าอะไร?
 Hint: (none)
-Choices: (none)
-User: I am a student.
+Choices: 😊 You're very kind. → "You're very kind."
+         🙋 I'm new here. → "I'm new here."
+         👋 You're my classmate. → "You're my classmate."
+User: You're very kind.
 Result: correct in pool
-response time : 99.83 ms
-Reply: ลองพูดประโยคสั้นๆ เกี่ยวกับตัวคุณหรือคู่สนทนาครับ 😊
+response time : 135.44 ms
+Reply: ลองคุยกับ Ben จริงๆ ครับ 👋 Ben พูดว่า “Hi! I'm Ben. I'm new here.” ตอบสองประโยคสั้นๆ: บอกหนึ่งอย่างเกี่ยวกับตัวคุณด้วย I'm... และพูดถึง Ben ด้วย You're... ครับ
 
 Step 5
-AI: ลองพูดประโยคสั้นๆ เกี่ยวกับตัวคุณหรือคู่สนทนาครับ 😊
+AI: ลองคุยกับ Ben จริงๆ ครับ 👋 Ben พูดว่า “Hi! I'm Ben. I'm new here.” ตอบสองประโยคสั้นๆ: บอกหนึ่งอย่างเกี่ยวกับตัวคุณด้วย I'm... และพูดถึง Ben ด้วย You're... ครับ
 Hint: (none)
 Choices: (none)
-User: I am a student.
+User: I'm new here too. You're my classmate.
 Result: correct in pool
-response time : 116.90 ms
-Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณพูด I am... และ You are... ได้แล้ว 🍌
+response time : 114.69 ms
+Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณใช้ I'm... เพื่อพูดเกี่ยวกับตัวเอง และ You're... เพื่อพูดกับคนอื่นได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ meet_people scenario 1 complete · 5 turns · 553.55 ms
+✅ meet_people scenario 1 complete · 5 turns · 595.22 ms
 
 ================================================================================
 meet_people — Scenario 2 — out-pool correct ทุก step → จบบท
@@ -59,53 +60,54 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 ================================================================================
 
 Step 1
-AI: สวัสดีครับ Nana! วันนี้เรามาฝึกพูดถึงตัวเองและคู่สนทนาครับ 🙋 I am Nana. แปลว่า “ฉันคือ Nana” และ I am ใช้พูดถึงตัวเรา ลองพูดตามว่า “I am Nana.” ครับ
+AI: สวัสดีครับ Nana! วันนี้เป็นวันแรกในคลาสครับ 🙋 ถ้าเราเพิ่งมาใหม่ พูดว่า “I'm new here.” แปลว่า “ฉันเพิ่งมาใหม่” โดย I'm เป็นรูปสั้นของ I am ลองพูดตามครับ
 Hint: (none)
-Choices: 🙋 I am → "I am Nana."
-User: I am Nano.
+Choices: (none)
+User: I'm new here....
 Result: correct out pool
-response time : 1.26 s
-Reply: ถูกต้องครับ! ถ้าจะบอกว่าเป็นนักเรียน — I am a student. 🎓 ลองพูดตามครับ
+response time : 1.31 s
+Reply: ถูกต้องครับ! วันแรกในคลาส คุณรู้สึกตื่นเต้นครับ 😊 พูดว่า “I'm excited.” แปลว่า “ฉันรู้สึกตื่นเต้น” ลองพูดตามครับ
 
 Step 2
-AI: ถูกต้องครับ! ถ้าจะบอกว่าเป็นนักเรียน — I am a student. 🎓 ลองพูดตามครับ
+AI: ถูกต้องครับ! วันแรกในคลาส คุณรู้สึกตื่นเต้นครับ 😊 พูดว่า “I'm excited.” แปลว่า “ฉันรู้สึกตื่นเต้น” ลองพูดตามครับ
 Hint: (none)
-Choices: 🙋 I am a student. → "I am a student."
-         👉 You are my friend. → "You are my friend."
-User: I am a student....
+Choices: (none)
+User: I'm excited....
 Result: correct out pool
-response time : 1.59 s
-Reply: ถูกต้องครับ! ต่อไปพูดกับคนที่คุยด้วย — You are my friend. 👉 ลองพูดตามนะครับ
+response time : 1.15 s
+Reply: เยี่ยมครับ! คุณเจอ Ben ซึ่งเรียนห้องเดียวกับคุณครับ 👋 พูดว่า “You're my classmate.” แปลว่า “คุณเป็นเพื่อนร่วมชั้นของฉัน” โดย You're เป็นรูปสั้นของ You are ลองพูดตามครับ
 
 Step 3
-AI: ถูกต้องครับ! ต่อไปพูดกับคนที่คุยด้วย — You are my friend. 👉 ลองพูดตามนะครับ
+AI: เยี่ยมครับ! คุณเจอ Ben ซึ่งเรียนห้องเดียวกับคุณครับ 👋 พูดว่า “You're my classmate.” แปลว่า “คุณเป็นเพื่อนร่วมชั้นของฉัน” โดย You're เป็นรูปสั้นของ You are ลองพูดตามครับ
 Hint: (none)
-Choices: 👉 You are → "You are my friend."
-User: You are my friend....
+Choices: (none)
+User: You're my classmate....
 Result: correct out pool
-response time : 1.42 s
-Reply: เยี่ยมครับ! You are my friend. แปลว่า “คุณคือเพื่อนของฉัน” ต่อไปลองทบทวน I am กันครับ ถ้าจะบอกเพื่อนว่าคุณเป็นนักเรียน จะพูดว่าอะไรครับ? 🎓
+response time : 1.29 s
+Reply: ดีมากครับ! Ben ช่วยคุณหาห้องเรียนครับ 😊 ถ้าจะบอกเขาว่า “คุณใจดีมาก” ควรพูดว่าอะไร?
 
 Step 4
-AI: เยี่ยมครับ! You are my friend. แปลว่า “คุณคือเพื่อนของฉัน” ต่อไปลองทบทวน I am กันครับ ถ้าจะบอกเพื่อนว่าคุณเป็นนักเรียน จะพูดว่าอะไรครับ? 🎓
+AI: ดีมากครับ! Ben ช่วยคุณหาห้องเรียนครับ 😊 ถ้าจะบอกเขาว่า “คุณใจดีมาก” ควรพูดว่าอะไร?
 Hint: (none)
-Choices: (none)
-User: I am a student....
+Choices: 😊 You're very kind. → "You're very kind."
+         🙋 I'm new here. → "I'm new here."
+         👋 You're my classmate. → "You're my classmate."
+User: You're very kind....
 Result: correct out pool
-response time : 1.28 s
-Reply: ดีมากครับ! ลองพูดประโยคสั้นๆ เกี่ยวกับตัวคุณหรือคู่สนทนาครับ 😊
+response time : 1.09 s
+Reply: ดีมากครับ! ลองคุยกับ Ben จริงๆ ครับ 👋 Ben พูดว่า “Hi! I'm Ben. I'm new here.” ตอบสองประโยคสั้นๆ: บอกหนึ่งอย่างเกี่ยวกับตัวคุณด้วย I'm... และพูดถึง Ben ด้วย You're... ครับ
 
 Step 5
-AI: ดีมากครับ! ลองพูดประโยคสั้นๆ เกี่ยวกับตัวคุณหรือคู่สนทนาครับ 😊
+AI: ดีมากครับ! ลองคุยกับ Ben จริงๆ ครับ 👋 Ben พูดว่า “Hi! I'm Ben. I'm new here.” ตอบสองประโยคสั้นๆ: บอกหนึ่งอย่างเกี่ยวกับตัวคุณด้วย I'm... และพูดถึง Ben ด้วย You're... ครับ
 Hint: (none)
 Choices: (none)
-User: I am a student....
+User: I'm new here too. You're my classmate....
 Result: correct out pool
-response time : 1.42 s
-Reply: เยี่ยมครับ! Nana! 🎉 วันนี้คุณพูด I am... และ You are... ได้แล้ว 🍌
+response time : 1.21 s
+Reply: สุดยอดครับ Nana! 🎉 วันนี้คุณใช้ I'm... เพื่อพูดเกี่ยวกับตัวเอง และ You're... เพื่อพูดกับคนอื่นได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ meet_people scenario 2 complete · 5 turns · 6.97 s
+✅ meet_people scenario 2 complete · 5 turns · 6.06 s
 
 ================================================================================
 meet_people — Scenario 3 — out-pool close ทุก step → จบบท
@@ -113,62 +115,63 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 ================================================================================
 
 Step 1
-AI: สวัสดีครับ Nana! วันนี้เรามาฝึกพูดถึงตัวเองและคู่สนทนาครับ 🙋 I am Nana. แปลว่า “ฉันคือ Nana” และ I am ใช้พูดถึงตัวเรา ลองพูดตามว่า “I am Nana.” ครับ
+AI: สวัสดีครับ Nana! วันนี้เป็นวันแรกในคลาสครับ 🙋 ถ้าเราเพิ่งมาใหม่ พูดว่า “I'm new here.” แปลว่า “ฉันเพิ่งมาใหม่” โดย I'm เป็นรูปสั้นของ I am ลองพูดตามครับ
 Hint: (none)
-Choices: 🙋 I am → "I am Nana."
-User: I Nana.
+Choices: (none)
+User: I new here.
 Result: close out pool
-response time : 1.17 s
-Reply: เกือบถูกแล้วครับ! พูดว่า I am Nana. 🙋
-ต่อไปถ้าจะบอกว่าเป็นนักเรียน — I am a student. 🎓 ลองพูดตามครับ
+response time : 1.22 s
+Reply: เกือบถูกแล้วครับ! พูดว่า I'm new here.
+วันแรกในคลาส คุณรู้สึกตื่นเต้นครับ 😊 พูดว่า “I'm excited.” แปลว่า “ฉันรู้สึกตื่นเต้น” ลองพูดตามครับ
 
 Step 2
-AI: เกือบถูกแล้วครับ! พูดว่า I am Nana. 🙋
-ต่อไปถ้าจะบอกว่าเป็นนักเรียน — I am a student. 🎓 ลองพูดตามครับ
+AI: เกือบถูกแล้วครับ! พูดว่า I'm new here.
+วันแรกในคลาส คุณรู้สึกตื่นเต้นครับ 😊 พูดว่า “I'm excited.” แปลว่า “ฉันรู้สึกตื่นเต้น” ลองพูดตามครับ
 Hint: (none)
-Choices: 🙋 I am a student. → "I am a student."
-         👉 You are my friend. → "You are my friend."
-User: I am student.
+Choices: (none)
+User: I excited.
 Result: close out pool
-response time : 1.33 s
-Reply: เกือบถูกแล้วครับ! พูดว่า I am a student. 🎓
-ต่อไปพูดกับคนที่คุยด้วย — You are my friend. 👉 ลองพูดตามนะครับ
+response time : 1.34 s
+Reply: เกือบถูกแล้วครับ! พูดว่า I'm excited.
+คุณเจอ Ben ซึ่งเรียนห้องเดียวกับคุณครับ 👋 พูดว่า “You're my classmate.” แปลว่า “คุณเป็นเพื่อนร่วมชั้นของฉัน” โดย You're เป็นรูปสั้นของ You are ลองพูดตามครับ
 
 Step 3
-AI: เกือบถูกแล้วครับ! พูดว่า I am a student. 🎓
-ต่อไปพูดกับคนที่คุยด้วย — You are my friend. 👉 ลองพูดตามนะครับ
+AI: เกือบถูกแล้วครับ! พูดว่า I'm excited.
+คุณเจอ Ben ซึ่งเรียนห้องเดียวกับคุณครับ 👋 พูดว่า “You're my classmate.” แปลว่า “คุณเป็นเพื่อนร่วมชั้นของฉัน” โดย You're เป็นรูปสั้นของ You are ลองพูดตามครับ
 Hint: (none)
-Choices: 👉 You are → "You are my friend."
-User: You my friend.
+Choices: (none)
+User: You my classmate.
 Result: close out pool
-response time : 1.15 s
-Reply: เกือบถูกแล้วครับ! พูดว่า You are my friend. 👉
-You are my friend. แปลว่า “คุณคือเพื่อนของฉัน” ต่อไปลองทบทวน I am กันครับ ถ้าจะบอกเพื่อนว่าคุณเป็นนักเรียน จะพูดว่าอะไรครับ? 🎓
+response time : 1.14 s
+Reply: เกือบถูกแล้วครับ! พูดว่า You're my classmate.
+Ben ช่วยคุณหาห้องเรียนครับ 😊 ถ้าจะบอกเขาว่า “คุณใจดีมาก” ควรพูดว่าอะไร?
 
 Step 4
-AI: เกือบถูกแล้วครับ! พูดว่า You are my friend. 👉
-You are my friend. แปลว่า “คุณคือเพื่อนของฉัน” ต่อไปลองทบทวน I am กันครับ ถ้าจะบอกเพื่อนว่าคุณเป็นนักเรียน จะพูดว่าอะไรครับ? 🎓
+AI: เกือบถูกแล้วครับ! พูดว่า You're my classmate.
+Ben ช่วยคุณหาห้องเรียนครับ 😊 ถ้าจะบอกเขาว่า “คุณใจดีมาก” ควรพูดว่าอะไร?
 Hint: (none)
-Choices: (none)
-User: I student.
+Choices: 😊 You're very kind. → "You're very kind."
+         🙋 I'm new here. → "I'm new here."
+         👋 You're my classmate. → "You're my classmate."
+User: You very kind.
 Result: close out pool
-response time : 1.24 s
-Reply: เกือบถูกแล้วครับ! พูดว่า I am a student. 🙋
-ลองพูดประโยคสั้นๆ เกี่ยวกับตัวคุณหรือคู่สนทนาครับ 😊
+response time : 1.21 s
+Reply: เกือบถูกแล้วครับ! พูดว่า You're very kind. 😊
+ลองคุยกับ Ben จริงๆ ครับ 👋 Ben พูดว่า “Hi! I'm Ben. I'm new here.” ตอบสองประโยคสั้นๆ: บอกหนึ่งอย่างเกี่ยวกับตัวคุณด้วย I'm... และพูดถึง Ben ด้วย You're... ครับ
 
 Step 5
-AI: เกือบถูกแล้วครับ! พูดว่า I am a student. 🙋
-ลองพูดประโยคสั้นๆ เกี่ยวกับตัวคุณหรือคู่สนทนาครับ 😊
+AI: เกือบถูกแล้วครับ! พูดว่า You're very kind. 😊
+ลองคุยกับ Ben จริงๆ ครับ 👋 Ben พูดว่า “Hi! I'm Ben. I'm new here.” ตอบสองประโยคสั้นๆ: บอกหนึ่งอย่างเกี่ยวกับตัวคุณด้วย I'm... และพูดถึง Ben ด้วย You're... ครับ
 Hint: (none)
 Choices: (none)
-User: I student.
+User: I new here. You my classmate.
 Result: close out pool
-response time : 1.39 s
-Reply: เกือบถูกแล้วครับ! พูดว่า I am a student.
-สุดยอดครับ Nana! 🎉 วันนี้คุณพูด I am... และ You are... ได้แล้ว 🍌
+response time : 1.37 s
+Reply: เกือบถูกแล้วครับ! พูดว่า I'm new here too. You're my classmate.
+สุดยอดครับ Nana! 🎉 วันนี้คุณใช้ I'm... เพื่อพูดเกี่ยวกับตัวเอง และ You're... เพื่อพูดกับคนอื่นได้แล้ว 🍌
 
 ────────────────────────────────────────────────────────────────────────
-✅ meet_people scenario 3 complete · 5 turns · 6.29 s
+✅ meet_people scenario 3 complete · 5 turns · 6.28 s
 
 ================================================================================
 meet_people — Scenario 4 — out-pool wrong + in-pool พูดตาม recovery → จบบท
@@ -176,99 +179,101 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 ================================================================================
 
 Step 1
-AI: สวัสดีครับ Nana! วันนี้เรามาฝึกพูดถึงตัวเองและคู่สนทนาครับ 🙋 I am Nana. แปลว่า “ฉันคือ Nana” และ I am ใช้พูดถึงตัวเรา ลองพูดตามว่า “I am Nana.” ครับ
+AI: สวัสดีครับ Nana! วันนี้เป็นวันแรกในคลาสครับ 🙋 ถ้าเราเพิ่งมาใหม่ พูดว่า “I'm new here.” แปลว่า “ฉันเพิ่งมาใหม่” โดย I'm เป็นรูปสั้นของ I am ลองพูดตามครับ
 Hint: (none)
-Choices: 🙋 I am → "I am Nana."
+Choices: (none)
 User: Good morning.
 Result: incorrect out pool
-response time : 1.57 s
-Reply: เกือบถูกแล้วครับ! ลองพูดว่า "I am Nana." เพื่อแนะนำตัวเองดูนะครับ ลองพูดตามนะครับ
+response time : 1.08 s
+Reply: ยังไม่ถูกครับ ลองพูดตามว่า “I'm new here.” ครับ
 
 Step 2
-AI: เกือบถูกแล้วครับ! ลองพูดว่า "I am Nana." เพื่อแนะนำตัวเองดูนะครับ ลองพูดตามนะครับ
+AI: ยังไม่ถูกครับ ลองพูดตามว่า “I'm new here.” ครับ
 Hint: (none)
-Choices: 🙋 I am → "I am Nana."
-User: I am Nana.
+Choices: (none)
+User: I'm new here.
 Result: correct in pool
-response time : 87.63 ms
-Reply: ถ้าจะบอกว่าเป็นนักเรียน — I am a student. 🎓 ลองพูดตามครับ
+response time : 85.28 ms
+Reply: วันแรกในคลาส คุณรู้สึกตื่นเต้นครับ 😊 พูดว่า “I'm excited.” แปลว่า “ฉันรู้สึกตื่นเต้น” ลองพูดตามครับ
 
 Step 3
-AI: ถ้าจะบอกว่าเป็นนักเรียน — I am a student. 🎓 ลองพูดตามครับ
+AI: วันแรกในคลาส คุณรู้สึกตื่นเต้นครับ 😊 พูดว่า “I'm excited.” แปลว่า “ฉันรู้สึกตื่นเต้น” ลองพูดตามครับ
 Hint: (none)
-Choices: 🙋 I am a student. → "I am a student."
-         👉 You are my friend. → "You are my friend."
+Choices: (none)
 User: Good morning.
 Result: incorrect out pool
-response time : 1.24 s
-Reply: ยังไม่ใช่นะครับ ลองพูดว่า "I am a student." เพื่อบอกว่าเป็นนักเรียนดูนะครับ ลองพูดตามครับ
+response time : 1.14 s
+Reply: ยังไม่ถูกครับ ลองพูดตามว่า “I'm excited.” ครับ
 
 Step 4
-AI: ยังไม่ใช่นะครับ ลองพูดว่า "I am a student." เพื่อบอกว่าเป็นนักเรียนดูนะครับ ลองพูดตามครับ
+AI: ยังไม่ถูกครับ ลองพูดตามว่า “I'm excited.” ครับ
 Hint: (none)
-Choices: 🙋 I am a student. → "I am a student."
-         👉 You are my friend. → "You are my friend."
-User: I am a student.
+Choices: (none)
+User: I'm excited.
 Result: correct in pool
-response time : 105.17 ms
-Reply: ต่อไปพูดกับคนที่คุยด้วย — You are my friend. 👉 ลองพูดตามนะครับ
+response time : 112.23 ms
+Reply: คุณเจอ Ben ซึ่งเรียนห้องเดียวกับคุณครับ 👋 พูดว่า “You're my classmate.” แปลว่า “คุณเป็นเพื่อนร่วมชั้นของฉัน” โดย You're เป็นรูปสั้นของ You are ลองพูดตามครับ
 
 Step 5
-AI: ต่อไปพูดกับคนที่คุยด้วย — You are my friend. 👉 ลองพูดตามนะครับ
+AI: คุณเจอ Ben ซึ่งเรียนห้องเดียวกับคุณครับ 👋 พูดว่า “You're my classmate.” แปลว่า “คุณเป็นเพื่อนร่วมชั้นของฉัน” โดย You're เป็นรูปสั้นของ You are ลองพูดตามครับ
 Hint: (none)
-Choices: 👉 You are → "You are my friend."
+Choices: (none)
 User: Good morning.
 Result: incorrect out pool
-response time : 1.43 s
-Reply: ยังไม่ใช่นะครับ ลองพูดว่า "You are my friend." เพื่อบอกว่าเป็นเพื่อนกันดูนะครับ ลองพูดตามครับ
+response time : 1.17 s
+Reply: ยังไม่ถูกครับ ลองพูดตามว่า “You're my classmate.” ครับ
 
 Step 6
-AI: ยังไม่ใช่นะครับ ลองพูดว่า "You are my friend." เพื่อบอกว่าเป็นเพื่อนกันดูนะครับ ลองพูดตามครับ
+AI: ยังไม่ถูกครับ ลองพูดตามว่า “You're my classmate.” ครับ
 Hint: (none)
-Choices: 👉 You are → "You are my friend."
-User: You are my friend.
+Choices: (none)
+User: You're my classmate.
 Result: correct in pool
-response time : 114.47 ms
-Reply: You are my friend. แปลว่า “คุณคือเพื่อนของฉัน” ต่อไปลองทบทวน I am กันครับ ถ้าจะบอกเพื่อนว่าคุณเป็นนักเรียน จะพูดว่าอะไรครับ? 🎓
+response time : 98.00 ms
+Reply: Ben ช่วยคุณหาห้องเรียนครับ 😊 ถ้าจะบอกเขาว่า “คุณใจดีมาก” ควรพูดว่าอะไร?
 
 Step 7
-AI: You are my friend. แปลว่า “คุณคือเพื่อนของฉัน” ต่อไปลองทบทวน I am กันครับ ถ้าจะบอกเพื่อนว่าคุณเป็นนักเรียน จะพูดว่าอะไรครับ? 🎓
+AI: Ben ช่วยคุณหาห้องเรียนครับ 😊 ถ้าจะบอกเขาว่า “คุณใจดีมาก” ควรพูดว่าอะไร?
 Hint: (none)
-Choices: (none)
+Choices: 😊 You're very kind. → "You're very kind."
+         🙋 I'm new here. → "I'm new here."
+         👋 You're my classmate. → "You're my classmate."
 User: Good morning.
 Result: incorrect out pool
-response time : 1.24 s
-Reply: ยังไม่ตรงครับ ลองใช้ “I am a student” หรือ “You are my friend” ครับ
+response time : 1.19 s
+Reply: ยังไม่ตรงครับ เรากำลังพูดถึง Ben ลองเริ่มด้วย “You're...” ครับ
 
 Step 8
-AI: ยังไม่ตรงครับ ลองใช้ “I am a student” หรือ “You are my friend” ครับ
+AI: ยังไม่ตรงครับ เรากำลังพูดถึง Ben ลองเริ่มด้วย “You're...” ครับ
 Hint: (none)
-Choices: (none)
-User: I am a student.
+Choices: 😊 You're very kind. → "You're very kind."
+         🙋 I'm new here. → "I'm new here."
+         👋 You're my classmate. → "You're my classmate."
+User: You're very kind.
 Result: correct in pool
-response time : 91.23 ms
-Reply: ลองพูดประโยคสั้นๆ เกี่ยวกับตัวคุณหรือคู่สนทนาครับ 😊
+response time : 94.59 ms
+Reply: ลองคุยกับ Ben จริงๆ ครับ 👋 Ben พูดว่า “Hi! I'm Ben. I'm new here.” ตอบสองประโยคสั้นๆ: บอกหนึ่งอย่างเกี่ยวกับตัวคุณด้วย I'm... และพูดถึง Ben ด้วย You're... ครับ
 
 Step 9
-AI: ลองพูดประโยคสั้นๆ เกี่ยวกับตัวคุณหรือคู่สนทนาครับ 😊
+AI: ลองคุยกับ Ben จริงๆ ครับ 👋 Ben พูดว่า “Hi! I'm Ben. I'm new here.” ตอบสองประโยคสั้นๆ: บอกหนึ่งอย่างเกี่ยวกับตัวคุณด้วย I'm... และพูดถึง Ben ด้วย You're... ครับ
 Hint: (none)
 Choices: (none)
 User: Good morning.
 Result: incorrect out pool
-response time : 1.37 s
-Reply: ยังไม่ตรงครับ ลองเริ่มด้วย “I am...” หรือ “You are...” แล้วพูดต่อให้ครบประโยคครับ
+response time : 1.11 s
+Reply: ยังไม่ตรงครับ ลองพูดสองส่วน โดยเริ่มด้วย “I'm...” แล้วตามด้วย “You're...” ครับ
 
 Step 10
-AI: ยังไม่ตรงครับ ลองเริ่มด้วย “I am...” หรือ “You are...” แล้วพูดต่อให้ครบประโยคครับ
+AI: ยังไม่ตรงครับ ลองพูดสองส่วน โดยเริ่มด้วย “I'm...” แล้วตามด้วย “You're...” ครับ
 Hint: (none)
 Choices: (none)
-User: I am a student.
+User: I'm new here too. You're my classmate.
 Result: correct in pool
-response time : 102.14 ms
+response time : 405.99 ms
 Reply: เรียนครบแล้วครับ Nana คุณทำบทเรียนจบโดยได้รับคำแนะนำบางส่วน ลองฝึกอีกครั้งเพื่อให้คล่องขึ้นนะครับ
 
 ────────────────────────────────────────────────────────────────────────
-✅ meet_people scenario 4 complete · 10 turns · 7.36 s
+✅ meet_people scenario 4 complete · 10 turns · 6.49 s
 
 ================================================================================
 meet_people — Scenario 5 — out-pool wrong + พูดตามผิดอีกครั้ง → soft-advance → จบบท
@@ -276,106 +281,108 @@ API: https://banana-english-api-production.up.railway.app · Learner: Nana
 ================================================================================
 
 Step 1
-AI: สวัสดีครับ Nana! วันนี้เรามาฝึกพูดถึงตัวเองและคู่สนทนาครับ 🙋 I am Nana. แปลว่า “ฉันคือ Nana” และ I am ใช้พูดถึงตัวเรา ลองพูดตามว่า “I am Nana.” ครับ
+AI: สวัสดีครับ Nana! วันนี้เป็นวันแรกในคลาสครับ 🙋 ถ้าเราเพิ่งมาใหม่ พูดว่า “I'm new here.” แปลว่า “ฉันเพิ่งมาใหม่” โดย I'm เป็นรูปสั้นของ I am ลองพูดตามครับ
 Hint: (none)
-Choices: 🙋 I am → "I am Nana."
+Choices: (none)
+User: Good morning.
+Result: incorrect out pool
+response time : 3.15 s
+Reply: ยังไม่ถูกครับ ลองพูดตามว่า “I'm new here.” ครับ
+
+Step 2
+AI: ยังไม่ถูกครับ ลองพูดตามว่า “I'm new here.” ครับ
+Hint: (none)
+Choices: (none)
+User: Hello there.
+Result: wrong (soft-advance)
+response time : 93.05 ms
+Reply: ตรงนี้พูดว่า "I'm new here." ครับ
+ไปต่อกันเลย — วันแรกในคลาส คุณรู้สึกตื่นเต้นครับ 😊 พูดว่า “I'm excited.” แปลว่า “ฉันรู้สึกตื่นเต้น” ลองพูดตามครับ
+
+Step 3
+AI: ตรงนี้พูดว่า "I'm new here." ครับ
+ไปต่อกันเลย — วันแรกในคลาส คุณรู้สึกตื่นเต้นครับ 😊 พูดว่า “I'm excited.” แปลว่า “ฉันรู้สึกตื่นเต้น” ลองพูดตามครับ
+Hint: (none)
+Choices: (none)
+User: Good morning.
+Result: incorrect out pool
+response time : 1.11 s
+Reply: ยังไม่ถูกครับ ลองพูดตามว่า “I'm excited.” ครับ
+
+Step 4
+AI: ยังไม่ถูกครับ ลองพูดตามว่า “I'm excited.” ครับ
+Hint: (none)
+Choices: (none)
+User: Hello there.
+Result: wrong (soft-advance)
+response time : 103.55 ms
+Reply: ตรงนี้พูดว่า "I'm excited." ครับ
+ไปต่อกันเลย — คุณเจอ Ben ซึ่งเรียนห้องเดียวกับคุณครับ 👋 พูดว่า “You're my classmate.” แปลว่า “คุณเป็นเพื่อนร่วมชั้นของฉัน” โดย You're เป็นรูปสั้นของ You are ลองพูดตามครับ
+
+Step 5
+AI: ตรงนี้พูดว่า "I'm excited." ครับ
+ไปต่อกันเลย — คุณเจอ Ben ซึ่งเรียนห้องเดียวกับคุณครับ 👋 พูดว่า “You're my classmate.” แปลว่า “คุณเป็นเพื่อนร่วมชั้นของฉัน” โดย You're เป็นรูปสั้นของ You are ลองพูดตามครับ
+Hint: (none)
+Choices: (none)
+User: Good morning.
+Result: incorrect out pool
+response time : 1.10 s
+Reply: ยังไม่ถูกครับ ลองพูดตามว่า “You're my classmate.” ครับ
+
+Step 6
+AI: ยังไม่ถูกครับ ลองพูดตามว่า “You're my classmate.” ครับ
+Hint: (none)
+Choices: (none)
+User: Hello there.
+Result: wrong (soft-advance)
+response time : 103.09 ms
+Reply: ตรงนี้พูดว่า "You're my classmate." ครับ
+ไปต่อกันเลย — Ben ช่วยคุณหาห้องเรียนครับ 😊 ถ้าจะบอกเขาว่า “คุณใจดีมาก” ควรพูดว่าอะไร?
+
+Step 7
+AI: ตรงนี้พูดว่า "You're my classmate." ครับ
+ไปต่อกันเลย — Ben ช่วยคุณหาห้องเรียนครับ 😊 ถ้าจะบอกเขาว่า “คุณใจดีมาก” ควรพูดว่าอะไร?
+Hint: (none)
+Choices: 😊 You're very kind. → "You're very kind."
+         🙋 I'm new here. → "I'm new here."
+         👋 You're my classmate. → "You're my classmate."
+User: Good morning.
+Result: incorrect out pool
+response time : 1.21 s
+Reply: ยังไม่ตรงครับ เรากำลังพูดถึง Ben ลองเริ่มด้วย “You're...” ครับ
+
+Step 8
+AI: ยังไม่ตรงครับ เรากำลังพูดถึง Ben ลองเริ่มด้วย “You're...” ครับ
+Hint: (none)
+Choices: 😊 You're very kind. → "You're very kind."
+         🙋 I'm new here. → "I'm new here."
+         👋 You're my classmate. → "You're my classmate."
+User: Hello there.
+Result: wrong (soft-advance)
+response time : 83.08 ms
+Reply: ตรงนี้พูดว่า "You're very kind." ครับ 😊
+ไปต่อกันเลย — ลองคุยกับ Ben จริงๆ ครับ 👋 Ben พูดว่า “Hi! I'm Ben. I'm new here.” ตอบสองประโยคสั้นๆ: บอกหนึ่งอย่างเกี่ยวกับตัวคุณด้วย I'm... และพูดถึง Ben ด้วย You're... ครับ
+
+Step 9
+AI: ตรงนี้พูดว่า "You're very kind." ครับ 😊
+ไปต่อกันเลย — ลองคุยกับ Ben จริงๆ ครับ 👋 Ben พูดว่า “Hi! I'm Ben. I'm new here.” ตอบสองประโยคสั้นๆ: บอกหนึ่งอย่างเกี่ยวกับตัวคุณด้วย I'm... และพูดถึง Ben ด้วย You're... ครับ
+Hint: (none)
+Choices: (none)
 User: Good morning.
 Result: incorrect out pool
 response time : 1.22 s
-Reply: เกือบถูกแล้วครับ! ลองพูดว่า "I am Nana." เพื่อแนะนำตัวเองนะครับ ลองพูดตามนะครับ
-
-Step 2
-AI: เกือบถูกแล้วครับ! ลองพูดว่า "I am Nana." เพื่อแนะนำตัวเองนะครับ ลองพูดตามนะครับ
-Hint: (none)
-Choices: 🙋 I am → "I am Nana."
-User: Hello there.
-Result: wrong (soft-advance)
-response time : 112.49 ms
-Reply: ตรงนี้พูดว่า "I am Nana." ครับ 🙋
-ไปต่อกันเลย — ถ้าจะบอกว่าเป็นนักเรียน — I am a student. 🎓 ลองพูดตามครับ
-
-Step 3
-AI: ตรงนี้พูดว่า "I am Nana." ครับ 🙋
-ไปต่อกันเลย — ถ้าจะบอกว่าเป็นนักเรียน — I am a student. 🎓 ลองพูดตามครับ
-Hint: (none)
-Choices: 🙋 I am a student. → "I am a student."
-         👉 You are my friend. → "You are my friend."
-User: Good morning.
-Result: incorrect out pool
-response time : 1.33 s
-Reply: ยังไม่ใช่ครับ ลองพูดตามว่า "I am a student." นะครับ
-
-Step 4
-AI: ยังไม่ใช่ครับ ลองพูดตามว่า "I am a student." นะครับ
-Hint: (none)
-Choices: 🙋 I am a student. → "I am a student."
-         👉 You are my friend. → "You are my friend."
-User: Hello there.
-Result: wrong (soft-advance)
-response time : 115.07 ms
-Reply: ตรงนี้พูดว่า "I am a student." ครับ 🎓
-ไปต่อกันเลย — ต่อไปพูดกับคนที่คุยด้วย — You are my friend. 👉 ลองพูดตามนะครับ
-
-Step 5
-AI: ตรงนี้พูดว่า "I am a student." ครับ 🎓
-ไปต่อกันเลย — ต่อไปพูดกับคนที่คุยด้วย — You are my friend. 👉 ลองพูดตามนะครับ
-Hint: (none)
-Choices: 👉 You are → "You are my friend."
-User: Good morning.
-Result: incorrect out pool
-response time : 1.66 s
-Reply: ยังไม่ถูกต้องครับ ลองพูดว่า "You are my friend." อีกครั้งนะครับ ลองพูดตามนะครับ
-
-Step 6
-AI: ยังไม่ถูกต้องครับ ลองพูดว่า "You are my friend." อีกครั้งนะครับ ลองพูดตามนะครับ
-Hint: (none)
-Choices: 👉 You are → "You are my friend."
-User: Hello there.
-Result: wrong (soft-advance)
-response time : 112.06 ms
-Reply: ตรงนี้พูดว่า "You are my friend." ครับ 👉
-ไปต่อกันเลย — You are my friend. แปลว่า “คุณคือเพื่อนของฉัน” ต่อไปลองทบทวน I am กันครับ ถ้าจะบอกเพื่อนว่าคุณเป็นนักเรียน จะพูดว่าอะไรครับ? 🎓
-
-Step 7
-AI: ตรงนี้พูดว่า "You are my friend." ครับ 👉
-ไปต่อกันเลย — You are my friend. แปลว่า “คุณคือเพื่อนของฉัน” ต่อไปลองทบทวน I am กันครับ ถ้าจะบอกเพื่อนว่าคุณเป็นนักเรียน จะพูดว่าอะไรครับ? 🎓
-Hint: (none)
-Choices: (none)
-User: Good morning.
-Result: incorrect out pool
-response time : 1.32 s
-Reply: ยังไม่ตรงครับ ลองใช้ “I am a student” หรือ “You are my friend” ครับ
-
-Step 8
-AI: ยังไม่ตรงครับ ลองใช้ “I am a student” หรือ “You are my friend” ครับ
-Hint: (none)
-Choices: (none)
-User: Hello there.
-Result: wrong (soft-advance)
-response time : 104.35 ms
-Reply: ตรงนี้พูดว่า "I am a student." ครับ 🙋
-ไปต่อกันเลย — ลองพูดประโยคสั้นๆ เกี่ยวกับตัวคุณหรือคู่สนทนาครับ 😊
-
-Step 9
-AI: ตรงนี้พูดว่า "I am a student." ครับ 🙋
-ไปต่อกันเลย — ลองพูดประโยคสั้นๆ เกี่ยวกับตัวคุณหรือคู่สนทนาครับ 😊
-Hint: (none)
-Choices: (none)
-User: Good morning.
-Result: incorrect out pool
-response time : 1.35 s
-Reply: ยังไม่ตรงครับ ลองเริ่มด้วย “I am...” หรือ “You are...” แล้วพูดต่อให้ครบประโยคครับ
+Reply: ยังไม่ตรงครับ ลองพูดสองส่วน โดยเริ่มด้วย “I'm...” แล้วตามด้วย “You're...” ครับ
 
 Step 10
-AI: ยังไม่ตรงครับ ลองเริ่มด้วย “I am...” หรือ “You are...” แล้วพูดต่อให้ครบประโยคครับ
+AI: ยังไม่ตรงครับ ลองพูดสองส่วน โดยเริ่มด้วย “I'm...” แล้วตามด้วย “You're...” ครับ
 Hint: (none)
 Choices: (none)
 User: Hello there.
 Result: wrong (soft-advance)
-response time : 102.70 ms
-Reply: ตรงนี้พูดได้ว่า "I am a student." ครับ
+response time : 158.99 ms
+Reply: ตรงนี้พูดได้ว่า "I'm new here too. You're my classmate." ครับ
 
 เรียนครบแล้วครับ Nana ลองทบทวนบทนี้อีกครั้งนะครับ
 
 ────────────────────────────────────────────────────────────────────────
-✅ meet_people scenario 5 complete · 10 turns · 7.43 s
+✅ meet_people scenario 5 complete · 10 turns · 8.33 s

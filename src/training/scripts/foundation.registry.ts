@@ -27,11 +27,11 @@ const OPENING_TEXTS: Record<(typeof FOUNDATION_LESSON_IDS)[number], string> = {
   meet_people:
     'สวัสดีครับ {name}! วันนี้เป็นวันแรกในคลาสครับ 🙋 ถ้าเราเพิ่งมาใหม่ พูดว่า “I\'m new here.” แปลว่า “ฉันเพิ่งมาใหม่” โดย I\'m เป็นรูปสั้นของ I am ลองพูดตามครับ',
   talk_about_groups:
-    'สวัสดีครับ {name}! วันนี้เรามาพูดถึงคนอื่นและสิ่งของครับ 👨 ลองพูดตามว่า He is my father.',
+    'สวัสดีครับ {name}! วันนี้เราจะพูดถึงคนอื่นและสิ่งของครับ 👨 Ben เรียนห้องเดียวกับคุณ พูดว่า “He\'s my classmate.” โดย He\'s เป็นรูปสั้นของ He is ลองพูดตามครับ',
   ee_about_me_family:
     'สวัสดีครับ {name}! วันนี้เรามาเรียนคำศัพท์ครอบครัวครับ 👨‍👩‍👧 เริ่มจาก brother แปลว่า “พี่ชายหรือน้องชาย” ลองพูดตามว่า “brother” ครับ',
   numbers:
-    'สวัสดีครับ {name}! วันนี้เราจะฝึกตัวเลข 0–20 กันครับ 🔢 เริ่มจาก 0–5: 0 zero, 1 one, 2 two, 3 three, 4 four, 5 five ลองพูดตามคำว่า “three” ครับ',
+    'สวัสดีครับ {name}! วันนี้เราจะฝึกตัวเลข 0–20 กันครับ 🔢 เริ่มจาก 0–5: 0 zero, 1 one, 2 two, 3 three, 4 four, 5 five มีแอปเปิลกี่ลูกครับ? 🍎🍎🍎🍎',
   telling_time:
     'สวัสดีครับ {name}! วันนี้เรามาเรียนบอกเวลาเป็นภาษาอังกฤษครับ ⏰ ลองพูดตามว่า It\'s six o\'clock.',
   everyday_numbers:
@@ -68,11 +68,11 @@ const COMPLETION_TEXTS: Record<
   meet_people: (name) =>
     foundationCompletion(name, 'วันนี้คุณใช้ I\'m... เพื่อพูดเกี่ยวกับตัวเอง และ You\'re... เพื่อพูดกับคนอื่นได้แล้ว'),
   talk_about_groups: (name) =>
-    foundationCompletion(name, 'วันนี้คุณพูด He is..., She is... และ It is... ได้แล้ว'),
+    foundationCompletion(name, 'วันนี้คุณใช้ He\'s..., She\'s... และ It\'s... เพื่อพูดถึงคนและสิ่งของได้แล้ว'),
   ee_about_me_family: (name) =>
     foundationCompletion(name, 'วันนี้คุณแนะนำครอบครัวด้วย This is my... และ I have... ได้แล้ว'),
   numbers: (name) =>
-    foundationCompletion(name, 'วันนี้คุณฝึกอ่านและใช้ตัวเลขหลายกลุ่มตั้งแต่ 0–20 แล้ว'),
+    foundationCompletion(name, 'วันนี้คุณฝึกตัวเลข 0–20 และลองใช้กับของรอบตัว หมายเลขห้อง และรถเมล์แล้ว'),
   telling_time: (name) =>
     foundationCompletion(name, 'วันนี้คุณฝึกบอกเวลาพื้นฐานด้วย o\'clock ตัวเลข และ a.m./p.m. แล้ว'),
   everyday_numbers: (name) =>

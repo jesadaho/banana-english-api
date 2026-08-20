@@ -173,7 +173,7 @@ describe('Foundation — full happy path (all steps → complete)', () => {
     assert.equal(steps[7].isLessonComplete, true);
   });
 
-  it('numbers — completion summarizes the full 0–20 range', () => {
+  it('numbers — completion summarizes the 0–20 range and real-world use', () => {
     const def = getDef(
       FOUNDATION_POOLGATE_FIXTURES.find((f) => f.lessonId === 'numbers')!,
     );
@@ -181,7 +181,7 @@ describe('Foundation — full happy path (all steps → complete)', () => {
 
     assert.match(
       result.completionText,
-      /ฝึกอ่านและใช้ตัวเลขหลายกลุ่มตั้งแต่ 0–20 แล้ว/,
+      /ฝึกตัวเลข 0–20 และลองใช้กับของรอบตัว หมายเลขห้อง และรถเมล์แล้ว/,
     );
     assert.doesNotMatch(result.completionText, /3, 7, 8, 16 และ 20/);
   });
@@ -214,6 +214,27 @@ describe('Foundation — full happy path (all steps → complete)', () => {
     assert.match(result.steps[4].userText, /I['’]m/);
     assert.match(result.steps[4].userText, /You['’]re/);
     assert.match(result.completionText, /I['’]m\.\.\..*You['’]re\.\.\./);
+  });
+
+  it('talk about groups — repeat turns hide choices and final contrasts person with thing', () => {
+    const def = getDef(
+      FOUNDATION_POOLGATE_FIXTURES.find(
+        (f) => f.lessonId === 'talk_about_groups',
+      )!,
+    );
+    const result = runFoundationFullHappyPath(def);
+
+    assert.equal(FOUNDATION_BOARDS.talk_about_groups[1].options.length, 0);
+    assert.equal(FOUNDATION_BOARDS.talk_about_groups[2].options.length, 0);
+    assert.equal(FOUNDATION_BOARDS.talk_about_groups[3].options.length, 0);
+    assert.ok(FOUNDATION_BOARDS.talk_about_groups[4].options.length >= 2);
+    assert.equal(FOUNDATION_BOARDS.talk_about_groups[5].options.length, 0);
+    assert.match(result.steps[4].userText, /He['’]s/);
+    assert.match(result.steps[4].userText, /It['’]s/);
+    assert.match(
+      result.completionText,
+      /He['’]s\.\.\..*She['’]s\.\.\..*It['’]s\.\.\./,
+    );
   });
 });
 

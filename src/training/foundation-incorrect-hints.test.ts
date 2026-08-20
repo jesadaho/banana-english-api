@@ -27,7 +27,7 @@ describe('Foundation incorrect hints — Introductions standard', () => {
   });
 
   it('recall steps reveal a sound cue only after an incorrect answer', () => {
-    const board = FOUNDATION_BOARDS.numbers[4];
+    const board = FOUNDATION_BOARDS.numbers[2];
     assert.equal(board.stem, '');
     const hint = resolveIncorrectHintTh(board);
     assert.match(hint ?? '', /เสียง \/s\//);
@@ -43,7 +43,7 @@ describe('Foundation incorrect hints — Introductions standard', () => {
     const cases = [
       ['polite_expressions', 4, /Thank you/i],
       ['polite_expressions', 5, /I['’]m sorry|Sorry/i],
-      ['talk_about_groups', 4, /It is my bag/i],
+      ['talk_about_groups', 4, /She['’]s/i],
       ['telling_time', 4, /nine p\.m/i],
       ['money_prices', 4, /ten dollars/i],
       ['likes_dislikes', 4, /don['’]t like tea/i],

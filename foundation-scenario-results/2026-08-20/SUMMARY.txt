@@ -2,11 +2,18 @@ SUMMARY
 ================================================================================
 
 everyday_numbers
-  ✅ Scenario 1 — 6 steps · 676.82 ms
-  ✅ Scenario 2 — 6 steps · 7.57 s
+  ✅ Scenario 1 — 6 steps · 674.20 ms
+  ✅ Scenario 2 — 6 steps · 7.73 s
   ✅ Scenario 3 — 6 steps · 7.88 s
-  ✅ Scenario 4 — 12 steps · 9.14 s
-  ✅ Scenario 5 — 12 steps · 8.16 s
+  ✅ Scenario 4 — 12 steps · 9.06 s
+  ✅ Scenario 5 — 12 steps · 9.00 s
 
-Total: 5/5 passed
+meet_people
+  ✅ Scenario 1 — 5 steps · 595.22 ms
+  ✅ Scenario 2 — 5 steps · 6.06 s
+  ✅ Scenario 3 — 5 steps · 6.28 s
+  ✅ Scenario 4 — 10 steps · 6.49 s
+  ✅ Scenario 5 — 10 steps · 8.33 s
+
+Total: 10/10 passed
 

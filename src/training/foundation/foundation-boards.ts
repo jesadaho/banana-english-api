@@ -67,11 +67,11 @@ export const FOUNDATION_LOOSE_MATCHERS: Record<
     }),
   talk_about_groups: (step, text) =>
     loose(step, text, {
-      1: /^he is /,
-      2: /^she is /,
-      3: /^it is /,
-      4: /^(he is|she is|it is|it['’]s) /,
-      5: /^(he is|she is|it is|it['’]s) /,
+      1: /^(he is|he['’]?s) my classmate$/,
+      2: /^(she is|she['’]?s) my teacher$/,
+      3: /^(it is|it['’]?s) my bag$/,
+      4: /^(she is|she['’]?s) very kind$/,
+      5: /^(he is|he['’]?s) very kind (it is|it['’]?s) new$/,
     }),
   ee_about_me_family: (step, text) =>
     loose(step, text, {
@@ -83,14 +83,11 @@ export const FOUNDATION_LOOSE_MATCHERS: Record<
     }),
   numbers: (step, text) =>
     loose(step, text, {
-      1: /^three$/,
-      2: /^four$/,
-      3: /^eight$/,
-      4: /^seven$/,
-      5: /^thirteen$/,
-      6: /^fourteen$/,
-      7: /^eighteen$/,
-      8: /^twenty$/,
+      1: /^four$/,
+      2: /^seven$/,
+      3: /^fourteen$/,
+      4: /^twenty$/,
+      5: /^twelve$/,
     }),
   telling_time: (step, text) =>
     loose(step, text, {
@@ -176,7 +173,11 @@ export const FOUNDATION_CLOSE_MATCHERS: Partial<
     5: /^i new here,? you my classmate$/,
   }),
   talk_about_groups: (step, text) => loose(step, text, {
-    1: /^he my father$/, 2: /^she my sister$/, 3: /^it my bag$/, 4: /^it my bag$/, 5: /^he my father$/,
+    1: /^he my classmate$/,
+    2: /^she my teacher$/,
+    3: /^it my bag$/,
+    4: /^she very kind$/,
+    5: /^he very kind,? it new$/,
   }),
   ee_about_me_family: (step, text) => loose(step, text, {
     1: /^brotha$/, 2: /^motha$/, 3: /^fatha$/, 4: /^this my father$/,
@@ -184,14 +185,11 @@ export const FOUNDATION_CLOSE_MATCHERS: Partial<
     7: /^i have two sister$/, 8: /^this my father$/,
   }),
   numbers: (step, text) => loose(step, text, {
-    1: /^tree$/,
-    2: /^for$/,
-    3: /^ate$/,
-    4: /^seben$/,
-    5: /^thir teen$/,
-    6: /^four teen$/,
-    7: /^eight teen$/,
-    8: /^twentee$/,
+    1: /^for$/,
+    2: /^seben$/,
+    3: /^four teen$/,
+    4: /^twentee$/,
+    5: /^twelb$/,
   }),
   telling_time: (step, text) => loose(step, text, {
     1: /^it['’]?s six clock$/, 2: /^it['’]?s seven thirty clock$/,
@@ -654,55 +652,53 @@ export const FOUNDATION_BOARDS: Record<
   talk_about_groups: {
     1: {
       textEn:
-        'สวัสดีครับ {name}! วันนี้เรามาพูดถึงคนอื่นและสิ่งของครับ 👨 ถ้าจะบอกว่า "เขาคือพ่อของฉัน" ให้พูดว่า He is my father. ลองพูดตามนะครับ',
+        'สวัสดีครับ {name}! วันนี้เราจะพูดถึงคนอื่นและสิ่งของครับ 👨 Ben เรียนห้องเดียวกับคุณ พูดว่า “He\'s my classmate.” โดย He\'s เป็นรูปสั้นของ He is ลองพูดตามครับ',
       withPraise: false,
       stem: '',
-      expectedSpeech: 'He is my father.',
-      options: [
-        { emoji: '👨', label: 'He is my father.', speak: 'He is my father.' },
-      ],
+      expectedSpeech: "He's my classmate.",
+      incorrectHintTh: 'ยังไม่ถูกครับ ลองพูดตามว่า “He\'s my classmate.” ครับ',
+      options: [],
     },
     2: {
       textEn:
-        'เก่งมากครับ! ถ้าเป็นผู้หญิง — She is my sister. 👩 ลองพูดตามครับ',
+        'Anna เป็นครูของคุณครับ 👩 พูดว่า “She\'s my teacher.” โดย She\'s เป็นรูปสั้นของ She is ลองพูดตามครับ',
       withPraise: true,
       stem: '',
-      expectedSpeech: 'She is my sister.',
-      options: [
-        { emoji: '👩', label: 'She is my sister.', speak: 'She is my sister.' },
-      ],
+      expectedSpeech: "She's my teacher.",
+      incorrectHintTh: 'ยังไม่ถูกครับ ลองพูดตามว่า “She\'s my teacher.” ครับ',
+      options: [],
     },
     3: {
       textEn:
-        'ดีมากครับ! She is my sister. แปลว่า “เธอคือพี่สาวหรือน้องสาวของฉัน” ต่อไป ถ้าพูดถึงสิ่งของ เราใช้ It ครับ — It is my bag. 🎒 ลองพูดตามนะครับ',
+        'ถ้าพูดถึงสิ่งของ เราใช้ It ครับ 🎒 กระเป๋าใบนี้เป็นของคุณ พูดว่า “It\'s my bag.” โดย It\'s เป็นรูปสั้นของ It is ลองพูดตามครับ',
       withPraise: true,
       stem: '',
-      expectedSpeech: 'It is my bag.',
-      options: [
-        { emoji: '🎒', label: 'It is my bag.', speak: 'It is my bag.' },
-      ],
+      expectedSpeech: "It's my bag.",
+      incorrectHintTh: 'ยังไม่ถูกครับ ลองพูดตามว่า “It\'s my bag.” ครับ',
+      options: [],
     },
     4: {
       textEn:
-        'ดีมากครับ! It is my bag. แปลว่า “มันคือกระเป๋าของฉัน” ถ้าจะพูดถึงกระเป๋าของคุณ ควรเลือกประโยคไหนครับ? 🎒',
+        'Anna ช่วยคุณหาห้องเรียนครับ 👩😊 ถ้าจะบอกว่า “เธอใจดีมาก” ควรพูดว่าอะไร?',
       withPraise: true,
       stem: '',
-      expectedSpeech: 'It is my bag.',
-      incorrectHintTh: 'ยังไม่ตรงครับ เมื่อพูดถึงกระเป๋า ให้พูดว่า “It is my bag.” ครับ',
+      expectedSpeech: "She's very kind.",
+      incorrectHintTh: 'ยังไม่ตรงครับ เรากำลังพูดถึง Anna ลองเริ่มด้วย “She\'s...” ครับ',
       options: [
-        { emoji: '👨', label: 'He is my father.', speak: 'He is my father.' },
-        { emoji: '👩', label: 'She is my sister.', speak: 'She is my sister.' },
-        { emoji: '🎒', label: 'It is my bag.', speak: 'It is my bag.' },
+        { emoji: '👨', label: "He's very kind.", speak: "He's very kind." },
+        { emoji: '👩', label: "She's very kind.", speak: "She's very kind." },
+        { emoji: '🎒', label: "It's very kind.", speak: "It's very kind." },
       ],
     },
     5: {
       textEn:
-        'ลองพูดประโยคสั้นๆ เกี่ยวกับคนหรือสิ่งของครับ 😊',
-      advanceQuestionEn: 'Say a sentence about someone or something.',
+        'ขั้นตอนสุดท้ายครับ 😊 Ben ช่วยถือกระเป๋าให้คุณ และโทรศัพท์เครื่องนี้เป็นของใหม่ พูดสองประโยคว่า “เขาใจดีมาก” และ “มันใหม่” โดยใช้ He\'s... และ It\'s... ครับ',
+      advanceQuestionEn:
+        'พูดสองประโยคเกี่ยวกับ Ben และโทรศัพท์ โดยใช้ He\'s... และ It\'s... ครับ',
       withPraise: true,
-      stem: '',
-      expectedSpeech: 'He is my father.',
-      incorrectHintTh: 'ยังไม่ตรงครับ ลองเริ่มด้วย “He is...”, “She is...” หรือ “It is...” แล้วพูดต่อให้ครบประโยคครับ',
+      stem: "He's... It's...",
+      expectedSpeech: "He's very kind. It's new.",
+      incorrectHintTh: 'ยังไม่ตรงครับ ลองพูดสองส่วน โดยเริ่มด้วย “He\'s...” แล้วตามด้วย “It\'s...” ครับ',
       options: [],
     },
   },
@@ -797,35 +793,21 @@ export const FOUNDATION_BOARDS: Record<
   numbers: {
     1: {
       textEn:
-        'สวัสดีครับ {name}! วันนี้เราจะฝึกตัวเลข 0–20 กันครับ 🔢 เริ่มจาก 0–5: 0 zero, 1 one, 2 two, 3 three, 4 four, 5 five ลองพูดตามคำว่า “three” ครับ',
+        'สวัสดีครับ {name}! วันนี้เราจะฝึกตัวเลข 0–20 กันครับ 🔢 เริ่มจาก 0–5: 0 zero, 1 one, 2 two, 3 three, 4 four, 5 five มีแอปเปิลกี่ลูกครับ? 🍎🍎🍎🍎',
       withPraise: false,
-      stem: '',
-      expectedSpeech: 'three',
-      options: [{ emoji: '3️⃣', label: 'three', speak: 'three' }],
-    },
-    2: {
-      textEn:
-        'เก่งมากครับ! ลองเช็กเลขกลุ่มแรกนะครับ มีแอปเปิลกี่ลูก? 🍎🍎🍎🍎',
-      withPraise: true,
       stem: '',
       expectedSpeech: 'four',
       incorrectHintTh: 'ลองนับอีกครั้งนะครับ มี 4 ลูก เลข 4 อ่านว่า “four” ครับ',
       options: [
-        { emoji: '2️⃣', label: 'two', speak: 'two' },
+        { emoji: '0️⃣', label: 'zero', speak: 'zero' },
+        { emoji: '3️⃣', label: 'three', speak: 'three' },
         { emoji: '4️⃣', label: 'four', speak: 'four' },
         { emoji: '5️⃣', label: 'five', speak: 'five' },
       ],
     },
-    3: {
+    2: {
       textEn:
-        'ต่อไป 6–10 ครับ: 6 six, 7 seven, 8 eight, 9 nine, 10 ten ลองพูดตามคำว่า “eight” ครับ',
-      withPraise: true,
-      stem: '',
-      expectedSpeech: 'eight',
-      options: [{ emoji: '8️⃣', label: 'eight', speak: 'eight' }],
-    },
-    4: {
-      textEn: 'บัตรคิวของคุณคือหมายเลขอะไรครับ? 🎫 7',
+        'ต่อไป 6–10 ครับ: 6 six, 7 seven, 8 eight, 9 nine, 10 ten บัตรคิวของคุณคือหมายเลขอะไรครับ? 🎫 7',
       withPraise: true,
       stem: '',
       expectedSpeech: 'seven',
@@ -837,16 +819,9 @@ export const FOUNDATION_BOARDS: Record<
         { emoji: '🔟', label: 'ten', speak: 'ten' },
       ],
     },
-    5: {
+    3: {
       textEn:
-        'ต่อไป 11–15 ครับ: 11 eleven, 12 twelve, 13 thirteen, 14 fourteen, 15 fifteen ตั้งแต่ 13 จะเริ่มได้ยินเสียง -teen ลองพูดตามคำว่า “thirteen” ครับ',
-      withPraise: true,
-      stem: '',
-      expectedSpeech: 'thirteen',
-      options: [{ emoji: '1️⃣3️⃣', label: 'thirteen', speak: 'thirteen' }],
-    },
-    6: {
-      textEn: 'หมายเลขห้องนี้อ่านว่าอะไรครับ? 🚪 14',
+        'ต่อไป 11–15 ครับ: 11 eleven, 12 twelve, 13 thirteen, 14 fourteen, 15 fifteen ตั้งแต่ 13 จะเริ่มได้ยินเสียง -teen หมายเลขห้องนี้อ่านว่าอะไรครับ? 🚪 14',
       withPraise: true,
       stem: '',
       expectedSpeech: 'fourteen',
@@ -858,21 +833,27 @@ export const FOUNDATION_BOARDS: Record<
         { emoji: '1️⃣5️⃣', label: 'fifteen', speak: 'fifteen' },
       ],
     },
-    7: {
+    4: {
       textEn:
-        'กลุ่มสุดท้ายครับ: 16 sixteen, 17 seventeen, 18 eighteen, 19 nineteen, 20 twenty ระวังว่า 20 ลงท้ายด้วยเสียง -ty ลองพูดตามคำว่า “eighteen” ครับ',
-      withPraise: true,
-      stem: '',
-      expectedSpeech: 'eighteen',
-      options: [{ emoji: '1️⃣8️⃣', label: 'eighteen', speak: 'eighteen' }],
-    },
-    8: {
-      textEn: 'ขั้นตอนสุดท้ายครับ รถเมล์สายนี้คือหมายเลขอะไร? 🚌 20',
-      advanceQuestionEn: 'รถเมล์สายนี้คือหมายเลขอะไรครับ? 🚌 20',
+        'กลุ่มสุดท้ายครับ: 16 sixteen, 17 seventeen, 18 eighteen, 19 nineteen, 20 twenty ระวังว่า 20 ลงท้ายด้วยเสียง -ty รถเมล์สายนี้คือหมายเลขอะไรครับ? 🚌 20',
       withPraise: true,
       stem: '',
       expectedSpeech: 'twenty',
       incorrectHintTh: 'เลข 20 อ่านว่า “twenty” และลงท้ายด้วยเสียง -ty ครับ',
+      options: [
+        { emoji: '1️⃣6️⃣', label: 'sixteen', speak: 'sixteen' },
+        { emoji: '1️⃣8️⃣', label: 'eighteen', speak: 'eighteen' },
+        { emoji: '1️⃣9️⃣', label: 'nineteen', speak: 'nineteen' },
+        { emoji: '2️⃣0️⃣', label: 'twenty', speak: 'twenty' },
+      ],
+    },
+    5: {
+      textEn: 'ขั้นตอนสุดท้ายครับ โดยไม่มีตัวเลือก หมายเลขล็อกเกอร์นี้อ่านว่าอะไร? 🔐 12',
+      advanceQuestionEn: 'หมายเลขล็อกเกอร์นี้อ่านว่าอะไรครับ? 🔐 12',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'twelve',
+      incorrectHintTh: 'เลข 12 อ่านว่า “twelve” ครับ',
       options: [],
     },
   },
@@ -1347,7 +1328,7 @@ export const FOUNDATION_MAX_STEPS: Record<FoundationLessonId, number> = {
   meet_people: 5,
   talk_about_groups: 5,
   ee_about_me_family: 8,
-  numbers: 8,
+  numbers: 5,
   telling_time: 5,
   everyday_numbers: 6,
   money_prices: 5,

@@ -53,9 +53,9 @@ export const FOUNDATION_POOLGATE_FIXTURES: FoundationPoolGateFixture[] = [
   },
   {
     lessonId: 'talk_about_groups',
-    setupExact: ['He is my father.'],
-    exactAtProbe: 'She is my sister.',
-    outOfPoolAtProbe: 'She is my mother.',
+    setupExact: ["He's my classmate.", "She's my teacher.", "It's my bag."],
+    exactAtProbe: "She's very kind.",
+    outOfPoolAtProbe: 'Anna is very kind.',
     wrongAtProbe: 'Good morning.',
     wrongAgainAtProbe: 'Hello.',
   },
@@ -69,7 +69,7 @@ export const FOUNDATION_POOLGATE_FIXTURES: FoundationPoolGateFixture[] = [
   },
   {
     lessonId: 'numbers',
-    setupExact: ['three', 'four', 'eight'],
+    setupExact: ['four'],
     exactAtProbe: 'seven',
     outOfPoolAtProbe: 'the number seven',
     wrongAtProbe: 'Good morning.',
