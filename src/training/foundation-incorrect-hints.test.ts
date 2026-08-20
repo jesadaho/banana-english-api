@@ -102,7 +102,8 @@ describe('Foundation incorrect hints — Introductions standard', () => {
       assert.doesNotMatch(board.incorrectHintTh ?? '', /\d/);
     }
     assert.match(FOUNDATION_BOARDS.numbers[1].textEn, /0–20/u);
-    assert.match(FOUNDATION_BOARDS.numbers[1].ttsText ?? '', /ภาษาอังกฤษอ่านว่า.*zero/u);
+    assert.match(FOUNDATION_BOARDS.numbers[1].ttsText ?? '', /เลขศูนย์อ่านว่า ซีโร/u);
+    assert.doesNotMatch(FOUNDATION_BOARDS.numbers[1].ttsText ?? '', /\bzero\b/i);
   });
 
   it('every foundation probe board follows repeat-only vs guided hint rule', () => {

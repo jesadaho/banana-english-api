@@ -68,6 +68,8 @@ export function pinBoardTextEn(modelText: string, boardText: string): string {
 /** Forced guided board: script may include praise; [withPraise] keeps system Success opener. */
 export type ForcedGuidedBoard = {
   textEn: string;
+  /** Optional speech-only copy; does not change the text shown in the UI. */
+  ttsText?: string;
   /** Keep model Success praise after strip (default: step > 1). Opening = false. */
   withPraise?: boolean;
   stem: string;
