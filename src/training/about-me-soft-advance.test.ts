@@ -44,7 +44,11 @@ function assertSoftAdvance(
     learnerFirstName: 'Nana',
   });
   assert.equal(reply?.deferToAi, undefined, `${lessonId} should soft-advance scripted`);
-  assert.match(reply?.textEn ?? '', /ตรงนี้พูดว่า/, `${lessonId} missing model line`);
+  assert.match(
+    reply?.textEn ?? '',
+    /ตรงนี้(พูดว่า|ใช้โครง)/,
+    `${lessonId} missing model/skeleton line`,
+  );
   assert.match(reply?.textEn ?? '', modelPattern, `${lessonId} model phrase`);
   assert.match(reply?.textEn ?? '', /ไปต่อกันเลย —/, `${lessonId} missing advance lead-in`);
   assert.match(reply?.textEn ?? '', advancePattern, `${lessonId} advance cue`);
@@ -84,7 +88,7 @@ describe('About Me soft-advance copy (all 10 lessons)', () => {
         'Good morning.',
       ),
       ABOUT_ME_FOOD.lessonId,
-      /"I like pizza\."/,
+      /"I like\.\.\."/,
       /What is pizza like\?/,
     );
   });
@@ -98,7 +102,7 @@ describe('About Me soft-advance copy (all 10 lessons)', () => {
         'Good morning.',
       ),
       ABOUT_ME_HOME.lessonId,
-      /"I live in an apartment\."/,
+      /"I live in\.\.\."/,
       /Who do you live with\?/,
     );
   });
@@ -112,7 +116,7 @@ describe('About Me soft-advance copy (all 10 lessons)', () => {
         'Hello.',
       ),
       ABOUT_ME_WORK_SCHOOL.lessonId,
-      /"I work\."/,
+      /"I\.\.\."/,
       /Where do you work\?/,
     );
   });
@@ -126,7 +130,7 @@ describe('About Me soft-advance copy (all 10 lessons)', () => {
         'Hello.',
       ),
       ABOUT_ME_HOBBIES.lessonId,
-      /"I watch movies\."/,
+      /"I\.\.\."/,
       /How often do you watch movies\?/,
     );
   });
@@ -140,7 +144,7 @@ describe('About Me soft-advance copy (all 10 lessons)', () => {
         'Good morning.',
       ),
       ABOUT_ME_PETS.lessonId,
-      /"I have a dog\."/,
+      /"I have a\.\.\."/,
       /น้องสัตว์เลี้ยง|เป็นยังไงบ้าง|What is your dog like\?/,
     );
   });
@@ -154,7 +158,7 @@ describe('About Me soft-advance copy (all 10 lessons)', () => {
         'Good morning.',
       ),
       ABOUT_ME_PEOPLE.lessonId,
-      /"My brother\."/,
+      /"My\.\.\."/,
       /What does he do\?/,
     );
   });
@@ -182,7 +186,7 @@ describe('About Me soft-advance copy (all 10 lessons)', () => {
         'Good morning.',
       ),
       ABOUT_ME_FRIENDS.lessonId,
-      /"We play games together\."/,
+      /"We \.+ together\."/,
       /กินข้าวด้วยกัน|How do you say we eat out together\?/,
     );
   });
@@ -196,7 +200,7 @@ describe('About Me soft-advance copy (all 10 lessons)', () => {
         'Good morning.',
       ),
       ABOUT_ME_FAVORITES.lessonId,
-      /"I prefer pizza\."/,
+      /"I prefer\.\.\."/,
       /Why do you like it\?/,
     );
   });

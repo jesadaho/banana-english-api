@@ -866,7 +866,7 @@ export function runFoundationAllOutOfPoolWrongThenSoftAdvance(
       true,
       `${def.lessonId} step ${step}: 2nd wrong is scripted`,
     );
-    assert.match(soft!.textEn ?? '', /ตรงนี้พูด(ว่า|ได้ว่า)/);
+    assert.match(soft!.textEn ?? '', /ตรงนี้(พูด(ว่า|ได้ว่า)|ใช้โครง)/);
     if (step < def.maxStep) {
       assert.match(soft!.textEn ?? '', /ไปต่อกันเลย —/);
       const nextBoard = def.boardForStep(step + 1, turns, learnerFirstName);
@@ -970,7 +970,7 @@ export function runWrongTwiceThenFinishFromStep(
     }
 
     assert.notEqual(route.deferToAi, true, `${def.lessonId}: 2nd wrong scripted`);
-    assert.match(route.textEn ?? '', /ตรงนี้พูด(ว่า|ได้ว่า)/);
+    assert.match(route.textEn ?? '', /ตรงนี้(พูด(ว่า|ได้ว่า)|ใช้โครง)/);
     const softStep = atStep + 1;
     if (atStep < def.maxStep) {
       assert.match(route.textEn ?? '', /ไปต่อกันเลย —/);

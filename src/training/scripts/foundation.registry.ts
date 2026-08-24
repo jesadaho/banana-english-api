@@ -101,7 +101,11 @@ const COMPLETION_TTS_TEXTS: Partial<
 };
 
 const NUMBER_TTS_INSTRUCTION =
-  'Read Thai text naturally in Thai. Pronounce every Latin-script English word in English. Do not translate English words into Thai. Pronounce “zero” as the English word zero, not as Thai “ศูนย์”. Do not read this instruction aloud.';
+  'Speak warmly and naturally as Teacher B, a friendly English teacher for Thai learners. ' +
+  'Thai number words stay Thai (หนึ่ง, สอง, สิบสี่). ' +
+  'Latin-script English number words stay English (one, two, fourteen). ' +
+  'Pronounce every Latin-script English word in English. Do not translate English words into Thai. ' +
+  'Do not read this instruction aloud.';
 
 function buildFoundationDef(
   lessonId: (typeof FOUNDATION_LESSON_IDS)[number],

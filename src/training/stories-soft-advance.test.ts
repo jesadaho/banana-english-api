@@ -48,7 +48,11 @@ function assertSoftAdvance(
     undefined,
     `${lessonId} should soft-advance scripted`,
   );
-  assert.match(reply?.textEn ?? '', /ตรงนี้พูดว่า/, `${lessonId} missing model line`);
+  assert.match(
+    reply?.textEn ?? '',
+    /ตรงนี้(พูดว่า|ใช้โครง)/,
+    `${lessonId} missing model/skeleton line`,
+  );
   assert.match(reply?.textEn ?? '', modelPattern, `${lessonId} model phrase`);
   assert.match(
     reply?.textEn ?? '',
@@ -73,7 +77,7 @@ describe('Stories soft-advance copy (all 10 lessons)', () => {
         'Hello there.',
       ),
       STORIES_YESTERDAY.lessonId,
-      /"I ate breakfast this morning\."/,
+      /"I ate\.\.\. this morning"/,
       /กินข้าวเช้าเมื่อวาน|I ate breakfast yesterday/,
     );
   });
@@ -87,7 +91,7 @@ describe('Stories soft-advance copy (all 10 lessons)', () => {
         'Hello there.',
       ),
       STORIES_LAST_WEEKEND.lessonId,
-      /"I went to the beach\."/,
+      /"I went to the\.\.\."/,
       /ไปช้อปปิ้ง|I went shopping/,
     );
   });
@@ -101,7 +105,7 @@ describe('Stories soft-advance copy (all 10 lessons)', () => {
         'Hello there.',
       ),
       STORIES_VACATION.lessonId,
-      /"I went to Japan\."/,
+      /"I went to\.\.\."/,
       /ไปเกาหลี|I went to Korea/,
     );
   });
@@ -115,7 +119,7 @@ describe('Stories soft-advance copy (all 10 lessons)', () => {
         'Hello there.',
       ),
       STORIES_BIRTHDAY.lessonId,
-      /"I had a birthday party\."/,
+      /"I had a\.\.\."/,
       /ได้ของขวัญ|I got a gift/,
     );
   });
@@ -129,7 +133,7 @@ describe('Stories soft-advance copy (all 10 lessons)', () => {
         'Hello there.',
       ),
       STORIES_SCHOOL.lessonId,
-      /"I studied English\."/,
+      /"I studied\.\.\."|"I studied English\."/,
       /เล่นฟุตบอล|I played football/,
     );
   });
@@ -143,7 +147,7 @@ describe('Stories soft-advance copy (all 10 lessons)', () => {
         'Hello there.',
       ),
       STORIES_FUNNY.lessonId,
-      /"First, I forgot my bag\."/,
+      /"First, I\.\.\."/,
       /โทรศัพท์หาย|Then, I lost my phone/,
     );
   });
@@ -157,7 +161,7 @@ describe('Stories soft-advance copy (all 10 lessons)', () => {
         'Hello there.',
       ),
       STORIES_BAD_DAY.lessonId,
-      /"I was late because of traffic\."/,
+      /"I was late because\.\.\."/,
       /ฝนตก|It rained, so I took the bus/,
     );
   });
@@ -171,7 +175,7 @@ describe('Stories soft-advance copy (all 10 lessons)', () => {
         'Hello there.',
       ),
       STORIES_FIRST_TIME.lessonId,
-      /"It was my first time\."/,
+      /"It was my\.\.\."/,
       /เครื่องบิน|It was my first time on an airplane/,
     );
   });
@@ -185,7 +189,7 @@ describe('Stories soft-advance copy (all 10 lessons)', () => {
         'Hello there.',
       ),
       STORIES_FAVORITE.lessonId,
-      /"My favorite memory was our family trip\."/,
+      /"My favorite memory was\.\.\."/,
       /วันหยุด|My favorite memory was our holiday/,
     );
   });
@@ -199,7 +203,7 @@ describe('Stories soft-advance copy (all 10 lessons)', () => {
         'Hello there.',
       ),
       STORIES_LAST_NIGHT.lessonId,
-      /"I was watching TV\."/,
+      /"I was\.\.\."/,
       /เขากำลังทำอาหาร|He was cooking/,
     );
   });

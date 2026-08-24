@@ -134,7 +134,7 @@ describe('Foundation PoolGate — 5-lane matrix (all lessons)', () => {
         });
         assert.ok(reply, `${lessonId}: missing soft-advance reply`);
         assert.notEqual(reply!.deferToAi, true, `${lessonId}: soft-advance is scripted`);
-        assert.match(reply!.textEn ?? '', /ตรงนี้พูดว่า/);
+        assert.match(reply!.textEn ?? '', /ตรงนี้(พูดว่า|ใช้โครง)/);
         assert.match(reply!.textEn ?? '', /ไปต่อกันเลย —/);
         assert.equal(reply!.expectedSpeech, next!.expectedSpeech);
         assert.equal(reply!.assessmentTier, 'incorrect');
@@ -517,7 +517,7 @@ describe('Foundation — introductions all-step scenarios', () => {
     assert.equal(pinned.assessmentTier, 'close');
     assert.match(
       pinned.textEn ?? '',
-      /เกือบถูกแล้วครับ! พูดว่า I live in Bangkok\. 🏙️/,
+      /เกือบถูกแล้วครับ! ลองใช้โครง I live in\.\.\. ครับ 🏙️/,
     );
     assert.match(pinned.textEn ?? '', /ต่อไปถ้าจะบอกงาน.*I work as a teacher/i);
     assert.doesNotMatch(pinned.textEn ?? '', /เกือบถูกแล้วครับ.*ดีมากครับ/);
@@ -640,7 +640,7 @@ describe('Foundation — introductions all-step scenarios', () => {
     assert.equal(result.steps.at(-1)?.isLessonComplete, true);
     for (const record of result.steps) {
       assert.equal(record.userText, 'Good morning.');
-      assert.match(record.aiTextEn, /ตรงนี้พูด(ว่า|ได้ว่า)/);
+      assert.match(record.aiTextEn, /ตรงนี้(พูด(ว่า|ได้ว่า)|ใช้โครง)/);
       if (record.step < def.maxStep) {
         assert.match(record.aiTextEn, /ไปต่อกันเลย —/);
       } else {

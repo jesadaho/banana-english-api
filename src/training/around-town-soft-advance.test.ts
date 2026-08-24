@@ -48,7 +48,11 @@ function assertSoftAdvance(
     undefined,
     `${lessonId} should soft-advance scripted`,
   );
-  assert.match(reply?.textEn ?? '', /ตรงนี้พูดว่า/, `${lessonId} missing model line`);
+  assert.match(
+    reply?.textEn ?? '',
+    /ตรงนี้(พูดว่า|ใช้โครง)/,
+    `${lessonId} missing model/skeleton line`,
+  );
   assert.match(reply?.textEn ?? '', modelPattern, `${lessonId} model phrase`);
   assert.match(
     reply?.textEn ?? '',
@@ -115,7 +119,7 @@ describe('Around Town soft-advance copy (all 10 lessons)', () => {
         'Hello there.',
       ),
       AROUND_TOWN_CONVENIENCE.lessonId,
-      /"I'm looking for the museum\."/,
+      /I'm looking for the\.\.\./,
       /กำลังหาที่ไหน|I'm looking for the park/,
     );
   });
@@ -129,7 +133,7 @@ describe('Around Town soft-advance copy (all 10 lessons)', () => {
         'Hello there.',
       ),
       AROUND_TOWN_TRANSPORT.lessonId,
-      /"I'm going to London\."/,
+      /I'm going to\.\.\./,
       /กำลังจะไปเมืองนี้|I'm going to Paris/,
     );
   });
@@ -143,7 +147,7 @@ describe('Around Town soft-advance copy (all 10 lessons)', () => {
         'Hello there.',
       ),
       AROUND_TOWN_SMART_SHOPPER.lessonId,
-      /"Which one is cheaper\?"/,
+      /Which one is \.\.\.\?/,
       /This one is bigger/,
     );
   });
@@ -157,7 +161,7 @@ describe('Around Town soft-advance copy (all 10 lessons)', () => {
         'Hello there.',
       ),
       AROUND_TOWN_HOTEL.lessonId,
-      /"I have a reservation\."/,
+      /I have a\.\.\./,
       /เช็กอิน|I'd like to check in/,
     );
   });
@@ -199,7 +203,7 @@ describe('Around Town soft-advance copy (all 10 lessons)', () => {
         'Hello there.',
       ),
       AROUND_TOWN_SURVIVAL.lessonId,
-      /"I can't find my bag\."/,
+      /I can't find my\.\.\./,
       /Can you help me/,
     );
   });

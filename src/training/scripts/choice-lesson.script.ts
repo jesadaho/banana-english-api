@@ -231,18 +231,73 @@ function supportedCompletionText(
     : `เรียนครบแล้วครับ ${name} คุณทำบทเรียนจบโดยได้รับคำแนะนำบางส่วน ลองฝึกอีกครั้งเพื่อให้คล่องขึ้นนะครับ`;
 }
 
-/** Close out pool — recast canonical line, then next teaching (no double praise). */
+/** Prefer stem / โครง hint for phrase boards; keep full reveal for short vocab. */
+export function softRevealCue(board: GuidedBoard | null): {
+  kind: 'skeleton' | 'full';
+  cue: string;
+  emoji: string;
+} {
+  const emoji = boardTargetEmoji(board);
+  const model = board?.expectedSpeech?.trim() ?? '';
+  const modelBare = model.replace(/[.!?]+$/g, '').trim();
+  const stem = board?.stem?.trim() ?? '';
+  const hint = board?.incorrectHintTh?.trim() ?? '';
+
+  const stemCue = stem
+    .replace(/_{2,}/g, '...')
+    .replace(/\s+/g, ' ')
+    .trim();
+  // Stem that is only "..." is a vocab slot — do not treat as a phrase skeleton.
+  const stemIsPlaceholderOnly = !stemCue || /^(\.\.\.|…)+$/.test(stemCue);
+
+  if (!stemIsPlaceholderOnly && /(\.\.\.|…)/.test(stemCue)) {
+    return { kind: 'skeleton', cue: stemCue, emoji };
+  }
+
+  const fromHint = hint.match(/โครง\s+(.+?)\s*ครับ/u);
+  if (fromHint?.[1]?.trim()) {
+    return {
+      kind: 'skeleton',
+      cue: fromHint[1].trim().replace(/_{2,}/g, '...'),
+      emoji,
+    };
+  }
+
+  // Single-token vocab (shirt / coffee / Hot.) — keep full reveal.
+  if (modelBare && !/\s/.test(modelBare)) {
+    return { kind: 'full', cue: modelBare, emoji };
+  }
+
+  return { kind: 'full', cue: model || modelBare, emoji };
+}
+
+function formatCloseRecast(board: GuidedBoard | null): string {
+  const { kind, cue, emoji } = softRevealCue(board);
+  if (!cue) return 'เกือบถูกแล้วครับ!';
+  if (kind === 'skeleton') {
+    return `เกือบถูกแล้วครับ! ลองใช้โครง ${cue} ครับ${emoji ? ` ${emoji}` : ''}`;
+  }
+  const bare = cue.replace(/[.!?]+$/g, '');
+  return `เกือบถูกแล้วครับ! พูดว่า ${bare}.${emoji ? ` ${emoji}` : ''}`;
+}
+
+function formatSoftAdvanceModelLine(board: GuidedBoard | null): string {
+  const { kind, cue, emoji } = softRevealCue(board);
+  if (!cue) return '';
+  if (kind === 'skeleton') {
+    return `ตรงนี้ใช้โครง "${cue}" ครับ${emoji ? ` ${emoji}` : ''}`;
+  }
+  const model = board?.expectedSpeech?.trim() || cue;
+  return `ตรงนี้พูดว่า "${model}" ครับ${emoji ? ` ${emoji}` : ''}`;
+}
+
+/** Close out pool — skeleton for phrase boards; full line only for short vocab. */
 export function buildCloseAdvanceTextEn(
   failedBoard: GuidedBoard | null,
   nextBoard: GuidedBoard | null,
   nextScripted: ScriptTurnResult,
 ): string {
-  const model = failedBoard?.expectedSpeech?.trim() ?? '';
-  const emoji = boardTargetEmoji(failedBoard);
-  const modelBare = model.replace(/[.!?]+$/g, '');
-  const recast = modelBare
-    ? `เกือบถูกแล้วครับ! พูดว่า ${modelBare}.${emoji ? ` ${emoji}` : ''}`
-    : 'เกือบถูกแล้วครับ!';
+  const recast = formatCloseRecast(failedBoard);
 
   const nextRaw =
     nextBoard?.textEn?.trim() ||
@@ -292,22 +347,21 @@ export function buildCloseAdvanceTextTh(
   return nextTh;
 }
 
-/** 2nd wrong — model canonical answer, then next step question (no full praise block). */
+/** 2nd wrong — skeleton for phrase boards; full model only for short vocab. */
 export function buildSoftAdvanceTextEn(
   failedBoard: GuidedBoard | null,
   nextBoard: GuidedBoard | null,
   nextScripted: ScriptTurnResult,
 ): string {
-  const model = failedBoard?.expectedSpeech?.trim() ?? '';
-  const emoji = boardTargetEmoji(failedBoard);
   const nextInstruction = localizedNextInstruction(nextBoard, nextScripted);
-  const modelLine = model
-    ? `ตรงนี้พูดว่า "${model}" ครับ${emoji ? ` ${emoji}` : ''}`
-    : '';
+  const modelLine = formatSoftAdvanceModelLine(failedBoard);
+  const { kind, cue, emoji } = softRevealCue(failedBoard);
 
   if (nextScripted.isLessonComplete) {
-    const finalModel = model
-      ? `ตรงนี้พูดได้ว่า "${model}" ครับ${emoji ? ` ${emoji}` : ''}`
+    const finalModel = cue
+      ? kind === 'skeleton'
+        ? `ตรงนี้ใช้โครง "${cue}" ครับ${emoji ? ` ${emoji}` : ''}`
+        : `ตรงนี้พูดได้ว่า "${failedBoard?.expectedSpeech?.trim() || cue}" ครับ${emoji ? ` ${emoji}` : ''}`
       : '';
     const completion = nextScripted.textEn?.trim() ?? '';
     return finalModel ? `${finalModel}\n\n${completion}` : completion;

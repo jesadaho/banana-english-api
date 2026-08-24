@@ -77,7 +77,7 @@ describe('greetings PoolGate flow', () => {
       learnerFirstName: 'Nana',
     });
     assert.notEqual(route?.deferToAi, true);
-    assert.match(route!.textEn ?? '', /ตรงนี้พูด(ว่า|ได้ว่า)/);
+    assert.match(route!.textEn ?? '', /ตรงนี้(พูด(ว่า|ได้ว่า)|ใช้โครง)/);
     assert.equal(route!.expectedSpeech, 'Hi');
   });
 

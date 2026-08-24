@@ -112,6 +112,8 @@ describe('Foundation incorrect hints — Introductions standard', () => {
       )!;
       const board = getDef(fixture).boardForStep(1, [], 'Nana');
       if (lessonId === 'numbers' || lessonId === 'everyday_numbers') {
+        assert.match(board?.ttsInstruction ?? '', /Thai number words stay Thai/);
+        assert.match(board?.ttsInstruction ?? '', /Latin-script English number words stay English/);
         assert.match(board?.ttsInstruction ?? '', /Pronounce every Latin-script English word in English/);
       } else {
         assert.equal(board?.ttsInstruction, undefined, lessonId);
