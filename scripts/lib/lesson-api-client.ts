@@ -16,6 +16,15 @@ export type TurnResult = LessonTurnView & {
   aiResponse?: string;
 };
 
+export type MissionTurnResult = {
+  currentTurn: number;
+  maxTurns: number;
+  isTaskComplete: boolean;
+  aiResponse: string;
+  textTh: string;
+  checkpoints: Record<string, boolean>;
+};
+
 export type Timed<T> = T & { durationMs: number };
 
 export class LessonApiClient {
@@ -130,6 +139,72 @@ export class LessonApiClient {
 
   async refillBananas(): Promise<void> {
     await this.request('POST', '/users/me/debug/refill-bananas');
+  }
+
+  parseMissionTurn(payload: Json): MissionTurnResult {
+    const block = (payload.opening ?? payload) as Json;
+    const session = payload.session as Json | undefined;
+    const checkpoints =
+      (block.updatedCheckpoints as Record<string, boolean> | undefined) ??
+      (session?.checkpointStates as Record<string, boolean> | undefined) ??
+      {};
+    return {
+      currentTurn:
+        (block.currentTurn as number | undefined) ??
+        (session?.currentTurn as number | undefined) ??
+        0,
+      maxTurns: (session?.maxTurns as number | undefined) ?? 8,
+      isTaskComplete: Boolean(
+        block.isTaskComplete ?? session?.isComplete ?? false,
+      ),
+      aiResponse: (block.aiResponse as string | undefined) ?? '',
+      textTh: (block.textTh as string | undefined) ?? '',
+      checkpoints,
+    };
+  }
+
+  async startSimulation(simulationId: string): Promise<
+    Timed<{
+      sessionId: string;
+      maxTurns: number;
+      turn: MissionTurnResult;
+      json: Json;
+    }>
+  > {
+    const start = await this.request('POST', '/sessions', {
+      sessionType: 'simulation',
+      simulationId,
+      isDailyMission: false,
+    });
+    const session = start.json.session as Json;
+    return {
+      durationMs: start.durationMs,
+      sessionId: session.id as string,
+      maxTurns: (session.maxTurns as number | undefined) ?? 8,
+      turn: this.parseMissionTurn(start.json),
+      json: start.json,
+    };
+  }
+
+  async sendMissionSpeech(
+    sessionId: string,
+    currentTurn: number,
+    userSpeech: string,
+  ): Promise<{ turn: MissionTurnResult; json: Json; durationMs: number }> {
+    const res = await this.request('POST', `/sessions/${sessionId}/turn`, {
+      userSpeechText: userSpeech,
+      currentTurn,
+      generateAudio: false,
+    });
+    return {
+      turn: this.parseMissionTurn(res.json),
+      json: res.json,
+      durationMs: res.durationMs,
+    };
+  }
+
+  async getSessionReport(sessionId: string): Promise<void> {
+    await this.request('GET', `/sessions/${sessionId}/report`);
   }
 
   async startLesson(lessonId = DEFAULT_LESSON_ID): Promise<

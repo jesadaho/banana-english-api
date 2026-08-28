@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import {
   LESSON_BANANA_COST,
@@ -179,5 +179,58 @@ export class LessonsService {
       return null;
     }
     return LESSON_PROGRESSION_ORDER[index + 1];
+  }
+
+  async submitRating(params: {
+    userId: string;
+    lessonId: string;
+    stars: number;
+    sessionId?: string;
+  }): Promise<{
+    id: string;
+    lessonId: string;
+    stars: number;
+    sessionId: string | null;
+    createdAt: string;
+  }> {
+    const lessonId = params.lessonId.trim();
+    if (!lessonId) {
+      throw new BadRequestException('lessonId is required');
+    }
+    if (params.stars < 1 || params.stars > 5) {
+      throw new BadRequestException('stars must be between 1 and 5');
+    }
+
+    let sessionId = params.sessionId?.trim() || null;
+    if (sessionId) {
+      const session = await this.prisma.userSession.findFirst({
+        where: { id: sessionId, userId: params.userId },
+        select: { id: true, lessonId: true },
+      });
+      if (!session) {
+        throw new BadRequestException('sessionId not found for this user');
+      }
+      // Prefer the session's lessonId when present.
+      if (session.lessonId && session.lessonId !== lessonId) {
+        throw new BadRequestException('sessionId does not match lessonId');
+      }
+    }
+
+    const row = await this.prisma.lessonRating.create({
+      data: {
+        userId: params.userId,
+        lessonId,
+        sessionId,
+        stars: params.stars,
+      },
+    });
+
+    return {
+      id: row.id,
+      lessonId: row.lessonId,
+      stars: row.stars,
+      sessionId: row.sessionId,
+      createdAt: row.createdAt.toISOString(),
+    };
   }
 }

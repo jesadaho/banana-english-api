@@ -56,6 +56,7 @@ model User {
   fcmTokens               UserFcmToken[]
   transactions            EconomyTransaction[]
   sessions                UserSession[]
+  lessonRatings           LessonRating[]
   notificationLogs        NotificationLog[]
   userNotifications       UserNotification[]
   achievements            UserAchievement[]
@@ -146,6 +147,22 @@ model UserSession {
 
   @@index([userId])
   @@index([userId, completedAt])
+  @@index([userId, lessonId])
+}
+
+/** Learner star rating after finishing a lesson (1–5). */
+model LessonRating {
+  id        String   @id @default(uuid())
+  userId    String
+  lessonId  String
+  sessionId String?
+  stars     Int
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+  @@index([lessonId, createdAt])
   @@index([userId, lessonId])
 }
 
