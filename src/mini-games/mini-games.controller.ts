@@ -12,6 +12,7 @@ import { User } from '@prisma/client';
 import { EconomyService } from '../economy/economy.service';
 import { AnonymousUserGuard } from '../users/anonymous-user.guard';
 import { EmojiSpeakEndlessLeaderboardService } from './emoji-speak-endless-leaderboard.service';
+import { EndlessScoreDto } from './dto/endless-score.dto';
 import {
   SpeakChallengeEvaluateService,
   type SpeakChallengeEvalTier,
@@ -60,11 +61,6 @@ class EvaluateStoryBuilderDto {
   targetEn!: string;
 }
 
-class EndlessScoreDto {
-  score!: number;
-  avatarId?: string;
-}
-
 @Controller('mini-games')
 @UseGuards(AnonymousUserGuard)
 export class MiniGamesController {
@@ -82,7 +78,7 @@ export class MiniGamesController {
   ) {
     return this.endlessLeaderboard.submitScore(
       req.user,
-      Number(body.score),
+      body.score,
       body.avatarId,
     );
   }
