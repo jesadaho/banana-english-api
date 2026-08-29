@@ -45,9 +45,13 @@ const TURN3_SILENT: IntroOpening = {
 
 function sanitizeName(raw: string): string {
   return raw
-    .replace(/[.!?,]+$/, '')
+    .replace(/[“”"]/g, '')
+    .replace(/[.!?,…]+$/g, '')
     .trim()
-    .split(/\s+/)[0];
+    .split(/\s+/)
+    .filter((w) => /^[a-zA-Z]/.test(w))
+    .slice(0, 4)
+    .join(' ');
 }
 
 export function matchesHello(userText: string): boolean {
@@ -60,30 +64,39 @@ export function matchesHello(userText: string): boolean {
 }
 
 export function extractUserName(userText: string): string | null {
-  const text = userText.trim();
-  if (text.length === 0 || text.length < 2) return null;
+  let text = userText.trim();
+  if (text.length === 0) return null;
+
+  text = text.replace(/[“”"]/g, '').replace(/[.!?,…]+$/g, '').trim();
+  if (text.length < 2) return null;
 
   const lower = text.toLowerCase();
   if (/^(hi|hello|hey|สวัสดี|หวัดดี)[\s!.?,]*$/.test(lower)) {
     return null;
   }
 
-  const patterns = [
-    /(?:my name is|i'?m|i am|call me|name'?s|this is)\s+([a-zA-Z][\w'-]*)/i,
-    /^([a-zA-Z][a-zA-Z'-]{1,30})$/,
-  ];
+  const intro =
+    /(?:my name is|i'?m|i am|call me|name'?s|this is)\s+(.+)$/i.exec(text);
+  if (intro?.[1]) {
+    const name = sanitizeName(intro[1]);
+    if (name.length >= 2) return name;
+  }
 
-  for (const pattern of patterns) {
-    const match = text.match(pattern);
-    if (match?.[1]) {
-      const name = sanitizeName(match[1]);
-      if (name.length >= 2) return name;
-    }
+  const thai = /(?:ผม|ฉัน|ดิฉัน)?\s*ชื่อ\s+(.+)$/.exec(text);
+  if (thai?.[1]) {
+    const name = sanitizeName(thai[1]);
+    if (name.length >= 2) return name;
+  }
+
+  const plain = /^([a-zA-Z][\w'-]*(?:\s+[a-zA-Z][\w'-]*){0,3})$/.exec(text);
+  if (plain?.[1]) {
+    const name = sanitizeName(plain[1]);
+    if (name.length >= 2) return name;
   }
 
   const words = text.split(/\s+/);
   if (words.length <= 3) {
-    const candidate = sanitizeName(words[0]);
+    const candidate = sanitizeName(words[0] ?? '');
     if (/^[a-zA-Z]/.test(candidate) && candidate.length >= 2) {
       return candidate;
     }

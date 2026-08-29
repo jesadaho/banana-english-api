@@ -36,7 +36,7 @@ import {
   TAP_TO_CONTINUE_SENTINEL,
   TAP_TO_CONTINUE_TURN_TEXT,
 } from '../common/api.types';
-import { EndSessionDto } from './dto/sessions.dto';
+import { EndSessionDto, ExtractIntroNameDto } from './dto/sessions.dto';
 import {
   computeSpeakingAssessment,
   type SpeakingAssessmentResult,
@@ -404,6 +404,20 @@ export class SessionsController {
     }
 
     return this.processLegacyTurn(sessionId, body, chatDebug);
+  }
+
+  /** Onboarding: parse learner name from STT transcript (regex + Gemini). */
+  @Post(':sessionId/intro/extract-name')
+  async extractIntroName(
+    @Param('sessionId') sessionId: string,
+    @Body() body: ExtractIntroNameDto,
+  ) {
+    const data = this.sessionStore.get(sessionId);
+    if (!data) {
+      throw new NotFoundException('Session not found');
+    }
+    const userName = await this.chat.extractIntroUserName(body.transcript);
+    return { userName };
   }
 
   private async startTrainingSession(

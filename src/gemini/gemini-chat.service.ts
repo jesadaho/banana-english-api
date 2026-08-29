@@ -29,6 +29,7 @@ import {
 import {
   INTRO_REPORT_PROMPT,
   INTRO_TOPIC_CONTEXT,
+  extractUserName,
   introReplyInstruction,
 } from '../topics/intro_script';
 import { ChatTurn } from '../session-store/session-store.service';
@@ -759,6 +760,27 @@ const INTRO_REPORT_SCHEMA = {
     'listeningScore',
   ],
 };
+
+const INTRO_NAME_EXTRACT_SCHEMA = {
+  type: 'object',
+  properties: {
+    userName: {
+      type: 'string',
+      description:
+        'Learner first name only (English letters preferred). Empty string if no name.',
+    },
+  },
+  required: ['userName'],
+  propertyOrdering: ['userName'],
+};
+
+const INTRO_NAME_EXTRACT_PROMPT =
+  'The learner was asked "What is your name?" during Banana English onboarding. ' +
+  'Given their speech transcript (may include STT noise, Thai, fillers, or punctuation), ' +
+  'extract their first name only. ' +
+  'Return userName as the given name in Latin letters when possible (e.g. Jim, Nana, Somchai). ' +
+  'If they clearly did not say a name (only hello, filler, silence, or unrelated speech), return an empty string. ' +
+  'Never invent a name. Never return titles or full sentences.';
 
 type GeminiContent = {
   role: 'user' | 'model';
@@ -2805,6 +2827,45 @@ ${text}`,
       confidenceScore: this.clampScore(report.confidenceScore),
       listeningScore: this.clampScore(report.listeningScore),
     };
+  }
+
+  /**
+   * Fast name parse for onboarding turn 2. Regex first; Gemini only when needed.
+   */
+  async extractIntroUserName(transcript: string): Promise<string | null> {
+    const text = transcript.trim();
+    if (text.length < 2) return null;
+
+    const local = extractUserName(text);
+    if (local) return local;
+
+    try {
+      const { value } = await this.generateJson<{ userName: string }>({
+        ...GEMINI_LIVE_TURN,
+        systemInstruction: INTRO_NAME_EXTRACT_PROMPT,
+        contents: [
+          {
+            role: 'user',
+            parts: [{ text: `Speech transcript:\n${text}` }],
+          },
+        ],
+        schema: INTRO_NAME_EXTRACT_SCHEMA,
+        maxOutputTokens: 64,
+        temperature: 0,
+      });
+
+      const raw = (value.userName ?? '').trim();
+      if (!raw || /^null$/i.test(raw) || raw === '-' || raw === 'เพื่อน') {
+        return null;
+      }
+      // Re-run local sanitizer so we never accept a sentence.
+      return extractUserName(raw) ?? extractUserName(`My name is ${raw}`);
+    } catch (err) {
+      this.logger.warn(
+        `extractIntroUserName failed: ${err instanceof Error ? err.message : err}`,
+      );
+      return null;
+    }
   }
 
   private trainingLlmProvider(): 'gemini' | 'groq' {

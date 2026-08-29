@@ -146,3 +146,9 @@ export class EndSessionDto {
   @Type(() => SpeakingMetricsDto)
   speakingMetrics?: SpeakingMetricsDto;
 }
+
+export class ExtractIntroNameDto {
+  @IsString()
+  @IsNotEmpty()
+  transcript!: string;
+}
