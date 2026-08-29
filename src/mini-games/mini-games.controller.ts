@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Get,
   Param,
   Post,
   Req,
@@ -10,6 +11,7 @@ import {
 import { User } from '@prisma/client';
 import { EconomyService } from '../economy/economy.service';
 import { AnonymousUserGuard } from '../users/anonymous-user.guard';
+import { EmojiSpeakEndlessLeaderboardService } from './emoji-speak-endless-leaderboard.service';
 import {
   SpeakChallengeEvaluateService,
   type SpeakChallengeEvalTier,
@@ -58,6 +60,11 @@ class EvaluateStoryBuilderDto {
   targetEn!: string;
 }
 
+class EndlessScoreDto {
+  score!: number;
+  avatarId?: string;
+}
+
 @Controller('mini-games')
 @UseGuards(AnonymousUserGuard)
 export class MiniGamesController {
@@ -65,7 +72,25 @@ export class MiniGamesController {
     private readonly economy: EconomyService,
     private readonly speakChallengeEval: SpeakChallengeEvaluateService,
     private readonly storyBuilderEval: StoryBuilderEvaluateService,
+    private readonly endlessLeaderboard: EmojiSpeakEndlessLeaderboardService,
   ) {}
+
+  @Post('emoji-speak-endless/score')
+  async submitEndlessScore(
+    @Req() req: AuthedRequest,
+    @Body() body: EndlessScoreDto,
+  ) {
+    return this.endlessLeaderboard.submitScore(
+      req.user,
+      Number(body.score),
+      body.avatarId,
+    );
+  }
+
+  @Get('emoji-speak-endless/weekly-leaderboard')
+  async endlessWeeklyLeaderboard(@Req() req: AuthedRequest) {
+    return this.endlessLeaderboard.weeklyBoard(req.user);
+  }
 
   @Post('speak-challenge/evaluate')
   async evaluateSpeakChallenge(@Body() body: EvaluateSpeakChallengeDto): Promise<{

@@ -61,6 +61,7 @@ model User {
   userNotifications       UserNotification[]
   achievements            UserAchievement[]
   outfits                 UserOutfit[]
+  emojiSpeakEndlessWeeklyScores EmojiSpeakEndlessWeeklyScore[]
 
   createdAt               DateTime  @default(now())
   updatedAt               DateTime  @updatedAt
@@ -192,4 +193,21 @@ model UserOutfit {
 
   @@unique([userId, outfitId])
   @@index([userId])
+}
+
+/** Weekly personal best for Emoji Speak Endless (Mon–Sun, Asia/Bangkok week key). */
+model EmojiSpeakEndlessWeeklyScore {
+  id          String   @id @default(uuid())
+  userId      String
+  weekKey     String
+  bestScore   Int
+  displayName String?
+  avatarId    String?
+  updatedAt   DateTime @updatedAt
+  createdAt   DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, weekKey])
+  @@index([weekKey, bestScore])
 }
