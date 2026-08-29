@@ -56,11 +56,22 @@ export class EmojiSpeakEndlessLeaderboardService {
       where: { id: existing.id },
       data: {
         bestScore: improved ? rounded : existing.bestScore,
+        // Always refresh name/avatar snapshot from current profile.
         displayName: displayName ?? existing.displayName,
         avatarId: avatar ?? existing.avatarId,
       },
     });
     return { weekKey, bestScore: updated.bestScore, improved };
+  }
+
+  /** Keep leaderboard name in sync when the user renames. */
+  async syncDisplayName(userId: string, displayName: string): Promise<void> {
+    const trimmed = displayName.trim();
+    if (!trimmed) return;
+    await this.prisma.emojiSpeakEndlessWeeklyScore.updateMany({
+      where: { userId },
+      data: { displayName: trimmed },
+    });
   }
 
   async weeklyBoard(user: User): Promise<{
@@ -77,11 +88,15 @@ export class EmojiSpeakEndlessLeaderboardService {
       where: { weekKey },
       orderBy: [{ bestScore: 'desc' }, { updatedAt: 'asc' }],
       take: 3,
+      include: { user: { select: { displayName: true } } },
     });
 
     const top: EndlessLeaderboardEntry[] = topRows.map((row, i) => ({
       rank: i + 1,
-      name: row.displayName?.trim() || 'Player',
+      name:
+        row.user.displayName?.trim() ||
+        row.displayName?.trim() ||
+        'Player',
       score: row.bestScore,
       avatarId: row.avatarId,
       isYou: row.userId === user.id,
@@ -89,6 +104,7 @@ export class EmojiSpeakEndlessLeaderboardService {
 
     const mine = await this.prisma.emojiSpeakEndlessWeeklyScore.findUnique({
       where: { userId_weekKey: { userId: user.id, weekKey } },
+      include: { user: { select: { displayName: true } } },
     });
 
     let me: EndlessLeaderboardEntry | null = null;
@@ -107,7 +123,11 @@ export class EmojiSpeakEndlessLeaderboardService {
       });
       me = {
         rank: better + 1,
-        name: mine.displayName?.trim() || user.displayName?.trim() || 'You',
+        name:
+          mine.user.displayName?.trim() ||
+          user.displayName?.trim() ||
+          mine.displayName?.trim() ||
+          'You',
         score: mine.bestScore,
         avatarId: mine.avatarId,
         isYou: true,

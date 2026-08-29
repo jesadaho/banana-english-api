@@ -90,6 +90,13 @@ export class UsersService {
         } as Prisma.UserUpdateInput,
       });
 
+      if (dto.displayName?.trim()) {
+        await this.prisma.emojiSpeakEndlessWeeklyScore.updateMany({
+          where: { userId: user.id },
+          data: { displayName: dto.displayName.trim() },
+        });
+      }
+
       if (dto.fcmToken) {
         await this.prisma.userFcmToken.upsert({
           where: { token: dto.fcmToken },
@@ -134,10 +141,17 @@ export class UsersService {
     dto: CompleteOnboardingDto,
   ): Promise<UserProfileResponse> {
     if (dto.displayName) {
+      const trimmed = dto.displayName.trim();
       await this.prisma.user.update({
         where: { id: user.id },
-        data: { displayName: dto.displayName },
+        data: { displayName: trimmed },
       });
+      if (trimmed) {
+        await this.prisma.emojiSpeakEndlessWeeklyScore.updateMany({
+          where: { userId: user.id },
+          data: { displayName: trimmed },
+        });
+      }
     }
 
     const updated = await this.economy.creditOnboardingBonus(user.id);
@@ -369,9 +383,14 @@ export class UsersService {
 
   async updateDisplayName(userId: string, displayName: string) {
     if (!displayName.trim()) return;
+    const trimmed = displayName.trim();
     await this.prisma.user.update({
       where: { id: userId },
-      data: { displayName: displayName.trim() },
+      data: { displayName: trimmed },
+    });
+    await this.prisma.emojiSpeakEndlessWeeklyScore.updateMany({
+      where: { userId },
+      data: { displayName: trimmed },
     });
   }
 
