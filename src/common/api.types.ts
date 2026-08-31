@@ -537,6 +537,11 @@ export interface UserProfileResponse {
    * beginner | elementary | intermediate | advanced
    */
   selfReportedEnglishLevel?: string | null;
+  /**
+   * How the learner found Banana English:
+   * tiktok | facebook | friend_line | google | app_store | other | skipped
+   */
+  acquisitionSource?: string | null;
   /** Banana Ticket sheet copy — kept in sync with economy env/defaults. */
   bananaTicket: {
     dailyDrop: number;

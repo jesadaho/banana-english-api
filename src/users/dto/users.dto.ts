@@ -50,6 +50,27 @@ export class EnglishLevelSurveyDto {
   level!: 'beginner' | 'elementary' | 'intermediate' | 'advanced';
 }
 
+export class AcquisitionSourceSurveyDto {
+  @IsString()
+  @IsIn([
+    'tiktok',
+    'facebook',
+    'friend_line',
+    'google',
+    'app_store',
+    'other',
+    'skipped',
+  ])
+  source!:
+    | 'tiktok'
+    | 'facebook'
+    | 'friend_line'
+    | 'google'
+    | 'app_store'
+    | 'other'
+    | 'skipped';
+}
+
 export class UnlockAvatarDto {
   @IsString()
   @MinLength(1)

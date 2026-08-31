@@ -14,6 +14,7 @@ import { User } from '@prisma/client';
 import { ActivityService } from './activity.service';
 import { AnonymousUserGuard } from './anonymous-user.guard';
 import {
+  AcquisitionSourceSurveyDto,
   CompleteOnboardingDto,
   EnglishLevelSurveyDto,
   RefillBananasByNameDto,
@@ -111,6 +112,14 @@ export class UsersController {
     @Body() body: EnglishLevelSurveyDto,
   ) {
     return this.users.saveEnglishLevelSurvey(req.user, body);
+  }
+
+  @Post('me/acquisition-source-survey')
+  async saveAcquisitionSourceSurvey(
+    @Req() req: AuthedRequest,
+    @Body() body: AcquisitionSourceSurveyDto,
+  ) {
+    return this.users.saveAcquisitionSourceSurvey(req.user, body);
   }
 
   @Post('me/avatars/unlock')

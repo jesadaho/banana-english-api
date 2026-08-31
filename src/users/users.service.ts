@@ -16,7 +16,12 @@ import {
   FREE_AVATAR_IDS,
   isKnownAvatarId,
 } from './avatar-catalog';
-import { CompleteOnboardingDto, EnglishLevelSurveyDto, UpsertUserDto } from './dto/users.dto';
+import {
+  AcquisitionSourceSurveyDto,
+  CompleteOnboardingDto,
+  EnglishLevelSurveyDto,
+  UpsertUserDto,
+} from './dto/users.dto';
 
 export type SelfReportedEnglishLevel =
   | 'beginner'
@@ -24,11 +29,30 @@ export type SelfReportedEnglishLevel =
   | 'intermediate'
   | 'advanced';
 
+export type AcquisitionSource =
+  | 'tiktok'
+  | 'facebook'
+  | 'friend_line'
+  | 'google'
+  | 'app_store'
+  | 'other'
+  | 'skipped';
+
 const SELF_REPORTED_ENGLISH_LEVELS = new Set<SelfReportedEnglishLevel>([
   'beginner',
   'elementary',
   'intermediate',
   'advanced',
+]);
+
+const ACQUISITION_SOURCES = new Set<AcquisitionSource>([
+  'tiktok',
+  'facebook',
+  'friend_line',
+  'google',
+  'app_store',
+  'other',
+  'skipped',
 ]);
 
 export interface UserProfileResponse {
@@ -50,6 +74,11 @@ export interface UserProfileResponse {
    * beginner | elementary | intermediate | advanced
    */
   selfReportedEnglishLevel?: string | null;
+  /**
+   * How the learner found Banana English:
+   * tiktok | facebook | friend_line | google | app_store | other | skipped
+   */
+  acquisitionSource?: string | null;
   /** Banana Ticket sheet copy — kept in sync with economy env/defaults. */
   bananaTicket: {
     dailyDrop: number;
@@ -169,6 +198,21 @@ export class UsersService {
     const updated = await this.prisma.user.update({
       where: { id: user.id },
       data: { selfReportedEnglishLevel: dto.level },
+    });
+    return this.getProfile(updated);
+  }
+
+  async saveAcquisitionSourceSurvey(
+    user: User,
+    dto: AcquisitionSourceSurveyDto,
+  ): Promise<UserProfileResponse> {
+    if (!ACQUISITION_SOURCES.has(dto.source)) {
+      throw new BadRequestException('Invalid acquisition source');
+    }
+
+    const updated = await this.prisma.user.update({
+      where: { id: user.id },
+      data: { acquisitionSource: dto.source },
     });
     return this.getProfile(updated);
   }
@@ -428,6 +472,13 @@ export class UsersService {
       rawLevel && SELF_REPORTED_ENGLISH_LEVELS.has(rawLevel as SelfReportedEnglishLevel)
         ? rawLevel
         : null;
+    const rawAcquisition = (
+      user as User & { acquisitionSource?: string | null }
+    ).acquisitionSource;
+    const acquisitionSource =
+      rawAcquisition && ACQUISITION_SOURCES.has(rawAcquisition as AcquisitionSource)
+        ? rawAcquisition
+        : null;
     return {
       anonymousId: user.anonymousId,
       displayName: user.displayName ?? 'เพื่อน',
@@ -443,6 +494,7 @@ export class UsersService {
       unlockedAvatarIds,
       lessonTeachingLanguage,
       selfReportedEnglishLevel,
+      acquisitionSource,
       bananaTicket: this.economy.ticketRules(),
     };
   }

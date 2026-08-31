@@ -50,6 +50,12 @@ model User {
    */
   selfReportedEnglishLevel String?
 
+  /**
+   * How the learner found Banana English (onboarding acquisition survey):
+   * "tiktok" | "facebook" | "friend_line" | "google" | "app_store" | "other" | "skipped"
+   */
+  acquisitionSource String?
+
   /** True after the learner finishes any Vocab Drill with zero mistakes. */
   perfectVocabDrillCompleted Boolean @default(false)
 
