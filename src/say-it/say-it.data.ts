@@ -74,7 +74,7 @@ export const SAY_IT_TOPICS: SayItTopic[] = [
     titleTh: 'Reactions & Expressions',
     subtitleEn: 'Real reactions in English',
     subtitleTh: 'ปฏิกิริยาและสำนวนพูดจริงๆ',
-    emoji: '💬',
+    emoji: '😱',
     accentColor: 0xffff7043,
     estimatedMinutes: 3,
     poolSize: 20,
