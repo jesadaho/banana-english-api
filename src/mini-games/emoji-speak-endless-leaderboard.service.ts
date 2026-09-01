@@ -19,6 +19,8 @@ export class EmojiSpeakEndlessLeaderboardService {
   /** Sentinel board bucket — not a real ISO week. */
   static readonly ALL_TIME_KEY = 'all';
 
+  static readonly LEADERBOARD_TOP_SIZE = 5;
+
   constructor(private readonly prisma: PrismaService) {}
 
   async submitScore(
@@ -87,7 +89,7 @@ export class EmojiSpeakEndlessLeaderboardService {
     const topRows = await this.prisma.emojiSpeakEndlessWeeklyScore.findMany({
       where: { weekKey },
       orderBy: [{ bestScore: 'desc' }, { updatedAt: 'asc' }],
-      take: 3,
+      take: EmojiSpeakEndlessLeaderboardService.LEADERBOARD_TOP_SIZE,
       include: { user: { select: { displayName: true } } },
     });
 
