@@ -13,6 +13,9 @@ import { EconomyService } from '../economy/economy.service';
 import { AnonymousUserGuard } from '../users/anonymous-user.guard';
 import { EmojiSpeakEndlessLeaderboardService } from './emoji-speak-endless-leaderboard.service';
 import { EndlessScoreDto } from './dto/endless-score.dto';
+import { EvaluateExplainItDto } from './dto/evaluate-explain-it.dto';
+import { EvaluateSpeakChallengeDto } from './dto/evaluate-speak-challenge.dto';
+import { EvaluateStoryBuilderDto } from './dto/evaluate-story-builder.dto';
 import {
   SpeakChallengeEvaluateService,
   type SpeakChallengeEvalTier,
@@ -51,26 +54,6 @@ const ALLOWED_MINI_GAME_IDS = new Set([
   'story_builder_ee_stories_favorite',
   'whats_happen_ee_stories_bad_day',
 ]);
-
-class EvaluateSpeakChallengeDto {
-  transcript!: string;
-  targetEn!: string;
-  promptTh?: string;
-  promptEn?: string;
-}
-
-class EvaluateStoryBuilderDto {
-  transcript!: string;
-  emojiSet!: string;
-  targetEn!: string;
-}
-
-class EvaluateExplainItDto {
-  transcript!: string;
-  targetEn!: string;
-  emoji!: string;
-  exampleDescriptionEn!: string;
-}
 
 @Controller('mini-games')
 @UseGuards(AnonymousUserGuard)
