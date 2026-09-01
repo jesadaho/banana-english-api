@@ -23,6 +23,7 @@ export type SayItTopic = {
 };
 
 export const SAY_IT_DEAL_COUNT = 7;
+export const SAY_IT_BANANA_COST = 1;
 
 export const SAY_IT_TOPICS: SayItTopic[] = [
   {

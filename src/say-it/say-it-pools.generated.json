@@ -619,8 +619,16 @@
       "answerEn": "that's right.",
       "acceptedAnswers": [
         "that's right.",
+        "that's right",
+        "thats right",
         "exactly.",
-        "that's correct."
+        "exactly",
+        "that's correct.",
+        "that's correct",
+        "thats correct",
+        "correct",
+        "you got it",
+        "right"
       ]
     },
     {
@@ -629,7 +637,14 @@
       "answerEn": "that's correct.",
       "acceptedAnswers": [
         "that's correct.",
-        "that's right."
+        "that's correct",
+        "thats correct",
+        "that's right.",
+        "that's right",
+        "thats right",
+        "correct",
+        "right",
+        "exactly"
       ]
     },
     {
@@ -638,8 +653,18 @@
       "answerEn": "that's okay.",
       "acceptedAnswers": [
         "that's okay.",
+        "that's okay",
+        "thats okay",
         "it's okay.",
-        "no problem."
+        "it's okay",
+        "its okay",
+        "no problem.",
+        "no problem",
+        "that's fine.",
+        "that's fine",
+        "thats fine",
+        "no worries",
+        "don't worry"
       ]
     },
     {
@@ -648,7 +673,13 @@
       "answerEn": "that's me.",
       "acceptedAnswers": [
         "that's me.",
-        "it's me."
+        "that's me",
+        "thats me",
+        "it's me.",
+        "it's me",
+        "its me",
+        "me",
+        "yeah thats me"
       ]
     },
     {
@@ -657,7 +688,14 @@
       "answerEn": "that's it.",
       "acceptedAnswers": [
         "that's it.",
-        "that's all."
+        "that's it",
+        "thats it",
+        "that's all.",
+        "that's all",
+        "thats all",
+        "all",
+        "that is it",
+        "that is all"
       ]
     },
     {
@@ -666,8 +704,15 @@
       "answerEn": "that's easy.",
       "acceptedAnswers": [
         "that's easy.",
+        "that's easy",
+        "thats easy",
         "it's easy.",
-        "easy."
+        "it's easy",
+        "its easy",
+        "easy.",
+        "easy",
+        "piece of cake",
+        "no problem"
       ]
     },
     {
@@ -676,8 +721,16 @@
       "answerEn": "that's great.",
       "acceptedAnswers": [
         "that's great.",
+        "that's great",
+        "thats great",
         "that's awesome.",
-        "great!"
+        "that's awesome",
+        "thats awesome",
+        "great!",
+        "great",
+        "awesome",
+        "that's wonderful.",
+        "wonderful"
       ]
     },
     {
@@ -686,7 +739,13 @@
       "answerEn": "that's nice.",
       "acceptedAnswers": [
         "that's nice.",
-        "nice!"
+        "that's nice",
+        "thats nice",
+        "nice!",
+        "nice",
+        "that's lovely.",
+        "lovely",
+        "how nice"
       ]
     },
     {
@@ -695,7 +754,15 @@
       "answerEn": "that's really good.",
       "acceptedAnswers": [
         "that's really good.",
-        "that's very good."
+        "that's really good",
+        "thats really good",
+        "that's very good.",
+        "that's very good",
+        "thats very good",
+        "really good",
+        "very good",
+        "that's so good.",
+        "so good"
       ]
     },
     {
@@ -704,7 +771,15 @@
       "answerEn": "that's bad.",
       "acceptedAnswers": [
         "that's bad.",
-        "that's terrible."
+        "that's bad",
+        "thats bad",
+        "that's terrible.",
+        "that's terrible",
+        "thats terrible",
+        "terrible",
+        "that's awful.",
+        "awful",
+        "so bad"
       ]
     },
     {
@@ -713,8 +788,16 @@
       "answerEn": "that's too bad.",
       "acceptedAnswers": [
         "that's too bad.",
+        "that's too bad",
+        "thats too bad",
+        "too bad",
         "what a shame.",
-        "that's a shame."
+        "what a shame",
+        "that's a shame.",
+        "that's a shame",
+        "thats a shame",
+        "a shame",
+        "shame"
       ]
     },
     {
@@ -723,7 +806,12 @@
       "answerEn": "that's interesting.",
       "acceptedAnswers": [
         "that's interesting.",
-        "interesting."
+        "that's interesting",
+        "thats interesting",
+        "interesting.",
+        "interesting",
+        "hmm interesting",
+        "thats so interesting"
       ]
     },
     {
@@ -732,7 +820,13 @@
       "answerEn": "that's funny.",
       "acceptedAnswers": [
         "that's funny.",
-        "funny."
+        "that's funny",
+        "thats funny",
+        "funny.",
+        "funny",
+        "hilarious",
+        "so funny",
+        "that's hilarious."
       ]
     },
     {
@@ -741,7 +835,15 @@
       "answerEn": "that's weird.",
       "acceptedAnswers": [
         "that's weird.",
-        "that's strange."
+        "that's weird",
+        "thats weird",
+        "that's strange.",
+        "that's strange",
+        "thats strange",
+        "strange",
+        "weird",
+        "odd",
+        "that's odd."
       ]
     },
     {
@@ -750,7 +852,16 @@
       "answerEn": "that's crazy.",
       "acceptedAnswers": [
         "that's crazy.",
-        "that's insane."
+        "that's crazy",
+        "thats crazy",
+        "that's insane.",
+        "that's insane",
+        "thats insane",
+        "insane",
+        "crazy",
+        "that's nuts.",
+        "nuts",
+        "thats nuts"
       ]
     },
     {
@@ -759,7 +870,15 @@
       "answerEn": "is that true?",
       "acceptedAnswers": [
         "is that true?",
-        "really?"
+        "is that true",
+        "really?",
+        "really",
+        "for real?",
+        "for real",
+        "seriously?",
+        "seriously",
+        "is that for real",
+        "you serious?"
       ]
     },
     {
@@ -768,7 +887,14 @@
       "answerEn": "that's true.",
       "acceptedAnswers": [
         "that's true.",
-        "true."
+        "that's true",
+        "thats true",
+        "true.",
+        "true",
+        "that is true",
+        "yeah thats true",
+        "its true",
+        "it's true"
       ]
     },
     {
@@ -777,7 +903,13 @@
       "answerEn": "that's enough.",
       "acceptedAnswers": [
         "that's enough.",
-        "enough."
+        "that's enough",
+        "thats enough",
+        "enough.",
+        "enough",
+        "stop",
+        "that is enough",
+        "okay enough"
       ]
     },
     {
@@ -786,7 +918,14 @@
       "answerEn": "that's what I mean.",
       "acceptedAnswers": [
         "that's what I mean.",
-        "that's exactly what I mean."
+        "that's what I mean",
+        "thats what i mean",
+        "that's exactly what I mean.",
+        "that's exactly what I mean",
+        "thats exactly what i mean",
+        "exactly what i mean",
+        "what i mean",
+        "that is what i mean"
       ]
     },
     {
@@ -795,7 +934,14 @@
       "answerEn": "that's what I want.",
       "acceptedAnswers": [
         "that's what I want.",
-        "that's exactly what I want."
+        "that's what I want",
+        "thats what i want",
+        "that's exactly what I want.",
+        "that's exactly what I want",
+        "thats exactly what i want",
+        "exactly what i want",
+        "what i want",
+        "that is what i want"
       ]
     }
   ]
