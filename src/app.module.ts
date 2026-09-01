@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
+import { FirebaseAdminModule } from './firebase/firebase-admin.module';
 import { HealthModule } from './health/health.module';
 import { TopicsModule } from './topics/topics.module';
 import { SessionsModule } from './sessions/sessions.module';
@@ -20,6 +21,7 @@ import { UsersModule } from './users/users.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { MiniGamesModule } from './mini-games/mini-games.module';
 import { DailySpeakModule } from './daily-speak/daily-speak.module';
+import { ExplainItModule } from './explain-it/explain-it.module';
 import { SayItModule } from './say-it/say-it.module';
 import { DebugModule } from './debug/debug.module';
 
@@ -28,6 +30,7 @@ import { DebugModule } from './debug/debug.module';
     ConfigModule.forRoot({ isGlobal: true }),
     ScheduleModule.forRoot(),
     PrismaModule,
+    FirebaseAdminModule,
     EconomyModule,
     UsersModule,
     NotificationsModule,
@@ -47,6 +50,7 @@ import { DebugModule } from './debug/debug.module';
     MiniGamesModule,
     DailySpeakModule,
     SayItModule,
+    ExplainItModule,
     DebugModule,
   ],
 })

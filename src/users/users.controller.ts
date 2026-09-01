@@ -8,6 +8,7 @@ import {
   Put,
   Query,
   Req,
+  UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
 import { User } from '@prisma/client';
@@ -22,7 +23,9 @@ import {
   UpsertUserDto,
 } from './dto/users.dto';
 import { UserNotificationsService } from './user-notifications.service';
+import { UserAuthService } from './user-auth.service';
 import { UsersService } from './users.service';
+import { FirebaseIdToken } from './firebase-id-token.decorator';
 
 type AuthedRequest = { user: User };
 
@@ -31,6 +34,7 @@ type AuthedRequest = { user: User };
 export class UsersController {
   constructor(
     private readonly users: UsersService,
+    private readonly userAuth: UserAuthService,
     private readonly activity: ActivityService,
     private readonly notifications: UserNotificationsService,
   ) {}
@@ -43,6 +47,33 @@ export class UsersController {
   @Get('me')
   async getMe(@Req() req: AuthedRequest) {
     return this.users.syncProfile(req.user);
+  }
+
+  @Get('me/auth')
+  async getAuthStatus(@Req() req: AuthedRequest) {
+    return this.userAuth.getAuthStatus(req.user);
+  }
+
+  @Post('me/link-auth')
+  async linkAuth(
+    @Req() req: AuthedRequest,
+    @FirebaseIdToken() idToken: string | null,
+  ) {
+    if (!idToken) {
+      throw new UnauthorizedException('Missing Bearer ID token');
+    }
+    return this.userAuth.linkAuthFromToken(req.user, idToken);
+  }
+
+  @Post('me/link-provider')
+  async linkProvider(
+    @Req() req: AuthedRequest,
+    @FirebaseIdToken() idToken: string | null,
+  ) {
+    if (!idToken) {
+      throw new UnauthorizedException('Missing Bearer ID token');
+    }
+    return this.userAuth.linkAuthFromToken(req.user, idToken);
   }
 
   @Get('me/activity')

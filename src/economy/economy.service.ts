@@ -229,7 +229,7 @@ export class EconomyService {
     userId: string,
     amount: number,
     referenceId: string,
-    source: 'mission_start' | 'lesson_start' | 'free_talk_start' | 'say_it_start' = 'mission_start',
+    source: 'mission_start' | 'lesson_start' | 'free_talk_start' | 'say_it_start' | 'explain_it_start' = 'mission_start',
   ): Promise<User> {
     return this.prisma.$transaction(async (tx) => {
       const user = await tx.user.findUniqueOrThrow({ where: { id: userId } });
@@ -634,6 +634,8 @@ export class EconomyService {
     seedsEarned: number;
     balances: UserBalances;
     alreadyClaimed: boolean;
+    streakDays: number;
+    previousStreakDays: number;
   }> {
     const { userId, gameId } = params;
     const referenceId = `mini_game:${gameId}`;
@@ -649,13 +651,28 @@ export class EconomyService {
       });
 
       const user = await tx.user.findUniqueOrThrow({ where: { id: userId } });
+      const previousStreakDays = user.streakDays;
+      const local = getUserLocalTime(user.timezone);
+      const todayKey = local.dateKey;
+      const streakUpdate = this.computeStreakUpdate(user, todayKey);
+      const streakDays = streakUpdate.streakDays;
 
       if (prior) {
+        const streakOnly = await tx.user.update({
+          where: { id: userId },
+          data: {
+            streakDays,
+            longestStreakDays: Math.max(user.longestStreakDays, streakDays),
+            lastSessionDate: parseDateKey(todayKey),
+          },
+        });
         return {
           xpEarned: 0,
           seedsEarned: 0,
-          balances: this.toBalances(user),
+          balances: this.toBalances(streakOnly),
           alreadyClaimed: true,
+          streakDays: streakOnly.streakDays,
+          previousStreakDays,
         };
       }
 
@@ -682,6 +699,9 @@ export class EconomyService {
         data: {
           xpBalance: { increment: xpEarned },
           bananaSeedBalance: { increment: seedsEarned },
+          streakDays,
+          longestStreakDays: Math.max(user.longestStreakDays, streakDays),
+          lastSessionDate: parseDateKey(todayKey),
         },
       });
 
@@ -690,6 +710,36 @@ export class EconomyService {
         seedsEarned,
         balances: this.toBalances(updated),
         alreadyClaimed: false,
+        streakDays: updated.streakDays,
+        previousStreakDays,
+      };
+    });
+  }
+
+  /** Record a qualifying play day for streak (mini-games, etc.). */
+  async recordStreakActivity(userId: string): Promise<{
+    streakDays: number;
+    previousStreakDays: number;
+  }> {
+    return this.prisma.$transaction(async (tx) => {
+      const user = await tx.user.findUniqueOrThrow({ where: { id: userId } });
+      const previousStreakDays = user.streakDays;
+      const local = getUserLocalTime(user.timezone);
+      const todayKey = local.dateKey;
+      const { streakDays } = this.computeStreakUpdate(user, todayKey);
+
+      const updated = await tx.user.update({
+        where: { id: userId },
+        data: {
+          streakDays,
+          longestStreakDays: Math.max(user.longestStreakDays, streakDays),
+          lastSessionDate: parseDateKey(todayKey),
+        },
+      });
+
+      return {
+        streakDays: updated.streakDays,
+        previousStreakDays,
       };
     });
   }

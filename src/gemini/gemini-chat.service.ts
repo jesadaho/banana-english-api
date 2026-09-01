@@ -2738,6 +2738,41 @@ ${text}`,
     return value;
   }
 
+  /** Numeric rubric grading for Explain It mini-game. */
+  async evaluateExplainItUtterance(params: {
+    systemInstruction: string;
+    userPrompt: string;
+  }): Promise<{ clarity: number; usefulClues: number; communication: number }> {
+    const schema = {
+      type: 'object',
+      properties: {
+        clarity: { type: 'integer' },
+        usefulClues: { type: 'integer' },
+        communication: { type: 'integer' },
+      },
+      required: ['clarity', 'usefulClues', 'communication'],
+    };
+
+    const { value } = await this.generateJson<{
+      clarity: number;
+      usefulClues: number;
+      communication: number;
+    }>({
+      ...GEMINI_LIVE_TURN,
+      systemInstruction: params.systemInstruction,
+      contents: [
+        {
+          role: 'user',
+          parts: [{ text: params.userPrompt }],
+        },
+      ],
+      schema,
+      maxOutputTokens: 96,
+      temperature: 0.1,
+    });
+    return value;
+  }
+
   /** Fast utterance grading for Speak Challenge mini-game. */
   async evaluateSpeakChallengeUtterance(params: {
     systemInstruction: string;

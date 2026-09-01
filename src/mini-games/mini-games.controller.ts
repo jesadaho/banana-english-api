@@ -18,6 +18,10 @@ import {
   type SpeakChallengeEvalTier,
 } from './speak-challenge-evaluate.service';
 import {
+  ExplainItEvaluateService,
+  type ExplainItEvalResult,
+} from './explain-it-evaluate.service';
+import {
   StoryBuilderEvaluateService,
   type StoryBuilderEvalTier,
 } from './story-builder-evaluate.service';
@@ -61,26 +65,41 @@ class EvaluateStoryBuilderDto {
   targetEn!: string;
 }
 
+class EvaluateExplainItDto {
+  transcript!: string;
+  targetEn!: string;
+  emoji!: string;
+  exampleDescriptionEn!: string;
+}
+
 @Controller('mini-games')
 @UseGuards(AnonymousUserGuard)
 export class MiniGamesController {
   constructor(
     private readonly economy: EconomyService,
     private readonly speakChallengeEval: SpeakChallengeEvaluateService,
+    private readonly explainItEval: ExplainItEvaluateService,
     private readonly storyBuilderEval: StoryBuilderEvaluateService,
     private readonly endlessLeaderboard: EmojiSpeakEndlessLeaderboardService,
   ) {}
+
+  @Post('record-streak')
+  async recordStreak(@Req() req: AuthedRequest) {
+    return this.economy.recordStreakActivity(req.user.id);
+  }
 
   @Post('emoji-speak-endless/score')
   async submitEndlessScore(
     @Req() req: AuthedRequest,
     @Body() body: EndlessScoreDto,
   ) {
-    return this.endlessLeaderboard.submitScore(
+    const scoreResult = await this.endlessLeaderboard.submitScore(
       req.user,
       body.score,
       body.avatarId,
     );
+    const streak = await this.economy.recordStreakActivity(req.user.id);
+    return { ...scoreResult, ...streak };
   }
 
   @Get('emoji-speak-endless/weekly-leaderboard')
@@ -105,6 +124,26 @@ export class MiniGamesController {
       promptEn: body.promptEn?.trim(),
     });
     return { tier };
+  }
+
+  @Post('explain-it/evaluate')
+  async evaluateExplainIt(@Body() body: EvaluateExplainItDto): Promise<ExplainItEvalResult> {
+    const transcript = body.transcript?.trim() ?? '';
+    const targetEn = body.targetEn?.trim() ?? '';
+    const emoji = body.emoji?.trim() ?? '';
+    const exampleDescriptionEn = body.exampleDescriptionEn?.trim() ?? '';
+    if (!transcript || !targetEn || !emoji || !exampleDescriptionEn) {
+      throw new BadRequestException(
+        'transcript, targetEn, emoji, and exampleDescriptionEn are required',
+      );
+    }
+
+    return this.explainItEval.evaluate({
+      transcript,
+      targetEn,
+      emoji,
+      exampleDescriptionEn,
+    });
   }
 
   @Post('story-builder/evaluate')

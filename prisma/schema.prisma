@@ -59,7 +59,13 @@ model User {
   /** True after the learner finishes any Vocab Drill with zero mistakes. */
   perfectVocabDrillCompleted Boolean @default(false)
 
+  /** Firebase Auth UID after linking Apple/Google sign-in. */
+  firebaseUid             String?   @unique
+  /** Primary email from linked auth provider(s). */
+  email                   String?
+
   fcmTokens               UserFcmToken[]
+  authProviders           UserAuthProvider[]
   transactions            EconomyTransaction[]
   sessions                UserSession[]
   lessonRatings           LessonRating[]
@@ -85,6 +91,20 @@ model EconomyTransaction {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId, createdAt])
+}
+
+model UserAuthProvider {
+  id          String   @id @default(uuid())
+  userId      String
+  provider    String
+  providerUid String
+  email       String?
+  createdAt   DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerUid])
+  @@index([userId])
 }
 
 model UserFcmToken {

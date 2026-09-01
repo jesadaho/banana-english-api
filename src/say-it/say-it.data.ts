@@ -88,7 +88,7 @@ export const SAY_IT_TOPICS: SayItTopic[] = [
     titleTh: "That's",
     subtitleEn: 'Common “that’s…” phrases',
     subtitleTh: 'สำนวน That’s… ที่ใช้บ่อย',
-    emoji: '✅',
+    emoji: '👉',
     accentColor: 0xff5c6bc0,
     estimatedMinutes: 3,
     poolSize: 20,

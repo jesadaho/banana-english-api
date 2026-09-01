@@ -69,6 +69,9 @@ export interface UserProfileResponse {
   timezone: string;
   unlockedAvatarIds: string[];
   lessonTeachingLanguage: 'thai' | 'english';
+  email?: string | null;
+  isGuest?: boolean;
+  linkedProviders?: ('google' | 'apple')[];
   /**
    * Self-reported English level from onboarding survey:
    * beginner | elementary | intermediate | advanced
@@ -495,6 +498,7 @@ export class UsersService {
       lessonTeachingLanguage,
       selfReportedEnglishLevel,
       acquisitionSource,
+      email: user.email,
       bananaTicket: this.economy.ticketRules(),
     };
   }
