@@ -1,0 +1,802 @@
+{
+  "time_expressions": [
+    {
+      "id": "all_the_time",
+      "promptTh": "ตลอดเวลา",
+      "answerEn": "all the time",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "every_time",
+      "promptTh": "ทุกครั้ง",
+      "answerEn": "every time",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "on_time",
+      "promptTh": "ตรงเวลา",
+      "answerEn": "on time",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "in_time",
+      "promptTh": "ทันเวลา",
+      "answerEn": "in time",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "sometimes",
+      "promptTh": "บางครั้ง",
+      "answerEn": "sometimes",
+      "acceptedAnswers": [
+        "at times"
+      ]
+    },
+    {
+      "id": "first_time",
+      "promptTh": "เป็นครั้งแรก",
+      "answerEn": "first time",
+      "acceptedAnswers": [
+        "the first time"
+      ]
+    },
+    {
+      "id": "next_time",
+      "promptTh": "ครั้งหน้า",
+      "answerEn": "next time",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "last_time",
+      "promptTh": "ครั้งที่แล้ว",
+      "answerEn": "last time",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "from_time_to_time",
+      "promptTh": "เป็นครั้งคราว",
+      "answerEn": "from time to time",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "at_the_same_time",
+      "promptTh": "ในเวลาเดียวกัน",
+      "answerEn": "at the same time",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "for_the_time_being",
+      "promptTh": "ชั่วคราว",
+      "answerEn": "for the time being",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "over_time",
+      "promptTh": "เมื่อเวลาผ่านไป",
+      "answerEn": "over time",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "take_time",
+      "promptTh": "ใช้เวลา",
+      "answerEn": "take time",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "waste_time",
+      "promptTh": "เสียเวลา",
+      "answerEn": "waste time",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "save_time",
+      "promptTh": "ประหยัดเวลา",
+      "answerEn": "save time",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "make_time",
+      "promptTh": "หาเวลา",
+      "answerEn": "make time",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "kill_time",
+      "promptTh": "ฆ่าเวลา",
+      "answerEn": "kill time",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "times_up",
+      "promptTh": "หมดเวลา",
+      "answerEn": "time's up",
+      "acceptedAnswers": [
+        "times up",
+        "run out of time",
+        "out of time"
+      ]
+    },
+    {
+      "id": "have_a_good_time",
+      "promptTh": "มีช่วงเวลาที่ดี",
+      "answerEn": "have a good time",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "once_upon_a_time",
+      "promptTh": "กาลครั้งหนึ่ง",
+      "answerEn": "once upon a time",
+      "acceptedAnswers": []
+    }
+  ],
+  "where": [
+    {
+      "id": "where_are_you",
+      "promptTh": "อยู่ไหน?",
+      "answerEn": "where are you?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "where_are_you_going",
+      "promptTh": "กำลังไปไหน?",
+      "answerEn": "where are you going?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "where_are_you_from",
+      "promptTh": "คุณมาจากไหน?",
+      "answerEn": "where are you from?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "where_do_you_live",
+      "promptTh": "คุณอยู่ที่ไหน?",
+      "answerEn": "where do you live?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "where_do_you_work",
+      "promptTh": "คุณทำงานที่ไหน?",
+      "answerEn": "where do you work?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "where_do_you_study",
+      "promptTh": "คุณเรียนที่ไหน?",
+      "answerEn": "where do you study?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "where_will_you_go",
+      "promptTh": "คุณจะไปไหน?",
+      "answerEn": "where will you go?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "where_are_we_going",
+      "promptTh": "เราจะไปไหนกัน?",
+      "answerEn": "where are we going?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "where_should_we_meet",
+      "promptTh": "เราจะเจอกันที่ไหน?",
+      "answerEn": "where should we meet?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "where_do_you_want_to_go",
+      "promptTh": "คุณอยากไปที่ไหน?",
+      "answerEn": "where do you want to go?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "where_do_you_want_to_eat",
+      "promptTh": "คุณอยากกินที่ไหน?",
+      "answerEn": "where do you want to eat?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "where_did_you_buy_this",
+      "promptTh": "คุณซื้ออันนี้มาจากไหน?",
+      "answerEn": "where did you buy this?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "where_did_you_find_it",
+      "promptTh": "คุณเจอมันที่ไหน?",
+      "answerEn": "where did you find it?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "where_did_you_go",
+      "promptTh": "คุณไปไหนมา?",
+      "answerEn": "where did you go?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "where_were_you_last_night",
+      "promptTh": "เมื่อคืนคุณอยู่ไหน?",
+      "answerEn": "where were you last night?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "where_is_the_bathroom",
+      "promptTh": "ห้องน้ำอยู่ไหน?",
+      "answerEn": "where is the bathroom?",
+      "acceptedAnswers": [
+        "where is the restroom?"
+      ]
+    },
+    {
+      "id": "where_is_the_train_station",
+      "promptTh": "สถานีรถไฟอยู่ไหน?",
+      "answerEn": "where is the train station?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "where_should_i_go",
+      "promptTh": "ฉันควรไปที่ไหน?",
+      "answerEn": "where should I go?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "where_do_i_need_to_go",
+      "promptTh": "ฉันต้องไปที่ไหน?",
+      "answerEn": "where do I need to go?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "where_are_we",
+      "promptTh": "เราอยู่ที่ไหน?",
+      "answerEn": "where are we?",
+      "acceptedAnswers": []
+    }
+  ],
+  "every_any": [
+    {
+      "id": "everyone",
+      "promptTh": "ทุกคน",
+      "answerEn": "everyone",
+      "acceptedAnswers": [
+        "every one"
+      ]
+    },
+    {
+      "id": "everything",
+      "promptTh": "ทุกสิ่ง / ทุกอย่าง",
+      "answerEn": "everything",
+      "acceptedAnswers": [
+        "every thing"
+      ]
+    },
+    {
+      "id": "someone",
+      "promptTh": "บางคน / ใครบางคน",
+      "answerEn": "someone",
+      "acceptedAnswers": [
+        "some one",
+        "somebody"
+      ]
+    },
+    {
+      "id": "something",
+      "promptTh": "บางสิ่ง / บางอย่าง",
+      "answerEn": "something",
+      "acceptedAnswers": [
+        "some thing"
+      ]
+    },
+    {
+      "id": "anyone",
+      "promptTh": "ใครก็ตาม",
+      "answerEn": "anyone",
+      "acceptedAnswers": [
+        "any one",
+        "anybody"
+      ]
+    },
+    {
+      "id": "anything",
+      "promptTh": "อะไรก็ตาม / สิ่งใดก็ตาม",
+      "answerEn": "anything",
+      "acceptedAnswers": [
+        "any thing"
+      ]
+    },
+    {
+      "id": "no_one",
+      "promptTh": "ไม่มีใคร",
+      "answerEn": "no one",
+      "acceptedAnswers": [
+        "nobody",
+        "no-one"
+      ]
+    },
+    {
+      "id": "nothing",
+      "promptTh": "ไม่มีอะไร",
+      "answerEn": "nothing",
+      "acceptedAnswers": [
+        "no thing"
+      ]
+    },
+    {
+      "id": "everywhere",
+      "promptTh": "ทุกที่",
+      "answerEn": "everywhere",
+      "acceptedAnswers": [
+        "every where"
+      ]
+    },
+    {
+      "id": "somewhere",
+      "promptTh": "บางที่ / ที่ไหนสักแห่ง",
+      "answerEn": "somewhere",
+      "acceptedAnswers": [
+        "some where"
+      ]
+    },
+    {
+      "id": "anywhere",
+      "promptTh": "ที่ไหนก็ได้",
+      "answerEn": "anywhere",
+      "acceptedAnswers": [
+        "any where"
+      ]
+    },
+    {
+      "id": "nowhere",
+      "promptTh": "ไม่มีที่ไหน",
+      "answerEn": "nowhere",
+      "acceptedAnswers": [
+        "no where"
+      ]
+    },
+    {
+      "id": "every_time",
+      "promptTh": "ทุกครั้ง",
+      "answerEn": "every time",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "sometimes",
+      "promptTh": "บางครั้ง",
+      "answerEn": "sometimes",
+      "acceptedAnswers": [
+        "some times",
+        "at times"
+      ]
+    },
+    {
+      "id": "anytime",
+      "promptTh": "เมื่อไหร่ก็ได้",
+      "answerEn": "anytime",
+      "acceptedAnswers": [
+        "any time"
+      ]
+    },
+    {
+      "id": "anyway",
+      "promptTh": "ยังไงก็ตาม",
+      "answerEn": "anyway",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "any_way",
+      "promptTh": "ยังไงก็ได้",
+      "answerEn": "any way",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "however",
+      "promptTh": "อย่างไรก็ตาม",
+      "answerEn": "however",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "whatever_happens",
+      "promptTh": "ไม่ว่าอะไรจะเกิดขึ้น",
+      "answerEn": "whatever happens",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "whoever",
+      "promptTh": "ไม่ว่าใคร",
+      "answerEn": "whoever",
+      "acceptedAnswers": [
+        "who ever"
+      ]
+    }
+  ],
+  "reactions_expressions": [
+    {
+      "id": "what_the_hell",
+      "promptTh": "อะไรวะเนี่ย!?",
+      "answerEn": "what the hell?!",
+      "acceptedAnswers": [
+        "what the hell?",
+        "what the heck?",
+        "what the fuck?",
+        "what the fuck?!"
+      ]
+    },
+    {
+      "id": "damn_it",
+      "promptTh": "เชี่ยเอ๊ย! / ให้ตายสิ!",
+      "answerEn": "damn it!",
+      "acceptedAnswers": [
+        "damn!",
+        "shit!",
+        "shit"
+      ]
+    },
+    {
+      "id": "seriously",
+      "promptTh": "เอาจริงดิ!?",
+      "answerEn": "seriously?!",
+      "acceptedAnswers": [
+        "seriously?",
+        "really?",
+        "are you serious?"
+      ]
+    },
+    {
+      "id": "no_way",
+      "promptTh": "ไม่มีทาง!",
+      "answerEn": "no way!",
+      "acceptedAnswers": [
+        "no way?",
+        "absolutely not!",
+        "not a chance!"
+      ]
+    },
+    {
+      "id": "are_you_kidding_me",
+      "promptTh": "ล้อเล่นปะเนี่ย!?",
+      "answerEn": "are you kidding me?!",
+      "acceptedAnswers": [
+        "are you kidding me?",
+        "are you kidding?",
+        "are you serious?"
+      ]
+    },
+    {
+      "id": "what_the_heck",
+      "promptTh": "อะไรกันเนี่ย!?",
+      "answerEn": "what the heck?!",
+      "acceptedAnswers": [
+        "what the heck?",
+        "what the hell?",
+        "what's going on?",
+        "whats going on?"
+      ]
+    },
+    {
+      "id": "wow",
+      "promptTh": "โอ้โห!",
+      "answerEn": "wow!",
+      "acceptedAnswers": [
+        "whoa!",
+        "oh my god!",
+        "holy crap!"
+      ]
+    },
+    {
+      "id": "oh_my_god",
+      "promptTh": "พระเจ้าช่วย!",
+      "answerEn": "oh my God!",
+      "acceptedAnswers": [
+        "oh my god!",
+        "oh my gosh!",
+        "my god!",
+        "good god!"
+      ]
+    },
+    {
+      "id": "wait_a_minute",
+      "promptTh": "เดี๋ยวนะ!",
+      "answerEn": "wait a minute!",
+      "acceptedAnswers": [
+        "wait!",
+        "hold on!",
+        "hang on!"
+      ]
+    },
+    {
+      "id": "whoa_hold_on",
+      "promptTh": "เดี๋ยวๆๆ!",
+      "answerEn": "whoa, whoa, whoa!",
+      "acceptedAnswers": [
+        "whoa!",
+        "wait, wait, wait!",
+        "hold on!",
+        "wait wait wait"
+      ]
+    },
+    {
+      "id": "whats_wrong_with_you",
+      "promptTh": "อะไรของแกเนี่ย?",
+      "answerEn": "what's wrong with you?!",
+      "acceptedAnswers": [
+        "what's wrong with you?",
+        "what's with you?",
+        "what's your problem?"
+      ]
+    },
+    {
+      "id": "what_the_hell_wrong_with_you",
+      "promptTh": "เป็นบ้าอะไรเนี่ย!?",
+      "answerEn": "what the hell is wrong with you?!",
+      "acceptedAnswers": [
+        "what the hell is wrong with you?",
+        "what's wrong with you?",
+        "what is wrong with you?"
+      ]
+    },
+    {
+      "id": "come_on_tsk",
+      "promptTh": "โธ่เอ๊ย!",
+      "answerEn": "come on!",
+      "acceptedAnswers": [
+        "oh, come on!",
+        "for god's sake!",
+        "for gods sake"
+      ]
+    },
+    {
+      "id": "come_on_now",
+      "promptTh": "เอาน่า!",
+      "answerEn": "come on!",
+      "acceptedAnswers": [
+        "come on now!",
+        "oh, come on!"
+      ]
+    },
+    {
+      "id": "thats_enough",
+      "promptTh": "พอได้แล้ว!",
+      "answerEn": "that's enough!",
+      "acceptedAnswers": [
+        "enough!",
+        "stop it!",
+        "cut it out!"
+      ]
+    },
+    {
+      "id": "whatever",
+      "promptTh": "ช่างมันเถอะ",
+      "answerEn": "whatever.",
+      "acceptedAnswers": [
+        "whatever",
+        "never mind.",
+        "never mind",
+        "forget it."
+      ]
+    },
+    {
+      "id": "who_cares",
+      "promptTh": "ใครจะสนล่ะ",
+      "answerEn": "who cares?",
+      "acceptedAnswers": [
+        "who gives a damn?"
+      ]
+    },
+    {
+      "id": "fine",
+      "promptTh": "ก็ได้ๆ",
+      "answerEn": "fine!",
+      "acceptedAnswers": [
+        "alright!",
+        "okay, fine!",
+        "okay fine"
+      ]
+    },
+    {
+      "id": "thank_goodness",
+      "promptTh": "โล่งอกไปที",
+      "answerEn": "thank goodness!",
+      "acceptedAnswers": [
+        "thank god!",
+        "what a relief!"
+      ]
+    },
+    {
+      "id": "that_was_close",
+      "promptTh": "เกือบไปแล้ว!",
+      "answerEn": "that was close!",
+      "acceptedAnswers": [
+        "that was a close one!",
+        "close one!",
+        "that was a close one"
+      ]
+    }
+  ],
+  "thats": [
+    {
+      "id": "thats_right",
+      "promptTh": "ใช่เลย",
+      "answerEn": "that's right.",
+      "acceptedAnswers": [
+        "that's right.",
+        "exactly.",
+        "that's correct."
+      ]
+    },
+    {
+      "id": "thats_correct",
+      "promptTh": "ถูกต้อง",
+      "answerEn": "that's correct.",
+      "acceptedAnswers": [
+        "that's correct.",
+        "that's right."
+      ]
+    },
+    {
+      "id": "thats_okay",
+      "promptTh": "ไม่เป็นไร",
+      "answerEn": "that's okay.",
+      "acceptedAnswers": [
+        "that's okay.",
+        "it's okay.",
+        "no problem."
+      ]
+    },
+    {
+      "id": "thats_me",
+      "promptTh": "ฉันเอง",
+      "answerEn": "that's me.",
+      "acceptedAnswers": [
+        "that's me.",
+        "it's me."
+      ]
+    },
+    {
+      "id": "thats_it",
+      "promptTh": "แค่นั้นแหละ",
+      "answerEn": "that's it.",
+      "acceptedAnswers": [
+        "that's it.",
+        "that's all."
+      ]
+    },
+    {
+      "id": "thats_easy",
+      "promptTh": "ง่ายมาก",
+      "answerEn": "that's easy.",
+      "acceptedAnswers": [
+        "that's easy.",
+        "it's easy.",
+        "easy."
+      ]
+    },
+    {
+      "id": "thats_great",
+      "promptTh": "เยี่ยมเลย",
+      "answerEn": "that's great.",
+      "acceptedAnswers": [
+        "that's great.",
+        "that's awesome.",
+        "great!"
+      ]
+    },
+    {
+      "id": "thats_nice",
+      "promptTh": "ดีจัง",
+      "answerEn": "that's nice.",
+      "acceptedAnswers": [
+        "that's nice.",
+        "nice!"
+      ]
+    },
+    {
+      "id": "thats_really_good",
+      "promptTh": "ดีมากเลย",
+      "answerEn": "that's really good.",
+      "acceptedAnswers": [
+        "that's really good.",
+        "that's very good."
+      ]
+    },
+    {
+      "id": "thats_bad",
+      "promptTh": "แย่จัง",
+      "answerEn": "that's bad.",
+      "acceptedAnswers": [
+        "that's bad.",
+        "that's terrible."
+      ]
+    },
+    {
+      "id": "thats_too_bad",
+      "promptTh": "น่าเสียดายจัง",
+      "answerEn": "that's too bad.",
+      "acceptedAnswers": [
+        "that's too bad.",
+        "what a shame.",
+        "that's a shame."
+      ]
+    },
+    {
+      "id": "thats_interesting",
+      "promptTh": "น่าสนใจนะ",
+      "answerEn": "that's interesting.",
+      "acceptedAnswers": [
+        "that's interesting.",
+        "interesting."
+      ]
+    },
+    {
+      "id": "thats_funny",
+      "promptTh": "ตลกดี",
+      "answerEn": "that's funny.",
+      "acceptedAnswers": [
+        "that's funny.",
+        "funny."
+      ]
+    },
+    {
+      "id": "thats_weird",
+      "promptTh": "แปลกจัง",
+      "answerEn": "that's weird.",
+      "acceptedAnswers": [
+        "that's weird.",
+        "that's strange."
+      ]
+    },
+    {
+      "id": "thats_crazy",
+      "promptTh": "บ้าไปแล้ว",
+      "answerEn": "that's crazy.",
+      "acceptedAnswers": [
+        "that's crazy.",
+        "that's insane."
+      ]
+    },
+    {
+      "id": "is_that_true",
+      "promptTh": "จริงเหรอเนี่ย",
+      "answerEn": "is that true?",
+      "acceptedAnswers": [
+        "is that true?",
+        "really?"
+      ]
+    },
+    {
+      "id": "thats_true",
+      "promptTh": "จริงนะ",
+      "answerEn": "that's true.",
+      "acceptedAnswers": [
+        "that's true.",
+        "true."
+      ]
+    },
+    {
+      "id": "thats_enough",
+      "promptTh": "พอแล้ว",
+      "answerEn": "that's enough.",
+      "acceptedAnswers": [
+        "that's enough.",
+        "enough."
+      ]
+    },
+    {
+      "id": "thats_what_i_mean",
+      "promptTh": "นั่นแหละที่ฉันหมายถึง",
+      "answerEn": "that's what I mean.",
+      "acceptedAnswers": [
+        "that's what I mean.",
+        "that's exactly what I mean."
+      ]
+    },
+    {
+      "id": "thats_what_i_want",
+      "promptTh": "นั่นแหละที่ฉันต้องการ",
+      "answerEn": "that's what I want.",
+      "acceptedAnswers": [
+        "that's what I want.",
+        "that's exactly what I want."
+      ]
+    }
+  ]
+}
