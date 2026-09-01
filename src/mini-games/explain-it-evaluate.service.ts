@@ -10,6 +10,12 @@ export type ExplainItEvalResult = {
   communication: number;
   total: number;
   saidTargetWord: boolean;
+  /** Debug: how this score was produced. */
+  source:
+    | 'gemini'
+    | 'target_word'
+    | 'empty'
+    | 'gemini_fallback';
 };
 
 const EVAL_SCHEMA = {
@@ -60,11 +66,11 @@ export class ExplainItEvaluateService {
     const transcript = params.transcript.trim();
     const targetEn = params.targetEn.trim();
     if (!transcript || !targetEn) {
-      return this.zeroScore(true);
+      return { ...this.zeroScore(true), source: 'empty' };
     }
 
     if (saidExplainItTargetWord(transcript, targetEn)) {
-      return this.zeroScore(true);
+      return { ...this.zeroScore(true), source: 'target_word' };
     }
 
     const userPrompt = [
@@ -89,6 +95,7 @@ export class ExplainItEvaluateService {
         communication,
         total: clarity + usefulClues + communication,
         saidTargetWord: false,
+        source: 'gemini',
       };
     } catch (error) {
       this.logger.warn(
@@ -100,17 +107,22 @@ export class ExplainItEvaluateService {
         communication: 10,
         total: 10,
         saidTargetWord: false,
+        source: 'gemini_fallback',
       };
     }
   }
 
-  private zeroScore(saidTargetWord: boolean): ExplainItEvalResult {
+  private zeroScore(
+    saidTargetWord: boolean,
+    source: ExplainItEvalResult['source'] = 'empty',
+  ): ExplainItEvalResult {
     return {
       clarity: 0,
       usefulClues: 0,
       communication: 0,
       total: 0,
       saidTargetWord,
+      source,
     };
   }
 }
