@@ -27,13 +27,13 @@ const ABOUT_ME_CLOSE_BY_LESSON: Partial<
   Record<string, Record<number, string>>
 > = {
   ee_about_me_daily_routine: {
-    1: 'I am ready',
-    2: 'get up',
-    3: "I wake up at seven o'clock.",
-    4: "I go to sleep at eleven o'clock.",
-    5: 'I wake up at seven AM.',
-    6: 'I drink coffee everyday.',
-    7: 'I wake up at 7 AM each day.',
+    1: 'I wake up at seven every day.',
+    2: 'I get up at seven.',
+    3: 'I go to sleep at eleven every day.',
+    4: 'I go to bed at eleven.',
+    5: 'I drink coffee.',
+    6: 'I work every day.',
+    7: 'I wake up at seven every day.',
   },
   ee_about_me_food: {
     1: 'I really like pizza.',
@@ -47,9 +47,7 @@ const ABOUT_ME_CLOSE_BY_LESSON: Partial<
     1: 'I live in apartment.',
     2: 'I live with family.',
     3: 'I like relax in the living room.',
-    4: 'I live in an apartments.',
-    5: 'I live with my parents.',
-    6: 'I like to relaxing in the living room.',
+    4: 'I live in apartment. I live with family. I like relax in the living room.',
   },
   ee_about_me_work_school: {
     1: 'I am work.',
@@ -61,8 +59,7 @@ const ABOUT_ME_CLOSE_BY_LESSON: Partial<
     1: 'I watch movie.',
     2: 'I often watch movie.',
     3: 'On weekend, I usually watch movies.',
-    4: 'Usual.',
-    5: 'Sometime.',
+    4: 'In my free time I watch movies. On weekend I usually exercise.',
   },
   ee_about_me_pets: {
     1: 'I have dog.',
@@ -78,17 +75,16 @@ const ABOUT_ME_CLOSE_BY_LESSON: Partial<
     5: 'She very nice.',
   },
   ee_about_me_weather: {
-    1: 'hot',
-    2: 'The weather is very cold.',
+    1: 'It hot.',
+    2: 'It sunny.',
     3: 'I like sunny.',
     4: 'I like rainy.',
   },
   ee_about_me_friends: {
     1: 'We play game together.',
-    2: 'We eat out.',
+    2: 'They play game together.',
     3: 'They play games.',
-    4: 'We hang out.',
-    5: 'They eat out.',
+    4: 'We play games together. They eat out.',
   },
   ee_about_me_favorites: {
     1: 'I prefer pizza',

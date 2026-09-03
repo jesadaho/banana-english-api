@@ -84,15 +84,15 @@ export const ABOUT_ME_DAILY_ROUTINE: ChoiceLessonDef = {
   boardForStep: dailyRoutineBoardForStep,
   buildScriptedReplyFromProgress: wrapDailyRoutineScripted,
   progressFromSessionBeat: dailyRoutineProgressFromSessionBeat,
-  pinWithoutGuidedSteps: [1, 7],
+  pinWithoutGuidedSteps: [1, 3, 5, 7],
   buildOpening(learnerFirstName: string): ScriptTurnResult {
     const name = learnerFirstName.trim();
     return {
-      textEn: `สวัสดีครับ${name ? ` ${name}` : ''}! ยินดีต้อนรับสู่บทแรกของ About Me มาฝึกเล่าเรื่องชีวิตประจำวันกันครับ! พร้อมแล้วพูดว่า I'm ready ได้เลยครับ 🚀`,
-      textTh: `Hi${name ? ` ${name}` : ''}! Welcome to About Me — let's practice daily routine English. When you're ready, say "I'm ready".`,
+      textEn: `สวัสดีครับ${name ? ` ${name}` : ''}! วันนี้เราจะฝึกเล่ากิจวัตรประจำวันครับ 🌅 “ฉันตื่นตอนเจ็ดโมง” พูดว่า “I wake up at seven o'clock.” ลองพูดตามครับ`,
+      textTh: `Hi${name ? ` ${name}` : ''}! Today we'll talk about daily routines. Repeat: “I wake up at seven o'clock.”`,
       isLessonComplete: false,
       expectsUserSpeech: true,
-      expectedSpeech: "I'm ready",
+      expectedSpeech: "I wake up at seven o'clock.",
     };
   },
 };
@@ -116,7 +116,7 @@ export const ABOUT_ME_FOOD: ChoiceLessonDef = {
 
 export const ABOUT_ME_HOME: ChoiceLessonDef = {
   lessonId: 'ee_about_me_home',
-  maxStep: 6,
+  maxStep: 4,
   progressFn: homeLessonProgress,
   scoreStep: (step, text) => scoreHomeStep(step, text),
   boardForStep: (step) => homeBoardForStep(step),
@@ -146,7 +146,7 @@ export const ABOUT_ME_WORK_SCHOOL: ChoiceLessonDef = {
 
 export const ABOUT_ME_HOBBIES: ChoiceLessonDef = {
   lessonId: 'ee_about_me_hobbies',
-  maxStep: 5,
+  maxStep: 4,
   progressFn: hobbiesLessonProgress,
   scoreStep: (step, text, history) =>
     scoreHobbiesStepForHistory(history, step, text),
@@ -216,7 +216,7 @@ export const ABOUT_ME_WEATHER: ChoiceLessonDef = {
 
 export const ABOUT_ME_FRIENDS: ChoiceLessonDef = {
   lessonId: 'ee_about_me_friends',
-  maxStep: 5,
+  maxStep: 4,
   progressFn: friendsLessonProgress,
   scoreStep: (step, text) => scoreFriendsStep(step, text),
   boardForStep: (step) => friendsBoardForStep(step),

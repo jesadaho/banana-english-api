@@ -43,36 +43,36 @@ describe('About Me empty-reply / soft-hint bugs', () => {
     );
   });
 
-  it('weather: after cold sentence, preference step has non-empty reply', () => {
+  it('weather: after today weather, taught preference has non-empty reply', () => {
     const history: Turn[] = [
-      { speaker: 'ai', textEn: 'อากาศร้อน?' },
-      { speaker: 'user', textEn: 'Hot.' },
+      { speaker: 'ai', textEn: 'ลองพูดตาม It is hot.' },
+      { speaker: 'user', textEn: 'It is hot.' },
       {
         speaker: 'ai',
-        textEn: 'How do you say the weather is very cold today?',
+        textEn: 'What is the weather like today?',
       },
-      { speaker: 'user', textEn: 'The weather is very cold today.' },
+      { speaker: 'user', textEn: 'It is sunny.' },
     ];
     const reply = buildChoiceLessonAfterUser(ABOUT_ME_WEATHER, {
       turns: history,
       learnerFirstName: 'Nana',
     });
     assert.ok(reply?.textEn?.trim(), 'preference advance must not be blank');
-    assert.match(reply!.textEn!, /ชอบอากาศ|What weather/i);
+    assert.match(reply!.textEn!, /I like sunny weather|อากาศที่ชอบ/i);
   });
 
   it('weather: Gemini correct pin never returns praise-only when next board has cue', () => {
     const prior: Turn[] = [
-      { speaker: 'ai', textEn: 'อากาศร้อน?' },
-      { speaker: 'user', textEn: 'Hot.' },
+      { speaker: 'ai', textEn: 'ลองพูดตาม It is hot.' },
+      { speaker: 'user', textEn: 'It is hot.' },
       {
         speaker: 'ai',
-        textEn: 'How do you say the weather is very cold today?',
+        textEn: 'What is the weather like today?',
       },
     ];
     const turns: Turn[] = [
       ...prior,
-      { speaker: 'user', textEn: 'The weather is very cold today....' },
+      { speaker: 'user', textEn: 'It is sunny....' },
     ];
     const pinned = pinChoiceLessonAiReply(
       ABOUT_ME_WEATHER,
@@ -88,7 +88,7 @@ describe('About Me empty-reply / soft-hint bugs', () => {
       'Nana',
     );
     assert.ok(pinned.textEn.trim().length > 'ถูกต้องครับ!'.length);
-    assert.match(pinned.textEn, /ชอบอากาศ|What weather/i);
+    assert.match(pinned.textEn, /I like sunny weather|อากาศที่ชอบ/i);
   });
 
   it('pets soft-advance after Your uses combo cue (not bare ไปต่อกัน)', () => {
@@ -124,10 +124,10 @@ describe('About Me empty-reply / soft-hint bugs', () => {
     const friends1 = ABOUT_ME_FRIENDS.boardForStep(1, []);
     assert.match(pets1?.incorrectHintTh ?? '', /I have a\.\.\./);
     assert.doesNotMatch(pets1?.incorrectHintTh ?? '', /I have a dog\./i);
-    assert.match(weather2?.incorrectHintTh ?? '', /The weather is very\.\.\./);
+    assert.match(weather2?.incorrectHintTh ?? '', /It is\.\.\./);
     assert.doesNotMatch(
       weather2?.incorrectHintTh ?? '',
-      /The weather is very cold today\./i,
+      /It is sunny\./i,
     );
     assert.match(friends1?.incorrectHintTh ?? '', /We \.\.\. together/);
     assert.doesNotMatch(

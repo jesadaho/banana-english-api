@@ -4,7 +4,7 @@
 
 1. Paid Apps Agreement + banking active
 2. Create **Consumable** products:
-   - `banana_tickets_25` — ฿99 (or your tier)
+   - `banana_tickets_28` — ฿99 (or your tier)
    - `banana_tickets_70` — ฿199
 
 ## 2. Google Play Console (Android)
@@ -43,7 +43,7 @@ Set `REVENUECAT_WEBHOOK_AUTH` in Railway variables.
 
 | Product ID | Bananas |
 |------------|---------|
-| `banana_tickets_25` | 25 |
+| `banana_tickets_28` | 28 |
 | `banana_tickets_70` | 70 |
 
 Defined in `src/purchases/product-catalog.ts`.

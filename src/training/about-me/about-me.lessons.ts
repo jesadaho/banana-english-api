@@ -97,46 +97,26 @@ function matchesExactFromScorer(
 export const DAILY_ROUTINE_BOARDS: Record<number, ForcedGuidedBoard> = {
   1: {
     textEn:
-      'เก่งมากครับ! มาเริ่มกันเลย คำว่า ตื่นนอน ในภาษาอังกฤษคือคำไหนครับ? ⏰',
+      'ดีมากครับ! ทีนี้เป็นเวลาของคุณ ปกติคุณตื่นกี่โมงครับ? What time do you wake up? 🌅',
     withPraise: true,
-    stem: '...',
-    expectedSpeech: 'wake up',
-    softTeachHintTh: 'ตื่นนอน',
+    stem: 'I wake up at...',
+    expectedSpeech: "I wake up at 7 o'clock.",
+    softTeachHintTh: 'ถ้าจะบอกเวลาตื่น เราพูดว่า',
     options: [
-      { emoji: '⏰', label: 'wake up', speak: 'wake up' },
-      { emoji: '💼', label: 'go to work', speak: 'go to work' },
-      { emoji: '🛌', label: 'go to sleep', speak: 'go to sleep' },
+      { emoji: '⏰', label: "6 o'clock", speak: "I wake up at 6 o'clock." },
+      { emoji: '⏰', label: "7 o'clock", speak: "I wake up at 7 o'clock." },
+      { emoji: '⏰', label: "8 o'clock", speak: "I wake up at 8 o'clock." },
+      { emoji: '⏰', label: "9 o'clock", speak: "I wake up at 9 o'clock." },
     ],
   },
   2: {
     textEn:
-      'ยอดเยี่ยม! ปกติคุณตื่นกี่โมงครับ? What time do you wake up? 🌅',
+      'ต่อไปมาฝึกเวลาเข้านอนครับ 🌙 “ฉันเข้านอนตอนห้าทุ่ม” พูดว่า “I go to sleep at eleven.” ลองพูดตามครับ',
     withPraise: true,
-    stem: 'I wake up at...',
-    expectedSpeech: "I wake up at 7 o'clock.",
-    softTeachHintTh: 'ถ้าจะบอกว่าตื่นกี่โมง เราจะพูดว่า',
-    options: [
-      {
-        emoji: '⏰',
-        label: "6 o'clock",
-        speak: "I wake up at 6 o'clock.",
-      },
-      {
-        emoji: '⏰',
-        label: "7 o'clock",
-        speak: "I wake up at 7 o'clock.",
-      },
-      {
-        emoji: '⏰',
-        label: "8 o'clock",
-        speak: "I wake up at 8 o'clock.",
-      },
-      {
-        emoji: '⏰',
-        label: "9 o'clock",
-        speak: "I wake up at 9 o'clock.",
-      },
-    ],
+    stem: '',
+    expectedSpeech: 'I go to sleep at eleven.',
+    softTeachHintTh: 'ลองพูดตามว่า',
+    options: [],
   },
   3: {
     textEn:
@@ -168,9 +148,18 @@ export const DAILY_ROUTINE_BOARDS: Record<number, ForcedGuidedBoard> = {
       },
     ],
   },
+  4: {
+    textEn:
+      'ถ้าทำอะไรเป็นประจำ เราเติม every day ได้ครับ ☕ “I drink coffee every day.” แปลว่า “ฉันดื่มกาแฟทุกวัน” ลองพูดตามครับ',
+    withPraise: true,
+    stem: '',
+    expectedSpeech: 'I drink coffee every day.',
+    softTeachHintTh: 'ลองพูดตามว่า',
+    options: [],
+  },
   5: {
     textEn:
-      'เป๊ะเลยครับ! ถ้ากิจกรรมไหนทำเป็นประจำ ให้เติม every day ไว้ท้ายประโยคครับ แล้วนอกจากตื่นนอนกับนอน คุณทำอะไรทุกวันบ้างครับ? What do you do every day? ☕💼',
+      'ทีนี้เป็นกิจวัตรของคุณครับ คุณทำอะไรทุกวันบ้าง? What do you do every day? ☕💼',
     withPraise: true,
     stem: 'I ... every day.',
     expectedSpeech: 'I drink coffee every day.',
@@ -238,33 +227,11 @@ export function scoreDailyRoutineStep(
 
   switch (step) {
     case 1:
-      if (
-        /^(i(?:'m| am)\s+)?ready$/.test(t) ||
-        t === "i'm ready" ||
-        t === 'i am ready'
-      ) {
-        return 'exact';
-      }
-      if (/\bready\b/.test(t)) return 'near';
+      if (/^i wake up at (seven|7)( o'?clock)?$/.test(t)) return 'exact';
+      if (/\bi wake up at\b/.test(t)) return 'near';
       return 'wrong';
 
-    case 2:
-      if (
-        (t === 'wake up' || t === 'i wake up') &&
-        !/\bat\b/.test(t)
-      ) {
-        return 'exact';
-      }
-      if (
-        t === 'get up' ||
-        t === 'i get up' ||
-        /^i(?:'m)?\s*waking up$/.test(t)
-      ) {
-        return 'near';
-      }
-      return 'wrong';
-
-    case 3: {
+    case 2: {
       const noAmPm = !/\b(a\.?m\.?|p\.?m\.?)\b/.test(t);
       const noEveryDay = !/\bevery day\b/.test(t);
       const hasHour = DAILY_ROUTINE_HOUR_TOKEN.test(t);
@@ -294,6 +261,13 @@ export function scoreDailyRoutineStep(
       return 'wrong';
     }
 
+    case 3:
+      if (/^i go to sleep at (eleven|11)( o'?clock)?$/.test(t)) {
+        return 'exact';
+      }
+      if (/\bi go to sleep at\b/.test(t)) return 'near';
+      return 'wrong';
+
     case 4:
       if (/\bi go to sleep at\b/.test(t) || /\bi sleep at\b/.test(t)) {
         return 'exact';
@@ -302,17 +276,8 @@ export function scoreDailyRoutineStep(
       return 'wrong';
 
     case 5:
-      if (matchesDailyRoutineAmPmSentence(userText)) return 'exact';
-      if (
-        /\b(seven|7|eight|8|nine|9|six|6)\b/.test(t) &&
-        /\b(morning|afternoon|evening|night)\b/.test(t)
-      ) {
-        return 'near';
-      }
-      if (/^(a\.?m\.?|p\.?m\.?|am|pm|em)$/.test(t.trim())) return 'wrong';
-      if (/\b(am|pm|em)\b/.test(t) && !/\bi wake up at\b/.test(t)) {
-        return 'near';
-      }
+      if (/^i drink coffee every day$/.test(t)) return 'exact';
+      if (/\bi drink coffee\b/.test(t)) return 'near';
       return 'wrong';
 
     case 6:
@@ -338,7 +303,10 @@ export function scoreDailyRoutineStep(
       return 'wrong';
 
     case 7:
-      if (/\bi wake up at\b/.test(t) && /\bevery day\b/.test(t)) {
+      if (
+        /\bi wake up at\b/.test(t) &&
+        /\bi (go to work|drink coffee|exercise|study english) every day\b/.test(t)
+      ) {
         return 'exact';
       }
       return 'wrong';
@@ -368,32 +336,21 @@ export function dailyRoutineBoardForStep(
     return {
       textEn: '',
       stem: '',
-      expectedSpeech: "I'm ready",
-      options: [{ emoji: '🚀', label: "I'm ready", speak: "I'm ready" }],
+      expectedSpeech: "I wake up at seven o'clock.",
+      options: [],
     };
-  }
-  if (step === 5) {
-    return dailyRoutineAmPmBoard(extractDailyRoutineWakeHour(history));
   }
   if (step === 7) {
     const hour = extractDailyRoutineWakeHour(history);
-    const ampm = extractDailyRoutineAmPm(history);
     return {
       textEn: '',
-      stem: 'I wake up at... every day.',
-      expectedSpeech: `I wake up at ${hour} ${ampm} every day.`,
-      softTeachHintTh: 'ถ้าจะบอกว่าตื่นทุกวัน เราจะพูดว่า',
-      options: [
-        {
-          emoji: '⏰',
-          label: 'every day',
-          speak: `I wake up at ${hour} ${ampm} every day.`,
-        },
-      ],
+      stem: 'I wake up at... I ... every day.',
+      expectedSpeech: `I wake up at ${hour} o'clock. I drink coffee every day.`,
+      softTeachHintTh: 'ลองเล่าสองประโยค โดยบอกเวลาตื่นและกิจกรรมที่ทำทุกวัน',
+      options: [],
     };
   }
-  const boardKey = step === 6 ? 5 : step - 1;
-  return DAILY_ROUTINE_BOARDS[boardKey] ?? null;
+  return DAILY_ROUTINE_BOARDS[step - 1] ?? null;
 }
 
 function extractDailyRoutineWakeHour(
@@ -446,18 +403,11 @@ function extractDailyRoutineAmPm(
   return 'AM';
 }
 
-/**
- * Detect Daily Routine board from AI question text.
- * 1=vocab, 2=wake, 3=sleep, 4=ampm, 5=activity, 6=active-recall (no cards).
- */
+/** Detect the next board when an AI-authored turn needs deterministic pinning. */
 function dailyRoutineBoardFromAiText(textEn: string): number | null {
   const t = (textEn ?? '').toLowerCase();
   if (!t) return null;
-  if (
-    t.includes('wake up every day') ||
-    (t.includes('ตื่นกี่โมง') && t.includes('ทุกวัน')) ||
-    t.includes('คำถามสุดท้าย')
-  ) {
+  if (t.includes('สองประโยค') || t.includes('ขั้นตอนสุดท้าย')) {
     return 6;
   }
   if (
@@ -466,31 +416,16 @@ function dailyRoutineBoardFromAiText(textEn: string): number | null {
   ) {
     return 5;
   }
-  if (
-    (/\bam\b/.test(t) && /\bpm\b/.test(t)) ||
-    t.includes('am หรือ pm') ||
-    (t.includes('เช้า') && t.includes('ดึก') && t.includes('am'))
-  ) {
+  if (t.includes('i drink coffee every day') || (t.includes('every day') && t.includes('พูดตาม'))) {
     return 4;
   }
-  if (
-    t.includes('go to sleep') ||
-    t.includes('เข้านอน') ||
-    t.includes('ไปนอนประมาณ')
-  ) {
+  if (t.includes('what time do you go to sleep') || (t.includes('เข้านอนกี่โมง') && !t.includes('พูดตาม'))) {
     return 3;
   }
-  if (
-    (t.includes('what time do you wake up') || t.includes('ตื่นกี่โมง')) &&
-    !t.includes('ทุกวัน') &&
-    !t.includes('every day')
-  ) {
+  if (t.includes('i go to sleep at eleven') || (t.includes('เข้านอน') && t.includes('พูดตาม'))) {
     return 2;
   }
-  if (
-    t.includes('ตื่นนอน') &&
-    (t.includes('คือคำไหน') || t.includes('คำไหน'))
-  ) {
+  if (t.includes('what time do you wake up') || t.includes('ปกติคุณตื่นกี่โมง')) {
     return 1;
   }
   return null;
@@ -520,8 +455,7 @@ function dailyRoutineAmPmBoard(wakeHour: number): ForcedGuidedBoard {
 }
 
 /**
- * Pin Daily Routine guidedSpeaking boards (Turns 2–6).
- * Also strips choice cards on Active Recall (Turn 7).
+ * Pin Daily Routine boards after an AI-assessed response.
  */
 export function forceDailyRoutineGuidedSpeakingIfNeeded(
   lessonId: string,
@@ -557,7 +491,7 @@ export function forceDailyRoutineGuidedSpeakingIfNeeded(
     }
     return '';
   })();
-  const duplicateReady =
+  const duplicateAnswer =
     progress === 1 &&
     lastUserText.length > 0 &&
     matchesDailyRoutineStep(1, lastUserText);
@@ -568,7 +502,7 @@ export function forceDailyRoutineGuidedSpeakingIfNeeded(
 
   if (
     looksLikeSoftTeachReveal(current.textEn ?? '') &&
-    !duplicateReady &&
+    !duplicateAnswer &&
     !justClearedStep
   ) {
     return null;
@@ -580,7 +514,7 @@ export function forceDailyRoutineGuidedSpeakingIfNeeded(
       7,
       scoreDailyRoutineStep,
     ) &&
-    !duplicateReady &&
+    !duplicateAnswer &&
     !justClearedStep
   ) {
     return null;
@@ -590,8 +524,7 @@ export function forceDailyRoutineGuidedSpeakingIfNeeded(
   if (progress >= 7) return null;
 
   const fromText = dailyRoutineBoardFromAiText(current.textEn ?? '');
-  // After ready (progress=1) → board 1 (vocab); after vocab (2) → board 2, …
-  // progress N completed ⇒ next board key = N (for N=1..5), recall = 6.
+  // Progress N completed means board N is next; board 6 is synthesis.
   let target = fromText;
   if (target == null) {
     if (progress >= 1 && progress <= 6) target = progress;
@@ -608,18 +541,17 @@ export function forceDailyRoutineGuidedSpeakingIfNeeded(
       return null;
     }
     const hour = extractDailyRoutineWakeHour(history);
-    const ampm = extractDailyRoutineAmPm(history);
     return {
       textEn: resolveBoardTextEn(
         current.textEn ?? '',
         current.textEn?.trim() ||
-          'เท่มากครับ! คำถามสุดท้าย... ปกติคุณตื่นกี่โมงทุกวันครับ? What time do you wake up every day? ลองตอบเป็นประโยคภาษาอังกฤษเต็มๆ ดูครับ! ✨',
+          'ขั้นตอนสุดท้ายครับ ✨ ลองเล่ากิจวัตรของคุณสองประโยค: คุณตื่นกี่โมง และทำอะไรทุกวันครับ',
         { withPraise: true },
       ),
       textTh: current.textTh?.trim() || null,
       guidedSpeaking: null,
       expectsUserSpeech: true,
-      expectedSpeech: `I wake up at ${hour} ${ampm} every day.`,
+      expectedSpeech: `I wake up at ${hour} o'clock. I drink coffee every day.`,
       emojiChoice: null,
       isTaskComplete: false,
     };
@@ -627,24 +559,21 @@ export function forceDailyRoutineGuidedSpeakingIfNeeded(
 
   if (target < 1 || target > 5) return null;
 
-  const wakeHour = extractDailyRoutineWakeHour(history);
-  const board =
-    target === 4
-      ? dailyRoutineAmPmBoard(wakeHour)
-      : DAILY_ROUTINE_BOARDS[target];
+  const board = DAILY_ROUTINE_BOARDS[target];
   if (!board) return null;
 
-  const stemOk =
-    current.guidedSpeaking?.stem
-      ?.toLowerCase()
-      .includes(board.stem.toLowerCase().slice(0, 10)) ?? false;
+  const stemOk = board.stem.length === 0
+    ? current.guidedSpeaking == null
+    : current.guidedSpeaking?.stem
+        ?.toLowerCase()
+        .includes(board.stem.toLowerCase().slice(0, 10)) ?? false;
   const optionsOk =
     (current.guidedSpeaking?.options?.length ?? 0) >= board.options.length;
   if (
     current.expectsUserSpeech &&
     stemOk &&
     optionsOk &&
-    current.guidedSpeaking
+    (current.guidedSpeaking || board.options.length === 0)
   ) {
     return null;
   }
@@ -654,13 +583,15 @@ export function forceDailyRoutineGuidedSpeakingIfNeeded(
   return {
     textEn: resolveForcedBoardTextEn(current.textEn ?? '', board, target),
     textTh: current.textTh?.trim() || null,
-    guidedSpeaking: {
-      stem: board.stem,
-      emoji: first.emoji,
-      speak: first.speak,
-      ...(first.label ? { label: first.label } : {}),
-      options,
-    },
+    guidedSpeaking: first
+      ? {
+          stem: board.stem,
+          emoji: first.emoji,
+          speak: first.speak,
+          ...(first.label ? { label: first.label } : {}),
+          options,
+        }
+      : null,
     expectsUserSpeech: true,
     expectedSpeech: board.expectedSpeech,
     emojiChoice: null,
@@ -688,7 +619,7 @@ export function buildDailyRoutineScriptedReplyFromProgress(
   if (progress >= 7) {
     return {
       textEn:
-        'สุดยอดมากครับ! 🎉 วันนี้คุณบอกได้ทั้งเวลาตื่น นอน และกิจกรรมที่ทำ every day ได้คล่องสุดๆ บทแรกผ่านแล้วครับ! 🍌✨',
+        'สุดยอดครับ! 🎉 วันนี้คุณเล่าได้แล้วว่าตื่นกี่โมง เข้านอนกี่โมง และทำอะไรทุกวันครับ 🍌',
       textTh: '',
       guidedSpeaking: null,
       expectsUserSpeech: false,
@@ -702,24 +633,19 @@ export function buildDailyRoutineScriptedReplyFromProgress(
 
   if (progress === 6) {
     const hour = extractDailyRoutineWakeHour(history);
-    const ampm = extractDailyRoutineAmPm(history);
     return {
       textEn:
-        'เท่มากครับ! คำถามสุดท้าย... ปกติคุณตื่นกี่โมงทุกวันครับ? What time do you wake up every day? ลองตอบเป็นประโยคภาษาอังกฤษเต็มๆ ดูครับ! ✨',
+        'ขั้นตอนสุดท้ายครับ ✨ ลองเล่ากิจวัตรของคุณสองประโยค: คุณตื่นกี่โมง และทำอะไรทุกวันครับ',
       textTh: null,
       guidedSpeaking: null,
       expectsUserSpeech: true,
-      expectedSpeech: `I wake up at ${hour} ${ampm} every day.`,
+      expectedSpeech: `I wake up at ${hour} o'clock. I drink coffee every day.`,
       isTaskComplete: false,
     };
   }
 
   const target = progress;
-  const wakeHour = extractDailyRoutineWakeHour(history);
-  const board =
-    target === 4
-      ? dailyRoutineAmPmBoard(wakeHour)
-      : DAILY_ROUTINE_BOARDS[target];
+  const board = DAILY_ROUTINE_BOARDS[target];
   if (!board) return null;
 
   const options = board.options.map((o) => ({ ...o }));
@@ -727,13 +653,15 @@ export function buildDailyRoutineScriptedReplyFromProgress(
   return {
     textEn: board.textEn,
     textTh: null,
-    guidedSpeaking: {
-      stem: board.stem,
-      emoji: first.emoji,
-      speak: first.speak,
-      ...(first.label ? { label: first.label } : {}),
-      options,
-    },
+    guidedSpeaking: first
+      ? {
+          stem: board.stem,
+          emoji: first.emoji,
+          speak: first.speak,
+          ...(first.label ? { label: first.label } : {}),
+          options,
+        }
+      : null,
     expectsUserSpeech: true,
     expectedSpeech: board.expectedSpeech,
     isTaskComplete: false,
@@ -1374,46 +1302,18 @@ export const HOME_BOARDS: Record<number, ForcedGuidedBoard> = {
   },
   4: {
     textEn:
-      'เยี่ยมมากครับ! เดี๋ยวเรามาลองทบทวนกันนิดนะ 😊 ถ้าจะบอกว่า "ฉันอาศัยอยู่ในอพาร์ตเมนต์" จะพูดภาษาอังกฤษว่าอย่างไรครับ?',
-    advanceQuestionEn: 'How do you say I live in an apartment?',
+      'เยี่ยมมากครับ! ขั้นตอนสุดท้าย ลองเล่าเรื่องบ้านของคุณต่อกัน 3 ประโยคครับ: อยู่ที่ไหน อยู่กับใคร และชอบพักผ่อนตรงไหน 🏠✨',
+    advanceQuestionEn: 'Tell me about your home in three sentences.',
     withPraise: true,
-    stem: '',
-    expectedSpeech: 'I live in an apartment.',
+    stem: 'I live in... I live... I like to relax...',
+    expectedSpeech:
+      'I live in an apartment. I live with my family. I like to relax in the living room.',
     options: [
       {
-        emoji: '🏢',
-        label: 'Apartment',
-        speak: 'I live in an apartment.',
-      },
-    ],
-  },
-  5: {
-    textEn:
-      'แล้วถ้าจะบอกว่า "ฉันอยู่กับครอบครัว" จะพูดว่าอย่างไรครับ?',
-    advanceQuestionEn: 'How do you say I live with my family?',
-    withPraise: true,
-    stem: '',
-    expectedSpeech: 'I live with my family.',
-    options: [
-      {
-        emoji: '👨‍👩‍👧',
-        label: 'Family',
-        speak: 'I live with my family.',
-      },
-    ],
-  },
-  6: {
-    textEn:
-      'ข้อสุดท้ายครับ 😊 "ฉันชอบพักผ่อนในห้องนั่งเล่น" จะพูดภาษาอังกฤษว่าอย่างไรครับ?',
-    advanceQuestionEn: 'How do you say I like to relax in the living room?',
-    withPraise: true,
-    stem: '',
-    expectedSpeech: 'I like to relax in the living room.',
-    options: [
-      {
-        emoji: '🛋️',
-        label: 'Living room',
-        speak: 'I like to relax in the living room.',
+        emoji: '🏠',
+        label: '3 sentences',
+        speak:
+          'I live in an apartment. I live with my family. I like to relax in the living room.',
       },
     ],
   },
@@ -1449,11 +1349,11 @@ function matchesHomeStep(step: number, userText: string): boolean {
         t.replace(/\bi like to relax in (the )?\b/, '').trim().length >= 3
       );
     case 4:
-      return /\bi live in an apartment\b/.test(t);
-    case 5:
-      return /\bi live with my family\b/.test(t);
-    case 6:
-      return /\bi like to relax in the living room\b/.test(t);
+      return (
+        /\bi live in\b/.test(t) &&
+        (/\bi live with\b/.test(t) || /\bi live alone\b/.test(t)) &&
+        /\bi like to relax in\b/.test(t)
+      );
     default:
       return false;
   }
@@ -1467,19 +1367,17 @@ export function scoreHomeStep(step: number, userText: string): ChoiceStepTier {
   )(step, userText);
 }
 
-/** How many Home speak steps are cleared (0–6). */
+/** How many Home speak steps are cleared (0–4). */
 export function homeLessonProgress(
   history: Array<{ speaker: string; textEn?: string }>,
 ): number {
-  return computeThreeTierChoiceProgress(history, 6, scoreHomeStep);
+  return computeThreeTierChoiceProgress(history, 4, scoreHomeStep);
 }
 
 function homeBoardFromAiText(textEn: string): number | null {
   const t = (textEn ?? '').toLowerCase();
   if (!t) return null;
-  if (t.includes('ห้องนั่งเล่น') || t.includes('ข้อสุดท้าย')) return 6;
-  if (t.includes('อยู่กับครอบครัว')) return 5;
-  if (t.includes('อพาร์ตเมนต์') && t.includes('ทบทวน')) return 4;
+  if (t.includes('3 ประโยค') || t.includes('ขั้นตอนสุดท้าย')) return 4;
   if (
     t.includes('มุมโปรด') ||
     t.includes('ชอบไปนั่งชิล') ||
@@ -1506,7 +1404,7 @@ function homeBoardFromAiText(textEn: string): number | null {
 }
 
 /**
- * Pin Home guidedSpeaking boards (Turns 1–6).
+ * Pin Home guidedSpeaking boards (Turns 1–4).
  */
 export function forceHomeGuidedSpeakingIfNeeded(
   lessonId: string,
@@ -1537,7 +1435,7 @@ export function forceHomeGuidedSpeakingIfNeeded(
     pendingThreeTierSoftTeach(
       history,
       homeLessonProgress,
-      6,
+      4,
       scoreHomeStep,
     )
   ) {
@@ -1545,16 +1443,16 @@ export function forceHomeGuidedSpeakingIfNeeded(
   }
 
   const progress = homeLessonProgress(history);
-  if (progress >= 6) return null;
+  if (progress >= 4) return null;
 
   const fromText = homeBoardFromAiText(current.textEn ?? '');
   let step = fromText;
   if (step == null) {
-    if (progress >= 0 && progress <= 5) step = progress + 1;
+    if (progress >= 0 && progress <= 3) step = progress + 1;
     else return null;
   }
 
-  if (step < 1 || step > 6) return null;
+  if (step < 1 || step > 4) return null;
   if (nextTurn < 1 && step !== 1) return null;
 
   const board = HOME_BOARDS[step];
@@ -1631,7 +1529,7 @@ export function forceHomeCelebrateIfNeeded(
   isTaskComplete: true;
 } | null {
   if (lessonId !== 'ee_about_me_home') return null;
-  if (homeLessonProgress(history) < 6) return null;
+  if (homeLessonProgress(history) < 4) return null;
 
   const body =
     'สุดยอดครับ! 🎉 วันนี้คุณสามารถพูดเรื่องบ้านของตัวเองได้แล้ว ทั้งที่พัก คนที่อาศัยอยู่ด้วย และมุมโปรดในบ้าน เก่งมากครับ! 🍌';
@@ -2127,29 +2025,19 @@ const HOBBIES_WEEKEND_BOARD = {
   ],
 };
 
-const HOBBIES_QUIZ_USUALLY_BOARD = {
+const HOBBIES_SUMMARY_BOARD = {
   textEn:
-    "เก่งมากครับ! 👏 เดี๋ยวเรามาทดสอบความจำสั้นๆ กันนะ คำว่า 'เป็นประจำ' ในภาษาอังกฤษคือคำไหนครับ? How do you say 'เป็นประจำ' in English?",
-  stem: 'เป็นประจำ =...',
-  expectedSpeech: 'Usually.',
+    'เก่งมากครับ! 👏 ขั้นตอนสุดท้าย ลองเล่างานอดิเรกของคุณ 2 ประโยคครับ: เวลาว่างทำอะไร และวันหยุดสุดสัปดาห์ทำอะไร 🎨',
+  stem: 'In my free time, I... On weekends, I...',
+  expectedSpeech:
+    'In my free time, I watch movies. On weekends, I usually exercise.',
   options: [
-    { emoji: '⚡', label: 'Always', speak: 'Always.' },
-    { emoji: '📅', label: 'Usually', speak: 'Usually.' },
-    { emoji: '🔁', label: 'Often', speak: 'Often.' },
-    { emoji: '🎲', label: 'Sometimes', speak: 'Sometimes.' },
-  ],
-};
-
-const HOBBIES_QUIZ_SOMETIMES_BOARD = {
-  textEn:
-    "แม่นยำมากครับ! แล้วคำว่า 'บางครั้ง' ล่ะครับ ภาษาอังกฤษคือคำไหน? And how about 'บางครั้ง'?",
-  stem: 'บางครั้ง =...',
-  expectedSpeech: 'Sometimes.',
-  options: [
-    { emoji: '⚡', label: 'Always', speak: 'Always.' },
-    { emoji: '📅', label: 'Usually', speak: 'Usually.' },
-    { emoji: '🔁', label: 'Often', speak: 'Often.' },
-    { emoji: '🎲', label: 'Sometimes', speak: 'Sometimes.' },
+    {
+      emoji: '🎨',
+      label: '2 sentences',
+      speak:
+        'In my free time, I watch movies. On weekends, I usually exercise.',
+    },
   ],
 };
 
@@ -2223,17 +2111,16 @@ function matchesHobbiesStep(
       }
       return /\bon weekends,?\s*i usually\b/.test(t) && t.length > 22;
     case 4:
-      return t === 'usually';
-    case 5:
-      return t === 'sometimes';
+      return (
+        /\bin my free time,? i\b/.test(t) &&
+        /\bon weekends,? i\b/.test(t)
+      );
     default:
       return false;
   }
 }
 
-/** How many Hobbies speak steps are cleared (0–5).
- * Mini Quiz steps 4–5: soft-advance after 2 failed attempts.
- */
+/** How many Hobbies speak steps are cleared (0–4). */
 export function hobbiesBoardForStep(
   step: number,
   history: Array<{ speaker: string; textEn?: string }>,
@@ -2250,8 +2137,7 @@ export function hobbiesBoardForStep(
   }
   if (step === 2) return hobbiesFrequencyBoard(activity);
   if (step === 3) return HOBBIES_WEEKEND_BOARD;
-  if (step === 4) return HOBBIES_QUIZ_USUALLY_BOARD;
-  if (step === 5) return HOBBIES_QUIZ_SOMETIMES_BOARD;
+  if (step === 4) return HOBBIES_SUMMARY_BOARD;
   return null;
 }
 
@@ -2273,19 +2159,13 @@ export function hobbiesLessonProgress(
 ): number {
   const score = (step: number, text: string) =>
     scoreHobbiesStepForHistory(history, step, text);
-  return computeThreeTierChoiceProgress(history, 5, score);
+  return computeThreeTierChoiceProgress(history, 4, score);
 }
 
 function hobbiesBoardFromAiText(textEn: string): number | null {
   const t = (textEn ?? '').toLowerCase();
   if (!t) return null;
-  if (t.includes('บางครั้ง') && (t.includes('ล่ะ') || t.includes('and how about'))) {
-    return 5;
-  }
-  if (
-    t.includes('เป็นประจำ') ||
-    (t.includes('how do you say') && t.includes('เป็นประจำ'))
-  ) {
+  if (t.includes('2 ประโยค') || t.includes('ขั้นตอนสุดท้าย')) {
     return 4;
   }
   if (
@@ -2308,7 +2188,7 @@ function hobbiesBoardFromAiText(textEn: string): number | null {
 }
 
 /**
- * Pin Hobbies guidedSpeaking boards (Turns 1–5).
+ * Pin Hobbies guidedSpeaking boards (Turns 1–4).
  */
 export function forceHobbiesGuidedSpeakingIfNeeded(
   lessonId: string,
@@ -2339,7 +2219,7 @@ export function forceHobbiesGuidedSpeakingIfNeeded(
     pendingThreeTierSoftTeach(
       history,
       hobbiesLessonProgress,
-      5,
+      4,
       (step, text) => scoreHobbiesStepForHistory(history, step, text),
     )
   ) {
@@ -2347,17 +2227,17 @@ export function forceHobbiesGuidedSpeakingIfNeeded(
   }
 
   const progress = hobbiesLessonProgress(history);
-  if (progress >= 5) return null;
+  if (progress >= 4) return null;
 
   const activity = extractHobbiesActivity(history) ?? 'watch_movies';
   const fromText = hobbiesBoardFromAiText(current.textEn ?? '');
   let step = fromText;
   if (step == null) {
-    if (progress >= 0 && progress <= 4) step = progress + 1;
+    if (progress >= 0 && progress <= 3) step = progress + 1;
     else return null;
   }
 
-  if (step < 1 || step > 5) return null;
+  if (step < 1 || step > 4) return null;
   if (nextTurn < 1 && step !== 1) return null;
 
   let board: {
@@ -2387,17 +2267,10 @@ export function forceHobbiesGuidedSpeakingIfNeeded(
     };
   } else if (step === 4) {
     board = {
-      textEn: HOBBIES_QUIZ_USUALLY_BOARD.textEn,
-      stem: HOBBIES_QUIZ_USUALLY_BOARD.stem,
-      expectedSpeech: HOBBIES_QUIZ_USUALLY_BOARD.expectedSpeech,
-      options: HOBBIES_QUIZ_USUALLY_BOARD.options.map((o) => ({ ...o })),
-    };
-  } else {
-    board = {
-      textEn: HOBBIES_QUIZ_SOMETIMES_BOARD.textEn,
-      stem: HOBBIES_QUIZ_SOMETIMES_BOARD.stem,
-      expectedSpeech: HOBBIES_QUIZ_SOMETIMES_BOARD.expectedSpeech,
-      options: HOBBIES_QUIZ_SOMETIMES_BOARD.options.map((o) => ({ ...o })),
+      textEn: HOBBIES_SUMMARY_BOARD.textEn,
+      stem: HOBBIES_SUMMARY_BOARD.stem,
+      expectedSpeech: HOBBIES_SUMMARY_BOARD.expectedSpeech,
+      options: HOBBIES_SUMMARY_BOARD.options.map((o) => ({ ...o })),
     };
   }
 
@@ -2459,7 +2332,7 @@ export function forceHobbiesCelebrateIfNeeded(
   isTaskComplete: true;
 } | null {
   if (lessonId !== 'ee_about_me_hobbies') return null;
-  if (hobbiesLessonProgress(history) < 5) return null;
+  if (hobbiesLessonProgress(history) < 4) return null;
 
   const name = learnerFirstName.trim() || 'เพื่อน';
   const body = `สุดยอดครับ ${name}! 🎉 วันนี้คุณบอกงานอดิเรก ความถี่ และสิ่งที่มักทำวันเสาร์–อาทิตย์ได้แล้ว — เก่งมากครับ! 🍌`;
@@ -3575,23 +3448,22 @@ export function forcePeopleCelebrateIfNeeded(
 export const WEATHER_HOT_QUIZ_GUIDED_SPEAKING = {
   stem: '',
   options: [
-    { emoji: '🔥', label: 'Hot', speak: 'Hot.' },
-    { emoji: '☀️', label: 'Sunny', speak: 'Sunny.' },
-    { emoji: '🥶', label: 'Cold', speak: 'Cold.' },
+    { emoji: '🔥', label: 'It is hot', speak: 'It is hot.' },
   ],
 };
 
 const WEATHER_COLD_BOARD = {
   textEn:
-    "ถูกต้องครับ! 👏 ถ้าจะบอกว่า 'วันนี้อากาศร้อนมาก' ให้พูดว่า The weather is very hot today. แล้วถ้าจะบอกว่า 'วันนี้อากาศหนาวมาก' จะพูดว่าอย่างไรครับ?",
-  advanceQuestionEn: 'How do you say the weather is very cold today?',
-  stem: 'The weather is very...',
-  expectedSpeech: 'The weather is very cold today.',
+    'ดีมากครับ! แล้ววันนี้อากาศเป็นอย่างไรครับ? What is the weather like today? 🌤️',
+  advanceQuestionEn: 'What is the weather like today?',
+  stem: 'It is...',
+  expectedSpeech: 'It is sunny.',
   options: [
-    { emoji: '🥶', label: 'Cold', speak: 'The weather is very cold today.' },
+    { emoji: '🔥', label: 'Hot', speak: 'It is hot.' },
+    { emoji: '☀️', label: 'Sunny', speak: 'It is sunny.' },
+    { emoji: '🥶', label: 'Cold', speak: 'It is cold.' },
   ],
-  incorrectHintTh:
-    'ยังไม่ตรงครับ ประโยคเริ่มด้วย The weather is very... แล้วใส่ cold ครับ',
+  incorrectHintTh: 'ยังไม่ตรงครับ ลองใช้โครง It is... แล้วบอกสภาพอากาศครับ',
 };
 
 const WEATHER_PREFERENCE_GUIDED_SPEAKING = {
@@ -3605,13 +3477,12 @@ const WEATHER_PREFERENCE_GUIDED_SPEAKING = {
 
 const WEATHER_QUIZ_RAINY_BOARD = {
   textEn:
-    "ก่อนจบบท ลองบอกหน่อยครับ 😊 ถ้าจะพูดว่า 'ฉันชอบอากาศฝนตก' จะพูดเป็นภาษาอังกฤษว่าอย่างไรครับ?",
-  advanceQuestionEn: 'How do you say I like rainy weather?',
-  stem: '',
+    'ทีนี้เป็นอากาศที่คุณชอบครับ คุณชอบอากาศแบบไหน? What weather do you like? ☀️🌧️',
+  advanceQuestionEn: 'What weather do you like?',
+  stem: 'I like ... weather.',
   expectedSpeech: 'I like rainy weather.',
-  options: [{ emoji: '🌧️', label: '', speak: 'I like rainy weather.' }],
-  incorrectHintTh:
-    'ยังไม่ตรงครับ ลองใช้โครง I like ... weather โดยเน้น rainy ครับ',
+  options: WEATHER_PREFERENCE_GUIDED_SPEAKING.options,
+  incorrectHintTh: 'ยังไม่ตรงครับ ลองใช้โครง I like ... weather ครับ',
 };
 
 function normalizeWeatherSpeech(userText: string): string {
@@ -3628,18 +3499,16 @@ function matchesWeatherStep(step: number, userText: string): boolean {
   switch (step) {
     case 1:
       return (
-        t === 'hot' ||
         t === "it's hot" ||
-        t === 'it is hot' ||
-        t === 'hot weather'
+        t === 'it is hot'
       );
     case 2:
-      return t === 'the weather is very cold today';
+      return /^it is (hot|sunny|cold|rainy)$/.test(t) || /^it's (hot|sunny|cold|rainy)$/.test(t);
     case 3:
       // Soft-accept any "I like [adj] weather"
       return /^i like [\w][\w\s'-]{0,20} weather$/.test(t);
     case 4:
-      return t === 'i like rainy weather';
+      return /^i like [\w][\w\s'-]{0,20} weather$/.test(t);
     default:
       return false;
   }
@@ -3650,7 +3519,7 @@ export function weatherBoardForStep(step: number): ForcedGuidedBoard | null {
     return {
       textEn: '',
       stem: WEATHER_HOT_QUIZ_GUIDED_SPEAKING.stem,
-      expectedSpeech: 'Hot.',
+      expectedSpeech: 'It is hot.',
       options: WEATHER_HOT_QUIZ_GUIDED_SPEAKING.options.map((o) => ({ ...o })),
       incorrectHintTh: 'ยังไม่ตรงครับ คำนี้คือ hot — ลองพูด Hot. ครับ',
     };
@@ -3658,13 +3527,13 @@ export function weatherBoardForStep(step: number): ForcedGuidedBoard | null {
   if (step === 2) return WEATHER_COLD_BOARD;
   if (step === 3) {
     return {
-      textEn: 'แล้วคุณชอบอากาศแบบไหนครับ? What weather do you like? ☀️🌧️',
-      advanceQuestionEn: 'What weather do you like?',
-      stem: WEATHER_PREFERENCE_GUIDED_SPEAKING.stem,
+      textEn:
+        'ต่อไปมาฝึกบอกอากาศที่ชอบครับ ☀️ “ฉันชอบอากาศแจ่มใส” พูดว่า “I like sunny weather.” ลองพูดตามครับ',
+      advanceQuestionEn: 'Repeat: I like sunny weather.',
+      stem: '',
       expectedSpeech: 'I like sunny weather.',
-      options: WEATHER_PREFERENCE_GUIDED_SPEAKING.options.map((o) => ({ ...o })),
-      incorrectHintTh:
-        'ยังไม่ตรงครับ ลองใช้โครง I like ... weather ครับ',
+      options: [{ emoji: '☀️', label: 'Sunny', speak: 'I like sunny weather.' }],
+      incorrectHintTh: 'ลองพูดตามว่า I like sunny weather. ครับ',
     };
   }
   if (step === 4) return WEATHER_QUIZ_RAINY_BOARD;
@@ -3689,14 +3558,11 @@ export function weatherLessonProgress(
 function weatherBoardFromAiText(textEn: string): number | null {
   const t = (textEn ?? '').toLowerCase();
   if (!t) return null;
-  if (t.includes('ฉันชอบอากาศฝนตก') || t.includes('อากาศฝนตก')) return 4;
   if (t.includes('ชอบอากาศแบบไหน') || t.includes('what weather do you like')) {
-    return 3;
+    return 4;
   }
-  if (
-    t.includes('อากาศหนาวมาก') ||
-    t.includes('the weather is very hot today')
-  ) {
+  if (t.includes('i like sunny weather') || t.includes('อากาศที่ชอบ')) return 3;
+  if (t.includes('วันนี้อากาศเป็นอย่างไร') || t.includes('weather like today')) {
     return 2;
   }
   if (t.includes('อากาศร้อน') || t.includes('อากาศร้อนมากเลย')) return 1;
@@ -3766,9 +3632,9 @@ export function forceWeatherGuidedSpeakingIfNeeded(
     board = {
       textEn:
         current.textEn?.trim() ||
-        "วันนี้อากาศร้อนมากเลยครับ! 🔥 ถ้าจะพูดว่า 'อากาศร้อน' ภาษาอังกฤษใช้คำว่าอะไรครับ?",
+        'วันนี้เราจะฝึกพูดเรื่องอากาศครับ 🔥 “อากาศร้อน” พูดว่า “It is hot.” ลองพูดตามครับ',
       stem: WEATHER_HOT_QUIZ_GUIDED_SPEAKING.stem,
-      expectedSpeech: 'Hot.',
+      expectedSpeech: 'It is hot.',
       options: WEATHER_HOT_QUIZ_GUIDED_SPEAKING.options.map((o) => ({ ...o })),
       withPraise: false,
     };
@@ -3920,20 +3786,21 @@ export const FRIENDS_ACTIVITY_GUIDED_SPEAKING = {
 };
 
 const FRIENDS_EAT_OUT_BOARD = {
-  textEn: 'แล้วถ้าจะพูดว่า พวกเรากินข้าวด้วยกัน จะพูดว่าอย่างไรครับ?',
-  advanceQuestionEn: 'How do you say we eat out together?',
+  textEn:
+    'ถ้าพูดถึงเพื่อนอีกกลุ่ม เราใช้ They ครับ 🎮 “พวกเขาเล่นเกมด้วยกัน” พูดว่า “They play games together.” ลองพูดตามครับ',
+  advanceQuestionEn: 'Repeat: They play games together.',
   stem: '',
-  expectedSpeech: 'We eat out together.',
+  expectedSpeech: 'They play games together.',
   options: [
-    { emoji: '🍽️', label: 'Eat out', speak: 'We eat out together.' },
+    { emoji: '🎮', label: 'Play games', speak: 'They play games together.' },
   ],
 };
 
 const FRIENDS_THEY_PLAY_BOARD = {
   textEn:
-    'เยี่ยมครับ! 😊 แล้วถ้าจะพูดว่า พวกเขาเล่นเกมด้วยกัน จะพูดว่าอย่างไรครับ?',
-  advanceQuestionEn: 'How do you say they play games together?',
-  stem: 'They ........ together.',
+    'ทีนี้ลองพูดถึงเพื่อนอีกกลุ่มครับ พวกเขาชอบทำอะไรด้วยกัน? What do they do together? 😊',
+  advanceQuestionEn: 'What do they do together?',
+  stem: 'They ... together.',
   expectedSpeech: 'They play games together.',
   options: [
     {
@@ -3941,16 +3808,23 @@ const FRIENDS_THEY_PLAY_BOARD = {
       label: 'Play games',
       speak: 'They play games together.',
     },
+    { emoji: '🍽️', label: 'Eat out', speak: 'They eat out together.' },
+    { emoji: '🎳', label: 'Hang out', speak: 'They hang out together.' },
   ],
 };
 
 const FRIENDS_HANG_OUT_BOARD = {
-  textEn: 'ก่อนจบบท ลองบอกหน่อยครับ 😊 พวกเราไปเที่ยวด้วยกัน',
-  advanceQuestionEn: 'How do you say we hang out together?',
-  stem: '',
-  expectedSpeech: 'We hang out together.',
+  textEn:
+    'ขั้นตอนสุดท้ายครับ ลองพูด 2 ประโยค: คุณกับเพื่อนทำอะไร และเพื่อนอีกกลุ่มทำอะไรด้วยกัน ✨',
+  advanceQuestionEn: 'Say one sentence with We and one with They.',
+  stem: 'We ... together. They ... together.',
+  expectedSpeech: 'We play games together. They eat out together.',
   options: [
-    { emoji: '🎳', label: 'Hang out', speak: 'We hang out together.' },
+    {
+      emoji: '👥',
+      label: '2 sentences',
+      speak: 'We play games together. They eat out together.',
+    },
   ],
 };
 
@@ -3981,13 +3855,11 @@ function matchesFriendsStep(step: number, userText: string): boolean {
       // Soft-accept any clear "We … together"
       return /^we .+ together$/.test(t) && t.length >= 14;
     case 2:
-      return t === 'we eat out together';
-    case 3:
       return t === 'they play games together';
+    case 3:
+      return /^they .+ together$/.test(t) && t.length >= 16;
     case 4:
-      return t === 'we hang out together';
-    case 5:
-      return t === 'they eat out together';
+      return /\bwe .+ together\b/.test(t) && /\bthey .+ together\b/.test(t);
     default:
       return false;
   }
@@ -4013,20 +3885,6 @@ export function friendsBoardForStep(step: number): ForcedGuidedBoard | null {
   }
   if (step === 3) return FRIENDS_THEY_PLAY_BOARD;
   if (step === 4) return FRIENDS_HANG_OUT_BOARD;
-  if (step === 5) {
-    return {
-      textEn: FRIENDS_THEY_EAT_OUT_BOARD.textEn,
-      stem: '',
-      expectedSpeech: FRIENDS_THEY_EAT_OUT_BOARD.expectedSpeech,
-      options: [
-        {
-          emoji: '🍽️',
-          label: 'Eat out',
-          speak: FRIENDS_THEY_EAT_OUT_BOARD.expectedSpeech,
-        },
-      ],
-    };
-  }
   return null;
 }
 
@@ -4038,22 +3896,21 @@ export function scoreFriendsStep(step: number, userText: string): ChoiceStepTier
   )(step, userText);
 }
 
-/** Speak steps cleared (0–5). Quick checks 4 & 5 soft-advance after 2 failed attempts. */
+/** Speak steps cleared (0–4): personal We → model They → personal They → synthesis. */
 export function friendsLessonProgress(
   history: Array<{ speaker: string; textEn?: string }>,
 ): number {
-  return computeThreeTierChoiceProgress(history, 5, scoreFriendsStep);
+  return computeThreeTierChoiceProgress(history, 4, scoreFriendsStep);
 }
 
 function friendsBoardFromAiText(textEn: string): number | null {
   const t = (textEn ?? '').toLowerCase();
   if (!t) return null;
-  if (t.includes('พวกเขากินข้าว')) return 5;
-  if (t.includes('พวกเราไปเที่ยว') || t.includes('ก่อนจบบท')) return 4;
-  if (t.includes('พวกเขาเล่นเกม') || t.includes('they ........ together')) {
+  if (t.includes('2 ประโยค') || t.includes('ขั้นตอนสุดท้าย')) return 4;
+  if (t.includes('เพื่อนอีกกลุ่ม') || t.includes('what do they do together')) {
     return 3;
   }
-  if (t.includes('พวกเรากินข้าว')) return 2;
+  if (t.includes('they play games together') || t.includes('เราใช้ they')) return 2;
   if (
     t.includes('วันหยุด') ||
     t.includes('ชอบทำอะไรกัน') ||
@@ -4065,7 +3922,7 @@ function friendsBoardFromAiText(textEn: string): number | null {
 }
 
 /**
- * Pin Friends guidedSpeaking boards (Turns 1–4) and strip hints on Turn 5.
+ * Pin Friends guidedSpeaking boards (Turns 1–4).
  */
 export function forceFriendsGuidedSpeakingIfNeeded(
   lessonId: string,
@@ -4096,7 +3953,7 @@ export function forceFriendsGuidedSpeakingIfNeeded(
     pendingThreeTierSoftTeach(
       history,
       friendsLessonProgress,
-      5,
+      4,
       scoreFriendsStep,
     )
   ) {
@@ -4104,37 +3961,17 @@ export function forceFriendsGuidedSpeakingIfNeeded(
   }
 
   const progress = friendsLessonProgress(history);
-  if (progress >= 5) return null;
+  if (progress >= 4) return null;
 
   const fromText = friendsBoardFromAiText(current.textEn ?? '');
   let step = fromText;
   if (step == null) {
-    if (progress >= 0 && progress <= 4) step = progress + 1;
+    if (progress >= 0 && progress <= 3) step = progress + 1;
     else return null;
   }
 
-  if (step < 1 || step > 5) return null;
+  if (step < 1 || step > 4) return null;
   if (nextTurn < 1 && step !== 1) return null;
-
-  // Turn 5 — free recall, no choice cards.
-  if (step === 5) {
-    if (current.guidedSpeaking == null && current.expectsUserSpeech) {
-      return null;
-    }
-    return {
-      textEn: resolveBoardTextEn(
-        current.textEn ?? '',
-        FRIENDS_THEY_EAT_OUT_BOARD.textEn,
-        { withPraise: true },
-      ),
-      textTh: current.textTh?.trim() || null,
-      guidedSpeaking: null,
-      expectsUserSpeech: true,
-      expectedSpeech: FRIENDS_THEY_EAT_OUT_BOARD.expectedSpeech,
-      emojiChoice: null,
-      isTaskComplete: false,
-    };
-  }
 
   let board: {
     textEn: string;
@@ -4253,7 +4090,7 @@ export function forceFriendsCelebrateIfNeeded(
   isTaskComplete: true;
 } | null {
   if (lessonId !== 'ee_about_me_friends') return null;
-  if (friendsLessonProgress(history) < 5) return null;
+  if (friendsLessonProgress(history) < 4) return null;
 
   const name = learnerFirstName.trim() || 'เพื่อน';
   const body = `สุดยอดครับ ${name}! 🎉 วันนี้คุณพูด We/They … together กับเพื่อนได้แล้ว — เก่งมากครับ! 🍌`;
@@ -4812,7 +4649,7 @@ export function peopleBoardForStepFromHistory(
 }
 
 export function weatherOpeningText(): string {
-  return "วันนี้อากาศร้อนมากเลยครับ! 🔥 ถ้าจะพูดว่า 'อากาศร้อน' ภาษาอังกฤษใช้คำว่าอะไรครับ?";
+  return 'วันนี้เราจะฝึกพูดเรื่องอากาศครับ 🔥 “อากาศร้อน” พูดว่า “It is hot.” ลองพูดตามครับ';
 }
 
 export function favoritesOpeningText(learnerFirstName: string): string {

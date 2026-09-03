@@ -1,5 +1,5 @@
 export const BANANA_PACKS = {
-  banana_tickets_25: { bananas: 25 },
+  banana_tickets_28: { bananas: 28 },
   banana_tickets_70: { bananas: 70 },
 } as const;
 

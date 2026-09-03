@@ -60,21 +60,16 @@ function assertSoftAdvance(
 }
 
 describe('About Me soft-advance copy (all 10 lessons)', () => {
-  it('daily routine — step 2 wake up', () => {
+  it('daily routine — taught wake sentence', () => {
     assertSoftAdvance(
-      [
-        { speaker: 'ai', textEn: "Say I'm ready" },
-        { speaker: 'user', textEn: "I'm ready" },
-        {
-          speaker: 'ai',
-          textEn: 'เก่งมากครับ! มาเริ่มกันเลย คำว่า ตื่นนอน ในภาษาอังกฤษคือคำไหนครับ? ⏰',
-        },
-        { speaker: 'user', textEn: 'go to work' },
-        { speaker: 'ai', textEn: 'ลองพูดตามนะครับ wake up' },
-        { speaker: 'user', textEn: 'go to sleep' },
-      ],
+      doubleWrong(
+        'ลองพูดตามว่า I wake up at seven o\'clock.',
+        'good morning',
+        'ลองพูดตามว่า I wake up at seven o\'clock.',
+        'good night',
+      ),
       ABOUT_ME_DAILY_ROUTINE.lessonId,
-      /"wake up"/,
+      /I wake up at seven o'clock/,
       /What time do you wake up\?/,
     );
   });
@@ -166,14 +161,14 @@ describe('About Me soft-advance copy (all 10 lessons)', () => {
   it('weather — step 1 hot', () => {
     assertSoftAdvance(
       doubleWrong(
-        "วันนี้อากาศร้อนมากเลยครับ! ถ้าจะพูดว่า 'อากาศร้อน' ภาษาอังกฤษใช้คำว่าอะไรครับ?",
+        'ลองพูดตาม It is hot.',
         'I like pizza.',
-        'ลองพูดตาม Hot.',
+        'ลองพูดตาม It is hot.',
         'Good morning.',
       ),
       ABOUT_ME_WEATHER.lessonId,
-      /"Hot\."/,
-      /อากาศหนาวมาก|The weather is very hot today|How do you say the weather is very cold today\?/,
+      /"It is hot\."/,
+      /วันนี้อากาศเป็นอย่างไร|What is the weather like today\?/,
     );
   });
 
@@ -187,7 +182,7 @@ describe('About Me soft-advance copy (all 10 lessons)', () => {
       ),
       ABOUT_ME_FRIENDS.lessonId,
       /"We \.+ together\."/,
-      /กินข้าวด้วยกัน|How do you say we eat out together\?/,
+      /They play games together|เราใช้ They/,
     );
   });
 
