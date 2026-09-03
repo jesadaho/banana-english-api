@@ -19,7 +19,7 @@ export class EmojiSpeakEndlessLeaderboardService {
   /** Sentinel board bucket — not a real ISO week. */
   static readonly ALL_TIME_KEY = 'all';
 
-  static readonly LEADERBOARD_TOP_SIZE = 5;
+  static readonly LEADERBOARD_TOP_SIZE = 10;
 
   constructor(private readonly prisma: PrismaService) {}
 

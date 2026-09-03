@@ -158,7 +158,7 @@ export class EconomyService {
 
   async maybeCreditDailyBanana(user: User, now = new Date()): Promise<User> {
     const local = getUserLocalTime(user.timezone, now);
-    if (local.hour < 8) {
+    if (local.hour < 9) {
       return user;
     }
     if (isSameDateKey(user.lastDailyBananaDate, local.dateKey)) {
@@ -193,6 +193,32 @@ export class EconomyService {
           ...(credit > 0 ? { bananaBalance: { increment: credit } } : {}),
           lastDailyBananaDate: parseDateKey(local.dateKey),
         },
+      });
+    });
+  }
+
+  /** IAP credits bypass the free-earn soft cap. */
+  async creditPurchasedBananas(
+    userId: string,
+    amount: number,
+    referenceId: string,
+  ): Promise<User> {
+    if (!Number.isFinite(amount) || amount <= 0) {
+      throw new BadRequestException('Invalid purchase amount');
+    }
+    const rounded = Math.floor(amount);
+    return this.prisma.$transaction(async (tx) => {
+      await this.recordTransaction(tx, {
+        userId,
+        currency: Currency.BANANA,
+        amount: rounded,
+        source: 'iap_purchase',
+        referenceId,
+      });
+
+      return tx.user.update({
+        where: { id: userId },
+        data: { bananaBalance: { increment: rounded } },
       });
     });
   }

@@ -24,6 +24,7 @@ import { DailySpeakModule } from './daily-speak/daily-speak.module';
 import { ExplainItModule } from './explain-it/explain-it.module';
 import { SayItModule } from './say-it/say-it.module';
 import { DebugModule } from './debug/debug.module';
+import { PurchasesModule } from './purchases/purchases.module';
 
 @Module({
   imports: [
@@ -52,6 +53,7 @@ import { DebugModule } from './debug/debug.module';
     SayItModule,
     ExplainItModule,
     DebugModule,
+    PurchasesModule,
   ],
 })
 export class AppModule {}

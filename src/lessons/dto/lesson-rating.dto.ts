@@ -18,4 +18,9 @@ export class CreateLessonRatingDto {
   @MinLength(1)
   @MaxLength(80)
   sessionId?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(2000)
+  feedback?: string;
 }

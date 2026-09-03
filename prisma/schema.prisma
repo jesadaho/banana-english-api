@@ -74,6 +74,7 @@ model User {
   achievements            UserAchievement[]
   outfits                 UserOutfit[]
   emojiSpeakEndlessWeeklyScores EmojiSpeakEndlessWeeklyScore[]
+  purchaseRecords           PurchaseRecord[]
 
   createdAt               DateTime  @default(now())
   updatedAt               DateTime  @updatedAt
@@ -184,6 +185,8 @@ model LessonRating {
   lessonId  String
   sessionId String?
   stars     Int
+  /** Optional free-text feedback (usually when stars < 5). */
+  feedback  String?
   createdAt DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -236,4 +239,19 @@ model EmojiSpeakEndlessWeeklyScore {
 
   @@unique([userId, weekKey])
   @@index([weekKey, bestScore])
+}
+
+/** Verified in-app purchase (RevenueCat / App Store / Play). */
+model PurchaseRecord {
+  id                 String   @id @default(uuid())
+  userId             String
+  productId          String
+  storeTransactionId String   @unique
+  bananasGranted     Int
+  platform           String?
+  createdAt          DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
 }

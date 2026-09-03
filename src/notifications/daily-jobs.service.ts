@@ -36,7 +36,7 @@ export class DailyJobsService {
     }
   }
 
-  /** Credits the daily banana at 08:00 local; push only on the user's first-ever daily drop. */
+  /** Credits the daily banana refill at 09:00 local; push only on the user's first-ever daily drop. */
   private async processFirstBananaDrop() {
     const users = await this.prisma.user.findMany({
       include: { fcmTokens: true },
@@ -45,7 +45,7 @@ export class DailyJobsService {
 
     for (const user of users) {
       const local = getUserLocalTime(user.timezone, now);
-      if (local.hour !== 8) continue;
+      if (local.hour !== 9) continue;
       if (isSameDateKey(user.lastDailyBananaDate, local.dateKey)) continue;
 
       const isFirstDailyBanana = user.lastDailyBananaDate == null;

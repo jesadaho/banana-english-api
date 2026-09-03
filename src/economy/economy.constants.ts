@@ -41,9 +41,13 @@ export function freeTalkBananaCost(durationMinutes: number): number {
 }
 
 export const ONBOARDING_BANANA_BONUS = 2;
-export const DAILY_BANANA_DROP = 1;
+/**
+ * Daily free refill — credited once per local day after 09:00.
+ * Set to MAX_BANANA_BALANCE so a single drop tops the free-earn cap back up to 5.
+ */
+export const DAILY_BANANA_DROP = 5;
 export const DEBUG_BANANA_REFILL = 2;
-/** Soft cap on banana balance — credits never push above this. */
+/** Soft cap on banana balance for free-earn paths (onboarding, daily drop). IAP bypasses this. */
 export const MAX_BANANA_BALANCE = 5;
 /** Typical Mission start cost shown in the Banana Ticket sheet. */
 export const MISSION_BANANA_COST = 1;

@@ -26,6 +26,7 @@ export class LessonsController {
       lessonId: body.lessonId,
       stars: body.stars,
       sessionId: body.sessionId,
+      feedback: body.feedback,
     });
   }
 }

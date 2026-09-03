@@ -31,7 +31,7 @@ export const EXPLAIN_IT_TOPICS: ExplainItTopic[] = [
     titleTh: 'Demo',
     subtitleEn: 'Explain everyday objects',
     subtitleTh: 'อธิบายสิ่งของในชีวิตประจำวัน',
-    emoji: '🏠',
+    emoji: '🎲',
     accentColor: 0x26a69a,
     estimatedMinutes: 4,
     poolSize: 20,

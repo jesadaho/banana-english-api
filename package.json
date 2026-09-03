@@ -19,11 +19,13 @@
     "test": "node --import tsx --test src/sessions/speaking-assessment.service.test.ts src/lessons/daily-routine-turn.test.ts src/lessons/lesson-turn-driver.test.ts src/training/greetings-turn.test.ts src/training/daily-routine-turn.test.ts src/training/foundation-v2.test.ts src/training/foundation-incorrect-hints.test.ts src/training/food-lesson-choice.test.ts src/training/engine/ai-gate.test.ts src/training/about-me-soft-advance.test.ts src/training/around-town-soft-advance.test.ts src/training/stories-soft-advance.test.ts src/simulations/simulations.checkpoint.test.ts",
     "test:daily-routine": "node --import tsx --test src/lessons/daily-routine-turn.test.ts",
     "test:lesson-driver": "node --import tsx --test src/lessons/lesson-turn-driver.test.ts",
+    "test:purchases": "node --import tsx --test src/purchases/product-catalog.test.ts",
     "smoke:daily-routine": "tsx scripts/daily-routine-api-turn-smoke.ts",
     "smoke:daily-routine:unhappy": "tsx scripts/daily-routine-api-unhappy-smoke.ts",
     "smoke:all-lessons": "tsx scripts/all-lessons-api-benchmark.ts",
     "smoke:missions-prod": "tsx scripts/mission-scenarios-prod.ts",
-    "bench:groq-spike": "tsx scripts/groq-training-latency-spike.ts"
+    "bench:groq-spike": "tsx scripts/groq-training-latency-spike.ts",
+    "export:lesson-ratings": "tsx scripts/export-lesson-ratings.ts"
   },
   "dependencies": {
     "@nestjs/common": "^10.4.15",

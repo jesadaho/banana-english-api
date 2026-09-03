@@ -1,0 +1,108 @@
+createdAt,stars,lessonId,sessionId,feedback,ratingId,displayName,email,anonymousId,firebaseUid,platform,selfReportedEnglishLevel,acquisitionSource,userCreatedAt
+2026-09-03T15:50:19.250Z,5,greetings,session_1960d381e308,,ccc236f5-255d-44bc-9f35-6fd8b53071b7,Thank you,,dcc3efb7-c454-4a75-b36f-76b58b1a91f9,,,elementary,app_store,2026-09-03T15:40:12.149Z
+2026-09-03T14:18:27.724Z,5,greetings,session_0120dc537ee6,,2f084b8a-b2d7-48e4-bd41-bddb46d98e19,Nadine,,32fb0eb0-d95e-4a40-ae0b-c169658dba28,,iOS,beginner,,2026-09-03T14:14:39.354Z
+2026-09-03T13:52:06.981Z,5,greetings,session_4352b178d19a,,f7023222-52c4-42ae-96b2-5d357c2253db,ผู้เรียน,,0f2ab932-20db-42f9-9d73-aa02a725d2c2,,iOS,beginner,tiktok,2026-09-03T13:48:38.673Z
+2026-09-03T12:55:28.638Z,5,ee_about_me_family,session_e59f638187e9,,385dbc2f-e0c9-456c-855d-c9b38c9df895,iPhone,,4531e66c-0010-4574-b957-56eece230517,,iOS,beginner,,2026-08-24T15:22:16.184Z
+2026-09-03T10:58:43.112Z,5,greetings,session_494a21b99535,,465504ba-a141-4e9a-a925-909df6804d0e,Rosmita,,f074c441-e0b2-44a0-8dcb-36ae7788eb2a,,iOS,beginner,other,2026-09-03T10:54:55.239Z
+2026-09-03T10:30:41.519Z,5,greetings,session_83c1a4ae91ee,,a7092cbb-1a37-4483-b2a5-02f4d7056960,[Learner's Name],,ffa097dc-7c44-4946-8bd0-81a4f8040ef4,,iOS,elementary,tiktok,2026-09-03T10:24:19.212Z
+2026-09-03T09:32:35.414Z,2,greetings,session_adbbe6302bae,,16574658-3a8d-4ced-b558-ba7ddcea9091,Louis Chouda,,284eb72c-5873-48f7-87e6-63d085370d37,,,beginner,facebook,2026-09-03T09:28:30.111Z
+2026-09-03T08:52:19.998Z,2,greetings,session_6cc3acf9c7ab,,2688987f-4489-4cda-80a1-ef147517c5ed,ผู้เรียน,,5ae8d88e-45ec-4fce-9160-c3185382b79f,,,beginner,facebook,2026-09-03T08:47:31.154Z
+2026-09-03T07:52:23.953Z,5,ee_about_me_daily_routine,session_3f435b11314f,,5952f661-eba7-4622-a44a-5c47a0da5737,Pacha,,c38a5ef1-b9aa-4dad-9a26-f85822910e44,,iOS,intermediate,app_store,2026-09-03T07:48:02.691Z
+2026-09-03T00:47:20.422Z,5,greetings,session_8d66f2f93f62,,0594f3a4-587d-42d7-b62f-06e36afdfb83,sangthong poppers,,bc457d1a-a4cb-47db-b795-74dfc49f52af,,iOS,beginner,other,2026-09-03T00:41:55.497Z
+2026-09-03T00:12:15.091Z,5,greetings,session_ebc380f6be65,,6b1e6e39-969d-4953-be9e-d09ca042d7e3,Shakira,,4a545675-3c80-45ca-91ba-2770d99e8f5c,,,elementary,friend_line,2026-09-03T00:07:57.842Z
+2026-09-02T16:57:18.581Z,2,greetings,session_32fc6a118102,,6a1d075d-0707-4eef-bf16-e454bc085950,Learner,,9e357f99-6170-493a-8a0c-398f08e86b1e,,,,,2026-09-02T16:49:59.456Z
+2026-09-02T16:54:53.673Z,5,greetings,session_f48f55ee11e4,,1f1ca16c-174a-491c-b0e5-9dc1b52c91af,What is your name,,56c967c8-f80c-41a2-8a3d-a41cafcd62ff,,iOS,beginner,facebook,2026-09-02T16:41:38.844Z
+2026-09-02T16:53:09.592Z,5,greetings,session_cbd1c9627372,,d45d15a5-8fc0-4484-9c35-3fd9512cc7a5,Heart,,7de03568-6087-4791-8f4e-86a69f568f34,,,elementary,friend_line,2026-09-02T16:14:56.808Z
+2026-09-02T16:40:56.590Z,5,greetings,session_6c089fe66d0a,,048307b7-06ec-47e3-96ef-db5a2c30e354,Top,,6963724f-f2c8-4b7a-890d-a11d2aa0e4a9,,iOS,beginner,facebook,2026-09-02T16:36:49.052Z
+2026-09-02T16:28:37.600Z,5,greetings,session_cfd49025f71d,,00e9c343-65e6-42c8-a965-8dc78368a599,Lepid,,b48e41e4-2b7f-427f-92bc-2b46b8527f0e,,iOS,elementary,facebook,2026-09-02T16:24:42.526Z
+2026-09-02T15:58:21.787Z,5,greetings,session_b3df50c3e868,,66f919f3-bf64-42d0-b12d-571fde5459e6,Pan,,77f78fab-a53a-40e7-a510-04007c07836a,,iOS,elementary,facebook,2026-09-02T15:54:50.132Z
+2026-09-02T15:35:00.301Z,5,greetings,session_64bfac348206,,1856d800-44dc-46f9-a784-bb31d8cc1828,Mo,,747d04de-3e5b-4b69-baab-e23cd4fa8a78,,iOS,elementary,,2026-08-29T17:04:41.995Z
+2026-09-02T15:32:45.559Z,5,ee_about_me_daily_routine,session_25e68c751735,,0bc9bd66-2bd7-40a0-91c3-ad804d6341c3,กุ๊บกิ๊บ,,4ac5e1be-d0f1-4619-9af2-83daf4ac1493,,iOS,intermediate,facebook,2026-09-02T15:27:45.288Z
+2026-09-02T14:21:13.080Z,5,greetings,session_05629cdfb0ed,,912f365c-6020-465d-a4ed-13a4678d657c,นักเรียน,,c226b7de-b32c-4540-80b1-6a40d015a707,,iOS,beginner,facebook,2026-09-02T03:30:43.727Z
+2026-09-02T13:47:58.919Z,5,ee_about_me_daily_routine,session_78c548df897f,,9d94acea-ff0a-484a-a398-d28ccb8eb145,Mordeo,,b18affd1-b833-4b2a-9ab5-bc39053b62f5,,iOS,intermediate,tiktok,2026-09-02T13:41:25.803Z
+2026-09-02T13:29:53.461Z,3,greetings,session_c2e8f2d15530,,96706cd3-1abc-4cb2-bb10-6dd16300ee62,Susie,,2f5fb08c-477e-438a-8d23-58be1e6076f4,,iOS,beginner,tiktok,2026-09-02T09:08:15.083Z
+2026-09-02T13:05:09.598Z,5,greetings,session_982286af94b1,,e9ba0795-8859-468b-9a46-9e67484aaf4f,B,,8e4554bd-96f0-4529-904e-d356d2b05997,,,elementary,other,2026-09-01T13:38:01.543Z
+2026-09-02T12:51:11.092Z,5,greetings,session_8bc632e3cae3,,cecb24a9-47d0-4624-a78b-0b30a9f89342,Kritia Suliter,,9ec119ca-c2be-46e7-b152-6b334f7a6d8e,,iOS,elementary,tiktok,2026-09-02T12:47:04.635Z
+2026-09-02T10:36:58.905Z,5,greetings,session_15968e630dcf,,eae73e49-9125-4c6d-b365-18674e7db008,Pao Winnie,,1e765568-cd89-4429-aea1-5b7b7ac27eae,,iOS,beginner,app_store,2026-09-02T10:32:58.996Z
+2026-09-02T10:27:18.541Z,5,greetings,session_770e3665c16d,,b77c45af-d132-49a4-9a9d-0207f461d77c,Thank you,,4bbd8ec1-a4ba-41a0-9e2d-ba144edc0167,,,elementary,facebook,2026-09-01T11:04:27.223Z
+2026-09-02T09:13:03.413Z,5,greetings,session_d6f7dc18ad1c,,51b36d97-ff82-4158-a67f-dd575dc804b1,นักเรียน,,f349813d-c3ba-439f-beee-9d3241097d87,,,elementary,tiktok,2026-09-02T09:11:00.266Z
+2026-09-02T09:10:37.345Z,4,greetings,session_6da96193b0a3,,6c8ac557-b55e-4d19-ad37-d5f96f93eab3,Mapa,,3403d4c3-b338-413b-99ce-9e82e5d81c58,,,elementary,,2026-08-29T15:02:17.800Z
+2026-09-02T08:29:09.899Z,4,greetings,session_06e1967104e9,,5ac4a74b-9a5b-4048-9333-4874437e97ec,Jem,,79a71b54-ba02-4f35-9d98-8932b6fde6f5,,iOS,beginner,friend_line,2026-09-02T08:22:17.777Z
+2026-09-02T08:08:00.447Z,5,greetings,session_e076861bd965,,44f37517-4512-455d-a281-e2b46f0f49db,not a learner,,fb5df55d-cd68-475f-8096-755bdd365f8f,,iOS,elementary,tiktok,2026-09-02T08:04:32.933Z
+2026-09-02T07:27:41.374Z,2,greetings,session_186a0a546f75,,e4b3244b-e4d9-41d1-88be-206b027e5433,นักเรียน,,3959a75a-9ee8-4301-b2a9-1b695d5d8acf,,,advanced,tiktok,2026-09-02T07:24:05.518Z
+2026-09-02T06:41:43.872Z,5,greetings,session_03c6038618f0,,522e37cd-8202-47ec-b010-850ca2806a46,Learner,,64a22b38-4857-4638-bdf9-df903388ccc4,,,beginner,facebook,2026-09-02T06:38:07.285Z
+2026-09-02T06:27:00.459Z,3,greetings,session_1d9829686343,,e2827beb-fc8a-4351-abcf-76134ebc48c1,นักเรียน,,26df3ceb-024c-4312-99eb-b1980a7e2de6,,,elementary,tiktok,2026-09-02T06:25:42.618Z
+2026-09-02T06:16:48.022Z,3,greetings,session_515c918aab65,,18027ebc-1bd2-4ee2-abf8-b5269052f798,นักเรียน,,6dc708fb-a98b-42cd-a90a-1fa133bd8876,,,beginner,tiktok,2026-09-02T06:14:45.840Z
+2026-09-02T04:45:21.442Z,3,greetings,session_f8ecf4ca500c,,c570162f-7715-49f9-bc4d-30cbe099281f,คุณ,,83733cbb-d76c-4c42-ab75-61246e772557,,,,,2026-09-01T12:22:11.798Z
+2026-09-02T04:36:50.396Z,5,greetings,session_22035eda206c,,a7cd978b-3cbb-4e45-961f-7ad5ed88fd30,May,,f3d0b069-b352-4adc-bb55-f0abc245622c,,iOS,elementary,app_store,2026-09-02T04:31:49.665Z
+2026-09-02T00:35:14.138Z,5,greetings,session_788bec608631,,4962403a-ac13-4730-871d-d83f709299fe,Frame,,5e63295a-559e-4b79-85f9-fb0229d74bb1,,iOS,elementary,facebook,2026-09-02T00:29:50.645Z
+2026-09-02T00:33:10.562Z,4,greetings,session_95bc6505ab02,,873117c9-a5e6-4eaa-80d5-b53c5540c68e,ผู้เรียน,,dc5ccf9d-5879-49a7-8b6a-e05490299618,,iOS,beginner,other,2026-09-01T12:28:18.795Z
+2026-09-01T23:47:26.706Z,5,polite_expressions,session_e3c3e5c8b0f6,,972e860a-5835-468b-bc65-bd0af4ff54dd,Go,,085fec9c-13b8-4324-99d6-dd0bb9ecfaa5,,iOS,elementary,,2026-08-26T14:56:29.594Z
+2026-09-01T19:34:10.227Z,3,greetings,session_9ddb35ed4d69,,a4fcef02-0d58-4ff5-bb4f-5d1e47f32c95,นักเรียน,,449baeb0-64b2-4471-bf95-cbfe085d53f4,,,beginner,tiktok,2026-09-01T19:32:23.613Z
+2026-09-01T17:52:17.488Z,5,greetings,session_7e24d3cb15e8,,204bf1f5-3a3b-4252-a457-d7c8596cb376,Dao,,73879705-61ac-46e8-9760-f4b5fdf2b05f,,iOS,beginner,other,2026-09-01T17:47:59.074Z
+2026-09-01T16:44:35.663Z,5,greetings,session_b245a482b0ad,,5041d1e6-abfd-43b8-8d71-cda5f45399a3,Pop-bap,,e008979c-1272-4bba-98bb-6a5bb5661949,,iOS,beginner,tiktok,2026-09-01T16:39:55.117Z
+2026-09-01T15:52:58.441Z,5,greetings,session_1d28a3b2925a,,b9c6aa2a-0bcd-41a9-9621-ae50f0433ff8,Amya,,ec59d6e7-dfe0-4b47-ac5b-afe89f1f3522,,,beginner,other,2026-09-01T15:50:15.956Z
+2026-09-01T14:35:49.050Z,5,ee_about_me_daily_routine,session_b91ece3da207,,6e8d13c8-204a-4560-8684-020014963c2e,Yuc,,246bcaa0-e0bd-4bdd-aa02-4a63d9ecf047,,iOS,intermediate,facebook,2026-09-01T14:31:10.138Z
+2026-09-01T13:55:00.701Z,5,greetings,session_9f845d986008,,6235b213-6549-4ab4-8d6c-5f92c2ddd925,Bibi,,312d6e02-423e-414a-b0ea-4bbb62af42b2,,,elementary,facebook,2026-09-01T11:09:10.707Z
+2026-09-01T13:37:23.710Z,5,greetings,session_4b1ef600f1c6,,7b8f5ee7-a5fa-4914-af11-f09847f1a9db,K,,dfbd8b33-13c8-4655-bfb1-ed1d88f58927,,,elementary,,2026-08-31T01:23:06.667Z
+2026-09-01T12:57:19.577Z,5,greetings,session_03a07d68b92b,,27b21caa-89d1-4d1a-adc9-bffbacf9e9da,Min,,099aef39-b3de-4548-a412-f3646c78e620,,,beginner,facebook,2026-09-01T12:53:48.722Z
+2026-09-01T12:05:49.671Z,5,greetings,session_913ca92bce65,,ed863d92-6e2a-4208-9968-86dde2259a93,August,,a3368bb3-bd06-4c00-ba42-9b7c688cafd5,,,elementary,facebook,2026-09-01T11:59:04.644Z
+2026-09-01T10:57:58.718Z,5,greetings,session_f4b4269e6cf2,,73a5d0d8-6644-4cf6-b412-ff65753648e3,first,,54c1b23b-7548-4357-b4d3-5ec79bae9c3b,,iOS,beginner,facebook,2026-09-01T10:49:53.018Z
+2026-09-01T10:54:21.862Z,5,greetings,session_201529167c41,,a06191c6-4c0f-405f-9ef6-96b6e76137d8,ผู้เรียน,,d733e4c3-30cb-42a9-953f-45459f688073,,,beginner,facebook,2026-09-01T10:49:39.300Z
+2026-08-31T22:18:56.926Z,5,greetings,session_04bf4e7f143b,,f4816b3d-5207-43dd-9818-621e72b9ae97,Tisha,,362c3e96-22a4-4659-b249-5ffab2135c05,,iOS,elementary,,2026-08-31T22:13:20.802Z
+2026-08-31T16:55:51.055Z,1,ee_about_me_daily_routine,session_056486177524,,a98d15b2-7fca-464d-9794-26d267e57f6c,นักเรียน,,ab56386d-83a4-4071-a989-5f04f40448ae,,,intermediate,tiktok,2026-08-31T16:54:12.259Z
+2026-08-31T16:53:44.129Z,5,introductions,session_d11158991458,,2525dc92-c718-4930-a274-012fcac7feb6,นักเรียน,,746af21c-354f-480f-ab41-e906ff9fee0e,,,elementary,tiktok,2026-08-31T16:51:58.690Z
+2026-08-31T13:47:17.420Z,5,greetings,session_57f4170caf40,,26eac6d5-7dbd-4f37-8c37-db12b57d8d52,Tukta,,1b8acd4d-3d8c-4355-9ef8-3bd6048cbaee,,iOS,beginner,,2026-08-28T01:03:05.742Z
+2026-08-31T09:44:43.983Z,4,wants_needs,session_4573976e7361,,2fcb01ab-ee09-485b-865d-f417005f67c7,Pee Pee,,7acd58e1-5008-4e42-b230-e2a74621ef20,,,beginner,,2026-08-28T22:31:09.298Z
+2026-08-31T09:38:20.596Z,5,ee_about_me_daily_routine,session_cdd2579a8681,,59e1a276-2991-4a50-89f5-f262618f54bb,Arachapon,,5bb5bebe-b3cb-471f-9ec5-22d988de4364,,iOS,intermediate,,2026-08-31T06:30:28.748Z
+2026-08-31T09:30:32.005Z,3,greetings,session_4f9f08e67f4d,,f46d40c2-5d04-44ca-abdc-43fd13e78c6e,Ling,,3adea5ef-3797-45e6-a800-26fe21e1f7e4,,,elementary,,2026-08-31T09:26:31.661Z
+2026-08-31T08:06:55.993Z,5,greetings,session_16d1490e4701,,d17e5c40-5a5a-414b-b93f-3ee87eca8189,ผู้เรียน,,ff403f29-9790-44f0-8a3c-c264d7e19c5a,,iOS,beginner,,2026-08-31T06:23:40.310Z
+2026-08-31T06:07:48.012Z,5,greetings,session_268fcbb824c0,,bce87890-b1c4-465e-a33c-310f7291cfaa,Kook,,c735b505-10e4-4c56-ae21-0f5d880a53d3,,,beginner,,2026-08-31T06:04:01.045Z
+2026-08-31T03:43:39.098Z,5,likes_dislikes,session_782d2f93f5a6,,f52c74d5-8c03-430c-9dd4-bfe285b0523e,Jinla Pat,,a40a3409-3299-406a-af6b-65f20c1ec5cc,,,elementary,,2026-08-28T04:12:17.855Z
+2026-08-30T23:30:17.638Z,1,meet_people,session_4b16e349f731,,6795d58e-8ee6-42e7-b516-04b723026e5e,Antivo,,0e6de5e4-c34e-4bed-adcb-ac47e4fa3d88,,,beginner,,2026-08-26T09:06:58.441Z
+2026-08-30T20:04:39.889Z,5,ee_about_me_daily_routine,session_8c441cd7f67f,,774e21a2-98d6-4f92-9d3a-88b06c346c0c,ไข่ดาว,,d6744214-81bd-4ed9-9f48-5dca9876ee08,,iOS,advanced,,2026-08-30T19:32:43.658Z
+2026-08-30T17:26:07.282Z,5,ee_about_me_family,session_62bfab3603f9,,6f36f3bf-a3f0-4aa8-98ff-7a6fd7e20574,Chutipapad,,55ba5bd5-7e57-4eef-a6f0-ac5f2a1d6a74,,iOS,beginner,,2026-08-25T13:17:21.194Z
+2026-08-30T16:37:48.697Z,5,yes_no_maybe,session_2c1d69f7f5d9,,4a81d9ec-ae7b-48f5-a123-fdb242360ba8,ปังปอนด์,,b3b39280-c084-4306-8b2d-31eb89bde6d9,,iOS,,,2026-08-27T15:26:38.995Z
+2026-08-30T16:25:13.394Z,5,greetings,session_baa4916b71b9,,d94ca87a-b7b6-4156-a566-78aca08e631a,Um,,5084499a-feb1-4215-92d3-87ccab74e95a,,iOS,beginner,,2026-08-30T16:21:31.660Z
+2026-08-30T16:21:22.677Z,5,greetings,session_d1e8ecf4365b,,44cf41c7-6900-4737-936d-2d0f2b8bd51a,Em,,6bd8d914-bedb-4480-ad75-3995682f8def,,,elementary,,2026-08-30T16:18:07.768Z
+2026-08-30T15:41:38.708Z,1,greetings,session_100c1c835fb7,,51fc6777-5514-4026-ae65-6a1bbc45bc1f,นักเรียน,,be57393a-d213-4816-acfc-ba522ccb8d04,,,beginner,,2026-08-30T15:37:26.465Z
+2026-08-30T15:38:08.983Z,2,greetings,session_962ef6d40562,,8a39ad42-51d8-452a-a1f8-91f96264fa18,นักเรียน,,3b3b80b9-eca4-4b8c-b9a6-42c0ca7be01b,,,beginner,,2026-08-30T15:36:16.147Z
+2026-08-30T15:31:08.440Z,5,greetings,session_dc345355c24d,,3d92d9bd-f228-422c-b67f-532fc4f4825b,Tan,,b6d1c6f2-fd84-4c24-986c-8908cc04da7e,,,elementary,,2026-08-30T15:27:31.053Z
+2026-08-30T15:26:08.942Z,5,greetings,session_77cf99536de0,,d97d0554-9587-46a1-bc54-d88b60a21129,Yit Tarnari,,a5c6ffb5-eb7f-43b5-b417-8c083ad3b748,,,beginner,,2026-08-30T15:23:42.141Z
+2026-08-30T14:44:26.366Z,5,pron_silent_1,session_cbe8f9ddcb90,,24d2c7bf-d57a-44c4-b330-24b85f8d0355,Franz,,27c7726c-0559-41bb-8b05-bd0dc67e95a3,,iOS,elementary,,2026-08-26T09:27:32.465Z
+2026-08-30T14:42:44.581Z,1,ee_about_me_daily_routine,session_9fd3fbd79df6,,4562aa2e-72d9-4525-9894-783db70c2147,Gnita,,ddeeca41-dfe3-45ac-ab13-1edb764fc341,,iOS,beginner,,2026-08-27T04:21:39.935Z
+2026-08-30T14:26:40.625Z,5,greetings,session_8c90a4589e8e,,ccd40700-d37a-4ee9-9bc1-bfa6915cfad4,Puyi,,f71d6a0d-550d-4b41-9318-528490f953eb,,iOS,beginner,,2026-08-30T10:07:44.874Z
+2026-08-30T13:34:38.756Z,5,yes_no_maybe,session_74a620515021,,99917ad3-d2d5-41d3-85e7-2aefa7fc6f69,Leia,,e573b802-2497-4e7a-9c57-68720528b302,,iOS,elementary,,2026-08-30T13:31:21.680Z
+2026-08-30T13:03:13.154Z,5,pron_silent_1,session_7589392c52fe,,b2609869-f53f-4aa2-a03e-20758463af5d,คุณคือตุ๊กแก,,f4fa2e63-813b-41a3-835a-fedf77567200,,android,,,2026-07-17T12:27:27.345Z
+2026-08-30T13:01:20.253Z,5,greetings,session_b942ae61f5dc,,61922543-9e63-4c1c-9cfb-dfd083beca56,Kana,,28cdbea6-0b00-4923-a0e0-3adf88d04488,,iOS,beginner,,2026-08-30T12:55:04.216Z
+2026-08-30T09:59:57.542Z,5,greetings,session_55a25eba6599,,95366792-53c0-482d-b498-df313c4a7d4e,MD,,1dab2495-d235-4da2-a6e7-49200d253153,,iOS,beginner,,2026-08-30T09:56:58.463Z
+2026-08-30T08:42:58.036Z,5,introductions,session_f92b15157886,,3d19383e-3d01-48fa-b37c-0bc122f47a7e,ไพรินทร์,,cc7d7cea-01be-4517-8423-5e99961ea4ea,,android,,,2026-07-12T13:15:38.362Z
+2026-08-30T08:16:51.723Z,3,greetings,session_bfd7b762f813,,64bc2554-8d76-4390-888c-bd72b38cf40f,นักเรียน,,738289cc-2c58-4fd4-a23f-00765305add6,,,beginner,,2026-08-30T08:08:58.516Z
+2026-08-30T07:37:23.690Z,5,greetings,session_afe1f27e3bbd,,1963c93a-e911-420e-a03b-e2c7806a4417,Yis,,3039b398-c3f2-4ca5-8a67-834095513b29,,iOS,beginner,,2026-08-30T07:33:39.249Z
+2026-08-29T23:59:44.632Z,5,greetings,session_b664a536fe08,,b6fb5440-9620-4eb0-bee0-f819855a5530,Ed Pisha,,b7a9e823-b89b-4e7e-bced-cf3dabd8d98d,,,beginner,,2026-08-29T23:41:37.307Z
+2026-08-29T18:25:48.116Z,5,greetings,session_0a66f16833cf,,c3be316b-26e6-4e4e-a75a-67ea756f2f79,Tam,,6b313258-ad26-475b-91dd-26d56b0f1c36,,iOS,beginner,,2026-08-29T18:21:15.608Z
+2026-08-29T17:22:14.178Z,2,ee_about_me_daily_routine,session_6dbb6f825a03,,e2c03c7c-6909-4539-955b-1b718859f09d,นักเรียน,,8f2e3b31-9bbf-43b8-a8bf-e36a6b4e5d1e,,,intermediate,,2026-08-29T17:20:56.622Z
+2026-08-29T16:30:57.463Z,5,greetings,session_92c51c63bfed,,3238a3b8-eaed-4d0f-8e38-c7ee36e1333d,Mi,,e8b581ae-bba7-45fc-b286-c8f8bdd8c260,,iOS,beginner,,2026-08-29T16:26:07.582Z
+2026-08-29T16:15:18.332Z,5,greetings,session_16e7020f10f5,,e73ebaa5-b1d9-4d39-9cf1-d605e2eb2d21,Ui,,8abff02a-55e0-4ae4-ac27-85709b0a6ea1,,iOS,beginner,,2026-08-29T16:11:07.222Z
+2026-08-29T15:14:27.564Z,4,greetings,session_4b97bee8f483,,a58c4619-a927-4168-a19d-23bdc28b5630,นักเรียน,,0495e7a8-6b0e-481d-87d1-2e12ff31988c,,,elementary,,2026-08-29T15:12:47.683Z
+2026-08-29T13:49:41.218Z,5,greetings,session_d248f6937204,,fde9b478-c5cd-4359-a2d9-1007f3621141,Sataporn,,beecf8d6-d39e-4892-ad19-09fbf7f8b3a5,,iOS,elementary,,2026-08-29T13:44:53.994Z
+2026-08-29T13:47:02.917Z,5,greetings,session_cb6babf60ce1,,b70fe772-cd78-4ceb-ad7b-be16daf586f1,นาน่า,,9972bf8b-1707-4f88-a585-eb120f9431f5,,,beginner,,2026-08-29T13:40:11.476Z
+2026-08-29T13:23:21.413Z,5,ee_about_me_daily_routine,session_a073bd175d3f,,a5c4d3c5-bdbc-4af0-b42d-f5f7b184071a,Pat,,3690aab3-f4b7-4076-b06a-26456c202850,,,intermediate,,2026-08-29T09:49:28.314Z
+2026-08-29T12:43:54.203Z,5,greetings,session_fe4188f2d00c,,37cfa7c7-0d9e-4486-98e8-5a496a37bee8,Tiphawan,,715ad5a3-9704-4e32-b8a9-13ba16a5c199,,iOS,beginner,,2026-08-29T12:39:50.975Z
+2026-08-29T11:50:21.376Z,4,greetings,session_100984afb3b1,,6f522b2d-c9d8-493a-af79-7fc226b608f2,Nooks,,edc1fdb9-2298-403e-ad0c-c49875eb0e7b,,,beginner,,2026-08-29T11:46:34.887Z
+2026-08-29T11:32:23.945Z,5,greetings,session_7a6b2429b806,,06269521-a9cd-445f-9946-c956912521bf,Kat,,3ffce3df-5a0e-4301-b603-bdf40fad0fda,,iOS,beginner,,2026-08-29T11:28:14.019Z
+2026-08-29T10:24:28.083Z,5,greetings,session_f52ce316253d,,e320fc1e-671f-47ae-86c0-64f3d1c4f778,ผู้เรียน,,807bdeea-8eb8-4311-ad00-35a26bc08a70,,,beginner,,2026-08-29T08:50:19.596Z
+2026-08-29T09:05:18.174Z,5,greetings,session_4a7658c0cdd5,,dac828f6-8a91-49f7-8f76-80633acf7fa3,Khoan LeDee,,0e4ec121-dde8-420f-81ee-44073f4f8764,,iOS,elementary,,2026-08-29T09:01:10.090Z
+2026-08-29T08:49:00.468Z,3,greetings,session_a95921fbb5fd,,72efa4f0-503f-45a5-a093-4dc6976df61d,Poe,,ac00460d-7c3f-4a90-b362-a8f8f6474649,,iOS,beginner,,2026-08-29T08:43:53.695Z
+2026-08-29T04:49:53.854Z,5,greetings,session_e27bfc928dfe,,c6d4f944-499b-42a7-bdf0-c685f4352822,Dream,,0869a170-4c04-467c-af03-6c1d252d9f34,,,beginner,,2026-08-29T04:46:10.889Z
+2026-08-29T03:41:49.628Z,4,greetings,session_7f9ecdc88344,,94685c7d-6e0e-45ec-968e-71b254258d0d,Sudha Phon,,2d4b7ff3-3284-49f8-9f8d-4c9914c9a847,,iOS,beginner,,2026-08-29T03:34:16.869Z
+2026-08-29T02:42:29.672Z,1,greetings,session_b89d1ed583b0,,fca5a841-9036-4d0c-b23a-4120c051d90c,นักเรียน,,d1be49c4-2f2d-49d8-a0cb-4e8bcb5766b0,,,elementary,,2026-08-29T02:41:08.248Z
+2026-08-28T21:27:52.147Z,5,greetings,session_f68806c50d3f,,875c85c5-ba08-493a-bf62-891f0c821fd1,Kapun,,a2d3da7a-6c08-4b1f-bed6-87fd7a8d9453,,iOS,beginner,,2026-08-28T21:24:31.413Z
+2026-08-28T06:06:04.393Z,5,greetings,,,53bdf3fd-26a3-471d-8f5d-6d291707bce2,เกียวโต,jesada.gyoto@gmail.com,4c3f6a61-eb26-430b-b6d6-b74986758b80,tcylqFFG2uZzg5XvLFzXZ6DJ9Kn1,iOS,elementary,,2026-08-17T19:00:42.439Z
+2026-08-28T06:04:47.996Z,5,polite_expressions,session_d6e4598cbdb4,,6d4fbe41-3511-4ca0-bc81-7e97cb899133,เกียวโต,jesada.gyoto@gmail.com,4c3f6a61-eb26-430b-b6d6-b74986758b80,tcylqFFG2uZzg5XvLFzXZ6DJ9Kn1,iOS,elementary,,2026-08-17T19:00:42.439Z
+2026-08-28T05:59:06.024Z,4,greetings,session_f9cb2551819f,,7b2ae82c-60a1-48f2-ae6b-1b82c4b18b1e,นักเรียน,,acdd10d5-2f4a-4767-a18f-40d5a42d031d,,,beginner,,2026-08-28T05:56:14.691Z
+2026-08-28T05:46:15.789Z,2,ee_about_me_food,session_3eb031a8e113,,619cc4dc-e1dc-46b4-8962-dc7dcb8a6387,นักเรียน,,5e4d4c13-4a58-468d-8886-e6eaf05e0a76,,,intermediate,,2026-08-28T05:43:15.932Z
+2026-08-28T05:44:38.507Z,5,greetings,session_4740d23e01e3,,ef90b4f1-cba7-4472-975b-66a4d930f471,นักเรียน,,6f8b6ece-9cce-4662-ac3b-43a54dfb659c,,,beginner,,2026-08-28T05:43:07.279Z
+2026-08-28T05:43:39.637Z,2,greetings,session_02a1b753e017,,8ca3781d-3525-412e-89a7-55719787779e,นักเรียน,,a98116e5-9eef-440f-b5d8-a4d9b20020a6,,,beginner,,2026-08-28T05:42:21.063Z
+2026-08-28T03:09:57.507Z,5,greetings,,,fc46e5a6-4709-44d6-8844-4ae75e48ac17,นักเรียน,,9ead0b24-2475-4c3e-a6c3-8ec06462b112,,,,,2026-08-21T08:23:41.719Z
+2026-08-28T03:09:40.526Z,4,greetings,,,49a569d5-a010-4a83-8c2f-6adfda05c7c9,นักเรียน,,9ead0b24-2475-4c3e-a6c3-8ec06462b112,,,,,2026-08-21T08:23:41.719Z

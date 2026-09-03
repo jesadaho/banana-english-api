@@ -186,11 +186,13 @@ export class LessonsService {
     lessonId: string;
     stars: number;
     sessionId?: string;
+    feedback?: string;
   }): Promise<{
     id: string;
     lessonId: string;
     stars: number;
     sessionId: string | null;
+    feedback: string | null;
     createdAt: string;
   }> {
     const lessonId = params.lessonId.trim();
@@ -216,12 +218,15 @@ export class LessonsService {
       }
     }
 
+    const feedback = params.feedback?.trim() || null;
+
     const row = await this.prisma.lessonRating.create({
       data: {
         userId: params.userId,
         lessonId,
         sessionId,
         stars: params.stars,
+        feedback,
       },
     });
 
@@ -230,6 +235,7 @@ export class LessonsService {
       lessonId: row.lessonId,
       stars: row.stars,
       sessionId: row.sessionId,
+      feedback: row.feedback,
       createdAt: row.createdAt.toISOString(),
     };
   }
