@@ -2272,6 +2272,8 @@ export function forceHobbiesGuidedSpeakingIfNeeded(
       expectedSpeech: HOBBIES_SUMMARY_BOARD.expectedSpeech,
       options: HOBBIES_SUMMARY_BOARD.options.map((o) => ({ ...o })),
     };
+  } else {
+    return null;
   }
 
   const stemOk =
