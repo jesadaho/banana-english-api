@@ -497,9 +497,30 @@ export function foundationOutOfPoolCloseMiss(
     numbers: {
       1: 'for',
       2: 'seben',
-      3: 'four teen',
-      4: 'twentee',
+      3: 'eit',
+      4: 'eit',
+    },
+    fnd_v2_numbers_11_20: {
+      1: 'four teen',
+      2: 'twentee',
+      3: 'eigh teen',
+      4: 'six teen',
       5: 'twelb',
+    },
+    fnd_v2_say_it_again: {
+      1: 'Can you say again?',
+      2: 'How you say this in English?',
+      3: 'Can you say again?',
+      4: 'How you say this English?',
+      5: 'Can you speak slowly?',
+    },
+    fnd_v2_buying_something: {
+      1: 'I want.',
+      2: 'I want waters.',
+      3: 'I want blue bag.',
+      4: 'I take it.',
+      5: 'That too expensive.',
+      6: 'I take it.',
     },
     telling_time: { 1: "It's six clock.", 2: "It's seven thirty clock.", 3: "It's seven.", 4: "It's nine.", 5: "It's seven morning." },
     everyday_numbers: {

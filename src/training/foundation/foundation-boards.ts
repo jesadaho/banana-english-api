@@ -85,9 +85,33 @@ export const FOUNDATION_LOOSE_MATCHERS: Record<
     loose(step, text, {
       1: /^four$/,
       2: /^seven$/,
-      3: /^fourteen$/,
-      4: /^twenty$/,
+      3: /^eight$/,
+      4: /^(zero|one|two|three|four|five|six|seven|eight|nine|ten)$/,
+    }),
+  fnd_v2_numbers_11_20: (step, text) =>
+    loose(step, text, {
+      1: /^fourteen$/,
+      2: /^twenty$/,
+      3: /^eighteen$/,
+      4: /^sixteen$/,
       5: /^twelve$/,
+    }),
+  fnd_v2_say_it_again: (step, text) =>
+    loose(step, text, {
+      1: /^can you say that again$/,
+      2: /^how do you say this in english$/,
+      3: /^can you say that again$/,
+      4: /^how do you say this in english$/,
+      5: /^(can you say that again|can you speak more slowly|i don['’]?t understand|what does that mean|how do you say this in english)$/,
+    }),
+  fnd_v2_buying_something: (step, text) =>
+    loose(step, text, {
+      1: /^i want this$/,
+      2: /^i want (some )?water$/,
+      3: /^i want (the|a) blue bag$/,
+      4: /^i['']?ll take it$/,
+      5: /^that['']?s too expensive$/,
+      6: /^i['']?ll take it$/,
     }),
   telling_time: (step, text) =>
     loose(step, text, {
@@ -187,9 +211,30 @@ export const FOUNDATION_CLOSE_MATCHERS: Partial<
   numbers: (step, text) => loose(step, text, {
     1: /^for$/,
     2: /^seben$/,
-    3: /^four teen$/,
-    4: /^twentee$/,
+    3: /^eit$/,
+    4: /^eit$/,
+  }),
+  fnd_v2_numbers_11_20: (step, text) => loose(step, text, {
+    1: /^four teen$/,
+    2: /^twentee$/,
+    3: /^eigh teen$/,
+    4: /^six teen$/,
     5: /^twelb$/,
+  }),
+  fnd_v2_say_it_again: (step, text) => loose(step, text, {
+    1: /^can you say again$/,
+    2: /^how you say this in english$/,
+    3: /^can you say again$/,
+    4: /^how you say this english$/,
+    5: /^(can you say again|can you speak slowly|i don['’]?t understand|what that mean|how you say this in english)$/,
+  }),
+  fnd_v2_buying_something: (step, text) => loose(step, text, {
+    1: /^i want$/,
+    2: /^i want waters?$/,
+    3: /^i want blue bag$/,
+    4: /^i take it$/,
+    5: /^that too expensive$/,
+    6: /^i take it$/,
   }),
   telling_time: (step, text) => loose(step, text, {
     1: /^it['’]?s six clock$/, 2: /^it['’]?s seven thirty clock$/,
@@ -793,9 +838,9 @@ export const FOUNDATION_BOARDS: Record<
   numbers: {
     1: {
       textEn:
-        'สวัสดีครับ {name}! วันนี้เราจะฝึกตัวเลข 0–20 กันครับ 🔢 เริ่มจาก 0–5: 0 zero, 1 one, 2 two, 3 three, 4 four, 5 five มีแอปเปิลกี่ลูกครับ? 🍎🍎🍎🍎',
+        'สวัสดีครับ {name}! วันนี้เราจะฝึกตัวเลข 0–10 กันครับ 🔢 เริ่มจาก 0–5: 0 zero, 1 one, 2 two, 3 three, 4 four, 5 five มีแอปเปิลกี่ลูกครับ? 🍎🍎🍎🍎',
       ttsText:
-        'สวัสดีครับ {name}! วันนี้เราจะฝึกคำอ่านภาษาอังกฤษของตัวเลขศูนย์ถึงยี่สิบกันครับ 🔢 เลขศูนย์อ่านว่า zero ส่วนเลขหนึ่งถึงห้าอ่านว่า “one, two, three, four, five” มีแอปเปิลกี่ลูกครับ? 🍎🍎🍎🍎',
+        'สวัสดีครับ {name}! วันนี้เราจะฝึกคำอ่านภาษาอังกฤษของตัวเลขศูนย์ถึงสิบกันครับ 🔢 เลขศูนย์อ่านว่า zero ส่วนเลขหนึ่งถึงห้าอ่านว่า “one, two, three, four, five” มีแอปเปิลกี่ลูกครับ? 🍎🍎🍎🍎',
       withPraise: false,
       stem: '',
       expectedSpeech: 'four',
@@ -824,14 +869,47 @@ export const FOUNDATION_BOARDS: Record<
       ],
     },
     3: {
-      textEn:
-        'ต่อไป 11–15 ครับ: 11 eleven, 12 twelve, 13 thirteen, 14 fourteen, 15 fifteen ตั้งแต่ 13 จะเริ่มได้ยินเสียง -teen หมายเลขห้องนี้อ่านว่าอะไรครับ? 🚪 14',
-      ttsText:
-        'ต่อไปเลขสิบเอ็ดถึงสิบห้า ในภาษาอังกฤษอ่านว่า “eleven, twelve, thirteen, fourteen, fifteen” ตั้งแต่เลขสิบสามจะเริ่มได้ยินเสียง -teen หมายเลขห้องสิบสี่อ่านเป็นภาษาอังกฤษว่าอะไรครับ? 🚪',
+      textEn: 'หมายเลขห้องนี้อ่านว่าอะไรครับ? 🚪 8',
+      ttsText: 'หมายเลขห้องแปดอ่านเป็นภาษาอังกฤษว่าอะไรครับ? 🚪',
       withPraise: true,
       stem: '',
+      expectedSpeech: 'eight',
+      incorrectHintTh: 'ยังไม่ตรงครับ เลขแปดอ่านเป็นภาษาอังกฤษว่า “eight” ครับ',
+      options: [
+        { emoji: '6️⃣', label: 'six', speak: 'six' },
+        { emoji: '8️⃣', label: 'eight', speak: 'eight' },
+        { emoji: '9️⃣', label: 'nine', speak: 'nine' },
+        { emoji: '🔟', label: 'ten', speak: 'ten' },
+      ],
+    },
+    4: {
+      textEn:
+        'ขั้นตอนสุดท้ายครับ เลขโปรดของคุณคืออะไร? ลองพูดเลขที่คุณชอบเป็นภาษาอังกฤษครับ — วันนี้ลองพูด eight ⭐',
+      ttsText:
+        'ขั้นตอนสุดท้ายครับ เลขโปรดของคุณคืออะไร? ลองพูดเลขที่คุณชอบเป็นภาษาอังกฤษครับ — วันนี้ลองพูด eight ⭐',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'eight',
+      incorrectHintTh: 'ยังไม่ตรงครับ ลองพูดเลขโปรดของคุณเป็นภาษาอังกฤษ เช่น “eight” ครับ',
+      options: [
+        { emoji: '3️⃣', label: 'three', speak: 'three' },
+        { emoji: '5️⃣', label: 'five', speak: 'five' },
+        { emoji: '8️⃣', label: 'eight', speak: 'eight' },
+        { emoji: '🔟', label: 'ten', speak: 'ten' },
+      ],
+    },
+  },
+
+  fnd_v2_numbers_11_20: {
+    1: {
+      textEn:
+        'สวัสดีครับ {name}! ทบทวน 0–10 แล้วไปต่อ 11–15 ครับ: 11 eleven, 12 twelve, 13 thirteen, 14 fourteen, 15 fifteen ตั้งแต่ 13 จะเริ่มได้ยินเสียง -teen หมายเลขห้องนี้อ่านว่าอะไรครับ? 🚪 14',
+      ttsText:
+        'สวัสดีครับ {name}! ทบทวนศูนย์ถึงสิบแล้วไปต่อเลขสิบเอ็ดถึงสิบห้า ในภาษาอังกฤษอ่านว่า “eleven, twelve, thirteen, fourteen, fifteen” ตั้งแต่เลขสิบสามจะเริ่มได้ยินเสียง -teen หมายเลขห้องสิบสี่อ่านเป็นภาษาอังกฤษว่าอะไรครับ? 🚪',
+      withPraise: false,
+      stem: '',
       expectedSpeech: 'fourteen',
-      incorrectHintTh: 'เลขนี้ขึ้นต้นด้วย four และลงท้ายด้วยเสียง -teen ครับ',
+      incorrectHintTh: 'ยังไม่ตรงครับ เลขนี้ขึ้นต้นด้วย four และลงท้ายด้วยเสียง -teen ครับ',
       options: [
         { emoji: '1️⃣2️⃣', label: 'twelve', speak: 'twelve' },
         { emoji: '1️⃣3️⃣', label: 'thirteen', speak: 'thirteen' },
@@ -839,20 +917,48 @@ export const FOUNDATION_BOARDS: Record<
         { emoji: '1️⃣5️⃣', label: 'fifteen', speak: 'fifteen' },
       ],
     },
-    4: {
+    2: {
       textEn:
-        'กลุ่มสุดท้ายครับ: 16 sixteen, 17 seventeen, 18 eighteen, 19 nineteen, 20 twenty ระวังว่า 20 ลงท้ายด้วยเสียง -ty รถเมล์สายนี้คือหมายเลขอะไรครับ? 🚌 20',
+        'กลุ่มถัดไปครับ: 16 sixteen, 17 seventeen, 18 eighteen, 19 nineteen, 20 twenty ระวังว่า 20 ลงท้ายด้วยเสียง -ty รถเมล์สายนี้คือหมายเลขอะไรครับ? 🚌 20',
       ttsText:
-        'กลุ่มสุดท้ายครับ เลขสิบหกถึงยี่สิบ ในภาษาอังกฤษอ่านว่า “sixteen, seventeen, eighteen, nineteen, twenty” ระวังว่า twenty ลงท้ายด้วยเสียง -ty รถเมล์สายนี้คือหมายเลขยี่สิบ อ่านเป็นภาษาอังกฤษว่าอะไรครับ? 🚌',
+        'กลุ่มถัดไปครับ เลขสิบหกถึงยี่สิบ ในภาษาอังกฤษอ่านว่า “sixteen, seventeen, eighteen, nineteen, twenty” ระวังว่า twenty ลงท้ายด้วยเสียง -ty รถเมล์สายนี้คือหมายเลขยี่สิบ อ่านเป็นภาษาอังกฤษว่าอะไรครับ? 🚌',
       withPraise: true,
       stem: '',
       expectedSpeech: 'twenty',
-      incorrectHintTh: 'คำนี้ลงท้ายด้วยเสียง -ty ครับ',
+      incorrectHintTh: 'ยังไม่ตรงครับ คำนี้ลงท้ายด้วยเสียง -ty ครับ',
       options: [
         { emoji: '1️⃣6️⃣', label: 'sixteen', speak: 'sixteen' },
         { emoji: '1️⃣8️⃣', label: 'eighteen', speak: 'eighteen' },
         { emoji: '1️⃣9️⃣', label: 'nineteen', speak: 'nineteen' },
         { emoji: '2️⃣0️⃣', label: 'twenty', speak: 'twenty' },
+      ],
+    },
+    3: {
+      textEn: 'หมายเลขห้องนี้อ่านว่าอะไรครับ? 🚪 18',
+      ttsText: 'หมายเลขห้องสิบแปดอ่านเป็นภาษาอังกฤษว่าอะไรครับ? 🚪',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'eighteen',
+      incorrectHintTh: 'ยังไม่ตรงครับ เลขสิบแปดอ่านเป็นภาษาอังกฤษว่า “eighteen” ครับ',
+      options: [
+        { emoji: '1️⃣6️⃣', label: 'sixteen', speak: 'sixteen' },
+        { emoji: '1️⃣7️⃣', label: 'seventeen', speak: 'seventeen' },
+        { emoji: '1️⃣8️⃣', label: 'eighteen', speak: 'eighteen' },
+        { emoji: '1️⃣9️⃣', label: 'nineteen', speak: 'nineteen' },
+      ],
+    },
+    4: {
+      textEn: 'มีของกี่ชิ้นครับ? 📦 16',
+      ttsText: 'มีของสิบหกชิ้น อ่านเป็นภาษาอังกฤษว่าอะไรครับ? 📦',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'sixteen',
+      incorrectHintTh: 'ยังไม่ตรงครับ เลขสิบหกอ่านเป็นภาษาอังกฤษว่า “sixteen” ครับ',
+      options: [
+        { emoji: '1️⃣5️⃣', label: 'fifteen', speak: 'fifteen' },
+        { emoji: '1️⃣6️⃣', label: 'sixteen', speak: 'sixteen' },
+        { emoji: '1️⃣7️⃣', label: 'seventeen', speak: 'seventeen' },
+        { emoji: '1️⃣8️⃣', label: 'eighteen', speak: 'eighteen' },
       ],
     },
     5: {
@@ -864,6 +970,145 @@ export const FOUNDATION_BOARDS: Record<
       expectedSpeech: 'twelve',
       incorrectHintTh: 'เลขสิบสองอ่านเป็นภาษาอังกฤษว่า “twelve” ครับ',
       options: [],
+    },
+  },
+
+  fnd_v2_say_it_again: {
+    1: {
+      textEn:
+        'สวัสดีครับ {name}! วันนี้เรามาเรียนประโยคขอให้พูดอีกครั้งครับ 🔁 Can you say that again? แปลว่า “พูดอีกครั้งได้ไหม” คำว่า again แปลว่า “อีกครั้ง” ใช้เมื่อฟังไม่ทัน ลองพูดตามว่า “Can you say that again?” ครับ',
+      withPraise: false,
+      stem: '',
+      expectedSpeech: 'Can you say that again?',
+      options: [],
+    },
+    2: {
+      textEn:
+        'เก่งมากครับ! ต่อไปถามว่าพูดว่าอะไรเป็นภาษาอังกฤษ — How do you say this in English? 🇬🇧 คำว่า English แปลว่า “ภาษาอังกฤษ” ลองพูดตามครับ',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'How do you say this in English?',
+      options: [],
+    },
+    3: {
+      textEn:
+        'ถ้าฟังไม่ทันและอยากให้พูดอีกครั้ง ควรพูดประโยคไหนครับ? 🔁',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'Can you say that again?',
+      options: [
+        {
+          emoji: '🔁',
+          label: 'Can you say that again?',
+          speak: 'Can you say that again?',
+        },
+        {
+          emoji: '🇬🇧',
+          label: 'How do you say this in English?',
+          speak: 'How do you say this in English?',
+        },
+      ],
+    },
+    4: {
+      textEn:
+        'ถ้าชี้ไปที่ของแล้วอยากรู้ว่าพูดว่าอะไรเป็นภาษาอังกฤษ ควรพูดประโยคไหนครับ? 🇬🇧',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'How do you say this in English?',
+      options: [
+        {
+          emoji: '🔁',
+          label: 'Can you say that again?',
+          speak: 'Can you say that again?',
+        },
+        {
+          emoji: '🇬🇧',
+          label: 'How do you say this in English?',
+          speak: 'How do you say this in English?',
+        },
+      ],
+    },
+    5: {
+      textEn:
+        'ขั้นตอนสุดท้ายครับ ตอนนี้ถ้าฟังภาษาอังกฤษไม่ทัน คุณช่วยตัวเองได้แล้ว 🆘 ลองเลือกพูดหนึ่งประโยคเพื่อขอให้ผมพูดซ้ำ พูดช้าลง บอกว่าไม่เข้าใจ หรือถามความหมายครับ',
+      advanceQuestionEn:
+        'ลองพูดหนึ่งประโยคเพื่อขอให้พูดซ้ำ พูดช้าลง บอกว่าไม่เข้าใจ หรือถามความหมายครับ 🆘',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'Can you say that again?',
+      incorrectHintTh:
+        'ลองใช้หนึ่งในประโยคช่วยชีวิต เช่น “Can you say that again?” หรือ “I don\'t understand.” ครับ',
+      options: [],
+    },
+  },
+
+  fnd_v2_buying_something: {
+    1: {
+      textEn:
+        'สวัสดีครับ {name}! วันนี้เรามาเรียนประโยคซื้อของครับ 🛍️ ถ้าอยากได้สิ่งนี้ พูดว่า I want this. แปลว่า “ฉันอยากได้สิ่งนี้” ลองพูดตามครับ',
+      withPraise: false,
+      stem: '',
+      expectedSpeech: 'I want this.',
+      options: [],
+    },
+    2: {
+      textEn:
+        'ตอนนี้คุณต้องการน้ำหนึ่งขวด 💧 จากโครง I want... คุณจะบอกพนักงานว่าอย่างไรครับ?',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'I want water.',
+      incorrectHintTh: 'ยังไม่ตรงครับ เริ่มด้วย “I want...” แล้วตามด้วย water ครับ',
+      options: [
+        { emoji: '💧', label: 'Want water', speak: 'I want water.' },
+        { emoji: '📘', label: 'Want a book', speak: 'I want a book.' },
+        { emoji: '❓', label: 'Ask the price', speak: 'How much is it?' },
+      ],
+    },
+    3: {
+      textEn:
+        'ถ้ามีกระเป๋าหลายใบและคุณต้องการใบสีฟ้า ให้พูดว่า I want the blue bag. 🟦👜 ลองพูดตามครับ',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'I want the blue bag.',
+      options: [],
+    },
+    4: {
+      textEn:
+        'ถ้าตัดสินใจซื้อแล้ว พูดว่า I\'ll take it. แปลว่า “ฉันเอาอันนี้” ✅ ลองพูดตามครับ',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: "I'll take it.",
+      options: [],
+    },
+    5: {
+      textEn:
+        'กระเป๋าใบนี้ราคา 5,000 บาท 💸 คุณรู้สึกว่าแพงเกินไป พูดว่า That\'s too expensive. ครับ',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: "That's too expensive.",
+      incorrectHintTh: 'ยังไม่ตรงครับ ราคาแพงเกินไป ให้พูดว่า “That\'s too expensive.” ครับ',
+      options: [
+        {
+          emoji: '💸',
+            label: "That's too expensive",
+            speak: "That's too expensive.",
+        },
+        { emoji: '👍', label: "It's cheap", speak: "It's cheap." },
+        { emoji: '✅', label: "I'll take it", speak: "I'll take it." },
+      ],
+    },
+    6: {
+      textEn:
+        'ขั้นตอนสุดท้ายครับ หนังสือเล่มนี้ราคา 20 บาท 📘 ราคาโอเคและคุณต้องการซื้อ คุณจะพูดปิดการซื้อว่าอย่างไรครับ?',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: "I'll take it.",
+      incorrectHintTh: 'ยังไม่ตรงครับ คุณรู้ราคาแล้วและต้องการซื้อ ให้พูดว่า “I\'ll take it.” ครับ',
+      options: [
+        { emoji: '✅', label: "I'll take it", speak: "I'll take it." },
+        { emoji: '💸', label: "That's too expensive", speak: "That's too expensive." },
+        { emoji: '❓', label: 'How much is it?', speak: 'How much is it?' },
+      ],
     },
   },
 
@@ -1346,7 +1591,10 @@ export const FOUNDATION_MAX_STEPS: Record<FoundationLessonId, number> = {
   meet_people: 5,
   talk_about_groups: 5,
   ee_about_me_family: 8,
-  numbers: 5,
+  numbers: 4,
+  fnd_v2_numbers_11_20: 5,
+  fnd_v2_say_it_again: 5,
+  fnd_v2_buying_something: 6,
   telling_time: 5,
   everyday_numbers: 6,
   money_prices: 5,

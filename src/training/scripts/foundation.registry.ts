@@ -31,7 +31,13 @@ const OPENING_TEXTS: Record<(typeof FOUNDATION_LESSON_IDS)[number], string> = {
   ee_about_me_family:
     'สวัสดีครับ {name}! วันนี้เรามาเรียนคำศัพท์ครอบครัวครับ 👨‍👩‍👧 เริ่มจาก brother แปลว่า “พี่ชายหรือน้องชาย” ลองพูดตามว่า “brother” ครับ',
   numbers:
-    'สวัสดีครับ {name}! วันนี้เราจะฝึกตัวเลข 0–20 กันครับ 🔢 เริ่มจาก 0–5: 0 zero, 1 one, 2 two, 3 three, 4 four, 5 five มีแอปเปิลกี่ลูกครับ? 🍎🍎🍎🍎',
+    'สวัสดีครับ {name}! วันนี้เราจะฝึกตัวเลข 0–10 กันครับ 🔢 เริ่มจาก 0–5: 0 zero, 1 one, 2 two, 3 three, 4 four, 5 five มีแอปเปิลกี่ลูกครับ? 🍎🍎🍎🍎',
+  fnd_v2_numbers_11_20:
+    'สวัสดีครับ {name}! ทบทวน 0–10 แล้วไปต่อ 11–15 ครับ: 11 eleven, 12 twelve, 13 thirteen, 14 fourteen, 15 fifteen ตั้งแต่ 13 จะเริ่มได้ยินเสียง -teen หมายเลขห้องนี้อ่านว่าอะไรครับ? 🚪 14',
+  fnd_v2_say_it_again:
+    'สวัสดีครับ {name}! วันนี้เรามาเรียนประโยคขอให้พูดอีกครั้งครับ 🔁 Can you say that again? แปลว่า “พูดอีกครั้งได้ไหม” คำว่า again แปลว่า “อีกครั้ง” ใช้เมื่อฟังไม่ทัน ลองพูดตามว่า “Can you say that again?” ครับ',
+  fnd_v2_buying_something:
+    'สวัสดีครับ {name}! วันนี้เรามาเรียนประโยคซื้อของครับ 🛍️ ถ้าอยากได้สิ่งนี้ พูดว่า I want this. แปลว่า “ฉันอยากได้สิ่งนี้” ลองพูดตามครับ',
   telling_time:
     'สวัสดีครับ {name}! วันนี้เรามาเรียนบอกเวลาเป็นภาษาอังกฤษครับ ⏰ ลองพูดตามว่า It\'s six o\'clock.',
   everyday_numbers:
@@ -72,7 +78,13 @@ const COMPLETION_TEXTS: Record<
   ee_about_me_family: (name) =>
     foundationCompletion(name, 'วันนี้คุณแนะนำครอบครัวด้วย This is my... และ I have... ได้แล้ว'),
   numbers: (name) =>
-    foundationCompletion(name, 'วันนี้คุณฝึกตัวเลข 0–20 และลองใช้กับของรอบตัว หมายเลขห้อง และรถเมล์แล้ว'),
+    foundationCompletion(name, 'วันนี้คุณฝึกตัวเลข 0–10 และลองใช้กับของรอบตัวแล้ว'),
+  fnd_v2_numbers_11_20: (name) =>
+    foundationCompletion(name, 'วันนี้คุณฝึกตัวเลข 11–20 และลองใช้กับหมายเลขห้อง รถเมล์ และล็อกเกอร์แล้ว'),
+  fnd_v2_say_it_again: (name) =>
+    foundationCompletion(name, 'วันนี้คุณขอให้พูดอีกครั้ง และถามว่าพูดว่าอะไรเป็นภาษาอังกฤษได้แล้ว'),
+  fnd_v2_buying_something: (name) =>
+    foundationCompletion(name, 'วันนี้คุณบอกสิ่งที่ต้องการ ตอบสนองต่อราคา และตัดสินใจซื้อเป็นภาษาอังกฤษได้แล้ว'),
   telling_time: (name) =>
     foundationCompletion(name, 'วันนี้คุณฝึกบอกเวลาพื้นฐานด้วย o\'clock ตัวเลข และ a.m./p.m. แล้ว'),
   everyday_numbers: (name) =>
@@ -95,7 +107,12 @@ const COMPLETION_TTS_TEXTS: Partial<
   Record<(typeof FOUNDATION_LESSON_IDS)[number], (name: string) => string>
 > = {
   numbers: (name) =>
-    foundationCompletion(name, 'วันนี้คุณฝึกตัวเลขศูนย์ถึงยี่สิบ และลองใช้กับของรอบตัว หมายเลขห้อง และรถเมล์แล้ว'),
+    foundationCompletion(name, 'วันนี้คุณฝึกตัวเลขศูนย์ถึงสิบ และลองใช้กับของรอบตัวแล้ว'),
+  fnd_v2_numbers_11_20: (name) =>
+    foundationCompletion(
+      name,
+      'วันนี้คุณฝึกตัวเลขสิบเอ็ดถึงยี่สิบ และลองใช้กับหมายเลขห้อง รถเมล์ และล็อกเกอร์แล้ว',
+    ),
   everyday_numbers: (name) =>
     foundationCompletion(name, 'วันนี้คุณอ่านเลขหลักสิบ และประกอบเลขสองหลักตั้งแต่ยี่สิบถึงหนึ่งร้อยได้แล้ว'),
 };
@@ -118,7 +135,9 @@ function buildFoundationDef(
     completionText: COMPLETION_TEXTS[lessonId],
     completionTtsText: COMPLETION_TTS_TEXTS[lessonId],
     ttsInstruction:
-      lessonId === 'numbers' || lessonId === 'everyday_numbers'
+      lessonId === 'numbers' ||
+      lessonId === 'fnd_v2_numbers_11_20' ||
+      lessonId === 'everyday_numbers'
         ? NUMBER_TTS_INSTRUCTION
         : undefined,
     matchesLoose: FOUNDATION_LOOSE_MATCHERS[lessonId],

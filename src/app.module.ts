@@ -25,6 +25,7 @@ import { ExplainItModule } from './explain-it/explain-it.module';
 import { SayItModule } from './say-it/say-it.module';
 import { DebugModule } from './debug/debug.module';
 import { PurchasesModule } from './purchases/purchases.module';
+import { LearnPathModule } from './learn-path/learn-path.module';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { PurchasesModule } from './purchases/purchases.module';
     SimulationsModule,
     SeriesModule,
     LessonsModule,
+    LearnPathModule,
     AchievementsModule,
     StatsModule,
     OutfitsModule,

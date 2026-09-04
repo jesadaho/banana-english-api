@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import {
   dealSayItPhrases,
+  isFoundationPathSayItTopic,
   SAY_IT_DEAL_COUNT,
   SAY_IT_TOPICS,
   sayItTopicById,
@@ -11,7 +12,8 @@ import {
 @Injectable()
 export class SayItService {
   listTopics(): SayItTopic[] {
-    return SAY_IT_TOPICS;
+    // Foundation path topics are opened from Basics, not the Games hub.
+    return SAY_IT_TOPICS.filter((t) => !isFoundationPathSayItTopic(t.id));
   }
 
   getTopic(topicId: string): SayItTopic {

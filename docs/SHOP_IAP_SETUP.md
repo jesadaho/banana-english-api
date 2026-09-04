@@ -9,8 +9,11 @@
 
 ## 2. Google Play Console (Android)
 
-1. Monetize → Products → In-app products
-2. Create consumables with the **same product IDs** as iOS
+1. Monetize → Products → In-app products  
+   (requires an uploaded AAB that includes `com.android.vending.BILLING`)
+2. Create **Consumable** products with the **same product IDs** as iOS
+3. App must ship **Play Billing Library ≥ 8.0.0**  
+   (this project uses `purchases_flutter` ^9.16.1 → Billing Library 8)
 
 ## 3. RevenueCat
 

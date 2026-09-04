@@ -6,7 +6,11 @@ function stripTrailingDots(text: string): string {
 
 /** Repeat-only — incorrect uses Gemini + optional ลองพูดตาม append. */
 export function isFoundationRepeatOnlyBoard(board: ForcedGuidedBoard): boolean {
-  return board.stem.trim() === '' && board.options.length === 1;
+  return (
+    board.stem.trim() === '' &&
+    board.options.length <= 1 &&
+    /(?:ลอง)?พูดตาม/u.test(board.textEn)
+  );
 }
 
 function stemToHintLead(stem: string): string {

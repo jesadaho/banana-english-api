@@ -28,6 +28,7 @@ import {
   StoryBuilderEvaluateService,
   type StoryBuilderEvalTier,
 } from './story-builder-evaluate.service';
+import { isFoundationPathRewardGameId } from '../learn-path/foundation-v2-path.data';
 
 type AuthedRequest = { user: User };
 
@@ -54,6 +55,12 @@ const ALLOWED_MINI_GAME_IDS = new Set([
   'story_builder_ee_stories_favorite',
   'whats_happen_ee_stories_bad_day',
 ]);
+
+function isAllowedMiniGameId(gameId: string): boolean {
+  if (ALLOWED_MINI_GAME_IDS.has(gameId)) return true;
+  // Foundation path: only IDs that exist on the foundation-v2 catalog.
+  return isFoundationPathRewardGameId(gameId);
+}
 
 @Controller('mini-games')
 @UseGuards(AnonymousUserGuard)
@@ -155,7 +162,7 @@ export class MiniGamesController {
     @Req() req: AuthedRequest,
     @Param('gameId') gameId: string,
   ) {
-    if (!ALLOWED_MINI_GAME_IDS.has(gameId)) {
+    if (!isAllowedMiniGameId(gameId)) {
       throw new BadRequestException(`Unknown mini-game: ${gameId}`);
     }
 

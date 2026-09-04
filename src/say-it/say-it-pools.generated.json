@@ -944,5 +944,910 @@
         "that is what i want"
       ]
     }
+  ],
+  "fnd_v2_first_conversation": [
+    {
+      "id": "fnd_hello",
+      "promptTh": "สวัสดี",
+      "answerEn": "Hello.",
+      "acceptedAnswers": ["Hello", "Hi", "Hi.", "Hey", "Hey."]
+    },
+    {
+      "id": "fnd_hi",
+      "promptTh": "หวัดดี",
+      "answerEn": "Hello.",
+      "acceptedAnswers": ["Hello", "Hello.", "Hi", "Hi.", "Hey", "Hey."]
+    },
+    {
+      "id": "fnd_my_name_is_max",
+      "promptTh": "ฉันชื่อ Max",
+      "answerEn": "My name is Max.",
+      "acceptedAnswers": [
+        "My name is Max",
+        "I'm Max",
+        "I'm Max.",
+        "I am Max",
+        "I am Max."
+      ]
+    },
+    {
+      "id": "fnd_my_name_is_linda",
+      "promptTh": "ฉันชื่อ Linda",
+      "answerEn": "My name is Linda.",
+      "acceptedAnswers": [
+        "My name is Linda",
+        "I'm Linda",
+        "I'm Linda.",
+        "I am Linda",
+        "I am Linda."
+      ]
+    },
+    {
+      "id": "fnd_nice_to_meet_you",
+      "promptTh": "ยินดีที่ได้รู้จัก",
+      "answerEn": "Nice to meet you.",
+      "acceptedAnswers": [
+        "Nice to meet you",
+        "Nice meeting you",
+        "Nice meeting you."
+      ]
+    },
+    {
+      "id": "fnd_im_from_thailand",
+      "promptTh": "ฉันมาจากไทย",
+      "answerEn": "I'm from Thailand.",
+      "acceptedAnswers": [
+        "I'm from Thailand",
+        "I am from Thailand",
+        "I am from Thailand.",
+        "I'm from Thai",
+        "I am from Thai"
+      ]
+    },
+    {
+      "id": "fnd_im_from_japan",
+      "promptTh": "ฉันมาจากญี่ปุ่น",
+      "answerEn": "I'm from Japan.",
+      "acceptedAnswers": [
+        "I'm from Japan",
+        "I am from Japan",
+        "I am from Japan."
+      ]
+    },
+    {
+      "id": "fnd_i_live_in_bangkok",
+      "promptTh": "ฉันอยู่ที่กรุงเทพฯ",
+      "answerEn": "I live in Bangkok.",
+      "acceptedAnswers": [
+        "I live in Bangkok",
+        "I live in Bangkok.",
+        "I'm in Bangkok",
+        "I am in Bangkok"
+      ]
+    },
+    {
+      "id": "fnd_i_live_in_chiang_mai",
+      "promptTh": "ฉันอยู่ที่เชียงใหม่",
+      "answerEn": "I live in Chiang Mai.",
+      "acceptedAnswers": [
+        "I live in Chiang Mai",
+        "I live in Chiang Mai.",
+        "I live in Chiangmai",
+        "I live in Chiangmai."
+      ]
+    },
+    {
+      "id": "fnd_my_name_is_ken",
+      "promptTh": "ฉันชื่อ Ken",
+      "answerEn": "My name is Ken.",
+      "acceptedAnswers": [
+        "My name is Ken",
+        "I'm Ken",
+        "I'm Ken.",
+        "I am Ken",
+        "I am Ken."
+      ]
+    },
+    {
+      "id": "fnd_im_from_america",
+      "promptTh": "ฉันมาจากอเมริกา",
+      "answerEn": "I'm from America.",
+      "acceptedAnswers": [
+        "I'm from America",
+        "I am from America",
+        "I am from America.",
+        "I'm from the USA",
+        "I'm from the US",
+        "I am from the USA"
+      ]
+    },
+    {
+      "id": "fnd_i_live_in_tokyo",
+      "promptTh": "ฉันอยู่ที่โตเกียว",
+      "answerEn": "I live in Tokyo.",
+      "acceptedAnswers": ["I live in Tokyo", "I live in Tokyo."]
+    },
+    {
+      "id": "fnd_nice_to_meet_you_2",
+      "promptTh": "ดีใจที่ได้รู้จักคุณ",
+      "answerEn": "Nice to meet you.",
+      "acceptedAnswers": [
+        "Nice to meet you",
+        "Nice meeting you",
+        "Nice meeting you."
+      ]
+    },
+    {
+      "id": "fnd_hello_again",
+      "promptTh": "ทักทายว่า Hello",
+      "answerEn": "Hello.",
+      "acceptedAnswers": ["Hello", "Hi", "Hi."]
+    }
+  ],
+  "fnd_v2_be_polite": [
+    {
+      "id": "fnd_please",
+      "promptTh": "ได้โปรด / กรุณา",
+      "answerEn": "Please.",
+      "acceptedAnswers": ["Please"]
+    },
+    {
+      "id": "fnd_thank_you",
+      "promptTh": "ขอบคุณ",
+      "answerEn": "Thank you.",
+      "acceptedAnswers": ["Thank you", "Thanks", "Thanks.", "Thank you very much", "Thank you very much."]
+    },
+    {
+      "id": "fnd_youre_welcome",
+      "promptTh": "ไม่เป็นไร / ด้วยความยินดี",
+      "answerEn": "You're welcome.",
+      "acceptedAnswers": ["You're welcome", "You are welcome", "You are welcome.", "No problem", "No problem."]
+    },
+    {
+      "id": "fnd_excuse_me",
+      "promptTh": "ขอโทษนะ (เรียกความสนใจ)",
+      "answerEn": "Excuse me.",
+      "acceptedAnswers": ["Excuse me", "Pardon me", "Pardon me."]
+    },
+    {
+      "id": "fnd_sorry",
+      "promptTh": "ขอโทษ",
+      "answerEn": "Sorry.",
+      "acceptedAnswers": ["Sorry", "I'm sorry", "I'm sorry.", "I am sorry", "I am sorry."]
+    },
+    {
+      "id": "fnd_please_help_me",
+      "promptTh": "ช่วยฉันหน่อยได้ไหม",
+      "answerEn": "Please help me.",
+      "acceptedAnswers": ["Please help me", "Help me, please", "Help me please", "Help me please."]
+    },
+    {
+      "id": "fnd_thank_you_so_much",
+      "promptTh": "ขอบคุณมากๆ",
+      "answerEn": "Thank you so much.",
+      "acceptedAnswers": ["Thank you so much", "Thanks so much", "Thanks so much.", "Thank you very much", "Thank you very much."]
+    },
+    {
+      "id": "fnd_im_sorry",
+      "promptTh": "ฉันขอโทษ",
+      "answerEn": "I'm sorry.",
+      "acceptedAnswers": ["I'm sorry", "I am sorry", "I am sorry.", "Sorry", "Sorry."]
+    },
+    {
+      "id": "fnd_excuse_me_please",
+      "promptTh": "ขอโทษนะครับ/ค่ะ",
+      "answerEn": "Excuse me, please.",
+      "acceptedAnswers": ["Excuse me, please", "Excuse me please", "Excuse me please.", "Excuse me", "Excuse me."]
+    },
+    {
+      "id": "fnd_please_wait",
+      "promptTh": "กรุณารอสักครู่",
+      "answerEn": "Please wait.",
+      "acceptedAnswers": ["Please wait", "Wait, please", "Wait please", "Wait please."]
+    },
+    {
+      "id": "fnd_please_come_in",
+      "promptTh": "เชิญเข้ามาได้เลย",
+      "answerEn": "Please come in.",
+      "acceptedAnswers": ["Please come in", "Come in, please", "Come in please", "Come in please."]
+    },
+    {
+      "id": "fnd_after_you",
+      "promptTh": "เชิญคุณก่อน",
+      "answerEn": "After you.",
+      "acceptedAnswers": ["After you", "You first", "You first."]
+    },
+    {
+      "id": "fnd_no_problem",
+      "promptTh": "ไม่เป็นไรเลย",
+      "answerEn": "No problem.",
+      "acceptedAnswers": ["No problem", "You're welcome", "You're welcome.", "It's okay", "It's okay."]
+    },
+    {
+      "id": "fnd_thanks",
+      "promptTh": "ขอบคุณนะ",
+      "answerEn": "Thanks.",
+      "acceptedAnswers": ["Thanks", "Thank you", "Thank you."]
+    }
+  ],
+  "fnd_v2_survival": [
+    {
+      "id": "fnd_i_dont_understand",
+      "promptTh": "ฉันไม่เข้าใจ",
+      "answerEn": "I don't understand.",
+      "acceptedAnswers": ["I don't understand", "I do not understand", "I do not understand."]
+    },
+    {
+      "id": "fnd_speak_more_slowly",
+      "promptTh": "พูดช้าลงหน่อยได้ไหม",
+      "answerEn": "Can you speak more slowly?",
+      "acceptedAnswers": [
+        "Can you speak more slowly",
+        "Could you speak more slowly?",
+        "Could you speak more slowly",
+        "Please speak more slowly",
+        "Please speak more slowly."
+      ]
+    },
+    {
+      "id": "fnd_what_does_that_mean",
+      "promptTh": "นั่นหมายความว่าอะไร",
+      "answerEn": "What does that mean?",
+      "acceptedAnswers": ["What does that mean", "What does this mean?", "What does this mean"]
+    },
+    {
+      "id": "fnd_say_that_again",
+      "promptTh": "พูดอีกครั้งได้ไหม",
+      "answerEn": "Can you say that again?",
+      "acceptedAnswers": [
+        "Can you say that again",
+        "Could you say that again?",
+        "Could you say that again",
+        "Can you repeat that?",
+        "Can you repeat that"
+      ]
+    },
+    {
+      "id": "fnd_how_do_you_say_this",
+      "promptTh": "อันนี้ภาษาอังกฤษพูดว่าอะไร",
+      "answerEn": "How do you say this in English?",
+      "acceptedAnswers": [
+        "How do you say this in English",
+        "How do you say that in English?",
+        "How do you say that in English"
+      ]
+    },
+    {
+      "id": "fnd_survival_thank_you",
+      "promptTh": "ขอบคุณ",
+      "answerEn": "Thank you.",
+      "acceptedAnswers": ["Thank you", "Thanks", "Thanks."]
+    },
+    {
+      "id": "fnd_can_you_help_me",
+      "promptTh": "ช่วยฉันได้ไหม",
+      "answerEn": "Can you help me?",
+      "acceptedAnswers": ["Can you help me", "Could you help me?", "Could you help me", "Please help me", "Please help me."]
+    },
+    {
+      "id": "fnd_i_need_help_survival",
+      "promptTh": "ฉันต้องการความช่วยเหลือ",
+      "answerEn": "I need help.",
+      "acceptedAnswers": ["I need help", "I need some help", "I need some help."]
+    },
+    {
+      "id": "fnd_do_you_speak_english",
+      "promptTh": "คุณพูดภาษาอังกฤษได้ไหม",
+      "answerEn": "Do you speak English?",
+      "acceptedAnswers": ["Do you speak English", "Can you speak English?", "Can you speak English"]
+    },
+    {
+      "id": "fnd_please_speak_slowly",
+      "promptTh": "กรุณาพูดช้าๆ",
+      "answerEn": "Please speak slowly.",
+      "acceptedAnswers": ["Please speak slowly", "Speak slowly, please", "Speak slowly please", "Speak slowly please."]
+    },
+    {
+      "id": "fnd_one_more_time",
+      "promptTh": "อีกครั้งได้ไหม",
+      "answerEn": "One more time, please.",
+      "acceptedAnswers": [
+        "One more time, please",
+        "One more time please",
+        "One more time please.",
+        "One more time",
+        "One more time."
+      ]
+    },
+    {
+      "id": "fnd_sorry_dont_understand",
+      "promptTh": "ขอโทษ ฉันไม่เข้าใจ",
+      "answerEn": "Sorry, I don't understand.",
+      "acceptedAnswers": [
+        "Sorry, I don't understand",
+        "Sorry I don't understand",
+        "Sorry I don't understand.",
+        "I'm sorry, I don't understand",
+        "I'm sorry, I don't understand."
+      ]
+    },
+    {
+      "id": "fnd_what_did_you_say",
+      "promptTh": "คุณพูดว่าอะไรนะ",
+      "answerEn": "What did you say?",
+      "acceptedAnswers": ["What did you say", "Pardon?", "Pardon", "Sorry?", "Sorry"]
+    },
+    {
+      "id": "fnd_can_you_repeat",
+      "promptTh": "พูดซ้ำได้อีกไหม",
+      "answerEn": "Can you repeat that?",
+      "acceptedAnswers": [
+        "Can you repeat that",
+        "Could you repeat that?",
+        "Could you repeat that",
+        "Can you say that again?",
+        "Can you say that again"
+      ]
+    }
+  ],
+  "fnd_v2_daily_time": [
+    {
+      "id": "fnd_its_seven_oclock",
+      "promptTh": "ตอนนี้เจ็ดโมง",
+      "answerEn": "It's seven o'clock.",
+      "acceptedAnswers": [
+        "It's seven o'clock",
+        "It is seven o'clock",
+        "It is seven o'clock.",
+        "It's 7 o'clock",
+        "It's 7 o'clock."
+      ]
+    },
+    {
+      "id": "fnd_its_seven_thirty",
+      "promptTh": "ตอนนี้เจ็ดโมงครึ่ง",
+      "answerEn": "It's seven thirty.",
+      "acceptedAnswers": [
+        "It's seven thirty",
+        "It is seven thirty",
+        "It is seven thirty.",
+        "It's 7:30",
+        "It's 7:30."
+      ]
+    },
+    {
+      "id": "fnd_its_seven_am",
+      "promptTh": "ตอนนี้เจ็ดโมงเช้า",
+      "answerEn": "It's seven a.m.",
+      "acceptedAnswers": [
+        "It's seven a.m.",
+        "It's seven am",
+        "It is seven a.m.",
+        "It is seven am",
+        "It's 7 a.m."
+      ]
+    },
+    {
+      "id": "fnd_its_eight_thirty",
+      "promptTh": "ตอนนี้แปดโมงครึ่ง",
+      "answerEn": "It's eight thirty.",
+      "acceptedAnswers": [
+        "It's eight thirty",
+        "It is eight thirty",
+        "It is eight thirty.",
+        "It's 8:30",
+        "It's 8:30."
+      ]
+    },
+    {
+      "id": "fnd_its_eight_oclock",
+      "promptTh": "ตอนนี้แปดโมง",
+      "answerEn": "It's eight o'clock.",
+      "acceptedAnswers": [
+        "It's eight o'clock",
+        "It is eight o'clock",
+        "It is eight o'clock.",
+        "It's 8 o'clock",
+        "It's 8 o'clock."
+      ]
+    },
+    {
+      "id": "fnd_its_nine_thirty",
+      "promptTh": "ตอนนี้เก้าโมงครึ่ง",
+      "answerEn": "It's nine thirty.",
+      "acceptedAnswers": [
+        "It's nine thirty",
+        "It is nine thirty",
+        "It is nine thirty.",
+        "It's 9:30",
+        "It's 9:30."
+      ]
+    },
+    {
+      "id": "fnd_its_nine_pm",
+      "promptTh": "ตอนนี้สามทุ่ม",
+      "answerEn": "It's nine p.m.",
+      "acceptedAnswers": [
+        "It's nine p.m.",
+        "It's nine pm",
+        "It is nine p.m.",
+        "It is nine pm",
+        "It's 9 p.m."
+      ]
+    },
+    {
+      "id": "fnd_its_ten_thirty",
+      "promptTh": "ตอนนี้สิบโมงครึ่ง",
+      "answerEn": "It's ten thirty.",
+      "acceptedAnswers": [
+        "It's ten thirty",
+        "It is ten thirty",
+        "It is ten thirty.",
+        "It's 10:30",
+        "It's 10:30."
+      ]
+    },
+    {
+      "id": "fnd_its_ten_oclock",
+      "promptTh": "ตอนนี้สิบโมง",
+      "answerEn": "It's ten o'clock.",
+      "acceptedAnswers": [
+        "It's ten o'clock",
+        "It is ten o'clock",
+        "It is ten o'clock.",
+        "It's 10 o'clock",
+        "It's 10 o'clock."
+      ]
+    },
+    {
+      "id": "fnd_its_six_thirty",
+      "promptTh": "ตอนนี้หกโมงครึ่ง",
+      "answerEn": "It's six thirty.",
+      "acceptedAnswers": [
+        "It's six thirty",
+        "It is six thirty",
+        "It is six thirty.",
+        "It's 6:30",
+        "It's 6:30."
+      ]
+    },
+    {
+      "id": "fnd_its_eleven_am",
+      "promptTh": "ตอนนี้สิบเอ็ดโมงเช้า",
+      "answerEn": "It's eleven a.m.",
+      "acceptedAnswers": [
+        "It's eleven a.m.",
+        "It's eleven am",
+        "It is eleven a.m.",
+        "It is eleven am",
+        "It's 11 a.m."
+      ]
+    },
+    {
+      "id": "fnd_its_twelve_oclock",
+      "promptTh": "ตอนนี้สิบสองโมง",
+      "answerEn": "It's twelve o'clock.",
+      "acceptedAnswers": [
+        "It's twelve o'clock",
+        "It is twelve o'clock",
+        "It is twelve o'clock.",
+        "It's 12 o'clock",
+        "It's 12 o'clock."
+      ]
+    },
+    {
+      "id": "fnd_its_five_oclock",
+      "promptTh": "ตอนนี้ห้าโมง",
+      "answerEn": "It's five o'clock.",
+      "acceptedAnswers": [
+        "It's five o'clock",
+        "It is five o'clock",
+        "It is five o'clock.",
+        "It's 5 o'clock",
+        "It's 5 o'clock."
+      ]
+    },
+    {
+      "id": "fnd_its_five_pm",
+      "promptTh": "ตอนนี้ห้าโมงเย็น",
+      "answerEn": "It's five p.m.",
+      "acceptedAnswers": [
+        "It's five p.m.",
+        "It's five pm",
+        "It is five p.m.",
+        "It is five pm",
+        "It's 5 p.m."
+      ]
+    }
+  ],
+  "fnd_v2_people_family": [
+    {
+      "id": "fnd_i_am_a_student",
+      "promptTh": "ฉันเป็นนักเรียน",
+      "answerEn": "I am a student.",
+      "acceptedAnswers": ["I am a student", "I'm a student", "I'm a student."]
+    },
+    {
+      "id": "fnd_you_are_my_friend",
+      "promptTh": "คุณเป็นเพื่อนของฉัน",
+      "answerEn": "You are my friend.",
+      "acceptedAnswers": ["You are my friend", "You're my friend", "You're my friend."]
+    },
+    {
+      "id": "fnd_he_is_my_father",
+      "promptTh": "เขาเป็นพ่อของฉัน",
+      "answerEn": "He is my father.",
+      "acceptedAnswers": ["He is my father", "He's my father", "He's my father.", "He is my dad", "He is my dad."]
+    },
+    {
+      "id": "fnd_she_is_my_sister",
+      "promptTh": "เธอเป็นน้องสาว/พี่สาวของฉัน",
+      "answerEn": "She is my sister.",
+      "acceptedAnswers": ["She is my sister", "She's my sister", "She's my sister."]
+    },
+    {
+      "id": "fnd_it_is_my_bag",
+      "promptTh": "มันเป็นกระเป๋าของฉัน",
+      "answerEn": "It is my bag.",
+      "acceptedAnswers": ["It is my bag", "It's my bag", "It's my bag."]
+    },
+    {
+      "id": "fnd_this_is_my_family",
+      "promptTh": "นี่คือครอบครัวของฉัน",
+      "answerEn": "This is my family.",
+      "acceptedAnswers": ["This is my family"]
+    },
+    {
+      "id": "fnd_this_is_my_mother",
+      "promptTh": "นี่คือแม่ของฉัน",
+      "answerEn": "This is my mother.",
+      "acceptedAnswers": ["This is my mother", "This is my mom", "This is my mom."]
+    },
+    {
+      "id": "fnd_i_have_one_sister",
+      "promptTh": "ฉันมีพี่สาว/น้องสาวหนึ่งคน",
+      "answerEn": "I have one sister.",
+      "acceptedAnswers": ["I have one sister", "I have a sister", "I have a sister."]
+    },
+    {
+      "id": "fnd_he_is_my_brother",
+      "promptTh": "เขาเป็นพี่ชาย/น้องชายของฉัน",
+      "answerEn": "He is my brother.",
+      "acceptedAnswers": ["He is my brother", "He's my brother", "He's my brother."]
+    },
+    {
+      "id": "fnd_she_is_my_mother",
+      "promptTh": "เธอเป็นแม่ของฉัน",
+      "answerEn": "She is my mother.",
+      "acceptedAnswers": ["She is my mother", "She's my mother", "She's my mother.", "She is my mom", "She is my mom."]
+    },
+    {
+      "id": "fnd_this_is_my_father",
+      "promptTh": "นี่คือพ่อของฉัน",
+      "answerEn": "This is my father.",
+      "acceptedAnswers": ["This is my father", "This is my dad", "This is my dad."]
+    },
+    {
+      "id": "fnd_i_have_two_brothers",
+      "promptTh": "ฉันมีพี่ชาย/น้องชายสองคน",
+      "answerEn": "I have two brothers.",
+      "acceptedAnswers": ["I have two brothers"]
+    },
+    {
+      "id": "fnd_you_are_my_teacher",
+      "promptTh": "คุณเป็นครูของฉัน",
+      "answerEn": "You are my teacher.",
+      "acceptedAnswers": ["You are my teacher", "You're my teacher", "You're my teacher."]
+    },
+    {
+      "id": "fnd_this_is_my_bag",
+      "promptTh": "นี่คือกระเป๋าของฉัน",
+      "answerEn": "This is my bag.",
+      "acceptedAnswers": ["This is my bag"]
+    }
+  ],
+  "fnd_v2_numbers_shopping": [
+    {
+      "id": "fnd_how_much_is_it",
+      "promptTh": "อันนี้ราคาเท่าไหร่",
+      "answerEn": "How much is it?",
+      "acceptedAnswers": ["How much is it", "How much does it cost?", "How much does it cost"]
+    },
+    {
+      "id": "fnd_its_five_dollars",
+      "promptTh": "ราคาห้าดอลลาร์",
+      "answerEn": "It's five dollars.",
+      "acceptedAnswers": [
+        "It's five dollars",
+        "It is five dollars",
+        "It is five dollars.",
+        "It's $5",
+        "It's $5."
+      ]
+    },
+    {
+      "id": "fnd_its_cheap",
+      "promptTh": "ถูก",
+      "answerEn": "It's cheap.",
+      "acceptedAnswers": ["It's cheap", "It is cheap", "It is cheap."]
+    },
+    {
+      "id": "fnd_its_expensive",
+      "promptTh": "แพง",
+      "answerEn": "It's expensive.",
+      "acceptedAnswers": ["It's expensive", "It is expensive", "It is expensive."]
+    },
+    {
+      "id": "fnd_i_want_this",
+      "promptTh": "ฉันอยากได้อันนี้",
+      "answerEn": "I want this.",
+      "acceptedAnswers": ["I want this", "I'd like this", "I'd like this."]
+    },
+    {
+      "id": "fnd_i_want_the_blue_bag",
+      "promptTh": "ฉันอยากได้กระเป๋าสีน้ำเงิน",
+      "answerEn": "I want the blue bag.",
+      "acceptedAnswers": [
+        "I want the blue bag",
+        "I'd like the blue bag",
+        "I'd like the blue bag.",
+        "I want a blue bag",
+        "I want a blue bag."
+      ]
+    },
+    {
+      "id": "fnd_ill_take_it",
+      "promptTh": "ฉันเอาอันนี้",
+      "answerEn": "I'll take it.",
+      "acceptedAnswers": ["I'll take it", "I will take it", "I will take it.", "I'll buy it", "I'll buy it."]
+    },
+    {
+      "id": "fnd_thats_too_expensive",
+      "promptTh": "แพงเกินไป",
+      "answerEn": "That's too expensive.",
+      "acceptedAnswers": [
+        "That's too expensive",
+        "That is too expensive",
+        "That is too expensive.",
+        "It's too expensive",
+        "It's too expensive."
+      ]
+    },
+    {
+      "id": "fnd_shop_its_seven_oclock",
+      "promptTh": "ตอนนี้เจ็ดโมง",
+      "answerEn": "It's seven o'clock.",
+      "acceptedAnswers": [
+        "It's seven o'clock",
+        "It is seven o'clock",
+        "It is seven o'clock.",
+        "It's 7 o'clock",
+        "It's 7 o'clock."
+      ]
+    },
+    {
+      "id": "fnd_its_ten_dollars",
+      "promptTh": "ราคาสิบดอลลาร์",
+      "answerEn": "It's ten dollars.",
+      "acceptedAnswers": [
+        "It's ten dollars",
+        "It is ten dollars",
+        "It is ten dollars.",
+        "It's $10",
+        "It's $10."
+      ]
+    },
+    {
+      "id": "fnd_how_much_is_this",
+      "promptTh": "อันนี้เท่าไหร่",
+      "answerEn": "How much is this?",
+      "acceptedAnswers": ["How much is this", "How much does this cost?", "How much does this cost"]
+    },
+    {
+      "id": "fnd_i_want_that",
+      "promptTh": "ฉันอยากได้อันนั้น",
+      "answerEn": "I want that.",
+      "acceptedAnswers": ["I want that", "I'd like that", "I'd like that."]
+    },
+    {
+      "id": "fnd_its_twenty_baht",
+      "promptTh": "ยี่สิบบาท",
+      "answerEn": "It's twenty baht.",
+      "acceptedAnswers": [
+        "It's twenty baht",
+        "It is twenty baht",
+        "It is twenty baht.",
+        "It's 20 baht",
+        "It's 20 baht."
+      ]
+    }
+  ],
+  "fnd_v2_about_me": [
+    {
+      "id": "fnd_i_like_coffee",
+      "promptTh": "ฉันชอบกาแฟ",
+      "answerEn": "I like coffee.",
+      "acceptedAnswers": ["I like coffee"]
+    },
+    {
+      "id": "fnd_i_dont_like_tea",
+      "promptTh": "ฉันไม่ชอบชา",
+      "answerEn": "I don't like tea.",
+      "acceptedAnswers": ["I don't like tea", "I do not like tea", "I do not like tea."]
+    },
+    {
+      "id": "fnd_i_want_water",
+      "promptTh": "ฉันอยากได้น้ำ",
+      "answerEn": "I want water.",
+      "acceptedAnswers": ["I want water", "I'd like water", "I'd like water.", "I want some water", "I want some water."]
+    },
+    {
+      "id": "fnd_i_need_help",
+      "promptTh": "ฉันต้องการความช่วยเหลือ",
+      "answerEn": "I need help.",
+      "acceptedAnswers": ["I need help", "I need some help", "I need some help."]
+    },
+    {
+      "id": "fnd_i_have_a_dog",
+      "promptTh": "ฉันมีสุนัข",
+      "answerEn": "I have a dog.",
+      "acceptedAnswers": ["I have a dog"]
+    },
+    {
+      "id": "fnd_i_can_swim",
+      "promptTh": "ฉันว่ายน้ำได้",
+      "answerEn": "I can swim.",
+      "acceptedAnswers": ["I can swim"]
+    },
+    {
+      "id": "fnd_i_cant_drive",
+      "promptTh": "ฉันขับรถไม่ได้",
+      "answerEn": "I can't drive.",
+      "acceptedAnswers": ["I can't drive", "I cannot drive", "I cannot drive."]
+    },
+    {
+      "id": "fnd_i_like_pizza",
+      "promptTh": "ฉันชอบพิซซ่า",
+      "answerEn": "I like pizza.",
+      "acceptedAnswers": ["I like pizza"]
+    },
+    {
+      "id": "fnd_i_dont_like_spicy_food",
+      "promptTh": "ฉันไม่ชอบอาหารเผ็ด",
+      "answerEn": "I don't like spicy food.",
+      "acceptedAnswers": [
+        "I don't like spicy food",
+        "I do not like spicy food",
+        "I do not like spicy food."
+      ]
+    },
+    {
+      "id": "fnd_i_want_coffee",
+      "promptTh": "ฉันอยากได้กาแฟ",
+      "answerEn": "I want coffee.",
+      "acceptedAnswers": ["I want coffee", "I'd like coffee", "I'd like coffee.", "I want a coffee", "I want a coffee."]
+    },
+    {
+      "id": "fnd_i_need_water",
+      "promptTh": "ฉันต้องการน้ำ",
+      "answerEn": "I need water.",
+      "acceptedAnswers": ["I need water", "I need some water", "I need some water."]
+    },
+    {
+      "id": "fnd_i_have_a_cat",
+      "promptTh": "ฉันมีแมว",
+      "answerEn": "I have a cat.",
+      "acceptedAnswers": ["I have a cat"]
+    },
+    {
+      "id": "fnd_i_can_cook",
+      "promptTh": "ฉันทำอาหารได้",
+      "answerEn": "I can cook.",
+      "acceptedAnswers": ["I can cook"]
+    },
+    {
+      "id": "fnd_i_cant_swim",
+      "promptTh": "ฉันว่ายน้ำไม่ได้",
+      "answerEn": "I can't swim.",
+      "acceptedAnswers": ["I can't swim", "I cannot swim", "I cannot swim."]
+    }
+  ],
+  "fnd_v2_ask_me": [
+    {
+      "id": "fnd_where_is_the_bathroom",
+      "promptTh": "ห้องน้ำอยู่ที่ไหน",
+      "answerEn": "Where is the bathroom?",
+      "acceptedAnswers": [
+        "Where is the bathroom",
+        "Where's the bathroom?",
+        "Where's the bathroom",
+        "Where is the toilet?",
+        "Where is the toilet"
+      ]
+    },
+    {
+      "id": "fnd_who_is_that",
+      "promptTh": "นั่นคือใคร",
+      "answerEn": "Who is that?",
+      "acceptedAnswers": ["Who is that", "Who's that?", "Who's that"]
+    },
+    {
+      "id": "fnd_what_is_this",
+      "promptTh": "นี่คืออะไร",
+      "answerEn": "What is this?",
+      "acceptedAnswers": ["What is this", "What's this?", "What's this"]
+    },
+    {
+      "id": "fnd_how_are_you",
+      "promptTh": "สบายดีไหม",
+      "answerEn": "How are you?",
+      "acceptedAnswers": ["How are you", "How are you doing?", "How are you doing"]
+    },
+    {
+      "id": "fnd_where_is_the_station",
+      "promptTh": "สถานีอยู่ที่ไหน",
+      "answerEn": "Where is the station?",
+      "acceptedAnswers": [
+        "Where is the station",
+        "Where's the station?",
+        "Where's the station",
+        "Where is the train station?",
+        "Where is the train station"
+      ]
+    },
+    {
+      "id": "fnd_who_is_she",
+      "promptTh": "เธอคือใคร",
+      "answerEn": "Who is she?",
+      "acceptedAnswers": ["Who is she", "Who's she?", "Who's she"]
+    },
+    {
+      "id": "fnd_what_is_that",
+      "promptTh": "นั่นคืออะไร",
+      "answerEn": "What is that?",
+      "acceptedAnswers": ["What is that", "What's that?", "What's that"]
+    },
+    {
+      "id": "fnd_how_old_are_you",
+      "promptTh": "คุณอายุเท่าไหร่",
+      "answerEn": "How old are you?",
+      "acceptedAnswers": ["How old are you"]
+    },
+    {
+      "id": "fnd_where_do_you_live",
+      "promptTh": "คุณอาศัยอยู่ที่ไหน",
+      "answerEn": "Where do you live?",
+      "acceptedAnswers": ["Where do you live"]
+    },
+    {
+      "id": "fnd_what_do_you_do",
+      "promptTh": "คุณทำอาชีพอะไร",
+      "answerEn": "What do you do?",
+      "acceptedAnswers": ["What do you do", "What's your job?", "What's your job"]
+    },
+    {
+      "id": "fnd_who_is_he",
+      "promptTh": "เขาคือใคร",
+      "answerEn": "Who is he?",
+      "acceptedAnswers": ["Who is he", "Who's he?", "Who's he"]
+    },
+    {
+      "id": "fnd_where_is_the_hotel",
+      "promptTh": "โรงแรมอยู่ที่ไหน",
+      "answerEn": "Where is the hotel?",
+      "acceptedAnswers": ["Where is the hotel", "Where's the hotel?", "Where's the hotel"]
+    },
+    {
+      "id": "fnd_ask_how_much_is_it",
+      "promptTh": "ราคาเท่าไหร่",
+      "answerEn": "How much is it?",
+      "acceptedAnswers": ["How much is it", "How much does it cost?", "How much does it cost"]
+    },
+    {
+      "id": "fnd_what_time_is_it",
+      "promptTh": "กี่โมงแล้ว",
+      "answerEn": "What time is it?",
+      "acceptedAnswers": ["What time is it", "What's the time?", "What's the time"]
+    }
   ]
 }

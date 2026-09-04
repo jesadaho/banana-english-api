@@ -8,6 +8,7 @@ import {
 } from './scripts/choice-lesson.script';
 import { resolveLessonProgressTurn } from '../lessons/lessons.data';
 import { FOUNDATION_BOARDS } from './foundation/foundation-boards';
+import { sayItPoolForTopic } from '../say-it/say-it.data';
 import {
   FOUNDATION_POOLGATE_FIXTURES,
   FOUNDATION_PROBE_LEARNER,
@@ -173,7 +174,7 @@ describe('Foundation — full happy path (all steps → complete)', () => {
     assert.equal(steps[7].isLessonComplete, true);
   });
 
-  it('numbers — completion summarizes the 0–20 range and real-world use', () => {
+  it('numbers — completion summarizes the 0–10 range and real-world use', () => {
     const def = getDef(
       FOUNDATION_POOLGATE_FIXTURES.find((f) => f.lessonId === 'numbers')!,
     );
@@ -181,9 +182,23 @@ describe('Foundation — full happy path (all steps → complete)', () => {
 
     assert.match(
       result.completionText,
-      /ฝึกตัวเลข 0–20 และลองใช้กับของรอบตัว หมายเลขห้อง และรถเมล์แล้ว/,
+      /ฝึกตัวเลข 0–10 และลองใช้กับของรอบตัวแล้ว/,
     );
     assert.doesNotMatch(result.completionText, /3, 7, 8, 16 และ 20/);
+  });
+
+  it('numbers 11–20 — completion summarizes teens and real-world use', () => {
+    const def = getDef(
+      FOUNDATION_POOLGATE_FIXTURES.find(
+        (f) => f.lessonId === 'fnd_v2_numbers_11_20',
+      )!,
+    );
+    const result = runFoundationFullHappyPath(def);
+
+    assert.match(
+      result.completionText,
+      /ฝึกตัวเลข 11–20 และลองใช้กับหมายเลขห้อง รถเมล์ และล็อกเกอร์แล้ว/,
+    );
   });
 
   it('everyday numbers — completion summarizes tens and two-digit composition', () => {
@@ -235,6 +250,110 @@ describe('Foundation — full happy path (all steps → complete)', () => {
       result.completionText,
       /He['’]s\.\.\..*She['’]s\.\.\..*It['’]s\.\.\./,
     );
+  });
+});
+
+describe('Foundation V2 — new lesson script contracts', () => {
+  it('new repeat-after-model turns hide choices; situation turns keep choices', () => {
+    for (const step of [1, 2]) {
+      assert.equal(
+        FOUNDATION_BOARDS.fnd_v2_say_it_again[step].options.length,
+        0,
+        `Say It Again step ${step}`,
+      );
+    }
+    for (const step of [3, 4]) {
+      assert.ok(
+        FOUNDATION_BOARDS.fnd_v2_say_it_again[step].options.length >= 2,
+        `Say It Again situation step ${step}`,
+      );
+    }
+    assert.equal(
+      FOUNDATION_BOARDS.fnd_v2_say_it_again[5].options.length,
+      0,
+      'Say It Again final payoff must be free response',
+    );
+
+    for (const step of [1, 3, 4]) {
+      assert.equal(
+        FOUNDATION_BOARDS.fnd_v2_buying_something[step].options.length,
+        0,
+        `Buying Something step ${step}`,
+      );
+    }
+    for (const step of [2, 5, 6]) {
+      assert.ok(
+        FOUNDATION_BOARDS.fnd_v2_buying_something[step].options.length >= 2,
+        `Buying Something situation step ${step}`,
+      );
+    }
+  });
+
+  it('Say It Again ends with an unaided survival-phrase payoff', () => {
+    const board = FOUNDATION_BOARDS.fnd_v2_say_it_again[5];
+    assert.match(board.textEn, /ขั้นตอนสุดท้าย/);
+    assert.equal(board.options.length, 0);
+
+    const fixture = FOUNDATION_POOLGATE_FIXTURES.find(
+      (candidate) => candidate.lessonId === 'fnd_v2_say_it_again',
+    )!;
+    const def = getDef(fixture);
+    for (const phrase of [
+      'Can you say that again?',
+      'Can you speak more slowly?',
+      "I don't understand.",
+      'What does that mean?',
+      'How do you say this in English?',
+    ]) {
+      assert.ok(['exact', 'near'].includes(def.scoreStep(5, phrase, [])), phrase);
+    }
+  });
+
+  it('Buying Something alternates teaching with application and closes a purchase', () => {
+    const boards = FOUNDATION_BOARDS.fnd_v2_buying_something;
+    assert.equal(boards[1].expectedSpeech, 'I want this.');
+    assert.equal(boards[2].expectedSpeech, 'I want water.');
+    assert.equal(boards[3].expectedSpeech, 'I want the blue bag.');
+    assert.equal(boards[4].expectedSpeech, "I'll take it.");
+    assert.equal(boards[5].expectedSpeech, "That's too expensive.");
+    assert.equal(boards[6].expectedSpeech, "I'll take it.");
+  });
+
+  it('Numbers 0–10 favorite-number turn accepts every taught number', () => {
+    const fixture = FOUNDATION_POOLGATE_FIXTURES.find(
+      (candidate) => candidate.lessonId === 'numbers',
+    )!;
+    const def = getDef(fixture);
+    const taughtNumbers = [
+      'zero', 'one', 'two', 'three', 'four', 'five',
+      'six', 'seven', 'eight', 'nine', 'ten',
+    ];
+    for (const number of taughtNumbers) {
+      assert.ok(
+        ['exact', 'near'].includes(def.scoreStep(4, number, [])),
+        number,
+      );
+    }
+    for (const option of FOUNDATION_BOARDS.numbers[4].options) {
+      assert.equal(def.scoreStep(4, option.speak, []), 'exact', option.speak);
+    }
+  });
+
+  it('My Daily Time retrieves only time forms taught by Telling Time', () => {
+    const pool = sayItPoolForTopic('fnd_v2_daily_time');
+    assert.equal(pool.length, 14);
+    for (const phrase of pool) {
+      assert.match(phrase.answerEn, /^It['’]s /, phrase.id);
+      assert.doesNotMatch(
+        phrase.answerEn,
+        /wake|get up|sleep|bed|work|lunch/i,
+        phrase.id,
+      );
+    }
+    assert.ok(pool.some((phrase) => /o'clock/i.test(phrase.answerEn)));
+    assert.ok(pool.some((phrase) => /thirty/i.test(phrase.answerEn)));
+    assert.ok(pool.some((phrase) => /a\.m\./i.test(phrase.answerEn)));
+    assert.ok(pool.some((phrase) => /p\.m\./i.test(phrase.answerEn)));
   });
 });
 

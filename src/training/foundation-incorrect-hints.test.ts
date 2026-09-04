@@ -90,8 +90,9 @@ describe('Foundation incorrect hints — Introductions standard', () => {
     assert.equal(appleHint, 'ลองนับแอปเปิลอีกครั้งครับ');
     assert.doesNotMatch(appleHint, /4|four/i);
 
-    const twentyHint = resolveIncorrectHintTh(FOUNDATION_BOARDS.numbers[4]) ?? '';
-    assert.equal(twentyHint, 'คำนี้ลงท้ายด้วยเสียง -ty ครับ');
+    const twentyHint =
+      resolveIncorrectHintTh(FOUNDATION_BOARDS.fnd_v2_numbers_11_20[2]) ?? '';
+    assert.equal(twentyHint, 'ยังไม่ตรงครับ คำนี้ลงท้ายด้วยเสียง -ty ครับ');
     assert.doesNotMatch(twentyHint, /20|twenty/i);
   });
 
@@ -101,17 +102,26 @@ describe('Foundation incorrect hints — Introductions standard', () => {
       assert.doesNotMatch(board.ttsText ?? '', /\d/);
       assert.doesNotMatch(board.incorrectHintTh ?? '', /\d/);
     }
-    assert.match(FOUNDATION_BOARDS.numbers[1].textEn, /0–20/u);
+    for (const board of Object.values(FOUNDATION_BOARDS.fnd_v2_numbers_11_20)) {
+      assert.match(board.ttsText ?? '', /\S/);
+      assert.doesNotMatch(board.ttsText ?? '', /\d/);
+      assert.doesNotMatch(board.incorrectHintTh ?? '', /\d/);
+    }
+    assert.match(FOUNDATION_BOARDS.numbers[1].textEn, /0–10/u);
     assert.match(FOUNDATION_BOARDS.numbers[1].ttsText ?? '', /เลขศูนย์อ่านว่า zero/u);
   });
 
-  it('adds the pronunciation instruction only to the two number lessons', () => {
+  it('adds the pronunciation instruction only to the number lessons', () => {
     for (const lessonId of FOUNDATION_LESSON_IDS) {
       const fixture = FOUNDATION_POOLGATE_FIXTURES.find(
         (candidate) => candidate.lessonId === lessonId,
       )!;
       const board = getDef(fixture).boardForStep(1, [], 'Nana');
-      if (lessonId === 'numbers' || lessonId === 'everyday_numbers') {
+      if (
+        lessonId === 'numbers' ||
+        lessonId === 'fnd_v2_numbers_11_20' ||
+        lessonId === 'everyday_numbers'
+      ) {
         assert.match(board?.ttsInstruction ?? '', /Thai number words stay Thai/);
         assert.match(board?.ttsInstruction ?? '', /Latin-script English number words stay English/);
         assert.match(board?.ttsInstruction ?? '', /Pronounce every Latin-script English word in English/);
