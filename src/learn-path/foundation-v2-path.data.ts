@@ -2,7 +2,9 @@
  * Foundation Path V4 catalog — served by GET /learn-path/foundation-v2.
  * Preserved lesson IDs keep existing completions.
  *
- * Catalog (revised): 46 core + 5 optional = 51 nodes on the map.
+ * Catalog: 50 core + 3 optional = 53 nodes on the map.
+ * New lessons/pools marked comingSoon until content ships.
+ * Mission sims kept as-is (content redesign later).
  */
 
 export type FoundationV2NodeType =
@@ -20,7 +22,7 @@ export type FoundationV2NodeDef = {
   titleEn: string;
   titleTh: string;
   type: FoundationV2NodeType;
-  /** Core nodes count toward progress (46). Optional = false. */
+  /** Core nodes count toward progress. Optional = false. */
   countsTowardProgress: boolean;
   optional?: boolean;
   /** Content not ready yet — UI shows coming soon. */
@@ -138,28 +140,6 @@ function mission(
   };
 }
 
-function review(
-  id: string,
-  code: string,
-  titleEn: string,
-  titleTh: string,
-  reviewId: string,
-  unlockAfterNodeIds: string[],
-): FoundationV2NodeDef {
-  return {
-    id,
-    code,
-    titleEn,
-    titleTh,
-    type: 'review',
-    reviewId,
-    countsTowardProgress: true,
-    estimatedMinutes: 3,
-    unlockAfterNodeIds,
-    comingSoon: true,
-  };
-}
-
 function describeIt(
   id: string,
   code: string,
@@ -182,8 +162,8 @@ function describeIt(
 }
 
 /**
- * Path catalog aligned to the revised Foundation Path V4 outline.
- * Ch.1 playable now; other new content marked comingSoon until follow-up PRs.
+ * Soft-lock rule: playable cores unlockAfter the previous playable core,
+ * not comingSoon nodes in between.
  */
 export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
   {
@@ -209,7 +189,7 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
         'fnd_v2_say_first_conversation',
         '1.3',
         'First Conversation',
-        'ทบทวนเปิดบทสนทนา',
+        'เปิดบทสนทนา',
         'fnd_v2_first_conversation',
         ['introductions'],
         { comingSoon: false },
@@ -294,11 +274,11 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
     ],
   },
   {
-    id: 'people_family',
+    id: 'people_feelings_family',
     number: 3,
     emoji: '👥',
-    titleEn: 'People & Family',
-    titleTh: 'คนและครอบครัว',
+    titleEn: 'People, Feelings & Family',
+    titleTh: 'คน ความรู้สึก และครอบครัว',
     items: [
       lesson(
         'meet_people',
@@ -309,42 +289,58 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
         { comingSoon: false },
       ),
       lesson(
-        'talk_about_groups',
+        'fnd_v2_how_do_you_feel',
         '3.2',
+        'How Do You Feel?',
+        'คุณรู้สึกอย่างไร?',
+        ['meet_people'],
+        { comingSoon: true },
+      ),
+      emoji(
+        'fnd_v2_emoji_feelings',
+        '3.3',
+        'Feelings',
+        'ความรู้สึก',
+        'fnd_v2_emoji_feelings',
+        ['fnd_v2_how_do_you_feel'],
+      ),
+      lesson(
+        'talk_about_groups',
+        '3.4',
         'He / She / It',
         'เขา / เธอ / มัน',
+        // Bypass How Do You Feel + Feelings emoji until content ships.
         ['meet_people'],
         { comingSoon: false },
       ),
-      emoji(
-        'fnd_v2_emoji_people',
-        '3.3',
-        'People',
-        'คำเกี่ยวกับคน',
-        'fnd_v2_emoji_people',
+      lesson(
+        'fnd_v2_we_they',
+        '3.5',
+        'We / They',
+        'เรา / พวกเขา',
         ['talk_about_groups'],
+        { comingSoon: true },
       ),
       emoji(
-        'fnd_v2_emoji_things_opt',
-        '3.O1',
-        'Things',
-        'สิ่งของ (ทบทวน)',
-        'fnd_v2_emoji_things',
-        ['fnd_v2_emoji_people'],
-        { optional: true, countsTowardProgress: false },
+        'fnd_v2_emoji_people_things',
+        '3.6',
+        'People & Things',
+        'คนและสิ่งของ',
+        'fnd_v2_emoji_people_things',
+        ['fnd_v2_we_they'],
       ),
       lesson(
         'ee_about_me_family',
-        '3.4',
+        '3.7',
         'Family',
         'ครอบครัว',
-        // Unlock from He/She/It while emoji People is still comingSoon.
+        // Bypass We/They + People & Things until content ships.
         ['talk_about_groups'],
         { comingSoon: false },
       ),
       emoji(
         'fnd_v2_emoji_family',
-        '3.5',
+        '3.8',
         'Family Words',
         'คำครอบครัว',
         'fnd_v2_emoji_family',
@@ -352,24 +348,24 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
       ),
       sayIt(
         'fnd_v2_say_people_family',
-        '3.6',
-        'People & Family',
-        'คนและครอบครัว',
+        '3.9',
+        'People, Feelings & Family',
+        'คน ความรู้สึก และครอบครัว',
         'fnd_v2_people_family',
-        // Bypass emoji Family until pool ships.
+        // Bypass Family Words emoji until pool ships.
         ['ee_about_me_family'],
         { comingSoon: false },
       ),
       describeIt(
         'fnd_v2_describe_who',
-        '3.O2',
-        'Who Is It?',
-        'ใครเอ่ย?',
+        '3.O1',
+        'Who Are They?',
+        'พวกเขาเป็นใคร?',
         ['fnd_v2_say_people_family'],
       ),
       mission(
         'fnd_v2_mission_meet_family',
-        '3.7',
+        '3.10',
         'Meet My Family',
         'แนะนำครอบครัว',
         'catch_up_old_friend_easy',
@@ -385,7 +381,6 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
     titleEn: 'Numbers, Time & Shopping',
     titleTh: 'ตัวเลข เวลา และการซื้อของ',
     items: [
-      // Existing `numbers` lesson kept as 0–10 spine (content polish in follow-up).
       lesson(
         'numbers',
         '4.1',
@@ -415,7 +410,7 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
         '4.4',
         'Telling Time',
         'บอกเวลา',
-        // Bypass emoji Numbers 0–20 until pool ships.
+        // Bypass Numbers 0–20 emoji until pool ships.
         ['fnd_v2_numbers_11_20'],
         { comingSoon: false },
       ),
@@ -449,39 +444,47 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
         '4.8',
         'Money & Prices',
         'เงินและราคา',
-        // Bypass emoji Numbers 0–100 until pool ships.
+        // Bypass Numbers 0–100 emoji until pool ships.
         ['everyday_numbers'],
         { comingSoon: false },
       ),
-      emoji(
-        'fnd_v2_emoji_food_drinks_opt',
-        '4.O1',
-        'Food & Drinks',
-        'อาหารและเครื่องดื่ม',
-        'fnd_v2_emoji_food_drinks',
+      lesson(
+        'fnd_v2_basic_colors',
+        '4.9',
+        'Basic Colors',
+        'สีพื้นฐาน',
         ['money_prices'],
-        { optional: true, countsTowardProgress: false },
+        { comingSoon: true },
+      ),
+      emoji(
+        'fnd_v2_emoji_colors',
+        '4.10',
+        'Colors',
+        'สี',
+        'fnd_v2_emoji_colors',
+        ['fnd_v2_basic_colors'],
       ),
       emoji(
         'fnd_v2_emoji_shop',
-        '4.9',
+        '4.11',
         'Things at the Shop',
         'ของในร้าน',
         'fnd_v2_emoji_shop',
+        // Soft-lock: unlock from Money while Colors is comingSoon.
         ['money_prices'],
       ),
       lesson(
         'fnd_v2_buying_something',
-        '4.10',
+        '4.12',
         'Buying Something',
         'ซื้อของ',
-        // Bypass emoji Shop until pool ships.
+        // Bypass Colors + Shop emoji until content ships.
         ['money_prices'],
         { comingSoon: false },
       ),
       sayIt(
         'fnd_v2_say_numbers_shopping',
-        '4.11',
+        '4.13',
         'Numbers & Shopping',
         'ตัวเลขและการซื้อของ',
         'fnd_v2_numbers_shopping',
@@ -490,7 +493,7 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
       ),
       mission(
         'fnd_v2_mission_at_shop',
-        '4.12',
+        '4.14',
         'At the Shop',
         'ที่ร้านค้า',
         'coffee_order_easy',
@@ -500,11 +503,11 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
     ],
   },
   {
-    id: 'about_me',
+    id: 'talk_about_yourself',
     number: 5,
     emoji: '💬',
-    titleEn: 'About Me',
-    titleTh: 'เกี่ยวกับฉัน',
+    titleEn: 'Talk About Yourself',
+    titleTh: 'คุยเรื่องตัวเอง',
     items: [
       lesson(
         'likes_dislikes',
@@ -515,46 +518,45 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
         { comingSoon: false },
       ),
       emoji(
-        'fnd_v2_emoji_food_things',
+        'fnd_v2_emoji_food_drinks',
         '5.2',
-        'Food & Things',
-        'อาหารและสิ่งของ',
-        'fnd_v2_emoji_food_things',
+        'Food & Drinks',
+        'อาหารและเครื่องดื่ม',
+        'fnd_v2_emoji_food_drinks',
         ['likes_dislikes'],
+      ),
+      lesson(
+        'fnd_v2_daily_actions',
+        '5.3',
+        'Daily Actions',
+        'กิจวัตรประจำวัน',
+        ['likes_dislikes'],
+        { comingSoon: true },
+      ),
+      emoji(
+        'fnd_v2_emoji_daily_actions',
+        '5.4',
+        'Daily Actions',
+        'คำกริยาวัตรประจำวัน',
+        'fnd_v2_emoji_daily_actions',
+        ['fnd_v2_daily_actions'],
       ),
       lesson(
         'wants_needs',
-        '5.3',
+        '5.5',
         'Wants / Needs / Have',
         'อยากได้ ต้องการ มี',
-        // Bypass emoji Food & Things until pool ships.
+        // Bypass Food & Drinks + Daily Actions until content ships.
         ['likes_dislikes'],
         { comingSoon: false },
       ),
-      emoji(
-        'fnd_v2_emoji_daily',
-        '5.4',
-        'Daily Things',
-        'ของใช้ประจำวัน',
-        'fnd_v2_emoji_daily',
-        ['wants_needs'],
-      ),
       lesson(
         'can_cant',
-        '5.5',
+        '5.6',
         'Can / Can’t',
         'สามารถ / ไม่สามารถ',
-        // Bypass emoji Daily Things until pool ships.
         ['wants_needs'],
         { comingSoon: false },
-      ),
-      emoji(
-        'fnd_v2_emoji_actions',
-        '5.6',
-        'Actions',
-        'คำกริยา',
-        'fnd_v2_emoji_actions',
-        ['can_cant'],
       ),
       sayIt(
         'fnd_v2_say_about_me',
@@ -562,7 +564,6 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
         'About Me',
         'เกี่ยวกับฉัน',
         'fnd_v2_about_me',
-        // Bypass emoji Actions until pool ships.
         ['can_cant'],
         { comingSoon: false },
       ),
@@ -585,11 +586,11 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
     ],
   },
   {
-    id: 'ask_review',
+    id: 'ask_find_close',
     number: 6,
     emoji: '❓',
-    titleEn: 'Ask & Review',
-    titleTh: 'ถามและทบทวน',
+    titleEn: 'Ask, Find & Close',
+    titleTh: 'ถาม หาทาง และจบ',
     items: [
       lesson(
         'asking_questions',
@@ -599,72 +600,65 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
         ['fnd_v2_mission_talk_yourself'],
         { comingSoon: false },
       ),
+      lesson(
+        'fnd_v2_places_directions',
+        '6.2',
+        'Places & Simple Directions',
+        'สถานที่และการบอกทาง',
+        ['asking_questions'],
+        { comingSoon: true },
+      ),
       emoji(
         'fnd_v2_emoji_places',
-        '6.2',
+        '6.3',
         'Places & Transport',
         'สถานที่และการเดินทาง',
         'fnd_v2_emoji_places',
+        ['fnd_v2_places_directions'],
+      ),
+      lesson(
+        'fnd_v2_goodbye_closing',
+        '6.4',
+        'Goodbye & Closing',
+        'กล่าวลาและจบสนทนา',
+        // Soft-lock: unlock from Asking Questions while Places is comingSoon.
         ['asking_questions'],
+        { comingSoon: true },
       ),
       sayIt(
         'fnd_v2_say_ask_me',
-        '6.3',
-        'Ask Me',
-        'ถามฉันสิ',
+        '6.5',
+        'Ask & Close',
+        'ถามและกล่าวลา',
         'fnd_v2_ask_me',
-        // Bypass emoji Places until pool ships.
+        // Bypass Places + Goodbye until content ships.
         ['asking_questions'],
         { comingSoon: false },
-      ),
-      review(
-        'fnd_v2_review_first_conversation',
-        '6.4',
-        'First Conversation Review',
-        'ทบทวนเปิดบทสนทนา',
-        'first_conversation',
-        ['fnd_v2_say_ask_me'],
-      ),
-      review(
-        'fnd_v2_review_people_family',
-        '6.5',
-        'People & Family Review',
-        'ทบทวนคนและครอบครัว',
-        'people_family',
-        ['fnd_v2_review_first_conversation'],
-      ),
-      review(
-        'fnd_v2_review_numbers_shopping',
-        '6.6',
-        'Numbers & Shopping Review',
-        'ทบทวนตัวเลขและการซื้อของ',
-        'numbers_shopping',
-        ['fnd_v2_review_people_family'],
-      ),
-      review(
-        'fnd_v2_review_about_survival',
-        '6.7',
-        'About Me & Survival Review',
-        'ทบทวนเกี่ยวกับฉันและเอาตัวรอด',
-        'about_survival',
-        ['fnd_v2_review_numbers_shopping'],
       ),
       emoji(
         'fnd_v2_emoji_foundation_mix_opt',
         '6.O1',
         'Foundation Mix',
-        'ทบทวนคละ Foundation',
+        'ทบทวนคำคละ Foundation',
         'fnd_v2_emoji_foundation_mix',
-        ['fnd_v2_review_about_survival'],
+        ['fnd_v2_say_ask_me'],
         { optional: true, countsTowardProgress: false },
+      ),
+      sayIt(
+        'fnd_v2_say_foundation_challenge',
+        '6.6',
+        'Foundation Challenge',
+        'ท้าทาย Foundation',
+        'fnd_v2_foundation_challenge',
+        ['fnd_v2_say_ask_me'],
       ),
       mission(
         'fnd_v2_mission_first_day_abroad',
-        '6.8',
+        '6.7',
         'My First Day Abroad',
         'วันแรกในต่างประเทศ',
         'taxi_ride_easy',
-        // Bypass Mixed Reviews until review content ships.
+        // Bypass Foundation Challenge until pool ships.
         ['fnd_v2_say_ask_me'],
         { comingSoon: false },
       ),
@@ -673,8 +667,8 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
 ];
 
 export const FOUNDATION_V2_PATH_ID = 'foundation_v2';
-/** Bumped when catalog shape changes (Ch.4 numbers split + emoji number cards). */
-export const FOUNDATION_V2_VERSION = 6;
+/** Bumped when catalog shape changes (path restructure V4 outline). */
+export const FOUNDATION_V2_VERSION = 8;
 
 export function flattenFoundationV2Nodes(): FoundationV2NodeDef[] {
   return FOUNDATION_V2_CHAPTERS.flatMap((c) => c.items);

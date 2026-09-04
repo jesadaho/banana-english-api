@@ -22,14 +22,14 @@ function assert(cond: boolean, msg: string) {
 }
 
 const nodes = flattenFoundationV2Nodes();
-assert(nodes.length === 51, `expected 51 nodes, got ${nodes.length}`);
+assert(nodes.length === 53, `expected 53 nodes, got ${nodes.length}`);
 assert(
-  foundationV2CoreTotal() === 46,
-  `expected 46 core, got ${foundationV2CoreTotal()}`,
+  foundationV2CoreTotal() === 50,
+  `expected 50 core, got ${foundationV2CoreTotal()}`,
 );
 assert(
-  nodes.filter((n) => !n.countsTowardProgress).length === 5,
-  'expected 5 optional nodes',
+  nodes.filter((n) => !n.countsTowardProgress).length === 3,
+  'expected 3 optional nodes',
 );
 
 const ch1 = FOUNDATION_V2_CHAPTERS[0];
