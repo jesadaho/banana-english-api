@@ -118,8 +118,8 @@ export const FOUNDATION_POOLGATE_FIXTURES: FoundationPoolGateFixture[] = [
   {
     lessonId: 'money_prices',
     setupExact: ['How much is it?'],
-    exactAtProbe: "It's five dollars.",
-    outOfPoolAtProbe: 'five dollars please',
+    exactAtProbe: 'How much is it?',
+    outOfPoolAtProbe: 'What does it cost?',
     wrongAtProbe: 'Good morning.',
     wrongAgainAtProbe: 'Hello.',
   },

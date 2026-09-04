@@ -132,9 +132,12 @@ export const FOUNDATION_LOOSE_MATCHERS: Record<
   money_prices: (step, text) =>
     loose(step, text, {
       1: /^how much/,
-      2: /^it['']?s .+ dollar/,
-      3: /^it['']?s (cheap|expensive)$/,
-      5: /^it['']?s .+ dollar/,
+      2: /^how much/,
+      3: /^(it['']?s )?five dollars?$/,
+      4: /^it['']?s five dollars?$/,
+      5: /^it['']?s ten dollars?$/,
+      6: /^how much/,
+      7: /^(thank you|thanks)$/,
     }),
   likes_dislikes: (step, text) =>
     loose(step, text, {
@@ -249,8 +252,13 @@ export const FOUNDATION_CLOSE_MATCHERS: Partial<
     6: /^sixty tw$/,
   }),
   money_prices: (step, text) => loose(step, text, {
-    1: /^how much it is$/, 2: /^it five dollars$/, 3: /^it cheap$/,
-    4: /^it ten dollars$/, 5: /^it ten dollars$/,
+    1: /^how much it is$/,
+    2: /^how much it is$/,
+    3: /^five dollar$/,
+    4: /^it five dollars$/,
+    5: /^it ten dollars$/,
+    6: /^how much it is$/,
+    7: /^thank$/,
   }),
   likes_dislikes: (step, text) => loose(step, text, {
     1: /^i like coffee very$/, 2: /^i like pizza very$/, 3: /^i no like tea$/,
@@ -1241,58 +1249,76 @@ export const FOUNDATION_BOARDS: Record<
   money_prices: {
     1: {
       textEn:
-        'สวัสดีครับ {name}! วันนี้เรามาเรียนถามและบอกราคาเป็นภาษาอังกฤษครับ 💵 ถามราคาใช้ How much is it? — ลองพูดตามนะครับ',
+        'สวัสดีครับ {name}! วันนี้เราจะฝึกถามและเข้าใจราคาครับ 💵 เวลาอยากรู้ราคา ให้ถามว่า How much is it? แปลว่า “ราคาเท่าไหร่” ลองพูดตามครับ',
       withPraise: false,
       stem: '',
       expectedSpeech: 'How much is it?',
-      options: [
-        { emoji: '💬', label: 'How much is it?', speak: 'How much is it?' },
-      ],
+      options: [],
     },
     2: {
       textEn:
-        'เก่งมากครับ! ตอบราคา — It\'s five dollars. 💵 ลองพูดตามครับ',
+        'คุณเห็นกระเป๋าใบหนึ่งและอยากรู้ราคา 👜 คุณจะถามพนักงานว่าอย่างไรครับ?',
       withPraise: true,
       stem: '',
-      expectedSpeech: "It's five dollars.",
+      expectedSpeech: 'How much is it?',
       options: [
-        { emoji: '💵', label: "It's five dollars", speak: "It's five dollars." },
+        { emoji: '💰', label: 'Ask the price', speak: 'How much is it?' },
+        { emoji: '👉', label: 'Want this', speak: 'I want this.' },
+        { emoji: '🙏', label: 'Thank you', speak: 'Thank you.' },
       ],
     },
     3: {
       textEn:
-        'สมมติกาแฟราคา 1 ดอลลาร์ ซึ่งราคาถูก เราพูดว่า It\'s cheap. แปลว่า “มันราคาถูก” 👍 ลองพูดตามนะครับ',
+        'พนักงานตอบราคาเป็นตัวเลขก่อน แล้วตามด้วยหน่วยเงินครับ ราคา 5 ดอลลาร์พูดว่า five dollars. 💵 ลองพูดตามครับ',
       withPraise: true,
       stem: '',
-      expectedSpeech: "It's cheap.",
-      options: [
-        { emoji: '👍', label: "It's cheap", speak: "It's cheap." },
-        { emoji: '💎', label: "It's expensive", speak: "It's expensive." },
-      ],
+      expectedSpeech: 'five dollars',
+      options: [],
     },
     4: {
       textEn:
-        'ถ้าเห็นป้ายราคา $10 คุณจะพูดว่าอะไรครับ? 💵',
+        'เมื่อตอบเป็นประโยค ให้เติม It\'s ข้างหน้าครับ: It\'s five dollars. แปลว่า “ราคาห้าดอลลาร์” ลองพูดตามครับ',
       withPraise: true,
       stem: '',
-      expectedSpeech: "It's ten dollars.",
-      incorrectHintTh: 'ยังไม่ตรงครับ เมื่อป้ายราคาเป็น $10 ให้พูดว่า “It\'s ten dollars.” ครับ',
-      options: [
-        { emoji: '💬', label: 'How much is it?', speak: 'How much is it?' },
-        { emoji: '💵', label: "It's ten dollars", speak: "It's ten dollars." },
-        { emoji: '👍', label: "It's cheap", speak: "It's cheap." },
-        { emoji: '💎', label: "It's expensive", speak: "It's expensive." },
-      ],
+      expectedSpeech: "It's five dollars.",
+      options: [],
     },
     5: {
       textEn:
-        'ลองบอกราคาสินค้าที่คุณชอบซื้อเป็นภาษาอังกฤษครับ 🛒',
-      advanceQuestionEn: 'Say a price in English.',
+        'ลองใช้กับราคาใหม่ครับ ป้ายนี้เขียนว่า $10 🏷️ คุณจะบอกราคาเป็นภาษาอังกฤษว่าอย่างไร?',
+      ttsText:
+        'ลองใช้กับราคาใหม่ครับ ป้ายนี้เขียนว่าสิบดอลลาร์ คุณจะบอกราคาเป็นภาษาอังกฤษว่าอย่างไร?',
       withPraise: true,
       stem: '',
       expectedSpeech: "It's ten dollars.",
-      incorrectHintTh: 'ยังไม่ตรงครับ ลองเริ่มด้วย “It\'s...” แล้วตามด้วยราคาและคำว่า dollars ครับ',
+      incorrectHintTh: 'ยังไม่ตรงครับ เริ่มด้วย “It\'s...” แล้วตามด้วย ten dollars ครับ',
+      options: [
+        { emoji: '5️⃣', label: 'Five dollars', speak: "It's five dollars." },
+        { emoji: '🔟', label: 'Ten dollars', speak: "It's ten dollars." },
+        { emoji: '2️⃣0️⃣', label: 'Twenty dollars', speak: "It's twenty dollars." },
+      ],
+    },
+    6: {
+      textEn:
+        'มาลองคุยกับพนักงานครับ คุณเห็นหนังสือเล่มหนึ่งและยังไม่รู้ราคา 📘 เริ่มบทสนทนาด้วยการถามราคาครับ',
+      advanceQuestionEn: 'คุณเห็นหนังสือและยังไม่รู้ราคา ลองถามราคาครับ 📘',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'How much is it?',
+      incorrectHintTh: 'ยังไม่ตรงครับ ลองถามว่า “How much is it?” ครับ',
       options: [],
+    },
+    7: {
+      textEn:
+        'พนักงานตอบว่า It\'s twenty dollars. 💵 ตอนนี้ตอบกลับอย่างสุภาพเพื่อจบบทสนทนาครับ',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'Thank you.',
+      incorrectHintTh: 'ยังไม่ตรงครับ เมื่อพนักงานบอกราคาแล้ว ลองตอบว่า “Thank you.” ครับ',
+      options: [
+        { emoji: '🙏', label: 'Thank you', speak: 'Thank you.' },
+        { emoji: '❓', label: 'Ask the price', speak: 'How much is it?' },
+      ],
     },
   },
 
@@ -1597,7 +1623,7 @@ export const FOUNDATION_MAX_STEPS: Record<FoundationLessonId, number> = {
   fnd_v2_buying_something: 6,
   telling_time: 5,
   everyday_numbers: 6,
-  money_prices: 5,
+  money_prices: 7,
   likes_dislikes: 5,
   wants_needs: 5,
   can_cant: 4,

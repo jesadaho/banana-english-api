@@ -45,7 +45,7 @@ describe('Foundation incorrect hints — Introductions standard', () => {
       ['polite_expressions', 5, /I['’]m sorry|Sorry/i],
       ['talk_about_groups', 4, /She['’]s/i],
       ['telling_time', 4, /nine p\.m/i],
-      ['money_prices', 4, /ten dollars/i],
+      ['money_prices', 5, /ten dollars/i],
       ['likes_dislikes', 4, /don['’]t like tea/i],
       ['can_cant', 3, /I can cook/i],
     ] as const;

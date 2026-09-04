@@ -319,6 +319,27 @@ describe('Foundation V2 — new lesson script contracts', () => {
     assert.equal(boards[6].expectedSpeech, "I'll take it.");
   });
 
+  it('Money & Prices teaches price structure and ends with a mini exchange', () => {
+    const boards = FOUNDATION_BOARDS.money_prices;
+    assert.equal(boards[1].expectedSpeech, 'How much is it?');
+    assert.equal(boards[2].expectedSpeech, 'How much is it?');
+    assert.equal(boards[3].expectedSpeech, 'five dollars');
+    assert.equal(boards[4].expectedSpeech, "It's five dollars.");
+    assert.equal(boards[5].expectedSpeech, "It's ten dollars.");
+    assert.equal(boards[6].expectedSpeech, 'How much is it?');
+    assert.equal(boards[7].expectedSpeech, 'Thank you.');
+
+    for (const step of [1, 3, 4, 6]) {
+      assert.equal(boards[step].options.length, 0, `repeat/recall step ${step}`);
+    }
+    for (const step of [2, 5, 7]) {
+      assert.ok(boards[step].options.length >= 2, `situation step ${step}`);
+    }
+    for (const board of Object.values(boards)) {
+      assert.doesNotMatch(board.expectedSpeech, /cheap|expensive/i);
+    }
+  });
+
   it('Numbers 0–10 favorite-number turn accepts every taught number', () => {
     const fixture = FOUNDATION_POOLGATE_FIXTURES.find(
       (candidate) => candidate.lessonId === 'numbers',

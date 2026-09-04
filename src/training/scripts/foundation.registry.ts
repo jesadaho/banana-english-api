@@ -90,7 +90,7 @@ const COMPLETION_TEXTS: Record<
   everyday_numbers: (name) =>
     foundationCompletion(name, 'วันนี้คุณอ่านเลขหลักสิบ และประกอบเลขสองหลักตั้งแต่ 20–100 ได้แล้ว'),
   money_prices: (name) =>
-    foundationCompletion(name, 'วันนี้คุณถามและบอกราคาเป็นภาษาอังกฤษได้แล้ว'),
+    foundationCompletion(name, 'วันนี้คุณถามราคา เข้าใจหน่วยเงิน และบอกราคาเป็นภาษาอังกฤษได้แล้ว'),
   likes_dislikes: (name) =>
     foundationCompletion(name, 'วันนี้คุณบอกสิ่งที่ชอบและไม่ชอบได้แล้ว'),
   wants_needs: (name) =>
