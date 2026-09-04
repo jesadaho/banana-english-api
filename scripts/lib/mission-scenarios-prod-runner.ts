@@ -32,6 +32,15 @@ const FRIEND_HAPPY_LINES = [
   "That's cool!",
 ];
 
+/** Messy / STT-ish: study instead of work; short hobby ask. */
+const FRIEND_MESSY_LINES = [
+  "Hi, I'm Nana.",
+  "I'm from Bangkok.",
+  "I'm studying",
+  'What do you like, Max?',
+  "That's cool!",
+];
+
 const COFFEE_HAPPY_LINES = [
   "I'd like a latte.",
   'How much is it?',
@@ -228,7 +237,8 @@ function linesFor(missionId: MissionId, scenario: number): string[] {
     if (scenario === 2) return COFFEE_MESSY_LINES;
     return STUCK_LINES;
   }
-  if (scenario === 1 || scenario === 2) return FRIEND_HAPPY_LINES;
+  if (scenario === 1) return FRIEND_HAPPY_LINES;
+  if (scenario === 2) return FRIEND_MESSY_LINES;
   return STUCK_LINES;
 }
 

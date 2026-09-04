@@ -69,6 +69,7 @@ function runMissionTurn(args: {
     args.userText,
     history,
     merged,
+    args.aiResponse,
   );
   const finalized = finalizeSimulationTurnState(
     args.config,
@@ -340,6 +341,35 @@ describe('meet_new_friend_easy — 3 scenarios', () => {
     assert.equal(turn.checkpoints.got_to_know_friend, false);
     assert.equal(turn.isTaskComplete, false);
     assert.equal(meetNewFriendMinimumProgressMet(1, turn.history), false);
+  });
+
+  it('AI closes after studying — honor close even before turn 5', () => {
+    const friend = requireMission(FRIEND_ID);
+    const history: Turn[] = [
+      { speaker: 'ai', textEn: "Hi! I'm Max. Nice to meet you." },
+      { speaker: 'user', textEn: "Hi, I'm Jim." },
+      { speaker: 'ai', textEn: 'Nice! Where are you from?' },
+      { speaker: 'user', textEn: "I'm from Thailand." },
+      {
+        speaker: 'ai',
+        textEn: 'Thailand is beautiful! Do you work or study there, Jim?',
+      },
+    ];
+
+    const turn = runMissionTurn({
+      config: friend,
+      checkpoints: initCheckpointStates(friend.successCriteria),
+      history,
+      nextTurn: 3,
+      userText: "I'm studying.",
+      aiResponse:
+        'That is wonderful! I am a software developer and love jogging. Nice talking to you!',
+    });
+
+    assert.equal(turn.checkpoints.introduced_self, true);
+    assert.equal(turn.checkpoints.answered_about_self, true);
+    assert.equal(turn.checkpoints.got_to_know_friend, true);
+    assert.equal(turn.isTaskComplete, true);
   });
 
   it('scenario 3 — stuck: 2 goals near the end force-close; maxTurns still finishes', () => {

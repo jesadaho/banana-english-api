@@ -930,10 +930,16 @@ export function applySimulationCheckpointHeuristics(
   userText: string,
   history: TurnLike[],
   checkpoints: Record<string, boolean>,
+  aiResponse = '',
 ): Record<string, boolean> {
   switch (config.simulationId) {
     case 'meet_new_friend_easy':
-      return applyMeetNewFriendHeuristics(userText, history, checkpoints);
+      return applyMeetNewFriendHeuristics(
+        userText,
+        history,
+        checkpoints,
+        aiResponse,
+      );
     default:
       return checkpoints;
   }
@@ -951,7 +957,11 @@ function meetNewFriendAiTurnCount(history: TurnLike[]): number {
 function isMeetNewFriendIntroUtterance(userText: string): boolean {
   const t = userText.toLowerCase().trim();
   if (!t) return true;
-  if (/\b(from|live in|work|study|student|job|school|like|love|enjoy|hobby)\b/.test(t)) {
+  if (
+    /\b(from|live in|work|stud(?:y|ies|ying)|student|job|school|like|love|enjoy|hobby)\b/.test(
+      t,
+    )
+  ) {
     return false;
   }
   return (
@@ -970,7 +980,7 @@ function countMeetNewFriendSelfAnswers(history: TurnLike[]): number {
     if (!text || isMeetNewFriendIntroUtterance(text)) continue;
     const t = text.toLowerCase();
     if (
-      /\b(from|live in|work|study|student|job|school|like|love|enjoy|hobby|play|watch|read)\b/.test(
+      /\b(from|live in|work|stud(?:y|ies|ying)|student|job|school|like|love|enjoy|hobby|play|watch|read)\b/.test(
         t,
       ) ||
       t.split(/\s+/).length >= 5
@@ -985,16 +995,37 @@ function countMeetNewFriendSelfAnswers(history: TurnLike[]): number {
 function maxSharedAboutHimself(textEn: string): boolean {
   const t = textEn.toLowerCase().trim();
   if (!t) return false;
-  if (/nice to meet you/.test(t) && !/\b(i work|i study|i like|i love|i enjoy)\b/.test(t)) {
+  if (/^hi!?[\s,]*i'?m max[.!]?\s*nice to meet you[.!]?$/i.test(t)) {
     return false;
   }
-  if (/\b(where are you from|what'?s your name|what do you do|what do you like)\b/.test(t)) {
+  if (
+    /\b(where are you from|what'?s your name|what do you do|what do you like|work or study)\b/.test(
+      t,
+    ) &&
+    !/\b(i work|i stud(?:y|ies|ying)|i'?m a\b|i am a\b|i like|i love|i enjoy|i'?m from)\b/.test(
+      t,
+    )
+  ) {
     return false;
   }
-  return /\b(i work|i study|i'?m a student|i like|i love|i enjoy|i'?m from)\b/.test(t);
+  return (
+    /\b(i work|i stud(?:y|ies|ying)|i'?m a student|i'?m a\b|i am a\b|i like|i love|i enjoy|i'?m from)\b/.test(
+      t,
+    ) ||
+    /\b(and|,)\s+(like|love|enjoy)\b/.test(t) ||
+    /\b(software developer|developer|teacher|engineer|nurse|doctor|student)\b/.test(
+      t,
+    )
+  );
 }
 
-/** Meet New Friend arc needs ~5 exchanges before mission can end. */
+function looksLikeSocialMissionClosing(aiResponse: string): boolean {
+  return /nice talking|see you|goodbye|great meeting|take care|lovely meeting|have a (great|nice|good) day/i.test(
+    aiResponse,
+  );
+}
+
+/** Meet New Friend arc needs ~5 exchanges before mission can end (unless AI already closes). */
 export function meetNewFriendMinimumProgressMet(
   nextTurn: number,
   history: TurnLike[],
@@ -1019,6 +1050,7 @@ function meetNewFriendIntroducedSelfEarned(history: TurnLike[]): boolean {
 function meetNewFriendGotToKnowFriendEarned(
   history: TurnLike[],
   latestUserText: string,
+  aiResponse = '',
 ): boolean {
   const userTurnCount = meetNewFriendUserTurnCount(history);
   const aiTurnCount = meetNewFriendAiTurnCount(history);
@@ -1026,6 +1058,10 @@ function meetNewFriendGotToKnowFriendEarned(
 
   if (/\b(you|your|max)\b/.test(t) && /\?/.test(latestUserText)) {
     return true;
+  }
+
+  if (aiResponse && maxSharedAboutHimself(aiResponse)) {
+    return userTurnCount >= 2;
   }
 
   if (aiTurnCount >= 2 && userTurnCount >= 3) {
@@ -1046,6 +1082,7 @@ function applyMeetNewFriendHeuristics(
   userText: string,
   history: TurnLike[],
   _checkpoints: Record<string, boolean>,
+  aiResponse = '',
 ): Record<string, boolean> {
   const selfAnswers = countMeetNewFriendSelfAnswers(history);
 
@@ -1053,7 +1090,11 @@ function applyMeetNewFriendHeuristics(
   return {
     introduced_self: meetNewFriendIntroducedSelfEarned(history),
     answered_about_self: selfAnswers >= 2,
-    got_to_know_friend: meetNewFriendGotToKnowFriendEarned(history, userText),
+    got_to_know_friend: meetNewFriendGotToKnowFriendEarned(
+      history,
+      userText,
+      aiResponse,
+    ),
   };
 }
 
@@ -1077,19 +1118,24 @@ export function finalizeSimulationTurnState(
   let textTh = reply.textTh;
 
   const completedCount = Object.values(merged).filter(Boolean).length;
+  const aiAlreadyClosing = looksLikeSocialMissionClosing(aiResponse);
+  const friendReadyToHonorClose =
+    config.simulationId === 'meet_new_friend_easy' &&
+    aiAlreadyClosing &&
+    merged.introduced_self &&
+    merged.answered_about_self;
+
   const shouldForceClose =
     maxTurnsReached ||
     (remainingTurns <= 2 && completedCount >= 2) ||
-    (allCheckpointsComplete(merged) && remainingTurns <= 2);
+    (allCheckpointsComplete(merged) && remainingTurns <= 2) ||
+    friendReadyToHonorClose;
 
   if (shouldForceClose) {
     for (const key of config.successCriteria) {
       merged[key] = true;
     }
-    const looksLikeClosing =
-      /nice talking|see you|goodbye|great meeting|take care|lovely meeting/i.test(
-        aiResponse,
-      );
+    const looksLikeClosing = aiAlreadyClosing;
     const stillAsking = /\?/.test(aiResponse);
     if (!looksLikeClosing && (maxTurnsReached || stillAsking)) {
       aiResponse = 'Nice talking to you! See you around the park!';
@@ -1100,7 +1146,8 @@ export function finalizeSimulationTurnState(
   const checkpointsDone = allCheckpointsComplete(merged);
   const minArcMet =
     config.simulationId !== 'meet_new_friend_easy' ||
-    meetNewFriendMinimumProgressMet(nextTurn, history);
+    meetNewFriendMinimumProgressMet(nextTurn, history) ||
+    friendReadyToHonorClose;
 
   const isTaskComplete =
     (checkpointsDone && minArcMet) ||

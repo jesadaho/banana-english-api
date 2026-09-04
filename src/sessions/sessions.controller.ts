@@ -2511,6 +2511,7 @@ export class SessionsController {
         userText,
         data.turns,
         mergedCheckpoints,
+        reply.aiResponse,
       );
 
       const finalized = finalizeSimulationTurnState(
