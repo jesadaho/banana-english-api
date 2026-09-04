@@ -27,10 +27,12 @@ import {
   type FreeTalkSuggestionGateResult,
 } from '../topics/topics.data';
 import {
+  INTRO_DEFAULT_DISPLAY_NAME,
   INTRO_REPORT_PROMPT,
   INTRO_TOPIC_CONTEXT,
   extractUserName,
   introReplyInstruction,
+  isPlausibleIntroDisplayName,
 } from '../topics/intro_script';
 import { ChatTurn } from '../session-store/session-store.service';
 import {
@@ -780,7 +782,8 @@ const INTRO_NAME_EXTRACT_PROMPT =
   'extract their first name only. ' +
   'Return userName as the given name in Latin letters when possible (e.g. Jim, Nana, Somchai). ' +
   'If they clearly did not say a name (only hello, filler, silence, or unrelated speech), return an empty string. ' +
-  'Never invent a name. Never return titles or full sentences.';
+  'Never invent a name. Never return titles, full sentences, or placeholders ' +
+  '(not "learner", "นักเรียน", "ผู้เรียน", "not a learner", "Thank you", "What is your name").';
 
 type GeminiContent = {
   role: 'user' | 'model';
@@ -2855,13 +2858,34 @@ ${text}`,
       temperature: 0.4,
     });
 
+    const userName = await this.resolveIntroDisplayName(history);
+
     return {
       ...report,
+      userName,
       summaryTh: teacherBThaiVoice(report.summaryTh),
       pronunciationScore: this.clampScore(report.pronunciationScore),
       confidenceScore: this.clampScore(report.confidenceScore),
       listeningScore: this.clampScore(report.listeningScore),
     };
+  }
+
+  /**
+   * Display name for onboarding: extractIntroUserName from learner turns,
+   * else {@link INTRO_DEFAULT_DISPLAY_NAME} ("Newbie").
+   */
+  async resolveIntroDisplayName(history: ChatTurn[]): Promise<string> {
+    const userTexts = history
+      .filter((t) => t.speaker === 'user')
+      .map((t) => (t.textEn ?? '').trim())
+      .filter(Boolean)
+      .reverse();
+
+    for (const text of userTexts) {
+      const extracted = await this.extractIntroUserName(text);
+      if (extracted) return extracted;
+    }
+    return INTRO_DEFAULT_DISPLAY_NAME;
   }
 
   /**
@@ -2872,7 +2896,7 @@ ${text}`,
     if (text.length < 2) return null;
 
     const local = extractUserName(text);
-    if (local) return local;
+    if (local && isPlausibleIntroDisplayName(local)) return local;
 
     try {
       const { value } = await this.generateJson<{ userName: string }>({
@@ -2890,11 +2914,15 @@ ${text}`,
       });
 
       const raw = (value.userName ?? '').trim();
-      if (!raw || /^null$/i.test(raw) || raw === '-' || raw === 'เพื่อน') {
+      if (!raw || /^null$/i.test(raw) || raw === '-') {
         return null;
       }
       // Re-run local sanitizer so we never accept a sentence.
-      return extractUserName(raw) ?? extractUserName(`My name is ${raw}`);
+      const parsed =
+        extractUserName(raw) ?? extractUserName(`My name is ${raw}`);
+      if (parsed && isPlausibleIntroDisplayName(parsed)) return parsed;
+      if (isPlausibleIntroDisplayName(raw)) return raw;
+      return null;
     } catch (err) {
       this.logger.warn(
         `extractIntroUserName failed: ${err instanceof Error ? err.message : err}`,

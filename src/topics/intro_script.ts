@@ -54,6 +54,76 @@ function sanitizeName(raw: string): string {
     .join(' ');
 }
 
+/** Saved when intro name extract fails — never trust LLM placeholders. */
+export const INTRO_DEFAULT_DISPLAY_NAME = 'Newbie';
+
+const INTRO_PLACEHOLDER_NAMES = new Set(
+  [
+    'learner',
+    'not a learner',
+    'a learner',
+    'the learner',
+    "learner's name",
+    "[learner's name]",
+    'displayname',
+    'user',
+    'username',
+    'friend',
+    'เพื่อน',
+    'นักเรียน',
+    'ผู้เรียน',
+    'thank you',
+    'thanks',
+    'hello',
+    'hi',
+    'hey',
+    'what is your name',
+    'whats your name',
+    "what's your name",
+    'iphone',
+    'android',
+    'teacher b',
+    'ครูพี่บี',
+  ].map((s) => s.toLowerCase()),
+);
+
+/**
+ * True when [name] looks like a real given name (not an LLM/STT placeholder).
+ */
+export function isPlausibleIntroDisplayName(name: string): boolean {
+  const trimmed = name.trim();
+  if (trimmed.length < 2 || trimmed.length > 40) return false;
+  if (INTRO_PLACEHOLDER_NAMES.has(trimmed.toLowerCase())) return false;
+  if (/^\[.*\]$/.test(trimmed)) return false;
+  if (/^(what|how|where|who|why|my name|i am|i'm|call me)\b/i.test(trimmed)) {
+    return false;
+  }
+  if (/[.!?…]/.test(trimmed)) return false;
+  // Allow Latin and Thai given names (1–4 tokens).
+  if (
+    !/^[\p{L}][\p{L}\p{M}'’.-]*(?:\s+[\p{L}][\p{L}\p{M}'’.-]*){0,3}$/u.test(
+      trimmed,
+    )
+  ) {
+    return false;
+  }
+  return true;
+}
+
+/**
+ * Prefer a real name extracted from learner speech; otherwise Newbie.
+ * Does not trust free-form intro-report `userName` from the model.
+ */
+export function pickIntroDisplayName(
+  extractedName: string | null | undefined,
+): string {
+  const candidate = extractedName?.trim() ?? '';
+  if (candidate && isPlausibleIntroDisplayName(candidate)) {
+    return candidate;
+  }
+  return INTRO_DEFAULT_DISPLAY_NAME;
+}
+
 export function matchesHello(userText: string): boolean {
   const text = userText.trim();
   if (text.length === 0) return false;
@@ -128,7 +198,7 @@ export function getTurn3ScriptForCase(
 ): IntroOpening {
   switch (turnCase) {
     case 'named': {
-      const name = userName ?? 'เพื่อน';
+      const name = userName ?? INTRO_DEFAULT_DISPLAY_NAME;
       return {
         textEn:
           `ยินดีที่ได้รู้จักครับคุณ ${name}! ` +

@@ -429,8 +429,9 @@ export class UsersService {
   }
 
   async updateDisplayName(userId: string, displayName: string) {
-    if (!displayName.trim()) return;
     const trimmed = displayName.trim();
+    if (!trimmed) return;
+    // Intro path already sanitizes; still reject empty after trim.
     await this.prisma.user.update({
       where: { id: userId },
       data: { displayName: trimmed },
