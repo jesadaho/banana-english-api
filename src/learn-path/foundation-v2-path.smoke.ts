@@ -156,6 +156,10 @@ function assertPlayableContent(node: FoundationV2NodeDef) {
         `empty say-it pool: ${topicId}`,
       );
       assert(
+        sayItPoolForTopic(topicId).length === 5,
+        `playable foundation say-it pool must contain exactly 5 cards: ${topicId}`,
+      );
+      assert(
         isFoundationPathRewardGameId(`say_it:${topicId}`),
         `say_it reward id not in catalog: ${topicId}`,
       );

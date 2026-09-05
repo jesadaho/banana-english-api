@@ -4,6 +4,7 @@ import { EconomyService } from '../economy/economy.service';
 import { isFoundationPathRewardGameId } from '../learn-path/foundation-v2-path.data';
 import { AnonymousUserGuard } from '../users/anonymous-user.guard';
 import {
+  FOUNDATION_SAY_IT_DEAL_COUNT,
   isFoundationPathSayItTopic,
   SAY_IT_BANANA_COST,
   SAY_IT_DEAL_COUNT,
@@ -44,16 +45,20 @@ export class SayItController {
     if (topic.locked) {
       throw new BadRequestException('This topic is locked');
     }
-    await this.economy.spendBananas(
-      req.user.id,
-      SAY_IT_BANANA_COST,
-      topicId,
-      'say_it_start',
-    );
+    if (!isFoundationPathSayItTopic(topicId)) {
+      await this.economy.spendBananas(
+        req.user.id,
+        SAY_IT_BANANA_COST,
+        topicId,
+        'say_it_start',
+      );
+    }
     return {
       ok: true,
-      bananaCost: SAY_IT_BANANA_COST,
-      dealCount: SAY_IT_DEAL_COUNT,
+      bananaCost: isFoundationPathSayItTopic(topicId) ? 0 : SAY_IT_BANANA_COST,
+      dealCount: isFoundationPathSayItTopic(topicId)
+        ? FOUNDATION_SAY_IT_DEAL_COUNT
+        : SAY_IT_DEAL_COUNT,
     };
   }
 

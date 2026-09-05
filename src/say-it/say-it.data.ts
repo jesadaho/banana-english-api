@@ -24,6 +24,7 @@ export type SayItTopic = {
 };
 
 export const SAY_IT_DEAL_COUNT = 7;
+export const FOUNDATION_SAY_IT_DEAL_COUNT = 5;
 export const SAY_IT_BANANA_COST = 1;
 
 export const SAY_IT_TOPICS: SayItTopic[] = [
@@ -134,7 +135,7 @@ export const SAY_IT_TOPICS: SayItTopic[] = [
     emoji: '🛟',
     accentColor: 0xff29b6f6,
     estimatedMinutes: 3,
-    poolSize: 14,
+    poolSize: 5,
     locked: false,
     isNew: true,
     tagEn: 'FOUNDATION',
@@ -148,7 +149,7 @@ export const SAY_IT_TOPICS: SayItTopic[] = [
     emoji: '🕐',
     accentColor: 0xffffa726,
     estimatedMinutes: 3,
-    poolSize: 14,
+    poolSize: 5,
     locked: false,
     isNew: true,
     tagEn: 'FOUNDATION',
@@ -162,7 +163,7 @@ export const SAY_IT_TOPICS: SayItTopic[] = [
     emoji: '👥',
     accentColor: 0xff66bb6a,
     estimatedMinutes: 3,
-    poolSize: 14,
+    poolSize: 5,
     locked: false,
     isNew: true,
     tagEn: 'FOUNDATION',
@@ -176,7 +177,7 @@ export const SAY_IT_TOPICS: SayItTopic[] = [
     emoji: '🛒',
     accentColor: 0xffab47bc,
     estimatedMinutes: 3,
-    poolSize: 13,
+    poolSize: 5,
     locked: false,
     isNew: true,
     tagEn: 'FOUNDATION',
@@ -190,7 +191,7 @@ export const SAY_IT_TOPICS: SayItTopic[] = [
     emoji: '💬',
     accentColor: 0xff26a69a,
     estimatedMinutes: 3,
-    poolSize: 14,
+    poolSize: 5,
     locked: false,
     isNew: true,
     tagEn: 'FOUNDATION',
@@ -204,7 +205,7 @@ export const SAY_IT_TOPICS: SayItTopic[] = [
     emoji: '❓',
     accentColor: 0xff5c6bc0,
     estimatedMinutes: 3,
-    poolSize: 14,
+    poolSize: 5,
     locked: false,
     isNew: true,
     tagEn: 'FOUNDATION',

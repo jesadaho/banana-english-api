@@ -10,6 +10,7 @@ import {
 import { resolveLessonProgressTurn } from '../lessons/lessons.data';
 import { FOUNDATION_BOARDS } from './foundation/foundation-boards';
 import { sayItPoolForTopic } from '../say-it/say-it.data';
+import { SayItService } from '../say-it/say-it.service';
 import {
   FOUNDATION_POOLGATE_FIXTURES,
   FOUNDATION_PROBE_LEARNER,
@@ -416,7 +417,7 @@ describe('Foundation V2 — new lesson script contracts', () => {
 
   it('My Daily Time retrieves only time forms taught by Telling Time', () => {
     const pool = sayItPoolForTopic('fnd_v2_daily_time');
-    assert.equal(pool.length, 14);
+    assert.equal(pool.length, 5);
     for (const phrase of pool) {
       assert.match(phrase.answerEn, /^It['’]s /, phrase.id);
       assert.doesNotMatch(
@@ -429,6 +430,27 @@ describe('Foundation V2 — new lesson script contracts', () => {
     assert.ok(pool.some((phrase) => /thirty/i.test(phrase.answerEn)));
     assert.ok(pool.some((phrase) => /a\.m\./i.test(phrase.answerEn)));
     assert.ok(pool.some((phrase) => /p\.m\./i.test(phrase.answerEn)));
+  });
+
+  it('every playable Foundation Say It topic deals exactly five essential cards', () => {
+    const expected = {
+      fnd_v2_first_conversation: ['Hello.', 'My name is {name}.', 'Nice to meet you.', "I'm from Thailand.", 'I live in Bangkok.'],
+      fnd_v2_be_polite: ['Please.', 'Thank you.', "You're welcome.", 'Excuse me.', 'Sorry.'],
+      fnd_v2_survival: ["I don't understand.", 'Can you speak more slowly?', 'What does that mean?', 'Can you say that again?', 'How do you say this in English?'],
+      fnd_v2_people_family: ["I'm happy.", "We're friends.", "They're students.", 'This is my mother.', 'I have one sister.'],
+      fnd_v2_daily_time: ["It's seven o'clock.", "It's seven thirty.", "It's seven a.m.", "It's nine p.m.", "It's five p.m."],
+      fnd_v2_numbers_shopping: ['How much is it?', "It's five dollars.", 'I want this.', "That's too expensive.", "I'll take it."],
+      fnd_v2_about_me: ['I like coffee.', "I don't like tea.", 'I want water.', 'I have a dog.', 'I can swim.'],
+      fnd_v2_ask_me: ['Where is the bathroom?', 'Who is that?', 'What is this?', 'How are you?', 'See you later.'],
+    } as const;
+
+    const service = new SayItService();
+    for (const [topicId, answers] of Object.entries(expected)) {
+      const pool = sayItPoolForTopic(topicId);
+      assert.equal(pool.length, 5, topicId);
+      assert.deepEqual(pool.map((phrase) => phrase.answerEn), [...answers], topicId);
+      assert.equal(service.dealForTopic(topicId, 7, 'Mali').dealCount, 5, topicId);
+    }
   });
 });
 
