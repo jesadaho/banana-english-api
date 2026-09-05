@@ -37,7 +37,7 @@ const OPENING_TEXTS: Record<(typeof FOUNDATION_LESSON_IDS)[number], string> = {
   numbers:
     'สวัสดีครับ {name}! วันนี้เราจะฝึกตัวเลข 0–10 กันครับ 🔢 เริ่มจาก 0–5: 0 zero, 1 one, 2 two, 3 three, 4 four, 5 five มีแอปเปิลกี่ลูกครับ? 🍎🍎🍎🍎',
   fnd_v2_numbers_11_20:
-    'สวัสดีครับ {name}! ทบทวน 0–10 แล้วไปต่อ 11–15 ครับ: 11 eleven, 12 twelve, 13 thirteen, 14 fourteen, 15 fifteen ตั้งแต่ 13 จะเริ่มได้ยินเสียง -teen หมายเลขห้องนี้อ่านว่าอะไรครับ? 🚪 14',
+    'สวัสดีครับ {name}! วันนี้ไปต่อเลข 11 และ 12 ครับ: 11 eleven, 12 twelve 🔢 ลองพูดตามว่า “twelve” ครับ',
   fnd_v2_say_it_again:
     'สวัสดีครับ {name}! วันนี้เรามาเรียนประโยคขอให้พูดอีกครั้งครับ 🔁 Can you say that again? แปลว่า “พูดอีกครั้งได้ไหม” คำว่า again แปลว่า “อีกครั้ง” ใช้เมื่อฟังไม่ทัน ลองพูดตามว่า “Can you say that again?” ครับ',
   fnd_v2_basic_colors:
@@ -122,7 +122,7 @@ const COMPLETION_TEXTS: Record<
   likes_dislikes: (name) =>
     foundationCompletion(name, 'วันนี้คุณใช้คำอาหารและเครื่องดื่ม 5 คำ เพื่อบอกสิ่งที่ชอบและไม่ชอบได้แล้ว'),
   fnd_v2_daily_actions: (name) =>
-    foundationCompletion(name, 'วันนี้คุณพูดกิจวัตรประจำวัน 5 อย่าง และเล่าตั้งแต่ตื่นนอนถึงเข้านอนได้แล้ว 🌅'),
+    foundationCompletion(name, 'วันนี้คุณพูดกิจวัตรประจำวัน 5 อย่าง และเลือกเล่าสองกิจกรรมของตัวเองได้แล้ว 🌅'),
   wants_needs: (name) =>
     foundationCompletion(name, 'วันนี้คุณพูด I want / I need / I have ได้แล้ว'),
   can_cant: (name) =>

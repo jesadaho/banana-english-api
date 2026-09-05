@@ -90,10 +90,10 @@ describe('Foundation incorrect hints — Introductions standard', () => {
     assert.equal(appleHint, 'ลองนับแอปเปิลอีกครั้งครับ');
     assert.doesNotMatch(appleHint, /4|four/i);
 
-    const twentyHint =
+    const teenHint =
       resolveIncorrectHintTh(FOUNDATION_BOARDS.fnd_v2_numbers_11_20[2]) ?? '';
-    assert.equal(twentyHint, 'ยังไม่ตรงครับ คำนี้ลงท้ายด้วยเสียง -ty ครับ');
-    assert.doesNotMatch(twentyHint, /20|twenty/i);
+    assert.equal(teenHint, 'ยังไม่ตรงครับ เลขนี้ขึ้นต้นด้วย four และลงท้ายด้วยเสียง -teen ครับ');
+    assert.doesNotMatch(teenHint, /14|fourteen/i);
   });
 
   it('numbers separates Thai number context from English target pronunciation', () => {

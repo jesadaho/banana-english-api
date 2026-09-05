@@ -108,11 +108,11 @@ export const FOUNDATION_LOOSE_MATCHERS: Record<
     }),
   fnd_v2_numbers_11_20: (step, text) =>
     loose(step, text, {
-      1: /^fourteen$/,
-      2: /^twenty$/,
-      3: /^eighteen$/,
-      4: /^sixteen$/,
-      5: /^twelve$/,
+      1: /^twelve$/,
+      2: /^fourteen$/,
+      3: /^thirteen$/,
+      4: /^eighteen$/,
+      5: /^twenty$/,
     }),
   fnd_v2_say_it_again: (step, text) =>
     loose(step, text, {
@@ -138,7 +138,7 @@ export const FOUNDATION_LOOSE_MATCHERS: Record<
       3: /^shirt$/,
       4: /^shoes$/,
       5: /^hat$/,
-      6: /^i want a bag$/,
+      6: /^i want (?:a (?:bag|shirt|book|hat)|shoes)$/,
     }),
   fnd_v2_buying_something: (step, text) =>
     loose(step, text, {
@@ -190,7 +190,7 @@ export const FOUNDATION_LOOSE_MATCHERS: Record<
       3: /^i study$/,
       4: /^i work$/,
       5: /^i sleep$/,
-      6: /^i wake up[.!]?\s*i sleep$/,
+      6: /^(?:i (?:wake up|eat|work|study|sleep)[.!]?\s*){2,}$/,
     }),
   wants_needs: (step, text) =>
     loose(step, text, {
@@ -297,11 +297,11 @@ export const FOUNDATION_CLOSE_MATCHERS: Partial<
     4: /^eit$/,
   }),
   fnd_v2_numbers_11_20: (step, text) => loose(step, text, {
-    1: /^four teen$/,
-    2: /^twentee$/,
-    3: /^eigh teen$/,
-    4: /^six teen$/,
-    5: /^twelb$/,
+    1: /^twelb$/,
+    2: /^four teen$/,
+    3: /^thir teen$/,
+    4: /^eigh teen$/,
+    5: /^twentee$/,
   }),
   fnd_v2_say_it_again: (step, text) => loose(step, text, {
     1: /^can you say again$/,
@@ -316,7 +316,7 @@ export const FOUNDATION_CLOSE_MATCHERS: Partial<
   }),
   fnd_v2_shop_things: (step, text) => loose(step, text, {
     1: /^a bag$/, 2: /^a shirt$/, 3: /^a shirt$/, 4: /^shoe$/,
-    5: /^a hat$/, 6: /^i want bag$/,
+    5: /^a hat$/, 6: /^i want (?:bag|shirt|book|hat|shoe)$/,
   }),
   fnd_v2_buying_something: (step, text) => loose(step, text, {
     1: /^i want$/,
@@ -353,7 +353,7 @@ export const FOUNDATION_CLOSE_MATCHERS: Partial<
   }),
   fnd_v2_daily_actions: (step, text) => loose(step, text, {
     1: /^i wake$/, 2: /^i eating$/, 3: /^i studying$/, 4: /^i working$/,
-    5: /^i sleeping$/, 6: /^i wake up.*and i sleep$/,
+    5: /^i sleeping$/, 6: /^i (?:wake|eating|working|studying|sleeping).+i (?:wake|eating|working|studying|sleeping)$/,
   }),
   wants_needs: (step, text) => loose(step, text, {
     1: /^i want waters$/, 2: /^i need helps$/, 3: /^i have dog$/,
@@ -1157,39 +1157,45 @@ export const FOUNDATION_BOARDS: Record<
   fnd_v2_numbers_11_20: {
     1: {
       textEn:
-        'สวัสดีครับ {name}! ทบทวน 0–10 แล้วไปต่อ 11–15 ครับ: 11 eleven, 12 twelve, 13 thirteen, 14 fourteen, 15 fifteen ตั้งแต่ 13 จะเริ่มได้ยินเสียง -teen หมายเลขห้องนี้อ่านว่าอะไรครับ? 🚪 14',
+        'สวัสดีครับ {name}! วันนี้ไปต่อเลข 11 และ 12 ครับ: 11 eleven, 12 twelve 🔢 ลองพูดตามว่า “twelve” ครับ',
       ttsText:
-        'สวัสดีครับ {name}! ทบทวนศูนย์ถึงสิบแล้วไปต่อเลขสิบเอ็ดถึงสิบห้า ในภาษาอังกฤษอ่านว่า “eleven, twelve, thirteen, fourteen, fifteen” ตั้งแต่เลขสิบสามจะเริ่มได้ยินเสียง -teen หมายเลขห้องสิบสี่อ่านเป็นภาษาอังกฤษว่าอะไรครับ? 🚪',
+        'สวัสดีครับ {name}! วันนี้ไปต่อเลขสิบเอ็ดและสิบสอง ในภาษาอังกฤษอ่านว่า “eleven, twelve” ลองพูดตามว่า “twelve” ครับ',
       withPraise: false,
+      stem: '',
+      expectedSpeech: 'twelve',
+      options: [],
+    },
+    2: {
+      textEn:
+        'ต่อไป 13 thirteen, 14 fourteen และ 15 fifteen ครับ ตั้งแต่ 13 จะได้ยินเสียง -teen หมายเลขห้องนี้อ่านว่าอะไรครับ? 🚪 14',
+      ttsText:
+        'ต่อไปเลขสิบสาม สิบสี่ และสิบห้า ในภาษาอังกฤษอ่านว่า “thirteen, fourteen, fifteen” ตั้งแต่เลขสิบสามจะได้ยินเสียง -teen หมายเลขห้องสิบสี่อ่านเป็นภาษาอังกฤษว่าอะไรครับ?',
+      withPraise: true,
       stem: '',
       expectedSpeech: 'fourteen',
       incorrectHintTh: 'ยังไม่ตรงครับ เลขนี้ขึ้นต้นด้วย four และลงท้ายด้วยเสียง -teen ครับ',
       options: [
-        { emoji: '1️⃣2️⃣', label: 'twelve', speak: 'twelve' },
         { emoji: '1️⃣3️⃣', label: 'thirteen', speak: 'thirteen' },
         { emoji: '1️⃣4️⃣', label: 'fourteen', speak: 'fourteen' },
         { emoji: '1️⃣5️⃣', label: 'fifteen', speak: 'fifteen' },
       ],
     },
-    2: {
-      textEn:
-        'กลุ่มถัดไปครับ: 16 sixteen, 17 seventeen, 18 eighteen, 19 nineteen, 20 twenty ระวังว่า 20 ลงท้ายด้วยเสียง -ty รถเมล์สายนี้คือหมายเลขอะไรครับ? 🚌 20',
-      ttsText:
-        'กลุ่มถัดไปครับ เลขสิบหกถึงยี่สิบ ในภาษาอังกฤษอ่านว่า “sixteen, seventeen, eighteen, nineteen, twenty” ระวังว่า twenty ลงท้ายด้วยเสียง -ty รถเมล์สายนี้คือหมายเลขยี่สิบ อ่านเป็นภาษาอังกฤษว่าอะไรครับ? 🚌',
+    3: {
+      textEn: 'ห้องถัดไปคือหมายเลขอะไรครับ? 🚪 13',
+      ttsText: 'ห้องถัดไปคือหมายเลขสิบสาม อ่านเป็นภาษาอังกฤษว่าอะไรครับ?',
       withPraise: true,
       stem: '',
-      expectedSpeech: 'twenty',
-      incorrectHintTh: 'ยังไม่ตรงครับ คำนี้ลงท้ายด้วยเสียง -ty ครับ',
+      expectedSpeech: 'thirteen',
+      incorrectHintTh: 'ยังไม่ตรงครับ เลขสิบสามอ่านเป็นภาษาอังกฤษว่า “thirteen” ครับ',
       options: [
-        { emoji: '1️⃣6️⃣', label: 'sixteen', speak: 'sixteen' },
-        { emoji: '1️⃣8️⃣', label: 'eighteen', speak: 'eighteen' },
-        { emoji: '1️⃣9️⃣', label: 'nineteen', speak: 'nineteen' },
-        { emoji: '2️⃣0️⃣', label: 'twenty', speak: 'twenty' },
+        { emoji: '1️⃣2️⃣', label: 'twelve', speak: 'twelve' },
+        { emoji: '1️⃣3️⃣', label: 'thirteen', speak: 'thirteen' },
+        { emoji: '1️⃣4️⃣', label: 'fourteen', speak: 'fourteen' },
       ],
     },
-    3: {
-      textEn: 'หมายเลขห้องนี้อ่านว่าอะไรครับ? 🚪 18',
-      ttsText: 'หมายเลขห้องสิบแปดอ่านเป็นภาษาอังกฤษว่าอะไรครับ? 🚪',
+    4: {
+      textEn: 'กลุ่มสุดท้ายครับ: 16 sixteen, 17 seventeen, 18 eighteen และ 19 nineteen 📦 ลองอ่านเลข 18 ครับ',
+      ttsText: 'กลุ่มสุดท้าย เลขสิบหกถึงสิบเก้า ในภาษาอังกฤษอ่านว่า “sixteen, seventeen, eighteen, nineteen” ลองอ่านเลขสิบแปดครับ',
       withPraise: true,
       stem: '',
       expectedSpeech: 'eighteen',
@@ -1201,28 +1207,14 @@ export const FOUNDATION_BOARDS: Record<
         { emoji: '1️⃣9️⃣', label: 'nineteen', speak: 'nineteen' },
       ],
     },
-    4: {
-      textEn: 'มีของกี่ชิ้นครับ? 📦 16',
-      ttsText: 'มีของสิบหกชิ้น อ่านเป็นภาษาอังกฤษว่าอะไรครับ? 📦',
-      withPraise: true,
-      stem: '',
-      expectedSpeech: 'sixteen',
-      incorrectHintTh: 'ยังไม่ตรงครับ เลขสิบหกอ่านเป็นภาษาอังกฤษว่า “sixteen” ครับ',
-      options: [
-        { emoji: '1️⃣5️⃣', label: 'fifteen', speak: 'fifteen' },
-        { emoji: '1️⃣6️⃣', label: 'sixteen', speak: 'sixteen' },
-        { emoji: '1️⃣7️⃣', label: 'seventeen', speak: 'seventeen' },
-        { emoji: '1️⃣8️⃣', label: 'eighteen', speak: 'eighteen' },
-      ],
-    },
     5: {
-      textEn: 'ขั้นตอนสุดท้ายครับ โดยไม่มีตัวเลือก หมายเลขล็อกเกอร์นี้อ่านว่าอะไร? 🔐 12',
-      ttsText: 'ขั้นตอนสุดท้ายครับ โดยไม่มีตัวเลือก หมายเลขล็อกเกอร์สิบสองอ่านเป็นภาษาอังกฤษว่าอะไรครับ? 🔐',
-      advanceQuestionEn: 'หมายเลขล็อกเกอร์นี้อ่านว่าอะไรครับ? 🔐 12',
+      textEn: 'เลข 20 อ่านว่า twenty ซึ่งลงท้ายด้วยเสียง -ty ครับ ขั้นตอนสุดท้าย โดยไม่มีตัวเลือก รถเมล์สายนี้อ่านว่าอะไร? 🚌 20',
+      ttsText: 'เลขยี่สิบอ่านว่า “twenty” ซึ่งลงท้ายด้วยเสียง -ty ขั้นตอนสุดท้าย โดยไม่มีตัวเลือก รถเมล์สายยี่สิบอ่านเป็นภาษาอังกฤษว่าอะไรครับ?',
+      advanceQuestionEn: 'รถเมล์สายนี้อ่านว่าอะไรครับ? 🚌 20',
       withPraise: true,
       stem: '',
-      expectedSpeech: 'twelve',
-      incorrectHintTh: 'เลขสิบสองอ่านเป็นภาษาอังกฤษว่า “twelve” ครับ',
+      expectedSpeech: 'twenty',
+      incorrectHintTh: 'เลขยี่สิบอ่านเป็นภาษาอังกฤษว่า “twenty” ครับ',
       options: [],
     },
   },
@@ -1405,12 +1397,12 @@ export const FOUNDATION_BOARDS: Record<
     },
     6: {
       textEn:
-        'คุณอยู่ในร้านและอยากได้กระเป๋าหนึ่งใบ 👜 ลองบอกพนักงานว่า “I want a bag.” ครับ',
-      advanceQuestionEn: 'Tell the shop assistant that you want a bag.',
+        'ขั้นตอนสุดท้ายครับ เลือกของหนึ่งอย่างที่คุณอยากได้: bag, shirt, book, shoes หรือ hat แล้วบอกพนักงานด้วย I want... ครับ',
+      advanceQuestionEn: 'Choose one shop item and say I want...',
       withPraise: true,
       stem: 'I want...',
       expectedSpeech: 'I want a bag.',
-      incorrectHintTh: 'ยังไม่ตรงครับ ลองพูดว่า “I want a bag.” ครับ',
+      incorrectHintTh: 'ยังไม่ตรงครับ ลองพูดว่า “I want a...” แล้วตามด้วย bag, shirt, book หรือ hat ถ้าเลือก shoes ให้พูด “I want shoes.” ครับ',
       options: [],
     },
   },
@@ -1789,12 +1781,12 @@ export const FOUNDATION_BOARDS: Record<
     },
     6: {
       textEn:
-        'มาลองพูดกิจวัตรตั้งแต่เช้าถึงก่อนนอนสองประโยคครับ: “I wake up. I sleep.”',
-      advanceQuestionEn: 'Say both daily actions: I wake up. I sleep.',
+        'แล้วคุณล่ะ? เลือกสองอย่างที่คุณทำทุกวัน แล้วพูดเป็นสองประโยคครับ เช่น “I work. I eat.”',
+      advanceQuestionEn: 'Choose two daily actions and say two I... sentences.',
       withPraise: true,
       stem: '',
-      expectedSpeech: 'I wake up. I sleep.',
-      incorrectHintTh: 'ยังไม่ตรงครับ ลองพูดทั้งสองประโยคว่า “I wake up. I sleep.” ครับ',
+      expectedSpeech: 'I work. I eat.',
+      incorrectHintTh: 'ยังไม่ตรงครับ เลือกสองอย่างจาก wake up, eat, work, study หรือ sleep แล้วพูดเป็นสองประโยคที่ขึ้นต้นด้วย I ครับ',
       options: [],
     },
   },

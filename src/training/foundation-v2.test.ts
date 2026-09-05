@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {
   buildChoiceLessonAfterUser,
   choiceLessonEffectiveProgress,
+  ensureIncorrectAssessCopy,
   isRepeatOnlyBoard,
   type ChoiceLessonHistoryTurn,
 } from './scripts/choice-lesson.script';
@@ -254,6 +255,59 @@ describe('Foundation — full happy path (all steps → complete)', () => {
 });
 
 describe('Foundation V2 — new lesson script contracts', () => {
+  it('never praises an incorrect answer', () => {
+    const result = ensureIncorrectAssessCopy(
+      mockGeminiReply('incorrect', 'เก่งมากครับ Nana แต่ลองพูดตามว่า bathroom'),
+      FOUNDATION_BOARDS.fnd_v2_basic_colors[1],
+    );
+    assert.doesNotMatch(result.textEn, /เก่งมาก|ดีมาก|เยี่ยม|ยอดเยี่ยม|สุดยอด/);
+    assert.match(result.textEn, /red/i);
+  });
+
+  it('Numbers 11–20 introduces small groups and ends with unaided twenty', () => {
+    const boards = FOUNDATION_BOARDS.fnd_v2_numbers_11_20;
+    assert.equal(boards[1].expectedSpeech, 'twelve');
+    assert.equal(boards[2].expectedSpeech, 'fourteen');
+    assert.equal(boards[3].expectedSpeech, 'thirteen');
+    assert.equal(boards[4].expectedSpeech, 'eighteen');
+    assert.equal(boards[5].expectedSpeech, 'twenty');
+    assert.equal(boards[1].options.length, 0);
+    assert.equal(boards[5].options.length, 0);
+    assert.doesNotMatch(boards[1].textEn, /13 thirteen|14 fourteen|15 fifteen/);
+  });
+
+  it('Shop Things and Daily Actions end with personal choices', () => {
+    const shopFixture = FOUNDATION_POOLGATE_FIXTURES.find(
+      (candidate) => candidate.lessonId === 'fnd_v2_shop_things',
+    )!;
+    const shopDef = getDef(shopFixture);
+    for (const answer of [
+      'I want a bag.',
+      'I want a shirt.',
+      'I want a book.',
+      'I want shoes.',
+      'I want a hat.',
+    ]) {
+      assert.ok(
+        ['exact', 'near'].includes(shopDef.scoreStep(6, answer, [])),
+        answer,
+      );
+    }
+    assert.equal(FOUNDATION_BOARDS.fnd_v2_shop_things[6].options.length, 0);
+
+    const dailyFixture = FOUNDATION_POOLGATE_FIXTURES.find(
+      (candidate) => candidate.lessonId === 'fnd_v2_daily_actions',
+    )!;
+    const dailyDef = getDef(dailyFixture);
+    for (const answer of ['I work. I eat.', 'I study. I sleep.', 'I wake up. I work.']) {
+      assert.ok(
+        ['exact', 'near'].includes(dailyDef.scoreStep(6, answer, [])),
+        answer,
+      );
+    }
+    assert.equal(FOUNDATION_BOARDS.fnd_v2_daily_actions[6].options.length, 0);
+  });
+
   it('new repeat-after-model turns hide choices; situation turns keep choices', () => {
     for (const step of [1, 2]) {
       assert.equal(

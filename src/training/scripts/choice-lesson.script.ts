@@ -648,7 +648,15 @@ export function ensureIncorrectAssessCopy(
     return { ...aiReply, textEn: hintTh };
   }
 
-  const textEn = aiReply.textEn?.trim() || '';
+  let textEn = aiReply.textEn?.trim() || '';
+  // An incorrect answer must never receive celebratory feedback, even when the
+  // assessment model returns contradictory copy such as "เก่งมาก... แต่...".
+  if (/^(เก่งมาก|ดีมาก|เยี่ยม|ยอดเยี่ยม|สุดยอด|ถูกต้อง)/u.test(textEn)) {
+    const model = board?.expectedSpeech?.trim();
+    textEn = model
+      ? `ตรงนี้เราพูดว่า “${model}” ครับ ลองอีกครั้งนะครับ`
+      : 'ยังไม่ตรงครับ ลองอีกครั้งนะครับ';
+  }
   if (/พูดตาม|ลองพูดตาม/i.test(textEn)) {
     return { ...aiReply, textEn };
   }

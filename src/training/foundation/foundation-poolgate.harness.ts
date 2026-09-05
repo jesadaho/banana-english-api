@@ -501,11 +501,11 @@ export function foundationOutOfPoolCloseMiss(
       4: 'eit',
     },
     fnd_v2_numbers_11_20: {
-      1: 'four teen',
-      2: 'twentee',
-      3: 'eigh teen',
-      4: 'six teen',
-      5: 'twelb',
+      1: 'twelb',
+      2: 'four teen',
+      3: 'thir teen',
+      4: 'eigh teen',
+      5: 'twentee',
     },
     fnd_v2_say_it_again: {
       1: 'Can you say again?',
@@ -551,7 +551,7 @@ export function foundationOutOfPoolCloseMiss(
     likes_dislikes: { 1: 'I like coffee very.', 2: 'I like pizza very.', 3: 'I no like tea.', 4: 'I like sushi very.', 5: 'I like coffee very.' },
     fnd_v2_daily_actions: {
       1: 'I wake.', 2: 'I eating.', 3: 'I studying.', 4: 'I working.',
-      5: 'I sleeping.', 6: 'I wake up and I sleep.',
+      5: 'I sleeping.', 6: 'I working and I eating.',
     },
     wants_needs: { 1: 'I want waters.', 2: 'I need helps.', 3: 'I have dog.', 4: 'I want waters.', 5: 'I want coffees.' },
     can_cant: { 1: 'I swim.', 2: 'I no can drive.', 3: 'I can cooking.', 4: 'I can cooking.' },

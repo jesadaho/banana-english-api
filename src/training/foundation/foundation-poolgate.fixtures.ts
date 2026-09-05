@@ -94,8 +94,8 @@ export const FOUNDATION_POOLGATE_FIXTURES: FoundationPoolGateFixture[] = [
   {
     lessonId: 'fnd_v2_numbers_11_20',
     setupExact: [],
-    exactAtProbe: 'fourteen',
-    outOfPoolAtProbe: 'the number fourteen',
+    exactAtProbe: 'twelve',
+    outOfPoolAtProbe: 'the number twelve',
     wrongAtProbe: 'Good morning.',
     wrongAgainAtProbe: 'Hello.',
   },
