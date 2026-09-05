@@ -319,7 +319,7 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
         'We / They',
         'เรา / พวกเขา',
         ['talk_about_groups'],
-        { comingSoon: false },
+        { comingSoon: true },
       ),
       emoji(
         'fnd_v2_emoji_people_things',
@@ -327,7 +327,8 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
         'People & Things',
         'คนและสิ่งของ',
         'fnd_v2_emoji_people_things',
-        ['fnd_v2_we_they'],
+        // Soft-lock: unlock from He/She/It while We/They is comingSoon.
+        ['talk_about_groups'],
         { comingSoon: false },
       ),
       lesson(
@@ -404,14 +405,14 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
         'ตัวเลข 0–20',
         'fnd_v2_emoji_numbers_0_20',
         ['fnd_v2_numbers_11_20'],
+        { comingSoon: false },
       ),
       lesson(
         'telling_time',
         '4.4',
         'Telling Time',
         'บอกเวลา',
-        // Bypass Numbers 0–20 emoji until pool ships.
-        ['fnd_v2_numbers_11_20'],
+        ['fnd_v2_emoji_numbers_0_20'],
         { comingSoon: false },
       ),
       sayIt(
@@ -438,14 +439,14 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
         'ตัวเลข 0–100',
         'fnd_v2_emoji_numbers_0_100',
         ['everyday_numbers'],
+        { comingSoon: false },
       ),
       lesson(
         'money_prices',
         '4.8',
         'Money & Prices',
         'เงินและราคา',
-        // Bypass Numbers 0–100 emoji until pool ships.
-        ['everyday_numbers'],
+        ['fnd_v2_emoji_numbers_0_100'],
         { comingSoon: false },
       ),
       lesson(
@@ -462,6 +463,7 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
         'Colors',
         'สี',
         'fnd_v2_emoji_colors',
+        // Pool ready (red/blue/yellow/green/black) — unlock with Basic Colors.
         ['fnd_v2_basic_colors'],
       ),
       emoji(
@@ -470,7 +472,8 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
         'Things at the Shop',
         'ของในร้าน',
         'fnd_v2_emoji_shop',
-        // Soft-lock: unlock from Money while Colors is comingSoon.
+        // Pool ready (bag/shirt/book/shoes/hat) — teach nouns before unlock;
+        // soft-lock from Money while Colors + shop vocab still comingSoon.
         ['money_prices'],
       ),
       lesson(
@@ -523,6 +526,7 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
         'Food & Drinks',
         'อาหารและเครื่องดื่ม',
         'fnd_v2_emoji_food_drinks',
+        // Pool ready — teach sushi (+ water) in Likes before unlock.
         ['likes_dislikes'],
       ),
       lesson(
@@ -539,6 +543,7 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
         'Daily Actions',
         'คำกริยาวัตรประจำวัน',
         'fnd_v2_emoji_daily_actions',
+        // Pool ready (wake up/eat/work/study/sleep) — unlock with Daily Actions.
         ['fnd_v2_daily_actions'],
       ),
       lesson(
@@ -614,6 +619,8 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
         'Places & Transport',
         'สถานที่และการเดินทาง',
         'fnd_v2_emoji_places',
+        // Pool ready (bathroom/station/hotel/bus/taxi) — unlock with Places lesson.
+        // left/right stay in Say It (emoji ambiguous).
         ['fnd_v2_places_directions'],
       ),
       lesson(
@@ -667,8 +674,8 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
 ];
 
 export const FOUNDATION_V2_PATH_ID = 'foundation_v2';
-/** Bumped when catalog shape changes (Ch.3 feelings / we-they / emoji unlock). */
-export const FOUNDATION_V2_VERSION = 9;
+/** Bumped when catalog unlocks Numbers 0–20 / 0–100 emoji packs. */
+export const FOUNDATION_V2_VERSION = 11;
 
 export function flattenFoundationV2Nodes(): FoundationV2NodeDef[] {
   return FOUNDATION_V2_CHAPTERS.flatMap((c) => c.items);
