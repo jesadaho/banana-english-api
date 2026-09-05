@@ -319,7 +319,7 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
         'We / They',
         'เรา / พวกเขา',
         ['talk_about_groups'],
-        { comingSoon: true },
+        { comingSoon: false },
       ),
       emoji(
         'fnd_v2_emoji_people_things',
@@ -327,8 +327,7 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
         'People & Things',
         'คนและสิ่งของ',
         'fnd_v2_emoji_people_things',
-        // Soft-lock: unlock from He/She/It while We/They is comingSoon.
-        ['talk_about_groups'],
+        ['fnd_v2_we_they'],
         { comingSoon: false },
       ),
       lesson(
@@ -677,7 +676,7 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
 
 export const FOUNDATION_V2_PATH_ID = 'foundation_v2';
 /** Bumped when the new Foundation vocabulary lesson chains became playable. */
-export const FOUNDATION_V2_VERSION = 13;
+export const FOUNDATION_V2_VERSION = 14;
 
 export function flattenFoundationV2Nodes(): FoundationV2NodeDef[] {
   return FOUNDATION_V2_CHAPTERS.flatMap((c) => c.items);
