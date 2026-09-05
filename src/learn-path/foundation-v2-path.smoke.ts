@@ -14,7 +14,11 @@ import {
   type FoundationV2NodeDef,
 } from './foundation-v2-path.data';
 import { isFoundationChoiceLesson } from '../training/scripts/foundation.registry';
-import { sayItPoolForTopic, sayItTopicById } from '../say-it/say-it.data';
+import {
+  personalizeSayItPhrase,
+  sayItPoolForTopic,
+  sayItTopicById,
+} from '../say-it/say-it.data';
 import { getSimulation } from '../simulations/simulations.data';
 
 function assert(cond: boolean, msg: string) {
@@ -42,6 +46,57 @@ assert(ch1.items[0].id === 'greetings', 'preserve greetings id');
 assert(ch1.items[1].id === 'introductions', 'preserve introductions id');
 assert(ch1.items[2].id === 'fnd_v2_say_first_conversation', 'say it node');
 assert(ch1.items[2].topicId === 'fnd_v2_first_conversation', 'say it topic');
+assert(
+  JSON.stringify(
+    sayItPoolForTopic('fnd_v2_first_conversation').map((phrase) => phrase.id),
+  ) === JSON.stringify([
+    'fnd_hello',
+    'fnd_my_name_is_user',
+    'fnd_nice_to_meet_you',
+    'fnd_im_from_thailand',
+    'fnd_i_live_in_bangkok',
+  ]),
+  'first conversation must only retrieve five phrases taught before this node',
+);
+assert(
+  !sayItPoolForTopic('fnd_v2_first_conversation')
+    .find((phrase) => phrase.id === 'fnd_im_from_thailand')
+    ?.acceptedAnswers.includes("I'm from Thai"),
+  'Thailand card must not accept the incorrect country name "Thai"',
+);
+const personalizedNameCard = personalizeSayItPhrase(
+  sayItPoolForTopic('fnd_v2_first_conversation').find(
+    (phrase) => phrase.id === 'fnd_my_name_is_user',
+  )!,
+  'Mali',
+);
+assert(personalizedNameCard.promptTh === 'ฉันชื่อ Mali', 'name prompt must use learner name');
+assert(personalizedNameCard.answerEn === 'My name is Mali.', 'name answer must use learner name');
+assert(
+  personalizedNameCard.acceptedAnswers.includes("I'm Mali"),
+  'personalized short answer must be accepted',
+);
+const politePool = sayItPoolForTopic('fnd_v2_be_polite');
+assert(
+  JSON.stringify(politePool.map((phrase) => phrase.id)) ===
+    JSON.stringify([
+      'fnd_please',
+      'fnd_thank_you',
+      'fnd_youre_welcome',
+      'fnd_excuse_me',
+      'fnd_sorry',
+    ]),
+  'be polite must only retrieve its five taught expressions',
+);
+assert(
+  politePool.find((phrase) => phrase.id === 'fnd_please')?.promptTh === 'ได้โปรด',
+  'Please prompt must be concise',
+);
+assert(
+  politePool.find((phrase) => phrase.id === 'fnd_excuse_me')?.subtitleTh ===
+    'ใช้เรียกใครอย่างสุภาพ',
+  'Excuse me must explain its context without revealing English',
+);
 assert(ch1.items[3].id === 'yes_no_maybe', 'preserve yes_no_maybe id');
 assert(ch1.items[4].id === 'fnd_v2_mission_meet_max', 'meet max mission');
 assert(

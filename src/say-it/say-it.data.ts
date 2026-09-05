@@ -3,6 +3,7 @@ import poolsJson from './say-it-pools.generated.json';
 export type SayItPhrase = {
   id: string;
   promptTh: string;
+  subtitleTh?: string;
   answerEn: string;
   acceptedAnswers: string[];
 };
@@ -105,7 +106,7 @@ export const SAY_IT_TOPICS: SayItTopic[] = [
     emoji: '👋',
     accentColor: 0xffffc107,
     estimatedMinutes: 3,
-    poolSize: 14,
+    poolSize: 5,
     locked: false,
     isNew: true,
     tagEn: 'FOUNDATION',
@@ -119,7 +120,7 @@ export const SAY_IT_TOPICS: SayItTopic[] = [
     emoji: '🙏',
     accentColor: 0xffec407a,
     estimatedMinutes: 3,
-    poolSize: 14,
+    poolSize: 5,
     locked: false,
     isNew: true,
     tagEn: 'FOUNDATION',
@@ -225,8 +226,28 @@ export function sayItPoolForTopic(topicId: string): SayItPhrase[] {
   return pools[topicId] ?? [];
 }
 
+export function personalizeSayItPhrase(
+  phrase: SayItPhrase,
+  displayName?: string | null,
+): SayItPhrase {
+  if (!phrase.promptTh.includes('{name}')) return phrase;
+
+  const name = displayName?.trim() || 'Nana';
+  const replaceName = (value: string) => value.replaceAll('{name}', name);
+  return {
+    ...phrase,
+    promptTh: replaceName(phrase.promptTh),
+    answerEn: replaceName(phrase.answerEn),
+    acceptedAnswers: phrase.acceptedAnswers.map(replaceName),
+  };
+}
+
 /** Fisher–Yates shuffle; returns up to [count] phrases from the topic pool. */
-export function dealSayItPhrases(topicId: string, count = SAY_IT_DEAL_COUNT): SayItPhrase[] {
+export function dealSayItPhrases(
+  topicId: string,
+  count = SAY_IT_DEAL_COUNT,
+  displayName?: string | null,
+): SayItPhrase[] {
   const pool = [...sayItPoolForTopic(topicId)];
   if (pool.length === 0) return [];
 
@@ -236,5 +257,5 @@ export function dealSayItPhrases(topicId: string, count = SAY_IT_DEAL_COUNT): Sa
   }
 
   const n = Math.min(count, pool.length);
-  return pool.slice(0, n);
+  return pool.slice(0, n).map((phrase) => personalizeSayItPhrase(phrase, displayName));
 }

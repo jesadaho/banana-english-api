@@ -28,13 +28,14 @@ export class SayItController {
 
   @Get('topics/:topicId/deal')
   dealForTopic(
+    @Req() req: AuthedRequest,
     @Param('topicId') topicId: string,
     @Query('count') count?: string,
   ) {
     const parsed = count ? Number.parseInt(count, 10) : SAY_IT_DEAL_COUNT;
     const dealCount =
       Number.isFinite(parsed) && parsed > 0 ? parsed : SAY_IT_DEAL_COUNT;
-    return this.sayIt.dealForTopic(topicId, dealCount);
+    return this.sayIt.dealForTopic(topicId, dealCount, req.user.displayName);
   }
 
   @Post('topics/:topicId/start')

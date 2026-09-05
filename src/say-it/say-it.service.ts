@@ -24,13 +24,13 @@ export class SayItService {
     return topic;
   }
 
-  dealForTopic(topicId: string, count = SAY_IT_DEAL_COUNT): {
+  dealForTopic(topicId: string, count = SAY_IT_DEAL_COUNT, displayName?: string | null): {
     topicId: string;
     dealCount: number;
     phrases: SayItPhrase[];
   } {
     this.getTopic(topicId);
-    const phrases = dealSayItPhrases(topicId, count);
+    const phrases = dealSayItPhrases(topicId, count, displayName);
     return {
       topicId,
       dealCount: phrases.length,

@@ -953,33 +953,15 @@
       "acceptedAnswers": ["Hello", "Hi", "Hi.", "Hey", "Hey."]
     },
     {
-      "id": "fnd_hi",
-      "promptTh": "หวัดดี",
-      "answerEn": "Hello.",
-      "acceptedAnswers": ["Hello", "Hello.", "Hi", "Hi.", "Hey", "Hey."]
-    },
-    {
-      "id": "fnd_my_name_is_max",
-      "promptTh": "ฉันชื่อ Max",
-      "answerEn": "My name is Max.",
+      "id": "fnd_my_name_is_user",
+      "promptTh": "ฉันชื่อ {name}",
+      "answerEn": "My name is {name}.",
       "acceptedAnswers": [
-        "My name is Max",
-        "I'm Max",
-        "I'm Max.",
-        "I am Max",
-        "I am Max."
-      ]
-    },
-    {
-      "id": "fnd_my_name_is_linda",
-      "promptTh": "ฉันชื่อ Linda",
-      "answerEn": "My name is Linda.",
-      "acceptedAnswers": [
-        "My name is Linda",
-        "I'm Linda",
-        "I'm Linda.",
-        "I am Linda",
-        "I am Linda."
+        "My name is {name}",
+        "I'm {name}",
+        "I'm {name}.",
+        "I am {name}",
+        "I am {name}."
       ]
     },
     {
@@ -999,19 +981,7 @@
       "acceptedAnswers": [
         "I'm from Thailand",
         "I am from Thailand",
-        "I am from Thailand.",
-        "I'm from Thai",
-        "I am from Thai"
-      ]
-    },
-    {
-      "id": "fnd_im_from_japan",
-      "promptTh": "ฉันมาจากญี่ปุ่น",
-      "answerEn": "I'm from Japan.",
-      "acceptedAnswers": [
-        "I'm from Japan",
-        "I am from Japan",
-        "I am from Japan."
+        "I am from Thailand."
       ]
     },
     {
@@ -1024,70 +994,13 @@
         "I'm in Bangkok",
         "I am in Bangkok"
       ]
-    },
-    {
-      "id": "fnd_i_live_in_chiang_mai",
-      "promptTh": "ฉันอยู่ที่เชียงใหม่",
-      "answerEn": "I live in Chiang Mai.",
-      "acceptedAnswers": [
-        "I live in Chiang Mai",
-        "I live in Chiang Mai.",
-        "I live in Chiangmai",
-        "I live in Chiangmai."
-      ]
-    },
-    {
-      "id": "fnd_my_name_is_ken",
-      "promptTh": "ฉันชื่อ Ken",
-      "answerEn": "My name is Ken.",
-      "acceptedAnswers": [
-        "My name is Ken",
-        "I'm Ken",
-        "I'm Ken.",
-        "I am Ken",
-        "I am Ken."
-      ]
-    },
-    {
-      "id": "fnd_im_from_america",
-      "promptTh": "ฉันมาจากอเมริกา",
-      "answerEn": "I'm from America.",
-      "acceptedAnswers": [
-        "I'm from America",
-        "I am from America",
-        "I am from America.",
-        "I'm from the USA",
-        "I'm from the US",
-        "I am from the USA"
-      ]
-    },
-    {
-      "id": "fnd_i_live_in_tokyo",
-      "promptTh": "ฉันอยู่ที่โตเกียว",
-      "answerEn": "I live in Tokyo.",
-      "acceptedAnswers": ["I live in Tokyo", "I live in Tokyo."]
-    },
-    {
-      "id": "fnd_nice_to_meet_you_2",
-      "promptTh": "ดีใจที่ได้รู้จักคุณ",
-      "answerEn": "Nice to meet you.",
-      "acceptedAnswers": [
-        "Nice to meet you",
-        "Nice meeting you",
-        "Nice meeting you."
-      ]
-    },
-    {
-      "id": "fnd_hello_again",
-      "promptTh": "ทักทายว่า Hello",
-      "answerEn": "Hello.",
-      "acceptedAnswers": ["Hello", "Hi", "Hi."]
     }
   ],
   "fnd_v2_be_polite": [
     {
       "id": "fnd_please",
-      "promptTh": "ได้โปรด / กรุณา",
+      "promptTh": "ได้โปรด",
+      "subtitleTh": "ใช้เมื่อต้องการขออย่างสุภาพ",
       "answerEn": "Please.",
       "acceptedAnswers": ["Please"]
     },
@@ -1099,75 +1012,24 @@
     },
     {
       "id": "fnd_youre_welcome",
-      "promptTh": "ไม่เป็นไร / ด้วยความยินดี",
+      "promptTh": "ด้วยความยินดี",
+      "subtitleTh": "ใช้ตอบเมื่อมีคนขอบคุณ",
       "answerEn": "You're welcome.",
       "acceptedAnswers": ["You're welcome", "You are welcome", "You are welcome.", "No problem", "No problem."]
     },
     {
       "id": "fnd_excuse_me",
-      "promptTh": "ขอโทษนะ (เรียกความสนใจ)",
+      "promptTh": "ขอโทษนะ",
+      "subtitleTh": "ใช้เรียกใครอย่างสุภาพ",
       "answerEn": "Excuse me.",
       "acceptedAnswers": ["Excuse me", "Pardon me", "Pardon me."]
     },
     {
       "id": "fnd_sorry",
       "promptTh": "ขอโทษ",
+      "subtitleTh": "ใช้เมื่อทำผิดหรือรบกวนผู้อื่น",
       "answerEn": "Sorry.",
       "acceptedAnswers": ["Sorry", "I'm sorry", "I'm sorry.", "I am sorry", "I am sorry."]
-    },
-    {
-      "id": "fnd_please_help_me",
-      "promptTh": "ช่วยฉันหน่อยได้ไหม",
-      "answerEn": "Please help me.",
-      "acceptedAnswers": ["Please help me", "Help me, please", "Help me please", "Help me please."]
-    },
-    {
-      "id": "fnd_thank_you_so_much",
-      "promptTh": "ขอบคุณมากๆ",
-      "answerEn": "Thank you so much.",
-      "acceptedAnswers": ["Thank you so much", "Thanks so much", "Thanks so much.", "Thank you very much", "Thank you very much."]
-    },
-    {
-      "id": "fnd_im_sorry",
-      "promptTh": "ฉันขอโทษ",
-      "answerEn": "I'm sorry.",
-      "acceptedAnswers": ["I'm sorry", "I am sorry", "I am sorry.", "Sorry", "Sorry."]
-    },
-    {
-      "id": "fnd_excuse_me_please",
-      "promptTh": "ขอโทษนะครับ/ค่ะ",
-      "answerEn": "Excuse me, please.",
-      "acceptedAnswers": ["Excuse me, please", "Excuse me please", "Excuse me please.", "Excuse me", "Excuse me."]
-    },
-    {
-      "id": "fnd_please_wait",
-      "promptTh": "กรุณารอสักครู่",
-      "answerEn": "Please wait.",
-      "acceptedAnswers": ["Please wait", "Wait, please", "Wait please", "Wait please."]
-    },
-    {
-      "id": "fnd_please_come_in",
-      "promptTh": "เชิญเข้ามาได้เลย",
-      "answerEn": "Please come in.",
-      "acceptedAnswers": ["Please come in", "Come in, please", "Come in please", "Come in please."]
-    },
-    {
-      "id": "fnd_after_you",
-      "promptTh": "เชิญคุณก่อน",
-      "answerEn": "After you.",
-      "acceptedAnswers": ["After you", "You first", "You first."]
-    },
-    {
-      "id": "fnd_no_problem",
-      "promptTh": "ไม่เป็นไรเลย",
-      "answerEn": "No problem.",
-      "acceptedAnswers": ["No problem", "You're welcome", "You're welcome.", "It's okay", "It's okay."]
-    },
-    {
-      "id": "fnd_thanks",
-      "promptTh": "ขอบคุณนะ",
-      "answerEn": "Thanks.",
-      "acceptedAnswers": ["Thanks", "Thank you", "Thank you."]
     }
   ],
   "fnd_v2_survival": [
