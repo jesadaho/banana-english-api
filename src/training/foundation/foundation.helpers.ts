@@ -25,15 +25,20 @@ export const FOUNDATION_LESSON_IDS = [
   'numbers',
   'fnd_v2_numbers_11_20',
   'fnd_v2_say_it_again',
+  'fnd_v2_basic_colors',
+  'fnd_v2_shop_things',
   'fnd_v2_buying_something',
   'telling_time',
   'everyday_numbers',
   'money_prices',
   'likes_dislikes',
+  'fnd_v2_daily_actions',
   'wants_needs',
   'can_cant',
   'asking_for_help',
   'asking_questions',
+  'fnd_v2_places_directions',
+  'fnd_v2_goodbye_closing',
 ] as const;
 
 export type FoundationLessonId = (typeof FOUNDATION_LESSON_IDS)[number];

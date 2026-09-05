@@ -46,7 +46,7 @@ describe('Foundation incorrect hints — Introductions standard', () => {
       ['talk_about_groups', 4, /She['’]s/i],
       ['telling_time', 4, /nine p\.m/i],
       ['money_prices', 5, /ten dollars/i],
-      ['likes_dislikes', 4, /don['’]t like tea/i],
+      ['likes_dislikes', 4, /I like sushi/i],
       ['can_cant', 3, /I can cook/i],
     ] as const;
 

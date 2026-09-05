@@ -2,7 +2,7 @@
  * Foundation Path V4 catalog — served by GET /learn-path/foundation-v2.
  * Preserved lesson IDs keep existing completions.
  *
- * Catalog: 50 core + 3 optional = 53 nodes on the map.
+ * Catalog: 51 core + 3 optional = 54 nodes on the map.
  * New lessons/pools marked comingSoon until content ships.
  * Mission sims kept as-is (content redesign later).
  */
@@ -455,7 +455,7 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
         'Basic Colors',
         'สีพื้นฐาน',
         ['money_prices'],
-        { comingSoon: true },
+        { comingSoon: false },
       ),
       emoji(
         'fnd_v2_emoji_colors',
@@ -463,31 +463,37 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
         'Colors',
         'สี',
         'fnd_v2_emoji_colors',
-        // Pool ready (red/blue/yellow/green/black) — unlock with Basic Colors.
         ['fnd_v2_basic_colors'],
+        { comingSoon: false },
       ),
-      emoji(
-        'fnd_v2_emoji_shop',
+      lesson(
+        'fnd_v2_shop_things',
         '4.11',
         'Things at the Shop',
         'ของในร้าน',
+        ['fnd_v2_emoji_colors'],
+        { comingSoon: false },
+      ),
+      emoji(
         'fnd_v2_emoji_shop',
-        // Pool ready (bag/shirt/book/shoes/hat) — teach nouns before unlock;
-        // soft-lock from Money while Colors + shop vocab still comingSoon.
-        ['money_prices'],
+        '4.12',
+        'Things at the Shop',
+        'ของในร้าน',
+        'fnd_v2_emoji_shop',
+        ['fnd_v2_shop_things'],
+        { comingSoon: false },
       ),
       lesson(
         'fnd_v2_buying_something',
-        '4.12',
+        '4.13',
         'Buying Something',
         'ซื้อของ',
-        // Bypass Colors + Shop emoji until content ships.
-        ['money_prices'],
+        ['fnd_v2_emoji_shop'],
         { comingSoon: false },
       ),
       sayIt(
         'fnd_v2_say_numbers_shopping',
-        '4.13',
+        '4.14',
         'Numbers & Shopping',
         'ตัวเลขและการซื้อของ',
         'fnd_v2_numbers_shopping',
@@ -496,7 +502,7 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
       ),
       mission(
         'fnd_v2_mission_at_shop',
-        '4.14',
+        '4.15',
         'At the Shop',
         'ที่ร้านค้า',
         'coffee_order_easy',
@@ -526,16 +532,16 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
         'Food & Drinks',
         'อาหารและเครื่องดื่ม',
         'fnd_v2_emoji_food_drinks',
-        // Pool ready — teach sushi (+ water) in Likes before unlock.
         ['likes_dislikes'],
+        { comingSoon: false },
       ),
       lesson(
         'fnd_v2_daily_actions',
         '5.3',
         'Daily Actions',
         'กิจวัตรประจำวัน',
-        ['likes_dislikes'],
-        { comingSoon: true },
+        ['fnd_v2_emoji_food_drinks'],
+        { comingSoon: false },
       ),
       emoji(
         'fnd_v2_emoji_daily_actions',
@@ -543,16 +549,15 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
         'Daily Actions',
         'คำกริยาวัตรประจำวัน',
         'fnd_v2_emoji_daily_actions',
-        // Pool ready (wake up/eat/work/study/sleep) — unlock with Daily Actions.
         ['fnd_v2_daily_actions'],
+        { comingSoon: false },
       ),
       lesson(
         'wants_needs',
         '5.5',
         'Wants / Needs / Have',
         'อยากได้ ต้องการ มี',
-        // Bypass Food & Drinks + Daily Actions until content ships.
-        ['likes_dislikes'],
+        ['fnd_v2_emoji_daily_actions'],
         { comingSoon: false },
       ),
       lesson(
@@ -611,7 +616,7 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
         'Places & Simple Directions',
         'สถานที่และการบอกทาง',
         ['asking_questions'],
-        { comingSoon: true },
+        { comingSoon: false },
       ),
       emoji(
         'fnd_v2_emoji_places',
@@ -619,18 +624,16 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
         'Places & Transport',
         'สถานที่และการเดินทาง',
         'fnd_v2_emoji_places',
-        // Pool ready (bathroom/station/hotel/bus/taxi) — unlock with Places lesson.
-        // left/right stay in Say It (emoji ambiguous).
         ['fnd_v2_places_directions'],
+        { comingSoon: false },
       ),
       lesson(
         'fnd_v2_goodbye_closing',
         '6.4',
         'Goodbye & Closing',
         'กล่าวลาและจบสนทนา',
-        // Soft-lock: unlock from Asking Questions while Places is comingSoon.
-        ['asking_questions'],
-        { comingSoon: true },
+        ['fnd_v2_emoji_places'],
+        { comingSoon: false },
       ),
       sayIt(
         'fnd_v2_say_ask_me',
@@ -638,8 +641,7 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
         'Ask & Close',
         'ถามและกล่าวลา',
         'fnd_v2_ask_me',
-        // Bypass Places + Goodbye until content ships.
-        ['asking_questions'],
+        ['fnd_v2_goodbye_closing'],
         { comingSoon: false },
       ),
       emoji(
@@ -674,8 +676,8 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
 ];
 
 export const FOUNDATION_V2_PATH_ID = 'foundation_v2';
-/** Bumped when catalog unlocks Numbers 0–20 / 0–100 emoji packs. */
-export const FOUNDATION_V2_VERSION = 11;
+/** Bumped when the new Foundation vocabulary lesson chains became playable. */
+export const FOUNDATION_V2_VERSION = 13;
 
 export function flattenFoundationV2Nodes(): FoundationV2NodeDef[] {
   return FOUNDATION_V2_CHAPTERS.flatMap((c) => c.items);

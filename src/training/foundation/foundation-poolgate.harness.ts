@@ -514,6 +514,14 @@ export function foundationOutOfPoolCloseMiss(
       4: 'How you say this English?',
       5: 'Can you speak slowly?',
     },
+    fnd_v2_basic_colors: {
+      1: 'redd', 2: 'blu', 3: 'yello', 4: 'gren', 5: 'blak',
+      6: 'I like color blue.',
+    },
+    fnd_v2_shop_things: {
+      1: 'a bag', 2: 'a shirt', 3: 'a shirt', 4: 'shoe',
+      5: 'a hat', 6: 'I want bag.',
+    },
     fnd_v2_buying_something: {
       1: 'I want.',
       2: 'I want waters.',
@@ -540,11 +548,23 @@ export function foundationOutOfPoolCloseMiss(
       6: 'How much it is?',
       7: 'Thank.',
     },
-    likes_dislikes: { 1: 'I like coffee very.', 2: 'I like pizza very.', 3: 'I no like tea.', 4: 'I no like tea.', 5: 'I like coffee very.' },
+    likes_dislikes: { 1: 'I like coffee very.', 2: 'I like pizza very.', 3: 'I no like tea.', 4: 'I like sushi very.', 5: 'I like coffee very.' },
+    fnd_v2_daily_actions: {
+      1: 'I wake.', 2: 'I eating.', 3: 'I studying.', 4: 'I working.',
+      5: 'I sleeping.', 6: 'I wake up and I sleep.',
+    },
     wants_needs: { 1: 'I want waters.', 2: 'I need helps.', 3: 'I have dog.', 4: 'I want waters.', 5: 'I want coffees.' },
     can_cant: { 1: 'I swim.', 2: 'I no can drive.', 3: 'I can cooking.', 4: 'I can cooking.' },
     asking_for_help: { 1: 'I not understand.', 2: 'Can speak more slowly?', 3: 'What that mean?', 4: 'I not understand.' },
     asking_questions: { 1: 'Where the bathroom?', 2: 'Who that?', 3: 'How you?', 4: 'What this?', 5: 'What this?' },
+    fnd_v2_places_directions: {
+      1: 'bath room', 2: 'Where the bathroom?', 3: 'Where the hotel?',
+      4: 'a taxi', 5: 'Go straight ahead.', 6: 'Where the station?',
+    },
+    fnd_v2_goodbye_closing: {
+      1: 'good bye', 2: 'See later.', 3: 'See later.',
+      4: 'Nice talk to you.', 5: 'Have nice day.',
+    },
   };
   const authoredClose = closeByLesson[lessonId]?.[step];
   if (authoredClose) return authoredClose;

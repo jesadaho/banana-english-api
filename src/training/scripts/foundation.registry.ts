@@ -40,6 +40,10 @@ const OPENING_TEXTS: Record<(typeof FOUNDATION_LESSON_IDS)[number], string> = {
     'สวัสดีครับ {name}! ทบทวน 0–10 แล้วไปต่อ 11–15 ครับ: 11 eleven, 12 twelve, 13 thirteen, 14 fourteen, 15 fifteen ตั้งแต่ 13 จะเริ่มได้ยินเสียง -teen หมายเลขห้องนี้อ่านว่าอะไรครับ? 🚪 14',
   fnd_v2_say_it_again:
     'สวัสดีครับ {name}! วันนี้เรามาเรียนประโยคขอให้พูดอีกครั้งครับ 🔁 Can you say that again? แปลว่า “พูดอีกครั้งได้ไหม” คำว่า again แปลว่า “อีกครั้ง” ใช้เมื่อฟังไม่ทัน ลองพูดตามว่า “Can you say that again?” ครับ',
+  fnd_v2_basic_colors:
+    'วันนี้เราจะเรียนสีพื้นฐานกันครับ 🎨 red แปลว่า “สีแดง” และ blue แปลว่า “สีน้ำเงิน” ลองพูดตามว่า “red” ครับ',
+  fnd_v2_shop_things:
+    'วันนี้เราจะเรียนชื่อของในร้านครับ 🛍️ bag แปลว่า “กระเป๋า” ลองพูดตามว่า “bag” ครับ',
   fnd_v2_buying_something:
     'สวัสดีครับ {name}! วันนี้เรามาเรียนประโยคซื้อของครับ 🛍️ ถ้าอยากได้สิ่งนี้ พูดว่า I want this. แปลว่า “ฉันอยากได้สิ่งนี้” ลองพูดตามครับ',
   telling_time:
@@ -50,6 +54,8 @@ const OPENING_TEXTS: Record<(typeof FOUNDATION_LESSON_IDS)[number], string> = {
     'สวัสดีครับ {name}! วันนี้เรามาเรียนถามและบอกราคาเป็นภาษาอังกฤษครับ 💵 ลองพูดตามว่า How much is it?',
   likes_dislikes:
     'สวัสดีครับ {name}! วันนี้เรามาเรียนบอกสิ่งที่ชอบและไม่ชอบครับ ☕ I like... แปลว่า “ฉันชอบ...” เช่น I like coffee. แปลว่า “ฉันชอบกาแฟ” ลองพูดตามว่า “I like coffee.” ครับ',
+  fnd_v2_daily_actions:
+    'วันนี้เราจะฝึกพูดกิจวัตรประจำวันครับ 🌅 I wake up. แปลว่า “ฉันตื่นนอน” ลองพูดตามว่า “I wake up.” ครับ',
   wants_needs:
     'สวัสดีครับ {name}! วันนี้เรามาเรียน I want / I need / I have ครับ 💧 I want ใช้บอกสิ่งที่อยากได้, I need ใช้บอกสิ่งที่จำเป็นต้องใช้ และ I have ใช้บอกสิ่งที่มีอยู่แล้ว เริ่มจาก I want water. แปลว่า “ฉันอยากได้น้ำ” ลองพูดตามครับ',
   can_cant:
@@ -58,6 +64,10 @@ const OPENING_TEXTS: Record<(typeof FOUNDATION_LESSON_IDS)[number], string> = {
     'สวัสดีครับ {name}! วันนี้เรามาเรียน 3 ประโยคช่วยชีวิตเวลาฟังอังกฤษไม่ทัน 🆘 I don\'t understand. แปลว่า “ฉันไม่เข้าใจ” ใช้เมื่อฟังแล้วไม่เข้าใจ ลองพูดตามว่า “I don\'t understand.” ครับ',
   asking_questions:
     'สวัสดีครับ {name}! วันนี้เรามาเรียนถามคำถามง่ายๆ ครับ 🚻 Where ใช้ถามสถานที่ และ Where is the bathroom? แปลว่า “ห้องน้ำอยู่ที่ไหน” ใช้เมื่อต้องการหาห้องน้ำ ลองพูดตามครับ',
+  fnd_v2_places_directions:
+    'วันนี้เราจะเรียนสถานที่และการบอกทางง่ายๆ ครับ 🗺️ bathroom แปลว่า “ห้องน้ำ” ลองพูดตามว่า “bathroom” ครับ',
+  fnd_v2_goodbye_closing:
+    'วันนี้เราจะฝึกกล่าวลาและจบบทสนทนาครับ 👋 Goodbye. แปลว่า “ลาก่อน” ลองพูดตามว่า “Goodbye.” ครับ',
 };
 
 const COMPLETION_TEXTS: Record<
@@ -97,6 +107,10 @@ const COMPLETION_TEXTS: Record<
     foundationCompletion(name, 'วันนี้คุณฝึกตัวเลข 11–20 และลองใช้กับหมายเลขห้อง รถเมล์ และล็อกเกอร์แล้ว'),
   fnd_v2_say_it_again: (name) =>
     foundationCompletion(name, 'วันนี้คุณขอให้พูดอีกครั้ง และถามว่าพูดว่าอะไรเป็นภาษาอังกฤษได้แล้ว'),
+  fnd_v2_basic_colors: (name) =>
+    foundationCompletion(name, 'วันนี้คุณพูดสีพื้นฐาน 5 สี และบอกสีที่ตัวเองชอบได้แล้ว 🎨'),
+  fnd_v2_shop_things: (name) =>
+    foundationCompletion(name, 'วันนี้คุณเรียกชื่อของในร้าน 5 อย่าง และบอกสิ่งที่อยากได้เป็นภาษาอังกฤษได้แล้ว 🛍️'),
   fnd_v2_buying_something: (name) =>
     foundationCompletion(name, 'วันนี้คุณบอกสิ่งที่ต้องการ ตอบสนองต่อราคา และตัดสินใจซื้อเป็นภาษาอังกฤษได้แล้ว'),
   telling_time: (name) =>
@@ -106,7 +120,9 @@ const COMPLETION_TEXTS: Record<
   money_prices: (name) =>
     foundationCompletion(name, 'วันนี้คุณถามราคา เข้าใจหน่วยเงิน และบอกราคาเป็นภาษาอังกฤษได้แล้ว'),
   likes_dislikes: (name) =>
-    foundationCompletion(name, 'วันนี้คุณบอกสิ่งที่ชอบและไม่ชอบได้แล้ว'),
+    foundationCompletion(name, 'วันนี้คุณใช้คำอาหารและเครื่องดื่ม 5 คำ เพื่อบอกสิ่งที่ชอบและไม่ชอบได้แล้ว'),
+  fnd_v2_daily_actions: (name) =>
+    foundationCompletion(name, 'วันนี้คุณพูดกิจวัตรประจำวัน 5 อย่าง และเล่าตั้งแต่ตื่นนอนถึงเข้านอนได้แล้ว 🌅'),
   wants_needs: (name) =>
     foundationCompletion(name, 'วันนี้คุณพูด I want / I need / I have ได้แล้ว'),
   can_cant: (name) =>
@@ -115,6 +131,10 @@ const COMPLETION_TEXTS: Record<
     foundationCompletion(name, 'วันนี้คุณมี 3 ประโยคช่วยชีวิตเมื่อฟังอังกฤษไม่ทันแล้ว'),
   asking_questions: (name) =>
     foundationCompletion(name, 'วันนี้คุณถามคำถามง่ายๆ ด้วย What, Where, Who และ How ได้แล้ว'),
+  fnd_v2_places_directions: (name) =>
+    foundationCompletion(name, 'วันนี้คุณเรียกชื่อสถานที่และการเดินทาง พร้อมถามทางและบอกทางง่ายๆ ได้แล้ว 🗺️'),
+  fnd_v2_goodbye_closing: (name) =>
+    foundationCompletion(name, 'วันนี้คุณกล่าวลาและจบบทสนทนาเป็นภาษาอังกฤษได้หลายแบบแล้ว 👋'),
 };
 
 const COMPLETION_TTS_TEXTS: Partial<

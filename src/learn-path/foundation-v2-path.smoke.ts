@@ -26,10 +26,10 @@ function assert(cond: boolean, msg: string) {
 }
 
 const nodes = flattenFoundationV2Nodes();
-assert(nodes.length === 53, `expected 53 nodes, got ${nodes.length}`);
+assert(nodes.length === 54, `expected 54 nodes, got ${nodes.length}`);
 assert(
-  foundationV2CoreTotal() === 50,
-  `expected 50 core, got ${foundationV2CoreTotal()}`,
+  foundationV2CoreTotal() === 51,
+  `expected 51 core, got ${foundationV2CoreTotal()}`,
 );
 assert(
   nodes.filter((n) => !n.countsTowardProgress).length === 3,

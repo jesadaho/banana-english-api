@@ -122,6 +122,24 @@ export const FOUNDATION_LOOSE_MATCHERS: Record<
       4: /^how do you say this in english$/,
       5: /^(can you say that again|can you speak more slowly|i don['’]?t understand|what does that mean|how do you say this in english)$/,
     }),
+  fnd_v2_basic_colors: (step, text) =>
+    loose(step, text, {
+      1: /^red$/,
+      2: /^blue$/,
+      3: /^yellow$/,
+      4: /^green$/,
+      5: /^black$/,
+      6: /^i like (red|blue|yellow|green|black)$/,
+    }),
+  fnd_v2_shop_things: (step, text) =>
+    loose(step, text, {
+      1: /^bag$/,
+      2: /^shirt$/,
+      3: /^shirt$/,
+      4: /^shoes$/,
+      5: /^hat$/,
+      6: /^i want a bag$/,
+    }),
   fnd_v2_buying_something: (step, text) =>
     loose(step, text, {
       1: /^i want this$/,
@@ -159,10 +177,20 @@ export const FOUNDATION_LOOSE_MATCHERS: Record<
     }),
   likes_dislikes: (step, text) =>
     loose(step, text, {
-      1: /^i like /,
-      2: /^i like /,
-      3: /^i don['']?t like /,
-      5: /^i (like|don['']?t like) /,
+      1: /^i like coffee$/,
+      2: /^i like pizza$/,
+      3: /^i don['']?t like tea$/,
+      4: /^i like sushi$/,
+      5: /^i like /,
+    }),
+  fnd_v2_daily_actions: (step, text) =>
+    loose(step, text, {
+      1: /^i wake up$/,
+      2: /^i eat$/,
+      3: /^i study$/,
+      4: /^i work$/,
+      5: /^i sleep$/,
+      6: /^i wake up[.!]?\s*i sleep$/,
     }),
   wants_needs: (step, text) =>
     loose(step, text, {
@@ -189,6 +217,23 @@ export const FOUNDATION_LOOSE_MATCHERS: Record<
       2: /^(what|where|when|who|how) /,
       3: /^(what|where|when|who|how) /,
       5: /^(what|where|when|who|how) /,
+    }),
+  fnd_v2_places_directions: (step, text) =>
+    loose(step, text, {
+      1: /^bathroom$/,
+      2: /^where is the bathroom$/,
+      3: /^where is the hotel$/,
+      4: /^taxi$/,
+      5: /^go straight$/,
+      6: /^where is the station$/,
+    }),
+  fnd_v2_goodbye_closing: (step, text) =>
+    loose(step, text, {
+      1: /^goodbye$/,
+      2: /^see you later$/,
+      3: /^see you later$/,
+      4: /^nice talking to you$/,
+      5: /^(goodbye|see you later|nice talking to you|have a nice day)$/,
     }),
 };
 
@@ -265,6 +310,14 @@ export const FOUNDATION_CLOSE_MATCHERS: Partial<
     4: /^how you say this english$/,
     5: /^(can you say again|can you speak slowly|i don['’]?t understand|what that mean|how you say this in english)$/,
   }),
+  fnd_v2_basic_colors: (step, text) => loose(step, text, {
+    1: /^redd?$/, 2: /^blu$/, 3: /^yello$/, 4: /^gren$/, 5: /^blak$/,
+    6: /^i like color (red|blue|yellow|green|black)$/,
+  }),
+  fnd_v2_shop_things: (step, text) => loose(step, text, {
+    1: /^a bag$/, 2: /^a shirt$/, 3: /^a shirt$/, 4: /^shoe$/,
+    5: /^a hat$/, 6: /^i want bag$/,
+  }),
   fnd_v2_buying_something: (step, text) => loose(step, text, {
     1: /^i want$/,
     2: /^i want waters?$/,
@@ -296,7 +349,11 @@ export const FOUNDATION_CLOSE_MATCHERS: Partial<
   }),
   likes_dislikes: (step, text) => loose(step, text, {
     1: /^i like coffee very$/, 2: /^i like pizza very$/, 3: /^i no like tea$/,
-    4: /^i no like tea$/, 5: /^i like coffee very$/,
+    4: /^i like sushi very$/, 5: /^i like coffee very$/,
+  }),
+  fnd_v2_daily_actions: (step, text) => loose(step, text, {
+    1: /^i wake$/, 2: /^i eating$/, 3: /^i studying$/, 4: /^i working$/,
+    5: /^i sleeping$/, 6: /^i wake up.*and i sleep$/,
   }),
   wants_needs: (step, text) => loose(step, text, {
     1: /^i want waters$/, 2: /^i need helps$/, 3: /^i have dog$/,
@@ -312,6 +369,14 @@ export const FOUNDATION_CLOSE_MATCHERS: Partial<
   asking_questions: (step, text) => loose(step, text, {
     1: /^where the bathroom$/, 2: /^who that$/, 3: /^how you$/,
     4: /^what this$/, 5: /^what this$/,
+  }),
+  fnd_v2_places_directions: (step, text) => loose(step, text, {
+    1: /^bath room$/, 2: /^where the bathroom$/, 3: /^where the hotel$/,
+    4: /^a taxi$/, 5: /^go straight ahead$/, 6: /^where the station$/,
+  }),
+  fnd_v2_goodbye_closing: (step, text) => loose(step, text, {
+    1: /^good bye$/, 2: /^see later$/, 3: /^see later$/,
+    4: /^nice talk to you$/, 5: /^(bye bye|see later|nice talk to you|have nice day)$/,
   }),
   introductions: (step, text) =>
     loose(step, text, {
@@ -1231,6 +1296,125 @@ export const FOUNDATION_BOARDS: Record<
     },
   },
 
+  fnd_v2_basic_colors: {
+    1: {
+      textEn:
+        'วันนี้เราจะเรียนสีพื้นฐานกันครับ 🎨 red แปลว่า “สีแดง” และ blue แปลว่า “สีน้ำเงิน” ลองพูดตามว่า “red” ครับ',
+      withPraise: false,
+      stem: '',
+      expectedSpeech: 'red',
+      options: [],
+    },
+    2: {
+      textEn:
+        'กระเป๋าใบนี้เป็นสีน้ำเงินครับ 🎒🔵 สีนี้ภาษาอังกฤษเรียกว่าอะไรครับ?',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'blue',
+      incorrectHintTh: 'ยังไม่ตรงครับ กระเป๋าใบนี้เป็นสีน้ำเงิน ลองพูดว่า “blue” ครับ',
+      options: [
+        { emoji: '🔵', label: 'Blue', speak: 'blue' },
+        { emoji: '🔴', label: 'Red', speak: 'red' },
+      ],
+    },
+    3: {
+      textEn:
+        'yellow แปลว่า “สีเหลือง” 🟡 green แปลว่า “สีเขียว” 🟢 ลองพูดตามว่า “yellow” ครับ',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'yellow',
+      options: [],
+    },
+    4: {
+      textEn:
+        'ใบไม้นี้เป็นสีเขียวครับ 🍃 สีเขียวภาษาอังกฤษพูดว่าอะไรครับ?',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'green',
+      incorrectHintTh: 'ยังไม่ตรงครับ ใบไม้นี้เป็นสีเขียว ลองพูดว่า “green” ครับ',
+      options: [
+        { emoji: '🟢', label: 'Green', speak: 'green' },
+        { emoji: '🟡', label: 'Yellow', speak: 'yellow' },
+        { emoji: '🔵', label: 'Blue', speak: 'blue' },
+      ],
+    },
+    5: {
+      textEn:
+        'สีสุดท้ายคือ black แปลว่า “สีดำ” ⚫ ลองพูดตามว่า “black” ครับ',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'black',
+      options: [],
+    },
+    6: {
+      textEn:
+        'ขั้นตอนสุดท้ายครับ คุณชอบสีอะไร? เลือกหนึ่งสีแล้วพูดว่า I like... เช่น I like blue.',
+      advanceQuestionEn: 'What color do you like? Answer with I like...',
+      withPraise: true,
+      stem: 'I like...',
+      expectedSpeech: 'I like blue.',
+      incorrectHintTh:
+        'ยังไม่ตรงครับ ลองพูด “I like...” แล้วตามด้วย red, blue, yellow, green หรือ black ครับ',
+      options: [],
+    },
+  },
+
+  fnd_v2_shop_things: {
+    1: {
+      textEn:
+        'วันนี้เราจะเรียนชื่อของในร้านครับ 🛍️ bag แปลว่า “กระเป๋า” ลองพูดตามว่า “bag” ครับ',
+      withPraise: false,
+      stem: '',
+      expectedSpeech: 'bag',
+      options: [],
+    },
+    2: {
+      textEn:
+        'shirt แปลว่า “เสื้อเชิ้ต” 👕 ลองพูดตามว่า “shirt” ครับ',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'shirt',
+      options: [],
+    },
+    3: {
+      textEn: 'คุณเห็นเสื้อเชิ้ตตัวนี้ 👕 ของชิ้นนี้เรียกว่าอะไรครับ?',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'shirt',
+      incorrectHintTh: 'ยังไม่ตรงครับ รูปนี้คือเสื้อเชิ้ต ลองพูดว่า “shirt” ครับ',
+      options: [
+        { emoji: '👕', label: 'Shirt', speak: 'shirt' },
+        { emoji: '👜', label: 'Bag', speak: 'bag' },
+      ],
+    },
+    4: {
+      textEn:
+        'อีกสองอย่างครับ book แปลว่า “หนังสือ” 📘 และ shoes แปลว่า “รองเท้า” 👟 ลองพูดตามว่า “shoes” ครับ',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'shoes',
+      options: [],
+    },
+    5: {
+      textEn:
+        'hat แปลว่า “หมวก” 🧢 ลองพูดตามว่า “hat” ครับ',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'hat',
+      options: [],
+    },
+    6: {
+      textEn:
+        'คุณอยู่ในร้านและอยากได้กระเป๋าหนึ่งใบ 👜 ลองบอกพนักงานว่า “I want a bag.” ครับ',
+      advanceQuestionEn: 'Tell the shop assistant that you want a bag.',
+      withPraise: true,
+      stem: 'I want...',
+      expectedSpeech: 'I want a bag.',
+      incorrectHintTh: 'ยังไม่ตรงครับ ลองพูดว่า “I want a bag.” ครับ',
+      options: [],
+    },
+  },
+
   fnd_v2_buying_something: {
     1: {
       textEn:
@@ -1510,51 +1694,107 @@ export const FOUNDATION_BOARDS: Record<
       withPraise: false,
       stem: '',
       expectedSpeech: 'I like coffee.',
-      options: [
-        { emoji: '☕', label: 'I like coffee', speak: 'I like coffee.' },
-      ],
+      options: [],
     },
     2: {
       textEn:
-        'เก่งมากครับ! ถ้าชอบพิซซ่า — I like pizza. 🍕 ลองพูดตามครับ',
+        'pizza แปลว่า “พิซซ่า” 🍕 ถ้าคุณชอบพิซซ่า จะพูดว่าอย่างไรครับ?',
       withPraise: true,
       stem: '',
       expectedSpeech: 'I like pizza.',
       options: [
         { emoji: '🍕', label: 'I like pizza', speak: 'I like pizza.' },
+        { emoji: '☕', label: 'I like coffee', speak: 'I like coffee.' },
       ],
+      incorrectHintTh: 'ยังไม่ตรงครับ ถ้าชอบพิซซ่า ลองพูดว่า “I like pizza.” ครับ',
     },
     3: {
       textEn:
-        'ถ้าไม่ชอบชา ใช้ I don\'t like tea. 🍵 ลองพูดตามนะครับ',
+        'tea แปลว่า “ชา” 🍵 ถ้าไม่ชอบชา พูดว่า I don\'t like tea. ลองพูดตามครับ',
       withPraise: true,
       stem: '',
       expectedSpeech: "I don't like tea.",
-      options: [
-        { emoji: '🍵', label: "I don't like tea", speak: "I don't like tea." },
-      ],
+      options: [],
     },
     4: {
       textEn:
-        'ถ้ามีคนเสนอชาให้ แต่คุณไม่ชอบ จะพูดว่าอะไรครับ? 🍵',
+        'อีกสองคำที่ใช้บ่อยคือ sushi แปลว่า “ซูชิ” 🍣 และ water แปลว่า “น้ำ” 💧 ถ้าชอบซูชิ พูดว่าอย่างไรครับ?',
       withPraise: true,
       stem: '',
-      expectedSpeech: "I don't like tea.",
-      incorrectHintTh: 'ยังไม่ตรงครับ ถ้าไม่ชอบชา ให้พูดว่า “I don\'t like tea.” ครับ',
+      expectedSpeech: 'I like sushi.',
+      incorrectHintTh: 'ยังไม่ตรงครับ ถ้าชอบซูชิ ลองพูดว่า “I like sushi.” ครับ',
       options: [
-        { emoji: '☕', label: 'I like coffee', speak: 'I like coffee.' },
-        { emoji: '🍕', label: 'I like pizza', speak: 'I like pizza.' },
-        { emoji: '🍵', label: "I don't like tea", speak: "I don't like tea." },
+        { emoji: '🍣', label: 'I like sushi', speak: 'I like sushi.' },
+        { emoji: '💧', label: 'I like water', speak: 'I like water.' },
       ],
     },
     5: {
       textEn:
-        'ลองบอกสิ่งที่คุณชอบหรือไม่ชอบจริงๆ เป็นภาษาอังกฤษครับ 😊',
-      advanceQuestionEn: 'What do you like or dislike?',
+        'ตอนนี้ลองบอกสิ่งที่คุณชอบจริง ๆ หนึ่งอย่างครับ เริ่มด้วย I like...',
+      advanceQuestionEn: 'What do you like? Answer with I like...',
+      withPraise: true,
+      stem: 'I like...',
+      expectedSpeech: 'I like coffee.',
+      incorrectHintTh: 'ยังไม่ตรงครับ ลองเริ่มด้วย “I like...” แล้วตามด้วยอาหารหรือเครื่องดื่มครับ',
+      options: [],
+    },
+  },
+
+  fnd_v2_daily_actions: {
+    1: {
+      textEn:
+        'วันนี้เราจะฝึกพูดกิจวัตรประจำวันครับ 🌅 I wake up. แปลว่า “ฉันตื่นนอน” ลองพูดตามว่า “I wake up.” ครับ',
+      withPraise: false,
+      stem: '',
+      expectedSpeech: 'I wake up.',
+      options: [],
+    },
+    2: {
+      textEn:
+        'I eat. แปลว่า “ฉันกิน” 🍽️ ลองพูดตามว่า “I eat.” ครับ',
       withPraise: true,
       stem: '',
-      expectedSpeech: 'I like coffee.',
-      incorrectHintTh: 'ยังไม่ตรงครับ ลองเริ่มด้วย “I like...” หรือ “I don\'t like...” แล้วพูดต่อครับ',
+      expectedSpeech: 'I eat.',
+      options: [],
+    },
+    3: {
+      textEn: 'ตอนนี้คุณกำลังอ่านหนังสือเรียน 📚 คุณจะพูดว่าอย่างไรครับ?',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'I study.',
+      incorrectHintTh: 'ยังไม่ตรงครับ ตอนนี้กำลังเรียน ลองพูดว่า “I study.” ครับ',
+      options: [
+        { emoji: '📚', label: 'I study', speak: 'I study.' },
+        { emoji: '💼', label: 'I work', speak: 'I work.' },
+      ],
+    },
+    4: {
+      textEn: 'ตอนนี้คุณกำลังทำงานที่โต๊ะ 💼 คุณจะพูดว่าอย่างไรครับ?',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'I work.',
+      incorrectHintTh: 'ยังไม่ตรงครับ ตอนนี้กำลังทำงาน ลองพูดว่า “I work.” ครับ',
+      options: [
+        { emoji: '💼', label: 'I work', speak: 'I work.' },
+        { emoji: '🍽️', label: 'I eat', speak: 'I eat.' },
+      ],
+    },
+    5: {
+      textEn:
+        'ก่อนจบวัน เราพูดว่า I sleep. แปลว่า “ฉันนอน” 😴 ลองพูดตามครับ',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'I sleep.',
+      options: [],
+    },
+    6: {
+      textEn:
+        'มาลองพูดกิจวัตรตั้งแต่เช้าถึงก่อนนอนสองประโยคครับ: “I wake up. I sleep.”',
+      advanceQuestionEn: 'Say both daily actions: I wake up. I sleep.',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'I wake up. I sleep.',
+      incorrectHintTh: 'ยังไม่ตรงครับ ลองพูดทั้งสองประโยคว่า “I wake up. I sleep.” ครับ',
       options: [],
     },
   },
@@ -1788,6 +2028,110 @@ export const FOUNDATION_BOARDS: Record<
       options: [],
     },
   },
+
+  fnd_v2_places_directions: {
+    1: {
+      textEn:
+        'วันนี้เราจะเรียนสถานที่และการบอกทางง่ายๆ ครับ 🗺️ bathroom แปลว่า “ห้องน้ำ” ลองพูดตามว่า “bathroom” ครับ',
+      withPraise: false,
+      stem: '',
+      expectedSpeech: 'bathroom',
+      options: [],
+    },
+    2: {
+      textEn:
+        'ถ้าต้องการถามหาห้องน้ำ พูดว่า Where is the bathroom? 🚻 ลองพูดตามครับ',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'Where is the bathroom?',
+      options: [],
+    },
+    3: {
+      textEn: 'คุณกำลังหาที่พัก 🏨 คุณจะถามว่าโรงแรมอยู่ที่ไหนอย่างไรครับ?',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'Where is the hotel?',
+      incorrectHintTh: 'ยังไม่ตรงครับ คุณกำลังหาโรงแรม ลองพูดว่า “Where is the hotel?” ครับ',
+      options: [
+        { emoji: '🏨', label: 'Where is the hotel?', speak: 'Where is the hotel?' },
+        { emoji: '🚻', label: 'Where is the bathroom?', speak: 'Where is the bathroom?' },
+      ],
+    },
+    4: {
+      textEn:
+        'taxi แปลว่า “รถแท็กซี่” 🚕 ลองพูดตามว่า “taxi” ครับ',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'taxi',
+      options: [],
+    },
+    5: {
+      textEn:
+        'ถ้าจะบอกให้เดินตรงไป พูดว่า Go straight. ⬆️ ลองพูดตามครับ',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'Go straight.',
+      options: [],
+    },
+    6: {
+      textEn:
+        'คุณต้องไปขึ้นรถไฟและกำลังหาสถานี 🚉 ลองถามว่า “Where is the station?” ครับ',
+      advanceQuestionEn: 'Ask where the station is.',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'Where is the station?',
+      incorrectHintTh: 'ยังไม่ตรงครับ ลองถามว่า “Where is the station?” ครับ',
+      options: [],
+    },
+  },
+
+  fnd_v2_goodbye_closing: {
+    1: {
+      textEn:
+        'วันนี้เราจะฝึกกล่าวลาและจบบทสนทนาครับ 👋 Goodbye. แปลว่า “ลาก่อน” ลองพูดตามว่า “Goodbye.” ครับ',
+      withPraise: false,
+      stem: '',
+      expectedSpeech: 'Goodbye.',
+      options: [],
+    },
+    2: {
+      textEn:
+        'ถ้าจะบอกว่า “แล้วเจอกัน” พูดว่า See you later. ลองพูดตามครับ',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'See you later.',
+      options: [],
+    },
+    3: {
+      textEn: 'คุณกำลังแยกกับเพื่อนและจะเจอกันอีก 👋 คุณควรพูดว่าอะไรครับ?',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'See you later.',
+      incorrectHintTh: 'ยังไม่ตรงครับ ถ้าจะเจอกันอีก ลองพูดว่า “See you later.” ครับ',
+      options: [
+        { emoji: '👋', label: 'See you later', speak: 'See you later.' },
+        { emoji: '🙏', label: 'Thank you', speak: 'Thank you.' },
+      ],
+    },
+    4: {
+      textEn:
+        'หลังจากคุยกันอย่างเป็นมิตร พูดว่า Nice talking to you. แปลว่า “ดีที่ได้คุยกับคุณ” ลองพูดตามครับ',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'Nice talking to you.',
+      options: [],
+    },
+    5: {
+      textEn:
+        'มาจบบทสนทนาด้วยคำของคุณเองครับ 😊 พูด Goodbye, See you later, Nice talking to you หรือ Have a nice day ก็ได้ครับ',
+      advanceQuestionEn: 'Close the conversation in English.',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'Goodbye.',
+      incorrectHintTh: 'ยังไม่ตรงครับ ลองใช้คำกล่าวลา เช่น “Goodbye.” หรือ “See you later.” ครับ',
+      options: [],
+    },
+  },
 };
 
 export const FOUNDATION_MAX_STEPS: Record<FoundationLessonId, number> = {
@@ -1803,13 +2147,18 @@ export const FOUNDATION_MAX_STEPS: Record<FoundationLessonId, number> = {
   numbers: 4,
   fnd_v2_numbers_11_20: 5,
   fnd_v2_say_it_again: 5,
+  fnd_v2_basic_colors: 6,
+  fnd_v2_shop_things: 6,
   fnd_v2_buying_something: 6,
   telling_time: 5,
   everyday_numbers: 6,
   money_prices: 7,
   likes_dislikes: 5,
+  fnd_v2_daily_actions: 6,
   wants_needs: 5,
   can_cant: 4,
   asking_for_help: 4,
   asking_questions: 5,
+  fnd_v2_places_directions: 6,
+  fnd_v2_goodbye_closing: 5,
 };
