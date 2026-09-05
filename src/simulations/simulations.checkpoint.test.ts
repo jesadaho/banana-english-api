@@ -84,6 +84,69 @@ function runMissionTurn(args: {
 
 const COFFEE_ID = 'coffee_order_easy';
 const FRIEND_ID = 'meet_new_friend_easy';
+const FOUNDATION_MISSION_IDS = [
+  'foundation_first_conversation',
+  'foundation_survival_help',
+  'foundation_talk_about_family',
+  'foundation_buy_something',
+  'foundation_three_things_about_me',
+  'foundation_ask_for_a_place',
+];
+
+describe('Foundation missions — fixed beginner arc', () => {
+  for (const id of FOUNDATION_MISSION_IDS) {
+    it(`${id} costs one banana and requires exactly three learner replies`, () => {
+      const mission = requireMission(id);
+      assert.equal(mission.foundationMission, true);
+      assert.equal(mission.bananaCost, 1);
+      assert.equal(mission.maxTurns, 3);
+      assert.equal(mission.goalsEn.length, 3);
+      assert.equal(mission.goalsTh.length, 3);
+      assert.equal(mission.successCriteria.length, 3);
+      assert.ok(mission.completionReplyEn);
+      assert.ok(mission.completionReplyTh);
+    });
+  }
+
+  it('does not complete early even if Gemini marks every checkpoint true', () => {
+    const mission = requireMission('foundation_first_conversation');
+    const checkpoints = Object.fromEntries(
+      mission.successCriteria.map((key) => [key, true]),
+    );
+
+    const finalized = finalizeSimulationTurnState(
+      mission,
+      2,
+      checkpoints,
+      {
+        aiResponse: 'Great! Where do you live?',
+        textTh: 'เยี่ยมครับ! คุณอาศัยอยู่ที่ไหนครับ',
+      },
+    );
+
+    assert.equal(finalized.isTaskComplete, false);
+    assert.equal(finalized.reply.aiResponse, 'Great! Where do you live?');
+  });
+
+  it('closes deterministically after the third learner reply', () => {
+    const mission = requireMission('foundation_first_conversation');
+    const finalized = finalizeSimulationTurnState(
+      mission,
+      3,
+      initCheckpointStates(mission.successCriteria),
+      {
+        aiResponse: 'Great! What do you do?',
+        textTh: 'เยี่ยมครับ! คุณทำงานอะไรครับ',
+      },
+    );
+
+    assert.equal(finalized.isTaskComplete, true);
+    assert.equal(finalized.reply.aiResponse, mission.completionReplyEn);
+    assert.equal(finalized.reply.textTh, mission.completionReplyTh);
+    assert.equal(finalized.reply.aiResponse.includes('?'), false);
+    assert.ok(Object.values(finalized.checkpoints).every(Boolean));
+  });
+});
 
 describe('mission catalog — first two', () => {
   it('coffee_order_easy has 3 goals and payment checkpoints', () => {

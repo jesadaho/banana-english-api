@@ -20,6 +20,11 @@ export interface SimulationConfig {
   systemInstruction: string;
   /** Optional user prompt override for the first AI turn. */
   openingPrompt?: string;
+  /** Foundation missions are fixed, beginner-safe three-reply conversations. */
+  foundationMission?: boolean;
+  /** Deterministic close used when the final learner reply reaches maxTurns. */
+  completionReplyEn?: string;
+  completionReplyTh?: string;
   successCriteria: string[];
   maxTurns: number;
   vocabDrill: VocabDrillWord[];
@@ -29,6 +34,162 @@ const AI_LEAD =
   'You lead this easy conversation. Ask short clarifying questions and gently guide the learner through each objective. Keep every reply under 15 words. Never dump all questions at once.';
 
 export const SIMULATIONS: SimulationConfig[] = [
+  {
+    simulationId: 'foundation_first_conversation',
+    title: 'บทสนทนาแรก',
+    missionNumber: 1,
+    missionTitleTh: 'แนะนำตัวกับเพื่อนใหม่',
+    scenarioTh: 'คุณพบเพื่อนใหม่ในคลาส เขาอยากรู้จักคุณด้วยคำถามง่าย ๆ 3 ข้อ',
+    goalsTh: ['บอกชื่อ', 'บอกประเทศ', 'บอกเมืองที่อยู่'],
+    goalsEn: ['Say your name', 'Say where you are from', 'Say where you live'],
+    difficulty: 'easy',
+    estimatedMinutes: 2,
+    bananaCost: 1,
+    foundationMission: true,
+    systemInstruction:
+      'You are Max, a friendly classmate. This is a Foundation mission with exactly three learner replies. Ask exactly one question at a time in this order: name → country → city. Accept short answers and minor mistakes. After reply 1 ask where they are from. After reply 2 ask where they live. After reply 3 close warmly without a question. Never ask about work, study, hobbies, or anything else.',
+    openingPrompt:
+      'Open as Max with one short greeting, then ask only: "What is your name?" Keep every checkpoint false.',
+    completionReplyEn: 'Nice to meet you! Thanks for telling me about yourself.',
+    completionReplyTh: 'ยินดีที่ได้รู้จักครับ! ขอบคุณที่เล่าเรื่องตัวเองให้ฟังนะครับ',
+    successCriteria: ['said_name', 'said_country', 'said_city'],
+    maxTurns: 3,
+    vocabDrill: [
+      { word: 'My name is…', pronunciation: 'มาย-เนม-อิส', meaningTh: 'ฉันชื่อ…' },
+      { word: "I'm from…", pronunciation: 'ไอม์-ฟรอม', meaningTh: 'ฉันมาจาก…' },
+      { word: 'I live in…', pronunciation: 'ไอ-ลิฟ-อิน', meaningTh: 'ฉันอยู่ที่…' },
+    ],
+  },
+  {
+    simulationId: 'foundation_survival_help',
+    title: 'ใช้ภาษาเอาตัวรอด',
+    missionNumber: 2,
+    missionTitleTh: 'ขอให้พูดใหม่',
+    scenarioTh: 'คุณฟังพนักงานไม่ทัน จึงใช้ 3 ประโยคช่วยชีวิตเพื่อให้คุยต่อได้',
+    goalsTh: ['บอกว่าไม่เข้าใจ', 'ขอให้พูดช้าลง', 'ถามความหมาย'],
+    goalsEn: ['Say you do not understand', 'Ask for slower speech', 'Ask what a word means'],
+    difficulty: 'easy',
+    estimatedMinutes: 2,
+    bananaCost: 1,
+    foundationMission: true,
+    systemInstruction:
+      'You are a patient information-desk worker. This is a Foundation mission with exactly three learner replies. Reply 1 should elicit "I don\'t understand." Reply 2 should elicit "Can you speak more slowly?" Reply 3 should elicit "What does that mean?" Accept "Can you say that again?" for the final goal. Give a very short natural setup, never quiz grammar, and close after reply 3 without a question.',
+    openingPrompt:
+      'Say one short, deliberately difficult direction, then pause so the learner can say they do not understand. Keep every checkpoint false.',
+    completionReplyEn: 'Of course! You asked for help clearly. Well done!',
+    completionReplyTh: 'ได้เลยครับ! คุณขอความช่วยเหลือได้ชัดเจนมาก ทำได้ดีครับ',
+    successCriteria: ['said_dont_understand', 'asked_speak_slowly', 'asked_meaning_or_repeat'],
+    maxTurns: 3,
+    vocabDrill: [
+      { word: "I don't understand.", pronunciation: 'ไอ-โดนท์-อันเดอร์สแตนด์', meaningTh: 'ฉันไม่เข้าใจ' },
+      { word: 'Can you speak more slowly?', pronunciation: 'แคน-ยู-สปีค-มอร์-สโลว์ลี่', meaningTh: 'ช่วยพูดช้าลงได้ไหม' },
+      { word: 'What does that mean?', pronunciation: 'ว็อท-ดัซ-แดท-มีน', meaningTh: 'นั่นแปลว่าอะไร' },
+    ],
+  },
+  {
+    simulationId: 'foundation_talk_about_family',
+    title: 'คุยเรื่องครอบครัว',
+    missionNumber: 3,
+    missionTitleTh: 'แนะนำครอบครัว',
+    scenarioTh: 'เพื่อนดูรูปครอบครัวของคุณและถามคำถามง่าย ๆ 3 ข้อ',
+    goalsTh: ['แนะนำผู้ชายในครอบครัว', 'แนะนำผู้หญิงในครอบครัว', 'บอกพี่น้องที่มี'],
+    goalsEn: ['Use He is…', 'Use She is…', 'Use I have…'],
+    difficulty: 'easy',
+    estimatedMinutes: 2,
+    bananaCost: 1,
+    foundationMission: true,
+    systemInstruction:
+      'You are a friendly classmate looking at the learner\'s family photo. This is a Foundation mission with exactly three learner replies. Ask in order: "Who is he?" → "Who is she?" → "Do you have a brother or sister?" Accept any real family answer and minor mistakes. After reply 3 close warmly without a question. Do not invent extra relatives.',
+    openingPrompt:
+      'Look at the family photo and ask only: "Who is he?" Keep every checkpoint false.',
+    completionReplyEn: 'Thanks! It was nice meeting your family.',
+    completionReplyTh: 'ขอบคุณครับ! ยินดีที่ได้รู้จักครอบครัวของคุณนะครับ',
+    successCriteria: ['used_he_is', 'used_she_is', 'used_i_have'],
+    maxTurns: 3,
+    vocabDrill: [
+      { word: 'He is my…', pronunciation: 'ฮี-อิส-มาย', meaningTh: 'เขาคือ…ของฉัน' },
+      { word: 'She is my…', pronunciation: 'ชี-อิส-มาย', meaningTh: 'เธอคือ…ของฉัน' },
+      { word: 'I have…', pronunciation: 'ไอ-แฮฟ', meaningTh: 'ฉันมี…' },
+    ],
+  },
+  {
+    simulationId: 'foundation_buy_something',
+    title: 'ซื้อของหนึ่งชิ้น',
+    missionNumber: 4,
+    missionTitleTh: 'ซื้อกระเป๋าที่ร้าน',
+    scenarioTh: 'คุณเข้าร้าน เลือกของหนึ่งชิ้น ถามราคา แล้วตัดสินใจซื้อหรือไม่ซื้อ',
+    goalsTh: ['เลือกของที่ต้องการ', 'ถามราคา', 'ตัดสินใจซื้อหรือไม่ซื้อ'],
+    goalsEn: ['Choose an item', 'Ask the price', 'Make a buying decision'],
+    difficulty: 'easy',
+    estimatedMinutes: 2,
+    bananaCost: 1,
+    foundationMission: true,
+    systemInstruction:
+      'You are a friendly shop assistant. This is a Foundation mission with exactly three learner replies. First ask what they want. After reply 1 show that item and leave room for them to ask "How much is it?" After reply 2 give a simple price and ask "Would you like it?" Accept "I\'ll take it" or "That\'s too expensive" on reply 3, then close without a question. Do not ask about size, payment method, or anything else.',
+    openingPrompt:
+      'Greet the learner at the shop and ask only: "What do you want?" Keep every checkpoint false.',
+    completionReplyEn: 'Great choice! Thank you. Have a nice day!',
+    completionReplyTh: 'เลือกได้ดีครับ! ขอบคุณครับ ขอให้เป็นวันที่ดีนะครับ',
+    successCriteria: ['chose_item', 'asked_price', 'made_buying_decision'],
+    maxTurns: 3,
+    vocabDrill: [
+      { word: 'I want…', pronunciation: 'ไอ-วอนท์', meaningTh: 'ฉันต้องการ…' },
+      { word: 'How much is it?', pronunciation: 'ฮาว-มัช-อิส-อิท', meaningTh: 'ราคาเท่าไหร่' },
+      { word: "I'll take it.", pronunciation: 'ไอล์-เทค-อิท', meaningTh: 'ฉันเอาอันนี้' },
+    ],
+  },
+  {
+    simulationId: 'foundation_three_things_about_me',
+    title: 'สามเรื่องเกี่ยวกับฉัน',
+    missionNumber: 5,
+    missionTitleTh: 'คุยเรื่องตัวเอง',
+    scenarioTh: 'เพื่อนใหม่ถาม 3 เรื่องง่าย ๆ ว่าคุณชอบอะไร ต้องการอะไร และทำอะไรได้',
+    goalsTh: ['บอกสิ่งที่ชอบ', 'บอกสิ่งที่ต้องการ', 'บอกสิ่งที่ทำได้'],
+    goalsEn: ['Say what you like', 'Say what you want or need', 'Say what you can do'],
+    difficulty: 'easy',
+    estimatedMinutes: 2,
+    bananaCost: 1,
+    foundationMission: true,
+    systemInstruction:
+      'You are a friendly new classmate. This is a Foundation mission with exactly three learner replies. Ask exactly one question at a time in this order: what they like → what they want or need now → what they can do. Accept personal answers and minor mistakes. After reply 3 close warmly without a question. Never ask follow-up questions.',
+    openingPrompt:
+      'Greet briefly and ask only: "What do you like?" Keep every checkpoint false.',
+    completionReplyEn: 'Awesome! Now I know three things about you.',
+    completionReplyTh: 'เยี่ยมเลยครับ! ตอนนี้ผมรู้จักคุณเพิ่มขึ้นสามเรื่องแล้ว',
+    successCriteria: ['said_like', 'said_want_or_need', 'said_can'],
+    maxTurns: 3,
+    vocabDrill: [
+      { word: 'I like…', pronunciation: 'ไอ-ไลก์', meaningTh: 'ฉันชอบ…' },
+      { word: 'I want…', pronunciation: 'ไอ-วอนท์', meaningTh: 'ฉันต้องการ…' },
+      { word: 'I can…', pronunciation: 'ไอ-แคน', meaningTh: 'ฉันสามารถ…' },
+    ],
+  },
+  {
+    simulationId: 'foundation_ask_for_a_place',
+    title: 'ถามหาสถานที่',
+    missionNumber: 6,
+    missionTitleTh: 'ถามทางและกล่าวลา',
+    scenarioTh: 'คุณถามพนักงานว่าสถานที่อยู่ที่ไหน จากนั้นขอบคุณและจบบทสนทนา',
+    goalsTh: ['ถามหาสถานที่', 'กล่าวขอบคุณ', 'กล่าวลา'],
+    goalsEn: ['Ask where a place is', 'Say thank you', 'Say goodbye'],
+    difficulty: 'easy',
+    estimatedMinutes: 2,
+    bananaCost: 1,
+    foundationMission: true,
+    systemInstruction:
+      'You are a friendly station worker. This is a Foundation mission with exactly three learner replies. First offer help so the learner can ask "Where is the bathroom?" or another known place. After reply 1 give one simple direction. After reply 2 acknowledge their thanks and say goodbye. Accept "Goodbye" or "See you later" on reply 3, then close without a question. Never ask about tickets, transport, duration, or destinations.',
+    openingPrompt:
+      'Greet briefly and ask only: "Can I help you?" Keep every checkpoint false.',
+    completionReplyEn: 'Goodbye! Have a great day!',
+    completionReplyTh: 'ลาก่อนครับ! ขอให้เป็นวันที่ดีนะครับ',
+    successCriteria: ['asked_for_place', 'said_thank_you', 'said_goodbye'],
+    maxTurns: 3,
+    vocabDrill: [
+      { word: 'Where is…?', pronunciation: 'แวร์-อิส', meaningTh: '…อยู่ที่ไหน' },
+      { word: 'Thank you.', pronunciation: 'แทงก์-ยู', meaningTh: 'ขอบคุณ' },
+      { word: 'See you later.', pronunciation: 'ซี-ยู-เลเทอร์', meaningTh: 'แล้วเจอกัน' },
+    ],
+  },
   {
     simulationId: 'coffee_order_easy',
     title: 'สั่งกาแฟยามเช้า',
@@ -1118,6 +1279,7 @@ export function finalizeSimulationTurnState(
   let textTh = reply.textTh;
 
   const completedCount = Object.values(merged).filter(Boolean).length;
+  const isFoundationMission = config.foundationMission === true;
   const aiAlreadyClosing = looksLikeSocialMissionClosing(aiResponse);
   const friendReadyToHonorClose =
     config.simulationId === 'meet_new_friend_easy' &&
@@ -1127,8 +1289,10 @@ export function finalizeSimulationTurnState(
 
   const shouldForceClose =
     maxTurnsReached ||
-    (remainingTurns <= 2 && completedCount >= 2) ||
-    (allCheckpointsComplete(merged) && remainingTurns <= 2) ||
+    (!isFoundationMission && remainingTurns <= 2 && completedCount >= 2) ||
+    (!isFoundationMission &&
+      allCheckpointsComplete(merged) &&
+      remainingTurns <= 2) ||
     friendReadyToHonorClose;
 
   if (shouldForceClose) {
@@ -1137,17 +1301,25 @@ export function finalizeSimulationTurnState(
     }
     const looksLikeClosing = aiAlreadyClosing;
     const stillAsking = /\?/.test(aiResponse);
-    if (!looksLikeClosing && (maxTurnsReached || stillAsking)) {
-      aiResponse = 'Nice talking to you! See you around the park!';
-      textTh = 'ยินดีที่ได้คุยด้วยนะครับ! แล้วเจอกันในสวนครับ!';
+    if (isFoundationMission && maxTurnsReached) {
+      aiResponse = config.completionReplyEn ?? aiResponse;
+      textTh = config.completionReplyTh ?? textTh;
+    } else if (!looksLikeClosing && (maxTurnsReached || stillAsking)) {
+      aiResponse =
+        config.completionReplyEn ??
+        'Nice talking to you! See you around the park!';
+      textTh =
+        config.completionReplyTh ??
+        'ยินดีที่ได้คุยด้วยนะครับ! แล้วเจอกันในสวนครับ!';
     }
   }
 
   const checkpointsDone = allCheckpointsComplete(merged);
   const minArcMet =
-    config.simulationId !== 'meet_new_friend_easy' ||
-    meetNewFriendMinimumProgressMet(nextTurn, history) ||
-    friendReadyToHonorClose;
+    (config.simulationId !== 'meet_new_friend_easy' ||
+      meetNewFriendMinimumProgressMet(nextTurn, history) ||
+      friendReadyToHonorClose) &&
+    (!isFoundationMission || nextTurn >= config.maxTurns);
 
   const isTaskComplete =
     (checkpointsDone && minArcMet) ||

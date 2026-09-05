@@ -4,7 +4,7 @@
  *
  * Catalog: 51 core + 3 optional = 54 nodes on the map.
  * New lessons/pools marked comingSoon until content ships.
- * Mission sims kept as-is (content redesign later).
+ * Foundation missions are separate three-reply conversations, not Adventure sims.
  */
 
 export type FoundationV2NodeType =
@@ -33,6 +33,8 @@ export type FoundationV2NodeDef = {
   poolId?: string;
   topicId?: string;
   simulationId?: string;
+  /** Previous simulation IDs that still count as this node being completed. */
+  legacySimulationIds?: string[];
   reviewId?: string;
 };
 
@@ -137,6 +139,7 @@ function mission(
     unlockAfterNodeIds,
     comingSoon: opts?.comingSoon ?? true,
     optional: opts?.optional,
+    legacySimulationIds: opts?.legacySimulationIds,
   };
 }
 
@@ -205,11 +208,15 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
       mission(
         'fnd_v2_mission_meet_max',
         '1.5',
-        'Meet Max',
-        'พบกับ Max',
-        'meet_new_friend_easy',
+        'First Conversation',
+        'บทสนทนาแรก',
+        'foundation_first_conversation',
         ['yes_no_maybe'],
-        { comingSoon: false },
+        {
+          comingSoon: false,
+          estimatedMinutes: 2,
+          legacySimulationIds: ['meet_new_friend_easy'],
+        },
       ),
     ],
   },
@@ -265,11 +272,15 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
       mission(
         'fnd_v2_mission_need_help',
         '2.6',
-        'I Need Help',
-        'ฉันต้องการความช่วยเหลือ',
-        'ask_help_easy',
+        'Use Survival English',
+        'ใช้ภาษาเอาตัวรอด',
+        'foundation_survival_help',
         ['fnd_v2_say_survival'],
-        { comingSoon: false },
+        {
+          comingSoon: false,
+          estimatedMinutes: 2,
+          legacySimulationIds: ['ask_help_easy'],
+        },
       ),
     ],
   },
@@ -366,11 +377,15 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
       mission(
         'fnd_v2_mission_meet_family',
         '3.10',
-        'Meet My Family',
-        'แนะนำครอบครัว',
-        'catch_up_old_friend_easy',
+        'Talk About Family',
+        'คุยเรื่องครอบครัว',
+        'foundation_talk_about_family',
         ['fnd_v2_say_people_family'],
-        { comingSoon: false },
+        {
+          comingSoon: false,
+          estimatedMinutes: 2,
+          legacySimulationIds: ['catch_up_old_friend_easy'],
+        },
       ),
     ],
   },
@@ -502,11 +517,15 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
       mission(
         'fnd_v2_mission_at_shop',
         '4.15',
-        'At the Shop',
-        'ที่ร้านค้า',
-        'coffee_order_easy',
+        'Buy Something',
+        'ซื้อของหนึ่งชิ้น',
+        'foundation_buy_something',
         ['fnd_v2_say_numbers_shopping'],
-        { comingSoon: false },
+        {
+          comingSoon: false,
+          estimatedMinutes: 2,
+          legacySimulationIds: ['coffee_order_easy'],
+        },
       ),
     ],
   },
@@ -586,11 +605,15 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
       mission(
         'fnd_v2_mission_talk_yourself',
         '5.8',
-        'Talk About Yourself',
-        'คุยเรื่องตัวเอง',
-        'small_talk_easy',
+        'Three Things About Me',
+        'สามเรื่องเกี่ยวกับฉัน',
+        'foundation_three_things_about_me',
         ['fnd_v2_say_about_me'],
-        { comingSoon: false },
+        {
+          comingSoon: false,
+          estimatedMinutes: 2,
+          legacySimulationIds: ['small_talk_easy'],
+        },
       ),
     ],
   },
@@ -663,12 +686,16 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
       mission(
         'fnd_v2_mission_first_day_abroad',
         '6.7',
-        'My First Day Abroad',
-        'วันแรกในต่างประเทศ',
-        'taxi_ride_easy',
+        'Ask for a Place',
+        'ถามหาสถานที่',
+        'foundation_ask_for_a_place',
         // Bypass Foundation Challenge until pool ships.
         ['fnd_v2_say_ask_me'],
-        { comingSoon: false },
+        {
+          comingSoon: false,
+          estimatedMinutes: 2,
+          legacySimulationIds: ['taxi_ride_easy'],
+        },
       ),
     ],
   },
@@ -676,7 +703,7 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
 
 export const FOUNDATION_V2_PATH_ID = 'foundation_v2';
 /** Bumped when the new Foundation vocabulary lesson chains became playable. */
-export const FOUNDATION_V2_VERSION = 14;
+export const FOUNDATION_V2_VERSION = 15;
 
 export function flattenFoundationV2Nodes(): FoundationV2NodeDef[] {
   return FOUNDATION_V2_CHAPTERS.flatMap((c) => c.items);

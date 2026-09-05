@@ -1,5 +1,5 @@
 /**
- * Mission checkpoint scenarios against prod (coffee + meet new friend).
+ * Mission checkpoint scenarios against prod (six Foundation missions).
  *
  * Transcripts:
  *   mission-scenario-results/YYYY-MM-DD/
@@ -8,9 +8,9 @@
  *     SUMMARY.txt
  *
  *   npx tsx scripts/mission-scenarios-prod.ts
- *   npx tsx scripts/mission-scenarios-prod.ts coffee
- *   npx tsx scripts/mission-scenarios-prod.ts coffee 2
- *   npx tsx scripts/mission-scenarios-prod.ts friend 1
+ *   npx tsx scripts/mission-scenarios-prod.ts intro
+ *   npx tsx scripts/mission-scenarios-prod.ts shop 2
+ *   npx tsx scripts/mission-scenarios-prod.ts family 1
  *   npx tsx scripts/mission-scenarios-prod.ts 3
  *
  *   API_BASE=https://banana-english-api-production.up.railway.app \
@@ -41,10 +41,10 @@ try {
     'Usage: npx tsx scripts/mission-scenarios-prod.ts [missionId ...] [scenario 1-3]',
   );
   console.error(
-    '       npx tsx scripts/mission-scenarios-prod.ts coffee friend',
+    '       npx tsx scripts/mission-scenarios-prod.ts intro family shop',
   );
   console.error(
-    '       npx tsx scripts/mission-scenarios-prod.ts coffee 2',
+    '       npx tsx scripts/mission-scenarios-prod.ts shop 2',
   );
   console.error(err instanceof Error ? err.message : err);
   process.exit(1);

@@ -7,51 +7,46 @@ export const SCENARIO_TITLES: Record<number, string> = {
 };
 
 export const MISSION_IDS = [
-  'coffee_order_easy',
-  'meet_new_friend_easy',
+  'foundation_first_conversation',
+  'foundation_survival_help',
+  'foundation_talk_about_family',
+  'foundation_buy_something',
+  'foundation_three_things_about_me',
+  'foundation_ask_for_a_place',
 ] as const;
 
 export type MissionId = (typeof MISSION_IDS)[number];
 
 const ALIASES: Record<string, MissionId> = {
-  coffee: 'coffee_order_easy',
-  coffee_order_easy: 'coffee_order_easy',
-  friend: 'meet_new_friend_easy',
-  meet_new_friend: 'meet_new_friend_easy',
-  meet_new_friend_easy: 'meet_new_friend_easy',
+  intro: 'foundation_first_conversation',
+  survival: 'foundation_survival_help',
+  family: 'foundation_talk_about_family',
+  shop: 'foundation_buy_something',
+  about_me: 'foundation_three_things_about_me',
+  place: 'foundation_ask_for_a_place',
+  ...Object.fromEntries(MISSION_IDS.map((id) => [id, id])) as Record<string, MissionId>,
 };
 
 const LEARNER = 'Nana';
-const UNLOCK_MISSION: MissionId = 'meet_new_friend_easy';
+const UNLOCK_MISSION: MissionId = 'foundation_first_conversation';
 
-const FRIEND_HAPPY_LINES = [
-  "Hi, I'm Nana.",
-  "I'm from Bangkok.",
-  'I work at a school.',
-  'What do you like, Max?',
-  "That's cool!",
-];
+const HAPPY_LINES: Record<MissionId, string[]> = {
+  foundation_first_conversation: ['My name is Nana.', "I'm from Thailand.", 'I live in Bangkok.'],
+  foundation_survival_help: ["I don't understand.", 'Can you speak more slowly?', 'What does that mean?'],
+  foundation_talk_about_family: ['He is my father.', 'She is my mother.', 'I have one sister.'],
+  foundation_buy_something: ['I want the blue bag.', 'How much is it?', "I'll take it."],
+  foundation_three_things_about_me: ['I like coffee.', 'I want water.', 'I can cook.'],
+  foundation_ask_for_a_place: ['Where is the bathroom?', 'Thank you.', 'See you later.'],
+};
 
-/** Messy / STT-ish: study instead of work; short hobby ask. */
-const FRIEND_MESSY_LINES = [
-  "Hi, I'm Nana.",
-  "I'm from Bangkok.",
-  "I'm studying",
-  'What do you like, Max?',
-  "That's cool!",
-];
-
-const COFFEE_HAPPY_LINES = [
-  "I'd like a latte.",
-  'How much is it?',
-  'Card please.',
-];
-
-const COFFEE_MESSY_LINES = [
-  "I'd like a latte.",
-  'How much?',
-  'hard plates',
-];
+const MESSY_LINES: Record<MissionId, string[]> = {
+  foundation_first_conversation: ["I'm Nana.", 'Thailand.', 'Bangkok.'],
+  foundation_survival_help: ["I don't get it.", 'More slowly, please.', 'Can you say that again?'],
+  foundation_talk_about_family: ['My father.', 'My mother.', 'One sister.'],
+  foundation_buy_something: ['Blue bag, please.', 'How much?', 'Too expensive.'],
+  foundation_three_things_about_me: ['Coffee.', 'Need water.', 'I cook.'],
+  foundation_ask_for_a_place: ['Bathroom?', 'Thanks.', 'Goodbye.'],
+};
 
 const STUCK_LINES = [
   'hello',
@@ -110,7 +105,7 @@ export function parseMissionScenarioArgs(argv: string[]): {
     const id = ALIASES[arg];
     if (!id) {
       throw new Error(
-        `unknown mission: ${arg} (use coffee_order_easy / meet_new_friend_easy)`,
+        `unknown mission: ${arg} (use intro / survival / family / shop / about_me / place)`,
       );
     }
     if (!missionIds.includes(id)) missionIds.push(id);
@@ -179,7 +174,7 @@ async function completeMissionForUnlock(
     client,
     start.sessionId,
     start.turn,
-    FRIEND_HAPPY_LINES,
+    HAPPY_LINES[simulationId],
     start.maxTurns,
   );
   if (!played.turn.isTaskComplete) {
@@ -232,13 +227,8 @@ function finishFail(
 }
 
 function linesFor(missionId: MissionId, scenario: number): string[] {
-  if (missionId === 'coffee_order_easy') {
-    if (scenario === 1) return COFFEE_HAPPY_LINES;
-    if (scenario === 2) return COFFEE_MESSY_LINES;
-    return STUCK_LINES;
-  }
-  if (scenario === 1) return FRIEND_HAPPY_LINES;
-  if (scenario === 2) return FRIEND_MESSY_LINES;
+  if (scenario === 1) return HAPPY_LINES[missionId];
+  if (scenario === 2) return MESSY_LINES[missionId];
   return STUCK_LINES;
 }
 
@@ -249,42 +239,16 @@ function assertScenario(
   steps: number,
   maxTurns: number,
 ): string | null {
-  if (missionId === 'coffee_order_easy') {
-    if (scenario === 1 || scenario === 2) {
-      if (!turn.isTaskComplete) return 'mission did not complete';
-      if (!turn.checkpoints.payment_completed) {
-        return 'payment_completed stayed false';
-      }
-      return null;
-    }
-    if (turn.isTaskComplete && steps <= 2) {
-      return 'completed too early on off-topic speech';
-    }
-    if (!turn.isTaskComplete) {
-      return `did not force-close by maxTurns (${steps}/${maxTurns})`;
-    }
-    if (steps >= maxTurns && /\?/.test(turn.aiResponse)) {
-      return `last reply still asks a question: ${turn.aiResponse}`;
-    }
-    return null;
-  }
-
-  if (scenario === 1 && turn.isTaskComplete && steps < 4) {
-    return `completed too early (arc ${steps} turns, need ~5)`;
-  }
-  if (scenario === 2 && steps === 1 && turn.isTaskComplete) {
-    return 'Gemini/heuristic completed after one hello';
-  }
-  if (scenario === 3 && turn.isTaskComplete && steps <= 2) {
-    return 'completed too early on off-topic speech';
+  if (turn.isTaskComplete && steps < 3) {
+    return `completed too early (${steps}/3 learner replies)`;
   }
   if (!turn.isTaskComplete) {
     return `did not complete by maxTurns (${steps}/${maxTurns})`;
   }
-  if (scenario === 1 && !allTrue(turn.checkpoints)) {
+  if (!allTrue(turn.checkpoints)) {
     return `checkpoints incomplete: ${formatCheckpoints(turn.checkpoints)}`;
   }
-  if (scenario === 3 && steps >= maxTurns && /\?/.test(turn.aiResponse)) {
+  if (steps >= maxTurns && /\?/.test(turn.aiResponse)) {
     return `last reply still asks a question: ${turn.aiResponse}`;
   }
   return null;

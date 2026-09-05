@@ -6,6 +6,7 @@ import {
   getSeriesById,
   SeriesConfig,
 } from './series.data';
+import { isFoundationPathRewardGameId } from '../learn-path/foundation-v2-path.data';
 
 export interface SeriesMissionView {
   simulationId: string;
@@ -129,6 +130,11 @@ export class SeriesService {
     userId: string,
     simulationId: string,
   ): Promise<boolean> {
+    // Foundation path progression is enforced by the path itself. Its dedicated
+    // simulations are intentionally separate from the Adventure series catalog.
+    if (isFoundationPathRewardGameId(simulationId)) {
+      return true;
+    }
     const all = await this.getAllForUser(userId);
     for (const view of all) {
       if (!view.missions.some((m) => m.simulationId === simulationId)) {

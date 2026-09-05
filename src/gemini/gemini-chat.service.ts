@@ -2518,8 +2518,14 @@ Payment closure (critical — no tap UI exists):
 - Never use half-open phrases like "Just tap here?" — always finish the transaction and hand over the drink.
 
 Mission closure (critical):
-- When ${remainingTurns} turns remaining or fewer, wrap up warmly in this reply, set ALL checkpoints to true, and do NOT ask another question.
-- If every checkpoint is already complete, close the conversation — never loop on the same topic.`;
+${
+  config.foundationMission
+    ? `- This Foundation mission MUST receive exactly ${config.maxTurns} learner replies. Do not close early even if checkpoints are marked complete.
+- On learner reply ${config.maxTurns}, wrap up warmly, set ALL checkpoints true, and do NOT ask another question.
+- Before learner reply ${config.maxTurns}, ask only the next question defined in the mission flow.`
+    : `- When ${remainingTurns} turns remaining or fewer, wrap up warmly in this reply, set ALL checkpoints to true, and do NOT ask another question.
+- If every checkpoint is already complete, close the conversation — never loop on the same topic.`
+}`;
   }
 
   async generateReply(

@@ -100,9 +100,33 @@ assert(
 assert(ch1.items[3].id === 'yes_no_maybe', 'preserve yes_no_maybe id');
 assert(ch1.items[4].id === 'fnd_v2_mission_meet_max', 'meet max mission');
 assert(
-  ch1.items[4].simulationId === 'meet_new_friend_easy',
-  'meet max uses existing simulation',
+  ch1.items[4].simulationId === 'foundation_first_conversation',
+  'chapter 1 uses the dedicated Foundation mission',
 );
+
+const foundationMissionIds = FOUNDATION_V2_CHAPTERS.map(
+  (chapter) => chapter.items.find((node) => node.type === 'mission')?.simulationId,
+);
+assert(
+  JSON.stringify(foundationMissionIds) ===
+    JSON.stringify([
+      'foundation_first_conversation',
+      'foundation_survival_help',
+      'foundation_talk_about_family',
+      'foundation_buy_something',
+      'foundation_three_things_about_me',
+      'foundation_ask_for_a_place',
+    ]),
+  'every chapter must use its dedicated Foundation mission',
+);
+for (const simulationId of foundationMissionIds) {
+  const simulation = getSimulation(simulationId!);
+  assert(Boolean(simulation), `missing Foundation simulation ${simulationId}`);
+  assert(simulation!.foundationMission === true, `${simulationId} must be Foundation-safe`);
+  assert(simulation!.maxTurns === 3, `${simulationId} must use exactly 3 learner replies`);
+  assert(simulation!.bananaCost === 1, `${simulationId} must cost one banana`);
+  assert(simulation!.successCriteria.length === 3, `${simulationId} must have 3 goals`);
+}
 
 const ch4 = FOUNDATION_V2_CHAPTERS[3];
 assert(ch4.items[0].id === 'numbers', 'numbers 0–10 keeps numbers id');

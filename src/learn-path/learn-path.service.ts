@@ -70,7 +70,11 @@ export class LearnPathService {
       }
 
       if (node.type === 'mission' && node.simulationId) {
-        if (completedSimulationIds.has(node.simulationId)) {
+        const simulationIds = [
+          node.simulationId,
+          ...(node.legacySimulationIds ?? []),
+        ];
+        if (simulationIds.some((id) => completedSimulationIds.has(id))) {
           completed.add(node.id);
         }
         continue;
