@@ -294,7 +294,7 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
         'How Do You Feel?',
         'คุณรู้สึกอย่างไร?',
         ['meet_people'],
-        { comingSoon: true },
+        { comingSoon: false },
       ),
       emoji(
         'fnd_v2_emoji_feelings',
@@ -303,14 +303,14 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
         'ความรู้สึก',
         'fnd_v2_emoji_feelings',
         ['fnd_v2_how_do_you_feel'],
+        { comingSoon: false },
       ),
       lesson(
         'talk_about_groups',
         '3.4',
         'He / She / It',
         'เขา / เธอ / มัน',
-        // Bypass How Do You Feel + Feelings emoji until content ships.
-        ['meet_people'],
+        ['fnd_v2_emoji_feelings'],
         { comingSoon: false },
       ),
       lesson(
@@ -319,7 +319,7 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
         'We / They',
         'เรา / พวกเขา',
         ['talk_about_groups'],
-        { comingSoon: true },
+        { comingSoon: false },
       ),
       emoji(
         'fnd_v2_emoji_people_things',
@@ -328,14 +328,14 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
         'คนและสิ่งของ',
         'fnd_v2_emoji_people_things',
         ['fnd_v2_we_they'],
+        { comingSoon: false },
       ),
       lesson(
         'ee_about_me_family',
         '3.7',
         'Family',
         'ครอบครัว',
-        // Bypass We/They + People & Things until content ships.
-        ['talk_about_groups'],
+        ['fnd_v2_emoji_people_things'],
         { comingSoon: false },
       ),
       emoji(
@@ -345,6 +345,7 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
         'คำครอบครัว',
         'fnd_v2_emoji_family',
         ['ee_about_me_family'],
+        { comingSoon: false },
       ),
       sayIt(
         'fnd_v2_say_people_family',
@@ -352,8 +353,7 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
         'People, Feelings & Family',
         'คน ความรู้สึก และครอบครัว',
         'fnd_v2_people_family',
-        // Bypass Family Words emoji until pool ships.
-        ['ee_about_me_family'],
+        ['fnd_v2_emoji_family'],
         { comingSoon: false },
       ),
       describeIt(
@@ -667,8 +667,8 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
 ];
 
 export const FOUNDATION_V2_PATH_ID = 'foundation_v2';
-/** Bumped when catalog shape changes (path restructure V4 outline). */
-export const FOUNDATION_V2_VERSION = 8;
+/** Bumped when catalog shape changes (Ch.3 feelings / we-they / emoji unlock). */
+export const FOUNDATION_V2_VERSION = 9;
 
 export function flattenFoundationV2Nodes(): FoundationV2NodeDef[] {
   return FOUNDATION_V2_CHAPTERS.flatMap((c) => c.items);

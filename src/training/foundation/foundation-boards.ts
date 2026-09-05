@@ -65,6 +65,15 @@ export const FOUNDATION_LOOSE_MATCHERS: Record<
       4: /^(you are|you['’]?re) very kind$/,
       5: /^(i am|i['’]?m) .+ (you are|you['’]?re) /,
     }),
+  fnd_v2_how_do_you_feel: (step, text) =>
+    loose(step, text, {
+      1: /^(i am|i['’]?m) happy$/,
+      2: /^(i am|i['’]?m) sad$/,
+      3: /^(i am|i['’]?m) tired$/,
+      4: /^(i am|i['’]?m) hungry$/,
+      5: /^how do you feel$/,
+      6: /^(i am|i['’]?m) (happy|sad|tired|hungry|thirsty|excited|okay|ok|fine|great|good|sleepy)$/,
+    }),
   talk_about_groups: (step, text) =>
     loose(step, text, {
       1: /^(he is|he['’]?s) my classmate$/,
@@ -72,6 +81,15 @@ export const FOUNDATION_LOOSE_MATCHERS: Record<
       3: /^(it is|it['’]?s) my bag$/,
       4: /^(she is|she['’]?s) very kind$/,
       5: /^(he is|he['’]?s) very kind (it is|it['’]?s) new$/,
+    }),
+  fnd_v2_we_they: (step, text) =>
+    loose(step, text, {
+      1: /^(we are|we['’]?re) friends$/,
+      2: /^(we are|we['’]?re) students$/,
+      3: /^(they are|they['’]?re) my friends$/,
+      4: /^(they are|they['’]?re) students$/,
+      5: /^(we are|we['’]?re) friends$/,
+      6: /^(we are|we['’]?re) friends[.!]?\s*(and\s+)?(they are|they['’]?re) happy$/,
     }),
   ee_about_me_family: (step, text) =>
     loose(step, text, {
@@ -199,12 +217,28 @@ export const FOUNDATION_CLOSE_MATCHERS: Partial<
     4: /^you very kind$/,
     5: /^i new here,? you my classmate$/,
   }),
+  fnd_v2_how_do_you_feel: (step, text) => loose(step, text, {
+    1: /^(i happy|im happy|i'?m happi)$/,
+    2: /^(i sad|im sad)$/,
+    3: /^(i tired|im tired)$/,
+    4: /^(i hungry|im hungry)$/,
+    5: /^how you feel$/,
+    6: /^(i|im|i'?m) (happy|sad|tired|hungry|thirsty)$/,
+  }),
   talk_about_groups: (step, text) => loose(step, text, {
     1: /^he my classmate$/,
     2: /^she my teacher$/,
     3: /^it my bag$/,
     4: /^she very kind$/,
     5: /^he very kind,? it new$/,
+  }),
+  fnd_v2_we_they: (step, text) => loose(step, text, {
+    1: /^(we friends|were friends)$/,
+    2: /^(we students|were students)$/,
+    3: /^(they my friends|theyre my friends)$/,
+    4: /^(they students|theyre students)$/,
+    5: /^(we friends|were friends)$/,
+    6: /^(we|were) friends.*(they|theyre) happy$/,
   }),
   ee_about_me_family: (step, text) => loose(step, text, {
     1: /^brotha$/, 2: /^motha$/, 3: /^fatha$/, 4: /^this my father$/,
@@ -702,6 +736,73 @@ export const FOUNDATION_BOARDS: Record<
     },
   },
 
+  fnd_v2_how_do_you_feel: {
+    1: {
+      textEn:
+        'วันนี้เราจะฝึกบอกความรู้สึกครับ 😊 happy แปลว่า “มีความสุข” และ sad แปลว่า “เศร้า” 😢 ถ้ารู้สึกมีความสุขพูดว่า I\'m happy. ลองพูดตามครับ',
+      withPraise: false,
+      stem: '',
+      expectedSpeech: "I'm happy.",
+      incorrectHintTh: 'ยังไม่ถูกครับ ลองพูดตามว่า “I\'m happy.” ครับ',
+      options: [],
+    },
+    2: {
+      textEn:
+        'วันนี้ Max ทำของหายและรู้สึกเศร้า 😢 เขาจะพูดว่าอย่างไรครับ?',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: "I'm sad.",
+      incorrectHintTh: 'ยังไม่ตรงครับ หน้าตานี้กำลังเศร้า ลองใช้ I\'m... กับคำว่า sad ครับ',
+      options: [
+        { emoji: '😢', label: 'Sad', speak: "I'm sad." },
+        { emoji: '😊', label: 'Happy', speak: "I'm happy." },
+      ],
+    },
+    3: {
+      textEn:
+        'อีกสามความรู้สึกที่ใช้บ่อยครับ: tired คือเหนื่อย 😴 hungry คือหิว 🍽️ และ thirsty คือกระหายน้ำ 🥤 ถ้าเหนื่อยพูดว่า I\'m tired. ลองพูดตามครับ',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: "I'm tired.",
+      incorrectHintTh: 'ยังไม่ถูกครับ ลองพูดตามว่า “I\'m tired.” ครับ',
+      options: [],
+    },
+    4: {
+      textEn:
+        'คุณยังไม่ได้กินข้าวและตอนนี้หิวมาก 🍽️😋 คุณจะพูดว่าอย่างไรครับ?',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: "I'm hungry.",
+      incorrectHintTh:
+        'ยังไม่ตรงครับ ถ้ายังไม่ได้กินข้าว เราพูดว่า I\'m hungry. ครับ',
+      options: [
+        { emoji: '🍽️😋', label: 'Hungry', speak: "I'm hungry." },
+        { emoji: '🥤😓', label: 'Thirsty', speak: "I'm thirsty." },
+        { emoji: '😴', label: 'Tired', speak: "I'm tired." },
+      ],
+    },
+    5: {
+      textEn:
+        'ถ้าอยากถามเพื่อนว่าเขารู้สึกอย่างไร ให้ถามว่า How do you feel? แปลว่า “คุณรู้สึกอย่างไร” ลองพูดตามครับ',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: 'How do you feel?',
+      incorrectHintTh: 'ยังไม่ถูกครับ ลองพูดตามว่า “How do you feel?” ครับ',
+      options: [],
+    },
+    6: {
+      textEn:
+        'How do you feel today? ลองตอบความรู้สึกจริงของคุณด้วย I\'m... ครับ',
+      advanceQuestionEn: 'How do you feel today? Answer with I\'m...',
+      withPraise: true,
+      stem: "I'm...",
+      expectedSpeech: "I'm happy.",
+      incorrectHintTh:
+        'ยังไม่ตรงครับ ลองเริ่มด้วย I\'m... แล้วตามด้วยความรู้สึก เช่น I\'m happy. ครับ',
+      options: [],
+    },
+  },
+
   talk_about_groups: {
     1: {
       textEn:
@@ -752,6 +853,86 @@ export const FOUNDATION_BOARDS: Record<
       stem: "He's... It's...",
       expectedSpeech: "He's very kind. It's new.",
       incorrectHintTh: 'ยังไม่ตรงครับ ลองพูดสองส่วน โดยเริ่มด้วย “He\'s...” แล้วตามด้วย “It\'s...” ครับ',
+      options: [],
+    },
+  },
+
+  fnd_v2_we_they: {
+    1: {
+      textEn:
+        'ถ้าพูดถึงตัวเราและเพื่อนรวมกัน ใช้ we แปลว่า “พวกเรา” ครับ 👥 We are friends. หรือพูดสั้นว่า We\'re friends. ลองพูดตามว่า We\'re friends. ครับ',
+      withPraise: false,
+      stem: '',
+      expectedSpeech: "We're friends.",
+      incorrectHintTh: 'ยังไม่ถูกครับ ลองพูดตามว่า “We\'re friends.” ครับ',
+      options: [],
+    },
+    2: {
+      textEn:
+        'คุณกับเพื่อนเรียนอยู่ด้วยกัน 🎓🎓 ถ้าจะบอกว่า “พวกเราเป็นนักเรียน” คุณจะพูดว่าอย่างไรครับ?',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: "We're students.",
+      incorrectHintTh:
+        'ยังไม่ตรงครับ ประโยคพูดถึงตัวคุณรวมกับเพื่อน ให้เริ่มด้วย We\'re... ครับ',
+      options: [
+        { emoji: '🎓🎓', label: 'We are students', speak: "We're students." },
+        { emoji: '🧑‍🤝‍🧑', label: 'We are friends', speak: "We're friends." },
+      ],
+    },
+    3: {
+      textEn:
+        'ถ้าพูดถึงคนกลุ่มอื่นที่ไม่รวมตัวเรา ใช้ they แปลว่า “พวกเขา” ครับ 👉👥 They are my friends. หรือ They\'re my friends. ลองพูดตามว่า They\'re my friends. ครับ',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: "They're my friends.",
+      incorrectHintTh: 'ยังไม่ถูกครับ ลองพูดตามว่า “They\'re my friends.” ครับ',
+      options: [],
+    },
+    4: {
+      textEn:
+        'คนกลุ่มนั้นเป็นนักเรียน 👉🎓🎓 คุณจะพูดถึงพวกเขาว่าอย่างไรครับ?',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: "They're students.",
+      incorrectHintTh:
+        'ยังไม่ตรงครับ คุณกำลังพูดถึงคนกลุ่มอื่น ให้เริ่มด้วย They\'re... ครับ',
+      options: [
+        {
+          emoji: '👉🎓🎓',
+          label: 'They are students',
+          speak: "They're students.",
+        },
+        {
+          emoji: '👉👩‍🏫👨‍🏫',
+          label: 'They are teachers',
+          speak: "They're teachers.",
+        },
+      ],
+    },
+    5: {
+      textEn:
+        'คุณอยู่ในกลุ่มนี้และทุกคนเป็นเพื่อนกัน 🫵👥 ควรใช้ We หรือ They ครับ? ลองพูดประโยคเต็ม',
+      withPraise: true,
+      stem: '',
+      expectedSpeech: "We're friends.",
+      incorrectHintTh:
+        'ยังไม่ตรงครับ กลุ่มนี้มีตัวคุณรวมอยู่ด้วย จึงใช้ We ครับ',
+      options: [
+        { emoji: '🫵👥', label: 'We', speak: "We're friends." },
+        { emoji: '👉👥', label: 'They', speak: "They're friends." },
+      ],
+    },
+    6: {
+      textEn:
+        'ขั้นตอนสุดท้ายครับ คุณกับ Ben เป็นเพื่อนกัน และคนกลุ่มโน้นกำลังมีความสุข ลองพูดสองประโยคว่า “พวกเราเป็นเพื่อนกัน พวกเขามีความสุข” ครับ 😊',
+      advanceQuestionEn:
+        'พูดสองประโยค: We\'re friends. และ They\'re happy.',
+      withPraise: true,
+      stem: "We're... They're...",
+      expectedSpeech: "We're friends. They're happy.",
+      incorrectHintTh:
+        'ยังไม่ตรงครับ ใช้ We\'re... กับกลุ่มที่มีคุณ และ They\'re... กับคนกลุ่มอื่นครับ',
       options: [],
     },
   },
@@ -1615,7 +1796,9 @@ export const FOUNDATION_MAX_STEPS: Record<FoundationLessonId, number> = {
   yes_no_maybe: 6,
   polite_expressions: 5,
   meet_people: 5,
+  fnd_v2_how_do_you_feel: 6,
   talk_about_groups: 5,
+  fnd_v2_we_they: 6,
   ee_about_me_family: 8,
   numbers: 4,
   fnd_v2_numbers_11_20: 5,

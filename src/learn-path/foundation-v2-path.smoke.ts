@@ -111,7 +111,15 @@ function assertPlayableContent(node: FoundationV2NodeDef) {
       assert(!!getSimulation(simId), `missing simulation: ${simId}`);
       break;
     }
-    case 'emoji_speak':
+    case 'emoji_speak': {
+      const poolId = node.poolId ?? '';
+      assert(!!poolId, `emoji_speak ${node.id} missing poolId`);
+      assert(
+        isFoundationPathRewardGameId(`emoji_speak:${poolId}`),
+        `emoji pool not rewardable: ${poolId}`,
+      );
+      break;
+    }
     case 'review':
     case 'describe_it':
     case 'number_challenge':

@@ -26,8 +26,12 @@ const OPENING_TEXTS: Record<(typeof FOUNDATION_LESSON_IDS)[number], string> = {
     'สวัสดีครับ {name}! วันนี้เรามาเรียนคำสุภาพที่ใช้ทุกวันครับ 🙏 Thank you very much. แปลว่า “ขอบคุณมาก” ใช้เมื่ออยากขอบคุณใคร ลองพูดตามว่า “Thank you very much.” ครับ',
   meet_people:
     'สวัสดีครับ {name}! วันนี้เป็นวันแรกในคลาสครับ 🙋 ถ้าเราเพิ่งมาใหม่ พูดว่า “I\'m new here.” แปลว่า “ฉันเพิ่งมาใหม่” โดย I\'m เป็นรูปสั้นของ I am ลองพูดตามครับ',
+  fnd_v2_how_do_you_feel:
+    'วันนี้เราจะฝึกบอกความรู้สึกครับ 😊 happy แปลว่า “มีความสุข” และ sad แปลว่า “เศร้า” 😢 ถ้ารู้สึกมีความสุขพูดว่า I\'m happy. ลองพูดตามครับ',
   talk_about_groups:
     'สวัสดีครับ {name}! วันนี้เราจะพูดถึงคนอื่นและสิ่งของครับ 👨 Ben เรียนห้องเดียวกับคุณ พูดว่า “He\'s my classmate.” โดย He\'s เป็นรูปสั้นของ He is ลองพูดตามครับ',
+  fnd_v2_we_they:
+    'ถ้าพูดถึงตัวเราและเพื่อนรวมกัน ใช้ we แปลว่า “พวกเรา” ครับ 👥 We are friends. หรือพูดสั้นว่า We\'re friends. ลองพูดตามว่า We\'re friends. ครับ',
   ee_about_me_family:
     'สวัสดีครับ {name}! วันนี้เรามาเรียนคำศัพท์ครอบครัวครับ 👨‍👩‍👧 เริ่มจาก brother แปลว่า “พี่ชายหรือน้องชาย” ลองพูดตามว่า “brother” ครับ',
   numbers:
@@ -73,8 +77,18 @@ const COMPLETION_TEXTS: Record<
     foundationCompletion(name, 'วันนี้คุณใช้ thank you, you\'re welcome, excuse me และ sorry ได้แล้ว'),
   meet_people: (name) =>
     foundationCompletion(name, 'วันนี้คุณใช้ I\'m... เพื่อพูดเกี่ยวกับตัวเอง และ You\'re... เพื่อพูดกับคนอื่นได้แล้ว'),
+  fnd_v2_how_do_you_feel: (name) =>
+    foundationCompletion(
+      name,
+      'ตอนนี้คุณถามและบอกความรู้สึกพื้นฐานเป็นภาษาอังกฤษได้แล้ว',
+    ),
   talk_about_groups: (name) =>
     foundationCompletion(name, 'วันนี้คุณใช้ He\'s..., She\'s... และ It\'s... เพื่อพูดถึงคนและสิ่งของได้แล้ว'),
+  fnd_v2_we_they: (name) =>
+    foundationCompletion(
+      name,
+      'ตอนนี้คุณใช้ We\'re... พูดถึงกลุ่มของเรา และ They\'re... พูดถึงคนกลุ่มอื่นได้แล้ว',
+    ),
   ee_about_me_family: (name) =>
     foundationCompletion(name, 'วันนี้คุณแนะนำครอบครัวด้วย This is my... และ I have... ได้แล้ว'),
   numbers: (name) =>
