@@ -309,6 +309,15 @@ describe('Foundation V2 — new lesson script contracts', () => {
     assert.equal(FOUNDATION_BOARDS.fnd_v2_daily_actions[6].options.length, 0);
   });
 
+  it('We / They gives a student vocab hint without revealing the full sentence', () => {
+    const board = FOUNDATION_BOARDS.fnd_v2_we_they[4];
+    assert.equal(board.stem, "They're...");
+    assert.deepEqual(board.options, [
+      { emoji: '🎓🎓', label: 'Students', speak: "They're students." },
+    ]);
+    assert.notEqual(board.options[0]?.label, board.expectedSpeech);
+  });
+
   it('new repeat-after-model turns hide choices; situation turns keep choices', () => {
     for (const step of [1, 2]) {
       assert.equal(

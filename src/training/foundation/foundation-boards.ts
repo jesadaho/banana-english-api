@@ -958,20 +958,15 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'คนกลุ่มนั้นเป็นนักเรียน 👉🎓🎓 คุณจะพูดถึงพวกเขาว่าอย่างไรครับ?',
       withPraise: true,
-      stem: '',
+      stem: "They're...",
       expectedSpeech: "They're students.",
       incorrectHintTh:
         'ยังไม่ตรงครับ คุณกำลังพูดถึงคนกลุ่มอื่น ให้เริ่มด้วย They\'re... ครับ',
       options: [
         {
-          emoji: '👉🎓🎓',
-          label: 'They are students',
+          emoji: '🎓🎓',
+          label: 'Students',
           speak: "They're students.",
-        },
-        {
-          emoji: '👉👩‍🏫👨‍🏫',
-          label: 'They are teachers',
-          speak: "They're teachers.",
         },
       ],
     },

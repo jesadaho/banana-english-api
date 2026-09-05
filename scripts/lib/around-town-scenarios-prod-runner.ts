@@ -146,7 +146,7 @@ export function classifyResult(json: Json): string {
   const dbg = json.aiDebug as Json | undefined;
   const tier = json.assessmentTier as string | undefined;
   if (dbg?.source === 'scripted') {
-    if (tier === 'incorrect' && /ตรงนี้พูด(ว่า|ได้ว่า)/.test(String(json.aiResponse ?? ''))) {
+    if (tier === 'incorrect' && /ตรงนี้(พูด(ว่า|ได้ว่า)|ใช้โครง)/.test(String(json.aiResponse ?? ''))) {
       return 'wrong (soft-advance)';
     }
     return 'correct in pool';
