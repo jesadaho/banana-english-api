@@ -44,18 +44,15 @@ export class SayItController {
     if (topic.locked) {
       throw new BadRequestException('This topic is locked');
     }
-    // Foundation path Say It is retrieval practice — no banana charge.
-    if (!isFoundationPathSayItTopic(topicId)) {
-      await this.economy.spendBananas(
-        req.user.id,
-        SAY_IT_BANANA_COST,
-        topicId,
-        'say_it_start',
-      );
-    }
+    await this.economy.spendBananas(
+      req.user.id,
+      SAY_IT_BANANA_COST,
+      topicId,
+      'say_it_start',
+    );
     return {
       ok: true,
-      bananaCost: isFoundationPathSayItTopic(topicId) ? 0 : SAY_IT_BANANA_COST,
+      bananaCost: SAY_IT_BANANA_COST,
       dealCount: SAY_IT_DEAL_COUNT,
     };
   }

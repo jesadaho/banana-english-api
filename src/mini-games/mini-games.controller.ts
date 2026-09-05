@@ -64,7 +64,8 @@ function isAllowedMiniGameId(gameId: string): boolean {
 
 const EMOJI_SPEAK_BANANA_COST = 1;
 
-function isFreeEmojiSpeakStart(poolOrGameId: string): boolean {
+/** Foundation path Emoji Speak packs charge bananas; Games tab packs are free. */
+function isFoundationPathEmojiSpeak(poolOrGameId: string): boolean {
   if (poolOrGameId.startsWith('fnd_v2_')) return true;
   if (isFoundationPathRewardGameId(poolOrGameId)) return true;
   if (isFoundationPathRewardGameId(`emoji_speak:${poolOrGameId}`)) return true;
@@ -87,7 +88,7 @@ export class MiniGamesController {
     return this.economy.recordStreakActivity(req.user.id);
   }
 
-  /** Spend bananas to start a Games-tab Emoji Speak pack (Foundation path free). */
+  /** Spend bananas to start a Foundation-path Emoji Speak pack (Games tab free). */
   @Post('emoji-speak/:poolId/start')
   async startEmojiSpeakPack(
     @Req() req: AuthedRequest,
@@ -95,8 +96,8 @@ export class MiniGamesController {
   ) {
     const id = poolId?.trim();
     if (!id) throw new BadRequestException('poolId is required');
-    const free = isFreeEmojiSpeakStart(id);
-    if (!free) {
+    const charge = isFoundationPathEmojiSpeak(id);
+    if (charge) {
       await this.economy.spendBananas(
         req.user.id,
         EMOJI_SPEAK_BANANA_COST,
@@ -106,22 +107,7 @@ export class MiniGamesController {
     }
     return {
       ok: true,
-      bananaCost: free ? 0 : EMOJI_SPEAK_BANANA_COST,
-    };
-  }
-
-  /** Spend bananas to start Emoji Speak Endless. */
-  @Post('emoji-speak-endless/start')
-  async startEmojiSpeakEndless(@Req() req: AuthedRequest) {
-    await this.economy.spendBananas(
-      req.user.id,
-      EMOJI_SPEAK_BANANA_COST,
-      'game_emoji_speak_endless',
-      'emoji_speak_start',
-    );
-    return {
-      ok: true,
-      bananaCost: EMOJI_SPEAK_BANANA_COST,
+      bananaCost: charge ? EMOJI_SPEAK_BANANA_COST : 0,
     };
   }
 
