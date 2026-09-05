@@ -39,25 +39,25 @@ export const SIMULATIONS: SimulationConfig[] = [
     title: 'บทสนทนาแรก',
     missionNumber: 1,
     missionTitleTh: 'แนะนำตัวกับเพื่อนใหม่',
-    scenarioTh: 'คุณพบเพื่อนใหม่ในคลาส เขาอยากรู้จักคุณด้วยคำถามง่าย ๆ 3 ข้อ',
-    goalsTh: ['บอกชื่อ', 'บอกประเทศ', 'บอกเมืองที่อยู่'],
-    goalsEn: ['Say your name', 'Say where you are from', 'Say where you live'],
+    scenarioTh: 'คุณพบเพื่อนใหม่ในคลาส จึงทักทาย แนะนำชื่อ และบอกว่ามาจากไหน',
+    goalsTh: ['กล่าวทักทาย', 'บอกชื่อ', 'บอกว่ามาจากไหน'],
+    goalsEn: ['Say hello', 'Say your name', 'Say where you are from'],
     difficulty: 'easy',
     estimatedMinutes: 2,
     bananaCost: 1,
     foundationMission: true,
     systemInstruction:
-      'You are Max, a friendly classmate. This is a Foundation mission with exactly three learner replies. Ask exactly one question at a time in this order: name → country → city. Accept short answers and minor mistakes. After reply 1 ask where they are from. After reply 2 ask where they live. After reply 3 close warmly without a question. Never ask about work, study, hobbies, or anything else.',
+      'You are Max, a friendly classmate. This is a Foundation mission with exactly three learner replies. Follow this order: greeting → name → country. Start by greeting without a question so the learner can greet you back. After reply 1 ask their name. After reply 2 ask where they are from. Accept short answers and minor mistakes. After reply 3 close warmly without a question. Never ask where they live, about work, study, hobbies, or anything else.',
     openingPrompt:
-      'Open as Max with one short greeting, then ask only: "What is your name?" Keep every checkpoint false.',
+      'Open as Max with only: "Hi! I\'m Max. Nice to meet you." Do not ask a question. Let the learner greet you back. Keep every checkpoint false.',
     completionReplyEn: 'Nice to meet you! Thanks for telling me about yourself.',
     completionReplyTh: 'ยินดีที่ได้รู้จักครับ! ขอบคุณที่เล่าเรื่องตัวเองให้ฟังนะครับ',
-    successCriteria: ['said_name', 'said_country', 'said_city'],
+    successCriteria: ['said_greeting', 'said_name', 'said_country'],
     maxTurns: 3,
     vocabDrill: [
+      { word: 'Hello.', pronunciation: 'เฮลโล', meaningTh: 'สวัสดี' },
       { word: 'My name is…', pronunciation: 'มาย-เนม-อิส', meaningTh: 'ฉันชื่อ…' },
       { word: "I'm from…", pronunciation: 'ไอม์-ฟรอม', meaningTh: 'ฉันมาจาก…' },
-      { word: 'I live in…', pronunciation: 'ไอ-ลิฟ-อิน', meaningTh: 'ฉันอยู่ที่…' },
     ],
   },
   {
@@ -1094,6 +1094,8 @@ export function applySimulationCheckpointHeuristics(
   aiResponse = '',
 ): Record<string, boolean> {
   switch (config.simulationId) {
+    case 'foundation_first_conversation':
+      return applyFoundationFirstConversationHeuristics(history);
     case 'meet_new_friend_easy':
       return applyMeetNewFriendHeuristics(
         userText,
@@ -1104,6 +1106,29 @@ export function applySimulationCheckpointHeuristics(
     default:
       return checkpoints;
   }
+}
+
+function applyFoundationFirstConversationHeuristics(
+  history: TurnLike[],
+): Record<string, boolean> {
+  const learnerSpeech = history
+    .filter((turn) => turn.speaker === 'user')
+    .map((turn) => turn.textEn.toLowerCase().trim());
+
+  return {
+    said_greeting: learnerSpeech.some((text) =>
+      /\b(hi|hello|hey|nice to meet you)\b/.test(text),
+    ),
+    said_name: learnerSpeech.some(
+      (text) =>
+        /\b(my name is|call me)\b/.test(text) ||
+        (/\bi(?:'m| am)\s+[a-z]+\b/.test(text) &&
+          !/\bi(?:'m| am)\s+from\b/.test(text)),
+    ),
+    said_country: learnerSpeech.some((text) =>
+      /\b(i(?:'m| am)\s+from|from)\b/.test(text),
+    ),
+  };
 }
 
 function meetNewFriendUserTurnCount(history: TurnLike[]): number {
@@ -1286,6 +1311,9 @@ export function finalizeSimulationTurnState(
     aiAlreadyClosing &&
     merged.introduced_self &&
     merged.answered_about_self;
+  const firstConversationReady =
+    config.simulationId === 'foundation_first_conversation' &&
+    allCheckpointsComplete(merged);
 
   const shouldForceClose =
     maxTurnsReached ||
@@ -1293,7 +1321,8 @@ export function finalizeSimulationTurnState(
     (!isFoundationMission &&
       allCheckpointsComplete(merged) &&
       remainingTurns <= 2) ||
-    friendReadyToHonorClose;
+    friendReadyToHonorClose ||
+    firstConversationReady;
 
   if (shouldForceClose) {
     for (const key of config.successCriteria) {
@@ -1301,7 +1330,10 @@ export function finalizeSimulationTurnState(
     }
     const looksLikeClosing = aiAlreadyClosing;
     const stillAsking = /\?/.test(aiResponse);
-    if (isFoundationMission && maxTurnsReached) {
+    if (
+      isFoundationMission &&
+      (maxTurnsReached || firstConversationReady)
+    ) {
       aiResponse = config.completionReplyEn ?? aiResponse;
       textTh = config.completionReplyTh ?? textTh;
     } else if (!looksLikeClosing && (maxTurnsReached || stillAsking)) {
@@ -1319,7 +1351,9 @@ export function finalizeSimulationTurnState(
     (config.simulationId !== 'meet_new_friend_easy' ||
       meetNewFriendMinimumProgressMet(nextTurn, history) ||
       friendReadyToHonorClose) &&
-    (!isFoundationMission || nextTurn >= config.maxTurns);
+    (!isFoundationMission ||
+      nextTurn >= config.maxTurns ||
+      firstConversationReady);
 
   const isTaskComplete =
     (checkpointsDone && minArcMet) ||

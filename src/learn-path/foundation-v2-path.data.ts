@@ -191,8 +191,8 @@ export const FOUNDATION_V2_CHAPTERS: FoundationV2ChapterDef[] = [
       sayIt(
         'fnd_v2_say_first_conversation',
         '1.3',
-        'First Conversation',
-        'เปิดบทสนทนา',
+        'Introduce Yourself',
+        'พูดแนะนำตัว',
         'fnd_v2_first_conversation',
         ['introductions'],
         { comingSoon: false },

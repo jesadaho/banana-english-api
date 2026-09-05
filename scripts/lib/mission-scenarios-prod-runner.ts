@@ -31,7 +31,7 @@ const LEARNER = 'Nana';
 const UNLOCK_MISSION: MissionId = 'foundation_first_conversation';
 
 const HAPPY_LINES: Record<MissionId, string[]> = {
-  foundation_first_conversation: ['My name is Nana.', "I'm from Thailand.", 'I live in Bangkok.'],
+  foundation_first_conversation: ['Hi!', 'My name is Nana.', "I'm from Thailand."],
   foundation_survival_help: ["I don't understand.", 'Can you speak more slowly?', 'What does that mean?'],
   foundation_talk_about_family: ['He is my father.', 'She is my mother.', 'I have one sister.'],
   foundation_buy_something: ['I want the blue bag.', 'How much is it?', "I'll take it."],
@@ -40,7 +40,7 @@ const HAPPY_LINES: Record<MissionId, string[]> = {
 };
 
 const MESSY_LINES: Record<MissionId, string[]> = {
-  foundation_first_conversation: ["I'm Nana.", 'Thailand.', 'Bangkok.'],
+  foundation_first_conversation: ['Hello.', "I'm Nana.", 'Thailand.'],
   foundation_survival_help: ["I don't get it.", 'More slowly, please.', 'Can you say that again?'],
   foundation_talk_about_family: ['My father.', 'My mother.', 'One sister.'],
   foundation_buy_something: ['Blue bag, please.', 'How much?', 'Too expensive.'],
