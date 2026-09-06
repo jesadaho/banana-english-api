@@ -74,6 +74,10 @@ export class UserAuthService {
       where: { firebaseUid },
     });
     if (existingByFirebase && existingByFirebase.id !== user.id) {
+      if (await this.isGuestUser(user)) {
+        // Multi-device v1: guest adopts the already-linked profile.
+        return this.users.getProfile(existingByFirebase);
+      }
       throw new ConflictException(
         'This account is already linked to another profile',
       );
@@ -85,6 +89,12 @@ export class UserAuthService {
       },
     });
     if (existingProvider && existingProvider.userId !== user.id) {
+      if (await this.isGuestUser(user)) {
+        const existingUser = await this.prisma.user.findUniqueOrThrow({
+          where: { id: existingProvider.userId },
+        });
+        return this.users.getProfile(existingUser);
+      }
       throw new ConflictException(
         'This sign-in method is already linked to another profile',
       );
@@ -120,6 +130,15 @@ export class UserAuthService {
       where: { id: user.id },
     });
     return this.users.getProfile(updated);
+  }
+
+  /** Same guest definition as getAuthStatus: no firebaseUid and no linked providers. */
+  private async isGuestUser(user: User): Promise<boolean> {
+    if (user.firebaseUid) return false;
+    const linkedCount = await this.prisma.userAuthProvider.count({
+      where: { userId: user.id },
+    });
+    return linkedCount === 0;
   }
 
   private resolveProviderUid(

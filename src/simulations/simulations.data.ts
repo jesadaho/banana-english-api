@@ -25,6 +25,9 @@ export interface SimulationConfig {
   /** Deterministic close used when the final learner reply reaches maxTurns. */
   completionReplyEn?: string;
   completionReplyTh?: string;
+  /** Neutral close when maxTurns is reached before every goal is achieved. */
+  fallbackReplyEn?: string;
+  fallbackReplyTh?: string;
   successCriteria: string[];
   maxTurns: number;
   vocabDrill: VocabDrillWord[];
@@ -39,25 +42,44 @@ export const SIMULATIONS: SimulationConfig[] = [
     title: 'บทสนทนาแรก',
     missionNumber: 1,
     missionTitleTh: 'แนะนำตัวกับเพื่อนใหม่',
-    scenarioTh: 'คุณพบเพื่อนใหม่ในคลาส จึงทักทาย แนะนำชื่อ และบอกว่ามาจากไหน',
-    goalsTh: ['กล่าวทักทาย', 'บอกชื่อ', 'บอกว่ามาจากไหน'],
-    goalsEn: ['Say hello', 'Say your name', 'Say where you are from'],
+    scenarioTh:
+      'คุณพบเพื่อนใหม่ในคลาส จึงทักทาย แนะนำชื่อ บอกว่ามาจากไหน และตอบคำถามง่าย ๆ',
+    goalsTh: [
+      'กล่าวทักทาย',
+      'บอกชื่อ',
+      'บอกว่ามาจากไหน',
+      'ตอบ Yes / No / Maybe',
+    ],
+    goalsEn: [
+      'Say hello',
+      'Say your name',
+      'Say where you are from',
+      'Answer Yes, No, or Maybe',
+    ],
     difficulty: 'easy',
     estimatedMinutes: 2,
     bananaCost: 1,
     foundationMission: true,
     systemInstruction:
-      'You are Max, a friendly classmate. This is a Foundation mission with exactly three learner replies. Follow this order: greeting → name → country. Start by greeting without a question so the learner can greet you back. After reply 1 ask their name. After reply 2 ask where they are from. Accept short answers and minor mistakes. After reply 3 close warmly without a question. Never ask where they live, about work, study, hobbies, or anything else.',
+      'You are Max, a friendly classmate. This Foundation mission has four goals and at most four learner replies: greeting → name → country → answer one Yes/No/Maybe question. Start by greeting without a question. After each reply, ask only for the next missing goal; if the learner already gave their name, skip the name question. After learning their country, ask exactly: "Do you like English?" Accept "Yes, I do.", "No, I don\'t.", or "Maybe." As soon as all four goals are complete, close warmly without a question. Accept short answers and minor mistakes. Never ask where they live, about work, study, hobbies, or anything else.',
     openingPrompt:
       'Open as Max with only: "Hi! I\'m Max. Nice to meet you." Do not ask a question. Let the learner greet you back. Keep every checkpoint false.',
     completionReplyEn: 'Nice to meet you! Thanks for telling me about yourself.',
     completionReplyTh: 'ยินดีที่ได้รู้จักครับ! ขอบคุณที่เล่าเรื่องตัวเองให้ฟังนะครับ',
-    successCriteria: ['said_greeting', 'said_name', 'said_country'],
-    maxTurns: 3,
+    fallbackReplyEn: 'Nice talking to you! You can try these phrases again anytime.',
+    fallbackReplyTh: 'ยินดีที่ได้คุยกันครับ คุณกลับมาลองประโยคเหล่านี้ใหม่ได้เสมอครับ',
+    successCriteria: [
+      'said_greeting',
+      'said_name',
+      'said_country',
+      'answered_yes_no_maybe',
+    ],
+    maxTurns: 4,
     vocabDrill: [
       { word: 'Hello.', pronunciation: 'เฮลโล', meaningTh: 'สวัสดี' },
       { word: 'My name is…', pronunciation: 'มาย-เนม-อิส', meaningTh: 'ฉันชื่อ…' },
       { word: "I'm from…", pronunciation: 'ไอม์-ฟรอม', meaningTh: 'ฉันมาจาก…' },
+      { word: 'Yes, I do.', pronunciation: 'เยส-ไอ-ดู', meaningTh: 'ใช่' },
     ],
   },
   {
@@ -73,12 +95,18 @@ export const SIMULATIONS: SimulationConfig[] = [
     bananaCost: 1,
     foundationMission: true,
     systemInstruction:
-      'You are a patient information-desk worker. This is a Foundation mission with exactly three learner replies. Reply 1 should elicit "I don\'t understand." Reply 2 should elicit "Can you speak more slowly?" Reply 3 should elicit "What does that mean?" Accept "Can you say that again?" for the final goal. Give a very short natural setup, never quiz grammar, and close after reply 3 without a question.',
+      'You are a patient information-desk worker in a guided role-play. Use at most three learner replies and ask only for the next missing survival skill. Open with: "The information desk is beside the mezzanine." After non-understanding, say: "The desk is beyond the concourse, beside platform twelve." After a request to speak slowly, say slowly: "The desk is beside platform twelve." Accept I don\'t understand/I don\'t get it, Can/Could you speak more slowly/More slowly please, and What does this/that/platform mean or Platform? Mark every distinct skill communicated in packed replies and skip completed skills. The final goal is asking meaning, not asking for repetition. When a valid meaning question completes the goals, explain platform as the place where you wait for a train, then close. Never use textTh as unrelated coaching: it must faithfully translate aiResponse.',
     openingPrompt:
-      'Say one short, deliberately difficult direction, then pause so the learner can say they do not understand. Keep every checkpoint false.',
-    completionReplyEn: 'Of course! You asked for help clearly. Well done!',
-    completionReplyTh: 'ได้เลยครับ! คุณขอความช่วยเหลือได้ชัดเจนมาก ทำได้ดีครับ',
-    successCriteria: ['said_dont_understand', 'asked_speak_slowly', 'asked_meaning_or_repeat'],
+      'Open with exactly: "The information desk is beside the mezzanine." Translate it faithfully in textTh. Keep every checkpoint false.',
+    completionReplyEn: 'Platform is where you wait for a train. Well done!',
+    completionReplyTh: 'คำว่า platform หมายถึงบริเวณที่รอขึ้นรถไฟ หรือชานชาลาครับ ทำได้ดีมาก!',
+    fallbackReplyEn: 'No problem. Try: “I don\'t understand.”',
+    fallbackReplyTh: 'ไม่เป็นไรครับ ลองใช้ประโยค “I don\'t understand.” ได้ครับ',
+    successCriteria: [
+      'signaled_nonunderstanding',
+      'asked_speak_slowly',
+      'asked_meaning',
+    ],
     maxTurns: 3,
     vocabDrill: [
       { word: "I don't understand.", pronunciation: 'ไอ-โดนท์-อันเดอร์สแตนด์', meaningTh: 'ฉันไม่เข้าใจ' },
@@ -91,20 +119,34 @@ export const SIMULATIONS: SimulationConfig[] = [
     title: 'คุยเรื่องครอบครัว',
     missionNumber: 3,
     missionTitleTh: 'แนะนำครอบครัว',
-    scenarioTh: 'เพื่อนดูรูปครอบครัวของคุณและถามคำถามง่าย ๆ 3 ข้อ',
-    goalsTh: ['แนะนำผู้ชายในครอบครัว', 'แนะนำผู้หญิงในครอบครัว', 'บอกพี่น้องที่มี'],
-    goalsEn: ['Use He is…', 'Use She is…', 'Use I have…'],
+    scenarioTh: 'คุณคุยกับเพื่อนใหม่และเล่าเรื่องครอบครัวสั้น ๆ 3 อย่าง',
+    goalsTh: [
+      'เล่าเรื่องคนหนึ่งในครอบครัว',
+      'เล่าเรื่องครอบครัวเพิ่มอีกหนึ่งอย่าง',
+      'พูดประโยคเกี่ยวกับครอบครัวด้วยตัวเอง',
+    ],
+    goalsEn: [
+      'Share one family fact',
+      'Share another family fact',
+      'Say one final family sentence',
+    ],
     difficulty: 'easy',
     estimatedMinutes: 2,
     bananaCost: 1,
     foundationMission: true,
     systemInstruction:
-      'You are a friendly classmate looking at the learner\'s family photo. This is a Foundation mission with exactly three learner replies. Ask in order: "Who is he?" → "Who is she?" → "Do you have a brother or sister?" Accept any real family answer and minor mistakes. After reply 3 close warmly without a question. Do not invent extra relatives.',
+      'You are a friendly classmate. This is an inclusive Foundation mission with at most three learner replies. Never claim the generic illustration is the learner\'s real family. Never require a particular gender, relative, sibling, or family shape. Opening: "Let\'s talk about family. Tell me about one person in your family." After the first fact say: "Nice! Tell me one more thing about your family." After the second fact say: "Great! Say one last family sentence." Accept This is my…, He is/He\'s my…, She is/She\'s my…, I have…, short semantic answers such as My mother, truthful negatives, relatives the learner knows independently, and minor grammar or STT errors. Recast gently and continue. If one reply contains multiple distinct family facts, mark multiple checkpoints and skip prompts already satisfied. If the learner says they do not want to discuss family, respect it and close immediately without penalty. After three distinct facts or reply 3, close without a question.',
     openingPrompt:
-      'Look at the family photo and ask only: "Who is he?" Keep every checkpoint false.',
-    completionReplyEn: 'Thanks! It was nice meeting your family.',
-    completionReplyTh: 'ขอบคุณครับ! ยินดีที่ได้รู้จักครอบครัวของคุณนะครับ',
-    successCriteria: ['used_he_is', 'used_she_is', 'used_i_have'],
+      'Open with exactly: "Let\'s talk about family. Tell me about one person in your family." Do not refer to the illustration or assume who is in the learner\'s family. Keep every checkpoint false.',
+    completionReplyEn: 'Thanks for talking about your family with me!',
+    completionReplyTh: 'ขอบคุณที่คุยเรื่องครอบครัวกับผมนะครับ!',
+    fallbackReplyEn: 'Thanks for practicing family sentences with me!',
+    fallbackReplyTh: 'ขอบคุณที่มาฝึกประโยคเกี่ยวกับครอบครัวด้วยกันครับ!',
+    successCriteria: [
+      'shared_first_family_fact',
+      'shared_second_family_fact',
+      'shared_third_family_fact',
+    ],
     maxTurns: 3,
     vocabDrill: [
       { word: 'He is my…', pronunciation: 'ฮี-อิส-มาย', meaningTh: 'เขาคือ…ของฉัน' },
@@ -125,11 +167,13 @@ export const SIMULATIONS: SimulationConfig[] = [
     bananaCost: 1,
     foundationMission: true,
     systemInstruction:
-      'You are a friendly shop assistant. This is a Foundation mission with exactly three learner replies. First ask what they want. After reply 1 show that item and leave room for them to ask "How much is it?" After reply 2 give a simple price and ask "Would you like it?" Accept "I\'ll take it" or "That\'s too expensive" on reply 3, then close without a question. Do not ask about size, payment method, or anything else.',
+      'You are a friendly shop assistant. Use at most three learner replies and ask only for the next missing shopping goal. Open with "Hello! What do you want?" Accept I want…, item please, or a known item alone. Then say "Here it is. What would you like to ask?" After a price question, say "It\'s ten dollars. Would you like it?" Accept How much is it/this/How much and any clear buy or decline decision such as I\'ll take it/Yes please/That\'s too expensive/No thanks. Mark multiple goals in packed replies and skip completed prompts. Close as soon as choose + price + decision are complete. Do not ask about size, payment method, or anything else. textTh must faithfully translate aiResponse without adding tutor instructions.',
     openingPrompt:
       'Greet the learner at the shop and ask only: "What do you want?" Keep every checkpoint false.',
-    completionReplyEn: 'Great choice! Thank you. Have a nice day!',
-    completionReplyTh: 'เลือกได้ดีครับ! ขอบคุณครับ ขอให้เป็นวันที่ดีนะครับ',
+    completionReplyEn: 'Thanks for visiting! Have a nice day!',
+    completionReplyTh: 'ขอบคุณที่แวะมานะครับ ขอให้เป็นวันที่ดีครับ!',
+    fallbackReplyEn: 'Thanks for visiting! You can try again anytime.',
+    fallbackReplyTh: 'ขอบคุณที่แวะมาครับ คุณกลับมาลองใหม่ได้เสมอครับ',
     successCriteria: ['chose_item', 'asked_price', 'made_buying_decision'],
     maxTurns: 3,
     vocabDrill: [
@@ -151,12 +195,18 @@ export const SIMULATIONS: SimulationConfig[] = [
     bananaCost: 1,
     foundationMission: true,
     systemInstruction:
-      'You are a friendly new classmate. This is a Foundation mission with exactly three learner replies. Ask exactly one question at a time in this order: what they like → what they want or need now → what they can do. Accept personal answers and minor mistakes. After reply 3 close warmly without a question. Never ask follow-up questions.',
+      'You are a friendly new classmate. Use at most three learner replies. Ask only the next missing goal in this order: "What do you like?" → "What do you want or need?" → "What can or can\'t you do?" Accept positive or negative truthful answers, short semantic answers with a gentle recast, and minor STT or grammar errors. Mark multiple distinct goals in packed replies, skip questions already answered, and close as soon as all goals are complete. Never ask follow-up questions.',
     openingPrompt:
       'Greet briefly and ask only: "What do you like?" Keep every checkpoint false.',
-    completionReplyEn: 'Awesome! Now I know three things about you.',
-    completionReplyTh: 'เยี่ยมเลยครับ! ตอนนี้ผมรู้จักคุณเพิ่มขึ้นสามเรื่องแล้ว',
-    successCriteria: ['said_like', 'said_want_or_need', 'said_can'],
+    completionReplyEn: 'Thanks! It was nice learning about you.',
+    completionReplyTh: 'ขอบคุณครับ! ยินดีที่ได้รู้จักคุณมากขึ้นนะครับ',
+    fallbackReplyEn: 'Thanks for practicing with me. We can try again later.',
+    fallbackReplyTh: 'ขอบคุณที่มาฝึกด้วยกันครับ ไว้ลองใหม่ได้เสมอนะครับ',
+    successCriteria: [
+      'shared_preference',
+      'shared_want_or_need',
+      'shared_ability',
+    ],
     maxTurns: 3,
     vocabDrill: [
       { word: 'I like…', pronunciation: 'ไอ-ไลก์', meaningTh: 'ฉันชอบ…' },
@@ -177,12 +227,14 @@ export const SIMULATIONS: SimulationConfig[] = [
     bananaCost: 1,
     foundationMission: true,
     systemInstruction:
-      'You are a friendly station worker. This is a Foundation mission with exactly three learner replies. First offer help so the learner can ask "Where is the bathroom?" or another known place. After reply 1 give one simple direction. After reply 2 acknowledge their thanks and say goodbye. Accept "Goodbye" or "See you later" on reply 3, then close without a question. Never ask about tickets, transport, duration, or destinations.',
+      'You are a friendly station worker. Use at most three learner replies. Open with "Hello! Can I help you?" Accept Where is/Where\'s plus a known place or a short place request such as Bathroom? After a place request, say only: "Go straight." After thanks, say: "You\'re welcome. Goodbye!" Accept Thank you/Thanks and Goodbye/Bye/See you/See you later/Nice talking to you. Mark multiple goals in packed replies, skip prompts already satisfied, and close as soon as place request + thanks + goodbye are complete. Never ask about tickets, duration, or destinations.',
     openingPrompt:
       'Greet briefly and ask only: "Can I help you?" Keep every checkpoint false.',
     completionReplyEn: 'Goodbye! Have a great day!',
     completionReplyTh: 'ลาก่อนครับ! ขอให้เป็นวันที่ดีนะครับ',
-    successCriteria: ['asked_for_place', 'said_thank_you', 'said_goodbye'],
+    fallbackReplyEn: 'No problem. You can ask again anytime.',
+    fallbackReplyTh: 'ไม่เป็นไรครับ คุณกลับมาถามใหม่ได้เสมอครับ',
+    successCriteria: ['asked_for_place', 'said_thank_you', 'closed_conversation'],
     maxTurns: 3,
     vocabDrill: [
       { word: 'Where is…?', pronunciation: 'แวร์-อิส', meaningTh: '…อยู่ที่ไหน' },
@@ -1096,6 +1148,16 @@ export function applySimulationCheckpointHeuristics(
   switch (config.simulationId) {
     case 'foundation_first_conversation':
       return applyFoundationFirstConversationHeuristics(history);
+    case 'foundation_talk_about_family':
+      return applyFoundationFamilyHeuristics(history);
+    case 'foundation_survival_help':
+      return applyFoundationSurvivalHeuristics(history);
+    case 'foundation_buy_something':
+      return applyFoundationShopHeuristics(history);
+    case 'foundation_three_things_about_me':
+      return applyFoundationAboutMeHeuristics(history);
+    case 'foundation_ask_for_a_place':
+      return applyFoundationPlaceHeuristics(history);
     case 'meet_new_friend_easy':
       return applyMeetNewFriendHeuristics(
         userText,
@@ -1108,12 +1170,179 @@ export function applySimulationCheckpointHeuristics(
   }
 }
 
+const FAMILY_RELATION_NORMALIZATION: Record<string, string> = {
+  mom: 'mother',
+  mum: 'mother',
+  dad: 'father',
+  grandma: 'grandmother',
+  grandpa: 'grandfather',
+  grandparents: 'grandparent',
+  siblings: 'sibling',
+  children: 'child',
+  kids: 'child',
+  stepmom: 'stepmother',
+  stepdad: 'stepfather',
+};
+
+function familyPrivacyOptOut(history: TurnLike[]): boolean {
+  return history
+    .filter((turn) => turn.speaker === 'user')
+    .some((turn) =>
+      /\b(don't|do not|rather not|not comfortable|can't|cannot)\b.*\b(talk|say|share|family)\b/i.test(
+        turn.textEn,
+      ),
+    );
+}
+
+function applyFoundationFamilyHeuristics(
+  history: TurnLike[],
+): Record<string, boolean> {
+  const relationPattern =
+    /\b(mother|mom|mum|father|dad|sister|brother|sibling|siblings|grandmother|grandma|grandfather|grandpa|grandparent|grandparents|parent|parents|guardian|aunt|uncle|cousin|wife|husband|partner|son|daughter|child|children|kid|kids|stepmother|stepmom|stepfather|stepdad|stepparent|foster mother|foster father|foster parent)\b/gi;
+  const facts = new Set<string>();
+  for (const turn of history) {
+    if (turn.speaker !== 'user') continue;
+    for (const match of turn.textEn.matchAll(relationPattern)) {
+      const relation = match[1].toLowerCase();
+      facts.add(FAMILY_RELATION_NORMALIZATION[relation] ?? relation);
+    }
+  }
+
+  return {
+    shared_first_family_fact: facts.size >= 1,
+    shared_second_family_fact: facts.size >= 2,
+    shared_third_family_fact: facts.size >= 3,
+  };
+}
+
+function learnerRepliesWithPriorAi(
+  history: TurnLike[],
+): Array<{ text: string; priorAi: string }> {
+  let priorAi = '';
+  const replies: Array<{ text: string; priorAi: string }> = [];
+  for (const turn of history) {
+    if (turn.speaker === 'ai') {
+      priorAi = turn.textEn.toLowerCase();
+    } else if (turn.speaker === 'user') {
+      replies.push({ text: turn.textEn.toLowerCase().trim(), priorAi });
+    }
+  }
+  return replies;
+}
+
+function isUsableContextAnswer(text: string): boolean {
+  const cleaned = text.replace(/[^a-z' -]/g, '').trim();
+  if (!cleaned || cleaned.length < 2) return false;
+  return !/^(?:um+|uh+|hmm+|okay|ok|yes|no|i don't know|i do not know|not sure|banana)$/i.test(
+    cleaned,
+  );
+}
+
+function applyFoundationSurvivalHeuristics(
+  history: TurnLike[],
+): Record<string, boolean> {
+  const speech = history
+    .filter((turn) => turn.speaker === 'user')
+    .map((turn) => turn.textEn.toLowerCase());
+  return {
+    signaled_nonunderstanding: speech.some((text) =>
+      /\b(don't|do not)\s+(understand|get it|know)\b|\bsorry\??$/.test(text),
+    ),
+    asked_speak_slowly: speech.some((text) =>
+      /\b(speak|talk|say)\b.*\b(slow|slowly|slower)\b|\b(more slowly|slowly please)\b/.test(
+        text,
+      ),
+    ),
+    asked_meaning: speech.some((text) =>
+      /\bwhat (?:does|is)\b.*\bmean|\bwhat does that mean\b|\b(platform)\??$/.test(
+        text,
+      ),
+    ),
+  };
+}
+
+function applyFoundationShopHeuristics(
+  history: TurnLike[],
+): Record<string, boolean> {
+  const replies = learnerRepliesWithPriorAi(history);
+  const knownItem = /\b(bag|shirt|shoes?|hat|water|book)\b/;
+  return {
+    chose_item: replies.some(({ text, priorAi }) =>
+      /\bi want (?:this|that|the |a |an )?\w+|\bi want this(?: one)?\b/.test(
+        text,
+      ) ||
+      (/what do you want/.test(priorAi) &&
+        !/^\s*(?:what|how|where|who)\b/.test(text) &&
+        (knownItem.test(text) ||
+          /\b[a-z][a-z -]{1,30},? please[.!]?$/.test(text))),
+    ),
+    asked_price: replies.some(({ text }) =>
+      /\bhow much\b|\bwhat(?:'s| is) the price\b/.test(text),
+    ),
+    made_buying_decision: replies.some(
+      ({ text, priorAi }) =>
+        /\bi(?:'ll| will) take it\b|\btoo expensive\b|\bno thanks?\b/.test(
+          text,
+        ) ||
+        (/\b(yes|no)(?:,? please)?\b/.test(text) &&
+          /would you like/.test(priorAi)),
+    ),
+  };
+}
+
+function applyFoundationAboutMeHeuristics(
+  history: TurnLike[],
+): Record<string, boolean> {
+  const replies = learnerRepliesWithPriorAi(history);
+  const shortTaughtContent =
+    /\b(coffee|tea|pizza|sushi|burger|noodles|water|help|dog|cat|swim|cook|drive|work|study|eat|sleep|wake up|nothing)\b/;
+  return {
+    shared_preference: replies.some(({ text, priorAi }) =>
+      /\bi (?:don't |do not )?(?:like|love)\b/.test(text) ||
+      (/what do you like/.test(priorAi) && shortTaughtContent.test(text)),
+    ),
+    shared_want_or_need: replies.some(({ text, priorAi }) =>
+      /\bi (?:don't |do not )?(?:want|need)\b/.test(text) ||
+      (/what do you want or need/.test(priorAi) &&
+        shortTaughtContent.test(text)),
+    ),
+    shared_ability: replies.some(({ text, priorAi }) =>
+      /\bi (?:can|can't|cannot|can not)\b/.test(text) ||
+      (/what can(?: or can't)? you do/.test(priorAi) &&
+        shortTaughtContent.test(text)),
+    ),
+  };
+}
+
+function applyFoundationPlaceHeuristics(
+  history: TurnLike[],
+): Record<string, boolean> {
+  const replies = learnerRepliesWithPriorAi(history);
+  return {
+    asked_for_place: replies.some(({ text }) =>
+      /\bwhere(?:'s| is)\b|\b(bathroom|hotel|station|taxi)(?:,? please)?[?.!]*$/.test(
+        text,
+      ),
+    ),
+    said_thank_you: replies.some(({ text }) =>
+      /\b(thank you|thanks)\b/.test(text),
+    ),
+    closed_conversation: replies.some(({ text }) =>
+      /\b(goodbye|bye|see you|nice talking to you|have a nice day)\b/.test(
+        text,
+      ),
+    ),
+  };
+}
+
 function applyFoundationFirstConversationHeuristics(
   history: TurnLike[],
 ): Record<string, boolean> {
   const learnerSpeech = history
     .filter((turn) => turn.speaker === 'user')
     .map((turn) => turn.textEn.toLowerCase().trim());
+  const countryOrNationality =
+    /\b(thailand|thai|japan|japanese|china|chinese|korea|korean|vietnam|vietnamese|america|american|england|english)\b/;
 
   return {
     said_greeting: learnerSpeech.some((text) =>
@@ -1123,10 +1352,19 @@ function applyFoundationFirstConversationHeuristics(
       (text) =>
         /\b(my name is|call me)\b/.test(text) ||
         (/\bi(?:'m| am)\s+[a-z]+\b/.test(text) &&
-          !/\bi(?:'m| am)\s+from\b/.test(text)),
+          !/\bi(?:'m| am)\s+from\b/.test(text) &&
+          !countryOrNationality.test(text)),
     ),
-    said_country: learnerSpeech.some((text) =>
-      /\b(i(?:'m| am)\s+from|from)\b/.test(text),
+    said_country: learnerRepliesWithPriorAi(history).some(
+      ({ text, priorAi }) =>
+        /\b(i(?:'m| am)\s+from|from)\b/.test(text) ||
+        countryOrNationality.test(text) ||
+        (/where are you from/.test(priorAi) && isUsableContextAnswer(text)),
+    ),
+    answered_yes_no_maybe: learnerRepliesWithPriorAi(history).some(
+      ({ text, priorAi }) =>
+        /\b(yes|yeah|yep|no|nope|maybe)\b/.test(text) &&
+        /do you like english/.test(priorAi),
     ),
   };
 }
@@ -1311,9 +1549,11 @@ export function finalizeSimulationTurnState(
     aiAlreadyClosing &&
     merged.introduced_self &&
     merged.answered_about_self;
-  const firstConversationReady =
-    config.simulationId === 'foundation_first_conversation' &&
-    allCheckpointsComplete(merged);
+  const foundationGoalsDone =
+    isFoundationMission && allCheckpointsComplete(merged);
+  const respectedPrivacyExit =
+    config.simulationId === 'foundation_talk_about_family' &&
+    familyPrivacyOptOut(history);
 
   const shouldForceClose =
     maxTurnsReached ||
@@ -1322,20 +1562,35 @@ export function finalizeSimulationTurnState(
       allCheckpointsComplete(merged) &&
       remainingTurns <= 2) ||
     friendReadyToHonorClose ||
-    firstConversationReady;
+    foundationGoalsDone ||
+    respectedPrivacyExit;
 
   if (shouldForceClose) {
-    for (const key of config.successCriteria) {
-      merged[key] = true;
+    if (!isFoundationMission) {
+      for (const key of config.successCriteria) {
+        merged[key] = true;
+      }
     }
     const looksLikeClosing = aiAlreadyClosing;
     const stillAsking = /\?/.test(aiResponse);
     if (
       isFoundationMission &&
-      (maxTurnsReached || firstConversationReady)
+      (maxTurnsReached || foundationGoalsDone || respectedPrivacyExit)
     ) {
-      aiResponse = config.completionReplyEn ?? aiResponse;
-      textTh = config.completionReplyTh ?? textTh;
+      if (respectedPrivacyExit) {
+        aiResponse = 'No problem. We can talk about something else.';
+        textTh = 'ไม่เป็นไรครับ เราคุยเรื่องอื่นกันได้ครับ';
+      } else if (foundationGoalsDone) {
+        aiResponse = config.completionReplyEn ?? aiResponse;
+        textTh = config.completionReplyTh ?? textTh;
+      } else {
+        aiResponse =
+          config.fallbackReplyEn ??
+          'Thanks for practicing. You can try again anytime.';
+        textTh =
+          config.fallbackReplyTh ??
+          'ขอบคุณที่มาฝึกด้วยกันครับ คุณกลับมาลองใหม่ได้เสมอครับ';
+      }
     } else if (!looksLikeClosing && (maxTurnsReached || stillAsking)) {
       aiResponse =
         config.completionReplyEn ??
@@ -1353,7 +1608,8 @@ export function finalizeSimulationTurnState(
       friendReadyToHonorClose) &&
     (!isFoundationMission ||
       nextTurn >= config.maxTurns ||
-      firstConversationReady);
+      foundationGoalsDone ||
+      respectedPrivacyExit);
 
   const isTaskComplete =
     (checkpointsDone && minArcMet) ||

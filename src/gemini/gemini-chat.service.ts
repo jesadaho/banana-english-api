@@ -2520,8 +2520,10 @@ Payment closure (critical — no tap UI exists):
 Mission closure (critical):
 ${
   config.foundationMission
-    ? `- This Foundation mission MUST receive exactly ${config.maxTurns} learner replies. Do not close early even if checkpoints are marked complete.
-- On learner reply ${config.maxTurns}, wrap up warmly, set ALL checkpoints true, and do NOT ask another question.
+    ? `- This Foundation mission allows at most ${config.maxTurns} learner replies.
+- If the learner communicates multiple goals in one reply, mark every genuinely earned checkpoint and skip questions they already answered.
+- Close as soon as every checkpoint is genuinely complete; maxTurns is a ceiling, not a required conversation length.
+- On learner reply ${config.maxTurns}, wrap up without another question, but NEVER mark an unearned checkpoint true.
 - Before learner reply ${config.maxTurns}, ask only the next question defined in the mission flow.`
     : `- When ${remainingTurns} turns remaining or fewer, wrap up warmly in this reply, set ALL checkpoints to true, and do NOT ask another question.
 - If every checkpoint is already complete, close the conversation — never loop on the same topic.`

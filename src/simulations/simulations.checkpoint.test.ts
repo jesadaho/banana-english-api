@@ -95,41 +95,103 @@ const FOUNDATION_MISSION_IDS = [
 
 describe('Foundation missions — fixed beginner arc', () => {
   for (const id of FOUNDATION_MISSION_IDS) {
-    it(`${id} costs one banana and requires exactly three learner replies`, () => {
+    it(`${id} has the intended short Foundation arc`, () => {
       const mission = requireMission(id);
+      const expectedGoals = id === 'foundation_first_conversation' ? 4 : 3;
       assert.equal(mission.foundationMission, true);
       assert.equal(mission.bananaCost, 1);
-      assert.equal(mission.maxTurns, 3);
-      assert.equal(mission.goalsEn.length, 3);
-      assert.equal(mission.goalsTh.length, 3);
-      assert.equal(mission.successCriteria.length, 3);
+      assert.equal(mission.maxTurns, expectedGoals);
+      assert.equal(mission.goalsEn.length, expectedGoals);
+      assert.equal(mission.goalsTh.length, expectedGoals);
+      assert.equal(mission.successCriteria.length, expectedGoals);
       assert.ok(mission.completionReplyEn);
       assert.ok(mission.completionReplyTh);
     });
   }
 
   it('does not complete early even if Gemini marks every checkpoint true', () => {
-    const mission = requireMission('foundation_first_conversation');
-    const checkpoints = Object.fromEntries(
-      mission.successCriteria.map((key) => [key, true]),
-    );
+    const mission = requireMission('foundation_survival_help');
+    const finalized = runMissionTurn({
+      config: mission,
+      checkpoints: initCheckpointStates(mission.successCriteria),
+      history: [
+        { speaker: 'ai', textEn: 'The information desk is beside the mezzanine.' },
+      ],
+      nextTurn: 1,
+      userText: 'Banana.',
+      geminiCheckpoints: Object.fromEntries(
+        mission.successCriteria.map((key) => [key, true]),
+      ),
+      aiResponse: 'Please try again.',
+      textTh: 'ลองอีกครั้งนะครับ',
+    });
 
+    assert.equal(finalized.isTaskComplete, false);
+    assert.ok(Object.values(finalized.checkpoints).every((done) => !done));
+  });
+
+  it('maxTurns closes neutrally without fabricating Foundation goals', () => {
+    const mission = requireMission('foundation_three_things_about_me');
     const finalized = finalizeSimulationTurnState(
       mission,
-      2,
-      checkpoints,
+      3,
+      initCheckpointStates(mission.successCriteria),
       {
         aiResponse: 'Great! Where do you live?',
         textTh: 'เยี่ยมครับ! คุณอาศัยอยู่ที่ไหนครับ',
       },
     );
 
-    assert.equal(finalized.isTaskComplete, false);
-    assert.equal(finalized.reply.aiResponse, 'Great! Where do you live?');
+    assert.equal(finalized.isTaskComplete, true);
+    assert.equal(finalized.reply.aiResponse, mission.fallbackReplyEn);
+    assert.ok(Object.values(finalized.checkpoints).every((done) => !done));
+  });
+
+  it('first conversation skips name, asks Yes/No, then closes', () => {
+    const mission = requireMission('foundation_first_conversation');
+    let turn = runMissionTurn({
+      config: mission,
+      checkpoints: initCheckpointStates(mission.successCriteria),
+      history: [{ speaker: 'ai', textEn: "Hi! I'm Max. Nice to meet you." }],
+      nextTurn: 1,
+      userText: 'Hi, my name is Nana.',
+      aiResponse: 'Nice to meet you, Nana! Where are you from?',
+    });
+
+    assert.equal(turn.isTaskComplete, false);
+    assert.equal(turn.checkpoints.said_greeting, true);
+    assert.equal(turn.checkpoints.said_name, true);
+    assert.equal(turn.checkpoints.said_country, false);
+
+    turn = runMissionTurn({
+      config: mission,
+      checkpoints: turn.checkpoints,
+      history: turn.history,
+      nextTurn: 2,
+      userText: "I'm from Thailand.",
+      aiResponse: 'Do you like English?',
+    });
+
+    assert.equal(turn.isTaskComplete, false);
+    assert.equal(turn.checkpoints.said_country, true);
+    assert.equal(turn.checkpoints.answered_yes_no_maybe, false);
+
+    turn = runMissionTurn({
+      config: mission,
+      checkpoints: turn.checkpoints,
+      history: turn.history,
+      nextTurn: 3,
+      userText: 'Yes, I do.',
+      aiResponse: 'Great! What do you do?',
+    });
+
+    assert.equal(turn.isTaskComplete, true);
+    assert.equal(turn.reply.aiResponse, mission.completionReplyEn);
+    assert.ok(Object.values(turn.checkpoints).every(Boolean));
   });
 
   it('closes deterministically after the third learner reply', () => {
-    const mission = requireMission('foundation_first_conversation');
+    const mission = requireMission('foundation_three_things_about_me');
     const finalized = finalizeSimulationTurnState(
       mission,
       3,
@@ -141,10 +203,231 @@ describe('Foundation missions — fixed beginner arc', () => {
     );
 
     assert.equal(finalized.isTaskComplete, true);
-    assert.equal(finalized.reply.aiResponse, mission.completionReplyEn);
-    assert.equal(finalized.reply.textTh, mission.completionReplyTh);
+    assert.equal(finalized.reply.aiResponse, mission.fallbackReplyEn);
+    assert.equal(finalized.reply.textTh, mission.fallbackReplyTh);
     assert.equal(finalized.reply.aiResponse.includes('?'), false);
-    assert.ok(Object.values(finalized.checkpoints).every(Boolean));
+    assert.ok(Object.values(finalized.checkpoints).every((done) => !done));
+  });
+
+  it('family accepts three distinct facts in one packed reply', () => {
+    const mission = requireMission('foundation_talk_about_family');
+    const turn = runMissionTurn({
+      config: mission,
+      checkpoints: initCheckpointStates(mission.successCriteria),
+      history: [
+        {
+          speaker: 'ai',
+          textEn: "Let's talk about family. Tell me about one person in your family.",
+        },
+      ],
+      nextTurn: 1,
+      userText: 'This is my mother. I have one brother and one sister.',
+      aiResponse: 'Great! Who is the man in your photo?',
+    });
+
+    assert.equal(turn.isTaskComplete, true);
+    assert.equal(turn.reply.aiResponse, mission.completionReplyEn);
+    assert.ok(Object.values(turn.checkpoints).every(Boolean));
+  });
+
+  it('family respects a privacy opt-out without forcing another answer', () => {
+    const mission = requireMission('foundation_talk_about_family');
+    const turn = runMissionTurn({
+      config: mission,
+      checkpoints: initCheckpointStates(mission.successCriteria),
+      history: [
+        {
+          speaker: 'ai',
+          textEn: "Let's talk about family. Tell me about one person in your family.",
+        },
+      ],
+      nextTurn: 1,
+      userText: "I don't want to talk about my family.",
+      aiResponse: 'Please tell me about your mother.',
+    });
+
+    assert.equal(turn.isTaskComplete, true);
+    assert.equal(
+      turn.reply.aiResponse,
+      'No problem. We can talk about something else.',
+    );
+    assert.equal(turn.reply.aiResponse.includes('?'), false);
+  });
+
+  it('does not count First Conversation Yes before the like question', () => {
+    const mission = requireMission('foundation_first_conversation');
+    const turn = runMissionTurn({
+      config: mission,
+      checkpoints: initCheckpointStates(mission.successCriteria),
+      history: [{ speaker: 'ai', textEn: "Hi! I'm Max." }],
+      nextTurn: 1,
+      userText: "Yes, hi! I'm Nana from Thailand.",
+      aiResponse: 'Do you like English?',
+    });
+    assert.equal(turn.checkpoints.answered_yes_no_maybe, false);
+    assert.equal(turn.isTaskComplete, false);
+  });
+
+  it('About Me completes a packed semantic answer without repeated questions', () => {
+    const mission = requireMission('foundation_three_things_about_me');
+    const turn = runMissionTurn({
+      config: mission,
+      checkpoints: initCheckpointStates(mission.successCriteria),
+      history: [{ speaker: 'ai', textEn: 'What do you like?' }],
+      nextTurn: 1,
+      userText: 'I like coffee. I need water. I can cook.',
+      aiResponse: 'What do you want?',
+    });
+    assert.equal(turn.isTaskComplete, true);
+    assert.equal(turn.reply.aiResponse, mission.completionReplyEn);
+  });
+
+  it('Shop skips from packed item plus price to the decision', () => {
+    const mission = requireMission('foundation_buy_something');
+    let turn = runMissionTurn({
+      config: mission,
+      checkpoints: initCheckpointStates(mission.successCriteria),
+      history: [{ speaker: 'ai', textEn: 'Hello! What do you want?' }],
+      nextTurn: 1,
+      userText: 'I want the blue bag. How much is it?',
+      aiResponse: "It's ten dollars. Would you like it?",
+    });
+    assert.equal(turn.checkpoints.chose_item, true);
+    assert.equal(turn.checkpoints.asked_price, true);
+    assert.equal(turn.isTaskComplete, false);
+
+    turn = runMissionTurn({
+      config: mission,
+      checkpoints: turn.checkpoints,
+      history: turn.history,
+      nextTurn: 2,
+      userText: 'No, thanks. That is too expensive.',
+      aiResponse: 'What would you like instead?',
+    });
+    assert.equal(turn.isTaskComplete, true);
+    assert.equal(turn.reply.aiResponse, mission.completionReplyEn);
+  });
+
+  it('Place skips an already packed thank-you and closes after goodbye', () => {
+    const mission = requireMission('foundation_ask_for_a_place');
+    let turn = runMissionTurn({
+      config: mission,
+      checkpoints: initCheckpointStates(mission.successCriteria),
+      history: [{ speaker: 'ai', textEn: 'Hello! Can I help you?' }],
+      nextTurn: 1,
+      userText: 'Where is the bathroom? Thank you.',
+      aiResponse: "Go straight. You're welcome. Goodbye!",
+    });
+    assert.equal(turn.checkpoints.asked_for_place, true);
+    assert.equal(turn.checkpoints.said_thank_you, true);
+    assert.equal(turn.isTaskComplete, false);
+
+    turn = runMissionTurn({
+      config: mission,
+      checkpoints: turn.checkpoints,
+      history: turn.history,
+      nextTurn: 2,
+      userText: 'See you later.',
+      aiResponse: 'Do you need anything else?',
+    });
+    assert.equal(turn.isTaskComplete, true);
+    assert.equal(turn.reply.aiResponse, mission.completionReplyEn);
+  });
+
+  it('First Conversation accepts a country-only answer in context', () => {
+    const mission = requireMission('foundation_first_conversation');
+    const turn = runMissionTurn({
+      config: mission,
+      checkpoints: initCheckpointStates(mission.successCriteria),
+      history: [{ speaker: 'ai', textEn: 'Where are you from?' }],
+      nextTurn: 2,
+      userText: 'Laos.',
+      aiResponse: 'Do you like English?',
+    });
+    assert.equal(turn.checkpoints.said_country, true);
+  });
+
+  it('Survival meaning goal does not treat a repeat request as a definition question', () => {
+    const mission = requireMission('foundation_survival_help');
+    const turn = runMissionTurn({
+      config: mission,
+      checkpoints: initCheckpointStates(mission.successCriteria),
+      history: [{ speaker: 'ai', textEn: 'The desk is beside platform twelve.' }],
+      nextTurn: 2,
+      userText: 'Can you say that again?',
+      aiResponse: 'The desk is beside platform twelve.',
+    });
+    assert.equal(turn.checkpoints.asked_meaning, false);
+  });
+
+  it('Family accepts broad truthful relations and deduplicates repeats', () => {
+    const mission = requireMission('foundation_talk_about_family');
+    const turn = runMissionTurn({
+      config: mission,
+      checkpoints: initCheckpointStates(mission.successCriteria),
+      history: [{ speaker: 'ai', textEn: 'Tell me about your family.' }],
+      nextTurn: 1,
+      userText:
+        "My mother, mother. I don't have siblings. I have two children and a guardian.",
+      aiResponse: 'Tell me one more thing.',
+    });
+    assert.equal(turn.isTaskComplete, true);
+    assert.ok(Object.values(turn.checkpoints).every(Boolean));
+  });
+
+  it('Shop accepts a contextual short item but not an unrelated question', () => {
+    const mission = requireMission('foundation_buy_something');
+    const accepted = runMissionTurn({
+      config: mission,
+      checkpoints: initCheckpointStates(mission.successCriteria),
+      history: [{ speaker: 'ai', textEn: 'Hello! What do you want?' }],
+      nextTurn: 1,
+      userText: 'Water, please.',
+      aiResponse: 'Here it is.',
+    });
+    assert.equal(accepted.checkpoints.chose_item, true);
+
+    const rejected = runMissionTurn({
+      config: mission,
+      checkpoints: initCheckpointStates(mission.successCriteria),
+      history: [{ speaker: 'ai', textEn: 'Hello! What do you want?' }],
+      nextTurn: 1,
+      userText: 'What is this?',
+      aiResponse: 'It is a bag.',
+    });
+    assert.equal(rejected.checkpoints.chose_item, false);
+  });
+
+  it('About Me accepts short answers in prompt context and can not', () => {
+    const mission = requireMission('foundation_three_things_about_me');
+    let turn = runMissionTurn({
+      config: mission,
+      checkpoints: initCheckpointStates(mission.successCriteria),
+      history: [{ speaker: 'ai', textEn: 'What do you like?' }],
+      nextTurn: 1,
+      userText: 'Coffee.',
+      aiResponse: 'What do you want or need?',
+    });
+    assert.equal(turn.checkpoints.shared_preference, true);
+    turn = runMissionTurn({
+      config: mission,
+      checkpoints: turn.checkpoints,
+      history: turn.history,
+      nextTurn: 2,
+      userText: 'Water.',
+      aiResponse: "What can or can't you do?",
+    });
+    assert.equal(turn.checkpoints.shared_want_or_need, true);
+    turn = runMissionTurn({
+      config: mission,
+      checkpoints: turn.checkpoints,
+      history: turn.history,
+      nextTurn: 3,
+      userText: 'I can not swim.',
+      aiResponse: 'Tell me more.',
+    });
+    assert.equal(turn.isTaskComplete, true);
+    assert.equal(turn.checkpoints.shared_ability, true);
   });
 });
 

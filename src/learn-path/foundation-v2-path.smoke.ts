@@ -123,9 +123,17 @@ for (const simulationId of foundationMissionIds) {
   const simulation = getSimulation(simulationId!);
   assert(Boolean(simulation), `missing Foundation simulation ${simulationId}`);
   assert(simulation!.foundationMission === true, `${simulationId} must be Foundation-safe`);
-  assert(simulation!.maxTurns === 3, `${simulationId} must use exactly 3 learner replies`);
+  const expectedMaxTurns =
+    simulationId === 'foundation_first_conversation' ? 4 : 3;
+  assert(
+    simulation!.maxTurns === expectedMaxTurns,
+    `${simulationId} must use its intended short learner arc`,
+  );
   assert(simulation!.bananaCost === 1, `${simulationId} must cost one banana`);
-  assert(simulation!.successCriteria.length === 3, `${simulationId} must have 3 goals`);
+  assert(
+    simulation!.successCriteria.length === expectedMaxTurns,
+    `${simulationId} must have one checkpoint per goal`,
+  );
 }
 
 const ch4 = FOUNDATION_V2_CHAPTERS[3];
