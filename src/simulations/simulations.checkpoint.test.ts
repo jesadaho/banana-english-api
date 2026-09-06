@@ -396,6 +396,18 @@ describe('Foundation missions — fixed beginner arc', () => {
       aiResponse: 'It is a bag.',
     });
     assert.equal(rejected.checkpoints.chose_item, false);
+
+    for (const speech of ['Help me, please.', 'Speak slowly, please.']) {
+      const unrelated = runMissionTurn({
+        config: mission,
+        checkpoints: initCheckpointStates(mission.successCriteria),
+        history: [{ speaker: 'ai', textEn: 'Hello! What do you want?' }],
+        nextTurn: 1,
+        userText: speech,
+        aiResponse: 'Here it is.',
+      });
+      assert.equal(unrelated.checkpoints.chose_item, false);
+    }
   });
 
   it('About Me accepts short answers in prompt context and can not', () => {
@@ -428,6 +440,16 @@ describe('Foundation missions — fixed beginner arc', () => {
     });
     assert.equal(turn.isTaskComplete, true);
     assert.equal(turn.checkpoints.shared_ability, true);
+
+    const crossCategory = runMissionTurn({
+      config: mission,
+      checkpoints: initCheckpointStates(mission.successCriteria),
+      history: [{ speaker: 'ai', textEn: 'What can or can\'t you do?' }],
+      nextTurn: 1,
+      userText: 'Coffee.',
+      aiResponse: 'Try an action.',
+    });
+    assert.equal(crossCategory.checkpoints.shared_ability, false);
   });
 });
 

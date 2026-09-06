@@ -1265,7 +1265,8 @@ function applyFoundationShopHeuristics(
   history: TurnLike[],
 ): Record<string, boolean> {
   const replies = learnerRepliesWithPriorAi(history);
-  const knownItem = /\b(bag|shirt|shoes?|hat|water|book)\b/;
+  const knownItem =
+    /\b(bag|shirt|shoes?|hat|water|book|coffee|tea|pizza|sandwich)\b/;
   return {
     chose_item: replies.some(({ text, priorAi }) =>
       /\bi want (?:this|that|the |a |an )?\w+|\bi want this(?: one)?\b/.test(
@@ -1274,7 +1275,9 @@ function applyFoundationShopHeuristics(
       (/what do you want/.test(priorAi) &&
         !/^\s*(?:what|how|where|who)\b/.test(text) &&
         (knownItem.test(text) ||
-          /\b[a-z][a-z -]{1,30},? please[.!]?$/.test(text))),
+          /\b(?:blue|red|green|yellow)\s+(?:one|bag|shirt|hat),? please[.!]?$/.test(
+            text,
+          ))),
     ),
     asked_price: replies.some(({ text }) =>
       /\bhow much\b|\bwhat(?:'s| is) the price\b/.test(text),
@@ -1294,22 +1297,26 @@ function applyFoundationAboutMeHeuristics(
   history: TurnLike[],
 ): Record<string, boolean> {
   const replies = learnerRepliesWithPriorAi(history);
-  const shortTaughtContent =
-    /\b(coffee|tea|pizza|sushi|burger|noodles|water|help|dog|cat|swim|cook|drive|work|study|eat|sleep|wake up|nothing)\b/;
+  const preferenceContent =
+    /\b(coffee|tea|pizza|sushi|burger|noodles|water|food|music|movies?)\b/;
+  const wantNeedContent =
+    /\b(water|help|food|coffee|tea|pizza|sushi|burger|noodles|nothing)\b/;
+  const abilityContent =
+    /\b(swim|cook|drive|work|study|read|run|sing|dance|eat|sleep|wake up)\b/;
   return {
     shared_preference: replies.some(({ text, priorAi }) =>
       /\bi (?:don't |do not )?(?:like|love)\b/.test(text) ||
-      (/what do you like/.test(priorAi) && shortTaughtContent.test(text)),
+      (/what do you like/.test(priorAi) && preferenceContent.test(text)),
     ),
     shared_want_or_need: replies.some(({ text, priorAi }) =>
       /\bi (?:don't |do not )?(?:want|need)\b/.test(text) ||
       (/what do you want or need/.test(priorAi) &&
-        shortTaughtContent.test(text)),
+        wantNeedContent.test(text)),
     ),
     shared_ability: replies.some(({ text, priorAi }) =>
       /\bi (?:can|can't|cannot|can not)\b/.test(text) ||
       (/what can(?: or can't)? you do/.test(priorAi) &&
-        shortTaughtContent.test(text)),
+        abilityContent.test(text)),
     ),
   };
 }
@@ -1359,7 +1366,11 @@ function applyFoundationFirstConversationHeuristics(
       ({ text, priorAi }) =>
         /\b(i(?:'m| am)\s+from|from)\b/.test(text) ||
         countryOrNationality.test(text) ||
-        (/where are you from/.test(priorAi) && isUsableContextAnswer(text)),
+        (/where are you from/.test(priorAi) &&
+          isUsableContextAnswer(text) &&
+          !/\b(like|want|need|can|can't|work|live|study|eat|sleep)\b/.test(
+            text,
+          )),
     ),
     answered_yes_no_maybe: learnerRepliesWithPriorAi(history).some(
       ({ text, priorAi }) =>
