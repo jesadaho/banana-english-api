@@ -469,6 +469,13 @@ export class SessionsController {
         teachingLanguage,
       } as Prisma.UserSessionUncheckedCreateInput,
     });
+    await this.prisma.user.update({
+      where: { id: user.id },
+      data: {
+        lastStudiedLessonId: config.lessonId,
+        lastStudiedAt: new Date(),
+      },
+    });
 
     try {
       const handlerStartedAt = performance.now();

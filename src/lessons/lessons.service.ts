@@ -245,8 +245,8 @@ export class LessonsService {
   }
 
   /**
-   * Recent unique starters of a lesson (last 14 days), for intro social proof.
-   * Excludes the viewer. Returns up to 5 avatar ids + total unique count.
+   * Learners whose *last* training lesson is this one (last 7 days).
+   * Uses denormalized User.lastStudied* — O(index lookup), not session scan.
    */
   async getRecentLearners(
     lessonId: string,
@@ -257,39 +257,36 @@ export class LessonsService {
       return { total: 0, avatarIds: [] };
     }
 
-    const since = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000);
-    const rows = await this.prisma.userSession.findMany({
-      where: {
-        lessonId: trimmed,
-        sessionType: 'training',
-        userId: { not: viewerUserId },
-        createdAt: { gte: since },
-      },
-      orderBy: { createdAt: 'desc' },
-      take: 150,
-      select: {
-        userId: true,
-        user: { select: { avatarId: true, unlockedAvatarIds: true } },
-      },
-    });
+    const since = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+    const where = {
+      lastStudiedLessonId: trimmed,
+      lastStudiedAt: { gte: since },
+      id: { not: viewerUserId },
+    };
 
-    const seen = new Set<string>();
-    const avatarIds: string[] = [];
-    for (const row of rows) {
-      if (seen.has(row.userId)) continue;
-      seen.add(row.userId);
-      avatarIds.push(
-        this.resolveLearnerAvatarId(
-          row.user.avatarId,
-          row.user.unlockedAvatarIds,
-          row.userId,
-        ),
-      );
-    }
+    const [total, rows] = await Promise.all([
+      this.prisma.user.count({ where }),
+      this.prisma.user.findMany({
+        where,
+        orderBy: { lastStudiedAt: 'desc' },
+        take: 5,
+        select: {
+          id: true,
+          avatarId: true,
+          unlockedAvatarIds: true,
+        },
+      }),
+    ]);
 
     return {
-      total: seen.size,
-      avatarIds: avatarIds.slice(0, 5),
+      total,
+      avatarIds: rows.map((row) =>
+        this.resolveLearnerAvatarId(
+          row.avatarId,
+          row.unlockedAvatarIds,
+          row.id,
+        ),
+      ),
     };
   }
 
