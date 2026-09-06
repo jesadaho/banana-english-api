@@ -11,6 +11,10 @@ import {
   LESSON_REWARD_SEEDS,
   LESSON_REWARD_XP,
 } from '../economy/economy.constants';
+import {
+  AVATAR_SEED_COSTS,
+  isKnownAvatarId,
+} from '../users/avatar-catalog';
 
 export type LessonProgressStatus =
   | 'locked'
@@ -238,5 +242,73 @@ export class LessonsService {
       feedback: row.feedback,
       createdAt: row.createdAt.toISOString(),
     };
+  }
+
+  /**
+   * Recent unique starters of a lesson (last 14 days), for intro social proof.
+   * Excludes the viewer. Returns up to 5 avatar ids + total unique count.
+   */
+  async getRecentLearners(
+    lessonId: string,
+    viewerUserId: string,
+  ): Promise<{ total: number; avatarIds: string[] }> {
+    const trimmed = lessonId.trim();
+    if (!trimmed) {
+      return { total: 0, avatarIds: [] };
+    }
+
+    const since = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000);
+    const rows = await this.prisma.userSession.findMany({
+      where: {
+        lessonId: trimmed,
+        sessionType: 'training',
+        userId: { not: viewerUserId },
+        createdAt: { gte: since },
+      },
+      orderBy: { createdAt: 'desc' },
+      take: 150,
+      select: {
+        userId: true,
+        user: { select: { avatarId: true, unlockedAvatarIds: true } },
+      },
+    });
+
+    const seen = new Set<string>();
+    const avatarIds: string[] = [];
+    for (const row of rows) {
+      if (seen.has(row.userId)) continue;
+      seen.add(row.userId);
+      avatarIds.push(
+        this.resolveLearnerAvatarId(
+          row.user.avatarId,
+          row.user.unlockedAvatarIds,
+          row.userId,
+        ),
+      );
+    }
+
+    return {
+      total: seen.size,
+      avatarIds: avatarIds.slice(0, 5),
+    };
+  }
+
+  private resolveLearnerAvatarId(
+    avatarId: string | null | undefined,
+    unlockedAvatarIds: string[],
+    userId: string,
+  ): string {
+    const trimmed = avatarId?.trim();
+    if (trimmed && isKnownAvatarId(trimmed)) return trimmed;
+    for (const unlocked of unlockedAvatarIds) {
+      const id = unlocked.trim();
+      if (id && isKnownAvatarId(id)) return id;
+    }
+    const catalog = Object.keys(AVATAR_SEED_COSTS);
+    let hash = 0;
+    for (let i = 0; i < userId.length; i += 1) {
+      hash = (hash + userId.charCodeAt(i) * (i + 1)) % catalog.length;
+    }
+    return catalog[hash] ?? 'bogy';
   }
 }

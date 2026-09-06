@@ -363,11 +363,16 @@ export class UsersService {
             unlockedAvatarIds: {
               set: [...new Set([...user.unlockedAvatarIds, id])],
             },
+            avatarId: id,
           },
         });
         return this.getProfile(updated);
       }
-      return this.getProfile(user);
+      const updated = await this.prisma.user.update({
+        where: { id: user.id },
+        data: { avatarId: id },
+      });
+      return this.getProfile(updated);
     }
 
     if (cost <= 0) {
@@ -377,6 +382,7 @@ export class UsersService {
           unlockedAvatarIds: {
             set: [...new Set([...user.unlockedAvatarIds, id])],
           },
+          avatarId: id,
         },
       });
       return this.getProfile(updated);
@@ -414,10 +420,29 @@ export class UsersService {
           unlockedAvatarIds: {
             set: [...new Set([...current.unlockedAvatarIds, id])],
           },
+          avatarId: id,
         },
       });
     });
 
+    return this.getProfile(updated);
+  }
+
+  async selectAvatar(user: User, avatarId: string): Promise<UserProfileResponse> {
+    const id = avatarId.trim();
+    if (!isKnownAvatarId(id)) {
+      throw new BadRequestException('Unknown avatar');
+    }
+    const unlocked =
+      (FREE_AVATAR_IDS as readonly string[]).includes(id) ||
+      user.unlockedAvatarIds.includes(id);
+    if (!unlocked) {
+      throw new BadRequestException('Avatar is locked');
+    }
+    const updated = await this.prisma.user.update({
+      where: { id: user.id },
+      data: { avatarId: id },
+    });
     return this.getProfile(updated);
   }
 

@@ -24,6 +24,8 @@ model User {
   xpBalance               Int       @default(0)
   bananaSeedBalance       Int       @default(0)
   unlockedAvatarIds       String[]  @default([])
+  /** Currently selected profile avatar id (catalog). */
+  avatarId                String?
 
   streakDays              Int       @default(0)
   lastSessionDate         DateTime? @db.Date
@@ -176,6 +178,7 @@ model UserSession {
   @@index([userId])
   @@index([userId, completedAt])
   @@index([userId, lessonId])
+  @@index([lessonId, createdAt])
 }
 
 /** Learner star rating after finishing a lesson (1–5). */

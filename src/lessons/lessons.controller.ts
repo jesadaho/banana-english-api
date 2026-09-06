@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { AnonymousUserGuard } from '../users/anonymous-user.guard';
 import { CreateLessonRatingDto } from './dto/lesson-rating.dto';
@@ -14,6 +14,14 @@ export class LessonsController {
   @Get('progress')
   async getProgress(@Req() req: AuthedRequest) {
     return this.lessonsService.buildProgressView(req.user.id);
+  }
+
+  @Get(':lessonId/recent-learners')
+  async getRecentLearners(
+    @Req() req: AuthedRequest,
+    @Param('lessonId') lessonId: string,
+  ) {
+    return this.lessonsService.getRecentLearners(lessonId, req.user.id);
   }
 
   @Post('ratings')

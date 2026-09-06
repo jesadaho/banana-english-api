@@ -165,6 +165,14 @@ export class UsersController {
     );
   }
 
+  @Post('me/avatars/select')
+  async selectAvatar(
+    @Req() req: AuthedRequest,
+    @Body() body: UnlockAvatarDto,
+  ) {
+    return this.users.selectAvatar(req.user, body.avatarId);
+  }
+
   @Post('me/debug/refill-bananas')
   async refillBananasDebug(@Req() req: AuthedRequest) {
     return this.users.refillBananasDebug(req.user);
