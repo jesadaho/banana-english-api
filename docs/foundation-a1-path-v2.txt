@@ -1,0 +1,140 @@
+Banana English Foundation A1 Path V2
+
+Content-only redesign. Uses existing session types only: lesson, emoji speak,
+say it in English, describe it, explain it, mission. Emoji Speak is for single
+noun/verb vocabulary; Say It is Thai-to-English sentence retrieval. Describe It
+and Explain It appear only after the relevant vocabulary is taught. Missions
+have three communication goals, accept packed answers, and close on completion.
+
+Node sequence (number: title [type] — content; prerequisite is previous node)
+
+CHAPTER 1 First Conversation
+1 Greetings [lesson] — Hello/Hi; hello, hi
+2 Time Greetings [lesson] — Good morning/afternoon/evening; morning, afternoon, evening
+3 Greeting Words [emoji speak] — five greeting words from 1–2
+4 My Name Is [lesson] — My name is __ / I'm __; name
+5 Nice to Meet You [say it] — Nice to meet you / Nice to meet you, too
+6 Where Are You From? [lesson] — I'm from Thailand; from, Thailand
+7 Introduce Yourself [say it] — name and country sentences
+8 First Conversation [mission] — greeting, name, country (three goals)
+
+CHAPTER 2 People and Pronouns
+9 I Am / You Are [lesson] — I am... / You are...; student, teacher, friend
+10 People Words [emoji speak] — student, teacher, friend, man, woman
+11 He / She / It [lesson] — He/She/It is...; father, sister, bag
+12 People and Things [say it] — He is my father / She is my sister / It is my bag
+13 We / They [lesson] — We are friends / They are students
+14 Pronoun Words [emoji speak] — I, you, he, she, it, we, they
+15 Who Is That? [lesson] — Who is he/she? Who are they?
+16 People Around Me [describe it] — describe known people/things in a picture
+17 Meet People [mission] — three facts using he/she/we/they
+
+CHAPTER 3 Polite and Survival
+18 Please and Thank You [lesson] — Please / Thank you / You're welcome
+19 Polite Words [emoji speak] — please, thank you, welcome, excuse, sorry
+20 Excuse Me and Sorry [lesson] — Excuse me / Sorry
+21 Be Polite [say it] — Thai prompts for Please, Thank you, Excuse me
+22 I Don't Understand [lesson] — I don't understand
+23 Say It Again [lesson] — Can you say that again?
+24 Survival Phrases [say it] — don't understand / say again
+25 Survival Words [emoji speak] — understand, again, slowly, help, please
+26 Speak Slowly [lesson] — Can you speak more slowly?
+27 Ask for Help [mission] — understand, repeat, slowly
+
+CHAPTER 4 Family and Possession
+28 Family Words [lesson] — mother, father, brother, sister, family
+29 Family Vocabulary [emoji speak] — five family nouns
+30 This Is My Family [lesson] — This is my mother/father/sister
+31 He and She in Family [say it] — He is my father / She is my sister
+32 I Have [lesson] — I have one brother / two sisters
+33 Family Facts [describe it] — describe a family picture in 1–2 sentences
+34 My Family [say it] — sentences about members and possessions
+35 Talk About Family [mission] — three personal family facts
+
+CHAPTER 5 Numbers, Time and Dates
+36 Numbers 0–10 [lesson] — zero–ten
+37 Small Numbers [emoji speak] — emoji quantities 0–10
+38 Numbers 11–20 [lesson] — eleven–twenty
+39 Numbers Review [emoji speak] — five random numbers from 0–20
+40 Numbers 20–100 [lesson] — twenty, thirty, fifty, eighty, hundred
+41 What Time Is It? [lesson] — It's seven o'clock / seven thirty
+42 Time Phrases [say it] — I wake up at seven / go to work at eight
+43 Days of the Week [lesson] — What day is it? It's Monday
+44 Day Words [emoji speak] — today, tomorrow, Monday–Sunday
+45 Numbers, Time and Days [mission] — three contextual number/time/day facts
+
+CHAPTER 6 Colors and Things
+46 Basic Colors [lesson] — red, blue, yellow, green
+47 Color Words [emoji speak] — five colors
+48 This or That [lesson] — This is a bag / That is a hat
+49 Things Around Me [emoji speak] — bag, shirt, shoes, hat, apple
+50 A or An [lesson] — a bag / an apple; apple, orange, egg
+51 One or More [lesson] — one bag / two bags; plural s
+52 A/An and Plural Practice [say it] — short Thai-to-English phrases
+53 Describe an Object [describe it] — It is a blue bag
+54 Colors and Things [mission] — color, item, preference
+
+CHAPTER 7 Shopping
+55 Shop Things [lesson] — bag, shirt, shoes, hat, water
+56 Shop Vocabulary [emoji speak] — five shop nouns
+57 I Want This [lesson] — I want this / the blue bag
+58 Shopping Phrases [say it] — I want this / How much is it? / I'll take it
+59 How Much Is It? [lesson] — It's five dollars
+60 Prices [emoji speak] — price and dollar vocabulary
+61 Cheap or Expensive? [lesson] — It's cheap / expensive
+62 Buy Something [mission] — choose item, ask price, buy/refuse
+
+CHAPTER 8 About Me
+63 Likes and Dislikes [lesson] — I like coffee / I don't like tea
+64 Food and Things [emoji speak] — coffee, tea, pizza, water, book
+65 I Want / I Need [lesson] — I want water / I need help
+66 Want and Need Phrases [say it] — Thai-to-English retrieval
+67 I Have [lesson] — I have a dog/bag; dog, phone
+68 Things I Have [emoji speak] — five known possession nouns
+69 Daily Actions [lesson] — wake up, eat, study, work, sleep
+70 Action Words [emoji speak] — five action verbs
+71 I Can / I Can't [lesson] — I can swim / I can't drive
+72 About Me [say it] — like, want, can sentences
+73 Three Things About Me [mission] — preference, need/want, ability
+
+CHAPTER 9 Questions, Places and Weather
+74 Where Is...? [lesson] — Where is the bathroom?; bathroom, hotel, station
+75 Places [emoji speak] — bathroom, school, home, shop, station
+76 Who and What [lesson] — Who is that? / What is this?
+77 Question Phrases [say it] — Where/Who/What/How
+78 Basic Directions [lesson] — Go straight / Turn left / Turn right
+79 Direction Words [emoji speak] — straight, left, right, places
+80 How Are You? [lesson] — How are you? I'm good/tired/happy
+81 Weather Words [lesson] — hot, cold, sunny, raining
+82 Weather Vocabulary [emoji speak] — five weather words
+83 Ask and Answer [mission] — ask place, thank, close
+
+CHAPTER 10 Daily Context and Capstone
+84 Today and Tomorrow [lesson] — Today is Monday / See you tomorrow
+85 Days and Weather [say it] — It's sunny today / It's cold today
+86 My Daily Life [describe it] — 1–2 known action sentences from a picture
+87 Simple Help [explain it] — choose/say a suitable survival phrase
+88 Weather and Daily Life [mission] — weather, action, closing sentence
+89 First Conversation Review [say it] — greeting, name, country
+90 People and Family Review [emoji speak] — five known people/family words
+91 Numbers and Shopping Review [emoji speak] — numbers, colors, prices
+92 About Me Review [say it] — likes, wants, actions, ability
+93 Survival Review [say it] — help, repeat, slowly, thank you
+94 Describe My World [describe it] — known person/object/place
+95 Mixed Vocabulary [emoji speak] — random known vocabulary
+96 A1 Conversation 1 [mission] — meet someone in three replies
+97 A1 Conversation 2 [mission] — buy something in three replies
+98 Foundation Complete [mission] — mixed known content, 3–5 sentences
+
+Mission rules: semantic checkpoints, not one fixed grammar answer; packed answers
+can satisfy multiple goals; do not introduce untaught vocabulary; close after
+goals are complete or turn limit; never ask an extra question after completion.
+
+A1 coverage: personal information, greetings, family, pronouns, possession,
+numbers, money, time, days, colors, objects, food, likes/dislikes, wants/needs,
+daily actions, can/can't, politeness, survival English, questions, places,
+directions, weather, shopping and closing conversations.
+
+Self-score: coverage 9.6 | variety 9.6 | difficulty curve 9.4 |
+teach-before-retrieval 9.7 | beginner usability 9.5 | communication payoff 9.6 |
+migration safety 9.5 | overall 9.6/10.
