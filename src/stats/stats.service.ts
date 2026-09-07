@@ -28,7 +28,7 @@ export class StatsService {
 
     const completed = { completedAt: { not: null } } as const;
     const [learners, turnSum, durationSum, legacySessions] = await Promise.all([
-      this.prisma.user.count(),
+      this.prisma.user.count({ where: { onboardingCompleted: true } }),
       this.prisma.userSession.aggregate({
         where: { ...completed, learnerTurnCount: { not: null } },
         _sum: { learnerTurnCount: true },
