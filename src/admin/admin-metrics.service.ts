@@ -118,8 +118,13 @@ export class AdminMetricsService {
     const todayStart = new Date(
       Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()),
     );
-    const weekStart = new Date(todayStart.getTime() - 6 * 86_400_000);
-    const monthStart = new Date(todayStart.getTime() - 29 * 86_400_000);
+    // Complete calendar days only — "today" is still in progress.
+    const yesterdayStart = new Date(todayStart.getTime() - 86_400_000);
+    const dayBeforeYesterdayStart = new Date(
+      yesterdayStart.getTime() - 86_400_000,
+    );
+    const weekStart = new Date(yesterdayStart.getTime() - 6 * 86_400_000);
+    const monthStart = new Date(yesterdayStart.getTime() - 29 * 86_400_000);
     const userFilter = this.userWhere(filters);
     // New users KPI = onboarded; install/raw uses filters without forcing onboard.
     const installFilter = this.userWhere({
@@ -144,6 +149,7 @@ export class AdminMetricsService {
 
     const [
       dau,
+      dauPrev,
       wau,
       mau,
       newUsers,
@@ -165,9 +171,14 @@ export class AdminMetricsService {
       totalUsersAll,
       platformMix,
     ] = await Promise.all([
-      this.countActiveOn(todayStart, todayStart, userFilter),
-      this.countActiveOn(weekStart, todayStart, userFilter),
-      this.countActiveOn(monthStart, todayStart, userFilter),
+      this.countActiveOn(yesterdayStart, yesterdayStart, userFilter),
+      this.countActiveOn(
+        dayBeforeYesterdayStart,
+        dayBeforeYesterdayStart,
+        userFilter,
+      ),
+      this.countActiveOn(weekStart, yesterdayStart, userFilter),
+      this.countActiveOn(monthStart, yesterdayStart, userFilter),
       this.prisma.user.count({ where: onboardedIn(range.from, range.to) }),
       this.prisma.user.count({ where: onboardedIn(prev.from, prev.to) }),
       this.prisma.user.count({ where: onboardedIn(range.from, range.to) }),
@@ -178,17 +189,16 @@ export class AdminMetricsService {
       this.countCompletions(prev, 'training', userFilter),
       this.countCompletions(range, 'simulation', userFilter),
       this.countCompletions(prev, 'simulation', userFilter),
+      // IAP is money truth — do not apply cohort filters (source/onboarding/app-open).
       this.prisma.purchaseRecord.findMany({
         where: {
           createdAt: { gte: range.from, lte: range.to },
-          user: userFilter,
         },
         select: { productId: true, platform: true, createdAt: true },
       }),
       this.prisma.purchaseRecord.findMany({
         where: {
           createdAt: { gte: prev.from, lte: prev.to },
-          user: userFilter,
         },
         select: { productId: true },
       }),
@@ -196,7 +206,6 @@ export class AdminMetricsService {
         where: { ...userFilter, firebaseUid: { not: null } },
       }),
       this.prisma.purchaseRecord.findMany({
-        where: { user: userFilter },
         distinct: ['userId'],
         select: { userId: true },
       }),
@@ -273,9 +282,21 @@ export class AdminMetricsService {
           deltaPct: null,
           all: totalUsersAll,
         },
-        dau: { value: dau, deltaPct: null },
-        wau: { value: wau, deltaPct: null },
-        mau: { value: mau, deltaPct: null },
+        dau: {
+          value: dau,
+          deltaPct: pctChange(dau, dauPrev),
+          asOf: dateKey(yesterdayStart),
+        },
+        wau: {
+          value: wau,
+          deltaPct: null,
+          asOf: dateKey(yesterdayStart),
+        },
+        mau: {
+          value: mau,
+          deltaPct: null,
+          asOf: dateKey(yesterdayStart),
+        },
         newUsers: {
           value: newUsers,
           deltaPct: pctChange(newUsers, newUsersPrev),
@@ -460,6 +481,7 @@ export class AdminMetricsService {
         id: true,
         acquisitionSource: true,
         selfReportedEnglishLevel: true,
+        avatarId: true,
         onboardingCompleted: true,
         createdAt: true,
       },
@@ -467,10 +489,13 @@ export class AdminMetricsService {
 
     const sources: Record<string, number> = {};
     const levels: Record<string, number> = {};
+    const avatars: Record<string, number> = {};
+    const sourceLevel: Record<string, Record<string, number>> = {};
     let onboarded = 0;
     let unsetSource = 0;
     for (const u of users) {
       const raw = u.acquisitionSource?.trim();
+      const src = raw || 'unknown';
       if (!raw) {
         unsetSource += 1;
         if (!filters.excludeUnsetSource) {
@@ -481,6 +506,13 @@ export class AdminMetricsService {
       }
       const level = u.selfReportedEnglishLevel?.trim() || 'unknown';
       levels[level] = (levels[level] ?? 0) + 1;
+      const avatar = u.avatarId?.trim() || 'unset';
+      avatars[avatar] = (avatars[avatar] ?? 0) + 1;
+      if (!(filters.excludeUnsetSource && src === 'unknown')) {
+        const row = sourceLevel[src] ?? {};
+        row[level] = (row[level] ?? 0) + 1;
+        sourceLevel[src] = row;
+      }
       if (u.onboardingCompleted) onboarded += 1;
     }
 
@@ -540,6 +572,52 @@ export class AdminMetricsService {
           return { period, sources: srcMap, total };
         });
 
+    const levelOrder = [
+      'beginner',
+      'elementary',
+      'intermediate',
+      'advanced',
+      'unknown',
+    ];
+    const levelKeys = [
+      ...levelOrder.filter((l) => (levels[l] ?? 0) > 0),
+      ...Object.keys(levels)
+        .filter((l) => !levelOrder.includes(l))
+        .sort(),
+    ];
+    const sourceLevelMatrix = Object.entries(sourceLevel)
+      .map(([source, byLevel]) => {
+        const total = Object.values(byLevel).reduce((s, n) => s + n, 0);
+        return {
+          source,
+          total,
+          levels: Object.fromEntries(
+            levelKeys.map((l) => [l, byLevel[l] ?? 0]),
+          ),
+        };
+      })
+      .sort((a, b) => b.total - a.total);
+
+    const avatarOrder = [
+      'bogy',
+      'nana',
+      'kenji',
+      'sky',
+      'ray',
+      'linda',
+      'captain_banana',
+      'unset',
+    ];
+    const avatarRows = [
+      ...avatarOrder
+        .filter((id) => (avatars[id] ?? 0) > 0)
+        .map((avatar) => ({ avatar, count: avatars[avatar] })),
+      ...Object.entries(avatars)
+        .filter(([id]) => !avatarOrder.includes(id))
+        .map(([avatar, count]) => ({ avatar, count }))
+        .sort((a, b) => b.count - a.count),
+    ];
+
     return {
       range: { from: range.from.toISOString(), to: range.to.toISOString() },
       filters,
@@ -552,6 +630,9 @@ export class AdminMetricsService {
       levels: Object.entries(levels)
         .map(([level, count]) => ({ level, count }))
         .sort((a, b) => b.count - a.count),
+      levelKeys,
+      sourceLevelMatrix,
+      avatars: avatarRows,
       funnel: {
         signedUp,
         onboardingCompleted: onboarded,
@@ -625,13 +706,22 @@ export class AdminMetricsService {
           where: {
             createdAt: { gte: range.from, lte: range.to },
             user: userFilter,
-            source: {
-              in: [
-                'say_it_start',
-                'explain_it_start',
-                'emoji_speak_start',
-              ],
-            },
+            OR: [
+              {
+                source: {
+                  in: [
+                    'say_it_start',
+                    'explain_it_start',
+                    'emoji_speak_start',
+                    'emoji_speak_play',
+                  ],
+                },
+              },
+              {
+                source: 'daily_speak_reward',
+                currency: Currency.XP,
+              },
+            ],
           },
           _count: { _all: true },
         }),
@@ -689,15 +779,38 @@ export class AdminMetricsService {
             count: s._count._all,
             source: 'user_session' as const,
           })),
-          ...minigameStarts.map((s) => ({
-            sessionType: s.source.replace(/_start$/, ''),
-            count: s._count._all,
-            source: 'economy_start' as const,
-          })),
+          ...this.normalizeMinigameSessionMix(minigameStarts),
         ].sort((a, b) => b.count - a.count),
         dailySpeakTouchedUsers: dailySpeakActive,
       },
     };
+  }
+
+  /** Collapse economy sources into dashboard session-type rows. */
+  private normalizeMinigameSessionMix(
+    rows: { source: string; _count: { _all: number } }[],
+  ): { sessionType: string; count: number; source: 'economy_start' }[] {
+    const raw: Record<string, number> = {};
+    for (const row of rows) {
+      raw[row.source] = (raw[row.source] ?? 0) + row._count._all;
+    }
+
+    const play = raw.emoji_speak_play ?? 0;
+    const legacyStart = raw.emoji_speak_start ?? 0;
+    // Prefer play pings (free + paid). Fall back to banana starts for older data.
+    const emojiSpeak = play > 0 ? play : legacyStart;
+
+    const merged: Record<string, number> = {};
+    if (emojiSpeak > 0) merged.emoji_speak = emojiSpeak;
+    if (raw.say_it_start) merged.say_it = raw.say_it_start;
+    if (raw.explain_it_start) merged.explain_it = raw.explain_it_start;
+    if (raw.daily_speak_reward) merged.daily_speak = raw.daily_speak_reward;
+
+    return Object.entries(merged).map(([sessionType, count]) => ({
+      sessionType,
+      count,
+      source: 'economy_start' as const,
+    }));
   }
 
   private async streakDistribution(userFilter: Prisma.UserWhereInput) {
@@ -743,10 +856,10 @@ export class AdminMetricsService {
         },
         select: { amount: true, source: true },
       }),
+      // IAP is money truth — ignore cohort filters; date range only.
       this.prisma.purchaseRecord.findMany({
         where: {
           createdAt: { gte: range.from, lte: range.to },
-          user: userFilter,
         },
         select: {
           productId: true,

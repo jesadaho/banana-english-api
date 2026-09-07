@@ -80,7 +80,7 @@ export const FOUNDATION_LOOSE_MATCHERS: Record<
       2: /^(she is|she['’]?s) my teacher$/,
       3: /^(it is|it['’]?s) my bag$/,
       4: /^(she is|she['’]?s) very kind$/,
-      5: /^(he is|he['’]?s) very kind (it is|it['’]?s) new$/,
+      5: /^(he is|he['’]?s) my classmate (it is|it['’]?s) my bag$/,
     }),
   fnd_v2_we_they: (step, text) =>
     loose(step, text, {
@@ -260,7 +260,7 @@ export const FOUNDATION_CLOSE_MATCHERS: Partial<
     2: /^i excited$/,
     3: /^you my classmate$/,
     4: /^you very kind$/,
-    5: /^i new here,? you my classmate$/,
+    5: /^i excited,? you my classmate$/,
   }),
   fnd_v2_how_do_you_feel: (step, text) => loose(step, text, {
     1: /^(i happy|im happy|i'?m happi)$/,
@@ -275,7 +275,7 @@ export const FOUNDATION_CLOSE_MATCHERS: Partial<
     2: /^she my teacher$/,
     3: /^it my bag$/,
     4: /^she very kind$/,
-    5: /^he very kind,? it new$/,
+    5: /^he my classmate,? it my bag$/,
   }),
   fnd_v2_we_they: (step, text) => loose(step, text, {
     1: /^(we friends|were friends)$/,
@@ -783,21 +783,26 @@ export const FOUNDATION_BOARDS: Record<
       expectedSpeech: "You're very kind.",
       incorrectHintTh: 'ยังไม่ตรงครับ เรากำลังพูดถึง Ben ลองเริ่มด้วย “You\'re...” ครับ',
       options: [
-        { emoji: '😊', label: "You're very kind.", speak: "You're very kind." },
-        { emoji: '🙋', label: "I'm new here.", speak: "I'm new here." },
-        { emoji: '👋', label: "You're my classmate.", speak: "You're my classmate." },
+        { emoji: '😊', label: 'very kind', speak: "You're very kind." },
       ],
     },
     5: {
       textEn:
-        'ลองคุยกับ Ben จริงๆ ครับ 👋 Ben พูดว่า “Hi! I\'m Ben. I\'m new here.” ตอบสองประโยคสั้นๆ: บอกหนึ่งอย่างเกี่ยวกับตัวคุณด้วย I\'m... และพูดถึง Ben ด้วย You\'re... ครับ',
+        'ลองคุยกับ Ben จริงๆ ครับ 👋 Ben พูดว่า “Hi! I\'m Ben. I\'m new here.” ตอบสองประโยคสั้นๆ ที่คุณเคยฝึกมาแล้ว: “I\'m excited.” และ “You\'re my classmate.” ครับ',
       advanceQuestionEn:
-        'ตอบ Ben สองประโยคสั้นๆ โดยใช้ I\'m... และ You\'re... ครับ',
+        'ตอบ Ben ด้วย “I\'m excited.” และ “You\'re my classmate.” ครับ',
       withPraise: true,
       stem: "I'm... You're...",
-      expectedSpeech: "I'm new here too. You're my classmate.",
+      expectedSpeech: "I'm excited. You're my classmate.",
       incorrectHintTh: 'ยังไม่ตรงครับ ลองพูดสองส่วน โดยเริ่มด้วย “I\'m...” แล้วตามด้วย “You\'re...” ครับ',
-      options: [],
+      options: [
+        { emoji: '😊', label: "I'm excited", speak: "I'm excited." },
+        {
+          emoji: '👋',
+          label: "You're my classmate",
+          speak: "You're my classmate.",
+        },
+      ],
     },
   },
 
@@ -911,12 +916,12 @@ export const FOUNDATION_BOARDS: Record<
     },
     5: {
       textEn:
-        'ขั้นตอนสุดท้ายครับ 😊 Ben ช่วยถือกระเป๋าให้คุณ และโทรศัพท์เครื่องนี้เป็นของใหม่ พูดสองประโยคว่า “เขาใจดีมาก” และ “มันใหม่” โดยใช้ He\'s... และ It\'s... ครับ',
+        'ขั้นตอนสุดท้ายครับ 😊 Ben เรียนห้องเดียวกับคุณ และกระเป๋าใบนี้เป็นของคุณ พูดสองประโยคที่เคยฝึกมาแล้ว: “He\'s my classmate.” และ “It\'s my bag.” ครับ',
       advanceQuestionEn:
-        'พูดสองประโยคเกี่ยวกับ Ben และโทรศัพท์ โดยใช้ He\'s... และ It\'s... ครับ',
+        'พูดสองประโยค: “He\'s my classmate.” และ “It\'s my bag.” ครับ',
       withPraise: true,
       stem: "He's... It's...",
-      expectedSpeech: "He's very kind. It's new.",
+      expectedSpeech: "He's my classmate. It's my bag.",
       incorrectHintTh: 'ยังไม่ตรงครับ ลองพูดสองส่วน โดยเริ่มด้วย “He\'s...” แล้วตามด้วย “It\'s...” ครับ',
       options: [],
     },
@@ -1398,7 +1403,13 @@ export const FOUNDATION_BOARDS: Record<
       stem: 'I want...',
       expectedSpeech: 'I want a bag.',
       incorrectHintTh: 'ยังไม่ตรงครับ ลองพูดว่า “I want a...” แล้วตามด้วย bag, shirt, book หรือ hat ถ้าเลือก shoes ให้พูด “I want shoes.” ครับ',
-      options: [],
+      options: [
+        { emoji: '👜', label: 'bag', speak: 'I want a bag.' },
+        { emoji: '👕', label: 'shirt', speak: 'I want a shirt.' },
+        { emoji: '📘', label: 'book', speak: 'I want a book.' },
+        { emoji: '👟', label: 'shoes', speak: 'I want shoes.' },
+        { emoji: '🧢', label: 'hat', speak: 'I want a hat.' },
+      ],
     },
   },
 
@@ -1419,9 +1430,7 @@ export const FOUNDATION_BOARDS: Record<
       expectedSpeech: 'I want water.',
       incorrectHintTh: 'ยังไม่ตรงครับ เริ่มด้วย “I want...” แล้วตามด้วย water ครับ',
       options: [
-        { emoji: '💧', label: 'Want water', speak: 'I want water.' },
-        { emoji: '📘', label: 'Want a book', speak: 'I want a book.' },
-        { emoji: '❓', label: 'Ask the price', speak: 'How much is it?' },
+        { emoji: '💧', label: 'water', speak: 'I want water.' },
       ],
     },
     3: {
@@ -1594,7 +1603,7 @@ export const FOUNDATION_BOARDS: Record<
       stem: '',
       expectedSpeech: 'sixty-two',
       incorrectHintTh: 'ลองประกอบ หกสิบ sixty กับ สอง two เป็น “sixty-two” ครับ',
-      options: [],
+      options: [{ emoji: '6️⃣2️⃣', label: 'sixty-two', speak: 'sixty-two' }],
     },
   },
 
@@ -1615,7 +1624,6 @@ export const FOUNDATION_BOARDS: Record<
       expectedSpeech: 'How much is it?',
       options: [
         { emoji: '💰', label: 'Ask the price', speak: 'How much is it?' },
-        { emoji: '👉', label: 'Want this', speak: 'I want this.' },
         { emoji: '🙏', label: 'Thank you', speak: 'Thank you.' },
       ],
     },
@@ -1751,8 +1759,7 @@ export const FOUNDATION_BOARDS: Record<
       expectedSpeech: 'I study.',
       incorrectHintTh: 'ยังไม่ตรงครับ ตอนนี้กำลังเรียน ลองพูดว่า “I study.” ครับ',
       options: [
-        { emoji: '📚', label: 'I study', speak: 'I study.' },
-        { emoji: '💼', label: 'I work', speak: 'I work.' },
+        { emoji: '📚', label: 'study', speak: 'I study.' },
       ],
     },
     4: {
@@ -1762,8 +1769,7 @@ export const FOUNDATION_BOARDS: Record<
       expectedSpeech: 'I work.',
       incorrectHintTh: 'ยังไม่ตรงครับ ตอนนี้กำลังทำงาน ลองพูดว่า “I work.” ครับ',
       options: [
-        { emoji: '💼', label: 'I work', speak: 'I work.' },
-        { emoji: '🍽️', label: 'I eat', speak: 'I eat.' },
+        { emoji: '💼', label: 'work', speak: 'I work.' },
       ],
     },
     5: {
@@ -1870,9 +1876,7 @@ export const FOUNDATION_BOARDS: Record<
       expectedSpeech: 'I can cook.',
       incorrectHintTh: 'ยังไม่ตรงครับ ถ้าทำอาหารได้ ให้พูดว่า “I can cook.” ครับ',
       options: [
-        { emoji: '🏊', label: 'I can swim', speak: 'I can swim.' },
-        { emoji: '🍳', label: 'I can cook', speak: 'I can cook.' },
-        { emoji: '🚗', label: "I can't drive", speak: "I can't drive." },
+        { emoji: '🍳', label: 'cook', speak: 'I can cook.' },
       ],
     },
     4: {
@@ -2040,8 +2044,7 @@ export const FOUNDATION_BOARDS: Record<
       expectedSpeech: 'Where is the hotel?',
       incorrectHintTh: 'ยังไม่ตรงครับ คุณกำลังหาโรงแรม ลองพูดว่า “Where is the hotel?” ครับ',
       options: [
-        { emoji: '🏨', label: 'Where is the hotel?', speak: 'Where is the hotel?' },
-        { emoji: '🚻', label: 'Where is the bathroom?', speak: 'Where is the bathroom?' },
+        { emoji: '🏨', label: 'hotel', speak: 'Where is the hotel?' },
       ],
     },
     4: {

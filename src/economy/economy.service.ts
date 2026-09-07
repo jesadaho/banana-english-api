@@ -278,6 +278,26 @@ export class EconomyService {
     });
   }
 
+  /**
+   * Zero-banana activity marker for metrics (free minigame plays, etc.).
+   * Does not change balances.
+   */
+  async logPlayActivity(
+    userId: string,
+    source: string,
+    referenceId: string,
+  ): Promise<void> {
+    await this.prisma.economyTransaction.create({
+      data: {
+        userId,
+        currency: Currency.BANANA,
+        amount: 0,
+        source,
+        referenceId,
+      },
+    });
+  }
+
   async spendSeeds(
     userId: string,
     amount: number,

@@ -29,6 +29,7 @@ import {
   type StoryBuilderEvalTier,
 } from './story-builder-evaluate.service';
 import { isFoundationPathRewardGameId } from '../learn-path/foundation-v2-path.data';
+import { RecentLearnersService } from '../recent-learners/recent-learners.service';
 
 type AuthedRequest = { user: User };
 
@@ -81,7 +82,16 @@ export class MiniGamesController {
     private readonly explainItEval: ExplainItEvaluateService,
     private readonly storyBuilderEval: StoryBuilderEvaluateService,
     private readonly endlessLeaderboard: EmojiSpeakEndlessLeaderboardService,
+    private readonly recentLearners: RecentLearnersService,
   ) {}
+
+  @Get(':gameId/recent-learners')
+  async getRecentLearners(
+    @Req() req: AuthedRequest,
+    @Param('gameId') gameId: string,
+  ) {
+    return this.recentLearners.getRecent('minigame', gameId, req.user.id);
+  }
 
   @Post('record-streak')
   async recordStreak(@Req() req: AuthedRequest) {
@@ -105,10 +115,24 @@ export class MiniGamesController {
         'emoji_speak_start',
       );
     }
+    await this.recentLearners.markActivity(req.user.id, 'minigame', id);
     return {
       ok: true,
       bananaCost: charge ? EMOJI_SPEAK_BANANA_COST : 0,
     };
+  }
+
+  /** Session-volume ping for every Emoji Speak pack open (free or paid). */
+  @Post('emoji-speak/:poolId/play')
+  async recordEmojiSpeakPlay(
+    @Req() req: AuthedRequest,
+    @Param('poolId') poolId: string,
+  ) {
+    const id = poolId?.trim();
+    if (!id) throw new BadRequestException('poolId is required');
+    await this.economy.logPlayActivity(req.user.id, 'emoji_speak_play', id);
+    await this.recentLearners.markActivity(req.user.id, 'minigame', id);
+    return { ok: true };
   }
 
   @Post('emoji-speak-endless/score')
@@ -120,6 +144,11 @@ export class MiniGamesController {
       req.user,
       body.score,
       body.avatarId,
+    );
+    await this.economy.logPlayActivity(
+      req.user.id,
+      'emoji_speak_play',
+      'endless',
     );
     const streak = await this.economy.recordStreakActivity(req.user.id);
     return { ...scoreResult, ...streak };

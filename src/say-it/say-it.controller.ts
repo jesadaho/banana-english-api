@@ -11,6 +11,7 @@ import {
   sayItPoolForTopic,
 } from './say-it.data';
 import { SayItService } from './say-it.service';
+import { RecentLearnersService } from '../recent-learners/recent-learners.service';
 
 type AuthedRequest = { user: User };
 
@@ -20,6 +21,7 @@ export class SayItController {
   constructor(
     private readonly sayIt: SayItService,
     private readonly economy: EconomyService,
+    private readonly recentLearners: RecentLearnersService,
   ) {}
 
   @Get('topics')
@@ -53,6 +55,7 @@ export class SayItController {
         'say_it_start',
       );
     }
+    await this.recentLearners.markActivity(req.user.id, 'minigame', topicId);
     return {
       ok: true,
       bananaCost: isFoundationPathSayItTopic(topicId) ? 0 : SAY_IT_BANANA_COST,

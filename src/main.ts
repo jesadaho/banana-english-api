@@ -41,7 +41,9 @@ async function bootstrap() {
       // Firebase Hosting (admin dashboard + support site)
       if (
         /^https:\/\/[a-z0-9-]+\.web\.app$/i.test(origin) ||
-        /^https:\/\/[a-z0-9-]+\.firebaseapp\.com$/i.test(origin)
+        /^https:\/\/[a-z0-9-]+\.firebaseapp\.com$/i.test(origin) ||
+        origin === 'https://bananaenglish.app' ||
+        origin === 'https://www.bananaenglish.app'
       ) {
         callback(null, true);
         return;

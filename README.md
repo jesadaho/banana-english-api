@@ -44,7 +44,7 @@ Server runs at `http://localhost:8000`.
 | `GOOGLE_CLOUD_PROJECT` | GCP project id for `x-goog-user-project` on Bearer calls |
 | `GROQ_API_KEY` | Groq key (served to Flutter via `/api/config/keys`) |
 | `PORT` | Server port (default `8000`) |
-| `CORS_ORIGINS` | Comma-separated allowed origins (Firebase Hosting `*.web.app` / `*.firebaseapp.com` always allowed) |
+| `CORS_ORIGINS` | Comma-separated allowed origins (`*.web.app` / `*.firebaseapp.com` / `bananaenglish.app` always allowed) |
 | `ADMIN_EMAILS` | Comma-separated Google emails allowed for `GET /admin/metrics/*` |
 | `STALE_GUEST_CLEANUP_MODE` | `off` / `dry-run` (default) / `execute` — daily purge of guests not onboarded after N days |
 | `STALE_GUEST_CLEANUP_DAYS` | Age threshold in days (default `30`) |

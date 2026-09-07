@@ -16,6 +16,7 @@ import { AchievementsModule } from './achievements/achievements.module';
 import { StatsModule } from './stats/stats.module';
 import { OutfitsModule } from './outfits/outfits.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { RecentLearnersModule } from './recent-learners/recent-learners.module';
 import { EconomyModule } from './economy/economy.module';
 import { UsersModule } from './users/users.module';
 import { NotificationsModule } from './notifications/notifications.module';
@@ -33,6 +34,7 @@ import { AdminModule } from './admin/admin.module';
     ConfigModule.forRoot({ isGlobal: true }),
     ScheduleModule.forRoot(),
     PrismaModule,
+    RecentLearnersModule,
     FirebaseAdminModule,
     EconomyModule,
     UsersModule,

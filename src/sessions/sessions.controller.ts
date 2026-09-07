@@ -169,6 +169,7 @@ import { getMissionReward, getStarRating } from '../economy/economy.constants';
 import { getUserLocalTime, isSameDateKey } from '../common/timezone.util';
 import { getSeriesForSimulation } from '../series/series.data';
 import { ActivityService } from '../users/activity.service';
+import { RecentLearnersService } from '../recent-learners/recent-learners.service';
 import { AchievementsService } from '../achievements/achievements.service';
 
 type AuthedRequest = {
@@ -191,6 +192,7 @@ export class SessionsController {
     private readonly activity: ActivityService,
     private readonly achievements: AchievementsService,
     private readonly trainingEngine: TrainingTurnEngine,
+    private readonly recentLearners: RecentLearnersService,
   ) {}
 
   @Post()
@@ -328,6 +330,11 @@ export class SessionsController {
         isDailyMission,
       },
     });
+    await this.recentLearners.markActivity(
+      user.id,
+      'mission',
+      config.simulationId,
+    );
 
     try {
       const handlerStartedAt = performance.now();

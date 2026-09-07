@@ -226,8 +226,8 @@ describe('Foundation — full happy path (all steps → complete)', () => {
     assert.equal(FOUNDATION_BOARDS.meet_people[1].options.length, 0);
     assert.equal(FOUNDATION_BOARDS.meet_people[2].options.length, 0);
     assert.equal(FOUNDATION_BOARDS.meet_people[3].options.length, 0);
-    assert.ok(FOUNDATION_BOARDS.meet_people[4].options.length >= 2);
-    assert.equal(FOUNDATION_BOARDS.meet_people[5].options.length, 0);
+    assert.equal(FOUNDATION_BOARDS.meet_people[4].options.length, 1);
+    assert.equal(FOUNDATION_BOARDS.meet_people[5].options.length, 2);
     assert.match(result.steps[4].userText, /I['’]m/);
     assert.match(result.steps[4].userText, /You['’]re/);
     assert.match(result.completionText, /I['’]m\.\.\..*You['’]re\.\.\./);
@@ -277,7 +277,7 @@ describe('Foundation V2 — new lesson script contracts', () => {
     assert.doesNotMatch(boards[1].textEn, /13 thirteen|14 fourteen|15 fifteen/);
   });
 
-  it('Shop Things and Daily Actions end with personal choices', () => {
+  it('Shop Things scaffolds its first I want... output and Daily Actions stays personal', () => {
     const shopFixture = FOUNDATION_POOLGATE_FIXTURES.find(
       (candidate) => candidate.lessonId === 'fnd_v2_shop_things',
     )!;
@@ -294,7 +294,7 @@ describe('Foundation V2 — new lesson script contracts', () => {
         answer,
       );
     }
-    assert.equal(FOUNDATION_BOARDS.fnd_v2_shop_things[6].options.length, 0);
+    assert.equal(FOUNDATION_BOARDS.fnd_v2_shop_things[6].options.length, 5);
 
     const dailyFixture = FOUNDATION_POOLGATE_FIXTURES.find(
       (candidate) => candidate.lessonId === 'fnd_v2_daily_actions',
@@ -347,7 +347,7 @@ describe('Foundation V2 — new lesson script contracts', () => {
     }
     for (const step of [2, 5, 6]) {
       assert.ok(
-        FOUNDATION_BOARDS.fnd_v2_buying_something[step].options.length >= 2,
+        FOUNDATION_BOARDS.fnd_v2_buying_something[step].options.length >= 1,
         `Buying Something situation step ${step}`,
       );
     }

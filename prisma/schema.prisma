@@ -31,6 +31,11 @@ model User {
   lastStudiedLessonId     String?
   lastStudiedAt           DateTime?
 
+  /** Last started mission / minigame (intro avatar stack). */
+  lastActivityKind        String?
+  lastActivityId          String?
+  lastActivityAt          DateTime?
+
   streakDays              Int       @default(0)
   lastSessionDate         DateTime? @db.Date
   streakMilestonesClaimed Int[]     @default([])
@@ -86,6 +91,7 @@ model User {
   updatedAt               DateTime  @updatedAt
 
   @@index([lastStudiedLessonId, lastStudiedAt])
+  @@index([lastActivityKind, lastActivityId, lastActivityAt])
 }
 
 model EconomyTransaction {
