@@ -599,7 +599,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'ขั้นตอนสุดท้ายครับ ลองแนะนำตัวสั้นๆ เป็นภาษาอังกฤษด้วยชื่อ และอีกหนึ่งอย่างเกี่ยวกับตัวคุณ จะบอกว่ามาจากไหน อยู่ที่ไหน หรือทำงานอะไรก็ได้ครับ',
       withPraise: false,
-      stem: 'My name is...',
+      stem: "My name is... / I'm...",
       expectedSpeech: "My name is {name}. I'm from Thailand.",
       incorrectHintTh:
         'ยังไม่ตรงครับ ลองเริ่มด้วย “I\'m {name}.” แล้วเพิ่มอีกหนึ่งอย่าง เช่น “I\'m from...”, “I live in...” หรือ “I work as...” ครับ',
@@ -1240,39 +1240,17 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'ถ้าฟังไม่ทันและอยากให้พูดอีกครั้ง ควรพูดประโยคไหนครับ? 🔁',
       withPraise: true,
-      stem: '',
+      stem: 'Can you say...?',
       expectedSpeech: 'Can you say that again?',
-      options: [
-        {
-          emoji: '🔁',
-          label: 'Can you say that again?',
-          speak: 'Can you say that again?',
-        },
-        {
-          emoji: '🇬🇧',
-          label: 'How do you say this in English?',
-          speak: 'How do you say this in English?',
-        },
-      ],
+      options: [],
     },
     4: {
       textEn:
         'ถ้าชี้ไปที่ของแล้วอยากรู้ว่าพูดว่าอะไรเป็นภาษาอังกฤษ ควรพูดประโยคไหนครับ? 🇬🇧',
       withPraise: true,
-      stem: '',
+      stem: 'How do you say...?',
       expectedSpeech: 'How do you say this in English?',
-      options: [
-        {
-          emoji: '🔁',
-          label: 'Can you say that again?',
-          speak: 'Can you say that again?',
-        },
-        {
-          emoji: '🇬🇧',
-          label: 'How do you say this in English?',
-          speak: 'How do you say this in English?',
-        },
-      ],
+      options: [],
     },
     5: {
       textEn:
@@ -1280,7 +1258,7 @@ export const FOUNDATION_BOARDS: Record<
       advanceQuestionEn:
         'ลองพูดหนึ่งประโยคเพื่อขอให้พูดซ้ำ พูดช้าลง บอกว่าไม่เข้าใจ หรือถามความหมายครับ 🆘',
       withPraise: true,
-      stem: '',
+      stem: 'Can you say...?',
       expectedSpeech: 'Can you say that again?',
       incorrectHintTh:
         'ลองใช้หนึ่งในประโยคช่วยชีวิต เช่น “Can you say that again?” หรือ “I don\'t understand.” ครับ',
@@ -1910,7 +1888,7 @@ export const FOUNDATION_BOARDS: Record<
       textEn:
         'เก่งมากครับ! อาวุธที่สอง — ขอให้พูดช้าลง Can you speak more slowly? 🐢 ลองพูดตามครับ',
       withPraise: true,
-      stem: '',
+      stem: 'Can you speak...?',
       expectedSpeech: 'Can you speak more slowly?',
       options: [
         {

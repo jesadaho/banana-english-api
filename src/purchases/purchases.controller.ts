@@ -1,7 +1,8 @@
-import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { AnonymousUserGuard } from '../users/anonymous-user.guard';
 import { ClaimPurchaseDto } from './dto/claim-purchase.dto';
+import { listBananaPacks } from './product-catalog';
 import { PurchasesService } from './purchases.service';
 
 type AuthedRequest = {
@@ -12,6 +13,11 @@ type AuthedRequest = {
 @Controller('purchases')
 export class PurchasesController {
   constructor(private readonly purchases: PurchasesService) {}
+
+  @Get('catalog')
+  catalog() {
+    return { packs: listBananaPacks() };
+  }
 
   @Post('claim')
   @UseGuards(AnonymousUserGuard)
