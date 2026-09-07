@@ -327,9 +327,10 @@ describe('Foundation V2 — new lesson script contracts', () => {
       );
     }
     for (const step of [3, 4]) {
-      assert.ok(
-        FOUNDATION_BOARDS.fnd_v2_say_it_again[step].options.length >= 2,
-        `Say It Again situation step ${step}`,
+      assert.equal(
+        FOUNDATION_BOARDS.fnd_v2_say_it_again[step].options.length,
+        0,
+        `Say It Again recall step ${step} must use its sentence-start hint only`,
       );
     }
     assert.equal(
