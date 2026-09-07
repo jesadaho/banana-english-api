@@ -163,6 +163,7 @@ export class AdminMetricsService {
       newUsersRaw,
       totalUsers,
       totalUsersAll,
+      platformMix,
     ] = await Promise.all([
       this.countActiveOn(todayStart, todayStart, userFilter),
       this.countActiveOn(weekStart, todayStart, userFilter),
@@ -215,6 +216,7 @@ export class AdminMetricsService {
       }),
       this.prisma.user.count({ where: userFilter }),
       this.prisma.user.count(),
+      this.platformMix(userFilter),
     ]);
 
     const revenue = purchases.reduce(
@@ -317,6 +319,7 @@ export class AdminMetricsService {
             thb: v.thb,
           }),
         ),
+        platformMix,
       },
       recentPurchases: purchases
         .slice()
@@ -328,6 +331,51 @@ export class AdminMetricsService {
           thb: estimatedThbForProduct(p.productId),
           createdAt: p.createdAt.toISOString(),
         })),
+    };
+  }
+
+  private async platformMix(userFilter: Prisma.UserWhereInput) {
+    const [tokens, filteredUsers] = await Promise.all([
+      this.prisma.userFcmToken.findMany({
+        where: { user: userFilter },
+        select: { userId: true, platform: true, createdAt: true },
+        orderBy: { createdAt: 'desc' },
+      }),
+      this.prisma.user.count({ where: userFilter }),
+    ]);
+
+    // Latest token wins per user.
+    const latest = new Map<string, string>();
+    for (const row of tokens) {
+      if (latest.has(row.userId)) continue;
+      const raw = row.platform?.trim().toLowerCase() || 'unknown';
+      let key = 'other';
+      if (raw === 'ios' || raw === 'iphone') key = 'ios';
+      else if (raw === 'android') key = 'android';
+      else if (raw === 'unknown' || raw === '') key = 'unknown';
+      latest.set(row.userId, key);
+    }
+
+    const counts: Record<string, number> = {
+      ios: 0,
+      android: 0,
+      other: 0,
+      unknown: 0,
+    };
+    for (const plat of latest.values()) {
+      counts[plat] = (counts[plat] ?? 0) + 1;
+    }
+    const withToken = latest.size;
+    return {
+      withToken,
+      withoutToken: Math.max(0, filteredUsers - withToken),
+      totalUsers: filteredUsers,
+      slices: [
+        { platform: 'ios', count: counts.ios },
+        { platform: 'android', count: counts.android },
+        { platform: 'other', count: counts.other },
+        { platform: 'unknown', count: counts.unknown },
+      ].filter((s) => s.count > 0),
     };
   }
 
@@ -515,7 +563,7 @@ export class AdminMetricsService {
 
   private async buildContent(range: DateRange, filters: MetricsFilters) {
     const userFilter = this.userWhere(filters);
-    const [lessonSessions, missionSessions, ratings, streakBuckets, activeLearners, sessionMix, dailySpeakActive] =
+    const [lessonSessions, missionSessions, ratings, streakBuckets, activeLearners, sessionMix, dailySpeakActive, minigameStarts] =
       await Promise.all([
         this.prisma.userSession.groupBy({
           by: ['lessonId'],
@@ -572,6 +620,21 @@ export class AdminMetricsService {
             updatedAt: { gte: range.from, lte: range.to },
           },
         }),
+        this.prisma.economyTransaction.groupBy({
+          by: ['source'],
+          where: {
+            createdAt: { gte: range.from, lte: range.to },
+            user: userFilter,
+            source: {
+              in: [
+                'say_it_start',
+                'explain_it_start',
+                'emoji_speak_start',
+              ],
+            },
+          },
+          _count: { _all: true },
+        }),
       ]);
 
     const ratingByLesson = new Map(
@@ -620,18 +683,30 @@ export class AdminMetricsService {
       retention: {
         activeLearners7d: activeLearners,
         streakBuckets,
-        sessionMix: sessionMix.map((s) => ({
-          sessionType: s.sessionType,
-          count: s._count._all,
-        })),
+        sessionMix: [
+          ...sessionMix.map((s) => ({
+            sessionType: s.sessionType,
+            count: s._count._all,
+            source: 'user_session' as const,
+          })),
+          ...minigameStarts.map((s) => ({
+            sessionType: s.source.replace(/_start$/, ''),
+            count: s._count._all,
+            source: 'economy_start' as const,
+          })),
+        ].sort((a, b) => b.count - a.count),
         dailySpeakTouchedUsers: dailySpeakActive,
       },
     };
   }
 
   private async streakDistribution(userFilter: Prisma.UserWhereInput) {
+    // Include users whose current streak is 0 but who once had a long streak.
     const rows = await this.prisma.user.findMany({
-      where: { ...userFilter, streakDays: { gt: 0 } },
+      where: {
+        ...userFilter,
+        OR: [{ streakDays: { gt: 0 } }, { longestStreakDays: { gt: 0 } }],
+      },
       select: { streakDays: true, longestStreakDays: true },
     });
     const buckets = [
