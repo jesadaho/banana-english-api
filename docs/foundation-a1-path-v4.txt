@@ -1,0 +1,161 @@
+BANANA ENGLISH — FOUNDATION A1 PATH V4
+HYBRID VALIDATION ROADMAP (CONTENT ONLY)
+
+Goal
+Keep the early lessons that have proven learner feedback. Test the more
+granular, Nintendo-style Ki → Sho → Ten → Ketsu pacing only in later content
+where the team has less evidence. Do not change mechanics, schemas, scoring,
+or live node IDs in this phase.
+
+Validation principle
+- “Legacy core” means retain the current lesson’s scope and teaching script as
+  the default. We can improve copy or examples, but do not split it yet.
+- “Experimental arc” means a new A1 gap or a later, lower-risk topic where we
+  deliberately test smaller lessons + retrieval + a short payoff.
+- Mission: exactly three learner goals, only previously taught language, and
+  close the conversation as soon as all goals are satisfied.
+- Emoji Speak: individual words only. Say It: sentences only.
+
+CHAPTER 1 — FIRST CONVERSATION [LEGACY CORE: KEEP]
+1  [Lesson] Greetings
+   Keep existing scope: Hello / Hi / Good morning / afternoon / evening.
+2  [Lesson] Introductions
+   Keep existing progression: name → Nice to meet you → country → city/work.
+3  [Say It] Introduce Yourself
+4  [Lesson] Yes / No / Maybe
+5  [Mission] First Conversation — greet, name, country. Three replies.
+
+Why keep it: Greetings and Introductions are the best-validated onboarding
+content. Splitting them creates more nodes without a demonstrated learner gain.
+
+CHAPTER 2 — PEOPLE, FEELINGS AND FAMILY [MOSTLY LEGACY CORE]
+6  [Lesson] I Am / You Are
+7  [Lesson] How Do You Feel?
+8  [Emoji Speak] Feelings
+9  [Lesson] He / She / It
+10 [Lesson] We / They
+11 [Emoji Speak] People & Things
+12 [Lesson] Family
+13 [Emoji Speak] Family Words
+14 [Say It] People, Feelings & Family
+15 [Mission] Talk About Family — two relatives + one known fact. Three replies.
+
+Test boundary: retain these as the current broad lessons for now. Review whether
+I Am/You Are and He/She/It need smaller arcs only after real learner feedback.
+
+CHAPTER 3 — POLITE AND SURVIVAL [LEGACY CORE]
+16 [Lesson] Polite Expressions
+17 [Say It] Be Polite
+18 [Lesson] Asking for Help
+19 [Lesson] Say It Again
+20 [Say It] Survival English
+21 [Mission] Use Survival English — not understood, ask repeat/slowly, thank.
+
+Why keep it: Polite Expressions and Asking for Help are already high-value,
+high-rating lessons. Do not split the three survival phrases before testing.
+
+CHAPTER 4 — NUMBERS, TIME AND SHOPPING [LEGACY + VALIDATED NEW CONTENT]
+22 [Lesson] Numbers 0–10
+23 [Lesson] Numbers 11–20
+24 [Emoji Speak] Numbers 0–20
+25 [Lesson] Telling Time
+26 [Say It] Time Practice — clock phrases only; no daily verbs yet.
+27 [Lesson] Numbers 20–100
+28 [Emoji Speak] Numbers 0–100
+29 [Lesson] Money & Prices
+30 [Lesson] Basic Colors
+31 [Emoji Speak] Colors
+32 [Lesson] Things at the Shop
+33 [Emoji Speak] Things at the Shop
+34 [Lesson] Buying Something
+35 [Say It] Numbers & Shopping
+36 [Mission] Buy Something — choose, ask price, buy/refuse. Three replies.
+
+Why keep it: Numbers 0–10 and 11–20 are a sensible cognitive split. The newer
+Colors / Buying Something flow already tested well, so preserve it before trying
+further decomposition.
+
+CHAPTER 5 — TALK ABOUT YOURSELF [LEGACY CORE]
+37 [Lesson] Likes & Dislikes
+38 [Emoji Speak] Food & Drinks
+39 [Lesson] Daily Actions
+40 [Emoji Speak] Daily Actions
+41 [Lesson] Wants / Needs / Have
+42 [Lesson] Can / Can’t
+43 [Say It] About Me
+44 [Mission] Three Things About Me — like, want/need, ability. Three replies.
+
+CHAPTER 6 — ASK, FIND AND CLOSE [LEGACY CORE]
+45 [Lesson] Asking Questions
+46 [Lesson] Places & Simple Directions
+47 [Emoji Speak] Places & Transport
+48 [Lesson] Goodbye & Closing
+49 [Say It] Ask & Close
+50 [Mission] Ask for a Place — ask, receive a simple answer, thank/close.
+
+CHAPTER 7 — THINGS AROUND ME [EXPERIMENTAL ARC 1]
+Ki
+51 [Lesson] One Thing / More Things
+   a bag / an apple / two bags / two apples. Teach article and plural as useful
+   chunks, not as grammar terminology.
+Sho
+52 [Emoji Speak] Things Around Me
+   bag, apple, book, shirt, shoes — words are taught in node 51/examples.
+Ten
+53 [Say It] What Do You See?
+   This is a bag. / I have two books. / It’s an apple.
+Ketsu
+54 [Describe It] My Things
+   Guided image + example; learner says one or two known object sentences.
+
+Research question: do learners find one compact “one/more things” lesson clearer
+and less repetitive than separate A/An and plural lessons?
+
+CHAPTER 8 — NEW A1 CONTEXT [EXPERIMENTAL ARC 2]
+Ki
+55 [Lesson] Days, Today & Tomorrow
+   Monday–Sunday; today; tomorrow; What day is it?
+Sho
+56 [Emoji Speak] Days
+   Five taught day words per run; no new vocabulary.
+Ten
+57 [Say It] My Week
+   Today is Monday. / See you tomorrow.
+Ketsu
+58 [Mission] Make a Simple Plan
+   State today, choose a day, say goodbye. Three known replies.
+
+CHAPTER 9 — PLACES AND WEATHER [EXPERIMENTAL ARC 3]
+Ki
+59 [Lesson] Where Things Are
+   There is a bathroom. / There are two chairs. / The bag is on the table.
+   Teach: table, chair, on, under.
+Sho
+60 [Say It] In the Room
+   The book is on the table. / The bag is under the chair.
+Ten
+61 [Lesson] Weather & Language
+   It’s hot/cold/sunny/rainy. / I speak Thai. / I’m learning English.
+Ketsu
+62 [Mission] A Helpful Chat
+   Ask for a place, understand a simple location answer, close politely.
+
+CHAPTER 10 — LIGHT CONSOLIDATION
+63 [Emoji Speak] Foundation Mix
+   Five random words, all from previous content; never introduce new vocabulary.
+64 [Mission] Foundation Final
+   Learner chooses one familiar context: meet someone, shop, ask for help,
+   talk about family, or find a place. Exactly three known sentences.
+
+RELEASE / REVIEW PLAN
+1. Ship chapters 1–6 unchanged in scope; they remain the baseline.
+2. Build chapters 7–9 as the first granular-content experiment.
+3. Compare completion, repeat attempts, time per node, and qualitative rating
+   for chapters 7–9 against the legacy chapters.
+4. Only split an older proven lesson if the experiment demonstrates a clear
+   learner benefit. Otherwise keep the proven broader script.
+
+Expected shape
+64 core nodes. The start remains familiar and low-risk. The granular test begins
+after the learner already understands the app and has enough vocabulary to feel
+the payoff of smaller A1 arcs.

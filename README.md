@@ -46,6 +46,8 @@ Server runs at `http://localhost:8000`.
 | `PORT` | Server port (default `8000`) |
 | `CORS_ORIGINS` | Comma-separated allowed origins (Firebase Hosting `*.web.app` / `*.firebaseapp.com` always allowed) |
 | `ADMIN_EMAILS` | Comma-separated Google emails allowed for `GET /admin/metrics/*` |
+| `STALE_GUEST_CLEANUP_MODE` | `off` / `dry-run` (default) / `execute` — daily purge of guests not onboarded after N days |
+| `STALE_GUEST_CLEANUP_DAYS` | Age threshold in days (default `30`) |
 | `SESSION_DURATION_SECONDS` | Max session length (default `300`) |
 | `ONBOARDING_BANANA_BONUS` | Bananas granted on onboarding complete (default `2`) |
 | `DAILY_BANANA_DROP` | Bananas granted by daily drop after 08:00 local (default `1`) |
