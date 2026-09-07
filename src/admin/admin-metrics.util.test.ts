@@ -5,6 +5,7 @@ import {
   parseDateRange,
   pctChange,
   previousRange,
+  weekStartKey,
 } from './admin-metrics.util';
 
 describe('admin-metrics.util', () => {
@@ -31,5 +32,12 @@ describe('admin-metrics.util', () => {
     expect(pctChange(110, 100)).toBe(10);
     expect(pctChange(0, 0)).toBe(0);
     expect(pctChange(5, 0)).toBeNull();
+  });
+
+  it('weeks start on Monday UTC', () => {
+    // 2026-09-07 is Monday
+    expect(weekStartKey(new Date('2026-09-07T12:00:00Z'))).toBe('2026-09-07');
+    // Sunday 6 Sep → previous Monday 31 Aug
+    expect(weekStartKey(new Date('2026-09-06T12:00:00Z'))).toBe('2026-08-31');
   });
 });

@@ -1,0 +1,151 @@
+BANANA ENGLISH — FOUNDATION A1 PATH V3 (ROADMAP ONLY)
+
+Purpose
+Complete beginner A1 path using only existing session types: Lesson, Emoji
+Speak, Say It in English, Describe It, Explain It, Mission. No new mechanic,
+schema, scoring rule, or code change is required.
+
+Pacing: Kishotenketsu per mini-arc
+Ki = introduce one small language unit in Lesson.
+Sho = safe guided retrieval in Emoji Speak or Say It.
+Ten = use familiar language in a changed, useful context.
+Ketsu = personal payoff or a 3-reply Mission.
+
+Rules
+- Teach every word before its retrieval. Emoji Speak is single-word vocabulary;
+  Say It is short sentence retrieval. Describe/Explain remain guided 1–2
+  sentence tasks. Explain It is optional.
+- Maximum two Lessons in a row. A change of type must also change the task.
+- Every Mission uses only prior content, has three goals, accepts packed answers,
+  and closes immediately when goals are complete.
+- Existing production IDs/content are preserved at implementation time. This is
+  a content roadmap, not a migration or code plan.
+
+CORE PATH — 79 NODES
+
+CHAPTER 1 — FIRST CONVERSATION
+1 [Lesson] Hello! — Hello. / Hi.
+2 [Lesson] Good Morning! — Good morning / afternoon / evening.
+3 [Emoji Speak] Greetings — hello, hi, morning, afternoon, evening.
+4 [Lesson] My Name Is... — My name is __. / I’m __.
+5 [Say It] Meet Me — สวัสดี / ฉันชื่อ... / ยินดีที่ได้รู้จัก.
+6 [Lesson] I’m From... — I’m from Thailand. / I live in Bangkok.
+7 [Say It] Introduce Yourself — name + country/city from known prompts.
+8 [Mission] First Conversation — greet, name, country. Three replies.
+
+CHAPTER 2 — PEOPLE AND PRONOUNS
+9 [Lesson] I Am / You Are — I am a student. / You are my friend.
+  Vocab: student, teacher, friend, man, woman.
+10 [Emoji Speak] People Words — student, teacher, friend, man, woman.
+11 [Lesson] He / She / It — He is..., She is..., It is...; father, sister, bag.
+12 [Say It] People & Things — He is my father. / It is my bag.
+13 [Lesson] We / They — We are friends. / They are students.
+14 [Emoji Speak] Pronouns — I, you, he, she, it, we, they.
+15 [Describe It] Who Is This? — picture + Thai hint; one known sentence.
+16 [Mission] Meet People — self, one person, “We’re friends.” Three replies.
+
+CHAPTER 3 — POLITE AND SURVIVAL ENGLISH
+17 [Lesson] Please & Thank You — Please. / Thank you. / You’re welcome.
+18 [Emoji Speak] Polite Basics — please, thank you, welcome.
+19 [Lesson] Excuse Me & Sorry — Excuse me. / Sorry.
+20 [Say It] Be Polite — Thai situations using all taught polite phrases.
+21 [Lesson] I Don’t Understand — I don’t understand.
+22 [Lesson] Say It Again — Can you say that again?
+23 [Emoji Speak] Survival Basics — understand, again, please.
+24 [Lesson] Speak Slowly — Can you speak more slowly?
+25 [Mission] Ask for Help — not understood, repeat/slowly, thank. Three replies.
+
+CHAPTER 4 — FAMILY AND POSSESSION
+26 [Lesson] Family Words — mother, father, brother, sister, family.
+27 [Emoji Speak] Family Words — five taught family nouns.
+28 [Lesson] This Is My Family — This is my mother/father/sister.
+29 [Say It] Family Sentences — he/she + family relationship.
+30 [Lesson] I Have... — I have one brother. / I have two sisters.
+31 [Describe It] My Family — picture prompt; one or two known family facts.
+32 [Mission] Talk About Family — two relatives + one “I have...” fact.
+
+CHAPTER 5 — NUMBERS, TIME, DAYS AND DATES
+33 [Lesson] Numbers 0–10 — small groups, then familiar-object use.
+34 [Emoji Speak] Small Numbers — five visual quantities from 0–10.
+35 [Lesson] Numbers 11–20 — 11–15 then 16–20, each with use.
+36 [Emoji Speak] Numbers 0–20 — five mixed taught numbers.
+37 [Lesson] Numbers 20–100 — 20, 30, 40, 50, 60, 70, 80, 90, 100.
+38 [Lesson] What Time Is It? — It’s seven o’clock. / It’s seven thirty.
+39 [Say It] Clock Time — clock sentences only; no untaught daily-action verbs.
+40 [Lesson] Days and Dates — Monday–Sunday; today, tomorrow; What date is it?
+41 [Mission] Numbers & Time — number, time, day/date with supplied context.
+
+CHAPTER 6 — COLORS, OBJECTS, ARTICLES AND PLURALS
+42 [Lesson] Basic Colors — red, blue, yellow, green, orange.
+43 [Emoji Speak] Colors — five taught colors.
+44 [Lesson] Things Around Me — bag, shirt, shoes, hat, apple.
+45 [Emoji Speak] Things — bag, shirt, shoes, hat, apple.
+46 [Lesson] A or An — a bag, a hat, an apple, an orange.
+47 [Lesson] One or More — one bag / two bags; one apple / two apples.
+48 [Say It] Colors & Things — a blue bag / an orange hat / two red bags.
+49 [Describe It] Describe an Object — visual + example: It’s a blue bag.
+50 [Mission] Colors & Things — identify, describe, choose preference.
+
+CHAPTER 7 — SHOPPING AND MONEY
+51 [Lesson] Buying Something — I want this. / I want the blue bag.
+  Reuse taught objects; introduce water as the only new shop item.
+52 [Emoji Speak] Shop Words — bag, shirt, shoes, hat, water.
+53 [Lesson] How Much Is It? — How much is it? / It’s five dollars.
+  It’s cheap. / It’s expensive. / I’ll take it. / That’s too expensive.
+54 [Emoji Speak] Price Words — price, dollar, cheap, expensive.
+55 [Say It] Shopping Phrases — I want this. / How much is it? / I’ll take it.
+  / That’s too expensive.
+56 [Mission] Buy Something — choose, ask price, buy/refuse. Three replies.
+
+CHAPTER 8 — ABOUT ME AND DAILY LIFE
+57 [Lesson] Likes & Dislikes — I like / I don’t like; coffee, tea, pizza, water, book.
+58 [Emoji Speak] Food & Things — coffee, tea, pizza, water, book.
+59 [Lesson] I Want / I Need — I want water. / I need help.
+60 [Say It] Wants & Needs — short Thai-to-English retrieval.
+61 [Lesson] Daily Actions — wake up, eat, study, work, sleep.
+62 [Emoji Speak] Daily Actions — five taught verbs.
+63 [Lesson] I Can / I Can’t — swim, cook, drive, sing.
+64 [Say It] About Me — one like, one need/want, one ability.
+65 [Mission] Three Things About Me — preference, need/want, ability.
+
+CHAPTER 9 — LANGUAGE, PLACES, QUESTIONS AND WEATHER
+66 [Lesson] I Speak... — I speak Thai. / I speak English. / I’m learning English.
+67 [Lesson] Where Is...? — Where is the bathroom?; bathroom, school, shop, station.
+68 [Emoji Speak] Places — bathroom, school, shop, station, home.
+69 [Lesson] There Is / There Are — There is a bathroom. / There are two chairs.
+  Vocab and examples: table, chair, on, under; The book is on the table.
+  / The bag is under the chair.
+70 [Say It] Places Around Me — The book is on the table. / The bag is under the chair.
+71 [Lesson] Who / What / How — Who is that? / What is this? / How are you?
+72 [Say It] Ask a Question — Thai prompts for where/who/what/how.
+73 [Lesson] Weather — hot, cold, sunny, rainy, cloudy.
+74 [Emoji Speak] Weather Words — five taught weather words.
+75 [Mission] Ask and Answer — ask place, receive answer, say thanks. Three replies.
+
+CONSOLIDATION — SHORT, NOT A MANDATORY REVIEW WALL
+76 [Say It] First Conversation Review — greeting, name, country.
+77 [Emoji Speak] Foundation Mix — five previously taught words, no new vocabulary.
+78 [Describe It] My World — guided visual; one person/object/place sentence.
+79 [Mission] Foundation Complete — choose meet/shop/help/family/place context;
+  produce exactly three known sentences.
+
+OPTIONAL REVISIT NODES — DO NOT BLOCK PROGRESSION
+O1 [Explain It] Choose the Help Phrase — choose and say a taught survival phrase.
+O2 [Emoji Speak] Numbers & Shopping Mix — taught numbers, objects, prices.
+O3 [Say It] Daily Life Review — likes, actions, abilities.
+O4 [Mission] Friendly Catch-up — three known facts about yourself.
+
+KISHOTENKETSU CHECK
+Every chapter has Ki (new unit), Sho (safe retrieval), Ten (use in a changed
+context), and Ketsu (personal payoff/Mission). Missions are followed by a new,
+lighter topic rather than a grammar wall. The final review is three core nodes,
+not a seven-node endgame.
+
+IMPLEMENTATION ORDER
+P0 Preserve current production node IDs and unlocked progress.
+P1 Add missing A1 content as new nodes: days/dates, a/an, plurals, language
+identity, there is/are, basic prepositions, weather.
+P2 Add/refresh short review and Mission scripts using taught language only.
+
+Acceptance target: variety >= 9.5, difficulty curve >= 9.0,
+teach-before-retrieval >= 9.5.

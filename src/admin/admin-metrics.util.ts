@@ -82,7 +82,55 @@ export function dateKey(d: Date): string {
   return `${y}-${m}-${day}`;
 }
 
+/** Monday (UTC) date key for the week containing `d`. */
+export function weekStartKey(d: Date): string {
+  const day = startOfUtcDay(d);
+  const dow = day.getUTCDay(); // 0=Sun … 6=Sat
+  const mondayOffset = dow === 0 ? -6 : 1 - dow;
+  return dateKey(new Date(day.getTime() + mondayOffset * 86_400_000));
+}
+
 export function pctChange(current: number, previous: number): number | null {
   if (previous === 0) return current === 0 ? 0 : null;
   return Math.round(((current - previous) / previous) * 1000) / 10;
+}
+
+export type MetricsFilters = {
+  /** Only users with onboardingCompleted=true */
+  requireOnboarding: boolean;
+  /** Only users who linked Google/Apple (firebaseUid set) */
+  requireSignedIn: boolean;
+  /** Only users with lastAppOpenDate set */
+  requireAppOpen: boolean;
+  /** Drop users with null/empty acquisitionSource (dashboard "unknown") */
+  excludeUnsetSource: boolean;
+};
+
+export function parseBoolQuery(raw?: string): boolean {
+  if (!raw) return false;
+  const v = raw.trim().toLowerCase();
+  return v === '1' || v === 'true' || v === 'yes' || v === 'on';
+}
+
+export function parseMetricsFilters(query: {
+  requireOnboarding?: string;
+  requireSignedIn?: string;
+  requireAppOpen?: string;
+  excludeUnsetSource?: string;
+}): MetricsFilters {
+  return {
+    requireOnboarding: parseBoolQuery(query.requireOnboarding),
+    requireSignedIn: parseBoolQuery(query.requireSignedIn),
+    requireAppOpen: parseBoolQuery(query.requireAppOpen),
+    excludeUnsetSource: parseBoolQuery(query.excludeUnsetSource),
+  };
+}
+
+export function filtersCacheKey(filters: MetricsFilters): string {
+  return [
+    filters.requireOnboarding ? '1' : '0',
+    filters.requireSignedIn ? '1' : '0',
+    filters.requireAppOpen ? '1' : '0',
+    filters.excludeUnsetSource ? '1' : '0',
+  ].join('');
 }
