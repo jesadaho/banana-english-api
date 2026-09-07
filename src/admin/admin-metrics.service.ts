@@ -161,6 +161,8 @@ export class AdminMetricsService {
       dauSeriesRaw,
       completionsByDay,
       newUsersRaw,
+      totalUsers,
+      totalUsersAll,
     ] = await Promise.all([
       this.countActiveOn(todayStart, todayStart, userFilter),
       this.countActiveOn(weekStart, todayStart, userFilter),
@@ -211,6 +213,8 @@ export class AdminMetricsService {
       this.prisma.user.count({
         where: { createdAt: { gte: range.from, lte: range.to } },
       }),
+      this.prisma.user.count({ where: userFilter }),
+      this.prisma.user.count(),
     ]);
 
     const revenue = purchases.reduce(
@@ -262,6 +266,11 @@ export class AdminMetricsService {
       range: { from: range.from.toISOString(), to: range.to.toISOString() },
       filters,
       kpis: {
+        totalUsers: {
+          value: totalUsers,
+          deltaPct: null,
+          all: totalUsersAll,
+        },
         dau: { value: dau, deltaPct: null },
         wau: { value: wau, deltaPct: null },
         mau: { value: mau, deltaPct: null },
