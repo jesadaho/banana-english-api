@@ -38,6 +38,15 @@ async function bootstrap() {
         return;
       }
 
+      // Firebase Hosting (admin dashboard + support site)
+      if (
+        /^https:\/\/[a-z0-9-]+\.web\.app$/i.test(origin) ||
+        /^https:\/\/[a-z0-9-]+\.firebaseapp\.com$/i.test(origin)
+      ) {
+        callback(null, true);
+        return;
+      }
+
       callback(null, false);
     },
     credentials: true,

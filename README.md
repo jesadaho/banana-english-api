@@ -44,7 +44,8 @@ Server runs at `http://localhost:8000`.
 | `GOOGLE_CLOUD_PROJECT` | GCP project id for `x-goog-user-project` on Bearer calls |
 | `GROQ_API_KEY` | Groq key (served to Flutter via `/api/config/keys`) |
 | `PORT` | Server port (default `8000`) |
-| `CORS_ORIGINS` | Comma-separated allowed origins |
+| `CORS_ORIGINS` | Comma-separated allowed origins (Firebase Hosting `*.web.app` / `*.firebaseapp.com` always allowed) |
+| `ADMIN_EMAILS` | Comma-separated Google emails allowed for `GET /admin/metrics/*` |
 | `SESSION_DURATION_SECONDS` | Max session length (default `300`) |
 | `ONBOARDING_BANANA_BONUS` | Bananas granted on onboarding complete (default `2`) |
 | `DAILY_BANANA_DROP` | Bananas granted by daily drop after 08:00 local (default `1`) |
@@ -54,6 +55,10 @@ Server runs at `http://localhost:8000`.
 | Method | Path | Description |
 |--------|------|-------------|
 | GET | `/health` | Health check |
+| GET | `/admin/metrics/overview` | Exec KPIs + sparklines (Firebase Auth + `ADMIN_EMAILS`) |
+| GET | `/admin/metrics/acquisition` | Acquisition sources + activation funnel |
+| GET | `/admin/metrics/content` | Lesson/mission ranks, ratings, retention proxies |
+| GET | `/admin/metrics/economy` | Banana flows + estimated IAP revenue |
 | GET | `/api/config/keys` | Client runtime keys (`groqApiKey`) |
 | GET | `/topics/daily` | Daily topic list |
 | POST | `/sessions` | Start session `{ topicId }` |

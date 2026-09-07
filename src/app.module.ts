@@ -26,6 +26,7 @@ import { SayItModule } from './say-it/say-it.module';
 import { DebugModule } from './debug/debug.module';
 import { PurchasesModule } from './purchases/purchases.module';
 import { LearnPathModule } from './learn-path/learn-path.module';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { LearnPathModule } from './learn-path/learn-path.module';
     UsersModule,
     NotificationsModule,
     HealthModule,
+    AdminModule,
     TopicsModule,
     SessionsModule,
     ConfigKeysModule,
