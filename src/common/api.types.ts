@@ -455,6 +455,13 @@ export interface LearningStatsResponse {
   longestStreakDays: number;
 }
 
+/** Public marketing counters for bananaenglish.app. */
+export interface PublicMarketingStatsResponse {
+  learners: number;
+  speakingTurns: number;
+  minutesPracticed: number;
+}
+
 export interface AchievementRewardResponse {
   seeds: number;
   bananas: number;
