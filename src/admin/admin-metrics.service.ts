@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Currency, Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
+import { resolveDisplayedAvatarId } from '../users/avatar-catalog';
 import {
   dateKey,
   eachUtcDateKey,
@@ -13,6 +14,14 @@ import {
   type DateRange,
   type MetricsFilters,
 } from './admin-metrics.util';
+import {
+  classifyContentCourse,
+  CONTENT_COURSES,
+  contentItemTitle,
+  EMPTY_COURSE_COUNTS,
+  roundStars,
+  type ContentCourse,
+} from './content-course';
 
 type CacheEntry = { expiresAt: number; payload: unknown };
 
@@ -482,6 +491,7 @@ export class AdminMetricsService {
         acquisitionSource: true,
         selfReportedEnglishLevel: true,
         avatarId: true,
+        unlockedAvatarIds: true,
         onboardingCompleted: true,
         createdAt: true,
       },
@@ -506,7 +516,11 @@ export class AdminMetricsService {
       }
       const level = u.selfReportedEnglishLevel?.trim() || 'unknown';
       levels[level] = (levels[level] ?? 0) + 1;
-      const avatar = u.avatarId?.trim() || 'unset';
+      const avatar = resolveDisplayedAvatarId(
+        u.avatarId,
+        u.unlockedAvatarIds,
+        u.id,
+      );
       avatars[avatar] = (avatars[avatar] ?? 0) + 1;
       if (!(filters.excludeUnsetSource && src === 'unknown')) {
         const row = sourceLevel[src] ?? {};
@@ -644,7 +658,7 @@ export class AdminMetricsService {
 
   private async buildContent(range: DateRange, filters: MetricsFilters) {
     const userFilter = this.userWhere(filters);
-    const [lessonSessions, missionSessions, ratings, streakBuckets, activeLearners, sessionMix, dailySpeakActive, minigameStarts] =
+    const [lessonSessions, missionSessions, ratings, feedbackRows, streakBuckets, activeLearners, sessionMix, dailySpeakActive, minigameStarts] =
       await Promise.all([
         this.prisma.userSession.groupBy({
           by: ['lessonId'],
@@ -676,6 +690,20 @@ export class AdminMetricsService {
           },
           _avg: { stars: true },
           _count: { _all: true },
+        }),
+        this.prisma.lessonRating.findMany({
+          where: {
+            createdAt: { gte: range.from, lte: range.to },
+            user: userFilter,
+            feedback: { not: null },
+          },
+          orderBy: { createdAt: 'desc' },
+          select: {
+            lessonId: true,
+            stars: true,
+            feedback: true,
+            createdAt: true,
+          },
         }),
         this.streakDistribution(userFilter),
         this.prisma.user.count({
@@ -731,7 +759,7 @@ export class AdminMetricsService {
       ratings.map((r) => [
         r.lessonId,
         {
-          avgStars: Math.round((r._avg.stars ?? 0) * 100) / 100,
+          avgStars: roundStars(r._avg.stars ?? 0),
           count: r._count._all,
         },
       ]),
@@ -739,37 +767,79 @@ export class AdminMetricsService {
 
     const lessons = lessonSessions
       .filter((r) => r.lessonId)
-      .map((r) => ({
-        lessonId: r.lessonId!,
-        completions: r._count._all,
-        rating: ratingByLesson.get(r.lessonId!) ?? null,
-      }))
+      .map((r) => {
+        const lessonId = r.lessonId!;
+        return {
+          lessonId,
+          titleEn: contentItemTitle(lessonId),
+          course: classifyContentCourse(lessonId),
+          completions: r._count._all,
+          rating: ratingByLesson.get(lessonId) ?? null,
+        };
+      })
       .sort((a, b) => b.completions - a.completions);
 
     const lowRated = ratings
       .filter((r) => (r._avg.stars ?? 5) <= 2 && r._count._all >= 2)
       .map((r) => ({
         lessonId: r.lessonId,
-        avgStars: Math.round((r._avg.stars ?? 0) * 100) / 100,
+        titleEn: contentItemTitle(r.lessonId),
+        course: classifyContentCourse(r.lessonId),
+        avgStars: roundStars(r._avg.stars ?? 0),
         count: r._count._all,
       }))
       .sort((a, b) => a.avgStars - b.avgStars);
 
     const missions = missionSessions
       .filter((r) => r.simulationId)
-      .map((r) => ({
-        simulationId: r.simulationId!,
-        completions: r._count._all,
-      }))
+      .map((r) => {
+        const simulationId = r.simulationId!;
+        return {
+          simulationId,
+          titleEn: contentItemTitle(simulationId),
+          course: classifyContentCourse(simulationId),
+          completions: r._count._all,
+        };
+      })
       .sort((a, b) => b.completions - a.completions);
+
+    const writtenFeedback = feedbackRows
+      .map((row) => ({
+        lessonId: row.lessonId,
+        titleEn: contentItemTitle(row.lessonId),
+        course: classifyContentCourse(row.lessonId),
+        stars: row.stars,
+        feedback: row.feedback?.trim() ?? '',
+        createdAt: row.createdAt.toISOString(),
+      }))
+      .filter((row) => row.feedback.length > 0);
+
+    const feedbackSummary = this.buildFeedbackSummary(writtenFeedback);
+    const courses = Object.fromEntries(
+      CONTENT_COURSES.map((course) => [
+        course,
+        this.buildCourseContentSlice(
+          course,
+          lessons,
+          missions,
+          lowRated,
+          writtenFeedback,
+          ratings,
+        ),
+      ]),
+    ) as Record<ContentCourse, ReturnType<AdminMetricsService['buildCourseContentSlice']>>;
 
     return {
       range: { from: range.from.toISOString(), to: range.to.toISOString() },
       filters,
+      lessons,
       topLessons: lessons.slice(0, 15),
       bottomLessons: [...lessons].sort((a, b) => a.completions - b.completions).slice(0, 10),
       topMissions: missions.slice(0, 20),
       lowRatedLessons: lowRated.slice(0, 10),
+      writtenFeedback: writtenFeedback.slice(0, 80),
+      feedbackSummary,
+      courses,
       retention: {
         activeLearners7d: activeLearners,
         streakBuckets,
@@ -783,6 +853,79 @@ export class AdminMetricsService {
         ].sort((a, b) => b.count - a.count),
         dailySpeakTouchedUsers: dailySpeakActive,
       },
+    };
+  }
+
+  private buildFeedbackSummary(
+    rows: { course: ContentCourse; stars: number }[],
+  ) {
+    const byStars = [1, 2, 3, 4, 5].map((stars) => ({
+      stars,
+      count: rows.filter((row) => row.stars === stars).length,
+    }));
+    const byCourse: Record<ContentCourse, number> = { ...EMPTY_COURSE_COUNTS };
+    for (const row of rows) {
+      byCourse[row.course] += 1;
+    }
+    return {
+      total: rows.length,
+      byStars,
+      byCourse,
+    };
+  }
+
+  private buildCourseContentSlice(
+    course: ContentCourse,
+    lessons: {
+      lessonId: string;
+      titleEn: string;
+      course: ContentCourse;
+      completions: number;
+      rating: { avgStars: number; count: number } | null;
+    }[],
+    missions: {
+      simulationId: string;
+      titleEn: string;
+      course: ContentCourse;
+      completions: number;
+    }[],
+    lowRated: {
+      lessonId: string;
+      titleEn: string;
+      course: ContentCourse;
+      avgStars: number;
+      count: number;
+    }[],
+    feedback: { course: ContentCourse }[],
+    ratings: {
+      lessonId: string;
+      _avg: { stars: number | null };
+      _count: { _all: number };
+    }[],
+  ) {
+    const courseLessons = lessons.filter((row) => row.course === course);
+    const courseRatings = ratings.filter(
+      (row) => classifyContentCourse(row.lessonId) === course,
+    );
+    const ratingCount = courseRatings.reduce((sum, row) => sum + row._count._all, 0);
+    const starSum = courseRatings.reduce(
+      (sum, row) => sum + (row._avg.stars ?? 0) * row._count._all,
+      0,
+    );
+    return {
+      completions: courseLessons.reduce((sum, row) => sum + row.completions, 0),
+      ratings: ratingCount,
+      avgStars: ratingCount > 0 ? roundStars(starSum / ratingCount) : null,
+      withFeedback: feedback.filter((row) => row.course === course).length,
+      topLessons: courseLessons.slice(0, 15),
+      bottomLessons: [...courseLessons]
+        .sort((a, b) => a.completions - b.completions)
+        .slice(0, 10),
+      topMissions: missions
+        .filter((row) => row.course === course)
+        .slice(0, 20),
+      lowRatedLessons: lowRated.filter((row) => row.course === course).slice(0, 10),
+      writtenFeedback: feedback.filter((row) => row.course === course).slice(0, 80),
     };
   }
 

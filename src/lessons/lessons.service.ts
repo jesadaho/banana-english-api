@@ -11,10 +11,7 @@ import {
   LESSON_REWARD_SEEDS,
   LESSON_REWARD_XP,
 } from '../economy/economy.constants';
-import {
-  AVATAR_SEED_COSTS,
-  isKnownAvatarId,
-} from '../users/avatar-catalog';
+import { resolveDisplayedAvatarId } from '../users/avatar-catalog';
 
 export type LessonProgressStatus =
   | 'locked'
@@ -281,31 +278,8 @@ export class LessonsService {
     return {
       total,
       avatarIds: rows.map((row) =>
-        this.resolveLearnerAvatarId(
-          row.avatarId,
-          row.unlockedAvatarIds,
-          row.id,
-        ),
+        resolveDisplayedAvatarId(row.avatarId, row.unlockedAvatarIds, row.id),
       ),
     };
-  }
-
-  private resolveLearnerAvatarId(
-    avatarId: string | null | undefined,
-    unlockedAvatarIds: string[],
-    userId: string,
-  ): string {
-    const trimmed = avatarId?.trim();
-    if (trimmed && isKnownAvatarId(trimmed)) return trimmed;
-    for (const unlocked of unlockedAvatarIds) {
-      const id = unlocked.trim();
-      if (id && isKnownAvatarId(id)) return id;
-    }
-    const catalog = Object.keys(AVATAR_SEED_COSTS);
-    let hash = 0;
-    for (let i = 0; i < userId.length; i += 1) {
-      hash = (hash + userId.charCodeAt(i) * (i + 1)) % catalog.length;
-    }
-    return catalog[hash] ?? 'bogy';
   }
 }
