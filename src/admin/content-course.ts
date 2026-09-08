@@ -24,7 +24,6 @@ export const BASIC_LESSON_IDS = [
 const BASIC_LESSON_ID_SET = new Set<string>(BASIC_LESSON_IDS);
 
 export const CONTENT_COURSES = [
-  'basic',
   'foundation',
   'everyday',
   'pronunciation',
@@ -34,7 +33,6 @@ export const CONTENT_COURSES = [
 export type ContentCourse = (typeof CONTENT_COURSES)[number];
 
 export const EMPTY_COURSE_COUNTS: Record<ContentCourse, number> = {
-  basic: 0,
   foundation: 0,
   everyday: 0,
   pronunciation: 0,
@@ -58,15 +56,19 @@ function foundationTitles(): Map<string, string> {
 
 /**
  * Mutually exclusive course bucket for admin Content.
- * Shared Foundation Path IDs that originated in Basics stay in Basic.
+ * Foundation = the live Foundations path (original Basics + fnd_v2_*).
+ * Everyday = English Adventure. Pronunciation stays separate.
  */
 export function classifyContentCourse(id: string): ContentCourse {
   const trimmed = id.trim();
   if (!trimmed) return 'other';
-  if (trimmed.startsWith('fnd_v2_') || trimmed.startsWith('foundation_')) {
+  if (
+    trimmed.startsWith('fnd_v2_') ||
+    trimmed.startsWith('foundation_') ||
+    BASIC_LESSON_ID_SET.has(trimmed)
+  ) {
     return 'foundation';
   }
-  if (BASIC_LESSON_ID_SET.has(trimmed)) return 'basic';
   if (trimmed.startsWith('pron_')) return 'pronunciation';
   if (trimmed.startsWith('ee_')) return 'everyday';
   return 'other';
