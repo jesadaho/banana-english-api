@@ -27,25 +27,36 @@ export class StatsService {
     }
 
     const completed = { completedAt: { not: null } } as const;
-    const [learners, turnSum, durationSum, legacySessions] = await Promise.all([
-      this.prisma.user.count({ where: { onboardingCompleted: true } }),
-      this.prisma.userSession.aggregate({
-        where: { ...completed, learnerTurnCount: { not: null } },
-        _sum: { learnerTurnCount: true },
-      }),
-      this.prisma.userSession.aggregate({
-        where: completed,
-        _sum: { durationSeconds: true },
-      }),
-      this.prisma.userSession.count({
-        where: { ...completed, learnerTurnCount: null },
-      }),
-    ]);
+    const [learners, turnSum, durationSum, legacySessions, ratingAvg] =
+      await Promise.all([
+        this.prisma.user.count({ where: { onboardingCompleted: true } }),
+        this.prisma.userSession.aggregate({
+          where: { ...completed, learnerTurnCount: { not: null } },
+          _sum: { learnerTurnCount: true },
+        }),
+        this.prisma.userSession.aggregate({
+          where: completed,
+          _sum: { durationSeconds: true },
+        }),
+        this.prisma.userSession.count({
+          where: { ...completed, learnerTurnCount: null },
+        }),
+        this.prisma.lessonRating.aggregate({
+          _avg: { stars: true },
+        }),
+      ]);
 
+    const durationSeconds = durationSum._sum.durationSeconds ?? 0;
+    const avgStarsRaw = ratingAvg._avg.stars;
     const payload: PublicMarketingStatsResponse = {
       learners,
       speakingTurns: (turnSum._sum.learnerTurnCount ?? 0) + legacySessions,
-      minutesPracticed: Math.round((durationSum._sum.durationSeconds ?? 0) / 60),
+      minutesPracticed: Math.round(durationSeconds / 60),
+      secondsPracticed: durationSeconds,
+      avgStars:
+        avgStarsRaw == null
+          ? null
+          : Math.round(avgStarsRaw * 10) / 10,
     };
     this.publicCache = { expiresAt: Date.now() + this.publicTtlMs, payload };
     return payload;

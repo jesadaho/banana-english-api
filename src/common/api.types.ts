@@ -460,6 +460,8 @@ export interface PublicMarketingStatsResponse {
   learners: number;
   speakingTurns: number;
   minutesPracticed: number;
+  secondsPracticed: number;
+  avgStars: number | null;
 }
 
 export interface AchievementRewardResponse {

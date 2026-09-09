@@ -20,6 +20,12 @@ describe('classifyContentCourse', () => {
     assert.equal(classifyContentCourse('pron_th_1'), 'pronunciation');
   });
 
+  it('puts hub minigames in minigame', () => {
+    assert.equal(classifyContentCourse('game_say_it'), 'minigame');
+    assert.equal(classifyContentCourse('game_explain_it'), 'minigame');
+    assert.equal(classifyContentCourse('game_emoji_speak_endless'), 'minigame');
+  });
+
   it('puts parked leftover lessons in other', () => {
     assert.equal(classifyContentCourse('weather'), 'other');
     assert.equal(classifyContentCourse('shopping_basics'), 'other');

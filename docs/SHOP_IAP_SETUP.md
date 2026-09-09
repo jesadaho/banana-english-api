@@ -46,7 +46,7 @@ Set `REVENUECAT_WEBHOOK_AUTH` in Railway variables.
 
 | Product ID | Bananas |
 |------------|---------|
-| `banana_tickets_28` | 40 |
-| `banana_tickets_70` | 100 |
+| `banana_tickets_28` | 50 |
+| `banana_tickets_70` | 120 |
 
 Defined in `src/purchases/product-catalog.ts`. The app reads the same amounts from `GET /purchases/catalog`.

@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Currency, Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
-import { resolveDisplayedAvatarId } from '../users/avatar-catalog';
+import { isKnownAvatarId } from '../users/avatar-catalog';
 import {
   dateKey,
   eachUtcDateKey,
@@ -491,7 +491,6 @@ export class AdminMetricsService {
         acquisitionSource: true,
         selfReportedEnglishLevel: true,
         avatarId: true,
-        unlockedAvatarIds: true,
         onboardingCompleted: true,
         createdAt: true,
       },
@@ -516,11 +515,8 @@ export class AdminMetricsService {
       }
       const level = u.selfReportedEnglishLevel?.trim() || 'unknown';
       levels[level] = (levels[level] ?? 0) + 1;
-      const avatar = resolveDisplayedAvatarId(
-        u.avatarId,
-        u.unlockedAvatarIds,
-        u.id,
-      );
+      const trimmed = u.avatarId?.trim();
+      const avatar = trimmed && isKnownAvatarId(trimmed) ? trimmed : 'unset';
       avatars[avatar] = (avatars[avatar] ?? 0) + 1;
       if (!(filters.excludeUnsetSource && src === 'unknown')) {
         const row = sourceLevel[src] ?? {};
@@ -765,19 +761,35 @@ export class AdminMetricsService {
       ]),
     );
 
-    const lessons = lessonSessions
-      .filter((r) => r.lessonId)
-      .map((r) => {
-        const lessonId = r.lessonId!;
-        return {
-          lessonId,
-          titleEn: contentItemTitle(lessonId),
-          course: classifyContentCourse(lessonId),
-          completions: r._count._all,
-          rating: ratingByLesson.get(lessonId) ?? null,
-        };
-      })
-      .sort((a, b) => b.completions - a.completions);
+    const minigamePlays = this.minigamePlayCounts(minigameStarts);
+    const minigameIds = new Set<string>([
+      ...minigamePlays.keys(),
+      ...ratings
+        .map((r) => r.lessonId)
+        .filter((id) => classifyContentCourse(id) === 'minigame'),
+    ]);
+
+    const lessons = [
+      ...lessonSessions
+        .filter((r) => r.lessonId)
+        .map((r) => {
+          const lessonId = r.lessonId!;
+          return {
+            lessonId,
+            titleEn: contentItemTitle(lessonId),
+            course: classifyContentCourse(lessonId),
+            completions: r._count._all,
+            rating: ratingByLesson.get(lessonId) ?? null,
+          };
+        }),
+      ...[...minigameIds].map((lessonId) => ({
+        lessonId,
+        titleEn: contentItemTitle(lessonId),
+        course: 'minigame' as const,
+        completions: minigamePlays.get(lessonId) ?? 0,
+        rating: ratingByLesson.get(lessonId) ?? null,
+      })),
+    ].sort((a, b) => b.completions - a.completions);
 
     const lowRated = ratings
       .filter((r) => (r._avg.stars ?? 5) <= 2 && r._count._all >= 2)
@@ -927,6 +939,25 @@ export class AdminMetricsService {
       lowRatedLessons: lowRated.filter((row) => row.course === course).slice(0, 10),
       writtenFeedback: feedback.filter((row) => row.course === course).slice(0, 80),
     };
+  }
+
+  /** Plays for hub minigames that store ratings as LessonRating.game_*. */
+  private minigamePlayCounts(
+    rows: { source: string; _count: { _all: number } }[],
+  ): Map<string, number> {
+    const raw: Record<string, number> = {};
+    for (const row of rows) {
+      raw[row.source] = (raw[row.source] ?? 0) + row._count._all;
+    }
+    const plays = new Map<string, number>();
+    if (raw.say_it_start) plays.set('game_say_it', raw.say_it_start);
+    if (raw.explain_it_start) plays.set('game_explain_it', raw.explain_it_start);
+    const emoji =
+      (raw.emoji_speak_play ?? 0) > 0
+        ? raw.emoji_speak_play
+        : (raw.emoji_speak_start ?? 0);
+    if (emoji) plays.set('game_emoji_speak_endless', emoji);
+    return plays;
   }
 
   /** Collapse economy sources into dashboard session-type rows. */
