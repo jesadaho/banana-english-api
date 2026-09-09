@@ -1,6 +1,6 @@
 export const BANANA_PACKS = {
-  banana_tickets_28: { bananas: 50, fallbackPrice: '฿99', bestValue: false },
-  banana_tickets_70: { bananas: 120, fallbackPrice: '฿199', bestValue: true },
+  banana_tickets_28: { bananas: 60, fallbackPrice: '฿99', bestValue: false },
+  banana_tickets_70: { bananas: 150, fallbackPrice: '฿199', bestValue: true },
 } as const;
 
 export type BananaPackProductId = keyof typeof BANANA_PACKS;
