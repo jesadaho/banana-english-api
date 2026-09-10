@@ -87,6 +87,18 @@ export class AdminMetricsService {
     );
   }
 
+  /** Top 100 by lifetime XP. Date range is accepted for cache/compat but ignored. */
+  async users(
+    fromRaw?: string,
+    toRaw?: string,
+    filters: MetricsFilters = EMPTY_FILTERS,
+  ) {
+    this.safeRange(fromRaw, toRaw);
+    return this.cached(`users:${filtersCacheKey(filters)}`, () =>
+      this.buildUsers(filters),
+    );
+  }
+
   private safeRange(fromRaw?: string, toRaw?: string): DateRange {
     try {
       return parseDateRange(fromRaw, toRaw, 30);
@@ -1138,6 +1150,107 @@ export class AdminMetricsService {
           count,
         })),
       },
+    };
+  }
+
+  private async buildUsers(filters: MetricsFilters) {
+    const users = await this.prisma.user.findMany({
+      where: this.userWhere(filters),
+      orderBy: [{ xpBalance: 'desc' }, { createdAt: 'asc' }],
+      take: 100,
+      select: {
+        id: true,
+        displayName: true,
+        email: true,
+        anonymousId: true,
+        xpBalance: true,
+        bananaSeedBalance: true,
+        longestStreakDays: true,
+        streakDays: true,
+        lastAppOpenDate: true,
+        acquisitionSource: true,
+      },
+    });
+
+    const ids = users.map((u) => u.id);
+    const emptyStats = {
+      durationSeconds: 0,
+      learnerTurnCount: 0,
+      legacyTurnSessions: 0,
+      perfectScoreSessions: 0,
+    };
+    const statsByUser = new Map<string, typeof emptyStats>();
+    for (const id of ids) {
+      statsByUser.set(id, { ...emptyStats });
+    }
+
+    if (ids.length) {
+      const [sums, legacyTurns, perfects] = await Promise.all([
+        this.prisma.userSession.groupBy({
+          by: ['userId'],
+          where: { userId: { in: ids }, completedAt: { not: null } },
+          _sum: { durationSeconds: true, learnerTurnCount: true },
+        }),
+        this.prisma.userSession.groupBy({
+          by: ['userId'],
+          where: {
+            userId: { in: ids },
+            completedAt: { not: null },
+            learnerTurnCount: null,
+          },
+          _count: { _all: true },
+        }),
+        this.prisma.userSession.groupBy({
+          by: ['userId'],
+          where: {
+            userId: { in: ids },
+            completedAt: { not: null },
+            sessionType: 'simulation',
+            overallScore: { gte: 100 },
+          },
+          _count: { _all: true },
+        }),
+      ]);
+
+      for (const row of sums) {
+        const stats = statsByUser.get(row.userId);
+        if (!stats) continue;
+        stats.durationSeconds = row._sum.durationSeconds ?? 0;
+        stats.learnerTurnCount = row._sum.learnerTurnCount ?? 0;
+      }
+      for (const row of legacyTurns) {
+        const stats = statsByUser.get(row.userId);
+        if (!stats) continue;
+        stats.legacyTurnSessions = row._count._all;
+      }
+      for (const row of perfects) {
+        const stats = statsByUser.get(row.userId);
+        if (!stats) continue;
+        stats.perfectScoreSessions = row._count._all;
+      }
+    }
+
+    return {
+      note: 'Ranked by lifetime XP. Date range is ignored. Filters still apply.',
+      users: users.map((u, i) => {
+        const stats = statsByUser.get(u.id) ?? emptyStats;
+        const durationSeconds = stats.durationSeconds;
+        return {
+          rank: i + 1,
+          userId: u.id,
+          displayName: u.displayName,
+          email: u.email,
+          anonymousId: u.anonymousId,
+          xp: u.xpBalance,
+          gems: u.bananaSeedBalance,
+          perfectStars: stats.perfectScoreSessions,
+          hours: Math.round((durationSeconds / 3600) * 10) / 10,
+          spoken: stats.learnerTurnCount + stats.legacyTurnSessions,
+          longestStreakDays: Math.max(u.longestStreakDays, u.streakDays),
+          lastAppOpenDate: u.lastAppOpenDate?.toISOString() ?? null,
+          acquisitionSource: u.acquisitionSource,
+        };
+      }),
     };
   }
 }

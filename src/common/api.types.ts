@@ -558,3 +558,15 @@ export interface UserProfileResponse {
     missionCost: number;
   };
 }
+
+/** POST /lessons/ratings — comment bonus is uncapped. */
+export interface LessonRatingSubmitResult {
+  id: string;
+  lessonId: string;
+  stars: number;
+  sessionId: string | null;
+  feedback: string | null;
+  createdAt: string;
+  bananasGranted: number;
+  bananaBalance: number;
+}

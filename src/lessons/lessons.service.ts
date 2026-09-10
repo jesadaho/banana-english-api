@@ -1,5 +1,6 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { EconomyService } from '../economy/economy.service';
 import {
   LESSON_BANANA_COST,
   LESSON_PROGRESSION_ORDER,
@@ -43,7 +44,10 @@ export interface LessonProgressView {
 
 @Injectable()
 export class LessonsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly economy: EconomyService,
+  ) {}
 
   async getCompletedLessonIds(userId: string): Promise<Set<string>> {
     const rows = await this.prisma.userSession.findMany({
@@ -195,6 +199,8 @@ export class LessonsService {
     sessionId: string | null;
     feedback: string | null;
     createdAt: string;
+    bananasGranted: number;
+    bananaBalance: number;
   }> {
     const lessonId = params.lessonId.trim();
     if (!lessonId) {
@@ -231,6 +237,24 @@ export class LessonsService {
       },
     });
 
+    let bananasGranted = 0;
+    let bananaBalance = 0;
+    if (feedback) {
+      bananasGranted = Math.random() < 0.5 ? 1 : 2;
+      const user = await this.economy.creditRatingCommentBonus(
+        params.userId,
+        bananasGranted,
+        row.id,
+      );
+      bananaBalance = user.bananaBalance;
+    } else {
+      const user = await this.prisma.user.findUnique({
+        where: { id: params.userId },
+        select: { bananaBalance: true },
+      });
+      bananaBalance = user?.bananaBalance ?? 0;
+    }
+
     return {
       id: row.id,
       lessonId: row.lessonId,
@@ -238,6 +262,8 @@ export class LessonsService {
       sessionId: row.sessionId,
       feedback: row.feedback,
       createdAt: row.createdAt.toISOString(),
+      bananasGranted,
+      bananaBalance,
     };
   }
 

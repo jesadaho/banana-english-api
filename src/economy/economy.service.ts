@@ -223,6 +223,32 @@ export class EconomyService {
     });
   }
 
+  /** Comment bonus on a rating — uncapped (not [cappedBananaCredit]). */
+  async creditRatingCommentBonus(
+    userId: string,
+    amount: number,
+    referenceId: string,
+  ): Promise<User> {
+    if (!Number.isFinite(amount) || amount <= 0) {
+      throw new BadRequestException('Invalid rating bonus amount');
+    }
+    const rounded = Math.floor(amount);
+    return this.prisma.$transaction(async (tx) => {
+      await this.recordTransaction(tx, {
+        userId,
+        currency: Currency.BANANA,
+        amount: rounded,
+        source: 'rating_comment_bonus',
+        referenceId,
+      });
+
+      return tx.user.update({
+        where: { id: userId },
+        data: { bananaBalance: { increment: rounded } },
+      });
+    });
+  }
+
   async creditDebugBananas(userId: string, amount?: number): Promise<User> {
     const requested = amount ?? this.debugBananaRefill();
     return this.prisma.$transaction(async (tx) => {

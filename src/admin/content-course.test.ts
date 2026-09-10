@@ -23,7 +23,9 @@ describe('classifyContentCourse', () => {
   it('puts hub minigames in minigame', () => {
     assert.equal(classifyContentCourse('game_say_it'), 'minigame');
     assert.equal(classifyContentCourse('game_explain_it'), 'minigame');
-    assert.equal(classifyContentCourse('game_emoji_speak_endless'), 'minigame');
+    assert.equal(classifyContentCourse('game_emoji_speak'), 'minigame');
+    assert.equal(classifyContentCourse('game_speak_challenge'), 'minigame');
+    assert.equal(classifyContentCourse('game_word_choice'), 'minigame');
   });
 
   it('puts parked leftover lessons in other', () => {

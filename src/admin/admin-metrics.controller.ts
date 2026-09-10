@@ -91,4 +91,25 @@ export class AdminMetricsController {
       }),
     );
   }
+
+  @Get('users')
+  users(
+    @Query('from') from?: string,
+    @Query('to') to?: string,
+    @Query('requireOnboarding') requireOnboarding?: string,
+    @Query('requireSignedIn') requireSignedIn?: string,
+    @Query('requireAppOpen') requireAppOpen?: string,
+    @Query('excludeUnsetSource') excludeUnsetSource?: string,
+  ) {
+    return this.metrics.users(
+      from,
+      to,
+      parseMetricsFilters({
+        requireOnboarding,
+        requireSignedIn,
+        requireAppOpen,
+        excludeUnsetSource,
+      }),
+    );
+  }
 }

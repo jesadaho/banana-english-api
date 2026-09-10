@@ -44,7 +44,12 @@ export const EMPTY_COURSE_COUNTS: Record<ContentCourse, number> = {
 const MINIGAME_TITLES: Record<string, string> = {
   game_say_it: 'Say It',
   game_explain_it: 'Explain It',
+  game_emoji_speak: 'Emoji Speak',
   game_emoji_speak_endless: 'Emoji Speak Endless',
+  game_speak_challenge: 'Speak Challenge',
+  game_word_choice: 'Word Choice',
+  game_story_builder: 'Story Builder',
+  game_whats_happen: "What's Happen",
 };
 
 let foundationTitleById: Map<string, string> | null = null;
