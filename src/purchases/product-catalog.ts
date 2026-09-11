@@ -1,6 +1,6 @@
 export const BANANA_PACKS = {
   banana_tickets_28: {
-    bananas: 60,
+    bananas: 80,
     fallbackPrice: '฿79',
     bestValue: true,
     listed: true,
