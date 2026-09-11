@@ -10,7 +10,7 @@ import {
 
 describe('admin-metrics.util', () => {
   it('estimates pack prices', () => {
-    expect(estimatedThbForProduct('banana_tickets_28')).toBe(99);
+    expect(estimatedThbForProduct('banana_tickets_28')).toBe(79);
     expect(estimatedThbForProduct('banana_tickets_70')).toBe(199);
     expect(estimatedThbForProduct('unknown')).toBe(0);
   });

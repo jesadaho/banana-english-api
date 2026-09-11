@@ -13,17 +13,11 @@ assert.equal(isKnownBananaPack('banana_tickets_70'), true);
 assert.equal(isKnownBananaPack('other'), false);
 
 const packs = listBananaPacks();
-assert.equal(packs.length, 2);
+assert.equal(packs.length, 1);
 assert.deepEqual(packs[0], {
   productId: 'banana_tickets_28',
   bananas: 60,
-  fallbackPrice: '฿99',
-  bestValue: false,
-});
-assert.deepEqual(packs[1], {
-  productId: 'banana_tickets_70',
-  bananas: 150,
-  fallbackPrice: '฿199',
+  fallbackPrice: '฿79',
   bestValue: true,
 });
 

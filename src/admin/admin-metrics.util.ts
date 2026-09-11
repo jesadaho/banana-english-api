@@ -1,6 +1,6 @@
 /** Estimated THB list prices for IAP packs (tax-inclusive display approx). */
 export const BANANA_PACK_THB: Record<string, number> = {
-  banana_tickets_28: 99,
+  banana_tickets_28: 79,
   banana_tickets_70: 199,
 };
 
