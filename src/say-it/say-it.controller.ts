@@ -1,4 +1,5 @@
 import { BadRequestException, Controller, Get, Param, Post, Query, Req, UseGuards } from '@nestjs/common';
+import { randomUUID } from 'crypto';
 import { User } from '@prisma/client';
 import { EconomyService } from '../economy/economy.service';
 import { isFoundationPathRewardGameId } from '../learn-path/foundation-v2-path.data';
@@ -48,12 +49,28 @@ export class SayItController {
       throw new BadRequestException('This topic is locked');
     }
     if (!isFoundationPathSayItTopic(topicId)) {
+      const spendRef = randomUUID();
       await this.economy.spendBananas(
         req.user.id,
         SAY_IT_BANANA_COST,
-        topicId,
+        spendRef,
         'say_it_start',
       );
+      try {
+        this.sayIt.dealForTopic(
+          topicId,
+          SAY_IT_DEAL_COUNT,
+          req.user.displayName,
+        );
+      } catch (error) {
+        await this.economy.refundBananas(
+          req.user.id,
+          SAY_IT_BANANA_COST,
+          spendRef,
+          'say_it_start_refund',
+        );
+        throw error;
+      }
     }
     await this.recentLearners.markActivity(req.user.id, 'minigame', topicId);
     return {

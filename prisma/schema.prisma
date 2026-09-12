@@ -21,6 +21,8 @@ model User {
   onboardingCompleted     Boolean   @default(false)
 
   bananaBalance           Int       @default(0)
+  /** Daily free pool (capped). Spends this before accumulated bananas. */
+  freeBananaBalance       Int       @default(0)
   xpBalance               Int       @default(0)
   bananaSeedBalance       Int       @default(0)
   unlockedAvatarIds       String[]  @default([])

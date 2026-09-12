@@ -23,6 +23,10 @@ export const LESSON_BANANA_COST = 1;
 export const LESSON_REWARD_XP = 20;
 export const LESSON_REWARD_SEEDS = 10;
 
+/** Review of an already-completed lesson — once per local day. */
+export const LESSON_REVIEW_REWARD_XP = 5;
+export const LESSON_REVIEW_REWARD_SEEDS = 2;
+
 /** Daily Speak (Speak Today) — once per local day. */
 export const DAILY_SPEAK_REWARD_XP = 10;
 export const DAILY_SPEAK_REWARD_SEEDS = 1;
@@ -47,10 +51,13 @@ export const ONBOARDING_BANANA_BONUS = 2;
  */
 export const DAILY_BANANA_DROP = 5;
 export const DEBUG_BANANA_REFILL = 2;
-/** Soft cap on banana balance for free-earn paths (onboarding, daily drop). IAP bypasses this. */
+/** Cap on the daily free banana pool (onboarding, daily drop, debug refill). IAP / bonuses are uncapped saved bananas. */
 export const MAX_BANANA_BALANCE = 5;
 /** Typical Mission start cost shown in the Banana Ticket sheet. */
 export const MISSION_BANANA_COST = 1;
+
+/** Lesson rating comment bonus — fixed 1 banana (not random). */
+export const RATING_COMMENT_BONUS_BANANAS = 1;
 
 /** Env keys — defaults above apply when unset / invalid. */
 export const ENV_ONBOARDING_BANANA_BONUS = 'ONBOARDING_BANANA_BONUS';

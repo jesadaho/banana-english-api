@@ -40,7 +40,9 @@ flutter run \
 npx prisma migrate deploy
 ```
 
-Set `REVENUECAT_WEBHOOK_AUTH` in Railway variables.
+Set `REVENUECAT_WEBHOOK_AUTH` and `REVENUECAT_SECRET_API_KEY` in Railway variables.
+
+The secret API key is used to verify App Store / Play transactions with RevenueCat **before** bananas are credited on `POST /purchases/claim`. The webhook still grants as a backup (already authenticated) and shares the same idempotent credit path.
 
 ## Product catalog (server)
 

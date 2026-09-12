@@ -60,6 +60,8 @@ export interface UserProfileResponse {
   displayName: string;
   onboardingCompleted: boolean;
   bananaBalance: number;
+  /** Daily free pool remaining (capped). Spends before accumulated bananas. */
+  freeBananaBalance: number;
   xpBalance: number;
   bananaSeedBalance: number;
   streakDays: number;
@@ -513,6 +515,7 @@ export class UsersService {
       displayName: user.displayName ?? 'เพื่อน',
       onboardingCompleted: user.onboardingCompleted,
       bananaBalance: user.bananaBalance,
+      freeBananaBalance: user.freeBananaBalance,
       xpBalance: user.xpBalance,
       bananaSeedBalance: user.bananaSeedBalance,
       streakDays: user.streakDays,

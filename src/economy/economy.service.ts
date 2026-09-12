@@ -13,6 +13,8 @@ import {
   ENV_ONBOARDING_BANANA_BONUS,
   LESSON_REWARD_SEEDS,
   LESSON_REWARD_XP,
+  LESSON_REVIEW_REWARD_SEEDS,
+  LESSON_REVIEW_REWARD_XP,
   MAX_BANANA_BALANCE,
   MISSION_BANANA_COST,
   ONBOARDING_BANANA_BONUS,
@@ -44,6 +46,7 @@ export interface SessionRewardResult {
   ratingLabel: string;
   streakDays: number;
   previousStreakDays: number;
+  streakIncreased?: boolean;
   streakBonus?: StreakBonus;
   balances: UserBalances;
   isDailyMission: boolean;
@@ -117,7 +120,7 @@ export class EconomyService {
       }
 
       const credit = cappedBananaCredit(
-        user.bananaBalance,
+        user.freeBananaBalance,
         bonus,
         this.maxBananaBalance(),
       );
@@ -134,7 +137,12 @@ export class EconomyService {
         where: { id: userId },
         data: {
           onboardingCompleted: true,
-          ...(credit > 0 ? { bananaBalance: { increment: credit } } : {}),
+          ...(credit > 0
+            ? {
+                bananaBalance: { increment: credit },
+                freeBananaBalance: { increment: credit },
+              }
+            : {}),
         },
       });
     });
@@ -173,7 +181,7 @@ export class EconomyService {
       }
 
       const credit = cappedBananaCredit(
-        fresh.bananaBalance,
+        fresh.freeBananaBalance,
         drop,
         this.maxBananaBalance(),
       );
@@ -190,11 +198,57 @@ export class EconomyService {
       return tx.user.update({
         where: { id: user.id },
         data: {
-          ...(credit > 0 ? { bananaBalance: { increment: credit } } : {}),
+          ...(credit > 0
+            ? {
+                bananaBalance: { increment: credit },
+                freeBananaBalance: { increment: credit },
+              }
+            : {}),
           lastDailyBananaDate: parseDateKey(local.dateKey),
         },
       });
     });
+  }
+
+  /**
+   * Credit IAP bananas if this store transaction has not been ledgered yet.
+   * Call inside an existing Prisma transaction (with PurchaseRecord writes).
+   */
+  async creditIapIfNeeded(
+    tx: Prisma.TransactionClient,
+    userId: string,
+    amount: number,
+    storeTransactionId: string,
+  ): Promise<{ user: User; credited: boolean }> {
+    if (!Number.isFinite(amount) || amount <= 0) {
+      throw new BadRequestException('Invalid purchase amount');
+    }
+    const rounded = Math.floor(amount);
+    const existing = await tx.economyTransaction.findFirst({
+      where: {
+        userId,
+        source: 'iap_purchase',
+        referenceId: storeTransactionId,
+        currency: Currency.BANANA,
+      },
+    });
+    if (existing) {
+      const user = await tx.user.findUniqueOrThrow({ where: { id: userId } });
+      return { user, credited: false };
+    }
+
+    await this.recordTransaction(tx, {
+      userId,
+      currency: Currency.BANANA,
+      amount: rounded,
+      source: 'iap_purchase',
+      referenceId: storeTransactionId,
+    });
+    const user = await tx.user.update({
+      where: { id: userId },
+      data: { bananaBalance: { increment: rounded } },
+    });
+    return { user, credited: true };
   }
 
   /** IAP credits bypass the free-earn soft cap. */
@@ -203,23 +257,14 @@ export class EconomyService {
     amount: number,
     referenceId: string,
   ): Promise<User> {
-    if (!Number.isFinite(amount) || amount <= 0) {
-      throw new BadRequestException('Invalid purchase amount');
-    }
-    const rounded = Math.floor(amount);
     return this.prisma.$transaction(async (tx) => {
-      await this.recordTransaction(tx, {
+      const { user } = await this.creditIapIfNeeded(
+        tx,
         userId,
-        currency: Currency.BANANA,
-        amount: rounded,
-        source: 'iap_purchase',
+        amount,
         referenceId,
-      });
-
-      return tx.user.update({
-        where: { id: userId },
-        data: { bananaBalance: { increment: rounded } },
-      });
+      );
+      return user;
     });
   }
 
@@ -254,7 +299,7 @@ export class EconomyService {
     return this.prisma.$transaction(async (tx) => {
       const user = await tx.user.findUniqueOrThrow({ where: { id: userId } });
       const credit = cappedBananaCredit(
-        user.bananaBalance,
+        user.freeBananaBalance,
         requested,
         this.maxBananaBalance(),
       );
@@ -272,7 +317,10 @@ export class EconomyService {
 
       return tx.user.update({
         where: { id: userId },
-        data: { bananaBalance: { increment: credit } },
+        data: {
+          bananaBalance: { increment: credit },
+          freeBananaBalance: { increment: credit },
+        },
       });
     });
   }
@@ -289,6 +337,8 @@ export class EconomyService {
         throw new BadRequestException('Insufficient banana balance');
       }
 
+      const fromFree = Math.min(Math.max(0, user.freeBananaBalance), amount);
+
       await this.recordTransaction(tx, {
         userId,
         currency: Currency.BANANA,
@@ -296,10 +346,89 @@ export class EconomyService {
         source,
         referenceId,
       });
+      if (fromFree > 0) {
+        await this.recordTransaction(tx, {
+          userId,
+          currency: Currency.BANANA,
+          amount: fromFree,
+          source: 'banana_free_leg',
+          referenceId,
+        });
+      }
 
       return tx.user.update({
         where: { id: userId },
-        data: { bananaBalance: { decrement: amount } },
+        data: {
+          bananaBalance: { decrement: amount },
+          ...(fromFree > 0
+            ? { freeBananaBalance: { decrement: fromFree } }
+            : {}),
+        },
+      });
+    });
+  }
+
+  /**
+   * Refund a prior banana spend if the session never became playable.
+   * Idempotent on (userId, source, referenceId).
+   */
+  async refundBananas(
+    userId: string,
+    amount: number,
+    referenceId: string,
+    source:
+      | 'lesson_start_refund'
+      | 'mission_start_refund'
+      | 'free_talk_start_refund'
+      | 'say_it_start_refund'
+      | 'explain_it_start_refund'
+      | 'emoji_speak_start_refund',
+  ): Promise<User> {
+    if (!Number.isFinite(amount) || amount <= 0) {
+      return this.prisma.user.findUniqueOrThrow({ where: { id: userId } });
+    }
+    return this.prisma.$transaction(async (tx) => {
+      const existing = await tx.economyTransaction.findFirst({
+        where: {
+          userId,
+          source,
+          referenceId,
+          currency: Currency.BANANA,
+        },
+      });
+      if (existing) {
+        return tx.user.findUniqueOrThrow({ where: { id: userId } });
+      }
+
+      const freeLeg = await tx.economyTransaction.findFirst({
+        where: {
+          userId,
+          source: 'banana_free_leg',
+          referenceId,
+          currency: Currency.BANANA,
+        },
+      });
+      const fromFree = Math.min(
+        amount,
+        Math.max(0, freeLeg?.amount ?? 0),
+      );
+
+      await this.recordTransaction(tx, {
+        userId,
+        currency: Currency.BANANA,
+        amount,
+        source,
+        referenceId,
+      });
+
+      return tx.user.update({
+        where: { id: userId },
+        data: {
+          bananaBalance: { increment: amount },
+          ...(fromFree > 0
+            ? { freeBananaBalance: { increment: fromFree } }
+            : {}),
+        },
       });
     });
   }
@@ -368,61 +497,63 @@ export class EconomyService {
       });
 
       const user = await tx.user.findUniqueOrThrow({ where: { id: userId } });
-      const previousStreakDays = user.streakDays;
-
-      if (priorCompletion) {
-        await tx.userSession.update({
-          where: { id: sessionId },
-          data: {
-            rewardsApplied: true,
-            completedAt: new Date(),
-            xpEarned: 0,
-            seedsEarned: 0,
-            scoreLabel: 'Lesson Complete',
-          },
-        });
-
-        return {
-          xpEarned: 0,
-          seedsEarned: 0,
-          ratingLabel: 'Lesson Complete',
-          streakDays: user.streakDays,
-          previousStreakDays,
-          balances: this.toBalances(user),
-          isDailyMission: false,
-        };
-      }
-
-      const xpEarned = LESSON_REWARD_XP;
-      const seedsEarned = LESSON_REWARD_SEEDS;
       const local = getUserLocalTime(user.timezone);
       const todayKey = local.dateKey;
-      const streakUpdate = this.computeStreakUpdate(user, todayKey);
-      const streakDays = streakUpdate.streakDays;
+      const isReview = Boolean(priorCompletion);
 
-      await this.recordTransaction(tx, {
-        userId,
-        currency: Currency.XP,
-        amount: xpEarned,
-        source: 'lesson_reward',
-        referenceId: sessionId,
-      });
-      await this.recordTransaction(tx, {
-        userId,
-        currency: Currency.BANANA_SEED,
-        amount: seedsEarned,
-        source: 'lesson_reward',
-        referenceId: sessionId,
-      });
+      let xpEarned = 0;
+      let seedsEarned = 0;
+      let rewardSource: 'lesson_reward' | 'lesson_review' = 'lesson_reward';
 
+      if (isReview) {
+        const reviewRef = `lesson_review:${todayKey}`;
+        const alreadyReviewedToday = await tx.economyTransaction.findFirst({
+          where: {
+            userId,
+            source: 'lesson_review',
+            referenceId: reviewRef,
+            currency: Currency.XP,
+          },
+        });
+        if (!alreadyReviewedToday) {
+          xpEarned = LESSON_REVIEW_REWARD_XP;
+          seedsEarned = LESSON_REVIEW_REWARD_SEEDS;
+          rewardSource = 'lesson_review';
+        }
+      } else {
+        xpEarned = LESSON_REWARD_XP;
+        seedsEarned = LESSON_REWARD_SEEDS;
+      }
+
+      if (xpEarned > 0) {
+        await this.recordTransaction(tx, {
+          userId,
+          currency: Currency.XP,
+          amount: xpEarned,
+          source: rewardSource,
+          referenceId: isReview ? `lesson_review:${todayKey}` : sessionId,
+        });
+      }
+      if (seedsEarned > 0) {
+        await this.recordTransaction(tx, {
+          userId,
+          currency: Currency.BANANA_SEED,
+          amount: seedsEarned,
+          source: rewardSource,
+          referenceId: isReview ? `lesson_review:${todayKey}` : sessionId,
+        });
+      }
+
+      const streak = await this.applyStreakAndMilestone(tx, user, todayKey);
+      const totalSeeds = seedsEarned + streak.milestoneSeeds;
       const updated = await tx.user.update({
         where: { id: userId },
         data: {
-          xpBalance: { increment: xpEarned },
-          bananaSeedBalance: { increment: seedsEarned },
-          streakDays,
-          longestStreakDays: Math.max(user.longestStreakDays, streakDays),
-          lastSessionDate: parseDateKey(todayKey),
+          ...streak.userUpdate,
+          ...(xpEarned > 0 ? { xpBalance: { increment: xpEarned } } : {}),
+          ...(totalSeeds > 0
+            ? { bananaSeedBalance: { increment: totalSeeds } }
+            : {}),
         },
       });
 
@@ -432,17 +563,19 @@ export class EconomyService {
           rewardsApplied: true,
           completedAt: new Date(),
           xpEarned,
-          seedsEarned,
+          seedsEarned: totalSeeds,
           scoreLabel: 'Lesson Complete',
         },
       });
 
       return {
         xpEarned,
-        seedsEarned,
+        seedsEarned: totalSeeds,
         ratingLabel: 'Lesson Complete',
-        streakDays,
-        previousStreakDays,
+        streakDays: streak.streakDays,
+        previousStreakDays: streak.previousStreakDays,
+        streakIncreased: streak.streakDays !== streak.previousStreakDays,
+        streakBonus: streak.streakBonus,
         balances: this.toBalances(updated),
         isDailyMission: false,
       };
@@ -460,15 +593,8 @@ export class EconomyService {
 
     return this.prisma.$transaction(async (tx) => {
       const user = await tx.user.findUniqueOrThrow({ where: { id: userId } });
-      const previousStreakDays = user.streakDays;
-      let streakDays = user.streakDays;
-      let streakBonus: StreakBonus | undefined;
-      let milestones = [...user.streakMilestonesClaimed];
       const local = getUserLocalTime(user.timezone);
       const todayKey = local.dateKey;
-
-      let xpEarned = reward.xp;
-      let seedsEarned = reward.seeds;
 
       await this.recordTransaction(tx, {
         userId,
@@ -485,50 +611,19 @@ export class EconomyService {
         referenceId: sessionId,
       });
 
-      const updateData: Prisma.UserUpdateInput = {
-        xpBalance: { increment: reward.xp },
-        bananaSeedBalance: { increment: reward.seeds },
-      };
-
-      if (isDailyMission) {
-        const streakUpdate = this.computeStreakUpdate(user, todayKey);
-        streakDays = streakUpdate.streakDays;
-        updateData.streakDays = streakDays;
-        updateData.longestStreakDays = Math.max(
-          user.longestStreakDays,
-          streakDays,
-        );
-        updateData.lastSessionDate = parseDateKey(todayKey);
-        updateData.dailyMissionUsedDate = parseDateKey(todayKey);
-
-        const milestone = STREAK_MILESTONES.find(
-          (item) =>
-            streakDays >= item.days && !milestones.includes(item.days),
-        );
-        if (milestone) {
-          milestones = [...milestones, milestone.days];
-          seedsEarned += milestone.seeds;
-          streakBonus = {
-            days: milestone.days,
-            seedsEarned: milestone.seeds,
-          };
-          await this.recordTransaction(tx, {
-            userId,
-            currency: Currency.BANANA_SEED,
-            amount: milestone.seeds,
-            source: 'streak_milestone',
-            referenceId: String(milestone.days),
-          });
-          updateData.bananaSeedBalance = {
-            increment: reward.seeds + milestone.seeds,
-          };
-          updateData.streakMilestonesClaimed = milestones;
-        }
-      }
+      const streak = await this.applyStreakAndMilestone(tx, user, todayKey);
+      const seedsEarned = reward.seeds + streak.milestoneSeeds;
 
       const updated = await tx.user.update({
         where: { id: userId },
-        data: updateData,
+        data: {
+          ...streak.userUpdate,
+          xpBalance: { increment: reward.xp },
+          bananaSeedBalance: { increment: seedsEarned },
+          ...(isDailyMission
+            ? { dailyMissionUsedDate: parseDateKey(todayKey) }
+            : {}),
+        },
       });
 
       await tx.userSession.update({
@@ -538,18 +633,19 @@ export class EconomyService {
           completedAt: new Date(),
           overallScore,
           scoreLabel: reward.ratingLabel,
-          xpEarned,
+          xpEarned: reward.xp,
           seedsEarned,
         },
       });
 
       return {
-        xpEarned,
+        xpEarned: reward.xp,
         seedsEarned,
         ratingLabel: reward.ratingLabel,
-        streakDays,
-        previousStreakDays,
-        streakBonus,
+        streakDays: streak.streakDays,
+        previousStreakDays: streak.previousStreakDays,
+        streakIncreased: streak.streakDays !== streak.previousStreakDays,
+        streakBonus: streak.streakBonus,
         balances: this.toBalances(updated),
         isDailyMission,
       };
@@ -577,6 +673,59 @@ export class EconomyService {
   }
 
   /**
+   * Shared streak + one unclaimed milestone grant per qualifying completion.
+   */
+  private async applyStreakAndMilestone(
+    tx: Prisma.TransactionClient,
+    user: User,
+    todayKey: string,
+  ): Promise<{
+    previousStreakDays: number;
+    streakDays: number;
+    streakBonus?: StreakBonus;
+    milestoneSeeds: number;
+    userUpdate: Prisma.UserUpdateInput;
+  }> {
+    const previousStreakDays = user.streakDays;
+    const { streakDays } = this.computeStreakUpdate(user, todayKey);
+    let milestones = [...user.streakMilestonesClaimed];
+    let streakBonus: StreakBonus | undefined;
+    let milestoneSeeds = 0;
+
+    const milestone = STREAK_MILESTONES.find(
+      (item) => streakDays >= item.days && !milestones.includes(item.days),
+    );
+    if (milestone) {
+      milestones = [...milestones, milestone.days];
+      milestoneSeeds = milestone.seeds;
+      streakBonus = {
+        days: milestone.days,
+        seedsEarned: milestone.seeds,
+      };
+      await this.recordTransaction(tx, {
+        userId: user.id,
+        currency: Currency.BANANA_SEED,
+        amount: milestone.seeds,
+        source: 'streak_milestone',
+        referenceId: String(milestone.days),
+      });
+    }
+
+    return {
+      previousStreakDays,
+      streakDays,
+      streakBonus,
+      milestoneSeeds,
+      userUpdate: {
+        streakDays,
+        longestStreakDays: Math.max(user.longestStreakDays, streakDays),
+        lastSessionDate: parseDateKey(todayKey),
+        ...(milestone ? { streakMilestonesClaimed: milestones } : {}),
+      },
+    };
+  }
+
+  /**
    * Daily Speak: once-per-local-day XP/seeds + streak update.
    * Idempotent via economyTransaction referenceId `daily_speak:YYYY-MM-DD`.
    */
@@ -589,6 +738,7 @@ export class EconomyService {
     streakDays: number;
     previousStreakDays: number;
     streakIncreased: boolean;
+    streakBonus?: StreakBonus;
     dailySpeakCount: number;
     balances: UserBalances;
     isDailyMission: boolean;
@@ -598,7 +748,6 @@ export class EconomyService {
 
     return this.prisma.$transaction(async (tx) => {
       const user = await tx.user.findUniqueOrThrow({ where: { id: userId } });
-      const previousStreakDays = user.streakDays;
       const local = getUserLocalTime(user.timezone);
       const todayKey = local.dateKey;
       const referenceId = `daily_speak:${todayKey}`;
@@ -612,45 +761,38 @@ export class EconomyService {
         },
       });
 
-      const streakUpdate = this.computeStreakUpdate(user, todayKey);
-      const streakDays = streakUpdate.streakDays;
+      const streak = await this.applyStreakAndMilestone(tx, user, todayKey);
+      const dailySpeakCount =
+        (user as User & { dailySpeakCount?: number }).dailySpeakCount ?? 0;
 
       if (prior) {
-        // Still refresh lastSessionDate / streak if this is a new calendar day
-        // with a prior claim somehow missing date update (idempotent no-op when same day).
-        if (!isSameDateKey(user.lastSessionDate, todayKey)) {
-          await tx.user.update({
-            where: { id: userId },
-            data: {
-              streakDays,
-              longestStreakDays: Math.max(user.longestStreakDays, streakDays),
-              lastSessionDate: parseDateKey(todayKey),
-            },
-          });
-        }
+        const updated = await tx.user.update({
+          where: { id: userId },
+          data: {
+            ...streak.userUpdate,
+            ...(streak.milestoneSeeds > 0
+              ? { bananaSeedBalance: { increment: streak.milestoneSeeds } }
+              : {}),
+          },
+        });
 
         return {
           xpEarned: 0,
-          seedsEarned: 0,
+          seedsEarned: streak.milestoneSeeds,
           ratingLabel: 'Speak Today',
-          streakDays: isSameDateKey(user.lastSessionDate, todayKey)
-            ? user.streakDays
-            : streakDays,
-          previousStreakDays,
-          streakIncreased:
-            (isSameDateKey(user.lastSessionDate, todayKey)
-                ? user.streakDays
-                : streakDays) !== previousStreakDays,
-          dailySpeakCount:
-            (user as User & { dailySpeakCount?: number }).dailySpeakCount ?? 0,
-          balances: this.toBalances(user),
+          streakDays: streak.streakDays,
+          previousStreakDays: streak.previousStreakDays,
+          streakIncreased: streak.streakDays !== streak.previousStreakDays,
+          streakBonus: streak.streakBonus,
+          dailySpeakCount,
+          balances: this.toBalances(updated),
           isDailyMission: false,
           alreadyClaimed: true,
         };
       }
 
       const xpEarned = DAILY_SPEAK_REWARD_XP;
-      const seedsEarned = DAILY_SPEAK_REWARD_SEEDS;
+      const seedsEarned = DAILY_SPEAK_REWARD_SEEDS + streak.milestoneSeeds;
 
       await this.recordTransaction(tx, {
         userId,
@@ -662,7 +804,7 @@ export class EconomyService {
       await this.recordTransaction(tx, {
         userId,
         currency: Currency.BANANA_SEED,
-        amount: seedsEarned,
+        amount: DAILY_SPEAK_REWARD_SEEDS,
         source: 'daily_speak_reward',
         referenceId,
       });
@@ -670,11 +812,9 @@ export class EconomyService {
       const updated = await tx.user.update({
         where: { id: userId },
         data: {
+          ...streak.userUpdate,
           xpBalance: { increment: xpEarned },
           bananaSeedBalance: { increment: seedsEarned },
-          streakDays,
-          longestStreakDays: Math.max(user.longestStreakDays, streakDays),
-          lastSessionDate: parseDateKey(todayKey),
           dailySpeakCount: { increment: 1 },
         } as Prisma.UserUpdateInput,
       });
@@ -683,14 +823,14 @@ export class EconomyService {
         xpEarned,
         seedsEarned,
         ratingLabel: 'Speak Today',
-        streakDays,
-        previousStreakDays,
-        streakIncreased: streakDays !== previousStreakDays,
+        streakDays: streak.streakDays,
+        previousStreakDays: streak.previousStreakDays,
+        streakIncreased: streak.streakDays !== streak.previousStreakDays,
+        streakBonus: streak.streakBonus,
         dailySpeakCount:
           (updated as typeof updated & { dailySpeakCount?: number })
             .dailySpeakCount ??
-          ((user as typeof user & { dailySpeakCount?: number }).dailySpeakCount ??
-            0) + 1,
+          dailySpeakCount + 1,
         balances: this.toBalances(updated),
         isDailyMission: false,
         alreadyClaimed: false,
@@ -708,6 +848,8 @@ export class EconomyService {
     alreadyClaimed: boolean;
     streakDays: number;
     previousStreakDays: number;
+    streakIncreased: boolean;
+    streakBonus?: StreakBonus;
   }> {
     const { userId, gameId } = params;
     const referenceId = `mini_game:${gameId}`;
@@ -723,33 +865,34 @@ export class EconomyService {
       });
 
       const user = await tx.user.findUniqueOrThrow({ where: { id: userId } });
-      const previousStreakDays = user.streakDays;
       const local = getUserLocalTime(user.timezone);
       const todayKey = local.dateKey;
-      const streakUpdate = this.computeStreakUpdate(user, todayKey);
-      const streakDays = streakUpdate.streakDays;
+      const streak = await this.applyStreakAndMilestone(tx, user, todayKey);
 
       if (prior) {
         const streakOnly = await tx.user.update({
           where: { id: userId },
           data: {
-            streakDays,
-            longestStreakDays: Math.max(user.longestStreakDays, streakDays),
-            lastSessionDate: parseDateKey(todayKey),
+            ...streak.userUpdate,
+            ...(streak.milestoneSeeds > 0
+              ? { bananaSeedBalance: { increment: streak.milestoneSeeds } }
+              : {}),
           },
         });
         return {
           xpEarned: 0,
-          seedsEarned: 0,
+          seedsEarned: streak.milestoneSeeds,
           balances: this.toBalances(streakOnly),
           alreadyClaimed: true,
           streakDays: streakOnly.streakDays,
-          previousStreakDays,
+          previousStreakDays: streak.previousStreakDays,
+          streakIncreased: streak.streakDays !== streak.previousStreakDays,
+          streakBonus: streak.streakBonus,
         };
       }
 
       const xpEarned = LESSON_REWARD_XP;
-      const seedsEarned = LESSON_REWARD_SEEDS;
+      const seedsEarned = LESSON_REWARD_SEEDS + streak.milestoneSeeds;
 
       await this.recordTransaction(tx, {
         userId,
@@ -761,7 +904,7 @@ export class EconomyService {
       await this.recordTransaction(tx, {
         userId,
         currency: Currency.BANANA_SEED,
-        amount: seedsEarned,
+        amount: LESSON_REWARD_SEEDS,
         source: 'mini_game_reward',
         referenceId,
       });
@@ -769,11 +912,9 @@ export class EconomyService {
       const updated = await tx.user.update({
         where: { id: userId },
         data: {
+          ...streak.userUpdate,
           xpBalance: { increment: xpEarned },
           bananaSeedBalance: { increment: seedsEarned },
-          streakDays,
-          longestStreakDays: Math.max(user.longestStreakDays, streakDays),
-          lastSessionDate: parseDateKey(todayKey),
         },
       });
 
@@ -783,7 +924,9 @@ export class EconomyService {
         balances: this.toBalances(updated),
         alreadyClaimed: false,
         streakDays: updated.streakDays,
-        previousStreakDays,
+        previousStreakDays: streak.previousStreakDays,
+        streakIncreased: streak.streakDays !== streak.previousStreakDays,
+        streakBonus: streak.streakBonus,
       };
     });
   }
@@ -792,26 +935,30 @@ export class EconomyService {
   async recordStreakActivity(userId: string): Promise<{
     streakDays: number;
     previousStreakDays: number;
+    streakIncreased: boolean;
+    streakBonus?: StreakBonus;
   }> {
     return this.prisma.$transaction(async (tx) => {
       const user = await tx.user.findUniqueOrThrow({ where: { id: userId } });
-      const previousStreakDays = user.streakDays;
       const local = getUserLocalTime(user.timezone);
       const todayKey = local.dateKey;
-      const { streakDays } = this.computeStreakUpdate(user, todayKey);
+      const streak = await this.applyStreakAndMilestone(tx, user, todayKey);
 
-      const updated = await tx.user.update({
+      await tx.user.update({
         where: { id: userId },
         data: {
-          streakDays,
-          longestStreakDays: Math.max(user.longestStreakDays, streakDays),
-          lastSessionDate: parseDateKey(todayKey),
+          ...streak.userUpdate,
+          ...(streak.milestoneSeeds > 0
+            ? { bananaSeedBalance: { increment: streak.milestoneSeeds } }
+            : {}),
         },
       });
 
       return {
-        streakDays: updated.streakDays,
-        previousStreakDays,
+        streakDays: streak.streakDays,
+        previousStreakDays: streak.previousStreakDays,
+        streakIncreased: streak.streakDays !== streak.previousStreakDays,
+        streakBonus: streak.streakBonus,
       };
     });
   }

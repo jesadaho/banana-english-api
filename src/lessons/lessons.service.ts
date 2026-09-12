@@ -11,6 +11,9 @@ import {
 import {
   LESSON_REWARD_SEEDS,
   LESSON_REWARD_XP,
+  LESSON_REVIEW_REWARD_SEEDS,
+  LESSON_REVIEW_REWARD_XP,
+  RATING_COMMENT_BONUS_BANANAS,
 } from '../economy/economy.constants';
 import { resolveDisplayedAvatarId } from '../users/avatar-catalog';
 
@@ -34,6 +37,7 @@ export interface LessonProgressItemView {
 export interface LessonProgressView {
   bananaCost: number;
   lessonReward: { xp: number; seeds: number };
+  reviewReward: { xp: number; seeds: number };
   completedCount: number;
   totalPlayable: number;
   currentLessonId: string | null;
@@ -163,6 +167,10 @@ export class LessonsService {
     return {
       bananaCost: LESSON_BANANA_COST,
       lessonReward: { xp: LESSON_REWARD_XP, seeds: LESSON_REWARD_SEEDS },
+      reviewReward: {
+        xp: LESSON_REVIEW_REWARD_XP,
+        seeds: LESSON_REVIEW_REWARD_SEEDS,
+      },
       completedCount: completedIds.size,
       totalPlayable: LESSON_PROGRESSION_ORDER.length,
       currentLessonId,
@@ -240,7 +248,7 @@ export class LessonsService {
     let bananasGranted = 0;
     let bananaBalance = 0;
     if (feedback) {
-      bananasGranted = Math.random() < 0.5 ? 1 : 2;
+      bananasGranted = RATING_COMMENT_BONUS_BANANAS;
       const user = await this.economy.creditRatingCommentBonus(
         params.userId,
         bananasGranted,

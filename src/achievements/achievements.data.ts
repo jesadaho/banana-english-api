@@ -285,7 +285,6 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
     iconKey: 'fire_3',
     target: 3,
     metric: 'streak_days',
-    rewardSeeds: 30,
   },
   {
     achievementId: 'streak_7',
@@ -298,7 +297,6 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
     iconKey: 'fire_7',
     target: 7,
     metric: 'streak_days',
-    rewardSeeds: 50,
   },
   {
     achievementId: 'streak_14',
@@ -311,7 +309,6 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
     iconKey: 'fire_14',
     target: 14,
     metric: 'streak_days',
-    rewardSeeds: 100,
   },
   {
     achievementId: 'streak_30',

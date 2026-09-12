@@ -1,4 +1,5 @@
 import { BadRequestException, Controller, Get, Param, Post, Query, Req, UseGuards } from '@nestjs/common';
+import { randomUUID } from 'crypto';
 import { User } from '@prisma/client';
 import { EconomyService } from '../economy/economy.service';
 import { AnonymousUserGuard } from '../users/anonymous-user.guard';
@@ -40,12 +41,24 @@ export class ExplainItController {
     if (topic.locked) {
       throw new BadRequestException('This topic is locked');
     }
+    const spendRef = randomUUID();
     await this.economy.spendBananas(
       req.user.id,
       EXPLAIN_IT_BANANA_COST,
-      topicId,
+      spendRef,
       'explain_it_start',
     );
+    try {
+      this.explainIt.dealForTopic(topicId, EXPLAIN_IT_DEAL_COUNT);
+    } catch (error) {
+      await this.economy.refundBananas(
+        req.user.id,
+        EXPLAIN_IT_BANANA_COST,
+        spendRef,
+        'explain_it_start_refund',
+      );
+      throw error;
+    }
     return {
       ok: true,
       bananaCost: EXPLAIN_IT_BANANA_COST,
