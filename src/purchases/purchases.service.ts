@@ -44,9 +44,10 @@ export class PurchasesService {
       storeTransactionId: string;
       platform?: string;
       verifiedExternally?: boolean;
+      skipSignedInCheck?: boolean;
     },
   ): Promise<ClaimPurchaseResult> {
-    if (!user.firebaseUid) {
+    if (!params.skipSignedInCheck && !user.firebaseUid) {
       throw new ForbiddenException(
         'Sign in with Apple or Google before purchasing',
       );
@@ -64,6 +65,11 @@ export class PurchasesService {
     }
 
     if (!params.verifiedExternally) {
+      if (!user.firebaseUid) {
+        throw new ForbiddenException(
+          'Sign in with Apple or Google before purchasing',
+        );
+      }
       await this.revenueCat.assertStoreTransaction({
         appUserId: user.firebaseUid,
         productId,

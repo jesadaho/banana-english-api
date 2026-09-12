@@ -8,5 +8,6 @@ import { RevenueCatClient } from './revenuecat.client';
   imports: [EconomyModule],
   controllers: [PurchasesController],
   providers: [PurchasesService, RevenueCatClient],
+  exports: [PurchasesService],
 })
 export class PurchasesModule {}

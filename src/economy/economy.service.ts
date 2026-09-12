@@ -268,6 +268,31 @@ export class EconomyService {
     });
   }
 
+  /** Admin goodwill / ops credit — saved bananas, not the free daily pool. */
+  async creditAdminBananas(
+    userId: string,
+    amount: number,
+    referenceId: string,
+  ): Promise<User> {
+    if (!Number.isFinite(amount) || amount <= 0) {
+      throw new BadRequestException('Invalid credit amount');
+    }
+    const rounded = Math.floor(amount);
+    return this.prisma.$transaction(async (tx) => {
+      await this.recordTransaction(tx, {
+        userId,
+        currency: Currency.BANANA,
+        amount: rounded,
+        source: 'admin_credit',
+        referenceId,
+      });
+      return tx.user.update({
+        where: { id: userId },
+        data: { bananaBalance: { increment: rounded } },
+      });
+    });
+  }
+
   /** Comment bonus on a rating — uncapped (not [cappedBananaCredit]). */
   async creditRatingCommentBonus(
     userId: string,
