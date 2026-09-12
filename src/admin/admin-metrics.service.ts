@@ -1062,6 +1062,7 @@ export class AdminMetricsService {
     let bananaIn = 0;
     let bananaOut = 0;
     for (const t of txns) {
+      if (t.source === 'banana_free_leg') continue;
       const cur = bySource[t.source] ?? { in: 0, out: 0, net: 0 };
       if (t.amount >= 0) {
         cur.in += t.amount;

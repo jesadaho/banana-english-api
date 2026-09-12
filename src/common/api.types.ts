@@ -532,6 +532,8 @@ export interface UserProfileResponse {
   displayName: string;
   onboardingCompleted: boolean;
   bananaBalance: number;
+  /** Daily free pool remaining (capped). Spends before accumulated bananas. */
+  freeBananaBalance: number;
   xpBalance: number;
   bananaSeedBalance: number;
   streakDays: number;

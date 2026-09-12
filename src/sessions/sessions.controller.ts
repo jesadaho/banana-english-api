@@ -10,6 +10,7 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
+import { randomUUID } from 'crypto';
 import {
   throwAiServiceBadGateway,
   isChatDebugRequest,
@@ -227,10 +228,11 @@ export class SessionsController {
       const durationMinutes = body.durationMinutes === 10 ? 10 : 5;
       const bananaCost = freeTalkBananaCost(durationMinutes);
       const languageLevel = normalizeFreeTalkLanguageLevel(body.languageLevel);
+      const spendRef = randomUUID();
       await this.economy.spendBananas(
         req.user.id,
         bananaCost,
-        'free_talk',
+        spendRef,
         'free_talk_start',
       );
       const priorMemories = await this.users.getFreeTalkMemories(req.user.id);
@@ -265,6 +267,12 @@ export class SessionsController {
 
         return { session: data.session, opening };
       } catch (err) {
+        await this.economy.refundBananas(
+          req.user.id,
+          bananaCost,
+          spendRef,
+          'free_talk_start_refund',
+        );
         throwAiServiceBadGateway(err, chatDebug);
       }
     }
@@ -317,8 +325,10 @@ export class SessionsController {
       throw new BadRequestException('Series locked');
     }
 
-    await this.economy.spendBananas(user.id, config.bananaCost, simulationId);
+    const spendRef = randomUUID();
+    await this.economy.spendBananas(user.id, config.bananaCost, spendRef);
 
+    try {
     const data = this.sessionStore.createSimulation(config);
 
     await this.prisma.userSession.create({
@@ -336,7 +346,6 @@ export class SessionsController {
       config.simulationId,
     );
 
-    try {
       const handlerStartedAt = performance.now();
       const { reply: openingReply, aiDebug: openingAiDebug } =
         await this.chat.generateSimulationOpening(config);
@@ -386,6 +395,12 @@ export class SessionsController {
         opening,
       };
     } catch (err) {
+      await this.economy.refundBananas(
+        user.id,
+        config.bananaCost,
+        spendRef,
+        'mission_start_refund',
+      );
       throwAiServiceBadGateway(err, chatDebug);
     }
   }
@@ -456,13 +471,16 @@ export class SessionsController {
     }
 
     const bananaCost = getLessonBananaCost(config);
-    await this.economy.spendBananas(user.id, bananaCost, lessonId, 'lesson_start');
+    const spendRef = randomUUID();
+    await this.economy.spendBananas(user.id, bananaCost, spendRef, 'lesson_start');
 
     const learnerFirstName = firstNameFromDisplayName(
       user.displayName,
       teachingLanguage,
     );
     const useTrainingV2 = isTrainingV2Lesson(config.lessonId);
+
+    try {
     const data = this.sessionStore.createTraining(config, learnerFirstName, {
       engineVersion: useTrainingV2 ? 2 : 1,
     });
@@ -484,7 +502,6 @@ export class SessionsController {
       },
     });
 
-    try {
       const handlerStartedAt = performance.now();
       if (useTrainingV2) {
         return this.finishTrainingV2Opening(
@@ -785,6 +802,12 @@ export class SessionsController {
         ),
       };
     } catch (err) {
+      await this.economy.refundBananas(
+        user.id,
+        bananaCost,
+        spendRef,
+        'lesson_start_refund',
+      );
       throwAiServiceBadGateway(err, chatDebug);
     }
   }

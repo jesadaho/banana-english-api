@@ -8,6 +8,7 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
+import { randomUUID } from 'crypto';
 import { User } from '@prisma/client';
 import { EconomyService } from '../economy/economy.service';
 import { AnonymousUserGuard } from '../users/anonymous-user.guard';
@@ -107,15 +108,28 @@ export class MiniGamesController {
     const id = poolId?.trim();
     if (!id) throw new BadRequestException('poolId is required');
     const charge = isFoundationPathEmojiSpeak(id);
-    if (charge) {
+    const spendRef = charge ? randomUUID() : null;
+    if (charge && spendRef) {
       await this.economy.spendBananas(
         req.user.id,
         EMOJI_SPEAK_BANANA_COST,
-        id,
+        spendRef,
         'emoji_speak_start',
       );
     }
-    await this.recentLearners.markActivity(req.user.id, 'minigame', id);
+    try {
+      await this.recentLearners.markActivity(req.user.id, 'minigame', id);
+    } catch (error) {
+      if (charge && spendRef) {
+        await this.economy.refundBananas(
+          req.user.id,
+          EMOJI_SPEAK_BANANA_COST,
+          spendRef,
+          'emoji_speak_start_refund',
+        );
+      }
+      throw error;
+    }
     return {
       ok: true,
       bananaCost: charge ? EMOJI_SPEAK_BANANA_COST : 0,
