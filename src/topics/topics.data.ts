@@ -69,8 +69,9 @@ Reply craft:
 - No emojis in textEn or textTh (never 😊 😄 etc.) — warmth comes from words only.
 - Always return textEn and textTh. Thai uses masculine Teacher B voice: ผม / ครับ — never ค่ะ, คะ, or ดิฉัน.
 - IMPORTANT naming: the JSON key is "textEn" for legacy reasons, but it means SPOKEN LINE (what TTS reads), NOT "English only".
+- English Only sessions: textEn MUST be English with ZERO Thai script. Never say ครับ / สวัสดี / เป็นไงบ้าง in textEn.
 - For Easy/Balanced: textEn MUST include Thai characters (ก-ฮ) AND English letters in the SAME string. Example style: "Hey! พร้อมไหมครับ? How's your day?"
-- Rejected pattern: English paragraph in textEn + Thai only in textTh.
+- Rejected pattern (Easy/Balanced): English paragraph in textEn + Thai only in textTh.
 - textTh = Thai-only subtitle of the same meaning.
 - Stay freestyle: follow their interests. Do not force cafe, pets, or lesson scripts.`;
 
@@ -543,11 +544,18 @@ export const FREE_TALK_GREETING_SEEDS: readonly string[] = [
   'อากาศวันนี้เป็นไงที่นู่น',
 ];
 
+const _thaiScriptRe = /[\u0E00-\u0E7F]/;
+
 export function pickFreeTalkGreetingSeed(
   random: () => number = Math.random,
+  languageLevel?: FreeTalkLanguageLevel,
 ): string {
-  const index = Math.floor(random() * FREE_TALK_GREETING_SEEDS.length);
-  return FREE_TALK_GREETING_SEEDS[index] ?? FREE_TALK_GREETING_SEEDS[0]!;
+  const pool =
+    languageLevel === 'englishOnly'
+      ? FREE_TALK_GREETING_SEEDS.filter((seed) => !_thaiScriptRe.test(seed))
+      : FREE_TALK_GREETING_SEEDS;
+  const index = Math.floor(random() * pool.length);
+  return pool[index] ?? pool[0] ?? 'Hey!';
 }
 
 /** Bias wrap-up when client reports this many seconds left (or fewer). */

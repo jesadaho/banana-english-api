@@ -920,7 +920,7 @@ export class GeminiChatService {
     const memories = options.memories ?? [];
     const learnerFirstName =
       (options.learnerFirstName ?? '').trim() || 'เพื่อน';
-    const greetingSeed = pickFreeTalkGreetingSeed();
+    const greetingSeed = pickFreeTalkGreetingSeed(Math.random, languageLevel);
     const openingPrompt = freeTalkOpeningUserPrompt({
       languageLevel,
       memories,
@@ -1100,6 +1100,11 @@ export class GeminiChatService {
       // Keep soft-recast meaning; only weave mix if needed (no full LLM rewrite).
       if (languageLevel !== 'englishOnly') {
         reply = this.weaveLanguageMix(reply, languageLevel);
+      } else if (this.containsThaiScript(reply.textEn)) {
+        reply = {
+          ...reply,
+          textEn: this.stripThaiScript(reply.textEn) || reply.textEn,
+        };
       }
     }
 
@@ -1271,6 +1276,73 @@ export class GeminiChatService {
     return enWords.length >= 3;
   }
 
+  private stripThaiScript(text: string): string {
+    return text
+      .replace(/[\u0E00-\u0E7F]+/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  private async enforceEnglishOnlySpokenLine(
+    reply: FreeTalkTurnReply,
+    context: {
+      systemInstruction: string;
+      priorContents: GeminiContent[];
+      learnerFirstName?: string;
+    },
+  ): Promise<FreeTalkTurnReply> {
+    if (!this.containsThaiScript(reply.textEn)) {
+      return reply;
+    }
+
+    this.logger.warn(
+      'Free Talk englishOnly: textEn still has Thai — retrying once',
+    );
+
+    try {
+      const { value: retryReply } = await this.generateJson<FreeTalkTurnReply>({
+        ...GEMINI_LIVE_TURN,
+        systemInstruction: context.systemInstruction,
+        contents: [
+          ...context.priorContents,
+          {
+            role: 'user',
+            parts: [
+              {
+                text:
+                  'REWRITE REQUIRED: textEn must be English only. ' +
+                  'Remove every Thai word (no ครับ, สวัสดี, เป็นไงบ้าง). ' +
+                  'Keep the same meaning and warmth. textTh stays the Thai subtitle. ' +
+                  'Return full JSON schema.',
+              },
+            ],
+          },
+        ],
+        schema: FREE_TALK_REPLY_SCHEMA,
+        maxOutputTokens: 450,
+        temperature: 0.3,
+      });
+      const normalized = this.normalizeFreeTalkReply(retryReply, reply.phase);
+      if (!this.containsThaiScript(normalized.textEn)) {
+        return normalized;
+      }
+      const stripped = this.stripThaiScript(normalized.textEn);
+      return {
+        ...normalized,
+        textEn: stripped || 'Hey! How are you doing today?',
+      };
+    } catch (err) {
+      this.logger.warn(
+        `Free Talk englishOnly rewrite failed: ${err instanceof Error ? err.message : String(err)}`,
+      );
+      const stripped = this.stripThaiScript(reply.textEn);
+      return {
+        ...reply,
+        textEn: stripped || 'Hey! How are you doing today?',
+      };
+    }
+  }
+
   /** Easy/Balanced must code-switch in textEn; retry once, then weave mix in. */
   private async enforceFreeTalkCodeSwitch(
     reply: FreeTalkTurnReply,
@@ -1282,7 +1354,7 @@ export class GeminiChatService {
     },
   ): Promise<FreeTalkTurnReply> {
     if (languageLevel === 'englishOnly') {
-      return reply;
+      return this.enforceEnglishOnlySpokenLine(reply, context);
     }
 
     if (
