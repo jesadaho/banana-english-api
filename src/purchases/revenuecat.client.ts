@@ -34,8 +34,13 @@ export class RevenueCatClient {
     return key || undefined;
   }
 
+  private static readonly verifyAttempts = 3;
+  private static readonly verifyRetryDelaysMs = [2_000, 4_000];
+
   /**
    * Confirm a consumable transaction exists on this RevenueCat subscriber.
+   * Play can mark the order Processed before RC indexes it, so look up again
+   * a few times before failing the claim.
    */
   async assertStoreTransaction(params: {
     appUserId: string;
@@ -47,10 +52,55 @@ export class RevenueCatClient {
       throw new BadGatewayException('Purchase verification is not configured');
     }
 
+    let lastError: unknown;
+    for (let attempt = 1; attempt <= RevenueCatClient.verifyAttempts; attempt++) {
+      try {
+        const payload = await this.fetchSubscriber(params.appUserId, secret);
+        if (this.transactionMatches(payload, params)) {
+          if (attempt > 1) {
+            this.logger.log(
+              `RevenueCat transaction visible on attempt ${attempt}`,
+            );
+          }
+          return;
+        }
+        lastError = new BadRequestException('Purchase could not be verified');
+        this.logger.warn(
+          `RevenueCat transaction not visible yet attempt=${attempt}/${RevenueCatClient.verifyAttempts}`,
+        );
+      } catch (error) {
+        lastError = error;
+        this.logger.warn(
+          `RevenueCat subscriber lookup attempt=${attempt}/${RevenueCatClient.verifyAttempts} failed`,
+        );
+        if (
+          !(error instanceof BadGatewayException) &&
+          !(error instanceof BadRequestException)
+        ) {
+          lastError = new BadGatewayException('Could not verify purchase');
+        }
+      }
+
+      if (attempt >= RevenueCatClient.verifyAttempts) break;
+      await this.delay(RevenueCatClient.verifyRetryDelaysMs[attempt - 1] ?? 2_000);
+    }
+
+    if (
+      lastError instanceof BadGatewayException ||
+      lastError instanceof BadRequestException
+    ) {
+      throw lastError;
+    }
+    throw new BadRequestException('Purchase could not be verified');
+  }
+
+  private async fetchSubscriber(
+    appUserId: string,
+    secret: string,
+  ): Promise<RevenueCatSubscriberResponse> {
     const url = `https://api.revenuecat.com/v1/subscribers/${encodeURIComponent(
-      params.appUserId,
+      appUserId,
     )}`;
-    let payload: RevenueCatSubscriberResponse;
     try {
       const response = await fetch(url, {
         headers: {
@@ -64,7 +114,7 @@ export class RevenueCatClient {
         );
         throw new BadGatewayException('Could not verify purchase');
       }
-      payload = (await response.json()) as RevenueCatSubscriberResponse;
+      return (await response.json()) as RevenueCatSubscriberResponse;
     } catch (error) {
       if (
         error instanceof BadGatewayException ||
@@ -77,10 +127,12 @@ export class RevenueCatClient {
       );
       throw new BadGatewayException('Could not verify purchase');
     }
+  }
 
-    if (!this.transactionMatches(payload, params)) {
-      throw new BadRequestException('Purchase could not be verified');
-    }
+  private delay(ms: number): Promise<void> {
+    return new Promise((resolve) => {
+      setTimeout(resolve, ms);
+    });
   }
 
   private transactionMatches(
