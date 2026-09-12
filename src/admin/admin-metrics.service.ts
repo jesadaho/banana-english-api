@@ -1170,15 +1170,15 @@ export class AdminMetricsService {
         streakDays: true,
         lastAppOpenDate: true,
         acquisitionSource: true,
+        spokenCount: true,
       },
     });
 
     const ids = users.map((u) => u.id);
     const emptyStats = {
       durationSeconds: 0,
-      learnerTurnCount: 0,
-      legacyTurnSessions: 0,
       perfectScoreSessions: 0,
+      sessionCount: 0,
     };
     const statsByUser = new Map<string, typeof emptyStats>();
     for (const id of ids) {
@@ -1186,19 +1186,11 @@ export class AdminMetricsService {
     }
 
     if (ids.length) {
-      const [sums, legacyTurns, perfects] = await Promise.all([
+      const [sums, perfects] = await Promise.all([
         this.prisma.userSession.groupBy({
           by: ['userId'],
           where: { userId: { in: ids }, completedAt: { not: null } },
-          _sum: { durationSeconds: true, learnerTurnCount: true },
-        }),
-        this.prisma.userSession.groupBy({
-          by: ['userId'],
-          where: {
-            userId: { in: ids },
-            completedAt: { not: null },
-            learnerTurnCount: null,
-          },
+          _sum: { durationSeconds: true },
           _count: { _all: true },
         }),
         this.prisma.userSession.groupBy({
@@ -1217,12 +1209,7 @@ export class AdminMetricsService {
         const stats = statsByUser.get(row.userId);
         if (!stats) continue;
         stats.durationSeconds = row._sum.durationSeconds ?? 0;
-        stats.learnerTurnCount = row._sum.learnerTurnCount ?? 0;
-      }
-      for (const row of legacyTurns) {
-        const stats = statsByUser.get(row.userId);
-        if (!stats) continue;
-        stats.legacyTurnSessions = row._count._all;
+        stats.sessionCount = row._count._all;
       }
       for (const row of perfects) {
         const stats = statsByUser.get(row.userId);
@@ -1246,7 +1233,8 @@ export class AdminMetricsService {
           gems: u.bananaSeedBalance,
           perfectStars: stats.perfectScoreSessions,
           hours: Math.round((durationSeconds / 3600) * 10) / 10,
-          spoken: stats.learnerTurnCount + stats.legacyTurnSessions,
+          sessions: stats.sessionCount,
+          spoken: u.spokenCount,
           longestStreakDays: Math.max(u.longestStreakDays, u.streakDays),
           lastAppOpenDate: u.lastAppOpenDate?.toISOString() ?? null,
           acquisitionSource: u.acquisitionSource,

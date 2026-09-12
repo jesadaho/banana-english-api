@@ -7,15 +7,11 @@ import { EconomyService } from '../economy/economy.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { bananasForProduct, isKnownBananaPack } from '../purchases/product-catalog';
 import { PurchasesService } from '../purchases/purchases.service';
-import { RevenueCatClient } from '../purchases/revenuecat.client';
 
 const SEARCH_TAKE = 20;
 const LEDGER_TAKE = 200;
 const PURCHASE_TAKE = 50;
 const ALL_PURCHASES_TAKE = 200;
-const RC_SCAN_USER_TAKE = 80;
-const RC_SCAN_CONCURRENCY = 8;
-const RC_SCAN_TTL_MS = 90_000;
 
 type LedgerPurchaseRow = {
   id: string;
@@ -25,26 +21,23 @@ type LedgerPurchaseRow = {
   platform: string | null;
   createdAt: string;
   claimed: boolean;
-  source: 'db' | 'revenuecat';
+  status: string;
+  source: string;
+  error: string | null;
   user: {
     id: string;
     displayName: string | null;
     email: string | null;
     firebaseUid: string | null;
-  };
+  } | null;
 };
 
 @Injectable()
 export class AdminLedgerService {
-  private purchaseCache:
-    | { expiresAt: number; payload: { count: number; purchases: LedgerPurchaseRow[] } }
-    | null = null;
-
   constructor(
     private readonly prisma: PrismaService,
     private readonly economy: EconomyService,
     private readonly purchases: PurchasesService,
-    private readonly revenueCat: RevenueCatClient,
   ) {}
 
   async searchUsers(queryRaw?: string) {
@@ -80,11 +73,7 @@ export class AdminLedgerService {
   }
 
   async listPurchases() {
-    if (this.purchaseCache && this.purchaseCache.expiresAt > Date.now()) {
-      return this.purchaseCache.payload;
-    }
-
-    const rows = await this.prisma.purchaseRecord.findMany({
+    const rows = await this.prisma.purchaseAttempt.findMany({
       orderBy: { createdAt: 'desc' },
       take: ALL_PURCHASES_TAKE,
       include: {
@@ -99,96 +88,35 @@ export class AdminLedgerService {
       },
     });
 
-    const claimed = new Map<string, LedgerPurchaseRow>();
-    for (const row of rows) {
-      claimed.set(row.storeTransactionId, {
-        id: row.id,
-        productId: row.productId,
-        storeTransactionId: row.storeTransactionId,
-        bananasGranted: row.bananasGranted,
-        platform: row.platform,
-        createdAt: row.createdAt.toISOString(),
-        claimed: true,
-        source: 'db',
-        user: {
-          id: row.user.id,
-          displayName: row.user.displayName,
-          email: row.user.email,
-          firebaseUid: row.user.firebaseUid,
-        },
-      });
-    }
+    const purchases: LedgerPurchaseRow[] = rows.map((row) => ({
+      id: row.id,
+      productId: row.productId,
+      storeTransactionId: row.storeTransactionId,
+      bananasGranted: bananasForProduct(row.productId) ?? 0,
+      platform: row.platform,
+      createdAt: row.createdAt.toISOString(),
+      claimed: row.status === 'claimed' || row.status === 'already_claimed',
+      status: row.status,
+      source: row.source,
+      error: row.error,
+      user: row.user
+        ? {
+            id: row.user.id,
+            displayName: row.user.displayName,
+            email: row.user.email,
+            firebaseUid: row.user.firebaseUid,
+          }
+        : row.appUserId
+          ? {
+              id: '',
+              displayName: null,
+              email: null,
+              firebaseUid: row.appUserId,
+            }
+          : null,
+    }));
 
-    const since = new Date(Date.now() - 21 * 86_400_000);
-    const recentUsers = await this.prisma.user.findMany({
-      where: {
-        firebaseUid: { not: null },
-        updatedAt: { gte: since },
-      },
-      orderBy: { updatedAt: 'desc' },
-      take: RC_SCAN_USER_TAKE,
-      select: {
-        id: true,
-        displayName: true,
-        email: true,
-        firebaseUid: true,
-      },
-    });
-
-    const extras: LedgerPurchaseRow[] = [];
-    if (this.revenueCat.secretKey()) {
-      await this.mapPool(recentUsers, RC_SCAN_CONCURRENCY, async (user) => {
-        const uid = user.firebaseUid;
-        if (!uid) return;
-        const packs = await this.revenueCat.listBananaPackPurchases(uid);
-        for (const pack of packs) {
-          if (claimed.has(pack.storeTransactionId)) continue;
-          extras.push({
-            id: `rc:${pack.storeTransactionId}`,
-            productId: pack.productId,
-            storeTransactionId: pack.storeTransactionId,
-            bananasGranted: bananasForProduct(pack.productId) ?? 0,
-            platform: null,
-            createdAt: pack.purchasedAt ?? new Date().toISOString(),
-            claimed: false,
-            source: 'revenuecat',
-            user: {
-              id: user.id,
-              displayName: user.displayName,
-              email: user.email,
-              firebaseUid: user.firebaseUid,
-            },
-          });
-        }
-      });
-    }
-
-    const purchases = [...claimed.values(), ...extras].sort((a, b) =>
-      b.createdAt.localeCompare(a.createdAt),
-    );
-    const payload = { count: purchases.length, purchases };
-    this.purchaseCache = { expiresAt: Date.now() + RC_SCAN_TTL_MS, payload };
-    return payload;
-  }
-
-  private async mapPool<T>(
-    items: T[],
-    limit: number,
-    fn: (item: T) => Promise<void>,
-  ): Promise<void> {
-    let index = 0;
-    const worker = async () => {
-      while (index < items.length) {
-        const current = items[index];
-        index += 1;
-        if (current !== undefined) await fn(current);
-      }
-    };
-    await Promise.all(
-      Array.from({ length: Math.min(limit, Math.max(items.length, 1)) }, () =>
-        worker(),
-      ),
-    );
+    return { count: purchases.length, purchases };
   }
 
   async getLedger(userId: string) {
@@ -206,13 +134,18 @@ export class AdminLedgerService {
     });
     if (!user) throw new NotFoundException('User not found');
 
-    const [transactions, purchases] = await Promise.all([
+    const [transactions, purchases, attempts] = await Promise.all([
       this.prisma.economyTransaction.findMany({
         where: { userId, currency: 'BANANA' },
         orderBy: { createdAt: 'desc' },
         take: LEDGER_TAKE,
       }),
       this.prisma.purchaseRecord.findMany({
+        where: { userId },
+        orderBy: { createdAt: 'desc' },
+        take: PURCHASE_TAKE,
+      }),
+      this.prisma.purchaseAttempt.findMany({
         where: { userId },
         orderBy: { createdAt: 'desc' },
         take: PURCHASE_TAKE,
@@ -226,6 +159,16 @@ export class AdminLedgerService {
         productId: row.productId,
         storeTransactionId: row.storeTransactionId,
         bananasGranted: row.bananasGranted,
+        platform: row.platform,
+        createdAt: row.createdAt.toISOString(),
+      })),
+      attempts: attempts.map((row) => ({
+        id: row.id,
+        productId: row.productId,
+        storeTransactionId: row.storeTransactionId,
+        status: row.status,
+        source: row.source,
+        error: row.error,
         platform: row.platform,
         createdAt: row.createdAt.toISOString(),
       })),
@@ -255,19 +198,27 @@ export class AdminLedgerService {
 
     const note = body.note.trim();
     const storeTransactionId = body.storeTransactionId?.trim();
-    this.purchaseCache = null;
 
     if (storeTransactionId) {
       const productId = body.productId?.trim() || 'banana_tickets_28';
       if (!isKnownBananaPack(productId)) {
         throw new BadRequestException('Unknown product');
       }
+      await this.purchases.recordStorePaid({
+        userId: user.id,
+        appUserId: user.firebaseUid,
+        productId,
+        storeTransactionId,
+        platform: body.platform?.trim() || 'android',
+        source: 'admin',
+      });
       const claim = await this.purchases.claimPurchase(user, {
         productId,
         storeTransactionId,
         platform: body.platform?.trim() || 'android',
         verifiedExternally: true,
         skipSignedInCheck: true,
+        source: 'admin',
       });
       return {
         kind: 'iap' as const,

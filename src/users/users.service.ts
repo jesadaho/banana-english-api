@@ -455,6 +455,14 @@ export class UsersService {
     );
   }
 
+  async incrementSpokenCount(userId: string, by = 1): Promise<void> {
+    if (by <= 0) return;
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: { spokenCount: { increment: by } },
+    });
+  }
+
   async updateDisplayName(userId: string, displayName: string) {
     const trimmed = displayName.trim();
     if (!trimmed) return;

@@ -1,12 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
 import type {
   LearningStatsResponse,
   PublicMarketingStatsResponse,
 } from '../common/api.types';
 import { getLesson } from '../lessons/lessons.data';
 import { PrismaService } from '../prisma/prisma.service';
-import { ActivityService } from '../users/activity.service';
 
 type PublicCache = { expiresAt: number; payload: PublicMarketingStatsResponse };
 
@@ -15,10 +13,7 @@ export class StatsService {
   private publicCache: PublicCache | null = null;
   private readonly publicTtlMs = 10 * 60 * 1000;
 
-  constructor(
-    private readonly prisma: PrismaService,
-    private readonly activity: ActivityService,
-  ) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async getPublicMarketingStats(): Promise<PublicMarketingStatsResponse> {
     const hit = this.publicCache;
@@ -27,7 +22,7 @@ export class StatsService {
     }
 
     const completed = { completedAt: { not: null } } as const;
-    const [learners, turnSum, durationSum, legacySessions, ratingAvg] =
+    const [learners, turnSum, durationSum, legacySessions, spokenSum, ratingAvg] =
       await Promise.all([
         this.prisma.user.count({ where: { onboardingCompleted: true } }),
         this.prisma.userSession.aggregate({
@@ -41,6 +36,9 @@ export class StatsService {
         this.prisma.userSession.count({
           where: { ...completed, learnerTurnCount: null },
         }),
+        this.prisma.user.aggregate({
+          _sum: { spokenCount: true },
+        }),
         this.prisma.lessonRating.aggregate({
           _avg: { stars: true },
         }),
@@ -50,7 +48,10 @@ export class StatsService {
     const avgStarsRaw = ratingAvg._avg.stars;
     const payload: PublicMarketingStatsResponse = {
       learners,
-      speakingTurns: (turnSum._sum.learnerTurnCount ?? 0) + legacySessions,
+      speakingTurns:
+        (turnSum._sum.learnerTurnCount ?? 0) +
+        legacySessions +
+        (spokenSum._sum.spokenCount ?? 0),
       minutesPracticed: Math.round(durationSeconds / 60),
       secondsPracticed: durationSeconds,
       avgStars:
@@ -68,6 +69,7 @@ export class StatsService {
       select: {
         streakDays: true,
         longestStreakDays: true,
+        spokenCount: true,
       },
     });
 
@@ -81,13 +83,10 @@ export class StatsService {
         lessonId: true,
         rewardsApplied: true,
         durationSeconds: true,
-        learnerTurnCount: true,
-        reportJson: true,
       },
     });
 
     const lessonIds = new Set<string>();
-    let sentencesSpoken = 0;
     let durationSecondsTotal = 0;
 
     for (const session of sessions) {
@@ -97,12 +96,6 @@ export class StatsService {
         session.lessonId
       ) {
         lessonIds.add(session.lessonId);
-      }
-
-      if (session.learnerTurnCount != null) {
-        sentencesSpoken += session.learnerTurnCount;
-      } else {
-        sentencesSpoken += this.countUserTurns(session.reportJson);
       }
 
       if (session.durationSeconds != null) {
@@ -122,15 +115,9 @@ export class StatsService {
 
     return {
       lessonsCompleted: lessonIds.size,
-      sentencesSpoken,
+      sentencesSpoken: user.spokenCount,
       minutesPracticed: Math.round(durationSecondsTotal / 60),
       longestStreakDays: Math.max(user.longestStreakDays, user.streakDays),
     };
-  }
-
-  private countUserTurns(reportJson: Prisma.JsonValue | null): number {
-    const report = this.activity.parseStoredReport(reportJson);
-    if (!report.turns?.length) return 0;
-    return report.turns.filter((t) => t.speaker === 'user').length;
   }
 }

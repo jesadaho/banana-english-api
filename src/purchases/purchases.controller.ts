@@ -19,6 +19,19 @@ export class PurchasesController {
     return { packs: listBananaPacks() };
   }
 
+  @Post('attempts')
+  @UseGuards(AnonymousUserGuard)
+  async recordAttempt(@Req() req: AuthedRequest, @Body() body: ClaimPurchaseDto) {
+    return this.purchases.recordStorePaid({
+      userId: req.user.id,
+      appUserId: req.user.firebaseUid,
+      productId: body.productId,
+      storeTransactionId: body.storeTransactionId,
+      platform: body.platform,
+      source: 'app',
+    });
+  }
+
   @Post('claim')
   @UseGuards(AnonymousUserGuard)
   async claim(@Req() req: AuthedRequest, @Body() body: ClaimPurchaseDto) {
@@ -26,6 +39,7 @@ export class PurchasesController {
       productId: body.productId,
       storeTransactionId: body.storeTransactionId,
       platform: body.platform,
+      source: 'app',
     });
   }
 

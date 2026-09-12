@@ -417,15 +417,23 @@ export class SessionsController {
       throw new NotFoundException('Session not found');
     }
 
-    if (data.session.sessionType === 'simulation') {
-      return this.processSimulationTurn(sessionId, body, chatDebug);
-    }
+    const rawSpeech = (body.userSpeechText ?? body.transcript ?? '').trim();
+    const countsAsSpoken =
+      rawSpeech.length > 0 &&
+      rawSpeech !== TAP_TO_CONTINUE_SENTINEL &&
+      rawSpeech !== EMOJI_SPEAK_COMPLETE_SENTINEL;
 
-    if (data.session.sessionType === 'training') {
-      return this.processTrainingTurn(sessionId, body, chatDebug);
-    }
+    const result =
+      data.session.sessionType === 'simulation'
+        ? await this.processSimulationTurn(sessionId, body, chatDebug)
+        : data.session.sessionType === 'training'
+          ? await this.processTrainingTurn(sessionId, body, chatDebug)
+          : await this.processLegacyTurn(sessionId, body, chatDebug);
 
-    return this.processLegacyTurn(sessionId, body, chatDebug);
+    if (countsAsSpoken) {
+      await this.recordSpokenTurn(req.user.id);
+    }
+    return result;
   }
 
   /** Onboarding: parse learner name from STT transcript (regex + Gemini). */
@@ -1069,6 +1077,14 @@ export class SessionsController {
       turnAiDebug,
       handlerStartedAt,
     );
+  }
+
+  private async recordSpokenTurn(userId: string): Promise<void> {
+    try {
+      await this.users.incrementSpokenCount(userId);
+    } catch {
+      // Counter must not fail the lesson turn.
+    }
   }
 
   private async processTrainingTurn(

@@ -153,6 +153,16 @@ export class UsersController {
     return this.users.saveAcquisitionSourceSurvey(req.user, body);
   }
 
+  @Post('me/spoken')
+  async recordSpoken(@Req() req: AuthedRequest) {
+    try {
+      await this.users.incrementSpokenCount(req.user.id);
+    } catch {
+      // Counter must not fail the client speak flow.
+    }
+    return { ok: true };
+  }
+
   @Post('me/avatars/unlock')
   async unlockAvatar(
     @Req() req: AuthedRequest,

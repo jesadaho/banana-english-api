@@ -18,6 +18,13 @@ export type ClaimPurchaseResult = {
   alreadyClaimed: boolean;
 };
 
+export type PurchaseAttemptSource = 'app' | 'webhook' | 'admin';
+export type PurchaseAttemptStatus =
+  | 'store_paid'
+  | 'claimed'
+  | 'already_claimed'
+  | 'failed';
+
 type RevenueCatWebhookBody = {
   event?: {
     type?: string;
@@ -37,6 +44,33 @@ export class PurchasesService {
     private readonly revenueCat: RevenueCatClient,
   ) {}
 
+  async recordStorePaid(params: {
+    userId?: string | null;
+    appUserId?: string | null;
+    productId: string;
+    storeTransactionId: string;
+    platform?: string;
+    source: PurchaseAttemptSource;
+  }) {
+    const productId = params.productId.trim();
+    const storeTransactionId = params.storeTransactionId.trim();
+    if (!productId || !storeTransactionId) {
+      throw new BadRequestException('Missing purchase identifiers');
+    }
+
+    return this.prisma.purchaseAttempt.create({
+      data: {
+        userId: params.userId ?? null,
+        appUserId: params.appUserId?.trim() || null,
+        productId,
+        storeTransactionId,
+        platform: params.platform?.trim() || null,
+        source: params.source,
+        status: 'store_paid',
+      },
+    });
+  }
+
   async claimPurchase(
     user: User,
     params: {
@@ -45,80 +79,49 @@ export class PurchasesService {
       platform?: string;
       verifiedExternally?: boolean;
       skipSignedInCheck?: boolean;
+      source?: PurchaseAttemptSource;
     },
   ): Promise<ClaimPurchaseResult> {
-    if (!params.skipSignedInCheck && !user.firebaseUid) {
-      throw new ForbiddenException(
-        'Sign in with Apple or Google before purchasing',
-      );
-    }
-
     const productId = params.productId.trim();
     const storeTransactionId = params.storeTransactionId.trim();
-    if (!isKnownBananaPack(productId)) {
-      throw new BadRequestException('Unknown product');
-    }
+    const source = params.source ?? 'app';
 
-    const bananas = bananasForProduct(productId);
-    if (bananas == null || bananas <= 0) {
-      throw new BadRequestException('Invalid product configuration');
-    }
-
-    if (!params.verifiedExternally) {
-      if (!user.firebaseUid) {
+    try {
+      if (!params.skipSignedInCheck && !user.firebaseUid) {
         throw new ForbiddenException(
           'Sign in with Apple or Google before purchasing',
         );
       }
-      await this.revenueCat.assertStoreTransaction({
-        appUserId: user.firebaseUid,
-        productId,
-        storeTransactionId,
-      });
-    }
 
-    return this.prisma.$transaction(async (tx) => {
-      const existing = await tx.purchaseRecord.findUnique({
-        where: { storeTransactionId },
-      });
-
-      if (existing) {
-        if (existing.userId !== user.id) {
-          throw new BadRequestException('Transaction already claimed');
-        }
-        const { user: creditedUser, credited } =
-          await this.economy.creditIapIfNeeded(
-            tx,
-            user.id,
-            bananas,
-            storeTransactionId,
-          );
-        return {
-          bananasGranted: existing.bananasGranted,
-          bananaBalance: creditedUser.bananaBalance,
-          alreadyClaimed: !credited,
-        };
+      if (!isKnownBananaPack(productId)) {
+        throw new BadRequestException('Unknown product');
       }
 
-      try {
-        await tx.purchaseRecord.create({
-          data: {
-            userId: user.id,
-            productId,
-            storeTransactionId,
-            bananasGranted: bananas,
-            platform: params.platform?.trim() || null,
-          },
+      const bananas = bananasForProduct(productId);
+      if (bananas == null || bananas <= 0) {
+        throw new BadRequestException('Invalid product configuration');
+      }
+
+      if (!params.verifiedExternally) {
+        if (!user.firebaseUid) {
+          throw new ForbiddenException(
+            'Sign in with Apple or Google before purchasing',
+          );
+        }
+        await this.revenueCat.assertStoreTransaction({
+          appUserId: user.firebaseUid,
+          productId,
+          storeTransactionId,
         });
-      } catch (error) {
-        if (
-          error instanceof Prisma.PrismaClientKnownRequestError &&
-          error.code === 'P2002'
-        ) {
-          const raced = await tx.purchaseRecord.findUniqueOrThrow({
-            where: { storeTransactionId },
-          });
-          if (raced.userId !== user.id) {
+      }
+
+      const result = await this.prisma.$transaction(async (tx) => {
+        const existing = await tx.purchaseRecord.findUnique({
+          where: { storeTransactionId },
+        });
+
+        if (existing) {
+          if (existing.userId !== user.id) {
             throw new BadRequestException('Transaction already claimed');
           }
           const { user: creditedUser, credited } =
@@ -129,27 +132,139 @@ export class PurchasesService {
               storeTransactionId,
             );
           return {
-            bananasGranted: raced.bananasGranted,
+            bananasGranted: existing.bananasGranted,
             bananaBalance: creditedUser.bananaBalance,
             alreadyClaimed: !credited,
           };
         }
-        throw error;
-      }
 
-      const { user: creditedUser, credited } =
-        await this.economy.creditIapIfNeeded(
-          tx,
-          user.id,
-          bananas,
+        try {
+          await tx.purchaseRecord.create({
+            data: {
+              userId: user.id,
+              productId,
+              storeTransactionId,
+              bananasGranted: bananas,
+              platform: params.platform?.trim() || null,
+            },
+          });
+        } catch (error) {
+          if (
+            error instanceof Prisma.PrismaClientKnownRequestError &&
+            error.code === 'P2002'
+          ) {
+            const raced = await tx.purchaseRecord.findUniqueOrThrow({
+              where: { storeTransactionId },
+            });
+            if (raced.userId !== user.id) {
+              throw new BadRequestException('Transaction already claimed');
+            }
+            const { user: creditedUser, credited } =
+              await this.economy.creditIapIfNeeded(
+                tx,
+                user.id,
+                bananas,
+                storeTransactionId,
+              );
+            return {
+              bananasGranted: raced.bananasGranted,
+              bananaBalance: creditedUser.bananaBalance,
+              alreadyClaimed: !credited,
+            };
+          }
+          throw error;
+        }
+
+        const { user: creditedUser, credited } =
+          await this.economy.creditIapIfNeeded(
+            tx,
+            user.id,
+            bananas,
+            storeTransactionId,
+          );
+        return {
+          bananasGranted: bananas,
+          bananaBalance: creditedUser.bananaBalance,
+          alreadyClaimed: !credited,
+        };
+      });
+
+      await this.finalizeAttemptSafe({
+        storeTransactionId,
+        userId: user.id,
+        appUserId: user.firebaseUid,
+        productId,
+        platform: params.platform,
+        source,
+        status: result.alreadyClaimed ? 'already_claimed' : 'claimed',
+      });
+      return result;
+    } catch (error) {
+      await this.finalizeAttemptSafe({
+        storeTransactionId,
+        userId: user.id,
+        appUserId: user.firebaseUid,
+        productId,
+        platform: params.platform,
+        source,
+        status: 'failed',
+        error: this.claimErrorMessage(error),
+      });
+      throw error;
+    }
+  }
+
+  private claimErrorMessage(error: unknown): string {
+    if (error instanceof Error && error.message.trim()) {
+      return error.message.trim().slice(0, 300);
+    }
+    return String(error).slice(0, 300);
+  }
+
+  private async finalizeAttemptSafe(params: {
+    storeTransactionId: string;
+    userId?: string | null;
+    appUserId?: string | null;
+    productId?: string;
+    platform?: string;
+    source: PurchaseAttemptSource;
+    status: Exclude<PurchaseAttemptStatus, 'store_paid'>;
+    error?: string | null;
+  }): Promise<void> {
+    const storeTransactionId = params.storeTransactionId.trim();
+    if (!storeTransactionId) return;
+    try {
+      const latest = await this.prisma.purchaseAttempt.findFirst({
+        where: { storeTransactionId },
+        orderBy: { createdAt: 'desc' },
+      });
+      if (latest) {
+        await this.prisma.purchaseAttempt.update({
+          where: { id: latest.id },
+          data: {
+            status: params.status,
+            error: params.error ?? null,
+            userId: latest.userId ?? params.userId ?? undefined,
+            appUserId: latest.appUserId ?? params.appUserId ?? undefined,
+          },
+        });
+        return;
+      }
+      await this.prisma.purchaseAttempt.create({
+        data: {
+          userId: params.userId ?? null,
+          appUserId: params.appUserId?.trim() || null,
+          productId: params.productId?.trim() || 'unknown',
           storeTransactionId,
-        );
-      return {
-        bananasGranted: bananas,
-        bananaBalance: creditedUser.bananaBalance,
-        alreadyClaimed: !credited,
-      };
-    });
+          platform: params.platform?.trim() || null,
+          source: params.source,
+          status: params.status,
+          error: params.error ?? null,
+        },
+      });
+    } catch {
+      // Never hide the original claim error.
+    }
   }
 
   verifyRevenueCatWebhookAuth(authorizationHeader?: string): void {
@@ -187,7 +302,6 @@ export class PurchasesService {
     const user = await this.prisma.user.findUnique({
       where: { firebaseUid: appUserId },
     });
-    if (!user) return;
 
     const platform =
       event.store === 'APP_STORE'
@@ -196,11 +310,23 @@ export class PurchasesService {
           ? 'android'
           : undefined;
 
+    await this.recordStorePaid({
+      userId: user?.id,
+      appUserId,
+      productId,
+      storeTransactionId,
+      platform,
+      source: 'webhook',
+    });
+
+    if (!user) return;
+
     await this.claimPurchase(user, {
       productId,
       storeTransactionId,
       platform,
       verifiedExternally: true,
+      source: 'webhook',
     });
   }
 }
