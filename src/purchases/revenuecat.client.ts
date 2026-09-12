@@ -5,11 +5,19 @@ import {
   Logger,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { isKnownBananaPack } from './product-catalog';
 
 type RevenueCatNonSubscription = {
   id?: string;
   store_transaction_id?: string;
   original_purchase_id?: string;
+  purchase_date?: string;
+};
+
+export type RevenueCatPackPurchase = {
+  productId: string;
+  storeTransactionId: string;
+  purchasedAt: string | null;
 };
 
 type RevenueCatSubscriberResponse = {
@@ -32,6 +40,19 @@ export class RevenueCatClient {
   secretKey(): string | undefined {
     const key = this.config.get<string>('REVENUECAT_SECRET_API_KEY')?.trim();
     return key || undefined;
+  }
+
+  async listBananaPackPurchases(
+    appUserId: string,
+  ): Promise<RevenueCatPackPurchase[]> {
+    const secret = this.secretKey();
+    if (!secret || !appUserId.trim()) return [];
+    try {
+      const payload = await this.fetchSubscriber(appUserId.trim(), secret);
+      return this.extractBananaPackPurchases(payload);
+    } catch {
+      return [];
+    }
   }
 
   private static readonly verifyAttempts = 3;
@@ -133,6 +154,33 @@ export class RevenueCatClient {
     return new Promise((resolve) => {
       setTimeout(resolve, ms);
     });
+  }
+
+  private extractBananaPackPurchases(
+    payload: RevenueCatSubscriberResponse,
+  ): RevenueCatPackPurchase[] {
+    const nonSubs = payload.subscriber?.non_subscriptions ?? {};
+    const found: RevenueCatPackPurchase[] = [];
+    const seen = new Set<string>();
+    for (const [productId, rows] of Object.entries(nonSubs)) {
+      if (!isKnownBananaPack(productId)) continue;
+      for (const row of rows ?? []) {
+        const storeTransactionId = [
+          row.store_transaction_id,
+          row.id,
+          row.original_purchase_id,
+        ]
+          .map((value) => value?.trim())
+          .find((value): value is string => Boolean(value));
+        if (!storeTransactionId || !seen.add(storeTransactionId)) continue;
+        found.push({
+          productId,
+          storeTransactionId,
+          purchasedAt: row.purchase_date?.trim() || null,
+        });
+      }
+    }
+    return found;
   }
 
   private transactionMatches(
