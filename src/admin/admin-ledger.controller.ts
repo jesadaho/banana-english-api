@@ -17,6 +17,11 @@ import { AdminCreditBananasDto } from './dto/admin-credit-bananas.dto';
 export class AdminLedgerController {
   constructor(private readonly ledger: AdminLedgerService) {}
 
+  @Get('purchases')
+  purchases() {
+    return this.ledger.listPurchases();
+  }
+
   @Get('users')
   search(@Query('q') q?: string) {
     return this.ledger.searchUsers(q);

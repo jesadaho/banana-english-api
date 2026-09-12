@@ -11,6 +11,7 @@ import { PurchasesService } from '../purchases/purchases.service';
 const SEARCH_TAKE = 20;
 const LEDGER_TAKE = 200;
 const PURCHASE_TAKE = 50;
+const ALL_PURCHASES_TAKE = 200;
 
 @Injectable()
 export class AdminLedgerService {
@@ -50,6 +51,41 @@ export class AdminLedgerService {
     });
 
     return { users: users.map((user) => this.toUserSummary(user)) };
+  }
+
+  async listPurchases() {
+    const rows = await this.prisma.purchaseRecord.findMany({
+      orderBy: { createdAt: 'desc' },
+      take: ALL_PURCHASES_TAKE,
+      include: {
+        user: {
+          select: {
+            id: true,
+            displayName: true,
+            email: true,
+            firebaseUid: true,
+          },
+        },
+      },
+    });
+
+    return {
+      count: rows.length,
+      purchases: rows.map((row) => ({
+        id: row.id,
+        productId: row.productId,
+        storeTransactionId: row.storeTransactionId,
+        bananasGranted: row.bananasGranted,
+        platform: row.platform,
+        createdAt: row.createdAt.toISOString(),
+        user: {
+          id: row.user.id,
+          displayName: row.user.displayName,
+          email: row.user.email,
+          firebaseUid: row.user.firebaseUid,
+        },
+      })),
+    };
   }
 
   async getLedger(userId: string) {
