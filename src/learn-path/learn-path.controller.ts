@@ -14,4 +14,10 @@ export class LearnPathController {
   async foundationV2(@Req() req: AuthedRequest) {
     return this.learnPath.getFoundationV2(req.user.id);
   }
+
+  /** Preview catalog for the approved 109-node A1 Foundation redesign. */
+  @Get('foundation-v5')
+  async foundationV5(@Req() req: AuthedRequest) {
+    return this.learnPath.getFoundationV5(req.user.id);
+  }
 }

@@ -1,0 +1,2738 @@
+{
+  "metadata": {
+    "sourceVersion": "5.0.0-final-loop-r6",
+    "totalNodeCount": 109,
+    "macroArc": {
+      "Ki": "Units 1–4 social survival and be/people.",
+      "Sho": "Units 5–11 noun, reference, number, possession, preference, ability.",
+      "Ten": "Units 12–15 routine/now/question transformation plus static-place transfer.",
+      "Ketsu": "Unit 16 varied whole-toolkit integration."
+    }
+  },
+  "chapters": [
+    {
+      "id": "u01",
+      "number": 1,
+      "titleEn": "Hello & My Name",
+      "phase": "Ki",
+      "items": [
+        {
+          "id": "u01n01",
+          "code": "1",
+          "order": 1,
+          "globalOrder": 1,
+          "titleEn": "Greetings",
+          "type": "lesson",
+          "learningTarget": "เลือก Hello/Hi/Good morning/afternoon/evening ตาม cue เวลา",
+          "activity": "ฟังตัวอย่าง จับคู่เวลา แล้วพูดคำทักทายเอง",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "greetings"
+          ],
+          "reviewedSkillIds": [],
+          "prerequisiteNodeIds": [],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u01n02",
+          "code": "2",
+          "order": 2,
+          "globalOrder": 2,
+          "titleEn": "Introductions",
+          "type": "lesson",
+          "learningTarget": "พูดชื่อ ถิ่นที่อยู่ อาชีพ และ Nice to meet you เป็น introduction สั้น",
+          "activity": "เติม slot จากโปรไฟล์สมมติ แล้วประกอบ self-introduction",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "introductions"
+          ],
+          "reviewedSkillIds": [
+            "greetings"
+          ],
+          "prerequisiteNodeIds": [
+            "u01n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u01n03",
+          "code": "3",
+          "order": 3,
+          "globalOrder": 3,
+          "titleEn": "First Conversation",
+          "type": "say_it",
+          "learningTarget": "เรียกคืน greeting และ introduction จาก prompt ภาษาไทย",
+          "activity": "prompt ไทย → พูดอังกฤษ; choices ลดจาก 3 ตัวเลือกจนเหลือเสียงล้วน",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "greetings",
+            "introductions"
+          ],
+          "prerequisiteNodeIds": [
+            "u01n01",
+            "u01n02"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u01n04",
+          "code": "4",
+          "order": 4,
+          "globalOrder": 4,
+          "titleEn": "Yes / No / Maybe",
+          "type": "lesson",
+          "learningTarget": "ตอบคำถามง่ายด้วย Yes/No/Maybe และ short-answer chunks",
+          "activity": "ฟังคำถามสั้น เลือกเจตนา แล้วตอบ Yes, I am / No, I’m not / Yes, I do / No, I don’t / Maybe",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "yes_no_maybe"
+          ],
+          "reviewedSkillIds": [
+            "introductions"
+          ],
+          "prerequisiteNodeIds": [
+            "u01n02"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u01n05",
+          "code": "5",
+          "order": 5,
+          "globalOrder": 5,
+          "titleEn": "Meet Max",
+          "type": "conversation",
+          "learningTarget": "ทักทาย แนะนำตัว และตอบ Yes/No/Maybe กับ Max",
+          "activity": "Max นำบทสนทนา 4 learner turns: greet → name/origin → simple yes/no/maybe → close",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "greetings",
+            "introductions",
+            "yes_no_maybe"
+          ],
+          "prerequisiteNodeIds": [
+            "u01n01",
+            "u01n02",
+            "u01n04"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        }
+      ]
+    },
+    {
+      "id": "u02",
+      "number": 2,
+      "titleEn": "Be Polite & Ask Again",
+      "phase": "Ki",
+      "items": [
+        {
+          "id": "u02n01",
+          "code": "1",
+          "order": 1,
+          "globalOrder": 6,
+          "titleEn": "Polite Expressions",
+          "type": "lesson",
+          "learningTarget": "ใช้ please, thank you, you’re welcome, excuse me, sorry ตามเจตนา",
+          "activity": "จับคู่ micro-scene กับ phrase แล้วพูด response ที่เหมาะ",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "polite_expressions"
+          ],
+          "reviewedSkillIds": [
+            "greetings"
+          ],
+          "prerequisiteNodeIds": [
+            "u01n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u02n02",
+          "code": "2",
+          "order": 2,
+          "globalOrder": 7,
+          "titleEn": "Be Polite",
+          "type": "say_it",
+          "learningTarget": "ดึง polite phrase จากสถานการณ์ภาษาไทย",
+          "activity": "ดูเหตุการณ์สั้นแล้วพูด phrase โดยค่อยตัดตัวเลือก",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "polite_expressions"
+          ],
+          "prerequisiteNodeIds": [
+            "u02n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u02n03",
+          "code": "3",
+          "order": 3,
+          "globalOrder": 8,
+          "titleEn": "Asking for Help",
+          "type": "lesson",
+          "learningTarget": "พูด I don’t understand / Can you speak more slowly? / What does that mean?",
+          "activity": "model สามเจตนา → choose intent → guided speaking",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "survival_core"
+          ],
+          "reviewedSkillIds": [
+            "polite_expressions"
+          ],
+          "prerequisiteNodeIds": [
+            "u02n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u02n04",
+          "code": "4",
+          "order": 4,
+          "globalOrder": 9,
+          "titleEn": "Catch It Slowly",
+          "type": "pronunciation",
+          "learningTarget": "แยกเสียงพูดปกติกับช้าและจับ keyword ใน survival phrases",
+          "activity": "ฟังคู่ normal/slow กด intent แล้ว shadow เฉพาะ keyword stress",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "speech_rate_cues"
+          ],
+          "reviewedSkillIds": [
+            "survival_core"
+          ],
+          "prerequisiteNodeIds": [
+            "u02n03"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u02n05",
+          "code": "5",
+          "order": 5,
+          "globalOrder": 10,
+          "titleEn": "Say It Again",
+          "type": "lesson",
+          "learningTarget": "ขอให้พูดซ้ำและถามว่าจะพูดสิ่งนี้เป็นอังกฤษอย่างไร",
+          "activity": "ฝึก Can you say that again? และ How do you say this in English? กับ object cues",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "repair_more"
+          ],
+          "reviewedSkillIds": [
+            "survival_core"
+          ],
+          "prerequisiteNodeIds": [
+            "u02n03"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u02n06",
+          "code": "6",
+          "order": 6,
+          "globalOrder": 11,
+          "titleEn": "I Need Help",
+          "type": "conversation",
+          "learningTarget": "repair บทสนทนาที่ฟังไม่ทันแล้วปิดด้วย thanks",
+          "activity": "information-desk แบบ beginner-safe 3 turns; มี replay/slow path ทุก turn",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "polite_expressions",
+            "survival_core",
+            "speech_rate_cues",
+            "repair_more"
+          ],
+          "prerequisiteNodeIds": [
+            "u02n01",
+            "u02n03",
+            "u02n04",
+            "u02n05"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        }
+      ]
+    },
+    {
+      "id": "u03",
+      "number": 3,
+      "titleEn": "I Am You Are",
+      "phase": "Ki",
+      "items": [
+        {
+          "id": "u03n01",
+          "code": "1",
+          "order": 1,
+          "globalOrder": 12,
+          "titleEn": "I Am / You Are",
+          "type": "lesson",
+          "learningTarget": "ใช้ I am / You are กับชื่อ บทบาท และความรู้สึก",
+          "activity": "slot board ประกอบ subject + be + complement แล้วพูดข้อมูลจริง/สมมติ",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "be_i_you"
+          ],
+          "reviewedSkillIds": [
+            "introductions"
+          ],
+          "prerequisiteNodeIds": [
+            "u01n02"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u03n02",
+          "code": "2",
+          "order": 2,
+          "globalOrder": 13,
+          "titleEn": "I’m / You’re",
+          "type": "pronunciation",
+          "learningTarget": "ฟังและพูด contraction โดยไม่เสีย subject–be pairing",
+          "activity": "ฟังคู่ full/contraction เลือก transcript แล้ว shadow",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "be_contractions"
+          ],
+          "reviewedSkillIds": [
+            "be_i_you"
+          ],
+          "prerequisiteNodeIds": [
+            "u03n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u03n03",
+          "code": "3",
+          "order": 3,
+          "globalOrder": 14,
+          "titleEn": "Build Be Sentences",
+          "type": "sentence_builder",
+          "learningTarget": "เรียง I/you + am/are + complement ให้ถูก",
+          "activity": "ลาก word tiles แล้วอ่านประโยคที่สร้าง",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "be_i_you",
+            "be_contractions"
+          ],
+          "prerequisiteNodeIds": [
+            "u03n01",
+            "u03n02"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u03n04",
+          "code": "4",
+          "order": 4,
+          "globalOrder": 15,
+          "titleEn": "Not and Questions with Be",
+          "type": "lesson",
+          "learningTarget": "แปลง I/you be เป็นปฏิเสธและคำถาม",
+          "activity": "statement → negative → question ด้วย color-coded be slot",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "be_questions_negatives"
+          ],
+          "reviewedSkillIds": [
+            "be_i_you",
+            "yes_no_maybe"
+          ],
+          "prerequisiteNodeIds": [
+            "u01n04",
+            "u03n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u03n05",
+          "code": "5",
+          "order": 5,
+          "globalOrder": 16,
+          "titleEn": "Switch the Meaning",
+          "type": "say_it",
+          "learningTarget": "พูด statement/negative/question ตาม intent cue",
+          "activity": "ไฟสีเขียว/แดง/เครื่องหมายถามกำหนด form; scaffold fade",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "be_questions_negatives",
+            "be_contractions"
+          ],
+          "prerequisiteNodeIds": [
+            "u03n02",
+            "u03n04"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u03n06",
+          "code": "6",
+          "order": 6,
+          "globalOrder": 17,
+          "titleEn": "Be Form Check",
+          "type": "skill_check",
+          "learningTarget": "แสดง mastery I/you be ผ่าน listening, builder และ speaking",
+          "activity": "3 mechanics: listen_choose, arrange_words, say_it; adaptive retry เฉพาะ form ที่พลาด",
+          "estimatedMinutes": 5,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "be_i_you",
+            "be_contractions",
+            "be_questions_negatives"
+          ],
+          "prerequisiteNodeIds": [
+            "u03n01",
+            "u03n02",
+            "u03n04"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u03n07",
+          "code": "7",
+          "order": 7,
+          "globalOrder": 18,
+          "titleEn": "Meet a Classmate",
+          "type": "conversation",
+          "learningTarget": "ถามและตอบข้อมูล be พื้นฐานใน 3 turns",
+          "activity": "classmate ถามหนึ่งข้อและรับคำถาม Are you…? จากผู้เรียน; มี repair button",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "greetings",
+            "introductions",
+            "be_questions_negatives",
+            "yes_no_maybe"
+          ],
+          "prerequisiteNodeIds": [
+            "u01n01",
+            "u01n02",
+            "u01n04",
+            "u03n04"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        }
+      ]
+    },
+    {
+      "id": "u04",
+      "number": 4,
+      "titleEn": "People & Family",
+      "phase": "Ki",
+      "items": [
+        {
+          "id": "u04n01",
+          "code": "1",
+          "order": 1,
+          "globalOrder": 19,
+          "titleEn": "He / She / It / We / They",
+          "type": "lesson",
+          "learningTarget": "จับคู่คน/สิ่งกับ pronoun และ is/are",
+          "activity": "ภาพกลุ่ม/คน/ของ → pronoun choice → sentence speaking",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "people_pronouns",
+            "people_things_vocab"
+          ],
+          "reviewedSkillIds": [
+            "be_i_you"
+          ],
+          "prerequisiteNodeIds": [
+            "u03n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u04n02",
+          "code": "2",
+          "order": 2,
+          "globalOrder": 20,
+          "titleEn": "People & Things",
+          "type": "emoji_speak",
+          "learningTarget": "พูด known nouns/pronouns จาก emoji อย่างรวดเร็ว",
+          "activity": "emoji burst 8 ใบ; รับ reasonable synonyms ที่อยู่ใน taught set",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "people_things_vocab",
+            "people_pronouns"
+          ],
+          "prerequisiteNodeIds": [
+            "u04n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u04n03",
+          "code": "3",
+          "order": 3,
+          "globalOrder": 21,
+          "titleEn": "Family",
+          "type": "lesson",
+          "learningTarget": "แนะนำสมาชิกด้วย This is my… / He/She is my…",
+          "activity": "family board แบบเลือกตัวละครได้ แล้วพูด 3 introductions",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "family"
+          ],
+          "reviewedSkillIds": [
+            "people_pronouns"
+          ],
+          "prerequisiteNodeIds": [
+            "u04n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u04n04",
+          "code": "4",
+          "order": 4,
+          "globalOrder": 22,
+          "titleEn": "Who Is It?",
+          "type": "describe_it",
+          "learningTarget": "บรรยายคน 2–3 ประโยคจากภาพด้วย known forms",
+          "activity": "guided stem → cue words → bounded-open 3 lines",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "people_pronouns",
+            "family",
+            "be_i_you"
+          ],
+          "prerequisiteNodeIds": [
+            "u03n01",
+            "u04n01",
+            "u04n03"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u04n05",
+          "code": "5",
+          "order": 5,
+          "globalOrder": 23,
+          "titleEn": "People & Family",
+          "type": "say_it",
+          "learningTarget": "เรียกคืนประโยคแนะนำคนจาก prompt ไทย",
+          "activity": "ไทย → อังกฤษ 6 prompts; มี pronoun hint เฉพาะ retry",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "people_pronouns",
+            "family"
+          ],
+          "prerequisiteNodeIds": [
+            "u04n01",
+            "u04n03"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u04n06",
+          "code": "6",
+          "order": 6,
+          "globalOrder": 24,
+          "titleEn": "Meet My Family",
+          "type": "conversation",
+          "learningTarget": "แนะนำคนใกล้ตัวและตอบ follow-up หนึ่งข้อ",
+          "activity": "เลือก avatar family/friend ก่อนเริ่ม; NPC สนทนา 3 turns และมี opt-out",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "introductions",
+            "people_pronouns",
+            "family",
+            "yes_no_maybe"
+          ],
+          "prerequisiteNodeIds": [
+            "u01n02",
+            "u01n04",
+            "u04n01",
+            "u04n03"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        }
+      ]
+    },
+    {
+      "id": "u05",
+      "number": 5,
+      "titleEn": "One Thing or Many",
+      "phase": "Sho",
+      "items": [
+        {
+          "id": "u05n01",
+          "code": "1",
+          "order": 1,
+          "globalOrder": 25,
+          "titleEn": "A, An, One, Many",
+          "type": "lesson",
+          "learningTarget": "เลือก a/an สำหรับหนึ่งชิ้นและเติม plural -s เมื่อมีมากกว่าหนึ่ง",
+          "activity": "5 นาที 2 micro-rounds: (1) a/an กับ singular 4 items (2) one vs 2–4 objects กับ plural -s 4 items; แต่ละรอบมี mastery gate และ retry เฉพาะ family ที่พลาด",
+          "estimatedMinutes": 5,
+          "newSkillIds": [
+            "articles",
+            "plural_s"
+          ],
+          "reviewedSkillIds": [
+            "people_things_vocab"
+          ],
+          "prerequisiteNodeIds": [
+            "u04n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u05n02",
+          "code": "2",
+          "order": 2,
+          "globalOrder": 26,
+          "titleEn": "Hear the Plural Ending",
+          "type": "pronunciation",
+          "learningTarget": "ฟังและออกเสียง plural endings /s/, /z/, /ɪz/ เพื่อไม่ให้ one/many เปลี่ยนความหมาย",
+          "activity": "ฟังคู่ one/many แล้วเลือกจำนวน; tap จุดเสียงท้าย; shadow books /s/, bags /z/, buses /ɪz/; production scoring ต้องพบเสียงท้ายที่ฟังรู้เรื่อง",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "plural_s_sound"
+          ],
+          "reviewedSkillIds": [
+            "plural_s"
+          ],
+          "prerequisiteNodeIds": [
+            "u05n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u05n03",
+          "code": "3",
+          "order": 3,
+          "globalOrder": 27,
+          "titleEn": "One and Many",
+          "type": "lesson",
+          "learningTarget": "ใช้ a/an และ plural -s ใน noun phrases จากจำนวนจริง",
+          "activity": "ภาพจำนวน 1–4 → พูด noun phrase → รอบสุดท้ายไม่มีตัวอักษรช่วย; retry แยก article/plural/sound",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "articles",
+            "plural_s",
+            "plural_s_sound"
+          ],
+          "prerequisiteNodeIds": [
+            "u05n01",
+            "u05n02"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u05n04",
+          "code": "4",
+          "order": 4,
+          "globalOrder": 28,
+          "titleEn": "One or Many",
+          "type": "emoji_speak",
+          "learningTarget": "พูด noun phrase จาก emoji หนึ่ง/หลายชิ้น",
+          "activity": "emoji quantity burst; รับ a/an หรือ number + plural ตามภาพ",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "articles",
+            "plural_s"
+          ],
+          "prerequisiteNodeIds": [
+            "u05n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u05n05",
+          "code": "5",
+          "order": 5,
+          "globalOrder": 29,
+          "titleEn": "Make the Noun Fit",
+          "type": "sentence_builder",
+          "learningTarget": "สร้าง It is a… / They are… โดยใช้ article และ plural ที่สอนแล้ว",
+          "activity": "เลือกภาพ one/many → เรียง It is a… หรือ They are… → อ่าน final sentence; ยังไม่ใช้ these/those",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "articles",
+            "plural_s",
+            "people_pronouns"
+          ],
+          "prerequisiteNodeIds": [
+            "u04n01",
+            "u05n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u05n06",
+          "code": "6",
+          "order": 6,
+          "globalOrder": 30,
+          "titleEn": "Noun Builder Check",
+          "type": "skill_check",
+          "learningTarget": "ผ่าน article, quantity และ plural ใน 3 mechanics",
+          "activity": "4 mechanics: listen_choose plural ending + emoji_label quantity + arrange_words + say_it/read-aloud final noun phrase",
+          "estimatedMinutes": 5,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "articles",
+            "plural_s",
+            "plural_s_sound"
+          ],
+          "prerequisiteNodeIds": [
+            "u05n01",
+            "u05n02"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u05n07",
+          "code": "7",
+          "order": 7,
+          "globalOrder": 31,
+          "titleEn": "What’s in the Bag?",
+          "type": "conversation",
+          "learningTarget": "บอกของหนึ่งชิ้นและหลายชิ้นจากสิ่งที่เห็นในกระเป๋า โดยใช้ It is a/an… และ They are…",
+          "activity": "2 core learner attempts: ระบุภาพ one item แล้วระบุภาพ many items; repair/replay เป็น event ฟรีและไม่แทนคำตอบ",
+          "estimatedMinutes": 3,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "articles",
+            "plural_s",
+            "people_things_vocab",
+            "people_pronouns"
+          ],
+          "prerequisiteNodeIds": [
+            "u04n01",
+            "u05n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        }
+      ]
+    },
+    {
+      "id": "u06",
+      "number": 6,
+      "titleEn": "This That & Description",
+      "phase": "Sho",
+      "items": [
+        {
+          "id": "u06n01",
+          "code": "1",
+          "order": 1,
+          "globalOrder": 32,
+          "titleEn": "This and That",
+          "type": "lesson",
+          "learningTarget": "ใช้ this/that กับของหนึ่งชิ้นใกล้/ไกล",
+          "activity": "near/far camera cues → point, choose, speak",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "demonstratives_singular"
+          ],
+          "reviewedSkillIds": [
+            "articles"
+          ],
+          "prerequisiteNodeIds": [
+            "u05n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u06n02",
+          "code": "2",
+          "order": 2,
+          "globalOrder": 33,
+          "titleEn": "This or That?",
+          "type": "pronunciation",
+          "learningTarget": "ฟัง /ð/ และ vowel cue ใน this/that ให้แยกคำได้",
+          "activity": "listen-select near/far card แล้ว shadow ช้า→ปกติ",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "demonstrative_sound"
+          ],
+          "reviewedSkillIds": [
+            "demonstratives_singular"
+          ],
+          "prerequisiteNodeIds": [
+            "u06n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u06n03",
+          "code": "3",
+          "order": 3,
+          "globalOrder": 34,
+          "titleEn": "These and Those",
+          "type": "lesson",
+          "learningTarget": "ขยาย near/far ไปหลายชิ้น",
+          "activity": "contrast grid 2×2: near/far × one/many แล้วพูด",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "demonstratives_plural"
+          ],
+          "reviewedSkillIds": [
+            "demonstratives_singular",
+            "plural_s"
+          ],
+          "prerequisiteNodeIds": [
+            "u05n01",
+            "u06n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u06n04",
+          "code": "4",
+          "order": 4,
+          "globalOrder": 35,
+          "titleEn": "Point and Say",
+          "type": "describe_it",
+          "learningTarget": "ชี้และพูด 2 lines จาก scene ด้วย demonstratives",
+          "activity": "guided → cue-only: This is… / Those are…",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "demonstratives_singular",
+            "demonstratives_plural"
+          ],
+          "prerequisiteNodeIds": [
+            "u06n01",
+            "u06n03"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u06n05",
+          "code": "5",
+          "order": 5,
+          "globalOrder": 36,
+          "titleEn": "Color and Size",
+          "type": "lesson",
+          "learningTarget": "ใช้ basic color/size adjectives กับ nouns",
+          "activity": "5 นาที 2 micro-rounds: colors 4 คำ แล้ว size 2 คำ; รอบละ model→contrast→เลือก object→พูด; mastery gate 3/4 และ retry เฉพาะคำที่พลาด",
+          "estimatedMinutes": 5,
+          "newSkillIds": [
+            "basic_adjectives"
+          ],
+          "reviewedSkillIds": [
+            "articles",
+            "demonstratives_singular"
+          ],
+          "prerequisiteNodeIds": [
+            "u05n01",
+            "u06n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u06n06",
+          "code": "6",
+          "order": 6,
+          "globalOrder": 37,
+          "titleEn": "A Small Blue Bag",
+          "type": "sentence_builder",
+          "learningTarget": "เรียง article + size + color + noun",
+          "activity": "tile builder เริ่ม 3 slots แล้วเพิ่ม 4 slots; read aloud",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "adjective_order"
+          ],
+          "reviewedSkillIds": [
+            "basic_adjectives",
+            "articles"
+          ],
+          "prerequisiteNodeIds": [
+            "u05n01",
+            "u06n05"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u06n07",
+          "code": "7",
+          "order": 7,
+          "globalOrder": 38,
+          "titleEn": "Show Me the Right One",
+          "type": "skill_check",
+          "learningTarget": "เลือกและบรรยาย object ที่ตรง cue",
+          "activity": "4 mechanics: listen_choose, point_select, arrange_words, say_it",
+          "estimatedMinutes": 5,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "demonstratives_singular",
+            "demonstratives_plural",
+            "basic_adjectives",
+            "adjective_order"
+          ],
+          "prerequisiteNodeIds": [
+            "u06n01",
+            "u06n03",
+            "u06n05",
+            "u06n06"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        }
+      ]
+    },
+    {
+      "id": "u07",
+      "number": 7,
+      "titleEn": "My Things & Your Things",
+      "phase": "Sho",
+      "items": [
+        {
+          "id": "u07n01",
+          "code": "1",
+          "order": 1,
+          "globalOrder": 39,
+          "titleEn": "My, Your, His, Her",
+          "type": "lesson",
+          "learningTarget": "ใช้ possessive adjectives ตาม owner cue",
+          "activity": "owner portrait + object → choose possessive → speak phrase",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "possessive_adjectives"
+          ],
+          "reviewedSkillIds": [
+            "people_pronouns",
+            "family"
+          ],
+          "prerequisiteNodeIds": [
+            "u04n01",
+            "u04n03"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u07n02",
+          "code": "2",
+          "order": 2,
+          "globalOrder": 40,
+          "titleEn": "Whose Things Without Whose",
+          "type": "describe_it",
+          "learningTarget": "บรรยายของ 3 ชิ้นว่าเป็นของใครโดยไม่ต้องถาม Whose",
+          "activity": "guided “This is her…” → cue-only 3 objects",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "possessive_adjectives",
+            "demonstratives_singular",
+            "basic_adjectives"
+          ],
+          "prerequisiteNodeIds": [
+            "u06n01",
+            "u06n05",
+            "u07n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u07n03",
+          "code": "3",
+          "order": 3,
+          "globalOrder": 41,
+          "titleEn": "Have and Has",
+          "type": "lesson",
+          "learningTarget": "ใช้ I/you/we/they have และ he/she has",
+          "activity": "subject cards → choose have/has → personal/simulated line",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "have_has"
+          ],
+          "reviewedSkillIds": [
+            "people_pronouns",
+            "possessive_adjectives"
+          ],
+          "prerequisiteNodeIds": [
+            "u04n01",
+            "u07n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u07n04",
+          "code": "4",
+          "order": 4,
+          "globalOrder": 42,
+          "titleEn": "Owner + Thing",
+          "type": "sentence_builder",
+          "learningTarget": "สร้างประโยค possessive หรือ have/has ตาม meaning",
+          "activity": "เลือก meaning card แล้ว build หนึ่งในสอง frames",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "possessive_adjectives",
+            "have_has"
+          ],
+          "prerequisiteNodeIds": [
+            "u07n01",
+            "u07n03"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u07n05",
+          "code": "5",
+          "order": 5,
+          "globalOrder": 43,
+          "titleEn": "My Things & Your Things",
+          "type": "say_it",
+          "learningTarget": "แปล prompt เจ้าของ/สิ่งที่มีเป็นอังกฤษ",
+          "activity": "6 prompts; first-word hint เฉพาะ retry",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "possessive_adjectives",
+            "have_has"
+          ],
+          "prerequisiteNodeIds": [
+            "u07n01",
+            "u07n03"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u07n06",
+          "code": "6",
+          "order": 6,
+          "globalOrder": 44,
+          "titleEn": "Lost and Found Lite",
+          "type": "conversation",
+          "learningTarget": "บอกลักษณะของและว่าใครมีของนั้นใน 3 turns",
+          "activity": "NPC ถาม object/owner/color ทีละข้อ; ไม่ใช้ Whose",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "possessive_adjectives",
+            "have_has",
+            "basic_adjectives",
+            "demonstratives_singular"
+          ],
+          "prerequisiteNodeIds": [
+            "u06n01",
+            "u06n05",
+            "u07n01",
+            "u07n03"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        }
+      ]
+    },
+    {
+      "id": "u08",
+      "number": 8,
+      "titleEn": "Numbers Age & Spelling",
+      "phase": "Sho",
+      "items": [
+        {
+          "id": "u08n01",
+          "code": "1",
+          "order": 1,
+          "globalOrder": 45,
+          "titleEn": "Numbers 0–10",
+          "type": "lesson",
+          "learningTarget": "พูดและฟังเลข 0–10 เป็นกลุ่ม",
+          "activity": "5 นาที 3 micro-rounds: 0–3, 4–7, 8–10; แต่ละรอบ count→digit-to-voice→voice-to-digit และผ่าน 3/4 ก่อนต่อ; adaptive retry เฉพาะชุดที่พลาด",
+          "estimatedMinutes": 5,
+          "newSkillIds": [
+            "numbers_0_10"
+          ],
+          "reviewedSkillIds": [
+            "plural_s"
+          ],
+          "prerequisiteNodeIds": [
+            "u05n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u08n02",
+          "code": "2",
+          "order": 2,
+          "globalOrder": 46,
+          "titleEn": "Make Five Clear",
+          "type": "pronunciation",
+          "learningTarget": "ฟังและออกเสียง final /v/ ใน five ให้เลขไม่ถูกตัดเป็นเสียงคลุมเครือ",
+          "activity": "ฟัง five แบบครบ/ตัดเสียงท้ายแล้วเลือก digit; ดู voiced-fricative cue; อัด five ใน digit sequences และผ่าน final-/v/ intelligibility score",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "digit_listening"
+          ],
+          "reviewedSkillIds": [
+            "numbers_0_10"
+          ],
+          "prerequisiteNodeIds": [
+            "u08n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u08n03",
+          "code": "3",
+          "order": 3,
+          "globalOrder": 47,
+          "titleEn": "Numbers 11–20 and Age",
+          "type": "lesson",
+          "learningTarget": "พูด teens และถาม/ตอบ How old are you?",
+          "activity": "5 นาที 3 micro-rounds: 11–15, 16–20, แล้ว age transfer; teen-family cue ก่อนตัด scaffold; adaptive retry เฉพาะ number family",
+          "estimatedMinutes": 5,
+          "newSkillIds": [
+            "numbers_11_20_age"
+          ],
+          "reviewedSkillIds": [
+            "numbers_0_10",
+            "yes_no_maybe"
+          ],
+          "prerequisiteNodeIds": [
+            "u01n04",
+            "u08n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u08n04",
+          "code": "4",
+          "order": 4,
+          "globalOrder": 48,
+          "titleEn": "Birthday Board",
+          "type": "story_bites",
+          "learningTarget": "จับอายุของตัวละครจากคลิปสั้น",
+          "activity": "45-second clip; match 3 names to ages and repeat one line",
+          "estimatedMinutes": 3,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "numbers_11_20_age",
+            "introductions"
+          ],
+          "prerequisiteNodeIds": [
+            "u01n02",
+            "u08n03"
+          ],
+          "comingSoon": true,
+          "availability": "coming_soon"
+        },
+        {
+          "id": "u08n05",
+          "code": "5",
+          "order": 5,
+          "globalOrder": 49,
+          "titleEn": "Spell My Name",
+          "type": "lesson",
+          "learningTarget": "ถาม How do you spell that? และสะกดชื่อ/รหัสปลอดภัย",
+          "activity": "model alphabet chunks; spell fictional names and generated ID only",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "spelling_details"
+          ],
+          "reviewedSkillIds": [
+            "introductions",
+            "repair_more",
+            "numbers_0_10"
+          ],
+          "prerequisiteNodeIds": [
+            "u01n02",
+            "u02n05",
+            "u08n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u08n06",
+          "code": "6",
+          "order": 6,
+          "globalOrder": 50,
+          "titleEn": "Number & Spelling Check",
+          "type": "skill_check",
+          "learningTarget": "ผ่าน 0–20, age และ spelling ใน 4 mechanics",
+          "activity": "listen_choose + type_digits + say_it + arrange_letters",
+          "estimatedMinutes": 5,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "numbers_0_10",
+            "digit_listening",
+            "numbers_11_20_age",
+            "spelling_details"
+          ],
+          "prerequisiteNodeIds": [
+            "u08n01",
+            "u08n02",
+            "u08n03",
+            "u08n05"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u08n07",
+          "code": "7",
+          "order": 7,
+          "globalOrder": 51,
+          "titleEn": "Join the Class Lite",
+          "type": "conversation",
+          "learningTarget": "บอกชื่อ อายุ และสะกดชื่อใน 3 turns",
+          "activity": "teacher asks name/age/spelling; generated profile default และ personal opt-in",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "introductions",
+            "numbers_11_20_age",
+            "spelling_details",
+            "polite_expressions"
+          ],
+          "prerequisiteNodeIds": [
+            "u01n02",
+            "u02n01",
+            "u08n03",
+            "u08n05"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        }
+      ]
+    },
+    {
+      "id": "u09",
+      "number": 9,
+      "titleEn": "Time & Simple Information",
+      "phase": "Sho",
+      "items": [
+        {
+          "id": "u09n01",
+          "code": "1",
+          "order": 1,
+          "globalOrder": 52,
+          "titleEn": "Numbers 20–100",
+          "type": "lesson",
+          "learningTarget": "สร้างหลักสิบและเลขผสมจนถึง 100",
+          "activity": "tens ladder → mixed numbers → speak generated values",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "numbers_20_100"
+          ],
+          "reviewedSkillIds": [
+            "numbers_11_20_age"
+          ],
+          "prerequisiteNodeIds": [
+            "u08n03"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u09n02",
+          "code": "2",
+          "order": 2,
+          "globalOrder": 53,
+          "titleEn": "Teens or Tens?",
+          "type": "pronunciation",
+          "learningTarget": "ฟัง stress เพื่อแยก thirteen/thirty และชุดคล้ายกัน",
+          "activity": "contrast audio + stress tap + number selection → coached shadow → record teen/tens pair พร้อม stress/intelligibility feedback และ targeted retry",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "teen_tens_listening"
+          ],
+          "reviewedSkillIds": [
+            "numbers_11_20_age",
+            "numbers_20_100"
+          ],
+          "prerequisiteNodeIds": [
+            "u08n03",
+            "u09n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u09n03",
+          "code": "3",
+          "order": 3,
+          "globalOrder": 54,
+          "titleEn": "Telling Time",
+          "type": "lesson",
+          "learningTarget": "ถาม/บอก hour และ half-hour",
+          "activity": "analog/digital clock match แล้วพูด What time… / It’s…",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "telling_time"
+          ],
+          "reviewedSkillIds": [
+            "numbers_20_100"
+          ],
+          "prerequisiteNodeIds": [
+            "u09n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u09n04",
+          "code": "4",
+          "order": 4,
+          "globalOrder": 55,
+          "titleEn": "The Class Starts at Seven",
+          "type": "story_bites",
+          "learningTarget": "จับเวลา 2 รายการจากคลิปประกาศสั้น",
+          "activity": "ฟัง 45-second schedule twice; gist แล้ว detail",
+          "estimatedMinutes": 3,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "telling_time",
+            "speech_rate_cues"
+          ],
+          "prerequisiteNodeIds": [
+            "u02n04",
+            "u09n03"
+          ],
+          "comingSoon": true,
+          "availability": "coming_soon"
+        },
+        {
+          "id": "u09n05",
+          "code": "5",
+          "order": 5,
+          "globalOrder": 56,
+          "titleEn": "Money and Prices",
+          "type": "lesson",
+          "learningTarget": "ถาม How much is it? ตอบราคา และขอของด้วย This, please",
+          "activity": "price tags → question/answer → choose one item",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "price_request"
+          ],
+          "reviewedSkillIds": [
+            "numbers_20_100",
+            "demonstratives_singular",
+            "polite_expressions"
+          ],
+          "prerequisiteNodeIds": [
+            "u02n01",
+            "u06n01",
+            "u09n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u09n06",
+          "code": "6",
+          "order": 6,
+          "globalOrder": 57,
+          "titleEn": "Time and Price",
+          "type": "say_it",
+          "learningTarget": "ดึงคำถาม/คำตอบเวลาและราคาจาก prompt ไทย",
+          "activity": "ไทย→อังกฤษ; audio number check แทรกหนึ่งรอบ",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "telling_time",
+            "price_request",
+            "teen_tens_listening"
+          ],
+          "prerequisiteNodeIds": [
+            "u09n02",
+            "u09n03",
+            "u09n05"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u09n07",
+          "code": "7",
+          "order": 7,
+          "globalOrder": 58,
+          "titleEn": "Buy One Thing",
+          "type": "conversation",
+          "learningTarget": "ขอของหนึ่งชิ้น ถามราคา ตอบรับ/ปฏิเสธ และขอบคุณ",
+          "activity": "shop NPC 4 turns max; no size/payment/negotiation",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "price_request",
+            "polite_expressions",
+            "yes_no_maybe",
+            "numbers_20_100"
+          ],
+          "prerequisiteNodeIds": [
+            "u01n04",
+            "u02n01",
+            "u09n01",
+            "u09n05"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        }
+      ]
+    },
+    {
+      "id": "u10",
+      "number": 10,
+      "titleEn": "What I Like and Have",
+      "phase": "Sho",
+      "items": [
+        {
+          "id": "u10n01",
+          "code": "1",
+          "order": 1,
+          "globalOrder": 59,
+          "titleEn": "Likes and Dislikes",
+          "type": "lesson",
+          "learningTarget": "ใช้ I like / I don’t like กับ known nouns",
+          "activity": "choice cards → positive/negative lines → personal option",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "likes_dislikes"
+          ],
+          "reviewedSkillIds": [
+            "people_things_vocab"
+          ],
+          "prerequisiteNodeIds": [
+            "u04n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u10n02",
+          "code": "2",
+          "order": 2,
+          "globalOrder": 60,
+          "titleEn": "Food and Things",
+          "type": "emoji_speak",
+          "learningTarget": "เรียกคืน known nouns เพื่อใช้กับ preference",
+          "activity": "emoji burst แล้วต่อยอดหนึ่งคำเป็น I like/don’t like",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "people_things_vocab",
+            "likes_dislikes"
+          ],
+          "prerequisiteNodeIds": [
+            "u04n01",
+            "u10n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u10n03",
+          "code": "3",
+          "order": 3,
+          "globalOrder": 61,
+          "titleEn": "Do You Like...?",
+          "type": "lesson",
+          "learningTarget": "ถาม/ตอบ Do you like…? Yes, I do / No, I don’t",
+          "activity": "statement→question transform และ partner-card answers",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "like_questions"
+          ],
+          "reviewedSkillIds": [
+            "likes_dislikes",
+            "yes_no_maybe"
+          ],
+          "prerequisiteNodeIds": [
+            "u01n04",
+            "u10n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u10n04",
+          "code": "4",
+          "order": 4,
+          "globalOrder": 62,
+          "titleEn": "Max Likes Tea",
+          "type": "story_bites",
+          "learningTarget": "จับว่าใครชอบ/ไม่ชอบอะไรจาก clip",
+          "activity": "50-second two-speaker clip; gist + person-item match",
+          "estimatedMinutes": 3,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "like_questions",
+            "likes_dislikes"
+          ],
+          "prerequisiteNodeIds": [
+            "u10n01",
+            "u10n03"
+          ],
+          "comingSoon": true,
+          "availability": "coming_soon"
+        },
+        {
+          "id": "u10n05",
+          "code": "5",
+          "order": 5,
+          "globalOrder": 63,
+          "titleEn": "Want, Need, Have",
+          "type": "lesson",
+          "learningTarget": "แยก I want / I need / I have ตาม intent",
+          "activity": "intent icons → choose verb → speak object line",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "want_need_have"
+          ],
+          "reviewedSkillIds": [
+            "have_has",
+            "polite_expressions"
+          ],
+          "prerequisiteNodeIds": [
+            "u02n01",
+            "u07n03"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u10n06",
+          "code": "6",
+          "order": 6,
+          "globalOrder": 64,
+          "titleEn": "Three Lines About Me",
+          "type": "sentence_builder",
+          "learningTarget": "สร้าง like/want-or-need/have จาก choices",
+          "activity": "เลือก 3 content cards แล้ว build/read three lines",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "likes_dislikes",
+            "want_need_have"
+          ],
+          "prerequisiteNodeIds": [
+            "u10n01",
+            "u10n05"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u10n07",
+          "code": "7",
+          "order": 7,
+          "globalOrder": 65,
+          "titleEn": "Order Coffee Lite",
+          "type": "conversation",
+          "learningTarget": "ขอเครื่องดื่ม ตอบหนึ่งตัวเลือก และขอบคุณใน 3 turns",
+          "activity": "barista offers coffee/tea and small/big; accept I want/need/This please; no customizations/payment",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "want_need_have",
+            "polite_expressions",
+            "basic_adjectives",
+            "yes_no_maybe"
+          ],
+          "prerequisiteNodeIds": [
+            "u01n04",
+            "u02n01",
+            "u06n05",
+            "u10n05"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        }
+      ]
+    },
+    {
+      "id": "u11",
+      "number": 11,
+      "titleEn": "What I Can Do",
+      "phase": "Sho",
+      "items": [
+        {
+          "id": "u11n01",
+          "code": "1",
+          "order": 1,
+          "globalOrder": 66,
+          "titleEn": "Action Verbs",
+          "type": "lesson",
+          "learningTarget": "เข้าใจและพูด eat, drink, sleep, walk, run, swim, cook, read, write",
+          "activity": "5 นาที 3 micro-rounds: daily actions (eat/drink/sleep), movement (walk/run/swim), skills (cook/read/write); TPR→choose→speak; mastery 3/3 ต่อ family และ adaptive retry",
+          "estimatedMinutes": 5,
+          "newSkillIds": [
+            "action_verbs"
+          ],
+          "reviewedSkillIds": [
+            "likes_dislikes"
+          ],
+          "prerequisiteNodeIds": [
+            "u10n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u11n02",
+          "code": "2",
+          "order": 2,
+          "globalOrder": 67,
+          "titleEn": "Actions",
+          "type": "emoji_speak",
+          "learningTarget": "เรียกคืน action verbs จาก emoji/animation",
+          "activity": "8 rapid cues; synonyms accepted only if taught/meaning-equivalent",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "action_verbs"
+          ],
+          "prerequisiteNodeIds": [
+            "u11n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u11n03",
+          "code": "3",
+          "order": 3,
+          "globalOrder": 68,
+          "titleEn": "Can or Can’t?",
+          "type": "pronunciation",
+          "learningTarget": "ฟัง stress/final cue เพื่อแยก can กับ can’t",
+          "activity": "audio contrast in short sentences; select ability then shadow",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "can_cant_listening"
+          ],
+          "reviewedSkillIds": [
+            "action_verbs"
+          ],
+          "prerequisiteNodeIds": [
+            "u11n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u11n04",
+          "code": "4",
+          "order": 4,
+          "globalOrder": 69,
+          "titleEn": "Can / Can’t",
+          "type": "lesson",
+          "learningTarget": "บอกและถามความสามารถพร้อม short answers",
+          "activity": "ability cards → statement/negative/question → personal choice",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "can_ability"
+          ],
+          "reviewedSkillIds": [
+            "action_verbs",
+            "yes_no_maybe",
+            "can_cant_listening"
+          ],
+          "prerequisiteNodeIds": [
+            "u01n04",
+            "u11n01",
+            "u11n03"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u11n05",
+          "code": "5",
+          "order": 5,
+          "globalOrder": 70,
+          "titleEn": "What Can They Do?",
+          "type": "describe_it",
+          "learningTarget": "บรรยายความสามารถของคนในภาพ 3 lines",
+          "activity": "guided stem → cue-only → bounded-open",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "can_ability",
+            "people_pronouns",
+            "action_verbs"
+          ],
+          "prerequisiteNodeIds": [
+            "u04n01",
+            "u11n01",
+            "u11n04"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u11n06",
+          "code": "6",
+          "order": 6,
+          "globalOrder": 71,
+          "titleEn": "Three Things About Me",
+          "type": "skill_check",
+          "learningTarget": "ผ่าน like/have/can ด้วย 4 mechanics",
+          "activity": "emoji_label + arrange_words + say_it + describe_cued",
+          "estimatedMinutes": 5,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "likes_dislikes",
+            "want_need_have",
+            "can_ability",
+            "action_verbs"
+          ],
+          "prerequisiteNodeIds": [
+            "u10n01",
+            "u10n05",
+            "u11n01",
+            "u11n04"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u11n07",
+          "code": "7",
+          "order": 7,
+          "globalOrder": 72,
+          "titleEn": "Talk About Yourself",
+          "type": "conversation",
+          "learningTarget": "บอก like, possession/want และ ability พร้อม follow-up",
+          "activity": "NPC 4 learner turns; ผู้เรียนเลือก 3 facts ก่อนเริ่ม",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "likes_dislikes",
+            "want_need_have",
+            "can_ability",
+            "like_questions"
+          ],
+          "prerequisiteNodeIds": [
+            "u10n01",
+            "u10n03",
+            "u10n05",
+            "u11n04"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        }
+      ]
+    },
+    {
+      "id": "u12",
+      "number": 12,
+      "titleEn": "What I Do Every Day",
+      "phase": "Ten",
+      "items": [
+        {
+          "id": "u12n01",
+          "code": "1",
+          "order": 1,
+          "globalOrder": 73,
+          "titleEn": "My Day",
+          "type": "lesson",
+          "learningTarget": "ใช้ I + routine verb + time",
+          "activity": "timeline cards → arrange morning/evening → speak 3 lines",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "routine_i"
+          ],
+          "reviewedSkillIds": [
+            "action_verbs",
+            "telling_time"
+          ],
+          "prerequisiteNodeIds": [
+            "u09n03",
+            "u11n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u12n02",
+          "code": "2",
+          "order": 2,
+          "globalOrder": 74,
+          "titleEn": "A Simple Morning",
+          "type": "story_bites",
+          "learningTarget": "จับลำดับกิจวัตรและเวลาใน clip",
+          "activity": "50-second clip; order 3 scenes and answer one time detail",
+          "estimatedMinutes": 3,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "routine_i",
+            "telling_time"
+          ],
+          "prerequisiteNodeIds": [
+            "u09n03",
+            "u12n01"
+          ],
+          "comingSoon": true,
+          "availability": "coming_soon"
+        },
+        {
+          "id": "u12n03",
+          "code": "3",
+          "order": 3,
+          "globalOrder": 75,
+          "titleEn": "He / She Every Day",
+          "type": "lesson",
+          "learningTarget": "เติม third-person -s กับ routine verbs",
+          "activity": "I-line → he/she-line transformations with meaning cue",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "third_person_s"
+          ],
+          "reviewedSkillIds": [
+            "routine_i",
+            "people_pronouns"
+          ],
+          "prerequisiteNodeIds": [
+            "u04n01",
+            "u12n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u12n04",
+          "code": "4",
+          "order": 4,
+          "globalOrder": 76,
+          "titleEn": "Final -s Counts",
+          "type": "pronunciation",
+          "learningTarget": "ฟัง presence/absence ของ final -s ที่เปลี่ยน subject agreement",
+          "activity": "listen-select I vs she; waveform hint on retry; shadow",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "third_person_s_listening"
+          ],
+          "reviewedSkillIds": [
+            "third_person_s"
+          ],
+          "prerequisiteNodeIds": [
+            "u12n03"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u12n05",
+          "code": "5",
+          "order": 5,
+          "globalOrder": 77,
+          "titleEn": "Change I to She",
+          "type": "sentence_builder",
+          "learningTarget": "แปลง subject, verb และ time phrase พร้อมกัน",
+          "activity": "drag transform board then read final line",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "routine_i",
+            "third_person_s",
+            "third_person_s_listening"
+          ],
+          "prerequisiteNodeIds": [
+            "u12n01",
+            "u12n03",
+            "u12n04"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u12n06",
+          "code": "6",
+          "order": 6,
+          "globalOrder": 78,
+          "titleEn": "Do / Does Questions",
+          "type": "lesson",
+          "learningTarget": "สร้าง questions/negatives ด้วย do/does + base verb",
+          "activity": "statement→question/negative ด้วย base-verb reset animation",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "simple_questions"
+          ],
+          "reviewedSkillIds": [
+            "third_person_s",
+            "like_questions"
+          ],
+          "prerequisiteNodeIds": [
+            "u10n03",
+            "u12n03"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u12n07",
+          "code": "7",
+          "order": 7,
+          "globalOrder": 79,
+          "titleEn": "Daily Routine Check",
+          "type": "skill_check",
+          "learningTarget": "แยก I/he/she statements, negatives และ questions",
+          "activity": "listen_choose + arrange_words + transform + say_it",
+          "estimatedMinutes": 5,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "routine_i",
+            "third_person_s",
+            "third_person_s_listening",
+            "simple_questions"
+          ],
+          "prerequisiteNodeIds": [
+            "u12n01",
+            "u12n03",
+            "u12n04",
+            "u12n06"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u12n08",
+          "code": "8",
+          "order": 8,
+          "globalOrder": 80,
+          "titleEn": "A Short Day Chat",
+          "type": "conversation",
+          "learningTarget": "ถามและตอบ routine/time ใน 3 turns",
+          "activity": "buddy asks one routine; learner asks one Do you…?; close with time",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "routine_i",
+            "simple_questions",
+            "telling_time"
+          ],
+          "prerequisiteNodeIds": [
+            "u09n03",
+            "u12n01",
+            "u12n06"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        }
+      ]
+    },
+    {
+      "id": "u13",
+      "number": 13,
+      "titleEn": "What Is Happening Now",
+      "phase": "Ten",
+      "items": [
+        {
+          "id": "u13n01",
+          "code": "1",
+          "order": 1,
+          "globalOrder": 81,
+          "titleEn": "Action + ing",
+          "type": "lesson",
+          "learningTarget": "สร้าง -ing forms ของ verbs ที่สอนแล้ว",
+          "activity": "verb card → animate → choose/write -ing form",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "ing_forms"
+          ],
+          "reviewedSkillIds": [
+            "action_verbs"
+          ],
+          "prerequisiteNodeIds": [
+            "u11n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u13n02",
+          "code": "2",
+          "order": 2,
+          "globalOrder": 82,
+          "titleEn": "What’s Happening?",
+          "type": "emoji_speak",
+          "learningTarget": "พูด -ing action จาก animation",
+          "activity": "rapid motion cues; word/chunk output only",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "ing_forms",
+            "action_verbs"
+          ],
+          "prerequisiteNodeIds": [
+            "u11n01",
+            "u13n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u13n03",
+          "code": "3",
+          "order": 3,
+          "globalOrder": 83,
+          "titleEn": "Be + ing",
+          "type": "lesson",
+          "learningTarget": "สร้าง present continuous statements",
+          "activity": "subject + be + ing slot builder then speak scene",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "present_continuous"
+          ],
+          "reviewedSkillIds": [
+            "ing_forms",
+            "people_pronouns",
+            "be_i_you"
+          ],
+          "prerequisiteNodeIds": [
+            "u03n01",
+            "u04n01",
+            "u13n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u13n04",
+          "code": "4",
+          "order": 4,
+          "globalOrder": 84,
+          "titleEn": "Look What They’re Doing",
+          "type": "story_bites",
+          "learningTarget": "จับว่าแต่ละคนกำลังทำอะไรจาก clip",
+          "activity": "45-second silent+voice clip; person-action match and one repeat",
+          "estimatedMinutes": 3,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "present_continuous",
+            "people_pronouns"
+          ],
+          "prerequisiteNodeIds": [
+            "u04n01",
+            "u13n03"
+          ],
+          "comingSoon": true,
+          "availability": "coming_soon"
+        },
+        {
+          "id": "u13n05",
+          "code": "5",
+          "order": 5,
+          "globalOrder": 85,
+          "titleEn": "Make It Happening Now",
+          "type": "sentence_builder",
+          "learningTarget": "สร้าง/แก้ be + ing sentences จากภาพ",
+          "activity": "arrange words, catch missing be, then read aloud",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "present_continuous",
+            "ing_forms"
+          ],
+          "prerequisiteNodeIds": [
+            "u13n01",
+            "u13n03"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u13n06",
+          "code": "6",
+          "order": 6,
+          "globalOrder": 86,
+          "titleEn": "Is She...? What Are They Doing?",
+          "type": "lesson",
+          "learningTarget": "ถามและปฏิเสธ present continuous",
+          "activity": "scene → yes/no question, wh-question หรือ negative ตาม intent",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "continuous_questions"
+          ],
+          "reviewedSkillIds": [
+            "present_continuous",
+            "be_questions_negatives"
+          ],
+          "prerequisiteNodeIds": [
+            "u03n04",
+            "u13n03"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u13n07",
+          "code": "7",
+          "order": 7,
+          "globalOrder": 87,
+          "titleEn": "Now or Every Day?",
+          "type": "skill_check",
+          "learningTarget": "เลือก present simple/continuous แล้วผลิต form",
+          "activity": "picture/time-cue choose + arrange_words + say_it + listen_choose",
+          "estimatedMinutes": 5,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "routine_i",
+            "simple_questions",
+            "present_continuous",
+            "continuous_questions"
+          ],
+          "prerequisiteNodeIds": [
+            "u12n01",
+            "u12n06",
+            "u13n03",
+            "u13n06"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        }
+      ]
+    },
+    {
+      "id": "u14",
+      "number": 14,
+      "titleEn": "Ask the Right Question",
+      "phase": "Ten",
+      "items": [
+        {
+          "id": "u14n01",
+          "code": "1",
+          "order": 1,
+          "globalOrder": 88,
+          "titleEn": "What or Who",
+          "type": "lesson",
+          "learningTarget": "เลือก what สำหรับสิ่ง/ข้อมูล และ who สำหรับคน",
+          "activity": "answer card first → choose question word → speak full question",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "q_what_who"
+          ],
+          "reviewedSkillIds": [
+            "people_pronouns",
+            "demonstratives_singular"
+          ],
+          "prerequisiteNodeIds": [
+            "u04n01",
+            "u06n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u14n02",
+          "code": "2",
+          "order": 2,
+          "globalOrder": 89,
+          "titleEn": "Who Has the Book?",
+          "type": "story_bites",
+          "learningTarget": "ตาม clue คน/สิ่งจาก clip ด้วย what/who",
+          "activity": "45-second mystery แบบเลือก clue path: ผู้เรียนเลือกฟัง clue คนหรือของ → mark suspect → พูดคำตอบ Who has the book? ด้วย taught form; replay ได้หนึ่งครั้ง",
+          "estimatedMinutes": 3,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "q_what_who",
+            "have_has"
+          ],
+          "prerequisiteNodeIds": [
+            "u07n03",
+            "u14n01"
+          ],
+          "comingSoon": true,
+          "availability": "coming_soon"
+        },
+        {
+          "id": "u14n03",
+          "code": "3",
+          "order": 3,
+          "globalOrder": 90,
+          "titleEn": "Where or When",
+          "type": "lesson",
+          "learningTarget": "ถามสถานที่หรือเวลาโดยใช้ frames ที่รู้",
+          "activity": "place/time answer cards → build matching question",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "q_where_when"
+          ],
+          "reviewedSkillIds": [
+            "telling_time",
+            "simple_questions"
+          ],
+          "prerequisiteNodeIds": [
+            "u09n03",
+            "u12n06"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u14n04",
+          "code": "4",
+          "order": 4,
+          "globalOrder": 91,
+          "titleEn": "Question Melody",
+          "type": "pronunciation",
+          "learningTarget": "ฟัง statement vs question intonation เพื่อจับ intent",
+          "activity": "listen-select intent, mark focus word, shadow",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "question_intonation"
+          ],
+          "reviewedSkillIds": [
+            "q_what_who",
+            "q_where_when"
+          ],
+          "prerequisiteNodeIds": [
+            "u14n01",
+            "u14n03"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u14n05",
+          "code": "5",
+          "order": 5,
+          "globalOrder": 92,
+          "titleEn": "How, How Old, How Much",
+          "type": "lesson",
+          "learningTarget": "เลือก how-family ตาม age/price/state และรักษา How are you?",
+          "activity": "answer type → choose fixed frame → ask aloud",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "q_how_family"
+          ],
+          "reviewedSkillIds": [
+            "numbers_11_20_age",
+            "price_request",
+            "yes_no_maybe"
+          ],
+          "prerequisiteNodeIds": [
+            "u01n04",
+            "u08n03",
+            "u09n05"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u14n06",
+          "code": "6",
+          "order": 6,
+          "globalOrder": 93,
+          "titleEn": "Match Question to Answer",
+          "type": "sentence_builder",
+          "learningTarget": "สร้าง question จาก answer card ด้วย known auxiliaries",
+          "activity": "match pair → arrange full question → read aloud",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "q_what_who",
+            "q_where_when",
+            "q_how_family",
+            "simple_questions"
+          ],
+          "prerequisiteNodeIds": [
+            "u12n06",
+            "u14n01",
+            "u14n03",
+            "u14n05"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u14n07",
+          "code": "7",
+          "order": 7,
+          "globalOrder": 94,
+          "titleEn": "Ask the Right Question",
+          "type": "skill_check",
+          "learningTarget": "ผ่าน 5 question families ใน 4 mechanics",
+          "activity": "listen_choose + answer_match + arrange_words + say_it",
+          "estimatedMinutes": 5,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "q_what_who",
+            "q_where_when",
+            "q_how_family",
+            "question_intonation",
+            "simple_questions"
+          ],
+          "prerequisiteNodeIds": [
+            "u12n06",
+            "u14n01",
+            "u14n03",
+            "u14n04",
+            "u14n05"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        }
+      ]
+    },
+    {
+      "id": "u15",
+      "number": 15,
+      "titleEn": "Things and Places",
+      "phase": "Ten",
+      "items": [
+        {
+          "id": "u15n01",
+          "code": "1",
+          "order": 1,
+          "globalOrder": 95,
+          "titleEn": "There Is / There Are",
+          "type": "lesson",
+          "learningTarget": "บอกว่ามีหนึ่งหรือหลายสิ่งใน scene",
+          "activity": "scene count → choose is/are → speak sentence",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "there_is_are"
+          ],
+          "reviewedSkillIds": [
+            "articles",
+            "plural_s",
+            "numbers_0_10"
+          ],
+          "prerequisiteNodeIds": [
+            "u05n01",
+            "u08n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u15n02",
+          "code": "2",
+          "order": 2,
+          "globalOrder": 96,
+          "titleEn": "What’s in the Picture?",
+          "type": "describe_it",
+          "learningTarget": "บอก 3 สิ่งที่มีในภาพด้วย there is/are",
+          "activity": "guided first line → cue second → bounded-open third",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "there_is_are",
+            "basic_adjectives"
+          ],
+          "prerequisiteNodeIds": [
+            "u06n05",
+            "u15n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u15n03",
+          "code": "3",
+          "order": 3,
+          "globalOrder": 97,
+          "titleEn": "In, On, Under, Next To",
+          "type": "lesson",
+          "learningTarget": "บอกตำแหน่ง object ในภาพนิ่ง",
+          "activity": "move object then speak It’s… / There is…",
+          "estimatedMinutes": 4,
+          "newSkillIds": [
+            "location_prepositions"
+          ],
+          "reviewedSkillIds": [
+            "there_is_are",
+            "demonstratives_singular"
+          ],
+          "prerequisiteNodeIds": [
+            "u06n01",
+            "u15n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u15n04",
+          "code": "4",
+          "order": 4,
+          "globalOrder": 98,
+          "titleEn": "Where Is the Bag?",
+          "type": "story_bites",
+          "learningTarget": "จับตำแหน่งของจาก clip สั้น",
+          "activity": "listen to 3 clues; place bag on static room map",
+          "estimatedMinutes": 3,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "location_prepositions",
+            "q_where_when"
+          ],
+          "prerequisiteNodeIds": [
+            "u14n03",
+            "u15n03"
+          ],
+          "comingSoon": true,
+          "availability": "coming_soon"
+        },
+        {
+          "id": "u15n05",
+          "code": "5",
+          "order": 5,
+          "globalOrder": 99,
+          "titleEn": "Place It Correctly",
+          "type": "sentence_builder",
+          "learningTarget": "ประกอบ there is/are และ location sentence จาก scene",
+          "activity": "เลือก frame แล้วเรียง tiles; read aloud",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "there_is_are",
+            "location_prepositions",
+            "articles",
+            "plural_s"
+          ],
+          "prerequisiteNodeIds": [
+            "u05n01",
+            "u15n01",
+            "u15n03"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u15n06",
+          "code": "6",
+          "order": 6,
+          "globalOrder": 100,
+          "titleEn": "Things and Places",
+          "type": "say_it",
+          "learningTarget": "พูด known place/object questions จาก prompt ไทย",
+          "activity": "ไทย→อังกฤษ 6 prompts; map pin hint เฉพาะ retry",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "location_prepositions",
+            "q_where_when",
+            "there_is_are"
+          ],
+          "prerequisiteNodeIds": [
+            "u14n03",
+            "u15n01",
+            "u15n03"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u15n07",
+          "code": "7",
+          "order": 7,
+          "globalOrder": 101,
+          "titleEn": "Ask for a Place",
+          "type": "conversation",
+          "learningTarget": "ถามหาสถานที่ แล้วแสดงว่าเข้าใจด้วย location phrase หรือเลือกตำแหน่งถูกบนแผนที่",
+          "activity": "2 core attempts: ask where → ฟังคำตอบ → พูด location phrase หรือเลือก MAP_SELECT_CORRECT_LOCATION; หากไม่เข้าใจใช้ repair event ฟรีแล้วฟังซ้ำ; Thank you เป็น optional close หลัง confirm เท่านั้น",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "q_where_when",
+            "location_prepositions",
+            "repair_more",
+            "polite_expressions"
+          ],
+          "prerequisiteNodeIds": [
+            "u02n01",
+            "u02n05",
+            "u14n03",
+            "u15n03"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        }
+      ]
+    },
+    {
+      "id": "u16",
+      "number": 16,
+      "titleEn": "Build Your Own Conversation",
+      "phase": "Ketsu",
+      "items": [
+        {
+          "id": "u16n01",
+          "code": "1",
+          "order": 1,
+          "globalOrder": 102,
+          "titleEn": "A First Day Snapshot",
+          "type": "story_bites",
+          "learningTarget": "เข้าใจ clip ที่รวม introduction, time, likes และ place",
+          "activity": "60-second clip 2 speakers; gist → choose 2 of 3 detail paths → replay once → repeat one useful line",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "introductions",
+            "telling_time",
+            "likes_dislikes",
+            "location_prepositions"
+          ],
+          "prerequisiteNodeIds": [
+            "u01n02",
+            "u09n03",
+            "u10n01",
+            "u15n03"
+          ],
+          "comingSoon": true,
+          "availability": "coming_soon"
+        },
+        {
+          "id": "u16n02",
+          "code": "2",
+          "order": 2,
+          "globalOrder": 103,
+          "titleEn": "Foundation Warm-Up Mix",
+          "type": "skill_check",
+          "learningTarget": "เรียกคืน social, noun และ be foundations",
+          "activity": "4 mechanics: listen_choose, emoji_label, arrange_words, say_it; ผู้เรียนเลือกเริ่ม 1 ใน 3 skill lanes แล้วระบบเติม lane อ่อน",
+          "estimatedMinutes": 5,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "greetings",
+            "introductions",
+            "be_questions_negatives",
+            "articles",
+            "plural_s",
+            "possessive_adjectives"
+          ],
+          "prerequisiteNodeIds": [
+            "u01n01",
+            "u01n02",
+            "u03n04",
+            "u05n01",
+            "u07n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u16n03",
+          "code": "3",
+          "order": 3,
+          "globalOrder": 104,
+          "titleEn": "Picture to Three Sentences",
+          "type": "describe_it",
+          "learningTarget": "สร้าง 3 ประโยคเกี่ยวกับคน สิ่งของ และ action",
+          "activity": "guided line → cue line → bounded-open line; choose 1 of 3 pictures",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "people_pronouns",
+            "basic_adjectives",
+            "present_continuous",
+            "there_is_are"
+          ],
+          "prerequisiteNodeIds": [
+            "u04n01",
+            "u06n05",
+            "u13n03",
+            "u15n01"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u16n04",
+          "code": "4",
+          "order": 4,
+          "globalOrder": 105,
+          "titleEn": "Meet a New Friend Lite",
+          "type": "conversation",
+          "learningTarget": "ทักทาย แนะนำตัว ถามหนึ่งคำถาม และตอบหนึ่งข้อ",
+          "activity": "4 learner turns; เลือก question family ก่อนเริ่ม; NPC ถามทีละ goal และ retry speech recognition ไม่กิน turn",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "greetings",
+            "introductions",
+            "q_what_who",
+            "q_how_family",
+            "likes_dislikes",
+            "yes_no_maybe"
+          ],
+          "prerequisiteNodeIds": [
+            "u01n01",
+            "u01n02",
+            "u01n04",
+            "u10n01",
+            "u14n01",
+            "u14n05"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u16n05",
+          "code": "5",
+          "order": 5,
+          "globalOrder": 106,
+          "titleEn": "Build the Right Repair Route",
+          "type": "sentence_builder",
+          "learningTarget": "จัดลำดับ question → listen for one detail → repair phrase → corrected response เป็นเส้นทางเดียว",
+          "activity": "เลือก answer card แล้วเรียง question tiles; ฟัง detail หนึ่งค่า; ถ้าไม่ชัดให้แทรก repair tile ก่อนประกอบ response; อ่าน route ที่เสร็จ",
+          "estimatedMinutes": 5,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "q_what_who",
+            "q_where_when",
+            "q_how_family",
+            "numbers_20_100",
+            "repair_more"
+          ],
+          "prerequisiteNodeIds": [
+            "u02n05",
+            "u09n01",
+            "u14n01",
+            "u14n03",
+            "u14n05"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u16n06",
+          "code": "6",
+          "order": 6,
+          "globalOrder": 107,
+          "titleEn": "Request or Place?",
+          "type": "say_it",
+          "learningTarget": "เลือกพูด request หนึ่งชิ้นหรือถามหาสถานที่ตาม goal card",
+          "activity": "ผู้เรียนเลือก lane Shop หรือ Place; ไทย/ภาพ→อังกฤษ 5 items; final item ให้เลือกใช้ repair เพิ่มได้",
+          "estimatedMinutes": 4,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "price_request",
+            "q_where_when",
+            "location_prepositions",
+            "repair_more",
+            "polite_expressions"
+          ],
+          "prerequisiteNodeIds": [
+            "u02n01",
+            "u02n05",
+            "u09n05",
+            "u14n03",
+            "u15n03"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u16n07",
+          "code": "7",
+          "order": 7,
+          "globalOrder": 108,
+          "titleEn": "Final Foundation Mix",
+          "type": "skill_check",
+          "learningTarget": "แสดง statement, negative, question, listening และ description",
+          "activity": "5 mechanics: listen_choose, transform, arrange_words, describe_cued, say_it",
+          "estimatedMinutes": 5,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "be_questions_negatives",
+            "simple_questions",
+            "continuous_questions",
+            "location_prepositions",
+            "can_ability"
+          ],
+          "prerequisiteNodeIds": [
+            "u03n04",
+            "u11n04",
+            "u12n06",
+            "u13n06",
+            "u15n03"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        },
+        {
+          "id": "u16n08",
+          "code": "8",
+          "order": 8,
+          "globalOrder": 109,
+          "titleEn": "My First Day",
+          "type": "conversation",
+          "learningTarget": "ครบ 3 phases: introduce, ทั้ง ask+answer, และ Request OR Place branch ที่เลือก; ask หรือ answer อย่างเดียวไม่ผ่าน",
+          "activity": "เลือก Request หรือ Place ก่อนเริ่ม; 4 turns จริง: intro → answer → ask → branch action (Place ใช้ Where เป็น ask และ turn 4 confirm); cross-branch ไม่ได้คะแนน; recognition retry ฟรี",
+          "estimatedMinutes": 5,
+          "newSkillIds": [],
+          "reviewedSkillIds": [
+            "introductions",
+            "yes_no_maybe",
+            "price_request",
+            "q_where_when",
+            "location_prepositions",
+            "repair_more",
+            "polite_expressions",
+            "q_how_family",
+            "q_what_who"
+          ],
+          "prerequisiteNodeIds": [
+            "u01n02",
+            "u01n04",
+            "u02n01",
+            "u02n05",
+            "u09n05",
+            "u14n01",
+            "u14n03",
+            "u14n05",
+            "u15n03"
+          ],
+          "comingSoon": false,
+          "availability": "catalog_ready"
+        }
+      ]
+    }
+  ]
+}
