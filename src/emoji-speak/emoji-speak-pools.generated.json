@@ -1,0 +1,2323 @@
+{
+  "version": 1,
+  "pools": {
+    "emoji_speak_first_contact": {
+      "title": "🎮 Emoji Speak",
+      "dealCount": 5,
+      "items": [
+        {
+          "emoji": "👤",
+          "answer": "Name",
+          "hint": "N _ m e",
+          "meaningTh": "ชื่อ"
+        },
+        {
+          "emoji": "🧑",
+          "answer": "Person",
+          "hint": "P _ r s _ n",
+          "meaningTh": "คน"
+        },
+        {
+          "emoji": "🤝",
+          "answer": "Friend",
+          "hint": "F _ i _ n d",
+          "meaningTh": "เพื่อน"
+        },
+        {
+          "emoji": "🌍",
+          "answer": "Country",
+          "hint": "C _ u n t r y",
+          "meaningTh": "ประเทศ"
+        },
+        {
+          "emoji": "🏙️",
+          "answer": "City",
+          "hint": "C _ t y",
+          "meaningTh": "เมือง"
+        },
+        {
+          "emoji": "🏠",
+          "answer": "Home",
+          "hint": "H _ m e",
+          "meaningTh": "บ้าน"
+        },
+        {
+          "emoji": "💼",
+          "answer": "Job",
+          "hint": "J _ b",
+          "meaningTh": "งาน"
+        },
+        {
+          "emoji": "🏫",
+          "answer": "School",
+          "hint": "S _ h _ o l",
+          "meaningTh": "โรงเรียน"
+        },
+        {
+          "emoji": "🏠",
+          "answer": "Live",
+          "hint": "L _ v e",
+          "meaningTh": "อาศัยอยู่"
+        },
+        {
+          "emoji": "💼",
+          "answer": "Work",
+          "hint": "W _ r k",
+          "meaningTh": "ทำงาน"
+        },
+        {
+          "emoji": "🤝",
+          "answer": "Meet",
+          "hint": "M _ e t",
+          "meaningTh": "พบ / พบกัน"
+        },
+        {
+          "emoji": "😊",
+          "answer": "Nice",
+          "hint": "N _ c e",
+          "meaningTh": "ดี / น่ารัก"
+        },
+        {
+          "emoji": "👍",
+          "answer": "Good",
+          "hint": "G _ o d",
+          "meaningTh": "ดี"
+        },
+        {
+          "emoji": "👋",
+          "answer": "Hello",
+          "hint": "H _ l l _",
+          "meaningTh": "สวัสดี"
+        },
+        {
+          "emoji": "🙏",
+          "answer": "Thank you",
+          "hint": "T _ a n k Y _ u",
+          "meaningTh": "ขอบคุณ"
+        }
+      ]
+    },
+    "emoji_speak_people_around_you": {
+      "title": "🎮 Emoji Speak",
+      "dealCount": 5,
+      "items": [
+        {
+          "emoji": "👨",
+          "answer": "Father",
+          "hint": "F _ t h _ r",
+          "meaningTh": "พ่อ"
+        },
+        {
+          "emoji": "👩",
+          "answer": "Mother",
+          "hint": "M _ t h _ r",
+          "meaningTh": "แม่"
+        },
+        {
+          "emoji": "👦",
+          "answer": "Brother",
+          "hint": "B _ o t h _ r",
+          "meaningTh": "พี่/น้องชาย"
+        },
+        {
+          "emoji": "👧",
+          "answer": "Sister",
+          "hint": "S _ s t _ r",
+          "meaningTh": "พี่/น้องสาว"
+        },
+        {
+          "emoji": "👨‍👩‍👧",
+          "answer": "Family",
+          "hint": "F _ m _ l y",
+          "meaningTh": "ครอบครัว"
+        },
+        {
+          "emoji": "🧑",
+          "answer": "Friend",
+          "hint": "F _ i _ n d",
+          "meaningTh": "เพื่อน"
+        },
+        {
+          "emoji": "👨",
+          "answer": "Man",
+          "hint": "M _ n",
+          "meaningTh": "ผู้ชาย"
+        },
+        {
+          "emoji": "👩",
+          "answer": "Woman",
+          "hint": "W _ m _ n",
+          "meaningTh": "ผู้หญิง"
+        },
+        {
+          "emoji": "👦",
+          "answer": "Boy",
+          "hint": "B _ y",
+          "meaningTh": "เด็กชาย"
+        },
+        {
+          "emoji": "👧",
+          "answer": "Girl",
+          "hint": "G _ r l",
+          "meaningTh": "เด็กหญิง"
+        },
+        {
+          "emoji": "🎒",
+          "answer": "Bag",
+          "hint": "B _ g",
+          "meaningTh": "กระเป๋า"
+        },
+        {
+          "emoji": "📚",
+          "answer": "Book",
+          "hint": "B _ _ k",
+          "meaningTh": "หนังสือ"
+        },
+        {
+          "emoji": "📱",
+          "answer": "Phone",
+          "hint": "P _ o n e",
+          "meaningTh": "โทรศัพท์"
+        },
+        {
+          "emoji": "👋",
+          "answer": "Have",
+          "hint": "H _ v e",
+          "meaningTh": "มี"
+        },
+        {
+          "emoji": "👉",
+          "answer": "Is",
+          "hint": "I _",
+          "meaningTh": "เป็น / คือ"
+        },
+        {
+          "emoji": "👤",
+          "answer": "Myself",
+          "hint": "M _ s e l f",
+          "meaningTh": "ตัวเอง"
+        }
+      ]
+    },
+    "emoji_speak_numbers_daily_utility": {
+      "title": "🎮 Emoji Speak",
+      "dealCount": 5,
+      "items": [
+        {
+          "emoji": "0️⃣",
+          "answer": "Zero",
+          "hint": "Z _ r _",
+          "meaningTh": "ศูนย์"
+        },
+        {
+          "emoji": "1️⃣",
+          "answer": "One",
+          "hint": "O _ e",
+          "meaningTh": "หนึ่ง"
+        },
+        {
+          "emoji": "2️⃣",
+          "answer": "Two",
+          "hint": "T _ o",
+          "meaningTh": "สอง"
+        },
+        {
+          "emoji": "3️⃣",
+          "answer": "Three",
+          "hint": "T _ r _ _",
+          "meaningTh": "สาม"
+        },
+        {
+          "emoji": "5️⃣",
+          "answer": "Five",
+          "hint": "F _ v e",
+          "meaningTh": "ห้า"
+        },
+        {
+          "emoji": "🔟",
+          "answer": "Ten",
+          "hint": "T _ n",
+          "meaningTh": "สิบ"
+        },
+        {
+          "emoji": "2️⃣0️⃣",
+          "answer": "Twenty",
+          "hint": "T _ e n t y",
+          "meaningTh": "ยี่สิบ"
+        },
+        {
+          "emoji": "💯",
+          "answer": "One hundred",
+          "hint": "O _ e H _ n d r _ d",
+          "meaningTh": "หนึ่งร้อย"
+        },
+        {
+          "emoji": "🕛",
+          "answer": "Noon",
+          "hint": "N _ _ n",
+          "meaningTh": "เที่ยงวัน"
+        },
+        {
+          "emoji": "🌙🕛",
+          "answer": "Midnight",
+          "hint": "M _ d n _ g h t",
+          "meaningTh": "เที่ยงคืน"
+        },
+        {
+          "emoji": "⏰",
+          "answer": "O'clock",
+          "hint": "O ' c l _ c k",
+          "meaningTh": "นาฬิกาตรง"
+        },
+        {
+          "emoji": "🌅",
+          "answer": "AM",
+          "hint": "A M",
+          "meaningTh": "ตอนเช้า (ก่อนเที่ยง)",
+          "promptTh": "พูดประโยคเต็มตามการ์ด เช่น I wake up at 7 AM"
+        },
+        {
+          "emoji": "🌙",
+          "answer": "PM",
+          "hint": "P M",
+          "meaningTh": "ตอนเย็น/กลางคืน (หลังเที่ยง)",
+          "promptTh": "พูดประโยคเต็ม เช่น I go to sleep at 11 PM"
+        },
+        {
+          "emoji": "💵",
+          "answer": "Dollar",
+          "hint": "D _ l l _ r",
+          "meaningTh": "ดอลลาร์"
+        },
+        {
+          "emoji": "💰",
+          "answer": "Money",
+          "hint": "M _ n e y",
+          "meaningTh": "เงิน"
+        },
+        {
+          "emoji": "🏷️",
+          "answer": "Price",
+          "hint": "P _ i c e",
+          "meaningTh": "ราคา"
+        },
+        {
+          "emoji": "🛍️",
+          "answer": "Cheap",
+          "hint": "C _ e a p",
+          "meaningTh": "ถูก"
+        },
+        {
+          "emoji": "💎",
+          "answer": "Expensive",
+          "hint": "E _ p e n s i v e",
+          "meaningTh": "แพง"
+        }
+      ]
+    },
+    "emoji_speak_expressing_yourself": {
+      "title": "🎮 Emoji Speak",
+      "dealCount": 5,
+      "items": [
+        {
+          "emoji": "☕",
+          "answer": "Coffee",
+          "hint": "C _ f f _ e",
+          "meaningTh": "กาแฟ"
+        },
+        {
+          "emoji": "🍕",
+          "answer": "Pizza",
+          "hint": "P _ z z a",
+          "meaningTh": "พิซซ่า"
+        },
+        {
+          "emoji": "🍵",
+          "answer": "Tea",
+          "hint": "T _ a",
+          "meaningTh": "ชา"
+        },
+        {
+          "emoji": "💧",
+          "answer": "Water",
+          "hint": "W _ t e r",
+          "meaningTh": "น้ำ"
+        },
+        {
+          "emoji": "🐶",
+          "answer": "Dog",
+          "hint": "D _ g",
+          "meaningTh": "สุนัข"
+        },
+        {
+          "emoji": "🚗",
+          "answer": "Car",
+          "hint": "C _ r",
+          "meaningTh": "รถยนต์"
+        },
+        {
+          "emoji": "🚕",
+          "answer": "Taxi",
+          "hint": "T _ x i",
+          "meaningTh": "แท็กซี่"
+        },
+        {
+          "emoji": "🆘",
+          "answer": "Help",
+          "hint": "H _ l p",
+          "meaningTh": "ความช่วยเหลือ"
+        },
+        {
+          "emoji": "🚻",
+          "answer": "Bathroom",
+          "hint": "B _ t h r _ o m",
+          "meaningTh": "ห้องน้ำ"
+        },
+        {
+          "emoji": "👤",
+          "answer": "Meeting",
+          "hint": "M _ e t i n g",
+          "meaningTh": "การประชุม"
+        },
+        {
+          "emoji": "❤️",
+          "answer": "Like",
+          "hint": "L _ k e",
+          "meaningTh": "ชอบ"
+        },
+        {
+          "emoji": "🙋",
+          "answer": "Want",
+          "hint": "W _ n t",
+          "meaningTh": "อยากได้"
+        },
+        {
+          "emoji": "⭐",
+          "answer": "Need",
+          "hint": "N _ e d",
+          "meaningTh": "ต้องการ"
+        },
+        {
+          "emoji": "🏊",
+          "answer": "Swim",
+          "hint": "S _ i m",
+          "meaningTh": "ว่ายน้ำ"
+        },
+        {
+          "emoji": "👨‍🍳",
+          "answer": "Cook",
+          "hint": "C _ o k",
+          "meaningTh": "ทำอาหาร"
+        },
+        {
+          "emoji": "🚗💨",
+          "answer": "Drive",
+          "hint": "D _ i v e",
+          "meaningTh": "ขับรถ"
+        }
+      ]
+    },
+    "fnd_v2_emoji_feelings": {
+      "title": "😊 Emoji Speak",
+      "dealCount": 5,
+      "items": [
+        {
+          "emoji": "😊",
+          "answer": "Happy",
+          "hint": "h _ p p y",
+          "meaningTh": "มีความสุข"
+        },
+        {
+          "emoji": "😢",
+          "answer": "Sad",
+          "hint": "s _ d",
+          "meaningTh": "เศร้า"
+        },
+        {
+          "emoji": "😴",
+          "answer": "Tired",
+          "hint": "t _ r _ d",
+          "meaningTh": "เหนื่อย"
+        },
+        {
+          "emoji": "🍽️😋",
+          "answer": "Hungry",
+          "hint": "h _ n g r y",
+          "meaningTh": "หิว"
+        },
+        {
+          "emoji": "🥤😓",
+          "answer": "Thirsty",
+          "hint": "t h _ r s t y",
+          "meaningTh": "กระหายน้ำ"
+        }
+      ]
+    },
+    "fnd_v2_emoji_people_things": {
+      "title": "🧑‍🎓 Emoji Speak",
+      "dealCount": 5,
+      "items": [
+        {
+          "emoji": "🧑‍🎓",
+          "answer": "Student",
+          "hint": "s t _ d _ n t",
+          "meaningTh": "นักเรียน"
+        },
+        {
+          "emoji": "👩‍🏫",
+          "answer": "Teacher",
+          "hint": "t _ _ c h _ r",
+          "meaningTh": "ครู"
+        },
+        {
+          "emoji": "🧑‍🤝‍🧑",
+          "answer": "Friends",
+          "hint": "f r _ _ n d s",
+          "meaningTh": "เพื่อน"
+        },
+        {
+          "emoji": "👥",
+          "answer": "People",
+          "hint": "p _ _ p l e",
+          "meaningTh": "ผู้คน"
+        },
+        {
+          "emoji": "🎒",
+          "answer": "Bag",
+          "hint": "b _ g",
+          "meaningTh": "กระเป๋า"
+        }
+      ]
+    },
+    "fnd_v2_emoji_family": {
+      "title": "👨‍👩‍👧 Emoji Speak",
+      "dealCount": 5,
+      "items": [
+        {
+          "emoji": "👨",
+          "answer": "Father",
+          "hint": "f _ t h _ r",
+          "meaningTh": "พ่อ"
+        },
+        {
+          "emoji": "👩",
+          "answer": "Mother",
+          "hint": "m _ t h _ r",
+          "meaningTh": "แม่"
+        },
+        {
+          "emoji": "👦",
+          "answer": "Brother",
+          "hint": "b r _ t h _ r",
+          "meaningTh": "พี่/น้องชาย"
+        },
+        {
+          "emoji": "👧",
+          "answer": "Sister",
+          "hint": "s _ s t _ r",
+          "meaningTh": "พี่/น้องสาว"
+        },
+        {
+          "emoji": "👨‍👩‍👧",
+          "answer": "Family",
+          "hint": "f _ m _ l y",
+          "meaningTh": "ครอบครัว"
+        }
+      ]
+    },
+    "fnd_v2_emoji_numbers_0_20": {
+      "title": "🔢 Emoji Speak",
+      "dealCount": 5,
+      "items": [
+        {
+          "emoji": "0",
+          "answer": "Zero",
+          "hint": "z _ r _",
+          "meaningTh": "ศูนย์"
+        },
+        {
+          "emoji": "1",
+          "answer": "One",
+          "hint": "o _ e",
+          "meaningTh": "หนึ่ง"
+        },
+        {
+          "emoji": "2",
+          "answer": "Two",
+          "hint": "t _ o",
+          "meaningTh": "สอง"
+        },
+        {
+          "emoji": "3",
+          "answer": "Three",
+          "hint": "t h _ _ e",
+          "meaningTh": "สาม"
+        },
+        {
+          "emoji": "4",
+          "answer": "Four",
+          "hint": "f _ _ r",
+          "meaningTh": "สี่"
+        },
+        {
+          "emoji": "5",
+          "answer": "Five",
+          "hint": "f _ v e",
+          "meaningTh": "ห้า"
+        },
+        {
+          "emoji": "6",
+          "answer": "Six",
+          "hint": "s _ x",
+          "meaningTh": "หก"
+        },
+        {
+          "emoji": "7",
+          "answer": "Seven",
+          "hint": "s _ v _ n",
+          "meaningTh": "เจ็ด"
+        },
+        {
+          "emoji": "8",
+          "answer": "Eight",
+          "hint": "e _ g h t",
+          "meaningTh": "แปด"
+        },
+        {
+          "emoji": "9",
+          "answer": "Nine",
+          "hint": "n _ n e",
+          "meaningTh": "เก้า"
+        },
+        {
+          "emoji": "10",
+          "answer": "Ten",
+          "hint": "t _ n",
+          "meaningTh": "สิบ"
+        },
+        {
+          "emoji": "11",
+          "answer": "Eleven",
+          "hint": "e l _ v _ n",
+          "meaningTh": "สิบเอ็ด"
+        },
+        {
+          "emoji": "12",
+          "answer": "Twelve",
+          "hint": "t w _ l v e",
+          "meaningTh": "สิบสอง"
+        },
+        {
+          "emoji": "13",
+          "answer": "Thirteen",
+          "hint": "t h _ r t _ _ n",
+          "meaningTh": "สิบสาม"
+        },
+        {
+          "emoji": "14",
+          "answer": "Fourteen",
+          "hint": "f _ _ r t _ _ n",
+          "meaningTh": "สิบสี่"
+        },
+        {
+          "emoji": "15",
+          "answer": "Fifteen",
+          "hint": "f _ f t _ _ n",
+          "meaningTh": "สิบห้า"
+        },
+        {
+          "emoji": "16",
+          "answer": "Sixteen",
+          "hint": "s _ x t _ _ n",
+          "meaningTh": "สิบหก"
+        },
+        {
+          "emoji": "17",
+          "answer": "Seventeen",
+          "hint": "s _ v _ n t _ _ n",
+          "meaningTh": "สิบเจ็ด"
+        },
+        {
+          "emoji": "18",
+          "answer": "Eighteen",
+          "hint": "e _ g h t _ _ n",
+          "meaningTh": "สิบแปด"
+        },
+        {
+          "emoji": "19",
+          "answer": "Nineteen",
+          "hint": "n _ n _ t _ _ n",
+          "meaningTh": "สิบเก้า"
+        },
+        {
+          "emoji": "20",
+          "answer": "Twenty",
+          "hint": "t w _ n t y",
+          "meaningTh": "ยี่สิบ"
+        }
+      ]
+    },
+    "fnd_v2_emoji_numbers_0_100": {
+      "title": "🔢 Emoji Speak",
+      "dealCount": 5,
+      "items": [
+        {
+          "emoji": "20",
+          "answer": "Twenty",
+          "hint": "t w _ n t y",
+          "meaningTh": "ยี่สิบ"
+        },
+        {
+          "emoji": "30",
+          "answer": "Thirty",
+          "hint": "t h _ r t y",
+          "meaningTh": "สามสิบ"
+        },
+        {
+          "emoji": "35",
+          "answer": "Thirty-five",
+          "hint": "t h _ r t y - f _ v e",
+          "meaningTh": "สามสิบห้า"
+        },
+        {
+          "emoji": "40",
+          "answer": "Forty",
+          "hint": "f _ r t y",
+          "meaningTh": "สี่สิบ"
+        },
+        {
+          "emoji": "50",
+          "answer": "Fifty",
+          "hint": "f _ f t y",
+          "meaningTh": "ห้าสิบ"
+        },
+        {
+          "emoji": "60",
+          "answer": "Sixty",
+          "hint": "s _ x t y",
+          "meaningTh": "หกสิบ"
+        },
+        {
+          "emoji": "62",
+          "answer": "Sixty-two",
+          "hint": "s _ x t y - t _ o",
+          "meaningTh": "หกสิบสอง"
+        },
+        {
+          "emoji": "70",
+          "answer": "Seventy",
+          "hint": "s _ v _ n t y",
+          "meaningTh": "เจ็ดสิบ"
+        },
+        {
+          "emoji": "80",
+          "answer": "Eighty",
+          "hint": "e _ g h t y",
+          "meaningTh": "แปดสิบ"
+        },
+        {
+          "emoji": "90",
+          "answer": "Ninety",
+          "hint": "n _ n _ t y",
+          "meaningTh": "เก้าสิบ"
+        },
+        {
+          "emoji": "100",
+          "answer": "One hundred",
+          "hint": "o _ e h _ n d r _ d",
+          "meaningTh": "หนึ่งร้อย"
+        }
+      ]
+    },
+    "fnd_v2_emoji_colors": {
+      "title": "🎨 Emoji Speak",
+      "dealCount": 5,
+      "items": [
+        {
+          "emoji": "🔴",
+          "answer": "Red",
+          "hint": "r _ d",
+          "meaningTh": "สีแดง"
+        },
+        {
+          "emoji": "🔵",
+          "answer": "Blue",
+          "hint": "b l _ e",
+          "meaningTh": "สีน้ำเงิน"
+        },
+        {
+          "emoji": "🟡",
+          "answer": "Yellow",
+          "hint": "y _ l l _ w",
+          "meaningTh": "สีเหลือง"
+        },
+        {
+          "emoji": "🟢",
+          "answer": "Green",
+          "hint": "g r _ _ n",
+          "meaningTh": "สีเขียว"
+        },
+        {
+          "emoji": "⚫",
+          "answer": "Black",
+          "hint": "b l _ c k",
+          "meaningTh": "สีดำ"
+        }
+      ]
+    },
+    "fnd_v2_emoji_shop": {
+      "title": "🛍️ Emoji Speak",
+      "dealCount": 5,
+      "items": [
+        {
+          "emoji": "🎒",
+          "answer": "Bag",
+          "hint": "b _ g",
+          "meaningTh": "กระเป๋า"
+        },
+        {
+          "emoji": "👕",
+          "answer": "Shirt",
+          "hint": "s h _ r t",
+          "meaningTh": "เสื้อ"
+        },
+        {
+          "emoji": "📕",
+          "answer": "Book",
+          "hint": "b _ _ k",
+          "meaningTh": "หนังสือ"
+        },
+        {
+          "emoji": "👟",
+          "answer": "Shoes",
+          "hint": "s h _ _ s",
+          "meaningTh": "รองเท้า"
+        },
+        {
+          "emoji": "🧢",
+          "answer": "Hat",
+          "hint": "h _ t",
+          "meaningTh": "หมวก"
+        }
+      ]
+    },
+    "fnd_v2_emoji_food_drinks": {
+      "title": "🍽️ Emoji Speak",
+      "dealCount": 5,
+      "items": [
+        {
+          "emoji": "☕",
+          "answer": "Coffee",
+          "hint": "c _ f f _ e",
+          "meaningTh": "กาแฟ"
+        },
+        {
+          "emoji": "🍵",
+          "answer": "Tea",
+          "hint": "t _ a",
+          "meaningTh": "ชา"
+        },
+        {
+          "emoji": "🍕",
+          "answer": "Pizza",
+          "hint": "p _ z z a",
+          "meaningTh": "พิซซ่า"
+        },
+        {
+          "emoji": "🍣",
+          "answer": "Sushi",
+          "hint": "s _ s h i",
+          "meaningTh": "ซูชิ"
+        },
+        {
+          "emoji": "💧",
+          "answer": "Water",
+          "hint": "w _ t _ r",
+          "meaningTh": "น้ำ"
+        }
+      ]
+    },
+    "fnd_v2_emoji_daily_actions": {
+      "title": "🗓️ Emoji Speak",
+      "dealCount": 5,
+      "items": [
+        {
+          "emoji": "🛏️☀️",
+          "answer": "Wake up",
+          "hint": "w _ k e u p",
+          "meaningTh": "ตื่นนอน"
+        },
+        {
+          "emoji": "🍽️",
+          "answer": "Eat",
+          "hint": "e _ t",
+          "meaningTh": "กิน"
+        },
+        {
+          "emoji": "💼",
+          "answer": "Work",
+          "hint": "w _ r k",
+          "meaningTh": "ทำงาน"
+        },
+        {
+          "emoji": "📚",
+          "answer": "Study",
+          "hint": "s t _ d y",
+          "meaningTh": "เรียน"
+        },
+        {
+          "emoji": "🌙😴",
+          "answer": "Sleep",
+          "hint": "s l _ _ p",
+          "meaningTh": "นอน"
+        }
+      ]
+    },
+    "fnd_v2_emoji_places": {
+      "title": "📍 Emoji Speak",
+      "dealCount": 5,
+      "items": [
+        {
+          "emoji": "🚻",
+          "answer": "Bathroom",
+          "hint": "b _ t h r _ _ m",
+          "meaningTh": "ห้องน้ำ"
+        },
+        {
+          "emoji": "🚉",
+          "answer": "Station",
+          "hint": "s t _ t _ _ n",
+          "meaningTh": "สถานี"
+        },
+        {
+          "emoji": "🏨",
+          "answer": "Hotel",
+          "hint": "h _ t _ l",
+          "meaningTh": "โรงแรม"
+        },
+        {
+          "emoji": "🚌",
+          "answer": "Bus",
+          "hint": "b _ s",
+          "meaningTh": "รถบัส"
+        },
+        {
+          "emoji": "🚕",
+          "answer": "Taxi",
+          "hint": "t _ x i",
+          "meaningTh": "แท็กซี่"
+        }
+      ]
+    },
+    "fnd_v6_emoji_people_things": {
+      "title": "🧑‍🎓 People & Things",
+      "dealCount": 5,
+      "items": [
+        {
+          "emoji": "🧑‍🎓",
+          "answer": "Student",
+          "hint": "s t _ d _ n t",
+          "meaningTh": "นักเรียน"
+        },
+        {
+          "emoji": "👩‍🏫",
+          "answer": "Teacher",
+          "hint": "t _ _ c h _ r",
+          "meaningTh": "ครู"
+        },
+        {
+          "emoji": "🧑‍🤝‍🧑",
+          "answer": "Friends",
+          "hint": "f r _ _ n d s",
+          "meaningTh": "เพื่อน"
+        },
+        {
+          "emoji": "👥",
+          "answer": "People",
+          "hint": "p _ _ p l e",
+          "meaningTh": "ผู้คน"
+        },
+        {
+          "emoji": "🎒",
+          "answer": "Bag",
+          "hint": "b _ g",
+          "meaningTh": "กระเป๋า"
+        }
+      ]
+    },
+    "fnd_v6_emoji_one_or_many": {
+      "title": "🔢 One or Many",
+      "dealCount": 5,
+      "items": [
+        {
+          "emoji": "🍎",
+          "answer": "One apple",
+          "hint": "o _ e  a p p l e",
+          "meaningTh": "แอปเปิลหนึ่งลูก"
+        },
+        {
+          "emoji": "🍎🍎",
+          "answer": "Two apples",
+          "hint": "t _ o  a p p l e s",
+          "meaningTh": "แอปเปิลสองลูก"
+        },
+        {
+          "emoji": "📕",
+          "answer": "A book",
+          "hint": "a  b _ _ k",
+          "meaningTh": "หนังสือหนึ่งเล่ม"
+        },
+        {
+          "emoji": "📕📕📕",
+          "answer": "Three books",
+          "hint": "t h r _ e  b _ _ k s",
+          "meaningTh": "หนังสือสามเล่ม"
+        },
+        {
+          "emoji": "🥚",
+          "answer": "An egg",
+          "hint": "a n  e _ g",
+          "meaningTh": "ไข่หนึ่งฟอง"
+        }
+      ]
+    },
+    "fnd_v6_emoji_food_things": {
+      "title": "🍽️ Food and Things",
+      "dealCount": 5,
+      "items": [
+        {
+          "emoji": "☕",
+          "answer": "Coffee",
+          "hint": "c _ f f _ e",
+          "meaningTh": "กาแฟ"
+        },
+        {
+          "emoji": "🍵",
+          "answer": "Tea",
+          "hint": "t _ a",
+          "meaningTh": "ชา"
+        },
+        {
+          "emoji": "🍕",
+          "answer": "Pizza",
+          "hint": "p _ z z a",
+          "meaningTh": "พิซซ่า"
+        },
+        {
+          "emoji": "🍣",
+          "answer": "Sushi",
+          "hint": "s _ s h i",
+          "meaningTh": "ซูชิ"
+        },
+        {
+          "emoji": "💧",
+          "answer": "Water",
+          "hint": "w _ t _ r",
+          "meaningTh": "น้ำ"
+        }
+      ]
+    },
+    "fnd_v6_emoji_actions": {
+      "title": "🏃 Actions",
+      "dealCount": 5,
+      "items": [
+        {
+          "emoji": "🛏️☀️",
+          "answer": "Wake up",
+          "hint": "w _ k e u p",
+          "meaningTh": "ตื่นนอน"
+        },
+        {
+          "emoji": "🍽️",
+          "answer": "Eat",
+          "hint": "e _ t",
+          "meaningTh": "กิน"
+        },
+        {
+          "emoji": "💼",
+          "answer": "Work",
+          "hint": "w _ r k",
+          "meaningTh": "ทำงาน"
+        },
+        {
+          "emoji": "📚",
+          "answer": "Study",
+          "hint": "s t _ d y",
+          "meaningTh": "เรียน"
+        },
+        {
+          "emoji": "🌙😴",
+          "answer": "Sleep",
+          "hint": "s l _ _ p",
+          "meaningTh": "นอน"
+        }
+      ]
+    },
+    "fnd_v6_emoji_happening_now": {
+      "title": "👀 What’s Happening?",
+      "dealCount": 5,
+      "items": [
+        {
+          "emoji": "🏃",
+          "answer": "He is running",
+          "hint": "h e  i s  r _ n n _ n g",
+          "meaningTh": "เขากำลังวิ่ง"
+        },
+        {
+          "emoji": "👩📖",
+          "answer": "She is reading",
+          "hint": "s h e  i s  r _ _ d _ n g",
+          "meaningTh": "เธอกำลังอ่านหนังสือ"
+        },
+        {
+          "emoji": "👨🍳",
+          "answer": "He is cooking",
+          "hint": "h e  i s  c _ _ k _ n g",
+          "meaningTh": "เขากำลังทำอาหาร"
+        },
+        {
+          "emoji": "👧🎤",
+          "answer": "She is singing",
+          "hint": "s h e  i s  s _ n g _ n g",
+          "meaningTh": "เธอกำลังร้องเพลง"
+        },
+        {
+          "emoji": "👥⚽",
+          "answer": "They are playing",
+          "hint": "t h e y  a r e  p l _ y _ n g",
+          "meaningTh": "พวกเขากำลังเล่น"
+        }
+      ]
+    },
+    "fnd_v6_emoji_foundation_warmup": {
+      "title": "🌟 Foundation Warm-Up",
+      "dealCount": 5,
+      "items": [
+        {
+          "emoji": "👋🙂",
+          "answer": "Hello",
+          "hint": "h _ l l o",
+          "meaningTh": "สวัสดี"
+        },
+        {
+          "emoji": "🙏",
+          "answer": "Thank you",
+          "hint": "t h _ n k  y _ u",
+          "meaningTh": "ขอบคุณ"
+        },
+        {
+          "emoji": "👨‍👩‍👧",
+          "answer": "My family",
+          "hint": "m y  f _ m _ l y",
+          "meaningTh": "ครอบครัวของฉัน"
+        },
+        {
+          "emoji": "☕❤️",
+          "answer": "I like coffee",
+          "hint": "I  l _ k e  c _ f f _ e",
+          "meaningTh": "ฉันชอบกาแฟ"
+        },
+        {
+          "emoji": "📍🏫❓",
+          "answer": "Where is the school?",
+          "hint": "w h _ r e  i s  t h e  s c h _ _ l",
+          "meaningTh": "โรงเรียนอยู่ที่ไหน"
+        }
+      ]
+    },
+    "emoji_speak_ee_about_me_daily_routine": {
+      "title": "🎮 Emoji Speak",
+      "dealCount": 5,
+      "items": [
+        {
+          "emoji": "⏰",
+          "answer": "Wake up",
+          "hint": "w _ _ e u _",
+          "meaningTh": "ตื่นนอน"
+        },
+        {
+          "emoji": "😴",
+          "answer": "Sleep",
+          "hint": "s _ _ _ p",
+          "meaningTh": "นอน"
+        },
+        {
+          "emoji": "☕",
+          "answer": "Coffee",
+          "hint": "c _ _ _ _ e",
+          "meaningTh": "กาแฟ"
+        },
+        {
+          "emoji": "🌅",
+          "answer": "Morning",
+          "hint": "m _ _ _ _ _ g",
+          "meaningTh": "เช้า"
+        },
+        {
+          "emoji": "🌙",
+          "answer": "Night",
+          "hint": "n _ _ _ t",
+          "meaningTh": "กลางคืน"
+        },
+        {
+          "emoji": "🚿",
+          "answer": "Shower",
+          "hint": "s _ _ _ _ r",
+          "meaningTh": "อาบน้ำ"
+        },
+        {
+          "emoji": "🦷",
+          "answer": "Brush",
+          "hint": "b _ _ _ h",
+          "meaningTh": "แปรง (ฟัน)"
+        }
+      ]
+    },
+    "emoji_speak_ee_about_me_food": {
+      "title": "🎮 Emoji Speak",
+      "dealCount": 5,
+      "items": [
+        {
+          "emoji": "🍎",
+          "answer": "Apple",
+          "hint": "a _ _ _ e",
+          "meaningTh": "แอปเปิล"
+        },
+        {
+          "emoji": "🍌",
+          "answer": "Banana",
+          "hint": "b _ _ _ _ a",
+          "meaningTh": "กล้วย"
+        },
+        {
+          "emoji": "🍕",
+          "answer": "Pizza",
+          "hint": "p _ _ _ a",
+          "meaningTh": "พิซซ่า"
+        },
+        {
+          "emoji": "🥛",
+          "answer": "Milk",
+          "hint": "m _ _ _",
+          "meaningTh": "นม"
+        },
+        {
+          "emoji": "🍞",
+          "answer": "Bread",
+          "hint": "b _ _ _ d",
+          "meaningTh": "ขนมปัง"
+        },
+        {
+          "emoji": "🍳",
+          "answer": "Egg",
+          "hint": "e _ _",
+          "meaningTh": "ไข่"
+        },
+        {
+          "emoji": "🍔",
+          "answer": "Burger",
+          "hint": "b _ _ _ _ r",
+          "meaningTh": "เบอร์เกอร์"
+        },
+        {
+          "emoji": "🍟",
+          "answer": "Fries",
+          "hint": "f _ _ _ s",
+          "meaningTh": "มันฝรั่งทอด"
+        }
+      ]
+    },
+    "emoji_speak_ee_about_me_home": {
+      "title": "🎮 Emoji Speak",
+      "dealCount": 5,
+      "items": [
+        {
+          "emoji": "🛏️",
+          "answer": "Bed",
+          "hint": "b _ _",
+          "meaningTh": "เตียง"
+        },
+        {
+          "emoji": "🛋️",
+          "answer": "Sofa",
+          "hint": "s _ _ a",
+          "meaningTh": "โซฟา"
+        },
+        {
+          "emoji": "🚪",
+          "answer": "Door",
+          "hint": "d _ _ r",
+          "meaningTh": "ประตู"
+        },
+        {
+          "emoji": "🪟",
+          "answer": "Window",
+          "hint": "w _ _ _ _ w",
+          "meaningTh": "หน้าต่าง"
+        },
+        {
+          "emoji": "💡",
+          "answer": "Lamp",
+          "hint": "l _ _ _",
+          "meaningTh": "โคมไฟ"
+        },
+        {
+          "emoji": "🪑",
+          "answer": "Chair",
+          "hint": "c _ _ _ r",
+          "meaningTh": "เก้าอี้"
+        },
+        {
+          "emoji": "🚿",
+          "answer": "Shower",
+          "hint": "s _ _ _ _ r",
+          "meaningTh": "ฝักบัว"
+        },
+        {
+          "emoji": "🛁",
+          "answer": "Bathtub",
+          "hint": "b _ _ _ _ _ _ b",
+          "meaningTh": "อ่างอาบน้ำ"
+        }
+      ]
+    },
+    "emoji_speak_ee_about_me_jobs": {
+      "title": "🎮 Emoji Speak",
+      "dealCount": 5,
+      "items": [
+        {
+          "emoji": "👨‍⚕️",
+          "answer": "Doctor",
+          "hint": "d _ _ _ _ r",
+          "meaningTh": "หมอ"
+        },
+        {
+          "emoji": "👩‍🏫",
+          "answer": "Teacher",
+          "hint": "t _ _ _ _ _ r",
+          "meaningTh": "ครู"
+        },
+        {
+          "emoji": "👨‍🍳",
+          "answer": "Chef",
+          "hint": "c _ _ _",
+          "meaningTh": "เชฟ"
+        },
+        {
+          "emoji": "👮",
+          "answer": "Police",
+          "hint": "p _ _ _ _ e",
+          "meaningTh": "ตำรวจ"
+        },
+        {
+          "emoji": "👨‍🌾",
+          "answer": "Farmer",
+          "hint": "f _ _ _ _ r",
+          "meaningTh": "เกษตรกร"
+        },
+        {
+          "emoji": "🚗",
+          "answer": "Driver",
+          "hint": "d _ _ _ _ r",
+          "meaningTh": "คนขับ"
+        },
+        {
+          "emoji": "👷",
+          "answer": "Engineer",
+          "hint": "e _ _ _ _ _ _ r",
+          "meaningTh": "วิศวกร"
+        },
+        {
+          "emoji": "🎨",
+          "answer": "Designer",
+          "hint": "d _ _ _ _ _ _ r",
+          "meaningTh": "นักออกแบบ"
+        }
+      ]
+    },
+    "emoji_speak_ee_about_me_activities": {
+      "title": "🎮 Emoji Speak",
+      "dealCount": 5,
+      "items": [
+        {
+          "emoji": "⚽",
+          "answer": "Soccer",
+          "hint": "s _ _ _ _ r",
+          "meaningTh": "ฟุตบอล"
+        },
+        {
+          "emoji": "📖",
+          "answer": "Read",
+          "hint": "r _ _ d",
+          "meaningTh": "อ่าน"
+        },
+        {
+          "emoji": "🎨",
+          "answer": "Draw",
+          "hint": "d _ _ _",
+          "meaningTh": "วาดรูป"
+        },
+        {
+          "emoji": "🎧",
+          "answer": "Music",
+          "hint": "m _ _ _ c",
+          "meaningTh": "เพลง"
+        },
+        {
+          "emoji": "🏃",
+          "answer": "Run",
+          "hint": "r _ _",
+          "meaningTh": "วิ่ง"
+        },
+        {
+          "emoji": "🏊",
+          "answer": "Swim",
+          "hint": "s _ _ m",
+          "meaningTh": "ว่ายน้ำ"
+        },
+        {
+          "emoji": "🚴",
+          "answer": "Bicycle",
+          "hint": "b _ _ _ _ _ e",
+          "meaningTh": "จักรยาน"
+        },
+        {
+          "emoji": "💃",
+          "answer": "Dance",
+          "hint": "d _ _ _ e",
+          "meaningTh": "เต้น"
+        }
+      ]
+    },
+    "emoji_speak_ee_about_me_animals": {
+      "title": "🎮 Emoji Speak",
+      "dealCount": 5,
+      "items": [
+        {
+          "emoji": "🐶",
+          "answer": "Dog",
+          "hint": "d _ _",
+          "meaningTh": "หมา"
+        },
+        {
+          "emoji": "🐱",
+          "answer": "Cat",
+          "hint": "c _ _",
+          "meaningTh": "แมว"
+        },
+        {
+          "emoji": "🐘",
+          "answer": "Elephant",
+          "hint": "e _ _ _ _ _ _ t",
+          "meaningTh": "ช้าง"
+        },
+        {
+          "emoji": "🐰",
+          "answer": "Rabbit",
+          "hint": "r _ _ _ _ t",
+          "meaningTh": "กระต่าย"
+        },
+        {
+          "emoji": "🦁",
+          "answer": "Lion",
+          "hint": "l _ _ n",
+          "meaningTh": "สิงโต"
+        },
+        {
+          "emoji": "🐵",
+          "answer": "Monkey",
+          "hint": "m _ _ _ _ y",
+          "meaningTh": "ลิง"
+        },
+        {
+          "emoji": "🐼",
+          "answer": "Panda",
+          "hint": "p _ _ _ a",
+          "meaningTh": "แพนด้า"
+        },
+        {
+          "emoji": "🦒",
+          "answer": "Giraffe",
+          "hint": "g _ _ _ _ _ e",
+          "meaningTh": "ยีราฟ"
+        }
+      ]
+    },
+    "emoji_speak_ee_about_me_personality": {
+      "title": "🎮 Emoji Speak",
+      "dealCount": 5,
+      "items": [
+        {
+          "emoji": "😂",
+          "answer": "Funny",
+          "hint": "f _ _ _ y",
+          "meaningTh": "ตลก"
+        },
+        {
+          "emoji": "🙂",
+          "answer": "Kind",
+          "hint": "k _ _ _",
+          "meaningTh": "ใจดี"
+        },
+        {
+          "emoji": "😊",
+          "answer": "Friendly",
+          "hint": "f _ _ _ _ _ _ y",
+          "meaningTh": "เป็นมิตร"
+        },
+        {
+          "emoji": "😵",
+          "answer": "Busy",
+          "hint": "b _ _ _",
+          "meaningTh": "ยุ่ง"
+        },
+        {
+          "emoji": "🤓",
+          "answer": "Smart",
+          "hint": "s _ _ _ t",
+          "meaningTh": "ฉลาด"
+        },
+        {
+          "emoji": "😄",
+          "answer": "Happy",
+          "hint": "h _ _ _ y",
+          "meaningTh": "มีความสุข"
+        },
+        {
+          "emoji": "😳",
+          "answer": "Shy",
+          "hint": "s _ _",
+          "meaningTh": "ขี้อาย"
+        },
+        {
+          "emoji": "❤️",
+          "answer": "Helpful",
+          "hint": "h _ _ _ _ _ _ l",
+          "meaningTh": "ชอบช่วยเหลือ"
+        }
+      ]
+    },
+    "emoji_speak_ee_everyday_life_clothes": {
+      "title": "🎮 Emoji Speak",
+      "dealCount": 5,
+      "items": [
+        {
+          "emoji": "👕",
+          "answer": "Shirt",
+          "hint": "s _ _ _ t",
+          "meaningTh": "เสื้อเชิ้ต"
+        },
+        {
+          "emoji": "👖",
+          "answer": "Pants",
+          "hint": "p _ _ _ s",
+          "meaningTh": "กางเกง"
+        },
+        {
+          "emoji": "👗",
+          "answer": "Dress",
+          "hint": "d _ _ _ s",
+          "meaningTh": "เดรส"
+        },
+        {
+          "emoji": "👟",
+          "answer": "Shoes",
+          "hint": "s _ _ _ s",
+          "meaningTh": "รองเท้า"
+        },
+        {
+          "emoji": "🧢",
+          "answer": "Cap",
+          "hint": "c _ _",
+          "meaningTh": "หมวก"
+        },
+        {
+          "emoji": "🧥",
+          "answer": "Jacket",
+          "hint": "j _ _ _ _ t",
+          "meaningTh": "แจ็กเก็ต"
+        },
+        {
+          "emoji": "🧦",
+          "answer": "Socks",
+          "hint": "s _ _ _ s",
+          "meaningTh": "ถุงเท้า"
+        },
+        {
+          "emoji": "👔",
+          "answer": "Tie",
+          "hint": "t _ _",
+          "meaningTh": "เนคไท"
+        },
+        {
+          "emoji": "🩳",
+          "answer": "Shorts",
+          "hint": "s _ _ _ _ s",
+          "meaningTh": "กางเกงขาสั้น"
+        },
+        {
+          "emoji": "🧤",
+          "answer": "Gloves",
+          "hint": "g _ _ _ _ s",
+          "meaningTh": "ถุงมือ"
+        },
+        {
+          "emoji": "🥾",
+          "answer": "Boots",
+          "hint": "b _ _ _ s",
+          "meaningTh": "รองเท้าบูท"
+        },
+        {
+          "emoji": "🧣",
+          "answer": "Scarf",
+          "hint": "s _ _ _ f",
+          "meaningTh": "ผ้าพันคอ"
+        }
+      ]
+    },
+    "emoji_speak_ee_everyday_life_menu": {
+      "title": "🎮 Emoji Speak",
+      "dealCount": 5,
+      "items": [
+        {
+          "emoji": "🥗",
+          "answer": "Salad",
+          "hint": "s _ _ _ d",
+          "meaningTh": "สลัด"
+        },
+        {
+          "emoji": "🍜",
+          "answer": "Noodles",
+          "hint": "n _ _ _ _ _ s",
+          "meaningTh": "บะหมี่ / ก๋วยเตี๋ยว"
+        },
+        {
+          "emoji": "🍛",
+          "answer": "Curry",
+          "hint": "c _ _ _ y",
+          "meaningTh": "แกง"
+        },
+        {
+          "emoji": "🍣",
+          "answer": "Sushi",
+          "hint": "s _ _ _ i",
+          "meaningTh": "ซูชิ"
+        },
+        {
+          "emoji": "🍗",
+          "answer": "Chicken",
+          "hint": "c _ _ _ _ _ n",
+          "meaningTh": "ไก่"
+        },
+        {
+          "emoji": "🥩",
+          "answer": "Steak",
+          "hint": "s _ _ _ k",
+          "meaningTh": "สเต๊ก"
+        },
+        {
+          "emoji": "🍚",
+          "answer": "Rice",
+          "hint": "r _ _ _",
+          "meaningTh": "ข้าว"
+        },
+        {
+          "emoji": "🍰",
+          "answer": "Cake",
+          "hint": "c _ _ _",
+          "meaningTh": "เค้ก"
+        },
+        {
+          "emoji": "🥪",
+          "answer": "Sandwich",
+          "hint": "s _ _ _ _ _ _ h",
+          "meaningTh": "แซนด์วิช"
+        },
+        {
+          "emoji": "🍝",
+          "answer": "Pasta",
+          "hint": "p _ _ _ a",
+          "meaningTh": "พาสต้า"
+        }
+      ]
+    },
+    "emoji_speak_ee_everyday_life_coffee": {
+      "title": "🎮 Emoji Speak",
+      "dealCount": 5,
+      "items": [
+        {
+          "emoji": "☕",
+          "answer": "Coffee",
+          "hint": "c _ _ _ _ e",
+          "meaningTh": "กาแฟ"
+        },
+        {
+          "emoji": "🥛",
+          "answer": "Milk",
+          "hint": "m _ _ _",
+          "meaningTh": "นม"
+        },
+        {
+          "emoji": "🍵",
+          "answer": "Tea",
+          "hint": "t _ _",
+          "meaningTh": "ชา"
+        },
+        {
+          "emoji": "🧊",
+          "answer": "Ice",
+          "hint": "i _ _",
+          "meaningTh": "น้ำแข็ง"
+        },
+        {
+          "emoji": "🍯",
+          "answer": "Honey",
+          "hint": "h _ _ _ y",
+          "meaningTh": "น้ำผึ้ง"
+        },
+        {
+          "emoji": "🍬",
+          "answer": "Sugar",
+          "hint": "s _ _ _ r",
+          "meaningTh": "น้ำตาล"
+        },
+        {
+          "emoji": "🥤",
+          "answer": "Straw",
+          "hint": "s _ _ _ w",
+          "meaningTh": "หลอด"
+        },
+        {
+          "emoji": "🧋",
+          "answer": "Bubble",
+          "hint": "b _ _ _ _ e",
+          "meaningTh": "ชานมไข่มุก"
+        },
+        {
+          "emoji": "🫘",
+          "answer": "Beans",
+          "hint": "b _ _ _ s",
+          "meaningTh": "เมล็ดกาแฟ"
+        },
+        {
+          "emoji": "🥄",
+          "answer": "Spoon",
+          "hint": "s _ _ _ n",
+          "meaningTh": "ช้อน"
+        },
+        {
+          "emoji": "🥤",
+          "answer": "Cup",
+          "hint": "c _ _",
+          "meaningTh": "แก้ว"
+        },
+        {
+          "emoji": "💵",
+          "answer": "Bill",
+          "hint": "b _ _ _",
+          "meaningTh": "บิล / ใบเสร็จ"
+        }
+      ]
+    },
+    "emoji_speak_ee_everyday_life_places": {
+      "title": "🎮 Emoji Speak",
+      "dealCount": 5,
+      "items": [
+        {
+          "emoji": "🏫",
+          "answer": "School",
+          "hint": "s _ _ _ _ l",
+          "meaningTh": "โรงเรียน"
+        },
+        {
+          "emoji": "🏥",
+          "answer": "Hospital",
+          "hint": "h _ _ _ _ _ _ _",
+          "meaningTh": "โรงพยาบาล"
+        },
+        {
+          "emoji": "🏦",
+          "answer": "Bank",
+          "hint": "b _ _ _",
+          "meaningTh": "ธนาคาร"
+        },
+        {
+          "emoji": "🏪",
+          "answer": "Store",
+          "hint": "s _ _ _ e",
+          "meaningTh": "ร้านค้า"
+        },
+        {
+          "emoji": "🍽️",
+          "answer": "Restaurant",
+          "hint": "r _ _ _ _ _ _ _ _ t",
+          "meaningTh": "ร้านอาหาร"
+        },
+        {
+          "emoji": "🏨",
+          "answer": "Hotel",
+          "hint": "h _ _ _ l",
+          "meaningTh": "โรงแรม"
+        },
+        {
+          "emoji": "☕",
+          "answer": "Cafe",
+          "hint": "c _ _ _",
+          "meaningTh": "คาเฟ่"
+        },
+        {
+          "emoji": "🎬",
+          "answer": "Cinema",
+          "hint": "c _ _ _ _ _ a",
+          "meaningTh": "โรงหนัง"
+        },
+        {
+          "emoji": "🌳",
+          "answer": "Park",
+          "hint": "p _ _ _",
+          "meaningTh": "สวนสาธารณะ"
+        },
+        {
+          "emoji": "🛒",
+          "answer": "Market",
+          "hint": "m _ _ _ _ t",
+          "meaningTh": "ตลาด"
+        },
+        {
+          "emoji": "✈️",
+          "answer": "Airport",
+          "hint": "a _ _ _ _ _ _ t",
+          "meaningTh": "สนามบิน"
+        },
+        {
+          "emoji": "🚉",
+          "answer": "Station",
+          "hint": "s _ _ _ _ _ _ n",
+          "meaningTh": "สถานี"
+        }
+      ]
+    },
+    "emoji_speak_ee_everyday_life_vehicles": {
+      "title": "🎮 Emoji Speak",
+      "dealCount": 5,
+      "items": [
+        {
+          "emoji": "🚗",
+          "answer": "Car",
+          "hint": "c _ _",
+          "meaningTh": "รถเก๋ง"
+        },
+        {
+          "emoji": "🚌",
+          "answer": "Bus",
+          "hint": "b _ _",
+          "meaningTh": "รถเมล์"
+        },
+        {
+          "emoji": "🚕",
+          "answer": "Taxi",
+          "hint": "t _ _ _",
+          "meaningTh": "แท็กซี่"
+        },
+        {
+          "emoji": "🚆",
+          "answer": "Train",
+          "hint": "t _ _ _ _",
+          "meaningTh": "รถไฟ"
+        },
+        {
+          "emoji": "✈️",
+          "answer": "Airplane",
+          "hint": "a _ _ _ _ _ _ _",
+          "meaningTh": "เครื่องบิน"
+        },
+        {
+          "emoji": "🚲",
+          "answer": "Bicycle",
+          "hint": "b _ _ _ _ _ e",
+          "meaningTh": "จักรยาน"
+        },
+        {
+          "emoji": "🏍️",
+          "answer": "Motorcycle",
+          "hint": "m _ _ _ _ _ _ _ _ e",
+          "meaningTh": "มอเตอร์ไซค์"
+        },
+        {
+          "emoji": "🚤",
+          "answer": "Boat",
+          "hint": "b _ _ _",
+          "meaningTh": "เรือ"
+        },
+        {
+          "emoji": "🚢",
+          "answer": "Ship",
+          "hint": "s _ _ _",
+          "meaningTh": "เรือใหญ่"
+        },
+        {
+          "emoji": "🚁",
+          "answer": "Helicopter",
+          "hint": "h _ _ _ _ _ _ _ _ r",
+          "meaningTh": "เฮลิคอปเตอร์"
+        },
+        {
+          "emoji": "🚐",
+          "answer": "Van",
+          "hint": "v _ _",
+          "meaningTh": "รถตู้"
+        },
+        {
+          "emoji": "🚚",
+          "answer": "Truck",
+          "hint": "t _ _ _ _",
+          "meaningTh": "รถบรรทุก"
+        }
+      ]
+    },
+    "emoji_speak_ee_everyday_life_countries": {
+      "title": "🎮 Emoji Speak",
+      "dealCount": 5,
+      "items": [
+        {
+          "emoji": "🇹🇭",
+          "answer": "Thailand",
+          "hint": "T _ _ _ _ _ _ _",
+          "meaningTh": "ประเทศไทย"
+        },
+        {
+          "emoji": "🇺🇸",
+          "answer": "United States",
+          "hint": "U _ _ _ _ _   S _ _ _ _ _",
+          "meaningTh": "สหรัฐอเมริกา"
+        },
+        {
+          "emoji": "🇬🇧",
+          "answer": "United Kingdom",
+          "hint": "U _ _ _ _ _   K _ _ _ _ _ _",
+          "meaningTh": "สหราชอาณาจักร"
+        },
+        {
+          "emoji": "🇯🇵",
+          "answer": "Japan",
+          "hint": "J _ _ _ _",
+          "meaningTh": "ญี่ปุ่น"
+        },
+        {
+          "emoji": "🇨🇳",
+          "answer": "China",
+          "hint": "C _ _ _ _",
+          "meaningTh": "จีน"
+        },
+        {
+          "emoji": "🇰🇷",
+          "answer": "South Korea",
+          "hint": "S _ _ _ _   K _ _ _ _",
+          "meaningTh": "เกาหลีใต้"
+        },
+        {
+          "emoji": "🇸🇬",
+          "answer": "Singapore",
+          "hint": "S _ _ _ _ _ _ _ _",
+          "meaningTh": "สิงคโปร์"
+        },
+        {
+          "emoji": "🇫🇷",
+          "answer": "France",
+          "hint": "F _ _ _ _ _",
+          "meaningTh": "ฝรั่งเศส"
+        },
+        {
+          "emoji": "🇩🇪",
+          "answer": "Germany",
+          "hint": "G _ _ _ _ _ _",
+          "meaningTh": "เยอรมนี"
+        },
+        {
+          "emoji": "🇦🇺",
+          "answer": "Australia",
+          "hint": "A _ _ _ _ _ _ _ _",
+          "meaningTh": "ออสเตรเลีย"
+        },
+        {
+          "emoji": "🇮🇳",
+          "answer": "India",
+          "hint": "I _ _ _ _",
+          "meaningTh": "อินเดีย"
+        },
+        {
+          "emoji": "🇨🇦",
+          "answer": "Canada",
+          "hint": "C _ _ _ _ _",
+          "meaningTh": "แคนาดา"
+        }
+      ]
+    },
+    "emoji_speak_ee_everyday_life_3": {
+      "title": "🎮 Emoji Speak",
+      "dealCount": 5,
+      "items": [
+        {
+          "emoji": "📅",
+          "answer": "Reservation",
+          "hint": "R _ _ e _ _ _ _ _ _ n",
+          "meaningTh": "การจอง"
+        },
+        {
+          "emoji": "🛏️",
+          "answer": "Room",
+          "hint": "R _ o _",
+          "meaningTh": "ห้อง"
+        },
+        {
+          "emoji": "🔑",
+          "answer": "Key",
+          "hint": "K _ y",
+          "meaningTh": "กุญแจ"
+        },
+        {
+          "emoji": "🛂",
+          "answer": "Passport",
+          "hint": "P _ s _ _ o _ t",
+          "meaningTh": "พาสปอร์ต"
+        },
+        {
+          "emoji": "🏨",
+          "answer": "Hotel",
+          "hint": "H _ t _ l",
+          "meaningTh": "โรงแรม"
+        },
+        {
+          "emoji": "🛎️",
+          "answer": "Reception",
+          "hint": "R _ _ e _ _ _ _ n",
+          "meaningTh": "แผนกต้อนรับ"
+        },
+        {
+          "emoji": "🚪",
+          "answer": "Door",
+          "hint": "D _ o _",
+          "meaningTh": "ประตู"
+        },
+        {
+          "emoji": "🎫",
+          "answer": "Boarding pass",
+          "hint": "B _ _ r _ _ _ _ g P _ _ s",
+          "meaningTh": "บัตรขึ้นเครื่อง"
+        },
+        {
+          "emoji": "🚪5️⃣",
+          "answer": "Gate",
+          "hint": "G _ t _",
+          "meaningTh": "เกต"
+        },
+        {
+          "emoji": "🧳",
+          "answer": "Baggage",
+          "hint": "B _ _ g _ _ e",
+          "meaningTh": "กระเป๋าเดินทาง"
+        },
+        {
+          "emoji": "✈️",
+          "answer": "Flight",
+          "hint": "F _ i _ h t",
+          "meaningTh": "เที่ยวบิน"
+        },
+        {
+          "emoji": "🛫",
+          "answer": "Airplane",
+          "hint": "A _ _ p _ _ _ e",
+          "meaningTh": "เครื่องบิน"
+        },
+        {
+          "emoji": "🪑",
+          "answer": "Seat",
+          "hint": "S _ a _",
+          "meaningTh": "ที่นั่ง"
+        },
+        {
+          "emoji": "💊",
+          "answer": "Medicine",
+          "hint": "M _ _ i _ _ _ e",
+          "meaningTh": "ยา"
+        },
+        {
+          "emoji": "🤕",
+          "answer": "Headache",
+          "hint": "H _ _ d _ _ _ h e",
+          "meaningTh": "ปวดหัว"
+        },
+        {
+          "emoji": "🌡️",
+          "answer": "Fever",
+          "hint": "F _ v _ r",
+          "meaningTh": "ไข้"
+        },
+        {
+          "emoji": "🏥",
+          "answer": "Pharmacy",
+          "hint": "P _ _ r _ _ _ c y",
+          "meaningTh": "ร้านยา"
+        },
+        {
+          "emoji": "🤒",
+          "answer": "Sick",
+          "hint": "S _ c _",
+          "meaningTh": "ป่วย"
+        },
+        {
+          "emoji": "🩹",
+          "answer": "Bandage",
+          "hint": "B _ _ d _ _ e",
+          "meaningTh": "พลาสเตอร์ / ผ้าพันแผล"
+        }
+      ]
+    },
+    "emoji_speak_ee_stories_1": {
+      "title": "🥾 Emoji Speak",
+      "dealCount": 8,
+      "items": [
+        {
+          "emoji": "🥾",
+          "answer": "hike",
+          "hint": "H _ k e",
+          "meaningTh": "เดินป่า"
+        },
+        {
+          "emoji": "⛺",
+          "answer": "camp",
+          "hint": "C _ m p",
+          "meaningTh": "ตั้งแคมป์"
+        },
+        {
+          "emoji": "🧗",
+          "answer": "climb",
+          "hint": "C l _ m b",
+          "meaningTh": "ปีน"
+        },
+        {
+          "emoji": "🤿",
+          "answer": "dive",
+          "hint": "D _ v e",
+          "meaningTh": "ดำน้ำ"
+        },
+        {
+          "emoji": "🏄",
+          "answer": "surf",
+          "hint": "S _ r f",
+          "meaningTh": "เล่นเซิร์ฟ"
+        },
+        {
+          "emoji": "💦",
+          "answer": "waterfall",
+          "hint": "W _ t _ r f _ l l",
+          "meaningTh": "น้ำตก"
+        },
+        {
+          "emoji": "🏔️",
+          "answer": "mountain",
+          "hint": "M _ u n t _ _ n",
+          "meaningTh": "ภูเขา"
+        },
+        {
+          "emoji": "🏝️",
+          "answer": "island",
+          "hint": "_ s l _ n d",
+          "meaningTh": "เกาะ"
+        }
+      ]
+    },
+    "emoji_speak_ee_stories_2": {
+      "title": "🎂 Emoji Speak",
+      "dealCount": 8,
+      "items": [
+        {
+          "emoji": "🎂",
+          "answer": "birthday",
+          "hint": "B _ r t h d _ y",
+          "meaningTh": "วันเกิด"
+        },
+        {
+          "emoji": "🎉",
+          "answer": "party",
+          "hint": "P _ r t y",
+          "meaningTh": "งานปาร์ตี้"
+        },
+        {
+          "emoji": "🍰",
+          "answer": "cake",
+          "hint": "C _ k e",
+          "meaningTh": "เค้ก"
+        },
+        {
+          "emoji": "🎁",
+          "answer": "gift",
+          "hint": "G _ f t",
+          "meaningTh": "ของขวัญ"
+        },
+        {
+          "emoji": "🕯️",
+          "answer": "candle",
+          "hint": "C _ n d l e",
+          "meaningTh": "เทียน"
+        },
+        {
+          "emoji": "🎈",
+          "answer": "balloon",
+          "hint": "B _ l l _ o n",
+          "meaningTh": "ลูกโป่ง"
+        },
+        {
+          "emoji": "💌",
+          "answer": "invite",
+          "hint": "_ n v _ t e",
+          "meaningTh": "เชิญ"
+        },
+        {
+          "emoji": "🥳",
+          "answer": "celebrate",
+          "hint": "C _ l _ b r _ t e",
+          "meaningTh": "ฉลอง"
+        },
+        {
+          "emoji": "😲",
+          "answer": "surprise",
+          "hint": "S u r p r _ s e",
+          "meaningTh": "เซอร์ไพรส์"
+        },
+        {
+          "emoji": "🃏",
+          "answer": "card",
+          "hint": "C _ r d",
+          "meaningTh": "การ์ด"
+        },
+        {
+          "emoji": "⭐",
+          "answer": "wish",
+          "hint": "W _ s h",
+          "meaningTh": "อธิษฐาน"
+        },
+        {
+          "emoji": "👤",
+          "answer": "guest",
+          "hint": "G u _ s t",
+          "meaningTh": "แขก"
+        },
+        {
+          "emoji": "🎀",
+          "answer": "decorate",
+          "hint": "D _ c _ r _ t e",
+          "meaningTh": "ตกแต่ง"
+        },
+        {
+          "emoji": "🎆",
+          "answer": "fireworks",
+          "hint": "F _ r _ w _ r k s",
+          "meaningTh": "ดอกไม้ไฟ"
+        },
+        {
+          "emoji": "🎊",
+          "answer": "confetti",
+          "hint": "C _ n f _ t t i",
+          "meaningTh": "กระดาษโปรย"
+        }
+      ]
+    },
+    "emoji_speak_ee_stories_3": {
+      "title": "😫 Emoji Speak",
+      "dealCount": 8,
+      "items": [
+        {
+          "emoji": "😫",
+          "answer": "tired",
+          "hint": "T _ r _ d",
+          "meaningTh": "เหนื่อย"
+        },
+        {
+          "emoji": "🤒",
+          "answer": "sick",
+          "hint": "S _ c k",
+          "meaningTh": "ป่วย"
+        },
+        {
+          "emoji": "⏰",
+          "answer": "late",
+          "hint": "L _ t e",
+          "meaningTh": "สาย"
+        },
+        {
+          "emoji": "🗺️",
+          "answer": "lost",
+          "hint": "L _ s t",
+          "meaningTh": "หลงทาง"
+        },
+        {
+          "emoji": "🔧",
+          "answer": "broken",
+          "hint": "B r _ k _ n",
+          "meaningTh": "พัง / เสีย"
+        },
+        {
+          "emoji": "😟",
+          "answer": "worried",
+          "hint": "W _ r r _ e d",
+          "meaningTh": "กังวล"
+        },
+        {
+          "emoji": "😠",
+          "answer": "angry",
+          "hint": "_ n g r y",
+          "meaningTh": "โกรธ"
+        },
+        {
+          "emoji": "😞",
+          "answer": "upset",
+          "hint": "U p s _ t",
+          "meaningTh": "ไม่พอใจ / เศร้า"
+        },
+        {
+          "emoji": "😰",
+          "answer": "nervous",
+          "hint": "N _ r v _ u s",
+          "meaningTh": "ประหม่า"
+        },
+        {
+          "emoji": "😨",
+          "answer": "scared",
+          "hint": "S c _ r _ d",
+          "meaningTh": "กลัว"
+        },
+        {
+          "emoji": "😢",
+          "answer": "miss",
+          "hint": "M _ s s",
+          "meaningTh": "คิดถึง / พลาด"
+        },
+        {
+          "emoji": "🤔",
+          "answer": "forget",
+          "hint": "F _ r g _ t",
+          "meaningTh": "ลืม"
+        },
+        {
+          "emoji": "🤕",
+          "answer": "fall",
+          "hint": "F _ l l",
+          "meaningTh": "ล้ม"
+        },
+        {
+          "emoji": "🩹",
+          "answer": "hurt",
+          "hint": "H _ r t",
+          "meaningTh": "เจ็บ"
+        },
+        {
+          "emoji": "🚧",
+          "answer": "stuck",
+          "hint": "S t _ c k",
+          "meaningTh": "ติด / ไปไม่ได้"
+        }
+      ]
+    }
+  }
+}

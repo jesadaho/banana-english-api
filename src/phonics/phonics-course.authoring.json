@@ -1,0 +1,2891 @@
+{
+  "version": "1.4.0-designer-r5",
+  "course": {
+    "internalName": "Pronunciation & Phonics",
+    "uiName": "Clear English",
+    "promise": "Read unfamiliar beginner words more confidently and speak familiar English more clearly.",
+    "audience": "Thai-speaking adult beginners; available beside A1 rather than before it",
+    "structure": {
+      "chapters": 8,
+      "nodes": 52,
+      "legacyNodesPreserved": 34,
+      "newNodes": 18,
+      "estimatedMinutes": 182
+    },
+    "estimatedMinutes": 186
+  },
+  "chapters": [
+    {
+      "chapter": 6,
+      "title": "Unlock the Sound Code",
+      "goal": "Understand that letters represent sounds and decode regular CVC words without naming every letter.",
+      "arc": "ki",
+      "nodes": [
+        {
+          "id": "phon_code_1",
+          "title": "First Sound Code",
+          "type": "lesson",
+          "goal": "Map m, s, t, p and short a/i before blending.",
+          "mechanic": "six scored tap-to-sound choices, one per mapping; no IPA recall",
+          "prereqs": [],
+          "assessmentMode": "deterministic_choice",
+          "legacy": null,
+          "difficultyComponents": {
+            "novelty": 1,
+            "response": 0,
+            "transfer": 0,
+            "total": 2,
+            "rationale": "lesson: novelty/response/transfer load at this point in the sequence"
+          },
+          "boredomComponents": {
+            "format": 0,
+            "semantic": 0,
+            "agency": 1,
+            "longListen": 1,
+            "total": 2,
+            "previousWindow": "course start",
+            "rationale": "R4 values are bounded and trace to boredomEvidence.previousWindowIds"
+          },
+          "difficulty": 2,
+          "boredom": 2,
+          "difficultyEvidence": {
+            "firstExposure": {
+              "value": 1,
+              "mappingCount": null,
+              "evidence": "authored content in deterministicSpecs.phon_code_1"
+            },
+            "responseComplexity": {
+              "value": 0,
+              "evidence": "six scored tap-to-sound choices, one per mapping; no IPA recall"
+            },
+            "unseenTransfer": {
+              "value": 0,
+              "evidence": "no reserved unseen set; transfer value reflects contextual carryover only"
+            }
+          },
+          "boredomEvidence": {
+            "previousWindowIds": [],
+            "previousWindowTypes": [],
+            "format": {
+              "value": 0,
+              "linkedIds": [],
+              "reason": "same or closely repeated interaction family in the preceding window"
+            },
+            "semantic": {
+              "value": 0,
+              "linkedIds": [],
+              "reason": "continued sound/pattern focus in the preceding window"
+            },
+            "lowAgency": {
+              "value": 1,
+              "reason": "mostly model-led selection or imitation"
+            },
+            "longListen": {
+              "value": 1,
+              "reason": "includes multi-model listening sequence"
+            }
+          }
+        },
+        {
+          "id": "phon_blend_1",
+          "title": "Blend It: map",
+          "type": "sound_builder",
+          "goal": "First blending routine: sweep known m-a-p and s-i-t without letter names; both words are novel combinations after code teaching.",
+          "mechanic": "two scored first-blend builds (map, sit), then optional read aloud; 2/2 passes",
+          "prereqs": [
+            "phon_code_1"
+          ],
+          "assessmentMode": "orthographic_build",
+          "legacy": null,
+          "difficultyComponents": {
+            "novelty": 1,
+            "response": 1,
+            "transfer": 0,
+            "total": 3,
+            "rationale": "first-ever continuous blending routine (novelty 1), two ordered tile builds (response 1), combinations are new but model-supported rather than delayed transfer (transfer 0)"
+          },
+          "boredomComponents": {
+            "format": 0,
+            "semantic": 1,
+            "agency": 0,
+            "longListen": 0,
+            "total": 1,
+            "previousWindow": "phon_code_1",
+            "rationale": "R4 values are bounded and trace to boredomEvidence.previousWindowIds"
+          },
+          "difficulty": 3,
+          "boredom": 1,
+          "difficultyEvidence": {
+            "firstExposure": {
+              "value": 1,
+              "mappingCount": null,
+              "evidence": "authored content in deterministicSpecs.phon_blend_1"
+            },
+            "responseComplexity": {
+              "value": 1,
+              "evidence": "two scored first-blend builds (map, sit), then optional read aloud; 2/2 passes"
+            },
+            "unseenTransfer": {
+              "value": 0,
+              "evidence": "no reserved unseen set; transfer value reflects contextual carryover only"
+            }
+          },
+          "boredomEvidence": {
+            "previousWindowIds": [
+              "phon_code_1"
+            ],
+            "previousWindowTypes": [
+              "lesson"
+            ],
+            "format": {
+              "value": 0,
+              "linkedIds": [
+                "phon_code_1"
+              ],
+              "reason": "same or closely repeated interaction family in the preceding window"
+            },
+            "semantic": {
+              "value": 1,
+              "linkedIds": [
+                "phon_code_1"
+              ],
+              "reason": "continued sound/pattern focus in the preceding window"
+            },
+            "lowAgency": {
+              "value": 0,
+              "reason": "learner constructs, chooses, or actively attempts"
+            },
+            "longListen": {
+              "value": 0,
+              "reason": "no extended listening sequence"
+            }
+          }
+        },
+        {
+          "id": "phon_short_ai_1",
+          "title": "Short A and I",
+          "type": "listen_choose",
+          "goal": "Retrieve a/i in decodable map, mat, sit and pit.",
+          "mechanic": "four scored sound-to-print choices; replay once",
+          "prereqs": [
+            "phon_blend_1"
+          ],
+          "assessmentMode": "deterministic_choice",
+          "legacy": null,
+          "difficultyComponents": {
+            "novelty": 1,
+            "response": 0,
+            "transfer": 0,
+            "total": 2,
+            "rationale": "listen_choose: novelty/response/transfer load at this point in the sequence"
+          },
+          "boredomComponents": {
+            "format": 0,
+            "semantic": 1,
+            "agency": 1,
+            "longListen": 0,
+            "total": 2,
+            "previousWindow": "phon_code_1 > phon_blend_1",
+            "rationale": "R4 values are bounded and trace to boredomEvidence.previousWindowIds"
+          },
+          "difficulty": 2,
+          "boredom": 2,
+          "difficultyEvidence": {
+            "firstExposure": {
+              "value": 1,
+              "mappingCount": null,
+              "evidence": "authored content in deterministicSpecs.phon_short_ai_1"
+            },
+            "responseComplexity": {
+              "value": 0,
+              "evidence": "four scored sound-to-print choices; replay once"
+            },
+            "unseenTransfer": {
+              "value": 0,
+              "evidence": "no reserved unseen set; transfer value reflects contextual carryover only"
+            }
+          },
+          "boredomEvidence": {
+            "previousWindowIds": [
+              "phon_code_1",
+              "phon_blend_1"
+            ],
+            "previousWindowTypes": [
+              "lesson",
+              "sound_builder"
+            ],
+            "format": {
+              "value": 0,
+              "linkedIds": [
+                "phon_code_1",
+                "phon_blend_1"
+              ],
+              "reason": "same or closely repeated interaction family in the preceding window"
+            },
+            "semantic": {
+              "value": 1,
+              "linkedIds": [
+                "phon_blend_1"
+              ],
+              "reason": "continued sound/pattern focus in the preceding window"
+            },
+            "lowAgency": {
+              "value": 1,
+              "reason": "mostly model-led selection or imitation"
+            },
+            "longListen": {
+              "value": 0,
+              "reason": "no extended listening sequence"
+            }
+          }
+        },
+        {
+          "id": "phon_short_eou_1",
+          "title": "Short E, O and U",
+          "type": "word_sort",
+          "goal": "Map short e/o/u and sort met, pet, pot, top, sum and pup; use pup (not put) for /ʌ/.",
+          "mechanic": "teach three vowel anchors, then six scored sorts/models",
+          "prereqs": [
+            "phon_short_ai_1"
+          ],
+          "assessmentMode": "deterministic_choice",
+          "legacy": null,
+          "difficultyComponents": {
+            "novelty": 1,
+            "response": 1,
+            "transfer": 0,
+            "total": 3,
+            "rationale": "word_sort: novelty/response/transfer load at this point in the sequence"
+          },
+          "boredomComponents": {
+            "format": 0,
+            "semantic": 2,
+            "agency": 0,
+            "longListen": 0,
+            "total": 2,
+            "previousWindow": "phon_code_1 > phon_blend_1 > phon_short_ai_1",
+            "rationale": "R4 values are bounded and trace to boredomEvidence.previousWindowIds"
+          },
+          "difficulty": 3,
+          "boredom": 2,
+          "difficultyEvidence": {
+            "firstExposure": {
+              "value": 1,
+              "mappingCount": null,
+              "evidence": "authored content in deterministicSpecs.phon_short_eou_1"
+            },
+            "responseComplexity": {
+              "value": 1,
+              "evidence": "teach three vowel anchors, then six scored sorts/models"
+            },
+            "unseenTransfer": {
+              "value": 0,
+              "evidence": "no reserved unseen set; transfer value reflects contextual carryover only"
+            }
+          },
+          "boredomEvidence": {
+            "previousWindowIds": [
+              "phon_code_1",
+              "phon_blend_1",
+              "phon_short_ai_1"
+            ],
+            "previousWindowTypes": [
+              "lesson",
+              "sound_builder",
+              "listen_choose"
+            ],
+            "format": {
+              "value": 0,
+              "linkedIds": [
+                "phon_code_1",
+                "phon_blend_1",
+                "phon_short_ai_1"
+              ],
+              "reason": "same or closely repeated interaction family in the preceding window"
+            },
+            "semantic": {
+              "value": 2,
+              "linkedIds": [
+                "phon_blend_1",
+                "phon_short_ai_1"
+              ],
+              "reason": "continued sound/pattern focus in the preceding window"
+            },
+            "lowAgency": {
+              "value": 0,
+              "reason": "learner constructs, chooses, or actively attempts"
+            },
+            "longListen": {
+              "value": 0,
+              "reason": "no extended listening sequence"
+            }
+          }
+        },
+        {
+          "id": "phon_segment_1",
+          "title": "Break the Word",
+          "type": "sound_builder",
+          "goal": "Segment a CVC word into beginning, middle and end.",
+          "mechanic": "picture cue → place three grapheme tiles in sound boxes",
+          "prereqs": [
+            "phon_short_eou_1"
+          ],
+          "assessmentMode": "orthographic_build",
+          "legacy": null,
+          "difficultyComponents": {
+            "novelty": 1,
+            "response": 1,
+            "transfer": 0,
+            "total": 3,
+            "rationale": "sound_builder: novelty/response/transfer load at this point in the sequence"
+          },
+          "boredomComponents": {
+            "format": 1,
+            "semantic": 0,
+            "agency": 0,
+            "longListen": 0,
+            "total": 1,
+            "previousWindow": "phon_blend_1 > phon_short_ai_1 > phon_short_eou_1",
+            "rationale": "R4 values are bounded and trace to boredomEvidence.previousWindowIds"
+          },
+          "difficulty": 3,
+          "boredom": 1,
+          "difficultyEvidence": {
+            "firstExposure": {
+              "value": 1,
+              "mappingCount": null,
+              "evidence": "authored content in deterministicSpecs.phon_segment_1"
+            },
+            "responseComplexity": {
+              "value": 1,
+              "evidence": "picture cue → place three grapheme tiles in sound boxes"
+            },
+            "unseenTransfer": {
+              "value": 0,
+              "evidence": "no reserved unseen set; transfer value reflects contextual carryover only"
+            }
+          },
+          "boredomEvidence": {
+            "previousWindowIds": [
+              "phon_blend_1",
+              "phon_short_ai_1",
+              "phon_short_eou_1"
+            ],
+            "previousWindowTypes": [
+              "sound_builder",
+              "listen_choose",
+              "word_sort"
+            ],
+            "format": {
+              "value": 1,
+              "linkedIds": [
+                "phon_short_eou_1"
+              ],
+              "reason": "same or closely repeated interaction family in the preceding window"
+            },
+            "semantic": {
+              "value": 0,
+              "linkedIds": [
+                "phon_blend_1",
+                "phon_short_ai_1",
+                "phon_short_eou_1"
+              ],
+              "reason": "continued sound/pattern focus in the preceding window"
+            },
+            "lowAgency": {
+              "value": 0,
+              "reason": "learner constructs, chooses, or actively attempts"
+            },
+            "longListen": {
+              "value": 0,
+              "reason": "no extended listening sequence"
+            }
+          }
+        },
+        {
+          "id": "phon_check_1",
+          "title": "First Decode Check",
+          "type": "skill_check",
+          "goal": "Decode four unseen printed CVC words by matching each word to a meaning picture or blended audio; no picture-to-spelling item is counted as decoding.",
+          "mechanic": "four scored printed-word transfer choices: three meaning pictures and one audio match; 3/4 passes; optional speaking is unscored",
+          "prereqs": [
+            "phon_segment_1"
+          ],
+          "assessmentMode": "mixed_safe",
+          "legacy": null,
+          "difficultyComponents": {
+            "novelty": 1,
+            "response": 1,
+            "transfer": 0,
+            "total": 3,
+            "rationale": "skill_check: novelty/response/transfer load at this point in the sequence"
+          },
+          "boredomComponents": {
+            "format": 0,
+            "semantic": 2,
+            "agency": 0,
+            "longListen": 0,
+            "total": 2,
+            "previousWindow": "phon_short_ai_1 > phon_short_eou_1 > phon_segment_1",
+            "rationale": "R4 values are bounded and trace to boredomEvidence.previousWindowIds"
+          },
+          "difficulty": 3,
+          "boredom": 2,
+          "difficultyEvidence": {
+            "firstExposure": {
+              "value": 1,
+              "mappingCount": null,
+              "evidence": "authored content in deterministicSpecs.phon_check_1"
+            },
+            "responseComplexity": {
+              "value": 1,
+              "evidence": "four scored printed-word transfer choices: three meaning pictures and one audio match; 3/4 passes; optional speaking is unscored"
+            },
+            "unseenTransfer": {
+              "value": 0,
+              "evidence": "reserved unseen: pat, tip, set, pop"
+            }
+          },
+          "boredomEvidence": {
+            "previousWindowIds": [
+              "phon_short_ai_1",
+              "phon_short_eou_1",
+              "phon_segment_1"
+            ],
+            "previousWindowTypes": [
+              "listen_choose",
+              "word_sort",
+              "sound_builder"
+            ],
+            "format": {
+              "value": 0,
+              "linkedIds": [
+                "phon_short_ai_1",
+                "phon_short_eou_1",
+                "phon_segment_1"
+              ],
+              "reason": "same or closely repeated interaction family in the preceding window"
+            },
+            "semantic": {
+              "value": 2,
+              "linkedIds": [
+                "phon_short_eou_1",
+                "phon_segment_1"
+              ],
+              "reason": "continued sound/pattern focus in the preceding window"
+            },
+            "lowAgency": {
+              "value": 0,
+              "reason": "learner constructs, chooses, or actively attempts"
+            },
+            "longListen": {
+              "value": 0,
+              "reason": "no extended listening sequence"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "chapter": 7,
+      "title": "Patterns That Travel",
+      "goal": "Use a small set of high-yield spelling patterns to decode useful new words.",
+      "arc": "ki",
+      "nodes": [
+        {
+          "id": "phon_magic_e_ai_1",
+          "title": "Cap to Cape",
+          "type": "sound_builder",
+          "goal": "Teach c=/k/ and k=/k/ first, then notice silent-e in cap–cape and kit–kite.",
+          "mechanic": "add/remove e tile and compare model; build target",
+          "prereqs": [
+            "phon_check_1"
+          ],
+          "assessmentMode": "orthographic_build",
+          "legacy": null,
+          "difficultyComponents": {
+            "novelty": 2,
+            "response": 1,
+            "transfer": 0,
+            "total": 4,
+            "rationale": "Chapter 2 mapping load 4; novelty 2/2, response 1/2 from exact mechanic, transfer 0/1"
+          },
+          "boredomComponents": {
+            "format": 1,
+            "semantic": 1,
+            "agency": 0,
+            "longListen": 0,
+            "total": 2,
+            "previousWindow": "phon_short_eou_1 > phon_segment_1 > phon_check_1",
+            "rationale": "R4 values are bounded and trace to boredomEvidence.previousWindowIds"
+          },
+          "difficulty": 4,
+          "boredom": 2,
+          "difficultyEvidence": {
+            "firstExposure": {
+              "value": 2,
+              "mappingCount": 4,
+              "evidence": "exact new mapping count 4: c→/k/, k→/k/, a_e→/eɪ/, i_e→/aɪ/"
+            },
+            "responseComplexity": {
+              "value": 1,
+              "evidence": "add/remove e tile and compare model; build target"
+            },
+            "unseenTransfer": {
+              "value": 0,
+              "evidence": "no reserved unseen set; transfer value reflects contextual carryover only"
+            }
+          },
+          "boredomEvidence": {
+            "previousWindowIds": [
+              "phon_short_eou_1",
+              "phon_segment_1",
+              "phon_check_1"
+            ],
+            "previousWindowTypes": [
+              "word_sort",
+              "sound_builder",
+              "skill_check"
+            ],
+            "format": {
+              "value": 1,
+              "linkedIds": [
+                "phon_check_1"
+              ],
+              "reason": "same or closely repeated interaction family in the preceding window"
+            },
+            "semantic": {
+              "value": 1,
+              "linkedIds": [
+                "phon_check_1"
+              ],
+              "reason": "continued sound/pattern focus in the preceding window"
+            },
+            "lowAgency": {
+              "value": 0,
+              "reason": "learner constructs, chooses, or actively attempts"
+            },
+            "longListen": {
+              "value": 0,
+              "reason": "no extended listening sequence"
+            }
+          }
+        },
+        {
+          "id": "phon_magic_e_ou_1",
+          "title": "Hop to Hope",
+          "type": "decode",
+          "goal": "Teach h=/h/ and b=/b/ first, then apply silent-e in hop–hope and cub–cube.",
+          "mechanic": "mark vowel pattern, choose model, then read useful word",
+          "prereqs": [
+            "phon_magic_e_ai_1"
+          ],
+          "assessmentMode": "decode_transfer",
+          "legacy": null,
+          "difficultyComponents": {
+            "novelty": 2,
+            "response": 1,
+            "transfer": 0,
+            "total": 4,
+            "rationale": "Chapter 2 mapping load 4; novelty 2/2, response 1/2 from exact mechanic, transfer 0/1"
+          },
+          "boredomComponents": {
+            "format": 0,
+            "semantic": 2,
+            "agency": 0,
+            "longListen": 0,
+            "total": 2,
+            "previousWindow": "phon_segment_1 > phon_check_1 > phon_magic_e_ai_1",
+            "rationale": "R4 values are bounded and trace to boredomEvidence.previousWindowIds"
+          },
+          "difficulty": 4,
+          "boredom": 2,
+          "difficultyEvidence": {
+            "firstExposure": {
+              "value": 2,
+              "mappingCount": 4,
+              "evidence": "exact new mapping count 4: h→/h/, b→/b/, o_e→/oʊ/, u_e→/juː~uː/"
+            },
+            "responseComplexity": {
+              "value": 1,
+              "evidence": "mark vowel pattern, choose model, then read useful word"
+            },
+            "unseenTransfer": {
+              "value": 0,
+              "evidence": "no reserved unseen set; transfer value reflects contextual carryover only"
+            }
+          },
+          "boredomEvidence": {
+            "previousWindowIds": [
+              "phon_segment_1",
+              "phon_check_1",
+              "phon_magic_e_ai_1"
+            ],
+            "previousWindowTypes": [
+              "sound_builder",
+              "skill_check",
+              "sound_builder"
+            ],
+            "format": {
+              "value": 0,
+              "linkedIds": [
+                "phon_segment_1",
+                "phon_check_1",
+                "phon_magic_e_ai_1"
+              ],
+              "reason": "same or closely repeated interaction family in the preceding window"
+            },
+            "semantic": {
+              "value": 2,
+              "linkedIds": [
+                "phon_check_1",
+                "phon_magic_e_ai_1"
+              ],
+              "reason": "continued sound/pattern focus in the preceding window"
+            },
+            "lowAgency": {
+              "value": 0,
+              "reason": "learner constructs, chooses, or actively attempts"
+            },
+            "longListen": {
+              "value": 0,
+              "reason": "no extended listening sequence"
+            }
+          }
+        },
+        {
+          "id": "phon_team_eeea_1",
+          "title": "EE and EA",
+          "type": "word_sort",
+          "goal": "Teach g/r/n first, then recognize ee/ea in see, green, tea and eat.",
+          "mechanic": "sort by spelling team, hear and match to picture",
+          "prereqs": [
+            "phon_magic_e_ou_1"
+          ],
+          "assessmentMode": "deterministic_choice",
+          "legacy": null,
+          "difficultyComponents": {
+            "novelty": 2,
+            "response": 1,
+            "transfer": 0,
+            "total": 4,
+            "rationale": "Chapter 2 mapping load 5; novelty 2/2, response 1/2 from exact mechanic, transfer 0/1"
+          },
+          "boredomComponents": {
+            "format": 0,
+            "semantic": 2,
+            "agency": 0,
+            "longListen": 0,
+            "total": 2,
+            "previousWindow": "phon_check_1 > phon_magic_e_ai_1 > phon_magic_e_ou_1",
+            "rationale": "R4 values are bounded and trace to boredomEvidence.previousWindowIds"
+          },
+          "difficulty": 4,
+          "boredom": 2,
+          "difficultyEvidence": {
+            "firstExposure": {
+              "value": 2,
+              "mappingCount": 5,
+              "evidence": "exact new mapping count 5: g→/g/, r→/r/, n→/n/, ee→/iː/, ea→/iː/"
+            },
+            "responseComplexity": {
+              "value": 1,
+              "evidence": "sort by spelling team, hear and match to picture"
+            },
+            "unseenTransfer": {
+              "value": 0,
+              "evidence": "no reserved unseen set; transfer value reflects contextual carryover only"
+            }
+          },
+          "boredomEvidence": {
+            "previousWindowIds": [
+              "phon_check_1",
+              "phon_magic_e_ai_1",
+              "phon_magic_e_ou_1"
+            ],
+            "previousWindowTypes": [
+              "skill_check",
+              "sound_builder",
+              "decode"
+            ],
+            "format": {
+              "value": 0,
+              "linkedIds": [
+                "phon_check_1",
+                "phon_magic_e_ai_1",
+                "phon_magic_e_ou_1"
+              ],
+              "reason": "same or closely repeated interaction family in the preceding window"
+            },
+            "semantic": {
+              "value": 2,
+              "linkedIds": [
+                "phon_magic_e_ai_1",
+                "phon_magic_e_ou_1"
+              ],
+              "reason": "continued sound/pattern focus in the preceding window"
+            },
+            "lowAgency": {
+              "value": 0,
+              "reason": "learner constructs, chooses, or actively attempts"
+            },
+            "longListen": {
+              "value": 0,
+              "reason": "no extended listening sequence"
+            }
+          }
+        },
+        {
+          "id": "phon_team_aiayoa_1",
+          "title": "AI, AY and OA",
+          "type": "decode",
+          "goal": "Teach d first, then decode rain, day, boat and road; y is part of the taught ay team, not a standalone claim.",
+          "mechanic": "highlight team → blend → choose meaning → optional read",
+          "prereqs": [
+            "phon_team_eeea_1"
+          ],
+          "assessmentMode": "decode_transfer",
+          "legacy": null,
+          "difficultyComponents": {
+            "novelty": 2,
+            "response": 2,
+            "transfer": 0,
+            "total": 5,
+            "rationale": "Chapter 2 mapping load 4; novelty 2/2, response 2/2 from exact mechanic, transfer 0/1"
+          },
+          "boredomComponents": {
+            "format": 1,
+            "semantic": 1,
+            "agency": 0,
+            "longListen": 0,
+            "total": 2,
+            "previousWindow": "phon_magic_e_ai_1 > phon_magic_e_ou_1 > phon_team_eeea_1",
+            "rationale": "R4 values are bounded and trace to boredomEvidence.previousWindowIds"
+          },
+          "difficulty": 5,
+          "boredom": 2,
+          "difficultyEvidence": {
+            "firstExposure": {
+              "value": 2,
+              "mappingCount": 4,
+              "evidence": "exact new mapping count 4: d→/d/, ai→/eɪ/, ay→/eɪ/, oa→/oʊ/"
+            },
+            "responseComplexity": {
+              "value": 2,
+              "evidence": "highlight team → blend → choose meaning → optional read"
+            },
+            "unseenTransfer": {
+              "value": 0,
+              "evidence": "no reserved unseen set; transfer value reflects contextual carryover only"
+            }
+          },
+          "boredomEvidence": {
+            "previousWindowIds": [
+              "phon_magic_e_ai_1",
+              "phon_magic_e_ou_1",
+              "phon_team_eeea_1"
+            ],
+            "previousWindowTypes": [
+              "sound_builder",
+              "decode",
+              "word_sort"
+            ],
+            "format": {
+              "value": 1,
+              "linkedIds": [
+                "phon_team_eeea_1"
+              ],
+              "reason": "same or closely repeated interaction family in the preceding window"
+            },
+            "semantic": {
+              "value": 1,
+              "linkedIds": [
+                "phon_team_eeea_1"
+              ],
+              "reason": "continued sound/pattern focus in the preceding window"
+            },
+            "lowAgency": {
+              "value": 0,
+              "reason": "learner constructs, chooses, or actively attempts"
+            },
+            "longListen": {
+              "value": 0,
+              "reason": "no extended listening sequence"
+            }
+          }
+        },
+        {
+          "id": "phon_digraph_shch_1",
+          "title": "SH and CH",
+          "type": "listen_choose",
+          "goal": "Teach f/l first, then map sh/ch in shop, fish, chair and lunch.",
+          "mechanic": "sound-to-word choice followed by useful mini-phrase imitation",
+          "prereqs": [
+            "phon_team_aiayoa_1"
+          ],
+          "assessmentMode": "deterministic_choice",
+          "legacy": null,
+          "difficultyComponents": {
+            "novelty": 2,
+            "response": 1,
+            "transfer": 0,
+            "total": 4,
+            "rationale": "Chapter 2 mapping load 4; novelty 2/2, response 1/2 from exact mechanic, transfer 0/1"
+          },
+          "boredomComponents": {
+            "format": 0,
+            "semantic": 1,
+            "agency": 1,
+            "longListen": 0,
+            "total": 2,
+            "previousWindow": "phon_magic_e_ou_1 > phon_team_eeea_1 > phon_team_aiayoa_1",
+            "rationale": "R4 values are bounded and trace to boredomEvidence.previousWindowIds"
+          },
+          "difficulty": 4,
+          "boredom": 2,
+          "difficultyEvidence": {
+            "firstExposure": {
+              "value": 2,
+              "mappingCount": 4,
+              "evidence": "exact new mapping count 4: f→/f/, l→/l/, sh→/ʃ/, ch→/tʃ/"
+            },
+            "responseComplexity": {
+              "value": 1,
+              "evidence": "sound-to-word choice followed by useful mini-phrase imitation"
+            },
+            "unseenTransfer": {
+              "value": 0,
+              "evidence": "no reserved unseen set; transfer value reflects contextual carryover only"
+            }
+          },
+          "boredomEvidence": {
+            "previousWindowIds": [
+              "phon_magic_e_ou_1",
+              "phon_team_eeea_1",
+              "phon_team_aiayoa_1"
+            ],
+            "previousWindowTypes": [
+              "decode",
+              "word_sort",
+              "decode"
+            ],
+            "format": {
+              "value": 0,
+              "linkedIds": [
+                "phon_magic_e_ou_1",
+                "phon_team_eeea_1",
+                "phon_team_aiayoa_1"
+              ],
+              "reason": "same or closely repeated interaction family in the preceding window"
+            },
+            "semantic": {
+              "value": 1,
+              "linkedIds": [
+                "phon_team_aiayoa_1"
+              ],
+              "reason": "continued sound/pattern focus in the preceding window"
+            },
+            "lowAgency": {
+              "value": 1,
+              "reason": "mostly model-led selection or imitation"
+            },
+            "longListen": {
+              "value": 0,
+              "reason": "no extended listening sequence"
+            }
+          }
+        },
+        {
+          "id": "phon_digraph_th_1",
+          "title": "Two TH Sounds",
+          "type": "lesson",
+          "goal": "Recognize that th can represent the sounds in think and this.",
+          "mechanic": "two model anchors; classify printed A1 words; production is coach-only",
+          "prereqs": [
+            "phon_digraph_shch_1"
+          ],
+          "assessmentMode": "deterministic_choice",
+          "legacy": null,
+          "difficultyComponents": {
+            "novelty": 1,
+            "response": 2,
+            "transfer": 0,
+            "total": 4,
+            "rationale": "Chapter 2 mapping load 2; novelty 1/2, response 2/2 from exact mechanic, transfer 0/1"
+          },
+          "boredomComponents": {
+            "format": 0,
+            "semantic": 1,
+            "agency": 1,
+            "longListen": 1,
+            "total": 3,
+            "previousWindow": "phon_team_eeea_1 > phon_team_aiayoa_1 > phon_digraph_shch_1",
+            "rationale": "R4 values are bounded and trace to boredomEvidence.previousWindowIds"
+          },
+          "difficulty": 4,
+          "boredom": 3,
+          "difficultyEvidence": {
+            "firstExposure": {
+              "value": 1,
+              "mappingCount": 2,
+              "evidence": "exact new mapping count 2: th→/θ/, th→/ð/"
+            },
+            "responseComplexity": {
+              "value": 2,
+              "evidence": "two model anchors; classify printed A1 words; production is coach-only"
+            },
+            "unseenTransfer": {
+              "value": 0,
+              "evidence": "no reserved unseen set; transfer value reflects contextual carryover only"
+            }
+          },
+          "boredomEvidence": {
+            "previousWindowIds": [
+              "phon_team_eeea_1",
+              "phon_team_aiayoa_1",
+              "phon_digraph_shch_1"
+            ],
+            "previousWindowTypes": [
+              "word_sort",
+              "decode",
+              "listen_choose"
+            ],
+            "format": {
+              "value": 0,
+              "linkedIds": [
+                "phon_team_eeea_1",
+                "phon_team_aiayoa_1",
+                "phon_digraph_shch_1"
+              ],
+              "reason": "same or closely repeated interaction family in the preceding window"
+            },
+            "semantic": {
+              "value": 1,
+              "linkedIds": [
+                "phon_digraph_shch_1"
+              ],
+              "reason": "continued sound/pattern focus in the preceding window"
+            },
+            "lowAgency": {
+              "value": 1,
+              "reason": "mostly model-led selection or imitation"
+            },
+            "longListen": {
+              "value": 1,
+              "reason": "includes multi-model listening sequence"
+            }
+          }
+        },
+        {
+          "id": "phon_flexible_cg_1",
+          "title": "More Useful Consonants",
+          "type": "word_sort",
+          "goal": "Match the initial consonant code in cat, go, we and very; these whole words are model-anchored and are not claimed as fully decodable.",
+          "mechanic": "match cat, go, we and very to initial sound/letter; no soft-c/g detour",
+          "prereqs": [
+            "phon_digraph_th_1"
+          ],
+          "assessmentMode": "deterministic_choice",
+          "legacy": null,
+          "difficultyComponents": {
+            "novelty": 2,
+            "response": 2,
+            "transfer": 0,
+            "total": 5,
+            "rationale": "Chapter 2 mapping load 3; novelty 2/2, response 2/2 from exact mechanic, transfer 0/1"
+          },
+          "boredomComponents": {
+            "format": 0,
+            "semantic": 2,
+            "agency": 0,
+            "longListen": 0,
+            "total": 2,
+            "previousWindow": "phon_team_aiayoa_1 > phon_digraph_shch_1 > phon_digraph_th_1",
+            "rationale": "R4 values are bounded and trace to boredomEvidence.previousWindowIds"
+          },
+          "difficulty": 5,
+          "boredom": 2,
+          "difficultyEvidence": {
+            "firstExposure": {
+              "value": 2,
+              "mappingCount": 3,
+              "evidence": "exact new mapping count 3: w→/w/, v→/v/, y→/i/ in final very only"
+            },
+            "responseComplexity": {
+              "value": 2,
+              "evidence": "match cat, go, we and very to initial sound/letter; no soft-c/g detour"
+            },
+            "unseenTransfer": {
+              "value": 0,
+              "evidence": "no reserved unseen set; transfer value reflects contextual carryover only"
+            }
+          },
+          "boredomEvidence": {
+            "previousWindowIds": [
+              "phon_team_aiayoa_1",
+              "phon_digraph_shch_1",
+              "phon_digraph_th_1"
+            ],
+            "previousWindowTypes": [
+              "decode",
+              "listen_choose",
+              "lesson"
+            ],
+            "format": {
+              "value": 0,
+              "linkedIds": [
+                "phon_team_aiayoa_1",
+                "phon_digraph_shch_1",
+                "phon_digraph_th_1"
+              ],
+              "reason": "same or closely repeated interaction family in the preceding window"
+            },
+            "semantic": {
+              "value": 2,
+              "linkedIds": [
+                "phon_digraph_shch_1",
+                "phon_digraph_th_1"
+              ],
+              "reason": "continued sound/pattern focus in the preceding window"
+            },
+            "lowAgency": {
+              "value": 0,
+              "reason": "learner constructs, chooses, or actively attempts"
+            },
+            "longListen": {
+              "value": 0,
+              "reason": "no extended listening sequence"
+            }
+          }
+        },
+        {
+          "id": "phon_check_2",
+          "title": "Pattern Decoder",
+          "type": "skill_check",
+          "goal": "Decode six unseen printed pattern words by selecting their matching audio; pattern labels are retained separately for diagnosis, not used as decoding answers.",
+          "mechanic": "six scored printed-word-to-audio matches; 5/6 passes; correctPattern is a separate diagnostic key; speaking is unscored",
+          "prereqs": [
+            "phon_flexible_cg_1"
+          ],
+          "assessmentMode": "mixed_safe",
+          "legacy": null,
+          "difficultyComponents": {
+            "novelty": 2,
+            "response": 1,
+            "transfer": 1,
+            "total": 5,
+            "rationale": "Chapter 2 mapping load 0; novelty 2/2, response 1/2 from exact mechanic, transfer 1/1"
+          },
+          "boredomComponents": {
+            "format": 0,
+            "semantic": 2,
+            "agency": 0,
+            "longListen": 0,
+            "total": 2,
+            "previousWindow": "phon_digraph_shch_1 > phon_digraph_th_1 > phon_flexible_cg_1",
+            "rationale": "R4 values are bounded and trace to boredomEvidence.previousWindowIds"
+          },
+          "difficulty": 5,
+          "boredom": 2,
+          "difficultyEvidence": {
+            "firstExposure": {
+              "value": 2,
+              "mappingCount": 0,
+              "evidence": "exact new mapping count 0: retrieval check; no new mapping"
+            },
+            "responseComplexity": {
+              "value": 1,
+              "evidence": "six scored printed-word-to-audio matches; 5/6 passes; correctPattern is a separate diagnostic key; speaking is unscored"
+            },
+            "unseenTransfer": {
+              "value": 1,
+              "evidence": "reserved unseen: made, ride, seed, coat, chat, thin"
+            }
+          },
+          "boredomEvidence": {
+            "previousWindowIds": [
+              "phon_digraph_shch_1",
+              "phon_digraph_th_1",
+              "phon_flexible_cg_1"
+            ],
+            "previousWindowTypes": [
+              "listen_choose",
+              "lesson",
+              "word_sort"
+            ],
+            "format": {
+              "value": 0,
+              "linkedIds": [
+                "phon_digraph_shch_1",
+                "phon_digraph_th_1",
+                "phon_flexible_cg_1"
+              ],
+              "reason": "same or closely repeated interaction family in the preceding window"
+            },
+            "semantic": {
+              "value": 2,
+              "linkedIds": [
+                "phon_digraph_th_1",
+                "phon_flexible_cg_1"
+              ],
+              "reason": "continued sound/pattern focus in the preceding window"
+            },
+            "lowAgency": {
+              "value": 0,
+              "reason": "learner constructs, chooses, or actively attempts"
+            },
+            "longListen": {
+              "value": 0,
+              "reason": "no extended listening sequence"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "chapter": 8,
+      "title": "Read It, Say It, Use It",
+      "goal": "Transfer sound knowledge to unfamiliar words, signs and useful A1 lines.",
+      "arc": "ketsu",
+      "nodes": [
+        {
+          "id": "phon_transfer_signs_1",
+          "title": "Read the Signs",
+          "type": "decode",
+          "goal": "Decode STOP and SHOP; recognize HOTEL only as a coached sight/chunk sign.",
+          "mechanic": "three scored sign-to-meaning choices; STOP/SHOP are decodable, HOTEL is coached sight/chunk; 3/3 passes",
+          "prereqs": [
+            "pron_review_4"
+          ],
+          "assessmentMode": "decode_transfer",
+          "legacy": null,
+          "difficultyComponents": {
+            "novelty": 2,
+            "response": 1,
+            "transfer": 1,
+            "total": 5,
+            "rationale": "decode: novelty/response/transfer load at this point in the sequence"
+          },
+          "boredomComponents": {
+            "format": 0,
+            "semantic": 1,
+            "agency": 0,
+            "longListen": 0,
+            "total": 1,
+            "previousWindow": "pron_natural_1 > pron_flow_1 > pron_review_4",
+            "rationale": "R4 values are bounded and trace to boredomEvidence.previousWindowIds"
+          },
+          "difficulty": 5,
+          "boredom": 1,
+          "difficultyEvidence": {
+            "firstExposure": {
+              "value": 2,
+              "mappingCount": null,
+              "evidence": "authored content in deterministicSpecs.phon_transfer_signs_1"
+            },
+            "responseComplexity": {
+              "value": 1,
+              "evidence": "three scored sign-to-meaning choices; STOP/SHOP are decodable, HOTEL is coached sight/chunk; 3/3 passes"
+            },
+            "unseenTransfer": {
+              "value": 1,
+              "evidence": "no reserved unseen set; transfer value reflects contextual carryover only"
+            }
+          },
+          "boredomEvidence": {
+            "previousWindowIds": [
+              "pron_natural_1",
+              "pron_flow_1",
+              "pron_review_4"
+            ],
+            "previousWindowTypes": [
+              "pronunciation",
+              "pronunciation",
+              "skill_check"
+            ],
+            "format": {
+              "value": 0,
+              "linkedIds": [
+                "pron_natural_1",
+                "pron_flow_1",
+                "pron_review_4"
+              ],
+              "reason": "same or closely repeated interaction family in the preceding window"
+            },
+            "semantic": {
+              "value": 1,
+              "linkedIds": [
+                "pron_review_4"
+              ],
+              "reason": "continued sound/pattern focus in the preceding window"
+            },
+            "lowAgency": {
+              "value": 0,
+              "reason": "learner constructs, chooses, or actively attempts"
+            },
+            "longListen": {
+              "value": 0,
+              "reason": "no extended listening sequence"
+            }
+          }
+        },
+        {
+          "id": "phon_transfer_spell_1",
+          "title": "Hear It, Build It",
+          "type": "sound_builder",
+          "goal": "Segment modeled beginner words and choose their spelling.",
+          "mechanic": "audio/picture cue → sound boxes → grapheme tiles; confusable distractors",
+          "prereqs": [
+            "phon_transfer_signs_1"
+          ],
+          "assessmentMode": "orthographic_build",
+          "legacy": null,
+          "difficultyComponents": {
+            "novelty": 2,
+            "response": 1,
+            "transfer": 1,
+            "total": 5,
+            "rationale": "sound_builder: novelty/response/transfer load at this point in the sequence"
+          },
+          "boredomComponents": {
+            "format": 0,
+            "semantic": 2,
+            "agency": 0,
+            "longListen": 0,
+            "total": 2,
+            "previousWindow": "pron_flow_1 > pron_review_4 > phon_transfer_signs_1",
+            "rationale": "R4 values are bounded and trace to boredomEvidence.previousWindowIds"
+          },
+          "difficulty": 5,
+          "boredom": 2,
+          "difficultyEvidence": {
+            "firstExposure": {
+              "value": 2,
+              "mappingCount": null,
+              "evidence": "authored content in deterministicSpecs.phon_transfer_spell_1"
+            },
+            "responseComplexity": {
+              "value": 1,
+              "evidence": "audio/picture cue → sound boxes → grapheme tiles; confusable distractors"
+            },
+            "unseenTransfer": {
+              "value": 1,
+              "evidence": "no reserved unseen set; transfer value reflects contextual carryover only"
+            }
+          },
+          "boredomEvidence": {
+            "previousWindowIds": [
+              "pron_flow_1",
+              "pron_review_4",
+              "phon_transfer_signs_1"
+            ],
+            "previousWindowTypes": [
+              "pronunciation",
+              "skill_check",
+              "decode"
+            ],
+            "format": {
+              "value": 0,
+              "linkedIds": [
+                "pron_flow_1",
+                "pron_review_4",
+                "phon_transfer_signs_1"
+              ],
+              "reason": "same or closely repeated interaction family in the preceding window"
+            },
+            "semantic": {
+              "value": 2,
+              "linkedIds": [
+                "pron_review_4",
+                "phon_transfer_signs_1"
+              ],
+              "reason": "continued sound/pattern focus in the preceding window"
+            },
+            "lowAgency": {
+              "value": 0,
+              "reason": "learner constructs, chooses, or actively attempts"
+            },
+            "longListen": {
+              "value": 0,
+              "reason": "no extended listening sequence"
+            }
+          }
+        },
+        {
+          "id": "phon_transfer_lines_1",
+          "title": "Read a Useful Line",
+          "type": "decode",
+          "goal": "Choose phrase chunks in three practical lines, then complete a coached full-line read; no full-line decoding claim.",
+          "mechanic": "three scored chunk-boundary choices (2/3 passes); full-line speaking is coach-only participation",
+          "prereqs": [
+            "phon_transfer_spell_1"
+          ],
+          "assessmentMode": "decode_transfer",
+          "legacy": null,
+          "difficultyComponents": {
+            "novelty": 2,
+            "response": 2,
+            "transfer": 1,
+            "total": 6,
+            "rationale": "decode: novelty/response/transfer load at this point in the sequence"
+          },
+          "boredomComponents": {
+            "format": 1,
+            "semantic": 1,
+            "agency": 0,
+            "longListen": 0,
+            "total": 2,
+            "previousWindow": "pron_review_4 > phon_transfer_signs_1 > phon_transfer_spell_1",
+            "rationale": "R4 values are bounded and trace to boredomEvidence.previousWindowIds"
+          },
+          "difficulty": 6,
+          "boredom": 2,
+          "difficultyEvidence": {
+            "firstExposure": {
+              "value": 2,
+              "mappingCount": null,
+              "evidence": "authored content in deterministicSpecs.phon_transfer_lines_1"
+            },
+            "responseComplexity": {
+              "value": 2,
+              "evidence": "three scored chunk-boundary choices (2/3 passes); full-line speaking is coach-only participation"
+            },
+            "unseenTransfer": {
+              "value": 1,
+              "evidence": "no reserved unseen set; transfer value reflects contextual carryover only"
+            }
+          },
+          "boredomEvidence": {
+            "previousWindowIds": [
+              "pron_review_4",
+              "phon_transfer_signs_1",
+              "phon_transfer_spell_1"
+            ],
+            "previousWindowTypes": [
+              "skill_check",
+              "decode",
+              "sound_builder"
+            ],
+            "format": {
+              "value": 1,
+              "linkedIds": [
+                "phon_transfer_spell_1"
+              ],
+              "reason": "same or closely repeated interaction family in the preceding window"
+            },
+            "semantic": {
+              "value": 1,
+              "linkedIds": [
+                "phon_transfer_spell_1"
+              ],
+              "reason": "continued sound/pattern focus in the preceding window"
+            },
+            "lowAgency": {
+              "value": 0,
+              "reason": "learner constructs, chooses, or actively attempts"
+            },
+            "longListen": {
+              "value": 0,
+              "reason": "no extended listening sequence"
+            }
+          }
+        },
+        {
+          "id": "phon_final_1",
+          "title": "Clear English Challenge",
+          "type": "skill_check",
+          "goal": "Decode six unseen printed words by matching meaning pictures, then complete one contrast and one coached HOTEL sight item; speaking is unscored.",
+          "mechanic": "eight exact items: six unseen printed-word-to-meaning-picture choices, one W/V recognition, one HOTEL sight choice; 6/8 overall with separate subscores; speaking is completion-only",
+          "prereqs": [
+            "phon_transfer_lines_1"
+          ],
+          "assessmentMode": "mixed_safe",
+          "legacy": null,
+          "difficultyComponents": {
+            "novelty": 2,
+            "response": 2,
+            "transfer": 1,
+            "total": 6,
+            "rationale": "skill_check: novelty/response/transfer load at this point in the sequence"
+          },
+          "boredomComponents": {
+            "format": 0,
+            "semantic": 1,
+            "agency": 0,
+            "longListen": 0,
+            "total": 1,
+            "previousWindow": "phon_transfer_signs_1 > phon_transfer_spell_1 > phon_transfer_lines_1",
+            "rationale": "R4 values are bounded and trace to boredomEvidence.previousWindowIds"
+          },
+          "difficulty": 6,
+          "boredom": 1,
+          "difficultyEvidence": {
+            "firstExposure": {
+              "value": 2,
+              "mappingCount": null,
+              "evidence": "authored content in deterministicSpecs.phon_final_1"
+            },
+            "responseComplexity": {
+              "value": 2,
+              "evidence": "eight exact items: six unseen printed-word-to-meaning-picture choices, one W/V recognition, one HOTEL sight choice; 6/8 overall with separate subscores; speaking is completion-only"
+            },
+            "unseenTransfer": {
+              "value": 1,
+              "evidence": "reserved unseen: fin, mop, late, shine, feet, train"
+            }
+          },
+          "boredomEvidence": {
+            "previousWindowIds": [
+              "phon_transfer_signs_1",
+              "phon_transfer_spell_1",
+              "phon_transfer_lines_1"
+            ],
+            "previousWindowTypes": [
+              "decode",
+              "sound_builder",
+              "decode"
+            ],
+            "format": {
+              "value": 0,
+              "linkedIds": [
+                "phon_transfer_signs_1",
+                "phon_transfer_spell_1",
+                "phon_transfer_lines_1"
+              ],
+              "reason": "same or closely repeated interaction family in the preceding window"
+            },
+            "semantic": {
+              "value": 1,
+              "linkedIds": [
+                "phon_transfer_lines_1"
+              ],
+              "reason": "continued sound/pattern focus in the preceding window"
+            },
+            "lowAgency": {
+              "value": 0,
+              "reason": "learner constructs, chooses, or actively attempts"
+            },
+            "longListen": {
+              "value": 0,
+              "reason": "no extended listening sequence"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "runtimeTruth": {
+    "existingEngine": "buildPronunciationLesson: scripted listen-only beats, tip, ordered practice, at most one retry, then closing drill",
+    "assessmentModes": {
+      "coach_only": "Model and coach articulatory/rhythm behavior; completion is participation. Never infer sound quality from transcript.",
+      "transcript_target_match": "Check only whether STT text contains the intended word/phrase; one retry maximum. This verifies lexical attempt, not pronunciation quality.",
+      "deterministic_choice": "Learner taps what they heard/saw; score the selected option, not inferred audio production.",
+      "orthographic_build": "Learner orders visible sound/spelling tiles; score the constructed sequence deterministically.",
+      "decode_transfer": "Learner first builds/selects the decoding route, then reads aloud; decoding is scored, speech is participation/transcript match only.",
+      "mixed_safe": "Skill Check combines deterministic recognition/build tasks with coach-only or transcript-target speaking. Subscores stay separate."
+    },
+    "nonNegotiables": [
+      "Never claim that transcript-only input proves vowel length, voicing, stress, linking, mouth position or accent quality.",
+      "A recognition error may trigger one replay; a speaking mismatch may trigger one retry; neither creates an infinite loop.",
+      "Listen-only turns keep the mic hidden; every speaking turn ends with exactly one utterance target.",
+      "Wrong examples use existing TTS-safe Thai-script technique only when the contrast is reliably audible; never use Thai respelling for stress.",
+      "New phonics nodes teach a rule through examples, but every rule immediately transfers to useful A1 words or signs."
+    ],
+    "backendWorkNeededLater": [
+      "Add node-kind metadata without breaking pron_* lesson IDs or current progress.",
+      "Add deterministic tile/choice payloads for sound_builder, listen_choose and decode nodes.",
+      "Keep existing lesson completion contract, banana cost and separate pronunciation catalog pointer.",
+      "Store recognition/build score separately from speech participation; reserve acoustic score for a future audio-capable provider."
+    ]
+  },
+  "runtime": {
+    "shared": {
+      "replayLimit": 1,
+      "retryLimit": 1,
+      "thresholdRule": "Each node uses its explicit integer passThreshold; speaking never changes a deterministic score.",
+      "wrongRule": "After one retry, reveal the exact answer key and advance."
+    },
+    "deliveryContract": {
+      "serverAuthoringOnly": [
+        "authoringAnswerKey",
+        "authoringAudioCueText.spokenText",
+        "correctPattern",
+        "oralMeaningPreExposureWithoutPrint mapping"
+      ],
+      "sanitizedClientAllowed": [
+        "promptWord",
+        "optionPresentation",
+        "clientOptions.choiceId",
+        "clientOptions.audioAssetId",
+        "clientOptions.assetId",
+        "clientOptions.conceptId",
+        "preExposureRef"
+      ],
+      "stripRule": "Before delivery, recursively remove every authoring* field, correctPattern and spoken transcript. Audio-only options expose no label/text/transcript. Image-only options expose no label/text and use opaque IDs.",
+      "idRule": "All client choice, audio, image and concept identifiers match opaque namespace plus digits only; identifiers must not contain target spelling."
+    },
+    "oralMeaningPreExposureWithoutPrint": {
+      "policy": "Before an unseen meaning-picture item, play the concept audio and show its picture without any letters or target spelling. This establishes meaning while keeping orthography unseen.",
+      "entries": [
+        {
+          "preExposureRef": "pre_101",
+          "assetId": "img_pre_101",
+          "conceptId": "cpt_101_1",
+          "audioAssetId": "aud_pre_101",
+          "oralMeaningKnown": true,
+          "printedTargetExposed": false,
+          "learnerVisibleText": null
+        },
+        {
+          "preExposureRef": "pre_102",
+          "assetId": "img_pre_102",
+          "conceptId": "cpt_102_1",
+          "audioAssetId": "aud_pre_102",
+          "oralMeaningKnown": true,
+          "printedTargetExposed": false,
+          "learnerVisibleText": null
+        },
+        {
+          "preExposureRef": "pre_103",
+          "assetId": "img_pre_103",
+          "conceptId": "cpt_103_1",
+          "audioAssetId": "aud_pre_103",
+          "oralMeaningKnown": true,
+          "printedTargetExposed": false,
+          "learnerVisibleText": null
+        },
+        {
+          "preExposureRef": "pre_301",
+          "assetId": "img_pre_301",
+          "conceptId": "cpt_301_1",
+          "audioAssetId": "aud_pre_301",
+          "oralMeaningKnown": true,
+          "printedTargetExposed": false,
+          "learnerVisibleText": null
+        },
+        {
+          "preExposureRef": "pre_302",
+          "assetId": "img_pre_302",
+          "conceptId": "cpt_302_1",
+          "audioAssetId": "aud_pre_302",
+          "oralMeaningKnown": true,
+          "printedTargetExposed": false,
+          "learnerVisibleText": null
+        },
+        {
+          "preExposureRef": "pre_303",
+          "assetId": "img_pre_303",
+          "conceptId": "cpt_303_1",
+          "audioAssetId": "aud_pre_303",
+          "oralMeaningKnown": true,
+          "printedTargetExposed": false,
+          "learnerVisibleText": null
+        },
+        {
+          "preExposureRef": "pre_304",
+          "assetId": "img_pre_304",
+          "conceptId": "cpt_304_1",
+          "audioAssetId": "aud_pre_304",
+          "oralMeaningKnown": true,
+          "printedTargetExposed": false,
+          "learnerVisibleText": null
+        },
+        {
+          "preExposureRef": "pre_305",
+          "assetId": "img_pre_305",
+          "conceptId": "cpt_305_1",
+          "audioAssetId": "aud_pre_305",
+          "oralMeaningKnown": true,
+          "printedTargetExposed": false,
+          "learnerVisibleText": null
+        },
+        {
+          "preExposureRef": "pre_306",
+          "assetId": "img_pre_306",
+          "conceptId": "cpt_306_1",
+          "audioAssetId": "aud_pre_306",
+          "oralMeaningKnown": true,
+          "printedTargetExposed": false,
+          "learnerVisibleText": null
+        }
+      ]
+    },
+    "specs": {
+      "phon_code_1": {
+        "scoredDenominator": 6,
+        "passThreshold": 5,
+        "items": [
+          {
+            "promptAudio": "/m/",
+            "options": [
+              "m",
+              "s",
+              "p"
+            ],
+            "correct": "m"
+          },
+          {
+            "promptAudio": "/s/",
+            "options": [
+              "t",
+              "s",
+              "m"
+            ],
+            "correct": "s"
+          },
+          {
+            "promptAudio": "/t/",
+            "options": [
+              "p",
+              "m",
+              "t"
+            ],
+            "correct": "t"
+          },
+          {
+            "promptAudio": "/p/",
+            "options": [
+              "s",
+              "p",
+              "t"
+            ],
+            "correct": "p"
+          },
+          {
+            "promptAudio": "/æ/",
+            "options": [
+              "i",
+              "a",
+              "m"
+            ],
+            "correct": "a"
+          },
+          {
+            "promptAudio": "/ɪ/",
+            "options": [
+              "a",
+              "i",
+              "s"
+            ],
+            "correct": "i"
+          }
+        ]
+      },
+      "phon_blend_1": {
+        "scoredDenominator": 2,
+        "passThreshold": 2,
+        "items": [
+          {
+            "promptPicture": "map",
+            "tiles": [
+              "m",
+              "a",
+              "p"
+            ],
+            "correct": [
+              "m",
+              "a",
+              "p"
+            ]
+          },
+          {
+            "promptPicture": "sit",
+            "tiles": [
+              "s",
+              "i",
+              "t"
+            ],
+            "correct": [
+              "s",
+              "i",
+              "t"
+            ]
+          }
+        ]
+      },
+      "phon_short_ai_1": {
+        "scoredDenominator": 4,
+        "passThreshold": 3,
+        "items": [
+          {
+            "promptAudio": "map",
+            "options": [
+              "a",
+              "i"
+            ],
+            "correct": "a"
+          },
+          {
+            "promptAudio": "mat",
+            "options": [
+              "a",
+              "i"
+            ],
+            "correct": "a"
+          },
+          {
+            "promptAudio": "sit",
+            "options": [
+              "a",
+              "i"
+            ],
+            "correct": "i"
+          },
+          {
+            "promptAudio": "pit",
+            "options": [
+              "a",
+              "i"
+            ],
+            "correct": "i"
+          }
+        ]
+      },
+      "phon_short_eou_1": {
+        "scoredDenominator": 6,
+        "passThreshold": 5,
+        "items": [
+          {
+            "promptWord": "met",
+            "options": [
+              "e",
+              "o",
+              "u"
+            ],
+            "correct": "e"
+          },
+          {
+            "promptWord": "pet",
+            "options": [
+              "e",
+              "o",
+              "u"
+            ],
+            "correct": "e"
+          },
+          {
+            "promptWord": "pot",
+            "options": [
+              "e",
+              "o",
+              "u"
+            ],
+            "correct": "o"
+          },
+          {
+            "promptWord": "top",
+            "options": [
+              "e",
+              "o",
+              "u"
+            ],
+            "correct": "o"
+          },
+          {
+            "promptWord": "sum",
+            "options": [
+              "e",
+              "o",
+              "u"
+            ],
+            "correct": "u"
+          },
+          {
+            "promptWord": "pup",
+            "options": [
+              "e",
+              "o",
+              "u"
+            ],
+            "correct": "u"
+          }
+        ]
+      },
+      "phon_segment_1": {
+        "scoredDenominator": 5,
+        "passThreshold": 4,
+        "items": [
+          {
+            "promptPicture": "map",
+            "tiles": [
+              "m",
+              "a",
+              "p"
+            ],
+            "correct": [
+              "m",
+              "a",
+              "p"
+            ]
+          },
+          {
+            "promptPicture": "sit",
+            "tiles": [
+              "s",
+              "i",
+              "t"
+            ],
+            "correct": [
+              "s",
+              "i",
+              "t"
+            ]
+          },
+          {
+            "promptPicture": "met",
+            "tiles": [
+              "m",
+              "e",
+              "t"
+            ],
+            "correct": [
+              "m",
+              "e",
+              "t"
+            ]
+          },
+          {
+            "promptPicture": "pot",
+            "tiles": [
+              "p",
+              "o",
+              "t"
+            ],
+            "correct": [
+              "p",
+              "o",
+              "t"
+            ]
+          },
+          {
+            "promptPicture": "sum",
+            "tiles": [
+              "s",
+              "u",
+              "m"
+            ],
+            "correct": [
+              "s",
+              "u",
+              "m"
+            ]
+          }
+        ]
+      },
+      "phon_check_1": {
+        "scoredDenominator": 4,
+        "passThreshold": 3,
+        "reservedUnseen": [
+          "pat",
+          "tip",
+          "set",
+          "pop"
+        ],
+        "items": [
+          {
+            "promptWord": "pat",
+            "responseEvidence": "meaning_picture",
+            "optionPresentation": "image_only",
+            "preExposureRef": "pre_101",
+            "clientOptions": [
+              {
+                "choiceId": "ch_101_1",
+                "assetId": "img_101_1",
+                "conceptId": "cpt_101_1"
+              },
+              {
+                "choiceId": "ch_101_2",
+                "assetId": "img_101_2",
+                "conceptId": "cpt_101_2"
+              },
+              {
+                "choiceId": "ch_101_3",
+                "assetId": "img_101_3",
+                "conceptId": "cpt_101_3"
+              }
+            ],
+            "authoringAnswerKey": "ch_101_1"
+          },
+          {
+            "promptWord": "tip",
+            "responseEvidence": "meaning_picture",
+            "optionPresentation": "image_only",
+            "preExposureRef": "pre_102",
+            "clientOptions": [
+              {
+                "choiceId": "ch_102_1",
+                "assetId": "img_102_1",
+                "conceptId": "cpt_102_1"
+              },
+              {
+                "choiceId": "ch_102_2",
+                "assetId": "img_102_2",
+                "conceptId": "cpt_102_2"
+              },
+              {
+                "choiceId": "ch_102_3",
+                "assetId": "img_102_3",
+                "conceptId": "cpt_102_3"
+              }
+            ],
+            "authoringAnswerKey": "ch_102_1"
+          },
+          {
+            "promptWord": "set",
+            "responseEvidence": "meaning_picture",
+            "optionPresentation": "image_only",
+            "preExposureRef": "pre_103",
+            "clientOptions": [
+              {
+                "choiceId": "ch_103_1",
+                "assetId": "img_103_1",
+                "conceptId": "cpt_103_1"
+              },
+              {
+                "choiceId": "ch_103_2",
+                "assetId": "img_103_2",
+                "conceptId": "cpt_103_2"
+              },
+              {
+                "choiceId": "ch_103_3",
+                "assetId": "img_103_3",
+                "conceptId": "cpt_103_3"
+              }
+            ],
+            "authoringAnswerKey": "ch_103_1"
+          },
+          {
+            "promptWord": "pop",
+            "responseEvidence": "audio_match",
+            "optionPresentation": "audio_only",
+            "clientOptions": [
+              {
+                "choiceId": "ch_104_1",
+                "audioAssetId": "aud_104_1"
+              },
+              {
+                "choiceId": "ch_104_2",
+                "audioAssetId": "aud_104_2"
+              },
+              {
+                "choiceId": "ch_104_3",
+                "audioAssetId": "aud_104_3"
+              }
+            ],
+            "authoringAnswerKey": "ch_104_1",
+            "authoringAudioCueText": [
+              {
+                "audioAssetId": "aud_104_1",
+                "spokenText": "pop"
+              },
+              {
+                "audioAssetId": "aud_104_2",
+                "spokenText": "pup"
+              },
+              {
+                "audioAssetId": "aud_104_3",
+                "spokenText": "mop"
+              }
+            ]
+          }
+        ]
+      },
+      "phon_magic_e_ai_1": {
+        "scoredDenominator": 4,
+        "passThreshold": 3,
+        "teachBeforeItems": [
+          "c→/k/",
+          "k→/k/"
+        ],
+        "items": [
+          {
+            "prompt": "cap + e",
+            "options": [
+              "cap",
+              "cape"
+            ],
+            "correct": "cape"
+          },
+          {
+            "prompt": "kit + e",
+            "options": [
+              "kit",
+              "kite"
+            ],
+            "correct": "kite"
+          },
+          {
+            "promptAudio": "cape",
+            "options": [
+              "cap",
+              "cape"
+            ],
+            "correct": "cape"
+          },
+          {
+            "promptAudio": "kite",
+            "options": [
+              "kit",
+              "kite"
+            ],
+            "correct": "kite"
+          }
+        ]
+      },
+      "phon_magic_e_ou_1": {
+        "scoredDenominator": 4,
+        "passThreshold": 3,
+        "teachBeforeItems": [
+          "h→/h/",
+          "b→/b/"
+        ],
+        "items": [
+          {
+            "prompt": "hop + e",
+            "options": [
+              "hop",
+              "hope"
+            ],
+            "correct": "hope"
+          },
+          {
+            "prompt": "cub + e",
+            "options": [
+              "cub",
+              "cube"
+            ],
+            "correct": "cube"
+          },
+          {
+            "promptAudio": "hope",
+            "options": [
+              "hop",
+              "hope"
+            ],
+            "correct": "hope"
+          },
+          {
+            "promptAudio": "cube",
+            "options": [
+              "cub",
+              "cube"
+            ],
+            "correct": "cube"
+          }
+        ]
+      },
+      "phon_team_eeea_1": {
+        "scoredDenominator": 4,
+        "passThreshold": 3,
+        "teachBeforeItems": [
+          "g→/g/",
+          "r→/r/",
+          "n→/n/"
+        ],
+        "items": [
+          {
+            "promptWord": "see",
+            "options": [
+              "ee",
+              "ea"
+            ],
+            "correct": "ee"
+          },
+          {
+            "promptWord": "green",
+            "options": [
+              "ee",
+              "ea"
+            ],
+            "correct": "ee"
+          },
+          {
+            "promptWord": "tea",
+            "options": [
+              "ee",
+              "ea"
+            ],
+            "correct": "ea"
+          },
+          {
+            "promptWord": "eat",
+            "options": [
+              "ee",
+              "ea"
+            ],
+            "correct": "ea"
+          }
+        ]
+      },
+      "phon_team_aiayoa_1": {
+        "scoredDenominator": 4,
+        "passThreshold": 3,
+        "teachBeforeItems": [
+          "d→/d/",
+          "y→/j/"
+        ],
+        "items": [
+          {
+            "promptWord": "rain",
+            "options": [
+              "ai",
+              "ay",
+              "oa"
+            ],
+            "correct": "ai"
+          },
+          {
+            "promptWord": "day",
+            "options": [
+              "ai",
+              "ay",
+              "oa"
+            ],
+            "correct": "ay"
+          },
+          {
+            "promptWord": "boat",
+            "options": [
+              "ai",
+              "ay",
+              "oa"
+            ],
+            "correct": "oa"
+          },
+          {
+            "promptWord": "road",
+            "options": [
+              "ai",
+              "ay",
+              "oa"
+            ],
+            "correct": "oa"
+          }
+        ]
+      },
+      "phon_digraph_shch_1": {
+        "scoredDenominator": 4,
+        "passThreshold": 3,
+        "teachBeforeItems": [
+          "f→/f/",
+          "l→/l/"
+        ],
+        "items": [
+          {
+            "promptWord": "shop",
+            "options": [
+              "sh",
+              "ch"
+            ],
+            "correct": "sh"
+          },
+          {
+            "promptWord": "fish",
+            "options": [
+              "sh",
+              "ch"
+            ],
+            "correct": "sh"
+          },
+          {
+            "promptWord": "chair",
+            "options": [
+              "sh",
+              "ch"
+            ],
+            "correct": "ch"
+          },
+          {
+            "promptWord": "lunch",
+            "options": [
+              "sh",
+              "ch"
+            ],
+            "correct": "ch"
+          }
+        ]
+      },
+      "phon_digraph_th_1": {
+        "scoredDenominator": 4,
+        "passThreshold": 3,
+        "items": [
+          {
+            "promptWord": "think",
+            "options": [
+              "/θ/",
+              "/ð/"
+            ],
+            "correct": "/θ/"
+          },
+          {
+            "promptWord": "three",
+            "options": [
+              "/θ/",
+              "/ð/"
+            ],
+            "correct": "/θ/"
+          },
+          {
+            "promptWord": "this",
+            "options": [
+              "/θ/",
+              "/ð/"
+            ],
+            "correct": "/ð/"
+          },
+          {
+            "promptWord": "that",
+            "options": [
+              "/θ/",
+              "/ð/"
+            ],
+            "correct": "/ð/"
+          }
+        ]
+      },
+      "phon_flexible_cg_1": {
+        "scoredDenominator": 4,
+        "passThreshold": 3,
+        "items": [
+          {
+            "promptAudio": "cat",
+            "options": [
+              "c",
+              "g",
+              "w",
+              "v"
+            ],
+            "correct": "c"
+          },
+          {
+            "promptAudio": "go",
+            "options": [
+              "c",
+              "g",
+              "w",
+              "v"
+            ],
+            "correct": "g"
+          },
+          {
+            "promptAudio": "we",
+            "options": [
+              "c",
+              "g",
+              "w",
+              "v"
+            ],
+            "correct": "w"
+          },
+          {
+            "promptAudio": "very",
+            "options": [
+              "c",
+              "g",
+              "w",
+              "v"
+            ],
+            "correct": "v"
+          }
+        ]
+      },
+      "phon_check_2": {
+        "scoredDenominator": 6,
+        "passThreshold": 5,
+        "reservedUnseen": [
+          "made",
+          "ride",
+          "seed",
+          "coat",
+          "chat",
+          "thin"
+        ],
+        "items": [
+          {
+            "promptWord": "made",
+            "responseEvidence": "audio_match",
+            "optionPresentation": "audio_only",
+            "clientOptions": [
+              {
+                "choiceId": "ch_201_1",
+                "audioAssetId": "aud_201_1"
+              },
+              {
+                "choiceId": "ch_201_2",
+                "audioAssetId": "aud_201_2"
+              },
+              {
+                "choiceId": "ch_201_3",
+                "audioAssetId": "aud_201_3"
+              }
+            ],
+            "authoringAnswerKey": "ch_201_1",
+            "authoringAudioCueText": [
+              {
+                "audioAssetId": "aud_201_1",
+                "spokenText": "made"
+              },
+              {
+                "audioAssetId": "aud_201_2",
+                "spokenText": "mad"
+              },
+              {
+                "audioAssetId": "aud_201_3",
+                "spokenText": "mid"
+              }
+            ],
+            "correctPattern": "a_e"
+          },
+          {
+            "promptWord": "ride",
+            "responseEvidence": "audio_match",
+            "optionPresentation": "audio_only",
+            "clientOptions": [
+              {
+                "choiceId": "ch_202_1",
+                "audioAssetId": "aud_202_1"
+              },
+              {
+                "choiceId": "ch_202_2",
+                "audioAssetId": "aud_202_2"
+              },
+              {
+                "choiceId": "ch_202_3",
+                "audioAssetId": "aud_202_3"
+              }
+            ],
+            "authoringAnswerKey": "ch_202_1",
+            "authoringAudioCueText": [
+              {
+                "audioAssetId": "aud_202_1",
+                "spokenText": "ride"
+              },
+              {
+                "audioAssetId": "aud_202_2",
+                "spokenText": "rid"
+              },
+              {
+                "audioAssetId": "aud_202_3",
+                "spokenText": "road"
+              }
+            ],
+            "correctPattern": "i_e"
+          },
+          {
+            "promptWord": "seed",
+            "responseEvidence": "audio_match",
+            "optionPresentation": "audio_only",
+            "clientOptions": [
+              {
+                "choiceId": "ch_203_1",
+                "audioAssetId": "aud_203_1"
+              },
+              {
+                "choiceId": "ch_203_2",
+                "audioAssetId": "aud_203_2"
+              },
+              {
+                "choiceId": "ch_203_3",
+                "audioAssetId": "aud_203_3"
+              }
+            ],
+            "authoringAnswerKey": "ch_203_1",
+            "authoringAudioCueText": [
+              {
+                "audioAssetId": "aud_203_1",
+                "spokenText": "seed"
+              },
+              {
+                "audioAssetId": "aud_203_2",
+                "spokenText": "said"
+              },
+              {
+                "audioAssetId": "aud_203_3",
+                "spokenText": "sad"
+              }
+            ],
+            "correctPattern": "ee"
+          },
+          {
+            "promptWord": "coat",
+            "responseEvidence": "audio_match",
+            "optionPresentation": "audio_only",
+            "clientOptions": [
+              {
+                "choiceId": "ch_204_1",
+                "audioAssetId": "aud_204_1"
+              },
+              {
+                "choiceId": "ch_204_2",
+                "audioAssetId": "aud_204_2"
+              },
+              {
+                "choiceId": "ch_204_3",
+                "audioAssetId": "aud_204_3"
+              }
+            ],
+            "authoringAnswerKey": "ch_204_1",
+            "authoringAudioCueText": [
+              {
+                "audioAssetId": "aud_204_1",
+                "spokenText": "coat"
+              },
+              {
+                "audioAssetId": "aud_204_2",
+                "spokenText": "cot"
+              },
+              {
+                "audioAssetId": "aud_204_3",
+                "spokenText": "cat"
+              }
+            ],
+            "correctPattern": "oa"
+          },
+          {
+            "promptWord": "chat",
+            "responseEvidence": "audio_match",
+            "optionPresentation": "audio_only",
+            "clientOptions": [
+              {
+                "choiceId": "ch_205_1",
+                "audioAssetId": "aud_205_1"
+              },
+              {
+                "choiceId": "ch_205_2",
+                "audioAssetId": "aud_205_2"
+              },
+              {
+                "choiceId": "ch_205_3",
+                "audioAssetId": "aud_205_3"
+              }
+            ],
+            "authoringAnswerKey": "ch_205_1",
+            "authoringAudioCueText": [
+              {
+                "audioAssetId": "aud_205_1",
+                "spokenText": "chat"
+              },
+              {
+                "audioAssetId": "aud_205_2",
+                "spokenText": "shat"
+              },
+              {
+                "audioAssetId": "aud_205_3",
+                "spokenText": "cat"
+              }
+            ],
+            "correctPattern": "ch"
+          },
+          {
+            "promptWord": "thin",
+            "responseEvidence": "audio_match",
+            "optionPresentation": "audio_only",
+            "clientOptions": [
+              {
+                "choiceId": "ch_206_1",
+                "audioAssetId": "aud_206_1"
+              },
+              {
+                "choiceId": "ch_206_2",
+                "audioAssetId": "aud_206_2"
+              },
+              {
+                "choiceId": "ch_206_3",
+                "audioAssetId": "aud_206_3"
+              }
+            ],
+            "authoringAnswerKey": "ch_206_1",
+            "authoringAudioCueText": [
+              {
+                "audioAssetId": "aud_206_1",
+                "spokenText": "thin"
+              },
+              {
+                "audioAssetId": "aud_206_2",
+                "spokenText": "sin"
+              },
+              {
+                "audioAssetId": "aud_206_3",
+                "spokenText": "tin"
+              }
+            ],
+            "correctPattern": "th"
+          }
+        ]
+      },
+      "phon_transfer_signs_1": {
+        "scoredDenominator": 3,
+        "passThreshold": 3,
+        "items": [
+          {
+            "promptSign": "STOP",
+            "options": [
+              "stop",
+              "shop",
+              "gate"
+            ],
+            "correct": "stop",
+            "readingStatus": "decodable"
+          },
+          {
+            "promptSign": "SHOP",
+            "options": [
+              "stop",
+              "shop",
+              "gate"
+            ],
+            "correct": "shop",
+            "readingStatus": "decodable"
+          },
+          {
+            "promptSign": "HOTEL",
+            "options": [
+              "hotel",
+              "hospital",
+              "hostel"
+            ],
+            "correct": "hotel",
+            "readingStatus": "coached_sight_chunk_not_decodable"
+          }
+        ]
+      },
+      "phon_transfer_spell_1": {
+        "scoredDenominator": 4,
+        "passThreshold": 3,
+        "items": [
+          {
+            "promptAudio": "rain",
+            "options": [
+              "rain",
+              "rane",
+              "ren"
+            ],
+            "correct": "rain"
+          },
+          {
+            "promptAudio": "boat",
+            "options": [
+              "bot",
+              "boat",
+              "bote"
+            ],
+            "correct": "boat"
+          },
+          {
+            "promptAudio": "seed",
+            "options": [
+              "sed",
+              "seed",
+              "sead"
+            ],
+            "correct": "seed"
+          },
+          {
+            "promptAudio": "chat",
+            "options": [
+              "shat",
+              "chat",
+              "cat"
+            ],
+            "correct": "chat"
+          }
+        ]
+      },
+      "phon_transfer_lines_1": {
+        "scoredDenominator": 3,
+        "passThreshold": 2,
+        "items": [
+          {
+            "prompt": "Meet me at the gate.",
+            "options": [
+              [
+                "Meet me",
+                "at the gate"
+              ],
+              [
+                "Meet",
+                "me at",
+                "the gate"
+              ]
+            ],
+            "correct": [
+              "Meet me",
+              "at the gate"
+            ],
+            "readingStatus": "coached_chunk_not_fully_decodable"
+          },
+          {
+            "prompt": "Take the green boat.",
+            "options": [
+              [
+                "Take",
+                "the green boat"
+              ],
+              [
+                "Take the",
+                "green",
+                "boat"
+              ]
+            ],
+            "correct": [
+              "Take",
+              "the green boat"
+            ],
+            "readingStatus": "coached_chunk_not_fully_decodable"
+          },
+          {
+            "prompt": "This shop is open.",
+            "options": [
+              [
+                "This shop",
+                "is open"
+              ],
+              [
+                "This",
+                "shop is",
+                "open"
+              ]
+            ],
+            "correct": [
+              "This shop",
+              "is open"
+            ],
+            "readingStatus": "coached_chunk_not_fully_decodable"
+          }
+        ]
+      },
+      "phon_final_1": {
+        "scoredDenominator": 8,
+        "passThreshold": 6,
+        "reservedUnseen": [
+          "fin",
+          "mop",
+          "late",
+          "shine",
+          "feet",
+          "train"
+        ],
+        "items": [
+          {
+            "promptWord": "fin",
+            "responseEvidence": "meaning_picture",
+            "optionPresentation": "image_only",
+            "preExposureRef": "pre_301",
+            "clientOptions": [
+              {
+                "choiceId": "ch_301_1",
+                "assetId": "img_301_1",
+                "conceptId": "cpt_301_1"
+              },
+              {
+                "choiceId": "ch_301_2",
+                "assetId": "img_301_2",
+                "conceptId": "cpt_301_2"
+              },
+              {
+                "choiceId": "ch_301_3",
+                "assetId": "img_301_3",
+                "conceptId": "cpt_301_3"
+              }
+            ],
+            "authoringAnswerKey": "ch_301_1",
+            "correctPattern": "CVC"
+          },
+          {
+            "promptWord": "mop",
+            "responseEvidence": "meaning_picture",
+            "optionPresentation": "image_only",
+            "preExposureRef": "pre_302",
+            "clientOptions": [
+              {
+                "choiceId": "ch_302_1",
+                "assetId": "img_302_1",
+                "conceptId": "cpt_302_1"
+              },
+              {
+                "choiceId": "ch_302_2",
+                "assetId": "img_302_2",
+                "conceptId": "cpt_302_2"
+              },
+              {
+                "choiceId": "ch_302_3",
+                "assetId": "img_302_3",
+                "conceptId": "cpt_302_3"
+              }
+            ],
+            "authoringAnswerKey": "ch_302_1",
+            "correctPattern": "CVC"
+          },
+          {
+            "promptWord": "late",
+            "responseEvidence": "meaning_picture",
+            "optionPresentation": "image_only",
+            "preExposureRef": "pre_303",
+            "clientOptions": [
+              {
+                "choiceId": "ch_303_1",
+                "assetId": "img_303_1",
+                "conceptId": "cpt_303_1"
+              },
+              {
+                "choiceId": "ch_303_2",
+                "assetId": "img_303_2",
+                "conceptId": "cpt_303_2"
+              },
+              {
+                "choiceId": "ch_303_3",
+                "assetId": "img_303_3",
+                "conceptId": "cpt_303_3"
+              }
+            ],
+            "authoringAnswerKey": "ch_303_1",
+            "correctPattern": "a_e"
+          },
+          {
+            "promptWord": "shine",
+            "responseEvidence": "meaning_picture",
+            "optionPresentation": "image_only",
+            "preExposureRef": "pre_304",
+            "clientOptions": [
+              {
+                "choiceId": "ch_304_1",
+                "assetId": "img_304_1",
+                "conceptId": "cpt_304_1"
+              },
+              {
+                "choiceId": "ch_304_2",
+                "assetId": "img_304_2",
+                "conceptId": "cpt_304_2"
+              },
+              {
+                "choiceId": "ch_304_3",
+                "assetId": "img_304_3",
+                "conceptId": "cpt_304_3"
+              }
+            ],
+            "authoringAnswerKey": "ch_304_1",
+            "correctPattern": "i_e+sh"
+          },
+          {
+            "promptWord": "feet",
+            "responseEvidence": "meaning_picture",
+            "optionPresentation": "image_only",
+            "preExposureRef": "pre_305",
+            "clientOptions": [
+              {
+                "choiceId": "ch_305_1",
+                "assetId": "img_305_1",
+                "conceptId": "cpt_305_1"
+              },
+              {
+                "choiceId": "ch_305_2",
+                "assetId": "img_305_2",
+                "conceptId": "cpt_305_2"
+              },
+              {
+                "choiceId": "ch_305_3",
+                "assetId": "img_305_3",
+                "conceptId": "cpt_305_3"
+              }
+            ],
+            "authoringAnswerKey": "ch_305_1",
+            "correctPattern": "ee"
+          },
+          {
+            "promptWord": "train",
+            "responseEvidence": "meaning_picture",
+            "optionPresentation": "image_only",
+            "preExposureRef": "pre_306",
+            "clientOptions": [
+              {
+                "choiceId": "ch_306_1",
+                "assetId": "img_306_1",
+                "conceptId": "cpt_306_1"
+              },
+              {
+                "choiceId": "ch_306_2",
+                "assetId": "img_306_2",
+                "conceptId": "cpt_306_2"
+              },
+              {
+                "choiceId": "ch_306_3",
+                "assetId": "img_306_3",
+                "conceptId": "cpt_306_3"
+              }
+            ],
+            "authoringAnswerKey": "ch_306_1",
+            "correctPattern": "ai"
+          },
+          {
+            "promptAudioAssetId": "aud_401_1",
+            "optionPresentation": "text_choice",
+            "clientOptions": [
+              {
+                "choiceId": "ch_401_1",
+                "text": "west"
+              },
+              {
+                "choiceId": "ch_401_2",
+                "text": "vest"
+              }
+            ],
+            "authoringAnswerKey": "ch_401_1",
+            "strand": "recognition"
+          },
+          {
+            "promptSign": "HOTEL",
+            "optionPresentation": "image_only",
+            "clientOptions": [
+              {
+                "choiceId": "ch_402_1",
+                "assetId": "img_402_1",
+                "conceptId": "cpt_402_1"
+              },
+              {
+                "choiceId": "ch_402_2",
+                "assetId": "img_402_2",
+                "conceptId": "cpt_402_2"
+              },
+              {
+                "choiceId": "ch_402_3",
+                "assetId": "img_402_3",
+                "conceptId": "cpt_402_3"
+              }
+            ],
+            "authoringAnswerKey": "ch_402_1",
+            "strand": "sight_chunk"
+          }
+        ],
+        "subscores": {
+          "decoding": {
+            "itemNumbers": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ],
+            "passThreshold": 5
+          },
+          "recognition": {
+            "itemNumbers": [
+              7
+            ],
+            "passThreshold": 1
+          },
+          "sightChunk": {
+            "itemNumbers": [
+              8
+            ],
+            "passThreshold": 1
+          },
+          "speaking": {
+            "scored": false,
+            "completionOnly": true
+          }
+        }
+      }
+    }
+  }
+}

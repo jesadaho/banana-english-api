@@ -1387,5 +1387,201 @@
         "See you."
       ]
     }
+  ],
+  "fnd_v6_switch_meaning": [
+    {
+      "id": "v6_switch_1",
+      "promptTh": "พูดว่า ฉันเป็นนักเรียน",
+      "answerEn": "I am a student.",
+      "acceptedAnswers": [
+        "I am a student",
+        "I’m a student"
+      ]
+    },
+    {
+      "id": "v6_switch_2",
+      "promptTh": "พูดว่า ฉันไม่เหนื่อย",
+      "answerEn": "I am not tired.",
+      "acceptedAnswers": [
+        "I am not tired",
+        "I’m not tired"
+      ]
+    },
+    {
+      "id": "v6_switch_3",
+      "promptTh": "ถามว่า คุณเป็นครูหรือเปล่า",
+      "answerEn": "Are you a teacher?",
+      "acceptedAnswers": [
+        "Are you a teacher",
+        "Are you a teacher?"
+      ]
+    },
+    {
+      "id": "v6_switch_4",
+      "promptTh": "พูดว่า เขาเป็นเพื่อนของฉัน",
+      "answerEn": "He is my friend.",
+      "acceptedAnswers": [
+        "He is my friend",
+        "He’s my friend"
+      ]
+    },
+    {
+      "id": "v6_switch_5",
+      "promptTh": "ถามว่า เธอมีความสุขไหม",
+      "answerEn": "Is she happy?",
+      "acceptedAnswers": [
+        "Is she happy",
+        "Is she happy?"
+      ]
+    }
+  ],
+  "fnd_v6_my_your_things": [
+    {
+      "id": "v6_owner_1",
+      "promptTh": "พูดว่า นี่คือกระเป๋าของฉัน",
+      "answerEn": "This is my bag.",
+      "acceptedAnswers": [
+        "This is my bag",
+        "It is my bag",
+        "It’s my bag"
+      ]
+    },
+    {
+      "id": "v6_owner_2",
+      "promptTh": "พูดว่า นั่นคือหนังสือของคุณ",
+      "answerEn": "That is your book.",
+      "acceptedAnswers": [
+        "That is your book",
+        "That’s your book"
+      ]
+    },
+    {
+      "id": "v6_owner_3",
+      "promptTh": "พูดว่า นี่คือหมวกของเขา",
+      "answerEn": "This is his hat.",
+      "acceptedAnswers": [
+        "This is his hat",
+        "It is his hat",
+        "It’s his hat"
+      ]
+    },
+    {
+      "id": "v6_owner_4",
+      "promptTh": "พูดว่า นั่นคือโทรศัพท์ของเธอ",
+      "answerEn": "That is her phone.",
+      "acceptedAnswers": [
+        "That is her phone",
+        "That’s her phone"
+      ]
+    },
+    {
+      "id": "v6_owner_5",
+      "promptTh": "พูดว่า ฉันมีกุญแจของฉัน",
+      "answerEn": "I have my key.",
+      "acceptedAnswers": [
+        "I have my key",
+        "I have my keys"
+      ]
+    }
+  ],
+  "fnd_v6_number_spelling": [
+    {
+      "id": "v6_number_1",
+      "promptTh": "พูดว่า ฉันอายุแปดปี",
+      "answerEn": "I am eight years old.",
+      "acceptedAnswers": [
+        "I am eight years old",
+        "I’m eight years old",
+        "I am eight"
+      ]
+    },
+    {
+      "id": "v6_number_2",
+      "promptTh": "พูดเลข 15 เป็นภาษาอังกฤษ",
+      "answerEn": "Fifteen.",
+      "acceptedAnswers": [
+        "Fifteen",
+        "15"
+      ]
+    },
+    {
+      "id": "v6_number_3",
+      "promptTh": "สะกดคำว่า CAT เป็นภาษาอังกฤษ",
+      "answerEn": "C-A-T.",
+      "acceptedAnswers": [
+        "C A T",
+        "C-A-T",
+        "cat"
+      ]
+    },
+    {
+      "id": "v6_number_4",
+      "promptTh": "พูดว่า ชื่อของฉันคือ {name}",
+      "answerEn": "My name is {name}.",
+      "acceptedAnswers": [
+        "My name is {name}",
+        "I am {name}",
+        "I’m {name}"
+      ]
+    },
+    {
+      "id": "v6_number_5",
+      "promptTh": "ถามว่า คุณอายุเท่าไร",
+      "answerEn": "How old are you?",
+      "acceptedAnswers": [
+        "How old are you",
+        "How old are you?"
+      ]
+    }
+  ],
+  "fnd_v6_time_price": [
+    {
+      "id": "v6_time_1",
+      "promptTh": "พูดว่า ตอนนี้เจ็ดโมง",
+      "answerEn": "It is seven o’clock.",
+      "acceptedAnswers": [
+        "It is seven o’clock",
+        "It’s seven o’clock",
+        "Seven o’clock"
+      ]
+    },
+    {
+      "id": "v6_time_2",
+      "promptTh": "ถามว่า ตอนนี้กี่โมง",
+      "answerEn": "What time is it?",
+      "acceptedAnswers": [
+        "What time is it",
+        "What time is it?"
+      ]
+    },
+    {
+      "id": "v6_time_3",
+      "promptTh": "พูดว่า ราคา 20 บาท",
+      "answerEn": "It is twenty baht.",
+      "acceptedAnswers": [
+        "It is twenty baht",
+        "It’s twenty baht",
+        "Twenty baht"
+      ]
+    },
+    {
+      "id": "v6_time_4",
+      "promptTh": "ถามว่า ราคาเท่าไร",
+      "answerEn": "How much is it?",
+      "acceptedAnswers": [
+        "How much is it",
+        "How much is it?"
+      ]
+    },
+    {
+      "id": "v6_time_5",
+      "promptTh": "พูดว่า ชั้นเรียนเริ่มเก้าโมง",
+      "answerEn": "The class starts at nine.",
+      "acceptedAnswers": [
+        "The class starts at nine",
+        "Class starts at nine",
+        "It starts at nine"
+      ]
+    }
   ]
 }

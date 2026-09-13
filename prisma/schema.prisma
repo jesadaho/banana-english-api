@@ -88,6 +88,7 @@ model User {
   outfits                 UserOutfit[]
   emojiSpeakEndlessWeeklyScores EmojiSpeakEndlessWeeklyScore[]
   purchaseRecords           PurchaseRecord[]
+  phonicsNodeProgress       PhonicsNodeProgress[]
 
   createdAt               DateTime  @default(now())
   updatedAt               DateTime  @updatedAt
@@ -256,6 +257,22 @@ model EmojiSpeakEndlessWeeklyScore {
 
   @@unique([userId, weekKey])
   @@index([weekKey, bestScore])
+}
+
+/** Server-owned phonics check attempts and pass state. */
+model PhonicsNodeProgress {
+  id           String   @id @default(uuid())
+  userId       String
+  nodeId       String
+  attemptCount Int      @default(0)
+  passed       Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, nodeId])
+  @@index([userId, passed])
 }
 
 /** Verified in-app purchase (RevenueCat / App Store / Play). */

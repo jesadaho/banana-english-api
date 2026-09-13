@@ -20,4 +20,10 @@ export class LearnPathController {
   async foundationV5(@Req() req: AuthedRequest) {
     return this.learnPath.getFoundationV5(req.user.id);
   }
+
+  /** Playtest catalog for the lighter 95-node A1 Foundation cadence. */
+  @Get('foundation-v6')
+  async foundationV6(@Req() req: AuthedRequest) {
+    return this.learnPath.getFoundationV6(req.user.id);
+  }
 }
