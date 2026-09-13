@@ -8,6 +8,8 @@ import {
 import authoringJson from './phonics-course.authoring.json';
 import type { CheckPhonicsNodeDto } from './dto/check-phonics-node.dto';
 import { PrismaService } from '../prisma/prisma.service';
+import { buildClearEnglishCourse } from './clear-english-course.data';
+import { isPhonicsLesson } from './phonics-lessons.data';
 
 type JsonRecord = Record<string, unknown>;
 
@@ -163,6 +165,15 @@ export class PhonicsService {
   ) {}
 
   async getCourse(userId?: string) {
+    const rows = userId ? await this.prisma.userSession.findMany({
+      where:{userId, sessionType:'training', lessonId:{not:null}, rewardsApplied:true},
+      select:{lessonId:true}, distinct:['lessonId'],
+    }) : [];
+    return buildClearEnglishCourse(new Set(rows.flatMap(row => row.lessonId ? [row.lessonId] : [])));
+  }
+
+  /** Retained explicitly for clients of the retired 18-node quiz preview. */
+  async getLegacyCourse(userId?: string) {
     const passedIds = userId
       ? new Set(await this.passedNodeIds(userId))
       : new Set<string>();
@@ -194,6 +205,9 @@ export class PhonicsService {
   }
 
   getNode(nodeId: string) {
+    if (isPhonicsLesson(nodeId)) {
+      throw new BadRequestException('This is a training lesson. Use POST /sessions with sessionType=training and lessonId; not the legacy phonics quiz API.');
+    }
     const node = this.nodeById.get(nodeId);
     const spec = catalog.runtime.specs[nodeId];
     if (!node || !spec) throw new NotFoundException(`Phonics node not found: ${nodeId}`);

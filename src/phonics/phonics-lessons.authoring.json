@@ -1,0 +1,766 @@
+[
+  {
+    "lessonId": "pron_phonics_01_first_code",
+    "chapter": 1,
+    "order": 1,
+    "titleEn": "Your First Sound Code",
+    "titleTh": "เสียงแรกที่อ่านเป็นคำ",
+    "introducedCodes": [
+      "m",
+      "s",
+      "a",
+      "t"
+    ],
+    "models": [
+      "am",
+      "mat",
+      "sat"
+    ],
+    "transfer": "at",
+    "phrase": "a mat",
+    "tipTh": "m เป็นเสียงฮัมปิดริมฝีปาก s เป็นเสียงลมผ่านฟัน a ใน mat เป็นสระปากเปิด t ปิดเสียงสั้น ไม่อ่านชื่ออักษรและไม่เติมเสียงอะหลังพยัญชนะ",
+    "symbols": [
+      "m",
+      "s"
+    ],
+    "assessmentMode": "participation_only",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "choices": [
+      {
+        "symbol": "m",
+        "word": "mat"
+      },
+      {
+        "symbol": "s",
+        "word": "sat"
+      }
+    ]
+  },
+  {
+    "lessonId": "pron_phonics_02_more_words",
+    "chapter": 1,
+    "order": 2,
+    "titleEn": "Build More Words",
+    "titleTh": "ผสมเสียงเป็นคำเพิ่ม",
+    "introducedCodes": [
+      "p",
+      "i",
+      "n"
+    ],
+    "models": [
+      "map",
+      "sit",
+      "pin"
+    ],
+    "transfer": "pan",
+    "phrase": "a pin",
+    "tipTh": "เพิ่ม p เสียงปิดริมฝีปาก i ใน sit และ n เสียงปลายลิ้น ผสมจากซ้ายไปขวา ลองเปลี่ยนสระโดยรักษาเสียงต้นและท้าย",
+    "symbols": [
+      "a",
+      "i"
+    ],
+    "assessmentMode": "participation_only",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "choices": [
+      {
+        "symbol": "a",
+        "word": "map"
+      },
+      {
+        "symbol": "i",
+        "word": "sit"
+      }
+    ]
+  },
+  {
+    "lessonId": "pron_phonics_03_short_e",
+    "chapter": 1,
+    "order": 3,
+    "titleEn": "Meet Short E",
+    "titleTh": "อ่านคำด้วยเสียง E",
+    "introducedCodes": [
+      "e",
+      "c",
+      "k"
+    ],
+    "models": [
+      "pen",
+      "net",
+      "cat"
+    ],
+    "transfer": "pet",
+    "phrase": "a pen",
+    "tipTh": "e ใน pen ไม่ใช่ชื่ออักษร E; c ใน cat และ k ใน kit ใช้เสียงต้นเดียวกันในชุดคำนี้ ไม่ใช่กฎว่า c ออกเสียงนี้เสมอ",
+    "symbols": [
+      "e",
+      "a"
+    ],
+    "assessmentMode": "participation_only",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "choices": [
+      {
+        "symbol": "e",
+        "word": "pen"
+      },
+      {
+        "symbol": "a",
+        "word": "cat"
+      }
+    ]
+  },
+  {
+    "lessonId": "pron_phonics_04_short_o",
+    "chapter": 1,
+    "order": 4,
+    "titleEn": "Meet Short O",
+    "titleTh": "อ่านคำด้วยเสียง O",
+    "introducedCodes": [
+      "o",
+      "h",
+      "b"
+    ],
+    "models": [
+      "hot",
+      "hop",
+      "pot"
+    ],
+    "transfer": "top",
+    "phrase": "a pot",
+    "tipTh": "เรียน o จากเสียงคำ hot ในสำเนียงเดียวกับตัวอย่าง เพิ่ม h และ b; เปลี่ยนตำแหน่งเสียงใน pot กับ top แล้วอ่านตามลำดับจริง",
+    "symbols": [
+      "o",
+      "i"
+    ],
+    "assessmentMode": "participation_only",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "choices": [
+      {
+        "symbol": "o",
+        "word": "hot"
+      },
+      {
+        "symbol": "o",
+        "word": "hop"
+      }
+    ]
+  },
+  {
+    "lessonId": "pron_phonics_05_short_u",
+    "chapter": 1,
+    "order": 5,
+    "titleEn": "Meet Short U",
+    "titleTh": "อ่านคำด้วยเสียง U",
+    "introducedCodes": [
+      "u",
+      "d",
+      "g"
+    ],
+    "models": [
+      "cup",
+      "mug",
+      "dog"
+    ],
+    "transfer": "mud",
+    "phrase": "a cup",
+    "tipTh": "u ใน cup ไม่ใช่ชื่ออักษร U; g ใน dog เป็นเสียงกัก อย่าเติมสระท้าย แบบจำลอง dog ใช้เสียง o ที่เรียนแล้ว",
+    "symbols": [
+      "u",
+      "o"
+    ],
+    "assessmentMode": "participation_only",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "choices": [
+      {
+        "symbol": "u",
+        "word": "cup"
+      },
+      {
+        "symbol": "o",
+        "word": "dog"
+      }
+    ]
+  },
+  {
+    "lessonId": "pron_phonics_06_more_sounds",
+    "chapter": 1,
+    "order": 6,
+    "titleEn": "More Sounds, More Words",
+    "titleTh": "อ่านด้วยเสียง F L R",
+    "introducedCodes": [
+      "f",
+      "l",
+      "r"
+    ],
+    "models": [
+      "fan",
+      "leg",
+      "red"
+    ],
+    "transfer": "run",
+    "phrase": "a red pen",
+    "tipTh": "เชื่อม f l r กับเสียงในคำ ไม่สอนแก้สำเนียง R/L แบบเต็มบท ลองผสมแต่ละคำโดยไม่อ่านชื่ออักษร",
+    "symbols": [
+      "f",
+      "r"
+    ],
+    "assessmentMode": "participation_only",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "choices": [
+      {
+        "symbol": "f",
+        "word": "fan"
+      },
+      {
+        "symbol": "r",
+        "word": "red"
+      }
+    ]
+  },
+  {
+    "lessonId": "pron_phonics_07_first_sound",
+    "chapter": 1,
+    "order": 7,
+    "titleEn": "Read the First Sound",
+    "titleTh": "อ่านด้วยเสียง W V J",
+    "introducedCodes": [
+      "w",
+      "v",
+      "j"
+    ],
+    "models": [
+      "wet",
+      "van",
+      "jam"
+    ],
+    "transfer": "jet",
+    "phrase": "a van",
+    "tipTh": "w ใน wet, v ใน van, j ใน jam เป็นเสียงที่ใช้เริ่มคำ เชื่อมเสียงกับรูปอักษร ไม่ให้คะแนนการวางปากจาก transcript",
+    "symbols": [
+      "w",
+      "v"
+    ],
+    "assessmentMode": "participation_only",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "choices": [
+      {
+        "symbol": "w",
+        "word": "wet"
+      },
+      {
+        "symbol": "v",
+        "word": "van"
+      }
+    ]
+  },
+  {
+    "lessonId": "pron_phonics_08_basic_code",
+    "chapter": 1,
+    "order": 8,
+    "titleEn": "Finish the Basic Code",
+    "titleTh": "อ่านด้วยเสียง Y Z",
+    "introducedCodes": [
+      "y",
+      "z"
+    ],
+    "models": [
+      "yes",
+      "zip",
+      "zap"
+    ],
+    "transfer": "yet",
+    "phrase": "a red zip",
+    "tipTh": "y ต้น yes เป็นเสียงพยัญชนะ ไม่ใช่ชื่อ Y; z ใน zip เป็นเสียงก้อง ต่างจาก s ใน yes",
+    "symbols": [
+      "y",
+      "z"
+    ],
+    "assessmentMode": "participation_only",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "choices": [
+      {
+        "symbol": "y",
+        "word": "yes"
+      },
+      {
+        "symbol": "z",
+        "word": "zip"
+      }
+    ]
+  },
+  {
+    "lessonId": "pron_phonics_09_two_sounds",
+    "chapter": 1,
+    "order": 9,
+    "titleEn": "One Letter, Two Sounds",
+    "titleTh": "หนึ่งตัวไม่ได้แปลว่าหนึ่งเสียง",
+    "introducedCodes": [
+      "x",
+      "qu"
+    ],
+    "models": [
+      "box",
+      "six",
+      "quit"
+    ],
+    "transfer": "mix",
+    "phrase": "a box",
+    "tipTh": "x ใน box แทนสองเสียง k แล้ว s; qu ใน quit ใช้ k แล้ว w; ห้ามบอกว่า x หรือ qu เป็นเสียงเดียว และไม่อ้างว่าทุกคำออกเสียงแบบนี้",
+    "symbols": [
+      "x",
+      "qu"
+    ],
+    "assessmentMode": "participation_only",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "choices": [
+      {
+        "symbol": "x",
+        "word": "box"
+      },
+      {
+        "symbol": "qu",
+        "word": "quit"
+      }
+    ]
+  },
+  {
+    "lessonId": "pron_phonics_10_first_phrases",
+    "chapter": 1,
+    "order": 10,
+    "titleEn": "Read Your First Phrases",
+    "titleTh": "อ่านวลีแรกของคุณ",
+    "introducedCodes": [],
+    "models": [
+      "a red pen",
+      "a big map",
+      "a hot pot"
+    ],
+    "transfer": "a red bag",
+    "phrase": "a red bag",
+    "tipTh": "ทบทวนทีละคำก่อนรวมวลี a หน้าคำนามเป็นคำที่ฟังแบบเบา ไม่ใช่สระ a ใน mat; สอนเป็นคำตัวอย่างไม่เอาเป็นคำใหม่สอบถอดเสียง",
+    "symbols": [
+      "red",
+      "big"
+    ],
+    "assessmentMode": "participation_only",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "choices": [
+      {
+        "symbol": "red",
+        "word": "a red pen"
+      },
+      {
+        "symbol": "big",
+        "word": "a big map"
+      }
+    ]
+  },
+  {
+    "lessonId": "pron_phonics_11_sh",
+    "chapter": 2,
+    "order": 1,
+    "titleEn": "SH Together",
+    "titleTh": "SH สองตัวหนึ่งเสียง",
+    "introducedCodes": [
+      "sh"
+    ],
+    "models": [
+      "ship",
+      "shop",
+      "fish"
+    ],
+    "transfer": "shut",
+    "phrase": "a fish",
+    "tipTh": "sh เป็นตัวอักษรสองตัวร่วมแทนเสียงเดียว ไม่แยกอ่านชื่อ S H และไม่ออกเสียง s แล้ว h",
+    "symbols": [
+      "sh",
+      "s"
+    ],
+    "assessmentMode": "participation_only",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "choices": [
+      {
+        "symbol": "sh",
+        "word": "ship"
+      },
+      {
+        "symbol": "sh",
+        "word": "shop"
+      }
+    ]
+  },
+  {
+    "lessonId": "pron_phonics_12_ch",
+    "chapter": 2,
+    "order": 2,
+    "titleEn": "CH Together",
+    "titleTh": "อ่านคำด้วย CH",
+    "introducedCodes": [
+      "ch"
+    ],
+    "models": [
+      "chip",
+      "chat",
+      "chin"
+    ],
+    "transfer": "chop",
+    "phrase": "a chip",
+    "tipTh": "ch ในชุดคำนี้เป็นหนึ่งเสียงต่างจาก sh; ใช้คำที่สระและพยัญชนะอื่นเรียนแล้ว",
+    "symbols": [
+      "ch",
+      "sh"
+    ],
+    "assessmentMode": "participation_only",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "choices": [
+      {
+        "symbol": "ch",
+        "word": "chip"
+      },
+      {
+        "symbol": "ch",
+        "word": "chat"
+      }
+    ]
+  },
+  {
+    "lessonId": "pron_phonics_13_th",
+    "chapter": 2,
+    "order": 3,
+    "titleEn": "Meet TH",
+    "titleTh": "รู้จักสองเสียงของ TH",
+    "introducedCodes": [
+      "th_unvoiced",
+      "th_voiced"
+    ],
+    "models": [
+      "thin",
+      "this",
+      "that"
+    ],
+    "transfer": "than",
+    "phrase": "this map",
+    "tipTh": "th พบได้ทั้งเสียงไม่ก้องใน thin และเสียงก้องใน this; ตัวสะกดเหมือนกันไม่ได้บอกเสียงแน่นอน ต้องฟังยืนยัน; คำ than เป็นการลองคาดเดาแล้วฟังไม่ใช่การสอบ",
+    "symbols": [
+      "th",
+      "t"
+    ],
+    "assessmentMode": "participation_only",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "choices": [
+      {
+        "symbol": "th",
+        "word": "thin"
+      },
+      {
+        "symbol": "th",
+        "word": "this"
+      }
+    ]
+  },
+  {
+    "lessonId": "pron_phonics_14_ng_nk",
+    "chapter": 2,
+    "order": 4,
+    "titleEn": "NG and NK",
+    "titleTh": "อ่านคำลงท้าย NG NK",
+    "introducedCodes": [
+      "ng",
+      "nk"
+    ],
+    "models": [
+      "sing",
+      "ring",
+      "sink"
+    ],
+    "transfer": "pink",
+    "phrase": "a pink bag",
+    "tipTh": "ng ใน sing เป็นเสียงเดียว ส่วน nk ใน sink มีเสียง ng ต่อด้วย k ไม่อ่าน n แล้ว g แยกใน sing; สี pink หมายถึงชมพู ให้ความหมายหลังลองอ่าน",
+    "symbols": [
+      "ng",
+      "nk"
+    ],
+    "assessmentMode": "participation_only",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "choices": [
+      {
+        "symbol": "ng",
+        "word": "sing"
+      },
+      {
+        "symbol": "nk",
+        "word": "sink"
+      }
+    ]
+  },
+  {
+    "lessonId": "pron_phonics_15_a_e",
+    "chapter": 2,
+    "order": 5,
+    "titleEn": "Cap to Cape",
+    "titleTh": "E ท้ายเปลี่ยนเสียง A",
+    "introducedCodes": [
+      "a_e"
+    ],
+    "models": [
+      "cap",
+      "cape",
+      "tap",
+      "tape"
+    ],
+    "transfer": "made",
+    "phrase": "a cape",
+    "tipTh": "ในคู่ cap cape และ tap tape ตัว e ท้ายไม่เพิ่มพยางค์ แต่สระเปลี่ยนเป็นเสียงชื่อ A; เป็น pattern ของชุดคำนี้ ไม่ใช่กฎไม่มีข้อยกเว้น",
+    "symbols": [
+      "a",
+      "a_e"
+    ],
+    "assessmentMode": "participation_only",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "choices": [
+      {
+        "symbol": "a",
+        "word": "cap"
+      },
+      {
+        "symbol": "a_e",
+        "word": "cape"
+      }
+    ]
+  },
+  {
+    "lessonId": "pron_phonics_16_i_e",
+    "chapter": 2,
+    "order": 6,
+    "titleEn": "Kit to Kite",
+    "titleTh": "E ท้ายเปลี่ยนเสียง I",
+    "introducedCodes": [
+      "i_e"
+    ],
+    "models": [
+      "kit",
+      "kite",
+      "pin",
+      "pine"
+    ],
+    "transfer": "ride",
+    "phrase": "a kite",
+    "tipTh": "เปรียบเทียบเสียงสระใน kit kite; i_e เป็นเสียงเลื่อน ไม่ใช่แค่ลาก i ใน kit ให้ยาว",
+    "symbols": [
+      "i",
+      "i_e"
+    ],
+    "assessmentMode": "participation_only",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "choices": [
+      {
+        "symbol": "i",
+        "word": "kit"
+      },
+      {
+        "symbol": "i_e",
+        "word": "kite"
+      }
+    ]
+  },
+  {
+    "lessonId": "pron_phonics_17_o_e",
+    "chapter": 2,
+    "order": 7,
+    "titleEn": "Hop to Hope",
+    "titleTh": "E ท้ายเปลี่ยนเสียง O",
+    "introducedCodes": [
+      "o_e"
+    ],
+    "models": [
+      "hop",
+      "hope",
+      "not",
+      "note"
+    ],
+    "transfer": "home",
+    "phrase": "a note",
+    "tipTh": "o_e ใน hope กับ note ใช้เสียงเลื่อนตามสำเนียงตัวอย่าง ไม่ใช่เพียงยืด o ใน hop ให้ยาว",
+    "symbols": [
+      "o",
+      "o_e"
+    ],
+    "assessmentMode": "participation_only",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "choices": [
+      {
+        "symbol": "o",
+        "word": "hop"
+      },
+      {
+        "symbol": "o_e",
+        "word": "hope"
+      }
+    ]
+  },
+  {
+    "lessonId": "pron_phonics_18_ee_ea",
+    "chapter": 2,
+    "order": 8,
+    "titleEn": "EE and EA",
+    "titleTh": "สองรูปสะกด เสียงที่คุ้นกัน",
+    "introducedCodes": [
+      "ee",
+      "ea"
+    ],
+    "models": [
+      "see",
+      "seed",
+      "tea",
+      "eat"
+    ],
+    "transfer": "team",
+    "phrase": "green tea",
+    "tipTh": "ee และ ea ในชุดนี้ใช้เสียงสระเดียวกัน; ea ในคำอื่นอาจเปลี่ยนเสียง อย่าสอนว่า ea อ่านแบบเดียวเสมอ; ให้ลองคำ team ก่อนฟังความหมายว่า ทีม",
+    "symbols": [
+      "ee",
+      "ea"
+    ],
+    "assessmentMode": "participation_only",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "choices": [
+      {
+        "symbol": "ee",
+        "word": "see"
+      },
+      {
+        "symbol": "ea",
+        "word": "tea"
+      }
+    ]
+  },
+  {
+    "lessonId": "pron_phonics_19_ai_ay",
+    "chapter": 2,
+    "order": 9,
+    "titleEn": "AI and AY",
+    "titleTh": "อ่านคำด้วย AI AY",
+    "introducedCodes": [
+      "ai",
+      "ay"
+    ],
+    "models": [
+      "rain",
+      "train",
+      "day",
+      "play"
+    ],
+    "transfer": "paid",
+    "phrase": "a train",
+    "tipTh": "ai ใน rain และ ay ใน day ใช้เสียงเลื่อนเดียวกับ a_e ที่เรียน; train และ play ต้องรวมพยัญชนะต้นทีละเสียงโดยไม่แทรกสระ",
+    "symbols": [
+      "ai",
+      "ay"
+    ],
+    "assessmentMode": "participation_only",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "choices": [
+      {
+        "symbol": "ai",
+        "word": "rain"
+      },
+      {
+        "symbol": "ay",
+        "word": "day"
+      }
+    ]
+  },
+  {
+    "lessonId": "pron_phonics_20_oa",
+    "chapter": 2,
+    "order": 10,
+    "titleEn": "OA Words",
+    "titleTh": "อ่านคำด้วย OA",
+    "introducedCodes": [
+      "oa"
+    ],
+    "models": [
+      "boat",
+      "coat",
+      "road"
+    ],
+    "transfer": "soap",
+    "phrase": "a boat",
+    "tipTh": "oa ในชุดคำนี้ใช้เสียงเดียวกับ o_e ที่เรียน; ลองอ่านคำก่อนฟังเฉลย แล้วฝึกวลีสั้นโดยไม่เพิ่มกฎใหม่",
+    "symbols": [
+      "oa",
+      "o_e"
+    ],
+    "assessmentMode": "participation_only",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "choices": [
+      {
+        "symbol": "oa",
+        "word": "boat"
+      },
+      {
+        "symbol": "oa",
+        "word": "coat"
+      }
+    ]
+  }
+]

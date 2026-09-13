@@ -25,7 +25,7 @@ function createService() {
 describe('PhonicsService', () => {
   it('serves exactly the 18 approved new nodes as chapters 6–8', async () => {
     const { service } = createService();
-    const course = await service.getCourse();
+    const course = await service.getLegacyCourse();
     assert.equal(course.chapterCount, 3);
     assert.equal(course.nodeCount, 18);
     assert.deepEqual(
@@ -50,7 +50,7 @@ describe('PhonicsService', () => {
 
   it('strips every answer key and authoring transcript from learner payloads', async () => {
     const { service } = createService();
-    for (const chapter of (await service.getCourse()).chapters) {
+    for (const chapter of (await service.getLegacyCourse()).chapters) {
       for (const summary of chapter.nodes) {
         const payload = service.getNode(summary.id);
         const keys = allKeys(payload);
@@ -141,7 +141,7 @@ describe('PhonicsService', () => {
     assert.equal(await service.hasPassed('user-1', 'phon_blend_1'), true);
     assert.equal(await service.hasPassed('user-2', 'phon_blend_1'), false);
     await service.assertPassed('user-1', 'phon_blend_1');
-    const course = await service.getCourse('user-1');
+    const course = await service.getLegacyCourse('user-1');
     const blend = course.chapters
       .flatMap((chapter) => chapter.nodes)
       .find((node) => node.id === 'phon_blend_1');

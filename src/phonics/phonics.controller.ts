@@ -16,6 +16,11 @@ export class PhonicsController {
     return this.phonics.getCourse(req.user.id);
   }
 
+  @Get('course/legacy')
+  getLegacyCourse(@Req() req: AuthedRequest) {
+    return this.phonics.getLegacyCourse(req.user.id);
+  }
+
   @Get('nodes/:nodeId')
   getNode(@Param('nodeId') nodeId: string) {
     return this.phonics.getNode(nodeId);

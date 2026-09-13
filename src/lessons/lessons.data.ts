@@ -6,6 +6,7 @@ import {
 import { buildSoftTeachRevealLine } from './choice-board';
 import { FOUNDATION_V6_LESSONS } from './foundation-v6-lessons.data';
 import { FOUNDATION_V7_LESSONS } from './foundation-v7-lessons.data';
+import { PHONICS_LESSONS } from '../phonics/phonics-lessons.data';
 
 export type LessonDifficulty = 'beginner' | 'intermediate' | 'advanced';
 
@@ -1105,6 +1106,7 @@ ${
 }
 
 export const LESSONS: LessonConfig[] = [
+  ...PHONICS_LESSONS,
   ...FOUNDATION_V7_LESSONS,
   ...FOUNDATION_V6_LESSONS,
   // Foundation V6 contextual pronunciation inserts. These reuse the shipped
