@@ -516,6 +516,26 @@ export class LearnPathService {
     return ids;
   }
 
+  private isPrerequisiteSatisfied(
+    id: string,
+    byId: Map<
+      string,
+      { id: string; countsTowardProgress: boolean; comingSoon?: boolean; unlockAfterNodeIds: string[] }
+    >,
+    completed: Set<string>,
+  ): boolean {
+    if (completed.has(id)) return true;
+    const prereq = byId.get(id);
+    if (!prereq) return false;
+    if (prereq.countsTowardProgress === false) return true;
+    if (prereq.comingSoon) {
+      return prereq.unlockAfterNodeIds.every((pid) =>
+        this.isPrerequisiteSatisfied(pid, byId, completed),
+      );
+    }
+    return false;
+  }
+
   /** First incomplete core node whose unlock prerequisites are satisfied. */
   private resolveCurrentNodeId(
     nodes: Array<{
@@ -531,13 +551,9 @@ export class LearnPathService {
       if (!node.countsTowardProgress) continue;
       if (completed.has(node.id)) continue;
       if (node.comingSoon) continue;
-      const unlocked = node.unlockAfterNodeIds.every((id) => {
-        const prereq = byId.get(id);
-        // Optional nodes never gate the core spine.
-        if (prereq && prereq.countsTowardProgress === false) return true;
-        // Coming-soon core nodes still block — do not skip unfinished content.
-        return completed.has(id);
-      });
+      const unlocked = node.unlockAfterNodeIds.every((id) =>
+        this.isPrerequisiteSatisfied(id, byId, completed),
+      );
       if (unlocked) return node.id;
     }
     return null;
