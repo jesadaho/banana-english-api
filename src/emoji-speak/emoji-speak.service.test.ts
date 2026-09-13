@@ -7,7 +7,7 @@ describe('EmojiSpeakService', () => {
   const service = new EmojiSpeakService();
 
   it('serves the migrated Flutter pack catalog', () => {
-    assert.equal(Object.keys(EMOJI_SPEAK_POOLS).length, 37);
+    assert.equal(Object.keys(EMOJI_SPEAK_POOLS).filter(id => !id.startsWith('fnd_v7_')).length, 37);
     assert.equal(isEmojiSpeakPoolId('emoji_speak_first_contact'), true);
     assert.equal(isEmojiSpeakPoolId('fnd_v6_emoji_one_or_many'), true);
     assert.equal(isEmojiSpeakPoolId('missing_pool'), false);

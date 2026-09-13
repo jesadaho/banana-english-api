@@ -1,0 +1,458 @@
+{
+  "fnd_v7_u03n02": {
+    "title": "How Do You Feel?",
+    "dealCount": 4,
+    "items": [
+      {
+        "emoji": "😊",
+        "answer": "happy",
+        "hint": "มีความสุข",
+        "meaningTh": "มีความสุข",
+        "promptTh": "พูดภาษาอังกฤษ: มีความสุข"
+      },
+      {
+        "emoji": "😴",
+        "answer": "tired",
+        "hint": "เหนื่อย",
+        "meaningTh": "เหนื่อย",
+        "promptTh": "พูดภาษาอังกฤษ: เหนื่อย"
+      },
+      {
+        "emoji": "😋",
+        "answer": "hungry",
+        "hint": "หิว",
+        "meaningTh": "หิว",
+        "promptTh": "พูดภาษาอังกฤษ: หิว"
+      },
+      {
+        "emoji": "👌",
+        "answer": "ready",
+        "hint": "พร้อม",
+        "meaningTh": "พร้อม",
+        "promptTh": "พูดภาษาอังกฤษ: พร้อม"
+      }
+    ]
+  },
+  "fnd_v7_u04n02": {
+    "title": "People Around Me",
+    "dealCount": 4,
+    "items": [
+      {
+        "emoji": "🧑‍🏫",
+        "answer": "teacher",
+        "hint": "ครู",
+        "meaningTh": "ครู",
+        "promptTh": "พูดภาษาอังกฤษ: ครู"
+      },
+      {
+        "emoji": "🧑‍🎓",
+        "answer": "student",
+        "hint": "นักเรียน",
+        "meaningTh": "นักเรียน",
+        "promptTh": "พูดภาษาอังกฤษ: นักเรียน"
+      },
+      {
+        "emoji": "🧑‍🤝‍🧑",
+        "answer": "friend",
+        "hint": "เพื่อนหนึ่งคน",
+        "meaningTh": "เพื่อนหนึ่งคน",
+        "promptTh": "พูดภาษาอังกฤษ: เพื่อนหนึ่งคน"
+      },
+      {
+        "emoji": "👥",
+        "answer": "people",
+        "hint": "ผู้คน",
+        "meaningTh": "ผู้คน",
+        "promptTh": "พูดภาษาอังกฤษ: ผู้คน"
+      }
+    ]
+  },
+  "fnd_v7_u05n02": {
+    "title": "Everyday Objects",
+    "dealCount": 4,
+    "items": [
+      {
+        "emoji": "📖",
+        "answer": "book",
+        "hint": "หนังสือ",
+        "meaningTh": "หนังสือ",
+        "promptTh": "พูดภาษาอังกฤษ: หนังสือ"
+      },
+      {
+        "emoji": "🎒",
+        "answer": "bag",
+        "hint": "กระเป๋า",
+        "meaningTh": "กระเป๋า",
+        "promptTh": "พูดภาษาอังกฤษ: กระเป๋า"
+      },
+      {
+        "emoji": "🖊️",
+        "answer": "pen",
+        "hint": "ปากกา",
+        "meaningTh": "ปากกา",
+        "promptTh": "พูดภาษาอังกฤษ: ปากกา"
+      },
+      {
+        "emoji": "🍎",
+        "answer": "apple",
+        "hint": "แอปเปิล",
+        "meaningTh": "แอปเปิล",
+        "promptTh": "พูดภาษาอังกฤษ: แอปเปิล"
+      }
+    ]
+  },
+  "fnd_v7_u06n04": {
+    "title": "Spot the Colour",
+    "dealCount": 4,
+    "items": [
+      {
+        "emoji": "🔴",
+        "answer": "red",
+        "hint": "สีแดง",
+        "meaningTh": "สีแดง",
+        "promptTh": "พูดภาษาอังกฤษ: สีแดง"
+      },
+      {
+        "emoji": "🔵",
+        "answer": "blue",
+        "hint": "สีน้ำเงิน",
+        "meaningTh": "สีน้ำเงิน",
+        "promptTh": "พูดภาษาอังกฤษ: สีน้ำเงิน"
+      },
+      {
+        "emoji": "🟢",
+        "answer": "green",
+        "hint": "สีเขียว",
+        "meaningTh": "สีเขียว",
+        "promptTh": "พูดภาษาอังกฤษ: สีเขียว"
+      },
+      {
+        "emoji": "🟡",
+        "answer": "yellow",
+        "hint": "สีเหลือง",
+        "meaningTh": "สีเหลือง",
+        "promptTh": "พูดภาษาอังกฤษ: สีเหลือง"
+      }
+    ]
+  },
+  "fnd_v7_u07n02": {
+    "title": "Things I Carry",
+    "dealCount": 4,
+    "items": [
+      {
+        "emoji": "📱",
+        "answer": "phone",
+        "hint": "โทรศัพท์",
+        "meaningTh": "โทรศัพท์",
+        "promptTh": "พูดภาษาอังกฤษ: โทรศัพท์"
+      },
+      {
+        "emoji": "🔑",
+        "answer": "key",
+        "hint": "กุญแจ",
+        "meaningTh": "กุญแจ",
+        "promptTh": "พูดภาษาอังกฤษ: กุญแจ"
+      },
+      {
+        "emoji": "👕",
+        "answer": "shirt",
+        "hint": "เสื้อ",
+        "meaningTh": "เสื้อ",
+        "promptTh": "พูดภาษาอังกฤษ: เสื้อ"
+      },
+      {
+        "emoji": "🎒",
+        "answer": "bag",
+        "hint": "กระเป๋า",
+        "meaningTh": "กระเป๋า",
+        "promptTh": "พูดภาษาอังกฤษ: กระเป๋า"
+      }
+    ]
+  },
+  "fnd_v7_u08n02": {
+    "title": "Name the Number",
+    "dealCount": 5,
+    "items": [
+      {
+        "emoji": "0️⃣",
+        "answer": "zero",
+        "hint": "ศูนย์",
+        "meaningTh": "ศูนย์",
+        "promptTh": "พูดภาษาอังกฤษ: ศูนย์"
+      },
+      {
+        "emoji": "1️⃣",
+        "answer": "one",
+        "hint": "หนึ่ง",
+        "meaningTh": "หนึ่ง",
+        "promptTh": "พูดภาษาอังกฤษ: หนึ่ง"
+      },
+      {
+        "emoji": "2️⃣",
+        "answer": "two",
+        "hint": "สอง",
+        "meaningTh": "สอง",
+        "promptTh": "พูดภาษาอังกฤษ: สอง"
+      },
+      {
+        "emoji": "6️⃣",
+        "answer": "six",
+        "hint": "หก",
+        "meaningTh": "หก",
+        "promptTh": "พูดภาษาอังกฤษ: หก"
+      },
+      {
+        "emoji": "🔟",
+        "answer": "ten",
+        "hint": "สิบ",
+        "meaningTh": "สิบ",
+        "promptTh": "พูดภาษาอังกฤษ: สิบ"
+      }
+    ]
+  },
+  "fnd_v7_u09n04": {
+    "title": "Clock Faces",
+    "dealCount": 4,
+    "items": [
+      {
+        "emoji": "🕖",
+        "answer": "seven",
+        "hint": "เจ็ดโมง",
+        "meaningTh": "เจ็ดโมง",
+        "promptTh": "พูดภาษาอังกฤษ: เจ็ดโมง"
+      },
+      {
+        "emoji": "🕢",
+        "answer": "seven thirty",
+        "hint": "เจ็ดโมงครึ่ง",
+        "meaningTh": "เจ็ดโมงครึ่ง",
+        "promptTh": "พูดภาษาอังกฤษ: เจ็ดโมงครึ่ง"
+      },
+      {
+        "emoji": "🕗",
+        "answer": "eight",
+        "hint": "แปดโมง",
+        "meaningTh": "แปดโมง",
+        "promptTh": "พูดภาษาอังกฤษ: แปดโมง"
+      },
+      {
+        "emoji": "🕣",
+        "answer": "eight thirty",
+        "hint": "แปดโมงครึ่ง",
+        "meaningTh": "แปดโมงครึ่ง",
+        "promptTh": "พูดภาษาอังกฤษ: แปดโมงครึ่ง"
+      }
+    ]
+  },
+  "fnd_v7_u10n02": {
+    "title": "Food & Drink",
+    "dealCount": 4,
+    "items": [
+      {
+        "emoji": "🍵",
+        "answer": "tea",
+        "hint": "ชา",
+        "meaningTh": "ชา",
+        "promptTh": "พูดภาษาอังกฤษ: ชา"
+      },
+      {
+        "emoji": "☕",
+        "answer": "coffee",
+        "hint": "กาแฟ",
+        "meaningTh": "กาแฟ",
+        "promptTh": "พูดภาษาอังกฤษ: กาแฟ"
+      },
+      {
+        "emoji": "💧",
+        "answer": "water",
+        "hint": "น้ำ",
+        "meaningTh": "น้ำ",
+        "promptTh": "พูดภาษาอังกฤษ: น้ำ"
+      },
+      {
+        "emoji": "🍚",
+        "answer": "rice",
+        "hint": "ข้าว",
+        "meaningTh": "ข้าว",
+        "promptTh": "พูดภาษาอังกฤษ: ข้าว"
+      }
+    ]
+  },
+  "fnd_v7_u11n02": {
+    "title": "Action Words",
+    "dealCount": 4,
+    "items": [
+      {
+        "emoji": "🏊",
+        "answer": "swim",
+        "hint": "ว่ายน้ำ",
+        "meaningTh": "ว่ายน้ำ",
+        "promptTh": "พูดภาษาอังกฤษ: ว่ายน้ำ"
+      },
+      {
+        "emoji": "📖",
+        "answer": "read",
+        "hint": "อ่าน",
+        "meaningTh": "อ่าน",
+        "promptTh": "พูดภาษาอังกฤษ: อ่าน"
+      },
+      {
+        "emoji": "🧑‍🍳",
+        "answer": "cook",
+        "hint": "ทำอาหาร",
+        "meaningTh": "ทำอาหาร",
+        "promptTh": "พูดภาษาอังกฤษ: ทำอาหาร"
+      },
+      {
+        "emoji": "🪑",
+        "answer": "sit",
+        "hint": "นั่ง",
+        "meaningTh": "นั่ง",
+        "promptTh": "พูดภาษาอังกฤษ: นั่ง"
+      }
+    ]
+  },
+  "fnd_v7_u12n02": {
+    "title": "Daily Actions",
+    "dealCount": 4,
+    "items": [
+      {
+        "emoji": "⏰",
+        "answer": "wake up",
+        "hint": "ตื่นนอน",
+        "meaningTh": "ตื่นนอน",
+        "promptTh": "พูดภาษาอังกฤษ: ตื่นนอน"
+      },
+      {
+        "emoji": "🍽️",
+        "answer": "eat",
+        "hint": "กิน",
+        "meaningTh": "กิน",
+        "promptTh": "พูดภาษาอังกฤษ: กิน"
+      },
+      {
+        "emoji": "💼",
+        "answer": "work",
+        "hint": "ทำงาน",
+        "meaningTh": "ทำงาน",
+        "promptTh": "พูดภาษาอังกฤษ: ทำงาน"
+      },
+      {
+        "emoji": "😴",
+        "answer": "sleep",
+        "hint": "นอน",
+        "meaningTh": "นอน",
+        "promptTh": "พูดภาษาอังกฤษ: นอน"
+      }
+    ]
+  },
+  "fnd_v7_u13n02": {
+    "title": "Action Snapshot",
+    "dealCount": 4,
+    "items": [
+      {
+        "emoji": "📖",
+        "answer": "read",
+        "hint": "อ่าน",
+        "meaningTh": "อ่าน",
+        "promptTh": "พูดภาษาอังกฤษ: อ่าน"
+      },
+      {
+        "emoji": "🧑‍🍳",
+        "answer": "cook",
+        "hint": "ทำอาหาร",
+        "meaningTh": "ทำอาหาร",
+        "promptTh": "พูดภาษาอังกฤษ: ทำอาหาร"
+      },
+      {
+        "emoji": "🍽️",
+        "answer": "eat",
+        "hint": "กิน",
+        "meaningTh": "กิน",
+        "promptTh": "พูดภาษาอังกฤษ: กิน"
+      },
+      {
+        "emoji": "💼",
+        "answer": "work",
+        "hint": "ทำงาน",
+        "meaningTh": "ทำงาน",
+        "promptTh": "พูดภาษาอังกฤษ: ทำงาน"
+      }
+    ]
+  },
+  "fnd_v7_u15n02": {
+    "title": "Around the Room",
+    "dealCount": 4,
+    "items": [
+      {
+        "emoji": "🪑",
+        "answer": "chair",
+        "hint": "เก้าอี้",
+        "meaningTh": "เก้าอี้",
+        "promptTh": "พูดภาษาอังกฤษ: เก้าอี้"
+      },
+      {
+        "emoji": "🪟",
+        "answer": "window",
+        "hint": "หน้าต่าง",
+        "meaningTh": "หน้าต่าง",
+        "promptTh": "พูดภาษาอังกฤษ: หน้าต่าง"
+      },
+      {
+        "emoji": "🍽️🪑",
+        "answer": "table",
+        "hint": "โต๊ะ",
+        "meaningTh": "โต๊ะ",
+        "promptTh": "พูดภาษาอังกฤษ: โต๊ะ"
+      },
+      {
+        "emoji": "📖",
+        "answer": "book",
+        "hint": "หนังสือ",
+        "meaningTh": "หนังสือ",
+        "promptTh": "พูดภาษาอังกฤษ: หนังสือ"
+      }
+    ]
+  },
+  "fnd_v7_u16n01": {
+    "title": "Words I Know",
+    "dealCount": 5,
+    "items": [
+      {
+        "emoji": "📖",
+        "answer": "book",
+        "hint": "หนังสือ",
+        "meaningTh": "หนังสือ",
+        "promptTh": "พูดภาษาอังกฤษ: หนังสือ"
+      },
+      {
+        "emoji": "🔑",
+        "answer": "key",
+        "hint": "กุญแจ",
+        "meaningTh": "กุญแจ",
+        "promptTh": "พูดภาษาอังกฤษ: กุญแจ"
+      },
+      {
+        "emoji": "💧",
+        "answer": "water",
+        "hint": "น้ำ",
+        "meaningTh": "น้ำ",
+        "promptTh": "พูดภาษาอังกฤษ: น้ำ"
+      },
+      {
+        "emoji": "📖👀",
+        "answer": "read",
+        "hint": "อ่าน",
+        "meaningTh": "อ่าน",
+        "promptTh": "พูดภาษาอังกฤษ: อ่าน"
+      },
+      {
+        "emoji": "🪑",
+        "answer": "chair",
+        "hint": "เก้าอี้",
+        "meaningTh": "เก้าอี้",
+        "promptTh": "พูดภาษาอังกฤษ: เก้าอี้"
+      }
+    ]
+  }
+}

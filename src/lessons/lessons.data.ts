@@ -5,6 +5,7 @@ import {
 } from './lesson-teaching';
 import { buildSoftTeachRevealLine } from './choice-board';
 import { FOUNDATION_V6_LESSONS } from './foundation-v6-lessons.data';
+import { FOUNDATION_V7_LESSONS } from './foundation-v7-lessons.data';
 
 export type LessonDifficulty = 'beginner' | 'intermediate' | 'advanced';
 
@@ -1104,6 +1105,7 @@ ${
 }
 
 export const LESSONS: LessonConfig[] = [
+  ...FOUNDATION_V7_LESSONS,
   ...FOUNDATION_V6_LESSONS,
   // Foundation V6 contextual pronunciation inserts. These reuse the shipped
   // pronunciation coach flow, but keep independent IDs so map completion does
@@ -8385,7 +8387,7 @@ export const LESSON_PROGRESSION_ORDER: string[] = [
 /** Pronunciation course lessons run on the same engine but have their own
  * catalog, progress pointer and turn UI (tap-to-continue). */
 export function isPronunciationLesson(lessonId: string): boolean {
-  return lessonId.startsWith('pron_');
+  return lessonId.startsWith('pron_') || lessonId.startsWith('fnd_v6_pron_');
 }
 
 /** Everyday English scene-drill chapters (Around Town + Stories). */
@@ -13919,6 +13921,7 @@ export function isEverydayEnglishReview(lessonId: string): boolean {
 /** Lessons that use expectsUserSpeech + Continue button (and optional Scene). */
 export function lessonUsesTapToContinue(lessonId: string): boolean {
   return (
+    FOUNDATION_V7_LESSONS.some(lesson => lesson.lessonId === lessonId) ||
     isPronunciationLesson(lessonId) ||
     isAroundTownLesson(lessonId) ||
     isEverydayEnglishReview(lessonId) ||

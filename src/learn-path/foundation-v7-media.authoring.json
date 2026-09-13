@@ -1,0 +1,360 @@
+{
+  "status": "coming_soon",
+  "clips": [
+    {
+      "id": "sb01",
+      "title": "Meet Mia’s Family",
+      "durationSeconds": [
+        18,
+        22
+      ],
+      "set": "neutral indoor family photo setting",
+      "script": [
+        [
+          "Mia",
+          "Hello. I am Mia. This is my brother, Sam. He is a student. This is my sister, Anna. She is a doctor. We are happy."
+        ]
+      ],
+      "questions": [
+        {
+          "promptTh": "ใครเป็นนักเรียน?",
+          "choices": [
+            "Sam",
+            "Anna",
+            "Mia"
+          ],
+          "answer": "Sam",
+          "evidence": "He is a student."
+        },
+        {
+          "promptTh": "Anna เป็นอะไรกับ Mia?",
+          "choices": [
+            "sister",
+            "mother",
+            "brother"
+          ],
+          "answer": "sister",
+          "evidence": "This is my sister, Anna."
+        },
+        {
+          "promptTh": "Mia บอกว่าพวกเขารู้สึกอย่างไร?",
+          "choices": [
+            "happy",
+            "tired",
+            "hungry"
+          ],
+          "answer": "happy",
+          "evidence": "We are happy."
+        }
+      ],
+      "visualConstraint": "Neutral clothes; no job labels or family relationship labels. Faces can be introduced visually; questions still require spoken facts."
+    },
+    {
+      "id": "sb02",
+      "title": "The Class Ticket",
+      "durationSeconds": [
+        22,
+        28
+      ],
+      "set": "class entrance desk",
+      "script": [
+        [
+          "Mia",
+          "One ticket, please."
+        ],
+        [
+          "Max",
+          "Here you are. The class is on Friday, at ten."
+        ],
+        [
+          "Mia",
+          "How much is it?"
+        ],
+        [
+          "Max",
+          "Thirty baht."
+        ],
+        [
+          "Mia",
+          "Thank you."
+        ]
+      ],
+      "questions": [
+        {
+          "promptTh": "คลาสวันไหน?",
+          "choices": [
+            "Monday",
+            "Friday",
+            "Sunday"
+          ],
+          "answer": "Friday",
+          "evidence": "on Friday"
+        },
+        {
+          "promptTh": "คลาสกี่โมง?",
+          "choices": [
+            "seven",
+            "ten",
+            "eight"
+          ],
+          "answer": "ten",
+          "evidence": "at ten"
+        },
+        {
+          "promptTh": "ตั๋วราคาเท่าไร?",
+          "choices": [
+            "thirteen baht",
+            "thirty baht",
+            "forty baht"
+          ],
+          "answer": "thirty baht",
+          "evidence": "Thirty baht."
+        }
+      ],
+      "visualConstraint": "No visible schedule or price text. Show a generic ticket without answer-bearing numbers."
+    },
+    {
+      "id": "sb03",
+      "title": "The Lunch Break",
+      "durationSeconds": [
+        25,
+        30
+      ],
+      "set": "shared indoor table",
+      "script": [
+        [
+          "Mia",
+          "Sam, are you working now?"
+        ],
+        [
+          "Sam",
+          "No, I am eating. I work on Monday."
+        ],
+        [
+          "Mia",
+          "I am reading. I need water."
+        ]
+      ],
+      "questions": [
+        {
+          "promptTh": "Sam ทำงานวันไหน?",
+          "choices": [
+            "Monday",
+            "Friday",
+            "Sunday"
+          ],
+          "answer": "Monday",
+          "evidence": "I work on Monday."
+        },
+        {
+          "promptTh": "Mia ต้องการอะไร?",
+          "choices": [
+            "water",
+            "tea",
+            "coffee"
+          ],
+          "answer": "water",
+          "evidence": "I need water."
+        },
+        {
+          "promptTh": "ใครกำลังอ่าน?",
+          "choices": [
+            "Mia",
+            "Sam"
+          ],
+          "answer": "Mia",
+          "evidence": "Mia: I am reading."
+        }
+      ],
+      "visualConstraint": "Medium face shots; do not reveal the reading action or drink label that answers questions. Use pauses and natural restrained movement; do not accelerate speech to fit."
+    },
+    {
+      "id": "sb04",
+      "title": "A First Day",
+      "durationSeconds": [
+        28,
+        35
+      ],
+      "set": "class entrance desk reused from sb02",
+      "script": [
+        [
+          "Mia",
+          "Hello. My name is Mia."
+        ],
+        [
+          "Max",
+          "Hi, Mia. The class is at ten."
+        ],
+        [
+          "Mia",
+          "At seven?"
+        ],
+        [
+          "Max",
+          "No, at ten."
+        ],
+        [
+          "Mia",
+          "Thank you. I need a pen."
+        ],
+        [
+          "Max",
+          "There is a pen on the table."
+        ]
+      ],
+      "questions": [
+        {
+          "promptTh": "เวลาคลาสที่ถูกต้องคือกี่โมง?",
+          "choices": [
+            "seven",
+            "ten",
+            "eight"
+          ],
+          "answer": "ten",
+          "evidence": "No, at ten."
+        },
+        {
+          "promptTh": "Mia ต้องการอะไร?",
+          "choices": [
+            "a pen",
+            "a book",
+            "water"
+          ],
+          "answer": "a pen",
+          "evidence": "I need a pen."
+        },
+        {
+          "promptTh": "ปากกาอยู่ที่ไหน?",
+          "choices": [
+            "on the table",
+            "under the table",
+            "on the chair"
+          ],
+          "answer": "on the table",
+          "evidence": "There is a pen on the table."
+        }
+      ],
+      "visualConstraint": "No readable clock/schedule; pen off-camera. Wrong time is explicitly corrected in audio. Neutral visual staging keeps listening necessary."
+    }
+  ],
+  "describeItNodes": [
+    {
+      "id": "v7_u03n05",
+      "title": "Look at Me",
+      "brief": "ภาพมุมมองตัวละครพร้อมคำสั่งให้พูดเป็นตัวละคร; รับคำอธิบายที่สมเหตุผล ไม่ตัดสินสภาพคนจริง",
+      "examples": [
+        "I am tired",
+        "I am happy"
+      ]
+    },
+    {
+      "id": "v7_u04n05",
+      "title": "A Family Photo",
+      "brief": "ภาพครอบครัวสมมติพร้อมชื่อ/ความสัมพันธ์เป็นข้อมูล; ไม่อนุมานจากเพศ/อายุ; starter มีให้เมื่อขอ",
+      "examples": [
+        "This is my sister",
+        "She is happy"
+      ]
+    },
+    {
+      "id": "v7_u05n04",
+      "title": "Inside the Bag",
+      "brief": "ใช้ It is / They are ที่เรียนแล้ว; สอนขยายจาก noun phrase ด้วยแบบหนึ่งข้อ; ยังไม่ใช้ there is/are",
+      "examples": [
+        "It is a book",
+        "They are pens"
+      ]
+    },
+    {
+      "id": "v7_u06n06",
+      "title": "Two Blue Bags",
+      "brief": "ภาพระบุจุดยืนผู้พูด; รับ one/many + สีหรือขนาด ไม่บังคับใช้ทั้งสีและขนาดพร้อมกัน",
+      "examples": [
+        "These are blue bags",
+        "That is a small bag"
+      ]
+    },
+    {
+      "id": "v7_u07n04",
+      "title": "Found It!",
+      "brief": "ภาพมีป้ายเจ้าของและคำอธิบาย role; ใช้ This is her bag ไม่ถาม Whose ก่อนสอน",
+      "examples": [
+        "This is her bag",
+        "These are their keys"
+      ]
+    },
+    {
+      "id": "v7_u08n09",
+      "title": "My Profile Card",
+      "brief": "บัตรสมมติมีภาพ ชื่อ อายุ และของใช้; ใช้ประโยคที่เรียนแล้ว อ่านเป็นตัวช่วย",
+      "examples": [
+        "Her name is Mia",
+        "She is twelve"
+      ]
+    },
+    {
+      "id": "v7_u10n04",
+      "title": "My Snack Choice",
+      "brief": "ภาพของกินคู่กับชอบ/ไม่ชอบซึ่งระบุชัด; พูดแทน I ไม่ใช้ likes ก่อนเรียน third person",
+      "examples": [
+        "I like tea",
+        "I do not like coffee"
+      ]
+    },
+    {
+      "id": "v7_u12n07",
+      "title": "A Day in Pictures",
+      "brief": "ภาพติดป้าย Every day และนาฬิกาชัด; ไม่บังคับเดา habitual จากภาพนิ่ง; พูดสองประโยค",
+      "examples": [
+        "She wakes up at seven",
+        "She works on Monday"
+      ]
+    },
+    {
+      "id": "v7_u13n05",
+      "title": "What’s Happening Here?",
+      "brief": "ภาพมีคำกำกับ Now และคนสองคน; ไม่เพิ่มจำนวนกิจกรรม/คำศัพท์ใหม่พร้อมลด hint",
+      "examples": [
+        "She is reading",
+        "He is eating"
+      ]
+    },
+    {
+      "id": "v7_u14n02",
+      "title": "People & Things in a Scene",
+      "brief": "ข้อมูลภาพมีชื่อ/บทบาทชัด; บอกสิ่งที่รู้ ไม่ต้องสร้างคำถามในเกมนี้",
+      "examples": [
+        "She is a teacher",
+        "That is her book"
+      ]
+    },
+    {
+      "id": "v7_u14n05",
+      "title": "Two Useful Facts",
+      "brief": "ฉากคุ้น + วันที่/เวลาง่าย; ยอมรับสองข้อเท็จจริงใดที่ภาพรองรับ",
+      "examples": [
+        "She is reading",
+        "She has a book"
+      ]
+    },
+    {
+      "id": "v7_u15n04",
+      "title": "Where Is My Bag?",
+      "brief": "ภาพของสองใบ ตำแหน่งต่าง; หลังเพิ่งเรียน preposition ให้ starter The bag is … และขอหนึ่งประโยคก่อน; ประโยคที่สองเป็น optional ไม่เพิ่มทั้งความยาวและถอดตัวช่วยพร้อมกัน",
+      "examples": [
+        "The bag is under the table",
+        "The blue bag is on the chair"
+      ]
+    },
+    {
+      "id": "v7_u16n04",
+      "title": "Tell Me About This Place",
+      "brief": "ภาพสถานที่มีคน ของ ตำแหน่งและกิจกรรม; รับข้อเท็จจริงที่ภาพรองรับ ไม่บังคับใช้ทุกgrammar",
+      "examples": [
+        "There is a table",
+        "A book is on the table",
+        "She is reading"
+      ]
+    }
+  ]
+}

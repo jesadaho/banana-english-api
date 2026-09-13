@@ -2,6 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { Currency } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { LessonsService } from '../lessons/lessons.service';
+import { FOUNDATION_V7_CATALOG, FOUNDATION_V7_PATH_ID, foundationV7NodeTypeCounts, type FoundationV7Capability } from './foundation-v7-path.data';
+import { toFoundationV7ClientChapters } from './foundation-v7-path.view';
+import { canonicalFoundationV7RewardId } from './foundation-v7-path.data';
 import {
   FOUNDATION_V2_CHAPTERS,
   FOUNDATION_V2_PATH_ID,
@@ -43,6 +46,7 @@ export type FoundationV2PathView = {
 
 export type FoundationClientNodeType =
   | FoundationV2NodeDef['type']
+  | 'story_bites'
   | 'pronunciation';
 
 export type FoundationV5ClientNode = {
@@ -150,6 +154,7 @@ function shippedContentForMappedType(
   titleEn: string,
   type: FoundationClientNodeType,
 ): FoundationV2NodeDef | undefined {
+  if (type === 'story_bites') return undefined;
   return v2ContentForV5Title(
     titleEn,
     type === 'pronunciation' ? 'lesson' : type,
@@ -300,6 +305,27 @@ export class LearnPathService {
     private readonly prisma: PrismaService,
     private readonly lessons: LessonsService,
   ) {}
+
+  async getFoundationV7(userId: string, capabilities: readonly FoundationV7Capability[] = []) {
+    const chapters = toFoundationV7ClientChapters(capabilities);
+    const nodes = chapters.flatMap(chapter => chapter.items);
+    const playable = nodes.filter(node => !node.comingSoon);
+    const completed = await this.resolveCompletedV5NodeIds(userId, playable);
+    return {
+      pathId: FOUNDATION_V7_PATH_ID, version: FOUNDATION_V7_CATALOG.metadata.version,
+      sourceVersion: FOUNDATION_V7_CATALOG.metadata.sourceVersion, releaseStatus: 'playtest' as const,
+      chapters,
+      progress: {
+        completedNodeIds: [...completed], currentNodeId: this.resolveCurrentNodeId(nodes, completed),
+        completedCount: completed.size, totalCount: playable.length,
+      },
+      summary: {
+        chapterCount: chapters.length, nodeCount: nodes.length, nodeTypeCounts: foundationV7NodeTypeCounts(),
+        backendReadyCount: nodes.filter(node => node.backendReady).length,
+        playableCount: playable.length, comingSoonNodeIds: nodes.filter(node => node.comingSoon).map(node => node.id),
+      },
+    };
+  }
 
   async getFoundationV5(userId: string): Promise<FoundationV5CatalogView> {
     const sourceNodes = flattenFoundationV5Nodes();
@@ -512,6 +538,8 @@ export class LearnPathService {
       const ref = row.referenceId;
       if (!ref?.startsWith('mini_game:')) continue;
       ids.add(ref.slice('mini_game:'.length));
+      const canonical = canonicalFoundationV7RewardId(ref.slice('mini_game:'.length));
+      if (canonical) ids.add(canonical);
     }
     return ids;
   }

@@ -34,6 +34,7 @@ import { isFoundationV6RewardGameId } from '../learn-path/foundation-v6-path.dat
 import { RecentLearnersService } from '../recent-learners/recent-learners.service';
 import { isPhonicsNodeId, PhonicsService } from '../phonics/phonics.service';
 import { EmojiSpeakService } from '../emoji-speak/emoji-speak.service';
+import { canonicalFoundationV7RewardId, isFoundationV7EmojiPool } from '../learn-path/foundation-v7-path.data';
 
 type AuthedRequest = { user: User };
 
@@ -62,6 +63,7 @@ const ALLOWED_MINI_GAME_IDS = new Set([
 ]);
 
 function isAllowedMiniGameId(gameId: string): boolean {
+  if (canonicalFoundationV7RewardId(gameId)) return true;
   if (ALLOWED_MINI_GAME_IDS.has(gameId)) return true;
   if (isPhonicsNodeId(gameId)) return true;
   if (isFoundationV6RewardGameId(gameId)) return true;
@@ -73,6 +75,7 @@ const EMOJI_SPEAK_BANANA_COST = 1;
 
 /** Foundation path Emoji Speak packs charge bananas; Games tab packs are free. */
 function isFoundationPathEmojiSpeak(poolOrGameId: string): boolean {
+  if (isFoundationV7EmojiPool(poolOrGameId)) return true;
   if (poolOrGameId.startsWith('fnd_v2_') || poolOrGameId.startsWith('fnd_v6_')) return true;
   if (isFoundationPathRewardGameId(poolOrGameId)) return true;
   if (isFoundationPathRewardGameId(`emoji_speak:${poolOrGameId}`)) return true;

@@ -3,6 +3,7 @@ import { randomUUID } from 'crypto';
 import { User } from '@prisma/client';
 import { EconomyService } from '../economy/economy.service';
 import { isFoundationPathRewardGameId } from '../learn-path/foundation-v2-path.data';
+import { canonicalFoundationV7RewardId } from '../learn-path/foundation-v7-path.data';
 import { AnonymousUserGuard } from '../users/anonymous-user.guard';
 import {
   FOUNDATION_SAY_IT_DEAL_COUNT,
@@ -98,7 +99,7 @@ export class SayItController {
       throw new BadRequestException(`Say It topic has no pool: ${topicId}`);
     }
     const gameId = `say_it:${topicId}`;
-    if (!isFoundationPathRewardGameId(gameId)) {
+    if (!isFoundationPathRewardGameId(gameId) && !canonicalFoundationV7RewardId(gameId)) {
       throw new BadRequestException(`Unknown foundation Say It topic: ${topicId}`);
     }
     return this.economy.applyMiniGameRewards({

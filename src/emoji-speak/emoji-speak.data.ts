@@ -1,5 +1,6 @@
 /** Pack catalog copied from Flutter `emoji_speak_pools.dart`. */
 import poolsJson from './emoji-speak-pools.generated.json';
+import v7PoolsJson from './foundation-v7-pools.json';
 
 export type EmojiSpeakCard = {
   emoji: string;
@@ -20,7 +21,8 @@ type GeneratedCatalog = {
   pools: Record<string, EmojiSpeakPool>;
 };
 
-const catalog = poolsJson as GeneratedCatalog;
+const legacyCatalog = poolsJson as GeneratedCatalog;
+const catalog: GeneratedCatalog = { ...legacyCatalog, pools: { ...legacyCatalog.pools, ...v7PoolsJson } };
 
 export const EMOJI_SPEAK_POOLS = catalog.pools;
 

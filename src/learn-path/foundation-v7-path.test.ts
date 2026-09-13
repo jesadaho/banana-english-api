@@ -1,0 +1,273 @@
+import assert from 'node:assert/strict';
+import { describe, it } from 'node:test';
+import { FOUNDATION_V7_CATALOG, FOUNDATION_V7_NODES, canonicalFoundationV7RewardId, foundationV7NodeTypeCounts, foundationV7RewardAliases } from './foundation-v7-path.data';
+import { hasFoundationV7Content, toFoundationV7ClientChapters } from './foundation-v7-path.view';
+import { LearnPathService } from './learn-path.service';
+import { LearnPathController } from './learn-path.controller';
+import { getLesson, getAllLessons, lessonUsesTapToContinue } from '../lessons/lessons.data';
+import { FOUNDATION_V7_LESSONS } from '../lessons/foundation-v7-lessons.data';
+import lessonSpecs from '../lessons/foundation-v7-lessons.authoring.json';
+import { getSimulation, getAllSimulations, initCheckpointStates, finalizeSimulationTurnState } from '../simulations/simulations.data';
+import { FOUNDATION_V7_SIMULATIONS } from '../simulations/foundation-v7-simulations.data';
+import { SayItService } from '../say-it/say-it.service';
+import { SayItController } from '../say-it/say-it.controller';
+import { sayItPoolForTopic } from '../say-it/say-it.data';
+import { EmojiSpeakService } from '../emoji-speak/emoji-speak.service';
+import { MiniGamesController } from '../mini-games/mini-games.controller';
+import { EconomyService } from '../economy/economy.service';
+import { Currency } from '@prisma/client';
+
+const all = () => toFoundationV7ClientChapters(['say_it_guided']).flatMap(ch => ch.items);
+const req = { user: { id: 'v7-test', displayName: 'Mia' } } as any;
+
+describe('Foundation V7 catalog and real content', () => {
+  it('has 16 chapters and the approved 107-node mix, without Skill Mix', () => {
+    assert.equal(FOUNDATION_V7_CATALOG.chapters.length, 16);
+    assert.equal(FOUNDATION_V7_NODES.length, 107);
+    assert.equal(new Set(FOUNDATION_V7_NODES.map(n => n.id)).size, 107);
+    assert.deepEqual(FOUNDATION_V7_CATALOG.chapters.map(c => c.items.length), [5,4,6,6,6,8,7,10,9,7,6,8,6,6,8,5]);
+    assert.deepEqual(foundationV7NodeTypeCounts(), { lesson:39, say_it:18, emoji_speak:13, pronunciation:4, describe_it:13, story_bites:4, conversation:16 });
+    assert.deepEqual(FOUNDATION_V7_NODES.map(n => n.globalOrder), Array.from({length:107}, (_, i) => i + 1));
+    for (let i = 1; i < FOUNDATION_V7_NODES.length; i++) {
+      const prev = FOUNDATION_V7_NODES[i - 1];
+      const next = FOUNDATION_V7_NODES[i];
+      if (!['lesson', 'conversation'].includes(prev.type)) assert.notEqual(prev.type, next.type, `${prev.id} repeats ${next.id}`);
+    }
+  });
+
+  it('freezes Chapter 1 canonical content and reuses exactly four original pronunciation lessons', () => {
+    assert.deepEqual(FOUNDATION_V7_CATALOG.chapters[0].items.map(n => n.contentRef), [
+      {lessonId:'greetings'}, {lessonId:'introductions'}, {topicId:'fnd_v2_first_conversation'},
+      {lessonId:'yes_no_maybe'}, {simulationId:'foundation_first_conversation'},
+    ]);
+    const pron = FOUNDATION_V7_NODES.filter(n => n.type === 'pronunciation');
+    assert.deepEqual(pron.map(n => n.contentRef.lessonId), ['pron_th_2','pron_end_t_1','pron_final_s_1','pron_stress_1']);
+    for (const node of pron) {
+      assert.equal(node.contentRef.lessonId, node.pronunciation?.sourceLessonId);
+      assert.ok(getLesson(node.contentRef.lessonId!));
+      assert.ok(hasFoundationV7Content(node));
+    }
+  });
+
+  it('uses exact IDs, never a similar title to claim content exists', () => {
+    const node = FOUNDATION_V7_NODES[0];
+    assert.equal(hasFoundationV7Content({...node, contentRef:{lessonId:'does_not_exist'}}), false);
+    assert.equal(hasFoundationV7Content({...node, contentRef:{}}), false);
+  });
+
+  it('has 90 backend-ready nodes, 87 playable by default, and a capability gate for three Guided packs', () => {
+    const defaults = toFoundationV7ClientChapters().flatMap(c => c.items);
+    assert.equal(defaults.filter(n => n.backendReady).length, 90);
+    assert.equal(defaults.filter(n => !n.comingSoon).length, 87);
+    assert.equal(all().filter(n => !n.comingSoon).length, 90);
+    assert.equal(defaults.filter(n => n.unavailableReason === 'client_capability_required').length, 3);
+    assert.equal(defaults.filter(n => n.unavailableReason === 'missing_content').length, 0);
+    const placeholders = all().filter(n => n.comingSoon);
+    assert.equal(placeholders.length, 17);
+    assert.ok(placeholders.every(n => !n.countsTowardProgress && n.unavailableReason === 'mechanic_not_implemented'));
+    assert.ok(placeholders.every(n => !n.lessonId && !n.poolId && !n.topicId && !n.simulationId));
+    const serialized = JSON.stringify(all());
+    assert.equal(serialized.includes('"script"'), false);
+    assert.equal(serialized.includes('"questions"'), false);
+    assert.equal(serialized.includes('"answer"'), false);
+  });
+
+  it('does not make placeholders prerequisites or reorder the legacy hubs', () => {
+    for (const capabilities of [[], ['say_it_guided']] as const) {
+      let previous: string | undefined;
+      for (const node of toFoundationV7ClientChapters(capabilities).flatMap(c => c.items)) {
+        assert.deepEqual(node.unlockAfterNodeIds, previous ? [previous] : []);
+        if (!node.comingSoon) previous = node.id;
+      }
+    }
+    assert.ok(getAllLessons().every(l => !l.lessonId.startsWith('fnd_v7_')));
+    assert.ok(getAllSimulations().every(s => !s.simulationId.startsWith('foundation_v7_')));
+  });
+
+  it('registers 36 authored lesson flows with model, speaking practice, transfer and completion', () => {
+    assert.equal(FOUNDATION_V7_LESSONS.length, 36);
+    for (const [id, spec] of Object.entries(lessonSpecs)) {
+      const lesson = getLesson(id)!;
+      assert.ok(lesson, id);
+      assert.equal(lessonUsesTapToContinue(id), true);
+      assert.ok(spec.blocks.length > 0);
+      for (const block of spec.blocks) {
+        assert.ok(block.models.includes(block.repeat), `${id}: practice must follow its model`);
+        for (const target of block.models) assert.ok(lesson.targetPhrases.includes(target));
+      }
+      assert.ok(lesson.targetPhrases.includes(spec.recall.answerEn));
+      assert.match(lesson.systemInstruction, /Teach block 1/);
+      assert.match(lesson.systemInstruction, /Practise block 1/);
+      assert.match(lesson.systemInstruction, /Transfer:/);
+      assert.match(lesson.systemInstruction, /isLessonComplete=true/);
+      assert.match(lesson.openingPrompt, /expectsUserSpeech=false/);
+    }
+  });
+
+  it('serves all 18 Say It topics through the real service with five unique question IDs', () => {
+    const service = new SayItService();
+    for (const node of FOUNDATION_V7_NODES.filter(n => n.type === 'say_it')) {
+      const id = node.contentRef.topicId!;
+      assert.equal(service.getTopic(id).locked, false);
+      const result = service.dealForTopic(id, 1, 'Mia');
+      assert.equal(result.dealCount, 5, id);
+      assert.equal(new Set(result.phrases.map(q => q.id)).size, 5, id);
+      for (const q of result.phrases) assert.ok(q.promptTh && q.answerEn && Array.isArray(q.acceptedAnswers));
+    }
+  });
+
+  it('preserves Guided support fading in actual deals', () => {
+    const service = new SayItService();
+    const guided = FOUNDATION_V7_NODES.filter(n => n.sayItMode === 'guided');
+    assert.equal(guided.length, 3);
+    for (const node of guided) {
+      const pool = sayItPoolForTopic(node.contentRef.topicId!);
+      for (let attempt = 0; attempt < 10; attempt++) {
+        const result = service.dealForTopic(node.contentRef.topicId!);
+        assert.deepEqual(result.phrases.map(q => q.id), pool.map(q => q.id));
+        result.phrases.forEach((q, i) => {
+          if (i < 3) {
+            assert.equal(q.mode, 'guided');
+            assert.ok(q.hintEn);
+            assert.equal(q.choices?.length, 3);
+            assert.equal(q.choices?.filter(c => c === q.answerEn).length, 1);
+          } else { assert.equal(q.mode, undefined); assert.equal(q.choices, undefined); }
+        });
+      }
+    }
+  });
+
+  it('serves all 13 Emoji pools, including their prompts, through the actual deal route service', () => {
+    const service = new EmojiSpeakService();
+    for (const node of FOUNDATION_V7_NODES.filter(n => n.type === 'emoji_speak')) {
+      const deal = service.dealForPool(node.contentRef.poolId!);
+      assert.ok(deal.dealCount >= 4 && deal.dealCount <= 5);
+      assert.equal(deal.items.length, deal.dealCount);
+      for (const q of deal.items) assert.ok(q.emoji && q.answer && q.meaningTh && q.promptTh);
+    }
+  });
+
+  it('registers 15 conversations and closes at the turn cap without inventing completed goals', () => {
+    assert.equal(FOUNDATION_V7_SIMULATIONS.length, 15);
+    for (const config of FOUNDATION_V7_SIMULATIONS) {
+      assert.equal(getSimulation(config.simulationId), config);
+      assert.ok(config.foundationMission && config.scenarioTh);
+      assert.equal(config.successCriteria.length, config.goalsTh.length);
+      const checkpoints = initCheckpointStates(config.successCriteria);
+      const capped = finalizeSimulationTurnState(config, config.maxTurns, checkpoints, {aiResponse:'And you?', textTh:''});
+      assert.equal(capped.isTaskComplete, true);
+      assert.deepEqual(capped.checkpoints, checkpoints);
+      assert.equal(capped.reply.aiResponse, config.fallbackReplyEn);
+      const passed = finalizeSimulationTurnState(config, 2, Object.fromEntries(config.successCriteria.map(k => [k,true])), {aiResponse:'And you?',textTh:''});
+      assert.equal(passed.reply.aiResponse, config.completionReplyEn);
+      assert.equal(passed.isTaskComplete, true);
+    }
+  });
+});
+
+describe('Foundation V7 progress and completion contracts', () => {
+  function pathService(completedLessons: string[] = [], miniIds: string[] = [], simulations: string[] = []) {
+    return new LearnPathService({
+      economyTransaction: {findMany: async () => miniIds.map(id => ({referenceId:`mini_game:${id}`}))},
+      userSession: {findMany: async () => simulations.map(simulationId => ({simulationId}))},
+    } as any, {getCompletedLessonIds: async () => new Set(completedLessons)} as any);
+  }
+
+  it('has exactly one current node and recognizes existing Chapter 1 completion IDs', async () => {
+    const initial = await pathService().getFoundationV7('user');
+    assert.equal(initial.progress.currentNodeId, 'v7_u01n01');
+    const progressed = await pathService(['greetings','introductions','yes_no_maybe'], ['fnd_v2_say_first_conversation'], ['foundation_first_conversation']).getFoundationV7('user');
+    assert.equal(progressed.progress.completedCount, 5);
+    assert.equal(progressed.progress.currentNodeId, 'v7_u02n01');
+  });
+
+  it('recognizes canonical progress and ignores completion claims for Coming Soon content', async () => {
+    const playable = all().filter(n => !n.comingSoon);
+    const lessons = playable.flatMap(n => n.lessonId ? [n.lessonId] : []);
+    const mini = playable.flatMap(n => n.topicId ? [`say_it:${n.topicId}`] : n.poolId ? [`emoji_speak:${n.poolId}`] : []);
+    const simulations = playable.flatMap(n => n.simulationId ? [n.simulationId] : []);
+    mini.push(...all().filter(n => n.comingSoon).map(n => n.id));
+    const service = pathService(lessons, mini, simulations);
+    const full = await service.getFoundationV7('user', ['say_it_guided']);
+    assert.equal(full.progress.completedCount, 90);
+    assert.equal(full.progress.totalCount, 90);
+    assert.equal(full.progress.currentNodeId, null);
+    const legacyClient = await service.getFoundationV7('user');
+    assert.equal(legacyClient.progress.completedCount, 87);
+    assert.equal(legacyClient.progress.totalCount, 87);
+    assert.equal(legacyClient.progress.currentNodeId, null);
+  });
+
+  it('rejects unknown capabilities rather than silently enabling unsupported mechanics', async () => {
+    const controller = new LearnPathController(pathService());
+    assert.equal((await controller.foundationV7(req, 'say_it_guided')).summary.playableCount, 90);
+    await assert.rejects(controller.foundationV7(req, 'story_bites'));
+    await assert.rejects(controller.foundationV7(req, ['say_it_guided'] as any));
+  });
+
+  it('allows only actual mini-games and canonicalizes their aliases', () => {
+    for (const node of FOUNDATION_V7_NODES) {
+      const canonical = canonicalFoundationV7RewardId(node.id);
+      if (node.type === 'say_it' || node.type === 'emoji_speak') {
+        assert.ok(canonical, node.id);
+        assert.equal(canonicalFoundationV7RewardId(node.contentRef.topicId ?? node.contentRef.poolId!), canonical);
+        assert.equal(canonicalFoundationV7RewardId(canonical), canonical);
+      } else assert.equal(canonical, undefined, node.id);
+    }
+    assert.equal(canonicalFoundationV7RewardId('fnd_v7_unknown'), undefined);
+    assert.ok(foundationV7RewardAliases('v7_u01n03').includes('fnd_v2_say_first_conversation'));
+  });
+
+  it('allows V7 Say It completion and keeps Foundation start pricing unchanged', async () => {
+    const calls: any[] = [];
+    const economy = {applyMiniGameRewards: async (p: any) => {calls.push(p); return p;}, spendBananas: async () => {throw new Error('Say It Foundation start should remain free');}};
+    const controller = new SayItController(new SayItService(), economy as any, {markActivity: async () => {}} as any);
+    for (const node of FOUNDATION_V7_NODES.filter(n => n.type === 'say_it')) {
+      assert.equal((await controller.startTopic(req, node.contentRef.topicId!)).bananaCost, 0);
+      const reward = await controller.completeTopic(req, node.contentRef.topicId!);
+      assert.equal((reward as any).gameId, `say_it:${node.contentRef.topicId}`);
+    }
+    assert.equal(calls.length, 18);
+    await assert.rejects(controller.completeTopic(req, 'fnd_v7_unknown'));
+  });
+
+  it('accepts mini-game completion IDs but rejects lesson and unbuilt media IDs', async () => {
+    const economy = {applyMiniGameRewards: async (p: any) => p, spendBananas: async () => {}};
+    const controller = new MiniGamesController(economy as any, {} as any, {} as any, {} as any, {} as any, {markActivity:async () => {}} as any, {} as any, new EmojiSpeakService());
+    for (const node of FOUNDATION_V7_NODES) {
+      if (['say_it','emoji_speak'].includes(node.type)) await controller.complete(req, node.id);
+      else await assert.rejects(controller.complete(req, node.id));
+      if (node.type === 'emoji_speak') assert.equal((await controller.startEmojiSpeakPack(req, node.contentRef.poolId!)).bananaCost, 1);
+    }
+  });
+
+  it('uses one reward reference across raw topic, prefixed ID and node ID; honors old Chapter 1 rewards', async () => {
+    const rows: any[] = [];
+    let user: any = {id:'v7-test',timezone:'Asia/Bangkok',bananaBalance:5,xpBalance:0,bananaSeedBalance:0,streakDays:0,longestStreakDays:0,lastSessionDate:null,streakMilestonesClaimed:[]};
+    const tx = {
+      economyTransaction: {
+        findFirst: async ({where}: any) => rows.find(r => r.userId === where.userId && r.currency === where.currency && r.source === where.source && where.referenceId.in.includes(r.referenceId)),
+        create: async ({data}: any) => {rows.push(data); return data;},
+      },
+      user: {
+        findUniqueOrThrow: async () => user,
+        update: async ({data}: any) => { for (const [key,value] of Object.entries(data)) user[key] = value && typeof value === 'object' && 'increment' in value ? (user[key] ?? 0) + (value as any).increment : value; return user; },
+      },
+    };
+    const service = new EconomyService({$transaction:async (fn: any) => fn(tx)} as any, {get: () => undefined} as any);
+    const node = FOUNDATION_V7_NODES.find(n => n.type === 'say_it' && n.id.startsWith('v7_u02'))!;
+    const first = await service.applyMiniGameRewards({userId:user.id,gameId:node.id});
+    assert.equal(first.xpEarned, 20);
+    for (const gameId of [node.contentRef.topicId!, `say_it:${node.contentRef.topicId}`]) {
+      const repeat = await service.applyMiniGameRewards({userId:user.id,gameId});
+      assert.equal(repeat.alreadyClaimed, true);
+      assert.equal(repeat.xpEarned, 0);
+    }
+    assert.equal(rows.filter(r => r.currency === Currency.XP).length, 1);
+    assert.equal(rows[0].referenceId, `mini_game:say_it:${node.contentRef.topicId}`);
+    rows.push({userId:user.id,currency:Currency.XP,source:'mini_game_reward',referenceId:'mini_game:fnd_v2_say_first_conversation'});
+    const frozen = await service.applyMiniGameRewards({userId:user.id,gameId:'v7_u01n03'});
+    assert.equal(frozen.alreadyClaimed, true);
+    assert.equal(frozen.xpEarned, 0);
+  });
+});

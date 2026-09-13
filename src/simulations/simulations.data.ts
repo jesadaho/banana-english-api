@@ -1,3 +1,5 @@
+import { FOUNDATION_V7_SIMULATIONS } from './foundation-v7-simulations.data';
+
 export type SimulationDifficulty = 'easy' | 'medium' | 'hard';
 
 export interface VocabDrillWord {
@@ -1011,7 +1013,8 @@ const LEGACY_TOPIC_TO_SIMULATION: Record<string, string> = {
 export function getSimulation(
   simulationId: string,
 ): SimulationConfig | undefined {
-  return SIMULATIONS.find((s) => s.simulationId === simulationId);
+  return SIMULATIONS.find((s) => s.simulationId === simulationId)
+    ?? FOUNDATION_V7_SIMULATIONS.find((s) => s.simulationId === simulationId);
 }
 
 export function getAllSimulations(): SimulationConfig[] {

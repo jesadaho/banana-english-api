@@ -2,6 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Currency, Prisma, User } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
+import { canonicalFoundationV7RewardId, foundationV7RewardAliases } from '../learn-path/foundation-v7-path.data';
 import {
   DAILY_BANANA_DROP,
   DAILY_SPEAK_REWARD_SEEDS,
@@ -876,15 +877,19 @@ export class EconomyService {
     streakIncreased: boolean;
     streakBonus?: StreakBonus;
   }> {
-    const { userId, gameId } = params;
+    const { userId } = params;
+    // Node, topic and prefixed IDs refer to the same reward, whichever route
+    // completes the activity. Keep frozen Chapter 1's canonical source ID.
+    const gameId = canonicalFoundationV7RewardId(params.gameId) ?? params.gameId;
     const referenceId = `mini_game:${gameId}`;
+    const priorReferences = foundationV7RewardAliases(gameId).map(id => `mini_game:${id}`);
 
     return this.prisma.$transaction(async (tx) => {
       const prior = await tx.economyTransaction.findFirst({
         where: {
           userId,
           source: 'mini_game_reward',
-          referenceId,
+          referenceId: { in: priorReferences },
           currency: Currency.XP,
         },
       });
