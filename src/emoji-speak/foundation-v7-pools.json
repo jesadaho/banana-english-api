@@ -6,30 +6,30 @@
       {
         "emoji": "😊",
         "answer": "happy",
-        "hint": "มีความสุข",
+        "hint": "ha__y",
         "meaningTh": "มีความสุข",
-        "promptTh": "พูดภาษาอังกฤษ: มีความสุข"
+        "promptTh": "บอกความรู้สึกหรือสภาพในภาพเป็นภาษาอังกฤษ"
       },
       {
         "emoji": "😴",
         "answer": "tired",
-        "hint": "เหนื่อย",
+        "hint": "ti__d",
         "meaningTh": "เหนื่อย",
-        "promptTh": "พูดภาษาอังกฤษ: เหนื่อย"
+        "promptTh": "บอกความรู้สึกหรือสภาพในภาพเป็นภาษาอังกฤษ"
       },
       {
         "emoji": "😋",
         "answer": "hungry",
-        "hint": "หิว",
+        "hint": "hu___y",
         "meaningTh": "หิว",
-        "promptTh": "พูดภาษาอังกฤษ: หิว"
+        "promptTh": "บอกความรู้สึกหรือสภาพในภาพเป็นภาษาอังกฤษ"
       },
       {
         "emoji": "👌",
         "answer": "ready",
-        "hint": "พร้อม",
+        "hint": "re__y",
         "meaningTh": "พร้อม",
-        "promptTh": "พูดภาษาอังกฤษ: พร้อม"
+        "promptTh": "บอกความรู้สึกหรือสภาพในภาพเป็นภาษาอังกฤษ"
       }
     ]
   },
@@ -40,30 +40,30 @@
       {
         "emoji": "🧑‍🏫",
         "answer": "teacher",
-        "hint": "ครู",
+        "hint": "tea___r",
         "meaningTh": "ครู",
-        "promptTh": "พูดภาษาอังกฤษ: ครู"
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
       },
       {
         "emoji": "🧑‍🎓",
         "answer": "student",
-        "hint": "นักเรียน",
+        "hint": "stu___t",
         "meaningTh": "นักเรียน",
-        "promptTh": "พูดภาษาอังกฤษ: นักเรียน"
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
       },
       {
         "emoji": "🧑‍🤝‍🧑",
         "answer": "friend",
-        "hint": "เพื่อนหนึ่งคน",
+        "hint": "fr___d",
         "meaningTh": "เพื่อนหนึ่งคน",
-        "promptTh": "พูดภาษาอังกฤษ: เพื่อนหนึ่งคน"
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
       },
       {
         "emoji": "👥",
         "answer": "people",
-        "hint": "ผู้คน",
+        "hint": "pe___e",
         "meaningTh": "ผู้คน",
-        "promptTh": "พูดภาษาอังกฤษ: ผู้คน"
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
       }
     ]
   },
@@ -74,30 +74,30 @@
       {
         "emoji": "📖",
         "answer": "book",
-        "hint": "หนังสือ",
+        "hint": "bo_k",
         "meaningTh": "หนังสือ",
-        "promptTh": "พูดภาษาอังกฤษ: หนังสือ"
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
       },
       {
         "emoji": "🎒",
         "answer": "bag",
-        "hint": "กระเป๋า",
+        "hint": "b_g",
         "meaningTh": "กระเป๋า",
-        "promptTh": "พูดภาษาอังกฤษ: กระเป๋า"
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
       },
       {
         "emoji": "🖊️",
         "answer": "pen",
-        "hint": "ปากกา",
+        "hint": "p_n",
         "meaningTh": "ปากกา",
-        "promptTh": "พูดภาษาอังกฤษ: ปากกา"
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
       },
       {
         "emoji": "🍎",
         "answer": "apple",
-        "hint": "แอปเปิล",
+        "hint": "ap__e",
         "meaningTh": "แอปเปิล",
-        "promptTh": "พูดภาษาอังกฤษ: แอปเปิล"
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
       }
     ]
   },
@@ -108,30 +108,30 @@
       {
         "emoji": "🔴",
         "answer": "red",
-        "hint": "สีแดง",
+        "hint": "r_d",
         "meaningTh": "สีแดง",
-        "promptTh": "พูดภาษาอังกฤษ: สีแดง"
+        "promptTh": "บอกสีในภาพเป็นภาษาอังกฤษ"
       },
       {
         "emoji": "🔵",
         "answer": "blue",
-        "hint": "สีน้ำเงิน",
+        "hint": "bl_e",
         "meaningTh": "สีน้ำเงิน",
-        "promptTh": "พูดภาษาอังกฤษ: สีน้ำเงิน"
+        "promptTh": "บอกสีในภาพเป็นภาษาอังกฤษ"
       },
       {
         "emoji": "🟢",
         "answer": "green",
-        "hint": "สีเขียว",
+        "hint": "gr__n",
         "meaningTh": "สีเขียว",
-        "promptTh": "พูดภาษาอังกฤษ: สีเขียว"
+        "promptTh": "บอกสีในภาพเป็นภาษาอังกฤษ"
       },
       {
         "emoji": "🟡",
         "answer": "yellow",
-        "hint": "สีเหลือง",
+        "hint": "ye___w",
         "meaningTh": "สีเหลือง",
-        "promptTh": "พูดภาษาอังกฤษ: สีเหลือง"
+        "promptTh": "บอกสีในภาพเป็นภาษาอังกฤษ"
       }
     ]
   },
@@ -142,30 +142,30 @@
       {
         "emoji": "📱",
         "answer": "phone",
-        "hint": "โทรศัพท์",
+        "hint": "ph__e",
         "meaningTh": "โทรศัพท์",
-        "promptTh": "พูดภาษาอังกฤษ: โทรศัพท์"
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
       },
       {
         "emoji": "🔑",
         "answer": "key",
-        "hint": "กุญแจ",
+        "hint": "k_y",
         "meaningTh": "กุญแจ",
-        "promptTh": "พูดภาษาอังกฤษ: กุญแจ"
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
       },
       {
         "emoji": "👕",
         "answer": "shirt",
-        "hint": "เสื้อ",
+        "hint": "sh__t",
         "meaningTh": "เสื้อ",
-        "promptTh": "พูดภาษาอังกฤษ: เสื้อ"
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
       },
       {
         "emoji": "🎒",
         "answer": "bag",
-        "hint": "กระเป๋า",
+        "hint": "b_g",
         "meaningTh": "กระเป๋า",
-        "promptTh": "พูดภาษาอังกฤษ: กระเป๋า"
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
       }
     ]
   },
@@ -176,37 +176,37 @@
       {
         "emoji": "0️⃣",
         "answer": "zero",
-        "hint": "ศูนย์",
+        "hint": "ze_o",
         "meaningTh": "ศูนย์",
-        "promptTh": "พูดภาษาอังกฤษ: ศูนย์"
+        "promptTh": "พูดตัวเลขในภาพเป็นภาษาอังกฤษ"
       },
       {
         "emoji": "1️⃣",
         "answer": "one",
-        "hint": "หนึ่ง",
+        "hint": "o_e",
         "meaningTh": "หนึ่ง",
-        "promptTh": "พูดภาษาอังกฤษ: หนึ่ง"
+        "promptTh": "พูดตัวเลขในภาพเป็นภาษาอังกฤษ"
       },
       {
         "emoji": "2️⃣",
         "answer": "two",
-        "hint": "สอง",
+        "hint": "t_o",
         "meaningTh": "สอง",
-        "promptTh": "พูดภาษาอังกฤษ: สอง"
+        "promptTh": "พูดตัวเลขในภาพเป็นภาษาอังกฤษ"
       },
       {
         "emoji": "6️⃣",
         "answer": "six",
-        "hint": "หก",
+        "hint": "s_x",
         "meaningTh": "หก",
-        "promptTh": "พูดภาษาอังกฤษ: หก"
+        "promptTh": "พูดตัวเลขในภาพเป็นภาษาอังกฤษ"
       },
       {
         "emoji": "🔟",
         "answer": "ten",
-        "hint": "สิบ",
+        "hint": "t_n",
         "meaningTh": "สิบ",
-        "promptTh": "พูดภาษาอังกฤษ: สิบ"
+        "promptTh": "พูดตัวเลขในภาพเป็นภาษาอังกฤษ"
       }
     ]
   },
@@ -217,30 +217,30 @@
       {
         "emoji": "🕖",
         "answer": "seven",
-        "hint": "เจ็ดโมง",
+        "hint": "se__n",
         "meaningTh": "เจ็ดโมง",
-        "promptTh": "พูดภาษาอังกฤษ: เจ็ดโมง"
+        "promptTh": "บอกเวลาบนนาฬิกาเป็นภาษาอังกฤษ"
       },
       {
         "emoji": "🕢",
         "answer": "seven thirty",
-        "hint": "เจ็ดโมงครึ่ง",
+        "hint": "se__n th___y",
         "meaningTh": "เจ็ดโมงครึ่ง",
-        "promptTh": "พูดภาษาอังกฤษ: เจ็ดโมงครึ่ง"
+        "promptTh": "บอกเวลาบนนาฬิกาเป็นภาษาอังกฤษ"
       },
       {
         "emoji": "🕗",
         "answer": "eight",
-        "hint": "แปดโมง",
+        "hint": "ei__t",
         "meaningTh": "แปดโมง",
-        "promptTh": "พูดภาษาอังกฤษ: แปดโมง"
+        "promptTh": "บอกเวลาบนนาฬิกาเป็นภาษาอังกฤษ"
       },
       {
         "emoji": "🕣",
         "answer": "eight thirty",
-        "hint": "แปดโมงครึ่ง",
+        "hint": "ei__t th___y",
         "meaningTh": "แปดโมงครึ่ง",
-        "promptTh": "พูดภาษาอังกฤษ: แปดโมงครึ่ง"
+        "promptTh": "บอกเวลาบนนาฬิกาเป็นภาษาอังกฤษ"
       }
     ]
   },
@@ -251,30 +251,30 @@
       {
         "emoji": "🍵",
         "answer": "tea",
-        "hint": "ชา",
+        "hint": "t_a",
         "meaningTh": "ชา",
-        "promptTh": "พูดภาษาอังกฤษ: ชา"
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
       },
       {
         "emoji": "☕",
         "answer": "coffee",
-        "hint": "กาแฟ",
+        "hint": "co___e",
         "meaningTh": "กาแฟ",
-        "promptTh": "พูดภาษาอังกฤษ: กาแฟ"
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
       },
       {
         "emoji": "💧",
         "answer": "water",
-        "hint": "น้ำ",
+        "hint": "wa__r",
         "meaningTh": "น้ำ",
-        "promptTh": "พูดภาษาอังกฤษ: น้ำ"
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
       },
       {
         "emoji": "🍚",
         "answer": "rice",
-        "hint": "ข้าว",
+        "hint": "ri_e",
         "meaningTh": "ข้าว",
-        "promptTh": "พูดภาษาอังกฤษ: ข้าว"
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
       }
     ]
   },
@@ -285,30 +285,30 @@
       {
         "emoji": "🏊",
         "answer": "swim",
-        "hint": "ว่ายน้ำ",
+        "hint": "sw_m",
         "meaningTh": "ว่ายน้ำ",
-        "promptTh": "พูดภาษาอังกฤษ: ว่ายน้ำ"
+        "promptTh": "พูดคำกริยาภาษาอังกฤษจากภาพ"
       },
       {
         "emoji": "📖",
         "answer": "read",
-        "hint": "อ่าน",
+        "hint": "re_d",
         "meaningTh": "อ่าน",
-        "promptTh": "พูดภาษาอังกฤษ: อ่าน"
+        "promptTh": "พูดคำกริยาภาษาอังกฤษจากภาพ"
       },
       {
         "emoji": "🧑‍🍳",
         "answer": "cook",
-        "hint": "ทำอาหาร",
+        "hint": "co_k",
         "meaningTh": "ทำอาหาร",
-        "promptTh": "พูดภาษาอังกฤษ: ทำอาหาร"
+        "promptTh": "พูดคำกริยาภาษาอังกฤษจากภาพ"
       },
       {
         "emoji": "🪑",
         "answer": "sit",
-        "hint": "นั่ง",
+        "hint": "s_t",
         "meaningTh": "นั่ง",
-        "promptTh": "พูดภาษาอังกฤษ: นั่ง"
+        "promptTh": "พูดคำกริยาภาษาอังกฤษจากภาพ"
       }
     ]
   },
@@ -319,30 +319,30 @@
       {
         "emoji": "⏰",
         "answer": "wake up",
-        "hint": "ตื่นนอน",
+        "hint": "wa_e u_",
         "meaningTh": "ตื่นนอน",
-        "promptTh": "พูดภาษาอังกฤษ: ตื่นนอน"
+        "promptTh": "พูดคำกริยาภาษาอังกฤษจากภาพ"
       },
       {
         "emoji": "🍽️",
         "answer": "eat",
-        "hint": "กิน",
+        "hint": "e_t",
         "meaningTh": "กิน",
-        "promptTh": "พูดภาษาอังกฤษ: กิน"
+        "promptTh": "พูดคำกริยาภาษาอังกฤษจากภาพ"
       },
       {
         "emoji": "💼",
         "answer": "work",
-        "hint": "ทำงาน",
+        "hint": "wo_k",
         "meaningTh": "ทำงาน",
-        "promptTh": "พูดภาษาอังกฤษ: ทำงาน"
+        "promptTh": "พูดคำกริยาภาษาอังกฤษจากภาพ"
       },
       {
         "emoji": "😴",
         "answer": "sleep",
-        "hint": "นอน",
+        "hint": "sl__p",
         "meaningTh": "นอน",
-        "promptTh": "พูดภาษาอังกฤษ: นอน"
+        "promptTh": "พูดคำกริยาภาษาอังกฤษจากภาพ"
       }
     ]
   },
@@ -353,30 +353,30 @@
       {
         "emoji": "📖",
         "answer": "read",
-        "hint": "อ่าน",
+        "hint": "re_d",
         "meaningTh": "อ่าน",
-        "promptTh": "พูดภาษาอังกฤษ: อ่าน"
+        "promptTh": "พูดคำกริยาภาษาอังกฤษจากภาพ"
       },
       {
         "emoji": "🧑‍🍳",
         "answer": "cook",
-        "hint": "ทำอาหาร",
+        "hint": "co_k",
         "meaningTh": "ทำอาหาร",
-        "promptTh": "พูดภาษาอังกฤษ: ทำอาหาร"
+        "promptTh": "พูดคำกริยาภาษาอังกฤษจากภาพ"
       },
       {
         "emoji": "🍽️",
         "answer": "eat",
-        "hint": "กิน",
+        "hint": "e_t",
         "meaningTh": "กิน",
-        "promptTh": "พูดภาษาอังกฤษ: กิน"
+        "promptTh": "พูดคำกริยาภาษาอังกฤษจากภาพ"
       },
       {
         "emoji": "💼",
         "answer": "work",
-        "hint": "ทำงาน",
+        "hint": "wo_k",
         "meaningTh": "ทำงาน",
-        "promptTh": "พูดภาษาอังกฤษ: ทำงาน"
+        "promptTh": "พูดคำกริยาภาษาอังกฤษจากภาพ"
       }
     ]
   },
@@ -387,30 +387,30 @@
       {
         "emoji": "🪑",
         "answer": "chair",
-        "hint": "เก้าอี้",
+        "hint": "ch__r",
         "meaningTh": "เก้าอี้",
-        "promptTh": "พูดภาษาอังกฤษ: เก้าอี้"
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
       },
       {
         "emoji": "🪟",
         "answer": "window",
-        "hint": "หน้าต่าง",
+        "hint": "wi___w",
         "meaningTh": "หน้าต่าง",
-        "promptTh": "พูดภาษาอังกฤษ: หน้าต่าง"
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
       },
       {
         "emoji": "🍽️🪑",
         "answer": "table",
-        "hint": "โต๊ะ",
+        "hint": "ta__e",
         "meaningTh": "โต๊ะ",
-        "promptTh": "พูดภาษาอังกฤษ: โต๊ะ"
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
       },
       {
         "emoji": "📖",
         "answer": "book",
-        "hint": "หนังสือ",
+        "hint": "bo_k",
         "meaningTh": "หนังสือ",
-        "promptTh": "พูดภาษาอังกฤษ: หนังสือ"
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
       }
     ]
   },
@@ -421,37 +421,37 @@
       {
         "emoji": "📖",
         "answer": "book",
-        "hint": "หนังสือ",
+        "hint": "bo_k",
         "meaningTh": "หนังสือ",
-        "promptTh": "พูดภาษาอังกฤษ: หนังสือ"
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
       },
       {
         "emoji": "🔑",
         "answer": "key",
-        "hint": "กุญแจ",
+        "hint": "k_y",
         "meaningTh": "กุญแจ",
-        "promptTh": "พูดภาษาอังกฤษ: กุญแจ"
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
       },
       {
         "emoji": "💧",
         "answer": "water",
-        "hint": "น้ำ",
+        "hint": "wa__r",
         "meaningTh": "น้ำ",
-        "promptTh": "พูดภาษาอังกฤษ: น้ำ"
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
       },
       {
         "emoji": "📖👀",
         "answer": "read",
-        "hint": "อ่าน",
+        "hint": "re_d",
         "meaningTh": "อ่าน",
-        "promptTh": "พูดภาษาอังกฤษ: อ่าน"
+        "promptTh": "พูดคำกริยาภาษาอังกฤษจากภาพ"
       },
       {
         "emoji": "🪑",
         "answer": "chair",
-        "hint": "เก้าอี้",
+        "hint": "ch__r",
         "meaningTh": "เก้าอี้",
-        "promptTh": "พูดภาษาอังกฤษ: เก้าอี้"
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
       }
     ]
   }

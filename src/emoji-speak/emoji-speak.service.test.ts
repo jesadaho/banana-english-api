@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 import { EmojiSpeakService } from './emoji-speak.service';
 import { EMOJI_SPEAK_POOLS, isEmojiSpeakPoolId } from './emoji-speak.data';
+import foundationV7Pools from './foundation-v7-pools.json';
 
 describe('EmojiSpeakService', () => {
   const service = new EmojiSpeakService();
@@ -31,5 +32,33 @@ describe('EmojiSpeakService', () => {
     assert.ok(am);
     assert.equal(am?.emoji, '🌅');
     assert.match(am?.promptTh ?? '', /wake up/);
+  });
+
+  it('serves V7 spelling hints, keeping translations separate from prompts', () => {
+    assert.equal(Object.keys(foundationV7Pools).length, 13);
+    let count = 0;
+    for (const [id, pool] of Object.entries(foundationV7Pools)) {
+      for (const card of pool.items) {
+        count++;
+        assert.equal(card.hint.length, card.answer.length);
+        assert.match(card.hint, /_/);
+        assert.doesNotMatch(card.hint, /[\u0E00-\u0E7F]/);
+        [...card.hint].forEach((char, i) => {
+          if (char !== '_') assert.equal(char, card.answer[i]);
+          if (card.answer[i] === ' ') assert.equal(char, ' ');
+        });
+        assert.ok(card.meaningTh);
+        assert.ok(card.promptTh);
+        assert.notEqual(card.hint, card.meaningTh);
+        assert.ok(!card.promptTh.includes(card.meaningTh), `${id}: translated answer leaked into prompt`);
+      }
+      for (const card of service.dealForPool(id).items) {
+        const source = pool.items.find(item => item.answer === card.answer)!;
+        assert.equal(card.hint, source.hint);
+        assert.equal(card.meaningTh, source.meaningTh);
+      }
+    }
+    assert.equal(count, 54);
+    assert.equal(foundationV7Pools.fnd_v7_u05n02.items[3].hint, 'ap__e');
   });
 });
