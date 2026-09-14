@@ -115,8 +115,7 @@ describe('Foundation V7 catalog and real content', () => {
       assert.ok(lesson.targetPhrases.includes(spec.recall.answerEn));
       assert.match(lesson.systemInstruction, /Teach block 1/);
       assert.match(lesson.systemInstruction, /Practise block 1/);
-      assert.match(lesson.systemInstruction, /Recognise block 1:/);
-      assert.match(lesson.systemInstruction, /Independent recall:/);
+      assert.match(lesson.systemInstruction, /Authored choice/);
       assert.match(lesson.systemInstruction, /isLessonComplete=true/);
       assert.match(lesson.openingPrompt, /expectsUserSpeech=false/);
     }

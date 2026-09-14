@@ -1,66 +1,139 @@
 import type { LessonConfig } from './lessons.data';
 import specs from './foundation-v7-lessons.authoring.json';
+import { FOUNDATION_V7_CHOICE_BEATS } from './foundation-v7-choice-beats.data';
 
-const RECOGNITION_EMOJIS = ['1️⃣', '2️⃣', '3️⃣'] as const;
+export type V7TeachingPattern = 'choose_and_reuse' | 'contrast_and_apply' | 'decode_and_use' | 'situation_and_respond';
 
-function unique(items: string[]): string[] {
-  return [...new Set(items)];
+// Explicit curriculum assignments; changes here alter teaching rhythm, not content.
+export const FOUNDATION_V7_PATTERNS: Record<string, V7TeachingPattern> = {
+  fnd_v7_u02n01: 'situation_and_respond', fnd_v7_u02n03: 'situation_and_respond',
+  fnd_v7_u03n01: 'choose_and_reuse', fnd_v7_u03n03: 'contrast_and_apply',
+  fnd_v7_u04n01: 'contrast_and_apply', fnd_v7_u04n03: 'choose_and_reuse',
+  fnd_v7_u05n01: 'contrast_and_apply',
+  fnd_v7_u06n01: 'contrast_and_apply', fnd_v7_u06n03: 'choose_and_reuse', fnd_v7_u06n05: 'contrast_and_apply',
+  fnd_v7_u07n01: 'choose_and_reuse', fnd_v7_u07n03: 'contrast_and_apply', fnd_v7_u07n05: 'contrast_and_apply',
+  fnd_v7_u08n01: 'decode_and_use', fnd_v7_u08n03: 'decode_and_use',
+  fnd_v7_u08n05: 'decode_and_use', fnd_v7_u08n07: 'decode_and_use',
+  fnd_v7_u09n01: 'decode_and_use', fnd_v7_u09n03: 'decode_and_use',
+  fnd_v7_u09n05: 'choose_and_reuse', fnd_v7_u09n07: 'situation_and_respond',
+  fnd_v7_u10n01: 'choose_and_reuse', fnd_v7_u10n03: 'choose_and_reuse', fnd_v7_u10n05: 'choose_and_reuse',
+  fnd_v7_u11n01: 'choose_and_reuse', fnd_v7_u11n03: 'choose_and_reuse',
+  fnd_v7_u12n01: 'choose_and_reuse', fnd_v7_u12n03: 'contrast_and_apply', fnd_v7_u12n05: 'contrast_and_apply',
+  fnd_v7_u13n01: 'choose_and_reuse', fnd_v7_u13n03: 'contrast_and_apply',
+  fnd_v7_u14n01: 'contrast_and_apply', fnd_v7_u14n03: 'contrast_and_apply',
+  fnd_v7_u15n01: 'contrast_and_apply', fnd_v7_u15n03: 'contrast_and_apply', fnd_v7_u15n06: 'situation_and_respond',
+};
+
+const APPLICATION_STEMS: Record<string, string> = {
+  fnd_v7_u03n03: 'Are you...?', fnd_v7_u04n01: 'We are...',
+  fnd_v7_u05n01: '..., please', fnd_v7_u06n01: 'This is...',
+  fnd_v7_u06n05: 'Those are...', fnd_v7_u07n03: 'These are...',
+  fnd_v7_u07n05: 'He has...', fnd_v7_u12n03: 'He eats...',
+  fnd_v7_u12n05: 'Does he...?', fnd_v7_u13n03: 'Is he...?',
+  fnd_v7_u14n01: 'What is...?', fnd_v7_u14n03: 'Where is...?',
+  fnd_v7_u15n01: 'There is...', fnd_v7_u15n03: 'The bag is...',
+};
+
+export interface V7TeachingStep {
+  kind: 'welcome' | 'model_repeat' | 'model_group' | 'repeat' | 'choice' | 'guided_use' | 'recall' | 'complete';
+  instruction: string;
+  expectsUserSpeech: boolean;
+  expectedSpeech?: string;
 }
 
-function recognitionTarget(block: { models: string[]; repeat: string }): string {
-  return block.models.find((model) => model !== block.repeat) ?? block.repeat;
-}
-
-function recognitionOptions(
-  blocks: Array<{ models: string[]; repeat: string }>,
-  blockIndex: number,
-): Array<{ emoji: string; label: string; speak: string }> {
-  const target = recognitionTarget(blocks[blockIndex]);
-  const distractors = unique(blocks.flatMap((block) => block.models))
-    .filter((model) => model !== target)
-    .slice(blockIndex % 2, blockIndex % 2 + 2);
-  const choices = unique([target, ...distractors]).slice(0, 3);
-
-  // Rotate the answer position so learners cannot pass by always choosing card 1.
-  const answerPosition = blockIndex % choices.length;
-  choices.splice(answerPosition, 0, choices.splice(0, 1)[0]);
-
-  return choices.map((speak, index) => ({
-    emoji: RECOGNITION_EMOJIS[index],
-    label: speak,
-    speak,
-  }));
+export function buildFoundationV7Steps(lessonId: string): V7TeachingStep[] {
+  const spec = specs[lessonId as keyof typeof specs];
+  const choice = FOUNDATION_V7_CHOICE_BEATS[lessonId];
+  const pattern = FOUNDATION_V7_PATTERNS[lessonId];
+  if (!spec || !choice || !pattern) throw new Error('Missing V7 authored flow: ' + lessonId);
+  const steps: V7TeachingStep[] = [];
+  const add = (kind: V7TeachingStep['kind'], instruction: string, expectedSpeech?: string) =>
+    steps.push({ kind, instruction, expectsUserSpeech: expectedSpeech !== undefined, expectedSpeech });
+  add('welcome', 'Welcome: state the practical goal briefly. No question. expectsUserSpeech=false; expectedSpeech="".');
+  spec.blocks.forEach((block, index) => {
+    const teaching = 'Teach block ' + (index + 1) + ': explain briefly using this meaning cue: ' + block.tipTh +
+      '. Model ALL these English forms in this same turn: ' + block.models.join(' | ') +
+      '. Never split this model list across later turns.';
+    const practice = 'Practise block ' + (index + 1) + ': REQUIRED microphone turn, never a tap-to-continue turn. Ask for ONE repeat; expectedSpeech=' +
+      JSON.stringify(block.repeat) + '; expectsUserSpeech=true. Omit cards.';
+    if (pattern === 'decode_and_use') {
+      add('model_group', teaching + ' Group the number/letter codes; expectsUserSpeech=false; expectedSpeech="".');
+      add('repeat', practice, block.repeat);
+    } else {
+      add('model_repeat', teaching + ' In this SAME turn, finish with ' + practice, block.repeat);
+    }
+    if (index + 1 === choice.afterBlock) {
+      const first = choice.options[0];
+      const board = { stem: choice.stem, ...first, options: choice.options };
+      const answer = choice.answerMode === 'single'
+        ? 'Only the response matching this situation is correct: ' + JSON.stringify(choice.expectedSpeech) +
+          '. First miss: ' + choice.incorrectHintTh + ' Keep the same board for one retry.'
+        : 'EVERY option is correct. Accept ANY option and meaningful alternatives consistent with the taught pattern. ' +
+          'The default expectedSpeech is STT bias only, NEVER the sole answer key. Remember what the learner actually chose. ' +
+          'Allow a fictional choice or a truthful alternative when none describes them; never require an untrue personal claim.';
+      add('choice', 'Authored choice (' + choice.answerMode + '): ask exactly this meaning in the teaching language: ' +
+        choice.promptTh + '. Return guidedSpeaking=' + JSON.stringify(board) +
+        '; omit emojiChoice. Labels are cues, speak values are complete utterances. ' +
+        'Tapping a card never completes the step by itself; require the spoken utterance. ' + answer,
+        choice.expectedSpeech ?? first.speak);
+    }
+  });
+  if (pattern === 'choose_and_reuse') {
+    add('recall', 'Choice reuse: REMOVE all cards. Ask the learner to tell you their earlier chosen fact/request/question again. ' +
+      'Use THEIR selected speak value as expectedSpeech, including when they chose a non-first card. Accept equivalent phrasing. ' +
+      'Do not substitute a scripted preference or ask a new personal question.', choice.options[0].speak);
+  } else if (pattern === 'contrast_and_apply') {
+    add('guided_use', 'Guided use: ask this meaning: ' + spec.recall.promptTh +
+      '. Show ONLY this short stem in the teacher bubble: ' + APPLICATION_STEMS[lessonId] +
+      '. Omit choice cards and do not reveal the full answer first. Expected: ' + spec.recall.answerEn +
+      '. After the attempt give a brief contextual response; no extra quiz.', spec.recall.answerEn);
+  } else {
+    add('recall', 'Independent recall: REMOVE all scaffolding; omit emojiChoice and guidedSpeaking. Ask: ' +
+      spec.recall.promptTh + '. Do not say the answer first. Expected: ' + spec.recall.answerEn +
+      (pattern === 'situation_and_respond'
+        ? '. Frame it as the learner speaking to someone; acknowledge the intended request after their answer before closing.'
+        : '. Read Thai numerical context in Thai; avoid TTS saying the English answer before the learner.'), spec.recall.answerEn);
+  }
+  // Contrast lessons finish with the successful guided application rather than repeating the same question without cards.
+  const completion = 'completionTh' in spec ? spec.completionTh : spec.goalTh;
+  add('complete', 'Complete: briefly name the skill practised (' + completion +
+    ') and acknowledge the learner\'s actual response. Do not claim mastery or independence after a hinted answer. ' +
+    'Set isLessonComplete=true, expectsUserSpeech=false, expectedSpeech="". No new task.');
+  return steps;
 }
 
 export const FOUNDATION_V7_LESSON_IDS = Object.keys(specs);
 export const FOUNDATION_V7_LESSONS: LessonConfig[] = Object.entries(specs).map(([lessonId, spec]) => {
-  const completionTh = 'completionTh' in spec ? spec.completionTh : undefined;
-  const targets = [...new Set([...spec.blocks.flatMap(block => block.models), spec.recall.answerEn])];
-  const steps = [
-    `Welcome: state the practical goal in one short sentence. No question. expectsUserSpeech=false.`,
-    ...spec.blocks.flatMap((block, i) => {
-      const expected = recognitionTarget(block);
-      const options = recognitionOptions(spec.blocks, i);
-      return [
-        `Teach block ${i + 1}: this is exactly ONE listen-only turn. Explain in the learner's teaching language, using this Thai meaning cue: ${block.tipTh}. Model ALL these English forms in this same turn, in order: ${block.models.join(' | ')}. Never split this model list across later turns. No speaking request on this turn. expectsUserSpeech=false and expectedSpeech="".`,
-        `Practise block ${i + 1}: this is a REQUIRED microphone turn, never a tap-to-continue turn. Ask the learner to repeat exactly "${block.repeat}". Set expectedSpeech="${block.repeat}" and expectsUserSpeech=true. After a clear attempt advance to the next Core Flow step; if unclear give at most one microphone retry, then model and advance. Never turn this step into another listen-only explanation.`,
-        `Recognise block ${i + 1}: give ONE tiny everyday situation in the learner's teaching language that makes "${expected}" the clearly appropriate response. Do not reveal the answer in the question. Return emojiChoice with EXACTLY these cards: ${JSON.stringify(options)}. The learner chooses a card and says its full speak value through the microphone; tapping a card never completes the step by itself. Set expectedSpeech="${expected}" and expectsUserSpeech=true. Keep this exact board on one retry.`,
-      ];
-    }),
-    `Independent recall: REMOVE all scaffolding—omit emojiChoice and guidedSpeaking. Ask this meaning-first question in the learner's teaching language: ${spec.recall.promptTh}. Expected: "${spec.recall.answerEn}". Accept any taught equivalent with the same meaning. Give one short, target-specific hint on the first miss; after a second miss model the answer once and advance. expectsUserSpeech=true.`,
-    `Complete: ${completionTh ? `say this closing in the learner's teaching language: "${completionTh}".` : 'warmly summarize one useful thing learned.'} Clearly signal that the learner succeeded. Set isLessonComplete=true, expectsUserSpeech=false and expectedSpeech="". Do not add a new task or roleplay question.`,
-  ];
+  const steps = buildFoundationV7Steps(lessonId);
+  const choice = FOUNDATION_V7_CHOICE_BEATS[lessonId];
   return {
-    lessonId, titleEn: spec.titleEn, titleTh: spec.titleTh, goalEn: `Practise ${spec.titleEn} in a short everyday exchange.`, goalTh: spec.goalTh,
+    lessonId, titleEn: spec.titleEn, titleTh: spec.titleTh,
+    goalEn: 'Practise ' + spec.titleEn + ' in a short everyday exchange.', goalTh: spec.goalTh,
     difficulty: 'beginner', languageMix: { thai: 70, english: 30 },
     estimatedMinutesMin: spec.estimatedMinutes[0], estimatedMinutesMax: spec.estimatedMinutes[1],
-    targetPhrases: targets, targetLabel: 'item', listenOnlyTurns: 1,
-    progressMax: steps.length, maxTurns: 2 * (steps.length + spec.blocks.length),
-    systemInstruction: `Foundation A1 V7: ${spec.titleEn}\nGoal: ${spec.goalTh}\nScope: ${spec.scope}\n
-Teach one adult beginner privately in their chosen teaching language. ALL teacher narration, praise, explanations and requests must stay in that teaching language for the whole lesson; English is reserved for target forms being modeled or quoted. Never drift into English teacher directions such as "Great! Now, please say..." when the teaching language is Thai. Use short explanations; no class/group address. Treat alphabet names as letter names, not phonics. Do not claim mastery after exposure or diagnose acoustics from transcript. Use fictional profiles when personal facts are requested. Describe any needed spatial context verbally; never refer to an image that was not provided.
-Only the authored blocks introduce new language. Model all listed forms before practice. Do not add grammar or vocabulary outside this scope. A spelling transcript may collapse letters into a name; matching that name is a transcription convenience, not proof of each letter's pronunciation.
-Follow each step FORWARD. Every numbered Core Flow step is exactly one progress milestone. Never loop to a previous block. Model and practice are separate turns; listen-only turns contain no question and set expectedSpeech="". Speaking turns ask exactly one task and must set expectsUserSpeech=true. Recognition is guided practice, not a test: use a short concrete situation, show the authored cards, and require speech after the learner chooses. Never reveal the correct card in the question. Omit every choice card on Independent recall so support visibly fades. Never split a Teach block's model list into extra turns: alphabet groups such as A–D are modeled together in one turn. Praise briefly, accept meaningful short variants, and after one retry reveal and advance. Keep isLessonComplete=false until Complete. No pass gate, timed task, invented drag board, or forced picture interaction.
-Core Flow:\n${steps.map((step, i) => `${i + 1}. ${step}`).join('\n')}`,
-    openingPrompt: `Start ${spec.titleEn} for this learner. Explain today's practical goal briefly in their teaching language. This is the Welcome step only: do not ask a question or start a drill. Set expectsUserSpeech=false, expectedSpeech="", isLessonComplete=false. Return the existing lesson JSON schema.`,
+    targetPhrases: [...new Set([...spec.blocks.flatMap(block => block.models), spec.recall.answerEn, ...choice.options.map(o => o.speak)])],
+    targetLabel: 'item', listenOnlyTurns: 1, progressMax: steps.length,
+    maxTurns: steps.length + steps.filter(step => step.expectsUserSpeech).length + 2,
+    systemInstruction: 'Foundation A1 V7: ' + spec.titleEn + '\nGoal: ' + spec.goalTh + '\nScope: ' + spec.scope +
+      '\nTeaching pattern: ' + FOUNDATION_V7_PATTERNS[lessonId] + `
+ALL teacher narration, praise, explanations and requests stay in the learner's selected teaching language.
+Never drift into English teacher directions when teaching in Thai. English target forms remain English.
+Follow Core Flow forward, one numbered step per progress milestone. A retry stays on its current milestone.
+Every speaking step sets expectsUserSpeech=true and expectedSpeech. Omit cards except on the authored choice step.
+Only introduce language in authored models; scaffold recombinations of taught words with the supplied stem.
+Choice prompts and boards are authored: do not invent distractors or derive labels from full sentences.
+For any-mode accept ALL options, not only expectedSpeech. Respond to the actual selected option and remember it.
+For single-mode assess meaning in context; do not accept a distractor just because it appears on a card.
+Use the authored hint on the first miss; at most one retry, then briefly model and move on. Do not praise a wrong answer.
+On card-free application give a short specific hint on request/error, never a new question.
+Never add a recognition quiz after every model. Do not repeat the same application question as a second test.
+Treat alphabet names as letter names, not phonics; alphabet groups such as A–D are modeled together.
+Do not infer pronunciation accuracy from a spelling transcript or diagnose acoustics from text.
+Do not refer to an unseen image. Emojis are cues; state spatial relationships and fictional facts in the question.
+Keep isLessonComplete=false until Complete. Use only existing guidedSpeaking/microphone/Continue mechanics.
+Core Flow:
+` + steps.map((step, i) => (i + 1) + '. ' + step.instruction).join('\n'),
+    openingPrompt: 'Start ' + spec.titleEn + '. Welcome step only: explain the practical goal briefly in the teaching language. ' +
+      'expectsUserSpeech=false, expectedSpeech="", isLessonComplete=false. Return the existing lesson JSON schema.',
   };
 });

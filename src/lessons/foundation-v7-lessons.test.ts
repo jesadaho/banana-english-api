@@ -7,7 +7,10 @@ import { pickUserSpeechForTurn } from './lesson-turn-driver';
 import {
   FOUNDATION_V7_LESSON_IDS,
   FOUNDATION_V7_LESSONS,
+  FOUNDATION_V7_PATTERNS,
+  buildFoundationV7Steps,
 } from './foundation-v7-lessons.data';
+import { FOUNDATION_V7_CHOICE_BEATS } from './foundation-v7-choice-beats.data';
 import lessonSpecs from './foundation-v7-lessons.authoring.json';
 import {
   LESSON_PROGRESSION_ORDER,
@@ -32,25 +35,8 @@ function pathLessonNodes() {
   return FOUNDATION_V7_NODES.filter((node) => node.type === 'lesson');
 }
 
-function coreFlowStepCount(spec: AuthoredSpec): number {
-  return 1 + spec.blocks.length * 3 + 2;
-}
-
-function recognitionTarget(block: AuthoredSpec['blocks'][number]): string {
-  return block.models.find((model) => model !== block.repeat) ?? block.repeat;
-}
-
-function authoredHappyPathTurns(spec: AuthoredSpec) {
-  return [
-    { expectsUserSpeech: false },
-    ...spec.blocks.flatMap((block) => [
-      { expectsUserSpeech: false },
-      { expectsUserSpeech: true, expectedSpeech: block.repeat },
-      { expectsUserSpeech: true, expectedSpeech: recognitionTarget(block) },
-    ]),
-    { expectsUserSpeech: true, expectedSpeech: spec.recall.answerEn },
-    { expectsUserSpeech: false, isTaskComplete: true },
-  ];
+function coreFlowStepCount(id: string, spec: AuthoredSpec): number {
+  return 4 + spec.blocks.length * (FOUNDATION_V7_PATTERNS[id] === 'decode_and_use' ? 2 : 1);
 }
 
 describe('Foundation V7 lessons', () => {
@@ -102,7 +88,7 @@ describe('Foundation V7 lessons', () => {
     for (const [id, spec] of Object.entries(lessonSpecs)) {
       const lesson = getLesson(id)!;
       const node = pathLessonNodes().find((n) => n.contentRef.lessonId === id);
-      const steps = coreFlowStepCount(spec);
+      const steps = coreFlowStepCount(id, spec);
 
       assert.ok(lesson, id);
       assert.ok(node, id);
@@ -136,38 +122,73 @@ describe('Foundation V7 lessons', () => {
 
       assert.match(lesson.systemInstruction, /Teach block 1/);
       assert.match(lesson.systemInstruction, /Practise block 1/);
-      assert.match(lesson.systemInstruction, /Recognise block 1:/);
-      assert.match(lesson.systemInstruction, /Independent recall:/);
+      assert.match(lesson.systemInstruction, /Authored choice/);
       assert.match(lesson.systemInstruction, /isLessonComplete=true/);
       assert.match(lesson.openingPrompt, /expectsUserSpeech=false/);
     }
   });
 
-  it('drives the authored happy path through model, speech, recognition and recall', () => {
-    for (const [id, spec] of Object.entries(lessonSpecs)) {
-      const picked = authoredHappyPathTurns(spec).map((turn) =>
-        pickUserSpeechForTurn(turn),
-      );
-      const expected = [
-        TAP_TO_CONTINUE_SENTINEL,
-        ...spec.blocks.flatMap((block) => [
-          TAP_TO_CONTINUE_SENTINEL,
-          block.repeat,
-          recognitionTarget(block),
-        ]),
-        spec.recall.answerEn,
-        null,
-      ];
-      assert.deepEqual(picked, expected, id);
-      assert.equal(picked.length, coreFlowStepCount(spec), id);
+  it('authors choices for every lesson with valid timing and distinct cues', () => {
+    assert.deepEqual(Object.keys(FOUNDATION_V7_CHOICE_BEATS).sort(), Object.keys(lessonSpecs).sort());
+    for (const [id, choice] of Object.entries(FOUNDATION_V7_CHOICE_BEATS)) {
+      const spec = lessonSpecs[id as keyof typeof lessonSpecs];
+      assert.ok(choice.afterBlock >= 1 && choice.afterBlock <= spec.blocks.length, id);
+      assert.ok(choice.options.length >= 2 && choice.options.length <= 4, id);
+      assert.equal(new Set(choice.options.map(o => o.label)).size, choice.options.length, id);
+      for (const o of choice.options) {
+        assert.ok(o.label.split(/\s+/).length <= 3, id + ': cue too long');
+        assert.ok(o.emoji && o.speak, id);
+        assert.doesNotMatch(o.speak, /She have|Do he|Is they/, id);
+      }
+      if (choice.answerMode === 'single') {
+        assert.equal(choice.options.filter(o => o.speak === choice.expectedSpeech).length, 1, id);
+        assert.ok(choice.incorrectHintTh, id);
+      } else {
+        assert.equal(choice.expectedSpeech, undefined, id + ': free choice has no single key');
+      }
     }
+  });
+
+  it('keeps four different teaching rhythms short and speech-focused', () => {
+    assert.equal(new Set(Object.values(FOUNDATION_V7_PATTERNS)).size, 4);
+    for (const [id, spec] of Object.entries(lessonSpecs)) {
+      const steps = buildFoundationV7Steps(id);
+      assert.equal(steps.length, coreFlowStepCount(id, spec), id);
+      assert.ok(steps.length <= 12, id);
+      assert.equal(steps.filter(s => s.kind === 'choice').length, 1, id);
+      assert.equal(steps.at(-1)!.kind, 'complete', id);
+      assert.equal(pickUserSpeechForTurn(steps[0]), TAP_TO_CONTINUE_SENTINEL);
+      assert.ok(steps.filter(s => s.expectsUserSpeech).length >= spec.blocks.length + 2, id);
+    }
+    assert.ok(buildFoundationV7Steps('fnd_v7_u08n05').some(s => s.kind === 'model_group'));
+    assert.ok(buildFoundationV7Steps('fnd_v7_u15n03').some(s => s.kind === 'guided_use'));
+    assert.ok(buildFoundationV7Steps('fnd_v7_u10n05').some(s => /Choice reuse/.test(s.instruction)));
+  });
+
+  it('ships real guided board payloads and accepts non-first personal options in its tutor contract', () => {
+    for (const [id, choice] of Object.entries(FOUNDATION_V7_CHOICE_BEATS)) {
+      const step = buildFoundationV7Steps(id).find(s => s.kind === 'choice')!;
+      const json = step.instruction.split('Return guidedSpeaking=')[1].split('; omit emojiChoice')[0];
+      const board = JSON.parse(json);
+      assert.equal(board.stem, choice.stem);
+      assert.deepEqual(board.options, choice.options);
+      if (choice.answerMode === 'any') {
+        assert.match(step.instruction, /EVERY option is correct/);
+        assert.match(step.instruction, /NEVER the sole answer key/);
+        for (const option of board.options.slice(1)) {
+          assert.ok(step.instruction.includes(option.speak), id);
+        }
+      }
+    }
+    const reuse = buildFoundationV7Steps('fnd_v7_u10n05').find(s => s.kind === 'recall')!;
+    assert.match(reuse.instruction, /THEIR selected speak value/);
   });
 
   it('Please & Thank You practises Sorry and Excuse me separately', () => {
     const spec = lessonSpecs[PLEASE_THANKS];
     const max = getLesson(PLEASE_THANKS)!.progressMax!;
-    assert.equal(max, coreFlowStepCount(spec));
-    assert.equal(max, 12);
+    assert.equal(max, coreFlowStepCount(PLEASE_THANKS, spec));
+    assert.equal(max, 7);
     assert.deepEqual(spec.blocks.map((block) => block.repeat), [
       'Please',
       'Sorry',
@@ -256,19 +277,6 @@ describe('Foundation V7 lessons', () => {
     assert.match(letters.systemInstruction, /Model ALL these English forms in this same turn/);
     assert.match(letters.systemInstruction, /Never split this model list across later turns/);
     assert.match(letters.systemInstruction, /alphabet groups such as A–D are modeled together/);
-  });
-
-  it('adds recurring recognition boards and removes support for final recall', () => {
-    for (const [id, spec] of Object.entries(lessonSpecs)) {
-      const instruction = getLesson(id)!.systemInstruction;
-      for (let i = 0; i < spec.blocks.length; i += 1) {
-        assert.match(instruction, new RegExp(`Recognise block ${i + 1}:`), id);
-      }
-      assert.match(instruction, /Return emojiChoice with EXACTLY these cards:/, id);
-      assert.match(instruction, /tapping a card never completes the step by itself/, id);
-      assert.match(instruction, /Independent recall: REMOVE all scaffolding/, id);
-      assert.match(instruction, /omit emojiChoice and guidedSpeaking/, id);
-    }
   });
 
   it('keeps Teacher B directions in the selected teaching language', () => {
