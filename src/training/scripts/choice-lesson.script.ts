@@ -1,5 +1,4 @@
 import type { TrainingTurnReply } from '../../gemini/gemini-chat.service';
-import { TAP_TO_CONTINUE_SENTINEL } from '../../common/api.types';
 import { stripLeadingPraiseOpener } from '../../lessons/choice-board';
 import type { ChoiceStepTier } from '../../lessons/lessons.data';
 import type { ScriptTurnResult } from './types';
@@ -487,7 +486,8 @@ export function buildGenericScriptedReplyFromProgress(
 
   if (def.progressFn(history) >= def.maxStep || nextStep > def.maxStep) {
     if (def.afterTeachingComplete) {
-      return def.afterTeachingComplete(history, learnerFirstName);
+      const after = def.afterTeachingComplete(history, learnerFirstName);
+      if (after) return after;
     }
     const completionStatus = completionStatusFromHistory(history, def.maxStep);
     const text = completionStatus === 'completed_independently'
@@ -850,11 +850,7 @@ export function buildChoiceLessonAfterUser(
   }
 
   const teachingDone = def.progressFn(priorTurns) >= def.maxStep;
-  if (
-    userText === TAP_TO_CONTINUE_SENTINEL &&
-    def.afterTeachingComplete &&
-    teachingDone
-  ) {
+  if (def.afterTeachingComplete && teachingDone) {
     const next = def.afterTeachingComplete(turns, learnerFirstName);
     if (next) return { ...next, assessmentTier: 'correct' as const };
   }

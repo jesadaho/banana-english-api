@@ -3,7 +3,7 @@ import {
   aroundTownRoleplayIntroSpeech,
   computeThreeTierChoiceProgress,
   createBoardChoiceScorer,
-  scriptedAroundTownRoleplayOpening,
+  nextAroundTownRoleplayTurn,
   type ChoiceStepTier,
   type ForcedGuidedBoard,
 } from '../../lessons/lessons.data';
@@ -98,20 +98,16 @@ export function roleplayAfterTeaching(
     };
   }
 
-  if (history.some((t) => t.speaker === 'ai' && t.roleplayNpc != null)) {
-    return null;
-  }
-
-  const opening = scriptedAroundTownRoleplayOpening(lessonId);
-  if (!opening) return null;
+  const next = nextAroundTownRoleplayTurn(lessonId, 'thai', history);
+  if (!next) return null;
   return {
-    textEn: opening.textEn,
-    textTh: opening.textTh,
-    isLessonComplete: false,
-    expectsUserSpeech: opening.expectsUserSpeech,
-    expectedSpeech: opening.expectedSpeech ?? '',
-    roleplayNpc: opening.roleplayNpc,
-    ...(opening.emojiChoice ? { emojiChoice: opening.emojiChoice } : {}),
+    textEn: next.textEn,
+    textTh: next.textTh ?? '',
+    isLessonComplete: next.isLessonComplete,
+    expectsUserSpeech: next.expectsUserSpeech,
+    expectedSpeech: next.expectedSpeech ?? '',
+    ...(next.roleplayNpc ? { roleplayNpc: next.roleplayNpc } : {}),
+    ...(next.emojiChoice ? { emojiChoice: next.emojiChoice } : {}),
   };
 }
 

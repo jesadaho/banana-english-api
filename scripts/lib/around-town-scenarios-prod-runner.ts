@@ -13,6 +13,7 @@ import {
   aroundTownOutOfPoolWrongAgain,
   introductionsOutOfPoolNearMiss,
 } from '../../src/training/around-town/around-town-poolgate.harness.ts';
+import { looksLikeAroundTownRoleplayBridge } from '../../src/lessons/lessons.data.ts';
 import {
   AROUND_TOWN_CHOICE_LESSONS,
   getAroundTownChoiceLesson,
@@ -63,14 +64,32 @@ export type ScenarioRunResult = {
   error?: string;
 };
 
-function pickExpected(turn: TurnResult): string {
+const ROLEPLAY_FALLBACK_SPEECH: Record<string, string> = {
+  ee_around_town_shopping: "I'm looking for a shirt.",
+  ee_around_town_restaurant: "I'd like chicken rice.",
+  ee_around_town_coffee: 'Can I get a coffee?',
+  ee_around_town_convenience: 'Excuse me. Where is the bathroom?',
+  ee_around_town_transport: "I'm going to Chiang Mai.",
+  ee_around_town_airport: "I'd like to check in.",
+  ee_around_town_pharmacy: 'Can you help me?',
+};
+
+function pickExpected(turn: TurnResult, lessonId?: string): string {
+  if (turn.expectsUserSpeech === false) return TAP_TO_CONTINUE_SENTINEL;
   const expected = turn.expectedSpeech?.trim();
   if (expected) return expected;
   const guided = turn.guidedSpeaking;
   if (guided?.speak?.trim()) return guided.speak.trim();
   const option = guided?.options?.find((o) => o.speak?.trim());
   if (option?.speak?.trim()) return option.speak.trim();
-  throw new Error('missing expected speech on turn');
+  const choice = turn.emojiChoice?.options?.find((o) => o.speak?.trim());
+  if (choice?.speak?.trim()) return choice.speak.trim();
+  const picked = pickUserSpeechForTurn(turn)?.trim();
+  if (picked && picked !== "I'm ready") return picked;
+  const fallback = lessonId ? ROLEPLAY_FALLBACK_SPEECH[lessonId] : undefined;
+  if (fallback) return fallback;
+  if (picked) return picked;
+  return TAP_TO_CONTINUE_SENTINEL;
 }
 
 export function chromeBeforeAnswer(
@@ -191,7 +210,7 @@ function pickUserSpeech(
   turnBefore: TurnResult,
   step: number,
 ): { speech: string; recoverExact?: string; recoverWrong?: string } {
-  const expected = pickExpected(turnBefore);
+  const expected = pickExpected(turnBefore, lessonId);
 
   switch (scenario) {
     case 1:
@@ -215,18 +234,40 @@ function pickUserSpeech(
   }
 }
 
-function enteredRoleplay(block: Json): boolean {
-  return block.roleplayIntro != null || block.roleplayNpc != null;
+const STAFF_ROLEPLAY_ASKS = [
+  'what can i get for you',
+  'can i help you',
+  'are you ready to order',
+  'how can i help you',
+  'hello, where are you going',
+  'hello where are you going',
+  'which movie do you prefer',
+  'what were you doing last night',
+];
+
+function normalizeAsk(text: string): string {
+  return text
+    .trim()
+    .toLowerCase()
+    .replace(/[.!?]+$/g, '')
+    .replace(/\s+/g, ' ');
 }
 
-const ROLEPLAY_FALLBACK_SPEECH: Record<string, string> = {
-  ee_around_town_shopping: "I'm looking for a shirt.",
-  ee_around_town_restaurant: "I'd like chicken rice.",
-  ee_around_town_coffee: 'Can I get a coffee?',
-  ee_around_town_transport: "I'm going to Chiang Mai.",
-  ee_around_town_airport: "I'd like to check in.",
-  ee_around_town_pharmacy: 'Can you help me?',
-};
+function looksLikeStaffRoleplayAsk(text: string): boolean {
+  const key = normalizeAsk(text);
+  if (!key) return false;
+  if (key === 'hi' || key === 'hello') return true;
+  return STAFF_ROLEPLAY_ASKS.some((ask) => key === ask || key.includes(ask));
+}
+
+function enteredRoleplay(block: Json, text = ''): boolean {
+  if (block.roleplayIntro != null || block.roleplayNpc != null) return true;
+  const spoken = text || String(block.aiResponse ?? '');
+  return (
+    looksLikeAroundTownRoleplayBridge(spoken) ||
+    looksLikeStaffRoleplayAsk(spoken)
+  );
+}
 
 function pickRoleplaySpeech(
   lessonId: string,
@@ -249,7 +290,7 @@ function pickRoleplaySpeech(
   const fallback = ROLEPLAY_FALLBACK_SPEECH[lessonId];
   if (fallback) return fallback;
   if (picked) return picked;
-  throw new Error('missing expected speech on roleplay turn');
+  return TAP_TO_CONTINUE_SENTINEL;
 }
 
 function chromeForRoleplay(turn: TurnResult): { hint: string; choices: string } {
@@ -340,9 +381,16 @@ export async function runAroundTownScenario(
     ];
 
     while (reportStep < MAX_TURNS) {
+      const missingTeachingChrome =
+        !turnBefore.expectedSpeech?.trim() &&
+        !(turnBefore.guidedSpeaking?.options?.length) &&
+        !(turnBefore.emojiChoice?.options?.length);
       const roleplayTurn =
         inRoleplay ||
-        turnBefore.expectsUserSpeech === false;
+        turnBefore.expectsUserSpeech === false ||
+        looksLikeAroundTownRoleplayBridge(aiPrompt) ||
+        looksLikeStaffRoleplayAsk(aiPrompt) ||
+        (AROUND_TOWN_ROLEPLAY_LESSONS.has(lessonId) && missingTeachingChrome);
       const picked = roleplayTurn
         ? {
             speech: pickRoleplaySpeech(
@@ -396,7 +444,7 @@ export async function runAroundTownScenario(
 
       currentTurn = res.turn.currentTurn;
       turnBefore = res.turn;
-      if (enteredRoleplay(block)) inRoleplay = true;
+      if (enteredRoleplay(block, reply)) inRoleplay = true;
 
       if (res.turn.isTaskComplete) {
         return finishOk(lessonId, scenario, reportStep, totalMs);
@@ -441,7 +489,7 @@ export async function runAroundTownScenario(
         currentTurn = recovery.turn.currentTurn;
         turnBefore = recovery.turn;
         aiPrompt = recReply;
-        if (enteredRoleplay(recBlock)) inRoleplay = true;
+        if (enteredRoleplay(recBlock, recReply)) inRoleplay = true;
 
         if (recovery.turn.isTaskComplete) {
           return finishOk(lessonId, scenario, reportStep, totalMs);
@@ -485,7 +533,7 @@ export async function runAroundTownScenario(
         currentTurn = secondWrong.turn.currentTurn;
         turnBefore = secondWrong.turn;
         aiPrompt = softReply;
-        if (enteredRoleplay(softBlock)) inRoleplay = true;
+        if (enteredRoleplay(softBlock, softReply)) inRoleplay = true;
 
         if (secondWrong.turn.isTaskComplete) {
           return finishOk(lessonId, scenario, reportStep, totalMs);

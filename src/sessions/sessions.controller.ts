@@ -970,13 +970,72 @@ export class SessionsController {
     }
 
     const maxTurnsReached = nextTurn >= config.maxTurns;
-    const isTaskComplete = Boolean(reply.isLessonComplete) || maxTurnsReached;
-    const expectsUserSpeech = isTaskComplete
+    const teachingLang = teachingLanguageFromConfig(config);
+    let isTaskComplete = Boolean(reply.isLessonComplete) || maxTurnsReached;
+    let expectsUserSpeech = isTaskComplete
       ? false
       : (reply.expectsUserSpeech ?? true);
-    const expectedSpeech = reply.expectedSpeech?.trim() || null;
-    const emojiChoice = normalizeEmojiChoice(reply.emojiChoice);
+    let expectedSpeech = reply.expectedSpeech?.trim() || null;
+    let emojiChoice = normalizeEmojiChoice(reply.emojiChoice);
     const guidedSpeaking = normalizeGuidedSpeaking(reply.guidedSpeaking);
+    let textEn = reply.textEn;
+    let textTh: string | null | undefined = reply.textTh;
+    let roleplayIntro = normalizeRoleplayIntro(reply.roleplayIntro);
+    let roleplayNpc = normalizeRoleplayNpc(reply.roleplayNpc);
+
+    const guidedScripted = guideScriptedAroundTownRoleplayIfNeeded(
+      config.lessonId,
+      teachingLang,
+      data.turns,
+      {
+        textEn,
+        textTh,
+        roleplayIntro,
+        roleplayNpc,
+        expectsUserSpeech,
+        expectedSpeech,
+        isTaskComplete,
+      },
+    );
+    if (guidedScripted != null) {
+      textEn = guidedScripted.textEn;
+      textTh = guidedScripted.textTh;
+      expectsUserSpeech = guidedScripted.expectsUserSpeech;
+      expectedSpeech = guidedScripted.expectedSpeech;
+      roleplayNpc = guidedScripted.roleplayNpc;
+      roleplayIntro = null;
+      emojiChoice = guidedScripted.emojiChoice ?? null;
+      isTaskComplete = guidedScripted.isTaskComplete;
+    }
+
+    const guidedExplore = guideExploreCityRoleplayIfNeeded(
+      config.lessonId,
+      data.turns,
+      {
+        textEn,
+        textTh,
+        roleplayIntro,
+        roleplayNpc,
+        expectsUserSpeech,
+        expectedSpeech,
+        isTaskComplete,
+      },
+    );
+    if (guidedExplore != null) {
+      textEn = guidedExplore.textEn;
+      textTh = guidedExplore.textTh;
+      expectsUserSpeech = guidedExplore.expectsUserSpeech;
+      expectedSpeech = guidedExplore.expectedSpeech;
+      roleplayNpc = guidedExplore.roleplayNpc;
+      roleplayIntro = null;
+      isTaskComplete = guidedExplore.isTaskComplete;
+    }
+
+    if (isTaskComplete) {
+      expectsUserSpeech = false;
+      roleplayNpc = null;
+      roleplayIntro = null;
+    }
 
     const prevProgressTurn = data.session.progressTurn ?? 0;
     const lastAiTurn = [...data.turns]
@@ -987,13 +1046,13 @@ export class SessionsController {
       prevProgressTurn,
       config.progressMax,
         {
-          textEn: reply.textEn,
+          textEn,
           expectsUserSpeech,
           expectedSpeech,
           emojiChoice,
           guidedSpeaking,
-          roleplayIntro: null,
-          roleplayNpc: null,
+          roleplayIntro,
+          roleplayNpc,
           isTaskComplete,
           assessmentTier: reply.assessmentTier,
         },
@@ -1016,27 +1075,29 @@ export class SessionsController {
 
     this.sessionStore.addTurn(sessionId, {
       speaker: 'ai',
-      textEn: reply.textEn,
+      textEn,
       ttsText: reply.ttsText ?? null,
       ttsInstruction: reply.ttsInstruction ?? null,
-      textTh: reply.textTh,
+      textTh,
       audioUrl: null,
       expectsUserSpeech,
       expectedSpeech,
       emojiChoice,
       guidedSpeaking,
+      roleplayIntro,
+      roleplayNpc: isTaskComplete ? null : roleplayNpc,
       assessmentTier: reply.assessmentTier,
       wasSoftAdvance: reply.wasSoftAdvance,
       completionStatus: reply.completionStatus,
     });
 
     const response: TurnExchangeResponse = {
-      aiResponse: reply.textEn,
+      aiResponse: textEn,
       ...(reply.ttsText?.trim() ? { ttsText: reply.ttsText.trim() } : {}),
       ...(reply.ttsInstruction?.trim()
         ? { ttsInstruction: reply.ttsInstruction.trim() }
         : {}),
-      textTh: reply.textTh ?? '',
+      textTh: textTh ?? '',
       isTaskComplete,
       updatedCheckpoints: {},
       feedbackHints: { mispronouncedWords: [] },
@@ -1051,6 +1112,8 @@ export class SessionsController {
       expectedSpeech,
       emojiChoice,
       guidedSpeaking,
+      roleplayIntro,
+      roleplayNpc: isTaskComplete ? null : roleplayNpc,
       ...(reply.assessmentTier ? { assessmentTier: reply.assessmentTier } : {}),
       ...(reply.wasSoftAdvance ? { wasSoftAdvance: true } : {}),
       ...(reply.completionStatus ? { completionStatus: reply.completionStatus } : {}),
@@ -1058,7 +1121,7 @@ export class SessionsController {
 
     if (body.generateAudio) {
       const audio = await this.geminiTts.synthesizeSpeech(
-        reply.ttsText?.trim() || reply.textEn,
+        reply.ttsText?.trim() || textEn,
       );
       response.audioBase64 = audio.toString('base64');
       response.contentType = 'audio/wav';

@@ -82,7 +82,29 @@ describe('Around Town roleplay after teaching', () => {
     assert.equal(reply?.textEn, 'What can I get for you?');
   });
 
-  it('coffee — mid-roleplay does not rebuild the intro card', () => {
+  it('coffee — ordering coffee advances to What type of coffee?', () => {
+    const turns = [
+      ...coffeeTeachingTurns(),
+      {
+        speaker: 'ai',
+        textEn:
+          'เยี่ยมเลยครับ! 👏\n\nต่อไปครูพี่บีจะเป็นบาริสต้านะครับ ☕\n\nพร้อมแล้วแตะเริ่ม Roleplay ได้เลย!',
+      },
+      { speaker: 'user', textEn: TAP_TO_CONTINUE_SENTINEL },
+      { speaker: 'ai', textEn: 'What can I get for you?' },
+      { speaker: 'user', textEn: 'Can I get a coffee?' },
+    ];
+    const reply = buildChoiceLessonAfterUser(AROUND_TOWN_COFFEE, {
+      turns,
+      learnerFirstName: 'Nana',
+    });
+    assert.equal(reply?.deferToAi, undefined);
+    assert.equal(reply?.textEn, 'What type of coffee?');
+    assert.equal(reply?.roleplayNpc?.name, 'Barista');
+    assert.ok(reply?.emojiChoice?.options?.length);
+  });
+
+  it('coffee — mid-roleplay advances instead of rebuilding the intro', () => {
     const after = roleplayAfterTeaching('ee_around_town_coffee', [
       {
         speaker: 'ai',
@@ -96,6 +118,7 @@ describe('Around Town roleplay after teaching', () => {
       },
       { speaker: 'user', textEn: 'Can I get a coffee?' },
     ]);
-    assert.equal(after, null);
+    assert.equal(after?.textEn, 'What type of coffee?');
+    assert.equal(after?.roleplayNpc?.name, 'Barista');
   });
 });

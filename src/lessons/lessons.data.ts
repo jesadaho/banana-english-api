@@ -8803,10 +8803,16 @@ function exploreCityDirectionsReply(
 }
 
 function exploreCityRoleplayIntroIndex(
-  history: Array<{ speaker: string; roleplayIntro?: unknown }>,
+  history: Array<{ speaker: string; textEn?: string; roleplayIntro?: unknown }>,
 ): number {
-  return history.findIndex(
+  const byField = history.findIndex(
     (t) => t.speaker === 'ai' && t.roleplayIntro != null,
+  );
+  if (byField >= 0) return byField;
+  return history.findIndex(
+    (t) =>
+      t.speaker === 'ai' &&
+      looksLikeAroundTownRoleplayBridge(t.textEn ?? ''),
   );
 }
 
@@ -13381,9 +13387,7 @@ export function guideScriptedAroundTownRoleplayIfNeeded(
     startIdx < 0 &&
     currentAskIdx >= 0 &&
     !history.some((t) => t.speaker === 'ai' && t.roleplayIntro != null);
-  const hadIntro = history.some(
-    (t) => t.speaker === 'ai' && t.roleplayIntro != null,
-  );
+  const hadIntro = aroundTownIntroAlreadyShown(history);
   const inRoleplay =
     current.roleplayNpc != null ||
     offScript ||
@@ -13679,6 +13683,74 @@ export function guideScriptedAroundTownRoleplayIfNeeded(
 
   if (isAroundTownRoleplayCloseLine(current.textEn) && config.closeWithSure) {
     return forceScriptedAckClose(config, history, current.textEn);
+  }
+
+  return null;
+}
+
+const EMPTY_ROLEPLAY_CURRENT = {
+  textEn: '',
+  textTh: null,
+  roleplayIntro: null,
+  roleplayNpc: null,
+  expectsUserSpeech: true,
+  expectedSpeech: null,
+  isTaskComplete: false,
+};
+
+/** Next staff / celebrate beat after the purple Start Roleplay card. */
+export function nextAroundTownRoleplayTurn(
+  lessonId: string,
+  lang: LessonTeachingLanguage,
+  history: Array<{
+    speaker: string;
+    textEn?: string;
+    roleplayIntro?: unknown;
+    roleplayNpc?: unknown;
+  }>,
+): {
+  textEn: string;
+  textTh: string | null;
+  expectsUserSpeech: boolean;
+  expectedSpeech: string | null;
+  roleplayNpc?: { emoji: string; name: string; objective: string } | null;
+  emojiChoice?: ScriptedRoleplayAskStep['emojiChoice'] | null;
+  isLessonComplete: boolean;
+} | null {
+  if (!aroundTownIntroAlreadyShown(history)) return null;
+
+  const explore = guideExploreCityRoleplayIfNeeded(
+    lessonId,
+    history,
+    EMPTY_ROLEPLAY_CURRENT,
+  );
+  if (explore) {
+    return {
+      textEn: explore.textEn,
+      textTh: explore.textTh,
+      expectsUserSpeech: explore.expectsUserSpeech,
+      expectedSpeech: explore.expectedSpeech,
+      roleplayNpc: explore.roleplayNpc,
+      isLessonComplete: false,
+    };
+  }
+
+  const scripted = guideScriptedAroundTownRoleplayIfNeeded(
+    lessonId,
+    lang,
+    history,
+    EMPTY_ROLEPLAY_CURRENT,
+  );
+  if (scripted) {
+    return {
+      textEn: scripted.textEn,
+      textTh: scripted.textTh,
+      expectsUserSpeech: scripted.expectsUserSpeech,
+      expectedSpeech: scripted.expectedSpeech,
+      roleplayNpc: scripted.roleplayNpc,
+      emojiChoice: scripted.emojiChoice,
+      isLessonComplete: scripted.isTaskComplete,
+    };
   }
 
   return null;
