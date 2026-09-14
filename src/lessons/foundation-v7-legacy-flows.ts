@@ -2,16 +2,166 @@ import type { V7TeachingStep } from './foundation-v7-lessons.data';
 const icons: Record<string, string> = { coffee: '☕', tea: '🍵', water: '💧', rice: '🍚', Please: '🙏', 'Thank you': '💝', Sorry: '😔', 'Excuse me': '🙋', 'Please say that again': '🔁', 'Please speak slowly': '🐢', 'I do not understand': '🤔' };
 
 // V1 pacing: teach a small chunk, use it immediately, then transfer it.
-const task = (text: string, expectedSpeech: string, labels: string[] = [], stem = '', any = false): V7TeachingStep => ({
+const task = (text: string, expectedSpeech: string, labels: string[] = [], stem = '', any = false, successText?: string): V7TeachingStep => ({
   kind: 'recall', instruction: text, expectsUserSpeech: true, expectedSpeech,
   presentation: { text, answerMode: any ? 'any' : 'single', options: labels.map(label => ({
     emoji: icons[label] ?? '🔢', label, speak: stem + label,
-  })), stem },
+  })), stem, successText },
+});
+const choiceTask = (
+  text: string,
+  expectedSpeech: string,
+  stem: string,
+  options: Array<{ emoji: string; label: string; speak: string }>,
+  successText?: string,
+  any = false,
+): V7TeachingStep => ({
+  kind: 'recall', instruction: text, expectsUserSpeech: true, expectedSpeech,
+  presentation: { text, answerMode: any ? 'any' : 'single', options, stem, successText },
 });
 const finish = (text: string): V7TeachingStep => ({ kind: 'complete', instruction: text,
   expectsUserSpeech: false, presentation: { text, answerMode: 'single', options: [], stem: '' } });
+const reuseTask = (text: string, fallback: string, successText?: string): V7TeachingStep => ({
+  kind: 'recall', instruction: 'Choice reuse: ' + text, expectsUserSpeech: true, expectedSpeech: fallback,
+  presentation: { text, answerMode: 'single', options: [], stem: '', successText },
+});
 
 export const V7_LEGACY_FLOWS: Record<string, V7TeachingStep[]> = {
+  fnd_v7_he_she_it_we_they: [
+    task('Ben เป็นเพื่อนร่วมชั้นของคุณครับ 👨 ถ้าพูดถึงผู้ชายหนึ่งคน ใช้ he ลองพูดว่า “He is my classmate.”', 'He is my classmate.', [], '', false,
+      'เยี่ยมมากครับ “He is my classmate.” แปลว่า “เขาเป็นเพื่อนร่วมชั้นของฉัน” ต่อไป '),
+    choiceTask('Anna เป็นครูของ Ben ครับ 👩‍🏫 Anna เป็นผู้หญิงหนึ่งคน ควรเริ่มด้วยคำไหนครับ?', 'She is his teacher.', '... is his teacher.', [
+      { emoji: '👨', label: 'He', speak: 'He is his teacher.' },
+      { emoji: '👩‍🏫', label: 'She', speak: 'She is his teacher.' },
+    ], 'ถูกต้องครับ “She is his teacher.” แปลว่า “เธอเป็นครูของเขา” ต่อไปเราจะพูดถึงสิ่งของครับ '),
+    task('กระเป๋าใบนี้เป็นของ Ben ครับ 🎒 เวลาพูดถึงสิ่งของหนึ่งชิ้น ใช้ it ลองพูดว่า “It is his bag.”', 'It is his bag.', [], '', false,
+      'ดีมากครับ “It is his bag.” แปลว่า “มันคือกระเป๋าของเขา” ต่อไปลองเลือกคำจากสถานการณ์ครับ '),
+    choiceTask('Teacher B กำลังพูดถึง Anna ครับ 👩 Anna ใจดี ควรเริ่มด้วยคำไหน?', 'She is kind.', '... is kind.', [
+      { emoji: '👨', label: 'He', speak: 'He is kind.' },
+      { emoji: '👩', label: 'She', speak: 'She is kind.' },
+      { emoji: '🎒', label: 'It', speak: 'It is kind.' },
+    ], 'ถูกต้องครับ เราใช้ she เพราะกำลังพูดถึง Anna ต่อไปมาพูดถึงกลุ่มที่มีตัวเราครับ '),
+    task('คุณกับ Ben อยู่ห้องเรียนเดียวกันครับ 🫵👨 เมื่อกลุ่มนั้นมีตัวเรารวมอยู่ด้วย ใช้ we ลองพูดว่า “We are classmates.”', 'We are classmates.', [], '', false,
+      'เยี่ยมครับ we คือกลุ่มที่มีตัวเรารวมอยู่ด้วย ต่อไปเป็นกลุ่มอื่นครับ '),
+    task('Anna กับ Ben ยืนอยู่อีกฝั่งหนึ่งครับ 👉👩👨 กลุ่มนี้ไม่มีตัวเรารวมอยู่ด้วย ใช้ they ลองพูดว่า “They are friends.”', 'They are friends.', [], '', false,
+      'ถูกต้องครับ they ใช้กับคนกลุ่มอื่นที่ไม่มีตัวเรารวมอยู่ด้วย ขั้นสุดท้ายลองแยก we กับ they ครับ '),
+    choiceTask('คุณอยู่กับเพื่อนสองคนครับ 🫵👥 ทุกคนเป็นนักเรียน ควรใช้ We หรือ They?', 'We are students.', '... are students.', [
+      { emoji: '🫵👥', label: 'We', speak: 'We are students.' },
+      { emoji: '👉👥', label: 'They', speak: 'They are students.' },
+    ], 'ถูกต้องครับ กลุ่มนี้มีตัวคุณอยู่ด้วยจึงใช้ we '),
+    finish('จบบทแล้วครับ วันนี้คุณใช้ he, she, it, we และ they ตามคน สิ่งของ และกลุ่มในสถานการณ์ครับ'),
+  ],
+  fnd_v7_my_family: [
+    task('mother แปลว่าแม่ครับ 👩 ลองพูดคำว่า “mother”', 'mother', [], '', false,
+      'ดีครับ mother แปลว่าแม่ ต่อไปเป็นคำว่าพ่อครับ '),
+    choiceTask('father แปลว่าพ่อครับ 👨 ถ้าคำที่ต้องการคือ “พ่อ” เลือกคำแล้วพูดครับ', 'father', '', [
+      { emoji: '👩', label: 'mother', speak: 'mother' }, { emoji: '👨', label: 'father', speak: 'father' },
+    ], 'ถูกต้องครับ father แปลว่าพ่อ ต่อไปลองใช้คำนี้แนะนำคนครับ '),
+    task('ถ้าจะแนะนำว่า “นี่คือแม่ของฉัน” พูดว่า “This is my mother.” ลองพูดตามครับ', 'This is my mother.', [], '', false,
+      'เยี่ยมครับ This is my... ใช้แนะนำสมาชิกครอบครัว ต่อไปเรียนอีกสองคำครับ '),
+    choiceTask('brother คือพี่ชายหรือน้องชาย 👦 sister คือพี่สาวหรือน้องสาว 👧 คำว่า “พี่สาวหรือน้องสาว” คือคำไหนครับ?', 'sister', '', [
+      { emoji: '👦', label: 'brother', speak: 'brother' }, { emoji: '👧', label: 'sister', speak: 'sister' },
+    ], 'ถูกต้องครับ sister คือพี่สาวหรือน้องสาว ต่อไปนำคำศัพท์ไปใช้ในประโยคครับ '),
+    choiceTask('Max กำลังแนะนำพี่ชายครับ 👦 เติมคำเดียวแล้วพูดประโยคเต็ม', 'This is my brother.', 'This is my ...', [
+      { emoji: '👦', label: 'brother', speak: 'This is my brother.' },
+      { emoji: '👧', label: 'sister', speak: 'This is my sister.' },
+    ], 'ดีมากครับ คราวนี้เลือกสมาชิกที่คุณอยากแนะนำเองครับ '),
+    choiceTask('เลือกสมาชิกครอบครัวหนึ่งคนที่คุณอยากแนะนำครับ จะเป็นข้อมูลจริงหรือสมมติก็ได้', 'This is my mother.', 'This is my ...', [
+      { emoji: '👩', label: 'mother', speak: 'This is my mother.' },
+      { emoji: '👨', label: 'father', speak: 'This is my father.' },
+      { emoji: '👦', label: 'brother', speak: 'This is my brother.' },
+      { emoji: '👧', label: 'sister', speak: 'This is my sister.' },
+    ], 'ขอบคุณที่แนะนำครับ ลองพูดประโยคเดิมอีกครั้งโดยไม่ดูตัวช่วยครับ ', true),
+    reuseTask('พูดประโยคแนะนำสมาชิกที่คุณเลือกเมื่อกี้อีกครั้งโดยไม่ดูตัวช่วยครับ', 'This is my mother.',
+      'เยี่ยมครับ คุณนำคำศัพท์ครอบครัวไปใช้แนะนำคนได้แล้ว '),
+    finish('จบบทแล้วครับ วันนี้คุณได้รู้จัก mother, father, brother และ sister และใช้ This is my... เพื่อแนะนำสมาชิกครอบครัวครับ'),
+  ],
+  fnd_v7_what_or_who: [
+    task('คุณเจอของชิ้นหนึ่งแต่ไม่รู้ว่าคืออะไรครับ 📦❓ ใช้ what ถามสิ่งของ ลองพูดว่า “What is this?”', 'What is this?', [], '', false,
+      'ดีมากครับ “What is this?” ใช้ถามว่าสิ่งนี้คืออะไร ต่อไปลองเลือกคำถามจากสถานการณ์ครับ '),
+    choiceTask('มีของวางอยู่บนโต๊ะครับ ☕❓ คุณไม่รู้ว่ามันคืออะไร ควรเริ่มด้วย What หรือ Who?', 'What is this?', '... is this?', [
+      { emoji: '📦', label: 'What', speak: 'What is this?' },
+      { emoji: '👤', label: 'Who', speak: 'Who is this?' },
+    ], 'ถูกต้องครับ Teacher B ตอบว่า “It is coffee.” ต่อไปเราจะถามเกี่ยวกับคนครับ '),
+    task('มีคนโทรเข้ามา แต่คุณไม่รู้ว่าเป็นใครครับ 📞👤 ใช้ who ถามคน ลองพูดว่า “Who is that?”', 'Who is that?', [], '', false,
+      'เยี่ยมครับ “Who is that?” ใช้ถามว่าคนนั้นคือใคร ต่อไปลองเลือกเองครับ '),
+    choiceTask('มีคนยืนรออยู่หน้าห้องครับ 🚪👤❓ คุณอยากรู้ว่าเขาคือใคร ควรเริ่มด้วยคำไหน?', 'Who is that?', '... is that?', [
+      { emoji: '📦', label: 'What', speak: 'What is that?' },
+      { emoji: '👤', label: 'Who', speak: 'Who is that?' },
+    ], 'ถูกต้องครับ Teacher B ตอบว่า “That is Max.” ขั้นสุดท้ายลองถามเรื่องสิ่งของโดยไม่มีตัวช่วยครับ '),
+    task('คุณเจอสิ่งของที่ไม่รู้จักครับ 🎁❓ ลองถามว่าสิ่งนี้คืออะไรโดยไม่มีตัวช่วย', 'What is this?', [], '', false,
+      'ถูกต้องครับ คุณแยกคำถามเกี่ยวกับคนและสิ่งของได้ตามสถานการณ์แล้ว '),
+    finish('จบบทแล้วครับ วันนี้คุณใช้ what ถามสิ่งของ และ who ถามคนครับ'),
+  ],
+  fnd_v7_where_when_how_much_and_how_many: [
+    task('Max บอกว่า “เจอกันที่ตลาดนะ” แต่คุณไม่รู้ว่าตลาดอยู่ที่ไหนครับ 🛍️📍 ใช้ where ถามสถานที่ ลองพูดว่า “Where is the market?”', 'Where is the market?', [], '', false,
+      'ดีครับ Max ตอบว่า “Near the station.” ตอนนี้รู้สถานที่แล้ว แต่ยังไม่รู้วันครับ '),
+    task('คุณอยากรู้ว่าจะไปเมื่อไรครับ 📅❓ ใช้ when ถามเวลา ลองพูดว่า “When do we go?”', 'When do we go?', [], '', false,
+      'เยี่ยมครับ Max ตอบว่า “On Saturday.” เมื่อไปถึงตลาด คุณเจอของที่ไม่มีป้ายราคาครับ '),
+    choiceTask('คุณหยิบน้ำหนึ่งขวด แต่ไม่รู้ราคาครับ 💧🏷️❓ ควรเริ่มด้วยคำไหน?', 'How much is it?', '... is it?', [
+      { emoji: '📍', label: 'Where', speak: 'Where is it?' },
+      { emoji: '📅', label: 'When', speak: 'When is it?' },
+      { emoji: '🏷️', label: 'How much', speak: 'How much is it?' },
+    ], 'ถูกต้องครับ พนักงานตอบว่า “It is twenty baht.” ต่อไป Max ต้องการน้ำหลายขวดครับ '),
+    task('คุณไม่รู้ว่า Max ต้องการน้ำกี่ขวดครับ 💧💧❓ ใช้ how many ถามจำนวน ลองพูดว่า “How many bottles?”', 'How many bottles?', [], '', false,
+      'ดีมากครับ Max ตอบว่า “Two bottles.” ต่อไปลองแยกหน้าที่ของคำถามครับ '),
+    choiceTask('คุณรู้ว่าสินค้าคืออะไรแล้ว แต่อยากรู้ “ราคา” ครับ 🏷️ ควรถามแบบไหน?', 'How much is it?', '', [
+      { emoji: '📍', label: 'Where', speak: 'Where is it?' },
+      { emoji: '📅', label: 'When', speak: 'When is it?' },
+      { emoji: '🏷️', label: 'How much', speak: 'How much is it?' },
+      { emoji: '🔢', label: 'How many', speak: 'How many?' },
+    ], 'ถูกต้องครับ how much ใช้ถามราคา ขั้นสุดท้ายลองถามจำนวนโดยไม่มีตัวช่วยครับ '),
+    task('คุณรู้ราคาตั๋วแล้ว แต่ไม่รู้ว่าต้องซื้อตั๋วกี่ใบครับ 🎫🎫❓ ลองถามเอง', 'How many tickets?', [], '', false,
+      'เยี่ยมครับ คุณเลือกคำถามตามข้อมูลที่ต้องการได้แล้ว '),
+    finish('จบบทแล้วครับ วันนี้คุณใช้ where ถามสถานที่ when ถามเวลา how much ถามราคา และ how many ถามจำนวนครับ'),
+  ],
+  fnd_v7_do_does_every_day: [
+    task('ถ้าอยากถาม Teacher B ว่า “คุณทำงานทุกวันไหม” ใช้ Do you... ลองพูดว่า “Do you work every day?”', 'Do you work every day?', [], '', false,
+      'ดีครับ Teacher B ตอบว่า “Yes, I do.” ต่อไปเลือกกิจกรรมที่คุณอยากถามเองครับ '),
+    choiceTask('เลือกหนึ่งกิจกรรมที่คุณอยากถาม Teacher B ครับ ทุกคำตอบใช้ได้', 'Do you work every day?', 'Do you ... every day?', [
+      { emoji: '💼', label: 'work', speak: 'Do you work every day?' },
+      { emoji: '📖', label: 'read', speak: 'Do you read every day?' },
+      { emoji: '🍳', label: 'cook', speak: 'Do you cook every day?' },
+    ], 'Teacher B ตอบคำถามของคุณแล้วครับ ต่อไปเราจะถามถึง Max ซึ่งไม่ได้อยู่ในบทสนทนานี้ ' , true),
+    task('เมื่อถามเรื่อง Max ใช้ Does he... ครับ 👨 ลองพูดว่า “Does he study every day?”', 'Does he study every day?', [], '', false,
+      'ถูกต้องครับ Teacher B ตอบว่า “Yes, he does.” ต่อไปลองถามถึง May ครับ '),
+    choiceTask('May อ่านหนังสือทุกวันครับ 👩📖 ลองถาม Teacher B เพื่อยืนยันข้อมูล', 'Does she read every day?', 'Does she ... every day?', [
+      { emoji: '📖', label: 'read', speak: 'Does she read every day?' },
+      { emoji: '🍳', label: 'cook', speak: 'Does she cook every day?' },
+    ], 'ดีครับ Teacher B ตอบว่า “Yes, she does.” ต่อไปสังเกตว่าเรากำลังถามใครครับ '),
+    choiceTask('คุณกำลังพูดกับ Ben โดยตรงครับ 👨🍳 ถามเขาว่าเขาทำอาหารทุกวันไหม ควรเริ่มด้วยแบบไหน?', 'Do you cook every day?', '... cook every day?', [
+      { emoji: '🗣️', label: 'Do you', speak: 'Do you cook every day?' },
+      { emoji: '👉👨', label: 'Does he', speak: 'Does he cook every day?' },
+    ], 'ถูกต้องครับ เมื่อถาม Ben ตรง ๆ ใช้ you จึงเริ่มด้วย Do you ขั้นสุดท้ายเลือกถาม Teacher B อีกหนึ่งคำถามครับ '),
+    choiceTask('เลือกถาม Teacher B เกี่ยวกับกิจวัตรหนึ่งอย่างครับ ทุกคำตอบใช้ได้', 'Do you work every day?', 'Do you ... every day?', [
+      { emoji: '💼', label: 'work', speak: 'Do you work every day?' },
+      { emoji: '📖', label: 'read', speak: 'Do you read every day?' },
+      { emoji: '🍳', label: 'cook', speak: 'Do you cook every day?' },
+      { emoji: '📚', label: 'study', speak: 'Do you study every day?' },
+    ], 'Teacher B ตอบคำถามของคุณแล้วครับ ', true),
+    finish('จบบทแล้วครับ เวลาถามคนตรงหน้าใช้ Do you...? และเวลาถามถึงผู้ชายหรือผู้หญิงอีกคนใช้ Does he...? หรือ Does she...? ครับ'),
+  ],
+  fnd_v7_go_straight_turn_left: [
+    task('Max ออกจากคาเฟ่และกำลังหาสถานีครับ ☕➡️🚉 ขั้นแรกต้องเดินตรงไป ลองพูดว่า “Go straight.”', 'Go straight.', [], '', false,
+      'ดีครับ Max เดินตรงมาถึงทางแยกแล้ว สถานีอยู่ทางซ้ายครับ '),
+    task('เมื่อสถานีอยู่ทางซ้าย ↩️ บอกว่า “Turn left.” ลองพูดตามครับ', 'Turn left.', [], '', false,
+      'เยี่ยมครับ Max เลี้ยวซ้ายแล้วมาถึงอีกทางแยกครับ '),
+    choiceTask('สถานีอยู่ทางขวาครับ ↪️🚉 ควรบอกทางว่าอะไร?', 'Turn right.', '', [
+      { emoji: '⬆️', label: 'straight', speak: 'Go straight.' },
+      { emoji: '↩️', label: 'left', speak: 'Turn left.' },
+      { emoji: '↪️', label: 'right', speak: 'Turn right.' },
+    ], 'ถูกต้องครับ Max เลี้ยวขวาและหันมาถูกถนนแล้ว ตอนนี้สถานีอยู่ตรงไปข้างหน้าครับ '),
+    choiceTask('สถานีอยู่ตรงไปข้างหน้าครับ ⬆️🚉 เลือกคำสั่งที่ถูกต้องแล้วพูด', 'Go straight.', '', [
+      { emoji: '⬆️', label: 'straight', speak: 'Go straight.' },
+      { emoji: '↩️', label: 'left', speak: 'Turn left.' },
+      { emoji: '↪️', label: 'right', speak: 'Turn right.' },
+    ], 'ดีมากครับ Max ไปถึงสถานีแล้ว ต่อไปลองเชื่อมคำสั่งสองขั้นครับ '),
+    task('นักท่องเที่ยวต้องเดินตรง แล้วเลี้ยวซ้ายครับ ⬆️↩️ ใช้ then เชื่อมสองขั้น ลองพูดว่า “Go straight, then turn left.”', 'Go straight, then turn left.', [], '', false,
+      'เยี่ยมครับ ขั้นสุดท้ายลองเปลี่ยนปลายทางและทิศทางโดยไม่มีตัวช่วยครับ '),
+    task('คุณกำลังบอกทางไปโรงแรมครับ 🏨 ขั้นแรกเดินตรง ⬆️ แล้วเลี้ยวขวา ↪️ ลองบอกสองขั้นเอง', 'Go straight, then turn right.', [], '', false,
+      'ถูกต้องครับ นักท่องเที่ยวตอบว่า “Thank you!” '),
+    finish('จบบทแล้วครับ วันนี้คุณใช้ Go straight, Turn left, Turn right และเชื่อมคำสั่งสองขั้นด้วย then ครับ'),
+  ],
   fnd_v7_please_and_thank_you: [
     task('วันนี้ฝึกคำสุภาพในชีวิตประจำวันครับ please ใช้กับคำขอ เช่น Water, please. คือขอน้ำครับ ลองฝึกคำว่า Please', 'Please'),
     task('เมื่อมีคนช่วยเรา ใช้ Thank you แปลว่าขอบคุณครับ ลองพูด Thank you', 'Thank you'),

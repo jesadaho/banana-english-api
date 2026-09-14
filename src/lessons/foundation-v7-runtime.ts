@@ -120,7 +120,7 @@ export async function runV7Turn(input: TrainingEngineTurnInput, gate: TrainingAi
     ? (exact ?? (tier === 'correct' ? input.userText : current.expectedSpeech))
     : last?.v7Choice;
   const next = renderV7Turn(id, stepNumber + 1, chosen);
-  const prefix = tier === 'correct' ? 'ดีครับ ' :
+  const prefix = tier === 'correct' ? (step.presentation?.successText ?? 'ดีครับ ') :
     'ประโยคนี้พูดว่า “' + current.expectedSpeech + '” ครับ ลองฝึกต่อด้วยกันนะครับ ';
   const text = prefix + next.textEn;
   return { reply: { ...next, textEn: text, ttsText: text, assessmentTier: tier,

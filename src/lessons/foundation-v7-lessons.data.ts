@@ -40,7 +40,7 @@ export interface V7TeachingStep {
   instruction: string;
   expectsUserSpeech: boolean;
   expectedSpeech?: string;
-  presentation?: { text: string; answerMode: 'single' | 'any'; stem: string; options: { emoji: string; label: string; speak: string }[] };
+  presentation?: { text: string; successText?: string; answerMode: 'single' | 'any'; stem: string; options: { emoji: string; label: string; speak: string }[] };
 }
 
 export function buildFoundationV7Steps(lessonId: string): V7TeachingStep[] {

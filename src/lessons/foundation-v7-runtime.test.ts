@@ -37,6 +37,46 @@ function harness(id: string) {
 }
 
 describe('Foundation V7 server-owned runtime', () => {
+  it('uses authored success transitions without duplicate automatic praise', async () => {
+    const h = harness('fnd_v7_he_she_it_we_they');
+    await h.say('He is my classmate.');
+    assert.match(h.reply.textEn, /^เยี่ยมมากครับ/);
+    assert.doesNotMatch(h.reply.textEn, /^ดีครับ เยี่ยม/);
+    assert.match(h.reply.textEn, /แปลว่า “เขาเป็นเพื่อนร่วมชั้นของฉัน”/);
+    assert.match(h.reply.textEn, /Anna เป็นครูของ Ben/);
+  });
+  it('reuses the learner selected family member without cards', async () => {
+    const h = harness('fnd_v7_my_family');
+    while (h.reply.v7Step! < 6) await h.say(h.reply.expectedSpeech!);
+    await h.say('This is my sister.');
+    assert.equal(h.reply.v7Choice, 'This is my sister.');
+    assert.equal(h.reply.expectedSpeech, 'This is my sister.');
+    assert.equal(h.reply.guidedSpeaking, undefined);
+  });
+  it('makes question-word answers reveal the next piece of information', async () => {
+    const h = harness('fnd_v7_where_when_how_much_and_how_many');
+    await h.say('Where is the market?');
+    assert.match(h.reply.textEn, /Near the station/);
+    await h.say('When do we go?');
+    assert.match(h.reply.textEn, /On Saturday/);
+    await h.say('How much is it?');
+    assert.match(h.reply.textEn, /twenty baht/);
+  });
+  it('accepts non-first Do/Does personal choices and keeps direct address as Do you', async () => {
+    const h = harness('fnd_v7_do_does_every_day');
+    await h.say('Do you work every day?');
+    await h.say('Do you cook every day?');
+    assert.equal(h.reply.v7Step, 3);
+    await h.say('Does he study every day?');
+    await h.say('Does she read every day?');
+    assert.equal(h.reply.expectedSpeech, 'Do you cook every day?');
+  });
+  it('uses emoji direction cues and transfers to an unaided two-step route', () => {
+    const steps = V7_LEGACY_FLOWS.fnd_v7_go_straight_turn_left;
+    assert.deepEqual(steps[2].presentation!.options.map(o => o.emoji), ['⬆️', '↩️', '↪️']);
+    assert.equal(steps.at(-2)!.expectedSpeech, 'Go straight, then turn right.');
+    assert.equal(steps.at(-2)!.presentation!.options.length, 0);
+  });
   it('preserves V7 repair phrases and closes after the NPC repeats their name', async () => {
     const h = harness('fnd_v7_say_that_again');
     const answers: string[] = [];
