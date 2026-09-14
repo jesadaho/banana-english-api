@@ -63,6 +63,18 @@ export class AdminMetricsService {
     );
   }
 
+  async survey(
+    fromRaw?: string,
+    toRaw?: string,
+    filters: MetricsFilters = EMPTY_FILTERS,
+  ) {
+    const range = this.safeRange(fromRaw, toRaw);
+    return this.cached(
+      `survey:${range.from.toISOString()}:${range.to.toISOString()}:${filtersCacheKey(filters)}`,
+      () => this.buildSurvey(range, filters),
+    );
+  }
+
   async content(
     fromRaw?: string,
     toRaw?: string,
@@ -661,12 +673,93 @@ export class AdminMetricsService {
         firstLessonCompleted: firstLesson,
         firstMissionCompleted: firstMission,
       },
+      };
+  }
+
+  private async buildSurvey(range: DateRange, filters: MetricsFilters) {
+    const userFilter = this.userWhere(filters);
+    const users = await this.prisma.user.findMany({
+      where: {
+        ...userFilter,
+        createdAt: { gte: range.from, lte: range.to },
+      },
+      select: {
+        surveyGender: true,
+        surveyAgeRange: true,
+        onboardingCompleted: true,
+      },
+    });
+
+    const genders: Record<string, number> = {};
+    const ages: Record<string, number> = {};
+    const genderAge: Record<string, Record<string, number>> = {};
+    let answered = 0;
+    let unset = 0;
+    let onboarded = 0;
+
+    for (const u of users) {
+      if (u.onboardingCompleted) onboarded += 1;
+      const gender = u.surveyGender?.trim() || 'unknown';
+      const age = u.surveyAgeRange?.trim() || 'unknown';
+      if (gender === 'unknown' && age === 'unknown') {
+        unset += 1;
+      } else {
+        answered += 1;
+      }
+      genders[gender] = (genders[gender] ?? 0) + 1;
+      ages[age] = (ages[age] ?? 0) + 1;
+      const row = genderAge[gender] ?? {};
+      row[age] = (row[age] ?? 0) + 1;
+      genderAge[gender] = row;
+    }
+
+    const genderOrder = ['female', 'male', 'prefer_not_say', 'unknown'];
+    const ageOrder = ['under_18', '18_24', '25_34', '35_44', '45_plus', 'unknown'];
+    const genderKeys = [
+      ...genderOrder.filter((k) => (genders[k] ?? 0) > 0),
+      ...Object.keys(genders)
+        .filter((k) => !genderOrder.includes(k))
+        .sort(),
+    ];
+    const ageKeys = [
+      ...ageOrder.filter((k) => (ages[k] ?? 0) > 0),
+      ...Object.keys(ages)
+        .filter((k) => !ageOrder.includes(k))
+        .sort(),
+    ];
+
+    return {
+      range: { from: range.from.toISOString(), to: range.to.toISOString() },
+      filters,
+      totals: {
+        signedUp: users.length,
+        onboardingCompleted: onboarded,
+        answered,
+        unset,
+      },
+      genders: genderKeys.map((gender) => ({
+        gender,
+        count: genders[gender] ?? 0,
+      })),
+      ages: ageKeys.map((ageRange) => ({
+        ageRange,
+        count: ages[ageRange] ?? 0,
+      })),
+      genderKeys,
+      ageKeys,
+      genderAgeMatrix: genderKeys.map((gender) => ({
+        gender,
+        total: Object.values(genderAge[gender] ?? {}).reduce((s, n) => s + n, 0),
+        ages: Object.fromEntries(
+          ageKeys.map((age) => [age, genderAge[gender]?.[age] ?? 0]),
+        ),
+      })),
     };
   }
 
   private async buildContent(range: DateRange, filters: MetricsFilters) {
     const userFilter = this.userWhere(filters);
-    const [lessonSessions, missionSessions, ratings, feedbackRows, streakBuckets, activeLearners, sessionMix, dailySpeakActive, minigameStarts] =
+    const [lessonSessions, missionSessions, ratings, feedbackRows, streakBuckets, activeLearners, sessionMix, sessionMixUsers, dailySpeakActive, minigameStarts, minigameStartUsers] =
       await Promise.all([
         this.prisma.userSession.groupBy({
           by: ['lessonId'],
@@ -730,6 +823,14 @@ export class AdminMetricsService {
           },
           _count: { _all: true },
         }),
+        this.prisma.userSession.groupBy({
+          by: ['sessionType', 'userId'],
+          where: {
+            createdAt: { gte: range.from, lte: range.to },
+            user: userFilter,
+          },
+          _count: { _all: true },
+        }),
         this.prisma.user.count({
           where: {
             ...userFilter,
@@ -739,6 +840,30 @@ export class AdminMetricsService {
         }),
         this.prisma.economyTransaction.groupBy({
           by: ['source'],
+          where: {
+            createdAt: { gte: range.from, lte: range.to },
+            user: userFilter,
+            OR: [
+              {
+                source: {
+                  in: [
+                    'say_it_start',
+                    'explain_it_start',
+                    'emoji_speak_start',
+                    'emoji_speak_play',
+                  ],
+                },
+              },
+              {
+                source: 'daily_speak_reward',
+                currency: Currency.XP,
+              },
+            ],
+          },
+          _count: { _all: true },
+        }),
+        this.prisma.economyTransaction.groupBy({
+          by: ['source', 'userId'],
           where: {
             createdAt: { gte: range.from, lte: range.to },
             user: userFilter,
@@ -774,6 +899,10 @@ export class AdminMetricsService {
     );
 
     const minigamePlays = this.minigamePlayCounts(minigameStarts);
+    const usersBySessionType = this.uniqueUsersByKey(
+      sessionMixUsers,
+      'sessionType',
+    );
     const minigameIds = new Set<string>([
       ...minigamePlays.keys(),
       ...ratings
@@ -871,9 +1000,10 @@ export class AdminMetricsService {
           ...sessionMix.map((s) => ({
             sessionType: s.sessionType,
             count: s._count._all,
+            users: usersBySessionType[s.sessionType] ?? 0,
             source: 'user_session' as const,
           })),
-          ...this.normalizeMinigameSessionMix(minigameStarts),
+          ...this.normalizeMinigameSessionMix(minigameStarts, minigameStartUsers),
         ].sort((a, b) => b.count - a.count),
         dailySpeakTouchedUsers: dailySpeakActive,
       },
@@ -975,28 +1105,69 @@ export class AdminMetricsService {
   /** Collapse economy sources into dashboard session-type rows. */
   private normalizeMinigameSessionMix(
     rows: { source: string; _count: { _all: number } }[],
-  ): { sessionType: string; count: number; source: 'economy_start' }[] {
+    userRows: { source: string; userId: string }[] = [],
+  ): {
+    sessionType: string;
+    count: number;
+    users: number;
+    source: 'economy_start';
+  }[] {
     const raw: Record<string, number> = {};
     for (const row of rows) {
       raw[row.source] = (raw[row.source] ?? 0) + row._count._all;
     }
+    const usersBySource = this.uniqueUsersByKey(userRows, 'source');
 
     const play = raw.emoji_speak_play ?? 0;
     const legacyStart = raw.emoji_speak_start ?? 0;
     // Prefer play pings (free + paid). Fall back to banana starts for older data.
     const emojiSpeak = play > 0 ? play : legacyStart;
+    const emojiUsers =
+      play > 0
+        ? (usersBySource.emoji_speak_play ?? 0)
+        : (usersBySource.emoji_speak_start ?? 0);
 
-    const merged: Record<string, number> = {};
-    if (emojiSpeak > 0) merged.emoji_speak = emojiSpeak;
-    if (raw.say_it_start) merged.say_it = raw.say_it_start;
-    if (raw.explain_it_start) merged.explain_it = raw.explain_it_start;
-    if (raw.daily_speak_reward) merged.daily_speak = raw.daily_speak_reward;
+    const merged: Record<string, { count: number; users: number }> = {};
+    if (emojiSpeak > 0) {
+      merged.emoji_speak = { count: emojiSpeak, users: emojiUsers };
+    }
+    if (raw.say_it_start) {
+      merged.say_it = {
+        count: raw.say_it_start,
+        users: usersBySource.say_it_start ?? 0,
+      };
+    }
+    if (raw.explain_it_start) {
+      merged.explain_it = {
+        count: raw.explain_it_start,
+        users: usersBySource.explain_it_start ?? 0,
+      };
+    }
+    if (raw.daily_speak_reward) {
+      merged.daily_speak = {
+        count: raw.daily_speak_reward,
+        users: usersBySource.daily_speak_reward ?? 0,
+      };
+    }
 
-    return Object.entries(merged).map(([sessionType, count]) => ({
+    return Object.entries(merged).map(([sessionType, row]) => ({
       sessionType,
-      count,
+      count: row.count,
+      users: row.users,
       source: 'economy_start' as const,
     }));
+  }
+
+  private uniqueUsersByKey<K extends string>(
+    rows: Array<Record<K, string>>,
+    key: K,
+  ): Record<string, number> {
+    const counts: Record<string, number> = {};
+    for (const row of rows) {
+      const value = row[key];
+      counts[value] = (counts[value] ?? 0) + 1;
+    }
+    return counts;
   }
 
   private async streakDistribution(userFilter: Prisma.UserWhereInput) {

@@ -12,6 +12,8 @@ export type ChoiceLessonHistoryTurn = {
   guidedSpeaking?: {
     options?: Array<{ speak?: string }>;
   } | null;
+  roleplayIntro?: unknown;
+  roleplayNpc?: unknown;
 };
 
 export type ChoiceLessonBoard = {
@@ -484,7 +486,8 @@ export function buildGenericScriptedReplyFromProgress(
 
   if (def.progressFn(history) >= def.maxStep || nextStep > def.maxStep) {
     if (def.afterTeachingComplete) {
-      return def.afterTeachingComplete(history, learnerFirstName);
+      const after = def.afterTeachingComplete(history, learnerFirstName);
+      if (after) return after;
     }
     const completionStatus = completionStatusFromHistory(history, def.maxStep);
     const text = completionStatus === 'completed_independently'
@@ -767,9 +770,10 @@ export function pinChoiceLessonAiReply(
       nextBoardForPraise?.advanceQuestionEn?.trim() ||
       nextBody
     ).trim();
-    const praise = nextBoardForPraise?.withPraise === false
-      ? ''
-      : correctAdvancePraise(aiReply.textEn?.trim() ?? '');
+    const praise =
+      next.roleplayNpc != null || nextBoardForPraise?.withPraise === false
+        ? ''
+        : correctAdvancePraise(aiReply.textEn?.trim() ?? '');
     return {
       textEn: `${praise} ${nextBody}`.trim() || 'มาลองข้อต่อไปกันครับ',
       ttsText: `${praise} ${nextTtsBody}`.trim() || 'มาลองข้อต่อไปกันครับ',
@@ -843,6 +847,12 @@ export function buildChoiceLessonAfterUser(
       learnerFirstName,
     );
     return next ? { ...next, assessmentTier: 'correct' as const } : null;
+  }
+
+  const teachingDone = def.progressFn(priorTurns) >= def.maxStep;
+  if (def.afterTeachingComplete && teachingDone) {
+    const next = def.afterTeachingComplete(turns, learnerFirstName);
+    if (next) return { ...next, assessmentTier: 'correct' as const };
   }
 
   const replayBefore = def.progressFn(priorTurns);

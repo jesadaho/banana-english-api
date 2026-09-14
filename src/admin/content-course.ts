@@ -78,12 +78,15 @@ export function classifyContentCourse(id: string): ContentCourse {
   if (trimmed.startsWith('game_')) return 'minigame';
   if (
     trimmed.startsWith('fnd_v2_') ||
+    trimmed.startsWith('fnd_v7_') ||
     trimmed.startsWith('foundation_') ||
     BASIC_LESSON_ID_SET.has(trimmed)
   ) {
     return 'foundation';
   }
-  if (trimmed.startsWith('pron_')) return 'pronunciation';
+  if (trimmed.startsWith('pron_') || trimmed.startsWith('fnd_v6_pron_')) {
+    return 'pronunciation';
+  }
   if (trimmed.startsWith('ee_')) return 'everyday';
   return 'other';
 }

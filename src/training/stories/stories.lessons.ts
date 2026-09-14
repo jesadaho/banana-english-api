@@ -1,7 +1,9 @@
 import {
+  aroundTownIntroAlreadyShown,
   aroundTownRoleplayIntroSpeech,
   computeThreeTierChoiceProgress,
   createBoardChoiceScorer,
+  nextAroundTownRoleplayTurn,
   type ChoiceStepTier,
   type ForcedGuidedBoard,
 } from '../../lessons/lessons.data';
@@ -75,15 +77,37 @@ function withHints(
   };
 }
 
-export function roleplayAfterTeaching(lessonId: string): ScriptTurnResult | null {
+export function roleplayAfterTeaching(
+  lessonId: string,
+  history: Array<{
+    speaker: string;
+    roleplayIntro?: unknown;
+    roleplayNpc?: unknown;
+  }> = [],
+): ScriptTurnResult | null {
   const intro = aroundTownRoleplayIntroSpeech(lessonId, 'thai');
   if (!intro) return null;
+
+  if (!aroundTownIntroAlreadyShown(history)) {
+    return {
+      textEn: intro.textEn,
+      textTh: '',
+      isLessonComplete: false,
+      expectsUserSpeech: false,
+      roleplayIntro: intro.roleplayIntro,
+    };
+  }
+
+  const next = nextAroundTownRoleplayTurn(lessonId, 'thai', history);
+  if (!next) return null;
   return {
-    textEn: intro.textEn,
-    textTh: '',
-    isLessonComplete: false,
-    expectsUserSpeech: false,
-    roleplayIntro: intro.roleplayIntro,
+    textEn: next.textEn,
+    textTh: next.textTh ?? '',
+    isLessonComplete: next.isLessonComplete,
+    expectsUserSpeech: next.expectsUserSpeech,
+    expectedSpeech: next.expectedSpeech ?? '',
+    ...(next.roleplayNpc ? { roleplayNpc: next.roleplayNpc } : {}),
+    ...(next.emojiChoice ? { emojiChoice: next.emojiChoice } : {}),
   };
 }
 

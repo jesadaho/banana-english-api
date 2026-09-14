@@ -1,0 +1,458 @@
+{
+  "fnd_v7_u03n02": {
+    "title": "How Do You Feel?",
+    "dealCount": 4,
+    "items": [
+      {
+        "emoji": "😊",
+        "answer": "happy",
+        "hint": "ha__y",
+        "meaningTh": "มีความสุข",
+        "promptTh": "บอกความรู้สึกหรือสภาพในภาพเป็นภาษาอังกฤษ"
+      },
+      {
+        "emoji": "😴",
+        "answer": "tired",
+        "hint": "ti__d",
+        "meaningTh": "เหนื่อย",
+        "promptTh": "บอกความรู้สึกหรือสภาพในภาพเป็นภาษาอังกฤษ"
+      },
+      {
+        "emoji": "😋",
+        "answer": "hungry",
+        "hint": "hu___y",
+        "meaningTh": "หิว",
+        "promptTh": "บอกความรู้สึกหรือสภาพในภาพเป็นภาษาอังกฤษ"
+      },
+      {
+        "emoji": "👌",
+        "answer": "ready",
+        "hint": "re__y",
+        "meaningTh": "พร้อม",
+        "promptTh": "บอกความรู้สึกหรือสภาพในภาพเป็นภาษาอังกฤษ"
+      }
+    ]
+  },
+  "fnd_v7_u04n02": {
+    "title": "People Around Me",
+    "dealCount": 4,
+    "items": [
+      {
+        "emoji": "🧑‍🏫",
+        "answer": "teacher",
+        "hint": "tea___r",
+        "meaningTh": "ครู",
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
+      },
+      {
+        "emoji": "🧑‍🎓",
+        "answer": "student",
+        "hint": "stu___t",
+        "meaningTh": "นักเรียน",
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
+      },
+      {
+        "emoji": "🧑‍🤝‍🧑",
+        "answer": "friend",
+        "hint": "fr___d",
+        "meaningTh": "เพื่อนหนึ่งคน",
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
+      },
+      {
+        "emoji": "👥",
+        "answer": "people",
+        "hint": "pe___e",
+        "meaningTh": "ผู้คน",
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
+      }
+    ]
+  },
+  "fnd_v7_u05n02": {
+    "title": "Everyday Objects",
+    "dealCount": 4,
+    "items": [
+      {
+        "emoji": "📖",
+        "answer": "book",
+        "hint": "bo_k",
+        "meaningTh": "หนังสือ",
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
+      },
+      {
+        "emoji": "🎒",
+        "answer": "bag",
+        "hint": "b_g",
+        "meaningTh": "กระเป๋า",
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
+      },
+      {
+        "emoji": "🖊️",
+        "answer": "pen",
+        "hint": "p_n",
+        "meaningTh": "ปากกา",
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
+      },
+      {
+        "emoji": "🍎",
+        "answer": "apple",
+        "hint": "ap__e",
+        "meaningTh": "แอปเปิล",
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
+      }
+    ]
+  },
+  "fnd_v7_u06n04": {
+    "title": "Spot the Colour",
+    "dealCount": 4,
+    "items": [
+      {
+        "emoji": "🔴",
+        "answer": "red",
+        "hint": "r_d",
+        "meaningTh": "สีแดง",
+        "promptTh": "บอกสีในภาพเป็นภาษาอังกฤษ"
+      },
+      {
+        "emoji": "🔵",
+        "answer": "blue",
+        "hint": "bl_e",
+        "meaningTh": "สีน้ำเงิน",
+        "promptTh": "บอกสีในภาพเป็นภาษาอังกฤษ"
+      },
+      {
+        "emoji": "🟢",
+        "answer": "green",
+        "hint": "gr__n",
+        "meaningTh": "สีเขียว",
+        "promptTh": "บอกสีในภาพเป็นภาษาอังกฤษ"
+      },
+      {
+        "emoji": "🟡",
+        "answer": "yellow",
+        "hint": "ye___w",
+        "meaningTh": "สีเหลือง",
+        "promptTh": "บอกสีในภาพเป็นภาษาอังกฤษ"
+      }
+    ]
+  },
+  "fnd_v7_u07n02": {
+    "title": "Things I Carry",
+    "dealCount": 4,
+    "items": [
+      {
+        "emoji": "📱",
+        "answer": "phone",
+        "hint": "ph__e",
+        "meaningTh": "โทรศัพท์",
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
+      },
+      {
+        "emoji": "🔑",
+        "answer": "key",
+        "hint": "k_y",
+        "meaningTh": "กุญแจ",
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
+      },
+      {
+        "emoji": "👕",
+        "answer": "shirt",
+        "hint": "sh__t",
+        "meaningTh": "เสื้อ",
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
+      },
+      {
+        "emoji": "🎒",
+        "answer": "bag",
+        "hint": "b_g",
+        "meaningTh": "กระเป๋า",
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
+      }
+    ]
+  },
+  "fnd_v7_u08n02": {
+    "title": "Name the Number",
+    "dealCount": 5,
+    "items": [
+      {
+        "emoji": "0️⃣",
+        "answer": "zero",
+        "hint": "ze_o",
+        "meaningTh": "ศูนย์",
+        "promptTh": "พูดตัวเลขในภาพเป็นภาษาอังกฤษ"
+      },
+      {
+        "emoji": "1️⃣",
+        "answer": "one",
+        "hint": "o_e",
+        "meaningTh": "หนึ่ง",
+        "promptTh": "พูดตัวเลขในภาพเป็นภาษาอังกฤษ"
+      },
+      {
+        "emoji": "2️⃣",
+        "answer": "two",
+        "hint": "t_o",
+        "meaningTh": "สอง",
+        "promptTh": "พูดตัวเลขในภาพเป็นภาษาอังกฤษ"
+      },
+      {
+        "emoji": "6️⃣",
+        "answer": "six",
+        "hint": "s_x",
+        "meaningTh": "หก",
+        "promptTh": "พูดตัวเลขในภาพเป็นภาษาอังกฤษ"
+      },
+      {
+        "emoji": "🔟",
+        "answer": "ten",
+        "hint": "t_n",
+        "meaningTh": "สิบ",
+        "promptTh": "พูดตัวเลขในภาพเป็นภาษาอังกฤษ"
+      }
+    ]
+  },
+  "fnd_v7_u09n04": {
+    "title": "Clock Faces",
+    "dealCount": 4,
+    "items": [
+      {
+        "emoji": "🕖",
+        "answer": "seven",
+        "hint": "se__n",
+        "meaningTh": "เจ็ดโมง",
+        "promptTh": "บอกเวลาบนนาฬิกาเป็นภาษาอังกฤษ"
+      },
+      {
+        "emoji": "🕢",
+        "answer": "seven thirty",
+        "hint": "se__n th___y",
+        "meaningTh": "เจ็ดโมงครึ่ง",
+        "promptTh": "บอกเวลาบนนาฬิกาเป็นภาษาอังกฤษ"
+      },
+      {
+        "emoji": "🕗",
+        "answer": "eight",
+        "hint": "ei__t",
+        "meaningTh": "แปดโมง",
+        "promptTh": "บอกเวลาบนนาฬิกาเป็นภาษาอังกฤษ"
+      },
+      {
+        "emoji": "🕣",
+        "answer": "eight thirty",
+        "hint": "ei__t th___y",
+        "meaningTh": "แปดโมงครึ่ง",
+        "promptTh": "บอกเวลาบนนาฬิกาเป็นภาษาอังกฤษ"
+      }
+    ]
+  },
+  "fnd_v7_u10n02": {
+    "title": "Food & Drink",
+    "dealCount": 4,
+    "items": [
+      {
+        "emoji": "🍵",
+        "answer": "tea",
+        "hint": "t_a",
+        "meaningTh": "ชา",
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
+      },
+      {
+        "emoji": "☕",
+        "answer": "coffee",
+        "hint": "co___e",
+        "meaningTh": "กาแฟ",
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
+      },
+      {
+        "emoji": "💧",
+        "answer": "water",
+        "hint": "wa__r",
+        "meaningTh": "น้ำ",
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
+      },
+      {
+        "emoji": "🍚",
+        "answer": "rice",
+        "hint": "ri_e",
+        "meaningTh": "ข้าว",
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
+      }
+    ]
+  },
+  "fnd_v7_u11n02": {
+    "title": "Action Words",
+    "dealCount": 4,
+    "items": [
+      {
+        "emoji": "🏊",
+        "answer": "swim",
+        "hint": "sw_m",
+        "meaningTh": "ว่ายน้ำ",
+        "promptTh": "พูดคำกริยาภาษาอังกฤษจากภาพ"
+      },
+      {
+        "emoji": "📖",
+        "answer": "read",
+        "hint": "re_d",
+        "meaningTh": "อ่าน",
+        "promptTh": "พูดคำกริยาภาษาอังกฤษจากภาพ"
+      },
+      {
+        "emoji": "🧑‍🍳",
+        "answer": "cook",
+        "hint": "co_k",
+        "meaningTh": "ทำอาหาร",
+        "promptTh": "พูดคำกริยาภาษาอังกฤษจากภาพ"
+      },
+      {
+        "emoji": "🪑",
+        "answer": "sit",
+        "hint": "s_t",
+        "meaningTh": "นั่ง",
+        "promptTh": "พูดคำกริยาภาษาอังกฤษจากภาพ"
+      }
+    ]
+  },
+  "fnd_v7_u12n02": {
+    "title": "Daily Actions",
+    "dealCount": 4,
+    "items": [
+      {
+        "emoji": "⏰",
+        "answer": "wake up",
+        "hint": "wa_e u_",
+        "meaningTh": "ตื่นนอน",
+        "promptTh": "พูดคำกริยาภาษาอังกฤษจากภาพ"
+      },
+      {
+        "emoji": "🍽️",
+        "answer": "eat",
+        "hint": "e_t",
+        "meaningTh": "กิน",
+        "promptTh": "พูดคำกริยาภาษาอังกฤษจากภาพ"
+      },
+      {
+        "emoji": "💼",
+        "answer": "work",
+        "hint": "wo_k",
+        "meaningTh": "ทำงาน",
+        "promptTh": "พูดคำกริยาภาษาอังกฤษจากภาพ"
+      },
+      {
+        "emoji": "😴",
+        "answer": "sleep",
+        "hint": "sl__p",
+        "meaningTh": "นอน",
+        "promptTh": "พูดคำกริยาภาษาอังกฤษจากภาพ"
+      }
+    ]
+  },
+  "fnd_v7_u13n02": {
+    "title": "Action Snapshot",
+    "dealCount": 4,
+    "items": [
+      {
+        "emoji": "📖",
+        "answer": "read",
+        "hint": "re_d",
+        "meaningTh": "อ่าน",
+        "promptTh": "พูดคำกริยาภาษาอังกฤษจากภาพ"
+      },
+      {
+        "emoji": "🧑‍🍳",
+        "answer": "cook",
+        "hint": "co_k",
+        "meaningTh": "ทำอาหาร",
+        "promptTh": "พูดคำกริยาภาษาอังกฤษจากภาพ"
+      },
+      {
+        "emoji": "🍽️",
+        "answer": "eat",
+        "hint": "e_t",
+        "meaningTh": "กิน",
+        "promptTh": "พูดคำกริยาภาษาอังกฤษจากภาพ"
+      },
+      {
+        "emoji": "💼",
+        "answer": "work",
+        "hint": "wo_k",
+        "meaningTh": "ทำงาน",
+        "promptTh": "พูดคำกริยาภาษาอังกฤษจากภาพ"
+      }
+    ]
+  },
+  "fnd_v7_u15n02": {
+    "title": "Around the Room",
+    "dealCount": 4,
+    "items": [
+      {
+        "emoji": "🪑",
+        "answer": "chair",
+        "hint": "ch__r",
+        "meaningTh": "เก้าอี้",
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
+      },
+      {
+        "emoji": "🪟",
+        "answer": "window",
+        "hint": "wi___w",
+        "meaningTh": "หน้าต่าง",
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
+      },
+      {
+        "emoji": "🍽️🪑",
+        "answer": "table",
+        "hint": "ta__e",
+        "meaningTh": "โต๊ะ",
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
+      },
+      {
+        "emoji": "📖",
+        "answer": "book",
+        "hint": "bo_k",
+        "meaningTh": "หนังสือ",
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
+      }
+    ]
+  },
+  "fnd_v7_u16n01": {
+    "title": "Words I Know",
+    "dealCount": 5,
+    "items": [
+      {
+        "emoji": "📖",
+        "answer": "book",
+        "hint": "bo_k",
+        "meaningTh": "หนังสือ",
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
+      },
+      {
+        "emoji": "🔑",
+        "answer": "key",
+        "hint": "k_y",
+        "meaningTh": "กุญแจ",
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
+      },
+      {
+        "emoji": "💧",
+        "answer": "water",
+        "hint": "wa__r",
+        "meaningTh": "น้ำ",
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
+      },
+      {
+        "emoji": "📖👀",
+        "answer": "read",
+        "hint": "re_d",
+        "meaningTh": "อ่าน",
+        "promptTh": "พูดคำกริยาภาษาอังกฤษจากภาพ"
+      },
+      {
+        "emoji": "🪑",
+        "answer": "chair",
+        "hint": "ch__r",
+        "meaningTh": "เก้าอี้",
+        "promptTh": "พูดคำนามภาษาอังกฤษจากภาพ"
+      }
+    ]
+  }
+}

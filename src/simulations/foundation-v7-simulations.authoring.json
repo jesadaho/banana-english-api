@@ -1,0 +1,401 @@
+[
+  {
+    "simulationId": "foundation_v7_u02n04",
+    "nodeId": "v7_u02n04",
+    "titleEn": "Help Me Understand",
+    "scenarioTh": "คุณฟังชื่อเพื่อนไม่ทัน ลองขอให้พูดซ้ำ แล้วขอบคุณ ไม่ต้องทำเป็นว่ามีคำศัพท์ยากที่ไม่เคยเรียน",
+    "openingEn": "Hi! My name is Sam.",
+    "role": "You are Sam. After any repeat/slow/non-understanding request, say 'My name is Sam.' slowly and clearly. Then accept acknowledgement or thanks. Never use mezzanine, concourse, platform or a meaning quiz.",
+    "goals": [
+      {
+        "id": "repair",
+        "th": "ขอให้พูดซ้ำหรือช้าลง",
+        "en": "Request repetition or slower speech",
+        "example": "Please say that again"
+      },
+      {
+        "id": "acknowledge",
+        "th": "ยืนยันว่ารับข้อมูลแล้วหรือขอบคุณ",
+        "en": "Acknowledge the repeated name or thank the speaker",
+        "example": "Thank you"
+      }
+    ],
+    "maxTurns": 4
+  },
+  {
+    "simulationId": "foundation_v7_u03n06",
+    "nodeId": "v7_u03n06",
+    "titleEn": "Meet a Classmate",
+    "scenarioTh": "คุยกับเพื่อนชื่อ Max คุณเลือกตอบตามตัวเองหรือสมมติว่าพร้อมและไม่เหนื่อยได้",
+    "openingEn": "Hi! I am Max. Are you tired?",
+    "role": "You are a classmate. Accept either a truthful yes or a correction with not. Say 'I am ready.' when asked about yourself. Ask one short follow-up about ready/happy only, no age/work questions.",
+    "goals": [
+      {
+        "id": "state",
+        "th": "บอกสภาพของตน",
+        "en": "Say how you feel using the taught states",
+        "example": "I am not tired"
+      },
+      {
+        "id": "ask",
+        "th": "ถามสภาพเพื่อน",
+        "en": "Ask whether the classmate is ready/happy/tired",
+        "example": "Are you ready"
+      }
+    ],
+    "maxTurns": 4
+  },
+  {
+    "simulationId": "foundation_v7_u04n06",
+    "nodeId": "v7_u04n06",
+    "titleEn": "Meet My Family",
+    "scenarioTh": "แนะนำคนหนึ่งคนในครอบครัวจริงหรือสมมติ เช่น Mia เป็นพี่น้องของคุณและเป็นหมอ เลี่ยงเรื่องส่วนตัวได้",
+    "openingEn": "Hello! Who is this?",
+    "role": "Ask about one family member. Accept fictional or real family and any clear relationship. After the relationship, ask 'Is she a student?' if the learner used she, or corresponding pronoun; accept correction. Allow questions about your brother Sam, a student. If privacy opt-out, invite fictional Sam instead and do not penalize.",
+    "goals": [
+      {
+        "id": "introduce",
+        "th": "แนะนำความสัมพันธ์",
+        "en": "Introduce one family relationship",
+        "example": "This is my sister"
+      },
+      {
+        "id": "fact",
+        "th": "บอกข้อมูลเพิ่มหรือแก้ข้อมูลผิด",
+        "en": "Give or correct a simple fact about that person",
+        "example": "She is a doctor"
+      },
+      {
+        "id": "ask",
+        "th": "ถามเกี่ยวกับคนของอีกฝ่าย",
+        "en": "Ask who someone is",
+        "example": "Who is this"
+      }
+    ],
+    "maxTurns": 5
+  },
+  {
+    "simulationId": "foundation_v7_u05n06",
+    "nodeId": "v7_u05n06",
+    "titleEn": "What’s in the Bag?",
+    "scenarioTh": "สมมติว่าคุณมีหนังสือหนึ่งเล่มและปากกาหลายด้ามในกระเป๋า บอกเพื่อนว่ามีอะไรบ้าง",
+    "openingEn": "Hello! A book or pens?",
+    "role": "The shared text scene contains a book and several pens. Accept noun phrases and full sentences. Ask once 'A pen?' after the learner mentioned pens, so they can correct singular/plural. Do not introduce there is/are or untaught number words.",
+    "goals": [
+      {
+        "id": "object",
+        "th": "บอกสิ่งของ",
+        "en": "Name a taught object in the bag",
+        "example": "A book"
+      },
+      {
+        "id": "quantity",
+        "th": "ทำให้รู้ว่าหนึ่งหรือหลายชิ้น",
+        "en": "Clarify a singular/plural amount",
+        "example": "No, pens"
+      }
+    ],
+    "maxTurns": 4
+  },
+  {
+    "simulationId": "foundation_v7_u06n08",
+    "nodeId": "v7_u06n08",
+    "titleEn": "Find the Right One",
+    "scenarioTh": "เลือกกระเป๋าที่ต้องการ: ใกล้คุณมีใบเล็กสีแดง ไกลออกไปมีใบใหญ่สีน้ำเงิน คุณเลือกได้ทั้งสองใบ",
+    "openingEn": "Hello! This bag or that bag?",
+    "role": "Use the shared scene exactly: near small red bag, far big blue bag. Let the learner choose either. Ask a single clarifying colour or size question using taught words. Confirm their actual choice and stop. Do not reference an absent photo or price.",
+    "goals": [
+      {
+        "id": "choose",
+        "th": "เลือกสิ่งของใกล้หรือไกล",
+        "en": "Choose this or that item",
+        "example": "That bag, please"
+      },
+      {
+        "id": "detail",
+        "th": "ให้รายละเอียดเพื่อเลือกได้ถูก",
+        "en": "Clarify a taught colour or size",
+        "example": "The blue bag"
+      }
+    ],
+    "maxTurns": 4
+  },
+  {
+    "simulationId": "foundation_v7_u07n07",
+    "nodeId": "v7_u07n07",
+    "titleEn": "Lost & Found",
+    "scenarioTh": "ของหายของคุณคือกระเป๋าสีน้ำเงิน เจ้าหน้าที่มีใบสีน้ำเงินกับใบสีแดง บอกว่าชิ้นไหนของคุณ",
+    "openingEn": "Hello! Your bag?",
+    "role": "You work at lost and found. Both bags are in this text scene; blue belongs to the learner, red belongs to Sam. Ask 'The red bag?' once and accept a correction. Confirm the blue bag belongs to them. No images or hidden ownership facts are needed.",
+    "goals": [
+      {
+        "id": "request",
+        "th": "บอกของที่ต้องการ",
+        "en": "Request the missing belonging",
+        "example": "My bag, please"
+      },
+      {
+        "id": "owner",
+        "th": "ยืนยันหรือแก้เจ้าของ",
+        "en": "Clarify ownership and/or colour",
+        "example": "The blue bag is my bag"
+      }
+    ],
+    "maxTurns": 4
+  },
+  {
+    "simulationId": "foundation_v7_u08n10",
+    "nodeId": "v7_u08n10",
+    "titleEn": "Join the Class",
+    "scenarioTh": "สมัครคลาสด้วยชื่อจริงหรือบัตรสมมติ Sam อายุ 16 ปี คุณขอให้เจ้าหน้าที่พูดซ้ำได้",
+    "openingEn": "Hello! Your name, please?",
+    "role": "You are a patient class receptionist. Ask for the name, then ask 'Please spell that.' If a name and spelling were packed together, do not ask again. Confirm what was actually spelled and ask age. Accept a fictional age 11–20, real ages the learner already knows, letters separated or a correctly collapsed name from STT. Do not score phonetics from the transcript.",
+    "goals": [
+      {
+        "id": "name",
+        "th": "บอกชื่อ",
+        "en": "Give a name",
+        "example": "My name is Sam"
+      },
+      {
+        "id": "spell",
+        "th": "สะกดชื่อ",
+        "en": "Spell or clarify the name when asked",
+        "example": "S A M"
+      },
+      {
+        "id": "age",
+        "th": "บอกอายุ",
+        "en": "Give a real or fictional age",
+        "example": "I am sixteen"
+      }
+    ],
+    "maxTurns": 5
+  },
+  {
+    "simulationId": "foundation_v7_u09n09",
+    "nodeId": "v7_u09n09",
+    "titleEn": "Buy One Ticket",
+    "scenarioTh": "ซื้อตั๋วหนึ่งใบสำหรับคลาส ถามราคาและเวลาคลาส ราคาที่เจ้าหน้าที่รู้คือ 30 บาท คลาสวันศุกร์ 10 โมง",
+    "openingEn": "Hello! One ticket?",
+    "role": "You sell a class ticket. Price thirty baht, class Friday at ten. Answer the learner's actual questions and ask at most one confirmation of purchase. Never change facts, use dollars, or ask for travel/payment details. Accept short thanks/confirmation.",
+    "goals": [
+      {
+        "id": "ticket",
+        "th": "ขอตั๋วหนึ่งใบ",
+        "en": "Request one ticket",
+        "example": "One ticket, please"
+      },
+      {
+        "id": "price",
+        "th": "ถามราคา",
+        "en": "Ask the ticket price",
+        "example": "How much is it"
+      },
+      {
+        "id": "time",
+        "th": "ถามหรือยืนยันวันหรือเวลา",
+        "en": "Ask or confirm the class day/time",
+        "example": "At ten?"
+      }
+    ],
+    "maxTurns": 5
+  },
+  {
+    "simulationId": "foundation_v7_u10n07",
+    "nodeId": "v7_u10n07",
+    "titleEn": "Order a Drink",
+    "scenarioTh": "สั่งชา กาแฟ หรือน้ำ เลือกตามความชอบจริงหรือสมมติ ราคาเครื่องดื่มทุกชนิด 30 บาท",
+    "openingEn": "Hello! Tea or coffee?",
+    "role": "You are at a small drinks counter. Available tea, coffee, water; all thirty baht. Accept any of these. Offer one taught alternative only if the learner declines. Answer price questions, confirm their choice and close. No milk types, sizes, tense or vocabulary beyond the taught set.",
+    "goals": [
+      {
+        "id": "order",
+        "th": "สั่งเครื่องดื่ม",
+        "en": "Request a taught drink",
+        "example": "Tea, please"
+      },
+      {
+        "id": "respond",
+        "th": "รับหรือปฏิเสธตัวเลือก",
+        "en": "Accept, decline or clarify the offered drink",
+        "example": "No, thank you"
+      },
+      {
+        "id": "close",
+        "th": "จบการสั่งอย่างสุภาพ",
+        "en": "Confirm or thank the server",
+        "example": "Thank you"
+      }
+    ],
+    "maxTurns": 5
+  },
+  {
+    "simulationId": "foundation_v7_u11n06",
+    "nodeId": "v7_u11n06",
+    "titleEn": "Find Something We Can Do",
+    "scenarioTh": "หากิจกรรมที่ทำร่วมกับ Sam ได้ Sam ทำอาหารได้แต่ว่ายน้ำไม่เป็น คุณใช้ข้อมูลสมมติของตัวเองได้",
+    "openingEn": "Hi! I can cook. Can you cook?",
+    "role": "You are Sam. You can cook/read, cannot swim. Ask one ability question and give room for the learner to ask back. Accept true or fictional abilities, including cannot. Agree on a common taught activity if there is one; accept that no activity matches without treating it as failure. Never infer ability from appearance.",
+    "goals": [
+      {
+        "id": "ability",
+        "th": "บอกทำได้หรือไม่ได้",
+        "en": "State an ability or inability",
+        "example": "I can cook"
+      },
+      {
+        "id": "ask",
+        "th": "ถามอีกฝ่าย",
+        "en": "Ask the partner about an ability",
+        "example": "Can you swim"
+      },
+      {
+        "id": "respond",
+        "th": "ตอบรับหรือบอกว่ายังไม่ตรงกัน",
+        "en": "Respond to an offered activity",
+        "example": "Yes, I can"
+      }
+    ],
+    "maxTurns": 5
+  },
+  {
+    "simulationId": "foundation_v7_u12n08",
+    "nodeId": "v7_u12n08",
+    "titleEn": "Compare Our Days",
+    "scenarioTh": "คุยเปรียบเทียบกิจวัตรกับ Sam เขาตื่น 7 โมง ทำงานวันจันทร์ และไม่ทำงานวันศุกร์ คุณตอบจริงหรือสมมติก็ได้",
+    "openingEn": "Hi! I wake up at seven. What time do you wake up?",
+    "role": "You are Sam with the fixed routine in the learner brief. Ask one routine/time question. Answer any taught routine question truthfully from that brief; for a missing fact say a simple taught answer without changing facts. Let the learner ask; do not repeatedly request a full sentence when 'At seven' answers the question.",
+    "goals": [
+      {
+        "id": "routine",
+        "th": "บอกกิจวัตรหรือเวลา",
+        "en": "Share a routine/time fact",
+        "example": "I wake up at seven"
+      },
+      {
+        "id": "ask",
+        "th": "ถามกิจวัตรอีกฝ่าย",
+        "en": "Ask a routine question",
+        "example": "Do you work on Friday"
+      },
+      {
+        "id": "reply",
+        "th": "ตอบคำถามเพิ่มเติม",
+        "en": "Answer a short follow-up in context",
+        "example": "At seven"
+      }
+    ],
+    "maxTurns": 5
+  },
+  {
+    "simulationId": "foundation_v7_u13n06",
+    "nodeId": "v7_u13n06",
+    "titleEn": "A Quick Update",
+    "scenarioTh": "สมมติฉากร่วมกัน: Mia กำลังทำอาหาร Sam กำลังกิน ไม่ได้ทำงาน เล่าและถามสิ่งที่เกิดขึ้นตอนนี้",
+    "openingEn": "Hi! Is Mia working now?",
+    "role": "Use only the shared text scene: Mia cooking, Sam eating not working. Accept corrections and short replies. After receiving an update ask 'And Sam?' then allow the learner a question. Do not use past/future or claim to see an unprovided image.",
+    "goals": [
+      {
+        "id": "update",
+        "th": "บอกหรือแก้กิจกรรมตอนนี้",
+        "en": "Report/correct one current activity",
+        "example": "She is cooking"
+      },
+      {
+        "id": "second",
+        "th": "บอกกิจกรรมอีกคน",
+        "en": "Report the other person's activity",
+        "example": "He is eating"
+      },
+      {
+        "id": "ask",
+        "th": "ถามเกี่ยวกับตอนนี้",
+        "en": "Ask about a current activity",
+        "example": "Is he working"
+      }
+    ],
+    "maxTurns": 5
+  },
+  {
+    "simulationId": "foundation_v7_u14n06",
+    "nodeId": "v7_u14n06",
+    "titleEn": "You Ask First",
+    "scenarioTh": "คุณเป็นฝ่ายถามข้อมูลคลาสที่ยังไม่รู้ อยากรู้เวลาและสถานที่ ถ้าฟังไม่ทันขอซ้ำได้",
+    "openingEn": "Hello! What do you want to know?",
+    "role": "The class is on Friday at ten in this room. Let the learner ask first; only answer the actual question, do not reveal all missing facts immediately. After the first answer, say 'And?' or wait for the next question. Help with a short model only if requested. End after two distinct relevant questions have been answered.",
+    "goals": [
+      {
+        "id": "question_one",
+        "th": "ถามข้อมูลอย่างแรก",
+        "en": "Ask one relevant information question",
+        "example": "When is the class"
+      },
+      {
+        "id": "question_two",
+        "th": "ถามข้อมูลอีกเรื่อง",
+        "en": "Ask a second distinct information question",
+        "example": "Where is the class"
+      }
+    ],
+    "maxTurns": 5
+  },
+  {
+    "simulationId": "foundation_v7_u15n08",
+    "nodeId": "v7_u15n08",
+    "titleEn": "Find the Room",
+    "scenarioTh": "ถามทางไปห้องเรียน เจ้าหน้าที่จะบอกไม่เกินสองขั้น คุณขอซ้ำและยืนยันได้",
+    "openingEn": "Hello! Can I help?",
+    "role": "The classroom route is go straight then turn left. Wait for a place question before giving it. Repeat unchanged if asked. Accept a short route confirmation or thanks and end. Never add a map, stairs, floors, transit details or hidden alternatives. If the learner says right, gently model left once.",
+    "goals": [
+      {
+        "id": "place",
+        "th": "ถามหาสถานที่",
+        "en": "Ask where the room/class is",
+        "example": "Where is the room"
+      },
+      {
+        "id": "confirm",
+        "th": "ยืนยันทางหรือขอซ้ำ",
+        "en": "Confirm the route or request repetition",
+        "example": "Turn left"
+      },
+      {
+        "id": "close",
+        "th": "จบอย่างสุภาพ",
+        "en": "Acknowledge the help",
+        "example": "Thank you"
+      }
+    ],
+    "maxTurns": 5
+  },
+  {
+    "simulationId": "foundation_v7_u16n05",
+    "nodeId": "v7_u16n05",
+    "titleEn": "My First Day",
+    "scenarioTh": "วันแรกของคลาส: แนะนำตัวกับ Max แล้วเลือกถามเรื่องเวลา ห้อง หรือขอสิ่งที่ต้องการ ใช้ข้อมูลตัวเองหรือสมมติได้",
+    "openingEn": "Hi! I am Max. Nice to meet you.",
+    "role": "You are Max. Class Friday at ten in this room; a pen is on the table, water is available. Let the learner introduce themself and choose what to ask or request. Only answer asked facts. Include one gentle confirmation (e.g. 'At seven?' after a time question) for repair, then accept correction. Help if requested. No checklist of all grammar, no unrelated A2 task. Close after introduction, a meaningful request/question, and clarification/acknowledgement.",
+    "goals": [
+      {
+        "id": "introduce",
+        "th": "เริ่มคุยหรือแนะนำตัว",
+        "en": "Start the conversation or introduce yourself",
+        "example": "My name is Sam"
+      },
+      {
+        "id": "exchange",
+        "th": "ถามข้อมูลหรือขอสิ่งที่ต้องการ",
+        "en": "Ask for useful information or make a request",
+        "example": "When is the class"
+      },
+      {
+        "id": "repair",
+        "th": "ยืนยัน แก้ข้อมูล หรือขอซ้ำ",
+        "en": "Clarify, acknowledge or repair a misunderstanding",
+        "example": "Please say that again"
+      }
+    ],
+    "maxTurns": 6
+  }
+]

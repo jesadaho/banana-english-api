@@ -1,0 +1,1361 @@
+{
+  "fnd_v7_u02n01": {
+    "titleEn": "Please & Thank You",
+    "titleTh": "ใช้ please / thank you / sorry / excuse me ให้ตรงหน้าที่",
+    "goalTh": "ใช้ please / thank you / sorry / excuse me ให้ตรงหน้าที่",
+    "scope": "ฟังสถานการณ์สั้น สอนวลีทีละหน้าที่ แล้วลองพูดตาม",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "please ใช้กับคำขอ และ thank you ใช้ขอบคุณ",
+        "models": [
+          "Please",
+          "Thank you"
+        ],
+        "repeat": "Please"
+      },
+      {
+        "tipTh": "sorry ใช้ขอโทษ ส่วน excuse me ใช้เรียกความสนใจก่อนพูด",
+        "models": [
+          "Sorry",
+          "Excuse me"
+        ],
+        "repeat": "Excuse me"
+      }
+    ],
+    "recall": {
+      "promptTh": "อีกฝ่ายช่วยคุณแล้ว ลองขอบคุณเขา",
+      "answerEn": "Thank you"
+    }
+  },
+  "fnd_v7_u02n03": {
+    "titleEn": "Say That Again",
+    "titleTh": "ใช้วลีขอซ้ำ ขอช้า และบอกว่าไม่เข้าใจ",
+    "goalTh": "ใช้วลีขอซ้ำ ขอช้า และบอกว่าไม่เข้าใจ",
+    "scope": "สอนสาม repair chunks พร้อมตัวอย่างอีกฝ่ายพูดซ้ำให้; ไม่อ้างว่าเป็น pronunciation",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "ฟังไม่ทัน ขอให้พูดอีกครั้งได้",
+        "models": [
+          "Please say that again"
+        ],
+        "repeat": "Please say that again"
+      },
+      {
+        "tipTh": "ขอให้พูดช้าลง โดยยังใช้ please อย่างสุภาพ",
+        "models": [
+          "Please speak slowly"
+        ],
+        "repeat": "Please speak slowly"
+      },
+      {
+        "tipTh": "บอกตรง ๆ ว่ายังไม่เข้าใจได้",
+        "models": [
+          "I do not understand"
+        ],
+        "repeat": "I do not understand"
+      }
+    ],
+    "recall": {
+      "promptTh": "ฟังชื่ออีกฝ่ายไม่ทัน ขอให้พูดซ้ำ",
+      "answerEn": "Please say that again"
+    }
+  },
+  "fnd_v7_u03n01": {
+    "titleEn": "I Am / You Are",
+    "titleTh": "จับคู่ I/you กับ am/are; รู้จัก ready, happy, tired, hungry",
+    "goalTh": "จับคู่ I/you กับ am/are; รู้จัก ready, happy, tired, hungry",
+    "scope": "รูปเต็มและรูปย่อเป็นแบบเสียงของประโยคเดียวกัน ไม่ทำบท pronunciation แยก",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "I ใช้ am; ready คือพร้อม tired คือเหนื่อย; รูปย่อ I'm มีความหมายเดียวกัน",
+        "models": [
+          "I am ready",
+          "I'm tired"
+        ],
+        "repeat": "I am ready"
+      },
+      {
+        "tipTh": "You ใช้ are; happy คือมีความสุข hungry คือหิว; You're คือ You are",
+        "models": [
+          "You are happy",
+          "You're hungry"
+        ],
+        "repeat": "You are happy"
+      }
+    ],
+    "recall": {
+      "promptTh": "บอกว่าฉันหิว",
+      "answerEn": "I am hungry"
+    }
+  },
+  "fnd_v7_u03n03": {
+    "titleEn": "Not & Are You?",
+    "titleTh": "ปฏิเสธและถาม yes/no ด้วย be",
+    "goalTh": "ปฏิเสธและถาม yes/no ด้วย be",
+    "scope": "เปลี่ยนประโยคที่คุ้นเป็น not และคำถาม; ตัวอย่างคำตอบสั้น",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "เติม not หลัง am/are เพื่อบอกว่าไม่ใช่",
+        "models": [
+          "I am not tired",
+          "You are not hungry"
+        ],
+        "repeat": "I am not tired"
+      },
+      {
+        "tipTh": "ย้าย are ไว้หน้าคำว่า you เมื่อต้องการถาม",
+        "models": [
+          "Are you ready?",
+          "Are you tired?"
+        ],
+        "repeat": "Are you ready?"
+      },
+      {
+        "tipTh": "ตอบคำถามด้วยคำสั้น ๆ ได้",
+        "models": [
+          "Yes, I am",
+          "No, I am not"
+        ],
+        "repeat": "Yes, I am"
+      }
+    ],
+    "recall": {
+      "promptTh": "ถามว่าคุณพร้อมไหม",
+      "answerEn": "Are you ready?"
+    }
+  },
+  "fnd_v7_u04n01": {
+    "titleEn": "He, She, We, They",
+    "titleTh": "เลือกสรรพนามและ be ให้เข้ากับคนหรือกลุ่ม",
+    "goalTh": "เลือกสรรพนามและ be ให้เข้ากับคนหรือกลุ่ม",
+    "scope": "ตัวละครสมมติระบุสรรพนามชัด; it ใช้สิ่งของ; ทบทวน teacher/student จากบทแนะนำตัว",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "he/she กล่าวถึงคนหนึ่งคน; he เขา she เธอ; ใช้ is และระบุ role ของตัวละครก่อนเสมอ",
+        "models": [
+          "He is a teacher",
+          "She is a student"
+        ],
+        "repeat": "He is a teacher"
+      },
+      {
+        "tipTh": "we หมายถึงพวกเรา they หมายถึงพวกเขา ใช้ are; friend คือเพื่อน people คือผู้คน",
+        "models": [
+          "We are friends",
+          "They are people"
+        ],
+        "repeat": "We are friends"
+      },
+      {
+        "tipTh": "it ใช้สิ่งของหรือสิ่งที่กำลังกล่าวถึง ไม่ใช้เดาเพศจากภาพ",
+        "models": [
+          "It is a book",
+          "They are happy"
+        ],
+        "repeat": "It is a book"
+      }
+    ],
+    "recall": {
+      "promptTh": "บอกว่าพวกเราเป็นนักเรียน",
+      "answerEn": "We are students"
+    }
+  },
+  "fnd_v7_u04n03": {
+    "titleEn": "My Family",
+    "titleTh": "แนะนำความสัมพันธ์และถาม Who is this? เป็น chunk",
+    "goalTh": "แนะนำความสัมพันธ์และถาม Who is this? เป็น chunk",
+    "scope": "สอน mother/father/sister/brother; my และ this is เป็นวลีตัวอย่างก่อนอธิบายระบบใน chapter ถัดไป; เลือกครอบครัวสมมติได้",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "mother แม่ father พ่อ; This is my … เป็นวลีแนะนำคนในครอบครัว",
+        "models": [
+          "mother",
+          "father",
+          "This is my mother"
+        ],
+        "repeat": "This is my mother"
+      },
+      {
+        "tipTh": "sister พี่สาว/น้องสาว brother พี่ชาย/น้องชาย; ใช้ครอบครัวสมมติได้",
+        "models": [
+          "sister",
+          "brother",
+          "This is my sister"
+        ],
+        "repeat": "This is my sister"
+      },
+      {
+        "tipTh": "doctor คือหมอ; ถามว่าเป็นใครด้วย Who is this? และ model Her name is … ไว้สำหรับบัตรข้อมูลภายหลัง",
+        "models": [
+          "She is a doctor",
+          "Who is this?",
+          "Her name is Mia"
+        ],
+        "repeat": "Who is this?"
+      }
+    ],
+    "recall": {
+      "promptTh": "แนะนำว่าเขาคือพี่หรือน้องชายของฉัน",
+      "answerEn": "This is my brother"
+    }
+  },
+  "fnd_v7_u05n01": {
+    "titleEn": "One or More",
+    "titleTh": "บอก a/an กับของหนึ่งชิ้น และ regular plural กับหลายชิ้น",
+    "goalTh": "บอก a/an กับของหนึ่งชิ้น และ regular plural กับหลายชิ้น",
+    "scope": "สอน book, bag, pen, apple; a/an เป็นเสียงต้นคำ ไม่ใช่จำตัวอักษร; จัดสองช่วง model สั้นในบทเดียว",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "book หนังสือ bag กระเป๋า pen ปากกา; หนึ่งชิ้นใช้ a ก่อนเสียงพยัญชนะ",
+        "models": [
+          "a book",
+          "a bag",
+          "a pen"
+        ],
+        "repeat": "a book"
+      },
+      {
+        "tipTh": "apple แอปเปิล เริ่มเสียงสระจึงใช้ an; ดูเสียงไม่ใช่แค่ตัวสะกด",
+        "models": [
+          "an apple"
+        ],
+        "repeat": "an apple"
+      },
+      {
+        "tipTh": "มากกว่าหนึ่งชิ้น คำเหล่านี้เติม s; อย่าเพิ่ม irregular nouns",
+        "models": [
+          "books",
+          "bags",
+          "pens",
+          "apples"
+        ],
+        "repeat": "pens"
+      }
+    ],
+    "recall": {
+      "promptTh": "ขอหนังสือหลายเล่มอย่างสุภาพ",
+      "answerEn": "Books, please"
+    }
+  },
+  "fnd_v7_u06n01": {
+    "titleEn": "This & That",
+    "titleTh": "อ้างของใกล้และไกลด้วย this/that",
+    "goalTh": "อ้างของใกล้และไกลด้วย this/that",
+    "scope": "กำหนดตำแหน่งผู้พูดในภาพ; ไม่สอนความใกล้จากขนาดภาพอย่างเดียว",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "สมมติหนังสืออยู่ในมือผู้พูด สิ่งใกล้ตัวใช้ this",
+        "models": [
+          "This is a book"
+        ],
+        "repeat": "This is a book"
+      },
+      {
+        "tipTh": "สมมติกระเป๋าอยู่ไกลอีกฝั่งห้อง สิ่งไกลตัวใช้ that",
+        "models": [
+          "That is a bag"
+        ],
+        "repeat": "That is a bag"
+      }
+    ],
+    "recall": {
+      "promptTh": "กระเป๋าอยู่ในมือคุณ บอกว่านี่คือกระเป๋า",
+      "answerEn": "This is a bag"
+    }
+  },
+  "fnd_v7_u06n03": {
+    "titleEn": "Colours & Size",
+    "titleTh": "บอกสีและขนาดโดยเริ่มจากหนึ่ง adjective",
+    "goalTh": "บอกสีและขนาดโดยเริ่มจากหนึ่ง adjective",
+    "scope": "สอน red/blue/green/yellow และ big/small เป็นคู่; ใช้ It is blue ก่อนขยาย a blue bag; model the blue bag เป็น chunk ชี้ชิ้นที่รู้กัน; แบ่ง model สองชุด",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "red แดง blue น้ำเงิน; บอกสีด้วย It is …",
+        "models": [
+          "red",
+          "blue",
+          "It is blue"
+        ],
+        "repeat": "It is blue"
+      },
+      {
+        "tipTh": "green เขียว yellow เหลือง; ใช้สีหนึ่งคำก่อนคำนาม",
+        "models": [
+          "green",
+          "yellow",
+          "a green bag"
+        ],
+        "repeat": "a green bag"
+      },
+      {
+        "tipTh": "big ใหญ่ small เล็ก; พูดหนึ่งรายละเอียดก่อน ชี้ชิ้นที่รู้กันใช้ the เป็น chunk",
+        "models": [
+          "a big bag",
+          "a small bag",
+          "The blue bag"
+        ],
+        "repeat": "a small bag"
+      }
+    ],
+    "recall": {
+      "promptTh": "บอกว่ากระเป๋านี้สีน้ำเงิน",
+      "answerEn": "This is a blue bag"
+    }
+  },
+  "fnd_v7_u06n05": {
+    "titleEn": "These & Those",
+    "titleTh": "ใช้ these/those กับของหลายชิ้น",
+    "goalTh": "ใช้ these/those กับของหลายชิ้น",
+    "scope": "ทบทวน this/that และ they are ก่อนสลับเป็น these/those; สอนหนึ่งรายละเอียดต่อประโยคก่อน",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "หลายชิ้นใกล้ตัวใช้ these + are; ทบทวน this สำหรับหนึ่งชิ้น",
+        "models": [
+          "This is a book",
+          "These are books"
+        ],
+        "repeat": "These are books"
+      },
+      {
+        "tipTh": "หลายชิ้นไกลตัวใช้ those + are; ทบทวน that สำหรับหนึ่งชิ้น",
+        "models": [
+          "That is a bag",
+          "Those are bags"
+        ],
+        "repeat": "Those are bags"
+      }
+    ],
+    "recall": {
+      "promptTh": "กระเป๋าสีน้ำเงินหลายใบอยู่ไกลตัว บอกว่าเป็นกระเป๋าสีน้ำเงิน",
+      "answerEn": "Those are blue bags"
+    }
+  },
+  "fnd_v7_u07n01": {
+    "titleEn": "My & Your",
+    "titleTh": "ใช้ my/your กับของที่คุ้น",
+    "goalTh": "ใช้ my/your กับของที่คุ้น",
+    "scope": "สอน phone/key/shirt เป็นของใช้และเสื้อผ้า; เปรียบเทียบเจ้าของในบทสนทนา",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "phone โทรศัพท์ key กุญแจ shirt เสื้อ; ให้รู้ความหมายก่อนใส่เจ้าของ",
+        "models": [
+          "phone",
+          "key",
+          "shirt"
+        ],
+        "repeat": "key"
+      },
+      {
+        "tipTh": "my ของฉัน your ของคุณ ต้องตามด้วยคำนาม",
+        "models": [
+          "my phone",
+          "your bag",
+          "This is my key"
+        ],
+        "repeat": "This is my key"
+      }
+    ],
+    "recall": {
+      "promptTh": "ชี้โทรศัพท์ของอีกฝ่าย พูดว่านี่คือโทรศัพท์ของคุณ",
+      "answerEn": "This is your phone"
+    }
+  },
+  "fnd_v7_u07n03": {
+    "titleEn": "His, Her, Our, Their",
+    "titleTh": "เชื่อมเจ้าของกับ possessive determiner",
+    "goalTh": "เชื่อมเจ้าของกับ possessive determiner",
+    "scope": "เจ้าของเป็นตัวละครที่ระบุชัด; ใช้ he/she/we/they เป็นสะพาน จัดสองชุดสั้น",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "his ของเขา her ของเธอ; บอกเจ้าของเป็นข้อมูลชัด ไม่เดาจากหน้าตา",
+        "models": [
+          "his book",
+          "her phone"
+        ],
+        "repeat": "his book"
+      },
+      {
+        "tipTh": "our ของพวกเรา their ของพวกเขา; ทบทวน we/they เป็นสะพาน",
+        "models": [
+          "our bags",
+          "their keys"
+        ],
+        "repeat": "our bags"
+      }
+    ],
+    "recall": {
+      "promptTh": "กุญแจหลายดอกนี้เป็นของพวกเขา",
+      "answerEn": "These are their keys"
+    }
+  },
+  "fnd_v7_u07n05": {
+    "titleEn": "Have & Has",
+    "titleTh": "บอกสิ่งที่ตนหรืออีกคนมี",
+    "goalTh": "บอกสิ่งที่ตนหรืออีกคนมี",
+    "scope": "ใช้คำเดิมทั้งหมด; บวก have/has เท่านั้น ยังไม่เพิ่ม have got หรือปฏิเสธ",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "I/you/we/they ใช้ have เพื่อบอกสิ่งที่มี",
+        "models": [
+          "I have a phone",
+          "They have bags"
+        ],
+        "repeat": "I have a phone"
+      },
+      {
+        "tipTh": "he/she ใช้ has",
+        "models": [
+          "He has a book",
+          "She has a bag"
+        ],
+        "repeat": "He has a book"
+      }
+    ],
+    "recall": {
+      "promptTh": "เขามีหนังสือของฉัน",
+      "answerEn": "He has my book"
+    }
+  },
+  "fnd_v7_u08n01": {
+    "titleEn": "Numbers 0–10",
+    "titleTh": "ฟังและพูดเลขศูนย์ถึงสิบ",
+    "goalTh": "ฟังและพูดเลขศูนย์ถึงสิบ",
+    "scope": "แบ่ง 0–5 และ 6–10 ใน model สั้น; เชื่อมปริมาณกับเลข ไม่เป็น Phonics",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "รู้จักชื่อเลขศูนย์ถึงห้า ฟังทีละคำ",
+        "models": [
+          "zero",
+          "one",
+          "two",
+          "three",
+          "four",
+          "five"
+        ],
+        "repeat": "five"
+      },
+      {
+        "tipTh": "ต่อด้วยหกถึงสิบ ฟังช้าและขอฟังซ้ำได้",
+        "models": [
+          "six",
+          "seven",
+          "eight",
+          "nine",
+          "ten"
+        ],
+        "repeat": "eight"
+      }
+    ],
+    "recall": {
+      "promptTh": "เลข 3 ภาษาอังกฤษพูดอย่างไร",
+      "answerEn": "three"
+    }
+  },
+  "fnd_v7_u08n03": {
+    "titleEn": "Eleven to Twenty",
+    "titleTh": "บอกเลขสิบเอ็ดถึงยี่สิบและใช้บอกอายุ",
+    "goalTh": "บอกเลขสิบเอ็ดถึงยี่สิบและใช้บอกอายุ",
+    "scope": "แยก eleven/twelve กับ teen pattern; อายุเป็น chunk I am … years old จาก be ที่รู้; ฝึกด้วยตัวละครวัย 11–20 ไม่บังคับอายุจริง",
+    "estimatedMinutes": [
+      4,
+      6
+    ],
+    "blocks": [
+      {
+        "tipTh": "eleven คือสิบเอ็ด twelve คือสิบสอง",
+        "models": [
+          "eleven",
+          "twelve"
+        ],
+        "repeat": "twelve"
+      },
+      {
+        "tipTh": "ฟังเลขสิบสามถึงสิบหกเป็นกลุ่ม",
+        "models": [
+          "thirteen",
+          "fourteen",
+          "fifteen",
+          "sixteen"
+        ],
+        "repeat": "sixteen"
+      },
+      {
+        "tipTh": "ต่อด้วยสิบเจ็ดถึงยี่สิบ",
+        "models": [
+          "seventeen",
+          "eighteen",
+          "nineteen",
+          "twenty"
+        ],
+        "repeat": "eighteen"
+      },
+      {
+        "tipTh": "บอกอายุด้วย I am … years old; ใช้ตัวละครสมมติ ไม่ต้องบอกอายุจริง",
+        "models": [
+          "I am twelve years old",
+          "She is sixteen years old"
+        ],
+        "repeat": "I am twelve years old"
+      }
+    ],
+    "recall": {
+      "promptTh": "ตัวละครของคุณอายุยี่สิบปี ลองบอกอายุ",
+      "answerEn": "I am twenty"
+    }
+  },
+  "fnd_v7_u08n05": {
+    "titleEn": "Letter Names A–M",
+    "titleTh": "รู้จักชื่อเรียกตัวอักษรครึ่งแรกเพื่อสะกด",
+    "goalTh": "รู้จักชื่อเรียกตัวอักษรครึ่งแรกเพื่อสะกด",
+    "scope": "model เป็นกลุ่ม A–D/E–H/I–M; ฟังครบแต่ฝึกตัวอย่างสั้น; ไม่อ้างว่าจำคล่องครบในรอบเดียว และไม่สอน letter sounds",
+    "estimatedMinutes": [
+      4,
+      6
+    ],
+    "blocks": [
+      {
+        "tipTh": "นี่คือชื่อเรียกตัวอักษรสำหรับสะกด ไม่ใช่เสียง Phonics; model ชื่ออักษรอังกฤษทีละตัว",
+        "models": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "repeat": "A"
+      },
+      {
+        "tipTh": "ฟังชื่ออักษรกลุ่มถัดไปทีละตัว",
+        "models": [
+          "E",
+          "F",
+          "G",
+          "H"
+        ],
+        "repeat": "E"
+      },
+      {
+        "tipTh": "ฟังตัวที่เหลือของครึ่งแรก",
+        "models": [
+          "I",
+          "J",
+          "K",
+          "L",
+          "M"
+        ],
+        "repeat": "M"
+      },
+      {
+        "tipTh": "ชื่อ MIA สะกดทีละตัวว่า M I A; รับ STT ที่รวมเป็นชื่อแต่ไม่อ้างว่าได้วัด letter sounds แล้ว",
+        "models": [
+          "M I A"
+        ],
+        "repeat": "M I A"
+      }
+    ],
+    "recall": {
+      "promptTh": "สะกดชื่อ LEE ทีละตัว",
+      "answerEn": "L E E"
+    }
+  },
+  "fnd_v7_u08n07": {
+    "titleEn": "Letter Names N–Z",
+    "titleTh": "รู้จักชื่อเรียกตัวอักษรที่เหลือ",
+    "goalTh": "รู้จักชื่อเรียกตัวอักษรที่เหลือ",
+    "scope": "model N–R/S–V/W–Z; ขยายการขอ Please spell that เป็น chunk; รับชื่อ Z ต่างสำเนียง",
+    "estimatedMinutes": [
+      4,
+      6
+    ],
+    "blocks": [
+      {
+        "tipTh": "ทบทวนว่ากำลังฝึกชื่อเรียกอักษร ฟัง N ถึง R ทีละตัว",
+        "models": [
+          "N",
+          "O",
+          "P",
+          "Q",
+          "R"
+        ],
+        "repeat": "N"
+      },
+      {
+        "tipTh": "ต่อด้วย S ถึง V",
+        "models": [
+          "S",
+          "T",
+          "U",
+          "V"
+        ],
+        "repeat": "S"
+      },
+      {
+        "tipTh": "ต่อด้วย W ถึง Z; Z อ่าน zee หรือ zed ก็ได้",
+        "models": [
+          "W",
+          "X",
+          "Y",
+          "Z"
+        ],
+        "repeat": "Z"
+      },
+      {
+        "tipTh": "ขอให้สะกดด้วย Please spell that และฟังตัวอย่าง MAX",
+        "models": [
+          "Please spell that",
+          "M A X"
+        ],
+        "repeat": "M A X"
+      }
+    ],
+    "recall": {
+      "promptTh": "สะกดชื่อ SAM ทีละตัว",
+      "answerEn": "S A M"
+    }
+  },
+  "fnd_v7_u09n01": {
+    "titleEn": "Twenty to One Hundred",
+    "titleTh": "พูดเลขหลักสิบและประกอบเลขสองหลัก",
+    "goalTh": "พูดเลขหลักสิบและประกอบเลขสองหลัก",
+    "scope": "สอน tens เป็นกลุ่มแล้วประกอบ 21/35 ฯลฯ จาก units; hundred เป็นขอบเขตสุดท้าย ไม่มีเลขเกินร้อยหรือทศนิยม",
+    "estimatedMinutes": [
+      4,
+      6
+    ],
+    "blocks": [
+      {
+        "tipTh": "เลขหลักสิบชุดแรก twenty ยี่สิบ thirty สามสิบ forty สี่สิบ fifty ห้าสิบ",
+        "models": [
+          "twenty",
+          "thirty",
+          "forty",
+          "fifty"
+        ],
+        "repeat": "forty"
+      },
+      {
+        "tipTh": "ชุดถัดไป sixty หกสิบ seventy เจ็ดสิบ eighty แปดสิบ ninety เก้าสิบ",
+        "models": [
+          "sixty",
+          "seventy",
+          "eighty",
+          "ninety"
+        ],
+        "repeat": "eighty"
+      },
+      {
+        "tipTh": "ประกอบหลักสิบกับหลักหน่วย; one hundred คือหนึ่งร้อย",
+        "models": [
+          "twenty-one",
+          "thirty-five",
+          "forty-two",
+          "one hundred"
+        ],
+        "repeat": "thirty-five"
+      }
+    ],
+    "recall": {
+      "promptTh": "เลข 42 ภาษาอังกฤษพูดอย่างไร",
+      "answerEn": "forty-two"
+    }
+  },
+  "fnd_v7_u09n03": {
+    "titleEn": "What Time Is It?",
+    "titleTh": "ถามและบอกชั่วโมงกับนาทีพื้นฐาน",
+    "goalTh": "ถามและบอกชั่วโมงกับนาทีพื้นฐาน",
+    "scope": "ใช้ seven/seven thirty/seven fifteen; สอน digital time ก่อน ไม่เพิ่ม quarter/past/to; AM/PM เป็นตัวช่วยเมื่อจำเป็น",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "ถามเวลา What time is it? และตอบชั่วโมงตรง",
+        "models": [
+          "What time is it?",
+          "It is seven",
+          "It is eight"
+        ],
+        "repeat": "It is seven"
+      },
+      {
+        "tipTh": "อ่านนาทีแบบตรงไปตรงมา ยังไม่เพิ่ม quarter/past/to",
+        "models": [
+          "seven thirty",
+          "eight thirty",
+          "seven fifteen"
+        ],
+        "repeat": "seven thirty"
+      }
+    ],
+    "recall": {
+      "promptTh": "บอกเวลาแปดโมงครึ่ง",
+      "answerEn": "It is eight thirty"
+    }
+  },
+  "fnd_v7_u09n05": {
+    "titleEn": "Days & Simple Plans",
+    "titleTh": "เข้าใจวันในสัปดาห์และบอกวันกับเวลา",
+    "goalTh": "เข้าใจวันในสัปดาห์และบอกวันกับเวลา",
+    "scope": "model วันเป็นกลุ่ม; ใช้ on/at เป็น chunks กับ class; ไม่สอน future tense; แบบ The class is on Monday เป็น be ที่รู้",
+    "estimatedMinutes": [
+      4,
+      6
+    ],
+    "blocks": [
+      {
+        "tipTh": "ชื่อวันกลุ่มแรก Monday จันทร์ Tuesday อังคาร Wednesday พุธ Thursday พฤหัส",
+        "models": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday"
+        ],
+        "repeat": "Monday"
+      },
+      {
+        "tipTh": "ชื่อวันกลุ่มถัดไป Friday ศุกร์ Saturday เสาร์ Sunday อาทิตย์",
+        "models": [
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
+        "repeat": "Friday"
+      },
+      {
+        "tipTh": "class คือคลาส; on ใช้กับวัน at ใช้กับเวลา สอนเป็น chunk ด้วย be ไม่เพิ่ม future",
+        "models": [
+          "The class is on Monday",
+          "The class is at seven"
+        ],
+        "repeat": "The class is on Monday"
+      }
+    ],
+    "recall": {
+      "promptTh": "บอกว่าคลาสวันศุกร์",
+      "answerEn": "The class is on Friday"
+    }
+  },
+  "fnd_v7_u09n07": {
+    "titleEn": "Prices & Paying",
+    "titleTh": "ถามราคาและซื้อหนึ่งสิ่งอย่างสุภาพ",
+    "goalTh": "ถามราคาและซื้อหนึ่งสิ่งอย่างสุภาพ",
+    "scope": "สอน How much is it? / It is … baht และ Here you are เป็น chunk; เลขไม่เกิน100; ไม่เพิ่มต่อราคา/คืนของ",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "baht คือบาท ticket คือตั๋ว; ขอหนึ่งรายการอย่างสุภาพ",
+        "models": [
+          "One ticket, please",
+          "Thirty baht"
+        ],
+        "repeat": "One ticket, please"
+      },
+      {
+        "tipTh": "ถามราคาและตอบราคาจากตัวเลขที่เรียนแล้ว",
+        "models": [
+          "How much is it?",
+          "It is forty baht"
+        ],
+        "repeat": "How much is it?"
+      },
+      {
+        "tipTh": "Here you are ใช้เมื่อส่งของให้อีกฝ่าย ตอบขอบคุณได้",
+        "models": [
+          "Here you are",
+          "Thank you"
+        ],
+        "repeat": "Here you are"
+      }
+    ],
+    "recall": {
+      "promptTh": "ขอราคาสิ่งของที่กำลังดู",
+      "answerEn": "How much is it?"
+    }
+  },
+  "fnd_v7_u10n01": {
+    "titleEn": "I Like / I Don’t Like",
+    "titleTh": "บอกชอบและไม่ชอบด้วยของกินที่คุ้น",
+    "goalTh": "บอกชอบและไม่ชอบด้วยของกินที่คุ้น",
+    "scope": "สอน tea/coffee/water/rice เป็นชุดเล็ก; have จากchapter7 เป็น retrieval; do not เป็น chunk ไม่ขยาย does ตอนนี้",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "tea ชา coffee กาแฟ water น้ำ rice ข้าว; บอกความชอบด้วย I like",
+        "models": [
+          "tea",
+          "coffee",
+          "water",
+          "rice",
+          "I like tea"
+        ],
+        "repeat": "I like tea"
+      },
+      {
+        "tipTh": "ปฏิเสธความชอบด้วย I do not like; don't เป็นรูปย่อความหมายเดียวกัน",
+        "models": [
+          "I do not like coffee",
+          "I don't like coffee"
+        ],
+        "repeat": "I do not like coffee"
+      }
+    ],
+    "recall": {
+      "promptTh": "บอกว่าฉันชอบข้าว",
+      "answerEn": "I like rice"
+    }
+  },
+  "fnd_v7_u10n03": {
+    "titleEn": "Do You Like It?",
+    "titleTh": "ถามและตอบความชอบ",
+    "goalTh": "ถามและตอบความชอบ",
+    "scope": "ใช้คำเดิมทั้งหมด; do you + like และ yes/no answer patterns",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "ถามความชอบด้วย Do you like + สิ่งที่ถาม",
+        "models": [
+          "Do you like tea?",
+          "Do you like coffee?"
+        ],
+        "repeat": "Do you like tea?"
+      },
+      {
+        "tipTh": "ตอบ yes/no สั้น ๆ หรือพูดประโยคเต็มก็ได้",
+        "models": [
+          "Yes, I do",
+          "No, I do not",
+          "No, I don't"
+        ],
+        "repeat": "Yes, I do"
+      }
+    ],
+    "recall": {
+      "promptTh": "ถามว่าอีกฝ่ายชอบข้าวไหม",
+      "answerEn": "Do you like rice?"
+    }
+  },
+  "fnd_v7_u10n05": {
+    "titleEn": "Want, Need & Please",
+    "titleTh": "บอกสิ่งที่อยากได้/จำเป็นและใช้คำขอสุภาพ",
+    "goalTh": "บอกสิ่งที่อยากได้/จำเป็นและใช้คำขอสุภาพ",
+    "scope": "ใช้ I want/I need ในการบอกความต้องการ; ในร้านใช้ A …, please; สอน I need water/I need help; ไม่เพิ่ม would grammar",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "want บอกสิ่งที่อยากได้ need บอกสิ่งที่ต้องการหรือจำเป็น; ทบทวน have ว่ามีอยู่แล้ว",
+        "models": [
+          "I want water",
+          "I need help",
+          "I have water"
+        ],
+        "repeat": "I want water"
+      },
+      {
+        "tipTh": "ขอของในร้านใช้คำนามตามด้วย please; ไม่เพิ่มการผัน would",
+        "models": [
+          "A coffee, please",
+          "Water, please",
+          "No, thank you"
+        ],
+        "repeat": "Water, please"
+      }
+    ],
+    "recall": {
+      "promptTh": "คุณต้องการความช่วยเหลือ ลองบอกอีกฝ่าย",
+      "answerEn": "I need help"
+    }
+  },
+  "fnd_v7_u11n01": {
+    "titleEn": "I Can",
+    "titleTh": "บอกความสามารถด้วย can + action",
+    "goalTh": "บอกความสามารถด้วย can + action",
+    "scope": "สอน swim/read/cook/sit; ทบทวน help จากchapter2; ไม่ยัดกริยาเก้าคำ",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "swim ว่ายน้ำ read อ่าน cook ทำอาหาร sit นั่ง; ฟังศัพท์ก่อนใส่ can",
+        "models": [
+          "swim",
+          "read",
+          "cook",
+          "sit"
+        ],
+        "repeat": "swim"
+      },
+      {
+        "tipTh": "can + กริยารูปเดิมเพื่อบอกทำได้",
+        "models": [
+          "I can swim",
+          "I can read"
+        ],
+        "repeat": "I can swim"
+      }
+    ],
+    "recall": {
+      "promptTh": "บอกว่าฉันทำอาหารได้",
+      "answerEn": "I can cook"
+    }
+  },
+  "fnd_v7_u11n03": {
+    "titleEn": "Can’t & Can You?",
+    "titleTh": "บอกทำไม่ได้ ถามอีกคน และขออนุญาตด้วย chunk",
+    "goalTh": "บอกทำไม่ได้ ถามอีกคน และขออนุญาตด้วย chunk",
+    "scope": "can/cannot/can’t เป็นความหมาย; Can I sit here? เป็นคำขอที่ model ชัด; here มี lexical preview",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "cannot และ can't หมายถึงทำไม่ได้ ไม่ตัดสินความถูกของเสียง can/can't จาก transcript",
+        "models": [
+          "I cannot swim",
+          "I can't swim"
+        ],
+        "repeat": "I cannot swim"
+      },
+      {
+        "tipTh": "ถามอีกคนด้วย Can you…? แล้วตอบสั้น ๆ",
+        "models": [
+          "Can you cook?",
+          "Yes, I can",
+          "No, I cannot"
+        ],
+        "repeat": "Can you cook?"
+      },
+      {
+        "tipTh": "Can I sit here? เป็น chunk ขออนุญาต; here แปลว่าตรงนี้",
+        "models": [
+          "Can I sit here?"
+        ],
+        "repeat": "Can I sit here?"
+      }
+    ],
+    "recall": {
+      "promptTh": "ถามว่าอีกฝ่ายว่ายน้ำเป็นไหม",
+      "answerEn": "Can you swim?"
+    }
+  },
+  "fnd_v7_u12n01": {
+    "titleEn": "My Day",
+    "titleTh": "บอกกิจวัตรพร้อมเวลาในรูป I + verb",
+    "goalTh": "บอกกิจวัตรพร้อมเวลาในรูป I + verb",
+    "scope": "สอน wake up/eat/work/sleep; reuse read/cook; always/sometimes เป็น optional receptive preview ไม่เป็นเงื่อนไขผ่าน",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "wake up ตื่น eat กิน work ทำงาน sleep นอน; พูดกิจวัตรด้วย I + กริยา",
+        "models": [
+          "wake up",
+          "eat",
+          "work",
+          "sleep",
+          "I wake up"
+        ],
+        "repeat": "I wake up"
+      },
+      {
+        "tipTh": "เติมเวลาหรือวันจากบทก่อน; every day คือทุกวัน",
+        "models": [
+          "I wake up at seven",
+          "I work on Monday",
+          "I read every day"
+        ],
+        "repeat": "I wake up at seven"
+      }
+    ],
+    "recall": {
+      "promptTh": "บอกว่าฉันทำงานวันศุกร์",
+      "answerEn": "I work on Friday"
+    }
+  },
+  "fnd_v7_u12n03": {
+    "titleEn": "Her Day, His Day",
+    "titleTh": "ใช้ third-person -s กับกิจวัตรที่รู้",
+    "goalTh": "ใช้ third-person -s กับกิจวัตรที่รู้",
+    "scope": "model works/eats/sleeps และ likes/needs จากchapter10; ไม่ทดสอบกฎสะกดทุกแบบ",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "he/she กับกริยากิจวัตรมีเสียงท้ายสั้น ๆ; ใช้คำเดิมก่อน",
+        "models": [
+          "She works",
+          "He eats",
+          "She sleeps"
+        ],
+        "repeat": "She works"
+      },
+      {
+        "tipTh": "นำกฎเดียวกันกลับไปใช้กับ likes/needs ที่รู้ความหมายแล้ว",
+        "models": [
+          "She likes tea",
+          "He needs water"
+        ],
+        "repeat": "She likes tea"
+      }
+    ],
+    "recall": {
+      "promptTh": "บอกว่าเขากินตอนเจ็ดโมง",
+      "answerEn": "He eats at seven"
+    }
+  },
+  "fnd_v7_u12n05": {
+    "titleEn": "Do / Does Every Day",
+    "titleTh": "ถามกิจวัตรของ you/he/she และตอบสั้น",
+    "goalTh": "ถามกิจวัตรของ you/he/she และตอบสั้น",
+    "scope": "reuse do you like ก่อนเปลี่ยนกริยา; does + base verb แยก model; สอน don’t/doesn’t กับคำเดิม",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "ทบทวน Do you like… แล้วเปลี่ยนเป็นกริยากิจวัตร",
+        "models": [
+          "Do you work on Monday?",
+          "Do you wake up at seven?"
+        ],
+        "repeat": "Do you work on Monday?"
+      },
+      {
+        "tipTh": "he/she ใช้ Does และกริยากลับเป็นรูปเดิม",
+        "models": [
+          "Does she work?",
+          "Does he eat at seven?"
+        ],
+        "repeat": "Does she work?"
+      },
+      {
+        "tipTh": "ปฏิเสธด้วย don't/doesn't และกริยารูปเดิม; have ก็ใช้แบบเดียวกัน",
+        "models": [
+          "She does not work on Friday",
+          "I do not have a key"
+        ],
+        "repeat": "She does not work on Friday"
+      }
+    ],
+    "recall": {
+      "promptTh": "ถามว่าเขาทำงานวันจันทร์ไหม",
+      "answerEn": "Does he work on Monday?"
+    }
+  },
+  "fnd_v7_u13n01": {
+    "titleEn": "Happening Now",
+    "titleTh": "ใช้ am/is/are + -ing กับการกระทำที่รู้",
+    "goalTh": "ใช้ am/is/are + -ing กับการกระทำที่รู้",
+    "scope": "model eating/reading/cooking/working; เริ่ม I am แล้ว he/she/we ที่คุ้น ไม่สอน -ing แยกจาก be",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "now คือตอนนี้ ต่างจาก every day; ใช้ am/is/are + ing เสมอ",
+        "models": [
+          "I am reading",
+          "She is cooking"
+        ],
+        "repeat": "I am reading"
+      },
+      {
+        "tipTh": "ใช้คนหรือกลุ่มที่รู้แล้วกับรูปกำลังกระทำ; วันนี้ today เป็นคำช่วยฟัง",
+        "models": [
+          "He is eating",
+          "They are working"
+        ],
+        "repeat": "They are working"
+      }
+    ],
+    "recall": {
+      "promptTh": "บอกว่าตอนนี้ฉันกำลังอ่าน",
+      "answerEn": "I am reading now"
+    }
+  },
+  "fnd_v7_u13n03": {
+    "titleEn": "Are They Working?",
+    "titleTh": "ถามและปฏิเสธกิจกรรมตอนนี้",
+    "goalTh": "ถามและปฏิเสธกิจกรรมตอนนี้",
+    "scope": "ใช้ inversion ของ be จากchapter3 กับ -ing ที่เพิ่งเรียน; cue now/every day ชัด",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "ใช้ be ขึ้นต้นคำถามเหมือนบทเดิม แล้วคง ing ไว้",
+        "models": [
+          "Is she reading?",
+          "Are they eating?"
+        ],
+        "repeat": "Are they eating?"
+      },
+      {
+        "tipTh": "เติม not หลัง be เพื่อปฏิเสธสิ่งที่กำลังทำ",
+        "models": [
+          "They are not working",
+          "She is not cooking"
+        ],
+        "repeat": "They are not working"
+      }
+    ],
+    "recall": {
+      "promptTh": "ถามว่าเขากำลังทำงานไหม",
+      "answerEn": "Is he working?"
+    }
+  },
+  "fnd_v7_u14n01": {
+    "titleEn": "What or Who?",
+    "titleTh": "แยกคำถามเกี่ยวกับคนกับสิ่งของ",
+    "goalTh": "แยกคำถามเกี่ยวกับคนกับสิ่งของ",
+    "scope": "reuse Who is this? จากfamily; สอน What is this? และคำตอบสั้น; model การรับ turn ด้วย And you?",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "who ถามคน what ถามสิ่งของ; ทบทวนจากบทคนและสิ่งของ",
+        "models": [
+          "Who is she?",
+          "What is this?"
+        ],
+        "repeat": "Who is she?"
+      },
+      {
+        "tipTh": "ตอบสั้นได้และใช้ And you? ส่งคำถามกลับเมื่อเข้ากับบริบท",
+        "models": [
+          "She is a teacher",
+          "It is a book",
+          "And you?"
+        ],
+        "repeat": "And you?"
+      }
+    ],
+    "recall": {
+      "promptTh": "อยากรู้ว่าสิ่งนี้คืออะไร ลองถาม",
+      "answerEn": "What is this?"
+    }
+  },
+  "fnd_v7_u14n03": {
+    "titleEn": "Where, When & How Much",
+    "titleTh": "ถามข้อมูลสถานที่ วัน เวลา ราคา จำนวนจากรูปที่ model",
+    "goalTh": "ถามข้อมูลสถานที่ วัน เวลา ราคา จำนวนจากรูปที่ model",
+    "scope": "when/how much/how many ใช้ concrete short chunks กับ numbers/days เดิม; where + be ใช้ home/school/room ที่ lexical preview; ไม่สอน How + adjective ทุกแบบ",
+    "estimatedMinutes": [
+      4,
+      6
+    ],
+    "blocks": [
+      {
+        "tipTh": "where ถามที่ไหน; home บ้าน school โรงเรียน room ห้อง; ใช้ be จากที่เรียน",
+        "models": [
+          "Where is she?",
+          "Where is the room?"
+        ],
+        "repeat": "Where is the room?"
+      },
+      {
+        "tipTh": "when ถามเมื่อไร; ทบทวนวันกับเวลา และ How much ถามราคา",
+        "models": [
+          "When is the class?",
+          "How much is it?"
+        ],
+        "repeat": "When is the class?"
+      },
+      {
+        "tipTh": "How many + ของหลายชิ้น ถามจำนวน; ไม่เพิ่ม How + adjective ทุกแบบ",
+        "models": [
+          "How many books?"
+        ],
+        "repeat": "How many books?"
+      }
+    ],
+    "recall": {
+      "promptTh": "อยากรู้ว่าคลาสอยู่ที่ไหน ลองถาม",
+      "answerEn": "Where is the class?"
+    }
+  },
+  "fnd_v7_u15n01": {
+    "titleEn": "There Is / There Are",
+    "titleTh": "บอกสิ่งที่มีในสถานที่หนึ่ง",
+    "goalTh": "บอกสิ่งที่มีในสถานที่หนึ่ง",
+    "scope": "ใช้จำนวนเดิม; สอน table/chair/window/room เป็นชุดเล็ก; here/there แสดงสถานที่ชัด",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "table โต๊ะ chair เก้าอี้ window หน้าต่าง room ห้อง; บอกว่ามีหนึ่งสิ่งด้วย There is",
+        "models": [
+          "table",
+          "chair",
+          "window",
+          "room",
+          "There is a table"
+        ],
+        "repeat": "There is a table"
+      },
+      {
+        "tipTh": "บอกว่ามีหลายสิ่งด้วย There are + จำนวนที่รู้แล้ว",
+        "models": [
+          "There are two chairs",
+          "There are three books"
+        ],
+        "repeat": "There are two chairs"
+      }
+    ],
+    "recall": {
+      "promptTh": "บอกว่ามีหนังสือหนึ่งเล่ม",
+      "answerEn": "There is a book"
+    }
+  },
+  "fnd_v7_u15n03": {
+    "titleEn": "In, On, Under, Next To",
+    "titleTh": "บอกตำแหน่งของด้วยคำบุพบทสี่คำ",
+    "goalTh": "บอกตำแหน่งของด้วยคำบุพบทสี่คำ",
+    "scope": "ใช้ bag/book/table/chair เดิม; ภาพสัมพันธ์ชัด ไม่มี behind/between เพิ่ม",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "in อยู่ใน on อยู่บน; บอกสถานการณ์เป็นคำพูดชัด ไม่พึ่งภาพที่ระบบยังไม่ได้ส่ง",
+        "models": [
+          "The book is in the bag",
+          "The book is on the table"
+        ],
+        "repeat": "The book is in the bag"
+      },
+      {
+        "tipTh": "under อยู่ใต้ next to อยู่ข้าง; ใช้ของเดิมทั้งหมด",
+        "models": [
+          "The bag is under the table",
+          "The chair is next to the table"
+        ],
+        "repeat": "The bag is under the table"
+      }
+    ],
+    "recall": {
+      "promptTh": "กระเป๋าอยู่ใต้โต๊ะ ลองบอกตำแหน่ง",
+      "answerEn": "The bag is under the table"
+    }
+  },
+  "fnd_v7_u15n06": {
+    "titleEn": "Go Straight, Turn Left",
+    "titleTh": "เข้าใจและให้ทิศทางหนึ่งถึงสองขั้น",
+    "goalTh": "เข้าใจและให้ทิศทางหนึ่งถึงสองขั้น",
+    "scope": "สอน go straight/turn left/turn right/stop เป็น chunks; place words school/room เดิม; อ่านป้าย Exit/Toilet เป็นตัวช่วย ไม่อ้างถอดรหัส phonics",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "go straight ตรงไป turn left เลี้ยวซ้าย; เป็นวลีคำสั่งสั้น",
+        "models": [
+          "Go straight",
+          "Turn left"
+        ],
+        "repeat": "Go straight"
+      },
+      {
+        "tipTh": "turn right เลี้ยวขวา stop หยุด; อย่าเพิ่มเส้นทางยาวหรือ transport",
+        "models": [
+          "Turn right",
+          "Stop"
+        ],
+        "repeat": "Turn right"
+      },
+      {
+        "tipTh": "เชื่อมได้สองขั้นด้วย then ที่แปลว่า แล้วก็",
+        "models": [
+          "Go straight, then turn left"
+        ],
+        "repeat": "Go straight, then turn left"
+      }
+    ],
+    "recall": {
+      "promptTh": "บอกให้เลี้ยวขวา",
+      "answerEn": "Turn right"
+    }
+  }
+}

@@ -4,6 +4,9 @@ import {
   normalizeLessonTeachingLanguage,
 } from './lesson-teaching';
 import { buildSoftTeachRevealLine } from './choice-board';
+import { FOUNDATION_V6_LESSONS } from './foundation-v6-lessons.data';
+import { FOUNDATION_V7_LESSONS } from './foundation-v7-lessons.data';
+import { PHONICS_LESSONS } from '../phonics/phonics-lessons.data';
 
 export type LessonDifficulty = 'beginner' | 'intermediate' | 'advanced';
 
@@ -1103,6 +1106,145 @@ ${
 }
 
 export const LESSONS: LessonConfig[] = [
+  ...PHONICS_LESSONS,
+  ...FOUNDATION_V7_LESSONS,
+  ...FOUNDATION_V6_LESSONS,
+  // Foundation V6 contextual pronunciation inserts. These reuse the shipped
+  // pronunciation coach flow, but keep independent IDs so map completion does
+  // not collide with the standalone Pronunciation course.
+  buildPronunciationLesson({
+    lessonId: 'fnd_v6_pron_catch_slowly',
+    titleEn: 'Catch It Slowly',
+    titleTh: 'ฟังช้า จับคำสำคัญ',
+    goalEn: 'Catch the key words in useful survival phrases at natural speed.',
+    goalTh: 'จับคำสำคัญในประโยคเอาตัวรอดเมื่อได้ยินด้วยความเร็วธรรมชาติ',
+    soundLabel: 'clear key-word stress in short survival phrases',
+    items: ['Please say that again', 'Please speak slowly', 'I do not understand'],
+    itemNoun: 'phrase',
+    smoothMode: true,
+    listenItems: ['Please say that again', 'Please speak slowly', 'I do not understand'],
+    listenAgainItems: ['Say that again', 'Speak slowly', 'Do not understand'],
+    tipTh: 'ไม่ต้องจับทุกคำ ให้ฟังคำสำคัญที่ชัดกว่า เช่น again, slowly และ understand ครับ',
+    tipEn: 'Do not chase every word. Listen for the clearer key words: again, slowly, and understand.',
+    chapterOverviewTh: 'ฝึกฟังประโยคช่วยเหลือที่ใช้จริง แล้วจับเฉพาะคำสำคัญก่อนครับ',
+    chapterOverviewEn: 'Practise useful help phrases and catch the key words first.',
+  }),
+  buildPronunciationLesson({
+    lessonId: 'fnd_v6_pron_be_contractions',
+    titleEn: 'I’m / You’re',
+    titleTh: 'I’m / You’re แบบเป็นธรรมชาติ',
+    goalEn: 'Hear and say common subject-be contractions naturally.',
+    goalTh: 'ฟังและพูดรูปย่อของประธานกับ be ได้อย่างเป็นธรรมชาติ',
+    soundLabel: 'smooth subject-be contractions',
+    items: ["I'm ready", "You're kind", "He's here", "She's happy"],
+    itemNoun: 'phrase',
+    smoothMode: true,
+    listenItems: ['I am ready', 'You are kind', 'He is here', 'She is happy'],
+    listenAgainItems: ["I'm ready", "You're kind", "He's here", "She's happy"],
+    tipTh: 'รูปย่อเชื่อมประธานกับ be เป็นเสียงเดียว อย่าหยุดกลางคำนะครับ',
+    tipEn: 'Join the subject and be as one smooth unit without a pause.',
+    chapterOverviewTh: 'ลองเปลี่ยน I am และ you are ให้เป็นรูปย่อที่คนใช้ในการพูดจริงครับ',
+    chapterOverviewEn: 'Turn full subject-be forms into the contractions people use in everyday speech.',
+  }),
+  buildPronunciationLesson({
+    lessonId: 'fnd_v6_pron_plural_s',
+    titleEn: 'Hear the Plural Ending',
+    titleTh: 'ฟังเสียงท้ายพหูพจน์',
+    goalEn: 'Hear and say the three common plural endings.',
+    goalTh: 'ฟังและพูดเสียงท้ายพหูพจน์ทั้งสามแบบ',
+    soundLabel: 'plural endings /s/, /z/, and /ɪz/',
+    items: ['books', 'bags', 'buses'],
+    tipTh: 'พหูพจน์อาจจบด้วยเสียง s, z หรือ iz ให้รักษาเสียงสั้น ๆ ท้ายคำไว้ครับ',
+    tipEn: 'Plurals can end in s, z, or iz. Keep that short ending audible.',
+    chapterOverviewTh: 'เสียงท้ายคำช่วยให้ผู้ฟังรู้ว่าเป็นหนึ่งชิ้นหรือหลายชิ้นครับ',
+    chapterOverviewEn: 'The final sound tells the listener whether there is one thing or more than one.',
+  }),
+  buildPronunciationLesson({
+    lessonId: 'fnd_v6_pron_this_that',
+    titleEn: 'This or That?',
+    titleTh: 'This หรือ That?',
+    goalEn: 'Say this and that clearly with a voiced TH.',
+    goalTh: 'ออกเสียง this และ that ด้วย TH แบบมีเสียงให้ชัด',
+    soundLabel: 'the voiced TH sound (/ð/) in this and that',
+    items: ['this', 'that', 'these', 'those'],
+    tipTh: 'แตะปลายลิ้นเบา ๆ ระหว่างฟัน แล้วเปิดเสียงจากลำคอสำหรับ TH ใน this และ that ครับ',
+    tipEn: 'Touch your tongue lightly between your teeth and turn your voice on for the TH in this and that.',
+    chapterOverviewTh: 'ฝึกเสียง TH ที่ช่วยให้ this, that, these และ those ฟังชัดครับ',
+    chapterOverviewEn: 'Practise the TH sound that makes this, that, these, and those clear.',
+  }),
+  buildPronunciationLesson({
+    lessonId: 'fnd_v6_pron_five',
+    titleEn: 'Make Five Clear',
+    titleTh: 'พูด Five ให้ชัด',
+    goalEn: 'Keep the final V clear in five and useful number phrases.',
+    goalTh: 'รักษาเสียง V ท้ายคำ five ให้ชัดในวลีตัวเลขที่ใช้จริง',
+    soundLabel: 'the final V sound (/v/) in five',
+    items: ['five', 'twenty-five', 'five people', 'five years old'],
+    itemNoun: 'phrase',
+    tipTh: 'จบคำ five ด้วยฟันบนแตะริมฝีปากล่างเบา ๆ และให้เสียงสั่นสั้น ๆ ครับ',
+    tipEn: 'Finish five with your top teeth lightly on your lower lip and a short voiced buzz.',
+    chapterOverviewTh: 'เสียง V ท้าย five ต้องอยู่ครบเพื่อให้ตัวเลขฟังชัดครับ',
+    chapterOverviewEn: 'Keep the final V in five so the number stays easy to understand.',
+  }),
+  buildPronunciationLesson({
+    lessonId: 'fnd_v6_pron_teens_tens',
+    titleEn: 'Teens or Tens?',
+    titleTh: 'เลขสิบกว่า หรือหลักสิบ?',
+    goalEn: 'Use stress to separate teen numbers from tens.',
+    goalTh: 'ใช้จังหวะเน้นเสียงแยกเลขสิบกว่ากับเลขหลักสิบ',
+    soundLabel: 'contrasting stress in teen and tens numbers',
+    items: ['thirteen / thirty', 'fourteen / forty', 'fifteen / fifty'],
+    itemNoun: 'pair',
+    stressMode: true,
+    tipTh: 'เลขลงท้าย teen มักเน้นท้าย ส่วนเลขหลักสิบอย่าง thirty มักเน้นพยางค์แรกครับ',
+    tipEn: 'Teen numbers usually stress the end; tens like thirty usually stress the first syllable.',
+    chapterOverviewTh: 'ฝึกฟังและพูด stress เพื่อไม่ให้ thirteen กับ thirty สลับกันครับ',
+    chapterOverviewEn: 'Use stress so pairs like thirteen and thirty do not get mixed up.',
+  }),
+  buildPronunciationLesson({
+    lessonId: 'fnd_v6_pron_can_cant',
+    titleEn: 'Can or Can’t?',
+    titleTh: 'Can หรือ Can’t?',
+    goalEn: 'Hear and say the difference between can and can’t in short sentences.',
+    goalTh: 'ฟังและพูดความต่างระหว่าง can กับ can’t ในประโยคสั้น ๆ',
+    soundLabel: 'the rhythm and final cue that separate can from can’t',
+    items: ['I can swim', "I can't swim", 'She can drive', "She can't drive"],
+    itemNoun: 'sentence',
+    stressMode: true,
+    tipTh: 'ฟังทั้งจังหวะและเสียงท้ายของ can’t เพราะเสียง t อาจเบา แต่คำปฏิเสธจะเด่นกว่าครับ',
+    tipEn: 'Listen for both rhythm and the ending of can’t; the T may be light, but the negative word is stronger.',
+    chapterOverviewTh: 'ความต่างเล็ก ๆ ระหว่าง can กับ can’t เปลี่ยนความหมายทั้งประโยคครับ',
+    chapterOverviewEn: 'The small sound difference between can and can’t changes the whole meaning.',
+  }),
+  buildPronunciationLesson({
+    lessonId: 'fnd_v6_pron_third_person_s',
+    titleEn: 'Final -s Counts',
+    titleTh: 'เสียง -s มีความหมาย',
+    goalEn: 'Keep the final -s clear on verbs with he and she.',
+    goalTh: 'รักษาเสียง -s ท้ายกริยาที่ใช้กับ he และ she ให้ชัด',
+    soundLabel: 'the final -s on third-person verbs',
+    items: ['she works', 'he likes', 'she watches', 'he goes'],
+    itemNoun: 'phrase',
+    tipTh: 'เวลาใช้ he หรือ she ให้เก็บเสียง s, z หรือ iz สั้น ๆ ไว้ท้ายกริยาครับ',
+    tipEn: 'With he or she, keep the short s, z, or iz sound at the end of the verb.',
+    chapterOverviewTh: 'เสียงท้ายกริยาช่วยให้ผู้ฟังได้ยินว่าเรากำลังพูดถึง he หรือ she ครับ',
+    chapterOverviewEn: 'The verb ending helps listeners hear that you mean he or she.',
+  }),
+  buildPronunciationLesson({
+    lessonId: 'fnd_v6_pron_question_melody',
+    titleEn: 'Question Melody',
+    titleTh: 'ทำนองของคำถาม',
+    goalEn: 'Use natural question melody to make your intent clear.',
+    goalTh: 'ใช้ทำนองคำถามอย่างเป็นธรรมชาติเพื่อสื่อเจตนาให้ชัด',
+    soundLabel: 'natural question intonation',
+    items: ['Are you ready?', 'Do you like it?', 'Where are you?', 'What do you want?'],
+    itemNoun: 'question',
+    stressMode: true,
+    tipTh: 'คำถาม yes/no มักยกเสียงช่วงท้าย ส่วนคำถาม WH มักลงเสียงท้ายครับ',
+    tipEn: 'Yes-or-no questions often rise near the end; WH questions often fall.',
+    chapterOverviewTh: 'ทำนองเสียงช่วยให้ผู้ฟังรู้ทันทีว่าเรากำลังถาม ไม่ใช่บอกเล่าครับ',
+    chapterOverviewEn: 'Your melody helps listeners hear immediately that you are asking, not stating.',
+  }),
   {
     lessonId: 'greetings',
     targetLabel: 'phrase',
@@ -8247,7 +8389,7 @@ export const LESSON_PROGRESSION_ORDER: string[] = [
 /** Pronunciation course lessons run on the same engine but have their own
  * catalog, progress pointer and turn UI (tap-to-continue). */
 export function isPronunciationLesson(lessonId: string): boolean {
-  return lessonId.startsWith('pron_');
+  return lessonId.startsWith('pron_') || lessonId.startsWith('fnd_v6_pron_');
 }
 
 /** Everyday English scene-drill chapters (Around Town + Stories). */
@@ -8661,10 +8803,16 @@ function exploreCityDirectionsReply(
 }
 
 function exploreCityRoleplayIntroIndex(
-  history: Array<{ speaker: string; roleplayIntro?: unknown }>,
+  history: Array<{ speaker: string; textEn?: string; roleplayIntro?: unknown }>,
 ): number {
-  return history.findIndex(
+  const byField = history.findIndex(
     (t) => t.speaker === 'ai' && t.roleplayIntro != null,
+  );
+  if (byField >= 0) return byField;
+  return history.findIndex(
+    (t) =>
+      t.speaker === 'ai' &&
+      looksLikeAroundTownRoleplayBridge(t.textEn ?? ''),
   );
 }
 
@@ -10074,9 +10222,10 @@ type AroundTownIntroForceResult = {
   isTaskComplete: false;
 };
 
-function aroundTownIntroAlreadyShown(
+export function aroundTownIntroAlreadyShown(
   history: Array<{
     speaker: string;
+    textEn?: string;
     roleplayIntro?: unknown;
     roleplayNpc?: unknown;
   }>,
@@ -10084,7 +10233,9 @@ function aroundTownIntroAlreadyShown(
   return history.some(
     (t) =>
       t.speaker === 'ai' &&
-      (t.roleplayIntro != null || t.roleplayNpc != null),
+      (t.roleplayIntro != null ||
+        t.roleplayNpc != null ||
+        looksLikeAroundTownRoleplayBridge(t.textEn ?? '')),
   );
 }
 
@@ -13132,6 +13283,42 @@ function forceScriptedAsk(
   };
 }
 
+/** First staff ask after the purple Start Roleplay card. */
+export function scriptedAroundTownRoleplayOpening(lessonId: string): {
+  textEn: string;
+  textTh: string;
+  expectsUserSpeech: boolean;
+  expectedSpeech: string | null;
+  roleplayNpc: { emoji: string; name: string; objective: string };
+  emojiChoice: ScriptedRoleplayAskStep['emojiChoice'] | null;
+} | null {
+  if (lessonId === 'ee_around_town_convenience') {
+    return {
+      textEn: 'Hi!',
+      textTh: 'สวัสดีครับ!',
+      expectsUserSpeech: true,
+      expectedSpeech: '',
+      roleplayNpc: {
+        emoji: '👨',
+        name: 'Local Guide',
+        objective: EXPLORE_CITY_ROLEPLAY_OBJECTIVE,
+      },
+      emojiChoice: null,
+    };
+  }
+  const config = SCRIPTED_AROUND_TOWN_ROLEPLAYS[lessonId];
+  if (!config) return null;
+  const ask = forceScriptedAsk(config, 0);
+  return {
+    textEn: ask.textEn,
+    textTh: ask.textTh ?? '',
+    expectsUserSpeech: ask.expectsUserSpeech,
+    expectedSpeech: ask.expectedSpeech,
+    roleplayNpc: ask.roleplayNpc,
+    emojiChoice: ask.emojiChoice,
+  };
+}
+
 function forceScriptedAckClose(
   config: ScriptedRoleplayConfig,
   history: Array<{ speaker: string; textEn?: string }>,
@@ -13200,12 +13387,14 @@ export function guideScriptedAroundTownRoleplayIfNeeded(
     startIdx < 0 &&
     currentAskIdx >= 0 &&
     !history.some((t) => t.speaker === 'ai' && t.roleplayIntro != null);
+  const hadIntro = aroundTownIntroAlreadyShown(history);
   const inRoleplay =
     current.roleplayNpc != null ||
     offScript ||
     startIdx >= 0 ||
     isScriptedSoftHintLine(current.textEn) ||
-    (currentAskIdx >= 0 && !scriptedBeforeRoleplay);
+    (currentAskIdx >= 0 && !scriptedBeforeRoleplay) ||
+    (hadIntro && current.roleplayIntro == null);
 
   if (!inRoleplay) return null;
 
@@ -13499,6 +13688,74 @@ export function guideScriptedAroundTownRoleplayIfNeeded(
   return null;
 }
 
+const EMPTY_ROLEPLAY_CURRENT = {
+  textEn: '',
+  textTh: null,
+  roleplayIntro: null,
+  roleplayNpc: null,
+  expectsUserSpeech: true,
+  expectedSpeech: null,
+  isTaskComplete: false,
+};
+
+/** Next staff / celebrate beat after the purple Start Roleplay card. */
+export function nextAroundTownRoleplayTurn(
+  lessonId: string,
+  lang: LessonTeachingLanguage,
+  history: Array<{
+    speaker: string;
+    textEn?: string;
+    roleplayIntro?: unknown;
+    roleplayNpc?: unknown;
+  }>,
+): {
+  textEn: string;
+  textTh: string | null;
+  expectsUserSpeech: boolean;
+  expectedSpeech: string | null;
+  roleplayNpc?: { emoji: string; name: string; objective: string } | null;
+  emojiChoice?: ScriptedRoleplayAskStep['emojiChoice'] | null;
+  isLessonComplete: boolean;
+} | null {
+  if (!aroundTownIntroAlreadyShown(history)) return null;
+
+  const explore = guideExploreCityRoleplayIfNeeded(
+    lessonId,
+    history,
+    EMPTY_ROLEPLAY_CURRENT,
+  );
+  if (explore) {
+    return {
+      textEn: explore.textEn,
+      textTh: explore.textTh,
+      expectsUserSpeech: explore.expectsUserSpeech,
+      expectedSpeech: explore.expectedSpeech,
+      roleplayNpc: explore.roleplayNpc,
+      isLessonComplete: false,
+    };
+  }
+
+  const scripted = guideScriptedAroundTownRoleplayIfNeeded(
+    lessonId,
+    lang,
+    history,
+    EMPTY_ROLEPLAY_CURRENT,
+  );
+  if (scripted) {
+    return {
+      textEn: scripted.textEn,
+      textTh: scripted.textTh,
+      expectsUserSpeech: scripted.expectsUserSpeech,
+      expectedSpeech: scripted.expectedSpeech,
+      roleplayNpc: scripted.roleplayNpc,
+      emojiChoice: scripted.emojiChoice,
+      isLessonComplete: scripted.isTaskComplete,
+    };
+  }
+
+  return null;
+}
+
 /** Known Around Town staff lines — used to strip Thai praise mash from textEn. */
 const AROUND_TOWN_STAFF_LINES = [
   'Can I help you?',
@@ -13781,6 +14038,7 @@ export function isEverydayEnglishReview(lessonId: string): boolean {
 /** Lessons that use expectsUserSpeech + Continue button (and optional Scene). */
 export function lessonUsesTapToContinue(lessonId: string): boolean {
   return (
+    FOUNDATION_V7_LESSONS.some(lesson => lesson.lessonId === lessonId) ||
     isPronunciationLesson(lessonId) ||
     isAroundTownLesson(lessonId) ||
     isEverydayEnglishReview(lessonId) ||
@@ -13919,4 +14177,3 @@ export {
 } from './lesson-teaching';
 export * from './choice-board';
 export * from '../training/about-me';
-

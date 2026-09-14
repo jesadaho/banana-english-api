@@ -1,0 +1,731 @@
+{
+  "fnd_v7_u02n02": [
+    {
+      "id": "fnd_v7_u02n02_q1",
+      "promptTh": "ขอบคุณ",
+      "answerEn": "Thank you",
+      "acceptedAnswers": [
+        "Thanks"
+      ]
+    },
+    {
+      "id": "fnd_v7_u02n02_q2",
+      "promptTh": "ขอโทษเมื่อทำผิด",
+      "answerEn": "Sorry",
+      "acceptedAnswers": [
+        "I am sorry",
+        "I'm sorry"
+      ]
+    },
+    {
+      "id": "fnd_v7_u02n02_q3",
+      "promptTh": "ขอเรียกความสนใจก่อนพูด",
+      "answerEn": "Excuse me",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u02n02_q4",
+      "promptTh": "พูดว่า กรุณา",
+      "answerEn": "Please",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u02n02_q5",
+      "promptTh": "กล่าวขอบคุณอีกฝ่ายอีกครั้ง",
+      "answerEn": "Thank you",
+      "acceptedAnswers": [
+        "Thanks"
+      ]
+    }
+  ],
+  "fnd_v7_u03n04": [
+    {
+      "id": "fnd_v7_u03n04_q1",
+      "promptTh": "ฉันพร้อมแล้ว",
+      "answerEn": "I am ready",
+      "acceptedAnswers": [
+        "I'm ready"
+      ],
+      "mode": "guided",
+      "hintEn": "I am …",
+      "choices": [
+        "I am ready",
+        "You are ready",
+        "I am tired"
+      ]
+    },
+    {
+      "id": "fnd_v7_u03n04_q2",
+      "promptTh": "ฉันหิว",
+      "answerEn": "I am hungry",
+      "acceptedAnswers": [
+        "I'm hungry"
+      ],
+      "mode": "guided",
+      "hintEn": "I am …",
+      "choices": [
+        "I am hungry",
+        "I am happy",
+        "You are hungry"
+      ]
+    },
+    {
+      "id": "fnd_v7_u03n04_q3",
+      "promptTh": "คุณมีความสุข",
+      "answerEn": "You are happy",
+      "acceptedAnswers": [
+        "You're happy"
+      ],
+      "mode": "guided",
+      "hintEn": "You are …",
+      "choices": [
+        "You are happy",
+        "I am happy",
+        "You are tired"
+      ]
+    },
+    {
+      "id": "fnd_v7_u03n04_q4",
+      "promptTh": "ฉันไม่เหนื่อย",
+      "answerEn": "I am not tired",
+      "acceptedAnswers": [
+        "I'm not tired"
+      ]
+    },
+    {
+      "id": "fnd_v7_u03n04_q5",
+      "promptTh": "คุณพร้อมไหม",
+      "answerEn": "Are you ready",
+      "acceptedAnswers": []
+    }
+  ],
+  "fnd_v7_u05n03": [
+    {
+      "id": "fnd_v7_u05n03_q1",
+      "promptTh": "หนังสือหนึ่งเล่ม",
+      "answerEn": "a book",
+      "acceptedAnswers": [
+        "one book"
+      ]
+    },
+    {
+      "id": "fnd_v7_u05n03_q2",
+      "promptTh": "แอปเปิลหนึ่งผล",
+      "answerEn": "an apple",
+      "acceptedAnswers": [
+        "one apple"
+      ]
+    },
+    {
+      "id": "fnd_v7_u05n03_q3",
+      "promptTh": "ปากกาหลายด้าม",
+      "answerEn": "pens",
+      "acceptedAnswers": [
+        "many pens"
+      ]
+    },
+    {
+      "id": "fnd_v7_u05n03_q4",
+      "promptTh": "กระเป๋าหนึ่งใบ",
+      "answerEn": "a bag",
+      "acceptedAnswers": [
+        "one bag"
+      ]
+    },
+    {
+      "id": "fnd_v7_u05n03_q5",
+      "promptTh": "หนังสือหลายเล่ม",
+      "answerEn": "books",
+      "acceptedAnswers": [
+        "many books"
+      ]
+    }
+  ],
+  "fnd_v7_u05n05": [
+    {
+      "id": "fnd_v7_u05n05_q1",
+      "promptTh": "ขอกระเป๋าหนึ่งใบอย่างสุภาพ",
+      "answerEn": "A bag, please",
+      "acceptedAnswers": [
+        "One bag, please"
+      ]
+    },
+    {
+      "id": "fnd_v7_u05n05_q2",
+      "promptTh": "ขอหนังสือหลายเล่มอย่างสุภาพ",
+      "answerEn": "Books, please",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u05n05_q3",
+      "promptTh": "ขอแอปเปิลหนึ่งผลอย่างสุภาพ",
+      "answerEn": "An apple, please",
+      "acceptedAnswers": [
+        "One apple, please"
+      ]
+    },
+    {
+      "id": "fnd_v7_u05n05_q4",
+      "promptTh": "ขอปากกาหลายด้ามอย่างสุภาพ",
+      "answerEn": "Pens, please",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u05n05_q5",
+      "promptTh": "ขอหนังสือหนึ่งเล่มอย่างสุภาพ",
+      "answerEn": "A book, please",
+      "acceptedAnswers": [
+        "One book, please"
+      ]
+    }
+  ],
+  "fnd_v7_u06n07": [
+    {
+      "id": "fnd_v7_u06n07_q1",
+      "promptTh": "นั่นไม่ใช่ปากกา",
+      "answerEn": "That is not a pen",
+      "acceptedAnswers": [
+        "That isn't a pen",
+        "That's not a pen"
+      ]
+    },
+    {
+      "id": "fnd_v7_u06n07_q2",
+      "promptTh": "พวกนี้คือหนังสือ",
+      "answerEn": "These are books",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u06n07_q3",
+      "promptTh": "นี่คือกระเป๋าสีน้ำเงิน",
+      "answerEn": "This is a blue bag",
+      "acceptedAnswers": [
+        "This bag is blue"
+      ]
+    },
+    {
+      "id": "fnd_v7_u06n07_q4",
+      "promptTh": "พวกนั้นคือกระเป๋า",
+      "answerEn": "Those are bags",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u06n07_q5",
+      "promptTh": "นั่นคือกระเป๋าใบเล็ก",
+      "answerEn": "That is a small bag",
+      "acceptedAnswers": [
+        "That's a small bag"
+      ]
+    }
+  ],
+  "fnd_v7_u07n06": [
+    {
+      "id": "fnd_v7_u07n06_q1",
+      "promptTh": "ฉันมีกุญแจหนึ่งดอก",
+      "answerEn": "I have a key",
+      "acceptedAnswers": [],
+      "mode": "guided",
+      "hintEn": "I have …",
+      "choices": [
+        "I have a key",
+        "She has a key",
+        "I have a book"
+      ]
+    },
+    {
+      "id": "fnd_v7_u07n06_q2",
+      "promptTh": "เธอมีกระเป๋าหนึ่งใบ",
+      "answerEn": "She has a bag",
+      "acceptedAnswers": [],
+      "mode": "guided",
+      "hintEn": "She has …",
+      "choices": [
+        "She has a bag",
+        "She has a key",
+        "I have a bag"
+      ]
+    },
+    {
+      "id": "fnd_v7_u07n06_q3",
+      "promptTh": "นี่คือโทรศัพท์ของคุณ",
+      "answerEn": "This is your phone",
+      "acceptedAnswers": [],
+      "mode": "guided",
+      "hintEn": "This is …",
+      "choices": [
+        "This is your phone",
+        "This is my phone",
+        "This is her phone"
+      ]
+    },
+    {
+      "id": "fnd_v7_u07n06_q4",
+      "promptTh": "เขามีหนังสือของฉัน",
+      "answerEn": "He has my book",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u07n06_q5",
+      "promptTh": "พวกนี้คือกุญแจของพวกเขา",
+      "answerEn": "These are their keys",
+      "acceptedAnswers": []
+    }
+  ],
+  "fnd_v7_u08n04": [
+    {
+      "id": "fnd_v7_u08n04_q1",
+      "promptTh": "ฉันอายุสิบสองปี",
+      "answerEn": "I am twelve years old",
+      "acceptedAnswers": [
+        "I'm twelve years old",
+        "I am twelve",
+        "I'm twelve"
+      ]
+    },
+    {
+      "id": "fnd_v7_u08n04_q2",
+      "promptTh": "เธออายุสิบหกปี",
+      "answerEn": "She is sixteen years old",
+      "acceptedAnswers": [
+        "She's sixteen",
+        "She is sixteen",
+        "She's sixteen years old"
+      ]
+    },
+    {
+      "id": "fnd_v7_u08n04_q3",
+      "promptTh": "ฉันอายุสิบแปดปี",
+      "answerEn": "I am eighteen",
+      "acceptedAnswers": [
+        "I'm eighteen",
+        "I am eighteen years old"
+      ]
+    },
+    {
+      "id": "fnd_v7_u08n04_q4",
+      "promptTh": "เขาอายุสิบเอ็ดปี",
+      "answerEn": "He is eleven",
+      "acceptedAnswers": [
+        "He's eleven",
+        "He is eleven years old"
+      ]
+    },
+    {
+      "id": "fnd_v7_u08n04_q5",
+      "promptTh": "ฉันอายุยี่สิบปี",
+      "answerEn": "I am twenty",
+      "acceptedAnswers": [
+        "I'm twenty",
+        "I am twenty years old"
+      ]
+    }
+  ],
+  "fnd_v7_u08n06": [
+    {
+      "id": "fnd_v7_u08n06_q1",
+      "promptTh": "สะกดชื่อ AL ทีละตัว",
+      "answerEn": "A L",
+      "acceptedAnswers": [
+        "AL"
+      ]
+    },
+    {
+      "id": "fnd_v7_u08n06_q2",
+      "promptTh": "สะกดชื่อ LEE ทีละตัว",
+      "answerEn": "L E E",
+      "acceptedAnswers": [
+        "LEE"
+      ]
+    },
+    {
+      "id": "fnd_v7_u08n06_q3",
+      "promptTh": "สะกดชื่อ MIA ทีละตัว",
+      "answerEn": "M I A",
+      "acceptedAnswers": [
+        "MIA"
+      ]
+    },
+    {
+      "id": "fnd_v7_u08n06_q4",
+      "promptTh": "สะกดชื่อ EMMA ทีละตัว",
+      "answerEn": "E M M A",
+      "acceptedAnswers": [
+        "EMMA"
+      ]
+    },
+    {
+      "id": "fnd_v7_u08n06_q5",
+      "promptTh": "สะกดชื่อ KIM ทีละตัว",
+      "answerEn": "K I M",
+      "acceptedAnswers": [
+        "KIM"
+      ]
+    }
+  ],
+  "fnd_v7_u08n08": [
+    {
+      "id": "fnd_v7_u08n08_q1",
+      "promptTh": "สะกด MAX ให้ฟังอีกครั้ง",
+      "answerEn": "M A X",
+      "acceptedAnswers": [
+        "MAX"
+      ]
+    },
+    {
+      "id": "fnd_v7_u08n08_q2",
+      "promptTh": "สะกด SAM ให้ชัด",
+      "answerEn": "S A M",
+      "acceptedAnswers": [
+        "SAM"
+      ]
+    },
+    {
+      "id": "fnd_v7_u08n08_q3",
+      "promptTh": "สะกดชื่อ ANNA ทีละตัว",
+      "answerEn": "A N N A",
+      "acceptedAnswers": [
+        "ANNA"
+      ]
+    },
+    {
+      "id": "fnd_v7_u08n08_q4",
+      "promptTh": "สะกดชื่อ TOM ให้ถูก",
+      "answerEn": "T O M",
+      "acceptedAnswers": [
+        "TOM"
+      ]
+    },
+    {
+      "id": "fnd_v7_u08n08_q5",
+      "promptTh": "สะกด NINA อีกครั้ง",
+      "answerEn": "N I N A",
+      "acceptedAnswers": [
+        "NINA"
+      ]
+    }
+  ],
+  "fnd_v7_u09n02": [
+    {
+      "id": "fnd_v7_u09n02_q1",
+      "promptTh": "สามสิบ",
+      "answerEn": "thirty",
+      "acceptedAnswers": [
+        "30"
+      ]
+    },
+    {
+      "id": "fnd_v7_u09n02_q2",
+      "promptTh": "สี่สิบสอง",
+      "answerEn": "forty-two",
+      "acceptedAnswers": [
+        "forty two",
+        "42"
+      ]
+    },
+    {
+      "id": "fnd_v7_u09n02_q3",
+      "promptTh": "แปดสิบ",
+      "answerEn": "eighty",
+      "acceptedAnswers": [
+        "80"
+      ]
+    },
+    {
+      "id": "fnd_v7_u09n02_q4",
+      "promptTh": "ยี่สิบเอ็ด",
+      "answerEn": "twenty-one",
+      "acceptedAnswers": [
+        "twenty one",
+        "21"
+      ]
+    },
+    {
+      "id": "fnd_v7_u09n02_q5",
+      "promptTh": "หนึ่งร้อย",
+      "answerEn": "one hundred",
+      "acceptedAnswers": [
+        "a hundred",
+        "100"
+      ]
+    }
+  ],
+  "fnd_v7_u09n06": [
+    {
+      "id": "fnd_v7_u09n06_q1",
+      "promptTh": "สามสิบบาท",
+      "answerEn": "thirty baht",
+      "acceptedAnswers": [
+        "30 baht"
+      ]
+    },
+    {
+      "id": "fnd_v7_u09n06_q2",
+      "promptTh": "ห้าสิบบาท",
+      "answerEn": "fifty baht",
+      "acceptedAnswers": [
+        "50 baht"
+      ]
+    },
+    {
+      "id": "fnd_v7_u09n06_q3",
+      "promptTh": "ยี่สิบห้าบาท",
+      "answerEn": "twenty-five baht",
+      "acceptedAnswers": [
+        "twenty five baht",
+        "25 baht"
+      ]
+    },
+    {
+      "id": "fnd_v7_u09n06_q4",
+      "promptTh": "สี่สิบบาท",
+      "answerEn": "forty baht",
+      "acceptedAnswers": [
+        "40 baht"
+      ]
+    },
+    {
+      "id": "fnd_v7_u09n06_q5",
+      "promptTh": "หนึ่งร้อยบาท",
+      "answerEn": "one hundred baht",
+      "acceptedAnswers": [
+        "a hundred baht",
+        "100 baht"
+      ]
+    }
+  ],
+  "fnd_v7_u10n06": [
+    {
+      "id": "fnd_v7_u10n06_q1",
+      "promptTh": "ขอน้ำอย่างสุภาพ",
+      "answerEn": "Water, please",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u10n06_q2",
+      "promptTh": "ฉันต้องการความช่วยเหลือ",
+      "answerEn": "I need help",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u10n06_q3",
+      "promptTh": "ปฏิเสธอย่างสุภาพว่า ไม่ ขอบคุณ",
+      "answerEn": "No, thank you",
+      "acceptedAnswers": [
+        "No, thanks"
+      ]
+    },
+    {
+      "id": "fnd_v7_u10n06_q4",
+      "promptTh": "ขอกาแฟหนึ่งแก้วอย่างสุภาพ",
+      "answerEn": "A coffee, please",
+      "acceptedAnswers": [
+        "One coffee, please"
+      ]
+    },
+    {
+      "id": "fnd_v7_u10n06_q5",
+      "promptTh": "ฉันอยากได้น้ำ",
+      "answerEn": "I want water",
+      "acceptedAnswers": []
+    }
+  ],
+  "fnd_v7_u11n05": [
+    {
+      "id": "fnd_v7_u11n05_q1",
+      "promptTh": "ขออนุญาตนั่งตรงนี้",
+      "answerEn": "Can I sit here",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u11n05_q2",
+      "promptTh": "ถามว่าคุณว่ายน้ำเป็นไหม",
+      "answerEn": "Can you swim",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u11n05_q3",
+      "promptTh": "ถามว่าคุณทำอาหารเป็นไหม",
+      "answerEn": "Can you cook",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u11n05_q4",
+      "promptTh": "บอกว่าฉันอ่านได้",
+      "answerEn": "I can read",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u11n05_q5",
+      "promptTh": "บอกว่าฉันว่ายน้ำไม่เป็น",
+      "answerEn": "I cannot swim",
+      "acceptedAnswers": [
+        "I can't swim",
+        "I can not swim"
+      ]
+    }
+  ],
+  "fnd_v7_u12n06": [
+    {
+      "id": "fnd_v7_u12n06_q1",
+      "promptTh": "เขาทำงานวันจันทร์ไหม",
+      "answerEn": "Does he work on Monday",
+      "acceptedAnswers": [],
+      "mode": "guided",
+      "hintEn": "Does he …",
+      "choices": [
+        "Does he work on Monday",
+        "Do you work on Monday",
+        "Does he work on Friday"
+      ]
+    },
+    {
+      "id": "fnd_v7_u12n06_q2",
+      "promptTh": "คุณตื่นเจ็ดโมงไหม",
+      "answerEn": "Do you wake up at seven",
+      "acceptedAnswers": [
+        "Do you wake up at 7"
+      ],
+      "mode": "guided",
+      "hintEn": "Do you …",
+      "choices": [
+        "Do you wake up at seven",
+        "Does she wake up at seven",
+        "Do you work at seven"
+      ]
+    },
+    {
+      "id": "fnd_v7_u12n06_q3",
+      "promptTh": "เธอไม่ทำงานวันศุกร์",
+      "answerEn": "She does not work on Friday",
+      "acceptedAnswers": [
+        "She doesn't work on Friday"
+      ],
+      "mode": "guided",
+      "hintEn": "She does not …",
+      "choices": [
+        "She does not work on Friday",
+        "She works on Friday",
+        "I do not work on Friday"
+      ]
+    },
+    {
+      "id": "fnd_v7_u12n06_q4",
+      "promptTh": "ทบทวน: คุณทำอาหารเป็นไหม",
+      "answerEn": "Can you cook",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u12n06_q5",
+      "promptTh": "เธอทำงานไหม",
+      "answerEn": "Does she work",
+      "acceptedAnswers": []
+    }
+  ],
+  "fnd_v7_u14n04": [
+    {
+      "id": "fnd_v7_u14n04_q1",
+      "promptTh": "เธอคือใคร",
+      "answerEn": "Who is she",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14n04_q2",
+      "promptTh": "นี่คืออะไร",
+      "answerEn": "What is this",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14n04_q3",
+      "promptTh": "คลาสอยู่ที่ไหน",
+      "answerEn": "Where is the class",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14n04_q4",
+      "promptTh": "คลาสเมื่อไร",
+      "answerEn": "When is the class",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14n04_q5",
+      "promptTh": "ราคาเท่าไร",
+      "answerEn": "How much is it",
+      "acceptedAnswers": [
+        "How much"
+      ]
+    }
+  ],
+  "fnd_v7_u15n07": [
+    {
+      "id": "fnd_v7_u15n07_q1",
+      "promptTh": "ตรงไป",
+      "answerEn": "Go straight",
+      "acceptedAnswers": [
+        "Go straight ahead"
+      ]
+    },
+    {
+      "id": "fnd_v7_u15n07_q2",
+      "promptTh": "เลี้ยวซ้าย",
+      "answerEn": "Turn left",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u15n07_q3",
+      "promptTh": "เลี้ยวขวา",
+      "answerEn": "Turn right",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u15n07_q4",
+      "promptTh": "หยุด",
+      "answerEn": "Stop",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u15n07_q5",
+      "promptTh": "ตรงไป แล้วเลี้ยวซ้าย",
+      "answerEn": "Go straight, then turn left",
+      "acceptedAnswers": [
+        "Go straight and turn left",
+        "Go straight. Turn left."
+      ]
+    }
+  ],
+  "fnd_v7_u16n03": [
+    {
+      "id": "fnd_v7_u16n03_q1",
+      "promptTh": "ช่วยพูดอีกครั้ง",
+      "answerEn": "Please say that again",
+      "acceptedAnswers": [
+        "Say that again, please"
+      ]
+    },
+    {
+      "id": "fnd_v7_u16n03_q2",
+      "promptTh": "ห้องอยู่ที่ไหน",
+      "answerEn": "Where is the room",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u16n03_q3",
+      "promptTh": "ฉันต้องการความช่วยเหลือ",
+      "answerEn": "I need help",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u16n03_q4",
+      "promptTh": "ฉันขอนั่งตรงนี้ได้ไหม",
+      "answerEn": "Can I sit here",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u16n03_q5",
+      "promptTh": "ราคาเท่าไร",
+      "answerEn": "How much is it",
+      "acceptedAnswers": [
+        "How much"
+      ]
+    }
+  ]
+}

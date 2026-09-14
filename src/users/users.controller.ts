@@ -17,6 +17,7 @@ import { AnonymousUserGuard } from './anonymous-user.guard';
 import {
   AcquisitionSourceSurveyDto,
   CompleteOnboardingDto,
+  DemographicsSurveyDto,
   EnglishLevelSurveyDto,
   RefillBananasByNameDto,
   UnlockAvatarDto,
@@ -151,6 +152,14 @@ export class UsersController {
     @Body() body: AcquisitionSourceSurveyDto,
   ) {
     return this.users.saveAcquisitionSourceSurvey(req.user, body);
+  }
+
+  @Post('me/about-you-survey')
+  async saveAboutYouSurvey(
+    @Req() req: AuthedRequest,
+    @Body() body: DemographicsSurveyDto,
+  ) {
+    return this.users.saveDemographicsSurvey(req.user, body);
   }
 
   @Post('me/spoken')

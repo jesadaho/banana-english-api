@@ -3,6 +3,8 @@ import {
   type Json,
   type TurnResult,
 } from './lesson-api-client';
+import { TAP_TO_CONTINUE_SENTINEL } from '../../src/common/api.types.ts';
+import { pickUserSpeechForTurn } from '../../src/lessons/lesson-turn-driver.ts';
 import { boardToScriptTurn } from '../../src/training/scripts/choice-lesson.script.ts';
 import { extractIntroducedName } from '../../src/training/foundation/foundation.helpers.ts';
 import {
@@ -32,13 +34,13 @@ export const ALL_STORIES_SCENARIO_LESSON_IDS = STORIES_CHOICE_LESSONS.map(
 export type StoriesScenarioLessonId =
   (typeof ALL_STORIES_SCENARIO_LESSON_IDS)[number];
 
-/** Teaching ends before roleplay — stop scenario when roleplayIntro appears. */
-export const STORIES_TEACHING_ONLY_LESSONS = new Set<string>([
+/** Last Night keeps going after teaching: Roleplay intro → NPC → Celebrate. */
+export const STORIES_ROLEPLAY_LESSONS = new Set<string>([
   'ee_stories_last_night',
 ]);
 
 export const LEARNER = 'Nana';
-const MAX_TURNS = 32;
+const MAX_TURNS = 64;
 
 export type HistoryTurn = {
   speaker: 'ai' | 'user';
@@ -56,12 +58,15 @@ export type ScenarioRunResult = {
 };
 
 function pickExpected(turn: TurnResult): string {
+  if (turn.expectsUserSpeech === false) return TAP_TO_CONTINUE_SENTINEL;
   const expected = turn.expectedSpeech?.trim();
   if (expected) return expected;
   const guided = turn.guidedSpeaking;
   if (guided?.speak?.trim()) return guided.speak.trim();
   const option = guided?.options?.find((o) => o.speak?.trim());
   if (option?.speak?.trim()) return option.speak.trim();
+  const picked = pickUserSpeechForTurn(turn)?.trim();
+  if (picked) return picked;
   throw new Error('missing expected speech on turn');
 }
 
@@ -183,7 +188,13 @@ function pickUserSpeech(
   turnBefore: TurnResult,
   step: number,
 ): { speech: string; recoverExact?: string; recoverWrong?: string } {
+  if (turnBefore.expectsUserSpeech === false) {
+    return { speech: TAP_TO_CONTINUE_SENTINEL };
+  }
   const expected = pickExpected(turnBefore);
+  if (turnBefore.emojiChoice != null) {
+    return { speech: expected };
+  }
 
   switch (scenario) {
     case 1:
@@ -207,21 +218,8 @@ function pickUserSpeech(
   }
 }
 
-function isTeachingComplete(
-  lessonId: string,
-  def: ChoiceLessonDef,
-  lessonStep: number,
-  block: Json,
-  turn: TurnResult,
-): boolean {
-  if (turn.isTaskComplete) return true;
-  if (!STORIES_TEACHING_ONLY_LESSONS.has(lessonId)) return false;
-  if (lessonStep < def.maxStep) return false;
-  return (
-    block.roleplayIntro != null ||
-    block.roleplayNpc != null ||
-    turn.expectsUserSpeech === false
-  );
+function isLessonComplete(turn: TurnResult): boolean {
+  return Boolean(turn.isTaskComplete);
 }
 
 function finishOk(
@@ -334,7 +332,7 @@ export async function runStoriesScenario(
       currentTurn = res.turn.currentTurn;
       turnBefore = res.turn;
 
-      if (isTeachingComplete(lessonId, def, lessonStep, block, res.turn)) {
+      if (isLessonComplete(res.turn)) {
         return finishOk(lessonId, scenario, reportStep, totalMs);
       }
 
@@ -379,7 +377,7 @@ export async function runStoriesScenario(
         aiPrompt = recReply;
 
         if (
-          isTeachingComplete(lessonId, def, lessonStep, recBlock, recovery.turn)
+          isLessonComplete(recovery.turn)
         ) {
           return finishOk(lessonId, scenario, reportStep, totalMs);
         }
@@ -423,15 +421,7 @@ export async function runStoriesScenario(
         turnBefore = secondWrong.turn;
         aiPrompt = softReply;
 
-        if (
-          isTeachingComplete(
-            lessonId,
-            def,
-            lessonStep,
-            softBlock,
-            secondWrong.turn,
-          )
-        ) {
+        if (isLessonComplete(secondWrong.turn)) {
           return finishOk(lessonId, scenario, reportStep, totalMs);
         }
       } else {

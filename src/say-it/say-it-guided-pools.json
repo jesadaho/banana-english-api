@@ -1,0 +1,65 @@
+{
+  "fnd_v6_build_be_sentences": [
+    {"id":"gbe1","promptTh":"พูดว่า ฉันเป็นนักเรียน","answerEn":"I am a student.","acceptedAnswers":["I am a student","I'm a student"],"mode":"guided","hintEn":"I ___ a student.","choices":["am","is","are"]},
+    {"id":"gbe2","promptTh":"พูดว่า คุณเป็นครู","answerEn":"You are a teacher.","acceptedAnswers":["You are a teacher","You're a teacher"],"mode":"guided","hintEn":"You ___ a teacher.","choices":["is","are","am"]},
+    {"id":"gbe3","promptTh":"พูดว่า เขามีความสุข","answerEn":"He is happy.","acceptedAnswers":["He is happy","He's happy"],"mode":"guided","hintEn":"He ___ happy.","choices":["are","am","is"]},
+    {"id":"gbe4","promptTh":"พูดว่า พวกเราเป็นเพื่อนกัน","answerEn":"We are friends.","acceptedAnswers":["We are friends","We're friends"],"mode":"guided","hintEn":"We ___ friends.","choices":["are","is","am"]},
+    {"id":"gbe5","promptTh":"ถามว่า เธอเหนื่อยไหม","answerEn":"Is she tired?","acceptedAnswers":["Is she tired","Is she tired?"],"mode":"guided","hintEn":"___ she tired?","choices":["Are","Is","Am"]}
+  ],
+  "fnd_v6_make_noun_fit": [
+    {"id":"gnf1","promptTh":"พูดว่า แอปเปิลหนึ่งลูก","answerEn":"An apple.","acceptedAnswers":["An apple"],"mode":"guided","hintEn":"___ apple.","choices":["A","An","Two"]},
+    {"id":"gnf2","promptTh":"พูดว่า หนังสือหนึ่งเล่ม","answerEn":"A book.","acceptedAnswers":["A book"],"mode":"guided","hintEn":"___ book.","choices":["An","A","Two"]},
+    {"id":"gnf3","promptTh":"พูดว่า แมวสองตัว","answerEn":"Two cats.","acceptedAnswers":["Two cats"],"mode":"guided","hintEn":"Two ___.","choices":["cat","cats","cates"]},
+    {"id":"gnf4","promptTh":"พูดว่า ไข่สามฟอง","answerEn":"Three eggs.","acceptedAnswers":["Three eggs"],"mode":"guided","hintEn":"Three ___.","choices":["egg","eggs","egges"]},
+    {"id":"gnf5","promptTh":"พูดว่า กระเป๋าหลายใบ","answerEn":"Many bags.","acceptedAnswers":["Many bags"],"mode":"guided","hintEn":"Many ___.","choices":["bag","bags","a bag"]}
+  ],
+  "fnd_v6_small_blue_bag": [
+    {"id":"gsb1","promptTh":"พูดว่า กระเป๋าใบเล็กสีฟ้า","answerEn":"A small blue bag.","acceptedAnswers":["A small blue bag"],"mode":"guided","hintEn":"A ___ blue bag.","choices":["small","many","this"]},
+    {"id":"gsb2","promptTh":"พูดว่า หนังสือเล่มใหญ่สีแดง","answerEn":"A big red book.","acceptedAnswers":["A big red book"],"mode":"guided","hintEn":"A big ___ book.","choices":["red","bag","small"]},
+    {"id":"gsb3","promptTh":"พูดว่า นี่คือหมวกสีเขียว","answerEn":"This is a green hat.","acceptedAnswers":["This is a green hat"],"mode":"guided","hintEn":"___ is a green hat.","choices":["These","This","Those"]},
+    {"id":"gsb4","promptTh":"พูดว่า นั่นคือโทรศัพท์สีดำ","answerEn":"That is a black phone.","acceptedAnswers":["That is a black phone","That's a black phone"],"mode":"guided","hintEn":"___ is a black phone.","choices":["That","Those","These"]},
+    {"id":"gsb5","promptTh":"พูดว่า รองเท้าเหล่านี้สีขาว","answerEn":"These shoes are white.","acceptedAnswers":["These shoes are white"],"mode":"guided","hintEn":"___ shoes are white.","choices":["This","That","These"]}
+  ],
+  "fnd_v6_owner_thing": [
+    {"id":"got1","promptTh":"พูดว่า นี่คือกระเป๋าของฉัน","answerEn":"This is my bag.","acceptedAnswers":["This is my bag"],"mode":"guided","hintEn":"This is ___ bag.","choices":["my","your","her"]},
+    {"id":"got2","promptTh":"พูดว่า นั่นคือหนังสือของคุณ","answerEn":"That is your book.","acceptedAnswers":["That is your book","That's your book"],"mode":"guided","hintEn":"That is ___ book.","choices":["his","your","my"]},
+    {"id":"got3","promptTh":"พูดว่า นี่คือหมวกของเขา","answerEn":"This is his hat.","acceptedAnswers":["This is his hat"],"mode":"guided","hintEn":"This is ___ hat.","choices":["her","his","your"]},
+    {"id":"got4","promptTh":"พูดว่า นั่นคือโทรศัพท์ของเธอ","answerEn":"That is her phone.","acceptedAnswers":["That is her phone","That's her phone"],"mode":"guided","hintEn":"That is ___ phone.","choices":["my","his","her"]},
+    {"id":"got5","promptTh":"พูดว่า พวกเรามีหนังสือของเรา","answerEn":"We have our books.","acceptedAnswers":["We have our books"],"mode":"guided","hintEn":"We have ___ books.","choices":["our","their","your"]}
+  ],
+  "fnd_v6_three_lines": [
+    {"id":"gtl1","promptTh":"พูดว่า ฉันชอบกาแฟ","answerEn":"I like coffee.","acceptedAnswers":["I like coffee"],"mode":"guided","hintEn":"I ___ coffee.","choices":["like","likes","am"]},
+    {"id":"gtl2","promptTh":"พูดว่า ฉันไม่ชอบชา","answerEn":"I do not like tea.","acceptedAnswers":["I do not like tea","I don't like tea"],"mode":"guided","hintEn":"I ___ like tea.","choices":["do not","am not","does not"]},
+    {"id":"gtl3","promptTh":"พูดว่า ฉันอยากได้น้ำ","answerEn":"I want water.","acceptedAnswers":["I want water"],"mode":"guided","hintEn":"I ___ water.","choices":["want","wants","like"]},
+    {"id":"gtl4","promptTh":"พูดว่า ฉันต้องการความช่วยเหลือ","answerEn":"I need help.","acceptedAnswers":["I need help"],"mode":"guided","hintEn":"I ___ help.","choices":["need","have","am"]},
+    {"id":"gtl5","promptTh":"พูดว่า ฉันมีโทรศัพท์","answerEn":"I have a phone.","acceptedAnswers":["I have a phone"],"mode":"guided","hintEn":"I ___ a phone.","choices":["has","have","want"]}
+  ],
+  "fnd_v6_change_i_to_she": [
+    {"id":"gcs1","promptTh":"เปลี่ยน I work เป็นประโยคของเธอ","answerEn":"She works.","acceptedAnswers":["She works"],"mode":"guided","hintEn":"She ___.","choices":["work","works","working"]},
+    {"id":"gcs2","promptTh":"เปลี่ยน I like coffee เป็นประโยคของเขา","answerEn":"He likes coffee.","acceptedAnswers":["He likes coffee"],"mode":"guided","hintEn":"He ___ coffee.","choices":["like","likes","is like"]},
+    {"id":"gcs3","promptTh":"พูดว่า เธอมีรถ","answerEn":"She has a car.","acceptedAnswers":["She has a car"],"mode":"guided","hintEn":"She ___ a car.","choices":["have","has","having"]},
+    {"id":"gcs4","promptTh":"พูดว่า เขาไปโรงเรียนทุกวัน","answerEn":"He goes to school every day.","acceptedAnswers":["He goes to school every day"],"mode":"guided","hintEn":"He ___ to school every day.","choices":["go","goes","going"]},
+    {"id":"gcs5","promptTh":"ถามว่า เธอทำงานไหม","answerEn":"Does she work?","acceptedAnswers":["Does she work","Does she work?"],"mode":"guided","hintEn":"___ she work?","choices":["Do","Does","Is"]}
+  ],
+  "fnd_v6_now_or_every_day": [
+    {"id":"gne1","promptTh":"พูดว่า ตอนนี้เธอกำลังอ่านหนังสือ","answerEn":"She is reading now.","acceptedAnswers":["She is reading now","She's reading now"],"mode":"guided","hintEn":"She ___ reading now.","choices":["is","does","are"]},
+    {"id":"gne2","promptTh":"พูดว่า เธออ่านหนังสือทุกวัน","answerEn":"She reads every day.","acceptedAnswers":["She reads every day"],"mode":"guided","hintEn":"She ___ every day.","choices":["read","reads","is reading"]},
+    {"id":"gne3","promptTh":"พูดว่า ตอนนี้พวกเขากำลังเล่น","answerEn":"They are playing now.","acceptedAnswers":["They are playing now","They're playing now"],"mode":"guided","hintEn":"They ___ playing now.","choices":["is","are","do"]},
+    {"id":"gne4","promptTh":"พูดว่า เขาทำอาหารทุกวัน","answerEn":"He cooks every day.","acceptedAnswers":["He cooks every day"],"mode":"guided","hintEn":"He ___ every day.","choices":["cook","cooks","is cooking"]},
+    {"id":"gne5","promptTh":"ถามว่า ตอนนี้คุณกำลังทำอะไร","answerEn":"What are you doing now?","acceptedAnswers":["What are you doing now","What are you doing now?"],"mode":"guided","hintEn":"What ___ you doing now?","choices":["is","do","are"]}
+  ],
+  "fnd_v6_match_question_answer": [
+    {"id":"gmq1","promptTh":"ถามชื่อของอีกฝ่าย","answerEn":"What is your name?","acceptedAnswers":["What is your name","What's your name"],"mode":"guided","hintEn":"___ is your name?","choices":["What","Where","Who"]},
+    {"id":"gmq2","promptTh":"ถามว่าเขาคือใคร","answerEn":"Who is he?","acceptedAnswers":["Who is he","Who is he?"],"mode":"guided","hintEn":"___ is he?","choices":["When","Who","How"]},
+    {"id":"gmq3","promptTh":"ถามว่าห้องน้ำอยู่ที่ไหน","answerEn":"Where is the bathroom?","acceptedAnswers":["Where is the bathroom","Where's the bathroom"],"mode":"guided","hintEn":"___ is the bathroom?","choices":["What","Where","When"]},
+    {"id":"gmq4","promptTh":"ถามว่าชั้นเรียนเริ่มเมื่อไร","answerEn":"When does the class start?","acceptedAnswers":["When does the class start","When does the class start?"],"mode":"guided","hintEn":"___ does the class start?","choices":["Where","Who","When"]},
+    {"id":"gmq5","promptTh":"ถามว่าอันนี้ราคาเท่าไร","answerEn":"How much is this?","acceptedAnswers":["How much is this","How much is this?"],"mode":"guided","hintEn":"___ much is this?","choices":["What","How","Who"]}
+  ],
+  "fnd_v6_place_correctly": [
+    {"id":"gpc1","promptTh":"พูดว่า หนังสืออยู่บนโต๊ะ","answerEn":"The book is on the table.","acceptedAnswers":["The book is on the table"],"mode":"guided","hintEn":"The book is ___ the table.","choices":["on","in","under"]},
+    {"id":"gpc2","promptTh":"พูดว่า กระเป๋าอยู่ใต้เก้าอี้","answerEn":"The bag is under the chair.","acceptedAnswers":["The bag is under the chair"],"mode":"guided","hintEn":"The bag is ___ the chair.","choices":["next to","under","on"]},
+    {"id":"gpc3","promptTh":"พูดว่า โทรศัพท์อยู่ในกระเป๋า","answerEn":"The phone is in the bag.","acceptedAnswers":["The phone is in the bag"],"mode":"guided","hintEn":"The phone is ___ the bag.","choices":["in","on","next to"]},
+    {"id":"gpc4","promptTh":"พูดว่า โรงเรียนอยู่ข้างสวนสาธารณะ","answerEn":"The school is next to the park.","acceptedAnswers":["The school is next to the park"],"mode":"guided","hintEn":"The school is ___ the park.","choices":["under","in","next to"]},
+    {"id":"gpc5","promptTh":"พูดว่า มีหนังสือหนึ่งเล่มบนโต๊ะ","answerEn":"There is a book on the table.","acceptedAnswers":["There is a book on the table","There's a book on the table"],"mode":"guided","hintEn":"There ___ a book on the table.","choices":["are","is","am"]}
+  ]
+}

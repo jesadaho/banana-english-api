@@ -19,6 +19,7 @@ import {
 import {
   AcquisitionSourceSurveyDto,
   CompleteOnboardingDto,
+  DemographicsSurveyDto,
   EnglishLevelSurveyDto,
   UpsertUserDto,
 } from './dto/users.dto';
@@ -55,6 +56,23 @@ const ACQUISITION_SOURCES = new Set<AcquisitionSource>([
   'skipped',
 ]);
 
+type SurveyGender = 'female' | 'male' | 'prefer_not_say';
+type SurveyAgeRange = 'under_18' | '18_24' | '25_34' | '35_44' | '45_plus';
+
+const SURVEY_GENDERS = new Set<SurveyGender>([
+  'female',
+  'male',
+  'prefer_not_say',
+]);
+
+const SURVEY_AGE_RANGES = new Set<SurveyAgeRange>([
+  'under_18',
+  '18_24',
+  '25_34',
+  '35_44',
+  '45_plus',
+]);
+
 export interface UserProfileResponse {
   anonymousId: string;
   displayName: string;
@@ -84,6 +102,10 @@ export interface UserProfileResponse {
    * tiktok | facebook | friend_line | google | app_store | other | skipped
    */
   acquisitionSource?: string | null;
+  /** Onboarding demographics: female | male | prefer_not_say */
+  surveyGender?: string | null;
+  /** Onboarding age band: under_18 | 18_24 | 25_34 | 35_44 | 45_plus */
+  surveyAgeRange?: string | null;
   /** Banana Ticket sheet copy — kept in sync with economy env/defaults. */
   bananaTicket: {
     dailyDrop: number;
@@ -218,6 +240,27 @@ export class UsersService {
     const updated = await this.prisma.user.update({
       where: { id: user.id },
       data: { acquisitionSource: dto.source },
+    });
+    return this.getProfile(updated);
+  }
+
+  async saveDemographicsSurvey(
+    user: User,
+    dto: DemographicsSurveyDto,
+  ): Promise<UserProfileResponse> {
+    if (!SURVEY_GENDERS.has(dto.gender as SurveyGender)) {
+      throw new BadRequestException('Invalid survey gender');
+    }
+    if (!SURVEY_AGE_RANGES.has(dto.ageRange as SurveyAgeRange)) {
+      throw new BadRequestException('Invalid survey age range');
+    }
+
+    const updated = await this.prisma.user.update({
+      where: { id: user.id },
+      data: {
+        surveyGender: dto.gender,
+        surveyAgeRange: dto.ageRange,
+      },
     });
     return this.getProfile(updated);
   }
@@ -518,6 +561,16 @@ export class UsersService {
       rawAcquisition && ACQUISITION_SOURCES.has(rawAcquisition as AcquisitionSource)
         ? rawAcquisition
         : null;
+    const rawGender = (user as User & { surveyGender?: string | null })
+      .surveyGender;
+    const surveyGender =
+      rawGender && SURVEY_GENDERS.has(rawGender as SurveyGender)
+        ? rawGender
+        : null;
+    const rawAge = (user as User & { surveyAgeRange?: string | null })
+      .surveyAgeRange;
+    const surveyAgeRange =
+      rawAge && SURVEY_AGE_RANGES.has(rawAge as SurveyAgeRange) ? rawAge : null;
     return {
       anonymousId: user.anonymousId,
       displayName: user.displayName ?? 'เพื่อน',
@@ -535,6 +588,8 @@ export class UsersService {
       lessonTeachingLanguage,
       selfReportedEnglishLevel,
       acquisitionSource,
+      surveyGender,
+      surveyAgeRange,
       email: user.email,
       bananaTicket: this.economy.ticketRules(),
     };

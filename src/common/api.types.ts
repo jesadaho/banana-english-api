@@ -553,6 +553,10 @@ export interface UserProfileResponse {
    * tiktok | facebook | friend_line | google | app_store | other | skipped
    */
   acquisitionSource?: string | null;
+  /** Onboarding demographics: female | male | prefer_not_say */
+  surveyGender?: string | null;
+  /** Onboarding age band: under_18 | 18_24 | 25_34 | 35_44 | 45_plus */
+  surveyAgeRange?: string | null;
   /** Banana Ticket sheet copy — kept in sync with economy env/defaults. */
   bananaTicket: {
     dailyDrop: number;
