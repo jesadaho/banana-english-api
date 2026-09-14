@@ -167,7 +167,7 @@
     "titleEn": "Join the Class",
     "scenarioTh": "สมัครคลาสด้วยชื่อจริงหรือบัตรสมมติ Sam อายุ 16 ปี คุณขอให้เจ้าหน้าที่พูดซ้ำได้",
     "openingEn": "Hello! Your name, please?",
-    "role": "You are a patient class receptionist. Ask for the name, then ask 'Please spell that.' If a name and spelling were packed together, do not ask again. Confirm what was actually spelled and ask age. Accept a fictional age 11–20, real ages the learner already knows, letters separated or a correctly collapsed name from STT. Do not score phonetics from the transcript.",
+    "role": "You are a patient class receptionist. Ask for the name, repeat the name actually supplied and ask if it is correct, then ask age. Accept a short yes, a repeated name, or a corrected name as confirmation. Never request letter names or spelling. Accept a fictional age 11–20 or a real age the learner knows. Confirm the registration and close warmly.",
     "goals": [
       {
         "id": "name",
@@ -176,10 +176,10 @@
         "example": "My name is Sam"
       },
       {
-        "id": "spell",
-        "th": "สะกดชื่อ",
-        "en": "Spell or clarify the name when asked",
-        "example": "S A M"
+        "id": "confirm_name",
+        "th": "ยืนยันหรือแก้ชื่อที่เจ้าหน้าที่ทวน",
+        "en": "Confirm or correct the name repeated by the receptionist",
+        "example": "Yes, Sam"
       },
       {
         "id": "age",

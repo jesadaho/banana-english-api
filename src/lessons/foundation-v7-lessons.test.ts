@@ -47,17 +47,17 @@ function coreFlowStepCount(id: string, spec: AuthoredSpec): number {
 }
 
 describe('Foundation V7 lessons', () => {
-  it('ships all 39 path lesson nodes with real configs, including frozen Chapter 1', () => {
+  it('ships all 37 path lesson nodes with real configs, including frozen Chapter 1', () => {
     const nodes = pathLessonNodes();
     const client = toFoundationV7ClientChapters()
       .flatMap((chapter) => chapter.items)
       .filter((node) => node.nodeType === 'lesson');
 
-    assert.equal(nodes.length, 39);
-    assert.equal(client.length, 39);
+    assert.equal(nodes.length, 37);
+    assert.equal(client.length, 37);
     assert.ok(client.every((node) => !node.comingSoon && node.lessonId));
     assert.ok(client.every((node) => getLesson(node.lessonId!) != null));
-    assert.equal(new Set(nodes.map((node) => node.contentRef.lessonId)).size, 39);
+    assert.equal(new Set(nodes.map((node) => node.contentRef.lessonId)).size, 37);
 
     assert.deepEqual(
       nodes.slice(0, 3).map((node) => node.contentRef.lessonId),
@@ -76,7 +76,7 @@ describe('Foundation V7 lessons', () => {
 
     assert.equal(FOUNDATION_V7_LESSONS.length, 36);
     assert.deepEqual(FOUNDATION_V7_LESSON_IDS, authoredIds);
-    assert.deepEqual(pathAuthored.slice().sort(), authoredIds.slice().sort());
+    assert.deepEqual(pathAuthored.slice().sort(), authoredIds.filter(id => !['fnd_v7_u08n05', 'fnd_v7_u08n07'].includes(id)).sort());
     assert.ok(authoredIds.every((id) => id.startsWith('fnd_v7_')));
 
     const lessons = new LessonsService({} as any, {} as any);
@@ -98,10 +98,10 @@ describe('Foundation V7 lessons', () => {
       const steps = coreFlowStepCount(id, spec);
 
       assert.ok(lesson, id);
-      assert.ok(node, id);
+      assert.equal(Boolean(node), !['fnd_v7_u08n05', 'fnd_v7_u08n07'].includes(id), id);
       assert.equal(lesson.titleEn, spec.titleEn, id);
       assert.equal(lesson.titleTh, spec.titleTh, id);
-      assert.equal(node!.titleEn, spec.titleEn, id);
+      if (node) assert.equal(node.titleEn, spec.titleEn, id);
       assert.equal(lessonUsesTapToContinue(id), true, id);
       assert.equal(lesson.listenOnlyTurns, 1, id);
       assert.equal(lesson.progressMax, steps, id);

@@ -46,7 +46,7 @@ const HAPPY_OVERRIDES: Record<string, string[]> = {
   foundation_v7_u05n06: ['A book', 'No, pens', 'Thank you'],
   foundation_v7_u06n08: ['That bag, please', 'The blue bag', 'Thank you'],
   foundation_v7_u07n07: ['My bag, please', 'The blue bag is my bag', 'Thank you'],
-  foundation_v7_u08n10: ['My name is Sam', 'S A M', 'I am sixteen'],
+  foundation_v7_u08n10: ['My name is Sam', 'Yes, Sam', 'I am sixteen'],
   foundation_v7_u09n09: [
     'One ticket, please',
     'How much is it',
