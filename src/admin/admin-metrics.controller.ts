@@ -50,6 +50,27 @@ export class AdminMetricsController {
     );
   }
 
+  @Get('survey')
+  survey(
+    @Query('from') from?: string,
+    @Query('to') to?: string,
+    @Query('requireOnboarding') requireOnboarding?: string,
+    @Query('requireSignedIn') requireSignedIn?: string,
+    @Query('requireAppOpen') requireAppOpen?: string,
+    @Query('excludeUnsetSource') excludeUnsetSource?: string,
+  ) {
+    return this.metrics.survey(
+      from,
+      to,
+      parseMetricsFilters({
+        requireOnboarding,
+        requireSignedIn,
+        requireAppOpen,
+        excludeUnsetSource,
+      }),
+    );
+  }
+
   @Get('content')
   content(
     @Query('from') from?: string,

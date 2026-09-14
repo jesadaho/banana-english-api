@@ -3,6 +3,8 @@ import {
   type Json,
   type TurnResult,
 } from './lesson-api-client';
+import { TAP_TO_CONTINUE_SENTINEL } from '../../src/common/api.types.ts';
+import { pickUserSpeechForTurn } from '../../src/lessons/lesson-turn-driver.ts';
 import { boardToScriptTurn } from '../../src/training/scripts/choice-lesson.script.ts';
 import { extractIntroducedName } from '../../src/training/foundation/foundation.helpers.ts';
 import {
@@ -32,8 +34,8 @@ export const ALL_AROUND_TOWN_SCENARIO_LESSON_IDS = AROUND_TOWN_CHOICE_LESSONS.ma
 export type AroundTownScenarioLessonId =
   (typeof ALL_AROUND_TOWN_SCENARIO_LESSON_IDS)[number];
 
-/** Teaching ends before roleplay — stop scenario when roleplayIntro appears. */
-export const AROUND_TOWN_TEACHING_ONLY_LESSONS = new Set<string>([
+/** These lessons keep going after teaching: Roleplay intro → NPC → Celebrate. */
+export const AROUND_TOWN_ROLEPLAY_LESSONS = new Set<string>([
   'ee_around_town_shopping',
   'ee_around_town_restaurant',
   'ee_around_town_coffee',
@@ -44,7 +46,7 @@ export const AROUND_TOWN_TEACHING_ONLY_LESSONS = new Set<string>([
 ]);
 
 export const LEARNER = 'Nana';
-const MAX_TURNS = 32;
+const MAX_TURNS = 64;
 
 export type HistoryTurn = {
   speaker: 'ai' | 'user';
@@ -213,21 +215,62 @@ function pickUserSpeech(
   }
 }
 
-function isTeachingComplete(
+function enteredRoleplay(block: Json): boolean {
+  return block.roleplayIntro != null || block.roleplayNpc != null;
+}
+
+const ROLEPLAY_FALLBACK_SPEECH: Record<string, string> = {
+  ee_around_town_shopping: "I'm looking for a shirt.",
+  ee_around_town_restaurant: "I'd like chicken rice.",
+  ee_around_town_coffee: 'Can I get a coffee?',
+  ee_around_town_transport: "I'm going to Chiang Mai.",
+  ee_around_town_airport: "I'd like to check in.",
+  ee_around_town_pharmacy: 'Can you help me?',
+};
+
+function pickRoleplaySpeech(
   lessonId: string,
-  def: ChoiceLessonDef,
-  lessonStep: number,
-  block: Json,
   turn: TurnResult,
-): boolean {
-  if (turn.isTaskComplete) return true;
-  if (!AROUND_TOWN_TEACHING_ONLY_LESSONS.has(lessonId)) return false;
-  if (lessonStep < def.maxStep) return false;
-  return (
-    block.roleplayIntro != null ||
-    block.roleplayNpc != null ||
-    turn.expectsUserSpeech === false
-  );
+  convenienceSpeakCount: number,
+): string {
+  if (turn.expectsUserSpeech === false) {
+    return TAP_TO_CONTINUE_SENTINEL;
+  }
+
+  const picked = pickUserSpeechForTurn(turn)?.trim() ?? '';
+  if (picked && picked !== "I'm ready") return picked;
+
+  if (lessonId === 'ee_around_town_convenience') {
+    return convenienceSpeakCount === 0
+      ? 'Excuse me. Where is the bathroom?'
+      : 'Thank you.';
+  }
+
+  const fallback = ROLEPLAY_FALLBACK_SPEECH[lessonId];
+  if (fallback) return fallback;
+  if (picked) return picked;
+  throw new Error('missing expected speech on roleplay turn');
+}
+
+function chromeForRoleplay(turn: TurnResult): { hint: string; choices: string } {
+  if (turn.expectsUserSpeech === false) {
+    return { hint: '(tap continue)', choices: TAP_TO_CONTINUE_SENTINEL };
+  }
+  const options = turn.emojiChoice?.options ?? turn.guidedSpeaking?.options ?? [];
+  if (options.length > 0) {
+    const lines = options.map(
+      (o) => `${o.emoji ?? '·'} ${o.label ?? o.speak} → "${o.speak}"`,
+    );
+    return {
+      hint: turn.guidedSpeaking?.stem?.trim() || '(roleplay)',
+      choices: lines.length === 1 ? lines[0] : lines.join('\n         '),
+    };
+  }
+  const expected = turn.expectedSpeech?.trim();
+  return {
+    hint: expected || '(roleplay)',
+    choices: expected || '(none)',
+  };
 }
 
 function finishOk(
@@ -285,6 +328,9 @@ export async function runAroundTownScenario(
     let totalMs = 0;
     let reportStep = 0;
     let lessonStep = 1;
+    let inRoleplay = AROUND_TOWN_ROLEPLAY_LESSONS.has(lessonId) &&
+      enteredRoleplay(turnBlock(start.json));
+    let convenienceSpeakCount = 0;
     const history: HistoryTurn[] = [
       {
         speaker: 'ai',
@@ -294,18 +340,22 @@ export async function runAroundTownScenario(
     ];
 
     while (reportStep < MAX_TURNS) {
-      const { speech, recoverExact, recoverWrong } = pickUserSpeech(
-        lessonId,
-        scenario,
-        turnBefore,
-        lessonStep,
-      );
-      const { hint, choices } = chromeBeforeAnswer(
-        def,
-        lessonId,
-        turnBefore,
-        history,
-      );
+      const roleplayTurn =
+        inRoleplay ||
+        turnBefore.expectsUserSpeech === false;
+      const picked = roleplayTurn
+        ? {
+            speech: pickRoleplaySpeech(
+              lessonId,
+              turnBefore,
+              convenienceSpeakCount,
+            ),
+          }
+        : pickUserSpeech(lessonId, scenario, turnBefore, lessonStep);
+      const { speech, recoverExact, recoverWrong } = picked;
+      const { hint, choices } = roleplayTurn
+        ? chromeForRoleplay(turnBefore)
+        : chromeBeforeAnswer(def, lessonId, turnBefore, history);
 
       reportStep++;
       const res = await client.sendUserSpeech(
@@ -337,14 +387,22 @@ export async function runAroundTownScenario(
         expectedSpeech: res.turn.expectedSpeech,
       });
 
+      if (
+        lessonId === 'ee_around_town_convenience' &&
+        speech !== TAP_TO_CONTINUE_SENTINEL
+      ) {
+        convenienceSpeakCount += 1;
+      }
+
       currentTurn = res.turn.currentTurn;
       turnBefore = res.turn;
+      if (enteredRoleplay(block)) inRoleplay = true;
 
-      if (isTeachingComplete(lessonId, def, lessonStep, block, res.turn)) {
+      if (res.turn.isTaskComplete) {
         return finishOk(lessonId, scenario, reportStep, totalMs);
       }
 
-      if (recoverExact && result === 'incorrect out pool') {
+      if (!roleplayTurn && recoverExact && result === 'incorrect out pool') {
         const { hint: recHint, choices: recChoices } = chromeBeforeAnswer(
           def,
           lessonId,
@@ -383,13 +441,12 @@ export async function runAroundTownScenario(
         currentTurn = recovery.turn.currentTurn;
         turnBefore = recovery.turn;
         aiPrompt = recReply;
+        if (enteredRoleplay(recBlock)) inRoleplay = true;
 
-        if (
-          isTeachingComplete(lessonId, def, lessonStep, recBlock, recovery.turn)
-        ) {
+        if (recovery.turn.isTaskComplete) {
           return finishOk(lessonId, scenario, reportStep, totalMs);
         }
-      } else if (recoverWrong && result === 'incorrect out pool') {
+      } else if (!roleplayTurn && recoverWrong && result === 'incorrect out pool') {
         const { hint: recHint, choices: recChoices } = chromeBeforeAnswer(
           def,
           lessonId,
@@ -428,23 +485,16 @@ export async function runAroundTownScenario(
         currentTurn = secondWrong.turn.currentTurn;
         turnBefore = secondWrong.turn;
         aiPrompt = softReply;
+        if (enteredRoleplay(softBlock)) inRoleplay = true;
 
-        if (
-          isTeachingComplete(
-            lessonId,
-            def,
-            lessonStep,
-            softBlock,
-            secondWrong.turn,
-          )
-        ) {
+        if (secondWrong.turn.isTaskComplete) {
           return finishOk(lessonId, scenario, reportStep, totalMs);
         }
       } else {
         aiPrompt = reply;
       }
 
-      lessonStep++;
+      if (!inRoleplay) lessonStep++;
     }
 
     throw new Error(`did not complete within ${MAX_TURNS} turns`);

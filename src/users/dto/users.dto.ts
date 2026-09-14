@@ -71,6 +71,16 @@ export class AcquisitionSourceSurveyDto {
     | 'skipped';
 }
 
+export class DemographicsSurveyDto {
+  @IsString()
+  @IsIn(['female', 'male', 'prefer_not_say'])
+  gender!: 'female' | 'male' | 'prefer_not_say';
+
+  @IsString()
+  @IsIn(['under_18', '18_24', '25_34', '35_44', '45_plus'])
+  ageRange!: 'under_18' | '18_24' | '25_34' | '35_44' | '45_plus';
+}
+
 export class UnlockAvatarDto {
   @IsString()
   @MinLength(1)

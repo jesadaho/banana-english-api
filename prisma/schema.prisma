@@ -69,6 +69,18 @@ model User {
    */
   acquisitionSource String?
 
+  /**
+   * Onboarding demographics survey:
+   * "female" | "male" | "prefer_not_say"
+   */
+  surveyGender String?
+
+  /**
+   * Onboarding age band:
+   * "under_18" | "18_24" | "25_34" | "35_44" | "45_plus"
+   */
+  surveyAgeRange String?
+
   /** True after the learner finishes any Vocab Drill with zero mistakes. */
   perfectVocabDrillCompleted Boolean @default(false)
 
