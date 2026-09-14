@@ -19,6 +19,23 @@ import { Currency } from '@prisma/client';
 
 const all = () => toFoundationV7ClientChapters(['say_it_guided']).flatMap(ch => ch.items);
 const req = { user: { id: 'v7-test', displayName: 'Mia' } } as any;
+const EXPECTED_V7_MIN_TURNS: Record<string, number> = {
+  foundation_v7_u02n04: 2,
+  foundation_v7_u03n06: 3,
+  foundation_v7_u04n06: 3,
+  foundation_v7_u05n06: 3,
+  foundation_v7_u06n08: 3,
+  foundation_v7_u07n07: 3,
+  foundation_v7_u08n10: 3,
+  foundation_v7_u09n09: 4,
+  foundation_v7_u10n07: 3,
+  foundation_v7_u11n06: 3,
+  foundation_v7_u12n08: 3,
+  foundation_v7_u13n06: 3,
+  foundation_v7_u14n06: 3,
+  foundation_v7_u15n08: 3,
+  foundation_v7_u16n05: 4,
+};
 
 describe('Foundation V7 catalog and real content', () => {
   it('has 16 chapters and the approved 107-node mix, without Skill Mix', () => {
@@ -156,6 +173,7 @@ describe('Foundation V7 catalog and real content', () => {
       assert.equal(getSimulation(config.simulationId), config);
       assert.ok(config.foundationMission && config.scenarioTh);
       assert.ok(config.minTurns && config.minTurns >= 2 && config.minTurns < config.maxTurns);
+      assert.equal(config.minTurns, EXPECTED_V7_MIN_TURNS[config.simulationId], config.simulationId);
       assert.notEqual(config.completionReplyEn, 'Thanks for talking with me!');
       assert.match(config.systemInstruction, /V2 mission philosophy/);
       assert.match(config.systemInstruction, /concrete outcome/);

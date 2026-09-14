@@ -40,9 +40,35 @@ const HAPPY_OVERRIDES: Record<string, string[]> = {
     "I'm from Thailand.",
     'Yes, I do.',
   ],
-  foundation_v7_u03n06: ['I am ready', 'Are you ready?'],
+  foundation_v7_u02n04: ['Please say that again', 'Thank you'],
+  foundation_v7_u03n06: ['Are you ready?', 'I am ready', "Let's go"],
+  foundation_v7_u04n06: ['This is my sister', 'She is a doctor', 'Who is this'],
+  foundation_v7_u05n06: ['A book', 'No, pens', 'Thank you'],
+  foundation_v7_u06n08: ['That bag, please', 'The blue bag', 'Thank you'],
+  foundation_v7_u07n07: ['My bag, please', 'The blue bag is my bag', 'Thank you'],
+  foundation_v7_u08n10: ['My name is Sam', 'S A M', 'I am sixteen'],
+  foundation_v7_u09n09: [
+    'One ticket, please',
+    'How much is it',
+    'When is the class?',
+    'Yes, please',
+  ],
   foundation_v7_u10n07: ['Tea, please', 'Yes, please', 'Thank you'],
-  foundation_v7_u11n06: ['I can cook', 'Can you cook?', 'Yes, I can'],
+  foundation_v7_u11n06: ['I can cook', 'Can you swim?', "Yes, let's cook"],
+  foundation_v7_u12n08: [
+    'I do not work on Friday',
+    'Friday is good',
+    'See you on Friday',
+  ],
+  foundation_v7_u13n06: ['She is cooking', 'He is eating', 'Thank you'],
+  foundation_v7_u14n06: ['When is the class', 'Where is the class', 'Thank you'],
+  foundation_v7_u15n08: ['Where is the room', 'Turn left', 'Thank you'],
+  foundation_v7_u16n05: [
+    'My name is Sam',
+    'When is the class',
+    'Please say that again',
+    'Thank you',
+  ],
 };
 
 const MESSY_OVERRIDES: Record<string, string[]> = {
@@ -63,7 +89,7 @@ function specFor(simulationId: string) {
   return specs.find((spec) => spec.simulationId === simulationId);
 }
 
-function happyLinesFor(simulationId: string): string[] {
+export function happyLinesFor(simulationId: string): string[] {
   const override = HAPPY_OVERRIDES[simulationId];
   if (override) return override;
   const examples = specFor(simulationId)?.goals.map((goal) => goal.example) ?? [];
@@ -287,6 +313,13 @@ function assertScenario(
       return `invented success from off-topic replies: ${formatCheckpoints(turn.checkpoints)}`;
     }
     return null;
+  }
+  const minTurns = specFor(simulationId)?.minTurns;
+  if (scenario === 1 && minTurns && steps !== minTurns) {
+    return `expected ${minTurns} turns, got ${steps}`;
+  }
+  if (scenario === 2 && minTurns && steps < minTurns) {
+    return `completed before minTurns (${steps}/${minTurns})`;
   }
   if (steps < 1) {
     return 'completed with no learner replies';

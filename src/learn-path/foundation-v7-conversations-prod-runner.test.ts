@@ -4,6 +4,7 @@ import {
   ALL_V7_PATH_CONVERSATION_IDS,
   AUTHORED_V7_CONVERSATION_IDS,
   FROZEN_V7_CONVERSATION_IDS,
+  happyLinesFor,
   parseFoundationV7ConversationArgs,
 } from '../../scripts/lib/foundation-v7-conversations-prod-runner.ts';
 import { FOUNDATION_V7_NODES } from './foundation-v7-path.data';
@@ -24,6 +25,16 @@ describe('Foundation V7 conversation smoke runner', () => {
     );
     assert.equal(AUTHORED_V7_CONVERSATION_IDS.length, 15);
     assert.equal(ALL_V7_PATH_CONVERSATION_IDS.length, 16);
+  });
+
+  it('scripts a happy path matching each authored minTurns', () => {
+    for (const config of FOUNDATION_V7_SIMULATIONS) {
+      assert.equal(
+        happyLinesFor(config.simulationId).length,
+        config.minTurns,
+        config.simulationId,
+      );
+    }
   });
 
   it('parses authored by default, chapters, node ids and optional scenarios', () => {

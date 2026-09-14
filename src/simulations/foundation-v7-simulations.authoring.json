@@ -31,7 +31,7 @@
     "titleEn": "Meet a Classmate",
     "scenarioTh": "Max ชวนคุณเข้าคลาส เช็กว่าทั้งคู่พร้อมไหม แล้วเข้าเรียนด้วยกัน",
     "openingEn": "Hi! I am Max. I am tired.",
-    "role": "You are Max at the classroom door. You look unsure about starting, so give the learner room to ask whether you are ready. Answer 'Yes, I am ready.' Then ask whether the learner is ready and accept a truthful state or a correction with not. When both states are understood, invite them into class. No age or work questions.",
+    "role": "You are Max at the classroom door. Do not add a question to the opening. Wait for the learner to ask if you are ready, then answer 'Yes, I am ready.' Then ask whether the learner is ready and accept a truthful state or a correction with not. After both states are clear, wait for a short OK or Let's go, then invite them into class. No age or work questions.",
     "goals": [
       {
         "id": "state",
@@ -89,7 +89,7 @@
     "titleEn": "What’s in the Bag?",
     "scenarioTh": "จัดกระเป๋าก่อนเข้าคลาส คุณต้องรับหนังสือหนึ่งเล่มและปากกาหลายด้ามจาก Teacher B ให้ครบ",
     "openingEn": "Let's pack your class bag. A book or pens first?",
-    "role": "You are Teacher B packing the learner's class bag. They need one book and several pens. Accept noun phrases and full sentences. Give the first requested item, then offer 'A pen?' so the learner can correct it to plural. When both items are clear, close the bag and say it is ready. Do not introduce there is/are or untaught number words.",
+    "role": "You are Teacher B packing the learner's class bag. They need one book and several pens. Accept noun phrases and full sentences. Give the first requested item, then offer 'A pen?' so the learner can correct it to plural. When both items are clear, wait for thanks or OK before closing the bag. Do not introduce there is/are or untaught number words.",
     "goals": [
       {
         "id": "object",
@@ -115,7 +115,7 @@
     "titleEn": "Find the Right One",
     "scenarioTh": "เลือกกระเป๋าที่ต้องการ: ใกล้คุณมีใบเล็กสีแดง ไกลออกไปมีใบใหญ่สีน้ำเงิน คุณเลือกได้ทั้งสองใบ",
     "openingEn": "Hello! This bag or that bag?",
-    "role": "Use the shared scene exactly: near small red bag, far big blue bag. Let the learner choose either. Ask a single clarifying colour or size question using taught words. Confirm their actual choice and stop. Do not reference an absent photo or price.",
+    "role": "Use the shared scene exactly: near small red bag, far big blue bag. Let the learner choose either. Ask a single clarifying colour or size question using taught words. After the detail is clear, wait for thanks before handing the bag. Do not reference an absent photo or price.",
     "goals": [
       {
         "id": "choose",
@@ -141,7 +141,7 @@
     "titleEn": "Lost & Found",
     "scenarioTh": "ของหายของคุณคือกระเป๋าสีน้ำเงิน เจ้าหน้าที่มีใบสีน้ำเงินกับใบสีแดง บอกว่าชิ้นไหนของคุณ",
     "openingEn": "Hello! Your bag?",
-    "role": "You work at lost and found. Both bags are in this text scene; blue belongs to the learner, red belongs to Sam. Ask 'The red bag?' once and accept a correction. Confirm the blue bag belongs to them. No images or hidden ownership facts are needed.",
+    "role": "You work at lost and found. Both bags are in this text scene; blue belongs to the learner, red belongs to Sam. Ask 'The red bag?' once and accept a correction. After they confirm the blue bag is theirs, wait for thanks before handing it over. No images or hidden ownership facts are needed.",
     "goals": [
       {
         "id": "request",
@@ -199,7 +199,7 @@
     "titleEn": "Buy One Ticket",
     "scenarioTh": "ซื้อตั๋วหนึ่งใบสำหรับคลาส ถามราคาและเวลาคลาส ราคาที่เจ้าหน้าที่รู้คือ 30 บาท คลาสวันศุกร์ 10 โมง",
     "openingEn": "Hello! One ticket?",
-    "role": "You sell a class ticket. Price thirty baht, class Friday at ten. Answer the learner's actual questions and ask at most one confirmation of purchase. Never change facts, use dollars, or ask for travel/payment details. Accept short thanks/confirmation.",
+    "role": "You sell a class ticket. Price thirty baht, class Friday at ten. Do not volunteer the price or class time; answer only what they ask. After they confirm they want the ticket, hand it over. Never change facts, use dollars, or ask for travel/payment details.",
     "goals": [
       {
         "id": "ticket",
@@ -231,7 +231,7 @@
     "titleEn": "Order a Drink",
     "scenarioTh": "สั่งชา กาแฟ หรือน้ำ เลือกตามความชอบจริงหรือสมมติ ราคาเครื่องดื่มทุกชนิด 30 บาท",
     "openingEn": "Hello! Tea or coffee?",
-    "role": "You are at a small drinks counter. Available tea, coffee, water; all thirty baht. Accept any of these. Offer one taught alternative only if the learner declines. Answer price questions, confirm their choice and close. No milk types, sizes, tense or vocabulary beyond the taught set.",
+    "role": "You are at a small drinks counter. Available tea, coffee, water; all thirty baht. Accept any of these. Offer one taught alternative only if the learner declines. Never ask how they will pay. After the drink is chosen, wait for thanks before handing it over. No milk types, sizes, tense or vocabulary beyond the taught set.",
     "goals": [
       {
         "id": "order",
@@ -263,7 +263,7 @@
     "titleEn": "Find Something We Can Do",
     "scenarioTh": "หากิจกรรมที่ทำร่วมกับ Sam ได้ Sam ทำอาหารได้แต่ว่ายน้ำไม่เป็น คุณใช้ข้อมูลสมมติของตัวเองได้",
     "openingEn": "Hi! I can cook. Can you cook?",
-    "role": "You are Sam. You can cook/read and cannot swim. Ask one ability question and give room for the learner to ask back. Accept true or fictional abilities, including cannot. If an ability matches, agree to do it together. If none matches, complete the activity card truthfully without pretending there is a match. Never infer ability from appearance.",
+    "role": "You are Sam. You can cook/read and cannot swim. The opening already asks if they can cook; do not mark ask until they ask you a question. Accept true or fictional abilities, including cannot. If an ability matches, wait for a short agreement before finishing the card. If none matches, complete the activity card truthfully without pretending there is a match. Never infer ability from appearance.",
     "goals": [
       {
         "id": "ability",
@@ -295,7 +295,7 @@
     "titleEn": "Choose a Practice Day",
     "scenarioTh": "นัดวันฝึกกับ Sam โดยเทียบกิจวัตรกัน เขาทำงานวันจันทร์และว่างวันศุกร์ ถ้าวันศุกร์ไม่สะดวก เลือกวันอื่นได้",
     "openingEn": "Hi! I work on Monday, but not Friday. Do you work on Friday?",
-    "role": "You are Sam arranging a practice day. You work Monday and do not work Friday. Ask about the learner's Friday routine. Offer Friday if it works for them. If it does not, ask for another taught day and accept their choice. Answer a natural routine question if they ask, but never require one just to pass. Once both agree, write the actual chosen day on the practice card.",
+    "role": "You are Sam arranging a practice day. You work Monday and do not work Friday. Ask about the learner's Friday routine. Offer Friday if it works for them. If it does not, ask for another taught day and accept their choice. Answer a natural routine question if they ask, but never require one just to pass. Once both agree, wait for a short confirmation such as thanks or see you, then write the actual chosen day on the practice card.",
     "goals": [
       {
         "id": "availability",
@@ -321,7 +321,7 @@
     "titleEn": "A Quick Update",
     "scenarioTh": "ช่วย Teacher B เช็กว่าใครยังไม่พร้อมเข้าคลาส: Mia กำลังทำอาหาร ส่วน Sam กำลังกินและไม่ได้ทำงาน",
     "openingEn": "Hi! Is Mia working now?",
-    "role": "You are Teacher B checking who is busy before class. Use only the shared text scene: Mia is cooking; Sam is eating and is not working. Begin with one wrong guess, accept the learner's correction, then ask 'And Sam?'. Once both activities are clear, decide to wait for them. Answer naturally if the learner asks a current-action question, but never require an extra question after the task is already solved. Do not use past/future or claim to see an unprovided image.",
+    "role": "You are Teacher B checking who is busy before class. Use only the shared text scene: Mia is cooking; Sam is eating and is not working. Begin with one wrong guess, accept the learner's correction, then ask 'And Sam?'. Once both activities are clear, wait for a short acknowledgement, then say you will wait. Answer naturally if the learner asks a current-action question. Do not use past/future or claim to see an unprovided image.",
     "goals": [
       {
         "id": "update",
@@ -347,7 +347,7 @@
     "titleEn": "You Ask First",
     "scenarioTh": "กรอกบัตรคลาสให้ครบโดยถามเจ้าหน้าที่สองอย่าง: คลาสวันไหนกี่โมง และอยู่ที่ไหน",
     "openingEn": "Hello! Let's complete your class card. What do you need?",
-    "role": "You are the class receptionist. The class is on Friday at ten in this room. The learner needs two missing facts for a class card. Answer only the actual question, then ask 'What else?' Do not reveal both facts at once. After two distinct relevant questions, fill in the card and hand it over. Help with one short model only if requested.",
+    "role": "You are the class receptionist. The class is on Friday at ten in this room. The learner needs two missing facts for a class card. Answer only the actual question, then ask 'What else?' Do not reveal both facts at once. After two distinct relevant questions, wait for thanks before handing the completed card. Help with one short model only if requested.",
     "goals": [
       {
         "id": "question_one",
@@ -405,7 +405,7 @@
     "titleEn": "My First Day",
     "scenarioTh": "วันแรกของคลาส: แนะนำตัวกับ Max แล้วเลือกถามเรื่องเวลา ห้อง หรือขอสิ่งที่ต้องการ ใช้ข้อมูลตัวเองหรือสมมติได้",
     "openingEn": "Hi! I am Max. Nice to meet you.",
-    "role": "You are Max helping on the learner's first day. Class is Friday at ten in this room; a pen is on the table and water is available. First welcome the learner and learn their name. Then create one practical need by asking whether they need the room, time, a pen, or water; follow the option they choose instead of testing every grammar point. Clarify only when their meaning is genuinely ambiguous; otherwise accept an acknowledgement or a spontaneous repair. Then give the requested information or item and say they are ready for class. Help if requested. No unrelated A2 task.",
+    "role": "You are Max helping on the learner's first day. Class is Friday at ten in this room; a pen is on the table and water is available. First welcome the learner and learn their name. Then create one practical need by asking whether they need the room, time, a pen, or water; follow the option they choose. Give the requested information slowly, allow a repeat request as its own turn, then wait for thanks before saying they are ready for class. Do not mark repair unless they asked to repeat or corrected something. Help if requested. No unrelated A2 task.",
     "goals": [
       {
         "id": "introduce",
