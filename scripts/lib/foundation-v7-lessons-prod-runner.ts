@@ -13,9 +13,6 @@ export const FROZEN_V7_LESSON_IDS = [
   'greetings',
   'introductions',
   'yes_no_maybe',
-  'polite_expressions',
-  'asking_for_help',
-  'fnd_v2_say_it_again',
 ] as const;
 
 export const AUTHORED_V7_LESSON_IDS = [...FOUNDATION_V7_LESSON_IDS];
@@ -143,14 +140,10 @@ export function parseFoundationV7LessonArgs(argv: string[]): string[] {
       continue;
     }
     if (arg === 'ch1') {
-      add(FROZEN_V7_LESSON_IDS.slice(0, 3));
+      add(FROZEN_V7_LESSON_IDS);
       continue;
     }
-    if (arg === 'ch2') {
-      add(FROZEN_V7_LESSON_IDS.slice(3));
-      continue;
-    }
-    const chapter = arg.match(/^u(\d{2})$/i);
+    const chapter = arg === 'ch2' ? (['ch2', '02'] as const) : arg.match(/^u(\d{2})$/i);
     if (chapter) {
       const catalogChapter = FOUNDATION_V7_CATALOG.chapters.find(
         (ch) => ch.id === `v7_u${chapter[1]}`,

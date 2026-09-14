@@ -24,13 +24,7 @@ const FROZEN_CHAPTER_1_LESSON_IDS = [
   'yes_no_maybe',
 ] as const;
 
-const FROZEN_CHAPTER_2_LESSON_IDS = [
-  'polite_expressions',
-  'asking_for_help',
-  'fnd_v2_say_it_again',
-] as const;
-
-const I_AM_YOU_ARE = 'fnd_v7_u03n01';
+const PLEASE_THANKS = 'fnd_v7_u02n01';
 
 type AuthoredSpec = (typeof lessonSpecs)[keyof typeof lessonSpecs];
 
@@ -55,38 +49,34 @@ function authoredHappyPathTurns(spec: AuthoredSpec) {
 }
 
 describe('Foundation V7 lessons', () => {
-  it('ships all 40 path lesson nodes with real configs, including frozen Chapters 1–2', () => {
+  it('ships all 39 path lesson nodes with real configs, including frozen Chapter 1', () => {
     const nodes = pathLessonNodes();
     const client = toFoundationV7ClientChapters()
       .flatMap((chapter) => chapter.items)
       .filter((node) => node.nodeType === 'lesson');
 
-    assert.equal(nodes.length, 40);
-    assert.equal(client.length, 40);
+    assert.equal(nodes.length, 39);
+    assert.equal(client.length, 39);
     assert.ok(client.every((node) => !node.comingSoon && node.lessonId));
     assert.ok(client.every((node) => getLesson(node.lessonId!) != null));
-    assert.equal(new Set(nodes.map((node) => node.contentRef.lessonId)).size, 40);
+    assert.equal(new Set(nodes.map((node) => node.contentRef.lessonId)).size, 39);
 
     assert.deepEqual(
       nodes.slice(0, 3).map((node) => node.contentRef.lessonId),
       [...FROZEN_CHAPTER_1_LESSON_IDS],
     );
-    assert.deepEqual(
-      nodes.slice(3, 6).map((node) => node.contentRef.lessonId),
-      [...FROZEN_CHAPTER_2_LESSON_IDS],
-    );
-    for (const id of [...FROZEN_CHAPTER_1_LESSON_IDS, ...FROZEN_CHAPTER_2_LESSON_IDS]) {
+    for (const id of FROZEN_CHAPTER_1_LESSON_IDS) {
       assert.ok(getLesson(id), id);
     }
   });
 
-  it('registers exactly the 34 authored V7 flows and keeps them off the lesson hub', async () => {
+  it('registers exactly the 36 authored V7 flows and keeps them off the lesson hub', async () => {
     const authoredIds = Object.keys(lessonSpecs);
     const pathAuthored = pathLessonNodes()
       .map((node) => node.contentRef.lessonId)
       .filter((id): id is string => Boolean(id?.startsWith('fnd_v7_')));
 
-    assert.equal(FOUNDATION_V7_LESSONS.length, 34);
+    assert.equal(FOUNDATION_V7_LESSONS.length, 36);
     assert.deepEqual(FOUNDATION_V7_LESSON_IDS, authoredIds);
     assert.deepEqual(pathAuthored.slice().sort(), authoredIds.slice().sort());
     assert.ok(authoredIds.every((id) => id.startsWith('fnd_v7_')));
@@ -166,21 +156,21 @@ describe('Foundation V7 lessons', () => {
     }
   });
 
-  it('I Am / You Are opens at 1/7, retries stay, correct advances, complete fills', () => {
-    const spec = lessonSpecs[I_AM_YOU_ARE];
-    const max = getLesson(I_AM_YOU_ARE)!.progressMax!;
+  it('Please & Thank You opens at 1/7, retries stay, correct advances, complete fills', () => {
+    const spec = lessonSpecs[PLEASE_THANKS];
+    const max = getLesson(PLEASE_THANKS)!.progressMax!;
     assert.equal(max, coreFlowStepCount(spec));
     assert.equal(max, 7);
 
-    const opening = resolveLessonProgressTurn(I_AM_YOU_ARE, 0, max, {
-      textEn: 'วันนี้ฝึกพูด I am และ You are นะครับ',
+    const opening = resolveLessonProgressTurn(PLEASE_THANKS, 0, max, {
+      textEn: 'วันนี้ฝึกพูด Please และ Thank you นะครับ',
       expectsUserSpeech: false,
       isTaskComplete: false,
     });
     assert.equal(opening, 1);
 
-    const firstAsk = resolveLessonProgressTurn(I_AM_YOU_ARE, 1, max, {
-      textEn: 'ลองพูดตามนะครับ I am ready',
+    const firstAsk = resolveLessonProgressTurn(PLEASE_THANKS, 1, max, {
+      textEn: 'ลองพูดตามนะครับ Please',
       expectsUserSpeech: true,
       expectedSpeech: spec.blocks[0].repeat,
       isTaskComplete: false,
@@ -188,11 +178,11 @@ describe('Foundation V7 lessons', () => {
     assert.equal(firstAsk, 1);
 
     const correct = resolveLessonProgressTurn(
-      I_AM_YOU_ARE,
+      PLEASE_THANKS,
       1,
       max,
       {
-        textEn: 'เยี่ยมเลยครับ ต่อไป You are happy',
+        textEn: 'เยี่ยมเลยครับ ต่อไป Excuse me',
         expectsUserSpeech: true,
         expectedSpeech: spec.blocks[1].repeat,
         isTaskComplete: false,
@@ -203,11 +193,11 @@ describe('Foundation V7 lessons', () => {
     assert.equal(correct, 2);
 
     const retry = resolveLessonProgressTurn(
-      I_AM_YOU_ARE,
+      PLEASE_THANKS,
       1,
       max,
       {
-        textEn: 'ยังไม่ตรงครับ ลองพูดตามนะครับ I am ready',
+        textEn: 'ยังไม่ตรงครับ ลองพูดตามนะครับ Please',
         expectsUserSpeech: true,
         expectedSpeech: spec.blocks[0].repeat,
         isTaskComplete: false,
@@ -217,7 +207,7 @@ describe('Foundation V7 lessons', () => {
     );
     assert.equal(retry, 1);
 
-    const done = resolveLessonProgressTurn(I_AM_YOU_ARE, 2, max, {
+    const done = resolveLessonProgressTurn(PLEASE_THANKS, 2, max, {
       textEn: 'เก่งมากครับ Nana',
       expectsUserSpeech: false,
       isTaskComplete: true,

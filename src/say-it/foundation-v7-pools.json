@@ -1,4 +1,43 @@
 {
+  "fnd_v7_u02n02": [
+    {
+      "id": "fnd_v7_u02n02_q1",
+      "promptTh": "ขอบคุณ",
+      "answerEn": "Thank you",
+      "acceptedAnswers": [
+        "Thanks"
+      ]
+    },
+    {
+      "id": "fnd_v7_u02n02_q2",
+      "promptTh": "ขอโทษ",
+      "answerEn": "Sorry",
+      "acceptedAnswers": [
+        "I am sorry",
+        "I'm sorry"
+      ]
+    },
+    {
+      "id": "fnd_v7_u02n02_q3",
+      "promptTh": "ขออนุญาต",
+      "answerEn": "Excuse me",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u02n02_q4",
+      "promptTh": "กรุณา",
+      "answerEn": "Please",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u02n02_q5",
+      "promptTh": "ขอบคุณครับ",
+      "answerEn": "Thank you",
+      "acceptedAnswers": [
+        "Thanks"
+      ]
+    }
+  ],
   "fnd_v7_u03n04": [
     {
       "id": "fnd_v7_u03n04_q1",
@@ -105,7 +144,7 @@
   "fnd_v7_u05n05": [
     {
       "id": "fnd_v7_u05n05_q1",
-      "promptTh": "ขอกระเป๋าหนึ่งใบอย่างสุภาพ",
+      "promptTh": "กระเป๋าหนึ่งใบครับ",
       "answerEn": "A bag, please",
       "acceptedAnswers": [
         "One bag, please"
@@ -113,13 +152,13 @@
     },
     {
       "id": "fnd_v7_u05n05_q2",
-      "promptTh": "ขอหนังสือหลายเล่มอย่างสุภาพ",
+      "promptTh": "หนังสือหลายเล่มครับ",
       "answerEn": "Books, please",
       "acceptedAnswers": []
     },
     {
       "id": "fnd_v7_u05n05_q3",
-      "promptTh": "ขอแอปเปิลหนึ่งผลอย่างสุภาพ",
+      "promptTh": "แอปเปิลหนึ่งผลครับ",
       "answerEn": "An apple, please",
       "acceptedAnswers": [
         "One apple, please"
@@ -127,13 +166,13 @@
     },
     {
       "id": "fnd_v7_u05n05_q4",
-      "promptTh": "ขอปากกาหลายด้ามอย่างสุภาพ",
+      "promptTh": "ปากกาหลายด้ามครับ",
       "answerEn": "Pens, please",
       "acceptedAnswers": []
     },
     {
       "id": "fnd_v7_u05n05_q5",
-      "promptTh": "ขอหนังสือหนึ่งเล่มอย่างสุภาพ",
+      "promptTh": "หนังสือหนึ่งเล่มครับ",
       "answerEn": "A book, please",
       "acceptedAnswers": [
         "One book, please"
@@ -284,7 +323,7 @@
   "fnd_v7_u08n06": [
     {
       "id": "fnd_v7_u08n06_q1",
-      "promptTh": "สะกดชื่อ AL ทีละตัว",
+      "promptTh": "สะกดชื่อ Al",
       "answerEn": "A L",
       "acceptedAnswers": [
         "AL"
@@ -292,7 +331,7 @@
     },
     {
       "id": "fnd_v7_u08n06_q2",
-      "promptTh": "สะกดชื่อ LEE ทีละตัว",
+      "promptTh": "สะกดชื่อ Lee",
       "answerEn": "L E E",
       "acceptedAnswers": [
         "LEE"
@@ -300,7 +339,7 @@
     },
     {
       "id": "fnd_v7_u08n06_q3",
-      "promptTh": "สะกดชื่อ MIA ทีละตัว",
+      "promptTh": "สะกดชื่อ Mia",
       "answerEn": "M I A",
       "acceptedAnswers": [
         "MIA"
@@ -308,7 +347,7 @@
     },
     {
       "id": "fnd_v7_u08n06_q4",
-      "promptTh": "สะกดชื่อ EMMA ทีละตัว",
+      "promptTh": "สะกดชื่อ Emma",
       "answerEn": "E M M A",
       "acceptedAnswers": [
         "EMMA"
@@ -316,7 +355,7 @@
     },
     {
       "id": "fnd_v7_u08n06_q5",
-      "promptTh": "สะกดชื่อ KIM ทีละตัว",
+      "promptTh": "สะกดชื่อ Kim",
       "answerEn": "K I M",
       "acceptedAnswers": [
         "KIM"
@@ -326,7 +365,7 @@
   "fnd_v7_u08n08": [
     {
       "id": "fnd_v7_u08n08_q1",
-      "promptTh": "สะกด MAX ให้ฟังอีกครั้ง",
+      "promptTh": "สะกดชื่อ Max",
       "answerEn": "M A X",
       "acceptedAnswers": [
         "MAX"
@@ -334,7 +373,7 @@
     },
     {
       "id": "fnd_v7_u08n08_q2",
-      "promptTh": "สะกด SAM ให้ชัด",
+      "promptTh": "สะกดชื่อ Sam",
       "answerEn": "S A M",
       "acceptedAnswers": [
         "SAM"
@@ -342,7 +381,7 @@
     },
     {
       "id": "fnd_v7_u08n08_q3",
-      "promptTh": "สะกดชื่อ ANNA ทีละตัว",
+      "promptTh": "สะกดชื่อ Anna",
       "answerEn": "A N N A",
       "acceptedAnswers": [
         "ANNA"
@@ -350,7 +389,7 @@
     },
     {
       "id": "fnd_v7_u08n08_q4",
-      "promptTh": "สะกดชื่อ TOM ให้ถูก",
+      "promptTh": "สะกดชื่อ Tom",
       "answerEn": "T O M",
       "acceptedAnswers": [
         "TOM"
@@ -358,7 +397,7 @@
     },
     {
       "id": "fnd_v7_u08n08_q5",
-      "promptTh": "สะกด NINA อีกครั้ง",
+      "promptTh": "สะกดชื่อ Nina",
       "answerEn": "N I N A",
       "acceptedAnswers": [
         "NINA"
@@ -457,7 +496,7 @@
   "fnd_v7_u10n06": [
     {
       "id": "fnd_v7_u10n06_q1",
-      "promptTh": "ขอน้ำอย่างสุภาพ",
+      "promptTh": "ขอน้ำครับ",
       "answerEn": "Water, please",
       "acceptedAnswers": []
     },
@@ -469,7 +508,7 @@
     },
     {
       "id": "fnd_v7_u10n06_q3",
-      "promptTh": "ปฏิเสธอย่างสุภาพว่า ไม่ ขอบคุณ",
+      "promptTh": "ไม่ครับ ขอบคุณ",
       "answerEn": "No, thank you",
       "acceptedAnswers": [
         "No, thanks"
@@ -477,7 +516,7 @@
     },
     {
       "id": "fnd_v7_u10n06_q4",
-      "promptTh": "ขอกาแฟหนึ่งแก้วอย่างสุภาพ",
+      "promptTh": "ขอกาแฟครับ",
       "answerEn": "A coffee, please",
       "acceptedAnswers": [
         "One coffee, please"
@@ -493,31 +532,31 @@
   "fnd_v7_u11n05": [
     {
       "id": "fnd_v7_u11n05_q1",
-      "promptTh": "ขออนุญาตนั่งตรงนี้",
+      "promptTh": "ฉันนั่งตรงนี้ได้ไหม",
       "answerEn": "Can I sit here",
       "acceptedAnswers": []
     },
     {
       "id": "fnd_v7_u11n05_q2",
-      "promptTh": "ถามว่าคุณว่ายน้ำเป็นไหม",
+      "promptTh": "คุณว่ายน้ำเป็นไหม",
       "answerEn": "Can you swim",
       "acceptedAnswers": []
     },
     {
       "id": "fnd_v7_u11n05_q3",
-      "promptTh": "ถามว่าคุณทำอาหารเป็นไหม",
-      "answerEn": "Can you cook",
+      "promptTh": "คุณทำงานวันศุกร์ไหม",
+      "answerEn": "Do you work on Friday",
       "acceptedAnswers": []
     },
     {
       "id": "fnd_v7_u11n05_q4",
-      "promptTh": "บอกว่าฉันอ่านได้",
+      "promptTh": "ฉันอ่านได้",
       "answerEn": "I can read",
       "acceptedAnswers": []
     },
     {
       "id": "fnd_v7_u11n05_q5",
-      "promptTh": "บอกว่าฉันว่ายน้ำไม่เป็น",
+      "promptTh": "ฉันว่ายน้ำไม่เป็น",
       "answerEn": "I cannot swim",
       "acceptedAnswers": [
         "I can't swim",
@@ -571,7 +610,7 @@
     },
     {
       "id": "fnd_v7_u12n06_q4",
-      "promptTh": "ทบทวน: คุณทำอาหารเป็นไหม",
+      "promptTh": "คุณทำอาหารเป็นไหม",
       "answerEn": "Can you cook",
       "acceptedAnswers": []
     },
@@ -656,7 +695,7 @@
   "fnd_v7_u16n03": [
     {
       "id": "fnd_v7_u16n03_q1",
-      "promptTh": "ช่วยพูดอีกครั้ง",
+      "promptTh": "กรุณาพูดอีกครั้ง",
       "answerEn": "Please say that again",
       "acceptedAnswers": [
         "Say that again, please"

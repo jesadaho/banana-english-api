@@ -36,10 +36,8 @@ for (const node of FOUNDATION_V7_NODES) {
     }
   }
 }
-// Frozen Chapter 1–2 were also completed using the old path node IDs.
+// Frozen Chapter 1 was also completed using the old path node ID.
 rewardAliases.set('fnd_v2_say_first_conversation', 'say_it:fnd_v2_first_conversation');
-rewardAliases.set('fnd_v2_say_be_polite', 'say_it:fnd_v2_be_polite');
-rewardAliases.set('fnd_v2_say_survival', 'say_it:fnd_v2_survival');
 export function canonicalFoundationV7RewardId(id: string): string | undefined {
   return rewardAliases.get(id);
 }
