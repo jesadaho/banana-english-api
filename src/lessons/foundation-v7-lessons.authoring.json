@@ -18,9 +18,15 @@
         "repeat": "Please"
       },
       {
-        "tipTh": "sorry ใช้ขอโทษ ส่วน excuse me ใช้เรียกความสนใจก่อนพูด",
+        "tipTh": "sorry ใช้ขอโทษเมื่อทำผิดหรือรบกวนอีกฝ่าย",
         "models": [
-          "Sorry",
+          "Sorry"
+        ],
+        "repeat": "Sorry"
+      },
+      {
+        "tipTh": "excuse me ใช้เรียกความสนใจก่อนเริ่มพูด",
+        "models": [
           "Excuse me"
         ],
         "repeat": "Excuse me"
@@ -66,7 +72,8 @@
     "recall": {
       "promptTh": "ฟังชื่ออีกฝ่ายไม่ทัน ขอให้พูดซ้ำ",
       "answerEn": "Please say that again"
-    }
+    },
+    "completionTh": "เยี่ยมครับ ตอนนี้คุณขอให้อีกฝ่ายพูดซ้ำ พูดช้าลง และบอกว่าไม่เข้าใจได้แล้ว"
   },
   "fnd_v7_u03n01": {
     "titleEn": "I Am / You Are",
@@ -141,7 +148,7 @@
     }
   },
   "fnd_v7_u04n01": {
-    "titleEn": "He, She, We, They",
+    "titleEn": "He, She, It, We, They",
     "titleTh": "เลือกสรรพนามและ be ให้เข้ากับคนหรือกลุ่ม",
     "goalTh": "เลือกสรรพนามและ be ให้เข้ากับคนหรือกลุ่ม",
     "scope": "ตัวละครสมมติระบุสรรพนามชัด; it ใช้สิ่งของ; ทบทวน teacher/student จากบทแนะนำตัว",
@@ -556,7 +563,7 @@
     ],
     "recall": {
       "promptTh": "ตัวละครของคุณอายุยี่สิบปี ลองบอกอายุ",
-      "answerEn": "I am twenty"
+      "answerEn": "I am twenty years old"
     }
   },
   "fnd_v7_u08n05": {
@@ -1214,9 +1221,9 @@
     }
   },
   "fnd_v7_u14n03": {
-    "titleEn": "Where, When & How Much",
-    "titleTh": "ถามข้อมูลสถานที่ วัน เวลา ราคา จำนวนจากรูปที่ model",
-    "goalTh": "ถามข้อมูลสถานที่ วัน เวลา ราคา จำนวนจากรูปที่ model",
+    "titleEn": "Where, When, How Much & How Many",
+    "titleTh": "ถามสถานที่ เวลา ราคา และจำนวน",
+    "goalTh": "ใช้ where, when, how much และ how many ถามข้อมูลพื้นฐาน",
     "scope": "when/how much/how many ใช้ concrete short chunks กับ numbers/days เดิม; where + be ใช้ home/school/room ที่ lexical preview; ไม่สอน How + adjective ทุกแบบ",
     "estimatedMinutes": [
       4,

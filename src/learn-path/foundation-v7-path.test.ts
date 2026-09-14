@@ -101,7 +101,7 @@ describe('Foundation V7 catalog and real content', () => {
     assert.ok(getAllSimulations().every(s => !s.simulationId.startsWith('foundation_v7_')));
   });
 
-  it('registers 36 authored lesson flows with model, speaking practice, transfer and completion', () => {
+  it('registers 36 authored lesson flows with model, recognition, recall and completion', () => {
     assert.equal(FOUNDATION_V7_LESSONS.length, 36);
     for (const [id, spec] of Object.entries(lessonSpecs)) {
       const lesson = getLesson(id)!;
@@ -115,7 +115,8 @@ describe('Foundation V7 catalog and real content', () => {
       assert.ok(lesson.targetPhrases.includes(spec.recall.answerEn));
       assert.match(lesson.systemInstruction, /Teach block 1/);
       assert.match(lesson.systemInstruction, /Practise block 1/);
-      assert.match(lesson.systemInstruction, /Transfer:/);
+      assert.match(lesson.systemInstruction, /Recognise block 1:/);
+      assert.match(lesson.systemInstruction, /Independent recall:/);
       assert.match(lesson.systemInstruction, /isLessonComplete=true/);
       assert.match(lesson.openingPrompt, /expectsUserSpeech=false/);
     }

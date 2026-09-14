@@ -33,7 +33,11 @@ function pathLessonNodes() {
 }
 
 function coreFlowStepCount(spec: AuthoredSpec): number {
-  return 1 + spec.blocks.length * 2 + 2;
+  return 1 + spec.blocks.length * 3 + 2;
+}
+
+function recognitionTarget(block: AuthoredSpec['blocks'][number]): string {
+  return block.models.find((model) => model !== block.repeat) ?? block.repeat;
 }
 
 function authoredHappyPathTurns(spec: AuthoredSpec) {
@@ -42,6 +46,7 @@ function authoredHappyPathTurns(spec: AuthoredSpec) {
     ...spec.blocks.flatMap((block) => [
       { expectsUserSpeech: false },
       { expectsUserSpeech: true, expectedSpeech: block.repeat },
+      { expectsUserSpeech: true, expectedSpeech: recognitionTarget(block) },
     ]),
     { expectsUserSpeech: true, expectedSpeech: spec.recall.answerEn },
     { expectsUserSpeech: false, isTaskComplete: true },
@@ -93,7 +98,7 @@ describe('Foundation V7 lessons', () => {
     }
   });
 
-  it('keeps authored blocks, transfer, tap-to-continue and Core Flow progressMax in sync', () => {
+  it('keeps authored blocks, recognition, recall and Core Flow progressMax in sync', () => {
     for (const [id, spec] of Object.entries(lessonSpecs)) {
       const lesson = getLesson(id)!;
       const node = pathLessonNodes().find((n) => n.contentRef.lessonId === id);
@@ -131,13 +136,14 @@ describe('Foundation V7 lessons', () => {
 
       assert.match(lesson.systemInstruction, /Teach block 1/);
       assert.match(lesson.systemInstruction, /Practise block 1/);
-      assert.match(lesson.systemInstruction, /Transfer:/);
+      assert.match(lesson.systemInstruction, /Recognise block 1:/);
+      assert.match(lesson.systemInstruction, /Independent recall:/);
       assert.match(lesson.systemInstruction, /isLessonComplete=true/);
       assert.match(lesson.openingPrompt, /expectsUserSpeech=false/);
     }
   });
 
-  it('drives the authored happy path with Continue, then modeled speech, then done', () => {
+  it('drives the authored happy path through model, speech, recognition and recall', () => {
     for (const [id, spec] of Object.entries(lessonSpecs)) {
       const picked = authoredHappyPathTurns(spec).map((turn) =>
         pickUserSpeechForTurn(turn),
@@ -147,6 +153,7 @@ describe('Foundation V7 lessons', () => {
         ...spec.blocks.flatMap((block) => [
           TAP_TO_CONTINUE_SENTINEL,
           block.repeat,
+          recognitionTarget(block),
         ]),
         spec.recall.answerEn,
         null,
@@ -156,11 +163,16 @@ describe('Foundation V7 lessons', () => {
     }
   });
 
-  it('Please & Thank You opens at 1/7, retries stay, correct advances, complete fills', () => {
+  it('Please & Thank You practises Sorry and Excuse me separately', () => {
     const spec = lessonSpecs[PLEASE_THANKS];
     const max = getLesson(PLEASE_THANKS)!.progressMax!;
     assert.equal(max, coreFlowStepCount(spec));
-    assert.equal(max, 7);
+    assert.equal(max, 12);
+    assert.deepEqual(spec.blocks.map((block) => block.repeat), [
+      'Please',
+      'Sorry',
+      'Excuse me',
+    ]);
 
     const opening = resolveLessonProgressTurn(PLEASE_THANKS, 0, max, {
       textEn: 'วันนี้ฝึกพูด Please และ Thank you นะครับ',
@@ -212,6 +224,56 @@ describe('Foundation V7 lessons', () => {
       expectsUserSpeech: false,
       isTaskComplete: true,
     });
-    assert.equal(done, 7);
+    assert.equal(done, max);
+  });
+
+  it('keeps reviewed transfer, scope and completion contracts explicit', () => {
+    assert.equal(
+      lessonSpecs.fnd_v7_u08n03.recall.answerEn,
+      'I am twenty years old',
+    );
+    assert.equal(
+      lessonSpecs.fnd_v7_u04n01.titleEn,
+      'He, She, It, We, They',
+    );
+    assert.equal(
+      lessonSpecs.fnd_v7_u14n03.titleEn,
+      'Where, When, How Much & How Many',
+    );
+    assert.match(
+      getLesson('fnd_v7_u02n03')!.systemInstruction,
+      /คุณขอให้อีกฝ่ายพูดซ้ำ/,
+    );
+  });
+
+  it('makes every practice a microphone turn and every model group one milestone', () => {
+    const prices = getLesson('fnd_v7_u09n07')!;
+    assert.match(prices.systemInstruction, /REQUIRED microphone turn/);
+    assert.match(prices.systemInstruction, /expectedSpeech="Here you are"/);
+    assert.match(prices.systemInstruction, /never a tap-to-continue turn/);
+
+    const letters = getLesson('fnd_v7_u08n05')!;
+    assert.match(letters.systemInstruction, /Model ALL these English forms in this same turn/);
+    assert.match(letters.systemInstruction, /Never split this model list across later turns/);
+    assert.match(letters.systemInstruction, /alphabet groups such as A–D are modeled together/);
+  });
+
+  it('adds recurring recognition boards and removes support for final recall', () => {
+    for (const [id, spec] of Object.entries(lessonSpecs)) {
+      const instruction = getLesson(id)!.systemInstruction;
+      for (let i = 0; i < spec.blocks.length; i += 1) {
+        assert.match(instruction, new RegExp(`Recognise block ${i + 1}:`), id);
+      }
+      assert.match(instruction, /Return emojiChoice with EXACTLY these cards:/, id);
+      assert.match(instruction, /tapping a card never completes the step by itself/, id);
+      assert.match(instruction, /Independent recall: REMOVE all scaffolding/, id);
+      assert.match(instruction, /omit emojiChoice and guidedSpeaking/, id);
+    }
+  });
+
+  it('keeps Teacher B directions in the selected teaching language', () => {
+    const directions = getLesson('fnd_v7_u15n06')!;
+    assert.match(directions.systemInstruction, /ALL teacher narration, praise, explanations and requests/);
+    assert.match(directions.systemInstruction, /Never drift into English teacher directions/);
   });
 });
