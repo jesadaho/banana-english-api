@@ -9,6 +9,10 @@ import {
   FOUNDATION_V7_LESSON_IDS,
   FOUNDATION_V7_LESSONS,
 } from './foundation-v7-lessons.data';
+import {
+  FOUNDATION_V7_LESSON_ID_ALIASES,
+  canonicalFoundationV7LessonId,
+} from './foundation-v7-lesson-id-aliases';
 import { PHONICS_LESSONS } from '../phonics/phonics-lessons.data';
 
 export type LessonDifficulty = 'beginner' | 'intermediate' | 'advanced';
@@ -8305,6 +8309,10 @@ Turn loop rules (critical):
 ];
 
 const LESSON_BY_ID = new Map(LESSONS.map((l) => [l.lessonId, l]));
+for (const [legacy, canonical] of Object.entries(FOUNDATION_V7_LESSON_ID_ALIASES)) {
+  const lesson = LESSON_BY_ID.get(canonical);
+  if (lesson) LESSON_BY_ID.set(legacy, lesson);
+}
 
 export const LESSON_BANANA_COST = 1;
 
@@ -14106,7 +14114,7 @@ export function isEverydayEnglishReview(lessonId: string): boolean {
 /** Lessons that use expectsUserSpeech + Continue button (and optional Scene). */
 export function lessonUsesTapToContinue(lessonId: string): boolean {
   return (
-    FOUNDATION_V7_LESSONS.some(lesson => lesson.lessonId === lessonId) ||
+    FOUNDATION_V7_LESSON_IDS.includes(canonicalFoundationV7LessonId(lessonId)) ||
     isPronunciationLesson(lessonId) ||
     isAroundTownLesson(lessonId) ||
     isEverydayEnglishReview(lessonId) ||

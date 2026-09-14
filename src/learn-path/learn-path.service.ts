@@ -64,6 +64,7 @@ export type FoundationV5ClientNode = {
   poolId?: string;
   simulationId?: string;
   lessonId?: string;
+  legacyLessonIds?: string[];
   legacySimulationIds?: string[];
 };
 
@@ -475,7 +476,8 @@ export class LearnPathService {
       if (isLessonLikeType(node.type)) {
         if (
           completedLessonIds.has(node.id) ||
-          (node.lessonId && completedLessonIds.has(node.lessonId))
+          (node.lessonId && completedLessonIds.has(node.lessonId)) ||
+          (node.legacyLessonIds ?? []).some((id) => completedLessonIds.has(id))
         ) {
           completed.add(node.id);
         }

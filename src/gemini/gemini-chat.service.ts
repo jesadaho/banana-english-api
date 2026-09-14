@@ -432,6 +432,10 @@ export interface SimulationTurnReply {
 }
 
 export interface TrainingTurnReply {
+  /** Server-owned Foundation V7 state; never taken from model output. */
+  v7Step?: number;
+  v7Retry?: boolean;
+  v7Choice?: string;
   textEn: string;
   /** Optional speech-only copy for Cloud gRPC / server-side TTS. */
   ttsText?: string;

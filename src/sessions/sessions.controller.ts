@@ -156,6 +156,11 @@ import {
   withTeachingLanguage,
 } from '../lessons/lessons.data';
 import {
+  coerceFoundationV7SpeechTurn,
+  isFoundationV7LessonId,
+  userTurnWasContinue,
+} from '../lessons/foundation-v7-turn-guard';
+import {
   learnerNameFallback,
   teachingLanguageFromConfig,
 } from '../lessons/lesson-prompt';
@@ -479,7 +484,8 @@ export class SessionsController {
       user.displayName,
       teachingLanguage,
     );
-    const useTrainingV2 = isTrainingV2Lesson(config.lessonId);
+    const useTrainingV2 = isTrainingV2Lesson(config.lessonId) ||
+      (isFoundationV7LessonId(config.lessonId) && teachingLanguage === 'thai');
 
     try {
     const data = this.sessionStore.createTraining(config, learnerFirstName, {
@@ -833,6 +839,9 @@ export class SessionsController {
 
     const opening = {
       speaker: 'ai' as const,
+      v7Step: reply.v7Step,
+      v7Retry: reply.v7Retry,
+      v7Choice: reply.v7Choice,
       textEn: reply.textEn,
       ttsText: reply.ttsText ?? null,
       ttsInstruction: reply.ttsInstruction ?? null,
@@ -850,7 +859,7 @@ export class SessionsController {
     this.sessionStore.addTurn(data.session.id, opening);
 
     const openingProgressMax = config.progressMax;
-    const openingProgressTurn =
+    const openingProgressTurn = reply.v7Step ?? (
       openingProgressMax != null && openingProgressMax > 0
         ? resolveLessonProgressTurn(
             config.lessonId,
@@ -867,7 +876,7 @@ export class SessionsController {
                 isTaskComplete: false,
               },
           )
-        : undefined;
+        : undefined);
     if (openingProgressTurn != null) {
       this.sessionStore.updateTrainingState(data.session.id, {
         currentTurn: 0,
@@ -1035,13 +1044,34 @@ export class SessionsController {
       expectsUserSpeech = false;
       roleplayNpc = null;
       roleplayIntro = null;
+    } else if (isFoundationV7LessonId(config.lessonId) && reply.v7Step == null) {
+      const lastUser = [...data.turns]
+        .reverse()
+        .find((turn) => turn.speaker === 'user');
+      const lastAi = [...data.turns]
+        .reverse()
+        .find((turn) => turn.speaker === 'ai');
+      const coerced = coerceFoundationV7SpeechTurn({
+        isLessonComplete: false,
+        previousUserWasContinue: userTurnWasContinue(lastUser?.textEn),
+        previousAiText: lastAi?.textEn,
+        textEn,
+        expectsUserSpeech,
+        expectedSpeech,
+        hasBoard: Boolean(
+          guidedSpeaking?.options?.length || emojiChoice?.options?.length,
+        ),
+        targetPhrases: config.targetPhrases ?? [],
+      });
+      expectsUserSpeech = coerced.expectsUserSpeech;
+      expectedSpeech = coerced.expectedSpeech;
     }
 
     const prevProgressTurn = data.session.progressTurn ?? 0;
     const lastAiTurn = [...data.turns]
       .reverse()
       .find((t) => t.speaker === 'ai');
-    const nextProgressTurn = resolveLessonProgressTurn(
+    const nextProgressTurn = reply.v7Step ?? resolveLessonProgressTurn(
       config.lessonId,
       prevProgressTurn,
       config.progressMax,
@@ -1075,6 +1105,9 @@ export class SessionsController {
 
     this.sessionStore.addTurn(sessionId, {
       speaker: 'ai',
+      v7Step: reply.v7Step,
+      v7Retry: reply.v7Retry,
+      v7Choice: reply.v7Choice,
       textEn,
       ttsText: reply.ttsText ?? null,
       ttsInstruction: reply.ttsInstruction ?? null,

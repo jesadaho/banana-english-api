@@ -195,7 +195,7 @@
             1
           ],
           "contentRef": {
-            "lessonId": "fnd_v7_u02n01"
+            "lessonId": "fnd_v7_please_and_thank_you"
           }
         },
         {
@@ -254,7 +254,7 @@
             1
           ],
           "contentRef": {
-            "lessonId": "fnd_v7_u02n03"
+            "lessonId": "fnd_v7_say_that_again"
           }
         },
         {
@@ -321,7 +321,7 @@
             1
           ],
           "contentRef": {
-            "lessonId": "fnd_v7_u03n01"
+            "lessonId": "fnd_v7_i_am_you_are"
           }
         },
         {
@@ -381,7 +381,7 @@
             1
           ],
           "contentRef": {
-            "lessonId": "fnd_v7_u03n03"
+            "lessonId": "fnd_v7_not_and_are_you"
           }
         },
         {
@@ -505,7 +505,7 @@
             1
           ],
           "contentRef": {
-            "lessonId": "fnd_v7_u04n01"
+            "lessonId": "fnd_v7_he_she_it_we_they"
           }
         },
         {
@@ -564,7 +564,7 @@
             1
           ],
           "contentRef": {
-            "lessonId": "fnd_v7_u04n03"
+            "lessonId": "fnd_v7_my_family"
           }
         },
         {
@@ -687,7 +687,7 @@
             1
           ],
           "contentRef": {
-            "lessonId": "fnd_v7_u05n01"
+            "lessonId": "fnd_v7_one_or_more"
           }
         },
         {
@@ -849,7 +849,7 @@
           "code": "6.1",
           "order": 1,
           "globalOrder": 28,
-          "titleEn": "This & That",
+          "titleEn": "This Is / That Is",
           "type": "lesson",
           "beat": "Ki",
           "learningTarget": "อ้างของใกล้และไกลด้วย this/that",
@@ -870,7 +870,7 @@
             1
           ],
           "contentRef": {
-            "lessonId": "fnd_v7_u06n01"
+            "lessonId": "fnd_v7_this_is_that_is"
           }
         },
         {
@@ -940,7 +940,7 @@
             1
           ],
           "contentRef": {
-            "lessonId": "fnd_v7_u06n03"
+            "lessonId": "fnd_v7_colours_and_size"
           }
         },
         {
@@ -1000,7 +1000,7 @@
             1
           ],
           "contentRef": {
-            "lessonId": "fnd_v7_u06n05"
+            "lessonId": "fnd_v7_these_and_those"
           }
         },
         {
@@ -1123,7 +1123,7 @@
             1
           ],
           "contentRef": {
-            "lessonId": "fnd_v7_u07n01"
+            "lessonId": "fnd_v7_my_and_your"
           }
         },
         {
@@ -1185,7 +1185,7 @@
             1
           ],
           "contentRef": {
-            "lessonId": "fnd_v7_u07n03"
+            "lessonId": "fnd_v7_his_her_our_their"
           }
         },
         {
@@ -1241,7 +1241,7 @@
             1
           ],
           "contentRef": {
-            "lessonId": "fnd_v7_u07n05"
+            "lessonId": "fnd_v7_have_and_has"
           }
         },
         {
@@ -1338,7 +1338,7 @@
             1
           ],
           "contentRef": {
-            "lessonId": "fnd_v7_u08n01"
+            "lessonId": "fnd_v7_numbers_0_10"
           }
         },
         {
@@ -1398,7 +1398,7 @@
             1
           ],
           "contentRef": {
-            "lessonId": "fnd_v7_u08n03"
+            "lessonId": "fnd_v7_eleven_to_twenty"
           }
         },
         {
@@ -1458,7 +1458,7 @@
             1
           ],
           "contentRef": {
-            "lessonId": "fnd_v7_u08n05"
+            "lessonId": "fnd_v7_letter_names_a_m"
           }
         },
         {
@@ -1519,7 +1519,7 @@
             1
           ],
           "contentRef": {
-            "lessonId": "fnd_v7_u08n07"
+            "lessonId": "fnd_v7_letter_names_n_z"
           }
         },
         {
@@ -1644,7 +1644,7 @@
             1
           ],
           "contentRef": {
-            "lessonId": "fnd_v7_u09n01"
+            "lessonId": "fnd_v7_twenty_to_one_hundred"
           }
         },
         {
@@ -1704,7 +1704,7 @@
             1
           ],
           "contentRef": {
-            "lessonId": "fnd_v7_u09n03"
+            "lessonId": "fnd_v7_what_time_is_it"
           }
         },
         {
@@ -1765,7 +1765,7 @@
             1
           ],
           "contentRef": {
-            "lessonId": "fnd_v7_u09n05"
+            "lessonId": "fnd_v7_days_and_simple_plans"
           }
         },
         {
@@ -1824,7 +1824,7 @@
             1
           ],
           "contentRef": {
-            "lessonId": "fnd_v7_u09n07"
+            "lessonId": "fnd_v7_prices_and_paying"
           }
         },
         {
@@ -1920,7 +1920,7 @@
             1
           ],
           "contentRef": {
-            "lessonId": "fnd_v7_u10n01"
+            "lessonId": "fnd_v7_i_like_i_dont_like"
           }
         },
         {
@@ -1981,7 +1981,7 @@
             1
           ],
           "contentRef": {
-            "lessonId": "fnd_v7_u10n03"
+            "lessonId": "fnd_v7_do_you_like_it"
           }
         },
         {
@@ -2038,7 +2038,7 @@
             1
           ],
           "contentRef": {
-            "lessonId": "fnd_v7_u10n05"
+            "lessonId": "fnd_v7_want_need_and_please"
           }
         },
         {
@@ -2135,7 +2135,7 @@
             1
           ],
           "contentRef": {
-            "lessonId": "fnd_v7_u11n01"
+            "lessonId": "fnd_v7_i_can"
           }
         },
         {
@@ -2196,7 +2196,7 @@
             1
           ],
           "contentRef": {
-            "lessonId": "fnd_v7_u11n03"
+            "lessonId": "fnd_v7_cant_and_can_you"
           }
         },
         {
@@ -2332,7 +2332,7 @@
             1
           ],
           "contentRef": {
-            "lessonId": "fnd_v7_u12n01"
+            "lessonId": "fnd_v7_my_day"
           }
         },
         {
@@ -2394,7 +2394,7 @@
             1
           ],
           "contentRef": {
-            "lessonId": "fnd_v7_u12n03"
+            "lessonId": "fnd_v7_her_day_his_day"
           }
         },
         {
@@ -2461,7 +2461,7 @@
             1
           ],
           "contentRef": {
-            "lessonId": "fnd_v7_u12n05"
+            "lessonId": "fnd_v7_do_does_every_day"
           }
         },
         {
@@ -2586,7 +2586,7 @@
             1
           ],
           "contentRef": {
-            "lessonId": "fnd_v7_u13n01"
+            "lessonId": "fnd_v7_happening_now"
           }
         },
         {
@@ -2647,7 +2647,7 @@
             1
           ],
           "contentRef": {
-            "lessonId": "fnd_v7_u13n03"
+            "lessonId": "fnd_v7_are_they_working"
           }
         },
         {
@@ -2769,7 +2769,7 @@
             1
           ],
           "contentRef": {
-            "lessonId": "fnd_v7_u14n01"
+            "lessonId": "fnd_v7_what_or_who"
           }
         },
         {
@@ -2827,7 +2827,7 @@
             1
           ],
           "contentRef": {
-            "lessonId": "fnd_v7_u14n03"
+            "lessonId": "fnd_v7_where_when_how_much_and_how_many"
           }
         },
         {
@@ -2950,7 +2950,7 @@
             1
           ],
           "contentRef": {
-            "lessonId": "fnd_v7_u15n01"
+            "lessonId": "fnd_v7_there_is_there_are"
           }
         },
         {
@@ -3009,7 +3009,7 @@
             1
           ],
           "contentRef": {
-            "lessonId": "fnd_v7_u15n03"
+            "lessonId": "fnd_v7_in_on_under_next_to"
           }
         },
         {
@@ -3104,7 +3104,7 @@
             1
           ],
           "contentRef": {
-            "lessonId": "fnd_v7_u15n06"
+            "lessonId": "fnd_v7_go_straight_turn_left"
           }
         },
         {

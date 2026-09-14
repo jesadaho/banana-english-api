@@ -20,6 +20,13 @@ import {
   resolveLessonProgressTurn,
 } from './lessons.data';
 import { LessonsService } from './lessons.service';
+import { coerceFoundationV7SpeechTurn } from './foundation-v7-turn-guard';
+import {
+  AUTHORED_V7_LESSON_IDS,
+  classifyResult,
+  lessonSummaryLabel,
+  parseFoundationV7LessonArgs,
+} from '../../scripts/lib/foundation-v7-lessons-prod-runner.ts';
 
 const FROZEN_CHAPTER_1_LESSON_IDS = [
   'greetings',
@@ -27,7 +34,7 @@ const FROZEN_CHAPTER_1_LESSON_IDS = [
   'yes_no_maybe',
 ] as const;
 
-const PLEASE_THANKS = 'fnd_v7_u02n01';
+const PLEASE_THANKS = 'fnd_v7_please_and_thank_you';
 
 type AuthoredSpec = (typeof lessonSpecs)[keyof typeof lessonSpecs];
 
@@ -160,9 +167,9 @@ describe('Foundation V7 lessons', () => {
       assert.equal(pickUserSpeechForTurn(steps[0]), TAP_TO_CONTINUE_SENTINEL);
       assert.ok(steps.filter(s => s.expectsUserSpeech).length >= spec.blocks.length + 2, id);
     }
-    assert.ok(buildFoundationV7Steps('fnd_v7_u08n05').some(s => s.kind === 'model_group'));
-    assert.ok(buildFoundationV7Steps('fnd_v7_u15n03').some(s => s.kind === 'guided_use'));
-    assert.ok(buildFoundationV7Steps('fnd_v7_u10n05').some(s => /Choice reuse/.test(s.instruction)));
+    assert.ok(buildFoundationV7Steps('fnd_v7_letter_names_a_m').some(s => s.kind === 'model_group'));
+    assert.ok(buildFoundationV7Steps('fnd_v7_in_on_under_next_to').some(s => s.kind === 'guided_use'));
+    assert.ok(buildFoundationV7Steps('fnd_v7_want_need_and_please').some(s => /Choice reuse/.test(s.instruction)));
   });
 
   it('ships real guided board payloads and accepts non-first personal options in its tutor contract', () => {
@@ -180,7 +187,7 @@ describe('Foundation V7 lessons', () => {
         }
       }
     }
-    const reuse = buildFoundationV7Steps('fnd_v7_u10n05').find(s => s.kind === 'recall')!;
+    const reuse = buildFoundationV7Steps('fnd_v7_want_need_and_please').find(s => s.kind === 'recall')!;
     assert.match(reuse.instruction, /THEIR selected speak value/);
   });
 
@@ -250,38 +257,123 @@ describe('Foundation V7 lessons', () => {
 
   it('keeps reviewed transfer, scope and completion contracts explicit', () => {
     assert.equal(
-      lessonSpecs.fnd_v7_u08n03.recall.answerEn,
+      lessonSpecs.fnd_v7_eleven_to_twenty.recall.answerEn,
       'I am twenty years old',
     );
     assert.equal(
-      lessonSpecs.fnd_v7_u04n01.titleEn,
+      lessonSpecs.fnd_v7_he_she_it_we_they.titleEn,
       'He, She, It, We, They',
     );
     assert.equal(
-      lessonSpecs.fnd_v7_u14n03.titleEn,
+      lessonSpecs.fnd_v7_where_when_how_much_and_how_many.titleEn,
       'Where, When, How Much & How Many',
     );
     assert.match(
-      getLesson('fnd_v7_u02n03')!.systemInstruction,
+      getLesson('fnd_v7_say_that_again')!.systemInstruction,
       /คุณขอให้อีกฝ่ายพูดซ้ำ/,
     );
   });
 
   it('makes every practice a microphone turn and every model group one milestone', () => {
-    const prices = getLesson('fnd_v7_u09n07')!;
+    const prices = getLesson('fnd_v7_prices_and_paying')!;
     assert.match(prices.systemInstruction, /REQUIRED microphone turn/);
     assert.match(prices.systemInstruction, /expectedSpeech="Here you are"/);
     assert.match(prices.systemInstruction, /never a tap-to-continue turn/);
 
-    const letters = getLesson('fnd_v7_u08n05')!;
+    const letters = getLesson('fnd_v7_letter_names_a_m')!;
     assert.match(letters.systemInstruction, /Model ALL these English forms in this same turn/);
     assert.match(letters.systemInstruction, /Never split this model list across later turns/);
     assert.match(letters.systemInstruction, /alphabet groups such as A–D are modeled together/);
   });
 
-  it('keeps Teacher B directions in the selected teaching language', () => {
-    const directions = getLesson('fnd_v7_u15n06')!;
-    assert.match(directions.systemInstruction, /ALL teacher narration, praise, explanations and requests/);
-    assert.match(directions.systemInstruction, /Never drift into English teacher directions/);
+  it('opens the mic when Prices & Paying repeats a Continue lecture', () => {
+    const phrases = getLesson('fnd_v7_prices_and_paying')!.targetPhrases;
+    const lecture =
+      'How much is it? ใช้ถามราคา และ One ticket, please ใช้ขอซื้อตั๋วครับ';
+    const stuck = coerceFoundationV7SpeechTurn({
+      isLessonComplete: false,
+      previousUserWasContinue: true,
+      previousAiText: lecture,
+      textEn: lecture,
+      expectsUserSpeech: false,
+      expectedSpeech: null,
+      hasBoard: false,
+      targetPhrases: phrases,
+    });
+    assert.equal(stuck.expectsUserSpeech, true);
+    assert.ok(phrases.includes(stuck.expectedSpeech!));
+
+    const asked = coerceFoundationV7SpeechTurn({
+      isLessonComplete: false,
+      previousUserWasContinue: true,
+      previousAiText: 'ขอตั๋วหนึ่งใบอย่างสุภาพครับ',
+      textEn: 'ลองพูดตามว่า One ticket, please',
+      expectsUserSpeech: false,
+      expectedSpeech: null,
+      hasBoard: false,
+      targetPhrases: phrases,
+    });
+    assert.equal(asked.expectsUserSpeech, true);
+    assert.equal(asked.expectedSpeech, 'One ticket, please');
+  });
+
+  it('parses authored lessons and PoolGate scenarios 1–5 by default', () => {
+    assert.deepEqual(parseFoundationV7LessonArgs(['node', 'script']), {
+      lessonIds: [...AUTHORED_V7_LESSON_IDS],
+      scenarios: [1, 2, 3, 4, 5],
+    });
+    assert.deepEqual(parseFoundationV7LessonArgs(['node', 'script', '1']), {
+      lessonIds: [...AUTHORED_V7_LESSON_IDS],
+      scenarios: [1],
+    });
+    assert.deepEqual(
+      parseFoundationV7LessonArgs(['node', 'script', 'fnd_v7_prices_and_paying', '4']),
+      {
+        lessonIds: ['fnd_v7_prices_and_paying'],
+        scenarios: [4],
+      },
+    );
+    assert.deepEqual(parseFoundationV7LessonArgs(['node', 'script', 'ch2']), {
+      lessonIds: ['fnd_v7_please_and_thank_you', 'fnd_v7_say_that_again'],
+      scenarios: [1, 2, 3, 4, 5],
+    });
+    assert.deepEqual(
+      parseFoundationV7LessonArgs(['node', 'script', 'frozen', '2']),
+      {
+        lessonIds: ['greetings', 'introductions', 'yes_no_maybe'],
+        scenarios: [2],
+      },
+    );
+    assert.deepEqual(
+      parseFoundationV7LessonArgs(['node', 'script', 'fnd_v7_u11n01']),
+      {
+        lessonIds: ['fnd_v7_i_can'],
+        scenarios: [1, 2, 3, 4, 5],
+      },
+    );
+    assert.throws(
+      () => parseFoundationV7LessonArgs(['node', 'script', 'unknown']),
+      /unknown V7 lesson/,
+    );
+  });
+
+  it('classifies scripted incorrect retries as out-of-pool so scenario 4/5 can recover', () => {
+    assert.equal(
+      classifyResult({
+        aiDebug: { source: 'scripted' },
+        assessmentTier: 'incorrect',
+        aiResponse: 'ลองอีกครั้งครับ พูดว่า “Please”',
+      }),
+      'incorrect out pool',
+    );
+    assert.equal(
+      classifyResult({
+        aiDebug: { source: 'scripted' },
+        assessmentTier: 'incorrect',
+        wasSoftAdvance: true,
+        aiResponse: 'ประโยคนี้พูดว่า “Please” ครับ ลองฝึกต่อด้วยกันนะครับ',
+      }),
+      'wrong (soft-advance)',
+    );
   });
 });

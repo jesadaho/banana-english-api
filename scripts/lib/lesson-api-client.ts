@@ -115,10 +115,11 @@ export class LessonApiClient {
       aiResponse:
         (block.aiResponse as string | undefined) ??
         ((payload.opening as Json | undefined)?.aiResponse as string | undefined),
-      isTaskComplete:
-        view.isTaskComplete ??
-        (block.isTaskComplete as boolean | undefined) ??
-        false,
+      isTaskComplete: Boolean(
+        view.isTaskComplete ||
+          block.isTaskComplete ||
+          (payload.session as Json | undefined)?.isComplete,
+      ),
     };
   }
 

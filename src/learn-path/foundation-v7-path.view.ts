@@ -2,6 +2,7 @@ import { getLesson } from '../lessons/lessons.data';
 import { getSimulation } from '../simulations/simulations.data';
 import { sayItPoolForTopic, sayItTopicById } from '../say-it/say-it.data';
 import { emojiSpeakPoolById } from '../emoji-speak/emoji-speak.data';
+import { foundationV7LessonLegacyIds } from '../lessons/foundation-v7-lesson-id-aliases';
 import { FOUNDATION_V7_CATALOG, type FoundationV7Capability, type FoundationV7Node } from './foundation-v7-path.data';
 import type { FoundationV5ClientNode } from './learn-path.service';
 
@@ -46,6 +47,9 @@ export function toFoundationV7ClientChapters(capabilities: readonly FoundationV7
         estimatedMinutes: Math.ceil((node.estimatedMinutes[0] + node.estimatedMinutes[1]) / 2),
         unlockAfterNodeIds: previousPlayableId ? [previousPlayableId] : [],
         ...node.contentRef,
+        ...(node.type === 'lesson' && node.contentRef.lessonId
+          ? { legacyLessonIds: foundationV7LessonLegacyIds(node.contentRef.lessonId) }
+          : {}),
         ...(node.legacySimulationIds ? { legacySimulationIds: node.legacySimulationIds } : {}),
         sayItMode: node.sayItMode, pronunciation: node.pronunciation,
       };
