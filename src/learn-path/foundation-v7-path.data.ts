@@ -47,3 +47,10 @@ export function foundationV7RewardAliases(id: string): string[] {
 export function isFoundationV7EmojiPool(id: string): boolean {
   return FOUNDATION_V7_NODES.some(n => n.type === 'emoji_speak' && n.contentRef.poolId === id);
 }
+
+/** Conversations on the V7 path — not in the Adventure series catalog. */
+export function isFoundationV7SimulationId(simulationId: string): boolean {
+  return FOUNDATION_V7_NODES.some(
+    (n) => n.type === 'conversation' && n.contentRef.simulationId === simulationId,
+  );
+}

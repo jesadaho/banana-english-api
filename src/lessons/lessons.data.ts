@@ -591,6 +591,8 @@ interface StoriesPatternLessonSpec {
   answer1En: string;
   answer2En: string;
   nextLessonHint?: string;
+  /** Core Flow beats for the teaching progress bar (not maxTurns). */
+  progressMax?: number;
 }
 
 /** Forced emojiSpeakSet after Hook for pattern lessons (Ch2 + Ch3 Stories). */
@@ -827,6 +829,7 @@ function buildStoriesPatternLesson(spec: StoriesPatternLessonSpec): LessonConfig
     targetPhrases,
     maxTurns: 20,
     listenOnlyTurns: 2,
+    ...(spec.progressMax != null ? { progressMax: spec.progressMax } : {}),
     systemInstruction: `Lesson: ${spec.titleEn} (Everyday English → ${track} → ${spec.code})
 Goal: ${spec.goalEn}
 Pace target: ~4–6 minutes. Keep every tutor turn tight.
@@ -5593,6 +5596,8 @@ Turn loop:
       'What do you recommend?',
     ],
     maxTurns: 22,
+    /** Hook+vocab → pattern → RP intro → celebrate (bar hides in roleplay). */
+    progressMax: 6,
     listenOnlyTurns: 1,
     systemInstruction: `Lesson: Restaurant (Everyday English → Everyday Life → 2.2)
 Goal: Order simple food at a restaurant.
@@ -5735,6 +5740,8 @@ Turn loop:
       'Iced',
     ],
     maxTurns: 24,
+    /** Vocab×2 → order×2 → RP intro → celebrate (bar hides in roleplay). */
+    progressMax: 6,
     listenOnlyTurns: 1,
     systemInstruction: `Lesson: Coffee Shop (Everyday English → Everyday Life → 2.3)
 Goal: Order coffee at a cafe.
@@ -5886,6 +5893,8 @@ Turn loop: non-final = action or Continue; Celebrate → isLessonComplete true.`
       'Thank you.',
     ],
     maxTurns: 24,
+    /** Looking-for / landmarks teaching → RP intro → celebrate. */
+    progressMax: 6,
     listenOnlyTurns: 1,
     systemInstruction: `Lesson: Explore the City (Everyday English → Everyday Life → 2.4)
 Goal: Ask for places in the city in English.
@@ -6049,6 +6058,8 @@ Turn loop: non-final = action or Continue; Celebrate → isLessonComplete true.`
       'Yes, please.',
     ],
     maxTurns: 22,
+    /** Destinations → travel mode → RP intro → celebrate. */
+    progressMax: 6,
     listenOnlyTurns: 0,
     systemInstruction: `Lesson: Transportation (Everyday English → Everyday Life → 2.5)
 Goal: Buy a ticket and say where you are going.
@@ -6207,6 +6218,8 @@ Turn loop: non-final = action or Continue; Celebrate → isLessonComplete true.`
       "I'll take sandwich B.",
     ],
     maxTurns: 22,
+    /** Hook + 3 patterns + 4 minis + celebrate (no roleplay). */
+    progressMax: 8,
     listenOnlyTurns: 1,
     systemInstruction: `Lesson: Smart Shopper (Everyday English → Everyday Life → 2.6)
 Goal: Teach Which one is… / This one is… / I'll take… then run 4 Mini Challenge compares.
@@ -6338,6 +6351,7 @@ Turn loop: non-final = action or Continue; Celebrate → isLessonComplete true.`
     titleTh: 'โรงแรม',
     goalEn: 'Check in at a hotel.',
     goalTh: 'เช็กอินโรงแรม',
+    progressMax: 6,
     hookTh:
       'ถึงโรงแรมแล้วครับ! วันนี้มาฝึกเช็กอินแบบสั้นๆ กันครับ',
     emojiWords: [
@@ -6398,6 +6412,8 @@ Turn loop: non-final = action or Continue; Celebrate → isLessonComplete true.`
       'Where is the gate?',
     ],
     maxTurns: 22,
+    /** Vocab×2 → check-in lines → RP intro → celebrate. */
+    progressMax: 6,
     listenOnlyTurns: 1,
     systemInstruction: `Lesson: Airport (Everyday English → Everyday Life → 2.8)
 Goal: Get through airport check-in in English.
@@ -6523,6 +6539,8 @@ Turn loop:
       'Can you help me?',
     ],
     maxTurns: 22,
+    /** Vocab×2 → help lines → RP intro → celebrate. */
+    progressMax: 6,
     listenOnlyTurns: 1,
     systemInstruction: `Lesson: Pharmacy (Everyday English → Everyday Life → 2.9)
 Goal: Ask for basic help at a pharmacy.
@@ -6656,6 +6674,8 @@ Turn loop:
       'Can you speak again?',
     ],
     maxTurns: 18,
+    /** 3 survival lines + Emoji Speak intro + celebrate. */
+    progressMax: 5,
     listenOnlyTurns: 1,
     systemInstruction: `Lesson: Survival English (Everyday English → Everyday Life → 2.10)
 Goal: Build 3 survival lines, then lock them with Emoji Speak.
@@ -6778,6 +6798,8 @@ Turn loop: non-final = action or Continue; Celebrate → isLessonComplete true.`
       'Her room.',
     ],
     maxTurns: 28,
+    /** 10 discovery nodes (listen + quiz beats), not the 28-turn ceiling. */
+    progressMax: 10,
     listenOnlyTurns: 2,
     systemInstruction: `Lesson: Chapter 2 Review — Everyday Life / Around Town (Everyday English → Everyday Life → 2.R)
 Type: GRAMMAR DISCOVERY REVIEW (voice-optimized) — do NOT teach long new vocabulary lists.
@@ -9693,6 +9715,20 @@ const SHOPPING_PROGRESS_MAX = 12;
 
 const GREETINGS_PROGRESS_MAX = 9;
 
+/** Around Town lessons that use the generic Core Flow detector (not Shopping). */
+const AROUND_TOWN_GENERIC_PROGRESS_LESSON_IDS = new Set([
+  'ee_around_town_restaurant',
+  'ee_around_town_coffee',
+  'ee_around_town_convenience',
+  'ee_around_town_transport',
+  'ee_around_town_smart_shopper',
+  'ee_around_town_hotel',
+  'ee_around_town_airport',
+  'ee_around_town_pharmacy',
+  'ee_around_town_survival',
+  'ee_around_town_review',
+]);
+
 /** Foundation (Basics) lessons that use Core Flow progressMax. */
 const FOUNDATION_PROGRESS_LESSON_IDS = new Set([
   'greetings',
@@ -10037,6 +10073,27 @@ function detectShoppingProgressBeat(current: {
 }
 
 /**
+ * Around Town teaching bar: advance on new boards / correct turns, pin the
+ * Roleplay intro as the last visible beat, ignore staff asks (bar is hidden).
+ */
+function detectAroundTownGenericProgressBeat(
+  prevProgressTurn: number,
+  progressMax: number,
+  current: LessonProgressTurnInput,
+  previous?: LessonProgressTurnPrevious,
+): number | null {
+  if (current.isTaskComplete) return progressMax;
+  if (current.roleplayIntro != null) return Math.max(1, progressMax - 1);
+  if (current.roleplayNpc != null) return null;
+  return detectFoundationGenericProgressBeat(
+    prevProgressTurn,
+    progressMax,
+    current,
+    previous,
+  );
+}
+
+/**
  * Monotone Core Flow progress for lessons with progressMax.
  * Soft-teach / retry / praise keep the previous progressTurn.
  */
@@ -10052,6 +10109,13 @@ export function resolveLessonProgressTurn(
   let beat: number | null = null;
   if (lessonId === 'ee_around_town_shopping') {
     beat = detectShoppingProgressBeat(current);
+  } else if (AROUND_TOWN_GENERIC_PROGRESS_LESSON_IDS.has(lessonId)) {
+    beat = detectAroundTownGenericProgressBeat(
+      prevProgressTurn,
+      progressMax,
+      current,
+      previous,
+    );
   } else if (FOUNDATION_PROGRESS_LESSON_IDS.has(lessonId)) {
     beat = detectFoundationGenericProgressBeat(
       prevProgressTurn,

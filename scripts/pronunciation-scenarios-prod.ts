@@ -1,0 +1,148 @@
+/**
+ * Clear English pronunciation — happy path to lesson complete.
+ *
+ * Transcripts:
+ *   pronunciation-scenario-results/YYYY-MM-DD/
+ *     {lessonId}.txt
+ *     run-HHmmss.txt
+ *     SUMMARY.txt
+ *
+ *   API_BASE=https://banana-english-api-staging.up.railway.app \
+ *     npx tsx scripts/pronunciation-scenarios-prod.ts
+ *
+ *   npx tsx scripts/pronunciation-scenarios-prod.ts phonics
+ *   npx tsx scripts/pronunciation-scenarios-prod.ts legacy
+ *   npx tsx scripts/pronunciation-scenarios-prod.ts pron_phonics_01_first_code
+ *   npx tsx scripts/pronunciation-scenarios-prod.ts pron_th_1 pron_w_1
+ */
+import { mkdirSync, writeFileSync, createWriteStream } from 'node:fs';
+import { join } from 'node:path';
+import { format } from 'node:util';
+import {
+  formatMs,
+  parsePronunciationArgs,
+  runPronunciationLesson,
+  type ScenarioRunResult,
+} from './lib/pronunciation-scenarios-prod-runner';
+
+const API_BASE = (
+  process.env.API_BASE ?? 'https://banana-english-api-production.up.railway.app'
+).replace(/\/$/, '');
+
+let lessonIds: string[];
+try {
+  lessonIds = parsePronunciationArgs(process.argv);
+} catch (err) {
+  console.error(
+    'Usage: npx tsx scripts/pronunciation-scenarios-prod.ts [lessonId ... | phonics | legacy | all]',
+  );
+  console.error(
+    '       npx tsx scripts/pronunciation-scenarios-prod.ts pron_phonics_01_first_code',
+  );
+  console.error(
+    '       npx tsx scripts/pronunciation-scenarios-prod.ts phonics',
+  );
+  console.error(err instanceof Error ? err.message : err);
+  process.exit(1);
+}
+
+function pad2(n: number): string {
+  return String(n).padStart(2, '0');
+}
+
+function openResultLog(now = new Date()) {
+  const date = `${now.getFullYear()}-${pad2(now.getMonth() + 1)}-${pad2(now.getDate())}`;
+  const time = `${pad2(now.getHours())}${pad2(now.getMinutes())}${pad2(now.getSeconds())}`;
+  const dir = join(process.cwd(), 'pronunciation-scenario-results', date);
+  mkdirSync(dir, { recursive: true });
+
+  const runPath = join(dir, `run-${time}.txt`);
+  const stream = createWriteStream(runPath);
+  const origLog = console.log.bind(console);
+  const origErr = console.error.bind(console);
+  let buffer: string[] = [];
+
+  const write = (args: unknown[]) => {
+    const line = `${format(...args)}\n`;
+    buffer.push(line);
+    stream.write(line);
+  };
+
+  console.log = (...args: unknown[]) => {
+    origLog(...args);
+    write(args);
+  };
+  console.error = (...args: unknown[]) => {
+    origErr(...args);
+    write(args);
+  };
+
+  return {
+    dir,
+    runPath,
+    takeBuffer(): string {
+      const text = buffer.join('');
+      buffer = [];
+      return text;
+    },
+    close(): void {
+      console.log = origLog;
+      console.error = origErr;
+      stream.end();
+    },
+  };
+}
+
+function formatSummary(results: ScenarioRunResult[]): string {
+  const lines: string[] = ['SUMMARY', '='.repeat(80)];
+  for (const r of results) {
+    lines.push(
+      r.ok
+        ? `  ✅ ${r.lessonId} — ${r.steps} steps · ${formatMs(r.totalMs)}`
+        : `  ❌ ${r.lessonId} — ${r.error}`,
+    );
+  }
+  const failed = results.filter((r) => !r.ok);
+  lines.push(
+    '',
+    `Total: ${results.length - failed.length}/${results.length} passed`,
+    '',
+  );
+  return lines.join('\n');
+}
+
+async function main(): Promise<void> {
+  const log = openResultLog();
+
+  console.log(`API_BASE=${API_BASE}`);
+  console.log(`Results: ${log.dir}`);
+  console.log(`Lessons: ${lessonIds.join(', ')}`);
+  log.takeBuffer();
+
+  const results: ScenarioRunResult[] = [];
+  let runIndex = 0;
+
+  try {
+    for (const lessonId of lessonIds) {
+      results.push(await runPronunciationLesson(API_BASE, lessonId, runIndex++));
+      writeFileSync(join(log.dir, `${lessonId}.txt`), log.takeBuffer(), 'utf8');
+    }
+
+    const summary = formatSummary(results);
+    console.log(`\n${'='.repeat(80)}`);
+    console.log(summary.trimEnd());
+    writeFileSync(join(log.dir, 'SUMMARY.txt'), `${summary}\n`, 'utf8');
+    log.takeBuffer();
+  } finally {
+    log.close();
+  }
+
+  const failed = results.filter((r) => !r.ok);
+  console.log(`Saved: ${log.runPath}`);
+  if (failed.length > 0) process.exitCode = 1;
+}
+
+main().catch((err) => {
+  console.error('\n❌', err instanceof Error ? err.message : err);
+  process.exitCode = 1;
+});

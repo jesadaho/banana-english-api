@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
-import { FOUNDATION_V7_CATALOG, FOUNDATION_V7_NODES, canonicalFoundationV7RewardId, foundationV7NodeTypeCounts, foundationV7RewardAliases } from './foundation-v7-path.data';
+import { FOUNDATION_V7_CATALOG, FOUNDATION_V7_NODES, canonicalFoundationV7RewardId, foundationV7NodeTypeCounts, foundationV7RewardAliases, isFoundationV7SimulationId } from './foundation-v7-path.data';
 import { hasFoundationV7Content, toFoundationV7ClientChapters } from './foundation-v7-path.view';
 import { LearnPathService } from './learn-path.service';
 import { LearnPathController } from './learn-path.controller';
@@ -269,5 +269,17 @@ describe('Foundation V7 progress and completion contracts', () => {
     const frozen = await service.applyMiniGameRewards({userId:user.id,gameId:'v7_u01n03'});
     assert.equal(frozen.alreadyClaimed, true);
     assert.equal(frozen.xpEarned, 0);
+  });
+
+  it('treats V7 conversation simulations as path missions, not Adventure series', () => {
+    const conversations = FOUNDATION_V7_NODES.filter((n) => n.type === 'conversation');
+    assert.equal(conversations.length, 16);
+    for (const node of conversations) {
+      const id = node.contentRef.simulationId!;
+      assert.ok(getSimulation(id), id);
+      assert.equal(isFoundationV7SimulationId(id), true, id);
+    }
+    assert.equal(isFoundationV7SimulationId('coffee_order_easy'), false);
+    assert.equal(isFoundationV7SimulationId('foundation_v7_unknown'), false);
   });
 });
