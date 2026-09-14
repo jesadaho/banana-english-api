@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { V7_LEGACY_FLOWS } from './foundation-v7-legacy-flows';
 import { describe, it } from 'node:test';
 import { TrainingTurnEngine } from '../training/engine/training-turn.engine';
 import type { TrainingAiGate } from '../training/engine/ai-gate';
@@ -36,6 +37,69 @@ function harness(id: string) {
 }
 
 describe('Foundation V7 server-owned runtime', () => {
+  it('preserves V7 repair phrases and closes after the NPC repeats their name', async () => {
+    const h = harness('fnd_v7_say_that_again');
+    const answers: string[] = [];
+    while (!h.reply.isLessonComplete) {
+      answers.push(h.reply.expectedSpeech!);
+      await h.say(h.reply.expectedSpeech!);
+    }
+    assert.deepEqual([...new Set(answers)].sort(), ['I do not understand', 'Please say that again', 'Please speak slowly'].sort());
+    assert.match(h.reply.textEn, /My name is Teacher B.*จบบท/);
+    assert.equal(h.reply.expectsUserSpeech, false);
+  });
+  it('connects asking for a ticket, asking its price and handing over payment', async () => {
+    const h = harness('fnd_v7_prices_and_paying');
+    while (h.reply.v7Step! < 6) await h.say(h.reply.expectedSpeech!);
+    assert.equal(h.reply.expectedSpeech, 'One ticket, please');
+    await h.say('One ticket, please');
+    assert.equal(h.reply.expectedSpeech, 'How much is it?');
+    await h.say('How much is it?');
+    assert.match(h.reply.textEn, /It is forty baht/);
+    assert.equal(h.reply.expectedSpeech, 'Here you are');
+    const before = h.reply.v7Step;
+    await h.say('[continue]');
+    assert.equal(h.reply.v7Step, before);
+    await h.say('Here you are');
+    assert.equal(h.reply.isLessonComplete, true);
+    assert.match(h.reply.textEn, /Thank you/);
+  });
+  it('practises Sorry before applying it to accidentally bumping into someone', () => {
+    const steps = V7_LEGACY_FLOWS.fnd_v7_please_and_thank_you;
+    assert.equal(steps[3].expectedSpeech, 'Sorry');
+    assert.equal(steps[4].expectedSpeech, 'Sorry');
+    assert.match(steps[4].presentation!.text, /เผลอชน/);
+    assert.equal(steps[6].expectedSpeech, 'Excuse me');
+    assert.equal(steps[6].presentation!.options.length, 0);
+  });
+  for (const [id, steps] of Object.entries(V7_LEGACY_FLOWS)) {
+    steps.forEach((step, index) => {
+      for (const option of step.presentation!.options) {
+        it(`${id} step ${index + 1}: ${option.label}`, async () => {
+          const h = harness(id);
+          while (h.reply.v7Step! < index + 1) await h.say(h.reply.expectedSpeech!);
+          const before = h.reply.v7Step!;
+          await h.say('[continue]');
+          assert.equal(h.reply.v7Step, before);
+          const valid = step.presentation!.answerMode === 'any' || option.speak === step.expectedSpeech;
+          await h.say(option.speak);
+          assert.equal(h.reply.v7Step, before + (valid ? 1 : 0));
+          assert.equal(h.calls, 0, 'card answers use deterministic assessment');
+        });
+      }
+    });
+  }
+  it('keeps the age transfer, rice and new composed number without answer leakage', () => {
+    const age = V7_LEGACY_FLOWS.fnd_v7_eleven_to_twenty;
+    assert.equal(age.at(-2)!.expectedSpeech, 'I am twenty years old.');
+    const numbers = V7_LEGACY_FLOWS.fnd_v7_twenty_to_one_hundred;
+    assert.equal(numbers.at(-2)!.expectedSpeech, 'sixty-two');
+    assert.doesNotMatch(numbers.at(-2)!.presentation!.text, /sixty.two/i);
+    assert.equal(numbers.at(-2)!.presentation!.options.length, 0);
+    const likes = V7_LEGACY_FLOWS.fnd_v7_i_like_i_dont_like;
+    assert.equal(likes[3].expectedSpeech, 'I like rice');
+    assert.equal(likes.at(-2)!.presentation!.answerMode, 'any');
+  });
   for (const lesson of FOUNDATION_V7_LESSONS) {
     for (const scenario of ['correct', 'close', 'off-topic', 'wrong-twice'] as const) {
       it(lesson.lessonId + ' / ' + scenario + ': progress, recovery and completion', async () => {
@@ -118,6 +182,7 @@ describe('Foundation V7 server-owned runtime', () => {
   });
 
   for (const [id, choice] of Object.entries(FOUNDATION_V7_CHOICE_BEATS)) {
+    if (V7_LEGACY_FLOWS[id]) continue;
     for (const option of choice.options) {
       it(id + ' choice ' + option.label, async () => {
         const h = harness(id);

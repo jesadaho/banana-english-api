@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { V7_LEGACY_FLOWS } from './foundation-v7-legacy-flows';
 import { describe, it } from 'node:test';
 import { TAP_TO_CONTINUE_SENTINEL } from '../common/api.types';
 import { FOUNDATION_V7_NODES } from '../learn-path/foundation-v7-path.data';
@@ -76,7 +77,7 @@ describe('Foundation V7 lessons', () => {
 
     assert.equal(FOUNDATION_V7_LESSONS.length, 36);
     assert.deepEqual(FOUNDATION_V7_LESSON_IDS, authoredIds);
-    assert.deepEqual(pathAuthored.slice().sort(), authoredIds.filter(id => !['fnd_v7_u08n05', 'fnd_v7_u08n07'].includes(id)).sort());
+    assert.deepEqual(pathAuthored.slice().sort(), authoredIds.filter(id => !['fnd_v7_letter_names_a_m', 'fnd_v7_letter_names_n_z'].includes(id)).sort());
     assert.ok(authoredIds.every((id) => id.startsWith('fnd_v7_')));
 
     const lessons = new LessonsService({} as any, {} as any);
@@ -94,11 +95,16 @@ describe('Foundation V7 lessons', () => {
   it('keeps authored blocks, recognition, recall and Core Flow progressMax in sync', () => {
     for (const [id, spec] of Object.entries(lessonSpecs)) {
       const lesson = getLesson(id)!;
+      if (V7_LEGACY_FLOWS[id]) {
+        assert.equal(lesson.progressMax, V7_LEGACY_FLOWS[id].length);
+        assert.equal(lesson.listenOnlyTurns, 0);
+        continue;
+      }
       const node = pathLessonNodes().find((n) => n.contentRef.lessonId === id);
       const steps = coreFlowStepCount(id, spec);
 
       assert.ok(lesson, id);
-      assert.equal(Boolean(node), !['fnd_v7_u08n05', 'fnd_v7_u08n07'].includes(id), id);
+      assert.equal(Boolean(node), !['fnd_v7_letter_names_a_m', 'fnd_v7_letter_names_n_z'].includes(id), id);
       assert.equal(lesson.titleEn, spec.titleEn, id);
       assert.equal(lesson.titleTh, spec.titleTh, id);
       if (node) assert.equal(node.titleEn, spec.titleEn, id);
@@ -160,6 +166,12 @@ describe('Foundation V7 lessons', () => {
     assert.equal(new Set(Object.values(FOUNDATION_V7_PATTERNS)).size, 4);
     for (const [id, spec] of Object.entries(lessonSpecs)) {
       const steps = buildFoundationV7Steps(id);
+      if (V7_LEGACY_FLOWS[id]) {
+        assert.ok(steps.slice(0, -1).every(s => s.expectsUserSpeech));
+        assert.equal(steps.at(-1)!.kind, 'complete');
+        assert.ok(steps.length <= 9);
+        continue;
+      }
       assert.equal(steps.length, coreFlowStepCount(id, spec), id);
       assert.ok(steps.length <= 12, id);
       assert.equal(steps.filter(s => s.kind === 'choice').length, 1, id);
@@ -175,6 +187,7 @@ describe('Foundation V7 lessons', () => {
   it('ships real guided board payloads and accepts non-first personal options in its tutor contract', () => {
     for (const [id, choice] of Object.entries(FOUNDATION_V7_CHOICE_BEATS)) {
       const step = buildFoundationV7Steps(id).find(s => s.kind === 'choice')!;
+      if (V7_LEGACY_FLOWS[id]) continue; // Step-local boards tested by runtime suite.
       const json = step.instruction.split('Return guidedSpeaking=')[1].split('; omit emojiChoice')[0];
       const board = JSON.parse(json);
       assert.equal(board.stem, choice.stem);
@@ -194,8 +207,8 @@ describe('Foundation V7 lessons', () => {
   it('Please & Thank You practises Sorry and Excuse me separately', () => {
     const spec = lessonSpecs[PLEASE_THANKS];
     const max = getLesson(PLEASE_THANKS)!.progressMax!;
-    assert.equal(max, coreFlowStepCount(PLEASE_THANKS, spec));
-    assert.equal(max, 7);
+    assert.equal(max, buildFoundationV7Steps(PLEASE_THANKS).length);
+    assert.equal(max, 8);
     assert.deepEqual(spec.blocks.map((block) => block.repeat), [
       'Please',
       'Sorry',
@@ -270,15 +283,15 @@ describe('Foundation V7 lessons', () => {
     );
     assert.match(
       getLesson('fnd_v7_say_that_again')!.systemInstruction,
-      /คุณขอให้อีกฝ่ายพูดซ้ำ/,
+      /จบบทแล้วครับ.*ขอซ้ำ ขอช้า/,
     );
   });
 
   it('makes every practice a microphone turn and every model group one milestone', () => {
     const prices = getLesson('fnd_v7_prices_and_paying')!;
-    assert.match(prices.systemInstruction, /REQUIRED microphone turn/);
-    assert.match(prices.systemInstruction, /expectedSpeech="Here you are"/);
-    assert.match(prices.systemInstruction, /never a tap-to-continue turn/);
+    const paymentSteps = buildFoundationV7Steps(prices.lessonId).filter(s => s.expectedSpeech === 'Here you are');
+    assert.equal(paymentSteps.length, 2, 'model followed by contextual payment');
+    assert.ok(paymentSteps.every(s => s.expectsUserSpeech));
 
     const letters = getLesson('fnd_v7_letter_names_a_m')!;
     assert.match(letters.systemInstruction, /Model ALL these English forms in this same turn/);

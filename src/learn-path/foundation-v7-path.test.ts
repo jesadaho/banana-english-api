@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { V7_LEGACY_FLOWS } from '../lessons/foundation-v7-legacy-flows';
 import { describe, it } from 'node:test';
 import { FOUNDATION_V7_CATALOG, FOUNDATION_V7_NODES, canonicalFoundationV7RewardId, foundationV7NodeTypeCounts, foundationV7RewardAliases, isFoundationV7SimulationId } from './foundation-v7-path.data';
 import { hasFoundationV7Content, toFoundationV7ClientChapters } from './foundation-v7-path.view';
@@ -42,7 +43,7 @@ describe('Foundation V7 catalog and real content', () => {
     assert.equal(FOUNDATION_V7_CATALOG.chapters.length, 16);
     assert.equal(FOUNDATION_V7_NODES.length, 103);
     assert.equal(new Set(FOUNDATION_V7_NODES.map(n => n.id)).size, 103);
-    assert.deepEqual(FOUNDATION_V7_CATALOG.chapters.map(c => c.items.length), [5,4,6,6,6,8,7,10,9,7,6,8,6,6,8,5]);
+    assert.deepEqual(FOUNDATION_V7_CATALOG.chapters.map(c => c.items.length), [5,4,6,6,6,8,7,6,9,7,6,8,6,6,8,5]);
     assert.deepEqual(foundationV7NodeTypeCounts(), { lesson:37, say_it:16, emoji_speak:13, pronunciation:4, describe_it:13, story_bites:4, conversation:16 });
     assert.deepEqual(FOUNDATION_V7_NODES.map(n => n.globalOrder), Array.from({length:103}, (_, i) => i + 1));
     for (let i = 1; i < FOUNDATION_V7_NODES.length; i++) {
@@ -113,6 +114,10 @@ describe('Foundation V7 catalog and real content', () => {
         for (const target of block.models) assert.ok(lesson.targetPhrases.includes(target));
       }
       assert.ok(lesson.targetPhrases.includes(spec.recall.answerEn));
+      if (V7_LEGACY_FLOWS[id]) {
+        assert.equal(lesson.progressMax, V7_LEGACY_FLOWS[id].length);
+        continue;
+      }
       assert.match(lesson.systemInstruction, /Teach block 1/);
       assert.match(lesson.systemInstruction, /Practise block 1/);
       assert.match(lesson.systemInstruction, /Authored choice/);

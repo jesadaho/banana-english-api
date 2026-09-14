@@ -34,14 +34,17 @@ const APPLICATION_STEMS: Record<string, string> = {
   fnd_v7_there_is_there_are: 'There is...', fnd_v7_in_on_under_next_to: 'The bag is...',
 };
 
+import { V7_LEGACY_FLOWS } from './foundation-v7-legacy-flows';
 export interface V7TeachingStep {
   kind: 'welcome' | 'model_repeat' | 'model_group' | 'repeat' | 'choice' | 'guided_use' | 'recall' | 'complete';
   instruction: string;
   expectsUserSpeech: boolean;
   expectedSpeech?: string;
+  presentation?: { text: string; answerMode: 'single' | 'any'; stem: string; options: { emoji: string; label: string; speak: string }[] };
 }
 
 export function buildFoundationV7Steps(lessonId: string): V7TeachingStep[] {
+  if (V7_LEGACY_FLOWS[lessonId]) return V7_LEGACY_FLOWS[lessonId];
   const spec = specs[lessonId as keyof typeof specs];
   const choice = FOUNDATION_V7_CHOICE_BEATS[lessonId];
   const pattern = FOUNDATION_V7_PATTERNS[lessonId];
@@ -112,7 +115,7 @@ export const FOUNDATION_V7_LESSONS: LessonConfig[] = Object.entries(specs).map((
     difficulty: 'beginner', languageMix: { thai: 70, english: 30 },
     estimatedMinutesMin: spec.estimatedMinutes[0], estimatedMinutesMax: spec.estimatedMinutes[1],
     targetPhrases: [...new Set([...spec.blocks.flatMap(block => block.models), spec.recall.answerEn, ...choice.options.map(o => o.speak)])],
-    targetLabel: 'item', listenOnlyTurns: 1, progressMax: steps.length,
+    targetLabel: 'item', listenOnlyTurns: steps[0].expectsUserSpeech ? 0 : 1, progressMax: steps.length,
     maxTurns: steps.length + steps.filter(step => step.expectsUserSpeech).length + 2,
     systemInstruction: 'Foundation A1 V7: ' + spec.titleEn + '\nGoal: ' + spec.goalTh + '\nScope: ' + spec.scope +
       '\nTeaching pattern: ' + FOUNDATION_V7_PATTERNS[lessonId] + `
@@ -132,8 +135,8 @@ Do not infer pronunciation accuracy from a spelling transcript or diagnose acous
 Do not refer to an unseen image. Emojis are cues; state spatial relationships and fictional facts in the question.
 Keep isLessonComplete=false until Complete. Use only existing guidedSpeaking/microphone/Continue mechanics.
 Core Flow:
-` + steps.map((step, i) => (i + 1) + '. ' + step.instruction).join('\n'),
-    openingPrompt: 'Start ' + spec.titleEn + '. Welcome step only: explain the practical goal briefly in the teaching language. ' +
+` + steps.map((step, i) => (i + 1) + '. ' + step.instruction + (step.presentation ? '\nAuthored payload: ' + JSON.stringify({ ...step.presentation, expectedSpeech: step.expectedSpeech, expectsUserSpeech: step.expectsUserSpeech, isLessonComplete: step.kind === 'complete' }) : '')).join('\n'),
+    openingPrompt: V7_LEGACY_FLOWS[lessonId] ? 'Start at Core Flow step 1, including its microphone task and authored board. expectsUserSpeech=true. Do not add a welcome-only turn.' : 'Start ' + spec.titleEn + '. Welcome step only: explain the practical goal briefly in the teaching language. ' +
       'expectsUserSpeech=false, expectedSpeech="", isLessonComplete=false. Return the existing lesson JSON schema.',
   };
 });

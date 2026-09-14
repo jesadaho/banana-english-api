@@ -55,6 +55,11 @@ export function renderV7Turn(id: string, stepNumber: number, chosen?: string): T
     text = 'จบบทนี้แล้วครับ วันนี้เราได้ฝึก' + spec.goalTh + ' ขอบคุณที่ฝึกด้วยกันครับ';
     expected = undefined;
   }
+  if (step.presentation) {
+    text = step.presentation.text;
+    const p = step.presentation;
+    board = p.options.length ? { stem: p.stem, ...p.options[0], options: p.options } : undefined;
+  }
   return {
     textEn: text, textTh: '', ttsText: text,
     expectsUserSpeech: step.expectsUserSpeech, expectedSpeech: expected,
@@ -70,7 +75,8 @@ export async function runV7Turn(input: TrainingEngineTurnInput, gate: TrainingAi
   const stepNumber = last?.v7Step ?? input.sessionProgressTurn ?? 1;
   const current = renderV7Turn(id, stepNumber, last?.v7Choice);
   const step = buildFoundationV7Steps(id)[current.v7Step! - 1];
-  const choice = FOUNDATION_V7_CHOICE_BEATS[id];
+  const choice = step.presentation ? { ...step.presentation, incorrectHintTh: undefined } : FOUNDATION_V7_CHOICE_BEATS[id];
+  const isChoice = step.kind === 'choice' || !!step.presentation?.options.length;
   if (current.isLessonComplete) return { reply: current, aiDebug: scriptedAiDebug() };
   // Continue is a UI action, never evidence of a spoken attempt.
   if (step.expectsUserSpeech && userTurnWasContinue(input.userText)) {
@@ -79,11 +85,11 @@ export async function runV7Turn(input: TrainingEngineTurnInput, gate: TrainingAi
   if (!step.expectsUserSpeech) {
     return { reply: renderV7Turn(id, stepNumber + 1, last?.v7Choice), aiDebug: scriptedAiDebug() };
   }
-  const accepted = step.kind === 'choice' && choice.answerMode === 'any'
+  const accepted = isChoice && choice.answerMode === 'any'
     ? choice.options.map(o => o.speak) : [current.expectedSpeech!];
   const exact = accepted.find(answer => normalize(answer) === normalize(input.userText));
   // A distractor with the wrong meaning must not pass a single-answer choice.
-  const distractor = step.kind === 'choice' && choice.answerMode === 'single' &&
+  const distractor = isChoice && choice.answerMode === 'single' &&
     choice.options.some(o => normalize(o.speak) === normalize(input.userText)) && !exact;
   let tier: 'correct' | 'close' | 'incorrect' = exact ? 'correct' : 'incorrect';
   let aiDebug = scriptedAiDebug();
@@ -95,7 +101,7 @@ export async function runV7Turn(input: TrainingEngineTurnInput, gate: TrainingAi
       coreStepMax: input.config.progressMax!,
       expectedSpeech: current.expectedSpeech ?? null,
       exampleAnswer: current.expectedSpeech ?? null,
-      tutorQuestion: current.textEn + (step.kind === 'choice' && choice.answerMode === 'any'
+      tutorQuestion: current.textEn + (isChoice && choice.answerMode === 'any'
         ? '\nEvery option is valid; accept truthful alternatives. ' + accepted.join(' | ') : ''),
       incorrectHintTh: choice.incorrectHintTh ?? null,
       userText: input.userText, originalText: input.originalText,
@@ -110,7 +116,7 @@ export async function runV7Turn(input: TrainingEngineTurnInput, gate: TrainingAi
     const text = (hint || 'ลองอีกครั้งครับ พูดว่า “' + current.expectedSpeech + '”') + ' ' + current.textEn;
     return { reply: { ...current, textEn: text, ttsText: text, assessmentTier: tier, v7Retry: true }, aiDebug };
   }
-  const chosen = step.kind === 'choice' && choice.answerMode === 'any'
+  const chosen = isChoice && choice.answerMode === 'any'
     ? (exact ?? (tier === 'correct' ? input.userText : current.expectedSpeech))
     : last?.v7Choice;
   const next = renderV7Turn(id, stepNumber + 1, chosen);
