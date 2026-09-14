@@ -155,6 +155,7 @@ describe('Foundation V7 catalog and real content', () => {
     for (const config of FOUNDATION_V7_SIMULATIONS) {
       assert.equal(getSimulation(config.simulationId), config);
       assert.ok(config.foundationMission && config.scenarioTh);
+      assert.ok(config.minTurns && config.minTurns >= 2 && config.minTurns < config.maxTurns);
       assert.notEqual(config.completionReplyEn, 'Thanks for talking with me!');
       assert.match(config.systemInstruction, /V2 mission philosophy/);
       assert.match(config.systemInstruction, /concrete outcome/);
@@ -164,7 +165,10 @@ describe('Foundation V7 catalog and real content', () => {
       assert.equal(capped.isTaskComplete, true);
       assert.deepEqual(capped.checkpoints, checkpoints);
       assert.equal(capped.reply.aiResponse, config.fallbackReplyEn);
-      const passed = finalizeSimulationTurnState(config, 2, Object.fromEntries(config.successCriteria.map(k => [k,true])), {aiResponse:'And you?',textTh:''});
+      const allGoals = Object.fromEntries(config.successCriteria.map(k => [k,true]));
+      const early = finalizeSimulationTurnState(config, config.minTurns! - 1, allGoals, {aiResponse:'And you?',textTh:''});
+      assert.equal(early.isTaskComplete, false, `${config.simulationId} closed before minTurns`);
+      const passed = finalizeSimulationTurnState(config, config.minTurns!, allGoals, {aiResponse:'And you?',textTh:''});
       assert.equal(passed.reply.aiResponse, config.completionReplyEn);
       assert.equal(passed.isTaskComplete, true);
     }

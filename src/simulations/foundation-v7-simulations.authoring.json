@@ -20,6 +20,7 @@
         "example": "Thank you"
       }
     ],
+    "minTurns": 2,
     "maxTurns": 4,
     "completionEn": "Great. Here is Sam's class card.",
     "completionTh": "เยี่ยมครับ นี่คือบัตรเข้าคลาสของ Sam ครับ"
@@ -45,6 +46,7 @@
         "example": "Are you ready"
       }
     ],
+    "minTurns": 3,
     "maxTurns": 4,
     "completionEn": "We are ready. Let's go to class!",
     "completionTh": "เราพร้อมแล้ว ไปเข้าคลาสกันครับ!"
@@ -76,6 +78,7 @@
         "example": "Who is this"
       }
     ],
+    "minTurns": 3,
     "maxTurns": 5,
     "completionEn": "Nice to meet you both. Here are your name tags!",
     "completionTh": "ยินดีที่ได้รู้จักทั้งคู่ครับ นี่คือป้ายชื่อของคุณครับ!"
@@ -101,6 +104,7 @@
         "example": "No, pens"
       }
     ],
+    "minTurns": 3,
     "maxTurns": 4,
     "completionEn": "One book and pens. Your class bag is ready!",
     "completionTh": "หนังสือหนึ่งเล่มและปากกาหลายด้าม กระเป๋าเรียนพร้อมแล้วครับ!"
@@ -126,6 +130,7 @@
         "example": "The blue bag"
       }
     ],
+    "minTurns": 3,
     "maxTurns": 4,
     "completionEn": "Here is the bag you chose.",
     "completionTh": "นี่คือกระเป๋าใบที่คุณเลือกครับ"
@@ -151,6 +156,7 @@
         "example": "The blue bag is my bag"
       }
     ],
+    "minTurns": 3,
     "maxTurns": 4,
     "completionEn": "Yes, the blue bag is yours. Here you are!",
     "completionTh": "ใช่ครับ กระเป๋าสีน้ำเงินเป็นของคุณ รับไปได้เลยครับ!"
@@ -182,6 +188,7 @@
         "example": "I am sixteen"
       }
     ],
+    "minTurns": 3,
     "maxTurns": 5,
     "completionEn": "Your class card is ready. Welcome!",
     "completionTh": "บัตรเข้าคลาสของคุณพร้อมแล้ว ยินดีต้อนรับครับ!"
@@ -213,6 +220,7 @@
         "example": "At ten?"
       }
     ],
+    "minTurns": 4,
     "maxTurns": 5,
     "completionEn": "Here is your ticket for Friday at ten.",
     "completionTh": "นี่คือตั๋วของคุณสำหรับวันศุกร์สิบโมงครับ"
@@ -244,6 +252,7 @@
         "example": "Thank you"
       }
     ],
+    "minTurns": 3,
     "maxTurns": 5,
     "completionEn": "Your drink is ready. Here you are!",
     "completionTh": "เครื่องดื่มของคุณพร้อมแล้ว รับได้เลยครับ!"
@@ -275,6 +284,7 @@
         "example": "Yes, I can"
       }
     ],
+    "minTurns": 3,
     "maxTurns": 5,
     "completionEn": "Great! We finished our activity card.",
     "completionTh": "เยี่ยมครับ เราทำบัตรกิจกรรมเสร็จแล้วครับ"
@@ -300,6 +310,7 @@
         "example": "Friday is good"
       }
     ],
+    "minTurns": 3,
     "maxTurns": 5,
     "completionEn": "Great. I put our day on the practice card!",
     "completionTh": "เยี่ยมครับ ผมเขียนวันที่เราเลือกลงบัตรนัดฝึกแล้วครับ!"
@@ -325,6 +336,7 @@
         "example": "He is eating"
       }
     ],
+    "minTurns": 3,
     "maxTurns": 5,
     "completionEn": "Mia is cooking and Sam is eating. I will wait.",
     "completionTh": "Mia กำลังทำอาหารและ Sam กำลังกิน ผมจะรอก่อนครับ"
@@ -350,6 +362,7 @@
         "example": "Where is the class"
       }
     ],
+    "minTurns": 3,
     "maxTurns": 5,
     "completionEn": "Friday at ten, in this room. Your class card is complete!",
     "completionTh": "วันศุกร์สิบโมง ที่ห้องนี้ บัตรคลาสของคุณครบแล้วครับ!"
@@ -381,6 +394,7 @@
         "example": "Thank you"
       }
     ],
+    "minTurns": 3,
     "maxTurns": 5,
     "completionEn": "That's right. The classroom is straight ahead, then left.",
     "completionTh": "ถูกต้องครับ ห้องเรียนอยู่ตรงไปแล้วเลี้ยวซ้ายครับ"
@@ -412,6 +426,7 @@
         "example": "Please say that again"
       }
     ],
+    "minTurns": 4,
     "maxTurns": 6,
     "completionEn": "You have what you need. You are ready for your first class!",
     "completionTh": "คุณได้สิ่งที่ต้องการแล้ว พร้อมสำหรับคลาสแรกครับ!"
