@@ -1,4 +1,5 @@
 import type { TrainingTurnReply } from '../../gemini/gemini-chat.service';
+import { TAP_TO_CONTINUE_SENTINEL } from '../../common/api.types';
 import { stripLeadingPraiseOpener } from '../../lessons/choice-board';
 import type { ChoiceStepTier } from '../../lessons/lessons.data';
 import type { ScriptTurnResult } from './types';
@@ -12,6 +13,8 @@ export type ChoiceLessonHistoryTurn = {
   guidedSpeaking?: {
     options?: Array<{ speak?: string }>;
   } | null;
+  roleplayIntro?: unknown;
+  roleplayNpc?: unknown;
 };
 
 export type ChoiceLessonBoard = {
@@ -767,9 +770,10 @@ export function pinChoiceLessonAiReply(
       nextBoardForPraise?.advanceQuestionEn?.trim() ||
       nextBody
     ).trim();
-    const praise = nextBoardForPraise?.withPraise === false
-      ? ''
-      : correctAdvancePraise(aiReply.textEn?.trim() ?? '');
+    const praise =
+      next.roleplayNpc != null || nextBoardForPraise?.withPraise === false
+        ? ''
+        : correctAdvancePraise(aiReply.textEn?.trim() ?? '');
     return {
       textEn: `${praise} ${nextBody}`.trim() || 'มาลองข้อต่อไปกันครับ',
       ttsText: `${praise} ${nextTtsBody}`.trim() || 'มาลองข้อต่อไปกันครับ',
@@ -843,6 +847,16 @@ export function buildChoiceLessonAfterUser(
       learnerFirstName,
     );
     return next ? { ...next, assessmentTier: 'correct' as const } : null;
+  }
+
+  const lastAi = [...priorTurns].reverse().find((t) => t.speaker === 'ai');
+  if (
+    userText === TAP_TO_CONTINUE_SENTINEL &&
+    def.afterTeachingComplete &&
+    lastAi?.roleplayIntro != null
+  ) {
+    const next = def.afterTeachingComplete(turns, learnerFirstName);
+    if (next) return { ...next, assessmentTier: 'correct' as const };
   }
 
   const replayBefore = def.progressFn(priorTurns);

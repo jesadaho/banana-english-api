@@ -47,8 +47,11 @@ import {
   transportOpeningText,
 } from './around-town.lessons';
 
-function afterRoleplay(lessonId: string): ScriptTurnResult | null {
-  return roleplayAfterTeaching(lessonId);
+function afterRoleplay(
+  lessonId: string,
+  history: Array<{ speaker: string; roleplayIntro?: unknown; roleplayNpc?: unknown }> = [],
+): ScriptTurnResult | null {
+  return roleplayAfterTeaching(lessonId, history);
 }
 
 export const AROUND_TOWN_SHOPPING: ChoiceLessonDef = {
@@ -57,7 +60,7 @@ export const AROUND_TOWN_SHOPPING: ChoiceLessonDef = {
   progressFn: shoppingLessonProgress,
   scoreStep: (step, text) => scoreShoppingStep(step, text),
   boardForStep: (step) => shoppingBoardForStep(step),
-  afterTeachingComplete: () => afterRoleplay('ee_around_town_shopping'),
+  afterTeachingComplete: (history) => afterRoleplay('ee_around_town_shopping', history),
   clampNearIncorrectToCorrect: true,
   buildOpening(learnerFirstName: string): ScriptTurnResult {
     return buildOpeningFromBoard(
@@ -73,7 +76,7 @@ export const AROUND_TOWN_RESTAURANT: ChoiceLessonDef = {
   progressFn: restaurantLessonProgress,
   scoreStep: (step, text) => scoreRestaurantStep(step, text),
   boardForStep: (step) => restaurantBoardForStep(step),
-  afterTeachingComplete: () => afterRoleplay('ee_around_town_restaurant'),
+  afterTeachingComplete: (history) => afterRoleplay('ee_around_town_restaurant', history),
   clampNearIncorrectToCorrect: true,
   buildOpening(learnerFirstName: string): ScriptTurnResult {
     return buildOpeningFromBoard(
@@ -89,7 +92,7 @@ export const AROUND_TOWN_COFFEE: ChoiceLessonDef = {
   progressFn: coffeeLessonProgress,
   scoreStep: (step, text) => scoreCoffeeStep(step, text),
   boardForStep: (step) => coffeeBoardForStep(step),
-  afterTeachingComplete: () => afterRoleplay('ee_around_town_coffee'),
+  afterTeachingComplete: (history) => afterRoleplay('ee_around_town_coffee', history),
   clampNearIncorrectToCorrect: true,
   buildOpening(learnerFirstName: string): ScriptTurnResult {
     return buildOpeningFromBoard(
@@ -105,7 +108,7 @@ export const AROUND_TOWN_CONVENIENCE: ChoiceLessonDef = {
   progressFn: convenienceLessonProgress,
   scoreStep: (step, text) => scoreConvenienceStep(step, text),
   boardForStep: (step) => convenienceBoardForStep(step),
-  afterTeachingComplete: () => afterRoleplay('ee_around_town_convenience'),
+  afterTeachingComplete: (history) => afterRoleplay('ee_around_town_convenience', history),
   clampNearIncorrectToCorrect: true,
   buildOpening(learnerFirstName: string): ScriptTurnResult {
     return buildOpeningFromBoard(
@@ -121,7 +124,7 @@ export const AROUND_TOWN_TRANSPORT: ChoiceLessonDef = {
   progressFn: transportLessonProgress,
   scoreStep: (step, text) => scoreTransportStep(step, text),
   boardForStep: (step) => transportBoardForStep(step),
-  afterTeachingComplete: () => afterRoleplay('ee_around_town_transport'),
+  afterTeachingComplete: (history) => afterRoleplay('ee_around_town_transport', history),
   clampNearIncorrectToCorrect: true,
   buildOpening(learnerFirstName: string): ScriptTurnResult {
     return buildOpeningFromBoard(
@@ -171,7 +174,7 @@ export const AROUND_TOWN_AIRPORT: ChoiceLessonDef = {
   progressFn: airportLessonProgress,
   scoreStep: (step, text) => scoreAirportStep(step, text),
   boardForStep: (step) => airportBoardForStep(step),
-  afterTeachingComplete: () => afterRoleplay('ee_around_town_airport'),
+  afterTeachingComplete: (history) => afterRoleplay('ee_around_town_airport', history),
   clampNearIncorrectToCorrect: true,
   buildOpening(learnerFirstName: string): ScriptTurnResult {
     return buildOpeningFromBoard(
@@ -187,7 +190,7 @@ export const AROUND_TOWN_PHARMACY: ChoiceLessonDef = {
   progressFn: pharmacyLessonProgress,
   scoreStep: (step, text) => scorePharmacyStep(step, text),
   boardForStep: (step) => pharmacyBoardForStep(step),
-  afterTeachingComplete: () => afterRoleplay('ee_around_town_pharmacy'),
+  afterTeachingComplete: (history) => afterRoleplay('ee_around_town_pharmacy', history),
   clampNearIncorrectToCorrect: true,
   buildOpening(learnerFirstName: string): ScriptTurnResult {
     return buildOpeningFromBoard(

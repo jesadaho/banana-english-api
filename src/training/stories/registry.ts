@@ -56,8 +56,11 @@ import {
   yesterdayOpeningText,
 } from './stories.lessons';
 
-function afterRoleplay(lessonId: string): ScriptTurnResult | null {
-  return roleplayAfterTeaching(lessonId);
+function afterRoleplay(
+  lessonId: string,
+  history: Array<{ speaker: string; roleplayIntro?: unknown; roleplayNpc?: unknown }> = [],
+): ScriptTurnResult | null {
+  return roleplayAfterTeaching(lessonId, history);
 }
 
 function patternDef(params: {
@@ -179,7 +182,7 @@ export const STORIES_LAST_NIGHT: ChoiceLessonDef = {
   progressFn: lastNightLessonProgress,
   scoreStep: (step, text) => scoreLastNightStep(step, text),
   boardForStep: (step) => lastNightBoardForStep(step),
-  afterTeachingComplete: () => afterRoleplay('ee_stories_last_night'),
+  afterTeachingComplete: (history) => afterRoleplay('ee_stories_last_night', history),
   clampNearIncorrectToCorrect: true,
   buildOpening(learnerFirstName: string): ScriptTurnResult {
     return buildOpeningFromBoard(

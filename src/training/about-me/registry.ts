@@ -1,4 +1,8 @@
-import { aroundTownRoleplayIntroSpeech } from '../../lessons/lessons.data';
+import {
+  aroundTownIntroAlreadyShown,
+  aroundTownRoleplayIntroSpeech,
+  scriptedAroundTownRoleplayOpening,
+} from '../../lessons/lessons.data';
 import {
   buildDailyRoutineScriptedReplyFromProgress,
   dailyRoutineBoardForStep,
@@ -236,15 +240,31 @@ export const ABOUT_ME_FAVORITES: ChoiceLessonDef = {
   progressFn: favoritesLessonProgress,
   scoreStep: (step, text) => scoreFavoritesStep(step, text),
   boardForStep: (step) => favoritesBoardForStep(step),
-  afterTeachingComplete(): ScriptTurnResult | null {
+  afterTeachingComplete(history): ScriptTurnResult | null {
     const intro = aroundTownRoleplayIntroSpeech('ee_about_me_favorites', 'thai');
     if (!intro) return null;
+    if (!aroundTownIntroAlreadyShown(history)) {
+      return {
+        textEn: intro.textEn,
+        textTh: '',
+        isLessonComplete: false,
+        expectsUserSpeech: false,
+        roleplayIntro: intro.roleplayIntro,
+      };
+    }
+    if (history.some((t) => t.speaker === 'ai' && t.roleplayNpc != null)) {
+      return null;
+    }
+    const opening = scriptedAroundTownRoleplayOpening('ee_about_me_favorites');
+    if (!opening) return null;
     return {
-      textEn: intro.textEn,
-      textTh: '',
+      textEn: opening.textEn,
+      textTh: opening.textTh,
       isLessonComplete: false,
-      expectsUserSpeech: false,
-      roleplayIntro: intro.roleplayIntro,
+      expectsUserSpeech: opening.expectsUserSpeech,
+      expectedSpeech: opening.expectedSpeech ?? '',
+      roleplayNpc: opening.roleplayNpc,
+      ...(opening.emojiChoice ? { emojiChoice: opening.emojiChoice } : {}),
     };
   },
   buildOpening(learnerFirstName: string): ScriptTurnResult {

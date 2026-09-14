@@ -90,6 +90,7 @@ import {
   LAST_NIGHT_ROLEPLAY_OBJECTIVE,
   AIRPORT_ROLEPLAY_OBJECTIVE,
   PHARMACY_ROLEPLAY_OBJECTIVE,
+  aroundTownIntroAlreadyShown,
   aroundTownRoleplayIntroSpeech,
   forceShoppingRoleplayBridgeIfNeeded,
   forceCoffeeRoleplayBridgeIfNeeded,
@@ -2258,8 +2259,16 @@ export class SessionsController {
         expectsUserSpeech = true;
       }
 
+      const introAlreadyShown = aroundTownIntroAlreadyShown(data.turns);
+
+      // After Start Roleplay, never re-pin the purple intro card.
+      if (introAlreadyShown && roleplayIntro != null && roleplayNpc == null) {
+        roleplayIntro = null;
+      }
+
       // Around Town text bridges often omit roleplayIntro — attach praise + purple card.
       if (
+        !introAlreadyShown &&
         roleplayIntro == null &&
         roleplayNpc == null &&
         !expectsUserSpeech &&
@@ -2278,6 +2287,7 @@ export class SessionsController {
 
       // Pin canonical Roleplay Intro speech + card (2.1–2.5 + Explore City).
       if (
+        !introAlreadyShown &&
         roleplayIntro != null &&
         roleplayNpc == null &&
         !isTaskComplete

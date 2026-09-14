@@ -10216,7 +10216,7 @@ type AroundTownIntroForceResult = {
   isTaskComplete: false;
 };
 
-function aroundTownIntroAlreadyShown(
+export function aroundTownIntroAlreadyShown(
   history: Array<{
     speaker: string;
     roleplayIntro?: unknown;
@@ -13274,6 +13274,42 @@ function forceScriptedAsk(
   };
 }
 
+/** First staff ask after the purple Start Roleplay card. */
+export function scriptedAroundTownRoleplayOpening(lessonId: string): {
+  textEn: string;
+  textTh: string;
+  expectsUserSpeech: boolean;
+  expectedSpeech: string | null;
+  roleplayNpc: { emoji: string; name: string; objective: string };
+  emojiChoice: ScriptedRoleplayAskStep['emojiChoice'] | null;
+} | null {
+  if (lessonId === 'ee_around_town_convenience') {
+    return {
+      textEn: 'Hi!',
+      textTh: 'สวัสดีครับ!',
+      expectsUserSpeech: true,
+      expectedSpeech: '',
+      roleplayNpc: {
+        emoji: '👨',
+        name: 'Local Guide',
+        objective: EXPLORE_CITY_ROLEPLAY_OBJECTIVE,
+      },
+      emojiChoice: null,
+    };
+  }
+  const config = SCRIPTED_AROUND_TOWN_ROLEPLAYS[lessonId];
+  if (!config) return null;
+  const ask = forceScriptedAsk(config, 0);
+  return {
+    textEn: ask.textEn,
+    textTh: ask.textTh ?? '',
+    expectsUserSpeech: ask.expectsUserSpeech,
+    expectedSpeech: ask.expectedSpeech,
+    roleplayNpc: ask.roleplayNpc,
+    emojiChoice: ask.emojiChoice,
+  };
+}
+
 function forceScriptedAckClose(
   config: ScriptedRoleplayConfig,
   history: Array<{ speaker: string; textEn?: string }>,
@@ -13342,12 +13378,16 @@ export function guideScriptedAroundTownRoleplayIfNeeded(
     startIdx < 0 &&
     currentAskIdx >= 0 &&
     !history.some((t) => t.speaker === 'ai' && t.roleplayIntro != null);
+  const hadIntro = history.some(
+    (t) => t.speaker === 'ai' && t.roleplayIntro != null,
+  );
   const inRoleplay =
     current.roleplayNpc != null ||
     offScript ||
     startIdx >= 0 ||
     isScriptedSoftHintLine(current.textEn) ||
-    (currentAskIdx >= 0 && !scriptedBeforeRoleplay);
+    (currentAskIdx >= 0 && !scriptedBeforeRoleplay) ||
+    (hadIntro && current.roleplayIntro == null);
 
   if (!inRoleplay) return null;
 
