@@ -64,6 +64,7 @@ export type FoundationV5ClientNode = {
   poolId?: string;
   simulationId?: string;
   lessonId?: string;
+  legacySimulationIds?: string[];
 };
 
 export type FoundationV5ClientChapter = {
@@ -480,11 +481,14 @@ export class LearnPathService {
         }
         continue;
       }
-      if (
-        node.simulationId &&
-        completedSimulationIds.has(node.simulationId)
-      ) {
-        completed.add(node.id);
+      if (node.simulationId) {
+        const simulationIds = [
+          node.simulationId,
+          ...(node.legacySimulationIds ?? []),
+        ];
+        if (simulationIds.some((id) => completedSimulationIds.has(id))) {
+          completed.add(node.id);
+        }
         continue;
       }
       const candidates = [

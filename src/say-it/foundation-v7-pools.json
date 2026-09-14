@@ -1,43 +1,4 @@
 {
-  "fnd_v7_u02n02": [
-    {
-      "id": "fnd_v7_u02n02_q1",
-      "promptTh": "ขอบคุณ",
-      "answerEn": "Thank you",
-      "acceptedAnswers": [
-        "Thanks"
-      ]
-    },
-    {
-      "id": "fnd_v7_u02n02_q2",
-      "promptTh": "ขอโทษเมื่อทำผิด",
-      "answerEn": "Sorry",
-      "acceptedAnswers": [
-        "I am sorry",
-        "I'm sorry"
-      ]
-    },
-    {
-      "id": "fnd_v7_u02n02_q3",
-      "promptTh": "ขอเรียกความสนใจก่อนพูด",
-      "answerEn": "Excuse me",
-      "acceptedAnswers": []
-    },
-    {
-      "id": "fnd_v7_u02n02_q4",
-      "promptTh": "พูดว่า กรุณา",
-      "answerEn": "Please",
-      "acceptedAnswers": []
-    },
-    {
-      "id": "fnd_v7_u02n02_q5",
-      "promptTh": "กล่าวขอบคุณอีกฝ่ายอีกครั้ง",
-      "answerEn": "Thank you",
-      "acceptedAnswers": [
-        "Thanks"
-      ]
-    }
-  ],
   "fnd_v7_u03n04": [
     {
       "id": "fnd_v7_u03n04_q1",

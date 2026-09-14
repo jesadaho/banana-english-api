@@ -5,7 +5,10 @@ import {
 } from './lesson-teaching';
 import { buildSoftTeachRevealLine } from './choice-board';
 import { FOUNDATION_V6_LESSONS } from './foundation-v6-lessons.data';
-import { FOUNDATION_V7_LESSONS } from './foundation-v7-lessons.data';
+import {
+  FOUNDATION_V7_LESSON_IDS,
+  FOUNDATION_V7_LESSONS,
+} from './foundation-v7-lessons.data';
 import { PHONICS_LESSONS } from '../phonics/phonics-lessons.data';
 
 export type LessonDifficulty = 'beginner' | 'intermediate' | 'advanced';
@@ -9758,6 +9761,7 @@ const FOUNDATION_PROGRESS_LESSON_IDS = new Set([
   'asking_questions',
   'fnd_v2_places_directions',
   'fnd_v2_goodbye_closing',
+  ...FOUNDATION_V7_LESSON_IDS,
 ]);
 
 function normalizeStaffLine(text: string): string {

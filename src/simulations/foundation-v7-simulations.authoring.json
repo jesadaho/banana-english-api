@@ -1,28 +1,5 @@
 [
   {
-    "simulationId": "foundation_v7_u02n04",
-    "nodeId": "v7_u02n04",
-    "titleEn": "Help Me Understand",
-    "scenarioTh": "คุณฟังชื่อเพื่อนไม่ทัน ลองขอให้พูดซ้ำ แล้วขอบคุณ ไม่ต้องทำเป็นว่ามีคำศัพท์ยากที่ไม่เคยเรียน",
-    "openingEn": "Hi! My name is Sam.",
-    "role": "You are Sam. After any repeat/slow/non-understanding request, say 'My name is Sam.' slowly and clearly. Then accept acknowledgement or thanks. Never use mezzanine, concourse, platform or a meaning quiz.",
-    "goals": [
-      {
-        "id": "repair",
-        "th": "ขอให้พูดซ้ำหรือช้าลง",
-        "en": "Request repetition or slower speech",
-        "example": "Please say that again"
-      },
-      {
-        "id": "acknowledge",
-        "th": "ยืนยันว่ารับข้อมูลแล้วหรือขอบคุณ",
-        "en": "Acknowledge the repeated name or thank the speaker",
-        "example": "Thank you"
-      }
-    ],
-    "maxTurns": 4
-  },
-  {
     "simulationId": "foundation_v7_u03n06",
     "nodeId": "v7_u03n06",
     "titleEn": "Meet a Classmate",

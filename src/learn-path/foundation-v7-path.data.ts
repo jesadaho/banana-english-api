@@ -8,6 +8,7 @@ export interface FoundationV7Node {
   type: FoundationV7NodeType; beat: string; learningTarget: string; activity: string;
   examples: string[]; estimatedMinutes: number[]; difficultyAxes: number[];
   contentRef: FoundationV7ContentRef; sayItMode?: 'guided'; clipId?: string;
+  legacySimulationIds?: string[];
   pronunciation?: { sourceCourse: string; sourceLessonId: string; soundTarget: string; mode: string; lexicalPreview: string[] };
 }
 export const FOUNDATION_V7_CATALOG = catalogJson as {
@@ -35,8 +36,10 @@ for (const node of FOUNDATION_V7_NODES) {
     }
   }
 }
-// Frozen Chapter 1 was also completed using the old path node ID.
+// Frozen Chapter 1–2 were also completed using the old path node IDs.
 rewardAliases.set('fnd_v2_say_first_conversation', 'say_it:fnd_v2_first_conversation');
+rewardAliases.set('fnd_v2_say_be_polite', 'say_it:fnd_v2_be_polite');
+rewardAliases.set('fnd_v2_say_survival', 'say_it:fnd_v2_survival');
 export function canonicalFoundationV7RewardId(id: string): string | undefined {
   return rewardAliases.get(id);
 }

@@ -8,6 +8,7 @@ import {
   getAllLessons,
   getLesson,
 } from './lessons.data';
+import { PHONICS_LESSON_IDS } from '../phonics/phonics-lessons.data';
 import {
   LESSON_REWARD_SEEDS,
   LESSON_REWARD_XP,
@@ -163,6 +164,21 @@ export class LessonsService {
         this.resolveStatus(lesson.lessonId, completedIds, currentLessonId),
       ),
     );
+    // Clear English phonics lessons live on Games → Pronunciation, not the
+    // Basics hub. They still complete via training sessions and must appear
+    // here so the course map can check them off and advance.
+    for (const lessonId of PHONICS_LESSON_IDS) {
+      const lesson = getLesson(lessonId);
+      if (!lesson) continue;
+      if (lessons.some((row) => row.lessonId === lessonId)) continue;
+      lessons.push(
+        this.toItemView(
+          lesson,
+          lessons.length + 1,
+          this.resolveStatus(lessonId, completedIds, currentLessonId),
+        ),
+      );
+    }
 
     return {
       bananaCost: LESSON_BANANA_COST,

@@ -46,6 +46,7 @@ export function toFoundationV7ClientChapters(capabilities: readonly FoundationV7
         estimatedMinutes: Math.ceil((node.estimatedMinutes[0] + node.estimatedMinutes[1]) / 2),
         unlockAfterNodeIds: previousPlayableId ? [previousPlayableId] : [],
         ...node.contentRef,
+        ...(node.legacySimulationIds ? { legacySimulationIds: node.legacySimulationIds } : {}),
         sayItMode: node.sayItMode, pronunciation: node.pronunciation,
       };
       // A placeholder remains visible, but cannot block every later lesson.

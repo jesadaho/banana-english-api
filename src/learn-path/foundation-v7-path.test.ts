@@ -21,13 +21,13 @@ const all = () => toFoundationV7ClientChapters(['say_it_guided']).flatMap(ch => 
 const req = { user: { id: 'v7-test', displayName: 'Mia' } } as any;
 
 describe('Foundation V7 catalog and real content', () => {
-  it('has 16 chapters and the approved 107-node mix, without Skill Mix', () => {
+  it('has 16 chapters and the approved 109-node mix, without Skill Mix', () => {
     assert.equal(FOUNDATION_V7_CATALOG.chapters.length, 16);
-    assert.equal(FOUNDATION_V7_NODES.length, 107);
-    assert.equal(new Set(FOUNDATION_V7_NODES.map(n => n.id)).size, 107);
-    assert.deepEqual(FOUNDATION_V7_CATALOG.chapters.map(c => c.items.length), [5,4,6,6,6,8,7,10,9,7,6,8,6,6,8,5]);
-    assert.deepEqual(foundationV7NodeTypeCounts(), { lesson:39, say_it:18, emoji_speak:13, pronunciation:4, describe_it:13, story_bites:4, conversation:16 });
-    assert.deepEqual(FOUNDATION_V7_NODES.map(n => n.globalOrder), Array.from({length:107}, (_, i) => i + 1));
+    assert.equal(FOUNDATION_V7_NODES.length, 109);
+    assert.equal(new Set(FOUNDATION_V7_NODES.map(n => n.id)).size, 109);
+    assert.deepEqual(FOUNDATION_V7_CATALOG.chapters.map(c => c.items.length), [5,6,6,6,6,8,7,10,9,7,6,8,6,6,8,5]);
+    assert.deepEqual(foundationV7NodeTypeCounts(), { lesson:40, say_it:19, emoji_speak:13, pronunciation:4, describe_it:13, story_bites:4, conversation:16 });
+    assert.deepEqual(FOUNDATION_V7_NODES.map(n => n.globalOrder), Array.from({length:109}, (_, i) => i + 1));
     for (let i = 1; i < FOUNDATION_V7_NODES.length; i++) {
       const prev = FOUNDATION_V7_NODES[i - 1];
       const next = FOUNDATION_V7_NODES[i];
@@ -35,11 +35,16 @@ describe('Foundation V7 catalog and real content', () => {
     }
   });
 
-  it('freezes Chapter 1 canonical content and reuses exactly four original pronunciation lessons', () => {
+  it('freezes Chapter 1 and Chapter 2 canonical V2 content and reuses exactly four original pronunciation lessons', () => {
     assert.deepEqual(FOUNDATION_V7_CATALOG.chapters[0].items.map(n => n.contentRef), [
       {lessonId:'greetings'}, {lessonId:'introductions'}, {topicId:'fnd_v2_first_conversation'},
       {lessonId:'yes_no_maybe'}, {simulationId:'foundation_first_conversation'},
     ]);
+    assert.deepEqual(FOUNDATION_V7_CATALOG.chapters[1].items.map(n => n.contentRef), [
+      {lessonId:'polite_expressions'}, {topicId:'fnd_v2_be_polite'}, {lessonId:'asking_for_help'},
+      {lessonId:'fnd_v2_say_it_again'}, {topicId:'fnd_v2_survival'}, {simulationId:'foundation_survival_help'},
+    ]);
+    assert.deepEqual(FOUNDATION_V7_CATALOG.chapters[1].items[5].legacySimulationIds, ['ask_help_easy']);
     const pron = FOUNDATION_V7_NODES.filter(n => n.type === 'pronunciation');
     assert.deepEqual(pron.map(n => n.contentRef.lessonId), ['pron_th_2','pron_end_t_1','pron_final_s_1','pron_stress_1']);
     for (const node of pron) {
@@ -55,11 +60,11 @@ describe('Foundation V7 catalog and real content', () => {
     assert.equal(hasFoundationV7Content({...node, contentRef:{}}), false);
   });
 
-  it('has 90 backend-ready nodes, 87 playable by default, and a capability gate for three Guided packs', () => {
+  it('has 92 backend-ready nodes, 89 playable by default, and a capability gate for three Guided packs', () => {
     const defaults = toFoundationV7ClientChapters().flatMap(c => c.items);
-    assert.equal(defaults.filter(n => n.backendReady).length, 90);
-    assert.equal(defaults.filter(n => !n.comingSoon).length, 87);
-    assert.equal(all().filter(n => !n.comingSoon).length, 90);
+    assert.equal(defaults.filter(n => n.backendReady).length, 92);
+    assert.equal(defaults.filter(n => !n.comingSoon).length, 89);
+    assert.equal(all().filter(n => !n.comingSoon).length, 92);
     assert.equal(defaults.filter(n => n.unavailableReason === 'client_capability_required').length, 3);
     assert.equal(defaults.filter(n => n.unavailableReason === 'missing_content').length, 0);
     const placeholders = all().filter(n => n.comingSoon);
@@ -84,8 +89,8 @@ describe('Foundation V7 catalog and real content', () => {
     assert.ok(getAllSimulations().every(s => !s.simulationId.startsWith('foundation_v7_')));
   });
 
-  it('registers 36 authored lesson flows with model, speaking practice, transfer and completion', () => {
-    assert.equal(FOUNDATION_V7_LESSONS.length, 36);
+  it('registers 34 authored lesson flows with model, speaking practice, transfer and completion', () => {
+    assert.equal(FOUNDATION_V7_LESSONS.length, 34);
     for (const [id, spec] of Object.entries(lessonSpecs)) {
       const lesson = getLesson(id)!;
       assert.ok(lesson, id);
@@ -104,7 +109,7 @@ describe('Foundation V7 catalog and real content', () => {
     }
   });
 
-  it('serves all 18 Say It topics through the real service with five unique question IDs', () => {
+  it('serves all 19 Say It topics through the real service with five unique question IDs', () => {
     const service = new SayItService();
     for (const node of FOUNDATION_V7_NODES.filter(n => n.type === 'say_it')) {
       const id = node.contentRef.topicId!;
@@ -147,8 +152,8 @@ describe('Foundation V7 catalog and real content', () => {
     }
   });
 
-  it('registers 15 conversations and closes at the turn cap without inventing completed goals', () => {
-    assert.equal(FOUNDATION_V7_SIMULATIONS.length, 15);
+  it('registers 14 authored conversations and closes at the turn cap without inventing completed goals', () => {
+    assert.equal(FOUNDATION_V7_SIMULATIONS.length, 14);
     for (const config of FOUNDATION_V7_SIMULATIONS) {
       assert.equal(getSimulation(config.simulationId), config);
       assert.ok(config.foundationMission && config.scenarioTh);
@@ -179,6 +184,13 @@ describe('Foundation V7 progress and completion contracts', () => {
     const progressed = await pathService(['greetings','introductions','yes_no_maybe'], ['fnd_v2_say_first_conversation'], ['foundation_first_conversation']).getFoundationV7('user');
     assert.equal(progressed.progress.completedCount, 5);
     assert.equal(progressed.progress.currentNodeId, 'v7_u02n01');
+    const afterCh2 = await pathService(
+      ['greetings','introductions','yes_no_maybe','polite_expressions','asking_for_help','fnd_v2_say_it_again'],
+      ['fnd_v2_say_first_conversation','fnd_v2_say_be_polite','fnd_v2_say_survival'],
+      ['foundation_first_conversation','foundation_survival_help'],
+    ).getFoundationV7('user');
+    assert.equal(afterCh2.progress.completedCount, 11);
+    assert.equal(afterCh2.progress.currentNodeId, 'v7_u03n01');
   });
 
   it('recognizes canonical progress and ignores completion claims for Coming Soon content', async () => {
@@ -189,18 +201,18 @@ describe('Foundation V7 progress and completion contracts', () => {
     mini.push(...all().filter(n => n.comingSoon).map(n => n.id));
     const service = pathService(lessons, mini, simulations);
     const full = await service.getFoundationV7('user', ['say_it_guided']);
-    assert.equal(full.progress.completedCount, 90);
-    assert.equal(full.progress.totalCount, 90);
+    assert.equal(full.progress.completedCount, 92);
+    assert.equal(full.progress.totalCount, 92);
     assert.equal(full.progress.currentNodeId, null);
     const legacyClient = await service.getFoundationV7('user');
-    assert.equal(legacyClient.progress.completedCount, 87);
-    assert.equal(legacyClient.progress.totalCount, 87);
+    assert.equal(legacyClient.progress.completedCount, 89);
+    assert.equal(legacyClient.progress.totalCount, 89);
     assert.equal(legacyClient.progress.currentNodeId, null);
   });
 
   it('rejects unknown capabilities rather than silently enabling unsupported mechanics', async () => {
     const controller = new LearnPathController(pathService());
-    assert.equal((await controller.foundationV7(req, 'say_it_guided')).summary.playableCount, 90);
+    assert.equal((await controller.foundationV7(req, 'say_it_guided')).summary.playableCount, 92);
     await assert.rejects(controller.foundationV7(req, 'story_bites'));
     await assert.rejects(controller.foundationV7(req, ['say_it_guided'] as any));
   });
@@ -216,6 +228,8 @@ describe('Foundation V7 progress and completion contracts', () => {
     }
     assert.equal(canonicalFoundationV7RewardId('fnd_v7_unknown'), undefined);
     assert.ok(foundationV7RewardAliases('v7_u01n03').includes('fnd_v2_say_first_conversation'));
+    assert.ok(foundationV7RewardAliases('v7_u02n02').includes('fnd_v2_say_be_polite'));
+    assert.ok(foundationV7RewardAliases('v7_u02n05').includes('fnd_v2_say_survival'));
   });
 
   it('allows V7 Say It completion and keeps Foundation start pricing unchanged', async () => {
@@ -227,7 +241,7 @@ describe('Foundation V7 progress and completion contracts', () => {
       const reward = await controller.completeTopic(req, node.contentRef.topicId!);
       assert.equal((reward as any).gameId, `say_it:${node.contentRef.topicId}`);
     }
-    assert.equal(calls.length, 18);
+    assert.equal(calls.length, 19);
     await assert.rejects(controller.completeTopic(req, 'fnd_v7_unknown'));
   });
 
