@@ -63,6 +63,25 @@ describe('Around Town roleplay after teaching', () => {
     assert.equal(reply?.expectsUserSpeech, true);
   });
 
+  it('coffee — Start Roleplay still opens barista when intro field is missing', () => {
+    const turns = [
+      ...coffeeTeachingTurns(),
+      {
+        speaker: 'ai',
+        textEn:
+          'ถูกต้องครับ! ต่อไปครูพี่บีจะเป็นบาริสต้านะครับ ☕\n\nพร้อมแล้วแตะเริ่ม Roleplay ได้เลย!',
+      },
+      { speaker: 'user', textEn: TAP_TO_CONTINUE_SENTINEL },
+    ];
+    const reply = buildChoiceLessonAfterUser(AROUND_TOWN_COFFEE, {
+      turns,
+      learnerFirstName: 'Nana',
+    });
+    assert.equal(reply?.deferToAi, undefined);
+    assert.equal(reply?.roleplayNpc?.name, 'Barista');
+    assert.equal(reply?.textEn, 'What can I get for you?');
+  });
+
   it('coffee — mid-roleplay does not rebuild the intro card', () => {
     const after = roleplayAfterTeaching('ee_around_town_coffee', [
       {

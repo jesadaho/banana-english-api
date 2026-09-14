@@ -849,11 +849,11 @@ export function buildChoiceLessonAfterUser(
     return next ? { ...next, assessmentTier: 'correct' as const } : null;
   }
 
-  const lastAi = [...priorTurns].reverse().find((t) => t.speaker === 'ai');
+  const teachingDone = def.progressFn(priorTurns) >= def.maxStep;
   if (
     userText === TAP_TO_CONTINUE_SENTINEL &&
     def.afterTeachingComplete &&
-    lastAi?.roleplayIntro != null
+    teachingDone
   ) {
     const next = def.afterTeachingComplete(turns, learnerFirstName);
     if (next) return { ...next, assessmentTier: 'correct' as const };

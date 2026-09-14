@@ -10219,6 +10219,7 @@ type AroundTownIntroForceResult = {
 export function aroundTownIntroAlreadyShown(
   history: Array<{
     speaker: string;
+    textEn?: string;
     roleplayIntro?: unknown;
     roleplayNpc?: unknown;
   }>,
@@ -10226,7 +10227,9 @@ export function aroundTownIntroAlreadyShown(
   return history.some(
     (t) =>
       t.speaker === 'ai' &&
-      (t.roleplayIntro != null || t.roleplayNpc != null),
+      (t.roleplayIntro != null ||
+        t.roleplayNpc != null ||
+        looksLikeAroundTownRoleplayBridge(t.textEn ?? '')),
   );
 }
 
