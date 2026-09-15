@@ -28,7 +28,7 @@ const reuseTask = (text: string, fallback: string, successText?: string): V7Teac
 
 export const V7_LEGACY_FLOWS: Record<string, V7TeachingStep[]> = {
   fnd_v7_he_she_it_we_they: [
-    task('Ben เป็นเพื่อนร่วมชั้นของคุณครับ 👨 ถ้าพูดถึงผู้ชายหนึ่งคน ใช้ he ลองพูดว่า “He is my classmate.”', 'He is my classmate.', [], '', false,
+    task('วันนี้ในห้องมี Ben, Anna, กระเป๋าหนึ่งใบ และเพื่อนอีกหลายคนครับ เรียกชื่อทุกครั้งคงเหนื่อยน่าดู 😅 เราจะฝึกใช้คำสั้น ๆ แทนคน สิ่งของ และกลุ่มกัน Ben เป็นเพื่อนร่วมชั้นของคุณครับ 👨 ถ้าพูดถึงผู้ชายหนึ่งคน ใช้ he ลองพูดว่า “He is my classmate.”', 'He is my classmate.', [], '', false,
       'เยี่ยมมากครับ “He is my classmate.” แปลว่า “เขาเป็นเพื่อนร่วมชั้นของฉัน” ต่อไป '),
     choiceTask('Anna เป็นครูของ Ben ครับ 👩‍🏫 Anna เป็นผู้หญิงหนึ่งคน ควรเริ่มด้วยคำไหนครับ?', 'She is his teacher.', '... is his teacher.', [
       { emoji: '👨', label: 'He', speak: 'He is his teacher.' },
@@ -52,7 +52,7 @@ export const V7_LEGACY_FLOWS: Record<string, V7TeachingStep[]> = {
     finish('จบบทแล้วครับ วันนี้คุณใช้ he, she, it, we และ they ตามคน สิ่งของ และกลุ่มในสถานการณ์ครับ'),
   ],
   fnd_v7_my_family: [
-    task('mother แปลว่าแม่ครับ 👩 ลองพูดคำว่า “mother”', 'mother', [], '', false,
+    task('Max เปิดอัลบั้มครอบครัวให้เราดูครับ 👨‍👩‍👧 วันนี้เราจะเรียนคำเรียกสมาชิกครอบครัวและฝึกแนะนำพวกเขา คนแรกคือแม่ของ Max คำว่า “แม่” คือ mother ลองพูดคำว่า “mother”', 'mother', [], '', false,
       'ดีครับ mother แปลว่าแม่ ต่อไปเป็นคำว่าพ่อครับ '),
     choiceTask('father แปลว่าพ่อครับ 👨 ถ้าคำที่ต้องการคือ “พ่อ” เลือกคำแล้วพูดครับ', 'father', '', [
       { emoji: '👩', label: 'mother', speak: 'mother' }, { emoji: '👨', label: 'father', speak: 'father' },
@@ -77,7 +77,7 @@ export const V7_LEGACY_FLOWS: Record<string, V7TeachingStep[]> = {
     finish('จบบทแล้วครับ วันนี้คุณได้รู้จัก mother, father, brother และ sister และใช้ This is my... เพื่อแนะนำสมาชิกครอบครัวครับ'),
   ],
   fnd_v7_what_or_who: [
-    task('คุณเจอของชิ้นหนึ่งแต่ไม่รู้ว่าคืออะไรครับ 📦❓ ใช้ what ถามสิ่งของ ลองพูดว่า “What is this?”', 'What is this?', [], '', false,
+    task('คุณเจอคนไม่รู้จักหนึ่งคนกับกล่องปริศนาหนึ่งใบครับ ถามสลับกันอาจฟังแปลกนิดหน่อย 😅 วันนี้เราจะฝึกใช้ what ถามสิ่งของ และ who ถามคน เริ่มจากของชิ้นนี้ครับ 📦❓ ลองพูดว่า “What is this?”', 'What is this?', [], '', false,
       'ดีมากครับ “What is this?” ใช้ถามว่าสิ่งนี้คืออะไร ต่อไปลองเลือกคำถามจากสถานการณ์ครับ '),
     choiceTask('มีของวางอยู่บนโต๊ะครับ ☕❓ คุณไม่รู้ว่ามันคืออะไร ควรเริ่มด้วย What หรือ Who?', 'What is this?', '... is this?', [
       { emoji: '📦', label: 'What', speak: 'What is this?' },
@@ -94,7 +94,7 @@ export const V7_LEGACY_FLOWS: Record<string, V7TeachingStep[]> = {
     finish('จบบทแล้วครับ วันนี้คุณใช้ what ถามสิ่งของ และ who ถามคนครับ'),
   ],
   fnd_v7_where_when_how_much_and_how_many: [
-    task('Max บอกว่า “เจอกันที่ตลาดนะ” แต่คุณไม่รู้ว่าตลาดอยู่ที่ไหนครับ 🛍️📍 ใช้ where ถามสถานที่ ลองพูดว่า “Where is the market?”', 'Where is the market?', [], '', false,
+    task('Max บอกแค่ว่า “เจอกันที่ตลาดนะ” แต่เรายังไม่รู้ว่าที่ไหนหรือเมื่อไรครับ 😅 วันนี้เราจะฝึกถามสถานที่ เวลา ราคา และจำนวนให้ตรงกับข้อมูลที่ต้องการ เริ่มจากถามสถานที่ด้วย where ครับ 🛍️📍 ลองพูดว่า “Where is the market?”', 'Where is the market?', [], '', false,
       'ดีครับ Max ตอบว่า “Near the station.” ตอนนี้รู้สถานที่แล้ว แต่ยังไม่รู้วันครับ '),
     task('คุณอยากรู้ว่าจะไปเมื่อไรครับ 📅❓ ใช้ when ถามเวลา ลองพูดว่า “When do we go?”', 'When do we go?', [], '', false,
       'เยี่ยมครับ Max ตอบว่า “On Saturday.” เมื่อไปถึงตลาด คุณเจอของที่ไม่มีป้ายราคาครับ '),
@@ -116,7 +116,7 @@ export const V7_LEGACY_FLOWS: Record<string, V7TeachingStep[]> = {
     finish('จบบทแล้วครับ วันนี้คุณใช้ where ถามสถานที่ when ถามเวลา how much ถามราคา และ how many ถามจำนวนครับ'),
   ],
   fnd_v7_do_does_every_day: [
-    task('ถ้าอยากถาม Teacher B ว่า “คุณทำงานทุกวันไหม” ใช้ Do you... ลองพูดว่า “Do you work every day?”', 'Do you work every day?', [], '', false,
+    task('Teacher B บอกว่าทำงานทุกวันครับ…เราจะเชื่อเลยหรือถามยืนยันดีนะ 😄 วันนี้เราจะฝึกถามกิจวัตรของคนตรงหน้าและบุคคลอื่น ถ้าอยากถาม Teacher B ว่า “คุณทำงานทุกวันไหม” ใช้ Do you... ลองพูดว่า “Do you work every day?”', 'Do you work every day?', [], '', false,
       'ดีครับ Teacher B ตอบว่า “Yes, I do.” ต่อไปเลือกกิจกรรมที่คุณอยากถามเองครับ '),
     choiceTask('เลือกหนึ่งกิจกรรมที่คุณอยากถาม Teacher B ครับ ทุกคำตอบใช้ได้', 'Do you work every day?', 'Do you ... every day?', [
       { emoji: '💼', label: 'work', speak: 'Do you work every day?' },
@@ -142,7 +142,7 @@ export const V7_LEGACY_FLOWS: Record<string, V7TeachingStep[]> = {
     finish('จบบทแล้วครับ เวลาถามคนตรงหน้าใช้ Do you...? และเวลาถามถึงผู้ชายหรือผู้หญิงอีกคนใช้ Does he...? หรือ Does she...? ครับ'),
   ],
   fnd_v7_go_straight_turn_left: [
-    task('Max ออกจากคาเฟ่และกำลังหาสถานีครับ ☕➡️🚉 ขั้นแรกต้องเดินตรงไป ลองพูดว่า “Go straight.”', 'Go straight.', [], '', false,
+    task('Max ออกจากคาเฟ่แล้วหาสถานีไม่เจอครับ ถ้าบอกผิดทาง กาแฟแก้วต่อไปอาจเย็นพอดี ☕😅 วันนี้เราจะฝึกบอกทางหนึ่งถึงสองขั้น ขั้นแรกต้องเดินตรงไป ลองพูดว่า “Go straight.”', 'Go straight.', [], '', false,
       'ดีครับ Max เดินตรงมาถึงทางแยกแล้ว สถานีอยู่ทางซ้ายครับ '),
     task('เมื่อสถานีอยู่ทางซ้าย ↩️ บอกว่า “Turn left.” ลองพูดตามครับ', 'Turn left.', [], '', false,
       'เยี่ยมครับ Max เลี้ยวซ้ายแล้วมาถึงอีกทางแยกครับ '),
@@ -163,7 +163,7 @@ export const V7_LEGACY_FLOWS: Record<string, V7TeachingStep[]> = {
     finish('จบบทแล้วครับ วันนี้คุณใช้ Go straight, Turn left, Turn right และเชื่อมคำสั่งสองขั้นด้วย then ครับ'),
   ],
   fnd_v7_please_and_thank_you: [
-    task('วันนี้ฝึกคำสุภาพในชีวิตประจำวันครับ please ใช้กับคำขอ เช่น Water, please. คือขอน้ำครับ ลองฝึกคำว่า Please', 'Please'),
+    task('สวัสดีครับ 👋 วันนี้เราจะฝึกคำสุภาพที่ใช้ได้ทุกวัน ถ้าต้องการน้ำ ลองขออย่างสุภาพว่า “Water, please.”', 'Water, please.'),
     task('เมื่อมีคนช่วยเรา ใช้ Thank you แปลว่าขอบคุณครับ ลองพูด Thank you', 'Thank you'),
     task('คุณถือของหนัก เพื่อนช่วยเปิดประตูให้แล้วครับ คุณจะพูดอะไรกับเพื่อน', 'Thank you', ['Please', 'Thank you']),
     task('Sorry ใช้ขอโทษเมื่อเราทำผิด เช่นเดินชนคนโดยไม่ตั้งใจครับ ลองพูด Sorry', 'Sorry'),
@@ -173,7 +173,7 @@ export const V7_LEGACY_FLOWS: Record<string, V7TeachingStep[]> = {
     finish('จบบทแล้วครับ วันนี้ฝึก Please สำหรับคำขอ Thank you เมื่อได้รับความช่วยเหลือ Sorry เมื่อทำผิด และ Excuse me ก่อนเริ่มทักครับ'),
   ],
   fnd_v7_say_that_again: [
-    task('ฟังไม่ทัน ไม่ต้องเดาครับ ขอให้พูดอีกครั้งด้วย Please say that again ลองพูดตามครับ', 'Please say that again'),
+    task('เคยฟังภาษาอังกฤษแล้วไม่ทันไหมครับ? วันนี้เราจะฝึกขอให้อีกฝ่ายพูดซ้ำ พูดช้าลง และบอกเมื่อยังไม่เข้าใจ ไม่ต้องเดาครับ เริ่มด้วย “Please say that again.” ลองพูดตามครับ', 'Please say that again'),
     task('ถ้าอีกฝ่ายพูดเร็ว ขอให้ช้าลงด้วย Please speak slowly ครับ ลองพูดตาม', 'Please speak slowly'),
     task('อีกฝ่ายกำลังพูดเร็วมาก คุณอยากให้เขาลดความเร็ว จะขออย่างไรครับ', 'Please speak slowly', ['Please say that again', 'Please speak slowly']),
     task('ถ้ายังไม่เข้าใจ บอกได้ว่า I do not understand ครับ ลองพูดตาม', 'I do not understand'),
@@ -182,7 +182,7 @@ export const V7_LEGACY_FLOWS: Record<string, V7TeachingStep[]> = {
     finish('ครูพูดซ้ำว่า My name is Teacher B. ชื่อของครูคือ Teacher B ครับ จบบทแล้วครับ คุณได้ฝึกขอซ้ำ ขอช้า และบอกว่าไม่เข้าใจ เวลาเจอสถานการณ์นี้ใช้วลีเหล่านี้ช่วยตัวเองได้ครับ'),
   ],
   fnd_v7_prices_and_paying: [
-    task('วันนี้ลองซื้อตั๋วหนึ่งใบครับ ticket คือตั๋ว ขออย่างสุภาพว่า One ticket, please ลองพูดตามครับ', 'One ticket, please'),
+    task('สวัสดีครับ วันนี้เราจะฝึกซื้อตั๋ว ถามราคา และจ่ายเงินเป็นภาษาอังกฤษครับ 🎫 เริ่มด้วยการขอตั๋วหนึ่งใบอย่างสุภาพว่า “One ticket, please.” ลองพูดตามครับ', 'One ticket, please'),
     task('อยากรู้ราคา ถามว่า How much is it? แปลว่าราคาเท่าไหร่ครับ ลองพูดตาม', 'How much is it?'),
     task('baht คือบาทครับ Thirty baht คือสามสิบบาท ถ้าราคาสี่สิบบาท พูดเป็นประโยคว่า It is forty baht ลองพูดประโยคนี้ครับ', 'It is forty baht'),
     task('ลองอ่านป้ายราคาใหม่ครับ 🏷️ 30 บาท บอกราคาโดยเริ่มด้วย It is … baht ครับ', 'It is thirty baht', ['thirty baht', 'forty baht'], 'It is '),
@@ -193,14 +193,14 @@ export const V7_LEGACY_FLOWS: Record<string, V7TeachingStep[]> = {
     finish('พนักงานรับเงินและส่งตั๋วให้ พร้อมพูด Thank you. จบบทแล้วครับ วันนี้ฝึกขอตั๋ว ถามและฟังราคาเป็นบาท แล้วพูดตอนยื่นเงินครับ'),
   ],
   fnd_v7_numbers_0_10: [
-    task('วันนี้ฝึกอ่านเลขที่เจอในชีวิตประจำวันครับ ศูนย์ถึงห้าคือ zero, one, two, three, four, five ลองนับแอปเปิลแล้วพูดจำนวนเป็นอังกฤษครับ 🍎🍎🍎🍎', 'four', ['zero', 'three', 'four', 'five']),
+    task('สวัสดีครับ 👋 วันนี้เราจะฝึกนับเลขเป็นภาษาอังกฤษกัน ศูนย์ถึงห้าคือ zero, one, two, three, four, five ลองนับแอปเปิลแล้วพูดจำนวนเป็นภาษาอังกฤษครับ 🍎🍎🍎🍎', 'four', ['zero', 'three', 'four', 'five']),
     task('ต่อไปหกถึงสิบครับ six, seven, eight, nine, ten บัตรคิวของคุณคือเลข 7 🎫 ลองอ่านเลขคิวเป็นอังกฤษครับ', 'seven', ['six', 'seven', 'nine', 'ten']),
     task('ถึงห้องแล้วครับ 🚪 8 ห้องนี้เลขอะไร พูดเป็นอังกฤษครับ', 'eight', ['six', 'eight', 'nine', 'ten']),
     task('เลขศูนย์ถึงสิบ คุณชอบเลขไหนครับ เลือกเลขที่ชอบแล้วพูดได้เลย ไม่จำเป็นต้องเลือกจากตัวช่วยครับ', 'three', ['three', 'five', 'eight', 'ten'], '', true),
     finish('จบบทแล้วครับ วันนี้คุณได้ฝึกนับของ อ่านเลขคิว และเลขห้องครับ'),
   ],
   fnd_v7_eleven_to_twenty: [
-    task('สิบเอ็ดคือ eleven สิบสองคือ twelve ครับ ลองพูด twelve', 'twelve'),
+    task('เลขเริ่มยาวขึ้นแล้วครับ แต่ยังไม่ต้องหยิบเครื่องคิดเลข 😄 วันนี้เราจะฝึกเลข 11–20 และนำไปใช้บอกอายุ เริ่มจากเลข 12 คือ twelve ลองพูด “twelve” ครับ', 'twelve'),
     task('สิบสาม thirteen สิบสี่ fourteen สิบห้า fifteen ครับ ลงท้ายด้วย teen ลองอ่านเลขห้อง 🚪 14 ครับ', 'fourteen', ['thirteen', 'fourteen', 'fifteen']),
     task('อีกห้องหนึ่งคือ 🚪 13 ลองอ่านเองครับ', 'thirteen', ['twelve', 'thirteen', 'fourteen']),
     task('สิบหกถึงสิบเก้าคือ sixteen, seventeen, eighteen, nineteen ครับ บัตรคิว 🎫 18 อ่านว่าอะไรครับ', 'eighteen', ['sixteen', 'seventeen', 'eighteen', 'nineteen']),
@@ -210,7 +210,7 @@ export const V7_LEGACY_FLOWS: Record<string, V7TeachingStep[]> = {
     finish('จบบทแล้วครับ วันนี้ฝึกอ่านเลขสิบเอ็ดถึงยี่สิบ และนำไปบอกอายุครับ'),
   ],
   fnd_v7_twenty_to_one_hundred: [
-    task('ยี่สิบคือ twenty สามสิบ thirty สี่สิบ forty ห้าสิบ fifty ลองพูด forty ครับ', 'forty'),
+    task('รถเมล์กำลังมาแล้วครับ ถ้าอ่านเลขผิดอาจได้เที่ยวกรุงเทพฯ แบบไม่ได้ตั้งใจ 🚌😅 วันนี้เราจะฝึกอ่านหลักสิบจากราคา เลขรถเมล์ และเลขห้อง เริ่มจากยี่สิบ twenty สามสิบ thirty สี่สิบ forty และห้าสิบ fifty ลองพูด “forty” ครับ', 'forty'),
     task('ป้ายราคา 🏷️ 50 บาท ลองอ่านเฉพาะตัวเลขเป็นอังกฤษครับ', 'fifty', ['thirty', 'forty', 'fifty']),
     task('หกสิบถึงหนึ่งร้อยคือ sixty, seventy, eighty, ninety, one hundred ครับ ลองพูด eighty', 'eighty'),
     task('รถเมล์ 🚌 70 มาแล้วครับ ลองอ่านเลขสายเป็นอังกฤษ', 'seventy', ['sixty', 'seventy', 'eighty', 'ninety']),
@@ -219,7 +219,7 @@ export const V7_LEGACY_FLOWS: Record<string, V7TeachingStep[]> = {
     finish('จบบทแล้วครับ วันนี้ฝึกอ่านราคา เลขรถเมล์ และประกอบเลขสองหลักครับ'),
   ],
   fnd_v7_i_like_i_dont_like: [
-    task('coffee คือกาแฟครับ ฉันชอบกาแฟพูดว่า I like coffee. ลองพูดตามครับ', 'I like coffee.'),
+    task('Teacher B ชอบกาแฟครับ แต่กล้วยน่าจะยังเป็นอันดับหนึ่ง ☕🍌 วันนี้เราจะฝึกบอกสิ่งที่ชอบและไม่ชอบ ถ้าจะบอกว่า “ฉันชอบกาแฟ” พูดว่า “I like coffee.” ลองพูดตามครับ', 'I like coffee.'),
     task('tea คือชาครับ ถ้าคุณชอบชา จะพูดว่าอย่างไร ใช้ I like … ครับ', 'I like tea', ['tea', 'coffee'], 'I like '),
     task('ถ้าไม่ชอบ เติม don’t ครับ ฉันไม่ชอบชาคือ I don’t like tea. ลองพูดตามครับ', 'I don’t like tea.'),
     task('rice คือข้าว 🍚 และ water คือน้ำ 💧 ครับ ถ้าคุณชอบข้าว จะพูดว่าอย่างไร', 'I like rice', ['rice', 'water'], 'I like '),

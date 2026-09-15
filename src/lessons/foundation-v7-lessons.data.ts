@@ -34,6 +34,34 @@ const APPLICATION_STEMS: Record<string, string> = {
   fnd_v7_there_is_there_are: 'There is...', fnd_v7_in_on_under_next_to: 'The bag is...',
 };
 
+// Authored cold opens keep the existing first turn purposeful and consistent.
+const FOUNDATION_V7_OPENINGS: Record<string, string> = {
+  fnd_v7_i_am_you_are: 'สวัสดีครับ ก่อนเริ่มวันนี้เป็นอย่างไรบ้าง—พร้อม เหนื่อย หรือหิวครับ? วันนี้เราจะฝึกบอกความรู้สึกของตัวเองและอีกฝ่ายด้วย I am... และ You are...',
+  fnd_v7_not_and_are_you: 'Teacher B เดาว่าคุณเหนื่อยครับ…แต่ถ้าเดาผิด เราต้องแก้ข่าวกันหน่อย 😄 วันนี้เราจะฝึกบอกว่า “ไม่ใช่” และถามว่าอีกฝ่ายเป็นอย่างไร',
+  fnd_v7_one_or_more: 'Max ขอหนังสือหนึ่งเล่ม แต่พนักงานกำลังจะยกมาทั้งกองครับ 📚😳 วันนี้เราจะฝึกบอกให้ชัดว่าต้องการหนึ่งชิ้นหรือหลายชิ้น',
+  fnd_v7_this_is_that_is: 'บนโต๊ะมีหนังสืออยู่ใกล้หนึ่งเล่ม และกระเป๋าอยู่อีกฝั่งหนึ่งครับ วันนี้เราจะฝึกชี้ของใกล้และไกลด้วย this และ that',
+  fnd_v7_colours_and_size: 'มีกระเป๋าหลายใบครับ ถ้าบอกแค่ว่า “เอาใบนั้น” มีโอกาสได้ผิดใบสูงมาก 😅 วันนี้เราจะใช้สีและขนาดช่วยบอกให้ชัดขึ้น',
+  fnd_v7_these_and_those: 'หนังสือรอบนี้ไม่ได้มาเล่มเดียวครับ มากันเป็นแก๊งเลย 📚 วันนี้เราจะพูดถึงของหลายชิ้นที่อยู่ใกล้และไกลด้วย these และ those',
+  fnd_v7_my_and_your: 'โทรศัพท์สองเครื่องวางอยู่ติดกันครับ หยิบผิดขึ้นมาเรื่องอาจยาวกว่าบทเรียน 😅 วันนี้เราจะฝึกบอกว่าอะไรเป็นของฉันและอะไรเป็นของคุณ',
+  fnd_v7_his_her_our_their: 'บนโต๊ะมีหนังสือของ Ben โทรศัพท์ของ Anna และกุญแจของเพื่อนอีกกลุ่มครับ วันนี้เราจะฝึกบอกว่าแต่ละอย่างเป็นของใคร แล้วช่วยคืนของให้ถูกเจ้าของกัน',
+  fnd_v7_have_and_has: 'Teacher B อยากรู้ว่าแต่ละคนมีอะไรบ้างครับ—ยังไม่ถึงขั้นขอตรวจกระเป๋านะ 😄 วันนี้เราจะฝึกบอกว่าเราและคนอื่นมีอะไรด้วย have และ has',
+  fnd_v7_what_time_is_it: 'เพื่อนบอกว่าเจอกันตอนแปด แต่ถ้าเราไปถึงตอนเก้า ภาษาอังกฤษอาจไม่ใช่ปัญหาเดียวแล้วครับ 😅 วันนี้เราจะฝึกถามและบอกเวลาให้ชัดเจน',
+  fnd_v7_days_and_simple_plans: 'Max อยากนัดวันฝึก แต่คนหนึ่งจำว่าวันจันทร์ อีกคนจำว่าวันศุกร์ครับ วันนี้เราจะฝึกชื่อวันและใช้วันวางแผนง่าย ๆ ให้ตรงกัน',
+  fnd_v7_do_you_like_it: 'เราบอกสิ่งที่ตัวเองชอบได้แล้ว ต่อไปถึงเวลาสืบเรื่องคนอื่นบ้างครับ 🕵️ วันนี้เราจะฝึกถามและตอบว่าใครชอบอะไร',
+  fnd_v7_want_need_and_please: 'อยากได้กาแฟกับต้องการความช่วยเหลือฟังคล้ายกัน แต่ความเร่งด่วนคนละเรื่องเลยครับ 😄 วันนี้เราจะแยก want กับ need และฝึกขออย่างสุภาพ',
+  fnd_v7_i_can: 'Teacher B บอกว่าทำอาหารได้ครับ ส่วนรสชาติเป็นอีกเรื่องหนึ่ง 👨‍🍳😅 วันนี้เราจะฝึกบอกสิ่งที่ตัวเองทำได้ด้วย can',
+  fnd_v7_cant_and_can_you: 'ทำไม่ได้ไม่ใช่เรื่องน่าอายครับ—อย่างน้อยบอกก่อนลงสระก็ดีกว่า 🏊 วันนี้เราจะฝึกบอกสิ่งที่ทำไม่ได้และถามความสามารถของอีกฝ่าย',
+  fnd_v7_my_day: 'สวัสดีครับ ปกติตื่นกี่โมงครับ หรือกดเลื่อนปลุกจนโทรศัพท์ยอมแพ้? ⏰😴 วันนี้เราจะฝึกเล่ากิจวัตรประจำวันของตัวเอง',
+  fnd_v7_her_day_his_day: 'เราเล่าเรื่องตัวเองได้แล้ว ต่อไปลองดูหนึ่งวันของ Ben กับ Anna กันครับ วันนี้เราจะฝึกเล่ากิจวัตรของคนอื่นด้วย he และ she',
+  fnd_v7_happening_now: 'Max อ่านหนังสือเป็นประจำ แต่ตอนนี้เขากำลังกินข้าวครับ—คนละเวลาก็ใช้คนละรูปประโยค วันนี้เราจะพูดถึงสิ่งที่กำลังเกิดขึ้นตอนนี้',
+  fnd_v7_are_they_working: 'ทุกคนดูยุ่งมากครับ แต่คนหนึ่งอาจทำงาน ส่วนอีกคนอาจกำลังกินอยู่ วันนี้เราจะฝึกถามและตอบว่าคนอื่นกำลังทำอะไรอยู่ตอนนี้',
+  fnd_v7_there_is_there_are: 'Teacher B เพิ่งเข้าห้องใหม่และอยากรู้ว่าข้างในมีอะไรบ้างครับ วันนี้เราจะฝึกบอกว่ามีสิ่งหนึ่งหรือหลายสิ่งอยู่ในห้อง',
+  fnd_v7_in_on_under_next_to: 'กุญแจหายอีกแล้วครับ ข่าวดีคือยังอยู่ในห้อง ข่าวร้ายคือคำว่า “อยู่ในห้อง” ยังกว้างไป 😅 วันนี้เราจะฝึกบอกตำแหน่งให้ละเอียดขึ้น',
+  // These lessons are currently off the path, but remain buildable for content tooling.
+  fnd_v7_letter_names_a_m: 'วันนี้เราจะฝึกชื่อเรียกตัวอักษร A ถึง M เพื่อใช้ฟังและสะกดคำภาษาอังกฤษครับ',
+  fnd_v7_letter_names_n_z: 'วันนี้เราจะฝึกชื่อเรียกตัวอักษร N ถึง Z แล้วนำไปใช้ขอและฟังการสะกดคำครับ',
+};
+
 import { V7_LEGACY_FLOWS } from './foundation-v7-legacy-flows';
 export interface V7TeachingStep {
   kind: 'welcome' | 'model_repeat' | 'model_group' | 'repeat' | 'choice' | 'guided_use' | 'recall' | 'complete';
@@ -52,7 +80,11 @@ export function buildFoundationV7Steps(lessonId: string): V7TeachingStep[] {
   const steps: V7TeachingStep[] = [];
   const add = (kind: V7TeachingStep['kind'], instruction: string, expectedSpeech?: string) =>
     steps.push({ kind, instruction, expectsUserSpeech: expectedSpeech !== undefined, expectedSpeech });
-  add('welcome', 'Welcome: state the practical goal briefly. No question. expectsUserSpeech=false; expectedSpeech="".');
+  const opening = FOUNDATION_V7_OPENINGS[lessonId];
+  if (!opening) throw new Error('Missing V7 authored opening: ' + lessonId);
+  add('welcome', 'Open with exactly this authored Thai context and goal: ' + JSON.stringify(opening) +
+    '. Do not paraphrase, add another greeting, or introduce a new question. ' +
+    'No user response is required yet. expectsUserSpeech=false; expectedSpeech="".');
   spec.blocks.forEach((block, index) => {
     const teaching = 'Teach block ' + (index + 1) + ': explain briefly using this meaning cue: ' + block.tipTh +
       '. Model ALL these English forms in this same turn: ' + block.models.join(' | ') +
@@ -136,7 +168,7 @@ Do not refer to an unseen image. Emojis are cues; state spatial relationships an
 Keep isLessonComplete=false until Complete. Use only existing guidedSpeaking/microphone/Continue mechanics.
 Core Flow:
 ` + steps.map((step, i) => (i + 1) + '. ' + step.instruction + (step.presentation ? '\nAuthored payload: ' + JSON.stringify({ ...step.presentation, expectedSpeech: step.expectedSpeech, expectsUserSpeech: step.expectsUserSpeech, isLessonComplete: step.kind === 'complete' }) : '')).join('\n'),
-    openingPrompt: V7_LEGACY_FLOWS[lessonId] ? 'Start at Core Flow step 1, including its microphone task and authored board. expectsUserSpeech=true. Do not add a welcome-only turn.' : 'Start ' + spec.titleEn + '. Welcome step only: explain the practical goal briefly in the teaching language. ' +
-      'expectsUserSpeech=false, expectedSpeech="", isLessonComplete=false. Return the existing lesson JSON schema.',
+    openingPrompt: V7_LEGACY_FLOWS[lessonId] ? 'Start at Core Flow step 1, including its microphone task and authored board. expectsUserSpeech=true. Do not add a welcome-only turn.' : 'Start ' + spec.titleEn + '. Use only the exact authored opening from Core Flow step 1. ' +
+      'Do not paraphrase or add another greeting. expectsUserSpeech=false, expectedSpeech="", isLessonComplete=false. Return the existing lesson JSON schema.',
   };
 });

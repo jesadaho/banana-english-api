@@ -141,6 +141,28 @@ describe('Foundation V7 lessons', () => {
     }
   });
 
+  it('gives every V7 lesson an authored first-turn context and learner goal', () => {
+    for (const id of FOUNDATION_V7_LESSON_IDS) {
+      const lesson = getLesson(id)!;
+      const first = buildFoundationV7Steps(id)[0];
+
+      assert.match(first.instruction, /วันนี้/, id);
+      assert.match(first.instruction, /(ฝึก|เรียน|ใช้|พูด|บอก|ถาม)/, id);
+      assert.doesNotMatch(first.instruction, /state the practical goal briefly/, id);
+      if (!V7_LEGACY_FLOWS[id]) {
+        assert.match(first.instruction, /Open with exactly this authored Thai context and goal/, id);
+        assert.match(lesson.openingPrompt, /exact authored opening/, id);
+      }
+    }
+  });
+
+  it('models zero through five before the first Numbers 0–10 counting task', () => {
+    const first = buildFoundationV7Steps('fnd_v7_numbers_0_10')[0];
+    assert.match(first.instruction, /zero, one, two, three, four, five/);
+    assert.equal(first.expectedSpeech, 'four');
+    assert.ok(first.presentation?.options.some(option => option.speak === 'four'));
+  });
+
   it('authors choices for every lesson with valid timing and distinct cues', () => {
     assert.deepEqual(Object.keys(FOUNDATION_V7_CHOICE_BEATS).sort(), Object.keys(lessonSpecs).sort());
     for (const [id, choice] of Object.entries(FOUNDATION_V7_CHOICE_BEATS)) {
