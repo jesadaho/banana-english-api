@@ -4,7 +4,7 @@ export type FoundationV7NodeType = 'lesson' | 'say_it' | 'emoji_speak' | 'pronun
 export type FoundationV7Capability = 'say_it_guided';
 export type FoundationV7ContentRef = { lessonId?: string; topicId?: string; poolId?: string; simulationId?: string };
 export interface FoundationV7Node {
-  id: string; code: string; order: number; globalOrder: number; titleEn: string;
+  id: string; code: string; order: number; globalOrder: number; titleEn: string; titleTh: string;
   type: FoundationV7NodeType; beat: string; learningTarget: string; activity: string;
   examples: string[]; estimatedMinutes: number[]; difficultyAxes: number[];
   contentRef: FoundationV7ContentRef; sayItMode?: 'guided'; clipId?: string;
@@ -13,7 +13,7 @@ export interface FoundationV7Node {
 }
 export const FOUNDATION_V7_CATALOG = catalogJson as {
   metadata: { sourceVersion: string; pathId: string; version: number; releaseStatus: 'playtest'; totalNodeCount: number };
-  chapters: Array<{ id: string; number: number; titleEn: string; outcome: string; items: FoundationV7Node[] }>;
+  chapters: Array<{ id: string; number: number; titleEn: string; titleTh: string; outcome: string; items: FoundationV7Node[] }>;
 };
 export const FOUNDATION_V7_NODES = FOUNDATION_V7_CATALOG.chapters.flatMap(ch => ch.items);
 export const FOUNDATION_V7_PATH_ID = 'foundation_v7';

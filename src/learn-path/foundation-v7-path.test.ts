@@ -12,7 +12,7 @@ import { getSimulation, getAllSimulations, initCheckpointStates, finalizeSimulat
 import { FOUNDATION_V7_SIMULATIONS } from '../simulations/foundation-v7-simulations.data';
 import { SayItService } from '../say-it/say-it.service';
 import { SayItController } from '../say-it/say-it.controller';
-import { sayItPoolForTopic } from '../say-it/say-it.data';
+import { sayItPoolForTopic, sayItTopicById } from '../say-it/say-it.data';
 import { EmojiSpeakService } from '../emoji-speak/emoji-speak.service';
 import { MiniGamesController } from '../mini-games/mini-games.controller';
 import { EconomyService } from '../economy/economy.service';
@@ -51,6 +51,24 @@ describe('Foundation V7 catalog and real content', () => {
       const next = FOUNDATION_V7_NODES[i];
       if (!['lesson', 'conversation'].includes(prev.type)) assert.notEqual(prev.type, next.type, `${prev.id} repeats ${next.id}`);
     }
+  });
+
+  it('ships Thai titles for every chapter and node', () => {
+    for (const chapter of FOUNDATION_V7_CATALOG.chapters) {
+      assert.ok(chapter.titleTh.trim(), chapter.id);
+      assert.notEqual(chapter.titleTh, chapter.titleEn, chapter.id);
+    }
+    for (const node of FOUNDATION_V7_NODES) {
+      assert.ok(node.titleTh.trim(), node.id);
+      assert.notEqual(node.titleTh, node.titleEn, node.id);
+    }
+    const polite = FOUNDATION_V7_NODES.find((node) => node.id === 'v7_u02n02')!;
+    assert.equal(polite.titleTh, 'พูดอย่างสุภาพ');
+    assert.equal(sayItTopicById(polite.contentRef.topicId!)?.titleTh, 'พูดอย่างสุภาพ');
+    assert.equal(
+      toFoundationV7ClientChapters()[1].items.find((node) => node.id === 'v7_u02n02')?.titleTh,
+      'พูดอย่างสุภาพ',
+    );
   });
 
   it('freezes Chapter 1 canonical content and reuses exactly four original pronunciation lessons', () => {

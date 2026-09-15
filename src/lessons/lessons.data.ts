@@ -7654,16 +7654,18 @@ Turn loop rules (critical):
     goalTh: 'ออกเสียง TH แบบมีเสียงชัดในคำที่ใช้บ่อย',
     soundLabel: 'the voiced TH sound (/ð/)',
     items: ['this', 'that', 'they', 'those'],
-    tipTh: 'เวลาเจอ this, that หรือ they ให้วางลิ้นเหมือนเดิม แล้วเปิดเสียงจากลำคอ ' +
+    tipTh: 'เวลาเจอ this, that หรือ they ให้แตะปลายลิ้นเบา ๆ ระหว่างฟัน แล้วเปิดเสียงจากลำคอ ' +
       'ให้รู้สึกว่ามีเสียงสั่นนิด ๆ',
-    tipEn: 'For this, that, or they, keep the same tongue place and turn on your voice so you feel a ' +
-      'light buzz.',
+    tipEn: 'For this, that, or they, touch your tongue tip lightly between your teeth and turn on ' +
+      'your voice so you feel a light buzz.',
     chapterOverviewTh:
-      'คราวนี้เป็นเสียง TH อีกแบบครับ แบบในคำว่า this, that, they, those ตำแหน่งลิ้นเหมือนเดิม ' +
-      'แต่คราวนี้มีเสียงสั่นจากลำคอ',
+      'สวัสดีครับ วันนี้เราจะมาฝึกออกเสียง TH กันครับ\n\n' +
+      'ในภาษาอังกฤษ TH มีมากกว่าหนึ่งเสียง บทนี้เราจะฝึกเสียงแบบในคำว่า this, that, they และ those\n\n' +
+      'เดี๋ยวลองฟังก่อนว่าเสียงนี้ออกอย่างไรครับ',
     chapterOverviewEn:
-      'Now the other TH sound — in this, that, they, and those. Same tongue place, but this ' +
-      'time your throat buzzes.',
+      'Hello! Today we are going to practise the TH sound. English has more than one TH sound. ' +
+      'In this lesson, we will practise the sound in this, that, they, and those. Listen first ' +
+      'to hear how it sounds.',
   }),
   buildPronunciationLesson({
     lessonId: 'pron_w_1',
