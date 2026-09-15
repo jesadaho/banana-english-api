@@ -182,7 +182,7 @@ export const V7_LEGACY_FLOWS: Record<string, V7TeachingStep[]> = {
     finish('ครูพูดซ้ำว่า My name is Teacher B. ชื่อของครูคือ Teacher B ครับ จบบทแล้วครับ คุณได้ฝึกขอซ้ำ ขอช้า และบอกว่าไม่เข้าใจ เวลาเจอสถานการณ์นี้ใช้วลีเหล่านี้ช่วยตัวเองได้ครับ'),
   ],
   fnd_v7_prices_and_paying: [
-    task('สวัสดีครับ วันนี้เราจะฝึกซื้อตั๋ว ถามราคา และจ่ายเงินเป็นภาษาอังกฤษครับ 🎫 เริ่มด้วยการขอตั๋วหนึ่งใบอย่างสุภาพว่า “One ticket, please.” ลองพูดตามครับ', 'One ticket, please'),
+    task('สวัสดีครับ วันนี้เราจะฝึกซื้อตั๋ว ถามราคา และจ่ายเงินเป็นภาษาอังกฤษครับ 🎫 ticket คือตั๋ว เริ่มด้วยการขอตั๋วหนึ่งใบอย่างสุภาพว่า “One ticket, please.” ลองพูดตามครับ', 'One ticket, please'),
     task('อยากรู้ราคา ถามว่า How much is it? แปลว่าราคาเท่าไหร่ครับ ลองพูดตาม', 'How much is it?'),
     task('baht คือบาทครับ Thirty baht คือสามสิบบาท ถ้าราคาสี่สิบบาท พูดเป็นประโยคว่า It is forty baht ลองพูดประโยคนี้ครับ', 'It is forty baht'),
     task('ลองอ่านป้ายราคาใหม่ครับ 🏷️ 30 บาท บอกราคาโดยเริ่มด้วย It is … baht ครับ', 'It is thirty baht', ['thirty baht', 'forty baht'], 'It is '),
@@ -200,7 +200,7 @@ export const V7_LEGACY_FLOWS: Record<string, V7TeachingStep[]> = {
     finish('จบบทแล้วครับ วันนี้คุณได้ฝึกนับของ อ่านเลขคิว และเลขห้องครับ'),
   ],
   fnd_v7_eleven_to_twenty: [
-    task('เลขเริ่มยาวขึ้นแล้วครับ แต่ยังไม่ต้องหยิบเครื่องคิดเลข 😄 วันนี้เราจะฝึกเลข 11–20 และนำไปใช้บอกอายุ เริ่มจากเลข 12 คือ twelve ลองพูด “twelve” ครับ', 'twelve'),
+    task('เลขเริ่มยาวขึ้นแล้วครับ แต่ยังไม่ต้องหยิบเครื่องคิดเลข 😄 วันนี้เราจะฝึกเลข 11–20 และนำไปใช้บอกอายุ สิบเอ็ดคือ eleven และสิบสองคือ twelve ลองพูด “twelve” ครับ', 'twelve'),
     task('สิบสาม thirteen สิบสี่ fourteen สิบห้า fifteen ครับ ลงท้ายด้วย teen ลองอ่านเลขห้อง 🚪 14 ครับ', 'fourteen', ['thirteen', 'fourteen', 'fifteen']),
     task('อีกห้องหนึ่งคือ 🚪 13 ลองอ่านเองครับ', 'thirteen', ['twelve', 'thirteen', 'fourteen']),
     task('สิบหกถึงสิบเก้าคือ sixteen, seventeen, eighteen, nineteen ครับ บัตรคิว 🎫 18 อ่านว่าอะไรครับ', 'eighteen', ['sixteen', 'seventeen', 'eighteen', 'nineteen']),
@@ -219,7 +219,7 @@ export const V7_LEGACY_FLOWS: Record<string, V7TeachingStep[]> = {
     finish('จบบทแล้วครับ วันนี้ฝึกอ่านราคา เลขรถเมล์ และประกอบเลขสองหลักครับ'),
   ],
   fnd_v7_i_like_i_dont_like: [
-    task('Teacher B ชอบกาแฟครับ แต่กล้วยน่าจะยังเป็นอันดับหนึ่ง ☕🍌 วันนี้เราจะฝึกบอกสิ่งที่ชอบและไม่ชอบ ถ้าจะบอกว่า “ฉันชอบกาแฟ” พูดว่า “I like coffee.” ลองพูดตามครับ', 'I like coffee.'),
+    task('Teacher B ชอบกาแฟครับ แต่กล้วยน่าจะยังเป็นอันดับหนึ่ง ☕🍌 วันนี้เราจะฝึกบอกสิ่งที่ชอบและไม่ชอบ coffee คือกาแฟ ถ้าจะบอกว่า “ฉันชอบกาแฟ” พูดว่า “I like coffee.” ลองพูดตามครับ', 'I like coffee.'),
     task('tea คือชาครับ ถ้าคุณชอบชา จะพูดว่าอย่างไร ใช้ I like … ครับ', 'I like tea', ['tea', 'coffee'], 'I like '),
     task('ถ้าไม่ชอบ เติม don’t ครับ ฉันไม่ชอบชาคือ I don’t like tea. ลองพูดตามครับ', 'I don’t like tea.'),
     task('rice คือข้าว 🍚 และ water คือน้ำ 💧 ครับ ถ้าคุณชอบข้าว จะพูดว่าอย่างไร', 'I like rice', ['rice', 'water'], 'I like '),

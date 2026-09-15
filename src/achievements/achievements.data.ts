@@ -285,6 +285,7 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
     iconKey: 'fire_3',
     target: 3,
     metric: 'streak_days',
+    rewardBananas: 2,
   },
   {
     achievementId: 'streak_7',
@@ -297,6 +298,8 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
     iconKey: 'fire_7',
     target: 7,
     metric: 'streak_days',
+    rewardBananas: 3,
+    rewardSeeds: 100,
   },
   {
     achievementId: 'streak_14',
@@ -309,6 +312,8 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
     iconKey: 'fire_14',
     target: 14,
     metric: 'streak_days',
+    rewardBananas: 4,
+    rewardSeeds: 200,
   },
   {
     achievementId: 'streak_30',
@@ -321,6 +326,8 @@ export const ACHIEVEMENT_CATALOG: AchievementDef[] = [
     iconKey: 'fire_30',
     target: 30,
     metric: 'streak_days',
+    rewardBananas: 5,
+    rewardSeeds: 400,
     rewardOutfitId: 'flame_jacket',
   },
 

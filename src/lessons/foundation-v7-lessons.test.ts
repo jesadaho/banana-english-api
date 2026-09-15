@@ -163,6 +163,12 @@ describe('Foundation V7 lessons', () => {
     assert.ok(first.presentation?.options.some(option => option.speak === 'four'));
   });
 
+  it('keeps prerequisite vocabulary teaching inside revised first turns', () => {
+    assert.match(buildFoundationV7Steps('fnd_v7_eleven_to_twenty')[0].instruction, /สิบเอ็ดคือ eleven/);
+    assert.match(buildFoundationV7Steps('fnd_v7_prices_and_paying')[0].instruction, /ticket คือตั๋ว/);
+    assert.match(buildFoundationV7Steps('fnd_v7_i_like_i_dont_like')[0].instruction, /coffee คือกาแฟ/);
+  });
+
   it('authors choices for every lesson with valid timing and distinct cues', () => {
     assert.deepEqual(Object.keys(FOUNDATION_V7_CHOICE_BEATS).sort(), Object.keys(lessonSpecs).sort());
     for (const [id, choice] of Object.entries(FOUNDATION_V7_CHOICE_BEATS)) {
