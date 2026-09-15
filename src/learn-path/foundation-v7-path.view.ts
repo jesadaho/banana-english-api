@@ -29,7 +29,7 @@ export function hasFoundationV7Content(node: FoundationV7Node): boolean {
 export function toFoundationV7ClientChapters(capabilities: readonly FoundationV7Capability[] = []) {
   let previousPlayableId: string | undefined;
   return FOUNDATION_V7_CATALOG.chapters.map(chapter => ({
-    id: chapter.id, number: chapter.number, titleEn: chapter.titleEn, titleTh: chapter.titleEn,
+    id: chapter.id, number: chapter.number, titleEn: chapter.titleEn, titleTh: chapter.titleTh,
     emoji: '🍌', outcome: chapter.outcome,
     items: chapter.items.map((node): FoundationV7ClientNode => {
       const backendReady = hasFoundationV7Content(node);
@@ -38,7 +38,7 @@ export function toFoundationV7ClientChapters(capabilities: readonly FoundationV7
       const unbuilt = node.type === 'describe_it' || node.type === 'story_bites';
       const comingSoon = !backendReady || needsClient;
       const result: FoundationV7ClientNode = {
-        id: node.id, code: node.code, titleEn: node.titleEn, titleTh: node.titleEn,
+        id: node.id, code: node.code, titleEn: node.titleEn, titleTh: node.titleTh,
         type: node.type === 'conversation' ? 'mission' : node.type,
         nodeType: node.type, beat: node.beat, learningTarget: node.learningTarget,
         countsTowardProgress: !comingSoon, comingSoon, backendReady,

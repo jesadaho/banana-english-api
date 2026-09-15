@@ -304,7 +304,7 @@ export function sayItTopicById(topicId: string): SayItTopic | undefined {
   const v7 = FOUNDATION_V7_NODES.find(node => node.type === 'say_it' && node.contentRef.topicId === topicId);
   if (v7 && Object.prototype.hasOwnProperty.call(v7PoolsJson, topicId)) {
     return {
-      id: topicId, titleEn: v7.titleEn, titleTh: v7.titleEn,
+      id: topicId, titleEn: v7.titleEn, titleTh: v7.titleTh,
       subtitleEn: 'Practise the words and sentences from Foundation', subtitleTh: v7.learningTarget,
       emoji: '🗣️', accentColor: 0xffffc107, estimatedMinutes: 2,
       poolSize: pools[topicId].length, locked: false, isNew: true,
