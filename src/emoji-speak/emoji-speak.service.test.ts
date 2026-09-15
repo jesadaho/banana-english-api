@@ -35,7 +35,7 @@ describe('EmojiSpeakService', () => {
   });
 
   it('serves V7 spelling hints without header prompts', () => {
-    assert.equal(Object.keys(foundationV7Pools).length, 16);
+    assert.equal(Object.keys(foundationV7Pools).length, 17);
     let count = 0;
     for (const [id, pool] of Object.entries(foundationV7Pools)) {
       for (const card of pool.items) {
@@ -57,7 +57,9 @@ describe('EmojiSpeakService', () => {
         assert.equal(card.meaningTh, source.meaningTh);
       }
     }
-    assert.equal(count, 73);
+    assert.equal(count, 83);
     assert.equal(foundationV7Pools.fnd_v7_u05n02.items[3].hint, 'ap__e');
+    assert.equal(foundationV7Pools.fnd_v7_u05n06.dealCount, 10);
+    assert.equal(foundationV7Pools.fnd_v7_u05n06.items[0].answer, 'a book');
   });
 });

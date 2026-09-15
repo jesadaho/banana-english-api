@@ -23,8 +23,8 @@ describe('Foundation V7 conversation smoke runner', () => {
       AUTHORED_V7_CONVERSATION_IDS,
       FOUNDATION_V7_SIMULATIONS.map((s) => s.simulationId),
     );
-    assert.equal(AUTHORED_V7_CONVERSATION_IDS.length, 15);
-    assert.equal(ALL_V7_PATH_CONVERSATION_IDS.length, 16);
+    assert.equal(AUTHORED_V7_CONVERSATION_IDS.length, 14);
+    assert.equal(ALL_V7_PATH_CONVERSATION_IDS.length, 15);
   });
 
   it('scripts a happy path matching each authored minTurns', () => {
@@ -33,6 +33,24 @@ describe('Foundation V7 conversation smoke runner', () => {
         happyLinesFor(config.simulationId).length,
         config.minTurns,
         config.simulationId,
+      );
+    }
+  });
+
+  it('keeps Chapters 1–6 NPC-led without requiring learner questions', () => {
+    const earlyMissionIds = [
+      'foundation_first_conversation',
+      'foundation_v7_u02n04',
+      'foundation_v7_u03n06',
+      'foundation_v7_u04n06',
+      'foundation_v7_u06n08',
+    ];
+
+    for (const simulationId of earlyMissionIds) {
+      assert.equal(
+        happyLinesFor(simulationId).some((line) => line.includes('?')),
+        false,
+        `${simulationId} should let the NPC ask while the learner responds`,
       );
     }
   });

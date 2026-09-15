@@ -6,6 +6,7 @@ import * as admin from 'firebase-admin';
 export class FirebaseAdminService implements OnModuleInit {
   private readonly logger = new Logger(FirebaseAdminService.name);
   private enabled = false;
+  private storageBucket: string | null = null;
 
   constructor(private readonly config: ConfigService) {}
 
@@ -15,6 +16,9 @@ export class FirebaseAdminService implements OnModuleInit {
     const privateKey = this.config
       .get<string>('FIREBASE_PRIVATE_KEY')
       ?.replace(/\\n/g, '\n');
+    const storageBucket =
+      this.config.get<string>('FIREBASE_STORAGE_BUCKET')?.trim() ||
+      (projectId ? `${projectId}.firebasestorage.app` : '');
 
     if (!projectId || !clientEmail || !privateKey) {
       this.logger.warn(
@@ -30,10 +34,12 @@ export class FirebaseAdminService implements OnModuleInit {
           clientEmail,
           privateKey,
         }),
+        ...(storageBucket ? { storageBucket } : {}),
       });
     }
 
     this.enabled = true;
+    this.storageBucket = storageBucket || null;
     this.logger.log('Firebase Admin ready');
   }
 
@@ -46,5 +52,30 @@ export class FirebaseAdminService implements OnModuleInit {
       throw new Error('Firebase Admin is not configured');
     }
     return admin.auth().verifyIdToken(idToken);
+  }
+
+  async getSignedReadUrl(
+    objectPath: string,
+    expiresMs = 60 * 60 * 1000,
+  ): Promise<string | null> {
+    if (!this.enabled || !this.storageBucket || !objectPath.trim()) {
+      return null;
+    }
+    try {
+      const [url] = await admin
+        .storage()
+        .bucket(this.storageBucket)
+        .file(objectPath.trim())
+        .getSignedUrl({
+          action: 'read',
+          expires: Date.now() + expiresMs,
+        });
+      return url;
+    } catch (error) {
+      this.logger.warn(
+        `Signed URL failed for ${objectPath}: ${String(error).slice(0, 160)}`,
+      );
+      return null;
+    }
   }
 }

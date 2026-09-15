@@ -467,11 +467,12 @@
           "titleTh": "พบเพื่อนร่วมชั้น",
           "type": "conversation",
           "beat": "Ketsu",
-          "learningTarget": "ทักทาย ถามสภาพ และแก้ความเข้าใจผิด",
-          "activity": "NPC ถาม You are tired? ผู้เรียนตอบตาม role card ได้ทั้งรับหรือแก้; ไม่มีข้อบังคับเปิดเผยสภาพตนจริง",
+          "learningTarget": "ตอบว่าหิวไหม พร้อมไหม และตอบรับคำชวนไปกินข้าว",
+          "activity": "ช่วงพักกลางวัน NPC นำด้วยคำถามสั้นทุกช่วง ผู้เรียนตอบ hungry / ready และคำชวนไปกินข้าว โดยไม่ต้องตั้งคำถามเองหรือเปิดเผยสภาพจริง",
           "examples": [
-            "I am not tired",
-            "Are you ready?"
+            "Yes, I am hungry",
+            "Yes, I am ready",
+            "Let's go"
           ],
           "estimatedMinutes": [
             2,
@@ -686,11 +687,12 @@
           "titleTh": "พบครอบครัวของฉัน",
           "type": "conversation",
           "beat": "Ketsu",
-          "learningTarget": "แนะนำหนึ่งคน ตอบหนึ่งคำถาม และถามกลับ",
-          "activity": "ใช้คนสมมติได้; NPC ชี้คนผิดหนึ่งครั้งเพื่อให้บอกความสัมพันธ์ให้ชัด; จบเมื่อแลกข้อมูลแล้ว",
+          "learningTarget": "แนะนำหนึ่งคน ตอบข้อมูล และยืนยันว่าอีกคนเป็นใคร",
+          "activity": "ใช้คนสมมติได้; NPC นำด้วยคำถามสั้น ให้ผู้เรียนแนะนำหรือแก้ข้อมูล แล้วตอบยืนยันความสัมพันธ์ของ Sam โดยไม่ต้องตั้งคำถามเอง",
           "examples": [
             "This is my brother",
-            "He is a student"
+            "She is a student",
+            "He is your brother"
           ],
           "estimatedMinutes": [
             2,
@@ -876,27 +878,29 @@
           "globalOrder": 28,
           "titleEn": "What’s in the Bag?",
           "titleTh": "ในกระเป๋ามีอะไร?",
-          "type": "conversation",
+          "type": "emoji_speak",
           "beat": "Ketsu",
-          "learningTarget": "ถามตอบเกี่ยวกับของและแก้จำนวนผิด",
-          "activity": "NPC มีถุงสองใบ ใช้ข้อมูลภาพอ้างอิง; ฟังคำถามช้าและตอบด้วยวลีสั้นได้",
+          "learningTarget": "เรียก a/an กับของหนึ่งชิ้น และ regular plural กับหลายชิ้น จากภาพ",
+          "activity": "สิบข้อ คู่เอกพจน์/พหูพจน์: book, pen, apple, teacher, student",
           "examples": [
-            "A book",
-            "No, pens"
+            "a book",
+            "books",
+            "a teacher",
+            "teachers"
           ],
           "estimatedMinutes": [
             2,
-            4
+            3
           ],
           "difficultyAxes": [
             1,
+            1,
             2,
             2,
-            2,
-            2
+            1
           ],
           "contentRef": {
-            "simulationId": "foundation_v7_u05n06"
+            "poolId": "fnd_v7_u05n06"
           }
         }
       ]

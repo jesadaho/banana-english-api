@@ -29,35 +29,41 @@
     "simulationId": "foundation_v7_u03n06",
     "nodeId": "v7_u03n06",
     "titleEn": "Meet a Classmate",
-    "scenarioTh": "Max ชวนคุณเข้าคลาส เช็กว่าทั้งคู่พร้อมไหม แล้วเข้าเรียนด้วยกัน",
-    "openingEn": "Hi! I am Max. I am tired.",
-    "role": "You are Max at the classroom door. Do not add a question to the opening. Wait for the learner to ask if you are ready, then answer 'Yes, I am ready.' Then ask whether the learner is ready and accept a truthful state or a correction with not. After both states are clear, wait for a short OK or Let's go, then invite them into class. No age or work questions.",
+    "scenarioTh": "ช่วงพักกลางวัน Max หิวและชวนคุณไปกินข้าว เช็กว่าคุณหิวและพร้อมไปด้วยกันไหม",
+    "openingEn": "Hi! I am Max. I am hungry. Are you hungry?",
+    "role": "You are Max waiting outside the classroom at lunchtime. Lead every beat with one short question so the learner only needs to respond. First ask whether the learner is hungry and accept a truthful taught state or a correction with not. Then say 'I am ready for lunch. Are you ready?' and accept yes/no or a full taught answer. Finally say 'Great! Shall we go?' and accept OK, yes, or Let's go before heading to lunch together. Never require the learner to invent or ask a question. No age or work questions.",
     "goals": [
       {
         "id": "state",
-        "th": "บอกสภาพของตน",
-        "en": "Say how you feel using the taught states",
-        "example": "I am not tired"
+        "th": "ตอบว่าตนหิวหรือไม่",
+        "en": "Answer whether they are hungry",
+        "example": "Yes, I am hungry"
       },
       {
-        "id": "ask",
-        "th": "ถามสภาพเพื่อน",
-        "en": "Ask whether the classmate is ready/happy/tired",
-        "example": "Are you ready"
+        "id": "ready",
+        "th": "ตอบว่าตนพร้อมหรือยัง",
+        "en": "Answer whether they are ready",
+        "example": "Yes, I am ready"
+      },
+      {
+        "id": "go",
+        "th": "ตอบรับคำชวนเข้าคลาส",
+        "en": "Respond to the invitation to enter class",
+        "example": "Let's go"
       }
     ],
     "minTurns": 3,
     "maxTurns": 4,
-    "completionEn": "We are ready. Let's go to class!",
-    "completionTh": "เราพร้อมแล้ว ไปเข้าคลาสกันครับ!"
+    "completionEn": "Great! Let's go get lunch!",
+    "completionTh": "เยี่ยมครับ ไปกินข้าวกัน!"
   },
   {
     "simulationId": "foundation_v7_u04n06",
     "nodeId": "v7_u04n06",
     "titleEn": "Meet My Family",
-    "scenarioTh": "พาคนในครอบครัวจริงหรือสมมติมางาน Family Day แนะนำเขาให้ Max รู้จัก แล้วรู้จักคนที่มากับ Max",
+    "scenarioTh": "พาคนในครอบครัวจริงหรือสมมติมางาน Family Day ตอบคำถามของ Max เพื่อแนะนำเขา แล้วช่วยยืนยันว่า Sam เป็นใคร",
     "openingEn": "Hello! Who is this?",
-    "role": "You are Max welcoming guests at Family Day. Ask about one family member. Accept fictional or real family and any clear relationship. Ask one simple fact and accept a correction. Then say 'Someone is with me too.' and pause so the learner can ask who it is. Only then reveal 'This is my brother, Sam.' Once both introductions are clear, give both guests their Family Day name tags. If the learner avoids personal details, invite a fictional family member and do not penalize.",
+    "role": "You are Max welcoming guests at Family Day. Lead every beat with one short question so the learner only needs to respond. Ask who the learner brought and accept a fictional or real family relationship. Ask one simple yes/no fact about that person and accept confirmation or correction. Then introduce 'This is my brother, Sam.' and ask the learner to confirm who Sam is with a simple question such as 'Is he my brother?' Accept yes/no or 'He is your brother.' Once both people are clear, give both guests their Family Day name tags. Never require the learner to ask a question. If they avoid personal details, invite a fictional family member and do not penalize.",
     "goals": [
       {
         "id": "introduce",
@@ -72,42 +78,16 @@
         "example": "She is a doctor"
       },
       {
-        "id": "ask",
-        "th": "ถามเกี่ยวกับคนของอีกฝ่าย",
-        "en": "Ask who someone is",
-        "example": "Who is this"
+        "id": "recognize",
+        "th": "ยืนยันว่าอีกคนเป็นใคร",
+        "en": "Confirm who the other person is",
+        "example": "He is your brother"
       }
     ],
     "minTurns": 3,
     "maxTurns": 5,
     "completionEn": "Nice to meet you both. Here are your name tags!",
     "completionTh": "ยินดีที่ได้รู้จักทั้งคู่ครับ นี่คือป้ายชื่อของคุณครับ!"
-  },
-  {
-    "simulationId": "foundation_v7_u05n06",
-    "nodeId": "v7_u05n06",
-    "titleEn": "What’s in the Bag?",
-    "scenarioTh": "จัดกระเป๋าก่อนเข้าคลาส คุณต้องรับหนังสือหนึ่งเล่มและปากกาหลายด้ามจาก Teacher B ให้ครบ",
-    "openingEn": "Let's pack your class bag. A book or pens first?",
-    "role": "You are Teacher B packing the learner's class bag. They need one book and several pens. Accept noun phrases and full sentences. Give the first requested item, then offer 'A pen?' so the learner can correct it to plural. When both items are clear, wait for thanks or OK before closing the bag. Do not introduce there is/are or untaught number words.",
-    "goals": [
-      {
-        "id": "object",
-        "th": "บอกสิ่งของ",
-        "en": "Name a taught object in the bag",
-        "example": "A book"
-      },
-      {
-        "id": "quantity",
-        "th": "ทำให้รู้ว่าหนึ่งหรือหลายชิ้น",
-        "en": "Clarify a singular/plural amount",
-        "example": "No, pens"
-      }
-    ],
-    "minTurns": 3,
-    "maxTurns": 4,
-    "completionEn": "One book and pens. Your class bag is ready!",
-    "completionTh": "หนังสือหนึ่งเล่มและปากกาหลายด้าม กระเป๋าเรียนพร้อมแล้วครับ!"
   },
   {
     "simulationId": "foundation_v7_u06n08",

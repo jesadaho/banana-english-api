@@ -28,6 +28,7 @@ import { DebugModule } from './debug/debug.module';
 import { PurchasesModule } from './purchases/purchases.module';
 import { LearnPathModule } from './learn-path/learn-path.module';
 import { AdminModule } from './admin/admin.module';
+import { BugReportsModule } from './bug-reports/bug-reports.module';
 import { PhonicsModule } from './phonics/phonics.module';
 
 @Module({
@@ -42,6 +43,7 @@ import { PhonicsModule } from './phonics/phonics.module';
     NotificationsModule,
     HealthModule,
     AdminModule,
+    BugReportsModule,
     PhonicsModule,
     TopicsModule,
     SessionsModule,

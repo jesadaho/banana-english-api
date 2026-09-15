@@ -89,6 +89,72 @@
       }
     ]
   },
+  "fnd_v7_u05n06": {
+    "title": "What’s in the Bag?",
+    "dealCount": 10,
+    "items": [
+      {
+        "emoji": "📖",
+        "answer": "a book",
+        "hint": "a b__k",
+        "meaningTh": "หนังสือหนึ่งเล่ม"
+      },
+      {
+        "emoji": "📚",
+        "answer": "books",
+        "hint": "b__ks",
+        "meaningTh": "หนังสือหลายเล่ม"
+      },
+      {
+        "emoji": "🖊️",
+        "answer": "a pen",
+        "hint": "a p_n",
+        "meaningTh": "ปากกาหนึ่งด้าม"
+      },
+      {
+        "emoji": "🖊️🖊️",
+        "answer": "pens",
+        "hint": "p__s",
+        "meaningTh": "ปากกาหลายด้าม"
+      },
+      {
+        "emoji": "🍎",
+        "answer": "an apple",
+        "hint": "an ap__e",
+        "meaningTh": "แอปเปิลหนึ่งลูก"
+      },
+      {
+        "emoji": "🍎🍎",
+        "answer": "apples",
+        "hint": "ap___s",
+        "meaningTh": "แอปเปิลหลายลูก"
+      },
+      {
+        "emoji": "🧑‍🏫",
+        "answer": "a teacher",
+        "hint": "a tea___r",
+        "meaningTh": "ครูหนึ่งคน"
+      },
+      {
+        "emoji": "🧑‍🏫🧑‍🏫",
+        "answer": "teachers",
+        "hint": "tea____s",
+        "meaningTh": "ครูหลายคน"
+      },
+      {
+        "emoji": "🧑‍🎓",
+        "answer": "a student",
+        "hint": "a stu___t",
+        "meaningTh": "นักเรียนหนึ่งคน"
+      },
+      {
+        "emoji": "🧑‍🎓🧑‍🎓",
+        "answer": "students",
+        "hint": "stu____s",
+        "meaningTh": "นักเรียนหลายคน"
+      }
+    ]
+  },
   "fnd_v7_u06n04": {
     "title": "Spot the Colour",
     "dealCount": 4,
