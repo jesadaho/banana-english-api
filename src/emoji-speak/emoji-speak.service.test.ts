@@ -34,8 +34,8 @@ describe('EmojiSpeakService', () => {
     assert.match(am?.promptTh ?? '', /wake up/);
   });
 
-  it('serves V7 spelling hints, keeping translations separate from prompts', () => {
-    assert.equal(Object.keys(foundationV7Pools).length, 13);
+  it('serves V7 spelling hints without header prompts', () => {
+    assert.equal(Object.keys(foundationV7Pools).length, 16);
     let count = 0;
     for (const [id, pool] of Object.entries(foundationV7Pools)) {
       for (const card of pool.items) {
@@ -48,9 +48,8 @@ describe('EmojiSpeakService', () => {
           if (card.answer[i] === ' ') assert.equal(char, ' ');
         });
         assert.ok(card.meaningTh);
-        assert.ok(card.promptTh);
+        assert.equal(card.promptTh, undefined);
         assert.notEqual(card.hint, card.meaningTh);
-        assert.ok(!card.promptTh.includes(card.meaningTh), `${id}: translated answer leaked into prompt`);
       }
       for (const card of service.dealForPool(id).items) {
         const source = pool.items.find(item => item.answer === card.answer)!;
@@ -58,7 +57,7 @@ describe('EmojiSpeakService', () => {
         assert.equal(card.meaningTh, source.meaningTh);
       }
     }
-    assert.equal(count, 54);
+    assert.equal(count, 73);
     assert.equal(foundationV7Pools.fnd_v7_u05n02.items[3].hint, 'ap__e');
   });
 });

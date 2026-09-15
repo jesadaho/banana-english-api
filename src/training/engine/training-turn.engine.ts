@@ -1,4 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { isFoundationV7LessonId } from '../../lessons/foundation-v7-turn-guard';
+import { renderV7Turn, runV7Turn } from '../../lessons/foundation-v7-runtime';
 import type { AiDebug } from '../../common/api.types';
 import type { LessonConfig } from '../../lessons/lessons.data';
 import { teachingLanguageFromConfig } from '../../lessons/lesson-prompt';
@@ -48,6 +50,9 @@ export class TrainingTurnEngine {
     config: LessonConfig,
     learnerFirstName: string,
   ): { reply: TrainingTurnReply; aiDebug: AiDebug } {
+    if (isFoundationV7LessonId(config.lessonId)) {
+      return { reply: renderV7Turn(config.lessonId, 1), aiDebug: scriptedAiDebug() };
+    }
     const foundation = getFoundationChoiceLesson(config.lessonId);
     if (foundation) {
       const reply = foundation.buildOpening(learnerFirstName);
@@ -90,6 +95,7 @@ export class TrainingTurnEngine {
   async runTurn(
     input: TrainingEngineTurnInput,
   ): Promise<{ reply: TrainingTurnReply; aiDebug: AiDebug }> {
+    if (isFoundationV7LessonId(input.config.lessonId)) return runV7Turn(input, this.aiGate);
     const foundation = getFoundationChoiceLesson(input.config.lessonId);
     if (foundation) {
       return this.runChoiceLessonTurn(input, foundation);

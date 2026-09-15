@@ -1,5 +1,5 @@
 {
-  "fnd_v7_u02n01": {
+  "fnd_v7_please_and_thank_you": {
     "titleEn": "Please & Thank You",
     "titleTh": "ใช้ please / thank you / sorry / excuse me ให้ตรงหน้าที่",
     "goalTh": "ใช้ please / thank you / sorry / excuse me ให้ตรงหน้าที่",
@@ -18,9 +18,15 @@
         "repeat": "Please"
       },
       {
-        "tipTh": "sorry ใช้ขอโทษ ส่วน excuse me ใช้เรียกความสนใจก่อนพูด",
+        "tipTh": "sorry ใช้ขอโทษเมื่อทำผิดหรือรบกวนอีกฝ่าย",
         "models": [
-          "Sorry",
+          "Sorry"
+        ],
+        "repeat": "Sorry"
+      },
+      {
+        "tipTh": "excuse me ใช้เรียกความสนใจก่อนเริ่มพูด",
+        "models": [
           "Excuse me"
         ],
         "repeat": "Excuse me"
@@ -31,7 +37,7 @@
       "answerEn": "Thank you"
     }
   },
-  "fnd_v7_u02n03": {
+  "fnd_v7_say_that_again": {
     "titleEn": "Say That Again",
     "titleTh": "ใช้วลีขอซ้ำ ขอช้า และบอกว่าไม่เข้าใจ",
     "goalTh": "ใช้วลีขอซ้ำ ขอช้า และบอกว่าไม่เข้าใจ",
@@ -66,9 +72,10 @@
     "recall": {
       "promptTh": "ฟังชื่ออีกฝ่ายไม่ทัน ขอให้พูดซ้ำ",
       "answerEn": "Please say that again"
-    }
+    },
+    "completionTh": "เยี่ยมครับ ตอนนี้คุณขอให้อีกฝ่ายพูดซ้ำ พูดช้าลง และบอกว่าไม่เข้าใจได้แล้ว"
   },
-  "fnd_v7_u03n01": {
+  "fnd_v7_i_am_you_are": {
     "titleEn": "I Am / You Are",
     "titleTh": "จับคู่ I/you กับ am/are; รู้จัก ready, happy, tired, hungry",
     "goalTh": "จับคู่ I/you กับ am/are; รู้จัก ready, happy, tired, hungry",
@@ -100,7 +107,7 @@
       "answerEn": "I am hungry"
     }
   },
-  "fnd_v7_u03n03": {
+  "fnd_v7_not_and_are_you": {
     "titleEn": "Not & Are You?",
     "titleTh": "ปฏิเสธและถาม yes/no ด้วย be",
     "goalTh": "ปฏิเสธและถาม yes/no ด้วย be",
@@ -140,8 +147,8 @@
       "answerEn": "Are you ready?"
     }
   },
-  "fnd_v7_u04n01": {
-    "titleEn": "He, She, We, They",
+  "fnd_v7_he_she_it_we_they": {
+    "titleEn": "He, She, It, We, They",
     "titleTh": "เลือกสรรพนามและ be ให้เข้ากับคนหรือกลุ่ม",
     "goalTh": "เลือกสรรพนามและ be ให้เข้ากับคนหรือกลุ่ม",
     "scope": "ตัวละครสมมติระบุสรรพนามชัด; it ใช้สิ่งของ; ทบทวน teacher/student จากบทแนะนำตัว",
@@ -180,7 +187,7 @@
       "answerEn": "We are students"
     }
   },
-  "fnd_v7_u04n03": {
+  "fnd_v7_my_family": {
     "titleEn": "My Family",
     "titleTh": "แนะนำความสัมพันธ์และถาม Who is this? เป็น chunk",
     "goalTh": "แนะนำความสัมพันธ์และถาม Who is this? เป็น chunk",
@@ -223,7 +230,7 @@
       "answerEn": "This is my brother"
     }
   },
-  "fnd_v7_u05n01": {
+  "fnd_v7_one_or_more": {
     "titleEn": "One or More",
     "titleTh": "บอก a/an กับของหนึ่งชิ้น และ regular plural กับหลายชิ้น",
     "goalTh": "บอก a/an กับของหนึ่งชิ้น และ regular plural กับหลายชิ้น",
@@ -265,8 +272,8 @@
       "answerEn": "Books, please"
     }
   },
-  "fnd_v7_u06n01": {
-    "titleEn": "This & That",
+  "fnd_v7_this_is_that_is": {
+    "titleEn": "This Is / That Is",
     "titleTh": "อ้างของใกล้และไกลด้วย this/that",
     "goalTh": "อ้างของใกล้และไกลด้วย this/that",
     "scope": "กำหนดตำแหน่งผู้พูดในภาพ; ไม่สอนความใกล้จากขนาดภาพอย่างเดียว",
@@ -295,7 +302,7 @@
       "answerEn": "This is a bag"
     }
   },
-  "fnd_v7_u06n03": {
+  "fnd_v7_colours_and_size": {
     "titleEn": "Colours & Size",
     "titleTh": "บอกสีและขนาดโดยเริ่มจากหนึ่ง adjective",
     "goalTh": "บอกสีและขนาดโดยเริ่มจากหนึ่ง adjective",
@@ -338,7 +345,7 @@
       "answerEn": "This is a blue bag"
     }
   },
-  "fnd_v7_u06n05": {
+  "fnd_v7_these_and_those": {
     "titleEn": "These & Those",
     "titleTh": "ใช้ these/those กับของหลายชิ้น",
     "goalTh": "ใช้ these/those กับของหลายชิ้น",
@@ -370,7 +377,7 @@
       "answerEn": "Those are blue bags"
     }
   },
-  "fnd_v7_u07n01": {
+  "fnd_v7_my_and_your": {
     "titleEn": "My & Your",
     "titleTh": "ใช้ my/your กับของที่คุ้น",
     "goalTh": "ใช้ my/your กับของที่คุ้น",
@@ -404,7 +411,7 @@
       "answerEn": "This is your phone"
     }
   },
-  "fnd_v7_u07n03": {
+  "fnd_v7_his_her_our_their": {
     "titleEn": "His, Her, Our, Their",
     "titleTh": "เชื่อมเจ้าของกับ possessive determiner",
     "goalTh": "เชื่อมเจ้าของกับ possessive determiner",
@@ -436,7 +443,7 @@
       "answerEn": "These are their keys"
     }
   },
-  "fnd_v7_u07n05": {
+  "fnd_v7_have_and_has": {
     "titleEn": "Have & Has",
     "titleTh": "บอกสิ่งที่ตนหรืออีกคนมี",
     "goalTh": "บอกสิ่งที่ตนหรืออีกคนมี",
@@ -468,7 +475,7 @@
       "answerEn": "He has my book"
     }
   },
-  "fnd_v7_u08n01": {
+  "fnd_v7_numbers_0_10": {
     "titleEn": "Numbers 0–10",
     "titleTh": "ฟังและพูดเลขศูนย์ถึงสิบ",
     "goalTh": "ฟังและพูดเลขศูนย์ถึงสิบ",
@@ -507,7 +514,7 @@
       "answerEn": "three"
     }
   },
-  "fnd_v7_u08n03": {
+  "fnd_v7_eleven_to_twenty": {
     "titleEn": "Eleven to Twenty",
     "titleTh": "บอกเลขสิบเอ็ดถึงยี่สิบและใช้บอกอายุ",
     "goalTh": "บอกเลขสิบเอ็ดถึงยี่สิบและใช้บอกอายุ",
@@ -556,10 +563,10 @@
     ],
     "recall": {
       "promptTh": "ตัวละครของคุณอายุยี่สิบปี ลองบอกอายุ",
-      "answerEn": "I am twenty"
+      "answerEn": "I am twenty years old"
     }
   },
-  "fnd_v7_u08n05": {
+  "fnd_v7_letter_names_a_m": {
     "titleEn": "Letter Names A–M",
     "titleTh": "รู้จักชื่อเรียกตัวอักษรครึ่งแรกเพื่อสะกด",
     "goalTh": "รู้จักชื่อเรียกตัวอักษรครึ่งแรกเพื่อสะกด",
@@ -613,7 +620,7 @@
       "answerEn": "L E E"
     }
   },
-  "fnd_v7_u08n07": {
+  "fnd_v7_letter_names_n_z": {
     "titleEn": "Letter Names N–Z",
     "titleTh": "รู้จักชื่อเรียกตัวอักษรที่เหลือ",
     "goalTh": "รู้จักชื่อเรียกตัวอักษรที่เหลือ",
@@ -668,7 +675,7 @@
       "answerEn": "S A M"
     }
   },
-  "fnd_v7_u09n01": {
+  "fnd_v7_twenty_to_one_hundred": {
     "titleEn": "Twenty to One Hundred",
     "titleTh": "พูดเลขหลักสิบและประกอบเลขสองหลัก",
     "goalTh": "พูดเลขหลักสิบและประกอบเลขสองหลัก",
@@ -714,7 +721,7 @@
       "answerEn": "forty-two"
     }
   },
-  "fnd_v7_u09n03": {
+  "fnd_v7_what_time_is_it": {
     "titleEn": "What Time Is It?",
     "titleTh": "ถามและบอกชั่วโมงกับนาทีพื้นฐาน",
     "goalTh": "ถามและบอกชั่วโมงกับนาทีพื้นฐาน",
@@ -748,7 +755,7 @@
       "answerEn": "It is eight thirty"
     }
   },
-  "fnd_v7_u09n05": {
+  "fnd_v7_days_and_simple_plans": {
     "titleEn": "Days & Simple Plans",
     "titleTh": "เข้าใจวันในสัปดาห์และบอกวันกับเวลา",
     "goalTh": "เข้าใจวันในสัปดาห์และบอกวันกับเวลา",
@@ -791,7 +798,7 @@
       "answerEn": "The class is on Friday"
     }
   },
-  "fnd_v7_u09n07": {
+  "fnd_v7_prices_and_paying": {
     "titleEn": "Prices & Paying",
     "titleTh": "ถามราคาและซื้อหนึ่งสิ่งอย่างสุภาพ",
     "goalTh": "ถามราคาและซื้อหนึ่งสิ่งอย่างสุภาพ",
@@ -831,7 +838,7 @@
       "answerEn": "How much is it?"
     }
   },
-  "fnd_v7_u10n01": {
+  "fnd_v7_i_like_i_dont_like": {
     "titleEn": "I Like / I Don’t Like",
     "titleTh": "บอกชอบและไม่ชอบด้วยของกินที่คุ้น",
     "goalTh": "บอกชอบและไม่ชอบด้วยของกินที่คุ้น",
@@ -866,7 +873,7 @@
       "answerEn": "I like rice"
     }
   },
-  "fnd_v7_u10n03": {
+  "fnd_v7_do_you_like_it": {
     "titleEn": "Do You Like It?",
     "titleTh": "ถามและตอบความชอบ",
     "goalTh": "ถามและตอบความชอบ",
@@ -899,7 +906,7 @@
       "answerEn": "Do you like rice?"
     }
   },
-  "fnd_v7_u10n05": {
+  "fnd_v7_want_need_and_please": {
     "titleEn": "Want, Need & Please",
     "titleTh": "บอกสิ่งที่อยากได้/จำเป็นและใช้คำขอสุภาพ",
     "goalTh": "บอกสิ่งที่อยากได้/จำเป็นและใช้คำขอสุภาพ",
@@ -933,7 +940,7 @@
       "answerEn": "I need help"
     }
   },
-  "fnd_v7_u11n01": {
+  "fnd_v7_i_can": {
     "titleEn": "I Can",
     "titleTh": "บอกความสามารถด้วย can + action",
     "goalTh": "บอกความสามารถด้วย can + action",
@@ -967,7 +974,7 @@
       "answerEn": "I can cook"
     }
   },
-  "fnd_v7_u11n03": {
+  "fnd_v7_cant_and_can_you": {
     "titleEn": "Can’t & Can You?",
     "titleTh": "บอกทำไม่ได้ ถามอีกคน และขออนุญาตด้วย chunk",
     "goalTh": "บอกทำไม่ได้ ถามอีกคน และขออนุญาตด้วย chunk",
@@ -1007,7 +1014,7 @@
       "answerEn": "Can you swim?"
     }
   },
-  "fnd_v7_u12n01": {
+  "fnd_v7_my_day": {
     "titleEn": "My Day",
     "titleTh": "บอกกิจวัตรพร้อมเวลาในรูป I + verb",
     "goalTh": "บอกกิจวัตรพร้อมเวลาในรูป I + verb",
@@ -1043,7 +1050,7 @@
       "answerEn": "I work on Friday"
     }
   },
-  "fnd_v7_u12n03": {
+  "fnd_v7_her_day_his_day": {
     "titleEn": "Her Day, His Day",
     "titleTh": "ใช้ third-person -s กับกิจวัตรที่รู้",
     "goalTh": "ใช้ third-person -s กับกิจวัตรที่รู้",
@@ -1076,7 +1083,7 @@
       "answerEn": "He eats at seven"
     }
   },
-  "fnd_v7_u12n05": {
+  "fnd_v7_do_does_every_day": {
     "titleEn": "Do / Does Every Day",
     "titleTh": "ถามกิจวัตรของ you/he/she และตอบสั้น",
     "goalTh": "ถามกิจวัตรของ you/he/she และตอบสั้น",
@@ -1116,7 +1123,7 @@
       "answerEn": "Does he work on Monday?"
     }
   },
-  "fnd_v7_u13n01": {
+  "fnd_v7_happening_now": {
     "titleEn": "Happening Now",
     "titleTh": "ใช้ am/is/are + -ing กับการกระทำที่รู้",
     "goalTh": "ใช้ am/is/are + -ing กับการกระทำที่รู้",
@@ -1148,7 +1155,7 @@
       "answerEn": "I am reading now"
     }
   },
-  "fnd_v7_u13n03": {
+  "fnd_v7_are_they_working": {
     "titleEn": "Are They Working?",
     "titleTh": "ถามและปฏิเสธกิจกรรมตอนนี้",
     "goalTh": "ถามและปฏิเสธกิจกรรมตอนนี้",
@@ -1180,7 +1187,7 @@
       "answerEn": "Is he working?"
     }
   },
-  "fnd_v7_u14n01": {
+  "fnd_v7_what_or_who": {
     "titleEn": "What or Who?",
     "titleTh": "แยกคำถามเกี่ยวกับคนกับสิ่งของ",
     "goalTh": "แยกคำถามเกี่ยวกับคนกับสิ่งของ",
@@ -1213,10 +1220,10 @@
       "answerEn": "What is this?"
     }
   },
-  "fnd_v7_u14n03": {
-    "titleEn": "Where, When & How Much",
-    "titleTh": "ถามข้อมูลสถานที่ วัน เวลา ราคา จำนวนจากรูปที่ model",
-    "goalTh": "ถามข้อมูลสถานที่ วัน เวลา ราคา จำนวนจากรูปที่ model",
+  "fnd_v7_where_when_how_much_and_how_many": {
+    "titleEn": "Where, When, How Much & How Many",
+    "titleTh": "ถามสถานที่ เวลา ราคา และจำนวน",
+    "goalTh": "ใช้ where, when, how much และ how many ถามข้อมูลพื้นฐาน",
     "scope": "when/how much/how many ใช้ concrete short chunks กับ numbers/days เดิม; where + be ใช้ home/school/room ที่ lexical preview; ไม่สอน How + adjective ทุกแบบ",
     "estimatedMinutes": [
       4,
@@ -1252,7 +1259,7 @@
       "answerEn": "Where is the class?"
     }
   },
-  "fnd_v7_u15n01": {
+  "fnd_v7_there_is_there_are": {
     "titleEn": "There Is / There Are",
     "titleTh": "บอกสิ่งที่มีในสถานที่หนึ่ง",
     "goalTh": "บอกสิ่งที่มีในสถานที่หนึ่ง",
@@ -1287,7 +1294,7 @@
       "answerEn": "There is a book"
     }
   },
-  "fnd_v7_u15n03": {
+  "fnd_v7_in_on_under_next_to": {
     "titleEn": "In, On, Under, Next To",
     "titleTh": "บอกตำแหน่งของด้วยคำบุพบทสี่คำ",
     "goalTh": "บอกตำแหน่งของด้วยคำบุพบทสี่คำ",
@@ -1319,7 +1326,7 @@
       "answerEn": "The bag is under the table"
     }
   },
-  "fnd_v7_u15n06": {
+  "fnd_v7_go_straight_turn_left": {
     "titleEn": "Go Straight, Turn Left",
     "titleTh": "เข้าใจและให้ทิศทางหนึ่งถึงสองขั้น",
     "goalTh": "เข้าใจและให้ทิศทางหนึ่งถึงสองขั้น",

@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 import { PHONICS_LESSONS, PHONICS_LESSON_SPECS, isPhonicsLesson } from './phonics-lessons.data';
 import { buildClearEnglishCourse, CLEAR_ENGLISH_LESSON_IDS } from './clear-english-course.data';
-import { getLesson, getAllLessons, isPronunciationLesson, lessonUsesTapToContinue, normalizeEmojiChoice } from '../lessons/lessons.data';
+import { getLesson, getAllLessons, isPronunciationLesson, lessonUsesTapToContinue, normalizeEmojiChoice, LESSON_PROGRESSION_ORDER } from '../lessons/lessons.data';
 import { LessonsService } from '../lessons/lessons.service';
 import { MemoryPhonicsProgressStore, PhonicsService, isPhonicsNodeId } from './phonics.service';
 import { PhonicsController } from './phonics.controller';
@@ -46,6 +46,23 @@ describe('Phonics v2 — ordinary speaking lessons', () => {
       assert.ok(lesson.progressMax! < lesson.maxTurns);
     }
     assert.equal(isPhonicsLesson('pron_phonics_unknown'),false);
+  });
+
+  it('includes phonics completions on lesson progress without adding them to the hub', async () => {
+    const completedId = 'pron_phonics_01_first_code';
+    const lessons = new LessonsService({
+      userSession: {
+        findMany: async () => [{ lessonId: completedId }],
+        findFirst: async () => ({ lessonId: completedId }),
+      },
+    } as any, {} as any);
+    const view = await lessons.buildProgressView('user');
+    const phonics = view.lessons.find(row => row.lessonId === completedId);
+    assert.ok(phonics);
+    assert.equal(phonics!.status, 'completed');
+    assert.equal(LESSON_PROGRESSION_ORDER.includes(completedId), false);
+    assert.equal(getAllLessons().some(row => row.lessonId === completedId), false);
+    assert.equal(view.lessons.filter(row => row.lessonId.startsWith('pron_phonics_')).length, 20);
   });
 
   it('uses the real emojiChoice contract for letters/patterns and taught whole-word speech targets', () => {

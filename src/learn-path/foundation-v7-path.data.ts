@@ -8,6 +8,7 @@ export interface FoundationV7Node {
   type: FoundationV7NodeType; beat: string; learningTarget: string; activity: string;
   examples: string[]; estimatedMinutes: number[]; difficultyAxes: number[];
   contentRef: FoundationV7ContentRef; sayItMode?: 'guided'; clipId?: string;
+  legacySimulationIds?: string[];
   pronunciation?: { sourceCourse: string; sourceLessonId: string; soundTarget: string; mode: string; lexicalPreview: string[] };
 }
 export const FOUNDATION_V7_CATALOG = catalogJson as {
@@ -46,4 +47,11 @@ export function foundationV7RewardAliases(id: string): string[] {
 }
 export function isFoundationV7EmojiPool(id: string): boolean {
   return FOUNDATION_V7_NODES.some(n => n.type === 'emoji_speak' && n.contentRef.poolId === id);
+}
+
+/** Conversations on the V7 path — not in the Adventure series catalog. */
+export function isFoundationV7SimulationId(simulationId: string): boolean {
+  return FOUNDATION_V7_NODES.some(
+    (n) => n.type === 'conversation' && n.contentRef.simulationId === simulationId,
+  );
 }

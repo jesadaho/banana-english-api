@@ -31,6 +31,8 @@ export interface SimulationConfig {
   fallbackReplyEn?: string;
   fallbackReplyTh?: string;
   successCriteria: string[];
+  /** Minimum learner replies before a successful mission may close. */
+  minTurns?: number;
   maxTurns: number;
   vocabDrill: VocabDrillWord[];
 }
@@ -1563,8 +1565,11 @@ export function finalizeSimulationTurnState(
     aiAlreadyClosing &&
     merged.introduced_self &&
     merged.answered_about_self;
+  const minimumTurns = config.minTurns ?? 1;
   const foundationGoalsDone =
-    isFoundationMission && allCheckpointsComplete(merged);
+    isFoundationMission &&
+    allCheckpointsComplete(merged) &&
+    nextTurn >= minimumTurns;
   const respectedPrivacyExit =
     config.simulationId === 'foundation_talk_about_family' &&
     familyPrivacyOptOut(history);

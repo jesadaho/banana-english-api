@@ -432,6 +432,10 @@ export interface SimulationTurnReply {
 }
 
 export interface TrainingTurnReply {
+  /** Server-owned Foundation V7 state; never taken from model output. */
+  v7Step?: number;
+  v7Retry?: boolean;
+  v7Choice?: string;
   textEn: string;
   /** Optional speech-only copy for Cloud gRPC / server-side TTS. */
   ttsText?: string;
@@ -2592,9 +2596,10 @@ Payment closure (critical — no tap UI exists):
 Mission closure (critical):
 ${
   config.foundationMission
-    ? `- This Foundation mission allows at most ${config.maxTurns} learner replies.
+    ? `- This Foundation mission needs at least ${config.minTurns ?? 1} learner replies and at most ${config.maxTurns}.
 - If the learner communicates multiple goals in one reply, mark every genuinely earned checkpoint and skip questions they already answered.
-- Close as soon as every checkpoint is genuinely complete; maxTurns is a ceiling, not a required conversation length.
+- Do not close before learner reply ${config.minTurns ?? 1}. If checkpoints are already complete, continue one natural next beat and do not use the completion line yet.
+- Close with the concrete outcome only when every checkpoint is complete AND at least ${config.minTurns ?? 1} learner replies have happened.
 - On learner reply ${config.maxTurns}, wrap up without another question, but NEVER mark an unearned checkpoint true.
 - Before learner reply ${config.maxTurns}, ask only the next question defined in the mission flow.`
     : `- When ${remainingTurns} turns remaining or fewer, wrap up warmly in this reply, set ALL checkpoints to true, and do NOT ask another question.
