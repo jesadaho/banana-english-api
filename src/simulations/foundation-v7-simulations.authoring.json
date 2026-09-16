@@ -118,28 +118,34 @@
   {
     "simulationId": "foundation_v7_u07n07",
     "nodeId": "v7_u07n07",
-    "titleEn": "Lost & Found",
-    "scenarioTh": "ของหายของคุณคือกระเป๋าสีน้ำเงิน เจ้าหน้าที่มีใบสีน้ำเงินกับใบสีแดง บอกว่าชิ้นไหนของคุณ",
-    "openingEn": "Hello! Your bag?",
-    "role": "You work at lost and found. Both bags are in this text scene; blue belongs to the learner, red belongs to Sam. Ask 'The red bag?' once and accept a correction. After they confirm the blue bag is theirs, wait for thanks before handing it over. No images or hidden ownership facts are needed.",
+    "titleEn": "Before Class",
+    "scenarioTh": "ก่อนเข้าเรียน โทรศัพท์ของคุณกับหนังสือของ Max วางปะปนกันอยู่ ช่วยกันแยกของให้ถูกคน",
+    "openingEn": "Hey! Do you have a phone?",
+    "role": "You are Max checking mixed-up belongings with the learner before class. The learner has a phone, and you have their phone in front of you. The learner also has your book. First ask whether they have a phone. Then show the phone and ask whether it is theirs. Finally ask whether they have your book. Keep the exchange concrete and natural. The learner only needs to answer; never require them to ask a question. Accept short yes plus the target sentence, and accept contractions or omitted yes when the meaning is clear. After they confirm they have your book, complete the exchange by returning their phone and taking your book. Do not introduce a pen, key, bag, lost-and-found desk, colour choice, or absent image.",
     "goals": [
       {
-        "id": "request",
-        "th": "บอกของที่ต้องการ",
-        "en": "Request the missing belonging",
-        "example": "My bag, please"
+        "id": "have_phone",
+        "th": "บอกว่ามีโทรศัพท์",
+        "en": "Say that they have a phone",
+        "example": "Yes, I have a phone"
       },
       {
-        "id": "owner",
-        "th": "ยืนยันหรือแก้เจ้าของ",
-        "en": "Clarify ownership and/or colour",
-        "example": "The blue bag is my bag"
+        "id": "my_phone",
+        "th": "ยืนยันว่าโทรศัพท์เป็นของตน",
+        "en": "Confirm that the phone is theirs",
+        "example": "Yes, this is my phone"
+      },
+      {
+        "id": "your_book",
+        "th": "บอกว่าหนังสือของ Max อยู่กับตน",
+        "en": "Say that they have Max's book",
+        "example": "Yes, I have your book"
       }
     ],
     "minTurns": 3,
     "maxTurns": 4,
-    "completionEn": "Yes, the blue bag is yours. Here you are!",
-    "completionTh": "ใช่ครับ กระเป๋าสีน้ำเงินเป็นของคุณ รับไปได้เลยครับ!"
+    "completionEn": "Great! Here is your phone, and I have my book. Ready for class!",
+    "completionTh": "เยี่ยมครับ นี่คือโทรศัพท์ของคุณ และผมได้หนังสือคืนแล้ว พร้อมเข้าเรียนครับ!"
   },
   {
     "simulationId": "foundation_v7_u08n10",
@@ -176,10 +182,10 @@
   {
     "simulationId": "foundation_v7_u09n09",
     "nodeId": "v7_u09n09",
-    "titleEn": "Buy One Ticket",
-    "scenarioTh": "ซื้อตั๋วหนึ่งใบสำหรับคลาส ถามราคาและเวลาคลาส ราคาที่เจ้าหน้าที่รู้คือ 30 บาท คลาสวันศุกร์ 10 โมง",
-    "openingEn": "Hello! One ticket?",
-    "role": "You sell a class ticket. Price thirty baht, class Friday at ten. Do not volunteer the price or class time; answer only what they ask. After they confirm they want the ticket, hand it over. Never change facts, use dollars, or ask for travel/payment details.",
+    "titleEn": "Buy a Movie Ticket",
+    "scenarioTh": "ซื้อตั๋วหนังหนึ่งใบสำหรับรอบวันศุกร์ 10 โมง ราคา 100 บาท ยืนยันรอบ ถามราคา และยื่นเงินให้พนักงาน",
+    "openingEn": "Hello! How can I help?",
+    "role": "You are a friendly cinema ticket clerk. The movie is on Friday at ten and one ticket costs one hundred baht. After the learner requests one ticket, volunteer the schedule exactly as 'The movie is on Friday at ten.' and wait for them to confirm it. Then answer their price question. Accept 'Here you are' as payment, thank them, and hand over the ticket. Keep each response short. Never change the day, time, or price; never use dollars, discuss seats, snacks, movie titles, ratings, or payment methods.",
     "goals": [
       {
         "id": "ticket",
@@ -195,15 +201,21 @@
       },
       {
         "id": "time",
-        "th": "ถามหรือยืนยันวันหรือเวลา",
-        "en": "Ask or confirm the class day/time",
-        "example": "At ten?"
+        "th": "ยืนยันวันและเวลาของหนัง",
+        "en": "Confirm the movie day and time",
+        "example": "Friday at ten?"
+      },
+      {
+        "id": "payment",
+        "th": "ยื่นเงินให้พนักงาน",
+        "en": "Hand the payment to the clerk",
+        "example": "Here you are"
       }
     ],
     "minTurns": 4,
     "maxTurns": 5,
-    "completionEn": "Here is your ticket for Friday at ten.",
-    "completionTh": "นี่คือตั๋วของคุณสำหรับวันศุกร์สิบโมงครับ"
+    "completionEn": "Thank you. Here is your movie ticket. See you on Friday!",
+    "completionTh": "ขอบคุณครับ นี่คือตั๋วหนังของคุณ แล้วพบกันวันศุกร์ครับ!"
   },
   {
     "simulationId": "foundation_v7_u10n07",
@@ -241,85 +253,97 @@
     "simulationId": "foundation_v7_u11n06",
     "nodeId": "v7_u11n06",
     "titleEn": "Find Something We Can Do",
-    "scenarioTh": "หากิจกรรมที่ทำร่วมกับ Sam ได้ Sam ทำอาหารได้แต่ว่ายน้ำไม่เป็น คุณใช้ข้อมูลสมมติของตัวเองได้",
-    "openingEn": "Hi! I can cook. Can you cook?",
-    "role": "You are Sam. You can cook/read and cannot swim. The opening already asks if they can cook; do not mark ask until they ask you a question. Accept true or fictional abilities, including cannot. If an ability matches, wait for a short agreement before finishing the card. If none matches, complete the activity card truthfully without pretending there is a match. Never infer ability from appearance.",
+    "scenarioTh": "คุยกับ Max ริมสระว่ายน้ำ ตอบว่าว่ายน้ำเป็นไหม แล้วถาม Max กลับว่าเขาทำอาหารเป็นไหม ก่อนตอบว่าคุณทำอาหารเป็นหรือไม่ ใช้ข้อมูลจริงหรือสมมติได้",
+    "openingEn": "Hi! Can you swim?",
+    "role": "You are Max talking casually with a friend beside a swimming pool. First ask 'Can you swim?' Accept Yes/No, 'I can swim', 'I cannot swim', or equivalent short taught answers. If yes, reply briefly that you can swim too; if no, reassure them briefly and say that you can swim. Then stop and let the mission hint guide the learner to ask you 'Can you cook?' Do not ask the cooking question for them and do not use classroom language such as 'your turn'. When they ask if you can cook, answer 'Yes, I can. What about you? Can you cook?' Accept Yes/No or a full taught can/cannot answer. After their cooking answer, close truthfully: if they said they can swim, say you can swim together; otherwise if they said they can cook, say you can cook together; if both answers were negative, say that is okay and you can find something else. Keep every line short, friendly, and A1-level. Never infer ability from appearance or introduce new activities.",
     "goals": [
       {
-        "id": "ability",
-        "th": "บอกทำได้หรือไม่ได้",
-        "en": "State an ability or inability",
-        "example": "I can cook"
+        "id": "swim_answer",
+        "th": "ตอบ Max ว่าว่ายน้ำเป็นไหม",
+        "en": "Answer whether you can swim",
+        "example": "Yes, I can"
       },
       {
-        "id": "ask",
-        "th": "ถามอีกฝ่าย",
-        "en": "Ask the partner about an ability",
-        "example": "Can you swim"
+        "id": "ask_cook",
+        "th": "ถาม Max กลับว่าเขาทำอาหารเป็นไหม",
+        "en": "Ask Max whether he can cook",
+        "example": "Can you cook"
       },
       {
-        "id": "respond",
-        "th": "ตอบรับหรือบอกว่ายังไม่ตรงกัน",
-        "en": "Respond to an offered activity",
+        "id": "cook_answer",
+        "th": "ตอบ Max ว่าคุณทำอาหารเป็นไหม",
+        "en": "Answer whether you can cook",
         "example": "Yes, I can"
       }
     ],
     "minTurns": 3,
     "maxTurns": 5,
-    "completionEn": "Great! We finished our activity card.",
-    "completionTh": "เยี่ยมครับ เราทำบัตรกิจกรรมเสร็จแล้วครับ"
+    "completionEn": "Thanks! Now we know what we can do together.",
+    "completionTh": "ขอบคุณครับ ตอนนี้เรารู้แล้วว่ามีกิจกรรมอะไรที่ทำด้วยกันได้"
   },
   {
     "simulationId": "foundation_v7_u12n08",
-    "nodeId": "v7_u12n08",
-    "titleEn": "Choose a Practice Day",
-    "scenarioTh": "นัดวันฝึกกับ Sam โดยเทียบกิจวัตรกัน เขาทำงานวันจันทร์และว่างวันศุกร์ ถ้าวันศุกร์ไม่สะดวก เลือกวันอื่นได้",
-    "openingEn": "Hi! I work on Monday, but not Friday. Do you work on Friday?",
-    "role": "You are Sam arranging a practice day. You work Monday and do not work Friday. Ask about the learner's Friday routine. Offer Friday if it works for them. If it does not, ask for another taught day and accept their choice. Answer a natural routine question if they ask, but never require one just to pass. Once both agree, wait for a short confirmation such as thanks or see you, then write the actual chosen day on the practice card.",
+    "nodeId": "v7_u12n07",
+    "titleEn": "Make a Morning Plan",
+    "scenarioTh": "คุยกับ Max เพื่อเลือกเวลาเจอกันช่วงเช้า บอกเวลาที่ตื่น ตอบว่าทำงานวันศุกร์ไหม แล้วตอบรับวันและเวลาที่ Max เสนอ ใช้ข้อมูลจริงหรือสมมติได้",
+    "openingEn": "Good morning! What time do you wake up every day?",
+    "role": "You are Max making a simple morning plan with a friend. Lead the whole conversation so the learner only needs to answer. First ask exactly 'Good morning! What time do you wake up every day?' Accept a taught full answer such as 'I wake up at seven' and also accept a clear short time. Then ask exactly 'Do you work on Friday?' Accept Yes/No, 'I work on Friday', 'I do not work on Friday', or equivalent taught answers. If the learner does not work on Friday, offer 'Friday at ten?' If they work on Friday, offer 'Saturday at ten?' Accept a short yes or a clear repetition of the proposed day and time. Never require the learner to ask a question, never ask about Monday, and do not introduce past tense or 'did'. Keep every line short, friendly, and A1-level.",
     "goals": [
       {
-        "id": "availability",
-        "th": "บอกว่าวันศุกร์สะดวกไหมหรือเล่ากิจวัตรวันศุกร์",
-        "en": "Say whether Friday works or share a Friday routine",
-        "example": "I do not work on Friday"
+        "id": "wake_time",
+        "th": "บอกเวลาที่ตื่นเป็นประจำ",
+        "en": "Say what time you wake up every day",
+        "example": "I wake up at seven"
       },
       {
-        "id": "agree",
-        "th": "ตกลงวันฝึก",
-        "en": "Agree on a practice day",
-        "example": "Friday is good"
+        "id": "friday_work",
+        "th": "ตอบว่าทำงานวันศุกร์ไหม",
+        "en": "Answer whether you work on Friday",
+        "example": "No, I do not"
+      },
+      {
+        "id": "confirm_plan",
+        "th": "ตอบรับวันและเวลาที่ Max เสนอ",
+        "en": "Confirm the day and time Max offers",
+        "example": "Yes, Friday at ten"
       }
     ],
     "minTurns": 3,
     "maxTurns": 5,
-    "completionEn": "Great. I put our day on the practice card!",
-    "completionTh": "เยี่ยมครับ ผมเขียนวันที่เราเลือกลงบัตรนัดฝึกแล้วครับ!"
+    "completionEn": "Great! See you then!",
+    "completionTh": "เยี่ยมครับ แล้วเจอกันนะ!"
   },
   {
     "simulationId": "foundation_v7_u13n06",
     "nodeId": "v7_u13n06",
     "titleEn": "A Quick Update",
-    "scenarioTh": "ช่วย Teacher B เช็กว่าใครยังไม่พร้อมเข้าคลาส: Mia กำลังทำอาหาร ส่วน Sam กำลังกินและไม่ได้ทำงาน",
-    "openingEn": "Hi! Is Mia working now?",
-    "role": "You are Teacher B checking who is busy before class. Use only the shared text scene: Mia is cooking; Sam is eating and is not working. Begin with one wrong guess, accept the learner's correction, then ask 'And Sam?'. Once both activities are clear, wait for a short acknowledgement, then say you will wait. Answer naturally if the learner asks a current-action question. Do not use past/future or claim to see an unprovided image.",
+    "scenarioTh": "Mia โทรวิดีโอคอลมาช่วงพัก คุณอยู่ครัว บอกสิ่งที่กำลังทำ ตอบว่ากำลังทำงานอยู่ไหม แล้วยืนยันว่าเพื่อนผู้หญิงที่อยู่ใกล้ ๆ กำลังทำอาหาร ใช้ข้อมูลจริงหรือสมมติได้ในสองคำตอบแรก",
+    "openingEn": "Hi! What are you doing now?",
+    "role": "You are Mia on a video call during a break. The learner is in a kitchen. Lead the whole conversation so the learner only needs to answer. First ask exactly 'Hi! What are you doing now?' Accept a clear present-continuous answer with a known action such as cooking, eating, reading, or working. Then react briefly and ask exactly 'Are you working now?' Accept Yes/No, 'Yes, I am', 'No, I am not', or another clear taught answer. Next say 'I can see your friend too. Is she cooking?' The shared scene establishes that the friend is female and is cooking. Accept 'Yes, she is', 'She is cooking', or 'Yes, she is cooking'. Then close warmly. Keep every line short and A1-level. Never require the learner to ask a question, never introduce a new action, and do not use past or future tense.",
     "goals": [
       {
-        "id": "update",
-        "th": "บอกหรือแก้กิจกรรมตอนนี้",
-        "en": "Report/correct one current activity",
-        "example": "She is cooking"
+        "id": "own_action",
+        "th": "บอกสิ่งที่ตนกำลังทำตอนนี้",
+        "en": "Say what you are doing now",
+        "example": "I am cooking"
       },
       {
-        "id": "second",
-        "th": "บอกกิจกรรมอีกคน",
-        "en": "Report the other person's activity",
-        "example": "He is eating"
+        "id": "working_now",
+        "th": "ตอบว่ากำลังทำงานอยู่ไหม",
+        "en": "Answer whether you are working now",
+        "example": "No, I am not"
+      },
+      {
+        "id": "friend_action",
+        "th": "ยืนยันว่าเพื่อนกำลังทำอาหาร",
+        "en": "Confirm that your friend is cooking",
+        "example": "Yes, she is cooking"
       }
     ],
     "minTurns": 3,
     "maxTurns": 5,
-    "completionEn": "Mia is cooking and Sam is eating. I will wait.",
-    "completionTh": "Mia กำลังทำอาหารและ Sam กำลังกิน ผมจะรอก่อนครับ"
+    "completionEn": "Great! Thanks for the update. Talk to you later!",
+    "completionTh": "เยี่ยมครับ ขอบคุณที่อัปเดต แล้วคุยกันใหม่นะครับ!"
   },
   {
     "simulationId": "foundation_v7_u14n06",

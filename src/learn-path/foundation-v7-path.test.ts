@@ -42,7 +42,7 @@ describe('Foundation V7 catalog and real content', () => {
     assert.equal(FOUNDATION_V7_CATALOG.chapters.length, 16);
     assert.equal(FOUNDATION_V7_NODES.length, 106);
     assert.equal(new Set(FOUNDATION_V7_NODES.map(n => n.id)).size, 106);
-    assert.deepEqual(FOUNDATION_V7_CATALOG.chapters.map(c => c.items.length), [5,4,6,7,6,8,7,6,10,7,6,8,6,6,9,5]);
+    assert.deepEqual(FOUNDATION_V7_CATALOG.chapters.map(c => c.items.length), [5,4,6,7,7,8,7,6,10,7,6,7,6,6,9,5]);
     assert.deepEqual(foundationV7NodeTypeCounts(), { lesson:37, say_it:16, emoji_speak:17, pronunciation:4, describe_it:13, story_bites:4, conversation:15 });
     assert.deepEqual(FOUNDATION_V7_NODES.map(n => n.globalOrder), Array.from({length:106}, (_, i) => i + 1));
     for (let i = 1; i < FOUNDATION_V7_NODES.length; i++) {
@@ -76,7 +76,11 @@ describe('Foundation V7 catalog and real content', () => {
       {lessonId:'yes_no_maybe'}, {simulationId:'foundation_first_conversation'},
     ]);
     const pron = FOUNDATION_V7_NODES.filter(n => n.type === 'pronunciation');
-    assert.deepEqual(pron.map(n => n.contentRef.lessonId), ['pron_th_2','pron_end_t_1','pron_final_s_1','pron_stress_1']);
+    assert.deepEqual(pron.map(n => n.contentRef.lessonId), ['pron_final_s_1','pron_th_2','pron_end_t_1','pron_stress_1']);
+    const pluralS = FOUNDATION_V7_CATALOG.chapters[4].items[2];
+    assert.equal(pluralS.id, 'v7_u05n03');
+    assert.equal(pluralS.contentRef.lessonId, 'pron_final_s_1');
+    assert.deepEqual(getLesson('pron_final_s_1')?.targetPhrases, ['books', 'bags', 'pens', 'apples']);
     for (const node of pron) {
       assert.equal(node.contentRef.lessonId, node.pronunciation?.sourceLessonId);
       assert.ok(getLesson(node.contentRef.lessonId!));

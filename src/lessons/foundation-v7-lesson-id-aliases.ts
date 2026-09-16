@@ -28,7 +28,7 @@ export const FOUNDATION_V7_LESSON_ID_ALIASES: Record<string, string> = {
   'fnd_v7_u11n03': 'fnd_v7_cant_and_can_you',
   'fnd_v7_u12n01': 'fnd_v7_my_day',
   'fnd_v7_u12n03': 'fnd_v7_her_day_his_day',
-  'fnd_v7_u12n05': 'fnd_v7_do_does_every_day',
+  'fnd_v7_u12n04': 'fnd_v7_do_does_every_day',
   'fnd_v7_u13n01': 'fnd_v7_happening_now',
   'fnd_v7_u13n03': 'fnd_v7_are_they_working',
   'fnd_v7_u14n01': 'fnd_v7_what_or_who',
