@@ -157,7 +157,7 @@ function shippedContentForMappedType(
   titleEn: string,
   type: FoundationClientNodeType,
 ): FoundationV2NodeDef | undefined {
-  if (type === 'story_bites') return undefined;
+  if (type === 'story_bites' || type === 'new_words') return undefined;
   return v2ContentForV5Title(
     titleEn,
     type === 'pronunciation' ? 'lesson' : type,
