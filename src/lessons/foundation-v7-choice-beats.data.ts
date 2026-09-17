@@ -147,4 +147,10 @@ export const FOUNDATION_V7_CHOICE_BEATS: Record<string, FoundationV7ChoiceBeat> 
   fnd_v7_go_straight_turn_left: single(2, 'ทางไปห้องอยู่ด้านซ้าย ควรบอกให้ทำอะไร', '', 'Turn left', 'ด้านซ้ายใช้ Turn left ครับ', [
     option('⬆️', 'go straight', 'Go straight'), option('⬅️', 'turn left', 'Turn left'), option('➡️', 'turn right', 'Turn right'),
   ]),
+  fnd_v7_where_is_it: single(2, 'คุณอยากรู้ว่าสถานีอยู่ที่ไหน ควรถามอย่างไร', 'Where is...?', 'Where is the station?', 'ถามหาสถานที่ใช้ Where is ครับ', [
+    option('🚉', 'station', 'Where is the station?'), option('🏥', 'hospital', 'Where is the hospital?'), option('🛍️', 'market', 'Where is the market?'),
+  ]),
+  fnd_v7_how_do_you_go: any(2, 'เลือกวิธีเดินทางหนึ่งอย่างแล้วบอกให้ครบประโยค', 'I go by...', [
+    option('🚌', 'bus', 'I go by bus'), option('🚆', 'train', 'I go by train'), option('🚕', 'taxi', 'I go by taxi'),
+  ]),
 };

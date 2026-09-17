@@ -593,39 +593,45 @@
       }
     ]
   },
-  "fnd_v7_u16n01": {
-    "title": "Words I Know",
-    "dealCount": 5,
+  "fnd_v7_u16n09": {
+    "title": "Around Town Words",
+    "dealCount": 6,
     "items": [
       {
-        "emoji": "📖",
-        "answer": "book",
-        "hint": "bo_k",
-        "meaningTh": "หนังสือ"
+        "emoji": "🚉",
+        "answer": "station",
+        "hint": "st_ti_n",
+        "meaningTh": "สถานี"
       },
       {
-        "emoji": "🔑",
-        "answer": "key",
-        "hint": "k_y",
-        "meaningTh": "กุญแจ"
+        "emoji": "🏥",
+        "answer": "hospital",
+        "hint": "h_sp_t_l",
+        "meaningTh": "โรงพยาบาล"
       },
       {
-        "emoji": "💧",
-        "answer": "water",
-        "hint": "wa__r",
-        "meaningTh": "น้ำ"
+        "emoji": "🛍️",
+        "answer": "market",
+        "hint": "m_rk_t",
+        "meaningTh": "ตลาด"
       },
       {
-        "emoji": "📖👀",
-        "answer": "read",
-        "hint": "re_d",
-        "meaningTh": "อ่าน"
+        "emoji": "🚌",
+        "answer": "bus",
+        "hint": "b_s",
+        "meaningTh": "รถเมล์"
       },
       {
-        "emoji": "🪑",
-        "answer": "chair",
-        "hint": "ch__r",
-        "meaningTh": "เก้าอี้"
+        "emoji": "🚆",
+        "answer": "train",
+        "hint": "tr__n",
+        "meaningTh": "รถไฟ"
+      },
+      {
+        "emoji": "🚕",
+        "answer": "taxi",
+        "hint": "t_x_",
+        "meaningTh": "แท็กซี่"
       }
     ]
   }

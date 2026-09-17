@@ -404,35 +404,35 @@
     "completionTh": "ถูกต้องครับ ห้องเรียนอยู่ตรงไปแล้วเลี้ยวซ้ายครับ"
   },
   {
-    "simulationId": "foundation_v7_u16n05",
-    "nodeId": "v7_u16n05",
-    "titleEn": "My First Day",
-    "scenarioTh": "วันแรกของคลาส: แนะนำตัวกับ Max แล้วเลือกถามเรื่องเวลา ห้อง หรือขอสิ่งที่ต้องการ ใช้ข้อมูลตัวเองหรือสมมติได้",
-    "openingEn": "Hi! I am Max. Nice to meet you.",
-    "role": "You are Max helping on the learner's first day. Class is Friday at ten in this room; a pen is on the table and water is available. First welcome the learner and learn their name. Then create one practical need by asking whether they need the room, time, a pen, or water; follow the option they choose. Give the requested information slowly, allow a repeat request as its own turn, then wait for thanks before saying they are ready for class. Do not mark repair unless they asked to repeat or corrected something. Help if requested. No unrelated A2 task.",
+    "simulationId": "foundation_v7_u16n10",
+    "nodeId": "v7_u16n10",
+    "titleEn": "Get to the Station",
+    "scenarioTh": "คุณกำลังจะไปสถานี บอกจุดหมาย เลือกรถเมล์หรือแท็กซี่ แล้วฟังทิศทางสั้น ๆ ให้เข้าใจ",
+    "openingEn": "Hi! Where are you going?",
+    "role": "You are a friendly local helping the learner get to the station. Lead the exchange naturally. First ask where they are going. Accept 'the station' or a full sentence such as 'I'm going to the station'. Then offer exactly two choices, bus or taxi, and accept 'bus', 'I want to go by bus', or another meaningful choice. Give one short two-step route: 'Go straight and turn left.' Ask for a brief acknowledgment if needed, then wait for thanks before closing. Treat I'm going to and I want to go by as functional chunks; do not explain future grammar. Help or repeat slowly if requested. No tickets, schedules, hotel procedure, or unrelated A2 task.",
     "goals": [
       {
-        "id": "introduce",
-        "th": "เริ่มคุยหรือแนะนำตัว",
-        "en": "Start the conversation or introduce yourself",
-        "example": "My name is Sam"
+        "id": "destination",
+        "th": "บอกว่าจะไปสถานี",
+        "en": "Say that you are going to the station",
+        "example": "I'm going to the station"
       },
       {
-        "id": "exchange",
-        "th": "ถามข้อมูลหรือขอสิ่งที่ต้องการ",
-        "en": "Ask for useful information or make a request",
-        "example": "When is the class"
+        "id": "transport",
+        "th": "เลือกวิธีเดินทาง",
+        "en": "Choose how to travel",
+        "example": "I want to go by bus"
       },
       {
-        "id": "repair",
-        "th": "ยืนยัน แก้ข้อมูล หรือขอซ้ำ",
-        "en": "Clarify, acknowledge or repair a misunderstanding",
-        "example": "Please say that again"
+        "id": "route",
+        "th": "รับทิศทางและจบอย่างสุภาพ",
+        "en": "Acknowledge the route and close politely",
+        "example": "Thank you"
       }
     ],
-    "minTurns": 4,
-    "maxTurns": 6,
-    "completionEn": "You have what you need. You are ready for your first class!",
-    "completionTh": "คุณได้สิ่งที่ต้องการแล้ว พร้อมสำหรับคลาสแรกครับ!"
+    "minTurns": 3,
+    "maxTurns": 5,
+    "completionEn": "Great. The bus stop is straight ahead, then left. Have a good trip!",
+    "completionTh": "เยี่ยมครับ ป้ายรถเมล์อยู่ตรงไปแล้วเลี้ยวซ้าย เดินทางดี ๆ นะครับ!"
   }
 ]

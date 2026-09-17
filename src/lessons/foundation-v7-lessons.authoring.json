@@ -1364,5 +1364,51 @@
       "promptTh": "บอกให้เลี้ยวขวา",
       "answerEn": "Turn right"
     }
+  },
+  "fnd_v7_where_is_it": {
+    "titleEn": "Where Is It?",
+    "titleTh": "ถามและบอกว่าสถานที่อยู่ที่ไหน",
+    "goalTh": "ถามและบอกว่าสถานที่อยู่ที่ไหน",
+    "scope": "ใช้ school/café/shop/station/hospital/market ที่เรียนแล้ว และทบทวน next to/there is; ไม่เพิ่มเส้นทางหรือพาหนะในบทนี้",
+    "estimatedMinutes": [3, 5],
+    "blocks": [
+      {
+        "tipTh": "ถามหาสถานที่ด้วย Where is + สถานที่",
+        "models": ["Where is the café?", "Where is the shop?"],
+        "repeat": "Where is the café?"
+      },
+      {
+        "tipTh": "ตอบตำแหน่งด้วย here หรือ next to ซึ่งเคยเรียนแล้ว",
+        "models": ["The school is here", "The café is next to the shop"],
+        "repeat": "The café is next to the shop"
+      }
+    ],
+    "recall": {
+      "promptTh": "อยากรู้ว่าสถานีอยู่ที่ไหน ลองถาม",
+      "answerEn": "Where is the station?"
+    }
+  },
+  "fnd_v7_how_do_you_go": {
+    "titleEn": "How Do You Go?",
+    "titleTh": "บอกวิธีเดินทางแบบง่าย ๆ",
+    "goalTh": "บอกและถามวิธีเดินทางด้วย go by",
+    "scope": "สอน go by เป็น functional chunk กับ bus/train/taxi; ทบทวน do/does และไม่อธิบายระบบไวยากรณ์ใหม่",
+    "estimatedMinutes": [3, 5],
+    "blocks": [
+      {
+        "tipTh": "บอกพาหนะด้วย go by + ชื่อพาหนะ โดยไม่ใส่ a",
+        "models": ["I go by bus", "I go by train"],
+        "repeat": "I go by bus"
+      },
+      {
+        "tipTh": "ถามอีกฝ่ายด้วย Do you go by... และพูดถึง he/she ด้วย goes",
+        "models": ["Do you go by taxi?", "She goes by train"],
+        "repeat": "Do you go by taxi?"
+      }
+    ],
+    "recall": {
+      "promptTh": "บอกว่าคุณเดินทางโดยรถไฟ",
+      "answerEn": "I go by train"
+    }
   }
 }

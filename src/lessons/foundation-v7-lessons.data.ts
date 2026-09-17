@@ -22,6 +22,7 @@ export const FOUNDATION_V7_PATTERNS: Record<string, V7TeachingPattern> = {
   fnd_v7_happening_now: 'choose_and_reuse', fnd_v7_are_they_working: 'contrast_and_apply',
   fnd_v7_what_or_who: 'contrast_and_apply', fnd_v7_where_when_how_much_and_how_many: 'contrast_and_apply',
   fnd_v7_there_is_there_are: 'contrast_and_apply', fnd_v7_in_on_under_next_to: 'contrast_and_apply', fnd_v7_go_straight_turn_left: 'situation_and_respond',
+  fnd_v7_where_is_it: 'contrast_and_apply', fnd_v7_how_do_you_go: 'choose_and_reuse',
 };
 
 const APPLICATION_STEMS: Record<string, string> = {
@@ -32,6 +33,7 @@ const APPLICATION_STEMS: Record<string, string> = {
   fnd_v7_do_does_every_day: 'Does he...?', fnd_v7_are_they_working: 'Is he...?',
   fnd_v7_what_or_who: 'What is...?', fnd_v7_where_when_how_much_and_how_many: 'Where is...?',
   fnd_v7_there_is_there_are: 'There is...', fnd_v7_in_on_under_next_to: 'The bag is...',
+  fnd_v7_where_is_it: 'Where is...?',
 };
 
 // Authored cold opens keep the existing first turn purposeful and consistent.
@@ -57,6 +59,8 @@ const FOUNDATION_V7_OPENINGS: Record<string, string> = {
   fnd_v7_are_they_working: 'ทุกคนดูยุ่งมากครับ แต่คนหนึ่งอาจทำงาน ส่วนอีกคนอาจกำลังกินอยู่ วันนี้เราจะฝึกถามและตอบว่าคนอื่นกำลังทำอะไรอยู่ตอนนี้',
   fnd_v7_there_is_there_are: 'Teacher B เพิ่งเข้าห้องใหม่และอยากรู้ว่าข้างในมีอะไรบ้างครับ วันนี้เราจะฝึกบอกว่ามีสิ่งหนึ่งหรือหลายสิ่งอยู่ในห้อง',
   fnd_v7_in_on_under_next_to: 'กุญแจหายอีกแล้วครับ ข่าวดีคือยังอยู่ในห้อง ข่าวร้ายคือคำว่า “อยู่ในห้อง” ยังกว้างไป 😅 วันนี้เราจะฝึกบอกตำแหน่งให้ละเอียดขึ้น',
+  fnd_v7_where_is_it: 'มีคาเฟ่ ร้านค้า และสถานีอยู่แถวนี้ครับ แต่รู้ชื่ออย่างเดียวยังไปไม่ถูก 😅 วันนี้เราจะฝึกถามและบอกว่าสถานที่อยู่ที่ไหน',
+  fnd_v7_how_do_you_go: 'สถานีอยู่ไม่ไกลครับ แต่จะไปรถเมล์ รถไฟ หรือแท็กซี่ดี? วันนี้เราจะฝึกบอกและถามวิธีเดินทางแบบง่าย ๆ',
   // These lessons are currently off the path, but remain buildable for content tooling.
   fnd_v7_letter_names_a_m: 'วันนี้เราจะฝึกชื่อเรียกตัวอักษร A ถึง M เพื่อใช้ฟังและสะกดคำภาษาอังกฤษครับ',
   fnd_v7_letter_names_n_z: 'วันนี้เราจะฝึกชื่อเรียกตัวอักษร N ถึง Z แล้วนำไปใช้ขอและฟังการสะกดคำครับ',

@@ -48,17 +48,17 @@ function coreFlowStepCount(id: string, spec: AuthoredSpec): number {
 }
 
 describe('Foundation V7 lessons', () => {
-  it('ships all 37 path lesson nodes with real configs, including frozen Chapter 1', () => {
+  it('ships all 39 path lesson nodes with real configs, including frozen Chapter 1', () => {
     const nodes = pathLessonNodes();
     const client = toFoundationV7ClientChapters()
       .flatMap((chapter) => chapter.items)
       .filter((node) => node.nodeType === 'lesson');
 
-    assert.equal(nodes.length, 37);
-    assert.equal(client.length, 37);
+    assert.equal(nodes.length, 39);
+    assert.equal(client.length, 39);
     assert.ok(client.every((node) => !node.comingSoon && node.lessonId));
     assert.ok(client.every((node) => getLesson(node.lessonId!) != null));
-    assert.equal(new Set(nodes.map((node) => node.contentRef.lessonId)).size, 37);
+    assert.equal(new Set(nodes.map((node) => node.contentRef.lessonId)).size, 39);
 
     assert.deepEqual(
       nodes.slice(0, 3).map((node) => node.contentRef.lessonId),
@@ -69,13 +69,13 @@ describe('Foundation V7 lessons', () => {
     }
   });
 
-  it('registers exactly the 36 authored V7 flows and keeps them off the lesson hub', async () => {
+  it('registers exactly the 38 authored V7 flows and keeps them off the lesson hub', async () => {
     const authoredIds = Object.keys(lessonSpecs);
     const pathAuthored = pathLessonNodes()
       .map((node) => node.contentRef.lessonId)
       .filter((id): id is string => Boolean(id?.startsWith('fnd_v7_')));
 
-    assert.equal(FOUNDATION_V7_LESSONS.length, 36);
+    assert.equal(FOUNDATION_V7_LESSONS.length, 38);
     assert.deepEqual(FOUNDATION_V7_LESSON_IDS, authoredIds);
     assert.deepEqual(pathAuthored.slice().sort(), authoredIds.filter(id => !['fnd_v7_letter_names_a_m', 'fnd_v7_letter_names_n_z'].includes(id)).sort());
     assert.ok(authoredIds.every((id) => id.startsWith('fnd_v7_')));

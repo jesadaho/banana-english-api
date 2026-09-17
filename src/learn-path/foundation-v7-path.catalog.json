@@ -4350,165 +4350,134 @@
     {
       "id": "v7_u16",
       "number": 16,
-      "titleEn": "Build Your Own Conversation",
-      "titleTh": "สร้างบทสนทนาเอง",
-      "outcome": "ใช้พื้นฐานหลายเรื่องเพื่อคุยในวันแรกที่สถานที่ใหม่ได้",
+      "titleEn": "Around Town",
+      "titleTh": "เดินทางรอบเมือง",
+      "outcome": "บอกจุดหมาย เลือกวิธีเดินทาง และเข้าใจทิศทางสั้น ๆ ได้",
       "items": [
         {
           "id": "v7_u16n01",
           "code": "16.1",
           "order": 1,
           "globalOrder": 136,
-          "titleEn": "Words I Know",
-          "titleTh": "คำที่ฉันรู้",
-          "type": "emoji_speak",
+          "titleEn": "Places Around Town 1",
+          "titleTh": "สถานที่ในเมือง 1",
+          "type": "new_words",
           "beat": "Ki",
-          "learningTarget": "เรียกคืนคำที่ใช้ในฉากวันแรก",
-          "activity": "ชุดคงที่ห้าการ์ดจากคำเดิม เช่น book/key/water/read/chair; ไม่มี adaptive weak-lane engine",
-          "examples": [
-            "book",
-            "key",
-            "water",
-            "read",
-            "chair"
-          ],
-          "estimatedMinutes": [
-            1,
-            2
-          ],
-          "difficultyAxes": [
-            1,
-            1,
-            2,
-            1,
-            1
-          ],
-          "contentRef": {
-            "poolId": "fnd_v7_u16n01"
-          }
+          "learningTarget": "รู้จัก school, café และ shop",
+          "activity": "เห็น ฟัง และพูดสามคำใหม่ ก่อนนำไปถามตำแหน่ง",
+          "examples": ["school", "café", "shop"],
+          "estimatedMinutes": [1, 2],
+          "difficultyAxes": [1, 1, 1, 1, 1],
+          "contentRef": { "poolId": "new_words_places_1" }
         },
         {
           "id": "v7_u16n02",
           "code": "16.2",
           "order": 2,
           "globalOrder": 137,
-          "titleEn": "A First Day",
-          "titleTh": "วันแรก",
-          "type": "story_bites",
+          "titleEn": "Where Is It?",
+          "titleTh": "อยู่ที่ไหน",
+          "type": "lesson",
           "beat": "Sho",
-          "learningTarget": "ฟังรวมคน สถานที่ เวลา และความต้องการที่คุ้น",
-          "activity": "คลิป 28–35 วินาที; สามคำถามเลือกตอบใช้ข้อมูลเสียง ไม่มีการเดา past หรือ inference นอก A1",
-          "examples": [
-            "The class is at ten",
-            "I need a pen"
-          ],
-          "estimatedMinutes": [
-            2,
-            3
-          ],
-          "difficultyAxes": [
-            1,
-            3,
-            1,
-            2,
-            2
-          ],
-          "clipId": "sb04",
-          "contentRef": {}
+          "learningTarget": "ถามและบอกว่าสถานที่อยู่ที่ไหน",
+          "activity": "ใช้ Where is, here และ next to กับสถานที่ที่เพิ่งเรียน",
+          "examples": ["Where is the café?", "The café is next to the shop"],
+          "estimatedMinutes": [3, 5],
+          "difficultyAxes": [1, 1, 2, 2, 1],
+          "contentRef": { "lessonId": "fnd_v7_where_is_it" }
         },
         {
           "id": "v7_u16n03",
           "code": "16.3",
           "order": 3,
           "globalOrder": 138,
-          "titleEn": "Keep the Talk Going",
-          "titleTh": "พูดต่อให้สนุก",
-          "type": "say_it",
+          "titleEn": "Places Around Town 2",
+          "titleTh": "สถานที่ในเมือง 2",
+          "type": "new_words",
           "beat": "Ten",
-          "learningTarget": "เรียกคืนการขอข้อมูล/ขอซ้ำเมื่อเจอสถานการณ์ติดขัด",
-          "activity": "ห้าโจทย์ไทยใช้ repair, permission และข้อมูลที่สอนแล้ว; ไม่มีเลือก Shop/Place lane หรือเกมผสม",
-          "examples": [
-            "Please say that again",
-            "Where is the room?",
-            "I need help",
-            "Can I sit here?",
-            "How much is it?"
-          ],
-          "estimatedMinutes": [
-            1,
-            2
-          ],
-          "difficultyAxes": [
-            1,
-            1,
-            2,
-            2,
-            1
-          ],
-          "contentRef": {
-            "topicId": "fnd_v7_u16n03"
-          }
+          "learningTarget": "รู้จัก station, hospital และ market",
+          "activity": "เพิ่มสถานที่อีกสามคำแล้วนำไปผสมกับ Where is/next to/there is",
+          "examples": ["station", "hospital", "market"],
+          "estimatedMinutes": [1, 2],
+          "difficultyAxes": [1, 1, 1, 1, 1],
+          "contentRef": { "poolId": "new_words_places_2" }
         },
         {
           "id": "v7_u16n04",
           "code": "16.4",
           "order": 4,
           "globalOrder": 139,
-          "titleEn": "Tell Me About This Place",
-          "titleTh": "เล่าเรื่องที่นี่",
-          "type": "describe_it",
+          "titleEn": "Places Around Town",
+          "titleTh": "สถานที่รอบเมือง",
+          "type": "say_it",
           "beat": "Sho",
-          "learningTarget": "พูดสองถึงสามประโยคที่เลือกเองจากภาพ",
-          "activity": "ภาพสถานที่มีคน ของ ตำแหน่งและกิจกรรม; รับข้อเท็จจริงที่ภาพรองรับ ไม่บังคับใช้ทุกgrammar",
-          "examples": [
-            "There is a table",
-            "A book is on the table",
-            "She is reading"
-          ],
-          "estimatedMinutes": [
-            2,
-            3
-          ],
-          "difficultyAxes": [
-            1,
-            1,
-            3,
-            3,
-            2
-          ],
-          "contentRef": {}
+          "learningTarget": "ถามหาสถานที่และบอกตำแหน่งด้วยสอง pattern",
+          "activity": "ห้าโจทย์ผสม Where is กับ there is/next to จากสิ่งที่เรียนแล้ว",
+          "examples": ["Where is the station?", "There is a market here", "The hospital is next to the school"],
+          "estimatedMinutes": [1, 2],
+          "difficultyAxes": [1, 1, 2, 2, 1],
+          "contentRef": { "topicId": "fnd_v7_u16n04" }
         },
         {
           "id": "v7_u16n05",
           "code": "16.5",
           "order": 5,
           "globalOrder": 140,
-          "titleEn": "My First Day",
-          "titleTh": "วันแรกของฉัน",
-          "type": "conversation",
-          "beat": "Ketsu",
-          "learningTarget": "เริ่มคุย ถามข้อมูล และรับมือความเข้าใจผิดหนึ่งครั้ง",
-          "activity": "ฉากเดียว NPC คนเดียว 4–6 learner turns; เลือก persona สมมติได้; จบตามเป้าหมายสื่อสารไม่เก็บ checklist ทุกgrammar; ช่วยเมื่อขอ",
-          "examples": [
-            "My name is …",
-            "When is the class?",
-            "Please say that again",
-            "Thank you"
-          ],
-          "estimatedMinutes": [
-            3,
-            5
-          ],
-          "difficultyAxes": [
-            1,
-            2,
-            3,
-            3,
-            2
-          ],
-          "contentRef": {
-            "simulationId": "foundation_v7_u16n05"
-          }
+          "titleEn": "Transport",
+          "titleTh": "การเดินทาง",
+          "type": "new_words",
+          "beat": "Ki",
+          "learningTarget": "รู้จัก bus, train และ taxi",
+          "activity": "เห็น ฟัง และพูดชื่อพาหนะสามคำก่อนใช้กับ go by",
+          "examples": ["bus", "train", "taxi"],
+          "estimatedMinutes": [1, 2],
+          "difficultyAxes": [1, 1, 1, 1, 1],
+          "contentRef": { "poolId": "new_words_transport" }
+        },
+        {
+          "id": "v7_u16n06", "code": "16.6", "order": 6, "globalOrder": 141,
+          "titleEn": "How Do You Go?", "titleTh": "เดินทางอย่างไร", "type": "lesson", "beat": "Sho",
+          "learningTarget": "บอกและถามวิธีเดินทางด้วย go by",
+          "activity": "ใช้ go by เป็น functional chunk และทบทวน Do you/He-She goes",
+          "examples": ["I go by bus", "Do you go by taxi?", "She goes by train"],
+          "estimatedMinutes": [3, 5], "difficultyAxes": [1, 1, 2, 2, 1],
+          "contentRef": { "lessonId": "fnd_v7_how_do_you_go" }
+        },
+        {
+          "id": "v7_u16n07", "code": "16.7", "order": 7, "globalOrder": 142,
+          "titleEn": "More Ways to Go", "titleTh": "วิธีเดินทางเพิ่มเติม", "type": "new_words", "beat": "Ten",
+          "learningTarget": "รู้จัก car, walk และ bike",
+          "activity": "ขยายทางเลือกการเดินทางอีกสามคำ ก่อนผสมกับคำเก่า",
+          "examples": ["car", "walk", "bike"],
+          "estimatedMinutes": [1, 2], "difficultyAxes": [1, 1, 1, 1, 1],
+          "contentRef": { "poolId": "new_words_more_ways_to_go" }
+        },
+        {
+          "id": "v7_u16n08", "code": "16.8", "order": 8, "globalOrder": 143,
+          "titleEn": "Getting Around", "titleTh": "เดินทางรอบเมือง", "type": "say_it", "beat": "Sho",
+          "learningTarget": "ใช้ go by และ walk to ในประโยคบอกเล่า ปฏิเสธ และคำถาม",
+          "activity": "ห้าโจทย์ใช้คำใหม่สามคำและดึง bus/taxi/café กลับมาทบทวน",
+          "examples": ["I go by car", "We walk to the café", "Do you go by bus?"],
+          "estimatedMinutes": [1, 2], "difficultyAxes": [1, 1, 2, 2, 2],
+          "contentRef": { "topicId": "fnd_v7_u16n08" }
+        },
+        {
+          "id": "v7_u16n09", "code": "16.9", "order": 9, "globalOrder": 144,
+          "titleEn": "Around Town Words", "titleTh": "คำศัพท์รอบเมือง", "type": "emoji_speak", "beat": "Ten",
+          "learningTarget": "เรียกคืนสถานที่และพาหนะสำคัญ",
+          "activity": "หกการ์ดทบทวน station/hospital/market/bus/train/taxi ด้วยภาพและตัวอักษรใบ้",
+          "examples": ["station", "hospital", "market", "bus", "train", "taxi"],
+          "estimatedMinutes": [1, 2], "difficultyAxes": [1, 1, 2, 1, 1],
+          "contentRef": { "poolId": "fnd_v7_u16n09" }
+        },
+        {
+          "id": "v7_u16n10", "code": "16.10", "order": 10, "globalOrder": 145,
+          "titleEn": "Get to the Station", "titleTh": "ไปสถานีให้ถึง", "type": "conversation", "beat": "Ketsu",
+          "learningTarget": "บอกจุดหมาย เลือกพาหนะ และเข้าใจทิศทางสั้น ๆ",
+          "activity": "NPC ถามจุดหมายและวิธีเดินทาง ก่อนให้ทิศทางสองขั้น; จบเมื่อผู้เรียนรับข้อมูลและขอบคุณ",
+          "examples": ["I’m going to the station", "I want to go by bus", "Thank you"],
+          "estimatedMinutes": [3, 5], "difficultyAxes": [1, 2, 3, 3, 2],
+          "contentRef": { "simulationId": "foundation_v7_u16n10" }
         }
       ]
     }

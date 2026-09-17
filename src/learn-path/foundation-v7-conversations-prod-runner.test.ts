@@ -89,7 +89,7 @@ describe('Foundation V7 conversation smoke runner', () => {
     assert.deepEqual(
       parseFoundationV7ConversationArgs(['node', 'script', 'u16', '3']),
       {
-        simulationIds: ['foundation_v7_u16n05'],
+        simulationIds: ['foundation_v7_u16n10'],
         scenarios: [3],
       },
     );

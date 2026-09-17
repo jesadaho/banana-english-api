@@ -204,5 +204,37 @@
       { "emoji": "🛏️", "answer": "bed", "reading": "เบด", "meaningTh": "เตียง" },
       { "emoji": "🚻", "answer": "bathroom", "reading": "บาธ-รูม", "meaningTh": "ห้องน้ำ" }
     ]
+  },
+  "new_words_places_1": {
+    "title": "Places Around Town 1",
+    "items": [
+      { "emoji": "🏫", "answer": "school", "reading": "สคูล", "meaningTh": "โรงเรียน" },
+      { "emoji": "☕", "answer": "café", "reading": "คา-เฟ่", "meaningTh": "คาเฟ่" },
+      { "emoji": "🏪", "answer": "shop", "reading": "ช็อป", "meaningTh": "ร้านค้า" }
+    ]
+  },
+  "new_words_places_2": {
+    "title": "Places Around Town 2",
+    "items": [
+      { "emoji": "🚉", "answer": "station", "reading": "สเต-ชั่น", "meaningTh": "สถานี" },
+      { "emoji": "🏥", "answer": "hospital", "reading": "ฮอส-พิ-ทัล", "meaningTh": "โรงพยาบาล" },
+      { "emoji": "🛍️", "answer": "market", "reading": "มาร์-เก็ต", "meaningTh": "ตลาด" }
+    ]
+  },
+  "new_words_transport": {
+    "title": "Transport",
+    "items": [
+      { "emoji": "🚌", "answer": "bus", "reading": "บัส", "meaningTh": "รถเมล์" },
+      { "emoji": "🚆", "answer": "train", "reading": "เทรน", "meaningTh": "รถไฟ" },
+      { "emoji": "🚕", "answer": "taxi", "reading": "แท็ก-ซี่", "meaningTh": "แท็กซี่" }
+    ]
+  },
+  "new_words_more_ways_to_go": {
+    "title": "More Ways to Go",
+    "items": [
+      { "emoji": "🚗", "answer": "car", "reading": "คาร์", "meaningTh": "รถยนต์" },
+      { "emoji": "🚶", "answer": "walk", "reading": "วอล์ก", "meaningTh": "เดิน" },
+      { "emoji": "🚲", "answer": "bike", "reading": "ไบก์", "meaningTh": "จักรยาน" }
+    ]
   }
 }

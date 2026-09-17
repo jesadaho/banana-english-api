@@ -70,10 +70,9 @@ const HAPPY_OVERRIDES: Record<string, string[]> = {
   ],
   foundation_v7_u14n06: ['When is the class', 'Where is the class', 'Thank you'],
   foundation_v7_u15n08: ['Where is the room', 'Turn left', 'Thank you'],
-  foundation_v7_u16n05: [
-    'My name is Sam',
-    'When is the class',
-    'Please say that again',
+  foundation_v7_u16n10: [
+    'I am going to the station',
+    'I want to go by bus',
     'Thank you',
   ],
 };

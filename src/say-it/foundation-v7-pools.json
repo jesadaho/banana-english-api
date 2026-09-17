@@ -720,40 +720,68 @@
       ]
     }
   ],
-  "fnd_v7_u16n03": [
+  "fnd_v7_u16n04": [
     {
-      "id": "fnd_v7_u16n03_q1",
-      "promptTh": "กรุณาพูดอีกครั้ง",
-      "answerEn": "Please say that again",
-      "acceptedAnswers": [
-        "Say that again, please"
-      ]
+      "id": "fnd_v7_u16n04_q1",
+      "promptTh": "สถานีอยู่ที่ไหน",
+      "answerEn": "Where is the station",
+      "acceptedAnswers": ["Where's the station"]
     },
     {
-      "id": "fnd_v7_u16n03_q2",
-      "promptTh": "ห้องอยู่ที่ไหน",
-      "answerEn": "Where is the room",
+      "id": "fnd_v7_u16n04_q2",
+      "promptTh": "โรงพยาบาลอยู่ข้างโรงเรียน",
+      "answerEn": "The hospital is next to the school",
       "acceptedAnswers": []
     },
     {
-      "id": "fnd_v7_u16n03_q3",
-      "promptTh": "ฉันต้องการความช่วยเหลือ",
-      "answerEn": "I need help",
+      "id": "fnd_v7_u16n04_q3",
+      "promptTh": "ที่นี่มีตลาดหนึ่งแห่ง",
+      "answerEn": "There is a market here",
+      "acceptedAnswers": ["There is a market"]
+    },
+    {
+      "id": "fnd_v7_u16n04_q4",
+      "promptTh": "ร้านค้าอยู่ที่ไหน",
+      "answerEn": "Where is the shop",
+      "acceptedAnswers": ["Where's the shop"]
+    },
+    {
+      "id": "fnd_v7_u16n04_q5",
+      "promptTh": "คาเฟ่อยู่ข้างร้านค้า",
+      "answerEn": "The café is next to the shop",
+      "acceptedAnswers": ["The cafe is next to the shop"]
+    }
+  ],
+  "fnd_v7_u16n08": [
+    {
+      "id": "fnd_v7_u16n08_q1",
+      "promptTh": "ฉันเดินทางโดยรถยนต์",
+      "answerEn": "I go by car",
       "acceptedAnswers": []
     },
     {
-      "id": "fnd_v7_u16n03_q4",
-      "promptTh": "ฉันขอนั่งตรงนี้ได้ไหม",
-      "answerEn": "Can I sit here",
+      "id": "fnd_v7_u16n08_q2",
+      "promptTh": "เราเดินไปคาเฟ่",
+      "answerEn": "We walk to the café",
+      "acceptedAnswers": ["We walk to the cafe"]
+    },
+    {
+      "id": "fnd_v7_u16n08_q3",
+      "promptTh": "เขาเดินทางโดยจักรยาน",
+      "answerEn": "He goes by bike",
       "acceptedAnswers": []
     },
     {
-      "id": "fnd_v7_u16n03_q5",
-      "promptTh": "ราคาเท่าไร",
-      "answerEn": "How much is it",
-      "acceptedAnswers": [
-        "How much"
-      ]
+      "id": "fnd_v7_u16n08_q4",
+      "promptTh": "ฉันไม่ได้เดินทางโดยแท็กซี่",
+      "answerEn": "I do not go by taxi",
+      "acceptedAnswers": ["I don't go by taxi"]
+    },
+    {
+      "id": "fnd_v7_u16n08_q5",
+      "promptTh": "คุณเดินทางโดยรถเมล์ไหม",
+      "answerEn": "Do you go by bus",
+      "acceptedAnswers": []
     }
   ],
   "fnd_v7_u03n09": [
