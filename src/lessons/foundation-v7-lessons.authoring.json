@@ -306,7 +306,7 @@
     "titleEn": "Colours & Size",
     "titleTh": "บอกสีและขนาดโดยเริ่มจากหนึ่ง adjective",
     "goalTh": "บอกสีและขนาดโดยเริ่มจากหนึ่ง adjective",
-    "scope": "ใช้สีที่เรียนแล้ว; สอน big/small เป็นคู่; ประกอบเป็น a small blue bag, the big black book, Those are white bags",
+    "scope": "ใช้สีชุดแรก red/blue/green; สอน big/small เป็นคู่; ประกอบเป็น a small blue bag, a big green bag, Those are red bags",
     "estimatedMinutes": [
       3,
       5
@@ -329,11 +329,11 @@
         "repeat": "a small bag"
       },
       {
-        "tipTh": "ประยุกต์สีและขนาดเป็นวลียาวขึ้น รวม black/white ที่เรียนแล้ว",
+        "tipTh": "ประยุกต์สีชุดแรกและขนาดเป็นวลียาวขึ้น ยังไม่ใช้ yellow/black/white",
         "models": [
           "a small blue bag",
-          "the big black book",
-          "Those are white bags"
+          "a big green bag",
+          "Those are red bags"
         ],
         "repeat": "a small blue bag"
       }
@@ -379,19 +379,19 @@
     "titleEn": "My & Your",
     "titleTh": "ใช้ my/your กับของที่คุ้น",
     "goalTh": "ใช้ my/your กับของที่คุ้น",
-    "scope": "ใช้ phone/key/shirt/hat ที่เรียนแล้ว; เปรียบเทียบเจ้าของในบทสนทนา",
+    "scope": "ใช้ phone/key/shirt/bag ที่เรียนแล้ว; เปรียบเทียบเจ้าของในบทสนทนา",
     "estimatedMinutes": [
       3,
       5
     ],
     "blocks": [
       {
-        "tipTh": "phone โทรศัพท์ key กุญแจ shirt เสื้อ hat หมวก; ให้รู้ความหมายก่อนใส่เจ้าของ",
+        "tipTh": "phone โทรศัพท์ key กุญแจ shirt เสื้อ bag กระเป๋า; ให้รู้ความหมายก่อนใส่เจ้าของ",
         "models": [
           "phone",
           "key",
           "shirt",
-          "hat"
+          "bag"
         ],
         "repeat": "key"
       },
@@ -424,7 +424,7 @@
         "tipTh": "his ของเขา her ของเธอ; บอกเจ้าของเป็นข้อมูลชัด ไม่เดาจากหน้าตา",
         "models": [
           "his shirt",
-          "her hat"
+          "her bag"
         ],
         "repeat": "his shirt"
       },
@@ -1298,7 +1298,7 @@
     "titleEn": "In, On, Under, Next To",
     "titleTh": "บอกตำแหน่งของด้วยคำบุพบทสี่คำ",
     "goalTh": "บอกตำแหน่งของด้วยคำบุพบทสี่คำ",
-    "scope": "ใช้ bag/book/table/chair เดิม; ภาพสัมพันธ์ชัด ไม่มี behind/between เพิ่ม",
+    "scope": "ใช้ bag/bed/door/bathroom ที่เรียนแล้ว; ภาพสัมพันธ์ชัด ไม่มี behind/between เพิ่ม",
     "estimatedMinutes": [
       3,
       5
@@ -1313,17 +1313,17 @@
         "repeat": "The book is in the bag"
       },
       {
-        "tipTh": "under อยู่ใต้ next to อยู่ข้าง; ใช้ของเดิมทั้งหมด",
+        "tipTh": "under อยู่ใต้ next to อยู่ข้าง; ใช้ bed/door/bathroom ที่เพิ่งเรียน",
         "models": [
-          "The bag is under the table",
-          "The chair is next to the table"
+          "The bag is under the bed",
+          "The bathroom is next to the door"
         ],
-        "repeat": "The bag is under the table"
+        "repeat": "The bag is under the bed"
       }
     ],
     "recall": {
-      "promptTh": "กระเป๋าอยู่ใต้โต๊ะ ลองบอกตำแหน่ง",
-      "answerEn": "The bag is under the table"
+      "promptTh": "กระเป๋าอยู่ใต้เตียง ลองบอกตำแหน่ง",
+      "answerEn": "The bag is under the bed"
     }
   },
   "fnd_v7_go_straight_turn_left": {

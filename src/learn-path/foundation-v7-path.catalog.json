@@ -4,7 +4,7 @@
     "pathId": "foundation_v7",
     "version": 1,
     "releaseStatus": "playtest",
-    "totalNodeCount": 123
+    "totalNodeCount": 140
   },
   "chapters": [
     {
@@ -462,10 +462,74 @@
           }
         },
         {
-          "id": "v7_u03n05",
+          "id": "v7_u03n08",
           "code": "3.6",
           "order": 6,
           "globalOrder": 15,
+          "titleEn": "More Feelings",
+          "titleTh": "ความรู้สึกเพิ่ม",
+          "type": "new_words",
+          "beat": "Sho",
+          "learningTarget": "จำ hot, cold, sick ก่อนประกอบ I am กับความรู้สึกชุดใหม่",
+          "activity": "สอนสามคำความรู้สึกเพิ่ม แล้วนำไปผสมกับ hungry/tired ใน Say It",
+          "examples": [
+            "hot",
+            "cold",
+            "sick"
+          ],
+          "estimatedMinutes": [
+            2,
+            4
+          ],
+          "difficultyAxes": [
+            1,
+            1,
+            2,
+            1,
+            1
+          ],
+          "contentRef": {
+            "poolId": "new_words_more_feelings"
+          }
+        },
+        {
+          "id": "v7_u03n09",
+          "code": "3.7",
+          "order": 7,
+          "globalOrder": 16,
+          "titleEn": "How Do You Feel?",
+          "titleTh": "รู้สึกยังไง?",
+          "type": "say_it",
+          "beat": "Sho",
+          "learningTarget": "ใช้ I am / I am not และ Are you? กับความรู้สึกชุด B และชุด A",
+          "activity": "ห้าโจทย์ไทย โครง I am / I am not / Are you?; ข้อถามความรู้สึกรับ Yes, I am และ No, I’m not",
+          "examples": [
+            "I am hot.",
+            "I am not cold.",
+            "Are you sick?",
+            "I am hungry.",
+            "Are you tired?"
+          ],
+          "estimatedMinutes": [
+            1,
+            2
+          ],
+          "difficultyAxes": [
+            1,
+            1,
+            2,
+            1,
+            1
+          ],
+          "contentRef": {
+            "topicId": "fnd_v7_u03n09"
+          }
+        },
+        {
+          "id": "v7_u03n05",
+          "code": "3.8",
+          "order": 8,
+          "globalOrder": 17,
           "titleEn": "Look at Me",
           "titleTh": "ดูฉันสิ",
           "type": "describe_it",
@@ -491,9 +555,9 @@
         },
         {
           "id": "v7_u03n06",
-          "code": "3.7",
-          "order": 7,
-          "globalOrder": 16,
+          "code": "3.9",
+          "order": 9,
+          "globalOrder": 18,
           "titleEn": "Meet a Classmate",
           "titleTh": "พบเพื่อนร่วมชั้น",
           "type": "conversation",
@@ -533,7 +597,7 @@
           "id": "v7_u04n08",
           "code": "4.1",
           "order": 1,
-          "globalOrder": 17,
+          "globalOrder": 19,
           "titleEn": "People Around Me",
           "titleTh": "คนรอบตัวฉัน",
           "type": "new_words",
@@ -564,7 +628,7 @@
           "id": "v7_u04n01",
           "code": "4.2",
           "order": 2,
-          "globalOrder": 18,
+          "globalOrder": 20,
           "titleEn": "He, She, It, We, They",
           "titleTh": "เขา เธอ มัน เรา พวกเขา",
           "type": "lesson",
@@ -595,7 +659,7 @@
           "id": "v7_u04n02",
           "code": "4.3",
           "order": 3,
-          "globalOrder": 19,
+          "globalOrder": 21,
           "titleEn": "People Around Me",
           "titleTh": "คนรอบตัวฉัน",
           "type": "emoji_speak",
@@ -626,7 +690,7 @@
           "id": "v7_u04n09",
           "code": "4.4",
           "order": 4,
-          "globalOrder": 20,
+          "globalOrder": 22,
           "titleEn": "My Family",
           "titleTh": "สมาชิกครอบครัว",
           "type": "new_words",
@@ -658,7 +722,7 @@
           "id": "v7_u04n03",
           "code": "4.5",
           "order": 5,
-          "globalOrder": 21,
+          "globalOrder": 23,
           "titleEn": "My Family",
           "titleTh": "ครอบครัวของฉัน",
           "type": "lesson",
@@ -714,13 +778,77 @@
           },
           "code": "4.6",
           "order": 6,
-          "globalOrder": 22
+          "globalOrder": 24
+        },
+        {
+          "id": "v7_u04n10",
+          "code": "4.7",
+          "order": 7,
+          "globalOrder": 25,
+          "titleEn": "More Family",
+          "titleTh": "ครอบครัวเพิ่ม",
+          "type": "new_words",
+          "beat": "Sho",
+          "learningTarget": "จำ aunt, uncle, cousin ก่อน This is my …",
+          "activity": "สอนสามคำครอบครัวเพิ่ม แล้วนำไปใช้ต่อใน Story Bites และ Conversation",
+          "examples": [
+            "aunt",
+            "uncle",
+            "cousin"
+          ],
+          "estimatedMinutes": [
+            2,
+            4
+          ],
+          "difficultyAxes": [
+            1,
+            1,
+            2,
+            1,
+            1
+          ],
+          "contentRef": {
+            "poolId": "new_words_more_family"
+          }
+        },
+        {
+          "id": "v7_u04n11",
+          "code": "4.8",
+          "order": 8,
+          "globalOrder": 26,
+          "titleEn": "My Family Mix",
+          "titleTh": "ครอบครัวของฉันแบบผสม",
+          "type": "say_it",
+          "beat": "Sho",
+          "learningTarget": "ทบทวน This is my และ He/She is my กับครอบครัวชุด B และ sister/brother",
+          "activity": "ห้าโจทย์ไทย ผสม family words กับ pronouns ในโหนดเดียว",
+          "examples": [
+            "This is my aunt.",
+            "He is my uncle.",
+            "She is my cousin.",
+            "This is my sister.",
+            "He is my brother."
+          ],
+          "estimatedMinutes": [
+            1,
+            2
+          ],
+          "difficultyAxes": [
+            1,
+            1,
+            2,
+            1,
+            1
+          ],
+          "contentRef": {
+            "topicId": "fnd_v7_u04n11"
+          }
         },
         {
           "id": "v7_u04n04",
-          "code": "4.7",
-          "order": 7,
-          "globalOrder": 23,
+          "code": "4.9",
+          "order": 9,
+          "globalOrder": 27,
           "titleEn": "Meet Mia’s Family",
           "titleTh": "พบครอบครัวของ Mia",
           "type": "story_bites",
@@ -747,9 +875,9 @@
         },
         {
           "id": "v7_u04n05",
-          "code": "4.8",
-          "order": 8,
-          "globalOrder": 24,
+          "code": "4.10",
+          "order": 10,
+          "globalOrder": 28,
           "titleEn": "A Family Photo",
           "titleTh": "รูปครอบครัว",
           "type": "describe_it",
@@ -775,9 +903,9 @@
         },
         {
           "id": "v7_u04n06",
-          "code": "4.9",
-          "order": 9,
-          "globalOrder": 25,
+          "code": "4.11",
+          "order": 11,
+          "globalOrder": 29,
           "titleEn": "Meet My Family",
           "titleTh": "พบครอบครัวของฉัน",
           "type": "conversation",
@@ -817,7 +945,7 @@
           "id": "v7_u05n08",
           "code": "5.1",
           "order": 1,
-          "globalOrder": 26,
+          "globalOrder": 30,
           "titleEn": "Everyday Objects",
           "titleTh": "ของใช้รอบตัว",
           "type": "new_words",
@@ -849,7 +977,7 @@
           "id": "v7_u05n01",
           "code": "5.2",
           "order": 2,
-          "globalOrder": 27,
+          "globalOrder": 31,
           "titleEn": "One or More",
           "titleTh": "หนึ่งหรือหลาย",
           "type": "lesson",
@@ -881,7 +1009,7 @@
           "id": "v7_u05n02",
           "code": "5.3",
           "order": 3,
-          "globalOrder": 28,
+          "globalOrder": 32,
           "titleEn": "Everyday Objects",
           "titleTh": "ของใช้ในชีวิตประจำวัน",
           "type": "emoji_speak",
@@ -913,7 +1041,7 @@
           "id": "v7_u05n03",
           "code": "5.4",
           "order": 4,
-          "globalOrder": 29,
+          "globalOrder": 33,
           "titleEn": "Hear the Plural Ending",
           "titleTh": "ฟังเสียงท้ายคำพหูพจน์",
           "type": "pronunciation",
@@ -952,7 +1080,7 @@
           "id": "v7_u05n04",
           "code": "5.5",
           "order": 5,
-          "globalOrder": 30,
+          "globalOrder": 34,
           "titleEn": "One or Many?",
           "titleTh": "หนึ่งชิ้นหรือหลายชิ้น?",
           "type": "say_it",
@@ -980,10 +1108,74 @@
           }
         },
         {
-          "id": "v7_u05n05",
+          "id": "v7_u05n09",
           "code": "5.6",
           "order": 6,
-          "globalOrder": 31,
+          "globalOrder": 35,
+          "titleEn": "More Everyday Things",
+          "titleTh": "ของใช้เพิ่ม",
+          "type": "new_words",
+          "beat": "Sho",
+          "learningTarget": "จำ cup, phone, key สำหรับ a/an และ plural",
+          "activity": "สอนสามคำของใช้เพิ่ม; phone/key จะถูกนำกลับมาใช้ใน Chapter 7",
+          "examples": [
+            "cup",
+            "phone",
+            "key"
+          ],
+          "estimatedMinutes": [
+            2,
+            4
+          ],
+          "difficultyAxes": [
+            1,
+            1,
+            2,
+            1,
+            1
+          ],
+          "contentRef": {
+            "poolId": "new_words_more_everyday_things"
+          }
+        },
+        {
+          "id": "v7_u05n10",
+          "code": "5.7",
+          "order": 7,
+          "globalOrder": 36,
+          "titleEn": "One or Many: More Things",
+          "titleTh": "หนึ่งหรือหลาย: ของเพิ่ม",
+          "type": "say_it",
+          "beat": "Sho",
+          "learningTarget": "ใช้ It is a/an และเลข+พหูพจน์กับของชุดใหม่",
+          "activity": "ห้าโจทย์สถานการณ์; รับคำตอบสั้น a cup / two phones ได้ แต่ไม่ใช้แค่ cups ลอย ๆ",
+          "examples": [
+            "It is a cup.",
+            "Two phones.",
+            "It is a key.",
+            "Three books.",
+            "It is an apple."
+          ],
+          "estimatedMinutes": [
+            1,
+            2
+          ],
+          "difficultyAxes": [
+            1,
+            1,
+            2,
+            1,
+            1
+          ],
+          "contentRef": {
+            "topicId": "fnd_v7_u05n10"
+          }
+        },
+        {
+          "id": "v7_u05n05",
+          "code": "5.8",
+          "order": 8,
+          "globalOrder": 37,
           "titleEn": "Inside the Bag",
           "titleTh": "ในกระเป๋า",
           "type": "describe_it",
@@ -1009,9 +1201,9 @@
         },
         {
           "id": "v7_u05n06",
-          "code": "5.7",
-          "order": 7,
-          "globalOrder": 32,
+          "code": "5.9",
+          "order": 9,
+          "globalOrder": 38,
           "titleEn": "The Right Amount",
           "titleTh": "จำนวนที่ถูก",
           "type": "say_it",
@@ -1039,9 +1231,9 @@
         },
         {
           "id": "v7_u05n07",
-          "code": "5.8",
-          "order": 8,
-          "globalOrder": 33,
+          "code": "5.10",
+          "order": 10,
+          "globalOrder": 39,
           "titleEn": "What’s in the Bag?",
           "titleTh": "ในกระเป๋ามีอะไร?",
           "type": "emoji_speak",
@@ -1082,7 +1274,7 @@
           "id": "v7_u06n01",
           "code": "6.1",
           "order": 1,
-          "globalOrder": 34,
+          "globalOrder": 40,
           "titleEn": "This Is / That Is",
           "titleTh": "นี่คือ / นั่นคือ",
           "type": "lesson",
@@ -1112,7 +1304,7 @@
           "id": "v7_u06n02",
           "code": "6.2",
           "order": 2,
-          "globalOrder": 35,
+          "globalOrder": 41,
           "titleEn": "TH Sound: This",
           "titleTh": "เสียง TH: This",
           "type": "pronunciation",
@@ -1153,7 +1345,7 @@
           "id": "v7_u06n09",
           "code": "6.3",
           "order": 3,
-          "globalOrder": 36,
+          "globalOrder": 42,
           "titleEn": "Colours 1",
           "titleTh": "สีชุดแรก",
           "type": "new_words",
@@ -1181,16 +1373,47 @@
           }
         },
         {
-          "id": "v7_u06n10",
+          "id": "v7_u06n03",
           "code": "6.4",
           "order": 4,
-          "globalOrder": 37,
+          "globalOrder": 43,
+          "titleEn": "Colours & Size",
+          "titleTh": "สีและขนาด",
+          "type": "lesson",
+          "beat": "Sho",
+          "learningTarget": "บอกสีและขนาดโดยเริ่มจากหนึ่ง adjective",
+          "activity": "สอน big/small แล้วประยุกต์สีชุดแรกเป็น a small blue bag และ a big green bag",
+          "examples": [
+            "It is blue",
+            "a green bag",
+            "a small blue bag"
+          ],
+          "estimatedMinutes": [
+            3,
+            5
+          ],
+          "difficultyAxes": [
+            2,
+            1,
+            1,
+            1,
+            1
+          ],
+          "contentRef": {
+            "lessonId": "fnd_v7_colours_and_size"
+          }
+        },
+        {
+          "id": "v7_u06n10",
+          "code": "6.5",
+          "order": 5,
+          "globalOrder": 44,
           "titleEn": "Colours 2",
           "titleTh": "สีชุดที่สอง",
           "type": "new_words",
           "beat": "Sho",
           "learningTarget": "จำ yellow, black, white ก่อน Colours & Size",
-          "activity": "สอนสามสีถัดไป แล้วให้บท Colours & Size สอน big/small และประกอบเป็น a small blue bag, the big black book, Those are white bags",
+          "activity": "สอนสามสีถัดไป แล้วให้ Colour Mix เรียกคืน It is … ก่อนประกอบเป็น The black bag",
           "examples": [
             "yellow",
             "black",
@@ -1212,41 +1435,43 @@
           }
         },
         {
-          "id": "v7_u06n03",
-          "code": "6.5",
-          "order": 5,
-          "globalOrder": 38,
-          "titleEn": "Colours & Size",
-          "titleTh": "สีและขนาด",
-          "type": "lesson",
+          "id": "v7_u06n11",
+          "code": "6.6",
+          "order": 6,
+          "globalOrder": 45,
+          "titleEn": "Colour Mix",
+          "titleTh": "สีแบบผสม",
+          "type": "say_it",
           "beat": "Sho",
-          "learningTarget": "บอกสีและขนาดโดยเริ่มจากหนึ่ง adjective",
-          "activity": "สอน big/small แล้วประยุกต์สีที่เรียนแล้วเป็น a small blue bag, the big black book, Those are white bags",
+          "learningTarget": "ใช้ It is / It is not + สี และ This/That is a + colour + noun",
+          "activity": "ห้าโจทย์หลัง Colours & Size ซึ่งสอน adjective+noun แล้ว",
           "examples": [
-            "a small blue bag",
-            "the big black book",
-            "Those are white bags"
+            "It is yellow.",
+            "This is a black bag.",
+            "It is not white.",
+            "That is a blue phone.",
+            "This book is green."
           ],
           "estimatedMinutes": [
-            3,
-            5
+            1,
+            2
           ],
           "difficultyAxes": [
+            1,
+            1,
             2,
-            1,
-            1,
             1,
             1
           ],
           "contentRef": {
-            "lessonId": "fnd_v7_colours_and_size"
+            "topicId": "fnd_v7_u06n11"
           }
         },
         {
           "id": "v7_u06n04",
-          "code": "6.6",
-          "order": 6,
-          "globalOrder": 39,
+          "code": "6.7",
+          "order": 7,
+          "globalOrder": 46,
           "titleEn": "Spot the Colour",
           "titleTh": "หาสีให้เจอ",
           "type": "emoji_speak",
@@ -1276,9 +1501,9 @@
         },
         {
           "id": "v7_u06n05",
-          "code": "6.7",
-          "order": 7,
-          "globalOrder": 40,
+          "code": "6.8",
+          "order": 8,
+          "globalOrder": 47,
           "titleEn": "These & Those",
           "titleTh": "These และ Those",
           "type": "lesson",
@@ -1306,9 +1531,9 @@
         },
         {
           "id": "v7_u06n06",
-          "code": "6.8",
-          "order": 8,
-          "globalOrder": 41,
+          "code": "6.9",
+          "order": 9,
+          "globalOrder": 48,
           "titleEn": "Two Blue Bags",
           "titleTh": "กระเป๋าสีน้ำเงินสองใบ",
           "type": "describe_it",
@@ -1334,18 +1559,19 @@
         },
         {
           "id": "v7_u06n07",
-          "code": "6.9",
-          "order": 9,
-          "globalOrder": 42,
+          "code": "6.10",
+          "order": 10,
+          "globalOrder": 49,
           "titleEn": "Not That One",
           "titleTh": "ไม่ใช่อันนั้น",
           "type": "say_it",
           "beat": "Sho",
-          "learningTarget": "เรียกคืนการแก้ข้อมูลด้วย not + คำอ้างอิง",
-          "activity": "ไทยบอกสิ่งที่ต้องแก้ชัด; ใช้คำที่สอนแล้ว",
+          "learningTarget": "ประกอบสีชุด B กับคำนามที่คุ้น",
+          "activity": "ใช้ The + colour + noun หลัง Colour Mix; คง this/that/these/those บางข้อ",
           "examples": [
-            "That is not a pen",
-            "These are books"
+            "The black bag.",
+            "The white book.",
+            "The blue phone."
           ],
           "estimatedMinutes": [
             1,
@@ -1364,9 +1590,9 @@
         },
         {
           "id": "v7_u06n08",
-          "code": "6.10",
-          "order": 10,
-          "globalOrder": 43,
+          "code": "6.11",
+          "order": 11,
+          "globalOrder": 50,
           "titleEn": "Find the Right One",
           "titleTh": "หาอันที่ถูก",
           "type": "conversation",
@@ -1405,18 +1631,18 @@
           "id": "v7_u07n08",
           "code": "7.1",
           "order": 1,
-          "globalOrder": 44,
+          "globalOrder": 51,
           "titleEn": "Personal Things",
           "titleTh": "ของส่วนตัว",
           "type": "new_words",
           "beat": "Ki",
-          "learningTarget": "จำ phone, key, shirt, hat ก่อน my/your และ I have…",
-          "activity": "สอนสี่คำของใช้ส่วนตัว; book และ bag ไม่สอนซ้ำแต่หยิบมาปะปนในเกมทบทวนได้",
+          "learningTarget": "จำ phone, key, shirt, bag ก่อน my/your และ have/has",
+          "activity": "สอนสี่คำของส่วนตัว; phone/key ทบทวนจาก Chapter 5 แล้วใช้ต่อในบทเจ้าของ",
           "examples": [
             "phone",
             "key",
             "shirt",
-            "hat"
+            "bag"
           ],
           "estimatedMinutes": [
             2,
@@ -1437,13 +1663,13 @@
           "id": "v7_u07n01",
           "code": "7.2",
           "order": 2,
-          "globalOrder": 45,
+          "globalOrder": 52,
           "titleEn": "My & Your",
           "titleTh": "ของฉันและของคุณ",
           "type": "lesson",
           "beat": "Ki",
           "learningTarget": "ใช้ my/your กับของส่วนตัวที่คุ้น",
-          "activity": "ใช้ phone/key/shirt/hat ที่เรียนแล้ว; เปรียบเทียบเจ้าของในบทสนทนา; book และ bag ทบทวนได้",
+          "activity": "ใช้ phone/key/shirt/bag ที่เรียนแล้ว; เปรียบเทียบเจ้าของในบทสนทนา",
           "examples": [
             "my phone",
             "your key",
@@ -1468,7 +1694,7 @@
           "id": "v7_u07n02",
           "code": "7.3",
           "order": 3,
-          "globalOrder": 46,
+          "globalOrder": 53,
           "titleEn": "Things I Carry",
           "titleTh": "ของที่ฉันพก",
           "type": "emoji_speak",
@@ -1479,7 +1705,8 @@
             "phone",
             "key",
             "shirt",
-            "hat"
+            "bag",
+            "book"
           ],
           "estimatedMinutes": [
             1,
@@ -1500,7 +1727,7 @@
           "id": "v7_u07n03",
           "code": "7.4",
           "order": 4,
-          "globalOrder": 47,
+          "globalOrder": 54,
           "titleEn": "His, Her, Our, Their",
           "titleTh": "ของเขา ของเธอ ของเรา ของพวกเขา",
           "type": "lesson",
@@ -1509,7 +1736,7 @@
           "activity": "เจ้าของเป็นตัวละครที่ระบุชัด; ใช้ he/she/we/they เป็นสะพาน จัดสองชุดสั้น",
           "examples": [
             "his shirt",
-            "her hat",
+            "her bag",
             "our bags",
             "their keys"
           ],
@@ -1532,7 +1759,7 @@
           "id": "v7_u07n04",
           "code": "7.5",
           "order": 5,
-          "globalOrder": 48,
+          "globalOrder": 55,
           "titleEn": "Found It!",
           "titleTh": "เจอแล้ว!",
           "type": "describe_it",
@@ -1560,7 +1787,7 @@
           "id": "v7_u07n05",
           "code": "7.6",
           "order": 6,
-          "globalOrder": 49,
+          "globalOrder": 56,
           "titleEn": "Have & Has",
           "titleTh": "Have และ Has",
           "type": "lesson",
@@ -1587,19 +1814,53 @@
           }
         },
         {
-          "id": "v7_u07n06",
+          "id": "v7_u07n09",
           "code": "7.7",
           "order": 7,
-          "globalOrder": 50,
-          "titleEn": "What We Have",
+          "globalOrder": 57,
+          "titleEn": "More Personal Things",
+          "titleTh": "ของส่วนตัวเพิ่ม",
+          "type": "new_words",
+          "beat": "Sho",
+          "learningTarget": "จำ hat, watch, umbrella ก่อน I have / She has",
+          "activity": "สอนสามคำของส่วนตัวเพิ่มหลัง Have & Has",
+          "examples": [
+            "hat",
+            "watch",
+            "umbrella"
+          ],
+          "estimatedMinutes": [
+            2,
+            4
+          ],
+          "difficultyAxes": [
+            1,
+            1,
+            2,
+            1,
+            1
+          ],
+          "contentRef": {
+            "poolId": "new_words_more_personal_things"
+          }
+        },
+        {
+          "id": "v7_u07n06",
+          "code": "7.8",
+          "order": 8,
+          "globalOrder": 58,
+          "titleEn": "Things We Have",
           "titleTh": "สิ่งที่เรามี",
           "type": "say_it",
           "beat": "Sho",
-          "learningTarget": "เรียกคืนเจ้าของและ have/has อย่างมีตัวช่วย",
-          "activity": "ห้าโจทย์ไทย; Guided เป็นโหมดช่วย ไม่ใช่ Sentence Builder",
+          "learningTarget": "ใช้ have/has และ This/That is my/her กับของชุด B และชุด A",
+          "activity": "ยังไม่ใช้ does not have เพราะบท Have & Has ยังไม่สอนปฏิเสธ",
           "examples": [
-            "I have a key",
-            "He has my book"
+            "I have a hat.",
+            "She has a watch.",
+            "He has an umbrella.",
+            "This is my phone.",
+            "That is her bag."
           ],
           "estimatedMinutes": [
             1,
@@ -1619,9 +1880,9 @@
         },
         {
           "id": "v7_u07n07",
-          "code": "7.8",
-          "order": 8,
-          "globalOrder": 51,
+          "code": "7.9",
+          "order": 9,
+          "globalOrder": 59,
           "titleEn": "Before Class",
           "titleTh": "ก่อนเข้าเรียน",
           "type": "conversation",
@@ -1661,7 +1922,7 @@
           "id": "v7_u08n01",
           "code": "8.1",
           "order": 1,
-          "globalOrder": 52,
+          "globalOrder": 60,
           "titleEn": "Numbers 0–10",
           "titleTh": "ตัวเลข 0–10",
           "type": "lesson",
@@ -1692,7 +1953,7 @@
           "id": "v7_u08n02",
           "code": "8.2",
           "order": 2,
-          "globalOrder": 53,
+          "globalOrder": 61,
           "titleEn": "Name the Number",
           "titleTh": "บอกชื่อตัวเลข",
           "type": "emoji_speak",
@@ -1723,7 +1984,7 @@
           "id": "v7_u08n03",
           "code": "8.3",
           "order": 3,
-          "globalOrder": 54,
+          "globalOrder": 62,
           "titleEn": "Eleven to Twenty",
           "titleTh": "สิบเอ็ดถึงยี่สิบ",
           "type": "lesson",
@@ -1754,7 +2015,7 @@
           "id": "v7_u08n04",
           "code": "8.4",
           "order": 4,
-          "globalOrder": 55,
+          "globalOrder": 63,
           "titleEn": "Say My Age",
           "titleTh": "บอกอายุของฉัน",
           "type": "say_it",
@@ -1784,7 +2045,7 @@
           "id": "v7_u08n09",
           "code": "8.5",
           "order": 5,
-          "globalOrder": 56,
+          "globalOrder": 64,
           "titleEn": "My Profile Card",
           "titleTh": "บัตรโปรไฟล์ของฉัน",
           "type": "describe_it",
@@ -1812,7 +2073,7 @@
           "id": "v7_u08n10",
           "code": "8.6",
           "order": 6,
-          "globalOrder": 57,
+          "globalOrder": 65,
           "titleEn": "Join the Class",
           "titleTh": "เข้าชั้นเรียน",
           "type": "conversation",
@@ -1852,7 +2113,7 @@
           "id": "v7_u09n01",
           "code": "9.1",
           "order": 1,
-          "globalOrder": 58,
+          "globalOrder": 66,
           "titleEn": "Twenty to One Hundred",
           "titleTh": "ยี่สิบถึงหนึ่งร้อย",
           "type": "lesson",
@@ -1883,7 +2144,7 @@
           "id": "v7_u09n02",
           "code": "9.2",
           "order": 2,
-          "globalOrder": 59,
+          "globalOrder": 67,
           "titleEn": "Say the Number",
           "titleTh": "พูดตัวเลข",
           "type": "say_it",
@@ -1914,7 +2175,7 @@
           "id": "v7_u09n03",
           "code": "9.3",
           "order": 3,
-          "globalOrder": 60,
+          "globalOrder": 68,
           "titleEn": "What Time Is It?",
           "titleTh": "กี่โมงแล้ว?",
           "type": "lesson",
@@ -1945,7 +2206,7 @@
           "id": "v7_u09n04",
           "code": "9.4",
           "order": 4,
-          "globalOrder": 61,
+          "globalOrder": 69,
           "titleEn": "Clock Faces",
           "titleTh": "หน้าปัดนาฬิกา",
           "type": "emoji_speak",
@@ -1976,7 +2237,7 @@
           "id": "v7_u09n11",
           "code": "9.5",
           "order": 5,
-          "globalOrder": 62,
+          "globalOrder": 70,
           "titleEn": "Days 1",
           "titleTh": "วันจันทร์ถึงพฤหัส",
           "type": "new_words",
@@ -2005,41 +2266,10 @@
           }
         },
         {
-          "id": "v7_u09n12",
+          "id": "v7_u09n05",
           "code": "9.6",
           "order": 6,
-          "globalOrder": 63,
-          "titleEn": "Days 2",
-          "titleTh": "วันศุกร์ถึงอาทิตย์",
-          "type": "new_words",
-          "beat": "Sho",
-          "learningTarget": "จำ Friday, Saturday, Sunday ก่อน Days & Simple Plans",
-          "activity": "สอนสามวันสุดท้าย แล้วให้บท Days & Simple Plans เน้นวิธีใช้ on Monday, Friday at ten, The class is on Wednesday",
-          "examples": [
-            "Friday",
-            "Saturday",
-            "Sunday"
-          ],
-          "estimatedMinutes": [
-            2,
-            4
-          ],
-          "difficultyAxes": [
-            1,
-            1,
-            2,
-            1,
-            1
-          ],
-          "contentRef": {
-            "poolId": "new_words_days_2"
-          }
-        },
-        {
-          "id": "v7_u09n05",
-          "code": "9.7",
-          "order": 7,
-          "globalOrder": 64,
+          "globalOrder": 71,
           "titleEn": "Days & Simple Plans",
           "titleTh": "วันและแผนง่าย ๆ",
           "type": "lesson",
@@ -2067,19 +2297,53 @@
           }
         },
         {
-          "id": "v7_u09n06",
+          "id": "v7_u09n12",
+          "code": "9.7",
+          "order": 7,
+          "globalOrder": 72,
+          "titleEn": "Days 2",
+          "titleTh": "วันศุกร์ถึงอาทิตย์",
+          "type": "new_words",
+          "beat": "Sho",
+          "learningTarget": "จำ Friday, Saturday, Sunday ก่อน Days & Simple Plans",
+          "activity": "สอนสามวันสุดท้าย แล้วให้บท Days & Simple Plans เน้นวิธีใช้ on Monday, Friday at ten, The class is on Wednesday",
+          "examples": [
+            "Friday",
+            "Saturday",
+            "Sunday"
+          ],
+          "estimatedMinutes": [
+            2,
+            4
+          ],
+          "difficultyAxes": [
+            1,
+            1,
+            2,
+            1,
+            1
+          ],
+          "contentRef": {
+            "poolId": "new_words_days_2"
+          }
+        },
+        {
+          "id": "v7_u09n13",
           "code": "9.8",
           "order": 8,
-          "globalOrder": 65,
-          "titleEn": "Read the Price",
-          "titleTh": "อ่านราคา",
+          "globalOrder": 73,
+          "titleEn": "Choose the Day",
+          "titleTh": "เลือกวัน",
           "type": "say_it",
           "beat": "Sho",
-          "learningTarget": "ทบทวนตัวเลขก่อนใช้กับราคา",
-          "activity": "ห้าโจทย์ไทยเป็นตัวเลข/วลีราคา พร้อมความหมาย baht ในโจทย์; ยังไม่ถาม How much ก่อนเรียน",
+          "learningTarget": "ใช้ on + วัน ทั้งบอกเล่า ปฏิเสธ และตารางคลาส",
+          "activity": "ห้าโจทย์; ข้อไม่ทำงานรับวันใดก็ได้ที่ผู้เรียนเลือก",
           "examples": [
-            "Thirty baht",
-            "Fifty baht"
+            "I work on Monday.",
+            "The class is on Friday.",
+            "I do not work on Sunday.",
+            "We meet on Wednesday.",
+            "The class is on Saturday."
           ],
           "estimatedMinutes": [
             1,
@@ -2089,18 +2353,18 @@
             1,
             1,
             2,
-            2,
+            1,
             1
           ],
           "contentRef": {
-            "topicId": "fnd_v7_u09n06"
+            "topicId": "fnd_v7_u09n13"
           }
         },
         {
           "id": "v7_u09n07",
           "code": "9.9",
           "order": 9,
-          "globalOrder": 66,
+          "globalOrder": 74,
           "titleEn": "Prices & Paying",
           "titleTh": "ราคาและการจ่ายเงิน",
           "type": "lesson",
@@ -2125,6 +2389,36 @@
           ],
           "contentRef": {
             "lessonId": "fnd_v7_prices_and_paying"
+          }
+        },
+        {
+          "id": "v7_u09n06",
+          "code": "9.10",
+          "order": 10,
+          "globalOrder": 75,
+          "titleEn": "Read the Price",
+          "titleTh": "อ่านราคา",
+          "type": "say_it",
+          "beat": "Sho",
+          "learningTarget": "ทบทวนตัวเลขก่อนใช้กับราคา",
+          "activity": "ห้าโจทย์ไทยเป็นตัวเลข/วลีราคา พร้อมความหมาย baht ในโจทย์; ยังไม่ถาม How much ก่อนเรียน",
+          "examples": [
+            "Thirty baht",
+            "Fifty baht"
+          ],
+          "estimatedMinutes": [
+            1,
+            2
+          ],
+          "difficultyAxes": [
+            1,
+            1,
+            2,
+            2,
+            1
+          ],
+          "contentRef": {
+            "topicId": "fnd_v7_u09n06"
           }
         },
         {
@@ -2154,15 +2448,15 @@
           "contentRef": {
             "poolId": "fnd_v7_u09n10"
           },
-          "code": "9.10",
-          "order": 10,
-          "globalOrder": 67
+          "code": "9.11",
+          "order": 11,
+          "globalOrder": 76
         },
         {
           "id": "v7_u09n08",
-          "code": "9.11",
-          "order": 11,
-          "globalOrder": 68,
+          "code": "9.12",
+          "order": 12,
+          "globalOrder": 77,
           "titleEn": "The Class Ticket",
           "titleTh": "ตั๋วเข้าชั้นเรียน",
           "type": "story_bites",
@@ -2190,9 +2484,9 @@
         },
         {
           "id": "v7_u09n09",
-          "code": "9.12",
-          "order": 12,
-          "globalOrder": 69,
+          "code": "9.13",
+          "order": 13,
+          "globalOrder": 78,
           "titleEn": "Buy a Movie Ticket",
           "titleTh": "ซื้อตั๋วหนังหนึ่งใบ",
           "type": "conversation",
@@ -2233,7 +2527,7 @@
           "id": "v7_u10n08",
           "code": "10.1",
           "order": 1,
-          "globalOrder": 70,
+          "globalOrder": 79,
           "titleEn": "Drinks",
           "titleTh": "เครื่องดื่ม",
           "type": "new_words",
@@ -2261,41 +2555,10 @@
           }
         },
         {
-          "id": "v7_u10n09",
+          "id": "v7_u10n01",
           "code": "10.2",
           "order": 2,
-          "globalOrder": 71,
-          "titleEn": "Food",
-          "titleTh": "อาหาร",
-          "type": "new_words",
-          "beat": "Ki",
-          "learningTarget": "จำ rice, noodles, bread ก่อน I like / I don’t like",
-          "activity": "สอนสามอาหาร แล้วใช้ทั้งหกคำใน I like, Do you like…? และเกมที่เกี่ยวข้อง ไม่ให้แสดงแล้วหายไป",
-          "examples": [
-            "rice",
-            "noodles",
-            "bread"
-          ],
-          "estimatedMinutes": [
-            2,
-            4
-          ],
-          "difficultyAxes": [
-            1,
-            1,
-            2,
-            1,
-            1
-          ],
-          "contentRef": {
-            "poolId": "new_words_food"
-          }
-        },
-        {
-          "id": "v7_u10n01",
-          "code": "10.3",
-          "order": 3,
-          "globalOrder": 72,
+          "globalOrder": 80,
           "titleEn": "I Like / I Don’t Like",
           "titleTh": "ฉันชอบ / ฉันไม่ชอบ",
           "type": "lesson",
@@ -2323,9 +2586,9 @@
         },
         {
           "id": "v7_u10n02",
-          "code": "10.4",
-          "order": 4,
-          "globalOrder": 73,
+          "code": "10.3",
+          "order": 3,
+          "globalOrder": 81,
           "titleEn": "Food & Drink",
           "titleTh": "อาหารและเครื่องดื่ม",
           "type": "emoji_speak",
@@ -2355,9 +2618,9 @@
         },
         {
           "id": "v7_u10n03",
-          "code": "10.5",
-          "order": 5,
-          "globalOrder": 74,
+          "code": "10.4",
+          "order": 4,
+          "globalOrder": 82,
           "titleEn": "Do You Like It?",
           "titleTh": "คุณชอบไหม?",
           "type": "lesson",
@@ -2384,10 +2647,74 @@
           }
         },
         {
-          "id": "v7_u10n04",
+          "id": "v7_u10n09",
+          "code": "10.5",
+          "order": 5,
+          "globalOrder": 83,
+          "titleEn": "Food",
+          "titleTh": "อาหาร",
+          "type": "new_words",
+          "beat": "Ki",
+          "learningTarget": "จำ rice, noodles, bread ก่อน I like / I don’t like",
+          "activity": "สอนสามอาหาร แล้วใช้ทั้งหกคำใน I like, Do you like…? และเกมที่เกี่ยวข้อง ไม่ให้แสดงแล้วหายไป",
+          "examples": [
+            "rice",
+            "noodles",
+            "bread"
+          ],
+          "estimatedMinutes": [
+            2,
+            4
+          ],
+          "difficultyAxes": [
+            1,
+            1,
+            2,
+            1,
+            1
+          ],
+          "contentRef": {
+            "poolId": "new_words_food"
+          }
+        },
+        {
+          "id": "v7_u10n10",
           "code": "10.6",
           "order": 6,
-          "globalOrder": 75,
+          "globalOrder": 84,
+          "titleEn": "Food I Like",
+          "titleTh": "อาหารที่ฉันชอบ",
+          "type": "say_it",
+          "beat": "Sho",
+          "learningTarget": "ใช้ I like / I don’t like และ Do you like? กับอาหารและเครื่องดื่ม",
+          "activity": "ข้อ 1, 2, 4, 5 เป็น free choice รับทั้ง like และ don’t like",
+          "examples": [
+            "I like rice.",
+            "I do not like noodles.",
+            "Do you like bread?",
+            "I like coffee.",
+            "I do not like tea."
+          ],
+          "estimatedMinutes": [
+            1,
+            2
+          ],
+          "difficultyAxes": [
+            1,
+            1,
+            2,
+            1,
+            1
+          ],
+          "contentRef": {
+            "topicId": "fnd_v7_u10n10"
+          }
+        },
+        {
+          "id": "v7_u10n04",
+          "code": "10.7",
+          "order": 7,
+          "globalOrder": 85,
           "titleEn": "My Snack Choice",
           "titleTh": "ของกินเล่นที่ฉันเลือก",
           "type": "describe_it",
@@ -2413,9 +2740,9 @@
         },
         {
           "id": "v7_u10n05",
-          "code": "10.7",
-          "order": 7,
-          "globalOrder": 76,
+          "code": "10.8",
+          "order": 8,
+          "globalOrder": 86,
           "titleEn": "Want, Need & Please",
           "titleTh": "อยาก ต้องการ และได้โปรด",
           "type": "lesson",
@@ -2444,9 +2771,9 @@
         },
         {
           "id": "v7_u10n06",
-          "code": "10.8",
-          "order": 8,
-          "globalOrder": 77,
+          "code": "10.9",
+          "order": 9,
+          "globalOrder": 87,
           "titleEn": "Ask for What You Need",
           "titleTh": "ขอสิ่งที่ต้องการ",
           "type": "say_it",
@@ -2475,9 +2802,9 @@
         },
         {
           "id": "v7_u10n07",
-          "code": "10.9",
-          "order": 9,
-          "globalOrder": 78,
+          "code": "10.10",
+          "order": 10,
+          "globalOrder": 88,
           "titleEn": "Order a Drink",
           "titleTh": "สั่งเครื่องดื่ม",
           "type": "conversation",
@@ -2517,7 +2844,7 @@
           "id": "v7_u11n07",
           "code": "11.1",
           "order": 1,
-          "globalOrder": 79,
+          "globalOrder": 89,
           "titleEn": "Action Words",
           "titleTh": "คำกริยาที่ทำได้",
           "type": "new_words",
@@ -2549,7 +2876,7 @@
           "id": "v7_u11n01",
           "code": "11.2",
           "order": 2,
-          "globalOrder": 80,
+          "globalOrder": 90,
           "titleEn": "I Can",
           "titleTh": "ฉันทำได้",
           "type": "lesson",
@@ -2579,7 +2906,7 @@
           "id": "v7_u11n02",
           "code": "11.3",
           "order": 3,
-          "globalOrder": 81,
+          "globalOrder": 91,
           "titleEn": "Action Words",
           "titleTh": "คำกริยา",
           "type": "emoji_speak",
@@ -2611,7 +2938,7 @@
           "id": "v7_u11n03",
           "code": "11.4",
           "order": 4,
-          "globalOrder": 82,
+          "globalOrder": 92,
           "titleEn": "Can’t & Can You?",
           "titleTh": "ทำไม่ได้ และคุณทำได้ไหม?",
           "type": "lesson",
@@ -2639,10 +2966,74 @@
           }
         },
         {
-          "id": "v7_u11n04",
+          "id": "v7_u11n08",
           "code": "11.5",
           "order": 5,
-          "globalOrder": 83,
+          "globalOrder": 93,
+          "titleEn": "More Actions",
+          "titleTh": "คำกริยาเพิ่ม",
+          "type": "new_words",
+          "beat": "Sho",
+          "learningTarget": "จำ sing, dance, draw ก่อน I can …",
+          "activity": "สอนสามกริยาเพิ่มหลัง Can’t & Can You?",
+          "examples": [
+            "sing",
+            "dance",
+            "draw"
+          ],
+          "estimatedMinutes": [
+            2,
+            4
+          ],
+          "difficultyAxes": [
+            1,
+            1,
+            2,
+            1,
+            1
+          ],
+          "contentRef": {
+            "poolId": "new_words_more_actions"
+          }
+        },
+        {
+          "id": "v7_u11n09",
+          "code": "11.6",
+          "order": 6,
+          "globalOrder": 94,
+          "titleEn": "What I Can Do",
+          "titleTh": "ฉันทำอะไรได้",
+          "type": "say_it",
+          "beat": "Sho",
+          "learningTarget": "ใช้ I can / I can’t และ Can you? กับกริยาชุด B และชุด A",
+          "activity": "ข้อความสามารถของผู้เรียนรับทั้ง I can และ I can’t",
+          "examples": [
+            "I can sing.",
+            "I can't dance.",
+            "Can you draw?",
+            "I can swim.",
+            "I can't cook."
+          ],
+          "estimatedMinutes": [
+            1,
+            2
+          ],
+          "difficultyAxes": [
+            1,
+            1,
+            2,
+            1,
+            1
+          ],
+          "contentRef": {
+            "topicId": "fnd_v7_u11n09"
+          }
+        },
+        {
+          "id": "v7_u11n04",
+          "code": "11.7",
+          "order": 7,
+          "globalOrder": 95,
           "titleEn": "Ending T",
           "titleTh": "เสียง T ท้ายคำ",
           "type": "pronunciation",
@@ -2681,9 +3072,9 @@
         },
         {
           "id": "v7_u11n05",
-          "code": "11.6",
-          "order": 6,
-          "globalOrder": 84,
+          "code": "11.8",
+          "order": 8,
+          "globalOrder": 96,
           "titleEn": "Can I? Can You?",
           "titleTh": "ฉันทำได้ไหม? คุณทำได้ไหม?",
           "type": "say_it",
@@ -2711,9 +3102,9 @@
         },
         {
           "id": "v7_u11n06",
-          "code": "11.7",
-          "order": 7,
-          "globalOrder": 85,
+          "code": "11.9",
+          "order": 9,
+          "globalOrder": 97,
           "titleEn": "Find Something We Can Do",
           "titleTh": "หาสิ่งที่เราทำด้วยกันได้",
           "type": "conversation",
@@ -2753,7 +3144,7 @@
           "id": "v7_u12n08",
           "code": "12.1",
           "order": 1,
-          "globalOrder": 86,
+          "globalOrder": 98,
           "titleEn": "Daily Actions",
           "titleTh": "กิจวัตรประจำวัน",
           "type": "new_words",
@@ -2785,7 +3176,7 @@
           "id": "v7_u12n01",
           "code": "12.2",
           "order": 2,
-          "globalOrder": 87,
+          "globalOrder": 99,
           "titleEn": "My Day",
           "titleTh": "วันของฉัน",
           "type": "lesson",
@@ -2815,7 +3206,7 @@
           "id": "v7_u12n02",
           "code": "12.3",
           "order": 3,
-          "globalOrder": 88,
+          "globalOrder": 100,
           "titleEn": "Daily Actions",
           "titleTh": "กิจวัตรประจำวัน",
           "type": "emoji_speak",
@@ -2847,7 +3238,7 @@
           "id": "v7_u12n03",
           "code": "12.4",
           "order": 4,
-          "globalOrder": 89,
+          "globalOrder": 101,
           "titleEn": "Her Day, His Day",
           "titleTh": "วันของเธอ วันของเขา",
           "type": "lesson",
@@ -2876,10 +3267,41 @@
           }
         },
         {
-          "id": "v7_u12n04",
+          "id": "v7_u12n09",
           "code": "12.5",
           "order": 5,
-          "globalOrder": 90,
+          "globalOrder": 102,
+          "titleEn": "More Daily Actions",
+          "titleTh": "กิจวัตรเพิ่ม",
+          "type": "new_words",
+          "beat": "Sho",
+          "learningTarget": "จำ study, go home, watch TV ก่อนพูดกิจวัตร",
+          "activity": "สอนสามกิจวัตรเพิ่มหลัง Her Day, His Day; นำไปใช้ต่อใน Present Continuous ได้",
+          "examples": [
+            "study",
+            "go home",
+            "watch TV"
+          ],
+          "estimatedMinutes": [
+            2,
+            4
+          ],
+          "difficultyAxes": [
+            1,
+            1,
+            2,
+            1,
+            1
+          ],
+          "contentRef": {
+            "poolId": "new_words_more_daily_actions"
+          }
+        },
+        {
+          "id": "v7_u12n04",
+          "code": "12.6",
+          "order": 6,
+          "globalOrder": 103,
           "titleEn": "Do / Does Every Day",
           "titleTh": "Do / Does ทุกวัน",
           "type": "lesson",
@@ -2907,10 +3329,71 @@
           }
         },
         {
+          "id": "v7_u12n10",
+          "code": "12.7",
+          "order": 7,
+          "globalOrder": 104,
+          "titleEn": "My Day Mix",
+          "titleTh": "วันของฉันแบบผสม",
+          "type": "say_it",
+          "beat": "Sho",
+          "learningTarget": "ใช้ I + base, He/She + verb-s, I don’t และ Do you หลัง Do/Does Every Day",
+          "activity": "ห้าโจทย์หลัง Her Day, His Day และ Do/Does Every Day",
+          "examples": [
+            "I study every day.",
+            "She goes home at five.",
+            "He watches TV every day.",
+            "I do not work on Friday.",
+            "Do you wake up at seven?"
+          ],
+          "estimatedMinutes": [
+            1,
+            2
+          ],
+          "difficultyAxes": [
+            1,
+            1,
+            2,
+            1,
+            1
+          ],
+          "contentRef": {
+            "topicId": "fnd_v7_u12n10"
+          }
+        },
+        {
+          "id": "v7_u12n06",
+          "code": "12.8",
+          "order": 8,
+          "globalOrder": 105,
+          "titleEn": "A Day in Pictures",
+          "titleTh": "หนึ่งวันในรูปภาพ",
+          "type": "describe_it",
+          "beat": "Ten",
+          "learningTarget": "อธิบายกิจวัตรคนอื่นจาก timeline",
+          "activity": "ภาพติดป้าย Every day และนาฬิกาชัด; ไม่บังคับเดา habitual จากภาพนิ่ง; พูดสองประโยค",
+          "examples": [
+            "She wakes up at seven",
+            "She works on Monday"
+          ],
+          "estimatedMinutes": [
+            2,
+            3
+          ],
+          "difficultyAxes": [
+            1,
+            1,
+            3,
+            3,
+            2
+          ],
+          "contentRef": {}
+        },
+        {
           "id": "v7_u12n05",
-          "code": "12.6",
-          "order": 6,
-          "globalOrder": 91,
+          "code": "12.9",
+          "order": 9,
+          "globalOrder": 106,
           "titleEn": "Ask About a Day",
           "titleTh": "ถามเรื่องหนึ่งวัน",
           "type": "say_it",
@@ -2939,38 +3422,10 @@
           }
         },
         {
-          "id": "v7_u12n06",
-          "code": "12.7",
-          "order": 7,
-          "globalOrder": 92,
-          "titleEn": "A Day in Pictures",
-          "titleTh": "หนึ่งวันในรูปภาพ",
-          "type": "describe_it",
-          "beat": "Ten",
-          "learningTarget": "อธิบายกิจวัตรคนอื่นจาก timeline",
-          "activity": "ภาพติดป้าย Every day และนาฬิกาชัด; ไม่บังคับเดา habitual จากภาพนิ่ง; พูดสองประโยค",
-          "examples": [
-            "She wakes up at seven",
-            "She works on Monday"
-          ],
-          "estimatedMinutes": [
-            2,
-            3
-          ],
-          "difficultyAxes": [
-            1,
-            1,
-            3,
-            3,
-            2
-          ],
-          "contentRef": {}
-        },
-        {
           "id": "v7_u12n07",
-          "code": "12.8",
-          "order": 8,
-          "globalOrder": 93,
+          "code": "12.10",
+          "order": 10,
+          "globalOrder": 107,
           "titleEn": "Make a Morning Plan",
           "titleTh": "นัดเจอกันตอนเช้า",
           "type": "conversation",
@@ -3010,7 +3465,7 @@
           "id": "v7_u13n01",
           "code": "13.1",
           "order": 1,
-          "globalOrder": 94,
+          "globalOrder": 108,
           "titleEn": "Happening Now",
           "titleTh": "กำลังเกิดขึ้นตอนนี้",
           "type": "lesson",
@@ -3040,7 +3495,7 @@
           "id": "v7_u13n02",
           "code": "13.2",
           "order": 2,
-          "globalOrder": 95,
+          "globalOrder": 109,
           "titleEn": "Action Snapshot",
           "titleTh": "ภาพแอ็กชัน",
           "type": "emoji_speak",
@@ -3072,7 +3527,7 @@
           "id": "v7_u13n03",
           "code": "13.3",
           "order": 3,
-          "globalOrder": 96,
+          "globalOrder": 110,
           "titleEn": "Are They Working?",
           "titleTh": "พวกเขากำลังทำงานอยู่ไหม?",
           "type": "lesson",
@@ -3100,10 +3555,74 @@
           }
         },
         {
-          "id": "v7_u13n04",
+          "id": "v7_u13n07",
           "code": "13.4",
           "order": 4,
-          "globalOrder": 97,
+          "globalOrder": 111,
+          "titleEn": "Actions Happening Now",
+          "titleTh": "กำลังทำอยู่ตอนนี้",
+          "type": "new_words",
+          "beat": "Sho",
+          "learningTarget": "จำ walk, talk, wait ซึ่งเติม -ing ตรงไปตรงมา",
+          "activity": "สอนสามกริยาใหม่หลัง Are They Working? ไม่เริ่มด้วย spelling exception",
+          "examples": [
+            "walk",
+            "talk",
+            "wait"
+          ],
+          "estimatedMinutes": [
+            2,
+            4
+          ],
+          "difficultyAxes": [
+            1,
+            1,
+            2,
+            1,
+            1
+          ],
+          "contentRef": {
+            "poolId": "new_words_actions_happening_now"
+          }
+        },
+        {
+          "id": "v7_u13n08",
+          "code": "13.5",
+          "order": 5,
+          "globalOrder": 112,
+          "titleEn": "Happening Now Mix",
+          "titleTh": "กำลังเกิดแบบผสม",
+          "type": "say_it",
+          "beat": "Sho",
+          "learningTarget": "แยกกำลังทำ / ไม่ได้ทำ / กำลังทำไหม ด้วย is/are …ing",
+          "activity": "ห้าโจทย์ผสม affirmative, negative และ Is/Are questions",
+          "examples": [
+            "She is walking.",
+            "He is not talking.",
+            "Are they waiting?",
+            "She is cooking.",
+            "Is he reading?"
+          ],
+          "estimatedMinutes": [
+            1,
+            2
+          ],
+          "difficultyAxes": [
+            1,
+            1,
+            2,
+            1,
+            1
+          ],
+          "contentRef": {
+            "topicId": "fnd_v7_u13n08"
+          }
+        },
+        {
+          "id": "v7_u13n04",
+          "code": "13.6",
+          "order": 6,
+          "globalOrder": 113,
           "titleEn": "The Lunch Break",
           "titleTh": "พักกินข้าว",
           "type": "story_bites",
@@ -3130,9 +3649,9 @@
         },
         {
           "id": "v7_u13n05",
-          "code": "13.5",
-          "order": 5,
-          "globalOrder": 98,
+          "code": "13.7",
+          "order": 7,
+          "globalOrder": 114,
           "titleEn": "What’s Happening Here?",
           "titleTh": "ที่นี่เกิดอะไรขึ้น?",
           "type": "describe_it",
@@ -3158,9 +3677,9 @@
         },
         {
           "id": "v7_u13n06",
-          "code": "13.6",
-          "order": 6,
-          "globalOrder": 99,
+          "code": "13.8",
+          "order": 8,
+          "globalOrder": 115,
           "titleEn": "A Quick Update",
           "titleTh": "อัปเดตสั้น ๆ",
           "type": "conversation",
@@ -3200,7 +3719,7 @@
           "id": "v7_u14n07",
           "code": "14.1",
           "order": 1,
-          "globalOrder": 100,
+          "globalOrder": 116,
           "titleEn": "Question Clues 1",
           "titleTh": "เบาะแสคำถาม 1",
           "type": "new_words",
@@ -3231,7 +3750,7 @@
           "id": "v7_u14n01",
           "code": "14.2",
           "order": 2,
-          "globalOrder": 101,
+          "globalOrder": 117,
           "titleEn": "What or Who?",
           "titleTh": "What หรือ Who?",
           "type": "lesson",
@@ -3262,7 +3781,7 @@
           "id": "v7_u14n02",
           "code": "14.3",
           "order": 3,
-          "globalOrder": 102,
+          "globalOrder": 118,
           "titleEn": "People & Things in a Scene",
           "titleTh": "คนและสิ่งของในฉาก",
           "type": "describe_it",
@@ -3290,7 +3809,7 @@
           "id": "v7_u14n08",
           "code": "14.4",
           "order": 4,
-          "globalOrder": 103,
+          "globalOrder": 119,
           "titleEn": "Question Clues 2",
           "titleTh": "เบาะแสคำถาม 2",
           "type": "new_words",
@@ -3321,7 +3840,7 @@
           "id": "v7_u14n03",
           "code": "14.5",
           "order": 5,
-          "globalOrder": 104,
+          "globalOrder": 120,
           "titleEn": "Where, When, How Much & How Many",
           "titleTh": "ที่ไหน เมื่อไหร่ เท่าไหร่ กี่อัน",
           "type": "lesson",
@@ -3353,17 +3872,20 @@
           "id": "v7_u14n04",
           "code": "14.6",
           "order": 6,
-          "globalOrder": 105,
-          "titleEn": "Ask for the Missing Detail",
-          "titleTh": "ถามรายละเอียดที่ขาด",
+          "globalOrder": 121,
+          "titleEn": "Ask the Right Question",
+          "titleTh": "ถามให้ตรงคำถาม",
           "type": "say_it",
           "beat": "Ten",
-          "learningTarget": "เลือกคำถามจากเจตนาที่โจทย์ไทยกำหนด",
-          "activity": "ห้าโจทย์คน/สิ่งของ/สถานที่/เวลา/ราคา; เป็นไทย→อังกฤษ ไม่แอบเพิ่มจับคู่กระดาน",
+          "learningTarget": "เลือก question word ให้ถูกจากคลังหกคำ",
+          "activity": "หกโจทย์มีบริบททุกข้อ; ความท้าทายหลักคือเลือกคำถามไม่ใช่สร้าง grammar จากศูนย์",
           "examples": [
+            "What is this?",
             "Who is she?",
-            "Where is the class?",
-            "When is the class?"
+            "Where is the bathroom?",
+            "When is the class?",
+            "How much is the ticket?",
+            "How many books?"
           ],
           "estimatedMinutes": [
             1,
@@ -3384,7 +3906,7 @@
           "id": "v7_u14n05",
           "code": "14.7",
           "order": 7,
-          "globalOrder": 106,
+          "globalOrder": 122,
           "titleEn": "Two Useful Facts",
           "titleTh": "สองข้อมูลที่ใช้ได้",
           "type": "describe_it",
@@ -3412,7 +3934,7 @@
           "id": "v7_u14n06",
           "code": "14.8",
           "order": 8,
-          "globalOrder": 107,
+          "globalOrder": 123,
           "titleEn": "You Ask First",
           "titleTh": "คุณถามก่อน",
           "type": "conversation",
@@ -3451,7 +3973,7 @@
           "id": "v7_u15n10",
           "code": "15.1",
           "order": 1,
-          "globalOrder": 108,
+          "globalOrder": 124,
           "titleEn": "Around the Room",
           "titleTh": "ของในห้อง",
           "type": "new_words",
@@ -3479,41 +4001,10 @@
           }
         },
         {
-          "id": "v7_u15n11",
+          "id": "v7_u15n01",
           "code": "15.2",
           "order": 2,
-          "globalOrder": 109,
-          "titleEn": "Places & Fixtures",
-          "titleTh": "สถานที่และทางเดิน",
-          "type": "new_words",
-          "beat": "Ki",
-          "learningTarget": "จำ door, bathroom, stairs ก่อนบอกตำแหน่งและทิศทาง",
-          "activity": "สอนสามคำสถานที่ แล้วนำไปใช้กับ The bathroom is next to the stairs และ Go straight. The door is on the left",
-          "examples": [
-            "door",
-            "bathroom",
-            "stairs"
-          ],
-          "estimatedMinutes": [
-            2,
-            4
-          ],
-          "difficultyAxes": [
-            1,
-            1,
-            2,
-            1,
-            1
-          ],
-          "contentRef": {
-            "poolId": "new_words_places_and_fixtures"
-          }
-        },
-        {
-          "id": "v7_u15n01",
-          "code": "15.3",
-          "order": 3,
-          "globalOrder": 110,
+          "globalOrder": 125,
           "titleEn": "There Is / There Are",
           "titleTh": "มีอยู่ / มีหลาย",
           "type": "lesson",
@@ -3541,9 +4032,9 @@
         },
         {
           "id": "v7_u15n02",
-          "code": "15.4",
-          "order": 4,
-          "globalOrder": 111,
+          "code": "15.3",
+          "order": 3,
+          "globalOrder": 126,
           "titleEn": "Around the Room",
           "titleTh": "รอบห้อง",
           "type": "emoji_speak",
@@ -3571,19 +4062,83 @@
           }
         },
         {
-          "id": "v7_u15n03",
+          "id": "v7_u15n11",
+          "code": "15.4",
+          "order": 4,
+          "globalOrder": 127,
+          "titleEn": "More Places & Things",
+          "titleTh": "สถานที่และของเพิ่ม",
+          "type": "new_words",
+          "beat": "Ki",
+          "learningTarget": "จำ door, bed, bathroom ก่อน There is และตำแหน่ง",
+          "activity": "สอนสามคำหลัง There Is / There Are แล้วนำไปใช้ The bag is under the bed",
+          "examples": [
+            "door",
+            "bed",
+            "bathroom"
+          ],
+          "estimatedMinutes": [
+            2,
+            4
+          ],
+          "difficultyAxes": [
+            1,
+            1,
+            2,
+            1,
+            1
+          ],
+          "contentRef": {
+            "poolId": "new_words_places_and_fixtures"
+          }
+        },
+        {
+          "id": "v7_u15n12",
           "code": "15.5",
           "order": 5,
-          "globalOrder": 112,
+          "globalOrder": 128,
+          "titleEn": "What Is in the Room?",
+          "titleTh": "ในห้องมีอะไร",
+          "type": "say_it",
+          "beat": "Sho",
+          "learningTarget": "ใช้ There is/are และตำแหน่ง in/on/under/next to กับของในห้อง",
+          "activity": "ห้าโจทย์; ไม่ใช้ by เพราะยังไม่สอน",
+          "examples": [
+            "There is a door.",
+            "There are two chairs.",
+            "The bag is under the bed.",
+            "The bathroom is next to the door.",
+            "There is a table."
+          ],
+          "estimatedMinutes": [
+            1,
+            2
+          ],
+          "difficultyAxes": [
+            1,
+            1,
+            2,
+            1,
+            1
+          ],
+          "contentRef": {
+            "topicId": "fnd_v7_u15n12"
+          }
+        },
+        {
+          "id": "v7_u15n03",
+          "code": "15.6",
+          "order": 6,
+          "globalOrder": 129,
           "titleEn": "In, On, Under, Next To",
           "titleTh": "ใน บน ใต้ ข้าง ๆ",
           "type": "lesson",
           "beat": "Sho",
           "learningTarget": "บอกตำแหน่งของด้วยคำบุพบทสี่คำ",
-          "activity": "ใช้ bag/book/table/chair เดิม; ภาพสัมพันธ์ชัด ไม่มี behind/between เพิ่ม",
+          "activity": "ใช้คำจาก New Words B กับ in/on/under/next to; ตัวอย่างหลักคือ under the bed และ next to the door",
           "examples": [
-            "The bag is under the table",
-            "The book is on the chair"
+            "The bag is under the bed.",
+            "The bathroom is next to the door."
           ],
           "estimatedMinutes": [
             3,
@@ -3602,9 +4157,9 @@
         },
         {
           "id": "v7_u15n04",
-          "code": "15.6",
-          "order": 6,
-          "globalOrder": 113,
+          "code": "15.7",
+          "order": 7,
+          "globalOrder": 130,
           "titleEn": "Where Is My Bag?",
           "titleTh": "กระเป๋าฉันอยู่ไหน?",
           "type": "describe_it",
@@ -3612,7 +4167,7 @@
           "learningTarget": "บอกตำแหน่งที่ช่วยแยกของเหมือนกัน",
           "activity": "ภาพของสองใบ ตำแหน่งต่าง; หลังเพิ่งเรียน preposition ให้ starter The bag is … และขอหนึ่งประโยคก่อน; ประโยคที่สองเป็น optional ไม่เพิ่มทั้งความยาวและถอดตัวช่วยพร้อมกัน",
           "examples": [
-            "The bag is under the table",
+            "The bag is under the bed",
             "The blue bag is on the chair"
           ],
           "estimatedMinutes": [
@@ -3630,9 +4185,9 @@
         },
         {
           "id": "v7_u15n05",
-          "code": "15.7",
-          "order": 7,
-          "globalOrder": 114,
+          "code": "15.8",
+          "order": 8,
+          "globalOrder": 131,
           "titleEn": "Word Stress I",
           "titleTh": "การเน้นพยางค์ 1",
           "type": "pronunciation",
@@ -3668,9 +4223,9 @@
         },
         {
           "id": "v7_u15n06",
-          "code": "15.8",
-          "order": 8,
-          "globalOrder": 115,
+          "code": "15.9",
+          "order": 9,
+          "globalOrder": 132,
           "titleEn": "Go Straight, Turn Left",
           "titleTh": "ตรงไป เลี้ยวซ้าย",
           "type": "lesson",
@@ -3725,15 +4280,15 @@
           "contentRef": {
             "poolId": "fnd_v7_u15n09"
           },
-          "code": "15.9",
-          "order": 9,
-          "globalOrder": 116
+          "code": "15.10",
+          "order": 10,
+          "globalOrder": 133
         },
         {
           "id": "v7_u15n07",
-          "code": "15.10",
-          "order": 10,
-          "globalOrder": 117,
+          "code": "15.11",
+          "order": 11,
+          "globalOrder": 134,
           "titleEn": "Say the Way",
           "titleTh": "บอกทาง",
           "type": "say_it",
@@ -3761,9 +4316,9 @@
         },
         {
           "id": "v7_u15n08",
-          "code": "15.11",
-          "order": 11,
-          "globalOrder": 118,
+          "code": "15.12",
+          "order": 12,
+          "globalOrder": 135,
           "titleEn": "Find the Room",
           "titleTh": "หาห้องให้เจอ",
           "type": "conversation",
@@ -3803,7 +4358,7 @@
           "id": "v7_u16n01",
           "code": "16.1",
           "order": 1,
-          "globalOrder": 119,
+          "globalOrder": 136,
           "titleEn": "Words I Know",
           "titleTh": "คำที่ฉันรู้",
           "type": "emoji_speak",
@@ -3836,7 +4391,7 @@
           "id": "v7_u16n02",
           "code": "16.2",
           "order": 2,
-          "globalOrder": 120,
+          "globalOrder": 137,
           "titleEn": "A First Day",
           "titleTh": "วันแรก",
           "type": "story_bites",
@@ -3865,7 +4420,7 @@
           "id": "v7_u16n03",
           "code": "16.3",
           "order": 3,
-          "globalOrder": 121,
+          "globalOrder": 138,
           "titleEn": "Keep the Talk Going",
           "titleTh": "พูดต่อให้สนุก",
           "type": "say_it",
@@ -3898,7 +4453,7 @@
           "id": "v7_u16n04",
           "code": "16.4",
           "order": 4,
-          "globalOrder": 122,
+          "globalOrder": 139,
           "titleEn": "Tell Me About This Place",
           "titleTh": "เล่าเรื่องที่นี่",
           "type": "describe_it",
@@ -3927,7 +4482,7 @@
           "id": "v7_u16n05",
           "code": "16.5",
           "order": 5,
-          "globalOrder": 123,
+          "globalOrder": 140,
           "titleEn": "My First Day",
           "titleTh": "วันแรกของฉัน",
           "type": "conversation",

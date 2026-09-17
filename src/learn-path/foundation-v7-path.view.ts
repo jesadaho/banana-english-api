@@ -1,6 +1,6 @@
 import { getLesson } from '../lessons/lessons.data';
 import { getSimulation } from '../simulations/simulations.data';
-import { sayItPoolForTopic, sayItTopicById } from '../say-it/say-it.data';
+import { foundationSayItDealCount, sayItPoolForTopic, sayItTopicById } from '../say-it/say-it.data';
 import { emojiSpeakPoolById } from '../emoji-speak/emoji-speak.data';
 import { isValidNewWordsPack, newWordsPoolById } from '../new-words/new-words.data';
 import { foundationV7LessonLegacyIds } from '../lessons/foundation-v7-lesson-id-aliases';
@@ -20,7 +20,7 @@ export function hasFoundationV7Content(node: FoundationV7Node): boolean {
   switch(node.type) {
     case 'lesson': case 'pronunciation': return Boolean(ref.lessonId && getLesson(ref.lessonId));
     case 'conversation': return Boolean(ref.simulationId && getSimulation(ref.simulationId));
-    case 'say_it': return Boolean(ref.topicId && sayItTopicById(ref.topicId) && sayItPoolForTopic(ref.topicId).length === 5);
+    case 'say_it': return Boolean(ref.topicId && sayItTopicById(ref.topicId) && sayItPoolForTopic(ref.topicId).length === foundationSayItDealCount(ref.topicId));
     case 'emoji_speak': return Boolean(ref.poolId && (emojiSpeakPoolById(ref.poolId)?.items.length ?? 0) > 0);
     case 'new_words': return Boolean(ref.poolId && isValidNewWordsPack(newWordsPoolById(ref.poolId)));
     default: return false;

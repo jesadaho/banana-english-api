@@ -182,25 +182,29 @@
   "fnd_v7_u06n07": [
     {
       "id": "fnd_v7_u06n07_q1",
-      "promptTh": "นั่นไม่ใช่ปากกา",
-      "answerEn": "That is not a pen",
+      "promptTh": "กระเป๋าสีดำ",
+      "answerEn": "The black bag",
       "acceptedAnswers": [
-        "That isn't a pen",
-        "That's not a pen"
+        "That is the black bag",
+        "That's the black bag"
       ]
     },
     {
       "id": "fnd_v7_u06n07_q2",
-      "promptTh": "พวกนี้คือหนังสือ",
-      "answerEn": "These are books",
-      "acceptedAnswers": []
+      "promptTh": "หนังสือสีขาว",
+      "answerEn": "The white book",
+      "acceptedAnswers": [
+        "That is the white book",
+        "That's the white book"
+      ]
     },
     {
       "id": "fnd_v7_u06n07_q3",
-      "promptTh": "นี่คือกระเป๋าสีน้ำเงิน",
-      "answerEn": "This is a blue bag",
+      "promptTh": "โทรศัพท์สีน้ำเงิน",
+      "answerEn": "The blue phone",
       "acceptedAnswers": [
-        "This bag is blue"
+        "That is the blue phone",
+        "That's the blue phone"
       ]
     },
     {
@@ -211,64 +215,70 @@
     },
     {
       "id": "fnd_v7_u06n07_q5",
-      "promptTh": "นั่นคือกระเป๋าใบเล็ก",
-      "answerEn": "That is a small bag",
+      "promptTh": "นี่คือกระเป๋าสีน้ำเงิน",
+      "answerEn": "This is a blue bag",
       "acceptedAnswers": [
-        "That's a small bag"
+        "This bag is blue"
       ]
     }
   ],
   "fnd_v7_u07n06": [
     {
       "id": "fnd_v7_u07n06_q1",
-      "promptTh": "ฉันมีกุญแจหนึ่งดอก",
-      "answerEn": "I have a key",
+      "promptTh": "ฉันมีหมวกหนึ่งใบ",
+      "answerEn": "I have a hat",
       "acceptedAnswers": [],
       "mode": "guided",
       "hintEn": "I have …",
       "choices": [
-        "I have a key",
-        "She has a key",
-        "I have a book"
-      ]
-    },
-    {
-      "id": "fnd_v7_u07n06_q2",
-      "promptTh": "เธอมีกระเป๋าหนึ่งใบ",
-      "answerEn": "She has a bag",
-      "acceptedAnswers": [],
-      "mode": "guided",
-      "hintEn": "She has …",
-      "choices": [
-        "She has a bag",
-        "She has a key",
+        "I have a hat",
+        "She has a hat",
         "I have a bag"
       ]
     },
     {
-      "id": "fnd_v7_u07n06_q3",
-      "promptTh": "นี่คือโทรศัพท์ของคุณ",
-      "answerEn": "This is your phone",
+      "id": "fnd_v7_u07n06_q2",
+      "promptTh": "เธอมีนาฬิกาข้อมือหนึ่งเรือน",
+      "answerEn": "She has a watch",
       "acceptedAnswers": [],
       "mode": "guided",
-      "hintEn": "This is …",
+      "hintEn": "She has …",
       "choices": [
-        "This is your phone",
-        "This is my phone",
-        "This is her phone"
+        "She has a watch",
+        "She has a hat",
+        "I have a watch"
+      ]
+    },
+    {
+      "id": "fnd_v7_u07n06_q3",
+      "promptTh": "เขามีร่มหนึ่งคัน",
+      "answerEn": "He has an umbrella",
+      "acceptedAnswers": [],
+      "mode": "guided",
+      "hintEn": "He has …",
+      "choices": [
+        "He has an umbrella",
+        "He has a hat",
+        "I have an umbrella"
       ]
     },
     {
       "id": "fnd_v7_u07n06_q4",
-      "promptTh": "เขามีหนังสือของฉัน",
-      "answerEn": "He has my book",
-      "acceptedAnswers": []
+      "promptTh": "นี่คือโทรศัพท์ของฉัน",
+      "answerEn": "This is my phone",
+      "acceptedAnswers": [
+        "That's my phone",
+        "That is my phone"
+      ]
     },
     {
       "id": "fnd_v7_u07n06_q5",
-      "promptTh": "พวกนี้คือกุญแจของพวกเขา",
-      "answerEn": "These are their keys",
-      "acceptedAnswers": []
+      "promptTh": "นั่นคือกระเป๋าของเธอ",
+      "answerEn": "That is her bag",
+      "acceptedAnswers": [
+        "That's her bag",
+        "This is her bag"
+      ]
     }
   ],
   "fnd_v7_u08n04": [
@@ -627,34 +637,49 @@
   "fnd_v7_u14n04": [
     {
       "id": "fnd_v7_u14n04_q1",
-      "promptTh": "เธอคือใคร",
+      "promptTh": "📦 นี่คืออะไร",
+      "answerEn": "What is this",
+      "acceptedAnswers": [
+        "What's this"
+      ]
+    },
+    {
+      "id": "fnd_v7_u14n04_q2",
+      "promptTh": "👩 เธอคือใคร",
       "answerEn": "Who is she",
       "acceptedAnswers": []
     },
     {
-      "id": "fnd_v7_u14n04_q2",
-      "promptTh": "นี่คืออะไร",
-      "answerEn": "What is this",
-      "acceptedAnswers": []
-    },
-    {
       "id": "fnd_v7_u14n04_q3",
-      "promptTh": "คลาสอยู่ที่ไหน",
-      "answerEn": "Where is the class",
-      "acceptedAnswers": []
+      "promptTh": "🚻 ห้องน้ำอยู่ที่ไหน",
+      "answerEn": "Where is the bathroom",
+      "acceptedAnswers": [
+        "Where's the bathroom",
+        "Where is the toilet"
+      ]
     },
     {
       "id": "fnd_v7_u14n04_q4",
-      "promptTh": "คลาสเมื่อไร",
+      "promptTh": "🗓️ คลาสเมื่อไร",
       "answerEn": "When is the class",
-      "acceptedAnswers": []
+      "acceptedAnswers": [
+        "When's the class"
+      ]
     },
     {
       "id": "fnd_v7_u14n04_q5",
-      "promptTh": "ราคาเท่าไร",
-      "answerEn": "How much is it",
+      "promptTh": "🎫 ตั๋วราคาเท่าไร",
+      "answerEn": "How much is the ticket",
       "acceptedAnswers": [
-        "How much"
+        "How much is it"
+      ]
+    },
+    {
+      "id": "fnd_v7_u14n04_q6",
+      "promptTh": "📚 หนังสือกี่เล่ม",
+      "answerEn": "How many books",
+      "acceptedAnswers": [
+        "How many"
       ]
     }
   ],
@@ -728,6 +753,471 @@
       "answerEn": "How much is it",
       "acceptedAnswers": [
         "How much"
+      ]
+    }
+  ],
+  "fnd_v7_u03n09": [
+    {
+      "id": "fnd_v7_u03n09_q1",
+      "promptTh": "ฉันร้อน",
+      "answerEn": "I am hot",
+      "acceptedAnswers": [
+        "I'm hot"
+      ]
+    },
+    {
+      "id": "fnd_v7_u03n09_q2",
+      "promptTh": "ฉันไม่หนาว",
+      "answerEn": "I am not cold",
+      "acceptedAnswers": [
+        "I'm not cold"
+      ]
+    },
+    {
+      "id": "fnd_v7_u03n09_q3",
+      "promptTh": "คุณป่วยไหม",
+      "answerEn": "Are you sick",
+      "acceptedAnswers": [
+        "Yes, I am",
+        "Yes I am",
+        "Yes, I'm",
+        "No, I'm not",
+        "No I am not",
+        "No, I am not",
+        "I'm not"
+      ]
+    },
+    {
+      "id": "fnd_v7_u03n09_q4",
+      "promptTh": "ฉันหิว",
+      "answerEn": "I am hungry",
+      "acceptedAnswers": [
+        "I'm hungry"
+      ]
+    },
+    {
+      "id": "fnd_v7_u03n09_q5",
+      "promptTh": "คุณเหนื่อยไหม",
+      "answerEn": "Are you tired",
+      "acceptedAnswers": [
+        "Yes, I am",
+        "Yes I am",
+        "Yes, I'm",
+        "No, I'm not",
+        "No I am not",
+        "No, I am not",
+        "I'm not"
+      ]
+    }
+  ],
+  "fnd_v7_u04n11": [
+    {
+      "id": "fnd_v7_u04n11_q1",
+      "promptTh": "นี่คือป้าของฉัน",
+      "answerEn": "This is my aunt",
+      "acceptedAnswers": [
+        "That's my aunt",
+        "That is my aunt"
+      ]
+    },
+    {
+      "id": "fnd_v7_u04n11_q2",
+      "promptTh": "เขาคือลุงของฉัน",
+      "answerEn": "He is my uncle",
+      "acceptedAnswers": [
+        "He's my uncle"
+      ]
+    },
+    {
+      "id": "fnd_v7_u04n11_q3",
+      "promptTh": "เธอคือลูกพี่ลูกน้องของฉัน",
+      "answerEn": "She is my cousin",
+      "acceptedAnswers": [
+        "She's my cousin"
+      ]
+    },
+    {
+      "id": "fnd_v7_u04n11_q4",
+      "promptTh": "นี่คือพี่สาวของฉัน",
+      "answerEn": "This is my sister",
+      "acceptedAnswers": [
+        "That's my sister",
+        "That is my sister"
+      ]
+    },
+    {
+      "id": "fnd_v7_u04n11_q5",
+      "promptTh": "เขาคือพี่ชายของฉัน",
+      "answerEn": "He is my brother",
+      "acceptedAnswers": [
+        "He's my brother"
+      ]
+    }
+  ],
+  "fnd_v7_u05n10": [
+    {
+      "id": "fnd_v7_u05n10_q1",
+      "promptTh": "นี่คือถ้วยหนึ่งใบ",
+      "answerEn": "It is a cup",
+      "acceptedAnswers": [
+        "It's a cup",
+        "a cup",
+        "A cup"
+      ]
+    },
+    {
+      "id": "fnd_v7_u05n10_q2",
+      "promptTh": "โทรศัพท์สองเครื่อง",
+      "answerEn": "Two phones",
+      "acceptedAnswers": [
+        "2 phones",
+        "two phones"
+      ]
+    },
+    {
+      "id": "fnd_v7_u05n10_q3",
+      "promptTh": "นี่คือกุญแจหนึ่งดอก",
+      "answerEn": "It is a key",
+      "acceptedAnswers": [
+        "It's a key",
+        "a key",
+        "A key"
+      ]
+    },
+    {
+      "id": "fnd_v7_u05n10_q4",
+      "promptTh": "หนังสือสามเล่ม",
+      "answerEn": "Three books",
+      "acceptedAnswers": [
+        "3 books",
+        "three books"
+      ]
+    },
+    {
+      "id": "fnd_v7_u05n10_q5",
+      "promptTh": "นี่คือแอปเปิลหนึ่งผล",
+      "answerEn": "It is an apple",
+      "acceptedAnswers": [
+        "It's an apple",
+        "an apple",
+        "An apple"
+      ]
+    }
+  ],
+  "fnd_v7_u06n11": [
+    {
+      "id": "fnd_v7_u06n11_q1",
+      "promptTh": "มันสีเหลือง",
+      "answerEn": "It is yellow",
+      "acceptedAnswers": [
+        "It's yellow"
+      ]
+    },
+    {
+      "id": "fnd_v7_u06n11_q2",
+      "promptTh": "นี่คือกระเป๋าสีดำ",
+      "answerEn": "This is a black bag",
+      "acceptedAnswers": [
+        "This bag is black"
+      ]
+    },
+    {
+      "id": "fnd_v7_u06n11_q3",
+      "promptTh": "มันไม่ขาว",
+      "answerEn": "It is not white",
+      "acceptedAnswers": [
+        "It's not white",
+        "It isn't white"
+      ]
+    },
+    {
+      "id": "fnd_v7_u06n11_q4",
+      "promptTh": "นั่นคือโทรศัพท์สีน้ำเงิน",
+      "answerEn": "That is a blue phone",
+      "acceptedAnswers": [
+        "That's a blue phone",
+        "That phone is blue"
+      ]
+    },
+    {
+      "id": "fnd_v7_u06n11_q5",
+      "promptTh": "หนังสือเล่มนี้สีเขียว",
+      "answerEn": "This book is green",
+      "acceptedAnswers": [
+        "This is a green book",
+        "It is green",
+        "It's green"
+      ]
+    }
+  ],
+  "fnd_v7_u09n13": [
+    {
+      "id": "fnd_v7_u09n13_q1",
+      "promptTh": "ฉันทำงานวันจันทร์",
+      "answerEn": "I work on Monday",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u09n13_q2",
+      "promptTh": "คลาสวันศุกร์",
+      "answerEn": "The class is on Friday",
+      "acceptedAnswers": [
+        "Class is on Friday"
+      ]
+    },
+    {
+      "id": "fnd_v7_u09n13_q3",
+      "promptTh": "ฉันไม่ทำงานวันหนึ่ง",
+      "answerEn": "I do not work on Sunday",
+      "acceptedAnswers": [
+        "I do not work on Monday",
+        "I don't work on Monday",
+        "I do not work on Tuesday",
+        "I don't work on Tuesday",
+        "I do not work on Wednesday",
+        "I don't work on Wednesday",
+        "I do not work on Thursday",
+        "I don't work on Thursday",
+        "I do not work on Friday",
+        "I don't work on Friday",
+        "I do not work on Saturday",
+        "I don't work on Saturday",
+        "I don't work on Sunday"
+      ]
+    },
+    {
+      "id": "fnd_v7_u09n13_q4",
+      "promptTh": "เราเจอกันวันพุธ",
+      "answerEn": "We meet on Wednesday",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u09n13_q5",
+      "promptTh": "คลาสวันเสาร์",
+      "answerEn": "The class is on Saturday",
+      "acceptedAnswers": [
+        "Class is on Saturday"
+      ]
+    }
+  ],
+  "fnd_v7_u10n10": [
+    {
+      "id": "fnd_v7_u10n10_q1",
+      "promptTh": "ชอบหรือไม่ชอบข้าว",
+      "answerEn": "I like rice",
+      "acceptedAnswers": [
+        "I do not like rice",
+        "I don't like rice"
+      ]
+    },
+    {
+      "id": "fnd_v7_u10n10_q2",
+      "promptTh": "ชอบหรือไม่ชอบก๋วยเตี๋ยว",
+      "answerEn": "I do not like noodles",
+      "acceptedAnswers": [
+        "I like noodles",
+        "I don't like noodles"
+      ]
+    },
+    {
+      "id": "fnd_v7_u10n10_q3",
+      "promptTh": "คุณชอบขนมปังไหม",
+      "answerEn": "Do you like bread",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u10n10_q4",
+      "promptTh": "ชอบหรือไม่ชอบกาแฟ",
+      "answerEn": "I like coffee",
+      "acceptedAnswers": [
+        "I do not like coffee",
+        "I don't like coffee"
+      ]
+    },
+    {
+      "id": "fnd_v7_u10n10_q5",
+      "promptTh": "ชอบหรือไม่ชอบชา",
+      "answerEn": "I do not like tea",
+      "acceptedAnswers": [
+        "I like tea",
+        "I don't like tea"
+      ]
+    }
+  ],
+  "fnd_v7_u11n09": [
+    {
+      "id": "fnd_v7_u11n09_q1",
+      "promptTh": "ร้องเพลงเป็นหรือไม่เป็น",
+      "answerEn": "I can sing",
+      "acceptedAnswers": [
+        "I can't sing",
+        "I cannot sing",
+        "I can not sing"
+      ]
+    },
+    {
+      "id": "fnd_v7_u11n09_q2",
+      "promptTh": "เต้นเป็นหรือไม่เป็น",
+      "answerEn": "I can't dance",
+      "acceptedAnswers": [
+        "I can dance",
+        "I cannot dance",
+        "I can not dance"
+      ]
+    },
+    {
+      "id": "fnd_v7_u11n09_q3",
+      "promptTh": "คุณวาดรูปเป็นไหม",
+      "answerEn": "Can you draw",
+      "acceptedAnswers": [
+        "Yes, I can",
+        "Yes I can",
+        "No, I can't",
+        "No I cannot",
+        "No, I cannot",
+        "I cannot"
+      ]
+    },
+    {
+      "id": "fnd_v7_u11n09_q4",
+      "promptTh": "ว่ายน้ำเป็นหรือไม่เป็น",
+      "answerEn": "I can swim",
+      "acceptedAnswers": [
+        "I can't swim",
+        "I cannot swim",
+        "I can not swim"
+      ]
+    },
+    {
+      "id": "fnd_v7_u11n09_q5",
+      "promptTh": "ทำอาหารเป็นหรือไม่เป็น",
+      "answerEn": "I can't cook",
+      "acceptedAnswers": [
+        "I can cook",
+        "I cannot cook",
+        "I can not cook"
+      ]
+    }
+  ],
+  "fnd_v7_u12n10": [
+    {
+      "id": "fnd_v7_u12n10_q1",
+      "promptTh": "ฉันเรียนทุกวัน",
+      "answerEn": "I study every day",
+      "acceptedAnswers": [
+        "I study everyday"
+      ]
+    },
+    {
+      "id": "fnd_v7_u12n10_q2",
+      "promptTh": "เธอกลับบ้านห้าโมง",
+      "answerEn": "She goes home at five",
+      "acceptedAnswers": [
+        "She goes home at 5"
+      ]
+    },
+    {
+      "id": "fnd_v7_u12n10_q3",
+      "promptTh": "เขาดูทีวีทุกวัน",
+      "answerEn": "He watches TV every day",
+      "acceptedAnswers": [
+        "He watches TV everyday",
+        "He watches television every day"
+      ]
+    },
+    {
+      "id": "fnd_v7_u12n10_q4",
+      "promptTh": "ฉันไม่ทำงานวันศุกร์",
+      "answerEn": "I do not work on Friday",
+      "acceptedAnswers": [
+        "I don't work on Friday"
+      ]
+    },
+    {
+      "id": "fnd_v7_u12n10_q5",
+      "promptTh": "คุณตื่นเจ็ดโมงไหม",
+      "answerEn": "Do you wake up at seven",
+      "acceptedAnswers": [
+        "Do you wake up at 7"
+      ]
+    }
+  ],
+  "fnd_v7_u13n08": [
+    {
+      "id": "fnd_v7_u13n08_q1",
+      "promptTh": "เธอกำลังเดิน",
+      "answerEn": "She is walking",
+      "acceptedAnswers": [
+        "She's walking"
+      ]
+    },
+    {
+      "id": "fnd_v7_u13n08_q2",
+      "promptTh": "เขาไม่ได้กำลังพูด",
+      "answerEn": "He is not talking",
+      "acceptedAnswers": [
+        "He's not talking",
+        "He isn't talking"
+      ]
+    },
+    {
+      "id": "fnd_v7_u13n08_q3",
+      "promptTh": "พวกเขากำลังรอไหม",
+      "answerEn": "Are they waiting",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u13n08_q4",
+      "promptTh": "เธอกำลังทำอาหาร",
+      "answerEn": "She is cooking",
+      "acceptedAnswers": [
+        "She's cooking"
+      ]
+    },
+    {
+      "id": "fnd_v7_u13n08_q5",
+      "promptTh": "เขากำลังอ่านไหม",
+      "answerEn": "Is he reading",
+      "acceptedAnswers": []
+    }
+  ],
+  "fnd_v7_u15n12": [
+    {
+      "id": "fnd_v7_u15n12_q1",
+      "promptTh": "มีประตูหนึ่งบาน",
+      "answerEn": "There is a door",
+      "acceptedAnswers": [
+        "There's a door"
+      ]
+    },
+    {
+      "id": "fnd_v7_u15n12_q2",
+      "promptTh": "มีเก้าอี้สองตัว",
+      "answerEn": "There are two chairs",
+      "acceptedAnswers": [
+        "There are 2 chairs"
+      ]
+    },
+    {
+      "id": "fnd_v7_u15n12_q3",
+      "promptTh": "กระเป๋าอยู่ใต้เตียง",
+      "answerEn": "The bag is under the bed",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u15n12_q4",
+      "promptTh": "ห้องน้ำอยู่ข้างประตู",
+      "answerEn": "The bathroom is next to the door",
+      "acceptedAnswers": [
+        "The bathroom is next to the door."
+      ]
+    },
+    {
+      "id": "fnd_v7_u15n12_q5",
+      "promptTh": "มีโต๊ะหนึ่งตัว",
+      "answerEn": "There is a table",
+      "acceptedAnswers": [
+        "There's a table"
       ]
     }
   ]

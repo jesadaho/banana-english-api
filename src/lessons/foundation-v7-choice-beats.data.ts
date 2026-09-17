@@ -68,7 +68,7 @@ export const FOUNDATION_V7_CHOICE_BEATS: Record<string, FoundationV7ChoiceBeat> 
     option('👇', 'these', 'These are bags'), option('👉', 'those', 'Those are bags'),
   ]),
   fnd_v7_my_and_your: any(2, 'เลือกของหนึ่งชิ้นเพื่อบอกว่าเป็นของคุณ', 'This is my...', [
-    option('📱', 'phone', 'This is my phone'), option('🔑', 'key', 'This is my key'), option('👕', 'shirt', 'This is my shirt'), option('🧢', 'hat', 'This is my hat'),
+    option('📱', 'phone', 'This is my phone'), option('🔑', 'key', 'This is my key'), option('👕', 'shirt', 'This is my shirt'), option('🎒', 'bag', 'This is my bag'),
   ]),
   fnd_v7_his_her_our_their: single(2, 'กุญแจหลายดอกเป็นของคนกลุ่มนั้น ใช้คำแสดงเจ้าของคำไหน', 'These are...keys', 'These are their keys', 'ของคนหลายคนที่ไม่รวมเราใช้ their ครับ', [
     option('👨', 'his', 'These are his keys'), option('👩', 'her', 'These are her keys'), option('👥', 'their', 'These are their keys'),
@@ -141,8 +141,8 @@ export const FOUNDATION_V7_CHOICE_BEATS: Record<string, FoundationV7ChoiceBeat> 
   fnd_v7_there_is_there_are: single(2, 'ในห้องมีเก้าอี้สองตัว ควรใช้รูปใด', 'There...', 'There are two chairs', 'หลายชิ้นใช้ There are ครับ', [
     option('1️⃣', 'is', 'There is a chair'), option('2️⃣', 'are', 'There are two chairs'),
   ]),
-  fnd_v7_in_on_under_next_to: single(2, 'กระเป๋าอยู่ใต้โต๊ะ เลือกคำบอกตำแหน่ง', 'The bag is...the table', 'The bag is under the table', 'อยู่ใต้ใช้ under ครับ', [
-    option('⬆️', 'on', 'The bag is on the table'), option('⬇️', 'under', 'The bag is under the table'), option('↔️', 'next to', 'The bag is next to the table'),
+  fnd_v7_in_on_under_next_to: single(2, 'กระเป๋าอยู่ใต้เตียง เลือกคำบอกตำแหน่ง', 'The bag is...the bed', 'The bag is under the bed', 'อยู่ใต้ใช้ under ครับ', [
+    option('⬆️', 'on', 'The bag is on the bed'), option('⬇️', 'under', 'The bag is under the bed'), option('↔️', 'next to', 'The bag is next to the bed'),
   ]),
   fnd_v7_go_straight_turn_left: single(2, 'ทางไปห้องอยู่ด้านซ้าย ควรบอกให้ทำอะไร', '', 'Turn left', 'ด้านซ้ายใช้ Turn left ครับ', [
     option('⬆️', 'go straight', 'Go straight'), option('⬅️', 'turn left', 'Turn left'), option('➡️', 'turn right', 'Turn right'),

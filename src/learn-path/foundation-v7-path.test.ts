@@ -39,13 +39,13 @@ const EXPECTED_V7_MIN_TURNS: Record<string, number> = {
 };
 
 describe('Foundation V7 catalog and real content', () => {
-  it('has 16 chapters and the approved 123-node mix, without Skill Mix', () => {
+  it('has 16 chapters and the approved 140-node mix, without Skill Mix', () => {
     assert.equal(FOUNDATION_V7_CATALOG.chapters.length, 16);
-    assert.equal(FOUNDATION_V7_NODES.length, 123);
-    assert.equal(new Set(FOUNDATION_V7_NODES.map(n => n.id)).size, 123);
-    assert.deepEqual(FOUNDATION_V7_CATALOG.chapters.map(c => c.items.length), [5,4,7,9,8,10,8,6,12,9,7,8,6,8,11,5]);
-    assert.deepEqual(foundationV7NodeTypeCounts(), { lesson:37, say_it:16, emoji_speak:17, new_words:17, pronunciation:4, describe_it:13, story_bites:4, conversation:15 });
-    assert.deepEqual(FOUNDATION_V7_NODES.map(n => n.globalOrder), Array.from({length:123}, (_, i) => i + 1));
+    assert.equal(FOUNDATION_V7_NODES.length, 140);
+    assert.equal(new Set(FOUNDATION_V7_NODES.map(n => n.id)).size, 140);
+    assert.deepEqual(FOUNDATION_V7_CATALOG.chapters.map(c => c.items.length), [5,4,9,11,10,11,9,6,13,10,9,10,8,8,12,5]);
+    assert.deepEqual(foundationV7NodeTypeCounts(), { lesson:37, say_it:26, emoji_speak:17, new_words:24, pronunciation:4, describe_it:13, story_bites:4, conversation:15 });
+    assert.deepEqual(FOUNDATION_V7_NODES.map(n => n.globalOrder), Array.from({length:140}, (_, i) => i + 1));
     for (let i = 1; i < FOUNDATION_V7_NODES.length; i++) {
       const prev = FOUNDATION_V7_NODES[i - 1];
       const next = FOUNDATION_V7_NODES[i];
@@ -95,11 +95,11 @@ describe('Foundation V7 catalog and real content', () => {
     assert.equal(hasFoundationV7Content({...node, contentRef:{}}), false);
   });
 
-  it('has 106 backend-ready nodes, 103 playable by default, and a capability gate for three Guided packs', () => {
+  it('has 123 backend-ready nodes, 120 playable by default, and a capability gate for three Guided packs', () => {
     const defaults = toFoundationV7ClientChapters().flatMap(c => c.items);
-    assert.equal(defaults.filter(n => n.backendReady).length, 106);
-    assert.equal(defaults.filter(n => !n.comingSoon).length, 103);
-    assert.equal(all().filter(n => !n.comingSoon).length, 106);
+    assert.equal(defaults.filter(n => n.backendReady).length, 123);
+    assert.equal(defaults.filter(n => !n.comingSoon).length, 120);
+    assert.equal(all().filter(n => !n.comingSoon).length, 123);
     assert.equal(defaults.filter(n => n.unavailableReason === 'client_capability_required').length, 3);
     assert.equal(defaults.filter(n => n.unavailableReason === 'missing_content').length, 0);
     const placeholders = all().filter(n => n.comingSoon);
@@ -148,14 +148,15 @@ describe('Foundation V7 catalog and real content', () => {
     }
   });
 
-  it('serves all 16 Say It topics through the real service with five unique question IDs', () => {
+  it('serves all 26 Say It topics through the real service with five or six unique question IDs', () => {
     const service = new SayItService();
     for (const node of FOUNDATION_V7_NODES.filter(n => n.type === 'say_it')) {
       const id = node.contentRef.topicId!;
       assert.equal(service.getTopic(id).locked, false);
       const result = service.dealForTopic(id, 1, 'Mia');
-      assert.equal(result.dealCount, 5, id);
-      assert.equal(new Set(result.phrases.map(q => q.id)).size, 5, id);
+      const expected = id === 'fnd_v7_u14n04' ? 6 : 5;
+      assert.equal(result.dealCount, expected, id);
+      assert.equal(new Set(result.phrases.map(q => q.id)).size, expected, id);
       for (const q of result.phrases) {
         assert.ok(q.promptTh && q.answerEn && Array.isArray(q.acceptedAnswers));
         assert.doesNotMatch(q.promptTh, /(?:บอกว่า|ถามว่า|พูดว่า|อย่างสุภาพ|ทบทวน:)/, `${id}: Say It should use a direct Thai cue`);
@@ -247,18 +248,18 @@ describe('Foundation V7 progress and completion contracts', () => {
     mini.push(...all().filter(n => n.comingSoon).map(n => n.id));
     const service = pathService(lessons, mini, simulations);
     const full = await service.getFoundationV7('user', ['say_it_guided']);
-    assert.equal(full.progress.completedCount, 106);
-    assert.equal(full.progress.totalCount, 106);
+    assert.equal(full.progress.completedCount, 123);
+    assert.equal(full.progress.totalCount, 123);
     assert.equal(full.progress.currentNodeId, null);
     const legacyClient = await service.getFoundationV7('user');
-    assert.equal(legacyClient.progress.completedCount, 103);
-    assert.equal(legacyClient.progress.totalCount, 103);
+    assert.equal(legacyClient.progress.completedCount, 120);
+    assert.equal(legacyClient.progress.totalCount, 120);
     assert.equal(legacyClient.progress.currentNodeId, null);
   });
 
   it('rejects unknown capabilities rather than silently enabling unsupported mechanics', async () => {
     const controller = new LearnPathController(pathService());
-    assert.equal((await controller.foundationV7(req, 'say_it_guided')).summary.playableCount, 106);
+    assert.equal((await controller.foundationV7(req, 'say_it_guided')).summary.playableCount, 123);
     await assert.rejects(controller.foundationV7(req, 'story_bites'));
     await assert.rejects(controller.foundationV7(req, ['say_it_guided'] as any));
   });
@@ -270,29 +271,39 @@ describe('Foundation V7 progress and completion contracts', () => {
     assert.ok(isValidNewWordsPack(demo));
     assert.equal(canonicalFoundationV7RewardId('new_words_demo'), 'new_words:new_words_demo');
     const catalogNodes = FOUNDATION_V7_NODES.filter(n => n.type === 'new_words');
-    assert.equal(catalogNodes.length, 17);
+    assert.equal(catalogNodes.length, 24);
     assert.deepEqual(catalogNodes.map(n => n.contentRef.poolId), [
       'new_words_how_i_feel',
+      'new_words_more_feelings',
       'new_words_people_around_me',
       'new_words_family_words',
+      'new_words_more_family',
       'new_words_everyday_objects',
+      'new_words_more_everyday_things',
       'new_words_colours_1',
       'new_words_colours_2',
       'new_words_personal_things',
+      'new_words_more_personal_things',
       'new_words_days_1',
       'new_words_days_2',
       'new_words_drinks',
       'new_words_food',
       'new_words_action_words',
+      'new_words_more_actions',
       'new_words_daily_actions',
+      'new_words_more_daily_actions',
+      'new_words_actions_happening_now',
       'new_words_question_clues_1',
       'new_words_question_clues_2',
       'new_words_around_the_room',
       'new_words_places_and_fixtures',
     ]);
     assert.equal(newWordsPoolById('new_words_people_around_me')?.items.map(i => i.answer).join(','), 'teacher,student,doctor');
-    assert.equal(newWordsPoolById('new_words_personal_things')?.items.map(i => i.answer).join(','), 'phone,key,shirt,hat');
+    assert.equal(newWordsPoolById('new_words_personal_things')?.items.map(i => i.answer).join(','), 'phone,key,shirt,bag');
+    assert.equal(newWordsPoolById('new_words_more_personal_things')?.items.map(i => i.answer).join(','), 'hat,watch,umbrella');
     assert.equal(newWordsPoolById('new_words_food')?.items.map(i => i.answer).join(','), 'rice,noodles,bread');
+    assert.equal(newWordsPoolById('new_words_more_feelings')?.items.map(i => i.answer).join(','), 'hot,cold,sick');
+    assert.equal(newWordsPoolById('new_words_places_and_fixtures')?.items.map(i => i.answer).join(','), 'door,bed,bathroom');
     assert.equal(newWordsPoolById('new_words_question_clues_2')?.items.map(i => i.answer).join(','), 'when,how much,how many');
     for (const node of catalogNodes) {
       const pool = newWordsPoolById(node.contentRef.poolId!);
@@ -330,7 +341,7 @@ describe('Foundation V7 progress and completion contracts', () => {
       const reward = await controller.completeTopic(req, node.contentRef.topicId!);
       assert.equal((reward as any).gameId, `say_it:${node.contentRef.topicId}`);
     }
-    assert.equal(calls.length, 16);
+    assert.equal(calls.length, 26);
     await assert.rejects(controller.completeTopic(req, 'fnd_v7_unknown'));
   });
 

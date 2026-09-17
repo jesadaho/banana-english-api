@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import {
   dealSayItPhrases,
-  FOUNDATION_SAY_IT_DEAL_COUNT,
+  foundationSayItDealCount,
   isFoundationPathSayItTopic,
   SAY_IT_DEAL_COUNT,
   SAY_IT_TOPICS,
@@ -32,7 +32,7 @@ export class SayItService {
   } {
     this.getTopic(topicId);
     const effectiveCount = isFoundationPathSayItTopic(topicId)
-      ? FOUNDATION_SAY_IT_DEAL_COUNT
+      ? foundationSayItDealCount(topicId)
       : count;
     const phrases = dealSayItPhrases(topicId, effectiveCount, displayName);
     return {

@@ -6,7 +6,7 @@ import { isFoundationPathRewardGameId } from '../learn-path/foundation-v2-path.d
 import { canonicalFoundationV7RewardId } from '../learn-path/foundation-v7-path.data';
 import { AnonymousUserGuard } from '../users/anonymous-user.guard';
 import {
-  FOUNDATION_SAY_IT_DEAL_COUNT,
+  foundationSayItDealCount,
   isFoundationPathSayItTopic,
   SAY_IT_BANANA_COST,
   SAY_IT_DEAL_COUNT,
@@ -78,7 +78,7 @@ export class SayItController {
       ok: true,
       bananaCost: isFoundationPathSayItTopic(topicId) ? 0 : SAY_IT_BANANA_COST,
       dealCount: isFoundationPathSayItTopic(topicId)
-        ? FOUNDATION_SAY_IT_DEAL_COUNT
+        ? foundationSayItDealCount(topicId)
         : SAY_IT_DEAL_COUNT,
     };
   }

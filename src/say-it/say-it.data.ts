@@ -33,6 +33,11 @@ export const SAY_IT_DEAL_COUNT = 7;
 export const FOUNDATION_SAY_IT_DEAL_COUNT = 5;
 export const SAY_IT_BANANA_COST = 1;
 
+/** Most Foundation packs deal 5; Question Clues mix keeps all six words. */
+export function foundationSayItDealCount(topicId: string): number {
+  return topicId === 'fnd_v7_u14n04' ? 6 : FOUNDATION_SAY_IT_DEAL_COUNT;
+}
+
 export const SAY_IT_TOPICS: SayItTopic[] = [
   {
     id: 'time_expressions',
