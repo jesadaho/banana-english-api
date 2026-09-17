@@ -57,7 +57,7 @@ describe('EmojiSpeakService', () => {
         assert.equal(card.meaningTh, source.meaningTh);
       }
     }
-    assert.equal(count, 83);
+    assert.equal(count, 88);
     assert.equal(foundationV7Pools.fnd_v7_u05n02.items[3].hint, 'ap__e');
     assert.equal(foundationV7Pools.fnd_v7_u05n06.dealCount, 10);
     assert.equal(foundationV7Pools.fnd_v7_u05n06.items[0].answer, 'a book');

@@ -174,7 +174,7 @@ describe('Foundation V7 lessons', () => {
     for (const [id, choice] of Object.entries(FOUNDATION_V7_CHOICE_BEATS)) {
       const spec = lessonSpecs[id as keyof typeof lessonSpecs];
       assert.ok(choice.afterBlock >= 1 && choice.afterBlock <= spec.blocks.length, id);
-      assert.ok(choice.options.length >= 2 && choice.options.length <= 4, id);
+      assert.ok(choice.options.length >= 2 && choice.options.length <= 6, id);
       assert.equal(new Set(choice.options.map(o => o.label)).size, choice.options.length, id);
       for (const o of choice.options) {
         assert.ok(o.label.split(/\s+/).length <= 3, id + ': cue too long');

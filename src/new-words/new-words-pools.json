@@ -1,0 +1,152 @@
+{
+  "new_words_demo": {
+    "title": "New Words",
+    "items": [
+      { "emoji": "🍎", "answer": "apple", "reading": "แอพ-เปิล", "meaningTh": "แอปเปิล" },
+      { "emoji": "📘", "answer": "book", "reading": "บุ๊ค", "meaningTh": "หนังสือ" },
+      { "emoji": "💧", "answer": "water", "reading": "วอ-เตอร์", "meaningTh": "น้ำ" }
+    ]
+  },
+  "new_words_how_i_feel": {
+    "title": "How I Feel",
+    "items": [
+      { "emoji": "😊", "answer": "happy", "reading": "แฮป-ปี้", "meaningTh": "มีความสุข" },
+      { "emoji": "😴", "answer": "tired", "reading": "ไท-เอิร์ด", "meaningTh": "เหนื่อย" },
+      { "emoji": "😋", "answer": "hungry", "reading": "ฮัง-กรี้", "meaningTh": "หิว" }
+    ]
+  },
+  "new_words_people_around_me": {
+    "title": "People Around Me",
+    "items": [
+      { "emoji": "🧑‍🏫", "answer": "teacher", "reading": "ที-เชอร์", "meaningTh": "ครู" },
+      { "emoji": "🧑‍🎓", "answer": "student", "reading": "สตัด-เด็นท์", "meaningTh": "นักเรียน" },
+      { "emoji": "🧑‍⚕️", "answer": "doctor", "reading": "ด็อก-เตอร์", "meaningTh": "หมอ" }
+    ]
+  },
+  "new_words_family_words": {
+    "title": "My Family",
+    "items": [
+      { "emoji": "👩", "answer": "mother", "reading": "มา-เธอร์", "meaningTh": "แม่" },
+      { "emoji": "👨", "answer": "father", "reading": "ฟา-เธอร์", "meaningTh": "พ่อ" },
+      { "emoji": "👧", "answer": "sister", "reading": "ซิส-เตอร์", "meaningTh": "พี่สาวหรือน้องสาว" },
+      { "emoji": "👦", "answer": "brother", "reading": "บรา-เธอร์", "meaningTh": "พี่ชายหรือน้องชาย" }
+    ]
+  },
+  "new_words_everyday_objects": {
+    "title": "Everyday Objects",
+    "items": [
+      { "emoji": "📖", "answer": "book", "reading": "บุ๊ค", "meaningTh": "หนังสือ" },
+      { "emoji": "🎒", "answer": "bag", "reading": "แบ็ก", "meaningTh": "กระเป๋า" },
+      { "emoji": "🖊️", "answer": "pen", "reading": "เพน", "meaningTh": "ปากกา" },
+      { "emoji": "🍎", "answer": "apple", "reading": "แอพ-เปิล", "meaningTh": "แอปเปิล" }
+    ]
+  },
+  "new_words_colours_1": {
+    "title": "Colours 1",
+    "items": [
+      { "emoji": "🔴", "answer": "red", "reading": "เรด", "meaningTh": "สีแดง" },
+      { "emoji": "🔵", "answer": "blue", "reading": "บลู", "meaningTh": "สีน้ำเงิน" },
+      { "emoji": "🟢", "answer": "green", "reading": "กรีน", "meaningTh": "สีเขียว" }
+    ]
+  },
+  "new_words_colours_2": {
+    "title": "Colours 2",
+    "items": [
+      { "emoji": "🟡", "answer": "yellow", "reading": "เยล-โล่", "meaningTh": "สีเหลือง" },
+      { "emoji": "⚫", "answer": "black", "reading": "แบล็ก", "meaningTh": "สีดำ" },
+      { "emoji": "⚪", "answer": "white", "reading": "ไวท์", "meaningTh": "สีขาว" }
+    ]
+  },
+  "new_words_personal_things": {
+    "title": "Personal Things",
+    "items": [
+      { "emoji": "📱", "answer": "phone", "reading": "โฟน", "meaningTh": "โทรศัพท์" },
+      { "emoji": "🔑", "answer": "key", "reading": "คีย์", "meaningTh": "กุญแจ" },
+      { "emoji": "👕", "answer": "shirt", "reading": "เชิร์ต", "meaningTh": "เสื้อ" },
+      { "emoji": "🧢", "answer": "hat", "reading": "แฮท", "meaningTh": "หมวก" }
+    ]
+  },
+  "new_words_days_1": {
+    "title": "Days 1",
+    "items": [
+      { "emoji": "1️⃣", "answer": "Monday", "reading": "มัน-เดย์", "meaningTh": "วันจันทร์" },
+      { "emoji": "2️⃣", "answer": "Tuesday", "reading": "ทิวส์-เดย์", "meaningTh": "วันอังคาร" },
+      { "emoji": "3️⃣", "answer": "Wednesday", "reading": "เวนส์-เดย์", "meaningTh": "วันพุธ" },
+      { "emoji": "4️⃣", "answer": "Thursday", "reading": "เธิร์ส-เดย์", "meaningTh": "วันพฤหัสบดี" }
+    ]
+  },
+  "new_words_days_2": {
+    "title": "Days 2",
+    "items": [
+      { "emoji": "5️⃣", "answer": "Friday", "reading": "ไฟร-เดย์", "meaningTh": "วันศุกร์" },
+      { "emoji": "6️⃣", "answer": "Saturday", "reading": "แซท-เทอร์-เดย์", "meaningTh": "วันเสาร์" },
+      { "emoji": "7️⃣", "answer": "Sunday", "reading": "ซัน-เดย์", "meaningTh": "วันอาทิตย์" }
+    ]
+  },
+  "new_words_drinks": {
+    "title": "Drinks",
+    "items": [
+      { "emoji": "💧", "answer": "water", "reading": "วอ-เตอร์", "meaningTh": "น้ำ" },
+      { "emoji": "🍵", "answer": "tea", "reading": "ที", "meaningTh": "ชา" },
+      { "emoji": "☕", "answer": "coffee", "reading": "คอฟ-ฟี่", "meaningTh": "กาแฟ" }
+    ]
+  },
+  "new_words_food": {
+    "title": "Food",
+    "items": [
+      { "emoji": "🍚", "answer": "rice", "reading": "ไรซ์", "meaningTh": "ข้าว" },
+      { "emoji": "🍜", "answer": "noodles", "reading": "นู-เดิลส์", "meaningTh": "ก๋วยเตี๋ยว" },
+      { "emoji": "🍞", "answer": "bread", "reading": "เบรด", "meaningTh": "ขนมปัง" }
+    ]
+  },
+  "new_words_action_words": {
+    "title": "Action Words",
+    "items": [
+      { "emoji": "🏊", "answer": "swim", "reading": "สวิม", "meaningTh": "ว่ายน้ำ" },
+      { "emoji": "📖", "answer": "read", "reading": "รีด", "meaningTh": "อ่าน" },
+      { "emoji": "🧑‍🍳", "answer": "cook", "reading": "คุก", "meaningTh": "ทำอาหาร" },
+      { "emoji": "🪑", "answer": "sit", "reading": "ซิต", "meaningTh": "นั่ง" }
+    ]
+  },
+  "new_words_daily_actions": {
+    "title": "Daily Actions",
+    "items": [
+      { "emoji": "⏰", "answer": "wake up", "reading": "เวค อัพ", "meaningTh": "ตื่นนอน" },
+      { "emoji": "🍽️", "answer": "eat", "reading": "อีท", "meaningTh": "กิน" },
+      { "emoji": "💼", "answer": "work", "reading": "เวิร์ก", "meaningTh": "ทำงาน" },
+      { "emoji": "😴", "answer": "sleep", "reading": "สลีป", "meaningTh": "นอน" }
+    ]
+  },
+  "new_words_question_clues_1": {
+    "title": "Question Clues 1",
+    "items": [
+      { "emoji": "❓", "answer": "what", "reading": "ว็อท", "meaningTh": "อะไร" },
+      { "emoji": "👤", "answer": "who", "reading": "ฮู", "meaningTh": "ใคร" },
+      { "emoji": "📍", "answer": "where", "reading": "แวร์", "meaningTh": "ที่ไหน" }
+    ]
+  },
+  "new_words_question_clues_2": {
+    "title": "Question Clues 2",
+    "items": [
+      { "emoji": "🗓️", "answer": "when", "reading": "เวน", "meaningTh": "เมื่อไร" },
+      { "emoji": "💰", "answer": "how much", "reading": "ฮาว มัช", "meaningTh": "ราคาเท่าไร" },
+      { "emoji": "🔢", "answer": "how many", "reading": "ฮาว เมนี่", "meaningTh": "กี่ชิ้น" }
+    ]
+  },
+  "new_words_around_the_room": {
+    "title": "Around the Room",
+    "items": [
+      { "emoji": "🍽️", "answer": "table", "reading": "เท-เบิล", "meaningTh": "โต๊ะ" },
+      { "emoji": "🪑", "answer": "chair", "reading": "แชร์", "meaningTh": "เก้าอี้" },
+      { "emoji": "🪟", "answer": "window", "reading": "วิน-โดว์", "meaningTh": "หน้าต่าง" }
+    ]
+  },
+  "new_words_places_and_fixtures": {
+    "title": "Places & Fixtures",
+    "items": [
+      { "emoji": "🚪", "answer": "door", "reading": "ดอร์", "meaningTh": "ประตู" },
+      { "emoji": "🚻", "answer": "bathroom", "reading": "บาธ-รูม", "meaningTh": "ห้องน้ำ" },
+      { "emoji": "🪜", "answer": "stairs", "reading": "สแตร์ส", "meaningTh": "บันได" }
+    ]
+  }
+}

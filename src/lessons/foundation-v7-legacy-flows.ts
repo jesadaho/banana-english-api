@@ -1,5 +1,5 @@
 import type { V7TeachingStep } from './foundation-v7-lessons.data';
-const icons: Record<string, string> = { coffee: '☕', tea: '🍵', water: '💧', rice: '🍚', Please: '🙏', 'Thank you': '💝', Sorry: '😔', 'Excuse me': '🙋', 'Please say that again': '🔁', 'Please speak slowly': '🐢', 'I do not understand': '🤔' };
+const icons: Record<string, string> = { coffee: '☕', tea: '🍵', water: '💧', rice: '🍚', noodles: '🍜', bread: '🍞', Please: '🙏', 'Thank you': '💝', Sorry: '😔', 'Excuse me': '🙋', 'Please say that again': '🔁', 'Please speak slowly': '🐢', 'I do not understand': '🤔' };
 
 // V1 pacing: teach a small chunk, use it immediately, then transfer it.
 const task = (text: string, expectedSpeech: string, labels: string[] = [], stem = '', any = false, successText?: string): V7TeachingStep => ({
@@ -223,7 +223,7 @@ export const V7_LEGACY_FLOWS: Record<string, V7TeachingStep[]> = {
     task('tea คือชาครับ ถ้าคุณชอบชา จะพูดว่าอย่างไร ใช้ I like … ครับ', 'I like tea', ['tea', 'coffee'], 'I like '),
     task('ถ้าไม่ชอบ เติม don’t ครับ ฉันไม่ชอบชาคือ I don’t like tea. ลองพูดตามครับ', 'I don’t like tea.'),
     task('rice คือข้าว 🍚 และ water คือน้ำ 💧 ครับ ถ้าคุณชอบข้าว จะพูดว่าอย่างไร', 'I like rice', ['rice', 'water'], 'I like '),
-    task('คราวนี้บอกสิ่งที่คุณชอบจริง ๆ ครับ ใช้ I like … เลือกได้ทุกคำ หรือบอกสิ่งอื่นที่คุณชอบได้เลย', 'I like coffee', ['coffee', 'tea', 'water', 'rice'], 'I like ', true),
+    task('คราวนี้บอกสิ่งที่คุณชอบจริง ๆ ครับ ใช้ I like … เลือกได้ทุกคำ หรือบอกสิ่งอื่นที่คุณชอบได้เลย', 'I like coffee', ['coffee', 'tea', 'water', 'rice', 'noodles', 'bread'], 'I like ', true),
     finish('จบบทแล้วครับ วันนี้คุณได้ฝึกบอกว่าชอบและไม่ชอบอะไร ขอบคุณที่แบ่งปันครับ'),
   ],
 };

@@ -68,7 +68,7 @@ export const FOUNDATION_V7_CHOICE_BEATS: Record<string, FoundationV7ChoiceBeat> 
     option('👇', 'these', 'These are bags'), option('👉', 'those', 'Those are bags'),
   ]),
   fnd_v7_my_and_your: any(2, 'เลือกของหนึ่งชิ้นเพื่อบอกว่าเป็นของคุณ', 'This is my...', [
-    option('📱', 'phone', 'This is my phone'), option('🔑', 'key', 'This is my key'), option('👕', 'shirt', 'This is my shirt'),
+    option('📱', 'phone', 'This is my phone'), option('🔑', 'key', 'This is my key'), option('👕', 'shirt', 'This is my shirt'), option('🧢', 'hat', 'This is my hat'),
   ]),
   fnd_v7_his_her_our_their: single(2, 'กุญแจหลายดอกเป็นของคนกลุ่มนั้น ใช้คำแสดงเจ้าของคำไหน', 'These are...keys', 'These are their keys', 'ของคนหลายคนที่ไม่รวมเราใช้ their ครับ', [
     option('👨', 'his', 'These are his keys'), option('👩', 'her', 'These are her keys'), option('👥', 'their', 'These are their keys'),
@@ -101,13 +101,15 @@ export const FOUNDATION_V7_CHOICE_BEATS: Record<string, FoundationV7ChoiceBeat> 
     option('💰', 'how much', 'How much is it?'), option('🎫', 'one ticket', 'One ticket, please'),
   ]),
   fnd_v7_i_like_i_dont_like: any(2, 'เลือกสิ่งที่คุณชอบจริง ๆ', 'I like...', [
-    option('🍵', 'tea', 'I like tea'), option('☕', 'coffee', 'I like coffee'), option('🍚', 'rice', 'I like rice'),
+    option('💧', 'water', 'I like water'), option('🍵', 'tea', 'I like tea'), option('☕', 'coffee', 'I like coffee'),
+    option('🍚', 'rice', 'I like rice'), option('🍜', 'noodles', 'I like noodles'), option('🍞', 'bread', 'I like bread'),
   ]),
   fnd_v7_do_you_like_it: any(1, 'เลือกสิ่งหนึ่งที่อยากถามอีกฝ่าย', 'Do you like...', [
-    option('🍵', 'tea', 'Do you like tea?'), option('☕', 'coffee', 'Do you like coffee?'), option('🍚', 'rice', 'Do you like rice?'),
+    option('💧', 'water', 'Do you like water?'), option('🍵', 'tea', 'Do you like tea?'), option('☕', 'coffee', 'Do you like coffee?'),
+    option('🍚', 'rice', 'Do you like rice?'), option('🍜', 'noodles', 'Do you like noodles?'), option('🍞', 'bread', 'Do you like bread?'),
   ]),
   fnd_v7_want_need_and_please: any(2, 'เลือกเครื่องดื่มที่คุณต้องการแล้วขออย่างสุภาพ', '...please', [
-    option('☕', 'coffee', 'A coffee, please'), option('💧', 'water', 'Water, please'),
+    option('☕', 'coffee', 'A coffee, please'), option('🍵', 'tea', 'Tea, please'), option('💧', 'water', 'Water, please'),
   ]),
   fnd_v7_i_can: any(2, 'เลือกสิ่งที่คุณทำได้', 'I can...', [
     option('🏊', 'swim', 'I can swim'), option('📖', 'read', 'I can read'), option('🍳', 'cook', 'I can cook'),

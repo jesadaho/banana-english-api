@@ -47,7 +47,8 @@ export type FoundationV2PathView = {
 export type FoundationClientNodeType =
   | FoundationV2NodeDef['type']
   | 'story_bites'
-  | 'pronunciation';
+  | 'pronunciation'
+  | 'new_words';
 
 export type FoundationV5ClientNode = {
   id: string;
@@ -450,6 +451,7 @@ export class LearnPathService {
         node.reviewId,
         node.topicId ? `say_it:${node.topicId}` : null,
         node.poolId ? `emoji_speak:${node.poolId}` : null,
+        node.poolId ? `new_words:${node.poolId}` : null,
       ].filter((v): v is string => !!v);
 
       if (candidates.some((id) => completedMiniGameIds.has(id))) {
@@ -499,6 +501,7 @@ export class LearnPathService {
         node.poolId,
         node.topicId ? `say_it:${node.topicId}` : null,
         node.poolId ? `emoji_speak:${node.poolId}` : null,
+        node.poolId ? `new_words:${node.poolId}` : null,
       ].filter((value): value is string => !!value);
       if (candidates.some((id) => completedMiniGameIds.has(id))) {
         completed.add(node.id);

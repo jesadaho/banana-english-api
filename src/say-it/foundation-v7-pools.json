@@ -502,31 +502,34 @@
     },
     {
       "id": "fnd_v7_u10n06_q2",
-      "promptTh": "ฉันต้องการความช่วยเหลือ",
-      "answerEn": "I need help",
-      "acceptedAnswers": []
+      "promptTh": "ขอชาครับ",
+      "answerEn": "Tea, please",
+      "acceptedAnswers": [
+        "A tea, please"
+      ]
     },
     {
       "id": "fnd_v7_u10n06_q3",
-      "promptTh": "ไม่ครับ ขอบคุณ",
-      "answerEn": "No, thank you",
-      "acceptedAnswers": [
-        "No, thanks"
-      ]
+      "promptTh": "ขอก๋วยเตี๋ยวครับ",
+      "answerEn": "Noodles, please",
+      "acceptedAnswers": []
     },
     {
       "id": "fnd_v7_u10n06_q4",
       "promptTh": "ขอกาแฟครับ",
       "answerEn": "A coffee, please",
       "acceptedAnswers": [
-        "One coffee, please"
+        "One coffee, please",
+        "Coffee, please"
       ]
     },
     {
       "id": "fnd_v7_u10n06_q5",
-      "promptTh": "ฉันอยากได้น้ำ",
-      "answerEn": "I want water",
-      "acceptedAnswers": []
+      "promptTh": "ขอขนมปังครับ",
+      "answerEn": "Bread, please",
+      "acceptedAnswers": [
+        "A bread, please"
+      ]
     }
   ],
   "fnd_v7_u11n05": [

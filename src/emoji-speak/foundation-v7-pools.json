@@ -46,10 +46,10 @@
         "meaningTh": "นักเรียน"
       },
       {
-        "emoji": "🧑‍🤝‍🧑",
-        "answer": "friend",
-        "hint": "fr___d",
-        "meaningTh": "เพื่อนหนึ่งคน"
+        "emoji": "🧑‍⚕️",
+        "answer": "doctor",
+        "hint": "do___r",
+        "meaningTh": "หมอ"
       },
       {
         "emoji": "👥",
@@ -157,7 +157,7 @@
   },
   "fnd_v7_u06n04": {
     "title": "Spot the Colour",
-    "dealCount": 4,
+    "dealCount": 6,
     "items": [
       {
         "emoji": "🔴",
@@ -182,12 +182,24 @@
         "answer": "yellow",
         "hint": "ye___w",
         "meaningTh": "สีเหลือง"
+      },
+      {
+        "emoji": "⚫",
+        "answer": "black",
+        "hint": "bl__k",
+        "meaningTh": "สีดำ"
+      },
+      {
+        "emoji": "⚪",
+        "answer": "white",
+        "hint": "wh__e",
+        "meaningTh": "สีขาว"
       }
     ]
   },
   "fnd_v7_u07n02": {
     "title": "Things I Carry",
-    "dealCount": 4,
+    "dealCount": 5,
     "items": [
       {
         "emoji": "📱",
@@ -206,6 +218,12 @@
         "answer": "shirt",
         "hint": "sh__t",
         "meaningTh": "เสื้อ"
+      },
+      {
+        "emoji": "🧢",
+        "answer": "hat",
+        "hint": "h_t",
+        "meaningTh": "หมวก"
       },
       {
         "emoji": "🎒",
@@ -283,7 +301,7 @@
   },
   "fnd_v7_u10n02": {
     "title": "Food & Drink",
-    "dealCount": 4,
+    "dealCount": 6,
     "items": [
       {
         "emoji": "🍵",
@@ -308,6 +326,18 @@
         "answer": "rice",
         "hint": "ri_e",
         "meaningTh": "ข้าว"
+      },
+      {
+        "emoji": "🍜",
+        "answer": "noodles",
+        "hint": "no____s",
+        "meaningTh": "ก๋วยเตี๋ยว"
+      },
+      {
+        "emoji": "🍞",
+        "answer": "bread",
+        "hint": "br__d",
+        "meaningTh": "ขนมปัง"
       }
     ]
   },

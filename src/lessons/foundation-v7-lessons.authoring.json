@@ -151,7 +151,7 @@
     "titleEn": "He, She, It, We, They",
     "titleTh": "เลือกสรรพนามและ be ให้เข้ากับคนหรือกลุ่ม",
     "goalTh": "เลือกสรรพนามและ be ให้เข้ากับคนหรือกลุ่ม",
-    "scope": "ตัวละครสมมติระบุสรรพนามชัด; it ใช้สิ่งของ; ทบทวน teacher/student จากบทแนะนำตัว",
+    "scope": "ตัวละครสมมติระบุสรรพนามชัด; it ใช้สิ่งของ; ทบทวน teacher/student/doctor จาก New Words",
     "estimatedMinutes": [
       3,
       5
@@ -161,7 +161,7 @@
         "tipTh": "he/she กล่าวถึงคนหนึ่งคน; he เขา she เธอ; ใช้ is และระบุ role ของตัวละครก่อนเสมอ",
         "models": [
           "He is a teacher",
-          "She is a student"
+          "She is a doctor"
         ],
         "repeat": "He is a teacher"
       },
@@ -191,7 +191,7 @@
     "titleEn": "My Family",
     "titleTh": "แนะนำความสัมพันธ์และถาม Who is this? เป็น chunk",
     "goalTh": "แนะนำความสัมพันธ์และถาม Who is this? เป็น chunk",
-    "scope": "สอน mother/father/sister/brother; my และ this is เป็นวลีตัวอย่างก่อนอธิบายระบบใน chapter ถัดไป; เลือกครอบครัวสมมติได้",
+    "scope": "ใช้ mother/father/sister/brother ที่เรียนแล้ว; my และ this is เป็นวลีตัวอย่างก่อนอธิบายระบบใน chapter ถัดไป; เลือกครอบครัวสมมติได้",
     "estimatedMinutes": [
       3,
       5
@@ -306,38 +306,36 @@
     "titleEn": "Colours & Size",
     "titleTh": "บอกสีและขนาดโดยเริ่มจากหนึ่ง adjective",
     "goalTh": "บอกสีและขนาดโดยเริ่มจากหนึ่ง adjective",
-    "scope": "สอน red/blue/green/yellow และ big/small เป็นคู่; ใช้ It is blue ก่อนขยาย a blue bag; model the blue bag เป็น chunk ชี้ชิ้นที่รู้กัน; แบ่ง model สองชุด",
+    "scope": "ใช้สีที่เรียนแล้ว; สอน big/small เป็นคู่; ประกอบเป็น a small blue bag, the big black book, Those are white bags",
     "estimatedMinutes": [
       3,
       5
     ],
     "blocks": [
       {
-        "tipTh": "red แดง blue น้ำเงิน; บอกสีด้วย It is …",
+        "tipTh": "ใช้สีที่เรียนแล้วบอกของหนึ่งชิ้น; เริ่มจาก It is blue แล้วขยายเป็น a blue bag",
         "models": [
-          "red",
-          "blue",
-          "It is blue"
+          "It is blue",
+          "a green bag"
         ],
         "repeat": "It is blue"
       },
       {
-        "tipTh": "green เขียว yellow เหลือง; ใช้สีหนึ่งคำก่อนคำนาม",
-        "models": [
-          "green",
-          "yellow",
-          "a green bag"
-        ],
-        "repeat": "a green bag"
-      },
-      {
-        "tipTh": "big ใหญ่ small เล็ก; พูดหนึ่งรายละเอียดก่อน ชี้ชิ้นที่รู้กันใช้ the เป็น chunk",
+        "tipTh": "big ใหญ่ small เล็ก; พูดขนาดก่อน แล้วค่อยประกอบกับสี",
         "models": [
           "a big bag",
-          "a small bag",
-          "The blue bag"
+          "a small bag"
         ],
         "repeat": "a small bag"
+      },
+      {
+        "tipTh": "ประยุกต์สีและขนาดเป็นวลียาวขึ้น รวม black/white ที่เรียนแล้ว",
+        "models": [
+          "a small blue bag",
+          "the big black book",
+          "Those are white bags"
+        ],
+        "repeat": "a small blue bag"
       }
     ],
     "recall": {
@@ -381,18 +379,19 @@
     "titleEn": "My & Your",
     "titleTh": "ใช้ my/your กับของที่คุ้น",
     "goalTh": "ใช้ my/your กับของที่คุ้น",
-    "scope": "สอน phone/key/shirt เป็นของใช้และเสื้อผ้า; เปรียบเทียบเจ้าของในบทสนทนา",
+    "scope": "ใช้ phone/key/shirt/hat ที่เรียนแล้ว; เปรียบเทียบเจ้าของในบทสนทนา",
     "estimatedMinutes": [
       3,
       5
     ],
     "blocks": [
       {
-        "tipTh": "phone โทรศัพท์ key กุญแจ shirt เสื้อ; ให้รู้ความหมายก่อนใส่เจ้าของ",
+        "tipTh": "phone โทรศัพท์ key กุญแจ shirt เสื้อ hat หมวก; ให้รู้ความหมายก่อนใส่เจ้าของ",
         "models": [
           "phone",
           "key",
-          "shirt"
+          "shirt",
+          "hat"
         ],
         "repeat": "key"
       },
@@ -400,7 +399,7 @@
         "tipTh": "my ของฉัน your ของคุณ ต้องตามด้วยคำนาม",
         "models": [
           "my phone",
-          "your bag",
+          "your key",
           "This is my key"
         ],
         "repeat": "This is my key"
@@ -424,10 +423,10 @@
       {
         "tipTh": "his ของเขา her ของเธอ; บอกเจ้าของเป็นข้อมูลชัด ไม่เดาจากหน้าตา",
         "models": [
-          "his book",
-          "her phone"
+          "his shirt",
+          "her hat"
         ],
-        "repeat": "his book"
+        "repeat": "his shirt"
       },
       {
         "tipTh": "our ของพวกเรา their ของพวกเขา; ทบทวน we/they เป็นสะพาน",
@@ -759,33 +758,31 @@
     "titleEn": "Days & Simple Plans",
     "titleTh": "เข้าใจวันในสัปดาห์และบอกวันกับเวลา",
     "goalTh": "เข้าใจวันในสัปดาห์และบอกวันกับเวลา",
-    "scope": "model วันเป็นกลุ่ม; ใช้ on/at เป็น chunks กับ class; ไม่สอน future tense; แบบ The class is on Monday เป็น be ที่รู้",
+    "scope": "ไม่ไล่ท่องชื่อวันทีละคำ; ใช้ on/at เป็น chunks กับ class; ไม่สอน future tense; แบบ The class is on Wednesday เป็น be ที่รู้",
     "estimatedMinutes": [
       4,
       6
     ],
     "blocks": [
       {
-        "tipTh": "ชื่อวันกลุ่มแรก Monday จันทร์ Tuesday อังคาร Wednesday พุธ Thursday พฤหัส",
+        "tipTh": "ใช้ on กับวันที่เรียนแล้ว ประกอบเป็นประโยค ไม่ไล่ท่องชื่อวัน",
         "models": [
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday"
+          "on Monday",
+          "on Wednesday",
+          "The class is on Wednesday"
         ],
-        "repeat": "Monday"
+        "repeat": "The class is on Wednesday"
       },
       {
-        "tipTh": "ชื่อวันกลุ่มถัดไป Friday ศุกร์ Saturday เสาร์ Sunday อาทิตย์",
+        "tipTh": "บอกวันกับเวลาด้วย Friday at ten เป็น chunk",
         "models": [
-          "Friday",
-          "Saturday",
-          "Sunday"
+          "Friday at ten",
+          "The class is on Friday"
         ],
-        "repeat": "Friday"
+        "repeat": "Friday at ten"
       },
       {
-        "tipTh": "class คือคลาส; on ใช้กับวัน at ใช้กับเวลา สอนเป็น chunk ด้วย be ไม่เพิ่ม future",
+        "tipTh": "on ใช้กับวัน at ใช้กับเวลา สอนเป็น chunk ด้วย be ไม่เพิ่ม future",
         "models": [
           "The class is on Monday",
           "The class is at seven"
@@ -842,22 +839,24 @@
     "titleEn": "I Like / I Don’t Like",
     "titleTh": "บอกชอบและไม่ชอบด้วยของกินที่คุ้น",
     "goalTh": "บอกชอบและไม่ชอบด้วยของกินที่คุ้น",
-    "scope": "สอน tea/coffee/water/rice เป็นชุดเล็ก; have จากchapter7 เป็น retrieval; do not เป็น chunk ไม่ขยาย does ตอนนี้",
+    "scope": "ใช้ water/tea/coffee/rice/noodles/bread ที่เรียนแล้ว; have จากchapter7 เป็น retrieval; do not เป็น chunk ไม่ขยาย does ตอนนี้",
     "estimatedMinutes": [
       3,
       5
     ],
     "blocks": [
       {
-        "tipTh": "tea ชา coffee กาแฟ water น้ำ rice ข้าว; บอกความชอบด้วย I like",
+        "tipTh": "water น้ำ tea ชา coffee กาแฟ rice ข้าว noodles ก๋วยเตี๋ยว bread ขนมปัง; บอกความชอบด้วย I like",
         "models": [
+          "water",
           "tea",
           "coffee",
-          "water",
           "rice",
-          "I like tea"
+          "noodles",
+          "bread",
+          "I like noodles"
         ],
-        "repeat": "I like tea"
+        "repeat": "I like noodles"
       },
       {
         "tipTh": "ปฏิเสธความชอบด้วย I do not like; don't เป็นรูปย่อความหมายเดียวกัน",
@@ -887,7 +886,9 @@
         "tipTh": "ถามความชอบด้วย Do you like + สิ่งที่ถาม",
         "models": [
           "Do you like tea?",
-          "Do you like coffee?"
+          "Do you like coffee?",
+          "Do you like bread?",
+          "Do you like noodles?"
         ],
         "repeat": "Do you like tea?"
       },
@@ -902,8 +903,8 @@
       }
     ],
     "recall": {
-      "promptTh": "ถามว่าอีกฝ่ายชอบข้าวไหม",
-      "answerEn": "Do you like rice?"
+      "promptTh": "ถามว่าอีกฝ่ายชอบขนมปังไหม",
+      "answerEn": "Do you like bread?"
     }
   },
   "fnd_v7_want_need_and_please": {
@@ -1263,19 +1264,18 @@
     "titleEn": "There Is / There Are",
     "titleTh": "บอกสิ่งที่มีในสถานที่หนึ่ง",
     "goalTh": "บอกสิ่งที่มีในสถานที่หนึ่ง",
-    "scope": "ใช้จำนวนเดิม; สอน table/chair/window/room เป็นชุดเล็ก; here/there แสดงสถานที่ชัด",
+    "scope": "ใช้จำนวนเดิม; ใช้ table/chair/window ที่เรียนแล้ว; here/there แสดงสถานที่ชัด",
     "estimatedMinutes": [
       3,
       5
     ],
     "blocks": [
       {
-        "tipTh": "table โต๊ะ chair เก้าอี้ window หน้าต่าง room ห้อง; บอกว่ามีหนึ่งสิ่งด้วย There is",
+        "tipTh": "table โต๊ะ chair เก้าอี้ window หน้าต่าง ที่เรียนแล้ว; บอกว่ามีหนึ่งสิ่งด้วย There is",
         "models": [
           "table",
           "chair",
           "window",
-          "room",
           "There is a table"
         ],
         "repeat": "There is a table"
