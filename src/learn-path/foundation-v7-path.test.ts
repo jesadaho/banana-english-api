@@ -264,7 +264,7 @@ describe('Foundation V7 progress and completion contracts', () => {
     await assert.rejects(controller.foundationV7(req, ['say_it_guided'] as any));
   });
 
-  it('ships New Words demo and catalog pools, and reward aliases without banana intro', () => {
+  it('ships New Words demo and catalog pools, and reward aliases', () => {
     const demo = newWordsPoolById('new_words_demo');
     assert.equal(demo?.items.length, 3);
     assert.equal(demo?.items[0].answer, 'apple');
@@ -356,6 +356,7 @@ describe('Foundation V7 progress and completion contracts', () => {
       if (['say_it','emoji_speak','new_words'].includes(node.type)) await controller.complete(req, node.id);
       else await assert.rejects(controller.complete(req, node.id));
       if (node.type === 'emoji_speak') assert.equal((await controller.startEmojiSpeakPack(req, node.contentRef.poolId!)).bananaCost, 1);
+      if (node.type === 'new_words') assert.equal((await controller.startNewWordsPack(req, node.contentRef.poolId!)).bananaCost, 1);
     }
   });
 

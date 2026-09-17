@@ -35,6 +35,7 @@ import { RecentLearnersService } from '../recent-learners/recent-learners.servic
 import { isPhonicsNodeId, PhonicsService } from '../phonics/phonics.service';
 import { EmojiSpeakService } from '../emoji-speak/emoji-speak.service';
 import { canonicalFoundationV7RewardId, isFoundationV7EmojiPool } from '../learn-path/foundation-v7-path.data';
+import { isNewWordsPoolId } from '../new-words/new-words.data';
 
 type AuthedRequest = { user: User };
 
@@ -72,6 +73,7 @@ function isAllowedMiniGameId(gameId: string): boolean {
 }
 
 const EMOJI_SPEAK_BANANA_COST = 1;
+const NEW_WORDS_BANANA_COST = 1;
 
 /** Foundation path Emoji Speak packs charge bananas; Games tab packs are free. */
 function isFoundationPathEmojiSpeak(poolOrGameId: string): boolean {
@@ -150,6 +152,41 @@ export class MiniGamesController {
     return {
       ok: true,
       bananaCost: charge ? EMOJI_SPEAK_BANANA_COST : 0,
+    };
+  }
+
+  /** Spend bananas to start a New Words pack. */
+  @Post('new-words/:poolId/start')
+  async startNewWordsPack(
+    @Req() req: AuthedRequest,
+    @Param('poolId') poolId: string,
+  ) {
+    const id = poolId?.trim();
+    if (!id) throw new BadRequestException('poolId is required');
+    if (!isNewWordsPoolId(id)) {
+      throw new BadRequestException(`Unknown New Words pack: ${id}`);
+    }
+    const spendRef = randomUUID();
+    await this.economy.spendBananas(
+      req.user.id,
+      NEW_WORDS_BANANA_COST,
+      spendRef,
+      'new_words_start',
+    );
+    try {
+      await this.recentLearners.markActivity(req.user.id, 'minigame', id);
+    } catch (error) {
+      await this.economy.refundBananas(
+        req.user.id,
+        NEW_WORDS_BANANA_COST,
+        spendRef,
+        'new_words_start_refund',
+      );
+      throw error;
+    }
+    return {
+      ok: true,
+      bananaCost: NEW_WORDS_BANANA_COST,
     };
   }
 
