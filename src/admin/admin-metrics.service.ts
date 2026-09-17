@@ -851,6 +851,7 @@ export class AdminMetricsService {
                     'explain_it_start',
                     'emoji_speak_start',
                     'emoji_speak_play',
+                    'new_words_start',
                   ],
                 },
               },
@@ -875,6 +876,7 @@ export class AdminMetricsService {
                     'explain_it_start',
                     'emoji_speak_start',
                     'emoji_speak_play',
+                    'new_words_start',
                   ],
                 },
               },
@@ -1094,6 +1096,7 @@ export class AdminMetricsService {
     const plays = new Map<string, number>();
     if (raw.say_it_start) plays.set('game_say_it', raw.say_it_start);
     if (raw.explain_it_start) plays.set('game_explain_it', raw.explain_it_start);
+    if (raw.new_words_start) plays.set('game_new_words', raw.new_words_start);
     const emoji =
       (raw.emoji_speak_play ?? 0) > 0
         ? raw.emoji_speak_play
@@ -1141,6 +1144,12 @@ export class AdminMetricsService {
       merged.explain_it = {
         count: raw.explain_it_start,
         users: usersBySource.explain_it_start ?? 0,
+      };
+    }
+    if (raw.new_words_start) {
+      merged.new_words = {
+        count: raw.new_words_start,
+        users: usersBySource.new_words_start ?? 0,
       };
     }
     if (raw.daily_speak_reward) {
@@ -1253,6 +1262,7 @@ export class AdminMetricsService {
       'say_it_start',
       'explain_it_start',
       'emoji_speak_start',
+      'new_words_start',
     ];
     const spendMix = spendMixKeys.map((source) => ({
       source,
