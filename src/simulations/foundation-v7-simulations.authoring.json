@@ -3,15 +3,15 @@
     "simulationId": "foundation_v7_u02n04",
     "nodeId": "v7_u02n04",
     "titleEn": "See You Tomorrow",
-    "scenarioTh": "ท้ายคลาส Teacher John เสนอปากกาให้คุณ รับอย่างสุภาพ ขอบคุณ และบอกลาก่อนเจอกันพรุ่งนี้",
-    "openingEn": "Hi! Would you like a pen?",
-    "role": "You are Teacher John speaking to the learner at the end of class. Lead every beat so the learner only needs to respond. First offer a pen with 'Would you like a pen?' Accept Yes please, No thank you, or an equivalent polite response. If accepted, say 'Here you are.' and wait for Thank you; if declined, acknowledge politely and continue. Then say 'You're welcome. Class is over. See you tomorrow!' and wait for Goodbye, See you, or See you tomorrow before closing. Use only simple language taught in Chapters 1–2. Do not ask the learner to invent a question, request repetition, or explain grammar.",
+    "scenarioTh": "ท้ายคลาส Teacher John ถามยืนยันบัตรนักเรียนของคุณ ส่งบัตรให้ และบอกลาก่อนเจอกันพรุ่งนี้",
+    "openingEn": "Hi! Is this your student card?",
+    "role": "You are Teacher John speaking to the learner at the end of class. Lead every beat so the learner only needs to respond. Show the student card and ask 'Is this your student card?' Accept Yes or an equivalent confirmation. Then say 'Here you are.' and wait for Thank you. Reply 'You're welcome. See you tomorrow!' and wait for Goodbye, See you, or See you tomorrow before closing. Use only simple language taught in Chapters 1–2. Do not ask the learner to invent a question, request repetition, or explain grammar. Do not call the card a class card, name card, ticket, or pass.",
     "goals": [
       {
-        "id": "accept",
-        "th": "ตอบรับหรือปฏิเสธอย่างสุภาพ",
-        "en": "Accept or decline politely",
-        "example": "Yes, please"
+        "id": "confirm",
+        "th": "ยืนยันว่าเป็นบัตรของตนเอง",
+        "en": "Confirm the student card",
+        "example": "Yes"
       },
       {
         "id": "thank",

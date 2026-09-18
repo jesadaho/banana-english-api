@@ -292,10 +292,10 @@
           "titleTh": "แล้วเจอกันพรุ่งนี้",
           "type": "conversation",
           "beat": "Ketsu",
-          "learningTarget": "ตอบรับ ขอบคุณ และบอกลาในเหตุการณ์เดียว",
-          "activity": "ท้ายคลาส Teacher John เสนอปากกา ผู้เรียนตอบ Yes please ขอบคุณเมื่อได้รับของ และตอบคำลาก่อนเจอกันพรุ่งนี้",
+          "learningTarget": "ยืนยันบัตรของตน ขอบคุณ และบอกลาในเหตุการณ์เดียว",
+          "activity": "ท้ายคลาส Teacher John ถามว่านี่คือบัตรนักเรียนของผู้เรียนหรือไม่ ส่งบัตรให้ และบอกลาก่อนเจอกันพรุ่งนี้",
           "examples": [
-            "Yes, please",
+            "Yes",
             "Thank you",
             "See you tomorrow"
           ],
