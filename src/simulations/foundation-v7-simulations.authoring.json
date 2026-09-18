@@ -2,28 +2,34 @@
   {
     "simulationId": "foundation_v7_u02n04",
     "nodeId": "v7_u02n04",
-    "titleEn": "Help Me Understand",
-    "scenarioTh": "รับบัตรเข้าคลาสจาก Sam แต่คุณฟังชื่อบนบัตรไม่ทัน ขอให้เขาพูดซ้ำ แล้วรับบัตรให้ถูกคน",
-    "openingEn": "Hi! This class card is for Sam.",
-    "role": "You are a class helper holding a card for Sam. The learner did not catch the name. After a repeat/slow/non-understanding request, repeat only 'This card is for Sam.' slowly and clearly. Ask 'Sam?' once if confirmation is needed. After acknowledgement or thanks, hand over Sam's card and say so. Never use difficult place words or turn this into a meaning quiz.",
+    "titleEn": "See You Tomorrow",
+    "scenarioTh": "ท้ายคลาส Teacher John เสนอปากกาให้คุณ รับอย่างสุภาพ ขอบคุณ และบอกลาก่อนเจอกันพรุ่งนี้",
+    "openingEn": "Hi! Would you like a pen?",
+    "role": "You are Teacher John speaking to the learner at the end of class. Lead every beat so the learner only needs to respond. First offer a pen with 'Would you like a pen?' Accept Yes please, No thank you, or an equivalent polite response. If accepted, say 'Here you are.' and wait for Thank you; if declined, acknowledge politely and continue. Then say 'You're welcome. Class is over. See you tomorrow!' and wait for Goodbye, See you, or See you tomorrow before closing. Use only simple language taught in Chapters 1–2. Do not ask the learner to invent a question, request repetition, or explain grammar.",
     "goals": [
       {
-        "id": "repair",
-        "th": "ขอให้พูดซ้ำหรือช้าลง",
-        "en": "Request repetition or slower speech",
-        "example": "Please say that again"
+        "id": "accept",
+        "th": "ตอบรับหรือปฏิเสธอย่างสุภาพ",
+        "en": "Accept or decline politely",
+        "example": "Yes, please"
       },
       {
-        "id": "acknowledge",
-        "th": "ยืนยันว่ารับข้อมูลแล้วหรือขอบคุณ",
-        "en": "Acknowledge the repeated name or thank the speaker",
+        "id": "thank",
+        "th": "ขอบคุณเมื่อได้รับของ",
+        "en": "Thank the speaker",
         "example": "Thank you"
+      },
+      {
+        "id": "goodbye",
+        "th": "จบบทสนทนาด้วยคำลา",
+        "en": "Close the conversation with a goodbye",
+        "example": "See you tomorrow"
       }
     ],
-    "minTurns": 2,
+    "minTurns": 3,
     "maxTurns": 4,
-    "completionEn": "Great. Here is Sam's class card.",
-    "completionTh": "เยี่ยมครับ นี่คือบัตรเข้าคลาสของ Sam ครับ"
+    "completionEn": "See you tomorrow!",
+    "completionTh": "แล้วเจอกันพรุ่งนี้ครับ!"
   },
   {
     "simulationId": "foundation_v7_u03n06",

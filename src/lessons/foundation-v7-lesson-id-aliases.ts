@@ -1,7 +1,7 @@
 /** Previous positional IDs → readable slugs from the lesson title. */
 export const FOUNDATION_V7_LESSON_ID_ALIASES: Record<string, string> = {
   'fnd_v7_u02n01': 'fnd_v7_please_and_thank_you',
-  'fnd_v7_u02n03': 'fnd_v7_say_that_again',
+  'fnd_v7_u02n03': 'fnd_v7_goodbye_see_you',
   'fnd_v7_u03n01': 'fnd_v7_i_am_you_are',
   'fnd_v7_u03n03': 'fnd_v7_not_and_are_you',
   'fnd_v7_u04n01': 'fnd_v7_he_she_it_we_they',

@@ -69,15 +69,15 @@ describe('Foundation V7 lessons', () => {
     }
   });
 
-  it('registers exactly the 38 authored V7 flows and keeps them off the lesson hub', async () => {
+  it('registers exactly the 39 authored V7 flows and keeps them off the lesson hub', async () => {
     const authoredIds = Object.keys(lessonSpecs);
     const pathAuthored = pathLessonNodes()
       .map((node) => node.contentRef.lessonId)
       .filter((id): id is string => Boolean(id?.startsWith('fnd_v7_')));
 
-    assert.equal(FOUNDATION_V7_LESSONS.length, 38);
+    assert.equal(FOUNDATION_V7_LESSONS.length, 39);
     assert.deepEqual(FOUNDATION_V7_LESSON_IDS, authoredIds);
-    assert.deepEqual(pathAuthored.slice().sort(), authoredIds.filter(id => !['fnd_v7_letter_names_a_m', 'fnd_v7_letter_names_n_z'].includes(id)).sort());
+    assert.deepEqual(pathAuthored.slice().sort(), authoredIds.filter(id => !['fnd_v7_letter_names_a_m', 'fnd_v7_letter_names_n_z', 'fnd_v7_say_that_again'].includes(id)).sort());
     assert.ok(authoredIds.every((id) => id.startsWith('fnd_v7_')));
 
     const lessons = new LessonsService({} as any, {} as any);
@@ -375,7 +375,7 @@ describe('Foundation V7 lessons', () => {
       },
     );
     assert.deepEqual(parseFoundationV7LessonArgs(['node', 'script', 'ch2']), {
-      lessonIds: ['fnd_v7_please_and_thank_you', 'fnd_v7_say_that_again'],
+      lessonIds: ['fnd_v7_please_and_thank_you', 'fnd_v7_goodbye_see_you'],
       scenarios: [1, 2, 3, 4, 5],
     });
     assert.deepEqual(

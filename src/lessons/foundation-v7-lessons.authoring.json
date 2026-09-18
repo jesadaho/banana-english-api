@@ -75,6 +75,30 @@
     },
     "completionTh": "เยี่ยมครับ ตอนนี้คุณขอให้อีกฝ่ายพูดซ้ำ พูดช้าลง และบอกว่าไม่เข้าใจได้แล้ว"
   },
+  "fnd_v7_goodbye_see_you": {
+    "titleEn": "Goodbye & See You",
+    "titleTh": "ใช้คำลาให้เหมาะกับตอนจบบทสนทนา",
+    "goalTh": "ใช้ Goodbye, See you และ See you tomorrow เพื่อจบบทสนทนา",
+    "scope": "สอนคำลาสั้นเพียงสามรูป ไม่เพิ่ม See you later, Take care หรือ Have a nice day",
+    "estimatedMinutes": [3, 5],
+    "blocks": [
+      {
+        "tipTh": "Goodbye ใช้บอกลาเมื่อบทสนทนาจบ",
+        "models": ["Goodbye"],
+        "repeat": "Goodbye"
+      },
+      {
+        "tipTh": "See you ฟังเป็นกันเอง และเติม tomorrow เมื่อนัดว่าจะเจอกันพรุ่งนี้",
+        "models": ["See you", "See you tomorrow"],
+        "repeat": "See you tomorrow"
+      }
+    ],
+    "recall": {
+      "promptTh": "บอกเพื่อนว่าแล้วเจอกันพรุ่งนี้",
+      "answerEn": "See you tomorrow"
+    },
+    "completionTh": "เยี่ยมครับ ตอนนี้คุณเลือกใช้ Goodbye, See you และ See you tomorrow เพื่อจบบทสนทนาได้แล้ว"
+  },
   "fnd_v7_i_am_you_are": {
     "titleEn": "I Am / You Are",
     "titleTh": "จับคู่ I/you กับ am/are; รู้จัก ready, happy, tired, hungry",

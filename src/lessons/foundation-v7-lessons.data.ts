@@ -7,6 +7,7 @@ export type V7TeachingPattern = 'choose_and_reuse' | 'contrast_and_apply' | 'dec
 // Explicit curriculum assignments; changes here alter teaching rhythm, not content.
 export const FOUNDATION_V7_PATTERNS: Record<string, V7TeachingPattern> = {
   fnd_v7_please_and_thank_you: 'situation_and_respond', fnd_v7_say_that_again: 'situation_and_respond',
+  fnd_v7_goodbye_see_you: 'choose_and_reuse',
   fnd_v7_i_am_you_are: 'choose_and_reuse', fnd_v7_not_and_are_you: 'contrast_and_apply',
   fnd_v7_he_she_it_we_they: 'contrast_and_apply', fnd_v7_my_family: 'choose_and_reuse',
   fnd_v7_one_or_more: 'contrast_and_apply',
@@ -38,6 +39,7 @@ const APPLICATION_STEMS: Record<string, string> = {
 
 // Authored cold opens keep the existing first turn purposeful and consistent.
 const FOUNDATION_V7_OPENINGS: Record<string, string> = {
+  fnd_v7_goodbye_see_you: 'เรียนจบแล้วแต่ยังยืนมองหน้ากันอยู่ครับ 😅 วันนี้เราจะฝึกจบบทสนทนาด้วย Goodbye, See you และ See you tomorrow',
   fnd_v7_i_am_you_are: 'สวัสดีครับ ก่อนเริ่มวันนี้เป็นอย่างไรบ้าง—พร้อม เหนื่อย หรือหิวครับ? วันนี้เราจะฝึกบอกความรู้สึกของตัวเองและอีกฝ่ายด้วย I am... และ You are...',
   fnd_v7_not_and_are_you: 'Teacher B เดาว่าคุณเหนื่อยครับ…แต่ถ้าเดาผิด เราต้องแก้ข่าวกันหน่อย 😄 วันนี้เราจะฝึกบอกว่า “ไม่ใช่” และถามว่าอีกฝ่ายเป็นอย่างไร',
   fnd_v7_one_or_more: 'Max ขอหนังสือหนึ่งเล่ม แต่พนักงานกำลังจะยกมาทั้งกองครับ 📚😳 วันนี้เราจะฝึกบอกให้ชัดว่าต้องการหนึ่งชิ้นหรือหลายชิ้น',
