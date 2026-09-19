@@ -40,8 +40,8 @@ const APPLICATION_STEMS: Record<string, string> = {
 // Authored cold opens keep the existing first turn purposeful and consistent.
 const FOUNDATION_V7_OPENINGS: Record<string, string> = {
   fnd_v7_goodbye_see_you: 'เรียนจบแล้วแต่ยังยืนมองหน้ากันอยู่ครับ 😅 วันนี้เราจะฝึกจบบทสนทนาด้วย Goodbye, See you และ See you tomorrow',
-  fnd_v7_i_am_you_are: 'สวัสดีครับ ก่อนเริ่มวันนี้เป็นอย่างไรบ้าง—พร้อม เหนื่อย หรือหิวครับ? วันนี้เราจะฝึกบอกความรู้สึกของตัวเองและอีกฝ่ายด้วย I am... และ You are...',
-  fnd_v7_not_and_are_you: 'Teacher B เดาว่าคุณเหนื่อยครับ…แต่ถ้าเดาผิด เราต้องแก้ข่าวกันหน่อย 😄 วันนี้เราจะฝึกบอกว่า “ไม่ใช่” และถามว่าอีกฝ่ายเป็นอย่างไร',
+  fnd_v7_i_am_you_are: 'วันนี้เราจะฝึกบอกความรู้สึกของตัวเองและอีกฝ่ายครับ ถ้าพูดถึงตัวเอง เริ่มด้วย I am… “ฉันพร้อม” พูดว่า I am ready. ลองพูดตามครับ',
+  fnd_v7_not_and_are_you: 'วันนี้เราจะฝึกบอกว่า “ไม่” และถามความรู้สึกของอีกฝ่ายครับ I am tired. แปลว่า “ฉันเหนื่อย” เติม not หลัง am เป็น I am not tired. แปลว่า “ฉันไม่เหนื่อย” ลองพูดว่า I am not tired. ครับ',
   fnd_v7_one_or_more: 'Max ขอหนังสือหนึ่งเล่ม แต่พนักงานกำลังจะยกมาทั้งกองครับ 📚😳 วันนี้เราจะฝึกบอกให้ชัดว่าต้องการหนึ่งชิ้นหรือหลายชิ้น',
   fnd_v7_this_is_that_is: 'บนโต๊ะมีหนังสืออยู่ใกล้หนึ่งเล่ม และกระเป๋าอยู่อีกฝั่งหนึ่งครับ วันนี้เราจะฝึกชี้ของใกล้และไกลด้วย this และ that',
   fnd_v7_colours_and_size: 'มีกระเป๋าหลายใบครับ ถ้าบอกแค่ว่า “เอาใบนั้น” มีโอกาสได้ผิดใบสูงมาก 😅 วันนี้เราจะใช้สีและขนาดช่วยบอกให้ชัดขึ้น',
@@ -74,7 +74,14 @@ export interface V7TeachingStep {
   instruction: string;
   expectsUserSpeech: boolean;
   expectedSpeech?: string;
-  presentation?: { text: string; successText?: string; answerMode: 'single' | 'any'; stem: string; options: { emoji: string; label: string; speak: string }[] };
+  presentation?: {
+    text: string;
+    successText?: string;
+    incorrectHintTh?: string;
+    answerMode: 'single' | 'any';
+    stem: string;
+    options: { emoji: string; label: string; speak: string; meaningTh?: string; recapText?: string }[];
+  };
 }
 
 export function buildFoundationV7Steps(lessonId: string): V7TeachingStep[] {

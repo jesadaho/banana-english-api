@@ -80,16 +80,24 @@
     "titleTh": "ใช้คำลาให้เหมาะกับตอนจบบทสนทนา",
     "goalTh": "ใช้ Goodbye, See you และ See you tomorrow เพื่อจบบทสนทนา",
     "scope": "สอนคำลาสั้นเพียงสามรูป ไม่เพิ่ม See you later, Take care หรือ Have a nice day",
-    "estimatedMinutes": [3, 5],
+    "estimatedMinutes": [
+      3,
+      5
+    ],
     "blocks": [
       {
         "tipTh": "Goodbye ใช้บอกลาเมื่อบทสนทนาจบ",
-        "models": ["Goodbye"],
+        "models": [
+          "Goodbye"
+        ],
         "repeat": "Goodbye"
       },
       {
         "tipTh": "See you ฟังเป็นกันเอง และเติม tomorrow เมื่อนัดว่าจะเจอกันพรุ่งนี้",
-        "models": ["See you", "See you tomorrow"],
+        "models": [
+          "See you",
+          "See you tomorrow"
+        ],
         "repeat": "See you tomorrow"
       }
     ],
@@ -101,41 +109,41 @@
   },
   "fnd_v7_i_am_you_are": {
     "titleEn": "I Am / You Are",
-    "titleTh": "จับคู่ I/you กับ am/are; รู้จัก ready, happy, tired, hungry",
-    "goalTh": "จับคู่ I/you กับ am/are; รู้จัก ready, happy, tired, hungry",
-    "scope": "รูปเต็มและรูปย่อเป็นแบบเสียงของประโยคเดียวกัน ไม่ทำบท pronunciation แยก",
+    "titleTh": "พูดถึงตัวเองและอีกฝ่ายด้วย I am / You are",
+    "goalTh": "ใช้ I am… พูดถึงตัวเอง และ You are… พูดกับอีกฝ่าย",
+    "scope": "สอนเพียงความต่าง I am / You are; ใช้ ready, happy, tired, hungry ที่เรียนแล้ว; ไม่สอน I'm หรือ You're; พูดตามแล้วชมสั้น ๆ ส่วนเทิร์นที่ผู้เรียนเลือกหรือประกอบประโยคเองให้ทวนประโยคกับคำแปลก่อนไปต่อ",
     "estimatedMinutes": [
       3,
       5
     ],
     "blocks": [
       {
-        "tipTh": "I ใช้ am; ready คือพร้อม tired คือเหนื่อย; รูปย่อ I'm มีความหมายเดียวกัน",
+        "tipTh": "พูดถึงตัวเองใช้ I am",
         "models": [
           "I am ready",
-          "I'm tired"
+          "I am happy"
         ],
         "repeat": "I am ready"
       },
       {
-        "tipTh": "You ใช้ are; happy คือมีความสุข hungry คือหิว; You're คือ You are",
+        "tipTh": "พูดกับอีกฝ่ายใช้ You are",
         "models": [
-          "You are happy",
-          "You're hungry"
+          "You are ready",
+          "You are tired"
         ],
-        "repeat": "You are happy"
+        "repeat": "You are ready"
       }
     ],
     "recall": {
-      "promptTh": "บอกว่าฉันหิว",
+      "promptTh": "ลองบอกความรู้สึกของตัวเองหนึ่งอย่าง",
       "answerEn": "I am hungry"
     }
   },
   "fnd_v7_not_and_are_you": {
     "titleEn": "Not & Are You?",
     "titleTh": "ปฏิเสธและถาม yes/no ด้วย be",
-    "goalTh": "ปฏิเสธและถาม yes/no ด้วย be",
-    "scope": "เปลี่ยนประโยคที่คุ้นเป็น not และคำถาม; ตัวอย่างคำตอบสั้น",
+    "goalTh": "บอกว่าไม่ ถามอีกฝ่าย และตอบสั้น ๆ",
+    "scope": "ใช้ศัพท์ความรู้สึกเดิม ไม่มีศัพท์ใหม่; บอกว่าไม่ด้วย not ถามด้วย Are you และตอบสั้น Yes, I am / No, I am not; พูดตามแล้วชมสั้น ๆ ส่วนเทิร์นที่ผู้เรียนเลือกเองให้ทวนประโยคกับคำแปลตามคำตอบจริง",
     "estimatedMinutes": [
       3,
       5
@@ -167,91 +175,73 @@
       }
     ],
     "recall": {
-      "promptTh": "ถามว่าคุณพร้อมไหม",
-      "answerEn": "Are you ready?"
+      "promptTh": "ตอบตามตัวเองว่าเหนื่อยไหม",
+      "answerEn": "Yes, I am"
     }
   },
   "fnd_v7_he_she_it_we_they": {
     "titleEn": "He, She, It, We, They",
-    "titleTh": "เลือกสรรพนามและ be ให้เข้ากับคนหรือกลุ่ม",
-    "goalTh": "เลือกสรรพนามและ be ให้เข้ากับคนหรือกลุ่ม",
-    "scope": "ตัวละครสมมติระบุสรรพนามชัด; it ใช้สิ่งของ; ทบทวน teacher/student/doctor จาก New Words",
+    "titleTh": "เลือกสรรพนามตามคน สิ่งของ และกลุ่ม",
+    "goalTh": "เลือกสรรพนามตามคน สิ่งของ และกลุ่ม",
+    "scope": "ตัด his/kind/classmate จากเป้าหมายรอบนี้; ทบทวน teacher/student จาก New Words; students อธิบายผ่านคำแปลกลุ่ม",
     "estimatedMinutes": [
       3,
       5
     ],
     "blocks": [
       {
-        "tipTh": "he/she กล่าวถึงคนหนึ่งคน; he เขา she เธอ; ใช้ is และระบุ role ของตัวละครก่อนเสมอ",
+        "tipTh": "he ใช้กับผู้ชาย she ใช้กับผู้หญิง แล้วตามด้วย is",
         "models": [
           "He is a teacher",
-          "She is a doctor"
+          "She is a teacher"
         ],
         "repeat": "He is a teacher"
       },
       {
-        "tipTh": "we หมายถึงพวกเรา they หมายถึงพวกเขา ใช้ are; friend คือเพื่อน people คือผู้คน",
+        "tipTh": "it ใช้กับสิ่งของ we ใช้เมื่อรวมตัวเรา they ใช้กับกลุ่มอื่น",
         "models": [
-          "We are friends",
-          "They are people"
+          "It is a bag",
+          "We are students",
+          "They are students"
         ],
-        "repeat": "We are friends"
-      },
-      {
-        "tipTh": "it ใช้สิ่งของหรือสิ่งที่กำลังกล่าวถึง ไม่ใช้เดาเพศจากภาพ",
-        "models": [
-          "It is a book",
-          "They are happy"
-        ],
-        "repeat": "It is a book"
+        "repeat": "It is a bag"
       }
     ],
     "recall": {
-      "promptTh": "บอกว่าพวกเราเป็นนักเรียน",
-      "answerEn": "We are students"
+      "promptTh": "บอกว่าพวกเขาเป็นนักเรียน",
+      "answerEn": "They are students"
     }
   },
   "fnd_v7_my_family": {
     "titleEn": "My Family",
-    "titleTh": "แนะนำความสัมพันธ์และถาม Who is this? เป็น chunk",
-    "goalTh": "แนะนำความสัมพันธ์และถาม Who is this? เป็น chunk",
-    "scope": "ใช้ mother/father/sister/brother ที่เรียนแล้ว; my และ this is เป็นวลีตัวอย่างก่อนอธิบายระบบใน chapter ถัดไป; เลือกครอบครัวสมมติได้",
+    "titleTh": "แนะนำคนในครอบครัวด้วย This is my…",
+    "goalTh": "แนะนำคนในครอบครัวด้วย This is my…",
+    "scope": "ใช้ mother/father/sister/brother; ไม่เพิ่ม Who is this? หรือ Her name is... ในเป้าหมายของบทนี้",
     "estimatedMinutes": [
       3,
       5
     ],
     "blocks": [
       {
-        "tipTh": "mother แม่ father พ่อ; This is my … เป็นวลีแนะนำคนในครอบครัว",
+        "tipTh": "แนะนำแม่และพ่อด้วย This is my…",
         "models": [
-          "mother",
-          "father",
-          "This is my mother"
+          "This is my mother",
+          "This is my father"
         ],
         "repeat": "This is my mother"
       },
       {
-        "tipTh": "sister พี่สาว/น้องสาว brother พี่ชาย/น้องชาย; ใช้ครอบครัวสมมติได้",
+        "tipTh": "แนะนำพี่น้องด้วย brother และ sister",
         "models": [
-          "sister",
-          "brother",
+          "This is my brother",
           "This is my sister"
         ],
-        "repeat": "This is my sister"
-      },
-      {
-        "tipTh": "doctor คือหมอ; ถามว่าเป็นใครด้วย Who is this? และ model Her name is … ไว้สำหรับบัตรข้อมูลภายหลัง",
-        "models": [
-          "She is a doctor",
-          "Who is this?",
-          "Her name is Mia"
-        ],
-        "repeat": "Who is this?"
+        "repeat": "This is my brother"
       }
     ],
     "recall": {
-      "promptTh": "แนะนำว่าเขาคือพี่หรือน้องชายของฉัน",
-      "answerEn": "This is my brother"
+      "promptTh": "เลือกแนะนำสมาชิกครอบครัวหนึ่งคน",
+      "answerEn": "This is my sister"
     }
   },
   "fnd_v7_one_or_more": {
@@ -328,43 +318,35 @@
   },
   "fnd_v7_colours_and_size": {
     "titleEn": "Colours & Size",
-    "titleTh": "บอกสีและขนาดโดยเริ่มจากหนึ่ง adjective",
-    "goalTh": "บอกสีและขนาดโดยเริ่มจากหนึ่ง adjective",
-    "scope": "ใช้สีชุดแรก red/blue/green; สอน big/small เป็นคู่; ประกอบเป็น a small blue bag, a big green bag, Those are red bags",
+    "titleTh": "บอกสีและขนาดด้วย It is…",
+    "goalTh": "บอกสีและขนาดด้วย It is…",
+    "scope": "ใช้ It is + สีหรือขนาดหนึ่งคำ; ไม่ประกอบ a small blue bag และไม่ใช้ Those are ในบทนี้",
     "estimatedMinutes": [
       3,
       5
     ],
     "blocks": [
       {
-        "tipTh": "ใช้สีที่เรียนแล้วบอกของหนึ่งชิ้น; เริ่มจาก It is blue แล้วขยายเป็น a blue bag",
+        "tipTh": "บอกสีด้วย It is + สี",
         "models": [
           "It is blue",
-          "a green bag"
+          "It is green",
+          "It is red"
         ],
         "repeat": "It is blue"
       },
       {
-        "tipTh": "big ใหญ่ small เล็ก; พูดขนาดก่อน แล้วค่อยประกอบกับสี",
+        "tipTh": "บอกขนาดด้วย big และ small",
         "models": [
-          "a big bag",
-          "a small bag"
+          "It is big",
+          "It is small"
         ],
-        "repeat": "a small bag"
-      },
-      {
-        "tipTh": "ประยุกต์สีชุดแรกและขนาดเป็นวลียาวขึ้น ยังไม่ใช้ yellow/black/white",
-        "models": [
-          "a small blue bag",
-          "a big green bag",
-          "Those are red bags"
-        ],
-        "repeat": "a small blue bag"
+        "repeat": "It is small"
       }
     ],
     "recall": {
-      "promptTh": "บอกว่ากระเป๋านี้สีน้ำเงิน",
-      "answerEn": "This is a blue bag"
+      "promptTh": "บอกสีของกระเป๋า",
+      "answerEn": "It is blue"
     }
   },
   "fnd_v7_these_and_those": {
@@ -782,41 +764,40 @@
     "titleEn": "Days & Simple Plans",
     "titleTh": "เข้าใจวันในสัปดาห์และบอกวันกับเวลา",
     "goalTh": "เข้าใจวันในสัปดาห์และบอกวันกับเวลา",
-    "scope": "ไม่ไล่ท่องชื่อวันทีละคำ; ใช้ on/at เป็น chunks กับ class; ไม่สอน future tense; แบบ The class is on Wednesday เป็น be ที่รู้",
+    "scope": "ใช้ on กับวัน และ at กับเวลา; Friday ขึ้นไปใช้หลัง Days 2 ไม่ใส่ในบทนี้",
     "estimatedMinutes": [
       4,
       6
     ],
     "blocks": [
       {
-        "tipTh": "ใช้ on กับวันที่เรียนแล้ว ประกอบเป็นประโยค ไม่ไล่ท่องชื่อวัน",
-        "models": [
-          "on Monday",
-          "on Wednesday",
-          "The class is on Wednesday"
-        ],
-        "repeat": "The class is on Wednesday"
-      },
-      {
-        "tipTh": "บอกวันกับเวลาด้วย Friday at ten เป็น chunk",
-        "models": [
-          "Friday at ten",
-          "The class is on Friday"
-        ],
-        "repeat": "Friday at ten"
-      },
-      {
-        "tipTh": "on ใช้กับวัน at ใช้กับเวลา สอนเป็น chunk ด้วย be ไม่เพิ่ม future",
+        "tipTh": "ใช้ on กับวัน",
         "models": [
           "The class is on Monday",
-          "The class is at seven"
+          "The class is on Wednesday"
         ],
         "repeat": "The class is on Monday"
+      },
+      {
+        "tipTh": "ใช้ at กับเวลา",
+        "models": [
+          "The class is at seven",
+          "The class is at eight"
+        ],
+        "repeat": "The class is at seven"
+      },
+      {
+        "tipTh": "เลือกวันจันทร์ถึงพฤหัสบดี",
+        "models": [
+          "The class is on Tuesday",
+          "The class is on Thursday"
+        ],
+        "repeat": "The class is on Tuesday"
       }
     ],
     "recall": {
-      "promptTh": "บอกว่าคลาสวันศุกร์",
-      "answerEn": "The class is on Friday"
+      "promptTh": "บอกว่าคลาสอยู่วันพุธ",
+      "answerEn": "The class is on Wednesday"
     }
   },
   "fnd_v7_prices_and_paying": {
@@ -1001,42 +982,35 @@
   },
   "fnd_v7_cant_and_can_you": {
     "titleEn": "Can’t & Can You?",
-    "titleTh": "บอกทำไม่ได้ ถามอีกคน และขออนุญาตด้วย chunk",
-    "goalTh": "บอกทำไม่ได้ ถามอีกคน และขออนุญาตด้วย chunk",
-    "scope": "can/cannot/can’t เป็นความหมาย; Can I sit here? เป็นคำขอที่ model ชัด; here มี lexical preview",
+    "titleTh": "บอกทำไม่ได้ ถาม และตอบเรื่องความสามารถ",
+    "goalTh": "บอกทำไม่ได้ ถาม และตอบเรื่องความสามารถ",
+    "scope": "ไม่เพิ่ม Can I sit here? ในบทนี้; รับ cannot คู่กับ can not",
     "estimatedMinutes": [
       3,
       5
     ],
     "blocks": [
       {
-        "tipTh": "cannot และ can't หมายถึงทำไม่ได้ ไม่ตัดสินความถูกของเสียง can/can't จาก transcript",
+        "tipTh": "cannot และ can not หมายถึงทำไม่ได้",
         "models": [
-          "I cannot swim",
-          "I can't swim"
+          "I can not swim",
+          "I can not cook"
         ],
-        "repeat": "I cannot swim"
+        "repeat": "I can not swim"
       },
       {
-        "tipTh": "ถามอีกคนด้วย Can you…? แล้วตอบสั้น ๆ",
+        "tipTh": "ถามด้วย Can you…? แล้วตอบสั้น",
         "models": [
-          "Can you cook?",
+          "Can you swim?",
           "Yes, I can",
-          "No, I cannot"
+          "No, I can not"
         ],
-        "repeat": "Can you cook?"
-      },
-      {
-        "tipTh": "Can I sit here? เป็น chunk ขออนุญาต; here แปลว่าตรงนี้",
-        "models": [
-          "Can I sit here?"
-        ],
-        "repeat": "Can I sit here?"
+        "repeat": "Can you swim?"
       }
     ],
     "recall": {
-      "promptTh": "ถามว่าอีกฝ่ายว่ายน้ำเป็นไหม",
-      "answerEn": "Can you swim?"
+      "promptTh": "ตอบว่าทำอาหารเป็นหรือไม่เป็น",
+      "answerEn": "Yes, I can"
     }
   },
   "fnd_v7_my_day": {
@@ -1110,42 +1084,33 @@
   },
   "fnd_v7_do_does_every_day": {
     "titleEn": "Do / Does Every Day",
-    "titleTh": "ถามกิจวัตรของ you/he/she และตอบสั้น",
-    "goalTh": "ถามกิจวัตรของ you/he/she และตอบสั้น",
-    "scope": "reuse do you like ก่อนเปลี่ยนกริยา; does + base verb แยก model; สอน don’t/doesn’t กับคำเดิม",
+    "titleTh": "ถามกิจวัตรด้วย Do you และ Does he/she",
+    "goalTh": "ถามกิจวัตรด้วย Do you และ Does he/she",
+    "scope": "รอบนี้ scope คือคำถาม ไม่อ้างว่าสอน do not/does not แล้ว; หลัง Does ใช้กริยารูปเดิม",
     "estimatedMinutes": [
       3,
       5
     ],
     "blocks": [
       {
-        "tipTh": "ทบทวน Do you like… แล้วเปลี่ยนเป็นกริยากิจวัตร",
+        "tipTh": "ถามคนตรงหน้าด้วย Do you…?",
         "models": [
-          "Do you work on Monday?",
-          "Do you wake up at seven?"
+          "Do you work every day?"
         ],
-        "repeat": "Do you work on Monday?"
+        "repeat": "Do you work every day?"
       },
       {
-        "tipTh": "he/she ใช้ Does และกริยากลับเป็นรูปเดิม",
+        "tipTh": "ถามถึง he/she ด้วย Does และกริยารูปเดิม",
         "models": [
-          "Does she work?",
-          "Does he eat at seven?"
+          "Does he work every day?",
+          "Does she cook every day?"
         ],
-        "repeat": "Does she work?"
-      },
-      {
-        "tipTh": "ปฏิเสธด้วย don't/doesn't และกริยารูปเดิม; have ก็ใช้แบบเดียวกัน",
-        "models": [
-          "She does not work on Friday",
-          "I do not have a key"
-        ],
-        "repeat": "She does not work on Friday"
+        "repeat": "Does he work every day?"
       }
     ],
     "recall": {
-      "promptTh": "ถามว่าเขาทำงานวันจันทร์ไหม",
-      "answerEn": "Does he work on Monday?"
+      "promptTh": "ถามว่าเธอทำอาหารทุกวันไหม",
+      "answerEn": "Does she cook every day?"
     }
   },
   "fnd_v7_happening_now": {
@@ -1214,34 +1179,31 @@
   },
   "fnd_v7_what_or_who": {
     "titleEn": "What or Who?",
-    "titleTh": "แยกคำถามเกี่ยวกับคนกับสิ่งของ",
-    "goalTh": "แยกคำถามเกี่ยวกับคนกับสิ่งของ",
-    "scope": "reuse Who is this? จากfamily; สอน What is this? และคำตอบสั้น; model การรับ turn ด้วย And you?",
+    "titleTh": "แยก what สำหรับสิ่งของ และ who สำหรับคน",
+    "goalTh": "แยก what สำหรับสิ่งของ และ who สำหรับคน",
+    "scope": "ไม่เพิ่ม And you? หรือสลับ this/that ในรอบนี้",
     "estimatedMinutes": [
       3,
       5
     ],
     "blocks": [
       {
-        "tipTh": "who ถามคน what ถามสิ่งของ; ทบทวนจากบทคนและสิ่งของ",
+        "tipTh": "what ใช้ถามสิ่งของ",
         "models": [
-          "Who is she?",
           "What is this?"
         ],
-        "repeat": "Who is she?"
+        "repeat": "What is this?"
       },
       {
-        "tipTh": "ตอบสั้นได้และใช้ And you? ส่งคำถามกลับเมื่อเข้ากับบริบท",
+        "tipTh": "who ใช้ถามคน",
         "models": [
-          "She is a teacher",
-          "It is a book",
-          "And you?"
+          "Who is this?"
         ],
-        "repeat": "And you?"
+        "repeat": "Who is this?"
       }
     ],
     "recall": {
-      "promptTh": "อยากรู้ว่าสิ่งนี้คืออะไร ลองถาม",
+      "promptTh": "ถามว่าของตรงหน้าคืออะไร",
       "answerEn": "What is this?"
     }
   },
@@ -1391,43 +1353,62 @@
   },
   "fnd_v7_where_is_it": {
     "titleEn": "Where Is It?",
-    "titleTh": "ถามและบอกว่าสถานที่อยู่ที่ไหน",
-    "goalTh": "ถามและบอกว่าสถานที่อยู่ที่ไหน",
-    "scope": "ใช้ school/café/shop/station/hospital/market ที่เรียนแล้ว และทบทวน next to/there is; ไม่เพิ่มเส้นทางหรือพาหนะในบทนี้",
-    "estimatedMinutes": [3, 5],
+    "titleTh": "ถามหาสถานที่และบอกตำแหน่งด้วย next to",
+    "goalTh": "ถามหาสถานที่และบอกตำแหน่งด้วย next to",
+    "scope": "ใช้ school/café/shop; คำตอบ NPC เป็นไทยเพื่อไม่เพิ่ม between เป็น target; station/hospital/market ใช้หลัง Places 2",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
     "blocks": [
       {
-        "tipTh": "ถามหาสถานที่ด้วย Where is + สถานที่",
-        "models": ["Where is the café?", "Where is the shop?"],
+        "tipTh": "ถามหาสถานที่ด้วย Where is",
+        "models": [
+          "Where is the café?",
+          "Where is the shop?"
+        ],
         "repeat": "Where is the café?"
       },
       {
-        "tipTh": "ตอบตำแหน่งด้วย here หรือ next to ซึ่งเคยเรียนแล้ว",
-        "models": ["The school is here", "The café is next to the shop"],
+        "tipTh": "ตอบตำแหน่งด้วย next to ที่เรียนแล้ว",
+        "models": [
+          "The café is next to the shop",
+          "The school is next to the shop"
+        ],
         "repeat": "The café is next to the shop"
       }
     ],
     "recall": {
-      "promptTh": "อยากรู้ว่าสถานีอยู่ที่ไหน ลองถาม",
-      "answerEn": "Where is the station?"
+      "promptTh": "อยากรู้ว่าร้านค้าอยู่ที่ไหน ลองถาม",
+      "answerEn": "Where is the shop?"
     }
   },
   "fnd_v7_how_do_you_go": {
     "titleEn": "How Do You Go?",
-    "titleTh": "บอกวิธีเดินทางแบบง่าย ๆ",
+    "titleTh": "บอกและถามวิธีเดินทางด้วย go by",
     "goalTh": "บอกและถามวิธีเดินทางด้วย go by",
-    "scope": "สอน go by เป็น functional chunk กับ bus/train/taxi; ทบทวน do/does และไม่อธิบายระบบไวยากรณ์ใหม่",
-    "estimatedMinutes": [3, 5],
+    "scope": "ไม่เพิ่ม car/walk/bike ก่อน More Ways to Go; ไม่สอน She goes by… ในบทนี้",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
     "blocks": [
       {
-        "tipTh": "บอกพาหนะด้วย go by + ชื่อพาหนะ โดยไม่ใส่ a",
-        "models": ["I go by bus", "I go by train"],
+        "tipTh": "บอกพาหนะด้วย I go by",
+        "models": [
+          "I go by bus",
+          "I go by train",
+          "I go by taxi"
+        ],
         "repeat": "I go by bus"
       },
       {
-        "tipTh": "ถามอีกฝ่ายด้วย Do you go by... และพูดถึง he/she ด้วย goes",
-        "models": ["Do you go by taxi?", "She goes by train"],
-        "repeat": "Do you go by taxi?"
+        "tipTh": "ถามด้วย Do you go by…?",
+        "models": [
+          "Do you go by train?",
+          "Do you go by taxi?"
+        ],
+        "repeat": "Do you go by train?"
       }
     ],
     "recall": {

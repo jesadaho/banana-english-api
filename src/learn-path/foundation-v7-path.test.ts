@@ -121,7 +121,10 @@ describe('Foundation V7 catalog and real content', () => {
       }
     }
     assert.ok(getAllLessons().every(l => !l.lessonId.startsWith('fnd_v7_')));
-    assert.ok(getAllSimulations().every(s => !s.simulationId.startsWith('foundation_v7_')));
+    assert.equal(
+      getAllSimulations().filter((s) => s.simulationId.startsWith('foundation_v7_')).length,
+      FOUNDATION_V7_SIMULATIONS.length,
+    );
   });
 
   it('registers 39 authored lesson flows with model, recognition, recall and completion', () => {

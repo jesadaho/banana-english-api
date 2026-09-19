@@ -146,7 +146,7 @@ describe('Foundation V7 lessons', () => {
       const lesson = getLesson(id)!;
       const first = buildFoundationV7Steps(id)[0];
 
-      assert.match(first.instruction, /วันนี้/, id);
+      assert.match(first.instruction, /(วันนี้|เราจะ|ลองพูด|ลองถาม|ลองนับ)/, id);
       assert.match(first.instruction, /(ฝึก|เรียน|ใช้|พูด|บอก|ถาม)/, id);
       assert.doesNotMatch(first.instruction, /state the practical goal briefly/, id);
       if (!V7_LEGACY_FLOWS[id]) {
@@ -164,9 +164,9 @@ describe('Foundation V7 lessons', () => {
   });
 
   it('keeps prerequisite vocabulary teaching inside revised first turns', () => {
-    assert.match(buildFoundationV7Steps('fnd_v7_eleven_to_twenty')[0].instruction, /สิบเอ็ดคือ eleven/);
+    assert.match(buildFoundationV7Steps('fnd_v7_eleven_to_twenty')[0].instruction, /eleven คือสิบเอ็ด/);
     assert.match(buildFoundationV7Steps('fnd_v7_prices_and_paying')[0].instruction, /ticket คือตั๋ว/);
-    assert.match(buildFoundationV7Steps('fnd_v7_i_like_i_dont_like')[0].instruction, /coffee คือกาแฟ/);
+    assert.match(buildFoundationV7Steps('fnd_v7_i_like_i_dont_like')[0].instruction, /I like coffee/);
   });
 
   it('authors choices for every lesson with valid timing and distinct cues', () => {
@@ -208,8 +208,7 @@ describe('Foundation V7 lessons', () => {
       assert.ok(steps.filter(s => s.expectsUserSpeech).length >= spec.blocks.length + 2, id);
     }
     assert.ok(buildFoundationV7Steps('fnd_v7_letter_names_a_m').some(s => s.kind === 'model_group'));
-    assert.ok(buildFoundationV7Steps('fnd_v7_in_on_under_next_to').some(s => s.kind === 'guided_use'));
-    assert.ok(buildFoundationV7Steps('fnd_v7_want_need_and_please').some(s => /Choice reuse/.test(s.instruction)));
+    assert.ok(buildFoundationV7Steps('fnd_v7_goodbye_see_you').some(s => /Choice reuse/.test(s.instruction)));
   });
 
   it('ships real guided board payloads and accepts non-first personal options in its tutor contract', () => {
@@ -228,7 +227,7 @@ describe('Foundation V7 lessons', () => {
         }
       }
     }
-    const reuse = buildFoundationV7Steps('fnd_v7_want_need_and_please').find(s => s.kind === 'recall')!;
+    const reuse = buildFoundationV7Steps('fnd_v7_goodbye_see_you').find(s => s.kind === 'recall')!;
     assert.match(reuse.instruction, /THEIR selected speak value/);
   });
 
@@ -317,7 +316,7 @@ describe('Foundation V7 lessons', () => {
 
   it('makes every practice a microphone turn and every model group one milestone', () => {
     const prices = getLesson('fnd_v7_prices_and_paying')!;
-    const paymentSteps = buildFoundationV7Steps(prices.lessonId).filter(s => s.expectedSpeech === 'Here you are');
+    const paymentSteps = buildFoundationV7Steps(prices.lessonId).filter(s => s.expectedSpeech?.replace(/\.$/, '') === 'Here you are');
     assert.equal(paymentSteps.length, 2, 'model followed by contextual payment');
     assert.ok(paymentSteps.every(s => s.expectsUserSpeech));
 

@@ -1020,7 +1020,7 @@ export function getSimulation(
 }
 
 export function getAllSimulations(): SimulationConfig[] {
-  return SIMULATIONS;
+  return [...SIMULATIONS, ...FOUNDATION_V7_SIMULATIONS];
 }
 
 export function resolveSimulationIdFromTopic(

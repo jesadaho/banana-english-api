@@ -577,8 +577,8 @@
   "fnd_v7_u11n05": [
     {
       "id": "fnd_v7_u11n05_q1",
-      "promptTh": "ฉันนั่งตรงนี้ได้ไหม",
-      "answerEn": "Can I sit here",
+      "promptTh": "คุณทำอาหารเป็นไหม",
+      "answerEn": "Can you cook",
       "acceptedAnswers": []
     },
     {
@@ -589,8 +589,8 @@
     },
     {
       "id": "fnd_v7_u11n05_q3",
-      "promptTh": "คุณทำงานวันศุกร์ไหม",
-      "answerEn": "Do you work on Friday",
+      "promptTh": "คุณอ่านได้ไหม",
+      "answerEn": "Can you read",
       "acceptedAnswers": []
     },
     {
@@ -640,17 +640,15 @@
     },
     {
       "id": "fnd_v7_u12n06_q3",
-      "promptTh": "เธอไม่ทำงานวันศุกร์",
-      "answerEn": "She does not work on Friday",
-      "acceptedAnswers": [
-        "She doesn't work on Friday"
-      ],
+      "promptTh": "เขาทำงานทุกวันไหม",
+      "answerEn": "Does he work every day",
+      "acceptedAnswers": [],
       "mode": "guided",
-      "hintEn": "She does not …",
+      "hintEn": "Does he …",
       "choices": [
-        "She does not work on Friday",
-        "She works on Friday",
-        "I do not work on Friday"
+        "Does he work every day",
+        "Do you work every day",
+        "Does she work every day"
       ]
     },
     {
@@ -799,8 +797,8 @@
     },
     {
       "id": "fnd_v7_u16n08_q3",
-      "promptTh": "เขาเดินทางโดยจักรยาน",
-      "answerEn": "He goes by bike",
+      "promptTh": "ฉันเดินทางโดยจักรยาน",
+      "answerEn": "I go by bike",
       "acceptedAnswers": []
     },
     {
@@ -975,10 +973,10 @@
     },
     {
       "id": "fnd_v7_u06n11_q2",
-      "promptTh": "นี่คือกระเป๋าสีดำ",
-      "answerEn": "This is a black bag",
+      "promptTh": "มันสีดำ",
+      "answerEn": "It is black",
       "acceptedAnswers": [
-        "This bag is black"
+        "It's black"
       ]
     },
     {
@@ -992,21 +990,18 @@
     },
     {
       "id": "fnd_v7_u06n11_q4",
-      "promptTh": "นั่นคือโทรศัพท์สีน้ำเงิน",
-      "answerEn": "That is a blue phone",
+      "promptTh": "มันใหญ่",
+      "answerEn": "It is big",
       "acceptedAnswers": [
-        "That's a blue phone",
-        "That phone is blue"
+        "It's big"
       ]
     },
     {
       "id": "fnd_v7_u06n11_q5",
-      "promptTh": "หนังสือเล่มนี้สีเขียว",
-      "answerEn": "This book is green",
+      "promptTh": "มันเล็ก",
+      "answerEn": "It is small",
       "acceptedAnswers": [
-        "This is a green book",
-        "It is green",
-        "It's green"
+        "It's small"
       ]
     }
   ],
@@ -1170,28 +1165,23 @@
     },
     {
       "id": "fnd_v7_u12n10_q2",
-      "promptTh": "เธอกลับบ้านห้าโมง",
-      "answerEn": "She goes home at five",
-      "acceptedAnswers": [
-        "She goes home at 5"
-      ]
+      "promptTh": "เธอทำงาน",
+      "answerEn": "She works",
+      "acceptedAnswers": []
     },
     {
       "id": "fnd_v7_u12n10_q3",
-      "promptTh": "เขาดูทีวีทุกวัน",
-      "answerEn": "He watches TV every day",
+      "promptTh": "เขากินตอนเจ็ดโมง",
+      "answerEn": "He eats at seven",
       "acceptedAnswers": [
-        "He watches TV everyday",
-        "He watches television every day"
+        "He eats at 7"
       ]
     },
     {
       "id": "fnd_v7_u12n10_q4",
-      "promptTh": "ฉันไม่ทำงานวันศุกร์",
-      "answerEn": "I do not work on Friday",
-      "acceptedAnswers": [
-        "I don't work on Friday"
-      ]
+      "promptTh": "คุณทำงานทุกวันไหม",
+      "answerEn": "Do you work every day",
+      "acceptedAnswers": []
     },
     {
       "id": "fnd_v7_u12n10_q5",

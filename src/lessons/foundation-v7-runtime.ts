@@ -2,13 +2,47 @@ import type { TrainingTurnReply } from '../gemini/gemini-chat.service';
 import type { TrainingEngineTurnInput } from '../training/engine/training-turn.engine';
 import type { TrainingAiGate } from '../training/engine/ai-gate';
 import { scriptedAiDebug } from '../common/ai-debug';
-import { buildFoundationV7Steps } from './foundation-v7-lessons.data';
+import { buildFoundationV7Steps, type V7TeachingStep } from './foundation-v7-lessons.data';
 import { FOUNDATION_V7_CHOICE_BEATS } from './foundation-v7-choice-beats.data';
 import specs from './foundation-v7-lessons.authoring.json';
 import { userTurnWasContinue } from './foundation-v7-turn-guard';
 
-const normalize = (value: string) => value.toLowerCase().replace(/[’']/g, '').replace(/[^a-z0-9]/g, '');
+const normalize = (value: string) => value.toLowerCase().normalize('NFD').replace(/\p{M}/gu, '').replace(/[’']/g, '').replace(/[^a-z0-9]/g, '');
+
+function expandSpeechForms(value: string): string[] {
+  const forms = new Set([value]);
+  const add = (next: string) => { if (next.trim()) forms.add(next); };
+  add(value.replace(/\bdon't\b/gi, 'do not'));
+  add(value.replace(/\bdo not\b/gi, "don't"));
+  add(value.replace(/\bcan't\b/gi, 'cannot'));
+  add(value.replace(/\bcannot\b/gi, "can't"));
+  add(value.replace(/\bcan not\b/gi, "can't"));
+  add(value.replace(/\s*o['’]?clock\.?/gi, '').replace(/\s+/g, ' ').trim());
+  return [...forms];
+}
+
+function speechMatches(expected: string, got: string): boolean {
+  const gotN = normalize(got);
+  return expandSpeechForms(expected).some(form => normalize(form) === gotN)
+    || expandSpeechForms(got).some(form => normalize(form) === normalize(expected));
+}
 const OFF_TOPIC_PROBES = new Set(['goodmorning', 'hellothere']);
+
+const NUMBER_TH: Record<string, string> = {
+  zero: 'ศูนย์', one: 'หนึ่ง', two: 'สอง', three: 'สาม', four: 'สี่',
+  five: 'ห้า', six: 'หก', seven: 'เจ็ด', eight: 'แปด', nine: 'เก้า', ten: 'สิบ',
+};
+
+function v7CorrectPrefix(step: V7TeachingStep, spoken: string): string {
+  const option = step.presentation?.options.find(o => speechMatches(o.speak, spoken));
+  if (option?.recapText) return option.recapText;
+  const authored = step.presentation?.successText;
+  if (authored) return authored;
+  if (option?.meaningTh) return option.speak + ' แปลว่า “' + option.meaningTh + '” ครับ ';
+  const numberTh = NUMBER_TH[normalize(spoken)];
+  if (numberTh) return spoken + ' แปลว่า “' + numberTh + '” ครับ ';
+  return 'ดีครับ ';
+}
 
 /** PoolGate off-topic probes must stay incorrect even if Gemini likes the English. */
 export function isFoundationV7OffTopicProbe(
@@ -75,7 +109,7 @@ export async function runV7Turn(input: TrainingEngineTurnInput, gate: TrainingAi
   const stepNumber = last?.v7Step ?? input.sessionProgressTurn ?? 1;
   const current = renderV7Turn(id, stepNumber, last?.v7Choice);
   const step = buildFoundationV7Steps(id)[current.v7Step! - 1];
-  const choice = step.presentation ? { ...step.presentation, incorrectHintTh: undefined } : FOUNDATION_V7_CHOICE_BEATS[id];
+  const choice = step.presentation ?? FOUNDATION_V7_CHOICE_BEATS[id];
   const isChoice = step.kind === 'choice' || !!step.presentation?.options.length;
   if (current.isLessonComplete) return { reply: current, aiDebug: scriptedAiDebug() };
   // Continue is a UI action, never evidence of a spoken attempt.
@@ -87,10 +121,12 @@ export async function runV7Turn(input: TrainingEngineTurnInput, gate: TrainingAi
   }
   const accepted = isChoice && choice.answerMode === 'any'
     ? choice.options.map(o => o.speak) : [current.expectedSpeech!];
-  const exact = accepted.find(answer => normalize(answer) === normalize(input.userText));
+  const exact = accepted.find(answer => speechMatches(answer, input.userText));
+  const saidLabelOnly = isChoice && !exact && choice.options.some(o =>
+    speechMatches(o.label, input.userText) && !speechMatches(o.speak, input.userText));
   // A distractor with the wrong meaning must not pass a single-answer choice.
   const distractor = isChoice && choice.answerMode === 'single' &&
-    choice.options.some(o => normalize(o.speak) === normalize(input.userText)) && !exact;
+    (choice.options.some(o => speechMatches(o.speak, input.userText)) || saidLabelOnly) && !exact;
   let tier: 'correct' | 'close' | 'incorrect' = exact ? 'correct' : 'incorrect';
   let aiDebug = scriptedAiDebug();
   if (!exact && isFoundationV7OffTopicProbe(input.userText, current.expectedSpeech)) {
@@ -112,7 +148,9 @@ export async function runV7Turn(input: TrainingEngineTurnInput, gate: TrainingAi
     aiDebug = result.aiDebug;
   }
   if (tier === 'incorrect' && !last?.v7Retry) {
-    const hint = step.kind === 'choice' ? choice.incorrectHintTh : undefined;
+    const hint = saidLabelOnly
+      ? 'พูดประโยคเต็มตามตัวช่วยครับ อย่าพูดแค่คำสั้น ๆ'
+      : choice.incorrectHintTh;
     const text = (hint || 'ลองอีกครั้งครับ พูดว่า “' + current.expectedSpeech + '”') + ' ' + current.textEn;
     return { reply: { ...current, textEn: text, ttsText: text, assessmentTier: tier, v7Retry: true }, aiDebug };
   }
@@ -120,8 +158,9 @@ export async function runV7Turn(input: TrainingEngineTurnInput, gate: TrainingAi
     ? (exact ?? (tier === 'correct' ? input.userText : current.expectedSpeech))
     : last?.v7Choice;
   const next = renderV7Turn(id, stepNumber + 1, chosen);
-  const prefix = tier === 'correct' ? (step.presentation?.successText ?? 'ดีครับ ') :
-    'ประโยคนี้พูดว่า “' + current.expectedSpeech + '” ครับ ลองฝึกต่อด้วยกันนะครับ ';
+  const prefix = tier === 'correct'
+    ? v7CorrectPrefix(step, exact ?? chosen ?? current.expectedSpeech ?? input.userText)
+    : 'ประโยคนี้พูดว่า “' + current.expectedSpeech + '” ครับ ลองฝึกต่อด้วยกันนะครับ ';
   const text = prefix + next.textEn;
   return { reply: { ...next, textEn: text, ttsText: text, assessmentTier: tier,
     wasSoftAdvance: tier === 'incorrect' }, aiDebug };

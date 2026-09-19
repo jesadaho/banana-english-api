@@ -360,15 +360,16 @@
           "order": 2,
           "globalOrder": 12,
           "titleEn": "I Am / You Are",
-          "titleTh": "ฉันคือ / คุณคือ",
+          "titleTh": "I am / You are",
           "type": "lesson",
           "beat": "Ki",
-          "learningTarget": "จับคู่ I/you กับ am/are; รู้จัก ready, happy, tired, hungry",
-          "activity": "รูปเต็มและรูปย่อเป็นแบบเสียงของประโยคเดียวกัน ไม่ทำบท pronunciation แยก",
+          "learningTarget": "เลือกใช้ I am กับตัวเอง และ You are กับอีกฝ่าย",
+          "activity": "สลับพูดถึงตัวเองและพูดกับอีกฝ่าย เลือก am/are และจบด้วยความรู้สึกของผู้เรียน; ทวนคำแปลหลังตอบถูกทุกครั้ง",
           "examples": [
             "I am ready",
-            "I'm tired",
-            "You're happy"
+            "I am happy",
+            "You are ready",
+            "You are tired"
           ],
           "estimatedMinutes": [
             3,
@@ -744,12 +745,12 @@
           "titleTh": "ครอบครัวของฉัน",
           "type": "lesson",
           "beat": "Sho",
-          "learningTarget": "แนะนำความสัมพันธ์และถาม Who is this? เป็น chunk",
-          "activity": "ใช้ mother/father/sister/brother ที่เรียนแล้ว; my และ this is เป็นวลีตัวอย่างก่อนอธิบายระบบใน chapter ถัดไป; เลือกครอบครัวสมมติได้",
+          "learningTarget": "แนะนำคนในครอบครัวด้วย This is my…",
+          "activity": "ใช้ mother/father/sister/brother ที่เรียนแล้ว; ไม่เพิ่ม Who is this? หรือ Her name is...",
           "examples": [
-            "This is my sister",
-            "Who is this?",
-            "She is a doctor"
+            "This is my mother",
+            "This is my father",
+            "This is my sister"
           ],
           "estimatedMinutes": [
             3,
@@ -1367,7 +1368,7 @@
           "titleTh": "สีชุดแรก",
           "type": "new_words",
           "beat": "Sho",
-          "learningTarget": "จำ red, blue, green ก่อนขยายเป็น a small blue bag",
+          "learningTarget": "จำ red, blue, green ก่อนใช้ It is + สี",
           "activity": "สอนสามสีแรกให้จบรอบสั้น ๆ ก่อนเข้า Colours 2",
           "examples": [
             "red",
@@ -1398,12 +1399,12 @@
           "titleTh": "สีและขนาด",
           "type": "lesson",
           "beat": "Sho",
-          "learningTarget": "บอกสีและขนาดโดยเริ่มจากหนึ่ง adjective",
-          "activity": "สอน big/small แล้วประยุกต์สีชุดแรกเป็น a small blue bag และ a big green bag",
+          "learningTarget": "บอกสีและขนาดด้วย It is…",
+          "activity": "สอนสีแล้วตามด้วย big/small เป็น It is… ไม่ประกอบ adjective+noun ในบทนี้",
           "examples": [
             "It is blue",
-            "a green bag",
-            "a small blue bag"
+            "It is green",
+            "It is small"
           ],
           "estimatedMinutes": [
             3,
@@ -1460,14 +1461,14 @@
           "titleTh": "สีแบบผสม",
           "type": "say_it",
           "beat": "Sho",
-          "learningTarget": "ใช้ It is / It is not + สี และ This/That is a + colour + noun",
-          "activity": "ห้าโจทย์หลัง Colours & Size ซึ่งสอน adjective+noun แล้ว",
+          "learningTarget": "ใช้ It is / It is not + สี",
+          "activity": "ห้าโจทย์ทบทวน It is + สี หลัง Colours & Size โดยยังไม่ประกอบ adjective+noun",
           "examples": [
             "It is yellow.",
-            "This is a black bag.",
+            "It is black.",
             "It is not white.",
-            "That is a blue phone.",
-            "This book is green."
+            "It is big.",
+            "It is small."
           ],
           "estimatedMinutes": [
             1,
@@ -2867,7 +2868,7 @@
           "type": "new_words",
           "beat": "Ki",
           "learningTarget": "จำ swim, read, cook, sit ก่อน I can / Can you?",
-          "activity": "สอนสี่กริยา แล้วนำไปใช้กับ I can swim, Can you cook?, I cannot read, Can I sit here?",
+          "activity": "สอนสี่กริยา แล้วนำไปใช้กับ I can swim, Can you cook?, I cannot read",
           "examples": [
             "swim",
             "read",
@@ -2960,12 +2961,12 @@
           "titleTh": "ทำไม่ได้ และคุณทำได้ไหม?",
           "type": "lesson",
           "beat": "Sho",
-          "learningTarget": "บอกทำไม่ได้ ถามอีกคน และขออนุญาตด้วย chunk",
-          "activity": "can/cannot/can’t เป็นความหมาย; Can I sit here? เป็นคำขอที่ model ชัด; here มี lexical preview",
+          "learningTarget": "บอกทำไม่ได้ ถาม และตอบเรื่องความสามารถ",
+          "activity": "can/cannot เป็นความหมายเดียวกัน; ไม่เพิ่ม Can I sit here? ในบทนี้",
           "examples": [
             "I cannot swim",
             "Can you cook?",
-            "Can I sit here?"
+            "Yes, I can"
           ],
           "estimatedMinutes": [
             3,
@@ -3096,11 +3097,11 @@
           "titleTh": "ฉันทำได้ไหม? คุณทำได้ไหม?",
           "type": "say_it",
           "beat": "Ten",
-          "learningTarget": "เลือกถามความสามารถหรือขออนุญาตให้ตรงเจตนา",
-          "activity": "ไทยระบุว่าขอที่นั่งหรือถามว่าทำเป็นไหม; ใช้รูปที่เพิ่งสอน ไม่เปลี่ยนเป็น mixed engine",
+          "learningTarget": "ถามความสามารถด้วย Can you…?",
+          "activity": "ไทยระบุว่าถามว่าทำเป็นไหม; ใช้รูปที่เพิ่งสอน ไม่เปลี่ยนเป็น mixed engine",
           "examples": [
-            "Can I sit here?",
-            "Can you swim?"
+            "Can you swim?",
+            "Can you cook?"
           ],
           "estimatedMinutes": [
             1,
@@ -3323,12 +3324,12 @@
           "titleTh": "Do / Does ทุกวัน",
           "type": "lesson",
           "beat": "Sho",
-          "learningTarget": "ถามกิจวัตรของ you/he/she และตอบสั้น",
-          "activity": "reuse do you like ก่อนเปลี่ยนกริยา; does + base verb แยก model; สอน don’t/doesn’t กับคำเดิม",
+          "learningTarget": "ถามกิจวัตรด้วย Do you และ Does he/she",
+          "activity": "reuse do you like ก่อนเปลี่ยนกริยา; does + base verb แยก model; ยังไม่สอน don’t/doesn’t",
           "examples": [
-            "Do you work on Monday?",
-            "Does she work?",
-            "She does not work on Friday"
+            "Do you work every day?",
+            "Does he work every day?",
+            "Does she cook every day?"
           ],
           "estimatedMinutes": [
             3,
@@ -3354,13 +3355,13 @@
           "titleTh": "วันของฉันแบบผสม",
           "type": "say_it",
           "beat": "Sho",
-          "learningTarget": "ใช้ I + base, He/She + verb-s, I don’t และ Do you หลัง Do/Does Every Day",
-          "activity": "ห้าโจทย์หลัง Her Day, His Day และ Do/Does Every Day",
+          "learningTarget": "ใช้ I + base, He/She + verb-s และ Do you หลัง Do/Does Every Day",
+          "activity": "ห้าโจทย์หลัง Her Day, His Day และ Do/Does Every Day โดยยังไม่ใช้ don’t/doesn’t",
           "examples": [
             "I study every day.",
-            "She goes home at five.",
-            "He watches TV every day.",
-            "I do not work on Friday.",
+            "He eats at seven.",
+            "She works.",
+            "Do you work every day?",
             "Do you wake up at seven?"
           ],
           "estimatedMinutes": [
@@ -3773,11 +3774,10 @@
           "type": "lesson",
           "beat": "Ki",
           "learningTarget": "แยกคำถามเกี่ยวกับคนกับสิ่งของ",
-          "activity": "reuse Who is this? จากfamily; สอน What is this? และคำตอบสั้น; model การรับ turn ด้วย And you?",
+          "activity": "reuse Who is this? ที่สอนในบทนี้; สอน What is this? และคำตอบสั้น; ไม่เพิ่ม And you?",
           "examples": [
-            "Who is she?",
-            "What is this?",
-            "And you?"
+            "Who is this?",
+            "What is this?"
           ],
           "estimatedMinutes": [
             3,
@@ -4455,8 +4455,8 @@
           "id": "v7_u16n06", "code": "16.6", "order": 6, "globalOrder": 142,
           "titleEn": "How Do You Go?", "titleTh": "เดินทางอย่างไร", "type": "lesson", "beat": "Sho",
           "learningTarget": "บอกและถามวิธีเดินทางด้วย go by",
-          "activity": "ใช้ go by เป็น functional chunk และทบทวน Do you/He-She goes",
-          "examples": ["I go by bus", "Do you go by taxi?", "She goes by train"],
+          "activity": "ใช้ go by เป็น functional chunk และทบทวน Do you โดยยังไม่สอน She goes by",
+          "examples": ["I go by bus", "Do you go by taxi?", "I go by train"],
           "estimatedMinutes": [3, 5], "difficultyAxes": [1, 1, 2, 2, 1],
           "contentRef": { "lessonId": "fnd_v7_how_do_you_go" }
         },
