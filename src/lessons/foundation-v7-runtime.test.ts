@@ -109,13 +109,85 @@ describe('Foundation V7 server-owned runtime', () => {
     assert.equal(h.reply.isLessonComplete, true);
     assert.match(h.reply.textEn, /Thank you/);
   });
-  it('practises Sorry before applying it to accidentally bumping into someone', () => {
+  it('practises Sorry before applying it to accidentally bumping into someone', async () => {
     const steps = V7_LEGACY_FLOWS.fnd_v7_please_and_thank_you;
-    assert.equal(steps[3].expectedSpeech, 'Sorry');
-    assert.equal(steps[4].expectedSpeech, 'Sorry');
+    assert.equal(steps[0].expectedSpeech, 'Water, please.');
+    assert.equal(steps[0].presentation!.options.length, 0);
+    assert.equal(steps[1].expectedSpeech, 'Thank you.');
+    assert.equal(steps[1].presentation!.options.length, 0);
+    assert.equal(steps[2].expectedSpeech, 'Yes, please.');
+    assert.equal(steps[2].presentation!.options.length, 0);
+    assert.deepEqual(steps[3].presentation!.options.map(o => o.label), ['Yes, please', 'Thank you']);
+    assert.equal(steps[3].expectedSpeech, 'Thank you.');
+    assert.equal(steps[4].expectedSpeech, 'Sorry.');
+    assert.equal(steps[4].presentation!.options.length, 0);
     assert.match(steps[4].presentation!.text, /เผลอชน/);
-    assert.equal(steps[6].expectedSpeech, 'Excuse me');
-    assert.equal(steps[6].presentation!.options.length, 0);
+    assert.equal(steps[5].expectedSpeech, 'Excuse me.');
+    assert.equal(steps[6].expectedSpeech, 'Excuse me.');
+    assert.deepEqual(steps[6].presentation!.options.map(o => o.label), ['Sorry', 'Excuse me']);
+    assert.equal(steps[7].expectedSpeech, 'Sorry.');
+    assert.match(steps[7].presentation!.text, /เหยียบเท้า/);
+
+    const h = harness('fnd_v7_please_and_thank_you');
+    await h.say('Water, please.');
+    assert.match(h.reply.textEn, /^ดีครับ /);
+    await h.say('Thank you.');
+    await h.say('Yes, please.');
+    await h.say('Yes, please.');
+    assert.equal(h.reply.v7Retry, true);
+    await h.say('Thank you.');
+    assert.match(h.reply.textEn, /^Thank you\. แปลว่า “ขอบคุณ”/);
+    await h.say('Sorry.');
+    await h.say('Excuse me.');
+    await h.say('Sorry.');
+    assert.equal(h.reply.v7Retry, true);
+    await h.say('Excuse me.');
+    assert.match(h.reply.textEn, /เรียกพนักงาน/);
+    await h.say('Sorry.');
+    assert.match(h.reply.textEn, /^Sorry\. แปลว่า “ขอโทษ”/);
+    assert.match(h.reply.textEn, /จบบทแล้ว/);
+    assert.equal(h.reply.isLessonComplete, true);
+  });
+  it('teaches Goodbye then See you, lets the learner choose, then adds tomorrow without a reuse turn', async () => {
+    const steps = V7_LEGACY_FLOWS.fnd_v7_goodbye_see_you;
+    assert.equal(steps[0].expectedSpeech, 'Goodbye.');
+    assert.equal(steps[0].presentation!.options.length, 0);
+    assert.equal(steps[1].expectedSpeech, 'See you.');
+    assert.equal(steps[1].presentation!.options.length, 0);
+    assert.equal(steps[2].presentation!.answerMode, 'any');
+    assert.deepEqual(steps[2].presentation!.options.map(o => o.label), ['Goodbye', 'See you']);
+    assert.equal(steps[3].expectedSpeech, 'See you tomorrow.');
+    assert.equal(steps[4].presentation!.stem, 'See you ...');
+    assert.equal(steps[4].expectedSpeech, 'See you tomorrow.');
+    assert.equal(steps.at(-1)!.kind, 'complete');
+
+    const seeYou = harness('fnd_v7_goodbye_see_you');
+    await seeYou.say('Goodbye.');
+    assert.match(seeYou.reply.textEn, /^ดีครับ /);
+    assert.doesNotMatch(seeYou.reply.textEn, /Goodbye\. แปลว่า/);
+    assert.match(seeYou.reply.textEn, /แล้วเจอกัน/);
+    await seeYou.say('See you.');
+    assert.match(seeYou.reply.textEn, /^ดีครับ /);
+    await seeYou.say('See you.');
+    assert.match(seeYou.reply.textEn, /^See you\. แปลว่า “แล้วเจอกัน”/);
+    assert.match(seeYou.reply.textEn, /tomorrow/);
+    await seeYou.say('See you tomorrow.');
+    assert.match(seeYou.reply.textEn, /^ดีครับ /);
+    assert.equal(seeYou.reply.guidedSpeaking?.stem, 'See you ...');
+    await seeYou.say('tomorrow');
+    assert.equal(seeYou.reply.v7Retry, true);
+    assert.match(seeYou.reply.textEn, /ประโยคเต็ม/);
+    await seeYou.say('See you tomorrow.');
+    assert.match(seeYou.reply.textEn, /แล้วเจอกันพรุ่งนี้/);
+    assert.match(seeYou.reply.textEn, /ครูตอบว่า See you tomorrow/);
+    assert.match(seeYou.reply.textEn, /จบบทครับ/);
+    assert.equal(seeYou.reply.isLessonComplete, true);
+
+    const goodbye = harness('fnd_v7_goodbye_see_you');
+    while (goodbye.reply.v7Step! < 3) await goodbye.say(goodbye.reply.expectedSpeech!);
+    await goodbye.say('Goodbye.');
+    assert.match(goodbye.reply.textEn, /^Goodbye\. แปลว่า “ลาก่อน”/);
+    assert.doesNotMatch(goodbye.reply.textEn, /พูดคำเดิมซ้ำ|ไม่ดูตัวช่วย/);
   });
   for (const [id, steps] of Object.entries(V7_LEGACY_FLOWS)) {
     steps.forEach((step, index) => {

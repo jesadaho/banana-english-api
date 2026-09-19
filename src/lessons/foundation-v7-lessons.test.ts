@@ -208,7 +208,6 @@ describe('Foundation V7 lessons', () => {
       assert.ok(steps.filter(s => s.expectsUserSpeech).length >= spec.blocks.length + 2, id);
     }
     assert.ok(buildFoundationV7Steps('fnd_v7_letter_names_a_m').some(s => s.kind === 'model_group'));
-    assert.ok(buildFoundationV7Steps('fnd_v7_goodbye_see_you').some(s => /Choice reuse/.test(s.instruction)));
   });
 
   it('ships real guided board payloads and accepts non-first personal options in its tutor contract', () => {
@@ -227,17 +226,15 @@ describe('Foundation V7 lessons', () => {
         }
       }
     }
-    const reuse = buildFoundationV7Steps('fnd_v7_goodbye_see_you').find(s => s.kind === 'recall')!;
-    assert.match(reuse.instruction, /THEIR selected speak value/);
   });
 
   it('Please & Thank You practises Sorry and Excuse me separately', () => {
     const spec = lessonSpecs[PLEASE_THANKS];
     const max = getLesson(PLEASE_THANKS)!.progressMax!;
     assert.equal(max, buildFoundationV7Steps(PLEASE_THANKS).length);
-    assert.equal(max, 8);
+    assert.equal(max, 9);
     assert.deepEqual(spec.blocks.map((block) => block.repeat), [
-      'Please',
+      'Water, please',
       'Sorry',
       'Excuse me',
     ]);

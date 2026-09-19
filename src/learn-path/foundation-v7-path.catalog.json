@@ -184,9 +184,10 @@
           "type": "lesson",
           "beat": "Ki",
           "learningTarget": "ใช้ please / thank you / sorry / excuse me ให้ตรงหน้าที่",
-          "activity": "ฟังสถานการณ์สั้น สอนวลีทีละหน้าที่ แล้วลองพูดตาม",
+          "activity": "สอนขอของ รับข้อเสนอ ขอบคุณ แล้วแยก Sorry กับ Excuse me ตามสถานการณ์",
           "examples": [
-            "Please",
+            "Water, please",
+            "Yes, please",
             "Thank you",
             "Sorry",
             "Excuse me"
@@ -246,7 +247,7 @@
           "type": "lesson",
           "beat": "Ten",
           "learningTarget": "ใช้ Goodbye, See you และ See you tomorrow เพื่อจบบทสนทนา",
-          "activity": "สอนคำลาสั้นก่อน แล้วขยายเป็น See you tomorrow โดยไม่เพิ่มวลีบอกลาอื่น",
+          "activity": "สอน Goodbye แล้ว See you แยกกัน เลือกใช้คำลาสั้น แล้วค่อยเติม tomorrow โดยไม่พูดซ้ำคำที่เพิ่งเลือก",
           "examples": [
             "Goodbye",
             "See you",

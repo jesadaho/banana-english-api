@@ -3,19 +3,20 @@
     "titleEn": "Please & Thank You",
     "titleTh": "ใช้ please / thank you / sorry / excuse me ให้ตรงหน้าที่",
     "goalTh": "ใช้ please / thank you / sorry / excuse me ให้ตรงหน้าที่",
-    "scope": "ฟังสถานการณ์สั้น สอนวลีทีละหน้าที่ แล้วลองพูดตาม",
+    "scope": "สอน Water, please สำหรับคำขอ Thank you เมื่อได้รับของ Yes, please เมื่อรับข้อเสนอ Sorry เมื่อทำผิด และ Excuse me เมื่อเรียกความสนใจ; ไม่เพิ่ม You're welcome",
     "estimatedMinutes": [
       3,
       5
     ],
     "blocks": [
       {
-        "tipTh": "please ใช้กับคำขอ และ thank you ใช้ขอบคุณ",
+        "tipTh": "ขอของอย่างสุภาพด้วย please และขอบคุณเมื่อได้รับของ",
         "models": [
-          "Please",
-          "Thank you"
+          "Water, please",
+          "Thank you",
+          "Yes, please"
         ],
-        "repeat": "Please"
+        "repeat": "Water, please"
       },
       {
         "tipTh": "sorry ใช้ขอโทษเมื่อทำผิดหรือรบกวนอีกฝ่าย",
@@ -25,7 +26,7 @@
         "repeat": "Sorry"
       },
       {
-        "tipTh": "excuse me ใช้เรียกความสนใจก่อนเริ่มพูด",
+        "tipTh": "excuse me ใช้เรียกความสนใจก่อนเริ่มพูด ไม่ใช่คำขอโทษเมื่อทำผิด",
         "models": [
           "Excuse me"
         ],
@@ -79,33 +80,39 @@
     "titleEn": "Goodbye & See You",
     "titleTh": "ใช้คำลาให้เหมาะกับตอนจบบทสนทนา",
     "goalTh": "ใช้ Goodbye, See you และ See you tomorrow เพื่อจบบทสนทนา",
-    "scope": "สอนคำลาสั้นเพียงสามรูป ไม่เพิ่ม See you later, Take care หรือ Have a nice day",
+    "scope": "สอน Goodbye และ See you แยกก่อน แล้วค่อยเติม tomorrow; ไม่เพิ่ม See you later, Take care หรือ Have a nice day; ไม่ให้พูดคำลาที่เลือกซ้ำทันที",
     "estimatedMinutes": [
       3,
       5
     ],
     "blocks": [
       {
-        "tipTh": "Goodbye ใช้บอกลาเมื่อบทสนทนาจบ",
+        "tipTh": "Goodbye แปลว่าลาก่อน ใช้พูดเมื่อเราจะแยกกัน",
         "models": [
           "Goodbye"
         ],
         "repeat": "Goodbye"
       },
       {
-        "tipTh": "See you ฟังเป็นกันเอง และเติม tomorrow เมื่อนัดว่าจะเจอกันพรุ่งนี้",
+        "tipTh": "See you แปลว่าแล้วเจอกัน ใช้บอกลาแบบเป็นกันเองโดยยังไม่ต้องระบุเวลา",
         "models": [
-          "See you",
+          "See you"
+        ],
+        "repeat": "See you"
+      },
+      {
+        "tipTh": "เติม tomorrow เมื่อรู้ว่าจะเจอกันพรุ่งนี้",
+        "models": [
           "See you tomorrow"
         ],
         "repeat": "See you tomorrow"
       }
     ],
     "recall": {
-      "promptTh": "บอกเพื่อนว่าแล้วเจอกันพรุ่งนี้",
+      "promptTh": "บอกครูว่าแล้วเจอกันพรุ่งนี้",
       "answerEn": "See you tomorrow"
     },
-    "completionTh": "เยี่ยมครับ ตอนนี้คุณเลือกใช้ Goodbye, See you และ See you tomorrow เพื่อจบบทสนทนาได้แล้ว"
+    "completionTh": "จบบทครับ วันนี้เราได้ฝึกบอกลาและบอกว่าจะเจอกันพรุ่งนี้แล้ว"
   },
   "fnd_v7_i_am_you_are": {
     "titleEn": "I Am / You Are",

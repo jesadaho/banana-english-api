@@ -37,14 +37,14 @@ const any = (
  * Labels stay short; `speak` is the complete utterance sent to speech practice.
  */
 export const FOUNDATION_V7_CHOICE_BEATS: Record<string, FoundationV7ChoiceBeat> = {
-  fnd_v7_please_and_thank_you: single(1, 'พนักงานยื่นน้ำให้คุณ คุณควรพูดอะไร', '', 'Thank you', 'มีคนยื่นของให้เรา ใช้คำขอบคุณครับ', [
-    option('🙏', 'please', 'Please'), option('💝', 'thank you', 'Thank you'),
+  fnd_v7_please_and_thank_you: single(3, 'คราวนี้คุณเผลอเหยียบเท้าเพื่อนครับ จะพูดอะไรกับเขา?', '', 'Sorry.', 'เผลอเหยียบเท้าเพื่อนแล้วใช้ Sorry. ครับ', [
+    option('😔', 'Sorry', 'Sorry.'), option('💝', 'Thank you', 'Thank you.'),
   ]),
   fnd_v7_say_that_again: single(2, 'อีกฝ่ายพูดเร็วเกินไป คุณควรขออย่างไร', 'Please...', 'Please speak slowly', 'เลือกคำที่ขอให้พูดช้าลงครับ', [
     option('🔁', 'say again', 'Please say that again'), option('🐢', 'speak slowly', 'Please speak slowly'),
   ]),
-  fnd_v7_goodbye_see_you: any(2, 'เลือกคำลาหนึ่งแบบเพื่อจบบทสนทนา', '', [
-    option('👋', 'goodbye', 'Goodbye'), option('🙂', 'see you', 'See you'), option('🗓️', 'tomorrow', 'See you tomorrow'),
+  fnd_v7_goodbye_see_you: any(2, 'ลองสมมติว่าคุณกำลังจะกลับบ้านครับ เลือกคำลาที่อยากพูดกับครูได้เลย', '', [
+    option('👋', 'Goodbye', 'Goodbye.'), option('🙂', 'See you', 'See you.'),
   ]),
   fnd_v7_i_am_you_are: any(2, 'ลองเลือกบอกความรู้สึกของตัวเองหนึ่งอย่าง จะตอบตามจริงหรือสมมติก็ได้ครับ', 'I am ...', [
     option('😊', 'happy', 'I am happy'), option('😴', 'tired', 'I am tired'), option('🍽️', 'hungry', 'I am hungry'), option('✅', 'ready', 'I am ready'),
