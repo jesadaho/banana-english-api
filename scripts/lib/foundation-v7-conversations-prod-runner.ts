@@ -42,7 +42,12 @@ const HAPPY_OVERRIDES: Record<string, string[]> = {
   ],
   foundation_v7_u02n04: ['Yes', 'Thank you', 'See you tomorrow'],
   foundation_v7_u03n06: ['Yes, I am hungry', 'Yes, I am ready', "Let's go"],
-  foundation_v7_u04n06: ['This is my sister', 'She is a doctor', 'He is your brother'],
+  foundation_v7_u04n06: [
+    'This is my sister',
+    'She is a doctor',
+    'This is my father',
+    'He is a teacher',
+  ],
   foundation_v7_u06n08: ['That bag, please', 'The blue bag', 'Thank you'],
   foundation_v7_u07n07: [
     'Yes, I have a phone',

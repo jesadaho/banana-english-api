@@ -356,6 +356,39 @@
       "answerEn": "It is blue"
     }
   },
+  "fnd_v7_describe_a_thing": {
+    "titleEn": "Describe a Thing",
+    "titleTh": "วางสีหรือขนาดหน้าคำนาม",
+    "goalTh": "วางสีหรือขนาดหน้าคำนามเพื่อบรรยายสิ่งของ",
+    "scope": "สอน A + สี/ขนาด + bag/book; ยังไม่รวมเป็น A small blue bag และไม่สอนคำว่า adjective",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "สีอยู่หน้าชื่อสิ่งของ เช่น A blue bag",
+        "models": [
+          "A blue bag",
+          "A red bag",
+          "A blue book"
+        ],
+        "repeat": "A blue bag"
+      },
+      {
+        "tipTh": "ขนาดก็อยู่หน้าชื่อสิ่งของ เช่น A small bag",
+        "models": [
+          "A small bag",
+          "A big bag"
+        ],
+        "repeat": "A small bag"
+      }
+    ],
+    "recall": {
+      "promptTh": "กระเป๋าสีน้ำเงินหนึ่งใบ",
+      "answerEn": "A blue bag"
+    }
+  },
   "fnd_v7_these_and_those": {
     "titleEn": "These & Those",
     "titleTh": "ใช้ these/those กับของหลายชิ้น",
@@ -386,6 +419,39 @@
     "recall": {
       "promptTh": "กระเป๋าสีน้ำเงินหลายใบอยู่ไกลตัว บอกว่าเป็นกระเป๋าสีน้ำเงิน",
       "answerEn": "Those are blue bags"
+    }
+  },
+  "fnd_v7_and_and_or": {
+    "titleEn": "And & Or",
+    "titleTh": "ใช้ and เชื่อมสองอย่าง และ or ถามให้เลือก",
+    "goalTh": "ใช้ and เชื่อมสองอย่าง และใช้ or ถามให้เลือกในสถานการณ์นี้",
+    "scope": "สอน and สำหรับทั้งสองอย่าง และ or สำหรับคำถามให้เลือก; ใช้ red, blue, green, book, bag ที่เรียนแล้ว ไม่เพิ่ม but/because",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "and ใช้พูดถึงทั้งสองอย่าง",
+        "models": [
+          "Red and blue",
+          "Red and green",
+          "A book and a bag"
+        ],
+        "repeat": "Red and blue"
+      },
+      {
+        "tipTh": "or ใช้ถามให้เลือกอย่างใดอย่างหนึ่ง",
+        "models": [
+          "Red or blue",
+          "Red or green"
+        ],
+        "repeat": "Red or blue"
+      }
+    ],
+    "recall": {
+      "promptTh": "ต้องการทั้งหนังสือและกระเป๋า",
+      "answerEn": "A book and a bag"
     }
   },
   "fnd_v7_my_and_your": {

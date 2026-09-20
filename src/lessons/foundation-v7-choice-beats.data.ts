@@ -67,8 +67,14 @@ export const FOUNDATION_V7_CHOICE_BEATS: Record<string, FoundationV7ChoiceBeat> 
   fnd_v7_colours_and_size: any(2, 'เลือกสีให้กระเป๋าของคุณหนึ่งสี', 'It is ...', [
     option('🔴', 'red', 'It is red.'), option('🔵', 'blue', 'It is blue.'), option('🟢', 'green', 'It is green.'),
   ]),
+  fnd_v7_describe_a_thing: any(2, 'สมมติว่าคุณกำลังเลือกกระเป๋าครับ อยากได้ใบใหญ่หรือใบเล็ก เลือกแล้วพูดได้เลย', 'A ... bag.', [
+    option('🐘', 'big', 'A big bag.'), option('🐭', 'small', 'A small bag.'),
+  ]),
   fnd_v7_these_and_those: single(2, 'กระเป๋าหลายใบอยู่ไกลอีกฝั่งห้องครับ', '... are bags.', 'Those are bags.', 'ของหลายชิ้นที่อยู่ไกลใช้ Those ครับ', [
     option('👇', 'These', 'These are bags.'), option('👉', 'Those', 'Those are bags.'),
+  ]),
+  fnd_v7_and_and_or: any(2, 'คราวนี้ครูถาม คุณเลือกสีที่ชอบได้เลยครับ Red or blue?', '', [
+    option('🔴', 'red', 'Red.'), option('🔵', 'blue', 'Blue.'),
   ]),
   fnd_v7_my_and_your: any(2, 'เลือกของหนึ่งชิ้นแล้วบอกว่าเป็นของคุณเองครับ', 'This is my ...', [
     option('📱', 'phone', 'This is my phone.'), option('🎒', 'bag', 'This is my bag.'), option('🔑', 'key', 'This is my key.'),

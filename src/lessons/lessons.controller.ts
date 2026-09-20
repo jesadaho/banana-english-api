@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, NotFoundException, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { AnonymousUserGuard } from '../users/anonymous-user.guard';
 import { CreateLessonRatingDto } from './dto/lesson-rating.dto';
@@ -22,6 +22,21 @@ export class LessonsController {
     @Param('lessonId') lessonId: string,
   ) {
     return this.lessonsService.getRecentLearners(lessonId, req.user.id);
+  }
+
+  @Get(':lessonId')
+  async getLessonQuote(
+    @Req() req: AuthedRequest,
+    @Param('lessonId') lessonId: string,
+  ) {
+    const quote = await this.lessonsService.getLessonQuote(
+      req.user.id,
+      lessonId,
+    );
+    if (!quote) {
+      throw new NotFoundException('Lesson not found');
+    }
+    return quote;
   }
 
   @Post('ratings')

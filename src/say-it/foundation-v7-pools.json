@@ -1005,6 +1005,76 @@
       ]
     }
   ],
+  "fnd_v7_u06n15": [
+    {
+      "id": "fnd_v7_u06n15_q1",
+      "promptTh": "กระเป๋าสีน้ำเงินหนึ่งใบ",
+      "answerEn": "A blue bag",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u06n15_q2",
+      "promptTh": "หนังสือสีแดงหนึ่งเล่ม",
+      "answerEn": "A red book",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u06n15_q3",
+      "promptTh": "กระเป๋าใบเล็กหนึ่งใบ",
+      "answerEn": "A small bag",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u06n15_q4",
+      "promptTh": "หนังสือเล่มใหญ่หนึ่งเล่ม",
+      "answerEn": "A big book",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u06n15_q5",
+      "promptTh": "กระเป๋าสีเขียวหนึ่งใบ",
+      "answerEn": "A green bag",
+      "acceptedAnswers": []
+    }
+  ],
+  "fnd_v7_u06n13": [
+    {
+      "id": "fnd_v7_u06n13_q1",
+      "promptTh": "สีแดงและสีน้ำเงิน",
+      "answerEn": "Red and blue",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u06n13_q2",
+      "promptTh": "สีแดงหรือสีเขียว?",
+      "answerEn": "Red or green",
+      "acceptedAnswers": [
+        "Red or green?"
+      ]
+    },
+    {
+      "id": "fnd_v7_u06n13_q3",
+      "promptTh": "หนังสือหนึ่งเล่มและกระเป๋าหนึ่งใบ",
+      "answerEn": "A book and a bag",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u06n13_q4",
+      "promptTh": "สีน้ำเงินหรือสีเขียว?",
+      "answerEn": "Blue or green",
+      "acceptedAnswers": [
+        "Blue or green?"
+      ]
+    },
+    {
+      "id": "fnd_v7_u06n13_q5",
+      "promptTh": "หนังสือหนึ่งเล่มหรือกระเป๋าหนึ่งใบ?",
+      "answerEn": "A book or a bag",
+      "acceptedAnswers": [
+        "A book or a bag?"
+      ]
+    }
+  ],
   "fnd_v7_u09n13": [
     {
       "id": "fnd_v7_u09n13_q1",

@@ -275,6 +275,15 @@
       ]
     },
     {
+      "id": "v7_u06n16",
+      "title": "Pick Two",
+      "brief": "เลือกของสองอย่างด้วยสีหรือขนาดที่เรียนแล้ว; ยังไม่บังคับประกอบ A small blue bag",
+      "examples": [
+        "A blue bag and a red book",
+        "A big bag or a small bag"
+      ]
+    },
+    {
       "id": "v7_u07n04",
       "title": "Found It!",
       "brief": "ภาพมีป้ายเจ้าของและคำอธิบาย role; ใช้ This is her bag ไม่ถาม Whose ก่อนสอน",

@@ -166,6 +166,23 @@ export const V7_LEGACY_FLOWS: Record<string, V7TeachingStep[]> = {
     ], undefined, true, 'เลือกสีแล้วพูดว่า It is… ครับ'),
     finish('จบบทครับ เราใช้ It is… บอกสีและขนาดของสิ่งของแล้ว'),
   ],
+  fnd_v7_describe_a_thing: [
+    task('วันนี้เราจะนำสีมาบอกลักษณะสิ่งของครับ A bag. คือ “กระเป๋าหนึ่งใบ” ถ้าเป็นกระเป๋าสีน้ำเงิน วาง blue ไว้หน้า bag เป็น A blue bag. แปลว่า “กระเป๋าสีน้ำเงินหนึ่งใบ” ลองพูดตามครับ', 'A blue bag.', [], '', false, SHORT),
+    choiceTask('คราวนี้เป็นกระเป๋าสีแดงครับ 🔴 ลองเลือกสีแล้วพูดทั้งวลี', 'A red bag.', 'A ... bag.', [
+      { emoji: '🔴', label: 'red', speak: 'A red bag.' },
+      { emoji: '🔵', label: 'blue', speak: 'A blue bag.' },
+    ], recap('A red bag.', 'กระเป๋าสีแดงหนึ่งใบ'), false, 'สีแดงใช้ red แล้วพูดว่า A red bag. ครับ'),
+    choiceTask('คราวนี้เป็นหนังสือสีน้ำเงินครับ 📘 สีอยู่หน้าชื่อสิ่งของเหมือนเดิม ลองเลือกคำท้ายแล้วพูดครับ', 'A blue book.', 'A blue ...', [
+      { emoji: '📘', label: 'book', speak: 'A blue book.' },
+      { emoji: '🎒', label: 'bag', speak: 'A blue bag.' },
+    ], recap('A blue book.', 'หนังสือสีน้ำเงินหนึ่งเล่ม'), false, 'หนังสือใช้ book แล้วพูดว่า A blue book. ครับ'),
+    task('คำบอกขนาดก็วางหน้าชื่อสิ่งของได้ครับ A small bag. แปลว่า “กระเป๋าใบเล็กหนึ่งใบ” ลองพูดตามครับ', 'A small bag.', [], '', false, SHORT),
+    choiceTask('สมมติว่าคุณกำลังเลือกกระเป๋าครับ อยากได้ใบใหญ่หรือใบเล็ก เลือกแล้วพูดได้เลย', 'A big bag.', 'A ... bag.', [
+      { emoji: '🐘', label: 'big', speak: 'A big bag.', meaningTh: 'กระเป๋าใบใหญ่หนึ่งใบ' },
+      { emoji: '🐭', label: 'small', speak: 'A small bag.', meaningTh: 'กระเป๋าใบเล็กหนึ่งใบ' },
+    ], undefined, true, 'เลือกขนาดแล้วพูดว่า A big bag. หรือ A small bag. ครับ'),
+    finish('จบบทแล้ว วันนี้เราฝึกวางสีหรือขนาดไว้หน้าชื่อสิ่งของครับ'),
+  ],
   fnd_v7_these_and_those: [
     task('ครั้งก่อนเราชี้ของหนึ่งชิ้น วันนี้ถ้ามีหลายชิ้น คำที่ใช้ก็เปลี่ยนครับ หนังสือหลายเล่มอยู่ใกล้มือคุณ 📚 เปลี่ยนจาก this is เป็น these are “These are books.” แปลว่าเหล่านี้คือหนังสือ ลองพูดตามครับ', 'These are books.', [], '', false, SHORT),
     task('หนังสือหลายเล่มอยู่ไกลอีกฝั่งห้องครับ เมื่อของไกลมีหลายชิ้น เปลี่ยนจาก that is เป็น those are “Those are books.” แปลว่าเหล่านั้นคือหนังสือ ลองพูดตามครับ', 'Those are books.', [], '', false, SHORT),
@@ -179,6 +196,27 @@ export const V7_LEGACY_FLOWS: Record<string, V7TeachingStep[]> = {
     ], recap('Those are bags.', 'เหล่านั้นคือกระเป๋า'), false, 'ของหลายชิ้นที่อยู่ไกลใช้ Those แล้วพูดว่า Those are bags. ครับ'),
     task('ย้ายกระเป๋าหลายใบมาไว้ใกล้คุณแล้วครับ ลองบอกเอง', 'These are bags.', [], '', false, recap('These are bags.', 'เหล่านี้คือกระเป๋า')),
     finish('จบบทครับ ของหลายชิ้นใกล้ใช้ these ส่วนของหลายชิ้นไกลใช้ those'),
+  ],
+  fnd_v7_and_and_or: [
+    task('วันนี้เราจะฝึกพูดถึงสองอย่าง และถามให้เลือกครับ ถ้าพูดถึงทั้งสีแดงและสีน้ำเงิน ใช้ and แปลว่า “และ” Red and blue. แปลว่า “สีแดงและสีน้ำเงิน” 🔴🔵 ลองพูดตามครับ', 'Red and blue.', [], '', false, SHORT),
+    choiceTask('คราวนี้คุณต้องการทั้งสีแดงและสีเขียวครับ 🔴🟢 ลองเปลี่ยนสีท้ายแล้วพูดทั้งวลีครับ', 'Red and green.', 'Red and ...', [
+      { emoji: '🔵', label: 'blue', speak: 'Red and blue.' },
+      { emoji: '🟢', label: 'green', speak: 'Red and green.' },
+    ], recap('Red and green.', 'สีแดงและสีเขียว'), false, 'สีเขียวใช้ green แล้วพูดว่า Red and green. ครับ'),
+    task('ถ้าจะถามเพื่อนว่าเอาสีแดงหรือสีน้ำเงิน ใช้ or แปลว่า “หรือ” ครับ Red or blue? แปลว่า “สีแดงหรือสีน้ำเงิน?” คำถามนี้ให้เพื่อนเลือกหนึ่งสี ลองพูดตามครับ', 'Red or blue?', [], '', false, SHORT),
+    choiceTask('คราวนี้คุณอยากถามเพื่อนให้เลือกระหว่างสีแดงกับสีเขียวครับ ต้องใช้คำเชื่อมไหน?', 'Red or green?', 'Red ... green?', [
+      { emoji: '➕', label: 'and', speak: 'Red and green?' },
+      { emoji: '❓', label: 'or', speak: 'Red or green?' },
+    ], recap('Red or green?', 'สีแดงหรือสีเขียว?'), false, 'ถามให้เลือกใช้ or แล้วพูดว่า Red or green? ครับ'),
+    choiceTask('ใช้กับสิ่งของได้ด้วยครับ A book and a bag. แปลว่า “หนังสือหนึ่งเล่มและกระเป๋าหนึ่งใบ” ถ้าถามให้เลือก ใช้ A book or a bag? แปลว่า “หนังสือหนึ่งเล่มหรือกระเป๋าหนึ่งใบ?” รอบนี้คุณต้องการทั้งสองอย่างครับ เลือกคำเชื่อมแล้วพูด', 'A book and a bag.', 'A book ... a bag.', [
+      { emoji: '➕', label: 'and', speak: 'A book and a bag.' },
+      { emoji: '❓', label: 'or', speak: 'A book or a bag.' },
+    ], 'ถูกต้องครับ ใช้ and เพราะต้องการทั้งสองอย่าง ', false, 'ต้องการทั้งสองอย่างใช้ and แล้วพูดว่า A book and a bag. ครับ'),
+    choiceTask('คราวนี้ครูถาม คุณเลือกสีที่ชอบได้เลยครับ Red or blue?', 'Red.', '', [
+      { emoji: '🔴', label: 'red', speak: 'Red.', recapText: 'คุณเลือกสีแดงครับ 🔴 ' },
+      { emoji: '🔵', label: 'blue', speak: 'Blue.', recapText: 'คุณเลือกสีน้ำเงินครับ 🔵 ' },
+    ], undefined, true, 'เลือกสีแล้วพูดว่า Red. หรือ Blue. ครับ'),
+    finish('จบบทแล้ว วันนี้ฝึกใช้ and เชื่อมทั้งสองอย่าง และ or ถามให้เลือกแล้วครับ'),
   ],
   fnd_v7_my_and_your: [
     task('วันนี้เราจะบอกว่าอะไรเป็นของใครครับ 📱 คำที่ใช้ขึ้นอยู่กับว่าใครเป็นคนพูด ถ้าคุณเป็นเจ้าของโทรศัพท์ ใช้ my แปลว่าของฉัน “This is my phone.” แปลว่านี่คือโทรศัพท์ของฉัน ลองพูดตามครับ', 'This is my phone.', [], '', false, SHORT),

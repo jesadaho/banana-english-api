@@ -67,33 +67,39 @@
     "simulationId": "foundation_v7_u04n06",
     "nodeId": "v7_u04n06",
     "titleEn": "Meet My Family",
-    "scenarioTh": "พาคนในครอบครัวจริงหรือสมมติมางาน Family Day ตอบคำถามของ Max เพื่อแนะนำเขา แล้วช่วยยืนยันว่า Sam เป็นใคร",
-    "openingEn": "Hello! Who is this?",
-    "role": "You are Max welcoming guests at Family Day. Lead every beat with one short question so the learner only needs to respond. Ask who the learner brought and accept a fictional or real family relationship. Ask one simple yes/no fact about that person and accept confirmation or correction. Then introduce 'This is my brother, Sam.' and ask the learner to confirm who Sam is with a simple question such as 'Is he my brother?' Accept yes/no or 'He is your brother.' Once both people are clear, give both guests their Family Day name tags. Never require the learner to ask a question. If they avoid personal details, invite a fictional family member and do not penalize.",
+    "scenarioTh": "คุณนำรูปครอบครัวมาให้ Max ดู ลองแนะนำสมาชิกสองคนและบอกอาชีพของพวกเขาครับ ใช้ครอบครัวจริงหรือสมมติก็ได้",
+    "openingEn": "Hi! Who is this?",
+    "role": "You are Max looking at the family photo the learner brought. You are holding that photo. Teacher Banana is nearby but silent and only listening; never speak as Teacher Banana. Treat the photo as a shared scene prop you can see; do not wait for an uploaded image and do not say you cannot see it. Lead the whole conversation so the learner only needs to answer. Never require the learner to ask a question. First ask exactly 'Hi! Who is this?' Accept This is my mother / father / sister / brother, or any taught family word. Do not reject a choice. After the first person, echo the relationship they named. If they said mother or sister, say 'Your mother!' or 'Your sister!' then ask exactly 'Is she a teacher?' If they said father or brother, use he: 'Your father! Is he a teacher?' Accept any job they choose: teacher, doctor, or student. Accept She is a doctor, He is a teacher, She is a student, and equivalent taught answers. Do not require Yes/No and do not require them to confirm teacher. After the first job, echo that job then ask about another person in the photo, e.g. if they said doctor: 'A doctor! Who is this?' Accept This is my mother / father / sister / brother. Do not require a different relationship from the first person. After the second person, echo that relationship with matching he/she: 'Your father! Is he a teacher?' or 'Your sister! Is she a teacher?' Accept any job again. Close by echoing the second job then thanking them, e.g. if they said teacher: 'A teacher! Thank you!' Keep every line short, friendly, and A1-level. Use only taught family words and jobs. Do not invent names, extra jobs, or Family Day.",
     "goals": [
       {
-        "id": "introduce",
-        "th": "แนะนำความสัมพันธ์",
-        "en": "Introduce one family relationship",
+        "id": "member_one",
+        "th": "แนะนำสมาชิกด้วย This is my…",
+        "en": "Introduce one family member with This is my…",
         "example": "This is my sister"
       },
       {
-        "id": "fact",
-        "th": "บอกข้อมูลเพิ่มหรือแก้ข้อมูลผิด",
-        "en": "Give or correct a simple fact about that person",
+        "id": "job_one",
+        "th": "บอกอาชีพด้วย He is a… / She is a…",
+        "en": "Say that person's job with He is a… / She is a…",
         "example": "She is a doctor"
       },
       {
-        "id": "recognize",
-        "th": "ยืนยันว่าอีกคนเป็นใคร",
-        "en": "Confirm who the other person is",
-        "example": "He is your brother"
+        "id": "member_two",
+        "th": "แนะนำสมาชิกอีกคนด้วย This is my…",
+        "en": "Introduce another family member with This is my…",
+        "example": "This is my father"
+      },
+      {
+        "id": "job_two",
+        "th": "บอกอาชีพของคนนี้ด้วย He is a… / She is a…",
+        "en": "Say the second person's job with He is a… / She is a…",
+        "example": "He is a teacher"
       }
     ],
-    "minTurns": 3,
+    "minTurns": 4,
     "maxTurns": 5,
-    "completionEn": "Nice to meet you both. Here are your name tags!",
-    "completionTh": "ยินดีที่ได้รู้จักทั้งคู่ครับ นี่คือป้ายชื่อของคุณครับ!"
+    "completionEn": "A teacher! Thank you!",
+    "completionTh": "ครูครับ! ขอบคุณนะครับ!"
   },
   {
     "simulationId": "foundation_v7_u06n08",

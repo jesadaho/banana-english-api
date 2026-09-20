@@ -10,6 +10,8 @@ export const FOUNDATION_V7_LESSON_ID_ALIASES: Record<string, string> = {
   'fnd_v7_u06n01': 'fnd_v7_this_is_that_is',
   'fnd_v7_u06n03': 'fnd_v7_colours_and_size',
   'fnd_v7_u06n05': 'fnd_v7_these_and_those',
+  'fnd_v7_u06n12': 'fnd_v7_and_and_or',
+  'fnd_v7_u06n14': 'fnd_v7_describe_a_thing',
   'fnd_v7_u07n01': 'fnd_v7_my_and_your',
   'fnd_v7_u07n03': 'fnd_v7_his_her_our_their',
   'fnd_v7_u07n05': 'fnd_v7_have_and_has',
@@ -46,4 +48,12 @@ export function foundationV7LessonLegacyIds(lessonId: string): string[] {
   return Object.entries(FOUNDATION_V7_LESSON_ID_ALIASES)
     .filter(([, canonical]) => canonical === lessonId)
     .map(([legacy]) => legacy);
+}
+
+/** Canonical + legacy IDs that all count as the same completed lesson. */
+export function lessonIdsMatchingCompletion(lessonId: string): string[] {
+  const canonical = canonicalFoundationV7LessonId(lessonId);
+  return [
+    ...new Set([lessonId, canonical, ...foundationV7LessonLegacyIds(canonical)]),
+  ];
 }

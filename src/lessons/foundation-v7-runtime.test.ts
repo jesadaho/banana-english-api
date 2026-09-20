@@ -148,6 +148,86 @@ describe('Foundation V7 server-owned runtime', () => {
     assert.match(h.reply.textEn, /จบบทแล้ว/);
     assert.equal(h.reply.isLessonComplete, true);
   });
+  it('puts colour or size before the noun, then lets the learner pick a bag size', async () => {
+    const steps = V7_LEGACY_FLOWS.fnd_v7_describe_a_thing;
+    assert.equal(steps[0].expectedSpeech, 'A blue bag.');
+    assert.equal(steps[0].presentation!.options.length, 0);
+    assert.deepEqual(steps[1].presentation!.options.map(o => o.label), ['red', 'blue']);
+    assert.equal(steps[1].expectedSpeech, 'A red bag.');
+    assert.deepEqual(steps[2].presentation!.options.map(o => o.label), ['book', 'bag']);
+    assert.equal(steps[2].expectedSpeech, 'A blue book.');
+    assert.equal(steps[3].expectedSpeech, 'A small bag.');
+    assert.equal(steps[4].presentation!.answerMode, 'any');
+    assert.deepEqual(steps[4].presentation!.options.map(o => o.label), ['big', 'small']);
+
+    const big = harness('fnd_v7_describe_a_thing');
+    await big.say('A blue bag.');
+    assert.match(big.reply.textEn, /^ดีครับ /);
+    await big.say('A blue bag.');
+    assert.equal(big.reply.v7Retry, true);
+    await big.say('A red bag.');
+    assert.match(big.reply.textEn, /^A red bag\. แปลว่า “กระเป๋าสีแดงหนึ่งใบ”/);
+    await big.say('A blue bag.');
+    assert.equal(big.reply.v7Retry, true);
+    await big.say('A blue book.');
+    assert.match(big.reply.textEn, /^A blue book\. แปลว่า “หนังสือสีน้ำเงินหนึ่งเล่ม”/);
+    await big.say('A small bag.');
+    assert.match(big.reply.textEn, /^ดีครับ /);
+    await big.say('A big bag.');
+    assert.match(big.reply.textEn, /^A big bag\. แปลว่า “กระเป๋าใบใหญ่หนึ่งใบ”/);
+    assert.match(big.reply.textEn, /จบบทแล้ว/);
+    assert.equal(big.reply.isLessonComplete, true);
+
+    const small = harness('fnd_v7_describe_a_thing');
+    while (small.reply.v7Step! < 5) await small.say(small.reply.expectedSpeech!);
+    await small.say('A small bag.');
+    assert.match(small.reply.textEn, /^A small bag\. แปลว่า “กระเป๋าใบเล็กหนึ่งใบ”/);
+    assert.match(small.reply.textEn, /จบบทแล้ว/);
+    assert.equal(small.reply.isLessonComplete, true);
+  });
+  it('teaches and then or, then lets the learner pick a colour', async () => {
+    const steps = V7_LEGACY_FLOWS.fnd_v7_and_and_or;
+    assert.equal(steps[0].expectedSpeech, 'Red and blue.');
+    assert.equal(steps[0].presentation!.options.length, 0);
+    assert.deepEqual(steps[1].presentation!.options.map(o => o.label), ['blue', 'green']);
+    assert.equal(steps[1].expectedSpeech, 'Red and green.');
+    assert.equal(steps[2].expectedSpeech, 'Red or blue?');
+    assert.deepEqual(steps[3].presentation!.options.map(o => o.label), ['and', 'or']);
+    assert.equal(steps[3].expectedSpeech, 'Red or green?');
+    assert.equal(steps[4].expectedSpeech, 'A book and a bag.');
+    assert.equal(steps[5].presentation!.answerMode, 'any');
+    assert.deepEqual(steps[5].presentation!.options.map(o => o.label), ['red', 'blue']);
+
+    const red = harness('fnd_v7_and_and_or');
+    await red.say('Red and blue.');
+    assert.match(red.reply.textEn, /^ดีครับ /);
+    await red.say('Red and blue.');
+    assert.equal(red.reply.v7Retry, true);
+    await red.say('Red and green.');
+    assert.match(red.reply.textEn, /^Red and green\. แปลว่า “สีแดงและสีเขียว”/);
+    await red.say('Red or blue?');
+    assert.match(red.reply.textEn, /^ดีครับ /);
+    await red.say('Red and green?');
+    assert.equal(red.reply.v7Retry, true);
+    await red.say('Red or green?');
+    assert.match(red.reply.textEn, /^Red or green\? แปลว่า “สีแดงหรือสีเขียว\?”/);
+    await red.say('A book or a bag.');
+    assert.equal(red.reply.v7Retry, true);
+    await red.say('A book and a bag.');
+    assert.match(red.reply.textEn, /^ถูกต้องครับ ใช้ and เพราะต้องการทั้งสองอย่าง/);
+    assert.doesNotMatch(red.reply.textEn, /แปลว่า “หนังสือหนึ่งเล่มและกระเป๋าหนึ่งใบ”/);
+    await red.say('Red.');
+    assert.match(red.reply.textEn, /^คุณเลือกสีแดงครับ/);
+    assert.match(red.reply.textEn, /จบบทแล้ว/);
+    assert.equal(red.reply.isLessonComplete, true);
+
+    const blue = harness('fnd_v7_and_and_or');
+    while (blue.reply.v7Step! < 6) await blue.say(blue.reply.expectedSpeech!);
+    await blue.say('Blue.');
+    assert.match(blue.reply.textEn, /^คุณเลือกสีน้ำเงินครับ/);
+    assert.match(blue.reply.textEn, /จบบทแล้ว/);
+    assert.equal(blue.reply.isLessonComplete, true);
+  });
   it('teaches Goodbye then See you, lets the learner choose, then adds tomorrow without a reuse turn', async () => {
     const steps = V7_LEGACY_FLOWS.fnd_v7_goodbye_see_you;
     assert.equal(steps[0].expectedSpeech, 'Goodbye.');

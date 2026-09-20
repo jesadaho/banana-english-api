@@ -5,9 +5,11 @@ import {
   LESSON_BANANA_COST,
   LESSON_PROGRESSION_ORDER,
   LessonConfig,
+  bananaCostToStartLesson,
   getAllLessons,
   getLesson,
 } from './lessons.data';
+import { lessonIdsMatchingCompletion } from './foundation-v7-lesson-id-aliases';
 import { PHONICS_LESSON_IDS } from '../phonics/phonics-lessons.data';
 import {
   LESSON_REWARD_SEEDS,
@@ -33,6 +35,13 @@ export interface LessonProgressItemView {
   estimatedMinutesMax: number;
   status: LessonProgressStatus;
   isPlayable: true;
+  bananaCost: number;
+}
+
+export interface LessonQuoteView {
+  lessonId: string;
+  bananaCost: number;
+  completed: boolean;
 }
 
 export interface LessonProgressView {
@@ -73,6 +82,34 @@ export class LessonsService {
     );
   }
 
+  async hasCompletedLesson(userId: string, lessonId: string): Promise<boolean> {
+    const ids = lessonIdsMatchingCompletion(lessonId);
+    const row = await this.prisma.userSession.findFirst({
+      where: {
+        userId,
+        sessionType: 'training',
+        lessonId: { in: ids },
+        rewardsApplied: true,
+      },
+      select: { id: true },
+    });
+    return row != null;
+  }
+
+  async getLessonQuote(
+    userId: string,
+    lessonId: string,
+  ): Promise<LessonQuoteView | null> {
+    const config = getLesson(lessonId);
+    if (!config) return null;
+    const completed = await this.hasCompletedLesson(userId, config.lessonId);
+    return {
+      lessonId: config.lessonId,
+      bananaCost: bananaCostToStartLesson(config, completed),
+      completed,
+    };
+  }
+
   /** Latest training session's lesson — used to resume Continue strips. */
   async getLastStudiedLessonId(userId: string): Promise<string | null> {
     const row = await this.prisma.userSession.findFirst({
@@ -96,7 +133,7 @@ export class LessonsService {
     completedIds: Set<string>,
     currentLessonId: string | null,
   ): LessonProgressStatus {
-    if (completedIds.has(lessonId)) {
+    if (lessonIdsMatchingCompletion(lessonId).some((id) => completedIds.has(id))) {
       return 'completed';
     }
     if (lessonId === currentLessonId) {
@@ -145,6 +182,7 @@ export class LessonsService {
       estimatedMinutesMax: lesson.estimatedMinutesMax,
       status,
       isPlayable: true,
+      bananaCost: bananaCostToStartLesson(lesson, status === 'completed'),
     };
   }
 

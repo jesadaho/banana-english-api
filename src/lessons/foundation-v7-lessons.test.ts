@@ -21,6 +21,7 @@ import {
   resolveLessonProgressTurn,
 } from './lessons.data';
 import { LessonsService } from './lessons.service';
+import { lessonIdsMatchingCompletion } from './foundation-v7-lesson-id-aliases';
 import { coerceFoundationV7SpeechTurn } from './foundation-v7-turn-guard';
 import {
   AUTHORED_V7_LESSON_IDS,
@@ -48,17 +49,17 @@ function coreFlowStepCount(id: string, spec: AuthoredSpec): number {
 }
 
 describe('Foundation V7 lessons', () => {
-  it('ships all 39 path lesson nodes with real configs, including frozen Chapter 1', () => {
+  it('ships all 41 path lesson nodes with real configs, including frozen Chapter 1', () => {
     const nodes = pathLessonNodes();
     const client = toFoundationV7ClientChapters()
       .flatMap((chapter) => chapter.items)
       .filter((node) => node.nodeType === 'lesson');
 
-    assert.equal(nodes.length, 39);
-    assert.equal(client.length, 39);
+    assert.equal(nodes.length, 41);
+    assert.equal(client.length, 41);
     assert.ok(client.every((node) => !node.comingSoon && node.lessonId));
     assert.ok(client.every((node) => getLesson(node.lessonId!) != null));
-    assert.equal(new Set(nodes.map((node) => node.contentRef.lessonId)).size, 39);
+    assert.equal(new Set(nodes.map((node) => node.contentRef.lessonId)).size, 41);
 
     assert.deepEqual(
       nodes.slice(0, 3).map((node) => node.contentRef.lessonId),
@@ -69,13 +70,13 @@ describe('Foundation V7 lessons', () => {
     }
   });
 
-  it('registers exactly the 39 authored V7 flows and keeps them off the lesson hub', async () => {
+  it('registers exactly the 41 authored V7 flows and keeps them off the lesson hub', async () => {
     const authoredIds = Object.keys(lessonSpecs);
     const pathAuthored = pathLessonNodes()
       .map((node) => node.contentRef.lessonId)
       .filter((id): id is string => Boolean(id?.startsWith('fnd_v7_')));
 
-    assert.equal(FOUNDATION_V7_LESSONS.length, 39);
+    assert.equal(FOUNDATION_V7_LESSONS.length, 41);
     assert.deepEqual(FOUNDATION_V7_LESSON_IDS, authoredIds);
     assert.deepEqual(pathAuthored.slice().sort(), authoredIds.filter(id => !['fnd_v7_letter_names_a_m', 'fnd_v7_letter_names_n_z', 'fnd_v7_say_that_again'].includes(id)).sort());
     assert.ok(authoredIds.every((id) => id.startsWith('fnd_v7_')));
@@ -90,6 +91,46 @@ describe('Foundation V7 lessons', () => {
         false,
       );
     }
+  });
+
+  it('maps V7 aliases so a completed lesson can be replayed for free', async () => {
+    assert.deepEqual(
+      lessonIdsMatchingCompletion('fnd_v7_u02n01').sort(),
+      ['fnd_v7_please_and_thank_you', 'fnd_v7_u02n01'].sort(),
+    );
+    assert.deepEqual(lessonIdsMatchingCompletion('greetings'), ['greetings']);
+
+    const prisma = {
+      userSession: {
+        findFirst: async ({ where }: { where: { lessonId: { in: string[] } } }) => {
+          assert.ok(where.lessonId.in.includes('fnd_v7_please_and_thank_you'));
+          assert.ok(where.lessonId.in.includes('fnd_v7_u02n01'));
+          return { id: 'session-1' };
+        },
+      },
+    };
+    const lessons = new LessonsService(prisma as any, {} as any);
+    assert.equal(
+      await lessons.hasCompletedLesson('user', 'fnd_v7_u02n01'),
+      true,
+    );
+    assert.deepEqual(await lessons.getLessonQuote('user', 'fnd_v7_u02n01'), {
+      lessonId: 'fnd_v7_please_and_thank_you',
+      bananaCost: 0,
+      completed: true,
+    });
+  });
+
+  it('quotes one banana from the API on first play', async () => {
+    const lessons = new LessonsService(
+      { userSession: { findFirst: async () => null } } as any,
+      {} as any,
+    );
+    assert.deepEqual(await lessons.getLessonQuote('user', 'greetings'), {
+      lessonId: 'greetings',
+      bananaCost: 1,
+      completed: false,
+    });
   });
 
   it('keeps authored blocks, recognition, recall and Core Flow progressMax in sync', () => {

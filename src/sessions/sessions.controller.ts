@@ -147,7 +147,7 @@ import {
   TRANSPORT_HOOK_GUIDED_SPEAKING,
   transportHookOpeningText,
   getLesson,
-  getLessonBananaCost,
+  bananaCostToStartLesson,
   isPronunciationLesson,
   lessonUsesTapToContinue,
   normalizeLessonTeachingLanguage,
@@ -484,9 +484,20 @@ export class SessionsController {
       throw new BadRequestException('Lesson locked');
     }
 
-    const bananaCost = getLessonBananaCost(config);
+    const alreadyCompleted = await this.lessonsService.hasCompletedLesson(
+      user.id,
+      config.lessonId,
+    );
+    const bananaCost = bananaCostToStartLesson(config, alreadyCompleted);
     const spendRef = randomUUID();
-    await this.economy.spendBananas(user.id, bananaCost, spendRef, 'lesson_start');
+    if (bananaCost > 0) {
+      await this.economy.spendBananas(
+        user.id,
+        bananaCost,
+        spendRef,
+        'lesson_start',
+      );
+    }
 
     const learnerFirstName = firstNameFromDisplayName(
       user.displayName,
