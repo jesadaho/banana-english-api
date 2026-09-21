@@ -352,3 +352,18 @@ model BugReport {
   @@index([userId, createdAt])
   @@index([status, createdAt])
 }
+
+model Article {
+  id            String    @id @default(uuid())
+  slug          String    @unique
+  title         String
+  category      String
+  bodyMarkdown  String
+  heroImageUrl  String?
+  published     Boolean   @default(false)
+  publishedAt   DateTime  @default(now())
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([published, publishedAt])
+}

@@ -78,4 +78,38 @@ export class FirebaseAdminService implements OnModuleInit {
       return null;
     }
   }
+
+  async uploadPublicFile(
+    objectPath: string,
+    buffer: Buffer,
+    contentType: string,
+  ): Promise<{ bucket: string; path: string } | null> {
+    if (!this.enabled || !this.storageBucket || !objectPath.trim()) {
+      return null;
+    }
+    const path = objectPath.trim();
+    try {
+      const file = admin.storage().bucket(this.storageBucket).file(path);
+      await file.save(buffer, {
+        resumable: false,
+        metadata: {
+          contentType,
+          cacheControl: 'public, max-age=3600',
+        },
+      });
+      try {
+        await file.makePublic();
+      } catch (error) {
+        this.logger.warn(
+          `makePublic skipped for ${path}: ${String(error).slice(0, 160)}`,
+        );
+      }
+      return { bucket: this.storageBucket, path };
+    } catch (error) {
+      this.logger.warn(
+        `Upload failed for ${path}: ${String(error).slice(0, 160)}`,
+      );
+      return null;
+    }
+  }
 }

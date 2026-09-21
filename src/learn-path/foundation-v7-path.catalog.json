@@ -2954,12 +2954,12 @@
           "titleTh": "สั่งเครื่องดื่ม",
           "type": "conversation",
           "beat": "Ketsu",
-          "learningTarget": "สั่งเครื่องดื่ม ตอบตัวเลือก และจบอย่างสุภาพ",
-          "activity": "มีสองตัวเลือกที่สอนแล้ว; NPC เสนอตัวเลือก ผู้เรียนรับ/ปฏิเสธ; ราคาใช้เลขchapter9 ไม่มี customization ยาว",
+          "learningTarget": "ตอบความชอบแล้วสั่งชา กาแฟ หรือน้ำ แล้วขอบคุณเมื่อได้รับของ",
+          "activity": "NPC ถาม Do you like coffee? แล้วเสนอ tea/coffee/water ตามคำตอบ; ถ้าผู้เรียนสั่งพร้อมตอบความชอบ ให้รับคำสั่งซื้อเลย; ส่งเครื่องดื่มด้วย Here you are. แล้วรอขอบคุณ",
           "examples": [
-            "Tea, please",
-            "No, thank you",
-            "How much is it?"
+            "Yes, I do",
+            "Coffee, please",
+            "Thank you"
           ],
           "estimatedMinutes": [
             2,
@@ -3829,12 +3829,12 @@
           "titleTh": "อัปเดตสั้น ๆ",
           "type": "conversation",
           "beat": "Ketsu",
-          "learningTarget": "ตอบเกี่ยวกับสิ่งที่ตนเองและผู้อื่นกำลังทำอยู่ตอนนี้",
-          "activity": "Mia โทรวิดีโอคอลมาช่วงพักและถามนำทั้งบท; ผู้เรียนบอกสิ่งที่ทำตอนนี้ ตอบ yes/no แล้วบอกว่าเพื่อนกำลังทำอาหาร โดยไม่ต้องตั้งคำถามกลับ",
+          "learningTarget": "บอกสิ่งที่ตนเองกำลังทำ และบอกว่าเพื่อนกำลังทำอะไร จากศัพท์ที่เรียนแล้ว",
+          "activity": "Mia โทรวิดีโอคอลและถามนำ; ไม่ถามข้อมูลเดิมซ้ำ; มีเพื่อนอยู่ในภาพชัดเจน; ผู้เรียนเลือกกิจกรรมของเพื่อนจาก cooking/eating/reading/working ได้ทั้งยืนยันและปฏิเสธ",
           "examples": [
             "I am cooking",
-            "No, I am not",
-            "Yes, she is cooking"
+            "She is reading",
+            "No, she is eating"
           ],
           "estimatedMinutes": [
             2,
@@ -4083,8 +4083,8 @@
           "titleTh": "คุณถามก่อน",
           "type": "conversation",
           "beat": "Ketsu",
-          "learningTarget": "เริ่มถามและตามด้วยคำถามที่เกี่ยวข้อง",
-          "activity": "NPC มีข้อมูลส่วนที่ role card เว้นไว้; ผู้เรียนถามสองเรื่องด้วยภาษาที่รู้ ขอซ้ำได้; ไม่จำเป็นต้องถามครบทุก WH",
+          "learningTarget": "ถามวันเวลาเรียนและสถานที่เรียน แล้วขอบคุณเมื่อได้ข้อมูลครบ",
+          "activity": "ผู้เรียนจะมาเรียนแต่ยังไม่รู้วันเวลาและสถานที่; ถามสลับลำดับหรือถามรวมกันได้; NPC ตอบเฉพาะที่ถูกถาม; สถานที่คือ Room 2 ไม่ใช่ in this room; ได้ข้อมูลครบแล้วขอบคุณก็จบ ไม่ต้องกรอกบัตร",
           "examples": [
             "When is the class?",
             "Where is the class?"

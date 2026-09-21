@@ -32,7 +32,7 @@ const EXPECTED_V7_MIN_TURNS: Record<string, number> = {
   foundation_v7_u10n07: 3,
   foundation_v7_u11n06: 3,
   foundation_v7_u12n08: 3,
-  foundation_v7_u13n06: 3,
+  foundation_v7_u13n06: 2,
   foundation_v7_u14n06: 3,
   foundation_v7_u15n08: 3,
   foundation_v7_u16n10: 3,

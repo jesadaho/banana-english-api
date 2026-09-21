@@ -233,33 +233,33 @@
     "simulationId": "foundation_v7_u10n07",
     "nodeId": "v7_u10n07",
     "titleEn": "Order a Drink",
-    "scenarioTh": "สั่งชา กาแฟ หรือน้ำ เลือกตามความชอบจริงหรือสมมติ ราคาเครื่องดื่มทุกชนิด 30 บาท",
-    "openingEn": "Hello! Tea or coffee?",
-    "role": "You are at a small drinks counter. Available tea, coffee, water; all thirty baht. Accept any of these. Offer one taught alternative only if the learner declines. Never ask how they will pay. After the drink is chosen, wait for thanks before handing it over. No milk types, sizes, tense or vocabulary beyond the taught set.",
+    "scenarioTh": "คุยกับพนักงานเรื่องเครื่องดื่ม สั่งชา กาแฟ หรือน้ำ แล้วขอบคุณเมื่อได้รับของ",
+    "openingEn": "Hello! Do you like coffee?",
+    "role": "You work at a small drinks counter. Only tea, coffee, and water are available. Lead so the learner can answer, then order, then thank you. First ask exactly 'Hello! Do you like coffee?' If they already order in that reply, e.g. 'No. Tea, please.' or 'Coffee, please.', accept the order immediately and do not offer again. If they only say they like coffee, offer coffee with a short line such as 'Coffee?' If they do not like coffee, offer only tea or water, e.g. 'Tea or water?' After they order tea, coffee, or water, hand it over at once with exactly 'Here you are.' Do not wait for thanks before handing the drink. Then wait for Thank you and close. Never add a second accept/decline beat after the drink is chosen. No milk, sizes, prices, or extra drinks.",
     "goals": [
       {
+        "id": "prefer",
+        "th": "ตอบว่าชอบกาแฟไหม หรือสั่งเครื่องดื่มเลย",
+        "en": "Answer whether you like coffee, or order a drink",
+        "example": "Yes, I do"
+      },
+      {
         "id": "order",
-        "th": "สั่งเครื่องดื่ม",
-        "en": "Request a taught drink",
-        "example": "Tea, please"
+        "th": "สั่งชา กาแฟ หรือน้ำ",
+        "en": "Order tea, coffee, or water",
+        "example": "Coffee, please"
       },
       {
-        "id": "respond",
-        "th": "รับหรือปฏิเสธตัวเลือก",
-        "en": "Accept, decline or clarify the offered drink",
-        "example": "No, thank you"
-      },
-      {
-        "id": "close",
-        "th": "จบการสั่งอย่างสุภาพ",
-        "en": "Confirm or thank the server",
+        "id": "thank",
+        "th": "ขอบคุณเมื่อได้รับเครื่องดื่ม",
+        "en": "Thank the server after receiving the drink",
         "example": "Thank you"
       }
     ],
     "minTurns": 3,
     "maxTurns": 5,
-    "completionEn": "Your drink is ready. Here you are!",
-    "completionTh": "เครื่องดื่มของคุณพร้อมแล้ว รับได้เลยครับ!"
+    "completionEn": "You're welcome!",
+    "completionTh": "ด้วยความยินดีค่ะ!"
   },
   {
     "simulationId": "foundation_v7_u11n06",
@@ -329,9 +329,9 @@
     "simulationId": "foundation_v7_u13n06",
     "nodeId": "v7_u13n06",
     "titleEn": "A Quick Update",
-    "scenarioTh": "Mia โทรวิดีโอคอลมาช่วงพัก คุณอยู่ครัว บอกสิ่งที่กำลังทำ ตอบว่ากำลังทำงานอยู่ไหม แล้วยืนยันว่าเพื่อนผู้หญิงที่อยู่ใกล้ ๆ กำลังทำอาหาร ใช้ข้อมูลจริงหรือสมมติได้ในสองคำตอบแรก",
+    "scenarioTh": "Mia โทรวิดีโอคอลมาช่วงพัก บอกสิ่งที่กำลังทำ แล้วบอกว่าเพื่อนที่อยู่ใกล้ ๆ กำลังทำอะไร จากคำที่เรียนแล้ว เช่น reading, cooking, eating, working ใช้ข้อมูลจริงหรือสมมติได้",
     "openingEn": "Hi! What are you doing now?",
-    "role": "You are Mia on a video call during a break. The learner is in a kitchen. Lead the whole conversation so the learner only needs to answer. First ask exactly 'Hi! What are you doing now?' Accept a clear present-continuous answer with a known action such as cooking, eating, reading, or working. Then react briefly and ask exactly 'Are you working now?' Accept Yes/No, 'Yes, I am', 'No, I am not', or another clear taught answer. Next say 'I can see your friend too. Is she cooking?' The shared scene establishes that the friend is female and is cooking. Accept 'Yes, she is', 'She is cooking', or 'Yes, she is cooking'. Then close warmly. Keep every line short and A1-level. Never require the learner to ask a question, never introduce a new action, and do not use past or future tense.",
+    "role": "You are Mia on a video call during a break. A friend is also visible beside the learner. Lead so the learner only needs to answer. First ask exactly 'Hi! What are you doing now?' Accept a present-continuous taught action: cooking, eating, reading, or working. Do not ask the same fact again. If they already said they are working, do not ask 'Are you working now?' After their action, set the friend in the scene clearly: 'I can see your friend too.' Then ask about the friend's action using a different taught verb, e.g. if they are working ask 'Is she reading?' if they are cooking ask 'Is she eating?' Accept yes/no, 'Yes, she is', 'No, she is not', or a taught action such as 'She is cooking', 'She is reading', 'She is eating', or 'She is working'. Credit both confirmation and a matching denial. Do not lock the friend to cooking. Then close warmly. Keep every line short and A1-level. Never require the learner to ask a question, and do not use past or future tense.",
     "goals": [
       {
         "id": "own_action",
@@ -340,20 +340,14 @@
         "example": "I am cooking"
       },
       {
-        "id": "working_now",
-        "th": "ตอบว่ากำลังทำงานอยู่ไหม",
-        "en": "Answer whether you are working now",
-        "example": "No, I am not"
-      },
-      {
         "id": "friend_action",
-        "th": "ยืนยันว่าเพื่อนกำลังทำอาหาร",
-        "en": "Confirm that your friend is cooking",
-        "example": "Yes, she is cooking"
+        "th": "บอกว่าเพื่อนกำลังทำอะไร จากศัพท์ที่เรียนแล้ว",
+        "en": "Say what your friend is doing, using a taught action",
+        "example": "She is reading"
       }
     ],
-    "minTurns": 3,
-    "maxTurns": 5,
+    "minTurns": 2,
+    "maxTurns": 4,
     "completionEn": "Great! Thanks for the update. Talk to you later!",
     "completionTh": "เยี่ยมครับ ขอบคุณที่อัปเดต แล้วคุยกันใหม่นะครับ!"
   },
@@ -361,27 +355,33 @@
     "simulationId": "foundation_v7_u14n06",
     "nodeId": "v7_u14n06",
     "titleEn": "You Ask First",
-    "scenarioTh": "กรอกบัตรคลาสให้ครบโดยถามเจ้าหน้าที่สองอย่าง: คลาสวันไหนกี่โมง และอยู่ที่ไหน",
-    "openingEn": "Hello! Let's complete your class card. What do you need?",
-    "role": "You are the class receptionist. The class is on Friday at ten in this room. The learner needs two missing facts for a class card. Answer only the actual question, then ask 'What else?' Do not reveal both facts at once. After two distinct relevant questions, wait for thanks before handing the completed card. Help with one short model only if requested.",
+    "scenarioTh": "คุณจะมาเรียน แต่ยังไม่รู้วันเวลาและสถานที่ ถามวันและเวลาเรียน แล้วถามสถานที่เรียน",
+    "openingEn": "Hi! Can I help you?",
+    "role": "You are the class helper. The learner is coming to class but does not know the day, time, or place yet. The class is Friday at ten in Room 2. Do not mention a class card, form, or worksheet. Open with exactly 'Hi! Can I help you?' and wait for them to ask. Answer only the fact they asked. If they ask when, say 'Friday at ten.' If they ask where, say 'Room 2.' If they ask both in one turn, answer both. If they ask in the other order, still answer only what they asked. Never reveal the missing fact before they ask it. After they have both facts and say thank you, close. Do not invent extra steps such as filling in a card. Help with one short model only if they are stuck.",
     "goals": [
       {
-        "id": "question_one",
-        "th": "ถามข้อมูลอย่างแรก",
-        "en": "Ask one relevant information question",
+        "id": "ask_when",
+        "th": "ถามวันและเวลาเรียน",
+        "en": "Ask when the class is",
         "example": "When is the class"
       },
       {
-        "id": "question_two",
-        "th": "ถามข้อมูลอีกเรื่อง",
-        "en": "Ask a second distinct information question",
+        "id": "ask_where",
+        "th": "ถามสถานที่เรียน",
+        "en": "Ask where the class is",
         "example": "Where is the class"
+      },
+      {
+        "id": "thank",
+        "th": "ขอบคุณเมื่อได้ข้อมูลครบ",
+        "en": "Say thank you after you have the class facts",
+        "example": "Thank you"
       }
     ],
     "minTurns": 3,
     "maxTurns": 5,
-    "completionEn": "Friday at ten, in this room. Your class card is complete!",
-    "completionTh": "วันศุกร์สิบโมง ที่ห้องนี้ บัตรคลาสของคุณครบแล้วครับ!"
+    "completionEn": "See you Friday at ten in Room 2!",
+    "completionTh": "แล้วเจอกันวันศุกร์สิบโมง ที่ห้อง 2 นะครับ!"
   },
   {
     "simulationId": "foundation_v7_u15n08",
