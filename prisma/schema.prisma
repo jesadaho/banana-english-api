@@ -102,6 +102,7 @@ model User {
   achievements            UserAchievement[]
   outfits                 UserOutfit[]
   emojiSpeakEndlessWeeklyScores EmojiSpeakEndlessWeeklyScore[]
+  explainItTopicScores      ExplainItTopicScore[]
   purchaseRecords           PurchaseRecord[]
   purchaseAttempts          PurchaseAttempt[]
   phonicsNodeProgress       PhonicsNodeProgress[]
@@ -274,6 +275,23 @@ model EmojiSpeakEndlessWeeklyScore {
 
   @@unique([userId, weekKey])
   @@index([weekKey, bestScore])
+}
+
+/** Personal best per Explain It topic (all-time Top 10). */
+model ExplainItTopicScore {
+  id          String   @id @default(uuid())
+  userId      String
+  topicId     String
+  bestScore   Int
+  displayName String?
+  avatarId    String?
+  updatedAt   DateTime @updatedAt
+  createdAt   DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, topicId])
+  @@index([topicId, bestScore])
 }
 
 /** Server-owned phonics check attempts and pass state. */

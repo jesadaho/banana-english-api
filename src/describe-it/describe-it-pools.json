@@ -1,0 +1,68 @@
+{
+  "fnd_v7_u13n05": {
+    "id": "fnd_v7_u13n05",
+    "titleEn": "What's Happening Here?",
+    "titleTh": "ที่นี่เกิดอะไรขึ้น?",
+    "tagEn": "NOW",
+    "emoji": "🖼️",
+    "estimatedMinutes": 3,
+    "items": [
+      {
+        "id": "01-she-is-reading",
+        "promptTh": "บอกว่า May กำลังทำอะไรอยู่ตอนนี้",
+        "answerEn": "She is reading.",
+        "acceptedAnswers": [
+          "She's reading.",
+          "May is reading.",
+          "I am reading."
+        ],
+        "imagePath": "describe-it/fnd_v7_u13n05/01-she-is-reading.webp",
+        "hintEn": "She _____"
+      },
+      {
+        "id": "02-he-is-eating",
+        "promptTh": "บอกว่า Max กำลังทำอะไรอยู่ตอนนี้",
+        "answerEn": "He is eating.",
+        "acceptedAnswers": [
+          "He's eating.",
+          "Max is eating.",
+          "I am eating."
+        ],
+        "imagePath": "describe-it/fnd_v7_u13n05/02-he-is-eating.webp"
+      },
+      {
+        "id": "03-they-are-waiting",
+        "promptTh": "ทั้งสองคนรอเข้าห้องเรียนอยู่ ลองบอกว่าพวกเขากำลังทำอะไรเป็นภาษาอังกฤษ",
+        "answerEn": "They are waiting.",
+        "acceptedAnswers": [
+          "They're waiting.",
+          "May and Max are waiting.",
+          "We are waiting."
+        ],
+        "imagePath": "describe-it/fnd_v7_u13n05/03-they-are-waiting.webp"
+      },
+      {
+        "id": "04-he-is-cooking",
+        "promptTh": "บอกว่า Max กำลังทำอะไรอยู่ตอนนี้",
+        "answerEn": "He is cooking.",
+        "acceptedAnswers": [
+          "He's cooking.",
+          "Max is cooking.",
+          "I am cooking."
+        ],
+        "imagePath": "describe-it/fnd_v7_u13n05/04-he-is-cooking.webp"
+      },
+      {
+        "id": "05-they-are-walking",
+        "promptTh": "บอกว่าทั้งสองคนกำลังทำอะไรอยู่ตอนนี้",
+        "answerEn": "They are walking.",
+        "acceptedAnswers": [
+          "They're walking.",
+          "May and Max are walking.",
+          "We are walking."
+        ],
+        "imagePath": "describe-it/fnd_v7_u13n05/05-they-are-walking.webp"
+      }
+    ]
+  }
+}

@@ -151,6 +151,10 @@ export class UsersService {
           where: { userId: user.id },
           data: { displayName: dto.displayName.trim() },
         });
+        await this.prisma.explainItTopicScore.updateMany({
+          where: { userId: user.id },
+          data: { displayName: dto.displayName.trim() },
+        });
       }
 
       if (dto.fcmToken) {
@@ -204,6 +208,10 @@ export class UsersService {
       });
       if (trimmed) {
         await this.prisma.emojiSpeakEndlessWeeklyScore.updateMany({
+          where: { userId: user.id },
+          data: { displayName: trimmed },
+        });
+        await this.prisma.explainItTopicScore.updateMany({
           where: { userId: user.id },
           data: { displayName: trimmed },
         });
@@ -515,6 +523,10 @@ export class UsersService {
       data: { displayName: trimmed },
     });
     await this.prisma.emojiSpeakEndlessWeeklyScore.updateMany({
+      where: { userId },
+      data: { displayName: trimmed },
+    });
+    await this.prisma.explainItTopicScore.updateMany({
       where: { userId },
       data: { displayName: trimmed },
     });

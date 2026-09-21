@@ -43,6 +43,7 @@ export const EMPTY_COURSE_COUNTS: Record<ContentCourse, number> = {
 
 const MINIGAME_TITLES: Record<string, string> = {
   game_say_it: 'Say It',
+  game_describe_it: 'Describe It',
   game_explain_it: 'Explain It',
   game_emoji_speak: 'Emoji Speak',
   game_emoji_speak_endless: 'Emoji Speak Endless',

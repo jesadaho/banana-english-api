@@ -24,6 +24,7 @@ import { MiniGamesModule } from './mini-games/mini-games.module';
 import { DailySpeakModule } from './daily-speak/daily-speak.module';
 import { ExplainItModule } from './explain-it/explain-it.module';
 import { SayItModule } from './say-it/say-it.module';
+import { DescribeItModule } from './describe-it/describe-it.module';
 import { DebugModule } from './debug/debug.module';
 import { PurchasesModule } from './purchases/purchases.module';
 import { LearnPathModule } from './learn-path/learn-path.module';
@@ -63,6 +64,7 @@ import { PhonicsModule } from './phonics/phonics.module';
     MiniGamesModule,
     DailySpeakModule,
     SayItModule,
+    DescribeItModule,
     ExplainItModule,
     DebugModule,
     PurchasesModule,

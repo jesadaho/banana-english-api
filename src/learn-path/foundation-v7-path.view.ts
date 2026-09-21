@@ -3,6 +3,7 @@ import { getSimulation } from '../simulations/simulations.data';
 import { foundationSayItDealCount, sayItPoolForTopic, sayItTopicById } from '../say-it/say-it.data';
 import { emojiSpeakPoolById } from '../emoji-speak/emoji-speak.data';
 import { isValidNewWordsPack, newWordsPoolById } from '../new-words/new-words.data';
+import { isValidDescribeItPack, describeItPoolById } from '../describe-it/describe-it.data';
 import { foundationV7LessonLegacyIds } from '../lessons/foundation-v7-lesson-id-aliases';
 import { FOUNDATION_V7_CATALOG, type FoundationV7Capability, type FoundationV7Node } from './foundation-v7-path.data';
 import type { FoundationV5ClientNode } from './learn-path.service';
@@ -23,6 +24,7 @@ export function hasFoundationV7Content(node: FoundationV7Node): boolean {
     case 'say_it': return Boolean(ref.topicId && sayItTopicById(ref.topicId) && sayItPoolForTopic(ref.topicId).length === foundationSayItDealCount(ref.topicId));
     case 'emoji_speak': return Boolean(ref.poolId && (emojiSpeakPoolById(ref.poolId)?.items.length ?? 0) > 0);
     case 'new_words': return Boolean(ref.poolId && isValidNewWordsPack(newWordsPoolById(ref.poolId)));
+    case 'describe_it': return Boolean(ref.poolId && isValidDescribeItPack(describeItPoolById(ref.poolId)));
     default: return false;
   }
 }
@@ -37,7 +39,7 @@ export function toFoundationV7ClientChapters(capabilities: readonly FoundationV7
       const backendReady = hasFoundationV7Content(node);
       const requiredClientCapabilities: FoundationV7Capability[] = node.sayItMode === 'guided' ? ['say_it_guided'] : [];
       const needsClient = requiredClientCapabilities.some(cap => !capabilities.includes(cap));
-      const unbuilt = node.type === 'describe_it' || node.type === 'story_bites';
+      const unbuilt = (node.type === 'describe_it' && !backendReady) || node.type === 'story_bites';
       const comingSoon = !backendReady || needsClient;
       const result: FoundationV7ClientNode = {
         id: node.id, code: node.code, titleEn: node.titleEn, titleTh: node.titleTh,

@@ -95,17 +95,21 @@ describe('Foundation V7 catalog and real content', () => {
     assert.equal(hasFoundationV7Content({...node, contentRef:{}}), false);
   });
 
-  it('has 134 backend-ready nodes, 131 playable by default, and a capability gate for three Guided packs', () => {
+  it('has 135 backend-ready nodes, 132 playable by default, and a capability gate for three Guided packs', () => {
     const defaults = toFoundationV7ClientChapters().flatMap(c => c.items);
-    assert.equal(defaults.filter(n => n.backendReady).length, 134);
-    assert.equal(defaults.filter(n => !n.comingSoon).length, 131);
-    assert.equal(all().filter(n => !n.comingSoon).length, 134);
+    assert.equal(defaults.filter(n => n.backendReady).length, 135);
+    assert.equal(defaults.filter(n => !n.comingSoon).length, 132);
+    assert.equal(all().filter(n => !n.comingSoon).length, 135);
     assert.equal(defaults.filter(n => n.unavailableReason === 'client_capability_required').length, 3);
     assert.equal(defaults.filter(n => n.unavailableReason === 'missing_content').length, 0);
     const placeholders = all().filter(n => n.comingSoon);
-    assert.equal(placeholders.length, 16);
+    assert.equal(placeholders.length, 15);
     assert.ok(placeholders.every(n => !n.countsTowardProgress && n.unavailableReason === 'mechanic_not_implemented'));
     assert.ok(placeholders.every(n => !n.lessonId && !n.poolId && !n.topicId && !n.simulationId));
+    const describeIt = all().find(n => n.id === 'v7_u13n05');
+    assert.equal(describeIt?.comingSoon, false);
+    assert.equal(describeIt?.backendReady, true);
+    assert.equal(describeIt?.poolId, 'fnd_v7_u13n05');
     const serialized = JSON.stringify(all());
     assert.equal(serialized.includes('"script"'), false);
     assert.equal(serialized.includes('"questions"'), false);
@@ -246,23 +250,23 @@ describe('Foundation V7 progress and completion contracts', () => {
   it('recognizes canonical progress and ignores completion claims for Coming Soon content', async () => {
     const playable = all().filter(n => !n.comingSoon);
     const lessons = playable.flatMap(n => n.lessonId ? [n.lessonId] : []);
-    const mini = playable.flatMap(n => n.topicId ? [`say_it:${n.topicId}`] : n.nodeType === 'new_words' && n.poolId ? [`new_words:${n.poolId}`] : n.poolId ? [`emoji_speak:${n.poolId}`] : []);
+    const mini = playable.flatMap(n => n.topicId ? [`say_it:${n.topicId}`] : n.nodeType === 'new_words' && n.poolId ? [`new_words:${n.poolId}`] : n.nodeType === 'describe_it' && n.poolId ? [`describe_it:${n.poolId}`] : n.poolId ? [`emoji_speak:${n.poolId}`] : []);
     const simulations = playable.flatMap(n => n.simulationId ? [n.simulationId] : []);
     mini.push(...all().filter(n => n.comingSoon).map(n => n.id));
     const service = pathService(lessons, mini, simulations);
     const full = await service.getFoundationV7('user', ['say_it_guided']);
-    assert.equal(full.progress.completedCount, 134);
-    assert.equal(full.progress.totalCount, 134);
+    assert.equal(full.progress.completedCount, 135);
+    assert.equal(full.progress.totalCount, 135);
     assert.equal(full.progress.currentNodeId, null);
     const legacyClient = await service.getFoundationV7('user');
-    assert.equal(legacyClient.progress.completedCount, 131);
-    assert.equal(legacyClient.progress.totalCount, 131);
+    assert.equal(legacyClient.progress.completedCount, 132);
+    assert.equal(legacyClient.progress.totalCount, 132);
     assert.equal(legacyClient.progress.currentNodeId, null);
   });
 
   it('rejects unknown capabilities rather than silently enabling unsupported mechanics', async () => {
     const controller = new LearnPathController(pathService());
-    assert.equal((await controller.foundationV7(req, 'say_it_guided')).summary.playableCount, 134);
+    assert.equal((await controller.foundationV7(req, 'say_it_guided')).summary.playableCount, 135);
     await assert.rejects(controller.foundationV7(req, 'story_bites'));
     await assert.rejects(controller.foundationV7(req, ['say_it_guided'] as any));
   });
@@ -329,7 +333,7 @@ describe('Foundation V7 progress and completion contracts', () => {
   it('allows only actual mini-games and canonicalizes their aliases', () => {
     for (const node of FOUNDATION_V7_NODES) {
       const canonical = canonicalFoundationV7RewardId(node.id);
-      if (node.type === 'say_it' || node.type === 'emoji_speak' || node.type === 'new_words') {
+      if (node.type === 'say_it' || node.type === 'emoji_speak' || node.type === 'new_words' || (node.type === 'describe_it' && node.contentRef.poolId)) {
         assert.ok(canonical, node.id);
         assert.equal(canonicalFoundationV7RewardId(node.contentRef.topicId ?? node.contentRef.poolId!), canonical);
         assert.equal(canonicalFoundationV7RewardId(canonical), canonical);
@@ -356,7 +360,7 @@ describe('Foundation V7 progress and completion contracts', () => {
     const economy = {applyMiniGameRewards: async (p: any) => p, spendBananas: async () => {}};
     const controller = new MiniGamesController(economy as any, {} as any, {} as any, {} as any, {} as any, {markActivity:async () => {}} as any, {} as any, new EmojiSpeakService());
     for (const node of FOUNDATION_V7_NODES) {
-      if (['say_it','emoji_speak','new_words'].includes(node.type)) await controller.complete(req, node.id);
+      if (['say_it','emoji_speak','new_words'].includes(node.type) || (node.type === 'describe_it' && node.contentRef.poolId)) await controller.complete(req, node.id);
       else await assert.rejects(controller.complete(req, node.id));
       if (node.type === 'emoji_speak') assert.equal((await controller.startEmojiSpeakPack(req, node.contentRef.poolId!)).bananaCost, 1);
       if (node.type === 'new_words') assert.equal((await controller.startNewWordsPack(req, node.contentRef.poolId!)).bananaCost, 1);

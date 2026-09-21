@@ -1,4 +1,4 @@
-import { BadRequestException, Controller, Get, Param, Post, Query, Req, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Param, Post, Query, Req, UseGuards } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 import { User } from '@prisma/client';
 import { EconomyService } from '../economy/economy.service';
@@ -7,6 +7,8 @@ import {
   EXPLAIN_IT_BANANA_COST,
   EXPLAIN_IT_DEAL_COUNT,
 } from './explain-it.data';
+import { ExplainItLeaderboardService } from './explain-it-leaderboard.service';
+import { ExplainItScoreDto } from './dto/explain-it-score.dto';
 import { ExplainItService } from './explain-it.service';
 
 type AuthedRequest = { user: User };
@@ -17,6 +19,7 @@ export class ExplainItController {
   constructor(
     private readonly explainIt: ExplainItService,
     private readonly economy: EconomyService,
+    private readonly leaderboard: ExplainItLeaderboardService,
   ) {}
 
   @Get('topics')
@@ -64,5 +67,27 @@ export class ExplainItController {
       bananaCost: EXPLAIN_IT_BANANA_COST,
       dealCount: EXPLAIN_IT_DEAL_COUNT,
     };
+  }
+
+  @Post('topics/:topicId/score')
+  submitScore(
+    @Req() req: AuthedRequest,
+    @Param('topicId') topicId: string,
+    @Body() body: ExplainItScoreDto,
+  ) {
+    return this.leaderboard.submitScore(
+      req.user,
+      topicId,
+      body.score,
+      body.avatarId,
+    );
+  }
+
+  @Get('topics/:topicId/leaderboard')
+  leaderboardForTopic(
+    @Req() req: AuthedRequest,
+    @Param('topicId') topicId: string,
+  ) {
+    return this.leaderboard.board(req.user, topicId);
   }
 }

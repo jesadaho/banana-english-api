@@ -30,7 +30,8 @@ for (const node of FOUNDATION_V7_NODES) {
   const ref = node.contentRef;
   const canonical = node.type === 'say_it' && ref.topicId ? `say_it:${ref.topicId}`
     : node.type === 'emoji_speak' && ref.poolId ? `emoji_speak:${ref.poolId}`
-    : node.type === 'new_words' && ref.poolId ? `new_words:${ref.poolId}` : null;
+    : node.type === 'new_words' && ref.poolId ? `new_words:${ref.poolId}`
+    : node.type === 'describe_it' && ref.poolId ? `describe_it:${ref.poolId}` : null;
   if (canonical) {
     for (const alias of [node.id, ref.topicId, ref.poolId, canonical]) {
       if (alias) rewardAliases.set(alias, canonical);
