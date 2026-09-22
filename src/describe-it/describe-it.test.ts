@@ -12,16 +12,8 @@ import {
 const req = { user: { id: 'describe-it-test', displayName: 'Mia' } } as any;
 
 describe('Describe It foundation pack', () => {
-  it('lists playable hub pools', () => {
-    const pools = listDescribeItPools();
-    assert.equal(pools.length, 3);
-    assert.deepEqual(
-      pools.map((pool) => pool.id).sort(),
-      ['fnd_v7_u03n05', 'fnd_v7_u04n05', 'fnd_v7_u13n05'],
-    );
-    const lookAtMe = pools.find((pool) => pool.id === 'fnd_v7_u03n05');
-    assert.equal(lookAtMe?.poolSize, 6);
-    assert.equal(lookAtMe?.locked, false);
+  it('hides hub pools while Describe It is temporarily disabled', () => {
+    assert.deepEqual(listDescribeItPools(), []);
   });
 
   it('deals six Look at Me cards in order with a first-item hint', () => {
@@ -66,6 +58,27 @@ describe('Describe It foundation pack', () => {
     assert.ok(items.slice(1).every((item) => !item.hintEn));
   });
 
+  it('deals five Inside the Bag cards in order with a first-item hint', () => {
+    const pool = describeItPoolById('fnd_v7_u05n05');
+    assert.ok(isValidDescribeItPack(pool));
+    const items = dealDescribeItCards('fnd_v7_u05n05');
+    assert.equal(items.length, 5);
+    assert.deepEqual(items.map((item) => item.id), [
+      '01-one-book',
+      '02-two-pens',
+      '03-one-phone',
+      '04-two-apples',
+      '05-two-keys',
+    ]);
+    assert.equal(items[0].hintEn, 'It is a _____');
+    assert.equal(items[0].answerEn, 'It is a book.');
+    assert.equal(items[1].answerEn, 'They are pens.');
+    assert.equal(items[4].answerEn, 'They are keys.');
+    assert.ok(items.every((item) => (item.answerTh ?? '').trim().length > 0));
+    assert.ok(items[0].imageUrl.includes('describe-it%2Ffnd_v7_u05n05%2F01-one-book.webp'));
+    assert.ok(items.slice(1).every((item) => !item.hintEn));
+  });
+
   it('deals five authored Now cards in order with a first-item hint', () => {
     const pool = describeItPoolById('fnd_v7_u13n05');
     assert.ok(isValidDescribeItPack(pool));
@@ -86,66 +99,31 @@ describe('Describe It foundation pack', () => {
     assert.ok(items.slice(1).every((item) => !item.hintEn));
   });
 
-  it('starts for 1 banana and completes with the canonical reward id', async () => {
-    const calls: any[] = [];
-    const spends: any[] = [];
-    const scores: any[] = [];
-    const claimed = new Set<string>();
+  it('rejects start and complete while Describe It is temporarily disabled', async () => {
     const controller = new DescribeItController(
       new DescribeItService(),
       {
-        applyMiniGameRewards: async (p: any) => {
-          calls.push(p);
-          claimed.add(p.gameId);
-          return p;
+        applyMiniGameRewards: async () => {
+          throw new Error('should not reward while disabled');
         },
-        recordMiniGameScore: async (p: any) => {
-          scores.push(p);
+        recordMiniGameScore: async () => {
+          throw new Error('should not record while disabled');
         },
-        hasClaimedMiniGameReward: async (_userId: string, gameId: string) =>
-          claimed.has(gameId),
-        spendBananas: async (
-          userId: string,
-          amount: number,
-          referenceId: string,
-          source: string,
-        ) => {
-          spends.push({ userId, amount, referenceId, source });
+        hasClaimedMiniGameReward: async () => false,
+        spendBananas: async () => {
+          throw new Error('should not spend while disabled');
         },
-        refundBananas: async () => {
-          throw new Error('should not refund on successful start');
-        },
+        refundBananas: async () => {},
       } as any,
       { markActivity: async () => {} } as any,
     );
-    const start = await controller.startPool(req, 'fnd_v7_u03n05');
-    assert.equal(start.bananaCost, 1);
-    assert.equal(start.dealCount, 6);
-    assert.equal(spends.length, 1);
-    assert.equal(spends[0].amount, 1);
-    assert.equal(spends[0].source, 'describe_it_start');
-    const reward = await controller.completePool(req, 'fnd_v7_u03n05', {
-      correctCount: 5,
-      totalCount: 6,
-    });
-    assert.equal((reward as any).gameId, 'describe_it:fnd_v7_u03n05');
-    assert.equal(calls.length, 1);
-    assert.equal(scores.length, 1);
-    assert.equal(scores[0].correctCount, 5);
-    assert.equal(scores[0].totalCount, 6);
-    assert.equal(scores[0].kind, 'describe_it');
-
-    const replay = await controller.startPool(req, 'fnd_v7_u03n05');
-    assert.equal(replay.bananaCost, 0);
-    assert.equal(spends.length, 1, 'replay must not charge again');
-
-    const startNow = await controller.startPool(req, 'fnd_v7_u13n05');
-    assert.equal(startNow.dealCount, 5);
-    assert.equal(startNow.bananaCost, 1);
-    await controller.completePool(req, 'fnd_v7_u13n05');
-    assert.equal(calls.length, 2);
-    assert.equal(scores.length, 2);
-    assert.equal(spends.length, 2);
-    await assert.rejects(controller.completePool(req, 'fnd_v7_unknown'));
+    assert.throws(() => controller.dealForPool('fnd_v7_u03n05'));
+    await assert.rejects(() => controller.startPool(req, 'fnd_v7_u03n05'));
+    await assert.rejects(() =>
+      controller.completePool(req, 'fnd_v7_u03n05', {
+        correctCount: 5,
+        totalCount: 6,
+      }),
+    );
   });
 });

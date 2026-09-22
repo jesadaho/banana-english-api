@@ -3,7 +3,7 @@ import { getSimulation } from '../simulations/simulations.data';
 import { foundationSayItDealCount, sayItPoolForTopic, sayItTopicById } from '../say-it/say-it.data';
 import { emojiSpeakPoolById } from '../emoji-speak/emoji-speak.data';
 import { isValidNewWordsPack, newWordsPoolById } from '../new-words/new-words.data';
-import { isValidDescribeItPack, describeItPoolById } from '../describe-it/describe-it.data';
+import { isValidDescribeItPack, describeItPoolById, DESCRIBE_IT_ENABLED } from '../describe-it/describe-it.data';
 import { foundationV7LessonLegacyIds } from '../lessons/foundation-v7-lesson-id-aliases';
 import { FOUNDATION_V7_CATALOG, type FoundationV7Capability, type FoundationV7Node } from './foundation-v7-path.data';
 import type { FoundationV5ClientNode } from './learn-path.service';
@@ -24,7 +24,9 @@ export function hasFoundationV7Content(node: FoundationV7Node): boolean {
     case 'say_it': return Boolean(ref.topicId && sayItTopicById(ref.topicId) && sayItPoolForTopic(ref.topicId).length === foundationSayItDealCount(ref.topicId));
     case 'emoji_speak': return Boolean(ref.poolId && (emojiSpeakPoolById(ref.poolId)?.items.length ?? 0) > 0);
     case 'new_words': return Boolean(ref.poolId && isValidNewWordsPack(newWordsPoolById(ref.poolId)));
-    case 'describe_it': return Boolean(ref.poolId && isValidDescribeItPack(describeItPoolById(ref.poolId)));
+    case 'describe_it':
+      if (!DESCRIBE_IT_ENABLED) return false;
+      return Boolean(ref.poolId && isValidDescribeItPack(describeItPoolById(ref.poolId)));
     default: return false;
   }
 }
@@ -41,6 +43,9 @@ export function toFoundationV7ClientChapters(capabilities: readonly FoundationV7
       const needsClient = requiredClientCapabilities.some(cap => !capabilities.includes(cap));
       const unbuilt = (node.type === 'describe_it' && !backendReady) || node.type === 'story_bites';
       const comingSoon = !backendReady || needsClient;
+      // Hide content refs on disabled/unbuilt describe_it so older clients cannot open them.
+      const contentRef =
+        node.type === 'describe_it' && !backendReady ? {} : node.contentRef;
       const result: FoundationV7ClientNode = {
         id: node.id, code: node.code, titleEn: node.titleEn, titleTh: node.titleTh,
         type: node.type === 'conversation' ? 'mission' : node.type,
@@ -50,9 +55,9 @@ export function toFoundationV7ClientChapters(capabilities: readonly FoundationV7
         requiredClientCapabilities,
         estimatedMinutes: Math.ceil((node.estimatedMinutes[0] + node.estimatedMinutes[1]) / 2),
         unlockAfterNodeIds: previousPlayableId ? [previousPlayableId] : [],
-        ...node.contentRef,
-        ...(node.type === 'lesson' && node.contentRef.lessonId
-          ? { legacyLessonIds: foundationV7LessonLegacyIds(node.contentRef.lessonId) }
+        ...contentRef,
+        ...(node.type === 'lesson' && contentRef.lessonId
+          ? { legacyLessonIds: foundationV7LessonLegacyIds(contentRef.lessonId) }
           : {}),
         ...(node.legacySimulationIds ? { legacySimulationIds: node.legacySimulationIds } : {}),
         sayItMode: node.sayItMode, pronunciation: node.pronunciation,

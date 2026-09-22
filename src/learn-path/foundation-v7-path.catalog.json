@@ -1222,7 +1222,9 @@
             2,
             2
           ],
-          "contentRef": {}
+          "contentRef": {
+            "poolId": "fnd_v7_u05n05"
+          }
         },
         {
           "id": "v7_u05n06",
@@ -1251,7 +1253,7 @@
             1
           ],
           "contentRef": {
-            "topicId": "fnd_v7_u05n05"
+            "topicId": "fnd_v7_u05n09"
           }
         },
         {

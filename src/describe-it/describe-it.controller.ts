@@ -1,4 +1,14 @@
-import { BadRequestException, Body, Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Req,
+  ServiceUnavailableException,
+  UseGuards,
+} from '@nestjs/common';
 import { randomUUID } from 'crypto';
 import { User } from '@prisma/client';
 import { EconomyService } from '../economy/economy.service';
@@ -8,6 +18,7 @@ import { AnonymousUserGuard } from '../users/anonymous-user.guard';
 import { RecentLearnersService } from '../recent-learners/recent-learners.service';
 import {
   DESCRIBE_IT_BANANA_COST,
+  DESCRIBE_IT_ENABLED,
   isFoundationDescribeItPool,
   listDescribeItPools,
 } from './describe-it.data';
@@ -24,6 +35,12 @@ export class DescribeItController {
     private readonly recentLearners: RecentLearnersService,
   ) {}
 
+  private assertEnabled() {
+    if (!DESCRIBE_IT_ENABLED) {
+      throw new ServiceUnavailableException('Describe It is temporarily unavailable');
+    }
+  }
+
   @Get('pools')
   listPools() {
     return { pools: listDescribeItPools() };
@@ -31,11 +48,13 @@ export class DescribeItController {
 
   @Get('pools/:poolId/deal')
   dealForPool(@Param('poolId') poolId: string) {
+    this.assertEnabled();
     return this.describeIt.dealForPool(poolId);
   }
 
   @Post('pools/:poolId/start')
   async startPool(@Req() req: AuthedRequest, @Param('poolId') poolId: string) {
+    this.assertEnabled();
     this.describeIt.getPool(poolId);
     const rewardId = `describe_it:${poolId}`;
     const replayFree = await this.economy.hasClaimedMiniGameReward(
@@ -79,6 +98,7 @@ export class DescribeItController {
     @Param('poolId') poolId: string,
     @Body() body?: MiniGameScoreBody,
   ) {
+    this.assertEnabled();
     if (!isFoundationDescribeItPool(poolId)) {
       throw new BadRequestException(
         'Only foundation path Describe It pools can claim path rewards',

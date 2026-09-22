@@ -253,6 +253,392 @@
       "acceptedAnswers": []
     }
   ],
+  "what": [
+    {
+      "id": "what_are_you_doing",
+      "promptTh": "คุณกำลังทำอะไร?",
+      "answerEn": "what are you doing?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "what_do_you_want",
+      "promptTh": "คุณต้องการอะไร?",
+      "answerEn": "what do you want?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "what_do_you_need",
+      "promptTh": "คุณต้องใช้อะไร?",
+      "answerEn": "what do you need?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "what_do_you_mean",
+      "promptTh": "คุณหมายความว่าอะไร?",
+      "answerEn": "what do you mean?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "what_do_you_do",
+      "promptTh": "คุณทำงานอะไร?",
+      "answerEn": "what do you do?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "what_do_you_like",
+      "promptTh": "คุณชอบอะไร?",
+      "answerEn": "what do you like?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "what_do_you_want_to_eat",
+      "promptTh": "คุณอยากกินอะไร?",
+      "answerEn": "what do you want to eat?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "what_are_you_looking_for",
+      "promptTh": "คุณกำลังหาอะไร?",
+      "answerEn": "what are you looking for?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "what_is_this",
+      "promptTh": "นี่คืออะไร?",
+      "answerEn": "what is this?",
+      "acceptedAnswers": [
+        "what's this?"
+      ]
+    },
+    {
+      "id": "what_is_that",
+      "promptTh": "นั่นคืออะไร?",
+      "answerEn": "what is that?",
+      "acceptedAnswers": [
+        "what's that?"
+      ]
+    },
+    {
+      "id": "what_is_your_name",
+      "promptTh": "คุณชื่ออะไร?",
+      "answerEn": "what is your name?",
+      "acceptedAnswers": [
+        "what's your name?"
+      ]
+    },
+    {
+      "id": "what_is_wrong",
+      "promptTh": "เป็นอะไร?",
+      "answerEn": "what is wrong?",
+      "acceptedAnswers": [
+        "what's wrong?"
+      ]
+    },
+    {
+      "id": "what_time_is_it",
+      "promptTh": "ตอนนี้กี่โมง?",
+      "answerEn": "what time is it?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "what_should_i_do",
+      "promptTh": "ฉันควรทำอะไร?",
+      "answerEn": "what should I do?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "what_should_we_do",
+      "promptTh": "เราควรทำอะไร?",
+      "answerEn": "what should we do?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "what_did_you_say",
+      "promptTh": "คุณพูดว่าอะไร?",
+      "answerEn": "what did you say?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "what_did_you_buy",
+      "promptTh": "คุณซื้ออะไรมา?",
+      "answerEn": "what did you buy?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "what_did_you_do",
+      "promptTh": "คุณทำอะไรมา?",
+      "answerEn": "what did you do?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "what_happened",
+      "promptTh": "เกิดอะไรขึ้น?",
+      "answerEn": "what happened?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "what_will_you_do",
+      "promptTh": "คุณจะทำอะไร?",
+      "answerEn": "what will you do?",
+      "acceptedAnswers": []
+    }
+  ],
+  "when": [
+    {
+      "id": "when_are_you_coming",
+      "promptTh": "คุณจะมาเมื่อไร?",
+      "answerEn": "when are you coming?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "when_are_you_leaving",
+      "promptTh": "คุณจะไปเมื่อไร?",
+      "answerEn": "when are you leaving?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "when_are_we_going",
+      "promptTh": "เราจะไปกันเมื่อไร?",
+      "answerEn": "when are we going?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "when_will_you_be_back",
+      "promptTh": "คุณจะกลับมาเมื่อไร?",
+      "answerEn": "when will you be back?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "when_will_it_be_ready",
+      "promptTh": "มันจะพร้อมเมื่อไร?",
+      "answerEn": "when will it be ready?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "when_does_it_start",
+      "promptTh": "มันเริ่มเมื่อไร?",
+      "answerEn": "when does it start?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "when_does_it_end",
+      "promptTh": "มันจบเมื่อไร?",
+      "answerEn": "when does it end?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "when_is_the_meeting",
+      "promptTh": "ประชุมเมื่อไร?",
+      "answerEn": "when is the meeting?",
+      "acceptedAnswers": [
+        "when's the meeting?"
+      ]
+    },
+    {
+      "id": "when_is_the_class",
+      "promptTh": "คลาสเรียนเมื่อไร?",
+      "answerEn": "when is the class?",
+      "acceptedAnswers": [
+        "when's the class?"
+      ]
+    },
+    {
+      "id": "when_is_your_birthday",
+      "promptTh": "วันเกิดคุณเมื่อไร?",
+      "answerEn": "when is your birthday?",
+      "acceptedAnswers": [
+        "when's your birthday?"
+      ]
+    },
+    {
+      "id": "when_can_we_meet",
+      "promptTh": "เราเจอกันได้เมื่อไร?",
+      "answerEn": "when can we meet?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "when_should_i_call",
+      "promptTh": "ฉันควรโทรเมื่อไร?",
+      "answerEn": "when should I call?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "when_should_we_go",
+      "promptTh": "เราควรไปเมื่อไร?",
+      "answerEn": "when should we go?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "when_do_you_work",
+      "promptTh": "คุณทำงานเมื่อไร?",
+      "answerEn": "when do you work?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "when_do_you_study",
+      "promptTh": "คุณเรียนเมื่อไร?",
+      "answerEn": "when do you study?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "when_do_you_wake_up",
+      "promptTh": "คุณตื่นเมื่อไร?",
+      "answerEn": "when do you wake up?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "when_do_you_go_to_bed",
+      "promptTh": "คุณเข้านอนเมื่อไร?",
+      "answerEn": "when do you go to bed?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "when_did_you_arrive",
+      "promptTh": "คุณมาถึงเมื่อไร?",
+      "answerEn": "when did you arrive?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "when_did_you_leave",
+      "promptTh": "คุณออกไปเมื่อไร?",
+      "answerEn": "when did you leave?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "when_did_this_happen",
+      "promptTh": "เรื่องนี้เกิดขึ้นเมื่อไร?",
+      "answerEn": "when did this happen?",
+      "acceptedAnswers": []
+    }
+  ],
+  "why": [
+    {
+      "id": "why_are_you_here",
+      "promptTh": "คุณมาที่นี่ทำไม?",
+      "answerEn": "why are you here?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "why_are_you_late",
+      "promptTh": "ทำไมคุณมาสาย?",
+      "answerEn": "why are you late?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "why_are_you_tired",
+      "promptTh": "ทำไมคุณเหนื่อย?",
+      "answerEn": "why are you tired?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "why_are_you_sad",
+      "promptTh": "ทำไมคุณเศร้า?",
+      "answerEn": "why are you sad?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "why_are_you_laughing",
+      "promptTh": "คุณหัวเราะทำไม?",
+      "answerEn": "why are you laughing?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "why_are_you_crying",
+      "promptTh": "คุณร้องไห้ทำไม?",
+      "answerEn": "why are you crying?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "why_are_you_leaving",
+      "promptTh": "คุณจะไปทำไม?",
+      "answerEn": "why are you leaving?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "why_are_you_going",
+      "promptTh": "คุณกำลังไปทำไม?",
+      "answerEn": "why are you going?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "why_do_you_ask",
+      "promptTh": "คุณถามทำไม?",
+      "answerEn": "why do you ask?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "why_do_you_like_it",
+      "promptTh": "ทำไมคุณถึงชอบมัน?",
+      "answerEn": "why do you like it?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "why_do_you_want_this",
+      "promptTh": "ทำไมคุณถึงอยากได้สิ่งนี้?",
+      "answerEn": "why do you want this?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "why_do_you_need_it",
+      "promptTh": "ทำไมคุณถึงต้องใช้มัน?",
+      "answerEn": "why do you need it?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "why_did_you_call",
+      "promptTh": "คุณโทรมาทำไม?",
+      "answerEn": "why did you call?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "why_did_you_stop",
+      "promptTh": "คุณหยุดทำไม?",
+      "answerEn": "why did you stop?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "why_did_you_say_that",
+      "promptTh": "ทำไมคุณพูดแบบนั้น?",
+      "answerEn": "why did you say that?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "why_did_you_do_that",
+      "promptTh": "ทำไมคุณทำแบบนั้น?",
+      "answerEn": "why did you do that?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "why_cant_i_go",
+      "promptTh": "ทำไมฉันไปไม่ได้?",
+      "answerEn": "why can't I go?",
+      "acceptedAnswers": [
+        "why can I not go?"
+      ]
+    },
+    {
+      "id": "why_cant_we_stay",
+      "promptTh": "ทำไมเราอยู่ต่อไม่ได้?",
+      "answerEn": "why can't we stay?",
+      "acceptedAnswers": [
+        "why can we not stay?"
+      ]
+    },
+    {
+      "id": "why_is_it_closed",
+      "promptTh": "ทำไมมันปิด?",
+      "answerEn": "why is it closed?",
+      "acceptedAnswers": [
+        "why's it closed?"
+      ]
+    },
+    {
+      "id": "why_is_this_important",
+      "promptTh": "ทำไมสิ่งนี้ถึงสำคัญ?",
+      "answerEn": "why is this important?",
+      "acceptedAnswers": []
+    }
+  ],
   "every_any": [
     {
       "id": "everyone",

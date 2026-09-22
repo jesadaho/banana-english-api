@@ -42,6 +42,9 @@ for (const node of FOUNDATION_V7_NODES) {
 rewardAliases.set('fnd_v2_say_first_conversation', 'say_it:fnd_v2_first_conversation');
 rewardAliases.set('new_words_demo', 'new_words:new_words_demo');
 rewardAliases.set('new_words:new_words_demo', 'new_words:new_words_demo');
+// Say It "The Right Amount" topic ids used before Describe It claimed fnd_v7_u05n05.
+rewardAliases.set('say_it:fnd_v7_u05n05', 'say_it:fnd_v7_u05n09');
+rewardAliases.set('say_it:fnd_v7_u05n06', 'say_it:fnd_v7_u05n09');
 export function canonicalFoundationV7RewardId(id: string): string | undefined {
   return rewardAliases.get(id);
 }

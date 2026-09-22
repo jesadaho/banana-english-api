@@ -28,6 +28,12 @@ export type DescribeItPool = {
 type Catalog = Record<string, DescribeItPool>;
 
 export const DESCRIBE_IT_POOLS = poolsJson as Catalog;
+/**
+ * Kill switch until the App Store build that ships Describe It is live.
+ * When false, Foundation path treats all describe_it nodes as Coming Soon and
+ * the public pool list is empty (Games hub has nothing to open).
+ */
+export const DESCRIBE_IT_ENABLED = false;
 /** Minimum authored cards for a playable Foundation Describe It pack. */
 export const DESCRIBE_IT_DEAL_COUNT = 5;
 export const DESCRIBE_IT_BANANA_COST = 1;
@@ -66,6 +72,7 @@ export function listDescribeItPools(): Array<{
   isNew: boolean;
   accentColor: number;
 }> {
+  if (!DESCRIBE_IT_ENABLED) return [];
   return Object.values(DESCRIBE_IT_POOLS)
     .filter((pool) => isValidDescribeItPack(pool))
     .map((pool) => ({

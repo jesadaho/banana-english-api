@@ -142,6 +142,82 @@
       }
     ]
   },
+  "fnd_v7_u05n05": {
+    "id": "fnd_v7_u05n05",
+    "titleEn": "Inside the Bag",
+    "titleTh": "ในกระเป๋า",
+    "tagEn": "THINGS",
+    "emoji": "🎒",
+    "estimatedMinutes": 3,
+    "items": [
+      {
+        "id": "01-one-book",
+        "promptTh": "Max หยิบอะไรออกมาจากกระเป๋า ลองตอบเป็นประโยคสั้น ๆ ครับ",
+        "answerEn": "It is a book.",
+        "answerTh": "มันเป็นหนังสือ",
+        "acceptedAnswers": [
+          "It's a book.",
+          "A book.",
+          "It is one book.",
+          "It is a book"
+        ],
+        "imagePath": "describe-it/fnd_v7_u05n05/01-one-book.webp",
+        "hintEn": "It is a _____"
+      },
+      {
+        "id": "02-two-pens",
+        "promptTh": "ของสองชิ้นที่หล่นออกมาคืออะไร ลองตอบเป็นภาษาอังกฤษครับ",
+        "answerEn": "They are pens.",
+        "answerTh": "พวกมันเป็นปากกา",
+        "acceptedAnswers": [
+          "They're pens.",
+          "Two pens.",
+          "They are two pens.",
+          "They are pens"
+        ],
+        "imagePath": "describe-it/fnd_v7_u05n05/02-two-pens.webp"
+      },
+      {
+        "id": "03-one-phone",
+        "promptTh": "Max เจออะไรที่กำลังดังอยู่ในกระเป๋า ลองตอบเป็นภาษาอังกฤษครับ",
+        "answerEn": "It is a phone.",
+        "answerTh": "มันเป็นโทรศัพท์",
+        "acceptedAnswers": [
+          "It's a phone.",
+          "A phone.",
+          "It is one phone.",
+          "It is a phone"
+        ],
+        "imagePath": "describe-it/fnd_v7_u05n05/03-one-phone.webp"
+      },
+      {
+        "id": "04-two-apples",
+        "promptTh": "ของว่างสองชิ้นบนโต๊ะคืออะไร ลองตอบเป็นภาษาอังกฤษครับ",
+        "answerEn": "They are apples.",
+        "answerTh": "พวกมันเป็นแอปเปิล",
+        "acceptedAnswers": [
+          "They're apples.",
+          "Two apples.",
+          "They are two apples.",
+          "They are apples"
+        ],
+        "imagePath": "describe-it/fnd_v7_u05n05/04-two-apples.webp"
+      },
+      {
+        "id": "05-two-keys",
+        "promptTh": "ของสองชิ้นที่ Max เจอก้นกระเป๋าคืออะไร ลองตอบเป็นภาษาอังกฤษครับ",
+        "answerEn": "They are keys.",
+        "answerTh": "พวกมันเป็นกุญแจ",
+        "acceptedAnswers": [
+          "They're keys.",
+          "Two keys.",
+          "They are two keys.",
+          "They are keys"
+        ],
+        "imagePath": "describe-it/fnd_v7_u05n05/05-two-keys.webp"
+      }
+    ]
+  },
   "fnd_v7_u13n05": {
     "id": "fnd_v7_u13n05",
     "titleEn": "What's Happening Here?",

@@ -34,6 +34,10 @@ const POOL_SOURCES: Record<
     dir: `${OUTPUT_ROOT}/v7_u04n05/web`,
     localName: (itemId) => `${itemId}-v1.webp`,
   },
+  fnd_v7_u05n05: {
+    dir: `${OUTPUT_ROOT}/v7_u05n05/web`,
+    localName: (itemId) => `${itemId}-v1.webp`,
+  },
 };
 
 const FIREBASE_CLI_CLIENT_ID =
