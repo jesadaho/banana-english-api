@@ -516,6 +516,15 @@ export class LearnPathService {
       },
     });
 
+    await this.economy.recordMiniGameScore({
+      userId,
+      gameId: `skip_quiz:${targetChapterId}`,
+      kind: 'skip_quiz',
+      correctCount,
+      totalCount: attempt.totalCount,
+      passed,
+    });
+
     return {
       passed,
       skippedChapterId: passed ? attempt.previousChapterId : null,

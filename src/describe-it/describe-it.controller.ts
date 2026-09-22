@@ -1,7 +1,8 @@
-import { BadRequestException, Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 import { User } from '@prisma/client';
 import { EconomyService } from '../economy/economy.service';
+import { readMiniGameScoreBody, type MiniGameScoreBody } from '../economy/mini-game-score';
 import { canonicalFoundationV7RewardId } from '../learn-path/foundation-v7-path.data';
 import { AnonymousUserGuard } from '../users/anonymous-user.guard';
 import { RecentLearnersService } from '../recent-learners/recent-learners.service';
@@ -73,7 +74,11 @@ export class DescribeItController {
   }
 
   @Post('pools/:poolId/complete')
-  async completePool(@Req() req: AuthedRequest, @Param('poolId') poolId: string) {
+  async completePool(
+    @Req() req: AuthedRequest,
+    @Param('poolId') poolId: string,
+    @Body() body?: MiniGameScoreBody,
+  ) {
     if (!isFoundationDescribeItPool(poolId)) {
       throw new BadRequestException(
         'Only foundation path Describe It pools can claim path rewards',
@@ -87,6 +92,13 @@ export class DescribeItController {
     if (!canonicalFoundationV7RewardId(gameId)) {
       throw new BadRequestException(`Unknown foundation Describe It pool: ${poolId}`);
     }
+    const score = readMiniGameScoreBody(body);
+    await this.economy.recordMiniGameScore({
+      userId: req.user.id,
+      gameId,
+      kind: 'describe_it',
+      ...score,
+    });
     return this.economy.applyMiniGameRewards({
       userId: req.user.id,
       gameId,

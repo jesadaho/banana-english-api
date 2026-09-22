@@ -137,6 +137,7 @@ describe('Foundation V7 skip quiz service', () => {
         refundCalls.push({ amount, referenceId, source });
         return { bananaBalance: balance };
       },
+      recordMiniGameScore: async () => {},
     };
 
     const service = new LearnPathService(

@@ -759,7 +759,7 @@ export class AdminMetricsService {
 
   private async buildContent(range: DateRange, filters: MetricsFilters) {
     const userFilter = this.userWhere(filters);
-    const [lessonSessions, missionSessions, ratings, feedbackRows, streakBuckets, activeLearners, sessionMix, sessionMixUsers, dailySpeakActive, minigameStarts, minigameStartUsers] =
+    const [lessonSessions, missionSessions, ratings, feedbackRows, streakBuckets, activeLearners, sessionMix, sessionMixUsers, dailySpeakActive, minigameStarts, minigameStartUsers, stageScoreRows] =
       await Promise.all([
         this.prisma.userSession.groupBy({
           by: ['lessonId'],
@@ -852,6 +852,7 @@ export class AdminMetricsService {
                     'emoji_speak_start',
                     'emoji_speak_play',
                     'new_words_start',
+                    'describe_it_start',
                   ],
                 },
               },
@@ -877,6 +878,7 @@ export class AdminMetricsService {
                     'emoji_speak_start',
                     'emoji_speak_play',
                     'new_words_start',
+                    'describe_it_start',
                   ],
                 },
               },
@@ -887,6 +889,20 @@ export class AdminMetricsService {
             ],
           },
           _count: { _all: true },
+        }),
+        this.prisma.miniGameScoreAttempt.findMany({
+          where: {
+            createdAt: { gte: range.from, lte: range.to },
+            user: userFilter,
+          },
+          select: {
+            gameId: true,
+            kind: true,
+            correctCount: true,
+            totalCount: true,
+            passed: true,
+            userId: true,
+          },
         }),
       ]);
 
@@ -984,6 +1000,8 @@ export class AdminMetricsService {
       ]),
     ) as Record<ContentCourse, ReturnType<AdminMetricsService['buildCourseContentSlice']>>;
 
+    const stageScores = this.aggregateStageScores(stageScoreRows);
+
     return {
       range: { from: range.from.toISOString(), to: range.to.toISOString() },
       filters,
@@ -995,6 +1013,7 @@ export class AdminMetricsService {
       writtenFeedback: writtenFeedback.slice(0, 80),
       feedbackSummary,
       courses,
+      stageScores,
       retention: {
         activeLearners7d: activeLearners,
         streakBuckets,
@@ -1010,6 +1029,87 @@ export class AdminMetricsService {
         dailySpeakTouchedUsers: dailySpeakActive,
       },
     };
+  }
+
+  /** Aggregate append-only stage scores for admin Content. */
+  private aggregateStageScores(
+    rows: {
+      gameId: string;
+      kind: string;
+      correctCount: number;
+      totalCount: number;
+      passed: boolean | null;
+      userId: string;
+    }[],
+  ) {
+    type Acc = {
+      gameId: string;
+      kind: string;
+      attempts: number;
+      users: Set<string>;
+      correctSum: number;
+      totalSum: number;
+      passedCount: number;
+      scoredPass: number;
+    };
+    const byGame = new Map<string, Acc>();
+    for (const row of rows) {
+      let acc = byGame.get(row.gameId);
+      if (!acc) {
+        acc = {
+          gameId: row.gameId,
+          kind: row.kind,
+          attempts: 0,
+          users: new Set(),
+          correctSum: 0,
+          totalSum: 0,
+          passedCount: 0,
+          scoredPass: 0,
+        };
+        byGame.set(row.gameId, acc);
+      }
+      acc.attempts += 1;
+      acc.users.add(row.userId);
+      acc.correctSum += row.correctCount;
+      acc.totalSum += row.totalCount;
+      if (row.passed != null) {
+        acc.scoredPass += 1;
+        if (row.passed) acc.passedCount += 1;
+      }
+    }
+
+    return [...byGame.values()]
+      .map((acc) => {
+        const avgCorrect =
+          acc.attempts === 0
+            ? 0
+            : Math.round((acc.correctSum / acc.attempts) * 10) / 10;
+        const avgTotal =
+          acc.attempts === 0
+            ? 0
+            : Math.round((acc.totalSum / acc.attempts) * 10) / 10;
+        const avgPct =
+          acc.totalSum === 0
+            ? 0
+            : Math.round((acc.correctSum / acc.totalSum) * 1000) / 10;
+        const passRate =
+          acc.scoredPass === 0
+            ? null
+            : Math.round((acc.passedCount / acc.scoredPass) * 1000) / 10;
+        return {
+          gameId: acc.gameId,
+          titleEn: contentItemTitle(acc.gameId),
+          kind: acc.kind,
+          course: classifyContentCourse(acc.gameId),
+          attempts: acc.attempts,
+          users: acc.users.size,
+          avgCorrect,
+          avgTotal,
+          avgPct,
+          passRate,
+        };
+      })
+      .sort((a, b) => b.attempts - a.attempts);
   }
 
   private buildFeedbackSummary(
@@ -1097,6 +1197,7 @@ export class AdminMetricsService {
     if (raw.say_it_start) plays.set('game_say_it', raw.say_it_start);
     if (raw.explain_it_start) plays.set('game_explain_it', raw.explain_it_start);
     if (raw.new_words_start) plays.set('game_new_words', raw.new_words_start);
+    if (raw.describe_it_start) plays.set('game_describe_it', raw.describe_it_start);
     const emoji =
       (raw.emoji_speak_play ?? 0) > 0
         ? raw.emoji_speak_play
@@ -1150,6 +1251,12 @@ export class AdminMetricsService {
       merged.new_words = {
         count: raw.new_words_start,
         users: usersBySource.new_words_start ?? 0,
+      };
+    }
+    if (raw.describe_it_start) {
+      merged.describe_it = {
+        count: raw.describe_it_start,
+        users: usersBySource.describe_it_start ?? 0,
       };
     }
     if (raw.daily_speak_reward) {

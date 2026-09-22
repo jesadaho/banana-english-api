@@ -41,6 +41,21 @@ export interface StreakBonus {
   seedsEarned: number;
 }
 
+/** Infer analytics kind from a canonical / prefixed game id. */
+export function inferMiniGameScoreKind(gameId: string): string {
+  if (gameId.startsWith('say_it:')) return 'say_it';
+  if (gameId.startsWith('describe_it:')) return 'describe_it';
+  if (gameId.startsWith('emoji_speak:')) return 'emoji_speak';
+  if (gameId.startsWith('new_words:')) return 'new_words';
+  if (gameId.startsWith('skip_quiz:')) return 'skip_quiz';
+  if (gameId.startsWith('speak_challenge')) return 'speak_challenge';
+  if (gameId.startsWith('word_choice')) return 'word_choice';
+  if (gameId.startsWith('story_builder')) return 'story_builder';
+  if (gameId.startsWith('whats_happen')) return 'whats_happen';
+  if (gameId.startsWith('emoji_speak')) return 'emoji_speak';
+  return 'other';
+}
+
 export interface SessionRewardResult {
   xpEarned: number;
   seedsEarned: number;
@@ -995,6 +1010,54 @@ export class EconomyService {
         streakIncreased: streak.streakDays !== streak.previousStreakDays,
         streakBonus: streak.streakBonus,
       };
+    });
+  }
+
+  /**
+   * Persist one play's correct/total for admin Content. Optional scores are
+   * ignored (old clients); invalid values throw so the app can fix payloads.
+   */
+  async recordMiniGameScore(params: {
+    userId: string;
+    gameId: string;
+    correctCount?: number | null;
+    totalCount?: number | null;
+    passed?: boolean | null;
+    kind?: string;
+  }): Promise<void> {
+    const correctCount = params.correctCount;
+    const totalCount = params.totalCount;
+    if (correctCount == null && totalCount == null) return;
+    if (
+      typeof correctCount !== 'number' ||
+      typeof totalCount !== 'number' ||
+      !Number.isInteger(correctCount) ||
+      !Number.isInteger(totalCount) ||
+      correctCount < 0 ||
+      totalCount <= 0 ||
+      correctCount > totalCount
+    ) {
+      throw new BadRequestException(
+        'correctCount/totalCount must be integers with 0 ≤ correctCount ≤ totalCount and totalCount > 0',
+      );
+    }
+
+    const gameId =
+      canonicalFoundationV7RewardId(params.gameId) ?? params.gameId;
+    const kind = params.kind ?? inferMiniGameScoreKind(gameId);
+
+    await this.prisma.miniGameScoreAttempt.create({
+      data: {
+        userId: params.userId,
+        gameId,
+        kind,
+        correctCount,
+        totalCount,
+        passed:
+          params.passed == null
+            ? null
+            : Boolean(params.passed),
+      },
     });
   }
 

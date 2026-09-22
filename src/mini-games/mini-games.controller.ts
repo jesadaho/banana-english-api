@@ -36,6 +36,7 @@ import { isPhonicsNodeId, PhonicsService } from '../phonics/phonics.service';
 import { EmojiSpeakService } from '../emoji-speak/emoji-speak.service';
 import { canonicalFoundationV7RewardId, isFoundationV7EmojiPool } from '../learn-path/foundation-v7-path.data';
 import { isNewWordsPoolId } from '../new-words/new-words.data';
+import { readMiniGameScoreBody, type MiniGameScoreBody } from '../economy/mini-game-score';
 
 type AuthedRequest = { user: User };
 
@@ -304,6 +305,7 @@ export class MiniGamesController {
   async complete(
     @Req() req: AuthedRequest,
     @Param('gameId') gameId: string,
+    @Body() body?: MiniGameScoreBody,
   ) {
     if (!isAllowedMiniGameId(gameId)) {
       throw new BadRequestException(`Unknown mini-game: ${gameId}`);
@@ -311,6 +313,13 @@ export class MiniGamesController {
     if (isPhonicsNodeId(gameId)) {
       await this.phonics.assertPassed(req.user.id, gameId);
     }
+
+    const score = readMiniGameScoreBody(body);
+    await this.economy.recordMiniGameScore({
+      userId: req.user.id,
+      gameId,
+      ...score,
+    });
 
     return this.economy.applyMiniGameRewards({
       userId: req.user.id,

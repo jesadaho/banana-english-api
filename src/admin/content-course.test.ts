@@ -28,6 +28,15 @@ describe('classifyContentCourse', () => {
     assert.equal(classifyContentCourse('game_word_choice'), 'minigame');
   });
 
+  it('puts foundation stage score ids in foundation', () => {
+    assert.equal(classifyContentCourse('say_it:fnd_v7_u03n04'), 'foundation');
+    assert.equal(
+      classifyContentCourse('describe_it:fnd_v7_u03n05'),
+      'foundation',
+    );
+    assert.equal(classifyContentCourse('skip_quiz:v7_u04'), 'foundation');
+  });
+
   it('puts parked leftover lessons in other', () => {
     assert.equal(classifyContentCourse('weather'), 'other');
     assert.equal(classifyContentCourse('shopping_basics'), 'other');

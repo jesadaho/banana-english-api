@@ -108,6 +108,7 @@ model User {
   phonicsNodeProgress       PhonicsNodeProgress[]
   foundationChapterSkips    FoundationChapterSkip[]
   foundationSkipQuizAttempts FoundationSkipQuizAttempt[]
+  miniGameScoreAttempts     MiniGameScoreAttempt[]
   bugReports                BugReport[]
 
   createdAt               DateTime  @default(now())
@@ -351,6 +352,29 @@ model FoundationSkipQuizAttempt {
 
   @@unique([userId, idempotencyKey])
   @@index([userId, pathId, targetChapterId])
+}
+
+/**
+ * Append-only mini-game / path-stage scores (Say It, Describe It, Emoji Speak,
+ * New Words, Skip Quiz, etc.) for admin Content analytics.
+ */
+model MiniGameScoreAttempt {
+  id           String   @id @default(uuid())
+  userId       String
+  /** Canonical reward / stage id, e.g. say_it:fnd_v7_u03n04, skip_quiz:v7_u04. */
+  gameId       String
+  /** say_it | describe_it | emoji_speak | new_words | skip_quiz | other */
+  kind         String
+  correctCount Int
+  totalCount   Int
+  passed       Boolean?
+  createdAt    DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([gameId, createdAt])
+  @@index([kind, createdAt])
+  @@index([userId, gameId, createdAt])
 }
 
 /** Verified in-app purchase (RevenueCat / App Store / Play). */

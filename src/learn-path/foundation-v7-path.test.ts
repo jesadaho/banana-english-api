@@ -352,7 +352,7 @@ describe('Foundation V7 progress and completion contracts', () => {
 
   it('allows V7 Say It completion and keeps Foundation start pricing unchanged', async () => {
     const calls: any[] = [];
-    const economy = {applyMiniGameRewards: async (p: any) => {calls.push(p); return p;}, spendBananas: async () => {throw new Error('Say It Foundation start should remain free');}};
+    const economy = {applyMiniGameRewards: async (p: any) => {calls.push(p); return p;}, recordMiniGameScore: async () => {}, spendBananas: async () => {throw new Error('Say It Foundation start should remain free');}};
     const controller = new SayItController(new SayItService(), economy as any, {markActivity: async () => {}} as any);
     for (const node of FOUNDATION_V7_NODES.filter(n => n.type === 'say_it')) {
       assert.equal((await controller.startTopic(req, node.contentRef.topicId!)).bananaCost, 0);
@@ -364,7 +364,7 @@ describe('Foundation V7 progress and completion contracts', () => {
   });
 
   it('accepts mini-game completion IDs but rejects lesson and unbuilt media IDs', async () => {
-    const economy = {applyMiniGameRewards: async (p: any) => p, spendBananas: async () => {}};
+    const economy = {applyMiniGameRewards: async (p: any) => p, recordMiniGameScore: async () => {}, spendBananas: async () => {}, hasClaimedMiniGameReward: async () => false};
     const controller = new MiniGamesController(economy as any, {} as any, {} as any, {} as any, {} as any, {markActivity:async () => {}} as any, {} as any, new EmojiSpeakService());
     for (const node of FOUNDATION_V7_NODES) {
       if (['say_it','emoji_speak','new_words'].includes(node.type) || (node.type === 'describe_it' && node.contentRef.poolId)) await controller.complete(req, node.id);

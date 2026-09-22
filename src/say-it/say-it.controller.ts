@@ -1,7 +1,8 @@
-import { BadRequestException, Controller, Get, Param, Post, Query, Req, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Param, Post, Query, Req, UseGuards } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 import { User } from '@prisma/client';
 import { EconomyService } from '../economy/economy.service';
+import { readMiniGameScoreBody, type MiniGameScoreBody } from '../economy/mini-game-score';
 import { isFoundationPathRewardGameId } from '../learn-path/foundation-v2-path.data';
 import { canonicalFoundationV7RewardId } from '../learn-path/foundation-v7-path.data';
 import { AnonymousUserGuard } from '../users/anonymous-user.guard';
@@ -88,6 +89,7 @@ export class SayItController {
   async completeTopic(
     @Req() req: AuthedRequest,
     @Param('topicId') topicId: string,
+    @Body() body?: MiniGameScoreBody,
   ) {
     if (!isFoundationPathSayItTopic(topicId)) {
       throw new BadRequestException(
@@ -102,6 +104,13 @@ export class SayItController {
     if (!isFoundationPathRewardGameId(gameId) && !canonicalFoundationV7RewardId(gameId)) {
       throw new BadRequestException(`Unknown foundation Say It topic: ${topicId}`);
     }
+    const score = readMiniGameScoreBody(body);
+    await this.economy.recordMiniGameScore({
+      userId: req.user.id,
+      gameId,
+      kind: 'say_it',
+      ...score,
+    });
     return this.economy.applyMiniGameRewards({
       userId: req.user.id,
       gameId,

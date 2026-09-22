@@ -68,6 +68,7 @@ describe('Describe It foundation pack', () => {
   it('starts for 1 banana and completes with the canonical reward id', async () => {
     const calls: any[] = [];
     const spends: any[] = [];
+    const scores: any[] = [];
     const claimed = new Set<string>();
     const controller = new DescribeItController(
       new DescribeItService(),
@@ -76,6 +77,9 @@ describe('Describe It foundation pack', () => {
           calls.push(p);
           claimed.add(p.gameId);
           return p;
+        },
+        recordMiniGameScore: async (p: any) => {
+          scores.push(p);
         },
         hasClaimedMiniGameReward: async (_userId: string, gameId: string) =>
           claimed.has(gameId),
@@ -99,9 +103,16 @@ describe('Describe It foundation pack', () => {
     assert.equal(spends.length, 1);
     assert.equal(spends[0].amount, 1);
     assert.equal(spends[0].source, 'describe_it_start');
-    const reward = await controller.completePool(req, 'fnd_v7_u03n05');
+    const reward = await controller.completePool(req, 'fnd_v7_u03n05', {
+      correctCount: 5,
+      totalCount: 6,
+    });
     assert.equal((reward as any).gameId, 'describe_it:fnd_v7_u03n05');
     assert.equal(calls.length, 1);
+    assert.equal(scores.length, 1);
+    assert.equal(scores[0].correctCount, 5);
+    assert.equal(scores[0].totalCount, 6);
+    assert.equal(scores[0].kind, 'describe_it');
 
     const replay = await controller.startPool(req, 'fnd_v7_u03n05');
     assert.equal(replay.bananaCost, 0);
@@ -112,6 +123,7 @@ describe('Describe It foundation pack', () => {
     assert.equal(startNow.bananaCost, 1);
     await controller.completePool(req, 'fnd_v7_u13n05');
     assert.equal(calls.length, 2);
+    assert.equal(scores.length, 2);
     assert.equal(spends.length, 2);
     await assert.rejects(controller.completePool(req, 'fnd_v7_unknown'));
   });
