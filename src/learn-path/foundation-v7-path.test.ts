@@ -95,15 +95,15 @@ describe('Foundation V7 catalog and real content', () => {
     assert.equal(hasFoundationV7Content({...node, contentRef:{}}), false);
   });
 
-  it('has 136 backend-ready nodes, 133 playable by default, and a capability gate for three Guided packs', () => {
+  it('has 137 backend-ready nodes, 134 playable by default, and a capability gate for three Guided packs', () => {
     const defaults = toFoundationV7ClientChapters().flatMap(c => c.items);
-    assert.equal(defaults.filter(n => n.backendReady).length, 136);
-    assert.equal(defaults.filter(n => !n.comingSoon).length, 133);
-    assert.equal(all().filter(n => !n.comingSoon).length, 136);
+    assert.equal(defaults.filter(n => n.backendReady).length, 137);
+    assert.equal(defaults.filter(n => !n.comingSoon).length, 134);
+    assert.equal(all().filter(n => !n.comingSoon).length, 137);
     assert.equal(defaults.filter(n => n.unavailableReason === 'client_capability_required').length, 3);
     assert.equal(defaults.filter(n => n.unavailableReason === 'missing_content').length, 0);
     const placeholders = all().filter(n => n.comingSoon);
-    assert.equal(placeholders.length, 14);
+    assert.equal(placeholders.length, 13);
     assert.ok(placeholders.every(n => !n.countsTowardProgress && n.unavailableReason === 'mechanic_not_implemented'));
     assert.ok(placeholders.every(n => !n.lessonId && !n.poolId && !n.topicId && !n.simulationId));
     const describeIt = all().find(n => n.id === 'v7_u13n05');
@@ -114,6 +114,10 @@ describe('Foundation V7 catalog and real content', () => {
     assert.equal(lookAtMe?.comingSoon, false);
     assert.equal(lookAtMe?.backendReady, true);
     assert.equal(lookAtMe?.poolId, 'fnd_v7_u03n05');
+    const familyPhoto = all().find(n => n.id === 'v7_u04n05');
+    assert.equal(familyPhoto?.comingSoon, false);
+    assert.equal(familyPhoto?.backendReady, true);
+    assert.equal(familyPhoto?.poolId, 'fnd_v7_u04n05');
     const serialized = JSON.stringify(all());
     assert.equal(serialized.includes('"script"'), false);
     assert.equal(serialized.includes('"questions"'), false);
@@ -262,18 +266,18 @@ describe('Foundation V7 progress and completion contracts', () => {
     mini.push(...all().filter(n => n.comingSoon).map(n => n.id));
     const service = pathService(lessons, mini, simulations);
     const full = await service.getFoundationV7('user', ['say_it_guided']);
-    assert.equal(full.progress.completedCount, 136);
-    assert.equal(full.progress.totalCount, 136);
+    assert.equal(full.progress.completedCount, 137);
+    assert.equal(full.progress.totalCount, 137);
     assert.equal(full.progress.currentNodeId, null);
     const legacyClient = await service.getFoundationV7('user');
-    assert.equal(legacyClient.progress.completedCount, 133);
-    assert.equal(legacyClient.progress.totalCount, 133);
+    assert.equal(legacyClient.progress.completedCount, 134);
+    assert.equal(legacyClient.progress.totalCount, 134);
     assert.equal(legacyClient.progress.currentNodeId, null);
   });
 
   it('rejects unknown capabilities rather than silently enabling unsupported mechanics', async () => {
     const controller = new LearnPathController(pathService());
-    assert.equal((await controller.foundationV7(req, 'say_it_guided')).summary.playableCount, 136);
+    assert.equal((await controller.foundationV7(req, 'say_it_guided')).summary.playableCount, 137);
     await assert.rejects(controller.foundationV7(req, 'story_bites'));
     await assert.rejects(controller.foundationV7(req, ['say_it_guided'] as any));
   });

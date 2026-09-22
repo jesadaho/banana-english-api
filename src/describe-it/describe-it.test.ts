@@ -14,10 +14,10 @@ const req = { user: { id: 'describe-it-test', displayName: 'Mia' } } as any;
 describe('Describe It foundation pack', () => {
   it('lists playable hub pools', () => {
     const pools = listDescribeItPools();
-    assert.equal(pools.length, 2);
+    assert.equal(pools.length, 3);
     assert.deepEqual(
       pools.map((pool) => pool.id).sort(),
-      ['fnd_v7_u03n05', 'fnd_v7_u13n05'],
+      ['fnd_v7_u03n05', 'fnd_v7_u04n05', 'fnd_v7_u13n05'],
     );
     const lookAtMe = pools.find((pool) => pool.id === 'fnd_v7_u03n05');
     assert.equal(lookAtMe?.poolSize, 6);
@@ -42,6 +42,27 @@ describe('Describe It foundation pack', () => {
     assert.equal(items[0].answerTh, 'ฉันมีความสุข');
     assert.ok(items.every((item) => (item.answerTh ?? '').trim().length > 0));
     assert.ok(items[0].imageUrl.includes('describe-it%2Ffnd_v7_u03n05%2F01-happy.webp'));
+    assert.ok(items.slice(1).every((item) => !item.hintEn));
+  });
+
+  it('deals five Family Photo cards in order with a first-item hint', () => {
+    const pool = describeItPoolById('fnd_v7_u04n05');
+    assert.ok(isValidDescribeItPack(pool));
+    const items = dealDescribeItCards('fnd_v7_u04n05');
+    assert.equal(items.length, 5);
+    assert.deepEqual(items.map((item) => item.id), [
+      '01-may-student',
+      '02-max-happy',
+      '03-john-teacher',
+      '04-minnie-doctor',
+      '05-mali-tired',
+    ]);
+    assert.equal(items[0].hintEn, 'She is a _____');
+    assert.equal(items[0].answerEn, 'She is a student.');
+    assert.equal(items[0].answerTh, 'เธอเป็นนักเรียน');
+    assert.equal(items[2].answerEn, 'He is a teacher.');
+    assert.ok(items.every((item) => (item.answerTh ?? '').trim().length > 0));
+    assert.ok(items[0].imageUrl.includes('describe-it%2Ffnd_v7_u04n05%2F01-may-student.webp'));
     assert.ok(items.slice(1).every((item) => !item.hintEn));
   });
 

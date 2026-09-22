@@ -903,11 +903,12 @@
           "titleTh": "รูปครอบครัว",
           "type": "describe_it",
           "beat": "Sho",
-          "learningTarget": "พูดสองประโยคแนะนำคนในภาพ",
-          "activity": "ภาพครอบครัวสมมติพร้อมชื่อ/ความสัมพันธ์เป็นข้อมูล; ไม่อนุมานจากเพศ/อายุ; starter มีให้เมื่อขอ",
+          "learningTarget": "บอกอาชีพหรือความรู้สึกของคนในรูปด้วย He/She is…",
+          "activity": "ภาพคนในกรอบรูปครอบครัว; พูดหนึ่งประโยคจากสิ่งที่เห็น เช่น He is a teacher. / She is happy.",
           "examples": [
-            "This is my sister",
-            "She is happy"
+            "She is a student",
+            "He is happy",
+            "She is a doctor"
           ],
           "estimatedMinutes": [
             2,
@@ -920,7 +921,9 @@
             2,
             2
           ],
-          "contentRef": {}
+          "contentRef": {
+            "poolId": "fnd_v7_u04n05"
+          }
         },
         {
           "id": "v7_u04n06",

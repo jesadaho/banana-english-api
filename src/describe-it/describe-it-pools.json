@@ -76,6 +76,72 @@
       }
     ]
   },
+  "fnd_v7_u04n05": {
+    "id": "fnd_v7_u04n05",
+    "titleEn": "A Family Photo",
+    "titleTh": "รูปครอบครัว",
+    "tagEn": "PEOPLE",
+    "emoji": "🖼️",
+    "estimatedMinutes": 3,
+    "items": [
+      {
+        "id": "01-may-student",
+        "promptTh": "ผู้หญิงในภาพเป็นอะไร ลองพูดเป็นภาษาอังกฤษครับ",
+        "answerEn": "She is a student.",
+        "answerTh": "เธอเป็นนักเรียน",
+        "acceptedAnswers": [
+          "She's a student.",
+          "She is a student"
+        ],
+        "imagePath": "describe-it/fnd_v7_u04n05/01-may-student.webp",
+        "hintEn": "She is a _____"
+      },
+      {
+        "id": "02-max-happy",
+        "promptTh": "ผู้ชายในภาพรู้สึกอย่างไร ลองพูดเป็นภาษาอังกฤษครับ",
+        "answerEn": "He is happy.",
+        "answerTh": "เขามีความสุข",
+        "acceptedAnswers": [
+          "He's happy.",
+          "He is happy"
+        ],
+        "imagePath": "describe-it/fnd_v7_u04n05/02-max-happy.webp"
+      },
+      {
+        "id": "03-john-teacher",
+        "promptTh": "ผู้ชายในภาพทำอาชีพอะไร ลองพูดเป็นภาษาอังกฤษครับ",
+        "answerEn": "He is a teacher.",
+        "answerTh": "เขาเป็นครู",
+        "acceptedAnswers": [
+          "He's a teacher.",
+          "He is a teacher"
+        ],
+        "imagePath": "describe-it/fnd_v7_u04n05/03-john-teacher.webp"
+      },
+      {
+        "id": "04-minnie-doctor",
+        "promptTh": "ผู้หญิงในภาพทำอาชีพอะไร ลองพูดเป็นภาษาอังกฤษครับ",
+        "answerEn": "She is a doctor.",
+        "answerTh": "เธอเป็นหมอ",
+        "acceptedAnswers": [
+          "She's a doctor.",
+          "She is a doctor"
+        ],
+        "imagePath": "describe-it/fnd_v7_u04n05/04-minnie-doctor.webp"
+      },
+      {
+        "id": "05-mali-tired",
+        "promptTh": "ผู้หญิงในภาพรู้สึกอย่างไร ลองพูดเป็นภาษาอังกฤษครับ",
+        "answerEn": "She is tired.",
+        "answerTh": "เธอเหนื่อย",
+        "acceptedAnswers": [
+          "She's tired.",
+          "She is tired"
+        ],
+        "imagePath": "describe-it/fnd_v7_u04n05/05-mali-tired.webp"
+      }
+    ]
+  },
   "fnd_v7_u13n05": {
     "id": "fnd_v7_u13n05",
     "titleEn": "What's Happening Here?",
