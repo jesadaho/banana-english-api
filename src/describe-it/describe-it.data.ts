@@ -5,6 +5,7 @@ export type DescribeItCard = {
   id: string;
   promptTh: string;
   answerEn: string;
+  answerTh: string;
   acceptedAnswers: string[];
   imagePath: string;
   hintEn?: string;
@@ -27,6 +28,7 @@ export type DescribeItPool = {
 type Catalog = Record<string, DescribeItPool>;
 
 export const DESCRIBE_IT_POOLS = poolsJson as Catalog;
+/** Minimum authored cards for a playable Foundation Describe It pack. */
 export const DESCRIBE_IT_DEAL_COUNT = 5;
 export const DESCRIBE_IT_BANANA_COST = 0;
 export const DEFAULT_DESCRIBE_IT_BUCKET =
@@ -45,11 +47,39 @@ export function isFoundationDescribeItPool(poolId: string): boolean {
 }
 
 export function isValidDescribeItPack(pool: DescribeItPool | undefined): boolean {
-  return Boolean(pool && pool.items.length === DESCRIBE_IT_DEAL_COUNT);
+  return Boolean(pool && pool.items.length >= DESCRIBE_IT_DEAL_COUNT);
 }
 
 export function describeItImageUrl(imagePath: string, versionMs = 0): string {
   return publicHeroUrl(describeItStorageBucket(), imagePath, versionMs);
+}
+
+export function listDescribeItPools(): Array<{
+  id: string;
+  titleEn: string;
+  titleTh: string;
+  tagEn: string;
+  emoji: string;
+  estimatedMinutes: number;
+  poolSize: number;
+  locked: boolean;
+  isNew: boolean;
+  accentColor: number;
+}> {
+  return Object.values(DESCRIBE_IT_POOLS)
+    .filter((pool) => isValidDescribeItPack(pool))
+    .map((pool) => ({
+      id: pool.id,
+      titleEn: pool.titleEn,
+      titleTh: pool.titleTh,
+      tagEn: pool.tagEn,
+      emoji: pool.emoji,
+      estimatedMinutes: pool.estimatedMinutes,
+      poolSize: pool.items.length,
+      locked: false,
+      isNew: true,
+      accentColor: 0xfff06292,
+    }));
 }
 
 export function dealDescribeItCards(poolId: string): DescribeItDealtCard[] {
@@ -60,3 +90,4 @@ export function dealDescribeItCards(poolId: string): DescribeItDealtCard[] {
     imageUrl: describeItImageUrl(item.imagePath),
   }));
 }
+

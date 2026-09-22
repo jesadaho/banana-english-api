@@ -6,12 +6,46 @@ import {
   dealDescribeItCards,
   describeItPoolById,
   isValidDescribeItPack,
+  listDescribeItPools,
 } from './describe-it.data';
 
 const req = { user: { id: 'describe-it-test', displayName: 'Mia' } } as any;
 
 describe('Describe It foundation pack', () => {
-  it('deals five authored cards in order with a first-item hint', () => {
+  it('lists playable hub pools', () => {
+    const pools = listDescribeItPools();
+    assert.equal(pools.length, 2);
+    assert.deepEqual(
+      pools.map((pool) => pool.id).sort(),
+      ['fnd_v7_u03n05', 'fnd_v7_u13n05'],
+    );
+    const lookAtMe = pools.find((pool) => pool.id === 'fnd_v7_u03n05');
+    assert.equal(lookAtMe?.poolSize, 6);
+    assert.equal(lookAtMe?.locked, false);
+  });
+
+  it('deals six Look at Me cards in order with a first-item hint', () => {
+    const pool = describeItPoolById('fnd_v7_u03n05');
+    assert.ok(isValidDescribeItPack(pool));
+    const items = dealDescribeItCards('fnd_v7_u03n05');
+    assert.equal(items.length, 6);
+    assert.deepEqual(items.map((item) => item.id), [
+      '01-happy',
+      '02-tired',
+      '03-hungry',
+      '04-hot',
+      '05-cold',
+      '06-sick',
+    ]);
+    assert.equal(items[0].hintEn, 'I am _____');
+    assert.equal(items[0].answerEn, 'I am happy.');
+    assert.equal(items[0].answerTh, 'ฉันมีความสุข');
+    assert.ok(items.every((item) => (item.answerTh ?? '').trim().length > 0));
+    assert.ok(items[0].imageUrl.includes('describe-it%2Ffnd_v7_u03n05%2F01-happy.webp'));
+    assert.ok(items.slice(1).every((item) => !item.hintEn));
+  });
+
+  it('deals five authored Now cards in order with a first-item hint', () => {
     const pool = describeItPoolById('fnd_v7_u13n05');
     assert.ok(isValidDescribeItPack(pool));
     const items = dealDescribeItCards('fnd_v7_u13n05');
@@ -25,6 +59,8 @@ describe('Describe It foundation pack', () => {
     ]);
     assert.equal(items[0].hintEn, 'She _____');
     assert.equal(items[0].answerEn, 'She is reading.');
+    assert.equal(items[0].answerTh, 'เธอกำลังอ่านหนังสือ');
+    assert.ok(items.every((item) => (item.answerTh ?? '').trim().length > 0));
     assert.ok(items[0].imageUrl.includes('describe-it%2Ffnd_v7_u13n05%2F01-she-is-reading.webp'));
     assert.ok(items.slice(1).every((item) => !item.hintEn));
   });
@@ -44,12 +80,17 @@ describe('Describe It foundation pack', () => {
       } as any,
       { markActivity: async () => {} } as any,
     );
-    const start = await controller.startPool(req, 'fnd_v7_u13n05');
+    const start = await controller.startPool(req, 'fnd_v7_u03n05');
     assert.equal(start.bananaCost, 0);
-    assert.equal(start.dealCount, 5);
-    const reward = await controller.completePool(req, 'fnd_v7_u13n05');
-    assert.equal((reward as any).gameId, 'describe_it:fnd_v7_u13n05');
+    assert.equal(start.dealCount, 6);
+    const reward = await controller.completePool(req, 'fnd_v7_u03n05');
+    assert.equal((reward as any).gameId, 'describe_it:fnd_v7_u03n05');
     assert.equal(calls.length, 1);
+
+    const startNow = await controller.startPool(req, 'fnd_v7_u13n05');
+    assert.equal(startNow.dealCount, 5);
+    await controller.completePool(req, 'fnd_v7_u13n05');
+    assert.equal(calls.length, 2);
     await assert.rejects(controller.completePool(req, 'fnd_v7_unknown'));
   });
 });

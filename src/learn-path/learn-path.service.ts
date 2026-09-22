@@ -1,10 +1,19 @@
-import { Injectable } from '@nestjs/common';
-import { Currency } from '@prisma/client';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { Currency, Prisma } from '@prisma/client';
+import { randomUUID } from 'crypto';
 import { PrismaService } from '../prisma/prisma.service';
 import { LessonsService } from '../lessons/lessons.service';
+import { EconomyService } from '../economy/economy.service';
 import { FOUNDATION_V7_CATALOG, FOUNDATION_V7_PATH_ID, foundationV7NodeTypeCounts, type FoundationV7Capability } from './foundation-v7-path.data';
 import { toFoundationV7ClientChapters } from './foundation-v7-path.view';
 import { canonicalFoundationV7RewardId } from './foundation-v7-path.data';
+import {
+  dealSkipQuizPhrases,
+  isSkipQuizPassed,
+  resolveSkipQuizPool,
+  SKIP_QUIZ_BANANA_COST,
+  skipQuizEligibilityPayload,
+} from './foundation-v7-skip-quiz';
 import {
   FOUNDATION_V2_CHAPTERS,
   FOUNDATION_V2_PATH_ID,
@@ -307,26 +316,248 @@ export class LearnPathService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly lessons: LessonsService,
+    private readonly economy: EconomyService,
   ) {}
 
   async getFoundationV7(userId: string, capabilities: readonly FoundationV7Capability[] = []) {
-    const chapters = toFoundationV7ClientChapters(capabilities);
+    const chapters = toFoundationV7ClientChapters(capabilities).map((chapter) => ({
+      ...chapter,
+      skipQuizEligible: resolveSkipQuizPool(chapter.id).eligible,
+    }));
     const nodes = chapters.flatMap(chapter => chapter.items);
     const playable = nodes.filter(node => !node.comingSoon);
     const completed = await this.resolveCompletedV5NodeIds(userId, playable);
+    const skippedNodeIds = await this.resolveSkippedV7NodeIds(userId);
+    const satisfied = new Set([...completed, ...skippedNodeIds]);
     return {
       pathId: FOUNDATION_V7_PATH_ID, version: FOUNDATION_V7_CATALOG.metadata.version,
       sourceVersion: FOUNDATION_V7_CATALOG.metadata.sourceVersion, releaseStatus: 'playtest' as const,
       chapters,
       progress: {
-        completedNodeIds: [...completed], currentNodeId: this.resolveCurrentNodeId(nodes, completed),
-        completedCount: completed.size, totalCount: playable.length,
+        completedNodeIds: [...completed],
+        skippedNodeIds: [...skippedNodeIds],
+        currentNodeId: this.resolveCurrentNodeId(nodes, satisfied),
+        completedCount: satisfied.size,
+        totalCount: playable.length,
       },
       summary: {
         chapterCount: chapters.length, nodeCount: nodes.length, nodeTypeCounts: foundationV7NodeTypeCounts(),
         backendReadyCount: nodes.filter(node => node.backendReady).length,
         playableCount: playable.length, comingSoonNodeIds: nodes.filter(node => node.comingSoon).map(node => node.id),
       },
+    };
+  }
+
+  getSkipQuizEligibility(targetChapterId: string) {
+    this.assertKnownChapter(targetChapterId);
+    return skipQuizEligibilityPayload(targetChapterId);
+  }
+
+  async startSkipQuiz(
+    userId: string,
+    targetChapterId: string,
+    idempotencyKey: string,
+    displayName?: string | null,
+  ) {
+    this.assertKnownChapter(targetChapterId);
+    const key = idempotencyKey?.trim();
+    if (!key) throw new BadRequestException('idempotencyKey is required');
+
+    const existing = await this.prisma.foundationSkipQuizAttempt.findUnique({
+      where: { userId_idempotencyKey: { userId, idempotencyKey: key } },
+    });
+    if (existing) return this.formatSkipQuizAttempt(existing);
+
+    const resolved = resolveSkipQuizPool(targetChapterId);
+    if (!resolved.eligible || !resolved.previousChapterId) {
+      throw new BadRequestException(
+        resolved.reason === 'no_previous'
+          ? 'No previous chapter to quiz'
+          : resolved.reason === 'below_minimum'
+            ? 'Not enough Say It phrases for skip quiz'
+            : 'No Say It content for skip quiz',
+      );
+    }
+
+    const items = dealSkipQuizPhrases(targetChapterId, displayName);
+    if (items.length < 5) {
+      throw new BadRequestException('Not enough Say It phrases for skip quiz');
+    }
+
+    const spendRef = randomUUID();
+    try {
+      await this.economy.spendBananas(userId, SKIP_QUIZ_BANANA_COST, spendRef, 'skip_quiz_start');
+    } catch (err) {
+      throw err;
+    }
+
+    try {
+      const attempt = await this.prisma.foundationSkipQuizAttempt.create({
+        data: {
+          userId,
+          pathId: FOUNDATION_V7_PATH_ID,
+          targetChapterId,
+          previousChapterId: resolved.previousChapterId,
+          idempotencyKey: key,
+          items: items as unknown as Prisma.InputJsonValue,
+          totalCount: items.length,
+          bananaCost: SKIP_QUIZ_BANANA_COST,
+          spendRef,
+          status: 'started',
+        },
+      });
+      return this.formatSkipQuizAttempt(attempt);
+    } catch (err) {
+      if (
+        err instanceof Prisma.PrismaClientKnownRequestError &&
+        err.code === 'P2002'
+      ) {
+        await this.economy.refundBananas(
+          userId,
+          SKIP_QUIZ_BANANA_COST,
+          spendRef,
+          'skip_quiz_start_refund',
+        );
+        const raced = await this.prisma.foundationSkipQuizAttempt.findUniqueOrThrow({
+          where: { userId_idempotencyKey: { userId, idempotencyKey: key } },
+        });
+        return this.formatSkipQuizAttempt(raced);
+      }
+      await this.economy.refundBananas(
+        userId,
+        SKIP_QUIZ_BANANA_COST,
+        spendRef,
+        'skip_quiz_start_refund',
+      );
+      throw err;
+    }
+  }
+
+  async completeSkipQuiz(
+    userId: string,
+    targetChapterId: string,
+    attemptId: string,
+    correctCount: number,
+  ) {
+    this.assertKnownChapter(targetChapterId);
+    if (!Number.isInteger(correctCount) || correctCount < 0) {
+      throw new BadRequestException('correctCount must be a non-negative integer');
+    }
+
+    const attempt = await this.prisma.foundationSkipQuizAttempt.findFirst({
+      where: { id: attemptId, userId, pathId: FOUNDATION_V7_PATH_ID },
+    });
+    if (!attempt) throw new NotFoundException('Skip quiz attempt not found');
+    if (attempt.targetChapterId !== targetChapterId) {
+      throw new BadRequestException('attemptId does not match chapter');
+    }
+
+    if (attempt.status === 'completed') {
+      const skipped = await this.prisma.foundationChapterSkip.findUnique({
+        where: {
+          userId_pathId_chapterId: {
+            userId,
+            pathId: FOUNDATION_V7_PATH_ID,
+            chapterId: attempt.previousChapterId,
+          },
+        },
+      });
+      return {
+        passed: Boolean(attempt.passed),
+        skippedChapterId: attempt.passed ? attempt.previousChapterId : null,
+        skippedNodeIds: skipped
+          ? (skipped.skippedNodeIds as string[])
+          : [],
+        correctCount: attempt.correctCount ?? correctCount,
+        totalCount: attempt.totalCount,
+      };
+    }
+
+    if (correctCount > attempt.totalCount) {
+      throw new BadRequestException('correctCount exceeds totalCount');
+    }
+
+    const passed = isSkipQuizPassed(correctCount, attempt.totalCount);
+    const resolved = resolveSkipQuizPool(targetChapterId);
+    let skippedNodeIds: string[] = [];
+
+    if (passed) {
+      skippedNodeIds = resolved.playableNodeIds;
+      await this.prisma.foundationChapterSkip.upsert({
+        where: {
+          userId_pathId_chapterId: {
+            userId,
+            pathId: FOUNDATION_V7_PATH_ID,
+            chapterId: attempt.previousChapterId,
+          },
+        },
+        create: {
+          userId,
+          pathId: FOUNDATION_V7_PATH_ID,
+          chapterId: attempt.previousChapterId,
+          skippedNodeIds,
+          quizCorrect: correctCount,
+          quizTotal: attempt.totalCount,
+        },
+        update: {
+          skippedNodeIds,
+          quizCorrect: correctCount,
+          quizTotal: attempt.totalCount,
+        },
+      });
+    }
+
+    await this.prisma.foundationSkipQuizAttempt.update({
+      where: { id: attempt.id },
+      data: {
+        status: 'completed',
+        correctCount,
+        passed,
+      },
+    });
+
+    return {
+      passed,
+      skippedChapterId: passed ? attempt.previousChapterId : null,
+      skippedNodeIds: passed ? skippedNodeIds : [],
+      correctCount,
+      totalCount: attempt.totalCount,
+    };
+  }
+
+  private assertKnownChapter(chapterId: string) {
+    if (!FOUNDATION_V7_CATALOG.chapters.some((ch) => ch.id === chapterId)) {
+      throw new NotFoundException('Chapter not found');
+    }
+  }
+
+  private async resolveSkippedV7NodeIds(userId: string): Promise<Set<string>> {
+    const rows = await this.prisma.foundationChapterSkip.findMany({
+      where: { userId, pathId: FOUNDATION_V7_PATH_ID },
+      select: { skippedNodeIds: true },
+    });
+    const ids = new Set<string>();
+    for (const row of rows) {
+      const list = row.skippedNodeIds;
+      if (!Array.isArray(list)) continue;
+      for (const id of list) {
+        if (typeof id === 'string') ids.add(id);
+      }
+    }
+    return ids;
+  }
+
+  private formatSkipQuizAttempt(attempt: {
+    id: string;
+    items: Prisma.JsonValue;
+    totalCount: number;
+    bananaCost: number;
+  }) {
+    return {
+      attemptId: attempt.id,
+      items: attempt.items,
+      totalCount: attempt.totalCount,
+      bananaCost: attempt.bananaCost,
     };
   }
 

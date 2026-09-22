@@ -106,6 +106,8 @@ model User {
   purchaseRecords           PurchaseRecord[]
   purchaseAttempts          PurchaseAttempt[]
   phonicsNodeProgress       PhonicsNodeProgress[]
+  foundationChapterSkips    FoundationChapterSkip[]
+  foundationSkipQuizAttempts FoundationSkipQuizAttempt[]
   bugReports                BugReport[]
 
   createdAt               DateTime  @default(now())
@@ -308,6 +310,47 @@ model PhonicsNodeProgress {
 
   @@unique([userId, nodeId])
   @@index([userId, passed])
+}
+
+/** Chapter marked skipped after passing a skip quiz (≠ completed for badges). */
+model FoundationChapterSkip {
+  id              String   @id @default(uuid())
+  userId          String
+  pathId          String
+  chapterId       String
+  skippedNodeIds  Json
+  quizCorrect     Int
+  quizTotal       Int
+  createdAt       DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, pathId, chapterId])
+  @@index([userId, pathId])
+}
+
+/** Paid skip-quiz attempt; idempotencyKey prevents double banana charge on retry. */
+model FoundationSkipQuizAttempt {
+  id                 String   @id @default(uuid())
+  userId             String
+  pathId             String
+  targetChapterId    String
+  previousChapterId  String
+  idempotencyKey     String
+  items              Json
+  totalCount         Int
+  bananaCost         Int      @default(1)
+  spendRef           String
+  status             String   @default("started")
+  correctCount       Int?
+  passed             Boolean?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, idempotencyKey])
+  @@index([userId, pathId, targetChapterId])
 }
 
 /** Verified in-app purchase (RevenueCat / App Store / Play). */

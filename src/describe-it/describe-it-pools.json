@@ -1,4 +1,81 @@
 {
+  "fnd_v7_u03n05": {
+    "id": "fnd_v7_u03n05",
+    "titleEn": "Look at Me",
+    "titleTh": "ดูฉันสิ",
+    "tagEn": "FEEL",
+    "emoji": "🪞",
+    "estimatedMinutes": 3,
+    "items": [
+      {
+        "id": "01-happy",
+        "promptTh": "ลองพูดเป็นตัวละครในภาพครับ",
+        "answerEn": "I am happy.",
+        "answerTh": "ฉันมีความสุข",
+        "acceptedAnswers": [
+          "I'm happy.",
+          "I am happy"
+        ],
+        "imagePath": "describe-it/fnd_v7_u03n05/01-happy.webp",
+        "hintEn": "I am _____"
+      },
+      {
+        "id": "02-tired",
+        "promptTh": "ลองพูดเป็นตัวละครในภาพครับ",
+        "answerEn": "I am tired.",
+        "answerTh": "ฉันเหนื่อย",
+        "acceptedAnswers": [
+          "I'm tired.",
+          "I am tired"
+        ],
+        "imagePath": "describe-it/fnd_v7_u03n05/02-tired.webp"
+      },
+      {
+        "id": "03-hungry",
+        "promptTh": "ลองพูดเป็นตัวละครในภาพครับ",
+        "answerEn": "I am hungry.",
+        "answerTh": "ฉันหิว",
+        "acceptedAnswers": [
+          "I'm hungry.",
+          "I am hungry"
+        ],
+        "imagePath": "describe-it/fnd_v7_u03n05/03-hungry.webp"
+      },
+      {
+        "id": "04-hot",
+        "promptTh": "ลองพูดเป็นตัวละครในภาพครับ",
+        "answerEn": "I am hot.",
+        "answerTh": "ฉันร้อน",
+        "acceptedAnswers": [
+          "I'm hot.",
+          "I am hot"
+        ],
+        "imagePath": "describe-it/fnd_v7_u03n05/04-hot.webp"
+      },
+      {
+        "id": "05-cold",
+        "promptTh": "ลองพูดเป็นตัวละครในภาพครับ",
+        "answerEn": "I am cold.",
+        "answerTh": "ฉันหนาว",
+        "acceptedAnswers": [
+          "I'm cold.",
+          "I am cold"
+        ],
+        "imagePath": "describe-it/fnd_v7_u03n05/05-cold.webp"
+      },
+      {
+        "id": "06-sick",
+        "promptTh": "ลองพูดเป็นตัวละครในภาพครับ",
+        "answerEn": "I am sick.",
+        "answerTh": "ฉันไม่สบาย",
+        "acceptedAnswers": [
+          "I'm sick.",
+          "I am sick"
+        ],
+        "imagePath": "describe-it/fnd_v7_u03n05/06-sick.webp"
+      }
+    ]
+  },
   "fnd_v7_u13n05": {
     "id": "fnd_v7_u13n05",
     "titleEn": "What's Happening Here?",
@@ -9,8 +86,9 @@
     "items": [
       {
         "id": "01-she-is-reading",
-        "promptTh": "บอกว่า May กำลังทำอะไรอยู่ตอนนี้",
+        "promptTh": "May กำลังทำอะไรอยู่ตอนนี้",
         "answerEn": "She is reading.",
+        "answerTh": "เธอกำลังอ่านหนังสือ",
         "acceptedAnswers": [
           "She's reading.",
           "May is reading.",
@@ -21,8 +99,9 @@
       },
       {
         "id": "02-he-is-eating",
-        "promptTh": "บอกว่า Max กำลังทำอะไรอยู่ตอนนี้",
+        "promptTh": "Max กำลังทำอะไรอยู่ตอนนี้",
         "answerEn": "He is eating.",
+        "answerTh": "เขากำลังกิน",
         "acceptedAnswers": [
           "He's eating.",
           "Max is eating.",
@@ -32,8 +111,9 @@
       },
       {
         "id": "03-they-are-waiting",
-        "promptTh": "ทั้งสองคนรอเข้าห้องเรียนอยู่ ลองบอกว่าพวกเขากำลังทำอะไรเป็นภาษาอังกฤษ",
+        "promptTh": "ทั้งสองคนรอเข้าห้องเรียนอยู่ พวกเขากำลังทำอะไร",
         "answerEn": "They are waiting.",
+        "answerTh": "พวกเขากำลังรอ",
         "acceptedAnswers": [
           "They're waiting.",
           "May and Max are waiting.",
@@ -43,8 +123,9 @@
       },
       {
         "id": "04-he-is-cooking",
-        "promptTh": "บอกว่า Max กำลังทำอะไรอยู่ตอนนี้",
+        "promptTh": "Max กำลังทำอะไรอยู่ตอนนี้",
         "answerEn": "He is cooking.",
+        "answerTh": "เขากำลังทำอาหาร",
         "acceptedAnswers": [
           "He's cooking.",
           "Max is cooking.",
@@ -54,8 +135,9 @@
       },
       {
         "id": "05-they-are-walking",
-        "promptTh": "บอกว่าทั้งสองคนกำลังทำอะไรอยู่ตอนนี้",
+        "promptTh": "ทั้งสองคนกำลังทำอะไรอยู่ตอนนี้",
         "answerEn": "They are walking.",
+        "answerTh": "พวกเขากำลังเดิน",
         "acceptedAnswers": [
           "They're walking.",
           "May and Max are walking.",

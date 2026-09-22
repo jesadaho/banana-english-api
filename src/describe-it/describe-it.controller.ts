@@ -6,8 +6,8 @@ import { AnonymousUserGuard } from '../users/anonymous-user.guard';
 import { RecentLearnersService } from '../recent-learners/recent-learners.service';
 import {
   DESCRIBE_IT_BANANA_COST,
-  DESCRIBE_IT_DEAL_COUNT,
   isFoundationDescribeItPool,
+  listDescribeItPools,
 } from './describe-it.data';
 import { DescribeItService } from './describe-it.service';
 
@@ -22,6 +22,11 @@ export class DescribeItController {
     private readonly recentLearners: RecentLearnersService,
   ) {}
 
+  @Get('pools')
+  listPools() {
+    return { pools: listDescribeItPools() };
+  }
+
   @Get('pools/:poolId/deal')
   dealForPool(@Param('poolId') poolId: string) {
     return this.describeIt.dealForPool(poolId);
@@ -35,7 +40,7 @@ export class DescribeItController {
     return {
       ok: true,
       bananaCost: DESCRIBE_IT_BANANA_COST,
-      dealCount: DESCRIBE_IT_DEAL_COUNT,
+      dealCount: this.describeIt.dealForPool(poolId).dealCount,
     };
   }
 

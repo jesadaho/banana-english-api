@@ -2,6 +2,7 @@
  * Upload Describe It web cards to Firebase Storage.
  *
  *   npx tsx scripts/upload-describe-it-images.ts
+ *   npx tsx scripts/upload-describe-it-images.ts fnd_v7_u03n05
  *
  * Uses FIREBASE_* service-account env if present, otherwise the logged-in
  * Firebase CLI refresh token.
@@ -14,8 +15,23 @@ import { UserRefreshClient } from 'google-auth-library';
 import { publicHeroUrl } from '../src/articles/article-hero';
 import { DESCRIBE_IT_POOLS } from '../src/describe-it/describe-it.data';
 
-const SOURCE_DIR =
-  '/Users/jesada/Documents/Codex/2026-08-20/new-chat-2/output/describe-it/v7_u13n05/web';
+const OUTPUT_ROOT =
+  '/Users/jesada/Documents/Codex/2026-08-20/new-chat-2/output/describe-it';
+
+/** Local web folder + optional filename remap (storage id → local file). */
+const POOL_SOURCES: Record<
+  string,
+  { dir: string; localName?: (itemId: string) => string }
+> = {
+  fnd_v7_u13n05: {
+    dir: `${OUTPUT_ROOT}/v7_u13n05/web`,
+  },
+  fnd_v7_u03n05: {
+    dir: `${OUTPUT_ROOT}/v7_u03n05/web`,
+    localName: (itemId) => `${itemId}-v1.webp`,
+  },
+};
+
 const FIREBASE_CLI_CLIENT_ID =
   '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com';
 const FIREBASE_CLI_CLIENT_SECRET = 'j9iVZfS8kkCEFUPaAeJV0sAi';
@@ -132,20 +148,32 @@ async function uploadWithCliToken(bucketName: string, path: string, buffer: Buff
   }
 }
 
-async function main() {
-  const bucketName = storageBucketName();
-  const pool = DESCRIBE_IT_POOLS.fnd_v7_u13n05;
-  if (!pool) throw new Error('Missing pool fnd_v7_u13n05');
+async function uploadPool(poolId: string) {
+  const pool = DESCRIBE_IT_POOLS[poolId];
+  if (!pool) throw new Error(`Missing pool ${poolId}`);
+  const source = POOL_SOURCES[poolId];
+  if (!source) throw new Error(`No local source mapped for ${poolId}`);
 
+  const bucketName = storageBucketName();
   const versionMs = Date.now();
   for (const item of pool.items) {
-    const localPath = `${SOURCE_DIR}/${item.id}.webp`;
+    const fileName = source.localName?.(item.id) ?? `${item.id}.webp`;
+    const localPath = `${source.dir}/${fileName}`;
     const buffer = await readFile(localPath);
     const uploaded = await uploadWithAdmin(bucketName, item.imagePath, buffer);
     if (!uploaded) {
       await uploadWithCliToken(bucketName, item.imagePath, buffer);
     }
     console.log(`${item.id}\t${publicHeroUrl(bucketName, item.imagePath, versionMs)}`);
+  }
+}
+
+async function main() {
+  const only = process.argv[2]?.trim();
+  const poolIds = only ? [only] : Object.keys(POOL_SOURCES);
+  for (const poolId of poolIds) {
+    console.log(`\n== ${poolId} ==`);
+    await uploadPool(poolId);
   }
 }
 

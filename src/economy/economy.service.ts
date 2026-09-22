@@ -355,7 +355,15 @@ export class EconomyService {
     userId: string,
     amount: number,
     referenceId: string,
-    source: 'mission_start' | 'lesson_start' | 'free_talk_start' | 'say_it_start' | 'explain_it_start' | 'emoji_speak_start' | 'new_words_start' = 'mission_start',
+    source:
+      | 'mission_start'
+      | 'lesson_start'
+      | 'free_talk_start'
+      | 'say_it_start'
+      | 'explain_it_start'
+      | 'emoji_speak_start'
+      | 'new_words_start'
+      | 'skip_quiz_start' = 'mission_start',
   ): Promise<User> {
     return this.prisma.$transaction(async (tx) => {
       const user = await tx.user.findUniqueOrThrow({ where: { id: userId } });
@@ -409,7 +417,8 @@ export class EconomyService {
       | 'say_it_start_refund'
       | 'explain_it_start_refund'
       | 'emoji_speak_start_refund'
-      | 'new_words_start_refund',
+      | 'new_words_start_refund'
+      | 'skip_quiz_start_refund',
   ): Promise<User> {
     if (!Number.isFinite(amount) || amount <= 0) {
       return this.prisma.user.findUniqueOrThrow({ where: { id: userId } });
