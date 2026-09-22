@@ -30,7 +30,7 @@ type Catalog = Record<string, DescribeItPool>;
 export const DESCRIBE_IT_POOLS = poolsJson as Catalog;
 /** Minimum authored cards for a playable Foundation Describe It pack. */
 export const DESCRIBE_IT_DEAL_COUNT = 5;
-export const DESCRIBE_IT_BANANA_COST = 0;
+export const DESCRIBE_IT_BANANA_COST = 1;
 export const DEFAULT_DESCRIBE_IT_BUCKET =
   'banana-english-ecf11.firebasestorage.app';
 

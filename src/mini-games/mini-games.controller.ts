@@ -126,7 +126,11 @@ export class MiniGamesController {
   ) {
     const id = poolId?.trim();
     if (!id) throw new BadRequestException('poolId is required');
-    const charge = isFoundationPathEmojiSpeak(id);
+    const normallyCharged = isFoundationPathEmojiSpeak(id);
+    const replayFree =
+      normallyCharged &&
+      (await this.economy.hasClaimedMiniGameReward(req.user.id, `emoji_speak:${id}`));
+    const charge = normallyCharged && !replayFree;
     const spendRef = charge ? randomUUID() : null;
     if (charge && spendRef) {
       await this.economy.spendBananas(
@@ -166,27 +170,36 @@ export class MiniGamesController {
     if (!isNewWordsPoolId(id)) {
       throw new BadRequestException(`Unknown New Words pack: ${id}`);
     }
-    const spendRef = randomUUID();
-    await this.economy.spendBananas(
+    const replayFree = await this.economy.hasClaimedMiniGameReward(
       req.user.id,
-      NEW_WORDS_BANANA_COST,
-      spendRef,
-      'new_words_start',
+      `new_words:${id}`,
     );
+    const bananaCost = replayFree ? 0 : NEW_WORDS_BANANA_COST;
+    const spendRef = bananaCost > 0 ? randomUUID() : null;
+    if (bananaCost > 0 && spendRef) {
+      await this.economy.spendBananas(
+        req.user.id,
+        bananaCost,
+        spendRef,
+        'new_words_start',
+      );
+    }
     try {
       await this.recentLearners.markActivity(req.user.id, 'minigame', id);
     } catch (error) {
-      await this.economy.refundBananas(
-        req.user.id,
-        NEW_WORDS_BANANA_COST,
-        spendRef,
-        'new_words_start_refund',
-      );
+      if (bananaCost > 0 && spendRef) {
+        await this.economy.refundBananas(
+          req.user.id,
+          bananaCost,
+          spendRef,
+          'new_words_start_refund',
+        );
+      }
       throw error;
     }
     return {
       ok: true,
-      bananaCost: NEW_WORDS_BANANA_COST,
+      bananaCost,
     };
   }
 

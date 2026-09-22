@@ -65,32 +65,54 @@ describe('Describe It foundation pack', () => {
     assert.ok(items.slice(1).every((item) => !item.hintEn));
   });
 
-  it('starts free and completes with the canonical reward id', async () => {
+  it('starts for 1 banana and completes with the canonical reward id', async () => {
     const calls: any[] = [];
+    const spends: any[] = [];
+    const claimed = new Set<string>();
     const controller = new DescribeItController(
       new DescribeItService(),
       {
         applyMiniGameRewards: async (p: any) => {
           calls.push(p);
+          claimed.add(p.gameId);
           return p;
         },
-        spendBananas: async () => {
-          throw new Error('Describe It Foundation start should remain free');
+        hasClaimedMiniGameReward: async (_userId: string, gameId: string) =>
+          claimed.has(gameId),
+        spendBananas: async (
+          userId: string,
+          amount: number,
+          referenceId: string,
+          source: string,
+        ) => {
+          spends.push({ userId, amount, referenceId, source });
+        },
+        refundBananas: async () => {
+          throw new Error('should not refund on successful start');
         },
       } as any,
       { markActivity: async () => {} } as any,
     );
     const start = await controller.startPool(req, 'fnd_v7_u03n05');
-    assert.equal(start.bananaCost, 0);
+    assert.equal(start.bananaCost, 1);
     assert.equal(start.dealCount, 6);
+    assert.equal(spends.length, 1);
+    assert.equal(spends[0].amount, 1);
+    assert.equal(spends[0].source, 'describe_it_start');
     const reward = await controller.completePool(req, 'fnd_v7_u03n05');
     assert.equal((reward as any).gameId, 'describe_it:fnd_v7_u03n05');
     assert.equal(calls.length, 1);
 
+    const replay = await controller.startPool(req, 'fnd_v7_u03n05');
+    assert.equal(replay.bananaCost, 0);
+    assert.equal(spends.length, 1, 'replay must not charge again');
+
     const startNow = await controller.startPool(req, 'fnd_v7_u13n05');
     assert.equal(startNow.dealCount, 5);
+    assert.equal(startNow.bananaCost, 1);
     await controller.completePool(req, 'fnd_v7_u13n05');
     assert.equal(calls.length, 2);
+    assert.equal(spends.length, 2);
     await assert.rejects(controller.completePool(req, 'fnd_v7_unknown'));
   });
 });

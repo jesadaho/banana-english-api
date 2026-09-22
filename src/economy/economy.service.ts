@@ -363,6 +363,7 @@ export class EconomyService {
       | 'explain_it_start'
       | 'emoji_speak_start'
       | 'new_words_start'
+      | 'describe_it_start'
       | 'skip_quiz_start' = 'mission_start',
   ): Promise<User> {
     return this.prisma.$transaction(async (tx) => {
@@ -418,6 +419,7 @@ export class EconomyService {
       | 'explain_it_start_refund'
       | 'emoji_speak_start_refund'
       | 'new_words_start_refund'
+      | 'describe_it_start_refund'
       | 'skip_quiz_start_refund',
   ): Promise<User> {
     if (!Number.isFinite(amount) || amount <= 0) {
@@ -872,6 +874,31 @@ export class EconomyService {
         alreadyClaimed: false,
       };
     });
+  }
+
+  /**
+   * True when this user already claimed path mini-game rewards for [gameId]
+   * (node id, pool/topic id, or prefixed canonical id). Used to waive banana
+   * charge on replay of a completed Foundation node.
+   */
+  async hasClaimedMiniGameReward(
+    userId: string,
+    gameId: string,
+  ): Promise<boolean> {
+    const canonical = canonicalFoundationV7RewardId(gameId) ?? gameId;
+    const priorReferences = foundationV7RewardAliases(canonical).map(
+      (id) => `mini_game:${id}`,
+    );
+    const prior = await this.prisma.economyTransaction.findFirst({
+      where: {
+        userId,
+        source: 'mini_game_reward',
+        referenceId: { in: priorReferences },
+        currency: Currency.XP,
+      },
+      select: { id: true },
+    });
+    return Boolean(prior);
   }
 
   async applyMiniGameRewards(params: {

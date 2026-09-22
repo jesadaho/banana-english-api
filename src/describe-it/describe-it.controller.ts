@@ -1,4 +1,5 @@
 import { BadRequestException, Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
+import { randomUUID } from 'crypto';
 import { User } from '@prisma/client';
 import { EconomyService } from '../economy/economy.service';
 import { canonicalFoundationV7RewardId } from '../learn-path/foundation-v7-path.data';
@@ -35,13 +36,40 @@ export class DescribeItController {
   @Post('pools/:poolId/start')
   async startPool(@Req() req: AuthedRequest, @Param('poolId') poolId: string) {
     this.describeIt.getPool(poolId);
-    this.describeIt.dealForPool(poolId);
-    await this.recentLearners.markActivity(req.user.id, 'minigame', poolId);
-    return {
-      ok: true,
-      bananaCost: DESCRIBE_IT_BANANA_COST,
-      dealCount: this.describeIt.dealForPool(poolId).dealCount,
-    };
+    const rewardId = `describe_it:${poolId}`;
+    const replayFree = await this.economy.hasClaimedMiniGameReward(
+      req.user.id,
+      rewardId,
+    );
+    const bananaCost = replayFree ? 0 : DESCRIBE_IT_BANANA_COST;
+    const spendRef = bananaCost > 0 ? randomUUID() : null;
+    if (bananaCost > 0 && spendRef) {
+      await this.economy.spendBananas(
+        req.user.id,
+        bananaCost,
+        spendRef,
+        'describe_it_start',
+      );
+    }
+    try {
+      const deal = this.describeIt.dealForPool(poolId);
+      await this.recentLearners.markActivity(req.user.id, 'minigame', poolId);
+      return {
+        ok: true,
+        bananaCost,
+        dealCount: deal.dealCount,
+      };
+    } catch (error) {
+      if (bananaCost > 0 && spendRef) {
+        await this.economy.refundBananas(
+          req.user.id,
+          bananaCost,
+          spendRef,
+          'describe_it_start_refund',
+        );
+      }
+      throw error;
+    }
   }
 
   @Post('pools/:poolId/complete')
