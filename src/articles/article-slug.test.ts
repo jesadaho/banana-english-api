@@ -59,3 +59,19 @@ describe('hero helpers', () => {
     );
   });
 });
+
+describe('article engagement helpers', () => {
+  it('accepts visitor ids and clamps clap amounts', async () => {
+    const {
+      ARTICLE_MAX_CLAPS_PER_VISITOR,
+      clampClapAmount,
+      normalizeVisitorId,
+    } = await import('./article-engagement.ts');
+    assert.equal(ARTICLE_MAX_CLAPS_PER_VISITOR, 50);
+    assert.equal(normalizeVisitorId('abcdef12'), 'abcdef12');
+    assert.equal(normalizeVisitorId('bad'), null);
+    assert.equal(clampClapAmount(undefined), 1);
+    assert.equal(clampClapAmount(3), 3);
+    assert.equal(clampClapAmount(99), 10);
+  });
+});
