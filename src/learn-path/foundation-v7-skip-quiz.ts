@@ -103,11 +103,21 @@ export function resolveSkipQuizPool(targetChapterId: string): SkipQuizPoolResolu
   };
 }
 
+export function skipQuizDealCount(availableCount: number): number {
+  if (availableCount < SKIP_QUIZ_MIN_DEAL) return 0;
+  const preferred = Math.min(
+    SKIP_QUIZ_MAX_DEAL,
+    Math.max(SKIP_QUIZ_MIN_DEAL, SKIP_QUIZ_PREFERRED_DEAL),
+  );
+  return Math.min(preferred, availableCount, SKIP_QUIZ_MAX_DEAL);
+}
+
 export function skipQuizEligibilityPayload(targetChapterId: string) {
   const resolved = resolveSkipQuizPool(targetChapterId);
   return {
     eligible: resolved.eligible,
     availableCount: resolved.availableCount,
+    questionCount: skipQuizDealCount(resolved.availableCount),
     bananaCost: SKIP_QUIZ_BANANA_COST,
     minDeal: SKIP_QUIZ_MIN_DEAL,
     reason: resolved.reason ?? undefined,
@@ -115,7 +125,7 @@ export function skipQuizEligibilityPayload(targetChapterId: string) {
   };
 }
 
-/** Shuffle merged previous-chapter Say It phrases; deal 5–10 (prefer 7). */
+/** Shuffle merged previous-chapter Say It phrases; deal preferred count (usually 7). */
 export function dealSkipQuizPhrases(
   targetChapterId: string,
   displayName?: string | null,
@@ -138,13 +148,18 @@ export function dealSkipQuizPhrases(
     [pool[i], pool[j]] = [pool[j], pool[i]];
   }
 
-  const preferred = Math.min(
-    SKIP_QUIZ_MAX_DEAL,
-    Math.max(SKIP_QUIZ_MIN_DEAL, SKIP_QUIZ_PREFERRED_DEAL),
-  );
-  const count = Math.min(preferred, pool.length, SKIP_QUIZ_MAX_DEAL);
-  const n = Math.max(SKIP_QUIZ_MIN_DEAL, Math.min(count, pool.length));
-  return pool.slice(0, n).map((phrase) => personalizeSayItPhrase(phrase, displayName));
+  const n = skipQuizDealCount(pool.length);
+  // Chapter unlock quizzes are free-speak only — no letter/guided hints.
+  return pool.slice(0, n).map((phrase) => {
+    const personalized = personalizeSayItPhrase(phrase, displayName);
+    return {
+      id: personalized.id,
+      promptTh: personalized.promptTh,
+      ...(personalized.subtitleTh ? { subtitleTh: personalized.subtitleTh } : {}),
+      answerEn: personalized.answerEn,
+      acceptedAnswers: personalized.acceptedAnswers,
+    };
+  });
 }
 
 export function isSkipQuizPassed(correctCount: number, totalCount: number): boolean {

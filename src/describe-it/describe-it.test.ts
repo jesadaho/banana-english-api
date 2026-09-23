@@ -99,6 +99,32 @@ describe('Describe It foundation pack', () => {
     assert.ok(items.slice(1).every((item) => !item.hintEn));
   });
 
+  it('deals eight Two Blue Bags cards in order with a first-item hint', () => {
+    const pool = describeItPoolById('fnd_v7_u06n06');
+    assert.ok(isValidDescribeItPack(pool));
+    const items = dealDescribeItCards('fnd_v7_u06n06');
+    assert.equal(items.length, 8);
+    assert.deepEqual(items.map((item) => item.id), [
+      '01-this-blue-bag',
+      '02-this-yellow-book',
+      '03-these-blue-bags',
+      '04-these-green-books',
+      '05-that-red-bag',
+      '06-that-yellow-book',
+      '07-those-black-bags',
+      '08-those-white-books',
+    ]);
+    assert.equal(items[0].hintEn, 'This is a _____');
+    assert.equal(items[0].answerEn, 'This is a blue bag.');
+    assert.equal(items[0].answerTh, 'นี่คือกระเป๋าสีน้ำเงิน');
+    assert.equal(items[2].answerEn, 'These are blue bags.');
+    assert.equal(items[4].answerEn, 'That is a red bag.');
+    assert.equal(items[7].answerEn, 'Those are white books.');
+    assert.ok(items.every((item) => (item.answerTh ?? '').trim().length > 0));
+    assert.ok(items[0].imageUrl.includes('describe-it%2Ffnd_v7_u06n06%2F01-this-blue-bag.webp'));
+    assert.ok(items.slice(1).every((item) => !item.hintEn));
+  });
+
   it('rejects start and complete while Describe It is temporarily disabled', async () => {
     const controller = new DescribeItController(
       new DescribeItService(),

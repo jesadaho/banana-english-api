@@ -12,6 +12,7 @@ import {
   isSkipQuizPassed,
   resolveSkipQuizPool,
   SKIP_QUIZ_BANANA_COST,
+  skipQuizDealCount,
   skipQuizEligibilityPayload,
 } from './foundation-v7-skip-quiz';
 import {
@@ -320,10 +321,14 @@ export class LearnPathService {
   ) {}
 
   async getFoundationV7(userId: string, capabilities: readonly FoundationV7Capability[] = []) {
-    const chapters = toFoundationV7ClientChapters(capabilities).map((chapter) => ({
-      ...chapter,
-      skipQuizEligible: resolveSkipQuizPool(chapter.id).eligible,
-    }));
+    const chapters = toFoundationV7ClientChapters(capabilities).map((chapter) => {
+      const skip = resolveSkipQuizPool(chapter.id);
+      return {
+        ...chapter,
+        skipQuizEligible: skip.eligible,
+        skipQuizQuestionCount: skipQuizDealCount(skip.availableCount),
+      };
+    });
     const nodes = chapters.flatMap(chapter => chapter.items);
     const playable = nodes.filter(node => !node.comingSoon);
     const completed = await this.resolveCompletedV5NodeIds(userId, playable);

@@ -8,6 +8,8 @@ import {
   isSkipQuizPassed,
   resolveSkipQuizPool,
   SKIP_QUIZ_MIN_DEAL,
+  skipQuizDealCount,
+  skipQuizEligibilityPayload,
 } from './foundation-v7-skip-quiz';
 
 describe('Foundation V7 skip quiz helpers', () => {
@@ -29,6 +31,17 @@ describe('Foundation V7 skip quiz helpers', () => {
     assert.ok(items.length >= 5);
     assert.ok(items.length <= 10);
     assert.ok(items.every((p) => p.answerEn && p.promptTh));
+    assert.ok(
+      items.every((p) => !p.mode && !p.hintEn && !p.choices?.length),
+      'skip quiz must not include guided hints',
+    );
+  });
+
+  it('exposes the exact deal size on eligibility', () => {
+    const payload = skipQuizEligibilityPayload('v7_u03');
+    assert.equal(payload.eligible, true);
+    assert.equal(payload.questionCount, dealSkipQuizPhrases('v7_u03').length);
+    assert.equal(payload.questionCount, skipQuizDealCount(payload.availableCount));
   });
 
   it('uses strict > 0.75 pass threshold', () => {

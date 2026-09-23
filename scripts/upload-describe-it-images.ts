@@ -38,6 +38,13 @@ const POOL_SOURCES: Record<
     dir: `${OUTPUT_ROOT}/v7_u05n05/web`,
     localName: (itemId) => `${itemId}-v1.webp`,
   },
+  fnd_v7_u06n06: {
+    dir: `${OUTPUT_ROOT}/v7_u06n06/web`,
+    localName: (itemId) =>
+      itemId === '08-those-white-books'
+        ? `${itemId}-v2.webp`
+        : `${itemId}-v1.webp`,
+  },
 };
 
 const FIREBASE_CLI_CLIENT_ID =

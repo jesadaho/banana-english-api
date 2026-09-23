@@ -106,7 +106,7 @@ describe('Foundation V7 catalog and real content', () => {
     assert.equal(placeholders.length, 16);
     assert.ok(placeholders.every(n => !n.countsTowardProgress && n.unavailableReason === 'mechanic_not_implemented'));
     assert.ok(placeholders.every(n => !n.lessonId && !n.poolId && !n.topicId && !n.simulationId));
-    for (const id of ['v7_u03n05', 'v7_u04n05', 'v7_u05n05', 'v7_u13n05'] as const) {
+    for (const id of ['v7_u03n05', 'v7_u04n05', 'v7_u05n05', 'v7_u06n06', 'v7_u13n05'] as const) {
       const describeIt = all().find(n => n.id === id);
       assert.equal(describeIt?.comingSoon, true);
       assert.equal(describeIt?.backendReady, false);

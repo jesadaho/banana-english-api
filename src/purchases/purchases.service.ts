@@ -89,7 +89,7 @@ export class PurchasesService {
     try {
       if (!params.skipSignedInCheck && !user.firebaseUid) {
         throw new ForbiddenException(
-          'Sign in with Apple or Google before purchasing',
+          'Open the Banana Shop again to start a purchase session',
         );
       }
 
@@ -105,7 +105,7 @@ export class PurchasesService {
       if (!params.verifiedExternally) {
         if (!user.firebaseUid) {
           throw new ForbiddenException(
-            'Sign in with Apple or Google before purchasing',
+            'Open the Banana Shop again to start a purchase session',
           );
         }
         await this.revenueCat.assertStoreTransaction({

@@ -288,5 +288,124 @@
         "imagePath": "describe-it/fnd_v7_u13n05/05-they-are-walking.webp"
       }
     ]
+  },
+  "fnd_v7_u06n06": {
+    "id": "fnd_v7_u06n06",
+    "titleEn": "Two Blue Bags",
+    "titleTh": "กระเป๋าสีน้ำเงินสองใบ",
+    "tagEn": "NEAR",
+    "emoji": "🎒",
+    "estimatedMinutes": 3,
+    "items": [
+      {
+        "id": "01-this-blue-bag",
+        "promptTh": "ช่วย May บอกว่าของใกล้ตัวบนโต๊ะคืออะไรครับ",
+        "answerEn": "This is a blue bag.",
+        "answerTh": "นี่คือกระเป๋าสีน้ำเงิน",
+        "acceptedAnswers": [
+          "It's a blue bag.",
+          "It is a blue bag.",
+          "A blue bag.",
+          "This is a blue bag"
+        ],
+        "imagePath": "describe-it/fnd_v7_u06n06/01-this-blue-bag.webp",
+        "hintEn": "This is a _____"
+      },
+      {
+        "id": "02-this-yellow-book",
+        "promptTh": "ช่วย May บอกสีของหนังสือใกล้ตัวบนโต๊ะครับ",
+        "answerEn": "This is a yellow book.",
+        "answerTh": "นี่คือหนังสือสีเหลือง",
+        "acceptedAnswers": [
+          "It's a yellow book.",
+          "It is a yellow book.",
+          "A yellow book.",
+          "This is a yellow book"
+        ],
+        "imagePath": "describe-it/fnd_v7_u06n06/02-this-yellow-book.webp"
+      },
+      {
+        "id": "03-these-blue-bags",
+        "promptTh": "ช่วย May บอกว่าของสองชิ้นใกล้ตัวบนโต๊ะคืออะไรครับ",
+        "answerEn": "These are blue bags.",
+        "answerTh": "พวกนี้คือกระเป๋าสีน้ำเงิน",
+        "acceptedAnswers": [
+          "They are blue bags.",
+          "They're blue bags.",
+          "Two blue bags.",
+          "Blue bags.",
+          "These are blue bags"
+        ],
+        "imagePath": "describe-it/fnd_v7_u06n06/03-these-blue-bags.webp"
+      },
+      {
+        "id": "04-these-green-books",
+        "promptTh": "ช่วย May บอกว่าของหลายชิ้นใกล้ตัวบนโต๊ะคืออะไรครับ",
+        "answerEn": "These are green books.",
+        "answerTh": "พวกนี้คือหนังสือสีเขียว",
+        "acceptedAnswers": [
+          "They are green books.",
+          "They're green books.",
+          "Three green books.",
+          "Green books.",
+          "These are green books"
+        ],
+        "imagePath": "describe-it/fnd_v7_u06n06/04-these-green-books.webp"
+      },
+      {
+        "id": "05-that-red-bag",
+        "promptTh": "May กำลังชี้ของที่อยู่ไกลบนตู้ ช่วยบอกว่าคืออะไรครับ",
+        "answerEn": "That is a red bag.",
+        "answerTh": "นั่นคือกระเป๋าสีแดง",
+        "acceptedAnswers": [
+          "It's a red bag.",
+          "It is a red bag.",
+          "A red bag.",
+          "That is a red bag"
+        ],
+        "imagePath": "describe-it/fnd_v7_u06n06/05-that-red-bag.webp"
+      },
+      {
+        "id": "06-that-yellow-book",
+        "promptTh": "May กำลังชี้หนังสือที่อยู่ไกล ช่วยบอกสีของมันครับ",
+        "answerEn": "That is a yellow book.",
+        "answerTh": "นั่นคือหนังสือสีเหลือง",
+        "acceptedAnswers": [
+          "It's a yellow book.",
+          "It is a yellow book.",
+          "A yellow book.",
+          "That is a yellow book"
+        ],
+        "imagePath": "describe-it/fnd_v7_u06n06/06-that-yellow-book.webp"
+      },
+      {
+        "id": "07-those-black-bags",
+        "promptTh": "May กำลังชี้ของสองชิ้นที่อยู่ไกลบนตู้ ช่วยบอกว่าคืออะไรครับ",
+        "answerEn": "Those are black bags.",
+        "answerTh": "พวกนั้นคือกระเป๋าสีดำ",
+        "acceptedAnswers": [
+          "They are black bags.",
+          "They're black bags.",
+          "Two black bags.",
+          "Black bags.",
+          "Those are black bags"
+        ],
+        "imagePath": "describe-it/fnd_v7_u06n06/07-those-black-bags.webp"
+      },
+      {
+        "id": "08-those-white-books",
+        "promptTh": "May กำลังชี้ของหลายชิ้นที่อยู่ไกลบนตู้ ช่วยบอกว่าคืออะไรครับ",
+        "answerEn": "Those are white books.",
+        "answerTh": "พวกนั้นคือหนังสือสีขาว",
+        "acceptedAnswers": [
+          "They are white books.",
+          "They're white books.",
+          "Three white books.",
+          "White books.",
+          "Those are white books"
+        ],
+        "imagePath": "describe-it/fnd_v7_u06n06/08-those-white-books.webp"
+      }
+    ]
   }
 }

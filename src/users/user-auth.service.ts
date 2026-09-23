@@ -40,13 +40,59 @@ export class UserAuthService {
       .map((row) => row.provider)
       .filter((p): p is AuthProviderName => p === 'google' || p === 'apple');
 
-    const isGuest = linked.length === 0 && !user.firebaseUid;
+    // Guest = no Google/Apple link. Anonymous Firebase UID alone still counts as guest
+    // so IAP can bind a session without treating the user as "signed in".
+    const isGuest = linked.length === 0;
 
     return {
       isGuest,
       email: user.email,
       providers: [...new Set(linked)],
     };
+  }
+
+  /**
+   * Bind a Firebase Auth UID (including anonymous) to this profile for IAP.
+   * Does not create Google/Apple provider rows — those still go through linkAuth.
+   */
+  async attachFirebaseUidFromToken(user: User, idToken: string): Promise<User> {
+    if (!this.firebaseAdmin.isEnabled()) {
+      throw new ServiceUnavailableException('Auth service unavailable');
+    }
+
+    const trimmed = idToken.trim();
+    if (!trimmed) {
+      throw new BadRequestException('Missing ID token');
+    }
+
+    const decoded = await this.firebaseAdmin.verifyIdToken(trimmed);
+    const firebaseUid = decoded.uid?.trim();
+    if (!firebaseUid) {
+      throw new BadRequestException('Invalid ID token');
+    }
+
+    if (user.firebaseUid === firebaseUid) {
+      return user;
+    }
+
+    if (user.firebaseUid && user.firebaseUid !== firebaseUid) {
+      // Keep the already-bound account identity (usually after Google/Apple link).
+      return user;
+    }
+
+    const existingByFirebase = await this.prisma.user.findUnique({
+      where: { firebaseUid },
+    });
+    if (existingByFirebase && existingByFirebase.id !== user.id) {
+      throw new ConflictException(
+        'This account is already linked to another profile',
+      );
+    }
+
+    return this.prisma.user.update({
+      where: { id: user.id },
+      data: { firebaseUid },
+    });
   }
 
   async linkAuthFromToken(user: User, idToken: string) {
@@ -132,9 +178,8 @@ export class UserAuthService {
     return this.users.getProfile(updated);
   }
 
-  /** Same guest definition as getAuthStatus: no firebaseUid and no linked providers. */
+  /** Guest = no Google/Apple providers (anonymous Firebase UID alone is still guest). */
   private async isGuestUser(user: User): Promise<boolean> {
-    if (user.firebaseUid) return false;
     const linkedCount = await this.prisma.userAuthProvider.count({
       where: { userId: user.id },
     });
