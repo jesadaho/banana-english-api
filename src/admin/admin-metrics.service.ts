@@ -635,6 +635,9 @@ export class AdminMetricsService {
     const avatarOrder = [
       'bogy',
       'nana',
+      'sunny',
+      'zig',
+      'bloo',
       'kenji',
       'sky',
       'ray',

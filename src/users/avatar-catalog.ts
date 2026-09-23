@@ -4,6 +4,9 @@
 export const AVATAR_SEED_COSTS: Record<string, number> = {
   bogy: 0,
   nana: 0,
+  sunny: 0,
+  zig: 0,
+  bloo: 0,
   kenji: 500,
   sky: 500,
   ray: 500,
@@ -16,7 +19,7 @@ export const AVATAR_MIN_PERFECT_STARS: Record<string, number> = {
   linda: 15,
 };
 
-export const FREE_AVATAR_IDS = ['bogy', 'nana'] as const;
+export const FREE_AVATAR_IDS = ['bogy', 'nana', 'sunny', 'zig', 'bloo'] as const;
 
 export function isKnownAvatarId(avatarId: string): boolean {
   return Object.prototype.hasOwnProperty.call(AVATAR_SEED_COSTS, avatarId);
