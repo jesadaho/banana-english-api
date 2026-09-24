@@ -45,6 +45,9 @@ const POOL_SOURCES: Record<
         ? `${itemId}-v2.webp`
         : `${itemId}-v1.webp`,
   },
+  fnd_v7_u06n16: {
+    dir: `${OUTPUT_ROOT}/v7_u06n16-v1/web`,
+  },
 };
 
 const FIREBASE_CLI_CLIENT_ID =

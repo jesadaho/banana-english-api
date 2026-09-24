@@ -1,0 +1,1423 @@
+{
+  "topics": [
+    {
+      "id": "everyday_objects",
+      "titleEn": "Everyday Objects",
+      "titleTh": "สิ่งของในชีวิตประจำวัน",
+      "subtitleEn": "Explain everyday objects",
+      "subtitleTh": "อธิบายสิ่งของรอบตัว",
+      "emoji": "🧳",
+      "accentColor": 4280723098,
+      "estimatedMinutes": 4,
+      "poolSize": 20,
+      "locked": false,
+      "isNew": true,
+      "tagEn": "EASY",
+      "tier": 1
+    },
+    {
+      "id": "places",
+      "titleEn": "Places",
+      "titleTh": "สถานที่",
+      "subtitleEn": "Explain places",
+      "subtitleTh": "อธิบายสถานที่",
+      "emoji": "📍",
+      "accentColor": 4282557941,
+      "estimatedMinutes": 4,
+      "poolSize": 20,
+      "locked": false,
+      "isNew": true,
+      "tagEn": "EASY",
+      "tier": 1
+    },
+    {
+      "id": "daily_actions",
+      "titleEn": "Daily Actions",
+      "titleTh": "กิจกรรมประจำวัน",
+      "subtitleEn": "Explain daily actions",
+      "subtitleTh": "อธิบายกิจกรรมประจำวัน",
+      "emoji": "🗓️",
+      "accentColor": 4284922730,
+      "estimatedMinutes": 4,
+      "poolSize": 20,
+      "locked": false,
+      "isNew": true,
+      "tagEn": "EASY",
+      "tier": 1
+    },
+    {
+      "id": "jobs",
+      "titleEn": "Jobs",
+      "titleTh": "อาชีพ",
+      "subtitleEn": "Explain jobs",
+      "subtitleTh": "อธิบายอาชีพ",
+      "emoji": "💼",
+      "accentColor": 4294944550,
+      "estimatedMinutes": 4,
+      "poolSize": 20,
+      "locked": false,
+      "isNew": true,
+      "tagEn": "MEDIUM",
+      "tier": 2
+    },
+    {
+      "id": "food_drink",
+      "titleEn": "Food & Drink",
+      "titleTh": "อาหารและเครื่องดื่ม",
+      "subtitleEn": "Explain food and drink",
+      "subtitleTh": "อธิบายอาหารและเครื่องดื่ม",
+      "emoji": "🍽️",
+      "accentColor": 4293874512,
+      "estimatedMinutes": 4,
+      "poolSize": 20,
+      "locked": false,
+      "isNew": true,
+      "tagEn": "MEDIUM",
+      "tier": 2
+    },
+    {
+      "id": "weather",
+      "titleEn": "Weather",
+      "titleTh": "อากาศ",
+      "subtitleEn": "Explain weather",
+      "subtitleTh": "อธิบายอากาศ",
+      "emoji": "🌤️",
+      "accentColor": 4280923894,
+      "estimatedMinutes": 4,
+      "poolSize": 20,
+      "locked": false,
+      "isNew": true,
+      "tagEn": "MEDIUM",
+      "tier": 2
+    },
+    {
+      "id": "animals",
+      "titleEn": "Animals",
+      "titleTh": "สัตว์",
+      "subtitleEn": "Explain animals",
+      "subtitleTh": "อธิบายสัตว์",
+      "emoji": "🐾",
+      "accentColor": 4289415100,
+      "estimatedMinutes": 4,
+      "poolSize": 20,
+      "locked": false,
+      "isNew": true,
+      "tagEn": "MEDIUM",
+      "tier": 2
+    },
+    {
+      "id": "feelings",
+      "titleEn": "Feelings",
+      "titleTh": "ความรู้สึก",
+      "subtitleEn": "Explain feelings",
+      "subtitleTh": "อธิบายความรู้สึก",
+      "emoji": "💭",
+      "accentColor": 4293673082,
+      "estimatedMinutes": 4,
+      "poolSize": 20,
+      "locked": false,
+      "isNew": true,
+      "tagEn": "HARD",
+      "tier": 3
+    }
+  ],
+  "pools": {
+    "everyday_objects": [
+      {
+        "id": "everyday_objects_camera",
+        "targetEn": "Camera",
+        "emoji": "📷",
+        "exampleDescriptionEn": "We use it to take a photo",
+        "sentenceStructure": "We use it to ___",
+        "tier": 1
+      },
+      {
+        "id": "everyday_objects_umbrella",
+        "targetEn": "Umbrella",
+        "emoji": "☂️",
+        "exampleDescriptionEn": "We use it when it's rainy",
+        "sentenceStructure": "We use it to ___",
+        "tier": 1
+      },
+      {
+        "id": "everyday_objects_key",
+        "targetEn": "Key",
+        "emoji": "🔑",
+        "exampleDescriptionEn": "We use it to open the door",
+        "sentenceStructure": "We use it to ___",
+        "tier": 1
+      },
+      {
+        "id": "everyday_objects_broom",
+        "targetEn": "Broom",
+        "emoji": "🧹",
+        "exampleDescriptionEn": "We use it to clean the floor",
+        "sentenceStructure": "We use it to ___",
+        "tier": 1
+      },
+      {
+        "id": "everyday_objects_scissors",
+        "targetEn": "Scissors",
+        "emoji": "✂️",
+        "exampleDescriptionEn": "We use it to cut paper",
+        "sentenceStructure": "We use it to ___",
+        "tier": 1
+      },
+      {
+        "id": "everyday_objects_toothbrush",
+        "targetEn": "Toothbrush",
+        "emoji": "🪥",
+        "exampleDescriptionEn": "We use it to clean your teeth",
+        "sentenceStructure": "We use it to ___",
+        "tier": 1
+      },
+      {
+        "id": "everyday_objects_flashlight",
+        "targetEn": "Flashlight",
+        "emoji": "🔦",
+        "exampleDescriptionEn": "We use it when it's dark",
+        "sentenceStructure": "We use it to ___",
+        "tier": 1
+      },
+      {
+        "id": "everyday_objects_phone",
+        "targetEn": "Phone",
+        "emoji": "📱",
+        "exampleDescriptionEn": "We use it to call your friend",
+        "sentenceStructure": "We use it to ___",
+        "tier": 1
+      },
+      {
+        "id": "everyday_objects_pillow",
+        "targetEn": "Pillow",
+        "emoji": "🛏️",
+        "exampleDescriptionEn": "We use it when we sleep",
+        "sentenceStructure": "We use it to ___",
+        "tier": 1
+      },
+      {
+        "id": "everyday_objects_blanket",
+        "targetEn": "Blanket",
+        "emoji": "🛏️",
+        "exampleDescriptionEn": "We use it to keep warm",
+        "sentenceStructure": "We use it to ___",
+        "tier": 1
+      },
+      {
+        "id": "everyday_objects_soap",
+        "targetEn": "Soap",
+        "emoji": "🧼",
+        "exampleDescriptionEn": "We use it to wash our hands",
+        "sentenceStructure": "We use it to ___",
+        "tier": 1
+      },
+      {
+        "id": "everyday_objects_towel",
+        "targetEn": "Towel",
+        "emoji": "🧺",
+        "exampleDescriptionEn": "We use it to dry our body",
+        "sentenceStructure": "We use it to ___",
+        "tier": 1
+      },
+      {
+        "id": "everyday_objects_mirror",
+        "targetEn": "Mirror",
+        "emoji": "🪞",
+        "exampleDescriptionEn": "We use it to see our face",
+        "sentenceStructure": "We use it to ___",
+        "tier": 1
+      },
+      {
+        "id": "everyday_objects_clock",
+        "targetEn": "Clock",
+        "emoji": "⏰",
+        "exampleDescriptionEn": "We use it to tell the time",
+        "sentenceStructure": "We use it to ___",
+        "tier": 1
+      },
+      {
+        "id": "everyday_objects_pencil",
+        "targetEn": "Pencil",
+        "emoji": "✏️",
+        "exampleDescriptionEn": "We use it to write",
+        "sentenceStructure": "We use it to ___",
+        "tier": 1
+      },
+      {
+        "id": "everyday_objects_backpack",
+        "targetEn": "Backpack",
+        "emoji": "🎒",
+        "exampleDescriptionEn": "We use it to carry books",
+        "sentenceStructure": "We use it to ___",
+        "tier": 1
+      },
+      {
+        "id": "everyday_objects_chair",
+        "targetEn": "Chair",
+        "emoji": "🪑",
+        "exampleDescriptionEn": "We use it to sit down",
+        "sentenceStructure": "We use it to ___",
+        "tier": 1
+      },
+      {
+        "id": "everyday_objects_spoon",
+        "targetEn": "Spoon",
+        "emoji": "🥄",
+        "exampleDescriptionEn": "We use it to eat soup",
+        "sentenceStructure": "We use it to ___",
+        "tier": 1
+      },
+      {
+        "id": "everyday_objects_fork",
+        "targetEn": "Fork",
+        "emoji": "🍴",
+        "exampleDescriptionEn": "We use it to eat food",
+        "sentenceStructure": "We use it to ___",
+        "tier": 1
+      },
+      {
+        "id": "everyday_objects_fan",
+        "targetEn": "Fan",
+        "emoji": "🪭",
+        "exampleDescriptionEn": "We use it when it's hot",
+        "sentenceStructure": "We use it to ___",
+        "tier": 1
+      }
+    ],
+    "places": [
+      {
+        "id": "places_school",
+        "targetEn": "School",
+        "emoji": "🏫",
+        "exampleDescriptionEn": "It's a place where students study",
+        "sentenceStructure": "It's a place where ___",
+        "tier": 1
+      },
+      {
+        "id": "places_hospital",
+        "targetEn": "Hospital",
+        "emoji": "🏥",
+        "exampleDescriptionEn": "It's a place where you go when you are sick",
+        "sentenceStructure": "It's a place where ___",
+        "tier": 1
+      },
+      {
+        "id": "places_restaurant",
+        "targetEn": "Restaurant",
+        "emoji": "🍽️",
+        "exampleDescriptionEn": "It's a place where you eat food",
+        "sentenceStructure": "It's a place where ___",
+        "tier": 1
+      },
+      {
+        "id": "places_supermarket",
+        "targetEn": "Supermarket",
+        "emoji": "🛒",
+        "exampleDescriptionEn": "It's a place where you buy food",
+        "sentenceStructure": "It's a place where ___",
+        "tier": 1
+      },
+      {
+        "id": "places_airport",
+        "targetEn": "Airport",
+        "emoji": "✈️",
+        "exampleDescriptionEn": "It's a place where you take a plane",
+        "sentenceStructure": "It's a place where ___",
+        "tier": 1
+      },
+      {
+        "id": "places_bank",
+        "targetEn": "Bank",
+        "emoji": "🏦",
+        "exampleDescriptionEn": "It's a place where you keep your money",
+        "sentenceStructure": "It's a place where ___",
+        "tier": 1
+      },
+      {
+        "id": "places_cinema",
+        "targetEn": "Cinema",
+        "emoji": "🎬",
+        "exampleDescriptionEn": "It's a place where you watch a movie",
+        "sentenceStructure": "It's a place where ___",
+        "tier": 1
+      },
+      {
+        "id": "places_library",
+        "targetEn": "Library",
+        "emoji": "📚",
+        "exampleDescriptionEn": "It's a place where you read books",
+        "sentenceStructure": "It's a place where ___",
+        "tier": 1
+      },
+      {
+        "id": "places_park",
+        "targetEn": "Park",
+        "emoji": "🏞️",
+        "exampleDescriptionEn": "It's a place where you can walk and play",
+        "sentenceStructure": "It's a place where ___",
+        "tier": 1
+      },
+      {
+        "id": "places_zoo",
+        "targetEn": "Zoo",
+        "emoji": "🦁",
+        "exampleDescriptionEn": "It's a place where you can see animals",
+        "sentenceStructure": "It's a place where ___",
+        "tier": 1
+      },
+      {
+        "id": "places_beach",
+        "targetEn": "Beach",
+        "emoji": "🏖️",
+        "exampleDescriptionEn": "It's a place where you can swim in the sea",
+        "sentenceStructure": "It's a place where ___",
+        "tier": 1
+      },
+      {
+        "id": "places_market",
+        "targetEn": "Market",
+        "emoji": "🏪",
+        "exampleDescriptionEn": "It's a place where you can buy fruit and vegetables",
+        "sentenceStructure": "It's a place where ___",
+        "tier": 1
+      },
+      {
+        "id": "places_post-office",
+        "targetEn": "Post office",
+        "emoji": "🏤",
+        "exampleDescriptionEn": "It's a place where you send letters",
+        "sentenceStructure": "It's a place where ___",
+        "tier": 1
+      },
+      {
+        "id": "places_gym",
+        "targetEn": "Gym",
+        "emoji": "🏋️",
+        "exampleDescriptionEn": "It's a place where you exercise",
+        "sentenceStructure": "It's a place where ___",
+        "tier": 1
+      },
+      {
+        "id": "places_hotel",
+        "targetEn": "Hotel",
+        "emoji": "🏨",
+        "exampleDescriptionEn": "It's a place where you sleep when you travel",
+        "sentenceStructure": "It's a place where ___",
+        "tier": 1
+      },
+      {
+        "id": "places_farm",
+        "targetEn": "Farm",
+        "emoji": "🌾",
+        "exampleDescriptionEn": "It's a place where you grow food and keep animals",
+        "sentenceStructure": "It's a place where ___",
+        "tier": 1
+      },
+      {
+        "id": "places_bakery",
+        "targetEn": "Bakery",
+        "emoji": "🥐",
+        "exampleDescriptionEn": "It's a place where you buy bread and cake",
+        "sentenceStructure": "It's a place where ___",
+        "tier": 1
+      },
+      {
+        "id": "places_pharmacy",
+        "targetEn": "Pharmacy",
+        "emoji": "💊",
+        "exampleDescriptionEn": "It's a place where you buy medicine",
+        "sentenceStructure": "It's a place where ___",
+        "tier": 1
+      },
+      {
+        "id": "places_museum",
+        "targetEn": "Museum",
+        "emoji": "🏛️",
+        "exampleDescriptionEn": "It's a place where you look at old things",
+        "sentenceStructure": "It's a place where ___",
+        "tier": 1
+      },
+      {
+        "id": "places_bus-station",
+        "targetEn": "Bus station",
+        "emoji": "🚌",
+        "exampleDescriptionEn": "It's a place where you wait for a bus",
+        "sentenceStructure": "It's a place where ___",
+        "tier": 1
+      }
+    ],
+    "daily_actions": [
+      {
+        "id": "daily_actions_sleep",
+        "targetEn": "Sleep",
+        "emoji": "😴",
+        "exampleDescriptionEn": "It's when you close your eyes at night",
+        "sentenceStructure": "It's when you ___",
+        "tier": 1
+      },
+      {
+        "id": "daily_actions_cook",
+        "targetEn": "Cook",
+        "emoji": "🍳",
+        "exampleDescriptionEn": "It's when you make food",
+        "sentenceStructure": "It's when you ___",
+        "tier": 1
+      },
+      {
+        "id": "daily_actions_shower",
+        "targetEn": "Shower",
+        "emoji": "🚿",
+        "exampleDescriptionEn": "It's when you clean your body",
+        "sentenceStructure": "It's when you ___",
+        "tier": 1
+      },
+      {
+        "id": "daily_actions_study",
+        "targetEn": "Study",
+        "emoji": "📖",
+        "exampleDescriptionEn": "It's when you learn something new",
+        "sentenceStructure": "It's when you ___",
+        "tier": 1
+      },
+      {
+        "id": "daily_actions_run",
+        "targetEn": "Run",
+        "emoji": "🏃",
+        "exampleDescriptionEn": "It's when you move very fast",
+        "sentenceStructure": "It's when you ___",
+        "tier": 1
+      },
+      {
+        "id": "daily_actions_read",
+        "targetEn": "Read",
+        "emoji": "📖",
+        "exampleDescriptionEn": "It's when you look at words in a book",
+        "sentenceStructure": "It's when you ___",
+        "tier": 1
+      },
+      {
+        "id": "daily_actions_write",
+        "targetEn": "Write",
+        "emoji": "✍️",
+        "exampleDescriptionEn": "It's when you put words on paper",
+        "sentenceStructure": "It's when you ___",
+        "tier": 1
+      },
+      {
+        "id": "daily_actions_eat",
+        "targetEn": "Eat",
+        "emoji": "🍽️",
+        "exampleDescriptionEn": "It's when you put food in your mouth",
+        "sentenceStructure": "It's when you ___",
+        "tier": 1
+      },
+      {
+        "id": "daily_actions_drink",
+        "targetEn": "Drink",
+        "emoji": "🥤",
+        "exampleDescriptionEn": "It's when you put liquid in your mouth",
+        "sentenceStructure": "It's when you ___",
+        "tier": 1
+      },
+      {
+        "id": "daily_actions_walk",
+        "targetEn": "Walk",
+        "emoji": "🚶",
+        "exampleDescriptionEn": "It's when you move slowly on your feet",
+        "sentenceStructure": "It's when you ___",
+        "tier": 1
+      },
+      {
+        "id": "daily_actions_swim",
+        "targetEn": "Swim",
+        "emoji": "🏊",
+        "exampleDescriptionEn": "It's when you move in the water",
+        "sentenceStructure": "It's when you ___",
+        "tier": 1
+      },
+      {
+        "id": "daily_actions_dance",
+        "targetEn": "Dance",
+        "emoji": "💃",
+        "exampleDescriptionEn": "It's when you move your body to music",
+        "sentenceStructure": "It's when you ___",
+        "tier": 1
+      },
+      {
+        "id": "daily_actions_sing",
+        "targetEn": "Sing",
+        "emoji": "🎤",
+        "exampleDescriptionEn": "It's when you make music with your voice",
+        "sentenceStructure": "It's when you ___",
+        "tier": 1
+      },
+      {
+        "id": "daily_actions_laugh",
+        "targetEn": "Laugh",
+        "emoji": "😂",
+        "exampleDescriptionEn": "It's when you feel happy and make a sound",
+        "sentenceStructure": "It's when you ___",
+        "tier": 1
+      },
+      {
+        "id": "daily_actions_cry",
+        "targetEn": "Cry",
+        "emoji": "😢",
+        "exampleDescriptionEn": "It's when you feel sad and water comes from your eyes",
+        "sentenceStructure": "It's when you ___",
+        "tier": 1
+      },
+      {
+        "id": "daily_actions_wake-up",
+        "targetEn": "Wake up",
+        "emoji": "⏰",
+        "exampleDescriptionEn": "It's when you open your eyes in the morning",
+        "sentenceStructure": "It's when you ___",
+        "tier": 1
+      },
+      {
+        "id": "daily_actions_brush-your-teeth",
+        "targetEn": "Brush your teeth",
+        "emoji": "🪥",
+        "exampleDescriptionEn": "It's when you clean your teeth",
+        "sentenceStructure": "It's when you ___",
+        "tier": 1
+      },
+      {
+        "id": "daily_actions_wash-your-hands",
+        "targetEn": "Wash your hands",
+        "emoji": "🧼",
+        "exampleDescriptionEn": "It's when you clean your hands with soap",
+        "sentenceStructure": "It's when you ___",
+        "tier": 1
+      },
+      {
+        "id": "daily_actions_play",
+        "targetEn": "Play",
+        "emoji": "🎮",
+        "exampleDescriptionEn": "It's when you have fun",
+        "sentenceStructure": "It's when you ___",
+        "tier": 1
+      },
+      {
+        "id": "daily_actions_work",
+        "targetEn": "Work",
+        "emoji": "💼",
+        "exampleDescriptionEn": "It's when you do your job",
+        "sentenceStructure": "It's when you ___",
+        "tier": 1
+      }
+    ],
+    "jobs": [
+      {
+        "id": "jobs_teacher",
+        "targetEn": "Teacher",
+        "emoji": "👩‍🏫",
+        "exampleDescriptionEn": "This person teaches students",
+        "sentenceStructure": "This person ___",
+        "tier": 2
+      },
+      {
+        "id": "jobs_doctor",
+        "targetEn": "Doctor",
+        "emoji": "👨‍⚕️",
+        "exampleDescriptionEn": "This person helps sick people",
+        "sentenceStructure": "This person ___",
+        "tier": 2
+      },
+      {
+        "id": "jobs_chef",
+        "targetEn": "Chef",
+        "emoji": "👨‍🍳",
+        "exampleDescriptionEn": "This person cooks food",
+        "sentenceStructure": "This person ___",
+        "tier": 2
+      },
+      {
+        "id": "jobs_police-officer",
+        "targetEn": "Police officer",
+        "emoji": "👮",
+        "exampleDescriptionEn": "This person helps people be safe",
+        "sentenceStructure": "This person ___",
+        "tier": 2
+      },
+      {
+        "id": "jobs_firefighter",
+        "targetEn": "Firefighter",
+        "emoji": "🧑‍🚒",
+        "exampleDescriptionEn": "This person stops fires",
+        "sentenceStructure": "This person ___",
+        "tier": 2
+      },
+      {
+        "id": "jobs_pilot",
+        "targetEn": "Pilot",
+        "emoji": "🧑‍✈️",
+        "exampleDescriptionEn": "This person flies a plane",
+        "sentenceStructure": "This person ___",
+        "tier": 2
+      },
+      {
+        "id": "jobs_artist",
+        "targetEn": "Artist",
+        "emoji": "🎨",
+        "exampleDescriptionEn": "This person makes pictures",
+        "sentenceStructure": "This person ___",
+        "tier": 2
+      },
+      {
+        "id": "jobs_singer",
+        "targetEn": "Singer",
+        "emoji": "🎤",
+        "exampleDescriptionEn": "This person sings songs",
+        "sentenceStructure": "This person ___",
+        "tier": 2
+      },
+      {
+        "id": "jobs_farmer",
+        "targetEn": "Farmer",
+        "emoji": "👨‍🌾",
+        "exampleDescriptionEn": "This person grows food",
+        "sentenceStructure": "This person ___",
+        "tier": 2
+      },
+      {
+        "id": "jobs_driver",
+        "targetEn": "Driver",
+        "emoji": "🚗",
+        "exampleDescriptionEn": "This person drives a car or bus",
+        "sentenceStructure": "This person ___",
+        "tier": 2
+      },
+      {
+        "id": "jobs_nurse",
+        "targetEn": "Nurse",
+        "emoji": "🧑‍⚕️",
+        "exampleDescriptionEn": "This person takes care of sick people",
+        "sentenceStructure": "This person ___",
+        "tier": 2
+      },
+      {
+        "id": "jobs_dentist",
+        "targetEn": "Dentist",
+        "emoji": "🦷",
+        "exampleDescriptionEn": "This person takes care of your teeth",
+        "sentenceStructure": "This person ___",
+        "tier": 2
+      },
+      {
+        "id": "jobs_waiter",
+        "targetEn": "Waiter",
+        "emoji": "🧑‍🍳",
+        "exampleDescriptionEn": "This person brings food in a restaurant",
+        "sentenceStructure": "This person ___",
+        "tier": 2
+      },
+      {
+        "id": "jobs_cleaner",
+        "targetEn": "Cleaner",
+        "emoji": "🧹",
+        "exampleDescriptionEn": "This person cleans a place",
+        "sentenceStructure": "This person ___",
+        "tier": 2
+      },
+      {
+        "id": "jobs_engineer",
+        "targetEn": "Engineer",
+        "emoji": "🛠️",
+        "exampleDescriptionEn": "This person builds things like roads or machines",
+        "sentenceStructure": "This person ___",
+        "tier": 2
+      },
+      {
+        "id": "jobs_photographer",
+        "targetEn": "Photographer",
+        "emoji": "📸",
+        "exampleDescriptionEn": "This person takes photos",
+        "sentenceStructure": "This person ___",
+        "tier": 2
+      },
+      {
+        "id": "jobs_barber",
+        "targetEn": "Barber",
+        "emoji": "💇",
+        "exampleDescriptionEn": "This person cuts your hair",
+        "sentenceStructure": "This person ___",
+        "tier": 2
+      },
+      {
+        "id": "jobs_fisherman",
+        "targetEn": "Fisherman",
+        "emoji": "🎣",
+        "exampleDescriptionEn": "This person catches fish",
+        "sentenceStructure": "This person ___",
+        "tier": 2
+      },
+      {
+        "id": "jobs_guard",
+        "targetEn": "Guard",
+        "emoji": "🛡️",
+        "exampleDescriptionEn": "This person keeps a place safe",
+        "sentenceStructure": "This person ___",
+        "tier": 2
+      },
+      {
+        "id": "jobs_vet",
+        "targetEn": "Vet",
+        "emoji": "🐾",
+        "exampleDescriptionEn": "This person takes care of sick animals",
+        "sentenceStructure": "This person ___",
+        "tier": 2
+      }
+    ],
+    "food_drink": [
+      {
+        "id": "food_drink_pizza",
+        "targetEn": "Pizza",
+        "emoji": "🍕",
+        "exampleDescriptionEn": "It's round, and we eat it",
+        "sentenceStructure": "It's [taste/color], and we ___",
+        "tier": 2
+      },
+      {
+        "id": "food_drink_coffee",
+        "targetEn": "Coffee",
+        "emoji": "☕",
+        "exampleDescriptionEn": "It's hot, and we drink it in the morning",
+        "sentenceStructure": "It's [taste/color], and we ___",
+        "tier": 2
+      },
+      {
+        "id": "food_drink_ice-cream",
+        "targetEn": "Ice cream",
+        "emoji": "🍦",
+        "exampleDescriptionEn": "It's cold, and it's sweet",
+        "sentenceStructure": "It's [taste/color], and we ___",
+        "tier": 2
+      },
+      {
+        "id": "food_drink_lemon",
+        "targetEn": "Lemon",
+        "emoji": "🍋",
+        "exampleDescriptionEn": "It's yellow, and it's sour",
+        "sentenceStructure": "It's [taste/color], and we ___",
+        "tier": 2
+      },
+      {
+        "id": "food_drink_banana",
+        "targetEn": "Banana",
+        "emoji": "🍌",
+        "exampleDescriptionEn": "It's yellow, and it's a fruit",
+        "sentenceStructure": "It's [taste/color], and we ___",
+        "tier": 2
+      },
+      {
+        "id": "food_drink_egg",
+        "targetEn": "Egg",
+        "emoji": "🥚",
+        "exampleDescriptionEn": "It's white, and chickens make it",
+        "sentenceStructure": "It's [taste/color], and we ___",
+        "tier": 2
+      },
+      {
+        "id": "food_drink_rice",
+        "targetEn": "Rice",
+        "emoji": "🍚",
+        "exampleDescriptionEn": "It's white, and we eat it every day",
+        "sentenceStructure": "It's [taste/color], and we ___",
+        "tier": 2
+      },
+      {
+        "id": "food_drink_juice",
+        "targetEn": "Juice",
+        "emoji": "🧃",
+        "exampleDescriptionEn": "It's sweet, and we drink it",
+        "sentenceStructure": "It's [taste/color], and we ___",
+        "tier": 2
+      },
+      {
+        "id": "food_drink_bread",
+        "targetEn": "Bread",
+        "emoji": "🍞",
+        "exampleDescriptionEn": "It's soft, and we eat it in the morning",
+        "sentenceStructure": "It's [taste/color], and we ___",
+        "tier": 2
+      },
+      {
+        "id": "food_drink_milk",
+        "targetEn": "Milk",
+        "emoji": "🥛",
+        "exampleDescriptionEn": "It's white, and we drink it",
+        "sentenceStructure": "It's [taste/color], and we ___",
+        "tier": 2
+      },
+      {
+        "id": "food_drink_noodles",
+        "targetEn": "Noodles",
+        "emoji": "🍜",
+        "exampleDescriptionEn": "It's long, and we eat it with soup",
+        "sentenceStructure": "It's [taste/color], and we ___",
+        "tier": 2
+      },
+      {
+        "id": "food_drink_soup",
+        "targetEn": "Soup",
+        "emoji": "🍲",
+        "exampleDescriptionEn": "It's hot, and we eat it with a spoon",
+        "sentenceStructure": "It's [taste/color], and we ___",
+        "tier": 2
+      },
+      {
+        "id": "food_drink_cake",
+        "targetEn": "Cake",
+        "emoji": "🎂",
+        "exampleDescriptionEn": "It's sweet, and we eat it on birthdays",
+        "sentenceStructure": "It's [taste/color], and we ___",
+        "tier": 2
+      },
+      {
+        "id": "food_drink_chicken",
+        "targetEn": "Chicken",
+        "emoji": "🍗",
+        "exampleDescriptionEn": "It's meat, and we cook it",
+        "sentenceStructure": "It's [taste/color], and we ___",
+        "tier": 2
+      },
+      {
+        "id": "food_drink_apple",
+        "targetEn": "Apple",
+        "emoji": "🍎",
+        "exampleDescriptionEn": "It's red or green, and it's a fruit",
+        "sentenceStructure": "It's [taste/color], and we ___",
+        "tier": 2
+      },
+      {
+        "id": "food_drink_water",
+        "targetEn": "Water",
+        "emoji": "💧",
+        "exampleDescriptionEn": "It has no color, and we drink it every day",
+        "sentenceStructure": "It's [taste/color], and we ___",
+        "tier": 2
+      },
+      {
+        "id": "food_drink_candy",
+        "targetEn": "Candy",
+        "emoji": "🍬",
+        "exampleDescriptionEn": "It's small, sweet, and children like it",
+        "sentenceStructure": "It's [taste/color], and we ___",
+        "tier": 2
+      },
+      {
+        "id": "food_drink_tea",
+        "targetEn": "Tea",
+        "emoji": "🍵",
+        "exampleDescriptionEn": "It's hot, and we drink it",
+        "sentenceStructure": "It's [taste/color], and we ___",
+        "tier": 2
+      },
+      {
+        "id": "food_drink_fish",
+        "targetEn": "Fish",
+        "emoji": "🐟",
+        "exampleDescriptionEn": "It lives in water, and we can eat it",
+        "sentenceStructure": "It's [taste/color], and we ___",
+        "tier": 2
+      },
+      {
+        "id": "food_drink_watermelon",
+        "targetEn": "Watermelon",
+        "emoji": "🍉",
+        "exampleDescriptionEn": "It's big, green outside, and red inside",
+        "sentenceStructure": "It's [taste/color], and we ___",
+        "tier": 2
+      }
+    ],
+    "weather": [
+      {
+        "id": "weather_sunny",
+        "targetEn": "Sunny",
+        "emoji": "☀️",
+        "exampleDescriptionEn": "When it's like this, it's hot",
+        "sentenceStructure": "When it's like this, ___",
+        "tier": 2
+      },
+      {
+        "id": "weather_rainy",
+        "targetEn": "Rainy",
+        "emoji": "🌧️",
+        "exampleDescriptionEn": "When it's like this, we use an umbrella",
+        "sentenceStructure": "When it's like this, ___",
+        "tier": 2
+      },
+      {
+        "id": "weather_cold",
+        "targetEn": "Cold",
+        "emoji": "🥶",
+        "exampleDescriptionEn": "When it's like this, we wear a jacket",
+        "sentenceStructure": "When it's like this, ___",
+        "tier": 2
+      },
+      {
+        "id": "weather_cloudy",
+        "targetEn": "Cloudy",
+        "emoji": "☁️",
+        "exampleDescriptionEn": "When it's like this, we can't see the sun",
+        "sentenceStructure": "When it's like this, ___",
+        "tier": 2
+      },
+      {
+        "id": "weather_storm",
+        "targetEn": "Storm",
+        "emoji": "⛈️",
+        "exampleDescriptionEn": "When it's like this, we stay at home",
+        "sentenceStructure": "When it's like this, ___",
+        "tier": 2
+      },
+      {
+        "id": "weather_windy",
+        "targetEn": "Windy",
+        "emoji": "💨",
+        "exampleDescriptionEn": "When it's like this, it's hard to hold your umbrella",
+        "sentenceStructure": "When it's like this, ___",
+        "tier": 2
+      },
+      {
+        "id": "weather_snowy",
+        "targetEn": "Snowy",
+        "emoji": "❄️",
+        "exampleDescriptionEn": "When it's like this, everything looks white",
+        "sentenceStructure": "When it's like this, ___",
+        "tier": 2
+      },
+      {
+        "id": "weather_hot",
+        "targetEn": "Hot",
+        "emoji": "🥵",
+        "exampleDescriptionEn": "When it's like this, we want to drink water",
+        "sentenceStructure": "When it's like this, ___",
+        "tier": 2
+      },
+      {
+        "id": "weather_foggy",
+        "targetEn": "Foggy",
+        "emoji": "🌫️",
+        "exampleDescriptionEn": "When it's like this, it's hard to see far away",
+        "sentenceStructure": "When it's like this, ___",
+        "tier": 2
+      },
+      {
+        "id": "weather_summer",
+        "targetEn": "Summer",
+        "emoji": "☀️",
+        "exampleDescriptionEn": "When it's like this, it's usually very hot",
+        "sentenceStructure": "When it's like this, ___",
+        "tier": 2
+      },
+      {
+        "id": "weather_winter",
+        "targetEn": "Winter",
+        "emoji": "❄️",
+        "exampleDescriptionEn": "When it's like this, it's usually cold",
+        "sentenceStructure": "When it's like this, ___",
+        "tier": 2
+      },
+      {
+        "id": "weather_rainbow",
+        "targetEn": "Rainbow",
+        "emoji": "🌈",
+        "exampleDescriptionEn": "When it's like this, we see it after the rain",
+        "sentenceStructure": "When it's like this, ___",
+        "tier": 2
+      },
+      {
+        "id": "weather_thunder",
+        "targetEn": "Thunder",
+        "emoji": "⚡",
+        "exampleDescriptionEn": "When it's like this, we hear a loud sound in the sky",
+        "sentenceStructure": "When it's like this, ___",
+        "tier": 2
+      },
+      {
+        "id": "weather_humid",
+        "targetEn": "Humid",
+        "emoji": "💧",
+        "exampleDescriptionEn": "When it's like this, the air feels wet and sticky",
+        "sentenceStructure": "When it's like this, ___",
+        "tier": 2
+      },
+      {
+        "id": "weather_dry-season",
+        "targetEn": "Dry season",
+        "emoji": "🏜️",
+        "exampleDescriptionEn": "When it's like this, it doesn't rain much",
+        "sentenceStructure": "When it's like this, ___",
+        "tier": 2
+      },
+      {
+        "id": "weather_rainy-season",
+        "targetEn": "Rainy season",
+        "emoji": "🌧️",
+        "exampleDescriptionEn": "When it's like this, it rains a lot",
+        "sentenceStructure": "When it's like this, ___",
+        "tier": 2
+      },
+      {
+        "id": "weather_morning",
+        "targetEn": "Morning",
+        "emoji": "🌅",
+        "exampleDescriptionEn": "When it's like this, the sun is rising",
+        "sentenceStructure": "When it's like this, ___",
+        "tier": 2
+      },
+      {
+        "id": "weather_night",
+        "targetEn": "Night",
+        "emoji": "🌙",
+        "exampleDescriptionEn": "When it's like this, the sky is dark",
+        "sentenceStructure": "When it's like this, ___",
+        "tier": 2
+      },
+      {
+        "id": "weather_flood",
+        "targetEn": "Flood",
+        "emoji": "🌊",
+        "exampleDescriptionEn": "When it's like this, there is too much water on the ground",
+        "sentenceStructure": "When it's like this, ___",
+        "tier": 2
+      },
+      {
+        "id": "weather_breeze",
+        "targetEn": "Breeze",
+        "emoji": "🍃",
+        "exampleDescriptionEn": "When it's like this, the wind is soft and cool",
+        "sentenceStructure": "When it's like this, ___",
+        "tier": 2
+      }
+    ],
+    "animals": [
+      {
+        "id": "animals_dog",
+        "targetEn": "Dog",
+        "emoji": "🐶",
+        "exampleDescriptionEn": "It's an animal that says \"woof\"",
+        "sentenceStructure": "It's an animal that ___",
+        "tier": 2
+      },
+      {
+        "id": "animals_cat",
+        "targetEn": "Cat",
+        "emoji": "🐱",
+        "exampleDescriptionEn": "It's an animal that says \"meow\"",
+        "sentenceStructure": "It's an animal that ___",
+        "tier": 2
+      },
+      {
+        "id": "animals_elephant",
+        "targetEn": "Elephant",
+        "emoji": "🐘",
+        "exampleDescriptionEn": "It's an animal that is very big",
+        "sentenceStructure": "It's an animal that ___",
+        "tier": 2
+      },
+      {
+        "id": "animals_bird",
+        "targetEn": "Bird",
+        "emoji": "🐦",
+        "exampleDescriptionEn": "It's an animal that can fly",
+        "sentenceStructure": "It's an animal that ___",
+        "tier": 2
+      },
+      {
+        "id": "animals_fish",
+        "targetEn": "Fish",
+        "emoji": "🐟",
+        "exampleDescriptionEn": "It's an animal that lives in water",
+        "sentenceStructure": "It's an animal that ___",
+        "tier": 2
+      },
+      {
+        "id": "animals_cow",
+        "targetEn": "Cow",
+        "emoji": "🐮",
+        "exampleDescriptionEn": "It's an animal that gives us milk",
+        "sentenceStructure": "It's an animal that ___",
+        "tier": 2
+      },
+      {
+        "id": "animals_lion",
+        "targetEn": "Lion",
+        "emoji": "🦁",
+        "exampleDescriptionEn": "It's an animal that is the king of the jungle",
+        "sentenceStructure": "It's an animal that ___",
+        "tier": 2
+      },
+      {
+        "id": "animals_snake",
+        "targetEn": "Snake",
+        "emoji": "🐍",
+        "exampleDescriptionEn": "It's an animal that has no legs",
+        "sentenceStructure": "It's an animal that ___",
+        "tier": 2
+      },
+      {
+        "id": "animals_monkey",
+        "targetEn": "Monkey",
+        "emoji": "🐵",
+        "exampleDescriptionEn": "It's an animal that can climb trees",
+        "sentenceStructure": "It's an animal that ___",
+        "tier": 2
+      },
+      {
+        "id": "animals_duck",
+        "targetEn": "Duck",
+        "emoji": "🦆",
+        "exampleDescriptionEn": "It's an animal that can swim and says \"quack\"",
+        "sentenceStructure": "It's an animal that ___",
+        "tier": 2
+      },
+      {
+        "id": "animals_horse",
+        "targetEn": "Horse",
+        "emoji": "🐴",
+        "exampleDescriptionEn": "It's an animal that people can ride it",
+        "sentenceStructure": "It's an animal that ___",
+        "tier": 2
+      },
+      {
+        "id": "animals_pig",
+        "targetEn": "Pig",
+        "emoji": "🐷",
+        "exampleDescriptionEn": "It's an animal that likes mud",
+        "sentenceStructure": "It's an animal that ___",
+        "tier": 2
+      },
+      {
+        "id": "animals_chicken",
+        "targetEn": "Chicken",
+        "emoji": "🍗",
+        "exampleDescriptionEn": "It's an animal that gives us eggs",
+        "sentenceStructure": "It's an animal that ___",
+        "tier": 2
+      },
+      {
+        "id": "animals_rabbit",
+        "targetEn": "Rabbit",
+        "emoji": "🐰",
+        "exampleDescriptionEn": "It's an animal that has long ears",
+        "sentenceStructure": "It's an animal that ___",
+        "tier": 2
+      },
+      {
+        "id": "animals_bee",
+        "targetEn": "Bee",
+        "emoji": "🐝",
+        "exampleDescriptionEn": "It's an animal that makes honey",
+        "sentenceStructure": "It's an animal that ___",
+        "tier": 2
+      },
+      {
+        "id": "animals_spider",
+        "targetEn": "Spider",
+        "emoji": "🕷️",
+        "exampleDescriptionEn": "It's an animal that has eight legs",
+        "sentenceStructure": "It's an animal that ___",
+        "tier": 2
+      },
+      {
+        "id": "animals_frog",
+        "targetEn": "Frog",
+        "emoji": "🐸",
+        "exampleDescriptionEn": "It's an animal that can jump high",
+        "sentenceStructure": "It's an animal that ___",
+        "tier": 2
+      },
+      {
+        "id": "animals_tiger",
+        "targetEn": "Tiger",
+        "emoji": "🐯",
+        "exampleDescriptionEn": "It's an animal that has stripes",
+        "sentenceStructure": "It's an animal that ___",
+        "tier": 2
+      },
+      {
+        "id": "animals_turtle",
+        "targetEn": "Turtle",
+        "emoji": "🐢",
+        "exampleDescriptionEn": "It's an animal that is very slow",
+        "sentenceStructure": "It's an animal that ___",
+        "tier": 2
+      },
+      {
+        "id": "animals_sheep",
+        "targetEn": "Sheep",
+        "emoji": "🐑",
+        "exampleDescriptionEn": "It's an animal that gives us wool",
+        "sentenceStructure": "It's an animal that ___",
+        "tier": 2
+      }
+    ],
+    "feelings": [
+      {
+        "id": "feelings_happy",
+        "targetEn": "Happy",
+        "emoji": "😊",
+        "exampleDescriptionEn": "You feel this when good things happen",
+        "sentenceStructure": "You feel this when ___",
+        "tier": 3
+      },
+      {
+        "id": "feelings_sad",
+        "targetEn": "Sad",
+        "emoji": "😢",
+        "exampleDescriptionEn": "You feel this when you lose something",
+        "sentenceStructure": "You feel this when ___",
+        "tier": 3
+      },
+      {
+        "id": "feelings_angry",
+        "targetEn": "Angry",
+        "emoji": "😠",
+        "exampleDescriptionEn": "You feel this when someone is not nice to you",
+        "sentenceStructure": "You feel this when ___",
+        "tier": 3
+      },
+      {
+        "id": "feelings_scared",
+        "targetEn": "Scared",
+        "emoji": "😨",
+        "exampleDescriptionEn": "You feel this when something is dangerous",
+        "sentenceStructure": "You feel this when ___",
+        "tier": 3
+      },
+      {
+        "id": "feelings_tired",
+        "targetEn": "Tired",
+        "emoji": "😫",
+        "exampleDescriptionEn": "You feel this when you need to sleep",
+        "sentenceStructure": "You feel this when ___",
+        "tier": 3
+      },
+      {
+        "id": "feelings_excited",
+        "targetEn": "Excited",
+        "emoji": "🤩",
+        "exampleDescriptionEn": "You feel this when something good will happen soon",
+        "sentenceStructure": "You feel this when ___",
+        "tier": 3
+      },
+      {
+        "id": "feelings_nervous",
+        "targetEn": "Nervous",
+        "emoji": "😬",
+        "exampleDescriptionEn": "You feel this when you have a test tomorrow",
+        "sentenceStructure": "You feel this when ___",
+        "tier": 3
+      },
+      {
+        "id": "feelings_bored",
+        "targetEn": "Bored",
+        "emoji": "😐",
+        "exampleDescriptionEn": "You feel this when you have nothing to do",
+        "sentenceStructure": "You feel this when ___",
+        "tier": 3
+      },
+      {
+        "id": "feelings_proud",
+        "targetEn": "Proud",
+        "emoji": "😌",
+        "exampleDescriptionEn": "You feel this when you do something well",
+        "sentenceStructure": "You feel this when ___",
+        "tier": 3
+      },
+      {
+        "id": "feelings_surprised",
+        "targetEn": "Surprised",
+        "emoji": "😲",
+        "exampleDescriptionEn": "You feel this when something happens that you don't expect",
+        "sentenceStructure": "You feel this when ___",
+        "tier": 3
+      },
+      {
+        "id": "feelings_confused",
+        "targetEn": "Confused",
+        "emoji": "😕",
+        "exampleDescriptionEn": "You feel this when you don't understand something",
+        "sentenceStructure": "You feel this when ___",
+        "tier": 3
+      },
+      {
+        "id": "feelings_embarrassed",
+        "targetEn": "Embarrassed",
+        "emoji": "😳",
+        "exampleDescriptionEn": "You feel this when you make a mistake in front of people",
+        "sentenceStructure": "You feel this when ___",
+        "tier": 3
+      },
+      {
+        "id": "feelings_lonely",
+        "targetEn": "Lonely",
+        "emoji": "😔",
+        "exampleDescriptionEn": "You feel this when you have no one to talk to",
+        "sentenceStructure": "You feel this when ___",
+        "tier": 3
+      },
+      {
+        "id": "feelings_jealous",
+        "targetEn": "Jealous",
+        "emoji": "😒",
+        "exampleDescriptionEn": "You feel this when someone else has something you want",
+        "sentenceStructure": "You feel this when ___",
+        "tier": 3
+      },
+      {
+        "id": "feelings_relieved",
+        "targetEn": "Relieved",
+        "emoji": "😌",
+        "exampleDescriptionEn": "You feel this when a problem is finally over",
+        "sentenceStructure": "You feel this when ___",
+        "tier": 3
+      },
+      {
+        "id": "feelings_confident",
+        "targetEn": "Confident",
+        "emoji": "😎",
+        "exampleDescriptionEn": "You feel this when you believe you can do something",
+        "sentenceStructure": "You feel this when ___",
+        "tier": 3
+      },
+      {
+        "id": "feelings_worried",
+        "targetEn": "Worried",
+        "emoji": "😟",
+        "exampleDescriptionEn": "You feel this when you think something bad will happen",
+        "sentenceStructure": "You feel this when ___",
+        "tier": 3
+      },
+      {
+        "id": "feelings_grateful",
+        "targetEn": "Grateful",
+        "emoji": "🙏",
+        "exampleDescriptionEn": "You feel this when someone helps you",
+        "sentenceStructure": "You feel this when ___",
+        "tier": 3
+      },
+      {
+        "id": "feelings_curious",
+        "targetEn": "Curious",
+        "emoji": "🤔",
+        "exampleDescriptionEn": "You feel this when you want to know more about something",
+        "sentenceStructure": "You feel this when ___",
+        "tier": 3
+      },
+      {
+        "id": "feelings_disappointed",
+        "targetEn": "Disappointed",
+        "emoji": "😞",
+        "exampleDescriptionEn": "You feel this when something doesn't happen the way you hoped",
+        "sentenceStructure": "You feel this when ___",
+        "tier": 3
+      }
+    ]
+  },
+  "challengeId": "challenge"
+}

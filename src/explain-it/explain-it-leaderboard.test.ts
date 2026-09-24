@@ -1,11 +1,11 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
-import { explainItTopicById } from './explain-it.data';
+import { explainItTopicById, EXPLAIN_IT_CHALLENGE_ID } from './explain-it.data';
 import { ExplainItLeaderboardService } from './explain-it-leaderboard.service';
 
-describe('Explain It Demo leaderboard', () => {
-  it('accepts the Demo topic id', () => {
-    assert.ok(explainItTopicById('demo'));
+describe('Explain It Challenge leaderboard', () => {
+  it('accepts the Challenge topic id', () => {
+    assert.ok(explainItTopicById(EXPLAIN_IT_CHALLENGE_ID));
   });
 
   it('rejects unknown topics', () => {

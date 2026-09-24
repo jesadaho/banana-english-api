@@ -407,5 +407,124 @@
         "imagePath": "describe-it/fnd_v7_u06n06/08-those-white-books.webp"
       }
     ]
+  },
+  "fnd_v7_u06n16": {
+    "id": "fnd_v7_u06n16",
+    "titleEn": "Pick Two",
+    "titleTh": "เลือกสองอย่าง",
+    "tagEn": "PICK",
+    "emoji": "🎒",
+    "estimatedMinutes": 3,
+    "items": [
+      {
+        "id": "01-blue-bag-and-red-book",
+        "promptTh": "บอกของสองอย่างที่เห็นในภาพครับ",
+        "answerEn": "A blue bag and a red book.",
+        "answerTh": "กระเป๋าสีน้ำเงินกับหนังสือสีแดง",
+        "acceptedAnswers": [
+          "The blue bag and the red book.",
+          "A blue bag and a red book",
+          "Blue bag and red book.",
+          "A blue bag and a red book."
+        ],
+        "imagePath": "describe-it/fnd_v7_u06n16/01-blue-bag-and-red-book.webp",
+        "hintEn": "A blue bag and a _____"
+      },
+      {
+        "id": "02-green-book-and-yellow-bag",
+        "promptTh": "บอกของสองอย่างที่เห็นในภาพครับ",
+        "answerEn": "A green book and a yellow bag.",
+        "answerTh": "หนังสือสีเขียวกับกระเป๋าสีเหลือง",
+        "acceptedAnswers": [
+          "The green book and the yellow bag.",
+          "A green book and a yellow bag",
+          "Green book and yellow bag.",
+          "A green book and a yellow bag."
+        ],
+        "imagePath": "describe-it/fnd_v7_u06n16/02-green-book-and-yellow-bag.webp"
+      },
+      {
+        "id": "03-black-bag-and-white-book",
+        "promptTh": "บอกของสองอย่างที่เห็นในภาพครับ",
+        "answerEn": "A black bag and a white book.",
+        "answerTh": "กระเป๋าสีดำกับหนังสือสีขาว",
+        "acceptedAnswers": [
+          "The black bag and the white book.",
+          "A black bag and a white book",
+          "Black bag and white book.",
+          "A black bag and a white book."
+        ],
+        "imagePath": "describe-it/fnd_v7_u06n16/03-black-bag-and-white-book.webp"
+      },
+      {
+        "id": "04-red-bag-and-blue-book",
+        "promptTh": "บอกของสองอย่างที่เห็นในภาพครับ",
+        "answerEn": "A red bag and a blue book.",
+        "answerTh": "กระเป๋าสีแดงกับหนังสือสีน้ำเงิน",
+        "acceptedAnswers": [
+          "The red bag and the blue book.",
+          "A red bag and a blue book",
+          "Red bag and blue book.",
+          "A red bag and a blue book."
+        ],
+        "imagePath": "describe-it/fnd_v7_u06n16/04-red-bag-and-blue-book.webp"
+      },
+      {
+        "id": "05-red-bag-or-blue-bag",
+        "promptTh": "เลือกของหนึ่งอย่าง แล้วพูดโดยใช้ or ครับ",
+        "answerEn": "A red bag or a blue bag.",
+        "answerTh": "กระเป๋าสีแดงหรือกระเป๋าสีน้ำเงิน",
+        "acceptedAnswers": [
+          "The red bag or the blue bag.",
+          "A red bag or a blue bag",
+          "Red bag or blue bag.",
+          "A blue bag or a red bag.",
+          "A red bag or a blue bag."
+        ],
+        "imagePath": "describe-it/fnd_v7_u06n16/05-red-bag-or-blue-bag.webp"
+      },
+      {
+        "id": "06-green-book-or-yellow-bag",
+        "promptTh": "เลือกของหนึ่งอย่าง แล้วพูดโดยใช้ or ครับ",
+        "answerEn": "A green book or a yellow bag.",
+        "answerTh": "หนังสือสีเขียวหรือกระเป๋าสีเหลือง",
+        "acceptedAnswers": [
+          "The green book or the yellow bag.",
+          "A green book or a yellow bag",
+          "Green book or yellow bag.",
+          "A yellow bag or a green book.",
+          "A green book or a yellow bag."
+        ],
+        "imagePath": "describe-it/fnd_v7_u06n16/06-green-book-or-yellow-bag.webp"
+      },
+      {
+        "id": "07-black-bag-or-white-book",
+        "promptTh": "เลือกของหนึ่งอย่าง แล้วพูดโดยใช้ or ครับ",
+        "answerEn": "A black bag or a white book.",
+        "answerTh": "กระเป๋าสีดำหรือหนังสือสีขาว",
+        "acceptedAnswers": [
+          "The black bag or the white book.",
+          "A black bag or a white book",
+          "Black bag or white book.",
+          "A white book or a black bag.",
+          "A black bag or a white book."
+        ],
+        "imagePath": "describe-it/fnd_v7_u06n16/07-black-bag-or-white-book.webp"
+      },
+      {
+        "id": "08-red-book-or-blue-bag",
+        "promptTh": "เลือกของหนึ่งอย่าง แล้วพูดโดยใช้ or ครับ",
+        "answerEn": "A red book or a blue bag.",
+        "answerTh": "หนังสือสีแดงหรือกระเป๋าสีน้ำเงิน",
+        "acceptedAnswers": [
+          "The red book or the blue bag.",
+          "A red book or a blue bag",
+          "Red book or blue bag.",
+          "A blue bag or a red book.",
+          "A red book or a blue bag."
+        ],
+        "imagePath": "describe-it/fnd_v7_u06n16/08-red-book-or-blue-bag.webp"
+      }
+    ]
   }
 }

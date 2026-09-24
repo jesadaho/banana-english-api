@@ -42,6 +42,7 @@ type AuthedRequest = { user: User };
 
 /** Allowed mini-game ids that can claim lesson-sized rewards once. */
 const ALLOWED_MINI_GAME_IDS = new Set([
+  'game_explain_it',
   'emoji_speak_first_contact',
   'speak_challenge_ee_everyday_life_1',
   'speak_challenge_ee_about_me_social',

@@ -1740,7 +1740,9 @@
             2,
             2
           ],
-          "contentRef": {}
+          "contentRef": {
+            "poolId": "fnd_v7_u06n16"
+          }
         },
         {
           "id": "v7_u06n08",
