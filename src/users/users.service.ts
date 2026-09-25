@@ -3,12 +3,14 @@ import {
   ConflictException,
   ForbiddenException,
   Injectable,
+  Logger,
   NotFoundException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { User, Prisma } from '@prisma/client';
 import { EconomyService } from '../economy/economy.service';
 import { getUserLocalTime, isSameDateKey } from '../common/timezone.util';
+import { FirebaseAdminService } from '../firebase/firebase-admin.service';
 import { PrismaService } from '../prisma/prisma.service';
 import {
   avatarSeedCost,
@@ -122,10 +124,13 @@ export interface DebugRefillBananasByNameResponse {
 
 @Injectable()
 export class UsersService {
+  private readonly logger = new Logger(UsersService.name);
+
   constructor(
     private readonly prisma: PrismaService,
     private readonly economy: EconomyService,
     private readonly config: ConfigService,
+    private readonly firebaseAdmin: FirebaseAdminService,
   ) {}
 
   async upsertProfile(user: User, dto: UpsertUserDto): Promise<UserProfileResponse> {
@@ -271,6 +276,26 @@ export class UsersService {
       },
     });
     return this.getProfile(updated);
+  }
+
+  /**
+   * Permanently delete this learner: DB row (cascade) + Firebase Auth user.
+   * Not a soft-disable / sign-out.
+   */
+  async deleteAccount(user: User): Promise<{ ok: true }> {
+    const firebaseUid = user.firebaseUid?.trim() || null;
+    await this.prisma.user.delete({ where: { id: user.id } });
+    if (firebaseUid) {
+      try {
+        await this.firebaseAdmin.deleteAuthUser(firebaseUid);
+      } catch (error) {
+        // DB row is already gone — log and continue so the client can reset.
+        this.logger.warn(
+          `Account ${user.id} DB deleted but Firebase Auth cleanup failed: ${String(error).slice(0, 200)}`,
+        );
+      }
+    }
+    return { ok: true };
   }
 
   async refillBananasDebug(user: User): Promise<UserProfileResponse> {

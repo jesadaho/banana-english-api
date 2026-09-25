@@ -79,6 +79,25 @@ export class FirebaseAdminService implements OnModuleInit {
     }
   }
 
+  /** Hard-delete a Firebase Auth user. No-ops if Auth is disabled or uid missing. */
+  async deleteAuthUser(uid: string): Promise<void> {
+    const trimmed = uid.trim();
+    if (!this.enabled || !trimmed) return;
+    try {
+      await admin.auth().deleteUser(trimmed);
+    } catch (error) {
+      const code =
+        error && typeof error === 'object' && 'code' in error
+          ? String((error as { code?: string }).code)
+          : '';
+      if (code === 'auth/user-not-found') return;
+      this.logger.warn(
+        `Firebase Auth deleteUser(${trimmed}) failed: ${String(error).slice(0, 200)}`,
+      );
+      throw error;
+    }
+  }
+
   async uploadPublicFile(
     objectPath: string,
     buffer: Buffer,

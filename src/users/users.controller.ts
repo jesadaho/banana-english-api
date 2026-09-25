@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Patch,
   Param,
@@ -48,6 +49,11 @@ export class UsersController {
   @Get('me')
   async getMe(@Req() req: AuthedRequest) {
     return this.users.syncProfile(req.user);
+  }
+
+  @Delete('me')
+  async deleteMe(@Req() req: AuthedRequest) {
+    return this.users.deleteAccount(req.user);
   }
 
   @Get('me/auth')
