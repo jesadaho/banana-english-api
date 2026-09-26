@@ -37,7 +37,7 @@ export class DescribeItController {
 
   private assertEnabled() {
     if (!DESCRIBE_IT_ENABLED) {
-      throw new ServiceUnavailableException('Describe It is temporarily unavailable');
+      throw new ServiceUnavailableException('See & Say is temporarily unavailable');
     }
   }
 
@@ -101,16 +101,16 @@ export class DescribeItController {
     this.assertEnabled();
     if (!isFoundationDescribeItPool(poolId)) {
       throw new BadRequestException(
-        'Only foundation path Describe It pools can claim path rewards',
+        'Only foundation path See & Say pools can claim path rewards',
       );
     }
     const deal = this.describeIt.dealForPool(poolId);
     if (deal.items.length === 0) {
-      throw new BadRequestException(`Describe It pool has no items: ${poolId}`);
+      throw new BadRequestException(`See & Say pool has no items: ${poolId}`);
     }
     const gameId = `describe_it:${poolId}`;
     if (!canonicalFoundationV7RewardId(gameId)) {
-      throw new BadRequestException(`Unknown foundation Describe It pool: ${poolId}`);
+      throw new BadRequestException(`Unknown foundation See & Say pool: ${poolId}`);
     }
     const score = readMiniGameScoreBody(body);
     await this.economy.recordMiniGameScore({

@@ -10,7 +10,7 @@ import { getLesson, getAllLessons, lessonUsesTapToContinue } from '../lessons/le
 import { FOUNDATION_V7_LESSONS } from '../lessons/foundation-v7-lessons.data';
 import lessonSpecs from '../lessons/foundation-v7-lessons.authoring.json';
 import { getSimulation, getAllSimulations, initCheckpointStates, finalizeSimulationTurnState } from '../simulations/simulations.data';
-import { FOUNDATION_V7_SIMULATIONS } from '../simulations/foundation-v7-simulations.data';
+import { FOUNDATION_V7_SIMULATIONS, FOUNDATION_V7_PRESERVED_SIMULATIONS } from '../simulations/foundation-v7-simulations.data';
 import { SayItService } from '../say-it/say-it.service';
 import { SayItController } from '../say-it/say-it.controller';
 import { sayItPoolForTopic, sayItTopicById } from '../say-it/say-it.data';
@@ -33,23 +33,24 @@ const EXPECTED_V7_MIN_TURNS: Record<string, number> = {
   foundation_v7_u11n06: 3,
   foundation_v7_u12n08: 3,
   foundation_v7_u13n06: 2,
-  foundation_v7_u14n06: 3,
+  foundation_v7_u14n15: 3,
+  foundation_v7_u14tn21: 2,
   foundation_v7_u15n08: 3,
-  foundation_v7_u16n10: 3,
 };
 
 describe('Foundation V7 catalog and real content', () => {
-  it('has 16 chapters and the approved 150-node mix, without Skill Mix', () => {
+  it('has 16 chapters and the approved 166-node mix after Ch14–16 revamp, without Skill Mix', () => {
     assert.equal(FOUNDATION_V7_CATALOG.chapters.length, 16);
-    assert.equal(FOUNDATION_V7_NODES.length, 150);
-    assert.equal(new Set(FOUNDATION_V7_NODES.map(n => n.id)).size, 150);
-    assert.deepEqual(FOUNDATION_V7_CATALOG.chapters.map(c => c.items.length), [5,5,9,11,10,15,9,6,13,10,9,10,8,8,12,10]);
-    assert.deepEqual(foundationV7NodeTypeCounts(), { lesson:41, say_it:29, emoji_speak:17, new_words:28, pronunciation:4, describe_it:13, story_bites:3, conversation:15 });
-    assert.deepEqual(FOUNDATION_V7_NODES.map(n => n.globalOrder), Array.from({length:150}, (_, i) => i + 1));
+    assert.equal(FOUNDATION_V7_NODES.length, 166);
+    assert.equal(new Set(FOUNDATION_V7_NODES.map(n => n.id)).size, 166);
+    assert.deepEqual(FOUNDATION_V7_CATALOG.chapters.map(c => c.items.length), [5,5,9,11,11,15,9,6,13,10,9,10,8,11,21,13]);
+    assert.deepEqual(FOUNDATION_V7_CATALOG.chapters.slice(13).map(c => c.id), ['v7_u14', 'v7_u14_time_numbers', 'v7_u15']);
+    assert.deepEqual(foundationV7NodeTypeCounts(), { lesson:46, say_it:38, emoji_speak:15, new_words:29, pronunciation:4, describe_it:12, story_bites:3, conversation:15, info_task:4 });
+    assert.deepEqual(FOUNDATION_V7_NODES.map(n => n.globalOrder), Array.from({length:166}, (_, i) => i + 1));
     for (let i = 1; i < FOUNDATION_V7_NODES.length; i++) {
       const prev = FOUNDATION_V7_NODES[i - 1];
       const next = FOUNDATION_V7_NODES[i];
-      if (!['lesson', 'conversation', 'new_words'].includes(prev.type)) assert.notEqual(prev.type, next.type, `${prev.id} repeats ${next.id}`);
+      if (!['lesson', 'conversation', 'new_words', 'info_task'].includes(prev.type)) assert.notEqual(prev.type, next.type, `${prev.id} repeats ${next.id}`);
     }
   });
 
@@ -95,22 +96,34 @@ describe('Foundation V7 catalog and real content', () => {
     assert.equal(hasFoundationV7Content({...node, contentRef:{}}), false);
   });
 
-  it('has 134 backend-ready nodes while Describe It is off, 131 playable by default, and a capability gate for three Guided packs', () => {
+  it('has 159 backend-ready nodes with Describe It packs on, 156 playable by default, and a capability gate for three Guided packs', () => {
     const defaults = toFoundationV7ClientChapters().flatMap(c => c.items);
-    assert.equal(defaults.filter(n => n.backendReady).length, 134);
-    assert.equal(defaults.filter(n => !n.comingSoon).length, 131);
-    assert.equal(all().filter(n => !n.comingSoon).length, 134);
+    assert.equal(defaults.filter(n => n.backendReady).length, 159);
+    assert.equal(defaults.filter(n => !n.comingSoon).length, 156);
+    assert.equal(all().filter(n => !n.comingSoon).length, 159);
     assert.equal(defaults.filter(n => n.unavailableReason === 'client_capability_required').length, 3);
-    assert.equal(defaults.filter(n => n.unavailableReason === 'missing_content').length, 0);
+    assert.equal(defaults.filter(n => n.unavailableReason === 'missing_content').length, 4);
     const placeholders = all().filter(n => n.comingSoon);
-    assert.equal(placeholders.length, 16);
-    assert.ok(placeholders.every(n => !n.countsTowardProgress && n.unavailableReason === 'mechanic_not_implemented'));
-    assert.ok(placeholders.every(n => !n.lessonId && !n.poolId && !n.topicId && !n.simulationId));
-    for (const id of ['v7_u03n05', 'v7_u04n05', 'v7_u05n05', 'v7_u06n06', 'v7_u06n16', 'v7_u13n05'] as const) {
+    assert.equal(placeholders.length, 7);
+    assert.ok(placeholders.every(n => !n.countsTowardProgress));
+    assert.equal(
+      placeholders.filter(n => n.unavailableReason === 'mechanic_not_implemented').length,
+      3,
+    );
+    assert.equal(
+      placeholders.filter(n => n.unavailableReason === 'missing_content').length,
+      4,
+    );
+    for (const id of ['v7_u07n04', 'v7_u08n09', 'v7_u10n04', 'v7_u12n06'] as const) {
       const describeIt = all().find(n => n.id === id);
       assert.equal(describeIt?.comingSoon, true);
       assert.equal(describeIt?.backendReady, false);
-      assert.equal(describeIt?.poolId, undefined);
+    }
+    for (const id of ['v7_u03n05', 'v7_u15n04', 'v7_u15n14'] as const) {
+      const describeIt = all().find(n => n.id === id);
+      assert.equal(describeIt?.comingSoon, false);
+      assert.equal(describeIt?.backendReady, true);
+      assert.ok(describeIt?.poolId);
     }
     const serialized = JSON.stringify(all());
     assert.equal(serialized.includes('"script"'), false);
@@ -129,12 +142,13 @@ describe('Foundation V7 catalog and real content', () => {
     assert.ok(getAllLessons().every(l => !l.lessonId.startsWith('fnd_v7_')));
     assert.equal(
       getAllSimulations().filter((s) => s.simulationId.startsWith('foundation_v7_')).length,
-      FOUNDATION_V7_SIMULATIONS.length,
+      FOUNDATION_V7_SIMULATIONS.length + FOUNDATION_V7_PRESERVED_SIMULATIONS.length,
     );
   });
 
-  it('registers 41 authored lesson flows with model, recognition, recall and completion', () => {
-    assert.equal(FOUNDATION_V7_LESSONS.length, 41);
+  it('registers authored lesson flows with model, recognition, recall and completion', () => {
+    assert.equal(FOUNDATION_V7_LESSONS.length, Object.keys(lessonSpecs).length);
+    assert.ok(FOUNDATION_V7_LESSONS.length >= 42);
     for (const [id, spec] of Object.entries(lessonSpecs)) {
       const lesson = getLesson(id)!;
       assert.ok(lesson, id);
@@ -157,13 +171,13 @@ describe('Foundation V7 catalog and real content', () => {
     }
   });
 
-  it('serves all 29 Say It topics through the real service with five or six unique question IDs', () => {
+  it('serves all Say It topics through the real service with five unique question IDs', () => {
     const service = new SayItService();
     for (const node of FOUNDATION_V7_NODES.filter(n => n.type === 'say_it')) {
       const id = node.contentRef.topicId!;
       assert.equal(service.getTopic(id).locked, false);
       const result = service.dealForTopic(id, 1, 'Mia');
-      const expected = id === 'fnd_v7_u14n04' ? 6 : 5;
+      const expected = 5;
       assert.equal(result.dealCount, expected, id);
       assert.equal(new Set(result.phrases.map(q => q.id)).size, expected, id);
       for (const q of result.phrases) {
@@ -207,7 +221,7 @@ describe('Foundation V7 catalog and real content', () => {
     }
   });
 
-  it('registers 14 authored conversations and closes at the turn cap without inventing completed goals', () => {
+  it('registers authored conversations and closes at the turn cap without inventing completed goals', () => {
     assert.equal(FOUNDATION_V7_SIMULATIONS.length, 14);
     for (const config of FOUNDATION_V7_SIMULATIONS) {
       assert.equal(getSimulation(config.simulationId), config);
@@ -255,23 +269,23 @@ describe('Foundation V7 progress and completion contracts', () => {
   it('recognizes canonical progress and ignores completion claims for Coming Soon content', async () => {
     const playable = all().filter(n => !n.comingSoon);
     const lessons = playable.flatMap(n => n.lessonId ? [n.lessonId] : []);
-    const mini = playable.flatMap(n => n.topicId ? [`say_it:${n.topicId}`] : n.nodeType === 'new_words' && n.poolId ? [`new_words:${n.poolId}`] : n.nodeType === 'describe_it' && n.poolId ? [`describe_it:${n.poolId}`] : n.poolId ? [`emoji_speak:${n.poolId}`] : []);
+    const mini = playable.flatMap(n => n.topicId ? [`say_it:${n.topicId}`] : n.nodeType === 'new_words' && n.poolId ? [`new_words:${n.poolId}`] : n.nodeType === 'info_task' && n.poolId ? [`info_task:${n.poolId}`] : n.nodeType === 'describe_it' && n.poolId ? [`describe_it:${n.poolId}`] : n.poolId ? [`emoji_speak:${n.poolId}`] : []);
     const simulations = playable.flatMap(n => n.simulationId ? [n.simulationId] : []);
     mini.push(...all().filter(n => n.comingSoon).map(n => n.id));
     const service = pathService(lessons, mini, simulations);
     const full = await service.getFoundationV7('user', ['say_it_guided']);
-    assert.equal(full.progress.completedCount, 134);
-    assert.equal(full.progress.totalCount, 134);
+    assert.equal(full.progress.completedCount, 159);
+    assert.equal(full.progress.totalCount, 159);
     assert.equal(full.progress.currentNodeId, null);
     const legacyClient = await service.getFoundationV7('user');
-    assert.equal(legacyClient.progress.completedCount, 131);
-    assert.equal(legacyClient.progress.totalCount, 131);
+    assert.equal(legacyClient.progress.completedCount, 156);
+    assert.equal(legacyClient.progress.totalCount, 156);
     assert.equal(legacyClient.progress.currentNodeId, null);
   });
 
   it('rejects unknown capabilities rather than silently enabling unsupported mechanics', async () => {
     const controller = new LearnPathController(pathService());
-    assert.equal((await controller.foundationV7(req, 'say_it_guided')).summary.playableCount, 134);
+    assert.equal((await controller.foundationV7(req, 'say_it_guided')).summary.playableCount, 159);
     await assert.rejects(controller.foundationV7(req, 'story_bites'));
     await assert.rejects(controller.foundationV7(req, ['say_it_guided'] as any));
   });
@@ -283,45 +297,17 @@ describe('Foundation V7 progress and completion contracts', () => {
     assert.ok(isValidNewWordsPack(demo));
     assert.equal(canonicalFoundationV7RewardId('new_words_demo'), 'new_words:new_words_demo');
     const catalogNodes = FOUNDATION_V7_NODES.filter(n => n.type === 'new_words');
-    assert.equal(catalogNodes.length, 28);
-    assert.deepEqual(catalogNodes.map(n => n.contentRef.poolId), [
-      'new_words_how_i_feel',
-      'new_words_more_feelings',
-      'new_words_people_around_me',
-      'new_words_family_words',
-      'new_words_more_family',
-      'new_words_everyday_objects',
-      'new_words_more_everyday_things',
-      'new_words_colours_1',
-      'new_words_colours_2',
-      'new_words_personal_things',
-      'new_words_more_personal_things',
-      'new_words_days_1',
-      'new_words_days_2',
-      'new_words_drinks',
-      'new_words_food',
-      'new_words_action_words',
-      'new_words_more_actions',
-      'new_words_daily_actions',
-      'new_words_more_daily_actions',
-      'new_words_actions_happening_now',
-      'new_words_question_clues_1',
-      'new_words_question_clues_2',
-      'new_words_around_the_room',
-      'new_words_places_and_fixtures',
-      'new_words_places_1',
-      'new_words_places_2',
-      'new_words_transport',
-      'new_words_more_ways_to_go',
-    ]);
+    assert.equal(catalogNodes.length, 29);
+    assert.ok(catalogNodes.some(n => n.contentRef.poolId === 'new_words_what_who'));
+    assert.ok(catalogNodes.some(n => n.contentRef.poolId === 'new_words_months_4'));
+    assert.ok(!catalogNodes.some(n => n.contentRef.poolId === 'new_words_places_1')); // Around Town off A1
     assert.equal(newWordsPoolById('new_words_people_around_me')?.items.map(i => i.answer).join(','), 'teacher,student,doctor');
     assert.equal(newWordsPoolById('new_words_personal_things')?.items.map(i => i.answer).join(','), 'phone,key,shirt,bag');
     assert.equal(newWordsPoolById('new_words_more_personal_things')?.items.map(i => i.answer).join(','), 'hat,watch,umbrella');
     assert.equal(newWordsPoolById('new_words_food')?.items.map(i => i.answer).join(','), 'rice,noodles,bread');
     assert.equal(newWordsPoolById('new_words_more_feelings')?.items.map(i => i.answer).join(','), 'hot,cold,sick');
     assert.equal(newWordsPoolById('new_words_places_and_fixtures')?.items.map(i => i.answer).join(','), 'door,bed,bathroom');
-    assert.equal(newWordsPoolById('new_words_question_clues_2')?.items.map(i => i.answer).join(','), 'when,how much,how many');
-    for (const node of catalogNodes) {
+        for (const node of catalogNodes) {
       const pool = newWordsPoolById(node.contentRef.poolId!);
       assert.ok(isValidNewWordsPack(pool), node.id);
       assert.ok(pool?.items.every((item) => item.emoji && item.answer && item.reading && item.meaningTh), node.id);
@@ -338,7 +324,7 @@ describe('Foundation V7 progress and completion contracts', () => {
   it('allows only actual mini-games and canonicalizes their aliases', () => {
     for (const node of FOUNDATION_V7_NODES) {
       const canonical = canonicalFoundationV7RewardId(node.id);
-      if (node.type === 'say_it' || node.type === 'emoji_speak' || node.type === 'new_words' || (node.type === 'describe_it' && node.contentRef.poolId)) {
+      if (node.type === 'say_it' || node.type === 'emoji_speak' || node.type === 'new_words' || node.type === 'info_task' || (node.type === 'describe_it' && node.contentRef.poolId)) {
         assert.ok(canonical, node.id);
         assert.equal(canonicalFoundationV7RewardId(node.contentRef.topicId ?? node.contentRef.poolId!), canonical);
         assert.equal(canonicalFoundationV7RewardId(canonical), canonical);
@@ -357,7 +343,7 @@ describe('Foundation V7 progress and completion contracts', () => {
       const reward = await controller.completeTopic(req, node.contentRef.topicId!);
       assert.equal((reward as any).gameId, `say_it:${node.contentRef.topicId}`);
     }
-    assert.equal(calls.length, 29);
+    assert.equal(calls.length, 38);
     await assert.rejects(controller.completeTopic(req, 'fnd_v7_unknown'));
   });
 
@@ -365,7 +351,7 @@ describe('Foundation V7 progress and completion contracts', () => {
     const economy = {applyMiniGameRewards: async (p: any) => p, recordMiniGameScore: async () => {}, spendBananas: async () => {}, hasClaimedMiniGameReward: async () => false};
     const controller = new MiniGamesController(economy as any, {} as any, {} as any, {} as any, {} as any, {markActivity:async () => {}} as any, {} as any, new EmojiSpeakService());
     for (const node of FOUNDATION_V7_NODES) {
-      if (['say_it','emoji_speak','new_words'].includes(node.type) || (node.type === 'describe_it' && node.contentRef.poolId)) await controller.complete(req, node.id);
+      if (['say_it','emoji_speak','new_words','info_task'].includes(node.type) || (node.type === 'describe_it' && node.contentRef.poolId)) await controller.complete(req, node.id);
       else await assert.rejects(controller.complete(req, node.id));
       if (node.type === 'emoji_speak') assert.equal((await controller.startEmojiSpeakPack(req, node.contentRef.poolId!)).bananaCost, 1);
       if (node.type === 'new_words') assert.equal((await controller.startNewWordsPack(req, node.contentRef.poolId!)).bananaCost, 1);

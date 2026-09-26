@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import type { AiDebug } from '../common/api.types';
+import { resolveGroqApiKeys } from '../config-keys/groq-api-keys';
 
 const GROQ_BASE_URL = 'https://api.groq.com/openai/v1';
 const GROQ_LIVE_TIMEOUT_MS = 20_000;
@@ -31,18 +32,21 @@ export type GroqGenerationResult<T> = {
 @Injectable()
 export class GroqChatService {
   private readonly logger = new Logger(GroqChatService.name);
-  private readonly apiKey: string;
+  private readonly apiKeys: string[];
   private readonly model: string;
+  private keyCursor = 0;
 
   constructor(private readonly config: ConfigService) {
-    this.apiKey = this.config.get<string>('GROQ_API_KEY') ?? '';
+    this.apiKeys = resolveGroqApiKeys((key) => this.config.get<string>(key));
     this.model =
       this.config.get<string>('GROQ_CHAT_MODEL') ?? 'openai/gpt-oss-120b';
-    this.logger.log(`Groq chat model: ${this.model}`);
+    this.logger.log(
+      `Groq chat model: ${this.model} (${this.apiKeys.length} API key${this.apiKeys.length === 1 ? '' : 's'})`,
+    );
   }
 
   isConfigured(): boolean {
-    return this.apiKey.trim().length > 0;
+    return this.apiKeys.length > 0;
   }
 
   activeModel(): string {
@@ -54,7 +58,7 @@ export class GroqChatService {
   ): Promise<GroqGenerationResult<T>> {
     if (!this.isConfigured()) {
       throw new ServiceUnavailableException(
-        'GROQ_API_KEY is not configured on the server',
+        'GROQ_API_KEY / GROQ_API_KEYS is not configured on the server',
       );
     }
 
@@ -128,6 +132,12 @@ export class GroqChatService {
       : new Error(String(lastError));
   }
 
+  private nextApiKey(): string {
+    const key = this.apiKeys[this.keyCursor % this.apiKeys.length]!;
+    this.keyCursor = (this.keyCursor + 1) % this.apiKeys.length;
+    return key;
+  }
+
   private async callChatCompletions(
     options: GroqGenerateJsonOptions & { temperature: number },
   ): Promise<{ text: string; ms: number }> {
@@ -163,42 +173,57 @@ export class GroqChatService {
       response_format: { type: 'json_object' as const },
     };
 
-    let response: Response;
-    try {
-      response = await fetch(`${GROQ_BASE_URL}/chat/completions`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${this.apiKey}`,
-        },
-        body: JSON.stringify(body),
-        signal: AbortSignal.timeout(GROQ_LIVE_TIMEOUT_MS),
-      });
-    } catch (error) {
-      const err = error instanceof Error ? error : new Error(String(error));
-      if (err.name === 'TimeoutError' || err.name === 'AbortError') {
-        throw new Error(
-          `Groq API failed (504): timeout after ${Math.round(GROQ_LIVE_TIMEOUT_MS / 1000)}s model=${this.model}`,
-        );
+    let lastError: Error | undefined;
+    for (let keyAttempt = 0; keyAttempt < this.apiKeys.length; keyAttempt++) {
+      const apiKey = this.nextApiKey();
+      let response: Response;
+      try {
+        response = await fetch(`${GROQ_BASE_URL}/chat/completions`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${apiKey}`,
+          },
+          body: JSON.stringify(body),
+          signal: AbortSignal.timeout(GROQ_LIVE_TIMEOUT_MS),
+        });
+      } catch (error) {
+        const err = error instanceof Error ? error : new Error(String(error));
+        if (err.name === 'TimeoutError' || err.name === 'AbortError') {
+          throw new Error(
+            `Groq API failed (504): timeout after ${Math.round(GROQ_LIVE_TIMEOUT_MS / 1000)}s model=${this.model}`,
+          );
+        }
+        throw err;
       }
-      throw err;
-    }
 
-    const ms = performance.now() - started;
+      const ms = performance.now() - started;
 
-    if (!response.ok) {
+      if (response.ok) {
+        const json = (await response.json()) as {
+          choices?: Array<{ message?: { content?: string } }>;
+        };
+        const text = json.choices?.[0]?.message?.content?.trim() ?? '';
+        if (!text) {
+          throw new Error('Groq response missing text');
+        }
+        return { text, ms };
+      }
+
       const err = await response.text();
-      throw new Error(`Groq API failed (${response.status}): ${err}`);
+      lastError = new Error(`Groq API failed (${response.status}): ${err}`);
+      const rateLimited =
+        response.status === 429 || /rate limit/i.test(err);
+      if (rateLimited && keyAttempt + 1 < this.apiKeys.length) {
+        this.logger.warn(
+          `Groq RPM limited on key ${keyAttempt + 1}/${this.apiKeys.length}; trying next key`,
+        );
+        continue;
+      }
+      throw lastError;
     }
 
-    const json = (await response.json()) as {
-      choices?: Array<{ message?: { content?: string } }>;
-    };
-    const text = json.choices?.[0]?.message?.content?.trim() ?? '';
-    if (!text) {
-      throw new Error('Groq response missing text');
-    }
-    return { text, ms };
+    throw lastError ?? new Error('Groq API failed');
   }
 
   private parseJsonResponse<T>(text: string): T {

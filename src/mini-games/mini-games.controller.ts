@@ -37,6 +37,11 @@ import { EmojiSpeakService } from '../emoji-speak/emoji-speak.service';
 import { canonicalFoundationV7RewardId, isFoundationV7EmojiPool } from '../learn-path/foundation-v7-path.data';
 import { isNewWordsPoolId } from '../new-words/new-words.data';
 import { readMiniGameScoreBody, type MiniGameScoreBody } from '../economy/mini-game-score';
+import {
+  dealInfoTaskItems,
+  infoTaskPoolById,
+  isValidInfoTaskPack,
+} from '../info-task/info-task.data';
 
 type AuthedRequest = { user: User };
 
@@ -118,6 +123,22 @@ export class MiniGamesController {
     const id = poolId?.trim();
     if (!id) throw new BadRequestException('poolId is required');
     return this.emojiSpeak.dealForPool(id);
+  }
+
+  @Get('info-task/:poolId/deal')
+  dealInfoTaskPack(@Param('poolId') poolId: string) {
+    const id = poolId?.trim();
+    if (!id) throw new BadRequestException('poolId is required');
+    const pool = infoTaskPoolById(id);
+    if (!isValidInfoTaskPack(pool)) {
+      throw new BadRequestException(`Unknown info-task pool: ${id}`);
+    }
+    return {
+      poolId: id,
+      title: pool!.title,
+      introTh: pool!.introTh ?? null,
+      items: dealInfoTaskItems(id),
+    };
   }
 
   /** Spend bananas to start a Foundation-path Emoji Speak pack (Games tab free). */

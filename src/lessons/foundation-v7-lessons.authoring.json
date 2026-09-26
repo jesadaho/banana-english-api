@@ -251,6 +251,36 @@
       "answerEn": "This is my sister"
     }
   },
+  "fnd_v7_syllable_intro": {
+    "titleEn": "Word Beats",
+    "titleTh": "แยกจังหวะ 1–2 พยางค์ของคำที่รู้จักแล้ว",
+    "goalTh": "แยกจังหวะ 1–2 พยางค์ของคำที่รู้จักแล้ว",
+    "scope": "สอนว่า syllable คือจังหวะเสียง ไม่ใช่ตัวอักษร; ใช้คำที่เรียนแล้ว book bag pen apple teacher doctor; ยังไม่สอน word stress",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "เริ่มด้วยการสอนให้เข้าใจว่า syllable แปลว่า พยางค์ หรือหนึ่งจังหวะเสียง โดยยังไม่บังคับออกเสียงคำว่า syllable; เช่น book มีหนึ่งจังหวะ พูดว่า One syllable.",
+        "models": [
+          "One syllable."
+        ],
+        "repeat": "One syllable."
+      },
+      {
+        "tipTh": "apple และ teacher มีสองจังหวะ พูดว่า Two syllables.",
+        "models": [
+          "Two syllables."
+        ],
+        "repeat": "Two syllables."
+      }
+    ],
+    "recall": {
+      "promptTh": "คำว่า doctor มีกี่จังหวะ",
+      "answerEn": "Two syllables."
+    }
+  },
   "fnd_v7_one_or_more": {
     "titleEn": "One or More",
     "titleTh": "บอก a/an กับของหนึ่งชิ้น และ regular plural กับหลายชิ้น",
@@ -1190,133 +1220,67 @@
     "titleEn": "Happening Now",
     "titleTh": "ใช้ am/is/are + -ing กับการกระทำที่รู้",
     "goalTh": "ใช้ am/is/are + -ing กับการกระทำที่รู้",
-    "scope": "model eating/reading/cooking/working; เริ่ม I am แล้ว he/she/we ที่คุ้น ไม่สอน -ing แยกจาก be",
+    "scope": "เทียบ I read every day กับ I am reading now; สอน am/is/are คู่ -ing; model reading/eating; ยังไม่สอน spelling exception ของ -ing",
     "estimatedMinutes": [
       3,
       5
     ],
     "blocks": [
       {
-        "tipTh": "now คือตอนนี้ ต่างจาก every day; ใช้ am/is/are + ing เสมอ",
+        "tipTh": "every day ใช้รูปปกติ ส่วน now ใช้ am/is/are + -ing",
         "models": [
           "I am reading",
-          "She is cooking"
+          "She is reading",
+          "They are reading"
         ],
         "repeat": "I am reading"
       },
       {
-        "tipTh": "ใช้คนหรือกลุ่มที่รู้แล้วกับรูปกำลังกระทำ; วันนี้ today เป็นคำช่วยฟัง",
+        "tipTh": "eat กลายเป็น eating เมื่อกำลังทำ; ใช้คู่กับ am/is/are",
         "models": [
-          "He is eating",
-          "They are working"
+          "I am eating",
+          "I am cooking"
         ],
-        "repeat": "They are working"
+        "repeat": "I am eating"
       }
     ],
     "recall": {
       "promptTh": "บอกว่าตอนนี้ฉันกำลังอ่าน",
-      "answerEn": "I am reading now"
+      "answerEn": "I am reading"
     }
   },
   "fnd_v7_are_they_working": {
     "titleEn": "Are They Working?",
     "titleTh": "ถามและปฏิเสธกิจกรรมตอนนี้",
     "goalTh": "ถามและปฏิเสธกิจกรรมตอนนี้",
-    "scope": "ใช้ inversion ของ be จากchapter3 กับ -ing ที่เพิ่งเรียน; cue now/every day ชัด",
+    "scope": "ถาม Yes/No ด้วย Is/Are … -ing?; เติม not หลัง be; ตอบสั้น Yes, she is. / No, she is not. / Yes, they are.",
     "estimatedMinutes": [
       3,
       5
     ],
     "blocks": [
       {
-        "tipTh": "ใช้ be ขึ้นต้นคำถามเหมือนบทเดิม แล้วคง ing ไว้",
+        "tipTh": "ถามว่ากำลังทำสิ่งนั้นอยู่ไหม ด้วย Is/Are ขึ้นต้น",
         "models": [
-          "Is she reading?",
-          "Are they eating?"
+          "Are they working?",
+          "Is she working?"
         ],
-        "repeat": "Are they eating?"
+        "repeat": "Are they working?"
       },
       {
-        "tipTh": "เติม not หลัง be เพื่อปฏิเสธสิ่งที่กำลังทำ",
+        "tipTh": "not อยู่หลัง am/is/are; ตอบสั้น Yes, she is. หรือ No, she is not.",
         "models": [
           "They are not working",
-          "She is not cooking"
+          "Yes, she is.",
+          "No, she is not.",
+          "Yes, they are."
         ],
-        "repeat": "They are not working"
+        "repeat": "Yes, she is."
       }
     ],
     "recall": {
-      "promptTh": "ถามว่าเขากำลังทำงานไหม",
-      "answerEn": "Is he working?"
-    }
-  },
-  "fnd_v7_what_or_who": {
-    "titleEn": "What or Who?",
-    "titleTh": "แยก what สำหรับสิ่งของ และ who สำหรับคน",
-    "goalTh": "แยก what สำหรับสิ่งของ และ who สำหรับคน",
-    "scope": "ไม่เพิ่ม And you? หรือสลับ this/that ในรอบนี้",
-    "estimatedMinutes": [
-      3,
-      5
-    ],
-    "blocks": [
-      {
-        "tipTh": "what ใช้ถามสิ่งของ",
-        "models": [
-          "What is this?"
-        ],
-        "repeat": "What is this?"
-      },
-      {
-        "tipTh": "who ใช้ถามคน",
-        "models": [
-          "Who is this?"
-        ],
-        "repeat": "Who is this?"
-      }
-    ],
-    "recall": {
-      "promptTh": "ถามว่าของตรงหน้าคืออะไร",
-      "answerEn": "What is this?"
-    }
-  },
-  "fnd_v7_where_when_how_much_and_how_many": {
-    "titleEn": "Where, When, How Much & How Many",
-    "titleTh": "ถามสถานที่ เวลา ราคา และจำนวน",
-    "goalTh": "ใช้ where, when, how much และ how many ถามข้อมูลพื้นฐาน",
-    "scope": "when/how much/how many ใช้ concrete short chunks กับ numbers/days เดิม; where + be ใช้ home/school/room ที่ lexical preview; ไม่สอน How + adjective ทุกแบบ",
-    "estimatedMinutes": [
-      4,
-      6
-    ],
-    "blocks": [
-      {
-        "tipTh": "where ถามที่ไหน; home บ้าน school โรงเรียน room ห้อง; ใช้ be จากที่เรียน",
-        "models": [
-          "Where is she?",
-          "Where is the room?"
-        ],
-        "repeat": "Where is the room?"
-      },
-      {
-        "tipTh": "when ถามเมื่อไร; ทบทวนวันกับเวลา และ How much ถามราคา",
-        "models": [
-          "When is the class?",
-          "How much is it?"
-        ],
-        "repeat": "When is the class?"
-      },
-      {
-        "tipTh": "How many + ของหลายชิ้น ถามจำนวน; ไม่เพิ่ม How + adjective ทุกแบบ",
-        "models": [
-          "How many books?"
-        ],
-        "repeat": "How many books?"
-      }
-    ],
-    "recall": {
-      "promptTh": "อยากรู้ว่าคลาสอยู่ที่ไหน ลองถาม",
-      "answerEn": "Where is the class?"
+      "promptTh": "ตอบสั้นว่าใช่ เธอกำลังทำงาน",
+      "answerEn": "Yes, she is."
     }
   },
   "fnd_v7_there_is_there_are": {
@@ -1349,8 +1313,8 @@
       }
     ],
     "recall": {
-      "promptTh": "บอกว่ามีหนังสือหนึ่งเล่ม",
-      "answerEn": "There is a book"
+      "promptTh": "ในห้องมีหน้าต่างสองบาน ลองบอกเอง",
+      "answerEn": "There are two windows"
     }
   },
   "fnd_v7_in_on_under_next_to": {
@@ -1487,6 +1451,295 @@
     "recall": {
       "promptTh": "บอกว่าคุณเดินทางโดยรถไฟ",
       "answerEn": "I go by train"
+    }
+  },
+  "fnd_v7_what_is_this": {
+    "titleEn": "What Is This?",
+    "titleTh": "นี่คืออะไร?",
+    "goalTh": "ถาม What is this? และ What is that? สำหรับสิ่งของใกล้และไกล แล้วได้คำตอบจริง",
+    "scope": "โมเดลใกล้-ไกล; เลือก What/Who สำหรับของ; ท้ายบทถามเองโดยไม่มี stem; หลังถามได้คำตอบเช่น It's a book.",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "ของอยู่ใกล้ ๆ ใช้ What is this?",
+        "models": [
+          "What is this?"
+        ],
+        "repeat": "What is this?"
+      },
+      {
+        "tipTh": "ของอยู่ไกล ๆ ใช้ What is that?",
+        "models": [
+          "What is that?"
+        ],
+        "repeat": "What is that?"
+      }
+    ],
+    "recall": {
+      "promptTh": "มีของอยู่บนโต๊ะใกล้ ๆ แต่ยังไม่รู้ว่าคืออะไร",
+      "answerEn": "What is this?"
+    }
+  },
+  "fnd_v7_who_is_this": {
+    "titleEn": "Who Is This?",
+    "titleTh": "คนนี้คือใคร?",
+    "goalTh": "ถาม Who is this / she / he? เพื่อหาตัวตน แล้วได้คำตอบจริง",
+    "scope": "ตอบด้วยตัวตนเช่น She's May / He's John; ท้ายบทถามเองโดยไม่มี stem; ไม่บังคับอาชีพเป็นคำตอบเดียว",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "ถามคนใกล้ ๆ ด้วย Who is this?",
+        "models": [
+          "Who is this?"
+        ],
+        "repeat": "Who is this?"
+      },
+      {
+        "tipTh": "ถามผู้หญิงด้วย Who is she?",
+        "models": [
+          "Who is she?"
+        ],
+        "repeat": "Who is she?"
+      },
+      {
+        "tipTh": "ถามผู้ชายด้วย Who is he?",
+        "models": [
+          "Who is he?"
+        ],
+        "repeat": "Who is he?"
+      }
+    ],
+    "recall": {
+      "promptTh": "เห็นผู้หญิงคนหนึ่งแต่ยังไม่รู้ว่าเป็นใคร",
+      "answerEn": "Who is she?"
+    }
+  },
+  "fnd_v7_where_is_my_bag": {
+    "titleEn": "Where Is My Bag?",
+    "titleTh": "กระเป๋าฉันอยู่ไหน?",
+    "goalTh": "ถาม Where is…? เพื่อหาตำแหน่ง",
+    "scope": "รับ here / there / in Room 2; อธิบาย in Room 2 เป็นชิ้นรับ",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "หาไม่เจอกระเป๋า",
+        "models": [
+          "Where is my bag?"
+        ],
+        "repeat": "Where is my bag?"
+      },
+      {
+        "tipTh": "หาไม่เจอโทรศัพท์",
+        "models": [
+          "Where is my phone?"
+        ],
+        "repeat": "Where is my phone?"
+      },
+      {
+        "tipTh": "อยากรู้ว่า Max อยู่ไหน",
+        "models": [
+          "Where is Max?"
+        ],
+        "repeat": "Where is Max?"
+      }
+    ],
+    "recall": {
+      "promptTh": "หาไม่เจอหนังสือของตัวเอง",
+      "answerEn": "Where is my book?"
+    }
+  },
+  "fnd_v7_what_do_you_want_to_know": {
+    "titleEn": "What Do You Want to Know?",
+    "titleTh": "อยากรู้อะไร?",
+    "goalTh": "เลือก What / Who / Where ตามข้อมูลที่ขาด โดยไม่เฉลยคำถามก่อน",
+    "scope": "ห้าสถานการณ์สั้นแบบเลือกคำถามจากข้อมูลที่ขาด; แต่ละคำถามได้คำตอบจริงหลังตอบถูก",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "ยังไม่รู้ว่าผู้ชายคนนั้นเป็นใคร — เลือกคำถามเอง",
+        "models": [
+          "Who is he?"
+        ],
+        "repeat": "Who is he?"
+      },
+      {
+        "tipTh": "รู้ชื่อแล้ว แต่ยังไม่รู้ว่าอยู่ไหน — เลือกคำถามเอง",
+        "models": [
+          "Where is Max?"
+        ],
+        "repeat": "Where is Max?"
+      },
+      {
+        "tipTh": "มีของที่ไม่รู้จัก — เลือกคำถามเอง",
+        "models": [
+          "What is this?"
+        ],
+        "repeat": "What is this?"
+      }
+    ],
+    "recall": {
+      "promptTh": "รู้แล้วว่าเป็นกระเป๋าของตัวเอง แต่ยังไม่รู้ว่าอยู่ไหน",
+      "answerEn": "Where is my bag?"
+    }
+  },
+  "fnd_v7_when_or_what_time": {
+    "titleEn": "When or What Time?",
+    "titleTh": "When หรือ What Time?",
+    "goalTh": "แยก When กับ What time และทบทวน Where",
+    "scope": "When ใช้ได้กว้างกับวัน/เวลา; ไม่สอนว่า when ถามได้แค่วัน",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "ยังไม่รู้วันเรียน",
+        "models": [
+          "When is the class?"
+        ],
+        "repeat": "When is the class?"
+      },
+      {
+        "tipTh": "รู้วันแล้ว ยังไม่รู้กี่โมง",
+        "models": [
+          "What time is the class?"
+        ],
+        "repeat": "What time is the class?"
+      },
+      {
+        "tipTh": "ยังไม่รู้ห้อง",
+        "models": [
+          "Where is the class?"
+        ],
+        "repeat": "Where is the class?"
+      }
+    ],
+    "recall": {
+      "promptTh": "รู้วันแล้ว แต่ยังไม่รู้เวลานาฬิกา",
+      "answerEn": "What time is the class?"
+    }
+  },
+  "fnd_v7_in_which_month": {
+    "titleEn": "In Which Month?",
+    "titleTh": "เดือนไหน?",
+    "goalTh": "ใช้ in + month สำหรับวันเกิดและคลาส",
+    "scope": "สอน birthday ในบท; เปรียบ on Friday กับ in March; ไม่บังคับเดือนที่ยังไม่เรียน",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "โมเดลวันเกิดใน January",
+        "models": [
+          "My birthday is in January."
+        ],
+        "repeat": "My birthday is in January."
+      },
+      {
+        "tipTh": "คลาสใน March",
+        "models": [
+          "The class is in March."
+        ],
+        "repeat": "The class is in March."
+      },
+      {
+        "tipTh": "ถาม When is your birthday?",
+        "models": [
+          "When is your birthday?"
+        ],
+        "repeat": "When is your birthday?"
+      }
+    ],
+    "recall": {
+      "promptTh": "โปรไฟล์สมมติ: วันเกิดอยู่ใน January",
+      "answerEn": "My birthday is in January."
+    }
+  },
+  "fnd_v7_how_much_is_it": {
+    "titleEn": "How Much Is It?",
+    "titleTh": "ราคาเท่าไร?",
+    "goalTh": "ถามราคาด้วย How much is…?",
+    "scope": "สอน How much is it? แล้วแทน it ด้วยชื่อของ เช่น the bag; ราคาเป็นบาทด้วยตัวเลขที่เรียนแล้ว",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "ถามราคาทั่วไป",
+        "models": [
+          "How much is it?"
+        ],
+        "repeat": "How much is it?"
+      },
+      {
+        "tipTh": "ถามราคากระเป๋า",
+        "models": [
+          "How much is the bag?"
+        ],
+        "repeat": "How much is the bag?"
+      },
+      {
+        "tipTh": "ถามราคาตั๋วหนึ่งใบ",
+        "models": [
+          "How much is one ticket?"
+        ],
+        "repeat": "How much is one ticket?"
+      }
+    ],
+    "recall": {
+      "promptTh": "อยากรู้ราคาหนังสือ",
+      "answerEn": "How much is the book?"
+    }
+  },
+  "fnd_v7_how_many": {
+    "titleEn": "How Many?",
+    "titleTh": "กี่ชิ้น?",
+    "goalTh": "ถามจำนวนด้วย How many…?",
+    "scope": "บริบทขอให้นำ/ซื้อของ; โมเดลพหูพจน์",
+    "estimatedMinutes": [
+      3,
+      5
+    ],
+    "blocks": [
+      {
+        "tipTh": "ต้องการหนังสือ",
+        "models": [
+          "How many books?"
+        ],
+        "repeat": "How many books?"
+      },
+      {
+        "tipTh": "ต้องการตั๋ว",
+        "models": [
+          "How many tickets?"
+        ],
+        "repeat": "How many tickets?"
+      },
+      {
+        "tipTh": "ต้องการปากกา",
+        "models": [
+          "How many pens?"
+        ],
+        "repeat": "How many pens?"
+      }
+    ],
+    "recall": {
+      "promptTh": "อีกฝ่ายขอให้ช่วยเตรียมหนังสือ แต่ยังไม่บอกจำนวน",
+      "answerEn": "How many books?"
     }
   }
 }

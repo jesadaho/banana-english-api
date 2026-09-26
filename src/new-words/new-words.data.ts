@@ -1,6 +1,6 @@
 import poolsJson from './new-words-pools.json';
 
-export const NEW_WORDS_MIN_PACK_SIZE = 3;
+export const NEW_WORDS_MIN_PACK_SIZE = 2;
 export const NEW_WORDS_MAX_PACK_SIZE = 4;
 
 export type NewWordsCard = {

@@ -9,7 +9,8 @@ export const FOUNDATION_V7_PATTERNS: Record<string, V7TeachingPattern> = {
   fnd_v7_please_and_thank_you: 'situation_and_respond', fnd_v7_say_that_again: 'situation_and_respond',
   fnd_v7_goodbye_see_you: 'choose_and_reuse',
   fnd_v7_i_am_you_are: 'choose_and_reuse', fnd_v7_not_and_are_you: 'contrast_and_apply',
-  fnd_v7_he_she_it_we_they: 'contrast_and_apply', fnd_v7_my_family: 'choose_and_reuse',
+  fnd_v7_he_she_it_we_they: 'contrast_and_apply',   fnd_v7_my_family: 'choose_and_reuse',
+  fnd_v7_syllable_intro: 'contrast_and_apply',
   fnd_v7_one_or_more: 'contrast_and_apply',
   fnd_v7_this_is_that_is: 'contrast_and_apply', fnd_v7_colours_and_size: 'choose_and_reuse',
   fnd_v7_describe_a_thing: 'choose_and_reuse', fnd_v7_these_and_those: 'contrast_and_apply',
@@ -23,6 +24,10 @@ export const FOUNDATION_V7_PATTERNS: Record<string, V7TeachingPattern> = {
   fnd_v7_i_can: 'choose_and_reuse', fnd_v7_cant_and_can_you: 'choose_and_reuse',
   fnd_v7_my_day: 'choose_and_reuse', fnd_v7_her_day_his_day: 'contrast_and_apply', fnd_v7_do_does_every_day: 'contrast_and_apply',
   fnd_v7_happening_now: 'choose_and_reuse', fnd_v7_are_they_working: 'contrast_and_apply',
+  fnd_v7_what_is_this: 'contrast_and_apply', fnd_v7_who_is_this: 'contrast_and_apply',
+  fnd_v7_where_is_my_bag: 'contrast_and_apply', fnd_v7_what_do_you_want_to_know: 'contrast_and_apply',
+  fnd_v7_when_or_what_time: 'contrast_and_apply', fnd_v7_in_which_month: 'choose_and_reuse',
+  fnd_v7_how_much_is_it: 'situation_and_respond', fnd_v7_how_many: 'contrast_and_apply',
   fnd_v7_what_or_who: 'contrast_and_apply', fnd_v7_where_when_how_much_and_how_many: 'contrast_and_apply',
   fnd_v7_there_is_there_are: 'contrast_and_apply', fnd_v7_in_on_under_next_to: 'contrast_and_apply', fnd_v7_go_straight_turn_left: 'situation_and_respond',
   fnd_v7_where_is_it: 'contrast_and_apply', fnd_v7_how_do_you_go: 'choose_and_reuse',
@@ -30,11 +35,15 @@ export const FOUNDATION_V7_PATTERNS: Record<string, V7TeachingPattern> = {
 
 const APPLICATION_STEMS: Record<string, string> = {
   fnd_v7_not_and_are_you: 'Are you...?', fnd_v7_he_she_it_we_they: 'We are...',
-  fnd_v7_one_or_more: '..., please', fnd_v7_this_is_that_is: 'This is...',
+  fnd_v7_one_or_more: '..., please', fnd_v7_syllable_intro: 'One / Two', fnd_v7_this_is_that_is: 'This is...',
   fnd_v7_these_and_those: 'Those are...', fnd_v7_his_her_our_their: 'These are...',
   fnd_v7_have_and_has: 'He has...', fnd_v7_her_day_his_day: 'He eats...',
   fnd_v7_do_does_every_day: 'Does he...?', fnd_v7_are_they_working: 'Is he...?',
-  fnd_v7_what_or_who: 'What is...?', fnd_v7_where_when_how_much_and_how_many: 'Where is...?',
+  fnd_v7_what_or_who: 'What is...?', fnd_v7_what_is_this: 'What is...?',
+  fnd_v7_who_is_this: 'Who is...?', fnd_v7_where_is_my_bag: 'Where is...?',
+  fnd_v7_what_do_you_want_to_know: 'Where is...?', fnd_v7_when_or_what_time: 'When is...?',
+  fnd_v7_how_many: 'How many...?',
+  fnd_v7_where_when_how_much_and_how_many: 'Where is...?',
   fnd_v7_there_is_there_are: 'There is...', fnd_v7_in_on_under_next_to: 'The bag is...',
   fnd_v7_where_is_it: 'Where is...?',
 };
@@ -45,6 +54,7 @@ const FOUNDATION_V7_OPENINGS: Record<string, string> = {
   fnd_v7_i_am_you_are: 'วันนี้เราจะฝึกบอกความรู้สึกของตัวเองและอีกฝ่ายครับ ถ้าพูดถึงตัวเอง เริ่มด้วย I am… “ฉันพร้อม” พูดว่า I am ready. ลองพูดตามครับ',
   fnd_v7_not_and_are_you: 'วันนี้เราจะฝึกบอกว่า “ไม่” และถามความรู้สึกของอีกฝ่ายครับ I am tired. แปลว่า “ฉันเหนื่อย” เติม not หลัง am เป็น I am not tired. แปลว่า “ฉันไม่เหนื่อย” ลองพูดว่า I am not tired. ครับ',
   fnd_v7_one_or_more: 'Max ขอหนังสือหนึ่งเล่ม แต่พนักงานกำลังจะยกมาทั้งกองครับ 📚😳 วันนี้เราจะฝึกบอกให้ชัดว่าต้องการหนึ่งชิ้นหรือหลายชิ้น',
+  fnd_v7_syllable_intro: 'ก่อนเริ่ม รู้จักคำว่า syllable กันครับ syllable แปลว่า “พยางค์” หรือหนึ่งจังหวะเสียง วันนี้ยังไม่ต้องพูดคำนี้ตาม เราจะใช้คำนี้เพื่อช่วยนับจังหวะของคำที่คุณรู้จักแล้ว',
   fnd_v7_this_is_that_is: 'บนโต๊ะมีหนังสืออยู่ใกล้หนึ่งเล่ม และกระเป๋าอยู่อีกฝั่งหนึ่งครับ วันนี้เราจะฝึกชี้ของใกล้และไกลด้วย this และ that',
   fnd_v7_colours_and_size: 'มีกระเป๋าหลายใบครับ ถ้าบอกแค่ว่า “เอาใบนั้น” มีโอกาสได้ผิดใบสูงมาก 😅 วันนี้เราจะใช้สีและขนาดช่วยบอกให้ชัดขึ้น',
   fnd_v7_these_and_those: 'หนังสือรอบนี้ไม่ได้มาเล่มเดียวครับ มากันเป็นแก๊งเลย 📚 วันนี้เราจะพูดถึงของหลายชิ้นที่อยู่ใกล้และไกลด้วย these และ those',
@@ -60,7 +70,7 @@ const FOUNDATION_V7_OPENINGS: Record<string, string> = {
   fnd_v7_my_day: 'สวัสดีครับ ปกติตื่นกี่โมงครับ หรือกดเลื่อนปลุกจนโทรศัพท์ยอมแพ้? ⏰😴 วันนี้เราจะฝึกเล่ากิจวัตรประจำวันของตัวเอง',
   fnd_v7_her_day_his_day: 'เราเล่าเรื่องตัวเองได้แล้ว ต่อไปลองดูหนึ่งวันของ Ben กับ Anna กันครับ วันนี้เราจะฝึกเล่ากิจวัตรของคนอื่นด้วย he และ she',
   fnd_v7_happening_now: 'Max อ่านหนังสือเป็นประจำ แต่ตอนนี้เขากำลังกินข้าวครับ—คนละเวลาก็ใช้คนละรูปประโยค วันนี้เราจะพูดถึงสิ่งที่กำลังเกิดขึ้นตอนนี้',
-  fnd_v7_are_they_working: 'ทุกคนดูยุ่งมากครับ แต่คนหนึ่งอาจทำงาน ส่วนอีกคนอาจกำลังกินอยู่ วันนี้เราจะฝึกถามและตอบว่าคนอื่นกำลังทำอะไรอยู่ตอนนี้',
+  fnd_v7_are_they_working: 'วันนี้เราจะถามว่ากำลังทำสิ่งนั้นอยู่ไหม แล้วตอบสั้น ๆ Yes หรือ No ครับ',
   fnd_v7_there_is_there_are: 'Teacher B เพิ่งเข้าห้องใหม่และอยากรู้ว่าข้างในมีอะไรบ้างครับ วันนี้เราจะฝึกบอกว่ามีสิ่งหนึ่งหรือหลายสิ่งอยู่ในห้อง',
   fnd_v7_in_on_under_next_to: 'กุญแจหายอีกแล้วครับ ข่าวดีคือยังอยู่ในห้อง ข่าวร้ายคือคำว่า “อยู่ในห้อง” ยังกว้างไป 😅 วันนี้เราจะฝึกบอกตำแหน่งให้ละเอียดขึ้น',
   fnd_v7_where_is_it: 'มีคาเฟ่ ร้านค้า และสถานีอยู่แถวนี้ครับ แต่รู้ชื่ออย่างเดียวยังไปไม่ถูก 😅 วันนี้เราจะฝึกถามและบอกว่าสถานที่อยู่ที่ไหน',
@@ -156,16 +166,26 @@ export const FOUNDATION_V7_LESSON_IDS = Object.keys(specs);
 export const FOUNDATION_V7_LESSONS: LessonConfig[] = Object.entries(specs).map(([lessonId, spec]) => {
   const steps = buildFoundationV7Steps(lessonId);
   const choice = FOUNDATION_V7_CHOICE_BEATS[lessonId];
+  const listenOnlyTurns = V7_LEGACY_FLOWS[lessonId]
+    ? Math.max(
+        0,
+        steps.findIndex(
+          (step) => step.expectsUserSpeech || step.kind === 'complete',
+        ),
+      )
+    : steps[0].expectsUserSpeech
+      ? 0
+      : 1;
   return {
     lessonId, titleEn: spec.titleEn, titleTh: spec.titleTh,
     goalEn: 'Practise ' + spec.titleEn + ' in a short everyday exchange.', goalTh: spec.goalTh,
     difficulty: 'beginner', languageMix: { thai: 70, english: 30 },
     estimatedMinutesMin: spec.estimatedMinutes[0], estimatedMinutesMax: spec.estimatedMinutes[1],
-    targetPhrases: [...new Set([...spec.blocks.flatMap(block => block.models), spec.recall.answerEn, ...choice.options.map(o => o.speak)])],
-    targetLabel: 'item', listenOnlyTurns: steps[0].expectsUserSpeech ? 0 : 1, progressMax: steps.length,
+    targetPhrases: [...new Set([...spec.blocks.flatMap(block => block.models), spec.recall.answerEn, ...(choice?.options.map(o => o.speak) ?? [])])],
+    targetLabel: 'item', listenOnlyTurns, progressMax: steps.length,
     maxTurns: steps.length + steps.filter(step => step.expectsUserSpeech).length + 2,
     systemInstruction: 'Foundation A1 V7: ' + spec.titleEn + '\nGoal: ' + spec.goalTh + '\nScope: ' + spec.scope +
-      '\nTeaching pattern: ' + FOUNDATION_V7_PATTERNS[lessonId] + `
+      '\nTeaching pattern: ' + (FOUNDATION_V7_PATTERNS[lessonId] ?? 'contrast_and_apply') + `
 ALL teacher narration, praise, explanations and requests stay in the learner's selected teaching language.
 Never drift into English teacher directions when teaching in Thai. English target forms remain English.
 Follow Core Flow forward, one numbered step per progress milestone. A retry stays on its current milestone.

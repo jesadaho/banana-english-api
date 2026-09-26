@@ -1,6 +1,6 @@
 import catalogJson from './foundation-v7-path.catalog.json';
 
-export type FoundationV7NodeType = 'lesson' | 'say_it' | 'emoji_speak' | 'new_words' | 'pronunciation' | 'describe_it' | 'story_bites' | 'conversation';
+export type FoundationV7NodeType = 'lesson' | 'say_it' | 'emoji_speak' | 'new_words' | 'pronunciation' | 'describe_it' | 'story_bites' | 'conversation' | 'info_task';
 export type FoundationV7Capability = 'say_it_guided';
 export type FoundationV7ContentRef = { lessonId?: string; topicId?: string; poolId?: string; simulationId?: string };
 export interface FoundationV7Node {
@@ -18,7 +18,7 @@ export const FOUNDATION_V7_CATALOG = catalogJson as {
 export const FOUNDATION_V7_NODES = FOUNDATION_V7_CATALOG.chapters.flatMap(ch => ch.items);
 export const FOUNDATION_V7_PATH_ID = 'foundation_v7';
 export function foundationV7NodeTypeCounts(): Record<FoundationV7NodeType, number> {
-  const result = { lesson: 0, say_it: 0, emoji_speak: 0, new_words: 0, pronunciation: 0, describe_it: 0, story_bites: 0, conversation: 0 };
+  const result = { lesson: 0, say_it: 0, emoji_speak: 0, new_words: 0, pronunciation: 0, describe_it: 0, story_bites: 0, conversation: 0, info_task: 0 };
   for (const node of FOUNDATION_V7_NODES) result[node.type]++;
   return result;
 }
@@ -31,7 +31,8 @@ for (const node of FOUNDATION_V7_NODES) {
   const canonical = node.type === 'say_it' && ref.topicId ? `say_it:${ref.topicId}`
     : node.type === 'emoji_speak' && ref.poolId ? `emoji_speak:${ref.poolId}`
     : node.type === 'new_words' && ref.poolId ? `new_words:${ref.poolId}`
-    : node.type === 'describe_it' && ref.poolId ? `describe_it:${ref.poolId}` : null;
+    : node.type === 'describe_it' && ref.poolId ? `describe_it:${ref.poolId}`
+    : node.type === 'info_task' && ref.poolId ? `info_task:${ref.poolId}` : null;
   if (canonical) {
     for (const alias of [node.id, ref.topicId, ref.poolId, canonical]) {
       if (alias) rewardAliases.set(alias, canonical);
@@ -45,6 +46,10 @@ rewardAliases.set('new_words:new_words_demo', 'new_words:new_words_demo');
 // Say It "The Right Amount" topic ids used before Describe It claimed fnd_v7_u05n05.
 rewardAliases.set('say_it:fnd_v7_u05n05', 'say_it:fnd_v7_u05n09');
 rewardAliases.set('say_it:fnd_v7_u05n06', 'say_it:fnd_v7_u05n09');
+rewardAliases.set(
+  'info_task:info_task_listen_find',
+  'describe_it:fnd_v7_u15n14_look_and_answer',
+);
 export function canonicalFoundationV7RewardId(id: string): string | undefined {
   return rewardAliases.get(id);
 }

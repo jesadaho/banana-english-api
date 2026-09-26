@@ -1,0 +1,974 @@
+{
+  "info_task_find_my_class": {
+    "title": "Find My Class",
+    "introTh": "อ่านการ์ดนัดหมายสั้น ๆ แล้วเลือกวัน เวลา หรือห้อง — ใช้คำที่เรียนแล้ว",
+    "items": [
+      {
+        "id": "fmc_01",
+        "sourceMode": "text",
+        "sourceContent": "Class note\nDay: Friday\nTime: 10:00\nRoom: 2",
+        "taskTh": "คลาสเรียนวันไหน?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Friday"
+          },
+          {
+            "id": "b",
+            "label": "Monday"
+          },
+          {
+            "id": "c",
+            "label": "Saturday"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanationTh": "บัตรเขียน Day: Friday",
+        "vocabTags": [
+          "Friday"
+        ]
+      },
+      {
+        "id": "fmc_02",
+        "sourceMode": "text",
+        "sourceContent": "Class note\nDay: Monday\nTime: 9:00\nRoom: 1",
+        "taskTh": "คลาสกี่โมง?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Monday"
+          },
+          {
+            "id": "b",
+            "label": "9:00"
+          },
+          {
+            "id": "c",
+            "label": "Room 1"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanationTh": "บัตรเขียน Time: 9:00",
+        "vocabTags": [
+          "Monday"
+        ]
+      },
+      {
+        "id": "fmc_03",
+        "sourceMode": "text",
+        "sourceContent": "Class note\nDay: Friday\nTime: 7:00\nRoom: 3",
+        "taskTh": "เรียนห้องไหน?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Friday"
+          },
+          {
+            "id": "b",
+            "label": "7:00"
+          },
+          {
+            "id": "c",
+            "label": "Room 3"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanationTh": "บัตรเขียน Room: 3",
+        "vocabTags": [
+          "Room 3"
+        ]
+      },
+      {
+        "id": "fmc_04",
+        "sourceMode": "text",
+        "sourceContent": "A) Friday · 10:00 · Room 2\nB) Monday · 9:00 · Room 1\nC) Friday · 7:00 · Room 3",
+        "taskTh": "คุณต้องไปเรียนสิบโมง เลือกการ์ดให้ตรง",
+        "options": [
+          {
+            "id": "a",
+            "label": "A"
+          },
+          {
+            "id": "b",
+            "label": "B"
+          },
+          {
+            "id": "c",
+            "label": "C"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanationTh": "สิบโมงคือ 10:00 — การ์ด A",
+        "vocabTags": [
+          "10:00"
+        ]
+      },
+      {
+        "id": "fmc_05",
+        "sourceMode": "text",
+        "sourceContent": "A) Monday · 9:00 · Room 1\nB) Friday · 10:00 · Room 2\nC) Saturday · 7:00 · Room 3",
+        "taskTh": "คุณต้องไปห้อง 2 เลือกการ์ดให้ตรง",
+        "options": [
+          {
+            "id": "a",
+            "label": "A"
+          },
+          {
+            "id": "b",
+            "label": "B"
+          },
+          {
+            "id": "c",
+            "label": "C"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanationTh": "Room 2 อยู่ที่การ์ด B",
+        "vocabTags": [
+          "Room 2"
+        ]
+      },
+      {
+        "id": "fmc_06",
+        "sourceMode": "text",
+        "sourceContent": "Class note\nDay: Saturday\nTime: 11:00\nRoom: 2",
+        "taskTh": "คลาสเรียนวันไหน?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Saturday"
+          },
+          {
+            "id": "b",
+            "label": "Friday"
+          },
+          {
+            "id": "c",
+            "label": "11:00"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanationTh": "Day: Saturday",
+        "vocabTags": [
+          "Saturday"
+        ]
+      },
+      {
+        "id": "fmc_07",
+        "sourceMode": "audio",
+        "sourceContent": "The class is on Friday at ten in Room 2.",
+        "taskTh": "คลาสกี่โมง?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Friday"
+          },
+          {
+            "id": "b",
+            "label": "10:00"
+          },
+          {
+            "id": "c",
+            "label": "Room 2"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanationTh": "at ten = 10:00",
+        "transcriptEn": "The class is on Friday at ten in Room 2.",
+        "vocabTags": [
+          "Friday",
+          "Room 2"
+        ]
+      },
+      {
+        "id": "fmc_08",
+        "sourceMode": "text",
+        "sourceContent": "A) Saturday · 11:00 · Room 2\nB) Monday · 9:00 · Room 1\nC) Friday · 7:00 · Room 3",
+        "taskTh": "คุณเรียนวันศุกร์ตอนเย็นเจ็ดโมง เลือกการ์ดให้ตรง",
+        "options": [
+          {
+            "id": "a",
+            "label": "A"
+          },
+          {
+            "id": "b",
+            "label": "B"
+          },
+          {
+            "id": "c",
+            "label": "C"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanationTh": "Friday และ 7:00 = การ์ด C",
+        "vocabTags": [
+          "Friday"
+        ]
+      }
+    ]
+  },
+  "info_task_calendar_1": {
+    "title": "Read the Calendar 1",
+    "introTh": "วันที่เขียนแบบ 5 May หมายถึง วันที่ 5 เดือนพฤษภาคม",
+    "items": [
+      {
+        "id": "cal1_01",
+        "sourceMode": "text",
+        "sourceContent": "5 May",
+        "taskTh": "เลือกวันที่บนการ์ด",
+        "options": [
+          {
+            "id": "a",
+            "label": "5 May"
+          },
+          {
+            "id": "b",
+            "label": "10 May"
+          },
+          {
+            "id": "c",
+            "label": "5 March"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanationTh": "การ์ดเขียน 5 May",
+        "vocabTags": [
+          "May"
+        ]
+      },
+      {
+        "id": "cal1_02",
+        "sourceMode": "text",
+        "sourceContent": "8 June",
+        "taskTh": "เลือกวันที่บนการ์ด",
+        "options": [
+          {
+            "id": "a",
+            "label": "8 May"
+          },
+          {
+            "id": "b",
+            "label": "8 June"
+          },
+          {
+            "id": "c",
+            "label": "18 June"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanationTh": "การ์ดเขียน 8 June",
+        "vocabTags": [
+          "June"
+        ]
+      },
+      {
+        "id": "cal1_03",
+        "sourceMode": "text",
+        "sourceContent": "Class\n3 March\n10:00",
+        "taskTh": "เลือกเดือน",
+        "options": [
+          {
+            "id": "a",
+            "label": "March"
+          },
+          {
+            "id": "b",
+            "label": "May"
+          },
+          {
+            "id": "c",
+            "label": "10:00"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanationTh": "March คือเดือน",
+        "vocabTags": [
+          "March"
+        ]
+      },
+      {
+        "id": "cal1_04",
+        "sourceMode": "text",
+        "sourceContent": "Class\n9 April\n7:00",
+        "taskTh": "เลือกเวลา",
+        "options": [
+          {
+            "id": "a",
+            "label": "9 April"
+          },
+          {
+            "id": "b",
+            "label": "7:00"
+          },
+          {
+            "id": "c",
+            "label": "April"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanationTh": "7:00 คือเวลา",
+        "vocabTags": [
+          "April"
+        ]
+      },
+      {
+        "id": "cal1_05",
+        "sourceMode": "text",
+        "sourceContent": "Birthday\n12 May",
+        "taskTh": "เลือกวันที่",
+        "options": [
+          {
+            "id": "a",
+            "label": "12 May"
+          },
+          {
+            "id": "b",
+            "label": "12 March"
+          },
+          {
+            "id": "c",
+            "label": "5 May"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanationTh": "12 May คือวันที่",
+        "vocabTags": [
+          "May"
+        ]
+      },
+      {
+        "id": "cal1_06",
+        "sourceMode": "text",
+        "sourceContent": "A) 5 May · 10:00\nB) 8 June · 9:00\nC) 3 March · 7:00",
+        "taskTh": "คุณมีนัดวันที่ 8 June เลือกการ์ดให้ตรง",
+        "options": [
+          {
+            "id": "a",
+            "label": "A"
+          },
+          {
+            "id": "b",
+            "label": "B"
+          },
+          {
+            "id": "c",
+            "label": "C"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanationTh": "8 June อยู่ที่การ์ด B",
+        "vocabTags": [
+          "June"
+        ]
+      },
+      {
+        "id": "cal1_07",
+        "sourceMode": "text",
+        "sourceContent": "A) 5 May · Room 2\nB) 9 April · Room 1\nC) 12 May · Room 3",
+        "taskTh": "คุณต้องไปห้อง 2 เลือกการ์ดให้ตรง",
+        "options": [
+          {
+            "id": "a",
+            "label": "A"
+          },
+          {
+            "id": "b",
+            "label": "B"
+          },
+          {
+            "id": "c",
+            "label": "C"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanationTh": "Room 2 อยู่ที่การ์ด A",
+        "vocabTags": [
+          "May"
+        ]
+      }
+    ]
+  },
+  "info_task_calendar_2": {
+    "title": "Read the Calendar 2",
+    "introTh": "อ่านวันที่ เวลา และห้อง จากบัตรที่มีเดือนหลัง ๆ ด้วย",
+    "items": [
+      {
+        "id": "cal2_01",
+        "sourceMode": "text",
+        "sourceContent": "12 October",
+        "taskTh": "เลือกวันที่บนการ์ด",
+        "options": [
+          {
+            "id": "a",
+            "label": "12 October"
+          },
+          {
+            "id": "b",
+            "label": "12 November"
+          },
+          {
+            "id": "c",
+            "label": "2 October"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanationTh": "การ์ดเขียน 12 October",
+        "vocabTags": [
+          "October"
+        ]
+      },
+      {
+        "id": "cal2_02",
+        "sourceMode": "text",
+        "sourceContent": "Class\n4 November\n9:00\nRoom 1",
+        "taskTh": "เลือกเดือน",
+        "options": [
+          {
+            "id": "a",
+            "label": "November"
+          },
+          {
+            "id": "b",
+            "label": "October"
+          },
+          {
+            "id": "c",
+            "label": "Room 1"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanationTh": "November คือเดือน",
+        "vocabTags": [
+          "November"
+        ]
+      },
+      {
+        "id": "cal2_03",
+        "sourceMode": "text",
+        "sourceContent": "Party\n20 December\n6:00",
+        "taskTh": "เลือกเวลา",
+        "options": [
+          {
+            "id": "a",
+            "label": "20 December"
+          },
+          {
+            "id": "b",
+            "label": "6:00"
+          },
+          {
+            "id": "c",
+            "label": "December"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanationTh": "6:00 คือเวลา",
+        "vocabTags": [
+          "December"
+        ]
+      },
+      {
+        "id": "cal2_04",
+        "sourceMode": "text",
+        "sourceContent": "Class\n15 October\nRoom 3",
+        "taskTh": "เลือกห้อง",
+        "options": [
+          {
+            "id": "a",
+            "label": "15 October"
+          },
+          {
+            "id": "b",
+            "label": "October"
+          },
+          {
+            "id": "c",
+            "label": "Room 3"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanationTh": "Room 3 คือห้อง",
+        "vocabTags": [
+          "October"
+        ]
+      },
+      {
+        "id": "cal2_05",
+        "sourceMode": "text",
+        "sourceContent": "1 November",
+        "taskTh": "เลือกวันที่บนการ์ด",
+        "options": [
+          {
+            "id": "a",
+            "label": "1 November"
+          },
+          {
+            "id": "b",
+            "label": "11 November"
+          },
+          {
+            "id": "c",
+            "label": "1 October"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanationTh": "การ์ดเขียน 1 November",
+        "vocabTags": [
+          "November"
+        ]
+      },
+      {
+        "id": "cal2_06",
+        "sourceMode": "text",
+        "sourceContent": "A) 12 October · 9:00 · Room 3\nB) 4 November · 10:00 · Room 1\nC) 20 December · 6:00 · Room 2",
+        "taskTh": "คุณต้องไปเรียนเก้าโมง เลือกการ์ดให้ตรง",
+        "options": [
+          {
+            "id": "a",
+            "label": "A"
+          },
+          {
+            "id": "b",
+            "label": "B"
+          },
+          {
+            "id": "c",
+            "label": "C"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanationTh": "9:00 อยู่ที่การ์ด A",
+        "vocabTags": [
+          "October"
+        ]
+      },
+      {
+        "id": "cal2_07",
+        "sourceMode": "text",
+        "sourceContent": "A) 12 October · Room 3\nB) 4 November · Room 1\nC) 20 December · Room 2",
+        "taskTh": "งานปาร์ตี้เดือนธันวาคม เลือกการ์ดให้ตรง",
+        "options": [
+          {
+            "id": "a",
+            "label": "A"
+          },
+          {
+            "id": "b",
+            "label": "B"
+          },
+          {
+            "id": "c",
+            "label": "C"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanationTh": "December อยู่ที่การ์ด C",
+        "vocabTags": [
+          "December"
+        ]
+      }
+    ]
+  },
+  "info_task_ticket": {
+    "title": "Read My Ticket",
+    "introTh": "อ่านบัตรสั้นแล้วเลือกข้อมูลที่ถาม — แต่ละข้อใช้บัตรคนละใบ",
+    "items": [
+      {
+        "id": "tix_01",
+        "sourceMode": "text",
+        "sourceContent": "Movie ticket\nDay: Friday\nTime: 7:00\nPrice: 80 baht",
+        "taskTh": "หนังฉายกี่โมง?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Friday"
+          },
+          {
+            "id": "b",
+            "label": "7:00"
+          },
+          {
+            "id": "c",
+            "label": "80 baht"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanationTh": "Time: 7:00",
+        "vocabTags": [
+          "Friday"
+        ]
+      },
+      {
+        "id": "tix_02",
+        "sourceMode": "text",
+        "sourceContent": "Order\n2 tickets\n80 baht each",
+        "taskTh": "ตั๋วกี่ใบ?",
+        "options": [
+          {
+            "id": "a",
+            "label": "2"
+          },
+          {
+            "id": "b",
+            "label": "80"
+          },
+          {
+            "id": "c",
+            "label": "8"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanationTh": "2 tickets คือจำนวน",
+        "vocabTags": [
+          "ticket"
+        ]
+      },
+      {
+        "id": "tix_03",
+        "sourceMode": "text",
+        "sourceContent": "Class card\nDay: Monday\nRoom: 2",
+        "taskTh": "เรียนที่ไหน?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Monday"
+          },
+          {
+            "id": "b",
+            "label": "Room 2"
+          },
+          {
+            "id": "c",
+            "label": "Class"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanationTh": "Room: 2",
+        "vocabTags": [
+          "Room 2"
+        ]
+      },
+      {
+        "id": "tix_04",
+        "sourceMode": "text",
+        "sourceContent": "Movie ticket\nDay: Saturday\nTime: 6:00\nPrice: 50 baht",
+        "taskTh": "ตั๋วหนึ่งใบราคาเท่าไร?",
+        "options": [
+          {
+            "id": "a",
+            "label": "Saturday"
+          },
+          {
+            "id": "b",
+            "label": "6:00"
+          },
+          {
+            "id": "c",
+            "label": "50 baht"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanationTh": "Price: 50 baht",
+        "vocabTags": [
+          "Saturday"
+        ]
+      },
+      {
+        "id": "tix_05",
+        "sourceMode": "text",
+        "sourceContent": "Message\nClass on 5 May\nRoom 1",
+        "taskTh": "เรียนวันไหน?",
+        "options": [
+          {
+            "id": "a",
+            "label": "5 May"
+          },
+          {
+            "id": "b",
+            "label": "Room 1"
+          },
+          {
+            "id": "c",
+            "label": "May"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanationTh": "5 May คือวันที่",
+        "vocabTags": [
+          "May"
+        ]
+      },
+      {
+        "id": "tix_06",
+        "sourceMode": "text",
+        "sourceContent": "A) Friday · 7:00 · 80 baht\nB) Saturday · 6:00 · 50 baht\nC) Monday · 10:00 · 30 baht",
+        "taskTh": "คุณต้องการตั๋วหนังวันศุกร์ เลือกการ์ดให้ตรง",
+        "options": [
+          {
+            "id": "a",
+            "label": "A"
+          },
+          {
+            "id": "b",
+            "label": "B"
+          },
+          {
+            "id": "c",
+            "label": "C"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanationTh": "Friday อยู่ที่การ์ด A",
+        "vocabTags": [
+          "Friday"
+        ]
+      },
+      {
+        "id": "tix_07",
+        "sourceMode": "text",
+        "sourceContent": "A) Friday · 7:00 · 80 baht\nB) Saturday · 6:00 · 50 baht\nC) Sunday · 5:00 · 40 baht",
+        "taskTh": "งบห้าสิบบาท เลือกการ์ดให้ตรง",
+        "options": [
+          {
+            "id": "a",
+            "label": "A"
+          },
+          {
+            "id": "b",
+            "label": "B"
+          },
+          {
+            "id": "c",
+            "label": "C"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanationTh": "50 baht อยู่ที่การ์ด B",
+        "vocabTags": [
+          "Saturday"
+        ]
+      }
+    ]
+  },
+  "info_task_listen_find": {
+    "title": "Listen & Find",
+    "introTh": "ฟังแล้วเลือกภาพหรือเส้นทางที่ตรง — ยังไม่แสดงบทถอดเสียงโดยค่าเริ่มต้น",
+    "items": [
+      {
+        "id": "lf_01",
+        "sourceMode": "audio",
+        "sourceContent": "The bag is under the chair.",
+        "transcriptEn": "The bag is under the chair.",
+        "taskTh": "เลือกฉากที่ตรงกับที่ได้ยิน",
+        "options": [
+          {
+            "id": "a",
+            "label": "Bag under chair"
+          },
+          {
+            "id": "b",
+            "label": "Bag on table"
+          },
+          {
+            "id": "c",
+            "label": "Bag in bag"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanationTh": "under the chair = ใต้เก้าอี้",
+        "vocabTags": [
+          "under",
+          "chair"
+        ]
+      },
+      {
+        "id": "lf_02",
+        "sourceMode": "audio",
+        "sourceContent": "The phone is on the table.",
+        "transcriptEn": "The phone is on the table.",
+        "taskTh": "เลือกฉากที่ตรงกับที่ได้ยิน",
+        "options": [
+          {
+            "id": "a",
+            "label": "Phone under bed"
+          },
+          {
+            "id": "b",
+            "label": "Phone on table"
+          },
+          {
+            "id": "c",
+            "label": "Phone in bag"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanationTh": "on the table = บนโต๊ะ",
+        "vocabTags": [
+          "on",
+          "table"
+        ]
+      },
+      {
+        "id": "lf_03",
+        "sourceMode": "audio",
+        "sourceContent": "The book is in the bag.",
+        "transcriptEn": "The book is in the bag.",
+        "taskTh": "เลือกฉากที่ตรงกับที่ได้ยิน",
+        "options": [
+          {
+            "id": "a",
+            "label": "Book on bed"
+          },
+          {
+            "id": "b",
+            "label": "Book under chair"
+          },
+          {
+            "id": "c",
+            "label": "Book in bag"
+          }
+        ],
+        "correctOptionId": "c",
+        "explanationTh": "in the bag = ในกระเป๋า",
+        "vocabTags": [
+          "in",
+          "bag"
+        ]
+      },
+      {
+        "id": "lf_04",
+        "sourceMode": "audio",
+        "sourceContent": "The chair is next to the bed.",
+        "transcriptEn": "The chair is next to the bed.",
+        "taskTh": "เลือกฉากที่ตรงกับที่ได้ยิน",
+        "options": [
+          {
+            "id": "a",
+            "label": "Chair next to bed"
+          },
+          {
+            "id": "b",
+            "label": "Chair under bed"
+          },
+          {
+            "id": "c",
+            "label": "Chair on bed"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanationTh": "next to the bed = ข้างเตียง",
+        "vocabTags": [
+          "next to",
+          "bed"
+        ]
+      },
+      {
+        "id": "lf_05",
+        "sourceMode": "audio",
+        "sourceContent": "There are two chairs.",
+        "transcriptEn": "There are two chairs.",
+        "taskTh": "เลือกจำนวนที่ถูกต้อง",
+        "options": [
+          {
+            "id": "a",
+            "label": "1 chair"
+          },
+          {
+            "id": "b",
+            "label": "2 chairs"
+          },
+          {
+            "id": "c",
+            "label": "3 chairs"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanationTh": "two chairs = สองตัว",
+        "vocabTags": [
+          "There are"
+        ]
+      },
+      {
+        "id": "lf_06",
+        "sourceMode": "audio",
+        "sourceContent": "Go straight, then turn left.",
+        "transcriptEn": "Go straight, then turn left.",
+        "taskTh": "เลือกลำดับลูกศรที่ถูกต้อง",
+        "options": [
+          {
+            "id": "a",
+            "label": "Straight then left"
+          },
+          {
+            "id": "b",
+            "label": "Straight then right"
+          },
+          {
+            "id": "c",
+            "label": "Left then straight"
+          }
+        ],
+        "correctOptionId": "a",
+        "explanationTh": "ตรงไปแล้วเลี้ยวซ้าย",
+        "vocabTags": [
+          "Go straight",
+          "Turn left"
+        ]
+      },
+      {
+        "id": "lf_07",
+        "sourceMode": "audio",
+        "sourceContent": "Go straight, then turn right.",
+        "transcriptEn": "Go straight, then turn right.",
+        "taskTh": "เลือกลำดับลูกศรที่ถูกต้อง",
+        "options": [
+          {
+            "id": "a",
+            "label": "Straight then left"
+          },
+          {
+            "id": "b",
+            "label": "Straight then right"
+          },
+          {
+            "id": "c",
+            "label": "Right only"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanationTh": "ตรงไปแล้วเลี้ยวขวา",
+        "vocabTags": [
+          "Go straight",
+          "Turn right"
+        ]
+      },
+      {
+        "id": "lf_08",
+        "sourceMode": "audio",
+        "sourceContent": "The bag is next to the door.",
+        "transcriptEn": "The bag is next to the door.",
+        "taskTh": "เลือกฉากที่ตรงกับที่ได้ยิน",
+        "options": [
+          {
+            "id": "a",
+            "label": "Bag under chair"
+          },
+          {
+            "id": "b",
+            "label": "Bag next to door"
+          },
+          {
+            "id": "c",
+            "label": "Bag on table"
+          }
+        ],
+        "correctOptionId": "b",
+        "explanationTh": "next to the door = ข้างประตู",
+        "vocabTags": [
+          "next to",
+          "door"
+        ]
+      }
+    ]
+  }
+}

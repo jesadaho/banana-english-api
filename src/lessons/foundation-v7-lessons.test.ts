@@ -49,17 +49,17 @@ function coreFlowStepCount(id: string, spec: AuthoredSpec): number {
 }
 
 describe('Foundation V7 lessons', () => {
-  it('ships all 41 path lesson nodes with real configs, including frozen Chapter 1', () => {
+  it('ships all 46 path lesson nodes with real configs, including frozen Chapter 1', () => {
     const nodes = pathLessonNodes();
     const client = toFoundationV7ClientChapters()
       .flatMap((chapter) => chapter.items)
       .filter((node) => node.nodeType === 'lesson');
 
-    assert.equal(nodes.length, 41);
-    assert.equal(client.length, 41);
+    assert.equal(nodes.length, 46);
+    assert.equal(client.length, 46);
     assert.ok(client.every((node) => !node.comingSoon && node.lessonId));
     assert.ok(client.every((node) => getLesson(node.lessonId!) != null));
-    assert.equal(new Set(nodes.map((node) => node.contentRef.lessonId)).size, 41);
+    assert.equal(new Set(nodes.map((node) => node.contentRef.lessonId)).size, 46);
 
     assert.deepEqual(
       nodes.slice(0, 3).map((node) => node.contentRef.lessonId),
@@ -70,15 +70,29 @@ describe('Foundation V7 lessons', () => {
     }
   });
 
-  it('registers exactly the 41 authored V7 flows and keeps them off the lesson hub', async () => {
+  it('registers exactly the authored V7 flows and keeps them off the lesson hub', async () => {
     const authoredIds = Object.keys(lessonSpecs);
     const pathAuthored = pathLessonNodes()
       .map((node) => node.contentRef.lessonId)
       .filter((id): id is string => Boolean(id?.startsWith('fnd_v7_')));
 
-    assert.equal(FOUNDATION_V7_LESSONS.length, 41);
+    assert.equal(FOUNDATION_V7_LESSONS.length, authoredIds.length);
     assert.deepEqual(FOUNDATION_V7_LESSON_IDS, authoredIds);
-    assert.deepEqual(pathAuthored.slice().sort(), authoredIds.filter(id => !['fnd_v7_letter_names_a_m', 'fnd_v7_letter_names_n_z', 'fnd_v7_say_that_again'].includes(id)).sort());
+    assert.deepEqual(
+      pathAuthored.slice().sort(),
+      authoredIds
+        .filter(
+          (id) =>
+            ![
+              'fnd_v7_letter_names_a_m',
+              'fnd_v7_letter_names_n_z',
+              'fnd_v7_say_that_again',
+              'fnd_v7_where_is_it',
+              'fnd_v7_how_do_you_go',
+            ].includes(id),
+        )
+        .sort(),
+    );
     assert.ok(authoredIds.every((id) => id.startsWith('fnd_v7_')));
 
     const lessons = new LessonsService({} as any, {} as any);
@@ -138,7 +152,11 @@ describe('Foundation V7 lessons', () => {
       const lesson = getLesson(id)!;
       if (V7_LEGACY_FLOWS[id]) {
         assert.equal(lesson.progressMax, V7_LEGACY_FLOWS[id].length);
-        assert.equal(lesson.listenOnlyTurns, 0);
+        assert.equal(
+          lesson.listenOnlyTurns,
+          id === 'fnd_v7_syllable_intro' ? 2 : 0,
+          id,
+        );
         continue;
       }
       const node = pathLessonNodes().find((n) => n.contentRef.lessonId === id);
@@ -187,8 +205,8 @@ describe('Foundation V7 lessons', () => {
       const lesson = getLesson(id)!;
       const first = buildFoundationV7Steps(id)[0];
 
-      assert.match(first.instruction, /(วันนี้|เราจะ|ลองพูด|ลองถาม|ลองนับ)/, id);
-      assert.match(first.instruction, /(ฝึก|เรียน|ใช้|พูด|บอก|ถาม)/, id);
+      assert.match(first.instruction, /(วันนี้|เราจะ|ลองพูด|ลองถาม|ลองนับ|ก่อนเริ่ม)/, id);
+      assert.match(first.instruction, /(ฝึก|เรียน|ใช้|พูด|บอก|ถาม|รู้จัก)/, id);
       assert.doesNotMatch(first.instruction, /state the practical goal briefly/, id);
       if (!V7_LEGACY_FLOWS[id]) {
         assert.match(first.instruction, /Open with exactly this authored Thai context and goal/, id);
@@ -236,7 +254,14 @@ describe('Foundation V7 lessons', () => {
     for (const [id, spec] of Object.entries(lessonSpecs)) {
       const steps = buildFoundationV7Steps(id);
       if (V7_LEGACY_FLOWS[id]) {
-        assert.ok(steps.slice(0, -1).every(s => s.expectsUserSpeech));
+        // Word Beats opens with listen-only concept beats before mic tasks.
+        if (id === 'fnd_v7_syllable_intro') {
+          assert.ok(steps[0].expectsUserSpeech === false);
+          assert.ok(steps[1].expectsUserSpeech === false);
+          assert.ok(steps.slice(2, -1).every(s => s.expectsUserSpeech));
+        } else {
+          assert.ok(steps.slice(0, -1).every(s => s.expectsUserSpeech));
+        }
         assert.equal(steps.at(-1)!.kind, 'complete');
         assert.ok(steps.length <= 9);
         continue;
@@ -343,8 +368,12 @@ describe('Foundation V7 lessons', () => {
       'He, She, It, We, They',
     );
     assert.equal(
-      lessonSpecs.fnd_v7_where_when_how_much_and_how_many.titleEn,
-      'Where, When, How Much & How Many',
+      lessonSpecs.fnd_v7_when_or_what_time.titleEn,
+      'When or What Time?',
+    );
+    assert.equal(
+      lessonSpecs.fnd_v7_what_is_this.titleEn,
+      'What Is This?',
     );
     assert.match(
       getLesson('fnd_v7_say_that_again')!.systemInstruction,

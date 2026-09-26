@@ -4,6 +4,7 @@ import { foundationSayItDealCount, sayItPoolForTopic, sayItTopicById } from '../
 import { emojiSpeakPoolById } from '../emoji-speak/emoji-speak.data';
 import { isValidNewWordsPack, newWordsPoolById } from '../new-words/new-words.data';
 import { isValidDescribeItPack, describeItPoolById, DESCRIBE_IT_ENABLED } from '../describe-it/describe-it.data';
+import { isValidInfoTaskPack, infoTaskPoolById } from '../info-task/info-task.data';
 import { foundationV7LessonLegacyIds } from '../lessons/foundation-v7-lesson-id-aliases';
 import { FOUNDATION_V7_CATALOG, type FoundationV7Capability, type FoundationV7Node } from './foundation-v7-path.data';
 import type { FoundationV5ClientNode } from './learn-path.service';
@@ -21,12 +22,14 @@ export function hasFoundationV7Content(node: FoundationV7Node): boolean {
   switch(node.type) {
     case 'lesson': case 'pronunciation': return Boolean(ref.lessonId && getLesson(ref.lessonId));
     case 'conversation': return Boolean(ref.simulationId && getSimulation(ref.simulationId));
-    case 'say_it': return Boolean(ref.topicId && sayItTopicById(ref.topicId) && sayItPoolForTopic(ref.topicId).length === foundationSayItDealCount(ref.topicId));
+    case 'say_it': return Boolean(ref.topicId && sayItTopicById(ref.topicId) && sayItPoolForTopic(ref.topicId).length >= foundationSayItDealCount(ref.topicId));
     case 'emoji_speak': return Boolean(ref.poolId && (emojiSpeakPoolById(ref.poolId)?.items.length ?? 0) > 0);
     case 'new_words': return Boolean(ref.poolId && isValidNewWordsPack(newWordsPoolById(ref.poolId)));
     case 'describe_it':
       if (!DESCRIBE_IT_ENABLED) return false;
       return Boolean(ref.poolId && isValidDescribeItPack(describeItPoolById(ref.poolId)));
+    case 'info_task':
+      return Boolean(ref.poolId && isValidInfoTaskPack(infoTaskPoolById(ref.poolId)));
     default: return false;
   }
 }
@@ -41,7 +44,9 @@ export function toFoundationV7ClientChapters(capabilities: readonly FoundationV7
       const backendReady = hasFoundationV7Content(node);
       const requiredClientCapabilities: FoundationV7Capability[] = node.sayItMode === 'guided' ? ['say_it_guided'] : [];
       const needsClient = requiredClientCapabilities.some(cap => !capabilities.includes(cap));
-      const unbuilt = (node.type === 'describe_it' && !backendReady) || node.type === 'story_bites';
+      const unbuilt =
+        node.type === 'story_bites' ||
+        (node.type === 'describe_it' && !DESCRIBE_IT_ENABLED);
       const comingSoon = !backendReady || needsClient;
       // Hide content refs on disabled/unbuilt describe_it so older clients cannot open them.
       const contentRef =

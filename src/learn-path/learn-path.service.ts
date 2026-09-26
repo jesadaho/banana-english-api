@@ -8,6 +8,11 @@ import { FOUNDATION_V7_CATALOG, FOUNDATION_V7_PATH_ID, foundationV7NodeTypeCount
 import { toFoundationV7ClientChapters } from './foundation-v7-path.view';
 import { canonicalFoundationV7RewardId } from './foundation-v7-path.data';
 import {
+  FOUNDATION_V7_NODE_MIGRATION,
+  FOUNDATION_V7_SIMULATION_MIGRATION,
+  migrateFoundationV7NodeId,
+} from './foundation-v7-ch14-16-migration';
+import {
   dealSkipQuizPhrases,
   isSkipQuizPassed,
   resolveSkipQuizPool,
@@ -332,6 +337,7 @@ export class LearnPathService {
     const nodes = chapters.flatMap(chapter => chapter.items);
     const playable = nodes.filter(node => !node.comingSoon);
     const completed = await this.resolveCompletedV5NodeIds(userId, playable);
+    await this.applyFoundationV7NodeMigration(userId, completed, playable);
     const skippedNodeIds = await this.resolveSkippedV7NodeIds(userId);
     const satisfied = new Set([...completed, ...skippedNodeIds]);
     return {
@@ -749,12 +755,56 @@ export class LearnPathService {
         node.poolId ? `emoji_speak:${node.poolId}` : null,
         node.poolId ? `new_words:${node.poolId}` : null,
         node.poolId ? `describe_it:${node.poolId}` : null,
+        node.poolId ? `info_task:${node.poolId}` : null,
       ].filter((value): value is string => !!value);
       if (candidates.some((id) => completedMiniGameIds.has(id))) {
         completed.add(node.id);
       }
     }
     return completed;
+  }
+
+  /** Credit closest Ch14–16 successors when legacy node IDs appear in progress stores. */
+  private async applyFoundationV7NodeMigration(
+    userId: string,
+    completed: Set<string>,
+    playable: FoundationV5ClientNode[],
+  ): Promise<void> {
+    const playableIds = new Set(playable.map((node) => node.id));
+    const [completedLessonIds, completedMiniGameIds, completedSimulationIds] =
+      await Promise.all([
+        this.lessons.getCompletedLessonIds(userId),
+        this.getCompletedMiniGameIds(userId),
+        this.getCompletedSimulationIds(userId),
+      ]);
+
+    for (const [legacy, next] of Object.entries(FOUNDATION_V7_NODE_MIGRATION)) {
+      if (!next || !playableIds.has(next) || completed.has(next)) continue;
+      if (
+        completed.has(legacy) ||
+        completedLessonIds.has(legacy) ||
+        completedMiniGameIds.has(legacy) ||
+        completedMiniGameIds.has(`say_it:${legacy}`) ||
+        completedMiniGameIds.has(`new_words:${legacy}`) ||
+        completedMiniGameIds.has(`emoji_speak:${legacy}`) ||
+        completedMiniGameIds.has(`info_task:${legacy}`)
+      ) {
+        completed.add(next);
+      }
+    }
+
+    for (const [simulationId, next] of Object.entries(
+      FOUNDATION_V7_SIMULATION_MIGRATION,
+    )) {
+      if (!playableIds.has(next) || completed.has(next)) continue;
+      if (completedSimulationIds.has(simulationId)) completed.add(next);
+    }
+
+    // Also migrate any already-completed live IDs that themselves remapped.
+    for (const id of [...completed]) {
+      const migrated = migrateFoundationV7NodeId(id);
+      if (migrated && playableIds.has(migrated)) completed.add(migrated);
+    }
   }
 
   private async getCompletedSimulationIds(

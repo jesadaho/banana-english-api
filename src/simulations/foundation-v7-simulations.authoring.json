@@ -329,122 +329,252 @@
     "simulationId": "foundation_v7_u13n06",
     "nodeId": "v7_u13n06",
     "titleEn": "A Quick Update",
-    "scenarioTh": "Mia โทรวิดีโอคอลมาช่วงพัก บอกสิ่งที่กำลังทำ แล้วบอกว่าเพื่อนที่อยู่ใกล้ ๆ กำลังทำอะไร จากคำที่เรียนแล้ว เช่น reading, cooking, eating, working ใช้ข้อมูลจริงหรือสมมติได้",
+    "scenarioTh": "คุณกำลังทำอาหาร ส่วน Max กำลังกินอยู่ใกล้ ๆ May โทรมาถามว่าคุณและ Max กำลังทำอะไร",
     "openingEn": "Hi! What are you doing now?",
-    "role": "You are Mia on a video call during a break. A friend is also visible beside the learner. Lead so the learner only needs to answer. First ask exactly 'Hi! What are you doing now?' Accept a present-continuous taught action: cooking, eating, reading, or working. Do not ask the same fact again. If they already said they are working, do not ask 'Are you working now?' After their action, set the friend in the scene clearly: 'I can see your friend too.' Then ask about the friend's action using a different taught verb, e.g. if they are working ask 'Is she reading?' if they are cooking ask 'Is she eating?' Accept yes/no, 'Yes, she is', 'No, she is not', or a taught action such as 'She is cooking', 'She is reading', 'She is eating', or 'She is working'. Credit both confirmation and a matching denial. Do not lock the friend to cooking. Then close warmly. Keep every line short and A1-level. Never require the learner to ask a question, and do not use past or future tense.",
+    "role": "You are May calling the learner. Scene fact: the learner is cooking and Max is eating nearby. Lead so the learner only needs to answer. First ask exactly 'Hi! What are you doing now?' In textTh give a clear Thai translation (e.g. สวัสดี! ตอนนี้กำลังทำอะไรอยู่?). Accept 'I'm cooking', 'I am cooking', or clear equivalents; mark own_cooking. Then ask exactly 'Is Max cooking too?' In textTh translate the question and append 'too = ด้วย'. Accept 'No, he isn't', 'No, he is not', or a packed answer such as 'No, he's eating' / 'No, he is eating'. If they deny Max is cooking, mark max_not_cooking. If that same reply also says Max is eating, mark max_eating too and close immediately with exactly 'Enjoy your food! Talk to you later!' — do not ask 'What is he doing?' again. If they only deny cooking without saying he is eating, then ask exactly 'What is he doing?' In textTh give a clear Thai translation. Accept 'He's eating', 'He is eating', or clear equivalents; mark max_eating (and max_not_cooking if not already marked). After own_cooking + max_not_cooking + max_eating are known, close with exactly 'Enjoy your food! Talk to you later!' and translate it faithfully in textTh. Accept both full and contracted forms throughout (I am/I'm, he is/he's, he is not/he isn't). Keep every line short and A1-level. Never require the learner to ask a question, and do not invent other actions.",
     "goals": [
       {
-        "id": "own_action",
-        "th": "บอกสิ่งที่ตนกำลังทำตอนนี้",
-        "en": "Say what you are doing now",
-        "example": "I am cooking"
+        "id": "own_cooking",
+        "th": "บอกว่ากำลังทำอาหาร — I'm cooking / I am cooking",
+        "en": "Say that you are cooking",
+        "example": "I'm cooking"
       },
       {
-        "id": "friend_action",
-        "th": "บอกว่าเพื่อนกำลังทำอะไร จากศัพท์ที่เรียนแล้ว",
-        "en": "Say what your friend is doing, using a taught action",
-        "example": "She is reading"
+        "id": "max_not_cooking",
+        "th": "ตอบว่า Max ไม่ได้ทำอาหาร — No, he isn't / No, he is not",
+        "en": "Say that Max is not cooking",
+        "example": "No, he isn't"
+      },
+      {
+        "id": "max_eating",
+        "th": "บอกว่า Max กำลังกิน — He's eating / He is eating",
+        "en": "Say that Max is eating",
+        "example": "He's eating"
       }
     ],
     "minTurns": 2,
     "maxTurns": 4,
-    "completionEn": "Great! Thanks for the update. Talk to you later!",
-    "completionTh": "เยี่ยมครับ ขอบคุณที่อัปเดต แล้วคุยกันใหม่นะครับ!"
+    "completionEn": "Enjoy your food! Talk to you later!",
+    "completionTh": "ทานให้อร่อยนะ! แล้วคุยกันใหม่นะ!"
   },
   {
     "simulationId": "foundation_v7_u14n06",
-    "nodeId": "v7_u14n06",
-    "titleEn": "You Ask First",
-    "scenarioTh": "คุณจะมาเรียน แต่ยังไม่รู้วันเวลาและสถานที่ ถามวันและเวลาเรียน แล้วถามสถานที่เรียน",
+    "nodeId": "v7_u14tn08",
+    "titleEn": "Plan My Class",
+    "scenarioTh": "[Archived] เคยเป็น Conversation วางแผนคลาส — แทนด้วย Find My Class (info_task) แล้ว",
     "openingEn": "Hi! Can I help you?",
-    "role": "You are the class helper. The learner is coming to class but does not know the day, time, or place yet. The class is Friday at ten in Room 2. Do not mention a class card, form, or worksheet. Open with exactly 'Hi! Can I help you?' and wait for them to ask. Answer only the fact they asked. If they ask when, say 'Friday at ten.' If they ask where, say 'Room 2.' If they ask both in one turn, answer both. If they ask in the other order, still answer only what they asked. Never reveal the missing fact before they ask it. After they have both facts and say thank you, close. Do not invent extra steps such as filling in a card. Help with one short model only if they are stuck.",
+    "role": "Archived: replaced on A1 by Find My Class info_task (v7_u14tn08f). Keep for old session resolution only.",
     "goals": [
       {
-        "id": "ask_when",
-        "th": "ถามวันและเวลาเรียน",
-        "en": "Ask when the class is",
-        "example": "When is the class"
+        "id": "ask_day",
+        "th": "ถามว่าเรียนวันไหน",
+        "en": "Ask which day the class is",
+        "example": "When is the class?",
+        "hints": {
+          "intentTh": "ถามว่าเรียนวันไหน",
+          "starterEn": "When…?",
+          "modelEn": "When is the class?"
+        }
       },
       {
-        "id": "ask_where",
-        "th": "ถามสถานที่เรียน",
+        "id": "ask_time",
+        "th": "ถามว่าเรียนกี่โมง",
+        "en": "Ask what time the class is",
+        "example": "What time is the class?",
+        "hints": {
+          "intentTh": "ถามว่าเรียนกี่โมง",
+          "starterEn": "What time…?",
+          "modelEn": "What time is the class?"
+        }
+      },
+      {
+        "id": "ask_place",
+        "th": "ถามว่าเรียนที่ไหน",
         "en": "Ask where the class is",
-        "example": "Where is the class"
-      },
-      {
-        "id": "thank",
-        "th": "ขอบคุณเมื่อได้ข้อมูลครบ",
-        "en": "Say thank you after you have the class facts",
-        "example": "Thank you"
+        "example": "Where is the class?",
+        "hints": {
+          "intentTh": "ถามว่าเรียนที่ไหน",
+          "starterEn": "Where…?",
+          "modelEn": "Where is the class?"
+        }
       }
     ],
     "minTurns": 3,
-    "maxTurns": 5,
-    "completionEn": "See you Friday at ten in Room 2!",
-    "completionTh": "แล้วเจอกันวันศุกร์สิบโมง ที่ห้อง 2 นะครับ!"
+    "maxTurns": 6,
+    "completionEn": "See you on Friday!",
+    "completionTh": "แล้วเจอกันวันศุกร์นะครับ!"
   },
   {
     "simulationId": "foundation_v7_u15n08",
     "nodeId": "v7_u15n08",
     "titleEn": "Find the Room",
-    "scenarioTh": "ถามทางไปห้องเรียน เจ้าหน้าที่จะบอกไม่เกินสองขั้น คุณขอซ้ำและยืนยันได้",
-    "openingEn": "Hello! Can I help?",
-    "role": "The classroom route is go straight then turn left. Wait for a place question before giving it. Repeat unchanged if asked. Accept a short route confirmation or thanks and end. Never add a map, stairs, floors, transit details or hidden alternatives. If the learner says right, gently model left once.",
+    "scenarioTh": "คุณต้องการหาห้อง 2 และห้องน้ำ และอยากได้กระเป๋าที่ฝากไว้กับเจ้าหน้าที่คนนี้ ถามทีละอย่าง; กระเป๋าไม่ใช่ของเซอร์ไพรส์ — ภารกิจบอกไว้แล้ว",
+    "openingEn": "Hi! Can I help you?",
+    "role": "You are school staff. The learner needs Room 2, the bathroom, and their bag left with you. Open with exactly 'Hi! Can I help you?' If they ask where Room 2 is, say 'Go straight and turn left.' If they ask where the bathroom is, say 'It's next to Room 2.' If they ask where their bag is, say 'It's under the chair.' Answer only the fact asked. Never require Please say that again or transport steps. After all three locations are known and they thank you, close with 'You're welcome!' textTh must faithfully translate aiResponse only — no coaching or next-task hints.",
     "goals": [
       {
-        "id": "place",
-        "th": "ถามหาสถานที่",
-        "en": "Ask where the room/class is",
-        "example": "Where is the room"
+        "id": "locate_room",
+        "th": "ถามว่าห้อง 2 อยู่ที่ไหน",
+        "en": "Ask where Room 2 is",
+        "example": "Where is Room 2?",
+        "hints": {
+          "intentTh": "ถามว่าห้อง 2 อยู่ที่ไหน",
+          "starterEn": "Where is Room…?",
+          "modelEn": "Where is Room 2?"
+        }
       },
       {
-        "id": "confirm",
-        "th": "ยืนยันทางหรือขอซ้ำ",
-        "en": "Confirm the route or request repetition",
-        "example": "Turn left"
+        "id": "locate_bathroom",
+        "th": "ถามว่าห้องน้ำอยู่ที่ไหน",
+        "en": "Ask where the bathroom is",
+        "example": "Where is the bathroom?",
+        "hints": {
+          "intentTh": "ถามว่าห้องน้ำอยู่ที่ไหน",
+          "starterEn": "Where is the bathroom…?",
+          "modelEn": "Where is the bathroom?"
+        }
       },
       {
-        "id": "close",
-        "th": "จบอย่างสุภาพ",
-        "en": "Acknowledge the help",
-        "example": "Thank you"
+        "id": "locate_bag",
+        "th": "ถามหากระเป๋าที่ฝากไว้กับเจ้าหน้าที่",
+        "en": "Ask where your bag is",
+        "example": "Where is my bag?",
+        "hints": {
+          "intentTh": "ถามหากระเป๋าที่ฝากไว้กับเจ้าหน้าที่",
+          "starterEn": "Where is my bag…?",
+          "modelEn": "Where is my bag?"
+        }
       }
     ],
     "minTurns": 3,
-    "maxTurns": 5,
-    "completionEn": "That's right. The classroom is straight ahead, then left.",
-    "completionTh": "ถูกต้องครับ ห้องเรียนอยู่ตรงไปแล้วเลี้ยวซ้ายครับ"
+    "maxTurns": 6,
+    "completionEn": "You're welcome!",
+    "completionTh": "ด้วยความยินดีครับ!"
+  },
+  {
+    "simulationId": "foundation_v7_u14n15",
+    "nodeId": "v7_u14n15",
+    "titleEn": "Meet Your Teacher",
+    "scenarioTh": "คุณมาถึงอาคารเรียนและเห็นรูปครูคนใหม่บนโต๊ะ ลองถาม Mali ว่าเขาคือใคร อยู่ที่ไหน และห้องนั้นอยู่ตรงไหน",
+    "openingEn": "Hi! Can I help you?",
+    "role": "You are Mali, a friendly school receptionist at the front desk. The learner sees a photo of a man on the counter — Teacher John. He is in Room 2, which is over there. Open with exactly 'Hi! Can I help you?' If they ask who he is / who this is, say 'He's John, your teacher.' If they ask where John is / where he is / where the teacher is, say 'He's in Room 2.' If they ask where Room 2 is, say 'It's over there.' Answer only the fact asked. Accept Who is this? for the photo. Do not reveal unasked facts. After all three facts and optional Thank you, close with exactly 'You're welcome!' textTh translates aiResponse only — never leak the next goal or put coaching in textTh.",
+    "goals": [
+      {
+        "id": "identify_person",
+        "th": "ถามว่าผู้ชายในรูปคือใคร",
+        "en": "Ask who the man in the photo is",
+        "example": "Who is he?",
+        "hints": {
+          "intentTh": "ถามว่าผู้ชายในรูปคือใคร",
+          "starterEn": "Who is…?",
+          "modelEn": "Who is he?"
+        }
+      },
+      {
+        "id": "locate_person",
+        "th": "ถามว่าครู John อยู่ที่ไหน",
+        "en": "Ask where Teacher John is",
+        "example": "Where is John?",
+        "hints": {
+          "intentTh": "ถามว่าครู John อยู่ที่ไหน",
+          "starterEn": "Where is John…?",
+          "modelEn": "Where is John?"
+        }
+      },
+      {
+        "id": "locate_room",
+        "th": "ถามว่าห้อง 2 อยู่ที่ไหน",
+        "en": "Ask where Room 2 is",
+        "example": "Where is Room 2?",
+        "hints": {
+          "intentTh": "ถามว่าห้อง 2 อยู่ที่ไหน",
+          "starterEn": "Where is Room…?",
+          "modelEn": "Where is Room 2?"
+        }
+      }
+    ],
+    "minTurns": 3,
+    "maxTurns": 6,
+    "completionEn": "You're welcome!",
+    "completionTh": "ด้วยความยินดีค่ะ!"
+  },
+  {
+    "simulationId": "foundation_v7_u14tn21",
+    "nodeId": "v7_u14tn21",
+    "titleEn": "Plan a Movie",
+    "scenarioTh": "คุณเลือกหนังไว้แล้ว กำลังสอบถามรอบฉายวันข้างหน้ากับ Mali ที่โต๊ะขายตั๋ว",
+    "openingEn": "Hi! Can I help you?",
+    "role": "You are Mali at the ticket desk. The learner already chose a movie and is asking about an upcoming showing. The movie is on Friday at seven. One ticket is eighty baht. Open with exactly 'Hi! Can I help you?' If they ask when the movie is, say 'On Friday.' If they ask what time the movie is, say 'At seven.' If they ask how much one ticket is, say 'Eighty baht.' Answer only asked facts; accept combined questions and any order; pack answers when they ask more than one fact in one turn. Do not require three separate utterances if all three facts were already asked. Do not add new grammar goals. After all three facts, if they say 'One ticket, please.' or 'Thank you.', reply 'Enjoy the movie!' Otherwise after the three facts close with 'Enjoy the movie!' textTh translates aiResponse only — never put hint coaching in textTh.",
+    "goals": [
+      {
+        "id": "ask_day",
+        "th": "ถามว่าหนังฉายวันไหน",
+        "en": "Ask which day the movie is",
+        "example": "When is the movie?",
+        "hints": {
+          "intentTh": "ถามว่าหนังฉายวันไหน",
+          "starterEn": "When…?",
+          "modelEn": "When is the movie?"
+        }
+      },
+      {
+        "id": "ask_time",
+        "th": "ถามว่าหนังฉายกี่โมง",
+        "en": "Ask what time the movie is",
+        "example": "What time is the movie?",
+        "hints": {
+          "intentTh": "ถามว่าหนังฉายกี่โมง",
+          "starterEn": "What time…?",
+          "modelEn": "What time is the movie?"
+        }
+      },
+      {
+        "id": "ask_price",
+        "th": "ถามราคาตั๋วหนึ่งใบ",
+        "en": "Ask how much one ticket is",
+        "example": "How much is one ticket?",
+        "hints": {
+          "intentTh": "ถามราคาตั๋วหนึ่งใบ",
+          "starterEn": "How much…?",
+          "modelEn": "How much is one ticket?"
+        }
+      }
+    ],
+    "minTurns": 2,
+    "maxTurns": 6,
+    "completionEn": "Enjoy the movie!",
+    "completionTh": "สนุกกับหนังนะคะ!"
   },
   {
     "simulationId": "foundation_v7_u16n10",
     "nodeId": "v7_u16n10",
     "titleEn": "Get to the Station",
-    "scenarioTh": "คุณกำลังจะไปสถานี บอกจุดหมาย เลือกรถเมล์หรือแท็กซี่ แล้วฟังทิศทางสั้น ๆ ให้เข้าใจ",
-    "openingEn": "Hi! Where are you going?",
-    "role": "You are a friendly local helping the learner get to the station. Lead the exchange naturally. First ask where they are going. Accept 'the station' or a full sentence such as 'I'm going to the station'. Then offer exactly two choices, bus or taxi, and accept 'bus', 'I want to go by bus', or another meaningful choice. Give one short two-step route: 'Go straight and turn left.' Ask for a brief acknowledgment if needed, then wait for thanks before closing. Treat I'm going to and I want to go by as functional chunks; do not explain future grammar. Help or repeat slowly if requested. No tickets, schedules, hotel procedure, or unrelated A2 task.",
+    "scenarioTh": "[A2 archive] ไปสถานี — เก็บไว้แมป A2 ภายหลัง ไม่ได้อยู่บน A1 path",
+    "openingEn": "Hi! Can I help you?",
+    "role": "Archived for A2. Not on the A1 Foundation path.",
     "goals": [
       {
-        "id": "destination",
-        "th": "บอกว่าจะไปสถานี",
-        "en": "Say that you are going to the station",
-        "example": "I'm going to the station"
+        "id": "ask_place",
+        "th": "ถามสถานที่",
+        "en": "Ask where",
+        "example": "Where is the station?"
       },
       {
-        "id": "transport",
-        "th": "เลือกวิธีเดินทาง",
-        "en": "Choose how to travel",
-        "example": "I want to go by bus"
+        "id": "ask_how",
+        "th": "ถามวิธีไป",
+        "en": "Ask how to go",
+        "example": "How do I go?"
       },
       {
-        "id": "route",
-        "th": "รับทิศทางและจบอย่างสุภาพ",
-        "en": "Acknowledge the route and close politely",
+        "id": "thank",
+        "th": "ขอบคุณ",
+        "en": "Thank you",
         "example": "Thank you"
       }
     ],
     "minTurns": 3,
-    "maxTurns": 5,
-    "completionEn": "Great. The bus stop is straight ahead, then left. Have a good trip!",
-    "completionTh": "เยี่ยมครับ ป้ายรถเมล์อยู่ตรงไปแล้วเลี้ยวซ้าย เดินทางดี ๆ นะครับ!"
+    "maxTurns": 6,
+    "completionEn": "Have a good trip!",
+    "completionTh": "เดินทางปลอดภัยนะครับ!"
   }
 ]

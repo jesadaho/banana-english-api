@@ -58,6 +58,9 @@ export const FOUNDATION_V7_CHOICE_BEATS: Record<string, FoundationV7ChoiceBeat> 
   fnd_v7_my_family: any(2, 'เลือกแนะนำสมาชิกหนึ่งคนได้เลยครับ', 'This is my ...', [
     option('👩', 'mother', 'This is my mother.'), option('👨', 'father', 'This is my father.'), option('👧', 'sister', 'This is my sister.'), option('👦', 'brother', 'This is my brother.'),
   ]),
+  fnd_v7_syllable_intro: single(2, 'ฟังคำว่า pen แล้วบอกจำนวนจังหวะ', '', 'One syllable.', 'pen มีหนึ่งจังหวะ พูดว่า One syllable. ครับ', [
+    option('1️⃣', 'One', 'One syllable.'), option('2️⃣', 'Two', 'Two syllables.'),
+  ]),
   fnd_v7_one_or_more: single(2, 'คราวนี้มีแอปเปิลแค่หนึ่งลูกครับ', '', 'an apple', 'หนึ่งลูกใช้ an apple ครับ', [
     option('🍎', 'an apple', 'an apple'), option('🍎🍎', 'apples', 'apples'),
   ]),
@@ -134,16 +137,34 @@ export const FOUNDATION_V7_CHOICE_BEATS: Record<string, FoundationV7ChoiceBeat> 
     option('🗣️', 'Do', 'Do you work every day?'), option('👉', 'Does', 'Does he work every day?'),
   ]),
   fnd_v7_happening_now: any(2, 'เลือกสิ่งที่ตัวละครของคุณกำลังทำตอนนี้ครับ', 'I am ...', [
-    option('📖', 'reading', 'I am reading.'), option('🍳', 'cooking', 'I am cooking.'),
+    option('📖', 'reading', 'I am reading.'), option('🍽️', 'eating', 'I am eating.'), option('🍳', 'cooking', 'I am cooking.'),
   ]),
-  fnd_v7_are_they_working: single(2, 'ลองถามถึง Anna อีกครั้งครับ', '... she working?', 'Is she working?', 'ถาม she ใช้ Is ครับ', [
-    option('👉', 'Is', 'Is she working?'), option('👥', 'Are', 'Are she working?'),
+  fnd_v7_are_they_working: single(2, 'Anna กำลังทำงานอยู่ ถูกถาม Is she working?', '', 'Yes, she is.', 'เธอกำลังทำงาน ตอบ Yes, she is. ครับ', [
+    option('✅', 'Yes', 'Yes, she is.'), option('🙅', 'No', 'No, she is not.'),
   ]),
-  fnd_v7_what_or_who: single(1, 'มีคนอยู่ข้างครูและคุณอยากรู้ว่าเป็นใครครับ', '... is this?', 'Who is this?', 'คนใช้ Who ครับ', [
+  fnd_v7_what_is_this: single(1, 'มีของอยู่บนโต๊ะและคุณอยากรู้ว่าคืออะไรครับ', '', 'What is this?', 'ของใช้ What ครับ', [
     option('📦', 'What', 'What is this?'), option('👤', 'Who', 'Who is this?'),
   ]),
-  fnd_v7_where_when_how_much_and_how_many: single(2, 'คุณอยากรู้ราคาของกระเป๋าครับ', '', 'How much is it?', 'ถามราคาใช้ How much ครับ', [
-    option('🏷️', 'How much', 'How much is it?'), option('🔢', 'How many', 'How many bags?'),
+  fnd_v7_who_is_this: single(1, 'มีคนอยู่ข้างครูและคุณอยากรู้ว่าเป็นใครครับ', '', 'Who is this?', 'คนใช้ Who ครับ', [
+    option('📦', 'What', 'What is this?'), option('👤', 'Who', 'Who is this?'),
+  ]),
+  fnd_v7_where_is_my_bag: single(2, 'กระเป๋าของคุณหาย และคุณอยากถามหาครับ', '', 'Where is my bag?', 'ถามหาของใช้ Where is…? ครับ', [
+    option('📍', 'Where', 'Where is my bag?'), option('🏷️', 'How much', 'How much is my bag?'),
+  ]),
+  fnd_v7_what_do_you_want_to_know: single(2, 'มีผู้ชายคนหนึ่งอยู่ตรงนั้น แต่คุณยังไม่รู้ว่าเขาเป็นใครครับ ควรถามอะไร?', '', 'Who is he?', 'ยังไม่รู้ตัวตน ใช้ Who ครับ', [
+    option('📦', 'What', 'What is this?'), option('👤', 'Who', 'Who is he?'), option('📍', 'Where', 'Where is he?'),
+  ]),
+  fnd_v7_when_or_what_time: single(2, 'คุณอยากรู้ว่าเรียนวันไหนครับ', '', 'When is the class?', 'ถามวันใช้ When…? ครับ', [
+    option('📅', 'When', 'When is the class?'), option('🕐', 'What time', 'What time is the class?'),
+  ]),
+  fnd_v7_in_which_month: single(2, 'คุณอยากรู้ว่าวันเกิดของเพื่อนอยู่ในเดือนไหนครับ', '', 'In which month?', 'ถามเดือนใช้ In which month? ครับ', [
+    option('📅', 'month', 'In which month?'), option('🕐', 'time', 'What time is it?'),
+  ]),
+  fnd_v7_how_much_is_it: single(2, 'คุณอยากรู้ราคาของกระเป๋าครับ', '', 'How much is the bag?', 'ถามราคาใช้ How much แล้วใส่ชื่อของครับ', [
+    option('🏷️', 'How much', 'How much is the bag?'), option('🔢', 'How many', 'How many bags?'),
+  ]),
+  fnd_v7_how_many: single(2, 'คุณอยากรู้ว่ามีแอปเปิลกี่ลูกครับ', '', 'How many apples?', 'ถามจำนวนใช้ How many ครับ', [
+    option('🏷️', 'How much', 'How much is it?'), option('🔢', 'How many', 'How many apples?'),
   ]),
   fnd_v7_there_is_there_are: single(2, 'ในห้องมีเก้าอี้สองตัวครับ', 'There ... two chairs.', 'There are two chairs.', 'หลายตัวใช้ are ครับ', [
     option('1️⃣', 'is', 'There is two chairs.'), option('2️⃣', 'are', 'There are two chairs.'),
