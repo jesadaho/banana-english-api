@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "sourceVersion": "foundation-v7-ch14-16-revamp-2026-09",
+    "sourceVersion": "foundation-v7-path-finale-2026-09",
     "pathId": "foundation_v7",
     "version": 1,
     "releaseStatus": "playtest",
-    "totalNodeCount": 166
+    "totalNodeCount": 167
   },
   "chapters": [
     {
@@ -5328,5 +5328,46 @@
         }
       ]
     }
-  ]
+  ],
+  "pathFinale": {
+    "id": "v7_finale",
+    "titleEn": "Path Finale",
+    "titleTh": "ปิดท้ายเส้นทาง",
+    "outcome": "ทบทวนความรู้ทั้ง Foundation A1 ด้วยสัมภาษณ์สั้น ๆ",
+    "items": [
+      {
+        "id": "v7_finale_n01",
+        "code": "Finale.1",
+        "order": 1,
+        "globalOrder": 167,
+        "titleEn": "Final Interview",
+        "titleTh": "บททดสอบสุดท้าย กับ Teacher John",
+        "type": "interactive_scenario",
+        "beat": "Ketsu",
+        "learningTarget": "ใช้ภาษา A1 ทั้งเส้นทางในการพูดคุยสั้น ๆ กับครู",
+        "activity": "Interactive scenario review กับ Teacher John",
+        "examples": [
+          "Hello",
+          "My name is…",
+          "I'm from…",
+          "I like…",
+          "See you"
+        ],
+        "estimatedMinutes": [
+          6,
+          10
+        ],
+        "difficultyAxes": [
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "contentRef": {
+          "scenarioId": "final_interview_john"
+        }
+      }
+    ]
+  }
 }

@@ -20,7 +20,12 @@ export interface FreeTalkTurnReply extends GptReply {
   softRecastTh?: string;
 }
 
-export type SessionType = 'intro' | 'legacy' | 'simulation' | 'training';
+export type SessionType =
+  | 'intro'
+  | 'legacy'
+  | 'simulation'
+  | 'training'
+  | 'interactive_scenario';
 
 /** The app posts this instead of a transcript when the learner taps Continue. */
 export const TAP_TO_CONTINUE_SENTINEL = '[continue]';
@@ -129,6 +134,18 @@ export interface TurnExchangeResponse {
     | 'needs_review';
   /** Timing breakdown — only when the client sends X-Chat-Debug: 1. */
   aiDebug?: AiDebug;
+  /**
+   * Interactive scenario / future lesson visual cue.
+   * Omit on turns with no image — legacy lessons stay unchanged.
+   */
+  visual?: TurnVisualCue | null;
+}
+
+/** Shared turn-level visual for scenarios (lessons later). */
+export interface TurnVisualCue {
+  imageAsset?: string;
+  sceneId?: string;
+  layout?: 'beside_teacher' | 'focus_image';
 }
 
 /** One Emoji Speak prompt embedded in a training turn. */

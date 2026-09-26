@@ -6,6 +6,7 @@ import { LearnPathService } from './learn-path.service';
 import {
   dealSkipQuizPhrases,
   isSkipQuizPassed,
+  resolveChaptersToSkipOnPass,
   resolveSkipQuizPool,
   SKIP_QUIZ_MIN_DEAL,
   skipQuizDealCount,
@@ -42,6 +43,15 @@ describe('Foundation V7 skip quiz helpers', () => {
     assert.equal(payload.eligible, true);
     assert.equal(payload.questionCount, dealSkipQuizPhrases('v7_u03').length);
     assert.equal(payload.questionCount, skipQuizDealCount(payload.availableCount));
+  });
+
+  it('lists every chapter before the target when resolving skip-on-pass', () => {
+    const chapters = resolveChaptersToSkipOnPass('v7_u05');
+    assert.deepEqual(
+      chapters.map((ch) => ch.chapterId),
+      ['v7_u01', 'v7_u02', 'v7_u03', 'v7_u04'],
+    );
+    assert.ok(chapters.every((ch) => ch.playableNodeIds.length > 0));
   });
 
   it('uses strict > 0.75 pass threshold', () => {
@@ -207,12 +217,45 @@ describe('Foundation V7 skip quiz service', () => {
     );
     assert.equal(result.passed, true);
     assert.equal(result.skippedChapterId, 'v7_u01');
+    assert.deepEqual(result.skippedChapterIds, ['v7_u01']);
     assert.ok(result.skippedNodeIds.length > 0);
 
     const path = await service.getFoundationV7('user-1', ['say_it_guided']);
     assert.ok(path.progress.skippedNodeIds.length > 0);
     assert.equal(path.progress.currentNodeId, 'v7_u02n01');
     assert.ok(path.chapters.find((ch: any) => ch.id === 'v7_u02')?.skipQuizEligible === true);
+  });
+
+  it('complete pass into a later chapter skips every chapter before the target', async () => {
+    const { service, skips } = buildService({ bananaBalance: 5 });
+    const started = await service.startSkipQuiz('user-1', 'v7_u05', 'key-jump');
+    const result = await service.completeSkipQuiz(
+      'user-1',
+      'v7_u05',
+      started.attemptId,
+      started.totalCount,
+    );
+    assert.equal(result.passed, true);
+    assert.deepEqual(result.skippedChapterIds, [
+      'v7_u01',
+      'v7_u02',
+      'v7_u03',
+      'v7_u04',
+    ]);
+    assert.equal(skips.size, 4);
+
+    const path = await service.getFoundationV7('user-1', ['say_it_guided']);
+    assert.equal(path.progress.currentNodeId?.startsWith('v7_u05'), true);
+    for (const chapterId of result.skippedChapterIds) {
+      const chapter = path.chapters.find((ch: any) => ch.id === chapterId);
+      assert.ok(chapter, chapterId);
+      const playable = chapter.items.filter((n: any) => !n.comingSoon);
+      assert.ok(playable.length > 0, chapterId);
+      assert.ok(
+        playable.every((n: any) => path.progress.skippedNodeIds.includes(n.id)),
+        chapterId,
+      );
+    }
   });
 
   it('complete below threshold does not skip chapter', async () => {
