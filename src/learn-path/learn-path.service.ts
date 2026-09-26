@@ -63,7 +63,8 @@ export type FoundationClientNodeType =
   | FoundationV2NodeDef['type']
   | 'story_bites'
   | 'pronunciation'
-  | 'new_words';
+  | 'new_words'
+  | 'info_task';
 
 export type FoundationV5ClientNode = {
   id: string;
@@ -172,7 +173,9 @@ function shippedContentForMappedType(
   titleEn: string,
   type: FoundationClientNodeType,
 ): FoundationV2NodeDef | undefined {
-  if (type === 'story_bites' || type === 'new_words') return undefined;
+  if (type === 'story_bites' || type === 'new_words' || type === 'info_task') {
+    return undefined;
+  }
   return v2ContentForV5Title(
     titleEn,
     type === 'pronunciation' ? 'lesson' : type,

@@ -25,3 +25,14 @@ export function resolveGroqApiKeys(getEnv: (key: string) => string | undefined):
     GROQ_API_KEYS: getEnv('GROQ_API_KEYS'),
   });
 }
+
+/** Round-robin cursor so each app config fetch gets one key from the pool. */
+let clientKeyCursor = 0;
+
+/** Pick one key for a Flutter client (do not expose the full pool). */
+export function pickGroqApiKeyForClient(keys: string[]): string | undefined {
+  if (keys.length === 0) return undefined;
+  const key = keys[clientKeyCursor % keys.length]!;
+  clientKeyCursor = (clientKeyCursor + 1) % keys.length;
+  return key;
+}
