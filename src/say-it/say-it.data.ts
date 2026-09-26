@@ -35,7 +35,7 @@ export const SAY_IT_BANANA_COST = 1;
 
 /** Most Foundation packs deal 5; Question Clues mix keeps all six words. */
 export function foundationSayItDealCount(topicId: string): number {
-  return topicId === 'fnd_v7_u14n04' ? 6 : FOUNDATION_SAY_IT_DEAL_COUNT;
+  return FOUNDATION_SAY_IT_DEAL_COUNT;
 }
 
 export const SAY_IT_TOPICS: SayItTopic[] = [
@@ -408,11 +408,98 @@ export function dealSayItPhrases(
   // V7 Guided packs deliberately fade support: three guided turns followed
   // by two independent turns. Preserve that authored order, not random order.
   const orderedGuided = FOUNDATION_V7_NODES.some(node => node.contentRef.topicId === topicId && node.sayItMode === 'guided');
-  for (let i = orderedGuided ? 0 : pool.length - 1; i > 0; i -= 1) {
+  if (orderedGuided) {
+    const n = Math.min(count, pool.length);
+    return pool.slice(0, n).map((phrase) => personalizeSayItPhrase(phrase, displayName));
+  }
+
+  const curated = dealCuratedFoundationSayIt(topicId, pool, count);
+  if (curated) {
+    return curated.map((phrase) => personalizeSayItPhrase(phrase, displayName));
+  }
+
+  for (let i = pool.length - 1; i > 0; i -= 1) {
     const j = Math.floor(Math.random() * (i + 1));
     [pool[i], pool[j]] = [pool[j], pool[i]];
   }
 
   const n = Math.min(count, pool.length);
   return pool.slice(0, n).map((phrase) => personalizeSayItPhrase(phrase, displayName));
+}
+
+function shuffleInPlace<T>(items: T[], random: () => number = Math.random): T[] {
+  for (let i = items.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(random() * (i + 1));
+    [items[i], items[j]] = [items[j], items[i]];
+  }
+  return items;
+}
+
+function takeOne(
+  from: SayItPhrase[],
+  used: Set<string>,
+): SayItPhrase | undefined {
+  const next = from.find((p) => !used.has(p.id));
+  if (!next) return undefined;
+  used.add(next.id);
+  return next;
+}
+
+/** Structured deals so key categories never vanish from a 5-card round. */
+function dealCuratedFoundationSayIt(
+  topicId: string,
+  pool: SayItPhrase[],
+  count: number,
+): SayItPhrase[] | null {
+  if (topicId === 'fnd_v7_u14tn18') {
+    // Months I Remember: always Oct/Nov/Dec + two earlier months.
+    const byMonth = (month: string) =>
+      pool.filter((p) => p.answerEn.toLowerCase().includes(month.toLowerCase()));
+    const used = new Set<string>();
+    const picked: SayItPhrase[] = [];
+    for (const month of ['October', 'November', 'December']) {
+      const hit = takeOne(shuffleInPlace([...byMonth(month)]), used);
+      if (hit) picked.push(hit);
+    }
+    const older = shuffleInPlace(
+      pool.filter(
+        (p) =>
+          !/october|november|december/i.test(p.answerEn) && !used.has(p.id),
+      ),
+    );
+    while (picked.length < count && older.length > 0) {
+      const hit = older.shift()!;
+      used.add(hit.id);
+      picked.push(hit);
+    }
+    return shuffleInPlace(picked).slice(0, count);
+  }
+
+  if (topicId === 'fnd_v7_u14tn20') {
+    // Questions in Real Life: schedule + price/qty + Ch14 review each round.
+    const schedule = pool.filter((p) =>
+      /when is|what time/i.test(p.answerEn),
+    );
+    const priceQty = pool.filter((p) =>
+      /how much|how many/i.test(p.answerEn),
+    );
+    const ch14 = pool.filter((p) =>
+      /what is|who is|where is/i.test(p.answerEn),
+    );
+    const used = new Set<string>();
+    const picked: SayItPhrase[] = [];
+    for (const group of [schedule, priceQty, ch14]) {
+      const hit = takeOne(shuffleInPlace([...group]), used);
+      if (hit) picked.push(hit);
+    }
+    const rest = shuffleInPlace(pool.filter((p) => !used.has(p.id)));
+    while (picked.length < count && rest.length > 0) {
+      const hit = rest.shift()!;
+      used.add(hit.id);
+      picked.push(hit);
+    }
+    return shuffleInPlace(picked).slice(0, count);
+  }
+
+  return null;
 }

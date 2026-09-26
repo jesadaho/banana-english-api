@@ -17,10 +17,15 @@ export const AUTHORED_V7_CONVERSATION_IDS = specs.map(
 
 export const FROZEN_V7_CONVERSATION_IDS = conversationIdsInChapter('v7_u01');
 
-export const ALL_V7_PATH_CONVERSATION_IDS = [
-  ...FROZEN_V7_CONVERSATION_IDS,
-  ...AUTHORED_V7_CONVERSATION_IDS,
-];
+/** Live A1 path conversations only (Around Town kept in authoring for A2, not here). */
+export const ALL_V7_PATH_CONVERSATION_IDS = FOUNDATION_V7_CATALOG.chapters
+  .flatMap((chapter) => chapter.items)
+  .filter((node) => node.type === 'conversation')
+  .map((node) => node.contentRef.simulationId)
+  .filter((id): id is string => Boolean(id));
+
+/** Preserved A2-ready Around Town mission — not on the A1 catalog. */
+export const PRESERVED_AROUND_TOWN_SIMULATION_ID = 'foundation_v7_u16n10';
 
 const STUCK_LINES = [
   'hello',
@@ -69,11 +74,24 @@ const HAPPY_OVERRIDES: Record<string, string[]> = {
     'Yes, Friday at ten',
   ],
   foundation_v7_u13n06: [
-    'I am cooking',
-    'She is reading',
+    "I'm cooking",
+    "No, he isn't. He's eating",
   ],
-  foundation_v7_u14n06: ['When is the class', 'Where is the class', 'Thank you'],
-  foundation_v7_u15n08: ['Where is the room', 'Turn left', 'Thank you'],
+  foundation_v7_u14n06: [
+    'When is the class?',
+    'What time is the class?',
+    'Where is the class?',
+  ],
+  foundation_v7_u14n15: ['Who is he?', 'Where is John?', 'Where is Room 2?'],
+  foundation_v7_u14tn21: [
+    'When is the movie? What time is the movie?',
+    'How much is one ticket?',
+  ],
+  foundation_v7_u15n08: [
+    'Where is Room 2?',
+    'Where is the bathroom?',
+    'Where is my bag?',
+  ],
   foundation_v7_u16n10: [
     'I am going to the station',
     'I want to go by bus',
@@ -208,11 +226,20 @@ export function parseFoundationV7ConversationArgs(argv: string[]): {
     const chapter =
       arg === 'ch2' ? (['ch2', '02'] as const) : arg.match(/^u(\d{2})$/i);
     if (chapter) {
-      const fromPath = conversationIdsInChapter(`v7_u${chapter[1]}`);
+      const chapterKey = chapter[1];
+      if (chapterKey === '16') {
+        add([PRESERVED_AROUND_TOWN_SIMULATION_ID]);
+        continue;
+      }
+      const fromPath = conversationIdsInChapter(`v7_u${chapterKey}`);
       if (fromPath.length === 0) {
         throw new Error(`no V7 conversations in chapter ${arg}`);
       }
       add(fromPath);
+      continue;
+    }
+    if (arg === 'u14tn' || arg === 'ch15') {
+      add(conversationIdsInChapter('v7_u14_time_numbers'));
       continue;
     }
     const id = resolveSimulationId(arg);

@@ -43,6 +43,7 @@ Server runs at `http://localhost:8000`.
 | `GOOGLE_CLOUD_TTS_VOICE` | Cloud TTS speaker (default = `GEMINI_TTS_VOICE`) |
 | `GOOGLE_CLOUD_PROJECT` | GCP project id for `x-goog-user-project` on Bearer calls |
 | `GROQ_API_KEY` | Groq key (served to Flutter via `/api/config/keys`) |
+| `GROQ_API_KEYS` | Optional comma-separated Groq keys for Whisper RPM load-balancing (preferred when set) |
 | `PORT` | Server port (default `8000`) |
 | `CORS_ORIGINS` | Comma-separated allowed origins (`*.web.app` / `*.firebaseapp.com` / `bananaenglish.app` always allowed) |
 | `ADMIN_EMAILS` | Comma-separated Google emails allowed for `GET /admin/metrics/*` |

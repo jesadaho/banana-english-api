@@ -24,6 +24,13 @@ const choiceTask = (
 });
 const finish = (text: string): V7TeachingStep => ({ kind: 'complete', instruction: text,
   expectsUserSpeech: false, presentation: { text, answerMode: 'single', options: [], stem: '' } });
+/** Listen / Continue only — no mic (used for short concept intros). */
+const listen = (text: string): V7TeachingStep => ({
+  kind: 'recall',
+  instruction: text,
+  expectsUserSpeech: false,
+  presentation: { text, answerMode: 'single', options: [], stem: '' },
+});
 
 export const V7_LEGACY_FLOWS: Record<string, V7TeachingStep[]> = {
   fnd_v7_i_am_you_are: [
@@ -115,6 +122,71 @@ export const V7_LEGACY_FLOWS: Record<string, V7TeachingStep[]> = {
       { emoji: '👦', label: 'brother', speak: 'This is my brother.', meaningTh: 'นี่คือพี่ชายหรือน้องชายของฉัน' },
     ], undefined, true, 'เลือกสมาชิกแล้วพูดประโยคเต็ม This is my… ครับ'),
     finish('จบบทครับ วันนี้คุณนำคำเรียกสมาชิกครอบครัวมาใช้แนะนำคนด้วย This is my…'),
+  ],
+  fnd_v7_syllable_intro: [
+    listen(
+      'ก่อนเริ่ม มารู้จักคำหนึ่งก่อนครับ\n'
+      + 'syllable แปลว่า “พยางค์” หรือหนึ่งจังหวะเสียง\n'
+      + 'เช่น book 👏 มีหนึ่งจังหวะ จึงมี one syllable\n'
+      + 'กดฟังคำว่า syllable ได้เลยครับ 🔊',
+    ),
+    listen(
+      'ถ้ามีหนึ่งพยางค์ เราพูดว่า one syllable\n'
+      + 'ถ้ามีสองพยางค์ขึ้นไป เติมเสียงท้ายเป็น two syllables',
+    ),
+    task(
+      'ลองฟัง bag 👏\nคำนี้มีกี่ syllables ครับ?',
+      'One syllable.',
+      [],
+      '',
+      false,
+      'ดีครับ bag มี one syllable ',
+      'ลองฟังช้า ๆ อีกครั้ง: bag 👏 แล้วพูด One syllable. ครับ',
+    ),
+    task(
+      'ลองฟังคำว่า apple — AP 👏 ple 👏\n'
+      + 'มีสองจังหวะ เราเรียกว่า two syllables\n'
+      + 'ลองพูดคำว่า apple ครับ',
+      'apple',
+      [],
+      '',
+      false,
+      'เยี่ยมครับ apple มี two syllables ',
+    ),
+    task(
+      'คราวนี้ฟัง teacher — TEA 👏 cher 👏\nคำนี้มีกี่ syllables ครับ?',
+      'Two syllables.',
+      [],
+      '',
+      false,
+      'ถูกต้องครับ teacher มี two syllables ',
+      'ลองฟังช้า ๆ: TEA · cher แล้วพูด Two syllables. ครับ',
+    ),
+    choiceTask(
+      'ฟังคำต่อไปครับ: pen\nคำนี้มีกี่ syllables?',
+      'One syllable.',
+      '',
+      [
+        { emoji: '1️⃣', label: 'One', speak: 'One syllable.' },
+        { emoji: '2️⃣', label: 'Two', speak: 'Two syllables.' },
+      ],
+      'ดีครับ pen มี one syllable ',
+      false,
+      'ลองฟังช้า ๆ: pen 👏 แล้วพูด One syllable. ครับ',
+    ),
+    choiceTask(
+      'รอบสุดท้ายครับ ฟังคำว่า doctor — doctor\nคำนี้มีกี่ syllables?',
+      'Two syllables.',
+      '',
+      [
+        { emoji: '1️⃣', label: 'One', speak: 'One syllable.' },
+        { emoji: '2️⃣', label: 'Two', speak: 'Two syllables.' },
+      ],
+      'ถูกต้องครับ doctor มี two syllables: DOC · tor ',
+      false,
+      'ลองฟังช้า ๆ: DOC · tor แล้วพูด Two syllables. ครับ',
+    ),
+    finish('วันนี้คุณเริ่มฟังจังหวะของคำภาษาอังกฤษได้แล้วครับ!'),
   ],
   fnd_v7_one_or_more: [
     task('วันนี้เราจะบอกของหนึ่งชิ้นกับหลายชิ้นครับ 📖 หนังสือหนึ่งเล่มพูดว่า “a book” ลองพูดตามครับ', 'a book', [], '', false, SHORT),
@@ -516,42 +588,330 @@ export const V7_LEGACY_FLOWS: Record<string, V7TeachingStep[]> = {
     finish('จบบทครับ วันนี้ฝึก Do you…? และ Does he/she…? โดยใช้กริยารูปเดิมหลัง Does'),
   ],
   fnd_v7_happening_now: [
-    task('ครั้งก่อนเราเล่าว่าทำอะไรเป็นประจำครับ บทนี้เราจะบอกว่าตอนนี้กำลังทำอะไรอยู่ สมมติว่าคุณกำลังอ่านหนังสือตอนนี้ 📖 “I am reading.” แปลว่าฉันกำลังอ่าน ลองพูดตามครับ', 'I am reading.', [], '', false, SHORT),
-    task('ถ้าพูดถึงเธอ เปลี่ยนเป็น “She is reading.” แปลว่าเธอกำลังอ่านครับ ใช้ is กับ she ลองพูดตาม', 'She is reading.', [], '', false, SHORT),
-    choiceTask('Anna กำลังอ่านอยู่ตอนนี้ครับ ลองเลือกคำให้ตรงกับ she', 'She is reading.', 'She ... reading.', [
-      { emoji: '👤', label: 'am', speak: 'She am reading.' },
-      { emoji: '👉', label: 'is', speak: 'She is reading.' },
-    ], recap('She is reading.', 'เธอกำลังอ่าน'), false, 'ใช้ is กับ she แล้วพูดว่า She is reading. ครับ'),
-    task('ถ้าเป็นคนหลายคนใช้ are ครับ “They are reading.” แปลว่าพวกเขากำลังอ่าน ลองพูดตามครับ', 'They are reading.', [], '', false, SHORT),
-    choiceTask('คนกลุ่มนั้นกำลังอ่านครับ ลองเลือกคำให้ตรงกับ they', 'They are reading.', 'They ... reading.', [
-      { emoji: '👉', label: 'is', speak: 'They is reading.' },
-      { emoji: '👥', label: 'are', speak: 'They are reading.' },
-    ], recap('They are reading.', 'พวกเขากำลังอ่าน'), false, 'ใช้ are กับ they แล้วพูดว่า They are reading. ครับ'),
-    task('cook เปลี่ยนเป็น cooking เมื่อบอกว่ากำลังทำครับ “I am cooking.” แปลว่าฉันกำลังทำอาหาร ลองพูดตามครับ', 'I am cooking.', [], '', false, SHORT),
-    choiceTask('เลือกสิ่งที่ตัวละครของคุณกำลังทำตอนนี้ครับ', 'I am reading.', 'I am ...', [
-      { emoji: '📖', label: 'reading', speak: 'I am reading.', meaningTh: 'ฉันกำลังอ่าน' },
-      { emoji: '🍳', label: 'cooking', speak: 'I am cooking.', meaningTh: 'ฉันกำลังทำอาหาร' },
-    ], undefined, true, 'เลือกกิจกรรมแล้วพูดว่า I am… ครับ'),
-    finish('จบบทครับ วันนี้ฝึกบอกสิ่งที่กำลังทำด้วย am, is, are และรูปกริยาที่ลงท้าย ing'),
+    task(
+      'ครั้งก่อนเราพูดว่าทำอะไรเป็นประจำครับ เช่น “I read every day.” แปลว่าฉันอ่านทุกวัน\n'
+      + 'ถ้าเป็นตอนนี้ ใช้รูปอื่น: “I am reading now.” แปลว่าตอนนี้ฉันกำลังอ่าน\n'
+      + 'สังเกตว่าใช้ am คู่กับกริยาที่เติม -ing ครับ ลองพูดว่า I am reading.',
+      'I am reading.',
+      [],
+      '',
+      false,
+      'ถูกต้องครับ I am reading. ใช้ am + reading ',
+    ),
+    task(
+      'พูดถึงเธอ ให้ใช้ is + กริยาเติม -ing ครับ “She is reading.” แปลว่าเธอกำลังอ่าน ลองพูดตามครับ',
+      'She is reading.',
+      [],
+      '',
+      false,
+      SHORT,
+    ),
+    choiceTask(
+      'Anna กำลังอ่านอยู่ตอนนี้ครับ 📖 เลือกคำให้ตรงกับ she แล้วพูดประโยคเต็ม',
+      'She is reading.',
+      'She ... reading.',
+      [
+        { emoji: '👤', label: 'am', speak: 'She am reading.' },
+        { emoji: '👉', label: 'is', speak: 'She is reading.' },
+      ],
+      recap('She is reading.', 'เธอกำลังอ่าน'),
+      false,
+      'ใช้ is กับ she แล้วพูดว่า She is reading. ครับ',
+    ),
+    task(
+      'พูดถึงคนหลายคน ใช้ are + กริยาเติม -ing ครับ “They are reading.” แปลว่าพวกเขากำลังอ่าน ลองพูดตามครับ',
+      'They are reading.',
+      [],
+      '',
+      false,
+      SHORT,
+    ),
+    choiceTask(
+      'คนกลุ่มนั้นกำลังอ่านครับ 📚 เลือกคำให้ตรงกับ they',
+      'They are reading.',
+      'They ... reading.',
+      [
+        { emoji: '👉', label: 'is', speak: 'They is reading.' },
+        { emoji: '👥', label: 'are', speak: 'They are reading.' },
+      ],
+      recap('They are reading.', 'พวกเขากำลังอ่าน'),
+      false,
+      'ใช้ are กับ they แล้วพูดว่า They are reading. ครับ',
+    ),
+    task(
+      'กริยา eat เมื่อบอกว่ากำลังทำ กลายเป็น eating ครับ\n'
+      + '“I am eating.” แปลว่าฉันกำลังกิน ลองพูดตามครับ',
+      'I am eating.',
+      [],
+      '',
+      false,
+      'ดีครับ eat → eating ใช้คู่กับ am ',
+    ),
+    choiceTask(
+      'เลือกสิ่งที่ตัวละครของคุณกำลังทำตอนนี้ครับ',
+      'I am reading.',
+      'I am ...',
+      [
+        { emoji: '📖', label: 'reading', speak: 'I am reading.', meaningTh: 'ฉันกำลังอ่าน' },
+        { emoji: '🍽️', label: 'eating', speak: 'I am eating.', meaningTh: 'ฉันกำลังกิน' },
+        { emoji: '🍳', label: 'cooking', speak: 'I am cooking.', meaningTh: 'ฉันกำลังทำอาหาร' },
+      ],
+      undefined,
+      true,
+      'เลือกกิจกรรมแล้วพูดว่า I am… ครับ',
+    ),
+    finish(
+      'จบบทครับ วันนี้เทียบ every day กับ now แล้วฝึก am/is/are คู่กับกริยาเติม -ing เช่น reading และ eating',
+    ),
   ],
   fnd_v7_are_they_working: [
-    task('วันนี้เราจะถามว่าคนอื่นกำลังทำอะไร และบอกเมื่อเขาไม่ได้ทำสิ่งนั้นครับ work คือทำงาน “They are working.” คือพวกเขากำลังทำงาน ถ้าถาม สลับเป็น “Are they working?” แปลว่าพวกเขากำลังทำงานไหม ลองพูดคำถามครับ', 'Are they working?', [], '', false, SHORT),
-    choiceTask('คุณอยากถามถึงคนหลายคนว่ากำลังทำงานไหมครับ ควรขึ้นต้นด้วยอะไร?', 'Are they working?', '... they working?', [
-      { emoji: '👉', label: 'Is', speak: 'Is they working?' },
-      { emoji: '👥', label: 'Are', speak: 'Are they working?' },
-    ], recap('Are they working?', 'พวกเขากำลังทำงานไหม'), false, 'ถาม they ใช้ Are แล้วพูดว่า Are they working? ครับ'),
-    task('ถ้าพวกเขาไม่ได้กำลังทำงาน เติม not ครับ “They are not working.” แปลว่าพวกเขาไม่ได้กำลังทำงาน ลองพูดตามครับ', 'They are not working.', [], '', false, SHORT),
-    task('ถ้าถามถึง Anna คนเดียว ใช้ is กับ she ครับ “Is she working?” แปลว่าเธอกำลังทำงานไหม ลองพูดตามครับ', 'Is she working?', [], '', false, SHORT),
-    choiceTask('ลองถามถึง Anna อีกครั้งครับ เลือกคำขึ้นต้นให้ตรงกับ she', 'Is she working?', '... she working?', [
-      { emoji: '👉', label: 'Is', speak: 'Is she working?' },
-      { emoji: '👥', label: 'Are', speak: 'Are she working?' },
-    ], recap('Is she working?', 'เธอกำลังทำงานไหม'), false, 'ถาม she ใช้ Is แล้วพูดว่า Is she working? ครับ'),
-    choiceTask('ตอนนี้ Anna ไม่ได้กำลังทำงานครับ ใช้ She is not… เหมือนการเติม not ที่เรียนแล้ว ลองพูดประโยคเต็ม', 'She is not working.', 'She is not ...', [
-      { emoji: '💼', label: 'working', speak: 'She is not working.' },
-      { emoji: '📖', label: 'reading', speak: 'She is not reading.' },
-    ], recap('She is not working.', 'เธอไม่ได้กำลังทำงาน'), false, 'ไม่ได้กำลังทำงานใช้ working แล้วพูดว่า She is not working. ครับ'),
-    finish('จบบทครับ วันนี้ฝึกถามด้วย Is/Are และเติม not เพื่อบอกว่าไม่ได้กำลังทำ'),
+    task(
+      'วันนี้เราจะถามว่ากำลังทำสิ่งนั้นอยู่ไหม แล้วตอบสั้น ๆ Yes หรือ No ครับ\n'
+      + 'work คือทำงาน “Are they working?” แปลว่าพวกเขากำลังทำงานไหม ลองถามครับ',
+      'Are they working?',
+      [],
+      '',
+      false,
+      SHORT,
+    ),
+    choiceTask(
+      'อยากถามคนหลายคนว่ากำลังทำงานไหมครับ ควรขึ้นต้นด้วยอะไร?',
+      'Are they working?',
+      '... they working?',
+      [
+        { emoji: '👉', label: 'Is', speak: 'Is they working?' },
+        { emoji: '👥', label: 'Are', speak: 'Are they working?' },
+      ],
+      recap('Are they working?', 'พวกเขากำลังทำงานไหม'),
+      false,
+      'ถาม they ใช้ Are แล้วพูดว่า Are they working? ครับ',
+    ),
+    task(
+      'ถ้าพวกเขาไม่ได้กำลังทำงาน เติม not หลัง are ครับ\n'
+      + '“They are not working.” แปลว่าพวกเขาไม่ได้กำลังทำงาน ลองพูดตามครับ',
+      'They are not working.',
+      [],
+      '',
+      false,
+      'ถูกต้องครับ not อยู่หลัง are ',
+    ),
+    task(
+      'ถามถึง Anna คนเดียว ใช้ is ครับ “Is she working?” แปลว่าเธอกำลังทำงานไหม ลองถามครับ',
+      'Is she working?',
+      [],
+      '',
+      false,
+      SHORT,
+    ),
+    choiceTask(
+      'ตอนนี้ Anna กำลังนั่งทำงานที่โต๊ะครับ 💼\n'
+      + 'ถ้าถูกถาม Is she working? ควรตอบอย่างไร?',
+      'Yes, she is.',
+      '',
+      [
+        { emoji: '✅', label: 'Yes', speak: 'Yes, she is.', recapText: 'Yes, she is. หมายถึง “ใช่ เธอกำลังทำงาน” ครับ ' },
+        { emoji: '🙅', label: 'No', speak: 'No, she is not.', recapText: 'ตอนนี้เธอกำลังทำงาน ตอบ Yes, she is. ครับ ' },
+      ],
+      undefined,
+      false,
+      'เธอกำลังทำงาน ตอบ Yes, she is. ครับ',
+    ),
+    choiceTask(
+      'คราวนี้ Anna กำลังกินข้าว ไม่ได้ทำงานครับ 🍽️\n'
+      + 'ถูกถาม Is she working? ตอบอย่างไร?\n'
+      + 'จำไว้ว่า not อยู่หลัง is ครับ',
+      'No, she is not.',
+      '',
+      [
+        { emoji: '✅', label: 'Yes', speak: 'Yes, she is.' },
+        { emoji: '🙅', label: 'No', speak: 'No, she is not.', recapText: 'No, she is not. หมายถึง “ไม่ เธอไม่ได้กำลังทำงาน” ครับ ' },
+      ],
+      undefined,
+      false,
+      'เธอไม่ได้ทำงาน ตอบ No, she is not. ครับ',
+    ),
+    choiceTask(
+      'เพื่อนสองคนกำลังทำงานอยู่ครับ 💼💼\n'
+      + 'ถูกถาม Are they working? ตอบอย่างไร?',
+      'Yes, they are.',
+      '',
+      [
+        { emoji: '✅', label: 'Yes', speak: 'Yes, they are.', recapText: 'Yes, they are. หมายถึง “ใช่ พวกเขากำลังทำงาน” ครับ ' },
+        { emoji: '🙅', label: 'No', speak: 'No, they are not.' },
+      ],
+      undefined,
+      false,
+      'พวกเขากำลังทำงาน ตอบ Yes, they are. ครับ',
+    ),
+    finish(
+      'จบบทครับ วันนี้ฝึกถาม Is/Are …? เติม not หลัง am/is/are และตอบสั้น Yes, she is. / No, she is not. / Yes, they are.',
+    ),
   ],
+
+  fnd_v7_what_is_this: [
+    task('วันนี้เราจะถามว่าสิ่งของคืออะไรครับ ของอยู่ใกล้ ๆ ใช้ “What is this?” แปลว่านี่คืออะไร ลองถามครับ', 'What is this?', [], '', false, SHORT + "It's a book. มันคือหนังสือครับ "),
+    choiceTask('มีของอยู่ตรงหน้าและคุณไม่รู้ว่าคืออะไรครับ ควรเริ่มด้วยคำไหน?', 'What is this?', '', [
+      { emoji: '📦', label: 'What', speak: 'What is this?' },
+      { emoji: '👤', label: 'Who', speak: 'Who is this?' },
+    ], recap('What is this?', 'นี่คืออะไร') + "It's a bag. มันคือกระเป๋าครับ ", false, 'สิ่งของใช้ What แล้วพูดว่า What is this? ครับ'),
+    task('ของอยู่ไกลกว่านี้ ใช้ “What is that?” แปลว่านั่นคืออะไร ลองถามครับ', 'What is that?', [], '', false, SHORT + "It's a phone. มันคือโทรศัพท์ครับ "),
+    task('ของอยู่ใกล้บนโต๊ะครับ ลองถามเอง — ไม่มีคำใบ้ให้เติม', 'What is this?', [], '', false, SHORT + "It's a book. มันคือหนังสือครับ "),
+    task('ของอยู่บนชั้นไกล ๆ ครับ ลองถามเอง — ไม่มีคำใบ้ให้เติม', 'What is that?', [], '', false, SHORT + "It's a bag. มันคือกระเป๋าครับ "),
+    finish('จบบทครับ What is this? สำหรับของใกล้ และ What is that? สำหรับของไกล'),
+  ],
+  fnd_v7_who_is_this: [
+    task('วันนี้เราจะถามว่าคนนี้คือใครครับ “Who is this?” แปลว่านี่คือใคร ลองถามครับ', 'Who is this?', [], '', false, SHORT + 'This is Max. นี่คือ Max ครับ '),
+    choiceTask('มีคนอยู่ข้างหน้าครับ ควรใช้ What หรือ Who?', 'Who is this?', '', [
+      { emoji: '📦', label: 'What', speak: 'What is this?' },
+      { emoji: '👤', label: 'Who', speak: 'Who is this?' },
+    ], recap('Who is this?', 'นี่คือใคร') + 'This is Anna. นี่คือ Anna ครับ ', false, 'คนใช้ Who ครับ'),
+    task('ถามผู้หญิงด้วย “Who is she?” แปลว่าเธอคือใคร ลองถามครับ', 'Who is she?', [], '', false, SHORT + "She's May. เธอคือ May ครับ "),
+    task('ถามผู้ชายด้วย “Who is he?” แปลว่าเขาคือใคร ลองถามครับ', 'Who is he?', [], '', false, SHORT + "He's John. เขาคือ John ครับ "),
+    task('เห็นผู้หญิงอีกคนครับ ลองถามเอง — ไม่มีคำใบ้ให้เติม', 'Who is she?', [], '', false, SHORT + "She's May. เธอคือ May ครับ "),
+    task('เห็นผู้ชายอีกคนครับ ลองถามเอง — ไม่มีคำใบ้ให้เติม', 'Who is he?', [], '', false, SHORT + "He's John. เขาคือ John ครับ "),
+    finish('จบบทครับ Who ใช้ถามตัวตนของคน'),
+  ],
+  fnd_v7_where_is_my_bag: [
+    task('รู้แล้วว่ามีกระเป๋า แต่ยังไม่รู้ตำแหน่งครับ “Where is my bag?” แปลว่ากระเป๋าฉันอยู่ไหน ลองถามครับ', 'Where is my bag?', [], '', false, SHORT + "It's here. อยู่ที่นี่ครับ "),
+    task('หาโทรศัพท์ไม่เจอครับ ลองถาม', 'Where is my phone?', [], '', false, SHORT + "It's there. อยู่ที่นั่นครับ "),
+    task('อยากรู้ว่า Max อยู่ไหนครับ “Where is Max?” ลองถาม', 'Where is Max?', [], '', false, SHORT + "He's in Room 2. เขาอยู่ห้อง 2 ครับ — in Room 2 แปลว่าอยู่ในห้อง 2 "),
+    task('หาหนังสือไม่เจอครับ ลองถาม', 'Where is my book?', [], '', false, SHORT + "It's here. อยู่ที่นี่ครับ "),
+    task('พูดถึงกระเป๋าไปแล้ว ถามสั้น ๆ ว่ามันอยู่ไหน', 'Where is it?', [], '', false, SHORT + "It's there. อยู่ที่นั่นครับ "),
+    task('มีปากกาของ Max ครับ ลองถามตำแหน่งเอง — ไม่มีคำใบ้ให้เติม', 'Where is Max?', [], '', false, SHORT + "He's in Room 2. เขาอยู่ห้อง 2 ครับ "),
+    finish('จบบทครับ Where is…? ใช้ถามตำแหน่งของหรือคนที่รู้จักแล้ว'),
+  ],
+  fnd_v7_what_do_you_want_to_know: [
+    choiceTask('วันนี้เราจะฝึกเลือก What / Who / Where จากข้อมูลที่ขาดครับ มีผู้ชายคนหนึ่งอยู่ตรงนั้น แต่คุณยังไม่รู้ว่าเขาเป็นใคร — ควรถามอะไร? (ยังไม่เฉลยคำถาม)', 'Who is he?', '', [
+      { emoji: '📦', label: 'What', speak: 'What is this?' },
+      { emoji: '👤', label: 'Who', speak: 'Who is he?' },
+      { emoji: '📍', label: 'Where', speak: 'Where is he?' },
+    ], SHORT + "He's John. เขาคือ John ครับ ", false, 'ยังไม่รู้ตัวตน ใช้ Who ครับ'),
+    choiceTask('รู้ชื่อ Max แล้ว แต่ยังไม่รู้ว่าเขาอยู่ไหนครับ ควรถามอะไร?', 'Where is Max?', '', [
+      { emoji: '📦', label: 'What', speak: 'What is this?' },
+      { emoji: '👤', label: 'Who', speak: 'Who is Max?' },
+      { emoji: '📍', label: 'Where', speak: 'Where is Max?' },
+    ], SHORT + "He's in Room 2. เขาอยู่ห้อง 2 ครับ ", false, 'รู้ชื่อแล้วแต่ยังไม่รู้ตำแหน่ง ใช้ Where ครับ'),
+    choiceTask('มีของที่ไม่รู้จักอยู่ใกล้ ๆ ครับ ควรถามอะไร?', 'What is this?', '', [
+      { emoji: '📦', label: 'What', speak: 'What is this?' },
+      { emoji: '👤', label: 'Who', speak: 'Who is this?' },
+      { emoji: '📍', label: 'Where', speak: 'Where is it?' },
+    ], SHORT + "It's a book. มันคือหนังสือครับ ", false, 'ของที่ไม่รู้จักใช้ What ครับ'),
+    choiceTask('รู้แล้วว่าเป็นกระเป๋าของตัวเอง แต่ยังไม่รู้ว่าอยู่ไหนครับ ควรถามอะไร?', 'Where is my bag?', '', [
+      { emoji: '📦', label: 'What', speak: 'What is this?' },
+      { emoji: '👤', label: 'Who', speak: 'Who is this?' },
+      { emoji: '📍', label: 'Where', speak: 'Where is my bag?' },
+    ], SHORT + "It's here. อยู่ที่นี่ครับ ", false, 'รู้ของแล้วแต่ยังไม่รู้ตำแหน่ง ใช้ Where ครับ'),
+    choiceTask('เห็นผู้หญิงคนหนึ่งแต่ยังไม่รู้ว่าเป็นใครครับ ควรถามอะไร?', 'Who is she?', '', [
+      { emoji: '📦', label: 'What', speak: 'What is this?' },
+      { emoji: '👤', label: 'Who', speak: 'Who is she?' },
+      { emoji: '📍', label: 'Where', speak: 'Where is she?' },
+    ], SHORT + "She's May. เธอคือ May ครับ ", false, 'ยังไม่รู้ตัวตน ใช้ Who ครับ'),
+    finish('จบบทครับ เลือก What / Who / Where ตามข้อมูลที่ขาด'),
+  ],
+  fnd_v7_when_or_what_time: [
+    task('ยังไม่รู้ว่าคลาสเรียนวันไหนครับ “When is the class?” ลองถาม', 'When is the class?', [], '', false, SHORT + 'On Friday. วันศุกร์ครับ '),
+    task('รู้วันแล้ว แต่ยังไม่รู้กี่โมงครับ “What time is the class?” ลองถาม', 'What time is the class?', [], '', false, SHORT + 'At ten. สิบโมงครับ '),
+    choiceTask('ยังไม่รู้วันเรียนครับ ควรถามด้วยคำไหน?', 'When is the class?', '... is the class?', [
+      { emoji: '📅', label: 'When', speak: 'When is the class?' },
+      { emoji: '⏰', label: 'What time', speak: 'What time is the class?' },
+    ], recap('When is the class?', 'คลาสมีเมื่อไร'), false, 'ยังไม่รู้วัน ใช้ When ครับ'),
+    choiceTask('รู้วันแล้ว แต่ยังไม่รู้เวลานาฬิกา ควรถามอะไร?', 'What time is the class?', '', [
+      { emoji: '📅', label: 'When', speak: 'When is the class?' },
+      { emoji: '⏰', label: 'What time', speak: 'What time is the class?' },
+    ], recap('What time is the class?', 'คลาสกี่โมง'), false, 'รู้วันแล้วถาม What time ครับ'),
+    task('ยังไม่รู้ห้องเรียนครับ ทบทวน Where ลองถาม', 'Where is the class?', [], '', false, SHORT + 'In Room 2. '),
+    task('บัตรบอกวันแล้ว แต่ยังไม่รู้กี่โมง ลองถามเอง', 'What time is the class?', [], '', false, recap('What time is the class?', 'คลาสกี่โมง')),
+    finish('จบบทครับ When ถามวัน/เวลาโดยกว้าง What time ถามนาฬิกา'),
+  ],
+  fnd_v7_in_which_month: [
+    task(
+      'วันนี้เราจะฝึกพูดเดือนเกิดครับ birthday แปลว่าวันเกิด ประโยคเต็ม “My birthday is in January.” แปลว่า “วันเกิดของฉันอยู่ในเดือนมกราคม” ลองพูดตามประโยคเต็มครับ',
+      'My birthday is in January.',
+      [],
+      '',
+      false,
+      SHORT,
+    ),
+    task(
+      'เปลี่ยนเดือนเป็น February ครับ “My birthday is in February.” แปลว่า “วันเกิดของฉันอยู่ในเดือนกุมภาพันธ์” ลองพูดตามครับ',
+      'My birthday is in February.',
+      [],
+      '',
+      false,
+      SHORT,
+    ),
+    task(
+      'คลาสอยู่ใน March ครับ “The class is in March.” แปลว่า “คลาสอยู่ในเดือนมีนาคม” ลองพูดตามครับ',
+      'The class is in March.',
+      [],
+      '',
+      false,
+      SHORT,
+    ),
+    task(
+      'วันใช้ on เช่น on Friday ส่วนเดือนใช้ in เช่น in March ครับ ลองพูด The class is on Friday.',
+      'The class is on Friday.',
+      [],
+      '',
+      false,
+      SHORT,
+    ),
+    task(
+      'โปรไฟล์สมมติ: วันเกิดของเพื่อนอยู่ใน January (ไม่ใช่เดือนเกิดจริงของคุณ) เพื่อนถาม When is your birthday? ตอบสั้นจากโปรไฟล์สมมติครับ',
+      'In January.',
+      ['In January'],
+      '',
+      false,
+      SHORT,
+    ),
+    task(
+      'โปรไฟล์สมมติอีกใบ: วันเกิดอยู่ใน March พูดประโยคเต็มจากโปรไฟล์สมมติครับ',
+      'My birthday is in March.',
+      [],
+      '',
+      false,
+      recap('My birthday is in March.', 'วันเกิดของฉันอยู่ในเดือนมีนาคม'),
+    ),
+    finish('จบบทครับ ใช้ in + month สำหรับวันเกิดและคลาส — ไม่ต้องตอบเดือนเกิดจริง'),
+  ],
+  fnd_v7_how_much_is_it: [
+    task(
+      'วันนี้เราจะถามราคาครับ อยากรู้ราคาของชิ้นนี้ “How much is it?” แปลว่าราคาเท่าไร ลองถาม',
+      'How much is it?',
+      [],
+      '',
+      false,
+      SHORT + 'Twenty baht. ',
+    ),
+    task(
+      'ถ้าพูดถึงของชัดแล้ว แทน it ด้วยชื่อของได้ครับ เช่น the bag → “How much is the bag?” แปลว่า “กระเป๋าราคาเท่าไร” โมเดลถามราคากระเป๋าครับ ลองพูดตาม',
+      'How much is the bag?',
+      [],
+      '',
+      false,
+      SHORT + 'Thirty baht. ',
+    ),
+    task('คราวนี้ถามราคาหนังสือเองครับ', 'How much is the book?', [], '', false, SHORT + 'Fifty baht. '),
+    task('ถามราคาตั๋วหนึ่งใบเองครับ', 'How much is one ticket?', [], '', false, SHORT + 'Eighty baht. '),
+    task('ถามราคากระเป๋าอีกครั้งแบบอิสระครับ', 'How much is the bag?', [], '', false, SHORT + 'Thirty baht. '),
+    finish('จบบทครับ How much is it? สำหรับของที่พูดถึงแล้ว และ How much is the …? เมื่อระบุชื่อของ'),
+  ],
+  fnd_v7_how_many: [
+    task('อีกฝ่ายขอหนังสือแต่ยังไม่บอกจำนวนครับ “How many books?” ลองถาม', 'How many books?', [], '', false, SHORT + 'Two books, please. '),
+    task('ต้องการตั๋วครับ ลองถามจำนวน', 'How many tickets?', [], '', false, SHORT + 'Three tickets, please. '),
+    task('ต้องการปากกาครับ ลองถามจำนวน', 'How many pens?', [], '', false, SHORT + 'Two pens, please. '),
+    choiceTask('อยากรู้ราคาหนังสือ ใช้ How much หรือ How many?', 'How much is the book?', '', [
+      { emoji: '💰', label: 'How much', speak: 'How much is the book?' },
+      { emoji: '🔢', label: 'How many', speak: 'How many books?' },
+    ], recap('How much is the book?', 'หนังสือราคาเท่าไร'), false, 'ถามราคาใช้ How much ครับ'),
+    choiceTask('อยากรู้ว่าต้องเอาหนังสือกี่เล่ม ใช้คำไหน?', 'How many books?', '', [
+      { emoji: '💰', label: 'How much', speak: 'How much is the book?' },
+      { emoji: '🔢', label: 'How many', speak: 'How many books?' },
+    ], recap('How many books?', 'หนังสือกี่เล่ม'), false, 'ถามจำนวนใช้ How many ครับ'),
+    task('อีกฝ่ายขอปากกาแต่ยังไม่บอกจำนวน ลองถามเอง', 'How many pens?', [], '', false, recap('How many pens?', 'ปากกากี่ด้าม')),
+    finish('จบบทครับ How many ใช้ถามจำนวน'),
+  ],
+
   fnd_v7_what_or_who: [
     task('วันนี้เราจะถามว่าสิ่งนี้คืออะไรหรือคนนี้คือใครครับ 📦 ใช้ what กับสิ่งของ “What is this?” แปลว่านี่คืออะไร ลองถามครับ', 'What is this?', [], '', false, SHORT + 'It is a book. มันคือหนังสือครับ '),
     choiceTask('สมมติว่ามีของอยู่ตรงหน้าและคุณไม่รู้ว่าคืออะไรครับ ควรเริ่มคำถามด้วยคำไหน?', 'What is this?', '... is this?', [
@@ -604,6 +964,14 @@ export const V7_LEGACY_FLOWS: Record<string, V7TeachingStep[]> = {
       { emoji: '📖', label: 'book', speak: 'There is a book.' },
       { emoji: '🪑', label: 'chair', speak: 'There is a chair.' },
     ], recap('There is a book.', 'มีหนังสือหนึ่งเล่ม'), false, 'หนังสือใช้ book แล้วพูดว่า There is a book. ครับ'),
+    task(
+      'ในห้องมีหน้าต่างสองบาน ลองบอกเป็นภาษาอังกฤษครับ — ไม่มีตัวเลือก ลองพูดเอง',
+      'There are two windows.',
+      [],
+      '',
+      false,
+      recap('There are two windows.', 'มีหน้าต่างสองบาน'),
+    ),
     finish('จบบทครับ เราฝึก There is กับหนึ่งสิ่ง และ There are กับหลายสิ่งแล้ว'),
   ],
   fnd_v7_in_on_under_next_to: [

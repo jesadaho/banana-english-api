@@ -23,8 +23,40 @@ function expandSpeechForms(value: string): string[] {
 
 function speechMatches(expected: string, got: string): boolean {
   const gotN = normalize(got);
-  return expandSpeechForms(expected).some(form => normalize(form) === gotN)
-    || expandSpeechForms(got).some(form => normalize(form) === normalize(expected));
+  if (
+    expandSpeechForms(expected).some(form => normalize(form) === gotN)
+    || expandSpeechForms(got).some(form => normalize(form) === normalize(expected))
+  ) {
+    return true;
+  }
+  return syllableCountSpeechMatches(expected, gotN);
+}
+
+/** Accept short answers for "One syllable." / "Two syllables." without forcing "syllables". */
+export function syllableCountSpeechMatches(expected: string, gotNormalized: string): boolean {
+  const expN = normalize(expected);
+  if (!gotNormalized) return false;
+  if (expN === 'onesyllable' || expN === 'onesyllables') {
+    return (
+      gotNormalized === 'one'
+      || gotNormalized === 'onesyllable'
+      || gotNormalized === 'onesyllables'
+      || gotNormalized === 'ithasonesyllable'
+      || gotNormalized === 'ithasonesyllables'
+      || (gotNormalized.includes('one') && gotNormalized.includes('syllable'))
+    );
+  }
+  if (expN === 'twosyllable' || expN === 'twosyllables') {
+    return (
+      gotNormalized === 'two'
+      || gotNormalized === 'twosyllable'
+      || gotNormalized === 'twosyllables'
+      || gotNormalized === 'ithastwosyllable'
+      || gotNormalized === 'ithastwosyllables'
+      || (gotNormalized.includes('two') && gotNormalized.includes('syllable'))
+    );
+  }
+  return false;
 }
 const OFF_TOPIC_PROBES = new Set(['goodmorning', 'hellothere']);
 

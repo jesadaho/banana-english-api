@@ -1,4 +1,4 @@
-import { FOUNDATION_V7_SIMULATIONS } from './foundation-v7-simulations.data';
+import { FOUNDATION_V7_SIMULATIONS, FOUNDATION_V7_PRESERVED_SIMULATIONS } from './foundation-v7-simulations.data';
 
 export type SimulationDifficulty = 'easy' | 'medium' | 'hard';
 
@@ -6,6 +6,12 @@ export interface VocabDrillWord {
   word: string;
   pronunciation: string;
   meaningTh: string;
+}
+
+export interface SimulationGoalHint {
+  intentTh: string;
+  starterEn: string;
+  modelEn: string;
 }
 
 export interface SimulationConfig {
@@ -16,6 +22,8 @@ export interface SimulationConfig {
   scenarioTh: string;
   goalsTh: string[];
   goalsEn: string[];
+  /** Optional authored hint ladder per goal (intent → starter → model). */
+  goalHints?: Array<SimulationGoalHint | null>;
   difficulty: SimulationDifficulty;
   estimatedMinutes: number;
   bananaCost: number;
@@ -1016,11 +1024,16 @@ export function getSimulation(
   simulationId: string,
 ): SimulationConfig | undefined {
   return SIMULATIONS.find((s) => s.simulationId === simulationId)
-    ?? FOUNDATION_V7_SIMULATIONS.find((s) => s.simulationId === simulationId);
+    ?? FOUNDATION_V7_SIMULATIONS.find((s) => s.simulationId === simulationId)
+    ?? FOUNDATION_V7_PRESERVED_SIMULATIONS.find((s) => s.simulationId === simulationId);
 }
 
 export function getAllSimulations(): SimulationConfig[] {
-  return [...SIMULATIONS, ...FOUNDATION_V7_SIMULATIONS];
+  return [
+    ...SIMULATIONS,
+    ...FOUNDATION_V7_SIMULATIONS,
+    ...FOUNDATION_V7_PRESERVED_SIMULATIONS,
+  ];
 }
 
 export function resolveSimulationIdFromTopic(

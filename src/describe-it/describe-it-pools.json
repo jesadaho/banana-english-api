@@ -526,5 +526,189 @@
         "imagePath": "describe-it/fnd_v7_u06n16/08-red-book-or-blue-bag.webp"
       }
     ]
+  },
+  "fnd_v7_u15n04_find_my_things": {
+    "id": "fnd_v7_u15n04_find_my_things",
+    "titleEn": "Find My Things",
+    "titleTh": "หาของของฉัน",
+    "tagEn": "PLACE",
+    "emoji": "🔎",
+    "estimatedMinutes": 3,
+    "items": [
+      {
+        "id": "01-book-in-bag",
+        "promptTh": "หนังสืออยู่ที่ไหนครับ ลองบอกตำแหน่ง",
+        "answerEn": "The book is in the bag.",
+        "answerTh": "หนังสืออยู่ในกระเป๋า",
+        "acceptedAnswers": [
+          "The book is in the bag",
+          "It's in the bag.",
+          "It is in the bag.",
+          "In the bag."
+        ],
+        "imagePath": "describe-it/fnd_v7_u15n04_find_my_things/01-book-in-bag.webp",
+        "hintEn": "The book is in _____"
+      },
+      {
+        "id": "02-phone-on-table",
+        "promptTh": "โทรศัพท์อยู่ที่ไหนครับ ลองบอกตำแหน่ง",
+        "answerEn": "The phone is on the table.",
+        "answerTh": "โทรศัพท์อยู่บนโต๊ะ",
+        "acceptedAnswers": [
+          "The phone is on the table",
+          "It's on the table.",
+          "It is on the table.",
+          "On the table."
+        ],
+        "imagePath": "describe-it/fnd_v7_u15n04_find_my_things/02-phone-on-table.webp"
+      },
+      {
+        "id": "03-bag-under-chair",
+        "promptTh": "กระเป๋าอยู่ที่ไหนครับ ลองบอกตำแหน่ง",
+        "answerEn": "The bag is under the chair.",
+        "answerTh": "กระเป๋าอยู่ใต้เก้าอี้",
+        "acceptedAnswers": [
+          "The bag is under the chair",
+          "It's under the chair.",
+          "It is under the chair.",
+          "Under the chair."
+        ],
+        "imagePath": "describe-it/fnd_v7_u15n04_find_my_things/03-bag-under-chair.webp"
+      },
+      {
+        "id": "04-chair-next-to-bed",
+        "promptTh": "เก้าอี้อยู่ที่ไหนครับ ลองบอกตำแหน่ง",
+        "answerEn": "The chair is next to the bed.",
+        "answerTh": "เก้าอี้อยู่ข้างเตียง",
+        "acceptedAnswers": [
+          "The chair is next to the bed",
+          "It's next to the bed.",
+          "It is next to the bed.",
+          "Next to the bed."
+        ],
+        "imagePath": "describe-it/fnd_v7_u15n04_find_my_things/04-chair-next-to-bed.webp"
+      },
+      {
+        "id": "05-book-on-bed",
+        "promptTh": "หนังสืออยู่ที่ไหนครับ ลองบอกตำแหน่ง",
+        "answerEn": "The book is on the bed.",
+        "answerTh": "หนังสืออยู่บนเตียง",
+        "acceptedAnswers": [
+          "The book is on the bed",
+          "It's on the bed.",
+          "It is on the bed.",
+          "On the bed."
+        ],
+        "imagePath": "describe-it/fnd_v7_u15n04_find_my_things/05-book-on-bed.webp"
+      },
+      {
+        "id": "06-bag-next-to-door",
+        "promptTh": "กระเป๋าอยู่ที่ไหนครับ ลองบอกตำแหน่ง",
+        "answerEn": "The bag is next to the door.",
+        "answerTh": "กระเป๋าอยู่ข้างประตู",
+        "acceptedAnswers": [
+          "The bag is next to the door",
+          "It's next to the door.",
+          "It is next to the door.",
+          "Next to the door."
+        ],
+        "imagePath": "describe-it/fnd_v7_u15n04_find_my_things/06-bag-next-to-door.webp"
+      }
+    ]
+  },
+  "fnd_v7_u15n14_look_and_answer": {
+    "id": "fnd_v7_u15n14_look_and_answer",
+    "titleEn": "Look & Answer",
+    "titleTh": "ดูแล้วตอบ",
+    "tagEn": "ASK",
+    "emoji": "👂",
+    "estimatedMinutes": 3,
+    "items": [
+      {
+        "id": "01-bag-under-chair",
+        "promptTh": "ดูภาพ แล้วตอบคำถามที่ได้ยินครับ",
+        "questionEn": "Where is the bag?",
+        "answerEn": "Under the chair.",
+        "answerTh": "ใต้เก้าอี้",
+        "acceptedAnswers": [
+          "Under the chair",
+          "It's under the chair.",
+          "It is under the chair.",
+          "The bag is under the chair."
+        ],
+        "imagePath": "describe-it/fnd_v7_u15n04_find_my_things/03-bag-under-chair.webp",
+        "hintEn": "Under the _____"
+      },
+      {
+        "id": "02-phone-on-table",
+        "promptTh": "ดูภาพ แล้วตอบคำถามที่ได้ยินครับ",
+        "questionEn": "Where is the phone?",
+        "answerEn": "On the table.",
+        "answerTh": "บนโต๊ะ",
+        "acceptedAnswers": [
+          "On the table",
+          "It's on the table.",
+          "It is on the table.",
+          "The phone is on the table."
+        ],
+        "imagePath": "describe-it/fnd_v7_u15n04_find_my_things/02-phone-on-table.webp"
+      },
+      {
+        "id": "03-book-in-bag",
+        "promptTh": "ดูภาพ แล้วตอบคำถามที่ได้ยินครับ",
+        "questionEn": "Where is the book?",
+        "answerEn": "In the bag.",
+        "answerTh": "ในกระเป๋า",
+        "acceptedAnswers": [
+          "In the bag",
+          "It's in the bag.",
+          "It is in the bag.",
+          "The book is in the bag."
+        ],
+        "imagePath": "describe-it/fnd_v7_u15n04_find_my_things/01-book-in-bag.webp"
+      },
+      {
+        "id": "04-chair-next-to-bed",
+        "promptTh": "ดูภาพ แล้วตอบคำถามที่ได้ยินครับ",
+        "questionEn": "Where is the chair?",
+        "answerEn": "Next to the bed.",
+        "answerTh": "ข้างเตียง",
+        "acceptedAnswers": [
+          "Next to the bed",
+          "It's next to the bed.",
+          "It is next to the bed.",
+          "The chair is next to the bed."
+        ],
+        "imagePath": "describe-it/fnd_v7_u15n04_find_my_things/04-chair-next-to-bed.webp"
+      },
+      {
+        "id": "05-book-on-bed",
+        "promptTh": "ดูภาพ แล้วตอบคำถามที่ได้ยินครับ",
+        "questionEn": "Where is the book?",
+        "answerEn": "On the bed.",
+        "answerTh": "บนเตียง",
+        "acceptedAnswers": [
+          "On the bed",
+          "It's on the bed.",
+          "It is on the bed.",
+          "The book is on the bed."
+        ],
+        "imagePath": "describe-it/fnd_v7_u15n04_find_my_things/05-book-on-bed.webp"
+      },
+      {
+        "id": "06-bag-next-to-door",
+        "promptTh": "ดูภาพ แล้วตอบคำถามที่ได้ยินครับ",
+        "questionEn": "Where is the bag?",
+        "answerEn": "Next to the door.",
+        "answerTh": "ข้างประตู",
+        "acceptedAnswers": [
+          "Next to the door",
+          "It's next to the door.",
+          "It is next to the door.",
+          "The bag is next to the door."
+        ],
+        "imagePath": "describe-it/fnd_v7_u15n04_find_my_things/06-bag-next-to-door.webp"
+      }
+    ]
   }
 }

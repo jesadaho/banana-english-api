@@ -43,19 +43,25 @@
       "id": "fnd_v7_u02n05_q1",
       "promptTh": "เอาด้วยครับ/ค่ะ",
       "answerEn": "Yes, please",
-      "acceptedAnswers": ["Yes please"]
+      "acceptedAnswers": [
+        "Yes please"
+      ]
     },
     {
       "id": "fnd_v7_u02n05_q2",
       "promptTh": "ลาก่อน",
       "answerEn": "Goodbye",
-      "acceptedAnswers": ["Bye"]
+      "acceptedAnswers": [
+        "Bye"
+      ]
     },
     {
       "id": "fnd_v7_u02n05_q3",
       "promptTh": "ขอบคุณ",
       "answerEn": "Thank you",
-      "acceptedAnswers": ["Thanks"]
+      "acceptedAnswers": [
+        "Thanks"
+      ]
     },
     {
       "id": "fnd_v7_u02n05_q4",
@@ -667,86 +673,82 @@
   "fnd_v7_u14n04": [
     {
       "id": "fnd_v7_u14n04_q1",
-      "promptTh": "📦 นี่คืออะไร",
-      "answerEn": "What is this",
+      "promptTh": "เห็นของอยู่ไกล ๆ แต่ยังไม่รู้ว่าคืออะไร",
+      "answerEn": "What is that?",
       "acceptedAnswers": [
-        "What's this"
+        "What's that?"
       ]
     },
     {
       "id": "fnd_v7_u14n04_q2",
-      "promptTh": "👩 เธอคือใคร",
-      "answerEn": "Who is she",
+      "promptTh": "เห็นผู้หญิงคนหนึ่งแต่ยังไม่รู้ว่าเป็นใคร",
+      "answerEn": "Who is she?",
       "acceptedAnswers": []
     },
     {
       "id": "fnd_v7_u14n04_q3",
-      "promptTh": "🚻 ห้องน้ำอยู่ที่ไหน",
-      "answerEn": "Where is the bathroom",
+      "promptTh": "หาไม่เจอกระเป๋าของตัวเอง",
+      "answerEn": "Where is my bag?",
       "acceptedAnswers": [
-        "Where's the bathroom",
-        "Where is the toilet"
+        "Where's my bag?"
       ]
     },
     {
       "id": "fnd_v7_u14n04_q4",
-      "promptTh": "🗓️ คลาสเมื่อไร",
-      "answerEn": "When is the class",
+      "promptTh": "มีของอยู่ใกล้ ๆ แต่ยังไม่รู้ว่าคืออะไร",
+      "answerEn": "What is this?",
       "acceptedAnswers": [
-        "When's the class"
+        "What's this?"
       ]
     },
     {
       "id": "fnd_v7_u14n04_q5",
-      "promptTh": "🎫 ตั๋วราคาเท่าไร",
-      "answerEn": "How much is the ticket",
+      "promptTh": "อยากรู้ว่า Max อยู่ที่ไหน",
+      "answerEn": "Where is Max?",
       "acceptedAnswers": [
-        "How much is it"
-      ]
-    },
-    {
-      "id": "fnd_v7_u14n04_q6",
-      "promptTh": "📚 หนังสือกี่เล่ม",
-      "answerEn": "How many books",
-      "acceptedAnswers": [
-        "How many"
+        "Where's Max?"
       ]
     }
   ],
   "fnd_v7_u15n07": [
     {
       "id": "fnd_v7_u15n07_q1",
-      "promptTh": "ตรงไป",
-      "answerEn": "Go straight",
-      "acceptedAnswers": [
-        "Go straight ahead"
-      ]
+      "promptTh": "บอกให้ตรงไป",
+      "answerEn": "Go straight.",
+      "acceptedAnswers": []
     },
     {
       "id": "fnd_v7_u15n07_q2",
-      "promptTh": "เลี้ยวซ้าย",
-      "answerEn": "Turn left",
+      "promptTh": "บอกให้เลี้ยวซ้าย",
+      "answerEn": "Turn left.",
       "acceptedAnswers": []
     },
     {
       "id": "fnd_v7_u15n07_q3",
-      "promptTh": "เลี้ยวขวา",
-      "answerEn": "Turn right",
+      "promptTh": "บอกให้เลี้ยวขวา",
+      "answerEn": "Turn right.",
       "acceptedAnswers": []
     },
     {
       "id": "fnd_v7_u15n07_q4",
-      "promptTh": "หยุด",
-      "answerEn": "Stop",
-      "acceptedAnswers": []
+      "promptTh": "บอกให้ตรงไปแล้วเลี้ยวซ้าย",
+      "answerEn": "Go straight, then turn left.",
+      "acceptedAnswers": [
+        "Go straight and turn left.",
+        "Go straight then turn left.",
+        "Go straight. Turn left.",
+        "Go straight. Then turn left."
+      ]
     },
     {
       "id": "fnd_v7_u15n07_q5",
-      "promptTh": "ตรงไป แล้วเลี้ยวซ้าย",
-      "answerEn": "Go straight, then turn left",
+      "promptTh": "บอกให้ตรงไปแล้วเลี้ยวขวา",
+      "answerEn": "Go straight, then turn right.",
       "acceptedAnswers": [
-        "Go straight and turn left",
-        "Go straight. Turn left."
+        "Go straight and turn right.",
+        "Go straight then turn right.",
+        "Go straight. Turn right.",
+        "Go straight. Then turn right."
       ]
     }
   ],
@@ -755,7 +757,9 @@
       "id": "fnd_v7_u16n04_q1",
       "promptTh": "สถานีอยู่ที่ไหน",
       "answerEn": "Where is the station",
-      "acceptedAnswers": ["Where's the station"]
+      "acceptedAnswers": [
+        "Where's the station"
+      ]
     },
     {
       "id": "fnd_v7_u16n04_q2",
@@ -767,19 +771,25 @@
       "id": "fnd_v7_u16n04_q3",
       "promptTh": "ที่นี่มีตลาดหนึ่งแห่ง",
       "answerEn": "There is a market here",
-      "acceptedAnswers": ["There is a market"]
+      "acceptedAnswers": [
+        "There is a market"
+      ]
     },
     {
       "id": "fnd_v7_u16n04_q4",
       "promptTh": "ร้านค้าอยู่ที่ไหน",
       "answerEn": "Where is the shop",
-      "acceptedAnswers": ["Where's the shop"]
+      "acceptedAnswers": [
+        "Where's the shop"
+      ]
     },
     {
       "id": "fnd_v7_u16n04_q5",
       "promptTh": "คาเฟ่อยู่ข้างร้านค้า",
       "answerEn": "The café is next to the shop",
-      "acceptedAnswers": ["The cafe is next to the shop"]
+      "acceptedAnswers": [
+        "The cafe is next to the shop"
+      ]
     }
   ],
   "fnd_v7_u16n08": [
@@ -793,7 +803,9 @@
       "id": "fnd_v7_u16n08_q2",
       "promptTh": "เราเดินไปคาเฟ่",
       "answerEn": "We walk to the café",
-      "acceptedAnswers": ["We walk to the cafe"]
+      "acceptedAnswers": [
+        "We walk to the cafe"
+      ]
     },
     {
       "id": "fnd_v7_u16n08_q3",
@@ -805,7 +817,9 @@
       "id": "fnd_v7_u16n08_q4",
       "promptTh": "ฉันไม่ได้เดินทางโดยแท็กซี่",
       "answerEn": "I do not go by taxi",
-      "acceptedAnswers": ["I don't go by taxi"]
+      "acceptedAnswers": [
+        "I don't go by taxi"
+      ]
     },
     {
       "id": "fnd_v7_u16n08_q5",
@@ -1304,41 +1318,483 @@
   "fnd_v7_u15n12": [
     {
       "id": "fnd_v7_u15n12_q1",
-      "promptTh": "มีประตูหนึ่งบาน",
-      "answerEn": "There is a door",
+      "promptTh": "ในห้องมีโต๊ะหนึ่งตัว",
+      "answerEn": "There is a table.",
       "acceptedAnswers": [
-        "There's a door"
+        "There's a table."
       ]
     },
     {
       "id": "fnd_v7_u15n12_q2",
-      "promptTh": "มีเก้าอี้สองตัว",
-      "answerEn": "There are two chairs",
-      "acceptedAnswers": [
-        "There are 2 chairs"
-      ]
-    },
-    {
-      "id": "fnd_v7_u15n12_q3",
-      "promptTh": "กระเป๋าอยู่ใต้เตียง",
-      "answerEn": "The bag is under the bed",
+      "promptTh": "ในห้องมีเก้าอี้สองตัว",
+      "answerEn": "There are two chairs.",
       "acceptedAnswers": []
     },
     {
-      "id": "fnd_v7_u15n12_q4",
-      "promptTh": "ห้องน้ำอยู่ข้างประตู",
-      "answerEn": "The bathroom is next to the door",
+      "id": "fnd_v7_u15n12_q3",
+      "promptTh": "ในห้องมีหน้าต่างหนึ่งบาน",
+      "answerEn": "There is a window.",
       "acceptedAnswers": [
-        "The bathroom is next to the door."
+        "There's a window."
       ]
     },
     {
+      "id": "fnd_v7_u15n12_q4",
+      "promptTh": "ในห้องมีหนังสือสามเล่ม",
+      "answerEn": "There are three books.",
+      "acceptedAnswers": []
+    },
+    {
       "id": "fnd_v7_u15n12_q5",
-      "promptTh": "มีโต๊ะหนึ่งตัว",
-      "answerEn": "There is a table",
+      "promptTh": "ในห้องมีกระเป๋าหนึ่งใบ",
+      "answerEn": "There is a bag.",
       "acceptedAnswers": [
-        "There's a table"
+        "There's a bag."
       ]
+    }
+  ],
+  "fnd_v7_u14n12": [
+    {
+      "id": "fnd_v7_u14n12_q1",
+      "promptTh": "มีของอยู่ในมือแต่ยังไม่รู้ว่าคืออะไร ลองถาม",
+      "answerEn": "What is this?",
+      "acceptedAnswers": [
+        "What's this?"
+      ]
+    },
+    {
+      "id": "fnd_v7_u14n12_q2",
+      "promptTh": "มีของอยู่บนโต๊ะใกล้ ๆ แต่ยังไม่รู้ว่าคืออะไร",
+      "answerEn": "What is this?",
+      "acceptedAnswers": [
+        "What's this?"
+      ]
+    },
+    {
+      "id": "fnd_v7_u14n12_q3",
+      "promptTh": "เห็นของบนชั้นไกล ๆ แต่ยังไม่รู้ว่าคืออะไร",
+      "answerEn": "What is that?",
+      "acceptedAnswers": [
+        "What's that?"
+      ]
+    },
+    {
+      "id": "fnd_v7_u14n12_q4",
+      "promptTh": "เพื่อนถือของอยู่ไกล ๆ คุณอยากรู้ว่าคืออะไร",
+      "answerEn": "What is that?",
+      "acceptedAnswers": [
+        "What's that?"
+      ]
+    },
+    {
+      "id": "fnd_v7_u14n12_q5",
+      "promptTh": "มีของวางข้างคุณ แต่ยังไม่รู้ว่าคืออะไร",
+      "answerEn": "What is this?",
+      "acceptedAnswers": [
+        "What's this?"
+      ]
+    }
+  ],
+  "fnd_v7_u14n10": [
+    {
+      "id": "fnd_v7_u14n10_q1",
+      "promptTh": "เห็นผู้หญิงคนหนึ่งแต่ยังไม่รู้ว่าเป็นใคร",
+      "answerEn": "Who is she?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14n10_q2",
+      "promptTh": "มีของอยู่ใกล้ ๆ แต่ยังไม่รู้ว่าคืออะไร",
+      "answerEn": "What is this?",
+      "acceptedAnswers": [
+        "What's this?"
+      ]
+    },
+    {
+      "id": "fnd_v7_u14n10_q3",
+      "promptTh": "เห็นผู้ชายคนหนึ่งแต่ยังไม่รู้ว่าเป็นใคร",
+      "answerEn": "Who is he?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14n10_q4",
+      "promptTh": "มีของอยู่ไกล ๆ แต่ยังไม่รู้ว่าคืออะไร",
+      "answerEn": "What is that?",
+      "acceptedAnswers": [
+        "What's that?"
+      ]
+    },
+    {
+      "id": "fnd_v7_u14n10_q5",
+      "promptTh": "มีคนในรูปแต่ยังไม่รู้ว่าเป็นใคร",
+      "answerEn": "Who is this?",
+      "acceptedAnswers": [
+        "Who's this?"
+      ]
+    }
+  ],
+  "fnd_v7_u14n13": [
+    {
+      "id": "fnd_v7_u14n13_q1",
+      "promptTh": "หาไม่เจอกระเป๋าของตัวเอง ลองถาม",
+      "answerEn": "Where is my bag?",
+      "acceptedAnswers": [
+        "Where's my bag?"
+      ]
+    },
+    {
+      "id": "fnd_v7_u14n13_q2",
+      "promptTh": "หาไม่เจอโทรศัพท์ของตัวเอง",
+      "answerEn": "Where is my phone?",
+      "acceptedAnswers": [
+        "Where's my phone?"
+      ]
+    },
+    {
+      "id": "fnd_v7_u14n13_q3",
+      "promptTh": "อยากรู้ว่า Max อยู่ที่ไหน",
+      "answerEn": "Where is Max?",
+      "acceptedAnswers": [
+        "Where's Max?"
+      ]
+    },
+    {
+      "id": "fnd_v7_u14n13_q4",
+      "promptTh": "หาไม่เจอหนังสือของตัวเอง",
+      "answerEn": "Where is my book?",
+      "acceptedAnswers": [
+        "Where's my book?"
+      ]
+    },
+    {
+      "id": "fnd_v7_u14n13_q5",
+      "promptTh": "พูดถึงกระเป๋าไปแล้ว อยากถามสั้น ๆ ว่ามันอยู่ไหน",
+      "answerEn": "Where is it?",
+      "acceptedAnswers": [
+        "Where's it?"
+      ]
+    }
+  ],
+  "fnd_v7_u14tn02": [
+    {
+      "id": "fnd_v7_u14tn02_q1",
+      "promptTh": "ยังไม่รู้ว่าคลาสเรียนวันไหน",
+      "answerEn": "When is the class?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14tn02_q2",
+      "promptTh": "รู้วันแล้ว แต่ยังไม่รู้ว่ากี่โมง",
+      "answerEn": "What time is the class?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14tn02_q3",
+      "promptTh": "ยังไม่รู้ว่าคลาสเรียนที่ไหน",
+      "answerEn": "Where is the class?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14tn02_q4",
+      "promptTh": "อีกคลาสหนึ่ง รู้วันแล้ว แต่ยังไม่รู้เวลานาฬิกา",
+      "answerEn": "What time is the class?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14tn02_q5",
+      "promptTh": "อีกคลาสหนึ่ง ยังไม่รู้วัน",
+      "answerEn": "When is the class?",
+      "acceptedAnswers": []
+    }
+  ],
+  "fnd_v7_u14tn05": [
+    {
+      "id": "fnd_v7_u14tn05_q1",
+      "promptTh": "วันเกิดสมมติอยู่ในเดือน January",
+      "answerEn": "My birthday is in January.",
+      "acceptedAnswers": [
+        "My birthday is in January"
+      ]
+    },
+    {
+      "id": "fnd_v7_u14tn05_q2",
+      "promptTh": "วันเกิดสมมติอยู่ในเดือน February",
+      "answerEn": "My birthday is in February.",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14tn05_q3",
+      "promptTh": "คลาสอยู่ในเดือน March",
+      "answerEn": "The class is in March.",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14tn05_q4",
+      "promptTh": "คลาสเรียนวัน Friday",
+      "answerEn": "The class is on Friday.",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14tn05_q5",
+      "promptTh": "คลาสเริ่มตอนสิบโมง",
+      "answerEn": "The class is at ten.",
+      "acceptedAnswers": [
+        "The class is at 10."
+      ]
+    }
+  ],
+  "fnd_v7_u14tn11": [
+    {
+      "id": "fnd_v7_u14tn11_q1",
+      "promptTh": "อยากรู้ราคาของสิ่งนั้น",
+      "answerEn": "How much is it?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14tn11_q2",
+      "promptTh": "อยากรู้ราคากระเป๋า",
+      "answerEn": "How much is the bag?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14tn11_q3",
+      "promptTh": "อยากรู้ราคาหนังสือ",
+      "answerEn": "How much is the book?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14tn11_q4",
+      "promptTh": "อยากรู้ราคาตั๋วหนึ่งใบ",
+      "answerEn": "How much is one ticket?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14tn11_q5",
+      "promptTh": "รู้ราคาแล้ว แต่ยังไม่รู้ว่ากระเป๋าอยู่ไหน",
+      "answerEn": "Where is the bag?",
+      "acceptedAnswers": [
+        "Where's the bag?"
+      ]
+    }
+  ],
+  "fnd_v7_u14tn13": [
+    {
+      "id": "fnd_v7_u14tn13_q1",
+      "promptTh": "วันเกิดสมมติอยู่ในเดือน July",
+      "answerEn": "My birthday is in July.",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14tn13_q2",
+      "promptTh": "คลาสอยู่ในเดือน August",
+      "answerEn": "The class is in August.",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14tn13_q3",
+      "promptTh": "วันเกิดสมมติอยู่ในเดือน September",
+      "answerEn": "My birthday is in September.",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14tn13_q4",
+      "promptTh": "คลาสอยู่ในเดือน May",
+      "answerEn": "The class is in May.",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14tn13_q5",
+      "promptTh": "คลาสเรียนวัน Monday",
+      "answerEn": "The class is on Monday.",
+      "acceptedAnswers": []
+    }
+  ],
+  "fnd_v7_u14tn15": [
+    {
+      "id": "fnd_v7_u14tn15_q1",
+      "promptTh": "อยากรู้ว่าต้องเอาหนังสือกี่เล่ม",
+      "answerEn": "How many books?",
+      "acceptedAnswers": [
+        "How many books"
+      ]
+    },
+    {
+      "id": "fnd_v7_u14tn15_q2",
+      "promptTh": "อยากรู้ราคาหนังสือ",
+      "answerEn": "How much is the book?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14tn15_q3",
+      "promptTh": "อยากรู้ว่าต้องซื้อตั๋วกี่ใบ",
+      "answerEn": "How many tickets?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14tn15_q4",
+      "promptTh": "อยากรู้ราคาตั๋วหนึ่งใบ",
+      "answerEn": "How much is one ticket?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14tn15_q5",
+      "promptTh": "อยากรู้ว่าต้องเอาปากกากี่ด้าม",
+      "answerEn": "How many pens?",
+      "acceptedAnswers": []
+    }
+  ],
+  "fnd_v7_u14tn18": [
+    {
+      "id": "fnd_v7_u14tn18_q1",
+      "promptTh": "ช่วยต้องการทราบ วันเกิดอยู่ในเดือนตุลาคม",
+      "answerEn": "My birthday is in October.",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14tn18_q2",
+      "promptTh": "ช่วยต้องการทราบ วันเกิดอยู่ในเดือนพฤศจิกายน",
+      "answerEn": "My birthday is in November.",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14tn18_q3",
+      "promptTh": "ช่วยต้องการทราบ วันเกิดอยู่ในเดือนธันวาคม",
+      "answerEn": "My birthday is in December.",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14tn18_q4",
+      "promptTh": "ช่วยต้องการทราบ คลาสอยู่ในเดือนมีนาคม",
+      "answerEn": "The class is in March.",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14tn18_q5",
+      "promptTh": "ช่วยต้องการทราบ คลาสอยู่ในเดือนพฤษภาคม",
+      "answerEn": "The class is in May.",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14tn18_q6",
+      "promptTh": "ช่วยต้องการทราบ วันเกิดอยู่ในเดือนมกราคม",
+      "answerEn": "My birthday is in January.",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14tn18_q7",
+      "promptTh": "ช่วยต้องการทราบ วันเกิดอยู่ในเดือนกรกฎาคม",
+      "answerEn": "My birthday is in July.",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14tn18_q8",
+      "promptTh": "ช่วยต้องการทราบ คลาสอยู่ในเดือนเมษายน",
+      "answerEn": "The class is in April.",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14tn18_q9",
+      "promptTh": "ช่วยต้องการทราบ คลาสอยู่ในเดือนมิถุนายน",
+      "answerEn": "The class is in June.",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14tn18_q10",
+      "promptTh": "ช่วยต้องการทราบ วันเกิดอยู่ในเดือนกุมภาพันธ์",
+      "answerEn": "My birthday is in February.",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14tn18_q11",
+      "promptTh": "ช่วยต้องการทราบ คลาสอยู่ในเดือนสิงหาคม",
+      "answerEn": "The class is in August.",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14tn18_q12",
+      "promptTh": "ช่วยต้องการทราบ วันเกิดอยู่ในเดือนกันยายน",
+      "answerEn": "My birthday is in September.",
+      "acceptedAnswers": []
+    }
+  ],
+  "fnd_v7_u14tn20": [
+    {
+      "id": "fnd_v7_u14tn20_q1",
+      "promptTh": "มีของอยู่ใกล้ ๆ แต่ยังไม่รู้ว่าคืออะไร",
+      "answerEn": "What is this?",
+      "acceptedAnswers": [
+        "What's this?"
+      ]
+    },
+    {
+      "id": "fnd_v7_u14tn20_q2",
+      "promptTh": "เห็นผู้หญิงคนหนึ่งแต่ยังไม่รู้ว่าเป็นใคร",
+      "answerEn": "Who is she?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14tn20_q3",
+      "promptTh": "หาไม่เจอกระเป๋าของตัวเอง",
+      "answerEn": "Where is my bag?",
+      "acceptedAnswers": [
+        "Where's my bag?"
+      ]
+    },
+    {
+      "id": "fnd_v7_u14tn20_q4",
+      "promptTh": "ยังไม่รู้ว่าคลาสเรียนวันไหน",
+      "answerEn": "When is the class?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14tn20_q5",
+      "promptTh": "รู้วันแล้ว แต่ยังไม่รู้ว่ากี่โมง",
+      "answerEn": "What time is the class?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14tn20_q6",
+      "promptTh": "อยากรู้ราคาตั๋วหนึ่งใบ",
+      "answerEn": "How much is one ticket?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14tn20_q7",
+      "promptTh": "อยากรู้ว่าต้องเอาหนังสือกี่เล่ม",
+      "answerEn": "How many books?",
+      "acceptedAnswers": []
+    }
+  ],
+  "fnd_v7_u15n13": [
+    {
+      "id": "fnd_v7_u15n13_q1",
+      "promptTh": "หนังสืออยู่ในกระเป๋า",
+      "answerEn": "The book is in the bag.",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u15n13_q2",
+      "promptTh": "โทรศัพท์อยู่บนโต๊ะ",
+      "answerEn": "The phone is on the table.",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u15n13_q3",
+      "promptTh": "กระเป๋าอยู่ใต้เตียง",
+      "answerEn": "The bag is under the bed.",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u15n13_q4",
+      "promptTh": "เก้าอี้อยู่ข้างหน้าต่าง",
+      "answerEn": "The chair is next to the window.",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u15n13_q5",
+      "promptTh": "ในห้องมีเก้าอี้สองตัว",
+      "answerEn": "There are two chairs.",
+      "acceptedAnswers": []
     }
   ]
 }

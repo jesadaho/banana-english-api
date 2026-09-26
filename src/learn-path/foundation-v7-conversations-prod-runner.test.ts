@@ -9,6 +9,7 @@ import {
 } from '../../scripts/lib/foundation-v7-conversations-prod-runner.ts';
 import { FOUNDATION_V7_NODES } from './foundation-v7-path.data';
 import { FOUNDATION_V7_SIMULATIONS } from '../simulations/foundation-v7-simulations.data';
+import { getSimulation } from '../simulations/simulations.data';
 
 describe('Foundation V7 conversation smoke runner', () => {
   it('covers every path conversation, including frozen Meet Max', () => {
@@ -20,11 +21,33 @@ describe('Foundation V7 conversation smoke runner', () => {
       'foundation_first_conversation',
     ]);
     assert.deepEqual(
-      AUTHORED_V7_CONVERSATION_IDS,
+      AUTHORED_V7_CONVERSATION_IDS.filter(
+        (id) =>
+          id !== 'foundation_v7_u16n10' && id !== 'foundation_v7_u14n06',
+      ),
       FOUNDATION_V7_SIMULATIONS.map((s) => s.simulationId),
     );
-    assert.equal(AUTHORED_V7_CONVERSATION_IDS.length, 14);
+    assert.equal(AUTHORED_V7_CONVERSATION_IDS.length, 16);
+    assert.equal(FOUNDATION_V7_SIMULATIONS.length, 14);
     assert.equal(ALL_V7_PATH_CONVERSATION_IDS.length, 15);
+    assert.ok(
+      AUTHORED_V7_CONVERSATION_IDS.includes('foundation_v7_u16n10'),
+      'Around Town preserved in authoring',
+    );
+    assert.ok(
+      AUTHORED_V7_CONVERSATION_IDS.includes('foundation_v7_u14n06'),
+      'Plan My Class preserved in authoring',
+    );
+    assert.ok(
+      !ALL_V7_PATH_CONVERSATION_IDS.includes('foundation_v7_u16n10'),
+      'Around Town not on A1 path',
+    );
+    assert.ok(
+      !ALL_V7_PATH_CONVERSATION_IDS.includes('foundation_v7_u14n06'),
+      'Plan My Class not on A1 path',
+    );
+    assert.ok(getSimulation('foundation_v7_u16n10'));
+    assert.ok(getSimulation('foundation_v7_u14n06'));
   });
 
   it('scripts a happy path matching each authored minTurns', () => {

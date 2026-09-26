@@ -1,5 +1,6 @@
 import { Controller, Get, ServiceUnavailableException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { resolveGroqApiKeys } from './groq-api-keys';
 
 @Controller('api/config')
 export class ConfigKeysController {
@@ -7,18 +8,21 @@ export class ConfigKeysController {
 
   @Get('keys')
   getKeys() {
-    const groqApiKey = this.config.get<string>('GROQ_API_KEY');
-    if (!groqApiKey) {
+    const groqApiKeys = this.groqKeys();
+    if (groqApiKeys.length === 0) {
       throw new ServiceUnavailableException(
-        'GROQ_API_KEY is not configured on the server',
+        'GROQ_API_KEY / GROQ_API_KEYS is not configured on the server',
       );
     }
-    return { groqApiKey };
+    return {
+      groqApiKey: groqApiKeys[0],
+      groqApiKeys,
+    };
   }
 
   @Get('app')
   getAppConfig() {
-    const groqApiKey = this.config.get<string>('GROQ_API_KEY');
+    const groqApiKeys = this.groqKeys();
     const ttsEnv = this.config.get<string>('DEFAULT_TTS_MODE', 'cloudGrpc');
     const defaultTtsMode = [
       'client',
@@ -60,7 +64,8 @@ export class ConfigKeysController {
     const cloudTtsTokenEnabled = this.isCloudTtsTokenConfigured();
 
     return {
-      groqApiKey: groqApiKey ?? null,
+      groqApiKey: groqApiKeys[0] ?? null,
+      groqApiKeys,
       defaultTtsMode,
       geminiApiKey: geminiApiKey ?? null,
       geminiTtsModel,
@@ -73,6 +78,10 @@ export class ConfigKeysController {
       cloudTtsProjectId: cloudTtsProjectId ?? null,
       cloudTtsTokenEnabled,
     };
+  }
+
+  private groqKeys(): string[] {
+    return resolveGroqApiKeys((key) => this.config.get<string>(key));
   }
 
   private isCloudTtsTokenConfigured(): boolean {
