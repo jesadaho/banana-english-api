@@ -3,6 +3,7 @@ import { V7_LEGACY_FLOWS } from '../lessons/foundation-v7-legacy-flows';
 import { describe, it } from 'node:test';
 import { FOUNDATION_V7_CATALOG, FOUNDATION_V7_NODES, canonicalFoundationV7RewardId, foundationV7NodeTypeCounts, foundationV7RewardAliases, isFoundationV7SimulationId } from './foundation-v7-path.data';
 import { isValidNewWordsPack, newWordsPoolById } from '../new-words/new-words.data';
+import { DESCRIBE_IT_ENABLED } from '../describe-it/describe-it.data';
 import { hasFoundationV7Content, toFoundationV7ClientChapters, toFoundationV7ClientFinale } from './foundation-v7-path.view';
 import { LearnPathService } from './learn-path.service';
 import { LearnPathController } from './learn-path.controller';
@@ -104,22 +105,30 @@ describe('Foundation V7 catalog and real content', () => {
   });
 
   it('has 159 chapter backend-ready nodes (156 playable by default), Path Finale playable, and a capability gate for three Guided packs', () => {
+    // Kill switch off: authored See & Say packs also become placeholders.
+    const readyDescribe = FOUNDATION_V7_NODES.filter(
+      n => n.type === 'describe_it' && n.contentRef.poolId,
+    ).length;
+    const offDescribe = DESCRIBE_IT_ENABLED ? 0 : readyDescribe;
     const defaults = toFoundationV7ClientChapters().flatMap(c => c.items);
-    assert.equal(defaults.filter(n => n.backendReady).length, 159);
-    assert.equal(defaults.filter(n => !n.comingSoon).length, 156);
-    assert.equal(all().filter(n => !n.comingSoon).length, 160);
+    assert.equal(defaults.filter(n => n.backendReady).length, 159 - offDescribe);
+    assert.equal(defaults.filter(n => !n.comingSoon).length, 156 - offDescribe);
+    assert.equal(all().filter(n => !n.comingSoon).length, 160 - offDescribe);
     assert.equal(defaults.filter(n => n.unavailableReason === 'client_capability_required').length, 3);
-    assert.equal(defaults.filter(n => n.unavailableReason === 'missing_content').length, 4);
+    assert.equal(
+      defaults.filter(n => n.unavailableReason === 'missing_content').length,
+      DESCRIBE_IT_ENABLED ? 4 : 0,
+    );
     const placeholders = all().filter(n => n.comingSoon);
-    assert.equal(placeholders.length, 7);
+    assert.equal(placeholders.length, 7 + offDescribe);
     assert.ok(placeholders.every(n => !n.countsTowardProgress));
     assert.equal(
       placeholders.filter(n => n.unavailableReason === 'mechanic_not_implemented').length,
-      3,
+      DESCRIBE_IT_ENABLED ? 3 : 3 + 4 + readyDescribe,
     );
     assert.equal(
       placeholders.filter(n => n.unavailableReason === 'missing_content').length,
-      4,
+      DESCRIBE_IT_ENABLED ? 4 : 0,
     );
     for (const id of ['v7_u07n04', 'v7_u08n09', 'v7_u10n04', 'v7_u12n06'] as const) {
       const describeIt = all().find(n => n.id === id);
@@ -128,9 +137,9 @@ describe('Foundation V7 catalog and real content', () => {
     }
     for (const id of ['v7_u03n05', 'v7_u15n04', 'v7_u15n14'] as const) {
       const describeIt = all().find(n => n.id === id);
-      assert.equal(describeIt?.comingSoon, false);
-      assert.equal(describeIt?.backendReady, true);
-      assert.ok(describeIt?.poolId);
+      assert.equal(describeIt?.comingSoon, !DESCRIBE_IT_ENABLED);
+      assert.equal(describeIt?.backendReady, DESCRIBE_IT_ENABLED);
+      if (DESCRIBE_IT_ENABLED) assert.ok(describeIt?.poolId);
     }
     const serialized = JSON.stringify(all());
     assert.equal(serialized.includes('"script"'), false);

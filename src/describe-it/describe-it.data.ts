@@ -35,7 +35,7 @@ export const DESCRIBE_IT_POOLS = poolsJson as Catalog;
  * When false, Foundation path treats all describe_it nodes as Coming Soon and
  * the public pool list is empty (Games hub has nothing to open).
  */
-export const DESCRIBE_IT_ENABLED = true;
+export const DESCRIBE_IT_ENABLED = false;
 /** Minimum authored cards for a playable Foundation Describe It pack. */
 export const DESCRIBE_IT_DEAL_COUNT = 5;
 export const DESCRIBE_IT_BANANA_COST = 1;
