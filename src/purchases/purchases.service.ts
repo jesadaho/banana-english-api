@@ -99,20 +99,23 @@ export class PurchasesService {
         throw new BadRequestException('Invalid product configuration');
       }
 
-      if (!params.verifiedExternally) {
-        await this.revenueCat.assertStoreTransaction({
-          appUserIds: revenueCatAppUserIdCandidates(user),
-          productId,
-          storeTransactionId,
-        });
-      }
+      const verified = params.verifiedExternally
+        ? { canonicalId: storeTransactionId, aliases: [storeTransactionId] }
+        : await this.revenueCat.assertStoreTransaction({
+            appUserIds: revenueCatAppUserIdCandidates(user),
+            productId,
+            storeTransactionId,
+          });
+      const aliases = [
+        ...new Set([verified.canonicalId, storeTransactionId, ...verified.aliases]),
+      ];
 
       const result = await this.prisma.$transaction(async (tx) => {
-        const existing = await tx.purchaseRecord.findUnique({
-          where: { storeTransactionId },
-        });
-
-        if (existing) {
+        const creditExisting = async (existing: {
+          userId: string;
+          storeTransactionId: string;
+          bananasGranted: number;
+        }) => {
           if (existing.userId !== user.id) {
             throw new BadRequestException('Transaction already claimed');
           }
@@ -121,21 +124,27 @@ export class PurchasesService {
               tx,
               user.id,
               bananas,
-              storeTransactionId,
+              existing.storeTransactionId,
+              aliases,
             );
           return {
             bananasGranted: existing.bananasGranted,
             bananaBalance: creditedUser.bananaBalance,
             alreadyClaimed: !credited,
           };
-        }
+        };
+
+        const existing = await tx.purchaseRecord.findFirst({
+          where: { storeTransactionId: { in: aliases } },
+        });
+        if (existing) return creditExisting(existing);
 
         try {
           await tx.purchaseRecord.create({
             data: {
               userId: user.id,
               productId,
-              storeTransactionId,
+              storeTransactionId: verified.canonicalId,
               bananasGranted: bananas,
               platform: params.platform?.trim() || null,
             },
@@ -145,24 +154,11 @@ export class PurchasesService {
             error instanceof Prisma.PrismaClientKnownRequestError &&
             error.code === 'P2002'
           ) {
-            const raced = await tx.purchaseRecord.findUniqueOrThrow({
-              where: { storeTransactionId },
-            });
-            if (raced.userId !== user.id) {
-              throw new BadRequestException('Transaction already claimed');
-            }
-            const { user: creditedUser, credited } =
-              await this.economy.creditIapIfNeeded(
-                tx,
-                user.id,
-                bananas,
-                storeTransactionId,
-              );
-            return {
-              bananasGranted: raced.bananasGranted,
-              bananaBalance: creditedUser.bananaBalance,
-              alreadyClaimed: !credited,
-            };
+            return creditExisting(
+              await tx.purchaseRecord.findUniqueOrThrow({
+                where: { storeTransactionId: verified.canonicalId },
+              }),
+            );
           }
           throw error;
         }
@@ -172,7 +168,8 @@ export class PurchasesService {
             tx,
             user.id,
             bananas,
-            storeTransactionId,
+            verified.canonicalId,
+            aliases,
           );
         return {
           bananasGranted: bananas,

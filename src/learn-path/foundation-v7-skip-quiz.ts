@@ -1,4 +1,4 @@
-import { FOUNDATION_V7_CATALOG, FOUNDATION_V7_PATH_ID } from './foundation-v7-path.data';
+import { FOUNDATION_V7_CAPABILITIES, FOUNDATION_V7_CATALOG, FOUNDATION_V7_PATH_ID } from './foundation-v7-path.data';
 import { toFoundationV7ClientChapters } from './foundation-v7-path.view';
 import {
   personalizeSayItPhrase,
@@ -62,7 +62,7 @@ export function resolveSkipQuizPool(targetChapterId: string): SkipQuizPoolResolu
     }
   }
 
-  const clientChapters = toFoundationV7ClientChapters(['say_it_guided']);
+  const clientChapters = toFoundationV7ClientChapters(FOUNDATION_V7_CAPABILITIES);
   const previousClient = clientChapters[targetIdx - 1];
   const playableNodeIds = previousClient.items
     .filter((node) => !node.comingSoon)
@@ -115,7 +115,7 @@ export function resolveChaptersToSkipOnPass(targetChapterId: string): Array<{
   const targetIdx = chapterIndex(targetChapterId);
   if (targetIdx <= 0) return [];
 
-  const clientChapters = toFoundationV7ClientChapters(['say_it_guided']);
+  const clientChapters = toFoundationV7ClientChapters(FOUNDATION_V7_CAPABILITIES);
   const out: Array<{
     chapterId: string;
     chapterNumber: number;

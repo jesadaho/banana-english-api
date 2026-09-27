@@ -3,6 +3,7 @@ import { describe, it } from 'node:test';
 import { DescribeItController } from './describe-it.controller';
 import { DescribeItService } from './describe-it.service';
 import {
+  DESCRIBE_IT_ENABLED,
   dealDescribeItCards,
   describeItPoolById,
   isValidDescribeItPack,
@@ -12,7 +13,7 @@ import {
 const req = { user: { id: 'describe-it-test', displayName: 'Mia' } } as any;
 
 describe('Describe It foundation pack', () => {
-  it('hides hub pools while Describe It is temporarily disabled', () => {
+  it('hides hub pools while Describe It is temporarily disabled', { skip: DESCRIBE_IT_ENABLED }, () => {
     assert.deepEqual(listDescribeItPools(), []);
   });
 
@@ -154,7 +155,7 @@ describe('Describe It foundation pack', () => {
     assert.ok(items.slice(1).every((item) => !item.hintEn));
   });
 
-  it('rejects start and complete while Describe It is temporarily disabled', async () => {
+  it('rejects start and complete while Describe It is temporarily disabled', { skip: DESCRIBE_IT_ENABLED }, async () => {
     const controller = new DescribeItController(
       new DescribeItService(),
       {
