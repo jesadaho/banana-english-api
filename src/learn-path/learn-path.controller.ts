@@ -11,6 +11,10 @@ import {
 } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { AnonymousUserGuard } from '../users/anonymous-user.guard';
+import {
+  FOUNDATION_V7_CAPABILITIES,
+  type FoundationV7Capability,
+} from './foundation-v7-path.data';
 import { LearnPathService } from './learn-path.service';
 
 type AuthedRequest = { user: User };
@@ -42,10 +46,16 @@ export class LearnPathController {
   async foundationV7(@Req() req: AuthedRequest, @Query('capabilities') raw?: string) {
     if (raw !== undefined && typeof raw !== 'string') throw new BadRequestException('Invalid capabilities');
     const capabilities = raw ? raw.split(',').map(value => value.trim()) : [];
-    if (capabilities.some(value => value !== 'say_it_guided')) {
-      throw new BadRequestException('Supported capability: say_it_guided');
+    const supported: readonly string[] = FOUNDATION_V7_CAPABILITIES;
+    if (capabilities.some(value => !supported.includes(value))) {
+      throw new BadRequestException(
+        `Supported capabilities: ${FOUNDATION_V7_CAPABILITIES.join(', ')}`,
+      );
     }
-    return this.learnPath.getFoundationV7(req.user.id, capabilities as Array<'say_it_guided'>);
+    return this.learnPath.getFoundationV7(
+      req.user.id,
+      capabilities as FoundationV7Capability[],
+    );
   }
 
   @Get('foundation-v7/chapters/:chapterId/skip-quiz/eligibility')

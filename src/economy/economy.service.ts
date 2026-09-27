@@ -236,6 +236,7 @@ export class EconomyService {
     userId: string,
     amount: number,
     storeTransactionId: string,
+    aliasIds: string[] = [],
   ): Promise<{ user: User; credited: boolean }> {
     if (!Number.isFinite(amount) || amount <= 0) {
       throw new BadRequestException('Invalid purchase amount');
@@ -245,7 +246,7 @@ export class EconomyService {
       where: {
         userId,
         source: 'iap_purchase',
-        referenceId: storeTransactionId,
+        referenceId: { in: [...new Set([storeTransactionId, ...aliasIds])] },
         currency: Currency.BANANA,
       },
     });

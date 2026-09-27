@@ -63,11 +63,16 @@ export class RevenueCatClient {
    * Play can mark the order Processed before RC indexes it, so look up again
    * a few times before failing the claim.
    */
+  /**
+   * The SDK reports different ids for the same consumable (store tx id after
+   * purchase, RevenueCat's own id in CustomerInfo), so callers must dedupe on
+   * [canonicalId] and every alias.
+   */
   async assertStoreTransaction(params: {
     appUserIds: string[];
     productId: string;
     storeTransactionId: string;
-  }): Promise<void> {
+  }): Promise<VerifiedStoreTransaction> {
     const secret = this.secretKey();
     if (!secret) {
       throw new BadGatewayException('Purchase verification is not configured');
@@ -78,13 +83,14 @@ export class RevenueCatClient {
       try {
         for (const appUserId of params.appUserIds) {
           const payload = await this.fetchSubscriber(appUserId, secret);
-          if (this.transactionMatches(payload, params)) {
+          const matched = this.matchTransaction(payload, params);
+          if (matched) {
             if (attempt > 1) {
               this.logger.log(
                 `RevenueCat transaction visible on attempt ${attempt}`,
               );
             }
-            return;
+            return matched;
           }
         }
         lastError = new BadRequestException('Purchase could not be verified');
@@ -185,47 +191,60 @@ export class RevenueCatClient {
     return found;
   }
 
-  private transactionMatches(
+  private matchTransaction(
     payload: RevenueCatSubscriberResponse,
     params: {
       productId: string;
       storeTransactionId: string;
     },
-  ): boolean {
+  ): VerifiedStoreTransaction | null {
     const wanted = params.storeTransactionId.trim();
-    if (!wanted) return false;
+    if (!wanted) return null;
     const subscriber = payload.subscriber;
-    if (!subscriber) return false;
-
-    const idsOf = (row: RevenueCatNonSubscription | undefined): string[] => {
-      if (!row) return [];
-      return [row.store_transaction_id, row.id, row.original_purchase_id]
-        .map((value) => value?.trim())
-        .filter((value): value is string => Boolean(value));
-    };
+    if (!subscriber) return null;
 
     const nonSubs = subscriber.non_subscriptions ?? {};
     const productRows = nonSubs[params.productId] ?? [];
     const allRows = Object.values(nonSubs).flatMap((rows) => rows ?? []);
-    for (const row of [...productRows, ...allRows]) {
-      if (idsOf(row).includes(wanted)) return true;
+    const otherRows = Object.values(subscriber.other_purchases ?? {});
+    for (const row of [...productRows, ...allRows, ...otherRows]) {
+      const verified = verifiedFromIds(
+        [row?.store_transaction_id, row?.id, row?.original_purchase_id],
+        wanted,
+      );
+      if (verified) return verified;
     }
 
-    const other = subscriber.other_purchases ?? {};
-    for (const row of Object.values(other)) {
-      if (idsOf(row).includes(wanted)) return true;
+    for (const row of Object.values(subscriber.subscriptions ?? {})) {
+      const verified = verifiedFromIds(
+        [row.store_transaction_id, row.original_transaction_id],
+        wanted,
+      );
+      if (verified) return verified;
     }
 
-    const subs = subscriber.subscriptions ?? {};
-    for (const row of Object.values(subs)) {
-      if (
-        row.store_transaction_id === wanted ||
-        row.original_transaction_id === wanted
-      ) {
-        return true;
-      }
-    }
-
-    return false;
+    return null;
   }
+}
+
+export type VerifiedStoreTransaction = {
+  /** Store transaction id when RevenueCat has it, else the matched id. */
+  canonicalId: string;
+  aliases: string[];
+};
+
+/** First id is the store transaction id, preferred as canonical. */
+function verifiedFromIds(
+  ids: Array<string | undefined>,
+  wanted: string,
+): VerifiedStoreTransaction | null {
+  const aliases = [
+    ...new Set(
+      ids
+        .map((value) => value?.trim())
+        .filter((value): value is string => Boolean(value)),
+    ),
+  ];
+  if (!aliases.includes(wanted)) return null;
+  return { canonicalId: aliases[0], aliases };
 }

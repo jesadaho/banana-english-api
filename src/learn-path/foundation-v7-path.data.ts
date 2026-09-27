@@ -13,7 +13,9 @@ export type FoundationV7NodeType =
   | 'info_task'
   | 'interactive_scenario';
 
-export type FoundationV7Capability = 'say_it_guided';
+/** Old app builds omit newer capabilities, so those nodes stay locked for them. */
+export const FOUNDATION_V7_CAPABILITIES = ['say_it_guided', 'describe_it'] as const;
+export type FoundationV7Capability = (typeof FOUNDATION_V7_CAPABILITIES)[number];
 export type FoundationV7ContentRef = {
   lessonId?: string;
   topicId?: string;

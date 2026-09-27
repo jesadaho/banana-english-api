@@ -1,9 +1,8 @@
 import assert from 'node:assert/strict';
 import { V7_LEGACY_FLOWS } from '../lessons/foundation-v7-legacy-flows';
 import { describe, it } from 'node:test';
-import { FOUNDATION_V7_CATALOG, FOUNDATION_V7_NODES, canonicalFoundationV7RewardId, foundationV7NodeTypeCounts, foundationV7RewardAliases, isFoundationV7SimulationId } from './foundation-v7-path.data';
+import { FOUNDATION_V7_CAPABILITIES, FOUNDATION_V7_CATALOG, FOUNDATION_V7_NODES, canonicalFoundationV7RewardId, foundationV7NodeTypeCounts, foundationV7RewardAliases, isFoundationV7SimulationId } from './foundation-v7-path.data';
 import { isValidNewWordsPack, newWordsPoolById } from '../new-words/new-words.data';
-import { DESCRIBE_IT_ENABLED } from '../describe-it/describe-it.data';
 import { hasFoundationV7Content, toFoundationV7ClientChapters, toFoundationV7ClientFinale } from './foundation-v7-path.view';
 import { LearnPathService } from './learn-path.service';
 import { LearnPathController } from './learn-path.controller';
@@ -21,8 +20,8 @@ import { EconomyService } from '../economy/economy.service';
 import { Currency } from '@prisma/client';
 
 const all = () => [
-  ...toFoundationV7ClientChapters(['say_it_guided']).flatMap((ch) => ch.items),
-  ...(toFoundationV7ClientFinale(['say_it_guided'])?.items ?? []),
+  ...toFoundationV7ClientChapters(FOUNDATION_V7_CAPABILITIES).flatMap((ch) => ch.items),
+  ...(toFoundationV7ClientFinale(FOUNDATION_V7_CAPABILITIES)?.items ?? []),
 ];
 const req = { user: { id: 'v7-test', displayName: 'Mia' } } as any;
 const EXPECTED_V7_MIN_TURNS: Record<string, number> = {
@@ -105,30 +104,29 @@ describe('Foundation V7 catalog and real content', () => {
   });
 
   it('has 159 chapter backend-ready nodes (156 playable by default), Path Finale playable, and a capability gate for three Guided packs', () => {
-    // Kill switch off: authored See & Say packs also become placeholders.
+    // Old builds without the describe_it capability keep See & Say locked.
     const readyDescribe = FOUNDATION_V7_NODES.filter(
       n => n.type === 'describe_it' && n.contentRef.poolId,
     ).length;
-    const offDescribe = DESCRIBE_IT_ENABLED ? 0 : readyDescribe;
     const defaults = toFoundationV7ClientChapters().flatMap(c => c.items);
-    assert.equal(defaults.filter(n => n.backendReady).length, 159 - offDescribe);
-    assert.equal(defaults.filter(n => !n.comingSoon).length, 156 - offDescribe);
-    assert.equal(all().filter(n => !n.comingSoon).length, 160 - offDescribe);
-    assert.equal(defaults.filter(n => n.unavailableReason === 'client_capability_required').length, 3);
+    assert.equal(defaults.filter(n => n.backendReady).length, 159);
+    assert.equal(defaults.filter(n => !n.comingSoon).length, 156 - readyDescribe);
+    assert.equal(all().filter(n => !n.comingSoon).length, 160);
     assert.equal(
-      defaults.filter(n => n.unavailableReason === 'missing_content').length,
-      DESCRIBE_IT_ENABLED ? 4 : 0,
+      defaults.filter(n => n.unavailableReason === 'client_capability_required').length,
+      3 + readyDescribe,
     );
+    assert.equal(defaults.filter(n => n.unavailableReason === 'missing_content').length, 4);
     const placeholders = all().filter(n => n.comingSoon);
-    assert.equal(placeholders.length, 7 + offDescribe);
+    assert.equal(placeholders.length, 7);
     assert.ok(placeholders.every(n => !n.countsTowardProgress));
     assert.equal(
       placeholders.filter(n => n.unavailableReason === 'mechanic_not_implemented').length,
-      DESCRIBE_IT_ENABLED ? 3 : 3 + 4 + readyDescribe,
+      3,
     );
     assert.equal(
       placeholders.filter(n => n.unavailableReason === 'missing_content').length,
-      DESCRIBE_IT_ENABLED ? 4 : 0,
+      4,
     );
     for (const id of ['v7_u07n04', 'v7_u08n09', 'v7_u10n04', 'v7_u12n06'] as const) {
       const describeIt = all().find(n => n.id === id);
@@ -137,9 +135,12 @@ describe('Foundation V7 catalog and real content', () => {
     }
     for (const id of ['v7_u03n05', 'v7_u15n04', 'v7_u15n14'] as const) {
       const describeIt = all().find(n => n.id === id);
-      assert.equal(describeIt?.comingSoon, !DESCRIBE_IT_ENABLED);
-      assert.equal(describeIt?.backendReady, DESCRIBE_IT_ENABLED);
-      if (DESCRIBE_IT_ENABLED) assert.ok(describeIt?.poolId);
+      assert.equal(describeIt?.comingSoon, false);
+      assert.equal(describeIt?.backendReady, true);
+      assert.ok(describeIt?.poolId);
+      const locked = defaults.find(n => n.id === id);
+      assert.equal(locked?.comingSoon, true);
+      assert.deepEqual(locked?.requiredClientCapabilities, ['describe_it']);
     }
     const serialized = JSON.stringify(all());
     assert.equal(serialized.includes('"script"'), false);
@@ -289,7 +290,7 @@ describe('Foundation V7 progress and completion contracts', () => {
     const simulations = playable.flatMap(n => n.simulationId ? [n.simulationId] : []);
     mini.push(...all().filter(n => n.comingSoon).map(n => n.id));
     const service = pathService(lessons, mini, simulations);
-    const full = await service.getFoundationV7('user', ['say_it_guided']);
+    const full = await service.getFoundationV7('user', FOUNDATION_V7_CAPABILITIES);
     assert.equal(full.progress.completedCount, 160);
     assert.equal(full.progress.totalCount, 160);
     assert.equal(full.progress.currentNodeId, null);
@@ -301,7 +302,7 @@ describe('Foundation V7 progress and completion contracts', () => {
 
   it('rejects unknown capabilities rather than silently enabling unsupported mechanics', async () => {
     const controller = new LearnPathController(pathService());
-    assert.equal((await controller.foundationV7(req, 'say_it_guided')).summary.playableCount, 160);
+    assert.equal((await controller.foundationV7(req, FOUNDATION_V7_CAPABILITIES.join(','))).summary.playableCount, 160);
     await assert.rejects(controller.foundationV7(req, 'story_bites'));
     await assert.rejects(controller.foundationV7(req, ['say_it_guided'] as any));
   });

@@ -47,8 +47,10 @@ function mapClientNode(
   capabilities: readonly FoundationV7Capability[],
 ): { node: FoundationV7ClientNode; nextPrevious: string | undefined } {
   const backendReady = hasFoundationV7Content(node);
-  const requiredClientCapabilities: FoundationV7Capability[] =
-    node.sayItMode === 'guided' ? ['say_it_guided'] : [];
+  const requiredClientCapabilities: FoundationV7Capability[] = [
+    ...(node.sayItMode === 'guided' ? (['say_it_guided'] as const) : []),
+    ...(node.type === 'describe_it' ? (['describe_it'] as const) : []),
+  ];
   const needsClient = requiredClientCapabilities.some(
     (cap) => !capabilities.includes(cap),
   );
