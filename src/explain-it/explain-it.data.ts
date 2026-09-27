@@ -111,7 +111,10 @@ export function dealExplainItItems(
   return pool.slice(0, n);
 }
 
-/** Challenge mix: 4 Tier1 + 3 Tier2 + 3 Tier3, then shuffle. */
+/**
+ * Challenge mix: 4 Tier1 + 3 Tier2 + 3 Tier3, ordered easy → hard so the
+ * learner warms up before the harder words. Picks within a tier are random.
+ */
 export function dealExplainItChallenge(): ExplainItItem[] {
   const pick = (tier: number, n: number): ExplainItItem[] => {
     const pool: ExplainItItem[] = [];
@@ -122,9 +125,7 @@ export function dealExplainItChallenge(): ExplainItItem[] {
     return pool.slice(0, Math.min(n, pool.length));
   };
 
-  const items = [...pick(1, 4), ...pick(2, 3), ...pick(3, 3)];
-  shuffleInPlace(items);
-  return items;
+  return [...pick(1, 4), ...pick(2, 3), ...pick(3, 3)];
 }
 
 /** Hard rule: learner must not say the target word (or its parts). */
