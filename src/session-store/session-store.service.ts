@@ -11,10 +11,14 @@ import type {
   LessonScene,
   SessionType,
   SpeakingMetricsPayload,
+  TurnVisualCue,
 } from '../common/api.types';
 import type { SimulationConfig } from '../simulations/simulations.data';
 import { initCheckpointStates } from '../simulations/simulations.data';
 import type { LessonConfig } from '../lessons/lessons.data';
+import type { InteractiveScenarioDef } from '../interactive-scenario/interactive-scenario.types';
+import type { ScenarioRuntimeState } from '../interactive-scenario/interactive-scenario.runtime';
+import { initScenarioRuntime } from '../interactive-scenario/interactive-scenario.runtime';
 import { teachingLanguageFromConfig, learnerNameFallback } from '../lessons/lesson-prompt';
 import type {
   FreeTalkIssueLogEntry,
@@ -66,6 +70,8 @@ export interface ChatTurn {
   roleplayIntro?: RoleplayIntroPrompt | null;
   /** Active roleplay NPC chrome (ai turns only). */
   roleplayNpc?: RoleplayNpcPrompt | null;
+  /** Scenario / lesson visual cue (ai turns only). */
+  visual?: TurnVisualCue | null;
 }
 
 export interface ConversationSession {
@@ -74,6 +80,7 @@ export interface ConversationSession {
   topicId?: string;
   simulationId?: string;
   lessonId?: string;
+  scenarioId?: string;
   startedAt: string;
   durationLimitSeconds?: number;
   currentTurn?: number;
@@ -139,6 +146,8 @@ export interface SessionData {
   introReport: GptIntroReport | null;
   simulationConfig?: SimulationConfig;
   lessonConfig?: LessonConfig;
+  scenarioConfig?: InteractiveScenarioDef;
+  scenarioRuntime?: ScenarioRuntimeState;
   /** First name for 1:1 tutor address (training sessions). */
   learnerFirstName?: string;
   freeTalk?: FreeTalkSessionState;
@@ -261,6 +270,33 @@ export class SessionStoreService {
       introReport: null,
       lessonConfig: config,
       learnerFirstName: name,
+      hintsUsed: 0,
+      thaiMixUsed: false,
+    };
+    this.sessions.set(sessionId, data);
+    return data;
+  }
+
+  createInteractiveScenario(config: InteractiveScenarioDef): SessionData {
+    const sessionId = `session_${randomUUID().replace(/-/g, '').slice(0, 12)}`;
+    const runtime = initScenarioRuntime(config);
+    const session: ConversationSession = {
+      id: sessionId,
+      sessionType: 'interactive_scenario',
+      scenarioId: config.id,
+      startedAt: new Date().toISOString(),
+      currentTurn: 0,
+      checkpointStates: { ...runtime.checkpoints },
+      isComplete: false,
+    };
+    const data: SessionData = {
+      session,
+      turns: [],
+      turnCounter: 0,
+      endedAt: null,
+      introReport: null,
+      scenarioConfig: config,
+      scenarioRuntime: runtime,
       hintsUsed: 0,
       thaiMixUsed: false,
     };

@@ -64,7 +64,7 @@ export class RevenueCatClient {
    * a few times before failing the claim.
    */
   async assertStoreTransaction(params: {
-    appUserId: string;
+    appUserIds: string[];
     productId: string;
     storeTransactionId: string;
   }): Promise<void> {
@@ -76,14 +76,16 @@ export class RevenueCatClient {
     let lastError: unknown;
     for (let attempt = 1; attempt <= RevenueCatClient.verifyAttempts; attempt++) {
       try {
-        const payload = await this.fetchSubscriber(params.appUserId, secret);
-        if (this.transactionMatches(payload, params)) {
-          if (attempt > 1) {
-            this.logger.log(
-              `RevenueCat transaction visible on attempt ${attempt}`,
-            );
+        for (const appUserId of params.appUserIds) {
+          const payload = await this.fetchSubscriber(appUserId, secret);
+          if (this.transactionMatches(payload, params)) {
+            if (attempt > 1) {
+              this.logger.log(
+                `RevenueCat transaction visible on attempt ${attempt}`,
+              );
+            }
+            return;
           }
-          return;
         }
         lastError = new BadRequestException('Purchase could not be verified');
         this.logger.warn(

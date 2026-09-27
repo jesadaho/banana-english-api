@@ -103,6 +103,39 @@ export function resolveSkipQuizPool(targetChapterId: string): SkipQuizPoolResolu
   };
 }
 
+/**
+ * Chapters unlocked/skipped when passing a quiz into `targetChapterId`.
+ * Jumping Ch1 → Ch5 credits every chapter before Ch5 (Ch1–Ch4), not only Ch4.
+ */
+export function resolveChaptersToSkipOnPass(targetChapterId: string): Array<{
+  chapterId: string;
+  chapterNumber: number;
+  playableNodeIds: string[];
+}> {
+  const targetIdx = chapterIndex(targetChapterId);
+  if (targetIdx <= 0) return [];
+
+  const clientChapters = toFoundationV7ClientChapters(['say_it_guided']);
+  const out: Array<{
+    chapterId: string;
+    chapterNumber: number;
+    playableNodeIds: string[];
+  }> = [];
+
+  for (let i = 0; i < targetIdx; i++) {
+    const chapter = FOUNDATION_V7_CATALOG.chapters[i]!;
+    const client = clientChapters[i];
+    out.push({
+      chapterId: chapter.id,
+      chapterNumber: chapter.number,
+      playableNodeIds: (client?.items ?? [])
+        .filter((node) => !node.comingSoon)
+        .map((node) => node.id),
+    });
+  }
+  return out;
+}
+
 export function skipQuizDealCount(availableCount: number): number {
   if (availableCount < SKIP_QUIZ_MIN_DEAL) return 0;
   const preferred = Math.min(

@@ -1,6 +1,5 @@
 import {
   BadRequestException,
-  ForbiddenException,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -10,6 +9,11 @@ import { Prisma } from '@prisma/client';
 import { EconomyService } from '../economy/economy.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { bananasForProduct, isKnownBananaPack } from './product-catalog';
+import {
+  anonymousIdFromGuestAppUserId,
+  revenueCatAppUserId,
+  revenueCatAppUserIdCandidates,
+} from './revenuecat-app-user';
 import { RevenueCatClient } from './revenuecat.client';
 
 export type ClaimPurchaseResult = {
@@ -78,7 +82,6 @@ export class PurchasesService {
       storeTransactionId: string;
       platform?: string;
       verifiedExternally?: boolean;
-      skipSignedInCheck?: boolean;
       source?: PurchaseAttemptSource;
     },
   ): Promise<ClaimPurchaseResult> {
@@ -87,12 +90,6 @@ export class PurchasesService {
     const source = params.source ?? 'app';
 
     try {
-      if (!params.skipSignedInCheck && !user.firebaseUid) {
-        throw new ForbiddenException(
-          'Open the Banana Shop again to start a purchase session',
-        );
-      }
-
       if (!isKnownBananaPack(productId)) {
         throw new BadRequestException('Unknown product');
       }
@@ -103,13 +100,8 @@ export class PurchasesService {
       }
 
       if (!params.verifiedExternally) {
-        if (!user.firebaseUid) {
-          throw new ForbiddenException(
-            'Open the Banana Shop again to start a purchase session',
-          );
-        }
         await this.revenueCat.assertStoreTransaction({
-          appUserId: user.firebaseUid,
+          appUserIds: revenueCatAppUserIdCandidates(user),
           productId,
           storeTransactionId,
         });
@@ -192,7 +184,7 @@ export class PurchasesService {
       await this.finalizeAttemptSafe({
         storeTransactionId,
         userId: user.id,
-        appUserId: user.firebaseUid,
+        appUserId: revenueCatAppUserId(user),
         productId,
         platform: params.platform,
         source,
@@ -203,7 +195,7 @@ export class PurchasesService {
       await this.finalizeAttemptSafe({
         storeTransactionId,
         userId: user.id,
-        appUserId: user.firebaseUid,
+        appUserId: revenueCatAppUserId(user),
         productId,
         platform: params.platform,
         source,
@@ -299,8 +291,11 @@ export class PurchasesService {
     if (!appUserId || !productId || !storeTransactionId) return;
     if (!isKnownBananaPack(productId)) return;
 
+    const guestAnonymousId = anonymousIdFromGuestAppUserId(appUserId);
     const user = await this.prisma.user.findUnique({
-      where: { firebaseUid: appUserId },
+      where: guestAnonymousId
+        ? { anonymousId: guestAnonymousId }
+        : { firebaseUid: appUserId },
     });
 
     const platform =

@@ -5,7 +5,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { LessonsService } from '../lessons/lessons.service';
 import { EconomyService } from '../economy/economy.service';
 import { FOUNDATION_V7_CATALOG, FOUNDATION_V7_PATH_ID, foundationV7NodeTypeCounts, type FoundationV7Capability } from './foundation-v7-path.data';
-import { toFoundationV7ClientChapters } from './foundation-v7-path.view';
+import { toFoundationV7ClientChapters, toFoundationV7ClientFinale } from './foundation-v7-path.view';
 import { canonicalFoundationV7RewardId } from './foundation-v7-path.data';
 import {
   FOUNDATION_V7_NODE_MIGRATION,
@@ -15,6 +15,7 @@ import {
 import {
   dealSkipQuizPhrases,
   isSkipQuizPassed,
+  resolveChaptersToSkipOnPass,
   resolveSkipQuizPool,
   SKIP_QUIZ_BANANA_COST,
   skipQuizDealCount,
@@ -64,7 +65,8 @@ export type FoundationClientNodeType =
   | 'story_bites'
   | 'pronunciation'
   | 'new_words'
-  | 'info_task';
+  | 'info_task'
+  | 'interactive_scenario';
 
 export type FoundationV5ClientNode = {
   id: string;
@@ -83,6 +85,7 @@ export type FoundationV5ClientNode = {
   lessonId?: string;
   legacyLessonIds?: string[];
   legacySimulationIds?: string[];
+  scenarioId?: string;
 };
 
 export type FoundationV5ClientChapter = {
@@ -173,7 +176,7 @@ function shippedContentForMappedType(
   titleEn: string,
   type: FoundationClientNodeType,
 ): FoundationV2NodeDef | undefined {
-  if (type === 'story_bites' || type === 'new_words' || type === 'info_task') {
+  if (type === 'story_bites' || type === 'new_words' || type === 'info_task' || type === 'interactive_scenario') {
     return undefined;
   }
   return v2ContentForV5Title(
@@ -337,7 +340,11 @@ export class LearnPathService {
         skipQuizQuestionCount: skipQuizDealCount(skip.availableCount),
       };
     });
-    const nodes = chapters.flatMap(chapter => chapter.items);
+    const pathFinale = toFoundationV7ClientFinale(capabilities);
+    const nodes = [
+      ...chapters.flatMap((chapter) => chapter.items),
+      ...(pathFinale?.items ?? []),
+    ];
     const playable = nodes.filter(node => !node.comingSoon);
     const completed = await this.resolveCompletedV5NodeIds(userId, playable);
     await this.applyFoundationV7NodeMigration(userId, completed, playable);
@@ -347,6 +354,7 @@ export class LearnPathService {
       pathId: FOUNDATION_V7_PATH_ID, version: FOUNDATION_V7_CATALOG.metadata.version,
       sourceVersion: FOUNDATION_V7_CATALOG.metadata.sourceVersion, releaseStatus: 'playtest' as const,
       chapters,
+      pathFinale,
       progress: {
         completedNodeIds: [...completed],
         skippedNodeIds: [...skippedNodeIds],
@@ -467,21 +475,15 @@ export class LearnPathService {
     }
 
     if (attempt.status === 'completed') {
-      const skipped = await this.prisma.foundationChapterSkip.findUnique({
-        where: {
-          userId_pathId_chapterId: {
-            userId,
-            pathId: FOUNDATION_V7_PATH_ID,
-            chapterId: attempt.previousChapterId,
-          },
-        },
-      });
+      const chaptersToSkip = resolveChaptersToSkipOnPass(targetChapterId);
+      const skippedNodeIds = chaptersToSkip.flatMap((ch) => ch.playableNodeIds);
       return {
         passed: Boolean(attempt.passed),
         skippedChapterId: attempt.passed ? attempt.previousChapterId : null,
-        skippedNodeIds: skipped
-          ? (skipped.skippedNodeIds as string[])
+        skippedChapterIds: attempt.passed
+          ? chaptersToSkip.map((ch) => ch.chapterId)
           : [],
+        skippedNodeIds: attempt.passed ? skippedNodeIds : [],
         correctCount: attempt.correctCount ?? correctCount,
         totalCount: attempt.totalCount,
       };
@@ -492,33 +494,35 @@ export class LearnPathService {
     }
 
     const passed = isSkipQuizPassed(correctCount, attempt.totalCount);
-    const resolved = resolveSkipQuizPool(targetChapterId);
+    const chaptersToSkip = resolveChaptersToSkipOnPass(targetChapterId);
     let skippedNodeIds: string[] = [];
 
     if (passed) {
-      skippedNodeIds = resolved.playableNodeIds;
-      await this.prisma.foundationChapterSkip.upsert({
-        where: {
-          userId_pathId_chapterId: {
+      skippedNodeIds = chaptersToSkip.flatMap((ch) => ch.playableNodeIds);
+      for (const chapter of chaptersToSkip) {
+        await this.prisma.foundationChapterSkip.upsert({
+          where: {
+            userId_pathId_chapterId: {
+              userId,
+              pathId: FOUNDATION_V7_PATH_ID,
+              chapterId: chapter.chapterId,
+            },
+          },
+          create: {
             userId,
             pathId: FOUNDATION_V7_PATH_ID,
-            chapterId: attempt.previousChapterId,
+            chapterId: chapter.chapterId,
+            skippedNodeIds: chapter.playableNodeIds,
+            quizCorrect: correctCount,
+            quizTotal: attempt.totalCount,
           },
-        },
-        create: {
-          userId,
-          pathId: FOUNDATION_V7_PATH_ID,
-          chapterId: attempt.previousChapterId,
-          skippedNodeIds,
-          quizCorrect: correctCount,
-          quizTotal: attempt.totalCount,
-        },
-        update: {
-          skippedNodeIds,
-          quizCorrect: correctCount,
-          quizTotal: attempt.totalCount,
-        },
-      });
+          update: {
+            skippedNodeIds: chapter.playableNodeIds,
+            quizCorrect: correctCount,
+            quizTotal: attempt.totalCount,
+          },
+        });
+      }
     }
 
     await this.prisma.foundationSkipQuizAttempt.update({
@@ -542,6 +546,7 @@ export class LearnPathService {
     return {
       passed,
       skippedChapterId: passed ? attempt.previousChapterId : null,
+      skippedChapterIds: passed ? chaptersToSkip.map((ch) => ch.chapterId) : [],
       skippedNodeIds: passed ? skippedNodeIds : [],
       correctCount,
       totalCount: attempt.totalCount,
@@ -754,11 +759,13 @@ export class LearnPathService {
         node.id,
         node.topicId,
         node.poolId,
+        node.scenarioId,
         node.topicId ? `say_it:${node.topicId}` : null,
         node.poolId ? `emoji_speak:${node.poolId}` : null,
         node.poolId ? `new_words:${node.poolId}` : null,
         node.poolId ? `describe_it:${node.poolId}` : null,
         node.poolId ? `info_task:${node.poolId}` : null,
+        node.scenarioId ? `interactive_scenario:${node.scenarioId}` : null,
       ].filter((value): value is string => !!value);
       if (candidates.some((id) => completedMiniGameIds.has(id))) {
         completed.add(node.id);

@@ -47,6 +47,7 @@ export function inferMiniGameScoreKind(gameId: string): string {
   if (gameId.startsWith('describe_it:')) return 'describe_it';
   if (gameId.startsWith('emoji_speak:')) return 'emoji_speak';
   if (gameId.startsWith('new_words:')) return 'new_words';
+  if (gameId.startsWith('interactive_scenario:')) return 'interactive_scenario';
   if (gameId.startsWith('skip_quiz:')) return 'skip_quiz';
   if (gameId.startsWith('speak_challenge')) return 'speak_challenge';
   if (gameId.startsWith('word_choice')) return 'word_choice';
@@ -379,6 +380,7 @@ export class EconomyService {
       | 'emoji_speak_start'
       | 'new_words_start'
       | 'describe_it_start'
+      | 'interactive_scenario_start'
       | 'skip_quiz_start' = 'mission_start',
   ): Promise<User> {
     return this.prisma.$transaction(async (tx) => {

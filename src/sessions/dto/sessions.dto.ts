@@ -17,8 +17,8 @@ export class StartSessionDto {
   topicId?: string;
 
   @IsOptional()
-  @IsIn(['simulation', 'training'])
-  sessionType?: 'simulation' | 'training';
+  @IsIn(['simulation', 'training', 'interactive_scenario'])
+  sessionType?: 'simulation' | 'training' | 'interactive_scenario';
 
   @ValidateIf((o: StartSessionDto) => o.sessionType === 'simulation')
   @IsString()
@@ -29,6 +29,11 @@ export class StartSessionDto {
   @IsString()
   @IsNotEmpty()
   lessonId?: string;
+
+  @ValidateIf((o: StartSessionDto) => o.sessionType === 'interactive_scenario')
+  @IsString()
+  @IsNotEmpty()
+  scenarioId?: string;
 
   @IsOptional()
   @IsBoolean()

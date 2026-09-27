@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req, UnauthorizedException, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { AnonymousUserGuard } from '../users/anonymous-user.guard';
 import { FirebaseIdToken } from '../users/firebase-id-token.decorator';
@@ -6,6 +6,7 @@ import { UserAuthService } from '../users/user-auth.service';
 import { ClaimPurchaseDto } from './dto/claim-purchase.dto';
 import { listBananaPacks } from './product-catalog';
 import { PurchasesService } from './purchases.service';
+import { revenueCatAppUserId } from './revenuecat-app-user';
 
 type AuthedRequest = {
   user: User;
@@ -34,7 +35,7 @@ export class PurchasesController {
     const user = await this.resolvePurchaseUser(req.user, idToken);
     return this.purchases.recordStorePaid({
       userId: user.id,
-      appUserId: user.firebaseUid,
+      appUserId: revenueCatAppUserId(user),
       productId: body.productId,
       storeTransactionId: body.storeTransactionId,
       platform: body.platform,
@@ -70,12 +71,12 @@ export class PurchasesController {
     return { ok: true };
   }
 
-  /** Bind Firebase Auth UID (guest anonymous OK) so RevenueCat can verify the tx. */
+  /**
+   * Bind Firebase Auth UID when present. Guests without Firebase buy under
+   * `guest_<anonymousId>` in RevenueCat (App Store requires no-login IAP).
+   */
   private async resolvePurchaseUser(user: User, idToken: string | null): Promise<User> {
-    if (!idToken) {
-      if (user.firebaseUid) return user;
-      throw new UnauthorizedException('Missing Bearer ID token');
-    }
+    if (!idToken) return user;
     return this.userAuth.attachFirebaseUidFromToken(user, idToken);
   }
 }

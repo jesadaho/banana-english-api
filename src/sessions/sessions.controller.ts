@@ -178,6 +178,12 @@ import { getSeriesForSimulation } from '../series/series.data';
 import { ActivityService } from '../users/activity.service';
 import { RecentLearnersService } from '../recent-learners/recent-learners.service';
 import { AchievementsService } from '../achievements/achievements.service';
+import { getInteractiveScenario } from '../interactive-scenario/interactive-scenario.data';
+import {
+  buildScenarioOpening,
+  processScenarioTurn,
+  scenarioHintForState,
+} from '../interactive-scenario/interactive-scenario.runtime';
 
 type AuthedRequest = {
   user: User;
@@ -222,6 +228,14 @@ export class SessionsController {
         req.user,
         body.lessonId!,
         body.teachingLanguage,
+        chatDebug,
+      );
+    }
+
+    if (body.sessionType === 'interactive_scenario') {
+      return this.startInteractiveScenarioSession(
+        req.user,
+        body.scenarioId!,
         chatDebug,
       );
     }
@@ -434,7 +448,13 @@ export class SessionsController {
         ? await this.processSimulationTurn(sessionId, body, chatDebug)
         : data.session.sessionType === 'training'
           ? await this.processTrainingTurn(sessionId, body, chatDebug)
-          : await this.processLegacyTurn(sessionId, body, chatDebug);
+          : data.session.sessionType === 'interactive_scenario'
+            ? await this.processInteractiveScenarioTurn(
+                sessionId,
+                body,
+                chatDebug,
+              )
+            : await this.processLegacyTurn(sessionId, body, chatDebug);
 
     if (countsAsSpoken) {
       await this.recordSpokenTurn(req.user.id);
@@ -454,6 +474,128 @@ export class SessionsController {
     }
     const userName = await this.chat.extractIntroUserName(body.transcript);
     return { userName };
+  }
+
+  private async startInteractiveScenarioSession(
+    user: User,
+    scenarioId: string,
+    chatDebug = false,
+  ) {
+    const config = getInteractiveScenario(scenarioId);
+    if (!config) {
+      throw new NotFoundException('Scenario not found');
+    }
+    if (config.bananaCost > 0) {
+      const spendRef = randomUUID();
+      await this.economy.spendBananas(
+        user.id,
+        config.bananaCost,
+        spendRef,
+        'interactive_scenario_start',
+      );
+    }
+
+    const data = this.sessionStore.createInteractiveScenario(config);
+    await this.prisma.userSession.create({
+      data: {
+        id: data.session.id,
+        userId: user.id,
+        sessionType: 'interactive_scenario',
+        simulationId: config.id,
+      } as Prisma.UserSessionUncheckedCreateInput,
+    });
+    await this.prisma.user.update({
+      where: { id: user.id },
+      data: { lastStudiedAt: new Date() },
+    });
+
+    const openingReply = buildScenarioOpening(config, data.scenarioRuntime!);
+    const opening = {
+      speaker: 'ai' as const,
+      textEn: openingReply.aiResponse,
+      textTh: openingReply.textTh,
+      audioUrl: null as string | null,
+      expectsUserSpeech: openingReply.expectsUserSpeech ?? true,
+      visual: openingReply.visual ?? null,
+    };
+    this.sessionStore.addTurn(data.session.id, opening);
+    data.session.checkpointStates = { ...openingReply.updatedCheckpoints };
+
+    return attachAiDebug(
+      {
+        session: data.session,
+        opening: {
+          ...openingReply,
+          speaker: 'ai',
+        },
+        scenario: {
+          id: config.id,
+          mode: config.mode,
+          teacher: config.teacher,
+          titleEn: config.titleEn,
+          titleTh: config.titleTh,
+          goalsTh: config.goals.map((g) => g.labelTh),
+          goalsEn: config.goals.map((g) => g.labelEn),
+          goalHints: config.goals.map((g) => g.hints),
+        },
+      },
+      chatDebug,
+      scriptedAiDebug(),
+      performance.now(),
+    );
+  }
+
+  private async processInteractiveScenarioTurn(
+    sessionId: string,
+    body: TurnDto,
+    chatDebug = false,
+  ) {
+    const handlerStartedAt = performance.now();
+    const data = this.sessionStore.get(sessionId);
+    if (!data?.scenarioConfig || !data.scenarioRuntime) {
+      throw new NotFoundException('Scenario session not found');
+    }
+    const transcript = (body.userSpeechText ?? body.transcript ?? '').trim();
+    if (!transcript || transcript === TAP_TO_CONTINUE_SENTINEL) {
+      throw new BadRequestException('transcript required');
+    }
+
+    this.sessionStore.addTurn(sessionId, {
+      speaker: 'user',
+      textEn: transcript,
+    });
+
+    const { state, reply } = processScenarioTurn({
+      scenario: data.scenarioConfig,
+      state: data.scenarioRuntime,
+      transcript,
+    });
+    data.scenarioRuntime = state;
+    data.session.checkpointStates = { ...state.checkpoints };
+    data.session.currentTurn = state.attemptCount;
+    data.session.isComplete = reply.isTaskComplete;
+    data.hintsUsed = state.hintsUsed;
+
+    const aiTurn = {
+      speaker: 'ai' as const,
+      textEn: reply.aiResponse,
+      textTh: reply.textTh,
+      audioUrl: null as string | null,
+      expectsUserSpeech: reply.expectsUserSpeech ?? true,
+      assessmentTier: reply.assessmentTier,
+      visual: reply.visual ?? null,
+    };
+    this.sessionStore.addTurn(sessionId, aiTurn);
+
+    return attachAiDebug(
+      {
+        ...reply,
+        updatedCheckpoints: state.checkpoints,
+      },
+      chatDebug,
+      scriptedAiDebug(),
+      handlerStartedAt,
+    );
   }
 
   private async startTrainingSession(
@@ -2914,6 +3056,23 @@ export class SessionsController {
 
     this.sessionStore.markHintUsed(sessionId);
 
+    if (data.session.sessionType === 'interactive_scenario' && data.scenarioConfig && data.scenarioRuntime) {
+      const { hints, nextState } = scenarioHintForState(
+        data.scenarioConfig,
+        data.scenarioRuntime,
+      );
+      data.scenarioRuntime = nextState;
+      data.hintsUsed = nextState.hintsUsed;
+      return {
+        hints: hints.map((h) => ({
+          id: h.id,
+          label: h.label,
+          sentenceEn: h.sentenceEn,
+          pronunciation: h.pronunciation ?? '',
+        })),
+      };
+    }
+
     try {
       const hints = await this.chat.generateHints(data.turns);
       if (hints.length > 0) {
@@ -2959,6 +3118,60 @@ export class SessionsController {
       } catch (err) {
         throwAiServiceBadGateway(err, chatDebug);
       }
+    }
+
+    if (
+      data.session.sessionType === 'interactive_scenario' &&
+      data.scenarioConfig
+    ) {
+      let scenarioRewards;
+      if (data.session.isComplete) {
+        const gameId = `interactive_scenario:${data.scenarioConfig.id}`;
+        const goalsDone = Object.values(
+          data.scenarioRuntime?.checkpoints ?? {},
+        ).filter(Boolean).length;
+        const totalGoals = data.scenarioConfig.goals.length;
+        await this.economy.recordMiniGameScore({
+          userId: req.user.id,
+          gameId,
+          correctCount: goalsDone,
+          totalCount: Math.max(totalGoals, 1),
+          passed: true,
+          kind: 'interactive_scenario',
+        });
+        scenarioRewards = await this.economy.applyMiniGameRewards({
+          userId: req.user.id,
+          gameId,
+        });
+        try {
+          await this.prisma.userSession.update({
+            where: { id: sessionId },
+            data: {
+              rewardsApplied: true,
+              hintsUsed: data.hintsUsed,
+              completedAt: new Date(),
+            },
+          });
+        } catch {
+          // non-fatal
+        }
+      }
+      return {
+        status: 'ended',
+        scenarioRewards,
+        scenarioAnalytics: {
+          scenarioId: data.scenarioConfig.id,
+          mode: data.scenarioConfig.mode,
+          goalsDone: Object.entries(
+            data.scenarioRuntime?.checkpoints ?? {},
+          )
+            .filter(([, v]) => v)
+            .map(([k]) => k),
+          hintsUsed: data.hintsUsed,
+          attempts: data.scenarioRuntime?.attemptCount ?? 0,
+          passed: Boolean(data.session.isComplete),
+        },
+      };
     }
 
     if (data.session.sessionType === 'training' && data.lessonConfig) {
