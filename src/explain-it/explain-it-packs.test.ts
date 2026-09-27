@@ -64,6 +64,9 @@ describe('Explain It packs', () => {
     assert.equal(counts[1], 4);
     assert.equal(counts[2], 3);
     assert.equal(counts[3], 3);
+
+    const tiers = items.map((item) => tierById.get(item.id)!);
+    assert.deepEqual(tiers, [...tiers].sort((a, b) => a - b));
   });
 
   it('accepts challenge for leaderboard topic lookup', () => {
