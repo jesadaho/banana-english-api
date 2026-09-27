@@ -380,6 +380,7 @@ export class EconomyService {
       | 'emoji_speak_start'
       | 'new_words_start'
       | 'describe_it_start'
+      | 'interactive_scenario_start'
       | 'skip_quiz_start' = 'mission_start',
   ): Promise<User> {
     return this.prisma.$transaction(async (tx) => {

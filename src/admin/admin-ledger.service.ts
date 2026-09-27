@@ -217,7 +217,6 @@ export class AdminLedgerService {
         storeTransactionId,
         platform: body.platform?.trim() || 'android',
         verifiedExternally: true,
-        skipSignedInCheck: true,
         source: 'admin',
       });
       return {

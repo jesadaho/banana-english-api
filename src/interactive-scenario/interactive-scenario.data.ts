@@ -13,22 +13,30 @@ export const FINAL_INTERVIEW_JOHN: InteractiveScenarioDef = {
   scenes: [
     {
       id: 'classroom',
-      titleEn: 'Classroom',
-      titleTh: 'ห้องเรียน',
-      imageAsset: 'assets/images/learn/scenario/final_interview_john_hero.jpg',
-      bannerAsset: 'assets/images/learn/scenario/final_interview_john_hero.jpg',
+      titleEn: 'Rooftop',
+      titleTh: 'ดาดฟ้า',
+      imageAsset:
+          'assets/images/learn/scenario/final_interview_rooftop_bg.jpg',
+      bannerAsset:
+          'assets/images/learn/scenario/final_interview_rooftop_bg.jpg',
     },
     {
       id: 'desk',
-      titleEn: 'Teacher desk',
-      titleTh: 'โต๊ะครู',
-      imageAsset: 'assets/images/learn/lesson_classroom_bg.png',
+      titleEn: 'Rooftop desk',
+      titleTh: 'ดาดฟ้า',
+      imageAsset:
+          'assets/images/learn/scenario/final_interview_rooftop_bg.jpg',
+      bannerAsset:
+          'assets/images/learn/scenario/final_interview_rooftop_bg.jpg',
     },
     {
       id: 'goodbye',
-      titleEn: 'See you',
-      titleTh: 'บอกลา',
-      imageAsset: 'assets/images/learn/lesson_classroom_bg.png',
+      titleEn: 'Rooftop goodbye',
+      titleTh: 'ดาดฟ้า',
+      imageAsset:
+          'assets/images/learn/scenario/final_interview_rooftop_bg.jpg',
+      bannerAsset:
+          'assets/images/learn/scenario/final_interview_rooftop_bg.jpg',
     },
   ],
   goals: [
