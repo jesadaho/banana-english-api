@@ -6,6 +6,9 @@ import type {
 import { getLesson } from '../lessons/lessons.data';
 import { PrismaService } from '../prisma/prisma.service';
 
+/** From here on every session turn also increments User.spokenCount. */
+const SESSION_TURNS_IN_SPOKEN_COUNT_SINCE = new Date('2026-09-12T16:37:12Z');
+
 type PublicCache = { expiresAt: number; payload: PublicMarketingStatsResponse };
 
 @Injectable()
@@ -26,7 +29,11 @@ export class StatsService {
       await Promise.all([
         this.prisma.user.count({ where: { onboardingCompleted: true } }),
         this.prisma.userSession.aggregate({
-          where: { ...completed, learnerTurnCount: { not: null } },
+          where: {
+            ...completed,
+            learnerTurnCount: { not: null },
+            createdAt: { lt: SESSION_TURNS_IN_SPOKEN_COUNT_SINCE },
+          },
           _sum: { learnerTurnCount: true },
         }),
         this.prisma.userSession.aggregate({
@@ -34,7 +41,11 @@ export class StatsService {
           _sum: { durationSeconds: true },
         }),
         this.prisma.userSession.count({
-          where: { ...completed, learnerTurnCount: null },
+          where: {
+            ...completed,
+            learnerTurnCount: null,
+            createdAt: { lt: SESSION_TURNS_IN_SPOKEN_COUNT_SINCE },
+          },
         }),
         this.prisma.user.aggregate({
           _sum: { spokenCount: true },

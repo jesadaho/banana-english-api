@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Currency, Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
+import { PurchasesService } from '../purchases/purchases.service';
 import { isKnownAvatarId } from '../users/avatar-catalog';
 import {
   dateKey,
@@ -25,6 +26,11 @@ import {
 
 type CacheEntry = { expiresAt: number; payload: unknown };
 
+/** Excludes RevenueCat sandbox / license-tester purchases; unchecked (null) rows count. */
+const REAL_PURCHASE: Prisma.PurchaseRecordWhereInput = {
+  OR: [{ isSandbox: null }, { isSandbox: false }],
+};
+
 const EMPTY_FILTERS: MetricsFilters = {
   requireOnboarding: false,
   requireSignedIn: false,
@@ -37,7 +43,29 @@ export class AdminMetricsService {
   private readonly cache = new Map<string, CacheEntry>();
   private readonly ttlMs = 120_000;
 
-  constructor(private readonly prisma: PrismaService) {}
+  private sandboxBackfill: Promise<void> | null = null;
+
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly purchases: PurchasesService,
+  ) {}
+
+  /** Flags older purchases from RevenueCat; waits briefly so the first load is mostly clean. */
+  private async ensureSandboxFlags(): Promise<void> {
+    if (!this.sandboxBackfill) {
+      this.sandboxBackfill = this.purchases
+        .backfillSandboxFlags()
+        .then(() => undefined)
+        .catch(() => undefined)
+        .finally(() => {
+          this.sandboxBackfill = null;
+        });
+    }
+    await Promise.race([
+      this.sandboxBackfill,
+      new Promise<void>((resolve) => setTimeout(resolve, 8_000)),
+    ]);
+  }
 
   async overview(
     fromRaw?: string,
@@ -146,6 +174,7 @@ export class AdminMetricsService {
   }
 
   private async buildOverview(range: DateRange, filters: MetricsFilters) {
+    await this.ensureSandboxFlags();
     const prev = previousRange(range);
     const now = new Date();
     const todayStart = new Date(
@@ -197,6 +226,7 @@ export class AdminMetricsService {
       purchasesPrev,
       signedInUsers,
       payingUsers,
+      sandboxPurchases,
       dauSeriesRaw,
       completionsByDay,
       newUsersRaw,
@@ -225,12 +255,14 @@ export class AdminMetricsService {
       // IAP is money truth — do not apply cohort filters (source/onboarding/app-open).
       this.prisma.purchaseRecord.findMany({
         where: {
+          ...REAL_PURCHASE,
           createdAt: { gte: range.from, lte: range.to },
         },
         select: { productId: true, platform: true, createdAt: true },
       }),
       this.prisma.purchaseRecord.findMany({
         where: {
+          ...REAL_PURCHASE,
           createdAt: { gte: prev.from, lte: prev.to },
         },
         select: { productId: true },
@@ -239,8 +271,15 @@ export class AdminMetricsService {
         where: { ...userFilter, firebaseUid: { not: null } },
       }),
       this.prisma.purchaseRecord.findMany({
+        where: REAL_PURCHASE,
         distinct: ['userId'],
         select: { userId: true },
+      }),
+      this.prisma.purchaseRecord.count({
+        where: {
+          isSandbox: true,
+          createdAt: { gte: range.from, lte: range.to },
+        },
       }),
       this.prisma.user.findMany({
         where: {
@@ -356,6 +395,7 @@ export class AdminMetricsService {
           value: revenue,
           deltaPct: pctChange(revenue, revenuePrev),
           purchases: purchases.length,
+          sandboxExcluded: sandboxPurchases,
         },
         payingUsers: {
           value: payingCount,
@@ -532,6 +572,7 @@ export class AdminMetricsService {
         miniGameUsers: Set<string>;
         spokenSessions: number;
         spokenMiniGames: number;
+        spokenDayRows: number;
         dailySpeakCompletions: number;
         lessonUsers: Set<string>;
         missionUsers: Set<string>;
@@ -547,6 +588,7 @@ export class AdminMetricsService {
         miniGameUsers: new Set(),
         spokenSessions: 0,
         spokenMiniGames: 0,
+        spokenDayRows: 0,
         dailySpeakCompletions: 0,
         lessonUsers: new Set(),
         missionUsers: new Set(),
@@ -590,15 +632,23 @@ export class AdminMetricsService {
       const bucket = map.get(dateKey(row.day));
       if (!bucket) continue;
       bucket.spokenMiniGames += row.count;
+      bucket.spokenDayRows += 1;
       bucket.dailySpeakCompletions += row.dailySpeakCompletions;
       if (row.count > 0 || row.dailySpeakCompletions > 0) {
         bucket.speakers.add(row.userId);
       }
     }
     return [...map.entries()].map(
-      ([day, { miniGameUsers, lessonUsers, missionUsers, speakers, ...v }]) => ({
+      ([
+        day,
+        { miniGameUsers, lessonUsers, missionUsers, speakers, spokenDayRows, ...v },
+      ]) => ({
         day,
         ...v,
+        // userSpokenDay.count already includes every session turn (all
+        // sessions, not just completed) plus mini-game utterances; older days
+        // without those rows fall back to completed-session learner turns.
+        timesSpoken: spokenDayRows > 0 ? v.spokenMiniGames : v.spokenSessions,
         miniGameUsers: miniGameUsers.size,
         lessonUsers: lessonUsers.size,
         missionUsers: missionUsers.size,
@@ -1426,6 +1476,7 @@ export class AdminMetricsService {
   }
 
   private async buildEconomy(range: DateRange, filters: MetricsFilters) {
+    await this.ensureSandboxFlags();
     const userFilter = this.userWhere(filters);
     const [txns, purchases] = await Promise.all([
       this.prisma.economyTransaction.findMany({
@@ -1439,6 +1490,7 @@ export class AdminMetricsService {
       // IAP is money truth — ignore cohort filters; date range only.
       this.prisma.purchaseRecord.findMany({
         where: {
+          ...REAL_PURCHASE,
           createdAt: { gte: range.from, lte: range.to },
         },
         select: {

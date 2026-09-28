@@ -402,6 +402,8 @@ model PurchaseRecord {
   storeTransactionId String   @unique
   bananasGranted     Int
   platform           String?
+  /// RevenueCat is_sandbox (App Store sandbox / Play license tester); null = not checked yet.
+  isSandbox          Boolean?
   createdAt          DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)

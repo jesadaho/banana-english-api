@@ -14,7 +14,10 @@ import {
   revenueCatAppUserId,
   revenueCatAppUserIdCandidates,
 } from './revenuecat-app-user';
-import { RevenueCatClient } from './revenuecat.client';
+import {
+  RevenueCatClient,
+  type VerifiedStoreTransaction,
+} from './revenuecat.client';
 
 export type ClaimPurchaseResult = {
   bananasGranted: number;
@@ -36,6 +39,7 @@ type RevenueCatWebhookBody = {
     product_id?: string;
     transaction_id?: string;
     store?: string;
+    environment?: string;
   };
 };
 
@@ -82,6 +86,8 @@ export class PurchasesService {
       storeTransactionId: string;
       platform?: string;
       verifiedExternally?: boolean;
+      /** Webhook environment when [verifiedExternally]. */
+      isSandbox?: boolean;
       source?: PurchaseAttemptSource;
     },
   ): Promise<ClaimPurchaseResult> {
@@ -99,8 +105,12 @@ export class PurchasesService {
         throw new BadRequestException('Invalid product configuration');
       }
 
-      const verified = params.verifiedExternally
-        ? { canonicalId: storeTransactionId, aliases: [storeTransactionId] }
+      const verified: VerifiedStoreTransaction = params.verifiedExternally
+        ? {
+            canonicalId: storeTransactionId,
+            aliases: [storeTransactionId],
+            isSandbox: params.isSandbox,
+          }
         : await this.revenueCat.assertStoreTransaction({
             appUserIds: revenueCatAppUserIdCandidates(user),
             productId,
@@ -147,6 +157,7 @@ export class PurchasesService {
               storeTransactionId: verified.canonicalId,
               bananasGranted: bananas,
               platform: params.platform?.trim() || null,
+              isSandbox: verified.isSandbox ?? null,
             },
           });
         } catch (error) {
@@ -318,7 +329,44 @@ export class PurchasesService {
       storeTransactionId,
       platform,
       verifiedExternally: true,
+      isSandbox: event.environment
+        ? event.environment.toUpperCase() === 'SANDBOX'
+        : undefined,
       source: 'webhook',
     });
+  }
+
+  /**
+   * Fill PurchaseRecord.isSandbox for older rows from RevenueCat so admin
+   * revenue can drop test purchases. Rows RevenueCat can't match stay null.
+   */
+  async backfillSandboxFlags(limit = 40): Promise<number> {
+    if (!this.revenueCat.secretKey()) return 0;
+    const rows = await this.prisma.purchaseRecord.findMany({
+      where: { isSandbox: null },
+      orderBy: { createdAt: 'desc' },
+      take: limit,
+      select: {
+        id: true,
+        productId: true,
+        storeTransactionId: true,
+        user: { select: { firebaseUid: true, anonymousId: true } },
+      },
+    });
+    let updated = 0;
+    for (const row of rows) {
+      const flag = await this.revenueCat.lookupSandboxFlag(
+        revenueCatAppUserIdCandidates(row.user),
+        row.productId,
+        row.storeTransactionId,
+      );
+      if (flag == null) continue;
+      await this.prisma.purchaseRecord.update({
+        where: { id: row.id },
+        data: { isSandbox: flag },
+      });
+      updated += 1;
+    }
+    return updated;
   }
 }

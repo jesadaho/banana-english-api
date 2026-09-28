@@ -12,6 +12,7 @@ type RevenueCatNonSubscription = {
   store_transaction_id?: string;
   original_purchase_id?: string;
   purchase_date?: string;
+  is_sandbox?: boolean;
 };
 
 export type RevenueCatPackPurchase = {
@@ -26,7 +27,11 @@ type RevenueCatSubscriberResponse = {
     other_purchases?: Record<string, RevenueCatNonSubscription | undefined>;
     subscriptions?: Record<
       string,
-      { store_transaction_id?: string; original_transaction_id?: string }
+      {
+        store_transaction_id?: string;
+        original_transaction_id?: string;
+        is_sandbox?: boolean;
+      }
     >;
   };
 };
@@ -123,6 +128,29 @@ export class RevenueCatClient {
     throw new BadRequestException('Purchase could not be verified');
   }
 
+  /** is_sandbox for a store transaction, or null when RevenueCat has no match. */
+  async lookupSandboxFlag(
+    appUserIds: string[],
+    productId: string,
+    storeTransactionId: string,
+  ): Promise<boolean | null> {
+    const secret = this.secretKey();
+    if (!secret) return null;
+    for (const appUserId of appUserIds) {
+      try {
+        const payload = await this.fetchSubscriber(appUserId, secret);
+        const matched = this.matchTransaction(payload, {
+          productId,
+          storeTransactionId,
+        });
+        if (matched) return matched.isSandbox ?? null;
+      } catch {
+        // Try the next app user id.
+      }
+    }
+    return null;
+  }
+
   private async fetchSubscriber(
     appUserId: string,
     secret: string,
@@ -211,6 +239,7 @@ export class RevenueCatClient {
       const verified = verifiedFromIds(
         [row?.store_transaction_id, row?.id, row?.original_purchase_id],
         wanted,
+        row?.is_sandbox,
       );
       if (verified) return verified;
     }
@@ -219,6 +248,7 @@ export class RevenueCatClient {
       const verified = verifiedFromIds(
         [row.store_transaction_id, row.original_transaction_id],
         wanted,
+        row.is_sandbox,
       );
       if (verified) return verified;
     }
@@ -231,12 +261,15 @@ export type VerifiedStoreTransaction = {
   /** Store transaction id when RevenueCat has it, else the matched id. */
   canonicalId: string;
   aliases: string[];
+  /** RevenueCat is_sandbox for the matched purchase (undefined if not sent). */
+  isSandbox?: boolean;
 };
 
 /** First id is the store transaction id, preferred as canonical. */
 function verifiedFromIds(
   ids: Array<string | undefined>,
   wanted: string,
+  isSandbox?: boolean,
 ): VerifiedStoreTransaction | null {
   const aliases = [
     ...new Set(
@@ -246,5 +279,9 @@ function verifiedFromIds(
     ),
   ];
   if (!aliases.includes(wanted)) return null;
-  return { canonicalId: aliases[0], aliases };
+  return {
+    canonicalId: aliases[0],
+    aliases,
+    ...(typeof isSandbox === 'boolean' ? { isSandbox } : {}),
+  };
 }
