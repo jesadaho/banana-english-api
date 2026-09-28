@@ -5304,17 +5304,17 @@
           "titleTh": "บททดสอบสุดท้าย กับ Teacher John",
           "type": "interactive_scenario",
           "beat": "Ketsu",
-          "learningTarget": "ใช้ภาษา A1 ทั้งเส้นทางในการพูดคุยสั้น ๆ กับครู",
-          "activity": "Interactive scenario review กับ Teacher John",
+          "learningTarget": "ทบทวนภาษา A1 ครบทั้ง 16 บท บทละ 1 คำถามกับครู",
+          "activity": "Final Interview 16 ด่าน บนดาดฟ้ากับ Teacher John",
           "examples": [
-            "Hello",
-            "My name is…",
-            "I'm from…",
-            "I like…",
-            "See you"
+            "Yes, I am ready!",
+            "My name is… I'm from…",
+            "She wakes up at seven.",
+            "How much is the red shirt?",
+            "Go straight and turn left."
           ],
           "estimatedMinutes": [
-            6,
+            8,
             10
           ],
           "difficultyAxes": [
