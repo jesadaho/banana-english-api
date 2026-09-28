@@ -3,6 +3,7 @@
  *
  *   npx tsx scripts/upload-describe-it-images.ts
  *   npx tsx scripts/upload-describe-it-images.ts fnd_v7_u03n05
+ *   npx tsx scripts/upload-describe-it-images.ts final_interview_john
  *
  * Uses FIREBASE_* service-account env if present, otherwise the logged-in
  * Firebase CLI refresh token.
@@ -14,6 +15,7 @@ import * as admin from 'firebase-admin';
 import { UserRefreshClient } from 'google-auth-library';
 import { publicHeroUrl } from '../src/articles/article-hero';
 import { DESCRIBE_IT_POOLS } from '../src/describe-it/describe-it.data';
+import { FINAL_INTERVIEW_JOHN } from '../src/interactive-scenario/interactive-scenario.data';
 
 const OUTPUT_ROOT =
   '/Users/jesada/Documents/Codex/2026-08-20/new-chat-2/output/describe-it';
@@ -186,8 +188,31 @@ async function uploadPool(poolId: string) {
   }
 }
 
+/** Final Interview stimulus cards: beat.imagePath → local web export. */
+const FINAL_INTERVIEW_DIR = `${OUTPUT_ROOT}/v7_finale_n01/web`;
+
+async function uploadFinalInterview() {
+  const bucketName = storageBucketName();
+  const versionMs = Date.now();
+  for (const beat of FINAL_INTERVIEW_JOHN.beats) {
+    if (!beat.imagePath) continue;
+    const fileName = beat.imagePath.split('/').pop()!;
+    const buffer = await readFile(`${FINAL_INTERVIEW_DIR}/${fileName}`);
+    const uploaded = await uploadWithAdmin(bucketName, beat.imagePath, buffer);
+    if (!uploaded) {
+      await uploadWithCliToken(bucketName, beat.imagePath, buffer);
+    }
+    console.log(`${beat.id}\t${publicHeroUrl(bucketName, beat.imagePath, versionMs)}`);
+  }
+}
+
 async function main() {
   const only = process.argv[2]?.trim();
+  if (only === FINAL_INTERVIEW_JOHN.id) {
+    console.log(`\n== ${only} ==`);
+    await uploadFinalInterview();
+    return;
+  }
   const poolIds = only ? [only] : Object.keys(POOL_SOURCES);
   for (const poolId of poolIds) {
     console.log(`\n== ${poolId} ==`);

@@ -16,10 +16,11 @@ import {
 
 const S = FINAL_INTERVIEW_JOHN;
 
-/** One good answer per beat, in order. */
+/** One good answer per beat, in order (beat 1 = ungraded "Are you ready?"). */
 const HAPPY_ANSWERS = [
   'Yes, I am ready!',
-  "Hello! My name is Maya. I'm from Chiang Mai.",
+  'Hello! My name is Maya.',
+  "I'm from Chiang Mai.",
   'I am twenty years old.',
   'This is my brother. He is a student.',
   'No, it is not. That is your bag.',
@@ -29,7 +30,7 @@ const HAPPY_ANSWERS = [
   'She wakes up at seven. She works at eight.',
   'He is eating.',
   "I like tea. I don't like coffee.",
-  'Yes, I can. I can swim.',
+  'Yes, I can.',
   'Can you cook?',
   'How much is the red shirt?',
   'Go straight and turn left.',
@@ -47,14 +48,29 @@ function run(answers: string[], state?: ScenarioRuntimeState) {
   return { state: s, reply, replies };
 }
 
-describe('final interview (16 turns) — authoring', () => {
-  it('has 16 beats, one goal each, one per Foundation chapter', () => {
-    assert.equal(S.beats.length, 16);
+describe('final interview (17 turns) — authoring', () => {
+  it('ungraded intro + 16 scored beats covering chapters 1–16', () => {
+    assert.equal(S.beats.length, 17);
+    assert.equal(S.beats[0]!.ungraded, true);
+    assert.deepEqual(S.beats[0]!.focusGoalIds, []);
     assert.equal(S.goals.length, 16);
-    const chapters = S.goals.flatMap((g) => g.measuresChapters ?? []).sort((a, b) => a - b);
-    assert.deepEqual(chapters, Array.from({ length: 16 }, (_, i) => i + 1));
     const used = S.beats.flatMap((b) => b.focusGoalIds);
     assert.deepEqual([...used].sort(), S.goals.map((g) => g.id).sort());
+    const chapters = new Set(S.goals.flatMap((g) => g.measuresChapters ?? []));
+    assert.deepEqual([...chapters].sort((a, b) => a - b), Array.from({ length: 16 }, (_, i) => i + 1));
+  });
+
+  it('asks one question per turn', () => {
+    for (const b of S.beats) {
+      assert.ok((b.promptEn.match(/\?/g) ?? []).length <= 1, `${b.id}: ${b.promptEn}`);
+    }
+  });
+
+  it('shows cards only as picture stand-ins, never as answer options', () => {
+    const withCards = S.beats.filter((b) => b.emojiChoice).map((b) => b.focusGoalIds[0]);
+    assert.deepEqual(withCards, [
+      'this_that', 'plural', 'her_day', 'happening_now', 'ask_price', 'directions',
+    ]);
   });
 
   it('opens with the final-boss "Are you ready?" intro', () => {
@@ -72,6 +88,14 @@ describe('final interview (16 turns) — authoring', () => {
     for (const b of S.beats.slice(0, -1)) assert.ok(b.praiseEn.length > 0, b.id);
   });
 
+  it('uses no flag emoji (they do not render on web)', () => {
+    const flags = /[\u{1F1E6}-\u{1F1FF}]/u;
+    for (const b of S.beats) {
+      for (const o of b.emojiChoice?.options ?? []) assert.doesNotMatch(o.emoji, flags, b.id);
+      if (b.retryGuided) assert.doesNotMatch(b.retryGuided.emoji, flags, b.id);
+    }
+  });
+
   it('every accept example passes its own goal locally', () => {
     for (const g of S.goals) {
       for (const ex of g.acceptExamples) {
@@ -82,32 +106,42 @@ describe('final interview (16 turns) — authoring', () => {
 
   it('every retry scaffold answer passes its beat', () => {
     for (const b of S.beats) {
+      if (!b.focusGoalIds.length) continue;
       const g = S.goals.find((x) => x.id === b.focusGoalIds[0])!;
       if (b.retryGuided) assert.equal(softMatchGoal(b.retryGuided.speak, g), true, b.id);
     }
   });
 });
 
-describe('final interview (16 turns) — runtime', () => {
-  it('happy path: 16 answers → complete, all goals, praise before next prompt', () => {
+describe('final interview (17 turns) — runtime', () => {
+  it('happy path: 17 answers → complete, all goals, praise before next prompt', () => {
     const { state, reply, replies } = run(HAPPY_ANSWERS);
     assert.equal(reply.isTaskComplete, true);
     assert.ok(Object.values(state.checkpoints).every(Boolean));
     assert.equal(state.slots.name, 'Maya');
     assert.equal(state.slots.city, 'Chiang Mai');
-    // Turn after intro: personalised praise + next question.
-    assert.match(replies[2]!.aiResponse, /^Nice to meet you, Maya! Chiang Mai\? Cool! How old are you\?/);
+    assert.match(replies[1]!.aiResponse, /^Ha! I like that\. Let's begin\. Hello! I am Teacher John/);
+    assert.match(replies[2]!.aiResponse, /^Nice to meet you, Maya! Where are you from\?$/);
+    assert.match(replies[3]!.aiResponse, /^Oh, Chiang Mai! Cool! How old are you\?$/);
     // John answers the learner's question before praising.
-    assert.match(replies[13]!.aiResponse, /^Yes, I can! Great question!/);
+    assert.match(replies[14]!.aiResponse, /^Yes, I can! Great question!/);
     // Price answer is given.
-    assert.match(replies[14]!.aiResponse, /fifty baht/);
+    assert.match(replies[15]!.aiResponse, /fifty baht/);
     // Closing uses the name.
-    assert.match(replies[15]!.aiResponse, /^Thank you! Very clear! Maya… you passed my test!/);
+    assert.match(replies[16]!.aiResponse, /^Thank you! Very clear! Maya… you passed my test!/);
     assert.match(reply.aiResponse, /Goodbye, Maya!/);
     assert.equal(reply.expectsUserSpeech, false);
   });
 
-  it('wrong answer (assessment): reveal the model answer and move on at once', () => {
+  it('intro accepts anything (even noise) and scores nothing', () => {
+    const r = processScenarioTurn({ scenario: S, state: initScenarioRuntime(S), transcript: 'uh' });
+    assert.equal(r.state.beatIndex, 1);
+    assert.equal(r.reply.assessmentTier, 'correct');
+    assert.ok(Object.values(r.state.checkpoints).every((v) => v === false));
+    assert.match(r.reply.aiResponse, /What is your name\?$/);
+  });
+
+  it('wrong answer (assessment): short reveal and move on at once', () => {
     let state = initScenarioRuntime(S);
     ({ state } = processScenarioTurn({ scenario: S, state, transcript: 'Yes' }));
     const r = processScenarioTurn({ scenario: S, state, transcript: 'I like coffee' });
@@ -116,20 +150,17 @@ describe('final interview (16 turns) — runtime', () => {
     assert.equal(r.state.beatIndex, 2);
     assert.equal(r.state.checkpoints.name, false);
     assert.equal(r.state.goalOutcomes.name, 'skipped');
-    assert.match(
-      r.reply.aiResponse,
-      /^Nice try! You can say: My name is Maya\. I'm from Thailand\. OK, next one! How old are you\?/,
-    );
-    assert.match(r.reply.textTh, /^เฉลย: “My name is Maya\. I'm from Thailand\.” · /);
+    assert.equal(r.reply.aiResponse, 'You can say: My name is Maya. Next! Where are you from?');
+    assert.match(r.reply.textTh, /^เฉลย: “My name is Maya\.” · /);
     assert.equal(r.reply.guidedSpeaking ?? null, null);
   });
 
   it('AI judge "close" passes and recasts the learner\'s own sentence', () => {
     let state = initScenarioRuntime(S);
-    for (const t of HAPPY_ANSWERS.slice(0, 7)) {
+    for (const t of HAPPY_ANSWERS.slice(0, 8)) {
       ({ state } = processScenarioTurn({ scenario: S, state, transcript: t }));
     }
-    assert.equal(state.beatIndex, 7); // t08 wake time
+    assert.equal(S.beats[state.beatIndex]!.focusGoalIds[0], 'wake_time');
     const r = processScenarioTurn({
       scenario: S,
       state,
@@ -140,27 +171,25 @@ describe('final interview (16 turns) — runtime', () => {
     assert.equal(r.state.checkpoints.wake_time, true);
     assert.equal(r.state.goalOutcomes.wake_time, 'close');
     assert.equal(r.reply.assessmentTier, 'close');
-    assert.match(r.reply.aiResponse, /We say: I wake up in the morning\. This is Mia's day/);
+    assert.match(r.reply.aiResponse, /We say: I wake up in the morning\. This is May's day/);
     assert.match(r.reply.textTh, /^เกือบถูกแล้ว! พูดว่า “I wake up in the morning\.”/);
   });
 
-  it('16 wrong answers still finish in exactly 16 turns with all goals skipped', () => {
-    const { reply, state, replies } = run(Array(16).fill('zzz'));
-    assert.equal(replies.length, 17);
+  it('all wrong answers still finish in exactly 17 turns with all goals skipped', () => {
+    const { reply, state, replies } = run(Array(17).fill('zzz'));
+    assert.equal(replies.length, 18);
     assert.equal(reply.isTaskComplete, true);
     assert.equal(state.finished, true);
     assert.ok(Object.values(state.checkpoints).every((v) => v === false));
-    assert.match(reply.aiResponse, /^Nice try! You can say: Thank you! Goodbye! See you! Goodbye, my friend!/);
+    assert.match(reply.aiResponse, /^You can say: Thank you! Goodbye! See you! Goodbye, my friend!/);
   });
 
   it('keeps NPC speech English-only on a wrong answer', () => {
-    const { reply } = processScenarioTurn({
-      scenario: S,
-      state: initScenarioRuntime(S),
-      transcript: 'asdf',
-    });
-    assert.doesNotMatch(reply.aiResponse, /[\u0E00-\u0E7F]/);
-    assert.match(reply.textTh, /[\u0E00-\u0E7F]/);
+    let state = initScenarioRuntime(S);
+    ({ state } = processScenarioTurn({ scenario: S, state, transcript: 'yes' }));
+    const { reply } = processScenarioTurn({ scenario: S, state, transcript: 'asdf' });
+    assert.doesNotMatch(reply.aiResponse, /[฀-๿]/);
+    assert.match(reply.textTh, /[฀-๿]/);
   });
 
   it('flags noise so the controller skips the AI judge', () => {
@@ -169,14 +198,14 @@ describe('final interview (16 turns) — runtime', () => {
     assert.equal(isScenarioNoise('I like tea'), false);
   });
 
-  it('hints stay sticky with checkpoints', () => {
+  it('hints follow the current scored beat', () => {
     let state = initScenarioRuntime(S);
+    assert.deepEqual(scenarioHintForState(S, state).hints, []);
     ({ state } = processScenarioTurn({ scenario: S, state, transcript: 'Yes!' }));
-    assert.equal(state.checkpoints.ready, true);
     const hinted = scenarioHintForState(S, state);
     assert.ok(hinted.hints.length >= 1);
     assert.equal(hinted.hints[0]!.id, 'name_intent');
-    assert.equal(hinted.nextState.checkpoints.ready, true);
+    assert.equal(hinted.nextState.hintsUsed, 1);
   });
 
   it('tolerates legacy in-memory state without new fields', () => {
@@ -216,8 +245,8 @@ describe('final interview — helpers', () => {
   });
 
   it('matches whole words only in accept examples', () => {
-    const g = S.goals.find((x) => x.id === 'ready')!;
-    assert.equal(softMatchGoal('yesterday', g), false);
-    assert.equal(softMatchGoal('yes', g), true);
+    const g = S.goals.find((x) => x.id === 'like')!;
+    assert.equal(softMatchGoal('likely', g), false);
+    assert.equal(softMatchGoal('I like tea', g), true);
   });
 });

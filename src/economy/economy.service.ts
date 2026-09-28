@@ -808,6 +808,16 @@ export class EconomyService {
       const todayKey = local.dateKey;
       const referenceId = `daily_speak:${todayKey}`;
 
+      const now = new Date();
+      const utcDay = new Date(
+        Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()),
+      );
+      await tx.userSpokenDay.upsert({
+        where: { userId_day: { userId, day: utcDay } },
+        create: { userId, day: utcDay, dailySpeakCompletions: 1 },
+        update: { dailySpeakCompletions: { increment: 1 } },
+      });
+
       const prior = await tx.economyTransaction.findFirst({
         where: {
           userId,

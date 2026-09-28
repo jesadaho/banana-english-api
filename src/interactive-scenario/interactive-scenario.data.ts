@@ -6,32 +6,34 @@ import type {
 
 const ROOFTOP_BG = 'assets/images/learn/scenario/final_interview_rooftop_bg.jpg';
 
+/** Stimulus cards in Firebase Storage (upload: scripts/upload-describe-it-images.ts final_interview_john). */
+const cardPath = (file: string) => `describe-it/v7_finale_n01/${file}.webp`;
+
 /**
- * Path Finale — 16 questions, one per A1 Foundations chapter (V7 ch.1–16).
- * One goal per turn. Visual stimuli are emoji cards until the dedicated
+ * Path Finale — ungraded "Are you ready?" intro + 16 scored questions covering
+ * every A1 Foundations chapter (V7 ch.1–16). One question per turn. Visual stimuli are emoji cards until the dedicated
  * images exist (see docs/final-interview-john.md for the asset list).
  */
 const GOALS: InteractiveScenarioGoal[] = [
   {
-    id: 'ready',
-    labelTh: 'ตอบว่าพร้อม',
-    labelEn: 'Say you are ready',
-    meaningRubric: "Confirms being ready — Yes / I am ready / Let's go / OK.",
-    acceptExamples: ['Yes, I am ready!', "I'm ready", "Let's go", 'Yes'],
-    matchPatterns: ["\\b(yes|yeah|yep|ready|ok|okay|sure|let'?s go|of course)\\b"],
-    measuresChapters: [3],
-    hints: { intentTh: 'ตอบว่าพร้อมแล้ว', starterEn: 'Yes, I am…', modelEn: 'Yes, I am ready!' },
+    id: 'name',
+    labelTh: 'บอกชื่อ',
+    labelEn: 'Say your name',
+    meaningRubric: "States a name — My name is X / I am X / I'm X. Real or made-up names are fine.",
+    acceptExamples: ['My name is Maya', "I'm Max", 'I am Ana'],
+    // Matched by the runtime name extractor.
+    measuresChapters: [1],
+    hints: { intentTh: 'บอกชื่อของคุณ', starterEn: 'My name is…', modelEn: 'My name is Maya.' },
   },
   {
-    id: 'name',
-    labelTh: 'บอกชื่อ และมาจากไหน',
-    labelEn: 'Say your name and where you are from',
-    meaningRubric: "Introduces themself — a name (My name is X / I'm X) and/or where they are from / live (I'm from X / I live in X). Either part is enough; real or made-up is fine.",
-    acceptExamples: ['My name is Maya', "I'm Max", "I'm from Thailand", "My name is Maya. I'm from Thailand."],
-    // Name via the runtime name extractor; origin via these patterns.
+    id: 'from_live',
+    labelTh: 'บอกว่ามาจากไหน',
+    labelEn: 'Say where you are from',
+    meaningRubric: "Says origin or home — I'm from X / I live in X. Real or made-up is fine.",
+    acceptExamples: ["I'm from Thailand", 'I am from Bangkok', 'I live in Chiang Mai'],
     matchPatterns: ['\\bfrom\\b', '\\blive (in|at)\\b'],
     measuresChapters: [1],
-    hints: { intentTh: 'บอกชื่อ และบอกว่ามาจากไหน', starterEn: "My name is… I'm from…", modelEn: "My name is Maya. I'm from Thailand." },
+    hints: { intentTh: "บอกว่ามาจากไหน ด้วย I'm from…", starterEn: "I'm from…", modelEn: "I'm from Thailand." },
   },
   {
     id: 'age',
@@ -44,7 +46,7 @@ const GOALS: InteractiveScenarioGoal[] = [
       '\\b(ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety)\\b',
       '\\byears old\\b',
     ],
-    measuresChapters: [8],
+    measuresChapters: [3, 8],
     hints: { intentTh: 'บอกอายุด้วย I am + ตัวเลข', starterEn: 'I am…', modelEn: 'I am twenty years old.' },
   },
   {
@@ -101,9 +103,9 @@ const GOALS: InteractiveScenarioGoal[] = [
   },
   {
     id: 'her_day',
-    labelTh: 'เล่ากิจวัตรของ Mia',
-    labelEn: "Tell Mia's day (she + verb-s)",
-    meaningRubric: "Describes Mia's routine in 3rd person: She wakes up at seven / She works at eight. Missing -s = close.",
+    labelTh: 'เล่ากิจวัตรของ May',
+    labelEn: "Tell May's day (she + verb-s)",
+    meaningRubric: "Describes May's routine in 3rd person: She wakes up at seven / She works at eight. Missing -s = close.",
     acceptExamples: ['She wakes up at seven', 'She works at eight', 'She wakes up at seven. She works at eight.'],
     matchPatterns: ['\\b(wakes|works|gets up|goes|eats|starts)\\b'],
     measuresChapters: [12],
@@ -193,40 +195,40 @@ const beat = (
 const BEATS: InteractiveScenarioBeat[] = [
   beat({
     id: 't01_ready',
-    focusGoalIds: ['ready'],
+    // Intro only — any reply continues, not scored.
+    ungraded: true,
+    focusGoalIds: [],
     npcBriefEn: 'Final boss intro on the school rooftop. Ask if the learner is ready.',
     promptEn: 'Finally… you made it to the top. Great job! One last test before you leave. Are you ready?',
     promptTh: 'ในที่สุดคุณก็มาถึงจุดนี้ได้ เยี่ยมมาก! บททดสอบสุดท้ายก่อนออกจากโรงเรียน… พร้อมไหมครับ?',
-    retryEn: 'Are you ready? Say: Yes, I am ready!',
-    retryTh: 'ตอบว่าพร้อมแล้ว',
-    retryGuided: { stem: 'Yes, I am…', emoji: '💪', label: 'ready', speak: 'Yes, I am ready!' },
     praiseEn: ["Ha! I like that. Let's begin."],
   }),
   beat({
-    id: 't02_intro',
+    id: 't02_name',
     focusGoalIds: ['name'],
-    npcBriefEn: "Ask the learner's name and where they are from (real or made-up).",
-    promptEn: 'Hello! I am Teacher John. Nice to meet you. What is your name? And where are you from?',
-    promptTh: 'สวัสดีครับ ผมครูจอห์น ยินดีที่ได้รู้จัก คุณชื่ออะไร มาจากไหนครับ?',
-    retryEn: "My name is John. I'm from Canada. And you?",
-    retryTh: "ใช้ My name is… / I'm from… (จริงหรือสมมติก็ได้)",
-    emojiChoice: {
-      options: [
-        { emoji: '🙋', label: 'name', speak: 'My name is Maya.' },
-        { emoji: '🇹🇭', label: 'Thailand', speak: "I'm from Thailand." },
-      ],
-    },
-    retryGuided: { stem: "My name is… I'm from…", emoji: '🙋', label: 'name', speak: "My name is Maya. I'm from Thailand." },
-    praiseEn: [
-      'Nice to meet you, {name}! {city}? Cool!',
-      'Nice to meet you, {name}!',
-      'Oh, {city}! Cool!',
-      'Nice to meet you too!',
-    ],
-    capture: ['name', 'city'],
+    npcBriefEn: "Ask for the learner's name (real or made-up).",
+    promptEn: 'Hello! I am Teacher John. Nice to meet you. What is your name?',
+    promptTh: 'สวัสดีครับ ผมครูจอห์น ยินดีที่ได้รู้จัก คุณชื่ออะไรครับ?',
+    retryEn: 'My name is John. What is your name?',
+    retryTh: 'บอกชื่อของคุณ (จริงหรือสมมติก็ได้)',
+    retryGuided: { stem: 'My name is…', emoji: '🙋', label: 'name', speak: 'My name is Maya.' },
+    praiseEn: ['Nice to meet you, {name}!', 'Nice to meet you too!'],
+    capture: 'name',
   }),
   beat({
-    id: 't03_age',
+    id: 't03_from',
+    focusGoalIds: ['from_live'],
+    npcBriefEn: 'Ask where the learner is from.',
+    promptEn: 'Where are you from?',
+    promptTh: 'คุณมาจากไหนครับ?',
+    retryEn: "I'm from Canada. Where are you from?",
+    retryTh: "ใช้ I'm from… (จริงหรือสมมติก็ได้)",
+    retryGuided: { stem: "I'm from…", emoji: '🌏', label: 'Thailand', speak: "I'm from Thailand." },
+    praiseEn: ['Oh, {city}! Cool!', 'Oh, cool!'],
+    capture: 'city',
+  }),
+  beat({
+    id: 't04_age',
     focusGoalIds: ['age'],
     npcBriefEn: 'Ask how old the learner is (made-up is fine).',
     promptEn: 'How old are you?',
@@ -237,35 +239,28 @@ const BEATS: InteractiveScenarioBeat[] = [
     praiseEn: ['Great!', 'Very good!'],
   }),
   beat({
-    id: 't04_family',
+    id: 't05_family',
     focusGoalIds: ['family'],
     npcBriefEn: "Ask about one person in the learner's family.",
     promptEn: 'Now, your family. Tell me about one person in your family.',
     promptTh: 'ทีนี้เรื่องครอบครัว เล่าถึงคนในครอบครัวสักหนึ่งคนครับ',
-    emojiChoice: {
-      options: [
-        { emoji: '👩', label: 'mother', speak: 'This is my mother.' },
-        { emoji: '👨', label: 'father', speak: 'This is my father.' },
-        { emoji: '👧', label: 'sister', speak: 'This is my sister.' },
-        { emoji: '👦', label: 'brother', speak: 'This is my brother.' },
-      ],
-    },
     retryEn: 'Tell me about your mother, father, sister or brother. Say: This is my…',
     retryTh: 'ใช้ This is my… แล้วบอกว่าเขาเป็นใคร',
     retryGuided: { stem: 'This is my…', emoji: '👦', label: 'brother', speak: 'This is my brother. He is a student.' },
     praiseEn: ['Wonderful!', 'How nice!'],
   }),
   beat({
-    id: 't05_this_that',
+    id: 't06_this_that',
     focusGoalIds: ['this_that'],
     visualLayout: 'focus_image',
+    imagePath: cardPath('05-near-red-far-blue-bags'),
     npcBriefEn: "A red bag is near, a blue bag is far. John's bag is blue. He points at the near red bag and asks if it is his.",
     promptEn: 'My bag is blue. Is this my bag?',
     promptTh: 'กระเป๋าของผมสีฟ้า ใบนี้ใช่กระเป๋าของผมไหมครับ?',
     emojiChoice: {
       options: [
-        { emoji: '🔴', label: 'this bag · red', speak: 'This is a red bag.' },
-        { emoji: '🔵', label: 'that bag · blue', speak: 'That is your bag.' },
+        { emoji: '🔴', label: 'red · near', speak: 'This is a red bag.' },
+        { emoji: '🔵', label: 'blue · far', speak: 'That is your bag.' },
       ],
     },
     retryEn: 'This bag is red. My bag is blue. Is this my bag? Say: No, it is not…',
@@ -274,28 +269,21 @@ const BEATS: InteractiveScenarioBeat[] = [
     praiseEn: ['Yes! That is my bag. Thank you!'],
   }),
   beat({
-    id: 't06_have',
+    id: 't07_have',
     focusGoalIds: ['have'],
     npcBriefEn: 'Ask what the learner has in their bag.',
-    promptEn: 'And you? What do you have in your bag?',
+    promptEn: 'And what do you have in your bag?',
     promptTh: 'แล้วคุณล่ะ ในกระเป๋ามีอะไรบ้างครับ?',
-    emojiChoice: {
-      options: [
-        { emoji: '📱', label: 'phone', speak: 'I have a phone.' },
-        { emoji: '🔑', label: 'key', speak: 'I have a key.' },
-        { emoji: '📚', label: 'books', speak: 'I have two books.' },
-        { emoji: '✏️', label: 'pens', speak: 'I have three pens.' },
-      ],
-    },
     retryEn: 'What do you have? Say: I have a…',
     retryTh: 'ใช้ I have… บอกของในกระเป๋า',
     retryGuided: { stem: 'I have…', emoji: '📱', label: 'phone', speak: 'I have a phone and two books.' },
     praiseEn: ['Very good!', 'Nice!'],
   }),
   beat({
-    id: 't07_plural',
+    id: 't08_plural',
     focusGoalIds: ['plural'],
     visualLayout: 'focus_image',
+    imagePath: cardPath('07-three-apples'),
     npcBriefEn: 'Picture: three apples on a table. Ask how many apples there are.',
     promptEn: 'Look at the table. How many apples are there?',
     promptTh: 'ดูที่โต๊ะสิครับ มีแอปเปิลกี่ลูก?',
@@ -306,30 +294,24 @@ const BEATS: InteractiveScenarioBeat[] = [
     praiseEn: ['Yes! Three apples. Excellent!'],
   }),
   beat({
-    id: 't08_wake_time',
+    id: 't09_wake_time',
     focusGoalIds: ['wake_time'],
     npcBriefEn: 'Ask what time they wake up.',
     promptEn: 'What time do you wake up?',
     promptTh: 'คุณตื่นนอนกี่โมงครับ?',
-    emojiChoice: {
-      options: [
-        { emoji: '🕕', label: 'six', speak: 'I wake up at six.' },
-        { emoji: '🕖', label: 'seven', speak: 'I wake up at seven.' },
-        { emoji: '🕗', label: 'eight', speak: 'I wake up at eight.' },
-      ],
-    },
     retryEn: 'What time do you wake up? Say: I wake up at…',
     retryTh: 'ใช้ I wake up at + เวลา',
     retryGuided: { stem: 'I wake up at…', emoji: '🕖', label: 'seven', speak: 'I wake up at seven.' },
     praiseEn: ['Good!', 'Great!'],
   }),
   beat({
-    id: 't09_her_day',
+    id: 't10_her_day',
     focusGoalIds: ['her_day'],
     visualLayout: 'focus_image',
-    npcBriefEn: "Show Mia's timeline: 7:00 wake up, 8:00 work. Ask the learner to tell Mia's day.",
-    promptEn: "This is Mia's day. Tell me about her day.",
-    promptTh: 'นี่คือวันของ Mia เล่าให้ฟังหน่อยครับ',
+    imagePath: cardPath('09-may-wakes-at-seven'),
+    npcBriefEn: "Picture: May wakes up in bed, clock shows 7:00. Ask the learner to tell May's day.",
+    promptEn: "This is May's day. Tell me about her day.",
+    promptTh: 'นี่คือวันของ May เล่าให้ฟังหน่อยครับ',
     emojiChoice: {
       options: [
         { emoji: '⏰', label: '7:00 · wake up', speak: 'She wakes up at seven.' },
@@ -342,9 +324,10 @@ const BEATS: InteractiveScenarioBeat[] = [
     praiseEn: ['Perfect! She wakes up at seven.'],
   }),
   beat({
-    id: 't10_happening_now',
+    id: 't11_happening_now',
     focusGoalIds: ['happening_now'],
     visualLayout: 'focus_image',
+    imagePath: cardPath('10-max-eating-now'),
     npcBriefEn: 'Show Max eating a meal right now. Ask what Max is doing now.',
     promptEn: 'Look! This is Max. What is Max doing now?',
     promptTh: 'ดูสิ นี่คือ Max ตอนนี้ Max กำลังทำอะไรอยู่ครับ?',
@@ -357,43 +340,29 @@ const BEATS: InteractiveScenarioBeat[] = [
     praiseEn: ["That's right! He is eating."],
   }),
   beat({
-    id: 't11_like',
+    id: 't12_like',
     focusGoalIds: ['like'],
     npcBriefEn: 'Ask coffee or tea preference.',
     promptEn: 'I am hungry too! Do you like coffee or tea?',
     promptTh: 'ผมก็หิวเหมือนกัน! คุณชอบกาแฟหรือชาครับ?',
-    emojiChoice: {
-      options: [
-        { emoji: '☕', label: 'coffee', speak: 'I like coffee.' },
-        { emoji: '🍵', label: 'tea', speak: 'I like tea.' },
-      ],
-    },
     retryEn: 'Coffee or tea? Say: I like…',
     retryTh: "ใช้ I like… / I don't like…",
     retryGuided: { stem: 'I like…', emoji: '🍵', label: 'tea', speak: "I like tea. I don't like coffee." },
     praiseEn: ['Me too!', 'Good choice!'],
   }),
   beat({
-    id: 't12_can',
+    id: 't13_can',
     focusGoalIds: ['can'],
-    npcBriefEn: 'Ask what they can do; suggest swim.',
-    promptEn: 'What can you do? Can you swim?',
-    promptTh: 'คุณทำอะไรได้บ้าง ว่ายน้ำเป็นไหมครับ?',
-    emojiChoice: {
-      options: [
-        { emoji: '🏊', label: 'swim', speak: 'I can swim.' },
-        { emoji: '🍳', label: 'cook', speak: 'I can cook.' },
-        { emoji: '🎤', label: 'sing', speak: 'I can sing.' },
-        { emoji: '💃', label: 'dance', speak: 'I can dance.' },
-      ],
-    },
+    npcBriefEn: 'Ask if they can swim (yes or no are both fine).',
+    promptEn: 'Can you swim?',
+    promptTh: 'คุณว่ายน้ำเป็นไหมครับ?',
     retryEn: "Can you swim? Say: Yes, I can. Or: No, I can't.",
     retryTh: "ใช้ I can… / I can't…",
     retryGuided: { stem: 'I can…', emoji: '🏊', label: 'swim', speak: 'Yes, I can. I can swim.' },
     praiseEn: ['Wow, very good!', 'Wow!'],
   }),
   beat({
-    id: 't13_ask_back',
+    id: 't14_ask_back',
     focusGoalIds: ['ask_back'],
     npcBriefEn: "Learner's turn: ask John any simple question. John answers it.",
     promptEn: "Now it's your turn. Ask me a question!",
@@ -405,9 +374,10 @@ const BEATS: InteractiveScenarioBeat[] = [
     praiseEn: ['Great question!'],
   }),
   beat({
-    id: 't14_ask_price',
+    id: 't15_ask_price',
     focusGoalIds: ['ask_price'],
     visualLayout: 'focus_image',
+    imagePath: cardPath('13-red-shirt-price-question'),
     npcBriefEn: 'Shop: blue shirt 80 baht, red shirt price hidden (50 baht). Learner must ask the price of the red shirt.',
     promptEn: 'Now we are at a shop. I want the blue shirt. It is eighty baht. You want the red shirt. Ask me the price!',
     promptTh: 'ตอนนี้เราอยู่ที่ร้าน ผมอยากได้เสื้อสีฟ้า ราคา 80 บาท คุณอยากได้เสื้อสีแดง ถามราคาผมหน่อยครับ',
@@ -423,16 +393,17 @@ const BEATS: InteractiveScenarioBeat[] = [
     praiseEn: ['It is fifty baht. Great question!'],
   }),
   beat({
-    id: 't15_directions',
+    id: 't16_directions',
     focusGoalIds: ['directions'],
     visualLayout: 'focus_image',
+    imagePath: cardPath('15-straight-then-left'),
     npcBriefEn: 'Map: to reach Room 2 go straight, then turn left. John asks for help.',
     promptEn: 'Help me, please! Where is Room 2?',
     promptTh: 'ช่วยผมหน่อยครับ ห้อง 2 อยู่ไหน?',
     emojiChoice: {
       options: [
-        { emoji: '⬆️', label: 'straight', speak: 'Go straight.' },
-        { emoji: '⬅️', label: 'left', speak: 'Turn left.' },
+        { emoji: '⬆️', label: '1', speak: 'Go straight.' },
+        { emoji: '⬅️', label: '2', speak: 'Turn left.' },
         { emoji: '🚪', label: 'Room 2', speak: 'Go straight and turn left.' },
       ],
     },
@@ -442,7 +413,7 @@ const BEATS: InteractiveScenarioBeat[] = [
     praiseEn: ['Thank you! Very clear!'],
   }),
   beat({
-    id: 't16_goodbye',
+    id: 't17_goodbye',
     focusGoalIds: ['goodbye'],
     npcBriefEn: 'Learner passed. Warm close; wait for thank you / goodbye.',
     promptEn:
@@ -466,7 +437,7 @@ export const FINAL_INTERVIEW_JOHN: InteractiveScenarioDef = {
   estimatedMinutes: 10,
   // Assessment: one try per question — wrong = reveal the answer, move on.
   maxAttemptsPerBeat: 1,
-  softAttemptCeiling: 32,
+  softAttemptCeiling: 34,
   scenes: [
     {
       id: 'rooftop',

@@ -533,10 +533,21 @@ export class UsersService {
 
   async incrementSpokenCount(userId: string, by = 1): Promise<void> {
     if (by <= 0) return;
-    await this.prisma.user.update({
-      where: { id: userId },
-      data: { spokenCount: { increment: by } },
-    });
+    const now = new Date();
+    const day = new Date(
+      Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()),
+    );
+    await this.prisma.$transaction([
+      this.prisma.user.update({
+        where: { id: userId },
+        data: { spokenCount: { increment: by } },
+      }),
+      this.prisma.userSpokenDay.upsert({
+        where: { userId_day: { userId, day } },
+        create: { userId, day, count: by },
+        update: { count: { increment: by } },
+      }),
+    ]);
   }
 
   async updateDisplayName(userId: string, displayName: string) {

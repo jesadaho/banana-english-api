@@ -1,4 +1,5 @@
 import type { TurnExchangeResponse, TurnVisualCue } from '../common/api.types';
+import { describeItImageUrl } from '../describe-it/describe-it.data';
 import type {
   InteractiveScenarioBeat,
   InteractiveScenarioDef,
@@ -282,6 +283,7 @@ export function localMatchCurrentBeat(
   transcript: string,
 ): boolean {
   const beat = currentScenarioBeat(scenario, state);
+  if (beat.ungraded) return true;
   if (beat.learnerMayAsk && looksLikeQuestion(transcript)) return true;
   return beat.focusGoalIds.some((id) => {
     const goal = scenario.goals.find((g) => g.id === id);
@@ -299,10 +301,11 @@ function visualForBeat(
 ): TurnVisualCue | null {
   const scene = scenario.scenes.find((s) => s.id === beat.sceneId);
   const imageAsset = beat.imageAsset ?? scene?.imageAsset;
-  if (!imageAsset && !beat.visualLayout) return null;
+  if (!imageAsset && !beat.visualLayout && !beat.imagePath) return null;
   return {
     sceneId: beat.sceneId,
     imageAsset,
+    ...(beat.imagePath ? { imageUrl: describeItImageUrl(beat.imagePath) } : {}),
     // focus_image only once a dedicated per-beat image exists; until then the
     // emoji cards carry the stimulus and John stays beside the scene.
     layout: beat.imageAsset ? (beat.visualLayout ?? 'beside_teacher') : 'beside_teacher',
@@ -317,6 +320,7 @@ function nextOpenBeatIndex(
   let idx = from;
   while (idx < scenario.beats.length - 1) {
     const b = scenario.beats[idx]!;
+    if (b.ungraded || b.focusGoalIds.length === 0) break;
     if (!b.focusGoalIds.every((id) => checkpoints[id])) break;
     idx += 1;
   }
@@ -450,8 +454,8 @@ export function processScenarioTurn(params: {
     wasSoftAdvance = true;
     const model = revealModel(scenario, beat, state.slots);
     reaction = model
-      ? `Nice try! You can say: ${model} OK, next one!`
-      : "Nice try! OK, next one!";
+      ? `You can say: ${model} Next!`
+      : 'OK, next!';
     noteTh = model ? `เฉลย: “${model}”` : '';
   }
 
@@ -462,7 +466,7 @@ export function processScenarioTurn(params: {
       state,
       reply: {
         aiResponse: wasSoftAdvance
-          ? `${reaction.replace(/ OK, next one!$/, '')} ${closing}`.trim()
+          ? `${reaction.replace(/ Next!$/, '')} ${closing}`.trim()
           : `${reaction} ${closing}`.trim(),
         textTh: joinTh(noteTh, scenario.completionTh),
         isTaskComplete: true,
