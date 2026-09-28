@@ -3204,6 +3204,19 @@ export class SessionsController {
           userId: req.user.id,
           gameId,
         });
+        data.scenarioRewards = {
+          xpEarned: scenarioRewards.xpEarned,
+          seedsEarned: scenarioRewards.seedsEarned,
+          ratingLabel: getMissionReward(
+            Math.round((goalsDone / Math.max(totalGoals, 1)) * 100),
+          ).ratingLabel,
+          streakDays: scenarioRewards.streakDays,
+          previousStreakDays: scenarioRewards.previousStreakDays,
+          streakIncreased: scenarioRewards.streakIncreased,
+          streakBonus: scenarioRewards.streakBonus,
+          balances: scenarioRewards.balances,
+          isDailyMission: false,
+        };
         try {
           await this.prisma.userSession.update({
             where: { id: sessionId },
@@ -3556,6 +3569,13 @@ export class SessionsController {
         };
       }
 
+      if (
+        data.session.sessionType === 'interactive_scenario' &&
+        data.scenarioConfig
+      ) {
+        return await this.buildScenarioReport(req.user.id, sessionId, data, duration);
+      }
+
       duration = Math.min(
         duration,
         data.session.durationLimitSeconds ?? duration,
@@ -3628,6 +3648,89 @@ export class SessionsController {
     } catch (err) {
       throwAiServiceBadGateway(err, chatDebug);
     }
+  }
+
+  /** Final Interview result in the Mission result shape (score = goals met). */
+  private async buildScenarioReport(
+    userId: string,
+    sessionId: string,
+    data: SessionData,
+    durationSeconds: number,
+  ): Promise<MissionResultResponse> {
+    if (data.scenarioReport) return data.scenarioReport;
+    const config = data.scenarioConfig!;
+    const checkpoints =
+      data.scenarioRuntime?.checkpoints ?? data.session.checkpointStates ?? {};
+    const completedCount = Object.values(checkpoints).filter(Boolean).length;
+    const totalCount = Math.max(config.goals.length, 1);
+    const overallScore = Math.round((completedCount / totalCount) * 100);
+    const scoreLabel = getMissionReward(overallScore).ratingLabel;
+    const duration = Math.min(durationSeconds, 60 * 60);
+    const ended = data.endedAt ?? new Date();
+
+    const report = await this.chat.generateReport(data.turns, duration);
+    const turns = mergeTurnsWithFeedback(data.turns, report.turnFeedback);
+    const rewards = data.scenarioRewards;
+
+    const result: MissionResultResponse = {
+      sessionId,
+      feedbackEn: report.feedbackEn,
+      feedbackTh: report.feedbackTh,
+      bestSentenceEn: report.bestSentenceEn,
+      bestSentenceNoteTh: report.bestSentenceNoteTh,
+      grammarTip: report.grammarTip,
+      grammarTipTh: report.grammarTipTh,
+      pronunciationIssues: report.pronunciationIssues,
+      vocab: report.vocab,
+      durationSeconds: duration,
+      topicId: config.id,
+      missionTitleTh: config.titleTh,
+      overallScore,
+      scoreLabel,
+      starRating: getStarRating(overallScore),
+      goldBananasEarned: rewards?.xpEarned ?? 0,
+      checkpointSummary: checkpoints,
+      rewards,
+      newAchievements: [],
+      simulationId: config.id,
+      completedAt: ended.toISOString(),
+      turns,
+    };
+
+    try {
+      await this.prisma.userSession.updateMany({
+        where: { id: sessionId, userId },
+        data: {
+          overallScore,
+          scoreLabel,
+          xpEarned: rewards?.xpEarned ?? 0,
+          seedsEarned: rewards?.seedsEarned ?? 0,
+          durationSeconds: duration,
+          learnerTurnCount: turns.filter((t) => t.speaker === 'user').length,
+          reportJson: JSON.parse(
+            JSON.stringify({
+              feedbackEn: report.feedbackEn,
+              feedbackTh: report.feedbackTh,
+              bestSentenceEn: report.bestSentenceEn,
+              bestSentenceNoteTh: report.bestSentenceNoteTh,
+              grammarTip: report.grammarTip,
+              grammarTipTh: report.grammarTipTh,
+              pronunciationIssues: report.pronunciationIssues,
+              vocab: report.vocab,
+              missionTitleTh: config.titleTh,
+              topicId: config.id,
+              checkpointSummary: checkpoints,
+              turns,
+            }),
+          ) as Prisma.InputJsonValue,
+        },
+      });
+    } catch (persistErr) {
+      console.error('Failed to persist scenario report', persistErr);
+    }
+
+    data.scenarioReport = result;
+    return result;
   }
 
   private async getStoredReport(

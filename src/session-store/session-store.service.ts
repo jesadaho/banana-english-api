@@ -9,6 +9,8 @@ import type {
   RoleplayNpcPrompt,
   GptIntroReport,
   LessonScene,
+  MissionResultResponse,
+  SessionRewardSummary,
   SessionType,
   SpeakingMetricsPayload,
   TurnVisualCue,
@@ -148,6 +150,10 @@ export interface SessionData {
   lessonConfig?: LessonConfig;
   scenarioConfig?: InteractiveScenarioDef;
   scenarioRuntime?: ScenarioRuntimeState;
+  /** Rewards granted when a completed scenario ended (shown on the result). */
+  scenarioRewards?: SessionRewardSummary;
+  /** Cached Mission-style result so re-opening the screen skips the AI call. */
+  scenarioReport?: MissionResultResponse;
   /** First name for 1:1 tutor address (training sessions). */
   learnerFirstName?: string;
   freeTalk?: FreeTalkSessionState;
