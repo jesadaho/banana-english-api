@@ -32,7 +32,7 @@ Source: `src/interactive-scenario/interactive-scenario.data.ts`
 | 13 | Can you swim? | can | 11 |
 | 14 | ⭐ Ask me a question! | ask_back | 14 |
 | 15 | ⭐ Ask me the price (red shirt). | ask_price | 15 |
-| 16 | ⭐ Where is Room 2? | directions | 16 |
+| 16 | ⭐ Which way do I go? | directions | 16 |
 | 17 | Time to say goodbye! | goodbye | 2 |
 
 Cards (`emojiChoice`) appear only as picture stand-ins on turns 6, 8, 10, 11, 15, 16 — never as answer options on personal questions. Labels give facts from the picture, not the target words. No flag emoji (they don't render on web).
@@ -43,8 +43,8 @@ Put files in the app under `assets/images/learn/scenario/`:
 - t07 `final_interview_apples.jpg` — three apples on a table
 - t09 `final_interview_mia_day.jpg` — timeline 7:00 wake up → 8:00 work
 - t10 `final_interview_max_eating.jpg` — Max eating now
-- t14 `final_interview_shirts.jpg` — red shirt (price hidden) / blue shirt 80 ฿
-- t15 `final_interview_map.jpg` — map: straight, then left to Room 2
+- t14 `final_interview_shirts.jpg` — red shirt (price hidden)
+- t15 `final_interview_map.jpg` — map: straight, then left to the door
 Until then every beat uses `beside_teacher` + `emojiChoice` cards.
 
 ## TTS

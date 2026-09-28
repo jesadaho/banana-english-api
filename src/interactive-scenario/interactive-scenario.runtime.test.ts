@@ -66,11 +66,14 @@ describe('final interview (17 turns) — authoring', () => {
     }
   });
 
-  it('shows cards only as picture stand-ins, never as answer options', () => {
-    const withCards = S.beats.filter((b) => b.emojiChoice).map((b) => b.focusGoalIds[0]);
-    assert.deepEqual(withCards, [
+  it('shows a picture card instead of emoji cards on stimulus beats', () => {
+    const withImage = S.beats.filter((b) => b.imagePath).map((b) => b.focusGoalIds[0]);
+    assert.deepEqual(withImage, [
       'this_that', 'plural', 'her_day', 'happening_now', 'ask_price', 'directions',
     ]);
+    for (const b of S.beats) {
+      if (b.imagePath) assert.equal(b.emojiChoice, undefined, b.id);
+    }
   });
 
   it('opens with the final-boss "Are you ready?" intro', () => {

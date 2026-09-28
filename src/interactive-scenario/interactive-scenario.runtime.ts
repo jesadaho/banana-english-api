@@ -306,8 +306,8 @@ function visualForBeat(
     sceneId: beat.sceneId,
     imageAsset,
     ...(beat.imagePath ? { imageUrl: describeItImageUrl(beat.imagePath) } : {}),
-    // focus_image only once a dedicated per-beat image exists; until then the
-    // emoji cards carry the stimulus and John stays beside the scene.
+    // focus_image only for bundled per-beat art; remote picture cards
+    // (imageUrl) render beside John.
     layout: beat.imageAsset ? (beat.visualLayout ?? 'beside_teacher') : 'beside_teacher',
   };
 }

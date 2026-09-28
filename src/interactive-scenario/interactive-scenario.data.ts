@@ -11,8 +11,8 @@ const cardPath = (file: string) => `describe-it/v7_finale_n01/${file}.webp`;
 
 /**
  * Path Finale — ungraded "Are you ready?" intro + 16 scored questions covering
- * every A1 Foundations chapter (V7 ch.1–16). One question per turn. Visual stimuli are emoji cards until the dedicated
- * images exist (see docs/final-interview-john.md for the asset list).
+ * every A1 Foundations chapter (V7 ch.1–16). One question per turn. Visual stimuli are Firebase picture cards
+ * (beat.imagePath) shown beside John — no emoji cards on those beats.
  */
 const GOALS: InteractiveScenarioGoal[] = [
   {
@@ -63,7 +63,7 @@ const GOALS: InteractiveScenarioGoal[] = [
     id: 'this_that',
     labelTh: 'บอกว่าไม่ใช่ และชี้กระเป๋าที่ถูก',
     labelEn: 'Say no and point to the right bag',
-    meaningRubric: "The near bag is red; John's bag is blue and far away. Says it is not his / points to 'that' blue bag.",
+    meaningRubric: "The bag in the picture is red; John's bag is blue. Says it is not his / it is not John's bag.",
     acceptExamples: ['No, it is not. That is your bag.', 'No', "No, that's your bag", 'That blue bag'],
     matchPatterns: ["\\b(no|not|isn'?t)\\b", "\\bthat( is|'s)? (your|the blue)\\b", '\\bblue\\b'],
     measuresChapters: [6],
@@ -163,8 +163,8 @@ const GOALS: InteractiveScenarioGoal[] = [
   },
   {
     id: 'directions',
-    labelTh: 'บอกทางไปห้อง 2',
-    labelEn: 'Give directions to Room 2',
+    labelTh: 'บอกทางไปที่ประตู',
+    labelEn: 'Give directions to the door',
     meaningRubric: 'Route on the map: go straight, then turn left. Accept either step or both.',
     acceptExamples: ['Go straight and turn left', 'Go straight', 'Turn left'],
     matchPatterns: ['\\b(straight|left)\\b'],
@@ -253,16 +253,10 @@ const BEATS: InteractiveScenarioBeat[] = [
     id: 't06_this_that',
     focusGoalIds: ['this_that'],
     visualLayout: 'focus_image',
-    imagePath: cardPath('05-near-red-far-blue-bags'),
-    npcBriefEn: "A red bag is near, a blue bag is far. John's bag is blue. He points at the near red bag and asks if it is his.",
+    imagePath: cardPath('05-red-bag-on-bench'),
+    npcBriefEn: "Picture: a red bag on a bench. John's bag is blue. He points at the red bag and asks if it is his.",
     promptEn: 'My bag is blue. Is this my bag?',
     promptTh: 'กระเป๋าของผมสีฟ้า ใบนี้ใช่กระเป๋าของผมไหมครับ?',
-    emojiChoice: {
-      options: [
-        { emoji: '🔴', label: 'red · near', speak: 'This is a red bag.' },
-        { emoji: '🔵', label: 'blue · far', speak: 'That is your bag.' },
-      ],
-    },
     retryEn: 'This bag is red. My bag is blue. Is this my bag? Say: No, it is not…',
     retryTh: 'ใบนี้สีแดง ไม่ใช่ของครู — บอกว่าไม่ใช่ แล้วชี้ใบสีฟ้า',
     retryGuided: { stem: 'No, it is not. That is…', emoji: '🔵', label: 'blue bag', speak: 'No, it is not. That is your bag.' },
@@ -287,7 +281,6 @@ const BEATS: InteractiveScenarioBeat[] = [
     npcBriefEn: 'Picture: three apples on a table. Ask how many apples there are.',
     promptEn: 'Look at the table. How many apples are there?',
     promptTh: 'ดูที่โต๊ะสิครับ มีแอปเปิลกี่ลูก?',
-    emojiChoice: { options: [{ emoji: '🍎🍎🍎', label: 'on the table', speak: 'There are three apples.' }] },
     retryEn: 'Count the apples. Say: There are…',
     retryTh: 'บอกจำนวน + คำนามเติม s',
     retryGuided: { stem: 'There are…', emoji: '🍎', label: 'three', speak: 'There are three apples.' },
@@ -312,12 +305,6 @@ const BEATS: InteractiveScenarioBeat[] = [
     npcBriefEn: "Picture: May wakes up in bed, clock shows 7:00. Ask the learner to tell May's day.",
     promptEn: "This is May's day. Tell me about her day.",
     promptTh: 'นี่คือวันของ May เล่าให้ฟังหน่อยครับ',
-    emojiChoice: {
-      options: [
-        { emoji: '⏰', label: '7:00 · wake up', speak: 'She wakes up at seven.' },
-        { emoji: '💼', label: '8:00 · work', speak: 'She works at eight.' },
-      ],
-    },
     retryEn: "Look. Seven o'clock, wake up. Say: She wakes up at…",
     retryTh: 'ใช้ She + กริยาเติม s เช่น She wakes up…',
     retryGuided: { stem: 'She wakes up at…', emoji: '⏰', label: '7:00', speak: 'She wakes up at seven. She works at eight.' },
@@ -331,9 +318,6 @@ const BEATS: InteractiveScenarioBeat[] = [
     npcBriefEn: 'Show Max eating a meal right now. Ask what Max is doing now.',
     promptEn: 'Look! This is Max. What is Max doing now?',
     promptTh: 'ดูสิ นี่คือ Max ตอนนี้ Max กำลังทำอะไรอยู่ครับ?',
-    emojiChoice: {
-      options: [{ emoji: '🍽️', label: 'Max · now', speak: 'He is eating.' }],
-    },
     retryEn: 'Max is… eat… Say: He is…',
     retryTh: 'ใช้ He is + กริยา -ing',
     retryGuided: { stem: 'He is…', emoji: '🍽️', label: 'eat', speak: 'He is eating.' },
@@ -345,6 +329,12 @@ const BEATS: InteractiveScenarioBeat[] = [
     npcBriefEn: 'Ask coffee or tea preference.',
     promptEn: 'I am hungry too! Do you like coffee or tea?',
     promptTh: 'ผมก็หิวเหมือนกัน! คุณชอบกาแฟหรือชาครับ?',
+    emojiChoice: {
+      options: [
+        { emoji: '☕', label: 'coffee', speak: 'I like coffee.' },
+        { emoji: '🍵', label: 'tea', speak: 'I like tea.' },
+      ],
+    },
     retryEn: 'Coffee or tea? Say: I like…',
     retryTh: "ใช้ I like… / I don't like…",
     retryGuided: { stem: 'I like…', emoji: '🍵', label: 'tea', speak: "I like tea. I don't like coffee." },
@@ -378,18 +368,11 @@ const BEATS: InteractiveScenarioBeat[] = [
     focusGoalIds: ['ask_price'],
     visualLayout: 'focus_image',
     imagePath: cardPath('13-red-shirt-price-question'),
-    npcBriefEn: 'Shop: blue shirt 80 baht, red shirt price hidden (50 baht). Learner must ask the price of the red shirt.',
-    promptEn: 'Now we are at a shop. I want the blue shirt. It is eighty baht. You want the red shirt. Ask me the price!',
-    promptTh: 'ตอนนี้เราอยู่ที่ร้าน ผมอยากได้เสื้อสีฟ้า ราคา 80 บาท คุณอยากได้เสื้อสีแดง ถามราคาผมหน่อยครับ',
-    emojiChoice: {
-      options: [
-        { emoji: '🔴', label: 'red shirt · ?', speak: 'How much is the red shirt?' },
-        { emoji: '🔵', label: 'blue shirt · 80 ฿', speak: 'How much is the blue shirt?' },
-      ],
-    },
+    npcBriefEn: 'Shop: red shirt, price hidden (50 baht). Learner must ask the price of the red shirt.',
+    promptEn: "We're at a shop. You want this red shirt. Ask me the price.",
+    promptTh: 'เราอยู่ที่ร้านค้า คุณอยากได้เสื้อสีแดงตัวนี้ ถามราคาผมหน่อยครับ',
     retryEn: 'Ask me the price. Say: How much is…?',
     retryTh: 'ถามราคาด้วย How much is…?',
-    retryGuided: { stem: 'How much is…?', emoji: '👕', label: 'red shirt', speak: 'How much is the red shirt?' },
     praiseEn: ['It is fifty baht. Great question!'],
   }),
   beat({
@@ -397,16 +380,9 @@ const BEATS: InteractiveScenarioBeat[] = [
     focusGoalIds: ['directions'],
     visualLayout: 'focus_image',
     imagePath: cardPath('15-straight-then-left'),
-    npcBriefEn: 'Map: to reach Room 2 go straight, then turn left. John asks for help.',
-    promptEn: 'Help me, please! Where is Room 2?',
-    promptTh: 'ช่วยผมหน่อยครับ ห้อง 2 อยู่ไหน?',
-    emojiChoice: {
-      options: [
-        { emoji: '⬆️', label: '1', speak: 'Go straight.' },
-        { emoji: '⬅️', label: '2', speak: 'Turn left.' },
-        { emoji: '🚪', label: 'Room 2', speak: 'Go straight and turn left.' },
-      ],
-    },
+    npcBriefEn: 'Map: to reach the door go straight, then turn left. John asks which way to go.',
+    promptEn: 'I need to get to that door. Which way do I go?',
+    promptTh: 'ผมต้องไปที่ประตูบานนั้น ต้องไปทางไหนครับ?',
     retryEn: 'Look at the map. Say: Go straight and…',
     retryTh: 'บอกทางด้วย Go straight / Turn left',
     retryGuided: { stem: 'Go straight and…', emoji: '⬅️', label: 'left', speak: 'Go straight and turn left.' },
@@ -433,7 +409,7 @@ export const FINAL_INTERVIEW_JOHN: InteractiveScenarioDef = {
   ttsVoiceProfile: 'teacher_john',
   titleEn: 'Final Interview',
   titleTh: 'บททดสอบสุดท้าย กับ Teacher John',
-  bananaCost: 0,
+  bananaCost: 5,
   estimatedMinutes: 10,
   // Assessment: one try per question — wrong = reveal the answer, move on.
   maxAttemptsPerBeat: 1,
