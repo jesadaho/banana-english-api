@@ -144,6 +144,8 @@ export interface TurnExchangeResponse {
 /** Shared turn-level visual for scenarios (lessons later). */
 export interface TurnVisualCue {
   imageAsset?: string;
+  /** Remote stimulus card (Firebase Storage), shown beside the teacher. */
+  imageUrl?: string;
   sceneId?: string;
   layout?: 'beside_teacher' | 'focus_image';
 }

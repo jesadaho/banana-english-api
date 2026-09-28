@@ -179,6 +179,7 @@ import { ActivityService } from '../users/activity.service';
 import { RecentLearnersService } from '../recent-learners/recent-learners.service';
 import { AchievementsService } from '../achievements/achievements.service';
 import { getInteractiveScenario } from '../interactive-scenario/interactive-scenario.data';
+import { describeItImageUrl } from '../describe-it/describe-it.data';
 import {
   buildScenarioOpening,
   currentScenarioBeat,
@@ -547,6 +548,9 @@ export class SessionsController {
           goalsTh: config.goals.map((g) => g.labelTh),
           goalsEn: config.goals.map((g) => g.labelEn),
           goalHints: config.goals.map((g) => g.hints),
+          imageUrls: config.beats.flatMap((b) =>
+            b.imagePath ? [describeItImageUrl(b.imagePath)] : [],
+          ),
         },
       },
       chatDebug,

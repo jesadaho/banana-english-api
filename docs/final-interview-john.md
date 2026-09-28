@@ -1,38 +1,41 @@
-# Final Interview with Teacher John (V7 finale, 16 turns = 1 per chapter)
+# Final Interview with Teacher John (V7 finale: intro + 16 scored questions)
 
 Scenario id: `final_interview_john` · path node `v7_finale_n01` (16.13)
 Source: `src/interactive-scenario/interactive-scenario.data.ts`
 
 ## Flow
-- 16 beats, one goal each, one per Foundation chapter (see `measuresChapters`). Opening = beat 1 ("Finally… you made it to the top… Are you ready?").
+- Beat 1 "Are you ready?" is ungraded (any reply continues). Then 16 scored beats, one question each, covering ch.1–16 (see `measuresChapters`). Opening = beat 1 ("Finally… you made it to the top… Are you ready?").
 - Correct → praise (+ `{name}` / `{city}` when captured) + next question.
 - Assessment = one try per question (`maxAttemptsPerBeat: 1`).
 - Close (AI) → pass + recast of the learner's own sentence: "Good! We say: I wake up at six." (sub: เกือบถูกแล้ว! พูดว่า …)
-- Wrong → reveal + move on: "Nice try! You can say: <model>. OK, next one!" (sub: เฉลย: “…”) — goal stays unchecked (`goalOutcomes = skipped`).
+- Wrong → reveal + move on: "You can say: <model>. Next!" (sub: เฉลย: “…”) — goal stays unchecked (`goalOutcomes = skipped`).
 - Noise ("", "uh", "zzz"…) is wrong without an AI call.
 - Matching: local regex/examples first; if no match, Gemini `evaluateScenarioUtterance` (6 s timeout) → correct / close / incorrect. `close` passes.
 - Beat 14 (ask John): John answers the learner's question first (`answerLearnerQuestion`).
 - Scenario ends after beat 16 even with skipped goals; rewards use checkpoints / 16.
 
 ## Turns
-| # | Goal | Chapter |
-|---|------|------|
-| 1 | ready — "Are you ready?" | 3 |
-| 2 | name — name + where from | 1 |
-| 3 | age | 8 |
-| 4 | family | 4 |
-| 5 | this_that (red/blue bag) | 6 |
-| 6 | have | 7 |
-| 7 | plural (three apples) | 5 |
-| 8 | wake_time | 9 |
-| 9 | her_day (Mia timeline, she + -s) | 12 |
-| 10 | happening_now (Max eating) | 13 |
-| 11 | like (coffee/tea) | 10 |
-| 12 | can | 11 |
-| 13 | ask_back ⭐ | 14 |
-| 14 | ask_price ⭐ (red shirt, 50 ฿) | 15 |
-| 15 | directions ⭐ (straight + left) | 16 |
-| 16 | goodbye | 2 |
+| # | John asks | Goal | Chapter |
+|---|-----------|------|------|
+| 1 | …Are you ready? | — (ungraded) | — |
+| 2 | What is your name? | name | 1 |
+| 3 | Where are you from? | from_live | 1 |
+| 4 | How old are you? | age | 3, 8 |
+| 5 | Tell me about one person in your family. | family | 4 |
+| 6 | My bag is blue. Is this my bag? | this_that | 6 |
+| 7 | And what do you have in your bag? | have | 7 |
+| 8 | How many apples are there? | plural | 5 |
+| 9 | What time do you wake up? | wake_time | 9 |
+| 10 | Tell me about May's day. | her_day | 12 |
+| 11 | What is Max doing now? | happening_now | 13 |
+| 12 | Do you like coffee or tea? | like | 10 |
+| 13 | Can you swim? | can | 11 |
+| 14 | ⭐ Ask me a question! | ask_back | 14 |
+| 15 | ⭐ Ask me the price (red shirt). | ask_price | 15 |
+| 16 | ⭐ Where is Room 2? | directions | 16 |
+| 17 | Time to say goodbye! | goodbye | 2 |
+
+Cards (`emojiChoice`) appear only as picture stand-ins on turns 6, 8, 10, 11, 15, 16 — never as answer options on personal questions. Labels give facts from the picture, not the target words. No flag emoji (they don't render on web).
 
 ## Images to produce (then set `imageAsset` on the beat → app switches to `focus_image`)
 Put files in the app under `assets/images/learn/scenario/`:

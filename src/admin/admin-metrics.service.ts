@@ -480,7 +480,8 @@ export class AdminMetricsService {
     userFilter: Prisma.UserWhereInput,
   ) {
     const inRange = { gte: range.from, lte: range.to };
-    const [rows, dailySpeakRows, miniGameRows] = await Promise.all([
+    const [rows, dailySpeakRows, miniGameRows, turnRows, spokenDayRows] =
+      await Promise.all([
       this.prisma.userSession.findMany({
         where: {
           rewardsApplied: true,
@@ -488,7 +489,7 @@ export class AdminMetricsService {
           sessionType: { in: ['training', 'simulation'] },
           user: userFilter,
         },
-        select: { completedAt: true, sessionType: true },
+        select: { completedAt: true, sessionType: true, userId: true },
       }),
       this.prisma.economyTransaction.findMany({
         where: {
@@ -497,11 +498,28 @@ export class AdminMetricsService {
           createdAt: inRange,
           user: userFilter,
         },
-        select: { createdAt: true },
+        select: { createdAt: true, userId: true },
       }),
       this.prisma.miniGameScoreAttempt.findMany({
         where: { createdAt: inRange, user: userFilter },
         select: { createdAt: true, userId: true },
+      }),
+      this.prisma.userSession.findMany({
+        where: {
+          completedAt: inRange,
+          learnerTurnCount: { gt: 0 },
+          user: userFilter,
+        },
+        select: { completedAt: true, learnerTurnCount: true, userId: true },
+      }),
+      this.prisma.userSpokenDay.findMany({
+        where: { day: inRange, user: userFilter },
+        select: {
+          day: true,
+          count: true,
+          dailySpeakCompletions: true,
+          userId: true,
+        },
       }),
     ]);
     const map = new Map<
@@ -512,6 +530,12 @@ export class AdminMetricsService {
         dailySpeak: number;
         miniGames: number;
         miniGameUsers: Set<string>;
+        spokenSessions: number;
+        spokenMiniGames: number;
+        dailySpeakCompletions: number;
+        lessonUsers: Set<string>;
+        missionUsers: Set<string>;
+        speakers: Set<string>;
       }
     >();
     for (const key of eachUtcDateKey(range.from, range.to)) {
@@ -521,30 +545,66 @@ export class AdminMetricsService {
         dailySpeak: 0,
         miniGames: 0,
         miniGameUsers: new Set(),
+        spokenSessions: 0,
+        spokenMiniGames: 0,
+        dailySpeakCompletions: 0,
+        lessonUsers: new Set(),
+        missionUsers: new Set(),
+        speakers: new Set(),
       });
     }
     for (const row of rows) {
       if (!row.completedAt) continue;
       const bucket = map.get(dateKey(row.completedAt));
       if (!bucket) continue;
-      if (row.sessionType === 'training') bucket.lessons += 1;
-      if (row.sessionType === 'simulation') bucket.missions += 1;
+      if (row.sessionType === 'training') {
+        bucket.lessons += 1;
+        bucket.lessonUsers.add(row.userId);
+      }
+      if (row.sessionType === 'simulation') {
+        bucket.missions += 1;
+        bucket.missionUsers.add(row.userId);
+      }
     }
     for (const row of dailySpeakRows) {
       const bucket = map.get(dateKey(row.createdAt));
-      if (bucket) bucket.dailySpeak += 1;
+      if (!bucket) continue;
+      bucket.dailySpeak += 1;
+      bucket.speakers.add(row.userId);
     }
     for (const row of miniGameRows) {
       const bucket = map.get(dateKey(row.createdAt));
       if (!bucket) continue;
       bucket.miniGames += 1;
       bucket.miniGameUsers.add(row.userId);
+      bucket.speakers.add(row.userId);
     }
-    return [...map.entries()].map(([day, { miniGameUsers, ...v }]) => ({
-      day,
-      ...v,
-      miniGameUsers: miniGameUsers.size,
-    }));
+    for (const row of turnRows) {
+      if (!row.completedAt) continue;
+      const bucket = map.get(dateKey(row.completedAt));
+      if (!bucket) continue;
+      bucket.spokenSessions += row.learnerTurnCount ?? 0;
+      bucket.speakers.add(row.userId);
+    }
+    for (const row of spokenDayRows) {
+      const bucket = map.get(dateKey(row.day));
+      if (!bucket) continue;
+      bucket.spokenMiniGames += row.count;
+      bucket.dailySpeakCompletions += row.dailySpeakCompletions;
+      if (row.count > 0 || row.dailySpeakCompletions > 0) {
+        bucket.speakers.add(row.userId);
+      }
+    }
+    return [...map.entries()].map(
+      ([day, { miniGameUsers, lessonUsers, missionUsers, speakers, ...v }]) => ({
+        day,
+        ...v,
+        miniGameUsers: miniGameUsers.size,
+        lessonUsers: lessonUsers.size,
+        missionUsers: missionUsers.size,
+        speakers: speakers.size,
+      }),
+    );
   }
 
   private async buildAcquisition(range: DateRange, filters: MetricsFilters) {

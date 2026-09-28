@@ -109,6 +109,7 @@ model User {
   foundationChapterSkips    FoundationChapterSkip[]
   foundationSkipQuizAttempts FoundationSkipQuizAttempt[]
   miniGameScoreAttempts     MiniGameScoreAttempt[]
+  spokenDays                UserSpokenDay[]
   bugReports                BugReport[]
 
   createdAt               DateTime  @default(now())
@@ -375,6 +376,22 @@ model MiniGameScoreAttempt {
   @@index([gameId, createdAt])
   @@index([kind, createdAt])
   @@index([userId, gameId, createdAt])
+}
+
+/** Per user per UTC day speaking tallies (lessons/missions use UserSession.learnerTurnCount). */
+model UserSpokenDay {
+  userId                String
+  /** UTC calendar day. */
+  day                   DateTime @db.Date
+  /** Mini-game utterances. */
+  count                 Int      @default(0)
+  /** Every Speak Today finish, including replays after the daily reward. */
+  dailySpeakCompletions Int      @default(0)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, day])
+  @@index([day])
 }
 
 /** Verified in-app purchase (RevenueCat / App Store / Play). */

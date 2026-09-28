@@ -49,6 +49,10 @@ export interface InteractiveScenarioBeat {
   visualLayout?: TurnVisualCue['layout'];
   /** Per-beat image (overrides scene image). */
   imageAsset?: string;
+  /** Firebase Storage path of the stimulus card, e.g. describe-it/v7_finale_n01/07-three-apples.webp. */
+  imagePath?: string;
+  /** Intro / framing beat: any reply continues, nothing is scored. */
+  ungraded?: boolean;
   focusGoalIds: string[];
   /** What the teacher may say / ask this beat (English). Also AI-judge context. */
   npcBriefEn: string;
