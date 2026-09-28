@@ -23,7 +23,7 @@ Source: `src/interactive-scenario/interactive-scenario.data.ts`
 | 4 | How old are you? | age | 3, 8 |
 | 5 | Tell me about one person in your family. | family | 4 |
 | 6 | My bag is blue. Is this my bag? | this_that | 6 |
-| 7 | And what do you have in your bag? | have | 7 |
+| 7 | What do you have in your bag? | have | 7 |
 | 8 | How many apples are there? | plural | 5 |
 | 9 | What time do you wake up? | wake_time | 9 |
 | 10 | Tell me about May's day. | her_day | 12 |

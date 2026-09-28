@@ -77,7 +77,7 @@ const GOALS: InteractiveScenarioGoal[] = [
     acceptExamples: ['I have a phone', 'I have a key and two books', 'A phone and a pen'],
     matchPatterns: ['\\bhave\\b', '\\b(phone|key|keys|book|books|pen|pens|wallet|bottle)\\b'],
     measuresChapters: [7],
-    hints: { intentTh: 'ใช้ I have… บอกของในกระเป๋า', starterEn: 'I have…', modelEn: 'I have a phone and a key.' },
+    hints: { intentTh: 'ใช้ I have… บอกของในกระเป๋า', starterEn: 'I have…', modelEn: 'I have a book.' },
   },
   {
     id: 'plural',
@@ -260,7 +260,7 @@ const BEATS: InteractiveScenarioBeat[] = [
     retryEn: 'This bag is red. My bag is blue. Is this my bag? Say: No, it is not…',
     retryTh: 'ใบนี้สีแดง ไม่ใช่ของครู — บอกว่าไม่ใช่ แล้วชี้ใบสีฟ้า',
     retryGuided: { stem: 'No, it is not. That is…', emoji: '🔵', label: 'blue bag', speak: 'No, it is not. That is your bag.' },
-    praiseEn: ['Yes! That is my bag. Thank you!'],
+    praiseEn: ["You're right. It's not my bag."],
   }),
   beat({
     id: 't07_have',
@@ -268,11 +268,11 @@ const BEATS: InteractiveScenarioBeat[] = [
     visualLayout: 'focus_image',
     imagePath: cardPath('06-red-bag-yellow-book'),
     npcBriefEn: 'Picture: an open red bag with a yellow book inside. Ask what the learner has in their bag.',
-    promptEn: 'And what do you have in your bag?',
-    promptTh: 'แล้วคุณล่ะ ในกระเป๋ามีอะไรบ้างครับ?',
+    promptEn: 'What do you have in your bag?',
+    promptTh: 'ในกระเป๋าของคุณมีอะไรบ้างครับ?',
     retryEn: 'What do you have? Say: I have a…',
     retryTh: 'ใช้ I have… บอกของในกระเป๋า',
-    retryGuided: { stem: 'I have…', emoji: '📒', label: 'book', speak: 'I have a yellow book.' },
+    retryGuided: { stem: 'I have…', emoji: '📒', label: 'book', speak: 'I have a book.' },
     praiseEn: ['Very good!', 'Nice!'],
   }),
   beat({
