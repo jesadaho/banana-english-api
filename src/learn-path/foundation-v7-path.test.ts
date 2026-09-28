@@ -41,20 +41,20 @@ const EXPECTED_V7_MIN_TURNS: Record<string, number> = {
 };
 
 describe('Foundation V7 catalog and real content', () => {
-  it('has 16 chapters (167 nodes) ending with the Final Interview, without Skill Mix', () => {
+  it('has 16 chapters (166 nodes) ending with the Final Interview, without Skill Mix', () => {
     assert.equal(FOUNDATION_V7_CATALOG.chapters.length, 16);
-    assert.equal(FOUNDATION_V7_NODES.length, 167);
-    assert.equal(new Set(FOUNDATION_V7_NODES.map(n => n.id)).size, 167);
-    assert.deepEqual(FOUNDATION_V7_CATALOG.chapters.map(c => c.items.length), [5,5,9,11,11,15,9,6,13,10,9,10,8,11,21,14]);
+    assert.equal(FOUNDATION_V7_NODES.length, 166);
+    assert.equal(new Set(FOUNDATION_V7_NODES.map(n => n.id)).size, 166);
+    assert.deepEqual(FOUNDATION_V7_CATALOG.chapters.map(c => c.items.length), [5,5,9,11,11,15,9,6,13,10,9,10,8,11,21,13]);
     assert.deepEqual(FOUNDATION_V7_CATALOG.chapters.slice(13).map(c => c.id), ['v7_u14', 'v7_u14_time_numbers', 'v7_u15']);
     assert.equal(FOUNDATION_V7_CATALOG.pathFinale, undefined);
     assert.equal(toFoundationV7ClientFinale(FOUNDATION_V7_CAPABILITIES), null);
     const finalNode = FOUNDATION_V7_CATALOG.chapters[15].items.at(-1)!;
     assert.equal(finalNode.id, 'v7_finale_n01');
-    assert.equal(finalNode.code, '16.14');
+    assert.equal(finalNode.code, '16.13');
     assert.equal(finalNode.type, 'interactive_scenario');
-    assert.deepEqual(foundationV7NodeTypeCounts(), { lesson:46, say_it:38, emoji_speak:15, new_words:29, pronunciation:4, describe_it:12, story_bites:3, conversation:15, info_task:4, interactive_scenario:1 });
-    assert.deepEqual(FOUNDATION_V7_NODES.map(n => n.globalOrder), Array.from({length:167}, (_, i) => i + 1));
+    assert.deepEqual(foundationV7NodeTypeCounts(), { lesson:46, say_it:38, emoji_speak:15, new_words:29, pronunciation:4, describe_it:12, story_bites:3, conversation:14, info_task:4, interactive_scenario:1 });
+    assert.deepEqual(FOUNDATION_V7_NODES.map(n => n.globalOrder), Array.from({length:166}, (_, i) => i + 1));
     for (let i = 1; i < FOUNDATION_V7_NODES.length; i++) {
       const prev = FOUNDATION_V7_NODES[i - 1];
       const next = FOUNDATION_V7_NODES[i];
@@ -104,15 +104,15 @@ describe('Foundation V7 catalog and real content', () => {
     assert.equal(hasFoundationV7Content({...node, contentRef:{}}), false);
   });
 
-  it('has 160 backend-ready nodes and capability gates for Guided packs, See & Say, and the Final Interview', () => {
+  it('has 159 backend-ready nodes and capability gates for Guided packs, See & Say, and the Final Interview', () => {
     // Old builds without the describe_it / interactive_scenario capabilities keep those nodes locked.
     const readyDescribe = FOUNDATION_V7_NODES.filter(
       n => n.type === 'describe_it' && n.contentRef.poolId,
     ).length;
     const defaults = toFoundationV7ClientChapters().flatMap(c => c.items);
-    assert.equal(defaults.filter(n => n.backendReady).length, 160);
-    assert.equal(defaults.filter(n => !n.comingSoon).length, 156 - readyDescribe);
-    assert.equal(all().filter(n => !n.comingSoon).length, 160);
+    assert.equal(defaults.filter(n => n.backendReady).length, 159);
+    assert.equal(defaults.filter(n => !n.comingSoon).length, 155 - readyDescribe);
+    assert.equal(all().filter(n => !n.comingSoon).length, 159);
     assert.equal(
       defaults.filter(n => n.unavailableReason === 'client_capability_required').length,
       4 + readyDescribe,
@@ -292,18 +292,18 @@ describe('Foundation V7 progress and completion contracts', () => {
     mini.push(...all().filter(n => n.comingSoon).map(n => n.id));
     const service = pathService(lessons, mini, simulations);
     const full = await service.getFoundationV7('user', FOUNDATION_V7_CAPABILITIES);
-    assert.equal(full.progress.completedCount, 160);
-    assert.equal(full.progress.totalCount, 160);
+    assert.equal(full.progress.completedCount, 159);
+    assert.equal(full.progress.totalCount, 159);
     assert.equal(full.progress.currentNodeId, null);
     const legacyClient = await service.getFoundationV7('user');
-    assert.equal(legacyClient.progress.completedCount, 148);
-    assert.equal(legacyClient.progress.totalCount, 148);
+    assert.equal(legacyClient.progress.completedCount, 147);
+    assert.equal(legacyClient.progress.totalCount, 147);
     assert.equal(legacyClient.progress.currentNodeId, null);
   });
 
   it('rejects unknown capabilities rather than silently enabling unsupported mechanics', async () => {
     const controller = new LearnPathController(pathService());
-    assert.equal((await controller.foundationV7(req, FOUNDATION_V7_CAPABILITIES.join(','))).summary.playableCount, 160);
+    assert.equal((await controller.foundationV7(req, FOUNDATION_V7_CAPABILITIES.join(','))).summary.playableCount, 159);
     await assert.rejects(controller.foundationV7(req, 'story_bites'));
     await assert.rejects(controller.foundationV7(req, ['say_it_guided'] as any));
   });
@@ -408,7 +408,7 @@ describe('Foundation V7 progress and completion contracts', () => {
 
   it('treats V7 conversation simulations as path missions, not Adventure series', () => {
     const conversations = FOUNDATION_V7_NODES.filter((n) => n.type === 'conversation');
-    assert.equal(conversations.length, 15);
+    assert.equal(conversations.length, 14);
     for (const node of conversations) {
       const id = node.contentRef.simulationId!;
       assert.ok(getSimulation(id), id);

@@ -4,7 +4,7 @@
     "pathId": "foundation_v7",
     "version": 1,
     "releaseStatus": "playtest",
-    "totalNodeCount": 167
+    "totalNodeCount": 166
   },
   "chapters": [
     {
@@ -5296,41 +5296,10 @@
           }
         },
         {
-          "id": "v7_u15n08",
+          "id": "v7_finale_n01",
           "code": "16.13",
           "order": 13,
           "globalOrder": 166,
-          "titleEn": "Find the Room",
-          "titleTh": "หาห้อง",
-          "type": "conversation",
-          "beat": "Ketsu",
-          "learningTarget": "ถามห้อง 2 ห้องน้ำ และกระเป๋าที่ฝากไว้",
-          "activity": "สามเป้าหมายข้อมูล; ไม่บังคับ Please say that again",
-          "examples": [
-            "Where is Room 2?",
-            "Where is the bathroom?",
-            "Where is my bag?"
-          ],
-          "estimatedMinutes": [
-            3,
-            5
-          ],
-          "difficultyAxes": [
-            2,
-            1,
-            1,
-            1,
-            1
-          ],
-          "contentRef": {
-            "simulationId": "foundation_v7_u15n08"
-          }
-        },
-        {
-          "id": "v7_finale_n01",
-          "code": "16.14",
-          "order": 14,
-          "globalOrder": 167,
           "titleEn": "Final Interview",
           "titleTh": "บททดสอบสุดท้าย กับ Teacher John",
           "type": "interactive_scenario",

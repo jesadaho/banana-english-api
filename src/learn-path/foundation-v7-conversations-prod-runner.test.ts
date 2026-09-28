@@ -29,7 +29,7 @@ describe('Foundation V7 conversation smoke runner', () => {
     );
     assert.equal(AUTHORED_V7_CONVERSATION_IDS.length, 16);
     assert.equal(FOUNDATION_V7_SIMULATIONS.length, 14);
-    assert.equal(ALL_V7_PATH_CONVERSATION_IDS.length, 15);
+    assert.equal(ALL_V7_PATH_CONVERSATION_IDS.length, 14);
     assert.ok(
       AUTHORED_V7_CONVERSATION_IDS.includes('foundation_v7_u16n10'),
       'Around Town preserved in authoring',
