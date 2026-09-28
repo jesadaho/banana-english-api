@@ -21,7 +21,6 @@ import { Currency } from '@prisma/client';
 
 const all = () => [
   ...toFoundationV7ClientChapters(FOUNDATION_V7_CAPABILITIES).flatMap((ch) => ch.items),
-  ...(toFoundationV7ClientFinale(FOUNDATION_V7_CAPABILITIES)?.items ?? []),
 ];
 const req = { user: { id: 'v7-test', displayName: 'Mia' } } as any;
 const EXPECTED_V7_MIN_TURNS: Record<string, number> = {
@@ -42,16 +41,18 @@ const EXPECTED_V7_MIN_TURNS: Record<string, number> = {
 };
 
 describe('Foundation V7 catalog and real content', () => {
-  it('has 16 chapters plus Path Finale (167 nodes), without Skill Mix', () => {
+  it('has 16 chapters (167 nodes) ending with the Final Interview, without Skill Mix', () => {
     assert.equal(FOUNDATION_V7_CATALOG.chapters.length, 16);
     assert.equal(FOUNDATION_V7_NODES.length, 167);
     assert.equal(new Set(FOUNDATION_V7_NODES.map(n => n.id)).size, 167);
-    assert.deepEqual(FOUNDATION_V7_CATALOG.chapters.map(c => c.items.length), [5,5,9,11,11,15,9,6,13,10,9,10,8,11,21,13]);
+    assert.deepEqual(FOUNDATION_V7_CATALOG.chapters.map(c => c.items.length), [5,5,9,11,11,15,9,6,13,10,9,10,8,11,21,14]);
     assert.deepEqual(FOUNDATION_V7_CATALOG.chapters.slice(13).map(c => c.id), ['v7_u14', 'v7_u14_time_numbers', 'v7_u15']);
-    assert.ok(FOUNDATION_V7_CATALOG.pathFinale);
-    assert.equal(FOUNDATION_V7_CATALOG.pathFinale!.id, 'v7_finale');
-    assert.equal(FOUNDATION_V7_CATALOG.pathFinale!.items.length, 1);
-    assert.equal(FOUNDATION_V7_CATALOG.pathFinale!.items[0]!.type, 'interactive_scenario');
+    assert.equal(FOUNDATION_V7_CATALOG.pathFinale, undefined);
+    assert.equal(toFoundationV7ClientFinale(FOUNDATION_V7_CAPABILITIES), null);
+    const finalNode = FOUNDATION_V7_CATALOG.chapters[15].items.at(-1)!;
+    assert.equal(finalNode.id, 'v7_finale_n01');
+    assert.equal(finalNode.code, '16.14');
+    assert.equal(finalNode.type, 'interactive_scenario');
     assert.deepEqual(foundationV7NodeTypeCounts(), { lesson:46, say_it:38, emoji_speak:15, new_words:29, pronunciation:4, describe_it:12, story_bites:3, conversation:15, info_task:4, interactive_scenario:1 });
     assert.deepEqual(FOUNDATION_V7_NODES.map(n => n.globalOrder), Array.from({length:167}, (_, i) => i + 1));
     for (let i = 1; i < FOUNDATION_V7_NODES.length; i++) {
@@ -103,18 +104,18 @@ describe('Foundation V7 catalog and real content', () => {
     assert.equal(hasFoundationV7Content({...node, contentRef:{}}), false);
   });
 
-  it('has 159 chapter backend-ready nodes (156 playable by default), Path Finale playable, and a capability gate for three Guided packs', () => {
-    // Old builds without the describe_it capability keep See & Say locked.
+  it('has 160 backend-ready nodes and capability gates for Guided packs, See & Say, and the Final Interview', () => {
+    // Old builds without the describe_it / interactive_scenario capabilities keep those nodes locked.
     const readyDescribe = FOUNDATION_V7_NODES.filter(
       n => n.type === 'describe_it' && n.contentRef.poolId,
     ).length;
     const defaults = toFoundationV7ClientChapters().flatMap(c => c.items);
-    assert.equal(defaults.filter(n => n.backendReady).length, 159);
+    assert.equal(defaults.filter(n => n.backendReady).length, 160);
     assert.equal(defaults.filter(n => !n.comingSoon).length, 156 - readyDescribe);
     assert.equal(all().filter(n => !n.comingSoon).length, 160);
     assert.equal(
       defaults.filter(n => n.unavailableReason === 'client_capability_required').length,
-      3 + readyDescribe,
+      4 + readyDescribe,
     );
     assert.equal(defaults.filter(n => n.unavailableReason === 'missing_content').length, 4);
     const placeholders = all().filter(n => n.comingSoon);
@@ -295,8 +296,8 @@ describe('Foundation V7 progress and completion contracts', () => {
     assert.equal(full.progress.totalCount, 160);
     assert.equal(full.progress.currentNodeId, null);
     const legacyClient = await service.getFoundationV7('user');
-    assert.equal(legacyClient.progress.completedCount, 157);
-    assert.equal(legacyClient.progress.totalCount, 157);
+    assert.equal(legacyClient.progress.completedCount, 148);
+    assert.equal(legacyClient.progress.totalCount, 148);
     assert.equal(legacyClient.progress.currentNodeId, null);
   });
 

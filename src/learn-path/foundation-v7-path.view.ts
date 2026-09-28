@@ -50,6 +50,9 @@ function mapClientNode(
   const requiredClientCapabilities: FoundationV7Capability[] = [
     ...(node.sayItMode === 'guided' ? (['say_it_guided'] as const) : []),
     ...(node.type === 'describe_it' ? (['describe_it'] as const) : []),
+    ...(node.type === 'interactive_scenario'
+      ? (['interactive_scenario'] as const)
+      : []),
   ];
   const needsClient = requiredClientCapabilities.some(
     (cap) => !capabilities.includes(cap),
