@@ -25,7 +25,7 @@ export const FOUNDATION_V7_NODE_MIGRATION: Record<string, string | null> = {
   v7_u15n06: 'v7_u15n06',
   v7_u15n09: 'v7_u15n09',
   v7_u15n07: 'v7_u15n07',
-  v7_u15n08: 'v7_u15n08',
+  v7_u15n08: null, // Find the Room conversation removed
 
   // Around Town removed from A1 — keep completions recorded, no A1 successor
   v7_u16n01: null,

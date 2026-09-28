@@ -1,11 +1,16 @@
 import {
   IsArray,
+  IsIn,
   IsNotEmpty,
   IsOptional,
   IsString,
   ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
+import {
+  TTS_VOICE_PROFILE_IDS,
+  type TtsVoiceProfileId,
+} from '../tts-voice-profiles';
 
 export class TtsSegmentDto {
   @IsString()
@@ -22,4 +27,9 @@ export class SynthesizeTtsDto {
   @ValidateNested({ each: true })
   @Type(() => TtsSegmentDto)
   segments!: TtsSegmentDto[];
+
+  /** Named voice profile (e.g. teacher_john). Omit = server default voice. */
+  @IsOptional()
+  @IsIn(TTS_VOICE_PROFILE_IDS)
+  voiceProfile?: TtsVoiceProfileId;
 }

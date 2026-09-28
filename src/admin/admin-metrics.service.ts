@@ -479,28 +479,72 @@ export class AdminMetricsService {
     range: DateRange,
     userFilter: Prisma.UserWhereInput,
   ) {
-    const rows = await this.prisma.userSession.findMany({
-      where: {
-        rewardsApplied: true,
-        completedAt: { gte: range.from, lte: range.to },
-        sessionType: { in: ['training', 'simulation'] },
-        user: userFilter,
-      },
-      select: { completedAt: true, sessionType: true },
-    });
-    const map = new Map<string, { lessons: number; missions: number }>();
+    const inRange = { gte: range.from, lte: range.to };
+    const [rows, dailySpeakRows, miniGameRows] = await Promise.all([
+      this.prisma.userSession.findMany({
+        where: {
+          rewardsApplied: true,
+          completedAt: inRange,
+          sessionType: { in: ['training', 'simulation'] },
+          user: userFilter,
+        },
+        select: { completedAt: true, sessionType: true },
+      }),
+      this.prisma.economyTransaction.findMany({
+        where: {
+          source: 'daily_speak_reward',
+          currency: Currency.XP,
+          createdAt: inRange,
+          user: userFilter,
+        },
+        select: { createdAt: true },
+      }),
+      this.prisma.miniGameScoreAttempt.findMany({
+        where: { createdAt: inRange, user: userFilter },
+        select: { createdAt: true, userId: true },
+      }),
+    ]);
+    const map = new Map<
+      string,
+      {
+        lessons: number;
+        missions: number;
+        dailySpeak: number;
+        miniGames: number;
+        miniGameUsers: Set<string>;
+      }
+    >();
     for (const key of eachUtcDateKey(range.from, range.to)) {
-      map.set(key, { lessons: 0, missions: 0 });
+      map.set(key, {
+        lessons: 0,
+        missions: 0,
+        dailySpeak: 0,
+        miniGames: 0,
+        miniGameUsers: new Set(),
+      });
     }
     for (const row of rows) {
       if (!row.completedAt) continue;
-      const key = dateKey(row.completedAt);
-      const bucket = map.get(key);
+      const bucket = map.get(dateKey(row.completedAt));
       if (!bucket) continue;
       if (row.sessionType === 'training') bucket.lessons += 1;
       if (row.sessionType === 'simulation') bucket.missions += 1;
     }
-    return [...map.entries()].map(([day, v]) => ({ day, ...v }));
+    for (const row of dailySpeakRows) {
+      const bucket = map.get(dateKey(row.createdAt));
+      if (bucket) bucket.dailySpeak += 1;
+    }
+    for (const row of miniGameRows) {
+      const bucket = map.get(dateKey(row.createdAt));
+      if (!bucket) continue;
+      bucket.miniGames += 1;
+      bucket.miniGameUsers.add(row.userId);
+    }
+    return [...map.entries()].map(([day, { miniGameUsers, ...v }]) => ({
+      day,
+      ...v,
+      miniGameUsers: miniGameUsers.size,
+    }));
   }
 
   private async buildAcquisition(range: DateRange, filters: MetricsFilters) {

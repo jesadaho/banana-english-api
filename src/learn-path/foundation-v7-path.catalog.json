@@ -4,7 +4,7 @@
     "pathId": "foundation_v7",
     "version": 1,
     "releaseStatus": "playtest",
-    "totalNodeCount": 167
+    "totalNodeCount": 166
   },
   "chapters": [
     {
@@ -5296,78 +5296,39 @@
           }
         },
         {
-          "id": "v7_u15n08",
+          "id": "v7_finale_n01",
           "code": "16.13",
           "order": 13,
           "globalOrder": 166,
-          "titleEn": "Find the Room",
-          "titleTh": "หาห้อง",
-          "type": "conversation",
+          "titleEn": "Final Interview",
+          "titleTh": "บททดสอบสุดท้าย กับ Teacher John",
+          "type": "interactive_scenario",
           "beat": "Ketsu",
-          "learningTarget": "ถามห้อง 2 ห้องน้ำ และกระเป๋าที่ฝากไว้",
-          "activity": "สามเป้าหมายข้อมูล; ไม่บังคับ Please say that again",
+          "learningTarget": "ทบทวนภาษา A1 ครบทั้ง 16 บท บทละ 1 คำถามกับครู",
+          "activity": "Final Interview 16 ด่าน บนดาดฟ้ากับ Teacher John",
           "examples": [
-            "Where is Room 2?",
-            "Where is the bathroom?",
-            "Where is my bag?"
+            "Yes, I am ready!",
+            "My name is… I'm from…",
+            "She wakes up at seven.",
+            "How much is the red shirt?",
+            "Go straight and turn left."
           ],
           "estimatedMinutes": [
-            3,
-            5
+            8,
+            10
           ],
           "difficultyAxes": [
             2,
-            1,
-            1,
-            1,
-            1
+            2,
+            2,
+            2,
+            2
           ],
           "contentRef": {
-            "simulationId": "foundation_v7_u15n08"
+            "scenarioId": "final_interview_john"
           }
         }
       ]
     }
-  ],
-  "pathFinale": {
-    "id": "v7_finale",
-    "titleEn": "Path Finale",
-    "titleTh": "ปิดท้ายเส้นทาง",
-    "outcome": "ทบทวนความรู้ทั้ง Foundation A1 ด้วยสัมภาษณ์สั้น ๆ",
-    "items": [
-      {
-        "id": "v7_finale_n01",
-        "code": "Finale.1",
-        "order": 1,
-        "globalOrder": 167,
-        "titleEn": "Final Interview",
-        "titleTh": "บททดสอบสุดท้าย กับ Teacher John",
-        "type": "interactive_scenario",
-        "beat": "Ketsu",
-        "learningTarget": "ใช้ภาษา A1 ทั้งเส้นทางในการพูดคุยสั้น ๆ กับครู",
-        "activity": "Interactive scenario review กับ Teacher John",
-        "examples": [
-          "Hello",
-          "My name is…",
-          "I'm from…",
-          "I like…",
-          "See you"
-        ],
-        "estimatedMinutes": [
-          6,
-          10
-        ],
-        "difficultyAxes": [
-          2,
-          2,
-          2,
-          2,
-          2
-        ],
-        "contentRef": {
-          "scenarioId": "final_interview_john"
-        }
-      }
-    ]
-  }
+  ]
 }

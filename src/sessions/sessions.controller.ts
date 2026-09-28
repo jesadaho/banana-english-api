@@ -181,9 +181,16 @@ import { AchievementsService } from '../achievements/achievements.service';
 import { getInteractiveScenario } from '../interactive-scenario/interactive-scenario.data';
 import {
   buildScenarioOpening,
+  currentScenarioBeat,
+  isScenarioNoise,
+  localMatchCurrentBeat,
   processScenarioTurn,
   scenarioHintForState,
+  type ScenarioJudgeTier,
 } from '../interactive-scenario/interactive-scenario.runtime';
+
+/** Max wait for the scenario AI judge before falling back to "incorrect". */
+const SCENARIO_JUDGE_TIMEOUT_MS = 6_000;
 
 type AuthedRequest = {
   user: User;
@@ -517,6 +524,7 @@ export class SessionsController {
       audioUrl: null as string | null,
       expectsUserSpeech: openingReply.expectsUserSpeech ?? true,
       visual: openingReply.visual ?? null,
+      emojiChoice: openingReply.emojiChoice ?? null,
     };
     this.sessionStore.addTurn(data.session.id, opening);
     data.session.checkpointStates = { ...openingReply.updatedCheckpoints };
@@ -532,6 +540,8 @@ export class SessionsController {
           id: config.id,
           mode: config.mode,
           teacher: config.teacher,
+          ttsVoiceProfile: config.ttsVoiceProfile ?? null,
+          estimatedMinutes: config.estimatedMinutes,
           titleEn: config.titleEn,
           titleTh: config.titleTh,
           goalsTh: config.goals.map((g) => g.labelTh),
@@ -565,10 +575,17 @@ export class SessionsController {
       textEn: transcript,
     });
 
+    const judge = await this.judgeScenarioTurn(
+      data.scenarioConfig,
+      data.scenarioRuntime,
+      transcript,
+    );
     const { state, reply } = processScenarioTurn({
       scenario: data.scenarioConfig,
       state: data.scenarioRuntime,
       transcript,
+      judge: judge.tier,
+      judgeCorrected: judge.corrected,
     });
     data.scenarioRuntime = state;
     data.session.checkpointStates = { ...state.checkpoints };
@@ -584,6 +601,8 @@ export class SessionsController {
       expectsUserSpeech: reply.expectsUserSpeech ?? true,
       assessmentTier: reply.assessmentTier,
       visual: reply.visual ?? null,
+      emojiChoice: reply.emojiChoice ?? null,
+      guidedSpeaking: reply.guidedSpeaking ?? null,
     };
     this.sessionStore.addTurn(sessionId, aiTurn);
 
@@ -596,6 +615,44 @@ export class SessionsController {
       scriptedAiDebug(),
       handlerStartedAt,
     );
+  }
+
+  /**
+   * Local regex/example match first (free, instant). Only when that fails,
+   * ask Gemini for a meaning-based verdict; any error/timeout = no verdict.
+   */
+  private async judgeScenarioTurn(
+    scenario: NonNullable<ReturnType<typeof getInteractiveScenario>>,
+    state: Parameters<typeof localMatchCurrentBeat>[1],
+    transcript: string,
+  ): Promise<{ tier: ScenarioJudgeTier | null; corrected?: string | null }> {
+    if (
+      state.finished ||
+      isScenarioNoise(transcript) ||
+      localMatchCurrentBeat(scenario, state, transcript)
+    ) {
+      return { tier: null };
+    }
+    const beat = currentScenarioBeat(scenario, state);
+    const goal = scenario.goals.find((g) => beat.focusGoalIds.includes(g.id));
+    if (!goal) return { tier: null };
+    try {
+      const verdict = await Promise.race([
+        this.chat.evaluateScenarioUtterance({
+          npcLine: beat.promptEn,
+          taskBrief: beat.npcBriefEn,
+          rubric: goal.meaningRubric,
+          examples: goal.acceptExamples,
+          transcript,
+        }),
+        new Promise<null>((resolve) =>
+          setTimeout(() => resolve(null), SCENARIO_JUDGE_TIMEOUT_MS),
+        ),
+      ]);
+      return { tier: verdict?.tier ?? null, corrected: verdict?.corrected ?? null };
+    } catch {
+      return { tier: null };
+    }
   }
 
   private async startTrainingSession(

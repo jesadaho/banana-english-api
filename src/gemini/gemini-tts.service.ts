@@ -8,6 +8,12 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { GeminiModelPool, parseGeminiModels } from './gemini-model-pool';
 import { pcmToWav, parseSampleRateFromMimeType } from './pcm-to-wav.util';
+import {
+  TTS_VOICE_PROFILES,
+  type TtsVoiceProfileId,
+} from '../tts/tts-voice-profiles';
+
+type TtsVoiceOptions = { voice: string; stylePrompt: string };
 
 type AudioBlock = {
   type?: string;
@@ -67,11 +73,30 @@ export class GeminiTtsService {
     );
   }
 
-  async synthesizeSpeech(text: string): Promise<Buffer> {
-    return this.synthesizeSpeechUnary(text);
+  /** Voice + style for a named profile (teacher_b = server defaults). */
+  resolveVoiceOptions(profile?: TtsVoiceProfileId | null): TtsVoiceOptions {
+    const def = profile ? TTS_VOICE_PROFILES[profile] : undefined;
+    const envVoice = def?.voiceEnv
+      ? this.config.get<string>(def.voiceEnv)?.trim()
+      : undefined;
+    return {
+      voice: envVoice || def?.voice || this.voice,
+      stylePrompt: def?.stylePrompt ?? GeminiTtsService.stylePrompt,
+    };
   }
 
-  async *synthesizeSpeechStream(text: string): AsyncGenerator<Buffer> {
+  async synthesizeSpeech(
+    text: string,
+    profile?: TtsVoiceProfileId | null,
+  ): Promise<Buffer> {
+    return this.synthesizeSpeechUnary(text, this.resolveVoiceOptions(profile));
+  }
+
+  async *synthesizeSpeechStream(
+    text: string,
+    profile?: TtsVoiceProfileId | null,
+  ): AsyncGenerator<Buffer> {
+    const vo = this.resolveVoiceOptions(profile);
     const trimmed = text.trim();
     if (!trimmed) {
       return;
@@ -89,7 +114,7 @@ export class GeminiTtsService {
     for (let i = 0; i < models.length; i++) {
       const model = models[i];
       try {
-        yield* this.streamWithModel(model, trimmed);
+        yield* this.streamWithModel(model, trimmed, vo);
         return;
       } catch (error) {
         const err = error instanceof Error ? error : new Error(String(error));
@@ -121,20 +146,21 @@ export class GeminiTtsService {
   private async *streamWithModel(
     model: string,
     trimmed: string,
+    vo: TtsVoiceOptions,
   ): AsyncGenerator<Buffer> {
     // Only 3.1 TTS supports Interactions streaming; everything else uses
     // generateContent (or Interactions unary via unaryWithModel routing).
     if (!this.supportsInteractionsStreaming(model)) {
-      yield await this.unaryWithModel(model, trimmed);
+      yield await this.unaryWithModel(model, trimmed, vo);
       return;
     }
 
     const body = {
       model,
-      input: `${GeminiTtsService.stylePrompt}:\n\n${trimmed}`,
+      input: `${vo.stylePrompt}:\n\n${trimmed}`,
       response_format: { type: 'audio' },
       generation_config: {
-        speech_config: [{ voice: this.voice }],
+        speech_config: [{ voice: vo.voice }],
       },
       stream: true,
     };
@@ -164,7 +190,7 @@ export class GeminiTtsService {
       this.logger.warn(
         `Interactions stream failed for ${model} (${response.status}); trying generateContent`,
       );
-      yield await this.generateContentTts(model, trimmed);
+      yield await this.generateContentTts(model, trimmed, vo);
       return;
     }
 
@@ -234,7 +260,10 @@ export class GeminiTtsService {
     return Buffer.from(delta.data, 'base64');
   }
 
-  private async synthesizeSpeechUnary(text: string): Promise<Buffer> {
+  private async synthesizeSpeechUnary(
+    text: string,
+    vo: TtsVoiceOptions,
+  ): Promise<Buffer> {
     const trimmed = text.trim();
     if (!trimmed) {
       return Buffer.alloc(0);
@@ -252,7 +281,7 @@ export class GeminiTtsService {
     for (let i = 0; i < models.length; i++) {
       const model = models[i];
       try {
-        return await this.unaryWithModel(model, trimmed);
+        return await this.unaryWithModel(model, trimmed, vo);
       } catch (error) {
         const err = error instanceof Error ? error : new Error(String(error));
         lastError = err;
@@ -283,10 +312,11 @@ export class GeminiTtsService {
   private async unaryWithModel(
     model: string,
     trimmed: string,
+    vo: TtsVoiceOptions,
   ): Promise<Buffer> {
     if (this.supportsInteractionsStreaming(model)) {
       try {
-        return await this.interactionsUnary(model, trimmed);
+        return await this.interactionsUnary(model, trimmed, vo);
       } catch (error) {
         const err = error instanceof Error ? error : new Error(String(error));
         if (err instanceof HttpException) throw err;
@@ -297,19 +327,20 @@ export class GeminiTtsService {
       }
     }
 
-    return this.generateContentTts(model, trimmed);
+    return this.generateContentTts(model, trimmed, vo);
   }
 
   private async interactionsUnary(
     model: string,
     trimmed: string,
+    vo: TtsVoiceOptions,
   ): Promise<Buffer> {
     const body = {
       model,
-      input: `${GeminiTtsService.stylePrompt}:\n\n${trimmed}`,
+      input: `${vo.stylePrompt}:\n\n${trimmed}`,
       response_format: { type: 'audio' },
       generation_config: {
-        speech_config: [{ voice: this.voice }],
+        speech_config: [{ voice: vo.voice }],
       },
     };
 
@@ -361,13 +392,14 @@ export class GeminiTtsService {
   private async generateContentTts(
     model: string,
     trimmed: string,
+    vo: TtsVoiceOptions,
   ): Promise<Buffer> {
     const body = {
       contents: [
         {
           parts: [
             {
-              text: `${GeminiTtsService.stylePrompt}:\n\n${trimmed}`,
+              text: `${vo.stylePrompt}:\n\n${trimmed}`,
             },
           ],
         },
@@ -377,7 +409,7 @@ export class GeminiTtsService {
         speechConfig: {
           voiceConfig: {
             prebuiltVoiceConfig: {
-              voiceName: this.voice,
+              voiceName: vo.voice,
             },
           },
         },

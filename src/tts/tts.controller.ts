@@ -41,7 +41,10 @@ export class TtsController {
     const combinedText = segments.join(' ');
 
     try {
-      const audio = await this.geminiTts.synthesizeSpeech(combinedText);
+      const audio = await this.geminiTts.synthesizeSpeech(
+        combinedText,
+        body.voiceProfile,
+      );
 
       return {
         clips: [
@@ -84,6 +87,7 @@ export class TtsController {
 
       for await (const chunk of this.geminiTts.synthesizeSpeechStream(
         combinedText,
+        body.voiceProfile,
       )) {
         res.write(
           `${JSON.stringify({

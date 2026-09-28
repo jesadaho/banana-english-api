@@ -2893,6 +2893,55 @@ ${text}`,
     return value;
   }
 
+  /**
+   * Interactive scenario (Final Interview) — meaning-based verdict for one
+   * learner utterance when the local regex/example match failed.
+   */
+  async evaluateScenarioUtterance(params: {
+    npcLine: string;
+    taskBrief: string;
+    rubric: string;
+    examples: string[];
+    transcript: string;
+  }): Promise<{ tier: 'correct' | 'close' | 'incorrect'; corrected?: string }> {
+    const schema = {
+      type: 'object',
+      properties: {
+        tier: { type: 'string', enum: ['correct', 'close', 'incorrect'] },
+        corrected: { type: 'string' },
+      },
+      required: ['tier'],
+    };
+    const systemInstruction =
+      'You grade one spoken answer from an A1 English learner (Thai speaker) in a friendly final review.\n' +
+      'Judge MEANING against the task, not exact wording. Speech-to-text may drop punctuation or mis-spell names.\n' +
+      'correct = answers the task in understandable English (any true or made-up personal content is fine).\n' +
+      'close = clearly attempts the task with the right idea but a noticeable grammar error (e.g. "I from Thailand", "She wake up at seven").\n' +
+      'incorrect = off-task, only Thai, silence/noise, or does not answer what was asked.\n' +
+      'For close: set "corrected" to the learner\'s OWN sentence with the smallest grammar fix ' +
+      '(keep their words and content, e.g. "I wake up six" → "I wake up at six."). Otherwise "corrected" = "".\n' +
+      'Return JSON {"tier": ..., "corrected": ...} only.';
+    const userPrompt = [
+      `Teacher said: "${params.npcLine}"`,
+      `Task: ${params.taskBrief}`,
+      `Pass rubric: ${params.rubric}`,
+      `Example good answers: ${params.examples.map((e) => `"${e}"`).join(', ')}`,
+      `Learner said: "${params.transcript}"`,
+    ].join('\n');
+    const { value } = await this.generateJson<{
+      tier: 'correct' | 'close' | 'incorrect';
+      corrected?: string;
+    }>({
+      ...GEMINI_LIVE_TURN,
+      systemInstruction,
+      contents: [{ role: 'user', parts: [{ text: userPrompt }] }],
+      schema,
+      maxOutputTokens: 96,
+      temperature: 0,
+    });
+    return value;
+  }
+
   /** Short Thai coaching line for Daily Speak (Speak Today) result. */
   async generateDailySpeakFeedback(params: {
     systemInstruction: string;

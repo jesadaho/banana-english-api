@@ -2,82 +2,222 @@ import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 import { FINAL_INTERVIEW_JOHN } from './interactive-scenario.data';
 import {
+  answerLearnerQuestion,
   buildScenarioOpening,
+  extractCity,
+  extractName,
   initScenarioRuntime,
+  isScenarioNoise,
   processScenarioTurn,
   scenarioHintForState,
   softMatchGoal,
+  type ScenarioRuntimeState,
 } from './interactive-scenario.runtime';
 
-describe('interactive scenario runtime', () => {
-  it('soft-matches meaning without exact script', () => {
-    const name = FINAL_INTERVIEW_JOHN.goals.find((g) => g.id === 'name')!;
-    assert.equal(softMatchGoal('My name is Bee', name), true);
-    assert.equal(softMatchGoal("I'm Luna", name), true);
-    assert.equal(softMatchGoal('banana', name), false);
+const S = FINAL_INTERVIEW_JOHN;
+
+/** One good answer per beat, in order. */
+const HAPPY_ANSWERS = [
+  'Yes, I am ready!',
+  "Hello! My name is Maya. I'm from Chiang Mai.",
+  'I am twenty years old.',
+  'This is my brother. He is a student.',
+  'No, it is not. That is your bag.',
+  'I have a phone and a key.',
+  'There are three apples.',
+  'I wake up at seven.',
+  'She wakes up at seven. She works at eight.',
+  'He is eating.',
+  "I like tea. I don't like coffee.",
+  'Yes, I can. I can swim.',
+  'Can you cook?',
+  'How much is the red shirt?',
+  'Go straight and turn left.',
+  'Thank you! Goodbye!',
+];
+
+function run(answers: string[], state?: ScenarioRuntimeState) {
+  let s = state ?? initScenarioRuntime(S);
+  let reply = buildScenarioOpening(S, s);
+  const replies = [reply];
+  for (const transcript of answers) {
+    ({ state: s, reply } = processScenarioTurn({ scenario: S, state: s, transcript }));
+    replies.push(reply);
+  }
+  return { state: s, reply, replies };
+}
+
+describe('final interview (16 turns) — authoring', () => {
+  it('has 16 beats, one goal each, one per Foundation chapter', () => {
+    assert.equal(S.beats.length, 16);
+    assert.equal(S.goals.length, 16);
+    const chapters = S.goals.flatMap((g) => g.measuresChapters ?? []).sort((a, b) => a - b);
+    assert.deepEqual(chapters, Array.from({ length: 16 }, (_, i) => i + 1));
+    const used = S.beats.flatMap((b) => b.focusGoalIds);
+    assert.deepEqual([...used].sort(), S.goals.map((g) => g.id).sort());
   });
 
-  it('keeps checkpoints sticky across wrong answers and hints', () => {
-    let state = initScenarioRuntime(FINAL_INTERVIEW_JOHN);
-    const open = buildScenarioOpening(FINAL_INTERVIEW_JOHN, state);
+  it('opens with the final-boss "Are you ready?" intro', () => {
+    const open = buildScenarioOpening(S, initScenarioRuntime(S));
+    assert.match(open.aiResponse, /Are you ready\?/);
+    assert.match(open.aiResponse, /Finally/);
     assert.ok(open.visual?.sceneId);
-
-    ({ state } = processScenarioTurn({
-      scenario: FINAL_INTERVIEW_JOHN,
-      state,
-      transcript: 'Hello!',
-    }));
-    assert.equal(state.checkpoints.greet, true);
-
-    ({ state } = processScenarioTurn({
-      scenario: FINAL_INTERVIEW_JOHN,
-      state,
-      transcript: 'zzz',
-    }));
-    assert.equal(state.checkpoints.greet, true);
-
-    const hinted = scenarioHintForState(FINAL_INTERVIEW_JOHN, state);
-    state = hinted.nextState;
-    assert.ok(hinted.hints.length >= 1);
-    assert.equal(state.checkpoints.greet, true);
   });
 
-  it('completes when all goals pass without fixed turn count', () => {
-    let state = initScenarioRuntime(FINAL_INTERVIEW_JOHN);
-    const answers = [
-      'Hi',
-      'My name is Maya',
-      "I'm from Thailand",
-      'I like coffee',
-      'I can swim',
-      'How are you?',
-      'See you tomorrow',
-    ];
-    let reply = buildScenarioOpening(FINAL_INTERVIEW_JOHN, state);
-    for (const transcript of answers) {
-      ({ state, reply } = processScenarioTurn({
-        scenario: FINAL_INTERVIEW_JOHN,
-        state,
-        transcript,
-      }));
+  it('keeps NPC speech English-only and every beat has praise or is the last', () => {
+    for (const b of S.beats) {
+      assert.doesNotMatch(b.promptEn, /[฀-๿]/, b.id);
+      for (const p of b.praiseEn) assert.doesNotMatch(p, /[฀-๿]/, b.id);
     }
+    for (const b of S.beats.slice(0, -1)) assert.ok(b.praiseEn.length > 0, b.id);
+  });
+
+  it('every accept example passes its own goal locally', () => {
+    for (const g of S.goals) {
+      for (const ex of g.acceptExamples) {
+        assert.equal(softMatchGoal(ex, g), true, `${g.id}: ${ex}`);
+      }
+    }
+  });
+
+  it('every retry scaffold answer passes its beat', () => {
+    for (const b of S.beats) {
+      const g = S.goals.find((x) => x.id === b.focusGoalIds[0])!;
+      if (b.retryGuided) assert.equal(softMatchGoal(b.retryGuided.speak, g), true, b.id);
+    }
+  });
+});
+
+describe('final interview (16 turns) — runtime', () => {
+  it('happy path: 16 answers → complete, all goals, praise before next prompt', () => {
+    const { state, reply, replies } = run(HAPPY_ANSWERS);
     assert.equal(reply.isTaskComplete, true);
     assert.ok(Object.values(state.checkpoints).every(Boolean));
+    assert.equal(state.slots.name, 'Maya');
+    assert.equal(state.slots.city, 'Chiang Mai');
+    // Turn after intro: personalised praise + next question.
+    assert.match(replies[2]!.aiResponse, /^Nice to meet you, Maya! Chiang Mai\? Cool! How old are you\?/);
+    // John answers the learner's question before praising.
+    assert.match(replies[13]!.aiResponse, /^Yes, I can! Great question!/);
+    // Price answer is given.
+    assert.match(replies[14]!.aiResponse, /fifty baht/);
+    // Closing uses the name.
+    assert.match(replies[15]!.aiResponse, /^Thank you! Very clear! Maya… you passed my test!/);
+    assert.match(reply.aiResponse, /Goodbye, Maya!/);
+    assert.equal(reply.expectsUserSpeech, false);
   });
 
-  it('does not put Thai into NPC speech on incorrect retry', () => {
-    let state = initScenarioRuntime(FINAL_INTERVIEW_JOHN);
-    ({ state } = processScenarioTurn({
-      scenario: FINAL_INTERVIEW_JOHN,
+  it('wrong answer (assessment): reveal the model answer and move on at once', () => {
+    let state = initScenarioRuntime(S);
+    ({ state } = processScenarioTurn({ scenario: S, state, transcript: 'Yes' }));
+    const r = processScenarioTurn({ scenario: S, state, transcript: 'I like coffee' });
+    assert.equal(r.reply.assessmentTier, 'incorrect');
+    assert.equal(r.reply.wasSoftAdvance, true);
+    assert.equal(r.state.beatIndex, 2);
+    assert.equal(r.state.checkpoints.name, false);
+    assert.equal(r.state.goalOutcomes.name, 'skipped');
+    assert.match(
+      r.reply.aiResponse,
+      /^Nice try! You can say: My name is Maya\. I'm from Thailand\. OK, next one! How old are you\?/,
+    );
+    assert.match(r.reply.textTh, /^เฉลย: “My name is Maya\. I'm from Thailand\.” · /);
+    assert.equal(r.reply.guidedSpeaking ?? null, null);
+  });
+
+  it('AI judge "close" passes and recasts the learner\'s own sentence', () => {
+    let state = initScenarioRuntime(S);
+    for (const t of HAPPY_ANSWERS.slice(0, 7)) {
+      ({ state } = processScenarioTurn({ scenario: S, state, transcript: t }));
+    }
+    assert.equal(state.beatIndex, 7); // t08 wake time
+    const r = processScenarioTurn({
+      scenario: S,
       state,
-      transcript: 'asdf',
-    }));
+      transcript: 'I wake up in morning',
+      judge: 'close',
+      judgeCorrected: 'I wake up in the morning',
+    });
+    assert.equal(r.state.checkpoints.wake_time, true);
+    assert.equal(r.state.goalOutcomes.wake_time, 'close');
+    assert.equal(r.reply.assessmentTier, 'close');
+    assert.match(r.reply.aiResponse, /We say: I wake up in the morning\. This is Mia's day/);
+    assert.match(r.reply.textTh, /^เกือบถูกแล้ว! พูดว่า “I wake up in the morning\.”/);
+  });
+
+  it('16 wrong answers still finish in exactly 16 turns with all goals skipped', () => {
+    const { reply, state, replies } = run(Array(16).fill('zzz'));
+    assert.equal(replies.length, 17);
+    assert.equal(reply.isTaskComplete, true);
+    assert.equal(state.finished, true);
+    assert.ok(Object.values(state.checkpoints).every((v) => v === false));
+    assert.match(reply.aiResponse, /^Nice try! You can say: Thank you! Goodbye! See you! Goodbye, my friend!/);
+  });
+
+  it('keeps NPC speech English-only on a wrong answer', () => {
     const { reply } = processScenarioTurn({
-      scenario: FINAL_INTERVIEW_JOHN,
-      state,
+      scenario: S,
+      state: initScenarioRuntime(S),
       transcript: 'asdf',
     });
     assert.doesNotMatch(reply.aiResponse, /[\u0E00-\u0E7F]/);
     assert.match(reply.textTh, /[\u0E00-\u0E7F]/);
+  });
+
+  it('flags noise so the controller skips the AI judge', () => {
+    assert.equal(isScenarioNoise(''), true);
+    assert.equal(isScenarioNoise('uh'), true);
+    assert.equal(isScenarioNoise('I like tea'), false);
+  });
+
+  it('hints stay sticky with checkpoints', () => {
+    let state = initScenarioRuntime(S);
+    ({ state } = processScenarioTurn({ scenario: S, state, transcript: 'Yes!' }));
+    assert.equal(state.checkpoints.ready, true);
+    const hinted = scenarioHintForState(S, state);
+    assert.ok(hinted.hints.length >= 1);
+    assert.equal(hinted.hints[0]!.id, 'name_intent');
+    assert.equal(hinted.nextState.checkpoints.ready, true);
+  });
+
+  it('tolerates legacy in-memory state without new fields', () => {
+    const legacy = {
+      scenarioId: S.id,
+      beatIndex: 0,
+      checkpoints: {},
+      attemptCount: 0,
+      hintsUsed: 0,
+      goalHintLevels: {},
+    } as unknown as ScenarioRuntimeState;
+    const r = processScenarioTurn({ scenario: S, state: legacy, transcript: 'yes' });
+    assert.equal(r.state.beatIndex, 1);
+  });
+});
+
+describe('final interview — helpers', () => {
+  it('extracts names and cities', () => {
+    assert.equal(extractName('My name is maya'), 'Maya');
+    assert.equal(extractName("I'm Max."), 'Max');
+    assert.equal(extractName('Somchai'), 'Somchai');
+    assert.equal(extractName("I'm ready"), null);
+    assert.equal(extractName('Hi'), null);
+    assert.equal(extractName('Thailand'), null);
+    assert.equal(extractName("I'm from Thailand"), null);
+    assert.equal(extractCity('I live in Chiang Mai and I am happy'), 'Chiang Mai');
+    assert.equal(extractCity("I'm from Thailand."), 'Thailand');
+    assert.equal(extractCity('hello'), null);
+  });
+
+  it('answers common learner questions', () => {
+    assert.equal(answerLearnerQuestion('How are you?'), "I'm great, thank you!");
+    assert.equal(answerLearnerQuestion('What is your name?'), 'My name is John. I am your teacher!');
+    assert.equal(answerLearnerQuestion('Where are you from?'), "I'm from Canada.");
+    assert.equal(answerLearnerQuestion('Do you like coffee?'), 'Yes, I do!');
+    assert.equal(answerLearnerQuestion('Can you swim?'), 'Yes, I can!');
+  });
+
+  it('matches whole words only in accept examples', () => {
+    const g = S.goals.find((x) => x.id === 'ready')!;
+    assert.equal(softMatchGoal('yesterday', g), false);
+    assert.equal(softMatchGoal('yes', g), true);
   });
 });
