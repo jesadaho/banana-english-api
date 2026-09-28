@@ -69,7 +69,7 @@ describe('final interview (17 turns) — authoring', () => {
   it('shows a picture card instead of emoji cards on stimulus beats', () => {
     const withImage = S.beats.filter((b) => b.imagePath).map((b) => b.focusGoalIds[0]);
     assert.deepEqual(withImage, [
-      'this_that', 'plural', 'her_day', 'happening_now', 'ask_price', 'directions',
+      'this_that', 'have', 'plural', 'her_day', 'happening_now', 'ask_price', 'directions',
     ]);
     for (const b of S.beats) {
       if (b.imagePath) assert.equal(b.emojiChoice, undefined, b.id);

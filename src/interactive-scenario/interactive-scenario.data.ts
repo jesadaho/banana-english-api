@@ -265,12 +265,14 @@ const BEATS: InteractiveScenarioBeat[] = [
   beat({
     id: 't07_have',
     focusGoalIds: ['have'],
-    npcBriefEn: 'Ask what the learner has in their bag.',
+    visualLayout: 'focus_image',
+    imagePath: cardPath('06-red-bag-yellow-book'),
+    npcBriefEn: 'Picture: an open red bag with a yellow book inside. Ask what the learner has in their bag.',
     promptEn: 'And what do you have in your bag?',
     promptTh: 'แล้วคุณล่ะ ในกระเป๋ามีอะไรบ้างครับ?',
     retryEn: 'What do you have? Say: I have a…',
     retryTh: 'ใช้ I have… บอกของในกระเป๋า',
-    retryGuided: { stem: 'I have…', emoji: '📱', label: 'phone', speak: 'I have a phone and two books.' },
+    retryGuided: { stem: 'I have…', emoji: '📒', label: 'book', speak: 'I have a yellow book.' },
     praiseEn: ['Very good!', 'Nice!'],
   }),
   beat({
