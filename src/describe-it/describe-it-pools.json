@@ -91,7 +91,25 @@
         "answerTh": "เธอเป็นนักเรียน",
         "acceptedAnswers": [
           "She's a student.",
-          "She is a student"
+          "She is a student",
+          "She is my sister.",
+          "She's my sister.",
+          "She is my mother.",
+          "She's my mother.",
+          "She is my mom.",
+          "She's my mom.",
+          "She is my grandmother.",
+          "She's my grandmother.",
+          "She is my grandma.",
+          "She's my grandma.",
+          "She is my aunt.",
+          "She's my aunt.",
+          "She is my cousin.",
+          "She's my cousin.",
+          "She is my daughter.",
+          "She's my daughter.",
+          "She is my wife.",
+          "She's my wife."
         ],
         "imagePath": "describe-it/fnd_v7_u04n05/01-may-student.webp",
         "hintEn": "She is a _____"
@@ -103,7 +121,25 @@
         "answerTh": "เขามีความสุข",
         "acceptedAnswers": [
           "He's happy.",
-          "He is happy"
+          "He is happy",
+          "He is my brother.",
+          "He's my brother.",
+          "He is my father.",
+          "He's my father.",
+          "He is my dad.",
+          "He's my dad.",
+          "He is my grandfather.",
+          "He's my grandfather.",
+          "He is my grandpa.",
+          "He's my grandpa.",
+          "He is my uncle.",
+          "He's my uncle.",
+          "He is my cousin.",
+          "He's my cousin.",
+          "He is my son.",
+          "He's my son.",
+          "He is my husband.",
+          "He's my husband."
         ],
         "imagePath": "describe-it/fnd_v7_u04n05/02-max-happy.webp"
       },
@@ -114,7 +150,25 @@
         "answerTh": "เขาเป็นครู",
         "acceptedAnswers": [
           "He's a teacher.",
-          "He is a teacher"
+          "He is a teacher",
+          "He is my brother.",
+          "He's my brother.",
+          "He is my father.",
+          "He's my father.",
+          "He is my dad.",
+          "He's my dad.",
+          "He is my grandfather.",
+          "He's my grandfather.",
+          "He is my grandpa.",
+          "He's my grandpa.",
+          "He is my uncle.",
+          "He's my uncle.",
+          "He is my cousin.",
+          "He's my cousin.",
+          "He is my son.",
+          "He's my son.",
+          "He is my husband.",
+          "He's my husband."
         ],
         "imagePath": "describe-it/fnd_v7_u04n05/03-john-teacher.webp"
       },
@@ -125,7 +179,25 @@
         "answerTh": "เธอเป็นหมอ",
         "acceptedAnswers": [
           "She's a doctor.",
-          "She is a doctor"
+          "She is a doctor",
+          "She is my sister.",
+          "She's my sister.",
+          "She is my mother.",
+          "She's my mother.",
+          "She is my mom.",
+          "She's my mom.",
+          "She is my grandmother.",
+          "She's my grandmother.",
+          "She is my grandma.",
+          "She's my grandma.",
+          "She is my aunt.",
+          "She's my aunt.",
+          "She is my cousin.",
+          "She's my cousin.",
+          "She is my daughter.",
+          "She's my daughter.",
+          "She is my wife.",
+          "She's my wife."
         ],
         "imagePath": "describe-it/fnd_v7_u04n05/04-minnie-doctor.webp"
       },
@@ -136,7 +208,25 @@
         "answerTh": "เธอเหนื่อย",
         "acceptedAnswers": [
           "She's tired.",
-          "She is tired"
+          "She is tired",
+          "She is my sister.",
+          "She's my sister.",
+          "She is my mother.",
+          "She's my mother.",
+          "She is my mom.",
+          "She's my mom.",
+          "She is my grandmother.",
+          "She's my grandmother.",
+          "She is my grandma.",
+          "She's my grandma.",
+          "She is my aunt.",
+          "She's my aunt.",
+          "She is my cousin.",
+          "She's my cousin.",
+          "She is my daughter.",
+          "She's my daughter.",
+          "She is my wife.",
+          "She's my wife."
         ],
         "imagePath": "describe-it/fnd_v7_u04n05/05-mali-tired.webp"
       }
@@ -552,10 +642,14 @@
           "His name is John and he is twenty-five years old.",
           "His name is John and he is 25 years old.",
           "He is John.",
-          "John is 25 years old."
+          "John is 25 years old.",
+          "His name is John. He is twenty-five years old.",
+          "His name is John. He is 25 years old.",
+          "His name is John. He's twenty-five years old.",
+          "His name is John. He's 25 years old."
         ],
         "imagePath": "describe-it/fnd_v7_u08n09/01-john-profile-25.webp",
-        "hintEn": "His name is _____"
+        "hintEn": "His name is _____. He is _____ years old."
       },
       {
         "id": "02-may-profile-18",
@@ -574,10 +668,14 @@
           "Her name is May and she is eighteen years old.",
           "Her name is May and she is 18 years old.",
           "She is May.",
-          "May is 18 years old."
+          "May is 18 years old.",
+          "Her name is May. She is eighteen years old.",
+          "Her name is May. She is 18 years old.",
+          "Her name is May. She's eighteen years old.",
+          "Her name is May. She's 18 years old."
         ],
         "imagePath": "describe-it/fnd_v7_u08n09/02-may-profile-18.webp",
-        "hintEn": "Her name is _____"
+        "hintEn": "Her name is _____. She is _____ years old."
       },
       {
         "id": "03-max-profile-19",
@@ -596,10 +694,14 @@
           "His name is Max and he is nineteen years old.",
           "His name is Max and he is 19 years old.",
           "He is Max.",
-          "Max is 19 years old."
+          "Max is 19 years old.",
+          "His name is Max. He is nineteen years old.",
+          "His name is Max. He is 19 years old.",
+          "His name is Max. He's nineteen years old.",
+          "His name is Max. He's 19 years old."
         ],
         "imagePath": "describe-it/fnd_v7_u08n09/03-max-profile-19.webp",
-        "hintEn": "His name is _____"
+        "hintEn": "His name is _____. He is _____ years old."
       },
       {
         "id": "04-max-has-phone",
@@ -709,6 +811,98 @@
         ],
         "imagePath": "describe-it/fnd_v7_u10n04/05-i-do-not-like-noodles.webp",
         "hintEn": "I don't like _____"
+      }
+    ]
+  },
+  "fnd_v7_u12n06_day_in_pictures": {
+    "id": "fnd_v7_u12n06_day_in_pictures",
+    "titleEn": "A Day in Pictures",
+    "titleTh": "หนึ่งวันในภาพ",
+    "tagEn": "ROUTINE",
+    "emoji": "⏰",
+    "estimatedMinutes": 3,
+    "items": [
+      {
+        "id": "01-she-wakes-at-seven",
+        "promptTh": "บอกว่า May ตื่นกี่โมงเป็นประจำ",
+        "answerEn": "She wakes up at seven.",
+        "answerTh": "เธอตื่นนอนตอนเจ็ดโมง",
+        "acceptedAnswers": [
+          "She wakes up at seven",
+          "She wakes up at 7.",
+          "She wakes up at seven o'clock.",
+          "She wakes up at 7 o'clock.",
+          "May wakes up at seven.",
+          "I wake up at seven.",
+          "I wake up at 7."
+        ],
+        "imagePath": "describe-it/fnd_v7_u12n06/01-she-wakes-at-seven.webp",
+        "hintEn": "She wakes up at _____"
+      },
+      {
+        "id": "02-she-eats-at-eight",
+        "promptTh": "บอกว่า May กินข้าวกี่โมงเป็นประจำ",
+        "answerEn": "She eats at eight.",
+        "answerTh": "เธอกินข้าวตอนแปดโมง",
+        "acceptedAnswers": [
+          "She eats at eight",
+          "She eats at 8.",
+          "She eats at eight o'clock.",
+          "She eats at 8 o'clock.",
+          "May eats at eight.",
+          "I eat at eight.",
+          "I eat at 8."
+        ],
+        "imagePath": "describe-it/fnd_v7_u12n06/02-she-eats-at-eight.webp",
+        "hintEn": "She eats at _____"
+      },
+      {
+        "id": "03-she-works-on-monday",
+        "promptTh": "บอกว่า May ทำงานวันไหน",
+        "answerEn": "She works on Monday.",
+        "answerTh": "เธอทำงานวันจันทร์",
+        "acceptedAnswers": [
+          "She works on Monday",
+          "She works on Mondays.",
+          "May works on Monday.",
+          "I work on Monday."
+        ],
+        "imagePath": "describe-it/fnd_v7_u12n06/03-she-works-on-monday.webp",
+        "hintEn": "She works on _____"
+      },
+      {
+        "id": "04-she-studies-at-nine",
+        "promptTh": "บอกว่า May เรียนหนังสือกี่โมงเป็นประจำ",
+        "answerEn": "She studies at nine.",
+        "answerTh": "เธอเรียนหนังสือตอนเก้าโมง",
+        "acceptedAnswers": [
+          "She studies at nine",
+          "She studies at 9.",
+          "She studies at nine o'clock.",
+          "She studies at 9 o'clock.",
+          "May studies at nine.",
+          "I study at nine.",
+          "I study at 9."
+        ],
+        "imagePath": "describe-it/fnd_v7_u12n06/04-she-studies-at-nine.webp",
+        "hintEn": "She studies at _____"
+      },
+      {
+        "id": "05-she-watches-tv-at-seven",
+        "promptTh": "บอกว่า May ดูทีวีกี่โมงเป็นประจำ",
+        "answerEn": "She watches TV at seven.",
+        "answerTh": "เธอดูทีวีตอนหนึ่งทุ่ม",
+        "acceptedAnswers": [
+          "She watches TV at seven",
+          "She watches TV at 7.",
+          "She watches TV at seven o'clock.",
+          "She watches TV at 7 o'clock.",
+          "May watches TV at seven.",
+          "I watch TV at seven.",
+          "I watch TV at 7."
+        ],
+        "imagePath": "describe-it/fnd_v7_u12n06/05-she-watches-tv-at-seven.webp",
+        "hintEn": "She watches TV at _____"
       }
     ]
   },
@@ -893,6 +1087,112 @@
           "The bag is next to the door."
         ],
         "imagePath": "describe-it/fnd_v7_u15n04_find_my_things/06-bag-next-to-door.webp"
+      }
+    ]
+  },
+  "fnd_v7_u07n04": {
+    "id": "fnd_v7_u07n04",
+    "titleEn": "Found It!",
+    "titleTh": "เจอแล้ว!",
+    "tagEn": "WHOSE",
+    "emoji": "🎒",
+    "estimatedMinutes": 3,
+    "items": [
+      {
+        "id": "01-max-his-bag",
+        "promptTh": "ดูภาพ แล้วพูดว่ากระเป๋าใบนี้เป็นของ Max",
+        "answerEn": "This is his bag.",
+        "answerTh": "นี่คือกระเป๋าของเขา",
+        "acceptedAnswers": [
+          "This is his bag",
+          "It is his bag.",
+          "It is his bag",
+          "It's his bag.",
+          "It's his bag",
+          "This is Max's bag.",
+          "This is Max's bag"
+        ],
+        "imagePath": "describe-it/fnd_v7_u07n04/01-max-his-bag.webp",
+        "hintEn": "This is _____ bag."
+      },
+      {
+        "id": "02-may-her-bag",
+        "promptTh": "ดูภาพ แล้วพูดว่ากระเป๋าใบนี้เป็นของ May",
+        "answerEn": "This is her bag.",
+        "answerTh": "นี่คือกระเป๋าของเธอ",
+        "acceptedAnswers": [
+          "This is her bag",
+          "It is her bag.",
+          "It is her bag",
+          "It's her bag.",
+          "It's her bag",
+          "This is May's bag.",
+          "This is May's bag"
+        ],
+        "imagePath": "describe-it/fnd_v7_u07n04/02-may-her-bag.webp",
+        "hintEn": "This is _____ bag."
+      },
+      {
+        "id": "03-max-his-phone",
+        "promptTh": "ดูภาพ แล้วพูดว่าโทรศัพท์เครื่องนี้เป็นของ Max",
+        "answerEn": "This is his phone.",
+        "answerTh": "นี่คือโทรศัพท์ของเขา",
+        "acceptedAnswers": [
+          "This is his phone",
+          "It is his phone.",
+          "It is his phone",
+          "It's his phone.",
+          "It's his phone",
+          "This is Max's phone.",
+          "This is Max's phone"
+        ],
+        "imagePath": "describe-it/fnd_v7_u07n04/03-max-his-phone.webp",
+        "hintEn": "This is _____ phone."
+      },
+      {
+        "id": "04-player-my-shirt",
+        "promptTh": "ดูภาพ แล้วพูดว่าเสื้อตัวนี้เป็นของฉัน",
+        "answerEn": "This is my shirt.",
+        "answerTh": "นี่คือเสื้อของฉัน",
+        "acceptedAnswers": [
+          "This is my shirt",
+          "It is my shirt.",
+          "It is my shirt",
+          "It's my shirt.",
+          "It's my shirt"
+        ],
+        "imagePath": "describe-it/fnd_v7_u07n04/04-player-my-shirt.webp",
+        "hintEn": "This is _____ shirt."
+      },
+      {
+        "id": "05-may-max-their-keys",
+        "promptTh": "ดูภาพ แล้วพูดว่ากุญแจเหล่านี้เป็นของ May กับ Max",
+        "answerEn": "These are their keys.",
+        "answerTh": "นี่คือกุญแจของพวกเขา",
+        "acceptedAnswers": [
+          "These are their keys",
+          "They are their keys.",
+          "They are their keys",
+          "They're their keys.",
+          "They're their keys"
+        ],
+        "imagePath": "describe-it/fnd_v7_u07n04/05-may-max-their-keys.webp",
+        "hintEn": "These are _____ keys."
+      },
+      {
+        "id": "06-player-max-our-books",
+        "promptTh": "ดูภาพ แล้วพูดว่าหนังสือเหล่านี้เป็นของฉันกับ Max",
+        "answerEn": "These are our books.",
+        "answerTh": "นี่คือหนังสือของพวกเรา",
+        "acceptedAnswers": [
+          "These are our books",
+          "They are our books.",
+          "They are our books",
+          "They're our books.",
+          "They're our books"
+        ],
+        "imagePath": "describe-it/fnd_v7_u07n04/06-player-max-our-books.webp",
+        "hintEn": "These are _____ books."
       }
     ]
   }

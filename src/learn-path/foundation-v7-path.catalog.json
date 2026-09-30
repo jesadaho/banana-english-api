@@ -1984,7 +1984,9 @@
             2,
             2
           ],
-          "contentRef": {}
+          "contentRef": {
+            "poolId": "fnd_v7_u07n04"
+          }
         },
         {
           "id": "v7_u07n05",
@@ -3594,7 +3596,9 @@
             3,
             2
           ],
-          "contentRef": {}
+          "contentRef": {
+            "poolId": "fnd_v7_u12n06_day_in_pictures"
+          }
         },
         {
           "id": "v7_u12n05",

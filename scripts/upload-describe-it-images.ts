@@ -50,11 +50,17 @@ const POOL_SOURCES: Record<
   fnd_v7_u06n16: {
     dir: `${OUTPUT_ROOT}/v7_u06n16-v1/web`,
   },
+  fnd_v7_u07n04: {
+    dir: `${OUTPUT_ROOT}/v7_u07n04-found-it/web`,
+  },
   fnd_v7_u08n09: {
     dir: `${OUTPUT_ROOT}/v7_u08n09/web`,
   },
   fnd_v7_u10n04: {
     dir: `${OUTPUT_ROOT}/v7_u10n04/web`,
+  },
+  fnd_v7_u12n06_day_in_pictures: {
+    dir: `${OUTPUT_ROOT}/v7_u12n06/web`,
   },
   /** Look & Answer (fnd_v7_u15n14_look_and_answer) reuses these files. */
   fnd_v7_u15n04_find_my_things: {
