@@ -33,22 +33,10 @@ export function avatarMinPerfectStars(avatarId: string): number {
   return AVATAR_MIN_PERFECT_STARS[avatarId] ?? 0;
 }
 
-/** Same face Lesson intro / recent-learners show when avatarId is empty. */
+/** Face shown for a user in recent-learner rows; matches the app default when unset. */
 export function resolveDisplayedAvatarId(
   avatarId: string | null | undefined,
-  unlockedAvatarIds: string[] | null | undefined,
-  userId: string,
 ): string {
   const trimmed = avatarId?.trim();
-  if (trimmed && isKnownAvatarId(trimmed)) return trimmed;
-  for (const unlocked of unlockedAvatarIds ?? []) {
-    const id = unlocked.trim();
-    if (id && isKnownAvatarId(id)) return id;
-  }
-  const catalog = Object.keys(AVATAR_SEED_COSTS);
-  let hash = 0;
-  for (let i = 0; i < userId.length; i += 1) {
-    hash = (hash + userId.charCodeAt(i) * (i + 1)) % catalog.length;
-  }
-  return catalog[hash] ?? 'bogy';
+  return trimmed && isKnownAvatarId(trimmed) ? trimmed : 'bogy';
 }

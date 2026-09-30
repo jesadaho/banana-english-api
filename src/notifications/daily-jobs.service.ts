@@ -158,7 +158,7 @@ export class DailyJobsService {
   private async sendPush(
     userId: string,
     tokens: string[],
-    type: PushNotificationType,
+    type: Exclude<PushNotificationType, 'bug_report_reply'>,
   ): Promise<string[]> {
     const payload = pushPayloadForType(type);
     return this.fcm.sendAndPersist({ userId, tokens, payload });

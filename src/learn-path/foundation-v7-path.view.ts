@@ -4,7 +4,7 @@ import { foundationSayItDealCount, sayItPoolForTopic, sayItTopicById } from '../
 import { emojiSpeakPoolById } from '../emoji-speak/emoji-speak.data';
 import { isValidNewWordsPack, newWordsPoolById } from '../new-words/new-words.data';
 import { isValidDescribeItPack, describeItPoolById, DESCRIBE_IT_ENABLED } from '../describe-it/describe-it.data';
-import { isValidInfoTaskPack, infoTaskPoolById } from '../info-task/info-task.data';
+import { isValidInfoTaskPack, infoTaskPoolById, INFO_TASK_ENABLED } from '../info-task/info-task.data';
 import { getInteractiveScenario } from '../interactive-scenario/interactive-scenario.data';
 import { foundationV7LessonLegacyIds } from '../lessons/foundation-v7-lesson-id-aliases';
 import {
@@ -59,10 +59,13 @@ function mapClientNode(
   );
   const unbuilt =
     node.type === 'story_bites' ||
-    (node.type === 'describe_it' && !DESCRIBE_IT_ENABLED);
+    (node.type === 'describe_it' && !DESCRIBE_IT_ENABLED) ||
+    (node.type === 'info_task' && !INFO_TASK_ENABLED);
   const comingSoon = !backendReady || needsClient;
   const contentRef =
-    node.type === 'describe_it' && !backendReady ? {} : node.contentRef;
+    (node.type === 'describe_it' || node.type === 'info_task') && !backendReady
+      ? {}
+      : node.contentRef;
   const result: FoundationV7ClientNode = {
     id: node.id,
     code: node.code,
@@ -132,6 +135,7 @@ export function hasFoundationV7Content(node: FoundationV7Node): boolean {
         ref.poolId && isValidDescribeItPack(describeItPoolById(ref.poolId)),
       );
     case 'info_task':
+      if (!INFO_TASK_ENABLED) return false;
       return Boolean(
         ref.poolId && isValidInfoTaskPack(infoTaskPoolById(ref.poolId)),
       );

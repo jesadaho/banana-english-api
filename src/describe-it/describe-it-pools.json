@@ -471,7 +471,7 @@
       },
       {
         "id": "05-red-bag-or-blue-bag",
-        "promptTh": "เลือกของหนึ่งอย่าง แล้วพูดโดยใช้ or ครับ",
+        "promptTh": "เลือกของหนึ่งอย่างครับ",
         "answerEn": "A red bag or a blue bag.",
         "answerTh": "กระเป๋าสีแดงหรือกระเป๋าสีน้ำเงิน",
         "acceptedAnswers": [
@@ -485,7 +485,7 @@
       },
       {
         "id": "06-green-book-or-yellow-bag",
-        "promptTh": "เลือกของหนึ่งอย่าง แล้วพูดโดยใช้ or ครับ",
+        "promptTh": "เลือกของหนึ่งอย่างครับ",
         "answerEn": "A green book or a yellow bag.",
         "answerTh": "หนังสือสีเขียวหรือกระเป๋าสีเหลือง",
         "acceptedAnswers": [
@@ -499,7 +499,7 @@
       },
       {
         "id": "07-black-bag-or-white-book",
-        "promptTh": "เลือกของหนึ่งอย่าง แล้วพูดโดยใช้ or ครับ",
+        "promptTh": "เลือกของหนึ่งอย่างครับ",
         "answerEn": "A black bag or a white book.",
         "answerTh": "กระเป๋าสีดำหรือหนังสือสีขาว",
         "acceptedAnswers": [
@@ -513,7 +513,7 @@
       },
       {
         "id": "08-red-book-or-blue-bag",
-        "promptTh": "เลือกของหนึ่งอย่าง แล้วพูดโดยใช้ or ครับ",
+        "promptTh": "เลือกของหนึ่งอย่างครับ",
         "answerEn": "A red book or a blue bag.",
         "answerTh": "หนังสือสีแดงหรือกระเป๋าสีน้ำเงิน",
         "acceptedAnswers": [
@@ -524,6 +524,191 @@
           "A red book or a blue bag."
         ],
         "imagePath": "describe-it/fnd_v7_u06n16/08-red-book-or-blue-bag.webp"
+      }
+    ]
+  },
+  "fnd_v7_u08n09": {
+    "id": "fnd_v7_u08n09",
+    "titleEn": "My Profile Card",
+    "titleTh": "บัตรโปรไฟล์ของฉัน",
+    "tagEn": "PROFILE",
+    "emoji": "🪪",
+    "estimatedMinutes": 3,
+    "items": [
+      {
+        "id": "01-john-profile-25",
+        "promptTh": "ดูบัตร แล้วบอกชื่อหรืออายุของเขา",
+        "answerEn": "His name is John.",
+        "answerTh": "เขาชื่อจอห์น",
+        "acceptedAnswers": [
+          "His name is John",
+          "His name's John.",
+          "He is twenty-five years old.",
+          "He is 25 years old.",
+          "He is twenty-five.",
+          "He is 25.",
+          "He's twenty-five years old.",
+          "He's 25 years old.",
+          "His name is John and he is twenty-five years old.",
+          "His name is John and he is 25 years old.",
+          "He is John.",
+          "John is 25 years old."
+        ],
+        "imagePath": "describe-it/fnd_v7_u08n09/01-john-profile-25.webp",
+        "hintEn": "His name is _____"
+      },
+      {
+        "id": "02-may-profile-18",
+        "promptTh": "ดูบัตร แล้วบอกชื่อหรืออายุของเธอ",
+        "answerEn": "Her name is May.",
+        "answerTh": "เธอชื่อเมย์",
+        "acceptedAnswers": [
+          "Her name is May",
+          "Her name's May.",
+          "She is eighteen years old.",
+          "She is 18 years old.",
+          "She is eighteen.",
+          "She is 18.",
+          "She's eighteen years old.",
+          "She's 18 years old.",
+          "Her name is May and she is eighteen years old.",
+          "Her name is May and she is 18 years old.",
+          "She is May.",
+          "May is 18 years old."
+        ],
+        "imagePath": "describe-it/fnd_v7_u08n09/02-may-profile-18.webp",
+        "hintEn": "Her name is _____"
+      },
+      {
+        "id": "03-max-profile-19",
+        "promptTh": "ดูบัตร แล้วบอกชื่อหรืออายุของเขา",
+        "answerEn": "His name is Max.",
+        "answerTh": "เขาชื่อแม็กซ์",
+        "acceptedAnswers": [
+          "His name is Max",
+          "His name's Max.",
+          "He is nineteen years old.",
+          "He is 19 years old.",
+          "He is nineteen.",
+          "He is 19.",
+          "He's nineteen years old.",
+          "He's 19 years old.",
+          "His name is Max and he is nineteen years old.",
+          "His name is Max and he is 19 years old.",
+          "He is Max.",
+          "Max is 19 years old."
+        ],
+        "imagePath": "describe-it/fnd_v7_u08n09/03-max-profile-19.webp",
+        "hintEn": "His name is _____"
+      },
+      {
+        "id": "04-max-has-phone",
+        "promptTh": "ดูภาพ แล้วบอกว่าเขามีอะไร",
+        "answerEn": "He has a phone.",
+        "answerTh": "เขามีโทรศัพท์",
+        "acceptedAnswers": [
+          "He has a phone",
+          "Max has a phone.",
+          "He has one phone.",
+          "He's got a phone.",
+          "He has a mobile phone.",
+          "He has a smartphone."
+        ],
+        "imagePath": "describe-it/fnd_v7_u08n09/04-max-has-phone.webp",
+        "hintEn": "He has a _____"
+      },
+      {
+        "id": "05-may-has-bag",
+        "promptTh": "ดูภาพ แล้วบอกว่าเธอมีอะไร",
+        "answerEn": "She has a bag.",
+        "answerTh": "เธอมีกระเป๋า",
+        "acceptedAnswers": [
+          "She has a bag",
+          "May has a bag.",
+          "She has one bag.",
+          "She's got a bag.",
+          "She has a pink bag."
+        ],
+        "imagePath": "describe-it/fnd_v7_u08n09/05-may-has-bag.webp",
+        "hintEn": "She has a _____"
+      }
+    ]
+  },
+  "fnd_v7_u10n04": {
+    "id": "fnd_v7_u10n04",
+    "titleEn": "My Snack Choice",
+    "titleTh": "ของว่างที่ฉันเลือก",
+    "tagEn": "LIKE",
+    "emoji": "🍞",
+    "estimatedMinutes": 3,
+    "items": [
+      {
+        "id": "01-i-do-not-like-bread",
+        "promptTh": "บอกสิ่งที่ตัวละคร I ไม่ชอบ",
+        "answerEn": "I do not like bread.",
+        "answerTh": "ฉันไม่ชอบขนมปัง",
+        "acceptedAnswers": [
+          "I do not like bread",
+          "I don't like bread.",
+          "I don't like bread",
+          "I dont like bread."
+        ],
+        "imagePath": "describe-it/fnd_v7_u10n04/01-i-do-not-like-bread.webp",
+        "hintEn": "I don't like _____"
+      },
+      {
+        "id": "02-i-like-tea",
+        "promptTh": "บอกสิ่งที่ตัวละคร I ชอบ",
+        "answerEn": "I like tea.",
+        "answerTh": "ฉันชอบชา",
+        "acceptedAnswers": [
+          "I like tea",
+          "I really like tea.",
+          "I love tea."
+        ],
+        "imagePath": "describe-it/fnd_v7_u10n04/02-i-like-tea.webp",
+        "hintEn": "I like _____"
+      },
+      {
+        "id": "03-i-do-not-like-coffee",
+        "promptTh": "บอกสิ่งที่ตัวละคร I ไม่ชอบ",
+        "answerEn": "I do not like coffee.",
+        "answerTh": "ฉันไม่ชอบกาแฟ",
+        "acceptedAnswers": [
+          "I do not like coffee",
+          "I don't like coffee.",
+          "I don't like coffee",
+          "I dont like coffee."
+        ],
+        "imagePath": "describe-it/fnd_v7_u10n04/03-i-do-not-like-coffee.webp",
+        "hintEn": "I don't like _____"
+      },
+      {
+        "id": "04-i-like-rice",
+        "promptTh": "บอกสิ่งที่ตัวละคร I ชอบ",
+        "answerEn": "I like rice.",
+        "answerTh": "ฉันชอบข้าว",
+        "acceptedAnswers": [
+          "I like rice",
+          "I really like rice.",
+          "I love rice."
+        ],
+        "imagePath": "describe-it/fnd_v7_u10n04/04-i-like-rice.webp",
+        "hintEn": "I like _____"
+      },
+      {
+        "id": "05-i-do-not-like-noodles",
+        "promptTh": "บอกสิ่งที่ตัวละคร I ไม่ชอบ",
+        "answerEn": "I do not like noodles.",
+        "answerTh": "ฉันไม่ชอบก๋วยเตี๋ยว",
+        "acceptedAnswers": [
+          "I do not like noodles",
+          "I don't like noodles.",
+          "I don't like noodles",
+          "I dont like noodles."
+        ],
+        "imagePath": "describe-it/fnd_v7_u10n04/05-i-do-not-like-noodles.webp",
+        "hintEn": "I don't like _____"
       }
     ]
   },

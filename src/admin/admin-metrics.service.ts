@@ -332,10 +332,26 @@ export class AdminMetricsService {
       if (bucket) bucket.add(`u${i}`);
       i += 1;
     }
-    const dauSeries = eachUtcDateKey(range.from, range.to).map((day) => ({
-      day,
-      value: dauByDay.get(day)?.size ?? 0,
-    }));
+    const activeDayRows = await this.prisma.userActiveDay.groupBy({
+      by: ['day'],
+      where: {
+        day: { gte: range.from, lte: range.to },
+        user: userFilter,
+      },
+      _count: { _all: true },
+    });
+    const trueDau = new Map(
+      activeDayRows.map((r) => [dateKey(r.day), r._count._all]),
+    );
+    // Last-open users are a subset of that day's openers, so max() also
+    // covers the partial first day of UserActiveDay tracking.
+    const dauSeries = eachUtcDateKey(range.from, range.to).map((day) => {
+      const proxy = dauByDay.get(day)?.size ?? 0;
+      const exact = trueDau.get(day);
+      return exact != null
+        ? { day, value: Math.max(exact, proxy), exact: true }
+        : { day, value: proxy, exact: false };
+    });
 
     const revenueByProduct: Record<string, { count: number; thb: number }> = {};
     for (const p of purchases) {

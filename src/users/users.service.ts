@@ -90,6 +90,8 @@ export interface UserProfileResponse {
   dailyUsedToday: boolean;
   timezone: string;
   unlockedAvatarIds: string[];
+  /** Selected avatar; null when the user never picked one on the server. */
+  avatarId: string | null;
   lessonTeachingLanguage: 'thai' | 'english';
   email?: string | null;
   isGuest?: boolean;
@@ -195,6 +197,7 @@ export class UsersService {
         ),
       },
     });
+    await this.recordActiveDay(user.id);
 
     updated = await this.economy.maybeCreditDailyBanana(updated);
     updated = await this.economy.ensureOnboardingBonus(updated.id);
@@ -531,6 +534,21 @@ export class UsersService {
     );
   }
 
+  private async recordActiveDay(userId: string): Promise<void> {
+    const now = new Date();
+    const day = new Date(
+      Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()),
+    );
+    try {
+      await this.prisma.userActiveDay.createMany({
+        data: [{ userId, day }],
+        skipDuplicates: true,
+      });
+    } catch {
+      // DAU tracking must not fail app open.
+    }
+  }
+
   async incrementSpokenCount(userId: string, by = 1): Promise<void> {
     if (by <= 0) return;
     const now = new Date();
@@ -633,6 +651,7 @@ export class UsersService {
       dailyUsedToday: isSameDateKey(user.dailyMissionUsedDate, local.dateKey),
       timezone: user.timezone,
       unlockedAvatarIds,
+      avatarId: user.avatarId?.trim() || null,
       lessonTeachingLanguage,
       selfReportedEnglishLevel,
       acquisitionSource,

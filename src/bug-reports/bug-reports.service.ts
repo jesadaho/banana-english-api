@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { FirebaseAdminService } from '../firebase/firebase-admin.service';
+import { FcmService } from '../notifications/fcm.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { parseDateRange } from '../admin/admin-metrics.util';
 import { isValidBugReportStoragePath } from './bug-report-storage-path';
@@ -17,6 +18,8 @@ import {
 import { CreateBugReportDto } from './dto/create-bug-report.dto';
 
 const MAX_REPORTS_PER_DAY = 8;
+const MAX_USER_REPLIES_PER_DAY = 40;
+const MINE_TAKE = 30;
 const ADMIN_LIST_TAKE = 200;
 const SIGNED_URL_TTL_MS = 60 * 60 * 1000;
 
@@ -25,6 +28,7 @@ export class BugReportsService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly firebase: FirebaseAdminService,
+    private readonly fcm: FcmService,
   ) {}
 
   async create(user: User, body: CreateBugReportDto) {
@@ -94,6 +98,7 @@ export class BugReportsService {
               firebaseUid: true,
             },
           },
+          messages: { orderBy: { createdAt: 'asc' } },
         },
       }),
       this.prisma.bugReport.groupBy({
@@ -130,11 +135,118 @@ export class BugReportsService {
           route: row.route,
           updatedAt: row.updatedAt.toISOString(),
           user: row.user,
+          messages: row.messages.map(toMessageView),
         };
       }),
     );
 
     return { reports, counts };
+  }
+
+  async listMine(user: User) {
+    const rows = await this.prisma.bugReport.findMany({
+      where: { userId: user.id },
+      orderBy: { updatedAt: 'desc' },
+      take: MINE_TAKE,
+      include: { messages: { orderBy: { createdAt: 'asc' } } },
+    });
+    return { tickets: rows.map(toThreadView) };
+  }
+
+  async getMine(user: User, id: string) {
+    const row = await this.prisma.bugReport.findFirst({
+      where: { id, userId: user.id },
+      include: { messages: { orderBy: { createdAt: 'asc' } } },
+    });
+    if (!row) throw new NotFoundException('Ticket not found');
+    return toThreadView(row);
+  }
+
+  /** User follow-up reopens the ticket so it shows under Open in admin. */
+  async replyAsUser(user: User, id: string, bodyRaw: string) {
+    const body = bodyRaw.trim();
+    if (!body) throw new BadRequestException('Message is empty');
+    const ticket = await this.prisma.bugReport.findFirst({
+      where: { id, userId: user.id },
+      select: { id: true },
+    });
+    if (!ticket) throw new NotFoundException('Ticket not found');
+
+    const since = new Date(Date.now() - 24 * 60 * 60 * 1000);
+    const recent = await this.prisma.bugReportMessage.count({
+      where: {
+        author: 'user',
+        createdAt: { gte: since },
+        report: { userId: user.id },
+      },
+    });
+    if (recent >= MAX_USER_REPLIES_PER_DAY) {
+      throw new BadRequestException('Too many replies today. Try again tomorrow.');
+    }
+
+    await this.prisma.$transaction([
+      this.prisma.bugReportMessage.create({
+        data: { reportId: id, author: 'user', body },
+      }),
+      this.prisma.bugReport.update({
+        where: { id },
+        data: { status: 'open' },
+      }),
+    ]);
+    return this.getMine(user, id);
+  }
+
+  async replyAsAdmin(id: string, bodyRaw: string) {
+    const body = bodyRaw.trim();
+    if (!body) throw new BadRequestException('Message is empty');
+    const ticket = await this.prisma.bugReport.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        ticketNumber: true,
+        userId: true,
+        locale: true,
+        user: { select: { fcmTokens: { select: { token: true } } } },
+      },
+    });
+    if (!ticket) throw new NotFoundException('Ticket not found');
+
+    const message = await this.prisma.bugReportMessage.create({
+      data: { reportId: id, author: 'admin', body },
+    });
+    await this.prisma.bugReport.update({
+      where: { id },
+      data: { updatedAt: new Date() },
+    });
+
+    const code = formatTicketCode(ticket.ticketNumber);
+    const english = ticket.locale === 'en';
+    try {
+      const invalid = await this.fcm.sendAndPersist({
+        userId: ticket.userId,
+        tokens: ticket.user.fcmTokens.map((t) => t.token),
+        payload: {
+          type: 'bug_report_reply',
+          title: english
+            ? `Reply on your report ${code}`
+            : `ทีมงานตอบกลับเรื่องที่แจ้ง ${code}`,
+          body: body.length > 140 ? `${body.slice(0, 137)}...` : body,
+          data: {
+            // Older app builds only know /settings/bug-report; newer ones redirect on ?ticket.
+            route: `/settings/bug-report?ticket=${id}`,
+            ticketId: id,
+          },
+        },
+      });
+      if (invalid.length > 0) {
+        await this.prisma.userFcmToken.deleteMany({
+          where: { token: { in: invalid } },
+        });
+      }
+    } catch {
+      // Reply is saved even if the push fails.
+    }
+    return toMessageView(message);
   }
 
   async updateStatus(id: string, statusRaw: string) {
@@ -174,6 +286,37 @@ function toTicketView(row: {
     status: (normalizeBugReportStatus(row.status) ??
       row.status) as BugReportStatus | string,
     createdAt: row.createdAt.toISOString(),
+  };
+}
+
+function toMessageView(row: {
+  id: string;
+  author: string;
+  body: string;
+  createdAt: Date;
+}) {
+  return {
+    id: row.id,
+    author: row.author === 'admin' ? 'admin' : 'user',
+    body: row.body,
+    createdAt: row.createdAt.toISOString(),
+  };
+}
+
+function toThreadView(row: {
+  id: string;
+  ticketNumber: number;
+  status: string;
+  createdAt: Date;
+  updatedAt: Date;
+  message: string;
+  messages: { id: string; author: string; body: string; createdAt: Date }[];
+}) {
+  return {
+    ...toTicketView(row),
+    message: row.message,
+    updatedAt: row.updatedAt.toISOString(),
+    messages: row.messages.map(toMessageView),
   };
 }
 

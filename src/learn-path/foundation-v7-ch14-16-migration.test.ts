@@ -5,7 +5,7 @@ import {
   migrateFoundationV7NodeId,
 } from './foundation-v7-ch14-16-migration';
 import { FOUNDATION_V7_NODES, FOUNDATION_V7_CATALOG } from './foundation-v7-path.data';
-import { dealInfoTaskItems, isValidInfoTaskPack, infoTaskPoolById } from '../info-task/info-task.data';
+import { dealInfoTaskItems, isValidInfoTaskPack, infoTaskPoolById, INFO_TASK_ENABLED } from '../info-task/info-task.data';
 import { resolveSkipQuizPool } from './foundation-v7-skip-quiz';
 import { LearnPathService } from './learn-path.service';
 import { FOUNDATION_V7_SIMULATIONS } from '../simulations/foundation-v7-simulations.data';
@@ -96,13 +96,13 @@ describe('Foundation V7 Ch14–16 playthrough personas', () => {
 
   it('excludes Around Town from the A1 denominator', async () => {
     const view = await pathService().getFoundationV7('user');
-    assert.equal(view.progress.totalCount, 147);
+    assert.equal(view.progress.totalCount, INFO_TASK_ENABLED ? 147 : 143);
     assert.ok(!view.chapters.some((ch) => ch.id === 'v7_u16'));
     assert.equal(view.chapters.at(-1)?.id, 'v7_u15');
     assert.equal(FOUNDATION_V7_CATALOG.chapters.length, 16);
   });
 
-  it('credits Find My Class when the legacy Plan My Class simulation is complete', async () => {
+  it('credits Find My Class when the legacy Plan My Class simulation is complete', { skip: !INFO_TASK_ENABLED }, async () => {
     const view = await pathService([], [], ['foundation_v7_u14n06']).getFoundationV7(
       'user',
     );

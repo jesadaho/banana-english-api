@@ -1,7 +1,8 @@
 export type PushNotificationType =
   | 'first_banana'
   | 'streak_reminder'
-  | 'miss_you';
+  | 'miss_you'
+  | 'bug_report_reply';
 
 export interface PushNotificationPayload {
   type: PushNotificationType;
@@ -11,7 +12,7 @@ export interface PushNotificationPayload {
 }
 
 export const PUSH_NOTIFICATION_TEMPLATES: Record<
-  PushNotificationType,
+  Exclude<PushNotificationType, 'bug_report_reply'>,
   Omit<PushNotificationPayload, 'type'>
 > = {
   first_banana: {
@@ -32,7 +33,7 @@ export const PUSH_NOTIFICATION_TEMPLATES: Record<
 };
 
 export function pushPayloadForType(
-  type: PushNotificationType,
+  type: Exclude<PushNotificationType, 'bug_report_reply'>,
 ): PushNotificationPayload {
   const template = PUSH_NOTIFICATION_TEMPLATES[type];
   return { type, ...template };

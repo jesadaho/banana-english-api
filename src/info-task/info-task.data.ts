@@ -25,6 +25,9 @@ export type InfoTaskPool = {
   items: InfoTaskItem[];
 };
 
+/** Path nodes stay Coming Soon while the mechanic is being reworked. */
+export const INFO_TASK_ENABLED = false;
+
 const catalog = poolsJson as Record<string, InfoTaskPool>;
 
 export const INFO_TASK_DEAL_COUNT = 5;

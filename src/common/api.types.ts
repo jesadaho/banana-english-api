@@ -561,6 +561,8 @@ export interface UserProfileResponse {
   dailyUsedToday: boolean;
   timezone: string;
   unlockedAvatarIds: string[];
+  /** Selected avatar; null when the user never picked one on the server. */
+  avatarId: string | null;
   lessonTeachingLanguage: 'thai' | 'english';
   /**
    * Self-reported English level from onboarding survey:

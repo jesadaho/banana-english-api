@@ -355,19 +355,13 @@ export class LessonsService {
         where,
         orderBy: { lastStudiedAt: 'desc' },
         take: 5,
-        select: {
-          id: true,
-          avatarId: true,
-          unlockedAvatarIds: true,
-        },
+        select: { avatarId: true },
       }),
     ]);
 
     return {
       total,
-      avatarIds: rows.map((row) =>
-        resolveDisplayedAvatarId(row.avatarId, row.unlockedAvatarIds, row.id),
-      ),
+      avatarIds: rows.map((row) => resolveDisplayedAvatarId(row.avatarId)),
     };
   }
 }
