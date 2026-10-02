@@ -20,6 +20,8 @@ import {
   CONTENT_COURSES,
   contentItemTitle,
   EMPTY_COURSE_COUNTS,
+  foundationV7PathPosition,
+  foundationV7StageCatalog,
   roundStars,
   type ContentCourse,
 } from './content-course';
@@ -1251,6 +1253,25 @@ export class AdminMetricsService {
       }
     }
 
+    const playedOrders = new Set<number>();
+    for (const acc of byGame.values()) {
+      const order = foundationV7PathPosition(acc.gameId)?.order;
+      if (order != null) playedOrders.add(order);
+    }
+    for (const stage of foundationV7StageCatalog()) {
+      if (playedOrders.has(stage.order) || byGame.has(stage.gameId)) continue;
+      byGame.set(stage.gameId, {
+        gameId: stage.gameId,
+        kind: stage.kind,
+        attempts: 0,
+        users: new Set(),
+        correctSum: 0,
+        totalSum: 0,
+        passedCount: 0,
+        scoredPass: 0,
+      });
+    }
+
     return [...byGame.values()]
       .map((acc) => {
         const avgCorrect =
@@ -1269,11 +1290,16 @@ export class AdminMetricsService {
           acc.scoredPass === 0
             ? null
             : Math.round((acc.passedCount / acc.scoredPass) * 1000) / 10;
+        const pathPosition = foundationV7PathPosition(acc.gameId);
         return {
           gameId: acc.gameId,
           titleEn: contentItemTitle(acc.gameId),
+          pathCode: pathPosition?.code ?? null,
+          pathOrder: pathPosition?.order ?? null,
           kind: acc.kind,
-          course: classifyContentCourse(acc.gameId),
+          course: pathPosition
+            ? 'foundation'
+            : classifyContentCourse(acc.gameId),
           attempts: acc.attempts,
           users: acc.users.size,
           avgCorrect,
@@ -1282,7 +1308,14 @@ export class AdminMetricsService {
           passRate,
         };
       })
-      .sort((a, b) => b.attempts - a.attempts);
+      .sort((a, b) => {
+        if (a.pathOrder != null && b.pathOrder != null) {
+          return a.pathOrder - b.pathOrder;
+        }
+        if (a.pathOrder != null) return -1;
+        if (b.pathOrder != null) return 1;
+        return b.attempts - a.attempts;
+      });
   }
 
   private buildFeedbackSummary(
@@ -1635,6 +1668,11 @@ export class AdminMetricsService {
         lastAppOpenDate: true,
         acquisitionSource: true,
         spokenCount: true,
+        avatarId: true,
+        surveyGender: true,
+        surveyAgeRange: true,
+        selfReportedEnglishLevel: true,
+        freeTalkMemories: true,
       },
     });
 
@@ -1703,6 +1741,11 @@ export class AdminMetricsService {
           longestStreakDays: Math.max(u.longestStreakDays, u.streakDays),
           lastAppOpenDate: u.lastAppOpenDate?.toISOString() ?? null,
           acquisitionSource: u.acquisitionSource,
+          avatarId: u.avatarId,
+          gender: u.surveyGender,
+          ageRange: u.surveyAgeRange,
+          englishLevel: u.selfReportedEnglishLevel,
+          memories: u.freeTalkMemories,
         };
       }),
     };

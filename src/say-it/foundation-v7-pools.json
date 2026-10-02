@@ -1541,6 +1541,12 @@
       "acceptedAnswers": [
         "The class is at 10."
       ]
+    },
+    {
+      "id": "fnd_v7_u14tn05_q6",
+      "promptTh": "คลาสอยู่ในเดือน April",
+      "answerEn": "The class is in April.",
+      "acceptedAnswers": []
     }
   ],
   "fnd_v7_u14tn11": [
@@ -1580,30 +1586,42 @@
   "fnd_v7_u14tn13": [
     {
       "id": "fnd_v7_u14tn13_q1",
-      "promptTh": "วันเกิดสมมติอยู่ในเดือน July",
-      "answerEn": "My birthday is in July.",
-      "acceptedAnswers": []
-    },
-    {
-      "id": "fnd_v7_u14tn13_q2",
-      "promptTh": "คลาสอยู่ในเดือน August",
-      "answerEn": "The class is in August.",
-      "acceptedAnswers": []
-    },
-    {
-      "id": "fnd_v7_u14tn13_q3",
       "promptTh": "วันเกิดสมมติอยู่ในเดือน September",
       "answerEn": "My birthday is in September.",
       "acceptedAnswers": []
     },
     {
+      "id": "fnd_v7_u14tn13_q2",
+      "promptTh": "คลาสอยู่ในเดือน October",
+      "answerEn": "The class is in October.",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14tn13_q3",
+      "promptTh": "วันเกิดสมมติอยู่ในเดือน November",
+      "answerEn": "My birthday is in November.",
+      "acceptedAnswers": []
+    },
+    {
       "id": "fnd_v7_u14tn13_q4",
+      "promptTh": "คลาสอยู่ในเดือน December",
+      "answerEn": "The class is in December.",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14tn13_q5",
       "promptTh": "คลาสอยู่ในเดือน May",
       "answerEn": "The class is in May.",
       "acceptedAnswers": []
     },
     {
-      "id": "fnd_v7_u14tn13_q5",
+      "id": "fnd_v7_u14tn13_q6",
+      "promptTh": "วันเกิดสมมติอยู่ในเดือน July",
+      "answerEn": "My birthday is in July.",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u14tn13_q7",
       "promptTh": "คลาสเรียนวัน Monday",
       "answerEn": "The class is on Monday.",
       "acceptedAnswers": []

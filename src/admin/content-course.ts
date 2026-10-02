@@ -1,5 +1,9 @@
 import { flattenFoundationV2Nodes } from '../learn-path/foundation-v2-path.data';
-import { FOUNDATION_V7_CATALOG, FOUNDATION_V7_NODES } from '../learn-path/foundation-v7-path.data';
+import {
+  canonicalFoundationV7RewardId,
+  FOUNDATION_V7_CATALOG,
+  FOUNDATION_V7_NODES,
+} from '../learn-path/foundation-v7-path.data';
 import { getLesson } from '../lessons/lessons.data';
 
 /** Original 16 Basics catalog lessons (BasicsLessons / BasicsCourse). */
@@ -152,4 +156,84 @@ export function contentItemTitle(id: string): string {
 
 export function roundStars(value: number): number {
   return Math.round(value * 100) / 100;
+}
+
+export type FoundationV7PathPosition = { order: number; code: string };
+
+let v7PositionByRewardId: Map<string, FoundationV7PathPosition> | null = null;
+
+/**
+ * Where a stage score's game sits on the V7 path (node globalOrder / code).
+ * A chapter's Skip Quiz sorts just before that chapter's first node.
+ */
+export function foundationV7PathPosition(
+  gameId: string,
+): FoundationV7PathPosition | null {
+  if (!v7PositionByRewardId) {
+    v7PositionByRewardId = new Map();
+    for (const node of FOUNDATION_V7_NODES) {
+      const canonical = canonicalFoundationV7RewardId(node.id);
+      if (canonical && !v7PositionByRewardId.has(canonical)) {
+        v7PositionByRewardId.set(canonical, {
+          order: node.globalOrder,
+          code: node.code,
+        });
+      }
+    }
+    for (const chapter of FOUNDATION_V7_CATALOG.chapters) {
+      const first = Math.min(...chapter.items.map((n) => n.globalOrder));
+      if (Number.isFinite(first)) {
+        v7PositionByRewardId.set(`skip_quiz:${chapter.id}`, {
+          order: first - 0.5,
+          code: `${chapter.number}.0`,
+        });
+      }
+    }
+  }
+  const trimmed = gameId.trim();
+  return (
+    v7PositionByRewardId.get(trimmed) ??
+    v7PositionByRewardId.get(canonicalFoundationV7RewardId(trimmed) ?? '') ??
+    null
+  );
+}
+
+export type FoundationV7Stage = {
+  gameId: string;
+  kind: string;
+  order: number;
+  code: string;
+  titleEn: string;
+};
+
+/** Every scored V7 stage (mini-game nodes + chapter Skip Quizzes from Ch2), in path order. */
+export function foundationV7StageCatalog(): FoundationV7Stage[] {
+  const stages: FoundationV7Stage[] = [];
+  const seen = new Set<string>();
+  for (const node of FOUNDATION_V7_NODES) {
+    const canonical = canonicalFoundationV7RewardId(node.id);
+    if (!canonical || seen.has(canonical)) continue;
+    seen.add(canonical);
+    stages.push({
+      gameId: canonical,
+      kind: canonical.slice(0, canonical.indexOf(':')),
+      order: node.globalOrder,
+      code: node.code,
+      titleEn: node.titleEn,
+    });
+  }
+  for (const chapter of FOUNDATION_V7_CATALOG.chapters) {
+    if (chapter.number < 2) continue;
+    const gameId = `skip_quiz:${chapter.id}`;
+    const position = foundationV7PathPosition(gameId);
+    if (!position) continue;
+    stages.push({
+      gameId,
+      kind: 'skip_quiz',
+      order: position.order,
+      code: position.code,
+      titleEn: contentItemTitle(gameId),
+    });
+  }
+  return stages.sort((a, b) => a.order - b.order);
 }

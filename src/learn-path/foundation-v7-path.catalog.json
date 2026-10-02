@@ -4348,12 +4348,13 @@
           "titleTh": "เดือน 1",
           "type": "new_words",
           "beat": "Ki",
-          "learningTarget": "จำ January / February / March",
-          "activity": "ชุดเดือนแรก สามคำ พร้อมเสียงและคำแปล",
+          "learningTarget": "จำ January / February / March / April",
+          "activity": "ชุดเดือนแรก สี่คำ พร้อมเสียงและคำแปล",
           "examples": [
             "January",
             "February",
-            "March"
+            "March",
+            "April"
           ],
           "estimatedMinutes": [
             2,
@@ -4410,9 +4411,10 @@
           "type": "say_it",
           "beat": "Sho",
           "learningTarget": "พูด in + month และ on + day / at + time",
-          "activity": "ทบทวนเดือน 1 กับวันเวลา",
+          "activity": "ทบทวนเดือน 1 (Jan–Apr) กับวันเวลา",
           "examples": [
             "My birthday is in January.",
+            "The class is in April.",
             "The class is on Friday."
           ],
           "estimatedMinutes": [
@@ -4439,12 +4441,13 @@
           "titleTh": "เดือน 2",
           "type": "new_words",
           "beat": "Ki",
-          "learningTarget": "จำ April / May / June",
-          "activity": "ชุดเดือนที่สอง",
+          "learningTarget": "จำ May / June / July / August",
+          "activity": "ชุดเดือนที่สอง สี่คำ",
           "examples": [
-            "April",
             "May",
-            "June"
+            "June",
+            "July",
+            "August"
           ],
           "estimatedMinutes": [
             2,
@@ -4613,71 +4616,10 @@
           }
         },
         {
-          "id": "v7_u14tn12",
+          "id": "v7_u14tn14",
           "code": "15.12",
           "order": 12,
           "globalOrder": 144,
-          "titleEn": "Months 3",
-          "titleTh": "เดือน 3",
-          "type": "new_words",
-          "beat": "Ki",
-          "learningTarget": "จำ July / August / September",
-          "activity": "ชุดเดือนที่สาม",
-          "examples": [
-            "July",
-            "August",
-            "September"
-          ],
-          "estimatedMinutes": [
-            2,
-            4
-          ],
-          "difficultyAxes": [
-            1,
-            1,
-            2,
-            1,
-            1
-          ],
-          "contentRef": {
-            "poolId": "new_words_months_3"
-          }
-        },
-        {
-          "id": "v7_u14tn13",
-          "code": "15.13",
-          "order": 13,
-          "globalOrder": 145,
-          "titleEn": "Months & Days 2",
-          "titleTh": "เดือนและวัน 2",
-          "type": "say_it",
-          "beat": "Sho",
-          "learningTarget": "ใช้เดือนชุด 3 และทบทวน May / Monday",
-          "activity": "กรอบ birthday / class",
-          "examples": [
-            "My birthday is in July.",
-            "The class is in May."
-          ],
-          "estimatedMinutes": [
-            2,
-            4
-          ],
-          "difficultyAxes": [
-            2,
-            1,
-            1,
-            1,
-            1
-          ],
-          "contentRef": {
-            "topicId": "fnd_v7_u14tn13"
-          }
-        },
-        {
-          "id": "v7_u14tn14",
-          "code": "15.14",
-          "order": 14,
-          "globalOrder": 146,
           "titleEn": "How Many?",
           "titleTh": "กี่ชิ้น?",
           "type": "lesson",
@@ -4705,9 +4647,9 @@
         },
         {
           "id": "v7_u14tn15",
-          "code": "15.15",
-          "order": 15,
-          "globalOrder": 147,
+          "code": "15.13",
+          "order": 13,
+          "globalOrder": 145,
           "titleEn": "Price or Number?",
           "titleTh": "ราคาหรือจำนวน?",
           "type": "say_it",
@@ -4734,17 +4676,18 @@
           }
         },
         {
-          "id": "v7_u14tn16",
-          "code": "15.16",
-          "order": 16,
-          "globalOrder": 148,
-          "titleEn": "Months 4",
-          "titleTh": "เดือน 4",
+          "id": "v7_u14tn12",
+          "code": "15.14",
+          "order": 14,
+          "globalOrder": 146,
+          "titleEn": "Months 3",
+          "titleTh": "เดือน 3",
           "type": "new_words",
           "beat": "Ki",
-          "learningTarget": "จำ October / November / December",
-          "activity": "ชุดเดือนสุดท้าย",
+          "learningTarget": "จำ September / October / November / December",
+          "activity": "ชุดเดือนสุดท้าย สี่คำ ครบ 12 เดือน",
           "examples": [
+            "September",
             "October",
             "November",
             "December"
@@ -4761,14 +4704,45 @@
             1
           ],
           "contentRef": {
-            "poolId": "new_words_months_4"
+            "poolId": "new_words_months_3"
+          }
+        },
+        {
+          "id": "v7_u14tn13",
+          "code": "15.15",
+          "order": 15,
+          "globalOrder": 147,
+          "titleEn": "Months & Days 2",
+          "titleTh": "เดือนและวัน 2",
+          "type": "say_it",
+          "beat": "Sho",
+          "learningTarget": "ใช้เดือนชุด 3 (Sep–Dec) และทบทวน May–Aug / Monday",
+          "activity": "ทบทวนเดือนชุด 2–3 กับวัน",
+          "examples": [
+            "My birthday is in October.",
+            "The class is in December.",
+            "The class is on Monday."
+          ],
+          "estimatedMinutes": [
+            2,
+            4
+          ],
+          "difficultyAxes": [
+            2,
+            1,
+            1,
+            1,
+            1
+          ],
+          "contentRef": {
+            "topicId": "fnd_v7_u14tn13"
           }
         },
         {
           "id": "v7_u14tn17",
-          "code": "15.17",
-          "order": 17,
-          "globalOrder": 149,
+          "code": "15.16",
+          "order": 16,
+          "globalOrder": 148,
           "titleEn": "Read the Calendar 2",
           "titleTh": "อ่านปฏิทิน 2",
           "type": "info_task",
@@ -4796,9 +4770,9 @@
         },
         {
           "id": "v7_u14tn18",
-          "code": "15.18",
-          "order": 18,
-          "globalOrder": 150,
+          "code": "15.17",
+          "order": 17,
+          "globalOrder": 149,
           "titleEn": "Months I Remember",
           "titleTh": "เดือนที่จำได้",
           "type": "say_it",
@@ -4826,9 +4800,9 @@
         },
         {
           "id": "v7_u14tn19",
-          "code": "15.19",
-          "order": 19,
-          "globalOrder": 151,
+          "code": "15.18",
+          "order": 18,
+          "globalOrder": 150,
           "titleEn": "Read My Ticket",
           "titleTh": "อ่านตั๋วของฉัน",
           "type": "info_task",
@@ -4857,9 +4831,9 @@
         },
         {
           "id": "v7_u14tn20",
-          "code": "15.20",
-          "order": 20,
-          "globalOrder": 152,
+          "code": "15.19",
+          "order": 19,
+          "globalOrder": 151,
           "titleEn": "Questions in Real Life",
           "titleTh": "คำถามในชีวิตจริง",
           "type": "say_it",
@@ -4888,9 +4862,9 @@
         },
         {
           "id": "v7_u14tn21",
-          "code": "15.21",
-          "order": 21,
-          "globalOrder": 153,
+          "code": "15.20",
+          "order": 20,
+          "globalOrder": 152,
           "titleEn": "Plan a Movie",
           "titleTh": "วางแผนดูหนัง",
           "type": "conversation",
@@ -4930,7 +4904,7 @@
           "id": "v7_u15n10",
           "code": "16.1",
           "order": 1,
-          "globalOrder": 154,
+          "globalOrder": 153,
           "titleEn": "Around the Room",
           "titleTh": "รอบห้อง",
           "type": "new_words",
@@ -4961,7 +4935,7 @@
           "id": "v7_u15n01",
           "code": "16.2",
           "order": 2,
-          "globalOrder": 155,
+          "globalOrder": 154,
           "titleEn": "There Is / There Are",
           "titleTh": "บอกว่ามีอะไรอยู่",
           "type": "lesson",
@@ -4991,7 +4965,7 @@
           "id": "v7_u15n12",
           "code": "16.3",
           "order": 3,
-          "globalOrder": 156,
+          "globalOrder": 155,
           "titleEn": "What Is in the Room?",
           "titleTh": "ในห้องมีอะไร?",
           "type": "say_it",
@@ -5021,7 +4995,7 @@
           "id": "v7_u15n11",
           "code": "16.4",
           "order": 4,
-          "globalOrder": 157,
+          "globalOrder": 156,
           "titleEn": "More Places & Things",
           "titleTh": "สถานที่และของเพิ่ม",
           "type": "new_words",
@@ -5052,7 +5026,7 @@
           "id": "v7_u15n03",
           "code": "16.5",
           "order": 5,
-          "globalOrder": 158,
+          "globalOrder": 157,
           "titleEn": "In, On, Under, Next To",
           "titleTh": "บอกตำแหน่งของ",
           "type": "lesson",
@@ -5082,7 +5056,7 @@
           "id": "v7_u15n13",
           "code": "16.6",
           "order": 6,
-          "globalOrder": 159,
+          "globalOrder": 158,
           "titleEn": "Where Is It?",
           "titleTh": "มันอยู่ไหน?",
           "type": "say_it",
@@ -5112,7 +5086,7 @@
           "id": "v7_u15n04",
           "code": "16.7",
           "order": 7,
-          "globalOrder": 160,
+          "globalOrder": 159,
           "titleEn": "Find My Things",
           "titleTh": "หาของของฉัน",
           "type": "describe_it",
@@ -5142,7 +5116,7 @@
           "id": "v7_u15n05",
           "code": "16.8",
           "order": 8,
-          "globalOrder": 161,
+          "globalOrder": 160,
           "titleEn": "Word Stress I",
           "titleTh": "เน้นพยางค์ I",
           "type": "pronunciation",
@@ -5184,7 +5158,7 @@
           "id": "v7_u15n06",
           "code": "16.9",
           "order": 9,
-          "globalOrder": 162,
+          "globalOrder": 161,
           "titleEn": "Go Straight, Turn Left",
           "titleTh": "ตรงไป เลี้ยวซ้าย",
           "type": "lesson",
@@ -5215,7 +5189,7 @@
           "id": "v7_u15n09",
           "code": "16.10",
           "order": 10,
-          "globalOrder": 163,
+          "globalOrder": 162,
           "titleEn": "Direction Mix",
           "titleTh": "ทิศทางผสม",
           "type": "emoji_speak",
@@ -5247,7 +5221,7 @@
           "id": "v7_u15n07",
           "code": "16.11",
           "order": 11,
-          "globalOrder": 164,
+          "globalOrder": 163,
           "titleEn": "Say the Way",
           "titleTh": "บอกทาง",
           "type": "say_it",
@@ -5277,7 +5251,7 @@
           "id": "v7_u15n14",
           "code": "16.12",
           "order": 12,
-          "globalOrder": 165,
+          "globalOrder": 164,
           "titleEn": "Look & Answer",
           "titleTh": "ดูแล้วตอบ",
           "type": "describe_it",
@@ -5307,7 +5281,7 @@
           "id": "v7_finale_n01",
           "code": "16.13",
           "order": 13,
-          "globalOrder": 166,
+          "globalOrder": 165,
           "titleEn": "Final Interview",
           "titleTh": "บททดสอบสุดท้าย กับ Teacher John",
           "type": "interactive_scenario",

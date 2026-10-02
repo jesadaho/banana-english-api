@@ -396,7 +396,11 @@
           "It's a blue bag.",
           "It is a blue bag.",
           "A blue bag.",
-          "This is a blue bag"
+          "This is a blue bag",
+          "This is a bag.",
+          "It's a bag.",
+          "It is a bag.",
+          "A bag."
         ],
         "imagePath": "describe-it/fnd_v7_u06n06/01-this-blue-bag.webp",
         "hintEn": "This is a _____"
@@ -410,7 +414,11 @@
           "It's a yellow book.",
           "It is a yellow book.",
           "A yellow book.",
-          "This is a yellow book"
+          "This is a yellow book",
+          "This is a book.",
+          "It's a book.",
+          "It is a book.",
+          "A book."
         ],
         "imagePath": "describe-it/fnd_v7_u06n06/02-this-yellow-book.webp"
       },
@@ -424,7 +432,12 @@
           "They're blue bags.",
           "Two blue bags.",
           "Blue bags.",
-          "These are blue bags"
+          "These are blue bags",
+          "These are bags.",
+          "They are bags.",
+          "They're bags.",
+          "Two bags.",
+          "Bags."
         ],
         "imagePath": "describe-it/fnd_v7_u06n06/03-these-blue-bags.webp"
       },
@@ -438,7 +451,12 @@
           "They're green books.",
           "Three green books.",
           "Green books.",
-          "These are green books"
+          "These are green books",
+          "These are books.",
+          "They are books.",
+          "They're books.",
+          "Three books.",
+          "Books."
         ],
         "imagePath": "describe-it/fnd_v7_u06n06/04-these-green-books.webp"
       },
@@ -451,7 +469,11 @@
           "It's a red bag.",
           "It is a red bag.",
           "A red bag.",
-          "That is a red bag"
+          "That is a red bag",
+          "That is a bag.",
+          "It's a bag.",
+          "It is a bag.",
+          "A bag."
         ],
         "imagePath": "describe-it/fnd_v7_u06n06/05-that-red-bag.webp"
       },
@@ -464,7 +486,11 @@
           "It's a yellow book.",
           "It is a yellow book.",
           "A yellow book.",
-          "That is a yellow book"
+          "That is a yellow book",
+          "That is a book.",
+          "It's a book.",
+          "It is a book.",
+          "A book."
         ],
         "imagePath": "describe-it/fnd_v7_u06n06/06-that-yellow-book.webp"
       },
@@ -478,7 +504,12 @@
           "They're black bags.",
           "Two black bags.",
           "Black bags.",
-          "Those are black bags"
+          "Those are black bags",
+          "Those are bags.",
+          "They are bags.",
+          "They're bags.",
+          "Two bags.",
+          "Bags."
         ],
         "imagePath": "describe-it/fnd_v7_u06n06/07-those-black-bags.webp"
       },
@@ -492,7 +523,12 @@
           "They're white books.",
           "Three white books.",
           "White books.",
-          "Those are white books"
+          "Those are white books",
+          "Those are books.",
+          "They are books.",
+          "They're books.",
+          "Three books.",
+          "Books."
         ],
         "imagePath": "describe-it/fnd_v7_u06n06/08-those-white-books.webp"
       }

@@ -96,7 +96,7 @@ describe('Foundation V7 Ch14–16 playthrough personas', () => {
 
   it('excludes Around Town from the A1 denominator', async () => {
     const view = await pathService().getFoundationV7('user');
-    assert.equal(view.progress.totalCount, INFO_TASK_ENABLED ? 147 : 143);
+    assert.equal(view.progress.totalCount, INFO_TASK_ENABLED ? 146 : 142);
     assert.ok(!view.chapters.some((ch) => ch.id === 'v7_u16'));
     assert.equal(view.chapters.at(-1)?.id, 'v7_u15');
     assert.equal(FOUNDATION_V7_CATALOG.chapters.length, 16);
@@ -156,8 +156,8 @@ describe('Foundation V7 Ch14–16 playthrough personas', () => {
     assert.equal(alternate.length, happyLinesFor('foundation_v7_u14tn21').length);
   });
 
-  it('ships months 1–4 covering all twelve month names exactly once across NW packs', () => {
-    const months = [1, 2, 3, 4].flatMap((n) =>
+  it('ships months 1–3 covering all twelve month names exactly once across NW packs', () => {
+    const months = [1, 2, 3].flatMap((n) =>
       (newWordsPoolById(`new_words_months_${n}`)?.items ?? []).map((i) =>
         i.answer.toLowerCase(),
       ),

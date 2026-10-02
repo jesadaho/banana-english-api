@@ -762,18 +762,18 @@
         "answer": "March",
         "reading": "มาร์ช",
         "meaningTh": "มีนาคม"
+      },
+      {
+        "emoji": "4️⃣",
+        "answer": "April",
+        "reading": "เอ-พริล",
+        "meaningTh": "เมษายน"
       }
     ]
   },
   "new_words_months_2": {
     "title": "Months 2",
     "items": [
-      {
-        "emoji": "4️⃣",
-        "answer": "April",
-        "reading": "เอ-พริล",
-        "meaningTh": "เมษายน"
-      },
       {
         "emoji": "5️⃣",
         "answer": "May",
@@ -785,12 +785,7 @@
         "answer": "June",
         "reading": "จูน",
         "meaningTh": "มิถุนายน"
-      }
-    ]
-  },
-  "new_words_months_3": {
-    "title": "Months 3",
-    "items": [
+      },
       {
         "emoji": "7️⃣",
         "answer": "July",
@@ -802,18 +797,18 @@
         "answer": "August",
         "reading": "ออ-กัสต์",
         "meaningTh": "สิงหาคม"
-      },
+      }
+    ]
+  },
+  "new_words_months_3": {
+    "title": "Months 3",
+    "items": [
       {
         "emoji": "9️⃣",
         "answer": "September",
         "reading": "เซป-เทม-เบอร์",
         "meaningTh": "กันยายน"
-      }
-    ]
-  },
-  "new_words_months_4": {
-    "title": "Months 4",
-    "items": [
+      },
       {
         "emoji": "🔟",
         "answer": "October",
