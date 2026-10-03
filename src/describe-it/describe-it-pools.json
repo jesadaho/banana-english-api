@@ -1231,5 +1231,125 @@
         "hintEn": "These are _____ books."
       }
     ]
+  },
+  "fnd_v7_u14tn07_read_the_calendar_1": {
+    "id": "fnd_v7_u14tn07_read_the_calendar_1",
+    "titleEn": "Read the Calendar 1",
+    "titleTh": "อ่านปฏิทิน 1",
+    "tagEn": "DATE",
+    "emoji": "📅",
+    "estimatedMinutes": 3,
+    "items": [
+      {
+        "id": "cal1_say_01",
+        "promptTh": "คลาสตรงกับวันอะไร?",
+        "questionEn": "What day is the class?",
+        "answerEn": "It's on Friday.",
+        "answerTh": "คลาสวันศุกร์",
+        "acceptedAnswers": [
+          "On Friday.",
+          "Friday.",
+          "It's on Friday",
+          "It is on Friday."
+        ],
+        "imagePath": "describe-it/fnd_v7_u14tn07_read_the_calendar_1/class-card-a.webp",
+        "hintEn": "It's on _____"
+      },
+      {
+        "id": "cal1_say_02",
+        "promptTh": "คลาสวันที่เท่าไร?",
+        "questionEn": "What date is the class?",
+        "answerEn": "May fifth.",
+        "answerTh": "วันที่ 5 พฤษภาคม",
+        "acceptedAnswers": [
+          "The fifth of May.",
+          "May fifth",
+          "May 5th.",
+          "The 5th of May.",
+          "Fifth of May."
+        ],
+        "imagePath": "describe-it/fnd_v7_u14tn07_read_the_calendar_1/class-card-a.webp",
+        "hintEn": "May _____"
+      },
+      {
+        "id": "cal1_say_03",
+        "promptTh": "คลาสกี่โมง?",
+        "questionEn": "What time is the class?",
+        "answerEn": "At ten.",
+        "answerTh": "สิบโมง",
+        "acceptedAnswers": [
+          "At ten o'clock.",
+          "Ten a.m.",
+          "At ten",
+          "At 10.",
+          "10 a.m.",
+          "Ten o'clock."
+        ],
+        "imagePath": "describe-it/fnd_v7_u14tn07_read_the_calendar_1/class-card-a.webp",
+        "hintEn": "At _____"
+      },
+      {
+        "id": "cal1_say_04",
+        "promptTh": "คลาสอยู่ห้องไหน?",
+        "questionEn": "What room is the class in?",
+        "answerEn": "In Room 2.",
+        "answerTh": "ที่ห้อง 2",
+        "acceptedAnswers": [
+          "Room 2.",
+          "Room two.",
+          "In Room two.",
+          "In room 2"
+        ],
+        "imagePath": "describe-it/fnd_v7_u14tn07_read_the_calendar_1/class-card-a.webp",
+        "hintEn": "In Room _____"
+      },
+      {
+        "id": "cal1_say_05",
+        "promptTh": "คลาสอยู่เดือนอะไร?",
+        "questionEn": "What month is the class in?",
+        "answerEn": "In June.",
+        "answerTh": "เดือนมิถุนายน",
+        "acceptedAnswers": [
+          "June.",
+          "In June",
+          "It's in June."
+        ],
+        "imagePath": "describe-it/fnd_v7_u14tn07_read_the_calendar_1/class-card-b.webp",
+        "hintEn": "In _____"
+      },
+      {
+        "id": "cal1_say_06",
+        "promptTh": "คลาสกี่โมง?",
+        "questionEn": "What time is the class?",
+        "answerEn": "At nine.",
+        "answerTh": "เก้าโมง",
+        "acceptedAnswers": [
+          "At nine o'clock.",
+          "Nine a.m.",
+          "At nine",
+          "At 9.",
+          "9 a.m.",
+          "Nine o'clock."
+        ],
+        "imagePath": "describe-it/fnd_v7_u14tn07_read_the_calendar_1/class-card-b.webp",
+        "hintEn": "At _____"
+      },
+      {
+        "id": "cal1_say_07",
+        "promptTh": "การ์ดนี้เป็นงานอะไร?",
+        "questionEn": "What event is on the card?",
+        "answerEn": "A birthday.",
+        "answerTh": "วันเกิด",
+        "acceptedAnswers": [
+          "It's a birthday.",
+          "A birthday event.",
+          "A birthday",
+          "Birthday.",
+          "It's a birthday party."
+        ],
+        "imagePath": "describe-it/fnd_v7_u14tn07_read_the_calendar_1/birthday-card.webp",
+        "hintEn": "A _____"
+      }
+    ]
   }
 }

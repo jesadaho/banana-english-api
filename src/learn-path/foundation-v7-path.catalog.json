@@ -4471,17 +4471,17 @@
           "globalOrder": 139,
           "titleEn": "Read the Calendar 1",
           "titleTh": "อ่านปฏิทิน 1",
-          "type": "info_task",
+          "type": "describe_it",
           "beat": "Ten",
-          "learningTarget": "อ่านวันที่เขียนแบบ 5 May และเลือกข้อมูลจากบัตร",
-          "activity": "เลือกวันที่ถูกต้องจากบัตรปฏิทิน (ม.ค.–มิ.ย.)",
+          "learningTarget": "อ่านวันที่เขียนแบบ 5 May แล้วพูดตอบจากบัตร",
+          "activity": "ดูบัตรคลาสและบัตรวันเกิด แล้วพูดตอบ วัน วันที่ เวลา ห้อง",
           "examples": [
             "5 May",
             "8 June"
           ],
           "estimatedMinutes": [
-            2,
-            4
+            3,
+            5
           ],
           "difficultyAxes": [
             2,
@@ -4491,7 +4491,7 @@
             1
           ],
           "contentRef": {
-            "poolId": "info_task_calendar_1"
+            "poolId": "fnd_v7_u14tn07_read_the_calendar_1"
           }
         },
         {

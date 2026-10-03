@@ -53,7 +53,7 @@ describe('Foundation V7 catalog and real content', () => {
     assert.equal(finalNode.id, 'v7_finale_n01');
     assert.equal(finalNode.code, '16.13');
     assert.equal(finalNode.type, 'interactive_scenario');
-    assert.deepEqual(foundationV7NodeTypeCounts(), { lesson:46, say_it:38, emoji_speak:15, new_words:28, pronunciation:4, describe_it:12, story_bites:3, conversation:14, info_task:4, interactive_scenario:1, hear_it:0, explain_it:0 });
+    assert.deepEqual(foundationV7NodeTypeCounts(), { lesson:46, say_it:38, emoji_speak:15, new_words:28, pronunciation:4, describe_it:13, story_bites:3, conversation:14, info_task:3, interactive_scenario:1, hear_it:0, explain_it:0 });
     assert.deepEqual(FOUNDATION_V7_NODES.map(n => n.globalOrder), Array.from({length:165}, (_, i) => i + 1));
     for (let i = 1; i < FOUNDATION_V7_NODES.length; i++) {
       const prev = FOUNDATION_V7_NODES[i - 1];
@@ -104,26 +104,26 @@ describe('Foundation V7 catalog and real content', () => {
     assert.equal(hasFoundationV7Content({...node, contentRef:{}}), false);
   });
 
-  it('has 158 backend-ready nodes and capability gates for Guided packs, See & Say, and the Final Interview', () => {
+  it('has 159 backend-ready nodes and capability gates for Guided packs, See & Say, and the Final Interview', () => {
     // Old builds without the describe_it / interactive_scenario capabilities keep those nodes locked.
     const readyDescribe = FOUNDATION_V7_NODES.filter(
       n => n.type === 'describe_it' && n.contentRef.poolId,
     ).length;
     const defaults = toFoundationV7ClientChapters().flatMap(c => c.items);
-    assert.equal(defaults.filter(n => n.backendReady).length, 158);
-    assert.equal(defaults.filter(n => !n.comingSoon).length, 154 - readyDescribe);
-    assert.equal(all().filter(n => !n.comingSoon).length, 158);
+    assert.equal(defaults.filter(n => n.backendReady).length, 159);
+    assert.equal(defaults.filter(n => !n.comingSoon).length, 155 - readyDescribe);
+    assert.equal(all().filter(n => !n.comingSoon).length, 159);
     assert.equal(
       defaults.filter(n => n.unavailableReason === 'client_capability_required').length,
       4 + readyDescribe,
     );
     assert.equal(defaults.filter(n => n.unavailableReason === 'missing_content').length, 0);
     const placeholders = all().filter(n => n.comingSoon);
-    assert.equal(placeholders.length, 7);
+    assert.equal(placeholders.length, 6);
     assert.ok(placeholders.every(n => !n.countsTowardProgress));
     assert.equal(
       placeholders.filter(n => n.unavailableReason === 'mechanic_not_implemented').length,
-      7,
+      6,
     );
     assert.equal(
       placeholders.filter(n => n.unavailableReason === 'missing_content').length,
@@ -287,8 +287,8 @@ describe('Foundation V7 progress and completion contracts', () => {
     mini.push(...all().filter(n => n.comingSoon).map(n => n.id));
     const service = pathService(lessons, mini, simulations);
     const full = await service.getFoundationV7('user', FOUNDATION_V7_CAPABILITIES);
-    assert.equal(full.progress.completedCount, 158);
-    assert.equal(full.progress.totalCount, 158);
+    assert.equal(full.progress.completedCount, 159);
+    assert.equal(full.progress.totalCount, 159);
     assert.equal(full.progress.currentNodeId, null);
     const legacyClient = await service.getFoundationV7('user');
     assert.equal(legacyClient.progress.completedCount, 142);
@@ -298,7 +298,7 @@ describe('Foundation V7 progress and completion contracts', () => {
 
   it('rejects unknown capabilities rather than silently enabling unsupported mechanics', async () => {
     const controller = new LearnPathController(pathService());
-    assert.equal((await controller.coursePath(req, 'foundation-v7', FOUNDATION_V7_CAPABILITIES.join(','))).summary.playableCount, 158);
+    assert.equal((await controller.coursePath(req, 'foundation-v7', FOUNDATION_V7_CAPABILITIES.join(','))).summary.playableCount, 159);
     await assert.rejects(controller.coursePath(req, 'foundation-v7', 'video_bites'));
     await assert.rejects(controller.coursePath(req, 'foundation-v7', ['say_it_guided'] as any));
     await assert.rejects(controller.coursePath(req, 'adventure-a3'));
