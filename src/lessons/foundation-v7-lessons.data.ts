@@ -119,6 +119,14 @@ export interface V7TeachingStep {
   };
 }
 
+export function foundationV7LessonSpec(lessonId: string): PathLessonSpec | undefined {
+  return specs[lessonId];
+}
+
+export function foundationV7ChoiceBeat(lessonId: string): FoundationV7ChoiceBeat | undefined {
+  return FOUNDATION_V7_CHOICE_BEATS[lessonId] ?? specs[lessonId]?.choice;
+}
+
 export function buildFoundationV7Steps(lessonId: string): V7TeachingStep[] {
   if (V7_LEGACY_FLOWS[lessonId]) return V7_LEGACY_FLOWS[lessonId];
   const spec = specs[lessonId];

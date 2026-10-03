@@ -17,6 +17,9 @@ import { LearnPathController } from './learn-path.controller';
 import { LearnPathService } from './learn-path.service';
 import { ADVENTURE_A2_LESSONS, buildFoundationV7Steps } from '../lessons/foundation-v7-lessons.data';
 import { getLesson } from '../lessons/lessons.data';
+import { TrainingTurnEngine } from '../training/engine/training-turn.engine';
+import type { TrainingAiGate } from '../training/engine/ai-gate';
+import type { ChatTurn } from '../session-store/session-store.service';
 import { getSimulation } from '../simulations/simulations.data';
 import { getInteractiveScenario } from '../interactive-scenario/interactive-scenario.data';
 import { emojiSpeakPoolById } from '../emoji-speak/emoji-speak.data';
@@ -134,6 +137,25 @@ describe('Adventure A2 Zone 1 content', () => {
       }
       assert.equal(lesson.difficulty, 'intermediate');
       assert.match(lesson.systemInstruction, /Adventure A2/);
+    }
+  });
+
+  it('plays every lesson through the server runtime with its model answers', async () => {
+    const engine = new TrainingTurnEngine({} as unknown as TrainingAiGate);
+    for (const lesson of ADVENTURE_A2_LESSONS) {
+      let reply = engine.buildOpening(lesson, 'Nana').reply;
+      const turns: ChatTurn[] = [{ speaker: 'ai', ...reply }];
+      for (let guard = 0; !reply.isLessonComplete; guard++) {
+        assert.ok(guard < 40, `${lesson.lessonId} never completes`);
+        const userText = reply.expectsUserSpeech ? reply.expectedSpeech! : 'continue';
+        turns.push({ speaker: 'user', textEn: userText });
+        reply = (await engine.runTurn({
+          config: lesson, turns, userText, originalText: userText,
+          learnerFirstName: 'Nana', sessionProgressTurn: reply.v7Step,
+        })).reply;
+        assert.ok(!reply.v7Retry, `${lesson.lessonId} rejected "${userText}"`);
+        turns.push({ speaker: 'ai', ...reply });
+      }
     }
   });
 

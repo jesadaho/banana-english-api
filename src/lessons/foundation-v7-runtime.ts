@@ -2,9 +2,12 @@ import type { TrainingTurnReply } from '../gemini/gemini-chat.service';
 import type { TrainingEngineTurnInput } from '../training/engine/training-turn.engine';
 import type { TrainingAiGate } from '../training/engine/ai-gate';
 import { scriptedAiDebug } from '../common/ai-debug';
-import { buildFoundationV7Steps, type V7TeachingStep } from './foundation-v7-lessons.data';
-import { FOUNDATION_V7_CHOICE_BEATS } from './foundation-v7-choice-beats.data';
-import specs from './foundation-v7-lessons.authoring.json';
+import {
+  buildFoundationV7Steps,
+  foundationV7ChoiceBeat,
+  foundationV7LessonSpec,
+  type V7TeachingStep,
+} from './foundation-v7-lessons.data';
 import { userTurnWasContinue } from './foundation-v7-turn-guard';
 
 const normalize = (value: string) => value.toLowerCase().normalize('NFD').replace(/\p{M}/gu, '').replace(/[’']/g, '').replace(/[^a-z0-9]/g, '');
@@ -86,11 +89,11 @@ export function isFoundationV7OffTopicProbe(
   return got !== normalize(expected ?? '');
 }
 export function renderV7Turn(id: string, stepNumber: number, chosen?: string): TrainingTurnReply {
-  const spec = specs[id as keyof typeof specs];
+  const spec = foundationV7LessonSpec(id)!;
   const steps = buildFoundationV7Steps(id);
   const index = Math.min(Math.max(stepNumber - 1, 0), steps.length - 1);
   const step = steps[index];
-  const choice = FOUNDATION_V7_CHOICE_BEATS[id];
+  const choice = foundationV7ChoiceBeat(id)!;
   const blockIndex = steps.slice(0, index + 1).filter(s => s.kind === 'model_repeat' || s.kind === 'model_group').length - 1;
   const block = spec.blocks[blockIndex];
   let text = '';
@@ -141,7 +144,7 @@ export async function runV7Turn(input: TrainingEngineTurnInput, gate: TrainingAi
   const stepNumber = last?.v7Step ?? input.sessionProgressTurn ?? 1;
   const current = renderV7Turn(id, stepNumber, last?.v7Choice);
   const step = buildFoundationV7Steps(id)[current.v7Step! - 1];
-  const choice = step.presentation ?? FOUNDATION_V7_CHOICE_BEATS[id];
+  const choice = step.presentation ?? foundationV7ChoiceBeat(id)!;
   const isChoice = step.kind === 'choice' || !!step.presentation?.options.length;
   if (current.isLessonComplete) return { reply: current, aiDebug: scriptedAiDebug() };
   // Continue is a UI action, never evidence of a spoken attempt.
