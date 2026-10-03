@@ -6,8 +6,9 @@ import {
 import { buildSoftTeachRevealLine } from './choice-board';
 import { FOUNDATION_V6_LESSONS } from './foundation-v6-lessons.data';
 import {
-  FOUNDATION_V7_LESSON_IDS,
+  ADVENTURE_A2_LESSONS,
   FOUNDATION_V7_LESSONS,
+  PATH_LESSON_IDS,
 } from './foundation-v7-lessons.data';
 import {
   FOUNDATION_V7_LESSON_ID_ALIASES,
@@ -1118,6 +1119,7 @@ ${
 export const LESSONS: LessonConfig[] = [
   ...PHONICS_LESSONS,
   ...FOUNDATION_V7_LESSONS,
+  ...ADVENTURE_A2_LESSONS,
   ...FOUNDATION_V6_LESSONS,
   // Foundation V6 contextual pronunciation inserts. These reuse the shipped
   // pronunciation coach flow, but keep independent IDs so map completion does
@@ -9771,7 +9773,7 @@ const FOUNDATION_PROGRESS_LESSON_IDS = new Set([
   'asking_questions',
   'fnd_v2_places_directions',
   'fnd_v2_goodbye_closing',
-  ...FOUNDATION_V7_LESSON_IDS,
+  ...PATH_LESSON_IDS,
 ]);
 
 function normalizeStaffLine(text: string): string {
@@ -14116,7 +14118,7 @@ export function isEverydayEnglishReview(lessonId: string): boolean {
 /** Lessons that use expectsUserSpeech + Continue button (and optional Scene). */
 export function lessonUsesTapToContinue(lessonId: string): boolean {
   return (
-    FOUNDATION_V7_LESSON_IDS.includes(canonicalFoundationV7LessonId(lessonId)) ||
+    PATH_LESSON_IDS.includes(canonicalFoundationV7LessonId(lessonId)) ||
     isPronunciationLesson(lessonId) ||
     isAroundTownLesson(lessonId) ||
     isEverydayEnglishReview(lessonId) ||

@@ -1,4 +1,5 @@
 import poolsJson from './new-words-pools.json';
+import a2PoolsJson from './adventure-a2-pools.json';
 
 export const NEW_WORDS_MIN_PACK_SIZE = 2;
 export const NEW_WORDS_MAX_PACK_SIZE = 4;
@@ -8,6 +9,8 @@ export type NewWordsCard = {
   answer: string;
   reading: string;
   meaningTh: string;
+  /** US/UK spellings or alternate forms graded as correct. */
+  acceptedAnswers?: string[];
 };
 
 export type NewWordsPool = {
@@ -15,7 +18,10 @@ export type NewWordsPool = {
   items: NewWordsCard[];
 };
 
-const catalog = poolsJson as Record<string, NewWordsPool>;
+const catalog = {
+  ...(poolsJson as Record<string, NewWordsPool>),
+  ...(a2PoolsJson as Record<string, NewWordsPool>),
+};
 
 export const NEW_WORDS_POOLS = catalog;
 

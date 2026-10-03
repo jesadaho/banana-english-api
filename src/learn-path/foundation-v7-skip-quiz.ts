@@ -1,4 +1,10 @@
-import { FOUNDATION_V7_CAPABILITIES, FOUNDATION_V7_CATALOG, FOUNDATION_V7_PATH_ID } from './foundation-v7-path.data';
+import {
+  FOUNDATION_V7_CAPABILITIES,
+  FOUNDATION_V7_COURSE,
+  FOUNDATION_V7_PATH_ID,
+  learnCourseForChapter,
+  type LearnCourse,
+} from './foundation-v7-path.data';
 import { toFoundationV7ClientChapters } from './foundation-v7-path.view';
 import {
   personalizeSayItPhrase,
@@ -28,12 +34,19 @@ export type SkipQuizPoolResolution = {
   playableNodeIds: string[];
 };
 
+function courseForChapter(chapterId: string): LearnCourse {
+  return learnCourseForChapter(chapterId) ?? FOUNDATION_V7_COURSE;
+}
+
 function chapterIndex(chapterId: string): number {
-  return FOUNDATION_V7_CATALOG.chapters.findIndex((ch) => ch.id === chapterId);
+  return courseForChapter(chapterId).catalog.chapters.findIndex(
+    (ch) => ch.id === chapterId,
+  );
 }
 
 /** Merge all Say It pools from the chapter before `targetChapterId`. */
 export function resolveSkipQuizPool(targetChapterId: string): SkipQuizPoolResolution {
+  const course = courseForChapter(targetChapterId);
   const targetIdx = chapterIndex(targetChapterId);
   if (targetIdx <= 0) {
     return {
@@ -47,7 +60,7 @@ export function resolveSkipQuizPool(targetChapterId: string): SkipQuizPoolResolu
     };
   }
 
-  const previous = FOUNDATION_V7_CATALOG.chapters[targetIdx - 1];
+  const previous = course.catalog.chapters[targetIdx - 1];
   const topicIds = previous.items
     .filter((node) => node.type === 'say_it' && node.contentRef.topicId)
     .map((node) => node.contentRef.topicId as string);
@@ -62,7 +75,7 @@ export function resolveSkipQuizPool(targetChapterId: string): SkipQuizPoolResolu
     }
   }
 
-  const clientChapters = toFoundationV7ClientChapters(FOUNDATION_V7_CAPABILITIES);
+  const clientChapters = toFoundationV7ClientChapters(FOUNDATION_V7_CAPABILITIES, course);
   const previousClient = clientChapters[targetIdx - 1];
   const playableNodeIds = previousClient.items
     .filter((node) => !node.comingSoon)
@@ -112,10 +125,11 @@ export function resolveChaptersToSkipOnPass(targetChapterId: string): Array<{
   chapterNumber: number;
   playableNodeIds: string[];
 }> {
+  const course = courseForChapter(targetChapterId);
   const targetIdx = chapterIndex(targetChapterId);
   if (targetIdx <= 0) return [];
 
-  const clientChapters = toFoundationV7ClientChapters(FOUNDATION_V7_CAPABILITIES);
+  const clientChapters = toFoundationV7ClientChapters(FOUNDATION_V7_CAPABILITIES, course);
   const out: Array<{
     chapterId: string;
     chapterNumber: number;
@@ -123,7 +137,7 @@ export function resolveChaptersToSkipOnPass(targetChapterId: string): Array<{
   }> = [];
 
   for (let i = 0; i < targetIdx; i++) {
-    const chapter = FOUNDATION_V7_CATALOG.chapters[i]!;
+    const chapter = course.catalog.chapters[i]!;
     const client = clientChapters[i];
     out.push({
       chapterId: chapter.id,

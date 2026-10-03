@@ -1,0 +1,582 @@
+[
+  {
+    "id": "a2_c08n09",
+    "titleEn": "Night Market with Max & May",
+    "titleTh": "คืนตลาดนัดกับ Max และ May",
+    "mode": "practice",
+    "teacher": "banana",
+    "ttsVoiceProfile": "teacher_b",
+    "bananaCost": 3,
+    "estimatedMinutes": 9,
+    "maxAttemptsPerBeat": 3,
+    "softAttemptCeiling": 30,
+    "scenes": [
+      {
+        "id": "mali_stall",
+        "titleEn": "Shopping at Mali's stall",
+        "titleTh": "ซื้อของที่แผงของ Mali"
+      },
+      {
+        "id": "lost_may",
+        "titleEn": "Where are you, May?",
+        "titleTh": "May หายไปไหน"
+      },
+      {
+        "id": "meet_again",
+        "titleEn": "Meet again",
+        "titleTh": "นัดเจอกันใหม่"
+      }
+    ],
+    "goals": [
+      {
+        "id": "just_looking",
+        "labelTh": "บอกว่าแค่ดูเฉย ๆ",
+        "labelEn": "Say you are just looking",
+        "meaningRubric": "Politely says they are only looking / do not need help yet (Just looking, thanks / No, thank you).",
+        "acceptExamples": [
+          "Just looking, thanks.",
+          "I'm just looking.",
+          "No, thank you. Just looking."
+        ],
+        "matchPatterns": [
+          "\\blooking\\b",
+          "\\bno,? thank"
+        ],
+        "measuresChapters": [
+          8
+        ],
+        "hints": {
+          "intentTh": "บอกแม่ค้าว่าแค่ดูเฉย ๆ",
+          "starterEn": "Just …",
+          "modelEn": "Just looking, thanks."
+        }
+      },
+      {
+        "id": "try_some",
+        "labelTh": "ขอชิม",
+        "labelEn": "Ask to try some",
+        "meaningRubric": "Asks to taste the sweets (Can I try some? / Can I try one?).",
+        "acceptExamples": [
+          "Can I try some?",
+          "Can I try one?",
+          "Can I taste it?"
+        ],
+        "matchPatterns": [
+          "\\btry\\b",
+          "\\btaste\\b"
+        ],
+        "measuresChapters": [
+          8
+        ],
+        "hints": {
+          "intentTh": "ขอชิมขนมก่อนซื้อ",
+          "starterEn": "Can I …?",
+          "modelEn": "Can I try some?"
+        }
+      },
+      {
+        "id": "ask_price",
+        "labelTh": "ถามราคา",
+        "labelEn": "Ask the price",
+        "meaningRubric": "Asks how much the sweets cost (How much is it? / How much is one bag?).",
+        "acceptExamples": [
+          "How much is it?",
+          "How much is one bag?",
+          "How much?"
+        ],
+        "matchPatterns": [
+          "\\bhow much\\b",
+          "\\bprice\\b",
+          "\\bcost\\b"
+        ],
+        "measuresChapters": [
+          8
+        ],
+        "hints": {
+          "intentTh": "ถามราคาขนมหนึ่งถุง",
+          "starterEn": "How much …?",
+          "modelEn": "How much is one bag?"
+        }
+      },
+      {
+        "id": "take_it",
+        "labelTh": "ตัดสินใจซื้อ",
+        "labelEn": "Decide to buy",
+        "meaningRubric": "Decides to buy with I'll take it / I'll take one bag / Two bags, please. Any clear buying decision is fine.",
+        "acceptExamples": [
+          "I'll take it.",
+          "I'll take two bags.",
+          "One bag, please."
+        ],
+        "matchPatterns": [
+          "\\btake\\b",
+          "\\b(one|two|three|1|2|3) bags?\\b",
+          "\\bplease\\b"
+        ],
+        "measuresChapters": [
+          6,
+          8
+        ],
+        "hints": {
+          "intentTh": "ตัดสินใจซื้อ ใช้ I'll …",
+          "starterEn": "I'll …",
+          "modelEn": "I'll take it."
+        }
+      },
+      {
+        "id": "my_location",
+        "labelTh": "บอกว่าตัวเองอยู่ตรงไหน",
+        "labelEn": "Say where you are",
+        "meaningRubric": "Says their location with a place word (next to / in front of / opposite / behind / near / at + a place in the market). Invented places are fine.",
+        "acceptExamples": [
+          "I'm next to the big wheel.",
+          "I'm standing in front of the food stall.",
+          "Near the gate."
+        ],
+        "matchPatterns": [
+          "\\b(next to|in front of|opposite|behind|between|near|by the|at the)\\b"
+        ],
+        "measuresChapters": [
+          3,
+          8
+        ],
+        "hints": {
+          "intentTh": "บอก May ว่าคุณอยู่ข้าง ๆ อะไร",
+          "starterEn": "I'm next to …",
+          "modelEn": "I'm next to the big wheel."
+        }
+      },
+      {
+        "id": "doing_now",
+        "labelTh": "บอกว่ากำลังทำอะไร",
+        "labelEn": "Say what you are doing now",
+        "meaningRubric": "Says what they are doing right now with am + -ing (I'm eating / I'm looking for you). A bare -ing verb is close enough.",
+        "acceptExamples": [
+          "I'm eating a mango sweet.",
+          "I'm looking for you.",
+          "I'm waiting."
+        ],
+        "matchPatterns": [
+          "\\b\\w+ing\\b"
+        ],
+        "measuresChapters": [
+          5
+        ],
+        "hints": {
+          "intentTh": "บอกสิ่งที่กำลังทำตอนนี้ ใช้ I'm + -ing",
+          "starterEn": "I'm …ing",
+          "modelEn": "I'm eating a mango sweet."
+        }
+      },
+      {
+        "id": "wearing",
+        "labelTh": "บอกว่าใส่ชุดอะไร",
+        "labelEn": "Say what you are wearing",
+        "meaningRubric": "Describes their clothes so May can find them (I'm wearing a red shirt / a blue hat). Colour or clothing word is enough.",
+        "acceptExamples": [
+          "I'm wearing a red shirt.",
+          "A blue hat.",
+          "I'm wearing glasses and a white T-shirt."
+        ],
+        "matchPatterns": [
+          "\\bwearing\\b",
+          "\\b(shirt|t-shirt|dress|hat|cap|jacket|glasses|skirt|shoes)\\b"
+        ],
+        "measuresChapters": [
+          4,
+          8
+        ],
+        "hints": {
+          "intentTh": "บอกชุดที่ใส่ให้ May หาเจอ",
+          "starterEn": "I'm wearing …",
+          "modelEn": "I'm wearing a red shirt."
+        }
+      },
+      {
+        "id": "ask_may",
+        "labelTh": "ถาม May หนึ่งคำถาม",
+        "labelEn": "Ask May a question",
+        "meaningRubric": "Asks May any real question (Where are you? / What are you wearing? / Can you see the big wheel?).",
+        "acceptExamples": [
+          "Where are you?",
+          "What are you wearing?",
+          "Can you see the big wheel?"
+        ],
+        "measuresChapters": [
+          5,
+          8
+        ],
+        "hints": {
+          "intentTh": "ถาม May กลับหนึ่งคำถาม",
+          "starterEn": "Where …?",
+          "modelEn": "Where are you?"
+        }
+      },
+      {
+        "id": "meet_place",
+        "labelTh": "นัดจุดเจอ",
+        "labelEn": "Choose a meeting place",
+        "meaningRubric": "Suggests where to meet (Let's meet at the gate / How about the big wheel?).",
+        "acceptExamples": [
+          "Let's meet at the gate.",
+          "How about the big wheel?",
+          "At the food stall."
+        ],
+        "matchPatterns": [
+          "\\bmeet\\b",
+          "\\bhow about\\b",
+          "\\bat the\\b",
+          "\\b(gate|big wheel|stall|entrance)\\b"
+        ],
+        "measuresChapters": [
+          7,
+          8
+        ],
+        "hints": {
+          "intentTh": "บอกจุดนัดเจอ",
+          "starterEn": "Let's meet at …",
+          "modelEn": "Let's meet at the gate."
+        }
+      },
+      {
+        "id": "meet_time",
+        "labelTh": "บอกเวลานัด",
+        "labelEn": "Say a meeting time",
+        "meaningRubric": "Gives a time to meet (At eight / In ten minutes / At seven fifty).",
+        "acceptExamples": [
+          "At eight o'clock.",
+          "In ten minutes.",
+          "Seven fifty."
+        ],
+        "matchPatterns": [
+          "\\b\\d{1,2}\\b",
+          "\\b(five|six|seven|eight|nine|ten|fifteen|twenty|thirty|forty|fifty)\\b",
+          "\\bminutes?\\b",
+          "\\bo'?clock\\b"
+        ],
+        "measuresChapters": [
+          7
+        ],
+        "hints": {
+          "intentTh": "บอกเวลานัด",
+          "starterEn": "At …",
+          "modelEn": "At eight o'clock."
+        }
+      },
+      {
+        "id": "reason_because",
+        "labelTh": "บอกเหตุผลที่มาช้า",
+        "labelEn": "Give a reason with because",
+        "meaningRubric": "Explains why they are late with because (Because there are so many people / Because I'm buying souvenirs).",
+        "acceptExamples": [
+          "Because there are so many people.",
+          "Because I'm buying souvenirs.",
+          "Because the market is very big."
+        ],
+        "matchPatterns": [
+          "\\bbecause\\b",
+          "\\bcos\\b"
+        ],
+        "measuresChapters": [
+          6
+        ],
+        "hints": {
+          "intentTh": "บอกเหตุผล ใช้ Because …",
+          "starterEn": "Because …",
+          "modelEn": "Because there are so many people."
+        }
+      },
+      {
+        "id": "ask_bee",
+        "labelTh": "ถาม Teacher Bee หนึ่งคำถาม",
+        "labelEn": "Ask Teacher Bee a question",
+        "meaningRubric": "Asks Teacher Bee any real question about the night or the next trip (What are we going to do next? / Where are we going?).",
+        "acceptExamples": [
+          "What are we going to do next?",
+          "Where are we going tomorrow?",
+          "Are you free tomorrow?"
+        ],
+        "measuresChapters": [
+          7
+        ],
+        "hints": {
+          "intentTh": "ถาม Teacher Bee หนึ่งคำถาม",
+          "starterEn": "What are we going to …?",
+          "modelEn": "What are we going to do next?"
+        }
+      }
+    ],
+    "beats": [
+      {
+        "id": "s1_help",
+        "sceneId": "mali_stall",
+        "visualLayout": "beside_teacher",
+        "focusGoalIds": [
+          "just_looking"
+        ],
+        "npcBriefEn": "Mali, a friendly night-market seller, greets the learner at her sweet stall. The learner is only looking.",
+        "promptEn": "Hi, I'm Mali! Welcome to my stall. Can I help you?",
+        "promptTh": "Mali แม่ค้าใจดีทักว่าให้ช่วยอะไรไหม แต่คุณแค่ดูอยู่",
+        "retryEn": "Can I help you? You can say: Just looking, thanks.",
+        "retryTh": "บอกว่าแค่ดูเฉย ๆ ขอบคุณ",
+        "retryGuided": {
+          "stem": "Just …",
+          "emoji": "👀",
+          "label": "looking",
+          "speak": "Just looking, thanks."
+        },
+        "praiseEn": [
+          "Okay, no problem! Take your time."
+        ]
+      },
+      {
+        "id": "s1_try",
+        "sceneId": "mali_stall",
+        "visualLayout": "beside_teacher",
+        "focusGoalIds": [
+          "try_some"
+        ],
+        "npcBriefEn": "Mali shows a tray of free mango sweets to taste.",
+        "promptEn": "These are my mango sweets. They're very good!",
+        "promptTh": "มีถาดขนมมะม่วงให้ชิม ลองขอชิมดู",
+        "retryEn": "There's a tray. Ask me: Can I try some?",
+        "retryTh": "ขอชิมด้วย Can I try some?",
+        "retryGuided": {
+          "stem": "Can I …?",
+          "emoji": "🥭",
+          "label": "try some",
+          "speak": "Can I try some?"
+        },
+        "praiseEn": [
+          "Sure! Here you are."
+        ]
+      },
+      {
+        "id": "s1_price",
+        "sceneId": "mali_stall",
+        "visualLayout": "beside_teacher",
+        "focusGoalIds": [
+          "ask_price"
+        ],
+        "npcBriefEn": "The learner tasted the sweet. Mali waits for them to ask the price.",
+        "promptEn": "Yummy, right? Do you have a question for me?",
+        "promptTh": "อร่อย! ถามราคาขนมหนึ่งถุง",
+        "retryEn": "Ask me the price. How much…?",
+        "retryTh": "ถามราคาด้วย How much…?",
+        "retryGuided": {
+          "stem": "How much …?",
+          "emoji": "🏷️",
+          "label": "one bag",
+          "speak": "How much is one bag?"
+        },
+        "praiseEn": [
+          "Good question!"
+        ]
+      },
+      {
+        "id": "s1_take",
+        "sceneId": "mali_stall",
+        "visualLayout": "beside_teacher",
+        "focusGoalIds": [
+          "take_it"
+        ],
+        "npcBriefEn": "One bag costs 80 baht. Mali asks if the learner wants to buy.",
+        "promptEn": "Eighty baht for one bag. Do you want some?",
+        "promptTh": "ขนมถุงละ 80 บาท ตัดสินใจซื้อ",
+        "retryEn": "Do you want it? Say: I'll take it.",
+        "retryTh": "ตัดสินใจซื้อด้วย I'll take it.",
+        "retryGuided": {
+          "stem": "I'll …",
+          "emoji": "💵",
+          "label": "take it",
+          "speak": "I'll take it."
+        },
+        "praiseEn": [
+          "Thank you! Enjoy the night market!"
+        ]
+      },
+      {
+        "id": "s2_where",
+        "sceneId": "lost_may",
+        "visualLayout": "beside_teacher",
+        "focusGoalIds": [
+          "my_location"
+        ],
+        "npcBriefEn": "May phones the learner. They lost each other in the crowd. There is a big wheel, a gate and food stalls nearby.",
+        "promptEn": "Hello? It's May! I can't see you. Where are you?",
+        "promptTh": "May โทรมาเพราะหากันไม่เจอ บอกว่าคุณอยู่ตรงไหน",
+        "retryEn": "Where are you? Say: I'm next to the…",
+        "retryTh": "บอกตำแหน่งด้วย I'm next to …",
+        "retryGuided": {
+          "stem": "I'm next to the …",
+          "emoji": "🎡",
+          "label": "big wheel",
+          "speak": "I'm next to the big wheel."
+        },
+        "praiseEn": [
+          "Okay, I know that place!"
+        ]
+      },
+      {
+        "id": "s2_doing",
+        "sceneId": "lost_may",
+        "visualLayout": "beside_teacher",
+        "focusGoalIds": [
+          "doing_now"
+        ],
+        "npcBriefEn": "May asks what the learner is doing right now.",
+        "promptEn": "What are you doing right now?",
+        "promptTh": "May ถามว่าตอนนี้คุณกำลังทำอะไร",
+        "retryEn": "Are you eating? Waiting? Say: I'm…ing.",
+        "retryTh": "ตอบด้วย I'm + -ing",
+        "retryGuided": {
+          "stem": "I'm …",
+          "emoji": "🍡",
+          "label": "eating",
+          "speak": "I'm eating a mango sweet."
+        },
+        "praiseEn": [
+          "Ha! Lucky you."
+        ]
+      },
+      {
+        "id": "s2_wearing",
+        "sceneId": "lost_may",
+        "visualLayout": "beside_teacher",
+        "focusGoalIds": [
+          "wearing"
+        ],
+        "npcBriefEn": "There are many people. May asks what the learner is wearing so she can find them.",
+        "promptEn": "There are so many people here! What are you wearing?",
+        "promptTh": "คนเยอะมาก บอกชุดที่ใส่ให้ May หาเจอ",
+        "retryEn": "What colour is your shirt? Say: I'm wearing…",
+        "retryTh": "บอกชุดด้วย I'm wearing …",
+        "retryGuided": {
+          "stem": "I'm wearing …",
+          "emoji": "👕",
+          "label": "red shirt",
+          "speak": "I'm wearing a red shirt."
+        },
+        "praiseEn": [
+          "Got it! I'm looking for you."
+        ]
+      },
+      {
+        "id": "s2_ask",
+        "sceneId": "lost_may",
+        "visualLayout": "beside_teacher",
+        "focusGoalIds": [
+          "ask_may"
+        ],
+        "learnerMayAsk": true,
+        "npcBriefEn": "May is walking and looking around. The learner asks May one question; May answers it (she is next to a food stall, wearing a yellow dress).",
+        "promptEn": "I'm walking now… Do you want to ask me something?",
+        "promptTh": "ถาม May กลับหนึ่งคำถาม",
+        "retryEn": "Ask me a question. Where…? What…?",
+        "retryTh": "ตั้งคำถามถาม May หนึ่งข้อ",
+        "retryGuided": {
+          "stem": "Where …?",
+          "emoji": "❓",
+          "label": "Where are you?",
+          "speak": "Where are you?"
+        },
+        "praiseEn": [
+          "I'm next to a food stall. I'm wearing a yellow dress."
+        ]
+      },
+      {
+        "id": "s3_place",
+        "sceneId": "meet_again",
+        "visualLayout": "beside_teacher",
+        "focusGoalIds": [
+          "meet_place"
+        ],
+        "npcBriefEn": "May still can't find the learner. She asks where to meet. Places: gate, big wheel, food stall.",
+        "promptEn": "This is hard! Where shall we meet?",
+        "promptTh": "ยังหากันไม่เจอ เสนอจุดนัดเจอ",
+        "retryEn": "The gate? The big wheel? Say: Let's meet at…",
+        "retryTh": "นัดจุดเจอด้วย Let's meet at …",
+        "retryGuided": {
+          "stem": "Let's meet at the …",
+          "emoji": "🚪",
+          "label": "gate",
+          "speak": "Let's meet at the gate."
+        },
+        "praiseEn": [
+          "Good idea!"
+        ]
+      },
+      {
+        "id": "s3_time",
+        "sceneId": "meet_again",
+        "visualLayout": "beside_teacher",
+        "focusGoalIds": [
+          "meet_time"
+        ],
+        "npcBriefEn": "It is 7:40 now. May asks what time to meet.",
+        "promptEn": "It's seven forty now. What time?",
+        "promptTh": "ตอนนี้ 1 ทุ่ม 40 บอกเวลานัด",
+        "retryEn": "Eight o'clock? In ten minutes? Say: At…",
+        "retryTh": "บอกเวลานัดด้วย At …",
+        "retryGuided": {
+          "stem": "At …",
+          "emoji": "🕗",
+          "label": "eight o'clock",
+          "speak": "At eight o'clock."
+        },
+        "praiseEn": [
+          "Okay! See you then."
+        ]
+      },
+      {
+        "id": "s3_late",
+        "sceneId": "meet_again",
+        "visualLayout": "beside_teacher",
+        "focusGoalIds": [
+          "reason_because"
+        ],
+        "npcBriefEn": "At the meeting place Max is waiting and teases the learner for being late. The learner gives a reason with because (present tense is fine).",
+        "promptEn": "Hey, it's Max! You're late! Why?",
+        "promptTh": "Max แซวว่ามาช้า บอกเหตุผลด้วย because",
+        "retryEn": "Why are you late? Say: Because…",
+        "retryTh": "บอกเหตุผลด้วย Because …",
+        "retryGuided": {
+          "stem": "Because …",
+          "emoji": "👥",
+          "label": "many people",
+          "speak": "Because there are so many people."
+        },
+        "praiseEn": [
+          "Ha! That's true. The market is very busy."
+        ]
+      },
+      {
+        "id": "s3_ask",
+        "sceneId": "meet_again",
+        "visualLayout": "beside_teacher",
+        "focusGoalIds": [
+          "ask_bee"
+        ],
+        "learnerMayAsk": true,
+        "npcBriefEn": "Teacher Bee joins the team. Everyone is together. The learner asks Teacher Bee one question; Bee answers that a new teacher and a city trip are coming soon.",
+        "promptEn": "Everyone is here! Great job, team. Do you have a question for me?",
+        "promptTh": "ทุกคนมาครบแล้ว ถาม Teacher Bee หนึ่งคำถาม",
+        "retryEn": "Ask me anything. What are we going to…?",
+        "retryTh": "ตั้งคำถามถาม Teacher Bee หนึ่งข้อ",
+        "retryGuided": {
+          "stem": "What are we going to …?",
+          "emoji": "🧭",
+          "label": "do next",
+          "speak": "What are we going to do next?"
+        },
+        "praiseEn": [
+          "Good question! We're going to meet a new teacher soon. And then… a trip to the city!"
+        ]
+      }
+    ],
+    "openingEn": "Hi, I'm Mali! Welcome to my stall. Can I help you?",
+    "openingTh": "ภารกิจตลาดนัดกลางคืน: ซื้อของ ตามหา May และนัดเจอทีม",
+    "completionEn": "Mission complete! You can shop, say where you are, and plan a meeting. Well done!",
+    "completionTh": "ภารกิจสำเร็จ! คุณซื้อของ บอกตำแหน่งตัวเอง และนัดเจอเพื่อนได้แล้ว เก่งมาก!"
+  }
+]

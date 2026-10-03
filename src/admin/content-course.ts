@@ -1,8 +1,10 @@
 import { flattenFoundationV2Nodes } from '../learn-path/foundation-v2-path.data';
 import {
+  ALL_LEARN_PATH_NODES,
   canonicalFoundationV7RewardId,
   FOUNDATION_V7_CATALOG,
   FOUNDATION_V7_NODES,
+  LEARN_COURSES,
 } from '../learn-path/foundation-v7-path.data';
 import { getLesson } from '../lessons/lessons.data';
 
@@ -30,6 +32,7 @@ const BASIC_LESSON_ID_SET = new Set<string>(BASIC_LESSON_IDS);
 
 export const CONTENT_COURSES = [
   'foundation',
+  'adventure_a2',
   'everyday',
   'pronunciation',
   'minigame',
@@ -40,6 +43,7 @@ export type ContentCourse = (typeof CONTENT_COURSES)[number];
 
 export const EMPTY_COURSE_COUNTS: Record<ContentCourse, number> = {
   foundation: 0,
+  adventure_a2: 0,
   everyday: 0,
   pronunciation: 0,
   minigame: 0,
@@ -69,7 +73,7 @@ function foundationTitles(): Map<string, string> {
         foundationTitleById.set(node.simulationId, node.titleEn);
       }
     }
-    for (const node of FOUNDATION_V7_NODES) {
+    for (const node of ALL_LEARN_PATH_NODES) {
       foundationTitleById.set(node.id, node.titleEn);
       const ref = node.contentRef;
       if (ref.topicId) foundationTitleById.set(ref.topicId, node.titleEn);
@@ -90,12 +94,16 @@ function foundationTitles(): Map<string, string> {
       if (node.type === 'new_words' && ref.poolId) {
         foundationTitleById.set(`new_words:${ref.poolId}`, node.titleEn);
       }
+      const canonical = canonicalFoundationV7RewardId(node.id);
+      if (canonical) foundationTitleById.set(canonical, node.titleEn);
     }
-    for (const chapter of FOUNDATION_V7_CATALOG.chapters) {
-      foundationTitleById.set(
-        `skip_quiz:${chapter.id}`,
-        `Skip Quiz · ${chapter.titleEn}`,
-      );
+    for (const course of LEARN_COURSES) {
+      for (const chapter of course.catalog.chapters) {
+        foundationTitleById.set(
+          `skip_quiz:${chapter.id}`,
+          `Skip Quiz · ${chapter.titleEn}`,
+        );
+      }
     }
   }
   return foundationTitleById;
@@ -110,6 +118,8 @@ export function classifyContentCourse(id: string): ContentCourse {
   const trimmed = id.trim();
   if (!trimmed) return 'other';
   if (trimmed.startsWith('game_')) return 'minigame';
+  const bare = trimmed.includes(':') ? trimmed.slice(trimmed.indexOf(':') + 1) : trimmed;
+  if (bare.startsWith('a2_') || bare.startsWith('adventure_a2_')) return 'adventure_a2';
   if (
     trimmed.startsWith('say_it:') ||
     trimmed.startsWith('describe_it:') ||

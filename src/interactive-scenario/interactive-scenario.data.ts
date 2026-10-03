@@ -3,6 +3,7 @@ import type {
   InteractiveScenarioDef,
   InteractiveScenarioGoal,
 } from './interactive-scenario.types';
+import adventureA2ScenariosJson from './adventure-a2-scenarios.json';
 
 const ROOFTOP_BG = 'assets/images/learn/scenario/final_interview_rooftop_bg.jpg';
 
@@ -433,8 +434,12 @@ export const FINAL_INTERVIEW_JOHN: InteractiveScenarioDef = {
   completionTh: 'ลาก่อน! ออกไปพูดภาษาอังกฤษให้เต็มที่นะครับ แล้วเจอกันข้างนอก!',
 };
 
+/** Data-driven checkpoints authored as JSON (Adventure A2 and later courses). */
+const AUTHORED_SCENARIOS = adventureA2ScenariosJson as unknown as InteractiveScenarioDef[];
+
 const BY_ID = new Map<string, InteractiveScenarioDef>([
   [FINAL_INTERVIEW_JOHN.id, FINAL_INTERVIEW_JOHN],
+  ...AUTHORED_SCENARIOS.map((scenario) => [scenario.id, scenario] as const),
 ]);
 
 export function getInteractiveScenario(

@@ -1,0 +1,676 @@
+{
+  "a2_c01n08": {
+    "id": "a2_c01n08",
+    "clipId": "a2_c01n08_clip",
+    "titleEn": "Capy's Hobby",
+    "titleTh": "งานอดิเรกของ Capy",
+    "speaker": "Capy",
+    "script": "Capy: Hi! I'm Capy. I love drawing. Look at my book! I draw every day after school. I don't like swimming. It's too cold! I enjoy dancing with my friends on Fridays.",
+    "questions": [
+      {
+        "id": "a2_c01n08_q1",
+        "questionEn": "What does Capy love doing?",
+        "answerEn": "Drawing.",
+        "acceptedAnswers": [
+          "Capy loves drawing."
+        ],
+        "hints": [
+          "Drawing. …"
+        ]
+      },
+      {
+        "id": "a2_c01n08_q2",
+        "questionEn": "Does Capy like swimming?",
+        "answerEn": "No, Capy doesn't.",
+        "acceptedAnswers": [
+          "No.",
+          "No, Capy doesn't like swimming."
+        ],
+        "hints": [
+          "No, …",
+          "No, ___ doesn't."
+        ]
+      },
+      {
+        "id": "a2_c01n08_q3",
+        "questionEn": "When does Capy dance?",
+        "answerEn": "On Fridays.",
+        "acceptedAnswers": [
+          "Fridays.",
+          "On Friday."
+        ],
+        "hints": [
+          "On …",
+          "On ___."
+        ]
+      }
+    ]
+  },
+  "a2_c02n10": {
+    "id": "a2_c02n10",
+    "clipId": "a2_c02n10_clip",
+    "titleEn": "Max's Morning",
+    "titleTh": "เช้าของ Max",
+    "speaker": "Max",
+    "script": "Max: Oh no! It's seven thirty! I usually get up at six thirty. I'm late again! I don't have time for breakfast, so I'm taking some bread. I'm sometimes late on Mondays.",
+    "questions": [
+      {
+        "id": "a2_c02n10_q1",
+        "questionEn": "What time does Max usually get up?",
+        "answerEn": "At six thirty.",
+        "acceptedAnswers": [
+          "Six thirty.",
+          "At 6:30."
+        ],
+        "hints": [
+          "At …",
+          "At ___ ___."
+        ]
+      },
+      {
+        "id": "a2_c02n10_q2",
+        "questionEn": "What is he taking for breakfast?",
+        "answerEn": "Some bread.",
+        "acceptedAnswers": [
+          "Bread."
+        ],
+        "hints": [
+          "Some …",
+          "Some ___."
+        ]
+      },
+      {
+        "id": "a2_c02n10_q3",
+        "questionEn": "When is he sometimes late?",
+        "answerEn": "On Mondays.",
+        "acceptedAnswers": [
+          "Mondays."
+        ],
+        "hints": [
+          "On …",
+          "On ___."
+        ]
+      }
+    ]
+  },
+  "a2_c08n10": {
+    "id": "a2_c08n10",
+    "clipId": "a2_c08n10_clip",
+    "titleEn": "A New Teacher!",
+    "titleTh": "ครูคนใหม่มาแล้ว",
+    "speaker": "Teacher Bee",
+    "script": "Teacher Bee: Hi, team! This is Teacher Nina. She's our new teacher! Teacher Nina: Hi! Good work at the night market! Next Saturday, we're going to Bangkok. Let's meet at the school gate at eight.",
+    "questions": [
+      {
+        "id": "a2_c08n10_q1",
+        "questionEn": "Who is the new teacher?",
+        "answerEn": "Teacher Nina.",
+        "acceptedAnswers": [],
+        "hints": [
+          "Teacher …",
+          "Teacher ___."
+        ]
+      },
+      {
+        "id": "a2_c08n10_q2",
+        "questionEn": "When are they going to Bangkok?",
+        "answerEn": "Next Saturday.",
+        "acceptedAnswers": [],
+        "hints": [
+          "Next …",
+          "Next ___."
+        ]
+      },
+      {
+        "id": "a2_c08n10_q3",
+        "questionEn": "Where are they going to meet?",
+        "answerEn": "At the school gate.",
+        "acceptedAnswers": [],
+        "hints": [
+          "At …",
+          "At the ___ ___."
+        ]
+      }
+    ]
+  },
+  "a2_c11n10": {
+    "id": "a2_c11n10",
+    "clipId": "a2_c11n10_clip",
+    "titleEn": "The Empty Fridge",
+    "titleTh": "ตู้เย็นว่าง",
+    "speaker": "May",
+    "script": "May: Aunt Noi, look! There isn't any milk. We have two eggs, but we need six. And there's only a little cheese. Aunt Noi: Oh, sorry! I don't remember. OK, let's go to the shop!",
+    "questions": [
+      {
+        "id": "a2_c11n10_q1",
+        "questionEn": "Is there any milk?",
+        "answerEn": "No, there isn't.",
+        "acceptedAnswers": [
+          "No.",
+          "No, there isn't any milk."
+        ],
+        "hints": [
+          "No, …",
+          "No, there ___."
+        ]
+      },
+      {
+        "id": "a2_c11n10_q2",
+        "questionEn": "How many eggs do they have?",
+        "answerEn": "Two.",
+        "acceptedAnswers": [
+          "Two eggs.",
+          "They have two eggs."
+        ],
+        "hints": [
+          "Two. …"
+        ]
+      },
+      {
+        "id": "a2_c11n10_q3",
+        "questionEn": "How many eggs do they need?",
+        "answerEn": "Six.",
+        "acceptedAnswers": [
+          "Six eggs.",
+          "They need six eggs.",
+          "They need six."
+        ],
+        "hints": [
+          "Six. …"
+        ]
+      }
+    ]
+  },
+  "a2_c14n09": {
+    "id": "a2_c14n09",
+    "clipId": "a2_c14n09_clip",
+    "titleEn": "Max Opens His Gift",
+    "titleTh": "Max แกะของขวัญ",
+    "speaker": "Max",
+    "script": "Max: Wow, a teddy bear from Mali! It's small and nice. Flowers from May. Thank you! And a cake from John. I love cake. The cake is the best!",
+    "questions": [
+      {
+        "id": "a2_c14n09_q1",
+        "questionEn": "Who is the teddy bear from?",
+        "answerEn": "Mali.",
+        "acceptedAnswers": [
+          "From Mali.",
+          "It's from Mali."
+        ],
+        "hints": [
+          "Mali. …"
+        ]
+      },
+      {
+        "id": "a2_c14n09_q2",
+        "questionEn": "Is the teddy bear big or small?",
+        "answerEn": "Small.",
+        "acceptedAnswers": [
+          "It's small.",
+          "It's small and nice."
+        ],
+        "hints": [
+          "Small. …"
+        ]
+      },
+      {
+        "id": "a2_c14n09_q3",
+        "questionEn": "Which gift does Max like best?",
+        "answerEn": "The cake.",
+        "acceptedAnswers": [
+          "Cake.",
+          "He likes the cake best.",
+          "The cake is the best."
+        ],
+        "hints": [
+          "The …",
+          "The ___."
+        ]
+      }
+    ]
+  },
+  "a2_c15n08": {
+    "id": "a2_c15n08",
+    "clipId": "a2_c15n08_clip",
+    "titleEn": "May's Yesterday",
+    "titleTh": "เมื่อวานของ May",
+    "speaker": "May",
+    "script": "May: Yesterday was great! I visited the museum with my sister. It was really fun. Then we watched a movie. It was a bit boring. In the evening, I cooked dinner with Aunt Noi.",
+    "questions": [
+      {
+        "id": "a2_c15n08_q1",
+        "questionEn": "Who was with May at the museum?",
+        "answerEn": "Her sister.",
+        "acceptedAnswers": [
+          "May's sister.",
+          "Her sister was."
+        ],
+        "hints": [
+          "Her …",
+          "Her ___."
+        ]
+      },
+      {
+        "id": "a2_c15n08_q2",
+        "questionEn": "Was the movie fun?",
+        "answerEn": "No, it was a bit boring.",
+        "acceptedAnswers": [
+          "No, it wasn't.",
+          "No.",
+          "It was a bit boring."
+        ],
+        "hints": [
+          "No, …",
+          "No, it was a ___ ___."
+        ]
+      },
+      {
+        "id": "a2_c15n08_q3",
+        "questionEn": "Who cooked dinner with May?",
+        "answerEn": "Aunt Noi.",
+        "acceptedAnswers": [
+          "Aunt Noi cooked dinner with May.",
+          "Her aunt.",
+          "Noi."
+        ],
+        "hints": [
+          "Aunt …",
+          "Aunt ___."
+        ]
+      }
+    ]
+  },
+  "a2_c16n11": {
+    "id": "a2_c16n11",
+    "clipId": "a2_c16n11_clip",
+    "titleEn": "Meet Teacher Torto",
+    "titleTh": "พบครู Torto",
+    "speaker": "Teacher Nina",
+    "script": "Teacher Nina: Team, this is Teacher Torto! Teacher Torto: Hello, team! I'm Teacher Torto. Next month, we're going to Singapore!",
+    "questions": [
+      {
+        "id": "a2_c16n11_q1",
+        "questionEn": "Who is the new teacher?",
+        "answerEn": "Teacher Torto.",
+        "acceptedAnswers": [
+          "Torto.",
+          "It's Teacher Torto."
+        ],
+        "hints": [
+          "Teacher …",
+          "Teacher ___."
+        ]
+      },
+      {
+        "id": "a2_c16n11_q2",
+        "questionEn": "Where are they going?",
+        "answerEn": "To Singapore.",
+        "acceptedAnswers": [
+          "Singapore.",
+          "They're going to Singapore."
+        ],
+        "hints": [
+          "To …",
+          "To ___."
+        ]
+      },
+      {
+        "id": "a2_c16n11_q3",
+        "questionEn": "When are they going?",
+        "answerEn": "Next month.",
+        "acceptedAnswers": [
+          "They're going next month."
+        ],
+        "hints": [
+          "Next …",
+          "Next ___."
+        ]
+      }
+    ]
+  },
+  "a2_c24n10": {
+    "id": "a2_c24n10",
+    "clipId": "a2_c24n10_clip",
+    "titleEn": "Max's Secret",
+    "titleTh": "ความลับของ Max",
+    "speaker": "Max",
+    "script": "Max: Teacher Torto, can I tell you something? I'm going to study in England next year. I'm excited, but I'm a little sad. I'm going to miss my friends.",
+    "questions": [
+      {
+        "id": "a2_c24n10_q1",
+        "questionEn": "Where is Max going to study?",
+        "answerEn": "In England.",
+        "acceptedAnswers": [
+          "England.",
+          "He's going to study in England."
+        ],
+        "hints": [
+          "In …",
+          "In ___."
+        ]
+      },
+      {
+        "id": "a2_c24n10_q2",
+        "questionEn": "When is he going?",
+        "answerEn": "Next year.",
+        "acceptedAnswers": [
+          "He's going next year."
+        ],
+        "hints": [
+          "Next …",
+          "Next ___."
+        ]
+      },
+      {
+        "id": "a2_c24n10_q3",
+        "questionEn": "How does he feel?",
+        "answerEn": "Excited, but a little sad.",
+        "acceptedAnswers": [
+          "He's excited, but a little sad.",
+          "Excited and a little sad."
+        ],
+        "hints": [
+          "Excited, …",
+          "Excited, but a ___ ___."
+        ]
+      }
+    ]
+  },
+  "a2_c25n10": {
+    "id": "a2_c25n10",
+    "clipId": "a2_c25n10_clip",
+    "titleEn": "Max's Side of the Story",
+    "titleTh": "ทริปในมุม Max",
+    "speaker": "Max",
+    "script": "Max: For me, the best thing was the boat trip! It was really exciting. The museum was boring, and the hotel food wasn't very good. But the night market was really fun.",
+    "questions": [
+      {
+        "id": "a2_c25n10_q1",
+        "questionEn": "What was the best thing for Max?",
+        "answerEn": "The boat trip.",
+        "acceptedAnswers": [
+          "The boat trip was the best thing.",
+          "It was the boat trip.",
+          "The boat trip was."
+        ],
+        "hints": [
+          "The …",
+          "The ___ ___."
+        ]
+      },
+      {
+        "id": "a2_c25n10_q2",
+        "questionEn": "What was boring?",
+        "answerEn": "The museum.",
+        "acceptedAnswers": [
+          "The museum was boring.",
+          "The museum was."
+        ],
+        "hints": [
+          "The …",
+          "The ___."
+        ]
+      },
+      {
+        "id": "a2_c25n10_q3",
+        "questionEn": "How was the hotel food?",
+        "answerEn": "It wasn't very good.",
+        "acceptedAnswers": [
+          "The hotel food wasn't very good.",
+          "It was not very good.",
+          "Not very good."
+        ],
+        "hints": [
+          "It …",
+          "It ___ ___ ___."
+        ]
+      }
+    ]
+  },
+  "a2_c26n09": {
+    "id": "a2_c26n09",
+    "clipId": "a2_c26n09_clip",
+    "titleEn": "Friends' Travel Photos",
+    "titleTh": "รูปทริปเพื่อน",
+    "speaker": "May",
+    "script": "May: I've been to Japan. I've eaten sushi there. Mali: I've never been to Japan, but I've tried durian! Capy: I've seen snow in Korea.",
+    "questions": [
+      {
+        "id": "a2_c26n09_q1",
+        "questionEn": "Who has been to Japan?",
+        "answerEn": "May.",
+        "acceptedAnswers": [
+          "May has.",
+          "May has been to Japan."
+        ],
+        "hints": [
+          "May. …"
+        ]
+      },
+      {
+        "id": "a2_c26n09_q2",
+        "questionEn": "Has Mali ever tried durian?",
+        "answerEn": "Yes, she has.",
+        "acceptedAnswers": [
+          "Yes.",
+          "Yes, she has tried durian."
+        ],
+        "hints": [
+          "Yes, …",
+          "Yes, she ___."
+        ]
+      },
+      {
+        "id": "a2_c26n09_q3",
+        "questionEn": "Where has Capy seen snow?",
+        "answerEn": "In Korea.",
+        "acceptedAnswers": [
+          "Korea.",
+          "Capy has seen snow in Korea."
+        ],
+        "hints": [
+          "In …",
+          "In ___."
+        ]
+      }
+    ]
+  },
+  "a2_c27n09": {
+    "id": "a2_c27n09",
+    "clipId": "a2_c27n09_clip",
+    "titleEn": "The Worst Day",
+    "titleTh": "วันแย่ที่สุด",
+    "speaker": "John",
+    "script": "John: Last Monday was a bad day. I was waiting for the bus when it started to rain. I didn't have my umbrella. Then the bus didn't come, so I walked to school. I was very wet!",
+    "questions": [
+      {
+        "id": "a2_c27n09_q1",
+        "questionEn": "What was John doing when it started to rain?",
+        "answerEn": "He was waiting for the bus.",
+        "acceptedAnswers": [
+          "Waiting for the bus.",
+          "He was waiting for the bus when it started to rain."
+        ],
+        "hints": [
+          "He …",
+          "He was ___ for the ___."
+        ]
+      },
+      {
+        "id": "a2_c27n09_q2",
+        "questionEn": "Did he have an umbrella?",
+        "answerEn": "No, he didn't.",
+        "acceptedAnswers": [
+          "No.",
+          "No, he did not.",
+          "No, he didn't have his umbrella."
+        ],
+        "hints": [
+          "No, …",
+          "No, he ___."
+        ]
+      },
+      {
+        "id": "a2_c27n09_q3",
+        "questionEn": "How did he get to school?",
+        "answerEn": "He walked.",
+        "acceptedAnswers": [
+          "He walked to school.",
+          "He walked to school because the bus didn't come."
+        ],
+        "hints": [
+          "He …",
+          "He ___."
+        ]
+      }
+    ]
+  },
+  "a2_c29n08": {
+    "id": "a2_c29n08",
+    "clipId": "a2_c29n08_clip",
+    "titleEn": "Three Reviews",
+    "titleTh": "รีวิวสามร้าน",
+    "speaker": "Mali",
+    "script": "Mali: Noodle Corner is cheap, but it's very crowded. Max: Green Café is quiet, but it's expensive. May: Sky Grill has an amazing view, and the food is great.",
+    "questions": [
+      {
+        "id": "a2_c29n08_q1",
+        "questionEn": "Which place is cheap?",
+        "answerEn": "Noodle Corner.",
+        "acceptedAnswers": [
+          "Noodle Corner is cheap.",
+          "Noodle Corner is."
+        ],
+        "hints": [
+          "Noodle …",
+          "Noodle ___."
+        ]
+      },
+      {
+        "id": "a2_c29n08_q2",
+        "questionEn": "Which place is quiet?",
+        "answerEn": "Green Café.",
+        "acceptedAnswers": [
+          "Green Café is quiet.",
+          "Green Cafe.",
+          "Green Café is."
+        ],
+        "hints": [
+          "Green …",
+          "Green ___."
+        ]
+      },
+      {
+        "id": "a2_c29n08_q3",
+        "questionEn": "Which place has an amazing view?",
+        "answerEn": "Sky Grill.",
+        "acceptedAnswers": [
+          "Sky Grill has an amazing view.",
+          "Sky Grill does."
+        ],
+        "hints": [
+          "Sky …",
+          "Sky ___."
+        ]
+      }
+    ]
+  },
+  "a2_c31n05": {
+    "id": "a2_c31n05",
+    "clipId": "a2_c31n05_clip",
+    "titleEn": "Nina's Checklist",
+    "titleTh": "เช็กลิสต์ของ Nina",
+    "speaker": "Teacher Nina",
+    "script": "Teacher Nina: OK, let me check. I've already bought the cake. I've already sent the cards. But I haven't booked the music yet.",
+    "questions": [
+      {
+        "id": "a2_c31n05_q1",
+        "questionEn": "Has Nina bought the cake yet?",
+        "answerEn": "Yes, she has.",
+        "acceptedAnswers": [
+          "Yes.",
+          "Yes, she has already bought the cake."
+        ],
+        "hints": [
+          "Yes, …",
+          "Yes, she ___."
+        ]
+      },
+      {
+        "id": "a2_c31n05_q2",
+        "questionEn": "What has she already sent?",
+        "answerEn": "The cards.",
+        "acceptedAnswers": [
+          "She has already sent the cards.",
+          "She's already sent the cards."
+        ],
+        "hints": [
+          "The …",
+          "The ___."
+        ]
+      },
+      {
+        "id": "a2_c31n05_q3",
+        "questionEn": "Has she booked the music yet?",
+        "answerEn": "No, she hasn't.",
+        "acceptedAnswers": [
+          "No.",
+          "No, she has not.",
+          "No, she hasn't booked the music yet."
+        ],
+        "hints": [
+          "No, …",
+          "No, she ___."
+        ]
+      }
+    ]
+  },
+  "a2_c32n04": {
+    "id": "a2_c32n04",
+    "clipId": "a2_c32n04_clip",
+    "titleEn": "The Adventure Continues",
+    "titleTh": "การผจญภัยยังไม่จบ",
+    "speaker": "Teacher Bee",
+    "script": "Teacher Bee: Great work, team! Capy: Let's go! Teacher Nina: I'll miss our city trips. Teacher Torto: Next year, let's go to the mountains! John: Welcome back, team!",
+    "questions": [
+      {
+        "id": "a2_c32n04_q1",
+        "questionEn": "Who says 'Great work'?",
+        "answerEn": "Teacher Bee.",
+        "acceptedAnswers": [
+          "Teacher Bee says it.",
+          "Teacher B."
+        ],
+        "hints": [
+          "Teacher …",
+          "Teacher ___."
+        ]
+      },
+      {
+        "id": "a2_c32n04_q2",
+        "questionEn": "Where does Torto want to go next year?",
+        "answerEn": "To the mountains.",
+        "acceptedAnswers": [
+          "The mountains.",
+          "He wants to go to the mountains."
+        ],
+        "hints": [
+          "To …",
+          "To the ___."
+        ]
+      },
+      {
+        "id": "a2_c32n04_q3",
+        "questionEn": "Who says 'Welcome back'?",
+        "answerEn": "John.",
+        "acceptedAnswers": [
+          "Teacher John.",
+          "John says it."
+        ],
+        "hints": [
+          "John. …"
+        ]
+      }
+    ]
+  }
+}

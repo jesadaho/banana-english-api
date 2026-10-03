@@ -182,7 +182,10 @@ import { getInteractiveScenario } from '../interactive-scenario/interactive-scen
 import { describeItImageUrl } from '../describe-it/describe-it.data';
 import {
   buildScenarioOpening,
+  buildScenarioResumeOpening,
+  completedSceneIds,
   currentScenarioBeat,
+  resumeScenarioRuntime,
   isScenarioNoise,
   localMatchCurrentBeat,
   processScenarioTurn,
@@ -461,6 +464,7 @@ export class SessionsController {
                 sessionId,
                 body,
                 chatDebug,
+                req.user.id,
               )
             : await this.processLegacyTurn(sessionId, body, chatDebug);
 
@@ -493,7 +497,12 @@ export class SessionsController {
     if (!config) {
       throw new NotFoundException('Scenario not found');
     }
-    if (config.bananaCost > 0) {
+    const resumed =
+      config.scenes.length > 1
+        ? await this.loadScenarioResume(user.id, config)
+        : null;
+    // Resuming a paid run is free: the learner already paid when scene 1 began.
+    if (config.bananaCost > 0 && !resumed) {
       const spendRef = randomUUID();
       await this.economy.spendBananas(
         user.id,
@@ -504,6 +513,7 @@ export class SessionsController {
     }
 
     const data = this.sessionStore.createInteractiveScenario(config);
+    if (resumed) data.scenarioRuntime = resumed;
     await this.prisma.userSession.create({
       data: {
         id: data.session.id,
@@ -517,7 +527,9 @@ export class SessionsController {
       data: { lastStudiedAt: new Date() },
     });
 
-    const openingReply = buildScenarioOpening(config, data.scenarioRuntime!);
+    const openingReply = resumed
+      ? buildScenarioResumeOpening(config, resumed)
+      : buildScenarioOpening(config, data.scenarioRuntime!);
     const opening = {
       speaker: 'ai' as const,
       textEn: openingReply.aiResponse,
@@ -551,6 +563,12 @@ export class SessionsController {
           imageUrls: config.beats.flatMap((b) =>
             b.imagePath ? [describeItImageUrl(b.imagePath)] : [],
           ),
+          scenes: config.scenes.map((s) => ({
+            id: s.id,
+            titleEn: s.titleEn ?? null,
+            titleTh: s.titleTh ?? null,
+          })),
+          resumedSceneIds: resumed ? completedSceneIds(config, resumed) : [],
         },
       },
       chatDebug,
@@ -563,6 +581,7 @@ export class SessionsController {
     sessionId: string,
     body: TurnDto,
     chatDebug = false,
+    userId?: string,
   ) {
     const handlerStartedAt = performance.now();
     const data = this.sessionStore.get(sessionId);
@@ -584,6 +603,7 @@ export class SessionsController {
       data.scenarioRuntime,
       transcript,
     );
+    const scenesBefore = completedSceneIds(data.scenarioConfig, data.scenarioRuntime);
     const { state, reply } = processScenarioTurn({
       scenario: data.scenarioConfig,
       state: data.scenarioRuntime,
@@ -592,6 +612,15 @@ export class SessionsController {
       judgeCorrected: judge.corrected,
     });
     data.scenarioRuntime = state;
+    const scenesAfter = completedSceneIds(data.scenarioConfig, state);
+    if (userId && data.scenarioConfig.scenes.length > 1 && scenesAfter.length > scenesBefore.length) {
+      await this.saveScenarioSceneProgress(
+        userId,
+        data.scenarioConfig.id,
+        scenesAfter,
+        state,
+      ).catch((err) => console.error('Failed to save scenario scene progress', err));
+    }
     data.session.checkpointStates = { ...state.checkpoints };
     data.session.currentTurn = state.attemptCount;
     data.session.isComplete = reply.isTaskComplete;
@@ -619,6 +648,46 @@ export class SessionsController {
       scriptedAiDebug(),
       handlerStartedAt,
     );
+  }
+
+  private async loadScenarioResume(
+    userId: string,
+    config: NonNullable<ReturnType<typeof getInteractiveScenario>>,
+  ) {
+    const row = await this.prisma.interactiveScenarioProgress.findUnique({
+      where: { userId_scenarioId: { userId, scenarioId: config.id } },
+    });
+    if (!row || row.finishedAt) return null;
+    const asArray = (v: Prisma.JsonValue) =>
+      Array.isArray(v) ? v.filter((x): x is string => typeof x === 'string') : [];
+    const asRecord = <T>(v: Prisma.JsonValue) =>
+      v && typeof v === 'object' && !Array.isArray(v) ? (v as Record<string, T>) : {};
+    return resumeScenarioRuntime(config, {
+      completedSceneIds: asArray(row.completedSceneIds),
+      checkpoints: asRecord<boolean>(row.checkpoints),
+      goalOutcomes: asRecord<'correct' | 'close' | 'skipped'>(row.goalOutcomes),
+      slots: asRecord<string>(row.slots),
+    });
+  }
+
+  private async saveScenarioSceneProgress(
+    userId: string,
+    scenarioId: string,
+    sceneIds: string[],
+    state: { checkpoints: Record<string, boolean>; goalOutcomes: Record<string, string>; slots: Record<string, string | undefined>; finished: boolean },
+  ) {
+    const data = {
+      completedSceneIds: sceneIds,
+      checkpoints: state.checkpoints,
+      goalOutcomes: state.goalOutcomes,
+      slots: state.slots as Prisma.InputJsonValue,
+      finishedAt: state.finished ? new Date() : null,
+    };
+    await this.prisma.interactiveScenarioProgress.upsert({
+      where: { userId_scenarioId: { userId, scenarioId } },
+      create: { userId, scenarioId, ...data },
+      update: data,
+    });
   }
 
   /**

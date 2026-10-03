@@ -35,7 +35,14 @@ import { RecentLearnersService } from '../recent-learners/recent-learners.servic
 import { isPhonicsNodeId, PhonicsService } from '../phonics/phonics.service';
 import { EmojiSpeakService } from '../emoji-speak/emoji-speak.service';
 import { canonicalFoundationV7RewardId, isFoundationV7EmojiPool } from '../learn-path/foundation-v7-path.data';
-import { isNewWordsPoolId } from '../new-words/new-words.data';
+import {
+  isNewWordsPoolId,
+  isValidNewWordsPack,
+  newWordsPoolById,
+} from '../new-words/new-words.data';
+import { dealHearItItems, hearItPoolById, isValidHearItPack } from '../hear-it/hear-it.data';
+import { isValidStoryBitesPack, storyBitesPoolById } from '../story-bites/story-bites.data';
+import { describeItImageUrl } from '../describe-it/describe-it.data';
 import { readMiniGameScoreBody, type MiniGameScoreBody } from '../economy/mini-game-score';
 import {
   dealInfoTaskItems,
@@ -138,6 +145,46 @@ export class MiniGamesController {
       title: pool!.title,
       introTh: pool!.introTh ?? null,
       items: dealInfoTaskItems(id),
+    };
+  }
+
+  /** Server-side New Words pack so new path content ships without an app build. */
+  @Get('new-words/:poolId/deal')
+  dealNewWordsPack(@Param('poolId') poolId: string) {
+    const id = poolId?.trim();
+    const pool = id ? newWordsPoolById(id) : undefined;
+    if (!pool || !isValidNewWordsPack(pool)) {
+      throw new BadRequestException(`Unknown New Words pack: ${id}`);
+    }
+    return { poolId: id, title: pool.title, items: pool.items };
+  }
+
+  @Get('hear-it/:poolId/deal')
+  dealHearItPack(@Param('poolId') poolId: string) {
+    const id = poolId?.trim();
+    const pool = id ? hearItPoolById(id) : undefined;
+    if (!pool || !isValidHearItPack(pool)) {
+      throw new BadRequestException(`Unknown Hear It pack: ${id}`);
+    }
+    return {
+      poolId: id,
+      titleEn: pool.titleEn,
+      titleTh: pool.titleTh,
+      items: dealHearItItems(id),
+    };
+  }
+
+  @Get('story-bites/:poolId/deal')
+  dealStoryBitesPack(@Param('poolId') poolId: string) {
+    const id = poolId?.trim();
+    const pool = id ? storyBitesPoolById(id) : undefined;
+    if (!pool || !isValidStoryBitesPack(pool)) {
+      throw new BadRequestException(`Unknown Story Bites pack: ${id}`);
+    }
+    return {
+      ...pool,
+      poolId: id,
+      imageUrl: pool.imagePath ? describeItImageUrl(pool.imagePath) : null,
     };
   }
 

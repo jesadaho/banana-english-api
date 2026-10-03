@@ -53,7 +53,7 @@ describe('Foundation V7 catalog and real content', () => {
     assert.equal(finalNode.id, 'v7_finale_n01');
     assert.equal(finalNode.code, '16.13');
     assert.equal(finalNode.type, 'interactive_scenario');
-    assert.deepEqual(foundationV7NodeTypeCounts(), { lesson:46, say_it:38, emoji_speak:15, new_words:28, pronunciation:4, describe_it:12, story_bites:3, conversation:14, info_task:4, interactive_scenario:1 });
+    assert.deepEqual(foundationV7NodeTypeCounts(), { lesson:46, say_it:38, emoji_speak:15, new_words:28, pronunciation:4, describe_it:12, story_bites:3, conversation:14, info_task:4, interactive_scenario:1, hear_it:0, explain_it:0 });
     assert.deepEqual(FOUNDATION_V7_NODES.map(n => n.globalOrder), Array.from({length:165}, (_, i) => i + 1));
     for (let i = 1; i < FOUNDATION_V7_NODES.length; i++) {
       const prev = FOUNDATION_V7_NODES[i - 1];
@@ -298,9 +298,10 @@ describe('Foundation V7 progress and completion contracts', () => {
 
   it('rejects unknown capabilities rather than silently enabling unsupported mechanics', async () => {
     const controller = new LearnPathController(pathService());
-    assert.equal((await controller.foundationV7(req, FOUNDATION_V7_CAPABILITIES.join(','))).summary.playableCount, 158);
-    await assert.rejects(controller.foundationV7(req, 'story_bites'));
-    await assert.rejects(controller.foundationV7(req, ['say_it_guided'] as any));
+    assert.equal((await controller.coursePath(req, 'foundation-v7', FOUNDATION_V7_CAPABILITIES.join(','))).summary.playableCount, 158);
+    await assert.rejects(controller.coursePath(req, 'foundation-v7', 'video_bites'));
+    await assert.rejects(controller.coursePath(req, 'foundation-v7', ['say_it_guided'] as any));
+    await assert.rejects(controller.coursePath(req, 'adventure-a3'));
   });
 
   it('ships New Words demo and catalog pools, and reward aliases', () => {

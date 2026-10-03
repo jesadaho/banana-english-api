@@ -1,6 +1,7 @@
 /** Pack catalog copied from Flutter `emoji_speak_pools.dart`. */
 import poolsJson from './emoji-speak-pools.generated.json';
 import v7PoolsJson from './foundation-v7-pools.json';
+import a2PoolsJson from './adventure-a2-pools.json';
 
 export type EmojiSpeakCard = {
   emoji: string;
@@ -8,6 +9,10 @@ export type EmojiSpeakCard = {
   hint: string;
   meaningTh: string;
   promptTh?: string;
+  /** Synonyms graded as correct in addition to `answer`. */
+  acceptedAnswers?: string[];
+  /** Two-level hints; level 1 replaces `hint` on new clients. */
+  hints?: string[];
 };
 
 export type EmojiSpeakPool = {
@@ -22,7 +27,14 @@ type GeneratedCatalog = {
 };
 
 const legacyCatalog = poolsJson as GeneratedCatalog;
-const catalog: GeneratedCatalog = { ...legacyCatalog, pools: { ...legacyCatalog.pools, ...v7PoolsJson } };
+const catalog: GeneratedCatalog = {
+  ...legacyCatalog,
+  pools: {
+    ...legacyCatalog.pools,
+    ...v7PoolsJson,
+    ...(a2PoolsJson as Record<string, EmojiSpeakPool>),
+  },
+};
 
 export const EMOJI_SPEAK_POOLS = catalog.pools;
 

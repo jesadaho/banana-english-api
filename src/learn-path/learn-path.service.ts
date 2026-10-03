@@ -4,7 +4,14 @@ import { randomUUID } from 'crypto';
 import { PrismaService } from '../prisma/prisma.service';
 import { LessonsService } from '../lessons/lessons.service';
 import { EconomyService } from '../economy/economy.service';
-import { FOUNDATION_V7_CATALOG, FOUNDATION_V7_PATH_ID, foundationV7NodeTypeCounts, type FoundationV7Capability } from './foundation-v7-path.data';
+import {
+  FOUNDATION_V7_COURSE,
+  FOUNDATION_V7_PATH_ID,
+  foundationV7NodeTypeCounts,
+  learnCourseForChapter,
+  type FoundationV7Capability,
+  type LearnCourse,
+} from './foundation-v7-path.data';
 import { toFoundationV7ClientChapters, toFoundationV7ClientFinale } from './foundation-v7-path.view';
 import { canonicalFoundationV7RewardId } from './foundation-v7-path.data';
 import {
@@ -66,7 +73,9 @@ export type FoundationClientNodeType =
   | 'pronunciation'
   | 'new_words'
   | 'info_task'
-  | 'interactive_scenario';
+  | 'interactive_scenario'
+  | 'hear_it'
+  | 'explain_it';
 
 export type FoundationV5ClientNode = {
   id: string;
@@ -176,7 +185,14 @@ function shippedContentForMappedType(
   titleEn: string,
   type: FoundationClientNodeType,
 ): FoundationV2NodeDef | undefined {
-  if (type === 'story_bites' || type === 'new_words' || type === 'info_task' || type === 'interactive_scenario') {
+  if (
+    type === 'story_bites' ||
+    type === 'new_words' ||
+    type === 'info_task' ||
+    type === 'interactive_scenario' ||
+    type === 'hear_it' ||
+    type === 'explain_it'
+  ) {
     return undefined;
   }
   return v2ContentForV5Title(
@@ -331,8 +347,12 @@ export class LearnPathService {
     private readonly economy: EconomyService,
   ) {}
 
-  async getFoundationV7(userId: string, capabilities: readonly FoundationV7Capability[] = []) {
-    const chapters = toFoundationV7ClientChapters(capabilities).map((chapter) => {
+  async getFoundationV7(
+    userId: string,
+    capabilities: readonly FoundationV7Capability[] = [],
+    course: LearnCourse = FOUNDATION_V7_COURSE,
+  ) {
+    const chapters = toFoundationV7ClientChapters(capabilities, course).map((chapter) => {
       const skip = resolveSkipQuizPool(chapter.id);
       return {
         ...chapter,
@@ -340,19 +360,23 @@ export class LearnPathService {
         skipQuizQuestionCount: skipQuizDealCount(skip.availableCount),
       };
     });
-    const pathFinale = toFoundationV7ClientFinale(capabilities);
+    const pathFinale = toFoundationV7ClientFinale(capabilities, course);
     const nodes = [
       ...chapters.flatMap((chapter) => chapter.items),
       ...(pathFinale?.items ?? []),
     ];
     const playable = nodes.filter(node => !node.comingSoon);
     const completed = await this.resolveCompletedV5NodeIds(userId, playable);
-    await this.applyFoundationV7NodeMigration(userId, completed, playable);
-    const skippedNodeIds = await this.resolveSkippedV7NodeIds(userId);
+    if (course.pathId === FOUNDATION_V7_PATH_ID) {
+      await this.applyFoundationV7NodeMigration(userId, completed, playable);
+    }
+    const skippedNodeIds = await this.resolveSkippedV7NodeIds(userId, course.pathId);
     const satisfied = new Set([...completed, ...skippedNodeIds]);
+    const metadata = course.catalog.metadata;
     return {
-      pathId: FOUNDATION_V7_PATH_ID, version: FOUNDATION_V7_CATALOG.metadata.version,
-      sourceVersion: FOUNDATION_V7_CATALOG.metadata.sourceVersion, releaseStatus: 'playtest' as const,
+      pathId: course.pathId, version: metadata.version,
+      sourceVersion: metadata.sourceVersion, releaseStatus: metadata.releaseStatus,
+      ...(metadata.level ? { level: metadata.level } : {}),
       chapters,
       pathFinale,
       progress: {
@@ -363,15 +387,15 @@ export class LearnPathService {
         totalCount: playable.length,
       },
       summary: {
-        chapterCount: chapters.length, nodeCount: nodes.length, nodeTypeCounts: foundationV7NodeTypeCounts(),
+        chapterCount: chapters.length, nodeCount: nodes.length, nodeTypeCounts: foundationV7NodeTypeCounts(course),
         backendReadyCount: nodes.filter(node => node.backendReady).length,
         playableCount: playable.length, comingSoonNodeIds: nodes.filter(node => node.comingSoon).map(node => node.id),
       },
     };
   }
 
-  getSkipQuizEligibility(targetChapterId: string) {
-    this.assertKnownChapter(targetChapterId);
+  getSkipQuizEligibility(targetChapterId: string, expectedPathId?: string) {
+    this.assertKnownChapter(targetChapterId, expectedPathId);
     return skipQuizEligibilityPayload(targetChapterId);
   }
 
@@ -380,8 +404,9 @@ export class LearnPathService {
     targetChapterId: string,
     idempotencyKey: string,
     displayName?: string | null,
+    expectedPathId?: string,
   ) {
-    this.assertKnownChapter(targetChapterId);
+    const pathId = this.assertKnownChapter(targetChapterId, expectedPathId);
     const key = idempotencyKey?.trim();
     if (!key) throw new BadRequestException('idempotencyKey is required');
 
@@ -417,7 +442,7 @@ export class LearnPathService {
       const attempt = await this.prisma.foundationSkipQuizAttempt.create({
         data: {
           userId,
-          pathId: FOUNDATION_V7_PATH_ID,
+          pathId,
           targetChapterId,
           previousChapterId: resolved.previousChapterId,
           idempotencyKey: key,
@@ -460,14 +485,15 @@ export class LearnPathService {
     targetChapterId: string,
     attemptId: string,
     correctCount: number,
+    expectedPathId?: string,
   ) {
-    this.assertKnownChapter(targetChapterId);
+    const pathId = this.assertKnownChapter(targetChapterId, expectedPathId);
     if (!Number.isInteger(correctCount) || correctCount < 0) {
       throw new BadRequestException('correctCount must be a non-negative integer');
     }
 
     const attempt = await this.prisma.foundationSkipQuizAttempt.findFirst({
-      where: { id: attemptId, userId, pathId: FOUNDATION_V7_PATH_ID },
+      where: { id: attemptId, userId, pathId },
     });
     if (!attempt) throw new NotFoundException('Skip quiz attempt not found');
     if (attempt.targetChapterId !== targetChapterId) {
@@ -504,13 +530,13 @@ export class LearnPathService {
           where: {
             userId_pathId_chapterId: {
               userId,
-              pathId: FOUNDATION_V7_PATH_ID,
+              pathId,
               chapterId: chapter.chapterId,
             },
           },
           create: {
             userId,
-            pathId: FOUNDATION_V7_PATH_ID,
+            pathId,
             chapterId: chapter.chapterId,
             skippedNodeIds: chapter.playableNodeIds,
             quizCorrect: correctCount,
@@ -553,15 +579,21 @@ export class LearnPathService {
     };
   }
 
-  private assertKnownChapter(chapterId: string) {
-    if (!FOUNDATION_V7_CATALOG.chapters.some((ch) => ch.id === chapterId)) {
+  /** Returns the pathId of the course that owns the chapter. */
+  private assertKnownChapter(chapterId: string, expectedPathId?: string): string {
+    const course = learnCourseForChapter(chapterId);
+    if (!course || (expectedPathId && course.pathId !== expectedPathId)) {
       throw new NotFoundException('Chapter not found');
     }
+    return course.pathId;
   }
 
-  private async resolveSkippedV7NodeIds(userId: string): Promise<Set<string>> {
+  private async resolveSkippedV7NodeIds(
+    userId: string,
+    pathId: string = FOUNDATION_V7_PATH_ID,
+  ): Promise<Set<string>> {
     const rows = await this.prisma.foundationChapterSkip.findMany({
-      where: { userId, pathId: FOUNDATION_V7_PATH_ID },
+      where: { userId, pathId },
       select: { skippedNodeIds: true },
     });
     const ids = new Set<string>();

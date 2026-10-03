@@ -1,0 +1,1011 @@
+{
+  "a2_c07n08": {
+    "id": "a2_c07n08",
+    "titleEn": "Voice Message",
+    "titleTh": "ข้อความเสียง",
+    "items": [
+      {
+        "id": "a2_c07n08_01",
+        "audioText": "Hi, it's May. Would you like to see a movie this evening? Let's meet at seven.",
+        "questionTh": "May ชวนไปดูหนังเมื่อไหร่ (พูดช่วงเวลา)",
+        "answerEn": "This evening.",
+        "acceptedAnswers": [
+          "this evening"
+        ],
+        "hints": [
+          "This …",
+          "This ___."
+        ]
+      },
+      {
+        "id": "a2_c07n08_02",
+        "audioText": "Hi, it's Max. Shall we play badminton tomorrow? I'm free after school.",
+        "questionTh": "Max ชวนเล่นแบดมินตันวันไหน",
+        "answerEn": "Tomorrow.",
+        "acceptedAnswers": [
+          "tomorrow"
+        ],
+        "hints": [
+          "Tomorrow. …"
+        ]
+      },
+      {
+        "id": "a2_c07n08_03",
+        "audioText": "Hello, it's Capy. How about drawing in the park next week? Let's meet at the lake.",
+        "questionTh": "Capy นัดเจอกันที่ไหน",
+        "answerEn": "At the lake.",
+        "acceptedAnswers": [
+          "the lake",
+          "lake"
+        ],
+        "hints": [
+          "At …",
+          "At the ___."
+        ]
+      },
+      {
+        "id": "a2_c07n08_04",
+        "audioText": "Hi, it's Teacher Bee. The club is going to practice on Friday at four. See you then!",
+        "questionTh": "ชมรมจะซ้อมกี่โมง",
+        "answerEn": "At four.",
+        "acceptedAnswers": [
+          "four",
+          "at 4"
+        ],
+        "hints": [
+          "At …",
+          "At ___."
+        ]
+      },
+      {
+        "id": "a2_c07n08_05",
+        "audioText": "Hi, it's Mali. Would you like to cook at my house this evening? Come at six.",
+        "questionTh": "Mali ให้ไปบ้านกี่โมง",
+        "answerEn": "At six.",
+        "acceptedAnswers": [
+          "six",
+          "at 6"
+        ],
+        "hints": [
+          "At …",
+          "At ___."
+        ]
+      },
+      {
+        "id": "a2_c07n08_06",
+        "audioText": "Hi, it's Teacher John. Sorry, I'm busy tomorrow. How about next week?",
+        "questionTh": "Teacher John เสนอนัดใหม่เมื่อไหร่",
+        "answerEn": "Next week.",
+        "acceptedAnswers": [
+          "next week"
+        ],
+        "hints": [
+          "Next …",
+          "Next ___."
+        ]
+      }
+    ]
+  },
+  "a2_c08n07": {
+    "id": "a2_c08n07",
+    "titleEn": "Bee's Voice Message",
+    "titleTh": "ข้อความเสียงครูบี",
+    "items": [
+      {
+        "id": "a2_c08n07_01",
+        "audioText": "Hi, team! It's Teacher Bee. Let's meet at the gate at six. See you then!",
+        "questionTh": "ครูบีนัดเจอกันที่ไหน",
+        "answerEn": "At the gate.",
+        "acceptedAnswers": [
+          "the gate",
+          "gate"
+        ],
+        "hints": [
+          "At …",
+          "At the ___."
+        ]
+      },
+      {
+        "id": "a2_c08n07_02",
+        "audioText": "Hi, it's Teacher Bee. Let's meet at the big wheel at seven thirty. Don't be late!",
+        "questionTh": "ครูบีนัดเจอกันกี่โมง",
+        "answerEn": "At seven thirty.",
+        "acceptedAnswers": [
+          "seven thirty",
+          "7:30"
+        ],
+        "hints": [
+          "At …",
+          "At ___ ___."
+        ]
+      },
+      {
+        "id": "a2_c08n07_03",
+        "audioText": "It's Teacher Bee. I'm standing next to the ice cream stall. I'm wearing a blue shirt.",
+        "questionTh": "ครูบียืนอยู่ข้างอะไร",
+        "answerEn": "The ice cream stall.",
+        "acceptedAnswers": [
+          "Next to the ice cream stall.",
+          "the ice cream stall",
+          "ice cream stall"
+        ],
+        "hints": [
+          "The …",
+          "The ___ ___ ___."
+        ]
+      },
+      {
+        "id": "a2_c08n07_04",
+        "audioText": "Hi, it's Teacher Bee. I'm at the big wheel now. I'm wearing my glasses.",
+        "questionTh": "ตอนนี้ครูบีอยู่ที่ไหน",
+        "answerEn": "At the big wheel.",
+        "acceptedAnswers": [
+          "the big wheel",
+          "next to the big wheel"
+        ],
+        "hints": [
+          "At …",
+          "At the ___ ___."
+        ]
+      },
+      {
+        "id": "a2_c08n07_05",
+        "audioText": "It's Teacher Bee. Max and May are at the ice cream stall. Let's all meet there at eight. Hurry up!",
+        "questionTh": "นัดเจอกันทุกคนกี่โมง",
+        "answerEn": "At eight.",
+        "acceptedAnswers": [
+          "eight",
+          "at 8"
+        ],
+        "hints": [
+          "At …",
+          "At ___."
+        ]
+      },
+      {
+        "id": "a2_c08n07_06",
+        "audioText": "Can you see me? It's Teacher Bee. I'm standing at the gate. I'm wearing a blue shirt and glasses.",
+        "questionTh": "ครูบีใส่เสื้อสีอะไร",
+        "answerEn": "A blue shirt.",
+        "acceptedAnswers": [
+          "blue",
+          "blue shirt",
+          "a blue shirt"
+        ],
+        "hints": [
+          "A …",
+          "A ___ ___."
+        ]
+      }
+    ]
+  },
+  "a2_c09n08": {
+    "id": "a2_c09n08",
+    "titleEn": "Mali's Orders",
+    "titleTh": "ฟังออร์เดอร์ของ Mali",
+    "items": [
+      {
+        "id": "a2_c09n08_01",
+        "audioText": "One medium iced latte for May!",
+        "questionTh": "แก้วลาเต้ของ May ขนาดไหน",
+        "answerEn": "Medium.",
+        "acceptedAnswers": [
+          "It's medium.",
+          "A medium one.",
+          "Medium iced latte."
+        ],
+        "hints": [
+          "Medium. …"
+        ]
+      },
+      {
+        "id": "a2_c09n08_02",
+        "audioText": "A large hot tea for Capy, to take away.",
+        "questionTh": "Capy ทานที่ร้านหรือกลับบ้าน",
+        "answerEn": "To take away.",
+        "acceptedAnswers": [
+          "Take away.",
+          "It's to take away."
+        ],
+        "hints": [
+          "To …",
+          "To ___ ___."
+        ]
+      },
+      {
+        "id": "a2_c09n08_03",
+        "audioText": "Three small iced lattes for John, for here.",
+        "questionTh": "John สั่งลาเต้กี่แก้ว",
+        "answerEn": "Three.",
+        "acceptedAnswers": [
+          "Three lattes.",
+          "Three small iced lattes.",
+          "Three small lattes."
+        ],
+        "hints": [
+          "Three. …"
+        ]
+      },
+      {
+        "id": "a2_c09n08_04",
+        "audioText": "A small latte for Teacher Nina. Hot, not iced!",
+        "questionTh": "ลาเต้ของ Teacher Nina ร้อนหรือเย็น",
+        "answerEn": "Hot.",
+        "acceptedAnswers": [
+          "It's hot.",
+          "A hot latte.",
+          "Hot latte."
+        ],
+        "hints": [
+          "Hot. …"
+        ]
+      },
+      {
+        "id": "a2_c09n08_05",
+        "audioText": "Sorry, Max. We don't have any hot milk today. We have hot tea and iced tea.",
+        "questionTh": "วันนี้ Max สั่งนมร้อนได้ไหม",
+        "answerEn": "No.",
+        "acceptedAnswers": [
+          "No, he can't.",
+          "No, they don't have any hot milk.",
+          "No hot milk."
+        ],
+        "hints": [
+          "No. …"
+        ]
+      },
+      {
+        "id": "a2_c09n08_06",
+        "audioText": "Hot tea, forty-five baht. Milk, fifty-five baht. Latte, sixty-five baht.",
+        "questionTh": "มีเงินพอดี 100 บาท อยากได้ 2 แก้วที่ไม่ซ้ำกัน และใช้เงินให้ครบ 100 บาท ซื้อคู่ไหน",
+        "answerEn": "Hot tea and milk.",
+        "acceptedAnswers": [
+          "A hot tea and some milk.",
+          "A hot tea and a milk.",
+          "Hot tea and a milk."
+        ],
+        "hints": [
+          "Hot …",
+          "Hot ___ and ___."
+        ]
+      }
+    ]
+  },
+  "a2_c10n10": {
+    "id": "a2_c10n10",
+    "titleEn": "It's Sold Out",
+    "titleTh": "เมนูหมด",
+    "items": [
+      {
+        "id": "a2_c10n10_01",
+        "audioText": "Sorry, we don't have any curry today. The noodle soup is really spicy. The fried rice isn't spicy.",
+        "questionTh": "Max กินเผ็ดไม่ได้ ควรสั่งจานไหน",
+        "answerEn": "Fried rice.",
+        "acceptedAnswers": [
+          "The fried rice.",
+          "He can have the fried rice."
+        ],
+        "hints": [
+          "Fried …",
+          "Fried ___."
+        ]
+      },
+      {
+        "id": "a2_c10n10_02",
+        "audioText": "I'm so sorry. We don't have any fried rice today. The curry is too spicy for Max. The noodle soup isn't spicy.",
+        "questionTh": "จานไหนไม่เผ็ด",
+        "answerEn": "Noodle soup.",
+        "acceptedAnswers": [
+          "The noodle soup."
+        ],
+        "hints": [
+          "Noodle …",
+          "Noodle ___."
+        ]
+      },
+      {
+        "id": "a2_c10n10_03",
+        "audioText": "Sorry, no noodle soup today. We have curry and fried rice.",
+        "questionTh": "วันนี้ร้านมีจานไหนบ้าง",
+        "answerEn": "Curry and fried rice.",
+        "acceptedAnswers": [
+          "The curry and the fried rice.",
+          "They have curry and fried rice.",
+          "Fried rice and curry."
+        ],
+        "hints": [
+          "Curry …",
+          "Curry and ___ ___."
+        ]
+      },
+      {
+        "id": "a2_c10n10_04",
+        "audioText": "Sorry, we don't have any noodle soup today. The curry is sweet, not spicy. The fried rice is really spicy.",
+        "questionTh": "Max ควรสั่งจานไหน",
+        "answerEn": "Curry.",
+        "acceptedAnswers": [
+          "The curry.",
+          "He can have the curry."
+        ],
+        "hints": [
+          "Curry. …"
+        ]
+      },
+      {
+        "id": "a2_c10n10_05",
+        "audioText": "Hi, it's Mali again! Sorry, no curry today. The noodle soup is a bit spicy, but we can make the fried rice without chilli.",
+        "questionTh": "Mali บอกว่าร้านทำจานไหนแบบไม่ใส่พริกได้",
+        "answerEn": "Fried rice.",
+        "acceptedAnswers": [
+          "The fried rice."
+        ],
+        "hints": [
+          "Fried …",
+          "Fried ___."
+        ]
+      }
+    ]
+  },
+  "a2_c16n08": {
+    "id": "a2_c16n08",
+    "titleEn": "The Boat Vendor",
+    "titleTh": "แม่ค้าบนเรือ",
+    "items": [
+      {
+        "id": "a2_c16n08_01",
+        "audioText": "Boat noodles are forty baht. Mango is thirty baht. Water is ten baht.",
+        "questionTh": "ก๋วยเตี๋ยวเรือราคาเท่าไร",
+        "answerEn": "Forty baht.",
+        "acceptedAnswers": [
+          "40 baht.",
+          "They're forty baht.",
+          "Forty."
+        ],
+        "hints": [
+          "Forty …",
+          "Forty ___."
+        ]
+      },
+      {
+        "id": "a2_c16n08_02",
+        "audioText": "Boat noodles are forty baht. Mango is thirty baht. Water is ten baht.",
+        "questionTh": "ซื้อก๋วยเตี๋ยวเรือ 1 ชาม กับน้ำ 1 ขวด รวมเป็นเงินเท่าไร",
+        "answerEn": "Fifty baht.",
+        "acceptedAnswers": [
+          "50 baht.",
+          "It's fifty baht.",
+          "Fifty."
+        ],
+        "hints": [
+          "Fifty …",
+          "Fifty ___."
+        ]
+      },
+      {
+        "id": "a2_c16n08_03",
+        "audioText": "Two boat noodles and one mango. That's one hundred and ten baht.",
+        "questionTh": "ยอดรวมเท่าไร",
+        "answerEn": "One hundred and ten baht.",
+        "acceptedAnswers": [
+          "110 baht.",
+          "A hundred and ten baht.",
+          "One hundred ten baht."
+        ],
+        "hints": [
+          "One …",
+          "One ___ and ___ ___."
+        ]
+      },
+      {
+        "id": "a2_c16n08_04",
+        "audioText": "One mango and one water. That's forty baht.",
+        "questionTh": "คุณจ่าย 100 บาท ควรได้เงินทอนเท่าไร",
+        "answerEn": "Sixty baht.",
+        "acceptedAnswers": [
+          "60 baht.",
+          "Sixty."
+        ],
+        "hints": [
+          "Sixty …",
+          "Sixty ___."
+        ]
+      },
+      {
+        "id": "a2_c16n08_05",
+        "audioText": "That's eighty baht. Here's your change, twenty baht.",
+        "questionTh": "คุณให้เงิน Mali ไปกี่บาท",
+        "answerEn": "One hundred baht.",
+        "acceptedAnswers": [
+          "100 baht.",
+          "A hundred baht.",
+          "One hundred."
+        ],
+        "hints": [
+          "One …",
+          "One ___ ___."
+        ]
+      },
+      {
+        "id": "a2_c16n08_06",
+        "audioText": "Boat noodles, forty baht. Mango, thirty baht. Here's your change, twenty baht.",
+        "questionTh": "คุณจ่าย 100 บาท Mali ทอนผิด เงินทอนที่ถูกคือเท่าไร",
+        "answerEn": "Thirty baht.",
+        "acceptedAnswers": [
+          "30 baht.",
+          "It's thirty baht.",
+          "Thirty."
+        ],
+        "hints": [
+          "Thirty …",
+          "Thirty ___."
+        ]
+      }
+    ]
+  },
+  "a2_c17n08": {
+    "id": "a2_c17n08",
+    "titleEn": "Airport Announcement",
+    "titleTh": "ประกาศสนามบิน",
+    "items": [
+      {
+        "id": "a2_c17n08_01",
+        "audioText": "Flight 72 to Tokyo, please go to Gate 15 now. The gate closes at 10:20.",
+        "questionTh": "ต้องไปเกตไหน",
+        "answerEn": "Gate 15",
+        "acceptedAnswers": [
+          "Gate fifteen",
+          "We have to go to Gate 15."
+        ],
+        "hints": [
+          "Gate …",
+          "Gate ___"
+        ]
+      },
+      {
+        "id": "a2_c17n08_02",
+        "audioText": "Flight 72 to Tokyo, please go to Gate 15 now. The gate closes at 10:20.",
+        "questionTh": "เกตปิดกี่โมง",
+        "answerEn": "10:20",
+        "acceptedAnswers": [
+          "Ten twenty",
+          "At 10:20",
+          "It closes at 10:20."
+        ],
+        "hints": [
+          "10:20 …"
+        ]
+      },
+      {
+        "id": "a2_c17n08_03",
+        "audioText": "Good morning! Flight 18 to London leaves from Gate 5. Please be at the gate at 8:30.",
+        "questionTh": "ต้องไปเกตไหน",
+        "answerEn": "Gate 5",
+        "acceptedAnswers": [
+          "Gate five",
+          "We have to go to Gate 5."
+        ],
+        "hints": [
+          "Gate …",
+          "Gate ___"
+        ]
+      },
+      {
+        "id": "a2_c17n08_04",
+        "audioText": "Flight 40 to Sydney: the gate is now Gate 9, not Gate 5. Please go to Gate 9.",
+        "questionTh": "เกตที่ถูกต้องคือเกตไหน",
+        "answerEn": "Gate 9",
+        "acceptedAnswers": [
+          "Gate nine",
+          "We have to go to Gate 9."
+        ],
+        "hints": [
+          "Gate …",
+          "Gate ___"
+        ]
+      },
+      {
+        "id": "a2_c17n08_05",
+        "audioText": "Flight 40 to Sydney leaves at 11:45. Please be at Gate 9 at 11:15.",
+        "questionTh": "ต้องไปถึงเกตกี่โมง",
+        "answerEn": "11:15",
+        "acceptedAnswers": [
+          "Eleven fifteen",
+          "At 11:15",
+          "At eleven fifteen"
+        ],
+        "hints": [
+          "11:15 …"
+        ]
+      }
+    ]
+  },
+  "a2_c19n09": {
+    "id": "a2_c19n09",
+    "titleEn": "Next Stop",
+    "titleTh": "ป้ายถัดไป",
+    "items": [
+      {
+        "id": "a2_c19n09_01",
+        "audioText": "♪ I love my bus, I love my bus! ♪ Hi, it's Driver Dave! Next stop, the museum! The museum! ♪ I love my bus! ♪",
+        "questionTh": "ป้ายถัดไปคือที่ไหน",
+        "answerEn": "The museum",
+        "acceptedAnswers": [
+          "Museum",
+          "The next stop is the museum."
+        ],
+        "hints": [
+          "The …",
+          "The ___"
+        ]
+      },
+      {
+        "id": "a2_c19n09_02",
+        "audioText": "Hello, hello! For the old town, get off at the market. The market is the third stop! ♪ I love my bus! ♪",
+        "questionTh": "จะไปเมืองเก่า ต้องลงป้ายไหน",
+        "answerEn": "The market",
+        "acceptedAnswers": [
+          "Market",
+          "Get off at the market.",
+          "At the market"
+        ],
+        "hints": [
+          "The …",
+          "The ___"
+        ]
+      },
+      {
+        "id": "a2_c19n09_03",
+        "audioText": "♪ I love my bus, I love my bus! ♪ We're at the school now! Next stop, the museum, then the market!",
+        "questionTh": "ตอนนี้รถจอดอยู่ที่ป้ายไหน",
+        "answerEn": "The school",
+        "acceptedAnswers": [
+          "School",
+          "We're at the school."
+        ],
+        "hints": [
+          "The …",
+          "The ___"
+        ]
+      },
+      {
+        "id": "a2_c19n09_04",
+        "audioText": "Sorry, sorry! The market stop is closed today. Please get off at the school and walk five minutes. ♪ I love my bus! ♪",
+        "questionTh": "ป้ายตลาดปิด Driver Dave บอกให้ลงป้ายไหนแทน",
+        "answerEn": "The school",
+        "acceptedAnswers": [
+          "School",
+          "Get off at the school.",
+          "At the school"
+        ],
+        "hints": [
+          "The …",
+          "The ___"
+        ]
+      },
+      {
+        "id": "a2_c19n09_05",
+        "audioText": "Oh no, you missed the museum! Get off at the next stop. It's the market! ♪ I love my bus! ♪",
+        "questionTh": "นั่งเลยป้ายพิพิธภัณฑ์แล้ว ต้องลงป้ายไหน",
+        "answerEn": "The market",
+        "acceptedAnswers": [
+          "Market",
+          "Get off at the market.",
+          "At the market"
+        ],
+        "hints": [
+          "The …",
+          "The ___"
+        ]
+      }
+    ]
+  },
+  "a2_c21n09": {
+    "id": "a2_c21n09",
+    "titleEn": "Weather Forecast",
+    "titleTh": "พยากรณ์อากาศ",
+    "items": [
+      {
+        "id": "a2_c21n09_01",
+        "audioText": "Good morning, it's DJ Coco! On Friday it's going to be sunny. Saturday will be cloudy, and on Sunday it might be stormy... but that's OK, be happy!",
+        "questionTh": "วันไหนเหมาะไปทะเล",
+        "answerEn": "Friday",
+        "acceptedAnswers": [
+          "On Friday",
+          "Friday is sunny."
+        ],
+        "hints": [
+          "Friday …"
+        ]
+      },
+      {
+        "id": "a2_c21n09_02",
+        "audioText": "Hello, hello, it's DJ Coco! Friday will be stormy... but that's OK, be happy! Saturday will be sunny and hot. Sunday will be cloudy.",
+        "questionTh": "วันไหนเหมาะไปทะเล",
+        "answerEn": "Saturday",
+        "acceptedAnswers": [
+          "On Saturday",
+          "Saturday is sunny."
+        ],
+        "hints": [
+          "Saturday …"
+        ]
+      },
+      {
+        "id": "a2_c21n09_03",
+        "audioText": "Good morning, it's DJ Coco! Friday and Saturday will be cloudy and humid. But on Sunday it's going to be sunny! Be happy!",
+        "questionTh": "วันไหนเหมาะไปทะเล",
+        "answerEn": "Sunday",
+        "acceptedAnswers": [
+          "On Sunday",
+          "Sunday is sunny."
+        ],
+        "hints": [
+          "Sunday …"
+        ]
+      },
+      {
+        "id": "a2_c21n09_04",
+        "audioText": "Good morning, it's DJ Coco! It might rain on Friday. Saturday is going to be stormy... but that's OK, be happy! Sunday will be sunny and warm!",
+        "questionTh": "วันไหนมีพายุ ไม่ควรไปทะเล",
+        "answerEn": "Saturday",
+        "acceptedAnswers": [
+          "On Saturday",
+          "Saturday is stormy."
+        ],
+        "hints": [
+          "Saturday …"
+        ]
+      },
+      {
+        "id": "a2_c21n09_05",
+        "audioText": "Hello, it's DJ Coco! Friday will be cloudy. Saturday will be sunny in the morning, but stormy in the afternoon. But that's OK, be happy! Sunday will be sunny all day!",
+        "questionTh": "วันไหนเหมาะไปทะเลทั้งวัน",
+        "answerEn": "Sunday",
+        "acceptedAnswers": [
+          "On Sunday",
+          "Sunday is sunny all day."
+        ],
+        "hints": [
+          "Sunday …"
+        ]
+      }
+    ]
+  },
+  "a2_c22n10": {
+    "id": "a2_c22n10",
+    "titleEn": "How Many Pills?",
+    "titleTh": "กินกี่เม็ด",
+    "items": [
+      {
+        "id": "a2_c22n10_01",
+        "audioText": "Take two pills after meals, three times a day.",
+        "questionTh": "ต้องกินครั้งละกี่เม็ด",
+        "answerEn": "Two pills",
+        "acceptedAnswers": [
+          "Two",
+          "2 pills",
+          "Take two pills."
+        ],
+        "hints": [
+          "Two …",
+          "Two ___"
+        ]
+      },
+      {
+        "id": "a2_c22n10_02",
+        "audioText": "This is for your cough. Take one pill before meals, twice a day.",
+        "questionTh": "กินก่อนหรือหลังอาหาร",
+        "answerEn": "Before meals",
+        "acceptedAnswers": [
+          "Before",
+          "Before meals, twice a day"
+        ],
+        "hints": [
+          "Before …",
+          "Before ___"
+        ]
+      },
+      {
+        "id": "a2_c22n10_03",
+        "audioText": "This medicine is for May's fever. Take one pill after meals. Take it three times a day.",
+        "questionTh": "กินวันละกี่ครั้ง",
+        "answerEn": "Three times a day",
+        "acceptedAnswers": [
+          "Three times",
+          "3 times a day"
+        ],
+        "hints": [
+          "Three …",
+          "Three ___ a ___"
+        ]
+      },
+      {
+        "id": "a2_c22n10_04",
+        "audioText": "Take two pills before breakfast. Only once a day, please.",
+        "questionTh": "กินครั้งละกี่เม็ด ก่อนหรือหลังอาหาร",
+        "answerEn": "Two pills, before breakfast",
+        "acceptedAnswers": [
+          "Two, before",
+          "Two pills before meals",
+          "Two pills, before"
+        ],
+        "hints": [
+          "Two …",
+          "Two ___, ___ ___"
+        ]
+      },
+      {
+        "id": "a2_c22n10_05",
+        "audioText": "We close in five minutes! Quick: take one pill after dinner, and drink a lot of water.",
+        "questionTh": "กินกี่เม็ด ก่อนหรือหลังอาหาร",
+        "answerEn": "One pill, after dinner",
+        "acceptedAnswers": [
+          "One, after",
+          "One pill after meals",
+          "One pill, after"
+        ],
+        "hints": [
+          "One …",
+          "One ___, ___ ___"
+        ]
+      }
+    ]
+  },
+  "a2_c24n07": {
+    "id": "a2_c24n07",
+    "titleEn": "Airport Announcement",
+    "titleTh": "ประกาศเที่ยวบิน",
+    "items": [
+      {
+        "id": "a2_c24n07_01",
+        "audioText": "Flight BK 205 is delayed. It will now leave at 11:15 from Gate 12.",
+        "questionTh": "เที่ยวบินจะออกจากเกตไหน",
+        "answerEn": "Gate 12",
+        "acceptedAnswers": [
+          "Gate twelve",
+          "It's Gate 12."
+        ],
+        "hints": [
+          "Gate …",
+          "Gate ___"
+        ]
+      },
+      {
+        "id": "a2_c24n07_02",
+        "audioText": "Flight BK 205 is delayed. The new time is 9:40. Please go to Gate 15.",
+        "questionTh": "เวลาใหม่คือกี่โมง",
+        "answerEn": "9:40",
+        "acceptedAnswers": [
+          "Nine forty",
+          "At 9:40",
+          "The new time is 9:40."
+        ],
+        "hints": [
+          "9:40 …"
+        ]
+      },
+      {
+        "id": "a2_c24n07_03",
+        "audioText": "Update for flight BK 205: the gate is now 15, not 12. The time is still 11:15.",
+        "questionTh": "เกตใหม่คือเกตไหน",
+        "answerEn": "Gate 15",
+        "acceptedAnswers": [
+          "Gate fifteen",
+          "The new gate is 15."
+        ],
+        "hints": [
+          "Gate …",
+          "Gate ___"
+        ]
+      },
+      {
+        "id": "a2_c24n07_04",
+        "audioText": "Sorry, flight BK 205 is delayed again. It's not 9:40 now. It will leave at 11:15.",
+        "questionTh": "ตอนนี้เที่ยวบินจะออกกี่โมง",
+        "answerEn": "11:15",
+        "acceptedAnswers": [
+          "Eleven fifteen",
+          "At 11:15",
+          "At eleven fifteen"
+        ],
+        "hints": [
+          "11:15 …"
+        ]
+      },
+      {
+        "id": "a2_c24n07_05",
+        "audioText": "Hello. Your flight is delayed. Please go to Gate 12 at 9:40. I'll give you a voucher there.",
+        "questionTh": "เจ้าหน้าที่บอกให้ไปเกตไหน กี่โมง",
+        "answerEn": "Gate 12 at 9:40",
+        "acceptedAnswers": [
+          "Gate 12, 9:40",
+          "Gate twelve at nine forty"
+        ],
+        "hints": [
+          "Gate …",
+          "Gate ___ at ___:"
+        ]
+      }
+    ]
+  },
+  "a2_c30n09": {
+    "id": "a2_c30n09",
+    "titleEn": "Voicemail",
+    "titleTh": "ฝากข้อความ",
+    "items": [
+      {
+        "id": "a2_c30n09_01",
+        "audioText": "Hi, this is Mali from the restaurant. Sorry, Friday is full. Can we change it to Saturday at 6:30?",
+        "questionTh": "ร้านขอเลื่อนเป็นกี่โมง",
+        "answerEn": "6:30",
+        "acceptedAnswers": [
+          "six thirty",
+          "Saturday at 6:30"
+        ],
+        "hints": [
+          "6:30 …"
+        ]
+      },
+      {
+        "id": "a2_c30n09_02",
+        "audioText": "Hello, it's Mali. Please call me back. My number is 081 552 7340.",
+        "questionTh": "เบอร์ที่ต้องโทรกลับคือเบอร์อะไร",
+        "answerEn": "081 552 7340",
+        "acceptedAnswers": [
+          "zero eight one, five five two, seven three four zero",
+          "zero eight one, double five two, seven three four zero"
+        ],
+        "hints": [
+          "081 …",
+          "081 ___ ___"
+        ]
+      },
+      {
+        "id": "a2_c30n09_03",
+        "audioText": "Hi Nina, it's Mali. We can't do 7:00 on Saturday. Is 6:00 OK?",
+        "questionTh": "ร้านเสนอเวลาใหม่กี่โมง",
+        "answerEn": "6:00",
+        "acceptedAnswers": [
+          "six",
+          "6 p.m."
+        ],
+        "hints": [
+          "6:00 …"
+        ]
+      },
+      {
+        "id": "a2_c30n09_04",
+        "audioText": "Hello, this is Mali. The table for six is OK on Sunday, not Saturday. The time is 7:00.",
+        "questionTh": "งานย้ายไปเป็นกี่โมง",
+        "answerEn": "7:00",
+        "acceptedAnswers": [
+          "seven",
+          "7 p.m.",
+          "Sunday at 7:00"
+        ],
+        "hints": [
+          "7:00 …"
+        ]
+      },
+      {
+        "id": "a2_c30n09_05",
+        "audioText": "Hi, it's Mali again. Sorry, I can't talk now. Please call me on 02 455 9810.",
+        "questionTh": "เบอร์ของ Mali คืออะไร",
+        "answerEn": "02 455 9810",
+        "acceptedAnswers": [
+          "zero two, four five five, nine eight one zero",
+          "zero two, four double five, nine eight one zero"
+        ],
+        "hints": [
+          "02 …",
+          "02 ___ ___"
+        ]
+      },
+      {
+        "id": "a2_c30n09_06",
+        "audioText": "Hi, it's Mali from the restaurant. Please confirm the booking. Call me back before 5 p.m. today.",
+        "questionTh": "ต้องโทรกลับก่อนกี่โมง",
+        "answerEn": "5 p.m.",
+        "acceptedAnswers": [
+          "five",
+          "before 5 p.m.",
+          "before five"
+        ],
+        "hints": [
+          "5 …",
+          "5 ___.."
+        ]
+      }
+    ]
+  },
+  "a2_c32n02": {
+    "id": "a2_c32n02",
+    "titleEn": "Torto's Briefing",
+    "titleTh": "Torto สรุปแผน",
+    "items": [
+      {
+        "id": "a2_c32n02_01",
+        "audioText": "Teacher Torto: OK, team. We're going to take the train to Chiang Mai. It leaves at 7:30 in the morning.",
+        "questionTh": "ทีมจะเดินทางด้วยอะไร",
+        "answerEn": "train",
+        "acceptedAnswers": [
+          "the train",
+          "by train"
+        ],
+        "hints": [
+          "train …"
+        ]
+      },
+      {
+        "id": "a2_c32n02_02",
+        "audioText": "Teacher Torto: The train leaves at 7:30, so please be at the station at 7:00.",
+        "questionTh": "ต้องไปถึงสถานีกี่โมง",
+        "answerEn": "7:00",
+        "acceptedAnswers": [
+          "seven",
+          "at 7:00"
+        ],
+        "hints": [
+          "7:00 …"
+        ]
+      },
+      {
+        "id": "a2_c32n02_03",
+        "audioText": "Teacher Torto: We're going to stay at a hotel next to the beach for three nights.",
+        "questionTh": "จะพักโรงแรมกี่คืน",
+        "answerEn": "three nights",
+        "acceptedAnswers": [
+          "three",
+          "3"
+        ],
+        "hints": [
+          "three …",
+          "three ___"
+        ]
+      },
+      {
+        "id": "a2_c32n02_04",
+        "audioText": "Teacher Torto: We're going to come back on Friday. The train home leaves at 4:15 in the afternoon.",
+        "questionTh": "รถไฟขากลับออกกี่โมง",
+        "answerEn": "4:15",
+        "acceptedAnswers": [
+          "four fifteen",
+          "at 4:15"
+        ],
+        "hints": [
+          "4:15 …"
+        ]
+      },
+      {
+        "id": "a2_c32n02_05",
+        "audioText": "Teacher Torto: We have to check in at the hotel at 2 p.m. Then we're going to visit a museum.",
+        "questionTh": "ต้องเช็กอินโรงแรมกี่โมง",
+        "answerEn": "2 p.m.",
+        "acceptedAnswers": [
+          "two",
+          "2",
+          "at 2 p.m."
+        ],
+        "hints": [
+          "2 …",
+          "2 ___.."
+        ]
+      },
+      {
+        "id": "a2_c32n02_06",
+        "audioText": "Teacher Torto: We're not going by plane. Flights are too expensive, so we'll take the train. It's cheaper.",
+        "questionTh": "ทำไมทีมไม่ไปเครื่องบิน",
+        "answerEn": "Flights are too expensive.",
+        "acceptedAnswers": [
+          "too expensive",
+          "It's too expensive.",
+          "because flights are too expensive"
+        ],
+        "hints": [
+          "Flights …",
+          "Flights are ___ ___."
+        ]
+      }
+    ]
+  }
+}

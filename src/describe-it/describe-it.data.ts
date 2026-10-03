@@ -1,5 +1,6 @@
 import { publicHeroUrl } from '../articles/article-hero';
 import poolsJson from './describe-it-pools.json';
+import a2PoolsJson from './adventure-a2-pools.json';
 
 export type DescribeItCard = {
   id: string;
@@ -11,6 +12,8 @@ export type DescribeItCard = {
   hintEn?: string;
   /** Optional English question to TTS before the learner speaks (Look & Answer). */
   questionEn?: string;
+  /** Two-level hints (highlight the info, then a sentence starter). */
+  hints?: string[];
 };
 
 export type DescribeItDealtCard = DescribeItCard & {
@@ -29,7 +32,10 @@ export type DescribeItPool = {
 
 type Catalog = Record<string, DescribeItPool>;
 
-export const DESCRIBE_IT_POOLS = poolsJson as Catalog;
+export const DESCRIBE_IT_POOLS: Catalog = {
+  ...(poolsJson as Catalog),
+  ...(a2PoolsJson as Catalog),
+};
 /**
  * Kill switch until the App Store build that ships Describe It is live.
  * When false, Foundation path treats all describe_it nodes as Coming Soon and
@@ -76,7 +82,7 @@ export function listDescribeItPools(): Array<{
 }> {
   if (!DESCRIBE_IT_ENABLED) return [];
   return Object.values(DESCRIBE_IT_POOLS)
-    .filter((pool) => isValidDescribeItPack(pool))
+    .filter((pool) => isValidDescribeItPack(pool) && !pool.id.startsWith('a2_'))
     .map((pool) => ({
       id: pool.id,
       titleEn: pool.titleEn,

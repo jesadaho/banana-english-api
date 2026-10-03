@@ -1,9 +1,9 @@
 import { TAP_TO_CONTINUE_SENTINEL, TAP_TO_CONTINUE_TURN_TEXT } from '../common/api.types';
-import { FOUNDATION_V7_LESSON_IDS } from './foundation-v7-lessons.data';
+import { PATH_LESSON_IDS } from './foundation-v7-lessons.data';
 import { canonicalFoundationV7LessonId } from './foundation-v7-lesson-id-aliases';
 
 export function isFoundationV7LessonId(lessonId: string): boolean {
-  return FOUNDATION_V7_LESSON_IDS.includes(canonicalFoundationV7LessonId(lessonId));
+  return PATH_LESSON_IDS.includes(canonicalFoundationV7LessonId(lessonId));
 }
 
 export function userTurnWasContinue(text: string | null | undefined): boolean {

@@ -1,0 +1,3884 @@
+{
+  "a2_c01n06": [
+    {
+      "id": "a2_c01n06_q1",
+      "promptTh": "บอกว่าคุณสนุกกับการอ่านหนังสือ",
+      "answerEn": "I enjoy reading.",
+      "acceptedAnswers": [
+        "I like reading.",
+        "I love reading."
+      ],
+      "hints": [
+        "I …",
+        "I ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c01n06_q2",
+      "promptTh": "ถาม Capy ว่า \"ชอบว่ายน้ำไหม\"",
+      "answerEn": "Do you like swimming?",
+      "acceptedAnswers": [
+        "Do you enjoy swimming?",
+        "Do you love swimming?"
+      ],
+      "hints": [
+        "Do …",
+        "Do you ___ ___?"
+      ]
+    },
+    {
+      "id": "a2_c01n06_q3",
+      "promptTh": "บอกว่าคุณไม่ชอบเต้น",
+      "answerEn": "I don't like dancing.",
+      "acceptedAnswers": [
+        "I do not like dancing."
+      ],
+      "hints": [
+        "I …",
+        "I don't ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c01n06_q4",
+      "promptTh": "ถาม May ว่า \"ชอบเล่นเกมไหม\"",
+      "answerEn": "Do you like gaming?",
+      "acceptedAnswers": [
+        "Do you enjoy gaming?"
+      ],
+      "hints": [
+        "Do …",
+        "Do you ___ ___?"
+      ]
+    },
+    {
+      "id": "a2_c01n06_q5",
+      "promptTh": "บอกว่าคุณรักการทำอาหารมาก",
+      "answerEn": "I love cooking.",
+      "acceptedAnswers": [
+        "I really love cooking."
+      ],
+      "hints": [
+        "I …",
+        "I ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c01n06_q6",
+      "promptTh": "บอกครูบีว่า Capy สนุกกับการวาดรูป",
+      "answerEn": "Capy enjoys drawing.",
+      "acceptedAnswers": [
+        "Capy likes drawing.",
+        "Capy loves drawing."
+      ],
+      "hints": [
+        "Capy …",
+        "Capy ___ ___."
+      ]
+    }
+  ],
+  "a2_c02n05": [
+    {
+      "id": "a2_c02n05_q1",
+      "promptTh": "ถาม May ว่า \"ทำอาหารบ่อยแค่ไหน\"",
+      "answerEn": "How often do you cook?",
+      "acceptedAnswers": [],
+      "hints": [
+        "How …",
+        "How ___ do you ___?"
+      ]
+    },
+    {
+      "id": "a2_c02n05_q2",
+      "promptTh": "ถาม Max ว่า \"ไปเดินป่าบ่อยแค่ไหน\"",
+      "answerEn": "How often do you go hiking?",
+      "acceptedAnswers": [
+        "How often do you hike?"
+      ],
+      "hints": [
+        "How …",
+        "How ___ do you ___ ___?"
+      ]
+    },
+    {
+      "id": "a2_c02n05_q3",
+      "promptTh": "ถาม Capy ว่า \"วาดรูปบ่อยแค่ไหน\"",
+      "answerEn": "How often do you draw?",
+      "acceptedAnswers": [],
+      "hints": [
+        "How …",
+        "How ___ do you ___?"
+      ]
+    },
+    {
+      "id": "a2_c02n05_q4",
+      "promptTh": "ตอบว่าบางครั้งคุณเดินไปโรงเรียน",
+      "answerEn": "I sometimes walk to school.",
+      "acceptedAnswers": [
+        "Sometimes I walk to school."
+      ],
+      "hints": [
+        "I …",
+        "I ___ ___ to ___."
+      ]
+    },
+    {
+      "id": "a2_c02n05_q5",
+      "promptTh": "ตอบว่าคุณไม่เต้นเลย ไม่ว่าวันไหน (ความถี่ 0%)",
+      "answerEn": "I never dance.",
+      "acceptedAnswers": [],
+      "hints": [
+        "I …",
+        "I ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c02n05_q6",
+      "promptTh": "ตอบว่าปกติคุณทำการบ้านหลังมื้อเย็น",
+      "answerEn": "I usually do my homework after dinner.",
+      "acceptedAnswers": [
+        "I usually do homework after dinner.",
+        "After dinner I usually do my homework."
+      ],
+      "hints": [
+        "I …",
+        "I ___ do my ___ ___ ___."
+      ]
+    }
+  ],
+  "a2_c03n08": [
+    {
+      "id": "a2_c03n08_q1",
+      "promptTh": "บอก May ว่าตู้เย็นอยู่ข้างประตู",
+      "answerEn": "The fridge is next to the door.",
+      "acceptedAnswers": [
+        "It's next to the door."
+      ],
+      "hints": [
+        "The …",
+        "The ___ is ___ to the ___."
+      ]
+    },
+    {
+      "id": "a2_c03n08_q2",
+      "promptTh": "บอกว่าในครัวไม่มีถ้วยเลยสักใบ",
+      "answerEn": "There aren't any cups in the kitchen.",
+      "acceptedAnswers": [
+        "There aren't any cups.",
+        "There are no cups in the kitchen."
+      ],
+      "hints": [
+        "There …",
+        "There ___ ___ ___ in the ___."
+      ]
+    },
+    {
+      "id": "a2_c03n08_q3",
+      "promptTh": "บอกว่าชั้นวางอยู่ข้างหลังโซฟา",
+      "answerEn": "The shelf is behind the sofa.",
+      "acceptedAnswers": [],
+      "hints": [
+        "The …",
+        "The ___ is ___ the ___."
+      ]
+    },
+    {
+      "id": "a2_c03n08_q4",
+      "promptTh": "บอกว่ากุญแจอยู่บนชั้นวาง",
+      "answerEn": "The key is on the shelf.",
+      "acceptedAnswers": [
+        "The key's on the shelf."
+      ],
+      "hints": [
+        "The …",
+        "The ___ is on the ___."
+      ]
+    },
+    {
+      "id": "a2_c03n08_q5",
+      "promptTh": "บอกว่าห้องนอนอยู่ตรงข้ามห้องครัว",
+      "answerEn": "The bedroom is opposite the kitchen.",
+      "acceptedAnswers": [],
+      "hints": [
+        "The …",
+        "The ___ is ___ the ___."
+      ]
+    },
+    {
+      "id": "a2_c03n08_q6",
+      "promptTh": "บอกว่าในห้องนอนไม่มีหนังสือเลยสักเล่ม",
+      "answerEn": "There aren't any books in the bedroom.",
+      "acceptedAnswers": [
+        "There are no books in the bedroom."
+      ],
+      "hints": [
+        "There …",
+        "There ___ ___ ___ in the ___."
+      ]
+    }
+  ],
+  "a2_c03n10": [
+    {
+      "id": "a2_c03n10_q1",
+      "promptTh": "เจอกระเป๋าบนโซฟาบ้าน May ถามว่า \"นี่ของใคร\"",
+      "answerEn": "Whose is this?",
+      "acceptedAnswers": [],
+      "hints": [
+        "Whose …"
+      ]
+    },
+    {
+      "id": "a2_c03n10_q2",
+      "promptTh": "May ชูหนังสือเล่มหนึ่ง ถามว่าของใคร แล้วตอบว่า \"ของฉันเอง\" (พูดทั้งคำถามและคำตอบ)",
+      "answerEn": "Whose is this? — It's mine.",
+      "acceptedAnswers": [
+        "Whose is this? It's mine.",
+        "Whose is this? It is mine."
+      ],
+      "hints": [
+        "Whose …",
+        "Whose is this? — It's ___."
+      ]
+    },
+    {
+      "id": "a2_c03n10_q3",
+      "promptTh": "May ถามว่าแก้วใบนี้ของใคร แก้วใบนั้นเป็นของ May เอง ตอบ May ว่า \"ของเธอนั่นแหละ\"",
+      "answerEn": "It's yours.",
+      "acceptedAnswers": [
+        "It is yours."
+      ],
+      "hints": [
+        "It's …",
+        "It's ___."
+      ]
+    },
+    {
+      "id": "a2_c03n10_q4",
+      "promptTh": "Max ถามว่ากุญแจนี้ของใคร ตอบว่าเป็นของ May",
+      "answerEn": "It's May's.",
+      "acceptedAnswers": [
+        "It is May's."
+      ],
+      "hints": [
+        "It's …",
+        "It's ___."
+      ]
+    },
+    {
+      "id": "a2_c03n10_q5",
+      "promptTh": "Capy ชูหมวกใบหนึ่งแล้วถามว่าของใคร ตอบว่า \"ของ Max ไม่ใช่ของฉัน\"",
+      "answerEn": "It's Max's. It isn't mine.",
+      "acceptedAnswers": [
+        "It's Max's. It's not mine.",
+        "It is Max's. It is not mine.",
+        "It's Max's, not mine."
+      ],
+      "hints": [
+        "It's …",
+        "It's ___. It ___ ___."
+      ]
+    }
+  ],
+  "a2_c04n07": [
+    {
+      "id": "a2_c04n07_q1",
+      "promptTh": "บอกว่าเขา (ผู้ชาย) ตัวสูงและมีเครา",
+      "answerEn": "He's tall and he has a beard.",
+      "acceptedAnswers": [
+        "He is tall and he has a beard.",
+        "He's tall and has a beard."
+      ],
+      "hints": [
+        "He's …",
+        "He's ___ and he ___ a ___."
+      ]
+    },
+    {
+      "id": "a2_c04n07_q2",
+      "promptTh": "บอกว่า Mali ผมสั้นและหยิก",
+      "answerEn": "Mali has short curly hair.",
+      "acceptedAnswers": [
+        "Mali's got short curly hair.",
+        "Mali has short, curly hair."
+      ],
+      "hints": [
+        "Mali …",
+        "Mali ___ ___ ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c04n07_q3",
+      "promptTh": "บอกว่า Teacher John ตัวสูง และเขาดูมีความสุข",
+      "answerEn": "Teacher John is tall. He looks happy.",
+      "acceptedAnswers": [
+        "Teacher John is tall and he looks happy.",
+        "Teacher John's tall. He looks happy.",
+        "John is tall. He looks happy."
+      ],
+      "hints": [
+        "Teacher …",
+        "Teacher ___ is ___. He ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c04n07_q4",
+      "promptTh": "บอกว่า Capy ตัวเตี้ยและกำลังใส่เสื้อเชิ้ตสีเขียว",
+      "answerEn": "Capy is short and is wearing a green shirt.",
+      "acceptedAnswers": [
+        "Capy is short and Capy is wearing a green shirt.",
+        "Capy's short and is wearing a green shirt.",
+        "Capy is short and wearing a green shirt."
+      ],
+      "hints": [
+        "Capy …",
+        "Capy is ___ and is ___ a ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c04n07_q5",
+      "promptTh": "บอกว่าเขา (ผู้ชาย) กำลังใส่เสื้อเชิ้ตสีแดง",
+      "answerEn": "He's wearing a red shirt.",
+      "acceptedAnswers": [
+        "He is wearing a red shirt."
+      ],
+      "hints": [
+        "He's …",
+        "He's ___ a ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c04n07_q6",
+      "promptTh": "บอกว่าครูบีใส่แว่นและเสื้อเชิ้ตสีฟ้า",
+      "answerEn": "Teacher Bee is wearing glasses and a blue shirt.",
+      "acceptedAnswers": [
+        "Teacher Bee wears glasses and a blue shirt.",
+        "Bee is wearing glasses and a blue shirt.",
+        "Teacher Bee has glasses and a blue shirt."
+      ],
+      "hints": [
+        "Teacher …",
+        "Teacher ___ is ___ ___ and a ___ ___."
+      ]
+    }
+  ],
+  "a2_c05n04": [
+    {
+      "id": "a2_c05n04_q1",
+      "promptTh": "ถามว่า Capy กำลังทำอะไรอยู่",
+      "answerEn": "What is Capy doing?",
+      "acceptedAnswers": [
+        "What's Capy doing?"
+      ],
+      "hints": [
+        "What …",
+        "What is ___ ___?"
+      ]
+    },
+    {
+      "id": "a2_c05n04_q2",
+      "promptTh": "ถามว่าเธอ (May) กำลังทำอะไร แล้วตอบว่าเธอกำลังว่ายน้ำ",
+      "answerEn": "What is she doing? — She's swimming.",
+      "acceptedAnswers": [
+        "What is she doing? She's swimming.",
+        "What's she doing? She's swimming.",
+        "What is she doing? She is swimming."
+      ],
+      "hints": [
+        "What …",
+        "What is she ___? — ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c05n04_q3",
+      "promptTh": "ถามว่าเขา (Max) กำลังทำอะไร แล้วตอบว่าเขากำลังวิ่ง",
+      "answerEn": "What is he doing? — He's running.",
+      "acceptedAnswers": [
+        "What is he doing? He's running.",
+        "What's he doing? He's running.",
+        "What is he doing? He is running."
+      ],
+      "hints": [
+        "What …",
+        "What is he ___? — ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c05n04_q4",
+      "promptTh": "บอกว่า Capy กำลังนอนหลับอยู่บนม้านั่ง",
+      "answerEn": "Capy is sleeping on the bench.",
+      "acceptedAnswers": [
+        "Capy's sleeping on the bench."
+      ],
+      "hints": [
+        "Capy …",
+        "Capy is ___ on the ___."
+      ]
+    },
+    {
+      "id": "a2_c05n04_q5",
+      "promptTh": "บอกว่าปกติ Mali ว่ายน้ำ แต่วันนี้เธอกำลังอ่านหนังสือ",
+      "answerEn": "Mali usually swims, but today she's reading.",
+      "acceptedAnswers": [
+        "Mali usually swims, but today she is reading."
+      ],
+      "hints": [
+        "Mali …",
+        "Mali ___ ___, but ___ ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c05n04_q6",
+      "promptTh": "ถามว่าพวกเขากำลังทำอะไร",
+      "answerEn": "What are they doing?",
+      "acceptedAnswers": [],
+      "hints": [
+        "What …",
+        "What are they ___?"
+      ]
+    }
+  ],
+  "a2_c05n08": [
+    {
+      "id": "a2_c05n08_q1",
+      "promptTh": "บอกว่าคุณเล่นแบดมินตันบ่อย แต่วันนี้คุณกำลังอ่านหนังสือ",
+      "answerEn": "I often play badminton, but today I'm reading.",
+      "acceptedAnswers": [
+        "I often play badminton, but today I am reading."
+      ],
+      "hints": [
+        "I …",
+        "I ___ ___ ___, but ___ I'm ___."
+      ]
+    },
+    {
+      "id": "a2_c05n08_q2",
+      "promptTh": "บอกว่าปกติ Max วิ่ง แต่ตอนนี้เขากำลังกินข้าว",
+      "answerEn": "Max usually runs, but at the moment he's eating.",
+      "acceptedAnswers": [
+        "Max usually runs, but right now he's eating.",
+        "Max usually runs, but at the moment he is eating."
+      ],
+      "hints": [
+        "Max …",
+        "Max ___ ___, but at the ___ ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c05n08_q3",
+      "promptTh": "บอกว่า May ไม่เคยวาดรูป แต่วันนี้เธอกำลังวาดรูป",
+      "answerEn": "May never draws, but today she's drawing.",
+      "acceptedAnswers": [
+        "May never draws, but today she is drawing."
+      ],
+      "hints": [
+        "May …",
+        "May ___ ___, but ___ ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c05n08_q4",
+      "promptTh": "บอกว่าคุณออกกำลังกายทุกวัน แต่ตอนนี้คุณกำลังพักผ่อน",
+      "answerEn": "I exercise every day, but right now I'm relaxing.",
+      "acceptedAnswers": [
+        "I exercise every day, but at the moment I'm relaxing.",
+        "I exercise every day, but right now I am relaxing."
+      ],
+      "hints": [
+        "I …",
+        "I ___ ___ ___, but ___ ___ I'm ___."
+      ]
+    },
+    {
+      "id": "a2_c05n08_q5",
+      "promptTh": "บอกว่าบางครั้ง Capy ทำอาหาร แต่วันนี้ Capy กำลังเต้น",
+      "answerEn": "Capy sometimes cooks, but today Capy is dancing.",
+      "acceptedAnswers": [
+        "Sometimes Capy cooks, but today Capy is dancing.",
+        "Capy sometimes cooks, but today Capy's dancing."
+      ],
+      "hints": [
+        "Capy …",
+        "Capy ___ ___, but ___ ___ is ___."
+      ]
+    }
+  ],
+  "a2_c06n08": [
+    {
+      "id": "a2_c06n08_q1",
+      "promptTh": "ถาม Max ว่า \"ทำไมอยากเข้าชมรมดนตรี\"",
+      "answerEn": "Why do you want to join the music club?",
+      "acceptedAnswers": [],
+      "hints": [
+        "Why …",
+        "Why do you ___ to ___ the ___ ___?"
+      ]
+    },
+    {
+      "id": "a2_c06n08_q2",
+      "promptTh": "ตอบว่า \"เพราะมันสนุก\"",
+      "answerEn": "Because it's fun.",
+      "acceptedAnswers": [
+        "Because it is fun."
+      ],
+      "hints": [
+        "Because …",
+        "Because it's ___."
+      ]
+    },
+    {
+      "id": "a2_c06n08_q3",
+      "promptTh": "ถาม May ว่า \"ทำไมชอบแบดมินตัน\"",
+      "answerEn": "Why do you like badminton?",
+      "acceptedAnswers": [
+        "Why do you like playing badminton?"
+      ],
+      "hints": [
+        "Why …",
+        "Why do you ___ ___?"
+      ]
+    },
+    {
+      "id": "a2_c06n08_q4",
+      "promptTh": "ตอบว่า \"เพราะมันดีต่อสุขภาพ\"",
+      "answerEn": "Because it's healthy.",
+      "acceptedAnswers": [
+        "Because it is healthy.",
+        "Because badminton is healthy."
+      ],
+      "hints": [
+        "Because …",
+        "Because it's ___."
+      ]
+    },
+    {
+      "id": "a2_c06n08_q5",
+      "promptTh": "ถาม Capy ว่า \"ทำไมอยากเข้าชมรมวาดภาพ (painting club)\"",
+      "answerEn": "Why do you want to join the painting club?",
+      "acceptedAnswers": [],
+      "hints": [
+        "Why …",
+        "Why do you ___ to ___ the ___ ___?"
+      ]
+    },
+    {
+      "id": "a2_c06n08_q6",
+      "promptTh": "ตอบว่า \"เพราะฉันวาดรูปเก่ง\"",
+      "answerEn": "Because I'm good at drawing.",
+      "acceptedAnswers": [
+        "Because I am good at drawing.",
+        "Because I'm good at painting."
+      ],
+      "hints": [
+        "Because …",
+        "Because I'm ___ at ___."
+      ]
+    }
+  ],
+  "a2_c07n02": [
+    {
+      "id": "a2_c07n02_q1",
+      "promptTh": "ถาม May ว่า \"สุดสัปดาห์นี้มีแผนจะทำอะไร\"",
+      "answerEn": "What are you going to do this weekend?",
+      "acceptedAnswers": [],
+      "hints": [
+        "What …",
+        "What are you ___ to do this ___?"
+      ]
+    },
+    {
+      "id": "a2_c07n02_q2",
+      "promptTh": "ถาม Max ว่า \"พรุ่งนี้มีแผนจะทำอะไร\"",
+      "answerEn": "What are you going to do tomorrow?",
+      "acceptedAnswers": [],
+      "hints": [
+        "What …",
+        "What are you ___ to do ___?"
+      ]
+    },
+    {
+      "id": "a2_c07n02_q3",
+      "promptTh": "ถาม Capy ว่า \"หลังเลิกเรียนมีแผนจะทำอะไร\"",
+      "answerEn": "What are you going to do after school?",
+      "acceptedAnswers": [],
+      "hints": [
+        "What …",
+        "What are you ___ to do ___ ___?"
+      ]
+    },
+    {
+      "id": "a2_c07n02_q4",
+      "promptTh": "ถาม Max ว่า Mali มีแผนจะทำอะไรวันเสาร์",
+      "answerEn": "What is Mali going to do on Saturday?",
+      "acceptedAnswers": [
+        "What's Mali going to do on Saturday?"
+      ],
+      "hints": [
+        "What …",
+        "What is ___ ___ to do on ___?"
+      ]
+    },
+    {
+      "id": "a2_c07n02_q5",
+      "promptTh": "ตอบว่าคุณตั้งใจจะไปเยี่ยมป้า",
+      "answerEn": "I'm going to visit my aunt.",
+      "acceptedAnswers": [
+        "I am going to visit my aunt."
+      ],
+      "hints": [
+        "I'm …",
+        "I'm ___ to ___ my ___."
+      ]
+    },
+    {
+      "id": "a2_c07n02_q6",
+      "promptTh": "ตอบว่าพรุ่งนี้คุณจะซ้อมแบดมินตัน (วางแผนไว้แล้ว)",
+      "answerEn": "I'm going to practice badminton tomorrow.",
+      "acceptedAnswers": [
+        "Tomorrow I'm going to practice badminton.",
+        "I am going to practice badminton tomorrow."
+      ],
+      "hints": [
+        "I'm …",
+        "I'm ___ to ___ ___ ___."
+      ]
+    }
+  ],
+  "a2_c07n09": [
+    {
+      "id": "a2_c07n09_q1",
+      "promptTh": "May ชวนไปดูหนัง ตอบตกลงสั้น ๆ",
+      "answerEn": "Sure!",
+      "acceptedAnswers": [
+        "Sure."
+      ],
+      "hints": [
+        "Sure! …"
+      ]
+    },
+    {
+      "id": "a2_c07n09_q2",
+      "promptTh": "ปฏิเสธ Max ว่าขอโทษ ไม่ว่าง ต้องอ่านหนังสือสอบ",
+      "answerEn": "Sorry, I'm busy. I have to study.",
+      "acceptedAnswers": [
+        "Sorry, I am busy. I have to study."
+      ],
+      "hints": [
+        "Sorry, …",
+        "Sorry, I'm ___. I ___ to ___."
+      ]
+    },
+    {
+      "id": "a2_c07n09_q3",
+      "promptTh": "ปฏิเสธ Capy ว่าขอโทษ ฉันต้องทำการบ้าน",
+      "answerEn": "Sorry, I have to do my homework.",
+      "acceptedAnswers": [
+        "Sorry, I have to do homework."
+      ],
+      "hints": [
+        "Sorry, …",
+        "Sorry, I ___ to do my ___."
+      ]
+    },
+    {
+      "id": "a2_c07n09_q4",
+      "promptTh": "ปฏิเสธ Mali ว่าขอโทษ เย็นนี้ฉันมีนัดกับ Max",
+      "answerEn": "Sorry, I'm meeting Max this evening.",
+      "acceptedAnswers": [
+        "Sorry, I am meeting Max this evening.",
+        "Sorry, I'm meeting Max."
+      ],
+      "hints": [
+        "Sorry, …",
+        "Sorry, I'm ___ ___ this ___."
+      ]
+    },
+    {
+      "id": "a2_c07n09_q5",
+      "promptTh": "ปฏิเสธ May ว่าขอโทษ ไม่ว่าง ไว้คราวหน้านะ",
+      "answerEn": "Sorry, I'm busy. Maybe next time!",
+      "acceptedAnswers": [
+        "Sorry, I am busy. Maybe next time!",
+        "Sorry, I'm busy. Maybe next time."
+      ],
+      "hints": [
+        "Sorry, …",
+        "Sorry, I'm ___. ___ ___ ___!"
+      ]
+    },
+    {
+      "id": "a2_c07n09_q6",
+      "promptTh": "Max ชวนเล่นแบดวันเสาร์ ตอบตกลงแล้วบอกว่าเจอกันวันนั้นนะ",
+      "answerEn": "Sure! See you then.",
+      "acceptedAnswers": [
+        "Sure. See you then."
+      ],
+      "hints": [
+        "Sure! …",
+        "Sure! ___ you ___."
+      ]
+    }
+  ],
+  "a2_c08n01": [
+    {
+      "id": "a2_c08n01_q1",
+      "promptTh": "บอกว่าคุณสนุกกับการเต้น",
+      "answerEn": "I enjoy dancing.",
+      "acceptedAnswers": [
+        "I like dancing.",
+        "I love dancing."
+      ],
+      "hints": [
+        "I …",
+        "I ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c08n01_q2",
+      "promptTh": "บอกว่า Max กินอาหารเช้าตอนเจ็ดโมงเสมอ",
+      "answerEn": "Max always has breakfast at seven.",
+      "acceptedAnswers": [
+        "Max always has breakfast at 7."
+      ],
+      "hints": [
+        "Max …",
+        "Max ___ ___ ___ at ___."
+      ]
+    },
+    {
+      "id": "a2_c08n01_q3",
+      "promptTh": "บอกว่าในตู้เย็นไม่มีแอปเปิ้ลเลยสักลูก",
+      "answerEn": "There aren't any apples in the fridge.",
+      "acceptedAnswers": [
+        "There are no apples in the fridge."
+      ],
+      "hints": [
+        "There …",
+        "There ___ ___ ___ in the ___."
+      ]
+    },
+    {
+      "id": "a2_c08n01_q4",
+      "promptTh": "ถาม May ว่าทำไมเธอชอบวาดรูป แล้วตอบแทนเธอว่าเพราะมันสนุก",
+      "answerEn": "Why do you like drawing? — Because it's fun.",
+      "acceptedAnswers": [
+        "Why do you like drawing? Because it's fun.",
+        "Why do you like drawing? Because it is fun."
+      ],
+      "hints": [
+        "Why …",
+        "Why do you ___ ___? — ___ it's ___."
+      ]
+    },
+    {
+      "id": "a2_c08n01_q5",
+      "promptTh": "บอกว่าสุดสัปดาห์นี้คุณตั้งใจจะเล่นแบดมินตัน (วางแผนไว้แล้ว)",
+      "answerEn": "I'm going to play badminton this weekend.",
+      "acceptedAnswers": [
+        "This weekend I'm going to play badminton.",
+        "I am going to play badminton this weekend."
+      ],
+      "hints": [
+        "I'm …",
+        "I'm ___ to ___ ___ this ___."
+      ]
+    },
+    {
+      "id": "a2_c08n01_q6",
+      "promptTh": "ปฏิเสธ Capy ว่าขอโทษ ไม่ว่าง ไว้คราวหน้านะ",
+      "answerEn": "Sorry, I'm busy. Maybe next time!",
+      "acceptedAnswers": [
+        "Sorry, I am busy. Maybe next time!",
+        "Sorry, I'm busy. Maybe next time."
+      ],
+      "hints": [
+        "Sorry, …",
+        "Sorry, I'm ___. ___ ___ ___!"
+      ]
+    },
+    {
+      "id": "a2_c08n01_q7",
+      "promptTh": "บอกว่า Capy ดูเหนื่อย",
+      "answerEn": "Capy looks tired.",
+      "acceptedAnswers": [],
+      "hints": [
+        "Capy …",
+        "Capy ___ ___."
+      ]
+    }
+  ],
+  "a2_c08n08": [
+    {
+      "id": "a2_c08n08_q1",
+      "promptTh": "โทรหา May ถามว่าเธออยู่ไหน แล้วบอกว่าคุณอยู่ข้างแผงไอศกรีม",
+      "answerEn": "Where are you? I'm next to the ice cream stall.",
+      "acceptedAnswers": [
+        "Where are you? I am next to the ice cream stall.",
+        "Where are you? I'm standing next to the ice cream stall."
+      ],
+      "hints": [
+        "Where …",
+        "Where are you? I'm ___ to the ___ ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c08n08_q2",
+      "promptTh": "บอก Max ว่าคุณกำลังยืนอยู่ข้างชิงช้าสวรรค์",
+      "answerEn": "I'm standing next to the big wheel.",
+      "acceptedAnswers": [
+        "I am standing next to the big wheel."
+      ],
+      "hints": [
+        "I'm …",
+        "I'm ___ ___ to the ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c08n08_q3",
+      "promptTh": "บอก May ว่าคุณกำลังใส่เสื้อเชิ้ตสีเขียว",
+      "answerEn": "I'm wearing a green shirt.",
+      "acceptedAnswers": [
+        "I am wearing a green shirt."
+      ],
+      "hints": [
+        "I'm …",
+        "I'm ___ a ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c08n08_q4",
+      "promptTh": "ชวนทุกคนไปเจอกันที่ประตูตลาด",
+      "answerEn": "Let's meet at the gate.",
+      "acceptedAnswers": [
+        "Let's meet at the market gate."
+      ],
+      "hints": [
+        "Let's …",
+        "Let's ___ at the ___."
+      ]
+    },
+    {
+      "id": "a2_c08n08_q5",
+      "promptTh": "บอก Max ว่าคุณอยู่ตรงข้ามแผงที่ Mali ช่วยขายของ",
+      "answerEn": "I'm opposite Mali's stall.",
+      "acceptedAnswers": [
+        "I am opposite Mali's stall.",
+        "I'm standing opposite Mali's stall."
+      ],
+      "hints": [
+        "I'm …",
+        "I'm ___ ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c08n08_q6",
+      "promptTh": "บอกครูบีว่าคุณกำลังยืนอยู่หน้าแผงของที่ระลึก",
+      "answerEn": "I'm standing in front of the souvenir stall.",
+      "acceptedAnswers": [
+        "I am standing in front of the souvenir stall."
+      ],
+      "hints": [
+        "I'm …",
+        "I'm ___ in ___ of the ___ ___."
+      ]
+    }
+  ],
+  "a2_c09n06": [
+    {
+      "id": "a2_c09n06_q1",
+      "promptTh": "สั่งกับ Mali ที่คาเฟ่: ลาเต้ร้อนแก้วใหญ่ 1 แก้ว กลับบ้าน",
+      "answerEn": "A large hot latte to take away, please.",
+      "acceptedAnswers": [
+        "Can I have a large hot latte to take away, please?",
+        "I'd like a large hot latte to take away, please.",
+        "A large hot latte to take away."
+      ],
+      "hints": [
+        "A …",
+        "A ___ ___ ___ to ___ ___, ___."
+      ]
+    },
+    {
+      "id": "a2_c09n06_q2",
+      "promptTh": "สั่งกับ Mali: ชาใส่น้ำแข็งแก้วกลาง 1 แก้ว ทานที่ร้าน",
+      "answerEn": "A medium iced tea for here, please.",
+      "acceptedAnswers": [
+        "Can I have a medium iced tea for here, please?",
+        "I'd like a medium iced tea for here, please.",
+        "A medium iced tea, for here."
+      ],
+      "hints": [
+        "A …",
+        "A ___ ___ ___ for here, ___."
+      ]
+    },
+    {
+      "id": "a2_c09n06_q3",
+      "promptTh": "สั่งลาเต้เย็นแก้วเล็ก 2 แก้ว กลับบ้าน",
+      "answerEn": "Two small iced lattes to take away, please.",
+      "acceptedAnswers": [
+        "Can I have two small iced lattes to take away, please?",
+        "I'd like two small iced lattes to take away, please."
+      ],
+      "hints": [
+        "Two …",
+        "Two ___ ___ ___ to ___ ___, ___."
+      ]
+    },
+    {
+      "id": "a2_c09n06_q4",
+      "promptTh": "นมร้อนหมดแล้ว สั่งชาร้อนแก้วเล็กแทน ทานที่ร้าน",
+      "answerEn": "A small hot tea for here, please.",
+      "acceptedAnswers": [
+        "Can I have a small hot tea for here, please?",
+        "I'd like a small hot tea for here, please.",
+        "A small hot tea for here."
+      ],
+      "hints": [
+        "A …",
+        "A ___ ___ ___ for here, ___."
+      ]
+    },
+    {
+      "id": "a2_c09n06_q5",
+      "promptTh": "สั่งลาเต้เย็นแก้วใหญ่ 1 แก้ว ทานที่ร้าน (ใช้ I'd like)",
+      "answerEn": "I'd like a large iced latte for here, please.",
+      "acceptedAnswers": [
+        "I'd like a large iced latte for here.",
+        "Can I have a large iced latte for here, please?"
+      ],
+      "hints": [
+        "I'd …",
+        "I'd ___ a ___ ___ ___ for here, ___."
+      ]
+    }
+  ],
+  "a2_c10n08": [
+    {
+      "id": "a2_c10n08_q1",
+      "promptTh": "ขอ Mali (พนักงานเสิร์ฟ) อย่างสุภาพ: ขอจานนี้แบบไม่ใส่พริกได้ไหม",
+      "answerEn": "Could I have it without chilli?",
+      "acceptedAnswers": [
+        "Could I have it without chilli, please?",
+        "Can I have it without chilli?"
+      ],
+      "hints": [
+        "Could …",
+        "Could I ___ it ___ ___?"
+      ]
+    },
+    {
+      "id": "a2_c10n08_q2",
+      "promptTh": "บอกพนักงานว่า แกงนี้เผ็ดเกินไป",
+      "answerEn": "This curry is too spicy.",
+      "acceptedAnswers": [
+        "It's too spicy.",
+        "The curry is too spicy."
+      ],
+      "hints": [
+        "This …",
+        "This ___ is ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c10n08_q3",
+      "promptTh": "Max กินเผ็ดไม่ได้ ขอข้าวผัดแบบไม่ใส่พริก (ใช้ Could I)",
+      "answerEn": "Could I have the fried rice without chilli, please?",
+      "acceptedAnswers": [
+        "Could I have the fried rice without chilli?",
+        "Could I have fried rice without chilli, please?"
+      ],
+      "hints": [
+        "Could …",
+        "Could I ___ the ___ ___ ___ ___, ___?"
+      ]
+    },
+    {
+      "id": "a2_c10n08_q4",
+      "promptTh": "บอกพนักงานว่า ซุปนี้เค็มเกินไป",
+      "answerEn": "This soup is too salty.",
+      "acceptedAnswers": [
+        "It's too salty.",
+        "The soup is too salty."
+      ],
+      "hints": [
+        "This …",
+        "This ___ is ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c10n08_q5",
+      "promptTh": "John ชอบเผ็ดมาก ขอก๋วยเตี๋ยวน้ำใส่พริกเพิ่ม (ใช้ Could I)",
+      "answerEn": "Could I have the noodle soup with extra chilli, please?",
+      "acceptedAnswers": [
+        "Could I have the noodle soup with extra chilli?",
+        "Could I have noodle soup with extra chilli, please?"
+      ],
+      "hints": [
+        "Could …",
+        "Could I ___ the ___ ___ with ___ ___, ___?"
+      ]
+    },
+    {
+      "id": "a2_c10n08_q6",
+      "promptTh": "บอกพนักงานว่า ก๋วยเตี๋ยวน้ำชามนี้เปรี้ยวเกินไป",
+      "answerEn": "This noodle soup is too sour.",
+      "acceptedAnswers": [
+        "It's too sour.",
+        "The noodle soup is too sour."
+      ],
+      "hints": [
+        "This …",
+        "This ___ ___ is ___ ___."
+      ]
+    }
+  ],
+  "a2_c11n08": [
+    {
+      "id": "a2_c11n08_q1",
+      "promptTh": "บอก Aunt Noi ว่าเราต้องการนม 1 กล่อง",
+      "answerEn": "We need a carton of milk.",
+      "acceptedAnswers": [
+        "We need one carton of milk."
+      ],
+      "hints": [
+        "We …",
+        "We ___ a ___ of ___."
+      ]
+    },
+    {
+      "id": "a2_c11n08_q2",
+      "promptTh": "บอก May ว่าเราไม่มีขนมปังเลย",
+      "answerEn": "We don't have any bread.",
+      "acceptedAnswers": [
+        "We do not have any bread."
+      ],
+      "hints": [
+        "We …",
+        "We don't ___ ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c11n08_q3",
+      "promptTh": "บอกว่าเราต้องการน้ำมัน 2 ขวด",
+      "answerEn": "We need two bottles of oil.",
+      "acceptedAnswers": [
+        "We need 2 bottles of oil."
+      ],
+      "hints": [
+        "We …",
+        "We ___ ___ ___ of ___."
+      ]
+    },
+    {
+      "id": "a2_c11n08_q4",
+      "promptTh": "บอกว่าเรามีชีสไม่ค่อยเยอะ",
+      "answerEn": "We don't have much cheese.",
+      "acceptedAnswers": [
+        "We do not have much cheese.",
+        "We only have a little cheese."
+      ],
+      "hints": [
+        "We …",
+        "We don't ___ ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c11n08_q5",
+      "promptTh": "บอกว่าเราต้องการไข่ 2-3 ฟอง (ใช้ a few)",
+      "answerEn": "We need a few eggs.",
+      "acceptedAnswers": [],
+      "hints": [
+        "We …",
+        "We ___ a ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c11n08_q6",
+      "promptTh": "บอกว่าเราต้องการข้าว 1 กิโล",
+      "answerEn": "We need a kilo of rice.",
+      "acceptedAnswers": [
+        "We need one kilo of rice."
+      ],
+      "hints": [
+        "We …",
+        "We ___ a ___ of ___."
+      ]
+    },
+    {
+      "id": "a2_c11n08_q7",
+      "promptTh": "ถาม Aunt Noi ว่าเราต้องการไข่กี่ฟอง",
+      "answerEn": "How many eggs do we need?",
+      "acceptedAnswers": [],
+      "hints": [
+        "How …",
+        "How ___ ___ do we ___?"
+      ]
+    }
+  ],
+  "a2_c12n08": [
+    {
+      "id": "a2_c12n08_q1",
+      "promptTh": "บอก Max: หั่นมันช้าๆ",
+      "answerEn": "Cut it slowly.",
+      "acceptedAnswers": [
+        "Cut it slowly, please."
+      ],
+      "hints": [
+        "Cut …",
+        "Cut it ___."
+      ]
+    },
+    {
+      "id": "a2_c12n08_q2",
+      "promptTh": "บอก May: ผสมมันเร็วๆ",
+      "answerEn": "Mix it quickly.",
+      "acceptedAnswers": [
+        "Mix it quickly, please."
+      ],
+      "hints": [
+        "Mix …",
+        "Mix it ___."
+      ]
+    },
+    {
+      "id": "a2_c12n08_q3",
+      "promptTh": "บอก Capy: ถือมันระวังๆ",
+      "answerEn": "Hold it carefully.",
+      "acceptedAnswers": [
+        "Hold it carefully, please."
+      ],
+      "hints": [
+        "Hold …",
+        "Hold it ___."
+      ]
+    },
+    {
+      "id": "a2_c12n08_q4",
+      "promptTh": "บอก John: ล้างผักอย่างระมัดระวัง",
+      "answerEn": "Wash the vegetables carefully.",
+      "acceptedAnswers": [
+        "Wash the vegetables carefully, please."
+      ],
+      "hints": [
+        "Wash …",
+        "Wash the ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c12n08_q5",
+      "promptTh": "บอก May: ทอดไข่ช้าๆ",
+      "answerEn": "Fry the eggs slowly.",
+      "acceptedAnswers": [
+        "Fry the eggs slowly, please."
+      ],
+      "hints": [
+        "Fry …",
+        "Fry the ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c12n08_q6",
+      "promptTh": "บอก Max: ผสมไข่ให้ดีๆ (ใช้คำบอกวิธีของ good)",
+      "answerEn": "Mix the eggs well.",
+      "acceptedAnswers": [
+        "Mix the eggs well, please.",
+        "Mix them well."
+      ],
+      "hints": [
+        "Mix …",
+        "Mix the ___ ___."
+      ]
+    }
+  ],
+  "a2_c12n10": [
+    {
+      "id": "a2_c12n10_q1",
+      "promptTh": "บอก May: ผสมพวกมัน (ไข่) อย่างระวัง แล้วขอให้ May ส่งน้ำมันให้",
+      "answerEn": "Mix them carefully. Pass me the oil, please.",
+      "acceptedAnswers": [
+        "Mix them carefully. Please pass me the oil.",
+        "Mix them carefully, and pass me the oil, please."
+      ],
+      "hints": [
+        "Mix …",
+        "Mix them ___. ___ me the ___, ___."
+      ]
+    },
+    {
+      "id": "a2_c12n10_q2",
+      "promptTh": "บอก John: ขั้นแรก ล้างผัก จากนั้น หั่นพวกมัน",
+      "answerEn": "First, wash the vegetables. Then, cut them.",
+      "acceptedAnswers": [
+        "First wash the vegetables, then cut them."
+      ],
+      "hints": [
+        "First, …",
+        "First, ___ the ___. ___, ___ them."
+      ]
+    },
+    {
+      "id": "a2_c12n10_q3",
+      "promptTh": "ขอ Aunt Noi ส่งเกลือให้หน่อย",
+      "answerEn": "Pass me the salt, please.",
+      "acceptedAnswers": [
+        "Could you pass me the salt, please?",
+        "Please pass me the salt."
+      ],
+      "hints": [
+        "Pass …",
+        "Pass me the ___, ___."
+      ]
+    },
+    {
+      "id": "a2_c12n10_q4",
+      "promptTh": "บอก Max: ขั้นแรก ซาวข้าว (ล้างข้าว) จากนั้น เอาไปต้ม",
+      "answerEn": "First, wash the rice. Then, boil it.",
+      "acceptedAnswers": [
+        "First wash the rice, then boil it.",
+        "First, wash the rice. Then boil it."
+      ],
+      "hints": [
+        "First, …",
+        "First, ___ the ___. ___, ___ it."
+      ]
+    },
+    {
+      "id": "a2_c12n10_q5",
+      "promptTh": "ขอ Capy ส่งกระทะให้ แล้วบอกว่า จากนั้นทอดไข่ช้าๆ",
+      "answerEn": "Pass me the pan, please. Then, fry the eggs slowly.",
+      "acceptedAnswers": [
+        "Pass me the pan, please. Then fry the eggs slowly."
+      ],
+      "hints": [
+        "Pass …",
+        "Pass me the ___, ___. ___, ___ the ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c12n10_q6",
+      "promptTh": "บอก May: ขั้นแรก ใส่เนย จากนั้น ใส่ชีส",
+      "answerEn": "First, add the butter. Then, add the cheese.",
+      "acceptedAnswers": [
+        "First add the butter, then add the cheese.",
+        "First, add butter. Then, add cheese."
+      ],
+      "hints": [
+        "First, …",
+        "First, ___ the ___. ___, ___ the ___."
+      ]
+    }
+  ],
+  "a2_c13n06": [
+    {
+      "id": "a2_c13n06_q1",
+      "promptTh": "เทียบแจ็กเก็ต 2 ตัว: ตัวสีฟ้าใหญ่กว่าตัวสีแดง",
+      "answerEn": "The blue one is bigger than the red one.",
+      "acceptedAnswers": [
+        "The blue jacket is bigger than the red one.",
+        "The blue jacket is bigger than the red jacket."
+      ],
+      "hints": [
+        "The …",
+        "The ___ ___ is ___ ___ the ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c13n06_q2",
+      "promptTh": "บอก Mali ที่ร้านเสื้อผ้า: กางเกงยีนส์ตัวนี้ถูกกว่าตัวนั้น",
+      "answerEn": "These jeans are cheaper than those.",
+      "acceptedAnswers": [
+        "These jeans are cheaper than those ones.",
+        "These jeans are cheaper than those jeans."
+      ],
+      "hints": [
+        "These …",
+        "These ___ are ___ ___ those."
+      ]
+    },
+    {
+      "id": "a2_c13n06_q3",
+      "promptTh": "บอก May: ชุดเดรสสีขาวแพงกว่าตัวสีดำ",
+      "answerEn": "The white dress is more expensive than the black one.",
+      "acceptedAnswers": [
+        "The white dress is more expensive than the black dress."
+      ],
+      "hints": [
+        "The …",
+        "The ___ ___ is ___ ___ ___ the ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c13n06_q4",
+      "promptTh": "บอก Max: แจ็กเก็ตตัวนี้ใส่สบายกว่าตัวนั้น",
+      "answerEn": "This jacket is more comfortable than that one.",
+      "acceptedAnswers": [
+        "This jacket is more comfortable than that jacket."
+      ],
+      "hints": [
+        "This …",
+        "This ___ is ___ ___ ___ that ___."
+      ]
+    },
+    {
+      "id": "a2_c13n06_q5",
+      "promptTh": "บอก Mali: ตัวสีเขียวดีกว่าตัวสีเหลือง",
+      "answerEn": "The green one is better than the yellow one.",
+      "acceptedAnswers": [
+        "The green one is better than the yellow."
+      ],
+      "hints": [
+        "The …",
+        "The ___ ___ is ___ ___ the ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c13n06_q6",
+      "promptTh": "แจ็กเก็ตของ Max ใหญ่กว่าของ John",
+      "answerEn": "Max's jacket is bigger than John's.",
+      "acceptedAnswers": [
+        "Max's jacket is bigger than John's jacket."
+      ],
+      "hints": [
+        "Max's …",
+        "Max's ___ is ___ ___ ___."
+      ]
+    }
+  ],
+  "a2_c13n10": [
+    {
+      "id": "a2_c13n10_q1",
+      "promptTh": "Mali อีกแล้ว! วันนี้ Mali ทำงานที่ร้านเสื้อผ้า ถาม Mali ว่าขอลองตัวนี้ได้ไหม",
+      "answerEn": "Can I try it on?",
+      "acceptedAnswers": [
+        "Can I try this on?",
+        "Could I try it on?"
+      ],
+      "hints": [
+        "Can …",
+        "Can I ___ it on?"
+      ]
+    },
+    {
+      "id": "a2_c13n10_q2",
+      "promptTh": "ชม May ที่ใส่แจ็กเก็ตใหม่ว่า ใส่แล้วดูดีมาก",
+      "answerEn": "It looks great on you!",
+      "acceptedAnswers": [
+        "It looks great on you."
+      ],
+      "hints": [
+        "It …",
+        "It ___ ___ on you!"
+      ]
+    },
+    {
+      "id": "a2_c13n10_q3",
+      "promptTh": "ถาม Mali ว่ามีไซซ์ใหญ่กว่านี้ไหม",
+      "answerEn": "Do you have a bigger size?",
+      "acceptedAnswers": [],
+      "hints": [
+        "Do …",
+        "Do you ___ a ___ ___?"
+      ]
+    },
+    {
+      "id": "a2_c13n10_q4",
+      "promptTh": "ชม Max ที่ลองกางเกงยีนส์ใหม่ว่า ใส่แล้วดูดีมาก",
+      "answerEn": "They look great on you!",
+      "acceptedAnswers": [
+        "They look great on you.",
+        "These jeans look great on you!",
+        "Those jeans look great on you!"
+      ],
+      "hints": [
+        "They …",
+        "They ___ ___ on you!"
+      ]
+    },
+    {
+      "id": "a2_c13n10_q5",
+      "promptTh": "ถาม Mali ว่าห้องลองเสื้ออยู่ที่ไหน",
+      "answerEn": "Where's the fitting room?",
+      "acceptedAnswers": [
+        "Where is the fitting room?"
+      ],
+      "hints": [
+        "Where's …",
+        "Where's the ___ ___?"
+      ]
+    },
+    {
+      "id": "a2_c13n10_q6",
+      "promptTh": "บอก Mali ว่ามันคับเกินไป แล้วถามว่ามีไซซ์ใหญ่กว่าไหม",
+      "answerEn": "It's too tight. Do you have a bigger size?",
+      "acceptedAnswers": [
+        "It is too tight. Do you have a bigger size?"
+      ],
+      "hints": [
+        "It's …",
+        "It's ___ ___. Do you ___ a ___ ___?"
+      ]
+    },
+    {
+      "id": "a2_c13n10_q7",
+      "promptTh": "ถาม Mali ว่าขอลองแจ็กเก็ตสีดำได้ไหม",
+      "answerEn": "Can I try on the black jacket?",
+      "acceptedAnswers": [
+        "Can I try the black jacket on?",
+        "Could I try on the black jacket?"
+      ],
+      "hints": [
+        "Can …",
+        "Can I ___ on the ___ ___?"
+      ]
+    }
+  ],
+  "a2_c14n06": [
+    {
+      "id": "a2_c14n06_q1",
+      "promptTh": "บอก May ว่า ดอกไม้สวยที่สุด",
+      "answerEn": "The flowers are the most beautiful.",
+      "acceptedAnswers": [
+        "These flowers are the most beautiful."
+      ],
+      "hints": [
+        "The …",
+        "The ___ are the ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c14n06_q2",
+      "promptTh": "บอกว่า เค้กก้อนนี้ถูกที่สุด",
+      "answerEn": "This cake is the cheapest.",
+      "acceptedAnswers": [
+        "This cake is the cheapest one.",
+        "This is the cheapest cake."
+      ],
+      "hints": [
+        "This …",
+        "This ___ is the ___."
+      ]
+    },
+    {
+      "id": "a2_c14n06_q3",
+      "promptTh": "บอก John ว่า ตุ๊กตาหมีตัวนี้ใหญ่ที่สุด",
+      "answerEn": "This teddy bear is the biggest.",
+      "acceptedAnswers": [
+        "This is the biggest teddy bear.",
+        "This teddy bear is the biggest one."
+      ],
+      "hints": [
+        "This …",
+        "This ___ ___ is the ___."
+      ]
+    },
+    {
+      "id": "a2_c14n06_q4",
+      "promptTh": "บอกว่า การ์ดใบนี้แพงที่สุด",
+      "answerEn": "This card is the most expensive.",
+      "acceptedAnswers": [
+        "This is the most expensive card.",
+        "This card is the most expensive one."
+      ],
+      "hints": [
+        "This …",
+        "This ___ is the ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c14n06_q5",
+      "promptTh": "บอก Capy ว่า ของขวัญของ May ดีที่สุด",
+      "answerEn": "May's gift is the best.",
+      "acceptedAnswers": [
+        "May's gift is the best one."
+      ],
+      "hints": [
+        "May's …",
+        "May's ___ is the ___."
+      ]
+    },
+    {
+      "id": "a2_c14n06_q6",
+      "promptTh": "บอกว่า ตุ๊กตาหมีน่ารักที่สุด",
+      "answerEn": "The teddy bear is the cutest.",
+      "acceptedAnswers": [
+        "The teddy bear is the cutest one."
+      ],
+      "hints": [
+        "The …",
+        "The ___ ___ is the ___."
+      ]
+    }
+  ],
+  "a2_c14n10": [
+    {
+      "id": "a2_c14n10_q1",
+      "promptTh": "บอก May: ดอกไม้ถูกกว่า แต่เค้กดีที่สุด",
+      "answerEn": "The flowers are cheaper, but the cake is the best.",
+      "acceptedAnswers": [
+        "The flowers are cheaper but the cake is the best."
+      ],
+      "hints": [
+        "The …",
+        "The ___ are ___, but the ___ is the ___."
+      ]
+    },
+    {
+      "id": "a2_c14n10_q2",
+      "promptTh": "ชวน May: ซื้อตุ๊กตาหมีกันเถอะ เพราะมันถูกที่สุด",
+      "answerEn": "Let's buy the teddy bear because it's the cheapest.",
+      "acceptedAnswers": [
+        "Let's buy the teddy bear because it is the cheapest."
+      ],
+      "hints": [
+        "Let's …",
+        "Let's ___ the ___ ___ ___ it's the ___."
+      ]
+    },
+    {
+      "id": "a2_c14n10_q3",
+      "promptTh": "บอก John: ฉันชอบดอกไม้ เพราะมันสวยที่สุด",
+      "answerEn": "I like the flowers because they're the most beautiful.",
+      "acceptedAnswers": [
+        "I like the flowers because they are the most beautiful."
+      ],
+      "hints": [
+        "I …",
+        "I ___ the ___ ___ ___ the ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c14n10_q4",
+      "promptTh": "บอก Capy: การ์ดถูกกว่าตุ๊กตาหมี แต่ตุ๊กตาหมีน่ารักที่สุด",
+      "answerEn": "The card is cheaper than the teddy bear, but the teddy bear is the cutest.",
+      "acceptedAnswers": [
+        "The card is cheaper than the teddy bear but the teddy bear is the cutest."
+      ],
+      "hints": [
+        "The …",
+        "The ___ is ___ ___ the ___ ___, but the ___ ___ is the ___."
+      ]
+    },
+    {
+      "id": "a2_c14n10_q5",
+      "promptTh": "บอก May: เค้กแพงกว่าดอกไม้ แต่มันเป็นของโปรดของ Max",
+      "answerEn": "The cake is more expensive than the flowers, but it's Max's favorite.",
+      "acceptedAnswers": [
+        "The cake is more expensive than the flowers, but it's his favorite.",
+        "The cake is more expensive than the flowers but it is Max's favorite."
+      ],
+      "hints": [
+        "The …",
+        "The ___ is ___ ___ ___ the ___, but it's ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c14n10_q6",
+      "promptTh": "บอกทีม: เค้กแพงเกินไป ดังนั้นซื้อดอกไม้กันเถอะ เพราะมันถูกกว่า",
+      "answerEn": "The cake is too expensive, so let's buy the flowers because they're cheaper.",
+      "acceptedAnswers": [
+        "The cake is too expensive, so let's buy the flowers because they are cheaper."
+      ],
+      "hints": [
+        "The …",
+        "The ___ is ___ ___, ___ ___ ___ the ___ ___ ___ ___."
+      ]
+    }
+  ],
+  "a2_c15n03": [
+    {
+      "id": "a2_c15n03_q1",
+      "promptTh": "บอก Max ว่า เมื่อวานฉันอยู่บ้าน",
+      "answerEn": "I was at home yesterday.",
+      "acceptedAnswers": [
+        "Yesterday I was at home.",
+        "I was home yesterday."
+      ],
+      "hints": [
+        "I …",
+        "I was at ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c15n03_q2",
+      "promptTh": "บอก Teacher Nina ว่า เมื่อคืน May กับพี่สาวของ May อยู่ที่คาเฟ่ (ร้านที่ Mali ทำงาน)",
+      "answerEn": "May and her sister were at the café last night.",
+      "acceptedAnswers": [
+        "Last night May and her sister were at the café."
+      ],
+      "hints": [
+        "May …",
+        "May and her ___ were at the ___ ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c15n03_q3",
+      "promptTh": "ถาม Max ว่า เมื่อวานสนุกไหม",
+      "answerEn": "Was it fun yesterday?",
+      "acceptedAnswers": [
+        "Was yesterday fun?",
+        "Was it fun?"
+      ],
+      "hints": [
+        "Was …",
+        "Was it ___ ___?"
+      ]
+    },
+    {
+      "id": "a2_c15n03_q4",
+      "promptTh": "เล่าว่า สุดสัปดาห์ที่แล้วฉันดูหนังกับ Capy",
+      "answerEn": "I watched a movie with Capy last weekend.",
+      "acceptedAnswers": [
+        "Last weekend I watched a movie with Capy."
+      ],
+      "hints": [
+        "I …",
+        "I ___ a ___ with ___ ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c15n03_q5",
+      "promptTh": "เล่าว่า เมื่อวาน Max เล่นแบดมินตัน มันเหนื่อยมาก",
+      "answerEn": "Max played badminton yesterday. He was very tired.",
+      "acceptedAnswers": [
+        "Yesterday Max played badminton. He was very tired."
+      ],
+      "hints": [
+        "Max …",
+        "Max ___ ___ ___. He was ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c15n03_q6",
+      "promptTh": "เล่าว่า เมื่อคืนเราทำอาหารเย็นกับ Aunt Noi มันอร่อยมาก",
+      "answerEn": "We cooked dinner with Aunt Noi last night. It was delicious.",
+      "acceptedAnswers": [
+        "Last night we cooked dinner with Aunt Noi. It was delicious.",
+        "We cooked dinner with Aunt Noi last night. It was really good."
+      ],
+      "hints": [
+        "We …",
+        "We ___ ___ with ___ ___ ___ ___. It was ___."
+      ]
+    }
+  ],
+  "a2_c15n09": [
+    {
+      "id": "a2_c15n09_q1",
+      "promptTh": "เล่าเรื่องเมื่อวาน: รองเท้าถูกกว่ากระเป๋า",
+      "answerEn": "The shoes were cheaper than the bag.",
+      "acceptedAnswers": [
+        "The shoes were cheaper than the bag yesterday."
+      ],
+      "hints": [
+        "The …",
+        "The ___ were ___ ___ the ___."
+      ]
+    },
+    {
+      "id": "a2_c15n09_q2",
+      "promptTh": "เล่าเรื่องร้านเสื้อเมื่อวาน: แจ็กเก็ตของ May แพงกว่าแจ็กเก็ตของฉัน",
+      "answerEn": "May's jacket was more expensive than my jacket.",
+      "acceptedAnswers": [
+        "May's jacket was more expensive than mine.",
+        "May's jacket was more expensive than my jacket yesterday."
+      ],
+      "hints": [
+        "May's …",
+        "May's ___ was ___ ___ ___ my ___."
+      ]
+    },
+    {
+      "id": "a2_c15n09_q3",
+      "promptTh": "เล่าว่า เมื่อคืน ก๋วยเตี๋ยวน้ำอร่อยกว่าข้าวผัด (ใช้ better)",
+      "answerEn": "The noodle soup was better than the fried rice.",
+      "acceptedAnswers": [
+        "The noodle soup was better than the fried rice last night."
+      ],
+      "hints": [
+        "The …",
+        "The ___ ___ was ___ ___ the ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c15n09_q4",
+      "promptTh": "เล่าว่า เมื่อวาน ไปพิพิธภัณฑ์สนุกกว่าดูหนัง",
+      "answerEn": "The museum was more fun than the movie.",
+      "acceptedAnswers": [
+        "The museum was more fun than the movie yesterday."
+      ],
+      "hints": [
+        "The …",
+        "The ___ was ___ ___ ___ the ___."
+      ]
+    },
+    {
+      "id": "a2_c15n09_q5",
+      "promptTh": "เล่าว่า เมื่อวาน ของขวัญของ John ใหญ่กว่าของ May",
+      "answerEn": "John's gift was bigger than May's.",
+      "acceptedAnswers": [
+        "John's gift was bigger than May's gift."
+      ],
+      "hints": [
+        "John's …",
+        "John's ___ was ___ ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c15n09_q6",
+      "promptTh": "เล่าว่า เมื่อวาน ชุดเดรสสีแดงสวยกว่าตัวสีฟ้า",
+      "answerEn": "The red dress was more beautiful than the blue one.",
+      "acceptedAnswers": [
+        "The red dress was more beautiful than the blue dress."
+      ],
+      "hints": [
+        "The …",
+        "The ___ ___ was ___ ___ ___ the ___ ___."
+      ]
+    }
+  ],
+  "a2_c16n01": [
+    {
+      "id": "a2_c16n01_q1",
+      "promptTh": "สั่งกับ Mali ที่คาเฟ่: ลาเต้เย็นแก้วกลาง (ใช้ I'd like)",
+      "answerEn": "I'd like a medium iced latte, please.",
+      "acceptedAnswers": [
+        "I'd like a medium iced latte."
+      ],
+      "hints": [
+        "I'd …",
+        "I'd ___ a ___ ___ ___, ___."
+      ]
+    },
+    {
+      "id": "a2_c16n01_q2",
+      "promptTh": "ที่ร้านอาหาร บอก Mali (พนักงานเสิร์ฟ) ว่า มันเผ็ดนิดหน่อย แล้วขอน้ำ (ใช้ Could I)",
+      "answerEn": "It's a bit spicy. Could I have some water, please?",
+      "acceptedAnswers": [
+        "It's a bit spicy. Could I have some water?",
+        "It is a bit spicy. Could I have some water, please?"
+      ],
+      "hints": [
+        "It's …",
+        "It's a ___ ___. ___ I ___ ___ ___, ___?"
+      ]
+    },
+    {
+      "id": "a2_c16n01_q3",
+      "promptTh": "บอก Teacher Nina ว่า เรามีน้ำตาลไม่ค่อยเยอะ",
+      "answerEn": "We don't have much sugar.",
+      "acceptedAnswers": [
+        "We do not have much sugar."
+      ],
+      "hints": [
+        "We …",
+        "We don't ___ ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c16n01_q4",
+      "promptTh": "ที่ร้านเสื้อผ้า (Mali อีกแล้ว!) บอก Mali ว่า กระเป๋าใบนี้ถูกกว่าใบนั้น",
+      "answerEn": "This bag is cheaper than that one.",
+      "acceptedAnswers": [
+        "This bag is cheaper than that bag."
+      ],
+      "hints": [
+        "This …",
+        "This ___ is ___ ___ that ___."
+      ]
+    },
+    {
+      "id": "a2_c16n01_q5",
+      "promptTh": "เล่าว่า เมื่อวาน Max เล่นแบดมินตันกับ John",
+      "answerEn": "Max played badminton with John yesterday.",
+      "acceptedAnswers": [
+        "Yesterday Max played badminton with John."
+      ],
+      "hints": [
+        "Max …",
+        "Max ___ ___ with ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c16n01_q6",
+      "promptTh": "บอก Capy: ทอดไข่อย่างระวัง",
+      "answerEn": "Fry the eggs carefully.",
+      "acceptedAnswers": [
+        "Fry the eggs carefully, please."
+      ],
+      "hints": [
+        "Fry …",
+        "Fry the ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c16n01_q7",
+      "promptTh": "บอก Max ก่อนออกไปตลาดน้ำ: ใส่หมวกของนายสิ",
+      "answerEn": "Put on your hat.",
+      "acceptedAnswers": [
+        "Put your hat on.",
+        "Put on your hat, please.",
+        "Put your hat on, please."
+      ],
+      "hints": [
+        "Put …",
+        "Put on your ___."
+      ]
+    }
+  ],
+  "a2_c16n09": [
+    {
+      "id": "a2_c16n09_q1",
+      "promptTh": "ยื่นเงินให้ Mali ที่เรือของครอบครัวเธอ",
+      "answerEn": "Here you go.",
+      "acceptedAnswers": [],
+      "hints": [
+        "Here …",
+        "Here you ___."
+      ]
+    },
+    {
+      "id": "a2_c16n09_q2",
+      "promptTh": "ทัก Mali สุภาพๆ ว่า ขอโทษนะ ฉันคิดว่าเงินทอนไม่ถูก",
+      "answerEn": "Sorry, I think the change isn't right.",
+      "acceptedAnswers": [
+        "Excuse me, I think the change isn't right.",
+        "Sorry, I think there's a mistake.",
+        "Sorry, I think the change is not right."
+      ],
+      "hints": [
+        "Sorry, …",
+        "Sorry, I ___ the ___ ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c16n09_q3",
+      "promptTh": "สั่งก๋วยเตี๋ยวเรือ 2 ที่ (ใช้ I'd like)",
+      "answerEn": "I'd like two boat noodles, please.",
+      "acceptedAnswers": [
+        "I'd like two boat noodles."
+      ],
+      "hints": [
+        "I'd …",
+        "I'd ___ ___ ___ ___, ___."
+      ]
+    },
+    {
+      "id": "a2_c16n09_q4",
+      "promptTh": "บอก Mali ว่า ฉันให้คุณไป 500 บาท",
+      "answerEn": "I gave you 500 baht.",
+      "acceptedAnswers": [
+        "Excuse me, I gave you 500 baht.",
+        "I gave you five hundred baht."
+      ],
+      "hints": [
+        "I …",
+        "I ___ you ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c16n09_q5",
+      "promptTh": "บอก Mali ว่า ฉันได้เงินทอนคืนแค่ 50 บาท",
+      "answerEn": "I only got 50 baht back.",
+      "acceptedAnswers": [
+        "I only got fifty baht back.",
+        "I only got 50 back."
+      ],
+      "hints": [
+        "I …",
+        "I ___ ___ ___ ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c16n09_q6",
+      "promptTh": "บอก Mali ว่า ไม่ต้องทอน",
+      "answerEn": "Keep the change.",
+      "acceptedAnswers": [
+        "Keep the change, please."
+      ],
+      "hints": [
+        "Keep …",
+        "Keep the ___."
+      ]
+    },
+    {
+      "id": "a2_c16n09_q7",
+      "promptTh": "ขอใบเสร็จอย่างสุภาพ (ใช้ Could I)",
+      "answerEn": "Could I have the receipt, please?",
+      "acceptedAnswers": [
+        "Could I have a receipt, please?",
+        "Could I have the receipt?"
+      ],
+      "hints": [
+        "Could …",
+        "Could I ___ the ___, ___?"
+      ]
+    }
+  ],
+  "a2_c17n07": [
+    {
+      "id": "a2_c17n07_q1",
+      "promptTh": "บอกทีม: เราต้องไปอยู่ที่เกตตอนสิบโมง",
+      "answerEn": "We have to be at the gate at ten.",
+      "acceptedAnswers": [
+        "We have to be at the gate at 10."
+      ],
+      "hints": [
+        "We …",
+        "We ___ to be at the ___ at ___."
+      ]
+    },
+    {
+      "id": "a2_c17n07_q2",
+      "promptTh": "ถามเจ้าหน้าที่เช็กอิน: ฉันต้องเช็กอินกระเป๋าใบนี้ไหม",
+      "answerEn": "Do I have to check in this bag?",
+      "acceptedAnswers": [],
+      "hints": [
+        "Do …",
+        "Do I ___ to ___ in this ___?"
+      ]
+    },
+    {
+      "id": "a2_c17n07_q3",
+      "promptTh": "คุณเป็นเจ้าหน้าที่เช็กอิน บอกผู้โดยสาร: คุณต้องแสดงพาสปอร์ต",
+      "answerEn": "You have to show your passport.",
+      "acceptedAnswers": [
+        "You have to show me your passport."
+      ],
+      "hints": [
+        "You …",
+        "You ___ to ___ your ___."
+      ]
+    },
+    {
+      "id": "a2_c17n07_q4",
+      "promptTh": "บอก Mali: เราไม่ต้องเช็กอินกระเป๋าถือขึ้นเครื่อง",
+      "answerEn": "We don't have to check in our carry-on.",
+      "acceptedAnswers": [
+        "We do not have to check in our carry-on.",
+        "We don't have to check in the carry-on.",
+        "We don't have to check in our carry-on bags."
+      ],
+      "hints": [
+        "We …",
+        "We don't ___ to ___ in our ___-."
+      ]
+    },
+    {
+      "id": "a2_c17n07_q5",
+      "promptTh": "Max ต้องแสดงบอร์ดดิ้งพาสของเขา",
+      "answerEn": "Max has to show his boarding pass.",
+      "acceptedAnswers": [
+        "He has to show his boarding pass."
+      ],
+      "hints": [
+        "Max …",
+        "Max ___ to ___ his ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c17n07_q6",
+      "promptTh": "ถามเจ้าหน้าที่เช็กอิน: เราต้องไปเกต 2 ไหม",
+      "answerEn": "Do we have to go to Gate 2?",
+      "acceptedAnswers": [
+        "Do we have to go to gate two?"
+      ],
+      "hints": [
+        "Do …",
+        "Do we ___ to ___ to ___ ___?"
+      ]
+    }
+  ],
+  "a2_c17n10": [
+    {
+      "id": "a2_c17n10_q1",
+      "promptTh": "ถามเจ้าหน้าที่เช็กอิน: ฉันเอากระเป๋าใบนี้ขึ้นเครื่องได้ไหม",
+      "answerEn": "Can I take this bag on the plane?",
+      "acceptedAnswers": [
+        "Can I take this bag on the plane, please?"
+      ],
+      "hints": [
+        "Can …",
+        "Can I ___ this ___ on the ___?"
+      ]
+    },
+    {
+      "id": "a2_c17n10_q2",
+      "promptTh": "คุณเป็นเจ้าหน้าที่เช็กอิน ถามผู้โดยสาร: คุณแพ็กกระเป๋าใบนี้เองหรือเปล่า",
+      "answerEn": "Did you pack this bag yourself?",
+      "acceptedAnswers": [
+        "Did you pack it yourself?",
+        "Did you pack your bag yourself?"
+      ],
+      "hints": [
+        "Did …",
+        "Did you ___ this ___ ___?"
+      ]
+    },
+    {
+      "id": "a2_c17n10_q3",
+      "promptTh": "ตอบเจ้าหน้าที่เช็กอินสั้นๆ ว่า ใช่ ฉันแพ็กเอง",
+      "answerEn": "Yes, I did.",
+      "acceptedAnswers": [
+        "Yes, I did. I packed it."
+      ],
+      "hints": [
+        "Yes, …"
+      ]
+    },
+    {
+      "id": "a2_c17n10_q4",
+      "promptTh": "ขอเจ้าหน้าที่เช็กอิน: ฉันขอที่นั่งริมหน้าต่างได้ไหม",
+      "answerEn": "Can I have a window seat?",
+      "acceptedAnswers": [
+        "Can I have a window seat, please?",
+        "Can I get a window seat?"
+      ],
+      "hints": [
+        "Can …",
+        "Can I ___ a ___ ___?"
+      ]
+    },
+    {
+      "id": "a2_c17n10_q5",
+      "promptTh": "กระเป๋าน้ำหนักเกิน ถามเจ้าหน้าที่เช็กอิน: ฉันต้องใส่ของพวกนี้ไว้ในกระเป๋าถือขึ้นเครื่องไหม",
+      "answerEn": "Do I have to put these things in my carry-on?",
+      "acceptedAnswers": [],
+      "hints": [
+        "Do …",
+        "Do I ___ to ___ these ___ in my ___-?"
+      ]
+    },
+    {
+      "id": "a2_c17n10_q6",
+      "promptTh": "ถาม Teacher Torto: เมื่อเช้า May เช็กอินกระเป๋าของเธอหรือเปล่า",
+      "answerEn": "Did May check in her luggage this morning?",
+      "acceptedAnswers": [
+        "Did May check in her bag this morning?"
+      ],
+      "hints": [
+        "Did …",
+        "Did ___ ___ in her ___ this ___?"
+      ]
+    }
+  ],
+  "a2_c18n08": [
+    {
+      "id": "a2_c18n08_q1",
+      "promptTh": "ถามพนักงานต้อนรับ: อาหารเช้ากี่โมง",
+      "answerEn": "What time is breakfast?",
+      "acceptedAnswers": [
+        "What time is breakfast, please?"
+      ],
+      "hints": [
+        "What …",
+        "What ___ is ___?"
+      ]
+    },
+    {
+      "id": "a2_c18n08_q2",
+      "promptTh": "ถามพนักงานต้อนรับ: ที่นี่มีลิฟต์ไหม",
+      "answerEn": "Is there a lift?",
+      "acceptedAnswers": [
+        "Is there a lift here?"
+      ],
+      "hints": [
+        "Is …",
+        "Is there a ___?"
+      ]
+    },
+    {
+      "id": "a2_c18n08_q3",
+      "promptTh": "ขอพนักงานต้อนรับ: ช่วยเอาผ้าเช็ดตัวมาให้อีกผืนได้ไหม",
+      "answerEn": "Could you bring another towel?",
+      "acceptedAnswers": [
+        "Could you bring another towel, please?",
+        "Could you bring me another towel?"
+      ],
+      "hints": [
+        "Could …",
+        "Could you ___ ___ ___?"
+      ]
+    },
+    {
+      "id": "a2_c18n08_q4",
+      "promptTh": "ถามพนักงานต้อนรับ: เช็กเอาต์กี่โมง",
+      "answerEn": "What time is checkout?",
+      "acceptedAnswers": [
+        "What time is check-out?"
+      ],
+      "hints": [
+        "What …",
+        "What ___ is ___?"
+      ]
+    },
+    {
+      "id": "a2_c18n08_q5",
+      "promptTh": "ขอพนักงานต้อนรับ: ช่วยเอาน้ำมาให้หน่อยได้ไหม",
+      "answerEn": "Could you bring some water?",
+      "acceptedAnswers": [
+        "Could you bring some water, please?",
+        "Could you bring me some water?"
+      ],
+      "hints": [
+        "Could …",
+        "Could you ___ ___ ___?"
+      ]
+    },
+    {
+      "id": "a2_c18n08_q6",
+      "promptTh": "Max อยากว่ายน้ำ ถามพนักงานต้อนรับ: โรงแรมมีสระว่ายน้ำไหม",
+      "answerEn": "Is there a pool?",
+      "acceptedAnswers": [
+        "Is there a pool in the hotel?",
+        "Is there a swimming pool?"
+      ],
+      "hints": [
+        "Is …",
+        "Is there a ___?"
+      ]
+    },
+    {
+      "id": "a2_c18n08_q7",
+      "promptTh": "คีย์การ์ดใช้ไม่ได้ ขอพนักงานต้อนรับ: ช่วยให้คีย์การ์ดใบใหม่ได้ไหม",
+      "answerEn": "Could you give me a new key card?",
+      "acceptedAnswers": [
+        "Could you give me a new key card, please?"
+      ],
+      "hints": [
+        "Could …",
+        "Could you ___ me a ___ ___ ___?"
+      ]
+    }
+  ],
+  "a2_c19n08": [
+    {
+      "id": "a2_c19n08_q1",
+      "promptTh": "ถาม Driver Dave (คนขับ): ค่าโดยสารเท่าไหร่",
+      "answerEn": "How much is the fare?",
+      "acceptedAnswers": [],
+      "hints": [
+        "How …",
+        "How ___ is the ___?"
+      ]
+    },
+    {
+      "id": "a2_c19n08_q2",
+      "promptTh": "ถาม Driver Dave (คนขับ): ฉันต้องลงที่ไหน",
+      "answerEn": "Where do I get off?",
+      "acceptedAnswers": [
+        "Where do I have to get off?"
+      ],
+      "hints": [
+        "Where …",
+        "Where do I ___ ___?"
+      ]
+    },
+    {
+      "id": "a2_c19n08_q3",
+      "promptTh": "ถามคนที่ป้ายรถเมล์: รถเมล์สายไหนไปตลาด",
+      "answerEn": "Which bus goes to the market?",
+      "acceptedAnswers": [],
+      "hints": [
+        "Which …",
+        "Which ___ ___ to the ___?"
+      ]
+    },
+    {
+      "id": "a2_c19n08_q4",
+      "promptTh": "ถาม Driver Dave (คนขับ): รถคันนี้ไปเมืองเก่าไหม",
+      "answerEn": "Does this bus go to the old town?",
+      "acceptedAnswers": [],
+      "hints": [
+        "Does …",
+        "Does this ___ ___ to the ___ ___?"
+      ]
+    },
+    {
+      "id": "a2_c19n08_q5",
+      "promptTh": "ถาม Driver Dave (คนขับ): ไปพิพิธภัณฑ์ใช้เวลานานแค่ไหน",
+      "answerEn": "How long does it take to get to the museum?",
+      "acceptedAnswers": [
+        "How long does it take to go to the museum?"
+      ],
+      "hints": [
+        "How …",
+        "How ___ does it ___ to ___ to the ___?"
+      ]
+    },
+    {
+      "id": "a2_c19n08_q6",
+      "promptTh": "ถาม Driver Dave (คนขับ): รถออกกี่โมง",
+      "answerEn": "What time does the bus depart?",
+      "acceptedAnswers": [
+        "What time does the bus leave?",
+        "When does the bus depart?"
+      ],
+      "hints": [
+        "What …",
+        "What ___ does the ___ ___?"
+      ]
+    }
+  ],
+  "a2_c20n05": [
+    {
+      "id": "a2_c20n05_q1",
+      "promptTh": "บอกทางไปร้านโปรดของ Teacher Torto: เลี้ยวขวาที่ไฟจราจร ร้านอยู่ทางซ้ายมือ",
+      "answerEn": "Turn right at the traffic lights. It's on your left.",
+      "acceptedAnswers": [
+        "Turn right at the traffic lights. It is on your left.",
+        "Turn right at the traffic light. It's on your left."
+      ],
+      "hints": [
+        "Turn …",
+        "Turn ___ at the ___ ___. It's on your ___."
+      ]
+    },
+    {
+      "id": "a2_c20n05_q2",
+      "promptTh": "บอกทาง May: เดินผ่านธนาคาร แล้วเลี้ยวซ้ายที่แยกที่สอง",
+      "answerEn": "Go past the bank and take the second left.",
+      "acceptedAnswers": [],
+      "hints": [
+        "Go …",
+        "Go ___ the ___ and ___ the ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c20n05_q3",
+      "promptTh": "บอกทาง Max: ข้ามสะพาน แล้วเลี้ยวซ้ายที่หัวมุม",
+      "answerEn": "Cross the bridge and turn left at the corner.",
+      "acceptedAnswers": [],
+      "hints": [
+        "Cross …",
+        "Cross the ___ and ___ ___ at the ___."
+      ]
+    },
+    {
+      "id": "a2_c20n05_q4",
+      "promptTh": "บอกทาง Teacher Nina: เดินตรงไป เลี้ยวขวาที่หัวมุม ร้านอยู่ทางขวามือ",
+      "answerEn": "Go straight and turn right at the corner. The shop is on your right.",
+      "acceptedAnswers": [
+        "Go straight and turn right at the corner. It's on your right.",
+        "Go straight on and turn right at the corner. The shop is on your right."
+      ],
+      "hints": [
+        "Go …",
+        "Go ___ and ___ ___ at the ___. The ___ is on your ___."
+      ]
+    },
+    {
+      "id": "a2_c20n05_q5",
+      "promptTh": "บอกทาง Mali: ข้ามถนนที่ไฟจราจร แล้วเลี้ยวขวาที่แยกที่สอง",
+      "answerEn": "Cross the street at the traffic lights and take the second right.",
+      "acceptedAnswers": [],
+      "hints": [
+        "Cross …",
+        "Cross the ___ at the ___ ___ and ___ the ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c20n05_q6",
+      "promptTh": "บอกทาง Capy: เดินตรงไป แล้วเลี้ยวซ้ายที่ไฟจราจร",
+      "answerEn": "Go straight and turn left at the traffic lights.",
+      "acceptedAnswers": [
+        "Go straight and turn left at the traffic light.",
+        "Go straight on and turn left at the traffic lights."
+      ],
+      "hints": [
+        "Go …",
+        "Go ___ and ___ ___ at the ___ ___."
+      ]
+    }
+  ],
+  "a2_c20n08": [
+    {
+      "id": "a2_c20n08_q1",
+      "promptTh": "คนแถวนั้นบอกทางเร็วมาก พูดว่า: ขอโทษ พูดอีกทีได้ไหม แล้วฉันเลี้ยวขวาใช่ไหม",
+      "answerEn": "Sorry, can you say that again? So I turn right?",
+      "acceptedAnswers": [
+        "Sorry, could you say that again? So I turn right?"
+      ],
+      "hints": [
+        "Sorry, …",
+        "Sorry, can you ___ that ___? ___ I ___ ___?"
+      ]
+    },
+    {
+      "id": "a2_c20n08_q2",
+      "promptTh": "ถามคนแถวนั้น: ร้านโปรดของ Teacher Torto อยู่ไกลแค่ไหน",
+      "answerEn": "How far is the shop?",
+      "acceptedAnswers": [
+        "How far is the shop from here?"
+      ],
+      "hints": [
+        "How …",
+        "How ___ is the ___?"
+      ]
+    },
+    {
+      "id": "a2_c20n08_q3",
+      "promptTh": "ขอให้พูดช้าลง: ช่วยพูดช้าๆ หน่อยได้ไหม",
+      "answerEn": "Can you speak slowly, please?",
+      "acceptedAnswers": [
+        "Could you speak slowly, please?",
+        "Slowly, please.",
+        "Can you speak more slowly, please?",
+        "Could you speak more slowly, please?"
+      ],
+      "hints": [
+        "Can …",
+        "Can you ___ ___, ___?"
+      ]
+    },
+    {
+      "id": "a2_c20n08_q4",
+      "promptTh": "ทวนให้แน่ใจ: งั้นฉันข้ามสะพานใช่ไหม",
+      "answerEn": "So I go across the bridge?",
+      "acceptedAnswers": [
+        "So I cross the bridge?"
+      ],
+      "hints": [
+        "So …",
+        "So I ___ ___ the ___?"
+      ]
+    },
+    {
+      "id": "a2_c20n08_q5",
+      "promptTh": "ถนนปิด ถามคนแถวนั้น: ขอโทษค่ะ/ครับ ตลาดอยู่ที่ไหน",
+      "answerEn": "Excuse me, where is the market?",
+      "acceptedAnswers": [
+        "Excuse me, where's the market?"
+      ],
+      "hints": [
+        "Excuse …",
+        "Excuse me, where is the ___?"
+      ]
+    },
+    {
+      "id": "a2_c20n08_q6",
+      "promptTh": "ทวนให้แน่ใจ: งั้นฉันเลี้ยวซ้ายที่แยกที่สองใช่ไหม",
+      "answerEn": "So I take the second left?",
+      "acceptedAnswers": [],
+      "hints": [
+        "So …",
+        "So I ___ the ___ ___?"
+      ]
+    }
+  ],
+  "a2_c21n08": [
+    {
+      "id": "a2_c21n08_q1",
+      "promptTh": "ถ้าแดดออก เราจะไปทะเล",
+      "answerEn": "If it's sunny, we'll go to the beach.",
+      "acceptedAnswers": [
+        "If it is sunny, we will go to the beach.",
+        "We'll go to the beach if it's sunny."
+      ],
+      "hints": [
+        "If …",
+        "If it's ___, ___ ___ to the ___."
+      ]
+    },
+    {
+      "id": "a2_c21n08_q2",
+      "promptTh": "ถ้าฝนตก เราจะไปพิพิธภัณฑ์",
+      "answerEn": "If it rains, we'll go to the museum.",
+      "acceptedAnswers": [
+        "If it rains, we will go to the museum.",
+        "We'll go to the museum if it rains."
+      ],
+      "hints": [
+        "If …",
+        "If it ___, ___ ___ to the ___."
+      ]
+    },
+    {
+      "id": "a2_c21n08_q3",
+      "promptTh": "ถ้าเมฆครึ้ม Teacher Torto จะไปตลาด",
+      "answerEn": "If it's cloudy, Teacher Torto will go to the market.",
+      "acceptedAnswers": [
+        "If it is cloudy, Teacher Torto will go to the market.",
+        "Teacher Torto will go to the market if it's cloudy."
+      ],
+      "hints": [
+        "If …",
+        "If it's ___, ___ ___ will ___ to the ___."
+      ]
+    },
+    {
+      "id": "a2_c21n08_q4",
+      "promptTh": "ถ้ามีพายุ เราจะอยู่ที่โรงแรม",
+      "answerEn": "If it's stormy, we'll stay at the hotel.",
+      "acceptedAnswers": [
+        "If it is stormy, we will stay at the hotel.",
+        "We'll stay at the hotel if it's stormy."
+      ],
+      "hints": [
+        "If …",
+        "If it's ___, ___ ___ at the ___."
+      ]
+    },
+    {
+      "id": "a2_c21n08_q5",
+      "promptTh": "ถ้าพรุ่งนี้แดดออก เราจะไปสำรวจเกาะ",
+      "answerEn": "If it's sunny tomorrow, we'll explore the island.",
+      "acceptedAnswers": [
+        "If it is sunny tomorrow, we will explore the island.",
+        "We'll explore the island if it's sunny tomorrow."
+      ],
+      "hints": [
+        "If …",
+        "If it's ___ ___, ___ ___ the ___."
+      ]
+    },
+    {
+      "id": "a2_c21n08_q6",
+      "promptTh": "ถาม Teacher Torto: ถ้าฝนตก เราจะทำอะไรกัน",
+      "answerEn": "What will we do if it rains?",
+      "acceptedAnswers": [
+        "If it rains, what will we do?"
+      ],
+      "hints": [
+        "What …",
+        "What will we do ___ it ___?"
+      ]
+    }
+  ],
+  "a2_c21n10": [
+    {
+      "id": "a2_c21n10_q1",
+      "promptTh": "ไปพิพิธภัณฑ์กันเถอะ ที่นั่นเงียบกว่า",
+      "answerEn": "Let's go to the museum. It's quieter.",
+      "acceptedAnswers": [
+        "Let's go to the museum because it's quieter."
+      ],
+      "hints": [
+        "Let's …",
+        "Let's ___ to the ___. It's ___."
+      ]
+    },
+    {
+      "id": "a2_c21n10_q2",
+      "promptTh": "ไปตลาดกันเถอะ เพราะมันใกล้กว่า",
+      "answerEn": "Let's go to the market because it's closer.",
+      "acceptedAnswers": [
+        "Let's go to the market. It's closer."
+      ],
+      "hints": [
+        "Let's …",
+        "Let's ___ to the ___ ___ it's ___."
+      ]
+    },
+    {
+      "id": "a2_c21n10_q3",
+      "promptTh": "ไปสวนสาธารณะกันเถอะ เพราะมันถูกกว่าไปเกาะ",
+      "answerEn": "Let's go to the park because it's cheaper than the island.",
+      "acceptedAnswers": [
+        "Let's go to the park. It's cheaper than the island.",
+        "Let's go to the park because it's cheaper than going to the island."
+      ],
+      "hints": [
+        "Let's …",
+        "Let's ___ to the ___ ___ it's ___ ___ the ___."
+      ]
+    },
+    {
+      "id": "a2_c21n10_q4",
+      "promptTh": "ไปทะเลวันเสาร์กันเถอะ เพราะอากาศดีกว่า",
+      "answerEn": "Let's go to the beach on Saturday because the weather is better.",
+      "acceptedAnswers": [
+        "Let's go to the beach on Saturday. The weather is better."
+      ],
+      "hints": [
+        "Let's …",
+        "Let's ___ to the ___ on ___ ___ the ___ is ___."
+      ]
+    },
+    {
+      "id": "a2_c21n10_q5",
+      "promptTh": "นั่งแท็กซี่กันเถอะ เพราะมันเร็วกว่ารถเมล์",
+      "answerEn": "Let's take a taxi because it's faster than the bus.",
+      "acceptedAnswers": [
+        "Let's take a taxi. It's faster than the bus."
+      ],
+      "hints": [
+        "Let's …",
+        "Let's ___ a ___ ___ it's ___ ___ the ___."
+      ]
+    },
+    {
+      "id": "a2_c21n10_q6",
+      "promptTh": "บอก Max: เอาร่มไปด้วยนะ เพราะฝนอาจจะตก",
+      "answerEn": "Take an umbrella because it might rain.",
+      "acceptedAnswers": [
+        "Take your umbrella because it might rain."
+      ],
+      "hints": [
+        "Take …",
+        "Take an ___ ___ it ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c21n10_q7",
+      "promptTh": "บอก Capy: พรุ่งนี้เอาหมวกไปด้วยนะ เพราะแดดจะออก",
+      "answerEn": "Take a hat tomorrow because it's going to be sunny.",
+      "acceptedAnswers": [
+        "Take your hat tomorrow because it's going to be sunny.",
+        "Take a hat tomorrow. It's going to be sunny."
+      ],
+      "hints": [
+        "Take …",
+        "Take a ___ ___ ___ it's ___ to be ___."
+      ]
+    }
+  ],
+  "a2_c22n07": [
+    {
+      "id": "a2_c22n07_q1",
+      "promptTh": "บอกเภสัชกร: เธอ (May) เป็นไข้",
+      "answerEn": "She has a fever.",
+      "acceptedAnswers": [
+        "May has a fever."
+      ],
+      "hints": [
+        "She …",
+        "She ___ a ___."
+      ]
+    },
+    {
+      "id": "a2_c22n07_q2",
+      "promptTh": "แนะนำ May ที่เป็นไข้: ควรพักผ่อนนะ",
+      "answerEn": "You should rest.",
+      "acceptedAnswers": [],
+      "hints": [
+        "You …",
+        "You ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c22n07_q3",
+      "promptTh": "ถาม May: เป็นอะไรเหรอ",
+      "answerEn": "What's wrong?",
+      "acceptedAnswers": [
+        "What is wrong?"
+      ],
+      "hints": [
+        "What's …",
+        "What's ___?"
+      ]
+    },
+    {
+      "id": "a2_c22n07_q4",
+      "promptTh": "บอกเภสัชกร: ฉันเจ็บคอ",
+      "answerEn": "I have a sore throat.",
+      "acceptedAnswers": [],
+      "hints": [
+        "I …",
+        "I ___ a ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c22n07_q5",
+      "promptTh": "Max ปวดหัว เขาไม่ควรออกไปข้างนอก",
+      "answerEn": "Max has a headache. He shouldn't go out.",
+      "acceptedAnswers": [
+        "Max has a headache. He should not go out.",
+        "He has a headache. He shouldn't go out."
+      ],
+      "hints": [
+        "Max …",
+        "Max ___ a ___. He ___ ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c22n07_q6",
+      "promptTh": "ถามเภสัชกร: ฉันเป็นหวัด ฉันควรทำยังไงดี",
+      "answerEn": "I have a cold. What should I do?",
+      "acceptedAnswers": [],
+      "hints": [
+        "I …",
+        "I ___ a ___. What ___ I do?"
+      ]
+    },
+    {
+      "id": "a2_c22n07_q7",
+      "promptTh": "แนะนำ Capy ที่เจ็บคอ: ควรดื่มน้ำและกินยานะ",
+      "answerEn": "You should drink water and take medicine.",
+      "acceptedAnswers": [
+        "You should drink water and take some medicine.",
+        "You should drink some water and take medicine.",
+        "Capy, you should drink water and take medicine."
+      ],
+      "hints": [
+        "You …",
+        "You ___ ___ ___ and ___ ___."
+      ]
+    }
+  ],
+  "a2_c23n07": [
+    {
+      "id": "a2_c23n07_q1",
+      "promptTh": "บอกเจ้าหน้าที่: ฉันลืมกระเป๋าไว้บนรถเมล์",
+      "answerEn": "I left my bag on the bus.",
+      "acceptedAnswers": [],
+      "hints": [
+        "I …",
+        "I ___ my ___ on the ___."
+      ]
+    },
+    {
+      "id": "a2_c23n07_q2",
+      "promptTh": "บอกเจ้าหน้าที่: เมื่อวานฉันลืมร่มไว้ที่คาเฟ่",
+      "answerEn": "I left my umbrella at the café yesterday.",
+      "acceptedAnswers": [
+        "I left my umbrella at the cafe yesterday.",
+        "Yesterday I left my umbrella at the café."
+      ],
+      "hints": [
+        "I …",
+        "I ___ my ___ at the ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c23n07_q3",
+      "promptTh": "Nina ทำกระเป๋าหายที่ตลาดเมื่อเช้านี้",
+      "answerEn": "Nina lost her bag at the market this morning.",
+      "acceptedAnswers": [
+        "She lost her bag at the market this morning."
+      ],
+      "hints": [
+        "Nina …",
+        "Nina ___ her ___ at the ___ this ___."
+      ]
+    },
+    {
+      "id": "a2_c23n07_q4",
+      "promptTh": "เมื่อเช้าฉันลืมเอาพาสปอร์ตมา",
+      "answerEn": "I forgot my passport this morning.",
+      "acceptedAnswers": [
+        "This morning I forgot my passport."
+      ],
+      "hints": [
+        "I …",
+        "I ___ my ___ this ___."
+      ]
+    },
+    {
+      "id": "a2_c23n07_q5",
+      "promptTh": "บอกเจ้าหน้าที่ว่า ฉันหามันไม่เจอเลย",
+      "answerEn": "I couldn't find it anywhere.",
+      "acceptedAnswers": [
+        "I couldn't find it."
+      ],
+      "hints": [
+        "I …",
+        "I ___ ___ it ___."
+      ]
+    },
+    {
+      "id": "a2_c23n07_q6",
+      "promptTh": "พูดแทน Max: เมื่อคืนผมวางกุญแจไว้บนโต๊ะ",
+      "answerEn": "I put my key on the table last night.",
+      "acceptedAnswers": [
+        "I put my keys on the table last night."
+      ],
+      "hints": [
+        "I …",
+        "I ___ my ___ on the ___ ___ ___."
+      ]
+    }
+  ],
+  "a2_c23n10": [
+    {
+      "id": "a2_c23n10_q1",
+      "promptTh": "บอกเจ้าหน้าที่: ฉันทำโทรศัพท์หาย มันสีดำ ช่วยฉันหน่อยได้ไหม",
+      "answerEn": "I lost my phone. It's black. Can you help me?",
+      "acceptedAnswers": [
+        "I lost my phone. It is black. Could you help me?"
+      ],
+      "hints": [
+        "I …",
+        "I ___ my ___. It's ___. Can you ___ me?"
+      ]
+    },
+    {
+      "id": "a2_c23n10_q2",
+      "promptTh": "บอกเจ้าหน้าที่: ฉันลืมกระเป๋าสตางค์ไว้บนรถเมล์ มันใบเล็กและสีน้ำเงิน",
+      "answerEn": "I left my wallet on the bus. It's small and blue.",
+      "acceptedAnswers": [
+        "I left my wallet on the bus. It is small and blue."
+      ],
+      "hints": [
+        "I …",
+        "I ___ my ___ on the ___. It's ___ and ___."
+      ]
+    },
+    {
+      "id": "a2_c23n10_q3",
+      "promptTh": "บอกเจ้าหน้าที่: กระเป๋าถือของเพื่อนฉันหาย มันเป็นกระเป๋าสีแดงที่มีกุญแจอยู่ข้างใน",
+      "answerEn": "My friend's handbag is missing. It's a red bag which has a key inside.",
+      "acceptedAnswers": [
+        "My friend's handbag is missing. It is a red bag which has a key inside."
+      ],
+      "hints": [
+        "My …",
+        "My ___ ___ is ___. It's a ___ ___ ___ ___ a ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c23n10_q4",
+      "promptTh": "บอกเจ้าหน้าที่: ฉันหามันไม่เจอเลย ช่วยตามหาให้หน่อยได้ไหม",
+      "answerEn": "I couldn't find it anywhere. Can you look for it?",
+      "acceptedAnswers": [
+        "I couldn't find it anywhere. Could you look for it?"
+      ],
+      "hints": [
+        "I …",
+        "I ___ ___ it ___. Can you ___ for it?"
+      ]
+    },
+    {
+      "id": "a2_c23n10_q5",
+      "promptTh": "บอกเจ้าหน้าที่: ฉันทำพาสปอร์ตหายเมื่อวาน ฉันอยากแจ้งของหาย",
+      "answerEn": "I lost my passport yesterday. I want to report it.",
+      "acceptedAnswers": [
+        "I lost my passport yesterday. I'd like to report it."
+      ],
+      "hints": [
+        "I …",
+        "I ___ my ___ ___. I ___ to ___ it."
+      ]
+    },
+    {
+      "id": "a2_c23n10_q6",
+      "promptTh": "ขอเจ้าหน้าที่: ถ้าเจอ ช่วยบอกฉันได้ไหม",
+      "answerEn": "If you find it, could you tell me?",
+      "acceptedAnswers": [
+        "Could you tell me if you find it?",
+        "If you find it, can you tell me?"
+      ],
+      "hints": [
+        "If …",
+        "If you ___ it, ___ you ___ me?"
+      ]
+    }
+  ],
+  "a2_c24n01": [
+    {
+      "id": "a2_c24n01_q1",
+      "promptTh": "บอกทีม: เราต้องไปเกต 12",
+      "answerEn": "We have to go to Gate 12.",
+      "acceptedAnswers": [
+        "We have to go to gate twelve."
+      ],
+      "hints": [
+        "We …",
+        "We ___ to ___ to ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c24n01_q2",
+      "promptTh": "ขอพนักงานต้อนรับโรงแรม: ช่วยหาแท็กซี่ให้เราหน่อยได้ไหม",
+      "answerEn": "Could you get a taxi for us?",
+      "acceptedAnswers": [
+        "Could you get us a taxi?",
+        "Could you get a taxi for us, please?"
+      ],
+      "hints": [
+        "Could …",
+        "Could you ___ a ___ for us?"
+      ]
+    },
+    {
+      "id": "a2_c24n01_q3",
+      "promptTh": "ถามทาง: ร้านขายยาอยู่ไกลแค่ไหน",
+      "answerEn": "How far is the pharmacy?",
+      "acceptedAnswers": [
+        "How far is the pharmacy from here?"
+      ],
+      "hints": [
+        "How …",
+        "How ___ is the ___?"
+      ]
+    },
+    {
+      "id": "a2_c24n01_q4",
+      "promptTh": "ถ้าฝนตก เราจะอยู่ที่โรงแรม",
+      "answerEn": "If it rains, we'll stay at the hotel.",
+      "acceptedAnswers": [
+        "If it rains, we will stay at the hotel.",
+        "We'll stay at the hotel if it rains."
+      ],
+      "hints": [
+        "If …",
+        "If it ___, ___ ___ at the ___."
+      ]
+    },
+    {
+      "id": "a2_c24n01_q5",
+      "promptTh": "May ยังไออยู่ เธอควรพักผ่อน",
+      "answerEn": "May still has a cough. She should rest.",
+      "acceptedAnswers": [
+        "She still has a cough. She should rest."
+      ],
+      "hints": [
+        "May …",
+        "May ___ ___ a ___. She ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c24n01_q6",
+      "promptTh": "ฉันทำพาสปอร์ตหาย ฉันกำลังหามันอยู่",
+      "answerEn": "I lost my passport. I'm looking for it.",
+      "acceptedAnswers": [
+        "I lost my passport. I am looking for it."
+      ],
+      "hints": [
+        "I …",
+        "I ___ my ___. I'm ___ for it."
+      ]
+    },
+    {
+      "id": "a2_c24n01_q7",
+      "promptTh": "ชวน Max: ขึ้นแท็กซี่กันเถอะ",
+      "answerEn": "Let's get in the taxi.",
+      "acceptedAnswers": [
+        "Let's get in a taxi."
+      ],
+      "hints": [
+        "Let's …",
+        "Let's ___ in the ___."
+      ]
+    }
+  ],
+  "a2_c24n08": [
+    {
+      "id": "a2_c24n08_q1",
+      "promptTh": "บอกเจ้าหน้าที่สายการบิน: ขอโทษค่ะ/ครับ เที่ยวบินของฉันถูกยกเลิก มีเที่ยวบินที่ช้ากว่านี้ไหม",
+      "answerEn": "Excuse me, my flight is cancelled. Is there a later flight?",
+      "acceptedAnswers": [
+        "Excuse me, my flight was cancelled. Is there a later flight?",
+        "Excuse me, my flight is canceled. Is there a later flight?"
+      ],
+      "hints": [
+        "Excuse …",
+        "Excuse me, my ___ is ___. Is there a ___ ___?"
+      ]
+    },
+    {
+      "id": "a2_c24n08_q2",
+      "promptTh": "ถามเจ้าหน้าที่สายการบิน: ฉันทำอะไรแทนได้บ้าง",
+      "answerEn": "What can I do instead?",
+      "acceptedAnswers": [],
+      "hints": [
+        "What …",
+        "What can I do ___?"
+      ]
+    },
+    {
+      "id": "a2_c24n08_q3",
+      "promptTh": "ขอเจ้าหน้าที่สายการบิน: ฉันขอ voucher ได้ไหม",
+      "answerEn": "Can I get a voucher?",
+      "acceptedAnswers": [
+        "Can I have a voucher?",
+        "Can I get a voucher, please?"
+      ],
+      "hints": [
+        "Can …",
+        "Can I ___ a ___?"
+      ]
+    },
+    {
+      "id": "a2_c24n08_q4",
+      "promptTh": "บอกเจ้าหน้าที่สายการบิน: เที่ยวบินของเราดีเลย์ ช่วยหาโรงแรมให้เราได้ไหม",
+      "answerEn": "Our flight is delayed. Could you find a hotel for us?",
+      "acceptedAnswers": [
+        "Our flight is delayed. Could you find us a hotel?"
+      ],
+      "hints": [
+        "Our …",
+        "Our ___ is ___. ___ you ___ a ___ for us?"
+      ]
+    },
+    {
+      "id": "a2_c24n08_q5",
+      "promptTh": "ถามเจ้าหน้าที่สายการบิน: ถ้าฉันขึ้นเที่ยวบินที่ช้ากว่า ฉันจะได้ voucher ไหม",
+      "answerEn": "If I take the later flight, will I get a voucher?",
+      "acceptedAnswers": [
+        "Will I get a voucher if I take the later flight?"
+      ],
+      "hints": [
+        "If …",
+        "If I ___ the ___ ___, will I ___ a ___?"
+      ]
+    },
+    {
+      "id": "a2_c24n08_q6",
+      "promptTh": "ถามเจ้าหน้าที่สายการบิน: มีข้อมูลอัปเดตของเที่ยวบินไหม",
+      "answerEn": "Is there an update on the flight?",
+      "acceptedAnswers": [
+        "Is there an update on our flight?"
+      ],
+      "hints": [
+        "Is …",
+        "Is there an ___ on the ___?"
+      ]
+    }
+  ],
+  "a2_c25n04": [
+    {
+      "id": "a2_c25n04_q1",
+      "promptTh": "ถามเพื่อนว่า (ทริปที่ผ่านมา) ไปเที่ยวกับใครมา",
+      "answerEn": "Who did you go with?",
+      "acceptedAnswers": [
+        "Who went with you?"
+      ],
+      "hints": [
+        "Who …",
+        "Who did you ___ with?"
+      ]
+    },
+    {
+      "id": "a2_c25n04_q2",
+      "promptTh": "ถามพ่อว่า (ทริปทำงานของพ่อ) กินอะไรมาบ้าง",
+      "answerEn": "What did you eat?",
+      "acceptedAnswers": [
+        "What did you eat on the trip?",
+        "What did you eat there?"
+      ],
+      "hints": [
+        "What …",
+        "What did you ___?"
+      ]
+    },
+    {
+      "id": "a2_c25n04_q3",
+      "promptTh": "แม่ถามว่าพักที่ไหน ตอบแม่ว่า: ฉันพักที่โรงแรมติดทะเล",
+      "answerEn": "I stayed at a hotel next to the beach.",
+      "acceptedAnswers": [
+        "I stayed in a hotel next to the beach.",
+        "I stayed at a hotel by the beach."
+      ],
+      "hints": [
+        "I …",
+        "I ___ at a ___ ___ to the ___."
+      ]
+    },
+    {
+      "id": "a2_c25n04_q4",
+      "promptTh": "ถาม Teacher John ว่า คุณกลับมาจากทริปเมื่อไหร่",
+      "answerEn": "When did you come back?",
+      "acceptedAnswers": [
+        "When did you get back?",
+        "When did you come back from the trip?"
+      ],
+      "hints": [
+        "When …",
+        "When did you ___ ___?"
+      ]
+    },
+    {
+      "id": "a2_c25n04_q5",
+      "promptTh": "ตอบแม่ว่า: เรากลับมาเมื่อสองวันก่อน",
+      "answerEn": "We came back two days ago.",
+      "acceptedAnswers": [
+        "We got back two days ago."
+      ],
+      "hints": [
+        "We …",
+        "We ___ ___ ___ ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c25n04_q6",
+      "promptTh": "ถาม Mali ว่า คุณไปเกาะยังไง (เดินทางด้วยอะไร)",
+      "answerEn": "How did you get to the island?",
+      "acceptedAnswers": [
+        "How did you go to the island?"
+      ],
+      "hints": [
+        "How …",
+        "How did you ___ to the ___?"
+      ]
+    }
+  ],
+  "a2_c26n06": [
+    {
+      "id": "a2_c26n06_q1",
+      "promptTh": "ฝึกถาม-ตอบ: ถามว่า 'คุณเคยไปญี่ปุ่นไหม' แล้วตอบเองแบบสั้นว่า 'ไม่เคย'",
+      "answerEn": "Have you ever been to Japan? No, I haven't.",
+      "acceptedAnswers": [
+        "Have you ever been to Japan? No, I have not.",
+        "Have you been to Japan? No, I haven't."
+      ],
+      "hints": [
+        "Have …",
+        "Have you ___ ___ to ___? ___, I ___."
+      ]
+    },
+    {
+      "id": "a2_c26n06_q2",
+      "promptTh": "Teacher Torto ถามว่าเคยลองทุเรียนไหม ตอบแบบสั้นว่า 'เคย'",
+      "answerEn": "Yes, I have.",
+      "acceptedAnswers": [
+        "Yes, I have. I've tried durian.",
+        "Yes, I have tried durian."
+      ],
+      "hints": [
+        "Yes, …",
+        "Yes, I ___."
+      ]
+    },
+    {
+      "id": "a2_c26n06_q3",
+      "promptTh": "ถาม Max ว่า เคยเห็นหิมะไหม",
+      "answerEn": "Have you ever seen snow?",
+      "acceptedAnswers": [],
+      "hints": [
+        "Have …",
+        "Have you ___ ___ ___?"
+      ]
+    },
+    {
+      "id": "a2_c26n06_q4",
+      "promptTh": "ถาม Mali ว่า เคยกินก๋วยเตี๋ยวน้ำไหม",
+      "answerEn": "Have you ever eaten noodle soup?",
+      "acceptedAnswers": [],
+      "hints": [
+        "Have …",
+        "Have you ___ ___ ___ ___?"
+      ]
+    },
+    {
+      "id": "a2_c26n06_q5",
+      "promptTh": "บอกว่า ฉันไม่เคยไปภูเก็ต",
+      "answerEn": "I've never been to Phuket.",
+      "acceptedAnswers": [
+        "I have never been to Phuket."
+      ],
+      "hints": [
+        "I've …",
+        "I've ___ ___ to ___."
+      ]
+    },
+    {
+      "id": "a2_c26n06_q6",
+      "promptTh": "ถาม Teacher Torto ว่า เคยตั้งแคมป์ในป่าไหม",
+      "answerEn": "Have you ever camped in a forest?",
+      "acceptedAnswers": [
+        "Have you ever camped in the forest?"
+      ],
+      "hints": [
+        "Have …",
+        "Have you ___ ___ in a ___?"
+      ]
+    }
+  ],
+  "a2_c27n02": [
+    {
+      "id": "a2_c27n02_q1",
+      "promptTh": "ฝึกถาม-ตอบ: ถามเพื่อนว่า เมื่อคืนตอนสองทุ่มกำลังทำอะไรอยู่ แล้วตอบเองว่า ฉันกำลังทำอาหารอยู่",
+      "answerEn": "What were you doing at 8 p.m. last night? I was cooking.",
+      "acceptedAnswers": [
+        "What were you doing at 8 p.m.? I was cooking.",
+        "What were you doing at eight last night? I was cooking."
+      ],
+      "hints": [
+        "What …",
+        "What were you ___ at ___ ___.. ___ ___? I was ___."
+      ]
+    },
+    {
+      "id": "a2_c27n02_q2",
+      "promptTh": "บอกว่า เมื่อวานตอน 7 โมงเช้า ฉันกำลังรอรถบัสอยู่",
+      "answerEn": "I was waiting for the bus at 7 a.m. yesterday.",
+      "acceptedAnswers": [
+        "At 7 a.m. yesterday, I was waiting for the bus.",
+        "I was waiting for the bus at seven yesterday."
+      ],
+      "hints": [
+        "I …",
+        "I was ___ for the ___ at ___ a.m. ___."
+      ]
+    },
+    {
+      "id": "a2_c27n02_q3",
+      "promptTh": "ถาม John ว่า เมื่อวานตอนบ่ายสามโมง Max กำลังทำอะไรอยู่",
+      "answerEn": "What was Max doing at 3 p.m. yesterday?",
+      "acceptedAnswers": [
+        "What was Max doing at three yesterday?"
+      ],
+      "hints": [
+        "What …",
+        "What was ___ ___ at ___ ___.. ___?"
+      ]
+    },
+    {
+      "id": "a2_c27n02_q4",
+      "promptTh": "บอกว่า เมื่อคืนตอนสี่ทุ่ม May กับ Mali กำลังดูหนังอยู่",
+      "answerEn": "May and Mali were watching a movie at 10 p.m. last night.",
+      "acceptedAnswers": [
+        "At 10 p.m. last night, May and Mali were watching a movie."
+      ],
+      "hints": [
+        "May …",
+        "May and ___ were ___ a ___ at ___ ___.. ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c27n02_q5",
+      "promptTh": "John ถามว่า 'Were you sleeping at 6 a.m.?' ตอบแบบสั้นว่า ใช่ (ตอนนั้นกำลังหลับ)",
+      "answerEn": "Yes, I was.",
+      "acceptedAnswers": [
+        "Yes, I was sleeping."
+      ],
+      "hints": [
+        "Yes, …"
+      ]
+    },
+    {
+      "id": "a2_c27n02_q6",
+      "promptTh": "บอกว่า เมื่อวานตอนเที่ยง แม่ของฉันไม่ได้กำลังทำงาน แม่กำลังกินข้าวกลางวันอยู่",
+      "answerEn": "My mother wasn't working at twelve yesterday. She was having lunch.",
+      "acceptedAnswers": [
+        "My mother was not working at twelve yesterday. She was having lunch.",
+        "My mother wasn't working at 12 yesterday. She was eating lunch.",
+        "My mother wasn't working at twelve yesterday. She was eating lunch."
+      ],
+      "hints": [
+        "My …",
+        "My ___ ___ ___ at ___ ___. She was ___ ___."
+      ]
+    }
+  ],
+  "a2_c27n10": [
+    {
+      "id": "a2_c27n10_q1",
+      "promptTh": "เล่าว่า (เมื่อวาน) ฉันกำลังวิ่งเพราะสาย ก็เลยเหนื่อยมาก",
+      "answerEn": "I was running because I was late, so I was very tired.",
+      "acceptedAnswers": [
+        "I was running because I was late, so I was tired."
+      ],
+      "hints": [
+        "I …",
+        "I was ___ ___ I was ___, ___ I was ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c27n10_q2",
+      "promptTh": "เล่าว่า ฉันกำลังหากระเป๋าอยู่ ตอนที่แม่ของฉันโทรมา",
+      "answerEn": "I was looking for my bag when my mother phoned.",
+      "acceptedAnswers": [
+        "I was looking for my bag when my mother phoned me."
+      ],
+      "hints": [
+        "I …",
+        "I was ___ for my ___ when my ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c27n10_q3",
+      "promptTh": "เล่าว่า Max กำลังเดินกลับบ้านตอนที่ฝนเริ่มตก เขาก็เลยเปียก",
+      "answerEn": "Max was walking home when it started to rain, so he got wet.",
+      "acceptedAnswers": [
+        "Max was walking home when it started raining, so he got wet."
+      ],
+      "hints": [
+        "Max …",
+        "Max was ___ ___ when it ___ to ___, ___ he ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c27n10_q4",
+      "promptTh": "เล่าว่า เรากำลังเดินอยู่ในป่าตอนที่เราหลงทาง",
+      "answerEn": "We were walking in the forest when we got lost.",
+      "acceptedAnswers": [],
+      "hints": [
+        "We …",
+        "We were ___ in the ___ when we ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c27n10_q5",
+      "promptTh": "เล่าว่า ถนนลื่นเพราะฝนกำลังตก ฉันก็เลยเดินช้า ๆ",
+      "answerEn": "The road was slippery because it was raining, so I walked slowly.",
+      "acceptedAnswers": [],
+      "hints": [
+        "The …",
+        "The ___ was ___ ___ it was ___, ___ I ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c27n10_q6",
+      "promptTh": "เล่าว่า ขณะที่เรากำลังกินข้าวเย็น พายุก็เริ่มเข้า เราก็เลยอยู่บ้าน",
+      "answerEn": "While we were having dinner, the storm started, so we stayed home.",
+      "acceptedAnswers": [
+        "While we were eating dinner, the storm started, so we stayed home.",
+        "While we were having dinner, the storm started, so we stayed at home."
+      ],
+      "hints": [
+        "While …",
+        "While we were ___ ___, the ___ ___, ___ we ___ ___."
+      ]
+    }
+  ],
+  "a2_c28n06": [
+    {
+      "id": "a2_c28n06_q1",
+      "promptTh": "เล่นเป็น Mali: ถามผู้จัดการของ Mali ว่า ฉันต้องใส่ยูนิฟอร์มไหม",
+      "answerEn": "Do I have to wear a uniform?",
+      "acceptedAnswers": [],
+      "hints": [
+        "Do …",
+        "Do I ___ to ___ a ___?"
+      ]
+    },
+    {
+      "id": "a2_c28n06_q2",
+      "promptTh": "บอกพนักงานใหม่ว่า ห้ามมาสาย",
+      "answerEn": "You mustn't be late.",
+      "acceptedAnswers": [
+        "You must not be late."
+      ],
+      "hints": [
+        "You …",
+        "You ___ be ___."
+      ]
+    },
+    {
+      "id": "a2_c28n06_q3",
+      "promptTh": "พูดแทนผู้จัดการของ Mali: บอก Mali ว่า คุณไม่จำเป็นต้องมาประชุมวันเสาร์",
+      "answerEn": "You don't have to come to the meeting on Saturday.",
+      "acceptedAnswers": [
+        "You don't have to go to the meeting on Saturday.",
+        "You do not have to come to the meeting on Saturday."
+      ],
+      "hints": [
+        "You …",
+        "You don't ___ to ___ to the ___ on ___."
+      ]
+    },
+    {
+      "id": "a2_c28n06_q4",
+      "promptTh": "บอกเพื่อนร่วมงานว่า ห้ามใช้โทรศัพท์ตอนทำงาน",
+      "answerEn": "You mustn't use your phone at work.",
+      "acceptedAnswers": [
+        "You must not use your phone at work."
+      ],
+      "hints": [
+        "You …",
+        "You ___ ___ your ___ at ___."
+      ]
+    },
+    {
+      "id": "a2_c28n06_q5",
+      "promptTh": "บอกว่า เราต้องทำงานให้เสร็จก่อนห้าโมงเย็น (กฎ)",
+      "answerEn": "We must finish our tasks before 5 p.m.",
+      "acceptedAnswers": [
+        "We must finish our tasks before five.",
+        "We must finish the tasks before 5 p.m."
+      ],
+      "hints": [
+        "We …",
+        "We ___ ___ our ___ ___ ___ ___.."
+      ]
+    },
+    {
+      "id": "a2_c28n06_q6",
+      "promptTh": "ถามผู้จัดการว่า Mali ต้องทำงานวันอาทิตย์ไหม",
+      "answerEn": "Does Mali have to work on Sunday?",
+      "acceptedAnswers": [
+        "Does Mali have to work on Sundays?"
+      ],
+      "hints": [
+        "Does …",
+        "Does ___ ___ to ___ on ___?"
+      ]
+    }
+  ],
+  "a2_c29n06": [
+    {
+      "id": "a2_c29n06_q1",
+      "promptTh": "พูดถึงทริปที่ผ่านมา: ฉันไม่เห็นด้วย เพราะมันคนเยอะเกินไป",
+      "answerEn": "I don't agree because it was too crowded.",
+      "acceptedAnswers": [
+        "I do not agree because it was too crowded."
+      ],
+      "hints": [
+        "I …",
+        "I don't ___ ___ it was ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c29n06_q2",
+      "promptTh": "พูดถึงทริปที่ผ่านมา: ฉันคิดว่าวิวสุดยอดมาก แล้วถาม Max ว่าคิดยังไง",
+      "answerEn": "I think the view was amazing. What do you think?",
+      "acceptedAnswers": [],
+      "hints": [
+        "I …",
+        "I ___ the ___ was ___. What do you ___?"
+      ]
+    },
+    {
+      "id": "a2_c29n06_q3",
+      "promptTh": "พูดถึงทริปที่ผ่านมา: ฉันเห็นด้วย ชายหาดสะอาดและเงียบสงบ",
+      "answerEn": "I agree. The beach was clean and peaceful.",
+      "acceptedAnswers": [],
+      "hints": [
+        "I …",
+        "I ___. The ___ was ___ and ___."
+      ]
+    },
+    {
+      "id": "a2_c29n06_q4",
+      "promptTh": "พูดถึงทริปที่ผ่านมา: ฉันคิดว่าตลาดดีที่สุด เพราะคนนิยมและราคาถูก",
+      "answerEn": "I think the market was the best because it was popular and cheap.",
+      "acceptedAnswers": [
+        "I think the market was the best because it's popular and cheap."
+      ],
+      "hints": [
+        "I …",
+        "I ___ the ___ was the ___ ___ it was ___ and ___."
+      ]
+    },
+    {
+      "id": "a2_c29n06_q5",
+      "promptTh": "พูดถึงทริปที่ผ่านมา: ฉันไม่เห็นด้วย เพราะโรงแรมเสียงดังมาก",
+      "answerEn": "I don't agree because the hotel was very noisy.",
+      "acceptedAnswers": [
+        "I do not agree because the hotel was very noisy."
+      ],
+      "hints": [
+        "I …",
+        "I don't ___ ___ the ___ was ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c29n06_q6",
+      "promptTh": "พูดถึงทริปที่ผ่านมา: ฉันคิดว่าพิพิธภัณฑ์แย่มาก แต่ร้านกาแฟสุดยอด",
+      "answerEn": "I think the museum was terrible, but the café was amazing.",
+      "acceptedAnswers": [],
+      "hints": [
+        "I …",
+        "I ___ the ___ was ___, but the ___ was ___."
+      ]
+    }
+  ],
+  "a2_c29n10": [
+    {
+      "id": "a2_c29n10_q1",
+      "promptTh": "รีวิวร้านกาแฟ: เราไปที่นั่นวันอาทิตย์ มันเป็นร้านกาแฟที่ดีที่สุด ฉันแนะนำ",
+      "answerEn": "We went there on Sunday. It was the best café. I recommend it.",
+      "acceptedAnswers": [],
+      "hints": [
+        "We …",
+        "We ___ there on ___. It was the ___ ___. I ___ it."
+      ]
+    },
+    {
+      "id": "a2_c29n10_q2",
+      "promptTh": "รีวิวตลาด: เราไปตลาดเมื่อวันเสาร์ มันเป็นตลาดที่คนเยอะที่สุด แต่คุ้มค่า",
+      "answerEn": "We went to the market on Saturday. It was the most crowded market, but it was worth it.",
+      "acceptedAnswers": [
+        "We went to the market on Saturday. It was the most crowded market, but it was worth it. I recommend it.",
+        "We went to the market on Saturday. It was the most crowded, but it was worth it."
+      ],
+      "hints": [
+        "We …",
+        "We ___ to the ___ on ___. It was the ___ ___ ___, but it was ___ it."
+      ]
+    },
+    {
+      "id": "a2_c29n10_q3",
+      "promptTh": "รีวิวโรงแรม: ฉันเคยไปโรงแรมนี้แล้ว บริการแย่ที่สุด ฉันไม่แนะนำ",
+      "answerEn": "I've been to this hotel. The service was the worst. I don't recommend it.",
+      "acceptedAnswers": [
+        "I have been to this hotel. The service was the worst. I don't recommend it.",
+        "I've been to this hotel. It was the worst service. I don't recommend it."
+      ],
+      "hints": [
+        "I've …",
+        "I've ___ to this ___. The ___ was the ___. I don't ___ it."
+      ]
+    },
+    {
+      "id": "a2_c29n10_q4",
+      "promptTh": "รีวิวเกาะ: เราไปเกาะเมื่อเดือนที่แล้ว มันเป็นเกาะที่เงียบสงบที่สุด ฉันแนะนำ",
+      "answerEn": "We went to the island last month. It was the most peaceful island. I recommend it.",
+      "acceptedAnswers": [],
+      "hints": [
+        "We …",
+        "We ___ to the ___ ___ ___. It was the ___ ___ ___. I ___ it."
+      ]
+    },
+    {
+      "id": "a2_c29n10_q5",
+      "promptTh": "รีวิวร้านก๋วยเตี๋ยว: Mali กับฉันกินที่ร้านก๋วยเตี๋ยวเมื่อวาน ราคาถูกที่สุดในเมือง คุ้มมาก",
+      "answerEn": "Mali and I ate at the noodle shop yesterday. It was the cheapest in town. It was really worth it.",
+      "acceptedAnswers": [
+        "Mali and I ate at the noodle shop yesterday. It was the cheapest in town. It was worth it."
+      ],
+      "hints": [
+        "Mali …",
+        "Mali and I ___ at the ___ ___ ___. It was the ___ in ___. It was ___ ___ it."
+      ]
+    },
+    {
+      "id": "a2_c29n10_q6",
+      "promptTh": "รีวิวร้านอาหารริมทะเล: เราไปกินข้าวเย็นที่นั่นเมื่อคืน วิวดีที่สุด ฉันแนะนำ",
+      "answerEn": "We had dinner there last night. It had the best view. I recommend it.",
+      "acceptedAnswers": [
+        "We had dinner there last night. The view was the best. I recommend it.",
+        "We ate dinner there last night. It had the best view. I recommend it."
+      ],
+      "hints": [
+        "We …",
+        "We ___ ___ there ___ ___. It ___ the ___ ___. I ___ it."
+      ]
+    }
+  ],
+  "a2_c30n02": [
+    {
+      "id": "a2_c30n02_q1",
+      "promptTh": "บอกว่า ฉันยังไม่ได้ส่งรูปเลย",
+      "answerEn": "I haven't sent the photos yet.",
+      "acceptedAnswers": [
+        "I have not sent the photos yet."
+      ],
+      "hints": [
+        "I …",
+        "I ___ ___ the ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c30n02_q2",
+      "promptTh": "บอกว่า ฉันจองโต๊ะไว้แล้ว (already)",
+      "answerEn": "I've already booked the table.",
+      "acceptedAnswers": [
+        "I have already booked the table."
+      ],
+      "hints": [
+        "I've …",
+        "I've ___ ___ the ___."
+      ]
+    },
+    {
+      "id": "a2_c30n02_q3",
+      "promptTh": "ถาม May ว่า โทรหาร้านแล้วหรือยัง",
+      "answerEn": "Have you called the restaurant yet?",
+      "acceptedAnswers": [],
+      "hints": [
+        "Have …",
+        "Have you ___ the ___ ___?"
+      ]
+    },
+    {
+      "id": "a2_c30n02_q4",
+      "promptTh": "บอกว่า Teacher Nina เพิ่งซื้อเค้กมา (just)",
+      "answerEn": "Teacher Nina has just bought the cake.",
+      "acceptedAnswers": [
+        "Nina has just bought the cake.",
+        "Teacher Nina's just bought the cake."
+      ],
+      "hints": [
+        "Teacher …",
+        "Teacher ___ ___ ___ ___ the ___."
+      ]
+    },
+    {
+      "id": "a2_c30n02_q5",
+      "promptTh": "บอกว่า Mali ยังไม่ได้โทรกลับมาเลย",
+      "answerEn": "Mali hasn't called back yet.",
+      "acceptedAnswers": [
+        "Mali has not called back yet.",
+        "Mali hasn't called me back yet."
+      ],
+      "hints": [
+        "Mali …",
+        "Mali ___ ___ ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c30n02_q6",
+      "promptTh": "ถามว่า Capy ซื้อเครื่องดื่มแล้วหรือยัง",
+      "answerEn": "Has Capy bought the drinks yet?",
+      "acceptedAnswers": [
+        "Has Capy bought drinks yet?"
+      ],
+      "hints": [
+        "Has …",
+        "Has ___ ___ the ___ ___?"
+      ]
+    }
+  ],
+  "a2_c30n10": [
+    {
+      "id": "a2_c30n10_q1",
+      "promptTh": "บอกร้านว่า เราจองวันศุกร์ไปแล้ว ขอเปลี่ยนเป็นวันเสาร์ได้ไหม",
+      "answerEn": "We've already booked for Friday. Can we change it to Saturday?",
+      "acceptedAnswers": [
+        "We have already booked for Friday. Can we change it to Saturday?"
+      ],
+      "hints": [
+        "We've …",
+        "We've ___ ___ for ___. Can we ___ it to ___?"
+      ]
+    },
+    {
+      "id": "a2_c30n10_q2",
+      "promptTh": "Mali บอกว่าวันศุกร์เต็ม ตอบว่า: โอเค เดี๋ยวฉันจะโทรหา Nina แล้วจะโทรกลับนะ",
+      "answerEn": "OK, I'll call Nina and call you back.",
+      "acceptedAnswers": [
+        "OK, I'll call Nina and I'll call you back.",
+        "OK. I'll call Nina and call back."
+      ],
+      "hints": [
+        "OK, …",
+        "OK, ___ ___ ___ and ___ you ___."
+      ]
+    },
+    {
+      "id": "a2_c30n10_q3",
+      "promptTh": "บอกว่า ฉันยังไม่ได้ยืนยันเวลา พรุ่งนี้ฉันจะโทรกลับ",
+      "answerEn": "I haven't confirmed the time yet. I'll call back tomorrow.",
+      "acceptedAnswers": [
+        "I haven't confirmed the time yet. I'll call you back tomorrow.",
+        "I have not confirmed the time yet. I'll call back tomorrow."
+      ],
+      "hints": [
+        "I …",
+        "I ___ ___ the ___ ___. ___ ___ ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c30n10_q4",
+      "promptTh": "บอกว่า Mali ยังไม่ได้โทรกลับมา ฉันจะฝากข้อความไว้",
+      "answerEn": "Mali hasn't called back yet. I'll leave a message.",
+      "acceptedAnswers": [
+        "Mali hasn't called back yet, so I'll leave a message.",
+        "Mali has not called back yet. I'll leave a message."
+      ],
+      "hints": [
+        "Mali …",
+        "Mali ___ ___ ___ ___. ___ ___ a ___."
+      ]
+    },
+    {
+      "id": "a2_c30n10_q5",
+      "promptTh": "ถามร้านว่า ยืนยันการจองแล้วหรือยัง แล้วขอเปลี่ยนเป็นหนึ่งทุ่ม",
+      "answerEn": "Have you confirmed the booking yet? Can we change it to 7 p.m.?",
+      "acceptedAnswers": [
+        "Have you confirmed the booking yet? Can we change it to seven?"
+      ],
+      "hints": [
+        "Have …",
+        "Have you ___ the ___ ___? Can we ___ it to ___ ___..?"
+      ]
+    },
+    {
+      "id": "a2_c30n10_q6",
+      "promptTh": "บอกว่า เราเพิ่งจองวันศุกร์ไป แต่ Max ไม่ว่าง ขอเลื่อนเป็นวันอาทิตย์ได้ไหม",
+      "answerEn": "We've just booked for Friday, but Max isn't free. Can we change it to Sunday?",
+      "acceptedAnswers": [
+        "We have just booked for Friday, but Max isn't free. Can we change it to Sunday?"
+      ],
+      "hints": [
+        "We've …",
+        "We've ___ ___ for ___, but ___ ___ ___. Can we ___ it to ___?"
+      ]
+    }
+  ],
+  "a2_c31n02": [
+    {
+      "id": "a2_c31n02_q1",
+      "promptTh": "เสนอว่า ทำไมเราไม่ทำการ์ดกันล่ะ แล้วอาสาว่า ฉันจะซื้อดอกไม้เอง",
+      "answerEn": "Why don't we make a card? I'll buy the flowers.",
+      "acceptedAnswers": [],
+      "hints": [
+        "Why …",
+        "Why don't we ___ a ___? ___ ___ the ___."
+      ]
+    },
+    {
+      "id": "a2_c31n02_q2",
+      "promptTh": "เสนอว่า ทำไมเราไม่ถ่ายรูปกับ Max ล่ะ",
+      "answerEn": "Why don't we take a photo with Max?",
+      "acceptedAnswers": [
+        "Why don't we take a team photo with Max?"
+      ],
+      "hints": [
+        "Why …",
+        "Why don't we ___ a ___ with ___?"
+      ]
+    },
+    {
+      "id": "a2_c31n02_q3",
+      "promptTh": "อาสาว่า ฉันจะเอาเค้กมาเอง",
+      "answerEn": "I'll bring the cake.",
+      "acceptedAnswers": [
+        "I will bring the cake."
+      ],
+      "hints": [
+        "I'll …",
+        "I'll ___ the ___."
+      ]
+    },
+    {
+      "id": "a2_c31n02_q4",
+      "promptTh": "เสนอว่า ทำไมเราไม่ขอให้ Teacher John ส่งวิดีโอมาล่ะ",
+      "answerEn": "Why don't we ask Teacher John to send a video?",
+      "acceptedAnswers": [
+        "Why don't we ask John to send a video?"
+      ],
+      "hints": [
+        "Why …",
+        "Why don't we ___ ___ ___ to ___ a ___?"
+      ]
+    },
+    {
+      "id": "a2_c31n02_q5",
+      "promptTh": "Mali ถามว่าใครจะเอาเพลงมา ตอบว่า: ฉันเอง! ฉันจะเอาเพลงมา",
+      "answerEn": "I'll do it! I'll bring the music.",
+      "acceptedAnswers": [
+        "I'll do it. I'll bring the music."
+      ],
+      "hints": [
+        "I'll …",
+        "I'll do it! ___ ___ the ___."
+      ]
+    },
+    {
+      "id": "a2_c31n02_q6",
+      "promptTh": "เสนอว่า ทำไมเราไม่ไปที่ร้านก่อนหกโมงล่ะ แล้วอาสาว่า ฉันจะโทรหา Mali เอง",
+      "answerEn": "Why don't we go to the restaurant before six? I'll call Mali.",
+      "acceptedAnswers": [
+        "Why don't we go to the restaurant before 6 p.m.? I'll call Mali."
+      ],
+      "hints": [
+        "Why …",
+        "Why don't we ___ to the ___ ___ ___? ___ ___ ___."
+      ]
+    }
+  ],
+  "a2_c31n06": [
+    {
+      "id": "a2_c31n06_q1",
+      "promptTh": "ถาม May ว่า ซื้อของขวัญแล้วหรือยัง",
+      "answerEn": "Have you bought the gift yet?",
+      "acceptedAnswers": [],
+      "hints": [
+        "Have …",
+        "Have you ___ the ___ ___?"
+      ]
+    },
+    {
+      "id": "a2_c31n06_q2",
+      "promptTh": "ถามในกลุ่มว่า ใครจะเป็นคนโทรหาร้าน",
+      "answerEn": "Who's going to call the restaurant?",
+      "acceptedAnswers": [
+        "Who is going to call the restaurant?"
+      ],
+      "hints": [
+        "Who's …",
+        "Who's ___ to ___ the ___?"
+      ]
+    },
+    {
+      "id": "a2_c31n06_q3",
+      "promptTh": "ถามว่า Mali ทำการ์ดเสร็จแล้วหรือยัง",
+      "answerEn": "Has Mali finished the card yet?",
+      "acceptedAnswers": [],
+      "hints": [
+        "Has …",
+        "Has ___ ___ the ___ ___?"
+      ]
+    },
+    {
+      "id": "a2_c31n06_q4",
+      "promptTh": "ตอบว่า ฉันซื้อดอกไม้แล้ว แต่ยังไม่ได้ซื้อเค้ก",
+      "answerEn": "I've already bought the flowers, but I haven't bought the cake yet.",
+      "acceptedAnswers": [
+        "I've bought the flowers, but I haven't bought the cake yet.",
+        "I have already bought the flowers, but I have not bought the cake yet."
+      ],
+      "hints": [
+        "I've …",
+        "I've ___ ___ the ___, but I ___ ___ the ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c31n06_q5",
+      "promptTh": "ถามว่า ใครจะไปรับ Max ที่บ้าน",
+      "answerEn": "Who's going to pick up Max from his house?",
+      "acceptedAnswers": [
+        "Who's going to pick Max up from his house?",
+        "Who is going to pick up Max from his house?",
+        "Who's going to pick up Max at his house?"
+      ],
+      "hints": [
+        "Who's …",
+        "Who's ___ to ___ ___ ___ ___ his ___?"
+      ]
+    },
+    {
+      "id": "a2_c31n06_q6",
+      "promptTh": "ถามเพื่อนว่า ส่งข้อความหา Teacher John แล้วหรือยัง",
+      "answerEn": "Have you sent a message to Teacher John yet?",
+      "acceptedAnswers": [
+        "Have you sent Teacher John a message yet?",
+        "Have you sent a message to John yet?"
+      ],
+      "hints": [
+        "Have …",
+        "Have you ___ a ___ to ___ ___ ___?"
+      ]
+    }
+  ],
+  "a2_c31n10": [
+    {
+      "id": "a2_c31n10_q1",
+      "promptTh": "อำลา Max: เรามีทริปที่ยอดเยี่ยม ฉันจะคิดถึงคุณ โชคดีนะ!",
+      "answerEn": "We had a great trip. I'll miss you. Good luck!",
+      "acceptedAnswers": [],
+      "hints": [
+        "We …",
+        "We ___ a ___ ___. ___ ___ you. ___ ___!"
+      ]
+    },
+    {
+      "id": "a2_c31n10_q2",
+      "promptTh": "อำลา Max: ทริปของเราเป็นประสบการณ์ที่ดีที่สุด โชคดีที่โรงเรียนใหม่นะ!",
+      "answerEn": "Our trip was the best experience. Good luck at your new school!",
+      "acceptedAnswers": [
+        "Our trip was the best experience. Good luck at your new school."
+      ],
+      "hints": [
+        "Our …",
+        "Our ___ was the ___ ___. ___ ___ at your ___ ___!"
+      ]
+    },
+    {
+      "id": "a2_c31n10_q3",
+      "promptTh": "อำลา Max: ตอนที่กระเป๋าฉันหาย คุณช่วยฉันหา ขอบคุณนะ ฉันจะคิดถึงคุณ",
+      "answerEn": "When I lost my bag, you helped me look for it. Thank you. I'll miss you.",
+      "acceptedAnswers": [
+        "When I lost my bag, you helped me look for it. Thanks. I'll miss you."
+      ],
+      "hints": [
+        "When …",
+        "When I ___ my ___, you ___ me ___ for it. ___ you. ___ ___ you."
+      ]
+    },
+    {
+      "id": "a2_c31n10_q4",
+      "promptTh": "อำลา Max: เราสนุกมากที่เกาะ ฉันจะโทรหาคุณทุกสัปดาห์ ติดต่อกันนะ!",
+      "answerEn": "We had a lot of fun on the island. I'll call you every week. Keep in touch!",
+      "acceptedAnswers": [
+        "We had fun on the island. I'll call you every week. Keep in touch!"
+      ],
+      "hints": [
+        "We …",
+        "We ___ a ___ of ___ on the ___. ___ ___ you ___ ___. ___ in ___!"
+      ]
+    },
+    {
+      "id": "a2_c31n10_q5",
+      "promptTh": "อำลา Max: คุณเป็นเพื่อนที่ตลกที่สุดในทีม เดินทางปลอดภัยนะ! เจอกันปีหน้า",
+      "answerEn": "You were the funniest friend in the team. Have a safe trip! See you next year.",
+      "acceptedAnswers": [
+        "You were the funniest friend on the team. Have a safe trip! See you next year."
+      ],
+      "hints": [
+        "You …",
+        "You were the ___ ___ in the ___. ___ a ___ ___! ___ you ___ ___."
+      ]
+    }
+  ],
+  "a2_c32n01": [
+    {
+      "id": "a2_c32n01_q1",
+      "promptTh": "บอก John ว่า ทีมเรากลับมาเมื่อสองสัปดาห์ก่อน ทริปน่าตื่นเต้นมาก",
+      "answerEn": "Our team came back two weeks ago. The trip was very exciting.",
+      "acceptedAnswers": [
+        "We came back two weeks ago. The trip was very exciting.",
+        "Our team got back two weeks ago. The trip was very exciting."
+      ],
+      "hints": [
+        "Our …",
+        "Our ___ ___ ___ ___ ___ ___. The ___ was ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c32n01_q2",
+      "promptTh": "ถาม John ว่า เคยไปเชียงใหม่ไหม",
+      "answerEn": "Have you ever been to Chiang Mai?",
+      "acceptedAnswers": [],
+      "hints": [
+        "Have …",
+        "Have you ___ ___ to ___ ___?"
+      ]
+    },
+    {
+      "id": "a2_c32n01_q3",
+      "promptTh": "เล่าให้ John ฟังว่า ฉันกำลังรอรถบัสอยู่ตอนที่ฝนเริ่มตก ก็เลยเปียกหมด",
+      "answerEn": "I was waiting for the bus when it started to rain, so I got wet.",
+      "acceptedAnswers": [
+        "I was waiting for the bus when it started raining, so I got wet."
+      ],
+      "hints": [
+        "I …",
+        "I was ___ for the ___ when it ___ to ___, ___ I ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c32n01_q4",
+      "promptTh": "เล่าว่า Mali ทำงานพาร์ตไทม์ที่ร้านแห่งหนึ่ง เธอต้องใส่ยูนิฟอร์ม แต่ไม่ต้องทำงานวันอาทิตย์",
+      "answerEn": "Mali works at a shop. She has to wear a uniform, but she doesn't have to work on Sunday.",
+      "acceptedAnswers": [
+        "Mali works at a shop. She has to wear a uniform, but she doesn't have to work on Sundays.",
+        "Mali works at a shop. She must wear a uniform, but she doesn't have to work on Sunday.",
+        "Mali works at a shop. She must wear a uniform, but she doesn't have to work on Sundays."
+      ],
+      "hints": [
+        "Mali …",
+        "Mali ___ at a ___. She ___ to ___ a ___, but she doesn't ___ to ___ on ___."
+      ]
+    },
+    {
+      "id": "a2_c32n01_q5",
+      "promptTh": "บอกว่า ฉันคิดว่าเกาะเป็นที่ที่ดีที่สุด แล้วถาม John ว่าคิดยังไง",
+      "answerEn": "I think the island was the best place. What do you think?",
+      "acceptedAnswers": [
+        "I think the island is the best place. What do you think?"
+      ],
+      "hints": [
+        "I …",
+        "I ___ the ___ was the ___ ___. What do you ___?"
+      ]
+    },
+    {
+      "id": "a2_c32n01_q6",
+      "promptTh": "รับสายแทน Nina: รอสักครู่นะ Nina กำลังคุยกับ Max อยู่",
+      "answerEn": "Hold on, please. Nina is talking to Max.",
+      "acceptedAnswers": [
+        "Hold on. Nina is talking to Max.",
+        "Hold on, please. Nina's talking to Max."
+      ],
+      "hints": [
+        "Hold …",
+        "Hold on, ___. ___ is ___ to ___."
+      ]
+    },
+    {
+      "id": "a2_c32n01_q7",
+      "promptTh": "ถามในกลุ่มว่า ใครจะเป็นคนจองตั๋วสำหรับทริปหน้า",
+      "answerEn": "Who's going to book the tickets for the next trip?",
+      "acceptedAnswers": [
+        "Who is going to book the tickets for the next trip?"
+      ],
+      "hints": [
+        "Who's …",
+        "Who's ___ to ___ the ___ for the ___ ___?"
+      ]
+    }
+  ]
+}

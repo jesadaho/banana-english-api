@@ -408,7 +408,8 @@ export function processScenarioTurn(params: {
       if (city) state.slots.city = city;
     }
     const praise = pickPraise(beat, state.slots);
-    reaction = beat.learnerMayAsk
+    // Canned answers describe Teacher John; other casts answer in their praise lines.
+    reaction = beat.learnerMayAsk && scenario.teacher === 'john'
       ? `${answerLearnerQuestion(transcript)} ${praise}`.trim()
       : praise;
     // Close = pass, but model the fixed version of the learner's own sentence.
@@ -535,4 +536,78 @@ export function scenarioHintForState(
     { id: `${goal.id}_model`, label: 'ประโยคเต็ม', sentenceEn: goal.hints.modelEn },
   ].slice(0, level);
   return { hints, nextState };
+}
+
+// ---------------------------------------------------------------------------
+// Scene-level resume (multi-scene checkpoints)
+// ---------------------------------------------------------------------------
+
+export type ScenarioSceneProgress = {
+  completedSceneIds: string[];
+  checkpoints: Record<string, boolean>;
+  goalOutcomes: Record<string, 'correct' | 'close' | 'skipped'>;
+  slots: Partial<Record<ScenarioSlot, string>>;
+};
+
+/** Scenes whose every beat lies before `beatIndex` (or all scenes once finished). */
+export function completedSceneIds(
+  scenario: InteractiveScenarioDef,
+  state: Pick<ScenarioRuntimeState, 'beatIndex' | 'finished'>,
+): string[] {
+  return scenario.scenes
+    .filter((scene) => {
+      const indexes = scenario.beats
+        .map((beat, index) => (beat.sceneId === scene.id ? index : -1))
+        .filter((index) => index >= 0);
+      if (indexes.length === 0) return false;
+      return state.finished || Math.max(...indexes) < state.beatIndex;
+    })
+    .map((scene) => scene.id);
+}
+
+/**
+ * Start state for a learner who already finished some scenes: jump to the first
+ * beat of the first unfinished scene and restore what earlier scenes earned.
+ * Returns null when there is nothing to resume.
+ */
+export function resumeScenarioRuntime(
+  scenario: InteractiveScenarioDef,
+  progress: ScenarioSceneProgress | null | undefined,
+): ScenarioRuntimeState | null {
+  if (!progress || progress.completedSceneIds.length === 0) return null;
+  const done = new Set(progress.completedSceneIds);
+  const firstOpen = scenario.beats.findIndex((beat) => !done.has(beat.sceneId));
+  if (firstOpen <= 0) return null;
+  const state = initScenarioRuntime(scenario);
+  for (const goal of scenario.goals) {
+    state.checkpoints[goal.id] = Boolean(progress.checkpoints[goal.id]);
+  }
+  state.goalOutcomes = { ...progress.goalOutcomes };
+  state.slots = { ...progress.slots };
+  state.beatIndex = firstOpen;
+  return state;
+}
+
+/** Opening line when resuming mid-scenario: the first open beat's prompt. */
+export function buildScenarioResumeOpening(
+  scenario: InteractiveScenarioDef,
+  state: ScenarioRuntimeState,
+): TurnExchangeResponse {
+  const beat = currentScenarioBeat(scenario, state);
+  const scene = scenario.scenes.find((s) => s.id === beat.sceneId);
+  const intro = scene?.titleEn ? `Welcome back! Next: ${scene.titleEn}.` : 'Welcome back!';
+  return {
+    aiResponse: `${intro} ${fillLoose(beat.promptEn, state.slots)}`.trim(),
+    textTh: joinTh(
+      scene?.titleTh ? `กลับมาต่อที่ฉาก “${scene.titleTh}”` : 'กลับมาเล่นต่อ',
+      beat.promptTh ?? '',
+    ),
+    isTaskComplete: false,
+    updatedCheckpoints: { ...state.checkpoints },
+    feedbackHints: { mispronouncedWords: [] },
+    currentTurn: 0,
+    expectsUserSpeech: true,
+    visual: visualForBeat(scenario, beat),
+    emojiChoice: beat.emojiChoice ?? null,
+  };
 }

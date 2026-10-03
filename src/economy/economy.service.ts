@@ -48,6 +48,9 @@ export function inferMiniGameScoreKind(gameId: string): string {
   if (gameId.startsWith('emoji_speak:')) return 'emoji_speak';
   if (gameId.startsWith('new_words:')) return 'new_words';
   if (gameId.startsWith('interactive_scenario:')) return 'interactive_scenario';
+  if (gameId.startsWith('hear_it:')) return 'hear_it';
+  if (gameId.startsWith('story_bites:')) return 'story_bites';
+  if (gameId.startsWith('info_task:')) return 'info_task';
   if (gameId.startsWith('skip_quiz:')) return 'skip_quiz';
   if (gameId.startsWith('speak_challenge')) return 'speak_challenge';
   if (gameId.startsWith('word_choice')) return 'word_choice';
@@ -1037,6 +1040,8 @@ export class EconomyService {
     totalCount?: number | null;
     passed?: boolean | null;
     kind?: string;
+    hintsUsed?: number | null;
+    assisted?: boolean | null;
   }): Promise<void> {
     const correctCount = params.correctCount;
     const totalCount = params.totalCount;
@@ -1070,6 +1075,8 @@ export class EconomyService {
           params.passed == null
             ? null
             : Boolean(params.passed),
+        hintsUsed: params.hintsUsed ?? null,
+        assisted: params.assisted ?? null,
       },
     });
   }

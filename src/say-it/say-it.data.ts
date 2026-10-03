@@ -1,7 +1,8 @@
 import poolsJson from './say-it-pools.generated.json';
 import guidedPoolsJson from './say-it-guided-pools.json';
 import v7PoolsJson from './foundation-v7-pools.json';
-import { FOUNDATION_V7_NODES } from '../learn-path/foundation-v7-path.data';
+import a2PoolsJson from './adventure-a2-pools.json';
+import { ALL_LEARN_PATH_NODES } from '../learn-path/foundation-v7-path.data';
 
 export type SayItPhrase = {
   id: string;
@@ -12,6 +13,13 @@ export type SayItPhrase = {
   mode?: 'guided';
   hintEn?: string;
   choices?: string[];
+  /** Two-level hints (first word, then gapped sentence); using them costs no stars. */
+  hints?: string[];
+};
+
+const pathPools = {
+  ...(v7PoolsJson as Record<string, SayItPhrase[]>),
+  ...(a2PoolsJson as Record<string, SayItPhrase[]>),
 };
 
 export type SayItTopic = {
@@ -324,11 +332,11 @@ export const SAY_IT_TOPICS: SayItTopic[] = [
 /** Path-embedded Say It topics (no banana charge on start). */
 export function isFoundationPathSayItTopic(topicId: string): boolean {
   return topicId.startsWith('fnd_v2_') || topicId.startsWith('fnd_v6_') ||
-    FOUNDATION_V7_NODES.some(node => node.type === 'say_it' && node.contentRef.topicId === topicId);
+    ALL_LEARN_PATH_NODES.some(node => node.type === 'say_it' && node.contentRef.topicId === topicId);
 }
 
 const pools = {
-  ...(v7PoolsJson as Record<string, SayItPhrase[]>),
+  ...pathPools,
   ...(poolsJson as Record<string, SayItPhrase[]>),
   ...(guidedPoolsJson as Record<string, SayItPhrase[]>),
 };
@@ -348,14 +356,18 @@ const guidedTopicTitles: Record<string, string> = {
 export function sayItTopicById(topicId: string): SayItTopic | undefined {
   const topic = SAY_IT_TOPICS.find((candidate) => candidate.id === topicId);
   if (topic) return topic;
-  const v7 = FOUNDATION_V7_NODES.find(node => node.type === 'say_it' && node.contentRef.topicId === topicId);
-  if (v7 && Object.prototype.hasOwnProperty.call(v7PoolsJson, topicId)) {
+  const v7 = ALL_LEARN_PATH_NODES.find(node => node.type === 'say_it' && node.contentRef.topicId === topicId);
+  if (v7 && Object.prototype.hasOwnProperty.call(pathPools, topicId)) {
+    const adventure = topicId.startsWith('a2_');
     return {
       id: topicId, titleEn: v7.titleEn, titleTh: v7.titleTh,
-      subtitleEn: 'Practise the words and sentences from Foundation', subtitleTh: v7.learningTarget,
+      subtitleEn: adventure
+        ? 'Practise the sentences from Adventure'
+        : 'Practise the words and sentences from Foundation',
+      subtitleTh: v7.learningTarget,
       emoji: '🗣️', accentColor: 0xffffc107, estimatedMinutes: 2,
       poolSize: pools[topicId].length, locked: false, isNew: true,
-      tagEn: v7.sayItMode === 'guided' ? 'GUIDED' : 'FOUNDATION',
+      tagEn: v7.sayItMode === 'guided' ? 'GUIDED' : adventure ? 'ADVENTURE' : 'FOUNDATION',
     };
   }
   const title = guidedTopicTitles[topicId];
@@ -407,7 +419,7 @@ export function dealSayItPhrases(
 
   // V7 Guided packs deliberately fade support: three guided turns followed
   // by two independent turns. Preserve that authored order, not random order.
-  const orderedGuided = FOUNDATION_V7_NODES.some(node => node.contentRef.topicId === topicId && node.sayItMode === 'guided');
+  const orderedGuided = ALL_LEARN_PATH_NODES.some(node => node.contentRef.topicId === topicId && node.sayItMode === 'guided');
   if (orderedGuided) {
     const n = Math.min(count, pool.length);
     return pool.slice(0, n).map((phrase) => personalizeSayItPhrase(phrase, displayName));

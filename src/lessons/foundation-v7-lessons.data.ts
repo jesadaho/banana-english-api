@@ -1,8 +1,31 @@
 import type { LessonConfig } from './lessons.data';
-import specs from './foundation-v7-lessons.authoring.json';
-import { FOUNDATION_V7_CHOICE_BEATS } from './foundation-v7-choice-beats.data';
+import v7Specs from './foundation-v7-lessons.authoring.json';
+import a2Specs from './adventure-a2-lessons.authoring.json';
+import { FOUNDATION_V7_CHOICE_BEATS, type FoundationV7ChoiceBeat } from './foundation-v7-choice-beats.data';
 
 export type V7TeachingPattern = 'choose_and_reuse' | 'contrast_and_apply' | 'decode_and_use' | 'situation_and_respond';
+
+/** Catalog-path lesson spec. Adventure specs carry their pattern, opening, stem and choice inline. */
+export type PathLessonSpec = {
+  titleEn: string;
+  titleTh: string;
+  goalTh: string;
+  scope: string;
+  estimatedMinutes: number[];
+  blocks: { tipTh: string; models: string[]; repeat: string }[];
+  recall: { promptTh: string; answerEn: string };
+  completionTh?: string;
+  pattern?: V7TeachingPattern;
+  opening?: string;
+  stem?: string;
+  choice?: FoundationV7ChoiceBeat;
+  teacher?: string;
+};
+
+const specs: Record<string, PathLessonSpec> = {
+  ...(v7Specs as Record<string, PathLessonSpec>),
+  ...(a2Specs as Record<string, PathLessonSpec>),
+};
 
 // Explicit curriculum assignments; changes here alter teaching rhythm, not content.
 export const FOUNDATION_V7_PATTERNS: Record<string, V7TeachingPattern> = {
@@ -98,14 +121,14 @@ export interface V7TeachingStep {
 
 export function buildFoundationV7Steps(lessonId: string): V7TeachingStep[] {
   if (V7_LEGACY_FLOWS[lessonId]) return V7_LEGACY_FLOWS[lessonId];
-  const spec = specs[lessonId as keyof typeof specs];
-  const choice = FOUNDATION_V7_CHOICE_BEATS[lessonId];
-  const pattern = FOUNDATION_V7_PATTERNS[lessonId];
+  const spec = specs[lessonId];
+  const choice = FOUNDATION_V7_CHOICE_BEATS[lessonId] ?? spec?.choice;
+  const pattern = FOUNDATION_V7_PATTERNS[lessonId] ?? spec?.pattern;
   if (!spec || !choice || !pattern) throw new Error('Missing V7 authored flow: ' + lessonId);
   const steps: V7TeachingStep[] = [];
   const add = (kind: V7TeachingStep['kind'], instruction: string, expectedSpeech?: string) =>
     steps.push({ kind, instruction, expectsUserSpeech: expectedSpeech !== undefined, expectedSpeech });
-  const opening = FOUNDATION_V7_OPENINGS[lessonId];
+  const opening = FOUNDATION_V7_OPENINGS[lessonId] ?? spec.opening;
   if (!opening) throw new Error('Missing V7 authored opening: ' + lessonId);
   add('welcome', 'Open with exactly this authored Thai context and goal: ' + JSON.stringify(opening) +
     '. Do not paraphrase, add another greeting, or introduce a new question. ' +
@@ -144,7 +167,7 @@ export function buildFoundationV7Steps(lessonId: string): V7TeachingStep[] {
       'Do not substitute a scripted preference or ask a new personal question.', choice.options[0].speak);
   } else if (pattern === 'contrast_and_apply') {
     add('guided_use', 'Guided use: ask this meaning: ' + spec.recall.promptTh +
-      '. Show ONLY this short stem in the teacher bubble: ' + APPLICATION_STEMS[lessonId] +
+      '. Show ONLY this short stem in the teacher bubble: ' + (APPLICATION_STEMS[lessonId] ?? spec.stem) +
       '. Omit choice cards and do not reveal the full answer first. Expected: ' + spec.recall.answerEn +
       '. After the attempt give a brief contextual response; no extra quiz.', spec.recall.answerEn);
   } else {
@@ -155,17 +178,42 @@ export function buildFoundationV7Steps(lessonId: string): V7TeachingStep[] {
         : '. Read Thai numerical context in Thai; avoid TTS saying the English answer before the learner.'), spec.recall.answerEn);
   }
   // Contrast lessons finish with the successful guided application rather than repeating the same question without cards.
-  const completion = 'completionTh' in spec ? spec.completionTh : spec.goalTh;
+  const completion = spec.completionTh ?? spec.goalTh;
   add('complete', 'Complete: briefly name the skill practised (' + completion +
     ') and acknowledge the learner\'s actual response. Do not claim mastery or independence after a hinted answer. ' +
     'Set isLessonComplete=true, expectsUserSpeech=false, expectedSpeech="". No new task.');
   return steps;
 }
 
-export const FOUNDATION_V7_LESSON_IDS = Object.keys(specs);
-export const FOUNDATION_V7_LESSONS: LessonConfig[] = Object.entries(specs).map(([lessonId, spec]) => {
+export const FOUNDATION_V7_LESSON_IDS = Object.keys(v7Specs);
+export const ADVENTURE_A2_LESSON_IDS = Object.keys(a2Specs);
+/** Every lesson that runs on the authored V7 step runtime (Foundation V7 + Adventure A2). */
+export const PATH_LESSON_IDS = [...FOUNDATION_V7_LESSON_IDS, ...ADVENTURE_A2_LESSON_IDS];
+
+type PathLessonCourse = {
+  label: string;
+  goalEn: (titleEn: string) => string;
+  difficulty: LessonConfig['difficulty'];
+  languageMix: LessonConfig['languageMix'];
+};
+
+const FOUNDATION_V7_LESSON_COURSE: PathLessonCourse = {
+  label: 'Foundation A1 V7',
+  goalEn: (titleEn) => 'Practise ' + titleEn + ' in a short everyday exchange.',
+  difficulty: 'beginner',
+  languageMix: { thai: 70, english: 30 },
+};
+
+const ADVENTURE_A2_LESSON_COURSE: PathLessonCourse = {
+  label: 'Adventure A2 (Teacher Bee, Adventure Club story; stay inside A2 scope)',
+  goalEn: (titleEn) => 'Use ' + titleEn + ' in a short Adventure Club situation.',
+  difficulty: 'intermediate',
+  languageMix: { thai: 60, english: 40 },
+};
+
+function buildPathLesson(lessonId: string, spec: PathLessonSpec, course: PathLessonCourse): LessonConfig {
   const steps = buildFoundationV7Steps(lessonId);
-  const choice = FOUNDATION_V7_CHOICE_BEATS[lessonId];
+  const choice = FOUNDATION_V7_CHOICE_BEATS[lessonId] ?? spec.choice;
   const listenOnlyTurns = V7_LEGACY_FLOWS[lessonId]
     ? Math.max(
         0,
@@ -178,14 +226,14 @@ export const FOUNDATION_V7_LESSONS: LessonConfig[] = Object.entries(specs).map((
       : 1;
   return {
     lessonId, titleEn: spec.titleEn, titleTh: spec.titleTh,
-    goalEn: 'Practise ' + spec.titleEn + ' in a short everyday exchange.', goalTh: spec.goalTh,
-    difficulty: 'beginner', languageMix: { thai: 70, english: 30 },
+    goalEn: course.goalEn(spec.titleEn), goalTh: spec.goalTh,
+    difficulty: course.difficulty, languageMix: course.languageMix,
     estimatedMinutesMin: spec.estimatedMinutes[0], estimatedMinutesMax: spec.estimatedMinutes[1],
     targetPhrases: [...new Set([...spec.blocks.flatMap(block => block.models), spec.recall.answerEn, ...(choice?.options.map(o => o.speak) ?? [])])],
     targetLabel: 'item', listenOnlyTurns, progressMax: steps.length,
     maxTurns: steps.length + steps.filter(step => step.expectsUserSpeech).length + 2,
-    systemInstruction: 'Foundation A1 V7: ' + spec.titleEn + '\nGoal: ' + spec.goalTh + '\nScope: ' + spec.scope +
-      '\nTeaching pattern: ' + (FOUNDATION_V7_PATTERNS[lessonId] ?? 'contrast_and_apply') + `
+    systemInstruction: course.label + ': ' + spec.titleEn + '\nGoal: ' + spec.goalTh + '\nScope: ' + spec.scope +
+      '\nTeaching pattern: ' + (FOUNDATION_V7_PATTERNS[lessonId] ?? spec.pattern ?? 'contrast_and_apply') + `
 ALL teacher narration, praise, explanations and requests stay in the learner's selected teaching language.
 Never drift into English teacher directions when teaching in Thai. English target forms remain English.
 Follow Core Flow forward, one numbered step per progress milestone. A retry stays on its current milestone.
@@ -206,4 +254,11 @@ Core Flow:
     openingPrompt: V7_LEGACY_FLOWS[lessonId] ? 'Start at Core Flow step 1, including its microphone task and authored board. expectsUserSpeech=true. Do not add a welcome-only turn.' : 'Start ' + spec.titleEn + '. Use only the exact authored opening from Core Flow step 1. ' +
       'Do not paraphrase or add another greeting. expectsUserSpeech=false, expectedSpeech="", isLessonComplete=false. Return the existing lesson JSON schema.',
   };
-});
+}
+
+export const FOUNDATION_V7_LESSONS: LessonConfig[] = FOUNDATION_V7_LESSON_IDS.map((lessonId) =>
+  buildPathLesson(lessonId, specs[lessonId]!, FOUNDATION_V7_LESSON_COURSE),
+);
+export const ADVENTURE_A2_LESSONS: LessonConfig[] = ADVENTURE_A2_LESSON_IDS.map((lessonId) =>
+  buildPathLesson(lessonId, specs[lessonId]!, ADVENTURE_A2_LESSON_COURSE),
+);

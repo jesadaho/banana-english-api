@@ -1,4 +1,8 @@
-import { FOUNDATION_V7_SIMULATIONS, FOUNDATION_V7_PRESERVED_SIMULATIONS } from './foundation-v7-simulations.data';
+import {
+  ADVENTURE_A2_SIMULATIONS,
+  FOUNDATION_V7_PRESERVED_SIMULATIONS,
+  FOUNDATION_V7_SIMULATIONS,
+} from './foundation-v7-simulations.data';
 
 export type SimulationDifficulty = 'easy' | 'medium' | 'hard';
 
@@ -1025,7 +1029,8 @@ export function getSimulation(
 ): SimulationConfig | undefined {
   return SIMULATIONS.find((s) => s.simulationId === simulationId)
     ?? FOUNDATION_V7_SIMULATIONS.find((s) => s.simulationId === simulationId)
-    ?? FOUNDATION_V7_PRESERVED_SIMULATIONS.find((s) => s.simulationId === simulationId);
+    ?? FOUNDATION_V7_PRESERVED_SIMULATIONS.find((s) => s.simulationId === simulationId)
+    ?? ADVENTURE_A2_SIMULATIONS.find((s) => s.simulationId === simulationId);
 }
 
 export function getAllSimulations(): SimulationConfig[] {
@@ -1033,6 +1038,7 @@ export function getAllSimulations(): SimulationConfig[] {
     ...SIMULATIONS,
     ...FOUNDATION_V7_SIMULATIONS,
     ...FOUNDATION_V7_PRESERVED_SIMULATIONS,
+    ...ADVENTURE_A2_SIMULATIONS,
   ];
 }
 

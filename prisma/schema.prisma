@@ -109,6 +109,7 @@ model User {
   foundationChapterSkips    FoundationChapterSkip[]
   foundationSkipQuizAttempts FoundationSkipQuizAttempt[]
   miniGameScoreAttempts     MiniGameScoreAttempt[]
+  scenarioProgress          InteractiveScenarioProgress[]
   spokenDays                UserSpokenDay[]
   activeDays                UserActiveDay[]
   bugReports                BugReport[]
@@ -370,6 +371,10 @@ model MiniGameScoreAttempt {
   correctCount Int
   totalCount   Int
   passed       Boolean?
+  /** Number of hint levels revealed during the run (hints never cost stars). */
+  hintsUsed    Int?
+  /** True when any hint was used: logged as assisted vs independent. */
+  assisted     Boolean?
   createdAt    DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -377,6 +382,23 @@ model MiniGameScoreAttempt {
   @@index([gameId, createdAt])
   @@index([kind, createdAt])
   @@index([userId, gameId, createdAt])
+}
+
+/** Scene-level checkpoint progress so a multi-scene scenario can be resumed. */
+model InteractiveScenarioProgress {
+  userId            String
+  scenarioId        String
+  completedSceneIds Json
+  checkpoints       Json
+  goalOutcomes      Json
+  slots             Json
+  /** Set once the last scene is finished; the next start begins from scene 1. */
+  finishedAt        DateTime?
+  updatedAt         DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, scenarioId])
 }
 
 /** One row per user per UTC day the app was opened (profile sync). */

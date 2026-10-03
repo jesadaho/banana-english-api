@@ -7,14 +7,26 @@ import { isValidDescribeItPack, describeItPoolById, DESCRIBE_IT_ENABLED } from '
 import { isValidInfoTaskPack, infoTaskPoolById, INFO_TASK_ENABLED } from '../info-task/info-task.data';
 import { getInteractiveScenario } from '../interactive-scenario/interactive-scenario.data';
 import { foundationV7LessonLegacyIds } from '../lessons/foundation-v7-lesson-id-aliases';
+import { hearItPoolById, isValidHearItPack } from '../hear-it/hear-it.data';
+import { isValidStoryBitesPack, storyBitesPoolById } from '../story-bites/story-bites.data';
 import {
-  FOUNDATION_V7_CATALOG,
-  FOUNDATION_V7_PATH_FINALE,
+  FOUNDATION_V7_COURSE,
   foundationV7LastChapterPlayableId,
   type FoundationV7Capability,
   type FoundationV7Node,
+  type LearnCourse,
 } from './foundation-v7-path.data';
 import type { FoundationV5ClientNode } from './learn-path.service';
+
+/** Comma-separated feature flags, e.g. `LEARN_PATH_FLAGS=a2_see_and_say_extra,a2_explain_it`. */
+export function enabledLearnPathFlags(): Set<string> {
+  return new Set(
+    (process.env.LEARN_PATH_FLAGS ?? '')
+      .split(',')
+      .map((flag) => flag.trim())
+      .filter(Boolean),
+  );
+}
 
 export type FoundationV7ClientNode = FoundationV5ClientNode & {
   nodeType: FoundationV7Node['type'];
@@ -24,7 +36,9 @@ export type FoundationV7ClientNode = FoundationV5ClientNode & {
   unavailableReason?:
     | 'mechanic_not_implemented'
     | 'missing_content'
-    | 'client_capability_required';
+    | 'client_capability_required'
+    | 'not_released'
+    | 'feature_flag_off';
   requiredClientCapabilities: FoundationV7Capability[];
   sayItMode?: 'guided';
   pronunciation?: FoundationV7Node['pronunciation'];
@@ -41,29 +55,51 @@ export type FoundationV7ClientFinale = {
   items: FoundationV7ClientNode[];
 };
 
+type MapContext = {
+  capabilities: readonly FoundationV7Capability[];
+  released: boolean;
+  flags: Set<string>;
+};
+
+const TYPE_CAPABILITY: Partial<Record<FoundationV7Node['type'], FoundationV7Capability>> = {
+  describe_it: 'describe_it',
+  interactive_scenario: 'interactive_scenario',
+  hear_it: 'hear_it',
+  story_bites: 'story_bites',
+  explain_it: 'explain_it',
+};
+
+const POOL_GATED_TYPES: ReadonlySet<FoundationV7Node['type']> = new Set([
+  'describe_it',
+  'info_task',
+  'hear_it',
+  'story_bites',
+  'explain_it',
+]);
+
 function mapClientNode(
   node: FoundationV7Node,
   previousPlayableId: string | undefined,
-  capabilities: readonly FoundationV7Capability[],
+  context: MapContext,
 ): { node: FoundationV7ClientNode; nextPrevious: string | undefined } {
+  const flagOff = Boolean(node.featureFlag && !context.flags.has(node.featureFlag));
   const backendReady = hasFoundationV7Content(node);
+  const typeCapability = TYPE_CAPABILITY[node.type];
   const requiredClientCapabilities: FoundationV7Capability[] = [
     ...(node.sayItMode === 'guided' ? (['say_it_guided'] as const) : []),
-    ...(node.type === 'describe_it' ? (['describe_it'] as const) : []),
-    ...(node.type === 'interactive_scenario'
-      ? (['interactive_scenario'] as const)
-      : []),
+    ...(typeCapability ? [typeCapability] : []),
   ];
   const needsClient = requiredClientCapabilities.some(
-    (cap) => !capabilities.includes(cap),
+    (cap) => !context.capabilities.includes(cap),
   );
   const unbuilt =
-    node.type === 'story_bites' ||
+    (node.type === 'story_bites' && !node.contentRef.poolId) ||
+    node.type === 'explain_it' ||
     (node.type === 'describe_it' && !DESCRIBE_IT_ENABLED) ||
     (node.type === 'info_task' && !INFO_TASK_ENABLED);
-  const comingSoon = !backendReady || needsClient;
+  const comingSoon = !backendReady || needsClient || !context.released || flagOff;
   const contentRef =
-    (node.type === 'describe_it' || node.type === 'info_task') && !backendReady
+    POOL_GATED_TYPES.has(node.type) && (!backendReady || !context.released || flagOff)
       ? {}
       : node.contentRef;
   const result: FoundationV7ClientNode = {
@@ -82,9 +118,13 @@ function mapClientNode(
       ? 'mechanic_not_implemented'
       : !backendReady
         ? 'missing_content'
-        : needsClient
-          ? 'client_capability_required'
-          : undefined,
+        : !context.released
+          ? 'not_released'
+          : flagOff
+            ? 'feature_flag_off'
+            : needsClient
+              ? 'client_capability_required'
+              : undefined,
     requiredClientCapabilities,
     estimatedMinutes: Math.ceil(
       (node.estimatedMinutes[0] + node.estimatedMinutes[1]) / 2,
@@ -143,47 +183,76 @@ export function hasFoundationV7Content(node: FoundationV7Node): boolean {
       return Boolean(
         ref.scenarioId && getInteractiveScenario(ref.scenarioId),
       );
+    case 'hear_it':
+      return Boolean(ref.poolId && isValidHearItPack(hearItPoolById(ref.poolId)));
+    case 'story_bites':
+      return Boolean(
+        ref.poolId && isValidStoryBitesPack(storyBitesPoolById(ref.poolId)),
+      );
     default:
       return false;
   }
 }
 
+function isChapterReleased(course: LearnCourse, chapterNumber: number): boolean {
+  const limit = course.catalog.metadata.releasedChapterCount;
+  return limit === undefined || chapterNumber <= limit;
+}
+
 /** Exact content references only; no title alias or fallback to a different mechanic. */
 export function toFoundationV7ClientChapters(
   capabilities: readonly FoundationV7Capability[] = [],
+  course: LearnCourse = FOUNDATION_V7_COURSE,
 ) {
+  const flags = enabledLearnPathFlags();
+  const emoji = course.catalog.metadata.chapterEmoji ?? '🍌';
   let previousPlayableId: string | undefined;
-  return FOUNDATION_V7_CATALOG.chapters.map((chapter) => ({
-    id: chapter.id,
-    number: chapter.number,
-    titleEn: chapter.titleEn,
-    titleTh: chapter.titleTh,
-    emoji: '🍌',
-    outcome: chapter.outcome,
-    items: chapter.items.map((node): FoundationV7ClientNode => {
-      const mapped = mapClientNode(node, previousPlayableId, capabilities);
-      previousPlayableId = mapped.nextPrevious;
-      return mapped.node;
-    }),
-  }));
+  return course.catalog.chapters.map((chapter) => {
+    const context: MapContext = {
+      capabilities,
+      released: isChapterReleased(course, chapter.number),
+      flags,
+    };
+    return {
+      id: chapter.id,
+      number: chapter.number,
+      titleEn: chapter.titleEn,
+      titleTh: chapter.titleTh,
+      emoji,
+      outcome: chapter.outcome,
+      ...(chapter.zone !== undefined ? { zone: chapter.zone } : {}),
+      items: chapter.items.map((node): FoundationV7ClientNode => {
+        const mapped = mapClientNode(node, previousPlayableId, context);
+        previousPlayableId = mapped.nextPrevious;
+        return mapped.node;
+      }),
+    };
+  });
 }
 
-/** Path Finale block — after 16 chapters, not numbered as Chapter 17. */
+/** Path Finale block — after the last chapter, not numbered as a chapter. */
 export function toFoundationV7ClientFinale(
   capabilities: readonly FoundationV7Capability[] = [],
+  course: LearnCourse = FOUNDATION_V7_COURSE,
 ): FoundationV7ClientFinale | null {
-  const finale = FOUNDATION_V7_PATH_FINALE;
+  const finale = course.catalog.pathFinale;
   if (!finale) return null;
-  const unlockAfter = foundationV7LastChapterPlayableId();
+  const unlockAfter = foundationV7LastChapterPlayableId(course);
+  const lastChapter = course.catalog.chapters[course.catalog.chapters.length - 1];
+  const context: MapContext = {
+    capabilities,
+    released: lastChapter ? isChapterReleased(course, lastChapter.number) : true,
+    flags: enabledLearnPathFlags(),
+  };
   return {
     id: finale.id,
     kind: 'finale',
     titleEn: finale.titleEn,
     titleTh: finale.titleTh,
-    emoji: '🎓',
+    emoji: course.catalog.metadata.finaleEmoji ?? '🎓',
     outcome: finale.outcome,
     items: finale.items.map((node) => {
-      const mapped = mapClientNode(node, unlockAfter, capabilities);
+      const mapped = mapClientNode(node, unlockAfter, context);
       return mapped.node;
     }),
   };
