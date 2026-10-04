@@ -17,13 +17,25 @@
         "id": "thank",
         "th": "ขอบคุณเมื่อได้รับของ",
         "en": "Thank the speaker",
-        "example": "Thank you"
+        "example": "Thank you",
+        "hints": {
+          "intentTh": "ขอบคุณครู John",
+          "starterEn": "Thank …",
+          "modelEn": "Thank you.",
+          "cueTh": "ขอบคุณครู John"
+        }
       },
       {
         "id": "goodbye",
         "th": "จบบทสนทนาด้วยคำลา",
         "en": "Close the conversation with a goodbye",
-        "example": "See you tomorrow"
+        "example": "See you tomorrow",
+        "hints": {
+          "intentTh": "บอกลาครู",
+          "starterEn": "See …",
+          "modelEn": "See you tomorrow!",
+          "cueTh": "บอกลาครู"
+        }
       }
     ],
     "minTurns": 3,
@@ -206,22 +218,40 @@
         "example": "One ticket, please"
       },
       {
-        "id": "price",
-        "th": "ถามราคา",
-        "en": "Ask the ticket price",
-        "example": "How much is it"
-      },
-      {
         "id": "time",
         "th": "ยืนยันวันและเวลาของหนัง",
         "en": "Confirm the movie day and time",
-        "example": "Friday at ten?"
+        "example": "Friday at ten?",
+        "hints": {
+          "intentTh": "ทวนวันและเวลาหนัง",
+          "starterEn": "On Friday …",
+          "modelEn": "On Friday at ten.",
+          "cueTh": "ทวนวันและเวลาหนัง"
+        }
+      },
+      {
+        "id": "price",
+        "th": "ถามราคา",
+        "en": "Ask the ticket price",
+        "example": "How much is it",
+        "hints": {
+          "intentTh": "ถามราคาตั๋ว",
+          "starterEn": "How much …?",
+          "modelEn": "How much is it?",
+          "cueTh": "ถามราคาตั๋ว"
+        }
       },
       {
         "id": "payment",
         "th": "ยื่นเงินให้พนักงาน",
         "en": "Hand the payment to the clerk",
-        "example": "Here you are"
+        "example": "Here you are",
+        "hints": {
+          "intentTh": "ยื่นเงิน (Here you are.)",
+          "starterEn": "Here …",
+          "modelEn": "Here you are.",
+          "cueTh": "ยื่นเงิน (Here you are.)"
+        }
       }
     ],
     "minTurns": 4,
@@ -253,7 +283,13 @@
         "id": "thank",
         "th": "ขอบคุณเมื่อได้รับเครื่องดื่ม",
         "en": "Thank the server after receiving the drink",
-        "example": "Thank you"
+        "example": "Thank you",
+        "hints": {
+          "intentTh": "ขอบคุณพนักงาน",
+          "starterEn": "Thank …",
+          "modelEn": "Thank you.",
+          "cueTh": "ขอบคุณพนักงาน"
+        }
       }
     ],
     "minTurns": 3,
@@ -279,7 +315,13 @@
         "id": "ask_cook",
         "th": "ถาม Max กลับว่าเขาทำอาหารเป็นไหม",
         "en": "Ask Max whether he can cook",
-        "example": "Can you cook"
+        "example": "Can you cook",
+        "hints": {
+          "intentTh": "ลองถาม Max ว่าทำอาหารเป็นไหม",
+          "starterEn": "Can you …?",
+          "modelEn": "Can you cook?",
+          "cueTh": "ลองถาม Max ว่าทำอาหารเป็นไหม"
+        }
       },
       {
         "id": "cook_answer",
@@ -420,7 +462,8 @@
         "hints": {
           "intentTh": "ถามว่าห้อง 2 อยู่ที่ไหน",
           "starterEn": "Where is Room…?",
-          "modelEn": "Where is Room 2?"
+          "modelEn": "Where is Room 2?",
+          "cueTh": "ถามว่าห้อง 2 อยู่ที่ไหน"
         }
       },
       {
@@ -431,7 +474,8 @@
         "hints": {
           "intentTh": "ถามว่าห้องน้ำอยู่ที่ไหน",
           "starterEn": "Where is the bathroom…?",
-          "modelEn": "Where is the bathroom?"
+          "modelEn": "Where is the bathroom?",
+          "cueTh": "ถามว่าห้องน้ำอยู่ที่ไหน"
         }
       },
       {
@@ -442,7 +486,8 @@
         "hints": {
           "intentTh": "ถามหากระเป๋าที่ฝากไว้กับเจ้าหน้าที่",
           "starterEn": "Where is my bag…?",
-          "modelEn": "Where is my bag?"
+          "modelEn": "Where is my bag?",
+          "cueTh": "ถามหากระเป๋าที่ฝากไว้กับเจ้าหน้าที่"
         }
       }
     ],
@@ -467,7 +512,8 @@
         "hints": {
           "intentTh": "ถามว่าผู้ชายในรูปคือใคร",
           "starterEn": "Who is…?",
-          "modelEn": "Who is he?"
+          "modelEn": "Who is he?",
+          "cueTh": "ถามว่าผู้ชายในรูปคือใคร"
         }
       },
       {
@@ -478,7 +524,8 @@
         "hints": {
           "intentTh": "ถามว่าครู John อยู่ที่ไหน",
           "starterEn": "Where is John…?",
-          "modelEn": "Where is John?"
+          "modelEn": "Where is John?",
+          "cueTh": "ถามว่าครู John อยู่ที่ไหน"
         }
       },
       {
@@ -489,7 +536,8 @@
         "hints": {
           "intentTh": "ถามว่าห้อง 2 อยู่ที่ไหน",
           "starterEn": "Where is Room…?",
-          "modelEn": "Where is Room 2?"
+          "modelEn": "Where is Room 2?",
+          "cueTh": "ถามว่าห้อง 2 อยู่ที่ไหน"
         }
       }
     ],
@@ -514,7 +562,8 @@
         "hints": {
           "intentTh": "ถามว่าหนังฉายวันไหน",
           "starterEn": "When…?",
-          "modelEn": "When is the movie?"
+          "modelEn": "When is the movie?",
+          "cueTh": "ถามว่าหนังฉายวันไหน"
         }
       },
       {
@@ -525,7 +574,8 @@
         "hints": {
           "intentTh": "ถามว่าหนังฉายกี่โมง",
           "starterEn": "What time…?",
-          "modelEn": "What time is the movie?"
+          "modelEn": "What time is the movie?",
+          "cueTh": "ถามว่าหนังฉายกี่โมง"
         }
       },
       {
@@ -536,7 +586,8 @@
         "hints": {
           "intentTh": "ถามราคาตั๋วหนึ่งใบ",
           "starterEn": "How much…?",
-          "modelEn": "How much is one ticket?"
+          "modelEn": "How much is one ticket?",
+          "cueTh": "ถามราคาตั๋วหนึ่งใบ"
         }
       }
     ],
