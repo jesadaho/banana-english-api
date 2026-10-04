@@ -1,6 +1,6 @@
 import { getLesson } from '../lessons/lessons.data';
 import { getSimulation } from '../simulations/simulations.data';
-import { foundationSayItDealCount, sayItPoolForTopic, sayItTopicById } from '../say-it/say-it.data';
+import { FOUNDATION_SAY_IT_DEAL_COUNT, foundationSayItDealCount, sayItPoolForTopic, sayItTopicById } from '../say-it/say-it.data';
 import { emojiSpeakPoolById } from '../emoji-speak/emoji-speak.data';
 import { isValidNewWordsPack, newWordsPoolById } from '../new-words/new-words.data';
 import { isValidDescribeItPack, describeItPoolById, DESCRIBE_IT_ENABLED } from '../describe-it/describe-it.data';
@@ -160,7 +160,7 @@ export function hasFoundationV7Content(node: FoundationV7Node): boolean {
         ref.topicId &&
           sayItTopicById(ref.topicId) &&
           sayItPoolForTopic(ref.topicId).length >=
-            foundationSayItDealCount(ref.topicId),
+            Math.min(foundationSayItDealCount(ref.topicId), FOUNDATION_SAY_IT_DEAL_COUNT),
       );
     case 'emoji_speak':
       return Boolean(

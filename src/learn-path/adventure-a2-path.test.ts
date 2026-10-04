@@ -125,6 +125,12 @@ describe('Adventure A2 Zone 1 content', () => {
     }
   });
 
+  it('deals all 7 Say It 1.8 prompts per round', () => {
+    const deal = new SayItService().dealForTopic('a2_c01n08', 5);
+    assert.equal(deal.dealCount, 7);
+    assert.equal(new Set(deal.phrases.map((p) => p.id)).size, 7);
+  });
+
   it('keeps A2 Say It topics out of the Games hub and gives every item two hints', () => {
     const hub = new SayItService().listTopics().map((t) => t.id);
     assert.ok(!hub.some((id) => id.startsWith('a2_')));
@@ -215,27 +221,28 @@ describe('Adventure A2 Zone 1 content', () => {
     }
   });
 
-  it('gives every conversation three or four goals', () => {
+  it('gives every conversation three to six goals', () => {
     for (const node of zone1.filter((n) => n.type === 'conversation')) {
       const sim = getSimulation(node.id)!;
-      assert.ok([3, 4].includes(sim.successCriteria.length), node.id);
+      assert.ok(sim.successCriteria.length >= 3 && sim.successCriteria.length <= 6, node.id);
     }
   });
 
-  it('lets New Friends close with the AI recap of real answers', () => {
+  it('lets New Friends close with the AI line using the learner name', () => {
     const sim = getSimulation('a2_c01n09')!;
     assert.equal(sim.aiClosing, true);
-    assert.deepEqual(sim.successCriteria, ['intro', 'hobby', 'ask_back', 'dislike']);
-    assert.equal(sim.goalHints?.[2]?.intentTh, 'ลองถามกลับว่าครูชอบทำอะไร');
-    assert.equal(sim.goalHints?.[3]?.intentTh, 'คุณไม่ชอบทำอะไร?');
+    assert.match(sim.openingPrompt ?? '', /Open with exactly: "Hi! Welcome to the club! What's your name\?"/);
+    assert.deepEqual(sim.successCriteria, ['intro', 'hobby', 'weekend', 'ask_back', 'react', 'dislike']);
+    assert.equal(sim.goalHints?.[3]?.intentTh, 'ลองถามว่าครูทำอะไรในวันหยุด');
+    assert.equal(sim.goalHints?.[5]?.intentTh, 'คุณไม่ชอบทำอะไร?');
     const done = Object.fromEntries(sim.successCriteria.map((k) => [k, true]));
-    const recap = finalizeSimulationTurnState(sim, 4, done, {
-      aiResponse: "You enjoy gaming and you don't like baking. Welcome to the club, Ploy!",
-      textTh: 'คุณสนุกกับการเล่นเกมและไม่ชอบอบขนม ยินดีต้อนรับสู่ชมรมนะ Ploy!',
+    const recap = finalizeSimulationTurnState(sim, 6, done, {
+      aiResponse: 'Thanks, Ploy! See you at the club!',
+      textTh: 'ขอบคุณนะ Ploy! แล้วเจอกันที่ชมรม!',
     });
     assert.equal(recap.isTaskComplete, true);
-    assert.match(recap.reply.aiResponse, /^You enjoy gaming/);
-    const asking = finalizeSimulationTurnState(sim, 4, done, {
+    assert.equal(recap.reply.aiResponse, 'Thanks, Ploy! See you at the club!');
+    const asking = finalizeSimulationTurnState(sim, 6, done, {
       aiResponse: 'What else do you like?', textTh: 'ชอบอะไรอีก?',
     });
     assert.equal(asking.reply.aiResponse, sim.completionReplyEn);

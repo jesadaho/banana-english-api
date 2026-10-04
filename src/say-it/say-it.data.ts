@@ -41,8 +41,9 @@ export const SAY_IT_DEAL_COUNT = 7;
 export const FOUNDATION_SAY_IT_DEAL_COUNT = 5;
 export const SAY_IT_BANANA_COST = 1;
 
-/** Most Foundation packs deal 5; Question Clues mix keeps all six words. */
+/** Foundation packs deal 5; Adventure A2 packs deal 7. */
 export function foundationSayItDealCount(topicId: string): number {
+  if (topicId.startsWith('a2_')) return SAY_IT_DEAL_COUNT;
   return FOUNDATION_SAY_IT_DEAL_COUNT;
 }
 

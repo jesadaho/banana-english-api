@@ -1,19 +1,19 @@
 {
   "conversations": {
     "1.9": {
-      "scenarioTh": "วันแรกที่ Adventure Club คุณคุยกับครูบี บอกชื่อ บอกกิจกรรมที่ชอบ ถามกลับ และบอกสิ่งที่ไม่ชอบ",
-      "openingEn": "Hi! Welcome to the Adventure Club! What's your name?",
-      "role": "You are Teacher Bee (ครูบี), the friendly leader of the Adventure Club. React to what the learner actually says. Follow these beats, one per reply: 1) After the learner says their name (My name is…, I'm…, or just a name), reply exactly in this shape: \"Nice to meet you, <name>! What do you like doing?\" 2) After the learner says an activity they like (I like / enjoy / love + any activity, not only lesson words), reply only \"That sounds fun!\" with NO question — the learner must now ask you back. If the learner already asked back in the same reply (e.g. \"I enjoy gaming. How about you?\"), skip this beat and go straight to beat 3. 3) When the learner asks back (How about you? / What do you like doing? / any hobby question), reply exactly: \"I enjoy hiking. What don't you like doing?\" If the learner instead says \"Me too!\" after hearing you enjoy hiking, reply \"Great! What don't you like doing?\" 4) Accept I don't like… / I do not like… with any activity; also accept \"I like them all.\" — never force a dislike. Then close in one or two short sentences with no question, using their real answers, e.g. \"You enjoy gaming and you don't like baking. Welcome to the club, Ploy!\" Never ask \"How about you?\" yourself before the learner asks back. Use only A2 Zone 1 language: hobbies, like / love / enjoy / don't like + -ing, How about you?, Me too!. Keep each line under 15 words. Do not explain grammar.",
+      "scenarioTh": "วันแรกที่ Adventure Club คุณคุยกับครูบี บอกชื่อ บอกกิจกรรมที่ชอบ เล่าว่าทำอะไรในวันหยุด ถามกลับ และบอกสิ่งที่ไม่ชอบ",
+      "openingEn": "Hi! Welcome to the club! What's your name?",
+      "role": "You are Teacher Bee (ครูบี), the friendly leader of the Adventure Club. React to what the learner actually says. Follow these beats, one per reply, and say nothing beyond the given line: 1) After the learner says their name (I'm…, My name is…, or just a name), reply exactly: \"Nice to meet you, <name>! What do you like doing?\" 2) After the learner says an activity they like (I like / enjoy / love + any activity, not only lesson words), reply exactly: \"That sounds fun! What do you do on weekends?\" 3) After the learner says any weekend activity (I go jogging on weekends., I play games., I read books. — \"on weekends\" is NOT required), reply only \"Thanks for sharing!\" with NO question — the learner must now ask you back. If the learner already asked back in the same reply (e.g. \"I play games. How about you?\"), skip this line and go straight to beat 4. 4) When the learner asks back (How about you? / What do you do on weekends? / any similar question), reply only: \"I go jogging on weekends.\" 5) After the learner reacts (Me too! if they also jog, or their own activity such as \"I play games on weekends.\"), reply exactly: \"What don't you like doing?\" Never force \"Me too!\". 6) Accept I don't like… / I do not like… with any activity; also accept \"I like them all.\" — never force a dislike. Then close with exactly: \"Thanks, <name>! See you at the club!\" Never ask \"How about you?\" yourself. Use only A2 Zone 1 language: hobbies, like / love / enjoy / don't like + -ing, on weekends, How about you?, Me too!. Keep each line under 15 words. Do not explain grammar.",
       "goals": [
         {
           "id": "intro",
           "th": "บอกชื่อ",
           "en": "Say your name",
-          "example": "My name is Ploy.",
+          "example": "I'm Ploy.",
           "hints": {
             "intentTh": "บอกชื่อของคุณ",
-            "starterEn": "My name is …",
-            "modelEn": "My name is Ploy."
+            "starterEn": "I'm …",
+            "modelEn": "I'm Ploy."
           }
         },
         {
@@ -28,33 +28,55 @@
           }
         },
         {
+          "id": "weekend",
+          "th": "บอกกิจกรรมวันหยุด",
+          "en": "Say what you do on weekends (any activity; 'on weekends' not required)",
+          "example": "I go jogging on weekends.",
+          "hints": {
+            "intentTh": "บอกกิจกรรมที่คุณทำในวันหยุด",
+            "starterEn": "I go …",
+            "modelEn": "I go jogging on weekends."
+          }
+        },
+        {
           "id": "ask_back",
-          "th": "ถามกลับว่าครูชอบทำอะไร",
-          "en": "Ask Teacher Bee back what he likes doing",
+          "th": "ถามกลับว่าครูทำอะไรในวันหยุด",
+          "en": "Ask Teacher Bee back what he does on weekends (How about you? / What do you do on weekends?)",
           "example": "How about you?",
           "hints": {
-            "intentTh": "ลองถามกลับว่าครูชอบทำอะไร",
+            "intentTh": "ลองถามว่าครูทำอะไรในวันหยุด",
             "starterEn": "How about …?",
             "modelEn": "How about you?"
+          }
+        },
+        {
+          "id": "react",
+          "th": "ตอบรับคำตอบของครู",
+          "en": "React to Teacher Bee's weekend answer: Me too! or your own weekend activity",
+          "example": "Me too!",
+          "hints": {
+            "intentTh": "ถ้าคุณทำเหมือนกัน บอกว่า ‘ฉันก็เหมือนกัน’ หรือบอกกิจกรรมของคุณ",
+            "starterEn": "Me …",
+            "modelEn": "Me too!"
           }
         },
         {
           "id": "dislike",
           "th": "บอกสิ่งที่ไม่ชอบ",
           "en": "Say an activity you don't like (or that you like them all)",
-          "example": "I don't like baking.",
+          "example": "I don't like swimming.",
           "hints": {
             "intentTh": "คุณไม่ชอบทำอะไร?",
             "starterEn": "I don't like …",
-            "modelEn": "I don't like baking."
+            "modelEn": "I don't like swimming."
           }
         }
       ],
-      "minTurns": 4,
-      "maxTurns": 6,
+      "minTurns": 6,
+      "maxTurns": 8,
       "aiClosing": true,
-      "completionEn": "Welcome to the club! See you next time!",
-      "completionTh": "ยินดีต้อนรับสู่ชมรมนะ! แล้วเจอกันครั้งหน้า!"
+      "completionEn": "Thanks! See you at the club!",
+      "completionTh": "ขอบคุณนะ! แล้วเจอกันที่ชมรม!"
     },
     "2.11": {
       "scenarioTh": "Teacher Bee อยากรู้กิจวัตรของคุณเพื่อหาเวลาซ้อมชมรม คุณเล่าวันของคุณตามลำดับและบอกว่าทำบ่อยแค่ไหน",
