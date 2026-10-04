@@ -1,6 +1,11 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import { scoreAnswer, scoreGreetingVariant } from './engine/answer-scorer';
+import { TrainingTurnEngine } from './engine/training-turn.engine';
+import type { TrainingAiGate } from './engine/ai-gate';
+import { LESSON_SKIP_TURN_TEXT } from '../common/api.types';
+import type { LessonConfig } from '../lessons/lessons.data';
+import type { ChatTurn } from '../session-store/session-store.service';
 import { buildChoiceLessonAfterUser } from './scripts/choice-lesson.script';
 import { getFoundationChoiceLesson } from './scripts/foundation.registry';
 import {
@@ -144,5 +149,43 @@ describe('greetings PoolGate flow', () => {
     });
     assert.notEqual(exactRoute?.deferToAi, true);
     assert.equal(exactRoute?.assessmentTier, 'correct');
+  });
+});
+
+describe('greetings Skip on repeat turns', () => {
+  const engine = new TrainingTurnEngine({} as unknown as TrainingAiGate);
+  const config = { lessonId: 'greetings', titleEn: 'Greetings' } as LessonConfig;
+
+  it('offers Skip on ลองพูดตาม turns and advances to the next board', async () => {
+    const opening = engine.buildOpening(config, 'Nana').reply;
+    assert.equal(opening.canSkip, true);
+    const turns = [
+      { speaker: 'ai', ...opening },
+      { speaker: 'user', textEn: LESSON_SKIP_TURN_TEXT },
+    ] as ChatTurn[];
+    const { reply } = await engine.runTurn({
+      config, turns, userText: LESSON_SKIP_TURN_TEXT,
+      originalText: LESSON_SKIP_TURN_TEXT, learnerFirstName: 'Nana',
+    });
+    assert.equal(reply.expectedSpeech, 'Hi');
+    assert.equal(reply.wasSoftAdvance, true);
+    assert.equal(reply.canSkip, true);
+  });
+
+  it('never offers Skip on a question with choices', async () => {
+    const opening = engine.buildOpening(config, 'Nana').reply;
+    const hi = (await engine.runTurn({
+      config, learnerFirstName: 'Nana', userText: 'Hello', originalText: 'Hello',
+      turns: [{ speaker: 'ai', ...opening }, { speaker: 'user', textEn: 'Hello' }] as ChatTurn[],
+    })).reply;
+    const question = (await engine.runTurn({
+      config, learnerFirstName: 'Nana', userText: 'Hi', originalText: 'Hi',
+      turns: [
+        { speaker: 'ai', ...opening }, { speaker: 'user', textEn: 'Hello' },
+        { speaker: 'ai', ...hi }, { speaker: 'user', textEn: 'Hi' },
+      ] as ChatTurn[],
+    })).reply;
+    assert.match(question.textEn, /เพื่อนสนิท/);
+    assert.equal(question.canSkip, undefined);
   });
 });

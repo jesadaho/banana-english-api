@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { isFoundationV7LessonId } from '../../lessons/foundation-v7-turn-guard';
+import {
+  isFoundationV7LessonId,
+  userTurnWasSkip,
+} from '../../lessons/foundation-v7-turn-guard';
 import { renderV7Turn, runV7Turn } from '../../lessons/foundation-v7-runtime';
 import type { AiDebug } from '../../common/api.types';
 import type { LessonConfig } from '../../lessons/lessons.data';
@@ -11,6 +14,7 @@ import { TrainingAiGate } from './ai-gate';
 import type { ScriptTurnResult } from '../scripts/types';
 import {
   buildChoiceLessonAfterUser,
+  buildGenericScriptedReplyFromProgress,
   choiceLessonEffectiveProgress,
   pinChoiceLessonAiReply,
   type ChoiceLessonDef,
@@ -42,6 +46,27 @@ export type TrainingEngineTurnInput = {
   sessionProgressTurn?: number;
 };
 
+/** Single-target "ลองพูดตาม" turn — the learner may skip it. */
+export function withRepeatSkip(reply: TrainingTurnReply): TrainingTurnReply {
+  if (reply.isLessonComplete || reply.expectsUserSpeech === false) return reply;
+  if (!reply.expectedSpeech?.trim() || reply.emojiChoice) return reply;
+  const guided = reply.guidedSpeaking;
+  if (guided && (guided.stem?.trim() || (guided.options?.length ?? 0) > 1)) {
+    return reply;
+  }
+  return /พูดตาม/u.test(reply.textEn) ? { ...reply, canSkip: true } : reply;
+}
+
+function stripSkipState(turn: ChatTurn | undefined): Omit<TrainingTurnReply, 'textEn'> {
+  return {
+    textTh: turn?.textTh ?? '',
+    isLessonComplete: false,
+    expectsUserSpeech: turn?.expectsUserSpeech ?? true,
+    expectedSpeech: turn?.expectedSpeech ?? undefined,
+    ...(turn?.guidedSpeaking ? { guidedSpeaking: turn.guidedSpeaking } : {}),
+  };
+}
+
 @Injectable()
 export class TrainingTurnEngine {
   constructor(private readonly aiGate: TrainingAiGate) {}
@@ -57,7 +82,7 @@ export class TrainingTurnEngine {
     if (foundation) {
       const reply = foundation.buildOpening(learnerFirstName);
       return {
-        reply: this.toReply(reply),
+        reply: withRepeatSkip(this.toReply(reply)),
         aiDebug: scriptedAiDebug(),
       };
     }
@@ -66,7 +91,7 @@ export class TrainingTurnEngine {
     if (aboutMe) {
       const reply = aboutMe.buildOpening(learnerFirstName);
       return {
-        reply: this.toReply(reply),
+        reply: withRepeatSkip(this.toReply(reply)),
         aiDebug: scriptedAiDebug(),
       };
     }
@@ -75,7 +100,7 @@ export class TrainingTurnEngine {
     if (aroundTown) {
       const reply = aroundTown.buildOpening(learnerFirstName);
       return {
-        reply: this.toReply(reply),
+        reply: withRepeatSkip(this.toReply(reply)),
         aiDebug: scriptedAiDebug(),
       };
     }
@@ -84,7 +109,7 @@ export class TrainingTurnEngine {
     if (stories) {
       const reply = stories.buildOpening(learnerFirstName);
       return {
-        reply: this.toReply(reply),
+        reply: withRepeatSkip(this.toReply(reply)),
         aiDebug: scriptedAiDebug(),
       };
     }
@@ -123,6 +148,41 @@ export class TrainingTurnEngine {
     input: TrainingEngineTurnInput,
     def: ChoiceLessonDef,
   ): Promise<{ reply: TrainingTurnReply; aiDebug: AiDebug }> {
+    const { reply, aiDebug } = await this.runChoiceLessonTurnInner(input, def);
+    return { reply: withRepeatSkip(reply), aiDebug };
+  }
+
+  private async runChoiceLessonTurnInner(
+    input: TrainingEngineTurnInput,
+    def: ChoiceLessonDef,
+  ): Promise<{ reply: TrainingTurnReply; aiDebug: AiDebug }> {
+    const lastAiTurn = [...input.turns].reverse().find((t) => t.speaker === 'ai');
+    if (userTurnWasSkip(input.originalText) || userTurnWasSkip(input.userText)) {
+      if (lastAiTurn?.canSkip) {
+        const answeredStep =
+          choiceLessonEffectiveProgress(
+            def,
+            input.turns.slice(0, -1),
+            input.sessionProgressTurn,
+          ) + 1;
+        const next = buildGenericScriptedReplyFromProgress(
+          def,
+          input.turns,
+          def.buildScriptedReplyFromProgress ? answeredStep : answeredStep + 1,
+          input.learnerFirstName,
+        );
+        if (next) {
+          return {
+            reply: { ...this.toReply(next), wasSoftAdvance: true },
+            aiDebug: scriptedAiDebug(),
+          };
+        }
+      }
+      return {
+        reply: { ...stripSkipState(lastAiTurn), textEn: lastAiTurn?.textEn ?? '' },
+        aiDebug: scriptedAiDebug(),
+      };
+    }
     const scripted = buildChoiceLessonAfterUser(def, {
       turns: input.turns,
       learnerFirstName: input.learnerFirstName,
