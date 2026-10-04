@@ -70,7 +70,15 @@
         "emoji": "🏃",
         "answer": "jog",
         "reading": "จ็อก",
-        "meaningTh": "วิ่งเหยาะ ๆ"
+        "meaningTh": "วิ่งเหยาะ ๆ",
+        "acceptedAnswers": [
+          "jogging",
+          "jogs",
+          "job",
+          "jock",
+          "jug",
+          "joke"
+        ]
       },
       {
         "emoji": "🏄",
@@ -181,7 +189,7 @@
         "answer": "sofa",
         "reading": "โซ-ฟะ",
         "meaningTh": "โซฟา",
-        "accept": [
+        "acceptedAnswers": [
           "couch"
         ]
       },
@@ -190,7 +198,7 @@
         "answer": "shelf",
         "reading": "เชลฟ์",
         "meaningTh": "ชั้นวางของ",
-        "accept": [
+        "acceptedAnswers": [
           "bookshelf"
         ]
       },
@@ -199,7 +207,7 @@
         "answer": "fridge",
         "reading": "ฟริดจ์",
         "meaningTh": "ตู้เย็น",
-        "accept": [
+        "acceptedAnswers": [
           "refrigerator"
         ]
       }
@@ -364,7 +372,7 @@
         "answer": "drums",
         "reading": "ดรัมส์",
         "meaningTh": "กลอง",
-        "accept": [
+        "acceptedAnswers": [
           "drum"
         ]
       },
@@ -437,7 +445,7 @@
         "answer": "afternoon",
         "reading": "อาฟ-เตอร์-นูน",
         "meaningTh": "ตอนบ่าย",
-        "accept": [
+        "acceptedAnswers": [
           "this afternoon"
         ]
       }

@@ -63,7 +63,15 @@
         "emoji": "🏃",
         "answer": "jog",
         "reading": "จ็อก",
-        "meaningTh": "วิ่งเหยาะ ๆ"
+        "meaningTh": "วิ่งเหยาะ ๆ",
+        "accept": [
+          "jogging",
+          "jogs",
+          "job",
+          "jock",
+          "jug",
+          "joke"
+        ]
       },
       {
         "emoji": "🏄",

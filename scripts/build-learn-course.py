@@ -278,7 +278,16 @@ def build():
         elif ntype == "new_words":
             items = overlays.get("newWords", {}).get(code)
             if items:
-                out["new_words"][nid] = {"title": title_en, "items": items}
+                out["new_words"][nid] = {
+                    "title": title_en,
+                    "items": [
+                        {
+                            **{k: v for k, v in it.items() if k != "accept"},
+                            **({"acceptedAnswers": it["accept"]} if it.get("accept") else {}),
+                        }
+                        for it in items
+                    ],
+                }
             content_ref["poolId"] = nid
         elif ntype == "emoji_speak":
             items = overlays.get("emojiSpeak", {}).get(code)
