@@ -436,6 +436,8 @@ export interface TrainingTurnReply {
   v7Step?: number;
   v7Retry?: boolean;
   v7Choice?: string;
+  /** Repeat-after-me turn the learner may skip; question/answer turns never set it. */
+  canSkip?: boolean;
   textEn: string;
   /** Optional speech-only copy for Cloud gRPC / server-side TTS. */
   ttsText?: string;

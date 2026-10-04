@@ -34,6 +34,8 @@ import type {
 import {
   EMOJI_SPEAK_COMPLETE_SENTINEL,
   EMOJI_SPEAK_COMPLETE_TURN_TEXT,
+  LESSON_SKIP_SENTINEL,
+  LESSON_SKIP_TURN_TEXT,
   TAP_TO_CONTINUE_SENTINEL,
   TAP_TO_CONTINUE_TURN_TEXT,
 } from '../common/api.types';
@@ -452,6 +454,7 @@ export class SessionsController {
     const countsAsSpoken =
       rawSpeech.length > 0 &&
       rawSpeech !== TAP_TO_CONTINUE_SENTINEL &&
+      rawSpeech !== LESSON_SKIP_SENTINEL &&
       rawSpeech !== EMOJI_SPEAK_COMPLETE_SENTINEL;
 
     const result =
@@ -1133,6 +1136,7 @@ export class SessionsController {
       v7Step: reply.v7Step,
       v7Retry: reply.v7Retry,
       v7Choice: reply.v7Choice,
+      ...(reply.canSkip ? { canSkip: true } : {}),
       textEn: reply.textEn,
       ttsText: reply.ttsText ?? null,
       ttsInstruction: reply.ttsInstruction ?? null,
@@ -1209,6 +1213,7 @@ export class SessionsController {
       opening: attachAiDebug(
         {
           aiResponse: reply.textEn,
+          ...(reply.canSkip ? { canSkip: true } : {}),
           ...(reply.ttsText?.trim() ? { ttsText: reply.ttsText.trim() } : {}),
           ...(reply.ttsInstruction?.trim()
             ? { ttsInstruction: reply.ttsInstruction.trim() }
@@ -1399,6 +1404,7 @@ export class SessionsController {
       v7Step: reply.v7Step,
       v7Retry: reply.v7Retry,
       v7Choice: reply.v7Choice,
+      ...(reply.canSkip ? { canSkip: true } : {}),
       textEn,
       ttsText: reply.ttsText ?? null,
       ttsInstruction: reply.ttsInstruction ?? null,
@@ -1441,6 +1447,7 @@ export class SessionsController {
       ...(reply.assessmentTier ? { assessmentTier: reply.assessmentTier } : {}),
       ...(reply.wasSoftAdvance ? { wasSoftAdvance: true } : {}),
       ...(reply.completionStatus ? { completionStatus: reply.completionStatus } : {}),
+      ...(reply.canSkip ? { canSkip: true } : {}),
     };
 
     if (body.generateAudio) {
@@ -1500,6 +1507,8 @@ export class SessionsController {
       originalText === EMOJI_SPEAK_COMPLETE_SENTINEL;
     if (isTapToContinue) {
       originalText = TAP_TO_CONTINUE_TURN_TEXT;
+    } else if (originalText === LESSON_SKIP_SENTINEL) {
+      originalText = LESSON_SKIP_TURN_TEXT;
     } else if (isEmojiSpeakComplete) {
       originalText = EMOJI_SPEAK_COMPLETE_TURN_TEXT;
     }

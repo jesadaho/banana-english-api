@@ -8,7 +8,7 @@ import {
   foundationV7LessonSpec,
   type V7TeachingStep,
 } from './foundation-v7-lessons.data';
-import { userTurnWasContinue } from './foundation-v7-turn-guard';
+import { userTurnWasContinue, userTurnWasSkip } from './foundation-v7-turn-guard';
 
 const normalize = (value: string) => value.toLowerCase().normalize('NFD').replace(/\p{M}/gu, '').replace(/[’']/g, '').replace(/[^a-z0-9]/g, '');
 
@@ -61,6 +61,13 @@ export function syllableCountSpeechMatches(expected: string, gotNormalized: stri
   }
   return false;
 }
+/** Repeat-after-me turns may be skipped; question/answer and choice turns may not. */
+function isSkippableStep(step: V7TeachingStep): boolean {
+  return step.expectsUserSpeech
+    && (step.kind === 'model_repeat' || step.kind === 'repeat')
+    && !step.presentation?.options.length;
+}
+
 const OFF_TOPIC_PROBES = new Set(['goodmorning', 'hellothere']);
 
 const NUMBER_TH: Record<string, string> = {
@@ -135,6 +142,7 @@ export function renderV7Turn(id: string, stepNumber: number, chosen?: string): T
     guidedSpeaking: board, emojiChoice: undefined,
     isLessonComplete: step.kind === 'complete',
     v7Step: index + 1, v7Retry: false, v7Choice: chosen,
+    ...(isSkippableStep(step) ? { canSkip: true } : {}),
   };
 }
 
@@ -150,6 +158,13 @@ export async function runV7Turn(input: TrainingEngineTurnInput, gate: TrainingAi
   // Continue is a UI action, never evidence of a spoken attempt.
   if (step.expectsUserSpeech && userTurnWasContinue(input.userText)) {
     return { reply: { ...current, v7Retry: last?.v7Retry }, aiDebug: scriptedAiDebug() };
+  }
+  if (userTurnWasSkip(input.userText)) {
+    if (!isSkippableStep(step)) {
+      return { reply: { ...current, v7Retry: last?.v7Retry }, aiDebug: scriptedAiDebug() };
+    }
+    const next = renderV7Turn(id, stepNumber + 1, last?.v7Choice);
+    return { reply: { ...next, wasSoftAdvance: true }, aiDebug: scriptedAiDebug() };
   }
   if (!step.expectsUserSpeech) {
     return { reply: renderV7Turn(id, stepNumber + 1, last?.v7Choice), aiDebug: scriptedAiDebug() };

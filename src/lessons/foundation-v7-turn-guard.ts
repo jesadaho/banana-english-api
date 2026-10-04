@@ -1,4 +1,9 @@
-import { TAP_TO_CONTINUE_SENTINEL, TAP_TO_CONTINUE_TURN_TEXT } from '../common/api.types';
+import {
+  LESSON_SKIP_SENTINEL,
+  LESSON_SKIP_TURN_TEXT,
+  TAP_TO_CONTINUE_SENTINEL,
+  TAP_TO_CONTINUE_TURN_TEXT,
+} from '../common/api.types';
 import { PATH_LESSON_IDS } from './foundation-v7-lessons.data';
 import { canonicalFoundationV7LessonId } from './foundation-v7-lesson-id-aliases';
 
@@ -12,6 +17,11 @@ export function userTurnWasContinue(text: string | null | undefined): boolean {
     value === TAP_TO_CONTINUE_SENTINEL ||
     value === TAP_TO_CONTINUE_TURN_TEXT
   );
+}
+
+export function userTurnWasSkip(text: string | null | undefined): boolean {
+  const value = (text ?? '').trim();
+  return value === LESSON_SKIP_SENTINEL || value === LESSON_SKIP_TURN_TEXT;
 }
 
 function tutorLineKey(text: string): string {

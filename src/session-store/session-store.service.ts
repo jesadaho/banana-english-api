@@ -34,6 +34,7 @@ export interface ChatTurn {
   v7Step?: number;
   v7Retry?: boolean;
   v7Choice?: string;
+  canSkip?: boolean;
   speaker: 'user' | 'ai';
   textEn: string;
   ttsText?: string | null;

@@ -33,6 +33,12 @@ export const TAP_TO_CONTINUE_SENTINEL = '[continue]';
 /** How a Continue tap is stored in history and shown to the model. */
 export const TAP_TO_CONTINUE_TURN_TEXT = '(tapped Continue)';
 
+/** The app posts this when the learner skips a repeat-after-me turn (`canSkip`). */
+export const LESSON_SKIP_SENTINEL = '[skip]';
+
+/** How a Skip tap is stored in history. */
+export const LESSON_SKIP_TURN_TEXT = '(tapped Skip)';
+
 /**
  * App posts this after finishing a local Emoji Speak batch (Stories 3.1).
  * Distinct from Continue so the model does not re-open the Intro listen turn.
@@ -67,6 +73,8 @@ export interface AiDebug {
 
 export interface TurnExchangeResponse {
   aiResponse: string;
+  /** Repeat-after-me turn: the client may offer Skip (posts LESSON_SKIP_SENTINEL). */
+  canSkip?: boolean;
   /** Speech-only copy; clients should use this instead of aiResponse for TTS. */
   ttsText?: string;
   /** Pass separately to instruction-aware TTS; never concatenate into spoken text. */

@@ -159,6 +159,41 @@ describe('Adventure A2 Zone 1 content', () => {
     }
   });
 
+  it('lets learners skip repeat-after-me turns but never question turns', async () => {
+    const engine = new TrainingTurnEngine({} as unknown as TrainingAiGate);
+    for (const lesson of ADVENTURE_A2_LESSONS) {
+      const steps = buildFoundationV7Steps(lesson.lessonId);
+      let reply = engine.buildOpening(lesson, 'Nana').reply;
+      const turns: ChatTurn[] = [{ speaker: 'ai', ...reply }];
+      for (let guard = 0; !reply.isLessonComplete; guard++) {
+        assert.ok(guard < 60, `${lesson.lessonId} never completes`);
+        const step = steps[reply.v7Step! - 1];
+        const isRepeat = step.kind === 'model_repeat' || step.kind === 'repeat';
+        assert.equal(!!reply.canSkip, isRepeat && reply.expectsUserSpeech, `${lesson.lessonId} ${step.kind}`);
+        const send = async (userText: string) => {
+          turns.push({ speaker: 'user', textEn: userText });
+          const next = (await engine.runTurn({
+            config: lesson, turns, userText, originalText: userText,
+            learnerFirstName: 'Nana', sessionProgressTurn: reply.v7Step,
+          })).reply;
+          turns.push({ speaker: 'ai', ...next });
+          return next;
+        };
+        if (!reply.expectsUserSpeech) {
+          reply = await send('continue');
+        } else if (reply.canSkip) {
+          const next = await send('(tapped Skip)');
+          assert.equal(next.v7Step, reply.v7Step! + 1, `${lesson.lessonId} skip should advance`);
+          reply = next;
+        } else {
+          const stay = await send('(tapped Skip)');
+          assert.equal(stay.v7Step, reply.v7Step, `${lesson.lessonId} ${step.kind} must not skip`);
+          reply = await send(reply.expectedSpeech!);
+        }
+      }
+    }
+  });
+
   it('gives every conversation three goals', () => {
     for (const node of zone1.filter((n) => n.type === 'conversation')) {
       const sim = getSimulation(node.id)!;
