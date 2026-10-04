@@ -16,6 +16,8 @@ export interface SimulationGoalHint {
   intentTh: string;
   starterEn: string;
   modelEn: string;
+  /** Shown above the mic as soon as this becomes the next open goal. */
+  cueTh?: string;
 }
 
 export interface SimulationConfig {

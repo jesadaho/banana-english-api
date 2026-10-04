@@ -704,42 +704,58 @@
   },
   {
    "code": "1.7",
-   "title": "🎬 Capy's Hobby / งานอดิเรกของ Capy",
-   "type": "story_bites",
+   "title": "Club Voices / เสียงจากชมรม",
+   "type": "hear_it",
    "flag": false,
    "beat": "Ten",
-   "axes": "12131",
-   "teach": "🎬 คลิป 15–30 วินาที: Capy รุ่นพี่ชมรมโชว์สมุดวาดรูปและเล่างานอดิเรก → ตอบ 3 คำถามด้วยเสียง · เปิดดูซ้ำได้ · 📜 สคริปต์มีคำตอบทุกข้อ ไม่ถามสิ่งที่คลิปไม่ได้พูด",
-   "say": "Drawing.",
+   "axes": "12132",
+   "teach": "🎧 ฟังเพื่อนในชมรมแนะนำตัวและเล่างานอดิเรก แล้วพูดตอบข้อมูลสำคัญ: เจอกันเมื่อไหร่ · ชอบ / ไม่ชอบทำอะไร · ทำอะไรวันหยุด (ตอบสั้นได้ ไม่ต้องเป็นประโยคเต็ม)",
+   "say": "On weekends.",
    "chapter": "บท 1: เพื่อนใหม่ในชมรม",
-   "goal": "ตามเรื่องในคลิปได้พอตอบ 3 คำถามด้วยเสียง",
-   "accept": "ตอบสั้นได้ ตรงเนื้อหาคลิป · เปิดดูซ้ำได้ไม่จำกัด",
-   "hint": "① เล่นซ้ำช่วงที่มีคำตอบ ② sentence starter · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
+   "goal": "จับข้อมูลสำคัญจากเสียงทางเดียว (ประกาศ ข้อความเสียง) แล้วพูดทวน",
+   "accept": "พูดข้อมูลสำคัญ (คำ ตัวเลข เวลา) ตรงกับเสียง ไม่ต้องเป็นประโยคเต็ม",
+   "hint": "① เล่นซ้ำ ② เล่นซ้ำแบบช้า + เน้นช่วงที่มีคำตอบ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "audio": "Capy: Hi! I'm Capy. I love drawing. Look at my book! I draw every day after school. I don't like swimming. It's too cold! I enjoy dancing with my friends on Fridays.",
-     "q": "What does Capy love doing?",
-     "en": "Drawing.",
+     "audio": "Hi! Welcome to the club! We meet on weekends. See you on Saturday!",
+     "q": "ชมรมเจอกันเมื่อไหร่",
+     "en": "On weekends.",
      "accept": [
-      "Capy loves drawing."
+      "Weekends.",
+      "On Saturday."
      ]
     },
     {
-     "audio": "(คลิปเดิม)",
-     "q": "Does Capy like swimming?",
-     "en": "No, Capy doesn't.",
+     "audio": "Hi, it's Capy! I love drawing. I don't like swimming. It's too cold!",
+     "q": "Capy ไม่ชอบทำอะไร",
+     "en": "Swimming.",
      "accept": [
-      "No.",
-      "No, Capy doesn't like swimming."
+      "Capy doesn't like swimming."
      ]
     },
     {
-     "audio": "(คลิปเดิม)",
-     "q": "When does Capy dance?",
-     "en": "On Fridays.",
+     "audio": "Hey! I go jogging on weekends. How about you?",
+     "q": "Max ทำอะไรทุกสุดสัปดาห์",
+     "en": "Jogging.",
      "accept": [
-      "Fridays.",
-      "On Friday."
+      "He goes jogging.",
+      "Go jogging."
+     ]
+    },
+    {
+     "audio": "Hi, it's May. I enjoy baking. I don't like gaming.",
+     "q": "May สนุกกับการทำอะไร",
+     "en": "Baking.",
+     "accept": [
+      "She enjoys baking."
+     ]
+    },
+    {
+     "audio": "Hi! I'm Mali. I work at the café. I like surfing, but I don't like fishing.",
+     "q": "Mali ไม่ชอบทำอะไร",
+     "en": "Fishing.",
+     "accept": [
+      "She doesn't like fishing."
      ]
     }
    ]

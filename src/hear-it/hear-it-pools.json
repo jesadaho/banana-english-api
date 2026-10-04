@@ -1,4 +1,74 @@
 {
+  "a2_c01n07": {
+    "id": "a2_c01n07",
+    "titleEn": "Club Voices",
+    "titleTh": "เสียงจากชมรม",
+    "items": [
+      {
+        "id": "a2_c01n07_01",
+        "audioText": "Hi! Welcome to the club! We meet on weekends. See you on Saturday!",
+        "questionTh": "ชมรมเจอกันเมื่อไหร่",
+        "answerEn": "On weekends.",
+        "acceptedAnswers": [
+          "Weekends.",
+          "On Saturday."
+        ],
+        "hints": [
+          "On …",
+          "On ___."
+        ]
+      },
+      {
+        "id": "a2_c01n07_02",
+        "audioText": "Hi, it's Capy! I love drawing. I don't like swimming. It's too cold!",
+        "questionTh": "Capy ไม่ชอบทำอะไร",
+        "answerEn": "Swimming.",
+        "acceptedAnswers": [
+          "Capy doesn't like swimming."
+        ],
+        "hints": [
+          "Swimming. …"
+        ]
+      },
+      {
+        "id": "a2_c01n07_03",
+        "audioText": "Hey! I go jogging on weekends. How about you?",
+        "questionTh": "Max ทำอะไรทุกสุดสัปดาห์",
+        "answerEn": "Jogging.",
+        "acceptedAnswers": [
+          "He goes jogging.",
+          "Go jogging."
+        ],
+        "hints": [
+          "Jogging. …"
+        ]
+      },
+      {
+        "id": "a2_c01n07_04",
+        "audioText": "Hi, it's May. I enjoy baking. I don't like gaming.",
+        "questionTh": "May สนุกกับการทำอะไร",
+        "answerEn": "Baking.",
+        "acceptedAnswers": [
+          "She enjoys baking."
+        ],
+        "hints": [
+          "Baking. …"
+        ]
+      },
+      {
+        "id": "a2_c01n07_05",
+        "audioText": "Hi! I'm Mali. I work at the café. I like surfing, but I don't like fishing.",
+        "questionTh": "Mali ไม่ชอบทำอะไร",
+        "answerEn": "Fishing.",
+        "acceptedAnswers": [
+          "She doesn't like fishing."
+        ],
+        "hints": [
+          "Fishing. …"
+        ]
+      }
+    ]
+  },
   "a2_c07n07": {
     "id": "a2_c07n07",
     "titleEn": "Voice Message",

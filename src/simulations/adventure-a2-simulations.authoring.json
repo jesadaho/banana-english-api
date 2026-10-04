@@ -48,7 +48,8 @@
         "hints": {
           "intentTh": "ลองถามว่าครูทำอะไรในวันหยุด",
           "starterEn": "How about …?",
-          "modelEn": "How about you?"
+          "modelEn": "How about you?",
+          "cueTh": "ลองถามว่าครูทำอะไรในวันหยุด"
         }
       },
       {
@@ -59,7 +60,8 @@
         "hints": {
           "intentTh": "ถ้าคุณทำเหมือนกัน บอกว่า ‘ฉันก็เหมือนกัน’ หรือบอกกิจกรรมของคุณ",
           "starterEn": "Me …",
-          "modelEn": "Me too!"
+          "modelEn": "Me too!",
+          "cueTh": "ถ้าคุณทำเหมือนกัน บอกว่า ‘ฉันก็เหมือนกัน’ หรือบอกกิจกรรมของคุณ"
         }
       },
       {
@@ -70,7 +72,8 @@
         "hints": {
           "intentTh": "คุณไม่ชอบทำอะไร?",
           "starterEn": "I don't like …",
-          "modelEn": "I don't like swimming."
+          "modelEn": "I don't like swimming.",
+          "cueTh": "คุณไม่ชอบทำอะไร?"
         }
       }
     ],

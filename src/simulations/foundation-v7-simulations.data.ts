@@ -7,7 +7,7 @@ type GoalSpec = {
   th: string;
   en: string;
   example: string;
-  hints?: { intentTh: string; starterEn: string; modelEn: string };
+  hints?: { intentTh: string; starterEn: string; modelEn: string; cueTh?: string };
 };
 
 type SimulationSpec = {

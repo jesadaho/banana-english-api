@@ -235,6 +235,12 @@ describe('Adventure A2 Zone 1 content', () => {
     assert.deepEqual(sim.successCriteria, ['intro', 'hobby', 'weekend', 'ask_back', 'react', 'dislike']);
     assert.equal(sim.goalHints?.[3]?.intentTh, 'ลองถามว่าครูทำอะไรในวันหยุด');
     assert.equal(sim.goalHints?.[5]?.intentTh, 'คุณไม่ชอบทำอะไร?');
+    assert.deepEqual(sim.goalHints?.map((h) => h?.cueTh ?? null), [
+      null, null, null,
+      'ลองถามว่าครูทำอะไรในวันหยุด',
+      'ถ้าคุณทำเหมือนกัน บอกว่า ‘ฉันก็เหมือนกัน’ หรือบอกกิจกรรมของคุณ',
+      'คุณไม่ชอบทำอะไร?',
+    ]);
     const done = Object.fromEntries(sim.successCriteria.map((k) => [k, true]));
     const recap = finalizeSimulationTurnState(sim, 6, done, {
       aiResponse: 'Thanks, Ploy! See you at the club!',
