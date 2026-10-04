@@ -33,6 +33,8 @@ export type PathLessonFlowStep = {
   options?: { emoji: string; label: string; speak: string; meaningTh?: string; recapText?: string }[];
   successText?: string;
   incorrectHintTh?: string;
+  /** 'any' choice: further accepted sentences (not shown as cards), each with its own recap. */
+  extraAnswers?: { speak: string; recapText?: string; meaningTh?: string }[];
 };
 
 const specs: Record<string, PathLessonSpec> = {
@@ -131,6 +133,7 @@ export interface V7TeachingStep {
     answerMode: 'single' | 'any';
     stem: string;
     options: { emoji: string; label: string; speak: string; meaningTh?: string; recapText?: string }[];
+    extraAnswers?: { speak: string; recapText?: string; meaningTh?: string }[];
   };
 }
 
@@ -162,6 +165,7 @@ function flowStep(step: PathLessonFlowStep): V7TeachingStep {
     presentation: {
       text, answerMode: step.answerMode ?? 'single', options, stem: step.stem ?? '',
       successText: step.successText, incorrectHintTh: step.incorrectHintTh,
+      ...(step.extraAnswers?.length ? { extraAnswers: step.extraAnswers } : {}),
     },
   };
 }

@@ -38,6 +38,8 @@ const chapterOf = (code: string) => Number(code.split('.')[0]);
 const zone1 = a2Nodes.filter((n) => chapterOf(n.code) <= ZONE_1_CHAPTERS);
 /** Picture packs ship only once their bundled images exist (seeAndSayImagesReady). */
 const AWAITING_ART = new Set(['describe_it', 'explain_it']);
+/** Owner-written flows exempt from the generated-flow shape contract. */
+const HAND_AUTHORED_FLOWS = new Set(['a2_c01n02']);
 
 describe('Adventure A2 course registry', () => {
   it('registers as a second course with a2_ ids that never collide with Foundation V7', () => {
@@ -131,7 +133,9 @@ describe('Adventure A2 Zone 1 content', () => {
       const steps = buildFoundationV7Steps(lesson.lessonId);
       const isFlow = Boolean(foundationV7LessonSpec(lesson.lessonId)?.flow);
       assert.equal(steps.at(-1)!.kind, 'complete', lesson.lessonId);
-      if (isFlow) {
+      if (HAND_AUTHORED_FLOWS.has(lesson.lessonId)) {
+        assert.ok(isFlow, lesson.lessonId);
+      } else if (isFlow) {
         const checks = steps.filter((s) => s.presentation?.answerMode === 'single' && s.presentation.options.length);
         assert.ok(checks.length >= 2, `${lesson.lessonId} needs two recognition checks`);
         assert.ok(steps.some((s) => s.expectsUserSpeech && !s.presentation?.options.length && !s.skippable),
@@ -270,5 +274,46 @@ describe('Adventure A2 generator', () => {
   it('passes the course QA script', () => {
     const out = execFileSync('python3', ['scripts/a2/qa.py'], { encoding: 'utf8' });
     assert.match(out, /ERRORS: 0/);
+  });
+
+  it('plays the hand-written I Enjoy Baking flow', async () => {
+    const engine = new TrainingTurnEngine({} as unknown as TrainingAiGate);
+    const config = { ...getLesson('a2_c01n02')!, lessonId: 'a2_c01n02' };
+    const turns: ChatTurn[] = [];
+    const say = async (text: string) => {
+      turns.push({ speaker: 'user', textEn: text } as ChatTurn);
+      const { reply } = await engine.runTurn({
+        config, turns, userText: text, originalText: text, learnerFirstName: 'Nana',
+      });
+      turns.push({ speaker: 'ai', ...reply } as ChatTurn);
+      return reply;
+    };
+    const intro = engine.buildOpening(config, 'Nana').reply;
+    turns.push({ speaker: 'ai', ...intro } as ChatTurn);
+    assert.equal(intro.expectsUserSpeech, false);
+    assert.match(intro.textEn, /bake → baking/);
+    const repeat = await say('(tapped Continue)');
+    assert.equal(repeat.expectedSpeech, 'I enjoy baking.');
+    assert.equal(repeat.canSkip, true);
+    const gaming = await say('I enjoy baking.');
+    assert.equal(gaming.guidedSpeaking?.options.length, 2);
+    const cycling = await say('I enjoy gaming.');
+    assert.match(cycling.textEn, /^ดีครับ I enjoy gaming\. แปลว่า/);
+    assert.equal(cycling.guidedSpeaking?.options.length, 3);
+    assert.equal(cycling.expectedSpeech, 'I enjoy cycling.');
+    const hiking = await say('I enjoy cycling.');
+    assert.equal(hiking.expectedSpeech, 'I enjoy hiking.');
+    const likeLove = await say('I enjoy hiking.');
+    assert.equal(likeLove.expectsUserSpeech, false);
+    assert.match(likeLove.textEn, /I love baking\./);
+    const pickVerb = await say('(tapped Continue)');
+    assert.equal(pickVerb.expectedSpeech, 'I love gaming.');
+    const pick = await say('I love gaming.');
+    assert.match(pick.textEn, /^ถูกต้องครับ I love gaming\./);
+    assert.equal(pick.guidedSpeaking?.options.length, 4);
+    const closing = await say('I love cycling.');
+    assert.equal(closing.isLessonComplete, true);
+    assert.equal(closing.assessmentTier, 'correct');
+    assert.match(closing.textEn, /^I love cycling\. แปลว่า “ฉันชอบปั่นจักรยานมาก” ครับ ❤️\nครูบีรู้แล้ว/);
   });
 });

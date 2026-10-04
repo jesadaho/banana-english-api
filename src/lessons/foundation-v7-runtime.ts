@@ -76,7 +76,8 @@ const NUMBER_TH: Record<string, string> = {
 };
 
 function v7CorrectPrefix(step: V7TeachingStep, spoken: string): string {
-  const option = step.presentation?.options.find(o => speechMatches(o.speak, spoken));
+  const option = [...step.presentation?.options ?? [], ...step.presentation?.extraAnswers ?? []]
+    .find(o => speechMatches(o.speak, spoken));
   if (option?.recapText) return option.recapText;
   const authored = step.presentation?.successText;
   if (authored) return authored;
@@ -170,7 +171,8 @@ export async function runV7Turn(input: TrainingEngineTurnInput, gate: TrainingAi
     return { reply: renderV7Turn(id, stepNumber + 1, last?.v7Choice), aiDebug: scriptedAiDebug() };
   }
   const accepted = isChoice && choice.answerMode === 'any'
-    ? choice.options.map(o => o.speak) : [current.expectedSpeech!];
+    ? [...choice.options, ...step.presentation?.extraAnswers ?? []].map(o => o.speak)
+    : [current.expectedSpeech!];
   const exact = accepted.find(answer => speechMatches(answer, input.userText));
   const saidLabelOnly = isChoice && !exact && choice.options.some(o =>
     speechMatches(o.label, input.userText) && !speechMatches(o.speak, input.userText));

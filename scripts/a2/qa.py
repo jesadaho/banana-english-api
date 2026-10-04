@@ -169,6 +169,7 @@ for n in N:
     c = n["code"]; fl = LF.get(c)
     if not fl: err("E13", f"{c}: lesson has no authored flow"); continue
     st = fl.get("steps", [])
+    if n.get("handAuthoredFlow"): continue  # owner-written flow; shape rules E13–E15 don't apply
     if not 8 <= len(st) <= 12: err("E13", f"{c}: flow has {len(st)} steps (8–12)")
     kinds = [s.get("kind") for s in st]
     if not st or not (kinds[0] in ("task", "listen") or (kinds[0] == "choice" and st[0].get("answerMode") == "single")): err("E13", f"{c}: flow must open with a warm-up check, a model/repeat task or a short listen intro")

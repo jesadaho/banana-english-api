@@ -134,7 +134,7 @@ def missing_describe_images(pool_id, count):
 
 FLOW_STEP_KEYS = (
     "kind", "text", "expectedSpeech", "answerMode", "stem", "options",
-    "successText", "incorrectHintTh",
+    "successText", "incorrectHintTh", "extraAnswers",
 )
 
 
