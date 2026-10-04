@@ -23,6 +23,8 @@ type SimulationSpec = {
   completionEn: string;
   completionTh: string;
   aiClosing?: boolean;
+  introGoalsTh?: string[];
+  introGoalsEn?: string[];
 };
 
 const specs = v7Specs as SimulationSpec[];
@@ -38,6 +40,9 @@ function toSimulationConfig(
   goalsTh: spec.goals.map((g: GoalSpec) => g.th),
   goalsEn: spec.goals.map((g: GoalSpec) => g.en),
   goalHints: spec.goals.map((g: GoalSpec) => g.hints ?? null),
+  ...(spec.introGoalsTh?.length
+    ? { introGoalsTh: spec.introGoalsTh, introGoalsEn: spec.introGoalsEn ?? spec.introGoalsTh }
+    : {}),
   difficulty: 'easy' as const, estimatedMinutes: spec.maxTurns >= 5 ? 4 : 3, bananaCost: 1,
   foundationMission: true, minTurns: spec.minTurns, maxTurns: spec.maxTurns,
   successCriteria: spec.goals.map((g: GoalSpec) => g.id),

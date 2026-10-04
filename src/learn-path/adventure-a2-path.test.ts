@@ -233,6 +233,7 @@ describe('Adventure A2 Zone 1 content', () => {
     assert.equal(sim.aiClosing, true);
     assert.match(sim.openingPrompt ?? '', /Open with exactly: "Hi! Welcome to the club! What's your name\?"/);
     assert.deepEqual(sim.successCriteria, ['intro', 'hobby', 'weekend', 'ask_back', 'react', 'dislike']);
+    assert.deepEqual(sim.introGoalsTh, ['บอกสิ่งที่ชอบ', 'เล่ากิจกรรมวันหยุด', 'ถามครูกลับ', 'บอกสิ่งที่ไม่ชอบ']);
     assert.equal(sim.goalHints?.[3]?.intentTh, 'ลองถามว่าครูทำอะไรในวันหยุด');
     assert.equal(sim.goalHints?.[5]?.intentTh, 'คุณไม่ชอบทำอะไร?');
     assert.deepEqual(sim.goalHints?.map((h) => h?.cueTh ?? null), [
