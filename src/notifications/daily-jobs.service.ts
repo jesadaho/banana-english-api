@@ -15,6 +15,9 @@ import {
   type PushNotificationType,
 } from './notification-templates';
 
+const BANANA_PUSH_START_HOUR = 8;
+const BANANA_PUSH_END_HOUR = 22;
+
 @Injectable()
 export class DailyJobsService {
   private readonly logger = new Logger(DailyJobsService.name);
@@ -28,7 +31,7 @@ export class DailyJobsService {
   @Cron('*/15 * * * *')
   async runScheduledJobs() {
     try {
-      await this.processFirstBananaDrop();
+      await this.processBananaFull();
       await this.processStreakReminder();
       await this.processMissYouDay3();
     } catch (error) {
@@ -36,45 +39,33 @@ export class DailyJobsService {
     }
   }
 
-  /** Credits the daily banana refill at 09:00 local; push only on the user's first-ever daily drop. */
-  private async processFirstBananaDrop() {
+  /**
+   * Push once when the free pool reaches the cap. Fires only on the below-cap → full
+   * transition, so it can't repeat until the user spends and the pool refills again.
+   * Quiet hours defer the credit (and push) to the morning; the refill math catches up.
+   */
+  private async processBananaFull() {
+    const now = new Date();
     const users = await this.prisma.user.findMany({
+      where: {
+        freeBananaBalance: { lt: this.economy.maxBananaBalance() },
+        lastBananaRefillAt: { not: null },
+        fcmTokens: { some: {} },
+      },
       include: { fcmTokens: true },
     });
-    const now = new Date();
 
     for (const user of users) {
       const local = getUserLocalTime(user.timezone, now);
-      if (local.hour !== 9) continue;
-      if (isSameDateKey(user.lastDailyBananaDate, local.dateKey)) continue;
+      if (local.hour < BANANA_PUSH_START_HOUR || local.hour >= BANANA_PUSH_END_HOUR) continue;
 
-      const isFirstDailyBanana = user.lastDailyBananaDate == null;
-
-      const updated = await this.economy.maybeCreditDailyBanana(user, now);
-      if (updated.lastDailyBananaDate?.getTime() === user.lastDailyBananaDate?.getTime()) {
-        continue;
-      }
-
-      // Push only the first time they ever receive a daily banana.
-      if (!isFirstDailyBanana) continue;
-
-      const alreadyNotified = await this.prisma.notificationLog.findFirst({
-        where: { userId: user.id, type: 'first_banana' },
-        select: { id: true },
-      });
-      if (alreadyNotified) continue;
-
-      const sent = await this.tryLogNotification(
-        user.id,
-        'first_banana',
-        local.dateKey,
-      );
-      if (!sent) continue;
+      const updated = await this.economy.maybeRefillFreeBananas(user, now);
+      if (updated.freeBananaBalance < this.economy.maxBananaBalance()) continue;
 
       const invalid = await this.sendPush(
         user.id,
         user.fcmTokens.map((token) => token.token),
-        'first_banana',
+        'banana_full',
       );
       await this.removeInvalidTokens(invalid);
     }

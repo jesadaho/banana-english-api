@@ -45,11 +45,10 @@ export function freeTalkBananaCost(durationMinutes: number): number {
 }
 
 export const ONBOARDING_BANANA_BONUS = 2;
-/**
- * Daily free refill — credited once per local day after 09:00.
- * Set to MAX_BANANA_BALANCE so a single drop tops the free-earn cap back up to 5.
- */
+/** Legacy daily-drop size; still reported to old app builds as `dailyDrop`. */
 export const DAILY_BANANA_DROP = 5;
+/** Timed free refill: +1 free banana per interval until the free pool reaches the cap. */
+export const BANANA_REFILL_HOURS = 4;
 export const DEBUG_BANANA_REFILL = 2;
 /** Cap on the daily free banana pool (onboarding, daily drop, debug refill). IAP / bonuses are uncapped saved bananas. */
 export const MAX_BANANA_BALANCE = 5;
@@ -62,6 +61,7 @@ export const RATING_COMMENT_BONUS_BANANAS = 1;
 /** Env keys — defaults above apply when unset / invalid. */
 export const ENV_ONBOARDING_BANANA_BONUS = 'ONBOARDING_BANANA_BONUS';
 export const ENV_DAILY_BANANA_DROP = 'DAILY_BANANA_DROP';
+export const ENV_BANANA_REFILL_HOURS = 'BANANA_REFILL_HOURS';
 export const ENV_DEBUG_BANANA_REFILL = 'DEBUG_BANANA_REFILL';
 export const ENV_MAX_BANANA_BALANCE = 'MAX_BANANA_BALANCE';
 
@@ -74,6 +74,29 @@ export function cappedBananaCredit(
   if (amount <= 0) return 0;
   const room = Math.max(0, maxBalance - currentBalance);
   return Math.min(amount, room);
+}
+
+/**
+ * Timed refill: one free banana per full interval since `lastRefillAt`, up to `maxBalance`.
+ * The clock does not run while the pool is full; a null anchor starts it now with no credit.
+ */
+export function timedBananaRefill(
+  freeBalance: number,
+  lastRefillAt: Date | null,
+  now: Date,
+  intervalMs: number,
+  maxBalance = MAX_BANANA_BALANCE,
+): { credit: number; nextAnchor: Date | null } {
+  if (freeBalance >= maxBalance) return { credit: 0, nextAnchor: null };
+  if (!lastRefillAt) return { credit: 0, nextAnchor: now };
+  const intervals = Math.floor((now.getTime() - lastRefillAt.getTime()) / intervalMs);
+  if (intervals <= 0) return { credit: 0, nextAnchor: null };
+  const credit = Math.min(intervals, maxBalance - freeBalance);
+  const full = freeBalance + credit >= maxBalance;
+  return {
+    credit,
+    nextAnchor: full ? now : new Date(lastRefillAt.getTime() + intervals * intervalMs),
+  };
 }
 
 export function getMissionReward(score: number): MissionRewardTier {

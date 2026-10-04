@@ -1,33 +1,60 @@
 {
   "conversations": {
     "1.10": {
-      "scenarioTh": "วันแรกที่ Adventure Club คุณเจอ Teacher Bee และ May ทุกคนแนะนำตัว บอกงานอดิเรก และถามกลับ",
-      "openingEn": "Hi! Welcome to the Adventure Club! I'm Teacher Bee. What's your name?",
-      "role": "You are Teacher Bee, the friendly leader of the Adventure Club, with May (a cheerful club member) next to you. Lead every beat so the learner only needs to respond. 1) Ask the learner's name and welcome them. 2) Ask 'What do you like doing?' and accept like / love / enjoy + -ing (any hobby). 3) Say May's hobby (May enjoys drawing) and invite the learner to ask someone back — accept 'How about you?', 'What do you like doing?' or any hobby question; answer it briefly. Use only A2 Zone 1 language: hobbies (dancing, drawing, gaming, swimming, cycling, baking, hiking, cooking, reading), like / love / enjoy + -ing, How about you?, Me too!, So do I. Keep each line under 15 words. Do not explain grammar.",
+      "scenarioTh": "วันแรกที่ Adventure Club คุณคุยกับครูบี บอกชื่อ บอกกิจกรรมที่ชอบ ถามกลับ และบอกสิ่งที่ไม่ชอบ",
+      "openingEn": "Hi! Welcome to the Adventure Club! What's your name?",
+      "role": "You are Teacher Bee (ครูบี), the friendly leader of the Adventure Club. React to what the learner actually says. Follow these beats, one per reply: 1) After the learner says their name (My name is…, I'm…, or just a name), reply exactly in this shape: \"Nice to meet you, <name>! What do you like doing?\" 2) After the learner says an activity they like (I like / enjoy / love + any activity, not only lesson words), reply only \"That sounds fun!\" with NO question — the learner must now ask you back. If the learner already asked back in the same reply (e.g. \"I enjoy gaming. How about you?\"), skip this beat and go straight to beat 3. 3) When the learner asks back (How about you? / What do you like doing? / any hobby question), reply exactly: \"I enjoy hiking. What don't you like doing?\" If the learner instead says \"Me too!\" after hearing you enjoy hiking, reply \"Great! What don't you like doing?\" 4) Accept I don't like… / I do not like… with any activity; also accept \"I like them all.\" — never force a dislike. Then close in one or two short sentences with no question, using their real answers, e.g. \"You enjoy gaming and you don't like baking. Welcome to the club, Ploy!\" Never ask \"How about you?\" yourself before the learner asks back. Use only A2 Zone 1 language: hobbies, like / love / enjoy / don't like + -ing, How about you?, Me too!. Keep each line under 15 words. Do not explain grammar.",
       "goals": [
         {
           "id": "intro",
-          "th": "แนะนำตัว",
-          "en": "Introduce yourself",
-          "example": "My name is Ploy. Nice to meet you."
+          "th": "บอกชื่อ",
+          "en": "Say your name",
+          "example": "My name is Ploy.",
+          "hints": {
+            "intentTh": "บอกชื่อของคุณ",
+            "starterEn": "My name is …",
+            "modelEn": "My name is Ploy."
+          }
         },
         {
           "id": "hobby",
-          "th": "บอกงานอดิเรกด้วย like / love / enjoy + -ing",
-          "en": "Say a hobby with like / love / enjoy + -ing",
-          "example": "I enjoy drawing."
+          "th": "บอกกิจกรรมที่ชอบ",
+          "en": "Say an activity you like with like / enjoy / love + -ing",
+          "example": "I enjoy gaming.",
+          "hints": {
+            "intentTh": "บอกกิจกรรมที่คุณชอบทำ",
+            "starterEn": "I enjoy …",
+            "modelEn": "I enjoy gaming."
+          }
         },
         {
           "id": "ask_back",
-          "th": "ถามกลับเรื่องงานอดิเรก",
-          "en": "Ask back about hobbies",
-          "example": "How about you?"
+          "th": "ถามกลับว่าครูชอบทำอะไร",
+          "en": "Ask Teacher Bee back what he likes doing",
+          "example": "How about you?",
+          "hints": {
+            "intentTh": "ลองถามกลับว่าครูชอบทำอะไร",
+            "starterEn": "How about …?",
+            "modelEn": "How about you?"
+          }
+        },
+        {
+          "id": "dislike",
+          "th": "บอกสิ่งที่ไม่ชอบ",
+          "en": "Say an activity you don't like (or that you like them all)",
+          "example": "I don't like baking.",
+          "hints": {
+            "intentTh": "คุณไม่ชอบทำอะไร?",
+            "starterEn": "I don't like …",
+            "modelEn": "I don't like baking."
+          }
         }
       ],
-      "minTurns": 3,
+      "minTurns": 4,
       "maxTurns": 6,
-      "completionEn": "Great to meet you! See you at the club!",
-      "completionTh": "ยินดีที่ได้รู้จัก แล้วเจอกันที่ชมรมนะ!"
+      "aiClosing": true,
+      "completionEn": "Welcome to the club! See you next time!",
+      "completionTh": "ยินดีต้อนรับสู่ชมรมนะ! แล้วเจอกันครั้งหน้า!"
     },
     "2.11": {
       "scenarioTh": "Teacher Bee อยากรู้กิจวัตรของคุณเพื่อหาเวลาซ้อมชมรม คุณเล่าวันของคุณตามลำดับและบอกว่าทำบ่อยแค่ไหน",

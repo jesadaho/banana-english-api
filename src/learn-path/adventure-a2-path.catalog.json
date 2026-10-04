@@ -81,6 +81,62 @@
           "code": "1.3",
           "order": 3,
           "globalOrder": 3,
+          "titleEn": "Club Words",
+          "titleTh": "คำในชมรม",
+          "type": "new_words",
+          "beat": "Sho",
+          "learningTarget": "จำและพูด club · team · friend · weekend ได้ เพื่อใช้ในเรื่องบทนี้: Teacher John (ครูจาก A1) ส่งผู้เรียนเข้าชมรม Adventure Club ให้ครูบีดูแล ครูบีพาประชุมชมรมครั้งแรก ทุกคนแนะนำตัวและงานอดิเรก",
+          "activity": "คำที่เรื่องในบทนี้ต้องใช้ (ชมรมและการหาคู่ partner) club · team · friend · weekend",
+          "examples": [],
+          "estimatedMinutes": [
+            1,
+            2
+          ],
+          "difficultyAxes": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "contentRef": {
+            "poolId": "a2_c01n03"
+          }
+        },
+        {
+          "id": "a2_c01n04",
+          "code": "1.4",
+          "order": 4,
+          "globalOrder": 4,
+          "titleEn": "What Do You Like Doing?",
+          "titleTh": "ชอบทำอะไร",
+          "type": "lesson",
+          "beat": "Sho",
+          "learningTarget": "เข้าใจ \"ชอบทำอะไร\" พอจะพูดตัวอย่างของตัวเองได้ 1 ประโยค",
+          "activity": "❓ ขั้น 1: ถามงานอดิเรกและถามกลับ What do you like doing? · How about you? · Me too! · So do I. · ใช้คำจาก 1.3: What do you like doing on the weekend? — I enjoy hiking with my friends. How about you? — Me too! · Our club has a hiking team.",
+          "examples": [
+            "What do you like doing?"
+          ],
+          "estimatedMinutes": [
+            3,
+            5
+          ],
+          "difficultyAxes": [
+            3,
+            1,
+            2,
+            1,
+            1
+          ],
+          "contentRef": {
+            "lessonId": "a2_c01n04"
+          }
+        },
+        {
+          "id": "a2_c01n05",
+          "code": "1.5",
+          "order": 5,
+          "globalOrder": 5,
           "titleEn": "Hobby Pictures",
           "titleTh": "ภาพงานอดิเรก",
           "type": "emoji_speak",
@@ -102,63 +158,7 @@
             1
           ],
           "contentRef": {
-            "poolId": "a2_c01n03"
-          }
-        },
-        {
-          "id": "a2_c01n04",
-          "code": "1.4",
-          "order": 4,
-          "globalOrder": 4,
-          "titleEn": "Club Words",
-          "titleTh": "คำในชมรม",
-          "type": "new_words",
-          "beat": "Sho",
-          "learningTarget": "จำและพูด club · team · friend · weekend ได้ เพื่อใช้ในเรื่องบทนี้: Teacher John (ครูจาก A1) ส่งผู้เรียนเข้าชมรม Adventure Club ให้ครูบีดูแล ครูบีพาประชุมชมรมครั้งแรก ทุกคนแนะนำตัวและงานอดิเรก",
-          "activity": "คำที่เรื่องในบทนี้ต้องใช้ (ชมรมและการหาคู่ partner) club · team · friend · weekend",
-          "examples": [],
-          "estimatedMinutes": [
-            1,
-            2
-          ],
-          "difficultyAxes": [
-            1,
-            1,
-            1,
-            1,
-            1
-          ],
-          "contentRef": {
-            "poolId": "a2_c01n04"
-          }
-        },
-        {
-          "id": "a2_c01n05",
-          "code": "1.5",
-          "order": 5,
-          "globalOrder": 5,
-          "titleEn": "What Do You Like Doing?",
-          "titleTh": "ชอบทำอะไร",
-          "type": "lesson",
-          "beat": "Sho",
-          "learningTarget": "เข้าใจ \"ชอบทำอะไร\" พอจะพูดตัวอย่างของตัวเองได้ 1 ประโยค",
-          "activity": "❓ ขั้น 1: ถามงานอดิเรกและถามกลับ What do you like doing? · How about you? · Me too! · So do I. · ใช้คำจาก 1.4: What do you like doing on the weekend? — I enjoy hiking with my friends. How about you? — Me too! · Our club has a hiking team.",
-          "examples": [
-            "What do you like doing?"
-          ],
-          "estimatedMinutes": [
-            3,
-            5
-          ],
-          "difficultyAxes": [
-            3,
-            1,
-            2,
-            1,
-            1
-          ],
-          "contentRef": {
-            "lessonId": "a2_c01n05"
+            "poolId": "a2_c01n05"
           }
         },
         {
@@ -171,7 +171,7 @@
           "type": "new_words",
           "beat": "Sho",
           "learningTarget": "จำและพูด fish · jog · surf · skate ได้ เพื่อเล่างานอดิเรกเพิ่มในการหาคู่ partner ของชมรม",
-          "activity": "More Words: คำกริยารูปเดิมเพิ่มที่ใส่ในแพทเทิร์น What do you like doing? — I enjoy + -ing (1.2 · 1.5) ได้ทันที fish · jog · surf · skate · ตอนพูดในประโยคเติม -ing: fishing · jogging (ซ้ำ g) · surfing · skating (ตัด e)",
+          "activity": "More Words: คำกริยารูปเดิมเพิ่มที่ใส่ในแพทเทิร์น What do you like doing? — I enjoy + -ing (1.2 · 1.4) ได้ทันที fish · jog · surf · skate · ตอนพูดในประโยคเติม -ing: fishing · jogging (ซ้ำ g) · surfing · skating (ตัด e)",
           "examples": [],
           "estimatedMinutes": [
             1,

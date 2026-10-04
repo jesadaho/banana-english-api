@@ -294,7 +294,7 @@ def build():
             if items:
                 out["emoji_speak"][nid] = {
                     "title": title_en,
-                    "dealCount": min(6, len(items)),
+                    "dealCount": min(7, len(items)),
                     "items": [
                         {
                             "emoji": it["emoji"],

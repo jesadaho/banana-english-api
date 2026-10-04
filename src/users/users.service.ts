@@ -115,7 +115,10 @@ export interface UserProfileResponse {
     dailyDrop: number;
     maxBalance: number;
     missionCost: number;
+    refillHours: number;
   };
+  /** Next timed free banana; null while the free pool is full. */
+  nextBananaRefillAt: string | null;
 }
 
 export interface DebugRefillBananasByNameResponse {
@@ -199,7 +202,7 @@ export class UsersService {
     });
     await this.recordActiveDay(user.id);
 
-    updated = await this.economy.maybeCreditDailyBanana(updated);
+    updated = await this.economy.maybeRefillFreeBananas(updated);
     updated = await this.economy.ensureOnboardingBonus(updated.id);
     return this.getProfile(updated);
   }
@@ -659,6 +662,7 @@ export class UsersService {
       surveyAgeRange,
       email: user.email,
       bananaTicket: this.economy.ticketRules(),
+      nextBananaRefillAt: this.economy.nextBananaRefillAt(user)?.toISOString() ?? null,
     };
   }
 }

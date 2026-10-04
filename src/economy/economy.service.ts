@@ -9,6 +9,9 @@ import {
   DAILY_SPEAK_REWARD_XP,
   DEBUG_BANANA_REFILL,
   ENV_DAILY_BANANA_DROP,
+  ENV_BANANA_REFILL_HOURS,
+  BANANA_REFILL_HOURS,
+  timedBananaRefill,
   ENV_DEBUG_BANANA_REFILL,
   ENV_MAX_BANANA_BALANCE,
   ENV_ONBOARDING_BANANA_BONUS,
@@ -103,8 +106,19 @@ export class EconomyService {
     return this.envInt(ENV_DEBUG_BANANA_REFILL, DEBUG_BANANA_REFILL);
   }
 
-  private maxBananaBalance(): number {
+  maxBananaBalance(): number {
     return this.envInt(ENV_MAX_BANANA_BALANCE, MAX_BANANA_BALANCE);
+  }
+
+  private bananaRefillHours(): number {
+    return this.envInt(ENV_BANANA_REFILL_HOURS, BANANA_REFILL_HOURS);
+  }
+
+  /** When the next free banana lands, or null while the free pool is full. */
+  nextBananaRefillAt(user: User): Date | null {
+    const anchor = user.lastBananaRefillAt;
+    if (user.freeBananaBalance >= this.maxBananaBalance() || !anchor) return null;
+    return new Date(anchor.getTime() + this.bananaRefillHours() * 3_600_000);
   }
 
   /** Rules shown in the Banana Ticket UI — env-overridable where applicable. */
@@ -112,11 +126,13 @@ export class EconomyService {
     dailyDrop: number;
     maxBalance: number;
     missionCost: number;
+    refillHours: number;
   } {
     return {
       dailyDrop: this.dailyBananaDrop(),
       maxBalance: this.maxBananaBalance(),
       missionCost: MISSION_BANANA_COST,
+      refillHours: this.bananaRefillHours(),
     };
   }
 
@@ -184,37 +200,28 @@ export class EconomyService {
     return this.creditOnboardingBonus(userId);
   }
 
-  async maybeCreditDailyBanana(user: User, now = new Date()): Promise<User> {
-    const local = getUserLocalTime(user.timezone, now);
-    if (local.hour < 9) {
-      return user;
-    }
-    if (isSameDateKey(user.lastDailyBananaDate, local.dateKey)) {
-      return user;
-    }
+  /** Timed free refill (+1 per interval up to the cap); safe to call on every profile load. */
+  async maybeRefillFreeBananas(user: User, now = new Date()): Promise<User> {
+    const intervalMs = this.bananaRefillHours() * 3_600_000;
+    const max = this.maxBananaBalance();
+    const anchorOf = (u: User) => u.lastBananaRefillAt ?? null;
+    const preview = timedBananaRefill(user.freeBananaBalance, anchorOf(user), now, intervalMs, max);
+    if (!preview.nextAnchor) return user;
 
-    const drop = this.dailyBananaDrop();
     return this.prisma.$transaction(async (tx) => {
       const fresh = await tx.user.findUniqueOrThrow({ where: { id: user.id } });
-      if (isSameDateKey(fresh.lastDailyBananaDate, local.dateKey)) {
-        return fresh;
-      }
-
-      const credit = cappedBananaCredit(
-        fresh.freeBananaBalance,
-        drop,
-        this.maxBananaBalance(),
+      const { credit, nextAnchor } = timedBananaRefill(
+        fresh.freeBananaBalance, anchorOf(fresh), now, intervalMs, max,
       );
-
+      if (!nextAnchor) return fresh;
       if (credit > 0) {
         await this.recordTransaction(tx, {
           userId: user.id,
           currency: Currency.BANANA,
           amount: credit,
-          source: 'daily_drop',
+          source: 'timed_refill',
         });
       }
-
       return tx.user.update({
         where: { id: user.id },
         data: {
@@ -224,7 +231,7 @@ export class EconomyService {
                 freeBananaBalance: { increment: credit },
               }
             : {}),
-          lastDailyBananaDate: parseDateKey(local.dateKey),
+          lastBananaRefillAt: nextAnchor,
         },
       });
     });
@@ -412,6 +419,7 @@ export class EconomyService {
         });
       }
 
+      const wasFull = user.freeBananaBalance >= this.maxBananaBalance();
       return tx.user.update({
         where: { id: userId },
         data: {
@@ -419,6 +427,7 @@ export class EconomyService {
           ...(fromFree > 0
             ? { freeBananaBalance: { decrement: fromFree } }
             : {}),
+          ...(fromFree > 0 && wasFull ? { lastBananaRefillAt: new Date() } : {}),
         },
       });
     });

@@ -17,6 +17,8 @@ export type HearItPool = {
   items: HearItItem[];
 };
 
+/** Temporarily off: Hear It nodes show as coming soon on every path. */
+export const HEAR_IT_ENABLED = false;
 export const HEAR_IT_MIN_ITEMS = 3;
 export const HEAR_IT_DEAL_COUNT = 5;
 

@@ -51,6 +51,7 @@ model User {
   spokenCount             Int       @default(0)
 
   lastDailyBananaDate     DateTime? @db.Date
+  lastBananaRefillAt      DateTime?
   lastAppOpenDate         DateTime? @db.Date
   dailyMissionUsedDate    DateTime? @db.Date
 

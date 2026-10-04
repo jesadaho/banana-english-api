@@ -1,7 +1,7 @@
 {
-  "a2_c01n03": {
+  "a2_c01n05": {
     "title": "Hobby Pictures",
-    "dealCount": 6,
+    "dealCount": 7,
     "items": [
       {
         "emoji": "🎮",
@@ -70,6 +70,19 @@
         "hints": [
           "S… (1 คำ)",
           "swimming"
+        ]
+      },
+      {
+        "emoji": "🏃",
+        "answer": "jogging",
+        "hint": "j______",
+        "meaningTh": "การวิ่งจ๊อกกิ้ง",
+        "acceptedAnswers": [
+          "jog"
+        ],
+        "hints": [
+          "J… (1 คำ)",
+          "jogging"
         ]
       }
     ]

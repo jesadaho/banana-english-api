@@ -20,13 +20,13 @@ import { getLesson } from '../lessons/lessons.data';
 import { TrainingTurnEngine } from '../training/engine/training-turn.engine';
 import type { TrainingAiGate } from '../training/engine/ai-gate';
 import type { ChatTurn } from '../session-store/session-store.service';
-import { getSimulation } from '../simulations/simulations.data';
+import { finalizeSimulationTurnState, getSimulation } from '../simulations/simulations.data';
 import { getInteractiveScenario } from '../interactive-scenario/interactive-scenario.data';
 import { emojiSpeakPoolById } from '../emoji-speak/emoji-speak.data';
 import { isValidNewWordsPack, newWordsPoolById } from '../new-words/new-words.data';
 import { sayItTopicById } from '../say-it/say-it.data';
 import { SayItService } from '../say-it/say-it.service';
-import { hearItPoolById } from '../hear-it/hear-it.data';
+import { HEAR_IT_ENABLED, hearItPoolById } from '../hear-it/hear-it.data';
 import { storyBitesPoolById } from '../story-bites/story-bites.data';
 import { describeItPoolById } from '../describe-it/describe-it.data';
 import { initScenarioRuntime, localMatchCurrentBeat, processScenarioTurn } from '../interactive-scenario/interactive-scenario.runtime';
@@ -39,7 +39,7 @@ const zone1 = a2Nodes.filter((n) => chapterOf(n.code) <= ZONE_1_CHAPTERS);
 /** Picture packs ship only once their bundled images exist (seeAndSayImagesReady). */
 const AWAITING_ART = new Set(['describe_it', 'explain_it']);
 /** Owner-written flows exempt from the generated-flow shape contract. */
-const HAND_AUTHORED_FLOWS = new Set(['a2_c01n02', 'a2_c01n05']);
+const HAND_AUTHORED_FLOWS = new Set(['a2_c01n02', 'a2_c01n04']);
 
 describe('Adventure A2 course registry', () => {
   it('registers as a second course with a2_ ids that never collide with Foundation V7', () => {
@@ -78,9 +78,18 @@ describe('Adventure A2 course registry', () => {
 describe('Adventure A2 Zone 1 content', () => {
   it('has real content behind every Zone 1 node except pending picture packs', () => {
     const missing = zone1
-      .filter((n) => !AWAITING_ART.has(n.type) && !hasFoundationV7Content(n))
+      .filter((n) => !AWAITING_ART.has(n.type) && !(n.type === 'hear_it' && !HEAR_IT_ENABLED))
+      .filter((n) => !hasFoundationV7Content(n))
       .map((n) => `${n.code} ${n.type}`);
     assert.deepEqual(missing, []);
+  });
+
+  it('keeps Hear It nodes coming soon while Hear It is off', { skip: HEAR_IT_ENABLED }, () => {
+    const items = toFoundationV7ClientChapters(A2_CAPABILITIES, ADVENTURE_A2_COURSE)
+      .flatMap((c) => c.items)
+      .filter((i) => i.nodeType === 'hear_it');
+    assert.ok(items.length > 0);
+    assert.ok(items.every((i) => i.comingSoon && !i.poolId));
   });
 
   it('opens playable Zone 1 nodes in a linear chain', () => {
@@ -206,11 +215,30 @@ describe('Adventure A2 Zone 1 content', () => {
     }
   });
 
-  it('gives every conversation three goals', () => {
+  it('gives every conversation three or four goals', () => {
     for (const node of zone1.filter((n) => n.type === 'conversation')) {
       const sim = getSimulation(node.id)!;
-      assert.equal(sim.successCriteria.length, 3, node.id);
+      assert.ok([3, 4].includes(sim.successCriteria.length), node.id);
     }
+  });
+
+  it('lets New Friends close with the AI recap of real answers', () => {
+    const sim = getSimulation('a2_c01n10')!;
+    assert.equal(sim.aiClosing, true);
+    assert.deepEqual(sim.successCriteria, ['intro', 'hobby', 'ask_back', 'dislike']);
+    assert.equal(sim.goalHints?.[2]?.intentTh, 'ลองถามกลับว่าครูชอบทำอะไร');
+    assert.equal(sim.goalHints?.[3]?.intentTh, 'คุณไม่ชอบทำอะไร?');
+    const done = Object.fromEntries(sim.successCriteria.map((k) => [k, true]));
+    const recap = finalizeSimulationTurnState(sim, 4, done, {
+      aiResponse: "You enjoy gaming and you don't like baking. Welcome to the club, Ploy!",
+      textTh: 'คุณสนุกกับการเล่นเกมและไม่ชอบอบขนม ยินดีต้อนรับสู่ชมรมนะ Ploy!',
+    });
+    assert.equal(recap.isTaskComplete, true);
+    assert.match(recap.reply.aiResponse, /^You enjoy gaming/);
+    const asking = finalizeSimulationTurnState(sim, 4, done, {
+      aiResponse: 'What else do you like?', textTh: 'ชอบอะไรอีก?',
+    });
+    assert.equal(asking.reply.aiResponse, sim.completionReplyEn);
   });
 
   it('runs Checkpoint 1 as three resumable scenes with one goal per beat', () => {
@@ -321,7 +349,7 @@ describe('Adventure A2 generator', () => {
 
   it('plays the hand-written What Do You Like Doing? flow', async () => {
     const engine = new TrainingTurnEngine({} as unknown as TrainingAiGate);
-    const config = { ...getLesson('a2_c01n05')!, lessonId: 'a2_c01n05' };
+    const config = { ...getLesson('a2_c01n04')!, lessonId: 'a2_c01n04' };
     const turns: ChatTurn[] = [];
     const say = async (text: string) => {
       turns.push({ speaker: 'user', textEn: text } as ChatTurn);

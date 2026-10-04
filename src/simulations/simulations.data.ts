@@ -39,6 +39,8 @@ export interface SimulationConfig {
   /** Deterministic close used when the final learner reply reaches maxTurns. */
   completionReplyEn?: string;
   completionReplyTh?: string;
+  /** Keep the AI's own closing (it recaps the learner's answers) unless it still asks a question. */
+  aiClosing?: boolean;
   /** Neutral close when maxTurns is reached before every goal is achieved. */
   fallbackReplyEn?: string;
   fallbackReplyTh?: string;
@@ -1619,8 +1621,10 @@ export function finalizeSimulationTurnState(
         aiResponse = 'No problem. We can talk about something else.';
         textTh = 'ไม่เป็นไรครับ เราคุยเรื่องอื่นกันได้ครับ';
       } else if (foundationGoalsDone) {
-        aiResponse = config.completionReplyEn ?? aiResponse;
-        textTh = config.completionReplyTh ?? textTh;
+        if (!config.aiClosing || stillAsking || !aiResponse.trim()) {
+          aiResponse = config.completionReplyEn ?? aiResponse;
+          textTh = config.completionReplyTh ?? textTh;
+        }
       } else {
         aiResponse =
           config.fallbackReplyEn ??

@@ -591,7 +591,10 @@ export interface UserProfileResponse {
     dailyDrop: number;
     maxBalance: number;
     missionCost: number;
+    refillHours: number;
   };
+  /** Next timed free banana; null while the free pool is full. */
+  nextBananaRefillAt: string | null;
 }
 
 /** POST /lessons/ratings — comment bonus is uncapped. */
