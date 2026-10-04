@@ -146,6 +146,7 @@ export function foundationV7ChoiceBeat(lessonId: string): FoundationV7ChoiceBeat
 }
 
 const stripEnd = (s: string) => s.replace(/[.!?]+$/, '').trim();
+const straightQuotes = (s: string) => s.replace(/[‘’]/g, "'");
 
 function flowStep(step: PathLessonFlowStep): V7TeachingStep {
   const text = step.text;
@@ -161,7 +162,8 @@ function flowStep(step: PathLessonFlowStep): V7TeachingStep {
   const expected = step.expectedSpeech ?? options[0]?.speak ?? '';
   return {
     kind: 'recall', instruction: text, expectsUserSpeech: true, expectedSpeech: expected,
-    ...(step.kind === 'task' && text.includes(stripEnd(expected)) ? { skippable: true } : {}),
+    ...(step.kind === 'task' && straightQuotes(text).includes(straightQuotes(stripEnd(expected)))
+      ? { skippable: true } : {}),
     presentation: {
       text, answerMode: step.answerMode ?? 'single', options, stem: step.stem ?? '',
       successText: step.successText, incorrectHintTh: step.incorrectHintTh,

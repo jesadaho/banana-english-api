@@ -389,11 +389,11 @@
    "flow": {
     "titleEn": "I Enjoy Baking",
     "titleTh": "ฉันสนุกกับการอบขนม",
-    "goalTh": "บอกว่าชอบทำอะไรด้วย I like / enjoy / love ___ing (baking · gaming · cycling · hiking)",
+    "goalTh": "บอกว่าชอบหรือไม่ชอบทำอะไรด้วย I enjoy / like / love / don't like ___ing (baking · gaming · cycling · hiking)",
     "steps": [
      {
       "kind": "listen",
-      "text": "ยินดีต้อนรับเข้า Adventure Club ครับ! วันนี้มาคุยเรื่องกิจกรรมสนุกๆกัน\nbake แปลว่า “อบขนม” ถ้าจะพูดถึงกิจกรรมว่า “การอบขนม” ใช้ baking 🧁\nคำนี้ลงท้ายด้วย e เราตัด e แล้วเติม -ing\n\n🧁 bake → baking"
+      "text": "ยินดีต้อนรับเข้า Adventure Club ครับ! วันนี้มาคุยเรื่อง กิจกรรมสนุกๆกัน\nbake แปลว่า “อบขนม” ถ้าจะพูดถึงกิจกรรมว่า “การอบขนม” ใช้ baking 🧁\nคำนี้ลงท้ายด้วย e เราตัด e แล้วเติม -ing\n\n🧁 bake → baking"
      },
      {
       "kind": "task",
@@ -422,56 +422,16 @@
       "incorrectHintTh": "เกือบแล้ว! เล่นเกม 🎮 คือ gaming ครับ พูดว่า I enjoy gaming."
      },
      {
-      "kind": "choice",
-      "answerMode": "single",
-      "text": "ถ้าคุณสนุกกับการปั่นจักรยานล่ะ? 🚴 จะบอกครูบีว่าอะไรดี?",
-      "stem": "I enjoy ...",
-      "options": [
-       {
-        "emoji": "🎮",
-        "label": "gaming",
-        "speak": "I enjoy gaming."
-       },
-       {
-        "emoji": "🚴",
-        "label": "cycling",
-        "speak": "I enjoy cycling."
-       },
-       {
-        "emoji": "🥾",
-        "label": "hiking",
-        "speak": "I enjoy hiking."
-       }
-      ],
+      "kind": "task",
+      "text": "ถ้าคุณสนุกกับการปั่นจักรยานล่ะ? 🚴\ncycle เปลี่ยนเป็น cycling ลองพูดเต็มประโยคครับ",
       "expectedSpeech": "I enjoy cycling.",
-      "successText": "I enjoy cycling. แปลว่า “ฉันสนุกกับการปั่นจักรยาน” ครับ\n",
-      "incorrectHintTh": "เกือบแล้ว! ปั่นจักรยาน 🚴 คือ cycling ครับ พูดว่า I enjoy cycling."
+      "successText": "I enjoy cycling. แปลว่า “ฉันสนุกกับการปั่นจักรยาน” ครับ\n"
      },
      {
-      "kind": "choice",
-      "answerMode": "single",
+      "kind": "task",
       "text": "อีกทีมหนึ่งจะไปเดินป่า 🥾 hike เปลี่ยนเป็น hiking\nถ้าคุณสนุกกับการเดินป่า จะพูดว่าอะไรครับ?",
-      "stem": "I enjoy ...",
-      "options": [
-       {
-        "emoji": "🎮",
-        "label": "gaming",
-        "speak": "I enjoy gaming."
-       },
-       {
-        "emoji": "🚴",
-        "label": "cycling",
-        "speak": "I enjoy cycling."
-       },
-       {
-        "emoji": "🥾",
-        "label": "hiking",
-        "speak": "I enjoy hiking."
-       }
-      ],
       "expectedSpeech": "I enjoy hiking.",
-      "successText": "I enjoy hiking. แปลว่า “ฉันสนุกกับการเดินป่า” ครับ\n",
-      "incorrectHintTh": "เกือบแล้ว! เดินป่า 🥾 คือ hiking ครับ พูดว่า I enjoy hiking."
+      "successText": "I enjoy hiking. แปลว่า “ฉันสนุกกับการเดินป่า” ครับ\n"
      },
      {
       "kind": "listen",
@@ -499,52 +459,78 @@
       "incorrectHintTh": "เกือบแล้ว! ชอบมาก ๆ ❤️ ใช้ love ครับ พูดว่า I love gaming."
      },
      {
+      "kind": "task",
+      "text": "แล้วถ้าไม่ชอบล่ะ? เติม don’t หน้า like ครับ\nI don’t like gaming. แปลว่า “ฉันไม่ชอบเล่นเกม”\nลองพูดตามครับ",
+      "expectedSpeech": "I don't like gaming."
+     },
+     {
+      "kind": "choice",
+      "answerMode": "single",
+      "text": "ถ้าคุณไม่ชอบปั่นจักรยาน 🚴 จะพูดว่าอย่างไรครับ?",
+      "stem": "I don't like ...",
+      "options": [
+       {
+        "emoji": "🚴",
+        "label": "cycling",
+        "speak": "I don't like cycling."
+       },
+       {
+        "emoji": "🎮",
+        "label": "gaming",
+        "speak": "I don't like gaming."
+       }
+      ],
+      "expectedSpeech": "I don't like cycling.",
+      "successText": "I don’t like cycling. แปลว่า “ฉันไม่ชอบปั่นจักรยาน” ครับ\n",
+      "incorrectHintTh": "เกือบแล้ว! ปั่นจักรยาน 🚴 คือ cycling ครับ พูดว่า I don't like cycling."
+     },
+     {
       "kind": "choice",
       "answerMode": "any",
-      "text": "คราวนี้บอกครูบีตามจริงได้เลย คุณชอบทำอะไร?\nเลือกใช้ like, enjoy หรือ love แล้วพูดเป็นประโยคครับ",
-      "stem": "I like / enjoy / love ...",
+      "text": "คราวนี้บอกครูบีตามจริงได้เลย คุณชอบหรือไม่ชอบทำอะไร? เลือกแล้วพูดเป็นประโยคครับ 🎒",
+      "stem": "I like / enjoy / love / don't like ...",
       "options": [
        {
         "emoji": "🧁",
         "label": "baking",
         "speak": "I enjoy baking.",
-        "recapText": "I enjoy baking. แปลว่า “ฉันสนุกกับการอบขนม” ครับ 😊\n"
+        "recapText": "I enjoy baking. แปลว่า “ฉันสนุกกับการอบขนม” ครับ\n"
        },
        {
         "emoji": "🎮",
         "label": "gaming",
         "speak": "I enjoy gaming.",
-        "recapText": "I enjoy gaming. แปลว่า “ฉันสนุกกับการเล่นเกม” ครับ 😊\n"
+        "recapText": "I enjoy gaming. แปลว่า “ฉันสนุกกับการเล่นเกม” ครับ\n"
        },
        {
         "emoji": "🚴",
         "label": "cycling",
         "speak": "I enjoy cycling.",
-        "recapText": "I enjoy cycling. แปลว่า “ฉันสนุกกับการปั่นจักรยาน” ครับ 😊\n"
+        "recapText": "I enjoy cycling. แปลว่า “ฉันสนุกกับการปั่นจักรยาน” ครับ\n"
        },
        {
         "emoji": "🥾",
         "label": "hiking",
         "speak": "I enjoy hiking.",
-        "recapText": "I enjoy hiking. แปลว่า “ฉันสนุกกับการเดินป่า” ครับ 😊\n"
+        "recapText": "I enjoy hiking. แปลว่า “ฉันสนุกกับการเดินป่า” ครับ\n"
        }
       ],
       "extraAnswers": [
        {
         "speak": "I like baking.",
-        "recapText": "I like baking. แปลว่า “ฉันชอบอบขนม” ครับ 👍\n"
+        "recapText": "I like baking. แปลว่า “ฉันชอบอบขนม” ครับ\n"
        },
        {
         "speak": "I like gaming.",
-        "recapText": "I like gaming. แปลว่า “ฉันชอบเล่นเกม” ครับ 👍\n"
+        "recapText": "I like gaming. แปลว่า “ฉันชอบเล่นเกม” ครับ\n"
        },
        {
         "speak": "I like cycling.",
-        "recapText": "I like cycling. แปลว่า “ฉันชอบปั่นจักรยาน” ครับ 👍\n"
+        "recapText": "I like cycling. แปลว่า “ฉันชอบปั่นจักรยาน” ครับ\n"
        },
        {
         "speak": "I like hiking.",
-        "recapText": "I like hiking. แปลว่า “ฉันชอบเดินป่า” ครับ 👍\n"
+        "recapText": "I like hiking. แปลว่า “ฉันชอบเดินป่า” ครับ\n"
        },
        {
         "speak": "I love baking.",
@@ -561,6 +547,22 @@
        {
         "speak": "I love hiking.",
         "recapText": "I love hiking. แปลว่า “ฉันชอบเดินป่ามาก” ครับ ❤️\n"
+       },
+       {
+        "speak": "I don't like baking.",
+        "recapText": "I don't like baking. แปลว่า “ฉันไม่ชอบอบขนม” ครับ\n"
+       },
+       {
+        "speak": "I don't like gaming.",
+        "recapText": "I don't like gaming. แปลว่า “ฉันไม่ชอบเล่นเกม” ครับ\n"
+       },
+       {
+        "speak": "I don't like cycling.",
+        "recapText": "I don't like cycling. แปลว่า “ฉันไม่ชอบปั่นจักรยาน” ครับ\n"
+       },
+       {
+        "speak": "I don't like hiking.",
+        "recapText": "I don't like hiking. แปลว่า “ฉันไม่ชอบเดินป่า” ครับ\n"
        }
       ],
       "expectedSpeech": "I enjoy baking.",
@@ -568,7 +570,7 @@
      },
      {
       "kind": "finish",
-      "text": "ครูบีรู้แล้วว่าคุณชอบทำอะไร! บทหน้าเราจะลองถามคนอื่นกันครับ"
+      "text": "ครูบีรู้จักคุณมากขึ้นแล้ว! บทหน้าเราจะลองถามคนอื่นกันครับ"
      }
     ]
    },
