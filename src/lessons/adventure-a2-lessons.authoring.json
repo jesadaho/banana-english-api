@@ -198,7 +198,7 @@
   "a2_c01n05": {
     "titleEn": "What Do You Like Doing?",
     "titleTh": "ชอบทำอะไร",
-    "goalTh": "ถามว่าเพื่อนชอบทำอะไร โยนคำถามกลับ และบอกว่าชอบเหมือนกัน 👉 What do you like doing? · How about you? · Me too! / So do I.",
+    "goalTh": "เริ่มคุยและถามกลับ What do you like doing? · How about you? · Me too!",
     "estimatedMinutes": [
       3,
       5
@@ -206,148 +206,132 @@
     "scope": "❓ ขั้น 1: ถามงานอดิเรกและถามกลับ What do you like doing? · How about you? · Me too! · So do I. · ใช้คำจาก 1.4: What do you like doing on the weekend? — I enjoy hiking with my friends. How about you? — Me too! · Our club has a hiking team.",
     "blocks": [],
     "recall": {
-      "promptTh": "ถามว่าเพื่อนชอบทำอะไร โยนคำถามกลับ และบอกว่าชอบเหมือนกัน 👉 What do you like doing? · How about you? · Me too! / So do I.",
-      "answerEn": "I enjoy hiking."
+      "promptTh": "เริ่มคุยและถามกลับ What do you like doing? · How about you? · Me too!",
+      "answerEn": "What do you like doing?"
     },
     "flow": [
       {
-        "kind": "choice",
-        "text": "ทายเล่น ๆ ครับ 👫 ภาพนี้คืออะไรเอ่ย? เลือกแล้วพูดเลย",
-        "expectedSpeech": "friend",
-        "answerMode": "single",
-        "stem": "👫 = ...",
-        "options": [
-          {
-            "emoji": "🔤",
-            "label": "club",
-            "speak": "club"
-          },
-          {
-            "emoji": "🔤",
-            "label": "team",
-            "speak": "team"
-          },
-          {
-            "emoji": "🔤",
-            "label": "friend",
-            "speak": "friend"
-          },
-          {
-            "emoji": "🔤",
-            "label": "weekend",
-            "speak": "weekend"
-          }
-        ],
-        "successText": "friend = เพื่อน 👫 ถูกต้อง!",
-        "incorrectHintTh": "👫 คือ friend = เพื่อน ครับ (club = ชมรม · team = ทีม · weekend = วันหยุดสุดสัปดาห์)"
+        "kind": "listen",
+        "text": "คราวก่อนครูบีรู้แล้วว่าคุณชอบทำอะไร วันนี้ถึงตาคุณถามครูบีบ้างครับ 😄\nถ้าอยากรู้ว่าอีกฝ่ายชอบทำอะไร ถามว่า What do you like doing?\nแปลว่า “คุณชอบทำอะไร”"
       },
       {
         "kind": "task",
-        "text": "ภารกิจหาคู่! 👫 อยากรู้ว่าเพื่อนชอบทำอะไร ใช้ประโยคเปิดบทสนทนานี้เลย 👉 “What do you like doing?” = เธอชอบทำอะไร ลองพูดตามครับ",
+        "text": "ลองถามครูบีว่า What do you like doing? ครับ",
         "expectedSpeech": "What do you like doing?"
       },
       {
         "kind": "listen",
-        "text": "May ตอบว่า “I enjoy hiking. How about you?” = ฉันชอบเดินป่า แล้วเธอล่ะ 🥾 อยากโยนคำถามกลับ ใช้ How about you? ง่าย ๆ เลยครับ"
-      },
-      {
-        "kind": "task",
-        "text": "ตอบแล้วโยนกลับในทีเดียว เท่สุด ๆ 😎 👉 I enjoy ___ing with my friends. How about you? 🥾 “I enjoy hiking with my friends. How about you?” ลองพูดตามครับ",
-        "expectedSpeech": "I enjoy hiking with my friends. How about you?"
-      },
-      {
-        "kind": "listen",
-        "text": "Max ตอบว่า “I like gaming.” = ฉันชอบเล่นเกม 🎮 ถ้าชอบเหมือนกัน พูดสั้น ๆ ได้เลยว่า Me too! หรือ So do I. ครับ"
+        "text": "I enjoy hiking. ครูสนุกกับการเดินป่าครับ 🥾\nHow about you? — “แล้วคุณล่ะ?”\nครูใช้ประโยคสั้น ๆ นี้ถามคำถามเดิมกลับไปหาคุณครับ"
       },
       {
         "kind": "choice",
-        "text": "คุณก็ติดเกมเหมือน Max เลย 🎮 อยากบอก Max ว่า ฉันก็เหมือนกัน พูดว่าอะไรดีครับ?",
-        "expectedSpeech": "So do I.",
-        "answerMode": "single",
-        "stem": "...",
-        "options": [
-          {
-            "emoji": "🙌",
-            "label": "So do I.",
-            "speak": "So do I."
-          },
-          {
-            "emoji": "❓",
-            "label": "What do you…?",
-            "speak": "What do you like doing?"
-          }
-        ],
-        "successText": "So do I. = ฉันก็เหมือนกัน 🎮 ได้คู่เล่นเกมแล้ว 😆",
-        "incorrectHintTh": "เกือบแล้ว! ชอบเหมือนกันพูดสั้น ๆ ว่า So do I. หรือ Me too! ครับ"
-      },
-      {
-        "kind": "task",
-        "text": "Capy ชอบอบขนมกับเพื่อน ๆ 🧁👫 (แต่กินมากกว่าอบ 😆) ช่วย Capy เล่าให้ทุกคนฟังหน่อย ใช้ enjoy นะ ลองเดาดู ผิดได้ไม่เป็นไรครับ 😄",
-        "expectedSpeech": "I enjoy baking with my friends."
-      },
-      {
-        "kind": "choice",
-        "text": "สุดยอด! พูดว่า “I enjoy baking with my friends.” ครับ 🧁 ครูบีประกาศข่าวดี ชมรมเรามีทีมเดินป่าด้วยนะ 🏕️ ครูบีพูดว่าอะไรครับ?",
-        "expectedSpeech": "Our club has a hiking team.",
-        "answerMode": "single",
-        "stem": "Our club has a ...",
-        "options": [
-          {
-            "emoji": "🥾",
-            "label": "hiking team",
-            "speak": "Our club has a hiking team."
-          },
-          {
-            "emoji": "🎮",
-            "label": "gaming team",
-            "speak": "Our club has a gaming team."
-          }
-        ],
-        "successText": "Our club has a hiking team. = ชมรมเรามีทีมเดินป่า 🏕️ ไปกันเลย!",
-        "incorrectHintTh": "เกือบแล้ว! ทีมเดินป่าคือ hiking team ครับ พูดว่า Our club has a hiking team."
-      },
-      {
-        "kind": "task",
-        "text": "อยากรู้ว่า Max ทำอะไรวันหยุด (weekend) 🗓️ ท้าเลย! ถาม Max เองดูครับ",
-        "expectedSpeech": "What do you like doing on the weekend?"
-      },
-      {
-        "kind": "listen",
-        "text": "เยี่ยม! ถามว่า “What do you like doing on the weekend?” ครับ 👍 Max ตอบว่า “I enjoy gaming with my friends.” = ฉันชอบเล่นเกมกับเพื่อน ๆ 🎮 (ไม่แปลกใจเลย 😆)"
-      },
-      {
-        "kind": "choice",
-        "text": "Max ถามคุณกลับ “How about you? What do you like doing?” ตอบเรื่องจริงของคุณเลยครับ",
-        "expectedSpeech": "I enjoy hiking.",
+        "text": "How about you? คุณชอบทำอะไรครับ?",
+        "expectedSpeech": "I enjoy baking.",
         "answerMode": "any",
         "stem": "I enjoy ...",
         "options": [
           {
-            "emoji": "🥾",
-            "label": "hiking",
-            "speak": "I enjoy hiking."
-          },
-          {
             "emoji": "🧁",
             "label": "baking",
-            "speak": "I enjoy baking."
+            "speak": "I enjoy baking.",
+            "recapText": "I enjoy baking. แปลว่า “ฉันสนุกกับการอบขนม” ครับ\n"
           },
           {
             "emoji": "🎮",
             "label": "gaming",
-            "speak": "Me too! I enjoy gaming."
+            "speak": "I enjoy gaming.",
+            "recapText": "I enjoy gaming. แปลว่า “ฉันสนุกกับการเล่นเกม” ครับ\n"
           },
           {
             "emoji": "🚴",
             "label": "cycling",
-            "speak": "I like cycling."
+            "speak": "I enjoy cycling.",
+            "recapText": "I enjoy cycling. แปลว่า “ฉันสนุกกับการปั่นจักรยาน” ครับ\n"
+          },
+          {
+            "emoji": "🥾",
+            "label": "hiking",
+            "speak": "I enjoy hiking.",
+            "recapText": "I enjoy hiking. แปลว่า “ฉันสนุกกับการเดินป่า” ครับ\n"
           }
         ],
-        "successText": "เท่มาก! พูดเรื่องตัวเองได้เป๊ะเลย 😎"
+        "successText": "เยี่ยมเลยครับ\n",
+        "extraAnswers": [
+          {
+            "speak": "I like baking.",
+            "recapText": "I like baking. แปลว่า “ฉันชอบอบขนม” ครับ\n"
+          },
+          {
+            "speak": "I like gaming.",
+            "recapText": "I like gaming. แปลว่า “ฉันชอบเล่นเกม” ครับ\n"
+          },
+          {
+            "speak": "I like cycling.",
+            "recapText": "I like cycling. แปลว่า “ฉันชอบปั่นจักรยาน” ครับ\n"
+          },
+          {
+            "speak": "I like hiking.",
+            "recapText": "I like hiking. แปลว่า “ฉันชอบเดินป่า” ครับ\n"
+          },
+          {
+            "speak": "I love baking.",
+            "recapText": "I love baking. แปลว่า “ฉันชอบอบขนมมาก” ครับ\n"
+          },
+          {
+            "speak": "I love gaming.",
+            "recapText": "I love gaming. แปลว่า “ฉันชอบเล่นเกมมาก” ครับ\n"
+          },
+          {
+            "speak": "I love cycling.",
+            "recapText": "I love cycling. แปลว่า “ฉันชอบปั่นจักรยานมาก” ครับ\n"
+          },
+          {
+            "speak": "I love hiking.",
+            "recapText": "I love hiking. แปลว่า “ฉันชอบเดินป่ามาก” ครับ\n"
+          }
+        ]
+      },
+      {
+        "kind": "choice",
+        "text": "ลองอีกสถานการณ์นะครับ ครูบีบอกว่า I love gaming. — “ครูชอบเล่นเกมมาก” 🎮\nแล้วครูอยากถามคุณว่า “แล้วคุณล่ะ?” ครูควรพูดว่าอะไร?",
+        "expectedSpeech": "How about you?",
+        "answerMode": "single",
+        "stem": "...",
+        "options": [
+          {
+            "emoji": "🔄",
+            "label": "How about you?",
+            "speak": "How about you?"
+          },
+          {
+            "emoji": "🙏",
+            "label": "Thank you.",
+            "speak": "Thank you."
+          }
+        ],
+        "successText": "How about you? แปลว่า “แล้วคุณล่ะ?” ครับ\n",
+        "incorrectHintTh": "เกือบแล้ว! Thank you. แปลว่า “ขอบคุณ” ถ้าจะถามกลับว่า “แล้วคุณล่ะ?” พูดว่า How about you? ครับ"
+      },
+      {
+        "kind": "listen",
+        "text": "ถ้าได้ยินเพื่อนบอกสิ่งที่ชอบ แล้วคุณก็ชอบเหมือนกัน พูดว่า Me too! — “ฉันก็เหมือนกัน” ได้เลย 🙌"
+      },
+      {
+        "kind": "task",
+        "text": "สมมติว่าคุณกับครูบีชอบเล่นเกมเหมือนกันนะครับ 🎮\nครูบีบอกว่า I love gaming.\nถ้าจะตอบว่า “ฉันก็เหมือนกัน” จะพูดว่าอะไรครับ?",
+        "expectedSpeech": "Me too!",
+        "successText": "ใช่เลยครับ!\n"
+      },
+      {
+        "kind": "task",
+        "text": "รอบสุดท้าย ให้คุณเป็นฝ่ายเริ่มคุยบ้าง ลองถามครูบีว่า “คุณชอบทำอะไร” ครับ",
+        "expectedSpeech": "What do you like doing?",
+        "successText": "What do you like doing? แปลว่า “คุณชอบทำอะไร” ครับ\n",
+        "incorrectHintTh": "ลองเริ่มด้วย What do you like ...? ครับ"
       },
       {
         "kind": "finish",
-        "text": "จบบทแล้ว 🎉 ตอนนี้คุณชวนคุยเรื่องงานอดิเรกได้ “What do you like doing?” · “I enjoy hiking. How about you?” · “Me too!” ได้คู่ครบแล้ว บทหน้าต้องหาเวลาซ้อมกัน แต่ทำไม May ไม่ว่างทุกเช้านะ? 🤔"
+        "text": "ครูบีตอบว่า I enjoy hiking. 🥾\nวันนี้คุณเริ่มถามเอง ถามกลับ และบอกว่าชอบเหมือนกันได้แล้ว!"
       }
     ]
   },

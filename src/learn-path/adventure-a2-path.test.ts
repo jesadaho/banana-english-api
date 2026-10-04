@@ -39,7 +39,7 @@ const zone1 = a2Nodes.filter((n) => chapterOf(n.code) <= ZONE_1_CHAPTERS);
 /** Picture packs ship only once their bundled images exist (seeAndSayImagesReady). */
 const AWAITING_ART = new Set(['describe_it', 'explain_it']);
 /** Owner-written flows exempt from the generated-flow shape contract. */
-const HAND_AUTHORED_FLOWS = new Set(['a2_c01n02']);
+const HAND_AUTHORED_FLOWS = new Set(['a2_c01n02', 'a2_c01n05']);
 
 describe('Adventure A2 course registry', () => {
   it('registers as a second course with a2_ ids that never collide with Foundation V7', () => {
@@ -315,5 +315,44 @@ describe('Adventure A2 generator', () => {
     assert.equal(closing.isLessonComplete, true);
     assert.equal(closing.assessmentTier, 'correct');
     assert.match(closing.textEn, /^I love cycling\. แปลว่า “ฉันชอบปั่นจักรยานมาก” ครับ ❤️\nครูบีรู้แล้ว/);
+  });
+
+  it('plays the hand-written What Do You Like Doing? flow', async () => {
+    const engine = new TrainingTurnEngine({} as unknown as TrainingAiGate);
+    const config = { ...getLesson('a2_c01n05')!, lessonId: 'a2_c01n05' };
+    const turns: ChatTurn[] = [];
+    const say = async (text: string) => {
+      turns.push({ speaker: 'user', textEn: text } as ChatTurn);
+      const { reply } = await engine.runTurn({
+        config, turns, userText: text, originalText: text, learnerFirstName: 'Nana',
+      });
+      turns.push({ speaker: 'ai', ...reply } as ChatTurn);
+      return reply;
+    };
+    const intro = engine.buildOpening(config, 'Nana').reply;
+    turns.push({ speaker: 'ai', ...intro } as ChatTurn);
+    assert.equal(intro.expectsUserSpeech, false);
+    const ask = await say('(tapped Continue)');
+    assert.equal(ask.expectedSpeech, 'What do you like doing?');
+    assert.equal(ask.canSkip, true);
+    const answer = await say('What do you like doing?');
+    assert.equal(answer.expectsUserSpeech, false);
+    assert.match(answer.textEn, /How about you\?/);
+    const mine = await say('(tapped Continue)');
+    assert.equal(mine.guidedSpeaking?.options.length, 4);
+    const askBack = await say('I like baking.');
+    assert.match(askBack.textEn, /^I like baking\. แปลว่า “ฉันชอบอบขนม” ครับ\nลองอีกสถานการณ์/);
+    assert.deepEqual(askBack.guidedSpeaking?.options.map((o) => o.speak), ['How about you?', 'Thank you.']);
+    const meTooIntro = await say('How about you?');
+    assert.match(meTooIntro.textEn, /^How about you\? แปลว่า/);
+    const meToo = await say('(tapped Continue)');
+    assert.equal(meToo.expectedSpeech, 'Me too!');
+    assert.equal(meToo.canSkip, undefined);
+    const last = await say('Me too!');
+    assert.match(last.textEn, /^ใช่เลยครับ!\nรอบสุดท้าย/);
+    assert.equal(last.canSkip, undefined);
+    const closing = await say('What do you like doing?');
+    assert.equal(closing.isLessonComplete, true);
+    assert.match(closing.textEn, /^What do you like doing\? แปลว่า “คุณชอบทำอะไร” ครับ\nครูบีตอบว่า I enjoy hiking\./);
   });
 });
