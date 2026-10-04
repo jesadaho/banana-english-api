@@ -864,7 +864,7 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "บอกว่าคุณสนุกกับการอ่านหนังสือ",
+     "th": "ฉันสนุกกับการอ่านหนังสือ",
      "en": "I enjoy reading.",
      "accept": [
       "I like reading.",
@@ -872,7 +872,7 @@
      ]
     },
     {
-     "th": "ถาม Capy ว่า \"ชอบว่ายน้ำไหม\"",
+     "th": "คุณชอบว่ายน้ำไหม?",
      "en": "Do you like swimming?",
      "accept": [
       "Do you enjoy swimming?",
@@ -880,28 +880,28 @@
      ]
     },
     {
-     "th": "บอกว่าคุณไม่ชอบเต้น",
+     "th": "ฉันไม่ชอบเต้น",
      "en": "I don't like dancing.",
      "accept": [
       "I do not like dancing."
      ]
     },
     {
-     "th": "ถาม May ว่า \"ชอบเล่นเกมไหม\"",
+     "th": "คุณชอบเล่นเกมไหม?",
      "en": "Do you like gaming?",
      "accept": [
       "Do you enjoy gaming?"
      ]
     },
     {
-     "th": "บอกว่าคุณรักการทำอาหารมาก",
+     "th": "ฉันชอบทำอาหารมาก",
      "en": "I love cooking.",
      "accept": [
       "I really love cooking."
      ]
     },
     {
-     "th": "บอกครูบีว่า Capy สนุกกับการวาดรูป",
+     "th": "Capy สนุกกับการวาดรูป",
      "en": "Capy enjoys drawing.",
      "accept": [
       "Capy likes drawing.",
@@ -909,7 +909,7 @@
      ]
     },
     {
-     "th": "บอกว่าคุณสนุกกับการวิ่งจ๊อกกิ้งตอนเช้า",
+     "th": "ฉันสนุกกับการวิ่งจ๊อกกิ้งตอนเช้า",
      "en": "I enjoy jogging in the morning.",
      "accept": [
       "I like jogging in the morning.",

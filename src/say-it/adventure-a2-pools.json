@@ -2,7 +2,7 @@
   "a2_c01n08": [
     {
       "id": "a2_c01n08_q1",
-      "promptTh": "บอกว่าคุณสนุกกับการอ่านหนังสือ",
+      "promptTh": "ฉันสนุกกับการอ่านหนังสือ",
       "answerEn": "I enjoy reading.",
       "acceptedAnswers": [
         "I like reading.",
@@ -15,7 +15,7 @@
     },
     {
       "id": "a2_c01n08_q2",
-      "promptTh": "ถาม Capy ว่า \"ชอบว่ายน้ำไหม\"",
+      "promptTh": "คุณชอบว่ายน้ำไหม?",
       "answerEn": "Do you like swimming?",
       "acceptedAnswers": [
         "Do you enjoy swimming?",
@@ -28,7 +28,7 @@
     },
     {
       "id": "a2_c01n08_q3",
-      "promptTh": "บอกว่าคุณไม่ชอบเต้น",
+      "promptTh": "ฉันไม่ชอบเต้น",
       "answerEn": "I don't like dancing.",
       "acceptedAnswers": [
         "I do not like dancing."
@@ -40,7 +40,7 @@
     },
     {
       "id": "a2_c01n08_q4",
-      "promptTh": "ถาม May ว่า \"ชอบเล่นเกมไหม\"",
+      "promptTh": "คุณชอบเล่นเกมไหม?",
       "answerEn": "Do you like gaming?",
       "acceptedAnswers": [
         "Do you enjoy gaming?"
@@ -52,7 +52,7 @@
     },
     {
       "id": "a2_c01n08_q5",
-      "promptTh": "บอกว่าคุณรักการทำอาหารมาก",
+      "promptTh": "ฉันชอบทำอาหารมาก",
       "answerEn": "I love cooking.",
       "acceptedAnswers": [
         "I really love cooking."
@@ -64,7 +64,7 @@
     },
     {
       "id": "a2_c01n08_q6",
-      "promptTh": "บอกครูบีว่า Capy สนุกกับการวาดรูป",
+      "promptTh": "Capy สนุกกับการวาดรูป",
       "answerEn": "Capy enjoys drawing.",
       "acceptedAnswers": [
         "Capy likes drawing.",
@@ -77,7 +77,7 @@
     },
     {
       "id": "a2_c01n08_q7",
-      "promptTh": "บอกว่าคุณสนุกกับการวิ่งจ๊อกกิ้งตอนเช้า",
+      "promptTh": "ฉันสนุกกับการวิ่งจ๊อกกิ้งตอนเช้า",
       "answerEn": "I enjoy jogging in the morning.",
       "acceptedAnswers": [
         "I like jogging in the morning.",
