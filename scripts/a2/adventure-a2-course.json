@@ -611,144 +611,64 @@
   },
   {
    "code": "1.4",
-   "title": "What Do You Like Doing? / ชอบทำอะไร",
+   "title": "On Weekends / ทำอะไรในวันหยุด",
    "type": "lesson",
    "flag": false,
    "beat": "Sho",
    "axes": "31211",
-   "teach": "❓ ขั้น 1: ถามงานอดิเรกและถามกลับ **What do you like doing? · How about you? · Me too! · So do I.** · ใช้คำจาก 1.3: What do you like doing on the **weekend**? — I enjoy hiking with my **friends**. **How about you?** — **Me too!** · Our **club** has a hiking **team**.",
-   "say": "What do you like doing?",
+   "teach": "❓ ถามความชอบและเรื่องวันหยุด **What do you like doing? · What do you do on weekends?** · ตอบ **I go jogging on weekends.** (go + -ing = ไปทำกิจกรรม · on weekends ไว้ท้ายประโยค) · ถามกลับ **How about you?** · ตอบรับ **Me too!**",
+   "say": "What do you do on weekends?",
    "chapter": "บท 1: เพื่อนใหม่ในชมรม",
-   "goal": "เข้าใจ \"ชอบทำอะไร\" พอจะพูดตัวอย่างของตัวเองได้ 1 ประโยค",
+   "goal": "เข้าใจ \"ทำอะไรในวันหยุด\" พอจะพูดตัวอย่างของตัวเองได้ 1 ประโยค",
    "accept": "ไม่ตัดสินผ่าน/ตก · ผู้เรียนพูดตามหรือเปลี่ยนคำในตัวอย่างอย่างน้อย 1 ประโยค",
    "hint": "ครูทวนตัวอย่างอีกครั้ง (ไม่มีระดับ hint)",
    "flow": {
-    "titleEn": "What Do You Like Doing?",
-    "titleTh": "ชอบทำอะไร",
-    "goalTh": "เริ่มคุยและถามกลับ What do you like doing? · How about you? · Me too!",
+    "titleEn": "On Weekends",
+    "titleTh": "ทำอะไรในวันหยุด",
+    "goalTh": "ถามว่าชอบทำอะไรและทำอะไรในวันหยุด What do you like doing? · What do you do on weekends? · I go jogging on weekends. · How about you? · Me too!",
     "steps": [
      {
       "kind": "listen",
-      "text": "คราวก่อนครูบีรู้แล้วว่าคุณชอบทำอะไร วันนี้ถึงตาคุณถามครูบีบ้างครับ 😄\nถ้าอยากรู้ว่าอีกฝ่ายชอบทำอะไร ถามว่า What do you like doing?\nแปลว่า “คุณชอบทำอะไร”"
+      "text": "ครูบีอยากชวนคุณหากิจกรรมทำด้วยกันครับ 🎒\nถ้าอยากรู้ว่าอีกฝ่ายชอบทำอะไร ถามว่า What do you like doing? — “คุณชอบทำอะไร”"
      },
      {
       "kind": "task",
-      "text": "ลองถามครูบีว่า What do you like doing? ครับ",
-      "expectedSpeech": "What do you like doing?"
-     },
-     {
-      "kind": "listen",
-      "text": "I enjoy hiking. ครูสนุกกับการเดินป่าครับ 🥾\nHow about you? — “แล้วคุณล่ะ?”\nครูใช้ประโยคสั้น ๆ นี้ถามคำถามเดิมกลับไปหาคุณครับ"
-     },
-     {
-      "kind": "choice",
-      "answerMode": "any",
-      "text": "How about you? คุณชอบทำอะไรครับ?",
-      "stem": "I enjoy ...",
-      "options": [
-       {
-        "emoji": "🧁",
-        "label": "baking",
-        "speak": "I enjoy baking.",
-        "recapText": "I enjoy baking. แปลว่า “ฉันสนุกกับการอบขนม” ครับ\n"
-       },
-       {
-        "emoji": "🎮",
-        "label": "gaming",
-        "speak": "I enjoy gaming.",
-        "recapText": "I enjoy gaming. แปลว่า “ฉันสนุกกับการเล่นเกม” ครับ\n"
-       },
-       {
-        "emoji": "🚴",
-        "label": "cycling",
-        "speak": "I enjoy cycling.",
-        "recapText": "I enjoy cycling. แปลว่า “ฉันสนุกกับการปั่นจักรยาน” ครับ\n"
-       },
-       {
-        "emoji": "🥾",
-        "label": "hiking",
-        "speak": "I enjoy hiking.",
-        "recapText": "I enjoy hiking. แปลว่า “ฉันสนุกกับการเดินป่า” ครับ\n"
-       }
-      ],
-      "extraAnswers": [
-       {
-        "speak": "I like baking.",
-        "recapText": "I like baking. แปลว่า “ฉันชอบอบขนม” ครับ\n"
-       },
-       {
-        "speak": "I like gaming.",
-        "recapText": "I like gaming. แปลว่า “ฉันชอบเล่นเกม” ครับ\n"
-       },
-       {
-        "speak": "I like cycling.",
-        "recapText": "I like cycling. แปลว่า “ฉันชอบปั่นจักรยาน” ครับ\n"
-       },
-       {
-        "speak": "I like hiking.",
-        "recapText": "I like hiking. แปลว่า “ฉันชอบเดินป่า” ครับ\n"
-       },
-       {
-        "speak": "I love baking.",
-        "recapText": "I love baking. แปลว่า “ฉันชอบอบขนมมาก” ครับ\n"
-       },
-       {
-        "speak": "I love gaming.",
-        "recapText": "I love gaming. แปลว่า “ฉันชอบเล่นเกมมาก” ครับ\n"
-       },
-       {
-        "speak": "I love cycling.",
-        "recapText": "I love cycling. แปลว่า “ฉันชอบปั่นจักรยานมาก” ครับ\n"
-       },
-       {
-        "speak": "I love hiking.",
-        "recapText": "I love hiking. แปลว่า “ฉันชอบเดินป่ามาก” ครับ\n"
-       }
-      ],
-      "expectedSpeech": "I enjoy baking.",
-      "successText": "เยี่ยมเลยครับ\n"
-     },
-     {
-      "kind": "choice",
-      "answerMode": "single",
-      "text": "ลองอีกสถานการณ์นะครับ ครูบีบอกว่า I love gaming. — “ครูชอบเล่นเกมมาก” 🎮\nแล้วคุณอยากถามครูว่า “แล้วคุณล่ะ?” คุณควรพูดว่าอะไร?",
-      "stem": "...",
-      "options": [
-       {
-        "emoji": "🔄",
-        "label": "How about you?",
-        "speak": "How about you?"
-       },
-       {
-        "emoji": "🙏",
-        "label": "Thank you.",
-        "speak": "Thank you."
-       }
-      ],
-      "expectedSpeech": "How about you?",
-      "successText": "How about you? แปลว่า “แล้วคุณล่ะ?” ครับ\n",
-      "incorrectHintTh": "เกือบแล้ว! Thank you. แปลว่า “ขอบคุณ” ถ้าจะถามกลับว่า “แล้วคุณล่ะ?” พูดว่า How about you? ครับ"
-     },
-     {
-      "kind": "listen",
-      "text": "ถ้าได้ยินเพื่อนบอกสิ่งที่ชอบ แล้วคุณก็ชอบเหมือนกัน พูดว่า Me too! — “ฉันก็เหมือนกัน” ได้เลย 🙌"
-     },
-     {
-      "kind": "task",
-      "text": "สมมติว่าคุณกับครูบีชอบเล่นเกมเหมือนกันนะครับ 🎮\nครูบีบอกว่า I love gaming.\nถ้าจะตอบว่า “ฉันก็เหมือนกัน” จะพูดว่าอะไรครับ?",
-      "expectedSpeech": "Me too!",
-      "successText": "ใช่เลยครับ!\n"
-     },
-     {
-      "kind": "task",
-      "text": "รอบสุดท้าย ให้คุณเป็นฝ่ายเริ่มคุยบ้าง ลองถามครูบีว่า “คุณชอบทำอะไร” ครับ",
+      "text": "ลองถามครูบีว่า “คุณชอบทำอะไร” ครับ",
       "expectedSpeech": "What do you like doing?",
-      "successText": "What do you like doing? แปลว่า “คุณชอบทำอะไร” ครับ\n",
-      "incorrectHintTh": "ลองเริ่มด้วย What do you like ...? ครับ"
+      "incorrectHintTh": "ลองเริ่มด้วย What do you like …? ครับ"
+     },
+     {
+      "kind": "listen",
+      "text": "I enjoy jogging. ครูสนุกกับการวิ่งจ๊อกกิ้งครับ 🏃\nถ้าอยากรู้ว่า “วันหยุดสุดสัปดาห์ครูทำอะไร” ถามว่า What do you do on weekends?\non weekends หมายถึง “ในวันหยุดสุดสัปดาห์” ครับ"
+     },
+     {
+      "kind": "task",
+      "text": "ลองถามครูบีว่า What do you do on weekends? ครับ",
+      "expectedSpeech": "What do you do on weekends?"
+     },
+     {
+      "kind": "listen",
+      "text": "I go jogging on weekends. — “ครูไปวิ่งจ๊อกกิ้งในวันหยุดสุดสัปดาห์” ครับ\ngo jogging หมายถึง “ไปวิ่งจ๊อกกิ้ง”\nเติม on weekends ท้ายประโยคเพื่อบอกว่าทำเมื่อไหร่ครับ\n\n🏃 I go jogging → I go jogging on weekends."
+     },
+     {
+      "kind": "task",
+      "text": "สมมติว่าวันหยุดคุณก็ไปวิ่งจ๊อกกิ้งครับ 🏃\nครูถามว่า What do you do on weekends? ลองตอบเต็มประโยคครับ",
+      "expectedSpeech": "I go jogging on weekends.",
+      "incorrectHintTh": "ลองเริ่มด้วย I go jogging … ครับ"
+     },
+     {
+      "kind": "task",
+      "text": "I go jogging on weekends. แปลว่า “ฉันไปวิ่งจ๊อกกิ้งในวันหยุดสุดสัปดาห์” ครับ\nหลังตอบ ถ้าอยากถามอีกฝ่ายว่า “แล้วคุณล่ะ?” พูดว่า How about you?\nลองพูดตามครับ",
+      "expectedSpeech": "How about you?"
+     },
+     {
+      "kind": "task",
+      "text": "ครูบีตอบว่า I go jogging on weekends, too. — “ครูก็ไปวิ่งจ๊อกกิ้งในวันหยุดเหมือนกัน” ครับ\nถ้าอยากบอกว่าเราทำเหมือนอีกฝ่าย พูดสั้น ๆ ว่า Me too! — “ฉันก็เหมือนกัน” ได้ครับ\nลองพูดตามครับ",
+      "expectedSpeech": "Me too!"
      },
      {
       "kind": "finish",
-      "text": "ครูบีตอบว่า I enjoy hiking. 🥾\nวันนี้คุณเริ่มถามเอง ถามกลับ และบอกว่าชอบเหมือนกันได้แล้ว!"
+      "text": "วันนี้คุณถามได้ทั้งว่าอีกฝ่ายชอบทำอะไร และทำอะไรในวันหยุด แล้วถามกลับด้วย How about you? ได้แล้วครับ!"
      }
     ]
    },
@@ -756,20 +676,6 @@
   },
   {
    "code": "1.5",
-   "title": "Hobby Pictures / ภาพงานอดิเรก",
-   "type": "emoji_speak",
-   "flag": false,
-   "beat": "Sho",
-   "axes": "12111",
-   "teach": "ดู emoji แล้วพูดงานอดิเรกรูป -ing จาก 1.1–1.2 (คำเดี่ยว): 🎮 gaming · 🚴 cycling · 🧁 baking · 🥾 hiking",
-   "say": "gaming",
-   "chapter": "บท 1: เพื่อนใหม่ในชมรม",
-   "goal": "ดึงคำ/ก้อนคำที่เรียนแล้วออกมาพูดได้เร็วจากภาพ",
-   "accept": "รับคำ/ก้อนคำที่ภาพกำหนด + คำพ้องที่ระบุไว้ · ไม่ตรวจ tense หรือรูปคำ",
-   "hint": "① ตัวอักษรแรก + จำนวนคำ ② ฟังเสียงแบบช้า · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent"
-  },
-  {
-   "code": "1.6",
    "title": "More Words: Hobbies / งานอดิเรกเพิ่ม",
    "type": "new_words",
    "flag": false,
@@ -783,143 +689,21 @@
    "hint": "① ฟังเสียงอีกครั้ง ② ฟังแบบช้า + แยกพยางค์ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent"
   },
   {
-   "code": "1.7",
-   "title": "🖼️ Club Board / บอร์ดสมาชิก",
-   "type": "see_and_say",
-   "flag": false,
-   "beat": "Ten",
-   "axes": "22211",
-   "teach": "🖼️ ดูบอร์ดสมาชิก 6 คน แต่ละคนมีไอคอนงานอดิเรกพร้อม ❤️ หรือ 👎 (มีงานอดิเรกจากคำ 1.6 ด้วย) → **Max enjoys gaming. · He doesn't like swimming.**",
-   "say": "Max enjoys gaming. He doesn't like swimming.",
-   "chapter": "บท 1: เพื่อนใหม่ในชมรม",
-   "goal": "อ่านข้อมูลในภาพ (บอร์ดสมาชิก) แล้วพูดเป็นประโยคที่ใช้ได้จริง",
-   "accept": "รับประโยคเดียวที่ตรงข้อมูลในภาพ ไม่บังคับพูด model ครบ · ข้อมูลผิดจากภาพ = ลองใหม่",
-   "hint": "① ไฮไลต์ข้อมูลในภาพที่ต้องพูด ② sentence starter · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
-   "pool": [
-    {
-     "pic": "บอร์ดสมาชิก: รูป Max (ผู้ชาย) มีไอคอน 🎮 เกม + ❤️ และ 🏊 ว่ายน้ำ + 👎",
-     "en": "Max enjoys gaming. He doesn't like swimming.",
-     "accept": [
-      "Max likes gaming. He doesn't like swimming.",
-      "Max loves gaming. He doesn't like swimming.",
-      "Max enjoys gaming. He does not like swimming."
-     ]
-    },
-    {
-     "pic": "บอร์ดสมาชิก: รูป May (ผู้หญิง) มีไอคอน 📚 อ่านหนังสือ + ❤️",
-     "en": "May enjoys reading.",
-     "accept": [
-      "May likes reading.",
-      "May loves reading."
-     ]
-    },
-    {
-     "pic": "บอร์ดสมาชิก: รูป Capy มีไอคอน 🎨 วาดรูป + ❤️ และ 🏊 ว่ายน้ำ + 👎",
-     "en": "Capy enjoys drawing. Capy doesn't like swimming.",
-     "accept": [
-      "Capy likes drawing. Capy doesn't like swimming.",
-      "Capy loves drawing. Capy doesn't like swimming.",
-      "Capy enjoys drawing. Capy does not like swimming.",
-      "Capy enjoys drawing but doesn't like swimming."
-     ]
-    },
-    {
-     "pic": "บอร์ดสมาชิก: รูป Teacher John (ผู้ชาย) มีไอคอน 🍳 ทำอาหาร + ❤️",
-     "en": "Teacher John enjoys cooking.",
-     "accept": [
-      "Teacher John likes cooking.",
-      "Teacher John loves cooking.",
-      "John enjoys cooking."
-     ]
-    },
-    {
-     "pic": "บอร์ดสมาชิก: รูป Mali (ผู้หญิง) มีไอคอน 🎮 เกม + 👎",
-     "en": "Mali doesn't like gaming.",
-     "accept": [
-      "Mali does not like gaming."
-     ]
-    },
-    {
-     "pic": "บอร์ดสมาชิก: รูป Teacher Bee มีไอคอน 🏃 วิ่งจ๊อกกิ้ง + ❤️",
-     "en": "Teacher Bee enjoys jogging.",
-     "accept": [
-      "Teacher Bee likes jogging.",
-      "Teacher Bee loves jogging."
-     ]
-    }
-   ]
-  },
-  {
-   "code": "1.8",
-   "title": "Talk About Hobbies / คุยเรื่องงานอดิเรก",
-   "type": "say_it",
+   "code": "1.6",
+   "title": "Hobby Pictures / ภาพงานอดิเรก",
+   "type": "emoji_speak",
    "flag": false,
    "beat": "Sho",
-   "axes": "12211",
-   "teach": "โจทย์ไทย → ประโยค enjoy / like + -ing และคำถาม Do you like…?",
-   "say": "Do you like swimming?",
+   "axes": "12111",
+   "teach": "ดู emoji แล้วพูดงานอดิเรกรูป -ing จาก 1.1–1.2 (คำเดี่ยว): 🎮 gaming · 🚴 cycling · 🧁 baking · 🥾 hiking",
+   "say": "gaming",
    "chapter": "บท 1: เพื่อนใหม่ในชมรม",
-   "goal": "สื่อความ \"คุยเรื่องงานอดิเรก\" เป็นภาษาอังกฤษในสถานการณ์บทนี้",
-   "accept": "รับทุกประโยคที่ความหมายตรงโจทย์และใช้โครงสร้างเป้าหมาย · มี accepted variants · ผิดเล็ก (a/the, -s) ผ่านพร้อม feedback",
-   "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
-   "pool": [
-    {
-     "th": "ฉันสนุกกับการอ่านหนังสือ",
-     "en": "I enjoy reading.",
-     "accept": [
-      "I like reading.",
-      "I love reading."
-     ]
-    },
-    {
-     "th": "คุณชอบว่ายน้ำไหม?",
-     "en": "Do you like swimming?",
-     "accept": [
-      "Do you enjoy swimming?",
-      "Do you love swimming?"
-     ]
-    },
-    {
-     "th": "ฉันไม่ชอบเต้น",
-     "en": "I don't like dancing.",
-     "accept": [
-      "I do not like dancing."
-     ]
-    },
-    {
-     "th": "คุณชอบเล่นเกมไหม?",
-     "en": "Do you like gaming?",
-     "accept": [
-      "Do you enjoy gaming?"
-     ]
-    },
-    {
-     "th": "ฉันชอบทำอาหารมาก",
-     "en": "I love cooking.",
-     "accept": [
-      "I really love cooking."
-     ]
-    },
-    {
-     "th": "Capy สนุกกับการวาดรูป",
-     "en": "Capy enjoys drawing.",
-     "accept": [
-      "Capy likes drawing.",
-      "Capy loves drawing."
-     ]
-    },
-    {
-     "th": "ฉันสนุกกับการวิ่งจ๊อกกิ้งตอนเช้า",
-     "en": "I enjoy jogging in the morning.",
-     "accept": [
-      "I like jogging in the morning.",
-      "I love jogging in the morning."
-     ]
-    }
-   ]
+   "goal": "ดึงคำ/ก้อนคำที่เรียนแล้วออกมาพูดได้เร็วจากภาพ",
+   "accept": "รับคำ/ก้อนคำที่ภาพกำหนด + คำพ้องที่ระบุไว้ · ไม่ตรวจ tense หรือรูปคำ",
+   "hint": "① ตัวอักษรแรก + จำนวนคำ ② ฟังเสียงแบบช้า · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent"
   },
   {
-   "code": "1.9",
+   "code": "1.7",
    "title": "🎬 Capy's Hobby / งานอดิเรกของ Capy",
    "type": "story_bites",
    "flag": false,
@@ -961,7 +745,78 @@
    ]
   },
   {
-   "code": "1.10",
+   "code": "1.8",
+   "title": "Talk About Hobbies / คุยเรื่องงานอดิเรก",
+   "type": "say_it",
+   "flag": false,
+   "beat": "Sho",
+   "axes": "12211",
+   "teach": "โจทย์คำแปลไทย → บอกความชอบ/ไม่ชอบ ถามกิจกรรมและวันหยุด ใช้ How about you? และ Me too! · 7 ข้อ",
+   "say": "I enjoy fishing. · I love skating. · I don't like surfing. · I go jogging on weekends. · What do you do on weekends? · How about you? · Me too!",
+   "chapter": "บท 1: เพื่อนใหม่ในชมรม",
+   "goal": "สื่อความ \"คุยเรื่องงานอดิเรก\" เป็นภาษาอังกฤษในสถานการณ์บทนี้",
+   "accept": "รับทุกประโยคที่ความหมายตรงโจทย์และใช้โครงสร้างเป้าหมาย · มี accepted variants · ผิดเล็ก (a/the, -s) ผ่านพร้อม feedback",
+   "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
+   "pool": [
+    {
+     "th": "ฉันสนุกกับการตกปลา",
+     "en": "I enjoy fishing.",
+     "accept": [
+      "I like fishing."
+     ]
+    },
+    {
+     "th": "ฉันชอบเล่นสเกตมาก",
+     "en": "I love skating.",
+     "accept": [
+      "I really like skating."
+     ]
+    },
+    {
+     "th": "ฉันไม่ชอบโต้คลื่น",
+     "en": "I don't like surfing.",
+     "accept": [
+      "I do not like surfing."
+     ]
+    },
+    {
+     "th": "ฉันไปวิ่งจ๊อกกิ้งทุกสุดสัปดาห์",
+     "en": "I go jogging on weekends.",
+     "accept": [
+      "I go jogging every weekend.",
+      "On weekends, I go jogging.",
+      "I go jogging at weekends.",
+      "I go jogging on the weekend."
+     ]
+    },
+    {
+     "th": "สุดสัปดาห์คุณทำอะไร?",
+     "en": "What do you do on weekends?",
+     "accept": [
+      "What do you do every weekend?",
+      "What do you do at weekends?",
+      "What do you do on the weekend?"
+     ]
+    },
+    {
+     "th": "แล้วคุณล่ะ?",
+     "en": "How about you?",
+     "accept": [
+      "What about you?"
+     ]
+    },
+    {
+     "th": "ฉันก็เหมือนกัน!",
+     "en": "Me too!",
+     "accept": [
+      "So do I.",
+      "Me too."
+     ]
+    }
+   ]
+  },
+  {
+   "code": "1.9",
    "title": "New Friends / เพื่อนใหม่",
    "type": "conversation",
    "flag": false,

@@ -48,7 +48,7 @@ describe('Adventure A2 course registry', () => {
     assert.equal(learnCourseById('adventure_a2'), ADVENTURE_A2_COURSE);
     assert.equal(learnCourseById('foundation-v7'), FOUNDATION_V7_COURSE);
     assert.equal(learnCourseById('adventure-a3'), undefined);
-    assert.equal(a2Nodes.length, 328);
+    assert.equal(a2Nodes.length, 327);
     assert.equal(ADVENTURE_A2_COURSE.catalog.chapters.length, 32);
     assert.equal(new Set(ALL_LEARN_PATH_NODES.map((n) => n.id)).size, ALL_LEARN_PATH_NODES.length);
     for (const node of a2Nodes) {
@@ -223,7 +223,7 @@ describe('Adventure A2 Zone 1 content', () => {
   });
 
   it('lets New Friends close with the AI recap of real answers', () => {
-    const sim = getSimulation('a2_c01n10')!;
+    const sim = getSimulation('a2_c01n09')!;
     assert.equal(sim.aiClosing, true);
     assert.deepEqual(sim.successCriteria, ['intro', 'hobby', 'ask_back', 'dislike']);
     assert.equal(sim.goalHints?.[2]?.intentTh, 'ลองถามกลับว่าครูชอบทำอะไร');
@@ -347,7 +347,7 @@ describe('Adventure A2 generator', () => {
     assert.match(closing.textEn, /^I don't like baking\. แปลว่า “ฉันไม่ชอบอบขนม” ครับ\nครูบีรู้จักคุณมากขึ้นแล้ว!/);
   });
 
-  it('plays the hand-written What Do You Like Doing? flow', async () => {
+  it('plays the hand-written On Weekends flow', async () => {
     const engine = new TrainingTurnEngine({} as unknown as TrainingAiGate);
     const config = { ...getLesson('a2_c01n04')!, lessonId: 'a2_c01n04' };
     const turns: ChatTurn[] = [];
@@ -364,25 +364,28 @@ describe('Adventure A2 generator', () => {
     assert.equal(intro.expectsUserSpeech, false);
     const ask = await say('(tapped Continue)');
     assert.equal(ask.expectedSpeech, 'What do you like doing?');
-    assert.equal(ask.canSkip, true);
-    const answer = await say('What do you like doing?');
-    assert.equal(answer.expectsUserSpeech, false);
-    assert.match(answer.textEn, /How about you\?/);
-    const mine = await say('(tapped Continue)');
-    assert.equal(mine.guidedSpeaking?.options.length, 4);
-    const askBack = await say('I like baking.');
-    assert.match(askBack.textEn, /^I like baking\. แปลว่า “ฉันชอบอบขนม” ครับ\nลองอีกสถานการณ์/);
-    assert.deepEqual(askBack.guidedSpeaking?.options.map((o) => o.speak), ['How about you?', 'Thank you.']);
-    const meTooIntro = await say('How about you?');
-    assert.match(meTooIntro.textEn, /^How about you\? แปลว่า/);
-    const meToo = await say('(tapped Continue)');
+    assert.equal(ask.canSkip, undefined);
+    const weekendIntro = await say('What do you like doing?');
+    assert.equal(weekendIntro.expectsUserSpeech, false);
+    assert.match(weekendIntro.textEn, /I enjoy jogging\./);
+    const askWeekend = await say('(tapped Continue)');
+    assert.equal(askWeekend.expectedSpeech, 'What do you do on weekends?');
+    assert.equal(askWeekend.canSkip, true);
+    const teach = await say('What do you do on weekends?');
+    assert.equal(teach.expectsUserSpeech, false);
+    assert.match(teach.textEn, /I go jogging → I go jogging on weekends\./);
+    const answer = await say('(tapped Continue)');
+    assert.equal(answer.expectedSpeech, 'I go jogging on weekends.');
+    assert.equal(answer.canSkip, undefined);
+    const askBack = await say('I go jogging on weekends.');
+    assert.equal(askBack.expectedSpeech, 'How about you?');
+    assert.equal(askBack.canSkip, true);
+    assert.match(askBack.textEn, /I go jogging on weekends\. แปลว่า/);
+    const meToo = await say('How about you?');
     assert.equal(meToo.expectedSpeech, 'Me too!');
-    assert.equal(meToo.canSkip, undefined);
-    const last = await say('Me too!');
-    assert.match(last.textEn, /^ใช่เลยครับ!\nรอบสุดท้าย/);
-    assert.equal(last.canSkip, undefined);
-    const closing = await say('What do you like doing?');
+    assert.equal(meToo.canSkip, true);
+    const closing = await say('Me too!');
     assert.equal(closing.isLessonComplete, true);
-    assert.match(closing.textEn, /^What do you like doing\? แปลว่า “คุณชอบทำอะไร” ครับ\nครูบีตอบว่า I enjoy hiking\./);
+    assert.match(closing.textEn, /วันนี้คุณถามได้ทั้งว่าอีกฝ่ายชอบทำอะไร/);
   });
 });

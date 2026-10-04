@@ -1,14 +1,14 @@
 {
-  "a2_c01n09": {
-    "id": "a2_c01n09",
-    "clipId": "a2_c01n09_clip",
+  "a2_c01n07": {
+    "id": "a2_c01n07",
+    "clipId": "a2_c01n07_clip",
     "titleEn": "Capy's Hobby",
     "titleTh": "งานอดิเรกของ Capy",
     "speaker": "Capy",
     "script": "Capy: Hi! I'm Capy. I love drawing. Look at my book! I draw every day after school. I don't like swimming. It's too cold! I enjoy dancing with my friends on Fridays.",
     "questions": [
       {
-        "id": "a2_c01n09_q1",
+        "id": "a2_c01n07_q1",
         "questionEn": "What does Capy love doing?",
         "answerEn": "Drawing.",
         "acceptedAnswers": [
@@ -19,7 +19,7 @@
         ]
       },
       {
-        "id": "a2_c01n09_q2",
+        "id": "a2_c01n07_q2",
         "questionEn": "Does Capy like swimming?",
         "answerEn": "No, Capy doesn't.",
         "acceptedAnswers": [
@@ -32,7 +32,7 @@
         ]
       },
       {
-        "id": "a2_c01n09_q3",
+        "id": "a2_c01n07_q3",
         "questionEn": "When does Capy dance?",
         "answerEn": "On Fridays.",
         "acceptedAnswers": [

@@ -2,11 +2,10 @@
   "a2_c01n08": [
     {
       "id": "a2_c01n08_q1",
-      "promptTh": "ฉันสนุกกับการอ่านหนังสือ",
-      "answerEn": "I enjoy reading.",
+      "promptTh": "ฉันสนุกกับการตกปลา",
+      "answerEn": "I enjoy fishing.",
       "acceptedAnswers": [
-        "I like reading.",
-        "I love reading."
+        "I like fishing."
       ],
       "hints": [
         "I …",
@@ -15,23 +14,22 @@
     },
     {
       "id": "a2_c01n08_q2",
-      "promptTh": "คุณชอบว่ายน้ำไหม?",
-      "answerEn": "Do you like swimming?",
+      "promptTh": "ฉันชอบเล่นสเกตมาก",
+      "answerEn": "I love skating.",
       "acceptedAnswers": [
-        "Do you enjoy swimming?",
-        "Do you love swimming?"
+        "I really like skating."
       ],
       "hints": [
-        "Do …",
-        "Do you ___ ___?"
+        "I …",
+        "I ___ ___."
       ]
     },
     {
       "id": "a2_c01n08_q3",
-      "promptTh": "ฉันไม่ชอบเต้น",
-      "answerEn": "I don't like dancing.",
+      "promptTh": "ฉันไม่ชอบโต้คลื่น",
+      "answerEn": "I don't like surfing.",
       "acceptedAnswers": [
-        "I do not like dancing."
+        "I do not like surfing."
       ],
       "hints": [
         "I …",
@@ -40,52 +38,56 @@
     },
     {
       "id": "a2_c01n08_q4",
-      "promptTh": "คุณชอบเล่นเกมไหม?",
-      "answerEn": "Do you like gaming?",
+      "promptTh": "ฉันไปวิ่งจ๊อกกิ้งทุกสุดสัปดาห์",
+      "answerEn": "I go jogging on weekends.",
       "acceptedAnswers": [
-        "Do you enjoy gaming?"
+        "I go jogging every weekend.",
+        "On weekends, I go jogging.",
+        "I go jogging at weekends.",
+        "I go jogging on the weekend."
       ],
       "hints": [
-        "Do …",
-        "Do you ___ ___?"
+        "I …",
+        "I ___ ___ on ___."
       ]
     },
     {
       "id": "a2_c01n08_q5",
-      "promptTh": "ฉันชอบทำอาหารมาก",
-      "answerEn": "I love cooking.",
+      "promptTh": "สุดสัปดาห์คุณทำอะไร?",
+      "answerEn": "What do you do on weekends?",
       "acceptedAnswers": [
-        "I really love cooking."
+        "What do you do every weekend?",
+        "What do you do at weekends?",
+        "What do you do on the weekend?"
       ],
       "hints": [
-        "I …",
-        "I ___ ___."
+        "What …",
+        "What do you do on ___?"
       ]
     },
     {
       "id": "a2_c01n08_q6",
-      "promptTh": "Capy สนุกกับการวาดรูป",
-      "answerEn": "Capy enjoys drawing.",
+      "promptTh": "แล้วคุณล่ะ?",
+      "answerEn": "How about you?",
       "acceptedAnswers": [
-        "Capy likes drawing.",
-        "Capy loves drawing."
+        "What about you?"
       ],
       "hints": [
-        "Capy …",
-        "Capy ___ ___."
+        "How …",
+        "How ___ you?"
       ]
     },
     {
       "id": "a2_c01n08_q7",
-      "promptTh": "ฉันสนุกกับการวิ่งจ๊อกกิ้งตอนเช้า",
-      "answerEn": "I enjoy jogging in the morning.",
+      "promptTh": "ฉันก็เหมือนกัน!",
+      "answerEn": "Me too!",
       "acceptedAnswers": [
-        "I like jogging in the morning.",
-        "I love jogging in the morning."
+        "So do I.",
+        "Me too."
       ],
       "hints": [
-        "I …",
-        "I ___ ___ in the ___."
+        "Me …",
+        "Me ___!"
       ]
     }
   ],
