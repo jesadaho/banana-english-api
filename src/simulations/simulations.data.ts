@@ -30,6 +30,8 @@ export interface SimulationConfig {
   /** Short learner-facing goals for the mission intro; goalsTh stays the full checklist. */
   introGoalsTh?: string[];
   introGoalsEn?: string[];
+  /** goals index behind each intro goal, so checklists can tick the short labels. */
+  introGoalIndexes?: number[];
   goalsEn: string[];
   /** Optional authored hint ladder per goal (intent → starter → model). */
   goalHints?: Array<SimulationGoalHint | null>;

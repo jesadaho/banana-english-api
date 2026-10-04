@@ -8,6 +8,9 @@ type GoalSpec = {
   en: string;
   example: string;
   hints?: { intentTh: string; starterEn: string; modelEn: string; cueTh?: string };
+  /** Short learner-facing label; goals without one stay backstage. */
+  introTh?: string;
+  introEn?: string;
 };
 
 type SimulationSpec = {
@@ -23,11 +26,19 @@ type SimulationSpec = {
   completionEn: string;
   completionTh: string;
   aiClosing?: boolean;
-  introGoalsTh?: string[];
-  introGoalsEn?: string[];
 };
 
 const specs = v7Specs as SimulationSpec[];
+
+function introGoals(goals: GoalSpec[]) {
+  const shown = goals.flatMap((g, i) => (g.introTh ? [{ g, i }] : []));
+  if (shown.length === 0) return {};
+  return {
+    introGoalsTh: shown.map(({ g }) => g.introTh!),
+    introGoalsEn: shown.map(({ g }) => g.introEn ?? g.introTh!),
+    introGoalIndexes: shown.map(({ i }) => i),
+  };
+}
 
 function toSimulationConfig(
   spec: SimulationSpec,
@@ -40,9 +51,7 @@ function toSimulationConfig(
   goalsTh: spec.goals.map((g: GoalSpec) => g.th),
   goalsEn: spec.goals.map((g: GoalSpec) => g.en),
   goalHints: spec.goals.map((g: GoalSpec) => g.hints ?? null),
-  ...(spec.introGoalsTh?.length
-    ? { introGoalsTh: spec.introGoalsTh, introGoalsEn: spec.introGoalsEn ?? spec.introGoalsTh }
-    : {}),
+  ...introGoals(spec.goals),
   difficulty: 'easy' as const, estimatedMinutes: spec.maxTurns >= 5 ? 4 : 3, bananaCost: 1,
   foundationMission: true, minTurns: spec.minTurns, maxTurns: spec.maxTurns,
   successCriteria: spec.goals.map((g: GoalSpec) => g.id),
