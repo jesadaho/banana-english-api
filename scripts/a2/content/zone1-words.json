@@ -478,6 +478,22 @@
         "emoji": "🥾",
         "answer": "hiking",
         "meaningTh": "การเดินป่า"
+      },
+      {
+        "emoji": "💃",
+        "answer": "dancing",
+        "meaningTh": "การเต้น",
+        "accept": [
+          "dance"
+        ]
+      },
+      {
+        "emoji": "🏊",
+        "answer": "swimming",
+        "meaningTh": "การว่ายน้ำ",
+        "accept": [
+          "swim"
+        ]
       }
     ],
     "2.3": [

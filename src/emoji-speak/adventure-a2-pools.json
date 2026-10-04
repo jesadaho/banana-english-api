@@ -1,7 +1,7 @@
 {
   "a2_c01n03": {
     "title": "Hobby Pictures",
-    "dealCount": 4,
+    "dealCount": 6,
     "items": [
       {
         "emoji": "🎮",
@@ -44,6 +44,32 @@
         "hints": [
           "H… (1 คำ)",
           "hiking"
+        ]
+      },
+      {
+        "emoji": "💃",
+        "answer": "dancing",
+        "hint": "d______",
+        "meaningTh": "การเต้น",
+        "acceptedAnswers": [
+          "dance"
+        ],
+        "hints": [
+          "D… (1 คำ)",
+          "dancing"
+        ]
+      },
+      {
+        "emoji": "🏊",
+        "answer": "swimming",
+        "hint": "s_______",
+        "meaningTh": "การว่ายน้ำ",
+        "acceptedAnswers": [
+          "swim"
+        ],
+        "hints": [
+          "S… (1 คำ)",
+          "swimming"
         ]
       }
     ]
