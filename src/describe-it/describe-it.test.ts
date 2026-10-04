@@ -155,6 +155,39 @@ describe('Describe It foundation pack', () => {
     assert.ok(items.slice(1).every((item) => !item.hintEn));
   });
 
+  it('deals Read the Calendar as seven cards balanced across date, details and match', () => {
+    const pool = describeItPoolById('fnd_v7_u14tn07_read_the_calendar_1');
+    assert.equal(pool?.titleEn, 'Read the Calendar');
+    assert.ok((pool?.items.length ?? 0) > 7);
+    for (let run = 0; run < 20; run++) {
+      const items = dealDescribeItCards('fnd_v7_u14tn07_read_the_calendar_1');
+      assert.equal(items.length, 7);
+      assert.equal(new Set(items.map((item) => item.id)).size, 7);
+      const counts = new Map<string, number>();
+      for (const item of items) counts.set(item.skill!, (counts.get(item.skill!) ?? 0) + 1);
+      assert.deepEqual([...counts.keys()].sort(), ['date', 'details', 'match']);
+      assert.ok([...counts.values()].every((n) => n === 2 || n === 3), JSON.stringify([...counts]));
+    }
+  });
+
+  it('deals Plan My Day as six spoken cards with non-answer helper chips', () => {
+    const pool = describeItPoolById('fnd_v7_u14tn08f_plan_my_day');
+    assert.ok(isValidDescribeItPack(pool));
+    const items = dealDescribeItCards('fnd_v7_u14tn08f_plan_my_day');
+    assert.deepEqual(items.map((item) => item.id), [
+      'plan_01', 'plan_02', 'plan_03', 'plan_04', 'plan_05', 'plan_06',
+    ]);
+    for (const item of items) {
+      assert.equal(item.helperChoices?.length, 3, item.id);
+      assert.ok(item.acceptedAnswers.length > 0, item.id);
+      assert.ok(item.questionEn, item.id);
+    }
+    const exact = items.find((item) => item.id === 'plan_06')!;
+    assert.match(exact.questionEn!, /exactly fifty baht/);
+    assert.equal(exact.answerEn, 'Ticket B, please.');
+    assert.ok(items[0].imageUrl.includes('class-options-abc-friday-1000.webp'));
+  });
+
   it('rejects start and complete while Describe It is temporarily disabled', { skip: DESCRIBE_IT_ENABLED }, async () => {
     const controller = new DescribeItController(
       new DescribeItService(),

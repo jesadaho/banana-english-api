@@ -4,7 +4,7 @@
     "pathId": "foundation_v7",
     "version": 1,
     "releaseStatus": "playtest",
-    "totalNodeCount": 166
+    "totalNodeCount": 163
   },
   "chapters": [
     {
@@ -4465,71 +4465,10 @@
           }
         },
         {
-          "id": "v7_u14tn07",
+          "id": "v7_u14tn09",
           "code": "15.7",
           "order": 7,
           "globalOrder": 139,
-          "titleEn": "Read the Calendar 1",
-          "titleTh": "อ่านปฏิทิน 1",
-          "type": "describe_it",
-          "beat": "Ten",
-          "learningTarget": "อ่านวันที่เขียนแบบ 5 May แล้วพูดตอบจากบัตร",
-          "activity": "ดูบัตรคลาสและบัตรวันเกิด แล้วพูดตอบ วัน วันที่ เวลา ห้อง",
-          "examples": [
-            "5 May",
-            "8 June"
-          ],
-          "estimatedMinutes": [
-            3,
-            5
-          ],
-          "difficultyAxes": [
-            2,
-            1,
-            1,
-            1,
-            1
-          ],
-          "contentRef": {
-            "poolId": "fnd_v7_u14tn07_read_the_calendar_1"
-          }
-        },
-        {
-          "id": "v7_u14tn08f",
-          "code": "15.8",
-          "order": 8,
-          "globalOrder": 140,
-          "titleEn": "Find My Class",
-          "titleTh": "หาคลาสของฉัน",
-          "type": "info_task",
-          "beat": "Ten",
-          "learningTarget": "อ่านการ์ดนัดหมายแล้วเลือกวัน เวลา หรือห้องให้ถูก",
-          "activity": "5 ข้อต่อรอบ: อ่านข้อมูลตรง ๆ แล้วค่อยจับคู่ภารกิจ",
-          "examples": [
-            "Friday",
-            "10:00",
-            "Room 2"
-          ],
-          "estimatedMinutes": [
-            2,
-            4
-          ],
-          "difficultyAxes": [
-            2,
-            1,
-            1,
-            1,
-            1
-          ],
-          "contentRef": {
-            "poolId": "info_task_find_my_class"
-          }
-        },
-        {
-          "id": "v7_u14tn09",
-          "code": "15.9",
-          "order": 9,
-          "globalOrder": 141,
           "titleEn": "How Much & How Many",
           "titleTh": "How Much และ How Many",
           "type": "new_words",
@@ -4557,9 +4496,9 @@
         },
         {
           "id": "v7_u14tn10",
-          "code": "15.10",
-          "order": 10,
-          "globalOrder": 142,
+          "code": "15.8",
+          "order": 8,
+          "globalOrder": 140,
           "titleEn": "How Much Is It?",
           "titleTh": "ราคาเท่าไร?",
           "type": "lesson",
@@ -4587,9 +4526,9 @@
         },
         {
           "id": "v7_u14tn11",
-          "code": "15.11",
-          "order": 11,
-          "globalOrder": 143,
+          "code": "15.9",
+          "order": 9,
+          "globalOrder": 141,
           "titleEn": "Ask the Price",
           "titleTh": "ถามราคา",
           "type": "say_it",
@@ -4617,9 +4556,9 @@
         },
         {
           "id": "v7_u14tn14",
-          "code": "15.12",
-          "order": 12,
-          "globalOrder": 144,
+          "code": "15.10",
+          "order": 10,
+          "globalOrder": 142,
           "titleEn": "How Many?",
           "titleTh": "กี่ชิ้น?",
           "type": "lesson",
@@ -4647,9 +4586,9 @@
         },
         {
           "id": "v7_u14tn15",
-          "code": "15.13",
-          "order": 13,
-          "globalOrder": 145,
+          "code": "15.11",
+          "order": 11,
+          "globalOrder": 143,
           "titleEn": "Price or Number?",
           "titleTh": "ราคาหรือจำนวน?",
           "type": "say_it",
@@ -4677,9 +4616,9 @@
         },
         {
           "id": "v7_u14tn12",
-          "code": "15.14",
-          "order": 14,
-          "globalOrder": 146,
+          "code": "15.12",
+          "order": 12,
+          "globalOrder": 144,
           "titleEn": "Months 3",
           "titleTh": "เดือน 3",
           "type": "new_words",
@@ -4709,9 +4648,9 @@
         },
         {
           "id": "v7_u14tn13",
-          "code": "15.15",
-          "order": 15,
-          "globalOrder": 147,
+          "code": "15.13",
+          "order": 13,
+          "globalOrder": 145,
           "titleEn": "Months & Days 2",
           "titleTh": "เดือนและวัน 2",
           "type": "say_it",
@@ -4739,23 +4678,24 @@
           }
         },
         {
-          "id": "v7_u14tn17",
-          "code": "15.16",
-          "order": 16,
-          "globalOrder": 148,
-          "titleEn": "Read the Calendar 2",
-          "titleTh": "อ่านปฏิทิน 2",
-          "type": "info_task",
+          "id": "v7_u14tn07",
+          "code": "15.14",
+          "order": 14,
+          "globalOrder": 146,
+          "titleEn": "Read the Calendar",
+          "titleTh": "อ่านปฏิทิน",
+          "type": "describe_it",
           "beat": "Ten",
-          "learningTarget": "อ่านวันที่ Oct–Dec และเดือนก่อนหน้า",
-          "activity": "เลือกวันที่/ห้องจากบัตรปฏิทินเดือนหลัง",
+          "learningTarget": "อ่านวันที่ เดือน เวลา และห้องจากบัตร แล้วพูดตอบ",
+          "activity": "7 ข้อต่อรอบ: วันที่/เดือน · เวลา/ห้อง · เลือกบัตรให้ตรงกับนัด",
           "examples": [
-            "12 October",
-            "Room 3"
+            "5 May",
+            "20 December",
+            "Card B."
           ],
           "estimatedMinutes": [
-            2,
-            4
+            3,
+            5
           ],
           "difficultyAxes": [
             2,
@@ -4765,14 +4705,14 @@
             1
           ],
           "contentRef": {
-            "poolId": "info_task_calendar_2"
+            "poolId": "fnd_v7_u14tn07_read_the_calendar_1"
           }
         },
         {
           "id": "v7_u14tn18",
-          "code": "15.17",
-          "order": 17,
-          "globalOrder": 149,
+          "code": "15.15",
+          "order": 15,
+          "globalOrder": 147,
           "titleEn": "Months I Remember",
           "titleTh": "เดือนที่จำได้",
           "type": "say_it",
@@ -4799,24 +4739,24 @@
           }
         },
         {
-          "id": "v7_u14tn19",
-          "code": "15.18",
-          "order": 18,
-          "globalOrder": 150,
-          "titleEn": "Read My Ticket",
-          "titleTh": "อ่านตั๋วของฉัน",
-          "type": "info_task",
+          "id": "v7_u14tn08f",
+          "code": "15.16",
+          "order": 16,
+          "globalOrder": 148,
+          "titleEn": "Plan My Day",
+          "titleTh": "วางแผนวันของฉัน",
+          "type": "describe_it",
           "beat": "Ten",
-          "learningTarget": "ดึงวัน เวลา จำนวน ราคา หรือวันที่จากบัตรสั้น",
-          "activity": "อ่านตั๋วหรือข้อความแล้วเลือกข้อมูลที่ถูก",
+          "learningTarget": "อ่านการ์ดคลาสและตั๋วหนัง แล้วพูดบอกเวลา จำนวน ราคา หรือตัวเลือกที่ตรง",
+          "activity": "6 ข้อ พูดตอบทุกข้อ · แตะชิปเพื่อฟังคำใบ้ได้ (ไม่นับเป็นคำตอบ)",
           "examples": [
-            "7:00",
-            "50 baht",
-            "5 May"
+            "At seven.",
+            "Two tickets.",
+            "Ticket B, please."
           ],
           "estimatedMinutes": [
-            2,
-            4
+            3,
+            5
           ],
           "difficultyAxes": [
             2,
@@ -4826,14 +4766,14 @@
             1
           ],
           "contentRef": {
-            "poolId": "info_task_ticket"
+            "poolId": "fnd_v7_u14tn08f_plan_my_day"
           }
         },
         {
           "id": "v7_u14tn20",
-          "code": "15.19",
-          "order": 19,
-          "globalOrder": 151,
+          "code": "15.17",
+          "order": 17,
+          "globalOrder": 149,
           "titleEn": "Questions in Real Life",
           "titleTh": "คำถามในชีวิตจริง",
           "type": "say_it",
@@ -4862,9 +4802,9 @@
         },
         {
           "id": "v7_u14tn21",
-          "code": "15.20",
-          "order": 20,
-          "globalOrder": 152,
+          "code": "15.18",
+          "order": 18,
+          "globalOrder": 150,
           "titleEn": "Plan a Movie",
           "titleTh": "วางแผนดูหนัง",
           "type": "conversation",
@@ -4904,7 +4844,7 @@
           "id": "v7_u15n10",
           "code": "16.1",
           "order": 1,
-          "globalOrder": 153,
+          "globalOrder": 151,
           "titleEn": "Around the Room",
           "titleTh": "รอบห้อง",
           "type": "new_words",
@@ -4935,7 +4875,7 @@
           "id": "v7_u15n01",
           "code": "16.2",
           "order": 2,
-          "globalOrder": 154,
+          "globalOrder": 152,
           "titleEn": "There Is / There Are",
           "titleTh": "บอกว่ามีอะไรอยู่",
           "type": "lesson",
@@ -4965,7 +4905,7 @@
           "id": "v7_u15n12",
           "code": "16.3",
           "order": 3,
-          "globalOrder": 155,
+          "globalOrder": 153,
           "titleEn": "What Is in the Room?",
           "titleTh": "ในห้องมีอะไร?",
           "type": "say_it",
@@ -4995,7 +4935,7 @@
           "id": "v7_u15n11",
           "code": "16.4",
           "order": 4,
-          "globalOrder": 156,
+          "globalOrder": 154,
           "titleEn": "More Places & Things",
           "titleTh": "สถานที่และของเพิ่ม",
           "type": "new_words",
@@ -5026,7 +4966,7 @@
           "id": "v7_u15n03",
           "code": "16.5",
           "order": 5,
-          "globalOrder": 157,
+          "globalOrder": 155,
           "titleEn": "In, On, Under, Next To",
           "titleTh": "บอกตำแหน่งของ",
           "type": "lesson",
@@ -5056,7 +4996,7 @@
           "id": "v7_u15n13",
           "code": "16.6",
           "order": 6,
-          "globalOrder": 158,
+          "globalOrder": 156,
           "titleEn": "Where Is It?",
           "titleTh": "มันอยู่ไหน?",
           "type": "say_it",
@@ -5086,7 +5026,7 @@
           "id": "v7_u15n04",
           "code": "16.7",
           "order": 7,
-          "globalOrder": 159,
+          "globalOrder": 157,
           "titleEn": "Find My Things",
           "titleTh": "หาของของฉัน",
           "type": "describe_it",
@@ -5116,7 +5056,7 @@
           "id": "v7_u15n05",
           "code": "16.8",
           "order": 8,
-          "globalOrder": 160,
+          "globalOrder": 158,
           "titleEn": "Word Stress I",
           "titleTh": "เน้นพยางค์ I",
           "type": "pronunciation",
@@ -5158,7 +5098,7 @@
           "id": "v7_u15n06",
           "code": "16.9",
           "order": 9,
-          "globalOrder": 161,
+          "globalOrder": 159,
           "titleEn": "Go Straight, Turn Left",
           "titleTh": "ตรงไป เลี้ยวซ้าย",
           "type": "lesson",
@@ -5189,7 +5129,7 @@
           "id": "v7_u15n09",
           "code": "16.10",
           "order": 10,
-          "globalOrder": 162,
+          "globalOrder": 160,
           "titleEn": "Direction Mix",
           "titleTh": "ทิศทางผสม",
           "type": "emoji_speak",
@@ -5221,7 +5161,7 @@
           "id": "v7_u15n07",
           "code": "16.11",
           "order": 11,
-          "globalOrder": 163,
+          "globalOrder": 161,
           "titleEn": "Say the Way",
           "titleTh": "บอกทาง",
           "type": "say_it",
@@ -5251,7 +5191,7 @@
           "id": "v7_u15n14",
           "code": "16.12",
           "order": 12,
-          "globalOrder": 164,
+          "globalOrder": 162,
           "titleEn": "Look & Answer",
           "titleTh": "ดูแล้วตอบ",
           "type": "describe_it",
@@ -5281,7 +5221,7 @@
           "id": "v7_finale_n01",
           "code": "16.13",
           "order": 13,
-          "globalOrder": 165,
+          "globalOrder": 163,
           "titleEn": "Final Interview",
           "titleTh": "บททดสอบสุดท้าย กับ Teacher John",
           "type": "interactive_scenario",

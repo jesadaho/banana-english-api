@@ -14,6 +14,10 @@ export type DescribeItCard = {
   questionEn?: string;
   /** Two-level hints (highlight the info, then a sentence starter). */
   hints?: string[];
+  /** Optional spoken-hint chips; tapping one plays it and never submits. */
+  helperChoices?: string[];
+  /** Skill bucket used to balance a capped deal (e.g. date / details / match). */
+  skill?: string;
 };
 
 export type DescribeItDealtCard = DescribeItCard & {
@@ -27,6 +31,8 @@ export type DescribeItPool = {
   tagEn: string;
   emoji: string;
   estimatedMinutes: number;
+  /** Cards per play when the pool holds more; dealt round-robin across skills. */
+  dealCount?: number;
   items: DescribeItCard[];
 };
 
@@ -97,10 +103,46 @@ export function listDescribeItPools(): Array<{
     }));
 }
 
-export function dealDescribeItCards(poolId: string): DescribeItDealtCard[] {
+function shuffled<T>(items: T[], random: () => number): T[] {
+  const out = [...items];
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(random() * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  return out;
+}
+
+function balancedSkillDeal(
+  items: DescribeItCard[],
+  count: number,
+  random: () => number,
+): DescribeItCard[] {
+  const buckets = new Map<string, DescribeItCard[]>();
+  for (const item of items) {
+    const key = item.skill ?? '';
+    buckets.set(key, [...(buckets.get(key) ?? []), item]);
+  }
+  const queues = shuffled([...buckets.values()], random).map((b) => shuffled(b, random));
+  const picked: DescribeItCard[] = [];
+  while (picked.length < count && queues.some((q) => q.length)) {
+    for (const queue of queues) {
+      const next = queue.shift();
+      if (next && picked.length < count) picked.push(next);
+    }
+  }
+  return picked;
+}
+
+export function dealDescribeItCards(
+  poolId: string,
+  random: () => number = Math.random,
+): DescribeItDealtCard[] {
   const pool = describeItPoolById(poolId);
   if (!pool || pool.items.length === 0) return [];
-  return pool.items.map((item) => ({
+  const count = pool.dealCount ?? pool.items.length;
+  const items =
+    count < pool.items.length ? balancedSkillDeal(pool.items, count, random) : pool.items;
+  return items.map((item) => ({
     ...item,
     imageUrl: describeItImageUrl(item.imagePath),
   }));

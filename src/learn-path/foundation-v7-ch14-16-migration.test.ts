@@ -18,9 +18,28 @@ describe('Foundation V7 Ch14–16 migration', () => {
   it('maps legacy You Ask First to Plan My Class without completing price/quantity siblings', () => {
     assert.equal(migrateFoundationV7NodeId('v7_u14n06'), 'v7_u14tn08f');
     assert.equal(migrateFoundationV7NodeId('v7_u14tn08'), 'v7_u14tn08f');
+    assert.equal(migrateFoundationV7NodeId('v7_u14tn17'), 'v7_u14tn07');
+    assert.equal(migrateFoundationV7NodeId('v7_u14tn19'), 'v7_u14tn08f');
     assert.equal(migrateFoundationV7NodeId('v7_u14n03'), 'v7_u14tn01');
     assert.equal(migrateFoundationV7NodeId('v7_u14n01'), 'v7_u14n01');
     assert.equal(migrateFoundationV7NodeId('v7_u16n10'), null);
+  });
+
+  it('keeps Chapter 15 to two See & Say information nodes in teaching order', () => {
+    const ch = FOUNDATION_V7_CATALOG.chapters.find((c) => c.id === 'v7_u14_time_numbers')!;
+    const ids = ch.items.map((n) => n.id);
+    assert.equal(ids.length, 18);
+    assert.ok(!ids.includes('v7_u14tn17') && !ids.includes('v7_u14tn19'));
+    assert.ok(ch.items.every((n) => n.type !== 'info_task'));
+    const cal = ch.items.find((n) => n.id === 'v7_u14tn07')!;
+    const plan = ch.items.find((n) => n.id === 'v7_u14tn08f')!;
+    assert.equal(cal.titleEn, 'Read the Calendar');
+    assert.equal(plan.titleEn, 'Plan My Day');
+    assert.equal(plan.type, 'describe_it');
+    assert.ok(ids.indexOf('v7_u14tn13') < ids.indexOf('v7_u14tn07'));
+    assert.ok(ids.indexOf('v7_u14tn07') < ids.indexOf('v7_u14tn08f'));
+    assert.ok(ids.indexOf('v7_u14tn15') < ids.indexOf('v7_u14tn08f'));
+    assert.deepEqual(ch.items.map((n) => n.order), Array.from({ length: 18 }, (_, i) => i + 1));
   });
 
   it('keeps migration targets on the live path when non-null', () => {

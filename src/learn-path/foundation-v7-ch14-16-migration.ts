@@ -8,10 +8,14 @@ export const FOUNDATION_V7_NODE_MIGRATION: Record<string, string | null> = {
   v7_u14n03: 'v7_u14tn01', // When or What Time only — NOT price/quantity siblings
   v7_u14n04: 'v7_u14n04',
   v7_u14n05: null, // empty describe_it removed
-  v7_u14n06: 'v7_u14tn08f', // You Ask First / Plan My Class → Find My Class
+  v7_u14n06: 'v7_u14tn08f', // You Ask First / Plan My Class → Plan My Day
 
-  // Plan My Class conversation node → Find My Class mini-game
+  // Plan My Class conversation node → Plan My Day
   v7_u14tn08: 'v7_u14tn08f',
+
+  // Ch15 info nodes consolidated into two See & Say nodes
+  v7_u14tn17: 'v7_u14tn07', // Read the Calendar 2 → Read the Calendar
+  v7_u14tn19: 'v7_u14tn08f', // Read My Ticket → Plan My Day
 
   // Old Ch15 Things & Places → displayed Ch16 (same chapter id v7_u15)
   v7_u15n10: 'v7_u15n10',
@@ -42,7 +46,7 @@ export const FOUNDATION_V7_NODE_MIGRATION: Record<string, string | null> = {
 
 /** Legacy simulation completions that credit a live A1 node after mechanic changes. */
 export const FOUNDATION_V7_SIMULATION_MIGRATION: Record<string, string> = {
-  foundation_v7_u14n06: 'v7_u14tn08f', // Plan My Class → Find My Class
+  foundation_v7_u14n06: 'v7_u14tn08f', // Plan My Class → Plan My Day
 };
 
 export function migrateFoundationV7NodeId(nodeId: string): string | null | undefined {

@@ -1234,11 +1234,11 @@
   },
   "fnd_v7_u14tn07_read_the_calendar_1": {
     "id": "fnd_v7_u14tn07_read_the_calendar_1",
-    "titleEn": "Read the Calendar 1",
-    "titleTh": "อ่านปฏิทิน 1",
+    "titleEn": "Read the Calendar",
+    "titleTh": "อ่านปฏิทิน",
     "tagEn": "DATE",
     "emoji": "📅",
-    "estimatedMinutes": 3,
+    "estimatedMinutes": 4,
     "items": [
       {
         "id": "cal1_say_01",
@@ -1253,7 +1253,8 @@
           "It is on Friday."
         ],
         "imagePath": "describe-it/fnd_v7_u14tn07_read_the_calendar_1/class-card-a.webp",
-        "hintEn": "It's on _____"
+        "hintEn": "It's on _____",
+        "skill": "date"
       },
       {
         "id": "cal1_say_02",
@@ -1269,7 +1270,8 @@
           "Fifth of May."
         ],
         "imagePath": "describe-it/fnd_v7_u14tn07_read_the_calendar_1/class-card-a.webp",
-        "hintEn": "May _____"
+        "hintEn": "May _____",
+        "skill": "date"
       },
       {
         "id": "cal1_say_03",
@@ -1286,7 +1288,8 @@
           "Ten o'clock."
         ],
         "imagePath": "describe-it/fnd_v7_u14tn07_read_the_calendar_1/class-card-a.webp",
-        "hintEn": "At _____"
+        "hintEn": "At _____",
+        "skill": "details"
       },
       {
         "id": "cal1_say_04",
@@ -1301,7 +1304,8 @@
           "In room 2"
         ],
         "imagePath": "describe-it/fnd_v7_u14tn07_read_the_calendar_1/class-card-a.webp",
-        "hintEn": "In Room _____"
+        "hintEn": "In Room _____",
+        "skill": "details"
       },
       {
         "id": "cal1_say_05",
@@ -1315,7 +1319,8 @@
           "It's in June."
         ],
         "imagePath": "describe-it/fnd_v7_u14tn07_read_the_calendar_1/class-card-b.webp",
-        "hintEn": "In _____"
+        "hintEn": "In _____",
+        "skill": "date"
       },
       {
         "id": "cal1_say_06",
@@ -1332,7 +1337,8 @@
           "Nine o'clock."
         ],
         "imagePath": "describe-it/fnd_v7_u14tn07_read_the_calendar_1/class-card-b.webp",
-        "hintEn": "At _____"
+        "hintEn": "At _____",
+        "skill": "details"
       },
       {
         "id": "cal1_say_07",
@@ -1348,7 +1354,256 @@
           "It's a birthday party."
         ],
         "imagePath": "describe-it/fnd_v7_u14tn07_read_the_calendar_1/birthday-card.webp",
-        "hintEn": "A _____"
+        "hintEn": "A _____",
+        "skill": "details"
+      },
+      {
+        "id": "cal_say_08",
+        "promptTh": "คลาสอยู่เดือนอะไร?",
+        "questionEn": "What month is the class in?",
+        "answerEn": "In November.",
+        "answerTh": "เดือนพฤศจิกายน",
+        "acceptedAnswers": [
+          "November.",
+          "In November",
+          "It's in November."
+        ],
+        "imagePath": "describe-it/fnd_v7_u14tn07_read_the_calendar_1/class-card-november.webp",
+        "hintEn": "In _____",
+        "skill": "date"
+      },
+      {
+        "id": "cal_say_09",
+        "promptTh": "ปาร์ตี้วันที่เท่าไร?",
+        "questionEn": "What date is the party?",
+        "answerEn": "December twentieth.",
+        "answerTh": "วันที่ 20 ธันวาคม",
+        "acceptedAnswers": [
+          "The twentieth of December.",
+          "December 20th.",
+          "December 20.",
+          "20 December.",
+          "The 20th of December.",
+          "Twentieth of December.",
+          "On December twentieth.",
+          "It's on December twentieth."
+        ],
+        "imagePath": "describe-it/fnd_v7_u14tn07_read_the_calendar_1/party-card-december.webp",
+        "hintEn": "December _____",
+        "skill": "date"
+      },
+      {
+        "id": "cal_say_10",
+        "promptTh": "คลาสอยู่ห้องไหน?",
+        "questionEn": "What room is the class in?",
+        "answerEn": "In Room 1.",
+        "answerTh": "ที่ห้อง 1",
+        "acceptedAnswers": [
+          "Room 1.",
+          "Room one.",
+          "In Room one.",
+          "In room 1"
+        ],
+        "imagePath": "describe-it/fnd_v7_u14tn07_read_the_calendar_1/class-card-november.webp",
+        "hintEn": "In Room _____",
+        "skill": "details"
+      },
+      {
+        "id": "cal_say_11",
+        "promptTh": "ปาร์ตี้กี่โมง?",
+        "questionEn": "What time is the party?",
+        "answerEn": "At six.",
+        "answerTh": "หกโมงเย็น",
+        "acceptedAnswers": [
+          "At six p.m.",
+          "At six o'clock.",
+          "Six p.m.",
+          "6 p.m.",
+          "At 6.",
+          "At 6 p.m.",
+          "Six o'clock."
+        ],
+        "imagePath": "describe-it/fnd_v7_u14tn07_read_the_calendar_1/party-card-december.webp",
+        "hintEn": "At _____",
+        "skill": "details"
+      },
+      {
+        "id": "cal_say_12",
+        "promptTh": "คลาสของคุณวันที่ 4 พฤศจิกายน เลือกการ์ดไหน?",
+        "questionEn": "Your class is on 4 November. Which card?",
+        "answerEn": "Card B.",
+        "answerTh": "การ์ด B",
+        "acceptedAnswers": [
+          "B.",
+          "Card B",
+          "It's card B.",
+          "Card bee.",
+          "Bee."
+        ],
+        "imagePath": "describe-it/fnd_v7_u14tn07_read_the_calendar_1/calendar-options-abc.webp",
+        "hintEn": "Card _____",
+        "skill": "match"
+      },
+      {
+        "id": "cal_say_13",
+        "promptTh": "คลาสของคุณอยู่ห้อง 3 เลือกการ์ดไหน?",
+        "questionEn": "Your class is in Room 3. Which card?",
+        "answerEn": "Card A.",
+        "answerTh": "การ์ด A",
+        "acceptedAnswers": [
+          "A.",
+          "Card A",
+          "It's card A.",
+          "Card hey."
+        ],
+        "imagePath": "describe-it/fnd_v7_u14tn07_read_the_calendar_1/calendar-options-abc.webp",
+        "hintEn": "Card _____",
+        "skill": "match"
+      },
+      {
+        "id": "cal_say_14",
+        "promptTh": "ปาร์ตี้ของคุณเดือนธันวาคม เลือกการ์ดไหน?",
+        "questionEn": "Your party is in December. Which card?",
+        "answerEn": "Card C.",
+        "answerTh": "การ์ด C",
+        "acceptedAnswers": [
+          "C.",
+          "Card C",
+          "It's card C.",
+          "Card see.",
+          "See."
+        ],
+        "imagePath": "describe-it/fnd_v7_u14tn07_read_the_calendar_1/calendar-options-abc.webp",
+        "hintEn": "Card _____",
+        "skill": "match"
+      }
+    ],
+    "dealCount": 7
+  },
+  "fnd_v7_u14tn08f_plan_my_day": {
+    "id": "fnd_v7_u14tn08f_plan_my_day",
+    "titleEn": "Plan My Day",
+    "titleTh": "วางแผนวันของฉัน",
+    "tagEn": "PLAN",
+    "emoji": "🎟️",
+    "estimatedMinutes": 3,
+    "items": [
+      {
+        "id": "plan_01",
+        "promptTh": "คุณต้องเข้าเรียนตอน 10:00 เลือกการ์ดให้ตรง",
+        "questionEn": "Your class is at ten. Which class?",
+        "answerEn": "Class A.",
+        "answerTh": "คลาส A",
+        "acceptedAnswers": [
+          "A.",
+          "The 10:00 class.",
+          "The ten o'clock class.",
+          "Class A",
+          "Class hey."
+        ],
+        "imagePath": "describe-it/fnd_v7_u14tn08f_plan_my_day/class-options-abc-friday-1000.webp",
+        "helperChoices": [
+          "Class A",
+          "Class B",
+          "Class C"
+        ]
+      },
+      {
+        "id": "plan_02",
+        "promptTh": "หนังฉายกี่โมง?",
+        "questionEn": "What time is the movie?",
+        "answerEn": "At seven.",
+        "answerTh": "หนึ่งทุ่ม",
+        "acceptedAnswers": [
+          "Seven.",
+          "At 7:00.",
+          "At 7.",
+          "At seven o'clock.",
+          "Seven o'clock."
+        ],
+        "imagePath": "describe-it/fnd_v7_u14tn08f_plan_my_day/movie-ticket-friday-7-80-v2.webp",
+        "helperChoices": [
+          "On Friday",
+          "At seven",
+          "80 baht"
+        ]
+      },
+      {
+        "id": "plan_03",
+        "promptTh": "จองตั๋วกี่ใบ?",
+        "questionEn": "How many tickets?",
+        "answerEn": "Two tickets.",
+        "answerTh": "ตั๋วสองใบ",
+        "acceptedAnswers": [
+          "Two.",
+          "2 tickets.",
+          "2.",
+          "Two tickets"
+        ],
+        "imagePath": "describe-it/fnd_v7_u14tn08f_plan_my_day/ticket-order-2-tickets-80-each-v2.webp",
+        "helperChoices": [
+          "Two tickets",
+          "80 baht",
+          "Eight tickets"
+        ]
+      },
+      {
+        "id": "plan_04",
+        "promptTh": "ตั๋ววันเสาร์ราคาเท่าไร?",
+        "questionEn": "How much is the Saturday ticket?",
+        "answerEn": "Fifty baht.",
+        "answerTh": "ห้าสิบบาท",
+        "acceptedAnswers": [
+          "50 baht.",
+          "It's 50 baht.",
+          "It's fifty baht.",
+          "Fifty baht"
+        ],
+        "imagePath": "describe-it/fnd_v7_u14tn08f_plan_my_day/movie-ticket-saturday-6-50-v2.webp",
+        "helperChoices": [
+          "On Saturday",
+          "At six",
+          "50 baht"
+        ]
+      },
+      {
+        "id": "plan_05",
+        "promptTh": "คุณอยากดูหนังวันศุกร์ พูดบอกว่าควรเลือกตั๋วใบไหน",
+        "questionEn": "You want to see the movie on Friday. Which ticket?",
+        "answerEn": "Ticket A, please.",
+        "answerTh": "ขอตั๋ว A ครับ/ค่ะ",
+        "acceptedAnswers": [
+          "Ticket A.",
+          "A, please.",
+          "Ticket A",
+          "Ticket A please"
+        ],
+        "imagePath": "describe-it/fnd_v7_u14tn08f_plan_my_day/movie-options-abc-v2.webp",
+        "helperChoices": [
+          "Ticket A",
+          "Ticket B",
+          "Ticket C"
+        ]
+      },
+      {
+        "id": "plan_06",
+        "promptTh": "เลือกตั๋วราคา 50 บาทพอดี แล้วพูดบอกคำตอบ",
+        "questionEn": "Which ticket is exactly fifty baht?",
+        "answerEn": "Ticket B, please.",
+        "answerTh": "ขอตั๋ว B ครับ/ค่ะ",
+        "acceptedAnswers": [
+          "Ticket B.",
+          "B, please.",
+          "Ticket B",
+          "Ticket B please",
+          "Ticket bee."
+        ],
+        "imagePath": "describe-it/fnd_v7_u14tn08f_plan_my_day/movie-options-abc-v2.webp",
+        "helperChoices": [
+          "Ticket A",
+          "Ticket B",
+          "Ticket C"
+        ]
       }
     ]
   }
