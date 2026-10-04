@@ -64,8 +64,7 @@
           "hints": {
             "intentTh": "คุณไม่ชอบทำอะไร?",
             "starterEn": "I don't like …",
-            "modelEn": "I don't like swimming.",
-            "cueTh": "คุณไม่ชอบทำอะไร?"
+            "modelEn": "I don't like swimming."
           },
           "introTh": "บอกสิ่งที่ไม่ชอบ",
           "introEn": "Say what you don't like"
@@ -78,91 +77,158 @@
       "completionTh": "ขอบคุณนะ! แล้วเจอกันที่ชมรม!"
     },
     "2.11": {
-      "scenarioTh": "Teacher Bee อยากรู้กิจวัตรของคุณเพื่อหาเวลาซ้อมชมรม คุณเล่าวันของคุณตามลำดับและบอกว่าทำบ่อยแค่ไหน",
-      "openingEn": "We need a good time for club practice. Tell me about your day. What do you do first in the morning?",
-      "role": "You are Teacher Bee planning a weekly practice time for the Adventure Club. Lead every beat. 1) Ask what the learner does first in the morning; accept any routine with or without First (I get up at six / First I have breakfast). 2) Ask what they do next; accept Then / After that + routine. 3) Ask how often they do something (Do you usually exercise? / How often do you…?); accept always / usually / often / sometimes / never. React briefly to each answer (e.g. 'Oh, early!'). Use only A2 Zone 1 language: daily routines (get up, have breakfast, take a shower, do homework, make the bed, exercise, relax), frequency words, first / then / after that. Keep each line under 15 words. Do not correct he / she -s forms aggressively; meaning first.",
+      "scenarioTh": "ครูบีหาเวลาซ้อมชมรม คุณเล่ากิจวัตรของคุณ บอกว่าทำบ่อยแค่ไหน แล้วถามครูกลับ",
+      "openingEn": "We need a good time for club practice. What do you usually do in the morning?",
+      "role": "You are Teacher Bee planning a weekly practice time for the Adventure Club. React to what the learner actually says. Follow these beats, one per reply: 1) After the learner says any morning routine (I have breakfast at seven., I get up at six., I take a shower. — First / Then are NOT required), react in a few words and ask exactly: \"How often do you exercise?\" 2) Accept always / usually / often / sometimes / never with any activity, or a short answer such as \"Sometimes.\" Then reply only \"Thanks for telling me!\" with NO question — the learner must now ask you back. If the learner already asked back in the same reply, skip this line and go straight to beat 3. 3) When the learner asks back (How about you? / What do you do in the morning? / How often do you exercise? / any similar question), reply: \"I usually get up at six and exercise in the morning.\" then close with exactly: \"Let's practice after school. See you!\" Never ask \"How about you?\" yourself. Use only A2 Zone 1 language: daily routines (get up, have breakfast, take a shower, do homework, have dinner, make the bed, exercise, relax, practice), frequency words. Keep each line under 15 words. Do not correct he / she -s forms; meaning first.",
       "goals": [
         {
-          "id": "first",
-          "th": "บอกกิจวัตรแรกของวัน",
-          "en": "Say your first routine",
-          "example": "First I get up at six."
-        },
-        {
-          "id": "sequence",
-          "th": "เล่าต่อด้วย then / after that",
-          "en": "Continue with then / after that",
-          "example": "Then I have breakfast. After that I go to school."
+          "id": "routine",
+          "th": "เล่ากิจวัตร",
+          "en": "Say a daily routine (any routine; First / Then not required)",
+          "example": "I have breakfast at seven.",
+          "hints": {
+            "intentTh": "เล่าว่าตอนเช้าคุณทำอะไร",
+            "starterEn": "I …",
+            "modelEn": "I have breakfast at seven."
+          },
+          "introTh": "เล่ากิจวัตร",
+          "introEn": "Tell your routine"
         },
         {
           "id": "frequency",
-          "th": "บอกความถี่ด้วย always / usually / sometimes / never",
-          "en": "Say how often with a frequency word",
-          "example": "I usually exercise in the evening."
+          "th": "บอกความถี่",
+          "en": "Say how often with always / usually / often / sometimes / never",
+          "example": "I sometimes exercise.",
+          "hints": {
+            "intentTh": "บอกว่าออกกำลังกายบ่อยแค่ไหน",
+            "starterEn": "I sometimes …",
+            "modelEn": "I sometimes exercise."
+          },
+          "introTh": "บอกความถี่",
+          "introEn": "Say how often"
+        },
+        {
+          "id": "ask_back",
+          "th": "ถามครูกลับ",
+          "en": "Ask Teacher Bee back about his routine (How about you? / What do you do in the morning? / How often do you exercise?)",
+          "example": "How about you?",
+          "hints": {
+            "intentTh": "ลองถามครูกลับว่าครูทำอะไรตอนเช้า",
+            "starterEn": "How about …?",
+            "modelEn": "How about you?",
+            "cueTh": "ลองถามครูกลับว่าครูทำอะไรตอนเช้า"
+          },
+          "introTh": "ถามครูกลับ",
+          "introEn": "Ask the teacher back"
         }
       ],
       "minTurns": 3,
       "maxTurns": 6,
-      "completionEn": "Thank you! Now I know a good time for practice.",
-      "completionTh": "ขอบคุณ! ตอนนี้รู้แล้วว่าซ้อมเวลาไหนดี"
+      "aiClosing": true,
+      "completionEn": "Let's practice after school. See you!",
+      "completionTh": "ซ้อมกันหลังเลิกเรียนนะ แล้วเจอกัน!"
     },
     "3.11": {
-      "scenarioTh": "คุณพา May ทัวร์บ้าน เธอถามว่าห้องและของอยู่ตรงไหน และมีอะไรบ้าง",
+      "scenarioTh": "คุณพา May ทัวร์บ้าน บอกว่าห้องอยู่ไหนและมีอะไรบ้าง แล้วเจอกุญแจใต้โซฟา ต้องถาม May ว่าของใคร",
       "openingEn": "Wow, nice home! Where is the kitchen?",
-      "role": "You are May visiting the learner's home for the first time for club practice. Lead every beat. 1) Ask where a room is (Where is the kitchen?); accept any location with next to / opposite / between / behind / in front of or simply a room direction. 2) Ask 'Is there a fridge?' or 'Are there any chairs?'; accept Yes, there is / there are some / No, there aren't any. 3) Ask where one thing is (Where is the sofa?) and accept a preposition answer. Compliment the home briefly. Use only A2 Zone 1 language: rooms (kitchen, bedroom, living room, bathroom), furniture (sofa, shelf, fridge, table, chair, TV), there is / there are / some / any, between, opposite, behind, in front of, next to. Keep each line under 15 words.",
+      "role": "You are May visiting the learner's home for the first time for club practice. React to what the learner actually says. Follow these beats, one per reply: 1) After the learner says where the kitchen is (next to / opposite / between / behind / in front of, or any simple location), compliment briefly and ask exactly: \"Are there any chairs in the kitchen?\" 2) Accept Yes, there are (some) / No, there aren't (any) / Yes, there is a table, or similar. Then say only: \"Oh, look! There's a key under the sofa.\" with NO question — the learner must now ask whose it is. If the learner already asked about the owner in the same reply, skip this line and go to beat 3. 3) When the learner asks about the owner (Whose is this? / Whose key is this? / Is this yours? / Is it Max's?), close with exactly: \"It's not mine. I think it's Max's! Let's give it to him and start practice.\" Never say whose the key is before the learner asks. Use only A2 Zone 1 language: rooms (kitchen, bedroom, living room, bathroom), furniture (sofa, shelf, fridge, table, chair, TV), there is / there are / some / any, between, opposite, behind, in front of, next to, whose / mine / yours / May's / Max's. Keep each line under 15 words.",
       "goals": [
         {
-          "id": "room",
-          "th": "บอกว่าห้องอยู่ตรงไหน",
-          "en": "Say where a room is",
-          "example": "The kitchen is next to the living room."
+          "id": "position",
+          "th": "บอกตำแหน่ง",
+          "en": "Say where a room or thing is (next to / opposite / between / behind / in front of)",
+          "example": "The kitchen is next to the living room.",
+          "hints": {
+            "intentTh": "บอกว่าห้องครัวอยู่ตรงไหน",
+            "starterEn": "The kitchen is …",
+            "modelEn": "The kitchen is next to the living room."
+          },
+          "introTh": "บอกตำแหน่ง",
+          "introEn": "Say where it is"
         },
         {
           "id": "there_is",
-          "th": "ตอบว่ามีของไหมด้วย there is / there are",
-          "en": "Answer with there is / there are",
-          "example": "Yes, there are some chairs in the kitchen."
+          "th": "บอกว่ามีอะไร",
+          "en": "Answer with there is / there are / there aren't any",
+          "example": "Yes, there are some chairs.",
+          "hints": {
+            "intentTh": "บอกว่าในครัวมีเก้าอี้ไหม",
+            "starterEn": "There are …",
+            "modelEn": "Yes, there are some chairs."
+          },
+          "introTh": "บอกว่ามีอะไร",
+          "introEn": "Say what there is"
         },
         {
-          "id": "position",
-          "th": "บอกตำแหน่งของด้วยบุพบท",
-          "en": "Say where a thing is with a preposition",
-          "example": "The sofa is in front of the TV."
+          "id": "ask_owner",
+          "th": "ถามเจ้าของ",
+          "en": "Ask who owns the key (Whose is this? / Whose key is this? / Is this yours?)",
+          "example": "Whose is this?",
+          "hints": {
+            "intentTh": "ลองถาม May ว่ากุญแจนี้ของใคร",
+            "starterEn": "Whose …?",
+            "modelEn": "Whose is this?",
+            "cueTh": "ลองถาม May ว่ากุญแจนี้ของใคร"
+          },
+          "introTh": "ถามเจ้าของ",
+          "introEn": "Ask whose it is"
         }
       ],
       "minTurns": 3,
       "maxTurns": 6,
-      "completionEn": "I love your home! Let's start practice in the living room.",
-      "completionTh": "ชอบบ้านคุณมาก! ไปซ้อมกันที่ห้องนั่งเล่นเลย"
+      "completionEn": "It's not mine. I think it's Max's! Let's give it to him and start practice.",
+      "completionTh": "ไม่ใช่ของฉันนะ น่าจะเป็นของ Max! เอาไปคืนเขาแล้วเริ่มซ้อมกันเลย"
     },
     "4.10": {
-      "scenarioTh": "ที่งานต้อนรับสมาชิกใหม่ Teacher Bee ถามหาคนในงาน คุณช่วยบรรยายรูปร่างหน้าตาและนิสัย แล้วถามว่าคนหนึ่งคือใคร",
-      "openingEn": "So many new members! I'm looking for the new coach. What does he look like?",
-      "role": "You are Teacher Bee at the Adventure Club welcome party. Lead every beat. 1) Ask what the new coach looks like (the learner can invent it); accept tall / short / has a beard / has curly hair / is wearing … . 2) Ask what the coach is like (personality); accept friendly / funny / shy / kind. 3) Invite the learner to ask about someone (There's a boy over there…); accept any Who's the … ? question and answer it (That's Max!). Use only A2 Zone 1 language: tall, short, long / short / curly / straight hair, glasses, beard, is wearing, looks + adjective, friendly, funny, shy, kind, coach, man, woman, boy, girl. Keep each line under 15 words.",
+      "scenarioTh": "ที่งานต้อนรับ ครูบีหา Mali แต่มีผู้หญิงใส่เสื้อแดงสองคน คุณช่วยบอกรูปร่างเพื่อแยกว่าคนไหน (Mali ผมสั้นหยิก) บอกนิสัยจากสิ่งที่เธอทำ แล้วถามว่าผู้ชายอีกคนคือใคร",
+      "openingEn": "So many new members! Two women are wearing red shirts. What does Mali look like?",
+      "role": "You are Teacher Bee at the Adventure Club welcome party, looking for Mali. Two women are wearing red shirts, so a shirt alone cannot tell them apart. React to what the learner actually says. Follow these beats, one per reply: 1) Accept any hair / glasses / height description (She has short curly hair. / She's tall. / the woman with glasses …); one sentence is enough. If the learner only mentions the red shirt, say \"Both women are wearing red shirts!\" and ask about her hair. Otherwise say: \"Ah, the woman with curly hair! She says hello to everyone. What is she like?\" 2) Accept friendly / kind / funny / shy or similar. Then say only: \"Yes! Oh, there's a man with glasses over there.\" with NO question — the learner must now ask who he is. If the learner already asked who he is in the same reply, skip this line and go to beat 3. 3) When the learner asks who he is (Who's the man with glasses? / Who's that man? / Who is he?), close with exactly: \"That's our new coach. He's very kind. Enjoy the party!\" Never judge personality from looks. Use only A2 Zone 1 language: tall, short, long / short / curly / straight hair, glasses, beard, is wearing, red shirt, friendly, funny, shy, kind, man, woman, boy, girl, coach. Keep each line under 15 words.",
       "goals": [
         {
           "id": "look",
-          "th": "บรรยายรูปร่างหน้าตา",
-          "en": "Describe how someone looks",
-          "example": "He is tall and he has a beard."
+          "th": "บอกรูปร่าง",
+          "en": "Describe how Mali looks with hair / glasses / height (one sentence is enough)",
+          "example": "She has short curly hair.",
+          "hints": {
+            "intentTh": "บอกว่า Mali ผมเป็นแบบไหน",
+            "starterEn": "She has …",
+            "modelEn": "She has short curly hair."
+          },
+          "introTh": "บอกรูปร่าง",
+          "introEn": "Describe how she looks"
         },
         {
           "id": "personality",
-          "th": "บอกนิสัย",
-          "en": "Say what someone is like",
-          "example": "He is friendly and funny."
+          "th": "บอกนิสัยจากสิ่งที่เธอทำ",
+          "en": "Say what Mali is like (friendly / kind / funny / shy)",
+          "example": "She's friendly.",
+          "hints": {
+            "intentTh": "บอกว่า Mali นิสัยเป็นยังไง",
+            "starterEn": "She's …",
+            "modelEn": "She's friendly."
+          },
+          "introTh": "คุยเรื่องนิสัย",
+          "introEn": "Talk about personality"
         },
         {
           "id": "who",
-          "th": "ถามว่าคนนั้นคือใคร",
-          "en": "Ask who someone is",
-          "example": "Who's the boy with curly hair?"
+          "th": "ถามว่าใคร",
+          "en": "Ask who the man is (Who's the man with glasses? / Who's that man?)",
+          "example": "Who's the man with glasses?",
+          "hints": {
+            "intentTh": "ลองถามครูบีว่าผู้ชายใส่แว่นคนนั้นคือใคร",
+            "starterEn": "Who's the …?",
+            "modelEn": "Who's the man with glasses?",
+            "cueTh": "ลองถามครูบีว่าผู้ชายใส่แว่นคนนั้นคือใคร"
+          },
+          "introTh": "ถามว่าใคร",
+          "introEn": "Ask who he is"
         }
       ],
       "minTurns": 3,
       "maxTurns": 6,
-      "completionEn": "Thanks! Now I can find everyone. Enjoy the party!",
-      "completionTh": "ขอบคุณ! ตอนนี้หาทุกคนเจอแล้ว สนุกกับงานนะ!"
+      "completionEn": "That's our new coach. He's very kind. Enjoy the party!",
+      "completionTh": "นั่นโค้ชคนใหม่ของเรา ใจดีมาก สนุกกับงานนะ!"
     },
     "5.10": {
       "scenarioTh": "วันกิจกรรมที่สวน Max โทรมาถามว่าตอนนี้ทุกคนกำลังทำอะไร คุณเล่าและถามกลับ",

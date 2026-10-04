@@ -1,7 +1,7 @@
 {
-  "a2_c01n08": [
+  "a2_c01n07": [
     {
-      "id": "a2_c01n08_q1",
+      "id": "a2_c01n07_q1",
       "promptTh": "ฉันสนุกกับการตกปลา",
       "answerEn": "I enjoy fishing.",
       "acceptedAnswers": [
@@ -13,7 +13,7 @@
       ]
     },
     {
-      "id": "a2_c01n08_q2",
+      "id": "a2_c01n07_q2",
       "promptTh": "ฉันชอบเล่นสเกตมาก",
       "answerEn": "I love skating.",
       "acceptedAnswers": [
@@ -25,7 +25,7 @@
       ]
     },
     {
-      "id": "a2_c01n08_q3",
+      "id": "a2_c01n07_q3",
       "promptTh": "ฉันไม่ชอบโต้คลื่น",
       "answerEn": "I don't like surfing.",
       "acceptedAnswers": [
@@ -37,7 +37,7 @@
       ]
     },
     {
-      "id": "a2_c01n08_q4",
+      "id": "a2_c01n07_q4",
       "promptTh": "ฉันไปวิ่งจ๊อกกิ้งทุกสุดสัปดาห์",
       "answerEn": "I go jogging on weekends.",
       "acceptedAnswers": [
@@ -52,7 +52,7 @@
       ]
     },
     {
-      "id": "a2_c01n08_q5",
+      "id": "a2_c01n07_q5",
       "promptTh": "สุดสัปดาห์คุณทำอะไร?",
       "answerEn": "What do you do on weekends?",
       "acceptedAnswers": [
@@ -66,7 +66,7 @@
       ]
     },
     {
-      "id": "a2_c01n08_q6",
+      "id": "a2_c01n07_q6",
       "promptTh": "แล้วคุณล่ะ?",
       "answerEn": "How about you?",
       "acceptedAnswers": [
@@ -78,7 +78,7 @@
       ]
     },
     {
-      "id": "a2_c01n08_q7",
+      "id": "a2_c01n07_q7",
       "promptTh": "ฉันก็เหมือนกัน!",
       "answerEn": "Me too!",
       "acceptedAnswers": [
@@ -94,7 +94,7 @@
   "a2_c02n05": [
     {
       "id": "a2_c02n05_q1",
-      "promptTh": "ถาม May ว่า \"ทำอาหารบ่อยแค่ไหน\"",
+      "promptTh": "คุณทำอาหารบ่อยแค่ไหน?",
       "answerEn": "How often do you cook?",
       "acceptedAnswers": [],
       "hints": [
@@ -104,7 +104,7 @@
     },
     {
       "id": "a2_c02n05_q2",
-      "promptTh": "ถาม Max ว่า \"ไปเดินป่าบ่อยแค่ไหน\"",
+      "promptTh": "คุณไปเดินป่าบ่อยแค่ไหน?",
       "answerEn": "How often do you go hiking?",
       "acceptedAnswers": [
         "How often do you hike?"
@@ -116,17 +116,20 @@
     },
     {
       "id": "a2_c02n05_q3",
-      "promptTh": "ถาม Capy ว่า \"วาดรูปบ่อยแค่ไหน\"",
-      "answerEn": "How often do you draw?",
-      "acceptedAnswers": [],
+      "promptTh": "ปกติฉันตื่นเจ็ดโมง",
+      "answerEn": "I usually get up at seven.",
+      "acceptedAnswers": [
+        "I usually wake up at seven.",
+        "I usually get up at 7."
+      ],
       "hints": [
-        "How …",
-        "How ___ do you ___?"
+        "I …",
+        "I ___ ___ ___ at ___."
       ]
     },
     {
       "id": "a2_c02n05_q4",
-      "promptTh": "ตอบว่าบางครั้งคุณเดินไปโรงเรียน",
+      "promptTh": "บางครั้งฉันเดินไปโรงเรียน",
       "answerEn": "I sometimes walk to school.",
       "acceptedAnswers": [
         "Sometimes I walk to school."
@@ -138,17 +141,19 @@
     },
     {
       "id": "a2_c02n05_q5",
-      "promptTh": "ตอบว่าคุณไม่เต้นเลย ไม่ว่าวันไหน (ความถี่ 0%)",
-      "answerEn": "I never dance.",
-      "acceptedAnswers": [],
+      "promptTh": "ฉันไม่เคยจัดเตียงเลย",
+      "answerEn": "I never make the bed.",
+      "acceptedAnswers": [
+        "I never make my bed."
+      ],
       "hints": [
         "I …",
-        "I ___ ___."
+        "I ___ ___ the ___."
       ]
     },
     {
       "id": "a2_c02n05_q6",
-      "promptTh": "ตอบว่าปกติคุณทำการบ้านหลังมื้อเย็น",
+      "promptTh": "ปกติฉันทำการบ้านหลังกินข้าวเย็น",
       "answerEn": "I usually do my homework after dinner.",
       "acceptedAnswers": [
         "I usually do homework after dinner.",
@@ -158,12 +163,24 @@
         "I …",
         "I ___ do my ___ ___ ___."
       ]
+    },
+    {
+      "id": "a2_c02n05_q7",
+      "promptTh": "ฉันกินข้าวเช้าเสมอ",
+      "answerEn": "I always have breakfast.",
+      "acceptedAnswers": [
+        "I always eat breakfast."
+      ],
+      "hints": [
+        "I …",
+        "I ___ ___ ___."
+      ]
     }
   ],
   "a2_c03n07": [
     {
       "id": "a2_c03n07_q1",
-      "promptTh": "บอก May ว่าตู้เย็นอยู่ข้างประตู",
+      "promptTh": "ตู้เย็นอยู่ข้างประตู",
       "answerEn": "The fridge is next to the door.",
       "acceptedAnswers": [
         "It's next to the door."
@@ -175,21 +192,18 @@
     },
     {
       "id": "a2_c03n07_q2",
-      "promptTh": "บอกว่าในครัวไม่มีถ้วยเลยสักใบ",
-      "answerEn": "There aren't any cups in the kitchen.",
-      "acceptedAnswers": [
-        "There aren't any cups.",
-        "There are no cups in the kitchen."
-      ],
+      "promptTh": "โซฟาอยู่ระหว่างชั้นวางกับทีวี",
+      "answerEn": "The sofa is between the shelf and the TV.",
+      "acceptedAnswers": [],
       "hints": [
-        "There …",
-        "There ___ ___ ___ in the ___."
+        "The …",
+        "The ___ is ___ the ___ and the ___."
       ]
     },
     {
       "id": "a2_c03n07_q3",
-      "promptTh": "บอกว่าชั้นวางอยู่ข้างหลังโซฟา",
-      "answerEn": "The shelf is behind the sofa.",
+      "promptTh": "ห้องนอนอยู่ตรงข้ามห้องครัว",
+      "answerEn": "The bedroom is opposite the kitchen.",
       "acceptedAnswers": [],
       "hints": [
         "The …",
@@ -198,7 +212,17 @@
     },
     {
       "id": "a2_c03n07_q4",
-      "promptTh": "บอกว่ากุญแจอยู่บนชั้นวาง",
+      "promptTh": "ชั้นวางอยู่ข้างหลังโซฟา",
+      "answerEn": "The shelf is behind the sofa.",
+      "acceptedAnswers": [],
+      "hints": [
+        "The …",
+        "The ___ is ___ the ___."
+      ]
+    },
+    {
+      "id": "a2_c03n07_q5",
+      "promptTh": "กุญแจอยู่บนชั้นวาง",
       "answerEn": "The key is on the shelf.",
       "acceptedAnswers": [
         "The key's on the shelf."
@@ -209,21 +233,21 @@
       ]
     },
     {
-      "id": "a2_c03n07_q5",
-      "promptTh": "บอกว่าห้องนอนอยู่ตรงข้ามห้องครัว",
-      "answerEn": "The bedroom is opposite the kitchen.",
+      "id": "a2_c03n07_q6",
+      "promptTh": "ในห้องนั่งเล่นมีเก้าอี้บ้างไหม?",
+      "answerEn": "Are there any chairs in the living room?",
       "acceptedAnswers": [],
       "hints": [
-        "The …",
-        "The ___ is ___ the ___."
+        "Are …",
+        "Are there ___ ___ in the ___ ___?"
       ]
     },
     {
-      "id": "a2_c03n07_q6",
-      "promptTh": "บอกว่าในห้องนอนไม่มีหนังสือเลยสักเล่ม",
-      "answerEn": "There aren't any books in the bedroom.",
+      "id": "a2_c03n07_q7",
+      "promptTh": "ในครัวไม่มีแก้วเลย",
+      "answerEn": "There aren't any cups in the kitchen.",
       "acceptedAnswers": [
-        "There are no books in the bedroom."
+        "There are no cups in the kitchen."
       ],
       "hints": [
         "There …",
@@ -234,7 +258,7 @@
   "a2_c03n10": [
     {
       "id": "a2_c03n10_q1",
-      "promptTh": "เจอกระเป๋าบนโซฟาบ้าน May ถามว่า \"นี่ของใคร\"",
+      "promptTh": "นี่ของใคร?",
       "answerEn": "Whose is this?",
       "acceptedAnswers": [],
       "hints": [
@@ -243,20 +267,19 @@
     },
     {
       "id": "a2_c03n10_q2",
-      "promptTh": "May ชูหนังสือเล่มหนึ่ง ถามว่าของใคร แล้วตอบว่า \"ของฉันเอง\" (พูดทั้งคำถามและคำตอบ)",
-      "answerEn": "Whose is this? — It's mine.",
+      "promptTh": "ของฉันเอง",
+      "answerEn": "It's mine.",
       "acceptedAnswers": [
-        "Whose is this? It's mine.",
-        "Whose is this? It is mine."
+        "It is mine."
       ],
       "hints": [
-        "Whose …",
-        "Whose is this? — It's ___."
+        "It's …",
+        "It's ___."
       ]
     },
     {
       "id": "a2_c03n10_q3",
-      "promptTh": "May ถามว่าแก้วใบนี้ของใคร แก้วใบนั้นเป็นของ May เอง ตอบ May ว่า \"ของเธอนั่นแหละ\"",
+      "promptTh": "ของเธอ",
       "answerEn": "It's yours.",
       "acceptedAnswers": [
         "It is yours."
@@ -268,7 +291,7 @@
     },
     {
       "id": "a2_c03n10_q4",
-      "promptTh": "Max ถามว่ากุญแจนี้ของใคร ตอบว่าเป็นของ May",
+      "promptTh": "ของ May",
       "answerEn": "It's May's.",
       "acceptedAnswers": [
         "It is May's."
@@ -280,23 +303,44 @@
     },
     {
       "id": "a2_c03n10_q5",
-      "promptTh": "Capy ชูหมวกใบหนึ่งแล้วถามว่าของใคร ตอบว่า \"ของ Max ไม่ใช่ของฉัน\"",
-      "answerEn": "It's Max's. It isn't mine.",
+      "promptTh": "กุญแจนี้ของใคร?",
+      "answerEn": "Whose is this key?",
       "acceptedAnswers": [
-        "It's Max's. It's not mine.",
-        "It is Max's. It is not mine.",
-        "It's Max's, not mine."
+        "Whose key is this?"
+      ],
+      "hints": [
+        "Whose …",
+        "Whose is this ___?"
+      ]
+    },
+    {
+      "id": "a2_c03n10_q6",
+      "promptTh": "กระเป๋านี้ของเธอไหม?",
+      "answerEn": "Is this bag yours?",
+      "acceptedAnswers": [],
+      "hints": [
+        "Is …",
+        "Is this ___ ___?"
+      ]
+    },
+    {
+      "id": "a2_c03n10_q7",
+      "promptTh": "ไม่ใช่ของฉัน",
+      "answerEn": "It's not mine.",
+      "acceptedAnswers": [
+        "It isn't mine.",
+        "It is not mine."
       ],
       "hints": [
         "It's …",
-        "It's ___. It ___ ___."
+        "It's not ___."
       ]
     }
   ],
   "a2_c04n06": [
     {
       "id": "a2_c04n06_q1",
-      "promptTh": "บอกว่าเขา (ผู้ชาย) ตัวสูงและมีเครา",
+      "promptTh": "เขาตัวสูงและมีเครา",
       "answerEn": "He's tall and he has a beard.",
       "acceptedAnswers": [
         "He is tall and he has a beard.",
@@ -309,10 +353,9 @@
     },
     {
       "id": "a2_c04n06_q2",
-      "promptTh": "บอกว่า Mali ผมสั้นและหยิก",
+      "promptTh": "Mali ผมสั้นหยิก",
       "answerEn": "Mali has short curly hair.",
       "acceptedAnswers": [
-        "Mali's got short curly hair.",
         "Mali has short, curly hair."
       ],
       "hints": [
@@ -322,62 +365,65 @@
     },
     {
       "id": "a2_c04n06_q3",
-      "promptTh": "บอกว่า Teacher John ตัวสูง และเขาดูมีความสุข",
-      "answerEn": "Teacher John is tall. He looks happy.",
-      "acceptedAnswers": [
-        "Teacher John is tall and he looks happy.",
-        "Teacher John's tall. He looks happy.",
-        "John is tall. He looks happy."
-      ],
+      "promptTh": "เธอผมยาวสีดำ",
+      "answerEn": "She has long black hair.",
+      "acceptedAnswers": [],
       "hints": [
-        "Teacher …",
-        "Teacher ___ is ___. He ___ ___."
+        "She …",
+        "She ___ ___ ___ ___."
       ]
     },
     {
       "id": "a2_c04n06_q4",
-      "promptTh": "บอกว่า Capy ตัวเตี้ยและกำลังใส่เสื้อเชิ้ตสีเขียว",
-      "answerEn": "Capy is short and is wearing a green shirt.",
+      "promptTh": "ครูบีใส่แว่นอยู่",
+      "answerEn": "Teacher Bee is wearing glasses.",
       "acceptedAnswers": [
-        "Capy is short and Capy is wearing a green shirt.",
-        "Capy's short and is wearing a green shirt.",
-        "Capy is short and wearing a green shirt."
+        "Teacher Bee wears glasses.",
+        "Teacher Bee has glasses."
       ],
       "hints": [
-        "Capy …",
-        "Capy is ___ and is ___ a ___ ___."
+        "Teacher …",
+        "Teacher ___ is ___ ___."
       ]
     },
     {
       "id": "a2_c04n06_q5",
-      "promptTh": "บอกว่าเขา (ผู้ชาย) กำลังใส่เสื้อเชิ้ตสีแดง",
-      "answerEn": "He's wearing a red shirt.",
+      "promptTh": "Capy ตัวเตี้ย",
+      "answerEn": "Capy is short.",
       "acceptedAnswers": [
-        "He is wearing a red shirt."
+        "Capy's short."
       ],
       "hints": [
-        "He's …",
-        "He's ___ a ___ ___."
+        "Capy …",
+        "Capy is ___."
       ]
     },
     {
       "id": "a2_c04n06_q6",
-      "promptTh": "บอกว่าครูบีใส่แว่นและเสื้อเชิ้ตสีฟ้า",
-      "answerEn": "Teacher Bee is wearing glasses and a blue shirt.",
+      "promptTh": "เขาหน้าตาเป็นยังไง?",
+      "answerEn": "What does he look like?",
+      "acceptedAnswers": [],
+      "hints": [
+        "What …",
+        "What does he ___ ___?"
+      ]
+    },
+    {
+      "id": "a2_c04n06_q7",
+      "promptTh": "ผู้ชายที่ใส่แว่นคือใคร?",
+      "answerEn": "Who's the man with glasses?",
       "acceptedAnswers": [
-        "Teacher Bee wears glasses and a blue shirt.",
-        "Bee is wearing glasses and a blue shirt.",
-        "Teacher Bee has glasses and a blue shirt."
+        "Who is the man with glasses?"
       ],
       "hints": [
-        "Teacher …",
-        "Teacher ___ is ___ ___ and a ___ ___."
+        "Who's …",
+        "Who's the ___ with ___?"
       ]
     }
   ],
-  "a2_c05n07": [
+  "a2_c05n06": [
     {
-      "id": "a2_c05n07_q1",
+      "id": "a2_c05n06_q1",
       "promptTh": "ถามว่า Capy กำลังทำอะไรอยู่",
       "answerEn": "What is Capy doing?",
       "acceptedAnswers": [
@@ -389,7 +435,7 @@
       ]
     },
     {
-      "id": "a2_c05n07_q2",
+      "id": "a2_c05n06_q2",
       "promptTh": "ถามว่าเธอ (May) กำลังทำอะไร แล้วตอบว่าเธอกำลังว่ายน้ำ",
       "answerEn": "What is she doing? — She's swimming.",
       "acceptedAnswers": [
@@ -403,7 +449,7 @@
       ]
     },
     {
-      "id": "a2_c05n07_q3",
+      "id": "a2_c05n06_q3",
       "promptTh": "ถามว่าเขา (Max) กำลังทำอะไร แล้วตอบว่าเขากำลังวิ่ง",
       "answerEn": "What is he doing? — He's running.",
       "acceptedAnswers": [
@@ -417,7 +463,7 @@
       ]
     },
     {
-      "id": "a2_c05n07_q4",
+      "id": "a2_c05n06_q4",
       "promptTh": "บอกว่า Capy กำลังนอนหลับอยู่บนม้านั่ง",
       "answerEn": "Capy is sleeping on the bench.",
       "acceptedAnswers": [
@@ -429,7 +475,7 @@
       ]
     },
     {
-      "id": "a2_c05n07_q5",
+      "id": "a2_c05n06_q5",
       "promptTh": "บอกว่าปกติ Mali ว่ายน้ำ แต่วันนี้เธอกำลังอ่านหนังสือ",
       "answerEn": "Mali usually swims, but today she's reading.",
       "acceptedAnswers": [
@@ -441,7 +487,7 @@
       ]
     },
     {
-      "id": "a2_c05n07_q6",
+      "id": "a2_c05n06_q6",
       "promptTh": "ถามว่าพวกเขากำลังทำอะไร",
       "answerEn": "What are they doing?",
       "acceptedAnswers": [],
@@ -896,9 +942,9 @@
       ]
     }
   ],
-  "a2_c09n08": [
+  "a2_c09n07": [
     {
-      "id": "a2_c09n08_q1",
+      "id": "a2_c09n07_q1",
       "promptTh": "สั่งกับ Mali ที่คาเฟ่: ลาเต้ร้อนแก้วใหญ่ 1 แก้ว กลับบ้าน",
       "answerEn": "A large hot latte to take away, please.",
       "acceptedAnswers": [
@@ -912,7 +958,7 @@
       ]
     },
     {
-      "id": "a2_c09n08_q2",
+      "id": "a2_c09n07_q2",
       "promptTh": "สั่งกับ Mali: ชาใส่น้ำแข็งแก้วกลาง 1 แก้ว ทานที่ร้าน",
       "answerEn": "A medium iced tea for here, please.",
       "acceptedAnswers": [
@@ -926,7 +972,7 @@
       ]
     },
     {
-      "id": "a2_c09n08_q3",
+      "id": "a2_c09n07_q3",
       "promptTh": "สั่งลาเต้เย็นแก้วเล็ก 2 แก้ว กลับบ้าน",
       "answerEn": "Two small iced lattes to take away, please.",
       "acceptedAnswers": [
@@ -939,7 +985,7 @@
       ]
     },
     {
-      "id": "a2_c09n08_q4",
+      "id": "a2_c09n07_q4",
       "promptTh": "นมร้อนหมดแล้ว สั่งชาร้อนแก้วเล็กแทน ทานที่ร้าน",
       "answerEn": "A small hot tea for here, please.",
       "acceptedAnswers": [
@@ -953,7 +999,7 @@
       ]
     },
     {
-      "id": "a2_c09n08_q5",
+      "id": "a2_c09n07_q5",
       "promptTh": "สั่งลาเต้เย็นแก้วใหญ่ 1 แก้ว ทานที่ร้าน (ใช้ I'd like)",
       "answerEn": "I'd like a large iced latte for here, please.",
       "acceptedAnswers": [
@@ -966,7 +1012,7 @@
       ]
     },
     {
-      "id": "a2_c09n08_q6",
+      "id": "a2_c09n07_q6",
       "promptTh": "สั่งกับ Mali: มัฟฟิน 1 ชิ้น กับน้ำผลไม้หน่อย",
       "answerEn": "Can I have a muffin and some juice, please?",
       "acceptedAnswers": [
@@ -979,7 +1025,7 @@
       ]
     },
     {
-      "id": "a2_c09n08_q7",
+      "id": "a2_c09n07_q7",
       "promptTh": "สั่งโกโก้ร้อนแก้วเล็ก 1 แก้ว กับคุกกี้ 1 ชิ้น ทานที่ร้าน",
       "answerEn": "A small hot cocoa and a cookie for here, please.",
       "acceptedAnswers": [
@@ -1155,9 +1201,9 @@
       ]
     }
   ],
-  "a2_c12n08": [
+  "a2_c12n07": [
     {
-      "id": "a2_c12n08_q1",
+      "id": "a2_c12n07_q1",
       "promptTh": "บอก Max: หั่นมันช้าๆ",
       "answerEn": "Cut it slowly.",
       "acceptedAnswers": [
@@ -1169,7 +1215,7 @@
       ]
     },
     {
-      "id": "a2_c12n08_q2",
+      "id": "a2_c12n07_q2",
       "promptTh": "บอก May: ผสมมันเร็วๆ",
       "answerEn": "Mix it quickly.",
       "acceptedAnswers": [
@@ -1181,7 +1227,7 @@
       ]
     },
     {
-      "id": "a2_c12n08_q3",
+      "id": "a2_c12n07_q3",
       "promptTh": "บอก Capy: ถือมันระวังๆ",
       "answerEn": "Hold it carefully.",
       "acceptedAnswers": [
@@ -1193,7 +1239,7 @@
       ]
     },
     {
-      "id": "a2_c12n08_q4",
+      "id": "a2_c12n07_q4",
       "promptTh": "บอก John: ล้างผักอย่างระมัดระวัง",
       "answerEn": "Wash the vegetables carefully.",
       "acceptedAnswers": [
@@ -1205,7 +1251,7 @@
       ]
     },
     {
-      "id": "a2_c12n08_q5",
+      "id": "a2_c12n07_q5",
       "promptTh": "บอก May: ทอดไข่ช้าๆ",
       "answerEn": "Fry the eggs slowly.",
       "acceptedAnswers": [
@@ -1217,7 +1263,7 @@
       ]
     },
     {
-      "id": "a2_c12n08_q6",
+      "id": "a2_c12n07_q6",
       "promptTh": "บอก Max: ผสมไข่ให้ดีๆ (ใช้คำบอกวิธีของ good)",
       "answerEn": "Mix the eggs well.",
       "acceptedAnswers": [
@@ -1230,7 +1276,7 @@
       ]
     },
     {
-      "id": "a2_c12n08_q7",
+      "id": "a2_c12n07_q7",
       "promptTh": "บอก Max: เทนมช้าๆ",
       "answerEn": "Pour the milk slowly.",
       "acceptedAnswers": [
@@ -1637,9 +1683,9 @@
       ]
     }
   ],
-  "a2_c15n07": [
+  "a2_c15n06": [
     {
-      "id": "a2_c15n07_q1",
+      "id": "a2_c15n06_q1",
       "promptTh": "บอก Max ว่า เมื่อวานฉันอยู่บ้าน",
       "answerEn": "I was at home yesterday.",
       "acceptedAnswers": [
@@ -1652,7 +1698,7 @@
       ]
     },
     {
-      "id": "a2_c15n07_q2",
+      "id": "a2_c15n06_q2",
       "promptTh": "บอก Teacher Nina ว่า เมื่อคืน May กับพี่สาวของ May อยู่ที่คาเฟ่ (ร้านที่ Mali ทำงาน)",
       "answerEn": "May and her sister were at the café last night.",
       "acceptedAnswers": [
@@ -1664,7 +1710,7 @@
       ]
     },
     {
-      "id": "a2_c15n07_q3",
+      "id": "a2_c15n06_q3",
       "promptTh": "ถาม Max ว่า เมื่อวานสนุกไหม",
       "answerEn": "Was it fun yesterday?",
       "acceptedAnswers": [
@@ -1677,7 +1723,7 @@
       ]
     },
     {
-      "id": "a2_c15n07_q4",
+      "id": "a2_c15n06_q4",
       "promptTh": "เล่าว่า สุดสัปดาห์ที่แล้วฉันดูหนังกับ Capy",
       "answerEn": "I watched a movie with Capy last weekend.",
       "acceptedAnswers": [
@@ -1689,7 +1735,7 @@
       ]
     },
     {
-      "id": "a2_c15n07_q5",
+      "id": "a2_c15n06_q5",
       "promptTh": "เล่าว่า เมื่อวาน Max เล่นแบดมินตัน มันเหนื่อยมาก",
       "answerEn": "Max played badminton yesterday. He was very tired.",
       "acceptedAnswers": [
@@ -1701,7 +1747,7 @@
       ]
     },
     {
-      "id": "a2_c15n07_q6",
+      "id": "a2_c15n06_q6",
       "promptTh": "เล่าว่า เมื่อคืนเราทำอาหารเย็นกับ Aunt Noi มันอร่อยมาก",
       "answerEn": "We cooked dinner with Aunt Noi last night. It was delicious.",
       "acceptedAnswers": [
@@ -1714,7 +1760,7 @@
       ]
     },
     {
-      "id": "a2_c15n07_q7",
+      "id": "a2_c15n06_q7",
       "promptTh": "เล่าให้ Teacher Nina ฟังว่า เมื่อวานฉันทำความสะอาดห้อง ฉันเหนื่อยมาก",
       "answerEn": "I cleaned my room yesterday. I was very tired.",
       "acceptedAnswers": [
@@ -2612,9 +2658,9 @@
       ]
     }
   ],
-  "a2_c22n08": [
+  "a2_c22n07": [
     {
-      "id": "a2_c22n08_q1",
+      "id": "a2_c22n07_q1",
       "promptTh": "บอกเภสัชกร: เธอ (May) เป็นไข้",
       "answerEn": "She has a fever.",
       "acceptedAnswers": [
@@ -2626,7 +2672,7 @@
       ]
     },
     {
-      "id": "a2_c22n08_q2",
+      "id": "a2_c22n07_q2",
       "promptTh": "แนะนำ May ที่เป็นไข้: ควรพักผ่อนนะ",
       "answerEn": "You should rest.",
       "acceptedAnswers": [],
@@ -2636,7 +2682,7 @@
       ]
     },
     {
-      "id": "a2_c22n08_q3",
+      "id": "a2_c22n07_q3",
       "promptTh": "ถาม May: เป็นอะไรเหรอ",
       "answerEn": "What's wrong?",
       "acceptedAnswers": [
@@ -2648,7 +2694,7 @@
       ]
     },
     {
-      "id": "a2_c22n08_q4",
+      "id": "a2_c22n07_q4",
       "promptTh": "Capy ปวดฟัน แนะนำ Capy ว่าควรไปหาหมอฟันนะ",
       "answerEn": "You should see a dentist.",
       "acceptedAnswers": [
@@ -2661,7 +2707,7 @@
       ]
     },
     {
-      "id": "a2_c22n08_q5",
+      "id": "a2_c22n07_q5",
       "promptTh": "Max ปวดหัว เขาไม่ควรออกไปข้างนอก",
       "answerEn": "Max has a headache. He shouldn't go out.",
       "acceptedAnswers": [
@@ -2674,7 +2720,7 @@
       ]
     },
     {
-      "id": "a2_c22n08_q6",
+      "id": "a2_c22n07_q6",
       "promptTh": "ถามเภสัชกร: ฉันเป็นหวัด ฉันควรทำยังไงดี",
       "answerEn": "I have a cold. What should I do?",
       "acceptedAnswers": [],
@@ -2684,7 +2730,7 @@
       ]
     },
     {
-      "id": "a2_c22n08_q7",
+      "id": "a2_c22n07_q7",
       "promptTh": "แนะนำ Capy ที่เจ็บคอ: ควรดื่มน้ำและกินยานะ",
       "answerEn": "You should drink water and take medicine.",
       "acceptedAnswers": [

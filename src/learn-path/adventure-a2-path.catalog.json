@@ -193,35 +193,6 @@
           "code": "1.7",
           "order": 7,
           "globalOrder": 7,
-          "titleEn": "Club Voices",
-          "titleTh": "เสียงจากชมรม",
-          "type": "hear_it",
-          "beat": "Ten",
-          "learningTarget": "จับข้อมูลสำคัญจากเสียงทางเดียว (ประกาศ ข้อความเสียง) แล้วพูดทวน",
-          "activity": "🎧 ฟังเพื่อนในชมรมแนะนำตัวและเล่างานอดิเรก แล้วพูดตอบข้อมูลสำคัญ: เจอกันเมื่อไหร่ · ชอบ / ไม่ชอบทำอะไร · ทำอะไรวันหยุด (ตอบสั้นได้ ไม่ต้องเป็นประโยคเต็ม)",
-          "examples": [
-            "On weekends."
-          ],
-          "estimatedMinutes": [
-            2,
-            3
-          ],
-          "difficultyAxes": [
-            1,
-            2,
-            1,
-            3,
-            2
-          ],
-          "contentRef": {
-            "poolId": "a2_c01n07"
-          }
-        },
-        {
-          "id": "a2_c01n08",
-          "code": "1.8",
-          "order": 8,
-          "globalOrder": 8,
           "titleEn": "Talk About Hobbies",
           "titleTh": "คุยเรื่องงานอดิเรก",
           "type": "say_it",
@@ -249,7 +220,36 @@
             1
           ],
           "contentRef": {
-            "topicId": "a2_c01n08"
+            "topicId": "a2_c01n07"
+          }
+        },
+        {
+          "id": "a2_c01n08",
+          "code": "1.8",
+          "order": 8,
+          "globalOrder": 8,
+          "titleEn": "Club Voices",
+          "titleTh": "เสียงจากชมรม",
+          "type": "hear_it",
+          "beat": "Ten",
+          "learningTarget": "จับข้อมูลสำคัญจากเสียงทางเดียว (ประกาศ ข้อความเสียง) แล้วพูดทวน",
+          "activity": "🎧 ฟังเพื่อนในชมรมแนะนำตัวและเล่างานอดิเรก แล้วพูดตอบข้อมูลสำคัญ: เจอกันเมื่อไหร่ · ชอบ / ไม่ชอบทำอะไร · ทำอะไรวันหยุด (ตอบสั้นได้ ไม่ต้องเป็นประโยคเต็ม)",
+          "examples": [
+            "On weekends."
+          ],
+          "estimatedMinutes": [
+            2,
+            3
+          ],
+          "difficultyAxes": [
+            1,
+            2,
+            1,
+            3,
+            2
+          ],
+          "contentRef": {
+            "poolId": "a2_c01n08"
           }
         },
         {
@@ -328,10 +328,10 @@
           "type": "lesson",
           "beat": "Ki",
           "learningTarget": "เข้าใจ \"กริยาคู่คำนาม\" พอจะพูดตัวอย่างของตัวเองได้ 1 ประโยค",
-          "activity": "🧩 ประกอบคำจาก 2.1 เป็นกริยาคู่คำนาม have breakfast · take a shower · do homework · have dinner · make the bed (พูดว่า do homework ไม่ใช่ make homework) · ตัวอย่าง: I have breakfast at seven. · I take a shower at night. · I do my homework after dinner.",
+          "activity": "🧩 กิจวัตรพูดเป็นคู่ กริยา + คำนาม: เริ่ม 3 คู่ have breakfast · take a shower · do homework แล้วต่อยอด have dinner และ make the bed ทีละคู่ · ตัวอย่าง: I have breakfast at seven. · I take a shower in the morning. · I do my homework after school.",
           "examples": [
             "I have breakfast at seven.",
-            "I do my homework after dinner."
+            "I do my homework after school."
           ],
           "estimatedMinutes": [
             3,
@@ -387,9 +387,10 @@
           "type": "lesson",
           "beat": "Sho",
           "learningTarget": "เข้าใจ \"ฉันมักตื่นเจ็ดโมง\" พอจะพูดตัวอย่างของตัวเองได้ 1 ประโยค",
-          "activity": "คำบอกความถี่ (สเกล 100% → 0%) always · usually · often · sometimes · never · ตำแหน่ง: หน้ากริยา แต่หลัง be (I'm always tired.) · ถามด้วย How often do you…? · ใช้กับกิจวัตรจาก 2.2: I always have breakfast. · I usually get up at seven. · I sometimes take a shower at night. · I never make the bed.",
+          "activity": "⏰ คำบอกความถี่: แกน usually · sometimes · never ก่อน แล้วเพิ่ม always · often · วางหน้ากริยา (I usually get up at seven.) แต่วางหลัง am / is / are (I'm always tired.) · ถามด้วย How often do you…?",
           "examples": [
-            "I usually get up at seven."
+            "I usually get up at seven.",
+            "How often do you cook?"
           ],
           "estimatedMinutes": [
             3,
@@ -416,7 +417,7 @@
           "type": "say_it",
           "beat": "Sho",
           "learningTarget": "สื่อความ \"บ่อยแค่ไหน\" เป็นภาษาอังกฤษในสถานการณ์บทนี้",
-          "activity": "โจทย์ไทย → ถาม How often do you…? และตอบด้วยคำความถี่จาก 2.4",
+          "activity": "โจทย์ไทยล้วน → ถาม How often do you…? และบอกความถี่ด้วย usually · sometimes · never · always · 7 ข้อ",
           "examples": [
             "How often do you cook?"
           ],
@@ -472,10 +473,11 @@
           "type": "lesson",
           "beat": "Sho",
           "learningTarget": "เข้าใจ \"เติม -es -ies\" พอจะพูดตัวอย่างของตัวเองได้ 1 ประโยค",
-          "activity": "🔁 ทบทวน A1 12.4 (She works.) แล้วต่อยอดกฎสะกดที่ A1 ยังไม่สอน: -es หลัง ch / sh / x / o (watches · relaxes · goes · does) · y → ies (studies) · has · ประโยคจากคำ 2.6: May practices after school. · Max exercises every morning. · Capy relaxes after dinner. · He goes to bed late.",
+          "activity": "🗣️ เล่าเรื่องคนอื่น: เปลี่ยนจาก I เป็น he / she / ชื่อคน กริยาเติม -s (practices · exercises) → -es หลัง ch / sh / x / o (watches · relaxes · goes) → y → ies (studies) → has · ใช้คำจาก 2.6: May practices after school. · Capy relaxes after dinner. · He goes to bed late.",
           "examples": [
-            "She studies English every day.",
-            "Capy relaxes after dinner."
+            "May practices after school.",
+            "Capy relaxes after dinner.",
+            "May studies English every day."
           ],
           "estimatedMinutes": [
             3,
@@ -590,9 +592,10 @@
           "type": "conversation",
           "beat": "Ketsu",
           "learningTarget": "คุยจนสำเร็จ: เล่ากิจวัตรและความถี่ได้",
-          "activity": "Teacher Bee ถามกิจวัตรของผู้เรียน เล่าตามลำดับ first / then / after that (5–7 turns ไม่เกิน 3 นาที · 3 goals)",
+          "activity": "ครูบีถามกิจวัตรเพื่อหาเวลาซ้อม: เล่ากิจวัตร บอกความถี่ แล้วถามครูกลับ (3–6 turns · 3 goals · ไม่บังคับ first / then)",
           "examples": [
-            "First I get up at six. Then I…"
+            "I have breakfast at seven.",
+            "How about you?"
           ],
           "estimatedMinutes": [
             3,
@@ -685,9 +688,11 @@
           "type": "lesson",
           "beat": "Ki",
           "learningTarget": "เข้าใจ \"มี…บ้างไหม\" พอจะพูดตัวอย่างของตัวเองได้ 1 ประโยค",
-          "activity": "🔁 ทบทวน A1 16.2 (There is / There are) แล้วต่อยอด: some / any · Is there a…? · Are there any…? · There aren't any… · ประโยคจากคำ 3.2: Is there a big kitchen in your house? · Are there any chairs in the living room? · There are some books in my bedroom. It's small and quiet. · There aren't any cups in the kitchen.",
+          "activity": "🔁 ทบทวน A1 16.2 (There is / There are) แล้วแยกทีละท่าด้วยของชุดเดิม: บอก There are some… → ถาม Are there any…? (ของชิ้นเดียว Is there a…?) → ปฏิเสธ There aren't any… · ตัวอย่างจากคำ 3.2: There are some chairs in the living room. · Are there any cups in the kitchen? · There aren't any chairs in my bedroom. · Is there a big kitchen in your house? · My bedroom is small and quiet.",
           "examples": [
-            "Are there any chairs?"
+            "There are some chairs in the living room.",
+            "Are there any cups in the kitchen?",
+            "There aren't any chairs in my bedroom."
           ],
           "estimatedMinutes": [
             3,
@@ -741,9 +746,11 @@
           "type": "lesson",
           "beat": "Sho",
           "learningTarget": "เข้าใจ \"อยู่ตรงไหน\" พอจะพูดตัวอย่างของตัวเองได้ 1 ประโยค",
-          "activity": "บุพบทใหม่: between · opposite · behind · in front of (A1 มี in / on / under / next to แล้ว) · ประโยคจากคำ 3.4: The sofa is between the shelf and the TV. · The fridge is opposite the door. · The key is behind the sofa. · The table is in front of the shelf.",
+          "activity": "บุพบทใหม่ เริ่มจาก between · opposite ก่อน แล้วเพิ่ม behind · in front of (A1 มี in / on / under / next to แล้ว) · ถามด้วย Where is…? · ประโยคจากคำ 3.4: The sofa is between the shelf and the TV. · The fridge is opposite the door. · The key is behind the sofa. · The table is in front of the sofa.",
           "examples": [
-            "The sofa is between the shelf and the TV."
+            "The sofa is between the shelf and the TV.",
+            "The fridge is opposite the door.",
+            "The bag is behind the fridge."
           ],
           "estimatedMinutes": [
             3,
@@ -799,7 +806,7 @@
           "type": "say_it",
           "beat": "Sho",
           "learningTarget": "สื่อความ \"ตู้เย็นอยู่ไหน\" เป็นภาษาอังกฤษในสถานการณ์บทนี้",
-          "activity": "โจทย์ไทย → บอกตำแหน่งของด้วยบุพบทจาก 3.5 และบอกว่าไม่มีอะไรด้วย There aren't any… จาก 3.3",
+          "activity": "โจทย์ไทยล้วน → บอกว่ามีอะไร / ไม่มีอะไร และบอกตำแหน่งด้วยบุพบทจาก 3.3 และ 3.5 · 7 ข้อ",
           "examples": [
             "The fridge is next to the door.",
             "There aren't any cups."
@@ -859,9 +866,12 @@
           "type": "lesson",
           "beat": "Ten",
           "learningTarget": "เข้าใจ \"ของใคร\" พอจะพูดตัวอย่างของตัวเองได้ 1 ประโยค",
-          "activity": "เจ้าของสิ่งของ Whose is this? · It's mine. · It's yours. · It's May's. · ตัวอย่างในบ้าน May: Whose is this key? — It's May's. · Is this bag yours? — Yes, it's mine.",
+          "activity": "เจ้าของสิ่งของ: เริ่มจากถาม Whose is this? → ตอบ It's mine. · It's yours. → ของคนที่มีชื่อ It's May's. · ถามว่าใช่ของเธอไหม Is this … yours? · ตัวอย่างในบ้าน May: Whose is this key? — It's May's. · Is this bag yours? — No, it's not mine.",
           "examples": [
-            "Whose is this? — It's mine."
+            "Whose is this?",
+            "It's mine.",
+            "It's yours.",
+            "It's May's."
           ],
           "estimatedMinutes": [
             3,
@@ -888,9 +898,10 @@
           "type": "say_it",
           "beat": "Ten",
           "learningTarget": "สื่อความ \"ของใคร\" เป็นภาษาอังกฤษในสถานการณ์บทนี้",
-          "activity": "โจทย์ไทย → ถามและตอบความเป็นเจ้าของด้วย Whose…? / mine / yours / May's จาก 3.9",
+          "activity": "โจทย์ไทยล้วน → ถามและตอบความเป็นเจ้าของด้วย Whose…? · mine · yours · May's จาก 3.9 · 7 ข้อ",
           "examples": [
-            "Whose is this? — It's mine."
+            "Whose is this?",
+            "It's mine."
           ],
           "estimatedMinutes": [
             2,
@@ -917,9 +928,10 @@
           "type": "conversation",
           "beat": "Ketsu",
           "learningTarget": "คุยจนสำเร็จ: บอกว่ามีอะไรและอยู่ตรงไหนในบ้าน",
-          "activity": "พา May ทัวร์บ้าน เธอถามว่าของอยู่ไหน ของใคร (5–7 turns ไม่เกิน 3 นาที · 3 goals)",
+          "activity": "May มาทัวร์บ้านคุณ: บอกตำแหน่ง บอกว่ามีอะไร แล้วเจอกุญแจปริศนา ต้องถามว่าของใคร (3–6 turns · 3 goals)",
           "examples": [
-            "The bathroom is opposite my bedroom."
+            "The kitchen is next to the living room.",
+            "Whose is this?"
           ],
           "estimatedMinutes": [
             3,
@@ -983,10 +995,13 @@
           "type": "lesson",
           "beat": "Ki",
           "learningTarget": "เข้าใจ \"เธอผมยาวสีดำ\" พอจะพูดตัวอย่างของตัวเองได้ 1 ประโยค",
-          "activity": "บรรยายคนด้วย has / is / is wearing · ประโยคจากคำ 4.1: He's tall. · Capy is short. · He has a beard. · Teacher Bee is wearing glasses. · 🧩 เรียงคำคุณศัพท์ ยาว/สั้น → ลักษณะ → สี: long black hair · short curly hair · straight hair (ไม่ใช่ hair long black) · look + คุณศัพท์ He looks happy. (ไม่ต้องมี like)",
+          "activity": "บรรยายรูปร่างทีละขั้น: ส่วนสูงใช้ is (He is tall. · Capy is short.) → สิ่งที่มีบนตัวใช้ has (He has a beard.) → ผม เรียง ยาว/สั้น → ลักษณะ/สี → hair (She has long black hair. · Mali has short curly hair. · straight hair ไม่ใช่ hair long black) → ของที่ใส่ใช้วลี is wearing (Teacher Bee is wearing glasses.) · look + คุณศัพท์ He looks happy. (ไม่ต้องมี like)",
           "examples": [
+            "He is tall.",
+            "He has a beard.",
             "She has long black hair.",
-            "He looks happy."
+            "Teacher Bee is wearing glasses.",
+            "Max looks happy."
           ],
           "estimatedMinutes": [
             3,
@@ -1069,9 +1084,11 @@
           "type": "lesson",
           "beat": "Sho",
           "learningTarget": "เข้าใจ \"เขาหน้าตาแบบไหน\" พอจะพูดตัวอย่างของตัวเองได้ 1 ประโยค",
-          "activity": "❓ ถามรูปร่างและถามว่าเป็นใคร What does he look like? · Who's the girl in the red dress? · ชี้คนด้วย 🧩 the man who… · the woman with… · ประโยคจากคำ 4.4: What does the man look like? — He's tall and he has a beard. · Who's the boy with curly hair? · The woman who has short hair is Mali. · The girl with long black hair is May.",
+          "activity": "❓ ถามหน้าตา What does he / she look like? (คนละเรื่องกับ What does he like?) · ชี้คนเป็นก้อน 🧩 the man with glasses · the girl with long black hair · the woman in the red shirt · ถามว่าใคร Who's the man with glasses? · บอกว่าใครคือใคร The girl with long black hair is May. · ประโยคจากคำ 4.4: What does the man look like? — He's tall and he has a beard. · Who's the boy with curly hair? · The woman with short curly hair is Mali. · The girl with long black hair is May.",
           "examples": [
-            "What does she look like?"
+            "What does she look like?",
+            "Who's the man with glasses?",
+            "The girl with long black hair is May."
           ],
           "estimatedMinutes": [
             3,
@@ -1098,7 +1115,7 @@
           "type": "say_it",
           "beat": "Sho",
           "learningTarget": "สื่อความ \"บรรยายเพื่อน\" เป็นภาษาอังกฤษในสถานการณ์บทนี้",
-          "activity": "บรรยายคน 1–2 ประโยคจากโจทย์ไทย",
+          "activity": "โจทย์ไทยล้วน → บรรยายรูปร่าง ถามหน้าตา และชี้คนด้วย the man with… จาก 4.2 และ 4.5 · 7 ข้อ",
           "examples": [
             "He's tall and he has a beard."
           ],
@@ -1154,9 +1171,10 @@
           "type": "lesson",
           "beat": "Ten",
           "learningTarget": "เข้าใจ \"นิสัยเป็นยังไง\" พอจะพูดตัวอย่างของตัวเองได้ 1 ประโยค",
-          "activity": "❓ ถามนิสัย What is she like? (ต่างจาก What does she look like? = หน้าตา) · ตอบด้วยคำจาก 4.7: Mali is friendly. · Capy is funny. · May is a bit shy. · Teacher Bee is very kind.",
+          "activity": "❓ ถามนิสัย What is she like? (คนละเรื่องกับ What does she look like? = หน้าตา) · ตอบด้วยคำจาก 4.7 โดยดูจากสิ่งที่เขาทำ ไม่ใช่หน้าตา: Mali is friendly. · Capy is funny. · May is a bit shy. · Teacher Bee is very kind.",
           "examples": [
-            "What is she like? — She's friendly."
+            "What is she like?",
+            "She's friendly."
           ],
           "estimatedMinutes": [
             3,
@@ -1183,9 +1201,9 @@
           "type": "describe_it",
           "beat": "Ten",
           "learningTarget": "อ่านข้อมูลในภาพ (หาคนในงาน) แล้วพูดเป็นประโยคที่ใช้ได้จริง",
-          "activity": "ดูภาพงานเลี้ยง บรรยายคนให้ระบบหาเจอ ใช้ the man who… / the woman with… จาก 4.5",
+          "activity": "ดูภาพงานเลี้ยง บรรยายคนในวงกลมให้เพื่อนหาเจอ ใช้ก้อน the man with… / the boy in… จาก 4.5",
           "examples": [
-            "The man who is wearing glasses."
+            "The man with glasses."
           ],
           "estimatedMinutes": [
             2,
@@ -1213,9 +1231,10 @@
           "type": "conversation",
           "beat": "Ketsu",
           "learningTarget": "คุยจนสำเร็จ: บรรยายรูปร่างและนิสัยคนได้",
-          "activity": "Teacher Bee ถามหาคนในงาน ผู้เรียนบรรยายรูปร่างและนิสัย และถามว่า Who's…? (5–7 turns ไม่เกิน 3 นาที · 3 goals)",
+          "activity": "ครูบีหา Mali ในงาน มีผู้หญิงใส่เสื้อแดงสองคน: บอกรูปร่างเพื่อแยกตัว บอกนิสัยจากสิ่งที่เธอทำ แล้วถามว่าอีกคนคือใคร (3–6 turns · 3 goals)",
           "examples": [
-            "Who's the boy with curly hair?"
+            "She has short curly hair.",
+            "Who's the man with glasses?"
           ],
           "estimatedMinutes": [
             3,
@@ -1388,35 +1407,6 @@
           "code": "5.6",
           "order": 6,
           "globalOrder": 47,
-          "titleEn": "What Are They Doing?",
-          "titleTh": "เขากำลังทำอะไร",
-          "type": "describe_it",
-          "beat": "Ten",
-          "learningTarget": "อ่านข้อมูลในภาพ (เขากำลังทำอะไร) แล้วพูดเป็นประโยคที่ใช้ได้จริง",
-          "activity": "🖼️ ดูภาพสวน เปลี่ยนคนและกิจกรรม (รวมคำจาก 5.5: climb · fly · kite) → He's running. · They're playing badminton.",
-          "examples": [
-            "They're playing badminton by the lake."
-          ],
-          "estimatedMinutes": [
-            2,
-            3
-          ],
-          "difficultyAxes": [
-            1,
-            2,
-            2,
-            3,
-            2
-          ],
-          "contentRef": {
-            "poolId": "a2_c05n06"
-          }
-        },
-        {
-          "id": "a2_c05n07",
-          "code": "5.7",
-          "order": 7,
-          "globalOrder": 48,
           "titleEn": "What Is He Doing?",
           "titleTh": "กำลังทำอะไร",
           "type": "say_it",
@@ -1438,7 +1428,36 @@
             1
           ],
           "contentRef": {
-            "topicId": "a2_c05n07"
+            "topicId": "a2_c05n06"
+          }
+        },
+        {
+          "id": "a2_c05n07",
+          "code": "5.7",
+          "order": 7,
+          "globalOrder": 48,
+          "titleEn": "What Are They Doing?",
+          "titleTh": "เขากำลังทำอะไร",
+          "type": "describe_it",
+          "beat": "Ten",
+          "learningTarget": "อ่านข้อมูลในภาพ (เขากำลังทำอะไร) แล้วพูดเป็นประโยคที่ใช้ได้จริง",
+          "activity": "🖼️ ดูภาพสวน เปลี่ยนคนและกิจกรรม (รวมคำจาก 5.5: climb · fly · kite) → He's running. · They're playing badminton.",
+          "examples": [
+            "They're playing badminton by the lake."
+          ],
+          "estimatedMinutes": [
+            2,
+            3
+          ],
+          "difficultyAxes": [
+            1,
+            2,
+            2,
+            3,
+            2
+          ],
+          "contentRef": {
+            "poolId": "a2_c05n07"
           }
         },
         {
@@ -2663,35 +2682,6 @@
           "code": "9.7",
           "order": 7,
           "globalOrder": 90,
-          "titleEn": "Café Board",
-          "titleTh": "บอร์ดเมนู",
-          "type": "describe_it",
-          "beat": "Ten",
-          "learningTarget": "อ่านข้อมูลในภาพ (บอร์ดเมนู) แล้วพูดเป็นประโยคที่ใช้ได้จริง",
-          "activity": "🖼️ ดูบอร์ดเมนูที่มีขนาด ราคา และป้าย ✗ หมด (และตู้ของว่างจากคำเพิ่ม 9.6: a muffin · some juice) → สั่งเฉพาะของที่มี Can I have a large iced tea, please? · ถ้าสั่งของที่มีป้ายหมดให้ลองใหม่",
-          "examples": [
-            "Can I have a large iced tea, please?"
-          ],
-          "estimatedMinutes": [
-            2,
-            3
-          ],
-          "difficultyAxes": [
-            2,
-            2,
-            2,
-            1,
-            1
-          ],
-          "contentRef": {
-            "poolId": "a2_c09n07"
-          }
-        },
-        {
-          "id": "a2_c09n08",
-          "code": "9.8",
-          "order": 8,
-          "globalOrder": 91,
           "titleEn": "Order a Drink",
           "titleTh": "สั่งเครื่องดื่ม",
           "type": "say_it",
@@ -2713,7 +2703,36 @@
             1
           ],
           "contentRef": {
-            "topicId": "a2_c09n08"
+            "topicId": "a2_c09n07"
+          }
+        },
+        {
+          "id": "a2_c09n08",
+          "code": "9.8",
+          "order": 8,
+          "globalOrder": 91,
+          "titleEn": "Café Board",
+          "titleTh": "บอร์ดเมนู",
+          "type": "describe_it",
+          "beat": "Ten",
+          "learningTarget": "อ่านข้อมูลในภาพ (บอร์ดเมนู) แล้วพูดเป็นประโยคที่ใช้ได้จริง",
+          "activity": "🖼️ ดูบอร์ดเมนูที่มีขนาด ราคา และป้าย ✗ หมด (และตู้ของว่างจากคำเพิ่ม 9.6: a muffin · some juice) → สั่งเฉพาะของที่มี Can I have a large iced tea, please? · ถ้าสั่งของที่มีป้ายหมดให้ลองใหม่",
+          "examples": [
+            "Can I have a large iced tea, please?"
+          ],
+          "estimatedMinutes": [
+            2,
+            3
+          ],
+          "difficultyAxes": [
+            2,
+            2,
+            2,
+            1,
+            1
+          ],
+          "contentRef": {
+            "poolId": "a2_c09n08"
           }
         },
         {
@@ -3524,35 +3543,6 @@
           "code": "12.7",
           "order": 7,
           "globalOrder": 119,
-          "titleEn": "Recipe Steps",
-          "titleTh": "ขั้นตอนทำอาหาร",
-          "type": "describe_it",
-          "beat": "Ten",
-          "learningTarget": "อ่านข้อมูลในภาพ (ขั้นตอนทำอาหาร) แล้วพูดเป็นประโยคที่ใช้ได้จริง",
-          "activity": "🖼️ ดูภาพขั้นตอนไข่เจียว → พูดทีละขั้น First, … Then, … After that, … · มีการ์ดที่ใช้กริยาเพิ่มจาก 12.6 (peel · chop · pour · stir)",
-          "examples": [
-            "First, mix the eggs. Then, add salt."
-          ],
-          "estimatedMinutes": [
-            2,
-            3
-          ],
-          "difficultyAxes": [
-            1,
-            2,
-            2,
-            3,
-            2
-          ],
-          "contentRef": {
-            "poolId": "a2_c12n07"
-          }
-        },
-        {
-          "id": "a2_c12n08",
-          "code": "12.8",
-          "order": 8,
-          "globalOrder": 120,
           "titleEn": "Do It Carefully",
           "titleTh": "ทำอย่างระวัง",
           "type": "say_it",
@@ -3574,7 +3564,36 @@
             1
           ],
           "contentRef": {
-            "topicId": "a2_c12n08"
+            "topicId": "a2_c12n07"
+          }
+        },
+        {
+          "id": "a2_c12n08",
+          "code": "12.8",
+          "order": 8,
+          "globalOrder": 120,
+          "titleEn": "Recipe Steps",
+          "titleTh": "ขั้นตอนทำอาหาร",
+          "type": "describe_it",
+          "beat": "Ten",
+          "learningTarget": "อ่านข้อมูลในภาพ (ขั้นตอนทำอาหาร) แล้วพูดเป็นประโยคที่ใช้ได้จริง",
+          "activity": "🖼️ ดูภาพขั้นตอนไข่เจียว → พูดทีละขั้น First, … Then, … After that, … · มีการ์ดที่ใช้กริยาเพิ่มจาก 12.6 (peel · chop · pour · stir)",
+          "examples": [
+            "First, mix the eggs. Then, add salt."
+          ],
+          "estimatedMinutes": [
+            2,
+            3
+          ],
+          "difficultyAxes": [
+            1,
+            2,
+            2,
+            3,
+            2
+          ],
+          "contentRef": {
+            "poolId": "a2_c12n08"
           }
         },
         {
@@ -4447,35 +4466,6 @@
           "code": "15.6",
           "order": 6,
           "globalOrder": 150,
-          "titleEn": "Yesterday's Photos",
-          "titleTh": "รูปเมื่อวาน",
-          "type": "describe_it",
-          "beat": "Sho",
-          "learningTarget": "อ่านข้อมูลในภาพ (รูปเมื่อวาน) แล้วพูดเป็นประโยคที่ใช้ได้จริง",
-          "activity": "🖼️ ดูรูปในมือถือ May ที่มีป้ายวันที่ เมื่อวาน → พูด 1 ประโยคด้วย -ed หรือ was/were · ป้ายวันที่คือตัวบอก tense · ทุกภาพมีไอคอนกริยาและชื่อสถานที่บนภาพ · รูปของ Max และ Capy ใช้กริยาเพิ่มจาก 15.5 (clean · relax)",
-          "examples": [
-            "She visited the museum yesterday."
-          ],
-          "estimatedMinutes": [
-            2,
-            3
-          ],
-          "difficultyAxes": [
-            1,
-            2,
-            1,
-            1,
-            1
-          ],
-          "contentRef": {
-            "poolId": "a2_c15n06"
-          }
-        },
-        {
-          "id": "a2_c15n07",
-          "code": "15.7",
-          "order": 7,
-          "globalOrder": 151,
           "titleEn": "Where Were You?",
           "titleTh": "เมื่อวานอยู่ไหน",
           "type": "say_it",
@@ -4497,7 +4487,36 @@
             1
           ],
           "contentRef": {
-            "topicId": "a2_c15n07"
+            "topicId": "a2_c15n06"
+          }
+        },
+        {
+          "id": "a2_c15n07",
+          "code": "15.7",
+          "order": 7,
+          "globalOrder": 151,
+          "titleEn": "Yesterday's Photos",
+          "titleTh": "รูปเมื่อวาน",
+          "type": "describe_it",
+          "beat": "Sho",
+          "learningTarget": "อ่านข้อมูลในภาพ (รูปเมื่อวาน) แล้วพูดเป็นประโยคที่ใช้ได้จริง",
+          "activity": "🖼️ ดูรูปในมือถือ May ที่มีป้ายวันที่ เมื่อวาน → พูด 1 ประโยคด้วย -ed หรือ was/were · ป้ายวันที่คือตัวบอก tense · ทุกภาพมีไอคอนกริยาและชื่อสถานที่บนภาพ · รูปของ Max และ Capy ใช้กริยาเพิ่มจาก 15.5 (clean · relax)",
+          "examples": [
+            "She visited the museum yesterday."
+          ],
+          "estimatedMinutes": [
+            2,
+            3
+          ],
+          "difficultyAxes": [
+            1,
+            2,
+            1,
+            1,
+            1
+          ],
+          "contentRef": {
+            "poolId": "a2_c15n07"
           }
         },
         {
@@ -6612,35 +6631,6 @@
           "code": "22.7",
           "order": 7,
           "globalOrder": 223,
-          "titleEn": "Medicine Label",
-          "titleTh": "ฉลากยา",
-          "type": "describe_it",
-          "beat": "Ten",
-          "learningTarget": "อ่านข้อมูลในภาพ (ฉลากยา) แล้วพูดเป็นประโยคที่ใช้ได้จริง",
-          "activity": "🖼️ ดูฉลากยา 5 แบบที่มีไอคอนจำนวนเม็ด 🍽️ ก่อน/หลังอาหาร และจำนวนครั้ง → Take one pill after meals, three times a day.",
-          "examples": [
-            "Take one pill after meals, three times a day."
-          ],
-          "estimatedMinutes": [
-            2,
-            3
-          ],
-          "difficultyAxes": [
-            2,
-            2,
-            2,
-            1,
-            1
-          ],
-          "contentRef": {
-            "poolId": "a2_c22n07"
-          }
-        },
-        {
-          "id": "a2_c22n08",
-          "code": "22.8",
-          "order": 8,
-          "globalOrder": 224,
           "titleEn": "What's Wrong?",
           "titleTh": "เป็นอะไร",
           "type": "say_it",
@@ -6663,7 +6653,36 @@
             1
           ],
           "contentRef": {
-            "topicId": "a2_c22n08"
+            "topicId": "a2_c22n07"
+          }
+        },
+        {
+          "id": "a2_c22n08",
+          "code": "22.8",
+          "order": 8,
+          "globalOrder": 224,
+          "titleEn": "Medicine Label",
+          "titleTh": "ฉลากยา",
+          "type": "describe_it",
+          "beat": "Ten",
+          "learningTarget": "อ่านข้อมูลในภาพ (ฉลากยา) แล้วพูดเป็นประโยคที่ใช้ได้จริง",
+          "activity": "🖼️ ดูฉลากยา 5 แบบที่มีไอคอนจำนวนเม็ด 🍽️ ก่อน/หลังอาหาร และจำนวนครั้ง → Take one pill after meals, three times a day.",
+          "examples": [
+            "Take one pill after meals, three times a day."
+          ],
+          "estimatedMinutes": [
+            2,
+            3
+          ],
+          "difficultyAxes": [
+            2,
+            2,
+            2,
+            1,
+            1
+          ],
+          "contentRef": {
+            "poolId": "a2_c22n08"
           }
         },
         {

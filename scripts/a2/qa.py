@@ -130,7 +130,11 @@ for k, v in cc.items():
 for a, b in zip(N, N[1:]):
     if a["code"].split(".")[0] == b["code"].split(".")[0]:
         if a["type"] == b["type"]: err("E9", f"{a['code']}–{b['code']} same type")
-        if (a["type"], b["type"]) == ("new_words", "say_it"): err("E9", f"{a['code']}→{b['code']} new_words→say_it")
+        if (a["type"], b["type"]) == ("new_words", "say_it"):
+            # Match E11: More Words can practise a pattern already taught in this chapter.
+            prior_lesson = any(m["type"] == "lesson" and CH(m["code"]) == CH(a["code"]) for m in N[:N.index(a)])
+            if not ("More Words" in a["title"] and prior_lesson):
+                err("E9", f"{a['code']}→{b['code']} new_words→say_it")
 for n in N:
     if n["type"] == "new_words":
         segs = re.findall(r"\*\*(.+?)\*\*", n["teach"])

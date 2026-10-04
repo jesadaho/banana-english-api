@@ -125,8 +125,8 @@ describe('Adventure A2 Zone 1 content', () => {
     }
   });
 
-  it('deals all 7 Say It 1.8 prompts per round', () => {
-    const deal = new SayItService().dealForTopic('a2_c01n08', 5);
+  it('deals all 7 Say It 1.7 prompts per round', () => {
+    const deal = new SayItService().dealForTopic('a2_c01n07', 5);
     assert.equal(deal.dealCount, 7);
     assert.equal(new Set(deal.phrases.map((p) => p.id)).size, 7);
   });
@@ -240,7 +240,7 @@ describe('Adventure A2 Zone 1 content', () => {
     assert.deepEqual(sim.goalHints?.map((h) => h?.cueTh ?? null), [
       null, null, null,
       'ลองถามว่าครูทำอะไรในวันหยุด',
-      'คุณไม่ชอบทำอะไร?',
+      null,
     ]);
     const done = Object.fromEntries(sim.successCriteria.map((k) => [k, true]));
     const recap = finalizeSimulationTurnState(sim, 5, done, {

@@ -279,123 +279,85 @@
   "a2_c02n02": {
     "titleEn": "Have, Take, Do",
     "titleTh": "ทำกิจวัตรประจำวัน",
-    "goalTh": "เล่าว่าวันหนึ่งทำอะไรบ้าง ด้วยคู่คำติดปาก have breakfast · take a shower · do my homework · have dinner · make the bed",
+    "goalTh": "เล่ากิจวัตรด้วยคู่คำ have breakfast · take a shower · do homework · have dinner · make the bed",
     "estimatedMinutes": [
       3,
       5
     ],
-    "scope": "🧩 ประกอบคำจาก 2.1 เป็นกริยาคู่คำนาม have breakfast · take a shower · do homework · have dinner · make the bed (พูดว่า do homework ไม่ใช่ make homework) · ตัวอย่าง: I have breakfast at seven. · I take a shower at night. · I do my homework after dinner.",
+    "scope": "🧩 กิจวัตรพูดเป็นคู่ กริยา + คำนาม: เริ่ม 3 คู่ have breakfast · take a shower · do homework แล้วต่อยอด have dinner และ make the bed ทีละคู่ · ตัวอย่าง: I have breakfast at seven. · I take a shower in the morning. · I do my homework after school.",
     "blocks": [],
     "recall": {
-      "promptTh": "เล่าว่าวันหนึ่งทำอะไรบ้าง ด้วยคู่คำติดปาก have breakfast · take a shower · do my homework · have dinner · make the bed",
+      "promptTh": "เล่ากิจวัตรด้วยคู่คำ have breakfast · take a shower · do homework · have dinner · make the bed",
       "answerEn": "I do my homework after dinner."
     },
     "flow": [
       {
-        "kind": "choice",
-        "text": "ทายเล่น ๆ ครับ 🚿 อันนี้คืออะไรเอ่ย? เลือกแล้วพูดเลย",
-        "expectedSpeech": "shower",
-        "answerMode": "single",
-        "stem": "🚿 = ...",
-        "options": [
-          {
-            "emoji": "🔤",
-            "label": "breakfast",
-            "speak": "breakfast"
-          },
-          {
-            "emoji": "🔤",
-            "label": "shower",
-            "speak": "shower"
-          },
-          {
-            "emoji": "🔤",
-            "label": "homework",
-            "speak": "homework"
-          },
-          {
-            "emoji": "🔤",
-            "label": "dinner",
-            "speak": "dinner"
-          }
-        ],
-        "successText": "shower = อาบน้ำ (ฝักบัว) 🚿 สดชื่น!",
-        "incorrectHintTh": "🚿 คือ shower = การอาบน้ำ (ฝักบัว) ครับ (breakfast = ข้าวเช้า · homework = การบ้าน · dinner = ข้าวเย็น)"
+        "kind": "listen",
+        "text": "ชมรมกำลังหาเวลาซ้อมครับ ครูบีเลยอยากรู้ว่าวันหนึ่งคุณทำอะไรบ้าง 🗓️\nกิจวัตรภาษาอังกฤษมักพูดเป็นคู่ กริยา + คำนาม\n🍳 have breakfast แปลว่า “กินข้าวเช้า”"
       },
       {
         "kind": "task",
-        "text": "ชมรมต้องหาเวลาซ้อม ทุกคนเลยเล่าว่าวันนึงทำอะไรบ้างครับ 🍳 กินข้าวเช้า พูดเป็นคู่ว่า have breakfast 👉 I have breakfast at ___. “I have breakfast at seven.” = ฉันกินข้าวเช้าตอนเจ็ดโมง ลองพูดตามครับ",
+        "text": "ถ้าจะบอกว่า “ฉันกินข้าวเช้าตอนเจ็ดโมง” พูดว่า I have breakfast at seven.\nลองพูดตามครับ",
         "expectedSpeech": "I have breakfast at seven."
       },
       {
-        "kind": "task",
-        "text": "อาบน้ำ พูดเป็นคู่ว่า take a shower 🚿 “I take a shower in the morning.” = ฉันอาบน้ำตอนเช้า ลองพูดตามครับ",
-        "expectedSpeech": "I take a shower in the morning."
+        "kind": "listen",
+        "text": "อีกสองคู่ที่ใช้ทุกวันครับ\n🚿 take a shower แปลว่า “อาบน้ำ”\n📚 do homework แปลว่า “ทำการบ้าน” (ใช้ do ไม่ใช่ make)"
       },
       {
         "kind": "choice",
-        "text": "May เล่าว่าหกโมงเย็นได้เวลากินข้าวแล้ว 🍽️😋 May พูดว่าอะไรดีครับ?",
-        "expectedSpeech": "I have dinner at six.",
+        "text": "ถ้าจะบอกว่า “ฉันอาบน้ำตอนเช้า” 🚿 จะพูดว่าอะไรครับ?",
+        "expectedSpeech": "I take a shower in the morning.",
         "answerMode": "single",
-        "stem": "I ... at six.",
+        "stem": "I ... in the morning.",
         "options": [
           {
-            "emoji": "🍽️",
-            "label": "have dinner",
-            "speak": "I have dinner at six."
+            "emoji": "🚿",
+            "label": "take a shower",
+            "speak": "I take a shower in the morning."
+          },
+          {
+            "emoji": "🍳",
+            "label": "have breakfast",
+            "speak": "I have breakfast in the morning."
+          }
+        ],
+        "incorrectHintTh": "เกือบแล้ว! อาบน้ำ 🚿 คือ take a shower ครับ พูดว่า I take a shower in the morning."
+      },
+      {
+        "kind": "choice",
+        "text": "แล้วถ้าจะบอกว่า “ฉันทำการบ้านหลังเลิกเรียน” 📚 ล่ะครับ?",
+        "expectedSpeech": "I do my homework after school.",
+        "answerMode": "single",
+        "stem": "I ... after school.",
+        "options": [
+          {
+            "emoji": "📚",
+            "label": "do my homework",
+            "speak": "I do my homework after school."
           },
           {
             "emoji": "🚿",
             "label": "take a shower",
-            "speak": "I take a shower at six."
+            "speak": "I take a shower after school."
           }
         ],
-        "successText": "I have dinner at six. = ฉันกินข้าวเย็นตอนหกโมง 🍽️ ถูกเผงเลย!",
-        "incorrectHintTh": "เกือบแล้ว! กินข้าวเย็นพูดว่า have dinner ครับ → I have dinner at six."
+        "incorrectHintTh": "เกือบแล้ว! ทำการบ้าน 📚 คือ do my homework ครับ พูดว่า I do my homework after school."
       },
       {
         "kind": "task",
-        "text": "การบ้าน จำเป็นคู่ว่า do my homework 📚 (ไม่ใช่ make นะ) “I do my homework after dinner.” = ฉันทำการบ้านหลังกินข้าวเย็น ลองพูดตามครับ",
-        "expectedSpeech": "I do my homework after dinner."
+        "text": "ข้าวเย็นใช้ have เหมือนข้าวเช้าครับ 🍽️ have dinner\nถ้าจะบอกว่า “ฉันกินข้าวเย็นตอนหกโมง” จะพูดว่าอะไรครับ?",
+        "expectedSpeech": "I have dinner at six.",
+        "incorrectHintTh": "ลองเริ่มด้วย I have dinner … ครับ"
       },
       {
         "kind": "task",
-        "text": "Capy อาบน้ำหลังข้าวเย็นทุกวัน 🚿🍽️ (แช่น้ำนาน ๆ สไตล์คาปิบาร่า 😆) ช่วย Capy เล่าหน่อย ใช้ take นะ ลองเดาดู ผิดได้ไม่เป็นไรครับ 😄",
-        "expectedSpeech": "I take a shower after dinner."
+        "text": "อีกคู่ครับ 🛏️ make the bed แปลว่า “จัดเตียง”\nI make the bed in the morning. แปลว่า “ฉันจัดเตียงตอนเช้า”\nลองพูดตามครับ",
+        "expectedSpeech": "I make the bed in the morning."
       },
       {
         "kind": "choice",
-        "text": "เก่งมาก! พูดว่า “I take a shower after dinner.” ครับ 🚿 ส่วน May ตื่นมาปุ๊บจัดเตียง (make the bed 🛏️) ทุกเช้า May เล่าว่าอะไรครับ?",
-        "expectedSpeech": "I make the bed in the morning.",
-        "answerMode": "single",
-        "stem": "I make the bed ...",
-        "options": [
-          {
-            "emoji": "🌅",
-            "label": "in the morning",
-            "speak": "I make the bed in the morning."
-          },
-          {
-            "emoji": "🍽️",
-            "label": "after dinner",
-            "speak": "I make the bed after dinner."
-          }
-        ],
-        "successText": "I make the bed in the morning. = ฉันจัดเตียงตอนเช้า 🛏️ May ขยันสุด ๆ",
-        "incorrectHintTh": "เกือบแล้ว! ตอนเช้าคือ in the morning ครับ → I make the bed in the morning."
-      },
-      {
-        "kind": "task",
-        "text": "ชมรมอยากซ้อมตอนเช้า ลองถาม May ว่ากินข้าวเช้าตอนเจ็ดโมงไหม 🍳 (ใช้ Do you… นะครับ) ท้าเลย! ถามเองดูครับ",
-        "expectedSpeech": "Do you have breakfast at seven?"
-      },
-      {
-        "kind": "listen",
-        "text": "เป๊ะเลย! ถามว่า “Do you have breakfast at seven?” ครับ 👍 May ตอบว่า “No, I have breakfast at six.” = ไม่ ฉันกินข้าวเช้าตอนหกโมง (ตื่นเช้ากว่าอีก 😮)"
-      },
-      {
-        "kind": "choice",
-        "text": "May ถามคุณบ้าง “What do you do after dinner?” ตอบตามจริงเลยครับ",
+        "text": "คราวนี้เล่าเรื่องจริงของคุณครับ หลังกินข้าวเย็นคุณทำอะไร? 🌙",
         "expectedSpeech": "I do my homework after dinner.",
         "answerMode": "any",
         "stem": "I ... after dinner.",
@@ -403,336 +365,295 @@
           {
             "emoji": "📚",
             "label": "do my homework",
-            "speak": "I do my homework after dinner."
+            "speak": "I do my homework after dinner.",
+            "recapText": "I do my homework after dinner. แปลว่า “ฉันทำการบ้านหลังกินข้าวเย็น” ครับ\n"
           },
           {
             "emoji": "🚿",
             "label": "take a shower",
-            "speak": "I take a shower after dinner."
+            "speak": "I take a shower after dinner.",
+            "recapText": "I take a shower after dinner. แปลว่า “ฉันอาบน้ำหลังกินข้าวเย็น” ครับ\n"
           },
           {
             "emoji": "📺",
             "label": "watch TV",
-            "speak": "I watch TV after dinner."
+            "speak": "I watch TV after dinner.",
+            "recapText": "I watch TV after dinner. แปลว่า “ฉันดูทีวีหลังกินข้าวเย็น” ครับ\n"
           }
         ],
-        "successText": "สุดยอด! Capy ปรบมือให้เลย 👏"
+        "extraAnswers": [
+          {
+            "speak": "I do homework after dinner.",
+            "recapText": "I do homework after dinner. แปลว่า “ฉันทำการบ้านหลังกินข้าวเย็น” ครับ\n"
+          }
+        ]
       },
       {
         "kind": "finish",
-        "text": "จบบทแล้ว 🎉 ตอนนี้คุณเล่าวันของตัวเองได้ “I have breakfast at seven.” · “I take a shower in the morning.” · “I do my homework after dinner.” บทหน้ามาดูกันว่าใครทำอะไรบ่อยแค่ไหน ชมรมจะได้ซ้อมเวลาไหนดี ⏰"
+        "text": "วันนี้คุณเล่ากิจวัตรได้แล้ว: have breakfast · take a shower · do homework · have dinner · make the bed\nบทหน้ามาบอกกันว่าทำสิ่งเหล่านี้บ่อยแค่ไหนครับ ⏰"
       }
     ]
   },
   "a2_c02n04": {
     "titleEn": "I Usually Get Up at Seven",
     "titleTh": "ฉันมักตื่นเจ็ดโมง",
-    "goalTh": "บอกว่าทำอะไรบ่อยแค่ไหนด้วย always · usually · sometimes · never และถามเพื่อนว่า How often do you…?",
+    "goalTh": "บอกว่าทำบ่อยแค่ไหนด้วย usually · sometimes · never · always · often และถาม How often do you…?",
     "estimatedMinutes": [
       3,
       5
     ],
-    "scope": "คำบอกความถี่ (สเกล 100% → 0%) always · usually · often · sometimes · never · ตำแหน่ง: หน้ากริยา แต่หลัง be (I'm always tired.) · ถามด้วย How often do you…? · ใช้กับกิจวัตรจาก 2.2: I always have breakfast. · I usually get up at seven. · I sometimes take a shower at night. · I never make the bed.",
+    "scope": "⏰ คำบอกความถี่: แกน usually · sometimes · never ก่อน แล้วเพิ่ม always · often · วางหน้ากริยา (I usually get up at seven.) แต่วางหลัง am / is / are (I'm always tired.) · ถามด้วย How often do you…?",
     "blocks": [],
     "recall": {
-      "promptTh": "บอกว่าทำอะไรบ่อยแค่ไหนด้วย always · usually · sometimes · never และถามเพื่อนว่า How often do you…?",
-      "answerEn": "I always cook."
+      "promptTh": "บอกว่าทำบ่อยแค่ไหนด้วย usually · sometimes · never · always · often และถาม How often do you…?",
+      "answerEn": "I sometimes cook."
     },
     "flow": [
       {
-        "kind": "task",
-        "text": "ชมรมกำลังหาเวลาซ้อม ต้องรู้ว่าใครทำอะไรบ่อยแค่ไหนครับ 🗓️ ทำทุกวันไม่เคยพลาด 👉 I always ___ 💯 “I always have breakfast.” = ฉันกินข้าวเช้าทุกวันเลย ลองพูดตามครับ",
-        "expectedSpeech": "I always have breakfast."
+        "kind": "listen",
+        "text": "ชมรมยังหาเวลาซ้อมอยู่ครับ คราวนี้ต้องรู้ว่าแต่ละคนทำอะไร “บ่อยแค่ไหน” ⏰\nusually แปลว่า “ปกติ / มักจะ” วางไว้หน้ากริยา\nI usually get up at seven. แปลว่า “ปกติฉันตื่นเจ็ดโมง”"
       },
       {
         "kind": "task",
-        "text": "เกือบทุกวัน 👉 I usually ___ ⏰ “I usually get up at seven.” = ปกติฉันตื่นเจ็ดโมง ลองพูดตามครับ",
+        "text": "ลองพูดตามครับ\nI usually get up at seven.",
         "expectedSpeech": "I usually get up at seven."
       },
       {
+        "kind": "listen",
+        "text": "อีกสองคำครับ\nsometimes แปลว่า “บางครั้ง”\nnever แปลว่า “ไม่เคยเลย”\nวางหน้ากริยาเหมือน usually: I sometimes cook dinner. · I never make the bed."
+      },
+      {
         "kind": "choice",
-        "text": "Max ตื่นเจ็ดโมงเกือบทุกวัน (มีสายบ้างวันเสาร์ 😴) Max เล่าว่าอะไรดีครับ?",
-        "expectedSpeech": "I usually get up at seven.",
+        "text": "May ทำอาหารเย็นบ้าง ไม่ทำบ้าง 🍳 May จะพูดว่าอะไรครับ?",
+        "expectedSpeech": "I sometimes cook dinner.",
         "answerMode": "single",
-        "stem": "I ... get up at seven.",
+        "stem": "I ... cook dinner.",
         "options": [
           {
-            "emoji": "⏰",
-            "label": "usually",
-            "speak": "I usually get up at seven."
+            "emoji": "🤏",
+            "label": "sometimes",
+            "speak": "I sometimes cook dinner."
           },
           {
             "emoji": "❌",
             "label": "never",
-            "speak": "I never get up at seven."
+            "speak": "I never cook dinner."
           }
         ],
-        "successText": "I usually get up at seven. = ปกติฉันตื่นเจ็ดโมง ⏰ เป๊ะ!",
-        "incorrectHintTh": "เกือบแล้ว! เกือบทุกวันคือ usually ครับ (never = ไม่เคยเลย) → I usually get up at seven."
+        "successText": "I sometimes cook dinner. แปลว่า “บางครั้งฉันก็ทำอาหารเย็น” ครับ\n",
+        "incorrectHintTh": "เกือบแล้ว! ทำบ้างไม่ทำบ้างคือ sometimes ครับ พูดว่า I sometimes cook dinner."
       },
       {
         "kind": "task",
-        "text": "ทำบ้างไม่ทำบ้าง 👉 I sometimes ___ 🙂 · ไม่ทำเลยสักครั้ง 👉 I never ___ ❌ ลองอันแรกก่อน “I sometimes cook dinner.” = บางวันฉันก็ทำอาหารเย็น ลองพูดตามครับ",
-        "expectedSpeech": "I sometimes cook dinner."
-      },
-      {
-        "kind": "choice",
-        "text": "Capy นอนดึกดูซีรีส์ทุกคืน 😴📺 เลยง่วงทุกวันไม่มีเว้น Capy บ่นว่าอะไรดีครับ?",
-        "expectedSpeech": "I'm always tired.",
-        "answerMode": "single",
-        "stem": "I'm ... tired.",
-        "options": [
-          {
-            "emoji": "😴",
-            "label": "always",
-            "speak": "I'm always tired."
-          },
-          {
-            "emoji": "😃",
-            "label": "never",
-            "speak": "I'm never tired."
-          }
-        ],
-        "successText": "I'm always tired. = ฉันเหนื่อยตลอดเลย 😴 (ดูซีรีส์น้อยลงหน่อยนะ Capy 😆)",
-        "incorrectHintTh": "เกือบแล้ว! ง่วงทุกวันคือ always ครับ → I'm always tired."
-      },
-      {
-        "kind": "task",
-        "text": "May ไม่เคยกินข้าวเช้าเลยสักวัน 🍳❌ (Max ตกใจมาก 😱) ช่วย May บอกเพื่อน ใช้ never นะ ลองเดาดู ผิดได้ไม่เป็นไรครับ 😄",
-        "expectedSpeech": "I never have breakfast."
-      },
-      {
-        "kind": "choice",
-        "text": "ใช่เลย! พูดว่า “I never have breakfast.” ครับ 🍳 แล้ว May ก็ไม่ว่างตอนเช้าเลยสักวัน 🌅❌ May บอกทีมว่าอะไรดีครับ?",
-        "expectedSpeech": "I'm never free in the morning.",
-        "answerMode": "single",
-        "stem": "I'm ... free in the morning.",
-        "options": [
-          {
-            "emoji": "❌",
-            "label": "never",
-            "speak": "I'm never free in the morning."
-          },
-          {
-            "emoji": "✅",
-            "label": "always",
-            "speak": "I'm always free in the morning."
-          }
-        ],
-        "successText": "I'm never free in the morning. = ฉันไม่เคยว่างตอนเช้าเลย 🌅 งั้นซ้อมตอนเย็นกัน!",
-        "incorrectHintTh": "เกือบแล้ว! ไม่ว่างเลยสักวันคือ never ครับ → I'm never free in the morning."
-      },
-      {
-        "kind": "task",
-        "text": "อยากรู้ว่าเพื่อนทำบ่อยแค่ไหน ใช้ท่านี้ 👉 How often do you ___? ลองถาม Max ว่าจัดเตียงบ่อยแค่ไหน 🛏️ ท้าเลย! ถามเองดูครับ",
-        "expectedSpeech": "How often do you make the bed?"
+        "text": "Max ไม่เคยจัดเตียงเลยสักวัน 🛏️ ถ้าเป็น Max จะพูดว่าอะไรครับ?",
+        "expectedSpeech": "I never make the bed.",
+        "successText": "I never make the bed. แปลว่า “ฉันไม่เคยจัดเตียงเลย” ครับ\n",
+        "incorrectHintTh": "ลองวาง never หน้า make ครับ: I never …"
       },
       {
         "kind": "listen",
-        "text": "สุดยอด! ถามว่า “How often do you make the bed?” ครับ 👍 Max ตอบว่า “I never make the bed!” = ฉันไม่เคยจัดเตียงเลย 😅 (ห้อง Max คงรกน่าดู 😆)"
+        "text": "อีกสองคำที่ใช้บ่อยครับ\nalways แปลว่า “เสมอ / ทุกครั้ง” · often แปลว่า “บ่อย”\nถ้าประโยคมี am / is / are ให้วางคำเหล่านี้ไว้หลัง\nI'm always tired. แปลว่า “ฉันเหนื่อยตลอดเลย”"
       },
       {
         "kind": "choice",
-        "text": "Max ถามคุณบ้าง “How often do you cook?” 🍳 ตอบตามจริงเลยครับ",
-        "expectedSpeech": "I always cook.",
+        "text": "Capy นอนดึกทุกคืน เลยง่วงตลอด 😴 Capy จะพูดว่าอะไรครับ?",
+        "expectedSpeech": "I'm always tired.",
+        "answerMode": "single",
+        "stem": "...",
+        "options": [
+          {
+            "emoji": "😴",
+            "label": "I'm always tired.",
+            "speak": "I'm always tired."
+          },
+          {
+            "emoji": "❓",
+            "label": "I always am tired.",
+            "speak": "I always am tired."
+          }
+        ],
+        "incorrectHintTh": "เกือบแล้ว! ประโยคมี am ให้วาง always ไว้หลัง I'm ครับ พูดว่า I'm always tired."
+      },
+      {
+        "kind": "task",
+        "text": "ถ้าอยากรู้ว่าอีกฝ่ายทำบางอย่างบ่อยแค่ไหน ถามว่า How often do you …?\nลองถาม Max ว่า How often do you cook? ครับ",
+        "expectedSpeech": "How often do you cook?"
+      },
+      {
+        "kind": "choice",
+        "text": "Max ถามกลับว่า How often do you cook? ตอบตามจริงครับ 🍳",
+        "expectedSpeech": "I sometimes cook.",
         "answerMode": "any",
         "stem": "I ... cook.",
         "options": [
           {
             "emoji": "💯",
             "label": "always",
-            "speak": "I always cook."
+            "speak": "I always cook.",
+            "recapText": "I always cook. แปลว่า “ฉันทำอาหารเสมอ” ครับ\n"
           },
           {
             "emoji": "🙂",
             "label": "usually",
-            "speak": "I usually cook."
+            "speak": "I usually cook.",
+            "recapText": "I usually cook. แปลว่า “ปกติฉันทำอาหาร” ครับ\n"
           },
           {
             "emoji": "🤏",
             "label": "sometimes",
-            "speak": "I sometimes cook."
+            "speak": "I sometimes cook.",
+            "recapText": "I sometimes cook. แปลว่า “บางครั้งฉันก็ทำอาหาร” ครับ\n"
           },
           {
             "emoji": "❌",
             "label": "never",
-            "speak": "I never cook."
+            "speak": "I never cook.",
+            "recapText": "I never cook. แปลว่า “ฉันไม่เคยทำอาหารเลย” ครับ\n"
           }
         ],
-        "successText": "ดีมาก! คุยกันได้จริงแล้วนะ 🤝"
+        "extraAnswers": [
+          {
+            "speak": "I often cook.",
+            "recapText": "I often cook. แปลว่า “ฉันทำอาหารบ่อย” ครับ\n"
+          }
+        ]
       },
       {
         "kind": "finish",
-        "text": "จบบทแล้ว 🎉 ตอนนี้คุณบอกได้ว่าทำอะไรบ่อยแค่ไหน “I usually get up at seven.” · “I never have breakfast.” · “How often do you cook?” บทหน้ามาเล่าเรื่องเพื่อน ๆ กันบ้าง ใครนอนดึกที่สุดในชมรมนะ? 🌙"
+        "text": "วันนี้คุณบอกได้แล้วว่าทำอะไรบ่อยแค่ไหน ด้วย usually · sometimes · never · always · often\nและถามเพื่อนได้ด้วย How often do you …? ครับ"
       }
     ]
   },
   "a2_c02n07": {
     "titleEn": "She Watches, He Studies",
     "titleTh": "เล่าว่าเพื่อนทำอะไร",
-    "goalTh": "เล่าว่าเพื่อน ๆ ทำอะไรเป็นประจำ เช่น Capy relaxes · Max goes · Max watches · May studies",
+    "goalTh": "เล่ากิจวัตรของคนอื่นด้วยกริยาเติม -s / -es / -ies และ has",
     "estimatedMinutes": [
       3,
       5
     ],
-    "scope": "🔁 ทบทวน A1 12.4 (She works.) แล้วต่อยอดกฎสะกดที่ A1 ยังไม่สอน: -es หลัง ch / sh / x / o (watches · relaxes · goes · does) · y → ies (studies) · has · ประโยคจากคำ 2.6: May practices after school. · Max exercises every morning. · Capy relaxes after dinner. · He goes to bed late.",
+    "scope": "🗣️ เล่าเรื่องคนอื่น: เปลี่ยนจาก I เป็น he / she / ชื่อคน กริยาเติม -s (practices · exercises) → -es หลัง ch / sh / x / o (watches · relaxes · goes) → y → ies (studies) → has · ใช้คำจาก 2.6: May practices after school. · Capy relaxes after dinner. · He goes to bed late.",
     "blocks": [],
     "recall": {
-      "promptTh": "เล่าว่าเพื่อน ๆ ทำอะไรเป็นประจำ เช่น Capy relaxes · Max goes · Max watches · May studies",
+      "promptTh": "เล่ากิจวัตรของคนอื่นด้วยกริยาเติม -s / -es / -ies และ has",
       "answerEn": "My friend studies English."
     },
     "flow": [
       {
-        "kind": "choice",
-        "text": "ทายเล่น ๆ ครับ 🏃 อันนี้คืออะไรเอ่ย? เลือกแล้วพูดเลย",
-        "expectedSpeech": "exercise",
-        "answerMode": "single",
-        "stem": "🏃 = ...",
-        "options": [
-          {
-            "emoji": "🔤",
-            "label": "practice",
-            "speak": "practice"
-          },
-          {
-            "emoji": "🔤",
-            "label": "exercise",
-            "speak": "exercise"
-          },
-          {
-            "emoji": "🔤",
-            "label": "relax",
-            "speak": "relax"
-          },
-          {
-            "emoji": "🔤",
-            "label": "late",
-            "speak": "late"
-          }
-        ],
-        "successText": "exercise = ออกกำลังกาย 🏃 ฟิตปั๋ง!",
-        "incorrectHintTh": "🏃 คือ exercise = ออกกำลังกาย ครับ (practice = ซ้อม · relax = พักผ่อน · late = ดึก สาย)"
+        "kind": "listen",
+        "text": "วันนี้มาเล่าเรื่องเพื่อน ๆ ในชมรมกันครับ 🗣️\nพูดถึงตัวเอง: I practice after school.\nพูดถึงคนอื่นคนเดียว (he / she / ชื่อคน) กริยาเติม -s\nMay practices after school. แปลว่า “May ซ้อมหลังเลิกเรียน”"
       },
       {
         "kind": "task",
-        "text": "มาเล่าถึงเพื่อน ๆ ในชมรมกันครับ 🗣️ เล่าถึงคนอื่น เสียงท้ายจะเปลี่ยนนิดนึง ฟังคู่นี้ 👉 relax → relaxes 🛋️ “Capy relaxes after dinner.” = Capy นอนชิลหลังข้าวเย็น ลองพูดตามครับ",
-        "expectedSpeech": "Capy relaxes after dinner."
+        "text": "ลองพูดตามครับ\nMay practices after school.",
+        "expectedSpeech": "May practices after school."
       },
       {
         "kind": "choice",
-        "text": "Max ดูทีวีทุกวันไม่มีพลาด 📺 (watch → watches) คุณเล่าให้ครูบีฟังว่าอะไรดีครับ?",
-        "expectedSpeech": "Max watches TV every day.",
-        "answerMode": "single",
-        "stem": "... TV every day.",
-        "options": [
-          {
-            "emoji": "📺",
-            "label": "Max watches",
-            "speak": "Max watches TV every day."
-          },
-          {
-            "emoji": "🙋",
-            "label": "I watch",
-            "speak": "I watch TV every day."
-          }
-        ],
-        "successText": "Max watches TV every day. = Max ดูทีวีทุกวัน 📺 ตาแฉะแล้วมั้ง 😆",
-        "incorrectHintTh": "เกือบแล้ว! เรากำลังเล่าถึง Max นะ → Max watches TV every day."
-      },
-      {
-        "kind": "task",
-        "text": "อีกคู่ฟังดูนะ 👉 study → studies 📖 “She studies English every day.” = เธอเรียนภาษาอังกฤษทุกวัน (เหมือนคุณเลย 😉) ลองพูดตามครับ",
-        "expectedSpeech": "She studies English every day."
-      },
-      {
-        "kind": "choice",
-        "text": "Max วิ่งออกกำลังกายทุกเช้า 🏃 ส่วน May ซ้อมดนตรีหลังเลิกเรียน 🎵 ครูบีถามว่า Max ทำอะไรตอนเช้า คุณตอบว่าอะไรดีครับ?",
+        "text": "Max ออกกำลังกายทุกเช้า 🏋️ จะเล่าถึง Max ว่าอะไรครับ?",
         "expectedSpeech": "Max exercises every morning.",
         "answerMode": "single",
         "stem": "Max ... every morning.",
         "options": [
           {
-            "emoji": "🏃",
+            "emoji": "🏋️",
             "label": "exercises",
             "speak": "Max exercises every morning."
           },
           {
-            "emoji": "🎵",
-            "label": "practices",
-            "speak": "Max practices every morning."
-          }
-        ],
-        "successText": "Max exercises every morning. = Max ออกกำลังกายทุกเช้า 🏃 ขยันจัง!",
-        "incorrectHintTh": "เกือบแล้ว! ตอนเช้า Max วิ่ง 🏃 → Max exercises every morning. (practices = ซ้อม)"
-      },
-      {
-        "kind": "task",
-        "text": "Capy ดูทีวีหลังข้าวเย็นทุกวัน 📺🍽️ (ชานมไข่มุกในมือด้วย 🧋) ช่วยเล่าถึง Capy หน่อย ลองเดาดู ผิดได้ไม่เป็นไรครับ 😄 (watch → ?)",
-        "expectedSpeech": "Capy watches TV after dinner."
-      },
-      {
-        "kind": "choice",
-        "text": "ถูกต้อง! พูดว่า “Capy watches TV after dinner.” ครับ 📺 ทีนี้เล่าถึง May ที่เรียนภาษาอังกฤษทุกวัน 📖 พูดว่าอะไรดีครับ?",
-        "expectedSpeech": "May studies English every day.",
-        "answerMode": "single",
-        "stem": "... English every day.",
-        "options": [
-          {
-            "emoji": "📖",
-            "label": "May studies",
-            "speak": "May studies English every day."
-          },
-          {
             "emoji": "🙋",
-            "label": "I study",
-            "speak": "I study English every day."
+            "label": "exercise",
+            "speak": "Max exercise every morning."
           }
         ],
-        "successText": "May studies English every day. = May เรียนภาษาอังกฤษทุกวัน 📖 Capy ปรบมือเลย 👏",
-        "incorrectHintTh": "เกือบแล้ว! เรากำลังเล่าถึง May นะ → May studies English every day."
-      },
-      {
-        "kind": "task",
-        "text": "ชมรมอยากซ้อมตอนเช้า ลองถาม Max ว่าออกกำลังกายทุกเช้าไหม 🏃 (ใช้ Do you… นะครับ) ท้าเลย! ถามเองดูครับ",
-        "expectedSpeech": "Do you exercise every morning?"
+        "incorrectHintTh": "เกือบแล้ว! พูดถึง Max คนเดียว กริยาเติม -s ครับ พูดว่า Max exercises every morning."
       },
       {
         "kind": "listen",
-        "text": "ชัดมาก! ถามว่า “Do you exercise every morning?” ครับ 👍 Max ตอบว่า “Yes, I do. I go to bed late, but I exercise every morning.” = ใช่ ฉันนอนดึก แต่ออกกำลังกายทุกเช้า"
+        "text": "บางคำเติม -es แทน -s ครับ คือคำที่ลงท้ายด้วย ch · sh · x · o\nwatch → watches · relax → relaxes · go → goes\nCapy relaxes after dinner. แปลว่า “Capy พักผ่อนหลังกินข้าวเย็น”"
+      },
+      {
+        "kind": "task",
+        "text": "ลองพูดตามครับ\nCapy relaxes after dinner.",
+        "expectedSpeech": "Capy relaxes after dinner."
       },
       {
         "kind": "choice",
-        "text": "Max ถามคุณบ้าง “What does your friend do after school?” นึกถึงเพื่อนคุณแล้วเลือกเลยครับ",
+        "text": "Max เข้านอนดึกทุกคืน 🌙 (go to bed late) จะเล่าถึง Max ว่าอะไรครับ?",
+        "expectedSpeech": "He goes to bed late.",
+        "answerMode": "single",
+        "stem": "He ... to bed late.",
+        "options": [
+          {
+            "emoji": "🌙",
+            "label": "goes",
+            "speak": "He goes to bed late."
+          },
+          {
+            "emoji": "❓",
+            "label": "go",
+            "speak": "He go to bed late."
+          }
+        ],
+        "successText": "He goes to bed late. แปลว่า “เขาเข้านอนดึก” ครับ\n",
+        "incorrectHintTh": "เกือบแล้ว! go ลงท้าย o เติม -es เป็น goes ครับ พูดว่า He goes to bed late."
+      },
+      {
+        "kind": "listen",
+        "text": "อีกสองแบบครับ\nลงท้าย y ให้เปลี่ยนเป็น -ies: study → studies\nและ have เปลี่ยนเป็น has: He has breakfast at seven."
+      },
+      {
+        "kind": "task",
+        "text": "May เรียนภาษาอังกฤษทุกวัน 📖 จะเล่าถึง May ว่าอะไรครับ?",
+        "expectedSpeech": "May studies English every day.",
+        "incorrectHintTh": "ลองใช้ studies ครับ: May studies …"
+      },
+      {
+        "kind": "choice",
+        "text": "นึกถึงเพื่อนคุณสักคนครับ หลังเลิกเรียนเพื่อนคุณทำอะไร?",
         "expectedSpeech": "My friend studies English.",
         "answerMode": "any",
         "stem": "My friend ...",
         "options": [
           {
             "emoji": "📖",
-            "label": "studies",
-            "speak": "My friend studies English."
+            "label": "studies English",
+            "speak": "My friend studies English.",
+            "recapText": "My friend studies English. แปลว่า “เพื่อนฉันเรียนภาษาอังกฤษ” ครับ\n"
           },
           {
             "emoji": "📺",
             "label": "watches TV",
-            "speak": "My friend watches TV."
+            "speak": "My friend watches TV.",
+            "recapText": "My friend watches TV. แปลว่า “เพื่อนฉันดูทีวี” ครับ\n"
           },
           {
-            "emoji": "🏃",
+            "emoji": "🏋️",
             "label": "exercises",
-            "speak": "My friend exercises."
+            "speak": "My friend exercises.",
+            "recapText": "My friend exercises. แปลว่า “เพื่อนฉันออกกำลังกาย” ครับ\n"
           },
           {
             "emoji": "🏠",
             "label": "goes home",
-            "speak": "My friend goes home."
+            "speak": "My friend goes home.",
+            "recapText": "My friend goes home. แปลว่า “เพื่อนฉันกลับบ้าน” ครับ\n"
           }
         ],
-        "successText": "เยี่ยม! เล่าเรื่องเพื่อนได้แล้ว 🙌"
+        "extraAnswers": [
+          {
+            "speak": "My friend practices.",
+            "recapText": "My friend practices. แปลว่า “เพื่อนฉันซ้อม” ครับ\n"
+          },
+          {
+            "speak": "My friend relaxes.",
+            "recapText": "My friend relaxes. แปลว่า “เพื่อนฉันพักผ่อน” ครับ\n"
+          }
+        ]
       },
       {
         "kind": "finish",
-        "text": "จบบทแล้ว 🎉 ตอนนี้คุณเล่าถึงเพื่อน ๆ ได้แล้ว “Capy relaxes after dinner.” · “Max goes to bed late.” · “She studies English every day.” บทหน้าไปซ้อมที่บ้าน May กัน แต่…กุญแจห้องเก็บของหายไปไหน? 🔑"
+        "text": "วันนี้คุณเล่าเรื่องคนอื่นได้แล้ว: practices · exercises · relaxes · goes · studies · has\nบทหน้าไปซ้อมที่บ้าน May กัน แต่กุญแจห้องเก็บของหายไปไหนนะ? 🔑"
       }
     ]
   },
@@ -805,97 +726,71 @@
   "a2_c03n03": {
     "titleEn": "Is There Any…?",
     "titleTh": "มี…บ้างไหม",
-    "goalTh": "ถามและบอกว่าในบ้านมีอะไร 👉 Is there a ___? · Are there any ___? · There are some ___. · There aren't any ___.",
+    "goalTh": "บอก ถาม และปฏิเสธว่าบ้านมีอะไรด้วย There are some… · Are there any…? · There aren't any…",
     "estimatedMinutes": [
       3,
       5
     ],
-    "scope": "🔁 ทบทวน A1 16.2 (There is / There are) แล้วต่อยอด: some / any · Is there a…? · Are there any…? · There aren't any… · ประโยคจากคำ 3.2: Is there a big kitchen in your house? · Are there any chairs in the living room? · There are some books in my bedroom. It's small and quiet. · There aren't any cups in the kitchen.",
+    "scope": "🔁 ทบทวน A1 16.2 (There is / There are) แล้วแยกทีละท่าด้วยของชุดเดิม: บอก There are some… → ถาม Are there any…? (ของชิ้นเดียว Is there a…?) → ปฏิเสธ There aren't any… · ตัวอย่างจากคำ 3.2: There are some chairs in the living room. · Are there any cups in the kitchen? · There aren't any chairs in my bedroom. · Is there a big kitchen in your house? · My bedroom is small and quiet.",
     "blocks": [],
     "recall": {
-      "promptTh": "ถามและบอกว่าในบ้านมีอะไร 👉 Is there a ___? · Are there any ___? · There are some ___. · There aren't any ___.",
-      "answerEn": "Yes, there is."
+      "promptTh": "บอก ถาม และปฏิเสธว่าบ้านมีอะไรด้วย There are some… · Are there any…? · There aren't any…",
+      "answerEn": "Yes, there are some books in my bedroom."
     },
     "flow": [
       {
-        "kind": "choice",
-        "text": "ทายเล่น ๆ ครับ 🛏️ ห้องนี้คือห้องอะไรเอ่ย? เลือกแล้วพูดเลย",
-        "expectedSpeech": "bedroom",
-        "answerMode": "single",
-        "stem": "🛏️ = ...",
-        "options": [
-          {
-            "emoji": "🔤",
-            "label": "house",
-            "speak": "house"
-          },
-          {
-            "emoji": "🔤",
-            "label": "kitchen",
-            "speak": "kitchen"
-          },
-          {
-            "emoji": "🔤",
-            "label": "bedroom",
-            "speak": "bedroom"
-          },
-          {
-            "emoji": "🔤",
-            "label": "living room",
-            "speak": "living room"
-          }
-        ],
-        "successText": "bedroom = ห้องนอน 🛏️ น่านอนจัง 😴",
-        "incorrectHintTh": "🛏️ คือ bedroom = ห้องนอน ครับ (house = บ้าน · kitchen = ห้องครัว · living room = ห้องนั่งเล่น)"
-      },
-      {
-        "kind": "task",
-        "text": "วันนี้ทีมไปซ้อมที่บ้าน May ครับ 🏠 ถามหาของ 1 อย่าง ใช้ท่านี้ 👉 Is there a ___? 🍳 “Is there a kitchen in your house? — Yes, there is.” = บ้านเธอมีครัวไหม มีสิ ลองพูดตามครับ",
-        "expectedSpeech": "Is there a kitchen in your house? — Yes, there is."
-      },
-      {
-        "kind": "task",
-        "text": "ถามหาหลาย ๆ อัน ใช้ท่านี้ 👉 Are there any ___? 🪑🪑 ทุกคนอยากนั่ง “Are there any chairs?” = มีเก้าอี้บ้างไหม ลองพูดตามครับ",
-        "expectedSpeech": "Are there any chairs?"
-      },
-      {
         "kind": "listen",
-        "text": "May ตอบว่า “Yes, there are some chairs in the living room.” = มีสิ มีเก้าอี้อยู่ในห้องนั่งเล่น 🪑 ทุกคนรีบไปจองที่ 😆"
+        "text": "วันนี้ทีมไปซ้อมที่บ้าน May ครับ 🏠 มาบอกกันว่าในบ้านมีอะไรบ้าง\nของหลายชิ้นที่มีอยู่ ใช้ There are some …\nThere are some chairs in the living room. แปลว่า “ในห้องนั่งเล่นมีเก้าอี้อยู่บ้าง”"
+      },
+      {
+        "kind": "task",
+        "text": "ลองพูดตามครับ\nThere are some chairs in the living room.",
+        "expectedSpeech": "There are some chairs in the living room."
       },
       {
         "kind": "choice",
-        "text": "คุณอยากยืมหนังสือ May มาอ่านหลาย ๆ เล่ม 📚📚 อยากรู้ว่าในห้องนอน May มีไหม ถามว่าอะไรดีครับ?",
-        "expectedSpeech": "Are there any books in your bedroom?",
+        "text": "ในห้องนอน May มีหนังสือหลายเล่ม 📚 จะบอกว่าอะไรครับ?",
+        "expectedSpeech": "There are some books in the bedroom.",
         "answerMode": "single",
-        "stem": "... in your bedroom?",
+        "stem": "There are some ... in the bedroom.",
         "options": [
           {
             "emoji": "📚",
-            "label": "Are there any books",
-            "speak": "Are there any books in your bedroom?"
+            "label": "books",
+            "speak": "There are some books in the bedroom."
           },
           {
-            "emoji": "🛏️",
-            "label": "Is there a bed",
-            "speak": "Is there a bed in your bedroom?"
+            "emoji": "🪑",
+            "label": "chairs",
+            "speak": "There are some chairs in the bedroom."
           }
         ],
-        "successText": "Are there any books in your bedroom? = ห้องนอนเธอมีหนังสือบ้างไหม 📚 ถามเก่งมาก!",
-        "incorrectHintTh": "เกือบแล้ว! หนังสือหลาย ๆ เล่ม 📚📚 ถามว่า Are there any books in your bedroom? ครับ"
+        "successText": "There are some books in the bedroom. แปลว่า “ในห้องนอนมีหนังสืออยู่บ้าง” ครับ\n",
+        "incorrectHintTh": "เกือบแล้ว! หนังสือ 📚 คือ books ครับ พูดว่า There are some books in the bedroom."
+      },
+      {
+        "kind": "listen",
+        "text": "ถ้าจะถามว่า “มี…บ้างไหม” เปลี่ยนเป็น Are there any …?\nAre there any chairs in the kitchen? แปลว่า “ในครัวมีเก้าอี้บ้างไหม”\n(ถามหาของชิ้นเดียว ใช้ Is there a …? เช่น Is there a fridge?)"
       },
       {
         "kind": "task",
-        "text": "ตอบก็ง่าย 👉 มีอยู่บ้าง There are some ___ 📚 · ไม่มีเลย There aren't any ___ ❌ ลองอันแรก “There are some books in my bedroom.” = ห้องนอนฉันมีหนังสืออยู่บ้าง ลองพูดตามครับ",
-        "expectedSpeech": "There are some books in my bedroom."
+        "text": "ลองพูดตามครับ\nAre there any chairs in the kitchen?",
+        "expectedSpeech": "Are there any chairs in the kitchen?"
       },
       {
         "kind": "task",
-        "text": "ห้องนั่งเล่นของ May มีหนังสือวางอยู่หลายเล่ม 📚🛋️ ช่วย May บอกทุกคน ใช้ some นะ ลองเดาดู ผิดได้ไม่เป็นไรครับ 😄",
-        "expectedSpeech": "There are some books in the living room."
+        "text": "ซ้อมจนคอแห้ง 🥤 อยากรู้ว่าในครัวมีแก้วบ้างไหม จะถาม May ว่าอะไรครับ?",
+        "expectedSpeech": "Are there any cups in the kitchen?",
+        "successText": "Are there any cups in the kitchen? แปลว่า “ในครัวมีแก้วบ้างไหม” ครับ\n",
+        "incorrectHintTh": "ลองเริ่มด้วย Are there any … ครับ"
+      },
+      {
+        "kind": "listen",
+        "text": "May ตอบว่า There aren't any cups in the kitchen. แปลว่า “ในครัวไม่มีแก้วเลย”\nบอกว่าไม่มีเลยสักชิ้น ใช้ There aren't any …"
       },
       {
         "kind": "choice",
-        "text": "เยี่ยม! พูดว่า “There are some books in the living room.” ครับ 📚 แต่ห้องนอน May ไม่มีเก้าอี้เลยสักตัว 🪑❌ (ต้องนั่งพื้น 😆) May บอกว่าอะไรดีครับ?",
+        "text": "ห้องนอน May ไม่มีเก้าอี้เลยสักตัว 🪑❌ May จะบอกว่าอะไรครับ?",
         "expectedSpeech": "There aren't any chairs in my bedroom.",
         "answerMode": "single",
         "stem": "There ... chairs in my bedroom.",
@@ -911,134 +806,77 @@
             "speak": "There are some chairs in my bedroom."
           }
         ],
-        "successText": "There aren't any chairs in my bedroom. = ห้องนอนฉันไม่มีเก้าอี้เลย 🪑 นั่งพื้นก็ชิลดี 😆",
-        "incorrectHintTh": "เกือบแล้ว! ไม่มีเลยสักตัว พูดว่า There aren't any chairs in my bedroom. ครับ"
-      },
-      {
-        "kind": "task",
-        "text": "ซ้อมจนคอแห้ง 🥤 ลองถาม May ว่าในครัวมีแก้วบ้างไหม ท้าเลย! ถามเองดูครับ",
-        "expectedSpeech": "Are there any cups in the kitchen?"
-      },
-      {
-        "kind": "listen",
-        "text": "เก่งมาก! ถามว่า “Are there any cups in the kitchen?” ครับ 👍 May ตอบว่า “Sorry, there aren't any cups in the kitchen. There are some in the living room.” = ขอโทษนะ ในครัวไม่มีแก้วเลย มีอยู่ในห้องนั่งเล่น"
+        "successText": "There aren't any chairs in my bedroom. แปลว่า “ห้องนอนฉันไม่มีเก้าอี้เลย” ครับ\n",
+        "incorrectHintTh": "เกือบแล้ว! ไม่มีเลยสักตัว ใช้ aren't any ครับ พูดว่า There aren't any chairs in my bedroom."
       },
       {
         "kind": "choice",
-        "text": "May ถามคุณบ้าง “Is there a big kitchen in your house?” ตอบตามบ้านจริงของคุณเลยครับ",
-        "expectedSpeech": "Yes, there is.",
+        "text": "May ถามคุณบ้าง Are there any books in your bedroom? ตอบตามห้องจริงของคุณครับ 📚",
+        "expectedSpeech": "Yes, there are some books in my bedroom.",
         "answerMode": "any",
         "stem": "...",
         "options": [
           {
-            "emoji": "✅",
-            "label": "Yes, there is.",
-            "speak": "Yes, there is."
+            "emoji": "📚",
+            "label": "Yes, there are some.",
+            "speak": "Yes, there are some books in my bedroom.",
+            "recapText": "Yes, there are some books in my bedroom. แปลว่า “มีสิ ห้องนอนฉันมีหนังสืออยู่บ้าง” ครับ\n"
           },
           {
-            "emoji": "🤏",
-            "label": "No, it's small.",
-            "speak": "No, there isn't. It's small."
-          },
-          {
-            "emoji": "🏠",
-            "label": "a big kitchen",
-            "speak": "Yes, there is a big kitchen in my house."
+            "emoji": "❌",
+            "label": "No, there aren't any.",
+            "speak": "No, there aren't any books in my bedroom.",
+            "recapText": "No, there aren't any books in my bedroom. แปลว่า “ไม่มี ห้องนอนฉันไม่มีหนังสือเลย” ครับ\n"
           }
         ],
-        "successText": "ว้าว! ตอบได้เป็นธรรมชาติมาก 🌟"
+        "extraAnswers": [
+          {
+            "speak": "Yes, there are.",
+            "recapText": "Yes, there are. แปลว่า “มีสิ” ครับ\n"
+          },
+          {
+            "speak": "No, there aren't.",
+            "recapText": "No, there aren't. แปลว่า “ไม่มี” ครับ\n"
+          }
+        ]
       },
       {
         "kind": "finish",
-        "text": "จบบทแล้ว 🎉 ตอนนี้คุณถามและบอกว่าบ้านมีอะไรได้ “Is there a kitchen?” · “Are there any chairs?” · “There aren't any cups.” บทหน้า…กุญแจห้องเก็บของหาย! ต้องช่วยกันบอกว่าของอยู่ตรงไหน 🔑"
+        "text": "วันนี้คุณบอกได้แล้วว่าบ้านมีอะไร: There are some … · Are there any …? · There aren't any …\nบทหน้า… กุญแจห้องเก็บของหาย! ต้องช่วยกันบอกว่าของอยู่ตรงไหน 🔑"
       }
     ]
   },
   "a2_c03n05": {
     "titleEn": "Where Is It?",
     "titleTh": "อยู่ตรงไหน",
-    "goalTh": "บอกว่าของอยู่ตรงไหนด้วย between · opposite · behind · in front of และถาม Where is…?",
+    "goalTh": "บอกตำแหน่งของด้วย between · opposite · behind · in front of และถาม Where is…?",
     "estimatedMinutes": [
       3,
       5
     ],
-    "scope": "บุพบทใหม่: between · opposite · behind · in front of (A1 มี in / on / under / next to แล้ว) · ประโยคจากคำ 3.4: The sofa is between the shelf and the TV. · The fridge is opposite the door. · The key is behind the sofa. · The table is in front of the shelf.",
+    "scope": "บุพบทใหม่ เริ่มจาก between · opposite ก่อน แล้วเพิ่ม behind · in front of (A1 มี in / on / under / next to แล้ว) · ถามด้วย Where is…? · ประโยคจากคำ 3.4: The sofa is between the shelf and the TV. · The fridge is opposite the door. · The key is behind the sofa. · The table is in front of the sofa.",
     "blocks": [],
     "recall": {
-      "promptTh": "บอกว่าของอยู่ตรงไหนด้วย between · opposite · behind · in front of และถาม Where is…?",
-      "answerEn": "It's opposite the sofa."
+      "promptTh": "บอกตำแหน่งของด้วย between · opposite · behind · in front of และถาม Where is…?",
+      "answerEn": "It's in the living room."
     },
     "flow": [
       {
-        "kind": "choice",
-        "text": "ทายเล่น ๆ ครับ 🧊 อันนี้คืออะไรเอ่ย? เลือกแล้วพูดเลย",
-        "expectedSpeech": "fridge",
-        "answerMode": "single",
-        "stem": "🧊 = ...",
-        "options": [
-          {
-            "emoji": "🔤",
-            "label": "sofa",
-            "speak": "sofa"
-          },
-          {
-            "emoji": "🔤",
-            "label": "shelf",
-            "speak": "shelf"
-          },
-          {
-            "emoji": "🔤",
-            "label": "fridge",
-            "speak": "fridge"
-          }
-        ],
-        "successText": "fridge = ตู้เย็น 🧊 Max เปิดบ่อยสุด 😆",
-        "incorrectHintTh": "🧊 คือ fridge = ตู้เย็น ครับ (sofa = โซฟา · shelf = ชั้นวาง)"
+        "kind": "listen",
+        "text": "แย่แล้ว! กุญแจห้องเก็บของหาย 🔑 ต้องบอกให้ได้ว่าของอยู่ตรงไหน\nห้องนั่งเล่นของ May: ชั้นวางอยู่ซ้าย 📚 ทีวีอยู่ขวา 📺 โซฟาอยู่ตรงกลาง 🛋️\nbetween … and … แปลว่า “อยู่ระหว่าง…กับ…”\nThe sofa is between the shelf and the TV. แปลว่า “โซฟาอยู่ระหว่างชั้นวางกับทีวี”"
       },
       {
         "kind": "task",
-        "text": "แย่แล้ว! กุญแจห้องเก็บของหาย 🔑 ต้องบอกให้ได้ว่าของอยู่ตรงไหน อยู่ตรงกลางสองอย่าง 👉 between ___ and ___ “The sofa is between the shelf and the TV.” = โซฟาอยู่ระหว่างชั้นวางกับทีวี ลองพูดตามครับ",
+        "text": "ลองพูดตามครับ\nThe sofa is between the shelf and the TV.",
         "expectedSpeech": "The sofa is between the shelf and the TV."
       },
       {
-        "kind": "task",
-        "text": "อยู่ฝั่งตรงข้ามกัน 👉 opposite ___ 🧊🚪 “The fridge is opposite the door.” = ตู้เย็นอยู่ตรงข้ามประตู ลองพูดตามครับ",
-        "expectedSpeech": "The fridge is opposite the door."
+        "kind": "listen",
+        "text": "อีกคำครับ opposite แปลว่า “อยู่ตรงข้าม”\nตู้เย็นอยู่ฝั่งหนึ่ง ประตูอยู่อีกฝั่ง หันหน้าเข้าหากัน 🧊↔️🚪\nThe fridge is opposite the door. แปลว่า “ตู้เย็นอยู่ตรงข้ามประตู”"
       },
       {
         "kind": "choice",
-        "text": "May ชี้ห้องนั่งเล่นให้ดู ชั้นวางอยู่ซ้าย ทีวีอยู่ขวา โซฟาอยู่ตรงกลาง 📚🛋️📺 คุณบอก Max ว่าอะไรดีครับ?",
-        "expectedSpeech": "The sofa is between the shelf and the TV.",
-        "answerMode": "single",
-        "stem": "The sofa is ...",
-        "options": [
-          {
-            "emoji": "↔️",
-            "label": "between",
-            "speak": "The sofa is between the shelf and the TV."
-          },
-          {
-            "emoji": "🔙",
-            "label": "behind",
-            "speak": "The sofa is behind the TV."
-          }
-        ],
-        "successText": "The sofa is between the shelf and the TV. = โซฟาอยู่ระหว่างชั้นวางกับทีวี 🛋️ เป๊ะ!",
-        "incorrectHintTh": "เกือบแล้ว! โซฟาอยู่ตรงกลางสองอย่าง → The sofa is between the shelf and the TV."
-      },
-      {
-        "kind": "task",
-        "text": "ข้างหลัง 👉 behind ___ · ข้างหน้า 👉 in front of ___ 🔍 Max มั่นใจมาก “The key is behind the sofa.” = กุญแจอยู่หลังโซฟาแน่ ๆ ลองพูดตามครับ",
-        "expectedSpeech": "The key is behind the sofa."
-      },
-      {
-        "kind": "task",
-        "text": "May หากระเป๋าไม่เจอ 🎒 คุณเห็นว่ามันอยู่ข้างหลังตู้เย็น บอก May หน่อย ลองเดาดู ผิดได้ไม่เป็นไรครับ 😄",
-        "expectedSpeech": "The bag is behind the fridge."
-      },
-      {
-        "kind": "choice",
-        "text": "ใช่เลย! พูดว่า “The bag is behind the fridge.” ครับ 🎒 ทีนี้ Max ถามว่าตู้เย็นอยู่ไหน ตู้เย็นอยู่ตรงกลาง ระหว่างโต๊ะกับประตู 🧊 ตอบ Max ว่าอะไรดีครับ?",
+        "text": "ในครัว ตู้เย็นอยู่ตรงกลาง ระหว่างโต๊ะกับประตู 🧊 จะบอก Max ว่าอะไรครับ?",
         "expectedSpeech": "The fridge is between the table and the door.",
         "answerMode": "single",
         "stem": "The fridge is ...",
@@ -1049,77 +887,122 @@
             "speak": "The fridge is between the table and the door."
           },
           {
-            "emoji": "⬆️",
-            "label": "in front of",
-            "speak": "The fridge is in front of the door."
+            "emoji": "🚪",
+            "label": "opposite",
+            "speak": "The fridge is opposite the door."
           }
         ],
-        "successText": "The fridge is between the table and the door. = ตู้เย็นอยู่ระหว่างโต๊ะกับประตู 🧊 Max วิ่งไปเปิดแล้ว 😆",
-        "incorrectHintTh": "เกือบแล้ว! ตู้เย็นอยู่ตรงกลางโต๊ะกับประตู → The fridge is between the table and the door."
-      },
-      {
-        "kind": "task",
-        "text": "หลังโซฟาไม่มีกุญแจ มีแต่เศษขนม 🍪😆 ลองถาม May ว่ากุญแจอยู่ไหน ท้าเลย! ถามเองดูครับ",
-        "expectedSpeech": "Where is the key?"
-      },
-      {
-        "kind": "listen",
-        "text": "เยี่ยม! ถามว่า “Where is the key?” ครับ 👍 May ตอบว่า “It's between the sofa and the shelf!” = อยู่ระหว่างโซฟากับชั้นวาง 🔑 เจอแล้ว 🎉"
+        "successText": "The fridge is between the table and the door. แปลว่า “ตู้เย็นอยู่ระหว่างโต๊ะกับประตู” ครับ\n",
+        "incorrectHintTh": "เกือบแล้ว! อยู่ตรงกลางสองอย่าง ใช้ between ครับ พูดว่า The fridge is between the table and the door."
       },
       {
         "kind": "choice",
-        "text": "May ถามคุณบ้าง “Where is the TV in your house?” นึกถึงบ้านคุณแล้วตอบเลยครับ",
-        "expectedSpeech": "It's opposite the sofa.",
+        "text": "ห้องนอน May อยู่ฝั่งหนึ่งของทางเดิน ห้องครัวอยู่อีกฝั่ง ตรงกันพอดี 🛏️↔️🍳 จะบอกว่าอะไรครับ?",
+        "expectedSpeech": "The bedroom is opposite the kitchen.",
+        "answerMode": "single",
+        "stem": "The bedroom is ... the kitchen.",
+        "options": [
+          {
+            "emoji": "↔️",
+            "label": "opposite",
+            "speak": "The bedroom is opposite the kitchen."
+          },
+          {
+            "emoji": "🧩",
+            "label": "between",
+            "speak": "The bedroom is between the kitchen."
+          }
+        ],
+        "successText": "The bedroom is opposite the kitchen. แปลว่า “ห้องนอนอยู่ตรงข้ามห้องครัว” ครับ\n",
+        "incorrectHintTh": "เกือบแล้ว! อยู่คนละฝั่งตรงกัน ใช้ opposite ครับ พูดว่า The bedroom is opposite the kitchen."
+      },
+      {
+        "kind": "listen",
+        "text": "อีกสองคำครับ\nbehind แปลว่า “ข้างหลัง” · in front of แปลว่า “ข้างหน้า”\nThe table is in front of the sofa. แปลว่า “โต๊ะอยู่หน้าโซฟา”\nThe key is behind the sofa. แปลว่า “กุญแจอยู่หลังโซฟา”"
+      },
+      {
+        "kind": "task",
+        "text": "May หากระเป๋าไม่เจอ 🎒 คุณเห็นว่ามันอยู่ข้างหลังตู้เย็น จะบอก May ว่าอะไรครับ?",
+        "expectedSpeech": "The bag is behind the fridge.",
+        "successText": "The bag is behind the fridge. แปลว่า “กระเป๋าอยู่หลังตู้เย็น” ครับ\n",
+        "incorrectHintTh": "ลองใช้ behind ครับ: The bag is behind …"
+      },
+      {
+        "kind": "task",
+        "text": "หลังโซฟาไม่มีกุญแจ มีแต่เศษขนม 🍪😆\nถ้าอยากรู้ว่าของอยู่ตรงไหน ถามว่า Where is …?\nลองถาม May ว่า Where is the key? ครับ",
+        "expectedSpeech": "Where is the key?",
+        "successText": "May ตอบว่า It's between the sofa and the shelf! แปลว่า “อยู่ระหว่างโซฟากับชั้นวาง” เจอแล้ว 🔑\n"
+      },
+      {
+        "kind": "choice",
+        "text": "May ถามคุณบ้าง Where is the TV in your house? นึกถึงบ้านจริงของคุณแล้วตอบครับ 📺",
+        "expectedSpeech": "It's in the living room.",
         "answerMode": "any",
         "stem": "It's ...",
         "options": [
           {
             "emoji": "🛋️",
-            "label": "opposite the sofa",
-            "speak": "It's opposite the sofa."
+            "label": "in the living room",
+            "speak": "It's in the living room.",
+            "recapText": "It's in the living room. แปลว่า “อยู่ในห้องนั่งเล่น” ครับ\n"
           },
           {
-            "emoji": "📚",
-            "label": "between",
-            "speak": "It's between the shelf and the window."
+            "emoji": "↔️",
+            "label": "opposite the sofa",
+            "speak": "It's opposite the sofa.",
+            "recapText": "It's opposite the sofa. แปลว่า “อยู่ตรงข้ามโซฟา” ครับ\n"
           },
           {
             "emoji": "🛏️",
             "label": "in my bedroom",
-            "speak": "It's in my bedroom."
+            "speak": "It's in my bedroom.",
+            "recapText": "It's in my bedroom. แปลว่า “อยู่ในห้องนอนฉัน” ครับ\n"
           }
         ],
-        "successText": "เยี่ยม! ตอบเรื่องของตัวเองได้แล้ว 🙌"
+        "extraAnswers": [
+          {
+            "speak": "It's in front of the sofa.",
+            "recapText": "It's in front of the sofa. แปลว่า “อยู่หน้าโซฟา” ครับ\n"
+          }
+        ]
       },
       {
         "kind": "finish",
-        "text": "จบบทแล้ว 🎉 ตอนนี้คุณบอกได้ว่าของอยู่ตรงไหน “The key is behind the sofa.” · “The fridge is opposite the door.” · “Where is the key?” เจอกุญแจแล้ว…แต่มันเป็นของใครกันแน่? บทหน้ามาตามหาเจ้าของ 🔑"
+        "text": "วันนี้คุณบอกตำแหน่งของได้แล้ว: between · opposite · behind · in front of · Where is …?\nเจอกุญแจแล้ว… แต่เป็นของใครกันแน่? บทหน้ามาตามหาเจ้าของครับ 🔑"
       }
     ]
   },
   "a2_c03n09": {
     "titleEn": "Whose Is This?",
     "titleTh": "ของใคร",
-    "goalTh": "ถามว่าของเป็นของใคร และตอบ 👉 Whose is this? · It's mine. · It's yours. · It's May's.",
+    "goalTh": "ถามหาเจ้าของด้วย Whose is this? และตอบ It's mine. · It's yours. · It's May's.",
     "estimatedMinutes": [
       3,
       5
     ],
-    "scope": "เจ้าของสิ่งของ Whose is this? · It's mine. · It's yours. · It's May's. · ตัวอย่างในบ้าน May: Whose is this key? — It's May's. · Is this bag yours? — Yes, it's mine.",
+    "scope": "เจ้าของสิ่งของ: เริ่มจากถาม Whose is this? → ตอบ It's mine. · It's yours. → ของคนที่มีชื่อ It's May's. · ถามว่าใช่ของเธอไหม Is this … yours? · ตัวอย่างในบ้าน May: Whose is this key? — It's May's. · Is this bag yours? — No, it's not mine.",
     "blocks": [],
     "recall": {
-      "promptTh": "ถามว่าของเป็นของใคร และตอบ 👉 Whose is this? · It's mine. · It's yours. · It's May's.",
-      "answerEn": "It's mine."
+      "promptTh": "ถามหาเจ้าของด้วย Whose is this? และตอบ It's mine. · It's yours. · It's May's.",
+      "answerEn": "No, it's not mine."
     },
     "flow": [
       {
+        "kind": "listen",
+        "text": "เจอกุญแจแล้ว แต่เป็นของใครล่ะ? 🔑🤔\nถามหาเจ้าของ ใช้ Whose is this? แปลว่า “นี่ของใคร”"
+      },
+      {
         "kind": "task",
-        "text": "เจอกุญแจแล้ว แต่เป็นของใครล่ะ? 🔑🤔 ถามหาเจ้าของ 👉 Whose is this? ถ้าเป็นของเรา 👉 It's mine. 🙋 “Whose is this? — It's mine.” = นี่ของใคร ของฉันเอง ลองพูดตามครับ",
-        "expectedSpeech": "Whose is this? — It's mine."
+        "text": "ลองถาม Capy ว่า Whose is this? ครับ",
+        "expectedSpeech": "Whose is this?"
+      },
+      {
+        "kind": "listen",
+        "text": "ตอบว่าเป็นของใคร\nของเราเอง 🙋 It's mine. แปลว่า “ของฉันเอง”\nของคนที่เราคุยด้วย 👉 It's yours. แปลว่า “ของเธอ”"
       },
       {
         "kind": "choice",
-        "text": "May ถือกระเป๋าใบหนึ่งแล้วถามว่า “Whose is this?” 🎒 อ้าว กระเป๋าคุณนี่นา! ตอบ May ว่าอะไรดีครับ?",
+        "text": "May ถือกระเป๋าใบหนึ่งแล้วถามว่า Whose is this? 🎒 กระเป๋านั้นเป็นของคุณเอง ตอบว่าอะไรครับ?",
         "expectedSpeech": "It's mine.",
         "answerMode": "single",
         "stem": "It's ...",
@@ -1135,30 +1018,20 @@
             "speak": "It's yours."
           }
         ],
-        "successText": "It's mine. = ของฉันเอง 🎒 ขอบคุณนะ May!",
-        "incorrectHintTh": "เกือบแล้ว! กระเป๋าของเราเอง พูดว่า It's mine. ครับ (yours = ของเธอ)"
-      },
-      {
-        "kind": "task",
-        "text": "ถามว่าใช่ของเธอไหม 👉 Is this ___ yours? 🎒 “Is this bag yours? — Yes, it's mine.” = กระเป๋านี้ของเธอไหม ใช่ ของฉัน ลองพูดตามครับ",
-        "expectedSpeech": "Is this bag yours? — Yes, it's mine."
-      },
-      {
-        "kind": "task",
-        "text": "ของเพื่อนที่มีชื่อ 👉 It's May's. · It's Max's. 🔑 “Whose is this key? — It's May's.” = กุญแจนี้ของใคร ของ May ลองพูดตามครับ",
-        "expectedSpeech": "Whose is this key? — It's May's."
+        "successText": "It's mine. แปลว่า “ของฉันเอง” ครับ\n",
+        "incorrectHintTh": "เกือบแล้ว! กระเป๋าของเราเอง พูดว่า It's mine. ครับ (yours แปลว่า ของเธอ)"
       },
       {
         "kind": "choice",
-        "text": "Capy ชูกุญแจห้องเก็บของแล้วถามว่า “Whose is this?” 🔑 คุณรู้ว่าเป็นของ May ตอบ Capy ว่าอะไรดีครับ?",
-        "expectedSpeech": "It's May's.",
+        "text": "คุณเจอหมวกของ Max บนโซฟา 🧢 ยื่นให้ Max แล้วบอกว่า “ของเธอนะ” จะพูดว่าอะไรครับ?",
+        "expectedSpeech": "It's yours.",
         "answerMode": "single",
         "stem": "It's ...",
         "options": [
           {
-            "emoji": "👧",
-            "label": "May's",
-            "speak": "It's May's."
+            "emoji": "👉",
+            "label": "yours",
+            "speak": "It's yours."
           },
           {
             "emoji": "🙋",
@@ -1166,302 +1039,235 @@
             "speak": "It's mine."
           }
         ],
-        "successText": "It's May's. = ของ May 🔑 ปริศนาคลี่คลาย! 🕵️",
-        "incorrectHintTh": "เกือบแล้ว! กุญแจเป็นของ May → It's May's. ครับ"
-      },
-      {
-        "kind": "task",
-        "text": "คุณเจอหมวกของ Max บนโซฟา 🧢 ยื่นให้ Max แล้วบอกว่า ของเธอนะ ลองเดาดู ผิดได้ไม่เป็นไรครับ 😄",
-        "expectedSpeech": "It's yours."
-      },
-      {
-        "kind": "choice",
-        "text": "ถูกต้อง! พูดว่า “It's yours.” ครับ 🧢 ทีนี้ Capy ถือหนังสือของ Max แล้วถามว่า “Whose is this?” 📕 คุณตอบว่าอะไรดีครับ?",
-        "expectedSpeech": "It's Max's.",
-        "answerMode": "single",
-        "stem": "It's ...",
-        "options": [
-          {
-            "emoji": "👦",
-            "label": "Max's",
-            "speak": "It's Max's."
-          },
-          {
-            "emoji": "🙋",
-            "label": "mine",
-            "speak": "It's mine."
-          }
-        ],
-        "successText": "It's Max's. = ของ Max 📕 Max รีบมาเอาคืนเลย 😆",
-        "incorrectHintTh": "เกือบแล้ว! หนังสือของ Max → It's Max's. ครับ"
-      },
-      {
-        "kind": "task",
-        "text": "เจอโทรศัพท์บนโต๊ะ 📱 ลองถาม Capy ว่าโทรศัพท์นี้ของ Capy ใช่ไหม (ใช้ yours นะครับ) ท้าเลย! ถามเองดูครับ",
-        "expectedSpeech": "Is this phone yours?"
+        "successText": "It's yours. แปลว่า “ของเธอ” ครับ\n",
+        "incorrectHintTh": "เกือบแล้ว! ของคนที่เราคุยด้วย พูดว่า It's yours. ครับ"
       },
       {
         "kind": "listen",
-        "text": "เป๊ะเลย! ถามว่า “Is this phone yours?” ครับ 👍 Capy ตอบว่า “No, it's not mine. It's May's.” = ไม่ใช่ของฉัน ของ May 📱"
+        "text": "ถ้าเป็นของคนที่มีชื่อ เติม 's หลังชื่อ\nIt's May's. แปลว่า “ของ May” · It's Max's. แปลว่า “ของ Max”"
+      },
+      {
+        "kind": "task",
+        "text": "Capy ชูกุญแจห้องเก็บของแล้วถามว่า Whose is this? 🔑 คุณรู้ว่าเป็นของ May ตอบ Capy ว่าอะไรครับ?",
+        "expectedSpeech": "It's May's.",
+        "successText": "It's May's. แปลว่า “ของ May” ครับ\n",
+        "incorrectHintTh": "ลองใช้ชื่อ + 's ครับ: It's May…"
+      },
+      {
+        "kind": "task",
+        "text": "ถ้าอยากถามว่า “ของเธอใช่ไหม” ใช้ Is this … yours?\nเจอโทรศัพท์บนโต๊ะ 📱 ลองถาม Capy ว่า Is this phone yours? ครับ",
+        "expectedSpeech": "Is this phone yours?",
+        "successText": "Capy ตอบว่า No, it's not mine. It's May's. แปลว่า “ไม่ใช่ของฉัน ของ May” ครับ\n"
       },
       {
         "kind": "choice",
-        "text": "May ชี้กระเป๋าบนโซฟาแล้วถามคุณ “Whose is this bag?” 🎒 ตอบได้ตามใจเลยครับ",
-        "expectedSpeech": "It's mine.",
-        "answerMode": "any",
-        "stem": "It's ...",
+        "text": "May ชี้กระเป๋าบนโซฟาแล้วถามว่า Is this bag yours? 🎒 กระเป๋านั้นไม่ใช่ของคุณ ตอบว่าอะไรครับ?",
+        "expectedSpeech": "No, it's not mine.",
+        "answerMode": "single",
+        "stem": "...",
         "options": [
           {
-            "emoji": "🙋",
-            "label": "mine",
-            "speak": "It's mine."
-          },
-          {
             "emoji": "🙅",
-            "label": "not mine",
-            "speak": "It's not mine."
+            "label": "No, it's not mine.",
+            "speak": "No, it's not mine."
           },
           {
-            "emoji": "👦",
-            "label": "Max's",
-            "speak": "It's Max's."
+            "emoji": "🙋",
+            "label": "Yes, it's mine.",
+            "speak": "Yes, it's mine."
           }
         ],
-        "successText": "เท่มาก! พูดเรื่องตัวเองได้เป๊ะเลย 😎"
+        "successText": "No, it's not mine. แปลว่า “ไม่ใช่ ไม่ใช่ของฉัน” ครับ\n",
+        "incorrectHintTh": "เกือบแล้ว! ไม่ใช่ของเรา พูดว่า No, it's not mine. ครับ"
       },
       {
         "kind": "finish",
-        "text": "จบบทแล้ว 🎉 ตอนนี้คุณถามหาเจ้าของและตอบได้ “Whose is this?” · “It's mine.” · “Is this phone yours?” · “It's May's.” บทหน้ามีงานต้อนรับสมาชิกใหม่ แล้วครูบีก็มีภารกิจตามหาใครบางคน 👀"
+        "text": "วันนี้คุณถามหาเจ้าของและตอบได้แล้ว: Whose is this? · It's mine. · It's yours. · It's May's.\nบทหน้ามีงานต้อนรับสมาชิกใหม่ ครูบีต้องตามหาใครบางคน 👀"
       }
     ]
   },
   "a2_c04n02": {
     "titleEn": "She Has Long Black Hair",
     "titleTh": "เธอผมยาวสีดำ",
-    "goalTh": "บรรยายหน้าตาคน 👉 He has a beard. · She has long black hair. · ___ is wearing glasses. · He looks happy.",
+    "goalTh": "บรรยายรูปร่างทีละขั้นด้วย is tall · has a beard · has long black hair · is wearing glasses",
     "estimatedMinutes": [
       3,
       5
     ],
-    "scope": "บรรยายคนด้วย has / is / is wearing · ประโยคจากคำ 4.1: He's tall. · Capy is short. · He has a beard. · Teacher Bee is wearing glasses. · 🧩 เรียงคำคุณศัพท์ ยาว/สั้น → ลักษณะ → สี: long black hair · short curly hair · straight hair (ไม่ใช่ hair long black) · look + คุณศัพท์ He looks happy. (ไม่ต้องมี like)",
+    "scope": "บรรยายรูปร่างทีละขั้น: ส่วนสูงใช้ is (He is tall. · Capy is short.) → สิ่งที่มีบนตัวใช้ has (He has a beard.) → ผม เรียง ยาว/สั้น → ลักษณะ/สี → hair (She has long black hair. · Mali has short curly hair. · straight hair ไม่ใช่ hair long black) → ของที่ใส่ใช้วลี is wearing (Teacher Bee is wearing glasses.) · look + คุณศัพท์ He looks happy. (ไม่ต้องมี like)",
     "blocks": [],
     "recall": {
-      "promptTh": "บรรยายหน้าตาคน 👉 He has a beard. · She has long black hair. · ___ is wearing glasses. · He looks happy.",
-      "answerEn": "Yes, I have long black hair."
+      "promptTh": "บรรยายรูปร่างทีละขั้นด้วย is tall · has a beard · has long black hair · is wearing glasses",
+      "answerEn": "I have short black hair."
     },
     "flow": [
       {
+        "kind": "listen",
+        "text": "งานต้อนรับสมาชิกใหม่ครับ 🎉 ครูบีให้ช่วยตามหา Mali เลยต้องบรรยายคนให้เป็น 👀\nบอกส่วนสูง ใช้ is\nHe is tall. แปลว่า “เขาตัวสูง” · Capy is short. แปลว่า “Capy ตัวเตี้ย”"
+      },
+      {
         "kind": "choice",
-        "text": "ทายเล่น ๆ ครับ 🧔 อันนี้คืออะไรเอ่ย? เลือกแล้วพูดเลย",
-        "expectedSpeech": "beard",
+        "text": "ผู้ชายข้างประตูสูงจนเกือบชนขอบประตู 🦒 จะบอกครูบีว่าอะไรครับ?",
+        "expectedSpeech": "He is tall.",
         "answerMode": "single",
-        "stem": "🧔 = ...",
+        "stem": "He is ...",
         "options": [
           {
-            "emoji": "🔤",
+            "emoji": "🦒",
             "label": "tall",
-            "speak": "tall"
+            "speak": "He is tall."
           },
           {
-            "emoji": "🔤",
+            "emoji": "🐭",
             "label": "short",
-            "speak": "short"
-          },
-          {
-            "emoji": "🔤",
-            "label": "glasses",
-            "speak": "glasses"
-          },
-          {
-            "emoji": "🔤",
-            "label": "beard",
-            "speak": "beard"
+            "speak": "He is short."
           }
         ],
-        "successText": "beard = เครา 🧔 เท่ไปอีกแบบ",
-        "incorrectHintTh": "🧔 คือ beard = เครา ครับ (tall = สูง · short = เตี้ย สั้น · glasses = แว่นตา)"
+        "successText": "He is tall. แปลว่า “เขาตัวสูง” ครับ\n",
+        "incorrectHintTh": "เกือบแล้ว! ตัวสูงคือ tall ครับ พูดว่า He is tall."
       },
       {
-        "kind": "choice",
-        "text": "งานต้อนรับสมาชิกใหม่ครับ 🎉 ครูบีให้ช่วยตามหา Mali เลยต้องบรรยายคนให้เป็น 👀 ผู้ชายคนนั้นมีเคราเต็มคาง ไม่ได้ใส่แว่น 🧔 คุณบอกครูบีว่าอะไรดีครับ?",
-        "expectedSpeech": "He has a beard.",
-        "answerMode": "single",
-        "stem": "He ...",
-        "options": [
-          {
-            "emoji": "🧔",
-            "label": "has a beard",
-            "speak": "He has a beard."
-          },
-          {
-            "emoji": "👓",
-            "label": "is wearing glasses",
-            "speak": "He is wearing glasses."
-          }
-        ],
-        "successText": "He has a beard. = เขามีเครา 🧔 ตาไวมาก!",
-        "incorrectHintTh": "เกือบแล้ว! เขาไม่ได้ใส่แว่น แต่มีเครา → He has a beard."
+        "kind": "listen",
+        "text": "บอกสิ่งที่มีบนตัวเขา ใช้ has\nHe has a beard. แปลว่า “เขามีเครา” 🧔"
       },
       {
         "kind": "task",
-        "text": "ใส่อะไรอยู่ 👉 ___ is wearing ___ 👓 “Teacher Bee is wearing glasses.” = ครูบีใส่แว่นอยู่ ลองพูดตามครับ",
-        "expectedSpeech": "Teacher Bee is wearing glasses."
+        "text": "ลองพูดตามครับ\nHe has a beard.",
+        "expectedSpeech": "He has a beard."
       },
       {
-        "kind": "task",
-        "text": "บรรยายผม ใช้ท่านี้ 👉 She has + ยาว/สั้น + สี + hair 💁‍♀️ “She has long black hair.” = เธอผมยาวสีดำ ลองพูดตามครับ",
-        "expectedSpeech": "She has long black hair."
+        "kind": "listen",
+        "text": "บรรยายผม เรียง ยาว/สั้น → ลักษณะหรือสี → hair\nShe has long black hair. แปลว่า “เธอผมยาวสีดำ” 💁‍♀️\nMali has short curly hair. แปลว่า “Mali ผมสั้นหยิก” 👩‍🦱"
       },
       {
         "kind": "choice",
-        "text": "ผู้หญิงที่ยืนข้างเวทีผมยาวถึงหลัง สีดำสนิท 💁‍♀️ คุณบอกครูบีว่าอะไรดีครับ?",
+        "text": "ผู้หญิงที่ยืนข้างเวทีผมยาวถึงหลัง สีดำสนิท 💁‍♀️ จะบอกครูบีว่าอะไรครับ?",
         "expectedSpeech": "She has long black hair.",
         "answerMode": "single",
         "stem": "She has ... hair.",
         "options": [
           {
-            "emoji": "💁‍♀️",
+            "emoji": "✅",
             "label": "long black",
             "speak": "She has long black hair."
           },
           {
-            "emoji": "✂️",
-            "label": "short black",
-            "speak": "She has short black hair."
+            "emoji": "🔀",
+            "label": "black long",
+            "speak": "She has black long hair."
           }
         ],
-        "successText": "She has long black hair. = เธอผมยาวสีดำ 💁‍♀️ สวยเลย!",
-        "incorrectHintTh": "เกือบแล้ว! ผมยาวถึงหลังคือ long ครับ → She has long black hair."
+        "successText": "She has long black hair. แปลว่า “เธอผมยาวสีดำ” ครับ\n",
+        "incorrectHintTh": "เกือบแล้ว! บอกความยาวก่อนสี พูดว่า She has long black hair. ครับ"
       },
       {
         "kind": "task",
-        "text": "ดูเป็นยังไง 👉 He looks ___ 😊 “He looks happy.” = เขาดูมีความสุข ลองพูดตามครับ",
-        "expectedSpeech": "He looks happy."
+        "text": "ครูบีถามว่า Mali ผมแบบไหน 👩‍🦱 ตอบครูบีว่าอะไรครับ?",
+        "expectedSpeech": "Mali has short curly hair.",
+        "successText": "Mali has short curly hair. แปลว่า “Mali ผมสั้นหยิก” ครับ\n",
+        "incorrectHintTh": "ลองเริ่มด้วย Mali has short … ครับ"
+      },
+      {
+        "kind": "listen",
+        "text": "ถ้าบอกว่าใส่อะไรอยู่ เช่น แว่น เสื้อ ใช้วลี is wearing\nTeacher Bee is wearing glasses. แปลว่า “ครูบีใส่แว่นอยู่” 👓"
       },
       {
         "kind": "task",
-        "text": "Mali ผมสั้นหยิก ๆ 👩‍🦱 ช่วยบรรยาย Mali ให้คนในงานช่วยหาหน่อย ลองเดาดู ผิดได้ไม่เป็นไรครับ 😄",
-        "expectedSpeech": "Mali has short curly hair."
+        "text": "ลองพูดตามครับ\nTeacher Bee is wearing glasses.",
+        "expectedSpeech": "Teacher Bee is wearing glasses."
       },
       {
         "kind": "choice",
-        "text": "เก่งมาก! พูดว่า “Mali has short curly hair.” ครับ 👩‍🦱 ทีนี้ Max ยิ้มแก้มปริทั้งงาน 😄 (เพราะเจอโต๊ะขนม 🍰) คุณพูดถึง Max ว่าอะไรดีครับ?",
-        "expectedSpeech": "He looks happy.",
+        "text": "บอกว่าดูเป็นยังไง ใช้ looks + คำบอกอารมณ์ (ไม่ต้องมี like)\nMax ยิ้มแก้มปริเพราะเจอโต๊ะขนม 😄🍰 จะพูดถึง Max ว่าอะไรครับ?",
+        "expectedSpeech": "Max looks happy.",
         "answerMode": "single",
-        "stem": "He looks ...",
+        "stem": "Max looks ...",
         "options": [
           {
             "emoji": "😄",
             "label": "happy",
-            "speak": "He looks happy."
+            "speak": "Max looks happy."
           },
           {
             "emoji": "😴",
             "label": "tired",
-            "speak": "He looks tired."
+            "speak": "Max looks tired."
           }
         ],
-        "successText": "He looks happy. = เขาดูมีความสุข 😄 ก็ของกินเพียบนี่นา",
-        "incorrectHintTh": "เกือบแล้ว! ยิ้มแก้มปริคือดูมีความสุข → He looks happy."
-      },
-      {
-        "kind": "task",
-        "text": "ลองถามครูบีว่า Mali ใส่แว่นอยู่ไหม 👓 (ขึ้นต้นด้วย Is Mali… นะครับ) ท้าเลย! ถามเองดูครับ",
-        "expectedSpeech": "Is Mali wearing glasses?"
-      },
-      {
-        "kind": "listen",
-        "text": "สุดยอด! ถามว่า “Is Mali wearing glasses?” ครับ 👍 ครูบีตอบว่า “No, she isn't. She has short curly hair.” = ไม่ได้ใส่ เธอผมสั้นหยิก 👩‍🦱"
+        "successText": "Max looks happy. แปลว่า “Max ดูมีความสุข” ครับ\n",
+        "incorrectHintTh": "เกือบแล้ว! ยิ้มแก้มปริคือ happy ครับ พูดว่า Max looks happy."
       },
       {
         "kind": "choice",
-        "text": "ครูบีถามคุณบ้าง “Do you have long hair?” ตอบตามจริงเลยครับ",
-        "expectedSpeech": "Yes, I have long black hair.",
+        "text": "คราวนี้บรรยายตัวเองตามจริงครับ ผมของคุณเป็นแบบไหน? 💇",
+        "expectedSpeech": "I have short black hair.",
         "answerMode": "any",
-        "stem": "I have ...",
+        "stem": "I have ... hair.",
         "options": [
           {
-            "emoji": "💁‍♀️",
-            "label": "long black hair",
-            "speak": "Yes, I have long black hair."
+            "emoji": "💁",
+            "label": "long black",
+            "speak": "I have long black hair.",
+            "recapText": "I have long black hair. แปลว่า “ฉันผมยาวสีดำ” ครับ\n"
           },
           {
-            "emoji": "✂️",
-            "label": "short hair",
-            "speak": "No, I have short hair."
+            "emoji": "💇",
+            "label": "short black",
+            "speak": "I have short black hair.",
+            "recapText": "I have short black hair. แปลว่า “ฉันผมสั้นสีดำ” ครับ\n"
           },
           {
             "emoji": "👩‍🦱",
-            "label": "short curly hair",
-            "speak": "No, I have short curly hair."
+            "label": "short curly",
+            "speak": "I have short curly hair.",
+            "recapText": "I have short curly hair. แปลว่า “ฉันผมสั้นหยิก” ครับ\n"
           }
         ],
-        "successText": "สุดยอด! Capy ปรบมือให้เลย 👏"
+        "extraAnswers": [
+          {
+            "speak": "I have short hair.",
+            "recapText": "I have short hair. แปลว่า “ฉันผมสั้น” ครับ\n"
+          },
+          {
+            "speak": "I have long hair.",
+            "recapText": "I have long hair. แปลว่า “ฉันผมยาว” ครับ\n"
+          }
+        ]
       },
       {
         "kind": "finish",
-        "text": "จบบทแล้ว 🎉 ตอนนี้คุณบรรยายคนได้ “She has long black hair.” · “He has a beard.” · “Teacher Bee is wearing glasses.” · “He looks happy.” บทหน้ายังตามหา Mali ต่อ ลองถามคนในงานว่าเธอหน้าตาแบบไหน 👀"
+        "text": "วันนี้คุณบรรยายคนได้แล้ว: He is tall. · He has a beard. · She has long black hair. · Teacher Bee is wearing glasses.\nบทหน้ายังตามหา Mali ต่อ ลองถามคนในงานว่าเธอหน้าตาแบบไหน 👀"
       }
     ]
   },
   "a2_c04n05": {
     "titleEn": "What Does He Look Like?",
     "titleTh": "เขาหน้าตาแบบไหน",
-    "goalTh": "ถามหน้าตาคน และชี้ตัวคนในงาน 👉 What does ___ look like? · The ___ with ___ is ___. · Who's the ___ with ___?",
+    "goalTh": "ถามหน้าตาด้วย What does … look like? และชี้คนด้วย the man with glasses · Who's the … with …?",
     "estimatedMinutes": [
       3,
       5
     ],
-    "scope": "❓ ถามรูปร่างและถามว่าเป็นใคร What does he look like? · Who's the girl in the red dress? · ชี้คนด้วย 🧩 the man who… · the woman with… · ประโยคจากคำ 4.4: What does the man look like? — He's tall and he has a beard. · Who's the boy with curly hair? · The woman who has short hair is Mali. · The girl with long black hair is May.",
+    "scope": "❓ ถามหน้าตา What does he / she look like? (คนละเรื่องกับ What does he like?) · ชี้คนเป็นก้อน 🧩 the man with glasses · the girl with long black hair · the woman in the red shirt · ถามว่าใคร Who's the man with glasses? · บอกว่าใครคือใคร The girl with long black hair is May. · ประโยคจากคำ 4.4: What does the man look like? — He's tall and he has a beard. · Who's the boy with curly hair? · The woman with short curly hair is Mali. · The girl with long black hair is May.",
     "blocks": [],
     "recall": {
-      "promptTh": "ถามหน้าตาคน และชี้ตัวคนในงาน 👉 What does ___ look like? · The ___ with ___ is ___. · Who's the ___ with ___?",
+      "promptTh": "ถามหน้าตาด้วย What does … look like? และชี้คนด้วย the man with glasses · Who's the … with …?",
       "answerEn": "I'm tall and I have short hair."
     },
     "flow": [
       {
-        "kind": "choice",
-        "text": "ทายเล่น ๆ ครับ 👦 นี่คือใครเอ่ย? เลือกแล้วพูดเลย",
-        "expectedSpeech": "boy",
-        "answerMode": "single",
-        "stem": "👦 = ...",
-        "options": [
-          {
-            "emoji": "🔤",
-            "label": "man",
-            "speak": "man"
-          },
-          {
-            "emoji": "🔤",
-            "label": "woman",
-            "speak": "woman"
-          },
-          {
-            "emoji": "🔤",
-            "label": "boy",
-            "speak": "boy"
-          },
-          {
-            "emoji": "🔤",
-            "label": "girl",
-            "speak": "girl"
-          }
-        ],
-        "successText": "boy = เด็กผู้ชาย 👦 ถูกต้อง!",
-        "incorrectHintTh": "👦 คือ boy = เด็กผู้ชาย ครับ (man = ผู้ชาย · woman = ผู้หญิง · girl = เด็กผู้หญิง)"
+        "kind": "listen",
+        "text": "ยังตามหา Mali ไม่เจอเลย 👀 อยากรู้ว่าเธอหน้าตาเป็นยังไง\nถามว่า What does she look like? แปลว่า “เธอหน้าตาเป็นยังไง”\n(ถ้าเป็นผู้ชาย ใช้ What does he look like?)"
       },
       {
         "kind": "task",
-        "text": "ยังตามหา Mali ไม่เจอเลย 👀 อยากรู้ว่าหน้าตาเป็นยังไง ใช้ท่านี้ 👉 What does ___ look like? “What does she look like?” = เธอหน้าตาเป็นยังไง ลองถามครูบีดูครับ",
-        "expectedSpeech": "What does she look like?"
-      },
-      {
-        "kind": "listen",
-        "text": "ครูบีตอบว่า “She has short curly hair.” = เธอผมสั้นหยิก ๆ 👩‍🦱 จำไว้นะ!"
+        "text": "ลองถามครูบีว่า What does she look like? ครับ",
+        "expectedSpeech": "What does she look like?",
+        "successText": "ครูบีตอบว่า She has short curly hair. แปลว่า “เธอผมสั้นหยิก” จำไว้นะ 👩‍🦱\n"
       },
       {
         "kind": "choice",
-        "text": "มีผู้ชายคนหนึ่งเดินมาทักครูบี 🧍‍♂️ คุณอยากรู้ว่าหน้าตาเขาเป็นยังไง (ไม่ได้อยากรู้ว่าเขาชอบอะไรนะ) ถามว่าอะไรดีครับ?",
+        "text": "มีผู้ชายคนหนึ่งเดินมาทักครูบี 🧍‍♂️ คุณอยากรู้ว่าหน้าตาเขาเป็นยังไง (ไม่ได้อยากรู้ว่าเขาชอบอะไร) ถามว่าอะไรครับ?",
         "expectedSpeech": "What does he look like?",
         "answerMode": "single",
         "stem": "...",
@@ -1477,17 +1283,21 @@
             "speak": "What does he like?"
           }
         ],
-        "successText": "What does he look like? = เขาหน้าตาเป็นยังไง 👀 ถามตรงจุด!",
-        "incorrectHintTh": "เกือบแล้ว! อยากรู้หน้าตา ต้องมี look like ครับ → What does he look like? (What does he like? = เขาชอบอะไร)"
+        "successText": "What does he look like? แปลว่า “เขาหน้าตาเป็นยังไง” ครับ\n",
+        "incorrectHintTh": "เกือบแล้ว! ถามหน้าตาต้องมี look ครับ พูดว่า What does he look like?"
+      },
+      {
+        "kind": "listen",
+        "text": "ชี้คนในงานง่าย ๆ ใช้ the + คน + with + ลักษณะ\nthe man with glasses แปลว่า “ผู้ชายที่ใส่แว่น” 👓\nthe girl with long black hair แปลว่า “เด็กผู้หญิงผมยาวสีดำ”\nถามว่าคือใคร: Who's the man with glasses?"
       },
       {
         "kind": "task",
-        "text": "ชี้คนในงานง่าย ๆ ใช้ท่านี้ 👉 The ___ with ___ is ___. 👧🎒 “The girl with a bag is May.” = เด็กผู้หญิงที่ถือกระเป๋าคือ May ลองพูดตามครับ",
-        "expectedSpeech": "The girl with a bag is May."
+        "text": "ลองพูดตามครับ\nWho's the man with glasses?",
+        "expectedSpeech": "Who's the man with glasses?"
       },
       {
         "kind": "choice",
-        "text": "มีเด็กผู้ชายผมหยิกยืนกินเค้กอยู่มุมห้อง 👦🍰 คุณอยากรู้ว่าเขาเป็นใคร ถามครูบีว่าอะไรดีครับ?",
+        "text": "มีเด็กผู้ชายผมหยิกยืนกินเค้กอยู่มุมห้อง 👦🍰 อยากรู้ว่าเขาเป็นใคร ถามครูบีว่าอะไรครับ?",
         "expectedSpeech": "Who's the boy with curly hair?",
         "answerMode": "single",
         "stem": "Who's the ... with curly hair?",
@@ -1503,134 +1313,107 @@
             "speak": "Who's the girl with curly hair?"
           }
         ],
-        "successText": "Who's the boy with curly hair? = เด็กผู้ชายผมหยิกคือใคร 👦 สงสัยจะเป็นสมาชิกใหม่!",
-        "incorrectHintTh": "เกือบแล้ว! เด็กผู้ชายคือ boy ครับ → Who's the boy with curly hair?"
-      },
-      {
-        "kind": "task",
-        "text": "ครูบีถามว่า Max อยู่ไหน 🤔 ชี้ให้ครูบีดูหน่อย Max ผมสั้นยุ่ง ๆ 👦 ใช้ with นะ ลองเดาดู ผิดได้ไม่เป็นไรครับ 😄",
-        "expectedSpeech": "The boy with short hair is Max."
-      },
-      {
-        "kind": "choice",
-        "text": "ใช่เลย! พูดว่า “The boy with short hair is Max.” ครับ 👦 แล้วนั่นไง! ผู้หญิงผมสั้นผูกผ้าพันคอสีเหลือง 👩💛 Mali แน่ ๆ ชี้ให้ครูบีดูว่าอะไรดีครับ?",
-        "expectedSpeech": "The woman with short hair is Mali.",
-        "answerMode": "single",
-        "stem": "The woman with ... is Mali.",
-        "options": [
-          {
-            "emoji": "✂️",
-            "label": "short hair",
-            "speak": "The woman with short hair is Mali."
-          },
-          {
-            "emoji": "💁‍♀️",
-            "label": "long black hair",
-            "speak": "The woman with long black hair is Mali."
-          }
-        ],
-        "successText": "The woman with short hair is Mali. = ผู้หญิงผมสั้นคือ Mali 👩 เจอแล้ว! 🎉",
-        "incorrectHintTh": "เกือบแล้ว! Mali ผมสั้นนะ → The woman with short hair is Mali."
-      },
-      {
-        "kind": "task",
-        "text": "มีผู้ชายมีเคราเดินมาทักครูบี 🧔 ลองถามครูบีว่าเขาคือใคร ท้าเลย! ถามเองดูครับ",
-        "expectedSpeech": "Who's the man with a beard?"
+        "successText": "Who's the boy with curly hair? แปลว่า “เด็กผู้ชายผมหยิกคือใคร” ครับ\n",
+        "incorrectHintTh": "เกือบแล้ว! เด็กผู้ชายคือ boy ครับ พูดว่า Who's the boy with curly hair?"
       },
       {
         "kind": "listen",
-        "text": "ชัดมาก! ถามว่า “Who's the man with a beard?” ครับ 👍 ครูบีตอบว่า “He's a new friend in our club. He's very kind!” = เขาเป็นเพื่อนใหม่ในชมรมเรา ใจดีมากเลย"
+        "text": "บอกว่าใครคือใคร ใช้ The … with … is …\nThe girl with long black hair is May. แปลว่า “เด็กผู้หญิงผมยาวสีดำคือ May”"
+      },
+      {
+        "kind": "task",
+        "text": "ครูบีถามว่า Max อยู่ไหน 🤔 Max เป็นเด็กผู้ชายผมสั้น 👦 ชี้ให้ครูบีดู จะพูดว่าอะไรครับ?",
+        "expectedSpeech": "The boy with short hair is Max.",
+        "successText": "The boy with short hair is Max. แปลว่า “เด็กผู้ชายผมสั้นคือ Max” ครับ\n",
+        "incorrectHintTh": "ลองใช้ The boy with … is Max. ครับ"
       },
       {
         "kind": "choice",
-        "text": "ครูบีถามคุณบ้าง “What do you look like?” บรรยายตัวเองเลยครับ",
+        "text": "นั่นไง! มีผู้หญิงใส่เสื้อแดงสองคน 👚👚 คนหนึ่งใส่แว่น อีกคนผมสั้นหยิก Mali ผมสั้นหยิก! ชี้ให้ครูบีดูว่าอะไรครับ?",
+        "expectedSpeech": "The woman with short curly hair is Mali.",
+        "answerMode": "single",
+        "stem": "The woman ... is Mali.",
+        "options": [
+          {
+            "emoji": "👩‍🦱",
+            "label": "with short curly hair",
+            "speak": "The woman with short curly hair is Mali."
+          },
+          {
+            "emoji": "👚",
+            "label": "in the red shirt",
+            "speak": "The woman in the red shirt is Mali."
+          }
+        ],
+        "successText": "The woman with short curly hair is Mali. แปลว่า “ผู้หญิงผมสั้นหยิกคือ Mali” ครับ\n",
+        "incorrectHintTh": "ทั้งสองคนใส่เสื้อแดงครับ ต้องใช้ผมช่วยแยก พูดว่า The woman with short curly hair is Mali."
+      },
+      {
+        "kind": "choice",
+        "text": "ครูบีถามคุณบ้าง What do you look like? บรรยายตัวเองตามจริงครับ",
         "expectedSpeech": "I'm tall and I have short hair.",
         "answerMode": "any",
         "stem": "I ...",
         "options": [
           {
-            "emoji": "📏",
+            "emoji": "🦒",
             "label": "tall, short hair",
-            "speak": "I'm tall and I have short hair."
+            "speak": "I'm tall and I have short hair.",
+            "recapText": "I'm tall and I have short hair. แปลว่า “ฉันตัวสูงและผมสั้น” ครับ\n"
           },
           {
-            "emoji": "💁‍♀️",
+            "emoji": "💁",
             "label": "long black hair",
-            "speak": "I have long black hair."
+            "speak": "I have long black hair.",
+            "recapText": "I have long black hair. แปลว่า “ฉันผมยาวสีดำ” ครับ\n"
           },
           {
             "emoji": "👓",
             "label": "short, glasses",
-            "speak": "I'm short and I'm wearing glasses."
+            "speak": "I'm short and I'm wearing glasses.",
+            "recapText": "I'm short and I'm wearing glasses. แปลว่า “ฉันตัวเตี้ยและใส่แว่น” ครับ\n"
           }
         ],
-        "successText": "ดีมาก! คุยกันได้จริงแล้วนะ 🤝"
+        "extraAnswers": [
+          {
+            "speak": "I have short hair.",
+            "recapText": "I have short hair. แปลว่า “ฉันผมสั้น” ครับ\n"
+          }
+        ]
       },
       {
         "kind": "finish",
-        "text": "จบบทแล้ว 🎉 ตอนนี้คุณถามและชี้คนในงานได้ “What does she look like?” · “The woman with short hair is Mali.” · “Who's the man with a beard?” เจอ Mali แล้ว บทหน้ามาดูกันว่าแต่ละคนนิสัยเป็นยังไง 😄"
+        "text": "วันนี้คุณถามหน้าตาและชี้คนในงานได้แล้ว: What does she look like? · Who's the man with glasses? · The woman with short curly hair is Mali.\nเจอ Mali แล้ว บทหน้ามาดูกันว่าแต่ละคนนิสัยเป็นยังไง 😄"
       }
     ]
   },
   "a2_c04n08": {
     "titleEn": "What Is She Like?",
     "titleTh": "นิสัยเป็นยังไง",
-    "goalTh": "ถามว่าใครนิสัยเป็นยังไง 👉 What is ___ like? และตอบด้วย friendly · funny · shy · kind",
+    "goalTh": "ถามนิสัยด้วย What is … like? และตอบ friendly · funny · shy · kind จากสิ่งที่เขาทำ",
     "estimatedMinutes": [
       3,
       5
     ],
-    "scope": "❓ ถามนิสัย What is she like? (ต่างจาก What does she look like? = หน้าตา) · ตอบด้วยคำจาก 4.7: Mali is friendly. · Capy is funny. · May is a bit shy. · Teacher Bee is very kind.",
+    "scope": "❓ ถามนิสัย What is she like? (คนละเรื่องกับ What does she look like? = หน้าตา) · ตอบด้วยคำจาก 4.7 โดยดูจากสิ่งที่เขาทำ ไม่ใช่หน้าตา: Mali is friendly. · Capy is funny. · May is a bit shy. · Teacher Bee is very kind.",
     "blocks": [],
     "recall": {
-      "promptTh": "ถามว่าใครนิสัยเป็นยังไง 👉 What is ___ like? และตอบด้วย friendly · funny · shy · kind",
+      "promptTh": "ถามนิสัยด้วย What is … like? และตอบ friendly · funny · shy · kind จากสิ่งที่เขาทำ",
       "answerEn": "My friend is funny."
     },
     "flow": [
       {
-        "kind": "choice",
-        "text": "ทายเล่น ๆ ครับ 😂 หน้านี้บอกนิสัยแบบไหนเอ่ย? เลือกแล้วพูดเลย",
-        "expectedSpeech": "funny",
-        "answerMode": "single",
-        "stem": "😂 = ...",
-        "options": [
-          {
-            "emoji": "🔤",
-            "label": "friendly",
-            "speak": "friendly"
-          },
-          {
-            "emoji": "🔤",
-            "label": "funny",
-            "speak": "funny"
-          },
-          {
-            "emoji": "🔤",
-            "label": "shy",
-            "speak": "shy"
-          },
-          {
-            "emoji": "🔤",
-            "label": "kind",
-            "speak": "kind"
-          }
-        ],
-        "successText": "funny = ตลก 😂 เหมือน Capy เลย",
-        "incorrectHintTh": "😂 คือ funny = ตลก ครับ (friendly = เป็นมิตร · shy = ขี้อาย · kind = ใจดี)"
+        "kind": "listen",
+        "text": "เจอ Mali แล้ว! ทีนี้อยากรู้ว่าเธอนิสัยเป็นยังไง 🤝\nถามนิสัย ใช้ What is she like? แปลว่า “เธอนิสัยเป็นยังไง”\nระวัง! What does she look like? ถามหน้าตา · What is she like? ถามนิสัย"
       },
       {
         "kind": "task",
-        "text": "เจอ Mali แล้ว! ทีนี้อยากรู้ว่านิสัยเป็นยังไง 🤝 ใช้ท่านี้ 👉 What is ___ like? “What is she like? — She's friendly.” = เธอนิสัยยังไง เป็นมิตรมาก ลองพูดตามครับ",
-        "expectedSpeech": "What is she like? — She's friendly."
-      },
-      {
-        "kind": "task",
-        "text": "Capy เล่นมุกตลอดทั้งงาน 😂 (มุกเดิมสามรอบแล้ว 😆) “Capy is funny.” = Capy ตลก ลองพูดตามครับ",
-        "expectedSpeech": "Capy is funny."
+        "text": "ลองพูดตามครับ\nWhat is she like?",
+        "expectedSpeech": "What is she like?"
       },
       {
         "kind": "choice",
-        "text": "คุณอยากรู้ว่า Mali นิสัยใจคอเป็นยังไง (หน้าตาเห็นแล้ว 😉) ถาม May ว่าอะไรดีครับ?",
+        "text": "คุณเห็นหน้าตา Mali แล้ว 😉 แต่อยากรู้ว่านิสัยใจคอเป็นยังไง ถาม May ว่าอะไรครับ?",
         "expectedSpeech": "What is she like?",
         "answerMode": "single",
         "stem": "...",
@@ -1642,72 +1425,76 @@
           },
           {
             "emoji": "👀",
-            "label": "look like",
+            "label": "What does she look like?",
             "speak": "What does she look like?"
           }
         ],
-        "successText": "What is she like? = เธอนิสัยเป็นยังไง 🤝 ถามตรงใจ!",
-        "incorrectHintTh": "เกือบแล้ว! อยากรู้นิสัย ถามว่า What is she like? ครับ (look like = ถามหน้าตา)"
+        "successText": "What is she like? แปลว่า “เธอนิสัยเป็นยังไง” ครับ\n",
+        "incorrectHintTh": "เกือบแล้ว! ถามนิสัยใช้ What is she like? ครับ (look like = ถามหน้าตา)"
+      },
+      {
+        "kind": "listen",
+        "text": "May ตอบว่า She's friendly. แปลว่า “เธอเป็นมิตร” 😊 เพราะ Mali ยิ้มทักทายทุกคนในงาน\nตอบนิสัย ใช้ is + friendly · funny · shy · kind"
       },
       {
         "kind": "choice",
-        "text": "Max ถามว่า “What is Mali like?” Mali ยิ้มทักทายทุกคนในงาน 😊 คุณตอบ Max ว่าอะไรดีครับ?",
-        "expectedSpeech": "She's friendly.",
+        "text": "Max เล่นมุกจนทุกคนหัวเราะท้องแข็ง 😂 May ถามว่า What is Max like? ตอบว่าอะไรครับ?",
+        "expectedSpeech": "He's funny.",
         "answerMode": "single",
-        "stem": "She's ...",
+        "stem": "He's ...",
         "options": [
           {
-            "emoji": "😊",
-            "label": "friendly",
-            "speak": "She's friendly."
+            "emoji": "😂",
+            "label": "funny",
+            "speak": "He's funny."
           },
           {
             "emoji": "🙈",
             "label": "shy",
-            "speak": "She's shy."
+            "speak": "He's shy."
           }
         ],
-        "successText": "She's friendly. = เธอเป็นมิตร 😊 ใคร ๆ ก็ชอบ Mali",
-        "incorrectHintTh": "เกือบแล้ว! ยิ้มทักทายทุกคนคือ friendly ครับ → She's friendly."
+        "successText": "He's funny. แปลว่า “เขาตลก” ครับ\n",
+        "incorrectHintTh": "เกือบแล้ว! เล่นมุกจนทุกคนหัวเราะคือ funny ครับ พูดว่า He's funny."
       },
       {
         "kind": "task",
-        "text": "Max เล่นมุกจนทุกคนหัวเราะท้องแข็ง 😂 ช่วยบอกนิสัยของ Max หน่อย ลองเดาดู ผิดได้ไม่เป็นไรครับ 😄",
-        "expectedSpeech": "Max is funny."
+        "text": "เด็กผู้หญิงคนหนึ่งยืนเงียบ ๆ ไม่กล้าพูดกับใคร 🙈 จะบอกว่าเธอนิสัยยังไงครับ?",
+        "expectedSpeech": "She's shy.",
+        "successText": "She's shy. แปลว่า “เธอขี้อาย” ครับ\n",
+        "incorrectHintTh": "ขี้อายคือ shy ครับ ลองพูดว่า She's …"
       },
       {
         "kind": "choice",
-        "text": "ฮาเลย! พูดว่า “Max is funny.” ครับ 😂 คราวนี้ May ถามว่า “What does Mali look like?” (ถามหน้าตานะ) คุณตอบว่าอะไรดีครับ?",
-        "expectedSpeech": "She has short hair.",
+        "text": "May ถามว่า What does Mali look like? (ถามหน้าตานะ) ตอบว่าอะไรครับ?",
+        "expectedSpeech": "She has short curly hair.",
         "answerMode": "single",
         "stem": "She ...",
         "options": [
           {
-            "emoji": "✂️",
-            "label": "short hair",
-            "speak": "She has short hair."
+            "emoji": "👩‍🦱",
+            "label": "has short curly hair",
+            "speak": "She has short curly hair."
           },
           {
-            "emoji": "💛",
-            "label": "kind",
+            "emoji": "💗",
+            "label": "is kind",
             "speak": "She's kind."
           }
         ],
-        "successText": "She has short hair. = เธอผมสั้น 👩 ไม่หลงกลเลย 👏",
-        "incorrectHintTh": "เกือบแล้ว! May ถามหน้าตา ไม่ได้ถามนิสัย → She has short hair."
+        "successText": "She has short curly hair. แปลว่า “เธอผมสั้นหยิก” ครับ\n",
+        "incorrectHintTh": "เกือบแล้ว! look like ถามหน้าตา ตอบว่า She has short curly hair. ครับ"
       },
       {
         "kind": "task",
-        "text": "ลองถาม May ว่าครูบีนิสัยเป็นยังไง 🤔 ท้าเลย! ถามเองดูครับ",
-        "expectedSpeech": "What is Teacher Bee like?"
-      },
-      {
-        "kind": "listen",
-        "text": "เก่งมาก! ถามว่า “What is Teacher Bee like?” ครับ 👍 May ตอบว่า “Teacher Bee is very kind and funny.” = ครูบีใจดีมากและตลกด้วย 💛"
+        "text": "ลองถาม May ว่าครูบีนิสัยเป็นยังไง ใช้ What is … like? ครับ",
+        "expectedSpeech": "What is Teacher Bee like?",
+        "successText": "May ตอบว่า Teacher Bee is very kind and funny. แปลว่า “ครูบีใจดีมากและตลกด้วย” 💛\n",
+        "incorrectHintTh": "ลองพูดว่า What is Teacher Bee … ครับ"
       },
       {
         "kind": "choice",
-        "text": "May ถามคุณบ้าง “What is your friend like?” นึกถึงเพื่อนสนิทแล้วตอบเลยครับ",
+        "text": "May ถามคุณบ้าง What is your friend like? นึกถึงเพื่อนสนิทแล้วตอบครับ",
         "expectedSpeech": "My friend is funny.",
         "answerMode": "any",
         "stem": "My friend is ...",
@@ -1715,29 +1502,32 @@
           {
             "emoji": "😂",
             "label": "funny",
-            "speak": "My friend is funny."
+            "speak": "My friend is funny.",
+            "recapText": "My friend is funny. แปลว่า “เพื่อนฉันตลก” ครับ\n"
           },
           {
-            "emoji": "💛",
+            "emoji": "💗",
             "label": "kind",
-            "speak": "My friend is kind."
+            "speak": "My friend is kind.",
+            "recapText": "My friend is kind. แปลว่า “เพื่อนฉันใจดี” ครับ\n"
           },
           {
             "emoji": "🙈",
             "label": "a bit shy",
-            "speak": "My friend is a bit shy."
+            "speak": "My friend is a bit shy.",
+            "recapText": "My friend is a bit shy. แปลว่า “เพื่อนฉันขี้อายนิดหน่อย” ครับ\n"
           },
           {
             "emoji": "😊",
             "label": "friendly",
-            "speak": "My friend is friendly."
+            "speak": "My friend is friendly.",
+            "recapText": "My friend is friendly. แปลว่า “เพื่อนฉันเป็นมิตร” ครับ\n"
           }
-        ],
-        "successText": "ว้าว! ตอบได้เป็นธรรมชาติมาก 🌟"
+        ]
       },
       {
         "kind": "finish",
-        "text": "จบบทแล้ว 🎉 ตอนนี้คุณถามและเล่าว่าใครนิสัยยังไงได้ “What is she like?” · “She's friendly.” · “Max is funny.” บทหน้าชมรมไปสวนสาธารณะ แต่ Capy หายไปไหนอีกแล้ว? 🌳"
+        "text": "วันนี้คุณถามและบอกนิสัยได้แล้ว: What is she like? · She's friendly. · He's funny. · She's shy.\nบทหน้าชมรมไปสวนสาธารณะ แต่ Capy หายไปไหนอีกแล้ว? 🌳"
       }
     ]
   },

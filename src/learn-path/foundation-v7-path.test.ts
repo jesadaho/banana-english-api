@@ -415,16 +415,17 @@ describe('Foundation V7 progress and completion contracts', () => {
     assert.equal(isFoundationV7SimulationId('foundation_v7_unknown'), false);
   });
 
-  it('shows an on-screen cue on every learner-initiated conversation turn', () => {
+  it('shows an on-screen cue only on turns where the learner must ask', () => {
     const cued: Record<string, string[]> = {
-      foundation_v7_u02n04: ['thank', 'goodbye'],
-      foundation_v7_u09n09: ['time', 'price', 'payment'],
-      foundation_v7_u10n07: ['thank'],
+      foundation_v7_u09n09: ['price'],
       foundation_v7_u11n06: ['ask_cook'],
       foundation_v7_u15n08: ['locate_room', 'locate_bathroom', 'locate_bag'],
       foundation_v7_u14n15: ['identify_person', 'locate_person', 'locate_room'],
       foundation_v7_u14tn21: ['ask_day', 'ask_time', 'ask_price'],
     };
+    for (const id of ['foundation_v7_u02n04', 'foundation_v7_u10n07']) {
+      assert.ok(!getSimulation(id)!.goalHints?.some((h) => h?.cueTh), id);
+    }
     for (const [id, goals] of Object.entries(cued)) {
       const sim = getSimulation(id)!;
       const withCue = sim.successCriteria.filter((_, i) => sim.goalHints?.[i]?.cueTh);
