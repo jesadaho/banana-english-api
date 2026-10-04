@@ -296,12 +296,10 @@ describe('Adventure A2 generator', () => {
     assert.equal(repeat.canSkip, true);
     const gaming = await say('I enjoy baking.');
     assert.equal(gaming.guidedSpeaking?.options.length, 2);
-    const cycling = await say('I enjoy gaming.');
-    assert.match(cycling.textEn, /^ดีครับ I enjoy gaming\. แปลว่า/);
-    assert.equal(cycling.guidedSpeaking, undefined);
-    assert.equal(cycling.canSkip, undefined);
-    const hiking = await say('I enjoy cycling.');
+    const hiking = await say('I enjoy gaming.');
+    assert.match(hiking.textEn, /^ดีครับ I enjoy gaming\. แปลว่า/);
     assert.equal(hiking.expectedSpeech, 'I enjoy hiking.');
+    assert.equal(hiking.guidedSpeaking?.options.length, 4);
     const likeLove = await say('I enjoy hiking.');
     assert.equal(likeLove.expectsUserSpeech, false);
     const pickVerb = await say('(tapped Continue)');

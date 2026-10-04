@@ -16,7 +16,7 @@
     "flow": [
       {
         "kind": "listen",
-        "text": "ยินดีต้อนรับเข้า Adventure Club ครับ! วันนี้มาคุยเรื่อง กิจกรรมสนุกๆกัน\nbake แปลว่า “อบขนม” ถ้าจะพูดถึงกิจกรรมว่า “การอบขนม” ใช้ baking 🧁\nคำนี้ลงท้ายด้วย e เราตัด e แล้วเติม -ing\n\n🧁 bake → baking"
+        "text": "ยินดีต้อนรับสู่ Adventure Club วันนี้มาคุยเรื่องกิจกรรมสนุกๆกันครับ\nbake แปลว่า “อบขนม” ถ้าจะพูดถึงกิจกรรมว่า “การอบขนม” ใช้ baking 🧁\nคำนี้ลงท้ายด้วย e เราตัด e แล้วเติม -ing\n\n🧁 bake → baking"
       },
       {
         "kind": "task",
@@ -45,16 +45,35 @@
         "incorrectHintTh": "เกือบแล้ว! เล่นเกม 🎮 คือ gaming ครับ พูดว่า I enjoy gaming."
       },
       {
-        "kind": "task",
-        "text": "ถ้าคุณสนุกกับการปั่นจักรยานล่ะ? 🚴\ncycle เปลี่ยนเป็น cycling ลองพูดเต็มประโยคครับ",
-        "expectedSpeech": "I enjoy cycling.",
-        "successText": "I enjoy cycling. แปลว่า “ฉันสนุกกับการปั่นจักรยาน” ครับ\n"
-      },
-      {
-        "kind": "task",
+        "kind": "choice",
         "text": "อีกทีมหนึ่งจะไปเดินป่า 🥾 hike เปลี่ยนเป็น hiking\nถ้าคุณสนุกกับการเดินป่า จะพูดว่าอะไรครับ?",
         "expectedSpeech": "I enjoy hiking.",
-        "successText": "I enjoy hiking. แปลว่า “ฉันสนุกกับการเดินป่า” ครับ\n"
+        "answerMode": "single",
+        "stem": "I enjoy ...",
+        "options": [
+          {
+            "emoji": "🎮",
+            "label": "gaming",
+            "speak": "I enjoy gaming."
+          },
+          {
+            "emoji": "🧁",
+            "label": "baking",
+            "speak": "I enjoy baking."
+          },
+          {
+            "emoji": "🚴",
+            "label": "cycling",
+            "speak": "I enjoy cycling."
+          },
+          {
+            "emoji": "🥾",
+            "label": "hiking",
+            "speak": "I enjoy hiking."
+          }
+        ],
+        "successText": "I enjoy hiking. แปลว่า “ฉันสนุกกับการเดินป่า” ครับ\n",
+        "incorrectHintTh": "เกือบแล้ว! เดินป่า 🥾 คือ hiking ครับ พูดว่า I enjoy hiking."
       },
       {
         "kind": "listen",
