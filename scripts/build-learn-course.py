@@ -132,6 +132,29 @@ def missing_describe_images(pool_id, count):
     return [i + 1 for i in range(count) if not (folder / f"{i + 1:02d}.webp").exists()]
 
 
+FLOW_STEP_KEYS = (
+    "kind", "text", "expectedSpeech", "answerMode", "stem", "options",
+    "successText", "incorrectHintTh",
+)
+
+
+def lesson_from_flow(node, ntype):
+    """Authored V7 legacy-flow lesson; the runtime plays `flow` step by step."""
+    flow = node["flow"]
+    steps = [{k: step[k] for k in FLOW_STEP_KEYS if k in step} for step in flow["steps"]]
+    spoken = [s["expectedSpeech"] for s in steps if s.get("expectedSpeech")]
+    return {
+        "titleEn": flow["titleEn"],
+        "titleTh": flow["titleTh"],
+        "goalTh": flow["goalTh"],
+        "estimatedMinutes": MINUTES[ntype],
+        "scope": plain(node["teach"]),
+        "blocks": [],
+        "recall": {"promptTh": flow["goalTh"], "answerEn": spoken[-1] if spoken else node["say"]},
+        "flow": steps,
+    }
+
+
 def build():
     course = json.loads((SRC / "adventure-a2-course.json").read_text())
     overlays = load_overlays()
@@ -282,7 +305,9 @@ def build():
             content_ref["poolId"] = nid
         elif ntype in ("lesson", "pronunciation"):
             spec = overlays.get("lessons", {}).get(code)
-            if spec:
+            if node.get("flow"):
+                out["lessons"][nid] = lesson_from_flow(node, ntype)
+            elif spec:
                 out["lessons"][nid] = {
                     "titleEn": spec.get("titleEn", title_en),
                     "titleTh": spec.get("titleTh", title_th),

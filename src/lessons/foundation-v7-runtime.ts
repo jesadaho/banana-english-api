@@ -64,7 +64,7 @@ export function syllableCountSpeechMatches(expected: string, gotNormalized: stri
 /** Repeat-after-me turns may be skipped; question/answer and choice turns may not. */
 function isSkippableStep(step: V7TeachingStep): boolean {
   return step.expectsUserSpeech
-    && (step.kind === 'model_repeat' || step.kind === 'repeat')
+    && (step.kind === 'model_repeat' || step.kind === 'repeat' || step.skippable === true)
     && !step.presentation?.options.length;
 }
 

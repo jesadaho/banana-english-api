@@ -1,7 +1,7 @@
 {
-  "a2_c01n04": {
+  "a2_c01n03": {
     "title": "Hobby Pictures",
-    "dealCount": 6,
+    "dealCount": 4,
     "items": [
       {
         "emoji": "🎮",
@@ -11,36 +11,6 @@
         "hints": [
           "G… (1 คำ)",
           "gaming"
-        ]
-      },
-      {
-        "emoji": "💃",
-        "answer": "dancing",
-        "hint": "d______",
-        "meaningTh": "การเต้น",
-        "hints": [
-          "D… (1 คำ)",
-          "dancing"
-        ]
-      },
-      {
-        "emoji": "🎨",
-        "answer": "drawing",
-        "hint": "d______",
-        "meaningTh": "การวาดรูป",
-        "hints": [
-          "D… (1 คำ)",
-          "drawing"
-        ]
-      },
-      {
-        "emoji": "🏊",
-        "answer": "swimming",
-        "hint": "s_______",
-        "meaningTh": "การว่ายน้ำ",
-        "hints": [
-          "S… (1 คำ)",
-          "swimming"
         ]
       },
       {
@@ -75,62 +45,51 @@
           "H… (1 คำ)",
           "hiking"
         ]
-      },
-      {
-        "emoji": "📖",
-        "answer": "reading",
-        "hint": "r______",
-        "meaningTh": "การอ่าน",
-        "hints": [
-          "R… (1 คำ)",
-          "reading"
-        ]
       }
     ]
   },
-  "a2_c02n04": {
+  "a2_c02n03": {
     "title": "Daily Pictures",
-    "dealCount": 6,
+    "dealCount": 5,
     "items": [
       {
         "emoji": "🍳",
-        "answer": "have breakfast",
-        "hint": "h___ b________",
-        "meaningTh": "กินอาหารเช้า",
-        "acceptedAnswers": [
-          "eat breakfast"
-        ],
+        "answer": "breakfast",
+        "hint": "b________",
+        "meaningTh": "อาหารเช้า",
         "hints": [
-          "H… (2 คำ)",
-          "have breakfast"
+          "B… (1 คำ)",
+          "breakfast"
         ]
       },
       {
         "emoji": "🚿",
-        "answer": "take a shower",
-        "hint": "t___ a s_____",
-        "meaningTh": "อาบน้ำ",
-        "acceptedAnswers": [
-          "have a shower",
-          "shower"
-        ],
+        "answer": "shower",
+        "hint": "s_____",
+        "meaningTh": "การอาบน้ำ (ฝักบัว)",
         "hints": [
-          "T… (3 คำ)",
-          "take a shower"
+          "S… (1 คำ)",
+          "shower"
         ]
       },
       {
         "emoji": "📚",
-        "answer": "do homework",
-        "hint": "d_ h_______",
-        "meaningTh": "ทำการบ้าน",
-        "acceptedAnswers": [
-          "do my homework",
-          "do the homework"
-        ],
+        "answer": "homework",
+        "hint": "h_______",
+        "meaningTh": "การบ้าน",
         "hints": [
-          "D… (2 คำ)",
-          "do homework"
+          "H… (1 คำ)",
+          "homework"
+        ]
+      },
+      {
+        "emoji": "🍽️",
+        "answer": "dinner",
+        "hint": "d_____",
+        "meaningTh": "อาหารเย็น",
+        "hints": [
+          "D… (1 คำ)",
+          "dinner"
         ]
       },
       {
@@ -144,26 +103,6 @@
         "hints": [
           "M… (3 คำ)",
           "make the bed"
-        ]
-      },
-      {
-        "emoji": "🏋️",
-        "answer": "exercise",
-        "hint": "e_______",
-        "meaningTh": "ออกกำลังกาย",
-        "hints": [
-          "E… (1 คำ)",
-          "exercise"
-        ]
-      },
-      {
-        "emoji": "😌",
-        "answer": "relax",
-        "hint": "r____",
-        "meaningTh": "พักผ่อน",
-        "hints": [
-          "R… (1 คำ)",
-          "relax"
         ]
       }
     ]
@@ -183,79 +122,72 @@
         ]
       },
       {
-        "emoji": "🏊",
-        "answer": "swimming",
-        "hint": "s_______",
-        "meaningTh": "การว่ายน้ำ",
+        "emoji": "🚴",
+        "answer": "cycling",
+        "hint": "c______",
+        "meaningTh": "การปั่นจักรยาน",
+        "acceptedAnswers": [
+          "biking"
+        ],
         "hints": [
-          "S… (1 คำ)",
-          "swimming"
+          "C… (1 คำ)",
+          "cycling"
+        ]
+      },
+      {
+        "emoji": "🥾",
+        "answer": "hiking",
+        "hint": "h_____",
+        "meaningTh": "การเดินป่า",
+        "hints": [
+          "H… (1 คำ)",
+          "hiking"
         ]
       },
       {
         "emoji": "🍳",
-        "answer": "have breakfast",
-        "hint": "h___ b________",
-        "meaningTh": "กินอาหารเช้า",
-        "acceptedAnswers": [
-          "eat breakfast"
-        ],
+        "answer": "breakfast",
+        "hint": "b________",
+        "meaningTh": "อาหารเช้า",
         "hints": [
-          "H… (2 คำ)",
-          "have breakfast"
+          "B… (1 คำ)",
+          "breakfast"
         ]
       },
       {
         "emoji": "🚿",
-        "answer": "take a shower",
-        "hint": "t___ a s_____",
-        "meaningTh": "อาบน้ำ",
-        "acceptedAnswers": [
-          "have a shower",
-          "shower"
-        ],
+        "answer": "shower",
+        "hint": "s_____",
+        "meaningTh": "การอาบน้ำ (ฝักบัว)",
         "hints": [
-          "T… (3 คำ)",
-          "take a shower"
+          "S… (1 คำ)",
+          "shower"
         ]
       },
       {
         "emoji": "📚",
-        "answer": "do homework",
-        "hint": "d_ h_______",
-        "meaningTh": "ทำการบ้าน",
-        "acceptedAnswers": [
-          "do my homework"
-        ],
+        "answer": "homework",
+        "hint": "h_______",
+        "meaningTh": "การบ้าน",
         "hints": [
-          "D… (2 คำ)",
-          "do homework"
-        ]
-      },
-      {
-        "emoji": "💯",
-        "answer": "always",
-        "hint": "a_____",
-        "meaningTh": "เสมอ",
-        "hints": [
-          "A… (1 คำ)",
-          "always"
+          "H… (1 คำ)",
+          "homework"
         ]
       }
     ]
   },
-  "a2_c03n05": {
+  "a2_c03n06": {
     "title": "Home Pictures",
-    "dealCount": 6,
+    "dealCount": 5,
     "items": [
       {
-        "emoji": "🍳",
-        "answer": "kitchen",
-        "hint": "k______",
-        "meaningTh": "ห้องครัว",
+        "emoji": "🏠",
+        "answer": "house",
+        "hint": "h____",
+        "meaningTh": "บ้าน (หลัง)",
         "hints": [
-          "K… (1 คำ)",
-          "kitchen"
+          "H… (1 คำ)",
+          "house"
         ]
       },
       {
@@ -266,16 +198,6 @@
         "hints": [
           "B… (1 คำ)",
           "bedroom"
-        ]
-      },
-      {
-        "emoji": "📺",
-        "answer": "living room",
-        "hint": "l_____ r___",
-        "meaningTh": "ห้องนั่งเล่น",
-        "hints": [
-          "L… (2 คำ)",
-          "living room"
         ]
       },
       {
@@ -319,38 +241,18 @@
       }
     ]
   },
-  "a2_c04n04": {
+  "a2_c04n03": {
     "title": "Look Words",
     "dealCount": 6,
     "items": [
       {
-        "emoji": "🦒",
+        "emoji": "📏",
         "answer": "tall",
         "hint": "t___",
         "meaningTh": "สูง",
         "hints": [
           "T… (1 คำ)",
           "tall"
-        ]
-      },
-      {
-        "emoji": "💁‍♀️",
-        "answer": "long hair",
-        "hint": "l___ h___",
-        "meaningTh": "ผมยาว",
-        "hints": [
-          "L… (2 คำ)",
-          "long hair"
-        ]
-      },
-      {
-        "emoji": "👩‍🦱",
-        "answer": "curly hair",
-        "hint": "c____ h___",
-        "meaningTh": "ผมหยิก",
-        "hints": [
-          "C… (2 คำ)",
-          "curly hair"
         ]
       },
       {
@@ -374,6 +276,26 @@
         ]
       },
       {
+        "emoji": "💁‍♀️",
+        "answer": "long hair",
+        "hint": "l___ h___",
+        "meaningTh": "ผมยาว",
+        "hints": [
+          "L… (2 คำ)",
+          "long hair"
+        ]
+      },
+      {
+        "emoji": "👩‍🦱",
+        "answer": "curly hair",
+        "hint": "c____ h___",
+        "meaningTh": "ผมหยิก",
+        "hints": [
+          "C… (2 คำ)",
+          "curly hair"
+        ]
+      },
+      {
         "emoji": "🖤",
         "answer": "long black hair",
         "hint": "l___ b____ h___",
@@ -391,6 +313,46 @@
     "dealCount": 6,
     "items": [
       {
+        "emoji": "🏞️",
+        "answer": "park",
+        "hint": "p___",
+        "meaningTh": "สวนสาธารณะ",
+        "hints": [
+          "P… (1 คำ)",
+          "park"
+        ]
+      },
+      {
+        "emoji": "🌊",
+        "answer": "lake",
+        "hint": "l___",
+        "meaningTh": "ทะเลสาบ, บึง",
+        "hints": [
+          "L… (1 คำ)",
+          "lake"
+        ]
+      },
+      {
+        "emoji": "🪑",
+        "answer": "bench",
+        "hint": "b____",
+        "meaningTh": "ม้านั่ง",
+        "hints": [
+          "B… (1 คำ)",
+          "bench"
+        ]
+      },
+      {
+        "emoji": "🌳",
+        "answer": "tree",
+        "hint": "t___",
+        "meaningTh": "ต้นไม้",
+        "hints": [
+          "T… (1 คำ)",
+          "tree"
+        ]
+      },
+      {
         "emoji": "🏃",
         "answer": "run",
         "hint": "r__",
@@ -401,59 +363,6 @@
         "hints": [
           "R… (1 คำ)",
           "run"
-        ]
-      },
-      {
-        "emoji": "📖",
-        "answer": "read",
-        "hint": "r___",
-        "meaningTh": "อ่าน",
-        "acceptedAnswers": [
-          "reading"
-        ],
-        "hints": [
-          "R… (1 คำ)",
-          "read"
-        ]
-      },
-      {
-        "emoji": "🍽️",
-        "answer": "eat",
-        "hint": "e__",
-        "meaningTh": "กิน",
-        "acceptedAnswers": [
-          "eating"
-        ],
-        "hints": [
-          "E… (1 คำ)",
-          "eat"
-        ]
-      },
-      {
-        "emoji": "⚽",
-        "answer": "play",
-        "hint": "p___",
-        "meaningTh": "เล่น",
-        "acceptedAnswers": [
-          "playing",
-          "play football"
-        ],
-        "hints": [
-          "P… (1 คำ)",
-          "play"
-        ]
-      },
-      {
-        "emoji": "🏊",
-        "answer": "swim",
-        "hint": "s___",
-        "meaningTh": "ว่ายน้ำ",
-        "acceptedAnswers": [
-          "swimming"
-        ],
-        "hints": [
-          "S… (1 คำ)",
-          "swim"
         ]
       },
       {
@@ -493,6 +402,9 @@
         "answer": "fridge",
         "hint": "f_____",
         "meaningTh": "ตู้เย็น",
+        "acceptedAnswers": [
+          "refrigerator"
+        ],
         "hints": [
           "F… (1 คำ)",
           "fridge"
@@ -519,37 +431,30 @@
         ]
       },
       {
-        "emoji": "🏃",
-        "answer": "Hurry up!",
-        "hint": "H____ u_!",
-        "meaningTh": "เร็วเข้า!",
-        "acceptedAnswers": [
-          "hurry up",
-          "hurry"
-        ],
+        "emoji": "🪑",
+        "answer": "bench",
+        "hint": "b____",
+        "meaningTh": "ม้านั่ง",
         "hints": [
-          "H… (2 คำ)",
-          "Hurry up!"
+          "B… (1 คำ)",
+          "bench"
         ]
       },
       {
-        "emoji": "🎨",
-        "answer": "drawing",
-        "hint": "d______",
-        "meaningTh": "การวาดรูป",
-        "acceptedAnswers": [
-          "painting"
-        ],
+        "emoji": "🧁",
+        "answer": "baking",
+        "hint": "b_____",
+        "meaningTh": "การอบขนม",
         "hints": [
-          "D… (1 คำ)",
-          "drawing"
+          "B… (1 คำ)",
+          "baking"
         ]
       }
     ]
   },
-  "a2_c06n06": {
+  "a2_c06n04": {
     "title": "Club Pictures",
-    "dealCount": 6,
+    "dealCount": 4,
     "items": [
       {
         "emoji": "🎸",
@@ -593,54 +498,34 @@
           "P… (1 คำ)",
           "painting"
         ]
-      },
-      {
-        "emoji": "🎤",
-        "answer": "singing",
-        "hint": "s______",
-        "meaningTh": "การร้องเพลง",
-        "hints": [
-          "S… (1 คำ)",
-          "singing"
-        ]
-      },
-      {
-        "emoji": "🎵",
-        "answer": "music",
-        "hint": "m____",
-        "meaningTh": "ดนตรี",
-        "hints": [
-          "M… (1 คำ)",
-          "music"
-        ]
       }
     ]
   },
-  "a2_c07n04": {
+  "a2_c07n03": {
     "title": "Free or Busy?",
-    "dealCount": 6,
+    "dealCount": 4,
     "items": [
       {
         "emoji": "🌆",
-        "answer": "this evening",
-        "hint": "t___ e______",
-        "meaningTh": "เย็นนี้",
-        "acceptedAnswers": [
-          "tonight"
-        ],
+        "answer": "evening",
+        "hint": "e______",
+        "meaningTh": "ตอนเย็น",
         "hints": [
-          "T… (2 คำ)",
-          "this evening"
+          "E… (1 คำ)",
+          "evening"
         ]
       },
       {
-        "emoji": "📅",
-        "answer": "next week",
-        "hint": "n___ w___",
-        "meaningTh": "สัปดาห์หน้า",
+        "emoji": "🌤️",
+        "answer": "afternoon",
+        "hint": "a________",
+        "meaningTh": "ตอนบ่าย",
+        "acceptedAnswers": [
+          "this afternoon"
+        ],
         "hints": [
-          "N… (2 คำ)",
-          "next week"
+          "A… (1 คำ)",
+          "afternoon"
         ]
       },
       {
@@ -662,112 +547,51 @@
           "B… (1 คำ)",
           "busy"
         ]
-      },
-      {
-        "emoji": "🌤️",
-        "answer": "afternoon",
-        "hint": "a________",
-        "meaningTh": "ตอนบ่าย",
-        "acceptedAnswers": [
-          "this afternoon"
-        ],
-        "hints": [
-          "A… (1 คำ)",
-          "afternoon"
-        ]
-      },
-      {
-        "emoji": "🗓️",
-        "answer": "calendar",
-        "hint": "c_______",
-        "meaningTh": "ปฏิทิน",
-        "hints": [
-          "C… (1 คำ)",
-          "calendar"
-        ]
       }
     ]
   },
-  "a2_c08n03": {
+  "a2_c08n04": {
     "title": "Market Pictures",
-    "dealCount": 5,
+    "dealCount": 4,
     "items": [
       {
-        "emoji": "👀",
-        "answer": "Just looking, thanks.",
-        "hint": "J___ l______, t_____.",
-        "meaningTh": "แค่ดูเฉย ๆ ขอบคุณ",
-        "promptTh": "แม่ค้าถาม Can I help you? แต่คุณแค่ดูอยู่",
-        "acceptedAnswers": [
-          "just looking",
-          "just looking thank you",
-          "i'm just looking"
-        ],
+        "emoji": "🌙",
+        "answer": "night market",
+        "hint": "n____ m_____",
+        "meaningTh": "ตลาดนัดกลางคืน",
         "hints": [
-          "J… (3 คำ)",
-          "Just looking, thanks."
+          "N… (2 คำ)",
+          "night market"
         ]
       },
       {
-        "emoji": "💵",
-        "answer": "I'll take it.",
-        "hint": "I'l_ t___ i_.",
-        "meaningTh": "เอาอันนี้",
-        "promptTh": "ชี้ของที่ถูกใจแล้วยื่นเงิน",
-        "acceptedAnswers": [
-          "i will take it",
-          "i'll take this",
-          "i'll take this one"
-        ],
+        "emoji": "🏪",
+        "answer": "stall",
+        "hint": "s____",
+        "meaningTh": "แผงขายของ",
         "hints": [
-          "I… (3 คำ)",
-          "I'll take it."
+          "S… (1 คำ)",
+          "stall"
         ]
       },
       {
-        "emoji": "🍢",
-        "answer": "Can I try some?",
-        "hint": "C__ I t__ s___?",
-        "meaningTh": "ขอชิมหน่อยได้ไหม",
-        "promptTh": "มีถาดของชิมวางอยู่ตรงหน้า",
-        "acceptedAnswers": [
-          "can i try",
-          "can i try it",
-          "can i try one"
-        ],
+        "emoji": "🎁",
+        "answer": "souvenir",
+        "hint": "s_______",
+        "meaningTh": "ของที่ระลึก",
         "hints": [
-          "C… (4 คำ)",
-          "Can I try some?"
-        ]
-      },
-      {
-        "emoji": "📱",
-        "answer": "Where are you?",
-        "hint": "W____ a__ y__?",
-        "meaningTh": "อยู่ที่ไหน",
-        "promptTh": "โทรหาเพื่อนที่หายไปในฝูงคน",
-        "acceptedAnswers": [
-          "where are you now"
-        ],
-        "hints": [
-          "W… (3 คำ)",
-          "Where are you?"
+          "S… (1 คำ)",
+          "souvenir"
         ]
       },
       {
         "emoji": "🧾",
-        "answer": "What's the total?",
-        "hint": "W___'s t__ t____?",
-        "meaningTh": "ยอดรวมเท่าไหร่",
-        "promptTh": "ซื้อของหลายชิ้น อยากรู้ยอดรวม",
-        "acceptedAnswers": [
-          "what is the total",
-          "how much is the total",
-          "how much in total"
-        ],
+        "answer": "total",
+        "hint": "t____",
+        "meaningTh": "ยอดรวม",
         "hints": [
-          "W… (3 คำ)",
-          "What's the total?"
+          "T… (1 คำ)",
+          "total"
         ]
       }
     ]

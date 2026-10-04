@@ -20,6 +20,19 @@ export type PathLessonSpec = {
   stem?: string;
   choice?: FoundationV7ChoiceBeat;
   teacher?: string;
+  /** Authored legacy-flow script (Adventure A2); replaces blocks/choice/recall pacing. */
+  flow?: PathLessonFlowStep[];
+};
+
+export type PathLessonFlowStep = {
+  kind: 'task' | 'choice' | 'listen' | 'finish';
+  text: string;
+  expectedSpeech?: string;
+  answerMode?: 'single' | 'any';
+  stem?: string;
+  options?: { emoji: string; label: string; speak: string; meaningTh?: string; recapText?: string }[];
+  successText?: string;
+  incorrectHintTh?: string;
 };
 
 const specs: Record<string, PathLessonSpec> = {
@@ -109,6 +122,8 @@ export interface V7TeachingStep {
   instruction: string;
   expectsUserSpeech: boolean;
   expectedSpeech?: string;
+  /** Repeat-after-me step inside an authored flow (the sentence is on screen). */
+  skippable?: boolean;
   presentation?: {
     text: string;
     successText?: string;
@@ -127,8 +142,48 @@ export function foundationV7ChoiceBeat(lessonId: string): FoundationV7ChoiceBeat
   return FOUNDATION_V7_CHOICE_BEATS[lessonId] ?? specs[lessonId]?.choice;
 }
 
+const stripEnd = (s: string) => s.replace(/[.!?]+$/, '').trim();
+
+function flowStep(step: PathLessonFlowStep): V7TeachingStep {
+  const text = step.text;
+  if (step.kind === 'finish') {
+    return { kind: 'complete', instruction: text, expectsUserSpeech: false,
+      presentation: { text, answerMode: 'single', options: [], stem: '' } };
+  }
+  if (step.kind === 'listen') {
+    return { kind: 'recall', instruction: text, expectsUserSpeech: false,
+      presentation: { text, answerMode: 'single', options: [], stem: '' } };
+  }
+  const options = step.kind === 'choice' ? step.options ?? [] : [];
+  const expected = step.expectedSpeech ?? options[0]?.speak ?? '';
+  return {
+    kind: 'recall', instruction: text, expectsUserSpeech: true, expectedSpeech: expected,
+    ...(step.kind === 'task' && text.includes(stripEnd(expected)) ? { skippable: true } : {}),
+    presentation: {
+      text, answerMode: step.answerMode ?? 'single', options, stem: step.stem ?? '',
+      successText: step.successText, incorrectHintTh: step.incorrectHintTh,
+    },
+  };
+}
+
+const flowStepsCache = new Map<string, V7TeachingStep[]>();
+
+function authoredFlowSteps(lessonId: string): V7TeachingStep[] | undefined {
+  const legacy = V7_LEGACY_FLOWS[lessonId];
+  if (legacy) return legacy;
+  const flow = specs[lessonId]?.flow;
+  if (!flow) return undefined;
+  let steps = flowStepsCache.get(lessonId);
+  if (!steps) {
+    steps = flow.map(flowStep);
+    flowStepsCache.set(lessonId, steps);
+  }
+  return steps;
+}
+
 export function buildFoundationV7Steps(lessonId: string): V7TeachingStep[] {
-  if (V7_LEGACY_FLOWS[lessonId]) return V7_LEGACY_FLOWS[lessonId];
+  const authored = authoredFlowSteps(lessonId);
+  if (authored) return authored;
   const spec = specs[lessonId];
   const choice = FOUNDATION_V7_CHOICE_BEATS[lessonId] ?? spec?.choice;
   const pattern = FOUNDATION_V7_PATTERNS[lessonId] ?? spec?.pattern;
@@ -222,7 +277,8 @@ const ADVENTURE_A2_LESSON_COURSE: PathLessonCourse = {
 function buildPathLesson(lessonId: string, spec: PathLessonSpec, course: PathLessonCourse): LessonConfig {
   const steps = buildFoundationV7Steps(lessonId);
   const choice = FOUNDATION_V7_CHOICE_BEATS[lessonId] ?? spec.choice;
-  const listenOnlyTurns = V7_LEGACY_FLOWS[lessonId]
+  const scripted = Boolean(authoredFlowSteps(lessonId));
+  const listenOnlyTurns = scripted
     ? Math.max(
         0,
         steps.findIndex(
@@ -237,7 +293,7 @@ function buildPathLesson(lessonId: string, spec: PathLessonSpec, course: PathLes
     goalEn: course.goalEn(spec.titleEn), goalTh: spec.goalTh,
     difficulty: course.difficulty, languageMix: course.languageMix,
     estimatedMinutesMin: spec.estimatedMinutes[0], estimatedMinutesMax: spec.estimatedMinutes[1],
-    targetPhrases: [...new Set([...spec.blocks.flatMap(block => block.models), spec.recall.answerEn, ...(choice?.options.map(o => o.speak) ?? [])])],
+    targetPhrases: [...new Set([...spec.blocks.flatMap(block => block.models), spec.recall.answerEn, ...(choice?.options.map(o => o.speak) ?? []), ...(spec.flow ? steps.flatMap(step => step.expectedSpeech ? [step.expectedSpeech] : []) : [])])],
     targetLabel: 'item', listenOnlyTurns, progressMax: steps.length,
     maxTurns: steps.length + steps.filter(step => step.expectsUserSpeech).length + 2,
     systemInstruction: course.label + ': ' + spec.titleEn + '\nGoal: ' + spec.goalTh + '\nScope: ' + spec.scope +
@@ -259,7 +315,7 @@ Do not refer to an unseen image. Emojis are cues; state spatial relationships an
 Keep isLessonComplete=false until Complete. Use only existing guidedSpeaking/microphone/Continue mechanics.
 Core Flow:
 ` + steps.map((step, i) => (i + 1) + '. ' + step.instruction + (step.presentation ? '\nAuthored payload: ' + JSON.stringify({ ...step.presentation, expectedSpeech: step.expectedSpeech, expectsUserSpeech: step.expectsUserSpeech, isLessonComplete: step.kind === 'complete' }) : '')).join('\n'),
-    openingPrompt: V7_LEGACY_FLOWS[lessonId] ? 'Start at Core Flow step 1, including its microphone task and authored board. expectsUserSpeech=true. Do not add a welcome-only turn.' : 'Start ' + spec.titleEn + '. Use only the exact authored opening from Core Flow step 1. ' +
+    openingPrompt: scripted ? 'Start at Core Flow step 1, including its microphone task and authored board. expectsUserSpeech=true. Do not add a welcome-only turn.' : 'Start ' + spec.titleEn + '. Use only the exact authored opening from Core Flow step 1. ' +
       'Do not paraphrase or add another greeting. expectsUserSpeech=false, expectedSpeech="", isLessonComplete=false. Return the existing lesson JSON schema.',
   };
 }

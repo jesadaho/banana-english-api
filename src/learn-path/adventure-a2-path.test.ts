@@ -15,7 +15,7 @@ import {
 import { hasFoundationV7Content, toFoundationV7ClientChapters } from './foundation-v7-path.view';
 import { LearnPathController } from './learn-path.controller';
 import { LearnPathService } from './learn-path.service';
-import { ADVENTURE_A2_LESSONS, buildFoundationV7Steps } from '../lessons/foundation-v7-lessons.data';
+import { ADVENTURE_A2_LESSONS, buildFoundationV7Steps, foundationV7LessonSpec } from '../lessons/foundation-v7-lessons.data';
 import { getLesson } from '../lessons/lessons.data';
 import { TrainingTurnEngine } from '../training/engine/training-turn.engine';
 import type { TrainingAiGate } from '../training/engine/ai-gate';
@@ -46,7 +46,7 @@ describe('Adventure A2 course registry', () => {
     assert.equal(learnCourseById('adventure_a2'), ADVENTURE_A2_COURSE);
     assert.equal(learnCourseById('foundation-v7'), FOUNDATION_V7_COURSE);
     assert.equal(learnCourseById('adventure-a3'), undefined);
-    assert.equal(a2Nodes.length, 333);
+    assert.equal(a2Nodes.length, 328);
     assert.equal(ADVENTURE_A2_COURSE.catalog.chapters.length, 32);
     assert.equal(new Set(ALL_LEARN_PATH_NODES.map((n) => n.id)).size, ALL_LEARN_PATH_NODES.length);
     for (const node of a2Nodes) {
@@ -101,7 +101,7 @@ describe('Adventure A2 Zone 1 content', () => {
       const id = node.id;
       switch (node.type) {
         case 'new_words': assert.ok(isValidNewWordsPack(newWordsPoolById(id)), id); break;
-        case 'emoji_speak': assert.ok((emojiSpeakPoolById(id)?.items.length ?? 0) >= 5, id); break;
+        case 'emoji_speak': assert.ok((emojiSpeakPoolById(id)?.items.length ?? 0) >= 4, id); break;
         case 'say_it': assert.ok(sayItTopicById(id), id); break;
         case 'hear_it': assert.ok(hearItPoolById(id), id); break;
         case 'story_bites': assert.equal(storyBitesPoolById(id)?.questions.length, 3, id); break;
@@ -126,12 +126,20 @@ describe('Adventure A2 Zone 1 content', () => {
   });
 
   it('builds authored lesson flows that respect the V7 step contract', () => {
-    assert.ok(ADVENTURE_A2_LESSONS.length >= 18);
+    assert.ok(ADVENTURE_A2_LESSONS.length >= 71);
     for (const lesson of ADVENTURE_A2_LESSONS) {
       const steps = buildFoundationV7Steps(lesson.lessonId);
-      assert.equal(steps[0].kind, 'welcome', lesson.lessonId);
+      const isFlow = Boolean(foundationV7LessonSpec(lesson.lessonId)?.flow);
       assert.equal(steps.at(-1)!.kind, 'complete', lesson.lessonId);
-      assert.equal(steps.filter((s) => s.kind === 'choice').length, 1, lesson.lessonId);
+      if (isFlow) {
+        const checks = steps.filter((s) => s.presentation?.answerMode === 'single' && s.presentation.options.length);
+        assert.ok(checks.length >= 2, `${lesson.lessonId} needs two recognition checks`);
+        assert.ok(steps.some((s) => s.expectsUserSpeech && !s.presentation?.options.length && !s.skippable),
+          `${lesson.lessonId} needs a hidden recall step`);
+      } else {
+        assert.equal(steps[0].kind, 'welcome', lesson.lessonId);
+        assert.equal(steps.filter((s) => s.kind === 'choice').length, 1, lesson.lessonId);
+      }
       for (const step of steps.filter((s) => s.expectsUserSpeech)) {
         assert.ok(step.expectedSpeech?.trim(), `${lesson.lessonId} ${step.kind} needs expectedSpeech`);
       }
@@ -168,7 +176,7 @@ describe('Adventure A2 Zone 1 content', () => {
       for (let guard = 0; !reply.isLessonComplete; guard++) {
         assert.ok(guard < 60, `${lesson.lessonId} never completes`);
         const step = steps[reply.v7Step! - 1];
-        const isRepeat = step.kind === 'model_repeat' || step.kind === 'repeat';
+        const isRepeat = step.kind === 'model_repeat' || step.kind === 'repeat' || step.skippable === true;
         assert.equal(!!reply.canSkip, isRepeat && reply.expectsUserSpeech, `${lesson.lessonId} ${step.kind}`);
         const send = async (userText: string) => {
           turns.push({ speaker: 'user', textEn: userText });

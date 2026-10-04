@@ -1,249 +1,64 @@
 {
   "lessons": {
-    "1.2": {
-      "goalTh": "ใช้ like / love / enjoy + -ing บอกสิ่งที่ชอบทำ และ don't like + -ing บอกสิ่งที่ไม่ชอบ",
-      "scope": "สอน like / love / enjoy + กริยาเติม -ing และ I don't like + -ing; ใช้คำงานอดิเรกจาก 1.1 (dancing, drawing, gaming, swimming, cooking, reading); ไม่สอน to-infinitive; ประโยคสั้นไม่เกิน 5 คำ",
-      "pattern": "choose_and_reuse",
-      "opening": "วันนี้เป็นวันแรกของ Adventure Club ครับ 🧭 ทุกคนต้องแนะนำงานอดิเรกของตัวเอง ตอน A1 เราพูด I like music. ได้แล้ว วันนี้จะต่อยอดเป็น I enjoy reading. คือชอบ \"ทำ\" อะไร ด้วยกริยาเติม -ing",
-      "blocks": [
-        { "tipTh": "ชอบทำอะไร ใช้ like / love / enjoy แล้วตามด้วยกริยาเติม -ing", "models": ["I like reading.", "I love cooking.", "I enjoy drawing."], "repeat": "I love cooking." },
-        { "tipTh": "ไม่ชอบทำอะไร ใช้ I don't like + กริยาเติม -ing", "models": ["I don't like dancing.", "I don't like swimming."], "repeat": "I don't like dancing." }
-      ],
-      "choice": {
-        "afterBlock": 2, "promptTh": "ลองเลือกบอกงานอดิเรกที่คุณชอบทำหนึ่งอย่าง จะตอบตามจริงหรือสมมติก็ได้ครับ", "stem": "I enjoy …", "answerMode": "any",
-        "options": [
-          { "emoji": "🎮", "label": "gaming", "speak": "I enjoy gaming." },
-          { "emoji": "🎨", "label": "drawing", "speak": "I enjoy drawing." },
-          { "emoji": "🍳", "label": "cooking", "speak": "I enjoy cooking." },
-          { "emoji": "📖", "label": "reading", "speak": "I enjoy reading." }
-        ]
-      },
-      "recall": { "promptTh": "บอกงานอดิเรกที่คุณชอบทำอีกครั้ง", "answerEn": "I enjoy reading." },
-      "completionTh": "บอกสิ่งที่ชอบและไม่ชอบทำด้วย like / love / enjoy + -ing"
-    },
-    "1.5": {
-      "goalTh": "ถามงานอดิเรกด้วย What do you like doing? ถามกลับด้วย How about you? และตอบรับว่าเหมือนกันด้วย Me too!",
-      "scope": "สอน What do you like doing? / How about you? / Me too! / So do I.; ใช้งานอดิเรกจาก 1.1 และ 1.2; ไม่สอนคำถามอื่น",
-      "pattern": "contrast_and_apply",
-      "opening": "ในชมรมทุกคนผลัดกันถามงานอดิเรกครับ ถ้าตอบอย่างเดียวไม่ถามกลับ บทสนทนาจะจบเร็วมาก 😅 วันนี้เราจะฝึกถามงานอดิเรก ถามกลับ และบอกว่าเราก็ชอบเหมือนกัน",
-      "blocks": [
-        { "tipTh": "ถามว่าอีกฝ่ายชอบทำอะไร", "models": ["What do you like doing?", "I like gaming."], "repeat": "What do you like doing?" },
-        { "tipTh": "ตอบแล้วถามกลับด้วย How about you? แปลว่า \"แล้วคุณล่ะ\"", "models": ["I enjoy drawing. How about you?", "How about you?"], "repeat": "How about you?" },
-        { "tipTh": "ถ้าชอบเหมือนกัน พูดว่า Me too! หรือ So do I.", "models": ["I like swimming. — Me too!", "I love cooking. — So do I."], "repeat": "Me too!" }
-      ],
-      "choice": {
-        "afterBlock": 3, "promptTh": "May บอกว่า I love cooking. และคุณก็ชอบทำอาหารเหมือนกัน จะตอบว่าอะไรดี", "stem": "", "answerMode": "single", "expectedSpeech": "So do I.", "incorrectHintTh": "ชอบเหมือนกันใช้ Me too! หรือ So do I. ครับ",
-        "options": [
-          { "emoji": "🙌", "label": "So do I.", "speak": "So do I." },
-          { "emoji": "❓", "label": "How about you?", "speak": "How about you?" }
-        ]
-      },
-      "stem": "What do you …?",
-      "recall": { "promptTh": "ถาม May ว่าเธอชอบทำอะไร", "answerEn": "What do you like doing?" },
-      "completionTh": "ถามงานอดิเรก ถามกลับ และบอกว่าชอบเหมือนกัน"
-    },
-    "2.2": {
-      "goalTh": "วางคำบอกความถี่ (always, usually, often, sometimes, never) ให้ถูกที่: หน้ากริยาทั่วไป แต่หลัง am / is / are",
-      "scope": "สอนตำแหน่งคำบอกความถี่: หน้ากริยา (I usually get up at seven.) และหลัง be (I'm always tired.); เพิ่ม often; ใช้กิจวัตรที่รู้แล้ว (get up, have breakfast, go to school); ไม่สอน how often",
-      "pattern": "contrast_and_apply",
-      "opening": "ชมรมต้องหาเวลาซ้อมประจำสัปดาห์ครับ ⏰ เลยต้องรู้ว่าแต่ละคนทำอะไรบ่อยแค่ไหน วันนี้เราจะฝึกวาง always, usually, often, sometimes, never ให้ถูกตำแหน่ง",
-      "blocks": [
-        { "tipTh": "คำบอกความถี่วางหน้ากริยา: I + usually + get up", "models": ["I usually get up at seven.", "I always have breakfast.", "I often walk to school."], "repeat": "I usually get up at seven." },
-        { "tipTh": "ถ้ามี am / is / are ให้วางคำบอกความถี่ไว้หลัง be", "models": ["I'm always tired.", "She is never late."], "repeat": "I'm always tired." }
-      ],
-      "choice": {
-        "afterBlock": 2, "promptTh": "ประโยคไหนวางคำว่า sometimes ถูกตำแหน่ง", "stem": "", "answerMode": "single", "expectedSpeech": "I sometimes cook dinner.", "incorrectHintTh": "sometimes วางหน้ากริยา cook ครับ",
-        "options": [
-          { "emoji": "✅", "label": "I sometimes cook dinner.", "speak": "I sometimes cook dinner." },
-          { "emoji": "❌", "label": "I cook sometimes dinner.", "speak": "I cook sometimes dinner." }
-        ]
-      },
-      "stem": "I usually …",
-      "recall": { "promptTh": "บอกว่าปกติคุณตื่นนอนกี่โมง ใช้ usually", "answerEn": "I usually get up at seven." },
-      "completionTh": "วางคำบอกความถี่หน้ากริยาและหลัง be"
-    },
-    "2.6": {
-      "goalTh": "เติม -es และเปลี่ยน y เป็น ies ให้ถูกเมื่อพูดถึง he / she: watches, goes, does, studies, has",
-      "scope": "ทบทวน She works. แล้วสอนกฎใหม่: -es หลัง ch / sh / o (watches, washes, goes, does), y → ies (studies), have → has; ประโยคกิจวัตรสั้น ๆ; ไม่สอนคำถาม does",
-      "pattern": "contrast_and_apply",
-      "opening": "ตอน A1 เราพูด She works. ได้แล้วครับ แต่บางคำเติม s เฉย ๆ ไม่ได้ เช่น watch, go, study 🤔 วันนี้เราจะฝึกเล่ากิจวัตรของพี่ชายและ May ด้วย -es และ -ies",
-      "blocks": [
-        { "tipTh": "คำที่ลงท้าย ch, sh, o ให้เติม -es", "models": ["She watches TV.", "He goes to school.", "She does her homework."], "repeat": "He goes to school." },
-        { "tipTh": "คำที่ลงท้าย y ให้เปลี่ยนเป็น ies และ have เปลี่ยนเป็น has", "models": ["She studies English every day.", "He has breakfast at seven."], "repeat": "She studies English every day." }
-      ],
-      "choice": {
-        "afterBlock": 2, "promptTh": "พี่ชายดูทีวีทุกเย็น เลือกประโยคที่ถูก", "stem": "He … TV every evening.", "answerMode": "single", "expectedSpeech": "He watches TV every evening.", "incorrectHintTh": "watch ลงท้าย ch ต้องเติม -es เป็น watches ครับ",
-        "options": [
-          { "emoji": "📺", "label": "watches", "speak": "He watches TV every evening." },
-          { "emoji": "📺", "label": "watchs", "speak": "He watchs TV every evening." }
-        ]
-      },
-      "stem": "She …",
-      "recall": { "promptTh": "บอกว่า May เรียนภาษาอังกฤษทุกวัน", "answerEn": "She studies English every day." },
-      "completionTh": "เติม -es และ -ies เมื่อเล่ากิจวัตรของ he / she"
-    },
     "2.8": {
       "goalTh": "ออกเสียงท้ายกริยา -s ให้ชัด 3 แบบ: works /s/ · goes /z/ · watches /ɪz/",
       "scope": "ฝึกเสียงท้ายกริยาเอกพจน์ 3 แบบ: /s/ (works, cooks), /z/ (goes, plays), /ɪz/ (watches, washes); ฟังแยกแล้วพูดตาม ไม่ตัดสินผ่าน/ตก ครูทวนตัวอย่างอีกครั้งถ้าไม่ชัด",
       "pattern": "decode_and_use",
       "opening": "ตอน A1 เราฝึกเสียง s ท้ายคำนามแล้วครับ วันนี้ย้ายมาที่กริยา: works, goes, watches สามคำนี้เสียงท้ายไม่เหมือนกัน ฟังให้ดีแล้วพูดตามครับ",
       "blocks": [
-        { "tipTh": "เสียง /s/ สั้น ๆ เหมือนลมออก", "models": ["works", "cooks", "He works."], "repeat": "He works." },
-        { "tipTh": "เสียง /z/ มีเสียงสั่นในคอ", "models": ["goes", "plays", "She goes."], "repeat": "She goes." },
-        { "tipTh": "เสียง /ɪz/ เพิ่มพยางค์ \"อิซ\"", "models": ["watches", "washes", "He watches TV."], "repeat": "He watches TV." }
+        {
+          "tipTh": "เสียง /s/ สั้น ๆ เหมือนลมออก",
+          "models": [
+            "works",
+            "cooks",
+            "He works."
+          ],
+          "repeat": "He works."
+        },
+        {
+          "tipTh": "เสียง /z/ มีเสียงสั่นในคอ",
+          "models": [
+            "goes",
+            "plays",
+            "She goes."
+          ],
+          "repeat": "She goes."
+        },
+        {
+          "tipTh": "เสียง /ɪz/ เพิ่มพยางค์ \"อิซ\"",
+          "models": [
+            "watches",
+            "washes",
+            "He watches TV."
+          ],
+          "repeat": "He watches TV."
+        }
       ],
       "choice": {
-        "afterBlock": 3, "promptTh": "คำไหนออกเสียงท้ายเป็น \"อิซ\" (เพิ่มพยางค์)", "stem": "", "answerMode": "single", "expectedSpeech": "watches", "incorrectHintTh": "watches ลงท้าย ch จึงเพิ่มพยางค์ /ɪz/ ครับ",
+        "afterBlock": 3,
+        "promptTh": "คำไหนออกเสียงท้ายเป็น \"อิซ\" (เพิ่มพยางค์)",
+        "stem": "",
+        "answerMode": "single",
+        "expectedSpeech": "watches",
+        "incorrectHintTh": "watches ลงท้าย ch จึงเพิ่มพยางค์ /ɪz/ ครับ",
         "options": [
-          { "emoji": "⌚", "label": "watches", "speak": "watches" },
-          { "emoji": "💼", "label": "works", "speak": "works" }
+          {
+            "emoji": "⌚",
+            "label": "watches",
+            "speak": "watches"
+          },
+          {
+            "emoji": "💼",
+            "label": "works",
+            "speak": "works"
+          }
         ]
       },
-      "recall": { "promptTh": "พูดประโยค \"เธอดูทีวี\" ให้ได้ยินเสียง /ɪz/ ชัด ๆ", "answerEn": "She watches TV." },
+      "recall": {
+        "promptTh": "พูดประโยค \"เธอดูทีวี\" ให้ได้ยินเสียง /ɪz/ ชัด ๆ",
+        "answerEn": "She watches TV."
+      },
       "completionTh": "ออกเสียงท้ายกริยา /s/ /z/ /ɪz/"
-    },
-    "3.3": {
-      "goalTh": "ถามว่ามีอะไรไหมด้วย Is there a…? / Are there any…? และตอบด้วย some / any",
-      "scope": "ทบทวน There is / There are แล้วสอน Is there a…? / Are there any…? / There are some… / There aren't any…; ใช้ห้องและของในบ้าน (kitchen, chairs, books, cups); ไม่สอน much / many",
-      "pattern": "contrast_and_apply",
-      "opening": "วันนี้ซ้อมครั้งแรกที่บ้าน May ครับ 🏠 ก่อนเริ่มต้องรู้ว่าบ้านมีเก้าอี้พอไหม มีแก้วน้ำไหม วันนี้เราจะฝึกถามว่า \"มี…ไหม\" และตอบด้วย some กับ any",
-      "blocks": [
-        { "tipTh": "ถามของชิ้นเดียวใช้ Is there a…? ของหลายชิ้นใช้ Are there any…?", "models": ["Is there a sofa?", "Are there any chairs?"], "repeat": "Are there any chairs?" },
-        { "tipTh": "ประโยคบอกใช้ some ประโยคปฏิเสธใช้ any", "models": ["There are some cups.", "There aren't any chairs."], "repeat": "There aren't any chairs." }
-      ],
-      "choice": {
-        "afterBlock": 2, "promptTh": "คุณอยากรู้ว่าในครัวมีแก้วหลายใบไหม จะถามอย่างไร", "stem": "", "answerMode": "single", "expectedSpeech": "Are there any cups?", "incorrectHintTh": "แก้วหลายใบใช้ Are there any…? ครับ",
-        "options": [
-          { "emoji": "🥤", "label": "Are there any cups?", "speak": "Are there any cups?" },
-          { "emoji": "🥤", "label": "Is there any cups?", "speak": "Is there any cups?" }
-        ]
-      },
-      "stem": "Are there any …?",
-      "recall": { "promptTh": "ถาม May ว่าในห้องนั่งเล่นมีหนังสือบ้างไหม", "answerEn": "Are there any books in the living room?" },
-      "completionTh": "ถามว่ามีอะไรไหม และตอบด้วย some / any"
-    },
-    "3.7": {
-      "goalTh": "บอกตำแหน่งของด้วยบุพบทใหม่ between, opposite, behind, in front of",
-      "scope": "สอน between … and …, opposite, behind, in front of (ทบทวน in / on / under / next to ได้); ใช้ของในบ้าน (sofa, shelf, fridge, TV, table); ประโยค The … is …",
-      "pattern": "contrast_and_apply",
-      "opening": "May พาชมบ้านแต่บอกแค่ว่า \"ตู้เย็นอยู่ในครัว\" ครับ ครัวกว้างมาก 😅 วันนี้เราจะใช้ between, opposite, behind, in front of บอกตำแหน่งให้ชัดขึ้น",
-      "blocks": [
-        { "tipTh": "between = อยู่ระหว่างสองอย่าง, opposite = อยู่ตรงข้าม", "models": ["The sofa is between the shelf and the TV.", "The bathroom is opposite my bedroom."], "repeat": "The sofa is between the shelf and the TV." },
-        { "tipTh": "behind = อยู่ข้างหลัง, in front of = อยู่ข้างหน้า", "models": ["The bag is behind the sofa.", "The table is in front of the TV."], "repeat": "The table is in front of the TV." }
-      ],
-      "choice": {
-        "afterBlock": 2, "promptTh": "แมวซ่อนอยู่ข้างหลังโซฟา จะบอกอย่างไร", "stem": "The cat is … the sofa.", "answerMode": "single", "expectedSpeech": "The cat is behind the sofa.", "incorrectHintTh": "ข้างหลังใช้ behind ครับ",
-        "options": [
-          { "emoji": "🙈", "label": "behind", "speak": "The cat is behind the sofa." },
-          { "emoji": "👀", "label": "in front of", "speak": "The cat is in front of the sofa." }
-        ]
-      },
-      "stem": "The fridge is …",
-      "recall": { "promptTh": "บอกว่าตู้เย็นอยู่ตรงข้ามโต๊ะ", "answerEn": "The fridge is opposite the table." },
-      "completionTh": "บอกตำแหน่งด้วย between, opposite, behind, in front of"
-    },
-    "4.2": {
-      "goalTh": "บรรยายคนด้วย has / is / is wearing เรียงคำคุณศัพท์ ยาว → สี (long black hair) และใช้ look + คุณศัพท์",
-      "scope": "สอน She has long black hair. / He is tall. / He is wearing a red shirt. / He looks happy.; ลำดับ ขนาด/ยาว ก่อน สี; look ไม่ต้องมี like; ใช้คำจาก 4.1 และ 4.3",
-      "pattern": "choose_and_reuse",
-      "opening": "งานต้อนรับสมาชิกใหม่เริ่มแล้วครับ 🎉 แต่คนเยอะมาก ถ้าบอกแค่ว่า \"ผู้หญิงคนนั้น\" ไม่มีใครรู้ว่าคนไหน วันนี้เราจะฝึกบรรยายรูปร่างหน้าตาให้ชัด",
-      "blocks": [
-        { "tipTh": "ผมและส่วนของร่างกายใช้ has เรียง ยาว/สั้น ก่อน สี", "models": ["She has long black hair.", "He has short hair."], "repeat": "She has long black hair." },
-        { "tipTh": "รูปร่างใช้ is, เสื้อผ้าใช้ is wearing, ดูเป็นอย่างไรใช้ looks", "models": ["He is tall.", "He is wearing a red shirt.", "He looks happy."], "repeat": "He is wearing a red shirt." }
-      ],
-      "choice": {
-        "afterBlock": 2, "promptTh": "ลองเลือกบรรยายเพื่อนสนิทของคุณหนึ่งอย่าง จริงหรือสมมติก็ได้ครับ", "stem": "My friend …", "answerMode": "any",
-        "options": [
-          { "emoji": "💁‍♀️", "label": "long black hair", "speak": "My friend has long black hair." },
-          { "emoji": "🦒", "label": "tall", "speak": "My friend is tall." },
-          { "emoji": "👓", "label": "glasses", "speak": "My friend is wearing glasses." },
-          { "emoji": "😊", "label": "looks happy", "speak": "My friend looks happy." }
-        ]
-      },
-      "recall": { "promptTh": "บรรยายเพื่อนของคุณอีกครั้ง", "answerEn": "My friend has long black hair." },
-      "completionTh": "บรรยายคนด้วย has / is / is wearing / looks"
-    },
-    "4.6": {
-      "goalTh": "ถามรูปร่างด้วย What does he look like? และถามว่าเป็นใครด้วย Who's the girl in the red dress?",
-      "scope": "สอน What does he / she look like? (ตอบด้วย He's tall. / She has curly hair.) และ Who's the … in the … ? / Who's the … with … ?; ไม่สับสนกับ What is he like? (นิสัย)",
-      "pattern": "contrast_and_apply",
-      "opening": "May เล่าว่ามีโค้ชคนใหม่มาที่งานครับ แต่เรายังไม่เคยเห็นหน้าเลย 🤔 วันนี้เราจะฝึกถามว่าเขาหน้าตาเป็นอย่างไร และถามว่าคนนั้นคือใคร",
-      "blocks": [
-        { "tipTh": "ถามรูปร่างหน้าตาใช้ What does he / she look like?", "models": ["What does he look like?", "He's tall. He has a beard."], "repeat": "What does he look like?" },
-        { "tipTh": "ถามว่าคนนั้นคือใครด้วย Who's the … in / with …?", "models": ["Who's the girl in the red dress?", "Who's the boy with curly hair?"], "repeat": "Who's the girl in the red dress?" }
-      ],
-      "choice": {
-        "afterBlock": 2, "promptTh": "คุณอยากรู้ว่าโค้ชใหม่หน้าตาเป็นอย่างไร จะถาม May ว่าอะไร", "stem": "", "answerMode": "single", "expectedSpeech": "What does he look like?", "incorrectHintTh": "ถามหน้าตาใช้ What does he look like? ครับ",
-        "options": [
-          { "emoji": "🧔", "label": "What does he look like?", "speak": "What does he look like?" },
-          { "emoji": "🙋", "label": "Who's the boy?", "speak": "Who's the boy?" }
-        ]
-      },
-      "stem": "Who's the …?",
-      "recall": { "promptTh": "ถามว่าผู้ชายที่ใส่แว่นคือใคร", "answerEn": "Who's the man with glasses?" },
-      "completionTh": "ถามรูปร่างหน้าตาและถามว่าเป็นใคร"
-    },
-    "5.1": {
-      "goalTh": "เทียบสิ่งที่ทำเป็นประจำกับสิ่งที่กำลังทำวันนี้ในประโยคเดียว ด้วย …, but today… / …, but right now…",
-      "scope": "ทบทวน present simple (ทำประจำ) และ present continuous (กำลังทำ) แล้วรวมในประโยคเดียวด้วย but today / but right now; ใช้กริยา run, read, play, swim, eat",
-      "pattern": "contrast_and_apply",
-      "opening": "วันกิจกรรมชมรมที่สวนครับ 🌳 ปกติ Max วิ่งทุกเช้า แต่วันนี้เขานั่งอ่านหนังสืออยู่บนม้านั่ง วันนี้เราจะเล่าทั้ง \"ปกติ\" และ \"วันนี้\" ในประโยคเดียว",
-      "blocks": [
-        { "tipTh": "ทำเป็นประจำใช้กริยาธรรมดา กำลังทำตอนนี้ใช้ is / are + -ing", "models": ["He usually runs.", "Today he's reading."], "repeat": "Today he's reading." },
-        { "tipTh": "รวมสองอย่างด้วย but today หรือ but right now", "models": ["He usually runs, but today he's reading.", "I usually swim, but right now I'm eating."], "repeat": "He usually runs, but today he's reading." }
-      ],
-      "choice": {
-        "afterBlock": 2, "promptTh": "ปกติ May เล่นแบดมินตัน แต่วันนี้เธอกำลังวาดรูป เลือกประโยคที่ถูก", "stem": "She usually plays badminton, but today …", "answerMode": "single", "expectedSpeech": "She usually plays badminton, but today she's drawing.", "incorrectHintTh": "วันนี้ใช้ she's + -ing ครับ",
-        "options": [
-          { "emoji": "🎨", "label": "she's drawing", "speak": "She usually plays badminton, but today she's drawing." },
-          { "emoji": "🎨", "label": "she draws", "speak": "She usually plays badminton, but today she draws." }
-        ]
-      },
-      "stem": "I usually …, but today …",
-      "recall": { "promptTh": "เล่าเรื่องตัวเอง: ปกติทำอะไร แต่วันนี้กำลังทำอะไร", "answerEn": "I usually walk to school, but today I'm taking the bus." },
-      "completionTh": "เทียบสิ่งที่ทำประจำกับสิ่งที่กำลังทำวันนี้"
-    },
-    "5.5": {
-      "goalTh": "เลือกคำบอกเวลาให้ตรงรูปประโยค: at the moment / today / right now ใช้กับ -ing, every day / usually ใช้กับกริยาธรรมดา",
-      "scope": "สอนคำบอกเวลา at the moment, right now, today คู่กับ present continuous และ every day, usually คู่กับ present simple; ประโยคสั้นเกี่ยวกับตัวเอง",
-      "pattern": "choose_and_reuse",
-      "opening": "Max โทรมาถามว่า \"ตอนนี้ทำอะไรอยู่\" ครับ 📱 คำตอบแบบ \"ฉันกินข้าวทุกวัน\" ไม่ใช่สิ่งที่เขาอยากรู้ 😄 วันนี้เราจะฝึกเลือกคำบอกเวลาให้ตรงกับรูปประโยค",
-      "blocks": [
-        { "tipTh": "ตอนนี้ใช้ at the moment / right now กับ am / is / are + -ing", "models": ["At the moment I'm eating lunch.", "Right now I'm reading."], "repeat": "At the moment I'm eating lunch." },
-        { "tipTh": "ทำประจำใช้ every day / usually กับกริยาธรรมดา", "models": ["I eat lunch every day.", "I usually read at night."], "repeat": "I eat lunch every day." }
-      ],
-      "choice": {
-        "afterBlock": 2, "promptTh": "Max ถามว่า What are you doing right now? เลือกตอบตามจริงหรือสมมติก็ได้ครับ", "stem": "Right now I'm …", "answerMode": "any",
-        "options": [
-          { "emoji": "🍜", "label": "eating", "speak": "Right now I'm eating lunch." },
-          { "emoji": "📖", "label": "reading", "speak": "Right now I'm reading." },
-          { "emoji": "🚶", "label": "walking", "speak": "Right now I'm walking in the park." },
-          { "emoji": "📚", "label": "studying", "speak": "Right now I'm studying English." }
-        ]
-      },
-      "recall": { "promptTh": "บอก Max อีกครั้งว่าตอนนี้คุณกำลังทำอะไร", "answerEn": "Right now I'm studying English." },
-      "completionTh": "เลือกคำบอกเวลาให้ตรงกับรูปประโยค"
-    },
-    "6.3": {
-      "goalTh": "บอกสิ่งที่ทำเก่งด้วย I'm good at + -ing, บอกว่าทำได้ดีด้วย can … well และบอกอย่างสุภาพว่าไม่ค่อยเก่งด้วย I'm not very good at…",
-      "scope": "สอน I'm good at + -ing / I'm not very good at + -ing / I can … well / fast; ใช้กิจกรรมจาก 6.2 และบท 1 (singing, drawing, swimming, badminton); ไม่สอน better / best",
-      "pattern": "choose_and_reuse",
-      "opening": "ทุกคนต้องเลือกชมรมย่อยก่อนทริปแรกครับ 🎸🏸 วิธีเลือกที่ง่ายที่สุดคือดูว่าเราทำอะไรเก่ง วันนี้เราจะฝึกบอกสิ่งที่ทำเก่งและไม่ค่อยเก่ง",
-      "blocks": [
-        { "tipTh": "ทำอะไรเก่งใช้ I'm good at + -ing", "models": ["I'm good at drawing.", "I'm good at singing."], "repeat": "I'm good at drawing." },
-        { "tipTh": "ไม่ค่อยเก่งพูดสุภาพว่า I'm not very good at…, ทำได้ดีใช้ can … well / fast", "models": ["I'm not very good at swimming.", "I can run fast.", "She can sing well."], "repeat": "I'm not very good at swimming." }
-      ],
-      "choice": {
-        "afterBlock": 2, "promptTh": "เลือกบอกสิ่งที่คุณทำเก่งหนึ่งอย่าง จริงหรือสมมติก็ได้ครับ", "stem": "I'm good at …", "answerMode": "any",
-        "options": [
-          { "emoji": "🎤", "label": "singing", "speak": "I'm good at singing." },
-          { "emoji": "🎨", "label": "drawing", "speak": "I'm good at drawing." },
-          { "emoji": "🏸", "label": "badminton", "speak": "I'm good at badminton." },
-          { "emoji": "🍳", "label": "cooking", "speak": "I'm good at cooking." }
-        ]
-      },
-      "recall": { "promptTh": "บอกอีกครั้งว่าคุณเก่งอะไร", "answerEn": "I'm good at singing." },
-      "completionTh": "บอกสิ่งที่ทำเก่งและไม่ค่อยเก่ง"
     },
     "6.5": {
       "goalTh": "ออกเสียง can แบบเบาและสั้น /kən/ แยกจาก can't ที่เสียงยาวและเน้น /kɑːnt/",
@@ -251,121 +66,55 @@
       "pattern": "decode_and_use",
       "opening": "can กับ can't ฟังคล้ายกันมากครับ ถ้าพูดไม่ชัด เพื่อนอาจคิดว่าคุณร้องเพลงได้ทั้งที่ร้องไม่ได้ 🎤😅 วันนี้เราจะฝึกเสียงสองคำนี้ให้แยกกันชัด",
       "blocks": [
-        { "tipTh": "can ในประโยคบอกพูดเบาและสั้น \"เคิน\" ไปเน้นที่กริยาแทน", "models": ["I can dance.", "She can swim."], "repeat": "I can dance." },
-        { "tipTh": "can't พูดยาวและเน้น \"คานท์\" ให้ได้ยินเสียง t", "models": ["I can't sing.", "He can't swim."], "repeat": "I can't sing." },
-        { "tipTh": "รวมสองคำในประโยคเดียว เบา แล้ว เน้น", "models": ["I can't sing, but I can dance."], "repeat": "I can't sing, but I can dance." }
+        {
+          "tipTh": "can ในประโยคบอกพูดเบาและสั้น \"เคิน\" ไปเน้นที่กริยาแทน",
+          "models": [
+            "I can dance.",
+            "She can swim."
+          ],
+          "repeat": "I can dance."
+        },
+        {
+          "tipTh": "can't พูดยาวและเน้น \"คานท์\" ให้ได้ยินเสียง t",
+          "models": [
+            "I can't sing.",
+            "He can't swim."
+          ],
+          "repeat": "I can't sing."
+        },
+        {
+          "tipTh": "รวมสองคำในประโยคเดียว เบา แล้ว เน้น",
+          "models": [
+            "I can't sing, but I can dance."
+          ],
+          "repeat": "I can't sing, but I can dance."
+        }
       ],
       "choice": {
-        "afterBlock": 3, "promptTh": "คุณว่ายน้ำไม่เป็น ให้พูดประโยคที่ได้ยิน can't ชัด ๆ", "stem": "", "answerMode": "single", "expectedSpeech": "I can't swim.", "incorrectHintTh": "ว่ายไม่เป็นใช้ can't เสียงยาวและเน้นครับ",
+        "afterBlock": 3,
+        "promptTh": "คุณว่ายน้ำไม่เป็น ให้พูดประโยคที่ได้ยิน can't ชัด ๆ",
+        "stem": "",
+        "answerMode": "single",
+        "expectedSpeech": "I can't swim.",
+        "incorrectHintTh": "ว่ายไม่เป็นใช้ can't เสียงยาวและเน้นครับ",
         "options": [
-          { "emoji": "🙅", "label": "I can't swim.", "speak": "I can't swim." },
-          { "emoji": "🏊", "label": "I can swim.", "speak": "I can swim." }
+          {
+            "emoji": "🙅",
+            "label": "I can't swim.",
+            "speak": "I can't swim."
+          },
+          {
+            "emoji": "🏊",
+            "label": "I can swim.",
+            "speak": "I can swim."
+          }
         ]
       },
-      "recall": { "promptTh": "บอกสิ่งที่คุณทำไม่ได้หนึ่งอย่าง และสิ่งที่ทำได้หนึ่งอย่างในประโยคเดียว", "answerEn": "I can't sing, but I can dance." },
+      "recall": {
+        "promptTh": "บอกสิ่งที่คุณทำไม่ได้หนึ่งอย่าง และสิ่งที่ทำได้หนึ่งอย่างในประโยคเดียว",
+        "answerEn": "I can't sing, but I can dance."
+      },
       "completionTh": "ออกเสียง can เบา และ can't เน้น"
-    },
-    "6.7": {
-      "goalTh": "ถามเหตุผลด้วย Why do you…? และตอบสั้น ๆ ด้วย Because…",
-      "scope": "สอน Why do you like…? / Why do you want to…? — Because it's fun / healthy / exciting / useful.; ใช้คำจาก 6.4; คำตอบสั้นขึ้นต้นด้วย Because",
-      "pattern": "contrast_and_apply",
-      "opening": "May เลือกชมรมวาดภาพครับ แต่เราอยากรู้ว่า \"ทำไม\" 🤔 วันนี้เราจะฝึกถามเหตุผลด้วย Why… และตอบด้วย Because…",
-      "blocks": [
-        { "tipTh": "ถามเหตุผลใช้ Why do you…?", "models": ["Why do you like music?", "Why do you like painting?"], "repeat": "Why do you like music?" },
-        { "tipTh": "ตอบเหตุผลขึ้นต้นด้วย Because", "models": ["Because it's fun.", "Because it's healthy.", "Because it's exciting."], "repeat": "Because it's fun." }
-      ],
-      "choice": {
-        "afterBlock": 2, "promptTh": "Teacher Bee ถามว่า Why do you like badminton? เลือกเหตุผลของคุณได้เลยครับ", "stem": "Because it's …", "answerMode": "any",
-        "options": [
-          { "emoji": "🥗", "label": "healthy", "speak": "Because it's healthy." },
-          { "emoji": "🤩", "label": "exciting", "speak": "Because it's exciting." },
-          { "emoji": "😄", "label": "fun", "speak": "Because it's fun." }
-        ]
-      },
-      "stem": "Why do you …?",
-      "recall": { "promptTh": "ถาม May ว่าทำไมเธอชอบวาดภาพ", "answerEn": "Why do you like painting?" },
-      "completionTh": "ถามเหตุผลด้วย Why และตอบด้วย Because"
-    },
-    "6.9": {
-      "goalTh": "ใช้ will (I'll…) บอกการตัดสินใจทันทีตอนนั้น เช่น I'll join the music club!",
-      "scope": "สอน I'll + กริยา สำหรับการตัดสินใจทันที (I'll join… / I'll try it. / I'll take it.); ยังไม่สอน be going to (บท 7); ใช้ชื่อชมรม music, badminton, art, cooking",
-      "pattern": "choose_and_reuse",
-      "opening": "ถึงเวลาตัดสินใจแล้วครับ ⏳ Teacher Bee ยื่นใบสมัครชมรมมาให้ตรงหน้า วันนี้เราจะใช้ I'll… บอกการตัดสินใจทันทีตอนนั้น",
-      "blocks": [
-        { "tipTh": "ตัดสินใจทันทีใช้ I'll + กริยา (I'll = I will)", "models": ["I'll join the music club!", "I'll try it."], "repeat": "I'll join the music club!" },
-        { "tipTh": "บอกเหตุผลก่อนแล้วตัดสินใจด้วย so I'll…", "models": ["I'm good at singing, so I'll join the music club.", "Badminton is exciting, so I'll try it."], "repeat": "I'm good at singing, so I'll join the music club." }
-      ],
-      "choice": {
-        "afterBlock": 2, "promptTh": "เลือกชมรมที่คุณจะเข้าได้เลยครับ", "stem": "I'll join the … club.", "answerMode": "any",
-        "options": [
-          { "emoji": "🎸", "label": "music", "speak": "I'll join the music club." },
-          { "emoji": "🏸", "label": "badminton", "speak": "I'll join the badminton club." },
-          { "emoji": "🖌️", "label": "art", "speak": "I'll join the art club." },
-          { "emoji": "🍳", "label": "cooking", "speak": "I'll join the cooking club." }
-        ]
-      },
-      "recall": { "promptTh": "บอก Teacher Bee อีกครั้งว่าคุณจะเข้าชมรมไหน", "answerEn": "I'll join the music club." },
-      "completionTh": "ใช้ I'll บอกการตัดสินใจทันที"
-    },
-    "7.1": {
-      "goalTh": "ใช้ be going to บอกแผนที่ตั้งใจไว้แล้ว ต่างจาก I'll ที่ตัดสินใจทันที",
-      "scope": "สอน I'm going to + กริยา / Are you going to…?; เทียบกับ I'll (ตัดสินใจตอนนั้น) จากบท 6; ใช้แผนหลังเลิกเรียนและวันหยุด (visit my aunt, see a movie, play badminton)",
-      "pattern": "contrast_and_apply",
-      "opening": "สุดสัปดาห์นี้ทุกคนมีแผนแล้วครับ 📅 ถ้าวางแผนไว้ก่อนแล้ว ภาษาอังกฤษไม่ใช้ I'll แต่ใช้ I'm going to… วันนี้เราจะฝึกบอกแผนที่ตั้งใจไว้",
-      "blocks": [
-        { "tipTh": "แผนที่ตั้งใจไว้แล้วใช้ I'm going to + กริยา", "models": ["I'm going to visit my aunt.", "We're going to see a movie."], "repeat": "I'm going to visit my aunt." },
-        { "tipTh": "ถามแผนของอีกฝ่ายด้วย What are you going to do?", "models": ["What are you going to do this weekend?", "Are you going to play badminton?"], "repeat": "What are you going to do this weekend?" }
-      ],
-      "choice": {
-        "afterBlock": 2, "promptTh": "คุณซื้อตั๋วหนังไว้แล้วตั้งแต่เมื่อวาน จะบอก May ว่าอย่างไร", "stem": "", "answerMode": "single", "expectedSpeech": "I'm going to see a movie.", "incorrectHintTh": "วางแผนไว้แล้วใช้ I'm going to… ครับ",
-        "options": [
-          { "emoji": "🎬", "label": "I'm going to see a movie.", "speak": "I'm going to see a movie." },
-          { "emoji": "🎬", "label": "I'll see a movie.", "speak": "I'll see a movie." }
-        ]
-      },
-      "stem": "I'm going to …",
-      "recall": { "promptTh": "บอกแผนสุดสัปดาห์นี้ของคุณหนึ่งอย่าง", "answerEn": "I'm going to visit my aunt." },
-      "completionTh": "บอกแผนด้วย be going to"
-    },
-    "7.6": {
-      "goalTh": "ชวนเพื่อนอย่างสุภาพด้วย Would you like to…? / How about…? / Shall we…?",
-      "scope": "สอน Would you like to + กริยา? / How about + นาม หรือ -ing? / Shall we + กริยา?; ตอบรับ Sure! / I'd love to.; กิจกรรมหลังเลิกเรียน (see a movie, have dinner, play badminton)",
-      "pattern": "choose_and_reuse",
-      "opening": "หลังเลิกเรียนอยากชวนเพื่อนไปทำอะไรสนุก ๆ ครับ 🎬 แต่ถ้าพูดแค่ \"ไปดูหนัง\" อาจฟังเหมือนสั่ง 😅 วันนี้เราจะฝึกชวนอย่างสุภาพสามแบบ",
-      "blocks": [
-        { "tipTh": "ชวนสุภาพใช้ Would you like to…? ตอบรับ I'd love to.", "models": ["Would you like to see a movie?", "I'd love to."], "repeat": "Would you like to see a movie?" },
-        { "tipTh": "เสนอแบบเป็นกันเองใช้ How about…? หรือ Shall we…?", "models": ["How about Friday evening?", "Shall we play badminton?"], "repeat": "Shall we play badminton?" }
-      ],
-      "choice": {
-        "afterBlock": 2, "promptTh": "เลือกกิจกรรมที่อยากชวน May ไปทำได้เลยครับ", "stem": "Would you like to …?", "answerMode": "any",
-        "options": [
-          { "emoji": "🎬", "label": "see a movie", "speak": "Would you like to see a movie?" },
-          { "emoji": "🍜", "label": "have dinner", "speak": "Would you like to have dinner?" },
-          { "emoji": "🏸", "label": "play badminton", "speak": "Would you like to play badminton?" }
-        ]
-      },
-      "recall": { "promptTh": "ชวน May อีกครั้งด้วยกิจกรรมที่คุณเลือก", "answerEn": "Would you like to see a movie?" },
-      "completionTh": "ชวนอย่างสุภาพด้วย Would you like to / How about / Shall we"
-    },
-    "8.6": {
-      "goalTh": "บอกเพื่อนว่าตอนนี้อยู่ตรงไหน ใส่อะไร และนัดจุดเจอ: I'm standing next to… / I'm wearing… / Let's meet at…",
-      "scope": "รวม present continuous (บท 5) กับคำบอกตำแหน่ง (บท 3): I'm standing next to / in front of / opposite …; I'm wearing …; Let's meet at …; ฉากตลาดนัด (big wheel, gate, food stall); ไม่ตัดสินผ่าน/ตก ให้พูดตามหรือเปลี่ยนคำอย่างน้อย 1 ประโยค",
-      "pattern": "choose_and_reuse",
-      "opening": "ตลาดนัดคนเยอะมากครับ 🌙 หันกลับมาอีกที May หายไปแล้ว! 📱 วันนี้เราจะฝึกบอกเพื่อนว่าเราอยู่ตรงไหน ใส่ชุดอะไร และนัดจุดเจอกัน",
-      "blocks": [
-        { "tipTh": "บอกว่าตอนนี้ยืนอยู่ตรงไหน ใช้ I'm standing + คำบอกตำแหน่ง", "models": ["I'm standing next to the big wheel.", "I'm standing in front of the food stall."], "repeat": "I'm standing next to the big wheel." },
-        { "tipTh": "ช่วยให้เพื่อนหาเจอ: บอกชุดที่ใส่ แล้วนัดจุดเจอ", "models": ["I'm wearing a red shirt.", "Let's meet at the gate."], "repeat": "Let's meet at the gate." }
-      ],
-      "choice": {
-        "afterBlock": 2, "promptTh": "เลือกจุดนัดเจอ May ได้เลยครับ", "stem": "Let's meet at the …", "answerMode": "any",
-        "options": [
-          { "emoji": "🎡", "label": "big wheel", "speak": "Let's meet at the big wheel." },
-          { "emoji": "🚪", "label": "gate", "speak": "Let's meet at the gate." },
-          { "emoji": "🍢", "label": "food stall", "speak": "Let's meet at the food stall." }
-        ]
-      },
-      "recall": { "promptTh": "บอก May อีกครั้งว่านัดเจอกันที่ไหน", "answerEn": "Let's meet at the gate." },
-      "completionTh": "บอกตำแหน่งตัวเอง ชุดที่ใส่ และนัดจุดเจอ"
     }
   }
 }

@@ -3,32 +3,32 @@
     "title": "Hobbies",
     "items": [
       {
-        "emoji": "💃",
-        "answer": "dancing",
-        "reading": "แดน-ซิ่ง",
-        "meaningTh": "การเต้น"
-      },
-      {
-        "emoji": "🎨",
-        "answer": "drawing",
-        "reading": "ดรอว์-อิ้ง",
-        "meaningTh": "การวาดรูป"
-      },
-      {
         "emoji": "🎮",
-        "answer": "gaming",
-        "reading": "เกม-มิ่ง",
-        "meaningTh": "การเล่นเกม"
+        "answer": "game",
+        "reading": "เกม",
+        "meaningTh": "เล่นเกม"
       },
       {
-        "emoji": "🏊",
-        "answer": "swimming",
-        "reading": "สวิม-มิ่ง",
-        "meaningTh": "การว่ายน้ำ"
+        "emoji": "🚴",
+        "answer": "cycle",
+        "reading": "ไซ-เคิล",
+        "meaningTh": "ปั่นจักรยาน"
+      },
+      {
+        "emoji": "🧁",
+        "answer": "bake",
+        "reading": "เบค",
+        "meaningTh": "อบขนม"
+      },
+      {
+        "emoji": "🥾",
+        "answer": "hike",
+        "reading": "ไฮค์",
+        "meaningTh": "เดินป่า"
       }
     ]
   },
-  "a2_c01n03": {
+  "a2_c01n04": {
     "title": "Club Words",
     "items": [
       {
@@ -57,78 +57,78 @@
       }
     ]
   },
-  "a2_c02n01": {
-    "title": "How Often?",
+  "a2_c01n06": {
+    "title": "More Words: Hobbies",
     "items": [
       {
-        "emoji": "💯",
-        "answer": "always",
-        "reading": "ออล-เวยส์",
-        "meaningTh": "เสมอ (100%)"
+        "emoji": "🎣",
+        "answer": "fish",
+        "reading": "ฟิช",
+        "meaningTh": "ตกปลา"
       },
       {
-        "emoji": "🔁",
-        "answer": "usually",
-        "reading": "ยู-ชวล-ลี่",
-        "meaningTh": "มักจะ (ส่วนใหญ่)"
+        "emoji": "🏃",
+        "answer": "jog",
+        "reading": "จ็อก",
+        "meaningTh": "วิ่งเหยาะ ๆ"
       },
       {
-        "emoji": "🎲",
-        "answer": "sometimes",
-        "reading": "ซัม-ไทมส์",
-        "meaningTh": "บางครั้ง"
+        "emoji": "🏄",
+        "answer": "surf",
+        "reading": "เซิร์ฟ",
+        "meaningTh": "โต้คลื่น"
       },
       {
-        "emoji": "🚫",
-        "answer": "never",
-        "reading": "เน-เวอร์",
-        "meaningTh": "ไม่เคยเลย (0%)"
+        "emoji": "🛹",
+        "answer": "skate",
+        "reading": "สเกต",
+        "meaningTh": "เล่นสเกต"
       }
     ]
   },
-  "a2_c02n03": {
-    "title": "Have, Take, Do",
+  "a2_c02n01": {
+    "title": "Daily Things",
     "items": [
       {
         "emoji": "🍳",
-        "answer": "have breakfast",
-        "reading": "แฮฟ เบรก-ฟัสท์",
-        "meaningTh": "กินอาหารเช้า"
+        "answer": "breakfast",
+        "reading": "เบรก-ฟัสต์",
+        "meaningTh": "อาหารเช้า"
       },
       {
         "emoji": "🚿",
-        "answer": "take a shower",
-        "reading": "เทค อะ ชาว-เวอร์",
-        "meaningTh": "อาบน้ำ (ฝักบัว)"
+        "answer": "shower",
+        "reading": "ชาว-เวอร์",
+        "meaningTh": "การอาบน้ำ (ฝักบัว)"
       },
       {
         "emoji": "📚",
-        "answer": "do homework",
-        "reading": "ดู โฮม-เวิร์ค",
-        "meaningTh": "ทำการบ้าน"
+        "answer": "homework",
+        "reading": "โฮม-เวิร์ก",
+        "meaningTh": "การบ้าน"
       },
       {
-        "emoji": "🛏️",
-        "answer": "make the bed",
-        "reading": "เมค เดอะ เบ็ด",
-        "meaningTh": "เก็บที่นอน"
+        "emoji": "🍽️",
+        "answer": "dinner",
+        "reading": "ดิน-เนอร์",
+        "meaningTh": "อาหารเย็น"
       }
     ]
   },
-  "a2_c02n07": {
-    "title": "Daily Jobs",
+  "a2_c02n06": {
+    "title": "Busy Days",
     "items": [
+      {
+        "emoji": "🎯",
+        "answer": "practice",
+        "reading": "แพรก-ทิส",
+        "meaningTh": "ฝึกซ้อม"
+      },
       {
         "emoji": "🏋️",
         "answer": "exercise",
-        "reading": "เอ็ก-เซอร์-ไซส์",
+        "reading": "เอก-เซอร์-ไซส์",
         "meaningTh": "ออกกำลังกาย"
-      },
-      {
-        "emoji": "⏰",
-        "answer": "late",
-        "reading": "เลท",
-        "meaningTh": "สาย, ดึก"
       },
       {
         "emoji": "😌",
@@ -137,16 +137,22 @@
         "meaningTh": "พักผ่อน"
       },
       {
-        "emoji": "🧹",
-        "answer": "chore",
-        "reading": "ชอร์",
-        "meaningTh": "งานบ้าน"
+        "emoji": "⏰",
+        "answer": "late",
+        "reading": "เลท",
+        "meaningTh": "สาย"
       }
     ]
   },
   "a2_c03n02": {
     "title": "Rooms",
     "items": [
+      {
+        "emoji": "🏠",
+        "answer": "house",
+        "reading": "เฮาส์",
+        "meaningTh": "บ้าน"
+      },
       {
         "emoji": "🍳",
         "answer": "kitchen",
@@ -160,7 +166,7 @@
         "meaningTh": "ห้องนอน"
       },
       {
-        "emoji": "🛋️",
+        "emoji": "📺",
         "answer": "living room",
         "reading": "ลิฟ-วิ่ง รูม",
         "meaningTh": "ห้องนั่งเล่น"
@@ -174,51 +180,28 @@
         "emoji": "🛋️",
         "answer": "sofa",
         "reading": "โซ-ฟะ",
-        "meaningTh": "โซฟา"
+        "meaningTh": "โซฟา",
+        "accept": [
+          "couch"
+        ]
       },
       {
         "emoji": "📚",
         "answer": "shelf",
         "reading": "เชลฟ์",
-        "meaningTh": "ชั้นวางของ"
+        "meaningTh": "ชั้นวางของ",
+        "accept": [
+          "bookshelf"
+        ]
       },
       {
         "emoji": "🧊",
         "answer": "fridge",
         "reading": "ฟริดจ์",
-        "meaningTh": "ตู้เย็น"
-      }
-    ]
-  },
-  "a2_c03n06": {
-    "title": "Where I Live",
-    "items": [
-      {
-        "emoji": "🏡",
-        "answer": "house",
-        "reading": "เฮาส์",
-        "meaningTh": "บ้าน (หลัง)"
-      },
-      {
-        "emoji": "🏢",
-        "answer": "apartment",
-        "reading": "อะ-พาร์ท-เมนท์",
-        "meaningTh": "อพาร์ตเมนต์, ห้องชุด"
-      },
-      {
-        "emoji": "👋",
-        "answer": "neighbor",
-        "reading": "เน-เบอร์",
-        "meaningTh": "เพื่อนบ้าน",
-        "acceptedAnswers": [
-          "neighbour"
+        "meaningTh": "ตู้เย็น",
+        "accept": [
+          "refrigerator"
         ]
-      },
-      {
-        "emoji": "🤫",
-        "answer": "quiet",
-        "reading": "ไคว-เอ็ท",
-        "meaningTh": "เงียบ"
       }
     ]
   },
@@ -238,23 +221,6 @@
         "meaningTh": "เตี้ย, สั้น"
       },
       {
-        "emoji": "💁‍♀️",
-        "answer": "long hair",
-        "reading": "ลอง แฮร์",
-        "meaningTh": "ผมยาว"
-      },
-      {
-        "emoji": "👩‍🦱",
-        "answer": "curly hair",
-        "reading": "เคอร์-ลี่ แฮร์",
-        "meaningTh": "ผมหยิก"
-      }
-    ]
-  },
-  "a2_c04n03": {
-    "title": "Glasses & Beard",
-    "items": [
-      {
         "emoji": "👓",
         "answer": "glasses",
         "reading": "กลาส-ซิส",
@@ -265,24 +231,12 @@
         "answer": "beard",
         "reading": "เบียร์ด",
         "meaningTh": "เครา"
-      },
-      {
-        "emoji": "👱‍♀️",
-        "answer": "straight hair",
-        "reading": "สเตรท แฮร์",
-        "meaningTh": "ผมตรง"
       }
     ]
   },
-  "a2_c04n05": {
-    "title": "Club People",
+  "a2_c04n04": {
+    "title": "People at the Party",
     "items": [
-      {
-        "emoji": "🧢",
-        "answer": "coach",
-        "reading": "โค้ช",
-        "meaningTh": "โค้ช, ผู้ฝึกสอน"
-      },
       {
         "emoji": "👨",
         "answer": "man",
@@ -300,10 +254,16 @@
         "answer": "boy",
         "reading": "บอย",
         "meaningTh": "เด็กผู้ชาย"
+      },
+      {
+        "emoji": "👧",
+        "answer": "girl",
+        "reading": "เกิร์ล",
+        "meaningTh": "เด็กผู้หญิง"
       }
     ]
   },
-  "a2_c04n08": {
+  "a2_c04n07": {
     "title": "What Are They Like?",
     "items": [
       {
@@ -332,7 +292,7 @@
       }
     ]
   },
-  "a2_c05n02": {
+  "a2_c05n01": {
     "title": "In the Park",
     "items": [
       {
@@ -354,54 +314,39 @@
         "meaningTh": "ม้านั่ง"
       },
       {
-        "emoji": "🚲",
-        "answer": "bike",
-        "reading": "ไบค์",
-        "meaningTh": "จักรยาน"
+        "emoji": "🌳",
+        "answer": "tree",
+        "reading": "ทรี",
+        "meaningTh": "ต้นไม้"
       }
     ]
   },
-  "a2_c05n06": {
-    "title": "Come On! Hurry Up!",
+  "a2_c05n05": {
+    "title": "More Words: Park Actions",
     "items": [
       {
-        "emoji": "👉",
-        "answer": "Come on!",
-        "reading": "คัม ออน",
-        "meaningTh": "มาเร็ว!, เอาน่า!",
-        "acceptedAnswers": [
-          "come on"
-        ]
+        "emoji": "🧗",
+        "answer": "climb",
+        "reading": "ไคลม์",
+        "meaningTh": "ปีน"
       },
       {
-        "emoji": "🏃",
-        "answer": "Hurry up!",
-        "reading": "เฮอ-รี่ อัพ",
-        "meaningTh": "เร็วเข้า!",
-        "acceptedAnswers": [
-          "hurry up",
-          "hurry"
-        ]
+        "emoji": "🚲",
+        "answer": "ride",
+        "reading": "ไรด์",
+        "meaningTh": "ขี่"
       },
       {
-        "emoji": "⚠️",
-        "answer": "Watch out!",
-        "reading": "วอทช์ เอาท์",
-        "meaningTh": "ระวัง!",
-        "acceptedAnswers": [
-          "watch out",
-          "look out"
-        ]
+        "emoji": "🕊️",
+        "answer": "fly",
+        "reading": "ฟลาย",
+        "meaningTh": "บิน, ทำให้ลอย"
       },
       {
-        "emoji": "👀",
-        "answer": "Look at that!",
-        "reading": "ลุค แอท แดท",
-        "meaningTh": "ดูนั่นสิ!",
-        "acceptedAnswers": [
-          "look at that",
-          "look at this"
-        ]
+        "emoji": "🪁",
+        "answer": "kite",
+        "reading": "ไคท์",
+        "meaningTh": "ว่าว"
       }
     ]
   },
@@ -418,7 +363,10 @@
         "emoji": "🥁",
         "answer": "drums",
         "reading": "ดรัมส์",
-        "meaningTh": "กลอง"
+        "meaningTh": "กลอง",
+        "accept": [
+          "drum"
+        ]
       },
       {
         "emoji": "🏸",
@@ -428,13 +376,13 @@
       },
       {
         "emoji": "🖌️",
-        "answer": "painting",
-        "reading": "เพน-ทิ่ง",
-        "meaningTh": "การวาดภาพระบายสี"
+        "answer": "paint",
+        "reading": "เพนท์",
+        "meaningTh": "ระบายสี"
       }
     ]
   },
-  "a2_c06n04": {
+  "a2_c06n06": {
     "title": "Good Reasons",
     "items": [
       {
@@ -463,21 +411,9 @@
       }
     ]
   },
-  "a2_c07n03": {
-    "title": "Time to Meet",
+  "a2_c07n01": {
+    "title": "Free Time",
     "items": [
-      {
-        "emoji": "🌆",
-        "answer": "this evening",
-        "reading": "ดิส อีฟ-นิ่ง",
-        "meaningTh": "เย็นนี้"
-      },
-      {
-        "emoji": "📅",
-        "answer": "next week",
-        "reading": "เน็กซ์ท วีค",
-        "meaningTh": "สัปดาห์หน้า"
-      },
       {
         "emoji": "😎",
         "answer": "free",
@@ -488,7 +424,22 @@
         "emoji": "😵",
         "answer": "busy",
         "reading": "บิ-ซี่",
-        "meaningTh": "ยุ่ง, ไม่ว่าง"
+        "meaningTh": "ยุ่ง"
+      },
+      {
+        "emoji": "🌆",
+        "answer": "evening",
+        "reading": "อีฟ-นิ่ง",
+        "meaningTh": "ตอนเย็น"
+      },
+      {
+        "emoji": "🌤️",
+        "answer": "afternoon",
+        "reading": "อาฟ-เตอร์-นูน",
+        "meaningTh": "ตอนบ่าย",
+        "accept": [
+          "this afternoon"
+        ]
       }
     ]
   },
@@ -496,22 +447,16 @@
     "title": "Plan a Meet-Up",
     "items": [
       {
+        "emoji": "💌",
+        "answer": "invite",
+        "reading": "อิน-ไวท์",
+        "meaningTh": "ชวน, เชิญ"
+      },
+      {
         "emoji": "✅",
         "answer": "available",
         "reading": "อะ-เว-ละ-เบิล",
         "meaningTh": "ว่าง (สะดวก)"
-      },
-      {
-        "emoji": "🗓️",
-        "answer": "calendar",
-        "reading": "แคล-เลน-ดาร์",
-        "meaningTh": "ปฏิทิน"
-      },
-      {
-        "emoji": "🌤️",
-        "answer": "afternoon",
-        "reading": "อาฟ-เตอร์-นูน",
-        "meaningTh": "ตอนบ่าย"
       },
       {
         "emoji": "❌",
@@ -521,88 +466,17 @@
       }
     ]
   },
-  "a2_c07n07": {
-    "title": "Next Time",
-    "items": [
-      {
-        "emoji": "⏭️",
-        "answer": "next time",
-        "reading": "เน็กซ์ท ไทม์",
-        "meaningTh": "คราวหน้า"
-      },
-      {
-        "emoji": "🔄",
-        "answer": "another time",
-        "reading": "อะ-นาเธอร์ ไทม์",
-        "meaningTh": "โอกาสหน้า"
-      },
-      {
-        "emoji": "⏳",
-        "answer": "soon",
-        "reading": "ซูน",
-        "meaningTh": "เร็ว ๆ นี้"
-      },
-      {
-        "emoji": "👋",
-        "answer": "See you then.",
-        "reading": "ซี ยู เดน",
-        "meaningTh": "แล้วเจอกันตอนนั้นนะ",
-        "acceptedAnswers": [
-          "see you then"
-        ]
-      }
-    ]
-  },
   "a2_c08n02": {
-    "title": "Night Market Phrases",
+    "title": "Market Words",
     "items": [
       {
-        "emoji": "👀",
-        "answer": "Just looking, thanks.",
-        "reading": "จัสท์ ลุค-กิ้ง แธงค์ส",
-        "meaningTh": "แค่ดูเฉย ๆ ขอบคุณ",
-        "acceptedAnswers": [
-          "just looking thanks",
-          "just looking",
-          "just looking thank you"
-        ]
+        "emoji": "🌙",
+        "answer": "night market",
+        "reading": "ไนท์ มาร์-เก็ต",
+        "meaningTh": "ตลาดกลางคืน"
       },
       {
-        "emoji": "💵",
-        "answer": "I'll take it.",
-        "reading": "ไอล์ เทค อิท",
-        "meaningTh": "เอาอันนี้",
-        "acceptedAnswers": [
-          "i'll take it",
-          "i will take it"
-        ]
-      },
-      {
-        "emoji": "🍢",
-        "answer": "Can I try some?",
-        "reading": "แคน ไอ ทราย ซัม",
-        "meaningTh": "ขอชิมหน่อยได้ไหม",
-        "acceptedAnswers": [
-          "can i try some",
-          "can i try"
-        ]
-      },
-      {
-        "emoji": "📱",
-        "answer": "Where are you?",
-        "reading": "แวร์ อาร์ ยู",
-        "meaningTh": "อยู่ที่ไหน",
-        "acceptedAnswers": [
-          "where are you"
-        ]
-      }
-    ]
-  },
-  "a2_c08n04": {
-    "title": "Market Stalls",
-    "items": [
-      {
-        "emoji": "⛺",
+        "emoji": "🏪",
         "answer": "stall",
         "reading": "สตอล",
         "meaningTh": "แผงขายของ"
@@ -610,14 +484,8 @@
       {
         "emoji": "🎁",
         "answer": "souvenir",
-        "reading": "ซู-เว-เนียร์",
+        "reading": "ซู-เวอ-เนียร์",
         "meaningTh": "ของที่ระลึก"
-      },
-      {
-        "emoji": "🌙",
-        "answer": "night market",
-        "reading": "ไนท์ มาร์-เก็ต",
-        "meaningTh": "ตลาดนัดกลางคืน"
       },
       {
         "emoji": "🧾",
