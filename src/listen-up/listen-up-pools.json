@@ -68,6 +68,7 @@
       {
         "id": "a2_c01n08_05",
         "audioText": "Hi! I'm Mali. I work at the café. I like surfing, but I don't like fishing.",
+        "speaker": "Mali",
         "questionEn": "What doesn't Mali like doing?",
         "questionTh": "Mali ไม่ชอบทำอะไร?",
         "answerEn": "Fishing.",
@@ -294,6 +295,7 @@
       {
         "id": "a2_c09n09_01",
         "audioText": "One medium iced latte for May!",
+        "speaker": "Mali",
         "questionEn": "What size is May's latte?",
         "questionTh": "แก้วลาเต้ของ May ขนาดไหน?",
         "answerEn": "Medium.",
@@ -310,6 +312,7 @@
       {
         "id": "a2_c09n09_02",
         "audioText": "A large hot tea for Capy, to take away.",
+        "speaker": "Mali",
         "questionEn": "Is Capy's tea for here or to take away?",
         "questionTh": "Capy ทานที่ร้านหรือกลับบ้าน?",
         "answerEn": "To take away.",
@@ -325,6 +328,7 @@
       {
         "id": "a2_c09n09_03",
         "audioText": "Three small iced lattes for John, for here.",
+        "speaker": "Mali",
         "questionEn": "How many lattes did John order?",
         "questionTh": "John สั่งลาเต้กี่แก้ว?",
         "answerEn": "Three.",
@@ -341,6 +345,7 @@
       {
         "id": "a2_c09n09_04",
         "audioText": "A small latte for Teacher Nina. Hot, not iced!",
+        "speaker": "Mali",
         "questionEn": "Is Teacher Nina's latte hot or iced?",
         "questionTh": "ลาเต้ของ Teacher Nina ร้อนหรือเย็น?",
         "answerEn": "Hot.",
@@ -357,6 +362,7 @@
       {
         "id": "a2_c09n09_05",
         "audioText": "Sorry, Max. We don't have any hot milk today. We have hot tea and iced tea.",
+        "speaker": "Mali",
         "questionEn": "Can Max get hot milk today?",
         "questionTh": "วันนี้ Max สั่งนมร้อนได้ไหม?",
         "answerEn": "No.",
@@ -373,6 +379,7 @@
       {
         "id": "a2_c09n09_06",
         "audioText": "Hot tea, forty-five baht. Milk, fifty-five baht. Latte, sixty-five baht.",
+        "speaker": "Mali",
         "questionEn": "You have 100 baht. Which two different drinks cost 100 baht?",
         "questionTh": "มีเงินพอดี 100 บาท อยากได้ 2 แก้วที่ไม่ซ้ำกัน และใช้เงินให้ครบ 100 บาท ซื้อคู่ไหน?",
         "answerEn": "Hot tea and milk.",
@@ -396,6 +403,7 @@
       {
         "id": "a2_c10n09_01",
         "audioText": "Sorry, we don't have any curry today. The noodle soup is really spicy. The fried rice isn't spicy.",
+        "speaker": "Mali",
         "questionEn": "Max can't eat spicy food. What should he order?",
         "questionTh": "Max กินเผ็ดไม่ได้ ควรสั่งจานไหน?",
         "answerEn": "Fried rice.",
@@ -411,6 +419,7 @@
       {
         "id": "a2_c10n09_02",
         "audioText": "I'm so sorry. We don't have any fried rice today. The curry is too spicy for Max. The noodle soup isn't spicy.",
+        "speaker": "Mali",
         "questionEn": "Which dish isn't spicy?",
         "questionTh": "จานไหนไม่เผ็ด?",
         "answerEn": "Noodle soup.",
@@ -425,6 +434,7 @@
       {
         "id": "a2_c10n09_03",
         "audioText": "Sorry, no noodle soup today. We have curry and fried rice.",
+        "speaker": "Mali",
         "questionEn": "Which dishes do they have today?",
         "questionTh": "วันนี้ร้านมีจานไหนบ้าง?",
         "answerEn": "Curry and fried rice.",
@@ -441,6 +451,7 @@
       {
         "id": "a2_c10n09_04",
         "audioText": "Sorry, we don't have any noodle soup today. The curry is sweet, not spicy. The fried rice is really spicy.",
+        "speaker": "Mali",
         "questionEn": "What should Max order?",
         "questionTh": "Max ควรสั่งจานไหน?",
         "answerEn": "Curry.",
@@ -478,6 +489,7 @@
       {
         "id": "a2_c16n08_01",
         "audioText": "Boat noodles are forty baht. Mango is thirty baht. Water is ten baht.",
+        "speaker": "Mali",
         "questionEn": "How much are the boat noodles?",
         "questionTh": "ก๋วยเตี๋ยวเรือราคาเท่าไร?",
         "answerEn": "Forty baht.",
@@ -494,6 +506,7 @@
       {
         "id": "a2_c16n08_02",
         "audioText": "Boat noodles are forty baht. Mango is thirty baht. Water is ten baht.",
+        "speaker": "Mali",
         "questionEn": "One boat noodles and one water. How much is that?",
         "questionTh": "ซื้อก๋วยเตี๋ยวเรือ 1 ชาม กับน้ำ 1 ขวด รวมเป็นเงินเท่าไร?",
         "answerEn": "Fifty baht.",
@@ -510,6 +523,7 @@
       {
         "id": "a2_c16n08_03",
         "audioText": "Two boat noodles and one mango. That's one hundred and ten baht.",
+        "speaker": "Mali",
         "questionEn": "What's the total?",
         "questionTh": "ยอดรวมเท่าไร?",
         "answerEn": "One hundred and ten baht.",
@@ -526,6 +540,7 @@
       {
         "id": "a2_c16n08_04",
         "audioText": "One mango and one water. That's forty baht.",
+        "speaker": "Mali",
         "questionEn": "You pay 100 baht. How much change do you get?",
         "questionTh": "คุณจ่าย 100 บาท ควรได้เงินทอนเท่าไร?",
         "answerEn": "Sixty baht.",
@@ -541,6 +556,7 @@
       {
         "id": "a2_c16n08_05",
         "audioText": "That's eighty baht. Here's your change, twenty baht.",
+        "speaker": "Mali",
         "questionEn": "How much money did you give Mali?",
         "questionTh": "คุณให้เงิน Mali ไปกี่บาท?",
         "answerEn": "One hundred baht.",
@@ -557,6 +573,7 @@
       {
         "id": "a2_c16n08_06",
         "audioText": "Boat noodles, forty baht. Mango, thirty baht. Here's your change, twenty baht.",
+        "speaker": "Mali",
         "questionEn": "You pay 100 baht. The change is wrong. What is the right change?",
         "questionTh": "คุณจ่าย 100 บาท Mali ทอนผิด เงินทอนที่ถูกคือเท่าไร?",
         "answerEn": "Thirty baht.",
@@ -680,6 +697,7 @@
       {
         "id": "a2_c19n08_02",
         "audioText": "Hello, hello! For the old town, get off at the market. The market is the third stop! ♪ I love my bus! ♪",
+        "speaker": "Driver Uncle Somchai",
         "questionEn": "Where do you get off for the old town?",
         "questionTh": "จะไปเมืองเก่า ต้องลงป้ายไหน?",
         "answerEn": "The market",
@@ -696,6 +714,7 @@
       {
         "id": "a2_c19n08_03",
         "audioText": "♪ I love my bus, I love my bus! ♪ We're at the school now! Next stop, the museum, then the market!",
+        "speaker": "Driver Uncle Somchai",
         "questionEn": "Where is the bus now?",
         "questionTh": "ตอนนี้รถจอดอยู่ที่ป้ายไหน?",
         "answerEn": "The school",
@@ -711,6 +730,7 @@
       {
         "id": "a2_c19n08_04",
         "audioText": "Sorry, sorry! The market stop is closed today. Please get off at the school and walk five minutes. ♪ I love my bus! ♪",
+        "speaker": "Driver Uncle Somchai",
         "questionEn": "The market stop is closed. Where should you get off?",
         "questionTh": "ป้ายตลาดปิด Driver Uncle Somchai บอกให้ลงป้ายไหนแทน?",
         "answerEn": "The school",
@@ -727,6 +747,7 @@
       {
         "id": "a2_c19n08_05",
         "audioText": "Oh no, you missed the museum! Get off at the next stop. It's the market! ♪ I love my bus! ♪",
+        "speaker": "Driver Uncle Somchai",
         "questionEn": "You missed the museum. Where do you get off?",
         "questionTh": "นั่งเลยป้ายพิพิธภัณฑ์แล้ว ต้องลงป้ายไหน?",
         "answerEn": "The market",
