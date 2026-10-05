@@ -19,8 +19,8 @@ export type ListenUpPool = {
   items: ListenUpItem[];
 };
 
-/** Temporarily off: Listen Up nodes show as coming soon on every path. */
-export const LISTEN_UP_ENABLED = false;
+/** When off, Listen Up nodes show as coming soon on every path. */
+export const LISTEN_UP_ENABLED = true;
 export const LISTEN_UP_MIN_ITEMS = 3;
 export const LISTEN_UP_DEAL_COUNT = 5;
 

@@ -6643,7 +6643,7 @@
       },
       {
         "kind": "finish",
-        "text": "พร้อมขึ้นรถแล้ว 🎉 ตอนนี้คุณพูดได้ว่า “Which bus goes to the old town?” · “How much is the fare?” · “It takes 20 minutes.” ต่อไป… เจอ Driver Dave คนขับที่ร้องเพลงเสียงดังสุด ๆ 🎤🚌"
+        "text": "พร้อมขึ้นรถแล้ว 🎉 ตอนนี้คุณพูดได้ว่า “Which bus goes to the old town?” · “How much is the fare?” · “It takes 20 minutes.” ต่อไป… เจอ Driver Uncle Somchai คนขับที่ร้องเพลงเสียงดังสุด ๆ 🎤🚌"
       }
     ]
   },
@@ -6705,7 +6705,7 @@
       },
       {
         "kind": "choice",
-        "text": "ลงรถเมล์ 🚌 👉 get off · Max อยากถาม Driver Dave ว่าต้องลงป้ายไหน 🤔 Max ถามว่าอะไรดี?",
+        "text": "ลงรถเมล์ 🚌 👉 get off · Max อยากถาม Driver Uncle Somchai ว่าต้องลงป้ายไหน 🤔 Max ถามว่าอะไรดี?",
         "expectedSpeech": "Where do I get off?",
         "answerMode": "single",
         "stem": "Where do I get ...?",
@@ -6726,12 +6726,12 @@
       },
       {
         "kind": "task",
-        "text": "แต่ Driver Dave เปิดเพลงดังแล้วร้องตามลั่นรถ 🎤🎵 ทีมไม่ได้ยินประกาศ… เลยป้ายไปแล้ว! 😱 (miss → missed) “Oh no! We missed our stop!” = แย่แล้ว! เราเลยป้ายแล้ว! ลองพูดตามครับ",
+        "text": "แต่ Driver Uncle Somchai เปิดเพลงดังแล้วร้องตามลั่นรถ 🎤🎵 ทีมไม่ได้ยินประกาศ… เลยป้ายไปแล้ว! 😱 (miss → missed) “Oh no! We missed our stop!” = แย่แล้ว! เราเลยป้ายแล้ว! ลองพูดตามครับ",
         "expectedSpeech": "Oh no! We missed our stop!"
       },
       {
         "kind": "choice",
-        "text": "Driver Dave หยุดร้องเพลงแป๊บนึง 🎤 แล้วตะโกนบอกให้ทีมลงป้ายหน้า Driver Dave พูดว่าอะไร?",
+        "text": "Driver Uncle Somchai หยุดร้องเพลงแป๊บนึง 🎤 แล้วตะโกนบอกให้ทีมลงป้ายหน้า Driver Uncle Somchai พูดว่าอะไร?",
         "expectedSpeech": "Get off at the next stop.",
         "answerMode": "single",
         "stem": "Get ... stop.",
@@ -6748,7 +6748,7 @@
           }
         ],
         "successText": "Get off at the next stop. = ลงป้ายหน้านะ! …แล้วก็ร้องเพลงต่อทันที 🎶😆",
-        "incorrectHintTh": "Driver Dave บอกให้ลงรถป้ายหน้า 🚌 พูดว่า Get off at the next stop. ครับ"
+        "incorrectHintTh": "Driver Uncle Somchai บอกให้ลงรถป้ายหน้า 🚌 พูดว่า Get off at the next stop. ครับ"
       },
       {
         "kind": "task",

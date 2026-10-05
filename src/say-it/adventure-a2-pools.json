@@ -2265,7 +2265,7 @@
   "a2_c19n07": [
     {
       "id": "a2_c19n07_q1",
-      "promptTh": "ถาม Driver Dave (คนขับ): ค่าโดยสารเท่าไหร่",
+      "promptTh": "ถาม Driver Uncle Somchai (คนขับ): ค่าโดยสารเท่าไหร่",
       "answerEn": "How much is the fare?",
       "acceptedAnswers": [],
       "hints": [
@@ -2275,7 +2275,7 @@
     },
     {
       "id": "a2_c19n07_q2",
-      "promptTh": "ถาม Driver Dave (คนขับ): ฉันต้องลงที่ไหน",
+      "promptTh": "ถาม Driver Uncle Somchai (คนขับ): ฉันต้องลงที่ไหน",
       "answerEn": "Where do I get off?",
       "acceptedAnswers": [
         "Where do I have to get off?"
@@ -2297,7 +2297,7 @@
     },
     {
       "id": "a2_c19n07_q4",
-      "promptTh": "ถาม Driver Dave (คนขับ): รถคันนี้ไปเมืองเก่าไหม",
+      "promptTh": "ถาม Driver Uncle Somchai (คนขับ): รถคันนี้ไปเมืองเก่าไหม",
       "answerEn": "Does this bus go to the old town?",
       "acceptedAnswers": [],
       "hints": [
@@ -2307,7 +2307,7 @@
     },
     {
       "id": "a2_c19n07_q5",
-      "promptTh": "ถาม Driver Dave (คนขับ): ไปพิพิธภัณฑ์ใช้เวลานานแค่ไหน",
+      "promptTh": "ถาม Driver Uncle Somchai (คนขับ): ไปพิพิธภัณฑ์ใช้เวลานานแค่ไหน",
       "answerEn": "How long does it take to get to the museum?",
       "acceptedAnswers": [
         "How long does it take to go to the museum?"
@@ -2319,7 +2319,7 @@
     },
     {
       "id": "a2_c19n07_q6",
-      "promptTh": "ถาม Driver Dave (คนขับ): รถออกกี่โมง",
+      "promptTh": "ถาม Driver Uncle Somchai (คนขับ): รถออกกี่โมง",
       "answerEn": "What time does the bus depart?",
       "acceptedAnswers": [
         "What time does the bus leave?",

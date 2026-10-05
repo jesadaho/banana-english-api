@@ -15,7 +15,7 @@
   "conversation",
   "interactive_scenario"
  ],
- "cast": "# Banana English — official cast (from character sheets)\n\nTeachers (only these 5 are teachers): Teacher Bee (also written Teacher B), Teacher John, Teacher Minnie (NOT in A2 — appears in a later course), Teacher Nina, Teacher Torto.\n\n- **Teacher Bee / Teacher B** — a banana character with round glasses, blue Hawaiian shirt with white flowers, shoulder bag. Warm coach. Gender not decided → NEVER use he/she/his/her for Bee; repeat \"Teacher Bee\" instead.\n- **Capy** — a capybara, Teacher Bee's sidekick, NOT a teacher. Black sunglasses, green Hawaiian shirt, backpack, loves bubble tea, holds a \"LET'S GO!\" sign, chill, loyal, funny. Gender not decided → NEVER use he/she/his/her for Capy; repeat \"Capy\". Capy has NO hair to describe (do not say curly hair etc.).\n- **Teacher John** — young man, light-brown hair, headphones round his neck, holds coffee. (he)\n- **Teacher Nina** — 22–26, energetic, long black hair with pink streaks, pink cargo pants, top says \"ENGLISH IS FUN!\", likes bubble tea. (she)\n- **Teacher Torto** — 60+ HUMAN old man (not a turtle) with white hair, sunglasses, bow tie, turtle-shell backpack, pocket watch. Calm, wise, funny. Appears only from the end of chapter 16. (he)\n- **Max** — 18–20 learner, brown messy hair, blue hoodie, backpack. (he)\n- **May** — 17–19 learner, brown hair in a bun, cream hoodie, denim skirt, pink backpack, a bit shy but brave. (she)\n- **Mali** — service worker seen in many places (reception, shop, café, events): short wavy brown hair, cream shirt, yellow scarf, navy pants. (she)\n- **Extra NPCs allowed (only these):**\n  - **Aunt Noi** — May's aunt, 50+, kind, forgetful, great cook, calls everyone \"my dear\" (untaught words must still pass the gate). Chapters 11–12 (the team cooks at her house in the city), cameo in 15 and 31. (she)\n  - **Driver Dave** — quirky bus driver abroad (ch19): loud music, sings, announces stops very fast. (he)\n  - **DJ Coco** — quirky weather radio DJ (ch21, voice only), far too cheerful even in a storm. (he)\n- **NO other named characters.** The course now uses ONLY the cast above so learners bond with them. Replace former NPCs like this:\n  - Leo (barista), Pa Daeng (night-market seller), Bella (clothes shop), Mae Pim (boat seller), Ms. Joy (party-venue phone), Chef Kai (restaurant) → **Mali** (she works part-time everywhere — a running joke). For the restaurant, Mali is the waitress.\n  - Coach Ben → **Teacher John**. Biscuit (the dog) → **Capy**.\n  - Abroad / strangers (Officer Sam, Ms. Rosa, Mr. Lim, Sunny, Dr. Ana, Officer Kim, Jess, Mr. Chen) → an UNNAMED role, e.g. \"the staff\", \"the driver\", \"the woman at the desk\", \"the man at the shop\", \"the weather report\" — in Thai: เจ้าหน้าที่ / คนขับ / พนักงานต้อนรับ / เภสัชกร. English role nouns must pass vocabgate.py (prefer taught words like man, woman, waiter, driver only if taught by then; otherwise rephrase so no role noun is needed, e.g. \"Excuse me, is there a later flight?\").\n  - Mom → \"my mother\" (not a named character).\n  - Watch pronouns: Mali/Nina = she, John = he, Capy/Bee = repeat the name.\n",
+ "cast": "# Banana English — official cast (from character sheets)\n\nTeachers (only these 5 are teachers): Teacher Bee (also written Teacher B), Teacher John, Teacher Minnie (NOT in A2 — appears in a later course), Teacher Nina, Teacher Torto.\n\n- **Teacher Bee / Teacher B** — a banana character with round glasses, blue Hawaiian shirt with white flowers, shoulder bag. Warm coach. Gender not decided → NEVER use he/she/his/her for Bee; repeat \"Teacher Bee\" instead.\n- **Capy** — a capybara, Teacher Bee's sidekick, NOT a teacher. Black sunglasses, green Hawaiian shirt, backpack, loves bubble tea, holds a \"LET'S GO!\" sign, chill, loyal, funny. Gender not decided → NEVER use he/she/his/her for Capy; repeat \"Capy\". Capy has NO hair to describe (do not say curly hair etc.).\n- **Teacher John** — young man, light-brown hair, headphones round his neck, holds coffee. (he)\n- **Teacher Nina** — 22–26, energetic, long black hair with pink streaks, pink cargo pants, top says \"ENGLISH IS FUN!\", likes bubble tea. (she)\n- **Teacher Torto** — 60+ HUMAN old man (not a turtle) with white hair, sunglasses, bow tie, turtle-shell backpack, pocket watch. Calm, wise, funny. Appears only from the end of chapter 16. (he)\n- **Max** — 18–20 learner, brown messy hair, blue hoodie, backpack. (he)\n- **May** — 17–19 learner, brown hair in a bun, cream hoodie, denim skirt, pink backpack, a bit shy but brave. (she)\n- **Mali** — service worker seen in many places (reception, shop, café, events): short wavy brown hair, cream shirt, yellow scarf, navy pants. (she)\n- **Extra NPCs allowed (only these):**\n  - **Aunt Noi** — May's aunt, 50+, kind, forgetful, great cook, calls everyone \"my dear\" (untaught words must still pass the gate). Chapters 11–12 (the team cooks at her house in the city), cameo in 15 and 31. (she)\n  - **Driver Uncle Somchai** — quirky bus driver abroad (ch19): loud music, sings, announces stops very fast. (he)\n  - **DJ Coco** — quirky weather radio DJ (ch21, voice only), far too cheerful even in a storm. (she)\n- **NO other named characters.** The course now uses ONLY the cast above so learners bond with them. Replace former NPCs like this:\n  - Leo (barista), Pa Daeng (night-market seller), Bella (clothes shop), Mae Pim (boat seller), Ms. Joy (party-venue phone), Chef Kai (restaurant) → **Mali** (she works part-time everywhere — a running joke). For the restaurant, Mali is the waitress.\n  - Coach Ben → **Teacher John**. Biscuit (the dog) → **Capy**.\n  - Abroad / strangers (Officer Sam, Ms. Rosa, Mr. Lim, Sunny, Dr. Ana, Officer Kim, Jess, Mr. Chen) → an UNNAMED role, e.g. \"the staff\", \"the driver\", \"the woman at the desk\", \"the man at the shop\", \"the weather report\" — in Thai: เจ้าหน้าที่ / คนขับ / พนักงานต้อนรับ / เภสัชกร. English role nouns must pass vocabgate.py (prefer taught words like man, woman, waiter, driver only if taught by then; otherwise rephrase so no role noun is needed, e.g. \"Excuse me, is there a later flight?\").\n  - Mom → \"my mother\" (not a named character).\n  - Watch pronouns: Mali/Nina = she, John = he, Capy/Bee = repeat the name.\n",
  "chapters": {
   "1": {
    "story": "Teacher John (ครูจาก A1) ส่งผู้เรียนเข้าชมรม Adventure Club ให้ครูบีดูแล ครูบีพาประชุมชมรมครั้งแรก ทุกคนแนะนำตัวและงานอดิเรก",
@@ -232,7 +232,7 @@
    "outcome": "ถามสาย ค่าโดยสาร และจุดลงรถได้",
    "npc": [
     {
-     "name": "Driver Dave",
+     "name": "Driver Uncle Somchai",
      "role": "คนขับรถเมล์ (NPC แปลกๆ)",
      "hook": "เปิดเพลงดัง ร้องเพลงตาม ประกาศป้ายเร็วมาก · ต้องฟังให้ทัน"
     }
@@ -11742,7 +11742,7 @@
      },
      {
       "kind": "finish",
-      "text": "พร้อมขึ้นรถแล้ว 🎉 ตอนนี้คุณพูดได้ว่า “Which bus goes to the old town?” · “How much is the fare?” · “It takes 20 minutes.” ต่อไป… เจอ Driver Dave คนขับที่ร้องเพลงเสียงดังสุด ๆ 🎤🚌"
+      "text": "พร้อมขึ้นรถแล้ว 🎉 ตอนนี้คุณพูดได้ว่า “Which bus goes to the old town?” · “How much is the fare?” · “It takes 20 minutes.” ต่อไป… เจอ Driver Uncle Somchai คนขับที่ร้องเพลงเสียงดังสุด ๆ 🎤🚌"
      }
     ]
    }
@@ -11837,7 +11837,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "ลงรถเมล์ 🚌 👉 get off · Max อยากถาม Driver Dave ว่าต้องลงป้ายไหน 🤔 Max ถามว่าอะไรดี?",
+      "text": "ลงรถเมล์ 🚌 👉 get off · Max อยากถาม Driver Uncle Somchai ว่าต้องลงป้ายไหน 🤔 Max ถามว่าอะไรดี?",
       "stem": "Where do I get ...?",
       "options": [
        {
@@ -11857,13 +11857,13 @@
      },
      {
       "kind": "task",
-      "text": "แต่ Driver Dave เปิดเพลงดังแล้วร้องตามลั่นรถ 🎤🎵 ทีมไม่ได้ยินประกาศ… เลยป้ายไปแล้ว! 😱 (miss → missed) “Oh no! We missed our stop!” = แย่แล้ว! เราเลยป้ายแล้ว! ลองพูดตามครับ",
+      "text": "แต่ Driver Uncle Somchai เปิดเพลงดังแล้วร้องตามลั่นรถ 🎤🎵 ทีมไม่ได้ยินประกาศ… เลยป้ายไปแล้ว! 😱 (miss → missed) “Oh no! We missed our stop!” = แย่แล้ว! เราเลยป้ายแล้ว! ลองพูดตามครับ",
       "expectedSpeech": "Oh no! We missed our stop!"
      },
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "Driver Dave หยุดร้องเพลงแป๊บนึง 🎤 แล้วตะโกนบอกให้ทีมลงป้ายหน้า Driver Dave พูดว่าอะไร?",
+      "text": "Driver Uncle Somchai หยุดร้องเพลงแป๊บนึง 🎤 แล้วตะโกนบอกให้ทีมลงป้ายหน้า Driver Uncle Somchai พูดว่าอะไร?",
       "stem": "Get ... stop.",
       "options": [
        {
@@ -11879,7 +11879,7 @@
       ],
       "expectedSpeech": "Get off at the next stop.",
       "successText": "Get off at the next stop. = ลงป้ายหน้านะ! …แล้วก็ร้องเพลงต่อทันที 🎶😆",
-      "incorrectHintTh": "Driver Dave บอกให้ลงรถป้ายหน้า 🚌 พูดว่า Get off at the next stop. ครับ"
+      "incorrectHintTh": "Driver Uncle Somchai บอกให้ลงรถป้ายหน้า 🚌 พูดว่า Get off at the next stop. ครับ"
      },
      {
       "kind": "task",
@@ -11977,12 +11977,12 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "ถาม Driver Dave (คนขับ): ค่าโดยสารเท่าไหร่",
+     "th": "ถาม Driver Uncle Somchai (คนขับ): ค่าโดยสารเท่าไหร่",
      "en": "How much is the fare?",
      "accept": []
     },
     {
-     "th": "ถาม Driver Dave (คนขับ): ฉันต้องลงที่ไหน",
+     "th": "ถาม Driver Uncle Somchai (คนขับ): ฉันต้องลงที่ไหน",
      "en": "Where do I get off?",
      "accept": [
       "Where do I have to get off?"
@@ -11994,19 +11994,19 @@
      "accept": []
     },
     {
-     "th": "ถาม Driver Dave (คนขับ): รถคันนี้ไปเมืองเก่าไหม",
+     "th": "ถาม Driver Uncle Somchai (คนขับ): รถคันนี้ไปเมืองเก่าไหม",
      "en": "Does this bus go to the old town?",
      "accept": []
     },
     {
-     "th": "ถาม Driver Dave (คนขับ): ไปพิพิธภัณฑ์ใช้เวลานานแค่ไหน",
+     "th": "ถาม Driver Uncle Somchai (คนขับ): ไปพิพิธภัณฑ์ใช้เวลานานแค่ไหน",
      "en": "How long does it take to get to the museum?",
      "accept": [
       "How long does it take to go to the museum?"
      ]
     },
     {
-     "th": "ถาม Driver Dave (คนขับ): รถออกกี่โมง",
+     "th": "ถาม Driver Uncle Somchai (คนขับ): รถออกกี่โมง",
      "en": "What time does the bus depart?",
      "accept": [
       "What time does the bus leave?",
@@ -12030,7 +12030,7 @@
    "hint": "① เล่นซ้ำ ② เล่นซ้ำแบบช้า + เน้นช่วงที่มีคำตอบ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "audio": "♪ I love my bus, I love my bus! ♪ Hi, it's Driver Dave! Next stop, the museum! The museum! ♪ I love my bus! ♪",
+     "audio": "♪ I love my bus, I love my bus! ♪ Hi, it's Driver Uncle Somchai! Next stop, the museum! The museum! ♪ I love my bus! ♪",
      "q": "ป้ายถัดไปคือที่ไหน",
      "en": "The museum",
      "accept": [
@@ -12059,7 +12059,7 @@
     },
     {
      "audio": "Sorry, sorry! The market stop is closed today. Please get off at the school and walk five minutes. ♪ I love my bus! ♪",
-     "q": "ป้ายตลาดปิด Driver Dave บอกให้ลงป้ายไหนแทน",
+     "q": "ป้ายตลาดปิด Driver Uncle Somchai บอกให้ลงป้ายไหนแทน",
      "en": "The school",
      "accept": [
       "School",

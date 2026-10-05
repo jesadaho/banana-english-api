@@ -107,7 +107,7 @@ for n in N:
     if n["type"] == "emoji_speak":
         texts += re.findall(r"[^\x00-\x7F\s]+\s*([A-Za-z][A-Za-z' ,.!?’-]+)", n["teach"])
     for txt in texts:
-        txt = re.sub(r"\b(Driver Dave|DJ Coco|Aunt Noi)\b", " ", txt)
+        txt = re.sub(r"\b(Driver Uncle Somchai|DJ Coco|Aunt Noi)\b", " ", txt)
         miss = sorted({w.lower() for w in re.findall(r"[A-Za-z][A-Za-z'’]*", txt) if not known(w)} - {"emoji", "lesson", "tense"})
         if miss: err("E7", f"{n['code']} {n['type']}: {', '.join(miss)}")
 for c, i, m in V.run(): err("E6", f"{c}#{i}: {', '.join(m)}")
@@ -198,7 +198,7 @@ for n in N:
                 if s.get("expectedSpeech") not in [o.get("speak") for o in ops]: err("E13", f"{c}#{i}: expectedSpeech is not one of the options")
                 if not s.get("incorrectHintTh") or not s.get("successText"): err("E13", f"{c}#{i}: single choice needs successText and incorrectHintTh")
         eng = " ".join([s.get("expectedSpeech", "")] + [o.get("speak", "") + " " + o.get("label", "") for o in s.get("options", [])])
-        eng = re.sub(r"\b(Driver Dave|DJ Coco|Aunt Noi|Sky Grill)\b", " ", eng)
+        eng = re.sub(r"\b(Driver Uncle Somchai|DJ Coco|Aunt Noi|Sky Grill)\b", " ", eng)
         miss = sorted({w.lower() for w in re.findall(r"[A-Za-z][A-Za-z'’]*", eng) if not (V.norm(w) & (V.A1 | V.FUNC | V.NAMES | V.LOAN | taught2))})
         if miss: err("E13", f"{c}#{i}: untaught English in flow: {', '.join(miss)}")
     # E14 old-Adventure strengths: hidden-answer recall, learner asks, character asks the learner
@@ -223,7 +223,7 @@ for n in N:
     for s in st:
         if s.get("kind") in ("listen", "task", "choice"):
             le = " ".join(q for q in re.findall(r"“([^”]*)”", s.get("text", "")) if re.search(r"[A-Za-z]", q) and not re.search(r"[\u0E00-\u0E7F]", q))
-            le = re.sub(r"\b(Driver Dave|DJ Coco|Aunt Noi|Sky Grill)\b", " ", le)
+            le = re.sub(r"\b(Driver Uncle Somchai|DJ Coco|Aunt Noi|Sky Grill)\b", " ", le)
             miss = sorted({w.lower() for w in re.findall(r"[A-Za-z][A-Za-z'’]*", le) if not (V.norm(w) & (V.A1 | V.FUNC | V.NAMES | V.LOAN | taught2))})
             if miss: err("E14", f"{c}: untaught English quoted in teacher text: {', '.join(miss)}")
     if sum(1 for s in st if s.get("kind") == "listen") > 3: err("E14", f"{c}: at most 3 listen steps")

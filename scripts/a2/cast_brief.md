@@ -12,8 +12,8 @@ Teachers (only these 5 are teachers): Teacher Bee (also written Teacher B), Teac
 - **Mali** — service worker seen in many places (reception, shop, café, events): short wavy brown hair, cream shirt, yellow scarf, navy pants. (she)
 - **Extra NPCs allowed (only these):**
   - **Aunt Noi** — May's aunt, 50+, kind, forgetful, great cook, calls everyone "my dear" (untaught words must still pass the gate). Chapters 11–12 (the team cooks at her house in the city), cameo in 15 and 31. (she)
-  - **Driver Dave** — quirky bus driver abroad (ch19): loud music, sings, announces stops very fast. (he)
-  - **DJ Coco** — quirky weather radio DJ (ch21, voice only), far too cheerful even in a storm. (he)
+  - **Driver Uncle Somchai** — quirky bus driver abroad (ch19): loud music, sings, announces stops very fast. (he)
+  - **DJ Coco** — quirky weather radio DJ (ch21, voice only), far too cheerful even in a storm. (she)
 - **NO other named characters.** The course now uses ONLY the cast above so learners bond with them. Replace former NPCs like this:
   - Leo (barista), Pa Daeng (night-market seller), Bella (clothes shop), Mae Pim (boat seller), Ms. Joy (party-venue phone), Chef Kai (restaurant) → **Mali** (she works part-time everywhere — a running joke). For the restaurant, Mali is the waitress.
   - Coach Ben → **Teacher John**. Biscuit (the dog) → **Capy**.

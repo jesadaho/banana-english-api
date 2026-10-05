@@ -103,7 +103,7 @@ NOT_SPEAKERS = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturda
 
 def listen_up_speaker(audio):
     """`Teacher Torto: …` or `Hi, it's May …` → the speaker's name, else None (announcements)."""
-    name = r"((?:Teacher |DJ |Driver )?[A-Z][a-z]+)"
+    name = r"((?:Teacher |DJ |Driver )?(?:Uncle )?[A-Z][a-z]+)"
     m = re.match(name + r":\s", audio) or re.search(r"\b(?:[Ii]t's|[Tt]his is) " + name + r"\b", audio)
     return m.group(1) if m and m.group(1) not in NOT_SPEAKERS else None
 

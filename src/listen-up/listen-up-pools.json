@@ -624,8 +624,8 @@
     "items": [
       {
         "id": "a2_c19n08_01",
-        "audioText": "♪ I love my bus, I love my bus! ♪ Hi, it's Driver Dave! Next stop, the museum! The museum! ♪ I love my bus! ♪",
-        "speaker": "Driver Dave",
+        "audioText": "♪ I love my bus, I love my bus! ♪ Hi, it's Driver Uncle Somchai! Next stop, the museum! The museum! ♪ I love my bus! ♪",
+        "speaker": "Driver Uncle Somchai",
         "questionTh": "ป้ายถัดไปคือที่ไหน",
         "answerEn": "The museum",
         "acceptedAnswers": [
@@ -669,7 +669,7 @@
       {
         "id": "a2_c19n08_04",
         "audioText": "Sorry, sorry! The market stop is closed today. Please get off at the school and walk five minutes. ♪ I love my bus! ♪",
-        "questionTh": "ป้ายตลาดปิด Driver Dave บอกให้ลงป้ายไหนแทน",
+        "questionTh": "ป้ายตลาดปิด Driver Uncle Somchai บอกให้ลงป้ายไหนแทน",
         "answerEn": "The school",
         "acceptedAnswers": [
           "School",

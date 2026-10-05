@@ -42,7 +42,7 @@ def run(lo=1, hi=32):
         for i, it in enumerate(P.get(n["code"], [])):
             if n["type"] == "explain_it": continue  # clues are free speech; only target words matter (taught on card)
             txt = " ".join([it.get("en", "")] + it.get("accept", []) + ([it["audio"]] if it.get("audio") and it["audio"] != "(คลิปเดิม)" else []))
-            txt = re.sub(r"\b(Driver Dave|DJ Coco|Aunt Noi|Sky Grill)\b", " ", txt)
+            txt = re.sub(r"\b(Driver Uncle Somchai|DJ Coco|Aunt Noi|Sky Grill)\b", " ", txt)
             miss = sorted({w.lower() for w in re.findall(r"[A-Za-z][A-Za-z'’]*", txt) if not known(norm(w))})
             if miss and lo <= ch <= hi: bad.append((n["code"], i, miss))
     return bad
