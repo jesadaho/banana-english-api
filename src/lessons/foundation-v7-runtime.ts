@@ -75,6 +75,23 @@ const NUMBER_TH: Record<string, string> = {
   five: 'ห้า', six: 'หก', seven: 'เจ็ด', eight: 'แปด', nine: 'เก้า', ten: 'สิบ',
 };
 
+export const A2_ENGLISH_PRAISES = ["That's right!", 'Very good!', 'Excellent!'] as const;
+const THAI_PRAISE_OPENER_RE =
+  /^(?:ถูกต้อง|ทำได้ดีมาก|เยี่ยมเลย|เยี่ยมมาก|เยี่ยม|สุดยอด|เก่งมาก|ดีมาก|ดีเลย|ดีครับ)(?:ครับ)?[!！]?[ \t]*/u;
+
+/** A2 praises in English: swap a leading Thai praise for one, or put one before a recap. */
+function a2EnglishPraisePrefix(prefix: string, seed: string): string {
+  let hash = 0;
+  for (const char of seed) hash = (hash * 31 + char.charCodeAt(0)) >>> 0;
+  const praise = A2_ENGLISH_PRAISES[hash % A2_ENGLISH_PRAISES.length];
+  const rest = prefix.replace(THAI_PRAISE_OPENER_RE, '');
+  if (rest !== prefix || /^[A-Za-z“"]/.test(rest)) {
+    if (!rest.trim()) return praise + (rest.includes('\n') ? '\n' : ' ');
+    return praise + (rest.startsWith('\n') ? '' : ' ') + rest;
+  }
+  return prefix;
+}
+
 function v7CorrectPrefix(step: V7TeachingStep, spoken: string): string {
   const option = [...step.presentation?.options ?? [], ...step.presentation?.extraAnswers ?? []]
     .find(o => speechMatches(o.speak, spoken));
@@ -210,8 +227,10 @@ export async function runV7Turn(input: TrainingEngineTurnInput, gate: TrainingAi
     ? (exact ?? (tier === 'correct' ? input.userText : current.expectedSpeech))
     : last?.v7Choice;
   const next = renderV7Turn(id, stepNumber + 1, chosen);
+  const spokenAnswer = exact ?? chosen ?? current.expectedSpeech ?? input.userText;
+  const correctPrefix = tier === 'correct' ? v7CorrectPrefix(step, spokenAnswer) : '';
   const prefix = tier === 'correct'
-    ? v7CorrectPrefix(step, exact ?? chosen ?? current.expectedSpeech ?? input.userText)
+    ? (id.startsWith('a2_') ? a2EnglishPraisePrefix(correctPrefix, id + stepNumber + spokenAnswer) : correctPrefix)
     : 'ประโยคนี้พูดว่า “' + current.expectedSpeech + '” ครับ ลองฝึกต่อด้วยกันนะครับ ';
   const text = prefix + next.textEn;
   return { reply: { ...next, textEn: text, ttsText: text, assessmentTier: tier,

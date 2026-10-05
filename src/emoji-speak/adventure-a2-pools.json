@@ -1,5 +1,5 @@
 {
-  "a2_c01n06": {
+  "a2_c01n04": {
     "title": "Hobby Pictures",
     "dealCount": 7,
     "items": [
@@ -93,49 +93,61 @@
     "items": [
       {
         "emoji": "🍳",
-        "answer": "breakfast",
-        "hint": "b________",
-        "meaningTh": "อาหารเช้า",
+        "answer": "have breakfast",
+        "hint": "h___ b________",
+        "meaningTh": "กินข้าวเช้า",
+        "acceptedAnswers": [
+          "eat breakfast"
+        ],
         "hints": [
-          "B… (1 คำ)",
-          "breakfast"
+          "H… (2 คำ)",
+          "have breakfast"
         ]
       },
       {
         "emoji": "🚿",
-        "answer": "shower",
-        "hint": "s_____",
-        "meaningTh": "การอาบน้ำ (ฝักบัว)",
+        "answer": "take a shower",
+        "hint": "t___ a s_____",
+        "meaningTh": "อาบน้ำ",
+        "acceptedAnswers": [
+          "have a shower"
+        ],
         "hints": [
-          "S… (1 คำ)",
-          "shower"
+          "T… (3 คำ)",
+          "take a shower"
         ]
       },
       {
         "emoji": "📚",
-        "answer": "homework",
-        "hint": "h_______",
-        "meaningTh": "การบ้าน",
+        "answer": "do homework",
+        "hint": "d_ h_______",
+        "meaningTh": "ทำการบ้าน",
+        "acceptedAnswers": [
+          "do my homework"
+        ],
         "hints": [
-          "H… (1 คำ)",
-          "homework"
+          "D… (2 คำ)",
+          "do homework"
         ]
       },
       {
         "emoji": "🍽️",
-        "answer": "dinner",
-        "hint": "d_____",
-        "meaningTh": "อาหารเย็น",
+        "answer": "have dinner",
+        "hint": "h___ d_____",
+        "meaningTh": "กินข้าวเย็น",
+        "acceptedAnswers": [
+          "eat dinner"
+        ],
         "hints": [
-          "D… (1 คำ)",
-          "dinner"
+          "H… (2 คำ)",
+          "have dinner"
         ]
       },
       {
         "emoji": "🛏️",
         "answer": "make the bed",
         "hint": "m___ t__ b__",
-        "meaningTh": "เก็บที่นอน",
+        "meaningTh": "จัดเตียง",
         "acceptedAnswers": [
           "make my bed"
         ],
@@ -253,7 +265,7 @@
         ]
       },
       {
-        "emoji": "📚",
+        "emoji": "🗄️",
         "answer": "shelf",
         "hint": "s____",
         "meaningTh": "ชั้นวางของ",
@@ -285,7 +297,7 @@
     "dealCount": 6,
     "items": [
       {
-        "emoji": "📏",
+        "emoji": "🦒",
         "answer": "tall",
         "hint": "t___",
         "meaningTh": "สูง",

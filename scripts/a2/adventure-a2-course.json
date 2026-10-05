@@ -375,7 +375,7 @@
   },
   {
    "code": "1.2",
-   "title": "I Enjoy Baking / ฉันชอบอบขนม",
+   "title": "I Enjoy Baking / ฉันสนุกกับการอบขนม",
    "type": "lesson",
    "flag": false,
    "beat": "Ki",
@@ -383,7 +383,7 @@
    "teach": "**like / love / enjoy + -ing** และ **don't like + -ing** · ต่างจาก A1 ที่ใช้ like + นาม · เปลี่ยนคำจาก 1.1 เป็นกิจกรรมด้วย -ing (ลงท้าย e ให้ตัด e ก่อน): cook → cooking = การทำอาหาร · bake → **baking** · game → **gaming** · cycle → **cycling** · hike → **hiking** · ประโยค: I **love baking**. · Max **enjoys gaming**. · May **likes hiking**. · I **don't like cycling**.",
    "say": "I love baking. · I don't like cycling.",
    "chapter": "บท 1: เพื่อนใหม่ในชมรม",
-   "goal": "เข้าใจ \"ฉันชอบอบขนม\" พอจะพูดตัวอย่างของตัวเองได้ 1 ประโยค",
+   "goal": "เข้าใจ \"ฉันสนุกกับการอบขนม\" พอจะพูดตัวอย่างของตัวเองได้ 1 ประโยค",
    "accept": "ไม่ตัดสินผ่าน/ตก · ผู้เรียนพูดตามหรือเปลี่ยนคำในตัวอย่างอย่างน้อย 1 ประโยค",
    "hint": "ครูทวนตัวอย่างอีกครั้ง (ไม่มีระดับ hint)",
    "flow": {
@@ -597,6 +597,34 @@
   },
   {
    "code": "1.3",
+   "title": "More Words: Hobbies / งานอดิเรกเพิ่ม",
+   "type": "new_words",
+   "flag": false,
+   "beat": "Sho",
+   "axes": "11111",
+   "teach": "More Words: คำกริยารูปเดิมเพิ่มที่ใส่ในแพทเทิร์น What do you like doing? — I enjoy + -ing (1.2) ได้ทันที **fish · jog · surf · skate** · ตอนพูดในประโยคเติม -ing: fishing · jogging (ซ้ำ g) · surfing · skating (ตัด e)",
+   "say": "—",
+   "chapter": "บท 1: เพื่อนใหม่ในชมรม",
+   "goal": "จำและพูด fish · jog · surf · skate ได้ เพื่อเล่างานอดิเรกเพิ่มในการหาคู่ partner ของชมรม",
+   "accept": "พูดคำได้ชัดพอให้ระบบจับคำถูก · รับ spelling/สำเนียง US-UK · ไม่ตรวจไวยากรณ์",
+   "hint": "① ฟังเสียงอีกครั้ง ② ฟังแบบช้า + แยกพยางค์ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent"
+  },
+  {
+   "code": "1.4",
+   "title": "Hobby Pictures / ภาพงานอดิเรก",
+   "type": "emoji_speak",
+   "flag": false,
+   "beat": "Sho",
+   "axes": "12111",
+   "teach": "ดู emoji แล้วพูดงานอดิเรกรูป -ing จาก 1.1–1.3 (คำเดี่ยว): 🎮 gaming · 🚴 cycling · 🧁 baking · 🥾 hiking · 🏃 jogging",
+   "say": "gaming",
+   "chapter": "บท 1: เพื่อนใหม่ในชมรม",
+   "goal": "ดึงคำ/ก้อนคำที่เรียนแล้วออกมาพูดได้เร็วจากภาพ",
+   "accept": "รับคำ/ก้อนคำที่ภาพกำหนด + คำพ้องที่ระบุไว้ · ไม่ตรวจ tense หรือรูปคำ",
+   "hint": "① ตัวอักษรแรก + จำนวนคำ ② ฟังเสียงแบบช้า · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent"
+  },
+  {
+   "code": "1.5",
    "title": "Club Words / คำในชมรม",
    "type": "new_words",
    "flag": false,
@@ -610,7 +638,7 @@
    "hint": "① ฟังเสียงอีกครั้ง ② ฟังแบบช้า + แยกพยางค์ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent"
   },
   {
-   "code": "1.4",
+   "code": "1.6",
    "title": "On Weekends / ทำอะไรในวันหยุด",
    "type": "lesson",
    "flag": false,
@@ -638,69 +666,55 @@
       "incorrectHintTh": "ลองเริ่มด้วย What do you like …? ครับ"
      },
      {
-      "kind": "listen",
-      "text": "I enjoy jogging. ครูสนุกกับการวิ่งจ๊อกกิ้งครับ 🏃\nถ้าอยากรู้ว่า “วันหยุดสุดสัปดาห์ครูทำอะไร” ถามว่า What do you do on weekends?\non weekends หมายถึง “ในวันหยุดสุดสัปดาห์” ครับ"
+      "kind": "task",
+      "text": "ครูบีตอบว่า I enjoy jogging. แปลว่า “ครูสนุกกับการวิ่งจ๊อกกิ้ง” 🏃\nคุณก็ชอบวิ่งเหมือนกัน! บอกว่า “ฉันก็เหมือนกัน” พูดสั้น ๆ ว่า Me too!\nลองพูดตามครับ",
+      "expectedSpeech": "Me too!"
      },
      {
       "kind": "task",
-      "text": "ลองถามครูบีว่า What do you do on weekends? ครับ",
+      "text": "ถ้าอยากรู้ว่า “วันหยุดสุดสัปดาห์ทำอะไร” ถามว่า What do you do on weekends?\non weekends แปลว่า “ในวันหยุดสุดสัปดาห์”\nลองถามครูบีครับ",
       "expectedSpeech": "What do you do on weekends?"
      },
      {
-      "kind": "listen",
-      "text": "I go jogging on weekends. — “ครูไปวิ่งจ๊อกกิ้งในวันหยุดสุดสัปดาห์” ครับ\ngo jogging หมายถึง “ไปวิ่งจ๊อกกิ้ง”\nเติม on weekends ท้ายประโยคเพื่อบอกว่าทำเมื่อไหร่ครับ\n\n🏃 I go jogging → I go jogging on weekends."
+      "kind": "choice",
+      "answerMode": "single",
+      "text": "ครูบีตอบว่า I go jogging on weekends. แปลว่า “ครูไปวิ่งจ๊อกกิ้งในวันหยุดสุดสัปดาห์”\nถ้าวันหยุดคุณไปว่ายน้ำ 🏊 จะตอบว่าอะไรครับ?",
+      "stem": "I go ... on weekends.",
+      "options": [
+       {
+        "emoji": "🏊",
+        "label": "swimming",
+        "speak": "I go swimming on weekends."
+       },
+       {
+        "emoji": "🏃",
+        "label": "jogging",
+        "speak": "I go jogging on weekends."
+       }
+      ],
+      "expectedSpeech": "I go swimming on weekends.",
+      "successText": "I go swimming on weekends. แปลว่า “ฉันไปว่ายน้ำในวันหยุดสุดสัปดาห์” ครับ\n",
+      "incorrectHintTh": "เกือบแล้ว! ว่ายน้ำคือ swimming ครับ พูดว่า I go swimming on weekends."
      },
      {
       "kind": "task",
-      "text": "สมมติว่าวันหยุดคุณก็ไปวิ่งจ๊อกกิ้งครับ 🏃\nครูถามว่า What do you do on weekends? ลองตอบเต็มประโยคครับ",
+      "text": "ทีนี้สมมติว่าวันหยุดคุณไปวิ่งจ๊อกกิ้งเหมือนครูบี 🏃\nครูถามว่า What do you do on weekends? ลองตอบเต็มประโยคครับ",
       "expectedSpeech": "I go jogging on weekends.",
+      "successText": "I go jogging on weekends. แปลว่า “ฉันไปวิ่งจ๊อกกิ้งในวันหยุดสุดสัปดาห์” ครับ\n",
       "incorrectHintTh": "ลองเริ่มด้วย I go jogging … ครับ"
      },
      {
       "kind": "task",
-      "text": "I go jogging on weekends. แปลว่า “ฉันไปวิ่งจ๊อกกิ้งในวันหยุดสุดสัปดาห์” ครับ\nหลังตอบ ถ้าอยากถามอีกฝ่ายว่า “แล้วคุณล่ะ?” พูดว่า How about you?\nลองพูดตามครับ",
+      "text": "หลังตอบ ถ้าอยากถามอีกฝ่ายกลับว่า “แล้วคุณล่ะ?” พูดว่า How about you?\nลองพูดตามครับ",
       "expectedSpeech": "How about you?"
      },
      {
-      "kind": "task",
-      "text": "ครูบีตอบว่า I go jogging on weekends, too. — “ครูก็ไปวิ่งจ๊อกกิ้งในวันหยุดเหมือนกัน” ครับ\nถ้าอยากบอกว่าเราทำเหมือนอีกฝ่าย พูดสั้น ๆ ว่า Me too! — “ฉันก็เหมือนกัน” ได้ครับ\nลองพูดตามครับ",
-      "expectedSpeech": "Me too!"
-     },
-     {
       "kind": "finish",
-      "text": "วันนี้คุณถามได้ทั้งว่าอีกฝ่ายชอบทำอะไร และทำอะไรในวันหยุด แล้วถามกลับด้วย How about you? ได้แล้วครับ!"
+      "text": "วันนี้คุณถามได้ทั้งว่าอีกฝ่ายชอบทำอะไร และทำอะไรในวันหยุด ตอบว่า Me too! แล้วถามกลับด้วย How about you? ได้แล้วครับ!"
      }
     ]
    },
    "handAuthoredFlow": true
-  },
-  {
-   "code": "1.5",
-   "title": "More Words: Hobbies / งานอดิเรกเพิ่ม",
-   "type": "new_words",
-   "flag": false,
-   "beat": "Sho",
-   "axes": "11111",
-   "teach": "More Words: คำกริยารูปเดิมเพิ่มที่ใส่ในแพทเทิร์น What do you like doing? — I enjoy + -ing (1.2 · 1.4) ได้ทันที **fish · jog · surf · skate** · ตอนพูดในประโยคเติม -ing: fishing · jogging (ซ้ำ g) · surfing · skating (ตัด e)",
-   "say": "—",
-   "chapter": "บท 1: เพื่อนใหม่ในชมรม",
-   "goal": "จำและพูด fish · jog · surf · skate ได้ เพื่อเล่างานอดิเรกเพิ่มในการหาคู่ partner ของชมรม",
-   "accept": "พูดคำได้ชัดพอให้ระบบจับคำถูก · รับ spelling/สำเนียง US-UK · ไม่ตรวจไวยากรณ์",
-   "hint": "① ฟังเสียงอีกครั้ง ② ฟังแบบช้า + แยกพยางค์ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent"
-  },
-  {
-   "code": "1.6",
-   "title": "Hobby Pictures / ภาพงานอดิเรก",
-   "type": "emoji_speak",
-   "flag": false,
-   "beat": "Sho",
-   "axes": "12111",
-   "teach": "ดู emoji แล้วพูดงานอดิเรกรูป -ing จาก 1.1–1.2 (คำเดี่ยว): 🎮 gaming · 🚴 cycling · 🧁 baking · 🥾 hiking",
-   "say": "gaming",
-   "chapter": "บท 1: เพื่อนใหม่ในชมรม",
-   "goal": "ดึงคำ/ก้อนคำที่เรียนแล้วออกมาพูดได้เร็วจากภาพ",
-   "accept": "รับคำ/ก้อนคำที่ภาพกำหนด + คำพ้องที่ระบุไว้ · ไม่ตรวจ tense หรือรูปคำ",
-   "hint": "① ตัวอักษรแรก + จำนวนคำ ② ฟังเสียงแบบช้า · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent"
   },
   {
    "code": "1.7",
@@ -805,7 +819,7 @@
      ]
     },
     {
-     "audio": "Hey! I go jogging on weekends. How about you?",
+     "audio": "Hey! It's Max. I go jogging on weekends. How about you?",
      "q": "Max ทำอะไรทุกสุดสัปดาห์",
      "en": "Jogging.",
      "accept": [
@@ -879,7 +893,7 @@
     "steps": [
      {
       "kind": "listen",
-      "text": "ชมรมกำลังหาเวลาซ้อมครับ ครูบีเลยอยากรู้ว่าวันหนึ่งคุณทำอะไรบ้าง 🗓️\nกิจวัตรภาษาอังกฤษมักพูดเป็นคู่ กริยา + คำนาม\n🍳 have breakfast แปลว่า “กินข้าวเช้า”"
+      "text": "ชมรมกำลังหาเวลาซ้อมครับ ครูบีเลยอยากรู้ว่าวันหนึ่งคุณทำอะไรบ้าง 🗓️\nกิจวัตรภาษาอังกฤษมักพูดเป็นคู่คำ\n🍳 have breakfast แปลว่า “กินข้าวเช้า”"
      },
      {
       "kind": "task",
@@ -989,8 +1003,8 @@
    "flag": false,
    "beat": "Sho",
    "axes": "12111",
-   "teach": "ดู emoji แล้วพูดคำจาก 2.1 และคำคู่จาก 2.2: 🍳 breakfast · 🚿 shower · 📚 homework · 🍽️ dinner · 🛏️ make the bed",
-   "say": "breakfast",
+   "teach": "ดู emoji แล้วพูดคู่คำกิจวัตรจาก 2.2: 🍳 have breakfast · 🚿 take a shower · 📚 do homework · 🍽️ have dinner · 🛏️ make the bed",
+   "say": "have breakfast",
    "chapter": "บท 2: หนึ่งวันของฉัน",
    "goal": "ดึงคำ/ก้อนคำที่เรียนแล้วออกมาพูดได้เร็วจากภาพ",
    "accept": "รับคำ/ก้อนคำที่ภาพกำหนด + คำพ้องที่ระบุไว้ · ไม่ตรวจ tense หรือรูปคำ",
@@ -1003,7 +1017,7 @@
    "flag": false,
    "beat": "Sho",
    "axes": "31211",
-   "teach": "⏰ คำบอกความถี่: แกน **usually · sometimes · never** ก่อน แล้วเพิ่ม **always · often** · วางหน้ากริยา (I **usually** get up at seven.) แต่วางหลัง am / is / are (I'm **always** tired.) · ถามด้วย **How often do you…?**",
+   "teach": "⏰ คำบอกความถี่ **usually · sometimes · never** วางไว้หน้าสิ่งที่ทำ (I **usually** get up at seven.) · ถามด้วย **How often do you…?** (How often do you cook? · How often do you go hiking?)",
    "say": "I usually get up at seven. · How often do you cook?",
    "chapter": "บท 2: หนึ่งวันของฉัน",
    "goal": "เข้าใจ \"ฉันมักตื่นเจ็ดโมง\" พอจะพูดตัวอย่างของตัวเองได้ 1 ประโยค",
@@ -1012,25 +1026,18 @@
    "flow": {
     "titleEn": "I Usually Get Up at Seven",
     "titleTh": "ฉันมักตื่นเจ็ดโมง",
-    "goalTh": "บอกว่าทำบ่อยแค่ไหนด้วย usually · sometimes · never · always · often และถาม How often do you…?",
+    "goalTh": "บอกว่าทำบ่อยแค่ไหนด้วย usually · sometimes · never และถาม How often do you…?",
     "steps": [
      {
-      "kind": "listen",
-      "text": "ชมรมยังหาเวลาซ้อมอยู่ครับ คราวนี้ต้องรู้ว่าแต่ละคนทำอะไร “บ่อยแค่ไหน” ⏰\nusually แปลว่า “ปกติ / มักจะ” วางไว้หน้ากริยา\nI usually get up at seven. แปลว่า “ปกติฉันตื่นเจ็ดโมง”"
-     },
-     {
       "kind": "task",
-      "text": "ลองพูดตามครับ\nI usually get up at seven.",
-      "expectedSpeech": "I usually get up at seven."
-     },
-     {
-      "kind": "listen",
-      "text": "อีกสองคำครับ\nsometimes แปลว่า “บางครั้ง”\nnever แปลว่า “ไม่เคยเลย”\nวางหน้ากริยาเหมือน usually: I sometimes cook dinner. · I never make the bed."
+      "text": "ชมรมยังหาเวลาซ้อมไม่ได้ครับ ⏰ ต้องรู้ว่าแต่ละคนทำอะไร “บ่อยแค่ไหน”\nusually แปลว่า “ปกติ / มักจะ” ใส่ไว้หน้าสิ่งที่ทำ\nถ้าจะบอกว่า “ปกติฉันตื่นเจ็ดโมง” พูดว่า I usually get up at seven.\nลองพูดตามครับ",
+      "expectedSpeech": "I usually get up at seven.",
+      "successText": "ถูกต้องครับ I usually get up at seven. คือ “ปกติฉันตื่นเจ็ดโมง”\n"
      },
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "May ทำอาหารเย็นบ้าง ไม่ทำบ้าง 🍳 May จะพูดว่าอะไรครับ?",
+      "text": "sometimes แปลว่า “บางครั้ง”\nMay ทำอาหารเย็นบ้าง ไม่ทำบ้าง 🍳 May จะพูดว่าอะไรครับ?",
       "stem": "I ... cook dinner.",
       "options": [
        {
@@ -1039,9 +1046,9 @@
         "speak": "I sometimes cook dinner."
        },
        {
-        "emoji": "❌",
-        "label": "never",
-        "speak": "I never cook dinner."
+        "emoji": "🔁",
+        "label": "usually",
+        "speak": "I usually cook dinner."
        }
       ],
       "expectedSpeech": "I sometimes cook dinner.",
@@ -1050,95 +1057,84 @@
      },
      {
       "kind": "task",
-      "text": "Max ไม่เคยจัดเตียงเลยสักวัน 🛏️ ถ้าเป็น Max จะพูดว่าอะไรครับ?",
+      "text": "never แปลว่า “ไม่เคยเลย”\nMax ไม่เคยจัดเตียงเลยสักวัน 🛏️ ถ้าเป็น Max จะพูดว่าอะไรครับ?",
       "expectedSpeech": "I never make the bed.",
       "successText": "I never make the bed. แปลว่า “ฉันไม่เคยจัดเตียงเลย” ครับ\n",
-      "incorrectHintTh": "ลองวาง never หน้า make ครับ: I never …"
-     },
-     {
-      "kind": "listen",
-      "text": "อีกสองคำที่ใช้บ่อยครับ\nalways แปลว่า “เสมอ / ทุกครั้ง” · often แปลว่า “บ่อย”\nถ้าประโยคมี am / is / are ให้วางคำเหล่านี้ไว้หลัง\nI'm always tired. แปลว่า “ฉันเหนื่อยตลอดเลย”"
-     },
-     {
-      "kind": "choice",
-      "answerMode": "single",
-      "text": "Capy นอนดึกทุกคืน เลยง่วงตลอด 😴 Capy จะพูดว่าอะไรครับ?",
-      "stem": "...",
-      "options": [
-       {
-        "emoji": "😴",
-        "label": "I'm always tired.",
-        "speak": "I'm always tired."
-       },
-       {
-        "emoji": "❓",
-        "label": "I always am tired.",
-        "speak": "I always am tired."
-       }
-      ],
-      "expectedSpeech": "I'm always tired.",
-      "incorrectHintTh": "เกือบแล้ว! ประโยคมี am ให้วาง always ไว้หลัง I'm ครับ พูดว่า I'm always tired."
+      "incorrectHintTh": "ลองพูดว่า I never make the bed. ครับ"
      },
      {
       "kind": "task",
-      "text": "ถ้าอยากรู้ว่าอีกฝ่ายทำบางอย่างบ่อยแค่ไหน ถามว่า How often do you …?\nลองถาม Max ว่า How often do you cook? ครับ",
-      "expectedSpeech": "How often do you cook?"
+      "text": "ถ้าอยากรู้ว่าอีกฝ่ายทำบ่อยแค่ไหน ถามว่า How often do you…?\nลองถาม Max ว่า “ทำอาหารบ่อยแค่ไหน” How often do you cook?\nลองพูดตามครับ",
+      "expectedSpeech": "How often do you cook?",
+      "successText": "Max ตอบว่า I never cook! ไม่เคยทำเลย 😆\n"
+     },
+     {
+      "kind": "task",
+      "text": "ลองถาม May บ้างว่าไปเดินป่าบ่อยแค่ไหน 🥾 (go hiking จากบทแรก)",
+      "expectedSpeech": "How often do you go hiking?",
+      "successText": "May ตอบว่า I sometimes go hiking. แปลว่า “บางครั้งฉันก็ไปเดินป่า”\n",
+      "incorrectHintTh": "ลองพูดว่า How often do you go hiking? ครับ"
      },
      {
       "kind": "choice",
       "answerMode": "any",
-      "text": "Max ถามกลับว่า How often do you cook? ตอบตามจริงครับ 🍳",
+      "text": "Max ถามกลับว่า How often do you cook? ตอบตามจริงครับ",
       "stem": "I ... cook.",
       "options": [
        {
-        "emoji": "💯",
-        "label": "always",
-        "speak": "I always cook.",
-        "recapText": "I always cook. แปลว่า “ฉันทำอาหารเสมอ” ครับ\n"
-       },
-       {
-        "emoji": "🙂",
+        "emoji": "🔁",
         "label": "usually",
         "speak": "I usually cook.",
-        "recapText": "I usually cook. แปลว่า “ปกติฉันทำอาหาร” ครับ\n"
+        "meaningTh": "ปกติฉันทำอาหาร"
        },
        {
         "emoji": "🤏",
         "label": "sometimes",
         "speak": "I sometimes cook.",
-        "recapText": "I sometimes cook. แปลว่า “บางครั้งฉันก็ทำอาหาร” ครับ\n"
+        "meaningTh": "บางครั้งฉันก็ทำอาหาร"
        },
        {
         "emoji": "❌",
         "label": "never",
         "speak": "I never cook.",
-        "recapText": "I never cook. แปลว่า “ฉันไม่เคยทำอาหารเลย” ครับ\n"
+        "meaningTh": "ฉันไม่เคยทำอาหารเลย"
        }
       ],
-      "expectedSpeech": "I sometimes cook.",
-      "extraAnswers": [
-       {
-        "speak": "I often cook.",
-        "recapText": "I often cook. แปลว่า “ฉันทำอาหารบ่อย” ครับ\n"
-       }
-      ]
+      "expectedSpeech": "I sometimes cook."
      },
      {
       "kind": "finish",
-      "text": "วันนี้คุณบอกได้แล้วว่าทำอะไรบ่อยแค่ไหน ด้วย usually · sometimes · never · always · often\nและถามเพื่อนได้ด้วย How often do you …? ครับ"
+      "text": "เยี่ยมเลย ตอนนี้บอกได้แล้วว่าทำอะไรบ่อยแค่ไหน\nบทหน้ามาดูว่าวันของแต่ละคนยุ่งแค่ไหนครับ"
      }
     ]
    },
    "handAuthoredFlow": true
   },
   {
+   "flag": false,
+   "beat": "Sho",
+   "axes": "11111",
+   "accept": "พูดคำได้ชัดพอให้ระบบจับคำถูก · รับ spelling/สำเนียง US-UK · ไม่ตรวจไวยากรณ์",
+   "hint": "① ฟังเสียงอีกครั้ง ② ฟังแบบช้า + แยกพยางค์ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "code": "2.5",
+   "title": "More Words: How Often / คำบอกความถี่",
+   "type": "new_words",
+   "teach": "More Words: คำบอกความถี่ครบชุด เรียงจากบ่อยที่สุดไปไม่เคยเลย ต่อจาก 2.4 **always · usually · often · sometimes · never** · ดูแถบความถี่แล้วพูดตามทีละคำ แล้วทายว่าจำได้ไหม",
+   "say": "—",
+   "chapter": "บท 2: หนึ่งวันของฉัน",
+   "goal": "จำและพูด always · usually · often · sometimes · never ได้ เพื่อบอกว่าทำอะไรบ่อยแค่ไหนตอนหาเวลาซ้อมชมรม",
+   "listView": true,
+   "listNote": "แถบแสดงความถี่โดยประมาณ",
+   "listExample": "I ___ have breakfast."
+  },
+  {
+   "code": "2.6",
    "title": "How Often Do You…? / บ่อยแค่ไหน",
    "type": "say_it",
    "flag": false,
    "beat": "Sho",
    "axes": "12211",
-   "teach": "โจทย์ไทยล้วน → ถาม How often do you…? และบอกความถี่ด้วย usually · sometimes · never · always · 7 ข้อ",
+   "teach": "โจทย์ไทยล้วน → ถาม How often do you…? และบอกความถี่ด้วย always · usually · often · sometimes · never · 7 ข้อ",
    "say": "How often do you cook?",
    "chapter": "บท 2: หนึ่งวันของฉัน",
    "goal": "สื่อความ \"บ่อยแค่ไหน\" เป็นภาษาอังกฤษในสถานการณ์บทนี้",
@@ -1151,25 +1147,18 @@
      "accept": []
     },
     {
-     "th": "คุณไปเดินป่าบ่อยแค่ไหน?",
-     "en": "How often do you go hiking?",
-     "accept": [
-      "How often do you hike?"
-     ]
-    },
-    {
      "th": "ปกติฉันตื่นเจ็ดโมง",
      "en": "I usually get up at seven.",
      "accept": [
-      "I usually wake up at seven.",
-      "I usually get up at 7."
+      "I usually wake up at seven."
      ]
     },
     {
-     "th": "บางครั้งฉันเดินไปโรงเรียน",
-     "en": "I sometimes walk to school.",
+     "th": "บางครั้งฉันทำการบ้านหลังกินข้าวเย็น",
+     "en": "I sometimes do my homework after dinner.",
      "accept": [
-      "Sometimes I walk to school."
+      "Sometimes I do my homework after dinner.",
+      "I sometimes do homework after dinner."
      ]
     },
     {
@@ -1180,24 +1169,30 @@
      ]
     },
     {
-     "th": "ปกติฉันทำการบ้านหลังกินข้าวเย็น",
-     "en": "I usually do my homework after dinner.",
-     "accept": [
-      "I usually do homework after dinner.",
-      "After dinner I usually do my homework."
-     ]
-    },
-    {
      "th": "ฉันกินข้าวเช้าเสมอ",
      "en": "I always have breakfast.",
      "accept": [
       "I always eat breakfast."
      ]
+    },
+    {
+     "th": "ฉันไปวิ่งจ๊อกกิ้งบ่อย",
+     "en": "I often go jogging.",
+     "accept": [
+      "I go jogging often."
+     ]
+    },
+    {
+     "th": "ฉันอาบน้ำทุกวัน",
+     "en": "I take a shower every day.",
+     "accept": [
+      "I have a shower every day."
+     ]
     }
    ]
   },
   {
-   "code": "2.6",
+   "code": "2.7",
    "title": "Busy Days / วันยุ่ง ๆ",
    "type": "new_words",
    "flag": false,
@@ -1211,36 +1206,32 @@
    "hint": "① ฟังเสียงอีกครั้ง ② ฟังแบบช้า + แยกพยางค์ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent"
   },
   {
-   "code": "2.7",
-   "title": "She Watches, He Studies / เล่าว่าเพื่อนทำอะไร",
+   "code": "2.8",
+   "title": "May Practices / เล่าว่าเพื่อนทำอะไร",
    "type": "lesson",
    "flag": false,
    "beat": "Sho",
    "axes": "31211",
-   "teach": "🗣️ เล่าเรื่องคนอื่น: เปลี่ยนจาก I เป็น he / she / ชื่อคน กริยาเติม **-s** (practices · exercises) → **-es** หลัง ch / sh / x / o (watches · relaxes · goes) → **y → ies** (studies) → **has** · ใช้คำจาก 2.6: May **practices** after school. · Capy **relaxes** after dinner. · He **goes** to bed **late**.",
-   "say": "May practices after school. · Capy relaxes after dinner. · May studies English every day.",
+   "teach": "🗣️ เล่าเรื่องคนอื่น (A1 สอน She works. แล้ว) บทนี้เน้นคำที่มีเสียง “อิซ” งอกเพิ่ม ใช้คำจาก 2.7: **practices · exercises · relaxes · watches** และ go → **goes** · May **practices** after school. · Capy **relaxes** after dinner. · Max **watches** TV every night. · Max **goes** to bed **late**.",
+   "say": "May practices after school. · Capy relaxes after dinner. · Max watches TV every night.",
    "chapter": "บท 2: หนึ่งวันของฉัน",
    "goal": "เข้าใจ \"เติม -es -ies\" พอจะพูดตัวอย่างของตัวเองได้ 1 ประโยค",
    "accept": "ไม่ตัดสินผ่าน/ตก · ผู้เรียนพูดตามหรือเปลี่ยนคำในตัวอย่างอย่างน้อย 1 ประโยค",
    "hint": "ครูทวนตัวอย่างอีกครั้ง (ไม่มีระดับ hint)",
    "flow": {
-    "titleEn": "She Watches, He Studies",
+    "titleEn": "May Practices",
     "titleTh": "เล่าว่าเพื่อนทำอะไร",
-    "goalTh": "เล่ากิจวัตรของคนอื่นด้วยกริยาเติม -s / -es / -ies และ has",
+    "goalTh": "เล่ากิจวัตรของเพื่อนด้วย practices · exercises · relaxes · watches · goes",
     "steps": [
      {
-      "kind": "listen",
-      "text": "วันนี้มาเล่าเรื่องเพื่อน ๆ ในชมรมกันครับ 🗣️\nพูดถึงตัวเอง: I practice after school.\nพูดถึงคนอื่นคนเดียว (he / she / ชื่อคน) กริยาเติม -s\nMay practices after school. แปลว่า “May ซ้อมหลังเลิกเรียน”"
-     },
-     {
       "kind": "task",
-      "text": "ลองพูดตามครับ\nMay practices after school.",
+      "text": "ครูบีอยากรู้ว่าเพื่อนแต่ละคนทำอะไรหลังเลิกเรียนครับ 🗓️\nตอน A1 เราพูด She works. มาแล้ว แต่บางคำพอเล่าถึงคนอื่นจะมีเสียง “อิซ” งอกออกมา\npractice → practices\nถ้าจะบอกว่า “May ซ้อมหลังเลิกเรียน” พูดว่า May practices after school.\nลองพูดตามครับ",
       "expectedSpeech": "May practices after school."
      },
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "Max ออกกำลังกายทุกเช้า 🏋️ จะเล่าถึง Max ว่าอะไรครับ?",
+      "text": "Max ออกกำลังกายทุกเช้า 🏋️ exercise → exercises\nจะเล่าถึง Max ว่าอะไรครับ?",
       "stem": "Max ... every morning.",
       "options": [
        {
@@ -1255,65 +1246,55 @@
        }
       ],
       "expectedSpeech": "Max exercises every morning.",
-      "incorrectHintTh": "เกือบแล้ว! พูดถึง Max คนเดียว กริยาเติม -s ครับ พูดว่า Max exercises every morning."
-     },
-     {
-      "kind": "listen",
-      "text": "บางคำเติม -es แทน -s ครับ คือคำที่ลงท้ายด้วย ch · sh · x · o\nwatch → watches · relax → relaxes · go → goes\nCapy relaxes after dinner. แปลว่า “Capy พักผ่อนหลังกินข้าวเย็น”"
+      "successText": "Max exercises every morning. แปลว่า “Max ออกกำลังกายทุกเช้า” ครับ\n",
+      "incorrectHintTh": "เกือบแล้ว! เล่าถึง Max ต้องเป็น exercises ครับ พูดว่า Max exercises every morning."
      },
      {
       "kind": "task",
-      "text": "ลองพูดตามครับ\nCapy relaxes after dinner.",
-      "expectedSpeech": "Capy relaxes after dinner."
+      "text": "Capy พักผ่อนหลังกินข้าวเย็น 😌 relax → relaxes\nลองพูดเต็มประโยคครับ",
+      "expectedSpeech": "Capy relaxes after dinner.",
+      "successText": "Capy relaxes after dinner. แปลว่า “Capy พักผ่อนหลังกินข้าวเย็น” ครับ\n",
+      "incorrectHintTh": "ลองพูดว่า Capy relaxes after dinner. ครับ"
+     },
+     {
+      "kind": "task",
+      "text": "Max ดูทีวีทุกคืน 📺 watch → watches\nจะเล่าว่าอะไรครับ?",
+      "expectedSpeech": "Max watches TV every night.",
+      "successText": "Max watches TV every night. แปลว่า “Max ดูทีวีทุกคืน” ครับ\n",
+      "incorrectHintTh": "ลองพูดว่า Max watches TV every night. ครับ"
      },
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "Max เข้านอนดึกทุกคืน 🌙 (go to bed late) จะเล่าถึง Max ว่าอะไรครับ?",
-      "stem": "He ... to bed late.",
+      "text": "แล้ว Max ก็เข้านอนดึกด้วย 🌙 go → goes",
+      "stem": "Max ... to bed late.",
       "options": [
        {
         "emoji": "🌙",
         "label": "goes",
-        "speak": "He goes to bed late."
+        "speak": "Max goes to bed late."
        },
        {
         "emoji": "❓",
         "label": "go",
-        "speak": "He go to bed late."
+        "speak": "Max go to bed late."
        }
       ],
-      "expectedSpeech": "He goes to bed late.",
-      "successText": "He goes to bed late. แปลว่า “เขาเข้านอนดึก” ครับ\n",
-      "incorrectHintTh": "เกือบแล้ว! go ลงท้าย o เติม -es เป็น goes ครับ พูดว่า He goes to bed late."
-     },
-     {
-      "kind": "listen",
-      "text": "อีกสองแบบครับ\nลงท้าย y ให้เปลี่ยนเป็น -ies: study → studies\nและ have เปลี่ยนเป็น has: He has breakfast at seven."
-     },
-     {
-      "kind": "task",
-      "text": "May เรียนภาษาอังกฤษทุกวัน 📖 จะเล่าถึง May ว่าอะไรครับ?",
-      "expectedSpeech": "May studies English every day.",
-      "incorrectHintTh": "ลองใช้ studies ครับ: May studies …"
+      "expectedSpeech": "Max goes to bed late.",
+      "successText": "Max goes to bed late. แปลว่า “Max เข้านอนดึก” ครับ\n",
+      "incorrectHintTh": "เกือบแล้ว! go เปลี่ยนเป็น goes ครับ พูดว่า Max goes to bed late."
      },
      {
       "kind": "choice",
       "answerMode": "any",
-      "text": "นึกถึงเพื่อนคุณสักคนครับ หลังเลิกเรียนเพื่อนคุณทำอะไร?",
+      "text": "นึกถึงเพื่อนสนิทครับ หลังเลิกเรียนเพื่อนคุณทำอะไร?",
       "stem": "My friend ...",
       "options": [
        {
-        "emoji": "📖",
-        "label": "studies English",
-        "speak": "My friend studies English.",
-        "recapText": "My friend studies English. แปลว่า “เพื่อนฉันเรียนภาษาอังกฤษ” ครับ\n"
-       },
-       {
-        "emoji": "📺",
-        "label": "watches TV",
-        "speak": "My friend watches TV.",
-        "recapText": "My friend watches TV. แปลว่า “เพื่อนฉันดูทีวี” ครับ\n"
+        "emoji": "🎯",
+        "label": "practices",
+        "speak": "My friend practices.",
+        "recapText": "My friend practices. แปลว่า “เพื่อนฉันฝึกซ้อม” ครับ\n"
        },
        {
         "emoji": "🏋️",
@@ -1322,34 +1303,30 @@
         "recapText": "My friend exercises. แปลว่า “เพื่อนฉันออกกำลังกาย” ครับ\n"
        },
        {
-        "emoji": "🏠",
-        "label": "goes home",
-        "speak": "My friend goes home.",
-        "recapText": "My friend goes home. แปลว่า “เพื่อนฉันกลับบ้าน” ครับ\n"
-       }
-      ],
-      "expectedSpeech": "My friend studies English.",
-      "extraAnswers": [
-       {
-        "speak": "My friend practices.",
-        "recapText": "My friend practices. แปลว่า “เพื่อนฉันซ้อม” ครับ\n"
-       },
-       {
+        "emoji": "😌",
+        "label": "relaxes",
         "speak": "My friend relaxes.",
         "recapText": "My friend relaxes. แปลว่า “เพื่อนฉันพักผ่อน” ครับ\n"
+       },
+       {
+        "emoji": "📺",
+        "label": "watches TV",
+        "speak": "My friend watches TV.",
+        "recapText": "My friend watches TV. แปลว่า “เพื่อนฉันดูทีวี” ครับ\n"
        }
-      ]
+      ],
+      "expectedSpeech": "My friend practices."
      },
      {
       "kind": "finish",
-      "text": "วันนี้คุณเล่าเรื่องคนอื่นได้แล้ว: practices · exercises · relaxes · goes · studies · has\nบทหน้าไปซ้อมที่บ้าน May กัน แต่กุญแจห้องเก็บของหายไปไหนนะ? 🔑"
+      "text": "ตอนนี้เล่าเรื่องเพื่อนได้แล้ว\nบทหน้าไปซ้อมที่บ้าน May กัน แต่กุญแจห้องเก็บของหายไปไหนนะ? 🔑"
      }
     ]
    },
    "handAuthoredFlow": true
   },
   {
-   "code": "2.8",
+   "code": "2.9",
    "title": "Sounds of -s / เสียง -s",
    "type": "pronunciation",
    "flag": false,
@@ -1363,10 +1340,10 @@
    "hint": "① ภาพปาก/ลิ้น ② ฟังช้าทีละคำ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent"
   },
   {
-   "code": "2.9",
+   "code": "2.10",
    "title": "🖼️ Brother's Schedule / ตารางของพี่ชาย",
    "type": "see_and_say",
-   "flag": false,
+   "flag": true,
    "beat": "Sho",
    "axes": "12211",
    "teach": "🖼️ ดูตารางกิจวัตรพี่ชายที่มีนาฬิกาและไอคอน → **He usually goes to school at seven.** · รับ -s/-es ที่ถูก",
@@ -1427,7 +1404,7 @@
    ]
   },
   {
-   "code": "2.10",
+   "code": "2.11",
    "title": "🎬 Max's Morning / เช้าของ Max",
    "type": "story_bites",
    "flag": false,
@@ -1468,7 +1445,7 @@
    ]
   },
   {
-   "code": "2.11",
+   "code": "2.12",
    "title": "A Thai Student's Day / วันของนักเรียนไทย",
    "type": "conversation",
    "flag": false,
@@ -1658,8 +1635,8 @@
    "flag": false,
    "beat": "Sho",
    "axes": "31111",
-   "teach": "บุพบทใหม่ เริ่มจาก **between · opposite** ก่อน แล้วเพิ่ม **behind · in front of** (A1 มี in / on / under / next to แล้ว) · ถามด้วย **Where is…?** · ประโยคจากคำ 3.4: The **sofa** is **between** the **shelf** and the TV. · The **fridge** is **opposite** the door. · The key is **behind** the **sofa**. · The table is **in front of** the **sofa**.",
-   "say": "The sofa is between the shelf and the TV. · The fridge is opposite the door. · The bag is behind the fridge.",
+   "teach": "บุพบทใหม่ เริ่มจาก **between · opposite** ก่อน แล้วเพิ่ม **behind · in front of** (A1 มี in / on / under / next to แล้ว) · ถามด้วย **Where is…?** · ประโยคจากคำ 3.4: The **sofa** is **between** the **shelf** and the TV. · The **fridge** is **opposite** the door. · The bag is **behind** the **sofa**. · The table is **in front of** the **sofa**.",
+   "say": "The sofa is between the shelf and the TV. · The fridge is opposite the door. · The phone is behind the fridge.",
    "chapter": "บท 3: พา May ชมบ้าน",
    "goal": "เข้าใจ \"อยู่ตรงไหน\" พอจะพูดตัวอย่างของตัวเองได้ 1 ประโยค",
    "accept": "ไม่ตัดสินผ่าน/ตก · ผู้เรียนพูดตามหรือเปลี่ยนคำในตัวอย่างอย่างน้อย 1 ประโยค",
@@ -1671,7 +1648,7 @@
     "steps": [
      {
       "kind": "listen",
-      "text": "แย่แล้ว! กุญแจห้องเก็บของหาย 🔑 ต้องบอกให้ได้ว่าของอยู่ตรงไหน\nห้องนั่งเล่นของ May: ชั้นวางอยู่ซ้าย 📚 ทีวีอยู่ขวา 📺 โซฟาอยู่ตรงกลาง 🛋️\nbetween … and … แปลว่า “อยู่ระหว่าง…กับ…”\nThe sofa is between the shelf and the TV. แปลว่า “โซฟาอยู่ระหว่างชั้นวางกับทีวี”"
+      "text": "แย่แล้ว! กุญแจห้องเก็บของหาย 🔑 ต้องบอกให้ได้ว่าของอยู่ตรงไหน\nห้องนั่งเล่นของ May: ชั้นวางอยู่ซ้าย 🗄️ ทีวีอยู่ขวา 📺 โซฟาอยู่ตรงกลาง 🛋️\nbetween … and … แปลว่า “อยู่ระหว่าง…กับ…”\nThe sofa is between the shelf and the TV. แปลว่า “โซฟาอยู่ระหว่างชั้นวางกับทีวี”"
      },
      {
       "kind": "task",
@@ -1726,14 +1703,14 @@
      },
      {
       "kind": "listen",
-      "text": "อีกสองคำครับ\nbehind แปลว่า “ข้างหลัง” · in front of แปลว่า “ข้างหน้า”\nThe table is in front of the sofa. แปลว่า “โต๊ะอยู่หน้าโซฟา”\nThe key is behind the sofa. แปลว่า “กุญแจอยู่หลังโซฟา”"
+      "text": "อีกสองคำครับ\nbehind แปลว่า “ข้างหลัง” · in front of แปลว่า “ข้างหน้า”\nThe table is in front of the sofa. แปลว่า “โต๊ะอยู่หน้าโซฟา”\nThe bag is behind the sofa. แปลว่า “กระเป๋าอยู่หลังโซฟา”"
      },
      {
       "kind": "task",
-      "text": "May หากระเป๋าไม่เจอ 🎒 คุณเห็นว่ามันอยู่ข้างหลังตู้เย็น จะบอก May ว่าอะไรครับ?",
-      "expectedSpeech": "The bag is behind the fridge.",
-      "successText": "The bag is behind the fridge. แปลว่า “กระเป๋าอยู่หลังตู้เย็น” ครับ\n",
-      "incorrectHintTh": "ลองใช้ behind ครับ: The bag is behind …"
+      "text": "May หาโทรศัพท์ไม่เจอ 📱 คุณเห็นว่ามันอยู่ข้างหลังตู้เย็น จะบอก May ว่าอะไรครับ?",
+      "expectedSpeech": "The phone is behind the fridge.",
+      "successText": "The phone is behind the fridge. แปลว่า “โทรศัพท์อยู่หลังตู้เย็น” ครับ\n",
+      "incorrectHintTh": "ลองใช้ behind ครับ: The phone is behind …"
      },
      {
       "kind": "task",
@@ -2135,8 +2112,8 @@
    "flag": false,
    "beat": "Ki",
    "axes": "31111",
-   "teach": "บรรยายรูปร่างทีละขั้น: ส่วนสูงใช้ **is** (He **is tall.** · Capy **is short.**) → สิ่งที่มีบนตัวใช้ **has** (He **has a beard.**) → ผม เรียง ยาว/สั้น → ลักษณะ/สี → hair (She **has long black hair.** · Mali has **short curly hair**. · **straight hair** ไม่ใช่ hair long black) → ของที่ใส่ใช้วลี **is wearing** (Teacher Bee **is wearing glasses.**) · look + คุณศัพท์ He **looks** happy. (ไม่ต้องมี like)",
-   "say": "He is tall. · He has a beard. · She has long black hair. · Teacher Bee is wearing glasses. · Max looks happy.",
+   "teach": "บรรยายรูปร่าง 2 รูปประโยค: ส่วนสูงใช้ **is** (He **is tall.** · Capy **is short.**) · สิ่งที่มีบนตัวใช้ **has** (He **has a beard.**) · ผม เรียง ยาว/สั้น → ลักษณะ/สี → hair: She **has long black hair.** · He has **short curly hair**.",
+   "say": "He is tall. · He has a beard. · She has long black hair.",
    "chapter": "บท 4: ใครเป็นใครในงานต้อนรับชมรม",
    "goal": "เข้าใจ \"เธอผมยาวสีดำ\" พอจะพูดตัวอย่างของตัวเองได้ 1 ประโยค",
    "accept": "ไม่ตัดสินผ่าน/ตก · ผู้เรียนพูดตามหรือเปลี่ยนคำในตัวอย่างอย่างน้อย 1 ประโยค",
@@ -2144,108 +2121,71 @@
    "flow": {
     "titleEn": "She Has Long Black Hair",
     "titleTh": "เธอผมยาวสีดำ",
-    "goalTh": "บรรยายรูปร่างทีละขั้นด้วย is tall · has a beard · has long black hair · is wearing glasses",
+    "goalTh": "บรรยายรูปร่างด้วย is + ส่วนสูง และ has + สิ่งที่มีบนตัว",
     "steps": [
      {
-      "kind": "listen",
-      "text": "งานต้อนรับสมาชิกใหม่ครับ 🎉 ครูบีให้ช่วยตามหา Mali เลยต้องบรรยายคนให้เป็น 👀\nบอกส่วนสูง ใช้ is\nHe is tall. แปลว่า “เขาตัวสูง” · Capy is short. แปลว่า “Capy ตัวเตี้ย”"
+      "kind": "task",
+      "text": "งานต้อนรับสมาชิกใหม่ครับ 🎉 คนเยอะมาก ครูบีให้ช่วยจำว่าใครหน้าตายังไง\nบอกส่วนสูงใช้ is\nถ้าจะบอกว่า “เขาตัวสูง” พูดว่า He is tall.\nลองพูดตามครับ",
+      "expectedSpeech": "He is tall."
      },
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "ผู้ชายข้างประตูสูงจนเกือบชนขอบประตู 🦒 จะบอกครูบีว่าอะไรครับ?",
-      "stem": "He is ...",
+      "text": "Capy ยืนข้าง Max แล้วตัวเล็กนิดเดียว 🦫",
+      "stem": "Capy is ...",
       "options": [
+       {
+        "emoji": "📏⬇️",
+        "label": "short",
+        "speak": "Capy is short."
+       },
        {
         "emoji": "🦒",
         "label": "tall",
-        "speak": "He is tall."
-       },
-       {
-        "emoji": "🐭",
-        "label": "short",
-        "speak": "He is short."
+        "speak": "Capy is tall."
        }
       ],
-      "expectedSpeech": "He is tall.",
-      "successText": "He is tall. แปลว่า “เขาตัวสูง” ครับ\n",
-      "incorrectHintTh": "เกือบแล้ว! ตัวสูงคือ tall ครับ พูดว่า He is tall."
-     },
-     {
-      "kind": "listen",
-      "text": "บอกสิ่งที่มีบนตัวเขา ใช้ has\nHe has a beard. แปลว่า “เขามีเครา” 🧔"
+      "expectedSpeech": "Capy is short.",
+      "successText": "Capy is short. แปลว่า “Capy ตัวเตี้ย” ครับ\n",
+      "incorrectHintTh": "เกือบแล้ว! ตัวเล็กคือ short ครับ พูดว่า Capy is short."
      },
      {
       "kind": "task",
-      "text": "ลองพูดตามครับ\nHe has a beard.",
+      "text": "บอกสิ่งที่มีบนตัวใช้ has 🧔\nถ้าจะบอกว่า “เขามีเครา” พูดว่า He has a beard.\nลองพูดตามครับ",
       "expectedSpeech": "He has a beard."
-     },
-     {
-      "kind": "listen",
-      "text": "บรรยายผม เรียง ยาว/สั้น → ลักษณะหรือสี → hair\nShe has long black hair. แปลว่า “เธอผมยาวสีดำ” 💁‍♀️\nMali has short curly hair. แปลว่า “Mali ผมสั้นหยิก” 👩‍🦱"
      },
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "ผู้หญิงที่ยืนข้างเวทีผมยาวถึงหลัง สีดำสนิท 💁‍♀️ จะบอกครูบีว่าอะไรครับ?",
+      "text": "บอกผมให้เรียง ยาว/สั้น ก่อน แล้วค่อยบอกสี\nผู้หญิงข้างเวทีผมยาวถึงหลัง สีดำ 💁‍♀️",
       "stem": "She has ... hair.",
       "options": [
        {
-        "emoji": "✅",
+        "emoji": "💁‍♀️",
         "label": "long black",
         "speak": "She has long black hair."
        },
        {
-        "emoji": "🔀",
-        "label": "black long",
-        "speak": "She has black long hair."
+        "emoji": "💇‍♀️",
+        "label": "short black",
+        "speak": "She has short black hair."
        }
       ],
       "expectedSpeech": "She has long black hair.",
       "successText": "She has long black hair. แปลว่า “เธอผมยาวสีดำ” ครับ\n",
-      "incorrectHintTh": "เกือบแล้ว! บอกความยาวก่อนสี พูดว่า She has long black hair. ครับ"
+      "incorrectHintTh": "เกือบแล้ว! ผมยาวถึงหลังคือ long ครับ พูดว่า She has long black hair."
      },
      {
       "kind": "task",
-      "text": "ครูบีถามว่า Mali ผมแบบไหน 👩‍🦱 ตอบครูบีว่าอะไรครับ?",
-      "expectedSpeech": "Mali has short curly hair.",
-      "successText": "Mali has short curly hair. แปลว่า “Mali ผมสั้นหยิก” ครับ\n",
-      "incorrectHintTh": "ลองเริ่มด้วย Mali has short … ครับ"
-     },
-     {
-      "kind": "listen",
-      "text": "ถ้าบอกว่าใส่อะไรอยู่ เช่น แว่น เสื้อ ใช้วลี is wearing\nTeacher Bee is wearing glasses. แปลว่า “ครูบีใส่แว่นอยู่” 👓"
-     },
-     {
-      "kind": "task",
-      "text": "ลองพูดตามครับ\nTeacher Bee is wearing glasses.",
-      "expectedSpeech": "Teacher Bee is wearing glasses."
-     },
-     {
-      "kind": "choice",
-      "answerMode": "single",
-      "text": "บอกว่าดูเป็นยังไง ใช้ looks + คำบอกอารมณ์ (ไม่ต้องมี like)\nMax ยิ้มแก้มปริเพราะเจอโต๊ะขนม 😄🍰 จะพูดถึง Max ว่าอะไรครับ?",
-      "stem": "Max looks ...",
-      "options": [
-       {
-        "emoji": "😄",
-        "label": "happy",
-        "speak": "Max looks happy."
-       },
-       {
-        "emoji": "😴",
-        "label": "tired",
-        "speak": "Max looks tired."
-       }
-      ],
-      "expectedSpeech": "Max looks happy.",
-      "successText": "Max looks happy. แปลว่า “Max ดูมีความสุข” ครับ\n",
-      "incorrectHintTh": "เกือบแล้ว! ยิ้มแก้มปริคือ happy ครับ พูดว่า Max looks happy."
+      "text": "เด็กผู้ชายที่มุมห้องผมสั้นหยิก 👦 curly แปลว่า “หยิก”\nลองพูดเต็มประโยคครับ",
+      "expectedSpeech": "He has short curly hair.",
+      "successText": "He has short curly hair. แปลว่า “เขาผมสั้นหยิก” ครับ\n",
+      "incorrectHintTh": "ลองพูดว่า He has short curly hair. ครับ"
      },
      {
       "kind": "choice",
       "answerMode": "any",
-      "text": "คราวนี้บรรยายตัวเองตามจริงครับ ผมของคุณเป็นแบบไหน? 💇",
+      "text": "คราวนี้บรรยายตัวเองตามจริงครับ ผมของคุณเป็นแบบไหน?",
       "stem": "I have ... hair.",
       "options": [
        {
@@ -2281,7 +2221,7 @@
      },
      {
       "kind": "finish",
-      "text": "วันนี้คุณบรรยายคนได้แล้ว: He is tall. · He has a beard. · She has long black hair. · Teacher Bee is wearing glasses.\nบทหน้ายังตามหา Mali ต่อ ลองถามคนในงานว่าเธอหน้าตาแบบไหน 👀"
+      "text": "ตอนนี้บอกได้แล้วว่าใครหน้าตาแบบไหน แต่ครูบียังหา Mali ไม่เจอเลย!\nบทหน้าลองถามกันว่า Mali หน้าตาเป็นยังไง 👀"
      }
     ]
    },
@@ -2502,11 +2442,10 @@
      "accept": []
     },
     {
-     "th": "ครูบีใส่แว่นอยู่",
-     "en": "Teacher Bee is wearing glasses.",
+     "th": "เด็กผู้ชายคนนั้นผมสั้นหยิก",
+     "en": "The boy has short curly hair.",
      "accept": [
-      "Teacher Bee wears glasses.",
-      "Teacher Bee has glasses."
+      "He has short curly hair."
      ]
     },
     {
@@ -2711,8 +2650,6 @@
      "pic": "ภาพงานเลี้ยงต้อนรับ: ผู้ชาย 3 คน คนที่มีวงกลมสีเหลืองเป็นคนเดียวที่ใส่แว่น 👓",
      "en": "The man with glasses.",
      "accept": [
-      "The man who is wearing glasses.",
-      "The man who's wearing glasses.",
       "The man who has glasses."
      ]
     },
@@ -2735,9 +2672,7 @@
      "en": "The boy in the red shirt.",
      "accept": [
       "The boy in a red shirt.",
-      "The boy with the red shirt.",
-      "The boy who is wearing a red shirt.",
-      "The boy who's wearing a red shirt."
+      "The boy with the red shirt."
      ]
     },
     {
@@ -2756,7 +2691,7 @@
    "flag": false,
    "beat": "Ketsu",
    "axes": "12232",
-   "teach": "ครูบีหา Mali ในงาน มีผู้หญิงใส่เสื้อแดงสองคน: บอกรูปร่างเพื่อแยกตัว บอกนิสัยจากสิ่งที่เธอทำ แล้วถามว่าอีกคนคือใคร (3–6 turns · 3 goals)",
+   "teach": "ครูบีพาไปทักเพื่อนของ May ในงาน มีผู้หญิงใส่เสื้อแดงสองคน: บอกรูปร่างเพื่อแยกตัว บอกนิสัยจากสิ่งที่เธอทำ แล้วถามว่าผู้ชายใส่แว่นคือใคร (3–6 turns · 3 goals)",
    "say": "She has short curly hair. · Who's the man with glasses?",
    "chapter": "บท 4: ใครเป็นใครในงานต้อนรับชมรม",
    "goal": "คุยจนสำเร็จ: บรรยายรูปร่างและนิสัยคนได้",
@@ -3713,7 +3648,7 @@
    "beat": "Sho",
    "axes": "31211",
    "teach": "❓ ขั้น 3: **Why do you…? — Because…** ตอบด้วยเหตุผลสั้นโดยใช้คำจาก 6.6: **Why do you** like badminton? — **Because** it's **healthy**. · Why do you want to join the music club? — Because music is **exciting**. · English is **useful**. · I don't like gaming **because** it's **boring**.",
-   "say": "Why do you like music? — Because it's fun.",
+   "say": "Why do you like music? — Because it's fun. · Why do you like English? — Because it's useful.",
    "chapter": "บท 6: เข้าชมรมย่อยไหนดี",
    "goal": "เข้าใจ \"ทำไม เพราะ\" พอจะพูดตัวอย่างของตัวเองได้ 1 ประโยค",
    "accept": "ไม่ตัดสินผ่าน/ตก · ผู้เรียนพูดตามหรือเปลี่ยนคำในตัวอย่างอย่างน้อย 1 ประโยค",
@@ -13262,7 +13197,7 @@
    "hint": "① เล่นซ้ำ ② เล่นซ้ำแบบช้า + เน้นช่วงที่มีคำตอบ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "audio": "Good morning, it's DJ Coco! On Friday it's going to be sunny. Saturday will be cloudy, and on Sunday it might be stormy... but that's OK, be happy!",
+     "audio": "Good morning, it's DJ Coco! On Friday it's going to be sunny. Saturday will be cloudy, and on Sunday it might be stormy... but that's OK!",
      "q": "วันไหนเหมาะไปทะเล",
      "en": "Friday",
      "accept": [
@@ -13271,7 +13206,7 @@
      ]
     },
     {
-     "audio": "Hello, hello, it's DJ Coco! Friday will be stormy... but that's OK, be happy! Saturday will be sunny and hot. Sunday will be cloudy.",
+     "audio": "Hello, hello, it's DJ Coco! Friday will be stormy... but that's OK! Saturday will be sunny and hot. Sunday will be cloudy.",
      "q": "วันไหนเหมาะไปทะเล",
      "en": "Saturday",
      "accept": [
@@ -13280,7 +13215,7 @@
      ]
     },
     {
-     "audio": "Good morning, it's DJ Coco! Friday and Saturday will be cloudy and humid. But on Sunday it's going to be sunny! Be happy!",
+     "audio": "Good morning, it's DJ Coco! Friday and Saturday will be cloudy and humid. But on Sunday it's going to be sunny! Have a nice day!",
      "q": "วันไหนเหมาะไปทะเล",
      "en": "Sunday",
      "accept": [
@@ -13289,7 +13224,7 @@
      ]
     },
     {
-     "audio": "Good morning, it's DJ Coco! It might rain on Friday. Saturday is going to be stormy... but that's OK, be happy! Sunday will be sunny and warm!",
+     "audio": "Good morning, it's DJ Coco! It might rain on Friday. Saturday is going to be stormy... but that's OK! Sunday will be sunny and warm!",
      "q": "วันไหนมีพายุ ไม่ควรไปทะเล",
      "en": "Saturday",
      "accept": [
@@ -13298,7 +13233,7 @@
      ]
     },
     {
-     "audio": "Hello, it's DJ Coco! Friday will be cloudy. Saturday will be sunny in the morning, but stormy in the afternoon. But that's OK, be happy! Sunday will be sunny all day!",
+     "audio": "Hello, it's DJ Coco! Friday will be cloudy. Saturday will be sunny in the morning, but stormy in the afternoon. But that's OK! Sunday will be sunny all day!",
      "q": "วันไหนเหมาะไปทะเลทั้งวัน",
      "en": "Sunday",
      "accept": [

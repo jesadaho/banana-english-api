@@ -1,14 +1,14 @@
 {
-  "a2_c02n10": {
-    "id": "a2_c02n10",
-    "clipId": "a2_c02n10_clip",
+  "a2_c02n11": {
+    "id": "a2_c02n11",
+    "clipId": "a2_c02n11_clip",
     "titleEn": "Max's Morning",
     "titleTh": "เช้าของ Max",
     "speaker": "Max",
     "script": "Max: Oh no! It's seven thirty! I usually get up at six thirty. I'm late again! I don't have time for breakfast, so I'm taking some bread. I'm sometimes late on Mondays.",
     "questions": [
       {
-        "id": "a2_c02n10_q1",
+        "id": "a2_c02n11_q1",
         "questionEn": "What time does Max usually get up?",
         "answerEn": "At six thirty.",
         "acceptedAnswers": [
@@ -21,7 +21,7 @@
         ]
       },
       {
-        "id": "a2_c02n10_q2",
+        "id": "a2_c02n11_q2",
         "questionEn": "What is he taking for breakfast?",
         "answerEn": "Some bread.",
         "acceptedAnswers": [
@@ -33,7 +33,7 @@
         ]
       },
       {
-        "id": "a2_c02n10_q3",
+        "id": "a2_c02n11_q3",
         "questionEn": "When is he sometimes late?",
         "answerEn": "On Mondays.",
         "acceptedAnswers": [
@@ -116,7 +116,8 @@
           "They have two eggs."
         ],
         "hints": [
-          "Two. …"
+          "T…",
+          "T__."
         ]
       },
       {
@@ -129,7 +130,8 @@
           "They need six."
         ],
         "hints": [
-          "Six. …"
+          "S…",
+          "S__."
         ]
       }
     ]
@@ -151,7 +153,8 @@
           "It's from Mali."
         ],
         "hints": [
-          "Mali. …"
+          "M…",
+          "M___."
         ]
       },
       {
@@ -163,7 +166,8 @@
           "It's small and nice."
         ],
         "hints": [
-          "Small. …"
+          "S…",
+          "S____."
         ]
       },
       {
@@ -397,7 +401,8 @@
           "May has been to Japan."
         ],
         "hints": [
-          "May. …"
+          "M…",
+          "M__."
         ]
       },
       {
@@ -621,7 +626,8 @@
           "John says it."
         ],
         "hints": [
-          "John. …"
+          "J…",
+          "J___."
         ]
       }
     ]

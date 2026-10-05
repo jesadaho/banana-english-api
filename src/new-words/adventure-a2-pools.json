@@ -29,35 +29,6 @@
     ]
   },
   "a2_c01n03": {
-    "title": "Club Words",
-    "items": [
-      {
-        "emoji": "🏠",
-        "answer": "club",
-        "reading": "คลับ",
-        "meaningTh": "ชมรม"
-      },
-      {
-        "emoji": "👥",
-        "answer": "team",
-        "reading": "ทีม",
-        "meaningTh": "ทีม"
-      },
-      {
-        "emoji": "🤝",
-        "answer": "friend",
-        "reading": "เฟรนด์",
-        "meaningTh": "เพื่อน"
-      },
-      {
-        "emoji": "📅",
-        "answer": "weekend",
-        "reading": "วีค-เอ็นด์",
-        "meaningTh": "วันหยุดสุดสัปดาห์"
-      }
-    ]
-  },
-  "a2_c01n05": {
     "title": "More Words: Hobbies",
     "items": [
       {
@@ -94,6 +65,35 @@
       }
     ]
   },
+  "a2_c01n05": {
+    "title": "Club Words",
+    "items": [
+      {
+        "emoji": "🏕️",
+        "answer": "club",
+        "reading": "คลับ",
+        "meaningTh": "ชมรม"
+      },
+      {
+        "emoji": "👥",
+        "answer": "team",
+        "reading": "ทีม",
+        "meaningTh": "ทีม"
+      },
+      {
+        "emoji": "🤝",
+        "answer": "friend",
+        "reading": "เฟรนด์",
+        "meaningTh": "เพื่อน"
+      },
+      {
+        "emoji": "📅",
+        "answer": "weekend",
+        "reading": "วีค-เอ็นด์",
+        "meaningTh": "วันหยุดสุดสัปดาห์"
+      }
+    ]
+  },
   "a2_c02n01": {
     "title": "Daily Things",
     "items": [
@@ -123,7 +123,50 @@
       }
     ]
   },
-  "a2_c02n06": {
+  "a2_c02n05": {
+    "title": "More Words: How Often",
+    "items": [
+      {
+        "emoji": "🔁",
+        "answer": "always",
+        "reading": "ออล-เวยส์",
+        "meaningTh": "เสมอ / ทุกครั้ง",
+        "level": 5
+      },
+      {
+        "emoji": "🗓️",
+        "answer": "usually",
+        "reading": "ยู-ฉวล-ลี่",
+        "meaningTh": "ปกติ / มักจะ",
+        "level": 4
+      },
+      {
+        "emoji": "🔂",
+        "answer": "often",
+        "reading": "ออฟ-เฟิน",
+        "meaningTh": "บ่อย",
+        "level": 3
+      },
+      {
+        "emoji": "🤏",
+        "answer": "sometimes",
+        "reading": "ซัม-ไทมส์",
+        "meaningTh": "บางครั้ง",
+        "level": 2
+      },
+      {
+        "emoji": "❌",
+        "answer": "never",
+        "reading": "เน-เวอร์",
+        "meaningTh": "ไม่เคยเลย",
+        "level": 0
+      }
+    ],
+    "layout": "list",
+    "note": "แถบแสดงความถี่โดยประมาณ",
+    "example": "I ___ have breakfast."
+  },
+  "a2_c02n07": {
     "title": "Busy Days",
     "items": [
       {
@@ -194,7 +237,7 @@
         ]
       },
       {
-        "emoji": "📚",
+        "emoji": "🗄️",
         "answer": "shelf",
         "reading": "เชลฟ์",
         "meaningTh": "ชั้นวางของ",
@@ -223,7 +266,7 @@
         "meaningTh": "สูง"
       },
       {
-        "emoji": "🐭",
+        "emoji": "📏⬇️",
         "answer": "short",
         "reading": "ชอร์ท",
         "meaningTh": "เตี้ย, สั้น"

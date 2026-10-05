@@ -27,12 +27,13 @@
           "Capy doesn't like swimming."
         ],
         "hints": [
-          "Swimming. …"
+          "S…",
+          "S_______."
         ]
       },
       {
         "id": "a2_c01n08_03",
-        "audioText": "Hey! I go jogging on weekends. How about you?",
+        "audioText": "Hey! It's Max. I go jogging on weekends. How about you?",
         "questionTh": "Max ทำอะไรทุกสุดสัปดาห์",
         "answerEn": "Jogging.",
         "acceptedAnswers": [
@@ -40,7 +41,8 @@
           "Go jogging."
         ],
         "hints": [
-          "Jogging. …"
+          "J…",
+          "J______."
         ]
       },
       {
@@ -52,7 +54,8 @@
           "She enjoys baking."
         ],
         "hints": [
-          "Baking. …"
+          "B…",
+          "B_____."
         ]
       },
       {
@@ -64,7 +67,8 @@
           "She doesn't like fishing."
         ],
         "hints": [
-          "Fishing. …"
+          "F…",
+          "F______."
         ]
       }
     ]
@@ -96,7 +100,8 @@
           "tomorrow"
         ],
         "hints": [
-          "Tomorrow. …"
+          "T…",
+          "T_______."
         ]
       },
       {
@@ -265,7 +270,8 @@
           "Medium iced latte."
         ],
         "hints": [
-          "Medium. …"
+          "M…",
+          "M_____."
         ]
       },
       {
@@ -293,7 +299,8 @@
           "Three small lattes."
         ],
         "hints": [
-          "Three. …"
+          "T…",
+          "T____."
         ]
       },
       {
@@ -307,7 +314,8 @@
           "Hot latte."
         ],
         "hints": [
-          "Hot. …"
+          "H…",
+          "H__."
         ]
       },
       {
@@ -321,7 +329,8 @@
           "No hot milk."
         ],
         "hints": [
-          "No. …"
+          "N…",
+          "N_."
         ]
       },
       {
@@ -398,7 +407,8 @@
           "He can have the curry."
         ],
         "hints": [
-          "Curry. …"
+          "C…",
+          "C____."
         ]
       },
       {
@@ -542,7 +552,8 @@
           "It closes at 10:20."
         ],
         "hints": [
-          "10:20 …"
+          "1…",
+          "1___:"
         ]
       },
       {
@@ -584,7 +595,8 @@
           "At eleven fifteen"
         ],
         "hints": [
-          "11:15 …"
+          "1…",
+          "1___:"
         ]
       }
     ]
@@ -676,7 +688,7 @@
     "items": [
       {
         "id": "a2_c21n09_01",
-        "audioText": "Good morning, it's DJ Coco! On Friday it's going to be sunny. Saturday will be cloudy, and on Sunday it might be stormy... but that's OK, be happy!",
+        "audioText": "Good morning, it's DJ Coco! On Friday it's going to be sunny. Saturday will be cloudy, and on Sunday it might be stormy... but that's OK!",
         "questionTh": "วันไหนเหมาะไปทะเล",
         "answerEn": "Friday",
         "acceptedAnswers": [
@@ -684,12 +696,13 @@
           "Friday is sunny."
         ],
         "hints": [
-          "Friday …"
+          "F…",
+          "F_____"
         ]
       },
       {
         "id": "a2_c21n09_02",
-        "audioText": "Hello, hello, it's DJ Coco! Friday will be stormy... but that's OK, be happy! Saturday will be sunny and hot. Sunday will be cloudy.",
+        "audioText": "Hello, hello, it's DJ Coco! Friday will be stormy... but that's OK! Saturday will be sunny and hot. Sunday will be cloudy.",
         "questionTh": "วันไหนเหมาะไปทะเล",
         "answerEn": "Saturday",
         "acceptedAnswers": [
@@ -697,12 +710,13 @@
           "Saturday is sunny."
         ],
         "hints": [
-          "Saturday …"
+          "S…",
+          "S_______"
         ]
       },
       {
         "id": "a2_c21n09_03",
-        "audioText": "Good morning, it's DJ Coco! Friday and Saturday will be cloudy and humid. But on Sunday it's going to be sunny! Be happy!",
+        "audioText": "Good morning, it's DJ Coco! Friday and Saturday will be cloudy and humid. But on Sunday it's going to be sunny! Have a nice day!",
         "questionTh": "วันไหนเหมาะไปทะเล",
         "answerEn": "Sunday",
         "acceptedAnswers": [
@@ -710,12 +724,13 @@
           "Sunday is sunny."
         ],
         "hints": [
-          "Sunday …"
+          "S…",
+          "S_____"
         ]
       },
       {
         "id": "a2_c21n09_04",
-        "audioText": "Good morning, it's DJ Coco! It might rain on Friday. Saturday is going to be stormy... but that's OK, be happy! Sunday will be sunny and warm!",
+        "audioText": "Good morning, it's DJ Coco! It might rain on Friday. Saturday is going to be stormy... but that's OK! Sunday will be sunny and warm!",
         "questionTh": "วันไหนมีพายุ ไม่ควรไปทะเล",
         "answerEn": "Saturday",
         "acceptedAnswers": [
@@ -723,12 +738,13 @@
           "Saturday is stormy."
         ],
         "hints": [
-          "Saturday …"
+          "S…",
+          "S_______"
         ]
       },
       {
         "id": "a2_c21n09_05",
-        "audioText": "Hello, it's DJ Coco! Friday will be cloudy. Saturday will be sunny in the morning, but stormy in the afternoon. But that's OK, be happy! Sunday will be sunny all day!",
+        "audioText": "Hello, it's DJ Coco! Friday will be cloudy. Saturday will be sunny in the morning, but stormy in the afternoon. But that's OK! Sunday will be sunny all day!",
         "questionTh": "วันไหนเหมาะไปทะเลทั้งวัน",
         "answerEn": "Sunday",
         "acceptedAnswers": [
@@ -736,7 +752,8 @@
           "Sunday is sunny all day."
         ],
         "hints": [
-          "Sunday …"
+          "S…",
+          "S_____"
         ]
       }
     ]
@@ -851,7 +868,8 @@
           "The new time is 9:40."
         ],
         "hints": [
-          "9:40 …"
+          "9…",
+          "9__:"
         ]
       },
       {
@@ -879,7 +897,8 @@
           "At eleven fifteen"
         ],
         "hints": [
-          "11:15 …"
+          "1…",
+          "1___:"
         ]
       },
       {
@@ -913,7 +932,8 @@
           "Saturday at 6:30"
         ],
         "hints": [
-          "6:30 …"
+          "6…",
+          "6__:"
         ]
       },
       {
@@ -940,7 +960,8 @@
           "6 p.m."
         ],
         "hints": [
-          "6:00 …"
+          "6…",
+          "6__:"
         ]
       },
       {
@@ -954,7 +975,8 @@
           "Sunday at 7:00"
         ],
         "hints": [
-          "7:00 …"
+          "7…",
+          "7__:"
         ]
       },
       {
@@ -1003,7 +1025,8 @@
           "by train"
         ],
         "hints": [
-          "train …"
+          "t…",
+          "t____"
         ]
       },
       {
@@ -1016,7 +1039,8 @@
           "at 7:00"
         ],
         "hints": [
-          "7:00 …"
+          "7…",
+          "7__:"
         ]
       },
       {
@@ -1043,7 +1067,8 @@
           "at 4:15"
         ],
         "hints": [
-          "4:15 …"
+          "4…",
+          "4__:"
         ]
       },
       {

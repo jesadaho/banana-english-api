@@ -103,6 +103,11 @@ def two_level_hints(answer):
     words = answer.split()
     if not words:
         return []
+    if len(words) == 1:
+        # One-word answer: the first word IS the answer, so reveal letters instead.
+        core = re.sub(r"[^\w']", "", words[0])
+        tail = re.sub(r"[\w']", "", words[0])
+        return [f"{core[0]}…", core[0] + "_" * (len(core) - 1) + tail] if core else []
     first = f"{words[0]} …"
     gapped = []
     for i, word in enumerate(words):
@@ -287,6 +292,9 @@ def build():
                         }
                         for it in items
                     ],
+                    **({"layout": "list"} if node.get("listView") else {}),
+                    **({"note": node["listNote"]} if node.get("listNote") else {}),
+                    **({"example": node["listExample"]} if node.get("listExample") else {}),
                 }
             content_ref["poolId"] = nid
         elif ntype == "emoji_speak":

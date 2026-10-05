@@ -8,7 +8,7 @@ Checks
  E5 grammar timing: structures used in pools before the chapter/node that teaches them
  E6 vocabulary gate (vocabgate.py) for pools  +  E7 the same gate for non-pool speaking text (emoji_speak items, conversation/lesson/scenario `say`)
  E8 cast: banned names, Bee/Capy pronouns, Nina before 8.10, Torto before 16.11
- E9 node rules: same-type adjacency, new_words -> say_it, chapter ≤ 11, new_words ≤ 4 items
+ E9 node rules: same-type adjacency, new_words -> say_it, chapter ≤ 12, new_words ≤ 4 items (list view ≤ 5)
  W  warnings: near-duplicate answers (differ by one word) ≥ 3 pairs in a node; accept equals en
 """
 import json, re, glob, sys, collections
@@ -126,7 +126,7 @@ for c, items in P.items():
 # E9 node rules
 cc = collections.Counter(n["code"].split(".")[0] for n in N)
 for k, v in cc.items():
-    if v > 11: err("E9", f"chapter {k}: {v} nodes")
+    if v > 12: err("E9", f"chapter {k}: {v} nodes")
 for a, b in zip(N, N[1:]):
     if a["code"].split(".")[0] == b["code"].split(".")[0]:
         if a["type"] == b["type"]: err("E9", f"{a['code']}–{b['code']} same type")
@@ -139,21 +139,23 @@ for n in N:
     if n["type"] == "new_words":
         segs = re.findall(r"\*\*(.+?)\*\*", n["teach"])
         items = [x for s in segs[:1] for x in s.split("·") if x.strip()]
-        if len(items) > 4: W.append(f"{n['code']}: new_words has {len(items)} items")
+        if len(items) > (5 if n.get("listView") else 4): W.append(f"{n['code']}: new_words has {len(items)} items")
 PHR = re.compile(r"[!?.…/+]|\b(get|look|pick|come|hold|hang|take|have|do|make|find|give|call|keep|see you|next|last|this|another)\s", re.I)
 GRAM = set("went ate bought gave saw took put lost left forgot found came got been seen eaten tried visited done met always usually sometimes never often rarely yesterday ago earlier later".split())
 for k, n in enumerate(N):
     if n["type"] != "new_words": continue
     segs = re.findall(r"\*\*(.+?)\*\*", n["teach"])
     items = [x.strip() for x in (segs[0] if segs else "").split("·") if x.strip()]
-    if not 3 <= len(items) <= 4: err("E10", f"{n['code']}: new_words should have 3–4 items, has {len(items)}")
+    # List-view packs teach a closed scale (always … never) as one set, so grammar words are allowed.
+    max_items = 5 if n.get("listView") else 4
+    if not 3 <= len(items) <= max_items: err("E10", f"{n['code']}: new_words should have 3–{max_items} items, has {len(items)}")
     for it in items:
-        if PHR.search(it + " ") or it.lower() in GRAM or len(it.split()) > 2:
+        if PHR.search(it + " ") or (it.lower() in GRAM and not n.get("listView")) or len(it.split()) > 2:
             err("E10", f"{n['code']}: '{it}' is a phrase / grammar form, not a noun-verb material word")
     ROOT_OK = {"evening", "morning", "meeting", "building", "ceiling", "bed", "red", "shed", "iced", "exciting", "boring", "amazing", "crowded", "missing", "interesting", "tired"}  # adjectives that are words in their own right
     for it in items:
         w = it.lower().split()[-1]
-        if w not in ROOT_OK and (w.endswith("ing") or w.endswith("ed") or w in GRAM):
+        if w not in ROOT_OK and (w.endswith("ing") or w.endswith("ed") or (w in GRAM and not n.get("listView"))):
             err("E12", f"{n['code']}: '{it}' is not a root form — teach the root (cook, swim) and the -ing/-ed form inside the lesson")
     nxt = N[k + 1] if k + 1 < len(N) else None
     prev_lesson = any(m["type"] == "lesson" for m in N[:k] if CH(m["code"]) == CH(n["code"]))

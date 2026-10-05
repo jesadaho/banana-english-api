@@ -156,7 +156,7 @@ export class MiniGamesController {
     if (!pool || !isValidNewWordsPack(pool)) {
       throw new BadRequestException(`Unknown New Words pack: ${id}`);
     }
-    return { poolId: id, title: pool.title, items: pool.items };
+    return { poolId: id, title: pool.title, items: pool.items, layout: pool.layout, note: pool.note, example: pool.example };
   }
 
   @Get('hear-it/:poolId/deal')

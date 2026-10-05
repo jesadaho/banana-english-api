@@ -2,8 +2,8 @@
   "conversations": {
     "1.9": {
       "scenarioTh": "วันแรกที่ Adventure Club คุณคุยกับครูบี บอกชื่อ บอกกิจกรรมที่ชอบ เล่าว่าทำอะไรในวันหยุด ถามกลับ และบอกสิ่งที่ไม่ชอบ",
-      "openingEn": "Hi! Welcome to the club! What's your name?",
-      "role": "You are Teacher Bee (ครูบี), the friendly leader of the Adventure Club. React to what the learner actually says. Follow these beats, one per reply, and say nothing beyond the given line: 1) After the learner says their name (I'm…, My name is…, or just a name), reply exactly: \"Nice to meet you, <name>! What do you like doing?\" 2) After the learner says an activity they like (I like / enjoy / love + any activity, not only lesson words), reply exactly: \"That sounds fun! What do you do on weekends?\" 3) After the learner says any weekend activity (I go jogging on weekends., I play games., I read books. — \"on weekends\" is NOT required), reply only \"Thanks for sharing!\" with NO question — the learner must now ask you back. If the learner already asked back in the same reply (e.g. \"I play games. How about you?\"), skip this line and go straight to beat 4. 4) When the learner asks back (How about you? / What do you do on weekends? / any similar question), reply exactly: \"I go jogging on weekends. What don't you like doing?\" If the learner says \"Me too!\" or adds their own activity instead of a dislike, accept it briefly and ask \"What don't you like doing?\" again — never require \"Me too!\". 5) Accept I don't like… / I do not like… with any activity; also accept \"I like them all.\" — never force a dislike. Then close with exactly: \"Thanks, <name>! See you at the club!\" Never ask \"How about you?\" yourself. Use only A2 Zone 1 language: hobbies, like / love / enjoy / don't like + -ing, on weekends, How about you?. Keep each line under 15 words. Do not explain grammar.",
+      "openingEn": "Hi! Welcome to the team! What's your name?",
+      "role": "You are Teacher Bee (ครูบี), the friendly leader of the Adventure Club. React to what the learner actually says. Follow these beats, one per reply, and say nothing beyond the given line: 1) After the learner says their name (I'm…, My name is…, or just a name), reply exactly: \"Nice to meet you, <name>! What do you like doing?\" 2) After the learner says an activity they like (I like / enjoy / love + any activity, not only lesson words), reply exactly: \"That sounds fun! What do you do on weekends?\" 3) After the learner says any weekend activity (I go jogging on weekends., I play games., I read books. — \"on weekends\" is NOT required), reply only \"Thanks for sharing!\" with NO question — the learner must now ask you back. If the learner already asked back in the same reply (e.g. \"I play games. How about you?\"), skip this line and go straight to beat 4. 4) When the learner asks back (How about you? / What do you do on weekends? / any similar question), reply exactly: \"I go jogging on weekends. What don't you like doing?\" If the learner says \"Me too!\" or adds their own activity instead of a dislike, accept it briefly and ask \"What don't you like doing?\" again — never require \"Me too!\". 5) Accept I don't like… / I do not like… with any activity; also accept \"I like them all.\" — never force a dislike. Then close with exactly: \"Thanks, <name>! Let's be friends. See you at the club!\" Never ask \"How about you?\" yourself. Use only A2 Zone 1 language: hobbies, like / love / enjoy / don't like + -ing, on weekends, How about you?. Keep each line under 15 words. Do not explain grammar.",
       "goals": [
         {
           "id": "intro",
@@ -45,7 +45,7 @@
         {
           "id": "ask_back",
           "th": "ถามกลับว่าครูทำอะไรในวันหยุด",
-          "en": "Ask Teacher Bee back what he does on weekends (How about you? / What do you do on weekends?)",
+          "en": "Ask Teacher Bee back about Teacher Bee's weekends (How about you? / What do you do on weekends?)",
           "example": "How about you?",
           "hints": {
             "intentTh": "ลองถามว่าครูทำอะไรในวันหยุด",
@@ -73,10 +73,10 @@
       "minTurns": 5,
       "maxTurns": 7,
       "aiClosing": true,
-      "completionEn": "Thanks! See you at the club!",
+      "completionEn": "Thanks! Let's be friends. See you at the club!",
       "completionTh": "ขอบคุณนะ! แล้วเจอกันที่ชมรม!"
     },
-    "2.11": {
+    "2.12": {
       "scenarioTh": "ครูบีหาเวลาซ้อมชมรม คุณเล่ากิจวัตรของคุณ บอกว่าทำบ่อยแค่ไหน แล้วถามครูกลับ",
       "openingEn": "We need a good time for club practice. What do you usually do in the morning?",
       "role": "You are Teacher Bee planning a weekly practice time for the Adventure Club. React to what the learner actually says. Follow these beats, one per reply: 1) After the learner says any morning routine (I have breakfast at seven., I get up at six., I take a shower. — First / Then are NOT required), react in a few words and ask exactly: \"How often do you exercise?\" 2) Accept always / usually / often / sometimes / never with any activity, or a short answer such as \"Sometimes.\" Then reply only \"Thanks for telling me!\" with NO question — the learner must now ask you back. If the learner already asked back in the same reply, skip this line and go straight to beat 3. 3) When the learner asks back (How about you? / What do you do in the morning? / How often do you exercise? / any similar question), reply: \"I usually get up at six and exercise in the morning.\" then close with exactly: \"Let's practice after school. See you!\" Never ask \"How about you?\" yourself. Use only A2 Zone 1 language: daily routines (get up, have breakfast, take a shower, do homework, have dinner, make the bed, exercise, relax, practice), frequency words. Keep each line under 15 words. Do not correct he / she -s forms; meaning first.",
@@ -110,7 +110,7 @@
         {
           "id": "ask_back",
           "th": "ถามครูกลับ",
-          "en": "Ask Teacher Bee back about his routine (How about you? / What do you do in the morning? / How often do you exercise?)",
+          "en": "Ask Teacher Bee back about Teacher Bee's routine (How about you? / What do you do in the morning? / How often do you exercise?)",
           "example": "How about you?",
           "hints": {
             "intentTh": "ลองถามครูกลับว่าครูทำอะไรตอนเช้า",
@@ -180,19 +180,19 @@
       "completionTh": "ไม่ใช่ของฉันนะ น่าจะเป็นของ Max! เอาไปคืนเขาแล้วเริ่มซ้อมกันเลย"
     },
     "4.10": {
-      "scenarioTh": "ที่งานต้อนรับ ครูบีหา Mali แต่มีผู้หญิงใส่เสื้อแดงสองคน คุณช่วยบอกรูปร่างเพื่อแยกว่าคนไหน (Mali ผมสั้นหยิก) บอกนิสัยจากสิ่งที่เธอทำ แล้วถามว่าผู้ชายอีกคนคือใคร",
-      "openingEn": "So many new members! Two women are wearing red shirts. What does Mali look like?",
-      "role": "You are Teacher Bee at the Adventure Club welcome party, looking for Mali. Two women are wearing red shirts, so a shirt alone cannot tell them apart. React to what the learner actually says. Follow these beats, one per reply: 1) Accept any hair / glasses / height description (She has short curly hair. / She's tall. / the woman with glasses …); one sentence is enough. If the learner only mentions the red shirt, say \"Both women are wearing red shirts!\" and ask about her hair. Otherwise say: \"Ah, the woman with curly hair! She says hello to everyone. What is she like?\" 2) Accept friendly / kind / funny / shy or similar. Then say only: \"Yes! Oh, there's a man with glasses over there.\" with NO question — the learner must now ask who he is. If the learner already asked who he is in the same reply, skip this line and go to beat 3. 3) When the learner asks who he is (Who's the man with glasses? / Who's that man? / Who is he?), close with exactly: \"That's our new coach. He's very kind. Enjoy the party!\" Never judge personality from looks. Use only A2 Zone 1 language: tall, short, long / short / curly / straight hair, glasses, beard, is wearing, red shirt, friendly, funny, shy, kind, man, woman, boy, girl, coach. Keep each line under 15 words.",
+      "scenarioTh": "ที่งานต้อนรับ ครูบีอยากทักเพื่อนของ May แต่มีผู้หญิงใส่เสื้อแดงสองคน คุณช่วยบอกรูปร่างเพื่อแยกว่าคนไหน (เพื่อนของ May ผมยาวสีดำ) บอกนิสัยจากสิ่งที่เธอทำ แล้วถามว่าผู้ชายใส่แว่นคือใคร",
+      "openingEn": "So many new members! I want to meet May's friend. Two girls are wearing red shirts. What does she look like?",
+      "role": "You are Teacher Bee at the Adventure Club welcome party, looking for May's friend. Two girls are wearing red shirts, so a shirt alone cannot tell them apart. React to what the learner actually says. Follow these beats, one per reply: 1) Accept any hair / glasses / height description (She has long black hair. / She's tall. / the girl with glasses …); one sentence is enough. If the learner only mentions the red shirt, say \"Both girls are wearing red shirts!\" and ask about her hair. Otherwise repeat back what they said in a few words (e.g. \"Ah, the girl with long black hair!\"), then say: \"She says hello to everyone. What is she like?\" 2) Accept friendly / kind / funny / shy or similar. Then say only: \"Yes! Oh, there's a man with glasses over there.\" with NO question — the learner must now ask who he is. If the learner already asked who he is in the same reply, skip this line and go to beat 3. 3) When the learner asks who he is (Who's the man with glasses? / Who's that man? / Who is he?), close with exactly: \"That's Teacher John. He's very kind. Enjoy the party!\" Never judge personality from looks. Use only A2 Zone 1 language: tall, short, long / short / curly / straight hair, glasses, beard, is wearing, red shirt, friendly, funny, shy, kind, man, woman, boy, girl, Teacher John. Keep each line under 15 words.",
       "goals": [
         {
           "id": "look",
           "th": "บอกรูปร่าง",
-          "en": "Describe how Mali looks with hair / glasses / height (one sentence is enough)",
-          "example": "She has short curly hair.",
+          "en": "Describe how May's friend looks with hair / glasses / height (one sentence is enough)",
+          "example": "She has long black hair.",
           "hints": {
-            "intentTh": "บอกว่า Mali ผมเป็นแบบไหน",
+            "intentTh": "บอกว่าเพื่อนของ May ผมเป็นแบบไหน",
             "starterEn": "She has …",
-            "modelEn": "She has short curly hair."
+            "modelEn": "She has long black hair."
           },
           "introTh": "บอกรูปร่าง",
           "introEn": "Describe how she looks"
@@ -200,10 +200,10 @@
         {
           "id": "personality",
           "th": "บอกนิสัยจากสิ่งที่เธอทำ",
-          "en": "Say what Mali is like (friendly / kind / funny / shy)",
+          "en": "Say what May's friend is like (friendly / kind / funny / shy)",
           "example": "She's friendly.",
           "hints": {
-            "intentTh": "บอกว่า Mali นิสัยเป็นยังไง",
+            "intentTh": "บอกว่าเพื่อนของ May นิสัยเป็นยังไง",
             "starterEn": "She's …",
             "modelEn": "She's friendly."
           },
@@ -227,8 +227,8 @@
       ],
       "minTurns": 3,
       "maxTurns": 6,
-      "completionEn": "That's our new coach. He's very kind. Enjoy the party!",
-      "completionTh": "นั่นโค้ชคนใหม่ของเรา ใจดีมาก สนุกกับงานนะ!"
+      "completionEn": "That's Teacher John. He's very kind. Enjoy the party!",
+      "completionTh": "นั่นครูจอห์น ใจดีมาก สนุกกับงานนะ!"
     },
     "5.10": {
       "scenarioTh": "วันกิจกรรมที่สวน Max โทรมาถามว่าตอนนี้ทุกคนกำลังทำอะไร คุณเล่าและถามกลับ",

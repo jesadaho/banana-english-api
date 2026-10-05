@@ -91,9 +91,9 @@
       ]
     }
   ],
-  "a2_c02n05": [
+  "a2_c02n06": [
     {
-      "id": "a2_c02n05_q1",
+      "id": "a2_c02n06_q1",
       "promptTh": "คุณทำอาหารบ่อยแค่ไหน?",
       "answerEn": "How often do you cook?",
       "acceptedAnswers": [],
@@ -103,24 +103,11 @@
       ]
     },
     {
-      "id": "a2_c02n05_q2",
-      "promptTh": "คุณไปเดินป่าบ่อยแค่ไหน?",
-      "answerEn": "How often do you go hiking?",
-      "acceptedAnswers": [
-        "How often do you hike?"
-      ],
-      "hints": [
-        "How …",
-        "How ___ do you ___ ___?"
-      ]
-    },
-    {
-      "id": "a2_c02n05_q3",
+      "id": "a2_c02n06_q2",
       "promptTh": "ปกติฉันตื่นเจ็ดโมง",
       "answerEn": "I usually get up at seven.",
       "acceptedAnswers": [
-        "I usually wake up at seven.",
-        "I usually get up at 7."
+        "I usually wake up at seven."
       ],
       "hints": [
         "I …",
@@ -128,19 +115,20 @@
       ]
     },
     {
-      "id": "a2_c02n05_q4",
-      "promptTh": "บางครั้งฉันเดินไปโรงเรียน",
-      "answerEn": "I sometimes walk to school.",
+      "id": "a2_c02n06_q3",
+      "promptTh": "บางครั้งฉันทำการบ้านหลังกินข้าวเย็น",
+      "answerEn": "I sometimes do my homework after dinner.",
       "acceptedAnswers": [
-        "Sometimes I walk to school."
+        "Sometimes I do my homework after dinner.",
+        "I sometimes do homework after dinner."
       ],
       "hints": [
         "I …",
-        "I ___ ___ to ___."
+        "I ___ do my ___ ___ ___."
       ]
     },
     {
-      "id": "a2_c02n05_q5",
+      "id": "a2_c02n06_q4",
       "promptTh": "ฉันไม่เคยจัดเตียงเลย",
       "answerEn": "I never make the bed.",
       "acceptedAnswers": [
@@ -152,20 +140,7 @@
       ]
     },
     {
-      "id": "a2_c02n05_q6",
-      "promptTh": "ปกติฉันทำการบ้านหลังกินข้าวเย็น",
-      "answerEn": "I usually do my homework after dinner.",
-      "acceptedAnswers": [
-        "I usually do homework after dinner.",
-        "After dinner I usually do my homework."
-      ],
-      "hints": [
-        "I …",
-        "I ___ do my ___ ___ ___."
-      ]
-    },
-    {
-      "id": "a2_c02n05_q7",
+      "id": "a2_c02n06_q5",
       "promptTh": "ฉันกินข้าวเช้าเสมอ",
       "answerEn": "I always have breakfast.",
       "acceptedAnswers": [
@@ -174,6 +149,30 @@
       "hints": [
         "I …",
         "I ___ ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c02n06_q6",
+      "promptTh": "ฉันไปวิ่งจ๊อกกิ้งบ่อย",
+      "answerEn": "I often go jogging.",
+      "acceptedAnswers": [
+        "I go jogging often."
+      ],
+      "hints": [
+        "I …",
+        "I ___ ___ ___."
+      ]
+    },
+    {
+      "id": "a2_c02n06_q7",
+      "promptTh": "ฉันอาบน้ำทุกวัน",
+      "answerEn": "I take a shower every day.",
+      "acceptedAnswers": [
+        "I have a shower every day."
+      ],
+      "hints": [
+        "I …",
+        "I ___ a ___ ___ ___."
       ]
     }
   ],
@@ -375,15 +374,14 @@
     },
     {
       "id": "a2_c04n06_q4",
-      "promptTh": "ครูบีใส่แว่นอยู่",
-      "answerEn": "Teacher Bee is wearing glasses.",
+      "promptTh": "เด็กผู้ชายคนนั้นผมสั้นหยิก",
+      "answerEn": "The boy has short curly hair.",
       "acceptedAnswers": [
-        "Teacher Bee wears glasses.",
-        "Teacher Bee has glasses."
+        "He has short curly hair."
       ],
       "hints": [
-        "Teacher …",
-        "Teacher ___ is ___ ___."
+        "The …",
+        "The ___ ___ ___ ___ ___."
       ]
     },
     {
@@ -712,7 +710,8 @@
         "Sure."
       ],
       "hints": [
-        "Sure! …"
+        "S…",
+        "S___!"
       ]
     },
     {

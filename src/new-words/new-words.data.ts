@@ -3,6 +3,8 @@ import a2PoolsJson from './adventure-a2-pools.json';
 
 export const NEW_WORDS_MIN_PACK_SIZE = 2;
 export const NEW_WORDS_MAX_PACK_SIZE = 4;
+/** List-view packs show a whole closed set (always … never) on one screen. */
+export const NEW_WORDS_LIST_MAX_PACK_SIZE = 5;
 
 export type NewWordsCard = {
   emoji: string;
@@ -11,11 +13,19 @@ export type NewWordsCard = {
   meaningTh: string;
   /** US/UK spellings or alternate forms graded as correct. */
   acceptedAnswers?: string[];
+  /** List view: filled bars out of 5 (e.g. how often a frequency word means). */
+  level?: number;
 };
 
 export type NewWordsPool = {
   title: string;
   items: NewWordsCard[];
+  /** `list` shows every word as a row and repeats them one by one. */
+  layout?: 'list';
+  /** Footnote under the list (e.g. what the bars mean). */
+  note?: string;
+  /** List view: sentence with `___` filled by the highlighted word (e.g. `I ___ have breakfast.`). */
+  example?: string;
 };
 
 const catalog = {
@@ -35,5 +45,6 @@ export function newWordsPoolById(poolId: string): NewWordsPool | undefined {
 
 export function isValidNewWordsPack(pool: NewWordsPool | undefined): boolean {
   const n = pool?.items.length ?? 0;
-  return n >= NEW_WORDS_MIN_PACK_SIZE && n <= NEW_WORDS_MAX_PACK_SIZE;
+  const max = pool?.layout === 'list' ? NEW_WORDS_LIST_MAX_PACK_SIZE : NEW_WORDS_MAX_PACK_SIZE;
+  return n >= NEW_WORDS_MIN_PACK_SIZE && n <= max;
 }
