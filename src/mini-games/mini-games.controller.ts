@@ -40,7 +40,7 @@ import {
   isValidNewWordsPack,
   newWordsPoolById,
 } from '../new-words/new-words.data';
-import { dealHearItItems, hearItPoolById, isValidHearItPack } from '../hear-it/hear-it.data';
+import { dealListenUpItems, listenUpPoolById, isValidListenUpPack } from '../listen-up/listen-up.data';
 import { isValidStoryBitesPack, storyBitesPoolById } from '../story-bites/story-bites.data';
 import { describeItImageUrl } from '../describe-it/describe-it.data';
 import { readMiniGameScoreBody, type MiniGameScoreBody } from '../economy/mini-game-score';
@@ -156,21 +156,21 @@ export class MiniGamesController {
     if (!pool || !isValidNewWordsPack(pool)) {
       throw new BadRequestException(`Unknown New Words pack: ${id}`);
     }
-    return { poolId: id, title: pool.title, items: pool.items, layout: pool.layout, note: pool.note, example: pool.example };
+    return { poolId: id, title: pool.title, items: pool.items, layout: pool.layout, note: pool.note, example: pool.example, levelStyle: pool.levelStyle };
   }
 
-  @Get('hear-it/:poolId/deal')
-  dealHearItPack(@Param('poolId') poolId: string) {
+  @Get('listen-up/:poolId/deal')
+  dealListenUpPack(@Param('poolId') poolId: string) {
     const id = poolId?.trim();
-    const pool = id ? hearItPoolById(id) : undefined;
-    if (!pool || !isValidHearItPack(pool)) {
-      throw new BadRequestException(`Unknown Hear It pack: ${id}`);
+    const pool = id ? listenUpPoolById(id) : undefined;
+    if (!pool || !isValidListenUpPack(pool)) {
+      throw new BadRequestException(`Unknown Listen Up pack: ${id}`);
     }
     return {
       poolId: id,
       titleEn: pool.titleEn,
       titleTh: pool.titleTh,
-      items: dealHearItItems(id),
+      items: dealListenUpItems(id),
     };
   }
 

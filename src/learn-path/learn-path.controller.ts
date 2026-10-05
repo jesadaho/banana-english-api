@@ -22,9 +22,14 @@ import { LearnPathService } from './learn-path.service';
 
 type AuthedRequest = { user: User };
 
+/** Pre-rename names from store builds: accepted but ignored, since those builds cannot play the renamed node type. */
+const RETIRED_CAPABILITIES = new Set(['hear_it']);
+
 function parseCapabilities(raw: unknown): FoundationV7Capability[] {
   if (raw !== undefined && typeof raw !== 'string') throw new BadRequestException('Invalid capabilities');
-  const capabilities = raw ? raw.split(',').map(value => value.trim()).filter(Boolean) : [];
+  const capabilities = raw
+    ? raw.split(',').map(value => value.trim()).filter(value => value && !RETIRED_CAPABILITIES.has(value))
+    : [];
   const supported: readonly string[] = FOUNDATION_V7_CAPABILITIES;
   if (capabilities.some(value => !supported.includes(value))) {
     throw new BadRequestException(

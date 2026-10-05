@@ -3618,7 +3618,7 @@
       }
     ]
   },
-  "a2_c10n05": {
+  "a2_c10n06": {
     "titleEn": "Could I…?",
     "titleTh": "ขอ…ได้ไหม",
     "goalTh": "สั่งอาหารแบบสุภาพด้วย Could I have…? ขอให้พนักงานช่วยด้วย Could you bring…? และชมว่าอร่อย",
@@ -3626,7 +3626,7 @@
       3,
       5
     ],
-    "scope": "ขอแบบสุภาพกว่า can: Could I have…? · Could you bring…? · ตัวอย่างจากคำ 10.4 ที่ restaurant ในเมือง: Could I have the fried rice, please? · Could you bring the noodle soup? · Could I have the curry? It's delicious!",
+    "scope": "ขอแบบสุภาพกว่า can: Could I have…? · Could you bring…? · ตัวอย่างจากคำ 10.5 ที่ restaurant ในเมือง: Could I have the fried rice, please? · Could you bring the noodle soup? · Could I have the curry? It's delicious!",
     "blocks": [],
     "recall": {
       "promptTh": "สั่งอาหารแบบสุภาพด้วย Could I have…? ขอให้พนักงานช่วยด้วย Could you bring…? และชมว่าอร่อย",
@@ -3781,7 +3781,7 @@
       }
     ]
   },
-  "a2_c10n07": {
+  "a2_c10n08": {
     "titleEn": "Sorry!",
     "titleTh": "ขอโทษ",
     "goalTh": "ทักเมื่ออาหารผิดอย่างสุภาพ ขอโทษ และรับคำขอโทษได้",
@@ -4074,7 +4074,7 @@
       3,
       5
     ],
-    "scope": "🔁 ทบทวน A1 15.9–15.12 (How much / How many) แล้วต่อยอด: ตอบด้วย a few (นับได้) / a little (นับไม่ได้) · not many / not much · บอกจำนวนด้วยหน่วยจากคำ 11.5: a carton of milk · two bottles of oil · a packet of flour · a kilo of rice → We need a few eggs and a little sugar.",
+    "scope": "🔁 ทบทวน A1 15.9–15.12 (How much / How many) แล้วต่อยอด: ตอบด้วย a few (นับได้) / a little (นับไม่ได้) · not many / not much · บอกจำนวนเป็นภาชนะ (สอนในบทนี้): a carton of milk · two bottles of oil · a packet of flour · a kilo of rice → We need a few eggs and a little sugar.",
     "blocks": [],
     "recall": {
       "promptTh": "ถามว่าต้องใช้เท่าไร (How many / How much) ตอบ a few / a little และบอกเป็นกล่อง ขวด ห่อ กิโล",
@@ -4082,30 +4082,9 @@
     },
     "flow": [
       {
-        "kind": "choice",
-        "text": "อุ่นเครื่องกันก่อน 🍾 น้ำมันพืชมาในภาชนะนี้ เรียกว่าอะไรเอ่ย?",
-        "expectedSpeech": "bottle",
-        "answerMode": "single",
-        "stem": "...",
-        "options": [
-          {
-            "emoji": "🔤",
-            "label": "bottle",
-            "speak": "bottle"
-          },
-          {
-            "emoji": "🔤",
-            "label": "carton",
-            "speak": "carton"
-          },
-          {
-            "emoji": "🔤",
-            "label": "kilo",
-            "speak": "kilo"
-          }
-        ],
-        "successText": "bottle = ขวด 🍾 ถูกต้องครับ!",
-        "incorrectHintTh": "เกือบแล้ว! ขวดคือ bottle ครับ 🍾 (carton = กล่องนม · kilo = กิโล)"
+        "kind": "task",
+        "text": "ของในครัวมักซื้อเป็นภาชนะ 🍾 bottle = ขวด · 🥛 carton = กล่อง · 📦 packet = ห่อ · ⚖️ kilo = กิโล · “a bottle of oil” = น้ำมัน 1 ขวด ลองพูดตามครับ",
+        "expectedSpeech": "a bottle of oil"
       },
       {
         "kind": "task",
@@ -4170,7 +4149,7 @@
       },
       {
         "kind": "task",
-        "text": "แป้ง (flour) ก็หมด! 📦 ต้องซื้อ 1 ห่อ (ห่อ = packet) บอก Aunt Noi เองเลย ลองเดาดูนะ ผิดได้ไม่เป็นไร 😄",
+        "text": "แป้ง (flour) ก็หมด! 📦 ต้องซื้อ 1 ห่อ (ห่อ = packet) บอก Aunt Noi เองเลย 😄",
         "expectedSpeech": "We need a packet of flour."
       },
       {

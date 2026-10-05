@@ -21,6 +21,7 @@
       {
         "id": "a2_c01n08_02",
         "audioText": "Hi, it's Capy! I love drawing. I don't like swimming. It's too cold!",
+        "speaker": "Capy",
         "questionTh": "Capy ไม่ชอบทำอะไร",
         "answerEn": "Swimming.",
         "acceptedAnswers": [
@@ -34,6 +35,7 @@
       {
         "id": "a2_c01n08_03",
         "audioText": "Hey! It's Max. I go jogging on weekends. How about you?",
+        "speaker": "Max",
         "questionTh": "Max ทำอะไรทุกสุดสัปดาห์",
         "answerEn": "Jogging.",
         "acceptedAnswers": [
@@ -48,6 +50,7 @@
       {
         "id": "a2_c01n08_04",
         "audioText": "Hi, it's May. I enjoy baking. I don't like gaming.",
+        "speaker": "May",
         "questionTh": "May สนุกกับการทำอะไร",
         "answerEn": "Baking.",
         "acceptedAnswers": [
@@ -81,6 +84,7 @@
       {
         "id": "a2_c07n07_01",
         "audioText": "Hi, it's May. Would you like to see a movie this evening? Let's meet at seven.",
+        "speaker": "May",
         "questionTh": "May ชวนไปดูหนังเมื่อไหร่ (พูดช่วงเวลา)",
         "answerEn": "This evening.",
         "acceptedAnswers": [
@@ -94,6 +98,7 @@
       {
         "id": "a2_c07n07_02",
         "audioText": "Hi, it's Max. Shall we play badminton tomorrow? I'm free after school.",
+        "speaker": "Max",
         "questionTh": "Max ชวนเล่นแบดมินตันวันไหน",
         "answerEn": "Tomorrow.",
         "acceptedAnswers": [
@@ -107,6 +112,7 @@
       {
         "id": "a2_c07n07_03",
         "audioText": "Hello, it's Capy. How about drawing in the park next week? Let's meet at the lake.",
+        "speaker": "Capy",
         "questionTh": "Capy นัดเจอกันที่ไหน",
         "answerEn": "At the lake.",
         "acceptedAnswers": [
@@ -121,6 +127,7 @@
       {
         "id": "a2_c07n07_04",
         "audioText": "Hi, it's Teacher Bee. The club is going to practice on Friday at four. See you then!",
+        "speaker": "Teacher Bee",
         "questionTh": "ชมรมจะซ้อมกี่โมง",
         "answerEn": "At four.",
         "acceptedAnswers": [
@@ -135,6 +142,7 @@
       {
         "id": "a2_c07n07_05",
         "audioText": "Hi, it's Mali. Would you like to cook at my house this evening? Come at six.",
+        "speaker": "Mali",
         "questionTh": "Mali ให้ไปบ้านกี่โมง",
         "answerEn": "At six.",
         "acceptedAnswers": [
@@ -149,6 +157,7 @@
       {
         "id": "a2_c07n07_06",
         "audioText": "Hi, it's Teacher John. Sorry, I'm busy tomorrow. How about next week?",
+        "speaker": "Teacher John",
         "questionTh": "Teacher John เสนอนัดใหม่เมื่อไหร่",
         "answerEn": "Next week.",
         "acceptedAnswers": [
@@ -169,6 +178,7 @@
       {
         "id": "a2_c08n07_01",
         "audioText": "Hi, team! It's Teacher Bee. Let's meet at the gate at six. See you then!",
+        "speaker": "Teacher Bee",
         "questionTh": "ครูบีนัดเจอกันที่ไหน",
         "answerEn": "At the gate.",
         "acceptedAnswers": [
@@ -183,6 +193,7 @@
       {
         "id": "a2_c08n07_02",
         "audioText": "Hi, it's Teacher Bee. Let's meet at the big wheel at seven thirty. Don't be late!",
+        "speaker": "Teacher Bee",
         "questionTh": "ครูบีนัดเจอกันกี่โมง",
         "answerEn": "At seven thirty.",
         "acceptedAnswers": [
@@ -197,6 +208,7 @@
       {
         "id": "a2_c08n07_03",
         "audioText": "It's Teacher Bee. I'm standing next to the ice cream stall. I'm wearing a blue shirt.",
+        "speaker": "Teacher Bee",
         "questionTh": "ครูบียืนอยู่ข้างอะไร",
         "answerEn": "The ice cream stall.",
         "acceptedAnswers": [
@@ -212,6 +224,7 @@
       {
         "id": "a2_c08n07_04",
         "audioText": "Hi, it's Teacher Bee. I'm at the big wheel now. I'm wearing my glasses.",
+        "speaker": "Teacher Bee",
         "questionTh": "ตอนนี้ครูบีอยู่ที่ไหน",
         "answerEn": "At the big wheel.",
         "acceptedAnswers": [
@@ -226,6 +239,7 @@
       {
         "id": "a2_c08n07_05",
         "audioText": "It's Teacher Bee. Max and May are at the ice cream stall. Let's all meet there at eight. Hurry up!",
+        "speaker": "Teacher Bee",
         "questionTh": "นัดเจอกันทุกคนกี่โมง",
         "answerEn": "At eight.",
         "acceptedAnswers": [
@@ -240,6 +254,7 @@
       {
         "id": "a2_c08n07_06",
         "audioText": "Can you see me? It's Teacher Bee. I'm standing at the gate. I'm wearing a blue shirt and glasses.",
+        "speaker": "Teacher Bee",
         "questionTh": "ครูบีใส่เสื้อสีอะไร",
         "answerEn": "A blue shirt.",
         "acceptedAnswers": [
@@ -350,13 +365,13 @@
       }
     ]
   },
-  "a2_c10n08": {
-    "id": "a2_c10n08",
+  "a2_c10n09": {
+    "id": "a2_c10n09",
     "titleEn": "It's Sold Out",
     "titleTh": "เมนูหมด",
     "items": [
       {
-        "id": "a2_c10n08_01",
+        "id": "a2_c10n09_01",
         "audioText": "Sorry, we don't have any curry today. The noodle soup is really spicy. The fried rice isn't spicy.",
         "questionTh": "Max กินเผ็ดไม่ได้ ควรสั่งจานไหน",
         "answerEn": "Fried rice.",
@@ -370,7 +385,7 @@
         ]
       },
       {
-        "id": "a2_c10n08_02",
+        "id": "a2_c10n09_02",
         "audioText": "I'm so sorry. We don't have any fried rice today. The curry is too spicy for Max. The noodle soup isn't spicy.",
         "questionTh": "จานไหนไม่เผ็ด",
         "answerEn": "Noodle soup.",
@@ -383,7 +398,7 @@
         ]
       },
       {
-        "id": "a2_c10n08_03",
+        "id": "a2_c10n09_03",
         "audioText": "Sorry, no noodle soup today. We have curry and fried rice.",
         "questionTh": "วันนี้ร้านมีจานไหนบ้าง",
         "answerEn": "Curry and fried rice.",
@@ -398,7 +413,7 @@
         ]
       },
       {
-        "id": "a2_c10n08_04",
+        "id": "a2_c10n09_04",
         "audioText": "Sorry, we don't have any noodle soup today. The curry is sweet, not spicy. The fried rice is really spicy.",
         "questionTh": "Max ควรสั่งจานไหน",
         "answerEn": "Curry.",
@@ -412,8 +427,9 @@
         ]
       },
       {
-        "id": "a2_c10n08_05",
+        "id": "a2_c10n09_05",
         "audioText": "Hi, it's Mali again! Sorry, no curry today. The noodle soup is a bit spicy, but we can make the fried rice without chilli.",
+        "speaker": "Mali",
         "questionTh": "Mali บอกว่าร้านทำจานไหนแบบไม่ใส่พริกได้",
         "answerEn": "Fried rice.",
         "acceptedAnswers": [
@@ -609,6 +625,7 @@
       {
         "id": "a2_c19n08_01",
         "audioText": "♪ I love my bus, I love my bus! ♪ Hi, it's Driver Dave! Next stop, the museum! The museum! ♪ I love my bus! ♪",
+        "speaker": "Driver Dave",
         "questionTh": "ป้ายถัดไปคือที่ไหน",
         "answerEn": "The museum",
         "acceptedAnswers": [
@@ -681,14 +698,15 @@
       }
     ]
   },
-  "a2_c21n09": {
-    "id": "a2_c21n09",
+  "a2_c21n10": {
+    "id": "a2_c21n10",
     "titleEn": "Weather Forecast",
     "titleTh": "พยากรณ์อากาศ",
     "items": [
       {
-        "id": "a2_c21n09_01",
+        "id": "a2_c21n10_01",
         "audioText": "Good morning, it's DJ Coco! On Friday it's going to be sunny. Saturday will be cloudy, and on Sunday it might be stormy... but that's OK!",
+        "speaker": "DJ Coco",
         "questionTh": "วันไหนเหมาะไปทะเล",
         "answerEn": "Friday",
         "acceptedAnswers": [
@@ -701,8 +719,9 @@
         ]
       },
       {
-        "id": "a2_c21n09_02",
+        "id": "a2_c21n10_02",
         "audioText": "Hello, hello, it's DJ Coco! Friday will be stormy... but that's OK! Saturday will be sunny and hot. Sunday will be cloudy.",
+        "speaker": "DJ Coco",
         "questionTh": "วันไหนเหมาะไปทะเล",
         "answerEn": "Saturday",
         "acceptedAnswers": [
@@ -715,8 +734,9 @@
         ]
       },
       {
-        "id": "a2_c21n09_03",
+        "id": "a2_c21n10_03",
         "audioText": "Good morning, it's DJ Coco! Friday and Saturday will be cloudy and humid. But on Sunday it's going to be sunny! Have a nice day!",
+        "speaker": "DJ Coco",
         "questionTh": "วันไหนเหมาะไปทะเล",
         "answerEn": "Sunday",
         "acceptedAnswers": [
@@ -729,8 +749,9 @@
         ]
       },
       {
-        "id": "a2_c21n09_04",
+        "id": "a2_c21n10_04",
         "audioText": "Good morning, it's DJ Coco! It might rain on Friday. Saturday is going to be stormy... but that's OK! Sunday will be sunny and warm!",
+        "speaker": "DJ Coco",
         "questionTh": "วันไหนมีพายุ ไม่ควรไปทะเล",
         "answerEn": "Saturday",
         "acceptedAnswers": [
@@ -743,8 +764,9 @@
         ]
       },
       {
-        "id": "a2_c21n09_05",
+        "id": "a2_c21n10_05",
         "audioText": "Hello, it's DJ Coco! Friday will be cloudy. Saturday will be sunny in the morning, but stormy in the afternoon. But that's OK! Sunday will be sunny all day!",
+        "speaker": "DJ Coco",
         "questionTh": "วันไหนเหมาะไปทะเลทั้งวัน",
         "answerEn": "Sunday",
         "acceptedAnswers": [
@@ -925,6 +947,7 @@
       {
         "id": "a2_c30n09_01",
         "audioText": "Hi, this is Mali from the restaurant. Sorry, Friday is full. Can we change it to Saturday at 6:30?",
+        "speaker": "Mali",
         "questionTh": "ร้านขอเลื่อนเป็นกี่โมง",
         "answerEn": "6:30",
         "acceptedAnswers": [
@@ -939,6 +962,7 @@
       {
         "id": "a2_c30n09_02",
         "audioText": "Hello, it's Mali. Please call me back. My number is 081 552 7340.",
+        "speaker": "Mali",
         "questionTh": "เบอร์ที่ต้องโทรกลับคือเบอร์อะไร",
         "answerEn": "081 552 7340",
         "acceptedAnswers": [
@@ -953,6 +977,7 @@
       {
         "id": "a2_c30n09_03",
         "audioText": "Hi Nina, it's Mali. We can't do 7:00 on Saturday. Is 6:00 OK?",
+        "speaker": "Mali",
         "questionTh": "ร้านเสนอเวลาใหม่กี่โมง",
         "answerEn": "6:00",
         "acceptedAnswers": [
@@ -967,6 +992,7 @@
       {
         "id": "a2_c30n09_04",
         "audioText": "Hello, this is Mali. The table for six is OK on Sunday, not Saturday. The time is 7:00.",
+        "speaker": "Mali",
         "questionTh": "งานย้ายไปเป็นกี่โมง",
         "answerEn": "7:00",
         "acceptedAnswers": [
@@ -982,6 +1008,7 @@
       {
         "id": "a2_c30n09_05",
         "audioText": "Hi, it's Mali again. Sorry, I can't talk now. Please call me on 02 455 9810.",
+        "speaker": "Mali",
         "questionTh": "เบอร์ของ Mali คืออะไร",
         "answerEn": "02 455 9810",
         "acceptedAnswers": [
@@ -996,6 +1023,7 @@
       {
         "id": "a2_c30n09_06",
         "audioText": "Hi, it's Mali from the restaurant. Please confirm the booking. Call me back before 5 p.m. today.",
+        "speaker": "Mali",
         "questionTh": "ต้องโทรกลับก่อนกี่โมง",
         "answerEn": "5 p.m.",
         "acceptedAnswers": [
@@ -1018,6 +1046,7 @@
       {
         "id": "a2_c32n02_01",
         "audioText": "Teacher Torto: OK, team. We're going to take the train to Chiang Mai. It leaves at 7:30 in the morning.",
+        "speaker": "Teacher Torto",
         "questionTh": "ทีมจะเดินทางด้วยอะไร",
         "answerEn": "train",
         "acceptedAnswers": [
@@ -1032,6 +1061,7 @@
       {
         "id": "a2_c32n02_02",
         "audioText": "Teacher Torto: The train leaves at 7:30, so please be at the station at 7:00.",
+        "speaker": "Teacher Torto",
         "questionTh": "ต้องไปถึงสถานีกี่โมง",
         "answerEn": "7:00",
         "acceptedAnswers": [
@@ -1046,6 +1076,7 @@
       {
         "id": "a2_c32n02_03",
         "audioText": "Teacher Torto: We're going to stay at a hotel next to the beach for three nights.",
+        "speaker": "Teacher Torto",
         "questionTh": "จะพักโรงแรมกี่คืน",
         "answerEn": "three nights",
         "acceptedAnswers": [
@@ -1060,6 +1091,7 @@
       {
         "id": "a2_c32n02_04",
         "audioText": "Teacher Torto: We're going to come back on Friday. The train home leaves at 4:15 in the afternoon.",
+        "speaker": "Teacher Torto",
         "questionTh": "รถไฟขากลับออกกี่โมง",
         "answerEn": "4:15",
         "acceptedAnswers": [
@@ -1074,6 +1106,7 @@
       {
         "id": "a2_c32n02_05",
         "audioText": "Teacher Torto: We have to check in at the hotel at 2 p.m. Then we're going to visit a museum.",
+        "speaker": "Teacher Torto",
         "questionTh": "ต้องเช็กอินโรงแรมกี่โมง",
         "answerEn": "2 p.m.",
         "acceptedAnswers": [
@@ -1089,6 +1122,7 @@
       {
         "id": "a2_c32n02_06",
         "audioText": "Teacher Torto: We're not going by plane. Flights are too expensive, so we'll take the train. It's cheaper.",
+        "speaker": "Teacher Torto",
         "questionTh": "ทำไมทีมไม่ไปเครื่องบิน",
         "answerEn": "Flights are too expensive.",
         "acceptedAnswers": [

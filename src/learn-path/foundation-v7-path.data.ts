@@ -13,7 +13,7 @@ export type FoundationV7NodeType =
   | 'conversation'
   | 'info_task'
   | 'interactive_scenario'
-  | 'hear_it'
+  | 'listen_up'
   | 'explain_it';
 
 /** Old app builds omit newer capabilities, so those nodes stay locked for them. */
@@ -21,7 +21,7 @@ export const FOUNDATION_V7_CAPABILITIES = [
   'say_it_guided',
   'describe_it',
   'interactive_scenario',
-  'hear_it',
+  'listen_up',
   'story_bites',
   'explain_it',
 ] as const;
@@ -169,7 +169,7 @@ export function foundationV7NodeTypeCounts(
     conversation: 0,
     info_task: 0,
     interactive_scenario: 0,
-    hear_it: 0,
+    listen_up: 0,
     explain_it: 0,
   };
   for (const node of course.nodes) result[node.type]++;
@@ -181,7 +181,7 @@ const CANONICAL_POOL_TYPES: ReadonlySet<FoundationV7NodeType> = new Set([
   'new_words',
   'describe_it',
   'info_task',
-  'hear_it',
+  'listen_up',
   'story_bites',
   'explain_it',
 ]);

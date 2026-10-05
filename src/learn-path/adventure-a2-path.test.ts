@@ -27,8 +27,8 @@ import { emojiSpeakPoolById } from '../emoji-speak/emoji-speak.data';
 import { isValidNewWordsPack, newWordsPoolById } from '../new-words/new-words.data';
 import { sayItTopicById } from '../say-it/say-it.data';
 import { SayItService } from '../say-it/say-it.service';
-import { HEAR_IT_ENABLED, hearItPoolById } from '../hear-it/hear-it.data';
-import { storyBitesPoolById } from '../story-bites/story-bites.data';
+import { LISTEN_UP_ENABLED, listenUpPoolById } from '../listen-up/listen-up.data';
+import { STORY_BITES_ENABLED, storyBitesPoolById } from '../story-bites/story-bites.data';
 import { describeItPoolById } from '../describe-it/describe-it.data';
 import { initScenarioRuntime, localMatchCurrentBeat, processScenarioTurn } from '../interactive-scenario/interactive-scenario.runtime';
 
@@ -53,7 +53,7 @@ describe('Adventure A2 course registry', () => {
     assert.equal(learnCourseById('adventure_a2'), ADVENTURE_A2_COURSE);
     assert.equal(learnCourseById('foundation-v7'), FOUNDATION_V7_COURSE);
     assert.equal(learnCourseById('adventure-a3'), undefined);
-    assert.equal(a2Nodes.length, 328);
+    assert.equal(a2Nodes.length, 330);
     assert.equal(ADVENTURE_A2_COURSE.catalog.chapters.length, 32);
     assert.equal(new Set(ALL_LEARN_PATH_NODES.map((n) => n.id)).size, ALL_LEARN_PATH_NODES.length);
     for (const node of a2Nodes) {
@@ -83,16 +83,24 @@ describe('Adventure A2 course registry', () => {
 describe('Adventure A2 Zone 1 content', () => {
   it('has real content behind every Zone 1 node except pending picture packs', () => {
     const missing = zone1
-      .filter((n) => !AWAITING_ART.has(n.type) && !(n.type === 'hear_it' && !HEAR_IT_ENABLED))
+      .filter((n) => !AWAITING_ART.has(n.type) && !(n.type === 'listen_up' && !LISTEN_UP_ENABLED) && !(n.type === 'story_bites' && !STORY_BITES_ENABLED))
       .filter((n) => !hasFoundationV7Content(n))
       .map((n) => `${n.code} ${n.type}`);
     assert.deepEqual(missing, []);
   });
 
-  it('keeps Hear It nodes coming soon while Hear It is off', { skip: HEAR_IT_ENABLED }, () => {
+  it('keeps Listen Up nodes coming soon while Listen Up is off', { skip: LISTEN_UP_ENABLED }, () => {
     const items = toFoundationV7ClientChapters(A2_CAPABILITIES, ADVENTURE_A2_COURSE)
       .flatMap((c) => c.items)
-      .filter((i) => i.nodeType === 'hear_it');
+      .filter((i) => i.nodeType === 'listen_up');
+    assert.ok(items.length > 0);
+    assert.ok(items.every((i) => i.comingSoon && !i.poolId));
+  });
+
+  it('keeps Story Bites nodes coming soon while Story Bites is off', { skip: STORY_BITES_ENABLED }, () => {
+    const items = toFoundationV7ClientChapters(A2_CAPABILITIES, ADVENTURE_A2_COURSE)
+      .flatMap((c) => c.items)
+      .filter((i) => i.nodeType === 'story_bites');
     assert.ok(items.length > 0);
     assert.ok(items.every((i) => i.comingSoon && !i.poolId));
   });
@@ -119,7 +127,7 @@ describe('Adventure A2 Zone 1 content', () => {
         case 'new_words': assert.ok(isValidNewWordsPack(newWordsPoolById(id)), id); break;
         case 'emoji_speak': assert.ok((emojiSpeakPoolById(id)?.items.length ?? 0) >= 4, id); break;
         case 'say_it': assert.ok(sayItTopicById(id), id); break;
-        case 'hear_it': assert.ok(hearItPoolById(id), id); break;
+        case 'listen_up': assert.ok(listenUpPoolById(id), id); break;
         case 'story_bites': assert.equal(storyBitesPoolById(id)?.questions.length, 3, id); break;
         case 'lesson':
         case 'pronunciation': assert.ok(getLesson(id), id); break;
@@ -139,6 +147,22 @@ describe('Adventure A2 Zone 1 content', () => {
     ]);
     assert.ok(isValidNewWordsPack(pool));
     assert.ok(!isValidNewWordsPack({ ...pool, layout: undefined }), 'card packs stay at 4 words');
+  });
+
+  it('serves the scale packs (10.3, 11.5, 21.8, 29.4) as list packs; 29.4 uses stars', () => {
+    const scales: Record<string, string[]> = {
+      a2_c10n03: ['too', 'really', 'quite', 'a bit'],
+      a2_c11n05: ['a lot of', 'some', 'a little', 'not much', 'no'],
+      a2_c21n08: ['will', 'probably', 'might', "won't"],
+      a2_c29n04: ['amazing', 'great', 'OK', 'bad', 'awful'],
+    };
+    for (const [id, words] of Object.entries(scales)) {
+      const pool = newWordsPoolById(id)!;
+      assert.equal(pool.layout, 'list', id);
+      assert.deepEqual(pool.items.map((w) => w.answer), words, id);
+      assert.ok(isValidNewWordsPack(pool), id);
+    }
+    assert.equal(newWordsPoolById('a2_c29n04')!.levelStyle, 'stars');
   });
 
   it('deals all 7 Say It 1.7 prompts per round', () => {

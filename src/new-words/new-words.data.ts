@@ -3,8 +3,8 @@ import a2PoolsJson from './adventure-a2-pools.json';
 
 export const NEW_WORDS_MIN_PACK_SIZE = 2;
 export const NEW_WORDS_MAX_PACK_SIZE = 4;
-/** List-view packs show a whole closed set (always … never) on one screen. */
-export const NEW_WORDS_LIST_MAX_PACK_SIZE = 5;
+/** List-view packs show a whole closed set (always … never, dawn … midnight) on one screen. */
+export const NEW_WORDS_LIST_MAX_PACK_SIZE = 7;
 
 export type NewWordsCard = {
   emoji: string;
@@ -15,6 +15,10 @@ export type NewWordsCard = {
   acceptedAnswers?: string[];
   /** List view: filled bars out of 5 (e.g. how often a frequency word means). */
   level?: number;
+  /** List view: short label in place of the bars (e.g. `05:00–06:00`). */
+  detail?: string;
+  /** List view: how the word is used (e.g. `at dawn`). */
+  usage?: string;
 };
 
 export type NewWordsPool = {
@@ -26,6 +30,8 @@ export type NewWordsPool = {
   note?: string;
   /** List view: sentence with `___` filled by the highlighted word (e.g. `I ___ have breakfast.`). */
   example?: string;
+  /** List view: draw `level` as stars (ratings) instead of bars. */
+  levelStyle?: 'stars';
 };
 
 const catalog = {

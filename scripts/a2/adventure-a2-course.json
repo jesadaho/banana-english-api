@@ -8,7 +8,7 @@
   "say_it",
   "emoji_speak",
   "see_and_say",
-  "hear_it",
+  "listen_up",
   "story_bites",
   "explain_it",
   "pronunciation",
@@ -597,7 +597,7 @@
   },
   {
    "code": "1.3",
-   "title": "More Words: Hobbies / งานอดิเรกเพิ่ม",
+   "title": "More Hobbies / งานอดิเรกเพิ่ม",
    "type": "new_words",
    "flag": false,
    "beat": "Sho",
@@ -607,7 +607,8 @@
    "chapter": "บท 1: เพื่อนใหม่ในชมรม",
    "goal": "จำและพูด fish · jog · surf · skate ได้ เพื่อเล่างานอดิเรกเพิ่มในการหาคู่ partner ของชมรม",
    "accept": "พูดคำได้ชัดพอให้ระบบจับคำถูก · รับ spelling/สำเนียง US-UK · ไม่ตรวจไวยากรณ์",
-   "hint": "① ฟังเสียงอีกครั้ง ② ฟังแบบช้า + แยกพยางค์ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent"
+   "hint": "① ฟังเสียงอีกครั้ง ② ฟังแบบช้า + แยกพยางค์ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
+   "moreWords": true
   },
   {
    "code": "1.4",
@@ -790,7 +791,7 @@
   {
    "code": "1.8",
    "title": "Club Voices / เสียงจากชมรม",
-   "type": "hear_it",
+   "type": "listen_up",
    "flag": false,
    "beat": "Ten",
    "axes": "12132",
@@ -1117,7 +1118,7 @@
    "accept": "พูดคำได้ชัดพอให้ระบบจับคำถูก · รับ spelling/สำเนียง US-UK · ไม่ตรวจไวยากรณ์",
    "hint": "① ฟังเสียงอีกครั้ง ② ฟังแบบช้า + แยกพยางค์ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "code": "2.5",
-   "title": "More Words: How Often / คำบอกความถี่",
+   "title": "How Often / คำบอกความถี่",
    "type": "new_words",
    "teach": "More Words: คำบอกความถี่ครบชุด เรียงจากบ่อยที่สุดไปไม่เคยเลย ต่อจาก 2.4 **always · usually · often · sometimes · never** · ดูแถบความถี่แล้วพูดตามทีละคำ แล้วทายว่าจำได้ไหม",
    "say": "—",
@@ -1125,7 +1126,7 @@
    "goal": "จำและพูด always · usually · often · sometimes · never ได้ เพื่อบอกว่าทำอะไรบ่อยแค่ไหนตอนหาเวลาซ้อมชมรม",
    "listView": true,
    "listNote": "แถบแสดงความถี่โดยประมาณ",
-   "listExample": "I ___ have breakfast."
+   "moreWords": true
   },
   {
    "code": "2.6",
@@ -3037,7 +3038,7 @@
   },
   {
    "code": "5.5",
-   "title": "More Words: Park Actions / กิจกรรมในสวนเพิ่ม",
+   "title": "Park Actions / กิจกรรมในสวนเพิ่ม",
    "type": "new_words",
    "flag": false,
    "beat": "Sho",
@@ -3047,7 +3048,8 @@
    "chapter": "บท 5: สวนสาธารณะวันนี้",
    "goal": "จำและพูด climb · ride · fly · kite ได้ เพื่อบอกว่าใครกำลังทำอะไรในสวนตอนตามหา Capy",
    "accept": "พูดคำได้ชัดพอให้ระบบจับคำถูก · รับ spelling/สำเนียง US-UK · ไม่ตรวจไวยากรณ์",
-   "hint": "① ฟังเสียงอีกครั้ง ② ฟังแบบช้า + แยกพยางค์ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent"
+   "hint": "① ฟังเสียงอีกครั้ง ② ฟังแบบช้า + แยกพยางค์ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
+   "moreWords": true
   },
   {
    "code": "5.6",
@@ -4490,7 +4492,7 @@
   {
    "code": "7.7",
    "title": "Voice Message / ข้อความเสียง",
-   "type": "hear_it",
+   "type": "listen_up",
    "flag": false,
    "beat": "Ten",
    "axes": "12132",
@@ -5269,7 +5271,7 @@
   {
    "code": "8.7",
    "title": "Bee's Voice Message / ข้อความเสียงครูบี",
-   "type": "hear_it",
+   "type": "listen_up",
    "flag": false,
    "beat": "Ten",
    "axes": "12232",
@@ -5803,7 +5805,7 @@
   },
   {
    "code": "9.6",
-   "title": "More Words: Café Snacks / คำเพิ่ม: ของว่างในคาเฟ่",
+   "title": "Café Snacks / ของว่างในคาเฟ่",
    "type": "new_words",
    "teach": "More Words: คำนามเพิ่มที่ใส่ในแพทเทิร์น a … / some … จาก 9.5 ได้ทันที **muffin · cookie · juice · cocoa** · ของเป็นชิ้นใช้ a: a muffin · a cookie · ของเหลวใช้ some: some juice · some cocoa → Can I have a muffin and some juice, please?",
    "goal": "จำและพูด muffin · cookie · juice · cocoa ได้ แล้วใช้ต่อในประโยค a … / some … ตอนสั่งที่คาเฟ่ของ Mali",
@@ -5813,7 +5815,8 @@
    "axes": "11111",
    "say": "—",
    "accept": "พูดคำได้ชัดพอให้ระบบจับคำถูก · รับ spelling/สำเนียง US-UK · ไม่ตรวจไวยากรณ์",
-   "hint": "① ฟังเสียงอีกครั้ง ② ฟังแบบช้า + แยกพยางค์ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent"
+   "hint": "① ฟังเสียงอีกครั้ง ② ฟังแบบช้า + แยกพยางค์ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
+   "moreWords": true
   },
   {
    "code": "9.7",
@@ -5957,7 +5960,7 @@
   {
    "code": "9.9",
    "title": "Mali's Orders / ฟังออร์เดอร์ของ Mali",
-   "type": "hear_it",
+   "type": "listen_up",
    "flag": false,
    "beat": "Ten",
    "axes": "12122",
@@ -6226,7 +6229,24 @@
    }
   },
   {
+   "flag": false,
+   "beat": "Sho",
+   "axes": "11111",
+   "accept": "พูดคำได้ชัดพอให้ระบบจับคำถูก · รับ spelling/สำเนียง US-UK · ไม่ตรวจไวยากรณ์",
+   "hint": "① ฟังเสียงอีกครั้ง ② ฟังแบบช้า + แยกพยางค์ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "code": "10.3",
+   "title": "How Strong? / แรงแค่ไหน",
+   "type": "new_words",
+   "teach": "คำบอกระดับครบชุด เรียงจากแรงที่สุดไปเบาที่สุด ต่อจาก 10.2 **too · really · quite · a bit** · ดูแถบความแรงแล้วพูดตามทีละคำ แล้วทายว่าจำได้ไหม",
+   "say": "—",
+   "chapter": "บท 10: มื้อเย็นที่ร้านอาหาร",
+   "goal": "จำและพูด too · really · quite · a bit ได้ เพื่อบอกว่าอาหารเผ็ด หวาน เค็มแค่ไหน",
+   "listView": true,
+   "listNote": "แถบแสดงความแรงโดยประมาณ",
+   "moreWords": true
+  },
+  {
+   "code": "10.4",
    "title": "Taste Pictures / ภาพรสชาติ",
    "type": "emoji_speak",
    "flag": false,
@@ -6240,7 +6260,7 @@
    "hint": "① ตัวอักษรแรก + จำนวนคำ ② ฟังเสียงแบบช้า · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent"
   },
   {
-   "code": "10.4",
+   "code": "10.5",
    "title": "At the Restaurant / ที่ร้านอาหาร",
    "type": "new_words",
    "flag": false,
@@ -6254,13 +6274,13 @@
    "hint": "① ฟังเสียงอีกครั้ง ② ฟังแบบช้า + แยกพยางค์ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent"
   },
   {
-   "code": "10.5",
+   "code": "10.6",
    "title": "Could I…? / ขอ…ได้ไหม",
    "type": "lesson",
    "flag": false,
    "beat": "Sho",
    "axes": "31111",
-   "teach": "ขอแบบสุภาพกว่า can: **Could I have…? · Could you bring…?** · ตัวอย่างจากคำ 10.4 ที่ **restaurant** ในเมือง: Could I have the **fried rice**, please? · Could you bring the **noodle soup**? · Could I have the **curry**? It's **delicious**!",
+   "teach": "ขอแบบสุภาพกว่า can: **Could I have…? · Could you bring…?** · ตัวอย่างจากคำ 10.5 ที่ **restaurant** ในเมือง: Could I have the **fried rice**, please? · Could you bring the **noodle soup**? · Could I have the **curry**? It's **delicious**!",
    "say": "Could I have the menu, please?",
    "chapter": "บท 10: มื้อเย็นที่ร้านอาหาร",
    "goal": "เข้าใจ \"ขอ…ได้ไหม\" พอจะพูดตัวอย่างของตัวเองได้ 1 ประโยค",
@@ -6421,7 +6441,7 @@
    }
   },
   {
-   "code": "10.6",
+   "code": "10.7",
    "title": "Change My Order / ปรับเมนู",
    "type": "say_it",
    "flag": false,
@@ -6485,7 +6505,7 @@
    ]
   },
   {
-   "code": "10.7",
+   "code": "10.8",
    "title": "Sorry! / ขอโทษ",
    "type": "lesson",
    "flag": false,
@@ -6627,9 +6647,9 @@
    }
   },
   {
-   "code": "10.8",
+   "code": "10.9",
    "title": "It's Sold Out / เมนูหมด",
-   "type": "hear_it",
+   "type": "listen_up",
    "flag": false,
    "beat": "Ten",
    "axes": "12232",
@@ -6687,7 +6707,7 @@
    ]
   },
   {
-   "code": "10.9",
+   "code": "10.10",
    "title": "Dinner Out / มื้อเย็นนอกบ้าน",
    "type": "conversation",
    "flag": false,
@@ -6894,18 +6914,20 @@
    "hint": "① ตัวอักษรแรก + จำนวนคำ ② ฟังเสียงแบบช้า · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent"
   },
   {
-   "code": "11.5",
-   "title": "A Bottle Of… / หนึ่งขวด",
-   "type": "new_words",
    "flag": false,
    "beat": "Sho",
    "axes": "11111",
-   "teach": "**bottle · packet · carton · kilo** (bag เรียนแล้วใน A1)",
+   "accept": "พูดคำได้ชัดพอให้ระบบจับคำถูก · รับ spelling/สำเนียง US-UK · ไม่ตรวจไวยากรณ์",
+   "hint": "① ฟังเสียงอีกครั้ง ② ฟังแบบช้า + แยกพยางค์ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
+   "code": "11.5",
+   "title": "How Much? / ปริมาณ",
+   "type": "new_words",
+   "teach": "คำบอกปริมาณครบชุด เรียงจากเยอะที่สุดไปไม่มีเลย **a lot of · some · a little · not much · no** · ดูแถบปริมาณแล้วพูดตามทีละคำ แล้วทายว่าจำได้ไหม",
    "say": "—",
    "chapter": "บท 11: ซื้อของเข้าครัว",
-   "goal": "จำและพูด bottle · packet · carton · kilo ได้ เพื่อใช้ในเรื่องบทนี้: ซื้อของเข้าครัวเพื่อทำอาหารที่บ้านป้าของ May",
-   "accept": "พูดคำได้ชัดพอให้ระบบจับคำถูก · รับ spelling/สำเนียง US-UK · ไม่ตรวจไวยากรณ์",
-   "hint": "① ฟังเสียงอีกครั้ง ② ฟังแบบช้า + แยกพยางค์ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent"
+   "goal": "จำและพูด a lot of · some · a little · not much · no ได้ เพื่อบอกว่าของในครัวเหลือเท่าไร",
+   "listView": true,
+   "listNote": "แถบแสดงปริมาณโดยประมาณ"
   },
   {
    "code": "11.6",
@@ -6914,7 +6936,7 @@
    "flag": false,
    "beat": "Sho",
    "axes": "31211",
-   "teach": "🔁 ทบทวน A1 15.9–15.12 (How much / How many) แล้ว**ต่อยอด**: ตอบด้วย **a few** (นับได้) / **a little** (นับไม่ได้) · **not many / not much** · บอกจำนวนด้วยหน่วยจากคำ 11.5: a **carton** of milk · two **bottles** of oil · a **packet** of flour · a **kilo** of rice → We need a few eggs and a little sugar.",
+   "teach": "🔁 ทบทวน A1 15.9–15.12 (How much / How many) แล้ว**ต่อยอด**: ตอบด้วย **a few** (นับได้) / **a little** (นับไม่ได้) · **not many / not much** · บอกจำนวนเป็นภาชนะ (สอนในบทนี้): a **carton** of milk · two **bottles** of oil · a **packet** of flour · a **kilo** of rice → We need a few eggs and a little sugar.",
    "say": "How many eggs do we need?",
    "chapter": "บท 11: ซื้อของเข้าครัว",
    "goal": "เข้าใจ \"เท่าไร กี่อัน\" พอจะพูดตัวอย่างของตัวเองได้ 1 ประโยค",
@@ -6926,30 +6948,9 @@
     "goalTh": "ถามว่าต้องใช้เท่าไร (How many / How much) ตอบ a few / a little และบอกเป็นกล่อง ขวด ห่อ กิโล",
     "steps": [
      {
-      "kind": "choice",
-      "answerMode": "single",
-      "text": "อุ่นเครื่องกันก่อน 🍾 น้ำมันพืชมาในภาชนะนี้ เรียกว่าอะไรเอ่ย?",
-      "stem": "...",
-      "options": [
-       {
-        "emoji": "🔤",
-        "label": "bottle",
-        "speak": "bottle"
-       },
-       {
-        "emoji": "🔤",
-        "label": "carton",
-        "speak": "carton"
-       },
-       {
-        "emoji": "🔤",
-        "label": "kilo",
-        "speak": "kilo"
-       }
-      ],
-      "expectedSpeech": "bottle",
-      "successText": "bottle = ขวด 🍾 ถูกต้องครับ!",
-      "incorrectHintTh": "เกือบแล้ว! ขวดคือ bottle ครับ 🍾 (carton = กล่องนม · kilo = กิโล)"
+      "kind": "task",
+      "text": "ของในครัวมักซื้อเป็นภาชนะ 🍾 bottle = ขวด · 🥛 carton = กล่อง · 📦 packet = ห่อ · ⚖️ kilo = กิโล · “a bottle of oil” = น้ำมัน 1 ขวด ลองพูดตามครับ",
+      "expectedSpeech": "a bottle of oil"
      },
      {
       "kind": "task",
@@ -7014,7 +7015,7 @@
      },
      {
       "kind": "task",
-      "text": "แป้ง (flour) ก็หมด! 📦 ต้องซื้อ 1 ห่อ (ห่อ = packet) บอก Aunt Noi เองเลย ลองเดาดูนะ ผิดได้ไม่เป็นไร 😄",
+      "text": "แป้ง (flour) ก็หมด! 📦 ต้องซื้อ 1 ห่อ (ห่อ = packet) บอก Aunt Noi เองเลย 😄",
       "expectedSpeech": "We need a packet of flour."
      },
      {
@@ -7588,7 +7589,7 @@
   },
   {
    "code": "12.6",
-   "title": "More Words: Kitchen Verbs / คำเพิ่ม: ทำอะไรในครัว",
+   "title": "Kitchen Verbs / ทำอะไรในครัว",
    "type": "new_words",
    "teach": "More Words: กริยารูปเดิมเพิ่มที่ใส่ในแพทเทิร์นคำสั่งทำอาหาร (ลำดับขั้น 12.2 + -ly 12.5) ได้ทันที **stir · pour · chop · peel** · ตอนพูดในประโยค: Stir it slowly. · Pour the milk carefully. · Chop the onion quickly. · Peel the eggs carefully.",
    "goal": "จำและพูด stir · pour · chop · peel ได้ แล้วใช้ต่อในคำสั่งทำอาหารแบบมีคำบอกวิธีในครัวของ Aunt Noi",
@@ -7598,7 +7599,8 @@
    "axes": "11111",
    "say": "—",
    "accept": "พูดคำได้ชัดพอให้ระบบจับคำถูก · รับ spelling/สำเนียง US-UK · ไม่ตรวจไวยากรณ์",
-   "hint": "① ฟังเสียงอีกครั้ง ② ฟังแบบช้า + แยกพยางค์ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent"
+   "hint": "① ฟังเสียงอีกครั้ง ② ฟังแบบช้า + แยกพยางค์ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
+   "moreWords": true
   },
   {
    "code": "12.7",
@@ -9457,7 +9459,7 @@
   },
   {
    "code": "15.5",
-   "title": "More Words: Weekend Verbs / คำเพิ่ม: ทำอะไรวันหยุด",
+   "title": "Weekend Verbs / ทำอะไรวันหยุด",
    "type": "new_words",
    "teach": "More Words: กริยารูปเดิมเพิ่มที่ใส่ในแพทเทิร์นเล่าอดีต -ed (15.2) + was / were (15.4) ได้ทันที **clean · relax · chat · text** · ตอนเล่าอดีตเติม -ed: clean → cleaned · relax → relaxed · chat → chatted (ซ้ำ t) · text → texted → I cleaned my room yesterday. I was tired.",
    "goal": "จำและพูด clean · relax · chat · text ได้ แล้วเปลี่ยนเป็น -ed เพื่อเล่าวันหยุดให้ Teacher Nina ฟัง",
@@ -9467,7 +9469,8 @@
    "axes": "11111",
    "say": "—",
    "accept": "พูดคำได้ชัดพอให้ระบบจับคำถูก · รับ spelling/สำเนียง US-UK · ไม่ตรวจไวยากรณ์",
-   "hint": "① ฟังเสียงอีกครั้ง ② ฟังแบบช้า + แยกพยางค์ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent"
+   "hint": "① ฟังเสียงอีกครั้ง ② ฟังแบบช้า + แยกพยางค์ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
+   "moreWords": true
   },
   {
    "code": "15.6",
@@ -10222,7 +10225,7 @@
   {
    "code": "16.8",
    "title": "The Boat Vendor / แม่ค้าบนเรือ",
-   "type": "hear_it",
+   "type": "listen_up",
    "flag": false,
    "beat": "Ten",
    "axes": "12232",
@@ -10912,7 +10915,7 @@
   {
    "code": "17.8",
    "title": "Airport Announcement / ประกาศสนามบิน",
-   "type": "hear_it",
+   "type": "listen_up",
    "flag": false,
    "beat": "Ten",
    "axes": "12133",
@@ -12015,7 +12018,7 @@
   {
    "code": "19.8",
    "title": "Next Stop / ป้ายถัดไป",
-   "type": "hear_it",
+   "type": "listen_up",
    "flag": false,
    "beat": "Ten",
    "axes": "12133",
@@ -12901,7 +12904,7 @@
   },
   {
    "code": "21.3",
-   "title": "More Words: More Weather / อากาศเพิ่มเติม",
+   "title": "More Weather / อากาศเพิ่มเติม",
    "type": "new_words",
    "flag": false,
    "beat": "Ki",
@@ -12911,7 +12914,8 @@
    "chapter": "บท 21: วันนี้ไปไหนดี",
    "goal": "จำและพูด windy · rainy · foggy · cool ได้ เพื่อเติมในรูป It's going to be… / It might be… ที่เพิ่งเรียน (It might be windy.)",
    "accept": "พูดคำได้ชัดพอให้ระบบจับคำถูก · รับ spelling/สำเนียง US-UK · ไม่ตรวจไวยากรณ์",
-   "hint": "① ฟังเสียงอีกครั้ง ② ฟังแบบช้า + แยกพยางค์ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent"
+   "hint": "① ฟังเสียงอีกครั้ง ② ฟังแบบช้า + แยกพยางค์ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
+   "moreWords": true
   },
   {
    "code": "21.4",
@@ -13112,7 +13116,24 @@
    "hint": "① ภาพปาก/ลิ้น ② ฟังช้าทีละคำ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent"
   },
   {
+   "flag": false,
+   "beat": "Sho",
+   "axes": "11111",
+   "accept": "พูดคำได้ชัดพอให้ระบบจับคำถูก · รับ spelling/สำเนียง US-UK · ไม่ตรวจไวยากรณ์",
+   "hint": "① ฟังเสียงอีกครั้ง ② ฟังแบบช้า + แยกพยางค์ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "code": "21.8",
+   "title": "How Sure? / แน่แค่ไหน",
+   "type": "new_words",
+   "teach": "คำบอกความแน่นอนครบชุด เรียงจากแน่ที่สุดไปไม่เกิดแน่ ๆ **will · probably · might · won't** · ดูแถบโอกาสแล้วพูดตามทีละคำ แล้วทายว่าจำได้ไหม · ใช้ต่อใน Plan A, Plan B",
+   "say": "—",
+   "chapter": "บท 21: วันนี้ไปไหนดี",
+   "goal": "จำและพูด will · probably · might · won't ได้ เพื่อบอกว่าฝนจะตกแน่ อาจจะตก หรือไม่ตกแน่",
+   "listView": true,
+   "listNote": "แถบแสดงโอกาสที่จะเกิดโดยประมาณ",
+   "moreWords": true
+  },
+  {
+   "code": "21.9",
    "title": "Plan A, Plan B / แผน A แผน B",
    "type": "say_it",
    "flag": false,
@@ -13183,9 +13204,9 @@
    ]
   },
   {
-   "code": "21.9",
+   "code": "21.10",
    "title": "Weather Forecast / พยากรณ์อากาศ",
-   "type": "hear_it",
+   "type": "listen_up",
    "flag": false,
    "beat": "Ten",
    "axes": "12133",
@@ -13244,7 +13265,7 @@
    ]
   },
   {
-   "code": "21.10",
+   "code": "21.11",
    "title": "Let's Go There / ไปที่นั่นกันเถอะ",
    "type": "say_it",
    "flag": false,
@@ -13311,7 +13332,7 @@
    ]
   },
   {
-   "code": "21.11",
+   "code": "21.12",
    "title": "Where Shall We Go? / ไปไหนดี",
    "type": "conversation",
    "flag": false,
@@ -13508,7 +13529,7 @@
   },
   {
    "code": "22.3",
-   "title": "More Words: Where Does It Hurt? / ปวดตรงไหน",
+   "title": "Where Does It Hurt? / ปวดตรงไหน",
    "type": "new_words",
    "flag": false,
    "beat": "Ki",
@@ -13518,7 +13539,8 @@
    "chapter": "บท 22: เมื่อ May ไม่สบาย",
    "goal": "จำและพูด toothache · backache · earache · dentist ได้ เพื่อเติมในรูป I have a… · You should… ที่เพิ่งเรียน (I have a toothache. — You should see a dentist.)",
    "accept": "พูดคำได้ชัดพอให้ระบบจับคำถูก · รับ spelling/สำเนียง US-UK · ไม่ตรวจไวยากรณ์",
-   "hint": "① ฟังเสียงอีกครั้ง ② ฟังแบบช้า + แยกพยางค์ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent"
+   "hint": "① ฟังเสียงอีกครั้ง ② ฟังแบบช้า + แยกพยางค์ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
+   "moreWords": true
   },
   {
    "code": "22.4",
@@ -13987,7 +14009,7 @@
   {
    "code": "22.10",
    "title": "How Many Pills? / กินกี่เม็ด",
-   "type": "hear_it",
+   "type": "listen_up",
    "flag": false,
    "beat": "Ten",
    "axes": "12122",
@@ -14482,7 +14504,7 @@
   },
   {
    "code": "23.7",
-   "title": "More Words: In My Bag / ของในกระเป๋า",
+   "title": "In My Bag / ของในกระเป๋า",
    "type": "new_words",
    "flag": false,
    "beat": "Sho",
@@ -14492,7 +14514,8 @@
    "chapter": "บท 23: กระเป๋าหาย",
    "goal": "จำและพูด charger · notebook · headphones ได้ เพื่อเติมในรูป I left my… / I lost my… / a bag with… inside ที่เพิ่งเรียน",
    "accept": "พูดคำได้ชัดพอให้ระบบจับคำถูก · รับ spelling/สำเนียง US-UK · ไม่ตรวจไวยากรณ์",
-   "hint": "① ฟังเสียงอีกครั้ง ② ฟังแบบช้า + แยกพยางค์ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent"
+   "hint": "① ฟังเสียงอีกครั้ง ② ฟังแบบช้า + แยกพยางค์ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
+   "moreWords": true
   },
   {
    "code": "23.8",
@@ -14946,7 +14969,7 @@
   {
    "code": "24.6",
    "title": "Airport Announcement / ประกาศเที่ยวบิน",
-   "type": "hear_it",
+   "type": "listen_up",
    "flag": false,
    "beat": "Ten",
    "axes": "12233",
@@ -16006,7 +16029,7 @@
   },
   {
    "code": "26.4",
-   "title": "More Words: Adventures / คำเพิ่ม: ผจญภัย",
+   "title": "Adventures / ผจญภัย",
    "type": "new_words",
    "flag": false,
    "beat": "Sho",
@@ -16016,7 +16039,8 @@
    "chapter": "บท 26: ทริปในความทรงจำ",
    "goal": "จำและพูด surf · dive · elephant · cave ได้ แล้วใส่ใน Have you ever…? ได้ทันที",
    "accept": "พูดคำได้ชัดพอให้ระบบจับคำถูก · รับ spelling/สำเนียง US-UK · ไม่ตรวจไวยากรณ์",
-   "hint": "① ฟังเสียงอีกครั้ง ② ฟังแบบช้า + แยกพยางค์ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent"
+   "hint": "① ฟังเสียงอีกครั้ง ② ฟังแบบช้า + แยกพยางค์ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
+   "moreWords": true
   },
   {
    "code": "26.5",
@@ -17775,18 +17799,22 @@
    }
   },
   {
-   "code": "29.4",
-   "title": "More Words: Good or Bad? / คำเพิ่ม: ดีหรือแย่",
-   "type": "new_words",
    "flag": false,
    "beat": "Sho",
    "axes": "11111",
-   "teach": "**fresh · dirty · awful** · ➕ คำเพิ่มที่ใส่ในแพตเทิร์น I think… จาก 29.3 ได้ทันที (I think the fish was fresh. · I don't agree because the room was dirty. · I think the coffee was awful.)",
+   "accept": "พูดคำได้ชัดพอให้ระบบจับคำถูก · รับ spelling/สำเนียง US-UK · ไม่ตรวจไวยากรณ์",
+   "hint": "① ฟังเสียงอีกครั้ง ② ฟังแบบช้า + แยกพยางค์ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
+   "code": "29.4",
+   "title": "Star Rating / ให้คะแนน",
+   "type": "new_words",
+   "teach": "คำให้คะแนนครบชุด เรียงจากดีที่สุดไปแย่ที่สุด **amazing · great · OK · bad · awful** · ดูดาวแล้วพูดตามทีละคำ แล้วทายว่าจำได้ไหม · ใส่ใน I think… จาก 29.3 ได้ทันที (I think the coffee was awful.)",
    "say": "—",
    "chapter": "บท 29: แชร์ความเห็นและรีวิวทริป",
-   "goal": "จำและพูด fresh · dirty · awful ได้ แล้วใส่ใน I think… ได้ทันที",
-   "accept": "พูดคำได้ชัดพอให้ระบบจับคำถูก · รับ spelling/สำเนียง US-UK · ไม่ตรวจไวยากรณ์",
-   "hint": "① ฟังเสียงอีกครั้ง ② ฟังแบบช้า + แยกพยางค์ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent"
+   "goal": "จำและพูด amazing · great · OK · bad · awful ได้ แล้วใส่ใน I think… ได้ทันที",
+   "listView": true,
+   "listNote": "ดาวแสดงคะแนนโดยประมาณ",
+   "moreWords": true,
+   "listLevelStyle": "stars"
   },
   {
    "code": "29.5",
@@ -17795,7 +17823,7 @@
    "flag": false,
    "beat": "Sho",
    "axes": "12111",
-   "teach": "ดู emoji แล้วพูดคำจาก 29.2: 🤩 amazing · 😖 terrible · 👥👥 crowded · 🏞️ view · ➕ คำเพิ่มจาก 29.4: 🐟 fresh · 🗑️ dirty · 🤢 awful",
+   "teach": "ดู emoji แล้วพูดคำจาก 29.2: 🤩 amazing · 😖 terrible · 👥👥 crowded · 🏞️ view · ➕ คำให้คะแนนจาก 29.4: 👍 great · 👌 OK · 👎 bad · 🤢 awful",
    "say": "crowded",
    "chapter": "บท 29: แชร์ความเห็นและรีวิวทริป",
    "goal": "ดึงคำ/ก้อนคำที่เรียนแล้วออกมาพูดได้เร็วจากภาพ",
@@ -18019,10 +18047,11 @@
      "accept": []
     },
     {
-     "th": "พูดถึงทริปที่ผ่านมา: ฉันคิดว่าปลาสด แต่ห้องสกปรก",
-     "en": "I think the fish was fresh, but the room was dirty.",
+     "th": "พูดถึงทริปที่ผ่านมา: ฉันคิดว่าอาหารพอใช้ได้ แต่ห้องแย่มาก",
+     "en": "I think the food was OK, but the room was awful.",
      "accept": [
-      "I think the fish was fresh but the room was dirty."
+      "I think the food was OK but the room was awful.",
+      "I think the food was okay, but the room was awful."
      ]
     }
    ]
@@ -18606,7 +18635,7 @@
   {
    "code": "30.9",
    "title": "Voicemail / ฝากข้อความ",
-   "type": "hear_it",
+   "type": "listen_up",
    "flag": false,
    "beat": "Ten",
    "axes": "12133",
@@ -19489,7 +19518,7 @@
   {
    "code": "32.2",
    "title": "Torto's Briefing / Torto สรุปแผน",
-   "type": "hear_it",
+   "type": "listen_up",
    "flag": false,
    "beat": "Ten",
    "axes": "12233",

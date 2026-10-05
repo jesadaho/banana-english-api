@@ -1037,9 +1037,9 @@
       ]
     }
   ],
-  "a2_c10n06": [
+  "a2_c10n07": [
     {
-      "id": "a2_c10n06_q1",
+      "id": "a2_c10n07_q1",
       "promptTh": "ขอ Mali (พนักงานเสิร์ฟ) อย่างสุภาพ: ขอจานนี้แบบไม่ใส่พริกได้ไหม",
       "answerEn": "Could I have it without chilli?",
       "acceptedAnswers": [
@@ -1052,7 +1052,7 @@
       ]
     },
     {
-      "id": "a2_c10n06_q2",
+      "id": "a2_c10n07_q2",
       "promptTh": "บอกพนักงานว่า แกงนี้เผ็ดเกินไป",
       "answerEn": "This curry is too spicy.",
       "acceptedAnswers": [
@@ -1065,7 +1065,7 @@
       ]
     },
     {
-      "id": "a2_c10n06_q3",
+      "id": "a2_c10n07_q3",
       "promptTh": "Max กินเผ็ดไม่ได้ ขอข้าวผัดแบบไม่ใส่พริก (ใช้ Could I)",
       "answerEn": "Could I have the fried rice without chilli, please?",
       "acceptedAnswers": [
@@ -1078,7 +1078,7 @@
       ]
     },
     {
-      "id": "a2_c10n06_q4",
+      "id": "a2_c10n07_q4",
       "promptTh": "บอกพนักงานว่า ซุปนี้เค็มเกินไป",
       "answerEn": "This soup is too salty.",
       "acceptedAnswers": [
@@ -1091,7 +1091,7 @@
       ]
     },
     {
-      "id": "a2_c10n06_q5",
+      "id": "a2_c10n07_q5",
       "promptTh": "John ชอบเผ็ดมาก ขอก๋วยเตี๋ยวน้ำใส่พริกเพิ่ม (ใช้ Could I)",
       "answerEn": "Could I have the noodle soup with extra chilli, please?",
       "acceptedAnswers": [
@@ -1104,7 +1104,7 @@
       ]
     },
     {
-      "id": "a2_c10n06_q6",
+      "id": "a2_c10n07_q6",
       "promptTh": "บอกพนักงานว่า ก๋วยเตี๋ยวน้ำชามนี้เปรี้ยวเกินไป",
       "answerEn": "This noodle soup is too sour.",
       "acceptedAnswers": [
@@ -2477,9 +2477,9 @@
       ]
     }
   ],
-  "a2_c21n08": [
+  "a2_c21n09": [
     {
-      "id": "a2_c21n08_q1",
+      "id": "a2_c21n09_q1",
       "promptTh": "ถ้าแดดออก เราจะไปทะเล",
       "answerEn": "If it's sunny, we'll go to the beach.",
       "acceptedAnswers": [
@@ -2492,7 +2492,7 @@
       ]
     },
     {
-      "id": "a2_c21n08_q2",
+      "id": "a2_c21n09_q2",
       "promptTh": "ถ้าฝนตก เราจะไปพิพิธภัณฑ์",
       "answerEn": "If it rains, we'll go to the museum.",
       "acceptedAnswers": [
@@ -2505,7 +2505,7 @@
       ]
     },
     {
-      "id": "a2_c21n08_q3",
+      "id": "a2_c21n09_q3",
       "promptTh": "ถ้าเมฆครึ้ม Teacher Torto จะไปตลาด",
       "answerEn": "If it's cloudy, Teacher Torto will go to the market.",
       "acceptedAnswers": [
@@ -2518,7 +2518,7 @@
       ]
     },
     {
-      "id": "a2_c21n08_q4",
+      "id": "a2_c21n09_q4",
       "promptTh": "ถ้ามีพายุ เราจะอยู่ที่โรงแรม",
       "answerEn": "If it's stormy, we'll stay at the hotel.",
       "acceptedAnswers": [
@@ -2531,7 +2531,7 @@
       ]
     },
     {
-      "id": "a2_c21n08_q5",
+      "id": "a2_c21n09_q5",
       "promptTh": "ถ้าพรุ่งนี้แดดออก เราจะไปสำรวจเกาะ",
       "answerEn": "If it's sunny tomorrow, we'll explore the island.",
       "acceptedAnswers": [
@@ -2544,7 +2544,7 @@
       ]
     },
     {
-      "id": "a2_c21n08_q6",
+      "id": "a2_c21n09_q6",
       "promptTh": "ถาม Teacher Torto: ถ้าฝนตก เราจะทำอะไรกัน",
       "answerEn": "What will we do if it rains?",
       "acceptedAnswers": [
@@ -2556,7 +2556,7 @@
       ]
     },
     {
-      "id": "a2_c21n08_q7",
+      "id": "a2_c21n09_q7",
       "promptTh": "ถ้าลมแรง เราจะไม่ไปเกาะ",
       "answerEn": "If it's windy, we won't go to the island.",
       "acceptedAnswers": [
@@ -2569,9 +2569,9 @@
       ]
     }
   ],
-  "a2_c21n10": [
+  "a2_c21n11": [
     {
-      "id": "a2_c21n10_q1",
+      "id": "a2_c21n11_q1",
       "promptTh": "ไปพิพิธภัณฑ์กันเถอะ ที่นั่นเงียบกว่า",
       "answerEn": "Let's go to the museum. It's quieter.",
       "acceptedAnswers": [
@@ -2583,7 +2583,7 @@
       ]
     },
     {
-      "id": "a2_c21n10_q2",
+      "id": "a2_c21n11_q2",
       "promptTh": "ไปตลาดกันเถอะ เพราะมันใกล้กว่า",
       "answerEn": "Let's go to the market because it's closer.",
       "acceptedAnswers": [
@@ -2595,7 +2595,7 @@
       ]
     },
     {
-      "id": "a2_c21n10_q3",
+      "id": "a2_c21n11_q3",
       "promptTh": "ไปสวนสาธารณะกันเถอะ เพราะมันถูกกว่าไปเกาะ",
       "answerEn": "Let's go to the park because it's cheaper than the island.",
       "acceptedAnswers": [
@@ -2608,7 +2608,7 @@
       ]
     },
     {
-      "id": "a2_c21n10_q4",
+      "id": "a2_c21n11_q4",
       "promptTh": "ไปทะเลวันเสาร์กันเถอะ เพราะอากาศดีกว่า",
       "answerEn": "Let's go to the beach on Saturday because the weather is better.",
       "acceptedAnswers": [
@@ -2620,7 +2620,7 @@
       ]
     },
     {
-      "id": "a2_c21n10_q5",
+      "id": "a2_c21n11_q5",
       "promptTh": "นั่งแท็กซี่กันเถอะ เพราะมันเร็วกว่ารถเมล์",
       "answerEn": "Let's take a taxi because it's faster than the bus.",
       "acceptedAnswers": [
@@ -2632,7 +2632,7 @@
       ]
     },
     {
-      "id": "a2_c21n10_q6",
+      "id": "a2_c21n11_q6",
       "promptTh": "บอก Max: เอาร่มไปด้วยนะ เพราะฝนอาจจะตก",
       "answerEn": "Take an umbrella because it might rain.",
       "acceptedAnswers": [
@@ -2644,7 +2644,7 @@
       ]
     },
     {
-      "id": "a2_c21n10_q7",
+      "id": "a2_c21n11_q7",
       "promptTh": "บอก Capy: พรุ่งนี้เอาหมวกไปด้วยนะ เพราะแดดจะออก",
       "answerEn": "Take a hat tomorrow because it's going to be sunny.",
       "acceptedAnswers": [
@@ -3596,10 +3596,11 @@
     },
     {
       "id": "a2_c29n08_q7",
-      "promptTh": "พูดถึงทริปที่ผ่านมา: ฉันคิดว่าปลาสด แต่ห้องสกปรก",
-      "answerEn": "I think the fish was fresh, but the room was dirty.",
+      "promptTh": "พูดถึงทริปที่ผ่านมา: ฉันคิดว่าอาหารพอใช้ได้ แต่ห้องแย่มาก",
+      "answerEn": "I think the food was OK, but the room was awful.",
       "acceptedAnswers": [
-        "I think the fish was fresh but the room was dirty."
+        "I think the food was OK but the room was awful.",
+        "I think the food was okay, but the room was awful."
       ],
       "hints": [
         "I …",

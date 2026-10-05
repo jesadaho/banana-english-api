@@ -4,7 +4,7 @@ Checks
  E1 structure: required fields per type, non-empty strings, pool size (4–7; story_bites/explain_it = 3)
  E2 node `say` appears in its pool (en or accept)
  E3 duplicates: identical en twice in a node; identical Thai prompt with different answers
- E4 evidence: hear_it/story_bites answer key words appear in the audio script; numbers in see_and_say answers appear in the picture
+ E4 evidence: listen_up/story_bites answer key words appear in the audio script; numbers in see_and_say answers appear in the picture
  E5 grammar timing: structures used in pools before the chapter/node that teaches them
  E6 vocabulary gate (vocabgate.py) for pools  +  E7 the same gate for non-pool speaking text (emoji_speak items, conversation/lesson/scenario `say`)
  E8 cast: banned names, Bee/Capy pronouns, Nina before 8.10, Torto before 16.11
@@ -19,7 +19,7 @@ order = {n["code"]: i for i, n in enumerate(N)}
 E = collections.defaultdict(list); W = []
 def err(k, msg): E[k].append(msg)
 EVIDENCE_OK = {"16.8#3", "1.8#1", "31.5#2"}  # reviewed by hand: computed change / yes-no answers implied by the script
-SHAPE = {"say_it": ("th", "en"), "see_and_say": ("pic", "en"), "hear_it": ("audio", "q", "en"), "story_bites": ("audio", "q", "en"), "explain_it": ("pic", "en")}
+SHAPE = {"say_it": ("th", "en"), "see_and_say": ("pic", "en"), "listen_up": ("audio", "q", "en"), "story_bites": ("audio", "q", "en"), "explain_it": ("pic", "en")}
 for n in N:
     c, t = n["code"], n["type"]
     if t in SHAPE:
@@ -33,7 +33,7 @@ for n in N:
             if it.get("en") in it.get("accept", []): W.append(f"{c}#{i}: accept repeats en")
         ens = [it["en"] for it in items]
         for e, k in collections.Counter(ens).items():
-            if k > 1 and t not in ("story_bites", "hear_it"): err("E3", f"{c}: duplicate answer '{e}'")
+            if k > 1 and t not in ("story_bites", "listen_up"): err("E3", f"{c}: duplicate answer '{e}'")
         prompts = collections.defaultdict(set)
         for it in items:
             key = it.get("th") or it.get("pic") or ((it.get("audio") or "") + "|" + (it.get("q") or ""))
@@ -49,7 +49,7 @@ for n in N:
         pairs = sum(near(ens[i], ens[j]) for i in range(len(ens)) for j in range(i + 1, len(ens)))
         if pairs >= 3: W.append(f"{c}: {pairs} near-duplicate answer pairs")
         # E4 evidence
-        if t in ("hear_it", "story_bites"):
+        if t in ("listen_up", "story_bites"):
             script = items[0]["audio"] if t == "story_bites" else None
             for i, it in enumerate(items):
                 aud = script if t == "story_bites" else it["audio"]
@@ -133,7 +133,7 @@ for a, b in zip(N, N[1:]):
         if (a["type"], b["type"]) == ("new_words", "say_it"):
             # Match E11: More Words can practise a pattern already taught in this chapter.
             prior_lesson = any(m["type"] == "lesson" and CH(m["code"]) == CH(a["code"]) for m in N[:N.index(a)])
-            if not ("More Words" in a["title"] and prior_lesson):
+            if not (a.get("moreWords") and prior_lesson):
                 err("E9", f"{a['code']}→{b['code']} new_words→say_it")
 for n in N:
     if n["type"] == "new_words":
@@ -150,7 +150,7 @@ for k, n in enumerate(N):
     max_items = 5 if n.get("listView") else 4
     if not 3 <= len(items) <= max_items: err("E10", f"{n['code']}: new_words should have 3–{max_items} items, has {len(items)}")
     for it in items:
-        if PHR.search(it + " ") or (it.lower() in GRAM and not n.get("listView")) or len(it.split()) > 2:
+        if PHR.search(it + " ") or (it.lower() in GRAM and not n.get("listView")) or len(it.split()) > (3 if n.get("listView") else 2):
             err("E10", f"{n['code']}: '{it}' is a phrase / grammar form, not a noun-verb material word")
     ROOT_OK = {"evening", "morning", "meeting", "building", "ceiling", "bed", "red", "shed", "iced", "exciting", "boring", "amazing", "crowded", "missing", "interesting", "tired"}  # adjectives that are words in their own right
     for it in items:
@@ -160,9 +160,9 @@ for k, n in enumerate(N):
     nxt = N[k + 1] if k + 1 < len(N) else None
     prev_lesson = any(m["type"] == "lesson" for m in N[:k] if CH(m["code"]) == CH(n["code"]))
     is_material = nxt and CH(nxt["code"]) == CH(n["code"]) and nxt["type"] == "lesson"
-    is_more = nxt and CH(nxt["code"]) == CH(n["code"]) and prev_lesson and nxt["type"] in ("say_it", "emoji_speak", "see_and_say") and "More Words" in n["title"]
+    is_more = nxt and CH(nxt["code"]) == CH(n["code"]) and prev_lesson and nxt["type"] in ("say_it", "emoji_speak", "see_and_say") and n.get("moreWords")
     if not (is_material or is_more):
-        err("E11", f"{n['code']}: new_words must be followed by its lesson, or be a 'More Words' node placed after the lesson and followed by practice of that pattern")
+        err("E11", f"{n['code']}: new_words must be followed by its lesson, or be a More Words node (`moreWords: true`) placed after the lesson and followed by practice of that pattern")
 
 # E13 lesson flows (V7 legacy-flow format): teach a small chunk, check recognition often, then transfer
 LF = {n["code"]: n["flow"] for n in N if n.get("flow")}

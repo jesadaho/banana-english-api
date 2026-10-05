@@ -23,6 +23,8 @@ export type StoryBitesPool = {
   questions: StoryBitesQuestion[];
 };
 
+/** Temporarily off: Story Bites nodes show as coming soon until the clips are made. */
+export const STORY_BITES_ENABLED = false;
 export const STORY_BITES_QUESTION_COUNT = 3;
 
 const catalog = poolsJson as Record<string, StoryBitesPool>;

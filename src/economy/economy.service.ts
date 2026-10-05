@@ -51,7 +51,7 @@ export function inferMiniGameScoreKind(gameId: string): string {
   if (gameId.startsWith('emoji_speak:')) return 'emoji_speak';
   if (gameId.startsWith('new_words:')) return 'new_words';
   if (gameId.startsWith('interactive_scenario:')) return 'interactive_scenario';
-  if (gameId.startsWith('hear_it:')) return 'hear_it';
+  if (gameId.startsWith('listen_up:')) return 'listen_up';
   if (gameId.startsWith('story_bites:')) return 'story_bites';
   if (gameId.startsWith('info_task:')) return 'info_task';
   if (gameId.startsWith('skip_quiz:')) return 'skip_quiz';

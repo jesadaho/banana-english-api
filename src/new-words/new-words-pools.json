@@ -845,5 +845,68 @@
         "meaningTh": "กี่ (จำนวน)"
       }
     ]
+  },
+  "new_words_times_of_day": {
+    "title": "Times of Day",
+    "layout": "list",
+    "note": "ไทม์ไลน์ 24 ชั่วโมง",
+    "items": [
+      {
+        "emoji": "🌄",
+        "answer": "dawn",
+        "reading": "ดอน",
+        "meaningTh": "รุ่งสาง",
+        "detail": "05:00–06:00",
+        "usage": "at dawn"
+      },
+      {
+        "emoji": "🌅",
+        "answer": "morning",
+        "reading": "มอร์-นิ่ง",
+        "meaningTh": "เช้า",
+        "detail": "06:00–12:00",
+        "usage": "in the morning"
+      },
+      {
+        "emoji": "☀️",
+        "answer": "noon",
+        "reading": "นูน",
+        "meaningTh": "เที่ยงวัน",
+        "detail": "12:00",
+        "usage": "at noon"
+      },
+      {
+        "emoji": "🌤️",
+        "answer": "afternoon",
+        "reading": "อาฟ-เตอร์-นูน",
+        "meaningTh": "บ่าย",
+        "detail": "12:00–17:00",
+        "usage": "in the afternoon"
+      },
+      {
+        "emoji": "🌇",
+        "answer": "evening",
+        "reading": "อีฟ-นิ่ง",
+        "meaningTh": "เย็น–หัวค่ำ",
+        "detail": "17:00–21:00",
+        "usage": "in the evening"
+      },
+      {
+        "emoji": "🌙",
+        "answer": "night",
+        "reading": "ไนท์",
+        "meaningTh": "กลางคืน",
+        "detail": "21:00–05:00",
+        "usage": "at night"
+      },
+      {
+        "emoji": "🕛",
+        "answer": "midnight",
+        "reading": "มิด-ไนท์",
+        "meaningTh": "เที่ยงคืน",
+        "detail": "00:00",
+        "usage": "at midnight"
+      }
+    ]
   }
 }

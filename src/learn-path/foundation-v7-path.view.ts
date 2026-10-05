@@ -7,8 +7,8 @@ import { isValidDescribeItPack, describeItPoolById, DESCRIBE_IT_ENABLED } from '
 import { isValidInfoTaskPack, infoTaskPoolById, INFO_TASK_ENABLED } from '../info-task/info-task.data';
 import { getInteractiveScenario } from '../interactive-scenario/interactive-scenario.data';
 import { foundationV7LessonLegacyIds } from '../lessons/foundation-v7-lesson-id-aliases';
-import { hearItPoolById, isValidHearItPack, HEAR_IT_ENABLED } from '../hear-it/hear-it.data';
-import { isValidStoryBitesPack, storyBitesPoolById } from '../story-bites/story-bites.data';
+import { listenUpPoolById, isValidListenUpPack, LISTEN_UP_ENABLED } from '../listen-up/listen-up.data';
+import { isValidStoryBitesPack, storyBitesPoolById, STORY_BITES_ENABLED } from '../story-bites/story-bites.data';
 import {
   FOUNDATION_V7_COURSE,
   foundationV7LastChapterPlayableId,
@@ -64,7 +64,7 @@ type MapContext = {
 const TYPE_CAPABILITY: Partial<Record<FoundationV7Node['type'], FoundationV7Capability>> = {
   describe_it: 'describe_it',
   interactive_scenario: 'interactive_scenario',
-  hear_it: 'hear_it',
+  listen_up: 'listen_up',
   story_bites: 'story_bites',
   explain_it: 'explain_it',
 };
@@ -72,7 +72,7 @@ const TYPE_CAPABILITY: Partial<Record<FoundationV7Node['type'], FoundationV7Capa
 const POOL_GATED_TYPES: ReadonlySet<FoundationV7Node['type']> = new Set([
   'describe_it',
   'info_task',
-  'hear_it',
+  'listen_up',
   'story_bites',
   'explain_it',
 ]);
@@ -93,10 +93,10 @@ function mapClientNode(
     (cap) => !context.capabilities.includes(cap),
   );
   const unbuilt =
-    (node.type === 'story_bites' && !node.contentRef.poolId) ||
+    (node.type === 'story_bites' && (!node.contentRef.poolId || !STORY_BITES_ENABLED)) ||
     node.type === 'explain_it' ||
     (node.type === 'describe_it' && !DESCRIBE_IT_ENABLED) ||
-    (node.type === 'hear_it' && !HEAR_IT_ENABLED) ||
+    (node.type === 'listen_up' && !LISTEN_UP_ENABLED) ||
     (node.type === 'info_task' && !INFO_TASK_ENABLED);
   const comingSoon = !backendReady || needsClient || !context.released || flagOff;
   const contentRef =
@@ -184,10 +184,11 @@ export function hasFoundationV7Content(node: FoundationV7Node): boolean {
       return Boolean(
         ref.scenarioId && getInteractiveScenario(ref.scenarioId),
       );
-    case 'hear_it':
-      if (!HEAR_IT_ENABLED) return false;
-      return Boolean(ref.poolId && isValidHearItPack(hearItPoolById(ref.poolId)));
+    case 'listen_up':
+      if (!LISTEN_UP_ENABLED) return false;
+      return Boolean(ref.poolId && isValidListenUpPack(listenUpPoolById(ref.poolId)));
     case 'story_bites':
+      if (!STORY_BITES_ENABLED) return false;
       return Boolean(
         ref.poolId && isValidStoryBitesPack(storyBitesPoolById(ref.poolId)),
       );

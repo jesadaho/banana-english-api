@@ -29,7 +29,7 @@
     ]
   },
   "a2_c01n03": {
-    "title": "More Words: Hobbies",
+    "title": "More Hobbies",
     "items": [
       {
         "emoji": "🎣",
@@ -124,7 +124,7 @@
     ]
   },
   "a2_c02n05": {
-    "title": "More Words: How Often",
+    "title": "How Often",
     "items": [
       {
         "emoji": "🔁",
@@ -163,8 +163,7 @@
       }
     ],
     "layout": "list",
-    "note": "แถบแสดงความถี่โดยประมาณ",
-    "example": "I ___ have breakfast."
+    "note": "แถบแสดงความถี่โดยประมาณ"
   },
   "a2_c02n07": {
     "title": "Busy Days",
@@ -373,7 +372,7 @@
     ]
   },
   "a2_c05n05": {
-    "title": "More Words: Park Actions",
+    "title": "Park Actions",
     "items": [
       {
         "emoji": "🧗",
@@ -545,5 +544,166 @@
         "meaningTh": "ยอดรวม"
       }
     ]
+  },
+  "a2_c10n03": {
+    "title": "How Strong?",
+    "items": [
+      {
+        "emoji": "🥵",
+        "answer": "too",
+        "reading": "ทู",
+        "meaningTh": "เกินไป",
+        "level": 5
+      },
+      {
+        "emoji": "🔥",
+        "answer": "really",
+        "reading": "เรีย-ลี่",
+        "meaningTh": "มาก ๆ",
+        "level": 4
+      },
+      {
+        "emoji": "👌",
+        "answer": "quite",
+        "reading": "ไควท์",
+        "meaningTh": "ค่อนข้าง",
+        "level": 3
+      },
+      {
+        "emoji": "🤏",
+        "answer": "a bit",
+        "reading": "อะ-บิท",
+        "meaningTh": "นิดหน่อย",
+        "level": 1
+      }
+    ],
+    "layout": "list",
+    "note": "แถบแสดงความแรงโดยประมาณ"
+  },
+  "a2_c11n05": {
+    "title": "How Much?",
+    "items": [
+      {
+        "emoji": "🧺",
+        "answer": "a lot of",
+        "reading": "อะ-ลอท-เอิฟ",
+        "meaningTh": "เยอะ / มาก",
+        "level": 5
+      },
+      {
+        "emoji": "🥄",
+        "answer": "some",
+        "reading": "ซัม",
+        "meaningTh": "มีบ้าง",
+        "level": 3
+      },
+      {
+        "emoji": "🤏",
+        "answer": "a little",
+        "reading": "อะ-ลิท-เทิล",
+        "meaningTh": "นิดหน่อย",
+        "level": 2
+      },
+      {
+        "emoji": "🫗",
+        "answer": "not much",
+        "reading": "นอท-มัช",
+        "meaningTh": "ไม่ค่อยมี",
+        "level": 1
+      },
+      {
+        "emoji": "🚫",
+        "answer": "no",
+        "reading": "โน",
+        "meaningTh": "ไม่มีเลย",
+        "level": 0
+      }
+    ],
+    "layout": "list",
+    "note": "แถบแสดงปริมาณโดยประมาณ"
+  },
+  "a2_c21n08": {
+    "title": "How Sure?",
+    "items": [
+      {
+        "emoji": "✅",
+        "answer": "will",
+        "reading": "วิล",
+        "meaningTh": "จะ…แน่ ๆ",
+        "level": 5
+      },
+      {
+        "emoji": "👍",
+        "answer": "probably",
+        "reading": "พร็อบ-บะ-บลี่",
+        "meaningTh": "น่าจะ",
+        "level": 4
+      },
+      {
+        "emoji": "🤷",
+        "answer": "might",
+        "reading": "ไมท์",
+        "meaningTh": "อาจจะ",
+        "level": 2
+      },
+      {
+        "emoji": "❌",
+        "answer": "won't",
+        "reading": "โวนท์",
+        "meaningTh": "ไม่…แน่ ๆ",
+        "level": 0,
+        "acceptedAnswers": [
+          "will not"
+        ]
+      }
+    ],
+    "layout": "list",
+    "note": "แถบแสดงโอกาสที่จะเกิดโดยประมาณ"
+  },
+  "a2_c29n04": {
+    "title": "Star Rating",
+    "items": [
+      {
+        "emoji": "🤩",
+        "answer": "amazing",
+        "reading": "อะ-เม-ซิ่ง",
+        "meaningTh": "สุดยอด",
+        "level": 5
+      },
+      {
+        "emoji": "😀",
+        "answer": "great",
+        "reading": "เกรท",
+        "meaningTh": "ดีมาก",
+        "level": 4
+      },
+      {
+        "emoji": "🙂",
+        "answer": "OK",
+        "reading": "โอ-เค",
+        "meaningTh": "พอใช้ได้",
+        "level": 3,
+        "acceptedAnswers": [
+          "okay"
+        ]
+      },
+      {
+        "emoji": "🙁",
+        "answer": "bad",
+        "reading": "แบด",
+        "meaningTh": "แย่",
+        "level": 2
+      },
+      {
+        "emoji": "🤢",
+        "answer": "awful",
+        "reading": "ออ-ฟุล",
+        "meaningTh": "แย่มาก",
+        "level": 1
+      }
+    ],
+    "layout": "list",
+    "note": "ดาวแสดงคะแนนโดยประมาณ",
+    "levelStyle": "stars"
   }
 }

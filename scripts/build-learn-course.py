@@ -6,7 +6,7 @@
 
 Inputs (scripts/a2/):
   adventure-a2-course.json   design spec: 333 nodes, pools for say_it / see_and_say /
-                             hear_it / story_bites / explain_it
+                             listen_up / story_bites / explain_it
   content/*.json             authored overlays for node types without pools
                              (new_words, emoji_speak, lessons, conversations,
                              checkpoint scenarios) plus chapter English titles
@@ -34,7 +34,7 @@ FLAG_BY_TYPE = {"explain_it": "adventure_a2_explain_it"}
 DEFAULT_FLAG = "adventure_a2_optional"
 MINUTES = {
     "lesson": [3, 5], "new_words": [1, 2], "emoji_speak": [1, 2], "say_it": [2, 3],
-    "describe_it": [2, 3], "story_bites": [2, 3], "hear_it": [2, 3], "conversation": [3, 4],
+    "describe_it": [2, 3], "story_bites": [2, 3], "listen_up": [2, 3], "conversation": [3, 4],
     "pronunciation": [2, 3], "interactive_scenario": [8, 10], "explain_it": [2, 3],
 }
 FUNCTION_WORDS = set(
@@ -49,7 +49,7 @@ OUTPUTS = {
     "emoji_speak": ROOT / "src/emoji-speak/adventure-a2-pools.json",
     "new_words": ROOT / "src/new-words/adventure-a2-pools.json",
     "describe_it": ROOT / "src/describe-it/adventure-a2-pools.json",
-    "hear_it": ROOT / "src/hear-it/hear-it-pools.json",
+    "listen_up": ROOT / "src/listen-up/listen-up-pools.json",
     "story_bites": ROOT / "src/story-bites/story-bites-pools.json",
     "lessons": ROOT / "src/lessons/adventure-a2-lessons.authoring.json",
     "conversations": ROOT / "src/simulations/adventure-a2-simulations.authoring.json",
@@ -96,6 +96,16 @@ def examples(say):
     if say.strip() in ("", "—"):
         return []
     return [s.strip() for s in say.split("·") if s.strip()]
+
+
+NOT_SPEAKERS = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "Flight", "Gate"}
+
+
+def listen_up_speaker(audio):
+    """`Teacher Torto: …` or `Hi, it's May …` → the speaker's name, else None (announcements)."""
+    name = r"((?:Teacher |DJ |Driver )?[A-Z][a-z]+)"
+    m = re.match(name + r":\s", audio) or re.search(r"\b(?:[Ii]t's|[Tt]his is) " + name + r"\b", audio)
+    return m.group(1) if m and m.group(1) not in NOT_SPEAKERS else None
 
 
 def two_level_hints(answer):
@@ -236,8 +246,8 @@ def build():
             else:
                 skipped_images.append(code)
             content_ref["poolId"] = nid
-        elif ntype == "hear_it" and pool:
-            out["hear_it"][nid] = {
+        elif ntype == "listen_up" and pool:
+            out["listen_up"][nid] = {
                 "id": nid,
                 "titleEn": title_en,
                 "titleTh": title_th,
@@ -245,6 +255,7 @@ def build():
                     {
                         "id": f"{nid}_{i + 1:02d}",
                         "audioText": item["audio"],
+                        **({"speaker": listen_up_speaker(item["audio"])} if listen_up_speaker(item["audio"]) else {}),
                         "questionTh": item["q"],
                         "answerEn": item["en"],
                         "acceptedAnswers": item.get("accept", []),
@@ -295,6 +306,7 @@ def build():
                     **({"layout": "list"} if node.get("listView") else {}),
                     **({"note": node["listNote"]} if node.get("listNote") else {}),
                     **({"example": node["listExample"]} if node.get("listExample") else {}),
+                    **({"levelStyle": node["listLevelStyle"]} if node.get("listLevelStyle") else {}),
                 }
             content_ref["poolId"] = nid
         elif ntype == "emoji_speak":
@@ -411,7 +423,7 @@ def main():
     catalog = out["catalog"]
     print(
         f"{catalog['metadata']['totalNodeCount']} nodes · {len(catalog['chapters'])} chapters · "
-        f"say_it {len(out['say_it'])} · describe_it {len(out['describe_it'])} · hear_it {len(out['hear_it'])} · "
+        f"say_it {len(out['say_it'])} · describe_it {len(out['describe_it'])} · listen_up {len(out['listen_up'])} · "
         f"story_bites {len(out['story_bites'])} · new_words {len(out['new_words'])} · "
         f"emoji {len(out['emoji_speak'])} · lessons {len(out['lessons'])} · "
         f"conversations {len(out['conversations'])} · scenarios {len(out['scenarios'])}"

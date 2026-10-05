@@ -74,7 +74,7 @@ export type FoundationClientNodeType =
   | 'new_words'
   | 'info_task'
   | 'interactive_scenario'
-  | 'hear_it'
+  | 'listen_up'
   | 'explain_it';
 
 export type FoundationV5ClientNode = {
@@ -190,7 +190,7 @@ function shippedContentForMappedType(
     type === 'new_words' ||
     type === 'info_task' ||
     type === 'interactive_scenario' ||
-    type === 'hear_it' ||
+    type === 'listen_up' ||
     type === 'explain_it'
   ) {
     return undefined;
