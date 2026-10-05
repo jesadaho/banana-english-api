@@ -256,6 +256,7 @@ def build():
                         "id": f"{nid}_{i + 1:02d}",
                         "audioText": item["audio"],
                         **({"speaker": listen_up_speaker(item["audio"])} if listen_up_speaker(item["audio"]) else {}),
+                        **({"questionEn": item["qEn"]} if item.get("qEn") else {}),
                         "questionTh": item["q"],
                         "answerEn": item["en"],
                         "acceptedAnswers": item.get("accept", []),

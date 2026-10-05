@@ -6,6 +6,7 @@ export type ListenUpItem = {
   audioText: string;
   /** Who is talking (e.g. `May`, `Teacher Bee`); absent for announcements. */
   speaker?: string;
+  questionEn?: string;
   questionTh: string;
   answerEn: string;
   acceptedAnswers: string[];

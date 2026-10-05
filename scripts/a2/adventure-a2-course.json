@@ -804,7 +804,8 @@
    "pool": [
     {
      "audio": "Hi! Welcome to the club! We meet on weekends. See you on Saturday!",
-     "q": "ชมรมเจอกันเมื่อไหร่",
+     "q": "ชมรมเจอกันเมื่อไหร่?",
+     "qEn": "When does the club meet?",
      "en": "On weekends.",
      "accept": [
       "Weekends.",
@@ -813,7 +814,8 @@
     },
     {
      "audio": "Hi, it's Capy! I love drawing. I don't like swimming. It's too cold!",
-     "q": "Capy ไม่ชอบทำอะไร",
+     "q": "Capy ไม่ชอบทำอะไร?",
+     "qEn": "What doesn't Capy like doing?",
      "en": "Swimming.",
      "accept": [
       "Capy doesn't like swimming."
@@ -821,7 +823,8 @@
     },
     {
      "audio": "Hey! It's Max. I go jogging on weekends. How about you?",
-     "q": "Max ทำอะไรทุกสุดสัปดาห์",
+     "q": "Max ทำอะไรทุกสุดสัปดาห์?",
+     "qEn": "What does Max do on weekends?",
      "en": "Jogging.",
      "accept": [
       "He goes jogging.",
@@ -830,7 +833,8 @@
     },
     {
      "audio": "Hi, it's May. I enjoy baking. I don't like gaming.",
-     "q": "May สนุกกับการทำอะไร",
+     "q": "May สนุกกับการทำอะไร?",
+     "qEn": "What does May enjoy doing?",
      "en": "Baking.",
      "accept": [
       "She enjoys baking."
@@ -838,7 +842,8 @@
     },
     {
      "audio": "Hi! I'm Mali. I work at the café. I like surfing, but I don't like fishing.",
-     "q": "Mali ไม่ชอบทำอะไร",
+     "q": "Mali ไม่ชอบทำอะไร?",
+     "qEn": "What doesn't Mali like doing?",
      "en": "Fishing.",
      "accept": [
       "She doesn't like fishing."
@@ -4505,7 +4510,8 @@
    "pool": [
     {
      "audio": "Hi, it's May. Would you like to see a movie this evening? Let's meet at seven.",
-     "q": "May ชวนไปดูหนังเมื่อไหร่ (พูดช่วงเวลา)",
+     "q": "May ชวนไปดูหนังเมื่อไหร่ (พูดช่วงเวลา)?",
+     "qEn": "When does May want to see a movie?",
      "en": "This evening.",
      "accept": [
       "this evening"
@@ -4513,7 +4519,8 @@
     },
     {
      "audio": "Hi, it's Max. Shall we play badminton tomorrow? I'm free after school.",
-     "q": "Max ชวนเล่นแบดมินตันวันไหน",
+     "q": "Max ชวนเล่นแบดมินตันวันไหน?",
+     "qEn": "When does Max want to play badminton?",
      "en": "Tomorrow.",
      "accept": [
       "tomorrow"
@@ -4521,7 +4528,8 @@
     },
     {
      "audio": "Hello, it's Capy. How about drawing in the park next week? Let's meet at the lake.",
-     "q": "Capy นัดเจอกันที่ไหน",
+     "q": "Capy นัดเจอกันที่ไหน?",
+     "qEn": "Where does Capy want to meet?",
      "en": "At the lake.",
      "accept": [
       "the lake",
@@ -4530,7 +4538,8 @@
     },
     {
      "audio": "Hi, it's Teacher Bee. The club is going to practice on Friday at four. See you then!",
-     "q": "ชมรมจะซ้อมกี่โมง",
+     "q": "ชมรมจะซ้อมกี่โมง?",
+     "qEn": "What time is the club going to practice?",
      "en": "At four.",
      "accept": [
       "four",
@@ -4539,7 +4548,8 @@
     },
     {
      "audio": "Hi, it's Mali. Would you like to cook at my house this evening? Come at six.",
-     "q": "Mali ให้ไปบ้านกี่โมง",
+     "q": "Mali ให้ไปบ้านกี่โมง?",
+     "qEn": "What time should you go to Mali's house?",
      "en": "At six.",
      "accept": [
       "six",
@@ -4548,7 +4558,8 @@
     },
     {
      "audio": "Hi, it's Teacher John. Sorry, I'm busy tomorrow. How about next week?",
-     "q": "Teacher John เสนอนัดใหม่เมื่อไหร่",
+     "q": "Teacher John เสนอนัดใหม่เมื่อไหร่?",
+     "qEn": "When does Teacher John want to meet?",
      "en": "Next week.",
      "accept": [
       "next week"
@@ -5284,7 +5295,8 @@
    "pool": [
     {
      "audio": "Hi, team! It's Teacher Bee. Let's meet at the gate at six. See you then!",
-     "q": "ครูบีนัดเจอกันที่ไหน",
+     "q": "ครูบีนัดเจอกันที่ไหน?",
+     "qEn": "Where does Teacher Bee want to meet?",
      "en": "At the gate.",
      "accept": [
       "the gate",
@@ -5293,7 +5305,8 @@
     },
     {
      "audio": "Hi, it's Teacher Bee. Let's meet at the big wheel at seven thirty. Don't be late!",
-     "q": "ครูบีนัดเจอกันกี่โมง",
+     "q": "ครูบีนัดเจอกันกี่โมง?",
+     "qEn": "What time does Teacher Bee want to meet?",
      "en": "At seven thirty.",
      "accept": [
       "seven thirty",
@@ -5302,7 +5315,8 @@
     },
     {
      "audio": "It's Teacher Bee. I'm standing next to the ice cream stall. I'm wearing a blue shirt.",
-     "q": "ครูบียืนอยู่ข้างอะไร",
+     "q": "ครูบียืนอยู่ข้างอะไร?",
+     "qEn": "What is Teacher Bee standing next to?",
      "en": "The ice cream stall.",
      "accept": [
       "Next to the ice cream stall.",
@@ -5312,7 +5326,8 @@
     },
     {
      "audio": "Hi, it's Teacher Bee. I'm at the big wheel now. I'm wearing my glasses.",
-     "q": "ตอนนี้ครูบีอยู่ที่ไหน",
+     "q": "ตอนนี้ครูบีอยู่ที่ไหน?",
+     "qEn": "Where is Teacher Bee now?",
      "en": "At the big wheel.",
      "accept": [
       "the big wheel",
@@ -5321,7 +5336,8 @@
     },
     {
      "audio": "It's Teacher Bee. Max and May are at the ice cream stall. Let's all meet there at eight. Hurry up!",
-     "q": "นัดเจอกันทุกคนกี่โมง",
+     "q": "นัดเจอกันทุกคนกี่โมง?",
+     "qEn": "What time is everyone going to meet?",
      "en": "At eight.",
      "accept": [
       "eight",
@@ -5330,7 +5346,8 @@
     },
     {
      "audio": "Can you see me? It's Teacher Bee. I'm standing at the gate. I'm wearing a blue shirt and glasses.",
-     "q": "ครูบีใส่เสื้อสีอะไร",
+     "q": "ครูบีใส่เสื้อสีอะไร?",
+     "qEn": "What color is Teacher Bee's shirt?",
      "en": "A blue shirt.",
      "accept": [
       "blue",
@@ -5973,7 +5990,8 @@
    "pool": [
     {
      "audio": "One medium iced latte for May!",
-     "q": "แก้วลาเต้ของ May ขนาดไหน",
+     "q": "แก้วลาเต้ของ May ขนาดไหน?",
+     "qEn": "What size is May's latte?",
      "en": "Medium.",
      "accept": [
       "It's medium.",
@@ -5983,7 +6001,8 @@
     },
     {
      "audio": "A large hot tea for Capy, to take away.",
-     "q": "Capy ทานที่ร้านหรือกลับบ้าน",
+     "q": "Capy ทานที่ร้านหรือกลับบ้าน?",
+     "qEn": "Is Capy's tea for here or to take away?",
      "en": "To take away.",
      "accept": [
       "Take away.",
@@ -5992,7 +6011,8 @@
     },
     {
      "audio": "Three small iced lattes for John, for here.",
-     "q": "John สั่งลาเต้กี่แก้ว",
+     "q": "John สั่งลาเต้กี่แก้ว?",
+     "qEn": "How many lattes did John order?",
      "en": "Three.",
      "accept": [
       "Three lattes.",
@@ -6002,7 +6022,8 @@
     },
     {
      "audio": "A small latte for Teacher Nina. Hot, not iced!",
-     "q": "ลาเต้ของ Teacher Nina ร้อนหรือเย็น",
+     "q": "ลาเต้ของ Teacher Nina ร้อนหรือเย็น?",
+     "qEn": "Is Teacher Nina's latte hot or iced?",
      "en": "Hot.",
      "accept": [
       "It's hot.",
@@ -6012,7 +6033,8 @@
     },
     {
      "audio": "Sorry, Max. We don't have any hot milk today. We have hot tea and iced tea.",
-     "q": "วันนี้ Max สั่งนมร้อนได้ไหม",
+     "q": "วันนี้ Max สั่งนมร้อนได้ไหม?",
+     "qEn": "Can Max get hot milk today?",
      "en": "No.",
      "accept": [
       "No, he can't.",
@@ -6022,7 +6044,8 @@
     },
     {
      "audio": "Hot tea, forty-five baht. Milk, fifty-five baht. Latte, sixty-five baht.",
-     "q": "มีเงินพอดี 100 บาท อยากได้ 2 แก้วที่ไม่ซ้ำกัน และใช้เงินให้ครบ 100 บาท ซื้อคู่ไหน",
+     "q": "มีเงินพอดี 100 บาท อยากได้ 2 แก้วที่ไม่ซ้ำกัน และใช้เงินให้ครบ 100 บาท ซื้อคู่ไหน?",
+     "qEn": "You have 100 baht. Which two different drinks cost 100 baht?",
      "en": "Hot tea and milk.",
      "accept": [
       "A hot tea and some milk.",
@@ -6662,7 +6685,8 @@
    "pool": [
     {
      "audio": "Sorry, we don't have any curry today. The noodle soup is really spicy. The fried rice isn't spicy.",
-     "q": "Max กินเผ็ดไม่ได้ ควรสั่งจานไหน",
+     "q": "Max กินเผ็ดไม่ได้ ควรสั่งจานไหน?",
+     "qEn": "Max can't eat spicy food. What should he order?",
      "en": "Fried rice.",
      "accept": [
       "The fried rice.",
@@ -6671,7 +6695,8 @@
     },
     {
      "audio": "I'm so sorry. We don't have any fried rice today. The curry is too spicy for Max. The noodle soup isn't spicy.",
-     "q": "จานไหนไม่เผ็ด",
+     "q": "จานไหนไม่เผ็ด?",
+     "qEn": "Which dish isn't spicy?",
      "en": "Noodle soup.",
      "accept": [
       "The noodle soup."
@@ -6679,7 +6704,8 @@
     },
     {
      "audio": "Sorry, no noodle soup today. We have curry and fried rice.",
-     "q": "วันนี้ร้านมีจานไหนบ้าง",
+     "q": "วันนี้ร้านมีจานไหนบ้าง?",
+     "qEn": "Which dishes do they have today?",
      "en": "Curry and fried rice.",
      "accept": [
       "The curry and the fried rice.",
@@ -6689,7 +6715,8 @@
     },
     {
      "audio": "Sorry, we don't have any noodle soup today. The curry is sweet, not spicy. The fried rice is really spicy.",
-     "q": "Max ควรสั่งจานไหน",
+     "q": "Max ควรสั่งจานไหน?",
+     "qEn": "What should Max order?",
      "en": "Curry.",
      "accept": [
       "The curry.",
@@ -6698,7 +6725,8 @@
     },
     {
      "audio": "Hi, it's Mali again! Sorry, no curry today. The noodle soup is a bit spicy, but we can make the fried rice without chilli.",
-     "q": "Mali บอกว่าร้านทำจานไหนแบบไม่ใส่พริกได้",
+     "q": "Mali บอกว่าร้านทำจานไหนแบบไม่ใส่พริกได้?",
+     "qEn": "Which dish can they make without chili?",
      "en": "Fried rice.",
      "accept": [
       "The fried rice."
@@ -10238,7 +10266,8 @@
    "pool": [
     {
      "audio": "Boat noodles are forty baht. Mango is thirty baht. Water is ten baht.",
-     "q": "ก๋วยเตี๋ยวเรือราคาเท่าไร",
+     "q": "ก๋วยเตี๋ยวเรือราคาเท่าไร?",
+     "qEn": "How much are the boat noodles?",
      "en": "Forty baht.",
      "accept": [
       "40 baht.",
@@ -10248,7 +10277,8 @@
     },
     {
      "audio": "Boat noodles are forty baht. Mango is thirty baht. Water is ten baht.",
-     "q": "ซื้อก๋วยเตี๋ยวเรือ 1 ชาม กับน้ำ 1 ขวด รวมเป็นเงินเท่าไร",
+     "q": "ซื้อก๋วยเตี๋ยวเรือ 1 ชาม กับน้ำ 1 ขวด รวมเป็นเงินเท่าไร?",
+     "qEn": "One boat noodles and one water. How much is that?",
      "en": "Fifty baht.",
      "accept": [
       "50 baht.",
@@ -10258,7 +10288,8 @@
     },
     {
      "audio": "Two boat noodles and one mango. That's one hundred and ten baht.",
-     "q": "ยอดรวมเท่าไร",
+     "q": "ยอดรวมเท่าไร?",
+     "qEn": "What's the total?",
      "en": "One hundred and ten baht.",
      "accept": [
       "110 baht.",
@@ -10268,7 +10299,8 @@
     },
     {
      "audio": "One mango and one water. That's forty baht.",
-     "q": "คุณจ่าย 100 บาท ควรได้เงินทอนเท่าไร",
+     "q": "คุณจ่าย 100 บาท ควรได้เงินทอนเท่าไร?",
+     "qEn": "You pay 100 baht. How much change do you get?",
      "en": "Sixty baht.",
      "accept": [
       "60 baht.",
@@ -10277,7 +10309,8 @@
     },
     {
      "audio": "That's eighty baht. Here's your change, twenty baht.",
-     "q": "คุณให้เงิน Mali ไปกี่บาท",
+     "q": "คุณให้เงิน Mali ไปกี่บาท?",
+     "qEn": "How much money did you give Mali?",
      "en": "One hundred baht.",
      "accept": [
       "100 baht.",
@@ -10287,7 +10320,8 @@
     },
     {
      "audio": "Boat noodles, forty baht. Mango, thirty baht. Here's your change, twenty baht.",
-     "q": "คุณจ่าย 100 บาท Mali ทอนผิด เงินทอนที่ถูกคือเท่าไร",
+     "q": "คุณจ่าย 100 บาท Mali ทอนผิด เงินทอนที่ถูกคือเท่าไร?",
+     "qEn": "You pay 100 baht. The change is wrong. What is the right change?",
      "en": "Thirty baht.",
      "accept": [
       "30 baht.",
@@ -10928,7 +10962,8 @@
    "pool": [
     {
      "audio": "Flight 72 to Tokyo, please go to Gate 15 now. The gate closes at 10:20.",
-     "q": "ต้องไปเกตไหน",
+     "q": "ต้องไปเกตไหน?",
+     "qEn": "Which gate do you need to go to?",
      "en": "Gate 15",
      "accept": [
       "Gate fifteen",
@@ -10937,7 +10972,8 @@
     },
     {
      "audio": "Flight 72 to Tokyo, please go to Gate 15 now. The gate closes at 10:20.",
-     "q": "เกตปิดกี่โมง",
+     "q": "เกตปิดกี่โมง?",
+     "qEn": "What time does the gate close?",
      "en": "10:20",
      "accept": [
       "Ten twenty",
@@ -10947,7 +10983,8 @@
     },
     {
      "audio": "Good morning! Flight 18 to London leaves from Gate 5. Please be at the gate at 8:30.",
-     "q": "ต้องไปเกตไหน",
+     "q": "ต้องไปเกตไหน?",
+     "qEn": "Which gate do you need to go to?",
      "en": "Gate 5",
      "accept": [
       "Gate five",
@@ -10956,7 +10993,8 @@
     },
     {
      "audio": "Flight 40 to Sydney: the gate is now Gate 9, not Gate 5. Please go to Gate 9.",
-     "q": "เกตที่ถูกต้องคือเกตไหน",
+     "q": "เกตที่ถูกต้องคือเกตไหน?",
+     "qEn": "Which is the right gate?",
      "en": "Gate 9",
      "accept": [
       "Gate nine",
@@ -10965,7 +11003,8 @@
     },
     {
      "audio": "Flight 40 to Sydney leaves at 11:45. Please be at Gate 9 at 11:15.",
-     "q": "ต้องไปถึงเกตกี่โมง",
+     "q": "ต้องไปถึงเกตกี่โมง?",
+     "qEn": "What time do you need to be at the gate?",
      "en": "11:15",
      "accept": [
       "Eleven fifteen",
@@ -12031,7 +12070,8 @@
    "pool": [
     {
      "audio": "♪ I love my bus, I love my bus! ♪ Hi, it's Driver Uncle Somchai! Next stop, the museum! The museum! ♪ I love my bus! ♪",
-     "q": "ป้ายถัดไปคือที่ไหน",
+     "q": "ป้ายถัดไปคือที่ไหน?",
+     "qEn": "What's the next stop?",
      "en": "The museum",
      "accept": [
       "Museum",
@@ -12040,7 +12080,8 @@
     },
     {
      "audio": "Hello, hello! For the old town, get off at the market. The market is the third stop! ♪ I love my bus! ♪",
-     "q": "จะไปเมืองเก่า ต้องลงป้ายไหน",
+     "q": "จะไปเมืองเก่า ต้องลงป้ายไหน?",
+     "qEn": "Where do you get off for the old town?",
      "en": "The market",
      "accept": [
       "Market",
@@ -12050,7 +12091,8 @@
     },
     {
      "audio": "♪ I love my bus, I love my bus! ♪ We're at the school now! Next stop, the museum, then the market!",
-     "q": "ตอนนี้รถจอดอยู่ที่ป้ายไหน",
+     "q": "ตอนนี้รถจอดอยู่ที่ป้ายไหน?",
+     "qEn": "Where is the bus now?",
      "en": "The school",
      "accept": [
       "School",
@@ -12059,7 +12101,8 @@
     },
     {
      "audio": "Sorry, sorry! The market stop is closed today. Please get off at the school and walk five minutes. ♪ I love my bus! ♪",
-     "q": "ป้ายตลาดปิด Driver Uncle Somchai บอกให้ลงป้ายไหนแทน",
+     "q": "ป้ายตลาดปิด Driver Uncle Somchai บอกให้ลงป้ายไหนแทน?",
+     "qEn": "The market stop is closed. Where should you get off?",
      "en": "The school",
      "accept": [
       "School",
@@ -12069,7 +12112,8 @@
     },
     {
      "audio": "Oh no, you missed the museum! Get off at the next stop. It's the market! ♪ I love my bus! ♪",
-     "q": "นั่งเลยป้ายพิพิธภัณฑ์แล้ว ต้องลงป้ายไหน",
+     "q": "นั่งเลยป้ายพิพิธภัณฑ์แล้ว ต้องลงป้ายไหน?",
+     "qEn": "You missed the museum. Where do you get off?",
      "en": "The market",
      "accept": [
       "Market",
@@ -13219,7 +13263,8 @@
    "pool": [
     {
      "audio": "Good morning, it's DJ Coco! On Friday it's going to be sunny. Saturday will be cloudy, and on Sunday it might be stormy... but that's OK!",
-     "q": "วันไหนเหมาะไปทะเล",
+     "q": "วันไหนเหมาะไปทะเล?",
+     "qEn": "Which day is good for the beach?",
      "en": "Friday",
      "accept": [
       "On Friday",
@@ -13228,7 +13273,8 @@
     },
     {
      "audio": "Hello, hello, it's DJ Coco! Friday will be stormy... but that's OK! Saturday will be sunny and hot. Sunday will be cloudy.",
-     "q": "วันไหนเหมาะไปทะเล",
+     "q": "วันไหนเหมาะไปทะเล?",
+     "qEn": "Which day is good for the beach?",
      "en": "Saturday",
      "accept": [
       "On Saturday",
@@ -13237,7 +13283,8 @@
     },
     {
      "audio": "Good morning, it's DJ Coco! Friday and Saturday will be cloudy and humid. But on Sunday it's going to be sunny! Have a nice day!",
-     "q": "วันไหนเหมาะไปทะเล",
+     "q": "วันไหนเหมาะไปทะเล?",
+     "qEn": "Which day is good for the beach?",
      "en": "Sunday",
      "accept": [
       "On Sunday",
@@ -13246,7 +13293,8 @@
     },
     {
      "audio": "Good morning, it's DJ Coco! It might rain on Friday. Saturday is going to be stormy... but that's OK! Sunday will be sunny and warm!",
-     "q": "วันไหนมีพายุ ไม่ควรไปทะเล",
+     "q": "วันไหนมีพายุ ไม่ควรไปทะเล?",
+     "qEn": "Which day is stormy?",
      "en": "Saturday",
      "accept": [
       "On Saturday",
@@ -13255,7 +13303,8 @@
     },
     {
      "audio": "Hello, it's DJ Coco! Friday will be cloudy. Saturday will be sunny in the morning, but stormy in the afternoon. But that's OK! Sunday will be sunny all day!",
-     "q": "วันไหนเหมาะไปทะเลทั้งวัน",
+     "q": "วันไหนเหมาะไปทะเลทั้งวัน?",
+     "qEn": "Which day is good for the beach all day?",
      "en": "Sunday",
      "accept": [
       "On Sunday",
@@ -14022,7 +14071,8 @@
    "pool": [
     {
      "audio": "Take two pills after meals, three times a day.",
-     "q": "ต้องกินครั้งละกี่เม็ด",
+     "q": "ต้องกินครั้งละกี่เม็ด?",
+     "qEn": "How many pills do you take each time?",
      "en": "Two pills",
      "accept": [
       "Two",
@@ -14032,7 +14082,8 @@
     },
     {
      "audio": "This is for your cough. Take one pill before meals, twice a day.",
-     "q": "กินก่อนหรือหลังอาหาร",
+     "q": "กินก่อนหรือหลังอาหาร?",
+     "qEn": "Do you take it before or after meals?",
      "en": "Before meals",
      "accept": [
       "Before",
@@ -14041,7 +14092,8 @@
     },
     {
      "audio": "This medicine is for May's fever. Take one pill after meals. Take it three times a day.",
-     "q": "กินวันละกี่ครั้ง",
+     "q": "กินวันละกี่ครั้ง?",
+     "qEn": "How many times a day do you take it?",
      "en": "Three times a day",
      "accept": [
       "Three times",
@@ -14050,7 +14102,8 @@
     },
     {
      "audio": "Take two pills before breakfast. Only once a day, please.",
-     "q": "กินครั้งละกี่เม็ด ก่อนหรือหลังอาหาร",
+     "q": "กินครั้งละกี่เม็ด ก่อนหรือหลังอาหาร?",
+     "qEn": "How many pills, and before or after breakfast?",
      "en": "Two pills, before breakfast",
      "accept": [
       "Two, before",
@@ -14060,7 +14113,8 @@
     },
     {
      "audio": "We close in five minutes! Quick: take one pill after dinner, and drink a lot of water.",
-     "q": "กินกี่เม็ด ก่อนหรือหลังอาหาร",
+     "q": "กินกี่เม็ด ก่อนหรือหลังอาหาร?",
+     "qEn": "How many pills, and before or after dinner?",
      "en": "One pill, after dinner",
      "accept": [
       "One, after",
@@ -14982,7 +15036,8 @@
    "pool": [
     {
      "audio": "Flight BK 205 is delayed. It will now leave at 11:15 from Gate 12.",
-     "q": "เที่ยวบินจะออกจากเกตไหน",
+     "q": "เที่ยวบินจะออกจากเกตไหน?",
+     "qEn": "Which gate will the flight leave from?",
      "en": "Gate 12",
      "accept": [
       "Gate twelve",
@@ -14991,7 +15046,8 @@
     },
     {
      "audio": "Flight BK 205 is delayed. The new time is 9:40. Please go to Gate 15.",
-     "q": "เวลาใหม่คือกี่โมง",
+     "q": "เวลาใหม่คือกี่โมง?",
+     "qEn": "What's the new time?",
      "en": "9:40",
      "accept": [
       "Nine forty",
@@ -15001,7 +15057,8 @@
     },
     {
      "audio": "Update for flight BK 205: the gate is now 15, not 12. The time is still 11:15.",
-     "q": "เกตใหม่คือเกตไหน",
+     "q": "เกตใหม่คือเกตไหน?",
+     "qEn": "What's the new gate?",
      "en": "Gate 15",
      "accept": [
       "Gate fifteen",
@@ -15010,7 +15067,8 @@
     },
     {
      "audio": "Sorry, flight BK 205 is delayed again. It's not 9:40 now. It will leave at 11:15.",
-     "q": "ตอนนี้เที่ยวบินจะออกกี่โมง",
+     "q": "ตอนนี้เที่ยวบินจะออกกี่โมง?",
+     "qEn": "What time will the flight leave now?",
      "en": "11:15",
      "accept": [
       "Eleven fifteen",
@@ -15020,7 +15078,8 @@
     },
     {
      "audio": "Hello. Your flight is delayed. Please go to Gate 12 at 9:40. I'll give you a voucher there.",
-     "q": "เจ้าหน้าที่บอกให้ไปเกตไหน กี่โมง",
+     "q": "เจ้าหน้าที่บอกให้ไปเกตไหน กี่โมง?",
+     "qEn": "Which gate, and what time?",
      "en": "Gate 12 at 9:40",
      "accept": [
       "Gate 12, 9:40",
@@ -18648,7 +18707,8 @@
    "pool": [
     {
      "audio": "Hi, this is Mali from the restaurant. Sorry, Friday is full. Can we change it to Saturday at 6:30?",
-     "q": "ร้านขอเลื่อนเป็นกี่โมง",
+     "q": "ร้านขอเลื่อนเป็นกี่โมง?",
+     "qEn": "What time does the restaurant want to change to?",
      "en": "6:30",
      "accept": [
       "six thirty",
@@ -18657,7 +18717,8 @@
     },
     {
      "audio": "Hello, it's Mali. Please call me back. My number is 081 552 7340.",
-     "q": "เบอร์ที่ต้องโทรกลับคือเบอร์อะไร",
+     "q": "เบอร์ที่ต้องโทรกลับคือเบอร์อะไร?",
+     "qEn": "What number do you need to call back?",
      "en": "081 552 7340",
      "accept": [
       "zero eight one, five five two, seven three four zero",
@@ -18666,7 +18727,8 @@
     },
     {
      "audio": "Hi Nina, it's Mali. We can't do 7:00 on Saturday. Is 6:00 OK?",
-     "q": "ร้านเสนอเวลาใหม่กี่โมง",
+     "q": "ร้านเสนอเวลาใหม่กี่โมง?",
+     "qEn": "What time does Mali offer?",
      "en": "6:00",
      "accept": [
       "six",
@@ -18675,7 +18737,8 @@
     },
     {
      "audio": "Hello, this is Mali. The table for six is OK on Sunday, not Saturday. The time is 7:00.",
-     "q": "งานย้ายไปเป็นกี่โมง",
+     "q": "งานย้ายไปเป็นกี่โมง?",
+     "qEn": "What time is the booking now?",
      "en": "7:00",
      "accept": [
       "seven",
@@ -18685,7 +18748,8 @@
     },
     {
      "audio": "Hi, it's Mali again. Sorry, I can't talk now. Please call me on 02 455 9810.",
-     "q": "เบอร์ของ Mali คืออะไร",
+     "q": "เบอร์ของ Mali คืออะไร?",
+     "qEn": "What's Mali's number?",
      "en": "02 455 9810",
      "accept": [
       "zero two, four five five, nine eight one zero",
@@ -18694,7 +18758,8 @@
     },
     {
      "audio": "Hi, it's Mali from the restaurant. Please confirm the booking. Call me back before 5 p.m. today.",
-     "q": "ต้องโทรกลับก่อนกี่โมง",
+     "q": "ต้องโทรกลับก่อนกี่โมง?",
+     "qEn": "When do you need to call back?",
      "en": "5 p.m.",
      "accept": [
       "five",
@@ -19531,7 +19596,8 @@
    "pool": [
     {
      "audio": "Teacher Torto: OK, team. We're going to take the train to Chiang Mai. It leaves at 7:30 in the morning.",
-     "q": "ทีมจะเดินทางด้วยอะไร",
+     "q": "ทีมจะเดินทางด้วยอะไร?",
+     "qEn": "How is the team going to travel?",
      "en": "train",
      "accept": [
       "the train",
@@ -19540,7 +19606,8 @@
     },
     {
      "audio": "Teacher Torto: The train leaves at 7:30, so please be at the station at 7:00.",
-     "q": "ต้องไปถึงสถานีกี่โมง",
+     "q": "ต้องไปถึงสถานีกี่โมง?",
+     "qEn": "What time do you need to be at the station?",
      "en": "7:00",
      "accept": [
       "seven",
@@ -19549,7 +19616,8 @@
     },
     {
      "audio": "Teacher Torto: We're going to stay at a hotel next to the beach for three nights.",
-     "q": "จะพักโรงแรมกี่คืน",
+     "q": "จะพักโรงแรมกี่คืน?",
+     "qEn": "How many nights are they going to stay at the hotel?",
      "en": "three nights",
      "accept": [
       "three",
@@ -19558,7 +19626,8 @@
     },
     {
      "audio": "Teacher Torto: We're going to come back on Friday. The train home leaves at 4:15 in the afternoon.",
-     "q": "รถไฟขากลับออกกี่โมง",
+     "q": "รถไฟขากลับออกกี่โมง?",
+     "qEn": "What time does the train home leave?",
      "en": "4:15",
      "accept": [
       "four fifteen",
@@ -19567,7 +19636,8 @@
     },
     {
      "audio": "Teacher Torto: We have to check in at the hotel at 2 p.m. Then we're going to visit a museum.",
-     "q": "ต้องเช็กอินโรงแรมกี่โมง",
+     "q": "ต้องเช็กอินโรงแรมกี่โมง?",
+     "qEn": "What time do they have to check in?",
      "en": "2 p.m.",
      "accept": [
       "two",
@@ -19577,7 +19647,8 @@
     },
     {
      "audio": "Teacher Torto: We're not going by plane. Flights are too expensive, so we'll take the train. It's cheaper.",
-     "q": "ทำไมทีมไม่ไปเครื่องบิน",
+     "q": "ทำไมทีมไม่ไปเครื่องบิน?",
+     "qEn": "Why isn't the team going by plane?",
      "en": "Flights are too expensive.",
      "accept": [
       "too expensive",
