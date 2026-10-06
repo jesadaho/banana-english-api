@@ -4,6 +4,7 @@
 - Keep the outer 6% clear of essential face, hands, and mission props.
 - Default camera: eye-level medium or medium-close, 35–50 mm equivalent.
 - Use one featured conversation partner by default. Show one concrete action and at most one supporting prop.
+- For a group-introduction Node or an explicit user request for an ensemble, include 3–5 named, canon-approved characters when the lesson supports it; keep one focal partner and a clear social action.
 - Compose naturally around the middle. Connected action and eyelines matter more than exact centering; preserve calm overlay space when practical.
 - Represent the learner through camera position or a neutral foreground object, not a visible avatar by default.
 - Use a minimal recognizable location cue with subtle Thai everyday-world details. Avoid crowds, landmark collages, dense signage, and readable generated text.
