@@ -44,6 +44,10 @@ Use these actual Git paths to discover references; existence alone is not eviden
 
 `max-exploration-v2.png` is a separate exploratory design; do not substitute it for `max.png`. Do not attach `player.png` or show a learner avatar unless requested.
 
+### A2 casting override — Bogy replaces Max
+
+For Adventure A2 only, use **Bogy** in every story/cover role previously assigned to Max. Apply this user-approved casting decision even when existing A2 catalog or simulation text still says Max; preserve the scene, learning objective and conversational beats while substituting Bogy's identity. Record the source name and the Max → Bogy substitution in the source note. Use `art-bible/characters/bogy.png` as the mandatory identity reference; never attach either Max sheet for an A2 rendering. Preserve Bogy's actual sheet face, hair, proportions, default outfit and accessories rather than putting Max's design or wardrobe on him. Do not show both characters as a workaround. Foundation/A1 casting is unchanged. This instruction governs rendering; do not rewrite course source data unless separately requested.
+
 ### Binary reference handling
 
 Materialize the exact selected Git PNG into the workspace using the checkout or an available authenticated Git download route. For public raw downloads, use the verified repository path and pinned revision. If a connector returns base64, decode it directly to a file without printing binary/base64 into the conversation. Check for Git LFS pointers and retrieve actual image bytes rather than passing a pointer as an image. Inspect each PNG with the image viewer before generation, then pass its local path through the image tool's supported reference mechanism.
