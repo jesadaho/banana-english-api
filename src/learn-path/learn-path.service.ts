@@ -797,6 +797,9 @@ export class LearnPathService {
         node.poolId ? `new_words:${node.poolId}` : null,
         node.poolId ? `describe_it:${node.poolId}` : null,
         node.poolId ? `info_task:${node.poolId}` : null,
+        node.poolId ? `listen_up:${node.poolId}` : null,
+        node.poolId ? `story_bites:${node.poolId}` : null,
+        node.poolId ? `explain_it:${node.poolId}` : null,
         node.scenarioId ? `interactive_scenario:${node.scenarioId}` : null,
       ].filter((value): value is string => !!value);
       if (candidates.some((id) => completedMiniGameIds.has(id))) {
