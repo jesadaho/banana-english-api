@@ -1,0 +1,4 @@
+interface:
+  display_name: "Conversation Cutscene"
+  short_description: "Plan approved storyboards and generate MiniMax cutscenes"
+  default_prompt: "Use $generate-conversation-cutscene to read this Conversation scenario and Art Bible, then propose a 15–30 second storyboard for my approval before generating video."
