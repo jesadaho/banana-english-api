@@ -27,7 +27,7 @@ import { emojiSpeakPoolById } from '../emoji-speak/emoji-speak.data';
 import { isValidNewWordsPack, newWordsPoolById } from '../new-words/new-words.data';
 import { sayItTopicById } from '../say-it/say-it.data';
 import { SayItService } from '../say-it/say-it.service';
-import { LISTEN_UP_ENABLED, listenUpPoolById } from '../listen-up/listen-up.data';
+import { dealListenUpItems, LISTEN_UP_ENABLED, listenUpPoolById } from '../listen-up/listen-up.data';
 import { STORY_BITES_ENABLED, storyBitesPoolById } from '../story-bites/story-bites.data';
 import { describeItPoolById } from '../describe-it/describe-it.data';
 import { initScenarioRuntime, localMatchCurrentBeat, processScenarioTurn } from '../interactive-scenario/interactive-scenario.runtime';
@@ -182,6 +182,14 @@ describe('Adventure A2 Zone 1 content', () => {
       assert.ok(isValidNewWordsPack(pool), id);
     }
     assert.equal(newWordsPoolById('a2_c29n04')!.levelStyle, 'stars');
+  });
+
+  it('deals every Listen Up item instead of a 5-item slice', () => {
+    const pool = listenUpPoolById('a2_c07n07')!;
+    assert.ok(pool.items.length > 5);
+    const items = dealListenUpItems('a2_c07n07');
+    assert.equal(items.length, pool.items.length);
+    assert.equal(new Set(items.map((item) => item.id)).size, pool.items.length);
   });
 
   it('deals all 7 Say It 1.7 prompts per round', () => {

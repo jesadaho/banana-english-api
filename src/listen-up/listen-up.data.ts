@@ -23,7 +23,8 @@ export type ListenUpPool = {
 /** When off, Listen Up nodes show as coming soon on every path. */
 export const LISTEN_UP_ENABLED = true;
 export const LISTEN_UP_MIN_ITEMS = 3;
-export const LISTEN_UP_DEAL_COUNT = 5;
+/** Packs are 4–7 items. Deal the whole pack, same as Adventure A2 Say It. */
+export const LISTEN_UP_DEAL_COUNT = 7;
 
 const catalog = poolsJson as Record<string, ListenUpPool>;
 

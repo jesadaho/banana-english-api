@@ -170,6 +170,8 @@ export function roundStars(value: number): number {
 
 export type FoundationV7PathPosition = {
   order: number;
+  /** 1-based position on the chapter map. Skip Quiz is not a map node. */
+  nodeOrder: number | null;
   code: string;
   chapterNumber: number;
   chapterTitleEn: string;
@@ -200,9 +202,11 @@ export function foundationV7PathPosition(
     for (const node of FOUNDATION_V7_NODES) {
       const canonical = canonicalFoundationV7RewardId(node.id);
       const chapter = chapterByNodeId.get(node.id);
-      if (canonical && chapter && !v7PositionByRewardId.has(canonical)) {
-        v7PositionByRewardId.set(canonical, {
+      const gameId = canonical ?? node.id;
+      if (chapter && !v7PositionByRewardId.has(gameId)) {
+        v7PositionByRewardId.set(gameId, {
           order: node.globalOrder,
+          nodeOrder: node.order,
           code: node.code,
           chapterNumber: chapter.number,
           chapterTitleEn: chapter.titleEn,
@@ -214,6 +218,7 @@ export function foundationV7PathPosition(
       if (Number.isFinite(first)) {
         v7PositionByRewardId.set(`skip_quiz:${chapter.id}`, {
           order: first - 0.5,
+          nodeOrder: null,
           code: `${chapter.number}.0`,
           chapterNumber: chapter.number,
           chapterTitleEn: chapter.titleEn,
@@ -233,22 +238,25 @@ export type FoundationV7Stage = {
   gameId: string;
   kind: string;
   order: number;
+  nodeOrder: number | null;
   code: string;
   titleEn: string;
 };
 
-/** Every scored V7 stage (mini-game nodes + chapter Skip Quizzes from Ch2), in path order. */
+/** Every map node, plus chapter Skip Quizzes from Ch2, in path order. */
 export function foundationV7StageCatalog(): FoundationV7Stage[] {
   const stages: FoundationV7Stage[] = [];
   const seen = new Set<string>();
   for (const node of FOUNDATION_V7_NODES) {
     const canonical = canonicalFoundationV7RewardId(node.id);
-    if (!canonical || seen.has(canonical)) continue;
-    seen.add(canonical);
+    const gameId = canonical ?? node.id;
+    if (seen.has(gameId)) continue;
+    seen.add(gameId);
     stages.push({
-      gameId: canonical,
-      kind: canonical.slice(0, canonical.indexOf(':')),
+      gameId,
+      kind: canonical ? canonical.slice(0, canonical.indexOf(':')) : node.type,
       order: node.globalOrder,
+      nodeOrder: node.order,
       code: node.code,
       titleEn: node.titleEn,
     });
@@ -262,6 +270,7 @@ export function foundationV7StageCatalog(): FoundationV7Stage[] {
       gameId,
       kind: 'skip_quiz',
       order: position.order,
+      nodeOrder: null,
       code: position.code,
       titleEn: contentItemTitle(gameId),
     });
