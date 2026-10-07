@@ -660,6 +660,29 @@
     "layout": "list",
     "note": "แถบแสดงโอกาสที่จะเกิดโดยประมาณ"
   },
+  "a2_c23n06": {
+    "title": "Stolen!",
+    "items": [
+      {
+        "emoji": "🦹",
+        "answer": "steal",
+        "reading": "สตีล",
+        "meaningTh": "ขโมย"
+      },
+      {
+        "emoji": "🥷",
+        "answer": "thief",
+        "reading": "ธีฟ",
+        "meaningTh": "โจร / คนขโมย"
+      },
+      {
+        "emoji": "👮",
+        "answer": "police",
+        "reading": "เพอะ-ลีส",
+        "meaningTh": "ตำรวจ"
+      }
+    ]
+  },
   "a2_c29n04": {
     "title": "Star Rating",
     "items": [

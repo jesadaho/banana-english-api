@@ -1,8 +1,8 @@
 [
   {
     "id": "a2_c08n09",
-    "titleEn": "Night Market with Max & May",
-    "titleTh": "คืนตลาดนัดกับ Max และ May",
+    "titleEn": "Night Market with Bogy & May",
+    "titleTh": "คืนตลาดนัดกับ Bogy และ May",
     "mode": "practice",
     "teacher": "banana",
     "ttsVoiceProfile": "teacher_b",
@@ -535,9 +535,9 @@
         "focusGoalIds": [
           "reason_because"
         ],
-        "npcBriefEn": "At the meeting place Max is waiting and teases the learner for being late. The learner gives a reason with because (present tense is fine).",
-        "promptEn": "Hey, it's Max! You're late! Why?",
-        "promptTh": "Max แซวว่ามาช้า บอกเหตุผลด้วย because",
+        "npcBriefEn": "At the meeting place Bogy is waiting and teases the learner for being late. The learner gives a reason with because (present tense is fine).",
+        "promptEn": "Hey, it's Bogy! You're late! Why?",
+        "promptTh": "Bogy แซวว่ามาช้า บอกเหตุผลด้วย because",
         "retryEn": "Why are you late? Say: Because…",
         "retryTh": "บอกเหตุผลด้วย Because …",
         "retryGuided": {

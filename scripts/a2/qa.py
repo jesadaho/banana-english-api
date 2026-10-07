@@ -68,7 +68,7 @@ G = [
  ("was/were", r"\b(was|were)\b", 15, r"was|were"),
  ("past -ed", r"\b(watched|played|cooked|visited|stayed|enjoyed)\b", 15, r"-ed|watched"),
  ("irregular past", r"\b(went|ate|bought|gave)\b", 16, r"went|bought|gave"),
- ("did-question", r"\b[Dd]id (you|he|she|they|we|May|Max)\b", 17, r"Did you"),
+ ("did-question", r"\b[Dd]id (you|he|she|they|we|May|Bogy)\b", 17, r"Did you"),
  ("going to", r"\b(am|is|are|'m|'s|'re) going to\b", 7, r"going to"),
  ("will", r"\b(will|I'll|we'll|you'll|won't)\b", 6, r"will|I'll"),
  ("comparative", r"\b(cheaper|bigger|smaller|better|more \w+ than)\b", 13, r"-er|cheaper|than"),
@@ -80,6 +80,7 @@ G = [
  ("past continuous", r"\b(was|were) (?!(?:exciting|interesting|boring|tiring|amazing|relaxing|a bit|really|very)\b)\w+ing\b", 27, r"was / were \+ -ing|was waiting|were \+ -ing"),
  ("must", r"\b(must|mustn't)\b", 28, r"must"),
  ("already/yet", r"\b(already|yet)\b", 30, r"already|yet"),
+ ("passive was stolen", r"\b(was|were|Was) (it |they )?stolen\b", 23, r"was stolen"),
 ]
 CH = lambda c: int(c.split(".")[0])
 START = {}
@@ -112,7 +113,11 @@ for n in N:
         if miss: err("E7", f"{n['code']} {n['type']}: {', '.join(miss)}")
 for c, i, m in V.run(): err("E6", f"{c}#{i}: {', '.join(m)}")
 # E8 cast
-DEBUT = {k: next(n["code"] for n in N if CH(n["code"]) == ch and n["type"] == "story_bites" and k in n["teach"]) for k, ch in (("Nina", 8), ("Torto", 16))}
+DEBUT = {
+    # Nina debuts on the locked chapter-8 finale scenario, not a story bite.
+    "Nina": next(n["code"] for n in N if CH(n["code"]) == 8 and n["type"] == "interactive_scenario" and "Nina" in n["teach"]),
+    "Torto": next(n["code"] for n in N if CH(n["code"]) == 16 and n["type"] == "story_bites" and "Torto" in n["teach"]),
+}
 BAN = ["Coach Ben", "Biscuit", "Pa Daeng", "Leo", "Chef Kai", "Bella", "Mae Pim", "Officer Sam", "Ms. Rosa", "Mr. Lim", "Dr. Ana", "Officer Kim", "Jess", "Mr. Chen", "Ms. Joy", "Minnie", "Bogie", "Sunny:"]
 for c, items in P.items():
     s = json.dumps(items, ensure_ascii=False)
@@ -129,7 +134,9 @@ for k, v in cc.items():
     if v > 12: err("E9", f"chapter {k}: {v} nodes")
 for a, b in zip(N, N[1:]):
     if a["code"].split(".")[0] == b["code"].split(".")[0]:
-        if a["type"] == b["type"]: err("E9", f"{a['code']}–{b['code']} same type")
+        # 8.9 is the zone checkpoint; 8.10 is the locked Nina debut right after it.
+        if a["type"] == b["type"] and (a["code"], b["code"]) != ("8.9", "8.10"):
+            err("E9", f"{a['code']}–{b['code']} same type")
         if (a["type"], b["type"]) == ("new_words", "say_it"):
             # Match E11: More Words can practise a pattern already taught in this chapter.
             prior_lesson = any(m["type"] == "lesson" and CH(m["code"]) == CH(a["code"]) for m in N[:N.index(a)])

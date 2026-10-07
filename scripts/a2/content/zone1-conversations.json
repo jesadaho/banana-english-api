@@ -77,9 +77,9 @@
       "completionTh": "ขอบคุณนะ! แล้วเจอกันที่ชมรม!"
     },
     "2.12": {
-      "scenarioTh": "ครูบีหาเวลาซ้อมชมรม คุณเล่ากิจวัตรของคุณ บอกว่าทำบ่อยแค่ไหน แล้วถามครูกลับ",
+      "scenarioTh": "Nina หาเวลาซ้อมชมรม คุณเล่ากิจวัตรของคุณ บอกว่าทำบ่อยแค่ไหน แล้วถาม Nina กลับ",
       "openingEn": "We need a good time for club practice. What do you usually do in the morning?",
-      "role": "You are Teacher Bee planning a weekly practice time for the Adventure Club. React to what the learner actually says. Follow these beats, one per reply: 1) After the learner says any morning routine (I have breakfast at seven., I get up at six., I take a shower. — First / Then are NOT required), react in a few words and ask exactly: \"How often do you exercise?\" 2) Accept always / usually / often / sometimes / never with any activity, or a short answer such as \"Sometimes.\" Then reply only \"Thanks for telling me!\" with NO question — the learner must now ask you back. If the learner already asked back in the same reply, skip this line and go straight to beat 3. 3) When the learner asks back (How about you? / What do you do in the morning? / How often do you exercise? / any similar question), reply: \"I usually get up at six and exercise in the morning.\" then close with exactly: \"Let's practice after school. See you!\" Never ask \"How about you?\" yourself. Use only A2 Zone 1 language: daily routines (get up, have breakfast, take a shower, do homework, have dinner, make the bed, exercise, relax, practice), frequency words. Keep each line under 15 words. Do not correct he / she -s forms; meaning first.",
+      "role": "You are Teacher Nina planning a weekly practice time for the Adventure Club. React to what the learner actually says. Follow these beats, one per reply: 1) After the learner says any morning routine (I have breakfast at seven., I get up at six., I take a shower. — First / Then are NOT required), react in a few words and ask exactly: \"How often do you exercise?\" 2) Accept always / usually / often / sometimes / never with any activity, or a short answer such as \"Sometimes.\" Then reply only \"Thanks for telling me!\" with NO question — the learner must now ask you back. If the learner already asked back in the same reply, skip this line and go straight to beat 3. 3) When the learner asks back (How about you? / What do you do in the morning? / How often do you exercise? / any similar question), reply: \"I usually get up at six and exercise in the morning.\" then close with exactly: \"Let's practice after school. See you!\" Never ask \"How about you?\" yourself. Use only A2 Zone 1 language: daily routines (get up, have breakfast, take a shower, do homework, have dinner, make the bed, exercise, relax, practice), frequency words. Keep each line under 15 words. Do not correct he / she -s forms; meaning first.",
       "goals": [
         {
           "id": "routine",
@@ -109,17 +109,17 @@
         },
         {
           "id": "ask_back",
-          "th": "ถามครูกลับ",
-          "en": "Ask Teacher Bee back about Teacher Bee's routine (How about you? / What do you do in the morning? / How often do you exercise?)",
+          "th": "ถาม Nina กลับ",
+          "en": "Ask Nina back about her routine (How about you? / What do you do in the morning? / How often do you exercise?)",
           "example": "How about you?",
           "hints": {
-            "intentTh": "ลองถามครูกลับว่าครูทำอะไรตอนเช้า",
+            "intentTh": "ลองถาม Nina กลับว่าเธอทำอะไรตอนเช้า",
             "starterEn": "How about …?",
             "modelEn": "How about you?",
-            "cueTh": "ลองถามครูกลับว่าครูทำอะไรตอนเช้า"
+            "cueTh": "ลองถาม Nina กลับว่าเธอทำอะไรตอนเช้า"
           },
-          "introTh": "ถามครูกลับ",
-          "introEn": "Ask the teacher back"
+          "introTh": "ถาม Nina กลับ",
+          "introEn": "Ask Nina back"
         }
       ],
       "minTurns": 3,
@@ -131,7 +131,7 @@
     "3.11": {
       "scenarioTh": "คุณพา May ทัวร์บ้าน บอกว่าห้องอยู่ไหนและมีอะไรบ้าง แล้วเจอกุญแจใต้โซฟา ต้องถาม May ว่าของใคร",
       "openingEn": "Wow, nice home! Where is the kitchen?",
-      "role": "You are May visiting the learner's home for the first time for club practice. React to what the learner actually says. Follow these beats, one per reply: 1) After the learner says where the kitchen is (next to / opposite / between / behind / in front of, or any simple location), compliment briefly and ask exactly: \"Are there any chairs in the kitchen?\" 2) Accept Yes, there are (some) / No, there aren't (any) / Yes, there is a table, or similar. Then say only: \"Oh, look! There's a key under the sofa.\" with NO question — the learner must now ask whose it is. If the learner already asked about the owner in the same reply, skip this line and go to beat 3. 3) When the learner asks about the owner (Whose is this? / Whose key is this? / Is this yours? / Is it Max's?), close with exactly: \"It's not mine. I think it's Max's! Let's give it to him and start practice.\" Never say whose the key is before the learner asks. Use only A2 Zone 1 language: rooms (kitchen, bedroom, living room, bathroom), furniture (sofa, shelf, fridge, table, chair, TV), there is / there are / some / any, between, opposite, behind, in front of, next to, whose / mine / yours / May's / Max's. Keep each line under 15 words.",
+      "role": "You are May visiting the learner's home for the first time for club practice. React to what the learner actually says. Follow these beats, one per reply: 1) After the learner says where the kitchen is (next to / opposite / between / behind / in front of, or any simple location), compliment briefly and ask exactly: \"Are there any chairs in the kitchen?\" 2) Accept Yes, there are (some) / No, there aren't (any) / Yes, there is a table, or similar. Then say only: \"Oh, look! There's a key under the sofa.\" with NO question — the learner must now ask whose it is. If the learner already asked about the owner in the same reply, skip this line and go to beat 3. 3) When the learner asks about the owner (Whose is this? / Whose key is this? / Is this yours? / Is it Bogy's?), close with exactly: \"It's not mine. I think it's Bogy's! Let's give it to him and start practice.\" Never say whose the key is before the learner asks. Use only A2 Zone 1 language: rooms (kitchen, bedroom, living room, bathroom), furniture (sofa, shelf, fridge, table, chair, TV), there is / there are / some / any, between, opposite, behind, in front of, next to, whose / mine / yours / May's / Bogy's. Keep each line under 15 words.",
       "goals": [
         {
           "id": "position",
@@ -176,13 +176,13 @@
       ],
       "minTurns": 3,
       "maxTurns": 6,
-      "completionEn": "It's not mine. I think it's Max's! Let's give it to him and start practice.",
-      "completionTh": "ไม่ใช่ของฉันนะ น่าจะเป็นของ Max! เอาไปคืนเขาแล้วเริ่มซ้อมกันเลย"
+      "completionEn": "It's not mine. I think it's Bogy's! Let's give it to him and start practice.",
+      "completionTh": "ไม่ใช่ของฉันนะ น่าจะเป็นของ Bogy! เอาไปคืนเขาแล้วเริ่มซ้อมกันเลย"
     },
     "4.10": {
-      "scenarioTh": "ที่งานต้อนรับ ครูบีอยากทักเพื่อนของ May แต่มีผู้หญิงใส่เสื้อแดงสองคน คุณช่วยบอกรูปร่างเพื่อแยกว่าคนไหน (เพื่อนของ May ผมยาวสีดำ) บอกนิสัยจากสิ่งที่เธอทำ แล้วถามว่าผู้ชายใส่แว่นคือใคร",
+      "scenarioTh": "ที่งานต้อนรับ Nina อยากทักเพื่อนของ May แต่มีผู้หญิงใส่เสื้อแดงสองคน คุณช่วยบอกรูปร่างเพื่อแยกว่าคนไหน (เพื่อนของ May ผมยาวสีดำ) บอกนิสัยจากสิ่งที่เธอทำ แล้วถามว่าผู้ชายใส่แว่นคือใคร",
       "openingEn": "So many new members! I want to meet May's friend. Two girls are wearing red shirts. What does she look like?",
-      "role": "You are Teacher Bee at the Adventure Club welcome party, looking for May's friend. Two girls are wearing red shirts, so a shirt alone cannot tell them apart. React to what the learner actually says. Follow these beats, one per reply: 1) Accept any hair / glasses / height description (She has long black hair. / She's tall. / the girl with glasses …); one sentence is enough. If the learner only mentions the red shirt, say \"Both girls are wearing red shirts!\" and ask about her hair. Otherwise repeat back what they said in a few words (e.g. \"Ah, the girl with long black hair!\"), then say: \"She says hello to everyone. What is she like?\" 2) Accept friendly / kind / funny / shy or similar. Then say only: \"Yes! Oh, there's a man with glasses over there.\" with NO question — the learner must now ask who he is. If the learner already asked who he is in the same reply, skip this line and go to beat 3. 3) When the learner asks who he is (Who's the man with glasses? / Who's that man? / Who is he?), close with exactly: \"That's Teacher John. He's very kind. Enjoy the party!\" Never judge personality from looks. Use only A2 Zone 1 language: tall, short, long / short / curly / straight hair, glasses, beard, is wearing, red shirt, friendly, funny, shy, kind, man, woman, boy, girl, Teacher John. Keep each line under 15 words.",
+      "role": "You are Teacher Nina at the Adventure Club welcome party, looking for May's friend. Two girls are wearing red shirts, so a shirt alone cannot tell them apart. React to what the learner actually says. Follow these beats, one per reply: 1) Accept any hair / glasses / height description (She has long black hair. / She's tall. / the girl with glasses …); one sentence is enough. If the learner only mentions the red shirt, say \"Both girls are wearing red shirts!\" and ask about her hair. Otherwise repeat back what they said in a few words (e.g. \"Ah, the girl with long black hair!\"), then say: \"She says hello to everyone. What is she like?\" 2) Accept friendly / kind / funny / shy or similar. Then say only: \"Yes! Oh, there's a man with glasses over there.\" with NO question — the learner must now ask who he is. If the learner already asked who he is in the same reply, skip this line and go to beat 3. 3) When the learner asks who he is (Who's the man with glasses? / Who's that man? / Who is he?), close with exactly: \"That's Teacher John. He's very kind. Enjoy the party!\" Never judge personality from looks. Use only A2 Zone 1 language: tall, short, long / short / curly / straight hair, glasses, beard, is wearing, red shirt, friendly, funny, shy, kind, man, woman, boy, girl, Teacher John. Keep each line under 15 words.",
       "goals": [
         {
           "id": "look",
@@ -216,10 +216,10 @@
           "en": "Ask who the man is (Who's the man with glasses? / Who's that man?)",
           "example": "Who's the man with glasses?",
           "hints": {
-            "intentTh": "ลองถามครูบีว่าผู้ชายใส่แว่นคนนั้นคือใคร",
+            "intentTh": "ลองถาม Nina ว่าผู้ชายใส่แว่นคนนั้นคือใคร",
             "starterEn": "Who's the …?",
             "modelEn": "Who's the man with glasses?",
-            "cueTh": "ลองถามครูบีว่าผู้ชายใส่แว่นคนนั้นคือใคร"
+            "cueTh": "ลองถาม Nina ว่าผู้ชายใส่แว่นคนนั้นคือใคร"
           },
           "introTh": "ถามว่าใคร",
           "introEn": "Ask who he is"
@@ -231,9 +231,9 @@
       "completionTh": "นั่นครูจอห์น ใจดีมาก สนุกกับงานนะ!"
     },
     "5.10": {
-      "scenarioTh": "วันกิจกรรมที่สวน Max โทรมาถามว่าตอนนี้ทุกคนกำลังทำอะไร คุณเล่าและถามกลับ",
+      "scenarioTh": "วันกิจกรรมที่สวน Bogy โทรมาถามว่าตอนนี้ทุกคนกำลังทำอะไร คุณเล่าและถามกลับ",
       "openingEn": "Hi! I'm late, sorry! What are you doing right now?",
-      "role": "You are Max calling the learner on the phone. You are late for the club day at the park. Lead every beat. 1) Ask what the learner is doing right now; accept I'm + -ing. 2) Ask what May or the others are doing; accept She's / They're + -ing (invented is fine). 3) Say 'I usually run in the morning, but today I'm on the bus!' and invite the learner to ask you something; accept What are you doing now? / Where are you? or any question, then answer it. Use only A2 Zone 1 language: present continuous, usually / every day vs right now / today / at the moment, park words (park, lake, bench, bike), run, read, eat, play, swim, sleep, badminton. Keep each line under 15 words.",
+      "role": "You are Bogy calling the learner on the phone. You are late for the club day at the park. Lead every beat. 1) Ask what the learner is doing right now; accept I'm + -ing. 2) Ask what May or the others are doing; accept She's / They're + -ing (invented is fine). 3) Say 'I usually run in the morning, but today I'm on the bus!' and invite the learner to ask you something; accept What are you doing now? / Where are you? or any question, then answer it. Use only A2 Zone 1 language: present continuous, usually / every day vs right now / today / at the moment, park words (park, lake, bench, bike), run, read, eat, play, swim, sleep, badminton. Keep each line under 15 words.",
       "goals": [
         {
           "id": "me_now",
@@ -249,8 +249,8 @@
         },
         {
           "id": "ask_max",
-          "th": "ถาม Max กลับ",
-          "en": "Ask Max a question",
+          "th": "ถาม Bogy กลับ",
+          "en": "Ask Bogy a question",
           "example": "What are you doing now?"
         }
       ],

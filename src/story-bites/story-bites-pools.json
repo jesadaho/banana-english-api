@@ -2,14 +2,14 @@
   "a2_c02n11": {
     "id": "a2_c02n11",
     "clipId": "a2_c02n11_clip",
-    "titleEn": "Max's Morning",
-    "titleTh": "เช้าของ Max",
-    "speaker": "Max",
-    "script": "Max: Oh no! It's seven thirty! I usually get up at six thirty. I'm late again! I don't have time for breakfast, so I'm taking some bread. I'm sometimes late on Mondays.",
+    "titleEn": "Bogy's Morning",
+    "titleTh": "เช้าของ Bogy",
+    "speaker": "Bogy",
+    "script": "Bogy: Oh no! It's seven thirty! I usually get up at six thirty. I'm late again! I don't have time for breakfast, so I'm taking some bread. I'm sometimes late on Mondays.",
     "questions": [
       {
         "id": "a2_c02n11_q1",
-        "questionEn": "What time does Max usually get up?",
+        "questionEn": "What time does Bogy usually get up?",
         "answerEn": "At six thirty.",
         "acceptedAnswers": [
           "Six thirty.",
@@ -42,46 +42,6 @@
         "hints": [
           "On …",
           "On ___."
-        ]
-      }
-    ]
-  },
-  "a2_c08n10": {
-    "id": "a2_c08n10",
-    "clipId": "a2_c08n10_clip",
-    "titleEn": "A New Teacher!",
-    "titleTh": "ครูคนใหม่มาแล้ว",
-    "speaker": "Teacher Bee",
-    "script": "Teacher Bee: Hi, team! This is Teacher Nina. She's our new teacher! Teacher Nina: Hi! Good work at the night market! Next Saturday, we're going to Bangkok. Let's meet at the school gate at eight.",
-    "questions": [
-      {
-        "id": "a2_c08n10_q1",
-        "questionEn": "Who is the new teacher?",
-        "answerEn": "Teacher Nina.",
-        "acceptedAnswers": [],
-        "hints": [
-          "Teacher …",
-          "Teacher ___."
-        ]
-      },
-      {
-        "id": "a2_c08n10_q2",
-        "questionEn": "When are they going to Bangkok?",
-        "answerEn": "Next Saturday.",
-        "acceptedAnswers": [],
-        "hints": [
-          "Next …",
-          "Next ___."
-        ]
-      },
-      {
-        "id": "a2_c08n10_q3",
-        "questionEn": "Where are they going to meet?",
-        "answerEn": "At the school gate.",
-        "acceptedAnswers": [],
-        "hints": [
-          "At …",
-          "At the ___ ___."
         ]
       }
     ]
@@ -139,10 +99,10 @@
   "a2_c14n09": {
     "id": "a2_c14n09",
     "clipId": "a2_c14n09_clip",
-    "titleEn": "Max Opens His Gift",
-    "titleTh": "Max แกะของขวัญ",
-    "speaker": "Max",
-    "script": "Max: Wow, a teddy bear from Mali! It's small and nice. Flowers from May. Thank you! And a cake from John. I love cake. The cake is the best!",
+    "titleEn": "Bogy Opens His Gift",
+    "titleTh": "Bogy แกะของขวัญ",
+    "speaker": "Bogy",
+    "script": "Bogy: Wow, a teddy bear from Mali! It's small and nice. Flowers from May. Thank you! And a cake from John. I love cake. The cake is the best!",
     "questions": [
       {
         "id": "a2_c14n09_q1",
@@ -172,7 +132,7 @@
       },
       {
         "id": "a2_c14n09_q3",
-        "questionEn": "Which gift does Max like best?",
+        "questionEn": "Which gift does Bogy like best?",
         "answerEn": "The cake.",
         "acceptedAnswers": [
           "Cake.",
@@ -288,14 +248,14 @@
   "a2_c24n09": {
     "id": "a2_c24n09",
     "clipId": "a2_c24n09_clip",
-    "titleEn": "Max's Secret",
-    "titleTh": "ความลับของ Max",
-    "speaker": "Max",
-    "script": "Max: Teacher Torto, can I tell you something? I'm going to study in England next year. I'm excited, but I'm a little sad. I'm going to miss my friends.",
+    "titleEn": "Bogy's Secret",
+    "titleTh": "ความลับของ Bogy",
+    "speaker": "Bogy",
+    "script": "Bogy: Teacher Torto, can I tell you something? I'm going to study in England next year. I'm excited, but I'm a little sad. I'm going to miss my friends.",
     "questions": [
       {
         "id": "a2_c24n09_q1",
-        "questionEn": "Where is Max going to study?",
+        "questionEn": "Where is Bogy going to study?",
         "answerEn": "In England.",
         "acceptedAnswers": [
           "England.",
@@ -336,14 +296,14 @@
   "a2_c25n10": {
     "id": "a2_c25n10",
     "clipId": "a2_c25n10_clip",
-    "titleEn": "Max's Side of the Story",
-    "titleTh": "ทริปในมุม Max",
-    "speaker": "Max",
-    "script": "Max: For me, the best thing was the boat trip! It was really exciting. The museum was boring, and the hotel food wasn't very good. But the night market was really fun.",
+    "titleEn": "Bogy's Side of the Story",
+    "titleTh": "ทริปในมุม Bogy",
+    "speaker": "Bogy",
+    "script": "Bogy: For me, the best thing was the boat trip! It was really exciting. The museum was boring, and the hotel food wasn't very good. But the night market was really fun.",
     "questions": [
       {
         "id": "a2_c25n10_q1",
-        "questionEn": "What was the best thing for Max?",
+        "questionEn": "What was the best thing for Bogy?",
         "answerEn": "The boat trip.",
         "acceptedAnswers": [
           "The boat trip was the best thing.",
@@ -489,7 +449,7 @@
     "titleEn": "Three Reviews",
     "titleTh": "รีวิวสามร้าน",
     "speaker": "Mali",
-    "script": "Mali: Noodle Corner is cheap, but it's very crowded. Max: Green Café is quiet, but it's expensive. May: Sky Grill has an amazing view, and the food is great.",
+    "script": "Mali: Noodle Corner is cheap, but it's very crowded. Bogy: Green Café is quiet, but it's expensive. May: Sky Grill has an amazing view, and the food is great.",
     "questions": [
       {
         "id": "a2_c29n09_q1",

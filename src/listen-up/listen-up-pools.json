@@ -36,10 +36,10 @@
       },
       {
         "id": "a2_c01n08_03",
-        "audioText": "Hey! It's Max. I go jogging on weekends. How about you?",
-        "speaker": "Max",
-        "questionEn": "What does Max do on weekends?",
-        "questionTh": "Max ทำอะไรทุกสุดสัปดาห์?",
+        "audioText": "Hey! It's Bogy. I go jogging on weekends. How about you?",
+        "speaker": "Bogy",
+        "questionEn": "What does Bogy do on weekends?",
+        "questionTh": "Bogy ทำอะไรทุกสุดสัปดาห์?",
         "answerEn": "Jogging.",
         "acceptedAnswers": [
           "He goes jogging.",
@@ -104,10 +104,10 @@
       },
       {
         "id": "a2_c07n07_02",
-        "audioText": "Hi, it's Max. Shall we play badminton tomorrow? I'm free after school.",
-        "speaker": "Max",
-        "questionEn": "When does Max want to play badminton?",
-        "questionTh": "Max ชวนเล่นแบดมินตันวันไหน?",
+        "audioText": "Hi, it's Bogy. Shall we play badminton tomorrow? I'm free after school.",
+        "speaker": "Bogy",
+        "questionEn": "When does Bogy want to play badminton?",
+        "questionTh": "Bogy ชวนเล่นแบดมินตันวันไหน?",
         "answerEn": "Tomorrow.",
         "acceptedAnswers": [
           "tomorrow"
@@ -254,7 +254,7 @@
       },
       {
         "id": "a2_c08n07_05",
-        "audioText": "It's Teacher Bee. Max and May are at the ice cream stall. Let's all meet there at eight. Hurry up!",
+        "audioText": "It's Teacher Bee. Bogy and May are at the ice cream stall. Let's all meet there at eight. Hurry up!",
         "speaker": "Teacher Bee",
         "questionEn": "What time is everyone going to meet?",
         "questionTh": "นัดเจอกันทุกคนกี่โมง?",
@@ -361,10 +361,10 @@
       },
       {
         "id": "a2_c09n09_05",
-        "audioText": "Sorry, Max. We don't have any hot milk today. We have hot tea and iced tea.",
+        "audioText": "Sorry, Bogy. We don't have any hot milk today. We have hot tea and iced tea.",
         "speaker": "Mali",
-        "questionEn": "Can Max get hot milk today?",
-        "questionTh": "วันนี้ Max สั่งนมร้อนได้ไหม?",
+        "questionEn": "Can Bogy get hot milk today?",
+        "questionTh": "วันนี้ Bogy สั่งนมร้อนได้ไหม?",
         "answerEn": "No.",
         "acceptedAnswers": [
           "No, he can't.",
@@ -404,8 +404,8 @@
         "id": "a2_c10n09_01",
         "audioText": "Sorry, we don't have any curry today. The noodle soup is really spicy. The fried rice isn't spicy.",
         "speaker": "Mali",
-        "questionEn": "Max can't eat spicy food. What should he order?",
-        "questionTh": "Max กินเผ็ดไม่ได้ ควรสั่งจานไหน?",
+        "questionEn": "Bogy can't eat spicy food. What should he order?",
+        "questionTh": "Bogy กินเผ็ดไม่ได้ ควรสั่งจานไหน?",
         "answerEn": "Fried rice.",
         "acceptedAnswers": [
           "The fried rice.",
@@ -418,7 +418,7 @@
       },
       {
         "id": "a2_c10n09_02",
-        "audioText": "I'm so sorry. We don't have any fried rice today. The curry is too spicy for Max. The noodle soup isn't spicy.",
+        "audioText": "I'm so sorry. We don't have any fried rice today. The curry is too spicy for Bogy. The noodle soup isn't spicy.",
         "speaker": "Mali",
         "questionEn": "Which dish isn't spicy?",
         "questionTh": "จานไหนไม่เผ็ด?",
@@ -452,8 +452,8 @@
         "id": "a2_c10n09_04",
         "audioText": "Sorry, we don't have any noodle soup today. The curry is sweet, not spicy. The fried rice is really spicy.",
         "speaker": "Mali",
-        "questionEn": "What should Max order?",
-        "questionTh": "Max ควรสั่งจานไหน?",
+        "questionEn": "What should Bogy order?",
+        "questionTh": "Bogy ควรสั่งจานไหน?",
         "answerEn": "Curry.",
         "acceptedAnswers": [
           "The curry.",

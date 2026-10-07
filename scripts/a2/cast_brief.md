@@ -7,7 +7,7 @@ Teachers (only these 5 are teachers): Teacher Bee (also written Teacher B), Teac
 - **Teacher John** — young man, light-brown hair, headphones round his neck, holds coffee. (he)
 - **Teacher Nina** — 22–26, energetic, long black hair with pink streaks, pink cargo pants, top says "ENGLISH IS FUN!", likes bubble tea. (she)
 - **Teacher Torto** — 60+ HUMAN old man (not a turtle) with white hair, sunglasses, bow tie, turtle-shell backpack, pocket watch. Calm, wise, funny. Appears only from the end of chapter 16. (he)
-- **Max** — 18–20 learner, brown messy hair, blue hoodie, backpack. (he)
+- **Bogy** — 18–20 teammate, short curly brown hair, black hoodie, olive cargo pants, white sneakers, backpack. Cheerful and playful. (he)
 - **May** — 17–19 learner, brown hair in a bun, cream hoodie, denim skirt, pink backpack, a bit shy but brave. (she)
 - **Mali** — service worker seen in many places (reception, shop, café, events): short wavy brown hair, cream shirt, yellow scarf, navy pants. (she)
 - **Extra NPCs allowed (only these):**
@@ -19,4 +19,4 @@ Teachers (only these 5 are teachers): Teacher Bee (also written Teacher B), Teac
   - Coach Ben → **Teacher John**. Biscuit (the dog) → **Capy**.
   - Abroad / strangers (Officer Sam, Ms. Rosa, Mr. Lim, Sunny, Dr. Ana, Officer Kim, Jess, Mr. Chen) → an UNNAMED role, e.g. "the staff", "the driver", "the woman at the desk", "the man at the shop", "the weather report" — in Thai: เจ้าหน้าที่ / คนขับ / พนักงานต้อนรับ / เภสัชกร. English role nouns must pass vocabgate.py (prefer taught words like man, woman, waiter, driver only if taught by then; otherwise rephrase so no role noun is needed, e.g. "Excuse me, is there a later flight?").
   - Mom → "my mother" (not a named character).
-  - Watch pronouns: Mali/Nina = she, John = he, Capy/Bee = repeat the name.
+  - Watch pronouns: Mali/Nina = she, Bogy/John = he, Capy/Bee = repeat the name.

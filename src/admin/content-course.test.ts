@@ -1,6 +1,9 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
-import { classifyContentCourse } from './content-course';
+import {
+  classifyContentCourse,
+  foundationV7PathPosition,
+} from './content-course';
 
 describe('classifyContentCourse', () => {
   it('puts Foundations path lessons together', () => {
@@ -35,6 +38,16 @@ describe('classifyContentCourse', () => {
       'foundation',
     );
     assert.equal(classifyContentCourse('skip_quiz:v7_u04'), 'foundation');
+  });
+
+  it('tags stage scores with their chapter', () => {
+    const skip = foundationV7PathPosition('skip_quiz:v7_u04');
+    assert.equal(skip?.chapterNumber, 4);
+    assert.equal(skip?.code, '4.0');
+    assert.ok(skip?.chapterTitleEn);
+    const sayIt = foundationV7PathPosition('say_it:fnd_v7_u03n04');
+    assert.equal(sayIt?.chapterNumber, 3);
+    assert.ok(sayIt?.chapterTitleEn);
   });
 
   it('puts parked leftover lessons in other', () => {

@@ -39,6 +39,8 @@ const chapterOf = (code: string) => Number(code.split('.')[0]);
 const zone1 = a2Nodes.filter((n) => chapterOf(n.code) <= ZONE_1_CHAPTERS);
 /** Picture packs ship only once their bundled images exist (seeAndSayImagesReady). */
 const AWAITING_ART = new Set(['describe_it', 'explain_it']);
+/** Chapter 8 finale is an interactive scenario with no script yet, so it stays locked. */
+const PENDING_SCENARIO = new Set(['a2_c08n10']);
 /** Owner-written flows exempt from the generated-flow shape contract. */
 const HAND_AUTHORED_FLOWS = new Set(
   (JSON.parse(readFileSync('scripts/a2/adventure-a2-course.json', 'utf8')).nodes as { code: string; handAuthoredFlow?: boolean }[])
@@ -53,7 +55,7 @@ describe('Adventure A2 course registry', () => {
     assert.equal(learnCourseById('adventure_a2'), ADVENTURE_A2_COURSE);
     assert.equal(learnCourseById('foundation-v7'), FOUNDATION_V7_COURSE);
     assert.equal(learnCourseById('adventure-a3'), undefined);
-    assert.equal(a2Nodes.length, 330);
+    assert.equal(a2Nodes.length, 332);
     assert.equal(ADVENTURE_A2_COURSE.catalog.chapters.length, 32);
     assert.equal(new Set(ALL_LEARN_PATH_NODES.map((n) => n.id)).size, ALL_LEARN_PATH_NODES.length);
     for (const node of a2Nodes) {
@@ -83,7 +85,7 @@ describe('Adventure A2 course registry', () => {
 describe('Adventure A2 Zone 1 content', () => {
   it('has real content behind every Zone 1 node except pending picture packs', () => {
     const missing = zone1
-      .filter((n) => !AWAITING_ART.has(n.type) && !(n.type === 'listen_up' && !LISTEN_UP_ENABLED) && !(n.type === 'story_bites' && !STORY_BITES_ENABLED))
+      .filter((n) => !PENDING_SCENARIO.has(n.id) && !AWAITING_ART.has(n.type) && !(n.type === 'listen_up' && !LISTEN_UP_ENABLED) && !(n.type === 'story_bites' && !STORY_BITES_ENABLED))
       .filter((n) => !hasFoundationV7Content(n))
       .map((n) => `${n.code} ${n.type}`);
     assert.deepEqual(missing, []);
@@ -132,10 +134,27 @@ describe('Adventure A2 Zone 1 content', () => {
         case 'lesson':
         case 'pronunciation': assert.ok(getLesson(id), id); break;
         case 'conversation': assert.ok(getSimulation(id), id); break;
-        case 'interactive_scenario': assert.ok(getInteractiveScenario(id), id); break;
+        case 'interactive_scenario':
+          if (PENDING_SCENARIO.has(id)) {
+            assert.equal(getInteractiveScenario(id), undefined, id);
+            break;
+          }
+          assert.ok(getInteractiveScenario(id), id);
+          break;
         case 'describe_it': assert.equal(describeItPoolById(id), undefined, `${id} has no art yet`); break;
       }
     }
+  });
+
+  it('locks the chapter 8 finale until the Nina scenario is written', () => {
+    const node = zone1.find((n) => n.id === 'a2_c08n10');
+    assert.equal(node?.type, 'interactive_scenario');
+    const item = toFoundationV7ClientChapters(A2_CAPABILITIES, ADVENTURE_A2_COURSE)
+      .flatMap((c) => c.items)
+      .find((i) => i.id === 'a2_c08n10');
+    assert.equal(item?.nodeType, 'interactive_scenario');
+    assert.equal(item?.comingSoon, true);
+    assert.equal(item?.countsTowardProgress, false);
   });
 
   it('serves 2.5 frequency words as a five-row list pack with bars', () => {

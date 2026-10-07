@@ -168,7 +168,12 @@ export function roundStars(value: number): number {
   return Math.round(value * 100) / 100;
 }
 
-export type FoundationV7PathPosition = { order: number; code: string };
+export type FoundationV7PathPosition = {
+  order: number;
+  code: string;
+  chapterNumber: number;
+  chapterTitleEn: string;
+};
 
 let v7PositionByRewardId: Map<string, FoundationV7PathPosition> | null = null;
 
@@ -181,12 +186,26 @@ export function foundationV7PathPosition(
 ): FoundationV7PathPosition | null {
   if (!v7PositionByRewardId) {
     v7PositionByRewardId = new Map();
+    const chapterByNodeId = new Map(
+      FOUNDATION_V7_CATALOG.chapters.flatMap((chapter) =>
+        chapter.items.map(
+          (item) =>
+            [
+              item.id,
+              { number: chapter.number, titleEn: chapter.titleEn },
+            ] as const,
+        ),
+      ),
+    );
     for (const node of FOUNDATION_V7_NODES) {
       const canonical = canonicalFoundationV7RewardId(node.id);
-      if (canonical && !v7PositionByRewardId.has(canonical)) {
+      const chapter = chapterByNodeId.get(node.id);
+      if (canonical && chapter && !v7PositionByRewardId.has(canonical)) {
         v7PositionByRewardId.set(canonical, {
           order: node.globalOrder,
           code: node.code,
+          chapterNumber: chapter.number,
+          chapterTitleEn: chapter.titleEn,
         });
       }
     }
@@ -196,6 +215,8 @@ export function foundationV7PathPosition(
         v7PositionByRewardId.set(`skip_quiz:${chapter.id}`, {
           order: first - 0.5,
           code: `${chapter.number}.0`,
+          chapterNumber: chapter.number,
+          chapterTitleEn: chapter.titleEn,
         });
       }
     }

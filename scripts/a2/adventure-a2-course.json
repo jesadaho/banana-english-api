@@ -15,7 +15,7 @@
   "conversation",
   "interactive_scenario"
  ],
- "cast": "# Banana English — official cast (from character sheets)\n\nTeachers (only these 5 are teachers): Teacher Bee (also written Teacher B), Teacher John, Teacher Minnie (NOT in A2 — appears in a later course), Teacher Nina, Teacher Torto.\n\n- **Teacher Bee / Teacher B** — a banana character with round glasses, blue Hawaiian shirt with white flowers, shoulder bag. Warm coach. Gender not decided → NEVER use he/she/his/her for Bee; repeat \"Teacher Bee\" instead.\n- **Capy** — a capybara, Teacher Bee's sidekick, NOT a teacher. Black sunglasses, green Hawaiian shirt, backpack, loves bubble tea, holds a \"LET'S GO!\" sign, chill, loyal, funny. Gender not decided → NEVER use he/she/his/her for Capy; repeat \"Capy\". Capy has NO hair to describe (do not say curly hair etc.).\n- **Teacher John** — young man, light-brown hair, headphones round his neck, holds coffee. (he)\n- **Teacher Nina** — 22–26, energetic, long black hair with pink streaks, pink cargo pants, top says \"ENGLISH IS FUN!\", likes bubble tea. (she)\n- **Teacher Torto** — 60+ HUMAN old man (not a turtle) with white hair, sunglasses, bow tie, turtle-shell backpack, pocket watch. Calm, wise, funny. Appears only from the end of chapter 16. (he)\n- **Max** — 18–20 learner, brown messy hair, blue hoodie, backpack. (he)\n- **May** — 17–19 learner, brown hair in a bun, cream hoodie, denim skirt, pink backpack, a bit shy but brave. (she)\n- **Mali** — service worker seen in many places (reception, shop, café, events): short wavy brown hair, cream shirt, yellow scarf, navy pants. (she)\n- **Extra NPCs allowed (only these):**\n  - **Aunt Noi** — May's aunt, 50+, kind, forgetful, great cook, calls everyone \"my dear\" (untaught words must still pass the gate). Chapters 11–12 (the team cooks at her house in the city), cameo in 15 and 31. (she)\n  - **Driver Uncle Somchai** — quirky bus driver abroad (ch19): loud music, sings, announces stops very fast. (he)\n  - **DJ Coco** — quirky weather radio DJ (ch21, voice only), far too cheerful even in a storm. (she)\n- **NO other named characters.** The course now uses ONLY the cast above so learners bond with them. Replace former NPCs like this:\n  - Leo (barista), Pa Daeng (night-market seller), Bella (clothes shop), Mae Pim (boat seller), Ms. Joy (party-venue phone), Chef Kai (restaurant) → **Mali** (she works part-time everywhere — a running joke). For the restaurant, Mali is the waitress.\n  - Coach Ben → **Teacher John**. Biscuit (the dog) → **Capy**.\n  - Abroad / strangers (Officer Sam, Ms. Rosa, Mr. Lim, Sunny, Dr. Ana, Officer Kim, Jess, Mr. Chen) → an UNNAMED role, e.g. \"the staff\", \"the driver\", \"the woman at the desk\", \"the man at the shop\", \"the weather report\" — in Thai: เจ้าหน้าที่ / คนขับ / พนักงานต้อนรับ / เภสัชกร. English role nouns must pass vocabgate.py (prefer taught words like man, woman, waiter, driver only if taught by then; otherwise rephrase so no role noun is needed, e.g. \"Excuse me, is there a later flight?\").\n  - Mom → \"my mother\" (not a named character).\n  - Watch pronouns: Mali/Nina = she, John = he, Capy/Bee = repeat the name.\n",
+ "cast": "# Banana English — official cast (from character sheets)\n\nTeachers (only these 5 are teachers): Teacher Bee (also written Teacher B), Teacher John, Teacher Minnie (NOT in A2 — appears in a later course), Teacher Nina, Teacher Torto.\n\n- **Teacher Bee / Teacher B** — a banana character with round glasses, blue Hawaiian shirt with white flowers, shoulder bag. Warm coach. Gender not decided → NEVER use he/she/his/her for Bee; repeat \"Teacher Bee\" instead.\n- **Capy** — a capybara, Teacher Bee's sidekick, NOT a teacher. Black sunglasses, green Hawaiian shirt, backpack, loves bubble tea, holds a \"LET'S GO!\" sign, chill, loyal, funny. Gender not decided → NEVER use he/she/his/her for Capy; repeat \"Capy\". Capy has NO hair to describe (do not say curly hair etc.).\n- **Teacher John** — young man, light-brown hair, headphones round his neck, holds coffee. (he)\n- **Teacher Nina** — 22–26, energetic, long black hair with pink streaks, pink cargo pants, top says \"ENGLISH IS FUN!\", likes bubble tea. (she)\n- **Teacher Torto** — 60+ HUMAN old man (not a turtle) with white hair, sunglasses, bow tie, turtle-shell backpack, pocket watch. Calm, wise, funny. Appears only from the end of chapter 16. (he)\n- **Bogy** — 18–20 teammate, short curly brown hair, black hoodie, olive cargo pants, white sneakers, backpack. Cheerful and playful. (he)\n- **May** — 17–19 learner, brown hair in a bun, cream hoodie, denim skirt, pink backpack, a bit shy but brave. (she)\n- **Mali** — service worker seen in many places (reception, shop, café, events): short wavy brown hair, cream shirt, yellow scarf, navy pants. (she)\n- **Extra NPCs allowed (only these):**\n  - **Aunt Noi** — May's aunt, 50+, kind, forgetful, great cook, calls everyone \"my dear\" (untaught words must still pass the gate). Chapters 11–12 (the team cooks at her house in the city), cameo in 15 and 31. (she)\n  - **Driver Uncle Somchai** — quirky bus driver abroad (ch19): loud music, sings, announces stops very fast. (he)\n  - **DJ Coco** — quirky weather radio DJ (ch21, voice only), far too cheerful even in a storm. (she)\n- **NO other named characters.** The course now uses ONLY the cast above so learners bond with them. Replace former NPCs like this:\n  - Leo (barista), Pa Daeng (night-market seller), Bella (clothes shop), Mae Pim (boat seller), Ms. Joy (party-venue phone), Chef Kai (restaurant) → **Mali** (she works part-time everywhere — a running joke). For the restaurant, Mali is the waitress.\n  - Coach Ben → **Teacher John**. Biscuit (the dog) → **Capy**.\n  - Abroad / strangers (Officer Sam, Ms. Rosa, Mr. Lim, Sunny, Dr. Ana, Officer Kim, Jess, Mr. Chen) → an UNNAMED role, e.g. \"the staff\", \"the driver\", \"the woman at the desk\", \"the man at the shop\", \"the weather report\" — in Thai: เจ้าหน้าที่ / คนขับ / พนักงานต้อนรับ / เภสัชกร. English role nouns must pass vocabgate.py (prefer taught words like man, woman, waiter, driver only if taught by then; otherwise rephrase so no role noun is needed, e.g. \"Excuse me, is there a later flight?\").\n  - Mom → \"my mother\" (not a named character).\n  - Watch pronouns: Mali/Nina = she, Bogy/John = he, Capy/Bee = repeat the name.\n",
  "chapters": {
   "1": {
    "story": "Teacher John (ครูจาก A1) ส่งผู้เรียนเข้าชมรม Adventure Club ให้ครูบีดูแล ครูบีพาประชุมชมรมครั้งแรก ทุกคนแนะนำตัวและงานอดิเรก",
@@ -38,8 +38,8 @@
      "hook": "ชิล ซื่อสัตย์ ตลก · Capy goes everywhere ตามทีมทุกโซน"
     },
     {
-     "name": "Max",
-     "role": "ผู้เรียนจาก A1",
+     "name": "Bogy",
+     "role": "เพื่อนร่วมทีม",
      "hook": "เพื่อนร่วมทีมตลอดคอร์ส"
     },
     {
@@ -80,13 +80,13 @@
   },
   "5": {
    "story": "วันกิจกรรมชมรมที่สวนสาธารณะ",
-   "twist": "Max โทรมาบอกว่าหา Capy ไม่เจอ ต้องบอกว่าใครกำลังทำอะไรอยู่ตรงไหน",
+   "twist": "Bogy โทรมาบอกว่าหา Capy ไม่เจอ ต้องบอกว่าใครกำลังทำอะไรอยู่ตรงไหน",
    "outcome": "บอกสิ่งที่กำลังเกิดขึ้นตอนนี้ได้",
    "npc": [
     {
      "name": "Capy",
      "role": "หายไปในสวน",
-     "hook": "Max โทรมาบอกว่าหา Capy ไม่เจอ ต้องบอกว่าใครกำลังทำอะไรอยู่ตรงไหน"
+     "hook": "Bogy โทรมาบอกว่าหา Capy ไม่เจอ ต้องบอกว่าใครกำลังทำอะไรอยู่ตรงไหน"
     }
    ]
   },
@@ -133,7 +133,7 @@
   },
   "10": {
    "story": "มื้อเย็นที่ร้านอาหารในเมือง",
-   "twist": "เมนูที่สั่งหมด และ Max กินเผ็ดไม่ได้ Mali เตือนว่าเมนูนี้เผ็ดมาก",
+   "twist": "เมนูที่สั่งหมด และ Bogy กินเผ็ดไม่ได้ Mali เตือนว่าเมนูนี้เผ็ดมาก",
    "outcome": "สั่งอาหาร ปรับรสชาติ และแจ้งเมื่ออาหารผิด",
    "npc": [
     {
@@ -180,14 +180,14 @@
    ]
   },
   "14": {
-   "story": "เตรียมของขวัญวันเกิด Max",
+   "story": "เตรียมของขวัญวันเกิด Bogy",
    "twist": "งบไม่พอซื้อชิ้นที่ทุกคนอยากได้ ต้องตกลงกันใหม่",
    "outcome": "เปรียบเทียบขั้นสุดและตัดสินใจพร้อมเหตุผล",
    "npc": []
   },
   "15": {
    "story": "วันจันทร์ เล่าวันหยุดในเมืองให้ Nina ฟัง",
-   "twist": "รูปของ May ไม่ตรงกับที่ Max เล่า ต้องถามว่าเกิดอะไรขึ้นจริง",
+   "twist": "รูปของ May ไม่ตรงกับที่ Bogy เล่า ต้องถามว่าเกิดอะไรขึ้นจริง",
    "outcome": "เล่าและถามเรื่องเมื่อวานได้",
    "npc": []
   },
@@ -271,10 +271,10 @@
   "24": {
    "story": "🧳 Mission: ได้กระเป๋าคืนแล้ว แต่เที่ยวบินกลับดีเลย์",
    "twist": "เที่ยวบินถูกยกเลิก ต้องขอทางเลือกและ voucher",
-   "outcome": "ฟังประกาศ ขอทางเลือก แจ้งคนที่รอ · ปิดโซนด้วยความลับของ Max",
+   "outcome": "ฟังประกาศ ขอทางเลือก แจ้งคนที่รอ · ปิดโซนด้วยความลับของ Bogy",
    "npc": [
     {
-     "name": "Max",
+     "name": "Bogy",
      "role": "มีความลับ",
      "hook": "บอกว่าจะไปเรียนต่อต่างประเทศ"
     }
@@ -317,7 +317,7 @@
    "npc": []
   },
   "30": {
-   "story": "Nina ให้ช่วยโทรจองร้านจัดงานอำลา Max",
+   "story": "Nina ให้ช่วยโทรจองร้านจัดงานอำลา Bogy",
    "twist": "Mali รับสายแล้วบอกว่าร้านเต็ม ต้องเลื่อนวันและฝากข้อความ",
    "outcome": "คุยโทรศัพท์ เช็กงานที่ทำแล้ว/ยัง และเลื่อนนัดได้",
    "npc": [
@@ -329,7 +329,7 @@
    ]
   },
   "31": {
-   "story": "งานอำลา Max ก่อนเขาไปเรียนต่อ ครูบีกลับมาเซอร์ไพรส์ (Capy อยู่กับทีมมาตลอด)",
+   "story": "งานอำลา Bogy ก่อนเขาไปเรียนต่อ ครูบีกลับมาเซอร์ไพรส์ (Capy อยู่กับทีมมาตลอด)",
    "twist": "ของบางอย่างยังไม่มีคนจัดการ ต้องแบ่งงานกันในงาน",
    "outcome": "แบ่งงาน อวยพร และกล่าวลาได้",
    "npc": [
@@ -341,7 +341,7 @@
     {
      "name": "Aunt Noi",
      "role": "มางานอำลา",
-     "hook": "ทำขนมมาให้ Max"
+     "hook": "ทำขนมมาให้ Bogy"
     }
    ]
   },
@@ -380,7 +380,7 @@
    "flag": false,
    "beat": "Ki",
    "axes": "31111",
-   "teach": "**like / love / enjoy + -ing** และ **don't like + -ing** · ต่างจาก A1 ที่ใช้ like + นาม · เปลี่ยนคำจาก 1.1 เป็นกิจกรรมด้วย -ing (ลงท้าย e ให้ตัด e ก่อน): cook → cooking = การทำอาหาร · bake → **baking** · game → **gaming** · cycle → **cycling** · hike → **hiking** · ประโยค: I **love baking**. · Max **enjoys gaming**. · May **likes hiking**. · I **don't like cycling**.",
+   "teach": "**like / love / enjoy + -ing** และ **don't like + -ing** · ต่างจาก A1 ที่ใช้ like + นาม · เปลี่ยนคำจาก 1.1 เป็นกิจกรรมด้วย -ing (ลงท้าย e ให้ตัด e ก่อน): cook → cooking = การทำอาหาร · bake → **baking** · game → **gaming** · cycle → **cycling** · hike → **hiking** · ประโยค: I **love baking**. · Bogy **enjoys gaming**. · May **likes hiking**. · I **don't like cycling**.",
    "say": "I love baking. · I don't like cycling.",
    "chapter": "บท 1: เพื่อนใหม่ในชมรม",
    "goal": "เข้าใจ \"ฉันสนุกกับการอบขนม\" พอจะพูดตัวอย่างของตัวเองได้ 1 ประโยค",
@@ -822,9 +822,9 @@
      ]
     },
     {
-     "audio": "Hey! It's Max. I go jogging on weekends. How about you?",
-     "q": "Max ทำอะไรทุกสุดสัปดาห์?",
-     "qEn": "What does Max do on weekends?",
+     "audio": "Hey! It's Bogy. I go jogging on weekends. How about you?",
+     "q": "Bogy ทำอะไรทุกสุดสัปดาห์?",
+     "qEn": "What does Bogy do on weekends?",
      "en": "Jogging.",
      "accept": [
       "He goes jogging.",
@@ -1063,16 +1063,16 @@
      },
      {
       "kind": "task",
-      "text": "never แปลว่า “ไม่เคยเลย”\nMax ไม่เคยจัดเตียงเลยสักวัน 🛏️ ถ้าเป็น Max จะพูดว่าอะไรครับ?",
+      "text": "never แปลว่า “ไม่เคยเลย”\nMax ไม่เคยจัดเตียงเลยสักวัน 🛏️ ถ้าเป็น Bogy จะพูดว่าอะไรครับ?",
       "expectedSpeech": "I never make the bed.",
       "successText": "I never make the bed. แปลว่า “ฉันไม่เคยจัดเตียงเลย” ครับ\n",
       "incorrectHintTh": "ลองพูดว่า I never make the bed. ครับ"
      },
      {
       "kind": "task",
-      "text": "ถ้าอยากรู้ว่าอีกฝ่ายทำบ่อยแค่ไหน ถามว่า How often do you…?\nลองถาม Max ว่า “ทำอาหารบ่อยแค่ไหน” How often do you cook?\nลองพูดตามครับ",
+      "text": "ถ้าอยากรู้ว่าอีกฝ่ายทำบ่อยแค่ไหน ถามว่า How often do you…?\nลองถาม Bogy ว่า “ทำอาหารบ่อยแค่ไหน” How often do you cook?\nลองพูดตามครับ",
       "expectedSpeech": "How often do you cook?",
-      "successText": "Max ตอบว่า I never cook! ไม่เคยทำเลย 😆\n"
+      "successText": "Bogy ตอบว่า I never cook! ไม่เคยทำเลย 😆\n"
      },
      {
       "kind": "task",
@@ -1084,7 +1084,7 @@
      {
       "kind": "choice",
       "answerMode": "any",
-      "text": "Max ถามกลับว่า How often do you cook? ตอบตามจริงครับ",
+      "text": "Bogy ถามกลับว่า How often do you cook? ตอบตามจริงครับ",
       "stem": "I ... cook.",
       "options": [
        {
@@ -1218,8 +1218,8 @@
    "flag": false,
    "beat": "Sho",
    "axes": "31211",
-   "teach": "🗣️ เล่าเรื่องคนอื่น (A1 สอน She works. แล้ว) บทนี้เน้นคำที่มีเสียง “อิซ” งอกเพิ่ม ใช้คำจาก 2.7: **practices · exercises · relaxes · watches** และ go → **goes** · May **practices** after school. · Capy **relaxes** after dinner. · Max **watches** TV every night. · Max **goes** to bed **late**.",
-   "say": "May practices after school. · Capy relaxes after dinner. · Max watches TV every night.",
+   "teach": "🗣️ เล่าเรื่องคนอื่น (A1 สอน She works. แล้ว) บทนี้เน้นคำที่มีเสียง “อิซ” งอกเพิ่ม ใช้คำจาก 2.7: **practices · exercises · relaxes · watches** และ go → **goes** · May **practices** after school. · Capy **relaxes** after dinner. · Bogy **watches** TV every night. · Bogy **goes** to bed **late**.",
+   "say": "May practices after school. · Capy relaxes after dinner. · Bogy watches TV every night.",
    "chapter": "บท 2: หนึ่งวันของฉัน",
    "goal": "เข้าใจ \"เติม -es -ies\" พอจะพูดตัวอย่างของตัวเองได้ 1 ประโยค",
    "accept": "ไม่ตัดสินผ่าน/ตก · ผู้เรียนพูดตามหรือเปลี่ยนคำในตัวอย่างอย่างน้อย 1 ประโยค",
@@ -1237,23 +1237,23 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "Max ออกกำลังกายทุกเช้า 🏋️ exercise → exercises\nจะเล่าถึง Max ว่าอะไรครับ?",
-      "stem": "Max ... every morning.",
+      "text": "Bogy ออกกำลังกายทุกเช้า 🏋️ exercise → exercises\nจะเล่าถึง Bogy ว่าอะไรครับ?",
+      "stem": "Bogy ... every morning.",
       "options": [
        {
         "emoji": "🏋️",
         "label": "exercises",
-        "speak": "Max exercises every morning."
+        "speak": "Bogy exercises every morning."
        },
        {
         "emoji": "🙋",
         "label": "exercise",
-        "speak": "Max exercise every morning."
+        "speak": "Bogy exercise every morning."
        }
       ],
-      "expectedSpeech": "Max exercises every morning.",
-      "successText": "Max exercises every morning. แปลว่า “Max ออกกำลังกายทุกเช้า” ครับ\n",
-      "incorrectHintTh": "เกือบแล้ว! เล่าถึง Max ต้องเป็น exercises ครับ พูดว่า Max exercises every morning."
+      "expectedSpeech": "Bogy exercises every morning.",
+      "successText": "Bogy exercises every morning. แปลว่า “Bogy ออกกำลังกายทุกเช้า” ครับ\n",
+      "incorrectHintTh": "เกือบแล้ว! เล่าถึง Bogy ต้องเป็น exercises ครับ พูดว่า Bogy exercises every morning."
      },
      {
       "kind": "task",
@@ -1264,31 +1264,31 @@
      },
      {
       "kind": "task",
-      "text": "Max ดูทีวีทุกคืน 📺 watch → watches\nจะเล่าว่าอะไรครับ?",
-      "expectedSpeech": "Max watches TV every night.",
-      "successText": "Max watches TV every night. แปลว่า “Max ดูทีวีทุกคืน” ครับ\n",
-      "incorrectHintTh": "ลองพูดว่า Max watches TV every night. ครับ"
+      "text": "Bogy ดูทีวีทุกคืน 📺 watch → watches\nจะเล่าว่าอะไรครับ?",
+      "expectedSpeech": "Bogy watches TV every night.",
+      "successText": "Bogy watches TV every night. แปลว่า “Bogy ดูทีวีทุกคืน” ครับ\n",
+      "incorrectHintTh": "ลองพูดว่า Bogy watches TV every night. ครับ"
      },
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "แล้ว Max ก็เข้านอนดึกด้วย 🌙 go → goes",
-      "stem": "Max ... to bed late.",
+      "text": "แล้ว Bogy ก็เข้านอนดึกด้วย 🌙 go → goes",
+      "stem": "Bogy ... to bed late.",
       "options": [
        {
         "emoji": "🌙",
         "label": "goes",
-        "speak": "Max goes to bed late."
+        "speak": "Bogy goes to bed late."
        },
        {
         "emoji": "❓",
         "label": "go",
-        "speak": "Max go to bed late."
+        "speak": "Bogy go to bed late."
        }
       ],
-      "expectedSpeech": "Max goes to bed late.",
-      "successText": "Max goes to bed late. แปลว่า “Max เข้านอนดึก” ครับ\n",
-      "incorrectHintTh": "เกือบแล้ว! go เปลี่ยนเป็น goes ครับ พูดว่า Max goes to bed late."
+      "expectedSpeech": "Bogy goes to bed late.",
+      "successText": "Bogy goes to bed late. แปลว่า “Bogy เข้านอนดึก” ครับ\n",
+      "incorrectHintTh": "เกือบแล้ว! go เปลี่ยนเป็น goes ครับ พูดว่า Bogy goes to bed late."
      },
      {
       "kind": "choice",
@@ -1411,12 +1411,12 @@
   },
   {
    "code": "2.11",
-   "title": "🎬 Max's Morning / เช้าของ Max",
+   "title": "🎬 Bogy's Morning / เช้าของ Bogy",
    "type": "story_bites",
    "flag": false,
    "beat": "Ten",
    "axes": "12132",
-   "teach": "🎬 คลิป 15–30 วินาที: Max ตื่นสาย วิ่งไปขึ้นรถ → ตอบ 3 คำถามด้วยเสียง · เปิดดูซ้ำได้ · 📜 สคริปต์มีคำตอบทุกข้อ ไม่ถามสิ่งที่คลิปไม่ได้พูด",
+   "teach": "🎬 คลิป 15–30 วินาที: Bogy ตื่นสาย วิ่งไปขึ้นรถ → ตอบ 3 คำถามด้วยเสียง · เปิดดูซ้ำได้ · 📜 สคริปต์มีคำตอบทุกข้อ ไม่ถามสิ่งที่คลิปไม่ได้พูด",
    "say": "At six thirty.",
    "chapter": "บท 2: หนึ่งวันของฉัน",
    "goal": "ตามเรื่องในคลิปได้พอตอบ 3 คำถามด้วยเสียง",
@@ -1424,8 +1424,8 @@
    "hint": "① เล่นซ้ำช่วงที่มีคำตอบ ② sentence starter · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "audio": "Max: Oh no! It's seven thirty! I usually get up at six thirty. I'm late again! I don't have time for breakfast, so I'm taking some bread. I'm sometimes late on Mondays.",
-     "q": "What time does Max usually get up?",
+     "audio": "Bogy: Oh no! It's seven thirty! I usually get up at six thirty. I'm late again! I don't have time for breakfast, so I'm taking some bread. I'm sometimes late on Mondays.",
+     "q": "What time does Bogy usually get up?",
      "en": "At six thirty.",
      "accept": [
       "Six thirty.",
@@ -1457,7 +1457,7 @@
    "flag": false,
    "beat": "Ketsu",
    "axes": "12222",
-   "teach": "ครูบีถามกิจวัตรเพื่อหาเวลาซ้อม: เล่ากิจวัตร บอกความถี่ แล้วถามครูกลับ (3–6 turns · 3 goals · ไม่บังคับ first / then)",
+   "teach": "Nina ถามกิจวัตรเพื่อหาเวลาซ้อม: เล่ากิจวัตร บอกความถี่ แล้วถาม Nina กลับ (3–6 turns · 3 goals · ไม่บังคับ first / then)",
    "say": "I have breakfast at seven. · How about you?",
    "chapter": "บท 2: หนึ่งวันของฉัน",
    "goal": "คุยจนสำเร็จ: เล่ากิจวัตรและความถี่ได้",
@@ -1668,7 +1668,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "ในครัว ตู้เย็นอยู่ตรงกลาง ระหว่างโต๊ะกับประตู 🧊 จะบอก Max ว่าอะไรครับ?",
+      "text": "ในครัว ตู้เย็นอยู่ตรงกลาง ระหว่างโต๊ะกับประตู 🧊 จะบอก Bogy ว่าอะไรครับ?",
       "stem": "The fridge is ...",
       "options": [
        {
@@ -1957,7 +1957,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "คุณเจอหมวกของ Max บนโซฟา 🧢 ยื่นให้ Max แล้วบอกว่า “ของเธอนะ” จะพูดว่าอะไรครับ?",
+      "text": "คุณเจอหมวกของ Bogy บนโซฟา 🧢 ยื่นให้ Bogy แล้วบอกว่า “ของเธอนะ” จะพูดว่าอะไรครับ?",
       "stem": "It's ...",
       "options": [
        {
@@ -1977,7 +1977,7 @@
      },
      {
       "kind": "listen",
-      "text": "ถ้าเป็นของคนที่มีชื่อ เติม 's หลังชื่อ\nIt's May's. แปลว่า “ของ May” · It's Max's. แปลว่า “ของ Max”"
+      "text": "ถ้าเป็นของคนที่มีชื่อ เติม 's หลังชื่อ\nIt's May's. แปลว่า “ของ May” · It's Bogy's. แปลว่า “ของ Bogy”"
      },
      {
       "kind": "task",
@@ -2137,7 +2137,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "Capy ยืนข้าง Max แล้วตัวเล็กนิดเดียว 🦫",
+      "text": "Capy ยืนข้าง Bogy แล้วตัวเล็กนิดเดียว 🦫",
       "stem": "Capy is ...",
       "options": [
        {
@@ -2346,10 +2346,10 @@
      },
      {
       "kind": "task",
-      "text": "ครูบีถามว่า Max อยู่ไหน 🤔 Max เป็นเด็กผู้ชายผมสั้น 👦 ชี้ให้ครูบีดู จะพูดว่าอะไรครับ?",
-      "expectedSpeech": "The boy with short hair is Max.",
-      "successText": "The boy with short hair is Max. แปลว่า “เด็กผู้ชายผมสั้นคือ Max” ครับ\n",
-      "incorrectHintTh": "ลองใช้ The boy with … is Max. ครับ"
+      "text": "ครูบีถามว่า Bogy อยู่ไหน 🤔 Bogy เป็นเด็กผู้ชายผมสั้น 👦 ชี้ให้ครูบีดู จะพูดว่าอะไรครับ?",
+      "expectedSpeech": "The boy with short hair is Bogy.",
+      "successText": "The boy with short hair is Bogy. แปลว่า “เด็กผู้ชายผมสั้นคือ Bogy” ครับ\n",
+      "incorrectHintTh": "ลองใช้ The boy with … is Bogy. ครับ"
      },
      {
       "kind": "choice",
@@ -2544,7 +2544,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "Max เล่นมุกจนทุกคนหัวเราะท้องแข็ง 😂 May ถามว่า What is Max like? ตอบว่าอะไรครับ?",
+      "text": "Bogy เล่นมุกจนทุกคนหัวเราะท้องแข็ง 😂 May ถามว่า What is Bogy like? ตอบว่าอะไรครับ?",
       "stem": "He's ...",
       "options": [
        {
@@ -2697,7 +2697,7 @@
    "flag": false,
    "beat": "Ketsu",
    "axes": "12232",
-   "teach": "ครูบีพาไปทักเพื่อนของ May ในงาน มีผู้หญิงใส่เสื้อแดงสองคน: บอกรูปร่างเพื่อแยกตัว บอกนิสัยจากสิ่งที่เธอทำ แล้วถามว่าผู้ชายใส่แว่นคือใคร (3–6 turns · 3 goals)",
+   "teach": "Nina พาไปทักเพื่อนของ May ในงาน มีผู้หญิงใส่เสื้อแดงสองคน: บอกรูปร่างเพื่อแยกตัว บอกนิสัยจากสิ่งที่เธอทำ แล้วถามว่าผู้ชายใส่แว่นคือใคร (3–6 turns · 3 goals)",
    "say": "She has short curly hair. · Who's the man with glasses?",
    "chapter": "บท 4: ใครเป็นใครในงานต้อนรับชมรม",
    "goal": "คุยจนสำเร็จ: บรรยายรูปร่างและนิสัยคนได้",
@@ -2725,7 +2725,7 @@
    "flag": false,
    "beat": "Ki",
    "axes": "31111",
-   "teach": "🔁 ทบทวน A1 บท 12–13 (ทำประจำ vs กำลังทำ) แล้วต่อยอด: ใช้ทั้งสองในประโยคเดียวด้วย **…, but today…** · ประโยคจากคำ 5.1: Max usually runs in the **park**, **but today** he's sitting on a **bench**. · Capy usually swims in the **lake**, **but today** Capy is sleeping under a **tree**.",
+   "teach": "🔁 ทบทวน A1 บท 12–13 (ทำประจำ vs กำลังทำ) แล้วต่อยอด: ใช้ทั้งสองในประโยคเดียวด้วย **…, but today…** · ประโยคจากคำ 5.1: Bogy usually runs in the **park**, **but today** he's sitting on a **bench**. · Capy usually swims in the **lake**, **but today** Capy is sleeping under a **tree**.",
    "say": "He usually runs, but today he's reading.",
    "chapter": "บท 5: สวนสาธารณะวันนี้",
    "goal": "เข้าใจ \"ปกติ…แต่วันนี้\" พอจะพูดตัวอย่างของตัวเองได้ 1 ประโยค",
@@ -2769,8 +2769,8 @@
      },
      {
       "kind": "task",
-      "text": "วันนี้ชมรมมีกิจกรรมที่สวนสาธารณะครับ 🏞️ เล่าสิ่งที่ทำประจำ 👉 ___ usually ___ “Max usually runs in the park.” = ปกติ Max วิ่งในสวน ลองพูดตามครับ",
-      "expectedSpeech": "Max usually runs in the park."
+      "text": "วันนี้ชมรมมีกิจกรรมที่สวนสาธารณะครับ 🏞️ เล่าสิ่งที่ทำประจำ 👉 ___ usually ___ “Bogy usually runs in the park.” = ปกติ Bogy วิ่งในสวน ลองพูดตามครับ",
+      "expectedSpeech": "Bogy usually runs in the park."
      },
      {
       "kind": "task",
@@ -2780,23 +2780,23 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "ปกติ Max วิ่งในสวน 🏃 แต่วันนี้ขี้เกียจ นั่งแช่อยู่บนม้านั่ง 🪑😆 คุณเล่าว่าอะไรดีครับ?",
-      "stem": "Max usually ..., but today ...",
+      "text": "ปกติ Bogy วิ่งในสวน 🏃 แต่วันนี้ขี้เกียจ นั่งแช่อยู่บนม้านั่ง 🪑😆 คุณเล่าว่าอะไรดีครับ?",
+      "stem": "Bogy usually ..., but today ...",
       "options": [
        {
         "emoji": "🪑",
         "label": "runs / sitting",
-        "speak": "Max usually runs, but today he's sitting on a bench."
+        "speak": "Bogy usually runs, but today he's sitting on a bench."
        },
        {
         "emoji": "🏃",
         "label": "sits / running",
-        "speak": "Max usually sits on a bench, but today he's running."
+        "speak": "Bogy usually sits on a bench, but today he's running."
        }
       ],
-      "expectedSpeech": "Max usually runs, but today he's sitting on a bench.",
-      "successText": "Max usually runs, but today he's sitting on a bench. = ปกติ Max วิ่ง แต่วันนี้นั่งอยู่บนม้านั่ง 🪑 จับได้นะ Max 😆",
-      "incorrectHintTh": "เกือบแล้ว! ปกติวิ่ง แต่วันนี้นั่ง → Max usually runs, but today he's sitting on a bench."
+      "expectedSpeech": "Bogy usually runs, but today he's sitting on a bench.",
+      "successText": "Bogy usually runs, but today he's sitting on a bench. = ปกติ Bogy วิ่ง แต่วันนี้นั่งอยู่บนม้านั่ง 🪑 จับได้นะ Bogy 😆",
+      "incorrectHintTh": "เกือบแล้ว! ปกติวิ่ง แต่วันนี้นั่ง → Bogy usually runs, but today he's sitting on a bench."
      },
      {
       "kind": "choice",
@@ -2847,17 +2847,17 @@
      },
      {
       "kind": "task",
-      "text": "ลองถาม Max ว่าปกติวิ่งในสวนใช่ไหม 🏃 (ขึ้นต้นด้วย Do you… นะครับ) ท้าเลย! ถามเองดูครับ",
+      "text": "ลองถาม Bogy ว่าปกติวิ่งในสวนใช่ไหม 🏃 (ขึ้นต้นด้วย Do you… นะครับ) ท้าเลย! ถามเองดูครับ",
       "expectedSpeech": "Do you usually run in the park?"
      },
      {
       "kind": "listen",
-      "text": "เยี่ยม! ถามว่า “Do you usually run in the park?” ครับ 👍 Max ตอบว่า “Yes, I do. But today I'm sitting on a bench.” = ใช่ แต่วันนี้ฉันนั่งอยู่บนม้านั่ง 🪑"
+      "text": "เยี่ยม! ถามว่า “Do you usually run in the park?” ครับ 👍 Bogy ตอบว่า “Yes, I do. But today I'm sitting on a bench.” = ใช่ แต่วันนี้ฉันนั่งอยู่บนม้านั่ง 🪑"
      },
      {
       "kind": "choice",
       "answerMode": "any",
-      "text": "Max ถามคุณบ้าง “What do you usually do in the park?” เลือกแบบที่ตรงกับคุณแล้วพูดเลยครับ",
+      "text": "Bogy ถามคุณบ้าง “What do you usually do in the park?” เลือกแบบที่ตรงกับคุณแล้วพูดเลยครับ",
       "stem": "I usually ..., but today ...",
       "options": [
        {
@@ -2881,7 +2881,7 @@
      },
      {
       "kind": "finish",
-      "text": "จบบทแล้ว 🎉 ตอนนี้คุณเล่าได้ว่าปกติทำอะไร แล้ววันนี้ต่างไปยังไง “Max usually runs, but today he's reading.” · “I usually read in the park.” บทหน้า…Max โทรมาบอกว่าหา Capy ไม่เจอ! 📱"
+      "text": "จบบทแล้ว 🎉 ตอนนี้คุณเล่าได้ว่าปกติทำอะไร แล้ววันนี้ต่างไปยังไง “Bogy usually runs, but today he's reading.” · “I usually read in the park.” บทหน้า…Bogy โทรมาบอกว่าหา Capy ไม่เจอ! 📱"
      }
     ]
    }
@@ -2907,7 +2907,7 @@
    "flag": false,
    "beat": "Sho",
    "axes": "21211",
-   "teach": "❓ ขั้น 2: ถามสิ่งที่กำลังทำ **What is he doing? · What are they doing?** · คำบอกเวลา **at the moment · today · right now** (กำลังทำ) vs **every day · usually** (ทำประจำ) · ตัวอย่าง: **What is** Max **doing**? — **Right now** he's running by the lake. · **At the moment** I'm eating lunch.",
+   "teach": "❓ ขั้น 2: ถามสิ่งที่กำลังทำ **What is he doing? · What are they doing?** · คำบอกเวลา **at the moment · today · right now** (กำลังทำ) vs **every day · usually** (ทำประจำ) · ตัวอย่าง: **What is** Bogy **doing**? — **Right now** he's running by the lake. · **At the moment** I'm eating lunch.",
    "say": "At the moment I'm eating lunch.",
    "chapter": "บท 5: สวนสาธารณะวันนี้",
    "goal": "เข้าใจ \"ตอนนี้\" พอจะพูดตัวอย่างของตัวเองได้ 1 ประโยค",
@@ -2920,7 +2920,7 @@
     "steps": [
      {
       "kind": "task",
-      "text": "Max อยู่อีกฝั่งของสวน มองไม่เห็นเลย 📱 อยากรู้ว่าใครกำลังทำอะไร ใช้ท่านี้ 👉 What is ___ doing? “What is he doing?” = เขากำลังทำอะไรอยู่ ลองถาม May ดูครับ",
+      "text": "Bogy อยู่อีกฝั่งของสวน มองไม่เห็นเลย 📱 อยากรู้ว่าใครกำลังทำอะไร ใช้ท่านี้ 👉 What is ___ doing? “What is he doing?” = เขากำลังทำอะไรอยู่ ลองถาม May ดูครับ",
       "expectedSpeech": "What is he doing?"
      },
      {
@@ -2976,13 +2976,13 @@
      },
      {
       "kind": "task",
-      "text": "Max โทรมาถามว่าคุณทำอะไรอยู่ 📱 ตอนนี้คุณนั่งอยู่บนม้านั่ง 🪑 ตอบ Max (ขึ้นต้นด้วย Right now…) ลองเดาดู ผิดได้ไม่เป็นไรครับ 😄",
+      "text": "Bogy โทรมาถามว่าคุณทำอะไรอยู่ 📱 ตอนนี้คุณนั่งอยู่บนม้านั่ง 🪑 ตอบ Bogy (ขึ้นต้นด้วย Right now…) ลองเดาดู ผิดได้ไม่เป็นไรครับ 😄",
       "expectedSpeech": "Right now I'm sitting on a bench."
      },
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "ใช่เลย! พูดว่า “Right now I'm sitting on a bench.” ครับ 🪑 Max โทรมาอีกรอบ ตอนคุณกำลังกินข้าวเที่ยงคำโตพอดี 🍱😋 ตอบว่าอะไรดีครับ?",
+      "text": "ใช่เลย! พูดว่า “Right now I'm sitting on a bench.” ครับ 🪑 Bogy โทรมาอีกรอบ ตอนคุณกำลังกินข้าวเที่ยงคำโตพอดี 🍱😋 ตอบว่าอะไรดีครับ?",
       "stem": "...",
       "options": [
        {
@@ -2997,22 +2997,22 @@
        }
       ],
       "expectedSpeech": "At the moment I'm eating lunch.",
-      "successText": "At the moment I'm eating lunch. = ตอนนี้ฉันกำลังกินข้าวเที่ยง 🍱 Max หิวตามเลย 😆",
+      "successText": "At the moment I'm eating lunch. = ตอนนี้ฉันกำลังกินข้าวเที่ยง 🍱 Bogy หิวตามเลย 😆",
       "incorrectHintTh": "เกือบแล้ว! กำลังกินอยู่ตอนนี้ → At the moment I'm eating lunch."
      },
      {
       "kind": "task",
-      "text": "หา Capy ไม่เจอ 😮 ลองถาม Max ว่า Capy กำลังทำอะไรอยู่ ท้าเลย! ถามเองดูครับ",
+      "text": "หา Capy ไม่เจอ 😮 ลองถาม Bogy ว่า Capy กำลังทำอะไรอยู่ ท้าเลย! ถามเองดูครับ",
       "expectedSpeech": "What is Capy doing?"
      },
      {
       "kind": "listen",
-      "text": "เป๊ะเลย! ถามว่า “What is Capy doing?” ครับ 👍 Max ตอบว่า “Capy is sleeping under a tree!” = Capy กำลังนอนหลับอยู่ใต้ต้นไม้ 😴🌳"
+      "text": "เป๊ะเลย! ถามว่า “What is Capy doing?” ครับ 👍 Bogy ตอบว่า “Capy is sleeping under a tree!” = Capy กำลังนอนหลับอยู่ใต้ต้นไม้ 😴🌳"
      },
      {
       "kind": "choice",
       "answerMode": "any",
-      "text": "Max ถามคุณบ้าง “What are you doing right now?” ตอบตามจริงเลยครับ",
+      "text": "Bogy ถามคุณบ้าง “What are you doing right now?” ตอบตามจริงเลยครับ",
       "stem": "Right now I'm ...",
       "options": [
        {
@@ -3087,7 +3087,7 @@
      ]
     },
     {
-     "th": "ถามว่าเขา (Max) กำลังทำอะไร แล้วตอบว่าเขากำลังวิ่ง",
+     "th": "ถามว่าเขา (Bogy) กำลังทำอะไร แล้วตอบว่าเขากำลังวิ่ง",
      "en": "What is he doing? — He's running.",
      "accept": [
       "What is he doing? He's running.",
@@ -3131,12 +3131,12 @@
    "hint": "① ไฮไลต์ข้อมูลในภาพที่ต้องพูด ② sentence starter · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "pic": "ภาพสวน: Max (ผู้ชาย) กำลังวิ่ง 🏃",
+     "pic": "ภาพสวน: Bogy (ผู้ชาย) กำลังวิ่ง 🏃",
      "en": "He's running.",
      "accept": [
       "He is running.",
-      "Max is running.",
-      "Max is running in the park."
+      "Bogy is running.",
+      "Bogy is running in the park."
      ]
     },
     {
@@ -3175,10 +3175,10 @@
      ]
     },
     {
-     "pic": "ภาพสวน: Max (ผู้ชาย) กำลังปีนต้นไม้ 🧗🌳 (ป้าย tree)",
-     "en": "Max is climbing a tree.",
+     "pic": "ภาพสวน: Bogy (ผู้ชาย) กำลังปีนต้นไม้ 🧗🌳 (ป้าย tree)",
+     "en": "Bogy is climbing a tree.",
      "accept": [
-      "Max's climbing a tree.",
+      "Bogy's climbing a tree.",
       "He's climbing a tree.",
       "He is climbing a tree."
      ]
@@ -3201,7 +3201,7 @@
    "flag": false,
    "beat": "Sho",
    "axes": "31111",
-   "teach": "🧩 วลีติดปากในสวน **Come on! · Hurry up! · Watch out! · Look at…** · ใช้คู่กับ present continuous: **Look at** Capy! Capy is sleeping on the bench. · **Watch out!** Max is running fast. · **Hurry up!** They're playing badminton by the lake. · **Come on!** Let's run.",
+   "teach": "🧩 วลีติดปากในสวน **Come on! · Hurry up! · Watch out! · Look at…** · ใช้คู่กับ present continuous: **Look at** Capy! Capy is sleeping on the bench. · **Watch out!** Bogy is running fast. · **Hurry up!** They're playing badminton by the lake. · **Come on!** Let's run.",
    "say": "Look at Capy! · Hurry up!",
    "chapter": "บท 5: สวนสาธารณะวันนี้",
    "goal": "เข้าใจ \"วลีสั้นในสวน\" พอจะพูดตัวอย่างของตัวเองได้ 1 ประโยค",
@@ -3262,7 +3262,7 @@
        {
         "emoji": "⚠️",
         "label": "Watch out!",
-        "speak": "Watch out! Max is running."
+        "speak": "Watch out! Bogy is running."
        }
       ],
       "expectedSpeech": "Come on! Let's run.",
@@ -3277,7 +3277,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "ทันเวลา! พูดว่า “Watch out! Capy is running.” ครับ ⚠️ ทีนี้ Capy กำลังเล่นว่าว 🪁 (เก่งเกินคาปิบาร่า 😆) อยากให้ Max หันมาดู พูดว่าอะไรดีครับ?",
+      "text": "ทันเวลา! พูดว่า “Watch out! Capy is running.” ครับ ⚠️ ทีนี้ Capy กำลังเล่นว่าว 🪁 (เก่งเกินคาปิบาร่า 😆) อยากให้ Bogy หันมาดู พูดว่าอะไรดีครับ?",
       "stem": "...",
       "options": [
        {
@@ -3292,7 +3292,7 @@
        }
       ],
       "expectedSpeech": "Look at Capy!",
-      "successText": "Look at Capy! = ดู Capy สิ! 👀 Max อ้าปากค้างเลย 😆",
+      "successText": "Look at Capy! = ดู Capy สิ! 👀 Bogy อ้าปากค้างเลย 😆",
       "incorrectHintTh": "เกือบแล้ว! เรียกให้ดู → Look at Capy! ครับ"
      },
      {
@@ -3307,7 +3307,7 @@
      {
       "kind": "choice",
       "answerMode": "any",
-      "text": "Max ถามคุณบ้าง “Are you ready?” จะวิ่งหรือจะชิล เลือกเลยครับ 😄",
+      "text": "Bogy ถามคุณบ้าง “Are you ready?” จะวิ่งหรือจะชิล เลือกเลยครับ 😄",
       "stem": "...",
       "options": [
        {
@@ -3358,11 +3358,11 @@
      ]
     },
     {
-     "th": "บอกว่าปกติ Max วิ่ง แต่ตอนนี้เขากำลังกินข้าว",
-     "en": "Max usually runs, but at the moment he's eating.",
+     "th": "บอกว่าปกติ Bogy วิ่ง แต่ตอนนี้เขากำลังกินข้าว",
+     "en": "Bogy usually runs, but at the moment he's eating.",
      "accept": [
-      "Max usually runs, but right now he's eating.",
-      "Max usually runs, but at the moment he is eating."
+      "Bogy usually runs, but right now he's eating.",
+      "Bogy usually runs, but at the moment he is eating."
      ]
     },
     {
@@ -3397,7 +3397,7 @@
    "flag": false,
    "beat": "Ketsu",
    "axes": "12322",
-   "teach": "Max โทรมาถามว่าตอนนี้ใครทำอะไร ผู้เรียนเล่าและถามกลับ (5–7 turns ไม่เกิน 3 นาที · 3 goals)",
+   "teach": "Bogy โทรมาถามว่าตอนนี้ใครทำอะไร ผู้เรียนเล่าและถามกลับ (5–7 turns ไม่เกิน 3 นาที · 3 goals)",
    "say": "What are you doing now?",
    "chapter": "บท 5: สวนสาธารณะวันนี้",
    "goal": "คุยจนสำเร็จ: บอกสิ่งที่กำลังเกิดขึ้นตอนนี้ได้",
@@ -3489,23 +3489,23 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "Max ร้องเพลงเพราะมาก 🎤 แต่วาดแมวออกมาเหมือนมันฝรั่ง 🥔😆 คุณเล่าถึง Max ว่าอะไรดีครับ?",
-      "stem": "Max is good at ...",
+      "text": "Bogy ร้องเพลงเพราะมาก 🎤 แต่วาดแมวออกมาเหมือนมันฝรั่ง 🥔😆 คุณเล่าถึง Bogy ว่าอะไรดีครับ?",
+      "stem": "Bogy is good at ...",
       "options": [
        {
         "emoji": "🎤",
         "label": "singing",
-        "speak": "Max is good at singing."
+        "speak": "Bogy is good at singing."
        },
        {
         "emoji": "✏️",
         "label": "drawing",
-        "speak": "Max is good at drawing."
+        "speak": "Bogy is good at drawing."
        }
       ],
-      "expectedSpeech": "Max is good at singing.",
-      "successText": "Max is good at singing. = Max ร้องเพลงเก่ง 🎤 (วาดรูปไว้ก่อนนะ 😆)",
-      "incorrectHintTh": "เกือบแล้ว! Max เก่งร้องเพลง 🎤 → Max is good at singing."
+      "expectedSpeech": "Bogy is good at singing.",
+      "successText": "Bogy is good at singing. = Bogy ร้องเพลงเก่ง 🎤 (วาดรูปไว้ก่อนนะ 😆)",
+      "incorrectHintTh": "เกือบแล้ว! Bogy เก่งร้องเพลง 🎤 → Bogy is good at singing."
      },
      {
       "kind": "task",
@@ -3561,17 +3561,17 @@
      },
      {
       "kind": "task",
-      "text": "ลองถาม Max ว่าเล่นกีตาร์เก่งไหม 🎸 (ขึ้นต้นด้วย Are you… นะครับ) ท้าเลย! ถามเองดูครับ",
+      "text": "ลองถาม Bogy ว่าเล่นกีตาร์เก่งไหม 🎸 (ขึ้นต้นด้วย Are you… นะครับ) ท้าเลย! ถามเองดูครับ",
       "expectedSpeech": "Are you good at playing the guitar?"
      },
      {
       "kind": "listen",
-      "text": "ชัดมาก! ถามว่า “Are you good at playing the guitar?” ครับ 👍 Max ตอบว่า “No, I'm not very good at it. But I'm good at singing!” = ไม่ค่อยเก่ง แต่ฉันร้องเพลงเก่งนะ 🎤"
+      "text": "ชัดมาก! ถามว่า “Are you good at playing the guitar?” ครับ 👍 Bogy ตอบว่า “No, I'm not very good at it. But I'm good at singing!” = ไม่ค่อยเก่ง แต่ฉันร้องเพลงเก่งนะ 🎤"
      },
      {
       "kind": "choice",
       "answerMode": "any",
-      "text": "Max ถามคุณบ้าง “What are you good at?” อวดได้เต็มที่เลยครับ 😎",
+      "text": "Bogy ถามคุณบ้าง “What are you good at?” อวดได้เต็มที่เลยครับ 😎",
       "stem": "I'm good at ...",
       "options": [
        {
@@ -3704,7 +3704,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "Max ถามว่า “Why do you like English?” คุณรู้สึกว่าภาษาอังกฤษใช้ได้จริงทุกที่ 🌏 ตอบ Max ว่าอะไรดีครับ?",
+      "text": "Bogy ถามว่า “Why do you like English?” คุณรู้สึกว่าภาษาอังกฤษใช้ได้จริงทุกที่ 🌏 ตอบ Bogy ว่าอะไรดีครับ?",
       "stem": "Because it's ...",
       "options": [
        {
@@ -3724,7 +3724,7 @@
      },
      {
       "kind": "task",
-      "text": "ไม่ชอบก็บอกเหตุผลได้ 👉 I don't like ___ because ___ 😴🎮 “I don't like gaming because it's boring.” = ฉันไม่ชอบเล่นเกมเพราะมันน่าเบื่อ (Max ช็อกเลย 😱) ลองพูดตามครับ",
+      "text": "ไม่ชอบก็บอกเหตุผลได้ 👉 I don't like ___ because ___ 😴🎮 “I don't like gaming because it's boring.” = ฉันไม่ชอบเล่นเกมเพราะมันน่าเบื่อ (Bogy ช็อกเลย 😱) ลองพูดตามครับ",
       "expectedSpeech": "I don't like gaming because it's boring."
      },
      {
@@ -3750,7 +3750,7 @@
      },
      {
       "kind": "task",
-      "text": "Max ชอบปั่นจักรยานเพราะดีต่อสุขภาพ 🚴💪 ช่วย Max บอกเหตุผล ใช้ because นะ ลองเดาดู ผิดได้ไม่เป็นไรครับ 😄",
+      "text": "Bogy ชอบปั่นจักรยานเพราะดีต่อสุขภาพ 🚴💪 ช่วย Bogy บอกเหตุผล ใช้ because นะ ลองเดาดู ผิดได้ไม่เป็นไรครับ 😄",
       "expectedSpeech": "I like cycling because it's healthy."
      },
      {
@@ -3830,7 +3830,7 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "ถาม Max ว่า \"ทำไมอยากเข้าชมรมดนตรี\"",
+     "th": "ถาม Bogy ว่า \"ทำไมอยากเข้าชมรมดนตรี\"",
      "en": "Why do you want to join the music club?",
      "accept": []
     },
@@ -3948,7 +3948,7 @@
      },
      {
       "kind": "task",
-      "text": "Max ตีแบดเก่งมาก 🏸 เลยตัดสินใจเข้าชมรมแบดมินตัน ช่วย Max พูด ใช้ so นะ ลองเดาดู ผิดได้ไม่เป็นไรครับ 😄",
+      "text": "Bogy ตีแบดเก่งมาก 🏸 เลยตัดสินใจเข้าชมรมแบดมินตัน ช่วย Bogy พูด ใช้ so นะ ลองเดาดู ผิดได้ไม่เป็นไรครับ 😄",
       "expectedSpeech": "I'm good at playing badminton, so I'll join the badminton club."
      },
      {
@@ -4156,7 +4156,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "May มีนัดไปเยี่ยมป้าเย็นนี้ 👵 แต่ Max ชวนไปเที่ยว 🎡 May ตอบว่าอะไรดีครับ?",
+      "text": "May มีนัดไปเยี่ยมป้าเย็นนี้ 👵 แต่ Bogy ชวนไปเที่ยว 🎡 May ตอบว่าอะไรดีครับ?",
       "stem": "I'm ... this evening.",
       "options": [
        {
@@ -4171,7 +4171,7 @@
        }
       ],
       "expectedSpeech": "I'm busy this evening.",
-      "successText": "I'm busy this evening. = เย็นนี้ฉันไม่ว่าง 😵 Max เศร้านิดนึง 😢",
+      "successText": "I'm busy this evening. = เย็นนี้ฉันไม่ว่าง 😵 Bogy เศร้านิดนึง 😢",
       "incorrectHintTh": "เกือบแล้ว! มีนัดแล้วคือไม่ว่าง → I'm busy this evening."
      },
      {
@@ -4187,7 +4187,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "เยี่ยม! พูดว่า “I'm going to visit my aunt on Saturday afternoon.” ครับ 👵 ส่วน Max เย็นนี้ว่างมาก นอนกลิ้งอยู่บ้าน 😎🛋️ Max พูดว่าอะไรดีครับ?",
+      "text": "เยี่ยม! พูดว่า “I'm going to visit my aunt on Saturday afternoon.” ครับ 👵 ส่วน Bogy เย็นนี้ว่างมาก นอนกลิ้งอยู่บ้าน 😎🛋️ Bogy พูดว่าอะไรดีครับ?",
       "stem": "I'm ... this evening.",
       "options": [
        {
@@ -4207,17 +4207,17 @@
      },
      {
       "kind": "task",
-      "text": "ลองถาม Max ว่าบ่ายวันเสาร์ว่างไหม 🌤️ ท้าเลย! ถามเองดูครับ",
+      "text": "ลองถาม Bogy ว่าบ่ายวันเสาร์ว่างไหม 🌤️ ท้าเลย! ถามเองดูครับ",
       "expectedSpeech": "Are you free on Saturday afternoon?"
      },
      {
       "kind": "listen",
-      "text": "เป๊ะเลย! ถามว่า “Are you free on Saturday afternoon?” ครับ 👍 Max ตอบว่า “Yes, I am. What are you going to do?” = ว่างสิ จะทำอะไรเหรอ"
+      "text": "เป๊ะเลย! ถามว่า “Are you free on Saturday afternoon?” ครับ 👍 Bogy ตอบว่า “Yes, I am. What are you going to do?” = ว่างสิ จะทำอะไรเหรอ"
      },
      {
       "kind": "choice",
       "answerMode": "any",
-      "text": "Max ถามคุณบ้าง “What are you going to do this weekend?” แผนของคุณคืออะไร เลือกเลยครับ",
+      "text": "Bogy ถามคุณบ้าง “What are you going to do this weekend?” แผนของคุณคืออะไร เลือกเลยครับ",
       "stem": "I'm going to ...",
       "options": [
        {
@@ -4280,7 +4280,7 @@
      "accept": []
     },
     {
-     "th": "ถาม Max ว่า \"พรุ่งนี้มีแผนจะทำอะไร\"",
+     "th": "ถาม Bogy ว่า \"พรุ่งนี้มีแผนจะทำอะไร\"",
      "en": "What are you going to do tomorrow?",
      "accept": []
     },
@@ -4290,7 +4290,7 @@
      "accept": []
     },
     {
-     "th": "ถาม Max ว่า Mali มีแผนจะทำอะไรวันเสาร์",
+     "th": "ถาม Bogy ว่า Mali มีแผนจะทำอะไรวันเสาร์",
      "en": "What is Mali going to do on Saturday?",
      "accept": [
       "What's Mali going to do on Saturday?"
@@ -4383,7 +4383,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "Max ชอบเดินป่ามาก 🥾 คุณอยากชวน Max ไปเดินป่าแบบสุภาพ พูดว่าอะไรดีครับ?",
+      "text": "Bogy ชอบเดินป่ามาก 🥾 คุณอยากชวน Bogy ไปเดินป่าแบบสุภาพ พูดว่าอะไรดีครับ?",
       "stem": "...",
       "options": [
        {
@@ -4398,7 +4398,7 @@
        }
       ],
       "expectedSpeech": "Would you like to go hiking?",
-      "successText": "Would you like to go hiking? = อยากไปเดินป่าไหม 🥾 Max ตาเป็นประกายเลย ✨",
+      "successText": "Would you like to go hiking? = อยากไปเดินป่าไหม 🥾 Bogy ตาเป็นประกายเลย ✨",
       "incorrectHintTh": "เกือบแล้ว! ชวนแบบสุภาพ → Would you like to go hiking?"
      },
      {
@@ -4455,12 +4455,12 @@
      },
      {
       "kind": "task",
-      "text": "ลองชวน Max ไปดูหนังเย็นวันศุกร์แบบสุภาพ 🎬 ท้าเลย! ชวนเองดูครับ",
+      "text": "ลองชวน Bogy ไปดูหนังเย็นวันศุกร์แบบสุภาพ 🎬 ท้าเลย! ชวนเองดูครับ",
       "expectedSpeech": "Would you like to see a movie on Friday evening?"
      },
      {
       "kind": "listen",
-      "text": "สุดยอด! ถามว่า “Would you like to see a movie on Friday evening?” ครับ 👍 Max ตอบว่า “Sorry, I'm not available on Friday. How about Saturday?” = ขอโทษนะ วันศุกร์ไม่สะดวก วันเสาร์ดีไหม"
+      "text": "สุดยอด! ถามว่า “Would you like to see a movie on Friday evening?” ครับ 👍 Bogy ตอบว่า “Sorry, I'm not available on Friday. How about Saturday?” = ขอโทษนะ วันศุกร์ไม่สะดวก วันเสาร์ดีไหม"
      },
      {
       "kind": "choice",
@@ -4518,9 +4518,9 @@
      ]
     },
     {
-     "audio": "Hi, it's Max. Shall we play badminton tomorrow? I'm free after school.",
-     "q": "Max ชวนเล่นแบดมินตันวันไหน?",
-     "qEn": "When does Max want to play badminton?",
+     "audio": "Hi, it's Bogy. Shall we play badminton tomorrow? I'm free after school.",
+     "q": "Bogy ชวนเล่นแบดมินตันวันไหน?",
+     "qEn": "When does Bogy want to play badminton?",
      "en": "Tomorrow.",
      "accept": [
       "tomorrow"
@@ -4574,7 +4574,7 @@
    "flag": false,
    "beat": "Ten",
    "axes": "31211",
-   "teach": "ตอบรับ / ปฏิเสธนุ่มนวล: **Sure! · Sorry, I have to… · I'm meeting…** · 🧩 คำบอกเวลาเป็นก้อน **Maybe next time! · another time · soon · See you then.** · ตัวอย่าง: **Sorry, I have to** study. **Maybe next time!** · **Sure! See you then.** · Sorry, **I'm meeting** Max this evening. How about **another time**? See you **soon**!",
+   "teach": "ตอบรับ / ปฏิเสธนุ่มนวล: **Sure! · Sorry, I have to… · I'm meeting…** · 🧩 คำบอกเวลาเป็นก้อน **Maybe next time! · another time · soon · See you then.** · ตัวอย่าง: **Sorry, I have to** study. **Maybe next time!** · **Sure! See you then.** · Sorry, **I'm meeting** Bogy this evening. How about **another time**? See you **soon**!",
    "say": "Sorry, I'm busy. Maybe next time!",
    "chapter": "บท 7: นัดเพื่อนหลังเลิกเรียน",
    "goal": "เข้าใจ \"ไว้คราวหน้า\" พอจะพูดตัวอย่างของตัวเองได้ 1 ประโยค",
@@ -4598,7 +4598,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "Max ชวนไปเดินป่าพรุ่งนี้ 🥾 คุณอยากไปสุด ๆ 😄 ตอบรับว่าอะไรดีครับ?",
+      "text": "Bogy ชวนไปเดินป่าพรุ่งนี้ 🥾 คุณอยากไปสุด ๆ 😄 ตอบรับว่าอะไรดีครับ?",
       "stem": "...",
       "options": [
        {
@@ -4618,19 +4618,19 @@
      },
      {
       "kind": "task",
-      "text": "มีนัดอยู่แล้ว 👉 Sorry, I'm meeting ___ 👫 “Sorry, I'm meeting Max this evening.” = ขอโทษนะ เย็นนี้ฉันนัด Max ไว้แล้ว ลองพูดตามครับ",
-      "expectedSpeech": "Sorry, I'm meeting Max this evening."
+      "text": "มีนัดอยู่แล้ว 👉 Sorry, I'm meeting ___ 👫 “Sorry, I'm meeting Bogy this evening.” = ขอโทษนะ เย็นนี้ฉันนัด Bogy ไว้แล้ว ลองพูดตามครับ",
+      "expectedSpeech": "Sorry, I'm meeting Bogy this evening."
      },
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "เย็นนี้คุณนัด Max ไว้แล้ว 👫 แต่ May ชวนไปกินข้าว 🍜 ตอบ May ว่าอะไรดีครับ?",
+      "text": "เย็นนี้คุณนัด Bogy ไว้แล้ว 👫 แต่ May ชวนไปกินข้าว 🍜 ตอบ May ว่าอะไรดีครับ?",
       "stem": "...",
       "options": [
        {
         "emoji": "👫",
-        "label": "I'm meeting Max",
-        "speak": "Sorry, I'm meeting Max this evening."
+        "label": "I'm meeting Bogy",
+        "speak": "Sorry, I'm meeting Bogy this evening."
        },
        {
         "emoji": "😄",
@@ -4638,9 +4638,9 @@
         "speak": "Sure! See you then."
        }
       ],
-      "expectedSpeech": "Sorry, I'm meeting Max this evening.",
-      "successText": "Sorry, I'm meeting Max this evening. = ขอโทษนะ เย็นนี้ฉันนัด Max ไว้แล้ว 👫 May เข้าใจ 😊",
-      "incorrectHintTh": "เกือบแล้ว! มีนัดอยู่แล้ว → Sorry, I'm meeting Max this evening."
+      "expectedSpeech": "Sorry, I'm meeting Bogy this evening.",
+      "successText": "Sorry, I'm meeting Bogy this evening. = ขอโทษนะ เย็นนี้ฉันนัด Bogy ไว้แล้ว 👫 May เข้าใจ 😊",
+      "incorrectHintTh": "เกือบแล้ว! มีนัดอยู่แล้ว → Sorry, I'm meeting Bogy this evening."
      },
      {
       "kind": "task",
@@ -4680,7 +4680,7 @@
      {
       "kind": "choice",
       "answerMode": "any",
-      "text": "Max ชวนคุณบ้าง “Would you like to go hiking this weekend?” ไปหรือไม่ไป เลือกเลยครับ",
+      "text": "Bogy ชวนคุณบ้าง “Would you like to go hiking this weekend?” ไปหรือไม่ไป เลือกเลยครับ",
       "stem": "...",
       "options": [
        {
@@ -4731,7 +4731,7 @@
      ]
     },
     {
-     "th": "ปฏิเสธ Max ว่าขอโทษ ไม่ว่าง ต้องอ่านหนังสือสอบ",
+     "th": "ปฏิเสธ Bogy ว่าขอโทษ ไม่ว่าง ต้องอ่านหนังสือสอบ",
      "en": "Sorry, I'm busy. I have to study.",
      "accept": [
       "Sorry, I am busy. I have to study."
@@ -4745,11 +4745,11 @@
      ]
     },
     {
-     "th": "ปฏิเสธ Mali ว่าขอโทษ เย็นนี้ฉันมีนัดกับ Max",
-     "en": "Sorry, I'm meeting Max this evening.",
+     "th": "ปฏิเสธ Mali ว่าขอโทษ เย็นนี้ฉันมีนัดกับ Bogy",
+     "en": "Sorry, I'm meeting Bogy this evening.",
      "accept": [
-      "Sorry, I am meeting Max this evening.",
-      "Sorry, I'm meeting Max."
+      "Sorry, I am meeting Bogy this evening.",
+      "Sorry, I'm meeting Bogy."
      ]
     },
     {
@@ -4761,7 +4761,7 @@
      ]
     },
     {
-     "th": "Max ชวนเล่นแบดวันเสาร์ ตอบตกลงแล้วบอกว่าเจอกันวันนั้นนะ",
+     "th": "Bogy ชวนเล่นแบดวันเสาร์ ตอบตกลงแล้วบอกว่าเจอกันวันนั้นนะ",
      "en": "Sure! See you then.",
      "accept": [
       "Sure. See you then."
@@ -4808,7 +4808,7 @@
      ]
     },
     {
-     "pic": "ปฏิทินสองแถว: แถวบน \"ฉัน\" แถวล่าง \"Max\" · ช่องที่ระบายสีเทา = ไม่ว่าง · ช่องที่ทั้งสองแถวว่างตรงกันมีแค่ช่องเดียว: Wednesday evening (พุธ ช่วงเย็น)",
+     "pic": "ปฏิทินสองแถว: แถวบน \"ฉัน\" แถวล่าง \"Bogy\" · ช่องที่ระบายสีเทา = ไม่ว่าง · ช่องที่ทั้งสองแถวว่างตรงกันมีแค่ช่องเดียว: Wednesday evening (พุธ ช่วงเย็น)",
      "en": "How about Wednesday evening?",
      "accept": [
       "How about Wednesday evening? We're both free.",
@@ -4816,7 +4816,7 @@
      ]
     },
     {
-     "pic": "ปฏิทินสองแถว: แถวบน \"ฉัน\" แถวล่าง \"Max\" · ช่องที่ระบายสีเทา = ไม่ว่าง · ช่องที่ทั้งสองแถวว่างตรงกันมีแค่ช่องเดียว: Sunday afternoon (อาทิตย์ ช่วงบ่าย)",
+     "pic": "ปฏิทินสองแถว: แถวบน \"ฉัน\" แถวล่าง \"Bogy\" · ช่องที่ระบายสีเทา = ไม่ว่าง · ช่องที่ทั้งสองแถวว่างตรงกันมีแค่ช่องเดียว: Sunday afternoon (อาทิตย์ ช่วงบ่าย)",
      "en": "How about Sunday afternoon?",
      "accept": [
       "How about Sunday afternoon? We're both free.",
@@ -4862,10 +4862,10 @@
      ]
     },
     {
-     "th": "บอกว่า Max กินอาหารเช้าตอนเจ็ดโมงเสมอ",
-     "en": "Max always has breakfast at seven.",
+     "th": "บอกว่า Bogy กินอาหารเช้าตอนเจ็ดโมงเสมอ",
+     "en": "Bogy always has breakfast at seven.",
      "accept": [
-      "Max always has breakfast at 7."
+      "Bogy always has breakfast at 7."
      ]
     },
     {
@@ -4981,7 +4981,7 @@
      },
      {
       "kind": "listen",
-      "text": "Mali ตอบว่า “Sure! Here you are.” = ได้สิ นี่จ้ะ 🍡 (Max ขอชิมรอบที่สามแล้ว 😆)"
+      "text": "Mali ตอบว่า “Sure! Here you are.” = ได้สิ นี่จ้ะ 🍡 (Bogy ขอชิมรอบที่สามแล้ว 😆)"
      },
      {
       "kind": "task",
@@ -5016,7 +5016,7 @@
      },
      {
       "kind": "task",
-      "text": "Max ซื้อของฝากสองชิ้นกับขนมอีกถุง 🎁🎁🍡 อยากรู้ว่าทั้งหมดเท่าไหร่ (total = ยอดรวม) ท้าเลย! ช่วย Max ถาม Mali ดูครับ",
+      "text": "Bogy ซื้อของฝากสองชิ้นกับขนมอีกถุง 🎁🎁🍡 อยากรู้ว่าทั้งหมดเท่าไหร่ (total = ยอดรวม) ท้าเลย! ช่วย Bogy ถาม Mali ดูครับ",
       "expectedSpeech": "What's the total?"
      },
      {
@@ -5240,12 +5240,12 @@
      },
      {
       "kind": "task",
-      "text": "Max ก็หลงเหมือนกัน 📱 โทรถาม Max ว่าใส่อะไรอยู่ จะได้หาเจอ ท้าเลย! ถามเองดูครับ",
+      "text": "Bogy ก็หลงเหมือนกัน 📱 โทรถาม Bogy ว่าใส่อะไรอยู่ จะได้หาเจอ ท้าเลย! ถามเองดูครับ",
       "expectedSpeech": "What are you wearing?"
      },
      {
       "kind": "listen",
-      "text": "เยี่ยม! ถามว่า “What are you wearing?” ครับ 👍 Max ตอบว่า “I'm wearing a blue shirt. I'm standing next to the gate.” = ฉันใส่เสื้อสีฟ้า ยืนอยู่ข้างประตูทางเข้า 🚪"
+      "text": "เยี่ยม! ถามว่า “What are you wearing?” ครับ 👍 Bogy ตอบว่า “I'm wearing a blue shirt. I'm standing next to the gate.” = ฉันใส่เสื้อสีฟ้า ยืนอยู่ข้างประตูทางเข้า 🚪"
      },
      {
       "kind": "choice",
@@ -5335,7 +5335,7 @@
      ]
     },
     {
-     "audio": "It's Teacher Bee. Max and May are at the ice cream stall. Let's all meet there at eight. Hurry up!",
+     "audio": "It's Teacher Bee. Bogy and May are at the ice cream stall. Let's all meet there at eight. Hurry up!",
      "q": "นัดเจอกันทุกคนกี่โมง?",
      "qEn": "What time is everyone going to meet?",
      "en": "At eight.",
@@ -5380,7 +5380,7 @@
      ]
     },
     {
-     "th": "บอก Max ว่าคุณกำลังยืนอยู่ข้างชิงช้าสวรรค์",
+     "th": "บอก Bogy ว่าคุณกำลังยืนอยู่ข้างชิงช้าสวรรค์",
      "en": "I'm standing next to the big wheel.",
      "accept": [
       "I am standing next to the big wheel."
@@ -5401,7 +5401,7 @@
      ]
     },
     {
-     "th": "บอก Max ว่าคุณอยู่ตรงข้ามแผงที่ Mali ช่วยขายของ",
+     "th": "บอก Bogy ว่าคุณอยู่ตรงข้ามแผงที่ Mali ช่วยขายของ",
      "en": "I'm opposite Mali's stall.",
      "accept": [
       "I am opposite Mali's stall.",
@@ -5419,7 +5419,7 @@
   },
   {
    "code": "8.9",
-   "title": "Night Market with Max & May / คืนตลาดนัดกับ Max และ May",
+   "title": "Night Market with Bogy & May / คืนตลาดนัดกับ Bogy และ May",
    "type": "interactive_scenario",
    "flag": false,
    "beat": "Ketsu",
@@ -5433,37 +5433,17 @@
   },
   {
    "code": "8.10",
-   "title": "🎬 A New Teacher! / ครูคนใหม่มาแล้ว",
-   "type": "story_bites",
+   "title": "A New Teacher! / ครูคนใหม่มาแล้ว",
+   "type": "interactive_scenario",
    "flag": false,
    "beat": "Ketsu",
    "axes": "11121",
-   "teach": "🎬 คลิป 15–30 วินาที ปิด Mission: ครูบีแนะนำ **Teacher Nina** ครูนักผจญภัยคนใหม่ที่จะพาทีมตะลุยเมือง → ตอบ 3 คำถามด้วยเสียง · 🎴 ได้การ์ด NPC Nina · 📜 สคริปต์มีคำตอบทุกข้อ ไม่ถามสิ่งที่คลิปไม่ได้พูด",
+   "teach": "ปิด Mission: ครูบีแนะนำ **Teacher Nina** ครูนักผจญภัยคนใหม่ที่จะพาทีมตะลุยเมือง",
    "say": "Teacher Nina.",
    "chapter": "บท 8: Mission ตลาดนัดกลางคืน",
-   "goal": "ตามเรื่องในคลิปได้พอตอบ 3 คำถามด้วยเสียง",
-   "accept": "ตอบสั้นได้ ตรงเนื้อหาคลิป · เปิดดูซ้ำได้ไม่จำกัด",
-   "hint": "① เล่นซ้ำช่วงที่มีคำตอบ ② sentence starter · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
-   "pool": [
-    {
-     "audio": "Teacher Bee: Hi, team! This is Teacher Nina. She's our new teacher! Teacher Nina: Hi! Good work at the night market! Next Saturday, we're going to Bangkok. Let's meet at the school gate at eight.",
-     "q": "Who is the new teacher?",
-     "en": "Teacher Nina.",
-     "accept": []
-    },
-    {
-     "audio": "(คลิปเดิม)",
-     "q": "When are they going to Bangkok?",
-     "en": "Next Saturday.",
-     "accept": []
-    },
-    {
-     "audio": "(คลิปเดิม)",
-     "q": "Where are they going to meet?",
-     "en": "At the school gate.",
-     "accept": []
-    }
-   ]
+   "goal": "เจอ Teacher Nina และฟังข่าวทริปเข้าเมือง",
+   "accept": "ทักและตอบตามความหมายจริง",
+   "hint": "💡 ① เป้าหมายของ turn นี้ ② sentence starter · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent"
   },
   {
    "code": "9.1",
@@ -5540,7 +5520,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "Max ร้อนจนละลาย อยากได้ชาเย็นแก้วใหญ่ 🧊🥤 Max สั่ง Mali ว่าอะไรดี?",
+      "text": "Bogy ร้อนจนละลาย อยากได้ชาเย็นแก้วใหญ่ 🧊🥤 Bogy สั่ง Mali ว่าอะไรดี?",
       "stem": "Can I have a ... tea, please?",
       "options": [
        {
@@ -5555,8 +5535,8 @@
        }
       ],
       "expectedSpeech": "Can I have a large iced tea, please?",
-      "successText": "Can I have a large iced tea, please? = ขอชาเย็นแก้วใหญ่ได้ไหม · Max ชื่นใจเลย 😎",
-      "incorrectHintTh": "เกือบแล้ว! Max อยากได้แก้วใหญ่ใส่น้ำแข็ง 🧊 พูดว่า Can I have a large iced tea, please? ครับ"
+      "successText": "Can I have a large iced tea, please? = ขอชาเย็นแก้วใหญ่ได้ไหม · Bogy ชื่นใจเลย 😎",
+      "incorrectHintTh": "เกือบแล้ว! Bogy อยากได้แก้วใหญ่ใส่น้ำแข็ง 🧊 พูดว่า Can I have a large iced tea, please? ครับ"
      },
      {
       "kind": "choice",
@@ -5781,7 +5761,7 @@
      },
      {
       "kind": "task",
-      "text": "Max อยากได้นมนิดหน่อยใส่ชา 🥛 แต่ Max เขิน 😳 ช่วย Max ขอ Mali หน่อย ขอเองเลยครับ",
+      "text": "Bogy อยากได้นมนิดหน่อยใส่ชา 🥛 แต่ Bogy เขิน 😳 ช่วย Bogy ขอ Mali หน่อย ขอเองเลยครับ",
       "expectedSpeech": "Can I have some milk?"
      },
      {
@@ -5941,7 +5921,7 @@
      ]
     },
     {
-     "pic": "บอร์ดเมนูคาเฟ่ที่ Mali ทำงาน: ☕ hot latte S 50฿ · M 60฿ · L 70฿ | 🧊 iced latte S 55฿ · M 65฿ · L 75฿ | 🍵 hot tea S 40฿ · M 45฿ · L 50฿ | 🧊 iced tea S 45฿ · M 55฿ · L 65฿ | 🥛 hot milk ✗ หมด · Max ชี้ hot milk ที่มีป้าย ✗ หมด แล้วลูกศร 👉 ใหม่ชี้ที่ hot tea ขนาด S ✅",
+     "pic": "บอร์ดเมนูคาเฟ่ที่ Mali ทำงาน: ☕ hot latte S 50฿ · M 60฿ · L 70฿ | 🧊 iced latte S 55฿ · M 65฿ · L 75฿ | 🍵 hot tea S 40฿ · M 45฿ · L 50฿ | 🧊 iced tea S 45฿ · M 55฿ · L 65฿ | 🥛 hot milk ✗ หมด · Bogy ชี้ hot milk ที่มีป้าย ✗ หมด แล้วลูกศร 👉 ใหม่ชี้ที่ hot tea ขนาด S ✅",
      "en": "Can I have a small hot tea, please?",
      "accept": [
       "I'd like a small hot tea, please.",
@@ -6033,9 +6013,9 @@
      ]
     },
     {
-     "audio": "Sorry, Max. We don't have any hot milk today. We have hot tea and iced tea.",
-     "q": "วันนี้ Max สั่งนมร้อนได้ไหม?",
-     "qEn": "Can Max get hot milk today?",
+     "audio": "Sorry, Bogy. We don't have any hot milk today. We have hot tea and iced tea.",
+     "q": "วันนี้ Bogy สั่งนมร้อนได้ไหม?",
+     "qEn": "Can Bogy get hot milk today?",
      "en": "No.",
      "accept": [
       "No, he can't.",
@@ -6063,7 +6043,7 @@
    "flag": false,
    "beat": "Ketsu",
    "axes": "12222",
-   "teach": "สั่งเครื่องดื่มให้ตัวเองและ Max พนักงาน (Mali) ถามขนาดและของเพิ่ม (5–7 turns ไม่เกิน 3 นาที · 3 goals)",
+   "teach": "สั่งเครื่องดื่มให้ตัวเองและ Bogy พนักงาน (Mali) ถามขนาดและของเพิ่ม (5–7 turns ไม่เกิน 3 นาที · 3 goals)",
    "say": "I'd like a small latte, and he'd like an iced tea.",
    "chapter": "บท 9: แวะคาเฟ่",
    "goal": "คุยจนสำเร็จ: สั่งเครื่องดื่มพร้อมขนาดและแบบที่ต้องการ",
@@ -6162,7 +6142,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "Max ชิมไปคำเดียว หน้าแดง หูแดง กินต่อไม่ไหว 🥵🔥 Max พูดว่าอะไรดี?",
+      "text": "Bogy ชิมไปคำเดียว หน้าแดง หูแดง กินต่อไม่ไหว 🥵🔥 Bogy พูดว่าอะไรดี?",
       "stem": "It's ... spicy.",
       "options": [
        {
@@ -6177,8 +6157,8 @@
        }
       ],
       "expectedSpeech": "It's too spicy.",
-      "successText": "It's too spicy. = เผ็ดเกินไป · Max ขอน้ำด่วน! 💦😆",
-      "incorrectHintTh": "เกือบแล้ว! Max กินต่อไม่ไหว 🥵 พูดว่า It's too spicy. ครับ"
+      "successText": "It's too spicy. = เผ็ดเกินไป · Bogy ขอน้ำด่วน! 💦😆",
+      "incorrectHintTh": "เกือบแล้ว! Bogy กินต่อไม่ไหว 🥵 พูดว่า It's too spicy. ครับ"
      },
      {
       "kind": "task",
@@ -6213,12 +6193,12 @@
      },
      {
       "kind": "task",
-      "text": "ก่อนสั่งแกง 🍛 Max กลัวเผ็ดมาก 😰 ช่วยถาม Mali ว่ามันเผ็ดไหม ถามเองเลยครับ",
+      "text": "ก่อนสั่งแกง 🍛 Bogy กลัวเผ็ดมาก 😰 ช่วยถาม Mali ว่ามันเผ็ดไหม ถามเองเลยครับ",
       "expectedSpeech": "Is it spicy?"
      },
      {
       "kind": "listen",
-      "text": "ถามว่า “Is it spicy?” ครับ 👍 Mali ตอบว่า “Yes, it's really spicy!” = ใช่ เผ็ดมากเลย 🌶️🌶️🌶️ Max รีบพูดว่า Without chilli, please. ทันที 😆"
+      "text": "ถามว่า “Is it spicy?” ครับ 👍 Mali ตอบว่า “Yes, it's really spicy!” = ใช่ เผ็ดมากเลย 🌶️🌶️🌶️ Bogy รีบพูดว่า Without chilli, please. ทันที 😆"
      },
      {
       "kind": "choice",
@@ -6353,7 +6333,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "แกงเผ็ดมาก 🌶️ แต่ Max กินเผ็ดไม่ได้เลย 🥵 Max ควรสั่งอะไรดี?",
+      "text": "แกงเผ็ดมาก 🌶️ แต่ Bogy กินเผ็ดไม่ได้เลย 🥵 Bogy ควรสั่งอะไรดี?",
       "stem": "Could I have the ..., please?",
       "options": [
        {
@@ -6368,8 +6348,8 @@
        }
       ],
       "expectedSpeech": "Could I have the fried rice, please?",
-      "successText": "Could I have the fried rice, please? = ขอข้าวผัดได้ไหม · Max รอดแล้ว 😆",
-      "incorrectHintTh": "เกือบแล้ว! Max กินเผ็ดไม่ได้ เลือกข้าวผัดดีกว่า 🍚 พูดว่า Could I have the fried rice, please? ครับ"
+      "successText": "Could I have the fried rice, please? = ขอข้าวผัดได้ไหม · Bogy รอดแล้ว 😆",
+      "incorrectHintTh": "เกือบแล้ว! Bogy กินเผ็ดไม่ได้ เลือกข้าวผัดดีกว่า 🍚 พูดว่า Could I have the fried rice, please? ครับ"
      },
      {
       "kind": "choice",
@@ -6399,7 +6379,7 @@
      },
      {
       "kind": "task",
-      "text": "ข้าวผัดของ Max ก็อร่อยไม่แพ้กัน 🍚😋 ช่วย Max ชมให้ Mali ฟังหน่อย ท้าเลย! พูดเองดูครับ",
+      "text": "ข้าวผัดของ Bogy ก็อร่อยไม่แพ้กัน 🍚😋 ช่วย Bogy ชมให้ Mali ฟังหน่อย ท้าเลย! พูดเองดูครับ",
       "expectedSpeech": "The fried rice is delicious!"
      },
      {
@@ -6495,7 +6475,7 @@
      ]
     },
     {
-     "th": "Max กินเผ็ดไม่ได้ ขอข้าวผัดแบบไม่ใส่พริก (ใช้ Could I)",
+     "th": "Bogy กินเผ็ดไม่ได้ ขอข้าวผัดแบบไม่ใส่พริก (ใช้ Could I)",
      "en": "Could I have the fried rice without chilli, please?",
      "accept": [
       "Could I have the fried rice without chilli?",
@@ -6611,7 +6591,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "เป๊ะเลยครับ! “Excuse me, this isn't my order.” 👏 แล้ว Max ก็ปัดแก้วน้ำหกเต็มโต๊ะ 💦😳 Max พูดกับ Mali ว่าอะไรดี?",
+      "text": "เป๊ะเลยครับ! “Excuse me, this isn't my order.” 👏 แล้ว Bogy ก็ปัดแก้วน้ำหกเต็มโต๊ะ 💦😳 Bogy พูดกับ Mali ว่าอะไรดี?",
       "stem": "...",
       "options": [
        {
@@ -6626,8 +6606,8 @@
        }
       ],
       "expectedSpeech": "I'm so sorry.",
-      "successText": "I'm so sorry. = ขอโทษมาก ๆ · คราวนี้ตา Max ขอโทษบ้าง 😆",
-      "incorrectHintTh": "เกือบแล้ว! Max เป็นคนทำน้ำหก 💦 พูดว่า I'm so sorry. ครับ"
+      "successText": "I'm so sorry. = ขอโทษมาก ๆ · คราวนี้ตา Bogy ขอโทษบ้าง 😆",
+      "incorrectHintTh": "เกือบแล้ว! Bogy เป็นคนทำน้ำหก 💦 พูดว่า I'm so sorry. ครับ"
      },
      {
       "kind": "task",
@@ -6636,7 +6616,7 @@
      },
      {
       "kind": "listen",
-      "text": "ถามว่า “Is this my order?” ครับ 👍 Mali ตอบว่า “Oh no! I'm so sorry. This is Max's order.” = ตายแล้ว ขอโทษมาก ๆ นี่ของ Max 😅 (Max หิวรออยู่พอดี 🤤)"
+      "text": "ถามว่า “Is this my order?” ครับ 👍 Mali ตอบว่า “Oh no! I'm so sorry. This is Bogy's order.” = ตายแล้ว ขอโทษมาก ๆ นี่ของ Bogy 😅 (Bogy หิวรออยู่พอดี 🤤)"
      },
      {
       "kind": "choice",
@@ -6687,8 +6667,8 @@
    "pool": [
     {
      "audio": "Sorry, we don't have any curry today. The noodle soup is really spicy. The fried rice isn't spicy.",
-     "q": "Max กินเผ็ดไม่ได้ ควรสั่งจานไหน?",
-     "qEn": "Max can't eat spicy food. What should he order?",
+     "q": "Bogy กินเผ็ดไม่ได้ ควรสั่งจานไหน?",
+     "qEn": "Bogy can't eat spicy food. What should he order?",
      "en": "Fried rice.",
      "accept": [
       "The fried rice.",
@@ -6696,7 +6676,7 @@
      ]
     },
     {
-     "audio": "I'm so sorry. We don't have any fried rice today. The curry is too spicy for Max. The noodle soup isn't spicy.",
+     "audio": "I'm so sorry. We don't have any fried rice today. The curry is too spicy for Bogy. The noodle soup isn't spicy.",
      "q": "จานไหนไม่เผ็ด?",
      "qEn": "Which dish isn't spicy?",
      "en": "Noodle soup.",
@@ -6717,8 +6697,8 @@
     },
     {
      "audio": "Sorry, we don't have any noodle soup today. The curry is sweet, not spicy. The fried rice is really spicy.",
-     "q": "Max ควรสั่งจานไหน?",
-     "qEn": "What should Max order?",
+     "q": "Bogy ควรสั่งจานไหน?",
+     "qEn": "What should Bogy order?",
      "en": "Curry.",
      "accept": [
       "The curry.",
@@ -7331,7 +7311,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "ล้างแครอทเสร็จแล้ว 2 หัว 🥕🥕 คุณอยากให้ Max หั่นต่อ บอก Max ว่าอะไรดี?",
+      "text": "ล้างแครอทเสร็จแล้ว 2 หัว 🥕🥕 คุณอยากให้ Bogy หั่นต่อ บอก Bogy ว่าอะไรดี?",
       "stem": "Cut ...",
       "options": [
        {
@@ -7346,7 +7326,7 @@
        }
       ],
       "expectedSpeech": "Cut them.",
-      "successText": "Cut them. = หั่นเลย · Max หั่นฉับ ๆ 🔪😎",
+      "successText": "Cut them. = หั่นเลย · Bogy หั่นฉับ ๆ 🔪😎",
       "incorrectHintTh": "เกือบแล้ว! แครอทมีหลายหัว 🥕🥕 พูดว่า Cut them. ครับ"
      },
      {
@@ -7501,7 +7481,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "ข้าวในกระทะเริ่มมีกลิ่นไหม้แล้ว! 🔥😱 Aunt Noi ตะโกนบอก Max ว่าอะไรดี?",
+      "text": "ข้าวในกระทะเริ่มมีกลิ่นไหม้แล้ว! 🔥😱 Aunt Noi ตะโกนบอก Bogy ว่าอะไรดี?",
       "stem": "Fry the rice ...",
       "options": [
        {
@@ -7527,7 +7507,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "Max หั่นหัวหอมเร็วจนมีดเกือบโดนนิ้ว 😱🔪 Aunt Noi รีบเตือนว่าอะไรดี?",
+      "text": "Bogy หั่นหัวหอมเร็วจนมีดเกือบโดนนิ้ว 😱🔪 Aunt Noi รีบเตือนว่าอะไรดี?",
       "stem": "Cut the onion ...",
       "options": [
        {
@@ -7542,7 +7522,7 @@
        }
       ],
       "expectedSpeech": "Cut the onion carefully.",
-      "successText": "Cut the onion carefully. = หั่นหัวหอมระวัง ๆ · นิ้ว Max ปลอดภัย 😮‍💨",
+      "successText": "Cut the onion carefully. = หั่นหัวหอมระวัง ๆ · นิ้ว Bogy ปลอดภัย 😮‍💨",
       "incorrectHintTh": "เกือบแล้ว! มีดคมต้องระวัง 🔪 พูดว่า Cut the onion carefully. ครับ (quickly = เร็ว ๆ)"
      },
      {
@@ -7578,7 +7558,7 @@
      },
      {
       "kind": "task",
-      "text": "Max หิวมาก อยากหั่นหัวหอมให้เสร็จไว ๆ 🧅⚡ ช่วย Max ถาม Aunt Noi ว่าหั่นเร็ว ๆ ได้ไหม ถามเองเลยครับ",
+      "text": "Bogy หิวมาก อยากหั่นหัวหอมให้เสร็จไว ๆ 🧅⚡ ช่วย Bogy ถาม Aunt Noi ว่าหั่นเร็ว ๆ ได้ไหม ถามเองเลยครับ",
       "expectedSpeech": "Can I cut it quickly?"
      },
      {
@@ -7647,7 +7627,7 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "บอก Max: หั่นมันช้าๆ",
+     "th": "บอก Bogy: หั่นมันช้าๆ",
      "en": "Cut it slowly.",
      "accept": [
       "Cut it slowly, please."
@@ -7682,7 +7662,7 @@
      ]
     },
     {
-     "th": "บอก Max: ผสมไข่ให้ดีๆ (ใช้คำบอกวิธีของ good)",
+     "th": "บอก Bogy: ผสมไข่ให้ดีๆ (ใช้คำบอกวิธีของ good)",
      "en": "Mix the eggs well.",
      "accept": [
       "Mix the eggs well, please.",
@@ -7690,7 +7670,7 @@
      ]
     },
     {
-     "th": "บอก Max: เทนมช้าๆ",
+     "th": "บอก Bogy: เทนมช้าๆ",
      "en": "Pour the milk slowly.",
      "accept": [
       "Pour the milk slowly, please.",
@@ -7823,7 +7803,7 @@
      ]
     },
     {
-     "th": "บอก Max: ขั้นแรก ซาวข้าว (ล้างข้าว) จากนั้น เอาไปต้ม",
+     "th": "บอก Bogy: ขั้นแรก ซาวข้าว (ล้างข้าว) จากนั้น เอาไปต้ม",
      "en": "First, wash the rice. Then, boil it.",
      "accept": [
       "First wash the rice, then boil it.",
@@ -7958,7 +7938,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "เดรส 900 บาท 👗 ยีนส์ 500 บาท 👖 Max เห็นป้ายราคาแล้วตาโต พูดว่าอะไรดี?",
+      "text": "เดรส 900 บาท 👗 ยีนส์ 500 บาท 👖 Bogy เห็นป้ายราคาแล้วตาโต พูดว่าอะไรดี?",
       "stem": "The ... is more expensive than the ...",
       "options": [
        {
@@ -7973,7 +7953,7 @@
        }
       ],
       "expectedSpeech": "The dress is more expensive than the jeans.",
-      "successText": "The dress is more expensive than the jeans. = เดรสแพงกว่ายีนส์ · Max: โห! 😱",
+      "successText": "The dress is more expensive than the jeans. = เดรสแพงกว่ายีนส์ · Bogy: โห! 😱",
       "incorrectHintTh": "เกือบแล้ว! 900 มากกว่า 500 เดรสจึงแพงกว่า 👗 พูดว่า The dress is more expensive than the jeans. ครับ"
      },
      {
@@ -8095,7 +8075,7 @@
      ]
     },
     {
-     "th": "บอก Max: แจ็กเก็ตตัวนี้ใส่สบายกว่าตัวนั้น",
+     "th": "บอก Bogy: แจ็กเก็ตตัวนี้ใส่สบายกว่าตัวนั้น",
      "en": "This jacket is more comfortable than that one.",
      "accept": [
       "This jacket is more comfortable than that jacket."
@@ -8109,10 +8089,10 @@
      ]
     },
     {
-     "th": "แจ็กเก็ตของ Max ใหญ่กว่าของ John",
-     "en": "Max's jacket is bigger than John's.",
+     "th": "แจ็กเก็ตของ Bogy ใหญ่กว่าของ John",
+     "en": "Bogy's jacket is bigger than John's.",
      "accept": [
-      "Max's jacket is bigger than John's jacket."
+      "Bogy's jacket is bigger than John's jacket."
      ]
     }
    ]
@@ -8183,7 +8163,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "Max ลองแจ็กเก็ต หลวมโคร่งเหมือนใส่เต็นท์ 🧥⛺ Max พูดว่าอะไรดี?",
+      "text": "Bogy ลองแจ็กเก็ต หลวมโคร่งเหมือนใส่เต็นท์ 🧥⛺ Bogy พูดว่าอะไรดี?",
       "stem": "It's too ...",
       "options": [
        {
@@ -8198,7 +8178,7 @@
        }
       ],
       "expectedSpeech": "It's too loose.",
-      "successText": "It's too loose. = หลวมเกินไป · Max หายไปในแจ็กเก็ตเลย 😆",
+      "successText": "It's too loose. = หลวมเกินไป · Bogy หายไปในแจ็กเก็ตเลย 😆",
       "incorrectHintTh": "เกือบแล้ว! หลวมโคร่งคือ loose 🎈 พูดว่า It's too loose. ครับ"
      },
      {
@@ -8383,7 +8363,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "Max ใส่แจ็กเก็ตหนาเตอะ เหงื่อแตกพลั่ก 🥵💦 คุณอยากให้ Max ถอดออก พูดว่าอะไรดี?",
+      "text": "Bogy ใส่แจ็กเก็ตหนาเตอะ เหงื่อแตกพลั่ก 🥵💦 คุณอยากให้ Bogy ถอดออก พูดว่าอะไรดี?",
       "stem": "... it ...",
       "options": [
        {
@@ -8398,8 +8378,8 @@
        }
       ],
       "expectedSpeech": "Take it off.",
-      "successText": "Take it off. = ถอดออกเลย · Max โล่งขึ้นทันที 😮‍💨",
-      "incorrectHintTh": "เกือบแล้ว! Max ร้อนมาก ต้องถอด 👋 พูดว่า Take it off. ครับ"
+      "successText": "Take it off. = ถอดออกเลย · Bogy โล่งขึ้นทันที 😮‍💨",
+      "incorrectHintTh": "เกือบแล้ว! Bogy ร้อนมาก ต้องถอด 👋 พูดว่า Take it off. ครับ"
      },
      {
       "kind": "task",
@@ -8408,13 +8388,13 @@
      },
      {
       "kind": "task",
-      "text": "ข้างนอกหนาวเจี๊ยบ ❄️🥶 บอก Max ให้ใส่แจ็กเก็ต (ใส่ = put on · คล้ายตอนบอกให้ถอดรองเท้า) ท้าเลย! พูดเองดูครับ",
+      "text": "ข้างนอกหนาวเจี๊ยบ ❄️🥶 บอก Bogy ให้ใส่แจ็กเก็ต (ใส่ = put on · คล้ายตอนบอกให้ถอดรองเท้า) ท้าเลย! พูดเองดูครับ",
       "expectedSpeech": "Put on your jacket, please."
      },
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "เป๊ะเลยครับ! “Put on your jacket, please.” 👏 Max ใส่แจ็กเก็ตใหม่แล้วหล่อขึ้นสิบเท่า 😎 ชม Max ว่าอะไรดี?",
+      "text": "เป๊ะเลยครับ! “Put on your jacket, please.” 👏 Bogy ใส่แจ็กเก็ตใหม่แล้วหล่อขึ้นสิบเท่า 😎 ชม Bogy ว่าอะไรดี?",
       "stem": "...",
       "options": [
        {
@@ -8429,8 +8409,8 @@
        }
       ],
       "expectedSpeech": "It looks great on you!",
-      "successText": "It looks great on you! = ใส่แล้วดูดีมาก · Max ยิ้มไม่หุบเลย 😁",
-      "incorrectHintTh": "เกือบแล้ว! อยากชม Max 😍 พูดว่า It looks great on you! ครับ (Take it off. = ถอดออก)"
+      "successText": "It looks great on you! = ใส่แล้วดูดีมาก · Bogy ยิ้มไม่หุบเลย 😁",
+      "incorrectHintTh": "เกือบแล้ว! อยากชม Bogy 😍 พูดว่า It looks great on you! ครับ (Take it off. = ถอดออก)"
      },
      {
       "kind": "task",
@@ -8468,7 +8448,7 @@
      },
      {
       "kind": "finish",
-      "text": "เก่งมากครับ 🎉 ตอนนี้ช้อปเสื้อผ้าได้คล่องแล้ว เช่น “Can I try it on?” · “Take it off.” · “It looks great on you!” 🧥 ต่อไป… วันเกิด Max ใกล้มาแล้ว! ต้องเลือกของขวัญ 🎁"
+      "text": "เก่งมากครับ 🎉 ตอนนี้ช้อปเสื้อผ้าได้คล่องแล้ว เช่น “Can I try it on?” · “Take it off.” · “It looks great on you!” 🧥 ต่อไป… วันเกิด Bogy ใกล้มาแล้ว! ต้องเลือกของขวัญ 🎁"
      }
     ]
    }
@@ -8508,7 +8488,7 @@
      "accept": []
     },
     {
-     "th": "ชม Max ที่ลองกางเกงยีนส์ใหม่ว่า ใส่แล้วดูดีมาก",
+     "th": "ชม Bogy ที่ลองกางเกงยีนส์ใหม่ว่า ใส่แล้วดูดีมาก",
      "en": "They look great on you!",
      "accept": [
       "They look great on you.",
@@ -8563,7 +8543,7 @@
    "axes": "12211",
    "teach": "🔁 ทบทวนแบบเว้นระยะ ภาพสุ่มจากบทก่อน ๆ 6 ข้อ ไม่ใช่คำใหม่: บท 12–13 และบท 8: 🔪 cut · 🍳 fry · 🐢 slowly · 🧥 jacket · 👕🤏 tight · 👀 Just looking, thanks.",
    "say": "slowly",
-   "chapter": "บท 14: ของขวัญวันเกิด Max",
+   "chapter": "บท 14: ของขวัญวันเกิด Bogy",
    "goal": "ดึงคำ/ก้อนคำที่เรียนแล้วออกมาพูดได้เร็วจากภาพ",
    "accept": "รับคำ/ก้อนคำที่ภาพกำหนด + คำพ้องที่ระบุไว้ · ไม่ตรวจ tense หรือรูปคำ",
    "hint": "① ตัวอักษรแรก + จำนวนคำ ② ฟังเสียงแบบช้า · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent"
@@ -8577,8 +8557,8 @@
    "axes": "11111",
    "teach": "**gift · flower · cake · teddy bear** (card เรียนแล้วใน A1)",
    "say": "—",
-   "chapter": "บท 14: ของขวัญวันเกิด Max",
-   "goal": "จำและพูด gift · flower · cake · teddy bear ได้ เพื่อใช้ในเรื่องบทนี้: เตรียมของขวัญวันเกิด Max",
+   "chapter": "บท 14: ของขวัญวันเกิด Bogy",
+   "goal": "จำและพูด gift · flower · cake · teddy bear ได้ เพื่อใช้ในเรื่องบทนี้: เตรียมของขวัญวันเกิด Bogy",
    "accept": "พูดคำได้ชัดพอให้ระบบจับคำถูก · รับ spelling/สำเนียง US-UK · ไม่ตรวจไวยากรณ์",
    "hint": "① ฟังเสียงอีกครั้ง ② ฟังแบบช้า + แยกพยางค์ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent"
   },
@@ -8589,9 +8569,9 @@
    "flag": false,
    "beat": "Sho",
    "axes": "21211",
-   "teach": "เชื่อมเหตุผลด้วย **because / so** · ทบทวน **too + adj** · ตัวอย่างจากคำ 14.2 (flower → flowers): Let's buy a **cake** because Max likes cake. · The **teddy bear** is too big, so let's buy the **flowers**. · This **gift** is too expensive, so let's buy the card.",
+   "teach": "เชื่อมเหตุผลด้วย **because / so** · ทบทวน **too + adj** · ตัวอย่างจากคำ 14.2 (flower → flowers): Let's buy a **cake** because Bogy likes cake. · The **teddy bear** is too big, so let's buy the **flowers**. · This **gift** is too expensive, so let's buy the card.",
    "say": "It's too expensive, so let's buy the card.",
-   "chapter": "บท 14: ของขวัญวันเกิด Max",
+   "chapter": "บท 14: ของขวัญวันเกิด Bogy",
    "goal": "เข้าใจ \"เพราะ ดังนั้น\" พอจะพูดตัวอย่างของตัวเองได้ 1 ประโยค",
    "accept": "ไม่ตัดสินผ่าน/ตก · ผู้เรียนพูดตามหรือเปลี่ยนคำในตัวอย่างอย่างน้อย 1 ประโยค",
    "hint": "ครูทวนตัวอย่างอีกครั้ง (ไม่มีระดับ hint)",
@@ -8628,8 +8608,8 @@
      },
      {
       "kind": "task",
-      "text": "วันเกิด Max ใกล้แล้ว 🎂 ต้องเลือกของขวัญ (gift) ให้เหตุผลด้วยท่า 👉 Let's ___ because ___. (because = เพราะ) “Let's buy a cake because Max likes cake.” = ซื้อเค้กกันเถอะ เพราะ Max ชอบเค้ก ลองพูดตามครับ",
-      "expectedSpeech": "Let's buy a cake because Max likes cake."
+      "text": "วันเกิด Bogy ใกล้แล้ว 🎂 ต้องเลือกของขวัญ (gift) ให้เหตุผลด้วยท่า 👉 Let's ___ because ___. (because = เพราะ) “Let's buy a cake because Bogy likes cake.” = ซื้อเค้กกันเถอะ เพราะ Bogy ชอบเค้ก ลองพูดตามครับ",
+      "expectedSpeech": "Let's buy a cake because Bogy likes cake."
      },
      {
       "kind": "task",
@@ -8690,23 +8670,23 @@
      },
      {
       "kind": "task",
-      "text": "ไม่แน่ใจว่า Max ชอบเค้กจริงไหม 🎂🤔 แอบถาม May เบา ๆ ถามเองเลยครับ",
-      "expectedSpeech": "Does Max like cake?"
+      "text": "ไม่แน่ใจว่า Bogy ชอบเค้กจริงไหม 🎂🤔 แอบถาม May เบา ๆ ถามเองเลยครับ",
+      "expectedSpeech": "Does Bogy like cake?"
      },
      {
       "kind": "listen",
-      "text": "ถามว่า “Does Max like cake?” ครับ 👍 May ตอบว่า “Yes, he does! He loves cake.” = ชอบสิ ชอบมากเลย 🎂 (Max หิวตลอด ไม่แปลกใจเลย 😆)"
+      "text": "ถามว่า “Does Bogy like cake?” ครับ 👍 May ตอบว่า “Yes, he does! He loves cake.” = ชอบสิ ชอบมากเลย 🎂 (Bogy หิวตลอด ไม่แปลกใจเลย 😆)"
      },
      {
       "kind": "choice",
       "answerMode": "any",
-      "text": "May ถามคุณ “What gift can we buy for Max?” = ซื้อของขวัญอะไรให้ Max ดี เลือกไอเดียพร้อมเหตุผลแล้วพูดเลยครับ",
+      "text": "May ถามคุณ “What gift can we buy for Bogy?” = ซื้อของขวัญอะไรให้ Bogy ดี เลือกไอเดียพร้อมเหตุผลแล้วพูดเลยครับ",
       "stem": "Let's buy ... because ...",
       "options": [
        {
         "emoji": "🎂",
         "label": "cake",
-        "speak": "Let's buy a cake because Max likes cake."
+        "speak": "Let's buy a cake because Bogy likes cake."
        },
        {
         "emoji": "💌",
@@ -8716,15 +8696,15 @@
        {
         "emoji": "💐",
         "label": "flowers",
-        "speak": "Let's buy the flowers because Max likes flowers."
+        "speak": "Let's buy the flowers because Bogy likes flowers."
        }
       ],
-      "expectedSpeech": "Let's buy a cake because Max likes cake.",
-      "successText": "ไอเดียดีพร้อมเหตุผล Max ต้องชอบแน่ 🎁"
+      "expectedSpeech": "Let's buy a cake because Bogy likes cake.",
+      "successText": "ไอเดียดีพร้อมเหตุผล Bogy ต้องชอบแน่ 🎁"
      },
      {
       "kind": "finish",
-      "text": "สุดยอดครับ 🎉 ตอนนี้ให้เหตุผลและเสนอไอเดียได้แล้ว เช่น “Let's buy a cake because Max likes cake.” · “It's too expensive, so let's buy the card.” 🎁 ต่อไปมีของให้เลือก 3 ชิ้น… อันไหนดีที่สุดนะ? 🤔"
+      "text": "สุดยอดครับ 🎉 ตอนนี้ให้เหตุผลและเสนอไอเดียได้แล้ว เช่น “Let's buy a cake because Bogy likes cake.” · “It's too expensive, so let's buy the card.” 🎁 ต่อไปมีของให้เลือก 3 ชิ้น… อันไหนดีที่สุดนะ? 🤔"
      }
     ]
    }
@@ -8738,7 +8718,7 @@
    "axes": "12111",
    "teach": "ดู emoji แล้วพูดคำจาก 14.2: 🎁 gift · 💐 flowers · 🎂 cake · 🧸 teddy bear",
    "say": "teddy bear",
-   "chapter": "บท 14: ของขวัญวันเกิด Max",
+   "chapter": "บท 14: ของขวัญวันเกิด Bogy",
    "goal": "ดึงคำ/ก้อนคำที่เรียนแล้วออกมาพูดได้เร็วจากภาพ",
    "accept": "รับคำ/ก้อนคำที่ภาพกำหนด + คำพ้องที่ระบุไว้ · ไม่ตรวจ tense หรือรูปคำ",
    "hint": "① ตัวอักษรแรก + จำนวนคำ ② ฟังเสียงแบบช้า · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent"
@@ -8752,8 +8732,8 @@
    "axes": "11111",
    "teach": "**cheap · beautiful · cute · favorite**",
    "say": "—",
-   "chapter": "บท 14: ของขวัญวันเกิด Max",
-   "goal": "จำและพูด cheap · beautiful · cute · favorite ได้ เพื่อใช้ในเรื่องบทนี้: เตรียมของขวัญวันเกิด Max",
+   "chapter": "บท 14: ของขวัญวันเกิด Bogy",
+   "goal": "จำและพูด cheap · beautiful · cute · favorite ได้ เพื่อใช้ในเรื่องบทนี้: เตรียมของขวัญวันเกิด Bogy",
    "accept": "พูดคำได้ชัดพอให้ระบบจับคำถูก · รับ spelling/สำเนียง US-UK · ไม่ตรวจไวยากรณ์",
    "hint": "① ฟังเสียงอีกครั้ง ② ฟังแบบช้า + แยกพยางค์ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent"
   },
@@ -8764,9 +8744,9 @@
    "flag": false,
    "beat": "Sho",
    "axes": "31111",
-   "teach": "Superlative: **the -est** (the cheapest) · **the most …** · ผิดรูป **the best / the worst** · ตัวอย่างจากคำ 14.5: This card is the **cheapest**. · The flowers are the most **beautiful**. · The teddy bear is the **cutest**. · The cake is Max's **favorite**.",
+   "teach": "Superlative: **the -est** (the cheapest) · **the most …** · ผิดรูป **the best / the worst** · ตัวอย่างจากคำ 14.5: This card is the **cheapest**. · The flowers are the most **beautiful**. · The teddy bear is the **cutest**. · The cake is Bogy's **favorite**.",
    "say": "This is the cheapest one.",
-   "chapter": "บท 14: ของขวัญวันเกิด Max",
+   "chapter": "บท 14: ของขวัญวันเกิด Bogy",
    "goal": "เข้าใจ \"ของขวัญที่ดีที่สุด\" พอจะพูดตัวอย่างของตัวเองได้ 1 ประโยค",
    "accept": "ไม่ตัดสินผ่าน/ตก · ผู้เรียนพูดตามหรือเปลี่ยนคำในตัวอย่างอย่างน้อย 1 ประโยค",
    "hint": "ครูทวนตัวอย่างอีกครั้ง (ไม่มีระดับ hint)",
@@ -8855,8 +8835,8 @@
      },
      {
       "kind": "task",
-      "text": "ดีที่สุดใช้ 👉 the best 🥇 (favorite = อันโปรด) “The cake is the best. It's Max's favorite.” = เค้กดีที่สุด เป็นของโปรดของ Max ลองพูดตามครับ",
-      "expectedSpeech": "The cake is the best. It's Max's favorite."
+      "text": "ดีที่สุดใช้ 👉 the best 🥇 (favorite = อันโปรด) “The cake is the best. It's Bogy's favorite.” = เค้กดีที่สุด เป็นของโปรดของ Bogy ลองพูดตามครับ",
+      "expectedSpeech": "The cake is the best. It's Bogy's favorite."
      },
      {
       "kind": "task",
@@ -8881,7 +8861,7 @@
        }
       ],
       "expectedSpeech": "The cake is the best.",
-      "successText": "The cake is the best. = เค้กดีที่สุด · Max สายกินต้องชอบ 😋",
+      "successText": "The cake is the best. = เค้กดีที่สุด · Bogy สายกินต้องชอบ 😋",
       "incorrectHintTh": "เกือบแล้ว! เทียบทั้ง 3 ชิ้น เค้กชนะ 🥇 พูดว่า The cake is the best. ครับ (better ใช้ตอนเทียบแค่ 2 ชิ้น)"
      },
      {
@@ -8934,7 +8914,7 @@
    "axes": "12211",
    "teach": "เลือกของด้วย superlative",
    "say": "The flowers are the most beautiful.",
-   "chapter": "บท 14: ของขวัญวันเกิด Max",
+   "chapter": "บท 14: ของขวัญวันเกิด Bogy",
    "goal": "สื่อความ \"สวยที่สุด\" เป็นภาษาอังกฤษในสถานการณ์บทนี้",
    "accept": "รับทุกประโยคที่ความหมายตรงโจทย์และใช้โครงสร้างเป้าหมาย · มี accepted variants · ผิดเล็ก (a/the, -s) ผ่านพร้อม feedback",
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
@@ -8995,13 +8975,13 @@
    "axes": "22211",
    "teach": "🖼️ ดูของขวัญ 3 ชิ้นพร้อมราคาและดาวรีวิว → พูดขั้นสุด **The teddy bear is the cheapest. · The cake is the most popular.**",
    "say": "The teddy bear is the cheapest.",
-   "chapter": "บท 14: ของขวัญวันเกิด Max",
+   "chapter": "บท 14: ของขวัญวันเกิด Bogy",
    "goal": "อ่านข้อมูลในภาพ (เทียบราคาของขวัญ) แล้วพูดเป็นประโยคที่ใช้ได้จริง",
    "accept": "รับประโยคเดียวที่ตรงข้อมูลในภาพ ไม่บังคับพูด model ครบ · ข้อมูลผิดจากภาพ = ลองใหม่",
    "hint": "① ไฮไลต์ข้อมูลในภาพที่ต้องพูด ② sentence starter · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "pic": "ป้ายของขวัญวันเกิด Max: 🧸 teddy bear 150฿ ⭐⭐⭐ · 🎂 cake 300฿ ⭐⭐⭐⭐⭐ · 💐 flowers 250฿ ⭐⭐⭐⭐ · หัวข้อ: 💰 ราคา · ลูกศร 👉 ชี้ที่ teddy bear",
+     "pic": "ป้ายของขวัญวันเกิด Bogy: 🧸 teddy bear 150฿ ⭐⭐⭐ · 🎂 cake 300฿ ⭐⭐⭐⭐⭐ · 💐 flowers 250฿ ⭐⭐⭐⭐ · หัวข้อ: 💰 ราคา · ลูกศร 👉 ชี้ที่ teddy bear",
      "en": "The teddy bear is the cheapest.",
      "accept": [
       "The teddy bear is the cheapest one.",
@@ -9009,7 +8989,7 @@
      ]
     },
     {
-     "pic": "ป้ายของขวัญวันเกิด Max: 🧸 teddy bear 150฿ ⭐⭐⭐ · 🎂 cake 300฿ ⭐⭐⭐⭐⭐ · 💐 flowers 250฿ ⭐⭐⭐⭐ · หัวข้อ: ⭐ รีวิว (คนชอบเยอะ) · ลูกศร 👉 ชี้ที่ cake",
+     "pic": "ป้ายของขวัญวันเกิด Bogy: 🧸 teddy bear 150฿ ⭐⭐⭐ · 🎂 cake 300฿ ⭐⭐⭐⭐⭐ · 💐 flowers 250฿ ⭐⭐⭐⭐ · หัวข้อ: ⭐ รีวิว (คนชอบเยอะ) · ลูกศร 👉 ชี้ที่ cake",
      "en": "The cake is the most popular.",
      "accept": [
       "The cake is the most popular one.",
@@ -9017,7 +8997,7 @@
      ]
     },
     {
-     "pic": "ป้ายของขวัญวันเกิด Max: 🧸 teddy bear 150฿ ⭐⭐⭐ · 🎂 cake 300฿ ⭐⭐⭐⭐⭐ · 💐 flowers 250฿ ⭐⭐⭐⭐ · หัวข้อ: 💰 ราคา · ลูกศร 👉 ชี้ที่ cake",
+     "pic": "ป้ายของขวัญวันเกิด Bogy: 🧸 teddy bear 150฿ ⭐⭐⭐ · 🎂 cake 300฿ ⭐⭐⭐⭐⭐ · 💐 flowers 250฿ ⭐⭐⭐⭐ · หัวข้อ: 💰 ราคา · ลูกศร 👉 ชี้ที่ cake",
      "en": "The cake is the most expensive.",
      "accept": [
       "The cake is the most expensive one.",
@@ -9025,7 +9005,7 @@
      ]
     },
     {
-     "pic": "ป้ายของขวัญวันเกิด Max: 💌 card 50฿ ⭐⭐ · 💐 flowers 400฿ ⭐⭐⭐⭐⭐ · 🧸 teddy bear 600฿ ⭐⭐⭐ · หัวข้อ: 💰 ราคา · ลูกศร 👉 ชี้ที่ teddy bear",
+     "pic": "ป้ายของขวัญวันเกิด Bogy: 💌 card 50฿ ⭐⭐ · 💐 flowers 400฿ ⭐⭐⭐⭐⭐ · 🧸 teddy bear 600฿ ⭐⭐⭐ · หัวข้อ: 💰 ราคา · ลูกศร 👉 ชี้ที่ teddy bear",
      "en": "The teddy bear is the most expensive.",
      "accept": [
       "The teddy bear is the most expensive one.",
@@ -9033,14 +9013,14 @@
      ]
     },
     {
-     "pic": "ป้ายของขวัญวันเกิด Max: 💌 card 50฿ ⭐⭐ · 💐 flowers 400฿ ⭐⭐⭐⭐⭐ · 🧸 teddy bear 600฿ ⭐⭐⭐ · หัวข้อ: ⭐ รีวิว (คนชอบเยอะ) · ลูกศร 👉 ชี้ที่ flowers",
+     "pic": "ป้ายของขวัญวันเกิด Bogy: 💌 card 50฿ ⭐⭐ · 💐 flowers 400฿ ⭐⭐⭐⭐⭐ · 🧸 teddy bear 600฿ ⭐⭐⭐ · หัวข้อ: ⭐ รีวิว (คนชอบเยอะ) · ลูกศร 👉 ชี้ที่ flowers",
      "en": "The flowers are the most popular.",
      "accept": [
       "The flowers are the most popular gift."
      ]
     },
     {
-     "pic": "ป้ายของขวัญวันเกิด Max: 💌 card 50฿ ⭐⭐ · 💐 flowers 400฿ ⭐⭐⭐⭐⭐ · 🧸 teddy bear 600฿ ⭐⭐⭐ · หัวข้อ: 💰 ราคา · ลูกศร 👉 ชี้ที่ card",
+     "pic": "ป้ายของขวัญวันเกิด Bogy: 💌 card 50฿ ⭐⭐ · 💐 flowers 400฿ ⭐⭐⭐⭐⭐ · 🧸 teddy bear 600฿ ⭐⭐⭐ · หัวข้อ: 💰 ราคา · ลูกศร 👉 ชี้ที่ card",
      "en": "The card is the cheapest.",
      "accept": [
       "The card is the cheapest one.",
@@ -9051,20 +9031,20 @@
   },
   {
    "code": "14.9",
-   "title": "🎬 Max Opens His Gift / Max แกะของขวัญ",
+   "title": "🎬 Bogy Opens His Gift / Bogy แกะของขวัญ",
    "type": "story_bites",
    "flag": false,
    "beat": "Ten",
    "axes": "12132",
-   "teach": "🎬 คลิป 15–30 วินาที: Max แกะของขวัญ 3 ชิ้น ทำหน้าต่างกัน → ตอบ 3 คำถามด้วยเสียง · เปิดดูซ้ำได้ · 📜 สคริปต์มีคำตอบทุกข้อ ไม่ถามสิ่งที่คลิปไม่ได้พูด",
+   "teach": "🎬 คลิป 15–30 วินาที: Bogy แกะของขวัญ 3 ชิ้น ทำหน้าต่างกัน → ตอบ 3 คำถามด้วยเสียง · เปิดดูซ้ำได้ · 📜 สคริปต์มีคำตอบทุกข้อ ไม่ถามสิ่งที่คลิปไม่ได้พูด",
    "say": "Mali.",
-   "chapter": "บท 14: ของขวัญวันเกิด Max",
+   "chapter": "บท 14: ของขวัญวันเกิด Bogy",
    "goal": "ตามเรื่องในคลิปได้พอตอบ 3 คำถามด้วยเสียง",
    "accept": "ตอบสั้นได้ ตรงเนื้อหาคลิป · เปิดดูซ้ำได้ไม่จำกัด",
    "hint": "① เล่นซ้ำช่วงที่มีคำตอบ ② sentence starter · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "audio": "Max: Wow, a teddy bear from Mali! It's small and nice. Flowers from May. Thank you! And a cake from John. I love cake. The cake is the best!",
+     "audio": "Bogy: Wow, a teddy bear from Mali! It's small and nice. Flowers from May. Thank you! And a cake from John. I love cake. The cake is the best!",
      "q": "Who is the teddy bear from?",
      "en": "Mali.",
      "accept": [
@@ -9083,7 +9063,7 @@
     },
     {
      "audio": "(คลิปเดิม)",
-     "q": "Which gift does Max like best?",
+     "q": "Which gift does Bogy like best?",
      "en": "The cake.",
      "accept": [
       "Cake.",
@@ -9102,7 +9082,7 @@
    "axes": "12312",
    "teach": "ผสม comparative + superlative + because",
    "say": "The flowers are cheaper, but the cake is the best.",
-   "chapter": "บท 14: ของขวัญวันเกิด Max",
+   "chapter": "บท 14: ของขวัญวันเกิด Bogy",
    "goal": "สื่อความ \"ช่วยเลือกหน่อย\" เป็นภาษาอังกฤษในสถานการณ์บทนี้",
    "accept": "รับทุกประโยคที่ความหมายตรงโจทย์และใช้โครงสร้างเป้าหมาย · มี accepted variants · ผิดเล็ก (a/the, -s) ผ่านพร้อม feedback",
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
@@ -9136,11 +9116,11 @@
      ]
     },
     {
-     "th": "บอก May: เค้กแพงกว่าดอกไม้ แต่มันเป็นของโปรดของ Max",
-     "en": "The cake is more expensive than the flowers, but it's Max's favorite.",
+     "th": "บอก May: เค้กแพงกว่าดอกไม้ แต่มันเป็นของโปรดของ Bogy",
+     "en": "The cake is more expensive than the flowers, but it's Bogy's favorite.",
      "accept": [
       "The cake is more expensive than the flowers, but it's his favorite.",
-      "The cake is more expensive than the flowers but it is Max's favorite."
+      "The cake is more expensive than the flowers but it is Bogy's favorite."
      ]
     },
     {
@@ -9154,14 +9134,14 @@
   },
   {
    "code": "14.11",
-   "title": "Max's Birthday / วันเกิด Max",
+   "title": "Bogy's Birthday / วันเกิด Bogy",
    "type": "conversation",
    "flag": false,
    "beat": "Ketsu",
    "axes": "13322",
    "teach": "ปรึกษา May เลือกของขวัญ ให้เหตุผล และถามความเห็น **What do you think?** (5–7 turns ไม่เกิน 3 นาที · 3 goals)",
    "say": "Let's buy the teddy bear because it's the cutest.",
-   "chapter": "บท 14: ของขวัญวันเกิด Max",
+   "chapter": "บท 14: ของขวัญวันเกิด Bogy",
    "goal": "คุยจนสำเร็จ: เปรียบเทียบขั้นสุดและตัดสินใจพร้อมเหตุผล",
    "accept": "ผ่านเมื่อบรรลุเป้าหมายครบ ไม่ว่าจะใช้ประโยคแบบไหน · ต้องถามอย่างน้อย 1 ครั้ง",
    "hint": "① บอกเป้าหมายที่ยังเหลือ ② ประโยคตัวอย่างเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent"
@@ -9232,7 +9212,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "May ไปพิพิธภัณฑ์มาเมื่อวาน 🏛️ (ไม่ได้ไปทุกอาทิตย์นะ) Max เล่าให้ Nina ฟังว่าอะไรดี?",
+      "text": "May ไปพิพิธภัณฑ์มาเมื่อวาน 🏛️ (ไม่ได้ไปทุกอาทิตย์นะ) Bogy เล่าให้ Nina ฟังว่าอะไรดี?",
       "stem": "May ... the museum ...",
       "options": [
        {
@@ -9252,29 +9232,29 @@
      },
      {
       "kind": "task",
-      "text": "ส่วน Max ไม่ได้ไปไหนเลย 😆 watch → watched · play → played 📺🎮 “I watched TV and played games.” = ฉันดูทีวีแล้วก็เล่นเกม ลองพูดตามครับ",
+      "text": "ส่วน Bogy ไม่ได้ไปไหนเลย 😆 watch → watched · play → played 📺🎮 “I watched TV and played games.” = ฉันดูทีวีแล้วก็เล่นเกม ลองพูดตามครับ",
       "expectedSpeech": "I watched TV and played games."
      },
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "เมื่อคืน Max เล่นเกมทั้งคืนจนตาเป็นแพนด้า 🎮🐼 May แซว Max ให้ Nina ฟังว่าอะไรดี?",
-      "stem": "Max ... games ...",
+      "text": "เมื่อคืน Bogy เล่นเกมทั้งคืนจนตาเป็นแพนด้า 🎮🐼 May แซว Bogy ให้ Nina ฟังว่าอะไรดี?",
+      "stem": "Bogy ... games ...",
       "options": [
        {
         "emoji": "⏪",
         "label": "last night",
-        "speak": "Max played games last night."
+        "speak": "Bogy played games last night."
        },
        {
         "emoji": "🔁",
         "label": "every night",
-        "speak": "Max plays games every night."
+        "speak": "Bogy plays games every night."
        }
       ],
-      "expectedSpeech": "Max played games last night.",
-      "successText": "Max played games last night. = เมื่อคืน Max เล่นเกม · Nina ส่ายหัวขำ ๆ 😆",
-      "incorrectHintTh": "เกือบแล้ว! เป็นเรื่องเมื่อคืน ⏪ พูดว่า Max played games last night. ครับ (every night = ทุกคืน)"
+      "expectedSpeech": "Bogy played games last night.",
+      "successText": "Bogy played games last night. = เมื่อคืน Bogy เล่นเกม · Nina ส่ายหัวขำ ๆ 😆",
+      "incorrectHintTh": "เกือบแล้ว! เป็นเรื่องเมื่อคืน ⏪ พูดว่า Bogy played games last night. ครับ (every night = ทุกคืน)"
      },
      {
       "kind": "task",
@@ -9338,7 +9318,7 @@
      },
      {
       "kind": "finish",
-      "text": "เก่งมากครับ 🎉 ตอนนี้เล่าเรื่องเมื่อวานได้แล้ว เช่น “I visited the museum yesterday.” · “I watched TV and played games.” · “What about you?” 📸 แต่เดี๋ยวนะ… รูปของ May ดูไม่ตรงกับที่ Max เล่าเลย 🤔"
+      "text": "เก่งมากครับ 🎉 ตอนนี้เล่าเรื่องเมื่อวานได้แล้ว เช่น “I visited the museum yesterday.” · “I watched TV and played games.” · “What about you?” 📸 แต่เดี๋ยวนะ… รูปของ May ดูไม่ตรงกับที่ Bogy เล่าเลย 🤔"
      }
     ]
    }
@@ -9388,23 +9368,23 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "Max อ้างว่าเมื่อวานนอนอยู่บ้านทั้งวัน 🏠😴 เล่าต่อให้ Nina ฟังว่าอะไรดี?",
-      "stem": "Max ... at home ...",
+      "text": "Bogy อ้างว่าเมื่อวานนอนอยู่บ้านทั้งวัน 🏠😴 เล่าต่อให้ Nina ฟังว่าอะไรดี?",
+      "stem": "Bogy ... at home ...",
       "options": [
        {
         "emoji": "⏪",
         "label": "yesterday",
-        "speak": "Max was at home yesterday."
+        "speak": "Bogy was at home yesterday."
        },
        {
         "emoji": "⏺️",
         "label": "now",
-        "speak": "Max is at home now."
+        "speak": "Bogy is at home now."
        }
       ],
-      "expectedSpeech": "Max was at home yesterday.",
-      "successText": "Max was at home yesterday. = เมื่อวาน Max อยู่บ้าน · …จริงเหรอ Max? 🤨",
-      "incorrectHintTh": "เกือบแล้ว! เป็นเรื่องเมื่อวาน ⏪ พูดว่า Max was at home yesterday. ครับ (is … now = ตอนนี้)"
+      "expectedSpeech": "Bogy was at home yesterday.",
+      "successText": "Bogy was at home yesterday. = เมื่อวาน Bogy อยู่บ้าน · …จริงเหรอ Bogy? 🤨",
+      "incorrectHintTh": "เกือบแล้ว! เป็นเรื่องเมื่อวาน ⏪ พูดว่า Bogy was at home yesterday. ครับ (is … now = ตอนนี้)"
      },
      {
       "kind": "task",
@@ -9414,23 +9394,23 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "เมื่อคืน May กับ Max ยุ่งทั้งคู่ วิ่งวุ่นทั้งคืน 😮‍💨 เล่าให้ Nina ฟังว่าอะไรดี?",
+      "text": "เมื่อคืน May กับ Bogy ยุ่งทั้งคู่ วิ่งวุ่นทั้งคืน 😮‍💨 เล่าให้ Nina ฟังว่าอะไรดี?",
       "stem": "... busy last night.",
       "options": [
        {
         "emoji": "👥",
-        "label": "May and Max were",
-        "speak": "May and Max were busy last night."
+        "label": "May and Bogy were",
+        "speak": "May and Bogy were busy last night."
        },
        {
         "emoji": "👦",
-        "label": "Max was",
-        "speak": "Max was busy last night."
+        "label": "Bogy was",
+        "speak": "Bogy was busy last night."
        }
       ],
-      "expectedSpeech": "May and Max were busy last night.",
-      "successText": "May and Max were busy last night. = เมื่อคืน May กับ Max ยุ่ง · เหนื่อยแทนเลย 😅",
-      "incorrectHintTh": "เกือบแล้ว! ยุ่งทั้ง 2 คน 👥 พูดว่า May and Max were busy last night. ครับ"
+      "expectedSpeech": "May and Bogy were busy last night.",
+      "successText": "May and Bogy were busy last night. = เมื่อคืน May กับ Bogy ยุ่ง · เหนื่อยแทนเลย 😅",
+      "incorrectHintTh": "เกือบแล้ว! ยุ่งทั้ง 2 คน 👥 พูดว่า May and Bogy were busy last night. ครับ"
      },
      {
       "kind": "task",
@@ -9448,12 +9428,12 @@
      },
      {
       "kind": "task",
-      "text": "เป๊ะเลยครับ! “We were at the museum yesterday.” 👏 อ้าว! ในรูปของ May มี Max ยืนยิ้มอยู่ที่พิพิธภัณฑ์ด้วย 📸🤔 ถาม Max ว่าเมื่อวานอยู่บ้านจริงเหรอ (ใช้ท่า Were you…?) ถามเองเลยครับ",
+      "text": "เป๊ะเลยครับ! “We were at the museum yesterday.” 👏 อ้าว! ในรูปของ May มี Bogy ยืนยิ้มอยู่ที่พิพิธภัณฑ์ด้วย 📸🤔 ถาม Bogy ว่าเมื่อวานอยู่บ้านจริงเหรอ (ใช้ท่า Were you…?) ถามเองเลยครับ",
       "expectedSpeech": "Were you at home yesterday?"
      },
      {
       "kind": "listen",
-      "text": "ถามว่า “Were you at home yesterday?” ครับ 👍 Max ตอบว่า “No, I wasn't. I was at the museum with May.” = เปล่า ฉันอยู่พิพิธภัณฑ์กับ May 😅 จับได้แล้ว!"
+      "text": "ถามว่า “Were you at home yesterday?” ครับ 👍 Bogy ตอบว่า “No, I wasn't. I was at the museum with May.” = เปล่า ฉันอยู่พิพิธภัณฑ์กับ May 😅 จับได้แล้ว!"
      },
      {
       "kind": "choice",
@@ -9517,7 +9497,7 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "บอก Max ว่า เมื่อวานฉันอยู่บ้าน",
+     "th": "บอก Bogy ว่า เมื่อวานฉันอยู่บ้าน",
      "en": "I was at home yesterday.",
      "accept": [
       "Yesterday I was at home.",
@@ -9532,7 +9512,7 @@
      ]
     },
     {
-     "th": "ถาม Max ว่า เมื่อวานสนุกไหม",
+     "th": "ถาม Bogy ว่า เมื่อวานสนุกไหม",
      "en": "Was it fun yesterday?",
      "accept": [
       "Was yesterday fun?",
@@ -9547,10 +9527,10 @@
      ]
     },
     {
-     "th": "เล่าว่า เมื่อวาน Max เล่นแบดมินตัน มันเหนื่อยมาก",
-     "en": "Max played badminton yesterday. He was very tired.",
+     "th": "เล่าว่า เมื่อวาน Bogy เล่นแบดมินตัน มันเหนื่อยมาก",
+     "en": "Bogy played badminton yesterday. He was very tired.",
      "accept": [
-      "Yesterday Max played badminton. He was very tired."
+      "Yesterday Bogy played badminton. He was very tired."
      ]
     },
     {
@@ -9578,7 +9558,7 @@
    "flag": false,
    "beat": "Sho",
    "axes": "12111",
-   "teach": "🖼️ ดูรูปในมือถือ May ที่มีป้ายวันที่ **เมื่อวาน** → พูด 1 ประโยคด้วย **-ed** หรือ **was/were** · ป้ายวันที่คือตัวบอก tense · ทุกภาพมีไอคอนกริยาและชื่อสถานที่บนภาพ · รูปของ Max และ Capy ใช้กริยาเพิ่มจาก 15.5 (clean · relax)",
+   "teach": "🖼️ ดูรูปในมือถือ May ที่มีป้ายวันที่ **เมื่อวาน** → พูด 1 ประโยคด้วย **-ed** หรือ **was/were** · ป้ายวันที่คือตัวบอก tense · ทุกภาพมีไอคอนกริยาและชื่อสถานที่บนภาพ · รูปของ Bogy และ Capy ใช้กริยาเพิ่มจาก 15.5 (clean · relax)",
    "say": "She visited the museum yesterday.",
    "chapter": "บท 15: เมื่อวานเป็นยังไง",
    "goal": "อ่านข้อมูลในภาพ (รูปเมื่อวาน) แล้วพูดเป็นประโยคที่ใช้ได้จริง",
@@ -9622,8 +9602,8 @@
      ]
     },
     {
-     "pic": "รูป Max ถือไม้กวาดในห้องนอนที่สะอาด · 📅 Yesterday · ไอคอน 🧹 clean",
-     "en": "Max cleaned his room yesterday.",
+     "pic": "รูป Bogy ถือไม้กวาดในห้องนอนที่สะอาด · 📅 Yesterday · ไอคอน 🧹 clean",
+     "en": "Bogy cleaned his room yesterday.",
      "accept": [
       "He cleaned his room yesterday."
      ]
@@ -9748,7 +9728,7 @@
    "flag": false,
    "beat": "Ketsu",
    "axes": "13323",
-   "teach": "Max ถามว่าเมื่อวานเป็นยังไง ผู้เรียนเล่าด้วย was/were และ -ed แล้วถามกลับด้วย **How about you? · Was it fun?** (3 goals: บอกว่าอยู่ไหน · เล่า 2 สิ่งที่ทำ · ถามกลับ)",
+   "teach": "Bogy ถามว่าเมื่อวานเป็นยังไง ผู้เรียนเล่าด้วย was/were และ -ed แล้วถามกลับด้วย **How about you? · Was it fun?** (3 goals: บอกว่าอยู่ไหน · เล่า 2 สิ่งที่ทำ · ถามกลับ)",
    "say": "I watched a movie. It was fun. How about you?",
    "chapter": "บท 15: เมื่อวานเป็นยังไง",
    "goal": "คุยจนสำเร็จ: เล่าและถามเรื่องเมื่อวานได้",
@@ -9799,10 +9779,10 @@
      ]
     },
     {
-     "th": "เล่าว่า เมื่อวาน Max เล่นแบดมินตันกับ John",
-     "en": "Max played badminton with John yesterday.",
+     "th": "เล่าว่า เมื่อวาน Bogy เล่นแบดมินตันกับ John",
+     "en": "Bogy played badminton with John yesterday.",
      "accept": [
-      "Yesterday Max played badminton with John."
+      "Yesterday Bogy played badminton with John."
      ]
     },
     {
@@ -9813,7 +9793,7 @@
      ]
     },
     {
-     "th": "บอก Max ก่อนออกไปตลาดน้ำ: ใส่หมวกของนายสิ",
+     "th": "บอก Bogy ก่อนออกไปตลาดน้ำ: ใส่หมวกของนายสิ",
      "en": "Put on your hat.",
      "accept": [
       "Put your hat on.",
@@ -9940,7 +9920,7 @@
      },
      {
       "kind": "task",
-      "text": "เล่าให้ Max ฟังว่าคุณกินมะม่วงที่ตลาดน้ำ 🥭🛶 (กิน → ate) ท้าเลย! พูดเองดูครับ",
+      "text": "เล่าให้ Bogy ฟังว่าคุณกินมะม่วงที่ตลาดน้ำ 🥭🛶 (กิน → ate) ท้าเลย! พูดเองดูครับ",
       "expectedSpeech": "I ate a mango at the floating market."
      },
      {
@@ -9976,7 +9956,7 @@
      {
       "kind": "choice",
       "answerMode": "any",
-      "text": "Max ถามคุณ “Was the floating market fun?” = ตลาดน้ำสนุกไหม เลือกคำตอบของคุณแล้วพูดเลยครับ",
+      "text": "Bogy ถามคุณ “Was the floating market fun?” = ตลาดน้ำสนุกไหม เลือกคำตอบของคุณแล้วพูดเลยครับ",
       "stem": "...",
       "options": [
        {
@@ -9996,7 +9976,7 @@
        }
       ],
       "expectedSpeech": "Yes, it was! I ate the boat noodles.",
-      "successText": "เล่าทริปสนุกมาก Max อยากไปอีกรอบแล้ว 🛶😄"
+      "successText": "เล่าทริปสนุกมาก Bogy อยากไปอีกรอบแล้ว 🛶😄"
      },
      {
       "kind": "finish",
@@ -10363,7 +10343,7 @@
      ]
     },
     {
-     "th": "เล่าให้ Max ฟังว่า วันนี้เราไปตลาดน้ำ และฉันซื้อมะม่วง",
+     "th": "เล่าให้ Bogy ฟังว่า วันนี้เราไปตลาดน้ำ และฉันซื้อมะม่วง",
      "en": "We went to the floating market today. I bought a mango.",
      "accept": [
       "Today we went to the floating market. I bought a mango.",
@@ -10410,7 +10390,7 @@
    "flag": false,
    "beat": "Ketsu",
    "axes": "13333",
-   "teach": "📋 **Checkpoint 2** · **3 ฉาก × 4 turns = 12 turns** (ธรรมดา 4 · emoji 3 · ภาพ/ข้อมูล 5) · แต่ละฉากไม่เกิน 3 นาทีและบันทึกผลจบฉาก (เล่นต่อได้) · รวมไม่เกิน ~9 นาที · ฉาก: ① สั่งก๋วยเตี๋ยวเรือกับ Mali (ช่วยแผงเรือของครอบครัว) (I'd like · Could I…?) → ② จ่ายเงิน ทอนผิด ทักท้วงสุภาพ (I gave you…) → ③ เล่าให้ Max ฟังว่าวันนี้ไปไหน ซื้ออะไร (went · bought) · 3 เป้าหมาย: สั่งอาหาร · ทักเงินทอนผิด · เล่าวันนี้ด้วยอดีต · ผู้เรียนตั้งคำถามอย่างน้อย 1 ครั้งต่อฉาก · feedback ตามความหมายจริง ไม่บังคับท่อง model และไม่เฉลยแล้วข้าม: ให้ลองใหม่ได้ · 💡 hint 2 ระดับ (① คำขึ้นต้น ② sentence starter) ใช้แล้วไม่หักดาว บันทึกเป็น assisted",
+   "teach": "📋 **Checkpoint 2** · **3 ฉาก × 4 turns = 12 turns** (ธรรมดา 4 · emoji 3 · ภาพ/ข้อมูล 5) · แต่ละฉากไม่เกิน 3 นาทีและบันทึกผลจบฉาก (เล่นต่อได้) · รวมไม่เกิน ~9 นาที · ฉาก: ① สั่งก๋วยเตี๋ยวเรือกับ Mali (ช่วยแผงเรือของครอบครัว) (I'd like · Could I…?) → ② จ่ายเงิน ทอนผิด ทักท้วงสุภาพ (I gave you…) → ③ เล่าให้ Bogy ฟังว่าวันนี้ไปไหน ซื้ออะไร (went · bought) · 3 เป้าหมาย: สั่งอาหาร · ทักเงินทอนผิด · เล่าวันนี้ด้วยอดีต · ผู้เรียนตั้งคำถามอย่างน้อย 1 ครั้งต่อฉาก · feedback ตามความหมายจริง ไม่บังคับท่อง model และไม่เฉลยแล้วข้าม: ให้ลองใหม่ได้ · 💡 hint 2 ระดับ (① คำขึ้นต้น ② sentence starter) ใช้แล้วไม่หักดาว บันทึกเป็น assisted",
    "say": "I gave you 500 baht. · We went to the floating market.",
    "chapter": "บท 16: Mission ตลาดน้ำ",
    "goal": "ผ่าน checkpoint: สั่งอาหาร · ทักเงินทอนผิด · เล่าวันนี้ด้วยอดีต",
@@ -10556,7 +10536,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "Max มัวแต่ยืนดูร้านโดนัท 🍩 เกตปิด 10:20 แต่ตอนนี้ 10:15 แล้ว! Torto ดูนาฬิกาพก ⌚ แล้วรีบบอกทีมว่าอะไร?",
+      "text": "Bogy มัวแต่ยืนดูร้านโดนัท 🍩 เกตปิด 10:20 แต่ตอนนี้ 10:15 แล้ว! Torto ดูนาฬิกาพก ⌚ แล้วรีบบอกทีมว่าอะไร?",
       "stem": "We ... go now.",
       "options": [
        {
@@ -10582,7 +10562,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "เก่งมาก! พูดว่า “You have to show your boarding pass.” ครับ 👏 ทีนี้ Max ไม่แน่ใจว่าต้องไปเกต 9 รึเปล่า 🤔 Max อยากถามเจ้าหน้าที่ Max พูดว่าอะไรดี?",
+      "text": "เก่งมาก! พูดว่า “You have to show your boarding pass.” ครับ 👏 ทีนี้ Bogy ไม่แน่ใจว่าต้องไปเกต 9 รึเปล่า 🤔 Bogy อยากถามเจ้าหน้าที่ Bogy พูดว่าอะไรดี?",
       "stem": "... go to Gate 9?",
       "options": [
        {
@@ -10598,7 +10578,7 @@
       ],
       "expectedSpeech": "Do I have to go to Gate 9?",
       "successText": "Do I have to go to Gate 9? = ผมต้องไปเกต 9 ไหมครับ ✨ ท่าถาม 👉 Do I have to ___?",
-      "incorrectHintTh": "Max ยังไม่แน่ใจ เลยต้องถามนะ 🤔 พูดว่า Do I have to go to Gate 9? ครับ"
+      "incorrectHintTh": "Bogy ยังไม่แน่ใจ เลยต้องถามนะ 🤔 พูดว่า Do I have to go to Gate 9? ครับ"
      },
      {
       "kind": "task",
@@ -10726,7 +10706,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "Max มัวแต่ถ่ายรูปเครื่องบิน ✈️📸 ยังไม่ได้เช็กอินกระเป๋าเลย เจ้าหน้าที่ถามว่า “Did you check in your luggage?” Max ตอบว่าอะไรดี?",
+      "text": "Bogy มัวแต่ถ่ายรูปเครื่องบิน ✈️📸 ยังไม่ได้เช็กอินกระเป๋าเลย เจ้าหน้าที่ถามว่า “Did you check in your luggage?” Bogy ตอบว่าอะไรดี?",
       "stem": "..., I ... .",
       "options": [
        {
@@ -10742,17 +10722,17 @@
       ],
       "expectedSpeech": "No, I didn't.",
       "successText": "No, I didn't. = ยังเลยครับ 😅 ท่าตอบว่ายังไม่ได้ทำ 👉 No, I didn't.",
-      "incorrectHintTh": "Max ยังไม่ได้ทำเลยนะ 📸 ตอบว่า No, I didn't. ครับ"
+      "incorrectHintTh": "Bogy ยังไม่ได้ทำเลยนะ 📸 ตอบว่า No, I didn't. ครับ"
      },
      {
       "kind": "task",
-      "text": "เล่าสิ่งที่ “ไม่ได้” 👉 I didn't ___ 🪟 Max อยากนั่งริมหน้าต่าง แต่ไม่ได้ 😢 “I didn't get a window seat.” = ผมไม่ได้ที่นั่งริมหน้าต่าง ลองพูดตามครับ",
+      "text": "เล่าสิ่งที่ “ไม่ได้” 👉 I didn't ___ 🪟 Bogy อยากนั่งริมหน้าต่าง แต่ไม่ได้ 😢 “I didn't get a window seat.” = ผมไม่ได้ที่นั่งริมหน้าต่าง ลองพูดตามครับ",
       "expectedSpeech": "I didn't get a window seat."
      },
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "Max เช็กอินกระเป๋าเรียบร้อย ✅ แต่ได้ที่นั่งริมทางเดิน 😩 Max บ่นกับ May ว่าอะไร?",
+      "text": "Bogy เช็กอินกระเป๋าเรียบร้อย ✅ แต่ได้ที่นั่งริมทางเดิน 😩 Bogy บ่นกับ May ว่าอะไร?",
       "stem": "I didn't ... .",
       "options": [
        {
@@ -10767,7 +10747,7 @@
        }
       ],
       "expectedSpeech": "I didn't get a window seat.",
-      "successText": "I didn't get a window seat. = ผมไม่ได้ที่นั่งริมหน้าต่าง… น่าสงสาร Max 🥲",
+      "successText": "I didn't get a window seat. = ผมไม่ได้ที่นั่งริมหน้าต่าง… น่าสงสาร Bogy 🥲",
       "incorrectHintTh": "กระเป๋าน่ะเช็กอินแล้ว ที่ไม่ได้คือที่นั่งริมหน้าต่าง 🪟 พูดว่า I didn't get a window seat. ครับ"
      },
      {
@@ -10803,7 +10783,7 @@
      },
      {
       "kind": "listen",
-      "text": "ถามว่า “Did you get a window seat?” ครับ 👍 May ตอบว่า “Yes, I did! I have a window seat on the plane.” = ได้สิ! ฉันได้ที่นั่งริมหน้าต่าง (Max อิจฉาตาร้อนเลย 😆)"
+      "text": "ถามว่า “Did you get a window seat?” ครับ 👍 May ตอบว่า “Yes, I did! I have a window seat on the plane.” = ได้สิ! ฉันได้ที่นั่งริมหน้าต่าง (Bogy อิจฉาตาร้อนเลย 😆)"
      },
      {
       "kind": "choice",
@@ -10880,8 +10860,8 @@
      ]
     },
     {
-     "th": "Max ต้องแสดงบอร์ดดิ้งพาสของเขา",
-     "en": "Max has to show his boarding pass.",
+     "th": "Bogy ต้องแสดงบอร์ดดิ้งพาสของเขา",
+     "en": "Bogy has to show his boarding pass.",
      "accept": [
       "He has to show his boarding pass."
      ]
@@ -10925,10 +10905,10 @@
      ]
     },
     {
-     "pic": "บอร์ดดิ้งพาสชื่อ MAX พร้อมรูป Max (He/His): ✈️ 7:15 · 🚪 Gate 3",
+     "pic": "บอร์ดดิ้งพาสชื่อ MAX พร้อมรูป Bogy (He/His): ✈️ 7:15 · 🚪 Gate 3",
      "en": "His flight is at 7:15. He has to go to Gate 3.",
      "accept": [
-      "Max's flight is at 7:15. He has to go to Gate 3.",
+      "Bogy's flight is at 7:15. He has to go to Gate 3.",
       "His flight is at seven fifteen. He has to go to Gate 3."
      ]
     },
@@ -11204,13 +11184,13 @@
      },
      {
       "kind": "task",
-      "text": "ถึงตา Max บ้าง 🛏️ Max จองห้องไว้ 2 คืน ลองบอกพนักงานแทน Max ดูครับ ท้าเลย! พูดเองเลย 😄",
+      "text": "ถึงตา Bogy บ้าง 🛏️ Bogy จองห้องไว้ 2 คืน ลองบอกพนักงานแทน Bogy ดูครับ ท้าเลย! พูดเองเลย 😄",
       "expectedSpeech": "I booked a room for two nights."
      },
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "เยี่ยม! พูดว่า “I booked a room for two nights.” ครับ 👏 พนักงานยื่นการ์ดเปิดห้องให้ Max 🔑 พนักงานพูดว่าอะไร?",
+      "text": "เยี่ยม! พูดว่า “I booked a room for two nights.” ครับ 👏 พนักงานยื่นการ์ดเปิดห้องให้ Bogy 🔑 พนักงานพูดว่าอะไร?",
       "stem": "Here's your ... .",
       "options": [
        {
@@ -11225,7 +11205,7 @@
        }
       ],
       "expectedSpeech": "Here's your key card.",
-      "successText": "Here's your key card. = นี่คีย์การ์ดของคุณค่ะ Max กำไว้แน่นเลย 😄",
+      "successText": "Here's your key card. = นี่คีย์การ์ดของคุณค่ะ Bogy กำไว้แน่นเลย 😄",
       "incorrectHintTh": "การ์ดเปิดห้องคือ key card 🔑 พูดว่า Here's your key card. ครับ"
      },
      {
@@ -11318,7 +11298,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "อุ่นเครื่องกันครับ 🏊 Max เห็นป้ายในโรงแรมแล้วตาเป็นประกาย ✨ มันคืออะไรนะ? ลองเดาแล้วพูดเลย 😄",
+      "text": "อุ่นเครื่องกันครับ 🏊 Bogy เห็นป้ายในโรงแรมแล้วตาเป็นประกาย ✨ มันคืออะไรนะ? ลองเดาแล้วพูดเลย 😄",
       "stem": "...",
       "options": [
        {
@@ -11343,7 +11323,7 @@
        }
       ],
       "expectedSpeech": "pool",
-      "successText": "pool = สระว่ายน้ำ Max เตรียมกางเกงว่ายน้ำแล้ว 🩳",
+      "successText": "pool = สระว่ายน้ำ Bogy เตรียมกางเกงว่ายน้ำแล้ว 🩳",
       "incorrectHintTh": "🏊 คือ pool (สระว่ายน้ำ) ลองพูดว่า pool ครับ"
      },
      {
@@ -11354,7 +11334,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "กระเป๋าของ Max หนักมาก 🧳😩 ไม่อยากแบกขึ้นบันไดเลย Max ถามพนักงานว่าอะไรดี?",
+      "text": "กระเป๋าของ Bogy หนักมาก 🧳😩 ไม่อยากแบกขึ้นบันไดเลย Bogy ถามพนักงานว่าอะไรดี?",
       "stem": "Is there a ...?",
       "options": [
        {
@@ -11369,8 +11349,8 @@
        }
       ],
       "expectedSpeech": "Is there a lift?",
-      "successText": "Is there a lift? = มีลิฟต์ไหมครับ รอดแล้ว Max! 🛗",
-      "incorrectHintTh": "Max ไม่อยากขึ้นบันได อยากได้ลิฟต์ 🛗 พูดว่า Is there a lift? ครับ"
+      "successText": "Is there a lift? = มีลิฟต์ไหมครับ รอดแล้ว Bogy! 🛗",
+      "incorrectHintTh": "Bogy ไม่อยากขึ้นบันได อยากได้ลิฟต์ 🛗 พูดว่า Is there a lift? ครับ"
      },
      {
       "kind": "task",
@@ -11430,12 +11410,12 @@
      },
      {
       "kind": "task",
-      "text": "Max ทำคีย์การ์ดหายไปไหนก็ไม่รู้ 🔑😅 ช่วย Max ขอใบใหม่แบบสุภาพเองเลยครับ (ใช้ท่า Could you ___?) 🙋",
+      "text": "Bogy ทำคีย์การ์ดหายไปไหนก็ไม่รู้ 🔑😅 ช่วย Bogy ขอใบใหม่แบบสุภาพเองเลยครับ (ใช้ท่า Could you ___?) 🙋",
       "expectedSpeech": "Could you give me another key card?"
      },
      {
       "kind": "listen",
-      "text": "ขอว่า “Could you give me another key card?” ครับ 👍 พนักงานตอบว่า “Sure. Here's your key card.” = ได้ค่ะ นี่ค่ะ (รอบนี้ Max เก็บใส่กระเป๋าเสื้อทันที 😆)"
+      "text": "ขอว่า “Could you give me another key card?” ครับ 👍 พนักงานตอบว่า “Sure. Here's your key card.” = ได้ค่ะ นี่ค่ะ (รอบนี้ Bogy เก็บใส่กระเป๋าเสื้อทันที 😆)"
      },
      {
       "kind": "choice",
@@ -11540,7 +11520,7 @@
      ]
     },
     {
-     "th": "Max อยากว่ายน้ำ ถามพนักงานต้อนรับ: โรงแรมมีสระว่ายน้ำไหม",
+     "th": "Bogy อยากว่ายน้ำ ถามพนักงานต้อนรับ: โรงแรมมีสระว่ายน้ำไหม",
      "en": "Is there a pool?",
      "accept": [
       "Is there a pool in the hotel?",
@@ -11694,7 +11674,7 @@
      },
      {
       "kind": "listen",
-      "text": "หญิงสาวที่ป้ายรถเมล์ตอบครับ 🚌 “The number 8 bus goes to the old town.” = สาย 8 ไปเมืองเก่าค่ะ (Max จดเลข 8 ใส่มือทันที ✍️)"
+      "text": "หญิงสาวที่ป้ายรถเมล์ตอบครับ 🚌 “The number 8 bus goes to the old town.” = สาย 8 ไปเมืองเก่าค่ะ (Bogy จดเลข 8 ใส่มือทันที ✍️)"
      },
      {
       "kind": "task",
@@ -11724,7 +11704,7 @@
      },
      {
       "kind": "task",
-      "text": "ตารางรถบอกว่าไปเมืองเก่าใช้เวลา 30 นาที ⏳ Max อยากบอกทีม ลองพูดแทน Max ดูครับ (ใช้ท่า It takes ___) ผิดได้ไม่เป็นไร 😄",
+      "text": "ตารางรถบอกว่าไปเมืองเก่าใช้เวลา 30 นาที ⏳ Bogy อยากบอกทีม ลองพูดแทน Bogy ดูครับ (ใช้ท่า It takes ___) ผิดได้ไม่เป็นไร 😄",
       "expectedSpeech": "It takes thirty minutes."
      },
      {
@@ -11879,7 +11859,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "ลงรถเมล์ 🚌 👉 get off · Max อยากถาม Driver Uncle Somchai ว่าต้องลงป้ายไหน 🤔 Max ถามว่าอะไรดี?",
+      "text": "ลงรถเมล์ 🚌 👉 get off · Bogy อยากถาม Driver Uncle Somchai ว่าต้องลงป้ายไหน 🤔 Bogy ถามว่าอะไรดี?",
       "stem": "Where do I get ...?",
       "options": [
        {
@@ -11931,7 +11911,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "เยี่ยม! พูดว่า “Let's get off the bus.” ครับ 👏 ลงรถแล้ว Max โบกแท็กซี่ได้คันหนึ่ง 🚕 Max ชวนทีมว่าอะไร?",
+      "text": "เยี่ยม! พูดว่า “Let's get off the bus.” ครับ 👏 ลงรถแล้ว Bogy โบกแท็กซี่ได้คันหนึ่ง 🚕 Bogy ชวนทีมว่าอะไร?",
       "stem": "Let's get ... .",
       "options": [
        {
@@ -11947,7 +11927,7 @@
       ],
       "expectedSpeech": "Let's get in the taxi.",
       "successText": "Let's get in the taxi. = ขึ้นแท็กซี่กันเถอะ เงียบสงบ ไม่มีเพลงแล้ว 😌",
-      "incorrectHintTh": "Max เรียกแท็กซี่มาแล้ว 🚕 พูดว่า Let's get in the taxi. ครับ"
+      "incorrectHintTh": "Bogy เรียกแท็กซี่มาแล้ว 🚕 พูดว่า Let's get in the taxi. ครับ"
      },
      {
       "kind": "task",
@@ -12173,11 +12153,11 @@
      ]
     },
     {
-     "pic": "ตารางรถ: 🚌 8:20 ออกไปแล้ว ❌ · นาฬิกาตอนนี้ 8:25 · Max (He) วิ่งมาถึงป้ายคนเดียว",
-     "en": "Max missed the bus.",
+     "pic": "ตารางรถ: 🚌 8:20 ออกไปแล้ว ❌ · นาฬิกาตอนนี้ 8:25 · Bogy (He) วิ่งมาถึงป้ายคนเดียว",
+     "en": "Bogy missed the bus.",
      "accept": [
       "He missed the bus.",
-      "The bus left at 8:20. Max missed it."
+      "The bus left at 8:20. Bogy missed it."
      ]
     }
    ]
@@ -12270,7 +12250,7 @@
        }
       ],
       "expectedSpeech": "bank",
-      "successText": "bank = ธนาคาร Max ขอแวะกดเงินไปซื้อขนมก่อน 💸",
+      "successText": "bank = ธนาคาร Bogy ขอแวะกดเงินไปซื้อขนมก่อน 💸",
       "incorrectHintTh": "🏦 คือ bank (ธนาคาร) ลองพูดว่า bank ครับ"
      },
      {
@@ -12286,7 +12266,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "Max จะเลี้ยวแยกแรกแล้ว! 😅 แต่ร้านอยู่แยกซ้ายที่ 2 ต่างหาก ⬅️⬅️ Torto รีบบอกว่าอะไร?",
+      "text": "Bogy จะเลี้ยวแยกแรกแล้ว! 😅 แต่ร้านอยู่แยกซ้ายที่ 2 ต่างหาก ⬅️⬅️ Torto รีบบอกว่าอะไร?",
       "stem": "Take the ... left.",
       "options": [
        {
@@ -12301,7 +12281,7 @@
        }
       ],
       "expectedSpeech": "Take the second left.",
-      "successText": "Take the second left. = เลี้ยวซ้ายแยกที่สองนะ เกือบหลงแล้ว Max 😆",
+      "successText": "Take the second left. = เลี้ยวซ้ายแยกที่สองนะ เกือบหลงแล้ว Bogy 😆",
       "incorrectHintTh": "ร้านอยู่แยกที่ 2 นะ 2️⃣ พูดว่า Take the second left. ครับ"
      },
      {
@@ -12358,7 +12338,7 @@
      },
      {
       "kind": "task",
-      "text": "Max ซื้อขนมจนเงินหมด 🍩💸 อยากไปธนาคาร แต่ไม่รู้ว่าอยู่ไหน ถามคนแถวนั้นเองเลยครับ 🙋",
+      "text": "Bogy ซื้อขนมจนเงินหมด 🍩💸 อยากไปธนาคาร แต่ไม่รู้ว่าอยู่ไหน ถามคนแถวนั้นเองเลยครับ 🙋",
       "expectedSpeech": "Where is the bank?"
      },
      {
@@ -12439,7 +12419,7 @@
      "accept": []
     },
     {
-     "th": "บอกทาง Max: ข้ามสะพาน แล้วเลี้ยวซ้ายที่หัวมุม",
+     "th": "บอกทาง Bogy: ข้ามสะพาน แล้วเลี้ยวซ้ายที่หัวมุม",
      "en": "Cross the bridge and turn left at the corner.",
      "accept": []
     },
@@ -12531,7 +12511,7 @@
      },
      {
       "kind": "task",
-      "text": "เดินไปได้นิดเดียว เจอป้ายใหญ่ 🚧 คนงานบอกว่า “Sorry, this road is closed.” = ขอโทษนะ ถนนเส้นนี้ปิด ลองพูดตามครับ (Max: โอ๊ยยย 😩)",
+      "text": "เดินไปได้นิดเดียว เจอป้ายใหญ่ 🚧 คนงานบอกว่า “Sorry, this road is closed.” = ขอโทษนะ ถนนเส้นนี้ปิด ลองพูดตามครับ (Bogy: โอ๊ยยย 😩)",
       "expectedSpeech": "Sorry, this road is closed."
      },
      {
@@ -12592,7 +12572,7 @@
      },
      {
       "kind": "task",
-      "text": "Max เริ่มขาล้า 🦵😩 อยากรู้ว่าร้านของ Torto ยังไกลไหม ถามคนแถวนั้นเองเลยครับ 🙋",
+      "text": "Bogy เริ่มขาล้า 🦵😩 อยากรู้ว่าร้านของ Torto ยังไกลไหม ถามคนแถวนั้นเองเลยครับ 🙋",
       "expectedSpeech": "How far is the shop?"
      },
      {
@@ -13055,7 +13035,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "แผนของทีม: ฝนตก 🌧️ → พิพิธภัณฑ์ 🏛️ · แดดออก ☀️ → ทะเล 🏖️ May อธิบายแผนตอนฝนตกให้ Max ฟังว่าอะไร?",
+      "text": "แผนของทีม: ฝนตก 🌧️ → พิพิธภัณฑ์ 🏛️ · แดดออก ☀️ → ทะเล 🏖️ May อธิบายแผนตอนฝนตกให้ Bogy ฟังว่าอะไร?",
       "stem": "If it rains, we'll go to the ... .",
       "options": [
        {
@@ -13081,7 +13061,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "สุดยอด! พูดว่า “If it's sunny, we'll explore the island.” ครับ 👏 ส่วน Max อยากขึ้นภูเขาตอนอากาศดี ⛰️☀️ Max เสนอแผนว่าอะไร?",
+      "text": "สุดยอด! พูดว่า “If it's sunny, we'll explore the island.” ครับ 👏 ส่วน Bogy อยากขึ้นภูเขาตอนอากาศดี ⛰️☀️ Bogy เสนอแผนว่าอะไร?",
       "stem": "If it's ..., we'll go up the mountain.",
       "options": [
        {
@@ -13096,8 +13076,8 @@
        }
       ],
       "expectedSpeech": "If it's sunny, we'll go up the mountain.",
-      "successText": "If it's sunny, we'll go up the mountain. = ถ้าแดดออก เราจะขึ้นภูเขากัน Max ผูกเชือกรองเท้ารอแล้ว 👟",
-      "incorrectHintTh": "Max อยากไปตอนแดดออก ☀️ พูดว่า If it's sunny, we'll go up the mountain. ครับ"
+      "successText": "If it's sunny, we'll go up the mountain. = ถ้าแดดออก เราจะขึ้นภูเขากัน Bogy ผูกเชือกรองเท้ารอแล้ว 👟",
+      "incorrectHintTh": "Bogy อยากไปตอนแดดออก ☀️ พูดว่า If it's sunny, we'll go up the mountain. ครับ"
      },
      {
       "kind": "task",
@@ -13368,7 +13348,7 @@
      ]
     },
     {
-     "th": "บอก Max: เอาร่มไปด้วยนะ เพราะฝนอาจจะตก",
+     "th": "บอก Bogy: เอาร่มไปด้วยนะ เพราะฝนอาจจะตก",
      "en": "Take an umbrella because it might rain.",
      "accept": [
       "Take your umbrella because it might rain."
@@ -13495,7 +13475,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "Max ไอแค่ก ๆ 😷 แต่ยังจะไปตลาดกลางคืนให้ได้! 🌙 คุณเตือน Max ว่าอะไร?",
+      "text": "Bogy ไอแค่ก ๆ 😷 แต่ยังจะไปตลาดกลางคืนให้ได้! 🌙 คุณเตือน Bogy ว่าอะไร?",
       "stem": "You ... go out.",
       "options": [
        {
@@ -13510,8 +13490,8 @@
        }
       ],
       "expectedSpeech": "You shouldn't go out.",
-      "successText": "You shouldn't go out. = ไม่ควรออกไปข้างนอกนะ Max ทำหน้ามุ่ยเลย 😤😆",
-      "incorrectHintTh": "Max ป่วยอยู่ ไม่ควรออกไปนะ 🙅 พูดว่า You shouldn't go out. ครับ"
+      "successText": "You shouldn't go out. = ไม่ควรออกไปข้างนอกนะ Bogy ทำหน้ามุ่ยเลย 😤😆",
+      "incorrectHintTh": "Bogy ป่วยอยู่ ไม่ควรออกไปนะ 🙅 พูดว่า You shouldn't go out. ครับ"
      },
      {
       "kind": "task",
@@ -13706,7 +13686,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "อีกขวดเขียนว่า “วันละ 2 ครั้ง” ✌️ Max อ่านให้ May ฟังว่าอะไร?",
+      "text": "อีกขวดเขียนว่า “วันละ 2 ครั้ง” ✌️ Bogy อ่านให้ May ฟังว่าอะไร?",
       "stem": "Take one pill ... a day.",
       "options": [
        {
@@ -13838,10 +13818,10 @@
      ]
     },
     {
-     "th": "Max ปวดหัว เขาไม่ควรออกไปข้างนอก",
-     "en": "Max has a headache. He shouldn't go out.",
+     "th": "Bogy ปวดหัว เขาไม่ควรออกไปข้างนอก",
+     "en": "Bogy has a headache. He shouldn't go out.",
      "accept": [
-      "Max has a headache. He should not go out.",
+      "Bogy has a headache. He should not go out.",
       "He has a headache. He shouldn't go out."
      ]
     },
@@ -13969,7 +13949,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "วันนี้ Max ไอหนักกว่าเมื่อวานอีก 😣 (ดีขึ้น 👉 getting better · แย่ลง 👉 getting worse) Max บอกเภสัชกรว่าอะไร?",
+      "text": "วันนี้ Bogy ไอหนักกว่าเมื่อวานอีก 😣 (ดีขึ้น 👉 getting better · แย่ลง 👉 getting worse) Bogy บอกเภสัชกรว่าอะไร?",
       "stem": "It's getting ... .",
       "options": [
        {
@@ -13984,8 +13964,8 @@
        }
       ],
       "expectedSpeech": "It's getting worse.",
-      "successText": "It's getting worse. = แย่ลงเรื่อย ๆ เลย… Max ต้องพักแล้วนะ 🛌",
-      "incorrectHintTh": "Max ไอหนักขึ้น แปลว่าแย่ลง 😣 พูดว่า It's getting worse. ครับ"
+      "successText": "It's getting worse. = แย่ลงเรื่อย ๆ เลย… Bogy ต้องพักแล้วนะ 🛌",
+      "incorrectHintTh": "Bogy ไอหนักขึ้น แปลว่าแย่ลง 😣 พูดว่า It's getting worse. ครับ"
      },
      {
       "kind": "task",
@@ -14015,12 +13995,12 @@
      },
      {
       "kind": "task",
-      "text": "Max ไอมาหลายวันแล้ว 😷 ถาม Max เองเลยว่าเริ่มไอตั้งแต่เมื่อไหร่ 🙋",
+      "text": "Bogy ไอมาหลายวันแล้ว 😷 ถาม Bogy เองเลยว่าเริ่มไอตั้งแต่เมื่อไหร่ 🙋",
       "expectedSpeech": "When did it start?"
      },
      {
       "kind": "listen",
-      "text": "ถามว่า “When did it start?” ครับ 👍 Max ตอบว่า “It started yesterday. But I'm getting better.” = เริ่มเมื่อวาน แต่ตอนนี้ดีขึ้นแล้ว (เพราะยอมไม่ไปตลาดกลางคืนนั่นแหละ 😆)"
+      "text": "ถามว่า “When did it start?” ครับ 👍 Bogy ตอบว่า “It started yesterday. But I'm getting better.” = เริ่มเมื่อวาน แต่ตอนนี้ดีขึ้นแล้ว (เพราะยอมไม่ไปตลาดกลางคืนนั่นแหละ 😆)"
      },
      {
       "kind": "choice",
@@ -14197,7 +14177,7 @@
        }
       ],
       "expectedSpeech": "wallet",
-      "successText": "wallet = กระเป๋าสตางค์ ใบของ Max ข้างในมีแต่ใบเสร็จขนม 😆",
+      "successText": "wallet = กระเป๋าสตางค์ ใบของ Bogy ข้างในมีแต่ใบเสร็จขนม 😆",
       "incorrectHintTh": "👛 คือ wallet (กระเป๋าสตางค์) ลองพูดว่า wallet ครับ"
      },
      {
@@ -14217,7 +14197,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "Max นึกว่า Nina ลืมไว้ที่โรงแรม 🏨 แต่จริง ๆ เห็นครั้งสุดท้ายบนรถเมล์ 🚌 May ช่วยเล่าให้ถูกว่าอะไร?",
+      "text": "Bogy นึกว่า Nina ลืมไว้ที่โรงแรม 🏨 แต่จริง ๆ เห็นครั้งสุดท้ายบนรถเมล์ 🚌 May ช่วยเล่าให้ถูกว่าอะไร?",
       "stem": "Nina left her handbag ... .",
       "options": [
        {
@@ -14248,7 +14228,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "เป๊ะ! พูดว่า “I forgot my wallet at the hotel.” ครับ 👏 ส่วน Max ทำกระเป๋าสตางค์หายตั้งแต่เมื่อเช้า ยังหาไม่เจอเลย 👛😟 Max บ่นว่าอะไร?",
+      "text": "เป๊ะ! พูดว่า “I forgot my wallet at the hotel.” ครับ 👏 ส่วน Bogy ทำกระเป๋าสตางค์หายตั้งแต่เมื่อเช้า ยังหาไม่เจอเลย 👛😟 Bogy บ่นว่าอะไร?",
       "stem": "I ... my wallet.",
       "options": [
        {
@@ -14264,16 +14244,16 @@
       ],
       "expectedSpeech": "I lost my wallet.",
       "successText": "I lost my wallet. = ผมทำกระเป๋าสตางค์หาย วันนี้วันอะไรเนี่ย 😩",
-      "incorrectHintTh": "Max ยังหาไม่เจอ แปลว่าทำหาย 😟 พูดว่า I lost my wallet. ครับ"
+      "incorrectHintTh": "Bogy ยังหาไม่เจอ แปลว่าทำหาย 😟 พูดว่า I lost my wallet. ครับ"
      },
      {
       "kind": "task",
-      "text": "Max หน้าเศร้าสุด ๆ 😟 ถาม Max เองเลยว่าเกิดอะไรขึ้น 🙋",
+      "text": "Bogy หน้าเศร้าสุด ๆ 😟 ถาม Bogy เองเลยว่าเกิดอะไรขึ้น 🙋",
       "expectedSpeech": "What happened?"
      },
      {
       "kind": "listen",
-      "text": "ถามว่า “What happened?” ครับ 👍 Max ตอบว่า “I lost my wallet. I left it at the market.” = ผมทำกระเป๋าสตางค์หาย ลืมไว้ที่ตลาด"
+      "text": "ถามว่า “What happened?” ครับ 👍 Bogy ตอบว่า “I lost my wallet. I left it at the market.” = ผมทำกระเป๋าสตางค์หาย ลืมไว้ที่ตลาด"
      },
      {
       "kind": "choice",
@@ -14412,13 +14392,13 @@
      },
      {
       "kind": "task",
-      "text": "แต่ Max นึกอะไรออก 💡 เล่าสิ่งที่เห็น 👉 I saw ___ (see → saw) 👀 “I saw Nina's handbag on the bus.” = ผมเห็นกระเป๋าถือของ Nina บนรถเมล์ ลองพูดตามครับ",
+      "text": "แต่ Bogy นึกอะไรออก 💡 เล่าสิ่งที่เห็น 👉 I saw ___ (see → saw) 👀 “I saw Nina's handbag on the bus.” = ผมเห็นกระเป๋าถือของ Nina บนรถเมล์ ลองพูดตามครับ",
       "expectedSpeech": "I saw Nina's handbag on the bus."
      },
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "Max เห็นกระเป๋าถือของ Nina วางอยู่บนรถเมล์ตั้งแต่เมื่อเช้า 👀🚌 Max รีบบอก Nina ว่าอะไร?",
+      "text": "Bogy เห็นกระเป๋าถือของ Nina วางอยู่บนรถเมล์ตั้งแต่เมื่อเช้า 👀🚌 Bogy รีบบอก Nina ว่าอะไร?",
       "stem": "I ... Nina's handbag on the bus.",
       "options": [
        {
@@ -14434,7 +14414,7 @@
       ],
       "expectedSpeech": "I saw Nina's handbag on the bus.",
       "successText": "I saw Nina's handbag on the bus. = ผมเห็นกระเป๋าของ Nina บนรถเมล์! เบาะแสสำคัญ 🕵️",
-      "incorrectHintTh": "Max เล่าสิ่งที่ตาเห็น 👀 พูดว่า I saw Nina's handbag on the bus. ครับ"
+      "incorrectHintTh": "Bogy เล่าสิ่งที่ตาเห็น 👀 พูดว่า I saw Nina's handbag on the bus. ครับ"
      },
      {
       "kind": "task",
@@ -14464,12 +14444,12 @@
      },
      {
       "kind": "task",
-      "text": "Nina อยากรู้ว่า Max เห็นกระเป๋าของเธอไหม 👀 ถามแทน Nina เองเลยครับ (ใช้ท่า Did you ___?) 🙋",
+      "text": "Nina อยากรู้ว่า Bogy เห็นกระเป๋าของเธอไหม 👀 ถามแทน Nina เองเลยครับ (ใช้ท่า Did you ___?) 🙋",
       "expectedSpeech": "Did you see my bag?"
      },
      {
       "kind": "listen",
-      "text": "ถามว่า “Did you see my bag?” ครับ 👍 Max ตอบว่า “Yes, I saw it on the bus this morning. Maybe someone took it.” = เห็นบนรถเมล์เมื่อเช้า อาจมีคนเอาไปก็ได้ (take → took)"
+      "text": "ถามว่า “Did you see my bag?” ครับ 👍 Bogy ตอบว่า “Yes, I saw it on the bus this morning. Maybe someone took it.” = เห็นบนรถเมล์เมื่อเช้า อาจมีคนเอาไปก็ได้ (take → took)"
      },
      {
       "kind": "choice",
@@ -14505,12 +14485,149 @@
   },
   {
    "code": "23.6",
+   "title": "Stolen! / ถูกขโมย",
+   "type": "new_words",
+   "flag": false,
+   "beat": "Ten",
+   "axes": "11111",
+   "teach": "**steal · thief · police**",
+   "say": "—",
+   "chapter": "บท 23: กระเป๋าหาย",
+   "goal": "จำและพูด steal · thief · police ได้ เพื่อใช้ในเรื่องบทนี้: ที่ตลาดมีของถูกขโมย ต้องแจ้งตำรวจ",
+   "accept": "พูดคำได้ชัดพอให้ระบบจับคำถูก · รับ spelling/สำเนียง US-UK · ไม่ตรวจไวยากรณ์",
+   "hint": "① ฟังเสียงอีกครั้ง ② ฟังแบบช้า + แยกพยางค์ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent"
+  },
+  {
+   "code": "23.7",
+   "title": "It Was Stolen! / ถูกขโมยไปแล้ว",
+   "type": "lesson",
+   "flag": false,
+   "beat": "Ten",
+   "axes": "21211",
+   "teach": "🧩 ก้อนสำเร็จรูป **was stolen** (steal → stolen) = ถูกขโมย · ถาม **Was it stolen?** · แยกกับ I lost it (ทำหายเอง) · ใช้คำจาก 23.6: My wallet **was stolen**. · My phone was stolen. · Was it stolen? — No, I left it on the bus. · A **thief** took it. · ตำรวจ = **police**",
+   "say": "My wallet was stolen.",
+   "chapter": "บท 23: กระเป๋าหาย",
+   "goal": "แจ้งได้ว่าของถูกขโมย (My ___ was stolen.) ถามว่า Was it stolen? และแยกกับการทำหายเอง",
+   "accept": "รับคำตอบที่ความหมายตรง · ประโยคใกล้เคียงให้ผ่านแล้วทวนประโยคที่ถูก",
+   "hint": "ครูทวนตัวอย่างอีกครั้ง · hint ให้ประโยคเต็ม ไม่หักดาว",
+   "flow": {
+    "titleEn": "It Was Stolen!",
+    "titleTh": "ถูกขโมยไปแล้ว",
+    "goalTh": "แจ้งตำรวจว่าของถูกขโมย 👉 My ___ was stolen. · ถาม Was it stolen? · แยกกับ I lost it.",
+    "steps": [
+     {
+      "kind": "task",
+      "text": "ที่ตลาด Bogy ล้วงกระเป๋ากางเกงแล้วกระเป๋าสตางค์หายไป! 👛😱 มีคนเห็นขโมยหยิบไป\nsteal แปลว่า “ขโมย” ถ้าจะบอกว่า “กระเป๋าสตางค์ของฉันถูกขโมย” steal เปลี่ยนเป็น stolen แล้วพูดว่า “My wallet was stolen.”\nลองพูดตามครับ",
+      "expectedSpeech": "My wallet was stolen.",
+      "successText": "ถูกต้องครับ My wallet was stolen. คือ “กระเป๋าสตางค์ของฉันถูกขโมย” — A thief took it! โจรเอาไปแล้ว 🥷\n",
+      "incorrectHintTh": "ลองพูดตามช้า ๆ ว่า My wallet was stolen. ครับ"
+     },
+     {
+      "kind": "choice",
+      "answerMode": "single",
+      "text": "May เช็กกระเป๋า โทรศัพท์ก็หายไปด้วย 📱 May จะบอกตำรวจ 👮 ว่าอะไรดีครับ?",
+      "stem": "My ... was stolen.",
+      "options": [
+       {
+        "emoji": "📱",
+        "label": "phone",
+        "speak": "My phone was stolen."
+       },
+       {
+        "emoji": "👛",
+        "label": "wallet",
+        "speak": "My wallet was stolen."
+       }
+      ],
+      "expectedSpeech": "My phone was stolen.",
+      "incorrectHintTh": "โทรศัพท์คือ phone แล้วพูดว่า My phone was stolen. ครับ",
+      "successText": "ดีครับ My phone was stolen. คือ “โทรศัพท์ของฉันถูกขโมย”\n"
+     },
+     {
+      "kind": "task",
+      "text": "Capy ร้องลั่น กระเป๋าถือใบเล็กของ Capy ก็โดนด้วย 👜 handbag แปลว่า “กระเป๋าถือ”\nช่วย Capy บอกตำรวจว่า “กระเป๋าถือของฉันถูกขโมย” ลองพูดเต็มประโยคครับ",
+      "expectedSpeech": "My handbag was stolen.",
+      "successText": "ใช่เลย My handbag was stolen. คือ “กระเป๋าถือของฉันถูกขโมย”\n",
+      "incorrectHintTh": "ลองพูดว่า My handbag was stolen. ครับ"
+     },
+     {
+      "kind": "task",
+      "text": "ถ้าอยากถามว่า “ถูกขโมยเหรอ?” พูดว่า “Was it stolen?”\nNina ก็หากระเป๋าไม่เจอ ลองถาม Nina ดูครับ",
+      "expectedSpeech": "Was it stolen?",
+      "successText": "ดีครับ Was it stolen? คือ “ถูกขโมยเหรอ” — Nina ตอบว่า No, I left it on the bus! ไม่ใช่ ฉันลืมไว้บนรถเมล์ 😅\n",
+      "incorrectHintTh": "ลองพูดตามช้า ๆ ว่า Was it stolen? ครับ"
+     },
+     {
+      "kind": "choice",
+      "answerMode": "single",
+      "text": "Nina ลืมกระเป๋าไว้บนรถเมล์เอง 🚌 ไม่มีใครขโมย Nina ควรบอกเจ้าหน้าที่ว่าอะไรดีครับ?",
+      "stem": "...",
+      "options": [
+       {
+        "emoji": "🙈",
+        "label": "I lost it",
+        "speak": "I lost my bag."
+       },
+       {
+        "emoji": "🥷",
+        "label": "stolen",
+        "speak": "My bag was stolen."
+       }
+      ],
+      "expectedSpeech": "I lost my bag.",
+      "incorrectHintTh": "Nina ลืมไว้เอง ไม่มีขโมย พูดว่า I lost my bag. ครับ",
+      "successText": "ถูกต้องครับ I lost my bag. คือ “ฉันทำกระเป๋าหาย” ไม่ได้ถูกขโมย\n"
+     },
+     {
+      "kind": "choice",
+      "answerMode": "any",
+      "text": "ตำรวจ 👮 ถามคุณบ้างว่า What was stolen? ถ้าเป็นคุณ ของอะไรที่กลัวถูกขโมยที่สุด เลือกแล้วพูดเต็มประโยคครับ",
+      "stem": "My ... was stolen.",
+      "options": [
+       {
+        "emoji": "📱",
+        "label": "phone",
+        "speak": "My phone was stolen.",
+        "meaningTh": "โทรศัพท์ของฉันถูกขโมย"
+       },
+       {
+        "emoji": "👛",
+        "label": "wallet",
+        "speak": "My wallet was stolen.",
+        "meaningTh": "กระเป๋าสตางค์ของฉันถูกขโมย"
+       },
+       {
+        "emoji": "🛂",
+        "label": "passport",
+        "speak": "My passport was stolen.",
+        "meaningTh": "พาสปอร์ตของฉันถูกขโมย"
+       },
+       {
+        "emoji": "👜",
+        "label": "handbag",
+        "speak": "My handbag was stolen.",
+        "meaningTh": "กระเป๋าถือของฉันถูกขโมย"
+       }
+      ],
+      "expectedSpeech": "My phone was stolen.",
+      "incorrectHintTh": "เลือกหนึ่งอย่าง แล้วพูดเต็มประโยค เช่น My wallet was stolen. ครับ"
+     },
+     {
+      "kind": "finish",
+      "text": "ตอนนี้บอกได้แล้วว่าของถูกขโมย หรือทำหายเอง 👮 เดี๋ยวเราช่วย Nina ตามกระเป๋าต่อ น่าจะยังอยู่บนรถเมล์สาย 8! 🚌"
+     }
+    ]
+   },
+   "handAuthoredFlow": true
+  },
+  {
+   "code": "23.8",
    "title": "Tell What Happened / เล่าเหตุการณ์",
    "type": "say_it",
    "flag": false,
    "beat": "Sho",
    "axes": "12211",
-   "teach": "เล่าว่าของหายที่ไหน เมื่อไหร่",
+   "teach": "เล่าว่าของหายที่ไหน เมื่อไหร่ · ทบทวน **was stolen** จาก 23.7",
    "say": "I left my bag on the bus. · I couldn't find it.",
    "chapter": "บท 23: กระเป๋าหาย",
    "goal": "สื่อความ \"เล่าเหตุการณ์\" เป็นภาษาอังกฤษในสถานการณ์บทนี้",
@@ -14552,16 +14669,23 @@
      ]
     },
     {
-     "th": "พูดแทน Max: เมื่อคืนผมวางกุญแจไว้บนโต๊ะ",
-     "en": "I put my key on the table last night.",
+     "th": "กระเป๋าสตางค์ของฉันถูกขโมย",
+     "en": "My wallet was stolen.",
      "accept": [
-      "I put my keys on the table last night."
+      "My wallet got stolen."
+     ]
+    },
+    {
+     "th": "ถูกขโมยเหรอ?",
+     "en": "Was it stolen?",
+     "accept": [
+      "Was it stolen by someone?"
      ]
     }
    ]
   },
   {
-   "code": "23.7",
+   "code": "23.9",
    "title": "In My Bag / ของในกระเป๋า",
    "type": "new_words",
    "flag": false,
@@ -14576,7 +14700,7 @@
    "moreWords": true
   },
   {
-   "code": "23.8",
+   "code": "23.10",
    "title": "Describe Your Bag / บรรยายกระเป๋า",
    "type": "see_and_say",
    "flag": true,
@@ -14651,7 +14775,7 @@
    ]
   },
   {
-   "code": "23.9",
+   "code": "23.11",
    "title": "Can You Help Me? / ช่วยหน่อย",
    "type": "say_it",
    "flag": false,
@@ -14710,7 +14834,7 @@
    ]
   },
   {
-   "code": "23.10",
+   "code": "23.12",
    "title": "Lost Bag / แจ้งของหาย",
    "type": "conversation",
    "flag": false,
@@ -14730,7 +14854,7 @@
    "flag": false,
    "beat": "Ki",
    "axes": "12212",
-   "teach": "ไม่นับคะแนน ทบทวน have to · Could you · ถามทาง · if / will · should · อดีตผิดรูป · 🧩 get in / get on · look for · still / get better",
+   "teach": "ไม่นับคะแนน ทบทวน have to · Could you · ถามทาง · if / will · should · อดีตผิดรูป · was stolen · 🧩 get in / get on · look for · still / get better",
    "say": "We have to go to Gate 12.",
    "chapter": "บท 24: Mission เที่ยวบินดีเลย์",
    "goal": "สื่อความ \"อุ่นเครื่องโซน 3\" เป็นภาษาอังกฤษในสถานการณ์บทนี้",
@@ -14775,14 +14899,14 @@
      ]
     },
     {
-     "th": "ฉันทำพาสปอร์ตหาย ฉันกำลังหามันอยู่",
-     "en": "I lost my passport. I'm looking for it.",
+     "th": "พาสปอร์ตของฉันถูกขโมย",
+     "en": "My passport was stolen.",
      "accept": [
-      "I lost my passport. I am looking for it."
+      "My passport got stolen."
      ]
     },
     {
-     "th": "ชวน Max: ขึ้นแท็กซี่กันเถอะ",
+     "th": "ชวน Bogy: ขึ้นแท็กซี่กันเถอะ",
      "en": "Let's get in the taxi.",
      "accept": [
       "Let's get in a taxi."
@@ -14850,7 +14974,7 @@
        }
       ],
       "expectedSpeech": "voucher",
-      "successText": "voucher = บัตรกำนัล / คูปอง Max ตาเป็นประกายทันที 🍔✨",
+      "successText": "voucher = บัตรกำนัล / คูปอง Bogy ตาเป็นประกายทันที 🍔✨",
       "incorrectHintTh": "🎟️ คือ voucher (บัตรกำนัล / คูปอง) ลองพูดว่า voucher ครับ"
      },
      {
@@ -14861,7 +14985,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "Torto ดูนาฬิกาพก ⌚ แล้วดูจออีกที… ไม่ใช่แค่ช้านะ จอขึ้นว่า CANCELLED ❌ Max หันมาบอกทีมว่าอะไร?",
+      "text": "Torto ดูนาฬิกาพก ⌚ แล้วดูจออีกที… ไม่ใช่แค่ช้านะ จอขึ้นว่า CANCELLED ❌ Bogy หันมาบอกทีมว่าอะไร?",
       "stem": "Our flight is ... .",
       "options": [
        {
@@ -14890,13 +15014,13 @@
      },
      {
       "kind": "task",
-      "text": "Max ส่งข้อความเสียงบอกที่บ้านว่า เที่ยวบินถูกยกเลิก และทีมต้องพักโรงแรม 🏨📱 ลองพูดแทน Max ดูครับ (ใช้ have to นะ) ผิดได้ไม่เป็นไร 😄",
+      "text": "Bogy ส่งข้อความเสียงบอกที่บ้านว่า เที่ยวบินถูกยกเลิก และทีมต้องพักโรงแรม 🏨📱 ลองพูดแทน Bogy ดูครับ (ใช้ have to นะ) ผิดได้ไม่เป็นไร 😄",
       "expectedSpeech": "Our flight is cancelled. We have to stay at a hotel."
      },
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "เยี่ยม! พูดว่า “Our flight is cancelled. We have to stay at a hotel.” ครับ 👏 ทีนี้ Max ท้องร้องจ๊อก ๆ 🍔 อยากได้คูปองอาหาร Max ขอเจ้าหน้าที่ว่าอะไร?",
+      "text": "เยี่ยม! พูดว่า “Our flight is cancelled. We have to stay at a hotel.” ครับ 👏 ทีนี้ Bogy ท้องร้องจ๊อก ๆ 🍔 อยากได้คูปองอาหาร Bogy ขอเจ้าหน้าที่ว่าอะไร?",
       "stem": "... ?",
       "options": [
        {
@@ -14911,8 +15035,8 @@
        }
       ],
       "expectedSpeech": "Can I get a voucher?",
-      "successText": "Can I get a voucher? = ขอคูปองได้ไหมครับ ได้กินแล้ว Max! 😋",
-      "incorrectHintTh": "Max อยากได้คูปองอาหาร 🎟️ พูดว่า Can I get a voucher? ครับ"
+      "successText": "Can I get a voucher? = ขอคูปองได้ไหมครับ ได้กินแล้ว Bogy! 😋",
+      "incorrectHintTh": "Bogy อยากได้คูปองอาหาร 🎟️ พูดว่า Can I get a voucher? ครับ"
      },
      {
       "kind": "task",
@@ -15166,12 +15290,12 @@
   },
   {
    "code": "24.9",
-   "title": "Max's Secret / ความลับของ Max",
+   "title": "Bogy's Secret / ความลับของ Bogy",
    "type": "story_bites",
    "flag": false,
    "beat": "Ketsu",
    "axes": "11121",
-   "teach": "🎬 ดูคลิปสั้น 15–30 วินาที เป็นรางวัลหลังจบ Mission แล้วตอบคำถาม 3 ข้อด้วยเสียง ระหว่างรอเที่ยวบินใหม่ Max บอกว่าได้ทุนไปเรียนต่างประเทศ · 📜 สคริปต์มีคำตอบทุกข้อ ไม่ถามสิ่งที่คลิปไม่ได้พูด",
+   "teach": "🎬 ดูคลิปสั้น 15–30 วินาที เป็นรางวัลหลังจบ Mission แล้วตอบคำถาม 3 ข้อด้วยเสียง ระหว่างรอเที่ยวบินใหม่ Bogy บอกว่าได้ทุนไปเรียนต่างประเทศ · 📜 สคริปต์มีคำตอบทุกข้อ ไม่ถามสิ่งที่คลิปไม่ได้พูด",
    "say": "In England.",
    "chapter": "บท 24: Mission เที่ยวบินดีเลย์",
    "goal": "ตามเรื่องในคลิปได้พอตอบ 3 คำถามด้วยเสียง",
@@ -15179,8 +15303,8 @@
    "hint": "① เล่นซ้ำช่วงที่มีคำตอบ ② sentence starter · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "audio": "Max: Teacher Torto, can I tell you something? I'm going to study in England next year. I'm excited, but I'm a little sad. I'm going to miss my friends.",
-     "q": "Where is Max going to study?",
+     "audio": "Bogy: Teacher Torto, can I tell you something? I'm going to study in England next year. I'm excited, but I'm a little sad. I'm going to miss my friends.",
+     "q": "Where is Bogy going to study?",
      "en": "In England.",
      "accept": [
       "England.",
@@ -15231,7 +15355,7 @@
      },
      {
       "kind": "listen",
-      "text": "แม่ถามปุ๊บ Max ตอบปั๊บ 🏨 stay → stayed “We stayed at a hotel.” = พวกเราพักที่โรงแรม (Max ชอบสระว่ายน้ำที่สุด 🏊)"
+      "text": "แม่ถามปุ๊บ Bogy ตอบปั๊บ 🏨 stay → stayed “We stayed at a hotel.” = พวกเราพักที่โรงแรม (Bogy ชอบสระว่ายน้ำที่สุด 🏊)"
      },
      {
       "kind": "choice",
@@ -15308,17 +15432,17 @@
      },
      {
       "kind": "task",
-      "text": "Max เล่าว่าอาหารในทริปอร่อยจนลืมถ่ายรูป 🍜😆 ลองถาม Max ว่ากินอะไรไปบ้าง ท้าเลย! ถามเองครับ",
+      "text": "Bogy เล่าว่าอาหารในทริปอร่อยจนลืมถ่ายรูป 🍜😆 ลองถาม Bogy ว่ากินอะไรไปบ้าง ท้าเลย! ถามเองครับ",
       "expectedSpeech": "What did you eat?"
      },
      {
       "kind": "listen",
-      "text": "ถามว่า “What did you eat?” ครับ 👍 Max ตอบว่า “I ate a lot of noodles. They were great!” = ฉันกินก๋วยเตี๋ยวเยอะมาก อร่อยสุด ๆ 🍜 (พูดแล้ว Max หิวอีกแล้ว 😆)"
+      "text": "ถามว่า “What did you eat?” ครับ 👍 Bogy ตอบว่า “I ate a lot of noodles. They were great!” = ฉันกินก๋วยเตี๋ยวเยอะมาก อร่อยสุด ๆ 🍜 (พูดแล้ว Bogy หิวอีกแล้ว 😆)"
      },
      {
       "kind": "choice",
       "answerMode": "any",
-      "text": "ถึงตาคุณแล้ว! Max ถามว่า “Where did you go last year?” เลือกที่ที่คุณไปจริง ๆ แล้วพูดเลยครับ",
+      "text": "ถึงตาคุณแล้ว! Bogy ถามว่า “Where did you go last year?” เลือกที่ที่คุณไปจริง ๆ แล้วพูดเลยครับ",
       "stem": "I went to ... .",
       "options": [
        {
@@ -15483,22 +15607,22 @@
        }
       ],
       "expectedSpeech": "My suitcase was very big!",
-      "successText": "My suitcase was very big! = กระเป๋าเดินทางของฉันใหญ่มาก 🧳 Max ยังต้องช่วยแบกเลย 😆",
+      "successText": "My suitcase was very big! = กระเป๋าเดินทางของฉันใหญ่มาก 🧳 Bogy ยังต้องช่วยแบกเลย 😆",
       "incorrectHintTh": "ใกล้แล้ว! เป็นเรื่องตอนทริปที่จบไปแล้ว 🧳 พูดว่า My suitcase was very big! ครับ"
      },
      {
       "kind": "task",
-      "text": "Max ก็กลับถึงบ้านดึกเหมือนกัน 🌙 ลองถาม Max ว่ากลับถึงบ้านกี่โมง ใช้ What time นะ ถามเองเลยครับ",
+      "text": "Bogy ก็กลับถึงบ้านดึกเหมือนกัน 🌙 ลองถาม Bogy ว่ากลับถึงบ้านกี่โมง ใช้ What time นะ ถามเองเลยครับ",
       "expectedSpeech": "What time did you get back home?"
      },
      {
       "kind": "listen",
-      "text": "ถามว่า “What time did you get back home?” ครับ 👍 Max ตอบว่า “I got back home at 11 p.m. I was very tired!” = ฉันกลับถึงบ้านห้าทุ่ม เหนื่อยมาก 😴"
+      "text": "ถามว่า “What time did you get back home?” ครับ 👍 Bogy ตอบว่า “I got back home at 11 p.m. I was very tired!” = ฉันกลับถึงบ้านห้าทุ่ม เหนื่อยมาก 😴"
      },
      {
       "kind": "choice",
       "answerMode": "any",
-      "text": "Max ถามคุณบ้าง “When did you come back from your last holiday?” เลือกคำตอบของคุณแล้วพูดเลยครับ",
+      "text": "Bogy ถามคุณบ้าง “When did you come back from your last holiday?” เลือกคำตอบของคุณแล้วพูดเลยครับ",
       "stem": "I came back ... ago.",
       "options": [
        {
@@ -15636,7 +15760,7 @@
    "flag": false,
    "beat": "Sho",
    "axes": "31211",
-   "teach": "บรรยายทริปด้วยคำจาก 25.7 · คู่ **-ed / -ing**: **-ing** = สิ่งที่ทำให้รู้สึก · **-ed** = คนที่รู้สึก · **The boat ride was exciting. I was excited.** · **The show was boring. Max was bored.** · **The museum tour was interesting. May was interested.** · **The long walk was tiring. We were tired.** · บอกว่ามีอะไรบ้างด้วย **There was / There were**: **There were a lot of people.** (ย้ายมาจากบท 15)",
+   "teach": "บรรยายทริปด้วยคำจาก 25.7 · คู่ **-ed / -ing**: **-ing** = สิ่งที่ทำให้รู้สึก · **-ed** = คนที่รู้สึก · **The boat ride was exciting. I was excited.** · **The show was boring. Bogy was bored.** · **The museum tour was interesting. May was interested.** · **The long walk was tiring. We were tired.** · บอกว่ามีอะไรบ้างด้วย **There was / There were**: **There were a lot of people.** (ย้ายมาจากบท 15)",
    "say": "There were a lot of people. It was exciting.",
    "chapter": "บท 25: เล่าทริปให้ครอบครัวฟัง",
    "goal": "เข้าใจ \"มันน่าตื่นเต้น\" พอจะพูดตัวอย่างของตัวเองได้ 1 ประโยค",
@@ -15691,13 +15815,13 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "โชว์ยาวสามชั่วโมง Max หาวไม่หยุด 🥱 May กระซิบเล่าให้แม่ฟังว่า Max รู้สึกยังไง May พูดว่าอะไรดี?",
+      "text": "โชว์ยาวสามชั่วโมง Bogy หาวไม่หยุด 🥱 May กระซิบเล่าให้แม่ฟังว่า Bogy รู้สึกยังไง May พูดว่าอะไรดี?",
       "stem": "... was ... .",
       "options": [
        {
         "emoji": "🥱",
-        "label": "Max · bored",
-        "speak": "Max was bored."
+        "label": "Bogy · bored",
+        "speak": "Bogy was bored."
        },
        {
         "emoji": "📺",
@@ -15705,9 +15829,9 @@
         "speak": "The show was boring."
        }
       ],
-      "expectedSpeech": "Max was bored.",
-      "successText": "Max was bored. = Max เบื่อมาก 🥱 แต่ Max ไม่ยอมรับนะ 😆",
-      "incorrectHintTh": "เกือบแล้ว! May เล่าถึงตัว Max ที่หาวอยู่ 🥱 พูดว่า Max was bored. ครับ (The show was boring. = ตัวโชว์น่าเบื่อ)"
+      "expectedSpeech": "Bogy was bored.",
+      "successText": "Bogy was bored. = Bogy เบื่อมาก 🥱 แต่ Bogy ไม่ยอมรับนะ 😆",
+      "incorrectHintTh": "เกือบแล้ว! May เล่าถึงตัว Bogy ที่หาวอยู่ 🥱 พูดว่า Bogy was bored. ครับ (The show was boring. = ตัวโชว์น่าเบื่อ)"
      },
      {
       "kind": "task",
@@ -15796,7 +15920,7 @@
    "hint": "① ไฮไลต์ข้อมูลในภาพที่ต้องพูด ② sentence starter · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "pic": "ภาพคู่: ซ้าย ป้าย 'trip' รูปเรือแล่นบนคลื่น · ขวา ป้าย 'We' หน้าผู้เรียนกับ Max และ May ยิ้มกว้าง แท็กอารมณ์ 🤩 ตื่นเต้น",
+     "pic": "ภาพคู่: ซ้าย ป้าย 'trip' รูปเรือแล่นบนคลื่น · ขวา ป้าย 'We' หน้าผู้เรียนกับ Bogy และ May ยิ้มกว้าง แท็กอารมณ์ 🤩 ตื่นเต้น",
      "en": "The trip was exciting. We were excited.",
      "accept": [
       "The trip was exciting.",
@@ -15833,12 +15957,12 @@
      ]
     },
     {
-     "pic": "ภาพคู่: ซ้าย ป้าย 'football game' รูปสนามบอล · ขวา ป้าย 'Max' หน้า Max ตะโกนเชียร์ แท็กอารมณ์ 🤩 ตื่นเต้น",
-     "en": "The football game was exciting. Max was excited.",
+     "pic": "ภาพคู่: ซ้าย ป้าย 'football game' รูปสนามบอล · ขวา ป้าย 'Bogy' หน้า Bogy ตะโกนเชียร์ แท็กอารมณ์ 🤩 ตื่นเต้น",
+     "en": "The football game was exciting. Bogy was excited.",
      "accept": [
-      "The game was exciting. Max was excited.",
+      "The game was exciting. Bogy was excited.",
       "The football game was exciting.",
-      "Max was excited.",
+      "Bogy was excited.",
       "The football game was exciting. He was excited."
      ]
     },
@@ -15854,12 +15978,12 @@
   },
   {
    "code": "25.10",
-   "title": "🎬 Max's Side of the Story / ทริปในมุม Max",
+   "title": "🎬 Bogy's Side of the Story / ทริปในมุม Bogy",
    "type": "story_bites",
    "flag": false,
    "beat": "Ten",
    "axes": "12133",
-   "teach": "🎬 คลิป 15–30 วินาที: Max เล่าทริปเดียวกันแต่มองต่างมุม → ตอบ 3 คำถามด้วยเสียง · เปิดดูซ้ำได้ · 📜 สคริปต์มีคำตอบทุกข้อ ไม่ถามสิ่งที่คลิปไม่ได้พูด",
+   "teach": "🎬 คลิป 15–30 วินาที: Bogy เล่าทริปเดียวกันแต่มองต่างมุม → ตอบ 3 คำถามด้วยเสียง · เปิดดูซ้ำได้ · 📜 สคริปต์มีคำตอบทุกข้อ ไม่ถามสิ่งที่คลิปไม่ได้พูด",
    "say": "The boat trip.",
    "chapter": "บท 25: เล่าทริปให้ครอบครัวฟัง",
    "goal": "ตามเรื่องในคลิปได้พอตอบ 3 คำถามด้วยเสียง",
@@ -15867,8 +15991,8 @@
    "hint": "① เล่นซ้ำช่วงที่มีคำตอบ ② sentence starter · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "audio": "Max: For me, the best thing was the boat trip! It was really exciting. The museum was boring, and the hotel food wasn't very good. But the night market was really fun.",
-     "q": "What was the best thing for Max?",
+     "audio": "Bogy: For me, the best thing was the boat trip! It was really exciting. The museum was boring, and the hotel food wasn't very good. But the night market was really fun.",
+     "q": "What was the best thing for Bogy?",
      "en": "The boat trip.",
      "accept": [
       "The boat trip was the best thing.",
@@ -16025,7 +16149,7 @@
      },
      {
       "kind": "task",
-      "text": "Max เคยตั้งแคมป์ในป่ามาแล้ว ⛺🌲 แต่ Max เขินไม่กล้าเล่า ลองเล่าแทน Max เป็นภาษาอังกฤษเองเลยครับ ใช้ I've นะ (camp → camped)",
+      "text": "Bogy เคยตั้งแคมป์ในป่ามาแล้ว ⛺🌲 แต่ Bogy เขินไม่กล้าเล่า ลองเล่าแทน Bogy เป็นภาษาอังกฤษเองเลยครับ ใช้ I've นะ (camp → camped)",
       "expectedSpeech": "I've camped in a forest."
      },
      {
@@ -16150,7 +16274,7 @@
      ]
     },
     {
-     "th": "ถาม Max ว่า เคยเห็นหิมะไหม",
+     "th": "ถาม Bogy ว่า เคยเห็นหิมะไหม",
      "en": "Have you ever seen snow?",
      "accept": []
     },
@@ -16715,10 +16839,10 @@
      ]
     },
     {
-     "th": "ถาม John ว่า เมื่อวานตอนบ่ายสามโมง Max กำลังทำอะไรอยู่",
-     "en": "What was Max doing at 3 p.m. yesterday?",
+     "th": "ถาม John ว่า เมื่อวานตอนบ่ายสามโมง Bogy กำลังทำอะไรอยู่",
+     "en": "What was Bogy doing at 3 p.m. yesterday?",
      "accept": [
-      "What was Max doing at three yesterday?"
+      "What was Bogy doing at three yesterday?"
      ]
     },
     {
@@ -16820,7 +16944,7 @@
        }
       ],
       "expectedSpeech": "angry",
-      "successText": "angry = โกรธ 😠 เหมือน Max ตอนหิวเลย 😆",
+      "successText": "angry = โกรธ 😠 เหมือน Bogy ตอนหิวเลย 😆",
       "incorrectHintTh": "โกรธ 😠 คือ angry ครับ (wet = เปียก · dark = มืด · cold = หนาว)"
      },
      {
@@ -16887,17 +17011,17 @@
      },
      {
       "kind": "task",
-      "text": "อยากรู้ว่าตอนฝนเริ่มตก Max อยู่ไหน 🌧️ ลองถาม Max ว่าเขากำลังทำอะไรอยู่ ใช้ when นะ ถามเองเลยครับ",
+      "text": "อยากรู้ว่าตอนฝนเริ่มตก Bogy อยู่ไหน 🌧️ ลองถาม Bogy ว่าเขากำลังทำอะไรอยู่ ใช้ when นะ ถามเองเลยครับ",
       "expectedSpeech": "What were you doing when it started to rain?"
      },
      {
       "kind": "listen",
-      "text": "ถามว่า “What were you doing when it started to rain?” ครับ 👍 Max ตอบว่า “I was waiting for the bus, so I got wet!” = ฉันกำลังรอรถเมล์อยู่ เลยตัวเปียกเลย 😆"
+      "text": "ถามว่า “What were you doing when it started to rain?” ครับ 👍 Bogy ตอบว่า “I was waiting for the bus, so I got wet!” = ฉันกำลังรอรถเมล์อยู่ เลยตัวเปียกเลย 😆"
      },
      {
       "kind": "choice",
       "answerMode": "any",
-      "text": "Max ถามคุณบ้าง “What were you doing when it got dark yesterday?” เลือกคำตอบของคุณแล้วพูดเลยครับ",
+      "text": "Bogy ถามคุณบ้าง “What were you doing when it got dark yesterday?” เลือกคำตอบของคุณแล้วพูดเลยครับ",
       "stem": "I was ... .",
       "options": [
        {
@@ -16974,10 +17098,10 @@
      ]
     },
     {
-     "th": "เล่าว่า Max กำลังเดินกลับบ้านตอนที่ฝนเริ่มตก เขาก็เลยเปียก",
-     "en": "Max was walking home when it started to rain, so he got wet.",
+     "th": "เล่าว่า Bogy กำลังเดินกลับบ้านตอนที่ฝนเริ่มตก เขาก็เลยเปียก",
+     "en": "Bogy was walking home when it started to rain, so he got wet.",
      "accept": [
-      "Max was walking home when it started raining, so he got wet."
+      "Bogy was walking home when it started raining, so he got wet."
      ]
     },
     {
@@ -17134,7 +17258,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "Max ตื่นเต้น ซื้อเนกไทมาสามเส้น 👔👔👔 แต่ที่โรงแรมนี้จะผูกหรือไม่ผูกก็ได้ Mali บอก Max ว่าอะไรดี?",
+      "text": "Bogy ตื่นเต้น ซื้อเนกไทมาสามเส้น 👔👔👔 แต่ที่โรงแรมนี้จะผูกหรือไม่ผูกก็ได้ Mali บอก Bogy ว่าอะไรดี?",
       "stem": "You ... wear a tie.",
       "options": [
        {
@@ -17149,7 +17273,7 @@
        }
       ],
       "expectedSpeech": "You don't have to wear a tie.",
-      "successText": "You don't have to wear a tie. = ไม่ต้องผูกเนกไทก็ได้ 😅 Max เก็บเนกไทเงียบ ๆ",
+      "successText": "You don't have to wear a tie. = ไม่ต้องผูกเนกไทก็ได้ 😅 Bogy เก็บเนกไทเงียบ ๆ",
       "incorrectHintTh": "เกือบแล้ว! ผูกก็ได้ ไม่ผูกก็ได้ 🤷 Mali พูดว่า You don't have to wear a tie. ครับ"
      },
      {
@@ -17160,7 +17284,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "ป้ายหลังเคาน์เตอร์เขียนว่า ห้ามเล่นมือถือระหว่างทำงาน 📵 Mali อ่านให้ Max ฟังว่าอะไรดี?",
+      "text": "ป้ายหลังเคาน์เตอร์เขียนว่า ห้ามเล่นมือถือระหว่างทำงาน 📵 Mali อ่านให้ Bogy ฟังว่าอะไรดี?",
       "stem": "You ... use your phone.",
       "options": [
        {
@@ -17175,12 +17299,12 @@
        }
       ],
       "expectedSpeech": "You mustn't use your phone.",
-      "successText": "You mustn't use your phone. = ห้ามใช้โทรศัพท์ 📵 Max รีบเก็บมือถือทันที 😆",
+      "successText": "You mustn't use your phone. = ห้ามใช้โทรศัพท์ 📵 Bogy รีบเก็บมือถือทันที 😆",
       "incorrectHintTh": "ใกล้แล้ว! ป้ายบอกว่าห้ามเด็ดขาด 🚫 พูดว่า You mustn't use your phone. ครับ (don't have to = ไม่ต้องก็ได้)"
      },
      {
       "kind": "task",
-      "text": "Max จะเริ่มงานที่โรงแรมพรุ่งนี้ 🏨 ลองบอกกฎสองข้อให้ Max เป็นภาษาอังกฤษเองเลยครับ: ห้ามใช้โทรศัพท์ 📵 แต่ไม่ต้องผูกเนกไทก็ได้ 👔 ผิดได้ไม่เป็นไรนะ 😄",
+      "text": "Bogy จะเริ่มงานที่โรงแรมพรุ่งนี้ 🏨 ลองบอกกฎสองข้อให้ Bogy เป็นภาษาอังกฤษเองเลยครับ: ห้ามใช้โทรศัพท์ 📵 แต่ไม่ต้องผูกเนกไทก็ได้ 👔 ผิดได้ไม่เป็นไรนะ 😄",
       "expectedSpeech": "You mustn't use your phone. You don't have to wear a tie."
      },
      {
@@ -17436,7 +17560,7 @@
      },
      {
       "kind": "task",
-      "text": "Max ถามว่าเราฝึกงานที่ร้านกาแฟมานานแค่ไหนแล้ว ☕ เราเพิ่งทำได้สองเดือน ลองตอบเป็นภาษาอังกฤษเองเลยครับ ใช้ for นะ",
+      "text": "Bogy ถามว่าเราฝึกงานที่ร้านกาแฟมานานแค่ไหนแล้ว ☕ เราเพิ่งทำได้สองเดือน ลองตอบเป็นภาษาอังกฤษเองเลยครับ ใช้ for นะ",
       "expectedSpeech": "I've worked there for two months."
      },
      {
@@ -17536,10 +17660,10 @@
      ]
     },
     {
-     "th": "บอกว่า Max เป็นเด็กฝึกงานที่โรงแรม เขาทำงานที่นั่นตั้งแต่เดือนมีนาคม",
-     "en": "Max is an intern at the hotel. He has worked there since March.",
+     "th": "บอกว่า Bogy เป็นเด็กฝึกงานที่โรงแรม เขาทำงานที่นั่นตั้งแต่เดือนมีนาคม",
+     "en": "Bogy is an intern at the hotel. He has worked there since March.",
      "accept": [
-      "Max is an intern at the hotel. He's worked there since March."
+      "Bogy is an intern at the hotel. He's worked there since March."
      ]
     },
     {
@@ -17791,12 +17915,12 @@
        }
       ],
       "expectedSpeech": "I think the food was terrible.",
-      "successText": "I think the food was terrible. = ฉันว่าอาหารแย่มาก 😖 Max เถียงทันทีเลย 😆",
+      "successText": "I think the food was terrible. = ฉันว่าอาหารแย่มาก 😖 Bogy เถียงทันทีเลย 😆",
       "incorrectHintTh": "เกือบแล้ว! อาหารไม่อร่อยเลย 😖 พูดว่า I think the food was terrible. ครับ"
      },
      {
       "kind": "task",
-      "text": "Max ยืนยันว่าตลาดดีที่สุด 🏆 แต่เราไม่เห็นด้วย เพราะคนแน่นเกินไป 👥👥 ลองตอบ Max เป็นภาษาอังกฤษเองเลยครับ ใช้ because นะ",
+      "text": "Bogy ยืนยันว่าตลาดดีที่สุด 🏆 แต่เราไม่เห็นด้วย เพราะคนแน่นเกินไป 👥👥 ลองตอบ Bogy เป็นภาษาอังกฤษเองเลยครับ ใช้ because นะ",
       "expectedSpeech": "I don't agree because it was too crowded."
      },
      {
@@ -17822,12 +17946,12 @@
      },
      {
       "kind": "task",
-      "text": "ลองบอก Max ว่าเราว่าอาหารร้านนั้นแย่มาก แล้วถามความเห็น Max กลับ 😖🤔 พูดเองเลยครับ",
+      "text": "ลองบอก Bogy ว่าเราว่าอาหารร้านนั้นแย่มาก แล้วถามความเห็น Bogy กลับ 😖🤔 พูดเองเลยครับ",
       "expectedSpeech": "I think the food was terrible. What do you think?"
      },
      {
       "kind": "listen",
-      "text": "พูดว่า “I think the food was terrible. What do you think?” ครับ 👍 Max ตอบว่า “I don't agree because the noodles were great!” = ฉันไม่เห็นด้วย เพราะก๋วยเตี๋ยวอร่อยมาก 🍜 (Max กินได้ทุกอย่างจริง ๆ 😆)"
+      "text": "พูดว่า “I think the food was terrible. What do you think?” ครับ 👍 Bogy ตอบว่า “I don't agree because the noodles were great!” = ฉันไม่เห็นด้วย เพราะก๋วยเตี๋ยวอร่อยมาก 🍜 (Bogy กินได้ทุกอย่างจริง ๆ 😆)"
      },
      {
       "kind": "choice",
@@ -18054,7 +18178,7 @@
      },
      {
       "kind": "finish",
-      "text": "จบบทแล้วครับ 🎉 ตอนนี้คุณรีวิวได้แล้ว “The room was clean and peaceful.” · “It was worth it. I recommend it.” ⭐ บทหน้า Nina มีภารกิจลับ เตรียมงานอำลา Max 🤫🎈"
+      "text": "จบบทแล้วครับ 🎉 ตอนนี้คุณรีวิวได้แล้ว “The room was clean and peaceful.” · “It was worth it. I recommend it.” ⭐ บทหน้า Nina มีภารกิจลับ เตรียมงานอำลา Bogy 🤫🎈"
      }
     ]
    }
@@ -18081,7 +18205,7 @@
      ]
     },
     {
-     "th": "พูดถึงทริปที่ผ่านมา: ฉันคิดว่าวิวสุดยอดมาก แล้วถาม Max ว่าคิดยังไง",
+     "th": "พูดถึงทริปที่ผ่านมา: ฉันคิดว่าวิวสุดยอดมาก แล้วถาม Bogy ว่าคิดยังไง",
      "en": "I think the view was amazing. What do you think?",
      "accept": []
     },
@@ -18134,7 +18258,7 @@
    "hint": "① เล่นซ้ำช่วงที่มีคำตอบ ② sentence starter · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "audio": "Mali: Noodle Corner is cheap, but it's very crowded. Max: Green Café is quiet, but it's expensive. May: Sky Grill has an amazing view, and the food is great.",
+     "audio": "Mali: Noodle Corner is cheap, but it's very crowded. Bogy: Green Café is quiet, but it's expensive. May: Sky Grill has an amazing view, and the food is great.",
      "q": "Which place is cheap?",
      "en": "Noodle Corner.",
      "accept": [
@@ -18244,7 +18368,7 @@
    "teach": "**party · guest · invitation · balloon**",
    "say": "—",
    "chapter": "บท 30: โทรนัดหมายจัดงาน",
-   "goal": "จำและพูด party · guest · invitation · balloon ได้ เพื่อใช้ในเรื่องบทนี้: Nina ให้ช่วยโทรจองร้านจัดงานอำลา Max",
+   "goal": "จำและพูด party · guest · invitation · balloon ได้ เพื่อใช้ในเรื่องบทนี้: Nina ให้ช่วยโทรจองร้านจัดงานอำลา Bogy",
    "accept": "พูดคำได้ชัดพอให้ระบบจับคำถูก · รับ spelling/สำเนียง US-UK · ไม่ตรวจไวยากรณ์",
    "hint": "① ฟังเสียงอีกครั้ง ② ฟังแบบช้า + แยกพยางค์ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent"
   },
@@ -18299,7 +18423,7 @@
      },
      {
       "kind": "task",
-      "text": "Nina ชวนทีมเตรียมงานอำลา Max แบบลับ ๆ 🤫 งานไหนเสร็จแล้ว 👉 I've already ___ ✉️ send → sent “I've already sent the invitations.” = ฉันส่งการ์ดเชิญไปแล้ว ลองพูดตามครับ",
+      "text": "Nina ชวนทีมเตรียมงานอำลา Bogy แบบลับ ๆ 🤫 งานไหนเสร็จแล้ว 👉 I've already ___ ✉️ send → sent “I've already sent the invitations.” = ฉันส่งการ์ดเชิญไปแล้ว ลองพูดตามครับ",
       "expectedSpeech": "I've already sent the invitations."
      },
      {
@@ -18475,7 +18599,7 @@
    "teach": "**message · confirm · full**",
    "say": "—",
    "chapter": "บท 30: โทรนัดหมายจัดงาน",
-   "goal": "จำและพูด message · confirm · full ได้ เพื่อใช้ในเรื่องบทนี้: Nina ให้ช่วยโทรจองร้านจัดงานอำลา Max",
+   "goal": "จำและพูด message · confirm · full ได้ เพื่อใช้ในเรื่องบทนี้: Nina ให้ช่วยโทรจองร้านจัดงานอำลา Bogy",
    "accept": "พูดคำได้ชัดพอให้ระบบจับคำถูก · รับ spelling/สำเนียง US-UK · ไม่ตรวจไวยากรณ์",
    "hint": "① ฟังเสียงอีกครั้ง ② ฟังแบบช้า + แยกพยางค์ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent"
   },
@@ -18520,7 +18644,7 @@
        }
       ],
       "expectedSpeech": "full",
-      "successText": "full = เต็ม 🈵 เหมือนท้อง Max หลังกินบุฟเฟต์ 😆",
+      "successText": "full = เต็ม 🈵 เหมือนท้อง Bogy หลังกินบุฟเฟต์ 😆",
       "incorrectHintTh": "เต็ม 🈵 คือ full ครับ (message = ข้อความ · confirm = ยืนยัน)"
      },
      {
@@ -18625,7 +18749,7 @@
      },
      {
       "kind": "finish",
-      "text": "จบบทแล้วครับ 🎉 ตอนนี้คุณคุยโทรศัพท์ได้ “Can I speak to Mali?” · “Hold on, please.” · “Can I leave a message, please?” ☎️ บทหน้า งานอำลา Max มาถึงแล้ว และอาจมีแขกเซอร์ไพรส์ด้วย 🤫"
+      "text": "จบบทแล้วครับ 🎉 ตอนนี้คุณคุยโทรศัพท์ได้ “Can I speak to Mali?” · “Hold on, please.” · “Can I leave a message, please?” ☎️ บทหน้า งานอำลา Bogy มาถึงแล้ว และอาจมีแขกเซอร์ไพรส์ด้วย 🤫"
      }
     ]
    }
@@ -18826,10 +18950,10 @@
      ]
     },
     {
-     "th": "บอกว่า เราเพิ่งจองวันศุกร์ไป แต่ Max ไม่ว่าง ขอเลื่อนเป็นวันอาทิตย์ได้ไหม",
-     "en": "We've just booked for Friday, but Max isn't free. Can we change it to Sunday?",
+     "th": "บอกว่า เราเพิ่งจองวันศุกร์ไป แต่ Bogy ไม่ว่าง ขอเลื่อนเป็นวันอาทิตย์ได้ไหม",
+     "en": "We've just booked for Friday, but Bogy isn't free. Can we change it to Sunday?",
      "accept": [
-      "We have just booked for Friday, but Max isn't free. Can we change it to Sunday?"
+      "We have just booked for Friday, but Bogy isn't free. Can we change it to Sunday?"
      ]
     }
    ]
@@ -18857,7 +18981,7 @@
    "axes": "21111",
    "teach": "แบ่งหน้าที่และเสนอความคิด **Why don't we…? · Who's going to…? · I'll do it!**",
    "say": "Who's going to bring the cake?",
-   "chapter": "บท 31: งานอำลา Max",
+   "chapter": "บท 31: งานอำลา Bogy",
    "goal": "เข้าใจ \"ใครจะ…\" พอจะพูดตัวอย่างของตัวเองได้ 1 ประโยค",
    "accept": "ไม่ตัดสินผ่าน/ตก · ผู้เรียนพูดตามหรือเปลี่ยนคำในตัวอย่างอย่างน้อย 1 ประโยค",
    "hint": "ครูทวนตัวอย่างอีกครั้ง (ไม่มีระดับ hint)",
@@ -18868,12 +18992,12 @@
     "steps": [
      {
       "kind": "task",
-      "text": "งานอำลา Max ใกล้แล้วครับ 🎉 ท่าชวนเพื่อนทำอะไรด้วยกัน 👉 Why don't we ___? “Why don't we have a party for Max?” = เราจัดปาร์ตี้ให้ Max กันไหม ลองพูดตามครับ",
-      "expectedSpeech": "Why don't we have a party for Max?"
+      "text": "งานอำลา Bogy ใกล้แล้วครับ 🎉 ท่าชวนเพื่อนทำอะไรด้วยกัน 👉 Why don't we ___? “Why don't we have a party for Bogy?” = เราจัดปาร์ตี้ให้ Bogy กันไหม ลองพูดตามครับ",
+      "expectedSpeech": "Why don't we have a party for Bogy?"
      },
      {
       "kind": "listen",
-      "text": "Nina ตอบทันที “Yes! Let's have a party for Max.” = เอาเลย จัดปาร์ตี้ให้ Max กัน 🎉 (แต่ห้ามให้ Max รู้นะ 🤫)"
+      "text": "Nina ตอบทันที “Yes! Let's have a party for Bogy.” = เอาเลย จัดปาร์ตี้ให้ Bogy กัน 🎉 (แต่ห้ามให้ Bogy รู้นะ 🤫)"
      },
      {
       "kind": "task",
@@ -18935,7 +19059,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "เจ๋งมากครับ! พูดว่า “I'll bring the music.” 👏 ทีนี้อยากชวนทุกคนช่วยกันทำการ์ดให้ Max ✍️ ชวนว่าอะไรดี?",
+      "text": "เจ๋งมากครับ! พูดว่า “I'll bring the music.” 👏 ทีนี้อยากชวนทุกคนช่วยกันทำการ์ดให้ Bogy ✍️ ชวนว่าอะไรดี?",
       "stem": "... make a card?",
       "options": [
        {
@@ -18994,7 +19118,7 @@
      },
      {
       "kind": "finish",
-      "text": "จบบทแล้วครับ 🎉 ตอนนี้คุณแบ่งงานได้ “Why don't we make a card?” · “Who's going to bring the cake?” · “I'll do it!” 🙋 บทหน้า ถึงเวลาบอกลา Max แล้ว เตรียมทิชชูด้วยนะ 🥲"
+      "text": "จบบทแล้วครับ 🎉 ตอนนี้คุณแบ่งงานได้ “Why don't we make a card?” · “Who's going to bring the cake?” · “I'll do it!” 🙋 บทหน้า ถึงเวลาบอกลา Bogy แล้ว เตรียมทิชชูด้วยนะ 🥲"
      }
     ]
    }
@@ -19008,7 +19132,7 @@
    "axes": "12211",
    "teach": "เสนอความคิด + อาสาช่วย",
    "say": "Why don't we make a card? I'll buy the flowers.",
-   "chapter": "บท 31: งานอำลา Max",
+   "chapter": "บท 31: งานอำลา Bogy",
    "goal": "สื่อความ \"เสนอและอาสา\" เป็นภาษาอังกฤษในสถานการณ์บทนี้",
    "accept": "รับทุกประโยคที่ความหมายตรงโจทย์และใช้โครงสร้างเป้าหมาย · มี accepted variants · ผิดเล็ก (a/the, -s) ผ่านพร้อม feedback",
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
@@ -19019,10 +19143,10 @@
      "accept": []
     },
     {
-     "th": "เสนอว่า ทำไมเราไม่ถ่ายรูปกับ Max ล่ะ",
-     "en": "Why don't we take a photo with Max?",
+     "th": "เสนอว่า ทำไมเราไม่ถ่ายรูปกับ Bogy ล่ะ",
+     "en": "Why don't we take a photo with Bogy?",
      "accept": [
-      "Why don't we take a team photo with Max?"
+      "Why don't we take a team photo with Bogy?"
      ]
     },
     {
@@ -19064,48 +19188,48 @@
    "axes": "22211",
    "teach": "🖼️ ดูใบลงชื่องานอำลาที่มีชื่อคู่กับของ → **Mali is going to bring the drinks. · Who's going to bring the music?** (ช่องว่าง → ถาม)",
    "say": "Mali is going to bring the drinks.",
-   "chapter": "บท 31: งานอำลา Max",
+   "chapter": "บท 31: งานอำลา Bogy",
    "goal": "อ่านข้อมูลในภาพ (ใครเอาอะไรมา) แล้วพูดเป็นประโยคที่ใช้ได้จริง",
    "accept": "รับประโยคเดียวที่ตรงข้อมูลในภาพ ไม่บังคับพูด model ครบ · ข้อมูลผิดจากภาพ = ลองใหม่",
    "hint": "① ไฮไลต์ข้อมูลในภาพที่ต้องพูด ② sentence starter · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "pic": "ใบลงชื่องานอำลา Max: 🥤 drinks — Mali",
+     "pic": "ใบลงชื่องานอำลา Bogy: 🥤 drinks — Mali",
      "en": "Mali is going to bring the drinks.",
      "accept": [
       "Mali's going to bring the drinks."
      ]
     },
     {
-     "pic": "ใบลงชื่องานอำลา Max: 🎵 music — (ช่องว่าง ยังไม่มีชื่อ)",
+     "pic": "ใบลงชื่องานอำลา Bogy: 🎵 music — (ช่องว่าง ยังไม่มีชื่อ)",
      "en": "Who's going to bring the music?",
      "accept": [
       "Who is going to bring the music?"
      ]
     },
     {
-     "pic": "ใบลงชื่องานอำลา Max: 💐 flowers — May",
+     "pic": "ใบลงชื่องานอำลา Bogy: 💐 flowers — May",
      "en": "May is going to bring the flowers.",
      "accept": [
       "May's going to bring the flowers."
      ]
     },
     {
-     "pic": "ใบลงชื่องานอำลา Max: 📷 camera — Capy + Teacher Nina",
+     "pic": "ใบลงชื่องานอำลา Bogy: 📷 camera — Capy + Teacher Nina",
      "en": "Capy and Teacher Nina are going to bring the camera.",
      "accept": [
       "Capy and Nina are going to bring the camera."
      ]
     },
     {
-     "pic": "ใบลงชื่องานอำลา Max: 🎁 gift — (ช่องว่าง ยังไม่มีชื่อ)",
+     "pic": "ใบลงชื่องานอำลา Bogy: 🎁 gift — (ช่องว่าง ยังไม่มีชื่อ)",
      "en": "Who's going to bring the gift?",
      "accept": [
       "Who is going to bring the gift?"
      ]
     },
     {
-     "pic": "ใบลงชื่องานอำลา Max: 🍕 pizza — Teacher Torto",
+     "pic": "ใบลงชื่องานอำลา Bogy: 🍕 pizza — Teacher Torto",
      "en": "Teacher Torto is going to bring the pizza.",
      "accept": [
       "Teacher Torto's going to bring the pizza.",
@@ -19123,7 +19247,7 @@
    "axes": "12132",
    "teach": "🎬 คลิป 15–30 วินาที: Nina ไล่เช็กของงานอำลา → ตอบ 3 คำถามด้วยเสียง · เปิดดูซ้ำได้ · 📜 สคริปต์มีคำตอบทุกข้อ ไม่ถามสิ่งที่คลิปไม่ได้พูด",
    "say": "Yes, she has.",
-   "chapter": "บท 31: งานอำลา Max",
+   "chapter": "บท 31: งานอำลา Bogy",
    "goal": "ตามเรื่องในคลิปได้พอตอบ 3 คำถามด้วยเสียง",
    "accept": "ตอบสั้นได้ ตรงเนื้อหาคลิป · เปิดดูซ้ำได้ไม่จำกัด",
    "hint": "① เล่นซ้ำช่วงที่มีคำตอบ ② sentence starter · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
@@ -19167,7 +19291,7 @@
    "axes": "12312",
    "teach": "ถามความคืบหน้าและคนรับผิดชอบ",
    "say": "Have you bought the gift yet? · Who's going to call the restaurant?",
-   "chapter": "บท 31: งานอำลา Max",
+   "chapter": "บท 31: งานอำลา Bogy",
    "goal": "สื่อความ \"ซื้อแล้วยัง\" เป็นภาษาอังกฤษในสถานการณ์บทนี้",
    "accept": "รับทุกประโยคที่ความหมายตรงโจทย์และใช้โครงสร้างเป้าหมาย · มี accepted variants · ผิดเล็ก (a/the, -s) ผ่านพร้อม feedback",
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
@@ -19198,12 +19322,12 @@
      ]
     },
     {
-     "th": "ถามว่า ใครจะไปรับ Max ที่บ้าน",
-     "en": "Who's going to pick up Max from his house?",
+     "th": "ถามว่า ใครจะไปรับ Bogy ที่บ้าน",
+     "en": "Who's going to pick up Bogy from his house?",
      "accept": [
-      "Who's going to pick Max up from his house?",
-      "Who is going to pick up Max from his house?",
-      "Who's going to pick up Max at his house?"
+      "Who's going to pick Bogy up from his house?",
+      "Who is going to pick up Bogy from his house?",
+      "Who's going to pick up Bogy at his house?"
      ]
     },
     {
@@ -19225,8 +19349,8 @@
    "axes": "11111",
    "teach": "**experience · miss · memory · future**",
    "say": "—",
-   "chapter": "บท 31: งานอำลา Max",
-   "goal": "จำและพูด experience · miss · memory · future ได้ เพื่อใช้ในเรื่องบทนี้: งานอำลา Max ก่อนเขาไปเรียนต่อ ครูบีกลับมาเซอร์ไพรส์ (Capy อยู่กับทีมมาตลอด)",
+   "chapter": "บท 31: งานอำลา Bogy",
+   "goal": "จำและพูด experience · miss · memory · future ได้ เพื่อใช้ในเรื่องบทนี้: งานอำลา Bogy ก่อนเขาไปเรียนต่อ ครูบีกลับมาเซอร์ไพรส์ (Capy อยู่กับทีมมาตลอด)",
    "accept": "พูดคำได้ชัดพอให้ระบบจับคำถูก · รับ spelling/สำเนียง US-UK · ไม่ตรวจไวยากรณ์",
    "hint": "① ฟังเสียงอีกครั้ง ② ฟังแบบช้า + แยกพยางค์ · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent"
   },
@@ -19239,7 +19363,7 @@
    "axes": "21111",
    "teach": "บอกลาและอวยพร ด้วยคำจาก 31.6: **I'll miss you.** · **It was a great experience.** · **We have a lot of happy memories.** · **Good luck in the future!** · **Keep in touch!** · **Have a safe trip!**",
    "say": "I'll miss you. Keep in touch!",
-   "chapter": "บท 31: งานอำลา Max",
+   "chapter": "บท 31: งานอำลา Bogy",
    "goal": "เข้าใจ \"ลาก่อนและโชคดี\" พอจะพูดตัวอย่างของตัวเองได้ 1 ประโยค",
    "accept": "ไม่ตัดสินผ่าน/ตก · ผู้เรียนพูดตามหรือเปลี่ยนคำในตัวอย่างอย่างน้อย 1 ประโยค",
    "hint": "ครูทวนตัวอย่างอีกครั้ง (ไม่มีระดับ hint)",
@@ -19281,7 +19405,7 @@
      },
      {
       "kind": "task",
-      "text": "คืนงานอำลา Max ครับ 🎉 Max ยังไม่ไป แต่ใจหายแล้ว 👉 I'll miss you. 🥲 “I'll miss you.” = ฉันจะคิดถึงคุณนะ ลองพูดตามครับ",
+      "text": "คืนงานอำลา Bogy ครับ 🎉 Bogy ยังไม่ไป แต่ใจหายแล้ว 👉 I'll miss you. 🥲 “I'll miss you.” = ฉันจะคิดถึงคุณนะ ลองพูดตามครับ",
       "expectedSpeech": "I'll miss you."
      },
      {
@@ -19292,7 +19416,7 @@
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "Max จะบินไปเรียนต่อพรุ่งนี้ ✈️ เรากอด Max แล้วบอกว่าหลังจากนี้จะคิดถึงแน่ ๆ 🥲 พูดว่าอะไรดี?",
+      "text": "Bogy จะบินไปเรียนต่อพรุ่งนี้ ✈️ เรากอด Bogy แล้วบอกว่าหลังจากนี้จะคิดถึงแน่ ๆ 🥲 พูดว่าอะไรดี?",
       "stem": "I ... you.",
       "options": [
        {
@@ -19307,13 +19431,13 @@
        }
       ],
       "expectedSpeech": "I'll miss you.",
-      "successText": "I'll miss you. = ฉันจะคิดถึงคุณนะ 🥲 Max น้ำตาซึมเลย",
-      "incorrectHintTh": "เกือบแล้ว! Max ยังอยู่ตรงหน้า แต่พรุ่งนี้จะไปแล้ว ✈️ พูดว่า I'll miss you. ครับ (I miss you. = ตอนที่คิดถึงอยู่ตอนนี้)"
+      "successText": "I'll miss you. = ฉันจะคิดถึงคุณนะ 🥲 Bogy น้ำตาซึมเลย",
+      "incorrectHintTh": "เกือบแล้ว! Bogy ยังอยู่ตรงหน้า แต่พรุ่งนี้จะไปแล้ว ✈️ พูดว่า I'll miss you. ครับ (I miss you. = ตอนที่คิดถึงอยู่ตอนนี้)"
      },
      {
       "kind": "choice",
       "answerMode": "single",
-      "text": "ยื่นไลน์ให้ Max อยากให้ทักมาหากันเรื่อย ๆ 📱 พูดว่าอะไรดี?",
+      "text": "ยื่นไลน์ให้ Bogy อยากให้ทักมาหากันเรื่อย ๆ 📱 พูดว่าอะไรดี?",
       "stem": "... !",
       "options": [
        {
@@ -19328,12 +19452,12 @@
        }
       ],
       "expectedSpeech": "Keep in touch!",
-      "successText": "Keep in touch! = ติดต่อกันนะ 📱 Max แอดเพื่อนทันที",
+      "successText": "Keep in touch! = ติดต่อกันนะ 📱 Bogy แอดเพื่อนทันที",
       "incorrectHintTh": "ใกล้แล้ว! อยากให้ทักมาหากันเรื่อย ๆ 📱 พูดว่า Keep in touch! ครับ"
      },
      {
       "kind": "task",
-      "text": "ถึงคิวเรากล่าวลา Max แล้ว 🥲📱 ลองบอกเป็นภาษาอังกฤษเองเลยครับ ว่าจะคิดถึงนะ แล้วขอให้ติดต่อกันด้วย",
+      "text": "ถึงคิวเรากล่าวลา Bogy แล้ว 🥲📱 ลองบอกเป็นภาษาอังกฤษเองเลยครับ ว่าจะคิดถึงนะ แล้วขอให้ติดต่อกันด้วย",
       "expectedSpeech": "I'll miss you. Keep in touch!"
      },
      {
@@ -19359,22 +19483,22 @@
      },
      {
       "kind": "task",
-      "text": "อวยพร Max ก่อนขึ้นเครื่อง ✈️🍀 “Good luck in the future! Have a safe trip!” = โชคดีนะ เดินทางปลอดภัย ลองพูดตามครับ",
+      "text": "อวยพร Bogy ก่อนขึ้นเครื่อง ✈️🍀 “Good luck in the future! Have a safe trip!” = โชคดีนะ เดินทางปลอดภัย ลองพูดตามครับ",
       "expectedSpeech": "Good luck in the future! Have a safe trip!"
      },
      {
       "kind": "task",
-      "text": "อยากรู้ว่า Max จะกลับมาเมื่อไหร่ 🔙 ลองถาม Max เองเลยครับ ใช้ come back นะ",
+      "text": "อยากรู้ว่า Bogy จะกลับมาเมื่อไหร่ 🔙 ลองถาม Bogy เองเลยครับ ใช้ come back นะ",
       "expectedSpeech": "When will you come back?"
      },
      {
       "kind": "listen",
-      "text": "ถามว่า “When will you come back?” ครับ 👍 Max ตอบว่า “I'll come back next year. I'll miss you all!” = ฉันจะกลับมาปีหน้า จะคิดถึงทุกคนนะ"
+      "text": "ถามว่า “When will you come back?” ครับ 👍 Bogy ตอบว่า “I'll come back next year. I'll miss you all!” = ฉันจะกลับมาปีหน้า จะคิดถึงทุกคนนะ"
      },
      {
       "kind": "choice",
       "answerMode": "any",
-      "text": "Max ถามคุณบ้าง “Will you miss me?” เลือกคำตอบของคุณแล้วพูดเลยครับ",
+      "text": "Bogy ถามคุณบ้าง “Will you miss me?” เลือกคำตอบของคุณแล้วพูดเลยครับ",
       "stem": "...",
       "options": [
        {
@@ -19412,21 +19536,21 @@
    "axes": "12111",
    "teach": "ดู **ภาพฉาก + บอลลูนคำพูดอีกฝ่าย** (ไม่ใช้ emoji เดี่ยว เพราะวลีตีความได้หลายแบบ) แล้วพูดวลีที่ตรงฉาก: เพื่อนกำลังขึ้นเครื่องไปเรียนต่อ → **Good luck!** · ยื่นเบอร์/ไลน์ให้กัน → **Keep in touch!** · กอดลาทั้งน้ำตา → **I'll miss you.**",
    "say": "Good luck!",
-   "chapter": "บท 31: งานอำลา Max",
+   "chapter": "บท 31: งานอำลา Bogy",
    "goal": "ดึงคำ/ก้อนคำที่เรียนแล้วออกมาพูดได้เร็วจากภาพ",
    "accept": "รับคำ/ก้อนคำที่ภาพกำหนด + คำพ้องที่ระบุไว้ · ไม่ตรวจ tense หรือรูปคำ",
    "hint": "① ตัวอักษรแรก + จำนวนคำ ② ฟังเสียงแบบช้า · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent"
   },
   {
    "code": "31.9",
-   "title": "💬 Explain It: Thai Things for Max / อธิบายของไทยให้ Max",
+   "title": "💬 Explain It: Thai Things for Bogy / อธิบายของไทยให้ Bogy",
    "type": "explain_it",
    "flag": true,
    "beat": "Ten",
    "axes": "33322",
    "teach": "💬 ผู้เรียนเห็น **ภาพ + คำเป้าหมาย** บนการ์ด (คำเป้าหมายห้ามพูด) แล้วอธิบายให้เพื่อน (AI) ทายว่าคือคำอะไร · AI ทายถูก = ผ่าน · พูดคำเป้าหมาย = ลองใหม่ · ใช้คำที่เรียนแล้ว · ตัวอย่าง: **umbrella** → You use it when it rains. · การ์ด: **tuk-tuk** · **mango sticky rice** · **Songkran**",
    "say": "It's a small taxi with three wheels.",
-   "chapter": "บท 31: งานอำลา Max",
+   "chapter": "บท 31: งานอำลา Bogy",
    "goal": "ทำให้เพื่อนทายคำเป้าหมายถูก โดยอธิบายอ้อมและไม่พูดคำนั้น",
    "accept": "ผ่านเมื่อ AI ทายคำเป้าหมายถูก และผู้เรียนไม่พูดคำเป้าหมาย · คำอธิบายแบบไหนก็ได้ที่ทำให้ทายถูก",
    "hint": "① sentence starter (It's a… / You use it when… / This person…) ② คำใบ้ลักษณะ (สี ขนาด ที่ไหน) · ใช้ hint ไม่หักดาว",
@@ -19461,41 +19585,41 @@
    "flag": false,
    "beat": "Ten",
    "axes": "12313",
-   "teach": "พูดอำลา Max 2–3 ประโยค ผสมอดีต + อนาคต",
+   "teach": "พูดอำลา Bogy 2–3 ประโยค ผสมอดีต + อนาคต",
    "say": "We had a great trip. I'll miss you. Good luck!",
-   "chapter": "บท 31: งานอำลา Max",
+   "chapter": "บท 31: งานอำลา Bogy",
    "goal": "สื่อความ \"คำอำลา\" เป็นภาษาอังกฤษในสถานการณ์บทนี้",
    "accept": "รับทุกประโยคที่ความหมายตรงโจทย์และใช้โครงสร้างเป้าหมาย · มี accepted variants · ผิดเล็ก (a/the, -s) ผ่านพร้อม feedback",
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "อำลา Max: เรามีทริปที่ยอดเยี่ยม ฉันจะคิดถึงคุณ โชคดีนะ!",
+     "th": "อำลา Bogy: เรามีทริปที่ยอดเยี่ยม ฉันจะคิดถึงคุณ โชคดีนะ!",
      "en": "We had a great trip. I'll miss you. Good luck!",
      "accept": []
     },
     {
-     "th": "อำลา Max: ทริปของเราเป็นประสบการณ์ที่ดีที่สุด โชคดีที่โรงเรียนใหม่นะ!",
+     "th": "อำลา Bogy: ทริปของเราเป็นประสบการณ์ที่ดีที่สุด โชคดีที่โรงเรียนใหม่นะ!",
      "en": "Our trip was the best experience. Good luck at your new school!",
      "accept": [
       "Our trip was the best experience. Good luck at your new school."
      ]
     },
     {
-     "th": "อำลา Max: ตอนที่กระเป๋าฉันหาย คุณช่วยฉันหา ขอบคุณนะ ฉันจะคิดถึงคุณ",
+     "th": "อำลา Bogy: ตอนที่กระเป๋าฉันหาย คุณช่วยฉันหา ขอบคุณนะ ฉันจะคิดถึงคุณ",
      "en": "When I lost my bag, you helped me look for it. Thank you. I'll miss you.",
      "accept": [
       "When I lost my bag, you helped me look for it. Thanks. I'll miss you."
      ]
     },
     {
-     "th": "อำลา Max: เราสนุกมากที่เกาะ ฉันจะโทรหาคุณทุกสัปดาห์ ติดต่อกันนะ!",
+     "th": "อำลา Bogy: เราสนุกมากที่เกาะ ฉันจะโทรหาคุณทุกสัปดาห์ ติดต่อกันนะ!",
      "en": "We had a lot of fun on the island. I'll call you every week. Keep in touch!",
      "accept": [
       "We had fun on the island. I'll call you every week. Keep in touch!"
      ]
     },
     {
-     "th": "อำลา Max: คุณเป็นเพื่อนที่ตลกที่สุดในทีม เดินทางปลอดภัยนะ! เจอกันปีหน้า",
+     "th": "อำลา Bogy: คุณเป็นเพื่อนที่ตลกที่สุดในทีม เดินทางปลอดภัยนะ! เจอกันปีหน้า",
      "en": "You were the funniest friend in the team. Have a safe trip! See you next year.",
      "accept": [
       "You were the funniest friend on the team. Have a safe trip! See you next year."
@@ -19505,15 +19629,15 @@
   },
   {
    "code": "31.11",
-   "title": "Max's Farewell Party / งานอำลา Max",
+   "title": "Bogy's Farewell Party / งานอำลา Bogy",
    "type": "conversation",
    "flag": false,
    "beat": "Ketsu",
    "axes": "13333",
-   "teach": "เตรียมงานอำลา Max · 5–7 turns ไม่เกิน 3 นาที · 3 เป้าหมาย: 1) แบ่งงานที่ยังเหลือ (Who's going to…?) · 2) เช็กว่าใครทำอะไรแล้ว (already / yet) · 3) กล่าวลา Max · ผู้เรียนต้องถามอย่างน้อย 1 ครั้ง",
-   "say": "Has May called Max yet?",
-   "chapter": "บท 31: งานอำลา Max",
-   "goal": "คุยจนสำเร็จ: แบ่งงานที่ยังเหลือ (Who's going to…?) · เช็กว่าใครทำอะไรแล้ว (already / yet) · กล่าวลา Max",
+   "teach": "เตรียมงานอำลา Bogy · 5–7 turns ไม่เกิน 3 นาที · 3 เป้าหมาย: 1) แบ่งงานที่ยังเหลือ (Who's going to…?) · 2) เช็กว่าใครทำอะไรแล้ว (already / yet) · 3) กล่าวลา Bogy · ผู้เรียนต้องถามอย่างน้อย 1 ครั้ง",
+   "say": "Has May called Bogy yet?",
+   "chapter": "บท 31: งานอำลา Bogy",
+   "goal": "คุยจนสำเร็จ: แบ่งงานที่ยังเหลือ (Who's going to…?) · เช็กว่าใครทำอะไรแล้ว (already / yet) · กล่าวลา Bogy",
    "accept": "ผ่านเมื่อบรรลุเป้าหมายครบ ไม่ว่าจะใช้ประโยคแบบไหน · ต้องถามอย่างน้อย 1 ครั้ง",
    "hint": "① บอกเป้าหมายที่ยังเหลือ ② ประโยคตัวอย่างเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent"
   },
@@ -19568,11 +19692,11 @@
      ]
     },
     {
-     "th": "รับสายแทน Nina: รอสักครู่นะ Nina กำลังคุยกับ Max อยู่",
-     "en": "Hold on, please. Nina is talking to Max.",
+     "th": "รับสายแทน Nina: รอสักครู่นะ Nina กำลังคุยกับ Bogy อยู่",
+     "en": "Hold on, please. Nina is talking to Bogy.",
      "accept": [
-      "Hold on. Nina is talking to Max.",
-      "Hold on, please. Nina's talking to Max."
+      "Hold on. Nina is talking to Bogy.",
+      "Hold on, please. Nina's talking to Bogy."
      ]
     },
     {

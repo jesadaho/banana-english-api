@@ -1296,6 +1296,8 @@ export class AdminMetricsService {
           titleEn: contentItemTitle(acc.gameId),
           pathCode: pathPosition?.code ?? null,
           pathOrder: pathPosition?.order ?? null,
+          chapterNumber: pathPosition?.chapterNumber ?? null,
+          chapterTitleEn: pathPosition?.chapterTitleEn ?? null,
           kind: acc.kind,
           course: pathPosition
             ? 'foundation'
