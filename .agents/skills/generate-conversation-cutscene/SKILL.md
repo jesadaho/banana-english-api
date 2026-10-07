@@ -88,7 +88,7 @@ Consult current official documentation before selecting a model or preparing exe
 
 Verify model name, endpoint, duration, resolution, input limits, image transport, audio controls, task statuses and download flow. API versions and capability sets differ; never mix an older Hailuo request schema with a newer model. Record documentation check date and chosen settings. Adapt unsupported output sizes without stretching and disclose verified delivered dimensions.
 
-Read `MINIMAX_API_KEY` and `MINIMAX_API_HOST` from `minimax.credentials` in this skill folder. Do not print the key. Do not request a secret pasted into chat. Use supported authenticated uploads or accepted local/base64 input where available; do not expose private Git assets at an invented public URL.
+Read `MINIMAX_API_KEY`, `MINIMAX_API_HOST`, and `MINIMAX_SUBSCRIBTION_KEY` from `minimax.credentials` in this skill folder. Do not print the keys. Do not request a secret pasted into chat. Use supported authenticated uploads or accepted local/base64 input where available; do not expose private Git assets at an invented public URL.
 
 For asynchronous jobs, save the returned task ID immediately, poll using documented limits and bounded timeout, and resume an existing task rather than submitting duplicates. Report provider failures accurately. Do not launch paid retry loops; one approved sequence is the default scope; submit only its approved shots.
 
