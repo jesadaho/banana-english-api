@@ -664,8 +664,8 @@
       {
         "id": "01-john-profile-25",
         "promptTh": "ดูบัตร แล้วบอกชื่อหรืออายุของเขา",
-        "answerEn": "His name is John.",
-        "answerTh": "เขาชื่อจอห์น",
+        "answerEn": "His name is John. He is twenty-five years old.",
+        "answerTh": "เขาชื่อจอห์น อายุยี่สิบห้าปี",
         "acceptedAnswers": [
           "His name is John",
           "His name's John.",
@@ -690,8 +690,8 @@
       {
         "id": "02-may-profile-18",
         "promptTh": "ดูบัตร แล้วบอกชื่อหรืออายุของเธอ",
-        "answerEn": "Her name is May.",
-        "answerTh": "เธอชื่อเมย์",
+        "answerEn": "Her name is May. She is eighteen years old.",
+        "answerTh": "เธอชื่อเมย์ อายุสิบแปดปี",
         "acceptedAnswers": [
           "Her name is May",
           "Her name's May.",
@@ -710,14 +710,13 @@
           "Her name is May. She's eighteen years old.",
           "Her name is May. She's 18 years old."
         ],
-        "imagePath": "describe-it/fnd_v7_u08n09/02-may-profile-18.webp",
-        "hintEn": "Her name is _____. She is _____ years old."
+        "imagePath": "describe-it/fnd_v7_u08n09/02-may-profile-18.webp"
       },
       {
         "id": "03-max-profile-19",
         "promptTh": "ดูบัตร แล้วบอกชื่อหรืออายุของเขา",
-        "answerEn": "His name is Max.",
-        "answerTh": "เขาชื่อแม็กซ์",
+        "answerEn": "His name is Max. He is nineteen years old.",
+        "answerTh": "เขาชื่อแม็กซ์ อายุสิบเก้าปี",
         "acceptedAnswers": [
           "His name is Max",
           "His name's Max.",
@@ -736,8 +735,7 @@
           "His name is Max. He's nineteen years old.",
           "His name is Max. He's 19 years old."
         ],
-        "imagePath": "describe-it/fnd_v7_u08n09/03-max-profile-19.webp",
-        "hintEn": "His name is _____. He is _____ years old."
+        "imagePath": "describe-it/fnd_v7_u08n09/03-max-profile-19.webp"
       },
       {
         "id": "04-max-has-phone",
@@ -752,8 +750,7 @@
           "He has a mobile phone.",
           "He has a smartphone."
         ],
-        "imagePath": "describe-it/fnd_v7_u08n09/04-max-has-phone.webp",
-        "hintEn": "He has a _____"
+        "imagePath": "describe-it/fnd_v7_u08n09/04-max-has-phone.webp"
       },
       {
         "id": "05-may-has-bag",
@@ -767,8 +764,7 @@
           "She's got a bag.",
           "She has a pink bag."
         ],
-        "imagePath": "describe-it/fnd_v7_u08n09/05-may-has-bag.webp",
-        "hintEn": "She has a _____"
+        "imagePath": "describe-it/fnd_v7_u08n09/05-may-has-bag.webp"
       }
     ]
   },

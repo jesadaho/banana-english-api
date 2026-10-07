@@ -1,1 +1,204 @@
-{}
+{
+  "a2_c02n10": {
+    "id": "a2_c02n10",
+    "titleEn": "Brother's Schedule",
+    "titleTh": "ตารางของพี่ชาย",
+    "tagEn": "ADVENTURE",
+    "emoji": "🖼️",
+    "estimatedMinutes": 3,
+    "items": [
+      {
+        "id": "a2_c02n10_01",
+        "promptTh": "ดูตารางของพี่ชาย แล้วบอกว่าเขาทำอะไร บ่อยแค่ไหน และบอกเวลาด้วยเมื่อมี",
+        "answerEn": "He usually goes to school at seven.",
+        "answerTh": "เขาไปโรงเรียนตอนเจ็ดโมงเป็นประจำ",
+        "acceptedAnswers": [
+          "He usually goes to school at 7.",
+          "My brother usually goes to school at seven."
+        ],
+        "imagePath": "describe-it/a2_c02n10/01.webp",
+        "hints": [
+          "He …",
+          "He ___ ___ to ___ at ___."
+        ]
+      },
+      {
+        "id": "a2_c02n10_02",
+        "promptTh": "ดูตารางของพี่ชาย แล้วบอกว่าเขาทำอะไร บ่อยแค่ไหน และบอกเวลาด้วยเมื่อมี",
+        "answerEn": "He always has breakfast at six thirty.",
+        "answerTh": "เขากินอาหารเช้าตอนหกโมงครึ่งเสมอ",
+        "acceptedAnswers": [
+          "He always has breakfast at 6:30.",
+          "My brother always has breakfast at six thirty."
+        ],
+        "imagePath": "describe-it/a2_c02n10/02.webp",
+        "hints": [
+          "He …",
+          "He ___ ___ ___ at ___ ___."
+        ]
+      },
+      {
+        "id": "a2_c02n10_03",
+        "promptTh": "ดูตารางของพี่ชาย แล้วบอกว่าเขาทำอะไร บ่อยแค่ไหน และบอกเวลาด้วยเมื่อมี",
+        "answerEn": "He sometimes watches TV at six.",
+        "answerTh": "เขาดูทีวีตอนหกโมงบางครั้ง",
+        "acceptedAnswers": [
+          "He sometimes watches TV at 6 pm.",
+          "My brother sometimes watches TV at six."
+        ],
+        "imagePath": "describe-it/a2_c02n10/03.webp",
+        "hints": [
+          "He …",
+          "He ___ ___ ___ at ___."
+        ]
+      },
+      {
+        "id": "a2_c02n10_04",
+        "promptTh": "ดูตารางของพี่ชาย แล้วบอกว่าเขาทำอะไร บ่อยแค่ไหน และบอกเวลาด้วยเมื่อมี",
+        "answerEn": "He usually does his homework at eight.",
+        "answerTh": "เขาทำการบ้านตอนแปดโมงเป็นประจำ",
+        "acceptedAnswers": [
+          "He usually does homework at eight.",
+          "My brother usually does his homework at eight."
+        ],
+        "imagePath": "describe-it/a2_c02n10/04.webp",
+        "hints": [
+          "He …",
+          "He ___ does his ___ at ___."
+        ]
+      },
+      {
+        "id": "a2_c02n10_05",
+        "promptTh": "ดูตารางของพี่ชาย แล้วบอกว่าเขาทำอะไร บ่อยแค่ไหน และบอกเวลาด้วยเมื่อมี",
+        "answerEn": "He always takes a shower at nine.",
+        "answerTh": "เขาอาบน้ำตอนเก้าโมงเสมอ",
+        "acceptedAnswers": [
+          "He always takes a shower at 9 pm.",
+          "My brother always takes a shower at nine."
+        ],
+        "imagePath": "describe-it/a2_c02n10/05.webp",
+        "hints": [
+          "He …",
+          "He ___ ___ a ___ at ___."
+        ]
+      },
+      {
+        "id": "a2_c02n10_06",
+        "promptTh": "ดูตารางของพี่ชาย แล้วบอกว่าเขาทำอะไร บ่อยแค่ไหน และบอกเวลาด้วยเมื่อมี",
+        "answerEn": "He never makes the bed.",
+        "answerTh": "เขาไม่เคยจัดเตียง",
+        "acceptedAnswers": [
+          "He never makes his bed.",
+          "My brother never makes the bed."
+        ],
+        "imagePath": "describe-it/a2_c02n10/06.webp",
+        "hints": [
+          "He …",
+          "He ___ ___ the ___."
+        ]
+      }
+    ]
+  },
+  "a2_c03n08": {
+    "id": "a2_c03n08",
+    "titleEn": "Describe the Room",
+    "titleTh": "บรรยายห้อง",
+    "tagEn": "ADVENTURE",
+    "emoji": "🖼️",
+    "estimatedMinutes": 3,
+    "items": [
+      {
+        "id": "a2_c03n08_01",
+        "promptTh": "ดูห้องนั่งเล่นบ้าน May แล้วบอกว่ามีอะไร อยู่ตรงไหน",
+        "answerEn": "There's a sofa in front of the TV.",
+        "answerTh": "มีโซฟาอยู่หน้าทีวี",
+        "acceptedAnswers": [
+          "There is a sofa in front of the TV.",
+          "The sofa is in front of the TV."
+        ],
+        "imagePath": "describe-it/a2_c03n08/01.webp",
+        "hints": [
+          "There's …",
+          "There's a ___ in ___ of the ___."
+        ]
+      },
+      {
+        "id": "a2_c03n08_02",
+        "promptTh": "ดูห้องนั่งเล่นบ้าน May แล้วบอกว่ามีอะไร อยู่ตรงไหน",
+        "answerEn": "There's a shelf behind the sofa.",
+        "answerTh": "มีชั้นวางอยู่หลังโซฟา",
+        "acceptedAnswers": [
+          "There is a shelf behind the sofa.",
+          "The shelf is behind the sofa."
+        ],
+        "imagePath": "describe-it/a2_c03n08/02.webp",
+        "hints": [
+          "There's …",
+          "There's a ___ ___ the ___."
+        ]
+      },
+      {
+        "id": "a2_c03n08_03",
+        "promptTh": "ดูห้องนั่งเล่นบ้าน May แล้วบอกว่ามีอะไร อยู่ตรงไหน",
+        "answerEn": "There are some books on the shelf.",
+        "answerTh": "มีหนังสือหลายเล่มบนชั้น",
+        "acceptedAnswers": [
+          "There are books on the shelf.",
+          "There are a lot of books on the shelf.",
+          "There are many books on the shelf."
+        ],
+        "imagePath": "describe-it/a2_c03n08/03.webp",
+        "hints": [
+          "There …",
+          "There are ___ ___ on the ___."
+        ]
+      },
+      {
+        "id": "a2_c03n08_04",
+        "promptTh": "ดูห้องนั่งเล่นบ้าน May แล้วบอกว่ามีอะไร อยู่ตรงไหน",
+        "answerEn": "There's a table between the sofa and the TV.",
+        "answerTh": "มีโต๊ะอยู่ระหว่างโซฟากับทีวี",
+        "acceptedAnswers": [
+          "There is a table between the sofa and the TV.",
+          "The table is between the sofa and the TV."
+        ],
+        "imagePath": "describe-it/a2_c03n08/04.webp",
+        "hints": [
+          "There's …",
+          "There's a ___ ___ the ___ and the ___."
+        ]
+      },
+      {
+        "id": "a2_c03n08_05",
+        "promptTh": "ดูห้องนั่งเล่นบ้าน May แล้วบอกว่ามีอะไร อยู่ตรงไหน",
+        "answerEn": "There's a cat under the table.",
+        "answerTh": "มีแมวอยู่ใต้โต๊ะ",
+        "acceptedAnswers": [
+          "There is a cat under the table.",
+          "The cat is under the table."
+        ],
+        "imagePath": "describe-it/a2_c03n08/05.webp",
+        "hints": [
+          "There's …",
+          "There's a ___ ___ the ___."
+        ]
+      },
+      {
+        "id": "a2_c03n08_06",
+        "promptTh": "ดูห้องนั่งเล่นบ้าน May แล้วบอกว่ามีอะไร อยู่ตรงไหน",
+        "answerEn": "There aren't any chairs.",
+        "answerTh": "ไม่มีเก้าอี้",
+        "acceptedAnswers": [
+          "There aren't any chairs in the living room.",
+          "There are no chairs.",
+          "There are no chairs in the living room."
+        ],
+        "imagePath": "describe-it/a2_c03n08/06.webp",
+        "hints": [
+          "There …",
+          "There ___ ___ ___."
+        ]
+      }
+    ]
+  }
+}

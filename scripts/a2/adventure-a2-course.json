@@ -1349,7 +1349,7 @@
    "code": "2.10",
    "title": "🖼️ Brother's Schedule / ตารางของพี่ชาย",
    "type": "see_and_say",
-   "flag": true,
+   "flag": false,
    "beat": "Sho",
    "axes": "12211",
    "teach": "🖼️ ดูตารางกิจวัตรพี่ชายที่มีนาฬิกาและไอคอน → **He usually goes to school at seven.** · รับ -s/-es ที่ถูก",
@@ -1362,6 +1362,7 @@
     {
      "pic": "ตารางกิจวัตรของพี่ชาย (ผู้ชาย): 🕖 7:00 · 🏫 ไปโรงเรียน · ป้ายความถี่ usually",
      "en": "He usually goes to school at seven.",
+     "th": "เขาไปโรงเรียนตอนเจ็ดโมงเป็นประจำ",
      "accept": [
       "He usually goes to school at 7.",
       "My brother usually goes to school at seven."
@@ -1370,6 +1371,7 @@
     {
      "pic": "ตารางกิจวัตรของพี่ชาย (ผู้ชาย): 🕡 6:30 · 🍳 กินอาหารเช้า · ป้ายความถี่ always",
      "en": "He always has breakfast at six thirty.",
+     "th": "เขากินอาหารเช้าตอนหกโมงครึ่งเสมอ",
      "accept": [
       "He always has breakfast at 6:30.",
       "My brother always has breakfast at six thirty."
@@ -1378,6 +1380,7 @@
     {
      "pic": "ตารางกิจวัตรของพี่ชาย (ผู้ชาย): 🕕 18:00 · 📺 ดูทีวี · ป้ายความถี่ sometimes",
      "en": "He sometimes watches TV at six.",
+     "th": "เขาดูทีวีตอนหกโมงบางครั้ง",
      "accept": [
       "He sometimes watches TV at 6 pm.",
       "My brother sometimes watches TV at six."
@@ -1386,6 +1389,7 @@
     {
      "pic": "ตารางกิจวัตรของพี่ชาย (ผู้ชาย): 🕗 20:00 · 📚 ทำการบ้าน · ป้ายความถี่ usually",
      "en": "He usually does his homework at eight.",
+     "th": "เขาทำการบ้านตอนแปดโมงเป็นประจำ",
      "accept": [
       "He usually does homework at eight.",
       "My brother usually does his homework at eight."
@@ -1394,6 +1398,7 @@
     {
      "pic": "ตารางกิจวัตรของพี่ชาย (ผู้ชาย): 🕘 21:00 · 🚿 อาบน้ำ · ป้ายความถี่ always",
      "en": "He always takes a shower at nine.",
+     "th": "เขาอาบน้ำตอนเก้าโมงเสมอ",
      "accept": [
       "He always takes a shower at 9 pm.",
       "My brother always takes a shower at nine."
@@ -1402,6 +1407,7 @@
     {
      "pic": "ตารางกิจวัตรของพี่ชาย (ผู้ชาย): 🛏️ จัดเตียง · ป้ายความถี่ never (ไม่มีเวลา)",
      "en": "He never makes the bed.",
+     "th": "เขาไม่เคยจัดเตียง",
      "accept": [
       "He never makes his bed.",
       "My brother never makes the bed."
@@ -1840,7 +1846,7 @@
    "code": "3.8",
    "title": "Describe the Room / บรรยายห้อง",
    "type": "see_and_say",
-   "flag": true,
+   "flag": false,
    "beat": "Ten",
    "axes": "12222",
    "teach": "ดูภาพห้องนั่งเล่น บอก 3 อย่างว่ามีอะไร อยู่ตรงไหน",
@@ -1851,24 +1857,27 @@
    "hint": "① ไฮไลต์ข้อมูลในภาพที่ต้องพูด ② sentence starter · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "pic": "ภาพห้องนั่งเล่นบ้าน May: มีโซฟา 1 ตัววางอยู่หน้าทีวี (ลูกศรชี้ที่โซฟา)",
+     "pic": "ภาพห้องนั่งเล่นบ้าน May: มีโซฟา 1 ตัววางอยู่หน้าทีวี",
      "en": "There's a sofa in front of the TV.",
+     "th": "มีโซฟาอยู่หน้าทีวี",
      "accept": [
       "There is a sofa in front of the TV.",
       "The sofa is in front of the TV."
      ]
     },
     {
-     "pic": "ภาพห้องนั่งเล่นบ้าน May: มีชั้นวาง 1 อันอยู่ข้างหลังโซฟา (ลูกศรชี้ที่ชั้นวาง)",
+     "pic": "ภาพห้องนั่งเล่นบ้าน May: มีชั้นวาง 1 อันอยู่ข้างหลังโซฟา",
      "en": "There's a shelf behind the sofa.",
+     "th": "มีชั้นวางอยู่หลังโซฟา",
      "accept": [
       "There is a shelf behind the sofa.",
       "The shelf is behind the sofa."
      ]
     },
     {
-     "pic": "ภาพห้องนั่งเล่นบ้าน May: บนชั้นวางมีหนังสือหลายเล่ม (ลูกศรชี้ที่หนังสือ)",
+     "pic": "ภาพห้องนั่งเล่นบ้าน May: บนชั้นวางมีหนังสือหลายเล่ม",
      "en": "There are some books on the shelf.",
+     "th": "มีหนังสือหลายเล่มบนชั้น",
      "accept": [
       "There are books on the shelf.",
       "There are a lot of books on the shelf.",
@@ -1876,24 +1885,27 @@
      ]
     },
     {
-     "pic": "ภาพห้องนั่งเล่นบ้าน May: มีโต๊ะ 1 ตัวอยู่ระหว่างโซฟากับทีวี (ลูกศรชี้ที่โต๊ะ)",
+     "pic": "ภาพห้องนั่งเล่นบ้าน May: มีโต๊ะ 1 ตัวอยู่ระหว่างโซฟากับทีวี",
      "en": "There's a table between the sofa and the TV.",
+     "th": "มีโต๊ะอยู่ระหว่างโซฟากับทีวี",
      "accept": [
       "There is a table between the sofa and the TV.",
       "The table is between the sofa and the TV."
      ]
     },
     {
-     "pic": "ภาพห้องนั่งเล่นบ้าน May: มีแมว 1 ตัวอยู่ใต้โต๊ะ (ลูกศรชี้ที่แมว)",
+     "pic": "ภาพห้องนั่งเล่นบ้าน May: มีแมว 1 ตัวอยู่ใต้โต๊ะ",
      "en": "There's a cat under the table.",
+     "th": "มีแมวอยู่ใต้โต๊ะ",
      "accept": [
       "There is a cat under the table.",
       "The cat is under the table."
      ]
     },
     {
-     "pic": "ภาพห้องนั่งเล่นบ้าน May: ไอคอนเก้าอี้ 🪑 ขีดทับด้วย ❌ (ในห้องไม่มีเก้าอี้)",
+     "pic": "ภาพห้องนั่งเล่นบ้าน May: มีโซฟา ชั้นวาง และทีวี ไม่มีเก้าอี้",
      "en": "There aren't any chairs.",
+     "th": "ไม่มีเก้าอี้",
      "accept": [
       "There aren't any chairs in the living room.",
       "There are no chairs.",

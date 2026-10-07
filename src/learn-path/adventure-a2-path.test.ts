@@ -38,7 +38,7 @@ const a2Nodes = ADVENTURE_A2_COURSE.nodes;
 const chapterOf = (code: string) => Number(code.split('.')[0]);
 const zone1 = a2Nodes.filter((n) => chapterOf(n.code) <= ZONE_1_CHAPTERS);
 /** Picture packs ship only once their bundled images exist (seeAndSayImagesReady). */
-const AWAITING_ART = new Set(['describe_it', 'explain_it']);
+const AWAITING_ART = new Set(['explain_it']);
 /** Chapter 8 finale is an interactive scenario with no script yet, so it stays locked. */
 const PENDING_SCENARIO = new Set(['a2_c08n10']);
 /** Owner-written flows exempt from the generated-flow shape contract. */
@@ -85,7 +85,7 @@ describe('Adventure A2 course registry', () => {
 describe('Adventure A2 Zone 1 content', () => {
   it('has real content behind every Zone 1 node except pending picture packs', () => {
     const missing = zone1
-      .filter((n) => !PENDING_SCENARIO.has(n.id) && !AWAITING_ART.has(n.type) && !(n.type === 'listen_up' && !LISTEN_UP_ENABLED) && !(n.type === 'story_bites' && !STORY_BITES_ENABLED))
+      .filter((n) => !PENDING_SCENARIO.has(n.id) && !AWAITING_ART.has(n.type) && !(n.type === 'describe_it' && !describeItPoolById(n.id)) && !(n.type === 'listen_up' && !LISTEN_UP_ENABLED) && !(n.type === 'story_bites' && !STORY_BITES_ENABLED))
       .filter((n) => !hasFoundationV7Content(n))
       .map((n) => `${n.code} ${n.type}`);
     assert.deepEqual(missing, []);
@@ -141,7 +141,15 @@ describe('Adventure A2 Zone 1 content', () => {
           }
           assert.ok(getInteractiveScenario(id), id);
           break;
-        case 'describe_it': assert.equal(describeItPoolById(id), undefined, `${id} has no art yet`); break;
+        case 'describe_it':
+          if (id === 'a2_c02n10' || id === 'a2_c03n08') {
+            const pool = describeItPoolById(id);
+            assert.equal(pool?.items.length, 6, id);
+            assert.ok(pool?.items.every((item) => item.answerTh.trim().length > 0), id);
+            break;
+          }
+          assert.equal(describeItPoolById(id), undefined, `${id} has no art yet`);
+          break;
       }
     }
   });

@@ -66,6 +66,14 @@ const POOL_SOURCES: Record<
   fnd_v7_u15n04_find_my_things: {
     dir: '/Users/jesada/Project/banana-english-app/assets/images/describe_it/fnd_v7_u15n04_find_my_things',
   },
+  a2_c02n10: {
+    dir: '/Users/jesada/Project/banana-english-app/assets/images/describe_it/a2_c02n10',
+    localName: (itemId) => `${itemId.slice(-2)}.webp`,
+  },
+  a2_c03n08: {
+    dir: '/Users/jesada/Project/banana-english-app/assets/images/describe_it/a2_c03n08',
+    localName: (itemId) => `${itemId.slice(-2)}.webp`,
+  },
 };
 
 const FIREBASE_CLI_CLIENT_ID =

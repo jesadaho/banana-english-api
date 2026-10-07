@@ -155,6 +155,19 @@ describe('Describe It foundation pack', () => {
     assert.ok(items.slice(1).every((item) => !item.hintEn));
   });
 
+  it('reads the age on Profile Card reveals and hints only the first card', () => {
+    const items = dealDescribeItCards('fnd_v7_u08n09');
+    assert.deepEqual(items.map((item) => item.answerEn), [
+      'His name is John. He is twenty-five years old.',
+      'Her name is May. She is eighteen years old.',
+      'His name is Max. He is nineteen years old.',
+      'He has a phone.',
+      'She has a bag.',
+    ]);
+    assert.equal(items[0].hintEn, 'His name is _____. He is _____ years old.');
+    assert.ok(items.slice(1).every((item) => !item.hintEn));
+  });
+
   it('deals Read the Calendar as seven cards balanced across date, details and match', () => {
     const pool = describeItPoolById('fnd_v7_u14tn07_read_the_calendar_1');
     assert.equal(pool?.titleEn, 'Read the Calendar');
