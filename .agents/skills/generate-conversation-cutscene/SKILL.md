@@ -34,7 +34,7 @@ Treat these as production targets, not claims about provider capabilities:
 - Format: 9:16 portrait, target 720 × 1280. Use an explicit app viewport requirement when provided. Do not assume Conversation Stage dimensions are known or copy the 2:1 cover ratio.
 - Structure: a short multi-shot sequence; keep each generated shot continuous, with one main action and at most one restrained camera movement.
 - Cast: only characters needed by the scenario; normally one or two.
-- Audio: silent by default, with no visible talking or lip-sync. Add dialogue, ambience or music only when requested.
+- Audio: use English for ALL spoken dialogue and narration, including teachers, students and background voices. Never use Thai speech or mixed-language dialogue unless the user explicitly overrides this rule. Use short natural lines matched to the learner's CEFR level; keep A1 speech simple and clear. Keep shots without dialogue silent or use approved ambience. Add music only when requested.
 - Artwork: warm stylized 3D, exact sheet proportions, matte materials, simplified Thai everyday environment with one location cue and essential props.
 - No generated title, subtitle, logo, UI, border or watermark. Do not erase provider watermarks; report and use a permitted clean export when available.
 - Keep important faces, hands and props in the central 80%; leave calm top/bottom space for app overlays.
@@ -43,6 +43,8 @@ Treat these as production targets, not claims about provider capabilities:
 ## Direct the story
 
 Extract location, partner, learner role, immediate objective, emotional beat, props, opening line and cast constraints from the actual simulation. Use the simulation over conflicting catalog prose.
+
+Write planning explanations in Thai when communicating with the user, but write every spoken line in English. List the exact English dialogue per speaker and shot before generation; include an English-only speech constraint in each video prompt. Do not mistake Thai scenario descriptions or Thai planning notes for spoken dialogue.
 
 Write a concise Thai concept and a shot-by-shot storyboard table: shot number, start/end time, duration, visible action, camera/framing, emotion, audio and transition/continuity. Include total duration and the exact stage handoff. Use an adaptable three-beat structure:
 1. Establish the actual situation.
@@ -88,7 +90,7 @@ Consult current official documentation before selecting a model or preparing exe
 
 Verify model name, endpoint, duration, resolution, input limits, image transport, audio controls, task statuses and download flow. API versions and capability sets differ; never mix an older Hailuo request schema with a newer model. Record documentation check date and chosen settings. Adapt unsupported output sizes without stretching and disclose verified delivered dimensions.
 
-Read `MINIMAX_API_KEY`, `MINIMAX_API_HOST`, and `MINIMAX_SUBSCRIBTION_KEY` from `minimax.credentials` in this skill folder. Do not print the keys. Do not request a secret pasted into chat. Use supported authenticated uploads or accepted local/base64 input where available; do not expose private Git assets at an invented public URL.
+Read `MINIMAX_API_KEY`, `MINIMAX_API_HOST`, and `MINIMAX_SUBSCRIPTION_KEY` (accept legacy `MINIMAX_SUBSCRIBTION_KEY` as a fallback) from `minimax.credentials` in this skill folder. Do not print the keys. Do not request a secret pasted into chat. Use supported authenticated uploads or accepted local/base64 input where available; do not expose private Git assets at an invented public URL.
 
 For asynchronous jobs, save the returned task ID immediately, poll using documented limits and bounded timeout, and resume an existing task rather than submitting duplicates. Report provider failures accurately. Do not launch paid retry loops; one approved sequence is the default scope; submit only its approved shots.
 
