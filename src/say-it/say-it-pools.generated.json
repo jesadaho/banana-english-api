@@ -883,6 +883,116 @@
       "acceptedAnswers": []
     }
   ],
+  "port": [
+    {
+      "id": "port_port",
+      "promptTh": "ท่าเรือ",
+      "answerEn": "port",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "port_airport",
+      "promptTh": "สนามบิน",
+      "answerEn": "airport",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "port_seaport",
+      "promptTh": "ท่าเรือเดินทะเล",
+      "answerEn": "seaport",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "port_heliport",
+      "promptTh": "ลานจอดเฮลิคอปเตอร์",
+      "answerEn": "heliport",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "port_spaceport",
+      "promptTh": "ฐานส่งยานอวกาศ",
+      "answerEn": "spaceport",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "port_carport",
+      "promptTh": "ที่จอดรถมีหลังคา",
+      "answerEn": "carport",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "port_freeport",
+      "promptTh": "เขตท่าเสรี",
+      "answerEn": "freeport",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "port_passport",
+      "promptTh": "หนังสือเดินทาง",
+      "answerEn": "passport",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "port_report",
+      "promptTh": "รายงาน",
+      "answerEn": "report",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "port_sport",
+      "promptTh": "กีฬา",
+      "answerEn": "sport",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "port_transport",
+      "promptTh": "การขนส่ง",
+      "answerEn": "transport",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "port_import",
+      "promptTh": "การนำเข้า",
+      "answerEn": "import",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "port_export",
+      "promptTh": "การส่งออก",
+      "answerEn": "export",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "port_support",
+      "promptTh": "การสนับสนุน",
+      "answerEn": "support",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "port_teleport",
+      "promptTh": "การเคลื่อนย้ายทันที",
+      "answerEn": "teleport",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "port_deport",
+      "promptTh": "การเนรเทศ",
+      "answerEn": "deport",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "port_rapport",
+      "promptTh": "ความสัมพันธ์อันดี",
+      "answerEn": "rapport",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "port_purport",
+      "promptTh": "ความหมายที่ตั้งใจ",
+      "answerEn": "purport",
+      "acceptedAnswers": []
+    }
+  ],
   "every_any": [
     {
       "id": "everyone",
