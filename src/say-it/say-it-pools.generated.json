@@ -639,6 +639,250 @@
       "acceptedAnswers": []
     }
   ],
+  "who": [
+    {
+      "id": "who_are_you",
+      "promptTh": "คุณคือใคร?",
+      "answerEn": "who are you?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "who_is_he",
+      "promptTh": "เขาคือใคร? (ผู้ชาย)",
+      "answerEn": "who is he?",
+      "acceptedAnswers": ["who's he?"]
+    },
+    {
+      "id": "who_is_she",
+      "promptTh": "เขาคือใคร? (ผู้หญิง)",
+      "answerEn": "who is she?",
+      "acceptedAnswers": ["who's she?"]
+    },
+    {
+      "id": "who_are_they",
+      "promptTh": "พวกเขาคือใคร?",
+      "answerEn": "who are they?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "who_is_this",
+      "promptTh": "คนนี้คือใคร?",
+      "answerEn": "who is this?",
+      "acceptedAnswers": ["who's this?"]
+    },
+    {
+      "id": "who_is_that",
+      "promptTh": "คนนั้นคือใคร?",
+      "answerEn": "who is that?",
+      "acceptedAnswers": ["who's that?"]
+    },
+    {
+      "id": "who_is_the_man_by_the_door",
+      "promptTh": "ผู้ชายที่อยู่ข้างประตูคือใคร?",
+      "answerEn": "who is the man by the door?",
+      "acceptedAnswers": ["who's the man by the door?"]
+    },
+    {
+      "id": "who_is_the_woman_with_glasses",
+      "promptTh": "ผู้หญิงที่ใส่แว่นคือใคร?",
+      "answerEn": "who is the woman with glasses?",
+      "acceptedAnswers": ["who's the woman with glasses?"]
+    },
+    {
+      "id": "who_is_your_english_teacher",
+      "promptTh": "ใครเป็นครูสอนภาษาอังกฤษของคุณ?",
+      "answerEn": "who is your English teacher?",
+      "acceptedAnswers": ["who's your English teacher?"]
+    },
+    {
+      "id": "who_is_your_best_friend",
+      "promptTh": "ใครเป็นเพื่อนสนิทของคุณ?",
+      "answerEn": "who is your best friend?",
+      "acceptedAnswers": ["who's your best friend?"]
+    },
+    {
+      "id": "who_do_you_live_with",
+      "promptTh": "คุณอาศัยอยู่กับใคร?",
+      "answerEn": "who do you live with?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "who_are_you_going_with",
+      "promptTh": "คุณจะไปกับใคร?",
+      "answerEn": "who are you going with?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "who_is_coming_with_us",
+      "promptTh": "ใครจะมากับเรา?",
+      "answerEn": "who is coming with us?",
+      "acceptedAnswers": ["who's coming with us?"]
+    },
+    {
+      "id": "who_are_you_waiting_for",
+      "promptTh": "คุณกำลังรอใครอยู่?",
+      "answerEn": "who are you waiting for?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "who_called_you",
+      "promptTh": "ใครโทรหาคุณ?",
+      "answerEn": "who called you?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "who_sent_this_message",
+      "promptTh": "ใครส่งข้อความนี้มา?",
+      "answerEn": "who sent this message?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "who_did_you_meet_at_the_park",
+      "promptTh": "คุณเจอใครที่สวนสาธารณะ?",
+      "answerEn": "who did you meet at the park?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "who_do_you_play_badminton_with",
+      "promptTh": "คุณเล่นแบดมินตันกับใคร?",
+      "answerEn": "who do you play badminton with?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "who_can_help_me",
+      "promptTh": "ใครช่วยฉันได้บ้าง?",
+      "answerEn": "who can help me?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "who_should_i_ask",
+      "promptTh": "ฉันควรถามใคร?",
+      "answerEn": "who should I ask?",
+      "acceptedAnswers": []
+    }
+  ],
+  "tion": [
+    {
+      "id": "tion_nation",
+      "promptTh": "ชาติ / ประเทศ",
+      "answerEn": "nation",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "tion_notion",
+      "promptTh": "แนวคิด / ความคิด",
+      "answerEn": "notion",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "tion_motion",
+      "promptTh": "การเคลื่อนไหว",
+      "answerEn": "motion",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "tion_potion",
+      "promptTh": "ยาวิเศษ / น้ำยาวิเศษ",
+      "answerEn": "potion",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "tion_action",
+      "promptTh": "การกระทำ",
+      "answerEn": "action",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "tion_option",
+      "promptTh": "ตัวเลือก",
+      "answerEn": "option",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "tion_station",
+      "promptTh": "สถานี",
+      "answerEn": "station",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "tion_location",
+      "promptTh": "สถานที่ / ตำแหน่งที่ตั้ง",
+      "answerEn": "location",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "tion_vacation",
+      "promptTh": "วันหยุดพักผ่อน",
+      "answerEn": "vacation",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "tion_education",
+      "promptTh": "การศึกษา",
+      "answerEn": "education",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "tion_information",
+      "promptTh": "ข้อมูล / ข่าวสาร",
+      "answerEn": "information",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "tion_invitation",
+      "promptTh": "คำเชิญ",
+      "answerEn": "invitation",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "tion_direction",
+      "promptTh": "ทิศทาง / คำบอกทาง",
+      "answerEn": "direction",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "tion_attention",
+      "promptTh": "ความสนใจ / การใส่ใจ",
+      "answerEn": "attention",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "tion_celebration",
+      "promptTh": "การเฉลิมฉลอง",
+      "answerEn": "celebration",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "tion_population",
+      "promptTh": "ประชากร",
+      "answerEn": "population",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "tion_pollution",
+      "promptTh": "มลพิษ",
+      "answerEn": "pollution",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "tion_collection",
+      "promptTh": "การรวบรวม / ของสะสม",
+      "answerEn": "collection",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "tion_invention",
+      "promptTh": "สิ่งประดิษฐ์ / การประดิษฐ์",
+      "answerEn": "invention",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "tion_tradition",
+      "promptTh": "ประเพณี",
+      "answerEn": "tradition",
+      "acceptedAnswers": []
+    }
+  ],
   "every_any": [
     {
       "id": "everyone",
