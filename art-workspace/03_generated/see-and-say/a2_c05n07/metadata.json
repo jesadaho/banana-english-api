@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "repository": "jesadaho/banana-english-api",
+  "course": "Adventure A2",
+  "chapter": 5,
+  "nodeId": "a2_c05n07",
+  "poolId": "a2_c05n07",
+  "status": "approved",
+  "approvedBy": "user",
+  "approvedAt": "2026-10-08",
+  "approvalScope": "All five rendered images in this conversation",
+  "runtimeIntegration": "not integrated; proposed answers are concept authoring, not active runtime card IDs",
+  "backgroundDirection": "Original Bogy running scene: warm stylized 3D characters, believable semi-realistic Thai lakeside park",
+  "generator": "built-in image_gen",
+  "cards": [
+    {
+      "file": "01-bogy-running-v01.png",
+      "cast": [
+        "Bogy"
+      ],
+      "questionEn": "What is he doing?",
+      "proposedAnswerEn": "He's running.",
+      "visibleEvidence": "running by a lake",
+      "width": 1448,
+      "height": 1086,
+      "sha256": "9c07d25bc9c44089477fc474625b2658619d08c19e607886961b762709018db0",
+      "characterReferences": [
+        "art-bible/characters/bogy.png"
+      ],
+      "status": "approved"
+    },
+    {
+      "file": "02-may-riding-bike-v01.png",
+      "cast": [
+        "May"
+      ],
+      "questionEn": "What is she doing?",
+      "proposedAnswerEn": "She's riding a bike.",
+      "visibleEvidence": "riding a bicycle",
+      "width": 1448,
+      "height": 1086,
+      "sha256": "9c56c9f6a9d3b44546e8a9e0442b750e89e8e375b4c21f96ce1ca3de9f9b7bf0",
+      "characterReferences": [
+        "art-bible/characters/may.png"
+      ],
+      "status": "approved"
+    },
+    {
+      "file": "03-kenji-climbing-tree-v01.png",
+      "cast": [
+        "Kenji"
+      ],
+      "questionEn": "What is he doing?",
+      "proposedAnswerEn": "He's climbing a tree.",
+      "visibleEvidence": "climbing a tree",
+      "width": 1448,
+      "height": 1086,
+      "sha256": "3be995baef61f170d45141519b567b0c7f94c58092f49e77f47945e03b369ace",
+      "characterReferences": [
+        "art-bible/characters/kenji.png"
+      ],
+      "status": "approved"
+    },
+    {
+      "file": "04-bogy-may-flying-kite-v01.png",
+      "cast": [
+        "Bogy",
+        "May"
+      ],
+      "questionEn": "What are they doing?",
+      "proposedAnswerEn": "They're flying a kite.",
+      "visibleEvidence": "two characters flying one kite",
+      "width": 1448,
+      "height": 1086,
+      "sha256": "8dcf339e752913e65897799e26d61f23ea887d429dbf4dce5be06bdc6a803837",
+      "characterReferences": [
+        "art-bible/characters/bogy.png",
+        "art-bible/characters/may.png"
+      ],
+      "status": "approved"
+    },
+    {
+      "file": "05-nina-john-badminton-v01.png",
+      "cast": [
+        "Nina",
+        "John"
+      ],
+      "questionEn": "What are they doing?",
+      "proposedAnswerEn": "They're playing badminton by the lake.",
+      "visibleEvidence": "two rackets and a shuttlecock by a visible lake",
+      "width": 1448,
+      "height": 1086,
+      "sha256": "1e82b3eee8780f09b4db71436754e7968c94da39e4d70c4b91fd1a61edceef5a",
+      "characterReferences": [
+        "art-bible/characters/nina.png",
+        "art-bible/characters/john.png"
+      ],
+      "status": "approved"
+    }
+  ]
+}
