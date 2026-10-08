@@ -24,6 +24,20 @@ Resolve chapter shorthand to its See & Say node and pool. Read every selected ca
 
 If only a chapter-level intention exists and no runtime pool/card matches, report it as unimplemented. Offer an explicitly labeled exploratory concept, without claiming an invented card ID, accepted answer or runtime integration. Ask only when multiple matching nodes remain or missing facts prevent an answerable image.
 
+## Text concept before rendering
+
+Always send a source-grounded concept as text before invoking image generation. Even when the initial request says render, complete source discovery and concept preparation first, then wait for the user's go-ahead on that concept. If the user explicitly requests immediate rendering without a concept, honor that instruction.
+
+Write the concept in Thai unless the user prefers another language. Include:
+- Course, chapter, node/pool and selected card(s).
+- What the learner will see: setting, characters, action, objects and composition.
+- The question and expected English answer, outside the proposed artwork.
+- The precise visible evidence that supports the answer, including required counts, positions, time, frequency or prices.
+- Proposed aspect ratio and any essential labels or markers.
+- For a batch, a short concept per distinct image and any shared-image mapping.
+
+Keep it concrete and concise; do not expose a long production prompt as the concept. Do not generate an image or spend rendering credits in this concept-only turn. End after presenting the concept so the user can adjust it or say “render”, “ลอง render”, or equivalent. Once authorized, render the accepted concept without asking again. If source conflicts prevent a sound concept, state them before proposing a fix.
+
 ## Prepare the visual contract
 
 Before generation, record a compact table per selected image:
