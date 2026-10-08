@@ -15,6 +15,8 @@ export type SayItPhrase = {
   choices?: string[];
   /** Two-level hints (first word, then gapped sentence); using them costs no stars. */
   hints?: string[];
+  /** Filled frequency bars out of 5. Omitted when the sentence has no frequency word. */
+  level?: number;
 };
 
 const pathPools = {

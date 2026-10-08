@@ -1242,8 +1242,7 @@
           ],
           "contentRef": {
             "poolId": "a2_c04n09"
-          },
-          "featureFlag": "adventure_a2_optional"
+          }
         },
         {
           "id": "a2_c04n10",

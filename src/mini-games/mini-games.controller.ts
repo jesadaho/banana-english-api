@@ -14,6 +14,8 @@ import { EconomyService } from '../economy/economy.service';
 import { AnonymousUserGuard } from '../users/anonymous-user.guard';
 import { EmojiSpeakEndlessLeaderboardService } from './emoji-speak-endless-leaderboard.service';
 import { EndlessScoreDto } from './dto/endless-score.dto';
+import { DescribeItEvaluateService, type DescribeItEvalTier } from './describe-it-evaluate.service';
+import { EvaluateDescribeItDto } from './dto/evaluate-describe-it.dto';
 import { EvaluateExplainItDto } from './dto/evaluate-explain-it.dto';
 import { EvaluateSpeakChallengeDto } from './dto/evaluate-speak-challenge.dto';
 import { EvaluateStoryBuilderDto } from './dto/evaluate-story-builder.dto';
@@ -104,6 +106,7 @@ export class MiniGamesController {
   constructor(
     private readonly economy: EconomyService,
     private readonly speakChallengeEval: SpeakChallengeEvaluateService,
+    private readonly describeItEval: DescribeItEvaluateService,
     private readonly explainItEval: ExplainItEvaluateService,
     private readonly storyBuilderEval: StoryBuilderEvaluateService,
     private readonly endlessLeaderboard: EmojiSpeakEndlessLeaderboardService,
@@ -325,6 +328,24 @@ export class MiniGamesController {
       targetEn,
       promptTh: body.promptTh?.trim(),
       promptEn: body.promptEn?.trim(),
+    });
+    return { tier };
+  }
+
+  @Post('describe-it/evaluate')
+  async evaluateDescribeIt(@Body() body: EvaluateDescribeItDto): Promise<{
+    tier: DescribeItEvalTier;
+  }> {
+    const transcript = body.transcript?.trim() ?? '';
+    const targetEn = body.targetEn?.trim() ?? '';
+    if (!transcript || !targetEn) {
+      throw new BadRequestException('transcript and targetEn are required');
+    }
+    const tier = await this.describeItEval.evaluate({
+      transcript,
+      targetEn,
+      promptTh: body.promptTh?.trim(),
+      acceptedEn: body.acceptedEn?.trim(),
     });
     return { tier };
   }

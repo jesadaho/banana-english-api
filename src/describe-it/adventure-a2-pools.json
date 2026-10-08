@@ -200,5 +200,92 @@
         ]
       }
     ]
+  },
+  "a2_c04n09": {
+    "id": "a2_c04n09",
+    "titleEn": "Find the Person",
+    "titleTh": "หาคนในงาน",
+    "tagEn": "ADVENTURE",
+    "emoji": "🖼️",
+    "estimatedMinutes": 3,
+    "items": [
+      {
+        "id": "a2_c04n09_01",
+        "promptTh": "บรรยายคนในวงกลมสีเหลือง ให้เพื่อนหาเจอว่าคนไหน",
+        "answerEn": "The man with glasses.",
+        "answerTh": "ผู้ชายที่ใส่แว่น",
+        "acceptedAnswers": [
+          "He's the man with glasses.",
+          "The man who has glasses."
+        ],
+        "imagePath": "describe-it/a2_c04n09/01.webp",
+        "hints": [
+          "The …",
+          "The ___ with ___."
+        ]
+      },
+      {
+        "id": "a2_c04n09_02",
+        "promptTh": "บรรยายคนในวงกลมสีเหลือง ให้เพื่อนหาเจอว่าคนไหน",
+        "answerEn": "The man with a beard.",
+        "answerTh": "ผู้ชายที่มีเครา",
+        "acceptedAnswers": [
+          "The bearded man.",
+          "The man with the short beard.",
+          "The man who has a beard."
+        ],
+        "imagePath": "describe-it/a2_c04n09/02.webp",
+        "hints": [
+          "The …",
+          "The ___ with a ___."
+        ]
+      },
+      {
+        "id": "a2_c04n09_03",
+        "promptTh": "บรรยายคนในวงกลมสีเหลือง ให้เพื่อนหาเจอว่าคนไหน",
+        "answerEn": "The woman with short curly hair.",
+        "answerTh": "ผู้หญิงที่ผมหยิกสั้น",
+        "acceptedAnswers": [
+          "The woman with curly hair.",
+          "The woman who has curly hair."
+        ],
+        "imagePath": "describe-it/a2_c04n09/03.webp",
+        "hints": [
+          "The …",
+          "The ___ with ___ ___ ___."
+        ]
+      },
+      {
+        "id": "a2_c04n09_04",
+        "promptTh": "บรรยายคนในวงกลมสีเหลือง ให้เพื่อนหาเจอว่าคนไหน",
+        "answerEn": "The girl with long black hair.",
+        "answerTh": "เด็กผู้หญิงที่ผมยาวสีดำ",
+        "acceptedAnswers": [
+          "The girl with long straight black hair.",
+          "The girl with long hair.",
+          "The girl who has long black hair."
+        ],
+        "imagePath": "describe-it/a2_c04n09/04.webp",
+        "hints": [
+          "The …",
+          "The ___ with ___ ___ ___."
+        ]
+      },
+      {
+        "id": "a2_c04n09_05",
+        "promptTh": "บรรยายคนในวงกลมสีเหลือง ให้เพื่อนหาเจอว่าคนไหน",
+        "answerEn": "The boy in a red shirt.",
+        "answerTh": "เด็กผู้ชายที่ใส่เสื้อสีแดง",
+        "acceptedAnswers": [
+          "The boy with the red shirt.",
+          "The boy in the red shirt."
+        ],
+        "imagePath": "describe-it/a2_c04n09/05.webp",
+        "hints": [
+          "The …",
+          "The ___ in a ___ ___."
+        ]
+      }
+    ]
   }
 }

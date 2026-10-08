@@ -16,6 +16,7 @@ import {
   type FoundationV7Node,
   type LearnCourse,
 } from './foundation-v7-path.data';
+import { conversationCutsceneUrl } from './conversation-cutscenes';
 import type { FoundationV5ClientNode } from './learn-path.service';
 
 /** Comma-separated feature flags, e.g. `LEARN_PATH_FLAGS=a2_see_and_say_extra,a2_explain_it`. */
@@ -43,6 +44,8 @@ export type FoundationV7ClientNode = FoundationV5ClientNode & {
   sayItMode?: 'guided';
   pronunciation?: FoundationV7Node['pronunciation'];
   scenarioId?: string;
+  /** Bunny mp4 played before the conversation intro. Omitted when no clip is published. */
+  cutsceneUrl?: string;
 };
 
 export type FoundationV7ClientFinale = {
@@ -103,6 +106,10 @@ function mapClientNode(
     POOL_GATED_TYPES.has(node.type) && (!backendReady || !context.released || flagOff)
       ? {}
       : node.contentRef;
+  const cutsceneUrl =
+    node.type === 'conversation' && node.contentRef.simulationId
+      ? conversationCutsceneUrl(node.contentRef.simulationId)
+      : undefined;
   const result: FoundationV7ClientNode = {
     id: node.id,
     code: node.code,
@@ -140,6 +147,7 @@ function mapClientNode(
       : {}),
     sayItMode: node.sayItMode,
     pronunciation: node.pronunciation,
+    ...(cutsceneUrl ? { cutsceneUrl } : {}),
   };
   return {
     node: result,

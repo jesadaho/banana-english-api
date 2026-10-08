@@ -26,6 +26,8 @@ import { getInteractiveScenario } from '../interactive-scenario/interactive-scen
 import { emojiSpeakPoolById } from '../emoji-speak/emoji-speak.data';
 import { isValidNewWordsPack, newWordsPoolById } from '../new-words/new-words.data';
 import { sayItTopicById } from '../say-it/say-it.data';
+import { sayItPoolForTopic } from '../say-it/say-it.data';
+import { sayItPoolForTopic } from '../say-it/say-it.data';
 import { SayItService } from '../say-it/say-it.service';
 import { dealListenUpItems, LISTEN_UP_ENABLED, listenUpPoolById } from '../listen-up/listen-up.data';
 import { STORY_BITES_ENABLED, storyBitesPoolById } from '../story-bites/story-bites.data';
@@ -142,9 +144,9 @@ describe('Adventure A2 Zone 1 content', () => {
           assert.ok(getInteractiveScenario(id), id);
           break;
         case 'describe_it':
-          if (id === 'a2_c02n10' || id === 'a2_c03n08') {
+          if (id === 'a2_c02n10' || id === 'a2_c03n08' || id === 'a2_c04n09') {
             const pool = describeItPoolById(id);
-            assert.equal(pool?.items.length, 6, id);
+            assert.equal(pool?.items.length, id === 'a2_c04n09' ? 5 : 6, id);
             assert.ok(pool?.items.every((item) => item.answerTh.trim().length > 0), id);
             break;
           }
@@ -198,6 +200,11 @@ describe('Adventure A2 Zone 1 content', () => {
     const items = dealListenUpItems('a2_c07n07');
     assert.equal(items.length, pool.items.length);
     assert.equal(new Set(items.map((item) => item.id)).size, pool.items.length);
+  });
+
+  it('shows the How Often frequency bar on sentences that name a frequency', () => {
+    const levels = sayItPoolForTopic('a2_c02n06').map((phrase) => phrase.level);
+    assert.deepEqual(levels, [undefined, 4, 2, 0, 5, 3, undefined]);
   });
 
   it('deals all 7 Say It 1.7 prompts per round', () => {

@@ -4,6 +4,7 @@ import { PhonicsModule } from '../phonics/phonics.module';
 import { UsersModule } from '../users/users.module';
 import { EmojiSpeakService } from '../emoji-speak/emoji-speak.service';
 import { EmojiSpeakEndlessLeaderboardService } from './emoji-speak-endless-leaderboard.service';
+import { DescribeItEvaluateService } from './describe-it-evaluate.service';
 import { ExplainItEvaluateService } from './explain-it-evaluate.service';
 import { MiniGamesController } from './mini-games.controller';
 import { SpeakChallengeEvaluateService } from './speak-challenge-evaluate.service';
@@ -14,6 +15,7 @@ import { StoryBuilderEvaluateService } from './story-builder-evaluate.service';
   controllers: [MiniGamesController],
   providers: [
     SpeakChallengeEvaluateService,
+    DescribeItEvaluateService,
     ExplainItEvaluateService,
     StoryBuilderEvaluateService,
     EmojiSpeakEndlessLeaderboardService,

@@ -1155,6 +1155,7 @@
     {
      "th": "ปกติฉันตื่นเจ็ดโมง",
      "en": "I usually get up at seven.",
+     "level": 4,
      "accept": [
       "I usually wake up at seven."
      ]
@@ -1162,6 +1163,7 @@
     {
      "th": "บางครั้งฉันทำการบ้านหลังกินข้าวเย็น",
      "en": "I sometimes do my homework after dinner.",
+     "level": 2,
      "accept": [
       "Sometimes I do my homework after dinner.",
       "I sometimes do homework after dinner."
@@ -1170,6 +1172,7 @@
     {
      "th": "ฉันไม่เคยจัดเตียงเลย",
      "en": "I never make the bed.",
+     "level": 0,
      "accept": [
       "I never make my bed."
      ]
@@ -1177,6 +1180,7 @@
     {
      "th": "ฉันกินข้าวเช้าเสมอ",
      "en": "I always have breakfast.",
+     "level": 5,
      "accept": [
       "I always eat breakfast."
      ]
@@ -1184,6 +1188,7 @@
     {
      "th": "ฉันไปวิ่งจ๊อกกิ้งบ่อย",
      "en": "I often go jogging.",
+     "level": 3,
      "accept": [
       "I go jogging often."
      ]
@@ -2654,7 +2659,7 @@
    "code": "4.9",
    "title": "Find the Person / หาคนในงาน",
    "type": "see_and_say",
-   "flag": true,
+   "flag": false,
    "beat": "Ten",
    "axes": "12222",
    "teach": "ดูภาพงานเลี้ยง บรรยายคนในวงกลมให้เพื่อนหาเจอ ใช้ก้อน the man with… / the boy in… จาก 4.5",
@@ -2665,39 +2670,50 @@
    "hint": "① ไฮไลต์ข้อมูลในภาพที่ต้องพูด ② sentence starter · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "pic": "ภาพงานเลี้ยงต้อนรับ: ผู้ชาย 3 คน คนที่มีวงกลมสีเหลืองเป็นคนเดียวที่ใส่แว่น 👓",
+     "pic": "งานต้อนรับชมรม มีคน 7 คน วงกลมสีเหลืองอยู่ที่ผู้ชายคนเดียวที่ใส่แว่น",
      "en": "The man with glasses.",
+     "th": "ผู้ชายที่ใส่แว่น",
      "accept": [
+      "He's the man with glasses.",
       "The man who has glasses."
      ]
     },
     {
-     "pic": "ภาพงานเลี้ยงต้อนรับ: ผู้หญิง 3 คน คนที่มีวงกลมสีเหลืองเป็นคนเดียวที่ผมหยิก 👩‍🦱",
-     "en": "The woman with curly hair.",
-     "accept": [
-      "The woman who has curly hair."
-     ]
-    },
-    {
-     "pic": "ภาพงานเลี้ยงต้อนรับ: ผู้ชาย 3 คน คนที่มีวงกลมสีเหลืองเป็นคนเดียวที่มีเครา 🧔",
+     "pic": "งานต้อนรับชมรม มีคน 7 คน วงกลมสีเหลืองอยู่ที่ผู้ชายคนเดียวที่มีเครา",
      "en": "The man with a beard.",
+     "th": "ผู้ชายที่มีเครา",
      "accept": [
+      "The bearded man.",
+      "The man with the short beard.",
       "The man who has a beard."
      ]
     },
     {
-     "pic": "ภาพงานเลี้ยงต้อนรับ: เด็กผู้ชาย 3 คน คนที่มีวงกลมสีเหลืองเป็นคนเดียวที่ใส่เสื้อเชิ้ตสีแดง",
-     "en": "The boy in the red shirt.",
+     "pic": "งานต้อนรับชมรม มีคน 7 คน วงกลมสีเหลืองอยู่ที่ผู้หญิงคนเดียวที่ผมหยิกสั้น",
+     "en": "The woman with short curly hair.",
+     "th": "ผู้หญิงที่ผมหยิกสั้น",
      "accept": [
-      "The boy in a red shirt.",
-      "The boy with the red shirt."
+      "The woman with curly hair.",
+      "The woman who has curly hair."
      ]
     },
     {
-     "pic": "ภาพงานเลี้ยงต้อนรับ: เด็กผู้หญิง 3 คน คนที่มีวงกลมสีเหลืองเป็นคนเดียวที่ผมยาวสีดำ",
+     "pic": "งานต้อนรับชมรม มีคน 7 คน วงกลมสีเหลืองอยู่ที่เด็กผู้หญิงคนเดียวที่ผมยาวสีดำ",
      "en": "The girl with long black hair.",
+     "th": "เด็กผู้หญิงที่ผมยาวสีดำ",
      "accept": [
+      "The girl with long straight black hair.",
+      "The girl with long hair.",
       "The girl who has long black hair."
+     ]
+    },
+    {
+     "pic": "งานต้อนรับชมรม มีคน 7 คน วงกลมสีเหลืองอยู่ที่เด็กผู้ชายคนเดียวที่ใส่เสื้อสีแดง",
+     "en": "The boy in a red shirt.",
+     "th": "เด็กผู้ชายที่ใส่เสื้อสีแดง",
+     "accept": [
+      "The boy with the red shirt.",
+      "The boy in the red shirt."
      ]
     }
    ]

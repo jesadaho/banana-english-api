@@ -216,6 +216,7 @@ def build():
                     "answerEn": item["en"],
                     "acceptedAnswers": item.get("accept", []),
                     "hints": two_level_hints(item["en"]),
+                    **({"level": item["level"]} if isinstance(item.get("level"), int) else {}),
                 }
                 for i, item in enumerate(pool)
             ]
