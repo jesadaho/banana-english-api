@@ -22,6 +22,7 @@ import { UsersModule } from './users/users.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { MiniGamesModule } from './mini-games/mini-games.module';
 import { DailySpeakModule } from './daily-speak/daily-speak.module';
+import { ReferralsModule } from './referrals/referrals.module';
 import { ExplainItModule } from './explain-it/explain-it.module';
 import { SayItModule } from './say-it/say-it.module';
 import { DescribeItModule } from './describe-it/describe-it.module';
@@ -63,6 +64,7 @@ import { PhonicsModule } from './phonics/phonics.module';
     OutfitsModule,
     MiniGamesModule,
     DailySpeakModule,
+    ReferralsModule,
     SayItModule,
     DescribeItModule,
     ExplainItModule,

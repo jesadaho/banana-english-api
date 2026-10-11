@@ -2,7 +2,8 @@ export type PushNotificationType =
   | 'banana_full'
   | 'streak_reminder'
   | 'miss_you'
-  | 'bug_report_reply';
+  | 'bug_report_reply'
+  | 'referral_reward';
 
 export interface PushNotificationPayload {
   type: PushNotificationType;
@@ -21,7 +22,7 @@ export const BANANA_FULL_VARIANTS: PushTemplate[] = [
 ];
 
 export const PUSH_NOTIFICATION_TEMPLATES: Record<
-  Exclude<PushNotificationType, 'bug_report_reply' | 'banana_full'>,
+  Exclude<PushNotificationType, 'bug_report_reply' | 'banana_full' | 'referral_reward'>,
   PushTemplate
 > = {
   streak_reminder: {
@@ -37,7 +38,7 @@ export const PUSH_NOTIFICATION_TEMPLATES: Record<
 };
 
 export function pushPayloadForType(
-  type: Exclude<PushNotificationType, 'bug_report_reply'>,
+  type: Exclude<PushNotificationType, 'bug_report_reply' | 'referral_reward'>,
 ): PushNotificationPayload {
   const template =
     type === 'banana_full'

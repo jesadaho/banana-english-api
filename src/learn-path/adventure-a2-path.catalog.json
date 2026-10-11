@@ -262,7 +262,7 @@
           "type": "conversation",
           "beat": "Ketsu",
           "learningTarget": "คุยจนสำเร็จ: บอกและถามงานอดิเรกได้",
-          "activity": "เจอ Teacher Bee และ May: แนะนำตัว บอกงานอดิเรก ถามกลับ (5–7 turns ไม่เกิน 3 นาที · 3 goals)",
+          "activity": "คุยกับ Nina: แนะนำตัว บอกงานอดิเรก ถามกลับ (5–7 turns ไม่เกิน 3 นาที · 3 goals)",
           "examples": [
             "I enjoy drawing. How about you?"
           ],

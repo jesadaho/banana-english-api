@@ -6,6 +6,7 @@ import {
   FOUNDATION_V7_NODES,
   LEARN_COURSES,
 } from '../learn-path/foundation-v7-path.data';
+import { canonicalFoundationV7LessonId } from '../lessons/foundation-v7-lesson-id-aliases';
 import { getLesson } from '../lessons/lessons.data';
 
 /** Original 16 Basics catalog lessons (BasicsLessons / BasicsCourse). */
@@ -242,6 +243,48 @@ export type FoundationV7Stage = {
   code: string;
   titleEn: string;
 };
+
+let v7StageByLessonId: Map<string, string> | null = null;
+let v7StageBySimulationId: Map<string, string> | null = null;
+
+/**
+ * V7 map node for a completed lesson / conversation session — those stages
+ * log `userSession` rows, not `miniGameScoreAttempt`.
+ */
+export function foundationV7StageIdForSession(session: {
+  lessonId: string | null;
+  simulationId: string | null;
+}): string | null {
+  if (!v7StageByLessonId || !v7StageBySimulationId) {
+    v7StageByLessonId = new Map();
+    v7StageBySimulationId = new Map();
+    for (const node of FOUNDATION_V7_NODES) {
+      const ref = node.contentRef;
+      if (node.type === 'lesson' && ref.lessonId && !v7StageByLessonId.has(ref.lessonId)) {
+        v7StageByLessonId.set(ref.lessonId, node.id);
+      }
+      if (
+        node.type === 'conversation' &&
+        ref.simulationId &&
+        !v7StageBySimulationId.has(ref.simulationId)
+      ) {
+        v7StageBySimulationId.set(ref.simulationId, node.id);
+      }
+    }
+  }
+  if (session.simulationId) {
+    return v7StageBySimulationId.get(session.simulationId.trim()) ?? null;
+  }
+  if (session.lessonId) {
+    const id = session.lessonId.trim();
+    return (
+      v7StageByLessonId.get(id) ??
+      v7StageByLessonId.get(canonicalFoundationV7LessonId(id)) ??
+      null
+    );
+  }
+  return null;
+}
 
 /** Every map node, plus chapter Skip Quizzes from Ch2, in path order. */
 export function foundationV7StageCatalog(): FoundationV7Stage[] {

@@ -22,6 +22,7 @@ import {
   EMPTY_COURSE_COUNTS,
   foundationV7PathPosition,
   foundationV7StageCatalog,
+  foundationV7StageIdForSession,
   roundStars,
   type ContentCourse,
 } from './content-course';
@@ -934,7 +935,7 @@ export class AdminMetricsService {
 
   private async buildContent(range: DateRange, filters: MetricsFilters) {
     const userFilter = this.userWhere(filters);
-    const [lessonSessions, missionSessions, ratings, feedbackRows, streakBuckets, activeLearners, sessionMix, sessionMixUsers, dailySpeakActive, minigameStarts, minigameStartUsers, stageScoreRows] =
+    const [lessonSessions, missionSessions, ratings, feedbackRows, streakBuckets, activeLearners, sessionMix, sessionMixUsers, dailySpeakActive, minigameStarts, minigameStartUsers, stageScoreRows, stageSessionRows] =
       await Promise.all([
         this.prisma.userSession.groupBy({
           by: ['lessonId'],
@@ -1079,6 +1080,16 @@ export class AdminMetricsService {
             userId: true,
           },
         }),
+        this.prisma.userSession.groupBy({
+          by: ['lessonId', 'simulationId', 'userId'],
+          where: {
+            sessionType: { in: ['training', 'simulation'] },
+            rewardsApplied: true,
+            completedAt: { gte: range.from, lte: range.to },
+            user: userFilter,
+          },
+          _count: { _all: true },
+        }),
       ]);
 
     const ratingByLesson = new Map(
@@ -1175,7 +1186,15 @@ export class AdminMetricsService {
       ]),
     ) as Record<ContentCourse, ReturnType<AdminMetricsService['buildCourseContentSlice']>>;
 
-    const stageScores = this.aggregateStageScores(stageScoreRows);
+    const stageScores = this.aggregateStageScores(
+      stageScoreRows,
+      stageSessionRows.map((row) => ({
+        lessonId: row.lessonId,
+        simulationId: row.simulationId,
+        userId: row.userId,
+        count: row._count._all,
+      })),
+    );
 
     return {
       range: { from: range.from.toISOString(), to: range.to.toISOString() },
@@ -1216,11 +1235,18 @@ export class AdminMetricsService {
       passed: boolean | null;
       userId: string;
     }[],
+    sessionRows: {
+      lessonId: string | null;
+      simulationId: string | null;
+      userId: string;
+      count: number;
+    }[] = [],
   ) {
     type Acc = {
       gameId: string;
       kind: string;
       attempts: number;
+      scoredAttempts: number;
       users: Set<string>;
       correctSum: number;
       totalSum: number;
@@ -1235,6 +1261,7 @@ export class AdminMetricsService {
           gameId: row.gameId,
           kind: row.kind,
           attempts: 0,
+          scoredAttempts: 0,
           users: new Set(),
           correctSum: 0,
           totalSum: 0,
@@ -1244,6 +1271,7 @@ export class AdminMetricsService {
         byGame.set(row.gameId, acc);
       }
       acc.attempts += 1;
+      acc.scoredAttempts += 1;
       acc.users.add(row.userId);
       acc.correctSum += row.correctCount;
       acc.totalSum += row.totalCount;
@@ -1264,6 +1292,7 @@ export class AdminMetricsService {
         gameId: stage.gameId,
         kind: stage.kind,
         attempts: 0,
+        scoredAttempts: 0,
         users: new Set(),
         correctSum: 0,
         totalSum: 0,
@@ -1271,17 +1300,24 @@ export class AdminMetricsService {
         scoredPass: 0,
       });
     }
+    for (const row of sessionRows) {
+      const stageId = foundationV7StageIdForSession(row);
+      const acc = stageId ? byGame.get(stageId) : undefined;
+      if (!acc) continue;
+      acc.attempts += row.count;
+      acc.users.add(row.userId);
+    }
 
     return [...byGame.values()]
       .map((acc) => {
         const avgCorrect =
-          acc.attempts === 0
+          acc.scoredAttempts === 0
             ? 0
-            : Math.round((acc.correctSum / acc.attempts) * 10) / 10;
+            : Math.round((acc.correctSum / acc.scoredAttempts) * 10) / 10;
         const avgTotal =
-          acc.attempts === 0
+          acc.scoredAttempts === 0
             ? 0
-            : Math.round((acc.totalSum / acc.attempts) * 10) / 10;
+            : Math.round((acc.totalSum / acc.scoredAttempts) * 10) / 10;
         const avgPct =
           acc.totalSum === 0
             ? 0
@@ -1304,6 +1340,7 @@ export class AdminMetricsService {
             ? 'foundation'
             : classifyContentCourse(acc.gameId),
           attempts: acc.attempts,
+          scoredAttempts: acc.scoredAttempts,
           users: acc.users.size,
           avgCorrect,
           avgTotal,
@@ -1554,6 +1591,22 @@ export class AdminMetricsService {
         },
       }),
     ]);
+    const referralClaims = await this.prisma.referral.groupBy({
+      by: ['source'],
+      where: {
+        createdAt: { gte: range.from, lte: range.to },
+        invitee: userFilter,
+      },
+      _count: { _all: true },
+    });
+    const referralQualified = await this.prisma.referral.groupBy({
+      by: ['status'],
+      where: {
+        qualifiedAt: { gte: range.from, lte: range.to },
+        invitee: userFilter,
+      },
+      _count: { _all: true },
+    });
 
     const bySource: Record<string, { in: number; out: number; net: number }> =
       {};
@@ -1649,6 +1702,17 @@ export class AdminMetricsService {
           platform,
           count,
         })),
+      },
+      referrals: {
+        claims: referralClaims.reduce((s, r) => s + r._count._all, 0),
+        claimsBySource: referralClaims.map((r) => ({
+          source: r.source,
+          count: r._count._all,
+        })),
+        rewarded:
+          referralQualified.find((r) => r.status === 'rewarded')?._count._all ?? 0,
+        capped:
+          referralQualified.find((r) => r.status === 'capped')?._count._all ?? 0,
       },
     };
   }

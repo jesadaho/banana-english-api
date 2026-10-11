@@ -10,6 +10,8 @@ function cutsceneBaseUrl(): string {
  */
 export const CONVERSATION_CUTSCENES: Record<string, string> = {
   foundation_first_conversation: 'conversation-cutscenes/v7_u01n05.mp4',
+  a2_c01n09:
+    'https://banana-english-cutscenes.b-cdn.net/conversation-cutscenes/a2_c01n09.mp4?v=2',
 };
 
 export function conversationCutsceneUrl(

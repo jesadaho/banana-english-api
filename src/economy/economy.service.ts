@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Currency, Prisma, User } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
@@ -77,10 +77,27 @@ export interface SessionRewardResult {
 
 @Injectable()
 export class EconomyService {
+  private readonly logger = new Logger(EconomyService.name);
+
   constructor(
     private readonly prisma: PrismaService,
     private readonly config: ConfigService,
   ) {}
+
+  private readonly progressListeners: ((userId: string) => Promise<void>)[] = [];
+
+  /** Called after a lesson / mission / mini-game reward commits. */
+  onLearnerProgress(listener: (userId: string) => Promise<void>): void {
+    this.progressListeners.push(listener);
+  }
+
+  private notifyLearnerProgress(userId: string): void {
+    for (const listener of this.progressListeners) {
+      listener(userId).catch((error) => {
+        this.logger.warn(`Learner progress listener failed: ${String(error)}`);
+      });
+    }
+  }
 
   private envInt(key: string, fallback: number): number {
     const raw = this.config.get<string>(key);
@@ -554,7 +571,7 @@ export class EconomyService {
   }): Promise<SessionRewardResult | null> {
     const { userId, sessionId, lessonId } = params;
 
-    return this.prisma.$transaction(async (tx) => {
+    const result = await this.prisma.$transaction(async (tx) => {
       const priorCompletion = await tx.userSession.findFirst({
         where: {
           userId,
@@ -648,6 +665,8 @@ export class EconomyService {
         isDailyMission: false,
       };
     });
+    this.notifyLearnerProgress(userId);
+    return result;
   }
 
   async applyMissionRewards(params: {
@@ -659,7 +678,7 @@ export class EconomyService {
     const { userId, sessionId, overallScore, isDailyMission } = params;
     const reward = getMissionReward(overallScore);
 
-    return this.prisma.$transaction(async (tx) => {
+    const result = await this.prisma.$transaction(async (tx) => {
       const user = await tx.user.findUniqueOrThrow({ where: { id: userId } });
       const local = getUserLocalTime(user.timezone);
       const todayKey = local.dateKey;
@@ -718,6 +737,8 @@ export class EconomyService {
         isDailyMission,
       };
     });
+    this.notifyLearnerProgress(userId);
+    return result;
   }
 
   private computeStreakUpdate(
@@ -961,7 +982,7 @@ export class EconomyService {
     const referenceId = `mini_game:${gameId}`;
     const priorReferences = foundationV7RewardAliases(gameId).map(id => `mini_game:${id}`);
 
-    return this.prisma.$transaction(async (tx) => {
+    const result = await this.prisma.$transaction(async (tx) => {
       const prior = await tx.economyTransaction.findFirst({
         where: {
           userId,
@@ -1036,6 +1057,8 @@ export class EconomyService {
         streakBonus: streak.streakBonus,
       };
     });
+    if (!result.alreadyClaimed) this.notifyLearnerProgress(userId);
+    return result;
   }
 
   /**

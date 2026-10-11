@@ -9,3 +9,10 @@ dist
 .idea
 coverage
 test
+# Not needed to build or run the API — keeps the build context small
+art-bible
+art-workspace
+Claude outputs
+.agents
+docs
+*-results

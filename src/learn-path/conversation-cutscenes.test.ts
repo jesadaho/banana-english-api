@@ -39,6 +39,7 @@ describe('conversation cutscene URLs', () => {
 
   it('sends the Bunny URL on the Adventure conversation node', () => {
     const previous = process.env.BUNNY_CUTSCENE_BASE_URL;
+    const previousClip = CONVERSATION_CUTSCENES.a2_c01n09;
     process.env.BUNNY_CUTSCENE_BASE_URL = 'https://banana.b-cdn.net';
     CONVERSATION_CUTSCENES.a2_c01n09 = 'conversation-cutscenes/a2_c01n09.mp4';
     try {
@@ -53,7 +54,8 @@ describe('conversation cutscene URLs', () => {
       const other = chapter?.items.find((item) => item.type !== 'mission');
       assert.equal(other?.cutsceneUrl, undefined);
     } finally {
-      delete CONVERSATION_CUTSCENES.a2_c01n09;
+      if (previousClip === undefined) delete CONVERSATION_CUTSCENES.a2_c01n09;
+      else CONVERSATION_CUTSCENES.a2_c01n09 = previousClip;
       if (previous === undefined) delete process.env.BUNNY_CUTSCENE_BASE_URL;
       else process.env.BUNNY_CUTSCENE_BASE_URL = previous;
     }

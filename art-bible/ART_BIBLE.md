@@ -79,6 +79,9 @@ Teacher B ยังคงเป็น brand anchor ตาม approved sheet: ban
 - NPC มี anatomy ใกล้คนจริงกว่าตัวละครหลัก แต่ยัง simplify ใบหน้า ผม มือ และ texture
 - NPC ต้องไม่กลายเป็นภาพถ่ายหรือคนจริงที่ถูก compositing เข้ากับตัวการ์ตูน
 - ทุกคนรับแสง ทอดเงา และอยู่ใน depth of field เดียวกัน
+- ใช้ [`npc-style-sheet-v01.png`](npc-style-sheet-v01.png) เป็น style และ variety reference สำหรับ NPC ที่สร้างใหม่ ชีตนี้มี 10 แบบเพื่อแสดงความหลากหลาย ไม่ใช่ identity lock สำหรับ recurring character และอย่านำใบหน้าทั้ง 10 ไปใช้ซ้ำเป็น named characters โดยอัตโนมัติ
+- กระจาย silhouette ผมผู้ชายให้เห็นความต่าง เช่น แสกข้างสั้น ผมหยิกสั้นไล่ข้าง และผมตรงยาวปัดข้าง รวมทั้งเปลี่ยนรูปหน้า สีเสื้อ และหนวดเคราตามวัย หลีกเลี่ยงการให้ NPC ทุกคนมีผมยุ่งสีเข้มและหน้า template เดียวกัน
+- ถ้าตัวละครมี approved character sheet ให้ยึด sheet นั้นเป็นหลัก ชีต NPC นี้ใช้คุมความเข้ากันของสไตล์เท่านั้น ไม่ใช้แทน identity reference
 
 ## 5. Scene Direction
 

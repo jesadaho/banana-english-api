@@ -63,12 +63,14 @@ Use the V2 mission philosophy: create a concrete situation, let the learner use 
   completionReplyEn: spec.completionEn, completionReplyTh: spec.completionTh,
   ...(spec.aiClosing ? { aiClosing: true } : {}),
   fallbackReplyEn: 'Thanks for practising. You can try again anytime.', fallbackReplyTh: 'ขอบคุณที่มาฝึกด้วยกันครับ กลับมาลองใหม่ได้เสมอครับ',
-  vocabDrill: [
-    ...spec.goals.map((g: GoalSpec) => ({word: g.example, meaningTh: g.th, pronunciation: ''})),
-    ...(spec.simulationId === 'foundation_v7_u13n06'
-      ? [{ word: 'too', meaningTh: 'ด้วย', pronunciation: 'ทู' }]
-      : []),
-  ],
+  vocabDrill: spec.simulationId.startsWith('a2_')
+    ? []
+    : [
+        ...spec.goals.map((g: GoalSpec) => ({word: g.example, meaningTh: g.th, pronunciation: ''})),
+        ...(spec.simulationId === 'foundation_v7_u13n06'
+          ? [{ word: 'too', meaningTh: 'ด้วย', pronunciation: 'ทู' }]
+          : []),
+      ],
 };
 }
 
