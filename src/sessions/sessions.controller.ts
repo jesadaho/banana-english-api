@@ -16,6 +16,7 @@ import {
   isChatDebugRequest,
 } from '../common/ai-user-message';
 import { attachAiDebug, scriptedAiDebug } from '../common/ai-debug';
+import { audioUrlForTurn } from '../tts/tts-bank';
 import { TrainingTurnEngine } from '../training/engine/training-turn.engine';
 import { isTrainingV2Lesson } from '../training/training-v2.config';
 import { Prisma, User } from '@prisma/client';
@@ -1141,7 +1142,7 @@ export class SessionsController {
       ttsText: reply.ttsText ?? null,
       ttsInstruction: reply.ttsInstruction ?? null,
       textTh: reply.textTh,
-      audioUrl: null,
+      audioUrl: audioUrlForTurn(reply.ttsText, reply.textEn),
       expectsUserSpeech: openingExpectsUserSpeech,
       expectedSpeech: openingExpectedSpeech,
       scene: null,
@@ -1219,6 +1220,7 @@ export class SessionsController {
             ? { ttsInstruction: reply.ttsInstruction.trim() }
             : {}),
           textTh: reply.textTh ?? '',
+          audioUrl: audioUrlForTurn(reply.ttsText, reply.textEn),
           isTaskComplete: false,
           updatedCheckpoints: {},
           feedbackHints: { mispronouncedWords: [] as string[] },
@@ -1409,7 +1411,7 @@ export class SessionsController {
       ttsText: reply.ttsText ?? null,
       ttsInstruction: reply.ttsInstruction ?? null,
       textTh,
-      audioUrl: null,
+      audioUrl: audioUrlForTurn(reply.ttsText, textEn),
       expectsUserSpeech,
       expectedSpeech,
       emojiChoice,
@@ -1428,6 +1430,7 @@ export class SessionsController {
         ? { ttsInstruction: reply.ttsInstruction.trim() }
         : {}),
       textTh: textTh ?? '',
+      audioUrl: audioUrlForTurn(reply.ttsText, textEn),
       isTaskComplete,
       updatedCheckpoints: {},
       feedbackHints: { mispronouncedWords: [] },

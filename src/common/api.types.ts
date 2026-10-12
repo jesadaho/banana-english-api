@@ -80,6 +80,8 @@ export interface TurnExchangeResponse {
   /** Pass separately to instruction-aware TTS; never concatenate into spoken text. */
   ttsInstruction?: string;
   textTh: string;
+  /** Pre-generated clip when this spoken line is in the TTS bank. Omitted or null uses live TTS. */
+  audioUrl?: string | null;
   audioBase64?: string;
   contentType?: string;
   isTaskComplete: boolean;
