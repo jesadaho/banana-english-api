@@ -355,15 +355,25 @@ describe('Foundation V7 progress and completion contracts', () => {
     assert.ok(foundationV7RewardAliases('v7_u01n03').includes('fnd_v2_say_first_conversation'));
   });
 
-  it('allows V7 Say It completion and keeps Foundation start pricing unchanged', async () => {
+  it('allows V7 Say It completion and charges Foundation starts until the reward is claimed', async () => {
     const calls: any[] = [];
-    const economy = {applyMiniGameRewards: async (p: any) => {calls.push(p); return p;}, recordMiniGameScore: async () => {}, spendBananas: async () => {throw new Error('Say It Foundation start should remain free');}};
+    const claimed = new Set<string>();
+    let spent = 0;
+    const economy = {
+      applyMiniGameRewards: async (p: any) => {calls.push(p); claimed.add(p.gameId); return p;},
+      recordMiniGameScore: async () => {},
+      spendBananas: async (_userId: string, amount: number) => {spent += amount;},
+      hasClaimedMiniGameReward: async (_userId: string, gameId: string) => claimed.has(gameId),
+    };
     const controller = new SayItController(new SayItService(), economy as any, {markActivity: async () => {}} as any);
-    for (const node of FOUNDATION_V7_NODES.filter(n => n.type === 'say_it')) {
-      assert.equal((await controller.startTopic(req, node.contentRef.topicId!)).bananaCost, 0);
+    const sayItNodes = FOUNDATION_V7_NODES.filter(n => n.type === 'say_it');
+    for (const node of sayItNodes) {
+      assert.equal((await controller.startTopic(req, node.contentRef.topicId!)).bananaCost, 1);
       const reward = await controller.completeTopic(req, node.contentRef.topicId!);
       assert.equal((reward as any).gameId, `say_it:${node.contentRef.topicId}`);
+      assert.equal((await controller.startTopic(req, node.contentRef.topicId!)).bananaCost, 0);
     }
+    assert.equal(spent, sayItNodes.length);
     assert.equal(calls.length, 38);
     await assert.rejects(controller.completeTopic(req, 'fnd_v7_unknown'));
   });

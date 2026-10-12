@@ -10,5 +10,6 @@ import { ReferralsService } from './referrals.service';
   imports: [EconomyModule, NotificationsModule, PrismaModule, UsersModule],
   controllers: [ReferralsController],
   providers: [ReferralsService],
+  exports: [ReferralsService],
 })
 export class ReferralsModule {}

@@ -295,6 +295,172 @@ export class ReferralsService implements OnModuleInit {
     return agg._sum.amount ?? 0;
   }
 
+  /** Admin dashboard: claims cohort in range, payouts, sources, top referrers. */
+  async adminReport(range: { from: Date; to: Date }) {
+    const inRange = { gte: range.from, lte: range.to };
+    const [cohort, qualified, payouts, codesIssued, allTime] = await Promise.all([
+      this.prisma.referral.findMany({
+        where: { createdAt: inRange },
+        select: {
+          id: true,
+          referrerId: true,
+          inviteeId: true,
+          code: true,
+          source: true,
+          status: true,
+          createdAt: true,
+          qualifiedAt: true,
+          referrer: { select: { displayName: true, email: true, avatarId: true } },
+          invitee: { select: { displayName: true, email: true, avatarId: true } },
+        },
+        orderBy: { createdAt: 'desc' },
+      }),
+      this.prisma.referral.findMany({
+        where: { qualifiedAt: inRange },
+        select: { status: true, qualifiedAt: true },
+      }),
+      this.prisma.economyTransaction.groupBy({
+        by: ['source'],
+        where: {
+          source: { in: ['referral_reward', 'referral_invitee_bonus'] },
+          currency: Currency.BANANA,
+          createdAt: inRange,
+        },
+        _sum: { amount: true },
+        _count: { _all: true },
+      }),
+      this.prisma.user.count({ where: { referralCode: { not: null } } }),
+      this.prisma.referral.groupBy({ by: ['status'], _count: { _all: true } }),
+    ]);
+
+    const progress = await this.completedNodeCounts(
+      cohort.filter((r) => r.status === 'pending').map((r) => r.inviteeId),
+    );
+
+    const dayKey = (d: Date) => d.toISOString().slice(0, 10);
+    const days: string[] = [];
+    for (
+      let t = Date.UTC(
+        range.from.getUTCFullYear(),
+        range.from.getUTCMonth(),
+        range.from.getUTCDate(),
+      );
+      t <= range.to.getTime();
+      t += 86_400_000
+    ) {
+      days.push(dayKey(new Date(t)));
+    }
+    const claimsByDay = new Map(days.map((d) => [d, 0]));
+    const rewardedByDay = new Map(days.map((d) => [d, 0]));
+    for (const r of cohort) {
+      const k = dayKey(r.createdAt);
+      claimsByDay.set(k, (claimsByDay.get(k) ?? 0) + 1);
+    }
+    for (const r of qualified) {
+      if (r.status !== 'rewarded' || !r.qualifiedAt) continue;
+      const k = dayKey(r.qualifiedAt);
+      rewardedByDay.set(k, (rewardedByDay.get(k) ?? 0) + 1);
+    }
+
+    const sourceMap = new Map<
+      string,
+      { source: string; claims: number; rewarded: number; capped: number }
+    >();
+    const referrerMap = new Map<
+      string,
+      {
+        referrerId: string;
+        displayName: string | null;
+        email: string | null;
+        avatarId: string | null;
+        code: string;
+        claims: number;
+        rewarded: number;
+        capped: number;
+      }
+    >();
+    for (const r of cohort) {
+      const s = sourceMap.get(r.source) ?? {
+        source: r.source,
+        claims: 0,
+        rewarded: 0,
+        capped: 0,
+      };
+      s.claims += 1;
+      if (r.status === 'rewarded') s.rewarded += 1;
+      if (r.status === 'capped') s.capped += 1;
+      sourceMap.set(r.source, s);
+
+      const ref = referrerMap.get(r.referrerId) ?? {
+        referrerId: r.referrerId,
+        displayName: r.referrer.displayName,
+        email: r.referrer.email,
+        avatarId: r.referrer.avatarId,
+        code: r.code,
+        claims: 0,
+        rewarded: 0,
+        capped: 0,
+      };
+      ref.claims += 1;
+      if (r.status === 'rewarded') ref.rewarded += 1;
+      if (r.status === 'capped') ref.capped += 1;
+      referrerMap.set(r.referrerId, ref);
+    }
+
+    const cohortRewarded = cohort.filter((r) => r.status === 'rewarded').length;
+    const cohortCapped = cohort.filter((r) => r.status === 'capped').length;
+    const payout = (source: string) =>
+      payouts.find((p) => p.source === source)?._sum.amount ?? 0;
+    const statusCount = (status: string) =>
+      allTime.find((s) => s.status === status)?._count._all ?? 0;
+
+    return {
+      kpis: {
+        claims: cohort.length,
+        activeReferrers: referrerMap.size,
+        qualified: cohortRewarded + cohortCapped,
+        qualifyRate:
+          cohort.length > 0
+            ? Math.round(((cohortRewarded + cohortCapped) / cohort.length) * 1000) / 10
+            : null,
+        rewardedInRange: qualified.filter((r) => r.status === 'rewarded').length,
+        cappedInRange: qualified.filter((r) => r.status === 'capped').length,
+        referrerBananas: payout('referral_reward'),
+        inviteeBananas: payout('referral_invitee_bonus'),
+        codesIssued,
+      },
+      allTime: {
+        pending: statusCount('pending'),
+        rewarded: statusCount('rewarded'),
+        capped: statusCount('capped'),
+      },
+      daily: days.map((day) => ({
+        day,
+        claims: claimsByDay.get(day) ?? 0,
+        rewarded: rewardedByDay.get(day) ?? 0,
+      })),
+      bySource: [...sourceMap.values()].sort((a, b) => b.claims - a.claims),
+      topReferrers: [...referrerMap.values()]
+        .sort((a, b) => b.claims - a.claims || b.rewarded - a.rewarded)
+        .slice(0, 30),
+      recent: cohort.slice(0, 100).map((r) => ({
+        id: r.id,
+        createdAt: r.createdAt,
+        qualifiedAt: r.qualifiedAt,
+        source: r.source,
+        status: r.status,
+        code: r.code,
+        progress:
+          r.status === 'pending'
+            ? Math.min(progress.get(r.inviteeId) ?? 0, REFERRAL_REQUIRED_NODES)
+            : REFERRAL_REQUIRED_NODES,
+        requiredNodes: REFERRAL_REQUIRED_NODES,
+        referrer: { id: r.referrerId, ...r.referrer },
+        invitee: { id: r.inviteeId, ...r.invitee },
+      })),
+    };
+  }
+
   /** Distinct finished map nodes: rewarded mini-games + rewarded lessons / conversations. */
   private async completedNodeCounts(userIds: string[]): Promise<Map<string, number>> {
     const counts = new Map<string, number>();

@@ -50,24 +50,38 @@ export class SayItController {
     if (topic.locked) {
       throw new BadRequestException('This topic is locked');
     }
-    if (!isFoundationPathSayItTopic(topicId)) {
+    const isFoundation = isFoundationPathSayItTopic(topicId);
+    const replayFree =
+      isFoundation &&
+      (await this.economy.hasClaimedMiniGameReward(
+        req.user.id,
+        `say_it:${topicId}`,
+      ));
+    const bananaCost = replayFree ? 0 : SAY_IT_BANANA_COST;
+    if (bananaCost > 0) {
       const spendRef = randomUUID();
       await this.economy.spendBananas(
         req.user.id,
-        SAY_IT_BANANA_COST,
+        bananaCost,
         spendRef,
         'say_it_start',
       );
       try {
-        this.sayIt.dealForTopic(
-          topicId,
-          SAY_IT_DEAL_COUNT,
-          req.user.displayName,
-        );
+        if (isFoundation) {
+          if (sayItPoolForTopic(topicId).length === 0) {
+            throw new BadRequestException(`Say It topic has no pool: ${topicId}`);
+          }
+        } else {
+          this.sayIt.dealForTopic(
+            topicId,
+            SAY_IT_DEAL_COUNT,
+            req.user.displayName,
+          );
+        }
       } catch (error) {
         await this.economy.refundBananas(
           req.user.id,
-          SAY_IT_BANANA_COST,
+          bananaCost,
           spendRef,
           'say_it_start_refund',
         );
@@ -77,8 +91,8 @@ export class SayItController {
     await this.recentLearners.markActivity(req.user.id, 'minigame', topicId);
     return {
       ok: true,
-      bananaCost: isFoundationPathSayItTopic(topicId) ? 0 : SAY_IT_BANANA_COST,
-      dealCount: isFoundationPathSayItTopic(topicId)
+      bananaCost,
+      dealCount: isFoundation
         ? foundationSayItDealCount(topicId)
         : SAY_IT_DEAL_COUNT,
     };
