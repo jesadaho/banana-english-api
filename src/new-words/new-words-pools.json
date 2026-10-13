@@ -22,6 +22,32 @@
       }
     ]
   },
+  "new_words_praise": {
+    "title": "Good, Great, Excellent",
+    "items": [
+      {
+        "emoji": "👍",
+        "answer": "Good",
+        "reading": "กูด",
+        "meaningTh": "ดี",
+        "acceptedAnswers": ["good"]
+      },
+      {
+        "emoji": "🌟",
+        "answer": "Great",
+        "reading": "เกรท",
+        "meaningTh": "ดีมาก",
+        "acceptedAnswers": ["great"]
+      },
+      {
+        "emoji": "🎉",
+        "answer": "Excellent",
+        "reading": "เอ็ก-เซ-เลนท์",
+        "meaningTh": "เยี่ยม",
+        "acceptedAnswers": ["excellent"]
+      }
+    ]
+  },
   "new_words_how_i_feel": {
     "title": "How I Feel",
     "items": [

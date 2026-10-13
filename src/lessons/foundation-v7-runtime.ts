@@ -1,4 +1,5 @@
 import type { TrainingTurnReply } from '../gemini/gemini-chat.service';
+import { englishPraiseFor } from '../tts/english-praises';
 import type { TrainingEngineTurnInput } from '../training/engine/training-turn.engine';
 import type { TrainingAiGate } from '../training/engine/ai-gate';
 import { scriptedAiDebug } from '../common/ai-debug';
@@ -229,10 +230,20 @@ export async function runV7Turn(input: TrainingEngineTurnInput, gate: TrainingAi
   const next = renderV7Turn(id, stepNumber + 1, chosen);
   const spokenAnswer = exact ?? chosen ?? current.expectedSpeech ?? input.userText;
   const correctPrefix = tier === 'correct' ? v7CorrectPrefix(step, spokenAnswer) : '';
-  const prefix = tier === 'correct'
-    ? (id.startsWith('a2_') ? a2EnglishPraisePrefix(correctPrefix, id + stepNumber + spokenAnswer) : correctPrefix)
-    : 'ประโยคนี้พูดว่า “' + current.expectedSpeech + '” ครับ ลองฝึกต่อด้วยกันนะครับ ';
+  let praiseText: string | undefined;
+  let prefix: string;
+  if (tier !== 'correct') {
+    prefix = 'ประโยคนี้พูดว่า “' + current.expectedSpeech + '” ครับ ลองฝึกต่อด้วยกันนะครับ ';
+  } else if (id.startsWith('a2_')) {
+    prefix = a2EnglishPraisePrefix(correctPrefix, id + stepNumber + spokenAnswer);
+  } else {
+    const rest = correctPrefix.replace(THAI_PRAISE_OPENER_RE, '');
+    praiseText = englishPraiseFor(`${id}\n${stepNumber}\n${spokenAnswer}`);
+    // Drop a prefix that is only a short praise. Keep a teaching sentence
+    // that happens to start with the same words.
+    prefix = rest.trim() ? correctPrefix : '';
+  }
   const text = prefix + next.textEn;
-  return { reply: { ...next, textEn: text, ttsText: text, assessmentTier: tier,
+  return { reply: { ...next, textEn: text, ttsText: text, praiseText, assessmentTier: tier,
     wasSoftAdvance: tier === 'incorrect' }, aiDebug };
 }

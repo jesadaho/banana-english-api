@@ -16,7 +16,7 @@ import {
   isChatDebugRequest,
 } from '../common/ai-user-message';
 import { attachAiDebug, scriptedAiDebug } from '../common/ai-debug';
-import { audioUrlForTurn } from '../tts/tts-bank';
+import { audioUrlForTurn, audioUrlsForSpokenTurn } from '../tts/tts-bank';
 import { TrainingTurnEngine } from '../training/engine/training-turn.engine';
 import { isTrainingV2Lesson } from '../training/training-v2.config';
 import { Prisma, User } from '@prisma/client';
@@ -1142,7 +1142,7 @@ export class SessionsController {
       ttsText: reply.ttsText ?? null,
       ttsInstruction: reply.ttsInstruction ?? null,
       textTh: reply.textTh,
-      audioUrl: audioUrlForTurn(reply.ttsText, reply.textEn),
+      ...audioUrlsForSpokenTurn(reply),
       expectsUserSpeech: openingExpectsUserSpeech,
       expectedSpeech: openingExpectedSpeech,
       scene: null,
@@ -1220,7 +1220,7 @@ export class SessionsController {
             ? { ttsInstruction: reply.ttsInstruction.trim() }
             : {}),
           textTh: reply.textTh ?? '',
-          audioUrl: audioUrlForTurn(reply.ttsText, reply.textEn),
+          ...audioUrlsForSpokenTurn(reply),
           isTaskComplete: false,
           updatedCheckpoints: {},
           feedbackHints: { mispronouncedWords: [] as string[] },
@@ -1401,17 +1401,26 @@ export class SessionsController {
         : {}),
     });
 
+    const praise = reply.praiseText?.trim() ?? '';
+    const shownText = praise ? `${praise} ${textEn}`.trim() : textEn;
+    const spokenBody = (reply.ttsText?.trim() || textEn).trim();
+    const clips = audioUrlsForSpokenTurn({
+      ttsText: spokenBody,
+      praiseText: praise,
+    });
+
     this.sessionStore.addTurn(sessionId, {
       speaker: 'ai',
       v7Step: reply.v7Step,
       v7Retry: reply.v7Retry,
       v7Choice: reply.v7Choice,
       ...(reply.canSkip ? { canSkip: true } : {}),
-      textEn,
-      ttsText: reply.ttsText ?? null,
+      textEn: shownText,
+      ttsText: spokenBody,
       ttsInstruction: reply.ttsInstruction ?? null,
       textTh,
-      audioUrl: audioUrlForTurn(reply.ttsText, textEn),
+      audioUrl: clips.audioUrl,
+      praiseAudioUrl: clips.praiseAudioUrl,
       expectsUserSpeech,
       expectedSpeech,
       emojiChoice,
@@ -1424,13 +1433,14 @@ export class SessionsController {
     });
 
     const response: TurnExchangeResponse = {
-      aiResponse: textEn,
-      ...(reply.ttsText?.trim() ? { ttsText: reply.ttsText.trim() } : {}),
+      aiResponse: shownText,
+      ...(spokenBody ? { ttsText: spokenBody } : {}),
       ...(reply.ttsInstruction?.trim()
         ? { ttsInstruction: reply.ttsInstruction.trim() }
         : {}),
       textTh: textTh ?? '',
-      audioUrl: audioUrlForTurn(reply.ttsText, textEn),
+      audioUrl: clips.audioUrl,
+      praiseAudioUrl: clips.praiseAudioUrl,
       isTaskComplete,
       updatedCheckpoints: {},
       feedbackHints: { mispronouncedWords: [] },

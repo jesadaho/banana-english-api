@@ -10,7 +10,9 @@ import {
 } from '../training/engine/training-turn.engine';
 import type { TrainingAiGate } from '../training/engine/ai-gate';
 import { FOUNDATION_PROBE_LEARNER } from '../training/foundation/foundation-poolgate.fixtures';
+import catalog from '../learn-path/foundation-v7-path.catalog.json';
 import { lineContainsLearnerName } from './chapter1-tts-lines';
+import { ENGLISH_PRAISES } from './english-praises';
 import { spokenTurnText, ttsBankKey } from './tts-bank';
 
 /** Chapter 2 choice lessons. Say It and the conversation stay on live TTS. */
@@ -18,6 +20,24 @@ export const CHAPTER2_TTS_LESSON_IDS = [
   'fnd_v7_please_and_thank_you',
   'fnd_v7_goodbye_see_you',
 ] as const;
+
+type CatalogChapter = {
+  number: number;
+  items: Array<{ type: string; contentRef?: { lessonId?: string } }>;
+};
+
+/** Scripted Foundation lessons in a chapter range. Say It and conversation stay live. */
+export function foundationLessonIds(fromChapter: number, toChapter: number): string[] {
+  const ids: string[] = [];
+  for (const chapter of (catalog as { chapters: CatalogChapter[] }).chapters) {
+    if (chapter.number < fromChapter || chapter.number > toChapter) continue;
+    for (const item of chapter.items) {
+      const lessonId = item.type === 'lesson' ? item.contentRef?.lessonId : undefined;
+      if (lessonId) ids.push(lessonId);
+    }
+  }
+  return ids;
+}
 
 const OFF_TOPIC = 'I like pizza.';
 
@@ -75,8 +95,17 @@ function engineFor(): TrainingTurnEngine {
 export async function collectChapter2BankLines(
   name = FOUNDATION_PROBE_LEARNER,
 ): Promise<string[]> {
-  const lines = new Set<string>();
-  for (const lessonId of CHAPTER2_TTS_LESSON_IDS) {
+  return collectFoundationBankLines(2, 2, name);
+}
+
+/** Chapters 2–16 scripted lesson lines, plus the three shared English praise clips. */
+export async function collectFoundationBankLines(
+  fromChapter = 2,
+  toChapter = 16,
+  name = FOUNDATION_PROBE_LEARNER,
+): Promise<string[]> {
+  const lines = new Set<string>(ENGLISH_PRAISES);
+  for (const lessonId of foundationLessonIds(fromChapter, toChapter)) {
     await collectLesson(lessonId, name, lines);
   }
   return [...lines].sort((a, b) => a.localeCompare(b));

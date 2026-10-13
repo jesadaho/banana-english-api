@@ -82,6 +82,8 @@ export interface TurnExchangeResponse {
   textTh: string;
   /** Pre-generated clip when this spoken line is in the TTS bank. Omitted or null uses live TTS. */
   audioUrl?: string | null;
+  /** Short praise clip played before [audioUrl]. Omitted when this turn has no separate praise. */
+  praiseAudioUrl?: string | null;
   audioBase64?: string;
   contentType?: string;
   isTaskComplete: boolean;

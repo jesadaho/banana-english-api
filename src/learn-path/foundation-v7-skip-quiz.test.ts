@@ -222,7 +222,7 @@ describe('Foundation V7 skip quiz service', () => {
 
     const path = await service.getFoundationV7('user-1', ['say_it_guided']);
     assert.ok(path.progress.skippedNodeIds.length > 0);
-    assert.equal(path.progress.currentNodeId, 'v7_u02n01');
+    assert.equal(path.progress.currentNodeId, 'v7_u02n06');
     assert.ok(path.chapters.find((ch: any) => ch.id === 'v7_u02')?.skipQuizEligible === true);
   });
 

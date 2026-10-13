@@ -40,8 +40,9 @@ describe('Foundation V7 server-owned runtime', () => {
   it('uses authored success transitions without duplicate automatic praise', async () => {
     const h = harness('fnd_v7_he_she_it_we_they');
     await h.say('He is a teacher.');
-    assert.match(h.reply.textEn, /^ดีครับ /);
-    assert.doesNotMatch(h.reply.textEn, /^ดีครับ ดี/);
+    assert.ok(['Good!', 'Great!', 'Excellent!'].includes(h.reply.praiseText ?? ''));
+    assert.doesNotMatch(h.reply.textEn, /^ดีครับ/);
+    assert.doesNotMatch(h.reply.textEn, /ดีครับ ดี/);
     assert.doesNotMatch(h.reply.textEn, /He is a teacher\. แปลว่า/);
     assert.match(h.reply.textEn, /Anna เป็นครูผู้หญิง/);
   });
@@ -130,7 +131,8 @@ describe('Foundation V7 server-owned runtime', () => {
 
     const h = harness('fnd_v7_please_and_thank_you');
     await h.say('Water, please.');
-    assert.match(h.reply.textEn, /^ดีครับ /);
+    assert.ok(['Good!', 'Great!', 'Excellent!'].includes(h.reply.praiseText ?? ''));
+    assert.doesNotMatch(h.reply.textEn, /^ดีครับ/);
     await h.say('Thank you.');
     await h.say('Yes, please.');
     await h.say('Yes, please.');
@@ -162,7 +164,8 @@ describe('Foundation V7 server-owned runtime', () => {
 
     const big = harness('fnd_v7_describe_a_thing');
     await big.say('A blue bag.');
-    assert.match(big.reply.textEn, /^ดีครับ /);
+    assert.ok(['Good!', 'Great!', 'Excellent!'].includes(big.reply.praiseText ?? ''));
+    assert.doesNotMatch(big.reply.textEn, /^ดีครับ/);
     await big.say('A blue bag.');
     assert.equal(big.reply.v7Retry, true);
     await big.say('A red bag.');
@@ -172,7 +175,8 @@ describe('Foundation V7 server-owned runtime', () => {
     await big.say('A blue book.');
     assert.match(big.reply.textEn, /^A blue book\. แปลว่า “หนังสือสีน้ำเงินหนึ่งเล่ม”/);
     await big.say('A small bag.');
-    assert.match(big.reply.textEn, /^ดีครับ /);
+    assert.ok(['Good!', 'Great!', 'Excellent!'].includes(big.reply.praiseText ?? ''));
+    assert.doesNotMatch(big.reply.textEn, /^ดีครับ/);
     await big.say('A big bag.');
     assert.match(big.reply.textEn, /^A big bag\. แปลว่า “กระเป๋าใบใหญ่หนึ่งใบ”/);
     assert.match(big.reply.textEn, /จบบทแล้ว/);
@@ -200,13 +204,15 @@ describe('Foundation V7 server-owned runtime', () => {
 
     const red = harness('fnd_v7_and_and_or');
     await red.say('Red and blue.');
-    assert.match(red.reply.textEn, /^ดีครับ /);
+    assert.ok(['Good!', 'Great!', 'Excellent!'].includes(red.reply.praiseText ?? ''));
+    assert.doesNotMatch(red.reply.textEn, /^ดีครับ/);
     await red.say('Red and blue.');
     assert.equal(red.reply.v7Retry, true);
     await red.say('Red and green.');
     assert.match(red.reply.textEn, /^Red and green\. แปลว่า “สีแดงและสีเขียว”/);
     await red.say('Red or blue?');
-    assert.match(red.reply.textEn, /^ดีครับ /);
+    assert.ok(['Good!', 'Great!', 'Excellent!'].includes(red.reply.praiseText ?? ''));
+    assert.doesNotMatch(red.reply.textEn, /^ดีครับ/);
     await red.say('Red and green?');
     assert.equal(red.reply.v7Retry, true);
     await red.say('Red or green?');
@@ -214,6 +220,7 @@ describe('Foundation V7 server-owned runtime', () => {
     await red.say('A book or a bag.');
     assert.equal(red.reply.v7Retry, true);
     await red.say('A book and a bag.');
+    assert.ok(['Good!', 'Great!', 'Excellent!'].includes(red.reply.praiseText ?? ''));
     assert.match(red.reply.textEn, /^ถูกต้องครับ ใช้ and เพราะต้องการทั้งสองอย่าง/);
     assert.doesNotMatch(red.reply.textEn, /แปลว่า “หนังสือหนึ่งเล่มและกระเป๋าหนึ่งใบ”/);
     await red.say('Red.');
@@ -243,16 +250,19 @@ describe('Foundation V7 server-owned runtime', () => {
 
     const seeYou = harness('fnd_v7_goodbye_see_you');
     await seeYou.say('Goodbye.');
-    assert.match(seeYou.reply.textEn, /^ดีครับ /);
+    assert.ok(['Good!', 'Great!', 'Excellent!'].includes(seeYou.reply.praiseText ?? ''));
+    assert.doesNotMatch(seeYou.reply.textEn, /^ดีครับ/);
     assert.doesNotMatch(seeYou.reply.textEn, /Goodbye\. แปลว่า/);
     assert.match(seeYou.reply.textEn, /แล้วเจอกัน/);
     await seeYou.say('See you.');
-    assert.match(seeYou.reply.textEn, /^ดีครับ /);
+    assert.ok(['Good!', 'Great!', 'Excellent!'].includes(seeYou.reply.praiseText ?? ''));
+    assert.doesNotMatch(seeYou.reply.textEn, /^ดีครับ/);
     await seeYou.say('See you.');
     assert.match(seeYou.reply.textEn, /^See you\. แปลว่า “แล้วเจอกัน”/);
     assert.match(seeYou.reply.textEn, /tomorrow/);
     await seeYou.say('See you tomorrow.');
-    assert.match(seeYou.reply.textEn, /^ดีครับ /);
+    assert.ok(['Good!', 'Great!', 'Excellent!'].includes(seeYou.reply.praiseText ?? ''));
+    assert.doesNotMatch(seeYou.reply.textEn, /^ดีครับ/);
     assert.equal(seeYou.reply.guidedSpeaking?.stem, 'See you ...');
     await seeYou.say('tomorrow');
     assert.equal(seeYou.reply.v7Retry, true);
@@ -305,13 +315,14 @@ describe('Foundation V7 server-owned runtime', () => {
     const h = harness('fnd_v7_i_am_you_are');
     assert.equal(h.reply.guidedSpeaking, undefined);
     await h.say('I am ready.');
-    assert.match(h.reply.textEn, /^ถูกต้องครับ /);
+    assert.ok(['Good!', 'Great!', 'Excellent!'].includes(h.reply.praiseText ?? ''));
     assert.doesNotMatch(h.reply.textEn, /I am ready\. แปลว่า/);
     assert.match(h.reply.textEn, /ฉันมีความสุข/);
     await h.say('I am happy.');
     assert.match(h.reply.textEn, /^I am happy\. แปลว่า “ฉันมีความสุข”/);
     await h.say('You are ready.');
-    assert.match(h.reply.textEn, /^ดีครับ /);
+    assert.ok(['Good!', 'Great!', 'Excellent!'].includes(h.reply.praiseText ?? ''));
+    assert.doesNotMatch(h.reply.textEn, /^ดีครับ/);
     assert.doesNotMatch(h.reply.textEn, /You are ready\. แปลว่า/);
     await h.say('You are tired.');
     assert.match(h.reply.textEn, /^You are tired\. แปลว่า “คุณเหนื่อย”/);
@@ -342,17 +353,18 @@ describe('Foundation V7 server-owned runtime', () => {
 
     const yes = harness('fnd_v7_not_and_are_you');
     await yes.say('I am not tired.');
-    assert.match(yes.reply.textEn, /^ถูกต้องครับ /);
+    assert.ok(['Good!', 'Great!', 'Excellent!'].includes(yes.reply.praiseText ?? ''));
     await yes.say('I am not hungry.');
     assert.match(yes.reply.textEn, /^I am not hungry\. แปลว่า “ฉันไม่หิว”/);
     await yes.say('Are you tired?');
-    assert.match(yes.reply.textEn, /^ถูกต้องครับ /);
+    assert.ok(['Good!', 'Great!', 'Excellent!'].includes(yes.reply.praiseText ?? ''));
     await yes.say('Are you ready?');
     assert.match(yes.reply.textEn, /^Are you ready\? แปลว่า “คุณพร้อมไหม”/);
     await yes.say('Yes, I am.');
-    assert.match(yes.reply.textEn, /^ถูกต้องครับ /);
+    assert.ok(['Good!', 'Great!', 'Excellent!'].includes(yes.reply.praiseText ?? ''));
     await yes.say('No, I am not.');
-    assert.match(yes.reply.textEn, /^ดีครับ /);
+    assert.ok(['Good!', 'Great!', 'Excellent!'].includes(yes.reply.praiseText ?? ''));
+    assert.doesNotMatch(yes.reply.textEn, /^ดีครับ/);
     await yes.say('Yes, I am.');
     assert.match(yes.reply.textEn, /^Yes, I am\. ในคำถามนี้หมายถึง “ใช่ ฉันเหนื่อย”/);
     assert.equal(yes.reply.isLessonComplete, true);

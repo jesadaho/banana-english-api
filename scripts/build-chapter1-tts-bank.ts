@@ -12,7 +12,7 @@ import * as admin from 'firebase-admin';
 import { UserRefreshClient } from 'google-auth-library';
 import { publicHeroUrl } from '../src/articles/article-hero';
 import { collectChapter1BankLines } from '../src/tts/chapter1-tts-lines';
-import { collectChapter2BankLines } from '../src/tts/chapter2-tts-lines';
+import { collectFoundationBankLines } from '../src/tts/chapter2-tts-lines';
 import {
   TTS_BANK_MODEL,
   TTS_BANK_PROMPT,
@@ -21,6 +21,7 @@ import {
   ttsBankObjectPath,
   type TtsBankFile,
 } from '../src/tts/tts-bank';
+import { ENGLISH_PRAISES } from '../src/tts/english-praises';
 import { synthesisText } from '../src/tts/tts-speech-text';
 
 const BANK_PATH = resolve(__dirname, '../src/tts/tts-bank.json');
@@ -151,7 +152,11 @@ async function mintAccessToken(): Promise<string> {
   return token;
 }
 
-async function synthesizeMp3(token: string, text: string): Promise<Buffer> {
+async function synthesizeMp3(
+  token: string,
+  text: string,
+  prompt: string | null,
+): Promise<Buffer> {
   const response = await fetch(
     'https://texttospeech.googleapis.com/v1/text:synthesize',
     {
@@ -163,7 +168,7 @@ async function synthesizeMp3(token: string, text: string): Promise<Buffer> {
           process.env.FIREBASE_PROJECT_ID?.trim() || 'banana-english-ecf11',
       },
       body: JSON.stringify({
-        input: { prompt: TTS_BANK_PROMPT, text },
+        input: prompt ? { prompt, text } : { text },
         voice: {
           languageCode: 'en-US',
           name: TTS_BANK_VOICE,
@@ -282,7 +287,7 @@ async function main() {
   const lines = [
     ...new Set([
       ...collectChapter1BankLines(),
-      ...(await collectChapter2BankLines()),
+      ...(await collectFoundationBankLines(2, 16)),
     ]),
   ].sort((a, b) => a.localeCompare(b));
   const bank = readBank();
@@ -290,8 +295,29 @@ async function main() {
   bank.voice = TTS_BANK_VOICE;
   const bucketName = storageBucketName();
   const versionMs = Date.now();
-  const token = await mintAccessToken();
+  let token = await mintAccessToken();
+  let mintedAt = Date.now();
   let created = 0;
+
+  async function freshToken(): Promise<string> {
+    if (Date.now() - mintedAt > 45 * 60 * 1000) {
+      token = await mintAccessToken();
+      mintedAt = Date.now();
+    }
+    return token;
+  }
+
+  async function synthesizeFresh(text: string, prompt: string | null): Promise<Buffer> {
+    try {
+      return await synthesizeMp3(await freshToken(), text, prompt);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err);
+      if (!message.includes('TTS failed (401)')) throw err;
+      token = await mintAccessToken();
+      mintedAt = Date.now();
+      return synthesizeMp3(token, text, prompt);
+    }
+  }
 
   for (let i = 0; i < lines.length; i++) {
     const spoken = lines[i];
@@ -301,7 +327,29 @@ async function main() {
       continue;
     }
     const text = synthesisText(spoken);
-    const audio = await synthesizeMp3(token, text);
+    const prompt = (ENGLISH_PRAISES as readonly string[]).includes(spoken)
+      ? null
+      : TTS_BANK_PROMPT;
+    let audio: Buffer;
+    try {
+      audio = await synthesizeFresh(text, prompt);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err);
+      if (!message.includes('TTS failed (400)')) throw err;
+      if (prompt) {
+        try {
+          audio = await synthesizeFresh(text, null);
+        } catch (retryErr) {
+          const retryMessage = retryErr instanceof Error ? retryErr.message : String(retryErr);
+          if (!retryMessage.includes('TTS failed (400)')) throw retryErr;
+          console.error(`[${i + 1}/${lines.length}] blocked ${spoken.slice(0, 80)}`);
+          continue;
+        }
+      } else {
+        console.error(`[${i + 1}/${lines.length}] blocked ${spoken.slice(0, 80)}`);
+        continue;
+      }
+    }
     const objectPath = ttsBankObjectPath(spoken);
     const uploaded = await uploadWithAdmin(bucketName, objectPath, audio);
     if (!uploaded) await uploadWithCliToken(bucketName, objectPath, audio);

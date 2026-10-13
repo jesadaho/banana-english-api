@@ -41,6 +41,7 @@ export interface ChatTurn {
   ttsInstruction?: string | null;
   textTh?: string | null;
   audioUrl?: string | null;
+  praiseAudioUrl?: string | null;
   /** Raw learner utterance before Thai Mix (user turns only). */
   originalTextEn?: string | null;
   /**

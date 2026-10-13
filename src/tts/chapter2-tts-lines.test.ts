@@ -2,7 +2,7 @@ import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import { FOUNDATION_PROBE_LEARNER } from '../training/foundation/foundation-poolgate.fixtures';
 import { lineContainsLearnerName } from './chapter1-tts-lines';
-import { collectChapter2BankLines } from './chapter2-tts-lines';
+import { collectChapter2BankLines, collectFoundationBankLines } from './chapter2-tts-lines';
 import { ttsBankKey } from './tts-bank';
 
 describe('chapter 2 TTS bank lines', () => {
@@ -17,5 +17,15 @@ describe('chapter 2 TTS bank lines', () => {
     }
     assert.ok(lines.some((line) => line.includes('Water, please')));
     assert.ok(lines.some((line) => line.includes('See you tomorrow')));
+    assert.equal(lines.some((line) => line.startsWith('ดีครับ')), false);
+    for (const praise of ['Good!', 'Great!', 'Excellent!']) {
+      assert.ok(lines.includes(praise));
+    }
+  });
+
+  it('includes a later chapter body without baking in the praise word', async () => {
+    const lines = await collectFoundationBankLines(3, 3);
+    assert.ok(lines.some((line) => line.includes('I am ready')));
+    assert.equal(lines.filter((line) => line.startsWith('Good!')).length, 1);
   });
 });

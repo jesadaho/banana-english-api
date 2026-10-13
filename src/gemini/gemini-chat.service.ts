@@ -439,6 +439,8 @@ export interface TrainingTurnReply {
   /** Repeat-after-me turn the learner may skip; question/answer turns never set it. */
   canSkip?: boolean;
   textEn: string;
+  /** Short English praise played as its own clip, not baked into textEn. */
+  praiseText?: string;
   /** Optional speech-only copy for Cloud gRPC / server-side TTS. */
   ttsText?: string;
   /** Optional non-spoken instruction for clients using instruction-aware TTS. */

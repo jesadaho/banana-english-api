@@ -70,3 +70,19 @@ export function audioUrlForTurn(
 ): string | null {
   return lookupTtsBankUrl(loadTtsBank().lines, ttsText, textEn);
 }
+
+/** Body clip plus an optional praise clip. Praise is never folded into the body URL. */
+export function audioUrlsForSpokenTurn(input: {
+  ttsText?: string | null;
+  textEn?: string | null;
+  praiseText?: string | null;
+}): { audioUrl: string | null; praiseAudioUrl: string | null } {
+  const body = spokenTurnText(input.ttsText, input.textEn);
+  const praise = input.praiseText?.trim();
+  return {
+    audioUrl: body ? lookupTtsBankUrl(loadTtsBank().lines, body, null) : null,
+    praiseAudioUrl: praise
+      ? lookupTtsBankUrl(loadTtsBank().lines, praise, null)
+      : null,
+  };
+}
