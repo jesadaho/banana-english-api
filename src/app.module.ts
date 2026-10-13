@@ -33,6 +33,7 @@ import { AdminModule } from './admin/admin.module';
 import { ArticlesModule } from './articles/articles.module';
 import { BugReportsModule } from './bug-reports/bug-reports.module';
 import { PhonicsModule } from './phonics/phonics.module';
+import { SubscriptionsModule } from './subscriptions/subscriptions.module';
 
 @Module({
   imports: [
@@ -65,6 +66,7 @@ import { PhonicsModule } from './phonics/phonics.module';
     MiniGamesModule,
     DailySpeakModule,
     ReferralsModule,
+    SubscriptionsModule,
     SayItModule,
     DescribeItModule,
     ExplainItModule,

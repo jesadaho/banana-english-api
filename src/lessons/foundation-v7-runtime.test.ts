@@ -110,6 +110,20 @@ describe('Foundation V7 server-owned runtime', () => {
     assert.equal(h.reply.isLessonComplete, true);
     assert.match(h.reply.textEn, /Thank you/);
   });
+  it('offers Skip on every legacy repeat-after-me turn', () => {
+    for (const [id, steps] of Object.entries(V7_LEGACY_FLOWS)) {
+      steps.forEach((step, index) => {
+        const text = step.presentation?.text ?? '';
+        const cards = step.presentation?.options.length ?? 0;
+        const where = `${id} step ${index + 1}`;
+        if (cards > 0 || /ลองพูดเอง/u.test(text)) {
+          assert.notEqual(step.skippable, true, where);
+          return;
+        }
+        if (/พูดตาม|ลองพูด/u.test(text)) assert.equal(step.skippable, true, where);
+      });
+    }
+  });
   it('practises Sorry before applying it to accidentally bumping into someone', async () => {
     const steps = V7_LEGACY_FLOWS.fnd_v7_please_and_thank_you;
     assert.equal(steps[0].expectedSpeech, 'Water, please.');
@@ -130,7 +144,9 @@ describe('Foundation V7 server-owned runtime', () => {
     assert.match(steps[7].presentation!.text, /เหยียบเท้า/);
 
     const h = harness('fnd_v7_please_and_thank_you');
+    assert.equal(h.reply.canSkip, true);
     await h.say('Water, please.');
+    assert.equal(h.reply.canSkip, undefined);
     assert.ok(['Good!', 'Great!', 'Excellent!'].includes(h.reply.praiseText ?? ''));
     assert.doesNotMatch(h.reply.textEn, /^ดีครับ/);
     await h.say('Thank you.');
@@ -139,6 +155,7 @@ describe('Foundation V7 server-owned runtime', () => {
     assert.equal(h.reply.v7Retry, true);
     await h.say('Thank you.');
     assert.match(h.reply.textEn, /^Thank you\. แปลว่า “ขอบคุณ”/);
+    assert.equal(h.reply.canSkip, true);
     await h.say('Sorry.');
     await h.say('Excuse me.');
     await h.say('Sorry.');

@@ -51,6 +51,20 @@ export function foundationSayItDealCount(topicId: string): number {
 
 export const SAY_IT_TOPICS: SayItTopic[] = [
   {
+    id: 'directions',
+    titleEn: 'Directions',
+    titleTh: 'Directions',
+    subtitleEn: 'Go straight, turn left, U-turn…',
+    subtitleTh: 'บอกทาง ตรงไป เลี้ยวซ้าย ยูเทิร์น…',
+    emoji: '🧭',
+    accentColor: 0xff26c6da,
+    estimatedMinutes: 3,
+    poolSize: 20,
+    locked: false,
+    isNew: true,
+    tagEn: 'DIRECTIONS',
+  },
+  {
     id: 'time_expressions',
     titleEn: 'Time Expressions',
     titleTh: 'Time Expressions',

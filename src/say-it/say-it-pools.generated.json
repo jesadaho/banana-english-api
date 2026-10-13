@@ -1,4 +1,198 @@
 {
+  "directions": [
+    {
+      "id": "go_straight",
+      "promptTh": "ตรงไป",
+      "answerEn": "go straight",
+      "acceptedAnswers": [
+        "go straight ahead",
+        "straight ahead",
+        "go straight on"
+      ]
+    },
+    {
+      "id": "turn_left",
+      "promptTh": "เลี้ยวซ้าย",
+      "answerEn": "turn left",
+      "acceptedAnswers": [
+        "turn to the left"
+      ]
+    },
+    {
+      "id": "turn_right",
+      "promptTh": "เลี้ยวขวา",
+      "answerEn": "turn right",
+      "acceptedAnswers": [
+        "turn to the right"
+      ]
+    },
+    {
+      "id": "make_a_u_turn",
+      "promptTh": "ยูเทิร์น / กลับรถ",
+      "answerEn": "make a U-turn",
+      "acceptedAnswers": [
+        "make a u turn",
+        "do a U-turn",
+        "do a u turn",
+        "U-turn",
+        "u turn"
+      ]
+    },
+    {
+      "id": "go_back",
+      "promptTh": "ย้อนกลับไป",
+      "answerEn": "go back",
+      "acceptedAnswers": [
+        "turn back",
+        "go back the way you came"
+      ]
+    },
+    {
+      "id": "keep_going",
+      "promptTh": "ตรงไปเรื่อย ๆ",
+      "answerEn": "keep going",
+      "acceptedAnswers": [
+        "keep going straight",
+        "keep straight on",
+        "keep going straight ahead"
+      ]
+    },
+    {
+      "id": "on_the_left",
+      "promptTh": "อยู่ทางซ้าย",
+      "answerEn": "it's on the left",
+      "acceptedAnswers": [
+        "it is on the left",
+        "on the left",
+        "on your left",
+        "it's on your left"
+      ]
+    },
+    {
+      "id": "on_the_right",
+      "promptTh": "อยู่ทางขวา",
+      "answerEn": "it's on the right",
+      "acceptedAnswers": [
+        "it is on the right",
+        "on the right",
+        "on your right",
+        "it's on your right"
+      ]
+    },
+    {
+      "id": "first_left",
+      "promptTh": "เลี้ยวซ้ายแยกแรก",
+      "answerEn": "take the first left",
+      "acceptedAnswers": [
+        "take the first turn on the left",
+        "first left",
+        "take the first left turn"
+      ]
+    },
+    {
+      "id": "second_right",
+      "promptTh": "เลี้ยวขวาแยกที่สอง",
+      "answerEn": "take the second right",
+      "acceptedAnswers": [
+        "take the second turn on the right",
+        "second right",
+        "take the second right turn"
+      ]
+    },
+    {
+      "id": "at_the_corner",
+      "promptTh": "ตรงหัวมุม",
+      "answerEn": "at the corner",
+      "acceptedAnswers": [
+        "on the corner"
+      ]
+    },
+    {
+      "id": "at_the_traffic_lights",
+      "promptTh": "ตรงไฟแดง",
+      "answerEn": "at the traffic lights",
+      "acceptedAnswers": [
+        "at the traffic light",
+        "at the lights",
+        "at the light"
+      ]
+    },
+    {
+      "id": "at_the_intersection",
+      "promptTh": "ตรงสี่แยก",
+      "answerEn": "at the intersection",
+      "acceptedAnswers": [
+        "at the crossroads",
+        "at the junction"
+      ]
+    },
+    {
+      "id": "go_past_the_bank",
+      "promptTh": "เลยธนาคารไป",
+      "answerEn": "go past the bank",
+      "acceptedAnswers": [
+        "walk past the bank",
+        "drive past the bank"
+      ]
+    },
+    {
+      "id": "cross_the_road",
+      "promptTh": "ข้ามถนน",
+      "answerEn": "cross the road",
+      "acceptedAnswers": [
+        "cross the street"
+      ]
+    },
+    {
+      "id": "next_to_the_bank",
+      "promptTh": "อยู่ติดกับธนาคาร",
+      "answerEn": "it's next to the bank",
+      "acceptedAnswers": [
+        "it is next to the bank",
+        "next to the bank"
+      ]
+    },
+    {
+      "id": "opposite_the_school",
+      "promptTh": "อยู่ตรงข้ามโรงเรียน",
+      "answerEn": "it's opposite the school",
+      "acceptedAnswers": [
+        "it is opposite the school",
+        "opposite the school",
+        "it's across from the school",
+        "across from the school"
+      ]
+    },
+    {
+      "id": "stop_here",
+      "promptTh": "จอดตรงนี้",
+      "answerEn": "stop here",
+      "acceptedAnswers": [
+        "stop here please",
+        "please stop here"
+      ]
+    },
+    {
+      "id": "pull_over",
+      "promptTh": "จอดข้างทางหน่อย",
+      "answerEn": "pull over",
+      "acceptedAnswers": [
+        "pull over here",
+        "please pull over",
+        "pull over please"
+      ]
+    },
+    {
+      "id": "how_do_i_get_to",
+      "promptTh": "ไปสถานีรถไฟยังไงครับ",
+      "answerEn": "How do I get to the station?",
+      "acceptedAnswers": [
+        "how do i get to the train station",
+        "how can i get to the station",
+        "how do i go to the station"
+      ]
+    }
+  ],
   "time_expressions": [
     {
       "id": "all_the_time",
@@ -650,13 +844,17 @@
       "id": "who_is_he",
       "promptTh": "เขาคือใคร? (ผู้ชาย)",
       "answerEn": "who is he?",
-      "acceptedAnswers": ["who's he?"]
+      "acceptedAnswers": [
+        "who's he?"
+      ]
     },
     {
       "id": "who_is_she",
       "promptTh": "เขาคือใคร? (ผู้หญิง)",
       "answerEn": "who is she?",
-      "acceptedAnswers": ["who's she?"]
+      "acceptedAnswers": [
+        "who's she?"
+      ]
     },
     {
       "id": "who_are_they",
@@ -668,37 +866,49 @@
       "id": "who_is_this",
       "promptTh": "คนนี้คือใคร?",
       "answerEn": "who is this?",
-      "acceptedAnswers": ["who's this?"]
+      "acceptedAnswers": [
+        "who's this?"
+      ]
     },
     {
       "id": "who_is_that",
       "promptTh": "คนนั้นคือใคร?",
       "answerEn": "who is that?",
-      "acceptedAnswers": ["who's that?"]
+      "acceptedAnswers": [
+        "who's that?"
+      ]
     },
     {
       "id": "who_is_the_man_by_the_door",
       "promptTh": "ผู้ชายที่อยู่ข้างประตูคือใคร?",
       "answerEn": "who is the man by the door?",
-      "acceptedAnswers": ["who's the man by the door?"]
+      "acceptedAnswers": [
+        "who's the man by the door?"
+      ]
     },
     {
       "id": "who_is_the_woman_with_glasses",
       "promptTh": "ผู้หญิงที่ใส่แว่นคือใคร?",
       "answerEn": "who is the woman with glasses?",
-      "acceptedAnswers": ["who's the woman with glasses?"]
+      "acceptedAnswers": [
+        "who's the woman with glasses?"
+      ]
     },
     {
       "id": "who_is_your_english_teacher",
       "promptTh": "ใครเป็นครูสอนภาษาอังกฤษของคุณ?",
       "answerEn": "who is your English teacher?",
-      "acceptedAnswers": ["who's your English teacher?"]
+      "acceptedAnswers": [
+        "who's your English teacher?"
+      ]
     },
     {
       "id": "who_is_your_best_friend",
       "promptTh": "ใครเป็นเพื่อนสนิทของคุณ?",
       "answerEn": "who is your best friend?",
-      "acceptedAnswers": ["who's your best friend?"]
+      "acceptedAnswers": [
+        "who's your best friend?"
+      ]
     },
     {
       "id": "who_do_you_live_with",
@@ -716,7 +926,9 @@
       "id": "who_is_coming_with_us",
       "promptTh": "ใครจะมากับเรา?",
       "answerEn": "who is coming with us?",
-      "acceptedAnswers": ["who's coming with us?"]
+      "acceptedAnswers": [
+        "who's coming with us?"
+      ]
     },
     {
       "id": "who_are_you_waiting_for",

@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import { PrismaService } from '../prisma/prisma.service';
 import { EconomyService } from '../economy/economy.service';
+import { PRO_BANANA_CAP } from '../subscriptions/subscription.constants';
 import {
   dateKeyDaysAgo,
   getUserLocalTime,
@@ -48,7 +49,7 @@ export class DailyJobsService {
     const now = new Date();
     const users = await this.prisma.user.findMany({
       where: {
-        freeBananaBalance: { lt: this.economy.maxBananaBalance() },
+        freeBananaBalance: { lt: PRO_BANANA_CAP },
         lastBananaRefillAt: { not: null },
         fcmTokens: { some: {} },
       },
@@ -60,7 +61,7 @@ export class DailyJobsService {
       if (local.hour < BANANA_PUSH_START_HOUR || local.hour >= BANANA_PUSH_END_HOUR) continue;
 
       const updated = await this.economy.maybeRefillFreeBananas(user, now);
-      if (updated.freeBananaBalance < this.economy.maxBananaBalance()) continue;
+      if (updated.freeBananaBalance < this.economy.bananaCapFor(updated)) continue;
 
       const invalid = await this.sendPush(
         user.id,

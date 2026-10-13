@@ -90,6 +90,9 @@ function isAllowedMiniGameId(gameId: string): boolean {
 
 const EMOJI_SPEAK_BANANA_COST = 1;
 const NEW_WORDS_BANANA_COST = 1;
+const LISTEN_UP_BANANA_COST = 1;
+const STORY_BITES_BANANA_COST = 1;
+const INFO_TASK_BANANA_COST = 1;
 
 /** Foundation path Emoji Speak packs charge bananas; Games tab packs are free. */
 function isFoundationPathEmojiSpeak(poolOrGameId: string): boolean {
@@ -189,6 +192,37 @@ export class MiniGamesController {
       poolId: id,
       imageUrl: pool.imagePath ? describeItImageUrl(pool.imagePath) : null,
     };
+  }
+
+  /** First play costs 1 banana. A claimed reward makes the replay free. */
+  @Post('listen-up/:poolId/start')
+  startListenUp(@Req() req: AuthedRequest, @Param('poolId') poolId: string) {
+    const id = poolId?.trim();
+    const pool = id ? listenUpPoolById(id) : undefined;
+    if (!pool || !isValidListenUpPack(pool)) {
+      throw new BadRequestException(`Unknown Listen Up pack: ${id}`);
+    }
+    return this.chargeFirstPlay(req.user.id, id, LISTEN_UP_BANANA_COST, 'listen_up_start');
+  }
+
+  @Post('story-bites/:poolId/start')
+  startStoryBites(@Req() req: AuthedRequest, @Param('poolId') poolId: string) {
+    const id = poolId?.trim();
+    const pool = id ? storyBitesPoolById(id) : undefined;
+    if (!pool || !isValidStoryBitesPack(pool)) {
+      throw new BadRequestException(`Unknown Story Bites pack: ${id}`);
+    }
+    return this.chargeFirstPlay(req.user.id, id, STORY_BITES_BANANA_COST, 'story_bites_start');
+  }
+
+  @Post('info-task/:poolId/start')
+  startInfoTask(@Req() req: AuthedRequest, @Param('poolId') poolId: string) {
+    const id = poolId?.trim();
+    const pool = id ? infoTaskPoolById(id) : undefined;
+    if (!pool || !isValidInfoTaskPack(pool)) {
+      throw new BadRequestException(`Unknown info-task pool: ${id}`);
+    }
+    return this.chargeFirstPlay(req.user.id, id, INFO_TASK_BANANA_COST, 'info_task_start');
   }
 
   /** Spend bananas to start a Foundation-path Emoji Speak pack (Games tab free). */
@@ -415,5 +449,33 @@ export class MiniGamesController {
       userId: req.user.id,
       gameId,
     });
+  }
+
+  private async chargeFirstPlay(
+    userId: string,
+    gameId: string,
+    cost: number,
+    source: 'listen_up_start' | 'story_bites_start' | 'info_task_start',
+  ) {
+    const replayFree = await this.economy.hasClaimedMiniGameReward(userId, gameId);
+    const bananaCost = replayFree ? 0 : cost;
+    const spendRef = bananaCost > 0 ? randomUUID() : null;
+    if (bananaCost > 0 && spendRef) {
+      await this.economy.spendBananas(userId, bananaCost, spendRef, source);
+    }
+    try {
+      await this.recentLearners.markActivity(userId, 'minigame', gameId);
+    } catch (error) {
+      if (bananaCost > 0 && spendRef) {
+        const refund = {
+          listen_up_start: 'listen_up_start_refund',
+          story_bites_start: 'story_bites_start_refund',
+          info_task_start: 'info_task_start_refund',
+        } as const;
+        await this.economy.refundBananas(userId, bananaCost, spendRef, refund[source]);
+      }
+      throw error;
+    }
+    return { ok: true, bananaCost };
   }
 }

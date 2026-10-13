@@ -2,6 +2,11 @@ import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Currency, Prisma, User } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
+import {
+  PRO_BANANA_CAP,
+  PRO_REFILL_HOURS,
+  effectiveSubscriptionTier,
+} from '../subscriptions/subscription.constants';
 import { canonicalFoundationV7RewardId, foundationV7RewardAliases } from '../learn-path/foundation-v7-path.data';
 import {
   DAILY_BANANA_DROP,
@@ -131,15 +136,28 @@ export class EconomyService {
     return this.envInt(ENV_BANANA_REFILL_HOURS, BANANA_REFILL_HOURS);
   }
 
+  /** Free-pool cap for this learner. Pro stores 15; everyone else uses the env cap. */
+  bananaCapFor(user: User): number {
+    return effectiveSubscriptionTier(user) === 'PRO'
+      ? PRO_BANANA_CAP
+      : this.maxBananaBalance();
+  }
+
+  private refillHoursFor(user: User): number {
+    return effectiveSubscriptionTier(user) === 'PRO'
+      ? PRO_REFILL_HOURS
+      : this.bananaRefillHours();
+  }
+
   /** When the next free banana lands, or null while the free pool is full. */
   nextBananaRefillAt(user: User): Date | null {
     const anchor = user.lastBananaRefillAt;
-    if (user.freeBananaBalance >= this.maxBananaBalance() || !anchor) return null;
-    return new Date(anchor.getTime() + this.bananaRefillHours() * 3_600_000);
+    if (user.freeBananaBalance >= this.bananaCapFor(user) || !anchor) return null;
+    return new Date(anchor.getTime() + this.refillHoursFor(user) * 3_600_000);
   }
 
   /** Rules shown in the Banana Ticket UI — env-overridable where applicable. */
-  ticketRules(): {
+  ticketRules(user?: User): {
     dailyDrop: number;
     maxBalance: number;
     missionCost: number;
@@ -147,9 +165,9 @@ export class EconomyService {
   } {
     return {
       dailyDrop: this.dailyBananaDrop(),
-      maxBalance: this.maxBananaBalance(),
+      maxBalance: user ? this.bananaCapFor(user) : this.maxBananaBalance(),
       missionCost: MISSION_BANANA_COST,
-      refillHours: this.bananaRefillHours(),
+      refillHours: user ? this.refillHoursFor(user) : this.bananaRefillHours(),
     };
   }
 
@@ -175,7 +193,7 @@ export class EconomyService {
       const credit = cappedBananaCredit(
         user.freeBananaBalance,
         bonus,
-        this.maxBananaBalance(),
+        this.bananaCapFor(user),
       );
 
       // Always record so ensureOnboardingBonus does not retry when already at cap.
@@ -219,8 +237,8 @@ export class EconomyService {
 
   /** Timed free refill (+1 per interval up to the cap); safe to call on every profile load. */
   async maybeRefillFreeBananas(user: User, now = new Date()): Promise<User> {
-    const intervalMs = this.bananaRefillHours() * 3_600_000;
-    const max = this.maxBananaBalance();
+    const intervalMs = this.refillHoursFor(user) * 3_600_000;
+    const max = this.bananaCapFor(user);
     const anchorOf = (u: User) => u.lastBananaRefillAt ?? null;
     const preview = timedBananaRefill(user.freeBananaBalance, anchorOf(user), now, intervalMs, max);
     if (!preview.nextAnchor) return user;
@@ -371,7 +389,7 @@ export class EconomyService {
       const credit = cappedBananaCredit(
         user.freeBananaBalance,
         requested,
-        this.maxBananaBalance(),
+        this.bananaCapFor(user),
       );
 
       if (credit <= 0) {
@@ -409,10 +427,30 @@ export class EconomyService {
       | 'new_words_start'
       | 'describe_it_start'
       | 'interactive_scenario_start'
-      | 'skip_quiz_start' = 'mission_start',
+      | 'skip_quiz_start'
+      | 'listen_up_start'
+      | 'story_bites_start'
+      | 'info_task_start' = 'mission_start',
   ): Promise<User> {
     return this.prisma.$transaction(async (tx) => {
       const user = await tx.user.findUniqueOrThrow({ where: { id: userId } });
+      if (effectiveSubscriptionTier(user) === 'PRO_MAX') {
+        await this.recordTransaction(tx, {
+          userId,
+          currency: Currency.BANANA,
+          amount: 0,
+          source: 'subscription_unlimited',
+          referenceId,
+        });
+        await this.recordTransaction(tx, {
+          userId,
+          currency: Currency.BANANA,
+          amount: 0,
+          source,
+          referenceId,
+        });
+        return user;
+      }
       if (user.bananaBalance < amount) {
         throw new BadRequestException('Insufficient banana balance');
       }
@@ -436,7 +474,7 @@ export class EconomyService {
         });
       }
 
-      const wasFull = user.freeBananaBalance >= this.maxBananaBalance();
+      const wasFull = user.freeBananaBalance >= this.bananaCapFor(user);
       return tx.user.update({
         where: { id: userId },
         data: {
@@ -467,12 +505,27 @@ export class EconomyService {
       | 'emoji_speak_start_refund'
       | 'new_words_start_refund'
       | 'describe_it_start_refund'
-      | 'skip_quiz_start_refund',
+      | 'skip_quiz_start_refund'
+      | 'listen_up_start_refund'
+      | 'story_bites_start_refund'
+      | 'info_task_start_refund',
   ): Promise<User> {
     if (!Number.isFinite(amount) || amount <= 0) {
       return this.prisma.user.findUniqueOrThrow({ where: { id: userId } });
     }
     return this.prisma.$transaction(async (tx) => {
+      const unlimited = await tx.economyTransaction.findFirst({
+        where: {
+          userId,
+          source: 'subscription_unlimited',
+          referenceId,
+          currency: Currency.BANANA,
+        },
+      });
+      if (unlimited) {
+        return tx.user.findUniqueOrThrow({ where: { id: userId } });
+      }
+
       const existing = await tx.economyTransaction.findFirst({
         where: {
           userId,
