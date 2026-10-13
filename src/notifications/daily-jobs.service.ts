@@ -57,11 +57,16 @@ export class DailyJobsService {
     });
 
     for (const user of users) {
+      const cap = this.economy.bananaCapFor(user);
+      // Already full (free cap is 5, query only excludes 15+). A no-op refill
+      // must not push again every tick.
+      if (user.freeBananaBalance >= cap) continue;
+
       const local = getUserLocalTime(user.timezone, now);
       if (local.hour < BANANA_PUSH_START_HOUR || local.hour >= BANANA_PUSH_END_HOUR) continue;
 
       const updated = await this.economy.maybeRefillFreeBananas(user, now);
-      if (updated.freeBananaBalance < this.economy.bananaCapFor(updated)) continue;
+      if (updated.freeBananaBalance < cap) continue;
 
       const invalid = await this.sendPush(
         user.id,
