@@ -12,7 +12,14 @@ import * as admin from 'firebase-admin';
 import { UserRefreshClient } from 'google-auth-library';
 import { publicHeroUrl } from '../src/articles/article-hero';
 import { collectChapter1BankLines } from '../src/tts/chapter1-tts-lines';
-import { collectFoundationBankLines } from '../src/tts/chapter2-tts-lines';
+import {
+  collectAdventureA2BankLines,
+  collectFoundationBankLines,
+} from '../src/tts/chapter2-tts-lines';
+import {
+  collectConversationBankLines,
+  collectFoundationConversationBankLines,
+} from '../src/tts/conversation-tts-lines';
 import {
   TTS_BANK_MODEL,
   TTS_BANK_PROMPT,
@@ -21,7 +28,7 @@ import {
   ttsBankObjectPath,
   type TtsBankFile,
 } from '../src/tts/tts-bank';
-import { ENGLISH_PRAISES } from '../src/tts/english-praises';
+import { BARE_PRAISE_LINES } from '../src/tts/english-praises';
 import { synthesisText } from '../src/tts/tts-speech-text';
 
 const BANK_PATH = resolve(__dirname, '../src/tts/tts-bank.json');
@@ -152,42 +159,56 @@ async function mintAccessToken(): Promise<string> {
   return token;
 }
 
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 async function synthesizeMp3(
   token: string,
   text: string,
   prompt: string | null,
+  model: string,
 ): Promise<Buffer> {
-  const response = await fetch(
-    'https://texttospeech.googleapis.com/v1/text:synthesize',
-    {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-        'x-goog-user-project':
-          process.env.FIREBASE_PROJECT_ID?.trim() || 'banana-english-ecf11',
+  let lastError = 'TTS failed';
+  for (let attempt = 1; attempt <= 8; attempt++) {
+    const response = await fetch(
+      'https://texttospeech.googleapis.com/v1/text:synthesize',
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          'x-goog-user-project':
+            process.env.FIREBASE_PROJECT_ID?.trim() || 'banana-english-ecf11',
+        },
+        body: JSON.stringify({
+          input: prompt ? { prompt, text } : { text },
+          voice: {
+            languageCode: 'en-US',
+            name: TTS_BANK_VOICE,
+            model_name: model,
+          },
+          audioConfig: {
+            audioEncoding: 'MP3',
+            sampleRateHertz: 24000,
+          },
+        }),
       },
-      body: JSON.stringify({
-        input: prompt ? { prompt, text } : { text },
-        voice: {
-          languageCode: 'en-US',
-          name: TTS_BANK_VOICE,
-          model_name: TTS_BANK_MODEL,
-        },
-        audioConfig: {
-          audioEncoding: 'MP3',
-          sampleRateHertz: 24000,
-        },
-      }),
-    },
-  );
-  if (!response.ok) {
+    );
+    if (response.ok) {
+      const data = (await response.json()) as { audioContent?: string };
+      if (!data.audioContent) throw new Error('TTS response missing audioContent');
+      return Buffer.from(data.audioContent, 'base64');
+    }
     const errText = await response.text();
-    throw new Error(`TTS failed (${response.status}): ${errText.slice(0, 240)}`);
+    lastError = `TTS failed (${response.status}): ${errText.slice(0, 240)}`;
+    if (response.status !== 429 || attempt === 8) {
+      throw new Error(lastError);
+    }
+    console.error(`rate limited, waiting ${attempt * 15}s`);
+    await sleep(attempt * 15_000);
   }
-  const data = (await response.json()) as { audioContent?: string };
-  if (!data.audioContent) throw new Error('TTS response missing audioContent');
-  return Buffer.from(data.audioContent, 'base64');
+  throw new Error(lastError);
 }
 
 function firebaseCliRefreshToken(): string | null {
@@ -283,13 +304,25 @@ function writeBank(bank: TtsBankFile) {
   );
 }
 
+const CONVERSATION_MODEL = 'gemini-2.5-flash-tts';
+
 async function main() {
-  const lines = [
-    ...new Set([
+  const conversationA1 = process.argv.includes('--conversation-a1');
+  const lessonLines = new Set(
+    [
       ...collectChapter1BankLines(),
       ...(await collectFoundationBankLines(2, 16)),
-    ]),
-  ].sort((a, b) => a.localeCompare(b));
+      ...(await collectAdventureA2BankLines(1, 8)),
+    ].map((line) => ttsBankKey(line)),
+  );
+  const conversationLines = conversationA1
+    ? collectFoundationConversationBankLines().filter((line) => !lessonLines.has(line))
+    : collectConversationBankLines();
+  const lines = conversationA1
+    ? conversationLines
+    : [...new Set([...lessonLines, ...conversationLines])].sort((a, b) =>
+        a.localeCompare(b),
+      );
   const bank = readBank();
   bank.model = TTS_BANK_MODEL;
   bank.voice = TTS_BANK_VOICE;
@@ -307,38 +340,49 @@ async function main() {
     return token;
   }
 
-  async function synthesizeFresh(text: string, prompt: string | null): Promise<Buffer> {
+  async function synthesizeFresh(
+    text: string,
+    prompt: string | null,
+    model: string,
+  ): Promise<Buffer> {
     try {
-      return await synthesizeMp3(await freshToken(), text, prompt);
+      return await synthesizeMp3(await freshToken(), text, prompt, model);
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);
       if (!message.includes('TTS failed (401)')) throw err;
       token = await mintAccessToken();
       mintedAt = Date.now();
-      return synthesizeMp3(token, text, prompt);
+      return synthesizeMp3(token, text, prompt, model);
     }
   }
 
   for (let i = 0; i < lines.length; i++) {
     const spoken = lines[i];
     const key = ttsBankKey(spoken);
-    if (bank.lines[key]) {
+    const model = conversationA1 ? CONVERSATION_MODEL : TTS_BANK_MODEL;
+    const objectPath = ttsBankObjectPath(spoken, model);
+    const objectHash = objectPath.slice('tts/v1/'.length, -'.mp3'.length);
+    const ready = conversationA1
+      ? bank.lines[key]?.includes(objectHash)
+      : Boolean(bank.lines[key]);
+    if (ready) {
       console.log(`[${i + 1}/${lines.length}] skip`);
       continue;
     }
+    if (conversationA1) await sleep(8000);
     const text = synthesisText(spoken);
-    const prompt = (ENGLISH_PRAISES as readonly string[]).includes(spoken)
+    const prompt = (BARE_PRAISE_LINES as readonly string[]).includes(spoken)
       ? null
       : TTS_BANK_PROMPT;
     let audio: Buffer;
     try {
-      audio = await synthesizeFresh(text, prompt);
+      audio = await synthesizeFresh(text, prompt, model);
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);
       if (!message.includes('TTS failed (400)')) throw err;
       if (prompt) {
         try {
-          audio = await synthesizeFresh(text, null);
+          audio = await synthesizeFresh(text, null, model);
         } catch (retryErr) {
           const retryMessage = retryErr instanceof Error ? retryErr.message : String(retryErr);
           if (!retryMessage.includes('TTS failed (400)')) throw retryErr;
@@ -350,7 +394,6 @@ async function main() {
         continue;
       }
     }
-    const objectPath = ttsBankObjectPath(spoken);
     const uploaded = await uploadWithAdmin(bucketName, objectPath, audio);
     if (!uploaded) await uploadWithCliToken(bucketName, objectPath, audio);
     bank.lines[key] = publicHeroUrl(bucketName, objectPath, versionMs);

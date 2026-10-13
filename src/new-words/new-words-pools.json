@@ -48,6 +48,32 @@
       }
     ]
   },
+  "new_words_later_praise": {
+    "title": "Nice, Perfect, Well done",
+    "items": [
+      {
+        "emoji": "😊",
+        "answer": "Nice",
+        "reading": "ไนซ์",
+        "meaningTh": "ดี",
+        "acceptedAnswers": ["nice"]
+      },
+      {
+        "emoji": "💯",
+        "answer": "Perfect",
+        "reading": "เพอร์-เฟกต์",
+        "meaningTh": "สมบูรณ์แบบ",
+        "acceptedAnswers": ["perfect"]
+      },
+      {
+        "emoji": "👏",
+        "answer": "Well done",
+        "reading": "เวล ดัน",
+        "meaningTh": "ทำได้ดีมาก",
+        "acceptedAnswers": ["well done"]
+      }
+    ]
+  },
   "new_words_how_i_feel": {
     "title": "How I Feel",
     "items": [

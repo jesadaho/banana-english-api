@@ -2,7 +2,7 @@ import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
-/** Cloud TTS model used for the pre-generated bank. */
+/** Cloud TTS model used for scripted lesson clips. */
 export const TTS_BANK_MODEL = 'gemini-3.1-flash-tts-preview';
 
 /** Same prebuilt voice the app uses for Teacher B. */
@@ -27,9 +27,12 @@ export function ttsBankKey(text: string | null | undefined): string {
 }
 
 /** Object name for one spoken line. Includes model and voice so a regen does not collide. */
-export function ttsBankObjectPath(text: string): string {
+export function ttsBankObjectPath(
+  text: string,
+  model: string = TTS_BANK_MODEL,
+): string {
   const hash = createHash('sha256')
-    .update(`${TTS_BANK_MODEL}\n${TTS_BANK_VOICE}\n${ttsBankKey(text)}`)
+    .update(`${model}\n${TTS_BANK_VOICE}\n${ttsBankKey(text)}`)
     .digest('hex');
   return `tts/v1/${hash}.mp3`;
 }
