@@ -1,5 +1,10 @@
+import { TAP_TO_CONTINUE_TURN_TEXT } from '../common/api.types';
 import { scriptedAiDebug } from '../common/ai-debug';
-import { FOUNDATION_V7_LESSONS } from '../lessons/foundation-v7-lessons.data';
+import {
+  ADVENTURE_A2_LESSONS,
+  buildFoundationV7Steps,
+  FOUNDATION_V7_LESSONS,
+} from '../lessons/foundation-v7-lessons.data';
 import { V7_LEGACY_FLOWS } from '../lessons/foundation-v7-legacy-flows';
 import type { V7TeachingStep } from '../lessons/foundation-v7-lessons.data';
 import type { ChatTurn } from '../session-store/session-store.service';
@@ -11,8 +16,9 @@ import {
 import type { TrainingAiGate } from '../training/engine/ai-gate';
 import { FOUNDATION_PROBE_LEARNER } from '../training/foundation/foundation-poolgate.fixtures';
 import catalog from '../learn-path/foundation-v7-path.catalog.json';
+import a2Catalog from '../learn-path/adventure-a2-path.catalog.json';
 import { lineContainsLearnerName } from './chapter1-tts-lines';
-import { ENGLISH_PRAISES } from './english-praises';
+import { BARE_PRAISE_LINES } from './english-praises';
 import { spokenTurnText, ttsBankKey } from './tts-bank';
 
 /** Chapter 2 choice lessons. Say It and the conversation stay on live TTS. */
@@ -98,17 +104,73 @@ export async function collectChapter2BankLines(
   return collectFoundationBankLines(2, 2, name);
 }
 
-/** Chapters 2–16 scripted lesson lines, plus the three shared English praise clips. */
+/** Scripted Adventure A2 lessons in a chapter range. Say It and conversation stay live. */
+export function adventureA2LessonIds(fromChapter: number, toChapter: number): string[] {
+  const ids: string[] = [];
+  for (const chapter of (a2Catalog as { chapters: CatalogChapter[] }).chapters) {
+    if (chapter.number < fromChapter || chapter.number > toChapter) continue;
+    for (const item of chapter.items) {
+      const lessonId = item.type === 'lesson' ? item.contentRef?.lessonId : undefined;
+      if (lessonId) ids.push(lessonId);
+    }
+  }
+  return ids;
+}
+
+/** Chapters 2–16 scripted lesson lines, plus both shared English praise sets. */
 export async function collectFoundationBankLines(
   fromChapter = 2,
   toChapter = 16,
   name = FOUNDATION_PROBE_LEARNER,
 ): Promise<string[]> {
-  const lines = new Set<string>(ENGLISH_PRAISES);
+  const lines = new Set<string>(BARE_PRAISE_LINES);
   for (const lessonId of foundationLessonIds(fromChapter, toChapter)) {
     await collectLesson(lessonId, name, lines);
   }
   return [...lines].sort((a, b) => a.localeCompare(b));
+}
+
+/** Adventure A2 chapters 1–8 scripted lesson lines. Praise stays inside the sentence. */
+export async function collectAdventureA2BankLines(
+  fromChapter = 1,
+  toChapter = 8,
+  name = FOUNDATION_PROBE_LEARNER,
+): Promise<string[]> {
+  const lines = new Set<string>();
+  for (const lessonId of adventureA2LessonIds(fromChapter, toChapter)) {
+    await collectA2Lesson(lessonId, name, lines);
+  }
+  return [...lines].sort((a, b) => a.localeCompare(b));
+}
+
+async function collectA2Lesson(
+  lessonId: string,
+  name: string,
+  lines: Set<string>,
+): Promise<void> {
+  const steps = buildFoundationV7Steps(lessonId);
+  const config = ADVENTURE_A2_LESSONS.find((lesson) => lesson.lessonId === lessonId);
+  if (!config) throw new Error(`missing A2 lesson ${lessonId}`);
+  const engine = engineFor();
+  const advances: string[] = [];
+
+  for (const step of steps) {
+    const here = await replay(engine, config, name, advances, lines, false);
+    if (advances.length === 0) addBankable(lines, spoken(here.reply), name);
+    if (step.kind === 'complete' || here.reply.isLessonComplete) break;
+    if (!step.expectsUserSpeech) {
+      await say(engine, config, name, here, TAP_TO_CONTINUE_TURN_TEXT, lines);
+      advances.push(TAP_TO_CONTINUE_TURN_TEXT);
+      continue;
+    }
+    if (!step.expectedSpeech) continue;
+    for (const answer of answersFor(step)) {
+      await say(engine, config, name, here, answer, lines);
+    }
+    const firstWrong = await say(engine, config, name, here, OFF_TOPIC, lines);
+    await say(engine, config, name, firstWrong, OFF_TOPIC, lines);
+    advances.push(step.expectedSpeech);
+  }
 }
 
 async function collectLesson(

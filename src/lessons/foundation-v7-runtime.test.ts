@@ -46,6 +46,12 @@ describe('Foundation V7 server-owned runtime', () => {
     assert.doesNotMatch(h.reply.textEn, /He is a teacher\. แปลว่า/);
     assert.match(h.reply.textEn, /Anna เป็นครูผู้หญิง/);
   });
+
+  it('uses the later praise set from Chapter 8', async () => {
+    const h = harness('fnd_v7_numbers_0_10');
+    await h.say('four');
+    assert.ok(['Nice!', 'Perfect!', 'Well done!'].includes(h.reply.praiseText ?? ''));
+  });
   it('recaps the selected family member and closes without a silent reuse turn', async () => {
     const h = harness('fnd_v7_my_family');
     while (h.reply.v7Step! < 5) await h.say(h.reply.expectedSpeech!);

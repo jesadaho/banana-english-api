@@ -238,7 +238,7 @@ export async function runV7Turn(input: TrainingEngineTurnInput, gate: TrainingAi
     prefix = a2EnglishPraisePrefix(correctPrefix, id + stepNumber + spokenAnswer);
   } else {
     const rest = correctPrefix.replace(THAI_PRAISE_OPENER_RE, '');
-    praiseText = englishPraiseFor(`${id}\n${stepNumber}\n${spokenAnswer}`);
+    praiseText = englishPraiseFor(`${id}\n${stepNumber}\n${spokenAnswer}`, id);
     // Drop a prefix that is only a short praise. Keep a teaching sentence
     // that happens to start with the same words.
     prefix = rest.trim() ? correctPrefix : '';

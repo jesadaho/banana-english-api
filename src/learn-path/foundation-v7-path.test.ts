@@ -42,11 +42,11 @@ const EXPECTED_V7_MIN_TURNS: Record<string, number> = {
 };
 
 describe('Foundation V7 catalog and real content', () => {
-  it('has 16 chapters (165 nodes) ending with the Final Interview, without Skill Mix', () => {
+  it('has 16 chapters (166 nodes) ending with the Final Interview, without Skill Mix', () => {
     assert.equal(FOUNDATION_V7_CATALOG.chapters.length, 16);
-    assert.equal(FOUNDATION_V7_NODES.length, 165);
-    assert.equal(new Set(FOUNDATION_V7_NODES.map(n => n.id)).size, 165);
-    assert.deepEqual(FOUNDATION_V7_CATALOG.chapters.map(c => c.items.length), [5,6,9,11,11,15,9,6,13,10,9,11,8,11,18,13]);
+    assert.equal(FOUNDATION_V7_NODES.length, 166);
+    assert.equal(new Set(FOUNDATION_V7_NODES.map(n => n.id)).size, 166);
+    assert.deepEqual(FOUNDATION_V7_CATALOG.chapters.map(c => c.items.length), [5,6,9,11,11,15,9,7,13,10,9,11,8,11,18,13]);
     assert.deepEqual(FOUNDATION_V7_CATALOG.chapters.slice(13).map(c => c.id), ['v7_u14', 'v7_u14_time_numbers', 'v7_u15']);
     assert.equal(FOUNDATION_V7_CATALOG.pathFinale, undefined);
     assert.equal(toFoundationV7ClientFinale(FOUNDATION_V7_CAPABILITIES), null);
@@ -54,8 +54,8 @@ describe('Foundation V7 catalog and real content', () => {
     assert.equal(finalNode.id, 'v7_finale_n01');
     assert.equal(finalNode.code, '16.13');
     assert.equal(finalNode.type, 'interactive_scenario');
-    assert.deepEqual(foundationV7NodeTypeCounts(), { lesson:46, say_it:38, emoji_speak:15, new_words:30, pronunciation:4, describe_it:14, story_bites:3, conversation:14, info_task:0, interactive_scenario:1, listen_up:0, explain_it:0 });
-    assert.deepEqual(FOUNDATION_V7_NODES.map(n => n.globalOrder), Array.from({length:165}, (_, i) => i + 1));
+    assert.deepEqual(foundationV7NodeTypeCounts(), { lesson:46, say_it:38, emoji_speak:15, new_words:31, pronunciation:4, describe_it:14, story_bites:3, conversation:14, info_task:0, interactive_scenario:1, listen_up:0, explain_it:0 });
+    assert.deepEqual(FOUNDATION_V7_NODES.map(n => n.globalOrder), Array.from({length:166}, (_, i) => i + 1));
     for (let i = 1; i < FOUNDATION_V7_NODES.length; i++) {
       const prev = FOUNDATION_V7_NODES[i - 1];
       const next = FOUNDATION_V7_NODES[i];
@@ -105,15 +105,15 @@ describe('Foundation V7 catalog and real content', () => {
     assert.equal(hasFoundationV7Content({...node, contentRef:{}}), false);
   });
 
-  it('has 162 backend-ready nodes and capability gates for Guided packs, See & Say, and the Final Interview', () => {
+  it('has 163 backend-ready nodes and capability gates for Guided packs, See & Say, and the Final Interview', () => {
     // Old builds without the describe_it / interactive_scenario capabilities keep those nodes locked.
     const readyDescribe = FOUNDATION_V7_NODES.filter(
       n => n.type === 'describe_it' && n.contentRef.poolId,
     ).length;
     const defaults = toFoundationV7ClientChapters().flatMap(c => c.items);
-    assert.equal(defaults.filter(n => n.backendReady).length, 162);
-    assert.equal(defaults.filter(n => !n.comingSoon).length, 158 - readyDescribe);
-    assert.equal(all().filter(n => !n.comingSoon).length, 162);
+    assert.equal(defaults.filter(n => n.backendReady).length, 163);
+    assert.equal(defaults.filter(n => !n.comingSoon).length, 159 - readyDescribe);
+    assert.equal(all().filter(n => !n.comingSoon).length, 163);
     assert.equal(
       defaults.filter(n => n.unavailableReason === 'client_capability_required').length,
       4 + readyDescribe,
@@ -288,18 +288,18 @@ describe('Foundation V7 progress and completion contracts', () => {
     mini.push(...all().filter(n => n.comingSoon).map(n => n.id));
     const service = pathService(lessons, mini, simulations);
     const full = await service.getFoundationV7('user', FOUNDATION_V7_CAPABILITIES);
-    assert.equal(full.progress.completedCount, 162);
-    assert.equal(full.progress.totalCount, 162);
+    assert.equal(full.progress.completedCount, 163);
+    assert.equal(full.progress.totalCount, 163);
     assert.equal(full.progress.currentNodeId, null);
     const legacyClient = await service.getFoundationV7('user');
-    assert.equal(legacyClient.progress.completedCount, 144);
-    assert.equal(legacyClient.progress.totalCount, 144);
+    assert.equal(legacyClient.progress.completedCount, 145);
+    assert.equal(legacyClient.progress.totalCount, 145);
     assert.equal(legacyClient.progress.currentNodeId, null);
   });
 
   it('rejects unknown capabilities rather than silently enabling unsupported mechanics', async () => {
     const controller = new LearnPathController(pathService());
-    assert.equal((await controller.coursePath(req, 'foundation-v7', FOUNDATION_V7_CAPABILITIES.join(','))).summary.playableCount, 162);
+    assert.equal((await controller.coursePath(req, 'foundation-v7', FOUNDATION_V7_CAPABILITIES.join(','))).summary.playableCount, 163);
     await assert.rejects(controller.coursePath(req, 'foundation-v7', 'video_bites'));
     await assert.rejects(controller.coursePath(req, 'foundation-v7', ['say_it_guided'] as any));
     await assert.rejects(controller.coursePath(req, 'adventure-a3'));
@@ -318,14 +318,16 @@ describe('Foundation V7 progress and completion contracts', () => {
     assert.ok(isValidNewWordsPack(demo));
     assert.equal(canonicalFoundationV7RewardId('new_words_demo'), 'new_words:new_words_demo');
     const catalogNodes = FOUNDATION_V7_NODES.filter(n => n.type === 'new_words');
-    assert.equal(catalogNodes.length, 30);
+    assert.equal(catalogNodes.length, 31);
     assert.ok(catalogNodes.some(n => n.contentRef.poolId === 'new_words_praise'));
+    assert.ok(catalogNodes.some(n => n.contentRef.poolId === 'new_words_later_praise'));
     assert.ok(catalogNodes.some(n => n.contentRef.poolId === 'new_words_what_who'));
     assert.ok(catalogNodes.some(n => n.contentRef.poolId === 'new_words_months_3'));
     assert.ok(!catalogNodes.some(n => n.contentRef.poolId === 'new_words_places_1')); // Around Town off A1
     assert.equal(newWordsPoolById('new_words_people_around_me')?.items.map(i => i.answer).join(','), 'teacher,student,doctor');
     assert.equal(newWordsPoolById('new_words_personal_things')?.items.map(i => i.answer).join(','), 'phone,key,shirt,bag');
     assert.equal(newWordsPoolById('new_words_more_personal_things')?.items.map(i => i.answer).join(','), 'hat,watch,umbrella');
+    assert.equal(newWordsPoolById('new_words_later_praise')?.items.map(i => i.answer).join(','), 'Nice,Perfect,Well done');
     assert.equal(newWordsPoolById('new_words_food')?.items.map(i => i.answer).join(','), 'rice,noodles,bread');
     assert.equal(newWordsPoolById('new_words_more_feelings')?.items.map(i => i.answer).join(','), 'hot,cold,sick');
     assert.equal(newWordsPoolById('new_words_places_and_fixtures')?.items.map(i => i.answer).join(','), 'door,bed,bathroom');

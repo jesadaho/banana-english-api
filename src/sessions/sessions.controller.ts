@@ -389,11 +389,12 @@ export class SessionsController {
         reply.updatedCheckpoints,
       );
 
+      const openingAudioUrl = audioUrlForTurn(reply.aiResponse, null);
       const openingTurn = {
         speaker: 'ai' as const,
         textEn: reply.aiResponse,
         textTh: reply.textTh,
-        audioUrl: null,
+        audioUrl: openingAudioUrl,
       };
       this.sessionStore.addTurn(data.session.id, openingTurn);
 
@@ -401,6 +402,7 @@ export class SessionsController {
         {
           aiResponse: reply.aiResponse,
           textTh: reply.textTh,
+          audioUrl: openingAudioUrl,
           isTaskComplete: false,
           updatedCheckpoints: normalizedCheckpoints,
           feedbackHints: {
@@ -2994,17 +2996,19 @@ export class SessionsController {
         isComplete: isTaskComplete,
       });
 
+      const audioUrl = audioUrlForTurn(finalized.reply.aiResponse, null);
       const aiTurn = {
         speaker: 'ai' as const,
         textEn: finalized.reply.aiResponse,
         textTh: finalized.reply.textTh,
-        audioUrl: null,
+        audioUrl,
       };
       this.sessionStore.addTurn(sessionId, aiTurn);
 
       const response: TurnExchangeResponse = {
         aiResponse: finalized.reply.aiResponse,
         textTh: finalized.reply.textTh,
+        audioUrl,
         isTaskComplete,
         updatedCheckpoints: finalized.checkpoints,
         feedbackHints: {
@@ -3014,7 +3018,7 @@ export class SessionsController {
         currentTurn: nextTurn,
       };
 
-      if (body.generateAudio) {
+      if (body.generateAudio && !audioUrl) {
         const audio = await this.geminiTts.synthesizeSpeech(
           finalized.reply.aiResponse,
         );
