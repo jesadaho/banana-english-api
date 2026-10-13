@@ -4,6 +4,7 @@ import { PurchasesModule } from '../purchases/purchases.module';
 import { BugReportsModule } from '../bug-reports/bug-reports.module';
 import { ArticlesModule } from '../articles/articles.module';
 import { ReferralsModule } from '../referrals/referrals.module';
+import { SubscriptionsModule } from '../subscriptions/subscriptions.module';
 import { AdminAuthGuard } from './admin-auth.guard';
 import { AdminArticlesController } from './admin-articles.controller';
 import { AdminBugReportsController } from './admin-bug-reports.controller';
@@ -12,6 +13,7 @@ import { AdminLedgerService } from './admin-ledger.service';
 import { AdminMetricsController } from './admin-metrics.controller';
 import { AdminMetricsService } from './admin-metrics.service';
 import { AdminReferralsController } from './admin-referrals.controller';
+import { AdminSubscriptionsController } from './admin-subscriptions.controller';
 
 @Module({
   imports: [
@@ -20,6 +22,7 @@ import { AdminReferralsController } from './admin-referrals.controller';
     BugReportsModule,
     ArticlesModule,
     ReferralsModule,
+    SubscriptionsModule,
   ],
   controllers: [
     AdminMetricsController,
@@ -27,6 +30,7 @@ import { AdminReferralsController } from './admin-referrals.controller';
     AdminBugReportsController,
     AdminArticlesController,
     AdminReferralsController,
+    AdminSubscriptionsController,
   ],
   providers: [AdminMetricsService, AdminLedgerService, AdminAuthGuard],
 })

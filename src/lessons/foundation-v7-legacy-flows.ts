@@ -4,12 +4,21 @@ const SHORT = 'ดีครับ ';
 const recap = (en: string, th: string) => en + ' แปลว่า “' + th + '” ครับ ';
 
 // V1 pacing: teach a small chunk, use it immediately, then transfer it.
-const task = (text: string, expectedSpeech: string, labels: string[] = [], stem = '', any = false, successText?: string, incorrectHintTh?: string): V7TeachingStep => ({
-  kind: 'recall', instruction: text, expectsUserSpeech: true, expectedSpeech,
-  presentation: { text, answerMode: any ? 'any' : 'single', options: labels.map(label => ({
+const task = (text: string, expectedSpeech: string, labels: string[] = [], stem = '', any = false, successText?: string, incorrectHintTh?: string): V7TeachingStep => {
+  const options = labels.map(label => ({
     emoji: icons[label] ?? '🔢', label, speak: stem + label,
-  })), stem, successText, incorrectHintTh },
-});
+  }));
+  const target = expectedSpeech.replace(/[.!?]+$/u, '').trim();
+  const repeatAfterMe = !options.length && !/ลองพูดเอง/u.test(text) && (
+    /พูดตาม/u.test(text) || (/ลองพูด/u.test(text) && target.length > 0 && text.includes(target))
+  );
+  return {
+    kind: 'recall', instruction: text, expectsUserSpeech: true, expectedSpeech,
+    // Repeat-after-me only. A situation that merely quotes the answer stays required.
+    ...(repeatAfterMe ? { skippable: true } : {}),
+    presentation: { text, answerMode: any ? 'any' : 'single', options, stem, successText, incorrectHintTh },
+  };
+};
 const choiceTask = (
   text: string,
   expectedSpeech: string,

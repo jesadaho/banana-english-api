@@ -1029,6 +1029,9 @@ export class AdminMetricsService {
                     'emoji_speak_play',
                     'new_words_start',
                     'describe_it_start',
+                    'listen_up_start',
+                    'story_bites_start',
+                    'info_task_start',
                   ],
                 },
               },
@@ -1055,6 +1058,9 @@ export class AdminMetricsService {
                     'emoji_speak_play',
                     'new_words_start',
                     'describe_it_start',
+                    'listen_up_start',
+                    'story_bites_start',
+                    'info_task_start',
                   ],
                 },
               },
@@ -1444,6 +1450,9 @@ export class AdminMetricsService {
     if (raw.explain_it_start) plays.set('game_explain_it', raw.explain_it_start);
     if (raw.new_words_start) plays.set('game_new_words', raw.new_words_start);
     if (raw.describe_it_start) plays.set('game_describe_it', raw.describe_it_start);
+    if (raw.listen_up_start) plays.set('game_listen_up', raw.listen_up_start);
+    if (raw.story_bites_start) plays.set('game_story_bites', raw.story_bites_start);
+    if (raw.info_task_start) plays.set('game_info_task', raw.info_task_start);
     const emoji =
       (raw.emoji_speak_play ?? 0) > 0
         ? raw.emoji_speak_play
@@ -1503,6 +1512,24 @@ export class AdminMetricsService {
       merged.describe_it = {
         count: raw.describe_it_start,
         users: usersBySource.describe_it_start ?? 0,
+      };
+    }
+    if (raw.listen_up_start) {
+      merged.listen_up = {
+        count: raw.listen_up_start,
+        users: usersBySource.listen_up_start ?? 0,
+      };
+    }
+    if (raw.story_bites_start) {
+      merged.story_bites = {
+        count: raw.story_bites_start,
+        users: usersBySource.story_bites_start ?? 0,
+      };
+    }
+    if (raw.info_task_start) {
+      merged.info_task = {
+        count: raw.info_task_start,
+        users: usersBySource.info_task_start ?? 0,
       };
     }
     if (raw.daily_speak_reward) {
@@ -1634,6 +1661,10 @@ export class AdminMetricsService {
       'explain_it_start',
       'emoji_speak_start',
       'new_words_start',
+      'describe_it_start',
+      'listen_up_start',
+      'story_bites_start',
+      'info_task_start',
     ];
     const spendMix = spendMixKeys.map((source) => ({
       source,
@@ -1740,6 +1771,8 @@ export class AdminMetricsService {
         surveyAgeRange: true,
         selfReportedEnglishLevel: true,
         freeTalkMemories: true,
+        subscriptionTier: true,
+        subscriptionExpiresAt: true,
       },
     });
 
@@ -1813,6 +1846,14 @@ export class AdminMetricsService {
           ageRange: u.surveyAgeRange,
           englishLevel: u.selfReportedEnglishLevel,
           memories: u.freeTalkMemories,
+          subscriptionTier: u.subscriptionTier,
+          subscriptionExpiresAt: u.subscriptionExpiresAt?.toISOString() ?? null,
+          subscriptionStatus:
+            u.subscriptionTier === 'PRO' || u.subscriptionTier === 'PRO_MAX'
+              ? u.subscriptionExpiresAt && u.subscriptionExpiresAt > new Date()
+                ? 'active'
+                : 'expired'
+              : 'free',
         };
       }),
     };

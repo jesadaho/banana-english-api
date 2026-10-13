@@ -11,6 +11,7 @@ import { User, Prisma } from '@prisma/client';
 import { EconomyService } from '../economy/economy.service';
 import { getUserLocalTime, isSameDateKey } from '../common/timezone.util';
 import { FirebaseAdminService } from '../firebase/firebase-admin.service';
+import { subscriptionPayload } from '../subscriptions/subscriptions.service';
 import { PrismaService } from '../prisma/prisma.service';
 import {
   avatarSeedCost,
@@ -119,6 +120,11 @@ export interface UserProfileResponse {
   };
   /** Next timed free banana; null while the free pool is full. */
   nextBananaRefillAt: string | null;
+  /** Active plan. `expiresAt` is null on the free tier. */
+  subscription: {
+    tier: 'FREE' | 'PRO' | 'PRO_MAX';
+    expiresAt: string | null;
+  };
 }
 
 export interface DebugRefillBananasByNameResponse {
@@ -661,8 +667,9 @@ export class UsersService {
       surveyGender,
       surveyAgeRange,
       email: user.email,
-      bananaTicket: this.economy.ticketRules(),
+      bananaTicket: this.economy.ticketRules(user),
       nextBananaRefillAt: this.economy.nextBananaRefillAt(user)?.toISOString() ?? null,
+      subscription: subscriptionPayload(user),
     };
   }
 }

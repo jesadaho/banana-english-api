@@ -13,6 +13,12 @@ enum Currency {
   BANANA_SEED
 }
 
+enum SubscriptionTier {
+  FREE
+  PRO
+  PRO_MAX
+}
+
 model User {
   id                      String    @id @default(uuid())
   anonymousId             String    @unique
@@ -96,6 +102,10 @@ model User {
   /** Invite-a-friend code (`BANANA-XXXX`), minted on first use. */
   referralCode            String?   @unique
 
+  /** Active plan. Ignored once [subscriptionExpiresAt] is in the past. */
+  subscriptionTier        SubscriptionTier @default(FREE)
+  subscriptionExpiresAt   DateTime?
+
   fcmTokens               UserFcmToken[]
   referralsSent             Referral[] @relation("ReferralReferrer")
   referredBy                Referral?  @relation("ReferralInvitee")
@@ -119,6 +129,8 @@ model User {
   spokenDays                UserSpokenDay[]
   activeDays                UserActiveDay[]
   bugReports                BugReport[]
+  subscriptionGrants      SubscriptionGrant[]
+  presaleOrders           PresaleOrder[]
 
   createdAt               DateTime  @default(now())
   updatedAt               DateTime  @updatedAt
@@ -146,6 +158,44 @@ model Referral {
   invitee  User @relation("ReferralInvitee", fields: [inviteeId], references: [id], onDelete: Cascade)
 
   @@index([referrerId, qualifiedAt])
+}
+
+/** One grant or renewal of Pro / Pro Max. History is kept after revoke. */
+model SubscriptionGrant {
+  id        String           @id @default(uuid())
+  userId    String
+  tier      SubscriptionTier
+  startsAt  DateTime
+  expiresAt DateTime
+  /** "founder_presale" | "admin" */
+  source    String
+  note      String?
+  priceThb  Int?
+  createdAt DateTime         @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+}
+
+/** Founder presale checkout. Quota counts rows with status "paid". */
+model PresaleOrder {
+  id            String           @id @default(uuid())
+  userId        String
+  tier          SubscriptionTier @default(PRO_MAX)
+  priceThb      Int
+  /** "pending_payment" | "paid" | "expired" */
+  status        String           @default("pending_payment")
+  beamChargeId  String?          @unique
+  /** PNG data URL or raw base64 from Beam, so the page can poll without another charge. */
+  qrImageBase64 String?
+  createdAt     DateTime         @default(now())
+  paidAt        DateTime?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+  @@index([status, createdAt])
 }
 
 model EconomyTransaction {
