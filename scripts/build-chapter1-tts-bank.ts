@@ -12,6 +12,7 @@ import * as admin from 'firebase-admin';
 import { UserRefreshClient } from 'google-auth-library';
 import { publicHeroUrl } from '../src/articles/article-hero';
 import { collectChapter1BankLines } from '../src/tts/chapter1-tts-lines';
+import { collectChapter2BankLines } from '../src/tts/chapter2-tts-lines';
 import {
   TTS_BANK_MODEL,
   TTS_BANK_PROMPT,
@@ -278,7 +279,12 @@ function writeBank(bank: TtsBankFile) {
 }
 
 async function main() {
-  const lines = collectChapter1BankLines();
+  const lines = [
+    ...new Set([
+      ...collectChapter1BankLines(),
+      ...(await collectChapter2BankLines()),
+    ]),
+  ].sort((a, b) => a.localeCompare(b));
   const bank = readBank();
   bank.model = TTS_BANK_MODEL;
   bank.voice = TTS_BANK_VOICE;
