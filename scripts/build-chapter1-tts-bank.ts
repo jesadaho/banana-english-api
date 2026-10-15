@@ -30,6 +30,25 @@ import {
 } from '../src/tts/tts-bank';
 import { BARE_PRAISE_LINES } from '../src/tts/english-praises';
 import { synthesisText } from '../src/tts/tts-speech-text';
+import { getTurn2Script } from '../src/topics/intro_script';
+import { V7_LEGACY_FLOWS } from '../src/lessons/foundation-v7-legacy-flows';
+
+/** Spoken lines seen on live TTS that the lesson walker does not emit. */
+function extraBankLines(): string[] {
+  const seeYou = V7_LEGACY_FLOWS.fnd_v7_goodbye_see_you
+    .map((step) => step.presentation?.text ?? '')
+    .find((text) => text.startsWith('ถ้ารู้ว่าจะเจอกันพรุ่งนี้'));
+  if (!seeYou) throw new Error('missing See you tomorrow teaching line');
+  return [
+    seeYou,
+    'เวลาเจอคำที่ลงท้ายด้วย S อย่าลืมเติมเสียง s หรือ z สั้น ๆ ตอนท้ายครับ',
+    'เรียนครบแล้วครับ Newbie คุณทำบทเรียนจบโดยได้รับคำแนะนำบางส่วน ลองฝึกอีกครั้งเพื่อให้คล่องขึ้นนะครับ',
+    'สุดยอดครับ! 🎉 วันนี้คุณทักทายได้หลายแบบแล้ว ทั้ง Hello, Hi และทักทายตามเวลาในวัน 🍌',
+    'สุดยอดครับ! 🎉 วันนี้คุณแนะนำตัวเป็นภาษาอังกฤษได้แล้ว ทั้งบอกชื่อ บอกว่ามาจากไหน และตอบเวลาพบคนใหม่ได้ 🍌',
+    'เรียนครบแล้วครับ ลองทบทวนบทนี้อีกครั้งนะครับ',
+    'Your mother! Is she a teacher?',
+  ];
+}
 
 const BANK_PATH = resolve(__dirname, '../src/tts/tts-bank.json');
 const FIREBASE_CLI_CLIENT_ID =
@@ -313,6 +332,8 @@ async function main() {
       ...collectChapter1BankLines(),
       ...(await collectFoundationBankLines(2, 16)),
       ...(await collectAdventureA2BankLines(1, 8)),
+      getTurn2Script().textEn,
+      ...extraBankLines(),
     ].map((line) => ttsBankKey(line)),
   );
   const conversationLines = conversationA1
