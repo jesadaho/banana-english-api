@@ -5,6 +5,7 @@ import { SeriesModule } from '../series/series.module';
 import { AchievementsModule } from '../achievements/achievements.module';
 import { UsersModule } from '../users/users.module';
 import { TrainingModule } from '../training/training.module';
+import { TtsModule } from '../tts/tts.module';
 import { SessionsController } from './sessions.controller';
 
 @Module({
@@ -15,6 +16,7 @@ import { SessionsController } from './sessions.controller';
     LessonsModule,
     AchievementsModule,
     TrainingModule,
+    TtsModule,
   ],
   controllers: [SessionsController],
 })

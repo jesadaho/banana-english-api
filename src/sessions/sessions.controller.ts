@@ -16,7 +16,8 @@ import {
   isChatDebugRequest,
 } from '../common/ai-user-message';
 import { attachAiDebug, scriptedAiDebug } from '../common/ai-debug';
-import { audioUrlForTurn, audioUrlsForSpokenTurn } from '../tts/tts-bank';
+import { audioUrlForTurn, audioUrlsForSpokenTurn, spokenTurnText } from '../tts/tts-bank';
+import { TtsLiveLinesService } from '../tts/tts-live-lines.service';
 import { TrainingTurnEngine } from '../training/engine/training-turn.engine';
 import { isTrainingV2Lesson } from '../training/training-v2.config';
 import { Prisma, User } from '@prisma/client';
@@ -220,6 +221,7 @@ export class SessionsController {
     private readonly achievements: AchievementsService,
     private readonly trainingEngine: TrainingTurnEngine,
     private readonly recentLearners: RecentLearnersService,
+    private readonly ttsLiveLines: TtsLiveLinesService,
   ) {}
 
   @Post()
@@ -291,6 +293,10 @@ export class SessionsController {
           textTh: reply.textTh,
           audioUrl: null,
         };
+        this.ttsLiveLines.observe('free_talk', {
+          text: reply.textEn,
+          excludeName: learnerFirstName,
+        });
         this.sessionStore.addTurn(data.session.id, opening);
         data.turns[data.turns.length - 1] = opening;
         this.sessionStore.updateFreeTalkState(data.session.id, {
@@ -324,6 +330,9 @@ export class SessionsController {
         textTh: reply.textTh,
         audioUrl: null,
       };
+      this.ttsLiveLines.observe(body.topicId === 'intro' ? 'intro' : 'chat', {
+        text: reply.textEn,
+      });
       this.sessionStore.addTurn(data.session.id, opening);
       data.turns[data.turns.length - 1] = opening;
 
@@ -390,6 +399,10 @@ export class SessionsController {
       );
 
       const openingAudioUrl = audioUrlForTurn(reply.aiResponse, null);
+      this.ttsLiveLines.observe('conversation', {
+        text: reply.aiResponse,
+        audioUrl: openingAudioUrl,
+      });
       const openingTurn = {
         speaker: 'ai' as const,
         textEn: reply.aiResponse,
@@ -545,6 +558,7 @@ export class SessionsController {
       visual: openingReply.visual ?? null,
       emojiChoice: openingReply.emojiChoice ?? null,
     };
+    this.ttsLiveLines.observe('scenario', { text: openingReply.aiResponse });
     this.sessionStore.addTurn(data.session.id, opening);
     data.session.checkpointStates = { ...openingReply.updatedCheckpoints };
 
@@ -643,6 +657,7 @@ export class SessionsController {
       emojiChoice: reply.emojiChoice ?? null,
       guidedSpeaking: reply.guidedSpeaking ?? null,
     };
+    this.ttsLiveLines.observe('scenario', { text: reply.aiResponse });
     this.sessionStore.addTurn(sessionId, aiTurn);
 
     return attachAiDebug(
@@ -1006,6 +1021,11 @@ export class SessionsController {
         roleplayIntro: openingRoleplayIntro,
         roleplayNpc: openingRoleplayNpc,
       };
+      this.ttsLiveLines.observe('lesson', {
+        text: opening.textEn,
+        sceneLines: opening.scene?.lines,
+        excludeName: learnerFirstName,
+      });
       this.sessionStore.addTurn(data.session.id, opening);
 
       const openingProgressMax = config.progressMax;
@@ -1154,6 +1174,14 @@ export class SessionsController {
       roleplayIntro: null,
       roleplayNpc: null,
     };
+    this.ttsLiveLines.observe('lesson', {
+      text: spokenTurnText(opening.ttsText, opening.textEn),
+      audioUrl: opening.audioUrl,
+      praiseText: reply.praiseText,
+      praiseAudioUrl: opening.praiseAudioUrl,
+      sceneLines: reply.scene?.lines,
+      excludeName: learnerFirstName,
+    });
     this.sessionStore.addTurn(data.session.id, opening);
 
     const openingProgressMax = config.progressMax;
@@ -1409,6 +1437,12 @@ export class SessionsController {
     const clips = audioUrlsForSpokenTurn({
       ttsText: spokenBody,
       praiseText: praise,
+    });
+    this.ttsLiveLines.observe('lesson', {
+      text: spokenBody,
+      audioUrl: clips.audioUrl,
+      praiseText: praise,
+      praiseAudioUrl: clips.praiseAudioUrl,
     });
 
     this.sessionStore.addTurn(sessionId, {
@@ -2851,6 +2885,10 @@ export class SessionsController {
         roleplayIntro,
         roleplayNpc: isTaskComplete ? null : roleplayNpc,
       };
+      this.ttsLiveLines.observe('lesson', {
+        text: staffSpeech.textEn,
+        sceneLines: reply.scene?.lines,
+      });
       this.sessionStore.addTurn(sessionId, aiTurn);
 
       const response: TurnExchangeResponse = {
@@ -2997,6 +3035,10 @@ export class SessionsController {
       });
 
       const audioUrl = audioUrlForTurn(finalized.reply.aiResponse, null);
+      this.ttsLiveLines.observe('conversation', {
+        text: finalized.reply.aiResponse,
+        audioUrl,
+      });
       const aiTurn = {
         speaker: 'ai' as const,
         textEn: finalized.reply.aiResponse,
@@ -3116,6 +3158,7 @@ export class SessionsController {
           textTh: reply.textTh,
           audioUrl: null,
         };
+        this.ttsLiveLines.observe('free_talk', { text: reply.textEn });
         this.sessionStore.addTurn(sessionId, aiTurn);
         data.turns[data.turns.length - 1] = aiTurn;
         this.sessionStore.updateFreeTalkState(sessionId, {
@@ -3175,6 +3218,9 @@ export class SessionsController {
         textTh: reply.textTh,
         audioUrl: null,
       };
+      this.ttsLiveLines.observe(topicId === 'intro' ? 'intro' : 'chat', {
+        text: reply.textEn,
+      });
       this.sessionStore.addTurn(sessionId, aiTurn);
       data.turns[data.turns.length - 1] = aiTurn;
 
