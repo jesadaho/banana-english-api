@@ -15,6 +15,11 @@ function foundationCompletion(name: string, thai: string): string {
   return `สุดยอดครับ ${n}! 🎉 ${thai} 🍌`;
 }
 
+/** Shared closing line. No learner name, so one clip covers every user. */
+function foundationCompletionShared(thai: string): string {
+  return `สุดยอดครับ! 🎉 ${thai} 🍌`;
+}
+
 const OPENING_TEXTS: Record<(typeof FOUNDATION_LESSON_IDS)[number], string> = {
   greetings:
     'สวัสดีครับ {name}! วันนี้เรามาเรียนการทักทายกันครับ — Hello, Hi และทักทายตามเวลาในวัน 😊 เริ่มจากคำแรก: Hello! ลองพูดตามครับ',
@@ -74,11 +79,10 @@ const COMPLETION_TEXTS: Record<
   (typeof FOUNDATION_LESSON_IDS)[number],
   (name: string) => string
 > = {
-  greetings: (name) =>
-    foundationCompletion(name, 'วันนี้คุณทักทายได้หลายแบบแล้ว ทั้ง Hello, Hi และทักทายตามเวลาในวัน'),
-  introductions: (name) =>
-    foundationCompletion(
-      name,
+  greetings: () =>
+    foundationCompletionShared('วันนี้คุณทักทายได้หลายแบบแล้ว ทั้ง Hello, Hi และทักทายตามเวลาในวัน'),
+  introductions: () =>
+    foundationCompletionShared(
       'วันนี้คุณแนะนำตัวเป็นภาษาอังกฤษได้แล้ว ทั้งบอกชื่อ บอกว่ามาจากไหน และตอบเวลาพบคนใหม่ได้',
     ),
   yes_no_maybe: (name) =>

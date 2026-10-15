@@ -330,9 +330,10 @@ export class SessionsController {
         textTh: reply.textTh,
         audioUrl: null,
       };
-      this.ttsLiveLines.observe(body.topicId === 'intro' ? 'intro' : 'chat', {
-        text: reply.textEn,
-      });
+      // Intro opening is assets/audio/banana_intro_turn1.wav. The app ignores this audio.
+      if (body.topicId !== 'intro') {
+        this.ttsLiveLines.observe('chat', { text: reply.textEn });
+      }
       this.sessionStore.addTurn(data.session.id, opening);
       data.turns[data.turns.length - 1] = opening;
 
@@ -3212,15 +3213,21 @@ export class SessionsController {
         turnAiDebug = generated.aiDebug;
       }
 
+      const audioUrl =
+        topicId === 'intro' ? audioUrlForTurn(reply.textEn) : null;
       const aiTurn = {
         speaker: 'ai' as const,
         textEn: reply.textEn,
         textTh: reply.textTh,
-        audioUrl: null,
+        audioUrl,
       };
-      this.ttsLiveLines.observe(topicId === 'intro' ? 'intro' : 'chat', {
-        text: reply.textEn,
-      });
+      // Intro turn 2 is assets/audio/banana_intro_turn2.wav. The app ignores this audio.
+      if (!(topicId === 'intro' && userTurnCount === 1)) {
+        this.ttsLiveLines.observe(topicId === 'intro' ? 'intro' : 'chat', {
+          text: reply.textEn,
+          audioUrl,
+        });
+      }
       this.sessionStore.addTurn(sessionId, aiTurn);
       data.turns[data.turns.length - 1] = aiTurn;
 

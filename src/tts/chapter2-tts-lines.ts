@@ -188,7 +188,13 @@ async function collectLesson(
   for (const step of steps) {
     const here = await replay(engine, config, name, prefix, lines, false);
     if (prefix.length === 0) addBankable(lines, spoken(here.reply), name);
-    if (!step.expectsUserSpeech || !step.expectedSpeech) continue;
+    if (step.kind === 'complete' || here.reply.isLessonComplete) break;
+    if (!step.expectsUserSpeech) {
+      await say(engine, config, name, here, TAP_TO_CONTINUE_TURN_TEXT, lines);
+      prefix.push(TAP_TO_CONTINUE_TURN_TEXT);
+      continue;
+    }
+    if (!step.expectedSpeech) continue;
 
     const answers = answersFor(step);
     for (const answer of answers) {
