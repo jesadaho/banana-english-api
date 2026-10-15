@@ -5,7 +5,9 @@ import { BugReportsModule } from '../bug-reports/bug-reports.module';
 import { ArticlesModule } from '../articles/articles.module';
 import { ReferralsModule } from '../referrals/referrals.module';
 import { SubscriptionsModule } from '../subscriptions/subscriptions.module';
+import { TtsModule } from '../tts/tts.module';
 import { AdminAuthGuard } from './admin-auth.guard';
+import { AdminTtsLiveLinesController } from './admin-tts-live-lines.controller';
 import { AdminArticlesController } from './admin-articles.controller';
 import { AdminBugReportsController } from './admin-bug-reports.controller';
 import { AdminLedgerController } from './admin-ledger.controller';
@@ -23,6 +25,7 @@ import { AdminSubscriptionsController } from './admin-subscriptions.controller';
     ArticlesModule,
     ReferralsModule,
     SubscriptionsModule,
+    TtsModule,
   ],
   controllers: [
     AdminMetricsController,
@@ -31,6 +34,7 @@ import { AdminSubscriptionsController } from './admin-subscriptions.controller';
     AdminArticlesController,
     AdminReferralsController,
     AdminSubscriptionsController,
+    AdminTtsLiveLinesController,
   ],
   providers: [AdminMetricsService, AdminLedgerService, AdminAuthGuard],
 })

@@ -618,3 +618,22 @@ model ArticleEngagement {
   @@unique([articleId, visitorId])
   @@index([articleId])
 }
+
+/**
+ * Spoken lines the API sent without a banked clip, so the app calls live TTS.
+ * One row per normalized sentence. hitCount is lifetime.
+ */
+model TtsLiveLine {
+  /** sha256 of the whitespace-collapsed spoken text. */
+  textKey     String   @id
+  text        String
+  /** lesson | conversation | free_talk | scenario | intro | chat */
+  source      String
+  hitCount    Int      @default(1)
+  firstSeenAt DateTime @default(now())
+  lastSeenAt  DateTime @default(now())
+
+  @@index([hitCount])
+  @@index([lastSeenAt])
+  @@index([source, hitCount])
+}
