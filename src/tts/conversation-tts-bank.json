@@ -1,0 +1,740 @@
+{
+  "model": "gemini-2.5-flash-tts",
+  "clips": {
+    "0045a8598686236385bb2c978355fd031d392fe14ff6164a78bea6ee29c04ab0": {
+      "voice": "Achird",
+      "text": "Hi! I am Max. I am hungry. Are you hungry?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F0045a8598686236385bb2c978355fd031d392fe14ff6164a78bea6ee29c04ab0.mp3?alt=media&v=1792137693745"
+    },
+    "0218e8c868024bf72e0bd9f24d9468db1925b85c84e0de669515563dfc7cf125": {
+      "voice": "Achird",
+      "text": "A teacher! Thank you!",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F0218e8c868024bf72e0bd9f24d9468db1925b85c84e0de669515563dfc7cf125.mp3?alt=media&v=1792137693745"
+    },
+    "0abeba084c0db558dc44cda9794fac6a16209a7a98d918180c8dc627c39d5ddb": {
+      "voice": "Achird",
+      "text": "Thanks! Now we know what we can do together.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F0abeba084c0db558dc44cda9794fac6a16209a7a98d918180c8dc627c39d5ddb.mp3?alt=media&v=1792137693745"
+    },
+    "11d16298ba42339b5d166fa1e40b9aa2123588a0f50a5cc5a83cb6316286b521": {
+      "voice": "Callirrhoe",
+      "text": "Here you are",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F11d16298ba42339b5d166fa1e40b9aa2123588a0f50a5cc5a83cb6316286b521.mp3?alt=media&v=1792137693745"
+    },
+    "14b4e61e9f5e9849a4a46771681077b4eb8f225abca3f0eeab63d5adac4ff39e": {
+      "voice": "Leda",
+      "text": "I'm cooking",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F14b4e61e9f5e9849a4a46771681077b4eb8f225abca3f0eeab63d5adac4ff39e.mp3?alt=media&v=1792137693745"
+    },
+    "14f99ddd17e13c23e0bffda9d0cde9b30a3f869f8fa736dbe0df81b584dd2b15": {
+      "voice": "Achird",
+      "text": "Great! Here is your phone, and I have my book. Ready for class!",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F14f99ddd17e13c23e0bffda9d0cde9b30a3f869f8fa736dbe0df81b584dd2b15.mp3?alt=media&v=1792137693745"
+    },
+    "1651eefbf86460792654b7310ee8f0821a9c7f7c34da1038e66583d688fd32b8": {
+      "voice": "Zephyr",
+      "text": "Thanks! Let's be friends. See you at the club!",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F1651eefbf86460792654b7310ee8f0821a9c7f7c34da1038e66583d688fd32b8.mp3?alt=media&v=1792137693745"
+    },
+    "16ef8c3a44b2af34b55c5cc3781d6ebf9677c3b622878f59d326a4a34f05635f": {
+      "voice": "Sadachbia",
+      "text": "I love painting!",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F16ef8c3a44b2af34b55c5cc3781d6ebf9677c3b622878f59d326a4a34f05635f.mp3?alt=media&v=1792137693745"
+    },
+    "17b9563a5714178c224f503c270946861fe42cb157e0223d305d9b068d5d322f": {
+      "voice": "Callirrhoe",
+      "text": "Nice talking to you! See you around the park!",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F17b9563a5714178c224f503c270946861fe42cb157e0223d305d9b068d5d322f.mp3?alt=media&v=1792137693745"
+    },
+    "193639d918f1dd469f11904f5c0963bc70945be83a721528457800e9b51dc265": {
+      "voice": "Leda",
+      "text": "Enjoy your food! Talk to you later!",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F193639d918f1dd469f11904f5c0963bc70945be83a721528457800e9b51dc265.mp3?alt=media&v=1792137693745"
+    },
+    "1abd68947ee5509513cc57eaab4b633bd09ba7be7afcfa8017ba4b760628dead": {
+      "voice": "Aoede",
+      "text": "You're welcome!",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F1abd68947ee5509513cc57eaab4b633bd09ba7be7afcfa8017ba4b760628dead.mp3?alt=media&v=1792137693745"
+    },
+    "1ac2638c78fe7178bc38531f6eda10bdcf0b5675588a280881b42435a00cb30d": {
+      "voice": "Achird",
+      "text": "I work on Friday",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F1ac2638c78fe7178bc38531f6eda10bdcf0b5675588a280881b42435a00cb30d.mp3?alt=media&v=1792137693745"
+    },
+    "1bcb1a41975938533bcd3004c8882b61311471551037a609a8a53e2532cec8a1": {
+      "voice": "Leda",
+      "text": "Thanks for practicing. You can try again anytime.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F1bcb1a41975938533bcd3004c8882b61311471551037a609a8a53e2532cec8a1.mp3?alt=media&v=1792137693745"
+    },
+    "1ceb36e8fdd276b88ea0ee6682a08e29dc20528a03248f5755aa1818d5025520": {
+      "voice": "Aoede",
+      "text": "Thanks for practicing. You can try again anytime.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F1ceb36e8fdd276b88ea0ee6682a08e29dc20528a03248f5755aa1818d5025520.mp3?alt=media&v=1792137693745"
+    },
+    "1d0b3c8dfe30094e104305616ece42adf3a66b53d1d32aa05744ea0d06863639": {
+      "voice": "Aoede",
+      "text": "Coffee?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F1d0b3c8dfe30094e104305616ece42adf3a66b53d1d32aa05744ea0d06863639.mp3?alt=media&v=1792137693745"
+    },
+    "1e38ec0b0ff51e7ac25cb5ecfced8524a119bda645625816516abe61fe0986c5": {
+      "voice": "Sadachbia",
+      "text": "Great choice! Welcome to your new club!",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F1e38ec0b0ff51e7ac25cb5ecfced8524a119bda645625816516abe61fe0986c5.mp3?alt=media&v=1792137693745"
+    },
+    "2064987874939e1b34438637f9d5e8dbd17b2a6463bdcc728c83faf6ad5c120d": {
+      "voice": "Callirrhoe",
+      "text": "Eighty baht.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F2064987874939e1b34438637f9d5e8dbd17b2a6463bdcc728c83faf6ad5c120d.mp3?alt=media&v=1792137693745"
+    },
+    "210eb32433e77957580257f1ee0b4c7f2402fdf4c114c58f61abd6110f890a23": {
+      "voice": "Zephyr",
+      "text": "Thanks for practicing. You can try again anytime.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F210eb32433e77957580257f1ee0b4c7f2402fdf4c114c58f61abd6110f890a23.mp3?alt=media&v=1792137693745"
+    },
+    "21ed4c1eb0869782c859c40d93ea0814dbbb8c947e4fa206436497330c9c99ce": {
+      "voice": "Callirrhoe",
+      "text": "At seven.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F21ed4c1eb0869782c859c40d93ea0814dbbb8c947e4fa206436497330c9c99ce.mp3?alt=media&v=1792137693745"
+    },
+    "220f9479db8c708e8f1dd1924ffe4d8c558af9c8ddb8f11b14a2cae0a50260ba": {
+      "voice": "Zephyr",
+      "text": "How often do you exercise?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F220f9479db8c708e8f1dd1924ffe4d8c558af9c8ddb8f11b14a2cae0a50260ba.mp3?alt=media&v=1792137693745"
+    },
+    "229b839045ef33a9dc048d3c639935fa9caa1f69bcdb4d8a309aa904efeeee1d": {
+      "voice": "Zephyr",
+      "text": "Yes! Oh, there's a man with glasses over there.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F229b839045ef33a9dc048d3c639935fa9caa1f69bcdb4d8a309aa904efeeee1d.mp3?alt=media&v=1792137693745"
+    },
+    "2315264bdbdbbcf02f87f9d6e865e2303f879e86c6af70033648811c7513d5f8": {
+      "voice": "Achird",
+      "text": "Nice talking to you! See you around the park!",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F2315264bdbdbbcf02f87f9d6e865e2303f879e86c6af70033648811c7513d5f8.mp3?alt=media&v=1792137693745"
+    },
+    "247f9f3f1c90576e76cc6af498afa34795a28145242e0479e5e9fa6eafb68065": {
+      "voice": "Achird",
+      "text": "A doctor! Who is this?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F247f9f3f1c90576e76cc6af498afa34795a28145242e0479e5e9fa6eafb68065.mp3?alt=media&v=1792137693745"
+    },
+    "2545f6aa112d16504802c3b275b9b718f6739bab55e876cc81c71fc0af24a39a": {
+      "voice": "Callirrhoe",
+      "text": "He's in Room 2.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F2545f6aa112d16504802c3b275b9b718f6739bab55e876cc81c71fc0af24a39a.mp3?alt=media&v=1792137693745"
+    },
+    "27258812b7f0527b37fe72fceb7dd1710534e2e470e6792b99e20ef3264c9b5a": {
+      "voice": "Leda",
+      "text": "Nice talking to you! See you around the park!",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F27258812b7f0527b37fe72fceb7dd1710534e2e470e6792b99e20ef3264c9b5a.mp3?alt=media&v=1792137693745"
+    },
+    "292aad643cd855cc6aa03a28df3cfa9b9c3b92352c1e4ec83b66f706dc3d75e7": {
+      "voice": "Zephyr",
+      "text": "So many new members! I want to meet May's friend. Two girls are wearing red shirts. What does she look like?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F292aad643cd855cc6aa03a28df3cfa9b9c3b92352c1e4ec83b66f706dc3d75e7.mp3?alt=media&v=1792137693745"
+    },
+    "293921a1d749f1599681337a1026c58d64a9cb4bdb1f17c0a31f1d8a0917abdd": {
+      "voice": "Zephyr",
+      "text": "No problem. We can talk about something else.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F293921a1d749f1599681337a1026c58d64a9cb4bdb1f17c0a31f1d8a0917abdd.mp3?alt=media&v=1792137693745"
+    },
+    "298544a1a6963d043bd3890bac3911ef8e39e2e14f71d2bd3244f8503296bdd0": {
+      "voice": "Zephyr",
+      "text": "I play games. How about you?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F298544a1a6963d043bd3890bac3911ef8e39e2e14f71d2bd3244f8503296bdd0.mp3?alt=media&v=1792137693745"
+    },
+    "2999fc54b247b7621a62b94755524d55a607316ef722207a1098434cd81bf968": {
+      "voice": "Zephyr",
+      "text": "Ah, the girl with long black hair!",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F2999fc54b247b7621a62b94755524d55a607316ef722207a1098434cd81bf968.mp3?alt=media&v=1792137693745"
+    },
+    "2aeb3989d9c3d077f6ecbfc2c55731599f64432f1f0d8ccc388f969e07907a22": {
+      "voice": "Sadachbia",
+      "text": "Thanks for practicing. You can try again anytime.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F2aeb3989d9c3d077f6ecbfc2c55731599f64432f1f0d8ccc388f969e07907a22.mp3?alt=media&v=1792137693745"
+    },
+    "2f2b1efcd1937518d407eefcaf0e718240c9feaeed78d05c6b91aefae8c807a1": {
+      "voice": "Callirrhoe",
+      "text": "Thank you. Here is your movie ticket. See you on Friday!",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F2f2b1efcd1937518d407eefcaf0e718240c9feaeed78d05c6b91aefae8c807a1.mp3?alt=media&v=1792137693745"
+    },
+    "326544ad387435ec1175653add0d248ae46c242a248d4d1debe3b3118ca0fa84": {
+      "voice": "Leda",
+      "text": "Hi! I'm free after school. What's up?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F326544ad387435ec1175653add0d248ae46c242a248d4d1debe3b3118ca0fa84.mp3?alt=media&v=1792137693745"
+    },
+    "342107bae04b5a209d43288707941a9d4d28fefa79e5eed08fe1e801fc1db31c": {
+      "voice": "Achird",
+      "text": "Thanks for practising. You can try again anytime.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F342107bae04b5a209d43288707941a9d4d28fefa79e5eed08fe1e801fc1db31c.mp3?alt=media&v=1792137693745"
+    },
+    "350febe4cded47d5bb8a52af2324162bb1ba1a76cefe3bfee28a30281a5a001d": {
+      "voice": "Zephyr",
+      "text": "Thanks for telling me!",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F350febe4cded47d5bb8a52af2324162bb1ba1a76cefe3bfee28a30281a5a001d.mp3?alt=media&v=1792137693745"
+    },
+    "36d12ffebf3caa2a446ce8a8bd16f3ea77410a1912b15d71a59391a53ed8cf17": {
+      "voice": "Aoede",
+      "text": "Nice talking to you! See you around the park!",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F36d12ffebf3caa2a446ce8a8bd16f3ea77410a1912b15d71a59391a53ed8cf17.mp3?alt=media&v=1792137693745"
+    },
+    "3709f486d63e56af256c28289e45145cc59d507717a6bb5bddf73e4e62c331d3": {
+      "voice": "Aoede",
+      "text": "Tea or water?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F3709f486d63e56af256c28289e45145cc59d507717a6bb5bddf73e4e62c331d3.mp3?alt=media&v=1792137693745"
+    },
+    "3750c6955378e1c801b5161ed372e2fdf22ace4fc14fbc0106d3ac5c6e902c49": {
+      "voice": "Zephyr",
+      "text": "Nice talking to you! See you around the park!",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F3750c6955378e1c801b5161ed372e2fdf22ace4fc14fbc0106d3ac5c6e902c49.mp3?alt=media&v=1792137693745"
+    },
+    "37674b699022c28b5213b275143ba0e6091bd3e224ff0d3ef3b29dd43dadf5eb": {
+      "voice": "Zephyr",
+      "text": "That's Teacher John. He's very kind. Enjoy the party!",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F37674b699022c28b5213b275143ba0e6091bd3e224ff0d3ef3b29dd43dadf5eb.mp3?alt=media&v=1792137693745"
+    },
+    "3efdf8d9b0e0b39edd7a5587323d5fc27a94fb326662e6bd82431844bbce940d": {
+      "voice": "Achird",
+      "text": "Great! Shall we go?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F3efdf8d9b0e0b39edd7a5587323d5fc27a94fb326662e6bd82431844bbce940d.mp3?alt=media&v=1792137693745"
+    },
+    "3fada071263c705c3a7a3dc10a9d88e7e2eb013992df36e942a0a0343de08953": {
+      "voice": "Achird",
+      "text": "Hey! Do you have a phone?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F3fada071263c705c3a7a3dc10a9d88e7e2eb013992df36e942a0a0343de08953.mp3?alt=media&v=1792137693745"
+    },
+    "4034e4cb3c3f27f2e3b02dd02163707a175f1a7591f7f66580b6381965db0652": {
+      "voice": "Zephyr",
+      "text": "I usually get up at six and exercise in the morning.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F4034e4cb3c3f27f2e3b02dd02163707a175f1a7591f7f66580b6381965db0652.mp3?alt=media&v=1792137693745"
+    },
+    "409922b4eef7d16dc99cbadaf7dc2ae5af9c93c15657cf9b3593224b28673e09": {
+      "voice": "Zephyr",
+      "text": "She says hello to everyone. What is she like?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F409922b4eef7d16dc99cbadaf7dc2ae5af9c93c15657cf9b3593224b28673e09.mp3?alt=media&v=1792137693745"
+    },
+    "42066a47658fbe463049bbf8409a0bed86bf008dd5a5dca609dafb2d97aa00c1": {
+      "voice": "Aoede",
+      "text": "Thanks for practising. You can try again anytime.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F42066a47658fbe463049bbf8409a0bed86bf008dd5a5dca609dafb2d97aa00c1.mp3?alt=media&v=1792137693745"
+    },
+    "4ae51abadd8f17ac34bed58c67aa0bd7f01d3ac9eb198959ee99be29dae064b8": {
+      "voice": "Achird",
+      "text": "Your sister! Is she a teacher?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F4ae51abadd8f17ac34bed58c67aa0bd7f01d3ac9eb198959ee99be29dae064b8.mp3?alt=media&v=1792137693745"
+    },
+    "4c3c4ef4153d60c9741bef0a9aa25b12a4d8171ebedb1ad836bd7cd42bb235cf": {
+      "voice": "Callirrhoe",
+      "text": "Enjoy the movie!",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F4c3c4ef4153d60c9741bef0a9aa25b12a4d8171ebedb1ad836bd7cd42bb235cf.mp3?alt=media&v=1792137693745"
+    },
+    "4e6aa4a5ccef034770bc89679c4220fb805ae582eecec96c9628e9b4ec54281d": {
+      "voice": "Sadachbia",
+      "text": "Nice talking to you! See you around the park!",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F4e6aa4a5ccef034770bc89679c4220fb805ae582eecec96c9628e9b4ec54281d.mp3?alt=media&v=1792137693745"
+    },
+    "5498552c1ef3bdd0549e48dee222897f99b1a21085221703eafae139f310493a": {
+      "voice": "Achird",
+      "text": "Your father! Is he a teacher?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F5498552c1ef3bdd0549e48dee222897f99b1a21085221703eafae139f310493a.mp3?alt=media&v=1792137693745"
+    },
+    "5c039bbf481b7bc2b5c9f40de02e3aa06c4d61fa9a0483bb5c847b0ba1e255ee": {
+      "voice": "Puck",
+      "text": "No problem. We can talk about something else.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F5c039bbf481b7bc2b5c9f40de02e3aa06c4d61fa9a0483bb5c847b0ba1e255ee.mp3?alt=media&v=1792137693745"
+    },
+    "5c86786bc695f4966baf7dc5b0d17107f36104d5bf6908359e84c00720501f0b": {
+      "voice": "Aoede",
+      "text": "Here you are.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F5c86786bc695f4966baf7dc5b0d17107f36104d5bf6908359e84c00720501f0b.mp3?alt=media&v=1792137693745"
+    },
+    "5d5b565e916ad3f560efd62dad3d49ffa6295c223fdac5c992acfebe9f1974fb": {
+      "voice": "Zephyr",
+      "text": "I go jogging on weekends. What don't you like doing?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F5d5b565e916ad3f560efd62dad3d49ffa6295c223fdac5c992acfebe9f1974fb.mp3?alt=media&v=1792137693745"
+    },
+    "5e8f53076afa9062c2551cd6cb75e09cdd007328689033aab06bab8c46a82d0d": {
+      "voice": "Leda",
+      "text": "Are there any chairs in the kitchen?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F5e8f53076afa9062c2551cd6cb75e09cdd007328689033aab06bab8c46a82d0d.mp3?alt=media&v=1792137693745"
+    },
+    "5f0d7359f075e5bb98b4a1c57b297ab06f8008833a6afc2e3dc0b98c14cf82ac": {
+      "voice": "Leda",
+      "text": "What is he doing?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F5f0d7359f075e5bb98b4a1c57b297ab06f8008833a6afc2e3dc0b98c14cf82ac.mp3?alt=media&v=1792137693745"
+    },
+    "60da79720a2d112f4e772cc97b62ecc44304c8cbf43065402cfe8134ddfa76f1": {
+      "voice": "Leda",
+      "text": "Sure! Friday evening is great.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F60da79720a2d112f4e772cc97b62ecc44304c8cbf43065402cfe8134ddfa76f1.mp3?alt=media&v=1792137693745"
+    },
+    "643c9f3946f8a05ad652c36619c35152e147a979c695791757f845cf1f12405c": {
+      "voice": "Zephyr",
+      "text": "What don't you like doing?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F643c9f3946f8a05ad652c36619c35152e147a979c695791757f845cf1f12405c.mp3?alt=media&v=1792137693745"
+    },
+    "653ea220fe0222b800409d995ae20962957fe7f03cdd5ce8e7ad362aa1623074": {
+      "voice": "Achird",
+      "text": "Nice to meet you! Thanks for telling me about yourself.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F653ea220fe0222b800409d995ae20962957fe7f03cdd5ce8e7ad362aa1623074.mp3?alt=media&v=1792137693745"
+    },
+    "65d80d3d95b09baf7b096b616d395eec77e1164ab808209d20b68e790b1e1dc2": {
+      "voice": "Aoede",
+      "text": "Hello! Do you like coffee?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F65d80d3d95b09baf7b096b616d395eec77e1164ab808209d20b68e790b1e1dc2.mp3?alt=media&v=1792137693745"
+    },
+    "6780b4fe550f7424467b59722ef0565bdbc9a69114af95d2250cc3bab7595df9": {
+      "voice": "Leda",
+      "text": "I am cooking",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F6780b4fe550f7424467b59722ef0565bdbc9a69114af95d2250cc3bab7595df9.mp3?alt=media&v=1792137693745"
+    },
+    "691b6d584f1f5a33a37172507e87d8fe1546904b51b489eaa273f5504e56024a": {
+      "voice": "Leda",
+      "text": "Is Max cooking too?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F691b6d584f1f5a33a37172507e87d8fe1546904b51b489eaa273f5504e56024a.mp3?alt=media&v=1792137693745"
+    },
+    "6ab88d9b6dfdcd44328d0eabb0a66c432680b81696997f7447d0ab8757c152b0": {
+      "voice": "Iapetus",
+      "text": "You're welcome. See you tomorrow!",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F6ab88d9b6dfdcd44328d0eabb0a66c432680b81696997f7447d0ab8757c152b0.mp3?alt=media&v=1792137693745"
+    },
+    "6be1d119511bad687f990172bfff7295d13f164a1f85be2e361cbb06d22462be": {
+      "voice": "Iapetus",
+      "text": "Your class card is ready. Welcome!",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F6be1d119511bad687f990172bfff7295d13f164a1f85be2e361cbb06d22462be.mp3?alt=media&v=1792137693745"
+    },
+    "6c18302830a11825c462166433a41ba1fd10bff9adc2294da7f1ef83d23bd242": {
+      "voice": "Callirrhoe",
+      "text": "On Friday.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F6c18302830a11825c462166433a41ba1fd10bff9adc2294da7f1ef83d23bd242.mp3?alt=media&v=1792137693745"
+    },
+    "6e98e27b1fbbb72eb62c551d8b6ae907487b66affa04b61ed7ccbbd90b2d95b2": {
+      "voice": "Achird",
+      "text": "I cannot swim",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F6e98e27b1fbbb72eb62c551d8b6ae907487b66affa04b61ed7ccbbd90b2d95b2.mp3?alt=media&v=1792137693745"
+    },
+    "6f2ba2e9582b5f35028b4542f49943cbe0fca0c3fd3fec41a6a67e3c5bb2fa11": {
+      "voice": "Leda",
+      "text": "He's eating",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F6f2ba2e9582b5f35028b4542f49943cbe0fca0c3fd3fec41a6a67e3c5bb2fa11.mp3?alt=media&v=1792137693745"
+    },
+    "6f85107f5627fa2d7cc51fe08c7ed48def9580ee62b33e672d66786c94a119ce": {
+      "voice": "Achird",
+      "text": "Hi! Who is this?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F6f85107f5627fa2d7cc51fe08c7ed48def9580ee62b33e672d66786c94a119ce.mp3?alt=media&v=1792137693745"
+    },
+    "723bfc0f2a2622a971f7fde3bc375ad54685eef6566f2405cac21a3c6dc33ed0": {
+      "voice": "Achird",
+      "text": "Maybe.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F723bfc0f2a2622a971f7fde3bc375ad54685eef6566f2405cac21a3c6dc33ed0.mp3?alt=media&v=1792137693745"
+    },
+    "7295fdb2e36ba02cb0c2c1cb03ca51e46fcf1c2d340213025d1ef73e7eb3a583": {
+      "voice": "Callirrhoe",
+      "text": "Hello! How can I help?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F7295fdb2e36ba02cb0c2c1cb03ca51e46fcf1c2d340213025d1ef73e7eb3a583.mp3?alt=media&v=1792137693745"
+    },
+    "72f56c9ecb9628a6236f26c590d0da4a3aa33cda0d11676fb422f0255d4e65b0": {
+      "voice": "Zephyr",
+      "text": "Both girls are wearing red shirts!",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F72f56c9ecb9628a6236f26c590d0da4a3aa33cda0d11676fb422f0255d4e65b0.mp3?alt=media&v=1792137693745"
+    },
+    "759f5a7bfc99c0fe61a03a078145e29f9ebe5030bdce93e018b5b6a6297a0853": {
+      "voice": "Achird",
+      "text": "Great! Let's go get lunch!",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F759f5a7bfc99c0fe61a03a078145e29f9ebe5030bdce93e018b5b6a6297a0853.mp3?alt=media&v=1792137693745"
+    },
+    "7a286798761797605ad6ad17115b04ade4d24cc1631cd1bd9e5e03a22b5376b3": {
+      "voice": "Achird",
+      "text": "No problem. We can talk about something else.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F7a286798761797605ad6ad17115b04ade4d24cc1631cd1bd9e5e03a22b5376b3.mp3?alt=media&v=1792137693745"
+    },
+    "7da00d71966409327449233c8fd603cfb31fdf48e1d54adc35f17add95b1259c": {
+      "voice": "Leda",
+      "text": "Wow, nice home! Where is the kitchen?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F7da00d71966409327449233c8fd603cfb31fdf48e1d54adc35f17add95b1259c.mp3?alt=media&v=1792137693745"
+    },
+    "7ebaac829a27ae16a19a71f7e7757f4e1e34b70b66e4de4c23f00c70f939e3a7": {
+      "voice": "Iapetus",
+      "text": "Thanks for practising. You can try again anytime.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F7ebaac829a27ae16a19a71f7e7757f4e1e34b70b66e4de4c23f00c70f939e3a7.mp3?alt=media&v=1792137693745"
+    },
+    "7f16b6a5bd8963fcb0e411f335fc26713e9faf7994594fd7d37c79e75170e45e": {
+      "voice": "Zephyr",
+      "text": "Me too!",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F7f16b6a5bd8963fcb0e411f335fc26713e9faf7994594fd7d37c79e75170e45e.mp3?alt=media&v=1792137693745"
+    },
+    "7f295e5079c2d813df5052dde6ffb4216f9d3ea01e5652c0be4b49ea4dcf7592": {
+      "voice": "Leda",
+      "text": "Oh, look! There's a key under the sofa.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F7f295e5079c2d813df5052dde6ffb4216f9d3ea01e5652c0be4b49ea4dcf7592.mp3?alt=media&v=1792137693745"
+    },
+    "80b53377e1752f12a7ebf9126f2d88b0d0cb8296db87525884518faf62dfeee4": {
+      "voice": "Achird",
+      "text": "Yes, I can. What about you? Can you cook?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F80b53377e1752f12a7ebf9126f2d88b0d0cb8296db87525884518faf62dfeee4.mp3?alt=media&v=1792137693745"
+    },
+    "8193cde1ccde2709c24e351eada42d84a411906ae742b2a735068477966e67f9": {
+      "voice": "Achird",
+      "text": "Hi! Can you swim?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F8193cde1ccde2709c24e351eada42d84a411906ae742b2a735068477966e67f9.mp3?alt=media&v=1792137693745"
+    },
+    "825fd2b6291b9df891a8b3f998dd0d4025447bcd78839d3599116279ad631a18": {
+      "voice": "Puck",
+      "text": "I usually run in the morning, but today I'm on the bus!",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F825fd2b6291b9df891a8b3f998dd0d4025447bcd78839d3599116279ad631a18.mp3?alt=media&v=1792137693745"
+    },
+    "874493a91d3f64c39b71f2a2f09b1ce1d55e052aac21e1102c7755489c8fe841": {
+      "voice": "Leda",
+      "text": "Thanks for practising. You can try again anytime.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F874493a91d3f64c39b71f2a2f09b1ce1d55e052aac21e1102c7755489c8fe841.mp3?alt=media&v=1792137693745"
+    },
+    "88a2219468e0bb596550f723169e8572346b85cebbafb766023ea6d1749bd2e5": {
+      "voice": "Iapetus",
+      "text": "Thanks for practicing. You can try again anytime.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F88a2219468e0bb596550f723169e8572346b85cebbafb766023ea6d1749bd2e5.mp3?alt=media&v=1792137693745"
+    },
+    "88ea7292872a87fb8e2b4532128018e045f5d00a7f74f4657ad91e957f9f4dad": {
+      "voice": "Achird",
+      "text": "I do not work on Friday",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F88ea7292872a87fb8e2b4532128018e045f5d00a7f74f4657ad91e957f9f4dad.mp3?alt=media&v=1792137693745"
+    },
+    "89208c946f57b2467cf1419407845b60c1d2c1f769c78461160b57a66ae7ce53": {
+      "voice": "Callirrhoe",
+      "text": "Hello! This bag or that bag?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F89208c946f57b2467cf1419407845b60c1d2c1f769c78461160b57a66ae7ce53.mp3?alt=media&v=1792137693745"
+    },
+    "89396b8c615bf33f734be41ba863792f946fa89ac8d97a6704acda328cfe7321": {
+      "voice": "Achird",
+      "text": "Great! See you then!",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F89396b8c615bf33f734be41ba863792f946fa89ac8d97a6704acda328cfe7321.mp3?alt=media&v=1792137693745"
+    },
+    "898a10dd4e687ff621a2927f63388b5d66b3df0f31440537239d13642fd8faba": {
+      "voice": "Iapetus",
+      "text": "Hi! Is this your student card?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F898a10dd4e687ff621a2927f63388b5d66b3df0f31440537239d13642fd8faba.mp3?alt=media&v=1792137693745"
+    },
+    "8a025c76315aaaa30a9efd379f5fc397724e29fafdeb209f693273164e0ced88": {
+      "voice": "Achird",
+      "text": "Thanks for practicing. You can try again anytime.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F8a025c76315aaaa30a9efd379f5fc397724e29fafdeb209f693273164e0ced88.mp3?alt=media&v=1792137693745"
+    },
+    "8b2aaed92822545914fc0f4d14e2d22c4ca8a6132c59f817193354a887f4d74a": {
+      "voice": "Leda",
+      "text": "No, he is not",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F8b2aaed92822545914fc0f4d14e2d22c4ca8a6132c59f817193354a887f4d74a.mp3?alt=media&v=1792137693745"
+    },
+    "8f1922c97f17ebee65c30863a0797fa8aa44e9847f5fd2b26bd9ff6465582ed1": {
+      "voice": "Achird",
+      "text": "Is she a teacher?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F8f1922c97f17ebee65c30863a0797fa8aa44e9847f5fd2b26bd9ff6465582ed1.mp3?alt=media&v=1792137693745"
+    },
+    "93162b66da782797d9caa06077a7f083f17145ce5676ec33a74ab0205a01d8e0": {
+      "voice": "Callirrhoe",
+      "text": "Hi! Can I help you?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F93162b66da782797d9caa06077a7f083f17145ce5676ec33a74ab0205a01d8e0.mp3?alt=media&v=1792137693745"
+    },
+    "944dc8f7318f958ebff49a0ae4fbee32e1c18799fe7b378b786d3a00a064e13e": {
+      "voice": "Callirrhoe",
+      "text": "One ticket, please.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F944dc8f7318f958ebff49a0ae4fbee32e1c18799fe7b378b786d3a00a064e13e.mp3?alt=media&v=1792137693745"
+    },
+    "94928ac60d905da9809f8fc7d15854a1f217d62aad1342b21aa5aa288b8c782b": {
+      "voice": "Sadachbia",
+      "text": "Thanks for practising. You can try again anytime.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F94928ac60d905da9809f8fc7d15854a1f217d62aad1342b21aa5aa288b8c782b.mp3?alt=media&v=1792137693745"
+    },
+    "965cbc53917fd60b83e368cabd93e7e0525c346fab759e7f843a6dadb63e1852": {
+      "voice": "Puck",
+      "text": "Thanks for practicing. You can try again anytime.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F965cbc53917fd60b83e368cabd93e7e0525c346fab759e7f843a6dadb63e1852.mp3?alt=media&v=1792137693745"
+    },
+    "96e326958cfef0d233cf5b39570f1f4566897e118ad3afa53264ed1e50336333": {
+      "voice": "Iapetus",
+      "text": "Is this your student card?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F96e326958cfef0d233cf5b39570f1f4566897e118ad3afa53264ed1e50336333.mp3?alt=media&v=1792137693745"
+    },
+    "9aa1ea8f407b998a36f188221359df47652f7cc6c22470d7f85837ab5cbd4676": {
+      "voice": "Leda",
+      "text": "Hi! What are you doing now?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F9aa1ea8f407b998a36f188221359df47652f7cc6c22470d7f85837ab5cbd4676.mp3?alt=media&v=1792137693745"
+    },
+    "9e6ace0dffc0fa2aa2faf8a3ebfcfa4eb05f3a4f9e920e2a02c7a7a4db16c149": {
+      "voice": "Achird",
+      "text": "Your mother!",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F9e6ace0dffc0fa2aa2faf8a3ebfcfa4eb05f3a4f9e920e2a02c7a7a4db16c149.mp3?alt=media&v=1792137693745"
+    },
+    "9e8dfe29bc78dd5af69be415ada7c767b0daf6126903d3c5ec47fbdcc50ffc8b": {
+      "voice": "Puck",
+      "text": "Nice talking to you! See you around the park!",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F9e8dfe29bc78dd5af69be415ada7c767b0daf6126903d3c5ec47fbdcc50ffc8b.mp3?alt=media&v=1792137693745"
+    },
+    "9e9c7a5c8dab9ba84325a7940162e9df1abdc81a3c70252f75179e32f15ddbab": {
+      "voice": "Zephyr",
+      "text": "Hi! Welcome to the team! What's your name?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2F9e9c7a5c8dab9ba84325a7940162e9df1abdc81a3c70252f75179e32f15ddbab.mp3?alt=media&v=1792137693745"
+    },
+    "a1a63c29700a709f13583acf1887f7ead22891cd6f323f6b74f702343d18cb50": {
+      "voice": "Zephyr",
+      "text": "Sometimes.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fa1a63c29700a709f13583acf1887f7ead22891cd6f323f6b74f702343d18cb50.mp3?alt=media&v=1792137693745"
+    },
+    "a3c981fbca64c1267da2a4c8d0336da4f5a9b2a45e1e6df7df5ba51dc12b8c57": {
+      "voice": "Achird",
+      "text": "I wake up at seven",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fa3c981fbca64c1267da2a4c8d0336da4f5a9b2a45e1e6df7df5ba51dc12b8c57.mp3?alt=media&v=1792137693745"
+    },
+    "a4f2d9c26b192153b1b086bb52a50147e21302484a1e4518d5ffcc3d1a0f203e": {
+      "voice": "Achird",
+      "text": "No, I don't.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fa4f2d9c26b192153b1b086bb52a50147e21302484a1e4518d5ffcc3d1a0f203e.mp3?alt=media&v=1792137693745"
+    },
+    "a69283be40c37ed3cba3cb1808da9d2c8e4053b2c5f419ce8132f17f8e1d7a12": {
+      "voice": "Leda",
+      "text": "No, he isn't",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fa69283be40c37ed3cba3cb1808da9d2c8e4053b2c5f419ce8132f17f8e1d7a12.mp3?alt=media&v=1792137693745"
+    },
+    "a7f87f0548f80d0f4123e340cebf456a22f8ba45a4204f82f481e70f0dfe62d1": {
+      "voice": "Leda",
+      "text": "It's not mine. I think it's Bogy's! Let's give it to him and start practice.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fa7f87f0548f80d0f4123e340cebf456a22f8ba45a4204f82f481e70f0dfe62d1.mp3?alt=media&v=1792137693745"
+    },
+    "a825fdfe65f70526b9bd91affb30bae6a051cb1ef3e70f8bdcd50035a5331f84": {
+      "voice": "Zephyr",
+      "text": "Let's practice after school. See you!",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fa825fdfe65f70526b9bd91affb30bae6a051cb1ef3e70f8bdcd50035a5331f84.mp3?alt=media&v=1792137693745"
+    },
+    "a916eb0cdeba19e11725854c9e52d46a8f91f7d48463912a498115e4c3ae13fb": {
+      "voice": "Callirrhoe",
+      "text": "Thanks for practicing. You can try again anytime.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fa916eb0cdeba19e11725854c9e52d46a8f91f7d48463912a498115e4c3ae13fb.mp3?alt=media&v=1792137693745"
+    },
+    "a9e46671f66ce945cf2c527a94e3e657d5f99519b158d1566e21fbad5690b9e1": {
+      "voice": "Zephyr",
+      "text": "That sounds fun! What do you do on weekends?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fa9e46671f66ce945cf2c527a94e3e657d5f99519b158d1566e21fbad5690b9e1.mp3?alt=media&v=1792137693745"
+    },
+    "aa10ad745c10b1aff0d008376d9be6191d01835764b7ef1ba0c7b2fd4240a0fa": {
+      "voice": "Sadachbia",
+      "text": "Time to choose a club! Music, badminton, art, or cooking. What are you good at?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Faa10ad745c10b1aff0d008376d9be6191d01835764b7ef1ba0c7b2fd4240a0fa.mp3?alt=media&v=1792137693745"
+    },
+    "ab8bb6efe603210e2865f63e859f00beb831a96fe99f774fe19029101b02aff4": {
+      "voice": "Aoede",
+      "text": "No. Tea, please.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fab8bb6efe603210e2865f63e859f00beb831a96fe99f774fe19029101b02aff4.mp3?alt=media&v=1792137693745"
+    },
+    "ae725fd609c568f474b0bf1c01a144ab8109bd540860fdc3886e61f5fd2f3493": {
+      "voice": "Aoede",
+      "text": "No problem. We can talk about something else.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fae725fd609c568f474b0bf1c01a144ab8109bd540860fdc3886e61f5fd2f3493.mp3?alt=media&v=1792137693745"
+    },
+    "b117ff75e3190a2fe8fe668e3b210379df06b5da5b98cb91d93166f7111fe43c": {
+      "voice": "Callirrhoe",
+      "text": "It's over there.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fb117ff75e3190a2fe8fe668e3b210379df06b5da5b98cb91d93166f7111fe43c.mp3?alt=media&v=1792137693745"
+    },
+    "b137ed23b45c2cf66a8aada7f0138d8a5382a9a420cc691be77026cca87c3786": {
+      "voice": "Leda",
+      "text": "No problem. We can talk about something else.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fb137ed23b45c2cf66a8aada7f0138d8a5382a9a420cc691be77026cca87c3786.mp3?alt=media&v=1792137693745"
+    },
+    "b45f4fa38b0fe8914372ad4ce7da67ffc80eaf3c31d0103dba076522ea42c0bb": {
+      "voice": "Callirrhoe",
+      "text": "Thanks for practising. You can try again anytime.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fb45f4fa38b0fe8914372ad4ce7da67ffc80eaf3c31d0103dba076522ea42c0bb.mp3?alt=media&v=1792137693745"
+    },
+    "b4a565f0aef8ae7c3f441cf4c04b9becff68760f51abe541e493c13b87ffa20c": {
+      "voice": "Callirrhoe",
+      "text": "The movie is on Friday at ten.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fb4a565f0aef8ae7c3f441cf4c04b9becff68760f51abe541e493c13b87ffa20c.mp3?alt=media&v=1792137693745"
+    },
+    "b555c67b9523624499a3e9fa19c8b1547522b1a06a303d6ddb5fe9cd2f80add7": {
+      "voice": "Achird",
+      "text": "Saturday at ten?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fb555c67b9523624499a3e9fa19c8b1547522b1a06a303d6ddb5fe9cd2f80add7.mp3?alt=media&v=1792137693745"
+    },
+    "bc507eea9ed21a508a28326e7ea8c0c5d89b6757b5d08b3501679ff2cac7ebc5": {
+      "voice": "Iapetus",
+      "text": "See you tomorrow!",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fbc507eea9ed21a508a28326e7ea8c0c5d89b6757b5d08b3501679ff2cac7ebc5.mp3?alt=media&v=1792137693745"
+    },
+    "be6e92e1a062e5518e5a2c5cbc815b9e1171fd6f08e415c129d4c7aafe71fc6d": {
+      "voice": "Zephyr",
+      "text": "How about you?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fbe6e92e1a062e5518e5a2c5cbc815b9e1171fd6f08e415c129d4c7aafe71fc6d.mp3?alt=media&v=1792137693745"
+    },
+    "beb009a2b6a1131ba9832b7bc2d8af4a5f3254d7b4e7b397293dbb17e1f53865": {
+      "voice": "Iapetus",
+      "text": "Here you are.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fbeb009a2b6a1131ba9832b7bc2d8af4a5f3254d7b4e7b397293dbb17e1f53865.mp3?alt=media&v=1792137693745"
+    },
+    "c0619b4c4397c42ff55c75bb98e9789152d30feece615371f72227d9ec1d936b": {
+      "voice": "Leda",
+      "text": "Sorry, I'm busy this evening. I'm going to visit my aunt.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fc0619b4c4397c42ff55c75bb98e9789152d30feece615371f72227d9ec1d936b.mp3?alt=media&v=1792137693745"
+    },
+    "c27711ed95d297f2720d95012861628d6a8bf187113b68d5e4bf4b57fc18878c": {
+      "voice": "Iapetus",
+      "text": "Nice talking to you! See you around the park!",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fc27711ed95d297f2720d95012861628d6a8bf187113b68d5e4bf4b57fc18878c.mp3?alt=media&v=1792137693745"
+    },
+    "c2c3245b6b32632288e106ab37e7a5a9b7b07d2bc2b33e55b996a25dd557486b": {
+      "voice": "Zephyr",
+      "text": "Thanks for practising. You can try again anytime.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fc2c3245b6b32632288e106ab37e7a5a9b7b07d2bc2b33e55b996a25dd557486b.mp3?alt=media&v=1792137693745"
+    },
+    "c4009dcf8b80ef9babd0ed98ff44e9149efb2a0d3044994897a78bd4d7200476": {
+      "voice": "Achird",
+      "text": "Can you swim?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fc4009dcf8b80ef9babd0ed98ff44e9149efb2a0d3044994897a78bd4d7200476.mp3?alt=media&v=1792137693745"
+    },
+    "c41eb73d2f7911cd57b21d8d3792f4c5dffce4564911d9082415d0d4a9a9ab0e": {
+      "voice": "Callirrhoe",
+      "text": "Here is the bag you chose.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fc41eb73d2f7911cd57b21d8d3792f4c5dffce4564911d9082415d0d4a9a9ab0e.mp3?alt=media&v=1792137693745"
+    },
+    "c54f5b1f10e2bedf2a2fd0dca3956463cf5a15073dcc4b27770f2c313ab174df": {
+      "voice": "Leda",
+      "text": "He is eating",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fc54f5b1f10e2bedf2a2fd0dca3956463cf5a15073dcc4b27770f2c313ab174df.mp3?alt=media&v=1792137693745"
+    },
+    "cc74e53e80c8bb8508394d2335c74a92732354662f6b98ae7bd3a1bf6c9a5595": {
+      "voice": "Achird",
+      "text": "I can swim",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fcc74e53e80c8bb8508394d2335c74a92732354662f6b98ae7bd3a1bf6c9a5595.mp3?alt=media&v=1792137693745"
+    },
+    "cc8a4771cc30c9c4559e87b76a909cfd1d753356596c14fd395a8fc9ae00a438": {
+      "voice": "Zephyr",
+      "text": "We need a good time for club practice. What do you usually do in the morning?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fcc8a4771cc30c9c4559e87b76a909cfd1d753356596c14fd395a8fc9ae00a438.mp3?alt=media&v=1792137693745"
+    },
+    "ce7505997689ccb899f94f7c63f41a53e423598a147036717a2e9d0c1b889dc8": {
+      "voice": "Zephyr",
+      "text": "Thanks for sharing!",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fce7505997689ccb899f94f7c63f41a53e423598a147036717a2e9d0c1b889dc8.mp3?alt=media&v=1792137693745"
+    },
+    "d006b3d05b8eb3ae67e98cbf83a0f1c88d0ea6ac9f016b01ebbcec36cfb15f4a": {
+      "voice": "Achird",
+      "text": "Do you work on Friday?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fd006b3d05b8eb3ae67e98cbf83a0f1c88d0ea6ac9f016b01ebbcec36cfb15f4a.mp3?alt=media&v=1792137693745"
+    },
+    "d362a9c7a84980a736de4de50b8ed465eb3dfe2c05551c62cf7dcbefda4e0ca8": {
+      "voice": "Achird",
+      "text": "Yes, I do.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fd362a9c7a84980a736de4de50b8ed465eb3dfe2c05551c62cf7dcbefda4e0ca8.mp3?alt=media&v=1792137693745"
+    },
+    "d4b068b888e61bc239ec50fa7e2bdb0598f9558effeff661eed5a50b63b920ca": {
+      "voice": "Callirrhoe",
+      "text": "You're welcome!",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fd4b068b888e61bc239ec50fa7e2bdb0598f9558effeff661eed5a50b63b920ca.mp3?alt=media&v=1792137693745"
+    },
+    "d585876d1a92807a4a9ad5d4ee97470e6078c584d4eeced295c8ba1ae084d4f0": {
+      "voice": "Aoede",
+      "text": "Coffee, please.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fd585876d1a92807a4a9ad5d4ee97470e6078c584d4eeced295c8ba1ae084d4f0.mp3?alt=media&v=1792137693745"
+    },
+    "d5ec9489fac54ec816469b09e411784aecc6995bde478cb384ac7f1489a95132": {
+      "voice": "Achird",
+      "text": "Friday at ten?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fd5ec9489fac54ec816469b09e411784aecc6995bde478cb384ac7f1489a95132.mp3?alt=media&v=1792137693745"
+    },
+    "d746a68fd85d8d447503130e92d19fcef32edf82a93a363b696bafc01b41042e": {
+      "voice": "Callirrhoe",
+      "text": "He's John, your teacher.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fd746a68fd85d8d447503130e92d19fcef32edf82a93a363b696bafc01b41042e.mp3?alt=media&v=1792137693745"
+    },
+    "d8bbddaf55b93ce9392cb96b71c60f7a49e126ac7a463ccbcba79c1b4dcbc10e": {
+      "voice": "Callirrhoe",
+      "text": "Thank you.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fd8bbddaf55b93ce9392cb96b71c60f7a49e126ac7a463ccbcba79c1b4dcbc10e.mp3?alt=media&v=1792137693745"
+    },
+    "e05773507bacd4d77ed6493cde891c2af9d1359edc1703cbcbe74b33a67d12af": {
+      "voice": "Sadachbia",
+      "text": "No problem. We can talk about something else.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fe05773507bacd4d77ed6493cde891c2af9d1359edc1703cbcbe74b33a67d12af.mp3?alt=media&v=1792137693745"
+    },
+    "e097498adce6e0320254aa764bcb34f85350bb802b9f197a8137cf51afe49daf": {
+      "voice": "Leda",
+      "text": "No, he's eating",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fe097498adce6e0320254aa764bcb34f85350bb802b9f197a8137cf51afe49daf.mp3?alt=media&v=1792137693745"
+    },
+    "e0c1bee154106e3e82a2fc58bf404ec55bf2750aab786c0cb18e7bf4e5aa3c3a": {
+      "voice": "Achird",
+      "text": "Do you like English?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fe0c1bee154106e3e82a2fc58bf404ec55bf2750aab786c0cb18e7bf4e5aa3c3a.mp3?alt=media&v=1792137693745"
+    },
+    "e60d7fc99e478751c21da4301e1f0ddd2ae99b5ebec06ae0b9f2750e31085b53": {
+      "voice": "Achird",
+      "text": "Your sister!",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fe60d7fc99e478751c21da4301e1f0ddd2ae99b5ebec06ae0b9f2750e31085b53.mp3?alt=media&v=1792137693745"
+    },
+    "e6db495a1173eb76010c36bd54a224e067c16fdd6c67823e897eab6226f1d8c3": {
+      "voice": "Achird",
+      "text": "Nice talking to you! You can try these phrases again anytime.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fe6db495a1173eb76010c36bd54a224e067c16fdd6c67823e897eab6226f1d8c3.mp3?alt=media&v=1792137693745"
+    },
+    "e765fec59af2c7eb0e74d954168ec86dac69b8866ae249ccc133f72c0855807b": {
+      "voice": "Achird",
+      "text": "Hi! I'm Max. Nice to meet you.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fe765fec59af2c7eb0e74d954168ec86dac69b8866ae249ccc133f72c0855807b.mp3?alt=media&v=1792137693745"
+    },
+    "eb4ebb046b78f24f5a6171d1b04dbe1749c7cfe391386a595103f33b4fa2746a": {
+      "voice": "Puck",
+      "text": "Hi! I'm late, sorry! What are you doing right now?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Feb4ebb046b78f24f5a6171d1b04dbe1749c7cfe391386a595103f33b4fa2746a.mp3?alt=media&v=1792137693745"
+    },
+    "ede4b6cdaad6bfd7f61363ea126ad6b1e0a345242689da585f9f76c206840efa": {
+      "voice": "Achird",
+      "text": "Can you cook?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fede4b6cdaad6bfd7f61363ea126ad6b1e0a345242689da585f9f76c206840efa.mp3?alt=media&v=1792137693745"
+    },
+    "ee9b8849ae0c18ab9b960387d5b4bdf3d5021beccea5a7197f007c43519cb5d6": {
+      "voice": "Iapetus",
+      "text": "No problem. We can talk about something else.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Fee9b8849ae0c18ab9b960387d5b4bdf3d5021beccea5a7197f007c43519cb5d6.mp3?alt=media&v=1792137693745"
+    },
+    "f0901832eb1657f5d30b2e7caa0663dfe4a8f75e4132ea4e1f1b911cc683b295": {
+      "voice": "Puck",
+      "text": "Okay, I'm almost there. See you at the lake!",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Ff0901832eb1657f5d30b2e7caa0663dfe4a8f75e4132ea4e1f1b911cc683b295.mp3?alt=media&v=1792137693745"
+    },
+    "f28e57b97d5fb9e763e6e0fc657a2d81c19a8b83339ac37b94c1f65ab436f328": {
+      "voice": "Achird",
+      "text": "Good morning! What time do you wake up every day?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Ff28e57b97d5fb9e763e6e0fc657a2d81c19a8b83339ac37b94c1f65ab436f328.mp3?alt=media&v=1792137693745"
+    },
+    "f2fcd28908f8b397de7b7391c3cc253af3c555ea448d9be950b139cadb6bbbe4": {
+      "voice": "Zephyr",
+      "text": "I like them all.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Ff2fcd28908f8b397de7b7391c3cc253af3c555ea448d9be950b139cadb6bbbe4.mp3?alt=media&v=1792137693745"
+    },
+    "f33b73442f917ca62a77099039ff6f9a3ceec6e3cfda5111b11c8176df3c4bdf": {
+      "voice": "Iapetus",
+      "text": "Hello! Your name, please?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Ff33b73442f917ca62a77099039ff6f9a3ceec6e3cfda5111b11c8176df3c4bdf.mp3?alt=media&v=1792137693745"
+    },
+    "f537980f2c8411ec74e790b8f2bfe0575fb4e514dc14e20cf5686502cc0cf3bf": {
+      "voice": "Leda",
+      "text": "Yay! Movie night on Friday. See you then!",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Ff537980f2c8411ec74e790b8f2bfe0575fb4e514dc14e20cf5686502cc0cf3bf.mp3?alt=media&v=1792137693745"
+    },
+    "f75673284e2d2bcc5bf494fdd24e1909be1d6c27e80ceb8027a52f6fff7e6782": {
+      "voice": "Puck",
+      "text": "Thanks for practising. You can try again anytime.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Ff75673284e2d2bcc5bf494fdd24e1909be1d6c27e80ceb8027a52f6fff7e6782.mp3?alt=media&v=1792137693745"
+    },
+    "f783ddc915f9391433bf5afc6ce1a5ebbf9214a69ef51b1f1188c98ffb07ace0": {
+      "voice": "Achird",
+      "text": "I am ready for lunch. Are you ready?",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Ff783ddc915f9391433bf5afc6ce1a5ebbf9214a69ef51b1f1188c98ffb07ace0.mp3?alt=media&v=1792137693745"
+    },
+    "fdd8cfcc82da02805715c89a6a2ca079d25d77d79c100f7d621269aa909ab02a": {
+      "voice": "Leda",
+      "text": "No, he is eating",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Ffdd8cfcc82da02805715c89a6a2ca079d25d77d79c100f7d621269aa909ab02a.mp3?alt=media&v=1792137693745"
+    },
+    "fe8384c39e4bd4ebf5041904ad4c5694b463b71194a479012c7f6a2ba128e1d2": {
+      "voice": "Callirrhoe",
+      "text": "No problem. We can talk about something else.",
+      "url": "https://firebasestorage.googleapis.com/v0/b/banana-english-ecf11.firebasestorage.app/o/tts%2Fconversation%2Fv1%2Ffe8384c39e4bd4ebf5041904ad4c5694b463b71194a479012c7f6a2ba128e1d2.mp3?alt=media&v=1792137693745"
+    }
+  }
+}

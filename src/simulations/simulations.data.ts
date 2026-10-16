@@ -35,6 +35,8 @@ export interface SimulationConfig {
   goalsEn: string[];
   /** Optional authored hint ladder per goal (intent → starter → model). */
   goalHints?: Array<SimulationGoalHint | null>;
+  /** Expected learner line for each goal, same order as successCriteria. */
+  goalExamples?: string[];
   difficulty: SimulationDifficulty;
   estimatedMinutes: number;
   bananaCost: number;

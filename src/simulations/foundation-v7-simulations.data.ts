@@ -51,6 +51,7 @@ function toSimulationConfig(
   goalsTh: spec.goals.map((g: GoalSpec) => g.th),
   goalsEn: spec.goals.map((g: GoalSpec) => g.en),
   goalHints: spec.goals.map((g: GoalSpec) => g.hints ?? null),
+  goalExamples: spec.goals.map((g: GoalSpec) => g.example),
   ...introGoals(spec.goals),
   difficulty: 'easy' as const, estimatedMinutes: spec.maxTurns >= 5 ? 4 : 3, bananaCost: 1,
   foundationMission: true, minTurns: spec.minTurns, maxTurns: spec.maxTurns,
