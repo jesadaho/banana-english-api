@@ -3,6 +3,7 @@ import { describe, it } from 'node:test';
 import {
   beamSignatureMatches,
   effectiveSubscriptionTier,
+  FOUNDER_PRESALE_CLOSES_AT,
 } from './subscription.constants';
 
 const future = new Date(Date.now() + 86_400_000);
@@ -28,6 +29,12 @@ describe('effectiveSubscriptionTier', () => {
       effectiveSubscriptionTier({ subscriptionTier: 'PRO_MAX', subscriptionExpiresAt: null }),
       'FREE',
     );
+  });
+});
+
+describe('FOUNDER_PRESALE_CLOSES_AT', () => {
+  it('is Sunday 18 Oct 2026 at 21:00 Bangkok', () => {
+    assert.equal(FOUNDER_PRESALE_CLOSES_AT.toISOString(), '2026-10-18T14:00:00.000Z');
   });
 });
 
