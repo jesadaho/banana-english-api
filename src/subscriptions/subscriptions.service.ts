@@ -329,6 +329,10 @@ export class SubscriptionsService {
     if (!order || order.user.firebaseUid !== uid) {
       throw new NotFoundException('Order not found');
     }
+    if (order.status === PENDING && order.beamChargeId) {
+      const synced = await this.syncPaidCharge(order);
+      if (synced) return this.orderPayload(synced);
+    }
     if (order.status === PENDING && this.isStale(order.createdAt)) {
       const expired = await this.prisma.presaleOrder.update({
         where: { id: order.id },
@@ -366,7 +370,7 @@ export class SubscriptionsService {
   private async markOrderPaid(orderId: string, beamChargeId?: string) {
     const order = await this.prisma.presaleOrder.findUnique({ where: { id: orderId } });
     if (!order || order.status === PAID) return;
-    if (order.status !== PENDING) return;
+    if (order.status !== PENDING && order.status !== EXPIRED) return;
     await this.prisma.presaleOrder.update({
       where: { id: order.id },
       data: {
@@ -391,6 +395,23 @@ export class SubscriptionsService {
       priceThb: order.priceThb,
       note: order.id,
     });
+  }
+
+  private async syncPaidCharge(order: {
+    id: string;
+    beamChargeId: string | null;
+    status: string;
+  }) {
+    if (!order.beamChargeId) return null;
+    const charge = await this.beam.getCharge(order.beamChargeId).catch(() => null);
+    if (!charge || charge.status !== 'SUCCEEDED') return null;
+    if (charge.referenceId !== order.id) return null;
+    const expectedSatang = FOUNDER_PRESALE_PRICE_THB * 100;
+    if (charge.amount !== expectedSatang && charge.amount !== FOUNDER_PRESALE_PRICE_THB) {
+      return null;
+    }
+    await this.markOrderPaid(order.id, order.beamChargeId);
+    return this.prisma.presaleOrder.findUnique({ where: { id: order.id } });
   }
 
   private async expireStaleOrders(userId: string) {

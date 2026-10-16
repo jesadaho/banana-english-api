@@ -34,14 +34,20 @@ export function addYears(from: Date, years: number): Date {
   return next;
 }
 
-/** Beam signs the raw body with HMAC-SHA256 and sends the digest as base64. */
+/**
+ * Beam Lighthouse shows the HMAC key as base64. Decode it to bytes, sign the
+ * raw body with HMAC-SHA256, then compare the base64 digest to X-Beam-Signature.
+ */
 export function beamSignatureMatches(
   rawBody: Buffer,
   signature: string | undefined,
   secret: string,
 ): boolean {
-  if (!signature || !secret) return false;
-  const digest = createHmac('sha256', secret).update(rawBody).digest('base64');
+  const trimmed = secret.trim();
+  if (!signature || !trimmed) return false;
+  const key = Buffer.from(trimmed, 'base64');
+  if (key.length === 0) return false;
+  const digest = createHmac('sha256', key).update(rawBody).digest('base64');
   const a = Buffer.from(digest);
   const b = Buffer.from(signature.trim());
   if (a.length !== b.length) return false;
