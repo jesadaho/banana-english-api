@@ -12,7 +12,7 @@ import {
   addYears,
   beamSignatureMatches,
   effectiveSubscriptionTier,
-  FOUNDER_PRESALE_CLOSES_AT,
+  FOUNDER_PRESALE_OPENS_AT,
   FOUNDER_PRESALE_PRICE_THB,
   FOUNDER_PRESALE_SEATS,
   FOUNDER_PRESALE_YEARS,
@@ -259,7 +259,7 @@ export class SubscriptionsService {
       cap: FOUNDER_PRESALE_SEATS,
       remaining: Math.max(0, FOUNDER_PRESALE_SEATS - sold),
       priceThb: FOUNDER_PRESALE_PRICE_THB,
-      closesAt: FOUNDER_PRESALE_CLOSES_AT.toISOString(),
+      opensAt: FOUNDER_PRESALE_OPENS_AT.toISOString(),
     };
   }
 
@@ -272,8 +272,8 @@ export class SubscriptionsService {
         message: 'เปิดแอป Banana English ก่อน แล้วสมัครด้วย Google บัญชีเดียวกัน',
       });
     }
-    if (Date.now() >= FOUNDER_PRESALE_CLOSES_AT.getTime()) {
-      throw new BadRequestException({ code: 'SALE_CLOSED', message: 'ปิดการขายแล้ว' });
+    if (Date.now() < FOUNDER_PRESALE_OPENS_AT.getTime()) {
+      throw new BadRequestException({ code: 'SALE_NOT_OPEN', message: 'ยังไม่เปิดรับ' });
     }
     const active = effectiveSubscriptionTier(user);
     if (active === 'PRO_MAX') {
