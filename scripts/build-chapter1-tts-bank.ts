@@ -17,10 +17,6 @@ import {
   collectFoundationBankLines,
 } from '../src/tts/chapter2-tts-lines';
 import {
-  collectConversationBankLines,
-  collectFoundationConversationBankLines,
-} from '../src/tts/conversation-tts-lines';
-import {
   TTS_BANK_MODEL,
   TTS_BANK_PROMPT,
   TTS_BANK_VOICE,
@@ -323,10 +319,12 @@ function writeBank(bank: TtsBankFile) {
   );
 }
 
-const CONVERSATION_MODEL = 'gemini-2.5-flash-tts';
-
 async function main() {
-  const conversationA1 = process.argv.includes('--conversation-a1');
+  if (process.argv.includes('--conversation-a1')) {
+    throw new Error(
+      'Conversation clips are per character. Use scripts/build-conversation-tts-bank.ts',
+    );
+  }
   const lessonLines = new Set(
     [
       ...collectChapter1BankLines(),
@@ -336,14 +334,7 @@ async function main() {
       ...extraBankLines(),
     ].map((line) => ttsBankKey(line)),
   );
-  const conversationLines = conversationA1
-    ? collectFoundationConversationBankLines().filter((line) => !lessonLines.has(line))
-    : collectConversationBankLines();
-  const lines = conversationA1
-    ? conversationLines
-    : [...new Set([...lessonLines, ...conversationLines])].sort((a, b) =>
-        a.localeCompare(b),
-      );
+  const lines = [...lessonLines].sort((a, b) => a.localeCompare(b));
   const bank = readBank();
   bank.model = TTS_BANK_MODEL;
   bank.voice = TTS_BANK_VOICE;
@@ -380,17 +371,12 @@ async function main() {
   for (let i = 0; i < lines.length; i++) {
     const spoken = lines[i];
     const key = ttsBankKey(spoken);
-    const model = conversationA1 ? CONVERSATION_MODEL : TTS_BANK_MODEL;
+    const model = TTS_BANK_MODEL;
     const objectPath = ttsBankObjectPath(spoken, model);
-    const objectHash = objectPath.slice('tts/v1/'.length, -'.mp3'.length);
-    const ready = conversationA1
-      ? bank.lines[key]?.includes(objectHash)
-      : Boolean(bank.lines[key]);
-    if (ready) {
+    if (bank.lines[key]) {
       console.log(`[${i + 1}/${lines.length}] skip`);
       continue;
     }
-    if (conversationA1) await sleep(8000);
     const text = synthesisText(spoken);
     const prompt = (BARE_PRAISE_LINES as readonly string[]).includes(spoken)
       ? null

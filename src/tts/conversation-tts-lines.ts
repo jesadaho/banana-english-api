@@ -109,6 +109,11 @@ export function collectConversationBankLines(): string[] {
   return linesFromSimulations(getAllSimulations(), true);
 }
 
+/** Fixed lines for one mission, including the shared fallback closes. */
+export function cacheableLinesForSimulation(sim: SimulationConfig): string[] {
+  return linesFromSimulations([sim], true);
+}
+
 /** Fixed lines for Foundation (A1) conversation nodes only. */
 export function collectFoundationConversationBankLines(): string[] {
   const sims = foundationConversationIds().map((id) => {

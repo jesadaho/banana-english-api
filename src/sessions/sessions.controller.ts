@@ -17,6 +17,7 @@ import {
 } from '../common/ai-user-message';
 import { attachAiDebug, scriptedAiDebug } from '../common/ai-debug';
 import { audioUrlForTurn, audioUrlsForSpokenTurn, spokenTurnText } from '../tts/tts-bank';
+import { audioUrlForConversationLine } from '../tts/conversation-tts-bank';
 import { TtsLiveLinesService } from '../tts/tts-live-lines.service';
 import { TrainingTurnEngine } from '../training/engine/training-turn.engine';
 import { isTrainingV2Lesson } from '../training/training-v2.config';
@@ -67,6 +68,7 @@ import {
   getSimulation,
   mergeCheckpoints,
 } from '../simulations/simulations.data';
+import { simulationExpectedHints } from '../simulations/conversation-hints';
 import {
   emojiSpeakSetForTrainingTurn,
   enrichEmojiSpeakForLesson,
@@ -399,7 +401,10 @@ export class SessionsController {
         reply.updatedCheckpoints,
       );
 
-      const openingAudioUrl = audioUrlForTurn(reply.aiResponse, null);
+      const openingAudioUrl = audioUrlForConversationLine(
+        config.simulationId,
+        reply.aiResponse,
+      );
       this.ttsLiveLines.observe('conversation', {
         text: reply.aiResponse,
         audioUrl: openingAudioUrl,
@@ -3035,7 +3040,10 @@ export class SessionsController {
         isComplete: isTaskComplete,
       });
 
-      const audioUrl = audioUrlForTurn(finalized.reply.aiResponse, null);
+      const audioUrl = audioUrlForConversationLine(
+        config.simulationId,
+        finalized.reply.aiResponse,
+      );
       this.ttsLiveLines.observe('conversation', {
         text: finalized.reply.aiResponse,
         audioUrl,
@@ -3264,6 +3272,15 @@ export class SessionsController {
     }
 
     this.sessionStore.markHintUsed(sessionId);
+
+    if (data.session.sessionType === 'simulation' && data.simulationConfig) {
+      return {
+        hints: simulationExpectedHints(
+          data.simulationConfig,
+          data.session.checkpointStates,
+        ),
+      };
+    }
 
     if (data.session.sessionType === 'interactive_scenario' && data.scenarioConfig && data.scenarioRuntime) {
       const { hints, nextState } = scenarioHintForState(
