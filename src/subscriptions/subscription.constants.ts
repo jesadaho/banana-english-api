@@ -7,6 +7,8 @@ export const FOUNDER_PRESALE_PRICE_THB = 150;
 export const FOUNDER_PRESALE_SEATS = 30;
 export const FOUNDER_PRESALE_YEARS = 1;
 export const PRESALE_QR_TTL_MS = 15 * 60 * 1000;
+/** Sunday 18 Oct 2026, 21:00 Asia/Bangkok. */
+export const FOUNDER_PRESALE_CLOSES_AT = new Date('2026-10-18T14:00:00.000Z');
 
 export type SubscriptionTierName = 'FREE' | 'PRO' | 'PRO_MAX';
 
