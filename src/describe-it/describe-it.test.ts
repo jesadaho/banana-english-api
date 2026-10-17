@@ -23,6 +23,10 @@ describe('Describe It foundation pack', () => {
     assert.ok(ids.includes('a2_c05n07'));
     assert.ok(ids.includes('a2_c31n03'));
     assert.equal(ids.filter((id) => id.startsWith('a2_')).length, 25);
+    const a2 = listDescribeItPools().filter((pool) => pool.id.startsWith('a2_'));
+    assert.equal(a2.find((pool) => pool.id === 'a2_c09n08')?.emoji, '☕');
+    assert.equal(a2.find((pool) => pool.id === 'a2_c31n03')?.emoji, '🎂');
+    assert.ok(new Set(a2.map((pool) => pool.emoji)).size > 1);
   });
 
   it('deals six Look at Me cards in order with a first-item hint', () => {

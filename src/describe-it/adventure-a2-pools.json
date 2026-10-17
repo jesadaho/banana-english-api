@@ -4,7 +4,7 @@
     "titleEn": "Brother's Schedule",
     "titleTh": "ตารางของพี่ชาย",
     "tagEn": "ADVENTURE",
-    "emoji": "🖼️",
+    "emoji": "📅",
     "estimatedMinutes": 3,
     "items": [
       {
@@ -104,7 +104,7 @@
     "titleEn": "Describe the Room",
     "titleTh": "บรรยายห้อง",
     "tagEn": "ADVENTURE",
-    "emoji": "🖼️",
+    "emoji": "🛋️",
     "estimatedMinutes": 3,
     "items": [
       {
@@ -206,7 +206,7 @@
     "titleEn": "Find the Person",
     "titleTh": "หาคนในงาน",
     "tagEn": "ADVENTURE",
-    "emoji": "🖼️",
+    "emoji": "🔍",
     "estimatedMinutes": 3,
     "items": [
       {
@@ -293,7 +293,7 @@
     "titleEn": "What Are They Doing?",
     "titleTh": "เขากำลังทำอะไร",
     "tagEn": "ADVENTURE",
-    "emoji": "🖼️",
+    "emoji": "🏃",
     "estimatedMinutes": 3,
     "items": [
       {
@@ -386,7 +386,7 @@
     "titleEn": "Club Posters",
     "titleTh": "โปสเตอร์ชมรม",
     "tagEn": "ADVENTURE",
-    "emoji": "🖼️",
+    "emoji": "🎸",
     "estimatedMinutes": 3,
     "items": [
       {
@@ -470,7 +470,7 @@
     "titleEn": "Two Calendars",
     "titleTh": "ปฏิทินสองคน",
     "tagEn": "ADVENTURE",
-    "emoji": "🖼️",
+    "emoji": "📆",
     "estimatedMinutes": 3,
     "items": [
       {
@@ -562,7 +562,7 @@
     "titleEn": "Price Tags",
     "titleTh": "ป้ายราคา",
     "tagEn": "ADVENTURE",
-    "emoji": "🖼️",
+    "emoji": "🏷️",
     "estimatedMinutes": 3,
     "items": [
       {
@@ -657,7 +657,7 @@
     "titleEn": "Café Board",
     "titleTh": "บอร์ดเมนู",
     "tagEn": "ADVENTURE",
-    "emoji": "🖼️",
+    "emoji": "☕",
     "estimatedMinutes": 3,
     "items": [
       {
@@ -742,7 +742,7 @@
     "titleEn": "Aunt Noi's Note",
     "titleTh": "โน้ตของ Aunt Noi",
     "tagEn": "ADVENTURE",
-    "emoji": "🖼️",
+    "emoji": "🛒",
     "estimatedMinutes": 3,
     "items": [
       {
@@ -822,7 +822,7 @@
     "titleEn": "Recipe Steps",
     "titleTh": "ขั้นตอนทำอาหาร",
     "tagEn": "ADVENTURE",
-    "emoji": "🖼️",
+    "emoji": "🍳",
     "estimatedMinutes": 3,
     "items": [
       {
@@ -902,7 +902,7 @@
     "titleEn": "Compare Two Shirts",
     "titleTh": "เทียบเสื้อ 2 ตัว",
     "tagEn": "ADVENTURE",
-    "emoji": "🖼️",
+    "emoji": "👕",
     "estimatedMinutes": 3,
     "items": [
       {
@@ -984,7 +984,7 @@
     "titleEn": "Gift Price Board",
     "titleTh": "เทียบราคาของขวัญ",
     "tagEn": "ADVENTURE",
-    "emoji": "🖼️",
+    "emoji": "🎁",
     "estimatedMinutes": 3,
     "items": [
       {
@@ -1066,7 +1066,7 @@
     "titleEn": "Yesterday's Photos",
     "titleTh": "รูปเมื่อวาน",
     "tagEn": "ADVENTURE",
-    "emoji": "🖼️",
+    "emoji": "📷",
     "estimatedMinutes": 3,
     "items": [
       {
@@ -1148,7 +1148,7 @@
     "titleEn": "Boat Menu",
     "titleTh": "เมนูบนเรือ",
     "tagEn": "ADVENTURE",
-    "emoji": "🖼️",
+    "emoji": "🍜",
     "estimatedMinutes": 3,
     "items": [
       {
@@ -1231,7 +1231,7 @@
     "titleEn": "Read the Boarding Pass",
     "titleTh": "อ่านบอร์ดดิ้งพาส",
     "tagEn": "ADVENTURE",
-    "emoji": "🖼️",
+    "emoji": "🎫",
     "estimatedMinutes": 3,
     "items": [
       {
@@ -1315,7 +1315,7 @@
     "titleEn": "Read the Booking",
     "titleTh": "อ่านใบจอง",
     "tagEn": "ADVENTURE",
-    "emoji": "🖼️",
+    "emoji": "🏨",
     "estimatedMinutes": 3,
     "items": [
       {
@@ -1395,7 +1395,7 @@
     "titleEn": "Timetable and Clock",
     "titleTh": "ตารางรถกับนาฬิกา",
     "tagEn": "ADVENTURE",
-    "emoji": "🖼️",
+    "emoji": "🚌",
     "estimatedMinutes": 3,
     "items": [
       {
@@ -1477,7 +1477,7 @@
     "titleEn": "Directions from a Map",
     "titleTh": "บอกทางจากแผนที่",
     "tagEn": "ADVENTURE",
-    "emoji": "🖼️",
+    "emoji": "🗺️",
     "estimatedMinutes": 3,
     "items": [
       {
@@ -1557,7 +1557,7 @@
     "titleEn": "Medicine Label",
     "titleTh": "ฉลากยา",
     "tagEn": "ADVENTURE",
-    "emoji": "🖼️",
+    "emoji": "💊",
     "estimatedMinutes": 3,
     "items": [
       {
@@ -1642,7 +1642,7 @@
     "titleEn": "Describe Your Bag",
     "titleTh": "บรรยายกระเป๋า",
     "tagEn": "ADVENTURE",
-    "emoji": "🖼️",
+    "emoji": "👜",
     "estimatedMinutes": 3,
     "items": [
       {
@@ -1722,7 +1722,7 @@
     "titleEn": "Departure Board",
     "titleTh": "จอเที่ยวบิน",
     "tagEn": "ADVENTURE",
-    "emoji": "🖼️",
+    "emoji": "🛫",
     "estimatedMinutes": 3,
     "items": [
       {
@@ -1802,7 +1802,7 @@
     "titleEn": "How Did It Feel?",
     "titleTh": "รู้สึกยังไง",
     "tagEn": "ADVENTURE",
-    "emoji": "🖼️",
+    "emoji": "😮",
     "estimatedMinutes": 3,
     "items": [
       {
@@ -1882,7 +1882,7 @@
     "titleEn": "My Trip Photo",
     "titleTh": "รูปทริปของฉัน",
     "tagEn": "ADVENTURE",
-    "emoji": "🖼️",
+    "emoji": "🏝️",
     "estimatedMinutes": 3,
     "items": [
       {
@@ -1967,7 +1967,7 @@
     "titleEn": "Read the Signs",
     "titleTh": "อ่านป้าย",
     "tagEn": "ADVENTURE",
-    "emoji": "🖼️",
+    "emoji": "🚫",
     "estimatedMinutes": 3,
     "items": [
       {
@@ -2047,7 +2047,7 @@
     "titleEn": "Who Brings What?",
     "titleTh": "ใครเอาอะไรมา",
     "tagEn": "ADVENTURE",
-    "emoji": "🖼️",
+    "emoji": "🎂",
     "estimatedMinutes": 3,
     "items": [
       {
