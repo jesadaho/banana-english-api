@@ -75,6 +75,11 @@ describe('Adventure A2 course registry', () => {
     const chapters = toFoundationV7ClientChapters(A2_CAPABILITIES, ADVENTURE_A2_COURSE);
     for (const chapter of chapters.slice(ZONE_1_CHAPTERS)) {
       for (const item of chapter.items) {
+        if (item.nodeType === 'describe_it' && item.backendReady) {
+          assert.equal(item.comingSoon, false, item.id);
+          assert.equal(item.countsTowardProgress, true, item.id);
+          continue;
+        }
         assert.equal(item.comingSoon, true, item.id);
         assert.equal(item.countsTowardProgress, false, item.id);
       }

@@ -6050,52 +6050,74 @@
    "hint": "① ไฮไลต์ข้อมูลในภาพที่ต้องพูด ② sentence starter · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "pic": "บอร์ดเมนูคาเฟ่ที่ Mali ทำงาน: ☕ hot latte S 50฿ · M 60฿ · L 70฿ | 🧊 iced latte S 55฿ · M 65฿ · L 75฿ | 🍵 hot tea S 40฿ · M 45฿ · L 50฿ | 🧊 iced tea S 45฿ · M 55฿ · L 65฿ | 🥛 hot milk ✗ หมด · ลูกศร 👉 ชี้ที่ iced tea ขนาด L",
+     "pic": "เมนูมี Iced tea Large 60 baht และยังมีขาย",
+     "promptTh": "สั่งชาเย็นขนาดใหญ่",
      "en": "Can I have a large iced tea, please?",
+     "th": "ขอชาเย็นแก้วใหญ่ได้ไหม",
      "accept": [
-      "I'd like a large iced tea, please.",
-      "A large iced tea, please."
+      "A large iced tea, please.",
+      "Can I have a large iced tea?"
+     ],
+     "hints": [
+      "Can I…",
+      "Can I have a large ___?"
      ]
     },
     {
-     "pic": "บอร์ดเมนูคาเฟ่ที่ Mali ทำงาน: ☕ hot latte S 50฿ · M 60฿ · L 70฿ | 🧊 iced latte S 55฿ · M 65฿ · L 75฿ | 🍵 hot tea S 40฿ · M 45฿ · L 50฿ | 🧊 iced tea S 45฿ · M 55฿ · L 65฿ | 🥛 hot milk ✗ หมด · ลูกศร 👉 ชี้ที่ iced latte ขนาด M",
-     "en": "Can I have a medium iced latte, please?",
+     "pic": "เมนูมี Hot latte Small 50 baht และยังมีขาย",
+     "promptTh": "สั่งลาเต้ร้อนขนาดเล็ก",
+     "en": "Can I have a small hot latte, please?",
+     "th": "ขอลาเต้ร้อนแก้วเล็กได้ไหม",
      "accept": [
-      "I'd like a medium iced latte, please.",
-      "A medium iced latte, please."
+      "A small hot latte, please."
+     ],
+     "hints": [
+      "Can I…",
+      "Can I have a small ___?"
      ]
     },
     {
-     "pic": "บอร์ดเมนูคาเฟ่ที่ Mali ทำงาน: ☕ hot latte S 50฿ · M 60฿ · L 70฿ | 🧊 iced latte S 55฿ · M 65฿ · L 75฿ | 🍵 hot tea S 40฿ · M 45฿ · L 50฿ | 🧊 iced tea S 45฿ · M 55฿ · L 65฿ | 🥛 hot milk ✗ หมด · Bogy ชี้ hot milk ที่มีป้าย ✗ หมด แล้วลูกศร 👉 ใหม่ชี้ที่ hot tea ขนาด S ✅",
-     "en": "Can I have a small hot tea, please?",
+     "pic": "เมนูมี Juice 40 baht และยังมีขาย",
+     "promptTh": "สั่งน้ำผลไม้",
+     "en": "Can I have some juice, please?",
+     "th": "ขอน้ำผลไม้ได้ไหม",
      "accept": [
-      "I'd like a small hot tea, please.",
-      "A small hot tea, please."
+      "Some juice, please.",
+      "Can I have some juice?"
+     ],
+     "hints": [
+      "Can I…",
+      "Can I have some ___?"
      ]
     },
     {
-     "pic": "บอร์ดเมนูคาเฟ่ที่ Mali ทำงาน: ☕ hot latte S 50฿ · M 60฿ · L 70฿ | 🧊 iced latte S 55฿ · M 65฿ · L 75฿ | 🍵 hot tea S 40฿ · M 45฿ · L 50฿ | 🧊 iced tea S 45฿ · M 55฿ · L 65฿ | 🥛 hot milk ✗ หมด · ลูกศร 👉 ชี้ที่ iced latte ขนาด S พร้อมป้าย ×2 (สองแก้ว)",
-     "en": "Can I have two small iced lattes, please?",
+     "pic": "เมนูมี Muffin 35 baht และยังมีขาย",
+     "promptTh": "สั่งมัฟฟิน",
+     "en": "Can I have a muffin, please?",
+     "th": "ขอมัฟฟินได้ไหม",
      "accept": [
-      "I'd like two small iced lattes, please.",
-      "Two small iced lattes, please."
+      "A muffin, please.",
+      "Can I have a muffin?"
+     ],
+     "hints": [
+      "Can I…",
+      "Can I have a ___?"
      ]
     },
     {
-     "pic": "บอร์ดเมนูคาเฟ่ที่ Mali ทำงาน: ☕ hot latte S 50฿ · M 60฿ · L 70฿ | 🧊 iced latte S 55฿ · M 65฿ · L 75฿ | 🍵 hot tea S 40฿ · M 45฿ · L 50฿ | 🧊 iced tea S 45฿ · M 55฿ · L 65฿ | 🥛 hot milk ✗ หมด · ลูกศร 👉 ชี้ที่ hot latte ขนาด L พร้อมไอคอน 🥡 กลับบ้าน (take away)",
-     "en": "Can I have a large hot latte to take away, please?",
+     "pic": "ป้ายราคา Muffin 35 baht",
+     "promptTh": "มัฟฟินราคาเท่าไหร่",
+     "en": "The muffin is 35 baht.",
+     "th": "มัฟฟินราคา 35 บาท",
      "accept": [
-      "I'd like a large hot latte to take away, please.",
-      "A large hot latte to take away, please."
-     ]
-    },
-    {
-     "pic": "ตู้ของว่างข้างเคาน์เตอร์ของ Mali: 🧁 muffin 45฿ · 🍪 cookie 25฿ · 🧃 juice 50฿ · 🍫 cocoa 60฿ · ลูกศร 👉 ชี้ที่ cookie พร้อมป้าย ×2 (สองชิ้น) และชี้ที่ juice",
-     "en": "Can I have two cookies and some juice, please?",
-     "accept": [
-      "I'd like two cookies and some juice, please.",
-      "Two cookies and some juice, please."
-     ]
+      "It's 35 baht.",
+      "35 baht."
+     ],
+     "hints": [
+      "The muffin…",
+      "The muffin is ___ baht."
+     ],
+     "questionEn": "How much is the muffin?"
     }
    ]
   },
@@ -7291,38 +7313,68 @@
    "hint": "① ไฮไลต์ข้อมูลในภาพที่ต้องพูด ② sentence starter · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "pic": "โน้ตของ Aunt Noi ติดตู้เย็น (Aunt Noi ขี้ลืม เลยเขียนโน้ตไว้กันลืม · 🛒 ต้องซื้อ · ทีมของเรา): 🥛 milk × 1 carton · 🫙 oil × 2 bottles",
+     "pic": "โน้ต Milk 1 carton และ Oil 2 bottles",
+     "promptTh": "ดูโน้ต ต้องซื้อนมอะไร และน้ำมันอะไร",
      "en": "We need a carton of milk and two bottles of oil.",
+     "th": "เราต้องการนมหนึ่งกล่องและน้ำมันสองขวด",
      "accept": [
       "We need one carton of milk and two bottles of oil."
+     ],
+     "hints": [
+      "We need…",
+      "We need a carton of ___."
      ]
     },
     {
-     "pic": "โน้ตของ Aunt Noi ติดตู้เย็น (🛒 ต้องซื้อ · ทีมของเรา): 🧀 cheese × 1 packet · 🍚 rice × 1 bag",
-     "en": "We need a packet of cheese and a bag of rice.",
+     "pic": "โน้ต Flour 1 packet",
+     "promptTh": "ต้องซื้อแป้งเท่าไหร่",
+     "en": "We need a packet of flour.",
+     "th": "เราต้องการแป้งหนึ่งถุง",
      "accept": [
-      "We need one packet of cheese and one bag of rice."
+      "We need one packet of flour."
+     ],
+     "hints": [
+      "We need…",
+      "We need a packet of ___."
      ]
     },
     {
-     "pic": "โน้ตของ Aunt Noi ติดตู้เย็น (🛒 ต้องซื้อ · ทีมของเรา): 🍬 sugar × 1 kilo · 🌾 flour × 2 packets",
-     "en": "We need a kilo of sugar and two packets of flour.",
+     "pic": "โน้ต Rice 2 kilos",
+     "promptTh": "ต้องซื้อข้าวเท่าไหร่",
+     "en": "We need two kilos of rice.",
+     "th": "เราต้องการข้าวสองกิโล",
      "accept": [
-      "We need one kilo of sugar and two packets of flour."
+      "We need 2 kilos of rice."
+     ],
+     "hints": [
+      "We need…",
+      "We need two kilos of ___."
      ]
     },
     {
-     "pic": "โน้ตของ Aunt Noi ติดตู้เย็น (🛒 ต้องซื้อ · ทีมของเรา): 🥛 milk × 2 cartons · 🥚 eggs × 6",
-     "en": "We need two cartons of milk and six eggs.",
+     "pic": "โน้ต Eggs 6",
+     "promptTh": "ต้องซื้อไข่กี่ฟอง",
+     "en": "We need six eggs.",
+     "th": "เราต้องการไข่หกฟอง",
      "accept": [
-      "We need 2 cartons of milk and 6 eggs."
+      "We need 6 eggs."
+     ],
+     "hints": [
+      "We need…",
+      "We need six ___."
      ]
     },
     {
-     "pic": "โน้ตของ Aunt Noi ติดตู้เย็น (🛒 ต้องซื้อ · ทีมของเรา): 🍚 rice × 2 kilos · 🫙 oil × 1 bottle",
-     "en": "We need two kilos of rice and a bottle of oil.",
+     "pic": "โน้ต Milk 1 carton",
+     "promptTh": "ต้องซื้อนมเท่าไหร่",
+     "en": "We need a carton of milk.",
+     "th": "เราต้องการนมหนึ่งกล่อง",
      "accept": [
-      "We need two kilos of rice and one bottle of oil."
+      "We need one carton of milk."
+     ],
+     "hints": [
+      "We need…",
+      "We need a carton of ___."
      ]
     }
    ]
@@ -7839,59 +7891,68 @@
    "hint": "① ไฮไลต์ข้อมูลในภาพที่ต้องพูด ② sentence starter · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "pic": "การ์ดสูตรไข่เจียวลายมือ Aunt Noi: ภาพ ① ป้าย First: ตีไข่ในชาม (mix the eggs) · ภาพ ② ป้าย Then: ใส่เกลือ 🧂 (add salt)",
+     "pic": "ขั้นตอน 1 ตีไข่ แล้วขั้นตอน 2 ใส่เกลือ",
+     "promptTh": "สองขั้นแรกทำอะไร",
      "en": "First, mix the eggs. Then, add salt.",
+     "th": "ขั้นแรกตีไข่ แล้วใส่เกลือ",
      "accept": [
-      "First, mix the eggs. Then add salt.",
-      "First mix the eggs, then add salt."
+      "First, mix the eggs, then add salt."
+     ],
+     "hints": [
+      "First…",
+      "First, mix the ___. Then, add ___."
      ]
     },
     {
-     "pic": "การ์ดสูตรไข่เจียวลายมือ Aunt Noi: ภาพ ③ ป้าย Then: เทน้ำมันลงกระทะ (add oil to the pan) · ภาพ ④ ป้าย After that: ทอดไข่ในกระทะ 🍳 (fry the eggs)",
-     "en": "Then, add oil to the pan. After that, fry the eggs.",
+     "pic": "ขั้นตอน 3 คนไข่ในชาม",
+     "promptTh": "ขั้นที่สามทำอะไร",
+     "en": "Then, mix the eggs.",
+     "th": "แล้วคนไข่",
      "accept": [
-      "Then add oil to the pan. After that, fry the eggs.",
-      "Add oil to the pan. After that, fry the eggs."
+      "Then mix the eggs."
+     ],
+     "hints": [
+      "Then…",
+      "Then, mix the ___."
      ]
     },
     {
-     "pic": "การ์ดสูตรไข่เจียวลายมือ Aunt Noi: ภาพ ④ ป้าย After that: ทอดไข่ 🍳 (fry the eggs) · ภาพ ⑤ ป้าย Finally: หั่นไข่เจียว 🔪 (cut it)",
-     "en": "After that, fry the eggs. Finally, cut it.",
+     "pic": "ขั้นตอน 4 เทไข่ลงกระทะ",
+     "promptTh": "ขั้นที่สี่ทำอะไร",
+     "en": "Then, pour the eggs into the pan.",
+     "th": "แล้วเทไข่ลงกระทะ",
      "accept": [
-      "After that fry the eggs. Finally cut it.",
-      "After that, fry the eggs. Finally cut it."
+      "Then pour the eggs into the pan."
+     ],
+     "hints": [
+      "Then…",
+      "Then, pour the eggs into the ___."
      ]
     },
     {
-     "pic": "การ์ดสูตรไข่ต้มลายมือ Aunt Noi: ภาพ ① ป้าย First: ต้มไข่ในหม้อ (boil the eggs) · ภาพ ② ป้าย Then: หั่นไข่ 🔪 (cut them) · ภาพ ③ ป้าย After that: ใส่เกลือ 🧂 (add salt)",
-     "en": "First, boil the eggs. Then, cut them. After that, add salt.",
+     "pic": "ขั้นตอน 5 ทอดไข่ในกระทะ",
+     "promptTh": "ขั้นสุดท้ายทำอะไร",
+     "en": "Then, fry the eggs.",
+     "th": "แล้วทอดไข่",
      "accept": [
-      "First boil the eggs, then cut them. After that, add salt.",
-      "First, boil the eggs. Then cut them. After that, add salt."
+      "Then fry the eggs."
+     ],
+     "hints": [
+      "Then…",
+      "Then, fry the ___."
      ]
     },
     {
-     "pic": "การ์ดสูตรไข่เจียวลายมือ Aunt Noi: ภาพ ④ ป้าย Then + 🐢 slowly: ทอดไข่ (fry the eggs) · ภาพ ⑤ ป้าย Finally + ⚠️ carefully: หั่น (cut it)",
-     "en": "Then, fry the eggs slowly. Finally, cut it carefully.",
+     "pic": "ขั้นตอน 1 ตีไข่ในชาม",
+     "promptTh": "ขั้นแรกทำอะไร",
+     "en": "First, mix the eggs.",
+     "th": "ขั้นแรกตีไข่",
      "accept": [
-      "Then fry the eggs slowly. Finally, cut it carefully.",
-      "Fry the eggs slowly. Finally, cut it carefully."
-     ]
-    },
-    {
-     "pic": "การ์ดสูตรไข่เจียวลายมือ Aunt Noi: ภาพ ① ป้าย First: ปอกหัวหอม 🧅 (peel the onion) · ภาพ ② ป้าย Then + ⚡ quickly: สับหัวหอม 🔪 (chop it)",
-     "en": "First, peel the onion. Then, chop it quickly.",
-     "accept": [
-      "First peel the onion, then chop it quickly.",
-      "First, peel the onion. Then chop it quickly."
-     ]
-    },
-    {
-     "pic": "การ์ดสูตรไข่ตุ๋นลายมือ Aunt Noi: ภาพ ③ ป้าย After that + 🐢 slowly: เทนมลงในไข่ 🥛 (pour the milk) · ภาพ ④ ป้าย Finally: คนให้เข้ากัน 🥄 (stir it)",
-     "en": "After that, pour the milk slowly. Finally, stir it.",
-     "accept": [
-      "After that pour the milk slowly. Finally stir it.",
-      "Pour the milk slowly. Finally, stir it."
+      "First mix the eggs."
+     ],
+     "hints": [
+      "First…",
+      "First, mix the ___."
      ]
     }
    ]
@@ -8422,49 +8483,71 @@
    "hint": "① ไฮไลต์ข้อมูลในภาพที่ต้องพูด ② sentence starter · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "pic": "เสื้อเชิ้ต 2 ตัวในร้านเสื้อผ้าที่ Mali ทำงาน: 👕 สีขาว 590฿ size M · 👕 สีดำ 390฿ size M · หัวข้อที่ต้องเทียบ: 💰 ราคา · ลูกศร 👉 ชี้ที่เสื้อสีขาว",
+     "pic": "เสื้อขาว S 350 baht เสื้อน้ำเงิน L 200 baht เทียบราคา",
+     "promptTh": "เสื้อตัวไหนแพงกว่า",
      "en": "The white shirt is more expensive.",
+     "th": "เสื้อขาวแพงกว่า",
      "accept": [
-      "The white shirt is more expensive than the black shirt.",
-      "The white shirt is more expensive than the black one.",
       "The white one is more expensive."
+     ],
+     "hints": [
+      "The white…",
+      "The white shirt is more ___."
      ]
     },
     {
-     "pic": "เสื้อเชิ้ต 2 ตัว: 👕 สีฟ้า size L 450฿ · 👕 สีแดง size S 450฿ · หัวข้อที่ต้องเทียบ: 📏 ขนาด · ลูกศร 👉 ชี้ที่เสื้อสีฟ้า",
-     "en": "The blue shirt is bigger than the red one.",
+     "pic": "เสื้อน้ำเงิน L 200 baht ใหญ่กว่าเสื้อขาว S 350 baht",
+     "promptTh": "เสื้อตัวไหนใหญ่กว่า",
+     "en": "The blue shirt is bigger than the white one.",
+     "th": "เสื้อน้ำเงินใหญ่กว่าเสื้อขาว",
      "accept": [
-      "The blue shirt is bigger.",
-      "The blue shirt is bigger than the red shirt.",
       "The blue one is bigger."
+     ],
+     "hints": [
+      "The blue…",
+      "The blue shirt is bigger than the ___ one."
      ]
     },
     {
-     "pic": "เสื้อเชิ้ต 2 ตัว: 👕 สีเหลือง 250฿ size M · 👕 สีเขียว 450฿ size M · หัวข้อที่ต้องเทียบ: 💰 ราคา · ลูกศร 👉 ชี้ที่เสื้อสีเหลือง",
-     "en": "The yellow shirt is cheaper than the green one.",
+     "pic": "เสื้อน้ำเงิน 200 baht ถูกกว่าเสื้อขาว 350 baht",
+     "promptTh": "เสื้อตัวไหนถูกกว่า",
+     "en": "The blue shirt is cheaper than the white one.",
+     "th": "เสื้อน้ำเงินถูกกว่าเสื้อขาว",
      "accept": [
-      "The yellow shirt is cheaper.",
-      "The yellow shirt is cheaper than the green shirt.",
-      "The yellow one is cheaper."
+      "The blue one is cheaper."
+     ],
+     "hints": [
+      "The blue…",
+      "The blue shirt is cheaper than the ___ one."
      ]
     },
     {
-     "pic": "เสื้อเชิ้ต 2 ตัว: 👕 สีแดง 300฿ size L · 👕 สีฟ้า 500฿ size M · หัวข้อที่ต้องเทียบ: 💰 ราคา และ 📏 ขนาด (พูด 2 ประโยค) · ลูกศร 👉 ชี้ที่เสื้อสีแดง",
-     "en": "The red shirt is cheaper. It's bigger too.",
+     "pic": "เสื้อขาว S เล็กกว่าเสื้อน้ำเงิน L",
+     "promptTh": "เสื้อขาวเป็นอย่างไรเมื่อเทียบขนาด",
+     "en": "The white shirt is smaller than the blue one.",
+     "th": "เสื้อขาวเล็กกว่าเสื้อน้ำเงิน",
      "accept": [
-      "The red shirt is cheaper than the blue one. It's bigger too.",
-      "The red shirt is cheaper. It's bigger than the blue one.",
-      "The red shirt is cheaper and bigger."
-     ]
-    },
-    {
-     "pic": "เสื้อเชิ้ต 2 ตัว: 👕 สีขาว size S 350฿ · 👕 สีดำ size XL 350฿ · หัวข้อที่ต้องเทียบ: 📏 ขนาด · ลูกศร 👉 ชี้ที่เสื้อสีขาว",
-     "en": "The white shirt is smaller than the black one.",
-     "accept": [
-      "The white shirt is smaller.",
-      "The white shirt is smaller than the black shirt.",
       "The white one is smaller."
+     ],
+     "hints": [
+      "The white…",
+      "The white shirt is smaller than the ___ one."
      ]
+    },
+    {
+     "pic": "ป้ายเสื้อน้ำเงิน L 200 baht",
+     "promptTh": "เสื้อน้ำเงินราคาเท่าไหร่",
+     "en": "The blue shirt is 200 baht.",
+     "th": "เสื้อน้ำเงินราคา 200 บาท",
+     "accept": [
+      "It's 200 baht.",
+      "200 baht."
+     ],
+     "hints": [
+      "The blue…",
+      "The blue shirt is ___ baht."
+     ],
+     "questionEn": "How much is the blue shirt?"
     }
    ]
   },
@@ -9126,50 +9209,70 @@
    "hint": "① ไฮไลต์ข้อมูลในภาพที่ต้องพูด ② sentence starter · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "pic": "ป้ายของขวัญวันเกิด Bogy: 🧸 teddy bear 150฿ ⭐⭐⭐ · 🎂 cake 300฿ ⭐⭐⭐⭐⭐ · 💐 flowers 250฿ ⭐⭐⭐⭐ · หัวข้อ: 💰 ราคา · ลูกศร 👉 ชี้ที่ teddy bear",
+     "pic": "Teddy bear 150 baht, Flowers 250 baht, Cake 350 baht เทียบราคาถูกสุด",
+     "promptTh": "ของชิ้นไหนถูกที่สุด",
      "en": "The teddy bear is the cheapest.",
+     "th": "ตุ๊กตาหมีถูกที่สุด",
      "accept": [
-      "The teddy bear is the cheapest one.",
       "The teddy bear is the cheapest gift."
+     ],
+     "hints": [
+      "The teddy…",
+      "The teddy bear is the ___."
      ]
     },
     {
-     "pic": "ป้ายของขวัญวันเกิด Bogy: 🧸 teddy bear 150฿ ⭐⭐⭐ · 🎂 cake 300฿ ⭐⭐⭐⭐⭐ · 💐 flowers 250฿ ⭐⭐⭐⭐ · หัวข้อ: ⭐ รีวิว (คนชอบเยอะ) · ลูกศร 👉 ชี้ที่ cake",
-     "en": "The cake is the most popular.",
-     "accept": [
-      "The cake is the most popular one.",
-      "The cake is the most popular gift."
-     ]
-    },
-    {
-     "pic": "ป้ายของขวัญวันเกิด Bogy: 🧸 teddy bear 150฿ ⭐⭐⭐ · 🎂 cake 300฿ ⭐⭐⭐⭐⭐ · 💐 flowers 250฿ ⭐⭐⭐⭐ · หัวข้อ: 💰 ราคา · ลูกศร 👉 ชี้ที่ cake",
+     "pic": "Cake 350 baht แพงกว่า Flowers 250 และ Teddy 150",
+     "promptTh": "ของชิ้นไหนแพงที่สุด",
      "en": "The cake is the most expensive.",
+     "th": "เค้กแพงที่สุด",
      "accept": [
-      "The cake is the most expensive one.",
       "The cake is the most expensive gift."
+     ],
+     "hints": [
+      "The cake…",
+      "The cake is the most ___."
      ]
     },
     {
-     "pic": "ป้ายของขวัญวันเกิด Bogy: 💌 card 50฿ ⭐⭐ · 💐 flowers 400฿ ⭐⭐⭐⭐⭐ · 🧸 teddy bear 600฿ ⭐⭐⭐ · หัวข้อ: 💰 ราคา · ลูกศร 👉 ชี้ที่ teddy bear",
-     "en": "The teddy bear is the most expensive.",
+     "pic": "Cake 5.0 / 5 ดาวมากสุด",
+     "promptTh": "ของชิ้นไหนคนชอบที่สุด",
+     "en": "The cake is the most popular.",
+     "th": "เค้กคนชอบที่สุด",
      "accept": [
-      "The teddy bear is the most expensive one.",
-      "The teddy bear is the most expensive gift."
+      "The cake is the most popular gift."
+     ],
+     "hints": [
+      "The cake…",
+      "The cake is the most ___."
      ]
     },
     {
-     "pic": "ป้ายของขวัญวันเกิด Bogy: 💌 card 50฿ ⭐⭐ · 💐 flowers 400฿ ⭐⭐⭐⭐⭐ · 🧸 teddy bear 600฿ ⭐⭐⭐ · หัวข้อ: ⭐ รีวิว (คนชอบเยอะ) · ลูกศร 👉 ชี้ที่ flowers",
-     "en": "The flowers are the most popular.",
+     "pic": "ป้าย Flowers 250 baht",
+     "promptTh": "ดอกไม้ราคาเท่าไหร่",
+     "en": "The flowers are 250 baht.",
+     "th": "ดอกไม้ราคา 250 บาท",
      "accept": [
-      "The flowers are the most popular gift."
+      "They're 250 baht.",
+      "250 baht."
+     ],
+     "hints": [
+      "The flowers…",
+      "The flowers are ___ baht."
      ]
     },
     {
-     "pic": "ป้ายของขวัญวันเกิด Bogy: 💌 card 50฿ ⭐⭐ · 💐 flowers 400฿ ⭐⭐⭐⭐⭐ · 🧸 teddy bear 600฿ ⭐⭐⭐ · หัวข้อ: 💰 ราคา · ลูกศร 👉 ชี้ที่ card",
-     "en": "The card is the cheapest.",
+     "pic": "ป้าย Teddy bear 150 baht",
+     "promptTh": "ตุ๊กตาหมีราคาเท่าไหร่",
+     "en": "The teddy bear is 150 baht.",
+     "th": "ตุ๊กตาหมีราคา 150 บาท",
      "accept": [
-      "The card is the cheapest one.",
-      "The card is the cheapest gift."
+      "It's 150 baht.",
+      "150 baht."
+     ],
+     "hints": [
+      "The teddy…",
+      "The teddy bear is ___ baht."
      ]
     }
    ]
@@ -9711,54 +9814,71 @@
    "hint": "① ไฮไลต์ข้อมูลในภาพที่ต้องพูด ② sentence starter · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "pic": "รูป May · 📅 Yesterday · ป้าย MUSEUM · ไอคอน 🚶 visit",
+     "pic": "รูป May ที่พิพิธภัณฑ์ ป้าย Yesterday",
+     "promptTh": "ดูรูปเมื่อวาน แล้วเล่าหนึ่งประโยค",
      "en": "She visited the museum yesterday.",
+     "th": "เธอไปพิพิธภัณฑ์เมื่อวาน",
      "accept": [
-      "May visited the museum yesterday."
+      "May visited the museum yesterday.",
+      "She was at the museum yesterday."
+     ],
+     "hints": [
+      "She…",
+      "She visited the ___ yesterday."
      ]
     },
     {
-     "pic": "รูป May กับพี่สาวบนโซฟา · 📅 Yesterday · ไอคอน 🎮 play games",
-     "en": "They played games yesterday.",
+     "pic": "รูป May ดูทีวีที่บ้าน ป้าย Yesterday",
+     "promptTh": "ดูรูปเมื่อวาน แล้วเล่าหนึ่งประโยค",
+     "en": "She watched TV yesterday.",
+     "th": "เธอดูทีวีเมื่อวาน",
      "accept": [
-      "May and her sister played games yesterday."
+      "May watched TV yesterday."
+     ],
+     "hints": [
+      "She…",
+      "She watched ___ yesterday."
      ]
     },
     {
-     "pic": "รูป May ในครัวของ Aunt Noi ตอนเย็น · จานอาหารบนโต๊ะมีป้าย DINNER · 📅 Yesterday · ไอคอน 🍳 cook",
-     "en": "She cooked dinner yesterday.",
+     "pic": "รูป Bogy ทำความสะอาดห้อง ป้าย Yesterday",
+     "promptTh": "ดูรูปเมื่อวาน แล้วเล่าหนึ่งประโยค",
+     "en": "He cleaned his room yesterday.",
+     "th": "เขาทำความสะอาดห้องเมื่อวาน",
      "accept": [
-      "She cooked with Aunt Noi yesterday.",
-      "May cooked dinner yesterday."
+      "Bogy cleaned his room yesterday."
+     ],
+     "hints": [
+      "He…",
+      "He cleaned his ___ yesterday."
      ]
     },
     {
-     "pic": "รูป May ที่คาเฟ่ (Mali ยืนอยู่หลังเคาน์เตอร์) · 📅 Yesterday · ไอคอน 📍 at the café",
-     "en": "She was at the café yesterday.",
+     "pic": "รูป Capy พักผ่อนที่บ้าน ป้าย Yesterday",
+     "promptTh": "ดูรูปเมื่อวาน แล้วเล่าหนึ่งประโยค",
+     "en": "Capy relaxed at home yesterday.",
+     "th": "คาปี้พักผ่อนที่บ้านเมื่อวาน",
      "accept": [
-      "May was at the café yesterday."
+      "Capy relaxed yesterday."
+     ],
+     "hints": [
+      "Capy…",
+      "Capy relaxed at ___ yesterday."
      ]
     },
     {
-     "pic": "รูป May กับ Capy ดูทีวี · 📅 Yesterday · ไอคอน 📺 watch",
-     "en": "They watched TV yesterday.",
+     "pic": "รูป May กับ Bogy ที่สวน ป้าย Yesterday",
+     "promptTh": "เมื่อวานพวกเขาอยู่ที่ไหน",
+     "en": "They were at the park yesterday.",
+     "th": "พวกเขาอยู่ที่สวนเมื่อวาน",
      "accept": [
-      "May and Capy watched TV yesterday."
-     ]
-    },
-    {
-     "pic": "รูป Bogy ถือไม้กวาดในห้องนอนที่สะอาด · 📅 Yesterday · ไอคอน 🧹 clean",
-     "en": "Bogy cleaned his room yesterday.",
-     "accept": [
-      "He cleaned his room yesterday."
-     ]
-    },
-    {
-     "pic": "รูป Capy นอนเล่นบนโซฟากับชานมไข่มุก · 📅 Yesterday · ไอคอน 😌 relax",
-     "en": "Capy relaxed yesterday.",
-     "accept": [
-      "Capy relaxed at home yesterday."
-     ]
+      "May and Bogy were at the park yesterday."
+     ],
+     "hints": [
+      "They were…",
+      "They were at the ___ yesterday."
+     ],
+     "questionEn": "Where were they yesterday?"
     }
    ]
   },
@@ -10145,43 +10265,71 @@
    "hint": "① ไฮไลต์ข้อมูลในภาพที่ต้องพูด ② sentence starter · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "pic": "ป้ายเมนูบนเรือของครอบครัว Mali: 🍜 boat noodles 40฿ ⭐ famous · 🥭 mango 30฿ · 🧊 iced tea 25฿ ⭐ famous · 💧 water 10฿ · 🍚 fried rice 50฿ ⭐ famous · ลูกศร 👉 ชี้ที่ boat noodles",
+     "pic": "ป้าย Boat noodles 40 baht และดาว Famous",
+     "promptTh": "ก๋วยเตี๋ยวเรือราคาเท่าไหร่ และมีอะไรพิเศษ",
      "en": "The boat noodles are 40 baht. They're famous.",
+     "th": "ก๋วยเตี๋ยวเรือราคา 40 บาท และดัง",
      "accept": [
-      "The boat noodles are 40 baht.",
-      "The boat noodles are forty baht. They are famous."
+      "The boat noodles are forty baht. They're famous."
+     ],
+     "hints": [
+      "The boat…",
+      "The boat noodles are ___ baht."
      ]
     },
     {
-     "pic": "ป้ายเมนูบนเรือของครอบครัว Mali: 🍜 boat noodles 40฿ ⭐ famous · 🥭 mango 30฿ · 🧊 iced tea 25฿ ⭐ famous · 💧 water 10฿ · 🍚 fried rice 50฿ ⭐ famous · ลูกศร 👉 ชี้ที่ mango",
+     "pic": "ป้าย Mango 30 baht",
+     "promptTh": "มะม่วงราคาเท่าไหร่",
      "en": "The mango is 30 baht.",
+     "th": "มะม่วงราคา 30 บาท",
      "accept": [
-      "The mango is thirty baht.",
-      "Mango is 30 baht."
+      "It's 30 baht.",
+      "30 baht."
+     ],
+     "hints": [
+      "The mango…",
+      "The mango is ___ baht."
      ]
     },
     {
-     "pic": "ป้ายเมนูบนเรือของครอบครัว Mali: 🍜 boat noodles 40฿ ⭐ famous · 🥭 mango 30฿ · 🧊 iced tea 25฿ ⭐ famous · 💧 water 10฿ · 🍚 fried rice 50฿ ⭐ famous · ลูกศร 👉 ชี้ที่ iced tea",
-     "en": "The iced tea is 25 baht. It's famous.",
-     "accept": [
-      "The iced tea is 25 baht.",
-      "The iced tea is twenty-five baht. It is famous."
-     ]
-    },
-    {
-     "pic": "ป้ายเมนูบนเรือของครอบครัว Mali: 🍜 boat noodles 40฿ ⭐ famous · 🥭 mango 30฿ · 🧊 iced tea 25฿ ⭐ famous · 💧 water 10฿ · 🍚 fried rice 50฿ ⭐ famous · ลูกศร 👉 ชี้ที่ water",
+     "pic": "ป้าย Water 10 baht",
+     "promptTh": "น้ำราคาเท่าไหร่",
      "en": "The water is 10 baht.",
+     "th": "น้ำราคา 10 บาท",
      "accept": [
-      "Water is 10 baht.",
-      "The water is ten baht."
+      "It's 10 baht.",
+      "10 baht."
+     ],
+     "hints": [
+      "The water…",
+      "The water is ___ baht."
      ]
     },
     {
-     "pic": "ป้ายเมนูบนเรือของครอบครัว Mali: 🍜 boat noodles 40฿ ⭐ famous · 🥭 mango 30฿ · 🧊 iced tea 25฿ ⭐ famous · 💧 water 10฿ · 🍚 fried rice 50฿ ⭐ famous · ลูกศร 👉 ชี้ที่ fried rice",
-     "en": "The fried rice is 50 baht. It's famous.",
+     "pic": "ดาว Famous อยู่ที่ Boat noodles",
+     "promptTh": "เมนูไหนดัง",
+     "en": "The boat noodles are famous.",
+     "th": "ก๋วยเตี๋ยวเรือดัง",
      "accept": [
-      "The fried rice is 50 baht.",
-      "The fried rice is fifty baht. It is famous."
+      "They're famous."
+     ],
+     "hints": [
+      "The boat…",
+      "The boat noodles are ___."
+     ]
+    },
+    {
+     "pic": "ป้าย Boat noodles 40 baht",
+     "promptTh": "ก๋วยเตี๋ยวเรือราคาเท่าไหร่",
+     "en": "The boat noodles are 40 baht.",
+     "th": "ก๋วยเตี๋ยวเรือราคา 40 บาท",
+     "accept": [
+      "They're 40 baht.",
+      "40 baht."
+     ],
+     "hints": [
+      "The boat…",
+      "The boat noodles are ___ baht."
      ]
     }
    ]
@@ -11028,48 +11176,79 @@
    "beat": "Ten",
    "axes": "22211",
    "teach": "🖼️ ดูบอร์ดดิ้งพาส → บอกเวลาและเกต **Our flight is at 10:40. We have to go to Gate 9.**",
-   "say": "We have to go to Gate 9.",
+   "say": "Her flight is at 10:40. She has to go to Gate 9.",
    "chapter": "บท 17: เช็กอินที่สนามบิน",
    "goal": "อ่านข้อมูลในภาพ (อ่านบอร์ดดิ้งพาส) แล้วพูดเป็นประโยคที่ใช้ได้จริง",
    "accept": "รับประโยคเดียวที่ตรงข้อมูลในภาพ ไม่บังคับพูด model ครบ · ข้อมูลผิดจากภาพ = ลองใหม่",
    "hint": "① ไฮไลต์ข้อมูลในภาพที่ต้องพูด ② sentence starter · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "pic": "บอร์ดดิ้งพาสของทีม (Our): ✈️ เวลาเครื่องออก 10:40 · 🚪 Gate 9",
-     "en": "Our flight is at 10:40. We have to go to Gate 9.",
+     "pic": "บอร์ดดิ้งพาสของ May เวลาออก 10:40 ประตู 9",
+     "promptTh": "เครื่องออกกี่โมง และต้องไปประตูไหน",
+     "en": "Her flight is at 10:40. She has to go to Gate 9.",
+     "th": "ไฟลต์ของเธอออก 10:40 เธอต้องไปประตู 9",
      "accept": [
-      "Our flight is at ten forty. We have to go to Gate 9.",
-      "We have to go to Gate 9. Our flight is at 10:40."
+      "She has to go to Gate 9.",
+      "The flight is at 10:40."
+     ],
+     "hints": [
+      "Her flight…",
+      "Her flight is at ___. She has to go to Gate ___."
      ]
     },
     {
-     "pic": "บอร์ดดิ้งพาสชื่อ CAPY พร้อมรูป Capy มีวงกลมสีแดงล้อมเฉพาะ 🚪 Gate 11 (บอกแค่เกต)",
-     "en": "Capy has to go to Gate 11.",
+     "pic": "บอร์ดดิ้งพาสที่นั่ง 12A",
+     "promptTh": "ที่นั่งอะไร",
+     "en": "The seat is 12A.",
+     "th": "ที่นั่ง 12A",
      "accept": [
-      "Capy has to go to gate eleven."
+      "Seat 12A.",
+      "It's 12A."
+     ],
+     "hints": [
+      "The seat…",
+      "The seat is ___."
+     ],
+     "questionEn": "What is the seat?"
+    },
+    {
+     "pic": "เวลาขึ้นเครื่อง 10:00",
+     "promptTh": "ขึ้นเครื่องกี่โมง",
+     "en": "Boarding is at 10:00.",
+     "th": "ขึ้นเครื่องตอน 10:00",
+     "accept": [
+      "We board at 10:00."
+     ],
+     "hints": [
+      "Boarding…",
+      "Boarding is at ___."
      ]
     },
     {
-     "pic": "บอร์ดดิ้งพาสชื่อ MAX พร้อมรูป Bogy (He/His): ✈️ 7:15 · 🚪 Gate 3",
-     "en": "His flight is at 7:15. He has to go to Gate 3.",
+     "pic": "เที่ยวบินจาก Bangkok ไป Singapore",
+     "promptTh": "เครื่องไปที่ไหน",
+     "en": "The flight is to Singapore.",
+     "th": "เครื่องไปสิงคโปร์",
      "accept": [
-      "Bogy's flight is at 7:15. He has to go to Gate 3.",
-      "His flight is at seven fifteen. He has to go to Gate 3."
+      "It goes to Singapore."
+     ],
+     "hints": [
+      "The flight…",
+      "The flight is to ___."
      ]
     },
     {
-     "pic": "บอร์ดดิ้งพาสชื่อ TEACHER NINA พร้อมรูป Nina (She/Her): ✈️ 13:20 · 🚪 Gate 15",
-     "en": "Her flight is at 13:20. She has to go to Gate 15.",
+     "pic": "ประตูขึ้นเครื่องหมายเลข 9",
+     "promptTh": "ประตูหมายเลขอะไร",
+     "en": "The gate is 9.",
+     "th": "ประตูหมายเลข 9",
      "accept": [
-      "Her flight is at 1:20 p.m. She has to go to Gate 15.",
-      "Nina's flight is at one twenty in the afternoon. She has to go to Gate 15."
-     ]
-    },
-    {
-     "pic": "บอร์ดดิ้งพาสของทีม (Our): ✈️ 8:50 · 🚪 Gate 5",
-     "en": "Our flight is at 8:50. We have to go to Gate 5.",
-     "accept": [
-      "Our flight is at eight fifty. We have to go to Gate 5."
+      "Gate 9.",
+      "It's gate 9."
+     ],
+     "hints": [
+      "The gate…",
+      "The gate is ___."
      ]
     }
    ]
@@ -11689,48 +11868,75 @@
    "beat": "Ten",
    "axes": "12122",
    "teach": "🖼️ ดูภาพใบจองห้อง → พูดข้อมูล **I have a reservation for two nights. · It's a double room.**",
-   "say": "I have a reservation for two nights.",
+   "say": "She has a reservation for two nights. It's a double room.",
    "chapter": "บท 18: เช็กอินโรงแรม",
    "goal": "อ่านข้อมูลในภาพ (อ่านใบจอง) แล้วพูดเป็นประโยคที่ใช้ได้จริง",
    "accept": "รับประโยคเดียวที่ตรงข้อมูลในภาพ ไม่บังคับพูด model ครบ · ข้อมูลผิดจากภาพ = ลองใหม่",
    "hint": "① ไฮไลต์ข้อมูลในภาพที่ต้องพูด ② sentence starter · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "pic": "ใบจองชื่อคุณ (I): 🌙 2 nights",
-     "en": "I have a reservation for two nights.",
+     "pic": "ใบจองของ May จำนวน Nights 2",
+     "promptTh": "จองกี่คืน",
+     "en": "She has a reservation for two nights.",
+     "th": "เธอจองไว้สองคืน",
      "accept": [
-      "I have a reservation for 2 nights."
+      "She has a reservation for 2 nights."
+     ],
+     "hints": [
+      "She has…",
+      "She has a reservation for ___ nights."
      ]
     },
     {
-     "pic": "ใบจองชื่อคุณ (I): 🌙 3 nights · 🛏️ Double room",
-     "en": "I have a reservation for three nights. It's a double room.",
+     "pic": "ใบจอง Room เป็น Double room",
+     "promptTh": "ห้องแบบไหน",
+     "en": "It's a double room.",
+     "th": "เป็นห้องคู่",
      "accept": [
-      "I have a reservation for three nights. It is a double room."
+      "It is a double room."
+     ],
+     "hints": [
+      "It's…",
+      "It's a ___ room."
      ]
     },
     {
-     "pic": "ใบจองของทั้งทีม (We): 🌙 4 nights · 🏨 Banana Hotel",
-     "en": "We have a reservation for four nights.",
+     "pic": "เวลาอาหารเช้า 7:00 ถึง 10:00",
+     "promptTh": "อาหารเช้ากี่โมง",
+     "en": "Breakfast is from 7:00 to 10:00.",
+     "th": "อาหารเช้าตั้งแต่ 7:00 ถึง 10:00",
      "accept": [
-      "We have a reservation for 4 nights."
+      "Breakfast is at 7:00."
+     ],
+     "hints": [
+      "Breakfast…",
+      "Breakfast is from ___ to ___."
      ]
     },
     {
-     "pic": "ใบจองชื่อ TEACHER NINA พร้อมรูป Nina (She): 🌙 1 night · 🛏️ Double room",
-     "en": "She has a reservation for one night. It's a double room.",
+     "pic": "เวลาเช็คเอาต์ 11:00",
+     "promptTh": "เช็คเอาต์กี่โมง",
+     "en": "Checkout is at 11:00.",
+     "th": "เช็คเอาต์ตอน 11:00",
      "accept": [
-      "Nina has a reservation for one night. It's a double room.",
-      "She has a reservation for one night. It is a double room."
+      "Checkout time is 11:00."
+     ],
+     "hints": [
+      "Checkout…",
+      "Checkout is at ___."
      ]
     },
     {
-     "pic": "2 ใบเทียบกัน: ใบที่พนักงานต้อนรับพิมพ์ 🌙 2 nights ❌ · ใบจองของคุณ 🌙 3 nights ✅ (พูดแก้ข้อมูลให้พนักงานต้อนรับว่าคุณจองไว้กี่คืน)",
-     "en": "I booked a room for three nights, not two.",
+     "pic": "ใบจอง Nights 2 และ Double room",
+     "promptTh": "สรุปการจอง",
+     "en": "She has a reservation for two nights. It's a double room.",
+     "th": "เธอจองสองคืน เป็นห้องคู่",
      "accept": [
-      "Sorry, I booked it for three nights, not two.",
-      "I booked a room for three nights, not two nights.",
-      "Sorry, I booked a room for three nights, not two."
+      "It's a double room for two nights."
+     ],
+     "hints": [
+      "She has…",
+      "She has a reservation for two ___. It's a ___ room."
      ]
     }
    ]
@@ -12267,42 +12473,70 @@
    "hint": "① ไฮไลต์ข้อมูลในภาพที่ต้องพูด ② sentence starter · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "pic": "ตารางรถ: 🚌 9:00 ออกไปแล้ว ❌ · นาฬิกาตอนนี้ 9:05 · ทีม (We) เพิ่งวิ่งมาถึงป้าย",
-     "en": "We missed the bus.",
+     "pic": "ป้ายรถ 09:00 ออกไปแล้ว นาฬิกาตอนนี้ 09:10",
+     "promptTh": "เกิดอะไรขึ้นกับรถคัน 09:00",
+     "en": "The 09:00 bus left. We missed the bus.",
+     "th": "รถ 09:00 ออกไปแล้ว เราพลาดรถ",
      "accept": [
-      "The bus left at nine. We missed it.",
-      "We missed the bus. It left at nine."
+      "We missed the bus."
+     ],
+     "hints": [
+      "The bus…",
+      "We missed the ___."
      ]
     },
     {
-     "pic": "ตารางรถ: 🚌 9:00 ออกไปแล้ว ❌ · 🚌 9:30 มีลูกศร ➡️ 'คันถัดไป' · นาฬิกาตอนนี้ 9:10 (บอกเวลารถคันถัดไป)",
-     "en": "The next bus is at 9:30.",
+     "pic": "รถคันถัดไปบนป้ายคือ 09:30",
+     "promptTh": "รถคันถัดไปกี่โมง",
+     "en": "The next bus is at 09:30.",
+     "th": "รถคันถัดไปตอน 09:30",
      "accept": [
-      "The next bus is at nine thirty."
+      "It's at 09:30."
+     ],
+     "hints": [
+      "The next…",
+      "The next bus is at ___."
      ]
     },
     {
-     "pic": "ตารางรถ: 🚌 7:15 ออกไปแล้ว ❌ · นาฬิกาตอนนี้ 7:20 · ทีม (We) เพิ่งมาถึงป้าย (บอกเวลาที่รถออกและว่าไม่ทัน)",
-     "en": "The bus left at 7:15. We missed it.",
+     "pic": "ค่าโดยสารบนป้าย FARE 20 baht",
+     "promptTh": "ค่าโดยสารเท่าไหร่",
+     "en": "The fare is 20 baht.",
+     "th": "ค่าโดยสาร 20 บาท",
      "accept": [
-      "The bus left at seven fifteen. We missed it.",
-      "We missed the bus. It left at 7:15."
+      "It's 20 baht.",
+      "20 baht."
+     ],
+     "hints": [
+      "The fare…",
+      "The fare is ___ baht."
      ]
     },
     {
-     "pic": "ตารางรถไป Old Town: 🚌 10:00 ออกไปแล้ว ❌ · 🚌 10:45 คันถัดไป ➡️ · นาฬิกาตอนนี้ 10:10 · ทีม (We) อยู่ที่ป้าย (บอกทั้ง 2 อย่าง)",
-     "en": "The bus left at ten. We missed it. The next bus is at 10:45.",
+     "pic": "ป้ายมีเวลา 10:00 ด้วย",
+     "promptTh": "มีรถกี่โมงอีกคัน",
+     "en": "There is a bus at 10:00.",
+     "th": "มีรถตอน 10:00",
      "accept": [
-      "We missed the bus. The next bus is at 10:45.",
-      "The bus left at 10:00. We missed it. The next bus is at ten forty-five."
+      "The bus is at 10:00."
+     ],
+     "hints": [
+      "There is…",
+      "There is a bus at ___."
      ]
     },
     {
-     "pic": "ตารางรถ: 🚌 8:20 ออกไปแล้ว ❌ · นาฬิกาตอนนี้ 8:25 · Bogy (He) วิ่งมาถึงป้ายคนเดียว",
-     "en": "Bogy missed the bus.",
+     "pic": "นาฬิกา NOW 09:10",
+     "promptTh": "ตอนนี้กี่โมง",
+     "en": "It is 09:10 now.",
+     "th": "ตอนนี้ 09:10",
      "accept": [
-      "He missed the bus.",
-      "The bus left at 8:20. Bogy missed it."
+      "It's 09:10.",
+      "Now it's 09:10."
+     ],
+     "hints": [
+      "It is…",
+      "It is ___ now."
      ]
     }
    ]
@@ -12769,48 +13003,75 @@
    "beat": "Ten",
    "axes": "12222",
    "teach": "ดูแผนที่ บอกทางจากจุด A ไป B",
-   "say": "Go along this street and turn left at the corner.",
+   "say": "Go straight. The bank is on your right.",
    "chapter": "บท 20: หาทางไปร้านที่ Teacher Torto แนะนำ",
    "goal": "อ่านข้อมูลในภาพ (บอกทางจากแผนที่) แล้วพูดเป็นประโยคที่ใช้ได้จริง",
    "accept": "รับประโยคเดียวที่ตรงข้อมูลในภาพ ไม่บังคับพูด model ครบ · ข้อมูลผิดจากภาพ = ลองใหม่",
    "hint": "① ไฮไลต์ข้อมูลในภาพที่ต้องพูด ② sentence starter · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "pic": "แผนที่: 📍A (ทีม) ➡️ เดินตามถนนเส้นนี้ตรงไป ➡️ ถึงหัวมุม ⬅️ เลี้ยวซ้าย ➡️ 📍B ร้านโปรดของ Teacher Torto",
-     "en": "Go along this street and turn left at the corner.",
+     "pic": "จุด YOU ARE HERE ธนาคารอยู่ทางขวาของถนนเส้นนี้",
+     "promptTh": "ธนาคารอยู่ทางไหน",
+     "en": "Go straight. The bank is on your right.",
+     "th": "เดินตรงไป ธนาคารอยู่ทางขวา",
      "accept": [
-      "Go straight along this street and turn left at the corner.",
-      "Go along the street and turn left at the corner."
+      "The bank is on your right."
+     ],
+     "hints": [
+      "Go straight…",
+      "The bank is on your ___."
      ]
     },
     {
-     "pic": "แผนที่: 📍A ➡️ 🌉 ข้ามสะพาน ➡️ 🚦 ไฟจราจร ➡️ เลี้ยวขวา ➡️ 📍B 🏛️ พิพิธภัณฑ์อยู่ทางซ้ายมือ",
-     "en": "Go across the bridge and turn right at the traffic lights. The museum is on your left.",
+     "pic": "ไฟจราจรอยู่ตรงไป แล้วเลี้ยวขวาไปคาเฟ่",
+     "promptTh": "ไปคาเฟ่ยังไง",
+     "en": "Go straight and turn right at the traffic lights.",
+     "th": "เดินตรงไปแล้วเลี้ยวขวาที่ไฟจราจร",
      "accept": [
-      "Cross the bridge and turn right at the traffic lights. The museum is on your left.",
-      "Go across the bridge and turn right at the traffic lights. It's on your left."
+      "Turn right at the traffic lights."
+     ],
+     "hints": [
+      "Go straight…",
+      "Turn right at the traffic ___."
      ]
     },
     {
-     "pic": "แผนที่: 📍A ➡️ เดินผ่าน 🏦 ธนาคาร ➡️ ถนนเส้นที่ 2 ⬅️ เลี้ยวซ้าย ➡️ 📍B 🛒 ตลาดอยู่ทางขวามือ",
-     "en": "Go past the bank and take the second left. The market is on your right.",
+     "pic": "สวนอยู่ฝั่งซ้าย อีกฝั่งของสะพาน",
+     "promptTh": "สวนอยู่ที่ไหน",
+     "en": "Go across the bridge. The park is on your left.",
+     "th": "ข้ามสะพานไป สวนอยู่ทางซ้าย",
      "accept": [
-      "Go past the bank and take the second left. It's on your right."
+      "The park is across the bridge."
+     ],
+     "hints": [
+      "Go across…",
+      "The park is on your ___."
      ]
     },
     {
-     "pic": "แผนที่: 📍A ➡️ เดินตรงไป ➡️ ถึงหัวมุม ➡️ เลี้ยวขวา ➡️ 📍B 🚏 ป้ายรถเมล์อยู่ทางซ้ายมือ",
-     "en": "Go straight and turn right at the corner. The bus stop is on your left.",
+     "pic": "ร้านค้าอยู่ทางซ้าย ก่อนถึงสะพาน",
+     "promptTh": "ร้านค้าอยู่ทางไหน",
+     "en": "Turn left. The shop is on your left.",
+     "th": "เลี้ยวซ้าย ร้านค้าอยู่ทางซ้าย",
      "accept": [
-      "Go straight and turn right at the corner. It's on your left."
+      "The shop is on your left."
+     ],
+     "hints": [
+      "Turn left…",
+      "The shop is on your ___."
      ]
     },
     {
-     "pic": "แผนที่: 📍A ➡️ 🚦 ข้ามถนนที่ไฟจราจร ➡️ เดินตามถนนไป ➡️ 📍B 🏨 โรงแรมอยู่ทางขวามือ",
-     "en": "Cross the street at the traffic lights and go along the street. The hotel is on your right.",
+     "pic": "คาเฟ่อยู่ทางขวาหลังไฟจราจร",
+     "promptTh": "คาเฟ่อยู่ที่ไหน",
+     "en": "The cafe is on your right.",
+     "th": "คาเฟ่อยู่ทางขวา",
      "accept": [
-      "Go across the street at the traffic lights and go along the street. The hotel is on your right.",
-      "Cross the street at the traffic lights and go along the street. It's on your right."
+      "The café is on your right."
+     ],
+     "hints": [
+      "The cafe…",
+      "The cafe is on your ___."
      ]
     }
    ]
@@ -14001,44 +14262,74 @@
    "hint": "① ไฮไลต์ข้อมูลในภาพที่ต้องพูด ② sentence starter · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "pic": "ฉลากยา: 💊 ×1 เม็ด · 🍽️ หลังอาหาร · 🔁 3 ครั้ง/วัน",
+     "pic": "ฉลากยา 1 เม็ด หลังอาหาร 3 ครั้งต่อวัน",
+     "promptTh": "ยานี้กินยังไง",
      "en": "Take one pill after meals, three times a day.",
+     "th": "กินหนึ่งเม็ดหลังอาหาร วันละสามครั้ง",
      "accept": [
-      "Take 1 pill after meals, 3 times a day.",
-      "Take one pill three times a day, after meals."
-     ]
+      "Take 1 pill after meals, 3 times a day."
+     ],
+     "hints": [
+      "Take…",
+      "Take one pill after meals, ___ times a day."
+     ],
+     "questionEn": "How do I take this medicine?"
     },
     {
-     "pic": "ฉลากยา: 💊💊 ×2 เม็ด · 🍽️ ก่อนอาหาร · 🔁 2 ครั้ง/วัน",
-     "en": "Take two pills before meals, twice a day.",
+     "pic": "ฉลากยา 1 เม็ด ก่อนอาหาร 2 ครั้งต่อวัน",
+     "promptTh": "ยานี้กินยังไง",
+     "en": "Take one pill before meals, twice a day.",
+     "th": "กินหนึ่งเม็ดก่อนอาหาร วันละสองครั้ง",
      "accept": [
-      "Take two pills before meals, two times a day.",
-      "Take two pills twice a day, before meals."
-     ]
+      "Take 1 pill before meals, twice a day."
+     ],
+     "hints": [
+      "Take…",
+      "Take one pill before meals, ___ a day."
+     ],
+     "questionEn": "How do I take this medicine?"
     },
     {
-     "pic": "ฉลากยา: 💊 ×1 เม็ด · 🍽️ ก่อนอาหาร · 🔁 1 ครั้ง/วัน",
-     "en": "Take one pill before meals, once a day.",
+     "pic": "ฉลากยา 2 เม็ด หลังอาหาร 2 ครั้งต่อวัน",
+     "promptTh": "ยานี้กินยังไง",
+     "en": "Take two pills after meals, twice a day.",
+     "th": "กินสองเม็ดหลังอาหาร วันละสองครั้ง",
      "accept": [
-      "Take one pill before meals, one time a day.",
-      "Take one pill once a day, before meals."
-     ]
+      "Take 2 pills after meals, twice a day."
+     ],
+     "hints": [
+      "Take…",
+      "Take two pills after meals, ___ a day."
+     ],
+     "questionEn": "How do I take this medicine?"
     },
     {
-     "pic": "ฉลากยา: 💊💊 ×2 เม็ด · 🍽️ หลังอาหาร · 🔁 3 ครั้ง/วัน",
-     "en": "Take two pills after meals, three times a day.",
+     "pic": "ฉลากยา 1 เม็ด หลังอาหาร 1 ครั้งต่อวัน",
+     "promptTh": "ยานี้กินยังไง",
+     "en": "Take one pill after meals, once a day.",
+     "th": "กินหนึ่งเม็ดหลังอาหาร วันละครั้ง",
      "accept": [
-      "Take 2 pills after meals, 3 times a day.",
-      "Take two pills three times a day, after meals."
-     ]
+      "Take 1 pill after meals, once a day."
+     ],
+     "hints": [
+      "Take…",
+      "Take one pill after meals, ___ a day."
+     ],
+     "questionEn": "How do I take this medicine?"
     },
     {
-     "pic": "ฉลากยา: 💊 ×1 เม็ด · 🍽️ หลังอาหาร · 🔁 4 ครั้ง/วัน",
-     "en": "Take one pill after meals, four times a day.",
+     "pic": "ฉลากยา 2 เม็ด ก่อนอาหาร 3 ครั้งต่อวัน",
+     "promptTh": "ยานี้กินยังไง",
+     "en": "Take two pills before meals, three times a day.",
+     "th": "กินสองเม็ดก่อนอาหาร วันละสามครั้ง",
      "accept": [
-      "Take 1 pill after meals, 4 times a day.",
-      "Take one pill four times a day, after meals."
-     ]
+      "Take 2 pills before meals, 3 times a day."
+     ],
+     "hints": [
+      "Take…",
+      "Take two pills before meals, ___ times a day."
+     ],
+     "questionEn": "How do I take this medicine?"
     }
    ]
   },
@@ -14852,69 +15143,75 @@
    "beat": "Ten",
    "axes": "12222",
    "teach": "ดูภาพแล้วบรรยายกระเป๋า สี ขนาด ของข้างใน ใช้ **a bag with…** เป็นวลี",
-   "say": "It's a small black bag with a key inside.",
+   "say": "It's a black bag with a key inside.",
    "chapter": "บท 23: กระเป๋าหาย",
    "goal": "อ่านข้อมูลในภาพ (บรรยายกระเป๋า) แล้วพูดเป็นประโยคที่ใช้ได้จริง",
    "accept": "รับประโยคเดียวที่ตรงข้อมูลในภาพ ไม่บังคับพูด model ครบ · ข้อมูลผิดจากภาพ = ลองใหม่",
    "hint": "① ไฮไลต์ข้อมูลในภาพที่ต้องพูด ② sentence starter · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "pic": "🎒 กระเป๋าใบเล็ก · สีดำ · ข้างในมี 🔑 กุญแจ",
-     "en": "It's a small black bag with a key inside.",
+     "pic": "กระเป๋าสีดำ ข้างในมีลูกกุญแจ",
+     "promptTh": "กระเป๋าใบนี้เป็นยังไง",
+     "en": "It's a black bag with a key inside.",
+     "th": "เป็นกระเป๋าสีดำ มีลูกกุญแจอยู่ข้างใน",
      "accept": [
-      "It is a small black bag with a key inside.",
-      "It's a small black bag which has a key inside."
+      "It is a black bag with a key inside."
+     ],
+     "hints": [
+      "It's…",
+      "It's a black bag with a ___ inside."
      ]
     },
     {
-     "pic": "👜 กระเป๋าใบใหญ่ · สีเขียว · ข้างในมี 📱 โทรศัพท์",
-     "en": "It's a big green bag with a phone inside.",
+     "pic": "กระเป๋าสีดำ ข้างในมีสมุดโน้ต",
+     "promptTh": "ในกระเป๋าสีดำมีอะไร",
+     "en": "There's a notebook in the black bag.",
+     "th": "ในกระเป๋าสีดำมีสมุดโน้ต",
      "accept": [
-      "It is a big green bag with a phone inside.",
-      "It's a large green bag with a phone inside.",
-      "It's a big green bag which has a phone inside."
+      "There is a notebook inside."
+     ],
+     "hints": [
+      "There's…",
+      "There's a ___ in the black bag."
      ]
     },
     {
-     "pic": "กระเป๋าของ Nina: 👜 กระเป๋าถือใบเล็ก · สีแดง · ข้างในมี 👛 กระเป๋าสตางค์",
-     "en": "It's a small red handbag with a wallet inside.",
+     "pic": "กระเป๋าสีดำ มีทั้งลูกกุญแจและสมุด",
+     "promptTh": "บรรยายกระเป๋าสีดำ",
+     "en": "It's a black bag with a key and a notebook inside.",
+     "th": "เป็นกระเป๋าสีดำ มีลูกกุญแจกับสมุดอยู่ข้างใน",
      "accept": [
-      "It is a small red handbag with a wallet inside.",
-      "It's a small red bag with a wallet inside.",
-      "It's a small red handbag which has a wallet inside."
+      "A black bag with a key and a notebook."
+     ],
+     "hints": [
+      "It's…",
+      "It's a black bag with a key and a ___ inside."
      ]
     },
     {
-     "pic": "🎒 กระเป๋าใบใหญ่ · สีน้ำเงิน · ข้างในมี 🛂 พาสปอร์ต และ 👓 แว่นตา",
-     "en": "It's a big blue bag with a passport and glasses inside.",
+     "pic": "กระเป๋าสีแดง ข้างในมีที่ชาร์จ",
+     "promptTh": "ในกระเป๋าสีแดงมีอะไร",
+     "en": "It's a red bag with a charger inside.",
+     "th": "เป็นกระเป๋าสีแดง มีที่ชาร์จอยู่ข้างใน",
      "accept": [
-      "It is a big blue bag with a passport and glasses inside.",
-      "It's a large blue bag with a passport and glasses inside.",
-      "It's a big blue bag which has a passport and glasses inside."
+      "There is a charger in the red bag."
+     ],
+     "hints": [
+      "It's…",
+      "It's a red bag with a ___ inside."
      ]
     },
     {
-     "pic": "🎒 กระเป๋าใบเล็ก · สีขาว · ข้างในมี ☂️ ร่ม",
-     "en": "It's a small white bag with an umbrella inside.",
+     "pic": "กระเป๋าสีแดง ข้างในมีหูฟัง",
+     "promptTh": "ในกระเป๋าสีแดงมีอะไรอีก",
+     "en": "It's a red bag with headphones inside.",
+     "th": "เป็นกระเป๋าสีแดง มีหูฟังอยู่ข้างใน",
      "accept": [
-      "It is a small white bag with an umbrella inside.",
-      "It's a small white bag which has an umbrella inside."
-     ]
-    },
-    {
-     "pic": "🎒 กระเป๋าใบใหญ่ · สีดำ · ข้างในมี 🎧 หูฟัง และ 🔌 ที่ชาร์จ",
-     "en": "It's a big black bag with headphones and a charger inside.",
-     "accept": [
-      "It is a big black bag with headphones and a charger inside.",
-      "It's a large black bag with headphones and a charger inside."
-     ]
-    },
-    {
-     "pic": "👜 กระเป๋าใบเล็ก · สีเหลือง · ข้างในมี 📓 สมุดโน้ต",
-     "en": "It's a small yellow bag with a notebook inside.",
-     "accept": [
-      "It is a small yellow bag with a notebook inside.",
-      "It's a small yellow bag which has a notebook inside."
+      "There are headphones in the red bag."
+     ],
+     "hints": [
+      "It's…",
+      "It's a red bag with ___ inside."
      ]
     }
    ]
@@ -15253,42 +15550,68 @@
    "hint": "① ไฮไลต์ข้อมูลในภาพที่ต้องพูด ② sentence starter · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "pic": "จอเที่ยวบิน: ✈️ BK 205 (เที่ยวบินของทีม · Our) · สถานะ ⏰ DELAYED · 🚪 New gate: 12",
+     "pic": "เที่ยวบินของเรา DELAYED และ New gate 12",
+     "promptTh": "เที่ยวบินของเราเป็นยังไง และประตูใหม่คืออะไร",
      "en": "Our flight is delayed. The new gate is 12.",
+     "th": "เที่ยวบินของเราดีเลย์ ประตูใหม่คือ 12",
      "accept": [
-      "Our flight is delayed. The new gate is Gate 12."
+      "The new gate is 12."
+     ],
+     "hints": [
+      "Our flight…",
+      "Our flight is delayed. The new gate is ___."
      ]
     },
     {
-     "pic": "จอเที่ยวบิน: ✈️ BK 205 (เที่ยวบินของทีม · Our) · สถานะ ❌ CANCELLED",
-     "en": "Our flight is cancelled.",
+     "pic": "เวลาใหม่ของเที่ยวบินเราคือ 12:00",
+     "promptTh": "ตอนนี้เครื่องออกกี่โมง",
+     "en": "The new time is 12:00.",
+     "th": "เวลาใหม่คือ 12:00",
      "accept": [
-      "Our flight is canceled.",
-      "Our flight was cancelled."
+      "It leaves at 12:00."
+     ],
+     "hints": [
+      "The new…",
+      "The new time is ___."
      ]
     },
     {
-     "pic": "จอเที่ยวบิน: ✈️ BK 205 (เที่ยวบินของทีม · Our) · สถานะ ⏰ DELAYED · 🕐 New time: 11:15",
-     "en": "Our flight is delayed. The new time is 11:15.",
+     "pic": "อีกเที่ยวบินหนึ่งสถานะ CANCELLED",
+     "promptTh": "มีเที่ยวบินไหนถูกยกเลิก",
+     "en": "One flight is cancelled.",
+     "th": "มีหนึ่งเที่ยวบินถูกยกเลิก",
      "accept": [
-      "Our flight is delayed. The new time is eleven fifteen.",
-      "Our flight is delayed. It's at 11:15 now."
+      "It is cancelled."
+     ],
+     "hints": [
+      "One flight…",
+      "One flight is ___."
      ]
     },
     {
-     "pic": "จอเที่ยวบิน: ✈️ BK 205 (เที่ยวบินของทีม · Our) · สถานะ ⏰ DELAYED · 🕐 New time: 9:40 · 🚪 New gate: 15",
-     "en": "Our flight is delayed. The new time is 9:40 and the new gate is 15.",
+     "pic": "เที่ยวบิน 14:30 สถานะ ON TIME",
+     "promptTh": "เที่ยวบินบ่ายเป็นยังไง",
+     "en": "The 14:30 flight is on time.",
+     "th": "เที่ยวบิน 14:30 ตรงเวลา",
      "accept": [
-      "Our flight is delayed. The new time is nine forty and the new gate is 15.",
-      "Our flight is delayed. The new time is 9:40. The new gate is 15."
+      "It is on time."
+     ],
+     "hints": [
+      "The flight…",
+      "The 14:30 flight is on ___."
      ]
     },
     {
-     "pic": "จอเที่ยวบิน: ✈️ BK 205 (เที่ยวบินของทีม · Our) ❌ CANCELLED · 🔁 instead ➡️ ✈️ BK 207 เวลา 18:30",
-     "en": "Our flight is cancelled. We can take the 18:30 flight instead.",
+     "pic": "ประตูเดิม 9 เปลี่ยนเป็นประตู 12",
+     "promptTh": "ประตูเปลี่ยนจากไหนไปไหน",
+     "en": "The gate changed from 9 to 12.",
+     "th": "ประตูเปลี่ยนจาก 9 เป็น 12",
      "accept": [
-      "Our flight is cancelled. We can take the 6:30 p.m. flight instead.",
-      "Our flight is cancelled. We can take BK 207 instead."
+      "The new gate is 12."
+     ],
+     "hints": [
+      "The gate…",
+      "The gate changed from ___ to ___."
      ]
     }
    ]
@@ -16058,65 +16381,75 @@
    "beat": "Sho",
    "axes": "12111",
    "teach": "🖼️ ดูภาพคู่ 5 ชุด: **คน** (หน้า) + **สิ่งที่เจอ** (มีป้ายชื่อ เช่น movie, trip) → พูด 1–2 ประโยค **The movie was boring. I was bored.** · รับถ้าคำ -ed ไปกับคน และ -ing ไปกับสิ่งของ ไม่บังคับครบทั้งคู่",
-   "say": "The trip was exciting. We were excited.",
+   "say": "The boat ride was exciting. She was excited.",
    "chapter": "บท 25: เล่าทริปให้ครอบครัวฟัง",
    "goal": "อ่านข้อมูลในภาพ (รู้สึกยังไง) แล้วพูดเป็นประโยคที่ใช้ได้จริง",
    "accept": "รับประโยคเดียวที่ตรงข้อมูลในภาพ ไม่บังคับพูด model ครบ · ข้อมูลผิดจากภาพ = ลองใหม่",
    "hint": "① ไฮไลต์ข้อมูลในภาพที่ต้องพูด ② sentence starter · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "pic": "ภาพคู่: ซ้าย ป้าย 'trip' รูปเรือแล่นบนคลื่น · ขวา ป้าย 'We' หน้าผู้เรียนกับ Bogy และ May ยิ้มกว้าง แท็กอารมณ์ 🤩 ตื่นเต้น",
-     "en": "The trip was exciting. We were excited.",
+     "pic": "ภาพนั่งเรือของ May เธอดูตื่นเต้น",
+     "promptTh": "เหตุการณ์เป็นยังไง และเธอรู้สึกยังไง",
+     "en": "The boat ride was exciting. She was excited.",
+     "th": "การนั่งเรือสนุก เธอตื่นเต้น",
      "accept": [
-      "The trip was exciting.",
-      "We were excited.",
-      "It was exciting. We were excited."
+      "She was excited."
+     ],
+     "hints": [
+      "The boat…",
+      "The boat ride was ___. She was ___."
      ]
     },
     {
-     "pic": "ภาพคู่: ซ้าย ป้าย 'movie' จอหนัง · ขวา ป้าย 'Teacher Torto' หน้า Teacher Torto หาวนอน แท็กอารมณ์ 🥱 เบื่อ",
-     "en": "The movie was boring. Teacher Torto was bored.",
+     "pic": "ภาพการแสดง Bogy ดูเบื่อ",
+     "promptTh": "การแสดงเป็นยังไง และเขารู้สึกยังไง",
+     "en": "The show was boring. He was bored.",
+     "th": "การแสดงน่าเบื่อ เขาเบื่อ",
      "accept": [
-      "The movie was boring. He was bored.",
-      "The movie was boring.",
-      "Teacher Torto was bored.",
-      "Torto was bored."
+      "He was bored."
+     ],
+     "hints": [
+      "The show…",
+      "The show was ___. He was ___."
      ]
     },
     {
-     "pic": "ภาพคู่: ซ้าย ป้าย 'museum' รูปพิพิธภัณฑ์ · ขวา ป้าย 'May' หน้า May ตั้งใจดู แท็กอารมณ์ 🧐 สนใจ",
-     "en": "The museum was interesting. May was interested.",
+     "pic": "ภาพทัวร์พิพิธภัณฑ์ May ดูสนใจ",
+     "promptTh": "ทัวร์เป็นยังไง และเธอรู้สึกยังไง",
+     "en": "The museum tour was interesting. She was interested.",
+     "th": "ทัวร์พิพิธภัณฑ์น่าสนใจ เธอสนใจ",
      "accept": [
-      "The museum was interesting. She was interested.",
-      "The museum was interesting.",
-      "May was interested."
+      "She was interested."
+     ],
+     "hints": [
+      "The museum…",
+      "The museum tour was ___. She was ___."
      ]
     },
     {
-     "pic": "ภาพคู่: ซ้าย ป้าย 'walk' รูปทางเดินยาวขึ้นเขา · ขวา ป้าย 'Mali' หน้า Mali เหงื่อออก แท็กอารมณ์ 😩 เหนื่อย",
-     "en": "The walk was tiring. Mali was tired.",
+     "pic": "ภาพเดินไกล May กับ Bogy ดูเหนื่อย",
+     "promptTh": "การเดินเป็นยังไง และพวกเขารู้สึกยังไง",
+     "en": "The long walk was tiring. They were tired.",
+     "th": "การเดินทางไกลเหนื่อย พวกเขาเหนื่อย",
      "accept": [
-      "The walk was tiring. She was tired.",
-      "The walk was tiring.",
-      "Mali was tired."
+      "They were tired."
+     ],
+     "hints": [
+      "The long…",
+      "The long walk was ___. They were ___."
      ]
     },
     {
-     "pic": "ภาพคู่: ซ้าย ป้าย 'football game' รูปสนามบอล · ขวา ป้าย 'Bogy' หน้า Bogy ตะโกนเชียร์ แท็กอารมณ์ 🤩 ตื่นเต้น",
-     "en": "The football game was exciting. Bogy was excited.",
+     "pic": "ภาพการแสดง May กับ Bogy ดูตื่นเต้น",
+     "promptTh": "การแสดงเป็นยังไง และพวกเขารู้สึกยังไง",
+     "en": "The show was exciting. They were excited.",
+     "th": "การแสดงสนุก พวกเขาตื่นเต้น",
      "accept": [
-      "The game was exciting. Bogy was excited.",
-      "The football game was exciting.",
-      "Bogy was excited.",
-      "The football game was exciting. He was excited."
-     ]
-    },
-    {
-     "pic": "ภาพคู่: ซ้าย ป้าย 'show' รูปเวทีการแสดง · ขวา ป้าย 'Capy' หน้า Capy นั่งหาว แท็กอารมณ์ 🥱 เบื่อ",
-     "en": "The show was boring. Capy was bored.",
-     "accept": [
-      "The show was boring.",
-      "Capy was bored."
+      "They were excited."
+     ],
+     "hints": [
+      "The show…",
+      "The show was ___. They were ___."
      ]
     }
    ]
@@ -16649,65 +16982,74 @@
    "hint": "① ไฮไลต์ข้อมูลในภาพที่ต้องพูด ② sentence starter · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "pic": "การ์ดรูปทริปของฉัน: ป้ายสถานที่ 'Phuket' · แท็กเวลา 'last year' · 🏆 'beautiful beach'",
-     "en": "I've been to Phuket. I went last year. It was the most beautiful beach.",
+     "pic": "รูปชายหาดป้าย Phuket และ Last year",
+     "promptTh": "เคยไปไหน และไปเมื่อไหร่",
+     "en": "I've been to Phuket. I went last year.",
+     "th": "ฉันเคยไปภูเก็ต เมื่อปีที่แล้ว",
      "accept": [
-      "I have been to Phuket. I went last year. It was the most beautiful beach.",
-      "I've been to Phuket. I went there last year. It was the most beautiful beach.",
-      "I've been to Phuket. I went last year. It had the most beautiful beach."
-     ]
+      "I have been to Phuket. I went last year."
+     ],
+     "hints": [
+      "I've been…",
+      "I've been to ___. I went last year."
+     ],
+     "questionEn": "Where have you been?"
     },
     {
-     "pic": "การ์ดรูปทริปของฉัน: ป้ายสถานที่ 'Chiang Mai' · แท็กเวลา 'two years ago' · 🏆 'good food'",
-     "en": "I've been to Chiang Mai. I went two years ago. It had the best food.",
+     "pic": "รูปวัดป้าย Chiang Mai และ Two years ago",
+     "promptTh": "เคยไปไหน และไปเมื่อไหร่",
+     "en": "I've been to Chiang Mai. I went two years ago.",
+     "th": "ฉันเคยไปเชียงใหม่ เมื่อสองปีก่อน",
      "accept": [
-      "I have been to Chiang Mai. I went two years ago. It had the best food.",
-      "I've been to Chiang Mai. I went there two years ago. It had the best food.",
-      "I've been to Chiang Mai. I went two years ago. The food was the best."
-     ]
+      "I have been to Chiang Mai."
+     ],
+     "hints": [
+      "I've been…",
+      "I've been to Chiang Mai. I went ___ years ago."
+     ],
+     "questionEn": "Where have you been?"
     },
     {
-     "pic": "การ์ดรูปทริปของฉัน: ป้ายสถานที่ 'Japan' · แท็กปี '2024' · 🏆 'exciting trip'",
-     "en": "I've been to Japan. I went in 2024. It was the most exciting trip.",
+     "pic": "รูปเทศกาลป้าย Japan และ Last year",
+     "promptTh": "เคยไปไหน และไปเมื่อไหร่",
+     "en": "I've been to Japan. I went last year.",
+     "th": "ฉันเคยไปญี่ปุ่น เมื่อปีที่แล้ว",
      "accept": [
-      "I have been to Japan. I went in 2024. It was the most exciting trip."
-     ]
+      "I have been to Japan."
+     ],
+     "hints": [
+      "I've been…",
+      "I've been to ___. I went last year."
+     ],
+     "questionEn": "Where have you been?"
     },
     {
-     "pic": "การ์ดรูปทริปของฉัน: ป้ายสถานที่ 'Bangkok' · แท็กเวลา 'three years ago' · 🏆 'interesting museum'",
-     "en": "I've been to Bangkok. I went three years ago. It had the most interesting museum.",
+     "pic": "รูปหิมะป้าย Korea และ Two years ago",
+     "promptTh": "เคยไปไหน และไปเมื่อไหร่",
+     "en": "I've been to Korea. I went two years ago.",
+     "th": "ฉันเคยไปเกาหลี เมื่อสองปีก่อน",
      "accept": [
-      "I have been to Bangkok. I went three years ago. It had the most interesting museum.",
-      "I've been to Bangkok. I went there three years ago. It had the most interesting museum.",
-      "I've been to Bangkok. I went three years ago. I saw the most interesting museum."
-     ]
+      "I have been to Korea."
+     ],
+     "hints": [
+      "I've been…",
+      "I've been to ___. I went two years ago."
+     ],
+     "questionEn": "Where have you been?"
     },
     {
-     "pic": "การ์ดรูปทริปของฉัน: ป้ายสถานที่ 'Krabi' · แท็กเวลา 'last month' · 🏆 'nice hotel'",
-     "en": "I've been to Krabi. I went last month. It had the nicest hotel.",
+     "pic": "รูปแค้มป์ป่าป้าย Chiang Mai และ Last year",
+     "promptTh": "เคยไปไหน และไปเมื่อไหร่",
+     "en": "I've been to Chiang Mai. I went last year.",
+     "th": "ฉันเคยไปเชียงใหม่ เมื่อปีที่แล้ว",
      "accept": [
-      "I have been to Krabi. I went last month. It had the nicest hotel.",
-      "I've been to Krabi. I went there last month. It had the nicest hotel.",
-      "I've been to Krabi. I went last month. I stayed at the nicest hotel."
-     ]
-    },
-    {
-     "pic": "การ์ดรูปทริปของฉัน: ป้ายสถานที่ 'Tokyo' · แท็กปี '2023' · 🏆 'big festival'",
-     "en": "I've been to Tokyo. I went in 2023. It had the biggest festival.",
-     "accept": [
-      "I have been to Tokyo. I went in 2023. It had the biggest festival.",
-      "I've been to Tokyo. I went there in 2023. It had the biggest festival.",
-      "I've been to Tokyo. I went in 2023. I saw the biggest festival."
-     ]
-    },
-    {
-     "pic": "การ์ดรูปทริปของฉัน: ป้ายสถานที่ 'Korea' · แท็กเวลา 'two years ago' · 🏆 'beautiful temple'",
-     "en": "I've visited Korea. I went two years ago. It had the most beautiful temple.",
-     "accept": [
-      "I've been to Korea. I went two years ago. It had the most beautiful temple.",
-      "I have visited Korea. I went two years ago. It had the most beautiful temple.",
-      "I've been to Korea. I went two years ago. I visited the most beautiful temple."
-     ]
+      "I went to Chiang Mai last year."
+     ],
+     "hints": [
+      "I've been…",
+      "I've been to Chiang Mai. I went last ___."
+     ],
+     "questionEn": "Where have you been?"
     }
    ]
   },
@@ -17843,7 +18185,7 @@
    "flag": false,
    "beat": "Ten",
    "axes": "12122",
-   "teach": "🖼️ ดูป้าย 5 ป้ายที่มี **สัญลักษณ์ตายตัว** แล้วพูดกฎ: ❗ ป้ายบังคับ → **You must…** · 🚫 ป้ายห้าม → **You mustn't…** · ป้าย OPTIONAL / ไม่บังคับ → **You don't have to…** · รับกริยาที่ตรงภาพ เช่น wear / use / bring",
+   "teach": "🖼️ ดูป้าย 5 ป้ายที่มี **สัญลักษณ์ตายตัว** แล้วพูดกฎ: ❗ ป้ายบังคับ → **You must…** · 🚫 ป้ายห้าม → **You mustn't…** · ป้าย OPTIONAL / ไม่บังคับ → **You don't have to…** · รับกริยาที่ตรงภาพ เช่น wear / use / bring · ป้ายหน้ากาก **mask**",
    "say": "You mustn't eat here.",
    "chapter": "บท 28: ชีวิตการเรียนและงาน",
    "goal": "อ่านข้อมูลในภาพ (อ่านป้าย) แล้วพูดเป็นประโยคที่ใช้ได้จริง",
@@ -17851,51 +18193,68 @@
    "hint": "① ไฮไลต์ข้อมูลในภาพที่ต้องพูด ② sentence starter · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "pic": "ป้าย 🚫 (ป้ายห้าม) รูปแฮมเบอร์เกอร์กับกล่องอาหาร",
-     "en": "You mustn't eat here.",
-     "accept": [
-      "You must not eat here.",
-      "You mustn't eat.",
-      "You mustn't eat food here."
-     ]
-    },
-    {
-     "pic": "ป้าย ❗ (ป้ายบังคับ) รูปเสื้อยูนิฟอร์ม เขียนว่า UNIFORM",
+     "pic": "ป้ายเสื้อ REQUIRED",
+     "promptTh": "ป้ายนี้บอกอะไร",
      "en": "You must wear a uniform.",
+     "th": "คุณต้องใส่ยูนิฟอร์ม",
      "accept": [
-      "You must wear a uniform here.",
-      "You must wear your uniform."
+      "You must wear a shirt."
+     ],
+     "hints": [
+      "You must…",
+      "You must wear a ___."
      ]
     },
     {
-     "pic": "ป้าย 🚫 (ป้ายห้าม) รูปโทรศัพท์มือถือ",
+     "pic": "ป้ายห้ามโทรศัพท์",
+     "promptTh": "ป้ายนี้บอกอะไร",
      "en": "You mustn't use your phone here.",
+     "th": "คุณห้ามใช้โทรศัพท์ที่นี่",
      "accept": [
-      "You mustn't use your phone.",
       "You must not use your phone here."
+     ],
+     "hints": [
+      "You mustn't…",
+      "You mustn't use your ___ here."
      ]
     },
     {
-     "pic": "ป้าย OPTIONAL (ไม่บังคับ) รูปเน็กไท",
+     "pic": "ป้ายห้ามอาหาร",
+     "promptTh": "ป้ายนี้บอกอะไร",
+     "en": "You mustn't eat here.",
+     "th": "คุณห้ามกินที่นี่",
+     "accept": [
+      "You must not eat here."
+     ],
+     "hints": [
+      "You mustn't…",
+      "You mustn't ___ here."
+     ]
+    },
+    {
+     "pic": "ป้ายเนกไท OPTIONAL",
+     "promptTh": "ป้ายนี้บอกอะไร",
      "en": "You don't have to wear a tie.",
+     "th": "คุณไม่จำเป็นต้องใส่เนกไท",
      "accept": [
       "You do not have to wear a tie."
+     ],
+     "hints": [
+      "You don't…",
+      "You don't have to wear a ___."
      ]
     },
     {
-     "pic": "ป้าย ❗ (ป้ายบังคับ) รูปรองเท้าคู่หนึ่งวางไว้หน้าประตู (ถอดรองเท้า)",
-     "en": "You must take off your shoes.",
+     "pic": "ป้ายหน้ากาก OPTIONAL",
+     "promptTh": "ป้ายนี้บอกอะไร",
+     "en": "You don't have to wear a mask.",
+     "th": "คุณไม่จำเป็นต้องใส่หน้ากาก",
      "accept": [
-      "You must take your shoes off.",
-      "You must take off your shoes here."
-     ]
-    },
-    {
-     "pic": "ป้าย OPTIONAL (ไม่บังคับ) รูปกล่องข้าวกลางวัน เขียนว่า LUNCH",
-     "en": "You don't have to bring your lunch.",
-     "accept": [
-      "You don't have to bring lunch.",
-      "You do not have to bring your lunch."
+      "You do not have to wear a mask."
+     ],
+     "hints": [
+      "You don't…",
+      "You don't have to wear a ___."
      ]
     }
    ]
@@ -19331,7 +19690,7 @@
    "flag": false,
    "beat": "Ten",
    "axes": "22211",
-   "teach": "🖼️ ดูใบลงชื่องานอำลาที่มีชื่อคู่กับของ → **Mali is going to bring the drinks. · Who's going to bring the music?** (ช่องว่าง → ถาม)",
+   "teach": "🖼️ ดูใบลงชื่องานอำลาที่มีชื่อคู่กับของ → **Mali is going to bring the drinks. · Who's going to bring the music?** (ช่องว่าง → ถาม) · ช่องว่างมี **plates**",
    "say": "Mali is going to bring the drinks.",
    "chapter": "บท 31: งานอำลา Bogy",
    "goal": "อ่านข้อมูลในภาพ (ใครเอาอะไรมา) แล้วพูดเป็นประโยคที่ใช้ได้จริง",
@@ -19339,46 +19698,71 @@
    "hint": "① ไฮไลต์ข้อมูลในภาพที่ต้องพูด ② sentence starter · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "pic": "ใบลงชื่องานอำลา Bogy: 🥤 drinks — Mali",
+     "pic": "ใบงาน เค้กคือ May",
+     "promptTh": "ใครจะเอาเค้กมา",
+     "en": "May is going to bring the cake.",
+     "th": "เมย์จะเอาเค้กมา",
+     "accept": [
+      "May's going to bring the cake."
+     ],
+     "hints": [
+      "May…",
+      "May is going to bring the ___."
+     ],
+     "questionEn": "Who's going to bring the cake?"
+    },
+    {
+     "pic": "ใบงาน เครื่องดื่มคือ Mali",
+     "promptTh": "ใครจะเอาเครื่องดื่มมา",
      "en": "Mali is going to bring the drinks.",
+     "th": "มะลิจะเอาเครื่องดื่มมา",
      "accept": [
       "Mali's going to bring the drinks."
-     ]
+     ],
+     "hints": [
+      "Mali…",
+      "Mali is going to bring the ___."
+     ],
+     "questionEn": "Who's going to bring the drinks?"
     },
     {
-     "pic": "ใบลงชื่องานอำลา Bogy: 🎵 music — (ช่องว่าง ยังไม่มีชื่อ)",
+     "pic": "ใบงาน ดอกไม้คือ Nina",
+     "promptTh": "ใครจะเอาดอกไม้มา",
+     "en": "Nina is going to bring the flowers.",
+     "th": "นีน่าจะเอาดอกไม้มา",
+     "accept": [
+      "Nina's going to bring the flowers."
+     ],
+     "hints": [
+      "Nina…",
+      "Nina is going to bring the ___."
+     ],
+     "questionEn": "Who's going to bring the flowers?"
+    },
+    {
+     "pic": "ช่องเพลงยังว่าง",
+     "promptTh": "ยังไม่มีคนเอาเพลงมา ถามเพื่อน",
      "en": "Who's going to bring the music?",
+     "th": "ใครจะเอาเพลงมา",
      "accept": [
       "Who is going to bring the music?"
+     ],
+     "hints": [
+      "Who's…",
+      "Who's going to bring the ___?"
      ]
     },
     {
-     "pic": "ใบลงชื่องานอำลา Bogy: 💐 flowers — May",
-     "en": "May is going to bring the flowers.",
+     "pic": "ช่องจานยังว่าง",
+     "promptTh": "ยังไม่มีคนเอาจานมา ถามเพื่อน",
+     "en": "Who's going to bring the plates?",
+     "th": "ใครจะเอาจานมา",
      "accept": [
-      "May's going to bring the flowers."
-     ]
-    },
-    {
-     "pic": "ใบลงชื่องานอำลา Bogy: 📷 camera — Capy + Teacher Nina",
-     "en": "Capy and Teacher Nina are going to bring the camera.",
-     "accept": [
-      "Capy and Nina are going to bring the camera."
-     ]
-    },
-    {
-     "pic": "ใบลงชื่องานอำลา Bogy: 🎁 gift — (ช่องว่าง ยังไม่มีชื่อ)",
-     "en": "Who's going to bring the gift?",
-     "accept": [
-      "Who is going to bring the gift?"
-     ]
-    },
-    {
-     "pic": "ใบลงชื่องานอำลา Bogy: 🍕 pizza — Teacher Torto",
-     "en": "Teacher Torto is going to bring the pizza.",
-     "accept": [
-      "Teacher Torto's going to bring the pizza.",
-      "Torto is going to bring the pizza."
+      "Who is going to bring the plates?"
+     ],
+     "hints": [
+      "Who's…",
+      "Who's going to bring the ___?"
      ]
     }
    ]

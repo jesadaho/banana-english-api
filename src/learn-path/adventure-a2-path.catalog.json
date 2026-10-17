@@ -5178,7 +5178,7 @@
           "learningTarget": "อ่านข้อมูลในภาพ (อ่านบอร์ดดิ้งพาส) แล้วพูดเป็นประโยคที่ใช้ได้จริง",
           "activity": "🖼️ ดูบอร์ดดิ้งพาส → บอกเวลาและเกต Our flight is at 10:40. We have to go to Gate 9.",
           "examples": [
-            "We have to go to Gate 9."
+            "Her flight is at 10:40. She has to go to Gate 9."
           ],
           "estimatedMinutes": [
             2,
@@ -5533,7 +5533,7 @@
           "learningTarget": "อ่านข้อมูลในภาพ (อ่านใบจอง) แล้วพูดเป็นประโยคที่ใช้ได้จริง",
           "activity": "🖼️ ดูภาพใบจองห้อง → พูดข้อมูล I have a reservation for two nights. · It's a double room.",
           "examples": [
-            "I have a reservation for two nights."
+            "She has a reservation for two nights. It's a double room."
           ],
           "estimatedMinutes": [
             2,
@@ -6099,7 +6099,7 @@
           "learningTarget": "อ่านข้อมูลในภาพ (บอกทางจากแผนที่) แล้วพูดเป็นประโยคที่ใช้ได้จริง",
           "activity": "ดูแผนที่ บอกทางจากจุด A ไป B",
           "examples": [
-            "Go along this street and turn left at the corner."
+            "Go straight. The bank is on your right."
           ],
           "estimatedMinutes": [
             2,
@@ -7127,7 +7127,7 @@
           "learningTarget": "อ่านข้อมูลในภาพ (บรรยายกระเป๋า) แล้วพูดเป็นประโยคที่ใช้ได้จริง",
           "activity": "ดูภาพแล้วบรรยายกระเป๋า สี ขนาด ของข้างใน ใช้ a bag with… เป็นวลี",
           "examples": [
-            "It's a small black bag with a key inside."
+            "It's a black bag with a key inside."
           ],
           "estimatedMinutes": [
             2,
@@ -7726,7 +7726,7 @@
           "learningTarget": "อ่านข้อมูลในภาพ (รู้สึกยังไง) แล้วพูดเป็นประโยคที่ใช้ได้จริง",
           "activity": "🖼️ ดูภาพคู่ 5 ชุด: คน (หน้า) + สิ่งที่เจอ (มีป้ายชื่อ เช่น movie, trip) → พูด 1–2 ประโยค The movie was boring. I was bored. · รับถ้าคำ -ed ไปกับคน และ -ing ไปกับสิ่งของ ไม่บังคับครบทั้งคู่",
           "examples": [
-            "The trip was exciting. We were excited."
+            "The boat ride was exciting. She was excited."
           ],
           "estimatedMinutes": [
             2,
@@ -8701,7 +8701,7 @@
           "type": "describe_it",
           "beat": "Ten",
           "learningTarget": "อ่านข้อมูลในภาพ (อ่านป้าย) แล้วพูดเป็นประโยคที่ใช้ได้จริง",
-          "activity": "🖼️ ดูป้าย 5 ป้ายที่มี สัญลักษณ์ตายตัว แล้วพูดกฎ: ❗ ป้ายบังคับ → You must… · 🚫 ป้ายห้าม → You mustn't… · ป้าย OPTIONAL / ไม่บังคับ → You don't have to… · รับกริยาที่ตรงภาพ เช่น wear / use / bring",
+          "activity": "🖼️ ดูป้าย 5 ป้ายที่มี สัญลักษณ์ตายตัว แล้วพูดกฎ: ❗ ป้ายบังคับ → You must… · 🚫 ป้ายห้าม → You mustn't… · ป้าย OPTIONAL / ไม่บังคับ → You don't have to… · รับกริยาที่ตรงภาพ เช่น wear / use / bring · ป้ายหน้ากาก mask",
           "examples": [
             "You mustn't eat here."
           ],
@@ -9507,7 +9507,7 @@
           "type": "describe_it",
           "beat": "Ten",
           "learningTarget": "อ่านข้อมูลในภาพ (ใครเอาอะไรมา) แล้วพูดเป็นประโยคที่ใช้ได้จริง",
-          "activity": "🖼️ ดูใบลงชื่องานอำลาที่มีชื่อคู่กับของ → Mali is going to bring the drinks. · Who's going to bring the music? (ช่องว่าง → ถาม)",
+          "activity": "🖼️ ดูใบลงชื่องานอำลาที่มีชื่อคู่กับของ → Mali is going to bring the drinks. · Who's going to bring the music? (ช่องว่าง → ถาม) · ช่องว่างมี plates",
           "examples": [
             "Mali is going to bring the drinks."
           ],

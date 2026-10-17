@@ -651,5 +651,1478 @@
         ]
       }
     ]
+  },
+  "a2_c09n08": {
+    "id": "a2_c09n08",
+    "titleEn": "Café Board",
+    "titleTh": "บอร์ดเมนู",
+    "tagEn": "ADVENTURE",
+    "emoji": "🖼️",
+    "estimatedMinutes": 3,
+    "items": [
+      {
+        "id": "a2_c09n08_01",
+        "promptTh": "สั่งชาเย็นขนาดใหญ่",
+        "answerEn": "Can I have a large iced tea, please?",
+        "answerTh": "ขอชาเย็นแก้วใหญ่ได้ไหม",
+        "acceptedAnswers": [
+          "A large iced tea, please.",
+          "Can I have a large iced tea?"
+        ],
+        "imagePath": "describe-it/a2_c09n08/01.webp",
+        "hints": [
+          "Can I…",
+          "Can I have a large ___?"
+        ]
+      },
+      {
+        "id": "a2_c09n08_02",
+        "promptTh": "สั่งลาเต้ร้อนขนาดเล็ก",
+        "answerEn": "Can I have a small hot latte, please?",
+        "answerTh": "ขอลาเต้ร้อนแก้วเล็กได้ไหม",
+        "acceptedAnswers": [
+          "A small hot latte, please."
+        ],
+        "imagePath": "describe-it/a2_c09n08/02.webp",
+        "hints": [
+          "Can I…",
+          "Can I have a small ___?"
+        ]
+      },
+      {
+        "id": "a2_c09n08_03",
+        "promptTh": "สั่งน้ำผลไม้",
+        "answerEn": "Can I have some juice, please?",
+        "answerTh": "ขอน้ำผลไม้ได้ไหม",
+        "acceptedAnswers": [
+          "Some juice, please.",
+          "Can I have some juice?"
+        ],
+        "imagePath": "describe-it/a2_c09n08/03.webp",
+        "hints": [
+          "Can I…",
+          "Can I have some ___?"
+        ]
+      },
+      {
+        "id": "a2_c09n08_04",
+        "promptTh": "สั่งมัฟฟิน",
+        "answerEn": "Can I have a muffin, please?",
+        "answerTh": "ขอมัฟฟินได้ไหม",
+        "acceptedAnswers": [
+          "A muffin, please.",
+          "Can I have a muffin?"
+        ],
+        "imagePath": "describe-it/a2_c09n08/04.webp",
+        "hints": [
+          "Can I…",
+          "Can I have a ___?"
+        ]
+      },
+      {
+        "id": "a2_c09n08_05",
+        "promptTh": "มัฟฟินราคาเท่าไหร่",
+        "answerEn": "The muffin is 35 baht.",
+        "answerTh": "มัฟฟินราคา 35 บาท",
+        "acceptedAnswers": [
+          "It's 35 baht.",
+          "35 baht."
+        ],
+        "imagePath": "describe-it/a2_c09n08/05.webp",
+        "questionEn": "How much is the muffin?",
+        "hints": [
+          "The muffin…",
+          "The muffin is ___ baht."
+        ]
+      }
+    ]
+  },
+  "a2_c11n08": {
+    "id": "a2_c11n08",
+    "titleEn": "Aunt Noi's Note",
+    "titleTh": "โน้ตของ Aunt Noi",
+    "tagEn": "ADVENTURE",
+    "emoji": "🖼️",
+    "estimatedMinutes": 3,
+    "items": [
+      {
+        "id": "a2_c11n08_01",
+        "promptTh": "ดูโน้ต ต้องซื้อนมอะไร และน้ำมันอะไร",
+        "answerEn": "We need a carton of milk and two bottles of oil.",
+        "answerTh": "เราต้องการนมหนึ่งกล่องและน้ำมันสองขวด",
+        "acceptedAnswers": [
+          "We need one carton of milk and two bottles of oil."
+        ],
+        "imagePath": "describe-it/a2_c11n08/01.webp",
+        "hints": [
+          "We need…",
+          "We need a carton of ___."
+        ]
+      },
+      {
+        "id": "a2_c11n08_02",
+        "promptTh": "ต้องซื้อแป้งเท่าไหร่",
+        "answerEn": "We need a packet of flour.",
+        "answerTh": "เราต้องการแป้งหนึ่งถุง",
+        "acceptedAnswers": [
+          "We need one packet of flour."
+        ],
+        "imagePath": "describe-it/a2_c11n08/02.webp",
+        "hints": [
+          "We need…",
+          "We need a packet of ___."
+        ]
+      },
+      {
+        "id": "a2_c11n08_03",
+        "promptTh": "ต้องซื้อข้าวเท่าไหร่",
+        "answerEn": "We need two kilos of rice.",
+        "answerTh": "เราต้องการข้าวสองกิโล",
+        "acceptedAnswers": [
+          "We need 2 kilos of rice."
+        ],
+        "imagePath": "describe-it/a2_c11n08/03.webp",
+        "hints": [
+          "We need…",
+          "We need two kilos of ___."
+        ]
+      },
+      {
+        "id": "a2_c11n08_04",
+        "promptTh": "ต้องซื้อไข่กี่ฟอง",
+        "answerEn": "We need six eggs.",
+        "answerTh": "เราต้องการไข่หกฟอง",
+        "acceptedAnswers": [
+          "We need 6 eggs."
+        ],
+        "imagePath": "describe-it/a2_c11n08/04.webp",
+        "hints": [
+          "We need…",
+          "We need six ___."
+        ]
+      },
+      {
+        "id": "a2_c11n08_05",
+        "promptTh": "ต้องซื้อนมเท่าไหร่",
+        "answerEn": "We need a carton of milk.",
+        "answerTh": "เราต้องการนมหนึ่งกล่อง",
+        "acceptedAnswers": [
+          "We need one carton of milk."
+        ],
+        "imagePath": "describe-it/a2_c11n08/05.webp",
+        "hints": [
+          "We need…",
+          "We need a carton of ___."
+        ]
+      }
+    ]
+  },
+  "a2_c12n08": {
+    "id": "a2_c12n08",
+    "titleEn": "Recipe Steps",
+    "titleTh": "ขั้นตอนทำอาหาร",
+    "tagEn": "ADVENTURE",
+    "emoji": "🖼️",
+    "estimatedMinutes": 3,
+    "items": [
+      {
+        "id": "a2_c12n08_01",
+        "promptTh": "สองขั้นแรกทำอะไร",
+        "answerEn": "First, mix the eggs. Then, add salt.",
+        "answerTh": "ขั้นแรกตีไข่ แล้วใส่เกลือ",
+        "acceptedAnswers": [
+          "First, mix the eggs, then add salt."
+        ],
+        "imagePath": "describe-it/a2_c12n08/01.webp",
+        "hints": [
+          "First…",
+          "First, mix the ___. Then, add ___."
+        ]
+      },
+      {
+        "id": "a2_c12n08_02",
+        "promptTh": "ขั้นที่สามทำอะไร",
+        "answerEn": "Then, mix the eggs.",
+        "answerTh": "แล้วคนไข่",
+        "acceptedAnswers": [
+          "Then mix the eggs."
+        ],
+        "imagePath": "describe-it/a2_c12n08/02.webp",
+        "hints": [
+          "Then…",
+          "Then, mix the ___."
+        ]
+      },
+      {
+        "id": "a2_c12n08_03",
+        "promptTh": "ขั้นที่สี่ทำอะไร",
+        "answerEn": "Then, pour the eggs into the pan.",
+        "answerTh": "แล้วเทไข่ลงกระทะ",
+        "acceptedAnswers": [
+          "Then pour the eggs into the pan."
+        ],
+        "imagePath": "describe-it/a2_c12n08/03.webp",
+        "hints": [
+          "Then…",
+          "Then, pour the eggs into the ___."
+        ]
+      },
+      {
+        "id": "a2_c12n08_04",
+        "promptTh": "ขั้นสุดท้ายทำอะไร",
+        "answerEn": "Then, fry the eggs.",
+        "answerTh": "แล้วทอดไข่",
+        "acceptedAnswers": [
+          "Then fry the eggs."
+        ],
+        "imagePath": "describe-it/a2_c12n08/04.webp",
+        "hints": [
+          "Then…",
+          "Then, fry the ___."
+        ]
+      },
+      {
+        "id": "a2_c12n08_05",
+        "promptTh": "ขั้นแรกทำอะไร",
+        "answerEn": "First, mix the eggs.",
+        "answerTh": "ขั้นแรกตีไข่",
+        "acceptedAnswers": [
+          "First mix the eggs."
+        ],
+        "imagePath": "describe-it/a2_c12n08/05.webp",
+        "hints": [
+          "First…",
+          "First, mix the ___."
+        ]
+      }
+    ]
+  },
+  "a2_c13n07": {
+    "id": "a2_c13n07",
+    "titleEn": "Compare Two Shirts",
+    "titleTh": "เทียบเสื้อ 2 ตัว",
+    "tagEn": "ADVENTURE",
+    "emoji": "🖼️",
+    "estimatedMinutes": 3,
+    "items": [
+      {
+        "id": "a2_c13n07_01",
+        "promptTh": "เสื้อตัวไหนแพงกว่า",
+        "answerEn": "The white shirt is more expensive.",
+        "answerTh": "เสื้อขาวแพงกว่า",
+        "acceptedAnswers": [
+          "The white one is more expensive."
+        ],
+        "imagePath": "describe-it/a2_c13n07/01.webp",
+        "hints": [
+          "The white…",
+          "The white shirt is more ___."
+        ]
+      },
+      {
+        "id": "a2_c13n07_02",
+        "promptTh": "เสื้อตัวไหนใหญ่กว่า",
+        "answerEn": "The blue shirt is bigger than the white one.",
+        "answerTh": "เสื้อน้ำเงินใหญ่กว่าเสื้อขาว",
+        "acceptedAnswers": [
+          "The blue one is bigger."
+        ],
+        "imagePath": "describe-it/a2_c13n07/02.webp",
+        "hints": [
+          "The blue…",
+          "The blue shirt is bigger than the ___ one."
+        ]
+      },
+      {
+        "id": "a2_c13n07_03",
+        "promptTh": "เสื้อตัวไหนถูกกว่า",
+        "answerEn": "The blue shirt is cheaper than the white one.",
+        "answerTh": "เสื้อน้ำเงินถูกกว่าเสื้อขาว",
+        "acceptedAnswers": [
+          "The blue one is cheaper."
+        ],
+        "imagePath": "describe-it/a2_c13n07/03.webp",
+        "hints": [
+          "The blue…",
+          "The blue shirt is cheaper than the ___ one."
+        ]
+      },
+      {
+        "id": "a2_c13n07_04",
+        "promptTh": "เสื้อขาวเป็นอย่างไรเมื่อเทียบขนาด",
+        "answerEn": "The white shirt is smaller than the blue one.",
+        "answerTh": "เสื้อขาวเล็กกว่าเสื้อน้ำเงิน",
+        "acceptedAnswers": [
+          "The white one is smaller."
+        ],
+        "imagePath": "describe-it/a2_c13n07/04.webp",
+        "hints": [
+          "The white…",
+          "The white shirt is smaller than the ___ one."
+        ]
+      },
+      {
+        "id": "a2_c13n07_05",
+        "promptTh": "เสื้อน้ำเงินราคาเท่าไหร่",
+        "answerEn": "The blue shirt is 200 baht.",
+        "answerTh": "เสื้อน้ำเงินราคา 200 บาท",
+        "acceptedAnswers": [
+          "It's 200 baht.",
+          "200 baht."
+        ],
+        "imagePath": "describe-it/a2_c13n07/05.webp",
+        "questionEn": "How much is the blue shirt?",
+        "hints": [
+          "The blue…",
+          "The blue shirt is ___ baht."
+        ]
+      }
+    ]
+  },
+  "a2_c14n08": {
+    "id": "a2_c14n08",
+    "titleEn": "Gift Price Board",
+    "titleTh": "เทียบราคาของขวัญ",
+    "tagEn": "ADVENTURE",
+    "emoji": "🖼️",
+    "estimatedMinutes": 3,
+    "items": [
+      {
+        "id": "a2_c14n08_01",
+        "promptTh": "ของชิ้นไหนถูกที่สุด",
+        "answerEn": "The teddy bear is the cheapest.",
+        "answerTh": "ตุ๊กตาหมีถูกที่สุด",
+        "acceptedAnswers": [
+          "The teddy bear is the cheapest gift."
+        ],
+        "imagePath": "describe-it/a2_c14n08/01.webp",
+        "hints": [
+          "The teddy…",
+          "The teddy bear is the ___."
+        ]
+      },
+      {
+        "id": "a2_c14n08_02",
+        "promptTh": "ของชิ้นไหนแพงที่สุด",
+        "answerEn": "The cake is the most expensive.",
+        "answerTh": "เค้กแพงที่สุด",
+        "acceptedAnswers": [
+          "The cake is the most expensive gift."
+        ],
+        "imagePath": "describe-it/a2_c14n08/02.webp",
+        "hints": [
+          "The cake…",
+          "The cake is the most ___."
+        ]
+      },
+      {
+        "id": "a2_c14n08_03",
+        "promptTh": "ของชิ้นไหนคนชอบที่สุด",
+        "answerEn": "The cake is the most popular.",
+        "answerTh": "เค้กคนชอบที่สุด",
+        "acceptedAnswers": [
+          "The cake is the most popular gift."
+        ],
+        "imagePath": "describe-it/a2_c14n08/03.webp",
+        "hints": [
+          "The cake…",
+          "The cake is the most ___."
+        ]
+      },
+      {
+        "id": "a2_c14n08_04",
+        "promptTh": "ดอกไม้ราคาเท่าไหร่",
+        "answerEn": "The flowers are 250 baht.",
+        "answerTh": "ดอกไม้ราคา 250 บาท",
+        "acceptedAnswers": [
+          "They're 250 baht.",
+          "250 baht."
+        ],
+        "imagePath": "describe-it/a2_c14n08/04.webp",
+        "hints": [
+          "The flowers…",
+          "The flowers are ___ baht."
+        ]
+      },
+      {
+        "id": "a2_c14n08_05",
+        "promptTh": "ตุ๊กตาหมีราคาเท่าไหร่",
+        "answerEn": "The teddy bear is 150 baht.",
+        "answerTh": "ตุ๊กตาหมีราคา 150 บาท",
+        "acceptedAnswers": [
+          "It's 150 baht.",
+          "150 baht."
+        ],
+        "imagePath": "describe-it/a2_c14n08/05.webp",
+        "hints": [
+          "The teddy…",
+          "The teddy bear is ___ baht."
+        ]
+      }
+    ]
+  },
+  "a2_c15n07": {
+    "id": "a2_c15n07",
+    "titleEn": "Yesterday's Photos",
+    "titleTh": "รูปเมื่อวาน",
+    "tagEn": "ADVENTURE",
+    "emoji": "🖼️",
+    "estimatedMinutes": 3,
+    "items": [
+      {
+        "id": "a2_c15n07_01",
+        "promptTh": "ดูรูปเมื่อวาน แล้วเล่าหนึ่งประโยค",
+        "answerEn": "She visited the museum yesterday.",
+        "answerTh": "เธอไปพิพิธภัณฑ์เมื่อวาน",
+        "acceptedAnswers": [
+          "May visited the museum yesterday.",
+          "She was at the museum yesterday."
+        ],
+        "imagePath": "describe-it/a2_c15n07/01.webp",
+        "hints": [
+          "She…",
+          "She visited the ___ yesterday."
+        ]
+      },
+      {
+        "id": "a2_c15n07_02",
+        "promptTh": "ดูรูปเมื่อวาน แล้วเล่าหนึ่งประโยค",
+        "answerEn": "She watched TV yesterday.",
+        "answerTh": "เธอดูทีวีเมื่อวาน",
+        "acceptedAnswers": [
+          "May watched TV yesterday."
+        ],
+        "imagePath": "describe-it/a2_c15n07/02.webp",
+        "hints": [
+          "She…",
+          "She watched ___ yesterday."
+        ]
+      },
+      {
+        "id": "a2_c15n07_03",
+        "promptTh": "ดูรูปเมื่อวาน แล้วเล่าหนึ่งประโยค",
+        "answerEn": "He cleaned his room yesterday.",
+        "answerTh": "เขาทำความสะอาดห้องเมื่อวาน",
+        "acceptedAnswers": [
+          "Bogy cleaned his room yesterday."
+        ],
+        "imagePath": "describe-it/a2_c15n07/03.webp",
+        "hints": [
+          "He…",
+          "He cleaned his ___ yesterday."
+        ]
+      },
+      {
+        "id": "a2_c15n07_04",
+        "promptTh": "ดูรูปเมื่อวาน แล้วเล่าหนึ่งประโยค",
+        "answerEn": "Capy relaxed at home yesterday.",
+        "answerTh": "คาปี้พักผ่อนที่บ้านเมื่อวาน",
+        "acceptedAnswers": [
+          "Capy relaxed yesterday."
+        ],
+        "imagePath": "describe-it/a2_c15n07/04.webp",
+        "hints": [
+          "Capy…",
+          "Capy relaxed at ___ yesterday."
+        ]
+      },
+      {
+        "id": "a2_c15n07_05",
+        "promptTh": "เมื่อวานพวกเขาอยู่ที่ไหน",
+        "answerEn": "They were at the park yesterday.",
+        "answerTh": "พวกเขาอยู่ที่สวนเมื่อวาน",
+        "acceptedAnswers": [
+          "May and Bogy were at the park yesterday."
+        ],
+        "imagePath": "describe-it/a2_c15n07/05.webp",
+        "questionEn": "Where were they yesterday?",
+        "hints": [
+          "They were…",
+          "They were at the ___ yesterday."
+        ]
+      }
+    ]
+  },
+  "a2_c16n04": {
+    "id": "a2_c16n04",
+    "titleEn": "Boat Menu",
+    "titleTh": "เมนูบนเรือ",
+    "tagEn": "ADVENTURE",
+    "emoji": "🖼️",
+    "estimatedMinutes": 3,
+    "items": [
+      {
+        "id": "a2_c16n04_01",
+        "promptTh": "ก๋วยเตี๋ยวเรือราคาเท่าไหร่ และมีอะไรพิเศษ",
+        "answerEn": "The boat noodles are 40 baht. They're famous.",
+        "answerTh": "ก๋วยเตี๋ยวเรือราคา 40 บาท และดัง",
+        "acceptedAnswers": [
+          "The boat noodles are forty baht. They're famous."
+        ],
+        "imagePath": "describe-it/a2_c16n04/01.webp",
+        "hints": [
+          "The boat…",
+          "The boat noodles are ___ baht."
+        ]
+      },
+      {
+        "id": "a2_c16n04_02",
+        "promptTh": "มะม่วงราคาเท่าไหร่",
+        "answerEn": "The mango is 30 baht.",
+        "answerTh": "มะม่วงราคา 30 บาท",
+        "acceptedAnswers": [
+          "It's 30 baht.",
+          "30 baht."
+        ],
+        "imagePath": "describe-it/a2_c16n04/02.webp",
+        "hints": [
+          "The mango…",
+          "The mango is ___ baht."
+        ]
+      },
+      {
+        "id": "a2_c16n04_03",
+        "promptTh": "น้ำราคาเท่าไหร่",
+        "answerEn": "The water is 10 baht.",
+        "answerTh": "น้ำราคา 10 บาท",
+        "acceptedAnswers": [
+          "It's 10 baht.",
+          "10 baht."
+        ],
+        "imagePath": "describe-it/a2_c16n04/03.webp",
+        "hints": [
+          "The water…",
+          "The water is ___ baht."
+        ]
+      },
+      {
+        "id": "a2_c16n04_04",
+        "promptTh": "เมนูไหนดัง",
+        "answerEn": "The boat noodles are famous.",
+        "answerTh": "ก๋วยเตี๋ยวเรือดัง",
+        "acceptedAnswers": [
+          "They're famous."
+        ],
+        "imagePath": "describe-it/a2_c16n04/04.webp",
+        "hints": [
+          "The boat…",
+          "The boat noodles are ___."
+        ]
+      },
+      {
+        "id": "a2_c16n04_05",
+        "promptTh": "ก๋วยเตี๋ยวเรือราคาเท่าไหร่",
+        "answerEn": "The boat noodles are 40 baht.",
+        "answerTh": "ก๋วยเตี๋ยวเรือราคา 40 บาท",
+        "acceptedAnswers": [
+          "They're 40 baht.",
+          "40 baht."
+        ],
+        "imagePath": "describe-it/a2_c16n04/05.webp",
+        "hints": [
+          "The boat…",
+          "The boat noodles are ___ baht."
+        ]
+      }
+    ]
+  },
+  "a2_c17n07": {
+    "id": "a2_c17n07",
+    "titleEn": "Read the Boarding Pass",
+    "titleTh": "อ่านบอร์ดดิ้งพาส",
+    "tagEn": "ADVENTURE",
+    "emoji": "🖼️",
+    "estimatedMinutes": 3,
+    "items": [
+      {
+        "id": "a2_c17n07_01",
+        "promptTh": "เครื่องออกกี่โมง และต้องไปประตูไหน",
+        "answerEn": "Her flight is at 10:40. She has to go to Gate 9.",
+        "answerTh": "ไฟลต์ของเธอออก 10:40 เธอต้องไปประตู 9",
+        "acceptedAnswers": [
+          "She has to go to Gate 9.",
+          "The flight is at 10:40."
+        ],
+        "imagePath": "describe-it/a2_c17n07/01.webp",
+        "hints": [
+          "Her flight…",
+          "Her flight is at ___. She has to go to Gate ___."
+        ]
+      },
+      {
+        "id": "a2_c17n07_02",
+        "promptTh": "ที่นั่งอะไร",
+        "answerEn": "The seat is 12A.",
+        "answerTh": "ที่นั่ง 12A",
+        "acceptedAnswers": [
+          "Seat 12A.",
+          "It's 12A."
+        ],
+        "imagePath": "describe-it/a2_c17n07/02.webp",
+        "questionEn": "What is the seat?",
+        "hints": [
+          "The seat…",
+          "The seat is ___."
+        ]
+      },
+      {
+        "id": "a2_c17n07_03",
+        "promptTh": "ขึ้นเครื่องกี่โมง",
+        "answerEn": "Boarding is at 10:00.",
+        "answerTh": "ขึ้นเครื่องตอน 10:00",
+        "acceptedAnswers": [
+          "We board at 10:00."
+        ],
+        "imagePath": "describe-it/a2_c17n07/03.webp",
+        "hints": [
+          "Boarding…",
+          "Boarding is at ___."
+        ]
+      },
+      {
+        "id": "a2_c17n07_04",
+        "promptTh": "เครื่องไปที่ไหน",
+        "answerEn": "The flight is to Singapore.",
+        "answerTh": "เครื่องไปสิงคโปร์",
+        "acceptedAnswers": [
+          "It goes to Singapore."
+        ],
+        "imagePath": "describe-it/a2_c17n07/04.webp",
+        "hints": [
+          "The flight…",
+          "The flight is to ___."
+        ]
+      },
+      {
+        "id": "a2_c17n07_05",
+        "promptTh": "ประตูหมายเลขอะไร",
+        "answerEn": "The gate is 9.",
+        "answerTh": "ประตูหมายเลข 9",
+        "acceptedAnswers": [
+          "Gate 9.",
+          "It's gate 9."
+        ],
+        "imagePath": "describe-it/a2_c17n07/05.webp",
+        "hints": [
+          "The gate…",
+          "The gate is ___."
+        ]
+      }
+    ]
+  },
+  "a2_c18n09": {
+    "id": "a2_c18n09",
+    "titleEn": "Read the Booking",
+    "titleTh": "อ่านใบจอง",
+    "tagEn": "ADVENTURE",
+    "emoji": "🖼️",
+    "estimatedMinutes": 3,
+    "items": [
+      {
+        "id": "a2_c18n09_01",
+        "promptTh": "จองกี่คืน",
+        "answerEn": "She has a reservation for two nights.",
+        "answerTh": "เธอจองไว้สองคืน",
+        "acceptedAnswers": [
+          "She has a reservation for 2 nights."
+        ],
+        "imagePath": "describe-it/a2_c18n09/01.webp",
+        "hints": [
+          "She has…",
+          "She has a reservation for ___ nights."
+        ]
+      },
+      {
+        "id": "a2_c18n09_02",
+        "promptTh": "ห้องแบบไหน",
+        "answerEn": "It's a double room.",
+        "answerTh": "เป็นห้องคู่",
+        "acceptedAnswers": [
+          "It is a double room."
+        ],
+        "imagePath": "describe-it/a2_c18n09/02.webp",
+        "hints": [
+          "It's…",
+          "It's a ___ room."
+        ]
+      },
+      {
+        "id": "a2_c18n09_03",
+        "promptTh": "อาหารเช้ากี่โมง",
+        "answerEn": "Breakfast is from 7:00 to 10:00.",
+        "answerTh": "อาหารเช้าตั้งแต่ 7:00 ถึง 10:00",
+        "acceptedAnswers": [
+          "Breakfast is at 7:00."
+        ],
+        "imagePath": "describe-it/a2_c18n09/03.webp",
+        "hints": [
+          "Breakfast…",
+          "Breakfast is from ___ to ___."
+        ]
+      },
+      {
+        "id": "a2_c18n09_04",
+        "promptTh": "เช็คเอาต์กี่โมง",
+        "answerEn": "Checkout is at 11:00.",
+        "answerTh": "เช็คเอาต์ตอน 11:00",
+        "acceptedAnswers": [
+          "Checkout time is 11:00."
+        ],
+        "imagePath": "describe-it/a2_c18n09/04.webp",
+        "hints": [
+          "Checkout…",
+          "Checkout is at ___."
+        ]
+      },
+      {
+        "id": "a2_c18n09_05",
+        "promptTh": "สรุปการจอง",
+        "answerEn": "She has a reservation for two nights. It's a double room.",
+        "answerTh": "เธอจองสองคืน เป็นห้องคู่",
+        "acceptedAnswers": [
+          "It's a double room for two nights."
+        ],
+        "imagePath": "describe-it/a2_c18n09/05.webp",
+        "hints": [
+          "She has…",
+          "She has a reservation for two ___. It's a ___ room."
+        ]
+      }
+    ]
+  },
+  "a2_c19n09": {
+    "id": "a2_c19n09",
+    "titleEn": "Timetable and Clock",
+    "titleTh": "ตารางรถกับนาฬิกา",
+    "tagEn": "ADVENTURE",
+    "emoji": "🖼️",
+    "estimatedMinutes": 3,
+    "items": [
+      {
+        "id": "a2_c19n09_01",
+        "promptTh": "เกิดอะไรขึ้นกับรถคัน 09:00",
+        "answerEn": "The 09:00 bus left. We missed the bus.",
+        "answerTh": "รถ 09:00 ออกไปแล้ว เราพลาดรถ",
+        "acceptedAnswers": [
+          "We missed the bus."
+        ],
+        "imagePath": "describe-it/a2_c19n09/01.webp",
+        "hints": [
+          "The bus…",
+          "We missed the ___."
+        ]
+      },
+      {
+        "id": "a2_c19n09_02",
+        "promptTh": "รถคันถัดไปกี่โมง",
+        "answerEn": "The next bus is at 09:30.",
+        "answerTh": "รถคันถัดไปตอน 09:30",
+        "acceptedAnswers": [
+          "It's at 09:30."
+        ],
+        "imagePath": "describe-it/a2_c19n09/02.webp",
+        "hints": [
+          "The next…",
+          "The next bus is at ___."
+        ]
+      },
+      {
+        "id": "a2_c19n09_03",
+        "promptTh": "ค่าโดยสารเท่าไหร่",
+        "answerEn": "The fare is 20 baht.",
+        "answerTh": "ค่าโดยสาร 20 บาท",
+        "acceptedAnswers": [
+          "It's 20 baht.",
+          "20 baht."
+        ],
+        "imagePath": "describe-it/a2_c19n09/03.webp",
+        "hints": [
+          "The fare…",
+          "The fare is ___ baht."
+        ]
+      },
+      {
+        "id": "a2_c19n09_04",
+        "promptTh": "มีรถกี่โมงอีกคัน",
+        "answerEn": "There is a bus at 10:00.",
+        "answerTh": "มีรถตอน 10:00",
+        "acceptedAnswers": [
+          "The bus is at 10:00."
+        ],
+        "imagePath": "describe-it/a2_c19n09/04.webp",
+        "hints": [
+          "There is…",
+          "There is a bus at ___."
+        ]
+      },
+      {
+        "id": "a2_c19n09_05",
+        "promptTh": "ตอนนี้กี่โมง",
+        "answerEn": "It is 09:10 now.",
+        "answerTh": "ตอนนี้ 09:10",
+        "acceptedAnswers": [
+          "It's 09:10.",
+          "Now it's 09:10."
+        ],
+        "imagePath": "describe-it/a2_c19n09/05.webp",
+        "hints": [
+          "It is…",
+          "It is ___ now."
+        ]
+      }
+    ]
+  },
+  "a2_c20n08": {
+    "id": "a2_c20n08",
+    "titleEn": "Directions from a Map",
+    "titleTh": "บอกทางจากแผนที่",
+    "tagEn": "ADVENTURE",
+    "emoji": "🖼️",
+    "estimatedMinutes": 3,
+    "items": [
+      {
+        "id": "a2_c20n08_01",
+        "promptTh": "ธนาคารอยู่ทางไหน",
+        "answerEn": "Go straight. The bank is on your right.",
+        "answerTh": "เดินตรงไป ธนาคารอยู่ทางขวา",
+        "acceptedAnswers": [
+          "The bank is on your right."
+        ],
+        "imagePath": "describe-it/a2_c20n08/01.webp",
+        "hints": [
+          "Go straight…",
+          "The bank is on your ___."
+        ]
+      },
+      {
+        "id": "a2_c20n08_02",
+        "promptTh": "ไปคาเฟ่ยังไง",
+        "answerEn": "Go straight and turn right at the traffic lights.",
+        "answerTh": "เดินตรงไปแล้วเลี้ยวขวาที่ไฟจราจร",
+        "acceptedAnswers": [
+          "Turn right at the traffic lights."
+        ],
+        "imagePath": "describe-it/a2_c20n08/02.webp",
+        "hints": [
+          "Go straight…",
+          "Turn right at the traffic ___."
+        ]
+      },
+      {
+        "id": "a2_c20n08_03",
+        "promptTh": "สวนอยู่ที่ไหน",
+        "answerEn": "Go across the bridge. The park is on your left.",
+        "answerTh": "ข้ามสะพานไป สวนอยู่ทางซ้าย",
+        "acceptedAnswers": [
+          "The park is across the bridge."
+        ],
+        "imagePath": "describe-it/a2_c20n08/03.webp",
+        "hints": [
+          "Go across…",
+          "The park is on your ___."
+        ]
+      },
+      {
+        "id": "a2_c20n08_04",
+        "promptTh": "ร้านค้าอยู่ทางไหน",
+        "answerEn": "Turn left. The shop is on your left.",
+        "answerTh": "เลี้ยวซ้าย ร้านค้าอยู่ทางซ้าย",
+        "acceptedAnswers": [
+          "The shop is on your left."
+        ],
+        "imagePath": "describe-it/a2_c20n08/04.webp",
+        "hints": [
+          "Turn left…",
+          "The shop is on your ___."
+        ]
+      },
+      {
+        "id": "a2_c20n08_05",
+        "promptTh": "คาเฟ่อยู่ที่ไหน",
+        "answerEn": "The cafe is on your right.",
+        "answerTh": "คาเฟ่อยู่ทางขวา",
+        "acceptedAnswers": [
+          "The café is on your right."
+        ],
+        "imagePath": "describe-it/a2_c20n08/05.webp",
+        "hints": [
+          "The cafe…",
+          "The cafe is on your ___."
+        ]
+      }
+    ]
+  },
+  "a2_c22n08": {
+    "id": "a2_c22n08",
+    "titleEn": "Medicine Label",
+    "titleTh": "ฉลากยา",
+    "tagEn": "ADVENTURE",
+    "emoji": "🖼️",
+    "estimatedMinutes": 3,
+    "items": [
+      {
+        "id": "a2_c22n08_01",
+        "promptTh": "ยานี้กินยังไง",
+        "answerEn": "Take one pill after meals, three times a day.",
+        "answerTh": "กินหนึ่งเม็ดหลังอาหาร วันละสามครั้ง",
+        "acceptedAnswers": [
+          "Take 1 pill after meals, 3 times a day."
+        ],
+        "imagePath": "describe-it/a2_c22n08/01.webp",
+        "questionEn": "How do I take this medicine?",
+        "hints": [
+          "Take…",
+          "Take one pill after meals, ___ times a day."
+        ]
+      },
+      {
+        "id": "a2_c22n08_02",
+        "promptTh": "ยานี้กินยังไง",
+        "answerEn": "Take one pill before meals, twice a day.",
+        "answerTh": "กินหนึ่งเม็ดก่อนอาหาร วันละสองครั้ง",
+        "acceptedAnswers": [
+          "Take 1 pill before meals, twice a day."
+        ],
+        "imagePath": "describe-it/a2_c22n08/02.webp",
+        "questionEn": "How do I take this medicine?",
+        "hints": [
+          "Take…",
+          "Take one pill before meals, ___ a day."
+        ]
+      },
+      {
+        "id": "a2_c22n08_03",
+        "promptTh": "ยานี้กินยังไง",
+        "answerEn": "Take two pills after meals, twice a day.",
+        "answerTh": "กินสองเม็ดหลังอาหาร วันละสองครั้ง",
+        "acceptedAnswers": [
+          "Take 2 pills after meals, twice a day."
+        ],
+        "imagePath": "describe-it/a2_c22n08/03.webp",
+        "questionEn": "How do I take this medicine?",
+        "hints": [
+          "Take…",
+          "Take two pills after meals, ___ a day."
+        ]
+      },
+      {
+        "id": "a2_c22n08_04",
+        "promptTh": "ยานี้กินยังไง",
+        "answerEn": "Take one pill after meals, once a day.",
+        "answerTh": "กินหนึ่งเม็ดหลังอาหาร วันละครั้ง",
+        "acceptedAnswers": [
+          "Take 1 pill after meals, once a day."
+        ],
+        "imagePath": "describe-it/a2_c22n08/04.webp",
+        "questionEn": "How do I take this medicine?",
+        "hints": [
+          "Take…",
+          "Take one pill after meals, ___ a day."
+        ]
+      },
+      {
+        "id": "a2_c22n08_05",
+        "promptTh": "ยานี้กินยังไง",
+        "answerEn": "Take two pills before meals, three times a day.",
+        "answerTh": "กินสองเม็ดก่อนอาหาร วันละสามครั้ง",
+        "acceptedAnswers": [
+          "Take 2 pills before meals, 3 times a day."
+        ],
+        "imagePath": "describe-it/a2_c22n08/05.webp",
+        "questionEn": "How do I take this medicine?",
+        "hints": [
+          "Take…",
+          "Take two pills before meals, ___ times a day."
+        ]
+      }
+    ]
+  },
+  "a2_c23n10": {
+    "id": "a2_c23n10",
+    "titleEn": "Describe Your Bag",
+    "titleTh": "บรรยายกระเป๋า",
+    "tagEn": "ADVENTURE",
+    "emoji": "🖼️",
+    "estimatedMinutes": 3,
+    "items": [
+      {
+        "id": "a2_c23n10_01",
+        "promptTh": "กระเป๋าใบนี้เป็นยังไง",
+        "answerEn": "It's a black bag with a key inside.",
+        "answerTh": "เป็นกระเป๋าสีดำ มีลูกกุญแจอยู่ข้างใน",
+        "acceptedAnswers": [
+          "It is a black bag with a key inside."
+        ],
+        "imagePath": "describe-it/a2_c23n10/01.webp",
+        "hints": [
+          "It's…",
+          "It's a black bag with a ___ inside."
+        ]
+      },
+      {
+        "id": "a2_c23n10_02",
+        "promptTh": "ในกระเป๋าสีดำมีอะไร",
+        "answerEn": "There's a notebook in the black bag.",
+        "answerTh": "ในกระเป๋าสีดำมีสมุดโน้ต",
+        "acceptedAnswers": [
+          "There is a notebook inside."
+        ],
+        "imagePath": "describe-it/a2_c23n10/02.webp",
+        "hints": [
+          "There's…",
+          "There's a ___ in the black bag."
+        ]
+      },
+      {
+        "id": "a2_c23n10_03",
+        "promptTh": "บรรยายกระเป๋าสีดำ",
+        "answerEn": "It's a black bag with a key and a notebook inside.",
+        "answerTh": "เป็นกระเป๋าสีดำ มีลูกกุญแจกับสมุดอยู่ข้างใน",
+        "acceptedAnswers": [
+          "A black bag with a key and a notebook."
+        ],
+        "imagePath": "describe-it/a2_c23n10/03.webp",
+        "hints": [
+          "It's…",
+          "It's a black bag with a key and a ___ inside."
+        ]
+      },
+      {
+        "id": "a2_c23n10_04",
+        "promptTh": "ในกระเป๋าสีแดงมีอะไร",
+        "answerEn": "It's a red bag with a charger inside.",
+        "answerTh": "เป็นกระเป๋าสีแดง มีที่ชาร์จอยู่ข้างใน",
+        "acceptedAnswers": [
+          "There is a charger in the red bag."
+        ],
+        "imagePath": "describe-it/a2_c23n10/04.webp",
+        "hints": [
+          "It's…",
+          "It's a red bag with a ___ inside."
+        ]
+      },
+      {
+        "id": "a2_c23n10_05",
+        "promptTh": "ในกระเป๋าสีแดงมีอะไรอีก",
+        "answerEn": "It's a red bag with headphones inside.",
+        "answerTh": "เป็นกระเป๋าสีแดง มีหูฟังอยู่ข้างใน",
+        "acceptedAnswers": [
+          "There are headphones in the red bag."
+        ],
+        "imagePath": "describe-it/a2_c23n10/05.webp",
+        "hints": [
+          "It's…",
+          "It's a red bag with ___ inside."
+        ]
+      }
+    ]
+  },
+  "a2_c24n05": {
+    "id": "a2_c24n05",
+    "titleEn": "Departure Board",
+    "titleTh": "จอเที่ยวบิน",
+    "tagEn": "ADVENTURE",
+    "emoji": "🖼️",
+    "estimatedMinutes": 3,
+    "items": [
+      {
+        "id": "a2_c24n05_01",
+        "promptTh": "เที่ยวบินของเราเป็นยังไง และประตูใหม่คืออะไร",
+        "answerEn": "Our flight is delayed. The new gate is 12.",
+        "answerTh": "เที่ยวบินของเราดีเลย์ ประตูใหม่คือ 12",
+        "acceptedAnswers": [
+          "The new gate is 12."
+        ],
+        "imagePath": "describe-it/a2_c24n05/01.webp",
+        "hints": [
+          "Our flight…",
+          "Our flight is delayed. The new gate is ___."
+        ]
+      },
+      {
+        "id": "a2_c24n05_02",
+        "promptTh": "ตอนนี้เครื่องออกกี่โมง",
+        "answerEn": "The new time is 12:00.",
+        "answerTh": "เวลาใหม่คือ 12:00",
+        "acceptedAnswers": [
+          "It leaves at 12:00."
+        ],
+        "imagePath": "describe-it/a2_c24n05/02.webp",
+        "hints": [
+          "The new…",
+          "The new time is ___."
+        ]
+      },
+      {
+        "id": "a2_c24n05_03",
+        "promptTh": "มีเที่ยวบินไหนถูกยกเลิก",
+        "answerEn": "One flight is cancelled.",
+        "answerTh": "มีหนึ่งเที่ยวบินถูกยกเลิก",
+        "acceptedAnswers": [
+          "It is cancelled."
+        ],
+        "imagePath": "describe-it/a2_c24n05/03.webp",
+        "hints": [
+          "One flight…",
+          "One flight is ___."
+        ]
+      },
+      {
+        "id": "a2_c24n05_04",
+        "promptTh": "เที่ยวบินบ่ายเป็นยังไง",
+        "answerEn": "The 14:30 flight is on time.",
+        "answerTh": "เที่ยวบิน 14:30 ตรงเวลา",
+        "acceptedAnswers": [
+          "It is on time."
+        ],
+        "imagePath": "describe-it/a2_c24n05/04.webp",
+        "hints": [
+          "The flight…",
+          "The 14:30 flight is on ___."
+        ]
+      },
+      {
+        "id": "a2_c24n05_05",
+        "promptTh": "ประตูเปลี่ยนจากไหนไปไหน",
+        "answerEn": "The gate changed from 9 to 12.",
+        "answerTh": "ประตูเปลี่ยนจาก 9 เป็น 12",
+        "acceptedAnswers": [
+          "The new gate is 12."
+        ],
+        "imagePath": "describe-it/a2_c24n05/05.webp",
+        "hints": [
+          "The gate…",
+          "The gate changed from ___ to ___."
+        ]
+      }
+    ]
+  },
+  "a2_c25n09": {
+    "id": "a2_c25n09",
+    "titleEn": "How Did It Feel?",
+    "titleTh": "รู้สึกยังไง",
+    "tagEn": "ADVENTURE",
+    "emoji": "🖼️",
+    "estimatedMinutes": 3,
+    "items": [
+      {
+        "id": "a2_c25n09_01",
+        "promptTh": "เหตุการณ์เป็นยังไง และเธอรู้สึกยังไง",
+        "answerEn": "The boat ride was exciting. She was excited.",
+        "answerTh": "การนั่งเรือสนุก เธอตื่นเต้น",
+        "acceptedAnswers": [
+          "She was excited."
+        ],
+        "imagePath": "describe-it/a2_c25n09/01.webp",
+        "hints": [
+          "The boat…",
+          "The boat ride was ___. She was ___."
+        ]
+      },
+      {
+        "id": "a2_c25n09_02",
+        "promptTh": "การแสดงเป็นยังไง และเขารู้สึกยังไง",
+        "answerEn": "The show was boring. He was bored.",
+        "answerTh": "การแสดงน่าเบื่อ เขาเบื่อ",
+        "acceptedAnswers": [
+          "He was bored."
+        ],
+        "imagePath": "describe-it/a2_c25n09/02.webp",
+        "hints": [
+          "The show…",
+          "The show was ___. He was ___."
+        ]
+      },
+      {
+        "id": "a2_c25n09_03",
+        "promptTh": "ทัวร์เป็นยังไง และเธอรู้สึกยังไง",
+        "answerEn": "The museum tour was interesting. She was interested.",
+        "answerTh": "ทัวร์พิพิธภัณฑ์น่าสนใจ เธอสนใจ",
+        "acceptedAnswers": [
+          "She was interested."
+        ],
+        "imagePath": "describe-it/a2_c25n09/03.webp",
+        "hints": [
+          "The museum…",
+          "The museum tour was ___. She was ___."
+        ]
+      },
+      {
+        "id": "a2_c25n09_04",
+        "promptTh": "การเดินเป็นยังไง และพวกเขารู้สึกยังไง",
+        "answerEn": "The long walk was tiring. They were tired.",
+        "answerTh": "การเดินทางไกลเหนื่อย พวกเขาเหนื่อย",
+        "acceptedAnswers": [
+          "They were tired."
+        ],
+        "imagePath": "describe-it/a2_c25n09/04.webp",
+        "hints": [
+          "The long…",
+          "The long walk was ___. They were ___."
+        ]
+      },
+      {
+        "id": "a2_c25n09_05",
+        "promptTh": "การแสดงเป็นยังไง และพวกเขารู้สึกยังไง",
+        "answerEn": "The show was exciting. They were excited.",
+        "answerTh": "การแสดงสนุก พวกเขาตื่นเต้น",
+        "acceptedAnswers": [
+          "They were excited."
+        ],
+        "imagePath": "describe-it/a2_c25n09/05.webp",
+        "hints": [
+          "The show…",
+          "The show was ___. They were ___."
+        ]
+      }
+    ]
+  },
+  "a2_c26n09": {
+    "id": "a2_c26n09",
+    "titleEn": "My Trip Photo",
+    "titleTh": "รูปทริปของฉัน",
+    "tagEn": "ADVENTURE",
+    "emoji": "🖼️",
+    "estimatedMinutes": 3,
+    "items": [
+      {
+        "id": "a2_c26n09_01",
+        "promptTh": "เคยไปไหน และไปเมื่อไหร่",
+        "answerEn": "I've been to Phuket. I went last year.",
+        "answerTh": "ฉันเคยไปภูเก็ต เมื่อปีที่แล้ว",
+        "acceptedAnswers": [
+          "I have been to Phuket. I went last year."
+        ],
+        "imagePath": "describe-it/a2_c26n09/01.webp",
+        "questionEn": "Where have you been?",
+        "hints": [
+          "I've been…",
+          "I've been to ___. I went last year."
+        ]
+      },
+      {
+        "id": "a2_c26n09_02",
+        "promptTh": "เคยไปไหน และไปเมื่อไหร่",
+        "answerEn": "I've been to Chiang Mai. I went two years ago.",
+        "answerTh": "ฉันเคยไปเชียงใหม่ เมื่อสองปีก่อน",
+        "acceptedAnswers": [
+          "I have been to Chiang Mai."
+        ],
+        "imagePath": "describe-it/a2_c26n09/02.webp",
+        "questionEn": "Where have you been?",
+        "hints": [
+          "I've been…",
+          "I've been to Chiang Mai. I went ___ years ago."
+        ]
+      },
+      {
+        "id": "a2_c26n09_03",
+        "promptTh": "เคยไปไหน และไปเมื่อไหร่",
+        "answerEn": "I've been to Japan. I went last year.",
+        "answerTh": "ฉันเคยไปญี่ปุ่น เมื่อปีที่แล้ว",
+        "acceptedAnswers": [
+          "I have been to Japan."
+        ],
+        "imagePath": "describe-it/a2_c26n09/03.webp",
+        "questionEn": "Where have you been?",
+        "hints": [
+          "I've been…",
+          "I've been to ___. I went last year."
+        ]
+      },
+      {
+        "id": "a2_c26n09_04",
+        "promptTh": "เคยไปไหน และไปเมื่อไหร่",
+        "answerEn": "I've been to Korea. I went two years ago.",
+        "answerTh": "ฉันเคยไปเกาหลี เมื่อสองปีก่อน",
+        "acceptedAnswers": [
+          "I have been to Korea."
+        ],
+        "imagePath": "describe-it/a2_c26n09/04.webp",
+        "questionEn": "Where have you been?",
+        "hints": [
+          "I've been…",
+          "I've been to ___. I went two years ago."
+        ]
+      },
+      {
+        "id": "a2_c26n09_05",
+        "promptTh": "เคยไปไหน และไปเมื่อไหร่",
+        "answerEn": "I've been to Chiang Mai. I went last year.",
+        "answerTh": "ฉันเคยไปเชียงใหม่ เมื่อปีที่แล้ว",
+        "acceptedAnswers": [
+          "I went to Chiang Mai last year."
+        ],
+        "imagePath": "describe-it/a2_c26n09/05.webp",
+        "questionEn": "Where have you been?",
+        "hints": [
+          "I've been…",
+          "I've been to Chiang Mai. I went last ___."
+        ]
+      }
+    ]
+  },
+  "a2_c28n09": {
+    "id": "a2_c28n09",
+    "titleEn": "Read the Signs",
+    "titleTh": "อ่านป้าย",
+    "tagEn": "ADVENTURE",
+    "emoji": "🖼️",
+    "estimatedMinutes": 3,
+    "items": [
+      {
+        "id": "a2_c28n09_01",
+        "promptTh": "ป้ายนี้บอกอะไร",
+        "answerEn": "You must wear a uniform.",
+        "answerTh": "คุณต้องใส่ยูนิฟอร์ม",
+        "acceptedAnswers": [
+          "You must wear a shirt."
+        ],
+        "imagePath": "describe-it/a2_c28n09/01.webp",
+        "hints": [
+          "You must…",
+          "You must wear a ___."
+        ]
+      },
+      {
+        "id": "a2_c28n09_02",
+        "promptTh": "ป้ายนี้บอกอะไร",
+        "answerEn": "You mustn't use your phone here.",
+        "answerTh": "คุณห้ามใช้โทรศัพท์ที่นี่",
+        "acceptedAnswers": [
+          "You must not use your phone here."
+        ],
+        "imagePath": "describe-it/a2_c28n09/02.webp",
+        "hints": [
+          "You mustn't…",
+          "You mustn't use your ___ here."
+        ]
+      },
+      {
+        "id": "a2_c28n09_03",
+        "promptTh": "ป้ายนี้บอกอะไร",
+        "answerEn": "You mustn't eat here.",
+        "answerTh": "คุณห้ามกินที่นี่",
+        "acceptedAnswers": [
+          "You must not eat here."
+        ],
+        "imagePath": "describe-it/a2_c28n09/03.webp",
+        "hints": [
+          "You mustn't…",
+          "You mustn't ___ here."
+        ]
+      },
+      {
+        "id": "a2_c28n09_04",
+        "promptTh": "ป้ายนี้บอกอะไร",
+        "answerEn": "You don't have to wear a tie.",
+        "answerTh": "คุณไม่จำเป็นต้องใส่เนกไท",
+        "acceptedAnswers": [
+          "You do not have to wear a tie."
+        ],
+        "imagePath": "describe-it/a2_c28n09/04.webp",
+        "hints": [
+          "You don't…",
+          "You don't have to wear a ___."
+        ]
+      },
+      {
+        "id": "a2_c28n09_05",
+        "promptTh": "ป้ายนี้บอกอะไร",
+        "answerEn": "You don't have to wear a mask.",
+        "answerTh": "คุณไม่จำเป็นต้องใส่หน้ากาก",
+        "acceptedAnswers": [
+          "You do not have to wear a mask."
+        ],
+        "imagePath": "describe-it/a2_c28n09/05.webp",
+        "hints": [
+          "You don't…",
+          "You don't have to wear a ___."
+        ]
+      }
+    ]
+  },
+  "a2_c31n03": {
+    "id": "a2_c31n03",
+    "titleEn": "Who Brings What?",
+    "titleTh": "ใครเอาอะไรมา",
+    "tagEn": "ADVENTURE",
+    "emoji": "🖼️",
+    "estimatedMinutes": 3,
+    "items": [
+      {
+        "id": "a2_c31n03_01",
+        "promptTh": "ใครจะเอาเค้กมา",
+        "answerEn": "May is going to bring the cake.",
+        "answerTh": "เมย์จะเอาเค้กมา",
+        "acceptedAnswers": [
+          "May's going to bring the cake."
+        ],
+        "imagePath": "describe-it/a2_c31n03/01.webp",
+        "questionEn": "Who's going to bring the cake?",
+        "hints": [
+          "May…",
+          "May is going to bring the ___."
+        ]
+      },
+      {
+        "id": "a2_c31n03_02",
+        "promptTh": "ใครจะเอาเครื่องดื่มมา",
+        "answerEn": "Mali is going to bring the drinks.",
+        "answerTh": "มะลิจะเอาเครื่องดื่มมา",
+        "acceptedAnswers": [
+          "Mali's going to bring the drinks."
+        ],
+        "imagePath": "describe-it/a2_c31n03/02.webp",
+        "questionEn": "Who's going to bring the drinks?",
+        "hints": [
+          "Mali…",
+          "Mali is going to bring the ___."
+        ]
+      },
+      {
+        "id": "a2_c31n03_03",
+        "promptTh": "ใครจะเอาดอกไม้มา",
+        "answerEn": "Nina is going to bring the flowers.",
+        "answerTh": "นีน่าจะเอาดอกไม้มา",
+        "acceptedAnswers": [
+          "Nina's going to bring the flowers."
+        ],
+        "imagePath": "describe-it/a2_c31n03/03.webp",
+        "questionEn": "Who's going to bring the flowers?",
+        "hints": [
+          "Nina…",
+          "Nina is going to bring the ___."
+        ]
+      },
+      {
+        "id": "a2_c31n03_04",
+        "promptTh": "ยังไม่มีคนเอาเพลงมา ถามเพื่อน",
+        "answerEn": "Who's going to bring the music?",
+        "answerTh": "ใครจะเอาเพลงมา",
+        "acceptedAnswers": [
+          "Who is going to bring the music?"
+        ],
+        "imagePath": "describe-it/a2_c31n03/04.webp",
+        "hints": [
+          "Who's…",
+          "Who's going to bring the ___?"
+        ]
+      },
+      {
+        "id": "a2_c31n03_05",
+        "promptTh": "ยังไม่มีคนเอาจานมา ถามเพื่อน",
+        "answerEn": "Who's going to bring the plates?",
+        "answerTh": "ใครจะเอาจานมา",
+        "acceptedAnswers": [
+          "Who is going to bring the plates?"
+        ],
+        "imagePath": "describe-it/a2_c31n03/05.webp",
+        "hints": [
+          "Who's…",
+          "Who's going to bring the ___?"
+        ]
+      }
+    ]
   }
 }
