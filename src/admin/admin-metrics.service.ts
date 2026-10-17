@@ -356,24 +356,6 @@ export class AdminMetricsService {
         : { day, value: proxy, exact: false };
     });
 
-    const onboardedRows = await this.prisma.user.findMany({
-      where: onboardedIn(range.from, range.to),
-      select: { createdAt: true },
-    });
-    const onboardedCounts = new Map<string, number>();
-    for (const key of eachUtcDateKey(range.from, range.to)) {
-      onboardedCounts.set(key, 0);
-    }
-    for (const row of onboardedRows) {
-      const key = dateKey(row.createdAt);
-      if (!onboardedCounts.has(key)) continue;
-      onboardedCounts.set(key, (onboardedCounts.get(key) ?? 0) + 1);
-    }
-    const onboardedByDay = [...onboardedCounts.entries()].map(([day, value]) => ({
-      day,
-      value,
-    }));
-
     const revenueByProduct: Record<string, { count: number; thb: number }> = {};
     for (const p of purchases) {
       const cur = revenueByProduct[p.productId] ?? { count: 0, thb: 0 };
@@ -441,7 +423,6 @@ export class AdminMetricsService {
         },
       },
       charts: {
-        onboardedByDay,
         activeUsersProxyByDay: dauSeries,
         completionsByDay,
         revenueByProduct: Object.entries(revenueByProduct).map(
@@ -772,6 +753,21 @@ export class AdminMetricsService {
 
     const signedUp = users.length;
 
+    const onboardedCounts = new Map<string, number>();
+    for (const key of eachUtcDateKey(range.from, range.to)) {
+      onboardedCounts.set(key, 0);
+    }
+    for (const u of users) {
+      if (!u.onboardingCompleted) continue;
+      const key = dateKey(u.createdAt);
+      if (!onboardedCounts.has(key)) continue;
+      onboardedCounts.set(key, (onboardedCounts.get(key) ?? 0) + 1);
+    }
+    const onboardedByDay = [...onboardedCounts.entries()].map(([day, value]) => ({
+      day,
+      value,
+    }));
+
     const byDay = new Map<string, Record<string, number>>();
     const byWeek = new Map<string, Record<string, number>>();
     for (const key of eachUtcDateKey(range.from, range.to)) {
@@ -862,6 +858,7 @@ export class AdminMetricsService {
       levelKeys,
       sourceLevelMatrix,
       avatars: avatarRows,
+      onboardedByDay,
       funnel: {
         signedUp,
         onboardingCompleted: onboarded,
