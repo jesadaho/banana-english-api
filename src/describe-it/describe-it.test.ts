@@ -17,6 +17,14 @@ describe('Describe It foundation pack', () => {
     assert.deepEqual(listDescribeItPools(), []);
   });
 
+  it('lists Adventure A2 picture packs on the Games hub', () => {
+    const ids = listDescribeItPools().map((pool) => pool.id);
+    assert.ok(ids.includes('fnd_v7_u03n05'));
+    assert.ok(ids.includes('a2_c05n07'));
+    assert.ok(ids.includes('a2_c31n03'));
+    assert.equal(ids.filter((id) => id.startsWith('a2_')).length, 25);
+  });
+
   it('deals six Look at Me cards in order with a first-item hint', () => {
     const pool = describeItPoolById('fnd_v7_u03n05');
     assert.ok(isValidDescribeItPack(pool));

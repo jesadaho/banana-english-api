@@ -88,7 +88,7 @@ export function listDescribeItPools(): Array<{
 }> {
   if (!DESCRIBE_IT_ENABLED) return [];
   return Object.values(DESCRIBE_IT_POOLS)
-    .filter((pool) => isValidDescribeItPack(pool) && !pool.id.startsWith('a2_'))
+    .filter((pool) => isValidDescribeItPack(pool))
     .map((pool) => ({
       id: pool.id,
       titleEn: pool.titleEn,
