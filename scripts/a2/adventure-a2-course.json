@@ -3159,65 +3159,81 @@
    "hint": "① ไฮไลต์ข้อมูลในภาพที่ต้องพูด ② sentence starter · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "pic": "ภาพสวน: Bogy (ผู้ชาย) กำลังวิ่ง 🏃",
+     "pic": "Bogy กำลังวิ่งข้างทะเลสาบ",
+     "promptTh": "บอกว่าเขาในภาพกำลังทำอะไร",
+     "questionEn": "What is he doing?",
      "en": "He's running.",
+     "th": "เขากำลังวิ่ง",
      "accept": [
       "He is running.",
       "Bogy is running.",
       "Bogy is running in the park."
+     ],
+     "hints": [
+      "He…",
+      "He is ___."
      ]
     },
     {
-     "pic": "ภาพสวน: May และ Mali กำลังเล่นแบดมินตัน 🏸 ข้างทะเลสาบ (ป้าย lake)",
-     "en": "They're playing badminton by the lake.",
+     "pic": "May กำลังขี่จักรยาน",
+     "promptTh": "บอกว่าเธอในภาพกำลังทำอะไร",
+     "questionEn": "What is she doing?",
+     "en": "She's riding a bike.",
+     "th": "เธอกำลังขี่จักรยาน",
      "accept": [
-      "They're playing badminton.",
-      "They are playing badminton by the lake.",
-      "May and Mali are playing badminton by the lake."
+      "She is riding a bike.",
+      "May is riding a bike.",
+      "She's cycling."
+     ],
+     "hints": [
+      "She…",
+      "She is ___."
      ]
     },
     {
-     "pic": "ภาพสวน: Capy กำลังอ่านหนังสือ 📖 บนม้านั่ง (ป้าย bench)",
-     "en": "Capy is reading on the bench.",
+     "pic": "Kenji กำลังปีนต้นไม้",
+     "promptTh": "บอกว่าเขาในภาพกำลังทำอะไร",
+     "questionEn": "What is he doing?",
+     "en": "He's climbing a tree.",
+     "th": "เขากำลังปีนต้นไม้",
      "accept": [
-      "Capy's reading on the bench.",
-      "Capy is reading."
+      "He is climbing a tree.",
+      "He's climbing the tree."
+     ],
+     "hints": [
+      "He…",
+      "He is ___."
      ]
     },
     {
-     "pic": "ภาพสวน: เด็กผู้ชาย 2 คนกำลังปั่นจักรยาน 🚲 ในสวนสาธารณะ (ป้าย park)",
-     "en": "They're cycling in the park.",
+     "pic": "Bogy กับ May กำลังเล่นว่าว",
+     "promptTh": "บอกว่าพวกเขาในภาพกำลังทำอะไร",
+     "questionEn": "What are they doing?",
+     "en": "They're flying a kite.",
+     "th": "พวกเขากำลังเล่นว่าว",
      "accept": [
-      "They are cycling in the park.",
-      "Two boys are cycling in the park.",
-      "The boys are cycling in the park.",
-      "They're cycling."
+      "They are flying a kite.",
+      "Bogy and May are flying a kite.",
+      "They're flying a kite by the lake."
+     ],
+     "hints": [
+      "They…",
+      "They are ___."
      ]
     },
     {
-     "pic": "ภาพสวน: ครูบีกำลังเต้น 💃 ในสวนสาธารณะ (ป้าย park)",
-     "en": "Teacher Bee is dancing in the park.",
+     "pic": "สองคนกำลังเล่นแบดมินตันข้างทะเลสาบ",
+     "promptTh": "บอกว่าพวกเขาในภาพกำลังทำอะไร",
+     "questionEn": "What are they doing?",
+     "en": "They're playing badminton.",
+     "th": "พวกเขากำลังเล่นแบดมินตัน",
      "accept": [
-      "Teacher Bee's dancing in the park.",
-      "Teacher Bee is dancing."
-     ]
-    },
-    {
-     "pic": "ภาพสวน: Bogy (ผู้ชาย) กำลังปีนต้นไม้ 🧗🌳 (ป้าย tree)",
-     "en": "Bogy is climbing a tree.",
-     "accept": [
-      "Bogy's climbing a tree.",
-      "He's climbing a tree.",
-      "He is climbing a tree."
-     ]
-    },
-    {
-     "pic": "ภาพสวน: เด็กผู้หญิง 2 คนกำลังเล่นว่าว 🪁 ข้างทะเลสาบ (ป้าย lake)",
-     "en": "They're flying a kite by the lake.",
-     "accept": [
-      "They are flying a kite by the lake.",
-      "They're flying a kite.",
-      "The girls are flying a kite."
+      "They are playing badminton.",
+      "They're playing badminton by the lake."
+     ],
+     "hints": [
+      "They…",
+      "They are ___."
      ]
     }
    ]
@@ -4048,7 +4064,7 @@
    "flag": false,
    "beat": "Ten",
    "axes": "12312",
-   "teach": "🖼️ ดูโปสเตอร์ชมรม แต่ละใบมีทักษะที่ต้องใช้ และโปรไฟล์ผู้เรียนที่ระบุสิ่งที่ทำเก่ง → **I'm good at singing, so I'll join the music club.**",
+   "teach": "🖼️ ดูโปสเตอร์ชมรม แต่ละใบมีทักษะที่ต้องใช้ และโปรไฟล์ผู้เรียนที่ระบุสิ่งที่ทำเก่ง → **I'm good at singing, so I'll join the music club.** · โปสเตอร์มี **art** club",
    "say": "I'm good at singing, so I'll join the music club.",
    "chapter": "บท 6: เข้าชมรมย่อยไหนดี",
    "goal": "อ่านข้อมูลในภาพ (โปสเตอร์ชมรม) แล้วพูดเป็นประโยคที่ใช้ได้จริง",
@@ -4056,40 +4072,72 @@
    "hint": "① ไฮไลต์ข้อมูลในภาพที่ต้องพูด ② sentence starter · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "pic": "โปสเตอร์ 🎤 Music Club · ทักษะที่ต้องใช้: singing | โปรไฟล์คุณ: ⭐ เก่ง singing",
+     "pic": "โปสเตอร์ Music / Art / Badminton ใบเดียวกัน",
+     "promptTh": "สมมติว่าคุณร้องเพลงเก่ง คุณจะเลือกชมรมไหน เพราะอะไร?",
      "en": "I'm good at singing, so I'll join the music club.",
+     "th": "ฉันร้องเพลงเก่ง เลยจะเข้าชมรมดนตรี",
      "accept": [
       "I am good at singing, so I will join the music club."
+     ],
+     "hints": [
+      "I'm good at…",
+      "I'm good at ___, so I'll join the ___ club."
      ]
     },
     {
-     "pic": "โปสเตอร์ 🏸 Badminton Club · ทักษะที่ต้องใช้: playing badminton | โปรไฟล์คุณ: ⭐ เก่ง playing badminton",
+     "pic": "โปสเตอร์ Music / Art / Badminton ใบเดียวกัน",
+     "promptTh": "สมมติว่าคุณเล่นกีตาร์เก่ง คุณจะเลือกชมรมไหน เพราะอะไร?",
+     "en": "I'm good at playing the guitar, so I'll join the music club.",
+     "th": "ฉันเล่นกีตาร์เก่ง เลยจะเข้าชมรมดนตรี",
+     "accept": [
+      "I am good at playing the guitar, so I will join the music club.",
+      "I'm good at guitar, so I'll join the music club."
+     ],
+     "hints": [
+      "I'm good at…",
+      "I'm good at ___, so I'll join the ___ club."
+     ]
+    },
+    {
+     "pic": "โปสเตอร์ Music / Art / Badminton ใบเดียวกัน",
+     "promptTh": "สมมติว่าคุณเล่นกลองเก่ง คุณจะเลือกชมรมไหน เพราะอะไร?",
+     "en": "I'm good at playing the drums, so I'll join the music club.",
+     "th": "ฉันเล่นกลองเก่ง เลยจะเข้าชมรมดนตรี",
+     "accept": [
+      "I am good at playing the drums, so I will join the music club.",
+      "I'm good at drums, so I'll join the music club."
+     ],
+     "hints": [
+      "I'm good at…",
+      "I'm good at ___, so I'll join the ___ club."
+     ]
+    },
+    {
+     "pic": "โปสเตอร์ Music / Art / Badminton ใบเดียวกัน",
+     "promptTh": "สมมติว่าคุณวาดภาพเก่ง คุณจะเลือกชมรมไหน เพราะอะไร?",
+     "en": "I'm good at painting, so I'll join the art club.",
+     "th": "ฉันวาดภาพเก่ง เลยจะเข้าชมรมศิลปะ",
+     "accept": [
+      "I am good at painting, so I will join the art club.",
+      "I'm good at painting, so I'll join the painting club."
+     ],
+     "hints": [
+      "I'm good at…",
+      "I'm good at ___, so I'll join the ___ club."
+     ]
+    },
+    {
+     "pic": "โปสเตอร์ Music / Art / Badminton ใบเดียวกัน",
+     "promptTh": "สมมติว่าคุณเล่นแบดมินตันเก่ง คุณจะเลือกชมรมไหน เพราะอะไร?",
      "en": "I'm good at playing badminton, so I'll join the badminton club.",
+     "th": "ฉันเล่นแบดมินตันเก่ง เลยจะเข้าชมรมแบดมินตัน",
      "accept": [
       "I'm good at badminton, so I'll join the badminton club.",
       "I am good at playing badminton, so I will join the badminton club."
-     ]
-    },
-    {
-     "pic": "โปสเตอร์ 🖌️ Painting Club · ทักษะที่ต้องใช้: painting | โปรไฟล์คุณ: ⭐ เก่ง painting",
-     "en": "I'm good at painting, so I'll join the painting club.",
-     "accept": [
-      "I am good at painting, so I will join the painting club."
-     ]
-    },
-    {
-     "pic": "โปสเตอร์ 💃 Dance Club · ทักษะที่ต้องใช้: dancing | โปรไฟล์คุณ: ⭐ เก่ง dancing",
-     "en": "I'm good at dancing, so I'll join the dance club.",
-     "accept": [
-      "I am good at dancing, so I will join the dance club.",
-      "I'm good at dancing, so I'll join the dancing club."
-     ]
-    },
-    {
-     "pic": "โปสเตอร์ 🏊 Swimming Club · ทักษะที่ต้องใช้: swimming | โปรไฟล์คุณ: ⭐ เก่ง swimming",
-     "en": "I'm good at swimming, so I'll join the swimming club.",
-     "accept": [
-      "I am good at swimming, so I will join the swimming club."
+     ],
+     "hints": [
+      "I'm good at…",
+      "I'm good at ___, so I'll join the ___ club."
      ]
     }
    ]
@@ -4804,51 +4852,88 @@
    "flag": false,
    "beat": "Ten",
    "axes": "12312",
-   "teach": "🖼️ ดูปฏิทินของเรากับ May ที่ระบายช่องไม่ว่าง → เสนอเวลาที่ว่างทั้งคู่ **How about Friday evening? We're both free.**",
-   "say": "How about Friday evening?",
+   "teach": "🖼️ ดูปฏิทินเย็นของเรากับ May สองใบ → ตอบว่าว่างไหม ชวนได้ไหม และเสนอวันที่ทั้งคู่ว่าง **How about Wednesday evening?**",
+   "say": "How about Wednesday evening?",
    "chapter": "บท 7: นัดเพื่อนหลังเลิกเรียน",
    "goal": "อ่านข้อมูลในภาพ (ปฏิทินสองคน) แล้วพูดเป็นประโยคที่ใช้ได้จริง",
    "accept": "รับประโยคเดียวที่ตรงข้อมูลในภาพ ไม่บังคับพูด model ครบ · ข้อมูลผิดจากภาพ = ลองใหม่",
    "hint": "① ไฮไลต์ข้อมูลในภาพที่ต้องพูด ② sentence starter · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "pic": "ปฏิทินสองแถว: แถวบน \"ฉัน\" แถวล่าง \"May\" · ช่องที่ระบายสีเทา = ไม่ว่าง · ช่องที่ทั้งสองแถวว่างตรงกันมีแค่ช่องเดียว: Friday evening (ศุกร์ ช่วงเย็น)",
-     "en": "How about Friday evening?",
+     "pic": "ปฏิทิน A: ศุกร์–อาทิตย์ เย็น YOU กับ May ทั้งคู่ว่างวันเสาร์",
+     "promptTh": "May ถามว่า Are you free on Saturday evening?",
+     "questionEn": "Are you free on Saturday evening?",
+     "en": "Yes, I'm free.",
+     "th": "ใช่ ฉันว่าง",
      "accept": [
-      "How about Friday evening? We're both free.",
-      "How about Friday evening? We are both free."
+      "Yes, I am free.",
+      "I'm free.",
+      "Yes, I'm free on Saturday evening."
+     ],
+     "hints": [
+      "I'm…",
+      "Yes, I'm ___."
      ]
     },
     {
-     "pic": "ปฏิทินสองแถว: แถวบน \"ฉัน\" แถวล่าง \"May\" · ช่องที่ระบายสีเทา = ไม่ว่าง · ช่องที่ทั้งสองแถวว่างตรงกันมีแค่ช่องเดียว: Monday afternoon (จันทร์ ช่วงบ่าย)",
-     "en": "How about Monday afternoon?",
+     "pic": "ปฏิทิน A: ศุกร์–อาทิตย์ เย็น",
+     "promptTh": "May ถามว่า Would you like to see a movie on Saturday evening?",
+     "questionEn": "Would you like to see a movie on Saturday evening?",
+     "en": "I'd love to! See you then.",
+     "th": "ยินดีมาก แล้วเจอกัน",
      "accept": [
-      "How about Monday afternoon? We're both free.",
-      "How about Monday afternoon? We are both free."
+      "I would love to.",
+      "Yes, I'd love to.",
+      "Sure, see you then."
+     ],
+     "hints": [
+      "I'd…",
+      "I'd ___ to."
      ]
     },
     {
-     "pic": "ปฏิทินสองแถว: แถวบน \"ฉัน\" แถวล่าง \"May\" · ช่องที่ระบายสีเทา = ไม่ว่าง · ช่องที่ทั้งสองแถวว่างตรงกันมีแค่ช่องเดียว: Saturday morning (เสาร์ ช่วงเช้า)",
-     "en": "How about Saturday morning?",
+     "pic": "ปฏิทิน A: คุณไม่ว่างวันศุกร์เย็น ทั้งคู่ว่างวันเสาร์เย็น",
+     "promptTh": "May ถามว่า Shall we meet on Friday evening?",
+     "questionEn": "Shall we meet on Friday evening?",
+     "en": "Sorry, I'm busy. How about Saturday evening?",
+     "th": "ขอโทษ ฉันไม่ว่าง วันเสาร์เย็นไหม",
      "accept": [
-      "How about Saturday morning? We're both free.",
-      "How about Saturday morning? We are both free."
+      "Sorry, I'm busy on Friday. How about Saturday evening?",
+      "Sorry, I am busy. How about Saturday?"
+     ],
+     "hints": [
+      "Sorry…",
+      "Sorry, I'm ___. How about ___?"
      ]
     },
     {
-     "pic": "ปฏิทินสองแถว: แถวบน \"ฉัน\" แถวล่าง \"Bogy\" · ช่องที่ระบายสีเทา = ไม่ว่าง · ช่องที่ทั้งสองแถวว่างตรงกันมีแค่ช่องเดียว: Wednesday evening (พุธ ช่วงเย็น)",
+     "pic": "ปฏิทิน B: จันทร์–พุธ เย็น ทั้งคู่ว่างวันพุธ",
+     "promptTh": "May ถามว่า When shall we meet?",
+     "questionEn": "When shall we meet?",
      "en": "How about Wednesday evening?",
+     "th": "วันพุธเย็นไหม",
      "accept": [
-      "How about Wednesday evening? We're both free.",
-      "How about Wednesday evening? We are both free."
+      "Shall we meet on Wednesday evening?",
+      "How about Wednesday?"
+     ],
+     "hints": [
+      "How about…?",
+      "How about ___ evening?"
      ]
     },
     {
-     "pic": "ปฏิทินสองแถว: แถวบน \"ฉัน\" แถวล่าง \"Bogy\" · ช่องที่ระบายสีเทา = ไม่ว่าง · ช่องที่ทั้งสองแถวว่างตรงกันมีแค่ช่องเดียว: Sunday afternoon (อาทิตย์ ช่วงบ่าย)",
-     "en": "How about Sunday afternoon?",
+     "pic": "ปฏิทิน B: คุณไม่ว่างวันอังคารเย็น ทั้งคู่ว่างวันพุธเย็น",
+     "promptTh": "May ถามว่า Are you free on Tuesday evening?",
+     "questionEn": "Are you free on Tuesday evening?",
+     "en": "Sorry, I'm busy on Tuesday evening. How about Wednesday evening?",
+     "th": "ขอโทษ ฉันไม่ว่างวันอังคารเย็น วันพุธเย็นไหม",
      "accept": [
-      "How about Sunday afternoon? We're both free.",
-      "How about Sunday afternoon? We are both free."
+      "Sorry, I'm busy. How about Wednesday evening?",
+      "I'm busy on Tuesday. How about Wednesday?"
+     ],
+     "hints": [
+      "I'm…",
+      "Sorry, I'm busy on ___. How about ___?"
      ]
     }
    ]
@@ -5104,59 +5189,91 @@
    "flag": false,
    "beat": "Ten",
    "axes": "22211",
-   "teach": "🖼️ ดูรูปแผงตลาด 5 รูปที่มีป้ายราคาชัด → บอกราคาหรือยอดรวม **The souvenir is 80 baht. · The total is 150 baht.**",
-   "say": "The total is 150 baht.",
+   "teach": "🖼️ ดูแผงตลาด ป้าย **key ring** 80 baht · **bag** 120 baht · **postcard** 30 baht → บอกราคา **The bag is 120 baht.**",
+   "say": "The bag is 120 baht.",
    "chapter": "บท 8: Mission ตลาดนัดกลางคืน",
    "goal": "อ่านข้อมูลในภาพ (ป้ายราคา) แล้วพูดเป็นประโยคที่ใช้ได้จริง",
    "accept": "รับประโยคเดียวที่ตรงข้อมูลในภาพ ไม่บังคับพูด model ครบ · ข้อมูลผิดจากภาพ = ลองใหม่",
    "hint": "① ไฮไลต์ข้อมูลในภาพที่ต้องพูด ② sentence starter · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "pic": "แผงของที่ระลึก: ป้ายราคาบนของที่ระลึก \"souvenir 80 baht\"",
-     "en": "The souvenir is 80 baht.",
+     "pic": "แผงตลาด: พวงกุญแจ 80 บาท กระเป๋า 120 บาท โปสการ์ด 30 บาท",
+     "promptTh": "พวงกุญแจราคาเท่าไหร่?",
+     "questionEn": "How much is the key ring?",
+     "en": "The key ring is 80 baht.",
+     "th": "พวงกุญแจราคา 80 บาท",
      "accept": [
-      "The souvenir is eighty baht.",
-      "It's 80 baht."
+      "It's 80 baht.",
+      "The key ring is eighty baht.",
+      "80 baht."
+     ],
+     "hints": [
+      "The key ring…",
+      "The key ring is ___ baht."
      ]
     },
     {
-     "pic": "แผงของที่ระลึก: ของ 2 ชิ้น ป้าย \"snack 50 baht\" + \"souvenir 100 baht\" และใบเสร็จเขียนว่า \"Total: 150 baht\"",
-     "en": "The total is 150 baht.",
+     "pic": "แผงตลาด: พวงกุญแจ 80 บาท กระเป๋า 120 บาท โปสการ์ด 30 บาท",
+     "promptTh": "กระเป๋าราคาเท่าไหร่?",
+     "questionEn": "How much is the bag?",
+     "en": "The bag is 120 baht.",
+     "th": "กระเป๋าราคา 120 บาท",
      "accept": [
-      "The total is one hundred and fifty baht.",
-      "It's 150 baht."
+      "It's 120 baht.",
+      "The bag is one hundred and twenty baht.",
+      "120 baht."
+     ],
+     "hints": [
+      "The bag…",
+      "The bag is ___ baht."
      ]
     },
     {
-     "pic": "แผงขนมที่ Mali ช่วยขาย: ป้ายราคา \"snack 40 baht\"",
-     "en": "The snack is 40 baht.",
+     "pic": "แผงตลาด: พวงกุญแจ 80 บาท กระเป๋า 120 บาท โปสการ์ด 30 บาท",
+     "promptTh": "โปสการ์ดราคาเท่าไหร่?",
+     "questionEn": "How much is the postcard?",
+     "en": "The postcard is 30 baht.",
+     "th": "โปสการ์ดราคา 30 บาท",
      "accept": [
-      "The snack is forty baht.",
-      "It's 40 baht."
+      "It's 30 baht.",
+      "The postcard is thirty baht.",
+      "30 baht."
+     ],
+     "hints": [
+      "The postcard…",
+      "The postcard is ___ baht."
      ]
     },
     {
-     "pic": "แผงเสื้อผ้า: ป้ายราคาบนเสื้อยืด \"T-shirt 200 baht\"",
-     "en": "The T-shirt is 200 baht.",
+     "pic": "แผงตลาด: ป้ายพวงกุญแจเขียนว่า 80 baht each",
+     "promptTh": "พวงกุญแจราคาชิ้นละเท่าไหร่?",
+     "questionEn": "How much is each key ring?",
+     "en": "The key rings are 80 baht each.",
+     "th": "พวงกุญแจราคาชิ้นละ 80 บาท",
      "accept": [
-      "The T-shirt is two hundred baht.",
-      "It's 200 baht."
+      "It's 80 baht each.",
+      "They are 80 baht each.",
+      "80 baht each."
+     ],
+     "hints": [
+      "The key rings…",
+      "The key rings are ___ baht each."
      ]
     },
     {
-     "pic": "แผงไอศกรีม: ป้ายราคา \"ice cream 30 baht\"",
-     "en": "The ice cream is 30 baht.",
+     "pic": "แผงตลาด: ป้ายโปสการ์ดเขียนว่า postcard 30 baht each",
+     "promptTh": "โปสการ์ดราคาชิ้นละเท่าไหร่?",
+     "questionEn": "How much is each postcard?",
+     "en": "The postcards are 30 baht each.",
+     "th": "โปสการ์ดราคาชิ้นละ 30 บาท",
      "accept": [
-      "The ice cream is thirty baht.",
-      "It's 30 baht."
-     ]
-    },
-    {
-     "pic": "แผงขนมที่ Mali ช่วยขาย: ขนม 3 ถุง และใบเสร็จเขียนว่า \"Total: 120 baht\"",
-     "en": "The total is 120 baht.",
-     "accept": [
-      "The total is one hundred and twenty baht.",
-      "It's 120 baht."
+      "It's 30 baht each.",
+      "They are 30 baht each.",
+      "30 baht each."
+     ],
+     "hints": [
+      "The postcards…",
+      "The postcards are ___ baht each."
      ]
     }
    ]
