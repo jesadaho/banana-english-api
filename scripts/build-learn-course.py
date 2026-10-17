@@ -229,7 +229,7 @@ def build():
                     "titleEn": title_en,
                     "titleTh": title_th,
                     "tagEn": "ADVENTURE",
-                    "emoji": "🖼️",
+                    "emoji": overlays.get("seeAndSayEmoji", {}).get(code, "🖼️"),
                     "estimatedMinutes": 3,
                     "items": [
                         {
