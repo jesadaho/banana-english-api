@@ -101,9 +101,14 @@ function mapClientNode(
     (node.type === 'describe_it' && !DESCRIBE_IT_ENABLED) ||
     (node.type === 'listen_up' && !LISTEN_UP_ENABLED) ||
     (node.type === 'info_task' && !INFO_TASK_ENABLED);
-  const comingSoon = !backendReady || needsClient || !context.released || flagOff;
+  // A See & Say pack with art is playable even when the rest of its chapter
+  // is still unreleased, and even when the node was flagged optional.
+  const pictureReady = node.type === 'describe_it' && backendReady;
+  const releasedForNode = context.released || pictureReady;
+  const flagBlocks = flagOff && !pictureReady;
+  const comingSoon = !backendReady || needsClient || !releasedForNode || flagBlocks;
   const contentRef =
-    POOL_GATED_TYPES.has(node.type) && (!backendReady || !context.released || flagOff)
+    POOL_GATED_TYPES.has(node.type) && (!backendReady || !releasedForNode || flagBlocks)
       ? {}
       : node.contentRef;
   const cutsceneUrl =
@@ -126,9 +131,9 @@ function mapClientNode(
       ? 'mechanic_not_implemented'
       : !backendReady
         ? 'missing_content'
-        : !context.released
+        : !releasedForNode
           ? 'not_released'
-          : flagOff
+          : flagBlocks
             ? 'feature_flag_off'
             : needsClient
               ? 'client_capability_required'

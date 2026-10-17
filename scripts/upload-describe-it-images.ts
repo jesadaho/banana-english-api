@@ -94,6 +94,78 @@ const POOL_SOURCES: Record<
     dir: '/Users/jesada/Project/banana-english-app/assets/images/describe_it/a2_c08n05',
     localName: (itemId) => `${itemId.slice(-2)}.webp`,
   },
+  a2_c09n08: {
+    dir: '/Users/jesada/Project/banana-english-app/assets/images/describe_it/a2_c09n08',
+    localName: (itemId) => `${itemId.slice(-2)}.webp`,
+  },
+  a2_c11n08: {
+    dir: '/Users/jesada/Project/banana-english-app/assets/images/describe_it/a2_c11n08',
+    localName: (itemId) => `${itemId.slice(-2)}.webp`,
+  },
+  a2_c12n08: {
+    dir: '/Users/jesada/Project/banana-english-app/assets/images/describe_it/a2_c12n08',
+    localName: (itemId) => `${itemId.slice(-2)}.webp`,
+  },
+  a2_c13n07: {
+    dir: '/Users/jesada/Project/banana-english-app/assets/images/describe_it/a2_c13n07',
+    localName: (itemId) => `${itemId.slice(-2)}.webp`,
+  },
+  a2_c14n08: {
+    dir: '/Users/jesada/Project/banana-english-app/assets/images/describe_it/a2_c14n08',
+    localName: (itemId) => `${itemId.slice(-2)}.webp`,
+  },
+  a2_c15n07: {
+    dir: '/Users/jesada/Project/banana-english-app/assets/images/describe_it/a2_c15n07',
+    localName: (itemId) => `${itemId.slice(-2)}.webp`,
+  },
+  a2_c16n04: {
+    dir: '/Users/jesada/Project/banana-english-app/assets/images/describe_it/a2_c16n04',
+    localName: (itemId) => `${itemId.slice(-2)}.webp`,
+  },
+  a2_c17n07: {
+    dir: '/Users/jesada/Project/banana-english-app/assets/images/describe_it/a2_c17n07',
+    localName: (itemId) => `${itemId.slice(-2)}.webp`,
+  },
+  a2_c18n09: {
+    dir: '/Users/jesada/Project/banana-english-app/assets/images/describe_it/a2_c18n09',
+    localName: (itemId) => `${itemId.slice(-2)}.webp`,
+  },
+  a2_c19n09: {
+    dir: '/Users/jesada/Project/banana-english-app/assets/images/describe_it/a2_c19n09',
+    localName: (itemId) => `${itemId.slice(-2)}.webp`,
+  },
+  a2_c20n08: {
+    dir: '/Users/jesada/Project/banana-english-app/assets/images/describe_it/a2_c20n08',
+    localName: (itemId) => `${itemId.slice(-2)}.webp`,
+  },
+  a2_c22n08: {
+    dir: '/Users/jesada/Project/banana-english-app/assets/images/describe_it/a2_c22n08',
+    localName: (itemId) => `${itemId.slice(-2)}.webp`,
+  },
+  a2_c23n10: {
+    dir: '/Users/jesada/Project/banana-english-app/assets/images/describe_it/a2_c23n10',
+    localName: (itemId) => `${itemId.slice(-2)}.webp`,
+  },
+  a2_c24n05: {
+    dir: '/Users/jesada/Project/banana-english-app/assets/images/describe_it/a2_c24n05',
+    localName: (itemId) => `${itemId.slice(-2)}.webp`,
+  },
+  a2_c25n09: {
+    dir: '/Users/jesada/Project/banana-english-app/assets/images/describe_it/a2_c25n09',
+    localName: (itemId) => `${itemId.slice(-2)}.webp`,
+  },
+  a2_c26n09: {
+    dir: '/Users/jesada/Project/banana-english-app/assets/images/describe_it/a2_c26n09',
+    localName: (itemId) => `${itemId.slice(-2)}.webp`,
+  },
+  a2_c28n09: {
+    dir: '/Users/jesada/Project/banana-english-app/assets/images/describe_it/a2_c28n09',
+    localName: (itemId) => `${itemId.slice(-2)}.webp`,
+  },
+  a2_c31n03: {
+    dir: '/Users/jesada/Project/banana-english-app/assets/images/describe_it/a2_c31n03',
+    localName: (itemId) => `${itemId.slice(-2)}.webp`,
+  },
 };
 
 const FIREBASE_CLI_CLIENT_ID =
