@@ -234,12 +234,13 @@ def build():
                     "items": [
                         {
                             "id": f"{nid}_{i + 1:02d}",
-                            "promptTh": prompt_th,
+                            "promptTh": item.get("promptTh") or prompt_th,
                             "answerEn": item["en"],
                             "answerTh": item.get("th", ""),
                             "acceptedAnswers": item.get("accept", []),
                             "imagePath": describe_image_path(nid, i),
-                            "hints": two_level_hints(item["en"]),
+                            **({"questionEn": item["questionEn"]} if item.get("questionEn") else {}),
+                            "hints": item["hints"] if item.get("hints") else two_level_hints(item["en"]),
                         }
                         for i, item in enumerate(pool)
                     ],

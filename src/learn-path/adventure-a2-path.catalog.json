@@ -1849,7 +1849,7 @@
           "type": "describe_it",
           "beat": "Ten",
           "learningTarget": "อ่านข้อมูลในภาพ (โปสเตอร์ชมรม) แล้วพูดเป็นประโยคที่ใช้ได้จริง",
-          "activity": "🖼️ ดูโปสเตอร์ชมรม แต่ละใบมีทักษะที่ต้องใช้ และโปรไฟล์ผู้เรียนที่ระบุสิ่งที่ทำเก่ง → I'm good at singing, so I'll join the music club.",
+          "activity": "🖼️ ดูโปสเตอร์ชมรม แต่ละใบมีทักษะที่ต้องใช้ และโปรไฟล์ผู้เรียนที่ระบุสิ่งที่ทำเก่ง → I'm good at singing, so I'll join the music club. · โปสเตอร์มี art club",
           "examples": [
             "I'm good at singing, so I'll join the music club."
           ],
@@ -2174,9 +2174,9 @@
           "type": "describe_it",
           "beat": "Ten",
           "learningTarget": "อ่านข้อมูลในภาพ (ปฏิทินสองคน) แล้วพูดเป็นประโยคที่ใช้ได้จริง",
-          "activity": "🖼️ ดูปฏิทินของเรากับ May ที่ระบายช่องไม่ว่าง → เสนอเวลาที่ว่างทั้งคู่ How about Friday evening? We're both free.",
+          "activity": "🖼️ ดูปฏิทินเย็นของเรากับ May สองใบ → ตอบว่าว่างไหม ชวนได้ไหม และเสนอวันที่ทั้งคู่ว่าง How about Wednesday evening?",
           "examples": [
-            "How about Friday evening?"
+            "How about Wednesday evening?"
           ],
           "estimatedMinutes": [
             2,
@@ -2357,9 +2357,9 @@
           "type": "describe_it",
           "beat": "Ten",
           "learningTarget": "อ่านข้อมูลในภาพ (ป้ายราคา) แล้วพูดเป็นประโยคที่ใช้ได้จริง",
-          "activity": "🖼️ ดูรูปแผงตลาด 5 รูปที่มีป้ายราคาชัด → บอกราคาหรือยอดรวม The souvenir is 80 baht. · The total is 150 baht.",
+          "activity": "🖼️ ดูแผงตลาด ป้าย key ring 80 baht · bag 120 baht · postcard 30 baht → บอกราคา The bag is 120 baht.",
           "examples": [
-            "The total is 150 baht."
+            "The bag is 120 baht."
           ],
           "estimatedMinutes": [
             2,

@@ -78,6 +78,22 @@ const POOL_SOURCES: Record<
     dir: '/Users/jesada/Project/banana-english-app/assets/images/describe_it/a2_c04n09',
     localName: (itemId) => `${itemId.slice(-2)}.webp`,
   },
+  a2_c05n07: {
+    dir: '/Users/jesada/Project/banana-english-app/assets/images/describe_it/a2_c05n07',
+    localName: (itemId) => `${itemId.slice(-2)}.webp`,
+  },
+  a2_c06n10: {
+    dir: '/Users/jesada/Project/banana-english-app/assets/images/describe_it/a2_c06n10',
+    localName: (itemId) => `${itemId.slice(-2)}.webp`,
+  },
+  a2_c07n10: {
+    dir: '/Users/jesada/Project/banana-english-app/assets/images/describe_it/a2_c07n10',
+    localName: (itemId) => `${itemId.slice(-2)}.webp`,
+  },
+  a2_c08n05: {
+    dir: '/Users/jesada/Project/banana-english-app/assets/images/describe_it/a2_c08n05',
+    localName: (itemId) => `${itemId.slice(-2)}.webp`,
+  },
 };
 
 const FIREBASE_CLI_CLIENT_ID =

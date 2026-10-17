@@ -287,5 +287,369 @@
         ]
       }
     ]
+  },
+  "a2_c05n07": {
+    "id": "a2_c05n07",
+    "titleEn": "What Are They Doing?",
+    "titleTh": "เขากำลังทำอะไร",
+    "tagEn": "ADVENTURE",
+    "emoji": "🖼️",
+    "estimatedMinutes": 3,
+    "items": [
+      {
+        "id": "a2_c05n07_01",
+        "promptTh": "บอกว่าเขาในภาพกำลังทำอะไร",
+        "answerEn": "He's running.",
+        "answerTh": "เขากำลังวิ่ง",
+        "acceptedAnswers": [
+          "He is running.",
+          "Bogy is running.",
+          "Bogy is running in the park."
+        ],
+        "imagePath": "describe-it/a2_c05n07/01.webp",
+        "questionEn": "What is he doing?",
+        "hints": [
+          "He…",
+          "He is ___."
+        ]
+      },
+      {
+        "id": "a2_c05n07_02",
+        "promptTh": "บอกว่าเธอในภาพกำลังทำอะไร",
+        "answerEn": "She's riding a bike.",
+        "answerTh": "เธอกำลังขี่จักรยาน",
+        "acceptedAnswers": [
+          "She is riding a bike.",
+          "May is riding a bike.",
+          "She's cycling."
+        ],
+        "imagePath": "describe-it/a2_c05n07/02.webp",
+        "questionEn": "What is she doing?",
+        "hints": [
+          "She…",
+          "She is ___."
+        ]
+      },
+      {
+        "id": "a2_c05n07_03",
+        "promptTh": "บอกว่าเขาในภาพกำลังทำอะไร",
+        "answerEn": "He's climbing a tree.",
+        "answerTh": "เขากำลังปีนต้นไม้",
+        "acceptedAnswers": [
+          "He is climbing a tree.",
+          "He's climbing the tree."
+        ],
+        "imagePath": "describe-it/a2_c05n07/03.webp",
+        "questionEn": "What is he doing?",
+        "hints": [
+          "He…",
+          "He is ___."
+        ]
+      },
+      {
+        "id": "a2_c05n07_04",
+        "promptTh": "บอกว่าพวกเขาในภาพกำลังทำอะไร",
+        "answerEn": "They're flying a kite.",
+        "answerTh": "พวกเขากำลังเล่นว่าว",
+        "acceptedAnswers": [
+          "They are flying a kite.",
+          "Bogy and May are flying a kite.",
+          "They're flying a kite by the lake."
+        ],
+        "imagePath": "describe-it/a2_c05n07/04.webp",
+        "questionEn": "What are they doing?",
+        "hints": [
+          "They…",
+          "They are ___."
+        ]
+      },
+      {
+        "id": "a2_c05n07_05",
+        "promptTh": "บอกว่าพวกเขาในภาพกำลังทำอะไร",
+        "answerEn": "They're playing badminton.",
+        "answerTh": "พวกเขากำลังเล่นแบดมินตัน",
+        "acceptedAnswers": [
+          "They are playing badminton.",
+          "They're playing badminton by the lake."
+        ],
+        "imagePath": "describe-it/a2_c05n07/05.webp",
+        "questionEn": "What are they doing?",
+        "hints": [
+          "They…",
+          "They are ___."
+        ]
+      }
+    ]
+  },
+  "a2_c06n10": {
+    "id": "a2_c06n10",
+    "titleEn": "Club Posters",
+    "titleTh": "โปสเตอร์ชมรม",
+    "tagEn": "ADVENTURE",
+    "emoji": "🖼️",
+    "estimatedMinutes": 3,
+    "items": [
+      {
+        "id": "a2_c06n10_01",
+        "promptTh": "สมมติว่าคุณร้องเพลงเก่ง คุณจะเลือกชมรมไหน เพราะอะไร?",
+        "answerEn": "I'm good at singing, so I'll join the music club.",
+        "answerTh": "ฉันร้องเพลงเก่ง เลยจะเข้าชมรมดนตรี",
+        "acceptedAnswers": [
+          "I am good at singing, so I will join the music club."
+        ],
+        "imagePath": "describe-it/a2_c06n10/01.webp",
+        "hints": [
+          "I'm good at…",
+          "I'm good at ___, so I'll join the ___ club."
+        ]
+      },
+      {
+        "id": "a2_c06n10_02",
+        "promptTh": "สมมติว่าคุณเล่นกีตาร์เก่ง คุณจะเลือกชมรมไหน เพราะอะไร?",
+        "answerEn": "I'm good at playing the guitar, so I'll join the music club.",
+        "answerTh": "ฉันเล่นกีตาร์เก่ง เลยจะเข้าชมรมดนตรี",
+        "acceptedAnswers": [
+          "I am good at playing the guitar, so I will join the music club.",
+          "I'm good at guitar, so I'll join the music club."
+        ],
+        "imagePath": "describe-it/a2_c06n10/02.webp",
+        "hints": [
+          "I'm good at…",
+          "I'm good at ___, so I'll join the ___ club."
+        ]
+      },
+      {
+        "id": "a2_c06n10_03",
+        "promptTh": "สมมติว่าคุณเล่นกลองเก่ง คุณจะเลือกชมรมไหน เพราะอะไร?",
+        "answerEn": "I'm good at playing the drums, so I'll join the music club.",
+        "answerTh": "ฉันเล่นกลองเก่ง เลยจะเข้าชมรมดนตรี",
+        "acceptedAnswers": [
+          "I am good at playing the drums, so I will join the music club.",
+          "I'm good at drums, so I'll join the music club."
+        ],
+        "imagePath": "describe-it/a2_c06n10/03.webp",
+        "hints": [
+          "I'm good at…",
+          "I'm good at ___, so I'll join the ___ club."
+        ]
+      },
+      {
+        "id": "a2_c06n10_04",
+        "promptTh": "สมมติว่าคุณวาดภาพเก่ง คุณจะเลือกชมรมไหน เพราะอะไร?",
+        "answerEn": "I'm good at painting, so I'll join the art club.",
+        "answerTh": "ฉันวาดภาพเก่ง เลยจะเข้าชมรมศิลปะ",
+        "acceptedAnswers": [
+          "I am good at painting, so I will join the art club.",
+          "I'm good at painting, so I'll join the painting club."
+        ],
+        "imagePath": "describe-it/a2_c06n10/04.webp",
+        "hints": [
+          "I'm good at…",
+          "I'm good at ___, so I'll join the ___ club."
+        ]
+      },
+      {
+        "id": "a2_c06n10_05",
+        "promptTh": "สมมติว่าคุณเล่นแบดมินตันเก่ง คุณจะเลือกชมรมไหน เพราะอะไร?",
+        "answerEn": "I'm good at playing badminton, so I'll join the badminton club.",
+        "answerTh": "ฉันเล่นแบดมินตันเก่ง เลยจะเข้าชมรมแบดมินตัน",
+        "acceptedAnswers": [
+          "I'm good at badminton, so I'll join the badminton club.",
+          "I am good at playing badminton, so I will join the badminton club."
+        ],
+        "imagePath": "describe-it/a2_c06n10/05.webp",
+        "hints": [
+          "I'm good at…",
+          "I'm good at ___, so I'll join the ___ club."
+        ]
+      }
+    ]
+  },
+  "a2_c07n10": {
+    "id": "a2_c07n10",
+    "titleEn": "Two Calendars",
+    "titleTh": "ปฏิทินสองคน",
+    "tagEn": "ADVENTURE",
+    "emoji": "🖼️",
+    "estimatedMinutes": 3,
+    "items": [
+      {
+        "id": "a2_c07n10_01",
+        "promptTh": "May ถามว่า Are you free on Saturday evening?",
+        "answerEn": "Yes, I'm free.",
+        "answerTh": "ใช่ ฉันว่าง",
+        "acceptedAnswers": [
+          "Yes, I am free.",
+          "I'm free.",
+          "Yes, I'm free on Saturday evening."
+        ],
+        "imagePath": "describe-it/a2_c07n10/01.webp",
+        "questionEn": "Are you free on Saturday evening?",
+        "hints": [
+          "I'm…",
+          "Yes, I'm ___."
+        ]
+      },
+      {
+        "id": "a2_c07n10_02",
+        "promptTh": "May ถามว่า Would you like to see a movie on Saturday evening?",
+        "answerEn": "I'd love to! See you then.",
+        "answerTh": "ยินดีมาก แล้วเจอกัน",
+        "acceptedAnswers": [
+          "I would love to.",
+          "Yes, I'd love to.",
+          "Sure, see you then."
+        ],
+        "imagePath": "describe-it/a2_c07n10/02.webp",
+        "questionEn": "Would you like to see a movie on Saturday evening?",
+        "hints": [
+          "I'd…",
+          "I'd ___ to."
+        ]
+      },
+      {
+        "id": "a2_c07n10_03",
+        "promptTh": "May ถามว่า Shall we meet on Friday evening?",
+        "answerEn": "Sorry, I'm busy. How about Saturday evening?",
+        "answerTh": "ขอโทษ ฉันไม่ว่าง วันเสาร์เย็นไหม",
+        "acceptedAnswers": [
+          "Sorry, I'm busy on Friday. How about Saturday evening?",
+          "Sorry, I am busy. How about Saturday?"
+        ],
+        "imagePath": "describe-it/a2_c07n10/03.webp",
+        "questionEn": "Shall we meet on Friday evening?",
+        "hints": [
+          "Sorry…",
+          "Sorry, I'm ___. How about ___?"
+        ]
+      },
+      {
+        "id": "a2_c07n10_04",
+        "promptTh": "May ถามว่า When shall we meet?",
+        "answerEn": "How about Wednesday evening?",
+        "answerTh": "วันพุธเย็นไหม",
+        "acceptedAnswers": [
+          "Shall we meet on Wednesday evening?",
+          "How about Wednesday?"
+        ],
+        "imagePath": "describe-it/a2_c07n10/04.webp",
+        "questionEn": "When shall we meet?",
+        "hints": [
+          "How about…?",
+          "How about ___ evening?"
+        ]
+      },
+      {
+        "id": "a2_c07n10_05",
+        "promptTh": "May ถามว่า Are you free on Tuesday evening?",
+        "answerEn": "Sorry, I'm busy on Tuesday evening. How about Wednesday evening?",
+        "answerTh": "ขอโทษ ฉันไม่ว่างวันอังคารเย็น วันพุธเย็นไหม",
+        "acceptedAnswers": [
+          "Sorry, I'm busy. How about Wednesday evening?",
+          "I'm busy on Tuesday. How about Wednesday?"
+        ],
+        "imagePath": "describe-it/a2_c07n10/05.webp",
+        "questionEn": "Are you free on Tuesday evening?",
+        "hints": [
+          "I'm…",
+          "Sorry, I'm busy on ___. How about ___?"
+        ]
+      }
+    ]
+  },
+  "a2_c08n05": {
+    "id": "a2_c08n05",
+    "titleEn": "Price Tags",
+    "titleTh": "ป้ายราคา",
+    "tagEn": "ADVENTURE",
+    "emoji": "🖼️",
+    "estimatedMinutes": 3,
+    "items": [
+      {
+        "id": "a2_c08n05_01",
+        "promptTh": "พวงกุญแจราคาเท่าไหร่?",
+        "answerEn": "The key ring is 80 baht.",
+        "answerTh": "พวงกุญแจราคา 80 บาท",
+        "acceptedAnswers": [
+          "It's 80 baht.",
+          "The key ring is eighty baht.",
+          "80 baht."
+        ],
+        "imagePath": "describe-it/a2_c08n05/01.webp",
+        "questionEn": "How much is the key ring?",
+        "hints": [
+          "The key ring…",
+          "The key ring is ___ baht."
+        ]
+      },
+      {
+        "id": "a2_c08n05_02",
+        "promptTh": "กระเป๋าราคาเท่าไหร่?",
+        "answerEn": "The bag is 120 baht.",
+        "answerTh": "กระเป๋าราคา 120 บาท",
+        "acceptedAnswers": [
+          "It's 120 baht.",
+          "The bag is one hundred and twenty baht.",
+          "120 baht."
+        ],
+        "imagePath": "describe-it/a2_c08n05/02.webp",
+        "questionEn": "How much is the bag?",
+        "hints": [
+          "The bag…",
+          "The bag is ___ baht."
+        ]
+      },
+      {
+        "id": "a2_c08n05_03",
+        "promptTh": "โปสการ์ดราคาเท่าไหร่?",
+        "answerEn": "The postcard is 30 baht.",
+        "answerTh": "โปสการ์ดราคา 30 บาท",
+        "acceptedAnswers": [
+          "It's 30 baht.",
+          "The postcard is thirty baht.",
+          "30 baht."
+        ],
+        "imagePath": "describe-it/a2_c08n05/03.webp",
+        "questionEn": "How much is the postcard?",
+        "hints": [
+          "The postcard…",
+          "The postcard is ___ baht."
+        ]
+      },
+      {
+        "id": "a2_c08n05_04",
+        "promptTh": "พวงกุญแจราคาชิ้นละเท่าไหร่?",
+        "answerEn": "The key rings are 80 baht each.",
+        "answerTh": "พวงกุญแจราคาชิ้นละ 80 บาท",
+        "acceptedAnswers": [
+          "It's 80 baht each.",
+          "They are 80 baht each.",
+          "80 baht each."
+        ],
+        "imagePath": "describe-it/a2_c08n05/04.webp",
+        "questionEn": "How much is each key ring?",
+        "hints": [
+          "The key rings…",
+          "The key rings are ___ baht each."
+        ]
+      },
+      {
+        "id": "a2_c08n05_05",
+        "promptTh": "โปสการ์ดราคาชิ้นละเท่าไหร่?",
+        "answerEn": "The postcards are 30 baht each.",
+        "answerTh": "โปสการ์ดราคาชิ้นละ 30 บาท",
+        "acceptedAnswers": [
+          "It's 30 baht each.",
+          "They are 30 baht each.",
+          "30 baht each."
+        ],
+        "imagePath": "describe-it/a2_c08n05/05.webp",
+        "questionEn": "How much is each postcard?",
+        "hints": [
+          "The postcards…",
+          "The postcards are ___ baht each."
+        ]
+      }
+    ]
   }
 }

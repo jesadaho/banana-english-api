@@ -143,15 +143,21 @@ describe('Adventure A2 Zone 1 content', () => {
           }
           assert.ok(getInteractiveScenario(id), id);
           break;
-        case 'describe_it':
-          if (id === 'a2_c02n10' || id === 'a2_c03n08' || id === 'a2_c04n09') {
-            const pool = describeItPoolById(id);
-            assert.equal(pool?.items.length, id === 'a2_c04n09' ? 5 : 6, id);
-            assert.ok(pool?.items.every((item) => item.answerTh.trim().length > 0), id);
-            break;
-          }
-          assert.equal(describeItPoolById(id), undefined, `${id} has no art yet`);
+        case 'describe_it': {
+          const expected: Record<string, number> = {
+            a2_c02n10: 6,
+            a2_c03n08: 6,
+            a2_c04n09: 5,
+            a2_c05n07: 5,
+            a2_c06n10: 5,
+            a2_c07n10: 5,
+            a2_c08n05: 5,
+          };
+          const pool = describeItPoolById(id);
+          assert.equal(pool?.items.length, expected[id], id);
+          assert.ok(pool?.items.every((item) => item.answerTh.trim().length > 0), id);
           break;
+        }
       }
     }
   });
