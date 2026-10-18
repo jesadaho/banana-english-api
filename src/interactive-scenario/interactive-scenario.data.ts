@@ -405,6 +405,16 @@ const BEATS: InteractiveScenarioBeat[] = [
   }),
 ];
 
+const JOHN_ROOFTOP_SCENES = [
+  {
+    id: 'rooftop',
+    titleEn: 'Rooftop',
+    titleTh: 'ดาดฟ้า',
+    imageAsset: ROOFTOP_BG,
+    bannerAsset: ROOFTOP_BG,
+  },
+] as const;
+
 export const FINAL_INTERVIEW_JOHN: InteractiveScenarioDef = {
   id: 'final_interview_john',
   mode: 'review',
@@ -417,15 +427,7 @@ export const FINAL_INTERVIEW_JOHN: InteractiveScenarioDef = {
   // Assessment: one try per question — wrong = reveal the answer, move on.
   maxAttemptsPerBeat: 1,
   softAttemptCeiling: 34,
-  scenes: [
-    {
-      id: 'rooftop',
-      titleEn: 'Rooftop',
-      titleTh: 'ดาดฟ้า',
-      imageAsset: ROOFTOP_BG,
-      bannerAsset: ROOFTOP_BG,
-    },
-  ],
+  scenes: [...JOHN_ROOFTOP_SCENES],
   goals: GOALS,
   beats: BEATS,
   openingEn: BEATS[0]!.promptEn,
@@ -434,11 +436,65 @@ export const FINAL_INTERVIEW_JOHN: InteractiveScenarioDef = {
   completionTh: 'ลาก่อน! ออกไปพูดภาษาอังกฤษให้เต็มที่นะครับ แล้วเจอกันข้างนอก!',
 };
 
+const ONBOARDING_BEATS: InteractiveScenarioBeat[] = BEATS.map((b) => {
+  if (b.id === 't01_ready') {
+    return {
+      ...b,
+      npcBriefEn: 'Warm placement intro. Ask if the learner is ready to talk.',
+      promptEn:
+        "Hello! I am Teacher John. Let's talk a little so I can see your English. Are you ready?",
+      promptTh: 'สวัสดีครับ ผมครูจอห์น คุยกันสั้น ๆ เพื่อดูภาษาอังกฤษของคุณ พร้อมไหมครับ?',
+      praiseEn: ["Ha! I like that. Let's begin."],
+    };
+  }
+  if (b.id === 't02_name') {
+    return {
+      ...b,
+      promptEn: 'Nice to meet you. What is your name?',
+      promptTh: 'ยินดีที่ได้รู้จัก คุณชื่ออะไรครับ?',
+    };
+  }
+  if (b.id === 't17_goodbye') {
+    return {
+      ...b,
+      npcBriefEn: 'Warm close after the placement chat; wait for thank you / goodbye.',
+      promptEn:
+        'Thank you, {name}! That was a great chat. I know where we can start. Time to say goodbye!',
+      promptTh: 'ขอบคุณที่คุยกับผมครับ ผมรู้แล้วว่าจะเริ่มตรงไหน ถึงเวลาบอกลาแล้วครับ',
+    };
+  }
+  return b;
+});
+
+/** Same engine as the Foundation finale, used during onboarding v2 placement. Free. */
+export const ONBOARDING_INTERVIEW_JOHN: InteractiveScenarioDef = {
+  id: 'onboarding_interview_john',
+  mode: 'review',
+  teacher: 'john',
+  ttsVoiceProfile: 'teacher_john',
+  titleEn: 'Talk with Teacher John',
+  titleTh: 'คุยวัดระดับกับ Teacher John',
+  bananaCost: 0,
+  estimatedMinutes: 8,
+  maxAttemptsPerBeat: 1,
+  softAttemptCeiling: 34,
+  scenes: [...JOHN_ROOFTOP_SCENES],
+  goals: GOALS,
+  beats: ONBOARDING_BEATS,
+  openingEn: ONBOARDING_BEATS[0]!.promptEn,
+  openingTh: ONBOARDING_BEATS[0]!.promptTh,
+  completionEn: 'Goodbye, {name}! See you in class.',
+  completionTh: 'ลาก่อนนะครับ แล้วเจอกันในบทเรียน!',
+};
+
+export const ONBOARDING_INTERVIEW_JOHN_ID = ONBOARDING_INTERVIEW_JOHN.id;
+
 /** Data-driven checkpoints authored as JSON (Adventure A2 and later courses). */
 const AUTHORED_SCENARIOS = adventureA2ScenariosJson as unknown as InteractiveScenarioDef[];
 
 const BY_ID = new Map<string, InteractiveScenarioDef>([
   [FINAL_INTERVIEW_JOHN.id, FINAL_INTERVIEW_JOHN],
+  [ONBOARDING_INTERVIEW_JOHN.id, ONBOARDING_INTERVIEW_JOHN],
   ...AUTHORED_SCENARIOS.map((scenario) => [scenario.id, scenario] as const),
 ]);
 
