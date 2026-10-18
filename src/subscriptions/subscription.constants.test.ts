@@ -4,6 +4,8 @@ import {
   beamSignatureMatches,
   effectiveSubscriptionTier,
   FOUNDER_PRESALE_OPENS_AT,
+  presaleIsSoldOut,
+  presaleSeatsRemaining,
 } from './subscription.constants';
 
 const future = new Date(Date.now() + 86_400_000);
@@ -29,6 +31,14 @@ describe('effectiveSubscriptionTier', () => {
       effectiveSubscriptionTier({ subscriptionTier: 'PRO_MAX', subscriptionExpiresAt: null }),
       'FREE',
     );
+  });
+});
+
+describe('presaleSeatsRemaining', () => {
+  it('holds 6 seats off the public remaining count', () => {
+    assert.equal(presaleSeatsRemaining(17), 7);
+    assert.equal(presaleIsSoldOut(24), true);
+    assert.equal(presaleIsSoldOut(23), false);
   });
 });
 

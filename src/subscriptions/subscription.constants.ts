@@ -5,10 +5,20 @@ export const PRO_REFILL_HOURS = 2;
 
 export const FOUNDER_PRESALE_PRICE_THB = 150;
 export const FOUNDER_PRESALE_SEATS = 30;
+/** Held off the public counter so the remaining seats look tighter. */
+export const FOUNDER_PRESALE_HELD_SEATS = 6;
 export const FOUNDER_PRESALE_YEARS = 1;
 export const PRESALE_QR_TTL_MS = 15 * 60 * 1000;
 /** Sale opens Sunday 18 Oct 2026, 21:00 Asia/Bangkok. */
 export const FOUNDER_PRESALE_OPENS_AT = new Date('2026-10-18T14:00:00.000Z');
+
+export function presaleSeatsRemaining(sold: number): number {
+  return Math.max(0, FOUNDER_PRESALE_SEATS - FOUNDER_PRESALE_HELD_SEATS - sold);
+}
+
+export function presaleIsSoldOut(sold: number): boolean {
+  return presaleSeatsRemaining(sold) <= 0;
+}
 
 export type SubscriptionTierName = 'FREE' | 'PRO' | 'PRO_MAX';
 
