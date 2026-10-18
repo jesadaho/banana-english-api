@@ -81,6 +81,7 @@ export class SubscriptionsService {
   }
 
   async adminReport() {
+    await this.backfillPresaleEmails();
     const now = new Date();
     const soon = new Date(now.getTime() + 7 * 86_400_000);
     const activeWhere = {
@@ -115,7 +116,6 @@ export class SubscriptionsService {
         include: { user: { select: { id: true, displayName: true, email: true } } },
       }),
     ]);
-    const filled = await this.fillMissingPresaleEmails(orders);
     const presaleRevenueThb = paidOrders.reduce((sum, row) => sum + row.priceThb, 0);
     return {
       kpis: {
@@ -141,7 +141,7 @@ export class SubscriptionsService {
         priceThb: row.priceThb,
         createdAt: row.createdAt.toISOString(),
       })),
-      orders: filled.map((row) => ({
+      orders: orders.map((row) => ({
         id: row.id,
         userId: row.userId,
         firebaseUid: row.firebaseUid,
@@ -259,6 +259,7 @@ export class SubscriptionsService {
   }
 
   async publicStatus() {
+    void this.backfillPresaleEmails().catch(() => undefined);
     const sold = await this.prisma.presaleOrder.count({ where: { status: PAID } });
     return {
       sold,
@@ -518,20 +519,17 @@ export class SubscriptionsService {
     };
   }
 
-  private async fillMissingPresaleEmails<
-    T extends { id: string; firebaseUid: string; email: string | null },
-  >(orders: T[]): Promise<T[]> {
-    const missing = orders.filter((row) => !row.email?.trim());
-    if (missing.length === 0 || typeof this.firebase.getAuthEmail !== 'function') {
-      return orders;
-    }
-    const emails = new Map<string, string>();
-    for (const row of missing) {
-      if (emails.has(row.firebaseUid)) continue;
-      const found = await this.firebase.getAuthEmail(row.firebaseUid);
-      if (found) emails.set(row.firebaseUid, found);
-    }
-    if (emails.size === 0) return orders;
+  private async backfillPresaleEmails(): Promise<void> {
+    if (typeof this.firebase.getAuthEmails !== 'function') return;
+    const missing = await this.prisma.presaleOrder.findMany({
+      where: { OR: [{ email: null }, { email: '' }] },
+      select: { id: true, firebaseUid: true },
+    });
+    if (missing.length === 0) return;
+    const emails = await this.firebase.getAuthEmails(
+      missing.map((row) => row.firebaseUid),
+    );
+    if (emails.size === 0) return;
     await Promise.all(
       missing
         .filter((row) => emails.has(row.firebaseUid))
@@ -542,10 +540,6 @@ export class SubscriptionsService {
           }),
         ),
     );
-    return orders.map((row) => {
-      const email = row.email?.trim() || emails.get(row.firebaseUid) || null;
-      return email === row.email ? row : { ...row, email };
-    });
   }
 
   private async identityFromToken(idToken: string): Promise<{ uid: string; email: string | null }> {
@@ -553,7 +547,11 @@ export class SubscriptionsService {
     if (!trimmed) throw new UnauthorizedException('Missing Firebase token');
     try {
       const decoded = await this.firebase.verifyIdToken(trimmed);
-      const email = decoded.email?.trim().toLowerCase() || null;
+      const identities = decoded.firebase?.identities ?? {};
+      const fromIdentities = [identities.email, identities['google.com'], identities['apple.com']]
+        .flat()
+        .find((value) => typeof value === 'string' && value.includes('@'));
+      const email = (decoded.email || fromIdentities)?.trim().toLowerCase() || null;
       return { uid: decoded.uid, email };
     } catch {
       throw new UnauthorizedException('Invalid Firebase token');

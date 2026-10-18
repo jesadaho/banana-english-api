@@ -55,19 +55,35 @@ export class FirebaseAdminService implements OnModuleInit {
   }
 
   async getAuthEmail(uid: string): Promise<string | null> {
-    const trimmed = uid.trim();
-    if (!this.enabled || !trimmed) return null;
+    const map = await this.getAuthEmails([uid]);
+    return map.get(uid.trim()) ?? null;
+  }
+
+  async getAuthEmails(uids: string[]): Promise<Map<string, string>> {
+    const found = new Map<string, string>();
+    const unique = [...new Set(uids.map((uid) => uid.trim()).filter(Boolean))];
+    if (!this.enabled || unique.length === 0) return found;
     try {
-      const record = await admin.auth().getUser(trimmed);
-      const fromAccount = record.email?.trim();
-      const fromProvider = record.providerData
-        .map((row) => row.email?.trim())
-        .find(Boolean);
-      const email = fromAccount || fromProvider || null;
-      return email ? email.toLowerCase() : null;
-    } catch {
-      return null;
+      const result = await admin.auth().getUsers(unique.map((uid) => ({ uid })));
+      for (const record of result.users) {
+        const fromAccount = record.email?.trim();
+        const fromProvider = record.providerData
+          .map((row) => row.email?.trim())
+          .find(Boolean);
+        const email = (fromAccount || fromProvider || '').toLowerCase();
+        if (email) found.set(record.uid, email);
+      }
+      if (result.notFound.length > 0) {
+        this.logger.warn(
+          `Firebase Auth missing ${result.notFound.length} presale uid(s)`,
+        );
+      }
+    } catch (error) {
+      this.logger.warn(
+        `Firebase Auth getUsers failed: ${String(error).slice(0, 200)}`,
+      );
     }
+    return found;
   }
 
   async getSignedReadUrl(
