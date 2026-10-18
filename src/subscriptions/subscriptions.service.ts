@@ -12,10 +12,13 @@ import {
   addYears,
   beamSignatureMatches,
   effectiveSubscriptionTier,
+  FOUNDER_PRESALE_HELD_SEATS,
   FOUNDER_PRESALE_OPENS_AT,
   FOUNDER_PRESALE_PRICE_THB,
   FOUNDER_PRESALE_SEATS,
   FOUNDER_PRESALE_YEARS,
+  presaleIsSoldOut,
+  presaleSeatsRemaining,
   PRESALE_QR_TTL_MS,
   SubscriptionTierName,
 } from './subscription.constants';
@@ -121,8 +124,9 @@ export class SubscriptionsService {
         expiringSoon,
         presalePaid: paidOrders.length,
         presaleRevenueThb,
-        seatsRemaining: Math.max(0, FOUNDER_PRESALE_SEATS - paidOrders.length),
+        seatsRemaining: presaleSeatsRemaining(paidOrders.length),
         seatCap: FOUNDER_PRESALE_SEATS,
+        seatsHeld: FOUNDER_PRESALE_HELD_SEATS,
       },
       grants: grants.map((row) => ({
         id: row.id,
@@ -259,7 +263,8 @@ export class SubscriptionsService {
     return {
       sold,
       cap: FOUNDER_PRESALE_SEATS,
-      remaining: Math.max(0, FOUNDER_PRESALE_SEATS - sold),
+      remaining: presaleSeatsRemaining(sold),
+      held: FOUNDER_PRESALE_HELD_SEATS,
       priceThb: FOUNDER_PRESALE_PRICE_THB,
       opensAt: FOUNDER_PRESALE_OPENS_AT.toISOString(),
     };
@@ -327,7 +332,7 @@ export class SubscriptionsService {
     }
 
     const sold = await this.prisma.presaleOrder.count({ where: { status: PAID } });
-    if (sold >= FOUNDER_PRESALE_SEATS) {
+    if (presaleIsSoldOut(sold)) {
       throw new BadRequestException({ code: 'SOLD_OUT', message: 'สิทธิ์ Founder ครบ 30 ที่แล้ว' });
     }
 
