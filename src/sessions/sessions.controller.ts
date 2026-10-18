@@ -3351,7 +3351,9 @@ export class SessionsController {
       data.scenarioConfig
     ) {
       let scenarioRewards;
-      if (data.session.isComplete) {
+      const onboardingPlacement =
+        data.scenarioConfig.id === 'onboarding_interview_john';
+      if (data.session.isComplete && !onboardingPlacement) {
         const gameId = `interactive_scenario:${data.scenarioConfig.id}`;
         const goalsDone = Object.values(
           data.scenarioRuntime?.checkpoints ?? {},

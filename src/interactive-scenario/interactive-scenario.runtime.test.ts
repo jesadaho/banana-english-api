@@ -1,6 +1,9 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
-import { FINAL_INTERVIEW_JOHN } from './interactive-scenario.data';
+import {
+  FINAL_INTERVIEW_JOHN,
+  ONBOARDING_INTERVIEW_JOHN,
+} from './interactive-scenario.data';
 import {
   answerLearnerQuestion,
   buildScenarioOpening,
@@ -251,5 +254,38 @@ describe('final interview — helpers', () => {
     const g = S.goals.find((x) => x.id === 'like')!;
     assert.equal(softMatchGoal('likely', g), false);
     assert.equal(softMatchGoal('I like tea', g), true);
+  });
+});
+
+describe('onboarding placement interview', () => {
+  it('is a free Teacher John assessment with the same 16 scored goals', () => {
+    assert.equal(ONBOARDING_INTERVIEW_JOHN.bananaCost, 0);
+    assert.equal(ONBOARDING_INTERVIEW_JOHN.teacher, 'john');
+    assert.equal(ONBOARDING_INTERVIEW_JOHN.maxAttemptsPerBeat, 1);
+    assert.equal(ONBOARDING_INTERVIEW_JOHN.goals.length, 16);
+    assert.equal(ONBOARDING_INTERVIEW_JOHN.beats.length, 17);
+    assert.equal(ONBOARDING_INTERVIEW_JOHN.beats[0]!.ungraded, true);
+    assert.match(ONBOARDING_INTERVIEW_JOHN.openingEn, /Are you ready\?/);
+    assert.doesNotMatch(ONBOARDING_INTERVIEW_JOHN.openingEn, /Finally/);
+    assert.doesNotMatch(
+      ONBOARDING_INTERVIEW_JOHN.beats.at(-1)!.promptEn,
+      /you passed my test/,
+    );
+  });
+
+  it('happy path still completes and captures a name', () => {
+    let state = initScenarioRuntime(ONBOARDING_INTERVIEW_JOHN);
+    let reply = buildScenarioOpening(ONBOARDING_INTERVIEW_JOHN, state);
+    assert.match(reply.aiResponse, /Let's talk a little/);
+    for (const transcript of HAPPY_ANSWERS) {
+      ({ state, reply } = processScenarioTurn({
+        scenario: ONBOARDING_INTERVIEW_JOHN,
+        state,
+        transcript,
+      }));
+    }
+    assert.equal(reply.isTaskComplete, true);
+    assert.equal(state.slots.name, 'Maya');
+    assert.match(reply.aiResponse, /See you in class/);
   });
 });
