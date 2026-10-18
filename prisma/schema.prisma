@@ -181,7 +181,10 @@ model SubscriptionGrant {
 /** Founder presale checkout. Quota counts rows with status "paid". */
 model PresaleOrder {
   id            String           @id @default(uuid())
-  userId        String
+  /** Null until the buyer logs into the app and we attach the profile. */
+  userId        String?
+  /** Firebase Auth UID from the presale web sign-in (Google/Apple). */
+  firebaseUid   String
   tier          SubscriptionTier @default(PRO_MAX)
   priceThb      Int
   /** "pending_payment" | "paid" | "expired" */
@@ -192,9 +195,10 @@ model PresaleOrder {
   createdAt     DateTime         @default(now())
   paidAt        DateTime?
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
 
   @@index([userId, createdAt])
+  @@index([firebaseUid, status])
   @@index([status, createdAt])
 }
 
