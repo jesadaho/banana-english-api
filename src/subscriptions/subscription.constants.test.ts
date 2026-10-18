@@ -35,10 +35,10 @@ describe('effectiveSubscriptionTier', () => {
 });
 
 describe('presaleSeatsRemaining', () => {
-  it('holds 8 seats off the public remaining count', () => {
-    assert.equal(presaleSeatsRemaining(19), 3);
-    assert.equal(presaleIsSoldOut(22), true);
-    assert.equal(presaleIsSoldOut(21), false);
+  it('holds 9 seats off the public remaining count', () => {
+    assert.equal(presaleSeatsRemaining(19), 2);
+    assert.equal(presaleIsSoldOut(21), true);
+    assert.equal(presaleIsSoldOut(20), false);
   });
 });
 
