@@ -108,10 +108,11 @@ export class SubscriptionsService {
       }),
       this.prisma.presaleOrder.findMany({
         orderBy: { createdAt: 'desc' },
-        take: 50,
+        take: 80,
         include: { user: { select: { id: true, displayName: true, email: true } } },
       }),
     ]);
+    const filled = await this.fillMissingPresaleEmails(orders);
     const presaleRevenueThb = paidOrders.reduce((sum, row) => sum + row.priceThb, 0);
     return {
       kpis: {
@@ -136,12 +137,12 @@ export class SubscriptionsService {
         priceThb: row.priceThb,
         createdAt: row.createdAt.toISOString(),
       })),
-      orders: orders.map((row) => ({
+      orders: filled.map((row) => ({
         id: row.id,
         userId: row.userId,
         firebaseUid: row.firebaseUid,
         displayName: row.user?.displayName ?? null,
-        email: row.user?.email ?? null,
+        email: row.email ?? row.user?.email ?? null,
         tier: row.tier,
         priceThb: row.priceThb,
         status: row.status,
@@ -265,7 +266,7 @@ export class SubscriptionsService {
   }
 
   async createPresaleOrder(idToken: string) {
-    const uid = await this.uidFromToken(idToken);
+    const { uid, email } = await this.identityFromToken(idToken);
     const user = await this.prisma.user.findUnique({ where: { firebaseUid: uid } });
     if (Date.now() < FOUNDER_PRESALE_OPENS_AT.getTime()) {
       throw new BadRequestException({ code: 'SALE_NOT_OPEN', message: 'ยังไม่เปิดรับ' });
@@ -286,6 +287,12 @@ export class SubscriptionsService {
       orderBy: { paidAt: 'desc' },
     });
     if (paidBucket) {
+      if (email && !paidBucket.email) {
+        await this.prisma.presaleOrder.update({
+          where: { id: paidBucket.id },
+          data: { email },
+        });
+      }
       if (user) await this.claimPaidPresaleForUser(user);
       return {
         alreadyActive: true,
@@ -308,7 +315,16 @@ export class SubscriptionsService {
       },
       orderBy: { createdAt: 'desc' },
     });
-    if (reusable) return this.orderPayload(reusable);
+    if (reusable) {
+      if (email && !reusable.email) {
+        const withEmail = await this.prisma.presaleOrder.update({
+          where: { id: reusable.id },
+          data: { email },
+        });
+        return this.orderPayload(withEmail);
+      }
+      return this.orderPayload(reusable);
+    }
 
     const sold = await this.prisma.presaleOrder.count({ where: { status: PAID } });
     if (sold >= FOUNDER_PRESALE_SEATS) {
@@ -319,6 +335,7 @@ export class SubscriptionsService {
       data: {
         userId: user?.id ?? null,
         firebaseUid: uid,
+        email,
         tier: SubscriptionTier.PRO_MAX,
         priceThb: FOUNDER_PRESALE_PRICE_THB,
         status: PENDING,
@@ -338,7 +355,7 @@ export class SubscriptionsService {
   }
 
   async presaleOrderForToken(orderId: string, idToken: string) {
-    const uid = await this.uidFromToken(idToken);
+    const { uid } = await this.identityFromToken(idToken);
     const order = await this.prisma.presaleOrder.findUnique({
       where: { id: orderId },
       include: { user: true },
@@ -496,12 +513,43 @@ export class SubscriptionsService {
     };
   }
 
-  private async uidFromToken(idToken: string): Promise<string> {
+  private async fillMissingPresaleEmails<
+    T extends { id: string; firebaseUid: string; email: string | null },
+  >(orders: T[]): Promise<T[]> {
+    const missing = orders.filter((row) => !row.email?.trim());
+    if (missing.length === 0 || typeof this.firebase.getAuthEmail !== 'function') {
+      return orders;
+    }
+    const emails = new Map<string, string>();
+    for (const row of missing) {
+      if (emails.has(row.firebaseUid)) continue;
+      const found = await this.firebase.getAuthEmail(row.firebaseUid);
+      if (found) emails.set(row.firebaseUid, found);
+    }
+    if (emails.size === 0) return orders;
+    await Promise.all(
+      missing
+        .filter((row) => emails.has(row.firebaseUid))
+        .map((row) =>
+          this.prisma.presaleOrder.update({
+            where: { id: row.id },
+            data: { email: emails.get(row.firebaseUid) },
+          }),
+        ),
+    );
+    return orders.map((row) => {
+      const email = row.email?.trim() || emails.get(row.firebaseUid) || null;
+      return email === row.email ? row : { ...row, email };
+    });
+  }
+
+  private async identityFromToken(idToken: string): Promise<{ uid: string; email: string | null }> {
     const trimmed = idToken.trim();
     if (!trimmed) throw new UnauthorizedException('Missing Firebase token');
     try {
       const decoded = await this.firebase.verifyIdToken(trimmed);
-      return decoded.uid;
+      const email = decoded.email?.trim().toLowerCase() || null;
+      return { uid: decoded.uid, email };
     } catch {
       throw new UnauthorizedException('Invalid Firebase token');
     }

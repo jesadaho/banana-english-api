@@ -185,6 +185,8 @@ model PresaleOrder {
   userId        String?
   /** Firebase Auth UID from the presale web sign-in (Google/Apple). */
   firebaseUid   String
+  /** Google/Apple email from the checkout token. Set even before app login. */
+  email         String?
   tier          SubscriptionTier @default(PRO_MAX)
   priceThb      Int
   /** "pending_payment" | "paid" | "expired" */

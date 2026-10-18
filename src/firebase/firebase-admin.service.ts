@@ -54,6 +54,22 @@ export class FirebaseAdminService implements OnModuleInit {
     return admin.auth().verifyIdToken(idToken);
   }
 
+  async getAuthEmail(uid: string): Promise<string | null> {
+    const trimmed = uid.trim();
+    if (!this.enabled || !trimmed) return null;
+    try {
+      const record = await admin.auth().getUser(trimmed);
+      const fromAccount = record.email?.trim();
+      const fromProvider = record.providerData
+        .map((row) => row.email?.trim())
+        .find(Boolean);
+      const email = fromAccount || fromProvider || null;
+      return email ? email.toLowerCase() : null;
+    } catch {
+      return null;
+    }
+  }
+
   async getSignedReadUrl(
     objectPath: string,
     expiresMs = 60 * 60 * 1000,
