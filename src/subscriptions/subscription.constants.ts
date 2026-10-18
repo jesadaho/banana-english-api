@@ -6,7 +6,7 @@ export const PRO_REFILL_HOURS = 2;
 export const FOUNDER_PRESALE_PRICE_THB = 150;
 export const FOUNDER_PRESALE_SEATS = 30;
 /** Held off the public counter so the remaining seats look tighter. */
-export const FOUNDER_PRESALE_HELD_SEATS = 6;
+export const FOUNDER_PRESALE_HELD_SEATS = 8;
 export const FOUNDER_PRESALE_YEARS = 1;
 export const PRESALE_QR_TTL_MS = 15 * 60 * 1000;
 /** Sale opens Sunday 18 Oct 2026, 21:00 Asia/Bangkok. */
