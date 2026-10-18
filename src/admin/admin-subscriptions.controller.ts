@@ -21,6 +21,11 @@ export class AdminSubscriptionsController {
     return this.subscriptions.adminReport();
   }
 
+  @Post('backfill-presale-emails')
+  backfillPresaleEmails() {
+    return this.subscriptions.adminReport();
+  }
+
   @Get('users')
   search(@Query('q') q?: string) {
     return this.subscriptions.searchForAdmin(q);
