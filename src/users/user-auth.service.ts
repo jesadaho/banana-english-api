@@ -2,11 +2,13 @@ import {
   BadRequestException,
   ConflictException,
   Injectable,
+  Optional,
   ServiceUnavailableException,
 } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { FirebaseAdminService } from '../firebase/firebase-admin.service';
 import { PrismaService } from '../prisma/prisma.service';
+import { SubscriptionsService } from '../subscriptions/subscriptions.service';
 import { UsersService } from './users.service';
 
 export type AuthProviderName = 'google' | 'apple';
@@ -28,6 +30,7 @@ export class UserAuthService {
     private readonly firebaseAdmin: FirebaseAdminService,
     private readonly prisma: PrismaService,
     private readonly users: UsersService,
+    @Optional() private readonly subscriptions?: SubscriptionsService,
   ) {}
 
   async getAuthStatus(user: User): Promise<UserAuthStatusResponse> {
@@ -122,7 +125,11 @@ export class UserAuthService {
     if (existingByFirebase && existingByFirebase.id !== user.id) {
       if (await this.isGuestUser(user)) {
         // Multi-device v1: guest adopts the already-linked profile.
-        return this.users.getProfile(existingByFirebase);
+        await this.subscriptions?.claimPaidPresaleForUser(existingByFirebase);
+        const claimed = await this.prisma.user.findUniqueOrThrow({
+          where: { id: existingByFirebase.id },
+        });
+        return this.users.getProfile(claimed);
       }
       throw new ConflictException(
         'This account is already linked to another profile',
@@ -139,7 +146,11 @@ export class UserAuthService {
         const existingUser = await this.prisma.user.findUniqueOrThrow({
           where: { id: existingProvider.userId },
         });
-        return this.users.getProfile(existingUser);
+        await this.subscriptions?.claimPaidPresaleForUser(existingUser);
+        const claimed = await this.prisma.user.findUniqueOrThrow({
+          where: { id: existingUser.id },
+        });
+        return this.users.getProfile(claimed);
       }
       throw new ConflictException(
         'This sign-in method is already linked to another profile',
@@ -175,7 +186,11 @@ export class UserAuthService {
     const updated = await this.prisma.user.findUniqueOrThrow({
       where: { id: user.id },
     });
-    return this.users.getProfile(updated);
+    await this.subscriptions?.claimPaidPresaleForUser(updated);
+    const claimed = await this.prisma.user.findUniqueOrThrow({
+      where: { id: updated.id },
+    });
+    return this.users.getProfile(claimed);
   }
 
   /** Guest = no Google/Apple providers (anonymous Firebase UID alone is still guest). */

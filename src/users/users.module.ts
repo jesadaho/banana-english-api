@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { EconomyModule } from '../economy/economy.module';
+import { SubscriptionsModule } from '../subscriptions/subscriptions.module';
 import { ActivityService } from './activity.service';
 import { AnonymousUserGuard } from './anonymous-user.guard';
 import { StaleGuestCleanupService } from './stale-guest-cleanup.service';
@@ -9,7 +10,7 @@ import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 
 @Module({
-  imports: [EconomyModule],
+  imports: [EconomyModule, SubscriptionsModule],
   controllers: [UsersController],
   providers: [
     UsersService,

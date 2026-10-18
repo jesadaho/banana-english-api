@@ -139,8 +139,9 @@ export class SubscriptionsService {
       orders: orders.map((row) => ({
         id: row.id,
         userId: row.userId,
-        displayName: row.user.displayName,
-        email: row.user.email,
+        firebaseUid: row.firebaseUid,
+        displayName: row.user?.displayName ?? null,
+        email: row.user?.email ?? null,
         tier: row.tier,
         priceThb: row.priceThb,
         status: row.status,
@@ -266,19 +267,13 @@ export class SubscriptionsService {
   async createPresaleOrder(idToken: string) {
     const uid = await this.uidFromToken(idToken);
     const user = await this.prisma.user.findUnique({ where: { firebaseUid: uid } });
-    if (!user) {
-      throw new BadRequestException({
-        code: 'NO_APP_ACCOUNT',
-        message: 'เปิดแอป Banana English ก่อน แล้วสมัครด้วย Google บัญชีเดียวกัน',
-      });
-    }
     if (Date.now() < FOUNDER_PRESALE_OPENS_AT.getTime()) {
       throw new BadRequestException({ code: 'SALE_NOT_OPEN', message: 'ยังไม่เปิดรับ' });
     }
-    const active = effectiveSubscriptionTier(user);
-    if (active === 'PRO_MAX') {
+    if (user && effectiveSubscriptionTier(user) === 'PRO_MAX') {
       return {
         alreadyActive: true,
+        pendingClaim: false,
         orderId: null,
         status: PAID,
         qrImageBase64: null,
@@ -286,11 +281,27 @@ export class SubscriptionsService {
         expiresAt: user.subscriptionExpiresAt?.toISOString() ?? null,
       };
     }
+    const paidBucket = await this.prisma.presaleOrder.findFirst({
+      where: { firebaseUid: uid, status: PAID },
+      orderBy: { paidAt: 'desc' },
+    });
+    if (paidBucket) {
+      if (user) await this.claimPaidPresaleForUser(user);
+      return {
+        alreadyActive: true,
+        pendingClaim: !user,
+        orderId: paidBucket.id,
+        status: PAID,
+        qrImageBase64: null,
+        priceThb: FOUNDER_PRESALE_PRICE_THB,
+        expiresAt: paidBucket.paidAt?.toISOString() ?? null,
+      };
+    }
 
-    await this.expireStaleOrders(user.id);
+    await this.expireStaleOrders(uid);
     const reusable = await this.prisma.presaleOrder.findFirst({
       where: {
-        userId: user.id,
+        firebaseUid: uid,
         status: PENDING,
         createdAt: { gt: new Date(Date.now() - PRESALE_QR_TTL_MS) },
         qrImageBase64: { not: null },
@@ -306,7 +317,8 @@ export class SubscriptionsService {
 
     const order = await this.prisma.presaleOrder.create({
       data: {
-        userId: user.id,
+        userId: user?.id ?? null,
+        firebaseUid: uid,
         tier: SubscriptionTier.PRO_MAX,
         priceThb: FOUNDER_PRESALE_PRICE_THB,
         status: PENDING,
@@ -331,7 +343,7 @@ export class SubscriptionsService {
       where: { id: orderId },
       include: { user: true },
     });
-    if (!order || order.user.firebaseUid !== uid) {
+    if (!order || order.firebaseUid !== uid) {
       throw new NotFoundException('Order not found');
     }
     if (order.status === PENDING && order.beamChargeId) {
@@ -384,7 +396,39 @@ export class SubscriptionsService {
         ...(beamChargeId ? { beamChargeId } : {}),
       },
     });
-    const user = await this.prisma.user.findUniqueOrThrow({ where: { id: order.userId } });
+    if (!order.userId) return;
+    const user = await this.prisma.user.findUnique({ where: { id: order.userId } });
+    if (!user) return;
+    await this.grantPaidOrder(user, order.id, order.priceThb);
+  }
+
+  async claimPaidPresaleForUser(user: User): Promise<void> {
+    const uid = user.firebaseUid?.trim();
+    if (!uid) return;
+    const orders = await this.prisma.presaleOrder.findMany({
+      where: { firebaseUid: uid, status: PAID },
+      orderBy: { paidAt: 'asc' },
+    });
+    for (const order of orders) {
+      if (order.userId && order.userId !== user.id) continue;
+      if (!order.userId) {
+        await this.prisma.presaleOrder.update({
+          where: { id: order.id },
+          data: { userId: user.id },
+        });
+      }
+      await this.grantPaidOrder(user, order.id, order.priceThb);
+      const refreshed = await this.prisma.user.findUniqueOrThrow({ where: { id: user.id } });
+      user.subscriptionTier = refreshed.subscriptionTier;
+      user.subscriptionExpiresAt = refreshed.subscriptionExpiresAt;
+    }
+  }
+
+  private async grantPaidOrder(user: User, orderId: string, priceThb: number) {
+    const already = await this.prisma.subscriptionGrant.findFirst({
+      where: { userId: user.id, source: 'founder_presale', note: orderId },
+    });
+    if (already) return;
     const now = new Date();
     const base =
       effectiveSubscriptionTier(user, now) === 'PRO_MAX' &&
@@ -397,8 +441,8 @@ export class SubscriptionsService {
       tier: 'PRO_MAX',
       expiresAt: addYears(base, FOUNDER_PRESALE_YEARS),
       source: 'founder_presale',
-      priceThb: order.priceThb,
-      note: order.id,
+      priceThb,
+      note: orderId,
     });
   }
 
@@ -419,10 +463,10 @@ export class SubscriptionsService {
     return this.prisma.presaleOrder.findUnique({ where: { id: order.id } });
   }
 
-  private async expireStaleOrders(userId: string) {
+  private async expireStaleOrders(firebaseUid: string) {
     await this.prisma.presaleOrder.updateMany({
       where: {
-        userId,
+        firebaseUid,
         status: PENDING,
         createdAt: { lte: new Date(Date.now() - PRESALE_QR_TTL_MS) },
       },
@@ -443,6 +487,7 @@ export class SubscriptionsService {
   }) {
     return {
       alreadyActive: false,
+      pendingClaim: false,
       orderId: order.id,
       status: order.status,
       qrImageBase64: order.status === PENDING ? order.qrImageBase64 : null,
