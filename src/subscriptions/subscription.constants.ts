@@ -7,12 +7,15 @@ export const FOUNDER_PRESALE_PRICE_THB = 150;
 export const FOUNDER_PRESALE_SEATS = 30;
 /** Held off the public counter so the remaining seats look tighter. */
 export const FOUNDER_PRESALE_HELD_SEATS = 9;
+/** Close the public Founder Presale. Remaining shows 0 / 30. */
+export const FOUNDER_PRESALE_FORCE_SOLD_OUT = true;
 export const FOUNDER_PRESALE_YEARS = 1;
 export const PRESALE_QR_TTL_MS = 15 * 60 * 1000;
 /** Sale opens Sunday 18 Oct 2026, 21:00 Asia/Bangkok. */
 export const FOUNDER_PRESALE_OPENS_AT = new Date('2026-10-18T14:00:00.000Z');
 
 export function presaleSeatsRemaining(sold: number): number {
+  if (FOUNDER_PRESALE_FORCE_SOLD_OUT) return 0;
   return Math.max(0, FOUNDER_PRESALE_SEATS - FOUNDER_PRESALE_HELD_SEATS - sold);
 }
 
