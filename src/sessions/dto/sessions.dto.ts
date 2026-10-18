@@ -35,6 +35,16 @@ export class StartSessionDto {
   @IsNotEmpty()
   scenarioId?: string;
 
+  /** Placement: onboarding vs Settings retake. */
+  @IsOptional()
+  @IsIn(['onboarding', 'profile_settings'])
+  entrySource?: 'onboarding' | 'profile_settings';
+
+  /** Placement: display name from onboarding (do not re-ask). */
+  @IsOptional()
+  @IsString()
+  learnerName?: string;
+
   @IsOptional()
   @IsBoolean()
   isDailyMission?: boolean;

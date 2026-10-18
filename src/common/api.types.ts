@@ -151,6 +151,16 @@ export interface TurnExchangeResponse {
    * Omit on turns with no image — legacy lessons stay unchanged.
    */
   visual?: TurnVisualCue | null;
+  /** Placement audio-only items: speak NPC English, do not show it as text. */
+  hideNpcTranscript?: boolean;
+  /** Placement session result — set on the closing turn. */
+  placementResult?: {
+    demonstratedBand: string | null;
+    resultStatus: string;
+    resultLabel: string;
+    recommendedStartKey: string;
+    stopReason: string;
+  } | null;
 }
 
 /** Shared turn-level visual for scenarios (lessons later). */

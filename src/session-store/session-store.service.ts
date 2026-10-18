@@ -21,6 +21,7 @@ import type { LessonConfig } from '../lessons/lessons.data';
 import type { InteractiveScenarioDef } from '../interactive-scenario/interactive-scenario.types';
 import type { ScenarioRuntimeState } from '../interactive-scenario/interactive-scenario.runtime';
 import { initScenarioRuntime } from '../interactive-scenario/interactive-scenario.runtime';
+import type { PlacementRuntimeState } from '../placement/placement.types';
 import { teachingLanguageFromConfig, learnerNameFallback } from '../lessons/lesson-prompt';
 import type {
   FreeTalkIssueLogEntry,
@@ -76,6 +77,14 @@ export interface ChatTurn {
   roleplayNpc?: RoleplayNpcPrompt | null;
   /** Scenario / lesson visual cue (ai turns only). */
   visual?: TurnVisualCue | null;
+  hideNpcTranscript?: boolean;
+  placementResult?: {
+    demonstratedBand: string | null;
+    resultStatus: string;
+    resultLabel: string;
+    recommendedStartKey: string;
+    stopReason: string;
+  } | null;
 }
 
 export interface ConversationSession {
@@ -152,6 +161,7 @@ export interface SessionData {
   lessonConfig?: LessonConfig;
   scenarioConfig?: InteractiveScenarioDef;
   scenarioRuntime?: ScenarioRuntimeState;
+  placementRuntime?: PlacementRuntimeState;
   /** Rewards granted when a completed scenario ended (shown on the result). */
   scenarioRewards?: SessionRewardSummary;
   /** Cached Mission-style result so re-opening the screen skips the AI call. */
