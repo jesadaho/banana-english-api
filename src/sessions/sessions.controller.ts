@@ -186,6 +186,17 @@ import { RecentLearnersService } from '../recent-learners/recent-learners.servic
 import { AchievementsService } from '../achievements/achievements.service';
 import { getInteractiveScenario } from '../interactive-scenario/interactive-scenario.data';
 import { describeItImageUrl } from '../describe-it/describe-it.data';
+import { PLACEMENT_IMAGE_PATHS } from '../placement/placement.scenario';
+import {
+  applyPlacementEvaluation,
+  buildPlacementOpening,
+  currentPlacementQuestion,
+  heuristicPlacementEval,
+  initPlacementRuntime,
+  isPlacementScenarioId,
+  makeItemResult,
+} from '../placement/placement.runtime';
+import type { PlacementTurnReply } from '../placement/placement.types';
 import {
   buildScenarioOpening,
   buildScenarioResumeOpening,
@@ -255,6 +266,10 @@ export class SessionsController {
         req.user,
         body.scenarioId!,
         chatDebug,
+        {
+          entrySource: body.entrySource,
+          learnerName: body.learnerName,
+        },
       );
     }
 
@@ -513,17 +528,47 @@ export class SessionsController {
     return { userName };
   }
 
+  private placementExchange(reply: PlacementTurnReply): TurnExchangeResponse {
+    return {
+      aiResponse: reply.aiResponse,
+      textTh: reply.textTh,
+      isTaskComplete: reply.isTaskComplete,
+      updatedCheckpoints: {},
+      feedbackHints: { mispronouncedWords: [] },
+      currentTurn: reply.progressTurn,
+      progressTurn: reply.progressTurn,
+      progressMax: reply.progressMax,
+      expectsUserSpeech: reply.expectsUserSpeech,
+      canSkip: reply.canSkip,
+      hideNpcTranscript: reply.hideNpcTranscript,
+      visual: reply.imagePath
+        ? {
+            imageUrl: describeItImageUrl(reply.imagePath),
+            layout: 'focus_image',
+            sceneId: 'day_out',
+          }
+        : null,
+      emojiChoice: null,
+      placementResult: reply.result ?? null,
+    };
+  }
+
   private async startInteractiveScenarioSession(
     user: User,
     scenarioId: string,
     chatDebug = false,
+    extras?: {
+      entrySource?: 'onboarding' | 'profile_settings';
+      learnerName?: string;
+    },
   ) {
     const config = getInteractiveScenario(scenarioId);
     if (!config) {
       throw new NotFoundException('Scenario not found');
     }
+    const placement = isPlacementScenarioId(config.id);
     const resumed =
-      config.scenes.length > 1
+      !placement && config.scenes.length > 1
         ? await this.loadScenarioResume(user.id, config)
         : null;
     // Resuming a paid run is free: the learner already paid when scene 1 began.
@@ -539,6 +584,17 @@ export class SessionsController {
 
     const data = this.sessionStore.createInteractiveScenario(config);
     if (resumed) data.scenarioRuntime = resumed;
+    if (placement) {
+      data.placementRuntime = initPlacementRuntime({
+        entrySource: extras?.entrySource === 'profile_settings'
+          ? 'profile_settings'
+          : 'onboarding',
+        learnerName:
+          extras?.learnerName?.trim() ||
+          firstNameFromDisplayName(user.displayName) ||
+          '',
+      });
+    }
     await this.prisma.userSession.create({
       data: {
         id: data.session.id,
@@ -552,9 +608,16 @@ export class SessionsController {
       data: { lastStudiedAt: new Date() },
     });
 
-    const openingReply = resumed
-      ? buildScenarioResumeOpening(config, resumed)
-      : buildScenarioOpening(config, data.scenarioRuntime!);
+    let openingReply: TurnExchangeResponse;
+    if (placement && data.placementRuntime) {
+      const opened = buildPlacementOpening(data.placementRuntime);
+      data.placementRuntime = opened.state;
+      openingReply = this.placementExchange(opened.reply);
+    } else {
+      openingReply = resumed
+        ? buildScenarioResumeOpening(config, resumed)
+        : buildScenarioOpening(config, data.scenarioRuntime!);
+    }
     const opening = {
       speaker: 'ai' as const,
       textEn: openingReply.aiResponse,
@@ -563,10 +626,14 @@ export class SessionsController {
       expectsUserSpeech: openingReply.expectsUserSpeech ?? true,
       visual: openingReply.visual ?? null,
       emojiChoice: openingReply.emojiChoice ?? null,
+      hideNpcTranscript: openingReply.hideNpcTranscript,
+      canSkip: openingReply.canSkip,
     };
     this.ttsLiveLines.observe('scenario', { text: openingReply.aiResponse });
     this.sessionStore.addTurn(data.session.id, opening);
     data.session.checkpointStates = { ...openingReply.updatedCheckpoints };
+    data.session.progressTurn = openingReply.progressTurn;
+    data.session.progressMax = openingReply.progressMax;
 
     return attachAiDebug(
       {
@@ -586,9 +653,11 @@ export class SessionsController {
           goalsTh: config.goals.map((g) => g.labelTh),
           goalsEn: config.goals.map((g) => g.labelEn),
           goalHints: config.goals.map((g) => g.hints),
-          imageUrls: config.beats.flatMap((b) =>
-            b.imagePath ? [describeItImageUrl(b.imagePath)] : [],
-          ),
+          imageUrls: placement
+            ? PLACEMENT_IMAGE_PATHS.map((p) => describeItImageUrl(p))
+            : config.beats.flatMap((b) =>
+                b.imagePath ? [describeItImageUrl(b.imagePath)] : [],
+              ),
           scenes: config.scenes.map((s) => ({
             id: s.id,
             titleEn: s.titleEn ?? null,
@@ -614,6 +683,10 @@ export class SessionsController {
     if (!data?.scenarioConfig || !data.scenarioRuntime) {
       throw new NotFoundException('Scenario session not found');
     }
+    if (data.placementRuntime) {
+      return this.processPlacementTurn(sessionId, body, chatDebug, handlerStartedAt);
+    }
+
     const transcript = (body.userSpeechText ?? body.transcript ?? '').trim();
     if (!transcript || transcript === TAP_TO_CONTINUE_SENTINEL) {
       throw new BadRequestException('transcript required');
@@ -715,6 +788,141 @@ export class SessionsController {
       create: { userId, scenarioId, ...data },
       update: data,
     });
+  }
+
+  private async processPlacementTurn(
+    sessionId: string,
+    body: TurnDto,
+    chatDebug: boolean,
+    handlerStartedAt: number,
+  ) {
+    const data = this.sessionStore.get(sessionId);
+    if (!data?.placementRuntime) {
+      throw new NotFoundException('Placement session not found');
+    }
+    const raw = (body.userSpeechText ?? body.transcript ?? '').trim();
+    const skipped = raw === LESSON_SKIP_SENTINEL;
+    if (!raw || raw === TAP_TO_CONTINUE_SENTINEL) {
+      throw new BadRequestException('transcript required');
+    }
+
+    this.sessionStore.addTurn(sessionId, {
+      speaker: 'user',
+      textEn: skipped ? LESSON_SKIP_TURN_TEXT : raw,
+    });
+
+    const q = currentPlacementQuestion(data.placementRuntime);
+    if (!q) {
+      throw new BadRequestException('placement already finished');
+    }
+
+    let evalPartial = heuristicPlacementEval(q, skipped ? '' : raw, skipped);
+    if (!evalPartial && isScenarioNoise(raw) && !skipped) {
+      evalPartial = {
+        status: 'technical_retry',
+        score: null,
+        eligibleForPlacement: false,
+        evidence: [],
+        reasonCode: 'capture_error',
+      };
+    }
+    if (!evalPartial) {
+      try {
+        const { prompt } = {
+          prompt: data.placementRuntime
+            ? q.npcEn.replace(
+                '{name}',
+                data.placementRuntime.learnerName || 'there',
+              )
+            : q.npcEn,
+        };
+        const judged = await Promise.race([
+          this.chat.evaluatePlacementAnswer({
+            questionId: q.id,
+            band: q.band,
+            exactPrompt: prompt,
+            target: q.target,
+            requiredEvidence: q.requiredEvidence,
+            anchors2: q.anchors2,
+            anchors1: q.anchors1,
+            sceneFacts: q.sceneFacts,
+            transcript: raw,
+          }),
+          new Promise<null>((resolve) =>
+            setTimeout(() => resolve(null), SCENARIO_JUDGE_TIMEOUT_MS),
+          ),
+        ]);
+        if (!judged) {
+          evalPartial = {
+            status: 'needs_review',
+            score: null,
+            eligibleForPlacement: false,
+            evidence: [raw.slice(0, 80)],
+            reasonCode: 'uncertain_transcription',
+          };
+        } else if (judged.status === 'needs_review' || judged.score === null) {
+          evalPartial = {
+            status: 'needs_review',
+            score: null,
+            eligibleForPlacement: false,
+            evidence: judged.evidence?.slice(0, 1) ?? [raw.slice(0, 80)],
+            reasonCode: judged.reasonCode === 'uncertain_transcription'
+              ? 'uncertain_transcription'
+              : 'uncertain_transcription',
+          };
+        } else {
+          evalPartial = {
+            status: 'scored',
+            score: judged.score,
+            eligibleForPlacement: true,
+            evidence: judged.evidence?.slice(0, 1) ?? [raw.slice(0, 80)],
+            reasonCode: judged.reasonCode === 'target_met' ||
+              judged.reasonCode === 'target_partially_demonstrated' ||
+              judged.reasonCode === 'off_topic' ||
+              judged.reasonCode === 'no_communicative_answer'
+              ? judged.reasonCode
+              : 'target_partially_demonstrated',
+          };
+        }
+      } catch {
+        evalPartial = {
+          status: 'needs_review',
+          score: null,
+          eligibleForPlacement: false,
+          evidence: [raw.slice(0, 80)],
+          reasonCode: 'uncertain_transcription',
+        };
+      }
+    }
+
+    const item = makeItemResult(q, data.placementRuntime, evalPartial);
+    const { state, reply } = applyPlacementEvaluation(data.placementRuntime, item);
+    data.placementRuntime = state;
+    data.session.isComplete = reply.isTaskComplete;
+    data.session.progressTurn = reply.progressTurn;
+    data.session.progressMax = reply.progressMax;
+
+    const exchange = this.placementExchange(reply);
+    const aiTurn = {
+      speaker: 'ai' as const,
+      textEn: exchange.aiResponse,
+      textTh: exchange.textTh,
+      audioUrl: null as string | null,
+      expectsUserSpeech: exchange.expectsUserSpeech ?? true,
+      visual: exchange.visual ?? null,
+      canSkip: exchange.canSkip,
+      hideNpcTranscript: exchange.hideNpcTranscript,
+      placementResult: exchange.placementResult,
+    };
+    this.ttsLiveLines.observe('scenario', { text: exchange.aiResponse });
+    this.sessionStore.addTurn(sessionId, aiTurn);
+
+    return attachAiDebug(
+      exchange,
+      chatDebug,
+      scriptedAiDebug(),
+      handlerStartedAt,
+    );
   }
 
   /**
@@ -3352,7 +3560,8 @@ export class SessionsController {
     ) {
       let scenarioRewards;
       const onboardingPlacement =
-        data.scenarioConfig.id === 'onboarding_interview_john';
+        data.scenarioConfig.id === 'onboarding_interview_john' ||
+        isPlacementScenarioId(data.scenarioConfig.id);
       if (data.session.isComplete && !onboardingPlacement) {
         const gameId = `interactive_scenario:${data.scenarioConfig.id}`;
         const goalsDone = Object.values(
@@ -3411,6 +3620,7 @@ export class SessionsController {
           hintsUsed: data.hintsUsed,
           attempts: data.scenarioRuntime?.attemptCount ?? 0,
           passed: Boolean(data.session.isComplete),
+          placementResult: data.placementRuntime?.result ?? null,
         },
       };
     }

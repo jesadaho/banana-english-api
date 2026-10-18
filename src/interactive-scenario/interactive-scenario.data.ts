@@ -3,6 +3,7 @@ import type {
   InteractiveScenarioDef,
   InteractiveScenarioGoal,
 } from './interactive-scenario.types';
+import { ONBOARDING_PLACEMENT_BEE } from '../placement/placement.scenario';
 import adventureA2ScenariosJson from './adventure-a2-scenarios.json';
 
 const ROOFTOP_BG = 'assets/images/learn/scenario/final_interview_rooftop_bg.jpg';
@@ -495,6 +496,7 @@ const AUTHORED_SCENARIOS = adventureA2ScenariosJson as unknown as InteractiveSce
 const BY_ID = new Map<string, InteractiveScenarioDef>([
   [FINAL_INTERVIEW_JOHN.id, FINAL_INTERVIEW_JOHN],
   [ONBOARDING_INTERVIEW_JOHN.id, ONBOARDING_INTERVIEW_JOHN],
+  [ONBOARDING_PLACEMENT_BEE.id, ONBOARDING_PLACEMENT_BEE],
   ...AUTHORED_SCENARIOS.map((scenario) => [scenario.id, scenario] as const),
 ]);
 
