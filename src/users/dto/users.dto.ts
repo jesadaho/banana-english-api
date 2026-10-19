@@ -34,6 +34,19 @@ export class UpsertUserDto {
   @IsOptional()
   @IsString()
   platform?: string;
+
+  @IsOptional()
+  @IsIn(['morning', 'noon', 'evening'])
+  reminderSlot?: 'morning' | 'noon' | 'evening';
+
+  /** Choose foundation start after an inconclusive placement without changing the badge. */
+  @IsOptional()
+  @IsString()
+  placementEntryPathId?: string;
+
+  @IsOptional()
+  @IsString()
+  placementEntryNodeId?: string;
 }
 
 export class CompleteOnboardingDto {

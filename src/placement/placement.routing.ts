@@ -1,10 +1,15 @@
-import { PLACEMENT_STAGES, getPlacementQuestion } from './placement.bank';
+import {
+  PLACEMENT_QUESTION_IDS,
+  PLACEMENT_STAGES,
+  getPlacementQuestion,
+} from './placement.bank';
+import { resolvePlacementStart } from './placement-catalog';
 import type {
   PlacementGateResults,
   PlacementItemResult,
   PlacementItemStatus,
   PlacementPublicResult,
-  PlacementRecommendationType,
+  PlacementQuestionResultRow,
   PlacementRuntimeState,
   PlacementScore,
   PlacementSessionResult,
@@ -13,6 +18,8 @@ import type {
 } from './placement.types';
 import {
   PLACEMENT_MAPPING_VERSION,
+  PLACEMENT_MODEL_VERSION,
+  PLACEMENT_PROMPT_VERSION,
   PLACEMENT_RUBRIC_VERSION,
 } from './placement.types';
 
@@ -198,99 +205,77 @@ export function resultLabelFor(
   }
 }
 
-type RouteMap = {
-  startKey: string;
-  recommendationType: PlacementRecommendationType;
-  intendedNextLevel: 'B1' | 'B2' | null;
-  pathId: string | null;
-  chapterId: string | null;
-  nodeId: string | null;
-  baseLevel: 'A1' | 'A2' | 'B1' | null;
-};
+function baseLevelFor(
+  result: PlacementPublicResult | null,
+): PlacementSessionResult['baseLevel'] {
+  if (result === 'A1' || result === 'A1+') return 'A1';
+  if (result === 'A2' || result === 'A2+') return 'A2';
+  if (result === 'B1') return 'B1';
+  return null;
+}
 
-function routeFor(result: PlacementPublicResult | null): RouteMap {
-  switch (result) {
-    case 'Seed':
-      return {
-        startKey: 'foundation_beginning',
-        recommendationType: 'course_start',
-        intendedNextLevel: null,
-        pathId: 'foundation_v7',
-        chapterId: 'v7_u01',
-        nodeId: 'v7_u01n01',
-        baseLevel: null,
-      };
-    case 'Seed+':
-      return {
-        startKey: 'foundation_ch8',
-        recommendationType: 'chapter_start',
-        intendedNextLevel: null,
-        pathId: 'foundation_v7',
-        chapterId: 'v7_u08',
-        nodeId: 'v7_u08n01',
-        baseLevel: null,
-      };
-    case 'A1':
-      return {
-        startKey: 'adventure_a2',
-        recommendationType: 'course_start',
-        intendedNextLevel: null,
-        pathId: 'adventure_a2',
-        chapterId: 'a2_c01',
-        nodeId: 'a2_c01n01',
-        baseLevel: 'A1',
-      };
-    case 'A1+':
-      return {
-        startKey: 'adventure_a2_ch8',
-        recommendationType: 'review_checkpoint',
-        intendedNextLevel: null,
-        pathId: 'adventure_a2',
-        chapterId: 'a2_c08',
-        nodeId: 'a2_c08n01',
-        baseLevel: 'A1',
-      };
-    case 'A2':
-      return {
-        startKey: 'coming_soon_b1',
-        recommendationType: 'coming_soon',
-        intendedNextLevel: 'B1',
-        pathId: null,
-        chapterId: null,
-        nodeId: null,
-        baseLevel: 'A2',
-      };
-    case 'A2+':
-      return {
-        startKey: 'coming_soon_b1',
-        recommendationType: 'coming_soon',
-        intendedNextLevel: 'B1',
-        pathId: null,
-        chapterId: null,
-        nodeId: null,
-        baseLevel: 'A2',
-      };
-    case 'B1':
-      return {
-        startKey: 'coming_soon_b2',
-        recommendationType: 'coming_soon',
-        intendedNextLevel: 'B2',
-        pathId: null,
-        chapterId: null,
-        nodeId: null,
-        baseLevel: 'B1',
-      };
+export function debugReasonFor(params: {
+  reasonCode: PlacementQuestionResultRow['reasonCode'];
+  status?: PlacementQuestionResultRow['status'];
+  reason?: string;
+  evidence?: string[];
+}): string {
+  const written = params.reason?.trim();
+  if (written) return written;
+  if (params.status === 'not_administered') return 'ยังไม่ได้ถามข้อนี้';
+  switch (params.reasonCode) {
+    case 'target_met':
+      return 'ครบหลักฐานที่ข้อนี้ขอ';
+    case 'target_partially_demonstrated':
+      return 'ตอบได้บางส่วน';
+    case 'off_topic':
+      return 'นอกเรื่อง หรือไม่ตรงโจทย์';
+    case 'no_communicative_answer':
+      return 'ยังไม่สื่อความหมาย';
+    case 'user_skipped':
+      return 'ข้ามข้อ จึงให้ 0';
+    case 'capture_error':
+      return 'จับเสียงไม่ชัด เลยยังไม่ให้คะแนน';
+    case 'uncertain_transcription':
+      return 'ถอดความไม่ชัวร์ เลยยังไม่ให้คะแนน';
+    case 'assistance_used':
+      return 'มีการช่วยตอบ จึงไม่นับเข้าเกต';
     default:
-      return {
-        startKey: 'retry_or_foundation',
-        recommendationType: 'course_start',
-        intendedNextLevel: null,
-        pathId: 'foundation_v7',
-        chapterId: 'v7_u01',
-        nodeId: 'v7_u01n01',
-        baseLevel: null,
-      };
+      return params.evidence?.[0]?.trim() || 'ไม่มีเหตุผลเพิ่ม';
   }
+}
+
+function questionRows(
+  state: PlacementRuntimeState,
+): PlacementQuestionResultRow[] {
+  return PLACEMENT_QUESTION_IDS.map((id) => {
+    const row = state.results[id];
+    if (!row) {
+      return {
+        questionId: id,
+        status: 'not_administered' as const,
+        score: null,
+        eligibleForPlacement: false,
+        evidence: [],
+        reasonCode: 'no_communicative_answer' as const,
+        reason: 'ยังไม่ได้ถามข้อนี้',
+      };
+    }
+    return {
+      questionId: row.questionId,
+      status: row.status,
+      score: row.score,
+      eligibleForPlacement: row.eligibleForPlacement,
+      evidence: row.evidence,
+      reasonCode: row.reasonCode,
+      reason: debugReasonFor({
+        reasonCode: row.reasonCode,
+        status: row.status,
+        reason: row.reason,
+        evidence: row.evidence,
+      }),
+    };
+  });
 }
 
 export function highestConfirmedStage(
@@ -322,7 +307,7 @@ export function buildSessionResult(
     stopReason === 'cancelled' && !gates.entry
       ? null
       : publicResultFor(state, stopReason);
-  const route = routeFor(publicResult);
+  const route = resolvePlacementStart(publicResult);
   const incompleteNext =
     publicResult === 'Seed+' && !gates.a1 && stopReason !== 'cancelled';
   const insufficient =
@@ -349,24 +334,60 @@ export function buildSessionResult(
     resultStatus = 'early_exit';
   }
 
+  const rows = questionRows(state);
+  const taskEvidence = [
+    ...new Set(
+      rows.flatMap((row) => (row.score === 2 ? row.evidence : [])),
+    ),
+  ];
+  const taskGaps = PLACEMENT_QUESTION_IDS.filter((id) => {
+    const score = eligibleScore(state.results[id]);
+    return score === 0 || score === 1;
+  }).map((id) => getPlacementQuestion(id)?.requiredEvidence ?? id);
+
   return {
     demonstratedBand: highestConfirmedStage(state),
     publicResult,
-    baseLevel: route.baseLevel,
+    baseLevel: baseLevelFor(publicResult),
     gateResults: gates,
     resultStatus,
     resultLabel: resultLabelFor(publicResult, { incompleteNext }),
-    recommendedStartKey:
-      publicResult === null ? 'retry_or_foundation' : route.startKey,
+    recommendedStartKey: route.recommendedStartKey,
     recommendationType: route.recommendationType,
     intendedNextLevel: route.intendedNextLevel,
     recommendedPathId: publicResult === null ? null : route.pathId,
     recommendedChapterId: publicResult === null ? null : route.chapterId,
     recommendedNodeId: publicResult === null ? null : route.nodeId,
+    recommendedTitleEn: publicResult === null ? null : route.titleEn,
+    recommendedTitleTh: publicResult === null ? null : route.titleTh,
+    recommendedAppRoute: publicResult === null ? null : route.appRoute,
+    recommendedContentRef:
+      publicResult === null || !route.contentRef
+        ? null
+        : Object.fromEntries(
+            Object.entries(route.contentRef).filter(
+              (entry): entry is [string, string] => Boolean(entry[1]),
+            ),
+          ),
+    usedFallback: route.usedFallback,
+    fallbackPathId: route.fallbackPathId,
+    fallbackChapterId: route.fallbackChapterId,
+    fallbackNodeId: route.fallbackNodeId,
+    fallbackNoticeTh: route.fallbackNoticeTh,
     stopReason: insufficient ? 'insufficient_evidence' : stopReason,
+    entrySource: state.entrySource,
     completedQuestionIds,
+    questionResults: rows,
+    taskEvidence,
+    taskGaps,
+    progressScores: PLACEMENT_QUESTION_IDS.map((id) =>
+      eligibleScore(state.results[id]),
+    ),
     rubricVersion: PLACEMENT_RUBRIC_VERSION,
     mappingVersion: PLACEMENT_MAPPING_VERSION,
+    modelVersion: PLACEMENT_MODEL_VERSION,
+    promptVersion: PLACEMENT_PROMPT_VERSION,
+    resolvedCatalogVersion: route.resolvedCatalogVersion,
   };
 }
 

@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "User" ADD COLUMN IF NOT EXISTS "placementResult" JSONB;
+ALTER TABLE "User" ADD COLUMN IF NOT EXISTS "placementEntryPathId" TEXT;
+ALTER TABLE "User" ADD COLUMN IF NOT EXISTS "placementEntryNodeId" TEXT;

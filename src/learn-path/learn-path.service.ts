@@ -13,6 +13,7 @@ import {
   type LearnCourse,
 } from './foundation-v7-path.data';
 import { toFoundationV7ClientChapters, toFoundationV7ClientFinale } from './foundation-v7-path.view';
+import { placementUnlockPrefix } from '../placement/placement-catalog';
 import { canonicalFoundationV7RewardId } from './foundation-v7-path.data';
 import {
   FOUNDATION_V7_NODE_MIGRATION,
@@ -371,7 +372,28 @@ export class LearnPathService {
       await this.applyFoundationV7NodeMigration(userId, completed, playable);
     }
     const skippedNodeIds = await this.resolveSkippedV7NodeIds(userId, course.pathId);
-    const satisfied = new Set([...completed, ...skippedNodeIds]);
+    const placement = await this.prisma.user?.findUnique?.({
+      where: { id: userId },
+      select: {
+        placementEntryPathId: true,
+        placementEntryNodeId: true,
+      } as Prisma.UserSelect,
+    });
+    const placementUnlockedNodeIds =
+      placement &&
+      (placement as { placementEntryPathId?: string | null }).placementEntryPathId ===
+        course.pathId &&
+      (placement as { placementEntryNodeId?: string | null }).placementEntryNodeId
+        ? placementUnlockPrefix(
+            course.pathId,
+            (placement as { placementEntryNodeId: string }).placementEntryNodeId,
+          )
+        : [];
+    const satisfied = new Set([
+      ...completed,
+      ...skippedNodeIds,
+      ...placementUnlockedNodeIds,
+    ]);
     const metadata = course.catalog.metadata;
     return {
       pathId: course.pathId, version: metadata.version,
@@ -382,8 +404,9 @@ export class LearnPathService {
       progress: {
         completedNodeIds: [...completed],
         skippedNodeIds: [...skippedNodeIds],
+        placementUnlockedNodeIds,
         currentNodeId: this.resolveCurrentNodeId(nodes, satisfied),
-        completedCount: satisfied.size,
+        completedCount: new Set([...completed, ...skippedNodeIds]).size,
         totalCount: playable.length,
       },
       summary: {

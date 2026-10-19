@@ -199,6 +199,7 @@ import {
 } from '../placement/placement.runtime';
 import {
   PLACEMENT_RUBRIC_VERSION,
+  type PlacementSessionResult,
   type PlacementTurnReply,
 } from '../placement/placement.types';
 import {
@@ -542,6 +543,7 @@ export class SessionsController {
       currentTurn: reply.progressTurn,
       progressTurn: reply.progressTurn,
       progressMax: reply.progressMax,
+      progressScores: reply.progressScores,
       expectsUserSpeech: reply.expectsUserSpeech,
       canSkip: reply.canSkip,
       hideNpcTranscript: reply.hideNpcTranscript,
@@ -688,7 +690,13 @@ export class SessionsController {
       throw new NotFoundException('Scenario session not found');
     }
     if (data.placementRuntime) {
-      return this.processPlacementTurn(sessionId, body, chatDebug, handlerStartedAt);
+      return this.processPlacementTurn(
+        sessionId,
+        body,
+        chatDebug,
+        handlerStartedAt,
+        userId,
+      );
     }
 
     const transcript = (body.userSpeechText ?? body.transcript ?? '').trim();
@@ -799,6 +807,7 @@ export class SessionsController {
     body: TurnDto,
     chatDebug: boolean,
     handlerStartedAt: number,
+    userId?: string,
   ) {
     const data = this.sessionStore.get(sessionId);
     if (!data?.placementRuntime) {
@@ -828,6 +837,7 @@ export class SessionsController {
         eligibleForPlacement: false,
         evidence: [],
         reasonCode: 'capture_error',
+        reason: 'จับเสียงไม่ชัด เลยยังไม่ให้คะแนน',
       };
     }
     if (!evalPartial) {
@@ -858,6 +868,7 @@ export class SessionsController {
             eligibleForPlacement: false,
             evidence: [raw.slice(0, 80)],
             reasonCode: 'uncertain_transcription',
+            reason: 'ผู้ประเมินไม่ทัน เลยยังไม่ให้คะแนน',
           };
         } else if (
           judged.status === 'needs_review' ||
@@ -876,6 +887,9 @@ export class SessionsController {
               judged.reasonCode === 'capture_error'
                 ? 'capture_error'
                 : 'uncertain_transcription',
+            reason:
+              judged.reason?.trim() ||
+              'ถอดความไม่ชัวร์ เลยยังไม่ให้คะแนน',
           };
         } else if (judged.status === 'assisted') {
           evalPartial = {
@@ -884,6 +898,7 @@ export class SessionsController {
             eligibleForPlacement: false,
             evidence: judged.evidence?.slice(0, 1) ?? [raw.slice(0, 80)],
             reasonCode: 'assistance_used',
+            reason: judged.reason?.trim() || 'มีการช่วยตอบ จึงไม่นับเข้าเกต',
           };
         } else {
           evalPartial = {
@@ -897,6 +912,7 @@ export class SessionsController {
               judged.reasonCode === 'no_communicative_answer'
               ? judged.reasonCode
               : 'target_partially_demonstrated',
+            reason: judged.reason?.trim() || undefined,
           };
         }
       } catch {
@@ -906,6 +922,7 @@ export class SessionsController {
           eligibleForPlacement: false,
           evidence: [raw.slice(0, 80)],
           reasonCode: 'uncertain_transcription',
+          reason: 'ผู้ประเมินล้มเหลว เลยยังไม่ให้คะแนน',
         };
       }
     }
@@ -914,6 +931,9 @@ export class SessionsController {
     const { state, reply } = applyPlacementEvaluation(data.placementRuntime, item);
     data.placementRuntime = state;
     data.session.isComplete = reply.isTaskComplete;
+    if (state.finished && state.result && userId) {
+      await this.persistPlacementResult(userId, state.result);
+    }
     data.session.progressTurn = reply.progressTurn;
     data.session.progressMax = reply.progressMax;
 
@@ -3577,6 +3597,15 @@ export class SessionsController {
       const onboardingPlacement =
         data.scenarioConfig.id === 'onboarding_interview_john' ||
         isPlacementScenarioId(data.scenarioConfig.id);
+      if (
+        onboardingPlacement &&
+        data.placementRuntime?.result
+      ) {
+        await this.persistPlacementResult(
+          req.user.id,
+          data.placementRuntime.result,
+        );
+      }
       if (data.session.isComplete && !onboardingPlacement) {
         const gameId = `interactive_scenario:${data.scenarioConfig.id}`;
         const goalsDone = Object.values(
@@ -4262,6 +4291,24 @@ export class SessionsController {
       grammarStats,
       vocabularyStats,
     });
+  }
+
+  private async persistPlacementResult(
+    userId: string,
+    result: PlacementSessionResult,
+  ) {
+    try {
+      await this.prisma.user.update({
+        where: { id: userId },
+        data: {
+          placementResult: result as unknown as Prisma.InputJsonValue,
+          placementEntryPathId: result.recommendedPathId,
+          placementEntryNodeId: result.recommendedNodeId,
+        } as Prisma.UserUpdateInput,
+      });
+    } catch {
+      // non-fatal — result still returns to the client
+    }
   }
 }
 

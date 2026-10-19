@@ -11,6 +11,7 @@ import {
   a2Gate,
   a2PlusGate,
   b1Gate,
+  buildSessionResult,
   entryGate,
   evaluateGates,
   publicResultFor,
@@ -221,6 +222,10 @@ describe('placement gates v1.5', () => {
   });
 });
 
+function fillA1(state: PlacementRuntimeState, scores: PlacementScore[]) {
+  A1.forEach((id, i) => putScore(state, id, scores[i]!));
+}
+
 function fillA2(state: PlacementRuntimeState, scores: PlacementScore[]) {
   A2.forEach((id, i) => putScore(state, id, scores[i]!));
 }
@@ -236,7 +241,25 @@ describe('placement routing walk', () => {
     assert.match(reply.aiResponse, /where do you live/i);
     assert.match(reply.textTh, /ครูพี่บี/);
     assert.equal(reply.canSkip, true);
-    assert.equal(reply.progressMax, 6);
+    assert.equal(reply.progressMax, 20);
+    assert.equal(reply.progressTurn, 1);
+    assert.equal(reply.progressScores.length, 20);
+    assert.ok(reply.progressScores.every((score) => score === null));
+  });
+
+  it('colors scored items 0 gray / 1 yellow / 2 green over 20 slots', () => {
+    let { state, reply } = buildPlacementOpening(
+      initPlacementRuntime({ entrySource: 'onboarding', learnerName: 'Maya' }),
+    );
+    ({ state, reply } = scoreWalk(state, 2));
+    assert.equal(reply.progressMax, 20);
+    assert.equal(reply.progressTurn, 2);
+    assert.equal(reply.progressScores[0], 2);
+    ({ state, reply } = scoreWalk(state, 1));
+    assert.equal(reply.progressScores[1], 1);
+    ({ state, reply } = scoreWalk(state, 0));
+    assert.equal(reply.progressScores[2], 0);
+    assert.equal(reply.progressScores.filter((s) => s !== null).length, 3);
   });
 
   it('uses the settings opening when entrySource is profile_settings', () => {
@@ -273,6 +296,9 @@ describe('placement routing walk', () => {
     assert.equal(state.finished, true);
     assert.equal(state.result?.publicResult, 'Seed');
     assert.equal(state.result?.recommendedNodeId, 'v7_u01n01');
+    assert.equal(state.result?.recommendedPathId, 'foundation_v7');
+    assert.equal(state.result?.recommendationType, 'course_start');
+    assert.ok(state.result?.progressScores?.includes(1));
     assert.equal(state.result?.rubricVersion, PLACEMENT_RUBRIC_VERSION);
     assert.equal(state.result?.mappingVersion, PLACEMENT_MAPPING_VERSION);
     assert.doesNotMatch(reply?.textTh ?? '', /20 ข้อ/);
@@ -345,7 +371,64 @@ describe('placement heuristics', () => {
 
   it('gives 1 to Thai-only answers that still show intent', () => {
     const q01 = getPlacementQuestion('Q01')!;
-    assert.equal(heuristicPlacementEval(q01, 'เหนื่อยครับ', false)?.score, 1);
+    const judged = heuristicPlacementEval(q01, 'เหนื่อยครับ', false);
+    assert.equal(judged?.score, 1);
+    assert.match(judged?.reason ?? '', /ไทย/);
+  });
+
+  it('keeps a debug reason on skipped and heuristic keys answers', () => {
+    const q04 = getPlacementQuestion('Q04')!;
+    assert.match(
+      heuristicPlacementEval(q04, '', true)?.reason ?? '',
+      /ข้าม/,
+    );
+    assert.match(
+      heuristicPlacementEval(q04, 'They have keys.', false)?.reason ?? '',
+      /keys/,
+    );
+  });
+});
+
+describe('placement live catalog mapping', () => {
+  it('starts Seed+ at Foundation Ch8 without rewriting the badge', () => {
+    const state = fill(ENTRY, [2, 2, 2, 2, 2, 1]);
+    const result = buildSessionResult(state, 'band_not_confirmed');
+    assert.equal(result.publicResult, 'Seed+');
+    assert.equal(result.recommendedPathId, 'foundation_v7');
+    assert.equal(result.recommendedChapterId, 'v7_u08');
+    assert.equal(result.recommendedNodeId, 'v7_u08n01');
+    assert.equal(result.recommendationType, 'chapter_start');
+    assert.equal(result.usedFallback, false);
+  });
+
+  it('starts A1 at Adventure Ch1 and A1+ at Ch8 warm-up', () => {
+    const a1 = fill(ENTRY, [2, 2, 2, 2, 2, 2]);
+    fillA1(a1, [2, 2, 1, 2]);
+    const a1Result = buildSessionResult(a1, 'band_not_confirmed');
+    assert.equal(a1Result.publicResult, 'Seed+');
+
+    const a1Pass = fill(ENTRY, [2, 2, 2, 2, 2, 2]);
+    fillA1(a1Pass, [2, 2, 2, 2]);
+    const a1Ok = buildSessionResult(a1Pass, 'band_not_confirmed');
+    assert.equal(a1Ok.publicResult, 'A1');
+    assert.equal(a1Ok.recommendedNodeId, 'a2_c01n01');
+
+    fillA2(a1Pass, [1, 2, 2, 2, 1, 1]);
+    const plus = buildSessionResult(a1Pass, 'band_not_confirmed');
+    assert.equal(plus.publicResult, 'A1+');
+    assert.equal(plus.recommendedNodeId, 'a2_c08n01');
+    assert.equal(plus.recommendationType, 'review_checkpoint');
+  });
+
+  it('keeps A2/B1 as coming soon until a later catalog exists', () => {
+    const state = fill(ENTRY, [2, 2, 2, 2, 2, 2]);
+    fillA1(state, [2, 2, 2, 2]);
+    fillA2(state, [2, 1, 2, 2, 2, 1]);
+    const a2 = buildSessionResult(state, 'band_not_confirmed');
+    assert.equal(a2.publicResult, 'A2');
+    assert.equal(a2.recommendationType, 'coming_soon');
+    assert.equal(a2.intendedNextLevel, 'B1');
+    assert.equal(a2.recommendedNodeId, null);
   });
 });
 

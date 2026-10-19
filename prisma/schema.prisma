@@ -26,6 +26,17 @@ model User {
   timezone                String    @default("Asia/Bangkok")
   onboardingCompleted     Boolean   @default(false)
 
+  /** Latest speaking-placement result payload (v1.5). */
+  placementResult         Json?
+  /** Path/node the learner may start at without completing earlier nodes. */
+  placementEntryPathId    String?
+  placementEntryNodeId    String?
+
+  /** Daily speaking reminder: "morning" | "noon" | "evening". Null = not opted in. */
+  reminderSlot            String?
+  /** Last daily-practice template ids (avoid repeats within 7 sends). */
+  dailyPracticeTemplateIds String[] @default([])
+
   bananaBalance           Int       @default(0)
   /** Daily free pool (capped). Spends this before accumulated bananas. */
   freeBananaBalance       Int       @default(0)

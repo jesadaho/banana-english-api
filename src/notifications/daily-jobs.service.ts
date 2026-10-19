@@ -12,6 +12,10 @@ import {
 } from '../common/timezone.util';
 import { FcmService } from './fcm.service';
 import {
+  isReminderSlot,
+  pickDailyPracticeTemplate,
+  rememberDailyPracticeTemplate,
+  REMINDER_SLOT_HOUR,
   pushPayloadForType,
   type PushNotificationType,
 } from './notification-templates';
@@ -33,6 +37,7 @@ export class DailyJobsService {
   async runScheduledJobs() {
     try {
       await this.processBananaFull();
+      await this.processDailyPractice();
       await this.processStreakReminder();
       await this.processMissYouDay3();
     } catch (error) {
@@ -75,6 +80,75 @@ export class DailyJobsService {
       );
       await this.removeInvalidTokens(invalid);
     }
+  }
+
+  /**
+   * One speaking nudge per local day at the hour the learner picked.
+   * Core copy always; morning/evening extras only in those slots.
+   * Skip if they already spoke today before this send.
+   */
+  private async processDailyPractice() {
+    const users = await this.prisma.user.findMany({
+      where: {
+        reminderSlot: { in: ['morning', 'noon', 'evening'] },
+        fcmTokens: { some: {} },
+      },
+      include: { fcmTokens: true },
+    });
+    const now = new Date();
+
+    for (const user of users) {
+      if (!isReminderSlot(user.reminderSlot)) continue;
+      const local = getUserLocalTime(user.timezone, now);
+      if (local.hour !== REMINDER_SLOT_HOUR[user.reminderSlot]) continue;
+
+      const alreadySpoke = await this.spokeToday(user.id, local.dateKey, user.lastSessionDate);
+      if (alreadySpoke) continue;
+
+      const sent = await this.tryLogNotification(
+        user.id,
+        'daily_practice',
+        local.dateKey,
+      );
+      if (!sent) continue;
+
+      const picked = pickDailyPracticeTemplate(
+        user.reminderSlot,
+        user.dailyPracticeTemplateIds,
+      );
+      const invalid = await this.fcm.sendAndPersist({
+        userId: user.id,
+        tokens: user.fcmTokens.map((token) => token.token),
+        payload: {
+          type: 'daily_practice',
+          title: picked.title,
+          body: picked.body,
+          data: { ...picked.data, templateId: picked.id },
+        },
+      });
+      await this.prisma.user.update({
+        where: { id: user.id },
+        data: {
+          dailyPracticeTemplateIds: rememberDailyPracticeTemplate(
+            user.dailyPracticeTemplateIds,
+            picked.id,
+          ),
+        },
+      });
+      await this.removeInvalidTokens(invalid);
+    }
+  }
+
+  private async spokeToday(
+    userId: string,
+    dateKey: string,
+    lastSessionDate: Date | null,
+  ): Promise<boolean> {
+    if (isSameDateKey(lastSessionDate, dateKey)) return true;
+    const row = await this.prisma.userSpokenDay.findUnique({
+      where: { userId_day: { userId, day: parseDateKey(dateKey) } },
+    });
+    return Boolean(row && row.count > 0);
   }
 
   /**
@@ -155,7 +229,10 @@ export class DailyJobsService {
   private async sendPush(
     userId: string,
     tokens: string[],
-    type: Exclude<PushNotificationType, 'bug_report_reply' | 'referral_reward'>,
+    type: Exclude<
+      PushNotificationType,
+      'bug_report_reply' | 'referral_reward' | 'daily_practice'
+    >,
   ): Promise<string[]> {
     const payload = pushPayloadForType(type);
     return this.fcm.sendAndPersist({ userId, tokens, payload });

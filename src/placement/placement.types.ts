@@ -1,6 +1,8 @@
 export const PLACEMENT_RUBRIC_VERSION = 'placement-v1.5';
 export const PLACEMENT_MAPPING_VERSION = 'placement-start-v1.5';
 export const PLACEMENT_SCENARIO_ID = 'onboarding_placement_bee';
+export const PLACEMENT_MODEL_VERSION = 'placement-eval-v1.5';
+export const PLACEMENT_PROMPT_VERSION = 'placement-prompt-v1.5';
 
 export type PlacementEntrySource = 'onboarding' | 'profile_settings';
 export type PlacementStageId =
@@ -83,6 +85,8 @@ export interface PlacementItemResult {
   eligibleForPlacement: boolean;
   evidence: string[];
   reasonCode: PlacementReasonCode;
+  /** Short debug explanation for why this score was given. */
+  reason?: string;
   exactPrompt: string;
   variantId: string;
 }
@@ -116,6 +120,16 @@ export interface PlacementGateResults {
   a2Plus: boolean;
 }
 
+export interface PlacementQuestionResultRow {
+  questionId: string;
+  status: PlacementItemStatus;
+  score: PlacementScore | null;
+  eligibleForPlacement: boolean;
+  evidence: string[];
+  reasonCode: PlacementReasonCode;
+  reason: string;
+}
+
 export interface PlacementSessionResult {
   /** Highest confirmed internal stage, for audit. Not a public badge. */
   demonstratedBand: PlacementStageId | null;
@@ -130,10 +144,27 @@ export interface PlacementSessionResult {
   recommendedPathId: string | null;
   recommendedChapterId: string | null;
   recommendedNodeId: string | null;
+  recommendedTitleEn: string | null;
+  recommendedTitleTh: string | null;
+  recommendedAppRoute: string | null;
+  recommendedContentRef: Record<string, string> | null;
+  usedFallback: boolean;
+  fallbackPathId: string | null;
+  fallbackChapterId: string | null;
+  fallbackNodeId: string | null;
+  fallbackNoticeTh: string | null;
   stopReason: PlacementStopReason;
+  entrySource: PlacementEntrySource;
   completedQuestionIds: string[];
+  questionResults: PlacementQuestionResultRow[];
+  taskEvidence: string[];
+  taskGaps: string[];
+  progressScores: Array<PlacementScore | null>;
   rubricVersion: string;
   mappingVersion: string;
+  modelVersion: string;
+  promptVersion: string;
+  resolvedCatalogVersion: string | null;
 }
 
 export interface PlacementTurnReply {
@@ -146,5 +177,7 @@ export interface PlacementTurnReply {
   isTaskComplete: boolean;
   progressTurn: number;
   progressMax: number;
+  /** Length 20. null = not scored yet; 0/1/2 after an answer or skip. */
+  progressScores: Array<PlacementScore | null>;
   result?: PlacementSessionResult;
 }
