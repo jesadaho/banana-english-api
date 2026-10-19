@@ -217,8 +217,6 @@ import {
 
 /** Max wait for the scenario AI judge before falling back to "incorrect". */
 const SCENARIO_JUDGE_TIMEOUT_MS = 6_000;
-/** Placement scoring needs thinking-token headroom; 6s cuts Gemini mid-JSON. */
-const PLACEMENT_JUDGE_TIMEOUT_MS = 15_000;
 
 type AuthedRequest = {
   user: User;
@@ -846,34 +844,20 @@ export class SessionsController {
     if (!evalPartial) {
       try {
         const { prompt } = exactPromptFor(q, data.placementRuntime);
-        const judged = await Promise.race([
-          this.chat.evaluatePlacementAnswer({
-            questionId: q.id,
-            stage: q.stage,
-            rubricVersion: PLACEMENT_RUBRIC_VERSION,
-            exactPrompt: prompt,
-            target: q.target,
-            requiredEvidence: q.requiredEvidence,
-            anchors2: q.anchors2,
-            anchors1: q.anchors1,
-            sceneFacts: q.sceneFacts,
-            delivery: q.delivery,
-            transcript: raw,
-          }),
-          new Promise<null>((resolve) =>
-            setTimeout(() => resolve(null), PLACEMENT_JUDGE_TIMEOUT_MS),
-          ),
-        ]);
-        if (!judged) {
-          evalPartial = {
-            status: 'needs_review',
-            score: null,
-            eligibleForPlacement: false,
-            evidence: [raw.slice(0, 80)],
-            reasonCode: 'uncertain_transcription',
-            reason: 'ผู้ประเมินไม่ทัน เลยยังไม่ให้คะแนน',
-          };
-        } else if (judged.status === 'technical_retry') {
+        const judged = await this.chat.evaluatePlacementAnswer({
+          questionId: q.id,
+          stage: q.stage,
+          rubricVersion: PLACEMENT_RUBRIC_VERSION,
+          exactPrompt: prompt,
+          target: q.target,
+          requiredEvidence: q.requiredEvidence,
+          anchors2: q.anchors2,
+          anchors1: q.anchors1,
+          sceneFacts: q.sceneFacts,
+          delivery: q.delivery,
+          transcript: raw,
+        });
+        if (judged.status === 'technical_retry') {
           evalPartial = {
             status: 'technical_retry',
             score: null,
