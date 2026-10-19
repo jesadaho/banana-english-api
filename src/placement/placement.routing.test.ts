@@ -422,6 +422,19 @@ describe('placement heuristics', () => {
     );
   });
 
+  it('scores Q07 seven o’clock plus a morning routine locally', () => {
+    const q07 = getPlacementQuestion('Q07')!;
+    assert.equal(
+      heuristicPlacementEval(
+        q07,
+        'She is waking up at seven. I usually read book in the morning.',
+        false,
+      )?.score,
+      2,
+    );
+    assert.equal(heuristicPlacementEval(q07, 'At seven.', false), null);
+  });
+
   it('scores Q05 polite book requests locally', () => {
     const q05 = getPlacementQuestion('Q05')!;
     assert.equal(
