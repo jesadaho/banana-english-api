@@ -556,6 +556,7 @@ export class SessionsController {
         : null,
       emojiChoice: null,
       placementResult: reply.result ?? null,
+      placementDebug: reply.lastDebug ?? null,
     };
   }
 

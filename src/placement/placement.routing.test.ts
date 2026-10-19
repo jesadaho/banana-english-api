@@ -255,6 +255,9 @@ describe('placement routing walk', () => {
     assert.equal(reply.progressMax, 20);
     assert.equal(reply.progressTurn, 2);
     assert.equal(reply.progressScores[0], 2);
+    assert.equal(reply.lastDebug?.questionId, 'Q01');
+    assert.equal(reply.lastDebug?.score, 2);
+    assert.ok((reply.lastDebug?.reason ?? '').length > 0);
     ({ state, reply } = scoreWalk(state, 1));
     assert.equal(reply.progressScores[1], 1);
     ({ state, reply } = scoreWalk(state, 0));
