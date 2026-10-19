@@ -6,6 +6,7 @@ import { HealthModule } from './health/health.module';
 import { TopicsModule } from './topics/topics.module';
 import { SessionsModule } from './sessions/sessions.module';
 import { ConfigKeysModule } from './config-keys/config-keys.module';
+import { SttModule } from './stt/stt.module';
 import { GeminiModule } from './gemini/gemini.module';
 import { SessionStoreModule } from './session-store/session-store.module';
 import { TtsModule } from './tts/tts.module';
@@ -53,6 +54,7 @@ import { SubscriptionsModule } from './subscriptions/subscriptions.module';
     TopicsModule,
     SessionsModule,
     ConfigKeysModule,
+    SttModule,
     GeminiModule,
     SessionStoreModule,
     TtsModule,

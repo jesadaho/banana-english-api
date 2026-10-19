@@ -1,6 +1,10 @@
 import { Controller, Get, ServiceUnavailableException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { pickGroqApiKeyForClient, resolveGroqApiKeys } from './groq-api-keys';
+import {
+  pickGroqApiKeyForClient,
+  resolveGroqApiKeys,
+  type GroqClientKey,
+} from './groq-api-keys';
 
 @Controller('api/config')
 export class ConfigKeysController {
@@ -8,18 +12,19 @@ export class ConfigKeysController {
 
   @Get('keys')
   getKeys() {
-    const groqApiKey = this.pickClientKey();
-    if (!groqApiKey) {
+    const picked = this.pickClientKey();
+    if (!picked) {
       throw new ServiceUnavailableException(
         'GROQ_API_KEY / GROQ_API_KEYS is not configured on the server',
       );
     }
-    return { groqApiKey };
+    return { groqApiKey: picked.key, groqKeyId: picked.keyId };
   }
 
   @Get('app')
   getAppConfig() {
-    const groqApiKey = this.pickClientKey() ?? null;
+    const picked = this.pickClientKey();
+    const groqApiKey = picked?.key ?? null;
     const ttsEnv = this.config.get<string>('DEFAULT_TTS_MODE', 'cloudGrpc');
     const defaultTtsMode = [
       'client',
@@ -62,6 +67,8 @@ export class ConfigKeysController {
 
     return {
       groqApiKey,
+      groqKeyId: picked?.keyId ?? null,
+      sttFallback: groqApiKey ? null : 'gcp',
       defaultTtsMode,
       geminiApiKey: geminiApiKey ?? null,
       geminiTtsModel,
@@ -77,7 +84,7 @@ export class ConfigKeysController {
   }
 
   /** One key per client config fetch — spreads Whisper RPM across the pool. */
-  private pickClientKey(): string | undefined {
+  private pickClientKey(): GroqClientKey | undefined {
     return pickGroqApiKeyForClient(
       resolveGroqApiKeys((key) => this.config.get<string>(key)),
     );

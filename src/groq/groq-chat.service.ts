@@ -5,7 +5,11 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import type { AiDebug } from '../common/api.types';
-import { resolveGroqApiKeys } from '../config-keys/groq-api-keys';
+import {
+  groqKeyIdForSecret,
+  markGroqKeyHot,
+  resolveGroqApiKeys,
+} from '../config-keys/groq-api-keys';
 
 const GROQ_BASE_URL = 'https://api.groq.com/openai/v1';
 const GROQ_LIVE_TIMEOUT_MS = 20_000;
@@ -214,6 +218,10 @@ export class GroqChatService {
       lastError = new Error(`Groq API failed (${response.status}): ${err}`);
       const rateLimited =
         response.status === 429 || /rate limit/i.test(err);
+      if (rateLimited) {
+        const keyId = groqKeyIdForSecret(this.apiKeys, apiKey);
+        if (keyId) markGroqKeyHot(keyId);
+      }
       if (rateLimited && keyAttempt + 1 < this.apiKeys.length) {
         this.logger.warn(
           `Groq RPM limited on key ${keyAttempt + 1}/${this.apiKeys.length}; trying next key`,
