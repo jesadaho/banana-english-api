@@ -3048,7 +3048,7 @@ ${text}`,
         maxOutputTokens: 256,
         temperature: 0,
         recoverFromPlainText: (text) => {
-          const scoreMatch = text.match(/"score"\s*:\s*([012])/);
+          const scoreMatch = text.match(/"?score"?\s*[:=]\s*([012])/i);
           if (!scoreMatch) return null;
           const statusMatch = text.match(
             /"status"\s*:\s*"(scored|needs_review|assisted|technical_retry)"/,

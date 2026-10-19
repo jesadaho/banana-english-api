@@ -287,6 +287,16 @@ export function heuristicPlacementEval(
       return scored(2, raw, 'target_met', 'ขอสุภาพและพูดถึงหนังสือ');
     }
   }
+  if (q.id === 'Q07') {
+    const seven = /\b(seven|7(?::00)?(?:\s*(?:am|o'?clock))?)\b/.test(lower);
+    const morningAct =
+      /\b(breakfast|shower|coffee|read|work|eat|brush|exercise|run|walk|usually|morning)\b/.test(
+        lower,
+      );
+    if (seven && morningAct) {
+      return scored(2, raw, 'target_met', 'บอกเจ็ดโมงและกิจวัตรเช้า');
+    }
+  }
   if (q.id === 'Q04') {
     const pluralKeys = /\bkeys\b/.test(lower);
     const owners = /\b(they|their|may|max|have)\b/.test(lower);
