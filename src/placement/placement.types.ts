@@ -179,5 +179,11 @@ export interface PlacementTurnReply {
   progressMax: number;
   /** Length 20. null = not scored yet; 0/1/2 after an answer or skip. */
   progressScores: Array<PlacementScore | null>;
+  lastDebug?: {
+    questionId: string;
+    score: PlacementScore | null;
+    status: PlacementItemStatus;
+    reason: string;
+  };
   result?: PlacementSessionResult;
 }

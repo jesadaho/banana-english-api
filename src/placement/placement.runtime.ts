@@ -10,8 +10,9 @@ import {
 } from './placement.bank';
 import {
   b1Gate,
+  debugReasonFor,
   deriveEligibility,
-  eligibleScore,
+  displayProgressScore,
   nextQuestionId,
   shouldEarlyStopAfter,
   buildSessionResult,
@@ -104,7 +105,7 @@ function progressOverall(state: PlacementRuntimeState): {
   progressScores: Array<0 | 1 | 2 | null>;
 } {
   const progressScores = PLACEMENT_QUESTION_IDS.map((id) =>
-    eligibleScore(state.results[id]),
+    displayProgressScore(state.results[id]),
   );
   const idx = state.currentQuestionId
     ? PLACEMENT_QUESTION_IDS.indexOf(state.currentQuestionId)
@@ -118,6 +119,29 @@ function progressOverall(state: PlacementRuntimeState): {
     progressMax: PLACEMENT_PROGRESS_MAX,
     progressScores,
   };
+}
+
+function lastDebugFor(
+  evaluation: PlacementItemResult,
+): NonNullable<PlacementTurnReply['lastDebug']> {
+  return {
+    questionId: evaluation.questionId,
+    score: evaluation.score,
+    status: evaluation.status,
+    reason: debugReasonFor({
+      reasonCode: evaluation.reasonCode,
+      status: evaluation.status,
+      reason: evaluation.reason,
+      evidence: evaluation.evidence,
+    }),
+  };
+}
+
+function withLastDebug(
+  reply: PlacementTurnReply,
+  evaluation: PlacementItemResult,
+): PlacementTurnReply {
+  return { ...reply, lastDebug: lastDebugFor(evaluation) };
 }
 
 function npcForQuestion(
@@ -363,25 +387,32 @@ export function applyPlacementEvaluation(
         '',
         'เสียงไม่ชัดครับ ลองพูดอีกครั้ง หรือข้ามข้อนี้ได้',
       );
-      return { state: next, reply: retry };
+      return { state: next, reply: withLastDebug(retry, normalized) };
     }
   }
 
   if (shouldEarlyStopAfter(next, q.id)) {
-    return finish(next, 'early_zero_streak');
+    const stopped = finish(next, 'early_zero_streak');
+    return {
+      state: stopped.state,
+      reply: withLastDebug(stopped.reply, normalized),
+    };
   }
 
   const upcoming = nextQuestionId(next);
   if (!upcoming) {
-    if (q.stage === 'b1' && b1Gate(next)) {
-      return finish(next, 'b1_confirmed');
-    }
-    return finish(
+    const stopped = finish(
       next,
-      stageAskedComplete(next, q.stage)
-        ? 'band_not_confirmed'
-        : 'insufficient_evidence',
+      q.stage === 'b1' && b1Gate(next)
+        ? 'b1_confirmed'
+        : stageAskedComplete(next, q.stage)
+          ? 'band_not_confirmed'
+          : 'insufficient_evidence',
     );
+    return {
+      state: stopped.state,
+      reply: withLastDebug(stopped.reply, normalized),
+    };
   }
 
   const nextQ = getPlacementQuestion(upcoming)!;
@@ -400,7 +431,10 @@ export function applyPlacementEvaluation(
   const ack = ackFor(q);
   const prefixTh =
     nextQ.transitionTh && !state.audioOnlyAnnounced ? nextQ.transitionTh : '';
-  return { state: next, reply: npcForQuestion(next, nextQ, ack, prefixTh) };
+  return {
+    state: next,
+    reply: withLastDebug(npcForQuestion(next, nextQ, ack, prefixTh), normalized),
+  };
 }
 
 function stageAskedComplete(

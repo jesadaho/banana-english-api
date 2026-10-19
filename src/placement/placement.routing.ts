@@ -31,6 +31,16 @@ export function eligibleScore(
   return null;
 }
 
+/** Progress-bar color: show the given 0/1/2 even when the item is ineligible. */
+export function displayProgressScore(
+  row: PlacementItemResult | undefined,
+): PlacementScore | null {
+  if (!row) return null;
+  if (row.status === 'skipped') return 0;
+  if (row.score === 0 || row.score === 1 || row.score === 2) return row.score;
+  return null;
+}
+
 export function deriveEligibility(params: {
   status: PlacementItemStatus;
   score: PlacementScore | null;

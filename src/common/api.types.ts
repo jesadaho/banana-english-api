@@ -157,6 +157,13 @@ export interface TurnExchangeResponse {
   hideNpcTranscript?: boolean;
   /** Placement session result — set on the closing turn. */
   placementResult?: Record<string, unknown> | null;
+  /** Latest scored item — client debug HUD. */
+  placementDebug?: {
+    questionId: string;
+    score: 0 | 1 | 2 | null;
+    status: string;
+    reason: string;
+  } | null;
 }
 
 /** Shared turn-level visual for scenarios (lessons later). */
