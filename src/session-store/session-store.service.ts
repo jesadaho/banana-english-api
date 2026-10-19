@@ -21,7 +21,10 @@ import type { LessonConfig } from '../lessons/lessons.data';
 import type { InteractiveScenarioDef } from '../interactive-scenario/interactive-scenario.types';
 import type { ScenarioRuntimeState } from '../interactive-scenario/interactive-scenario.runtime';
 import { initScenarioRuntime } from '../interactive-scenario/interactive-scenario.runtime';
-import type { PlacementRuntimeState } from '../placement/placement.types';
+import type {
+  PlacementRuntimeState,
+  PlacementSessionResult,
+} from '../placement/placement.types';
 import { teachingLanguageFromConfig, learnerNameFallback } from '../lessons/lesson-prompt';
 import type {
   FreeTalkIssueLogEntry,
@@ -78,13 +81,7 @@ export interface ChatTurn {
   /** Scenario / lesson visual cue (ai turns only). */
   visual?: TurnVisualCue | null;
   hideNpcTranscript?: boolean;
-  placementResult?: {
-    demonstratedBand: string | null;
-    resultStatus: string;
-    resultLabel: string;
-    recommendedStartKey: string;
-    stopReason: string;
-  } | null;
+  placementResult?: PlacementSessionResult | null;
 }
 
 export interface ConversationSession {
