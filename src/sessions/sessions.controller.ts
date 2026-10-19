@@ -970,7 +970,7 @@ export class SessionsController {
           ? 'target_partially_demonstrated'
           : 'no_communicative_answer',
         reason: hasEnglish
-          ? 'ผู้ประเมินตอบไม่ครบ จึงให้ 1 ชั่วคราว'
+          ? 'ระบบให้คะแนนไม่ทัน จึงให้ 1 ชั่วคราว'
           : 'ยังไม่มีคำตอบภาษาอังกฤษ จึงให้ 0',
       };
     }
