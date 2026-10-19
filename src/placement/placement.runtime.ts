@@ -281,7 +281,7 @@ export function heuristicPlacementEval(
         lower,
       );
     const trait =
-      /\b(kind|funny|nice|happy|quiet|loud|tall|short|young|old|friendly|cool)\b/.test(
+      /\b(kind|funny|nice|happy|quiet|loud|tall|short|young|old|friendly|cool|handsome|beautiful|pretty|cute|smart|clever|brave|shy|sweet|strong|caring|helpful|polite|lazy|busy|cheerful|serious|patient)\b/.test(
         lower,
       );
     if (who && trait) {

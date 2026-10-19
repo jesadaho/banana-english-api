@@ -388,6 +388,22 @@ describe('placement heuristics', () => {
     assert.equal(heuristicPlacementEval(q01, "I'm good.", false)?.score, 1);
   });
 
+  it('scores Q02 relationship plus appearance or personality', () => {
+    const q02 = getPlacementQuestion('Q02')!;
+    assert.equal(
+      heuristicPlacementEval(
+        q02,
+        'My father is a teacher. He is handsome.',
+        false,
+      )?.score,
+      2,
+    );
+    assert.equal(
+      heuristicPlacementEval(q02, 'My father is a teacher.', false)?.score,
+      1,
+    );
+  });
+
   it('scores Q05 polite book requests locally', () => {
     const q05 = getPlacementQuestion('Q05')!;
     assert.equal(
