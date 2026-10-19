@@ -217,6 +217,8 @@ import {
 
 /** Max wait for the scenario AI judge before falling back to "incorrect". */
 const SCENARIO_JUDGE_TIMEOUT_MS = 6_000;
+/** Placement scoring needs thinking-token headroom; 6s cuts Gemini mid-JSON. */
+const PLACEMENT_JUDGE_TIMEOUT_MS = 15_000;
 
 type AuthedRequest = {
   user: User;
@@ -859,7 +861,7 @@ export class SessionsController {
             transcript: raw,
           }),
           new Promise<null>((resolve) =>
-            setTimeout(() => resolve(null), SCENARIO_JUDGE_TIMEOUT_MS),
+            setTimeout(() => resolve(null), PLACEMENT_JUDGE_TIMEOUT_MS),
           ),
         ]);
         if (!judged) {
