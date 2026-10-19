@@ -255,6 +255,47 @@ export function heuristicPlacementEval(
   if (!raw || isScenarioNoise(raw)) return null;
   const lower = raw.toLowerCase();
 
+  if (q.id === 'Q01') {
+    const feeling =
+      /\b(good|great|fine|ok|okay|well|happy|tired|sad|alright|not bad)\b/.test(
+        lower,
+      );
+    const place =
+      /\b(live|from|in|at)\b/.test(lower) &&
+      /\b[a-z]{3,}\b/.test(lower.replace(/\b(live|from|in|at|i|i'm|im|am)\b/g, ''));
+    if (feeling && place) {
+      return scored(2, raw, 'target_met', 'บอกความรู้สึกและที่อยู่');
+    }
+    if (feeling || place) {
+      return scored(
+        1,
+        raw,
+        'target_partially_demonstrated',
+        feeling ? 'มีความรู้สึก แต่ยังไม่บอกที่อยู่' : 'มีที่อยู่ แต่ยังไม่บอกความรู้สึก',
+      );
+    }
+  }
+  if (q.id === 'Q02') {
+    const who =
+      /\b(sister|brother|mom|dad|mother|father|friend|family|wife|husband|son|daughter)\b/.test(
+        lower,
+      );
+    const trait =
+      /\b(kind|funny|nice|happy|quiet|loud|tall|short|young|old|friendly|cool)\b/.test(
+        lower,
+      );
+    if (who && trait) {
+      return scored(2, raw, 'target_met', 'บอกความสัมพันธ์และลักษณะ');
+    }
+    if (who || trait) {
+      return scored(
+        1,
+        raw,
+        'target_partially_demonstrated',
+        who ? 'มีคน แต่ยังไม่บอกลักษณะ' : 'มีลักษณะ แต่ยังไม่บอกว่าเป็นใคร',
+      );
+    }
+  }
   if (q.id === 'Q04') {
     const pluralKeys = /\bkeys\b/.test(lower);
     const owners = /\b(they|their|may|max|have)\b/.test(lower);

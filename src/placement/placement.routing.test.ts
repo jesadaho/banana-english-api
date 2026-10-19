@@ -379,6 +379,15 @@ describe('placement heuristics', () => {
     assert.match(judged?.reason ?? '', /ไทย/);
   });
 
+  it('scores Q01 feeling plus home without calling the evaluator', () => {
+    const q01 = getPlacementQuestion('Q01')!;
+    assert.equal(
+      heuristicPlacementEval(q01, "I'm good. I'm from Bangkok.", false)?.score,
+      2,
+    );
+    assert.equal(heuristicPlacementEval(q01, "I'm good.", false)?.score, 1);
+  });
+
   it('keeps a debug reason on skipped and heuristic keys answers', () => {
     const q04 = getPlacementQuestion('Q04')!;
     assert.match(
