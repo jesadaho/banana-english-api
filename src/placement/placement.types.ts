@@ -159,7 +159,8 @@ export interface PlacementSessionResult {
   questionResults: PlacementQuestionResultRow[];
   taskEvidence: string[];
   taskGaps: string[];
-  progressScores: Array<PlacementScore | null>;
+  /** 0/1/2 scored, -1 unevaluable, null not asked. */
+  progressScores: Array<PlacementScore | -1 | null>;
   rubricVersion: string;
   mappingVersion: string;
   modelVersion: string;
@@ -177,8 +178,8 @@ export interface PlacementTurnReply {
   isTaskComplete: boolean;
   progressTurn: number;
   progressMax: number;
-  /** Length 20. null = not scored yet; 0/1/2 after an answer or skip. */
-  progressScores: Array<PlacementScore | null>;
+  /** 0/1/2 scored, -1 unevaluable, null not asked. */
+  progressScores: Array<PlacementScore | -1 | null>;
   lastDebug?: {
     questionId: string;
     score: PlacementScore | null;

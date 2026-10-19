@@ -31,12 +31,15 @@ export function eligibleScore(
   return null;
 }
 
-/** Progress-bar color: show the given 0/1/2 even when the item is ineligible. */
+/** Progress-bar mark: 0/1/2 scored, -1 unevaluable, null not asked. */
 export function displayProgressScore(
   row: PlacementItemResult | undefined,
-): PlacementScore | null {
+): PlacementScore | -1 | null {
   if (!row) return null;
   if (row.status === 'skipped') return 0;
+  if (row.status === 'needs_review' || row.status === 'technical_retry') {
+    return -1;
+  }
   if (row.score === 0 || row.score === 1 || row.score === 2) return row.score;
   return null;
 }
@@ -386,7 +389,7 @@ export function buildSessionResult(
     taskEvidence,
     taskGaps,
     progressScores: PLACEMENT_QUESTION_IDS.map((id) =>
-      eligibleScore(state.results[id]),
+      displayProgressScore(state.results[id]),
     ),
     rubricVersion: PLACEMENT_RUBRIC_VERSION,
     mappingVersion: PLACEMENT_MAPPING_VERSION,

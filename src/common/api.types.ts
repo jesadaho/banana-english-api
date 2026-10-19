@@ -97,8 +97,8 @@ export interface TurnExchangeResponse {
   progressTurn?: number;
   /** Designed Core Flow beat count (progress bar denominator). */
   progressMax?: number;
-  /** Placement: 20 slots, null until scored; 0 / 1 / 2 after an answer. */
-  progressScores?: Array<0 | 1 | 2 | null>;
+  /** Placement: 20 slots, null until scored; 0/1/2 after an answer; -1 unevaluable. */
+  progressScores?: Array<0 | 1 | 2 | -1 | null>;
   /** False when the learner should tap Continue instead of speaking.
    * Omitted on paths that always expect speech. */
   expectsUserSpeech?: boolean;

@@ -956,22 +956,18 @@ export class SessionsController {
 
     if (
       evalPartial.status !== 'technical_retry' &&
+      evalPartial.status !== 'needs_review' &&
       evalPartial.score !== 0 &&
       evalPartial.score !== 1 &&
       evalPartial.score !== 2
     ) {
-      const hasEnglish = /\b[a-z]{2,}\b/i.test(raw);
       evalPartial = {
         ...evalPartial,
-        status: 'scored',
-        score: hasEnglish ? 1 : 0,
-        eligibleForPlacement: true,
-        reasonCode: hasEnglish
-          ? 'target_partially_demonstrated'
-          : 'no_communicative_answer',
-        reason: hasEnglish
-          ? 'ระบบให้คะแนนไม่ทัน จึงให้ 1 ชั่วคราว'
-          : 'ยังไม่มีคำตอบภาษาอังกฤษ จึงให้ 0',
+        status: 'needs_review',
+        score: null,
+        eligibleForPlacement: false,
+        reasonCode: 'uncertain_transcription',
+        reason: 'ประเมินไม่ได้ จึงยังไม่ให้คะแนน',
       };
     }
 

@@ -283,6 +283,29 @@ describe('placement routing walk', () => {
     assert.equal(reply.progressScores.filter((s) => s !== null).length, 3);
   });
 
+  it('marks unevaluable answers purple as -1 without faking a 1', () => {
+    let { state, reply } = buildPlacementOpening(
+      initPlacementRuntime({ entrySource: 'onboarding', learnerName: 'Maya' }),
+    );
+    const q = getPlacementQuestion('Q01')!;
+    ({ state, reply } = applyPlacementEvaluation(
+      state,
+      makeItemResult(q, state, {
+        status: 'needs_review',
+        score: null,
+        eligibleForPlacement: false,
+        evidence: ['ok'],
+        reasonCode: 'uncertain_transcription',
+        reason: 'ผู้ประเมินส่งคะแนนไม่เป็น JSON จึงยังไม่ให้คะแนน',
+      }),
+    ));
+    assert.equal(reply.progressScores[0], -1);
+    assert.equal(reply.lastDebug?.score, null);
+    assert.match(reply.lastDebug?.reason ?? '', /JSON/);
+    assert.equal(state.finished, false);
+    assert.equal(state.currentQuestionId, 'Q02');
+  });
+
   it('uses the settings opening when entrySource is profile_settings', () => {
     const { reply } = buildPlacementOpening(
       initPlacementRuntime({
@@ -420,6 +443,19 @@ describe('placement heuristics', () => {
       heuristicPlacementEval(q02, 'My father is a teacher.', false),
       null,
     );
+  });
+
+  it('scores Q08 like plus ability locally', () => {
+    const q08 = getPlacementQuestion('Q08')!;
+    assert.equal(
+      heuristicPlacementEval(
+        q08,
+        'I like cooking and I can cook well.',
+        false,
+      )?.score,
+      2,
+    );
+    assert.equal(heuristicPlacementEval(q08, 'I like games.', false), null);
   });
 
   it('scores Q07 seven o’clock plus a morning routine locally', () => {

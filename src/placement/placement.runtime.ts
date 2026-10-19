@@ -102,7 +102,7 @@ function hideTranscript(q: PlacementQuestion): boolean {
 function progressOverall(state: PlacementRuntimeState): {
   progressTurn: number;
   progressMax: number;
-  progressScores: Array<0 | 1 | 2 | null>;
+  progressScores: Array<0 | 1 | 2 | -1 | null>;
 } {
   const progressScores = PLACEMENT_QUESTION_IDS.map((id) =>
     displayProgressScore(state.results[id]),
@@ -295,6 +295,13 @@ export function heuristicPlacementEval(
       );
     if (seven && morningAct) {
       return scored(2, raw, 'target_met', 'บอกเจ็ดโมงและกิจวัตรเช้า');
+    }
+  }
+  if (q.id === 'Q08') {
+    const like = /\b(like|love|enjoy)\b/.test(lower);
+    const ability = /\b(can|good at|well)\b/.test(lower);
+    if (like && ability) {
+      return scored(2, raw, 'target_met', 'บอกความชอบและความสามารถ');
     }
   }
   if (q.id === 'Q04') {
