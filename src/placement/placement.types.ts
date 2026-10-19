@@ -1,8 +1,10 @@
-export const PLACEMENT_RUBRIC_VERSION = 'placement-v1.5';
-export const PLACEMENT_MAPPING_VERSION = 'placement-start-v1.5';
+export const PLACEMENT_QUESTION_VERSION = 'placement-q-v2.1';
+export const PLACEMENT_RUBRIC_VERSION = 'placement-rubric-v2.1';
+export const PLACEMENT_ROUTING_VERSION = 'placement-routing-v2.1';
+export const PLACEMENT_MAPPING_VERSION = 'placement-start-v2.1';
 export const PLACEMENT_SCENARIO_ID = 'onboarding_placement_bee';
-export const PLACEMENT_MODEL_VERSION = 'placement-eval-v1.5';
-export const PLACEMENT_PROMPT_VERSION = 'placement-prompt-v1.5';
+export const PLACEMENT_MODEL_VERSION = 'placement-eval-v2.1';
+export const PLACEMENT_PROMPT_VERSION = 'placement-prompt-v2.1';
 
 export type PlacementEntrySource = 'onboarding' | 'profile_settings';
 export type PlacementStageId =
@@ -47,7 +49,8 @@ export type PlacementStopReason =
   | 'band_not_confirmed'
   | 'early_zero_streak'
   | 'insufficient_evidence'
-  | 'cancelled';
+  | 'cancelled'
+  | 'user_finished_after_a2';
 export type PlacementRecommendationType =
   | 'course_start'
   | 'chapter_start'
@@ -161,7 +164,9 @@ export interface PlacementSessionResult {
   taskGaps: string[];
   /** 0/1/2 scored, -1 unevaluable, null not asked. */
   progressScores: Array<PlacementScore | -1 | null>;
+  questionVersion: string;
   rubricVersion: string;
+  routingVersion: string;
   mappingVersion: string;
   modelVersion: string;
   promptVersion: string;
