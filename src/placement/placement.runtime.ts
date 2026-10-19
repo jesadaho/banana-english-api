@@ -2,23 +2,22 @@ import { randomUUID } from 'crypto';
 import { isScenarioNoise } from '../interactive-scenario/interactive-scenario.runtime';
 import { describeItImageUrl } from '../describe-it/describe-it.data';
 import {
-  PLACEMENT_BANDS,
   PLACEMENT_QUESTION_BY_ID,
+  PLACEMENT_STAGES,
   getPlacementQuestion,
 } from './placement.bank';
 import {
-  bandEligibleScores,
-  bandStatus,
-  buildSessionResult,
+  b1Gate,
+  deriveEligibility,
   nextQuestionId,
   shouldEarlyStopAfter,
+  buildSessionResult,
 } from './placement.routing';
 import type {
   PlacementEntrySource,
   PlacementItemResult,
   PlacementQuestion,
   PlacementRuntimeState,
-  PlacementScore,
   PlacementTurnReply,
 } from './placement.types';
 import { PLACEMENT_SCENARIO_ID } from './placement.types';
@@ -27,6 +26,8 @@ const REPLAY_HINT_TH = 'ฟังไม่ทัน กดฟังซ้ำไ�
 const CLOSING_EN =
   'Thank you for talking with Teacher Bee. Let’s see where you can start!';
 const CLOSING_TH = 'ขอบคุณที่คุยกับครูบีนะครับ มาดูจุดเริ่มต้นของคุณกัน!';
+const Q18_VARIANT =
+  'You said {problem}. What did you do, and what happened next?';
 
 export function isPlacementScenarioId(id: string): boolean {
   return id.trim() === PLACEMENT_SCENARIO_ID;
@@ -58,51 +59,20 @@ function fillName(template: string, name: string): string {
   return template.replace(/\{name\}/g, n);
 }
 
-function exactPromptFor(
+export function exactPromptFor(
   q: PlacementQuestion,
   state: PlacementRuntimeState,
 ): { prompt: string; variantId: string } {
-  if (q.id === 'Q12') {
-    const act = state.facts.weekendActivity;
-    if (act) {
-      return {
-        prompt: `What did you think of ${act}?`,
-        variantId: 'Q12.personalized',
-      };
-    }
-    return { prompt: q.npcEn, variantId: 'Q12.base' };
-  }
-  if (q.id === 'Q14') {
-    if (state.facts.preference === 'beach') {
-      return {
-        prompt: 'Why would you choose the beach?',
-        variantId: 'Q14.beach',
-      };
-    }
-    if (state.facts.preference === 'mountains') {
-      return {
-        prompt: 'Why would you choose the mountains?',
-        variantId: 'Q14.mountains',
-      };
-    }
-    return {
-      prompt: 'What do you like about the beach or the mountains?',
-      variantId: 'Q14.fallback',
-    };
-  }
-  if (q.id === 'Q17' && state.facts.weekendActivity === 'home') {
-    return {
-      prompt: 'Tell me about a day you remember well. What happened?',
-      variantId: 'Q17.near_home',
-    };
-  }
   if (q.id === 'Q18' && state.facts.storyProblem) {
     return {
-      prompt: `You said ${state.facts.storyProblem}. How did you deal with that?`,
-      variantId: 'Q18.personalized',
+      prompt: Q18_VARIANT.replace('{problem}', state.facts.storyProblem),
+      variantId: 'Q18.contextual',
     };
   }
-  return { prompt: fillName(q.npcEn, state.learnerName), variantId: `${q.id}.base` };
+  return {
+    prompt: fillName(q.npcEn, state.learnerName),
+    variantId: `${q.id}.base`,
+  };
 }
 
 function openingLines(state: PlacementRuntimeState): {
@@ -125,17 +95,22 @@ function hideTranscript(q: PlacementQuestion): boolean {
   return q.delivery === 'audio_only' || q.delivery === 'picture_audio';
 }
 
-function progressInBand(state: PlacementRuntimeState): {
+function progressInStage(state: PlacementRuntimeState): {
   progressTurn: number;
   progressMax: number;
 } {
   const id = state.currentQuestionId ?? 'Q01';
   const q = getPlacementQuestion(id);
-  const band = PLACEMENT_BANDS.find((b) => b.id === (q?.band ?? 'A1'))!;
-  const asked = band.questionIds.filter((qid) =>
+  const stage = PLACEMENT_STAGES.find(
+    (s) => s.id === (q?.stage ?? 'foundation_entry'),
+  )!;
+  const asked = stage.questionIds.filter((qid) =>
     state.askedQuestionIds.includes(qid),
   ).length;
-  return { progressTurn: Math.min(asked, 4), progressMax: 4 };
+  return {
+    progressTurn: Math.min(asked, stage.questionIds.length),
+    progressMax: stage.questionIds.length,
+  };
 }
 
 function npcForQuestion(
@@ -145,7 +120,7 @@ function npcForQuestion(
   prefixTh = '',
 ): PlacementTurnReply {
   const { prompt } = exactPromptFor(q, state);
-  const { progressTurn, progressMax } = progressInBand({
+  const { progressTurn, progressMax } = progressInStage({
     ...state,
     currentQuestionId: q.id,
   });
@@ -183,11 +158,14 @@ export function buildPlacementOpening(
       : [...state.askedQuestionIds, 'Q01'],
   };
   const body = npcForQuestion(next, q01, '', `${open.th} ${REPLAY_HINT_TH}`);
+  const spokenPrompt = exactPromptFor(q01, next).prompt;
   return {
     state: next,
     reply: {
       ...body,
-      aiResponse: state.openingPlayed ? body.aiResponse : `${open.en} ${q01.npcEn.replace('{name}', state.learnerName || 'there')}`,
+      aiResponse: state.openingPlayed
+        ? body.aiResponse
+        : `${open.en} ${spokenPrompt}`,
     },
   };
 }
@@ -203,12 +181,32 @@ function thaiOnly(transcript: string): boolean {
   return thai / letters.length > 0.8;
 }
 
+function scored(
+  score: 0 | 1 | 2,
+  raw: string,
+  reasonCode: PlacementItemResult['reasonCode'],
+): Omit<
+  PlacementItemResult,
+  'questionId' | 'attemptId' | 'exactPrompt' | 'variantId'
+> {
+  return {
+    status: 'scored',
+    score,
+    eligibleForPlacement: true,
+    evidence: [raw.slice(0, 80)],
+    reasonCode,
+  };
+}
+
 /** Fast local 0/1/2 when the answer is obvious. null = call the evaluator. */
 export function heuristicPlacementEval(
   q: PlacementQuestion,
   transcript: string,
   skipped: boolean,
-): Omit<PlacementItemResult, 'questionId' | 'attemptId' | 'exactPrompt' | 'variantId'> | null {
+): Omit<
+  PlacementItemResult,
+  'questionId' | 'attemptId' | 'exactPrompt' | 'variantId'
+> | null {
   if (skipped) {
     return {
       status: 'skipped',
@@ -222,59 +220,27 @@ export function heuristicPlacementEval(
   if (!raw || isScenarioNoise(raw)) return null;
   const lower = raw.toLowerCase();
 
-  if (q.id === 'Q03' && /\b(phone|phones|bag)\b/.test(lower) && !/\bbook/.test(lower)) {
-    return {
-      status: 'scored',
-      score: 0,
-      eligibleForPlacement: true,
-      evidence: [raw.slice(0, 80)],
-      reasonCode: 'off_topic',
-    };
+  if (q.id === 'Q04') {
+    const pluralKeys = /\bkeys\b/.test(lower);
+    const owners = /\b(they|their|may|max|have)\b/.test(lower);
+    if (pluralKeys && owners) return scored(2, raw, 'target_met');
+    if (/\bkey\b/.test(lower) && !pluralKeys) {
+      return scored(1, raw, 'target_partially_demonstrated');
+    }
   }
-  if (q.id === 'Q03' && /\bbook/.test(lower)) {
-    return {
-      status: 'scored',
-      score: 2,
-      eligibleForPlacement: true,
-      evidence: [raw.slice(0, 80)],
-      reasonCode: 'target_met',
-    };
+  if (q.id === 'Q06') {
+    if (/\byes\b/.test(lower) && /\bred\b/.test(lower)) {
+      return scored(0, raw, 'off_topic');
+    }
+    const no = /\b(no|not|isn't|is not)\b/.test(lower);
+    const blue = /\bblue\b/.test(lower);
+    if (no && blue) return scored(2, raw, 'target_met');
+    if (no || blue) return scored(1, raw, 'target_partially_demonstrated');
   }
-  if (q.id === 'Q06' && /\b(seven|7|7:00|07:00)\b/.test(lower)) {
-    return {
-      status: 'scored',
-      score: 2,
-      eligibleForPlacement: true,
-      evidence: [raw.slice(0, 80)],
-      reasonCode: 'target_met',
-    };
-  }
-  if (q.id === 'Q10' && /\b(nine thirty|9:30|09:30)\b/.test(lower)) {
-    return {
-      status: 'scored',
-      score: 2,
-      eligibleForPlacement: true,
-      evidence: [raw.slice(0, 80)],
-      reasonCode: 'target_met',
-    };
-  }
-  if (q.id === 'Q10' && /\b(nine|9:00|09:00)\b/.test(lower) && !/thirty|30/.test(lower)) {
-    return {
-      status: 'scored',
-      score: 1,
-      eligibleForPlacement: true,
-      evidence: [raw.slice(0, 80)],
-      reasonCode: 'target_partially_demonstrated',
-    };
-  }
-  if (q.id === 'Q04' && /\bwater\b/.test(lower)) {
-    return {
-      status: 'scored',
-      score: 2,
-      eligibleForPlacement: true,
-      evidence: [raw.slice(0, 80)],
-      reasonCode: 'target_met',
-    };
+  if (q.id === 'Q09') {
+    if (/\b(how much|what's the price|what is the price)\b/.test(lower)) {
+      return scored(2, raw, 'target_met');
+    }
   }
   if (q.id === 'Q11') {
     const past = /\b(went|stayed|watched|played|did|was|were)\b/.test(lower);
@@ -282,33 +248,13 @@ export function heuristicPlacementEval(
       /\b(friend|friends|family|mom|dad|alone|myself|sister|brother|with)\b/.test(
         lower,
       );
-    if (past && who) {
-      return {
-        status: 'scored',
-        score: 2,
-        eligibleForPlacement: true,
-        evidence: [raw.slice(0, 80)],
-        reasonCode: 'target_met',
-      };
-    }
+    if (past && who) return scored(2, raw, 'target_met');
     if (past || who) {
-      return {
-        status: 'scored',
-        score: 1,
-        eligibleForPlacement: true,
-        evidence: [raw.slice(0, 80)],
-        reasonCode: 'target_partially_demonstrated',
-      };
+      return scored(1, raw, 'target_partially_demonstrated');
     }
   }
   if (thaiOnly(raw)) {
-    return {
-      status: 'scored',
-      score: 1,
-      eligibleForPlacement: true,
-      evidence: [raw.slice(0, 80)],
-      reasonCode: 'target_partially_demonstrated',
-    };
+    return scored(1, raw, 'target_partially_demonstrated');
   }
   return null;
 }
@@ -320,21 +266,15 @@ function captureFacts(
 ): PlacementRuntimeState['facts'] {
   const lower = transcript.toLowerCase();
   const next = { ...facts };
-  if (q.id === 'Q11') {
-    if (/\bmovie|film\b/.test(lower)) next.weekendActivity = 'the movie';
-    else if (/\bbeach\b/.test(lower)) next.weekendActivity = 'that place';
-    else if (/\bhome|house|alone\b/.test(lower)) next.weekendActivity = 'home';
-    else if (transcript.trim()) next.weekendActivity = 'that';
-  }
-  if (q.id === 'Q13') {
-    if (/\bmountain/.test(lower)) next.preference = 'mountains';
-    else if (/\bbeach|sea\b/.test(lower)) next.preference = 'beach';
-    else next.preference = 'other';
-  }
-  if (q.id === 'Q17' && /\b(late|rain|miss|cancel|wrong)\b/.test(lower)) {
+  if (q.id === 'Q17' && /\b(late|rain|miss|cancel|wrong|change)\b/.test(lower)) {
     next.storyProblem = transcript.trim().slice(0, 80);
   }
   return next;
+}
+
+function ackFor(q: PlacementQuestion): string {
+  if (q.id === 'Q03' || q.id === 'Q05' || q.id === 'Q06') return '';
+  return q.afterScoreEn ?? 'Thanks!';
 }
 
 export function applyPlacementEvaluation(
@@ -346,8 +286,15 @@ export function applyPlacementEvaluation(
     return finish(state, 'insufficient_evidence');
   }
 
-  const results = { ...state.results, [q.id]: evaluation };
-  let asked = state.askedQuestionIds.includes(q.id)
+  const derived = deriveEligibility(evaluation);
+  const normalized: PlacementItemResult = {
+    ...evaluation,
+    eligibleForPlacement: derived.eligibleForPlacement,
+    score: derived.score,
+  };
+
+  const results = { ...state.results, [q.id]: normalized };
+  const asked = state.askedQuestionIds.includes(q.id)
     ? state.askedQuestionIds
     : [...state.askedQuestionIds, q.id];
 
@@ -357,9 +304,9 @@ export function applyPlacementEvaluation(
     askedQuestionIds: asked,
     facts: captureFacts(q, evaluation.evidence[0] ?? '', state.facts),
     consecutiveZeros:
-      evaluation.eligibleForPlacement && evaluation.score === 0
+      normalized.eligibleForPlacement && normalized.score === 0
         ? state.consecutiveZeros + 1
-        : evaluation.eligibleForPlacement
+        : normalized.eligibleForPlacement
           ? 0
           : state.consecutiveZeros,
   };
@@ -387,12 +334,15 @@ export function applyPlacementEvaluation(
 
   const upcoming = nextQuestionId(next);
   if (!upcoming) {
-    const scores = bandEligibleScores(next, q.band);
-    const status = bandStatus(scores);
-    if (q.band === 'B1' && status === 'confirmed') {
+    if (q.stage === 'b1' && b1Gate(next)) {
       return finish(next, 'b1_confirmed');
     }
-    return finish(next, status === 'insufficient_evidence' ? 'insufficient_evidence' : 'band_not_confirmed');
+    return finish(
+      next,
+      stageAskedComplete(next, q.stage)
+        ? 'band_not_confirmed'
+        : 'insufficient_evidence',
+    );
   }
 
   const nextQ = getPlacementQuestion(upcoming)!;
@@ -403,12 +353,23 @@ export function applyPlacementEvaluation(
       ? next.askedQuestionIds
       : [...next.askedQuestionIds, nextQ.id],
     audioOnlyAnnounced:
-      next.audioOnlyAnnounced || Boolean(nextQ.transitionTh) || nextQ.id === 'Q09',
+      next.audioOnlyAnnounced ||
+      Boolean(nextQ.transitionTh) ||
+      nextQ.id === 'Q11',
   };
 
-  const ack = q.afterScoreEn ?? 'Thanks!';
-  const prefixTh = nextQ.transitionTh && !state.audioOnlyAnnounced ? nextQ.transitionTh : '';
+  const ack = ackFor(q);
+  const prefixTh =
+    nextQ.transitionTh && !state.audioOnlyAnnounced ? nextQ.transitionTh : '';
   return { state: next, reply: npcForQuestion(next, nextQ, ack, prefixTh) };
+}
+
+function stageAskedComplete(
+  state: PlacementRuntimeState,
+  stageId: PlacementQuestion['stage'],
+): boolean {
+  const stage = PLACEMENT_STAGES.find((s) => s.id === stageId)!;
+  return stage.questionIds.every((id) => state.askedQuestionIds.includes(id));
 }
 
 function finish(
@@ -422,7 +383,7 @@ function finish(
     currentQuestionId: null,
     result,
   };
-  const { progressTurn, progressMax } = progressInBand(state);
+  const { progressTurn, progressMax } = progressInStage(state);
   return {
     state: done,
     reply: {
@@ -448,12 +409,15 @@ export function makeItemResult(
   >,
 ): PlacementItemResult {
   const { prompt, variantId } = exactPromptFor(q, state);
+  const derived = deriveEligibility(partial);
   return {
     questionId: q.id,
     attemptId: randomUUID(),
     exactPrompt: prompt,
     variantId,
     ...partial,
+    eligibleForPlacement: derived.eligibleForPlacement,
+    score: derived.score,
   };
 }
 

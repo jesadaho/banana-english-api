@@ -191,12 +191,16 @@ import {
   applyPlacementEvaluation,
   buildPlacementOpening,
   currentPlacementQuestion,
+  exactPromptFor,
   heuristicPlacementEval,
   initPlacementRuntime,
   isPlacementScenarioId,
   makeItemResult,
 } from '../placement/placement.runtime';
-import type { PlacementTurnReply } from '../placement/placement.types';
+import {
+  PLACEMENT_RUBRIC_VERSION,
+  type PlacementTurnReply,
+} from '../placement/placement.types';
 import {
   buildScenarioOpening,
   buildScenarioResumeOpening,
@@ -828,24 +832,19 @@ export class SessionsController {
     }
     if (!evalPartial) {
       try {
-        const { prompt } = {
-          prompt: data.placementRuntime
-            ? q.npcEn.replace(
-                '{name}',
-                data.placementRuntime.learnerName || 'there',
-              )
-            : q.npcEn,
-        };
+        const { prompt } = exactPromptFor(q, data.placementRuntime);
         const judged = await Promise.race([
           this.chat.evaluatePlacementAnswer({
             questionId: q.id,
-            band: q.band,
+            stage: q.stage,
+            rubricVersion: PLACEMENT_RUBRIC_VERSION,
             exactPrompt: prompt,
             target: q.target,
             requiredEvidence: q.requiredEvidence,
             anchors2: q.anchors2,
             anchors1: q.anchors1,
             sceneFacts: q.sceneFacts,
+            delivery: q.delivery,
             transcript: raw,
           }),
           new Promise<null>((resolve) =>
@@ -860,15 +859,31 @@ export class SessionsController {
             evidence: [raw.slice(0, 80)],
             reasonCode: 'uncertain_transcription',
           };
-        } else if (judged.status === 'needs_review' || judged.score === null) {
+        } else if (
+          judged.status === 'needs_review' ||
+          judged.status === 'technical_retry' ||
+          judged.score === null
+        ) {
           evalPartial = {
-            status: 'needs_review',
+            status:
+              judged.status === 'technical_retry'
+                ? 'technical_retry'
+                : 'needs_review',
             score: null,
             eligibleForPlacement: false,
             evidence: judged.evidence?.slice(0, 1) ?? [raw.slice(0, 80)],
-            reasonCode: judged.reasonCode === 'uncertain_transcription'
-              ? 'uncertain_transcription'
-              : 'uncertain_transcription',
+            reasonCode:
+              judged.reasonCode === 'capture_error'
+                ? 'capture_error'
+                : 'uncertain_transcription',
+          };
+        } else if (judged.status === 'assisted') {
+          evalPartial = {
+            status: 'assisted',
+            score: judged.score,
+            eligibleForPlacement: false,
+            evidence: judged.evidence?.slice(0, 1) ?? [raw.slice(0, 80)],
+            reasonCode: 'assistance_used',
           };
         } else {
           evalPartial = {

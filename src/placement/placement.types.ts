@@ -1,8 +1,22 @@
-export const PLACEMENT_RUBRIC_VERSION = 'placement-v1';
+export const PLACEMENT_RUBRIC_VERSION = 'placement-v1.5';
+export const PLACEMENT_MAPPING_VERSION = 'placement-start-v1.5';
 export const PLACEMENT_SCENARIO_ID = 'onboarding_placement_bee';
 
 export type PlacementEntrySource = 'onboarding' | 'profile_settings';
-export type PlacementBandId = 'A1' | 'A1.5' | 'A2' | 'A2.5' | 'B1';
+export type PlacementStageId =
+  | 'foundation_entry'
+  | 'a1'
+  | 'a2'
+  | 'b1';
+export type PlacementPublicResult =
+  | 'Seed'
+  | 'Seed+'
+  | 'A1'
+  | 'A1+'
+  | 'A2'
+  | 'A2+'
+  | 'B1';
+export type PlacementBaseLevel = 'A1' | 'A2' | 'B1';
 export type PlacementScore = 0 | 1 | 2;
 export type PlacementItemStatus =
   | 'scored'
@@ -32,12 +46,21 @@ export type PlacementStopReason =
   | 'early_zero_streak'
   | 'insufficient_evidence'
   | 'cancelled';
+export type PlacementRecommendationType =
+  | 'course_start'
+  | 'chapter_start'
+  | 'review_checkpoint'
+  | 'coming_soon';
 
-export type PlacementDelivery = 'text_audio' | 'picture_text_audio' | 'picture_audio' | 'audio_only';
+export type PlacementDelivery =
+  | 'text_audio'
+  | 'picture_text_audio'
+  | 'picture_audio'
+  | 'audio_only';
 
 export interface PlacementQuestion {
   id: string;
-  band: PlacementBandId;
+  stage: PlacementStageId;
   skill: string;
   npcEn: string;
   target: string;
@@ -65,8 +88,6 @@ export interface PlacementItemResult {
 }
 
 export interface PlacementFacts {
-  weekendActivity?: string;
-  preference?: 'beach' | 'mountains' | 'other';
   storyProblem?: string;
 }
 
@@ -86,14 +107,33 @@ export interface PlacementRuntimeState {
   result: PlacementSessionResult | null;
 }
 
+export interface PlacementGateResults {
+  entry: boolean;
+  a1: boolean;
+  a2: boolean;
+  b1: boolean;
+  a1Plus: boolean;
+  a2Plus: boolean;
+}
+
 export interface PlacementSessionResult {
-  demonstratedBand: PlacementBandId | null;
+  /** Highest confirmed internal stage, for audit. Not a public badge. */
+  demonstratedBand: PlacementStageId | null;
+  publicResult: PlacementPublicResult | null;
+  baseLevel: PlacementBaseLevel | null;
+  gateResults: PlacementGateResults;
   resultStatus: PlacementResultStatus;
   resultLabel: string;
   recommendedStartKey: string;
+  recommendationType: PlacementRecommendationType;
+  intendedNextLevel: 'B1' | 'B2' | null;
+  recommendedPathId: string | null;
+  recommendedChapterId: string | null;
+  recommendedNodeId: string | null;
   stopReason: PlacementStopReason;
   completedQuestionIds: string[];
   rubricVersion: string;
+  mappingVersion: string;
 }
 
 export interface PlacementTurnReply {
