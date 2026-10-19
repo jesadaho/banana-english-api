@@ -190,6 +190,7 @@ import { PLACEMENT_IMAGE_PATHS } from '../placement/placement.scenario';
 import {
   applyPlacementEvaluation,
   buildPlacementOpening,
+  coercePlacementScore,
   currentPlacementQuestion,
   exactPromptFor,
   heuristicPlacementEval,
@@ -857,6 +858,7 @@ export class SessionsController {
           delivery: q.delivery,
           transcript: raw,
         });
+        const judgedScore = coercePlacementScore(judged.score);
         if (judged.status === 'technical_retry') {
           evalPartial = {
             status: 'technical_retry',
@@ -867,15 +869,11 @@ export class SessionsController {
             reason:
               judged.reason?.trim() || 'จับเสียงไม่ชัด เลยยังไม่ให้คะแนน',
           };
-        } else if (
-          judged.score === 0 ||
-          judged.score === 1 ||
-          judged.score === 2
-        ) {
+        } else if (judgedScore !== null) {
           const assisted = judged.status === 'assisted';
           evalPartial = {
             status: assisted ? 'assisted' : 'scored',
-            score: judged.score,
+            score: judgedScore,
             eligibleForPlacement: !assisted,
             evidence: judged.evidence?.slice(0, 1) ?? [raw.slice(0, 80)],
             reasonCode: assisted
@@ -890,7 +888,7 @@ export class SessionsController {
               judged.reason?.trim() ||
               (assisted ? 'มีการช่วยตอบ จึงไม่นับเข้าเกต' : undefined),
           };
-        } else if (judged.status === 'needs_review' || judged.score === null) {
+        } else {
           evalPartial = {
             status: 'needs_review',
             score: null,
@@ -903,29 +901,6 @@ export class SessionsController {
             reason:
               judged.reason?.trim() ||
               'ถอดความไม่ชัวร์ เลยยังไม่ให้คะแนน',
-          };
-        } else if (judged.status === 'assisted') {
-          evalPartial = {
-            status: 'assisted',
-            score: judged.score,
-            eligibleForPlacement: false,
-            evidence: judged.evidence?.slice(0, 1) ?? [raw.slice(0, 80)],
-            reasonCode: 'assistance_used',
-            reason: judged.reason?.trim() || 'มีการช่วยตอบ จึงไม่นับเข้าเกต',
-          };
-        } else {
-          evalPartial = {
-            status: 'scored',
-            score: judged.score,
-            eligibleForPlacement: true,
-            evidence: judged.evidence?.slice(0, 1) ?? [raw.slice(0, 80)],
-            reasonCode: judged.reasonCode === 'target_met' ||
-              judged.reasonCode === 'target_partially_demonstrated' ||
-              judged.reasonCode === 'off_topic' ||
-              judged.reasonCode === 'no_communicative_answer'
-              ? judged.reasonCode
-              : 'target_partially_demonstrated',
-            reason: judged.reason?.trim() || undefined,
           };
         }
       } catch {

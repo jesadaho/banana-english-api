@@ -231,6 +231,15 @@ function scored(
   };
 }
 
+/** Gemini JSON may send score as `"2"`; gates only accept numeric 0/1/2. */
+export function coercePlacementScore(score: unknown): 0 | 1 | 2 | null {
+  if (score === 0 || score === 1 || score === 2) return score;
+  if (typeof score === 'string' && /^(0|1|2)$/.test(score.trim())) {
+    return Number(score.trim()) as 0 | 1 | 2;
+  }
+  return null;
+}
+
 /** Skip, capture noise, and Thai-only only. Communicative 0/1/2 goes to Gemini. */
 export function heuristicPlacementEval(
   _q: PlacementQuestion,
