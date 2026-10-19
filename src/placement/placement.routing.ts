@@ -84,6 +84,10 @@ function allAtLeast(
   return scores.length > 0 && scores.every((s) => s >= min);
 }
 
+function sumScores(scores: PlacementScore[]): number {
+  return scores.reduce((total, score) => total + score, 0);
+}
+
 function scoreOf(
   state: PlacementRuntimeState,
   id: string,
@@ -91,40 +95,39 @@ function scoreOf(
   return eligibleScore(state.results[id]);
 }
 
+function atLeast(state: PlacementRuntimeState, id: string, min: PlacementScore) {
+  const score = scoreOf(state, id);
+  return score !== null && score >= min;
+}
+
+/** Q01–Q06: sum ≥9/12 and Q03/Q04 ≥1. */
 export function entryGate(state: PlacementRuntimeState): boolean {
   const scores = eligibleList(stageEligibleScores(state, 'foundation_entry'));
   if (scores.length < 6) return false;
-  const twos = scores.filter((s) => s === 2).length;
-  return (
-    twos >= 5 &&
-    allAtLeast(scores, 1) &&
-    scoreOf(state, 'Q03') === 2 &&
-    scoreOf(state, 'Q04') === 2
-  );
+  return sumScores(scores) >= 9 && atLeast(state, 'Q03', 1) && atLeast(state, 'Q04', 1);
 }
 
+/** Q07–Q10: sum ≥7/8 and no zeros (including Q09). */
 export function a1Gate(state: PlacementRuntimeState): boolean {
   if (!entryGate(state)) return false;
   const scores = eligibleList(stageEligibleScores(state, 'a1'));
   if (scores.length < 4) return false;
-  const twos = scores.filter((s) => s === 2).length;
-  return twos >= 3 && allAtLeast(scores, 1) && scoreOf(state, 'Q09') === 2;
+  return sumScores(scores) >= 7 && allAtLeast(scores, 1);
 }
 
+/** Q11–Q16: sum ≥10/12, no zeros, and ≥2 of Q11/Q13/Q15 are 2. */
 export function a2Gate(state: PlacementRuntimeState): boolean {
   if (!a1Gate(state)) return false;
   const scores = eligibleList(stageEligibleScores(state, 'a2'));
   if (scores.length < 6) return false;
-  const twos = scores.filter((s) => s === 2).length;
-  return (
-    twos >= 4 &&
-    allAtLeast(scores, 1) &&
-    scoreOf(state, 'Q11') === 2 &&
-    scoreOf(state, 'Q13') === 2 &&
-    scoreOf(state, 'Q15') === 2
-  );
+  if (sumScores(scores) < 10 || !allAtLeast(scores, 1)) return false;
+  const keyTwos = ['Q11', 'Q13', 'Q15'].filter(
+    (id) => scoreOf(state, id) === 2,
+  ).length;
+  return keyTwos >= 2;
 }
 
+/** Fail A2, but Q12/Q13/Q14 all ≥1 and ≥2 of them are 2. */
 export function a1PlusGate(state: PlacementRuntimeState): boolean {
   if (!a1Gate(state) || a2Gate(state)) return false;
   const scores = eligibleList(stageEligibleScores(state, 'a2'));
@@ -134,25 +137,20 @@ export function a1PlusGate(state: PlacementRuntimeState): boolean {
   return trio.filter((s) => s === 2).length >= 2;
 }
 
+/** Q17–Q20: ≥7/8 and no zeros. */
 export function b1Gate(state: PlacementRuntimeState): boolean {
   if (!a2Gate(state)) return false;
   const scores = eligibleList(stageEligibleScores(state, 'b1'));
   if (scores.length < 4) return false;
-  const twos = scores.filter((s) => s === 2).length;
-  if (twos < 3 || !allAtLeast(scores, 1)) return false;
-  const narr =
-    scoreOf(state, 'Q17') === 2 || scoreOf(state, 'Q18') === 2;
-  const reason =
-    scoreOf(state, 'Q19') === 2 || scoreOf(state, 'Q20') === 2;
-  return narr && reason;
+  return sumScores(scores) >= 7 && allAtLeast(scores, 1);
 }
 
+/** Q17–Q20: 6/8 and no zeros. */
 export function a2PlusGate(state: PlacementRuntimeState): boolean {
   if (!a2Gate(state) || b1Gate(state)) return false;
   const scores = eligibleList(stageEligibleScores(state, 'b1'));
   if (scores.length < 4) return false;
-  const twos = scores.filter((s) => s === 2).length;
-  return twos >= 2 && allAtLeast(scores, 1);
+  return sumScores(scores) >= 6 && allAtLeast(scores, 1);
 }
 
 export function evaluateGates(state: PlacementRuntimeState): PlacementGateResults {
@@ -181,11 +179,8 @@ export function publicResultFor(
   const entryScores = eligibleList(
     stageEligibleScores(state, 'foundation_entry'),
   );
-  const entryFailed =
-    entryScores.length >= 6 ||
-    stopReason === 'early_zero_streak' ||
-    stopReason === 'band_not_confirmed';
-  if (entryFailed && entryScores.length > 0) return 'Seed';
+  if (entryScores.length >= 6) return 'Seed';
+  if (stopReason === 'early_zero_streak' && entryScores.length > 0) return 'Seed';
   return null;
 }
 

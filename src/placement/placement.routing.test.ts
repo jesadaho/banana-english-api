@@ -149,21 +149,27 @@ describe('placement bank v1.5', () => {
 });
 
 describe('placement gates v1.5', () => {
-  it('entry [2,2,2,2,2,1] with Q03/Q04=2 passes entry and is not A1', () => {
-    const state = fill(ENTRY, [2, 2, 2, 2, 2, 1]);
+  it('entry sum ≥9 with Q03/Q04 ≥1 passes and is not A1 yet', () => {
+    const state = fill(ENTRY, [2, 1, 1, 1, 2, 2]);
     assert.equal(entryGate(state), true);
     assert.equal(a1Gate(state), false);
     assert.equal(publicResultFor(state, 'band_not_confirmed'), 'Seed+');
     assert.match(resultLabelFor('Seed+', { incompleteNext: true }), /ยังประเมินระดับถัดไปไม่ครบ/);
   });
 
-  it('entry Q04=1 even if others are 2 fails entry → Seed', () => {
-    const state = fill(ENTRY, [2, 2, 2, 1, 2, 2]);
+  it('entry fails when Q03 is 0 even if the sum is high → Seed', () => {
+    const state = fill(ENTRY, [2, 2, 0, 2, 2, 2]);
     assert.equal(entryGate(state), false);
     assert.equal(publicResultFor(state, 'band_not_confirmed'), 'Seed');
   });
 
-  it('entry pass + A1 [2,2,1,2] fails A1Gate because Q09 is not 2 → Seed+', () => {
+  it('entry fails when the set sum is under 9 → Seed', () => {
+    const state = fill(ENTRY, [1, 1, 1, 1, 1, 2]);
+    assert.equal(entryGate(state), false);
+    assert.equal(publicResultFor(state, 'band_not_confirmed'), 'Seed');
+  });
+
+  it('A1 passes at 7/8 with Q09=1 and no zeros', () => {
     const state = emptyState();
     passEntry(state);
     putScore(state, 'Q07', 2);
@@ -171,6 +177,17 @@ describe('placement gates v1.5', () => {
     putScore(state, 'Q09', 1);
     putScore(state, 'Q10', 2);
     assert.equal(entryGate(state), true);
+    assert.equal(a1Gate(state), true);
+    assert.equal(publicResultFor(state, 'band_not_confirmed'), 'A1');
+  });
+
+  it('A1 fails when any item is 0 → Seed+', () => {
+    const state = emptyState();
+    passEntry(state);
+    putScore(state, 'Q07', 2);
+    putScore(state, 'Q08', 2);
+    putScore(state, 'Q09', 2);
+    putScore(state, 'Q10', 0);
     assert.equal(a1Gate(state), false);
     assert.equal(publicResultFor(state, 'band_not_confirmed'), 'Seed+');
   });
@@ -184,10 +201,10 @@ describe('placement gates v1.5', () => {
     assert.equal(publicResultFor(state, 'band_not_confirmed'), 'A1+');
   });
 
-  it('A2 [2,1,2,2,2,1] passes A2Gate', () => {
+  it('A2 passes at 10/12 when two of Q11/Q13/Q15 are 2', () => {
     const state = emptyState();
     passA1(state);
-    fillA2(state, [2, 1, 2, 2, 2, 1]);
+    fillA2(state, [2, 2, 2, 1, 1, 2]);
     assert.equal(a2Gate(state), true);
     assert.equal(publicResultFor(state, 'band_not_confirmed'), 'A2');
   });
@@ -213,6 +230,7 @@ describe('placement gates v1.5', () => {
     const state = fill(ENTRY, [2, 2, 2, 2, 2, 2]);
     putScore(state, 'Q06', null, { eligible: false, status: 'needs_review' });
     assert.equal(entryGate(state), false);
+    assert.equal(publicResultFor(state, 'band_not_confirmed'), null);
     assert.equal(evaluateGates(state).a1Plus, false);
 
     const assisted = fill(ENTRY, [2, 2, 2, 2, 2, 2]);
@@ -289,11 +307,11 @@ describe('placement routing walk', () => {
     assert.equal(a1Gate(state), false);
   });
 
-  it('stops as Seed when Q04 is only 1', () => {
+  it('stops as Seed when Q03 is 0 even if later items are 2', () => {
     let { state, reply } = buildPlacementOpening(
       initPlacementRuntime({ entrySource: 'onboarding', learnerName: 'Maya' }),
     );
-    for (const s of [2, 2, 2, 1, 2, 2] as PlacementScore[]) {
+    for (const s of [2, 2, 0, 2, 2, 2] as PlacementScore[]) {
       ({ state, reply } = scoreWalk(state, s));
     }
     assert.equal(state.finished, true);
@@ -301,7 +319,7 @@ describe('placement routing walk', () => {
     assert.equal(state.result?.recommendedNodeId, 'v7_u01n01');
     assert.equal(state.result?.recommendedPathId, 'foundation_v7');
     assert.equal(state.result?.recommendationType, 'course_start');
-    assert.ok(state.result?.progressScores?.includes(1));
+    assert.ok(state.result?.progressScores?.includes(0));
     assert.equal(state.result?.rubricVersion, PLACEMENT_RUBRIC_VERSION);
     assert.equal(state.result?.mappingVersion, PLACEMENT_MAPPING_VERSION);
     assert.doesNotMatch(reply?.textTh ?? '', /20 ข้อ/);
@@ -439,13 +457,14 @@ describe('placement live catalog mapping', () => {
   });
 
   it('starts A1 at Adventure Ch1 and A1+ at Ch8 warm-up', () => {
-    const a1 = fill(ENTRY, [2, 2, 2, 2, 2, 2]);
-    fillA1(a1, [2, 2, 1, 2]);
-    const a1Result = buildSessionResult(a1, 'band_not_confirmed');
+    const a1Fail = fill(ENTRY, [2, 2, 2, 2, 2, 2]);
+    fillA1(a1Fail, [2, 2, 2, 0]);
+    const a1Result = buildSessionResult(a1Fail, 'band_not_confirmed');
     assert.equal(a1Result.publicResult, 'Seed+');
+    assert.equal(a1Result.recommendedNodeId, 'v7_u08n01');
 
     const a1Pass = fill(ENTRY, [2, 2, 2, 2, 2, 2]);
-    fillA1(a1Pass, [2, 2, 2, 2]);
+    fillA1(a1Pass, [2, 2, 1, 2]);
     const a1Ok = buildSessionResult(a1Pass, 'band_not_confirmed');
     assert.equal(a1Ok.publicResult, 'A1');
     assert.equal(a1Ok.recommendedNodeId, 'a2_c01n01');
