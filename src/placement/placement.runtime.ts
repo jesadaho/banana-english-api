@@ -232,7 +232,7 @@ function scored(
   };
 }
 
-/** Fast local 0/1/2 when the answer is obvious. null = call the evaluator. */
+/** Fast local 2/0 only when the answer is obvious. Partial matches return null so Gemini judges open answers. */
 export function heuristicPlacementEval(
   q: PlacementQuestion,
   transcript: string,
@@ -266,14 +266,6 @@ export function heuristicPlacementEval(
     if (feeling && place) {
       return scored(2, raw, 'target_met', 'บอกความรู้สึกและที่อยู่');
     }
-    if (feeling || place) {
-      return scored(
-        1,
-        raw,
-        'target_partially_demonstrated',
-        feeling ? 'มีความรู้สึก แต่ยังไม่บอกที่อยู่' : 'มีที่อยู่ แต่ยังไม่บอกความรู้สึก',
-      );
-    }
   }
   if (q.id === 'Q02') {
     const who =
@@ -287,28 +279,12 @@ export function heuristicPlacementEval(
     if (who && trait) {
       return scored(2, raw, 'target_met', 'บอกความสัมพันธ์และลักษณะ');
     }
-    if (who || trait) {
-      return scored(
-        1,
-        raw,
-        'target_partially_demonstrated',
-        who ? 'มีคน แต่ยังไม่บอกลักษณะ' : 'มีลักษณะ แต่ยังไม่บอกว่าเป็นใคร',
-      );
-    }
   }
   if (q.id === 'Q05') {
     const polite = /\b(can i|could i|may i|please)\b/.test(lower);
     const book = /\bbook\b/.test(lower);
     if (polite && book) {
       return scored(2, raw, 'target_met', 'ขอสุภาพและพูดถึงหนังสือ');
-    }
-    if (polite || book) {
-      return scored(
-        1,
-        raw,
-        'target_partially_demonstrated',
-        polite ? 'สุภาพ แต่ยังไม่พูดถึงหนังสือ' : 'พูดถึงหนังสือ แต่ยังไม่สุภาพพอ',
-      );
     }
   }
   if (q.id === 'Q04') {
@@ -335,14 +311,6 @@ export function heuristicPlacementEval(
     if (no && blue) {
       return scored(2, raw, 'target_met', 'ปฏิเสธสีแดงและบอกว่าสีน้ำเงิน');
     }
-    if (no || blue) {
-      return scored(
-        1,
-        raw,
-        'target_partially_demonstrated',
-        'มี no หรือ blue อย่างใดอย่างหนึ่ง',
-      );
-    }
   }
   if (q.id === 'Q09') {
     if (/\b(how much|what's the price|what is the price)\b/.test(lower)) {
@@ -357,14 +325,6 @@ export function heuristicPlacementEval(
       );
     if (past && who) {
       return scored(2, raw, 'target_met', 'เล่าอดีตและมีคนไปด้วย/ไปคนเดียว');
-    }
-    if (past || who) {
-      return scored(
-        1,
-        raw,
-        'target_partially_demonstrated',
-        past ? 'มีอดีต แต่ยังไม่บอกว่าไปกับใคร' : 'มีคน แต่ยังไม่ชัดว่าเป็นอดีต',
-      );
     }
   }
   if (thaiOnly(raw)) {

@@ -365,7 +365,7 @@ describe('placement heuristics', () => {
     assert.equal(heuristicPlacementEval(q04, 'They have keys.', false)?.score, 2);
     assert.equal(heuristicPlacementEval(q06, "No, it's blue.", false)?.score, 2);
     assert.equal(heuristicPlacementEval(q06, "Yes, it's red.", false)?.score, 0);
-    assert.equal(heuristicPlacementEval(q11, 'I went shopping.', false)?.score, 1);
+    assert.equal(heuristicPlacementEval(q11, 'I went shopping.', false), null);
     assert.equal(
       heuristicPlacementEval(q11, 'I went shopping with my friend.', false)?.score,
       2,
@@ -385,10 +385,10 @@ describe('placement heuristics', () => {
       heuristicPlacementEval(q01, "I'm good. I'm from Bangkok.", false)?.score,
       2,
     );
-    assert.equal(heuristicPlacementEval(q01, "I'm good.", false)?.score, 1);
+    assert.equal(heuristicPlacementEval(q01, "I'm good.", false), null);
   });
 
-  it('scores Q02 relationship plus appearance or personality', () => {
+  it('scores Q02 locally only when relationship and trait are both obvious', () => {
     const q02 = getPlacementQuestion('Q02')!;
     assert.equal(
       heuristicPlacementEval(
@@ -399,8 +399,8 @@ describe('placement heuristics', () => {
       2,
     );
     assert.equal(
-      heuristicPlacementEval(q02, 'My father is a teacher.', false)?.score,
-      1,
+      heuristicPlacementEval(q02, 'My father is a teacher.', false),
+      null,
     );
   });
 
@@ -410,7 +410,7 @@ describe('placement heuristics', () => {
       heuristicPlacementEval(q05, 'Can I borrow the book please?', false)?.score,
       2,
     );
-    assert.equal(heuristicPlacementEval(q05, 'Book.', false)?.score, 1);
+    assert.equal(heuristicPlacementEval(q05, 'Book.', false), null);
   });
 
   it('keeps a debug reason on skipped and heuristic keys answers', () => {
