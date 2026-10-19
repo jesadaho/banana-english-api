@@ -20,6 +20,8 @@ import {
   PLACEMENT_MAPPING_VERSION,
   PLACEMENT_MODEL_VERSION,
   PLACEMENT_PROMPT_VERSION,
+  PLACEMENT_QUESTION_VERSION,
+  PLACEMENT_ROUTING_VERSION,
   PLACEMENT_RUBRIC_VERSION,
 } from './placement.types';
 
@@ -103,57 +105,58 @@ function atLeast(state: PlacementRuntimeState, id: string, min: PlacementScore) 
   return score !== null && score >= min;
 }
 
-/** Q01–Q06: sum ≥9/12 and Q03/Q04 ≥1. */
+/** Q01–Q06: sum ≥9/12 and Q05/Q06 ≥1. */
 export function entryGate(state: PlacementRuntimeState): boolean {
   const scores = eligibleList(stageEligibleScores(state, 'foundation_entry'));
   if (scores.length < 6) return false;
-  return sumScores(scores) >= 9 && atLeast(state, 'Q03', 1) && atLeast(state, 'Q04', 1);
+  return sumScores(scores) >= 9 && atLeast(state, 'Q05', 1) && atLeast(state, 'Q06', 1);
 }
 
-/** Q07–Q10: sum ≥7/8 and no zeros (including Q09). */
+/** Q07–Q10: sum ≥6/8 and every item ≥1. */
 export function a1Gate(state: PlacementRuntimeState): boolean {
   if (!entryGate(state)) return false;
   const scores = eligibleList(stageEligibleScores(state, 'a1'));
   if (scores.length < 4) return false;
-  return sumScores(scores) >= 7 && allAtLeast(scores, 1);
+  return sumScores(scores) >= 6 && allAtLeast(scores, 1);
 }
 
-/** Q11–Q16: sum ≥10/12, no zeros, and ≥2 of Q11/Q13/Q15 are 2. */
+/** Q11–Q20: sum ≥15/20, every item ≥1, and ≥2 of Q13/Q16/Q18 are 2. */
 export function a2Gate(state: PlacementRuntimeState): boolean {
   if (!a1Gate(state)) return false;
   const scores = eligibleList(stageEligibleScores(state, 'a2'));
-  if (scores.length < 6) return false;
-  if (sumScores(scores) < 10 || !allAtLeast(scores, 1)) return false;
-  const keyTwos = ['Q11', 'Q13', 'Q15'].filter(
+  if (scores.length < 10) return false;
+  if (sumScores(scores) < 15 || !allAtLeast(scores, 1)) return false;
+  const keyTwos = ['Q13', 'Q16', 'Q18'].filter(
     (id) => scoreOf(state, id) === 2,
   ).length;
   return keyTwos >= 2;
 }
 
-/** Fail A2, but Q12/Q13/Q14 all ≥1 and ≥2 of them are 2. */
+/** Fail A2, but Q14–Q17 all ≥1 and ≥2 of those four are 2. */
 export function a1PlusGate(state: PlacementRuntimeState): boolean {
   if (!a1Gate(state) || a2Gate(state)) return false;
   const scores = eligibleList(stageEligibleScores(state, 'a2'));
-  if (scores.length < 6) return false;
-  const trio = ['Q12', 'Q13', 'Q14'].map((id) => scoreOf(state, id));
-  if (trio.some((s) => s === null || s < 1)) return false;
-  return trio.filter((s) => s === 2).length >= 2;
+  if (scores.length < 10) return false;
+  const quartet = ['Q14', 'Q15', 'Q16', 'Q17'].map((id) => scoreOf(state, id));
+  if (quartet.some((s) => s === null || s < 1)) return false;
+  return quartet.filter((s) => s === 2).length >= 2;
 }
 
-/** Q17–Q20: ≥7/8 and no zeros. */
+/** Q21–Q25: ≥8/10, every item ≥1, and Q21 or Q22 is 2. */
 export function b1Gate(state: PlacementRuntimeState): boolean {
   if (!a2Gate(state)) return false;
   const scores = eligibleList(stageEligibleScores(state, 'b1'));
-  if (scores.length < 4) return false;
-  return sumScores(scores) >= 7 && allAtLeast(scores, 1);
+  if (scores.length < 5) return false;
+  if (sumScores(scores) < 8 || !allAtLeast(scores, 1)) return false;
+  return scoreOf(state, 'Q21') === 2 || scoreOf(state, 'Q22') === 2;
 }
 
-/** Q17–Q20: 6/8 and no zeros. */
+/** Q21–Q25: ≥7/10 and every item ≥1. */
 export function a2PlusGate(state: PlacementRuntimeState): boolean {
   if (!a2Gate(state) || b1Gate(state)) return false;
   const scores = eligibleList(stageEligibleScores(state, 'b1'));
-  if (scores.length < 4) return false;
-  return sumScores(scores) >= 6 && allAtLeast(scores, 1);
+  if (scores.length < 5) return false;
+  return sumScores(scores) >= 7 && allAtLeast(scores, 1);
 }
 
 export function evaluateGates(state: PlacementRuntimeState): PlacementGateResults {
@@ -173,6 +176,7 @@ export function publicResultFor(
 ): PlacementPublicResult | null {
   const gates = evaluateGates(state);
   if (stopReason === 'cancelled' && !gates.entry) return null;
+  if (stopReason === 'user_finished_after_a2' && gates.a2) return 'A2';
   if (gates.b1) return 'B1';
   if (gates.a2Plus) return 'A2+';
   if (gates.a2) return 'A2';
@@ -328,7 +332,9 @@ export function buildSessionResult(
   if (stopReason === 'cancelled') {
     resultStatus = publicResult ? 'provisional' : 'cancelled';
   } else if (insufficient) resultStatus = 'insufficient_evidence';
-  else if (stopReason === 'early_zero_streak') resultStatus = 'early_exit';
+  else if (stopReason === 'user_finished_after_a2' && gates.a2) {
+    resultStatus = 'completed';
+  } else if (stopReason === 'early_zero_streak') resultStatus = 'early_exit';
   else if (
     (gates.a1 || gates.a2) &&
     stopReason !== 'b1_confirmed' &&
@@ -391,7 +397,9 @@ export function buildSessionResult(
     progressScores: PLACEMENT_QUESTION_IDS.map((id) =>
       displayProgressScore(state.results[id]),
     ),
+    questionVersion: PLACEMENT_QUESTION_VERSION,
     rubricVersion: PLACEMENT_RUBRIC_VERSION,
+    routingVersion: PLACEMENT_ROUTING_VERSION,
     mappingVersion: PLACEMENT_MAPPING_VERSION,
     modelVersion: PLACEMENT_MODEL_VERSION,
     promptVersion: PLACEMENT_PROMPT_VERSION,

@@ -120,22 +120,22 @@ function scoreWalk(
   );
 }
 
-describe('placement bank v1.5', () => {
-  it('has 20 unique question IDs in 6+4+6+4 stages', () => {
+describe('placement bank v2.1', () => {
+  it('has 25 unique question IDs in 6+4+10+5 stages', () => {
     const ids = PLACEMENT_QUESTIONS.map((q) => q.id);
-    assert.equal(ids.length, 20);
-    assert.equal(new Set(ids).size, 20);
+    assert.equal(ids.length, 25);
+    assert.equal(new Set(ids).size, 25);
     assert.deepEqual(
       PLACEMENT_STAGES.map((s) => s.questionIds.length),
-      [6, 4, 6, 4],
+      [6, 4, 10, 5],
     );
   });
 
-  it('starts audio-only at Q11, not Q09', () => {
+  it('hides NPC English from Q11 and keeps Q01–10 as text+audio', () => {
     for (const q of PLACEMENT_QUESTIONS) {
       const n = Number(q.id.slice(1));
       if (n <= 10) {
-        assert.equal(q.delivery === 'audio_only' || q.delivery === 'picture_audio', false);
+        assert.equal(q.delivery === 'audio_only' || q.delivery === 'picture_audio', false, q.id);
       } else {
         assert.ok(
           q.delivery === 'audio_only' || q.delivery === 'picture_audio',
@@ -144,39 +144,28 @@ describe('placement bank v1.5', () => {
       }
     }
     assert.equal(getPlacementQuestion('Q11')?.transitionTh?.includes('ไม่มีข้อความ'), true);
-    assert.equal(getPlacementQuestion('Q09')?.transitionTh, undefined);
+    assert.equal(getPlacementQuestion('Q01')?.npcEn, 'Where are you from?');
   });
 });
 
-describe('placement gates v1.5', () => {
-  it('entry sum ≥9 with Q03/Q04 ≥1 passes and is not A1 yet', () => {
-    const state = fill(ENTRY, [2, 1, 1, 1, 2, 2]);
+describe('placement gates v2.1', () => {
+  it('entry [2,2,1,1,2,1] =9 with Q05/Q06 ≥1 is Seed+', () => {
+    const state = fill(ENTRY, [2, 2, 1, 1, 2, 1]);
     assert.equal(entryGate(state), true);
     assert.equal(a1Gate(state), false);
     assert.equal(publicResultFor(state, 'band_not_confirmed'), 'Seed+');
-    assert.match(resultLabelFor('Seed+', { incompleteNext: true }), /ยังประเมินระดับถัดไปไม่ครบ/);
   });
 
-  it('entry fails when Q03 is 0 even if the sum is high → Seed', () => {
-    const state = fill(ENTRY, [2, 2, 0, 2, 2, 2]);
+  it('entry [2,2,2,2,1,0] =9 but Q06=0 is Seed', () => {
+    const state = fill(ENTRY, [2, 2, 2, 2, 1, 0]);
     assert.equal(entryGate(state), false);
     assert.equal(publicResultFor(state, 'band_not_confirmed'), 'Seed');
   });
 
-  it('entry fails when the set sum is under 9 → Seed', () => {
-    const state = fill(ENTRY, [1, 1, 1, 1, 1, 2]);
-    assert.equal(entryGate(state), false);
-    assert.equal(publicResultFor(state, 'band_not_confirmed'), 'Seed');
-  });
-
-  it('A1 passes at 7/8 with Q09=1 and no zeros', () => {
+  it('A1 [2,2,1,1] =6 with no zeros confirms A1', () => {
     const state = emptyState();
     passEntry(state);
-    putScore(state, 'Q07', 2);
-    putScore(state, 'Q08', 2);
-    putScore(state, 'Q09', 1);
-    putScore(state, 'Q10', 2);
-    assert.equal(entryGate(state), true);
+    fillA1(state, [2, 2, 1, 1]);
     assert.equal(a1Gate(state), true);
     assert.equal(publicResultFor(state, 'band_not_confirmed'), 'A1');
   });
@@ -184,44 +173,41 @@ describe('placement gates v1.5', () => {
   it('A1 fails when any item is 0 → Seed+', () => {
     const state = emptyState();
     passEntry(state);
-    putScore(state, 'Q07', 2);
-    putScore(state, 'Q08', 2);
-    putScore(state, 'Q09', 2);
-    putScore(state, 'Q10', 0);
+    fillA1(state, [2, 2, 2, 0]);
     assert.equal(a1Gate(state), false);
     assert.equal(publicResultFor(state, 'band_not_confirmed'), 'Seed+');
   });
 
-  it('A2 [1,2,2,2,1,1] is A1+ not A2', () => {
+  it('A2 15/20 with only one of Q13/Q16/Q18=2 is A1+', () => {
     const state = emptyState();
     passA1(state);
-    fillA2(state, [1, 2, 2, 2, 1, 1]);
+    fillA2(state, [2, 2, 1, 2, 2, 2, 1, 1, 1, 1]);
     assert.equal(a2Gate(state), false);
     assert.equal(a1PlusGate(state), true);
     assert.equal(publicResultFor(state, 'band_not_confirmed'), 'A1+');
   });
 
-  it('A2 passes at 10/12 when two of Q11/Q13/Q15 are 2', () => {
+  it('A2 15/20 with two of Q13/Q16/Q18=2 confirms A2', () => {
     const state = emptyState();
     passA1(state);
-    fillA2(state, [2, 2, 2, 1, 1, 2]);
+    fillA2(state, [2, 1, 2, 1, 1, 2, 2, 2, 1, 1]);
     assert.equal(a2Gate(state), true);
     assert.equal(publicResultFor(state, 'band_not_confirmed'), 'A2');
   });
 
-  it('B1 [2,1,2,1] is A2+; [2,2,2,1] is B1', () => {
+  it('B1 needs narration 2; 8/10 without it is A2+', () => {
     const near = emptyState();
     passA1(near);
-    fillA2(near, [2, 1, 2, 2, 2, 1]);
-    B1.forEach((id, i) => putScore(near, id, ([2, 1, 2, 1] as PlacementScore[])[i]!));
+    fillA2(near, [2, 1, 2, 1, 1, 2, 2, 2, 1, 1]);
+    B1.forEach((id, i) => putScore(near, id, ([1, 1, 2, 2, 2] as PlacementScore[])[i]!));
     assert.equal(b1Gate(near), false);
     assert.equal(a2PlusGate(near), true);
     assert.equal(publicResultFor(near, 'band_not_confirmed'), 'A2+');
 
     const full = emptyState();
     passA1(full);
-    fillA2(full, [2, 1, 2, 2, 2, 1]);
-    B1.forEach((id, i) => putScore(full, id, ([2, 2, 2, 1] as PlacementScore[])[i]!));
+    fillA2(full, [2, 1, 2, 1, 1, 2, 2, 2, 1, 1]);
+    B1.forEach((id, i) => putScore(full, id, ([2, 1, 2, 2, 1] as PlacementScore[])[i]!));
     assert.equal(b1Gate(full), true);
     assert.equal(publicResultFor(full, 'b1_confirmed'), 'B1');
   });
@@ -255,22 +241,22 @@ describe('placement routing walk', () => {
     );
     assert.equal(state.currentQuestionId, 'Q01');
     assert.match(reply.aiResponse, /Teacher Bee/);
-    assert.match(reply.aiResponse, /Hi, Maya/);
-    assert.match(reply.aiResponse, /where do you live/i);
+    assert.match(reply.aiResponse, /Where are you from/);
+    assert.doesNotMatch(reply.aiResponse, /Hi, Maya/);
     assert.match(reply.textTh, /ครูพี่บี/);
     assert.equal(reply.canSkip, true);
-    assert.equal(reply.progressMax, 20);
+    assert.equal(reply.progressMax, 25);
     assert.equal(reply.progressTurn, 1);
-    assert.equal(reply.progressScores.length, 20);
+    assert.equal(reply.progressScores.length, 25);
     assert.ok(reply.progressScores.every((score) => score === null));
   });
 
-  it('colors scored items 0 gray / 1 yellow / 2 green over 20 slots', () => {
+  it('colors scored items 0 gray / 1 yellow / 2 green over 25 slots', () => {
     let { state, reply } = buildPlacementOpening(
       initPlacementRuntime({ entrySource: 'onboarding', learnerName: 'Maya' }),
     );
     ({ state, reply } = scoreWalk(state, 2));
-    assert.equal(reply.progressMax, 20);
+    assert.equal(reply.progressMax, 25);
     assert.equal(reply.progressTurn, 2);
     assert.equal(reply.progressScores[0], 2);
     assert.equal(reply.lastDebug?.questionId, 'Q01');
@@ -330,11 +316,11 @@ describe('placement routing walk', () => {
     assert.equal(a1Gate(state), false);
   });
 
-  it('stops as Seed when Q03 is 0 even if later items are 2', () => {
+  it('stops as Seed when Q06 is 0 even if the sum is 9', () => {
     let { state, reply } = buildPlacementOpening(
       initPlacementRuntime({ entrySource: 'onboarding', learnerName: 'Maya' }),
     );
-    for (const s of [2, 2, 0, 2, 2, 2] as PlacementScore[]) {
+    for (const s of [2, 2, 2, 2, 1, 0] as PlacementScore[]) {
       ({ state, reply } = scoreWalk(state, s));
     }
     assert.equal(state.finished, true);
@@ -394,101 +380,30 @@ describe('placement routing walk', () => {
     assert.equal(state.currentQuestionId, 'Q11');
     assert.equal(reply.hideNpcTranscript, true);
     assert.match(reply.textTh, /ไม่มีข้อความ/);
-    assert.equal(getPlacementQuestion('Q11')?.delivery, 'audio_only');
+    assert.equal(getPlacementQuestion('Q11')?.delivery, 'picture_audio');
   });
 });
 
 describe('placement heuristics', () => {
-  it('scores keys ownership, colour, and past+companion', () => {
+  it('does not regex-award 2; English answers go to the evaluator', () => {
+    const q01 = getPlacementQuestion('Q01')!;
     const q04 = getPlacementQuestion('Q04')!;
-    const q06 = getPlacementQuestion('Q06')!;
-    const q11 = getPlacementQuestion('Q11')!;
-    assert.equal(heuristicPlacementEval(q04, 'They have keys.', false)?.score, 2);
-    assert.equal(heuristicPlacementEval(q06, "No, it's blue.", false)?.score, 2);
-    assert.equal(heuristicPlacementEval(q06, "Yes, it's red.", false)?.score, 0);
-    assert.equal(heuristicPlacementEval(q11, 'I went shopping.', false), null);
-    assert.equal(
-      heuristicPlacementEval(q11, 'I went shopping with my friend.', false)?.score,
-      2,
-    );
+    assert.equal(heuristicPlacementEval(q01, "I'm from Thailand.", false), null);
+    assert.equal(heuristicPlacementEval(q04, 'They have keys.', false), null);
   });
 
   it('gives 1 to Thai-only answers that still show intent', () => {
     const q01 = getPlacementQuestion('Q01')!;
-    const judged = heuristicPlacementEval(q01, 'เหนื่อยครับ', false);
+    const judged = heuristicPlacementEval(q01, 'มาจากกรุงเทพครับ', false);
     assert.equal(judged?.score, 1);
     assert.match(judged?.reason ?? '', /ไทย/);
   });
 
-  it('scores Q01 feeling plus home without calling the evaluator', () => {
-    const q01 = getPlacementQuestion('Q01')!;
-    assert.equal(
-      heuristicPlacementEval(q01, "I'm good. I'm from Bangkok.", false)?.score,
-      2,
-    );
-    assert.equal(heuristicPlacementEval(q01, "I'm good.", false), null);
-  });
-
-  it('scores Q02 locally only when relationship and trait are both obvious', () => {
-    const q02 = getPlacementQuestion('Q02')!;
-    assert.equal(
-      heuristicPlacementEval(
-        q02,
-        'My father is a teacher. He is handsome.',
-        false,
-      )?.score,
-      2,
-    );
-    assert.equal(
-      heuristicPlacementEval(q02, 'My father is a teacher.', false),
-      null,
-    );
-  });
-
-  it('scores Q08 like plus ability locally', () => {
-    const q08 = getPlacementQuestion('Q08')!;
-    assert.equal(
-      heuristicPlacementEval(
-        q08,
-        'I like cooking and I can cook well.',
-        false,
-      )?.score,
-      2,
-    );
-    assert.equal(heuristicPlacementEval(q08, 'I like games.', false), null);
-  });
-
-  it('scores Q07 seven o’clock plus a morning routine locally', () => {
-    const q07 = getPlacementQuestion('Q07')!;
-    assert.equal(
-      heuristicPlacementEval(
-        q07,
-        'She is waking up at seven. I usually read book in the morning.',
-        false,
-      )?.score,
-      2,
-    );
-    assert.equal(heuristicPlacementEval(q07, 'At seven.', false), null);
-  });
-
-  it('scores Q05 polite book requests locally', () => {
-    const q05 = getPlacementQuestion('Q05')!;
-    assert.equal(
-      heuristicPlacementEval(q05, 'Can I borrow the book please?', false)?.score,
-      2,
-    );
-    assert.equal(heuristicPlacementEval(q05, 'Book.', false), null);
-  });
-
-  it('keeps a debug reason on skipped and heuristic keys answers', () => {
+  it('keeps a debug reason on skipped answers', () => {
     const q04 = getPlacementQuestion('Q04')!;
     assert.match(
       heuristicPlacementEval(q04, '', true)?.reason ?? '',
       /ข้าม/,
-    );
-    assert.match(
-      heuristicPlacementEval(q04, 'They have keys.', false)?.reason ?? '',
-      /keys/,
     );
   });
 });
@@ -518,7 +433,7 @@ describe('placement live catalog mapping', () => {
     assert.equal(a1Ok.publicResult, 'A1');
     assert.equal(a1Ok.recommendedNodeId, 'a2_c01n01');
 
-    fillA2(a1Pass, [1, 2, 2, 2, 1, 1]);
+    fillA2(a1Pass, [2, 2, 1, 2, 2, 2, 1, 1, 1, 1]);
     const plus = buildSessionResult(a1Pass, 'band_not_confirmed');
     assert.equal(plus.publicResult, 'A1+');
     assert.equal(plus.recommendedNodeId, 'a2_c08n01');
@@ -528,7 +443,7 @@ describe('placement live catalog mapping', () => {
   it('keeps A2/B1 as coming soon until a later catalog exists', () => {
     const state = fill(ENTRY, [2, 2, 2, 2, 2, 2]);
     fillA1(state, [2, 2, 2, 2]);
-    fillA2(state, [2, 1, 2, 2, 2, 1]);
+    fillA2(state, [2, 1, 2, 1, 1, 2, 2, 2, 1, 1]);
     const a2 = buildSessionResult(state, 'band_not_confirmed');
     assert.equal(a2.publicResult, 'A2');
     assert.equal(a2.recommendationType, 'coming_soon');

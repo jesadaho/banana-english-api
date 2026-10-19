@@ -30,8 +30,7 @@ const REPLAY_HINT_TH = 'ฟังไม่ทัน กดฟังซ้ำไ�
 const CLOSING_EN =
   'Thank you for talking with Teacher Bee. Let’s see where you can start!';
 const CLOSING_TH = 'ขอบคุณที่คุยกับครูบีนะครับ มาดูจุดเริ่มต้นของคุณกัน!';
-const Q18_VARIANT =
-  'You said {problem}. What did you do, and what happened next?';
+const Q22_VARIANT = 'You said {problem}. How did you handle it?';
 
 export function isPlacementScenarioId(id: string): boolean {
   return id.trim() === PLACEMENT_SCENARIO_ID;
@@ -67,10 +66,10 @@ export function exactPromptFor(
   q: PlacementQuestion,
   state: PlacementRuntimeState,
 ): { prompt: string; variantId: string } {
-  if (q.id === 'Q18' && state.facts.storyProblem) {
+  if (q.id === 'Q22' && state.facts.storyProblem) {
     return {
-      prompt: Q18_VARIANT.replace('{problem}', state.facts.storyProblem),
-      variantId: 'Q18.contextual',
+      prompt: Q22_VARIANT.replace('{problem}', state.facts.storyProblem),
+      variantId: 'Q22.contextual',
     };
   }
   return {
@@ -232,9 +231,9 @@ function scored(
   };
 }
 
-/** Fast local 2/0 only when the answer is obvious. Partial matches return null so Gemini judges open answers. */
+/** Skip, capture noise, and Thai-only only. Communicative 0/1/2 goes to Gemini. */
 export function heuristicPlacementEval(
-  q: PlacementQuestion,
+  _q: PlacementQuestion,
   transcript: string,
   skipped: boolean,
 ): Omit<
@@ -253,97 +252,6 @@ export function heuristicPlacementEval(
   }
   const raw = transcript.trim();
   if (!raw || isScenarioNoise(raw)) return null;
-  const lower = raw.toLowerCase();
-
-  if (q.id === 'Q01') {
-    const feeling =
-      /\b(good|great|fine|ok|okay|well|happy|tired|sad|alright|not bad)\b/.test(
-        lower,
-      );
-    const place =
-      /\b(live|from|in|at)\b/.test(lower) &&
-      /\b[a-z]{3,}\b/.test(lower.replace(/\b(live|from|in|at|i|i'm|im|am)\b/g, ''));
-    if (feeling && place) {
-      return scored(2, raw, 'target_met', 'บอกความรู้สึกและที่อยู่');
-    }
-  }
-  if (q.id === 'Q02') {
-    const who =
-      /\b(sister|brother|mom|dad|mother|father|friend|family|wife|husband|son|daughter)\b/.test(
-        lower,
-      );
-    const trait =
-      /\b(kind|funny|nice|happy|quiet|loud|tall|short|young|old|friendly|cool|handsome|beautiful|pretty|cute|smart|clever|brave|shy|sweet|strong|caring|helpful|polite|lazy|busy|cheerful|serious|patient)\b/.test(
-        lower,
-      );
-    if (who && trait) {
-      return scored(2, raw, 'target_met', 'บอกความสัมพันธ์และลักษณะ');
-    }
-  }
-  if (q.id === 'Q05') {
-    const polite = /\b(can i|could i|may i|please)\b/.test(lower);
-    const book = /\bbook\b/.test(lower);
-    if (polite && book) {
-      return scored(2, raw, 'target_met', 'ขอสุภาพและพูดถึงหนังสือ');
-    }
-  }
-  if (q.id === 'Q07') {
-    const seven = /\b(seven|7(?::00)?(?:\s*(?:am|o'?clock))?)\b/.test(lower);
-    const morningAct =
-      /\b(breakfast|shower|coffee|read|work|eat|brush|exercise|run|walk|usually|morning)\b/.test(
-        lower,
-      );
-    if (seven && morningAct) {
-      return scored(2, raw, 'target_met', 'บอกเจ็ดโมงและกิจวัตรเช้า');
-    }
-  }
-  if (q.id === 'Q08') {
-    const like = /\b(like|love|enjoy)\b/.test(lower);
-    const ability = /\b(can|good at|well)\b/.test(lower);
-    if (like && ability) {
-      return scored(2, raw, 'target_met', 'บอกความชอบและความสามารถ');
-    }
-  }
-  if (q.id === 'Q04') {
-    const pluralKeys = /\bkeys\b/.test(lower);
-    const owners = /\b(they|their|may|max|have)\b/.test(lower);
-    if (pluralKeys && owners) {
-      return scored(2, raw, 'target_met', 'พูด keys หลายชิ้นและโยงเจ้าของ');
-    }
-    if (/\bkey\b/.test(lower) && !pluralKeys) {
-      return scored(
-        1,
-        raw,
-        'target_partially_demonstrated',
-        'พูด key แต่ยังไม่เป็นพหูพจน์/เจ้าของ',
-      );
-    }
-  }
-  if (q.id === 'Q06') {
-    if (/\byes\b/.test(lower) && /\bred\b/.test(lower)) {
-      return scored(0, raw, 'off_topic', 'ตอบว่าใช่/สีแดง ซึ่งไม่ตรงภาพ');
-    }
-    const no = /\b(no|not|isn't|is not)\b/.test(lower);
-    const blue = /\bblue\b/.test(lower);
-    if (no && blue) {
-      return scored(2, raw, 'target_met', 'ปฏิเสธสีแดงและบอกว่าสีน้ำเงิน');
-    }
-  }
-  if (q.id === 'Q09') {
-    if (/\b(how much|what's the price|what is the price)\b/.test(lower)) {
-      return scored(2, raw, 'target_met', 'ถามราคาได้ครบ');
-    }
-  }
-  if (q.id === 'Q11') {
-    const past = /\b(went|stayed|watched|played|did|was|were)\b/.test(lower);
-    const who =
-      /\b(friend|friends|family|mom|dad|alone|myself|sister|brother|with)\b/.test(
-        lower,
-      );
-    if (past && who) {
-      return scored(2, raw, 'target_met', 'เล่าอดีตและมีคนไปด้วย/ไปคนเดียว');
-    }
-  }
   if (thaiOnly(raw)) {
     return scored(
       1,
@@ -362,15 +270,18 @@ function captureFacts(
 ): PlacementRuntimeState['facts'] {
   const lower = transcript.toLowerCase();
   const next = { ...facts };
-  if (q.id === 'Q17' && /\b(late|rain|miss|cancel|wrong|change)\b/.test(lower)) {
+  if (q.id === 'Q21' && /\b(late|rain|miss|cancel|wrong|change|noisy|problem)\b/.test(lower)) {
     next.storyProblem = transcript.trim().slice(0, 80);
   }
   return next;
 }
 
 function ackFor(q: PlacementQuestion): string {
-  if (q.id === 'Q03' || q.id === 'Q05' || q.id === 'Q06') return '';
-  return q.afterScoreEn ?? 'Thanks!';
+  if (q.afterScoreEn) return q.afterScoreEn;
+  if (q.id === 'Q03' || q.id === 'Q05' || q.id === 'Q06' || q.id === 'Q08') {
+    return '';
+  }
+  return 'Thanks!';
 }
 
 export function applyPlacementEvaluation(
