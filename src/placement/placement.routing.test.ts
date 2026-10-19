@@ -388,6 +388,15 @@ describe('placement heuristics', () => {
     assert.equal(heuristicPlacementEval(q01, "I'm good.", false)?.score, 1);
   });
 
+  it('scores Q05 polite book requests locally', () => {
+    const q05 = getPlacementQuestion('Q05')!;
+    assert.equal(
+      heuristicPlacementEval(q05, 'Can I borrow the book please?', false)?.score,
+      2,
+    );
+    assert.equal(heuristicPlacementEval(q05, 'Book.', false)?.score, 1);
+  });
+
   it('keeps a debug reason on skipped and heuristic keys answers', () => {
     const q04 = getPlacementQuestion('Q04')!;
     assert.match(

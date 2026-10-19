@@ -296,6 +296,21 @@ export function heuristicPlacementEval(
       );
     }
   }
+  if (q.id === 'Q05') {
+    const polite = /\b(can i|could i|may i|please)\b/.test(lower);
+    const book = /\bbook\b/.test(lower);
+    if (polite && book) {
+      return scored(2, raw, 'target_met', 'ขอสุภาพและพูดถึงหนังสือ');
+    }
+    if (polite || book) {
+      return scored(
+        1,
+        raw,
+        'target_partially_demonstrated',
+        polite ? 'สุภาพ แต่ยังไม่พูดถึงหนังสือ' : 'พูดถึงหนังสือ แต่ยังไม่สุภาพพอ',
+      );
+    }
+  }
   if (q.id === 'Q04') {
     const pluralKeys = /\bkeys\b/.test(lower);
     const owners = /\b(they|their|may|max|have)\b/.test(lower);

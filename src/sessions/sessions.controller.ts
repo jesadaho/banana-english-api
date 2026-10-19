@@ -969,11 +969,9 @@ export class SessionsController {
         reasonCode: hasEnglish
           ? 'target_partially_demonstrated'
           : 'no_communicative_answer',
-        reason:
-          evalPartial.reason?.trim() ||
-          (hasEnglish
-            ? 'ผู้ประเมินไม่ชัด จึงให้ 1 ชั่วคราว'
-            : 'ยังไม่มีคำตอบภาษาอังกฤษ จึงให้ 0'),
+        reason: hasEnglish
+          ? 'ผู้ประเมินตอบไม่ครบ จึงให้ 1 ชั่วคราว'
+          : 'ยังไม่มีคำตอบภาษาอังกฤษ จึงให้ 0',
       };
     }
 
