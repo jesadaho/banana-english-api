@@ -2974,45 +2974,16 @@ ${text}`,
     reason: string;
   }> {
     type Judged = {
-      status: 'scored' | 'needs_review' | 'assisted' | 'technical_retry';
-      score: 0 | 1 | 2 | null;
-      reasonCode:
-        | 'target_met'
-        | 'target_partially_demonstrated'
-        | 'off_topic'
-        | 'no_communicative_answer'
-        | 'uncertain_transcription'
-        | 'user_skipped'
-        | 'capture_error'
-        | 'assistance_used';
-      evidence: string[];
-      reason: string;
+      score: 0 | 1 | 2;
+      reason?: string;
     };
     const schema = {
       type: 'object',
       properties: {
-        status: {
-          type: 'string',
-          enum: ['scored', 'needs_review', 'assisted', 'technical_retry'],
-        },
         score: { type: 'integer', enum: [0, 1, 2] },
-        reasonCode: {
-          type: 'string',
-          enum: [
-            'target_met',
-            'target_partially_demonstrated',
-            'off_topic',
-            'no_communicative_answer',
-            'uncertain_transcription',
-            'user_skipped',
-            'capture_error',
-            'assistance_used',
-          ],
-        },
-        evidence: { type: 'array', items: { type: 'string' } },
         reason: { type: 'string' },
       },
-      required: ['status', 'score', 'reasonCode', 'evidence', 'reason'],
+      required: ['score'],
     };
     const systemInstruction =
       'Assess only this response against the supplied task. Accept natural alternatives and complete short answers. ' +
@@ -3045,31 +3016,39 @@ ${text}`,
         systemInstruction,
         contents: [{ role: 'user', parts: [{ text: userPrompt }] }],
         schema,
-        maxOutputTokens: 256,
+        maxOutputTokens: 1024,
+        timeoutMs: 15_000,
         temperature: 0,
         recoverFromPlainText: (text) => {
           const scoreMatch = text.match(/"?score"?\s*[:=]\s*([012])/i);
           if (!scoreMatch) return null;
-          const statusMatch = text.match(
-            /"status"\s*:\s*"(scored|needs_review|assisted|technical_retry)"/,
-          );
           return {
-            status: (statusMatch?.[1] as Judged['status']) ?? 'scored',
             score: Number(scoreMatch[1]) as 0 | 1 | 2,
-            reasonCode: 'target_partially_demonstrated',
-            evidence: [params.transcript.slice(0, 80)],
             reason: 'กู้คะแนนจากคำตอบผู้ประเมินที่ไม่ครบ',
           };
         },
       });
 
+    const toResult = (judged: Judged) => ({
+      status: 'scored' as const,
+      score: judged.score,
+      reasonCode:
+        judged.score === 2
+          ? ('target_met' as const)
+          : judged.score === 1
+            ? ('target_partially_demonstrated' as const)
+            : ('off_topic' as const),
+      evidence: [params.transcript.slice(0, 80)],
+      reason: judged.reason?.trim() || 'ให้คะแนนจากผู้ประเมิน',
+    });
+
     try {
       const { value } = await run();
-      return value;
+      return toResult(value);
     } catch {
       try {
         const { value } = await run();
-        return value;
+        return toResult(value);
       } catch {
         return {
           status: 'needs_review',
