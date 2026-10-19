@@ -3076,7 +3076,7 @@ ${text}`,
           score: null,
           reasonCode: 'uncertain_transcription',
           evidence: [params.transcript.slice(0, 80)],
-          reason: 'ผู้ประเมินตอบ JSON ไม่ครบ',
+          reason: 'ผู้ประเมินส่งคะแนนไม่เป็น JSON จึงยังไม่ให้คะแนน',
         };
       }
     }
