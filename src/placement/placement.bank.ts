@@ -13,6 +13,11 @@ export const PLACEMENT_STAGES: Array<{
   { id: 'b1', questionIds: ['Q17', 'Q18', 'Q19', 'Q20'] },
 ];
 
+export const PLACEMENT_QUESTION_IDS = PLACEMENT_STAGES.flatMap(
+  (stage) => stage.questionIds,
+);
+export const PLACEMENT_PROGRESS_MAX = PLACEMENT_QUESTION_IDS.length;
+
 /** @deprecated Use PLACEMENT_STAGES. Kept as an alias for scenario chrome. */
 export const PLACEMENT_BANDS = PLACEMENT_STAGES;
 

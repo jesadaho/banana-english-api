@@ -111,6 +111,11 @@ export interface UserProfileResponse {
   surveyGender?: string | null;
   /** Onboarding age band: under_18 | 18_24 | 25_34 | 35_44 | 45_plus */
   surveyAgeRange?: string | null;
+  /** Daily speaking reminder: morning | noon | evening. */
+  reminderSlot?: 'morning' | 'noon' | 'evening' | null;
+  placementResult?: unknown;
+  placementEntryPathId?: string | null;
+  placementEntryNodeId?: string | null;
   /** Banana Ticket sheet copy — kept in sync with economy env/defaults. */
   bananaTicket: {
     dailyDrop: number;
@@ -151,7 +156,10 @@ export class UsersService {
       dto.displayName ||
       dto.timezone ||
       dto.fcmToken ||
-      dto.lessonTeachingLanguage
+      dto.lessonTeachingLanguage ||
+      dto.reminderSlot ||
+      dto.placementEntryNodeId ||
+      dto.placementEntryPathId
     ) {
       updated = await this.prisma.user.update({
         where: { id: user.id },
@@ -159,6 +167,9 @@ export class UsersService {
           displayName: dto.displayName ?? undefined,
           timezone: dto.timezone ?? undefined,
           lessonTeachingLanguage: dto.lessonTeachingLanguage ?? undefined,
+          reminderSlot: dto.reminderSlot ?? undefined,
+          placementEntryPathId: dto.placementEntryPathId ?? undefined,
+          placementEntryNodeId: dto.placementEntryNodeId ?? undefined,
         } as Prisma.UserUpdateInput,
       });
 
@@ -666,6 +677,20 @@ export class UsersService {
       acquisitionSource,
       surveyGender,
       surveyAgeRange,
+      reminderSlot:
+        user.reminderSlot === 'morning' ||
+        user.reminderSlot === 'noon' ||
+        user.reminderSlot === 'evening'
+          ? user.reminderSlot
+          : null,
+      placementResult:
+        (user as User & { placementResult?: unknown }).placementResult ?? null,
+      placementEntryPathId:
+        (user as User & { placementEntryPathId?: string | null })
+          .placementEntryPathId ?? null,
+      placementEntryNodeId:
+        (user as User & { placementEntryNodeId?: string | null })
+          .placementEntryNodeId ?? null,
       email: user.email,
       bananaTicket: this.economy.ticketRules(user),
       nextBananaRefillAt: this.economy.nextBananaRefillAt(user)?.toISOString() ?? null,

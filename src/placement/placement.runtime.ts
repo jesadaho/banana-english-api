@@ -2,13 +2,16 @@ import { randomUUID } from 'crypto';
 import { isScenarioNoise } from '../interactive-scenario/interactive-scenario.runtime';
 import { describeItImageUrl } from '../describe-it/describe-it.data';
 import {
+  PLACEMENT_PROGRESS_MAX,
   PLACEMENT_QUESTION_BY_ID,
+  PLACEMENT_QUESTION_IDS,
   PLACEMENT_STAGES,
   getPlacementQuestion,
 } from './placement.bank';
 import {
   b1Gate,
   deriveEligibility,
+  eligibleScore,
   nextQuestionId,
   shouldEarlyStopAfter,
   buildSessionResult,
@@ -95,21 +98,25 @@ function hideTranscript(q: PlacementQuestion): boolean {
   return q.delivery === 'audio_only' || q.delivery === 'picture_audio';
 }
 
-function progressInStage(state: PlacementRuntimeState): {
+function progressOverall(state: PlacementRuntimeState): {
   progressTurn: number;
   progressMax: number;
+  progressScores: Array<0 | 1 | 2 | null>;
 } {
-  const id = state.currentQuestionId ?? 'Q01';
-  const q = getPlacementQuestion(id);
-  const stage = PLACEMENT_STAGES.find(
-    (s) => s.id === (q?.stage ?? 'foundation_entry'),
-  )!;
-  const asked = stage.questionIds.filter((qid) =>
-    state.askedQuestionIds.includes(qid),
-  ).length;
+  const progressScores = PLACEMENT_QUESTION_IDS.map((id) =>
+    eligibleScore(state.results[id]),
+  );
+  const idx = state.currentQuestionId
+    ? PLACEMENT_QUESTION_IDS.indexOf(state.currentQuestionId)
+    : -1;
+  const progressTurn =
+    state.finished || idx < 0
+      ? PLACEMENT_PROGRESS_MAX
+      : idx + 1;
   return {
-    progressTurn: Math.min(asked, stage.questionIds.length),
-    progressMax: stage.questionIds.length,
+    progressTurn,
+    progressMax: PLACEMENT_PROGRESS_MAX,
+    progressScores,
   };
 }
 
@@ -120,7 +127,7 @@ function npcForQuestion(
   prefixTh = '',
 ): PlacementTurnReply {
   const { prompt } = exactPromptFor(q, state);
-  const { progressTurn, progressMax } = progressInStage({
+  const { progressTurn, progressMax, progressScores } = progressOverall({
     ...state,
     currentQuestionId: q.id,
   });
@@ -141,6 +148,7 @@ function npcForQuestion(
     isTaskComplete: false,
     progressTurn,
     progressMax,
+    progressScores,
   };
 }
 
@@ -185,6 +193,7 @@ function scored(
   score: 0 | 1 | 2,
   raw: string,
   reasonCode: PlacementItemResult['reasonCode'],
+  reason: string,
 ): Omit<
   PlacementItemResult,
   'questionId' | 'attemptId' | 'exactPrompt' | 'variantId'
@@ -195,6 +204,7 @@ function scored(
     eligibleForPlacement: true,
     evidence: [raw.slice(0, 80)],
     reasonCode,
+    reason,
   };
 }
 
@@ -214,6 +224,7 @@ export function heuristicPlacementEval(
       eligibleForPlacement: true,
       evidence: [],
       reasonCode: 'user_skipped',
+      reason: 'ข้ามข้อ จึงให้ 0',
     };
   }
   const raw = transcript.trim();
@@ -223,23 +234,39 @@ export function heuristicPlacementEval(
   if (q.id === 'Q04') {
     const pluralKeys = /\bkeys\b/.test(lower);
     const owners = /\b(they|their|may|max|have)\b/.test(lower);
-    if (pluralKeys && owners) return scored(2, raw, 'target_met');
+    if (pluralKeys && owners) {
+      return scored(2, raw, 'target_met', 'พูด keys หลายชิ้นและโยงเจ้าของ');
+    }
     if (/\bkey\b/.test(lower) && !pluralKeys) {
-      return scored(1, raw, 'target_partially_demonstrated');
+      return scored(
+        1,
+        raw,
+        'target_partially_demonstrated',
+        'พูด key แต่ยังไม่เป็นพหูพจน์/เจ้าของ',
+      );
     }
   }
   if (q.id === 'Q06') {
     if (/\byes\b/.test(lower) && /\bred\b/.test(lower)) {
-      return scored(0, raw, 'off_topic');
+      return scored(0, raw, 'off_topic', 'ตอบว่าใช่/สีแดง ซึ่งไม่ตรงภาพ');
     }
     const no = /\b(no|not|isn't|is not)\b/.test(lower);
     const blue = /\bblue\b/.test(lower);
-    if (no && blue) return scored(2, raw, 'target_met');
-    if (no || blue) return scored(1, raw, 'target_partially_demonstrated');
+    if (no && blue) {
+      return scored(2, raw, 'target_met', 'ปฏิเสธสีแดงและบอกว่าสีน้ำเงิน');
+    }
+    if (no || blue) {
+      return scored(
+        1,
+        raw,
+        'target_partially_demonstrated',
+        'มี no หรือ blue อย่างใดอย่างหนึ่ง',
+      );
+    }
   }
   if (q.id === 'Q09') {
     if (/\b(how much|what's the price|what is the price)\b/.test(lower)) {
-      return scored(2, raw, 'target_met');
+      return scored(2, raw, 'target_met', 'ถามราคาได้ครบ');
     }
   }
   if (q.id === 'Q11') {
@@ -248,13 +275,25 @@ export function heuristicPlacementEval(
       /\b(friend|friends|family|mom|dad|alone|myself|sister|brother|with)\b/.test(
         lower,
       );
-    if (past && who) return scored(2, raw, 'target_met');
+    if (past && who) {
+      return scored(2, raw, 'target_met', 'เล่าอดีตและมีคนไปด้วย/ไปคนเดียว');
+    }
     if (past || who) {
-      return scored(1, raw, 'target_partially_demonstrated');
+      return scored(
+        1,
+        raw,
+        'target_partially_demonstrated',
+        past ? 'มีอดีต แต่ยังไม่บอกว่าไปกับใคร' : 'มีคน แต่ยังไม่ชัดว่าเป็นอดีต',
+      );
     }
   }
   if (thaiOnly(raw)) {
-    return scored(1, raw, 'target_partially_demonstrated');
+    return scored(
+      1,
+      raw,
+      'target_partially_demonstrated',
+      'ตอบเป็นไทย แสดงว่าเข้าใจโจทย์ แต่ยังไม่พูดอังกฤษ',
+    );
   }
   return null;
 }
@@ -383,7 +422,7 @@ function finish(
     currentQuestionId: null,
     result,
   };
-  const { progressTurn, progressMax } = progressInStage(state);
+  const { progressTurn, progressMax, progressScores } = progressOverall(done);
   return {
     state: done,
     reply: {
@@ -395,6 +434,7 @@ function finish(
       isTaskComplete: true,
       progressTurn,
       progressMax,
+      progressScores,
       result,
     },
   };

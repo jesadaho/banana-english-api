@@ -97,6 +97,8 @@ export interface TurnExchangeResponse {
   progressTurn?: number;
   /** Designed Core Flow beat count (progress bar denominator). */
   progressMax?: number;
+  /** Placement: 20 slots, null until scored; 0 / 1 / 2 after an answer. */
+  progressScores?: Array<0 | 1 | 2 | null>;
   /** False when the learner should tap Continue instead of speaking.
    * Omitted on paths that always expect speech. */
   expectsUserSpeech?: boolean;
@@ -154,13 +156,7 @@ export interface TurnExchangeResponse {
   /** Placement audio-only items: speak NPC English, do not show it as text. */
   hideNpcTranscript?: boolean;
   /** Placement session result — set on the closing turn. */
-  placementResult?: {
-    demonstratedBand: string | null;
-    resultStatus: string;
-    resultLabel: string;
-    recommendedStartKey: string;
-    stopReason: string;
-  } | null;
+  placementResult?: Record<string, unknown> | null;
 }
 
 /** Shared turn-level visual for scenarios (lessons later). */
