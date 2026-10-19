@@ -555,7 +555,7 @@ export class SessionsController {
           }
         : null,
       emojiChoice: null,
-      placementResult: reply.result ?? null,
+      placementResult: (reply.result ?? null) as Record<string, unknown> | null,
       placementDebug: reply.lastDebug ?? null,
     };
   }
@@ -948,7 +948,7 @@ export class SessionsController {
       visual: exchange.visual ?? null,
       canSkip: exchange.canSkip,
       hideNpcTranscript: exchange.hideNpcTranscript,
-      placementResult: exchange.placementResult,
+      placementResult: reply.result ?? null,
     };
     this.ttsLiveLines.observe('scenario', { text: exchange.aiResponse });
     this.sessionStore.addTurn(sessionId, aiTurn);
