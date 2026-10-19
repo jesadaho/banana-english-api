@@ -3044,8 +3044,22 @@ ${text}`,
         systemInstruction,
         contents: [{ role: 'user', parts: [{ text: userPrompt }] }],
         schema,
-        maxOutputTokens: 160,
+        maxOutputTokens: 256,
         temperature: 0,
+        recoverFromPlainText: (text) => {
+          const scoreMatch = text.match(/"score"\s*:\s*([012])/);
+          if (!scoreMatch) return null;
+          const statusMatch = text.match(
+            /"status"\s*:\s*"(scored|needs_review|assisted|technical_retry)"/,
+          );
+          return {
+            status: (statusMatch?.[1] as Judged['status']) ?? 'scored',
+            score: Number(scoreMatch[1]) as 0 | 1 | 2,
+            reasonCode: 'target_partially_demonstrated',
+            evidence: [params.transcript.slice(0, 80)],
+            reason: 'กู้คะแนนจากคำตอบผู้ประเมินที่ไม่ครบ',
+          };
+        },
       });
 
     try {
@@ -3061,7 +3075,7 @@ ${text}`,
           score: null,
           reasonCode: 'uncertain_transcription',
           evidence: [params.transcript.slice(0, 80)],
-          reason: 'malformed evaluator output',
+          reason: 'ผู้ประเมินตอบ JSON ไม่ครบ',
         };
       }
     }
