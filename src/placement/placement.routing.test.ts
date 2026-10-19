@@ -20,6 +20,7 @@ import {
 import {
   applyPlacementEvaluation,
   buildPlacementOpening,
+  coercePlacementScore,
   heuristicPlacementEval,
   initPlacementRuntime,
   makeItemResult,
@@ -390,6 +391,13 @@ describe('placement heuristics', () => {
     const q04 = getPlacementQuestion('Q04')!;
     assert.equal(heuristicPlacementEval(q01, "I'm from Thailand.", false), null);
     assert.equal(heuristicPlacementEval(q04, 'They have keys.', false), null);
+  });
+
+  it('accepts Gemini scores sent as strings', () => {
+    assert.equal(coercePlacementScore('2'), 2);
+    assert.equal(coercePlacementScore('1'), 1);
+    assert.equal(coercePlacementScore(0), 0);
+    assert.equal(coercePlacementScore('null'), null);
   });
 
   it('gives 1 to Thai-only answers that still show intent', () => {
