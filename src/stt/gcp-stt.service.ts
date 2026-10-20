@@ -28,6 +28,7 @@ export class GcpSttService {
     const languageCode = this.languageCode(params.language);
     const projectId = token.projectId;
 
+    const kind = sniffAudioKind(params.audio, params.filename);
     if (projectId) {
       try {
         return await this.recognizeV2({
@@ -38,18 +39,25 @@ export class GcpSttService {
         });
       } catch (error) {
         this.logger.warn(
-          `Speech v2 failed, trying v1: ${
+          `Speech v2 failed (${kind}), trying v1: ${
             error instanceof Error ? error.message : String(error)
           }`,
         );
       }
     }
 
+    if (kind === 'm4a') {
+      throw new ServiceUnavailableException(
+        'GCP Speech cannot decode AAC/M4A on v1. Record WAV or enable Speech v2.',
+      );
+    }
+
     return this.recognizeV1({
       audio: params.audio,
       accessToken: token.accessToken,
       languageCode,
-      filename: params.filename ?? '',
+      kind,
+      projectId,
     });
   }
 
@@ -73,6 +81,7 @@ export class GcpSttService {
       headers: {
         Authorization: `Bearer ${params.accessToken}`,
         'Content-Type': 'application/json',
+        'x-goog-user-project': params.projectId,
       },
       body: JSON.stringify({
         config: {
@@ -95,23 +104,33 @@ export class GcpSttService {
     audio: Buffer;
     accessToken: string;
     languageCode: string;
-    filename: string;
+    kind: AudioKind;
+    projectId: string | null;
   }): Promise<GcpSttResult> {
-    const encoding = this.v1Encoding(params.filename);
+    const encoding = v1EncodingForKind(params.kind);
+    const headers: Record<string, string> = {
+      Authorization: `Bearer ${params.accessToken}`,
+      'Content-Type': 'application/json',
+    };
+    if (params.projectId) headers['x-goog-user-project'] = params.projectId;
+    const config: Record<string, unknown> = {
+      languageCode: params.languageCode,
+      model: 'latest_short',
+      enableAutomaticPunctuation: true,
+    };
+    // WAV/FLAC: let Google read the header. Wrong sampleRateHertz → empty.
+    if (encoding === 'WEBM_OPUS') {
+      config.encoding = encoding;
+      config.sampleRateHertz = 48000;
+    } else if (encoding === 'MP3') {
+      config.encoding = encoding;
+      config.sampleRateHertz = 44100;
+    }
     const response = await fetch('https://speech.googleapis.com/v1/speech:recognize', {
       method: 'POST',
-      headers: {
-        Authorization: `Bearer ${params.accessToken}`,
-        'Content-Type': 'application/json',
-      },
+      headers,
       body: JSON.stringify({
-        config: {
-          encoding,
-          sampleRateHertz: encoding === 'WEBM_OPUS' ? 48000 : 44100,
-          languageCode: params.languageCode,
-          model: 'latest_short',
-          enableAutomaticPunctuation: true,
-        },
+        config,
         audio: { content: params.audio.toString('base64') },
       }),
     });
@@ -121,14 +140,6 @@ export class GcpSttService {
       throw new ServiceUnavailableException('GCP Speech transcription failed');
     }
     return this.parseTranscript(body, 'v1');
-  }
-
-  private v1Encoding(filename: string): string {
-    const lower = filename.toLowerCase();
-    if (lower.endsWith('.webm') || lower.endsWith('.opus')) return 'WEBM_OPUS';
-    if (lower.endsWith('.wav')) return 'LINEAR16';
-    if (lower.endsWith('.mp3')) return 'MP3';
-    return 'MP3';
   }
 
   private parseTranscript(body: string, source: string): GcpSttResult {
@@ -151,4 +162,36 @@ export class GcpSttService {
     }
     return { text };
   }
+}
+
+export type AudioKind = 'wav' | 'webm' | 'mp3' | 'm4a' | 'unknown';
+
+export function sniffAudioKind(
+  audio: Buffer,
+  filename?: string,
+): AudioKind {
+  if (audio.length >= 12) {
+    if (audio.subarray(0, 4).toString('ascii') === 'RIFF') return 'wav';
+    if (audio.subarray(0, 4).toString('ascii') === 'OggS') return 'webm';
+    if (audio[0] === 0x1a && audio[1] === 0x45 && audio[2] === 0xdf) return 'webm';
+    if (audio.subarray(4, 8).toString('ascii') === 'ftyp') return 'm4a';
+    if (audio.subarray(0, 3).toString('ascii') === 'ID3') return 'mp3';
+    if (audio[0] === 0xff && (audio[1] & 0xe0) === 0xe0) return 'mp3';
+  }
+  const lower = (filename ?? '').toLowerCase();
+  if (lower.endsWith('.wav')) return 'wav';
+  if (lower.endsWith('.webm') || lower.endsWith('.opus') || lower.endsWith('.ogg')) {
+    return 'webm';
+  }
+  if (lower.endsWith('.mp3')) return 'mp3';
+  if (lower.endsWith('.m4a') || lower.endsWith('.aac') || lower.endsWith('.mp4')) {
+    return 'm4a';
+  }
+  return 'unknown';
+}
+
+function v1EncodingForKind(kind: AudioKind): string {
+  if (kind === 'webm') return 'WEBM_OPUS';
+  if (kind === 'wav') return 'LINEAR16';
+  return 'MP3';
 }

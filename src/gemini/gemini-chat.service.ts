@@ -61,6 +61,7 @@ import {
   teachingLanguageFromConfig,
 } from '../lessons/lesson-prompt';
 import { GroqChatService } from '../groq/groq-chat.service';
+import { isGeminiBillingError } from '../common/ai-user-message';
 import { GeminiModelPool, parseGeminiChatModels } from './gemini-model-pool';
 
 const REPLY_SCHEMA = {
@@ -3267,6 +3268,10 @@ ${text}`,
             lastPreview = error.message;
           }
 
+          if (isGeminiBillingError(error)) {
+            return this.generateJsonViaGroqFallback(options, error);
+          }
+
           const retryable = this.isRetryableJsonError(error, policy);
           this.logger.warn(
             `Gemini JSON attempt failed policy=${policy} model=${model} tokens=${tokenLimits[attempt]}: ${lastPreview.slice(0, 180)}`,
@@ -3398,7 +3403,7 @@ ${text}`,
         lastError = err;
 
         const hasAnotherModel = i < models.length - 1;
-        if (!hasAnotherModel || !this.isRetryableModelError(err)) {
+        if (isGeminiBillingError(err) || !hasAnotherModel || !this.isRetryableModelError(err)) {
           throw err;
         }
 
@@ -3538,7 +3543,21 @@ ${text}`,
     };
   }
 
+  private async generateJsonViaGroqFallback<T>(
+    options: GenerateJsonOptions,
+    cause: unknown,
+  ): Promise<GeminiGenerationResult<T>> {
+    if (!this.groq.isConfigured()) {
+      throw cause instanceof Error ? cause : new Error(String(cause));
+    }
+    this.logger.warn(
+      `Gemini prepaid/quota exhausted; falling back to Groq (${this.groq.activeModel()})`,
+    );
+    return this.groq.generateJson<T>(options);
+  }
+
   private isRetryableModelError(error: Error): boolean {
+    if (isGeminiBillingError(error)) return false;
     const message = error.message;
     const name = error.name;
     return (

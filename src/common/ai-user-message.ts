@@ -13,6 +13,16 @@ export function isChatDebugRequest(req: {
   return value === '1' || value.toLowerCase() === 'true';
 }
 
+export function isGeminiBillingError(err: unknown): boolean {
+  const raw = err instanceof Error ? err.message : String(err);
+  return (
+    /\bGemini API failed \(402\)/.test(raw) ||
+    /"code":\s*402/.test(raw) ||
+    raw.includes('prepaid credits are depleted') ||
+    raw.includes('RESOURCE_EXHAUSTED')
+  );
+}
+
 /** Maps Gemini / upstream AI failures to short user-facing copy. */
 export function formatAiServiceUserMessage(err: unknown): string {
   const raw = err instanceof Error ? err.message : String(err);
@@ -42,7 +52,10 @@ export function formatAiServiceUserMessage(err: unknown): string {
     lower.includes('504') ||
     lower.includes('429') ||
     lower.includes('resource_exhausted') ||
-    lower.includes('invalid json after retries')
+    lower.includes('prepaid credits') ||
+    /\b402\b/.test(lower) ||
+    lower.includes('invalid json after retries') ||
+    isGeminiBillingError(err)
   ) {
     return (
       'กำลังใช้งานหนาแน่น — We are experiencing high demand. ' +

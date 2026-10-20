@@ -29,6 +29,7 @@ import { synthesisText } from '../src/tts/tts-speech-text';
 import { getTurn2Script } from '../src/topics/intro_script';
 import { V7_LEGACY_FLOWS } from '../src/lessons/foundation-v7-legacy-flows';
 import { collectPlacementBankLines } from '../src/placement/placement.runtime';
+import { collectPronunciationBankLines } from '../src/training/scripts/pronunciation.script';
 
 /** Spoken lines seen on live TTS that the lesson walker does not emit. */
 function extraBankLines(): string[] {
@@ -331,6 +332,8 @@ async function main() {
       ? extraBankLines()
       : process.argv.includes('--only-placement')
         ? collectPlacementBankLines()
+        : process.argv.includes('--only-pronunciation')
+          ? collectPronunciationBankLines()
         : [
             ...collectChapter1BankLines(),
             ...(await collectFoundationBankLines(2, 16)),
@@ -338,6 +341,7 @@ async function main() {
             getTurn2Script().textEn,
             ...extraBankLines(),
             ...collectPlacementBankLines(),
+            ...collectPronunciationBankLines(),
           ]
     ).map((line) => ttsBankKey(line)),
   );

@@ -4,6 +4,7 @@ import {
   classifyContentCourse,
   foundationV7PathPosition,
   foundationV7StageCatalog,
+  foundationV7StageIdForRating,
 } from './content-course';
 
 describe('classifyContentCourse', () => {
@@ -76,6 +77,20 @@ describe('classifyContentCourse', () => {
         ['2.5', 5],
       ],
     );
+  });
+
+  it('maps lesson ratings onto the same stage ids as the score table', () => {
+    assert.equal(foundationV7StageIdForRating('greetings'), 'v7_u01n01');
+    assert.equal(foundationV7StageIdForRating('yes_no_maybe'), 'v7_u01n04');
+    assert.equal(
+      foundationV7StageIdForRating('foundation_first_conversation'),
+      'v7_u01n05',
+    );
+    assert.equal(
+      foundationV7StageIdForRating('fnd_v2_first_conversation'),
+      'say_it:fnd_v2_first_conversation',
+    );
+    assert.equal(foundationV7StageIdForRating('game_say_it'), null);
   });
 
   it('puts parked leftover lessons in other', () => {

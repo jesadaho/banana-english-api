@@ -71,7 +71,7 @@ interface PronunciationContrast {
   right: string;
 }
 
-interface PronunciationLessonSpec {
+export interface PronunciationLessonSpec {
   lessonId: string;
   titleEn: string;
   titleTh: string;
@@ -139,7 +139,20 @@ interface PronunciationLessonSpec {
  * Chapter 4: (Chapter Intro →) Lesson Overview → Listen → Listen Again → Tip → Repeat (coach) → Complete
  * Chapter 5: (Chapter Intro →) Lesson Overview → Listen → Listen Again → Tip → Practice → Complete
  */
+const PRONUNCIATION_SPECS: PronunciationLessonSpec[] = [];
+
+export function pronunciationLessonSpecs(): readonly PronunciationLessonSpec[] {
+  return PRONUNCIATION_SPECS;
+}
+
+export function pronunciationSpecFor(
+  lessonId: string,
+): PronunciationLessonSpec | undefined {
+  return PRONUNCIATION_SPECS.find((spec) => spec.lessonId === lessonId);
+}
+
 function buildPronunciationLesson(spec: PronunciationLessonSpec): LessonConfig {
+  PRONUNCIATION_SPECS.push(spec);
   const noun = spec.itemNoun ?? 'word';
   const nouns = `${noun}s`;
   const list = spec.items.map((item) => `- ${item}`).join('\n');
