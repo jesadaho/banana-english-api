@@ -144,7 +144,10 @@ describe('placement bank v2.1', () => {
         );
       }
     }
-    assert.equal(getPlacementQuestion('Q11')?.transitionTh?.includes('ไม่มีข้อความ'), true);
+    assert.equal(
+      getPlacementQuestion('Q11')?.transitionTh?.includes('ปิดไว้'),
+      true,
+    );
     assert.equal(getPlacementQuestion('Q01')?.npcEn, 'Where are you from?');
   });
 });
@@ -241,10 +244,11 @@ describe('placement routing walk', () => {
       initPlacementRuntime({ entrySource: 'onboarding', learnerName: 'Maya' }),
     );
     assert.equal(state.currentQuestionId, 'Q01');
-    assert.match(reply.aiResponse, /Teacher Bee/);
+    assert.match(reply.aiResponse, /ครูพี่บี/);
     assert.match(reply.aiResponse, /Where are you from/);
+    assert.doesNotMatch(reply.aiResponse, /Hello, I am Teacher Bee/);
     assert.doesNotMatch(reply.aiResponse, /Hi, Maya/);
-    assert.match(reply.textTh, /ครูพี่บี/);
+    assert.match(reply.textTh, /ฟังไม่ทัน/);
     assert.equal(reply.canSkip, true);
     assert.equal(reply.progressMax, 25);
     assert.equal(reply.progressTurn, 1);
@@ -262,6 +266,7 @@ describe('placement routing walk', () => {
     assert.equal(reply.progressScores[0], 2);
     assert.equal(reply.lastDebug?.questionId, 'Q01');
     assert.equal(reply.lastDebug?.score, 2);
+    assert.equal(reply.assessmentTier, 'correct');
     assert.ok((reply.lastDebug?.reason ?? '').length > 0);
     ({ state, reply } = scoreWalk(state, 1));
     assert.equal(reply.progressScores[1], 1);
@@ -300,8 +305,9 @@ describe('placement routing walk', () => {
         learnerName: 'Maya',
       }),
     );
-    assert.match(reply.aiResponse, /level check/i);
-    assert.doesNotMatch(reply.aiResponse, /Teacher Bee. I help/);
+    assert.match(reply.aiResponse, /มาลองวัดระดับ/);
+    assert.match(reply.aiResponse, /Where are you from/);
+    assert.doesNotMatch(reply.aiResponse, /Let’s try an English level check/);
   });
 
   it('passes entry then asks Q07, not A1 yet', () => {
@@ -380,7 +386,7 @@ describe('placement routing walk', () => {
     }
     assert.equal(state.currentQuestionId, 'Q11');
     assert.equal(reply.hideNpcTranscript, true);
-    assert.match(reply.textTh, /ไม่มีข้อความ/);
+    assert.match(reply.textTh, /ปิดไว้/);
     assert.equal(getPlacementQuestion('Q11')?.delivery, 'picture_audio');
   });
 });

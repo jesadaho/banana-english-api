@@ -78,20 +78,11 @@ export function exactPromptFor(
   };
 }
 
-function openingLines(state: PlacementRuntimeState): {
-  en: string;
-  th: string;
-} {
+function openingLines(state: PlacementRuntimeState): string {
   if (state.entrySource === 'profile_settings') {
-    return {
-      en: 'Let’s try an English level check. Answer as much as you can.',
-      th: 'มาลองวัดระดับภาษาอังกฤษกันครับ ตอบเท่าที่ได้เลย',
-    };
+    return 'มาลองวัดระดับภาษาอังกฤษกันครับ ตอบเท่าที่ได้เลย';
   }
-  return {
-    en: 'Hello, I am Teacher Bee. I help you speak English with confidence. Today we will check your English level. Answer as much as you can.',
-    th: 'สวัสดีครับ ผมครูพี่บี กล้วยหอมที่จะมาช่วยให้คุณพูดภาษาอังกฤษได้อย่างมั่นใจ วันนี้เรามาวัดระดับภาษาอังกฤษของคุณกัน ตอบเท่าที่ได้เลยครับ',
-  };
+  return 'สวัสดีครับ ผมครูพี่บี กล้วยหอมที่จะมาช่วยให้คุณพูดภาษาอังกฤษได้อย่างมั่นใจ วันนี้เรามาวัดระดับภาษาอังกฤษของคุณกัน ตอบเท่าที่ได้เลยครับ';
 }
 
 function hideTranscript(q: PlacementQuestion): boolean {
@@ -140,7 +131,18 @@ function withLastDebug(
   reply: PlacementTurnReply,
   evaluation: PlacementItemResult,
 ): PlacementTurnReply {
-  return { ...reply, lastDebug: lastDebugFor(evaluation) };
+  return {
+    ...reply,
+    lastDebug: lastDebugFor(evaluation),
+    assessmentTier:
+      evaluation.score === 2
+        ? 'correct'
+        : evaluation.score === 1
+          ? 'close'
+          : evaluation.score === 0
+            ? 'incorrect'
+            : undefined,
+  };
 }
 
 function npcForQuestion(
@@ -179,7 +181,6 @@ export function buildPlacementOpening(
   state: PlacementRuntimeState,
 ): { state: PlacementRuntimeState; reply: PlacementTurnReply } {
   const q01 = getPlacementQuestion('Q01')!;
-  const open = openingLines(state);
   const next: PlacementRuntimeState = {
     ...state,
     openingPlayed: true,
@@ -188,15 +189,15 @@ export function buildPlacementOpening(
       ? state.askedQuestionIds
       : [...state.askedQuestionIds, 'Q01'],
   };
-  const body = npcForQuestion(next, q01, '', `${open.th} ${REPLAY_HINT_TH}`);
+  const introTh = openingLines(state);
+  const body = npcForQuestion(next, q01, '', REPLAY_HINT_TH);
   const spokenPrompt = exactPromptFor(q01, next).prompt;
   return {
     state: next,
     reply: {
       ...body,
-      aiResponse: state.openingPlayed
-        ? body.aiResponse
-        : `${open.en} ${spokenPrompt}`,
+      aiResponse: `${introTh} ${spokenPrompt}`,
+      textTh: REPLAY_HINT_TH,
     },
   };
 }

@@ -556,6 +556,7 @@ export class SessionsController {
           }
         : null,
       emojiChoice: null,
+      assessmentTier: reply.assessmentTier,
       placementResult: (reply.result ?? null) as Record<string, unknown> | null,
       placementDebug: reply.lastDebug ?? null,
     };

@@ -191,5 +191,7 @@ export interface PlacementTurnReply {
     status: PlacementItemStatus;
     reason: string;
   };
+  /** Same chime contract as Final Interview: 2 → correct, 1 → close, 0 → incorrect. */
+  assessmentTier?: 'correct' | 'close' | 'incorrect';
   result?: PlacementSessionResult;
 }
