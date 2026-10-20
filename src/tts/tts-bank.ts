@@ -26,6 +26,21 @@ export function ttsBankKey(text: string | null | undefined): string {
   return (text ?? '').replace(/\s+/g, ' ').trim();
 }
 
+/**
+ * Loose key for lookup only — not used in object hashes.
+ * Hits the same clip when Gemini changes Latin case, trailing punct, or ๆ spacing.
+ */
+export function ttsBankLookupKey(text: string | null | undefined): string {
+  return ttsBankKey(text)
+    .normalize('NFC')
+    .replace(/^["“']+|["”']+$/g, '')
+    .replace(/\s*ๆ/gu, ' ๆ')
+    .replace(/[.!?…]+$/u, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .toLowerCase();
+}
+
 /** Object name for one spoken line. Includes model and voice so a regen does not collide. */
 export function ttsBankObjectPath(
   text: string,
@@ -51,18 +66,40 @@ export function lookupTtsBankUrl(
   lines: Record<string, string>,
   ttsText: string | null | undefined,
   textEn?: string | null,
+  foldedIndex?: Map<string, string>,
 ): string | null {
   const key = ttsBankKey(spokenTurnText(ttsText, textEn));
   if (!key) return null;
-  return lines[key] ?? null;
+  const direct = lines[key];
+  if (direct) return direct;
+  const folded = ttsBankLookupKey(key);
+  if (!folded) return null;
+  const indexed = foldedIndex?.get(folded);
+  if (indexed) return indexed;
+  if (foldedIndex) return null;
+  for (const [banked, url] of Object.entries(lines)) {
+    if (ttsBankLookupKey(banked) === folded) return url;
+  }
+  return null;
 }
 
 let cached: TtsBankFile | null = null;
+let cachedFolded: Map<string, string> | null = null;
+
+function foldedBankIndex(lines: Record<string, string>): Map<string, string> {
+  const index = new Map<string, string>();
+  for (const [banked, url] of Object.entries(lines)) {
+    const folded = ttsBankLookupKey(banked);
+    if (folded && !index.has(folded)) index.set(folded, url);
+  }
+  return index;
+}
 
 export function loadTtsBank(): TtsBankFile {
   if (cached) return cached;
   const path = join(__dirname, 'tts-bank.json');
   cached = JSON.parse(readFileSync(path, 'utf8')) as TtsBankFile;
+  cachedFolded = foldedBankIndex(cached.lines);
   return cached;
 }
 
@@ -71,7 +108,8 @@ export function audioUrlForTurn(
   ttsText: string | null | undefined,
   textEn?: string | null,
 ): string | null {
-  return lookupTtsBankUrl(loadTtsBank().lines, ttsText, textEn);
+  const bank = loadTtsBank();
+  return lookupTtsBankUrl(bank.lines, ttsText, textEn, cachedFolded ?? undefined);
 }
 
 /** Body clip plus an optional praise clip. Praise is never folded into the body URL. */
@@ -82,10 +120,14 @@ export function audioUrlsForSpokenTurn(input: {
 }): { audioUrl: string | null; praiseAudioUrl: string | null } {
   const body = spokenTurnText(input.ttsText, input.textEn);
   const praise = input.praiseText?.trim();
+  const bank = loadTtsBank();
+  const folded = cachedFolded ?? undefined;
   return {
-    audioUrl: body ? lookupTtsBankUrl(loadTtsBank().lines, body, null) : null,
+    audioUrl: body
+      ? lookupTtsBankUrl(bank.lines, body, null, folded)
+      : null,
     praiseAudioUrl: praise
-      ? lookupTtsBankUrl(loadTtsBank().lines, praise, null)
+      ? lookupTtsBankUrl(bank.lines, praise, null, folded)
       : null,
   };
 }

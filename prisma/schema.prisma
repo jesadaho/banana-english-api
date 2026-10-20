@@ -31,6 +31,8 @@ model User {
   /** Path/node the learner may start at without completing earlier nodes. */
   placementEntryPathId    String?
   placementEntryNodeId    String?
+  /** Last onboarding/paid Level Test start — one calendar month in the learner tz. */
+  lastPlacementTestAt     DateTime?
 
   /** Daily speaking reminder: "morning" | "noon" | "evening". Null = not opted in. */
   reminderSlot            String?
@@ -107,6 +109,8 @@ model User {
 
   /** Firebase Auth UID after linking Apple/Google sign-in. */
   firebaseUid             String?   @unique
+  /** Rotated on each Google/Apple login — old devices are rejected. */
+  authSessionId           String?
   /** Primary email from linked auth provider(s). */
   email                   String?
 

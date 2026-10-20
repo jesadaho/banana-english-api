@@ -192,12 +192,20 @@ import {
   buildPlacementOpening,
   coercePlacementScore,
   currentPlacementQuestion,
-  exactPromptFor,
   heuristicPlacementEval,
+  placementJudgeContext,
   initPlacementRuntime,
   isPlacementScenarioId,
   makeItemResult,
 } from '../placement/placement.runtime';
+import {
+  isPaidPlacementRetest,
+  normalizePlacementEntrySource,
+  PLACEMENT_MONTHLY_LIMIT_CODE,
+  placementRetestStatus,
+  placementRuntimeEntrySource,
+  shouldStampPlacementTest,
+} from '../placement/placement.access';
 import {
   PLACEMENT_RUBRIC_VERSION,
   type PlacementSessionResult,
@@ -535,6 +543,7 @@ export class SessionsController {
   }
 
   private placementExchange(reply: PlacementTurnReply): TurnExchangeResponse {
+    const clips = audioUrlsForSpokenTurn({ ttsText: reply.aiResponse });
     return {
       aiResponse: reply.aiResponse,
       textTh: reply.textTh,
@@ -548,6 +557,7 @@ export class SessionsController {
       expectsUserSpeech: reply.expectsUserSpeech,
       canSkip: reply.canSkip,
       hideNpcTranscript: reply.hideNpcTranscript,
+      audioUrl: clips.audioUrl,
       visual: reply.imagePath
         ? {
             imageUrl: describeItImageUrl(reply.imagePath),
@@ -567,7 +577,7 @@ export class SessionsController {
     scenarioId: string,
     chatDebug = false,
     extras?: {
-      entrySource?: 'onboarding' | 'profile_settings';
+      entrySource?: 'onboarding' | 'profile_settings' | 'growth' | 'debug';
       learnerName?: string;
     },
   ) {
@@ -576,10 +586,31 @@ export class SessionsController {
       throw new NotFoundException('Scenario not found');
     }
     const placement = isPlacementScenarioId(config.id);
+    const placementSource = placement
+      ? normalizePlacementEntrySource(extras?.entrySource)
+      : null;
     const resumed =
       !placement && config.scenes.length > 1
         ? await this.loadScenarioResume(user.id, config)
         : null;
+    if (placement && placementSource && isPaidPlacementRetest(placementSource)) {
+      const latest = await this.prisma.user.findUniqueOrThrow({
+        where: { id: user.id },
+      });
+      const retest = placementRetestStatus(latest);
+      if (!retest.available) {
+        throw new ConflictException(PLACEMENT_MONTHLY_LIMIT_CODE);
+      }
+      if (retest.bananaCost > 0) {
+        const spendRef = randomUUID();
+        await this.economy.spendBananas(
+          user.id,
+          retest.bananaCost,
+          spendRef,
+          'interactive_scenario_start',
+        );
+      }
+    }
     // Resuming a paid run is free: the learner already paid when scene 1 began.
     if (config.bananaCost > 0 && !resumed) {
       const spendRef = randomUUID();
@@ -593,11 +624,9 @@ export class SessionsController {
 
     const data = this.sessionStore.createInteractiveScenario(config);
     if (resumed) data.scenarioRuntime = resumed;
-    if (placement) {
+    if (placement && placementSource) {
       data.placementRuntime = initPlacementRuntime({
-        entrySource: extras?.entrySource === 'profile_settings'
-          ? 'profile_settings'
-          : 'onboarding',
+        entrySource: placementRuntimeEntrySource(placementSource),
         learnerName:
           extras?.learnerName?.trim() ||
           firstNameFromDisplayName(user.displayName) ||
@@ -612,9 +641,17 @@ export class SessionsController {
         simulationId: config.id,
       } as Prisma.UserSessionUncheckedCreateInput,
     });
+    const now = new Date();
     await this.prisma.user.update({
       where: { id: user.id },
-      data: { lastStudiedAt: new Date() },
+      data: {
+        lastStudiedAt: now,
+        ...(placement &&
+        placementSource &&
+        shouldStampPlacementTest(placementSource)
+          ? { lastPlacementTestAt: now }
+          : {}),
+      },
     });
 
     let openingReply: TurnExchangeResponse;
@@ -631,14 +668,17 @@ export class SessionsController {
       speaker: 'ai' as const,
       textEn: openingReply.aiResponse,
       textTh: openingReply.textTh,
-      audioUrl: null as string | null,
+      audioUrl: openingReply.audioUrl ?? null,
       expectsUserSpeech: openingReply.expectsUserSpeech ?? true,
       visual: openingReply.visual ?? null,
       emojiChoice: openingReply.emojiChoice ?? null,
       hideNpcTranscript: openingReply.hideNpcTranscript,
       canSkip: openingReply.canSkip,
     };
-    this.ttsLiveLines.observe('scenario', { text: openingReply.aiResponse });
+    this.ttsLiveLines.observe('scenario', {
+      text: openingReply.aiResponse,
+      audioUrl: openingReply.audioUrl,
+    });
     this.sessionStore.addTurn(data.session.id, opening);
     data.session.checkpointStates = { ...openingReply.updatedCheckpoints };
     data.session.progressTurn = openingReply.progressTurn;
@@ -845,16 +885,16 @@ export class SessionsController {
     }
     if (!evalPartial) {
       try {
-        const { prompt } = exactPromptFor(q, data.placementRuntime);
+        const judgedCtx = placementJudgeContext(q, data.placementRuntime);
         const judged = await this.chat.evaluatePlacementAnswer({
           questionId: q.id,
           stage: q.stage,
           rubricVersion: PLACEMENT_RUBRIC_VERSION,
-          exactPrompt: prompt,
-          target: q.target,
-          requiredEvidence: q.requiredEvidence,
-          anchors2: q.anchors2,
-          anchors1: q.anchors1,
+          exactPrompt: judgedCtx.prompt,
+          target: judgedCtx.target,
+          requiredEvidence: judgedCtx.requiredEvidence,
+          anchors2: judgedCtx.anchors2,
+          anchors1: judgedCtx.anchors1,
           sceneFacts: q.sceneFacts,
           delivery: q.delivery,
           transcript: raw,
@@ -948,14 +988,17 @@ export class SessionsController {
       speaker: 'ai' as const,
       textEn: exchange.aiResponse,
       textTh: exchange.textTh,
-      audioUrl: null as string | null,
+      audioUrl: exchange.audioUrl ?? null,
       expectsUserSpeech: exchange.expectsUserSpeech ?? true,
       visual: exchange.visual ?? null,
       canSkip: exchange.canSkip,
       hideNpcTranscript: exchange.hideNpcTranscript,
       placementResult: reply.result ?? null,
     };
-    this.ttsLiveLines.observe('scenario', { text: exchange.aiResponse });
+    this.ttsLiveLines.observe('scenario', {
+      text: exchange.aiResponse,
+      audioUrl: exchange.audioUrl,
+    });
     this.sessionStore.addTurn(sessionId, aiTurn);
 
     return attachAiDebug(

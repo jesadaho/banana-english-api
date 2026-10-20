@@ -10,6 +10,9 @@ import { ConfigService } from '@nestjs/config';
 import { User, Prisma } from '@prisma/client';
 import { EconomyService } from '../economy/economy.service';
 import { getUserLocalTime, isSameDateKey } from '../common/timezone.util';
+import {
+  placementRetestStatus,
+} from '../placement/placement.access';
 import { FirebaseAdminService } from '../firebase/firebase-admin.service';
 import { subscriptionPayload } from '../subscriptions/subscriptions.service';
 import { PrismaService } from '../prisma/prisma.service';
@@ -116,6 +119,13 @@ export interface UserProfileResponse {
   placementResult?: unknown;
   placementEntryPathId?: string | null;
   placementEntryNodeId?: string | null;
+  lastPlacementTestAt?: string | null;
+  placementRetestAvailable?: boolean;
+  placementRetestBananaCost?: number;
+  placementRetestNextDateKey?: string | null;
+  placementRetestDaysRemaining?: number;
+  placementRetestCooldownDays?: number;
+  authSessionId?: string | null;
   /** Banana Ticket sheet copy — kept in sync with economy env/defaults. */
   bananaTicket: {
     dailyDrop: number;
@@ -657,6 +667,8 @@ export class UsersService {
       .surveyAgeRange;
     const surveyAgeRange =
       rawAge && SURVEY_AGE_RANGES.has(rawAge as SurveyAgeRange) ? rawAge : null;
+    const placementUser = user as User & { lastPlacementTestAt?: Date | null };
+    const retest = placementRetestStatus(placementUser);
     return {
       anonymousId: user.anonymousId,
       displayName: user.displayName ?? 'เพื่อน',
@@ -691,6 +703,14 @@ export class UsersService {
       placementEntryNodeId:
         (user as User & { placementEntryNodeId?: string | null })
           .placementEntryNodeId ?? null,
+      lastPlacementTestAt: placementUser.lastPlacementTestAt?.toISOString() ?? null,
+      authSessionId:
+        (user as User & { authSessionId?: string | null }).authSessionId ?? null,
+      placementRetestAvailable: retest.available,
+      placementRetestBananaCost: retest.bananaCost,
+      placementRetestNextDateKey: retest.nextAvailableDateKey,
+      placementRetestDaysRemaining: retest.daysRemaining,
+      placementRetestCooldownDays: retest.cooldownDays,
       email: user.email,
       bananaTicket: this.economy.ticketRules(user),
       nextBananaRefillAt: this.economy.nextBananaRefillAt(user)?.toISOString() ?? null,

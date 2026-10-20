@@ -1,10 +1,10 @@
-export const PLACEMENT_QUESTION_VERSION = 'placement-q-v2.1';
-export const PLACEMENT_RUBRIC_VERSION = 'placement-rubric-v2.1';
+export const PLACEMENT_QUESTION_VERSION = 'placement-q-v2.2';
+export const PLACEMENT_RUBRIC_VERSION = 'placement-rubric-v2.2';
 export const PLACEMENT_ROUTING_VERSION = 'placement-routing-v2.1';
 export const PLACEMENT_MAPPING_VERSION = 'placement-start-v2.1';
 export const PLACEMENT_SCENARIO_ID = 'onboarding_placement_bee';
-export const PLACEMENT_MODEL_VERSION = 'placement-eval-v2.1';
-export const PLACEMENT_PROMPT_VERSION = 'placement-prompt-v2.1';
+export const PLACEMENT_MODEL_VERSION = 'placement-eval-v2.2';
+export const PLACEMENT_PROMPT_VERSION = 'placement-prompt-v2.2';
 
 export type PlacementEntrySource = 'onboarding' | 'profile_settings';
 export type PlacementStageId =
@@ -78,6 +78,26 @@ export interface PlacementQuestion {
   /** Thai line played once before this item (ungraded). */
   transitionTh?: string;
   afterScoreEn?: string;
+  /** Second speaking turn on the same item (invite follow-up, hotel constraint). */
+  followUp?: PlacementFollowUp;
+}
+
+export type PlacementFollowUp = {
+  kind: 'invite_schedule' | 'constraint';
+  timePrompt?: string;
+  placePrompt?: string;
+  prompt?: string;
+  target: string;
+  requiredEvidence: string;
+  anchors2: string[];
+  anchors1: string[];
+};
+
+export interface PlacementPendingFollowUp {
+  questionId: string;
+  prompt: string;
+  variant: string;
+  first: PlacementItemResult;
 }
 
 export interface PlacementItemResult {
@@ -110,6 +130,7 @@ export interface PlacementRuntimeState {
   captureRetries: Record<string, number>;
   consecutiveZeros: number;
   facts: PlacementFacts;
+  pendingFollowUp: PlacementPendingFollowUp | null;
   finished: boolean;
   result: PlacementSessionResult | null;
 }
