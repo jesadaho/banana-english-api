@@ -113,6 +113,27 @@ export class AdminMetricsController {
     );
   }
 
+  @Get('placement')
+  placement(
+    @Query('from') from?: string,
+    @Query('to') to?: string,
+    @Query('requireOnboarding') requireOnboarding?: string,
+    @Query('requireSignedIn') requireSignedIn?: string,
+    @Query('requireAppOpen') requireAppOpen?: string,
+    @Query('excludeUnsetSource') excludeUnsetSource?: string,
+  ) {
+    return this.metrics.placement(
+      from,
+      to,
+      parseMetricsFilters({
+        requireOnboarding,
+        requireSignedIn,
+        requireAppOpen,
+        excludeUnsetSource,
+      }),
+    );
+  }
+
   @Get('users')
   users(
     @Query('from') from?: string,

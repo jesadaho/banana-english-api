@@ -286,6 +286,31 @@ export function foundationV7StageIdForSession(session: {
   return null;
 }
 
+/**
+ * Map a LessonRating.lessonId (catalog lesson, simulation, or reward id)
+ * onto the Stage scores `gameId`. Hub minigame ratings (`game_*`) stay unmapped.
+ */
+export function foundationV7StageIdForRating(lessonId: string): string | null {
+  const trimmed = lessonId.trim();
+  if (!trimmed || trimmed.startsWith('game_')) return null;
+  const canonical = canonicalFoundationV7RewardId(trimmed);
+  if (canonical) return canonical;
+  const fromSession =
+    foundationV7StageIdForSession({
+      lessonId: trimmed,
+      simulationId: null,
+    }) ??
+    foundationV7StageIdForSession({
+      lessonId: null,
+      simulationId: trimmed,
+    });
+  if (fromSession) {
+    return canonicalFoundationV7RewardId(fromSession) ?? fromSession;
+  }
+  if (foundationV7PathPosition(trimmed)) return trimmed;
+  return null;
+}
+
 /** Every map node, plus chapter Skip Quizzes from Ch2, in path order. */
 export function foundationV7StageCatalog(): FoundationV7Stage[] {
   const stages: FoundationV7Stage[] = [];

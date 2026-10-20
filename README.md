@@ -62,6 +62,7 @@ Server runs at `http://localhost:8000`.
 | GET | `/admin/metrics/acquisition` | Acquisition sources + activation funnel |
 | GET | `/admin/metrics/content` | Lesson/mission ranks, ratings, retention proxies |
 | GET | `/admin/metrics/economy` | Banana flows + estimated IAP revenue |
+| GET | `/admin/metrics/placement` | Level Test bands, question heatmap, recent results |
 | GET | `/api/config/keys` | Client runtime keys (`groqApiKey`) |
 | GET | `/topics/daily` | Daily topic list |
 | POST | `/sessions` | Start session `{ topicId }` |

@@ -35,6 +35,11 @@ import {
   getFoundationChoiceLesson,
   isFoundationChoiceLesson,
 } from '../scripts/foundation.registry';
+import {
+  buildPronunciationAfterUser,
+  buildPronunciationOpening,
+  isPronunciationScriptLesson,
+} from '../scripts/pronunciation.script';
 
 export type TrainingEngineTurnInput = {
   config: LessonConfig;
@@ -114,6 +119,13 @@ export class TrainingTurnEngine {
       };
     }
 
+    if (isPronunciationScriptLesson(config.lessonId)) {
+      return {
+        reply: withRepeatSkip(this.toReply(buildPronunciationOpening(config))),
+        aiDebug: scriptedAiDebug(),
+      };
+    }
+
     throw new Error(`Training v2 opening not implemented: ${config.lessonId}`);
   }
 
@@ -139,6 +151,22 @@ export class TrainingTurnEngine {
     const stories = getStoriesChoiceLesson(input.config.lessonId);
     if (stories) {
       return this.runChoiceLessonTurn(input, stories);
+    }
+
+    if (isPronunciationScriptLesson(input.config.lessonId)) {
+      const reply = buildPronunciationAfterUser({
+        config: input.config,
+        turns: input.turns,
+        userText: input.userText,
+        learnerFirstName: input.learnerFirstName,
+      });
+      if (!reply) {
+        throw new Error(`pronunciation turn failed: ${input.config.lessonId}`);
+      }
+      return {
+        reply: withRepeatSkip(this.toReply(reply)),
+        aiDebug: scriptedAiDebug(),
+      };
     }
 
     throw new Error(`Training v2 turn not implemented: ${input.config.lessonId}`);

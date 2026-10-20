@@ -9,7 +9,8 @@ function cutsceneBaseUrl(): string {
  * Relative paths are served as `{BUNNY_CUTSCENE_BASE_URL}/{path}`.
  */
 export const CONVERSATION_CUTSCENES: Record<string, string> = {
-  foundation_first_conversation: 'conversation-cutscenes/v7_u01n05.mp4',
+  foundation_first_conversation:
+    'https://banana-english-cutscenes.b-cdn.net/conversation-cutscenes/v7_u01n05.mp4?v=5',
   a2_c01n09:
     'https://banana-english-cutscenes.b-cdn.net/conversation-cutscenes/a2_c01n09.mp4?v=2',
 };

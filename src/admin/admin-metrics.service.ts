@@ -22,10 +22,15 @@ import {
   EMPTY_COURSE_COUNTS,
   foundationV7PathPosition,
   foundationV7StageCatalog,
+  foundationV7StageIdForRating,
   foundationV7StageIdForSession,
   roundStars,
   type ContentCourse,
 } from './content-course';
+import {
+  publicResultFromJson,
+  summarizePlacementRows,
+} from './admin-placement-summary';
 
 type CacheEntry = { expiresAt: number; payload: unknown };
 
@@ -127,6 +132,18 @@ export class AdminMetricsService {
     return this.cached(
       `economy:${range.from.toISOString()}:${range.to.toISOString()}:${filtersCacheKey(filters)}`,
       () => this.buildEconomy(range, filters),
+    );
+  }
+
+  async placement(
+    fromRaw?: string,
+    toRaw?: string,
+    filters: MetricsFilters = EMPTY_FILTERS,
+  ) {
+    const range = this.safeRange(fromRaw, toRaw);
+    return this.cached(
+      `placement:${range.from.toISOString()}:${range.to.toISOString()}:${filtersCacheKey(filters)}`,
+      () => this.buildPlacement(range, filters),
     );
   }
 
@@ -1216,6 +1233,7 @@ export class AdminMetricsService {
         userId: row.userId,
         count: row._count._all,
       })),
+      ratings,
     );
 
     return {
@@ -1262,6 +1280,11 @@ export class AdminMetricsService {
       simulationId: string | null;
       userId: string;
       count: number;
+    }[] = [],
+    ratings: {
+      lessonId: string;
+      _avg: { stars: number | null };
+      _count: { _all: number };
     }[] = [],
   ) {
     type Acc = {
@@ -1330,6 +1353,18 @@ export class AdminMetricsService {
       acc.users.add(row.userId);
     }
 
+    const ratingByStage = new Map<string, { starSum: number; count: number }>();
+    for (const row of ratings) {
+      const stageId =
+        foundationV7StageIdForRating(row.lessonId) ?? row.lessonId;
+      const count = row._count._all;
+      if (!stageId || count <= 0) continue;
+      const current = ratingByStage.get(stageId) ?? { starSum: 0, count: 0 };
+      current.starSum += (row._avg.stars ?? 0) * count;
+      current.count += count;
+      ratingByStage.set(stageId, current);
+    }
+
     return [...byGame.values()]
       .map((acc) => {
         const avgCorrect =
@@ -1349,6 +1384,7 @@ export class AdminMetricsService {
             ? null
             : Math.round((acc.passedCount / acc.scoredPass) * 1000) / 10;
         const pathPosition = foundationV7PathPosition(acc.gameId);
+        const ratingAcc = ratingByStage.get(acc.gameId);
         return {
           gameId: acc.gameId,
           titleEn: contentItemTitle(acc.gameId),
@@ -1368,6 +1404,12 @@ export class AdminMetricsService {
           avgTotal,
           avgPct,
           passRate,
+          rating: ratingAcc
+            ? {
+                avgStars: roundStars(ratingAcc.starSum / ratingAcc.count),
+                count: ratingAcc.count,
+              }
+            : null,
         };
       })
       .sort((a, b) => {
@@ -1764,6 +1806,42 @@ export class AdminMetricsService {
     };
   }
 
+  private async buildPlacement(range: DateRange, filters: MetricsFilters) {
+    const userFilter = this.userWhere(filters);
+    const inRange: Prisma.UserWhereInput = {
+      OR: [
+        {
+          lastPlacementTestAt: { gte: range.from, lte: range.to },
+        },
+        {
+          lastPlacementTestAt: null,
+          placementResult: { not: Prisma.JsonNull },
+          createdAt: { gte: range.from, lte: range.to },
+        },
+      ],
+    };
+    const rows = await this.prisma.user.findMany({
+      where: { AND: [userFilter, inRange] },
+      select: {
+        id: true,
+        displayName: true,
+        email: true,
+        lastPlacementTestAt: true,
+        createdAt: true,
+        placementEntryNodeId: true,
+        placementEntryPathId: true,
+        placementResult: true,
+      },
+      take: 5000,
+    });
+    const summary = summarizePlacementRows(rows);
+    return {
+      range: { from: range.from.toISOString(), to: range.to.toISOString() },
+      filters,
+      ...summary,
+    };
+  }
+
   private async buildUsers(filters: MetricsFilters) {
     const users = await this.prisma.user.findMany({
       where: this.userWhere(filters),
@@ -1786,6 +1864,7 @@ export class AdminMetricsService {
         surveyGender: true,
         surveyAgeRange: true,
         selfReportedEnglishLevel: true,
+        placementResult: true,
         freeTalkMemories: true,
         subscriptionTier: true,
         subscriptionExpiresAt: true,
@@ -1861,6 +1940,7 @@ export class AdminMetricsService {
           gender: u.surveyGender,
           ageRange: u.surveyAgeRange,
           englishLevel: u.selfReportedEnglishLevel,
+          placementResult: publicResultFromJson(u.placementResult),
           memories: u.freeTalkMemories,
           subscriptionTier: u.subscriptionTier,
           subscriptionExpiresAt: u.subscriptionExpiresAt?.toISOString() ?? null,

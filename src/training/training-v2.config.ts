@@ -8,6 +8,7 @@ import {
 import { isAboutMeChoiceLesson } from './scripts/about-me.registry';
 import { isAroundTownChoiceLesson } from './scripts/around-town.registry';
 import { isStoriesChoiceLesson } from './scripts/stories.registry';
+import { isPronunciationLesson } from '../lessons/lessons.data';
 
 /** Foundation + About Me + Around Town + Stories lessons use the PoolGate / choice-lesson registry. */
 
@@ -48,6 +49,7 @@ export function isTrainingV2Lesson(lessonId: string): boolean {
   if (isAboutMeChoiceLesson(lessonId)) return true;
   if (isAroundTownChoiceLesson(lessonId)) return true;
   if (isStoriesChoiceLesson(lessonId)) return true;
+  if (isPronunciationLesson(lessonId)) return true;
   return extraV2Allowlist().has(lessonId);
 }
 
