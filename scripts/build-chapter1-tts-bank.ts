@@ -28,6 +28,7 @@ import { BARE_PRAISE_LINES } from '../src/tts/english-praises';
 import { synthesisText } from '../src/tts/tts-speech-text';
 import { getTurn2Script } from '../src/topics/intro_script';
 import { V7_LEGACY_FLOWS } from '../src/lessons/foundation-v7-legacy-flows';
+import { collectPlacementBankLines } from '../src/placement/placement.runtime';
 
 /** Spoken lines seen on live TTS that the lesson walker does not emit. */
 function extraBankLines(): string[] {
@@ -38,7 +39,7 @@ function extraBankLines(): string[] {
   return [
     seeYou,
     'เวลาเจอคำที่ลงท้ายด้วย S อย่าลืมเติมเสียง s หรือ z สั้น ๆ ตอนท้ายครับ',
-    'เรียนครบแล้วครับ Newbie คุณทำบทเรียนจบโดยได้รับคำแนะนำบางส่วน ลองฝึกอีกครั้งเพื่อให้คล่องขึ้นนะครับ',
+    'เรียนครบแล้วครับ คุณทำบทเรียนจบโดยได้รับคำแนะนำบางส่วน ลองฝึกอีกครั้งเพื่อให้คล่องขึ้นนะครับ',
     'สุดยอดครับ! 🎉 วันนี้คุณทักทายได้หลายแบบแล้ว ทั้ง Hello, Hi และทักทายตามเวลาในวัน 🍌',
     'สุดยอดครับ! 🎉 วันนี้คุณแนะนำตัวเป็นภาษาอังกฤษได้แล้ว ทั้งบอกชื่อ บอกว่ามาจากไหน และตอบเวลาพบคนใหม่ได้ 🍌',
     'เรียนครบแล้วครับ ลองทบทวนบทนี้อีกครั้งนะครับ',
@@ -326,13 +327,19 @@ async function main() {
     );
   }
   const lessonLines = new Set(
-    [
-      ...collectChapter1BankLines(),
-      ...(await collectFoundationBankLines(2, 16)),
-      ...(await collectAdventureA2BankLines(1, 8)),
-      getTurn2Script().textEn,
-      ...extraBankLines(),
-    ].map((line) => ttsBankKey(line)),
+    (process.argv.includes('--only-extra')
+      ? extraBankLines()
+      : process.argv.includes('--only-placement')
+        ? collectPlacementBankLines()
+        : [
+            ...collectChapter1BankLines(),
+            ...(await collectFoundationBankLines(2, 16)),
+            ...(await collectAdventureA2BankLines(1, 8)),
+            getTurn2Script().textEn,
+            ...extraBankLines(),
+            ...collectPlacementBankLines(),
+          ]
+    ).map((line) => ttsBankKey(line)),
   );
   const lines = [...lessonLines].sort((a, b) => a.localeCompare(b));
   const bank = readBank();

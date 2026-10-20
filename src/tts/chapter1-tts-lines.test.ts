@@ -36,6 +36,20 @@ describe('tts bank lookup', () => {
     assert.equal(lookupTtsBankUrl(lines, null, 'missing'), null);
   });
 
+  it('hits the Final S tip when Latin case or trailing punct differs', () => {
+    const url = 'https://example/final-s.mp3';
+    const lines = {
+      'เวลาเจอคำที่ลงท้ายด้วย S อย่าลืมเติมเสียง s หรือ z สั้น ๆ ตอนท้ายครับ': url,
+    };
+    assert.equal(
+      lookupTtsBankUrl(
+        lines,
+        'เวลาเจอคำที่ลงท้ายด้วย s อย่าลืมเติมเสียง s หรือ z สั้นๆ ตอนท้ายครับ.',
+      ),
+      url,
+    );
+  });
+
   it('speaks ttsText when the bubble text differs', () => {
     assert.equal(spokenTurnText('พูดอย่างนี้', 'bubble'), 'พูดอย่างนี้');
     assert.equal(spokenTurnText('  ', 'bubble'), 'bubble');

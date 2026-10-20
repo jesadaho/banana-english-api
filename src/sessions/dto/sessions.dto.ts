@@ -35,10 +35,10 @@ export class StartSessionDto {
   @IsNotEmpty()
   scenarioId?: string;
 
-  /** Placement: onboarding vs Settings retake. */
+  /** Placement: onboarding vs Growth/Settings retake vs debug. */
   @IsOptional()
-  @IsIn(['onboarding', 'profile_settings'])
-  entrySource?: 'onboarding' | 'profile_settings';
+  @IsIn(['onboarding', 'profile_settings', 'growth', 'debug'])
+  entrySource?: 'onboarding' | 'profile_settings' | 'growth' | 'debug';
 
   /** Placement: display name from onboarding (do not re-ask). */
   @IsOptional()

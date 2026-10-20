@@ -21,9 +21,12 @@ import {
   applyPlacementEvaluation,
   buildPlacementOpening,
   coercePlacementScore,
+  collectPlacementBankLines,
+  combineTwoPartScore,
   heuristicPlacementEval,
   initPlacementRuntime,
   makeItemResult,
+  mentionedMeetingTime,
 } from './placement.runtime';
 import type {
   PlacementItemResult,
@@ -98,27 +101,47 @@ function passA1(state: PlacementRuntimeState) {
   A1.forEach((id, i) => putScore(state, id, i === 2 ? 2 : i === 1 ? 1 : 2));
 }
 
+function scoredItem(
+  qId: string,
+  state: PlacementRuntimeState,
+  value: PlacementScore,
+  transcript: string,
+) {
+  const q = getPlacementQuestion(qId)!;
+  return makeItemResult(q, state, {
+    status: 'scored',
+    score: value,
+    eligibleForPlacement: true,
+    evidence: [transcript],
+    reasonCode:
+      value === 2
+        ? 'target_met'
+        : value === 1
+          ? 'target_partially_demonstrated'
+          : 'off_topic',
+  });
+}
+
 function scoreWalk(
   state: PlacementRuntimeState,
   value: PlacementScore,
   transcript = 'ok',
 ) {
   const q = getPlacementQuestion(state.currentQuestionId!)!;
-  return applyPlacementEvaluation(
+  let result = applyPlacementEvaluation(
     state,
-    makeItemResult(q, state, {
-      status: 'scored',
-      score: value,
-      eligibleForPlacement: true,
-      evidence: [transcript],
-      reasonCode:
-        value === 2
-          ? 'target_met'
-          : value === 1
-            ? 'target_partially_demonstrated'
-            : 'off_topic',
-    }),
+    scoredItem(q.id, state, value, transcript),
   );
+  if (
+    result.state.pendingFollowUp?.questionId === q.id &&
+    result.state.currentQuestionId === q.id
+  ) {
+    result = applyPlacementEvaluation(
+      result.state,
+      scoredItem(q.id, result.state, value, 'At ten.'),
+    );
+  }
+  return result;
 }
 
 describe('placement bank v2.1', () => {
@@ -144,11 +167,32 @@ describe('placement bank v2.1', () => {
         );
       }
     }
-    assert.equal(
-      getPlacementQuestion('Q11')?.transitionTh?.includes('ปิดไว้'),
-      true,
-    );
+    assert.equal(getPlacementQuestion('Q11')?.transitionTh, undefined);
     assert.equal(getPlacementQuestion('Q01')?.npcEn, 'Where are you from?');
+  });
+
+  it('banks scripted Teacher B lines without a learner name', () => {
+    const lines = collectPlacementBankLines();
+    assert.ok(lines.some((line) => line.endsWith('Where are you from?')));
+    assert.ok(lines.includes("What's inside the bag?"));
+    assert.ok(lines.includes('Invite me to do something with you this weekend.'));
+    assert.ok(lines.includes('What time shall we meet?'));
+    assert.ok(lines.includes('Where shall we meet?'));
+    assert.ok(
+      lines.includes(
+        "We don't have another room tonight. What would you like us to do?",
+      ),
+    );
+    assert.equal(
+      lines.some((line) => line.includes("We're both free this weekend")),
+      false,
+    );
+    assert.ok(lines.some((line) => line.includes('Thanks!') && line.includes('Tell me')));
+    assert.ok(lines.some((line) => line.startsWith('Thank you for talking with Teacher Bee')));
+    for (const line of lines) {
+      assert.equal(line.includes('{name}'), false);
+      assert.equal(line.includes('{problem}'), false);
+    }
   });
 });
 
@@ -374,7 +418,7 @@ describe('placement routing walk', () => {
     assert.equal(state.currentQuestionId, 'Q02');
   });
 
-  it('hides NPC transcript from Q11 and announces once', () => {
+  it('hides NPC transcript from Q11 without a listen-along caption', () => {
     let { state, reply } = buildPlacementOpening(
       initPlacementRuntime({ entrySource: 'onboarding', learnerName: 'Maya' }),
     );
@@ -386,8 +430,112 @@ describe('placement routing walk', () => {
     }
     assert.equal(state.currentQuestionId, 'Q11');
     assert.equal(reply.hideNpcTranscript, true);
-    assert.match(reply.textTh, /ปิดไว้/);
+    assert.equal(reply.textTh, '');
+    assert.doesNotMatch(reply.aiResponse, /ฟังครูบี|ปิดไว้/);
     assert.equal(getPlacementQuestion('Q11')?.delivery, 'picture_audio');
+  });
+});
+
+describe('placement two-turn items', () => {
+  function walkTo(id: string) {
+    let { state } = buildPlacementOpening(
+      initPlacementRuntime({ entrySource: 'onboarding', learnerName: 'Maya' }),
+    );
+    while (state.currentQuestionId !== id && !state.finished) {
+      ({ state } = scoreWalk(state, 2, "Let's go swimming"));
+    }
+    return state;
+  }
+
+  it('asks Q15 for a time if the invite has no time, else a place', () => {
+    let state = walkTo('Q15');
+    let reply;
+    ({ state, reply } = applyPlacementEvaluation(
+      state,
+      scoredItem('Q15', state, 2, "Let's go swimming"),
+    ));
+    assert.equal(state.currentQuestionId, 'Q15');
+    assert.equal(state.pendingFollowUp?.prompt, 'What time shall we meet?');
+    assert.match(reply.aiResponse, /What time shall we meet/);
+    assert.equal(state.results.Q15, undefined);
+
+    state = walkTo('Q15');
+    ({ state, reply } = applyPlacementEvaluation(
+      state,
+      scoredItem('Q15', state, 2, "Let's go swimming at ten"),
+    ));
+    assert.equal(state.pendingFollowUp?.prompt, 'Where shall we meet?');
+    assert.match(reply.aiResponse, /Where shall we meet/);
+  });
+
+  it('scores Q15 as 2 only when invite and arranging both land', () => {
+    let state = walkTo('Q15');
+    ({ state } = applyPlacementEvaluation(
+      state,
+      scoredItem('Q15', state, 2, "Let's go swimming"),
+    ));
+    const { state: done, reply } = applyPlacementEvaluation(
+      state,
+      scoredItem('Q15', state, 2, 'At ten.'),
+    );
+    assert.equal(done.results.Q15?.score, 2);
+    assert.equal(done.pendingFollowUp, null);
+    assert.equal(done.currentQuestionId, 'Q16');
+    assert.match(reply.aiResponse, /That sounds nice|what's happening/i);
+  });
+
+  it('scores Q15 as 1 when the learner skips the arranging turn', () => {
+    let state = walkTo('Q15');
+    ({ state } = applyPlacementEvaluation(
+      state,
+      scoredItem('Q15', state, 2, "Let's go swimming"),
+    ));
+    const q = getPlacementQuestion('Q15')!;
+    const { state: done } = applyPlacementEvaluation(
+      state,
+      makeItemResult(q, state, {
+        status: 'skipped',
+        score: 0,
+        eligibleForPlacement: true,
+        evidence: [],
+        reasonCode: 'user_skipped',
+      }),
+    );
+    assert.equal(done.results.Q15?.score, 1);
+    assert.equal(done.currentQuestionId, 'Q16');
+  });
+
+  it('does not follow up when the Q15 invite is 0 or 1', () => {
+    for (const score of [0, 1] as const) {
+      const state = walkTo('Q15');
+      const { state: next, reply } = applyPlacementEvaluation(
+        state,
+        scoredItem('Q15', state, score, score === 0 ? 'banana' : 'Park?'),
+      );
+      assert.equal(next.pendingFollowUp, null);
+      assert.equal(next.results.Q15?.score, score);
+      assert.equal(next.currentQuestionId, 'Q16');
+      assert.doesNotMatch(reply.aiResponse, /shall we meet/);
+    }
+  });
+
+  it('asks Q24 a constraint follow-up after a usable complaint', () => {
+    const state = walkTo('Q24');
+    const { state: next, reply } = applyPlacementEvaluation(
+      state,
+      scoredItem('Q24', state, 2, 'My room is noisy. Could I change rooms?'),
+    );
+    assert.equal(next.currentQuestionId, 'Q24');
+    assert.match(reply.aiResponse, /don't have another room/i);
+  });
+
+  it('combines part scores as 2 / 1 / 0', () => {
+    assert.equal(combineTwoPartScore(2, 2), 2);
+    assert.equal(combineTwoPartScore(2, 1), 1);
+    assert.equal(combineTwoPartScore(2, 0), 1);
+    assert.equal(combineTwoPartScore(0, 0), 0);
+    assert.equal(mentionedMeetingTime("Let's go swimming at 10"), true);
+    assert.equal(mentionedMeetingTime("Let's go swimming"), false);
   });
 });
 

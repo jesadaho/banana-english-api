@@ -7,6 +7,16 @@ import {
 import { PrismaService } from '../prisma/prisma.service';
 
 export const ANONYMOUS_USER_HEADER = 'x-anonymous-user-id';
+export const AUTH_SESSION_HEADER = 'x-auth-session-id';
+export const AUTH_SESSION_REPLACED = 'AUTH_SESSION_REPLACED';
+
+function isAuthLinkPath(url: string | undefined): boolean {
+  const path = (url ?? '').split('?')[0];
+  return (
+    path.endsWith('/users/me/link-auth') ||
+    path.endsWith('/users/me/link-provider')
+  );
+}
 
 @Injectable()
 export class AnonymousUserGuard implements CanActivate {
@@ -23,7 +33,24 @@ export class AnonymousUserGuard implements CanActivate {
       throw new UnauthorizedException('Missing X-Anonymous-User-Id header');
     }
 
-    request.user = await this.resolveUser(anonymousId);
+    const user = await this.resolveUser(anonymousId);
+    const requestUrl =
+      (request as { originalUrl?: string; url?: string }).originalUrl ??
+      (request as { url?: string }).url;
+    const expectedSession = (
+      user as typeof user & { authSessionId?: string | null }
+    ).authSessionId;
+    if (
+      expectedSession &&
+      !isAuthLinkPath(requestUrl)
+    ) {
+      const presented = request.headers[AUTH_SESSION_HEADER]?.trim();
+      if (!presented || presented !== expectedSession) {
+        throw new UnauthorizedException(AUTH_SESSION_REPLACED);
+      }
+    }
+
+    request.user = user;
     return true;
   }
 

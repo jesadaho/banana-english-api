@@ -5,6 +5,7 @@ import {
   Optional,
   ServiceUnavailableException,
 } from '@nestjs/common';
+import { randomUUID } from 'crypto';
 import { User } from '@prisma/client';
 import { FirebaseAdminService } from '../firebase/firebase-admin.service';
 import { PrismaService } from '../prisma/prisma.service';
@@ -126,6 +127,7 @@ export class UserAuthService {
       if (await this.isGuestUser(user)) {
         // Multi-device v1: guest adopts the already-linked profile.
         await this.subscriptions?.claimPaidPresaleForUser(existingByFirebase);
+        await this.rotateAuthSession(existingByFirebase.id);
         const claimed = await this.prisma.user.findUniqueOrThrow({
           where: { id: existingByFirebase.id },
         });
@@ -147,6 +149,7 @@ export class UserAuthService {
           where: { id: existingProvider.userId },
         });
         await this.subscriptions?.claimPaidPresaleForUser(existingUser);
+        await this.rotateAuthSession(existingUser.id);
         const claimed = await this.prisma.user.findUniqueOrThrow({
           where: { id: existingUser.id },
         });
@@ -179,6 +182,7 @@ export class UserAuthService {
         data: {
           firebaseUid,
           email: email ?? undefined,
+          authSessionId: randomUUID(),
         },
       });
     });
@@ -191,6 +195,13 @@ export class UserAuthService {
       where: { id: updated.id },
     });
     return this.users.getProfile(claimed);
+  }
+
+  private async rotateAuthSession(userId: string): Promise<void> {
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: { authSessionId: randomUUID() },
+    });
   }
 
   /** Guest = no Google/Apple providers (anonymous Firebase UID alone is still guest). */

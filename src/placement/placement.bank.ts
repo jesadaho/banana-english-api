@@ -185,8 +185,6 @@ export const PLACEMENT_QUESTIONS: PlacementQuestion[] = [
     imagePath: 'describe-it/a2_c19n09/01.webp',
     sceneFacts:
       'Old Town timetable. NOW 09:10. Departures 09:00 / 09:30 / 10:00. Sign text may stay visible; NPC English is audio-only.',
-    transitionTh:
-      'ต่อไปลองฟังครูบี ข้อความจะถูกปิดไว้นะครับ กดฟังซ้ำได้เหมือนเดิม',
   },
   {
     id: 'Q12',
@@ -227,17 +225,29 @@ export const PLACEMENT_QUESTIONS: PlacementQuestion[] = [
   {
     id: 'Q15',
     stage: 'a2',
-    skill: 'invitation',
-    npcEn: "We're both free this weekend. Invite me to do something with you.",
-    target: 'สร้างคำชวนคู่สนทนา',
-    requiredEvidence: 'An invitation; may reuse a Q14 plan but works without it',
+    skill: 'invitation + arranging to meet',
+    npcEn: 'Invite me to do something with you this weekend.',
+    target: 'ชวนครูทำอะไรสักอย่างในสุดสัปดาห์ แล้วตอบคำถามนัดหมาย',
+    requiredEvidence:
+      'An invitation on turn 1. Do not require Saturday, and do not require declining a day. A later time or place is scored on the follow-up.',
     anchors2: [
+      "Let's go swimming.",
       'Would you like to go to the park with me?',
       "Let's play football.",
     ],
     anchors1: ['Park?'],
     delivery: 'audio_only',
     afterScoreEn: "That sounds nice. I'd love to.",
+    followUp: {
+      kind: 'invite_schedule',
+      timePrompt: 'What time shall we meet?',
+      placePrompt: 'Where shall we meet?',
+      target: 'ตอบเวลานัดหรือสถานที่นัดให้ตรงคำถาม',
+      requiredEvidence:
+        'A meeting time or place that answers the follow-up. Short answers such as At ten. or At the park. are score 2.',
+      anchors2: ['At ten.', 'At the park.', "Let's meet at ten."],
+      anchors1: ['Ten.', 'Park.'],
+    },
   },
   {
     id: 'Q16',
@@ -351,14 +361,30 @@ export const PLACEMENT_QUESTIONS: PlacementQuestion[] = [
     skill: 'explain a problem / request resolution',
     npcEn:
       "You booked a quiet hotel room, but it's very noisy. I'm the receptionist. Explain the problem and ask for a solution.",
-    target: 'อธิบายความต่างระหว่างสิ่งที่คาดหวังกับสิ่งที่พบ และขอความช่วยเหลือ',
-    requiredEvidence: 'States the noisy-room problem and asks for a solution',
+    target:
+      'อธิบายปัญหาห้องเสียงดังและขอความช่วยเหลือ แล้วเสนอทางออกเมื่อเปลี่ยนห้องไม่ได้',
+    requiredEvidence:
+      'Turn 1 states the noisy-room problem and asks for help. Turn 2 proposes another solution after the hotel cannot change rooms.',
     anchors2: [
+      'My room is noisy. Could I change rooms?',
       'I booked a quiet room, but I can hear loud music next door. Could you move me to another room?',
     ],
     anchors1: ['The room is noisy.'],
     delivery: 'audio_only',
     afterScoreEn: "I'm sorry about that. I'll help you.",
+    followUp: {
+      kind: 'constraint',
+      prompt:
+        "We don't have another room tonight. What would you like us to do?",
+      target: 'เสนอทางออกรอบสองเมื่อเปลี่ยนห้องไม่ได้',
+      requiredEvidence:
+        'A usable workaround other than changing rooms now. Short requests are fine.',
+      anchors2: [
+        'Could you ask the people next door to be quiet?',
+        'Could I have earplugs or a quieter room tomorrow?',
+      ],
+      anchors1: ['Help me.', 'Be quiet.'],
+    },
   },
   {
     id: 'Q25',

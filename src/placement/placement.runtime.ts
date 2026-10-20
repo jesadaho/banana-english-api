@@ -22,6 +22,7 @@ import type {
   PlacementItemResult,
   PlacementQuestion,
   PlacementRuntimeState,
+  PlacementScore,
   PlacementTurnReply,
 } from './placement.types';
 import { PLACEMENT_SCENARIO_ID } from './placement.types';
@@ -52,8 +53,86 @@ export function initPlacementRuntime(params: {
     captureRetries: {},
     consecutiveZeros: 0,
     facts: {},
+    pendingFollowUp: null,
     finished: false,
     result: null,
+  };
+}
+
+export function mentionedMeetingTime(text: string): boolean {
+  const t = text.toLowerCase();
+  return (
+    /\bat\s+(\d{1,2}|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)\b/.test(
+      t,
+    ) ||
+    /\b\d{1,2}\s*(a\.?m\.?|p\.?m\.?|o'?clock)\b/.test(t) ||
+    /\b(noon|midnight|morning|afternoon|evening|tonight|o'?clock)\b/.test(t) ||
+    /\b(โมง|ทุ่ม|นาฬิกา)\b/.test(text)
+  );
+}
+
+/** 2 = both parts on-point, 1 = only one part or one part unclear, 0 = neither. */
+export function combineTwoPartScore(
+  first: PlacementScore | null,
+  second: PlacementScore | null,
+): PlacementScore {
+  const a = first ?? 0;
+  const b = second ?? 0;
+  if (a === 2 && b === 2) return 2;
+  if (a >= 1 || b >= 1) return 1;
+  return 0;
+}
+
+export function followUpPromptFor(
+  q: PlacementQuestion,
+  firstTranscript: string,
+): { prompt: string; variant: string } | null {
+  const follow = q.followUp;
+  if (!follow) return null;
+  if (follow.kind === 'invite_schedule') {
+    if (mentionedMeetingTime(firstTranscript) && follow.placePrompt) {
+      return { prompt: follow.placePrompt, variant: `${q.id}.place` };
+    }
+    if (follow.timePrompt) {
+      return { prompt: follow.timePrompt, variant: `${q.id}.time` };
+    }
+  }
+  if (follow.prompt) {
+    return { prompt: follow.prompt, variant: `${q.id}.follow` };
+  }
+  return null;
+}
+
+export function placementJudgeContext(
+  q: PlacementQuestion,
+  state: PlacementRuntimeState,
+): {
+  prompt: string;
+  variantId: string;
+  target: string;
+  requiredEvidence: string;
+  anchors2: string[];
+  anchors1: string[];
+} {
+  const pending = state.pendingFollowUp;
+  if (pending?.questionId === q.id && q.followUp) {
+    return {
+      prompt: pending.prompt,
+      variantId: pending.variant,
+      target: q.followUp.target,
+      requiredEvidence: q.followUp.requiredEvidence,
+      anchors2: q.followUp.anchors2,
+      anchors1: q.followUp.anchors1,
+    };
+  }
+  const { prompt, variantId } = exactPromptFor(q, state);
+  return {
+    prompt,
+    variantId,
+    target: q.target,
+    requiredEvidence: q.requiredEvidence,
+    anchors2: q.anchors2,
+    anchors1: q.anchors1,
   };
 }
 
@@ -66,6 +145,10 @@ export function exactPromptFor(
   q: PlacementQuestion,
   state: PlacementRuntimeState,
 ): { prompt: string; variantId: string } {
+  const pending = state.pendingFollowUp;
+  if (pending?.questionId === q.id) {
+    return { prompt: pending.prompt, variantId: pending.variant };
+  }
   if (q.id === 'Q22' && state.facts.storyProblem) {
     return {
       prompt: Q22_VARIANT.replace('{problem}', state.facts.storyProblem),
@@ -161,7 +244,7 @@ function npcForQuestion(
   if (q.transitionTh && !state.audioOnlyAnnounced) {
     textTh = [prefixTh, q.transitionTh].filter(Boolean).join(' ');
   }
-  if (!textTh) textTh = REPLAY_HINT_TH;
+  if (!textTh && !hide) textTh = REPLAY_HINT_TH;
   const spoken = [prefixEn, prompt].filter(Boolean).join(' ');
   return {
     aiResponse: spoken,
@@ -294,6 +377,50 @@ function ackFor(q: PlacementQuestion): string {
   return 'Thanks!';
 }
 
+function canStartFollowUp(item: PlacementItemResult): boolean {
+  return (
+    (item.status === 'scored' || item.status === 'assisted') &&
+    item.score === 2
+  );
+}
+
+function combineFollowUpResult(
+  first: PlacementItemResult,
+  second: PlacementItemResult,
+): PlacementItemResult {
+  const score = combineTwoPartScore(first.score, second.score);
+  const assisted = first.status === 'assisted' || second.status === 'assisted';
+  const derived = deriveEligibility({
+    ...second,
+    status: assisted ? 'assisted' : 'scored',
+    score,
+    eligibleForPlacement: !assisted,
+  });
+  return {
+    ...second,
+    status: derived.eligibleForPlacement ? 'scored' : assisted ? 'assisted' : second.status,
+    score: derived.score,
+    eligibleForPlacement: derived.eligibleForPlacement,
+    evidence: [...first.evidence, ...second.evidence]
+      .map((part) => part.trim())
+      .filter(Boolean)
+      .slice(0, 2),
+    reasonCode:
+      score === 2
+        ? 'target_met'
+        : score === 1
+          ? 'target_partially_demonstrated'
+          : 'off_topic',
+    reason:
+      score === 2
+        ? 'ครบทั้งสองส่วนของข้อนี้'
+        : score === 1
+          ? 'ทำได้เพียงส่วนเดียว หรืออีกส่วนยังสื่อไม่ชัด'
+          : 'ยังสื่อสารทั้งสองส่วนไม่ได้',
+    variantId: `${first.variantId}+${second.variantId}`,
+  };
+}
+
 export function applyPlacementEvaluation(
   state: PlacementRuntimeState,
   evaluation: PlacementItemResult,
@@ -304,11 +431,73 @@ export function applyPlacementEvaluation(
   }
 
   const derived = deriveEligibility(evaluation);
-  const normalized: PlacementItemResult = {
+  let normalized: PlacementItemResult = {
     ...evaluation,
     eligibleForPlacement: derived.eligibleForPlacement,
     score: derived.score,
   };
+
+  if (evaluation.status === 'technical_retry') {
+    const retries = (state.captureRetries[q.id] ?? 0) + 1;
+    const retrying: PlacementRuntimeState = {
+      ...state,
+      captureRetries: { ...state.captureRetries, [q.id]: retries },
+    };
+    if (retries <= 1) {
+      const retry = npcForQuestion(
+        retrying,
+        q,
+        '',
+        'เสียงไม่ชัดครับ ลองพูดอีกครั้ง หรือข้ามข้อนี้ได้',
+      );
+      return { state: retrying, reply: withLastDebug(retry, normalized) };
+    }
+    if (state.pendingFollowUp?.questionId === q.id) {
+      normalized = combineFollowUpResult(state.pendingFollowUp.first, {
+        ...normalized,
+        status: 'scored',
+        score: 0,
+        eligibleForPlacement: true,
+        reasonCode: 'capture_error',
+        reason: 'รอบสองจับเสียงไม่ชัด',
+      });
+    }
+  } else if (state.pendingFollowUp?.questionId === q.id) {
+    const second: PlacementItemResult =
+      evaluation.status === 'needs_review'
+        ? {
+            ...normalized,
+            status: 'scored',
+            score: 0,
+            eligibleForPlacement: true,
+            reasonCode: 'uncertain_transcription',
+            reason: 'รอบสองประเมินไม่ได้',
+          }
+        : normalized;
+    normalized = combineFollowUpResult(state.pendingFollowUp.first, second);
+  } else if (q.followUp && canStartFollowUp(normalized)) {
+    const follow = followUpPromptFor(q, normalized.evidence[0] ?? '');
+    if (follow) {
+      const next: PlacementRuntimeState = {
+        ...state,
+        pendingFollowUp: {
+          questionId: q.id,
+          prompt: follow.prompt,
+          variant: follow.variant,
+          first: normalized,
+        },
+        currentQuestionId: q.id,
+        askedQuestionIds: state.askedQuestionIds.includes(q.id)
+          ? state.askedQuestionIds
+          : [...state.askedQuestionIds, q.id],
+        facts: captureFacts(q, normalized.evidence[0] ?? '', state.facts),
+      };
+      return {
+        state: next,
+        reply: withLastDebug(npcForQuestion(next, q), normalized),
+      };
+    }
+  }
 
   const results = { ...state.results, [q.id]: normalized };
   const asked = state.askedQuestionIds.includes(q.id)
@@ -319,6 +508,7 @@ export function applyPlacementEvaluation(
     ...state,
     results,
     askedQuestionIds: asked,
+    pendingFollowUp: null,
     facts: captureFacts(q, evaluation.evidence[0] ?? '', state.facts),
     consecutiveZeros:
       normalized.eligibleForPlacement && normalized.score === 0
@@ -327,23 +517,6 @@ export function applyPlacementEvaluation(
           ? 0
           : state.consecutiveZeros,
   };
-
-  if (evaluation.status === 'technical_retry') {
-    const retries = (state.captureRetries[q.id] ?? 0) + 1;
-    next = {
-      ...next,
-      captureRetries: { ...state.captureRetries, [q.id]: retries },
-    };
-    if (retries <= 1) {
-      const retry = npcForQuestion(
-        next,
-        q,
-        '',
-        'เสียงไม่ชัดครับ ลองพูดอีกครั้ง หรือข้ามข้อนี้ได้',
-      );
-      return { state: next, reply: withLastDebug(retry, normalized) };
-    }
-  }
 
   if (shouldEarlyStopAfter(next, q.id)) {
     const stopped = finish(next, 'early_zero_streak');
@@ -455,4 +628,52 @@ export function currentPlacementQuestion(
   return state.currentQuestionId
     ? PLACEMENT_QUESTION_BY_ID.get(state.currentQuestionId)
     : undefined;
+}
+
+/** Scripted Teacher B lines for the Level Test TTS bank. */
+export function collectPlacementBankLines(): string[] {
+  const lines = new Set<string>();
+  const add = (text: string) => {
+    const key = text.replace(/\s+/g, ' ').trim();
+    if (key) lines.add(key);
+  };
+
+  add(
+    buildPlacementOpening(
+      initPlacementRuntime({ entrySource: 'onboarding', learnerName: '' }),
+    ).reply.aiResponse,
+  );
+  add(
+    buildPlacementOpening(
+      initPlacementRuntime({
+        entrySource: 'profile_settings',
+        learnerName: '',
+      }),
+    ).reply.aiResponse,
+  );
+
+  const blank = initPlacementRuntime({
+    entrySource: 'onboarding',
+    learnerName: '',
+  });
+  for (const id of PLACEMENT_QUESTION_IDS) {
+    const q = getPlacementQuestion(id)!;
+    add(exactPromptFor(q, blank).prompt);
+    if (q.followUp?.timePrompt) add(q.followUp.timePrompt);
+    if (q.followUp?.placePrompt) add(q.followUp.placePrompt);
+    if (q.followUp?.prompt) add(q.followUp.prompt);
+  }
+
+  for (let i = 0; i < PLACEMENT_QUESTION_IDS.length - 1; i++) {
+    const current = getPlacementQuestion(PLACEMENT_QUESTION_IDS[i]!)!;
+    const upcoming = getPlacementQuestion(PLACEMENT_QUESTION_IDS[i + 1]!)!;
+    add(
+      [ackFor(current), exactPromptFor(upcoming, blank).prompt]
+        .filter(Boolean)
+        .join(' '),
+    );
+  }
+
+  add(CLOSING_EN);
+  return [...lines].sort((a, b) => a.localeCompare(b));
 }

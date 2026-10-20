@@ -534,6 +534,10 @@ describe('Foundation — introductions cross-step regression', () => {
     );
     assert.equal(result.steps.at(-1)?.progressAfter, def.maxStep);
     assert.match(result.completionText, /เรียนครบแล้วครับ/);
+    assert.doesNotMatch(
+      result.completionText,
+      new RegExp(`\\b${FOUNDATION_PROBE_LEARNER}\\b`),
+    );
     assert.equal(
       result.steps.some((s) => s.userText.includes('Nice to meet you too.')),
       true,

@@ -225,12 +225,11 @@ function completionStatusFromHistory(
 
 function supportedCompletionText(
   status: LessonCompletionStatus,
-  learnerFirstName: string,
+  _learnerFirstName: string,
 ): string {
-  const name = learnerFirstName.trim() || 'เพื่อน';
   return status === 'needs_review'
     ? 'เรียนครบแล้วครับ ลองทบทวนบทนี้อีกครั้งนะครับ'
-    : `เรียนครบแล้วครับ ${name} คุณทำบทเรียนจบโดยได้รับคำแนะนำบางส่วน ลองฝึกอีกครั้งเพื่อให้คล่องขึ้นนะครับ`;
+    : 'เรียนครบแล้วครับ คุณทำบทเรียนจบโดยได้รับคำแนะนำบางส่วน ลองฝึกอีกครั้งเพื่อให้คล่องขึ้นนะครับ';
 }
 
 /** Prefer stem / โครง hint for phrase boards; keep full reveal for short vocab. */
