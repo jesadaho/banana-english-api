@@ -186,7 +186,7 @@ export const PLACEMENT_QUESTIONS: PlacementQuestion[] = [
     sceneFacts:
       'Old Town timetable. NOW 09:10. Departures 09:00 / 09:30 / 10:00. Sign text may stay visible; NPC English is audio-only.',
     transitionTh:
-      'ต่อไปลองฟังครูบีโดยไม่มีข้อความนะครับ กดฟังซ้ำได้เหมือนเดิม',
+      'ต่อไปลองฟังครูบี ข้อความจะถูกปิดไว้นะครับ กดฟังซ้ำได้เหมือนเดิม',
   },
   {
     id: 'Q12',
