@@ -391,10 +391,8 @@ function combineFollowUpResult(
   const score = combineTwoPartScore(first.score, second.score);
   const assisted = first.status === 'assisted' || second.status === 'assisted';
   const derived = deriveEligibility({
-    ...second,
     status: assisted ? 'assisted' : 'scored',
     score,
-    eligibleForPlacement: !assisted,
   });
   return {
     ...second,
