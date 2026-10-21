@@ -123,7 +123,8 @@ export function summarizePlacementRows(rows: PlacementSummaryRow[]) {
     if (!Array.isArray(items)) continue;
     for (const item of items) {
       const rec = asRecord(item);
-      const id = typeof rec?.questionId === 'string' ? rec.questionId : '';
+      if (!rec) continue;
+      const id = typeof rec.questionId === 'string' ? rec.questionId : '';
       if (!id || !questions[id]) continue;
       const agg = questions[id];
       agg.asked += 1;
