@@ -5,6 +5,7 @@ import {
   type SimulationConfig,
 } from '../simulations/simulations.data';
 import { ttsBankKey } from './tts-bank';
+import liveExtraLines from './live-tts-extra-lines.json';
 
 const DOUBLE_QUOTE_RE = /"((?:\\.|[^"\\])*)"/g;
 
@@ -14,6 +15,31 @@ const FIXED_CLOSES = [
   'Nice talking to you! See you around the park!',
   'Thanks for practicing. You can try again anytime.',
   'Thanks for practising. You can try again anytime.',
+];
+
+/**
+ * Reactions Gemini puts before a scripted line. Banked per character so a
+ * reply like "That is cool! Do you like English?" plays as two clips.
+ */
+const SHORT_REACTIONS = [
+  'Awesome!',
+  'Cool!',
+  'Great!',
+  'Me too!',
+  'Nice!',
+  'Nice to meet you!',
+  'Nice to meet you.',
+  'Nice to meet you too!',
+  'Nice to meet you too.',
+  'Oh, nice!',
+  'That is cool!',
+  'That is great!',
+  'That is nice!',
+  "That's cool!",
+  "That's great!",
+  "That's nice!",
+  'Very nice!',
+  'Wow!',
 ];
 
 function singleQuoted(text: string): string[] {
@@ -90,6 +116,9 @@ function linesFromSimulations(
   };
   if (includeFixedCloses) {
     for (const close of FIXED_CLOSES) add(close);
+    for (const reaction of SHORT_REACTIONS) add(reaction);
+    // Repeated live replies from the admin export; the speaker is not recorded.
+    for (const line of liveExtraLines.conversation) add(line);
   }
   for (const sim of sims) {
     add(sim.completionReplyEn);

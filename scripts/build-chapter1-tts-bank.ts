@@ -31,6 +31,12 @@ import { V7_LEGACY_FLOWS } from '../src/lessons/foundation-v7-legacy-flows';
 import { collectPlacementBankLines } from '../src/placement/placement.runtime';
 import { collectPronunciationBankLines } from '../src/training/scripts/pronunciation.script';
 
+/** Repeated live TTS lines picked from the admin Live TTS export. */
+function liveExtraLines(): string[] {
+  const path = resolve(__dirname, '../src/tts/live-tts-extra-lines.json');
+  return (JSON.parse(readFileSync(path, 'utf8')) as { teacher: string[] }).teacher;
+}
+
 /** Spoken lines seen on live TTS that the lesson walker does not emit. */
 function extraBankLines(): string[] {
   const seeYou = V7_LEGACY_FLOWS.fnd_v7_goodbye_see_you
@@ -330,6 +336,8 @@ async function main() {
   const lessonLines = new Set(
     (process.argv.includes('--only-extra')
       ? extraBankLines()
+      : process.argv.includes('--only-live')
+        ? liveExtraLines()
       : process.argv.includes('--only-placement')
         ? collectPlacementBankLines()
         : process.argv.includes('--only-pronunciation')
@@ -340,6 +348,7 @@ async function main() {
             ...(await collectAdventureA2BankLines(1, 8)),
             getTurn2Script().textEn,
             ...extraBankLines(),
+            ...liveExtraLines(),
             ...collectPlacementBankLines(),
             ...collectPronunciationBankLines(),
           ]

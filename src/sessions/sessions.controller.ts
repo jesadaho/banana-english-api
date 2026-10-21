@@ -17,7 +17,7 @@ import {
 } from '../common/ai-user-message';
 import { attachAiDebug, scriptedAiDebug } from '../common/ai-debug';
 import { audioUrlForTurn, audioUrlsForSpokenTurn, spokenTurnText } from '../tts/tts-bank';
-import { audioUrlForConversationLine } from '../tts/conversation-tts-bank';
+import { audioClipsForConversationReply } from '../tts/conversation-tts-bank';
 import { TtsLiveLinesService } from '../tts/tts-live-lines.service';
 import { TrainingTurnEngine } from '../training/engine/training-turn.engine';
 import { isTrainingV2Lesson } from '../training/training-v2.config';
@@ -430,10 +430,11 @@ export class SessionsController {
         reply.updatedCheckpoints,
       );
 
-      const openingAudioUrl = audioUrlForConversationLine(
+      const openingClips = audioClipsForConversationReply(
         config.simulationId,
         reply.aiResponse,
       );
+      const openingAudioUrl = openingClips.audioUrl;
       this.ttsLiveLines.observe('conversation', {
         text: reply.aiResponse,
         audioUrl: openingAudioUrl,
@@ -443,6 +444,7 @@ export class SessionsController {
         textEn: reply.aiResponse,
         textTh: reply.textTh,
         audioUrl: openingAudioUrl,
+        praiseAudioUrl: openingClips.praiseAudioUrl,
       };
       this.sessionStore.addTurn(data.session.id, openingTurn);
 
@@ -451,6 +453,7 @@ export class SessionsController {
           aiResponse: reply.aiResponse,
           textTh: reply.textTh,
           audioUrl: openingAudioUrl,
+          praiseAudioUrl: openingClips.praiseAudioUrl,
           isTaskComplete: false,
           updatedCheckpoints: normalizedCheckpoints,
           feedbackHints: {
@@ -3332,7 +3335,7 @@ export class SessionsController {
         isComplete: isTaskComplete,
       });
 
-      const audioUrl = audioUrlForConversationLine(
+      const { audioUrl, praiseAudioUrl } = audioClipsForConversationReply(
         config.simulationId,
         finalized.reply.aiResponse,
       );
@@ -3345,6 +3348,7 @@ export class SessionsController {
         textEn: finalized.reply.aiResponse,
         textTh: finalized.reply.textTh,
         audioUrl,
+        praiseAudioUrl,
       };
       this.sessionStore.addTurn(sessionId, aiTurn);
 
@@ -3352,6 +3356,7 @@ export class SessionsController {
         aiResponse: finalized.reply.aiResponse,
         textTh: finalized.reply.textTh,
         audioUrl,
+        praiseAudioUrl,
         isTaskComplete,
         updatedCheckpoints: finalized.checkpoints,
         feedbackHints: {
