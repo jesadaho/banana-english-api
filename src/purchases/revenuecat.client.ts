@@ -31,9 +31,23 @@ type RevenueCatSubscriberResponse = {
         store_transaction_id?: string;
         original_transaction_id?: string;
         is_sandbox?: boolean;
+        expires_date?: string | null;
+        purchase_date?: string | null;
+        refunded_at?: string | null;
+        store?: string;
+        product_plan_identifier?: string;
       }
     >;
   };
+};
+
+export type RevenueCatSubscriptionPeriod = {
+  productId: string;
+  storeTransactionId: string;
+  expiresAt: Date;
+  purchasedAt: Date | null;
+  isSandbox: boolean | null;
+  platform: 'ios' | 'android' | null;
 };
 
 @Injectable()
@@ -58,6 +72,40 @@ export class RevenueCatClient {
     } catch {
       return [];
     }
+  }
+
+  /** Unexpired, unrefunded store subscriptions across the given app user ids. */
+  async listActiveSubscriptions(
+    appUserIds: string[],
+    now = new Date(),
+  ): Promise<RevenueCatSubscriptionPeriod[]> {
+    const secret = this.secretKey();
+    if (!secret) {
+      throw new BadGatewayException('Purchase verification is not configured');
+    }
+    const found: RevenueCatSubscriptionPeriod[] = [];
+    for (const appUserId of appUserIds.map((id) => id.trim()).filter(Boolean)) {
+      const payload = await this.fetchSubscriber(appUserId, secret);
+      for (const [key, row] of Object.entries(payload.subscriber?.subscriptions ?? {})) {
+        const expiresAt = row.expires_date ? new Date(row.expires_date) : null;
+        if (!expiresAt || Number.isNaN(expiresAt.getTime())) continue;
+        if (expiresAt.getTime() <= now.getTime() || row.refunded_at) continue;
+        const storeTransactionId =
+          row.store_transaction_id?.trim() || row.original_transaction_id?.trim();
+        if (!storeTransactionId) continue;
+        const purchasedAt = row.purchase_date ? new Date(row.purchase_date) : null;
+        found.push({
+          productId: row.product_plan_identifier?.trim() || key,
+          storeTransactionId,
+          expiresAt,
+          purchasedAt: purchasedAt && !Number.isNaN(purchasedAt.getTime()) ? purchasedAt : null,
+          isSandbox: typeof row.is_sandbox === 'boolean' ? row.is_sandbox : null,
+          platform:
+            row.store === 'app_store' ? 'ios' : row.store === 'play_store' ? 'android' : null,
+        });
+      }
+    }
+    return found;
   }
 
   private static readonly verifyAttempts = 3;

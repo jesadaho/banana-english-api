@@ -4,6 +4,7 @@ import type { ConfigService } from '@nestjs/config';
 import type { User } from '@prisma/client';
 import type { EconomyService } from '../economy/economy.service';
 import type { PrismaService } from '../prisma/prisma.service';
+import type { SubscriptionsService } from '../subscriptions/subscriptions.service';
 import { PurchasesService } from './purchases.service';
 import { RevenueCatClient } from './revenuecat.client';
 
@@ -96,6 +97,7 @@ test('purchase then restore with the other id credits bananas once', async () =>
     economy,
     config,
     new RevenueCatClient(config),
+    {} as SubscriptionsService,
   );
   const user = { id: 'u1', firebaseUid: null, anonymousId: 'a' } as User;
 

@@ -8,6 +8,11 @@ import { User } from '@prisma/client';
 import { Prisma } from '@prisma/client';
 import { EconomyService } from '../economy/economy.service';
 import { PrismaService } from '../prisma/prisma.service';
+import { subscriptionProduct } from '../subscriptions/subscription-products';
+import {
+  SubscriptionsService,
+  subscriptionPayload,
+} from '../subscriptions/subscriptions.service';
 import { bananasForProduct, isKnownBananaPack } from './product-catalog';
 import {
   anonymousIdFromGuestAppUserId,
@@ -37,11 +42,22 @@ type RevenueCatWebhookBody = {
     type?: string;
     app_user_id?: string;
     product_id?: string;
+    new_product_id?: string;
     transaction_id?: string;
+    original_transaction_id?: string;
     store?: string;
     environment?: string;
+    expiration_at_ms?: number | null;
+    purchased_at_ms?: number | null;
   };
 };
+
+const SUBSCRIPTION_GRANT_EVENTS = new Set([
+  'INITIAL_PURCHASE',
+  'RENEWAL',
+  'PRODUCT_CHANGE',
+  'UNCANCELLATION',
+]);
 
 @Injectable()
 export class PurchasesService {
@@ -50,6 +66,7 @@ export class PurchasesService {
     private readonly economy: EconomyService,
     private readonly config: ConfigService,
     private readonly revenueCat: RevenueCatClient,
+    private readonly subscriptions: SubscriptionsService,
   ) {}
 
   async recordStorePaid(params: {
@@ -286,6 +303,18 @@ export class PurchasesService {
     if (!event) return;
 
     const type = event.type ?? '';
+    const platform =
+      event.store === 'APP_STORE'
+        ? 'ios'
+        : event.store === 'PLAY_STORE'
+          ? 'android'
+          : undefined;
+
+    if (subscriptionProduct(event.product_id)) {
+      await this.handleSubscriptionEvent(type, event, platform);
+      return;
+    }
+
     const allowed = new Set([
       'NON_RENEWING_PURCHASE',
       'INITIAL_PURCHASE',
@@ -299,19 +328,7 @@ export class PurchasesService {
     if (!appUserId || !productId || !storeTransactionId) return;
     if (!isKnownBananaPack(productId)) return;
 
-    const guestAnonymousId = anonymousIdFromGuestAppUserId(appUserId);
-    const user = await this.prisma.user.findUnique({
-      where: guestAnonymousId
-        ? { anonymousId: guestAnonymousId }
-        : { firebaseUid: appUserId },
-    });
-
-    const platform =
-      event.store === 'APP_STORE'
-        ? 'ios'
-        : event.store === 'PLAY_STORE'
-          ? 'android'
-          : undefined;
+    const user = await this.userForAppUserId(appUserId);
 
     await this.recordStorePaid({
       userId: user?.id,
@@ -333,6 +350,83 @@ export class PurchasesService {
         ? event.environment.toUpperCase() === 'SANDBOX'
         : undefined,
       source: 'webhook',
+    });
+  }
+
+  private async handleSubscriptionEvent(
+    type: string,
+    event: NonNullable<RevenueCatWebhookBody['event']>,
+    platform: string | undefined,
+  ): Promise<void> {
+    const appUserId = event.app_user_id?.trim();
+    const storeTransactionId = event.transaction_id?.trim();
+    const expiresMs = event.expiration_at_ms;
+    if (!appUserId || !storeTransactionId || !expiresMs) return;
+    const user = await this.userForAppUserId(appUserId);
+    if (!user) return;
+    const expiresAt = new Date(expiresMs);
+    const isSandbox = event.environment
+      ? event.environment.toUpperCase() === 'SANDBOX'
+      : null;
+
+    if (SUBSCRIPTION_GRANT_EVENTS.has(type)) {
+      const productId =
+        type === 'PRODUCT_CHANGE' && event.new_product_id
+          ? event.new_product_id
+          : event.product_id!;
+      await this.subscriptions.applyStorePeriod({
+        userId: user.id,
+        productId,
+        storeTransactionId,
+        expiresAt,
+        purchasedAt: event.purchased_at_ms ? new Date(event.purchased_at_ms) : null,
+        platform: platform ?? null,
+        isSandbox,
+      });
+      return;
+    }
+    // CANCELLATION keeps access until expiry; only an earlier expiry (refund) cuts it.
+    if (type === 'CANCELLATION' || type === 'EXPIRATION') {
+      await this.subscriptions.expireStorePeriod({
+        userId: user.id,
+        storeTransactionId,
+        expiresAt,
+      });
+    }
+  }
+
+  /** App → API right after a store subscription purchase or restore. */
+  async syncSubscriptions(user: User) {
+    const periods = await this.revenueCat.listActiveSubscriptions(
+      revenueCatAppUserIdCandidates(user),
+    );
+    let applied = 0;
+    for (const period of periods) {
+      if (!subscriptionProduct(period.productId)) continue;
+      const result = await this.subscriptions.applyStorePeriod({
+        userId: user.id,
+        productId: period.productId,
+        storeTransactionId: period.storeTransactionId,
+        expiresAt: period.expiresAt,
+        purchasedAt: period.purchasedAt,
+        platform: period.platform,
+        isSandbox: period.isSandbox,
+      });
+      if (result.applied) applied += 1;
+    }
+    const refreshed = await this.prisma.user.findUniqueOrThrow({ where: { id: user.id } });
+    return {
+      applied,
+      subscription: subscriptionPayload(refreshed),
+    };
+  }
+
+  private userForAppUserId(appUserId: string): Promise<User | null> {
+    const guestAnonymousId = anonymousIdFromGuestAppUserId(appUserId);
+    return this.prisma.user.findUnique({
+      where: guestAnonymousId
+        ? { anonymousId: guestAnonymousId }
+        : { firebaseUid: appUserId },
     });
   }
 

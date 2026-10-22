@@ -8,6 +8,7 @@ import { SubscriptionsModule } from '../subscriptions/subscriptions.module';
 import { TtsModule } from '../tts/tts.module';
 import { AdminAuthGuard } from './admin-auth.guard';
 import { AdminTtsLiveLinesController } from './admin-tts-live-lines.controller';
+import { AdminEarlyBirdController } from './admin-early-bird.controller';
 import { AdminArticlesController } from './admin-articles.controller';
 import { AdminBugReportsController } from './admin-bug-reports.controller';
 import { AdminLedgerController } from './admin-ledger.controller';
@@ -35,6 +36,7 @@ import { AdminSubscriptionsController } from './admin-subscriptions.controller';
     AdminReferralsController,
     AdminSubscriptionsController,
     AdminTtsLiveLinesController,
+    AdminEarlyBirdController,
   ],
   providers: [AdminMetricsService, AdminLedgerService, AdminAuthGuard],
 })

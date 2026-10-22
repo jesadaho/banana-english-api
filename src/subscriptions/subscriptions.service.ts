@@ -22,6 +22,12 @@ import {
   PRESALE_QR_TTL_MS,
   SubscriptionTierName,
 } from './subscription.constants';
+import {
+  EARLY_BIRD_PRODUCT_ID,
+  earlyBirdReserveSource,
+  mergeStorePeriod,
+  subscriptionProduct,
+} from './subscription-products';
 
 const PAID = 'paid';
 const PENDING = 'pending_payment';
@@ -71,6 +77,111 @@ export class SubscriptionsService {
     });
   }
 
+  /**
+   * Apply one store subscription period (purchase or renewal) from RevenueCat.
+   * Idempotent per store transaction; never shortens or downgrades an active plan.
+   */
+  async applyStorePeriod(params: {
+    userId: string;
+    productId: string;
+    storeTransactionId: string;
+    expiresAt: Date;
+    purchasedAt?: Date | null;
+    platform?: string | null;
+    isSandbox?: boolean | null;
+  }): Promise<{ applied: boolean; user: User | null }> {
+    const product = subscriptionProduct(params.productId);
+    const txId = params.storeTransactionId.trim();
+    if (!product || !txId) return { applied: false, user: null };
+    if (params.expiresAt.getTime() <= Date.now()) return { applied: false, user: null };
+
+    return this.prisma.$transaction(async (tx) => {
+      const user = await tx.user.findUnique({ where: { id: params.userId } });
+      if (!user) return { applied: false, user: null };
+      const existing = await tx.subscriptionGrant.findUnique({
+        where: { storeTransactionId: txId },
+      });
+      if (existing) {
+        if (existing.userId !== user.id || existing.expiresAt >= params.expiresAt) {
+          return { applied: false, user };
+        }
+        await tx.subscriptionGrant.update({
+          where: { id: existing.id },
+          data: { expiresAt: params.expiresAt },
+        });
+      } else {
+        await tx.subscriptionGrant.create({
+          data: {
+            userId: user.id,
+            tier: product.tier as SubscriptionTier,
+            startsAt: params.purchasedAt ?? new Date(),
+            expiresAt: params.expiresAt,
+            source: 'revenuecat',
+            priceThb: product.priceThb,
+            productId: product.productId,
+            storeTransactionId: txId,
+            platform: params.platform?.trim() || null,
+            isSandbox: params.isSandbox ?? null,
+            note: params.isSandbox ? 'sandbox' : null,
+          },
+        });
+      }
+      const merged = mergeStorePeriod({
+        currentTier: effectiveSubscriptionTier(user),
+        currentExpiresAt: user.subscriptionExpiresAt,
+        newTier: product.tier,
+        newExpiresAt: params.expiresAt,
+      });
+      if (!merged.changed) return { applied: true, user };
+      const updated = await tx.user.update({
+        where: { id: user.id },
+        data: {
+          subscriptionTier: merged.tier as SubscriptionTier,
+          subscriptionExpiresAt: merged.expiresAt,
+        },
+      });
+      return { applied: true, user: updated };
+    });
+  }
+
+  /**
+   * Store refund / early expiry: pull the plan back to [expiresAt] only when
+   * the current expiry came from this store transaction.
+   */
+  async expireStorePeriod(params: {
+    userId: string;
+    storeTransactionId: string;
+    expiresAt: Date;
+  }): Promise<void> {
+    const grant = await this.prisma.subscriptionGrant.findUnique({
+      where: { storeTransactionId: params.storeTransactionId.trim() },
+    });
+    if (!grant || grant.userId !== params.userId) return;
+    if (params.expiresAt >= grant.expiresAt) return;
+    await this.prisma.subscriptionGrant.update({
+      where: { id: grant.id },
+      data: { expiresAt: params.expiresAt },
+    });
+    const user = await this.prisma.user.findUnique({ where: { id: params.userId } });
+    if (!user?.subscriptionExpiresAt) return;
+    if (user.subscriptionExpiresAt.getTime() !== grant.expiresAt.getTime()) return;
+    await this.prisma.user.update({
+      where: { id: user.id },
+      data: { subscriptionExpiresAt: params.expiresAt },
+    });
+  }
+
+  /** Idempotent: the first reservation time and source are kept. */
+  async reserveEarlyBird(user: User, sourceRaw?: string): Promise<User> {
+    if (user.earlyBirdReservedAt) return user;
+    const source = earlyBirdReserveSource(sourceRaw);
+    await this.prisma.user.updateMany({
+      where: { id: user.id, earlyBirdReservedAt: null },
+      data: { earlyBirdReservedAt: new Date(), earlyBirdReserveSource: source },
+    });
+    return this.prisma.user.findUniqueOrThrow({ where: { id: user.id } });
+  }
+
   async revoke(userId: string): Promise<User> {
     const user = await this.prisma.user.findUnique({ where: { id: userId } });
     if (!user) throw new NotFoundException('User not found');
@@ -88,6 +199,13 @@ export class SubscriptionsService {
       subscriptionTier: { not: SubscriptionTier.FREE },
       subscriptionExpiresAt: { gt: now },
     };
+    const [earlyBirdReserved, earlyBirdGrants] = await Promise.all([
+      this.prisma.user.count({ where: { earlyBirdReservedAt: { not: null } } }),
+      this.prisma.subscriptionGrant.findMany({
+        where: { productId: EARLY_BIRD_PRODUCT_ID, isSandbox: { not: true } },
+        select: { userId: true, priceThb: true },
+      }),
+    ]);
     const [pro, proMax, expiringSoon, paidOrders, grants, orders] = await Promise.all([
       this.prisma.user.count({
         where: { ...activeWhere, subscriptionTier: SubscriptionTier.PRO },
@@ -127,6 +245,9 @@ export class SubscriptionsService {
         seatsRemaining: presaleSeatsRemaining(paidOrders.length),
         seatCap: FOUNDER_PRESALE_SEATS,
         seatsHeld: FOUNDER_PRESALE_HELD_SEATS,
+        earlyBirdReserved,
+        earlyBirdBuyers: new Set(earlyBirdGrants.map((row) => row.userId)).size,
+        earlyBirdRevenueThb: earlyBirdGrants.reduce((sum, row) => sum + (row.priceThb ?? 0), 0),
       },
       grants: grants.map((row) => ({
         id: row.id,
@@ -139,6 +260,8 @@ export class SubscriptionsService {
         source: row.source,
         note: row.note,
         priceThb: row.priceThb,
+        productId: row.productId,
+        platform: row.platform,
         createdAt: row.createdAt.toISOString(),
       })),
       orders: orders.map((row) => ({
@@ -557,6 +680,14 @@ export class SubscriptionsService {
       throw new UnauthorizedException('Invalid Firebase token');
     }
   }
+}
+
+export function earlyBirdPayload(user: User): {
+  reserved: boolean;
+  reservedAt: string | null;
+} {
+  const reservedAt = user.earlyBirdReservedAt ?? null;
+  return { reserved: reservedAt != null, reservedAt: reservedAt?.toISOString() ?? null };
 }
 
 export function subscriptionPayload(user: User, now = new Date()): {
