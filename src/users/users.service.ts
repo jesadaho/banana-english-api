@@ -14,7 +14,10 @@ import {
   placementRetestStatus,
 } from '../placement/placement.access';
 import { FirebaseAdminService } from '../firebase/firebase-admin.service';
-import { subscriptionPayload } from '../subscriptions/subscriptions.service';
+import {
+  earlyBirdPayload,
+  subscriptionPayload,
+} from '../subscriptions/subscriptions.service';
 import { PrismaService } from '../prisma/prisma.service';
 import {
   avatarSeedCost,
@@ -139,6 +142,11 @@ export interface UserProfileResponse {
   subscription: {
     tier: 'FREE' | 'PRO' | 'PRO_MAX';
     expiresAt: string | null;
+  };
+  /** Pro Max Early Bird reservation (final presale). */
+  earlyBird: {
+    reserved: boolean;
+    reservedAt: string | null;
   };
 }
 
@@ -715,6 +723,7 @@ export class UsersService {
       bananaTicket: this.economy.ticketRules(user),
       nextBananaRefillAt: this.economy.nextBananaRefillAt(user)?.toISOString() ?? null,
       subscription: subscriptionPayload(user),
+      earlyBird: earlyBirdPayload(user),
     };
   }
 }

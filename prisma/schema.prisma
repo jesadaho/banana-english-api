@@ -120,6 +120,10 @@ model User {
   /** Active plan. Ignored once [subscriptionExpiresAt] is in the past. */
   subscriptionTier        SubscriptionTier @default(FREE)
   subscriptionExpiresAt   DateTime?
+  /** Pro Max Early Bird reservation (final presale). Null = not reserved. */
+  earlyBirdReservedAt     DateTime?
+  /** "offer_day_1" | "offer_day_3" | ... | "settings" */
+  earlyBirdReserveSource  String?
 
   fcmTokens               UserFcmToken[]
   referralsSent             Referral[] @relation("ReferralReferrer")
@@ -152,6 +156,7 @@ model User {
 
   @@index([lastStudiedLessonId, lastStudiedAt])
   @@index([lastActivityKind, lastActivityId, lastActivityAt])
+  @@index([earlyBirdReservedAt])
 }
 
 /** Invite-a-friend link between a referrer and the friend who used their code. */
@@ -182,15 +187,23 @@ model SubscriptionGrant {
   tier      SubscriptionTier
   startsAt  DateTime
   expiresAt DateTime
-  /** "founder_presale" | "admin" */
+  /** "founder_presale" | "admin" | "revenuecat" */
   source    String
   note      String?
   priceThb  Int?
+  /** Store subscription product (RevenueCat grants only). */
+  productId          String?
+  /** One row per store transaction (initial purchase or renewal). */
+  storeTransactionId String?  @unique
+  /** "ios" | "android" */
+  platform           String?
+  isSandbox          Boolean?
   createdAt DateTime         @default(now())
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId, createdAt])
+  @@index([productId, createdAt])
 }
 
 /** Founder presale checkout. Quota counts rows with status "paid". */
