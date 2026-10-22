@@ -426,6 +426,7 @@ export class EconomyService {
       | 'emoji_speak_start'
       | 'new_words_start'
       | 'describe_it_start'
+      | 'in_on_at_start'
       | 'interactive_scenario_start'
       | 'skip_quiz_start'
       | 'listen_up_start'
