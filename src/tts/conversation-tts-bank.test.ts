@@ -1,9 +1,11 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 import {
+  audioClipsForConversationReply,
   audioUrlForConversationLine,
   collectConversationBankJobs,
   conversationClipHash,
+  type ConversationTtsBank,
 } from './conversation-tts-bank';
 import { conversationVoiceFor } from './conversation-voices';
 import { ttsBankObjectPath } from './tts-bank';
@@ -44,5 +46,55 @@ describe('conversation voice bank', () => {
     assert.ok(voices.has('Callirrhoe'));
     assert.equal(help.length, voices.size);
     assert.ok(jobs.length > 40);
+  });
+
+  it('banks Max name, country, and short reactions', () => {
+    const maxLines = new Set(
+      collectConversationBankJobs()
+        .filter((job) => job.voice.voice === 'Achird')
+        .map((job) => job.text),
+    );
+    assert.ok(maxLines.has('What is your name?'));
+    assert.ok(maxLines.has('Where are you from?'));
+    assert.ok(maxLines.has('That is cool!'));
+    assert.ok(maxLines.has('Do you like English?'));
+  });
+
+  describe('two-part replies', () => {
+    const sim = 'foundation_first_conversation';
+    const voice = conversationVoiceFor(sim);
+    const bankWith = (lines: string[]): ConversationTtsBank => ({
+      model: 'gemini-2.5-flash-tts',
+      clips: Object.fromEntries(
+        lines.map((text) => [
+          conversationClipHash(voice!, text),
+          { voice: voice!.voice, text, url: `url:${text}` },
+        ]),
+      ),
+    });
+
+    it('prefers the whole-line clip', () => {
+      const bank = bankWith(['That is cool! Do you like English?', 'That is cool!']);
+      assert.deepEqual(
+        audioClipsForConversationReply(sim, 'That is cool! Do you like English?', bank),
+        { praiseAudioUrl: null, audioUrl: 'url:That is cool! Do you like English?' },
+      );
+    });
+
+    it('plays a banked reaction then a banked question', () => {
+      const bank = bankWith(['That is cool!', 'Do you like English?']);
+      assert.deepEqual(
+        audioClipsForConversationReply(sim, 'That is cool!  Do you like English?', bank),
+        { praiseAudioUrl: 'url:That is cool!', audioUrl: 'url:Do you like English?' },
+      );
+    });
+
+    it('falls back to live TTS when either half is missing', () => {
+      const bank = bankWith(['Do you like English?']);
+      assert.deepEqual(
+        audioClipsForConversationReply(sim, 'So fun! Do you like English?', bank),
+        { praiseAudioUrl: null, audioUrl: null },
+      );
+    });
   });
 });

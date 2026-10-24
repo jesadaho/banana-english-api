@@ -87,3 +87,43 @@ export function audioUrlForConversationLine(
   const clip = bank.clips[conversationClipHash(voice, key)];
   return clip?.url ?? null;
 }
+
+export interface ConversationReplyClips {
+  /** Played first. Set only when the reply is split into two banked parts. */
+  praiseAudioUrl: string | null;
+  audioUrl: string | null;
+}
+
+const SENTENCE_BREAK_RE = /(?<=[.!?])\s+/;
+
+/**
+ * Whole-reply clip, or two banked parts played back to back.
+ * Gemini often adds a short reaction ("That is cool!") before a scripted
+ * question, which misses the whole-line bank even when both halves exist.
+ * The app plays `praiseAudioUrl` then `audioUrl`, so at most two parts.
+ */
+export function audioClipsForConversationReply(
+  simulationId: string,
+  text: string | null | undefined,
+  bank: ConversationTtsBank = loadConversationTtsBank(),
+): ConversationReplyClips {
+  const whole = audioUrlForConversationLine(simulationId, text, bank);
+  if (whole) return { praiseAudioUrl: null, audioUrl: whole };
+
+  const sentences = ttsBankKey(text).split(SENTENCE_BREAK_RE).filter(Boolean);
+  for (let cut = 1; cut < sentences.length; cut++) {
+    const head = audioUrlForConversationLine(
+      simulationId,
+      sentences.slice(0, cut).join(' '),
+      bank,
+    );
+    if (!head) continue;
+    const tail = audioUrlForConversationLine(
+      simulationId,
+      sentences.slice(cut).join(' '),
+      bank,
+    );
+    if (tail) return { praiseAudioUrl: head, audioUrl: tail };
+  }
+  return { praiseAudioUrl: null, audioUrl: null };
+}

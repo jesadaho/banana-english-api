@@ -29,6 +29,12 @@ export class GcpSttService {
     const projectId = token.projectId;
 
     const kind = sniffAudioKind(params.audio, params.filename);
+    const bytes = params.audio.length;
+    this.logger.log(
+      `GCP STT start kind=${kind} bytes=${bytes} file=${params.filename ?? '-'} lang=${languageCode}`,
+    );
+
+    let v2Error: string | null = null;
     if (projectId) {
       try {
         return await this.recognizeV2({
@@ -38,27 +44,36 @@ export class GcpSttService {
           languageCode,
         });
       } catch (error) {
-        this.logger.warn(
-          `Speech v2 failed (${kind}), trying v1: ${
-            error instanceof Error ? error.message : String(error)
-          }`,
-        );
+        v2Error = error instanceof Error ? error.message : String(error);
+        this.logger.warn(`Speech v2 failed (${kind}, ${bytes}b): ${v2Error}`);
       }
     }
 
     if (kind === 'm4a') {
       throw new ServiceUnavailableException(
-        'GCP Speech cannot decode AAC/M4A on v1. Record WAV or enable Speech v2.',
+        [
+          'GCP Speech cannot decode AAC/M4A on v1. Record WAV or enable Speech v2.',
+          ifSnippet(v2Error, 'v2'),
+        ]
+          .filter(Boolean)
+          .join(' | '),
       );
     }
 
-    return this.recognizeV1({
-      audio: params.audio,
-      accessToken: token.accessToken,
-      languageCode,
-      kind,
-      projectId,
-    });
+    try {
+      return await this.recognizeV1({
+        audio: params.audio,
+        accessToken: token.accessToken,
+        languageCode,
+        kind,
+        projectId,
+      });
+    } catch (error) {
+      const v1Error = error instanceof Error ? error.message : String(error);
+      throw new ServiceUnavailableException(
+        [v1Error, ifSnippet(v2Error, 'v2')].filter(Boolean).join(' | '),
+      );
+    }
   }
 
   private languageCode(language?: string | null): string {
@@ -87,7 +102,8 @@ export class GcpSttService {
         config: {
           autoDecodingConfig: {},
           languageCodes: [params.languageCode],
-          model: 'latest_short',
+          // latest_short returns no results for AAC/M4A; long decodes it.
+          model: 'long',
           features: { enableAutomaticPunctuation: true },
         },
         content: params.audio.toString('base64'),
@@ -95,7 +111,7 @@ export class GcpSttService {
     });
     const body = await response.text();
     if (!response.ok) {
-      throw new Error(`Speech v2 failed (${response.status}): ${body.slice(0, 180)}`);
+      throw new Error(googleSnippet('v2', response.status, body));
     }
     return this.parseTranscript(body, 'v2');
   }
@@ -136,8 +152,9 @@ export class GcpSttService {
     });
     const body = await response.text();
     if (!response.ok) {
-      this.logger.error(`Speech v1 failed (${response.status}): ${body.slice(0, 200)}`);
-      throw new ServiceUnavailableException('GCP Speech transcription failed');
+      const snippet = googleSnippet('v1', response.status, body);
+      this.logger.error(snippet);
+      throw new Error(snippet);
     }
     return this.parseTranscript(body, 'v1');
   }
@@ -158,7 +175,9 @@ export class GcpSttService {
       .trim();
     if (!text) {
       this.logger.warn(`GCP Speech ${source} returned empty transcript`);
-      throw new ServiceUnavailableException('GCP Speech heard nothing');
+      throw new ServiceUnavailableException(
+        `GCP Speech ${source} heard nothing (empty transcript)`,
+      );
     }
     return { text };
   }
@@ -188,6 +207,15 @@ export function sniffAudioKind(
     return 'm4a';
   }
   return 'unknown';
+}
+
+function googleSnippet(source: string, status: number, body: string): string {
+  return `GCP Speech ${source} HTTP ${status}: ${body.replace(/\s+/g, ' ').slice(0, 280)}`;
+}
+
+function ifSnippet(message: string | null, label: string): string | null {
+  if (!message) return null;
+  return `${label}: ${message}`;
 }
 
 function v1EncodingForKind(kind: AudioKind): string {
