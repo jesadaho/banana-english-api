@@ -1,5 +1,9 @@
 import type { LessonConfig } from '../lessons/lessons.data';
 import specsJson from './phonics-lessons.authoring.json';
+import {
+  isPhonicsLockedLesson,
+  PHONICS_LOCKED_PROGRESS_MAX,
+} from '../training/scripts/phonics-locked.script';
 
 export const PHONICS_LESSON_SPECS = specsJson;
 export const PHONICS_LESSON_IDS = specsJson.map(spec => spec.lessonId);
@@ -37,8 +41,11 @@ export const PHONICS_LESSONS: LessonConfig[] = specsJson.map(spec => {
     difficulty: 'beginner', languageMix: {thai:70,english:30},
     estimatedMinutesMin: spec.estimatedMinutes[0], estimatedMinutesMax: spec.estimatedMinutes[1],
     targetPhrases: [...new Set([...spec.models, spec.transfer, spec.phrase])],
-    targetLabel: 'word or short phrase', coachOnly: true, listenOnlyTurns: 2,
-    progressMax: steps.length, maxTurns: steps.length * 2,
+    targetLabel: 'word or short phrase', coachOnly: true,
+    // Locked scripts run 8 fixed beats (+ one retry each) on engine v2.
+    ...(isPhonicsLockedLesson(spec.lessonId)
+      ? { listenOnlyTurns: 0, progressMax: PHONICS_LOCKED_PROGRESS_MAX, maxTurns: PHONICS_LOCKED_PROGRESS_MAX * 3 }
+      : { listenOnlyTurns: 2, progressMax: steps.length, maxTurns: steps.length * 2 }),
     systemInstruction: `Phonics speaking Lesson v2, ${spec.titleEn}. Teach ONE adult beginner in their chosen teaching language, not a classroom of children.
 Reuse the existing Lesson JSON and Continue/microphone flow. No sorting, tile building, timed quiz, pass threshold or separate Skill Check. Visual choices are optional support for speaking.
 Safety: you receive transcript text, NOT acoustic evidence. Do not judge phoneme accuracy, vowel quality/length, voicing, mouth position or accent from it. Do not call a pronunciation wrong/right or claim an improvement you cannot hear. Completion means participation. A lexical match is not a phonics mastery score. Never block the learner on isolated-phoneme STT.
