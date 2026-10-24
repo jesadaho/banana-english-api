@@ -21,23 +21,23 @@ export type RevenueCatPackPurchase = {
   purchasedAt: string | null;
 };
 
+type RevenueCatSubscriptionRow = {
+  store_transaction_id?: string;
+  original_transaction_id?: string;
+  is_sandbox?: boolean;
+  expires_date?: string | null;
+  purchase_date?: string | null;
+  refunded_at?: string | null;
+  store?: string;
+  /** Google Play base plan id only — never the catalog product id. */
+  product_plan_identifier?: string;
+};
+
 type RevenueCatSubscriberResponse = {
   subscriber?: {
     non_subscriptions?: Record<string, RevenueCatNonSubscription[] | undefined>;
     other_purchases?: Record<string, RevenueCatNonSubscription | undefined>;
-    subscriptions?: Record<
-      string,
-      {
-        store_transaction_id?: string;
-        original_transaction_id?: string;
-        is_sandbox?: boolean;
-        expires_date?: string | null;
-        purchase_date?: string | null;
-        refunded_at?: string | null;
-        store?: string;
-        product_plan_identifier?: string;
-      }
-    >;
+    subscriptions?: Record<string, RevenueCatSubscriptionRow>;
   };
 };
 
@@ -86,24 +86,7 @@ export class RevenueCatClient {
     const found: RevenueCatSubscriptionPeriod[] = [];
     for (const appUserId of appUserIds.map((id) => id.trim()).filter(Boolean)) {
       const payload = await this.fetchSubscriber(appUserId, secret);
-      for (const [key, row] of Object.entries(payload.subscriber?.subscriptions ?? {})) {
-        const expiresAt = row.expires_date ? new Date(row.expires_date) : null;
-        if (!expiresAt || Number.isNaN(expiresAt.getTime())) continue;
-        if (expiresAt.getTime() <= now.getTime() || row.refunded_at) continue;
-        const storeTransactionId =
-          row.store_transaction_id?.trim() || row.original_transaction_id?.trim();
-        if (!storeTransactionId) continue;
-        const purchasedAt = row.purchase_date ? new Date(row.purchase_date) : null;
-        found.push({
-          productId: row.product_plan_identifier?.trim() || key,
-          storeTransactionId,
-          expiresAt,
-          purchasedAt: purchasedAt && !Number.isNaN(purchasedAt.getTime()) ? purchasedAt : null,
-          isSandbox: typeof row.is_sandbox === 'boolean' ? row.is_sandbox : null,
-          platform:
-            row.store === 'app_store' ? 'ios' : row.store === 'play_store' ? 'android' : null,
-        });
-      }
+      found.push(...extractActiveSubscriptions(payload, now));
     }
     return found;
   }
@@ -303,6 +286,37 @@ export class RevenueCatClient {
 
     return null;
   }
+}
+
+/**
+ * REST v1 keys subscriptions by product id (`pro_monthly` or
+ * `pro_monthly:monthly`). `product_plan_identifier` is the Play base plan
+ * (`monthly`) and must not be used as the catalog id.
+ */
+export function extractActiveSubscriptions(
+  payload: RevenueCatSubscriberResponse,
+  now = new Date(),
+): RevenueCatSubscriptionPeriod[] {
+  const found: RevenueCatSubscriptionPeriod[] = [];
+  for (const [key, row] of Object.entries(payload.subscriber?.subscriptions ?? {})) {
+    const expiresAt = row.expires_date ? new Date(row.expires_date) : null;
+    if (!expiresAt || Number.isNaN(expiresAt.getTime())) continue;
+    if (expiresAt.getTime() <= now.getTime() || row.refunded_at) continue;
+    const storeTransactionId =
+      row.store_transaction_id?.trim() || row.original_transaction_id?.trim();
+    if (!storeTransactionId) continue;
+    const purchasedAt = row.purchase_date ? new Date(row.purchase_date) : null;
+    found.push({
+      productId: key,
+      storeTransactionId,
+      expiresAt,
+      purchasedAt: purchasedAt && !Number.isNaN(purchasedAt.getTime()) ? purchasedAt : null,
+      isSandbox: typeof row.is_sandbox === 'boolean' ? row.is_sandbox : null,
+      platform:
+        row.store === 'app_store' ? 'ios' : row.store === 'play_store' ? 'android' : null,
+    });
+  }
+  return found;
 }
 
 export type VerifiedStoreTransaction = {
