@@ -222,4 +222,9 @@ export class UsersController {
   async resetDailySpeakDebug(@Req() req: AuthedRequest) {
     return this.users.resetDailySpeakDebug(req.user);
   }
+
+  @Post('me/debug/reset-placement-retest')
+  async resetPlacementRetestDebug(@Req() req: AuthedRequest) {
+    return this.users.resetPlacementRetestDebug(req.user);
+  }
 }

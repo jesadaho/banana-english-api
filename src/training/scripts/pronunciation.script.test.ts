@@ -18,6 +18,11 @@ describe('pronunciation script', () => {
     assert.equal(isTrainingV2Lesson('fnd_v6_pron_catch_slowly'), true);
   });
 
+  it('keeps AI-led phonics lessons off training v2 (no scripted opening)', () => {
+    assert.equal(isTrainingV2Lesson('pron_phonics_01_first_code'), false);
+    assert.equal(isTrainingV2Lesson('pron_phonics_11_sh'), false);
+  });
+
   it('opens from the chapter intro without asking for speech', () => {
     const opening = buildPronunciationOpening(config);
     assert.equal(opening.expectsUserSpeech, false);

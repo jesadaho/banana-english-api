@@ -458,6 +458,20 @@ export class UsersService {
     return this.getProfile(updated);
   }
 
+  /** Clears the 30-day Level Test cooldown so a paid retest can start again. */
+  async resetPlacementRetestDebug(user: User): Promise<UserProfileResponse> {
+    if (!this.isDebugEndpointsEnabled()) {
+      throw new ForbiddenException('Debug endpoints are disabled');
+    }
+
+    const updated = await this.prisma.user.update({
+      where: { id: user.id },
+      data: { lastPlacementTestAt: null } as Prisma.UserUpdateInput,
+    });
+
+    return this.getProfile(updated);
+  }
+
   async unlockAvatar(
     user: User,
     avatarId: string,

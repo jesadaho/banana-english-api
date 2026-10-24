@@ -85,8 +85,10 @@ const COMPLETION_TEXTS: Record<
     foundationCompletionShared(
       'วันนี้คุณแนะนำตัวเป็นภาษาอังกฤษได้แล้ว ทั้งบอกชื่อ บอกว่ามาจากไหน และตอบเวลาพบคนใหม่ได้',
     ),
-  yes_no_maybe: (name) =>
-    foundationCompletion(name, 'วันนี้คุณตอบ Yes / No / Maybe และคำตอบสั้นๆ ได้แล้ว'),
+  yes_no_maybe: () =>
+    foundationCompletionShared(
+      'วันนี้คุณตอบ Yes / No / Maybe และคำตอบสั้นๆ ได้แล้ว',
+    ),
   polite_expressions: (name) =>
     foundationCompletion(name, 'วันนี้คุณใช้ thank you, you\'re welcome, excuse me และ sorry ได้แล้ว'),
   meet_people: (name) =>

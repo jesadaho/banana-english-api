@@ -8,7 +8,7 @@ import {
 import { isAboutMeChoiceLesson } from './scripts/about-me.registry';
 import { isAroundTownChoiceLesson } from './scripts/around-town.registry';
 import { isStoriesChoiceLesson } from './scripts/stories.registry';
-import { isPronunciationLesson } from '../lessons/lessons.data';
+import { pronunciationSpecFor } from '../lessons/lessons.data';
 
 /** Foundation + About Me + Around Town + Stories lessons use the PoolGate / choice-lesson registry. */
 
@@ -49,7 +49,10 @@ export function isTrainingV2Lesson(lessonId: string): boolean {
   if (isAboutMeChoiceLesson(lessonId)) return true;
   if (isAroundTownChoiceLesson(lessonId)) return true;
   if (isStoriesChoiceLesson(lessonId)) return true;
-  if (isPronunciationLesson(lessonId)) return true;
+  // Only scripted pronunciation lessons (with a spec) run on engine v2.
+  // Phonics lessons (pron_phonics_*) share the pron_ prefix but are AI-led
+  // and have no v2 opening; routing them here threw "not implemented" (502).
+  if (pronunciationSpecFor(lessonId)) return true;
   return extraV2Allowlist().has(lessonId);
 }
 
