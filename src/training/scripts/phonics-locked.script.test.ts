@@ -7,6 +7,7 @@ import {
   buildPhonicsLockedOpening,
   collectPhonicsLockedBankLines,
   phonicsLockedMatches,
+  PHONICS_LOCKED_SPECS,
 } from './phonics-locked.script';
 
 const ID = 'pron_phonics_05_short_u';
@@ -29,7 +30,6 @@ function walk(answers: string[]) {
 describe('locked phonics — Short U', () => {
   it('runs on engine v2 without Gemini', () => {
     assert.equal(isTrainingV2Lesson(ID), true);
-    assert.equal(isTrainingV2Lesson('pron_phonics_01_first_code'), false);
   });
 
   it('walks 8 beats when every answer matches', () => {
@@ -60,7 +60,25 @@ describe('locked phonics — Short U', () => {
 
   it('never uses the learner name and keeps a small fixed bank', () => {
     const lines = collectPhonicsLockedBankLines();
-    assert.ok(lines.length <= 16, `bank lines: ${lines.length}`);
-    for (const line of lines) assert.doesNotMatch(line, /\{|Rookie/);
+    assert.ok(lines.length <= PHONICS_LOCKED_SPECS.length * 14, `bank lines: ${lines.length}`);
+    for (const line of lines) assert.doesNotMatch(line, /\{|undefined|Rookie/);
+  });
+
+  it('covers all 20 phonics lessons and each walks 8 beats', () => {
+    assert.equal(PHONICS_LOCKED_SPECS.length, 20);
+    for (const spec of PHONICS_LOCKED_SPECS) {
+      assert.equal(isTrainingV2Lesson(spec.lessonId), true);
+      const turns: ChatTurn[] = [];
+      let reply = buildPhonicsLockedOpening(spec.lessonId);
+      const steps = [reply.v7Step];
+      for (let i = 0; i < 20 && !reply.isLessonComplete; i++) {
+        turns.push({ speaker: 'ai', textEn: reply.textEn, v7Step: reply.v7Step, v7Retry: reply.v7Retry, expectedSpeech: reply.expectedSpeech });
+        const say = reply.expectedSpeech || '[continue]';
+        turns.push({ speaker: 'user', textEn: say });
+        reply = buildPhonicsLockedAfterUser({ lessonId: spec.lessonId, turns, userText: say });
+        steps.push(reply.v7Step);
+      }
+      assert.deepEqual(steps, [1, 2, 3, 4, 5, 6, 7, 8], spec.lessonId);
+    }
   });
 });
