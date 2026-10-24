@@ -36,6 +36,11 @@ import {
   isFoundationChoiceLesson,
 } from '../scripts/foundation.registry';
 import {
+  buildPhonicsLockedAfterUser,
+  buildPhonicsLockedOpening,
+  isPhonicsLockedLesson,
+} from '../scripts/phonics-locked.script';
+import {
   buildPronunciationAfterUser,
   buildPronunciationOpening,
   isPronunciationScriptLesson,
@@ -119,6 +124,13 @@ export class TrainingTurnEngine {
       };
     }
 
+    if (isPhonicsLockedLesson(config.lessonId)) {
+      return {
+        reply: this.toReply(buildPhonicsLockedOpening(config.lessonId)),
+        aiDebug: scriptedAiDebug(),
+      };
+    }
+
     if (isPronunciationScriptLesson(config.lessonId)) {
       return {
         reply: withRepeatSkip(this.toReply(buildPronunciationOpening(config))),
@@ -151,6 +163,15 @@ export class TrainingTurnEngine {
     const stories = getStoriesChoiceLesson(input.config.lessonId);
     if (stories) {
       return this.runChoiceLessonTurn(input, stories);
+    }
+
+    if (isPhonicsLockedLesson(input.config.lessonId)) {
+      const reply = buildPhonicsLockedAfterUser({
+        lessonId: input.config.lessonId,
+        turns: input.turns,
+        userText: input.userText,
+      });
+      return { reply: this.toReply(reply), aiDebug: scriptedAiDebug() };
     }
 
     if (isPronunciationScriptLesson(input.config.lessonId)) {

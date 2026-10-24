@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { isPhonicsLockedLesson } from '../training/scripts/phonics-locked.script';
 import { describe, it } from 'node:test';
 import { PHONICS_LESSONS, PHONICS_LESSON_SPECS, isPhonicsLesson } from './phonics-lessons.data';
 import { buildClearEnglishCourse, CLEAR_ENGLISH_LESSON_IDS } from './clear-english-course.data';
@@ -42,7 +43,7 @@ describe('Phonics v2 — ordinary speaking lessons', () => {
       assert.equal(await lessons.isLessonUnlockedForUser('user',lesson.lessonId),true);
       assert.equal(getAllLessons().some(l => l.lessonId === lesson.lessonId),false);
       assert.equal(lesson.coachOnly,true);
-      assert.equal(lesson.listenOnlyTurns,2);
+      assert.equal(lesson.listenOnlyTurns,isPhonicsLockedLesson(lesson.lessonId) ? 0 : 2);
       assert.ok(lesson.progressMax! < lesson.maxTurns);
     }
     assert.equal(isPhonicsLesson('pron_phonics_unknown'),false);

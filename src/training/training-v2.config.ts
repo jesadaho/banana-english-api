@@ -9,6 +9,7 @@ import { isAboutMeChoiceLesson } from './scripts/about-me.registry';
 import { isAroundTownChoiceLesson } from './scripts/around-town.registry';
 import { isStoriesChoiceLesson } from './scripts/stories.registry';
 import { pronunciationSpecFor } from '../lessons/lessons.data';
+import { isPhonicsLockedLesson } from './scripts/phonics-locked.script';
 
 /** Foundation + About Me + Around Town + Stories lessons use the PoolGate / choice-lesson registry. */
 
@@ -53,6 +54,8 @@ export function isTrainingV2Lesson(lessonId: string): boolean {
   // Phonics lessons (pron_phonics_*) share the pron_ prefix but are AI-led
   // and have no v2 opening; routing them here threw "not implemented" (502).
   if (pronunciationSpecFor(lessonId)) return true;
+  // Locked Phonics scripts (no Gemini); other pron_phonics_* stay AI-led.
+  if (isPhonicsLockedLesson(lessonId)) return true;
   return extraV2Allowlist().has(lessonId);
 }
 
