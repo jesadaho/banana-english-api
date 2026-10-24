@@ -1,6 +1,18 @@
+import { AsyncLocalStorage } from 'async_hooks';
 import { randomUUID } from 'crypto';
-import { Injectable } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  Logger,
+  OnModuleDestroy,
+  OnModuleInit,
+  Optional,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import {
+  SESSION_PERSISTENCE,
+  type SessionPersistence,
+} from './session-persistence';
 import type {
   EmojiChoicePrompt,
   EmojiSpeakPrompt,
@@ -174,11 +186,86 @@ export interface SessionData {
   speakingMetrics?: SpeakingMetricsPayload;
 }
 
-@Injectable()
-export class SessionStoreService {
-  private readonly sessions = new Map<string, SessionData>();
+/** In-progress sessions live this long (memory cache and DB rows). */
+const SESSION_TTL_MS = 24 * 60 * 60 * 1000;
+const CLEANUP_EVERY_MS = 30 * 60 * 1000;
 
-  constructor(private readonly config: ConfigService) {}
+@Injectable()
+export class SessionStoreService implements OnModuleInit, OnModuleDestroy {
+  private readonly logger = new Logger(SessionStoreService.name);
+  private readonly sessions = new Map<string, SessionData>();
+  /** Session ids touched during the current request (see runInRequest). */
+  private readonly touched = new AsyncLocalStorage<Set<string>>();
+  private cleanupTimer: NodeJS.Timeout | null = null;
+
+  constructor(
+    private readonly config: ConfigService,
+    @Optional()
+    @Inject(SESSION_PERSISTENCE)
+    private readonly persistence?: SessionPersistence,
+  ) {}
+
+  onModuleInit(): void {
+    if (!this.persistence) return;
+    this.cleanupTimer = setInterval(() => void this.cleanup(), CLEANUP_EVERY_MS);
+    this.cleanupTimer.unref?.();
+  }
+
+  onModuleDestroy(): void {
+    if (this.cleanupTimer) clearInterval(this.cleanupTimer);
+  }
+
+  /** Run one request with touch tracking so flushTouched() knows what to save. */
+  runInRequest<T>(fn: () => Promise<T>): Promise<T> {
+    return this.touched.run(new Set<string>(), fn);
+  }
+
+  /** Load a session from the DB into memory when this instance lacks it. */
+  async hydrate(sessionId: string): Promise<void> {
+    if (!this.persistence || this.sessions.has(sessionId)) return;
+    try {
+      const data = await this.persistence.load(sessionId);
+      if (data && !this.sessions.has(sessionId)) this.sessions.set(sessionId, data);
+    } catch (err) {
+      this.logger.warn(`Live session load failed ${sessionId}: ${String(err).slice(0, 160)}`);
+    }
+  }
+
+  /** Write every session touched in this request. Never throws. */
+  async flushTouched(): Promise<void> {
+    const ids = this.touched.getStore();
+    if (!this.persistence || !ids?.size) return;
+    const expiresAt = new Date(Date.now() + SESSION_TTL_MS);
+    await Promise.all(
+      [...ids].map(async (id) => {
+        const data = this.sessions.get(id);
+        if (!data) return;
+        try {
+          await this.persistence!.save(id, data, expiresAt);
+        } catch (err) {
+          this.logger.warn(`Live session save failed ${id}: ${String(err).slice(0, 160)}`);
+        }
+      }),
+    );
+  }
+
+  /** Drop expired rows and memory entries older than the TTL. */
+  async cleanup(now = new Date()): Promise<void> {
+    const cutoff = now.getTime() - SESSION_TTL_MS;
+    for (const [id, data] of this.sessions) {
+      const started = Date.parse(data.session.startedAt);
+      if (Number.isFinite(started) && started < cutoff) this.sessions.delete(id);
+    }
+    try {
+      await this.persistence?.deleteExpired(now);
+    } catch (err) {
+      this.logger.warn(`Live session cleanup failed: ${String(err).slice(0, 160)}`);
+    }
+  }
+
+  private touch(sessionId: string): void {
+    this.touched.getStore()?.add(sessionId);
+  }
 
   create(
     topicId: string,
@@ -226,6 +313,7 @@ export class SessionStoreService {
         : undefined,
     };
     this.sessions.set(sessionId, data);
+    this.touch(sessionId);
     return data;
   }
 
@@ -252,6 +340,7 @@ export class SessionStoreService {
       thaiMixUsed: false,
     };
     this.sessions.set(sessionId, data);
+    this.touch(sessionId);
     return data;
   }
 
@@ -289,6 +378,7 @@ export class SessionStoreService {
       thaiMixUsed: false,
     };
     this.sessions.set(sessionId, data);
+    this.touch(sessionId);
     return data;
   }
 
@@ -316,11 +406,15 @@ export class SessionStoreService {
       thaiMixUsed: false,
     };
     this.sessions.set(sessionId, data);
+    this.touch(sessionId);
     return data;
   }
 
   get(sessionId: string): SessionData | undefined {
-    return this.sessions.get(sessionId);
+    const data = this.sessions.get(sessionId);
+    // Handlers mutate the returned object directly, so a read counts as a touch.
+    if (data) this.touch(sessionId);
+    return data;
   }
 
   addTurn(sessionId: string, turn: ChatTurn): number {
@@ -406,7 +500,7 @@ export class SessionStoreService {
   }
 
   private require(sessionId: string): SessionData {
-    const data = this.sessions.get(sessionId);
+    const data = this.get(sessionId);
     if (!data) {
       throw new Error(sessionId);
     }

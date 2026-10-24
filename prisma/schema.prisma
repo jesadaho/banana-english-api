@@ -671,3 +671,15 @@ model TtsLiveLine {
   @@index([lastSeenAt])
   @@index([source, hitCount])
 }
+
+/// In-progress chat/lesson session state (SessionData JSON) so a deploy or
+/// restart does not drop learners mid-lesson. The API keeps a memory cache
+/// and writes through after each request; rows expire after 24h.
+model LiveSession {
+  id        String   @id
+  data      Json
+  updatedAt DateTime @updatedAt
+  expiresAt DateTime
+
+  @@index([expiresAt])
+}
