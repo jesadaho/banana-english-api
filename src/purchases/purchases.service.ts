@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Injectable,
+  Logger,
   UnauthorizedException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -41,6 +42,8 @@ type RevenueCatWebhookBody = {
   event?: {
     type?: string;
     app_user_id?: string;
+    original_app_user_id?: string;
+    aliases?: string[];
     product_id?: string;
     new_product_id?: string;
     transaction_id?: string;
@@ -61,6 +64,8 @@ const SUBSCRIPTION_GRANT_EVENTS = new Set([
 
 @Injectable()
 export class PurchasesService {
+  private readonly logger = new Logger(PurchasesService.name);
+
   constructor(
     private readonly prisma: PrismaService,
     private readonly economy: EconomyService,
@@ -310,7 +315,7 @@ export class PurchasesService {
           ? 'android'
           : undefined;
 
-    if (subscriptionProduct(event.product_id)) {
+    if (subscriptionProduct(event.product_id) || subscriptionProduct(event.new_product_id)) {
       await this.handleSubscriptionEvent(type, event, platform);
       return;
     }
@@ -358,12 +363,22 @@ export class PurchasesService {
     event: NonNullable<RevenueCatWebhookBody['event']>,
     platform: string | undefined,
   ): Promise<void> {
-    const appUserId = event.app_user_id?.trim();
-    const storeTransactionId = event.transaction_id?.trim();
+    const storeTransactionId =
+      event.transaction_id?.trim() || event.original_transaction_id?.trim();
     const expiresMs = event.expiration_at_ms;
-    if (!appUserId || !storeTransactionId || !expiresMs) return;
-    const user = await this.userForAppUserId(appUserId);
-    if (!user) return;
+    if (!storeTransactionId || !expiresMs) {
+      this.logger.warn(
+        `RC subscription webhook skipped type=${type} missing tx=${!storeTransactionId} exp=${!expiresMs}`,
+      );
+      return;
+    }
+    const user = await this.userForWebhookEvent(event);
+    if (!user) {
+      this.logger.warn(
+        `RC subscription webhook skipped type=${type} product=${event.product_id ?? ''} no matching user`,
+      );
+      return;
+    }
     const expiresAt = new Date(expiresMs);
     const isSandbox = event.environment
       ? event.environment.toUpperCase() === 'SANDBOX'
@@ -402,7 +417,10 @@ export class PurchasesService {
     );
     let applied = 0;
     for (const period of periods) {
-      if (!subscriptionProduct(period.productId)) continue;
+      if (!subscriptionProduct(period.productId)) {
+        this.logger.warn(`subscriptions/sync skipped unknown product ${period.productId}`);
+        continue;
+      }
       const result = await this.subscriptions.applyStorePeriod({
         userId: user.id,
         productId: period.productId,
@@ -419,6 +437,29 @@ export class PurchasesService {
       applied,
       subscription: subscriptionPayload(refreshed),
     };
+  }
+
+  /**
+   * RevenueCat may file the purchase under an anonymous id first. Search
+   * `app_user_id`, `original_app_user_id`, and `aliases`.
+   */
+  private async userForWebhookEvent(
+    event: NonNullable<RevenueCatWebhookBody['event']>,
+  ): Promise<User | null> {
+    const ids = [
+      event.app_user_id,
+      event.original_app_user_id,
+      ...(event.aliases ?? []),
+    ];
+    const seen = new Set<string>();
+    for (const raw of ids) {
+      const appUserId = raw?.trim();
+      if (!appUserId || seen.has(appUserId)) continue;
+      seen.add(appUserId);
+      const user = await this.userForAppUserId(appUserId);
+      if (user) return user;
+    }
+    return null;
   }
 
   private userForAppUserId(appUserId: string): Promise<User | null> {
