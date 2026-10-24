@@ -9,7 +9,9 @@ import {
   Body,
   Req,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
+import { SessionPersistenceInterceptor } from '../session-store/session-persistence.interceptor';
 import { randomUUID } from 'crypto';
 import {
   throwAiServiceBadGateway,
@@ -234,6 +236,8 @@ type AuthedRequest = {
 
 @Controller('sessions')
 @UseGuards(AnonymousUserGuard)
+// Load/save in-progress sessions around each request so deploys don't drop them.
+@UseInterceptors(SessionPersistenceInterceptor)
 export class SessionsController {
   constructor(
     private readonly sessionStore: SessionStoreService,
