@@ -1,7 +1,14 @@
 import { Module } from '@nestjs/common';
-import { ConfigKeysController } from './config-keys.controller';
+import { RateLimitGuard } from '../common/rate-limit';
+import { UsersModule } from '../users/users.module';
+import {
+  ConfigKeysController,
+  ConfigKeysV2Controller,
+} from './config-keys.controller';
 
 @Module({
-  controllers: [ConfigKeysController],
+  imports: [UsersModule],
+  controllers: [ConfigKeysController, ConfigKeysV2Controller],
+  providers: [RateLimitGuard],
 })
 export class ConfigKeysModule {}

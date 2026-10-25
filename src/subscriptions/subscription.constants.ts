@@ -1,7 +1,7 @@
 import { createHmac, timingSafeEqual } from 'crypto';
 
-export const PRO_BANANA_CAP = 15;
-export const PRO_REFILL_HOURS = 2;
+export const PRO_BANANA_CAP = 25;
+export const PRO_REFILL_HOURS = 1;
 
 export const FOUNDER_PRESALE_PRICE_THB = 150;
 export const FOUNDER_PRESALE_SEATS = 30;

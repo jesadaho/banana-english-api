@@ -1,13 +1,22 @@
-import { Controller, Get, ServiceUnavailableException } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  ServiceUnavailableException,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import {
   pickGroqApiKeyForClient,
   resolveGroqApiKeys,
   type GroqClientKey,
 } from './groq-api-keys';
+import { RateLimit, RateLimitGuard } from '../common/rate-limit';
+import { AnonymousUserGuard } from '../users/anonymous-user.guard';
+import { LegacyApiInterceptor } from '../common/legacy-api.interceptor';
 
-@Controller('api/config')
-export class ConfigKeysController {
+/** Routes shared by the legacy and v2 controllers below. */
+abstract class ConfigKeysRoutes {
   constructor(private readonly config: ConfigService) {}
 
   @Get('keys')
@@ -100,5 +109,26 @@ export class ConfigKeysController {
       ?.trim();
     const key = this.config.get<string>('GOOGLE_CLOUD_TTS_PRIVATE_KEY')?.trim();
     return Boolean(email && key);
+  }
+}
+
+/** @deprecated Open legacy route for old app builds. Remove after LEGACY_API_SUNSET. */
+@Controller('api/config')
+@UseGuards(RateLimitGuard)
+@UseInterceptors(LegacyApiInterceptor)
+@RateLimit({ name: 'config-legacy', windowMs: 60_000, perUser: 20, perIp: 120 })
+export class ConfigKeysController extends ConfigKeysRoutes {
+  constructor(config: ConfigService) {
+    super(config);
+  }
+}
+
+/** v2: a known app user is required, and fetches are rate limited. */
+@Controller('api/v2/config')
+@UseGuards(RateLimitGuard, AnonymousUserGuard)
+@RateLimit({ name: 'config', windowMs: 60_000, perUser: 20, perIp: 120 })
+export class ConfigKeysV2Controller extends ConfigKeysRoutes {
+  constructor(config: ConfigService) {
+    super(config);
   }
 }
