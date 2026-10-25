@@ -1,4 +1,4 @@
-export const PLACEMENT_QUESTION_VERSION = 'placement-q-v2.3';
+export const PLACEMENT_QUESTION_VERSION = 'placement-q-v2.4';
 export const PLACEMENT_RUBRIC_VERSION = 'placement-rubric-v2.3';
 export const PLACEMENT_ROUTING_VERSION = 'placement-routing-v2.1';
 export const PLACEMENT_MAPPING_VERSION = 'placement-start-v2.1';
