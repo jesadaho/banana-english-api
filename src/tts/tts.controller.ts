@@ -6,14 +6,19 @@ import {
   HttpException,
   Post,
   Res,
+  UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import type { Response } from 'express';
 import { GeminiTtsService } from '../gemini/gemini-tts.service';
 import { CloudTtsAuthService } from './cloud-tts-auth.service';
 import { SynthesizeTtsDto } from './dto/tts.dto';
+import { RateLimit, RateLimitGuard } from '../common/rate-limit';
+import { AnonymousUserGuard } from '../users/anonymous-user.guard';
+import { LegacyApiInterceptor } from '../common/legacy-api.interceptor';
 
-@Controller('api/tts')
-export class TtsController {
+/** Routes shared by the legacy and v2 controllers below. */
+abstract class TtsRoutes {
   constructor(
     private readonly geminiTts: GeminiTtsService,
     private readonly cloudTtsAuth: CloudTtsAuthService,
@@ -24,6 +29,7 @@ export class TtsController {
    * Audio synthesis happens on-device against Google — not proxied here.
    */
   @Get('cloud-token')
+  @RateLimit({ name: 'tts-token', windowMs: 60_000, perUser: 10, perIp: 120 })
   async cloudToken() {
     return this.cloudTtsAuth.mintAccessToken();
   }
@@ -115,5 +121,26 @@ export class TtsController {
       );
       res.end();
     }
+  }
+}
+
+/** @deprecated Open legacy route for old app builds. Remove after LEGACY_API_SUNSET. */
+@Controller('api/tts')
+@UseGuards(RateLimitGuard)
+@UseInterceptors(LegacyApiInterceptor)
+@RateLimit({ name: 'tts-legacy', windowMs: 60_000, perUser: 60, perIp: 600 })
+export class TtsController extends TtsRoutes {
+  constructor(geminiTts: GeminiTtsService, cloudTtsAuth: CloudTtsAuthService) {
+    super(geminiTts, cloudTtsAuth);
+  }
+}
+
+/** v2: a known app user is required, and calls are rate limited. */
+@Controller('api/v2/tts')
+@UseGuards(RateLimitGuard, AnonymousUserGuard)
+@RateLimit({ name: 'tts', windowMs: 60_000, perUser: 60, perIp: 600 })
+export class TtsV2Controller extends TtsRoutes {
+  constructor(geminiTts: GeminiTtsService, cloudTtsAuth: CloudTtsAuthService) {
+    super(geminiTts, cloudTtsAuth);
   }
 }
