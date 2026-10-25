@@ -324,6 +324,79 @@ export function coercePlacementScore(score: unknown): 0 | 1 | 2 | null {
   return null;
 }
 
+/**
+ * Lines Whisper-style ASR invents on silence or room noise. A learner never
+ * answers a placement item with these, so they mean "ask again", not 0.
+ */
+const ASR_HALLUCINATIONS = new Set([
+  'thank you',
+  'thank you very much',
+  'thank you so much',
+  'thanks',
+  'thanks for watching',
+  'thank you for watching',
+  'please subscribe',
+  'bye',
+  'bye bye',
+  'you',
+  'great',
+  'hey',
+  'hey hey',
+  "i'm a t",
+]);
+
+function normalizeAsr(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[‘’]/g, "'")
+    .replace(/[^a-z0-9' ]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+/**
+ * STT runs with language=en, so Thai like "ทำไม่ได้" / "ไม่รู้" / "ไม่เข้าใจ"
+ * comes back translated ("You can't do it.", "I don't know."). That is the
+ * learner saying they cannot answer: score 0 like a skip, no retry.
+ * Whole utterance only — "I don't know her name" is still an answer.
+ */
+export function placementSaysCannotAnswer(transcript: string): boolean {
+  const said = normalizeAsr(transcript);
+  if (!said) return false;
+  return /^(sorry )?(you can(?:'t|not)(?: do it)?|i can(?:'t|not)(?: do it| answer)?|i don'?t know(?: (?:the answer|how|what to say))?|i don'?t understand|i'?m not sure|no idea|i have no idea)$/.test(
+    said,
+  );
+}
+
+/** Reason text the runtime reads to swap the retry line for "don't repeat me". */
+export const PLACEMENT_ECHO_REASON = 'พูดตามคำถามของครู';
+
+/** True when the transcript is ASR noise (silence / room sound). Ask again. */
+export function placementCaptureNoise(transcript: string): boolean {
+  const said = normalizeAsr(transcript);
+  if (!said) return true;
+  if (ASR_HALLUCINATIONS.has(said)) return true;
+  const words = said.split(' ');
+  return words.every((w) => w.replace(/'/g, '').length <= 1);
+}
+
+/**
+ * True when the learner repeated the teacher's line instead of answering
+ * (lesson drills train "พูดตาม"). Ask again with a "don't repeat" hint.
+ */
+export function placementEchoOfTeacher(transcript: string, teacherLine: string): boolean {
+  const words = normalizeAsr(transcript).split(' ').filter(Boolean);
+  const teacherWords = new Set(
+    normalizeAsr(teacherLine)
+      .split(' ')
+      .filter((w) => w.length > 2),
+  );
+  const content = words.filter((w) => w.length > 2);
+  if (teacherWords.size < 3 || content.length < 3) return false;
+  const overlap = content.filter((w) => teacherWords.has(w)).length;
+  return overlap >= 3 && overlap / content.length >= 0.8;
+}
+
 /** Skip, capture noise, and Thai-only only. Communicative 0/1/2 goes to Gemini. */
 export function heuristicPlacementEval(
   _q: PlacementQuestion,
@@ -345,6 +418,14 @@ export function heuristicPlacementEval(
   }
   const raw = transcript.trim();
   if (!raw || isScenarioNoise(raw)) return null;
+  if (placementSaysCannotAnswer(raw)) {
+    return scored(
+      0,
+      raw,
+      'no_communicative_answer',
+      'บอกว่าตอบไม่ได้ (ภาษาไทยที่ระบบถอดเป็นอังกฤษ)',
+    );
+  }
   if (thaiOnly(raw)) {
     return scored(
       1,
@@ -446,7 +527,9 @@ export function applyPlacementEvaluation(
         retrying,
         q,
         '',
-        'เสียงไม่ชัดครับ ลองพูดอีกครั้ง หรือข้ามข้อนี้ได้',
+        evaluation.reason === PLACEMENT_ECHO_REASON
+          ? 'ไม่ต้องพูดตามครูนะครับ ลองตอบคำถามดู หรือข้ามข้อนี้ได้'
+          : 'เสียงไม่ชัดครับ ลองพูดอีกครั้ง หรือข้ามข้อนี้ได้',
       );
       return { state: retrying, reply: withLastDebug(retry, normalized) };
     }
@@ -459,6 +542,17 @@ export function applyPlacementEvaluation(
         reasonCode: 'capture_error',
         reason: 'รอบสองจับเสียงไม่ชัด',
       });
+    } else {
+      // Second unclear capture: count it as 0 so the stage can still be
+      // judged on the other items (an ineligible row fails the gate outright).
+      normalized = {
+        ...normalized,
+        status: 'scored',
+        score: 0,
+        eligibleForPlacement: true,
+        reasonCode: 'capture_error',
+        reason: 'จับเสียงไม่ชัดสองครั้ง จึงให้ 0',
+      };
     }
   } else if (state.pendingFollowUp?.questionId === q.id) {
     const second: PlacementItemResult =

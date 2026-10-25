@@ -4,8 +4,9 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { SubscriptionTier, User } from '@prisma/client';
+import { Prisma, SubscriptionTier, User } from '@prisma/client';
 import { FirebaseAdminService } from '../firebase/firebase-admin.service';
+import { placementRetestStatus } from '../placement/placement.access';
 import { PrismaService } from '../prisma/prisma.service';
 import { BeamClient } from './beam.client';
 import {
@@ -32,6 +33,12 @@ import {
 const PAID = 'paid';
 const PENDING = 'pending_payment';
 const EXPIRED = 'expired';
+
+function publicPlacementBand(value: unknown): string | null {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
+  const band = (value as { publicResult?: unknown }).publicResult;
+  return typeof band === 'string' && band.trim() ? band.trim() : null;
+}
 
 @Injectable()
 export class SubscriptionsService {
@@ -327,6 +334,11 @@ export class SubscriptionsService {
         subscriptionExpiresAt: true,
         createdAt: true,
         lastAppOpenDate: true,
+        timezone: true,
+        lastPlacementTestAt: true,
+        placementResult: true,
+        placementEntryPathId: true,
+        placementEntryNodeId: true,
       },
     });
     if (!user) throw new NotFoundException('User not found');
@@ -343,6 +355,7 @@ export class SubscriptionsService {
         xpBalance: user.xpBalance,
         createdAt: user.createdAt.toISOString(),
         lastAppOpenDate: user.lastAppOpenDate?.toISOString() ?? null,
+        ...this.adminPlacementSummary(user),
       },
       grants: grants.map((row) => ({
         id: row.id,
@@ -354,6 +367,46 @@ export class SubscriptionsService {
         priceThb: row.priceThb,
         createdAt: row.createdAt.toISOString(),
       })),
+    };
+  }
+
+  /** Clears the Level Test cooldown and previous result so the learner can sit it again. */
+  async resetPlacementForAdmin(userId: string) {
+    const user = await this.prisma.user.findUnique({ where: { id: userId } });
+    if (!user) throw new NotFoundException('User not found');
+    const updated = await this.prisma.user.update({
+      where: { id: userId },
+      data: {
+        lastPlacementTestAt: null,
+        placementResult: Prisma.DbNull,
+        placementEntryPathId: null,
+        placementEntryNodeId: null,
+      } as Prisma.UserUpdateInput,
+    });
+    return {
+      user: {
+        ...this.adminUserSummary(updated),
+        ...this.adminPlacementSummary(updated),
+      },
+    };
+  }
+
+  private adminPlacementSummary(user: {
+    timezone: string;
+    lastPlacementTestAt?: Date | null;
+    placementResult?: unknown;
+    placementEntryPathId?: string | null;
+    placementEntryNodeId?: string | null;
+  }) {
+    const retest = placementRetestStatus(user);
+    return {
+      placementResult: publicPlacementBand(user.placementResult),
+      placementEntryPathId: user.placementEntryPathId ?? null,
+      placementEntryNodeId: user.placementEntryNodeId ?? null,
+      lastPlacementTestAt: user.lastPlacementTestAt?.toISOString() ?? null,
+      placementRetestAvailable: retest.available,
+      placementRetestDaysRemaining: retest.daysRemaining,
+      placementRetestNextDateKey: retest.nextAvailableDateKey,
     };
   }
 

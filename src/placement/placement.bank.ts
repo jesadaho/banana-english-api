@@ -6,7 +6,9 @@ export const PLACEMENT_STAGES: Array<{
 }> = [
   {
     id: 'foundation_entry',
-    questionIds: ['Q01', 'Q02', 'Q03', 'Q04', 'Q05', 'Q06'],
+    // Easiest first (prod data): Q04/Q05 warm up before Q02/Q03. IDs keep
+    // their names so stored results and gates still line up.
+    questionIds: ['Q01', 'Q04', 'Q05', 'Q02', 'Q03', 'Q06'],
   },
   { id: 'a1', questionIds: ['Q07', 'Q08', 'Q09', 'Q10'] },
   {
@@ -72,8 +74,8 @@ export const PLACEMENT_QUESTIONS: PlacementQuestion[] = [
     npcEn: 'My bag is blue. Is this my bag?',
     target: 'ฟังเงื่อนไขแล้วปฏิเสธกระเป๋าแดงว่าไม่ใช่ของครู',
     requiredEvidence: 'Rejects the red bag as the teacher’s bag; naming the blue bag is not required',
-    anchors2: ["No, it isn't.", "No, that's not your bag.", 'No.'],
-    anchors1: ['Red bag.'],
+    anchors2: ["No, it isn't.", "No, that's not your bag.", 'No.', "No, it's red."],
+    anchors1: ['Red bag.', 'My bag is red.', 'This bag is red.'],
     delivery: 'picture_text_audio',
     imagePath: FINALE('05-red-bag-on-bench'),
     sceneFacts: 'One red bag on a bench. There is no blue bag in the picture.',
@@ -89,7 +91,7 @@ export const PLACEMENT_QUESTIONS: PlacementQuestion[] = [
     anchors1: ['Book.'],
     delivery: 'picture_text_audio',
     imagePath: FINALE('06-red-bag-yellow-book'),
-    sceneFacts: 'The same red bag is now open, with one yellow book inside.',
+    sceneFacts: 'A red bag is open, with one yellow book inside.',
   },
   {
     id: 'Q05',

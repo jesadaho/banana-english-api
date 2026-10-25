@@ -2978,28 +2978,60 @@ ${text}`,
     evidence: string[];
     reason: string;
   }> {
-    const examples = [...params.anchors2, ...params.anchors1].filter(Boolean);
-    const rubric = [
-      params.requiredEvidence,
-      params.sceneFacts ? `Scene facts: ${params.sceneFacts}` : '',
-      'correct = communicative task complete (placement score 2).',
-      'close = partial attempt with the right idea (placement score 1).',
-      'incorrect = off-task or no English communicative answer (placement score 0).',
+    const systemInstruction = [
+      'You score one spoken answer in an English placement test for Thai learners.',
+      'The learner text comes from automatic speech recognition (ASR).',
+      'Scores:',
+      '"2" = the learner did what the task asks (see Required evidence). Grammar mistakes are fine when the meaning is clear. Anything at least as good as a score-2 example is "2".',
+      '"1" = a real attempt that shows part of the required evidence, e.g. one key word or the right idea without the full answer. Anything comparable to a score-1 example is at least "1".',
+      '"0" = a real attempt that is off-task, wrong for the question or picture, or not understandable English.',
+      '"unclear" = the text is not a learner attempt at all: typical ASR hallucinations on silence or noise ("Thank you.", "Thanks for watching."), or text that mostly repeats the teacher\'s own line. Never use "unclear" for a genuine but weak answer, and never for a cannot-answer line.',
+      'ASR runs in English mode, so Thai like ทำไม่ได้ / ไม่รู้ / ไม่เข้าใจ is translated. "You can\'t do it.", "I cannot do it.", "I don\'t know.", "I don\'t know the answer.", "I don\'t understand." mean the learner gave up: score "0", not "unclear".',
+      'Thai-accent ASR often swaps similar sounds: bag/back, red/read/raised/race/lead/late, keys/kiss, seven/seben, eat/it. When a near-sound word makes the answer right in context, score it as the intended word.',
       'Example answers are not a whitelist. Short answers are fine.',
+      'Return JSON {"score": "2" | "1" | "0" | "unclear"} only.',
+    ].join('\n');
+    const userPrompt = [
+      `Teacher said: "${params.exactPrompt}"`,
+      `Item: ${params.questionId} (${params.stage}${params.delivery ? `, ${params.delivery}` : ''})`,
+      `Task: ${params.target}`,
+      `Required evidence: ${params.requiredEvidence}`,
+      params.sceneFacts ? `Scene facts: ${params.sceneFacts}` : '',
+      `Score-2 examples: ${params.anchors2.map((e) => `"${e}"`).join(', ') || '-'}`,
+      `Score-1 examples: ${params.anchors1.map((e) => `"${e}"`).join(', ') || '-'}`,
+      `Learner said (ASR): "${params.transcript}"`,
     ]
       .filter(Boolean)
-      .join(' ');
+      .join('\n');
 
     try {
-      const verdict = await this.evaluateScenarioUtterance({
-        npcLine: params.exactPrompt,
-        taskBrief: `${params.questionId} ${params.rubricVersion} (${params.stage}${params.delivery ? `, ${params.delivery}` : ''}): ${params.target}`,
-        rubric,
-        examples,
-        transcript: params.transcript,
+      const { value } = await this.generateJson<{ score: string }>({
+        ...GEMINI_LIVE_TURN,
+        systemInstruction,
+        contents: [{ role: 'user', parts: [{ text: userPrompt }] }],
+        schema: {
+          type: 'object',
+          properties: {
+            score: { type: 'string', enum: ['2', '1', '0', 'unclear'] },
+          },
+          required: ['score'],
+        },
+        maxOutputTokens: 96,
+        temperature: 0,
+        disableThinking: true,
       });
+      const evidence = [params.transcript.slice(0, 80)];
+      if (value.score === 'unclear') {
+        return {
+          status: 'technical_retry',
+          score: null,
+          reasonCode: 'capture_error',
+          evidence,
+          reason: 'จับเสียงไม่ชัด หรือติดเสียงครู เลยให้พูดใหม่',
+        };
+      }
       const score: 0 | 1 | 2 =
-        verdict.tier === 'correct' ? 2 : verdict.tier === 'close' ? 1 : 0;
+        value.score === '2' ? 2 : value.score === '1' ? 1 : 0;
       return {
         status: 'scored',
         score,
@@ -3009,7 +3041,7 @@ ${text}`,
             : score === 1
               ? 'target_partially_demonstrated'
               : 'off_topic',
-        evidence: [params.transcript.slice(0, 80)],
+        evidence,
         reason:
           score === 2
             ? 'ครบหลักฐานที่ข้อนี้ขอ'

@@ -339,7 +339,7 @@ describe('placement routing walk', () => {
     assert.equal(reply.lastDebug?.score, null);
     assert.match(reply.lastDebug?.reason ?? '', /JSON/);
     assert.equal(state.finished, false);
-    assert.equal(state.currentQuestionId, 'Q02');
+    assert.equal(state.currentQuestionId, 'Q04');
   });
 
   it('uses the settings opening when entrySource is profile_settings', () => {
@@ -415,7 +415,7 @@ describe('placement routing walk', () => {
     ));
     assert.equal(state.results.Q01?.eligibleForPlacement, true);
     assert.equal(state.results.Q01?.score, 0);
-    assert.equal(state.currentQuestionId, 'Q02');
+    assert.equal(state.currentQuestionId, 'Q04');
   });
 
   it('hides NPC transcript from Q11 without a listen-along caption', () => {

@@ -36,6 +36,13 @@ export class AdminSubscriptionsController {
     return this.subscriptions.userInfo(userId);
   }
 
+  @Post('users/:userId/reset-placement')
+  resetPlacement(@Param('userId') userId: string) {
+    const id = userId?.trim();
+    if (!id) throw new BadRequestException('Missing userId');
+    return this.subscriptions.resetPlacementForAdmin(id);
+  }
+
   @Post('grant')
   grant(
     @Body()

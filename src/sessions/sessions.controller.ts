@@ -195,6 +195,9 @@ import {
   coercePlacementScore,
   currentPlacementQuestion,
   heuristicPlacementEval,
+  PLACEMENT_ECHO_REASON,
+  placementCaptureNoise,
+  placementEchoOfTeacher,
   placementJudgeContext,
   initPlacementRuntime,
   isPlacementScenarioId,
@@ -880,14 +883,22 @@ export class SessionsController {
     }
 
     let evalPartial = heuristicPlacementEval(q, skipped ? '' : raw, skipped);
-    if (!evalPartial && isScenarioNoise(raw) && !skipped) {
+    const teacherLine = placementJudgeContext(q, data.placementRuntime).prompt;
+    if (
+      !evalPartial &&
+      !skipped &&
+      (isScenarioNoise(raw) ||
+        placementCaptureNoise(raw) ||
+        placementEchoOfTeacher(raw, teacherLine))
+    ) {
+      const echo = placementEchoOfTeacher(raw, teacherLine);
       evalPartial = {
         status: 'technical_retry',
         score: null,
         eligibleForPlacement: false,
-        evidence: [],
+        evidence: [raw.slice(0, 80)],
         reasonCode: 'capture_error',
-        reason: 'จับเสียงไม่ชัด เลยยังไม่ให้คะแนน',
+        reason: echo ? PLACEMENT_ECHO_REASON : 'จับเสียงไม่ชัด เลยยังไม่ให้คะแนน',
       };
     }
     if (!evalPartial) {
