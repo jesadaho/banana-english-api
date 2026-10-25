@@ -136,7 +136,7 @@ export class EconomyService {
     return this.envInt(ENV_BANANA_REFILL_HOURS, BANANA_REFILL_HOURS);
   }
 
-  /** Free-pool cap for this learner. Pro stores 15; everyone else uses the env cap. */
+  /** Free-pool cap for this learner. Pro stores PRO_BANANA_CAP (25); everyone else uses the env cap. */
   bananaCapFor(user: User): number {
     return effectiveSubscriptionTier(user) === 'PRO'
       ? PRO_BANANA_CAP

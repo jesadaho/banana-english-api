@@ -2,6 +2,7 @@
  * Generate the Chapter 1 TTS bank and upload it to Firebase Storage.
  *
  *   npx tsx scripts/build-chapter1-tts-bank.ts
+ *   npx tsx scripts/build-chapter1-tts-bank.ts --only-phonics   # locked Phonics lines
  *
  * Resumes from src/tts/tts-bank.json. Skips lines that already have a URL.
  */
@@ -30,6 +31,7 @@ import { getTurn2Script } from '../src/topics/intro_script';
 import { V7_LEGACY_FLOWS } from '../src/lessons/foundation-v7-legacy-flows';
 import { collectPlacementBankLines } from '../src/placement/placement.runtime';
 import { collectPronunciationBankLines } from '../src/training/scripts/pronunciation.script';
+import { collectPhonicsLockedBankLines } from '../src/training/scripts/phonics-locked.script';
 
 /** Repeated live TTS lines picked from the admin Live TTS export. */
 function liveExtraLines(): string[] {
@@ -342,6 +344,8 @@ async function main() {
         ? collectPlacementBankLines()
         : process.argv.includes('--only-pronunciation')
           ? collectPronunciationBankLines()
+        : process.argv.includes('--only-phonics')
+          ? collectPhonicsLockedBankLines()
         : [
             ...collectChapter1BankLines(),
             ...(await collectFoundationBankLines(2, 16)),
@@ -351,6 +355,7 @@ async function main() {
             ...liveExtraLines(),
             ...collectPlacementBankLines(),
             ...collectPronunciationBankLines(),
+            ...collectPhonicsLockedBankLines(),
           ]
     ).map((line) => ttsBankKey(line)),
   );
