@@ -84,6 +84,11 @@ export interface TurnExchangeResponse {
   audioUrl?: string | null;
   /** Short praise clip played before [audioUrl]. Omitted when this turn has no separate praise. */
   praiseAudioUrl?: string | null;
+  /**
+   * Server-only: how [aiResponse] splits into reaction + next line so each
+   * half can come from the TTS bank. Stripped before the reply is sent.
+   */
+  speechParts?: { lead: string; body: string };
   audioBase64?: string;
   contentType?: string;
   isTaskComplete: boolean;
@@ -107,6 +112,8 @@ export interface TurnExchangeResponse {
    * Prefer a single word on vocab/repeat turns (e.g. "latte").
    */
   expectedSpeech?: string | null;
+  /** STT hint. `name_spelling` = letter-by-letter name (expectedSpeech "M A Y A"). */
+  sttMode?: 'name_spelling' | null;
   /** Multi-speaker dialogue for Scene / Watch & Listen turns. */
   scene?: LessonScene;
   /** In-chat Emoji Speak card — app shows "ขอเฉลย" when present. */
