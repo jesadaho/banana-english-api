@@ -443,7 +443,10 @@ export function shouldEarlyStopAfter(
   const asked = stage.questionIds.filter((id) =>
     state.askedQuestionIds.includes(id),
   );
+  // Capture failures are the mic's fault, not the learner's: they do not
+  // count toward the three-zeros early stop.
   const scores = asked
+    .filter((id) => state.results[id]?.reasonCode !== 'capture_error')
     .map((id) => eligibleScore(state.results[id]))
     .filter((s): s is PlacementScore => s !== null);
   if (scores.length < 3) return false;
