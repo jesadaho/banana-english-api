@@ -3,8 +3,11 @@ import { describe, it } from 'node:test';
 import {
   beamSignatureMatches,
   effectiveSubscriptionTier,
+  FOUNDER_PRESALE_CLOSES_AT,
   FOUNDER_PRESALE_OPENS_AT,
-  presaleIsSoldOut,
+  FOUNDER_PRESALE_PRICE_THB,
+  presaleChargeAmountOk,
+  presaleIsClosed,
   presaleSeatsRemaining,
 } from './subscription.constants';
 
@@ -35,15 +38,37 @@ describe('effectiveSubscriptionTier', () => {
 });
 
 describe('presaleSeatsRemaining', () => {
-  it('closes the public sale when forced sold out', () => {
-    assert.equal(presaleSeatsRemaining(0), 0);
-    assert.equal(presaleIsSoldOut(0), true);
+  it('does not cap the public sale by remaining seats', () => {
+    assert.equal(presaleSeatsRemaining(0), 21);
+  });
+});
+
+describe('FOUNDER_PRESALE_PRICE_THB', () => {
+  it('charges 250 baht this round', () => {
+    assert.equal(FOUNDER_PRESALE_PRICE_THB, 250);
   });
 });
 
 describe('FOUNDER_PRESALE_OPENS_AT', () => {
   it('opens Sunday 18 Oct 2026 at 21:00 Bangkok', () => {
     assert.equal(FOUNDER_PRESALE_OPENS_AT.toISOString(), '2026-10-18T14:00:00.000Z');
+  });
+});
+
+describe('FOUNDER_PRESALE_CLOSES_AT', () => {
+  it('last day is 7 Nov 2026 Bangkok', () => {
+    assert.equal(FOUNDER_PRESALE_CLOSES_AT.toISOString(), '2026-11-07T17:00:00.000Z');
+    assert.equal(presaleIsClosed(new Date('2026-11-07T16:59:59.000Z')), false);
+    assert.equal(presaleIsClosed(new Date('2026-11-07T17:00:00.000Z')), true);
+  });
+});
+
+describe('presaleChargeAmountOk', () => {
+  it('accepts this round and the first-round PromptPay amounts', () => {
+    assert.equal(presaleChargeAmountOk(25000), true);
+    assert.equal(presaleChargeAmountOk(250), true);
+    assert.equal(presaleChargeAmountOk(15000), true);
+    assert.equal(presaleChargeAmountOk(12000), false);
   });
 });
 

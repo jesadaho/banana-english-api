@@ -13,12 +13,14 @@ import {
   addYears,
   beamSignatureMatches,
   effectiveSubscriptionTier,
+  FOUNDER_PRESALE_CLOSES_AT,
   FOUNDER_PRESALE_HELD_SEATS,
   FOUNDER_PRESALE_OPENS_AT,
   FOUNDER_PRESALE_PRICE_THB,
   FOUNDER_PRESALE_SEATS,
   FOUNDER_PRESALE_YEARS,
-  presaleIsSoldOut,
+  presaleChargeAmountOk,
+  presaleIsClosed,
   presaleSeatsRemaining,
   PRESALE_QR_TTL_MS,
   SubscriptionTierName,
@@ -444,6 +446,7 @@ export class SubscriptionsService {
       held: FOUNDER_PRESALE_HELD_SEATS,
       priceThb: FOUNDER_PRESALE_PRICE_THB,
       opensAt: FOUNDER_PRESALE_OPENS_AT.toISOString(),
+      closesAt: FOUNDER_PRESALE_CLOSES_AT.toISOString(),
     };
   }
 
@@ -508,9 +511,8 @@ export class SubscriptionsService {
       return this.orderPayload(reusable);
     }
 
-    const sold = await this.prisma.presaleOrder.count({ where: { status: PAID } });
-    if (presaleIsSoldOut(sold)) {
-      throw new BadRequestException({ code: 'SOLD_OUT', message: 'สิทธิ์ Founder ครบ 30 ที่แล้ว' });
+    if (presaleIsClosed()) {
+      throw new BadRequestException({ code: 'SALE_CLOSED', message: 'ปิดรับแล้ว' });
     }
 
     const order = await this.prisma.presaleOrder.create({
@@ -575,8 +577,7 @@ export class SubscriptionsService {
       return { ok: true, ignored: true };
     }
     const amount = payload.amount ?? 0;
-    const expectedSatang = FOUNDER_PRESALE_PRICE_THB * 100;
-    if (amount !== expectedSatang && amount !== FOUNDER_PRESALE_PRICE_THB) {
+    if (!presaleChargeAmountOk(amount)) {
       return { ok: true, ignored: true };
     }
     await this.markOrderPaid(payload.referenceId, payload.chargeId);
@@ -654,8 +655,7 @@ export class SubscriptionsService {
     const charge = await this.beam.getCharge(order.beamChargeId).catch(() => null);
     if (!charge || charge.status !== 'SUCCEEDED') return null;
     if (charge.referenceId !== order.id) return null;
-    const expectedSatang = FOUNDER_PRESALE_PRICE_THB * 100;
-    if (charge.amount !== expectedSatang && charge.amount !== FOUNDER_PRESALE_PRICE_THB) {
+    if (!presaleChargeAmountOk(charge.amount)) {
       return null;
     }
     await this.markOrderPaid(order.id, order.beamChargeId);
