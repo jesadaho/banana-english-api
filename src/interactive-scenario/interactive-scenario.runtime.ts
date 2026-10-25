@@ -4,6 +4,7 @@ import type {
   InteractiveScenarioBeat,
   InteractiveScenarioDef,
   InteractiveScenarioGoal,
+  InteractiveScenarioTeacher,
   ScenarioSlot,
 } from './interactive-scenario.types';
 
@@ -138,6 +139,100 @@ export function extractCity(transcript: string): string | null {
   return grab(/\blive (?:in|at) ([\p{L} ]+)/u) ?? grab(/\bfrom ([\p{L} ]+)/u);
 }
 
+/** "I like playing games" → "playing games". */
+export function extractHobby(transcript: string): string | null {
+  const raw = normalize(transcript);
+  const m = raw.match(/\b(?:like|love|enjoy)\s+(?:to\s+)?(.+)$/);
+  if (!m?.[1]) return null;
+  const hobby = m[1]
+    .replace(/\b(in my free time|a lot|very much|too)\b/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  if (!hobby || hobby.split(' ').length > 6) return null;
+  return hobby;
+}
+
+/** "I'd like to join the art club" → "art club". */
+export function extractClub(transcript: string): string | null {
+  const raw = normalize(transcript);
+  const m = raw.match(/\b(?:the\s+)?([a-z]+(?:\s+[a-z]+)?)\s+club\b/);
+  return m?.[1] ? `${m[1]} club` : null;
+}
+
+/** "How about Saturday evening?" → "Saturday evening". */
+export function extractWhen(transcript: string): string | null {
+  const raw = normalize(transcript);
+  const day = raw.match(
+    /\b(monday|tuesday|wednesday|thursday|friday|saturday|sunday)\b/,
+  );
+  if (!day) return null;
+  return `${titleCase(day[1]!)} evening`;
+}
+
+function captureSlots(
+  captures: ScenarioSlot[],
+  transcript: string,
+  slots: ScenarioRuntimeState['slots'],
+) {
+  for (const slot of captures) {
+    if (slot === 'name') {
+      const name = extractName(transcript);
+      if (name) slots.name = name;
+    } else if (slot === 'city') {
+      const city = extractCity(transcript);
+      if (city) slots.city = city;
+    } else if (slot === 'hobby') {
+      const hobby = extractHobby(transcript);
+      if (hobby) slots.hobby = hobby;
+    } else if (slot === 'club') {
+      const club = extractClub(transcript);
+      if (club) slots.club = club;
+    } else if (slot === 'when') {
+      const when = extractWhen(transcript);
+      if (when) slots.when = when;
+    }
+  }
+}
+
+function shouldSkipBeat(
+  beat: InteractiveScenarioBeat,
+  slots: ScenarioRuntimeState['slots'],
+): boolean {
+  const rule = beat.skipWhenSlot;
+  if (!rule) return false;
+  const value = slots[rule.slot];
+  if (!value) return false;
+  try {
+    return new RegExp(rule.pattern, 'iu').test(value);
+  } catch {
+    return false;
+  }
+}
+
+/** Mark skipped beats done and return the first beat that still needs asking. */
+function consumeSkippedBeats(
+  scenario: InteractiveScenarioDef,
+  from: number,
+  state: ScenarioRuntimeState,
+): { index: number; confirm: string } {
+  let idx = from;
+  let confirm = '';
+  while (idx < scenario.beats.length) {
+    const beat = scenario.beats[idx]!;
+    if (!shouldSkipBeat(beat, state.slots)) break;
+    for (const id of beat.focusGoalIds) {
+      state.checkpoints[id] = true;
+      if (!state.goalOutcomes[id]) state.goalOutcomes[id] = 'correct';
+    }
+    if (beat.skipConfirmEn) {
+      confirm = fillLoose(beat.skipConfirmEn, state.slots);
+    }
+    if (idx >= scenario.beats.length - 1) break;
+    idx += 1;
+  }
+  return { index: idx, confirm };
+}
+
 function looksLikeQuestion(transcript: string): boolean {
   if (transcript.includes('?')) return true;
   const raw = normalize(transcript);
@@ -146,14 +241,37 @@ function looksLikeQuestion(transcript: string): boolean {
   );
 }
 
-/** Teacher John's answers to the learner's free question (A1-safe English). */
-export function answerLearnerQuestion(transcript: string): string {
-  const raw = normalize(transcript);
-  const rules: Array<[RegExp, string]> = [
+function teacherNameLine(teacher: InteractiveScenarioTeacher): string {
+  if (teacher === 'minnie') return 'My name is Minnie!';
+  if (teacher === 'nina') return 'My name is Nina!';
+  return 'My name is John. I am your teacher!';
+}
+
+function teacherAnswers(teacher: InteractiveScenarioTeacher): Array<[RegExp, string]> {
+  const from =
+    teacher === 'minnie' ? "I'm from England." :
+    teacher === 'nina' ? "I'm from Bangkok." :
+    "I'm from Canada.";
+  const age =
+    teacher === 'minnie' ? 'I am twenty-eight.' :
+    teacher === 'nina' ? 'I am twenty-four.' :
+    'I am thirty-five.';
+  const extra: Array<[RegExp, string]> =
+    teacher === 'nina'
+      ? [
+          [/\bgood at\b/, "I'm good at exploring new places!"],
+          [/\bkey ring\b/, "It's 80 baht."],
+          [/\bpostcard\b/, "It's 30 baht."],
+          [/\bbag\b/, "It's 120 baht."],
+          [/\bhow much\b/, "It's 80 baht."],
+        ]
+      : [];
+  return [
+    ...extra,
     [/\bhow are you\b/, "I'm great, thank you!"],
-    [/\bhow old\b/, 'I am thirty-five.'],
-    [/\b(your name|who are you)\b/, 'My name is John. I am your teacher!'],
-    [/\bwhere are you from\b|\bfrom\b/, "I'm from Canada."],
+    [/\bhow old\b/, age],
+    [/\b(your name|who are you)\b/, teacherNameLine(teacher)],
+    [/\bwhere are you from\b|\bfrom\b/, from],
     [/\bwhere do you live\b|\blive\b/, 'I live in Bangkok now.'],
     [/\bbirthday\b/, 'My birthday is in June.'],
     [/\bwhat (do you do|is your job)\b|\bjob\b|\bwork\b/, 'I am a teacher. I work every day!'],
@@ -167,35 +285,182 @@ export function answerLearnerQuestion(transcript: string): string {
     [/\bwhat is this\b|\bwhat is that\b/, 'It is my bag!'],
     [/\bwho is\b/, 'That is my friend, Max.'],
   ];
-  for (const [re, answer] of rules) {
+}
+
+/** Teacher answers to the learner's free question (A1-safe English). */
+export function answerLearnerQuestion(
+  transcript: string,
+  teacher: InteractiveScenarioTeacher = 'john',
+): string {
+  const raw = normalize(transcript);
+  for (const [re, answer] of teacherAnswers(teacher)) {
     if (re.test(raw)) return answer;
   }
   return 'Hmm, good one!';
 }
 
-/** Fill {name}/{city}. Returns null if a slot is missing. */
+function politeParticle(teacher: InteractiveScenarioTeacher): 'ครับ' | 'ค่ะ' {
+  return teacher === 'minnie' || teacher === 'nina' ? 'ค่ะ' : 'ครับ';
+}
+
+/** Latin letters only, uppercased — "Maya" → "MAYA", "Somchai" → "SOMCHAI". */
+export function latinLettersOf(name: string | undefined): string {
+  return (name ?? '').toUpperCase().replace(/[^A-Z]/g, '');
+}
+
+/** "Maya" → "M A Y A". Null when there are fewer than 2 Latin letters. */
+export function spellNameOut(name: string | undefined): string | null {
+  const letters = latinLettersOf(name);
+  return letters.length >= 2 ? letters.split('').join(' ') : null;
+}
+
+const LETTER_TOKENS: Record<string, string> = {
+  a: 'a', ay: 'a', ey: 'a', ei: 'a',
+  b: 'b', bee: 'b', be: 'b',
+  c: 'c', see: 'c', sea: 'c', cee: 'c',
+  d: 'd', dee: 'd',
+  e: 'e', ee: 'e',
+  f: 'f', ef: 'f', eff: 'f',
+  g: 'g', gee: 'g',
+  h: 'h', aitch: 'h', haitch: 'h',
+  i: 'i', eye: 'i', aye: 'i',
+  j: 'j', jay: 'j',
+  k: 'k', kay: 'k',
+  l: 'l', el: 'l', ell: 'l',
+  m: 'm', em: 'm',
+  n: 'n', en: 'n',
+  o: 'o', oh: 'o', owe: 'o',
+  p: 'p', pee: 'p', pe: 'p',
+  q: 'q', cue: 'q', queue: 'q', kyu: 'q',
+  r: 'r', ar: 'r', are: 'r',
+  s: 's', ess: 's', es: 's',
+  t: 't', tee: 't', tea: 't',
+  u: 'u', you: 'u', yu: 'u',
+  v: 'v', vee: 'v',
+  w: 'w',
+  x: 'x', ex: 'x', eks: 'x',
+  y: 'y', why: 'y', wai: 'y',
+  z: 'z', zee: 'z', zed: 'z',
+};
+
+/** "M A Y A" / "em ay why ay" → "MAYA". */
+export function extractSpelledLetters(transcript: string): string {
+  const raw = normalize(transcript)
+    .replace(/\b(my name is|i spell|it is spelled|it's spelled|is spelled)\b/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  const tokens = raw.split(' ').filter(Boolean);
+  const letters: string[] = [];
+  for (let i = 0; i < tokens.length; i++) {
+    const t = tokens[i]!;
+    if (t === 'double' && tokens[i + 1] === 'u') {
+      letters.push('w');
+      i += 1;
+      continue;
+    }
+    if (t === 'doubleu' || t === 'doubleyou') {
+      letters.push('w');
+      continue;
+    }
+    if (/^[a-z]$/.test(t)) {
+      letters.push(t);
+      continue;
+    }
+    const mapped = LETTER_TOKENS[t];
+    if (mapped) letters.push(mapped);
+  }
+  return letters.join('').toUpperCase();
+}
+
+/** Spelling beat: letters of the captured name, or the name said as a word. */
+export function matchNameSpelling(
+  transcript: string,
+  name: string | undefined,
+): boolean {
+  if (isScenarioNoise(transcript)) return false;
+  const expected = latinLettersOf(name);
+  const raw = normalize(transcript);
+  const tokens = raw.split(' ').filter(Boolean);
+  const spokenWord = raw.replace(/[^a-z]/g, '');
+  if (expected.length >= 2) {
+    const want = expected.toLowerCase();
+    if (spokenWord === want || tokens.includes(want)) return true;
+  }
+  const spelled = extractSpelledLetters(transcript);
+  if (expected.length >= 2) return spelled === expected;
+  return spelled.length >= 2;
+}
+
+const SLOT_FALLBACK: Record<ScenarioSlot, string> = {
+  name: 'my friend',
+  city: 'your city',
+  hobby: 'that',
+  club: 'that club',
+  when: 'Saturday evening',
+};
+
+/** Fill {slots}. Returns null if a referenced slot is missing. */
 function fillStrict(
   template: string,
   slots: ScenarioRuntimeState['slots'],
 ): string | null {
   let missing = false;
-  const out = template.replace(/\{(name|city)\}/g, (_, key: ScenarioSlot) => {
-    const v = slots[key];
-    if (!v) missing = true;
-    return v ?? '';
-  });
+  const out = template.replace(
+    /\{(name|city|hobby|club|when)\}/g,
+    (_, key: ScenarioSlot) => {
+      const v = slots[key];
+      if (!v) missing = true;
+      return v ?? '';
+    },
+  );
   return missing ? null : out;
 }
 
-/** Fill {name}/{city} with friendly fallbacks — never leaves a placeholder. */
+/** Fill {slots} with friendly fallbacks — never leaves a placeholder. */
 function fillLoose(
   template: string,
   slots: ScenarioRuntimeState['slots'],
 ): string {
   return template
-    .replace(/\{name\}/g, slots.name ?? 'my friend')
-    .replace(/\{city\}/g, slots.city ?? 'your city')
+    .replace(/\{(name|city|hobby|club|when)\}/g, (_, key: ScenarioSlot) => slots[key] ?? SLOT_FALLBACK[key])
     .replace(/^my friend/, 'My friend');
+}
+
+const RETRY_LEAD_FIRST = 'Hmm… not yet. Try again!';
+const RETRY_LEAD_AGAIN = 'Almost!';
+
+/**
+ * Every fixed line a scenario speaks, one clip each: openings, prompts,
+ * retries, praise, teacher answers and closings. Never the joined
+ * "reaction + next question" string — playback stitches halves via speechParts.
+ * Lines with {slots} are learner-specific and stay live.
+ */
+export function collectInteractiveScenarioBankLines(
+  scenarios: InteractiveScenarioDef[],
+): string[] {
+  const lines = new Set<string>();
+  const add = (text: string | null | undefined) => {
+    const key = (text ?? '').replace(/\s+/g, ' ').trim();
+    if (key && !key.includes('{')) lines.add(key);
+  };
+  add(RETRY_LEAD_FIRST);
+  add(RETRY_LEAD_AGAIN);
+  add('OK, next!');
+  add('Hmm, good one!');
+  for (const teacher of ['john', 'minnie', 'nina'] as const) {
+    for (const [, answer] of teacherAnswers(teacher)) add(answer);
+  }
+  for (const scenario of scenarios) {
+    add(scenario.openingEn);
+    add(scenario.completionEn);
+    for (const beat of scenario.beats) {
+      add(beat.promptEn);
+      add(beat.retryEn);
+      add(beat.skipConfirmEn);
+      for (const praise of beat.praiseEn) add(praise);
+    }
+  }
+  return [...lines];
 }
 
 function pickPraise(
@@ -219,9 +484,26 @@ function revealModel(
   beat: InteractiveScenarioBeat,
   slots: ScenarioRuntimeState['slots'],
 ): string | null {
+  if (beat.sttMode === 'name_spelling') {
+    return spellNameOut(slots.name) ?? 'M A Y A';
+  }
   const goal = scenario.goals.find((g) => beat.focusGoalIds.includes(g.id));
   const model = goal?.hints.modelEn?.trim();
   return model ? fillLoose(model, slots) : null;
+}
+
+function sttFields(
+  beat: InteractiveScenarioBeat,
+  slots: ScenarioRuntimeState['slots'],
+): Pick<TurnExchangeResponse, 'expectedSpeech' | 'sttMode'> {
+  if (beat.sttMode === 'name_spelling') {
+    return {
+      expectedSpeech: spellNameOut(slots.name) ?? 'M A Y A',
+      sttMode: 'name_spelling',
+    };
+  }
+  const expected = beat.expectedSpeech?.trim();
+  return expected ? { expectedSpeech: fillLoose(expected, slots) } : {};
 }
 
 /** Empty / noise transcripts — never worth an AI call. */
@@ -284,7 +566,16 @@ export function localMatchCurrentBeat(
 ): boolean {
   const beat = currentScenarioBeat(scenario, state);
   if (beat.ungraded) return true;
-  if (beat.learnerMayAsk && looksLikeQuestion(transcript)) return true;
+  if (beat.sttMode === 'name_spelling') {
+    return matchNameSpelling(transcript, state.slots.name);
+  }
+  if (beat.learnerMayAsk && looksLikeQuestion(transcript)) {
+    const patterned = beat.focusGoalIds
+      .map((id) => scenario.goals.find((g) => g.id === id))
+      .filter((g): g is InteractiveScenarioGoal => Boolean(g?.matchPatterns?.length));
+    if (patterned.length === 0) return true;
+    return patterned.some((g) => softMatchGoal(transcript, g));
+  }
   return beat.focusGoalIds.some((id) => {
     const goal = scenario.goals.find((g) => g.id === id);
     return goal ? softMatchGoal(transcript, goal) : false;
@@ -343,6 +634,7 @@ export function buildScenarioOpening(
     expectsUserSpeech: true,
     visual: visualForBeat(scenario, beat),
     emojiChoice: beat.emojiChoice ?? null,
+    ...sttFields(beat, state.slots),
   };
 }
 
@@ -399,18 +691,15 @@ export function processScenarioTurn(params: {
     const captures = beat.capture
       ? Array.isArray(beat.capture) ? beat.capture : [beat.capture]
       : [];
-    if (captures.includes('name')) {
-      const name = extractName(transcript);
-      if (name) state.slots.name = name;
-    }
-    if (captures.includes('city')) {
-      const city = extractCity(transcript);
-      if (city) state.slots.city = city;
-    }
+    captureSlots(captures, transcript, state.slots);
     const praise = pickPraise(beat, state.slots);
-    // Canned answers describe Teacher John; other casts answer in their praise lines.
-    reaction = beat.learnerMayAsk && scenario.teacher === 'john'
-      ? `${answerLearnerQuestion(transcript)} ${praise}`.trim()
+    const answersBack =
+      beat.learnerMayAsk &&
+      (scenario.teacher === 'john' ||
+        scenario.teacher === 'minnie' ||
+        scenario.teacher === 'nina');
+    reaction = answersBack
+      ? `${answerLearnerQuestion(transcript, scenario.teacher)} ${praise}`.trim()
       : praise;
     // Close = pass, but model the fixed version of the learner's own sentence.
     const corrected = params.judgeCorrected?.trim().replace(/[.!?]+$/, '');
@@ -427,13 +716,12 @@ export function processScenarioTurn(params: {
         beat.focusGoalIds.includes(g.id),
       );
       const retryEn = fillLoose(beat.retryEn ?? beat.promptEn, state.slots);
-      const aiResponse =
-        attempts === 1
-          ? `Hmm… not yet. Try again! ${retryEn}`
-          : `Almost! ${retryEn}`;
+      const retryLead = attempts === 1 ? RETRY_LEAD_FIRST : RETRY_LEAD_AGAIN;
+      const aiResponse = `${retryLead} ${retryEn}`;
       const reply: TurnExchangeResponse = {
         aiResponse,
-        textTh: `ลองอีกครั้งนะครับ — ${beat.retryTh ?? focusGoal?.hints.intentTh ?? ''}`.trim(),
+        speechParts: { lead: retryLead, body: retryEn },
+        textTh: `ลองอีกครั้งนะ${politeParticle(scenario.teacher)} — ${beat.retryTh ?? focusGoal?.hints.intentTh ?? ''}`.trim(),
         isTaskComplete: false,
         updatedCheckpoints: { ...state.checkpoints },
         feedbackHints: { mispronouncedWords: [] },
@@ -443,6 +731,7 @@ export function processScenarioTurn(params: {
         visual: visualForBeat(scenario, beat),
         emojiChoice: attempts >= 2 ? null : (beat.emojiChoice ?? null),
         guidedSpeaking: attempts >= 2 ? (beat.retryGuided ?? null) : null,
+        ...sttFields(beat, state.slots),
       };
       return { state, reply };
     }
@@ -463,12 +752,14 @@ export function processScenarioTurn(params: {
   if (isLastBeat) {
     state.finished = true;
     const closing = fillLoose(scenario.completionEn, state.slots);
+    const closingLead = wasSoftAdvance
+      ? reaction.replace(/ Next!$/, '')
+      : reaction;
     return {
       state,
       reply: {
-        aiResponse: wasSoftAdvance
-          ? `${reaction.replace(/ Next!$/, '')} ${closing}`.trim()
-          : `${reaction} ${closing}`.trim(),
+        aiResponse: `${closingLead} ${closing}`.trim(),
+        speechParts: { lead: closingLead, body: closing },
         textTh: joinTh(noteTh, scenario.completionTh),
         isTaskComplete: true,
         updatedCheckpoints: { ...state.checkpoints },
@@ -482,9 +773,11 @@ export function processScenarioTurn(params: {
     };
   }
 
+  const skipped = consumeSkippedBeats(scenario, state.beatIndex + 1, state);
+  if (skipped.confirm) reaction = `${reaction} ${skipped.confirm}`.trim();
   state.beatIndex = nextOpenBeatIndex(
     scenario,
-    state.beatIndex + 1,
+    skipped.index,
     state.checkpoints,
   );
   const next = currentScenarioBeat(scenario, state);
@@ -494,6 +787,7 @@ export function processScenarioTurn(params: {
     state,
     reply: {
       aiResponse: `${reaction} ${nextPrompt}`.trim(),
+      speechParts: { lead: reaction, body: nextPrompt },
       textTh: joinTh(noteTh, next.promptTh ?? ''),
       isTaskComplete: false,
       updatedCheckpoints: { ...state.checkpoints },
@@ -504,6 +798,7 @@ export function processScenarioTurn(params: {
       wasSoftAdvance,
       visual: visualForBeat(scenario, next),
       emojiChoice: next.emojiChoice ?? null,
+      ...sttFields(next, state.slots),
     },
   };
 }
@@ -609,5 +904,6 @@ export function buildScenarioResumeOpening(
     expectsUserSpeech: true,
     visual: visualForBeat(scenario, beat),
     emojiChoice: beat.emojiChoice ?? null,
+    ...sttFields(beat, state.slots),
   };
 }

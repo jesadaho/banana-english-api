@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 import {
   FINAL_INTERVIEW_JOHN,
+  FINAL_INTERVIEW_MINNIE,
   ONBOARDING_INTERVIEW_JOHN,
 } from './interactive-scenario.data';
 import {
@@ -11,9 +12,11 @@ import {
   extractName,
   initScenarioRuntime,
   isScenarioNoise,
+  matchNameSpelling,
   processScenarioTurn,
   scenarioHintForState,
   softMatchGoal,
+  spellNameOut,
   type ScenarioRuntimeState,
 } from './interactive-scenario.runtime';
 
@@ -287,5 +290,98 @@ describe('onboarding placement interview', () => {
     assert.equal(reply.isTaskComplete, true);
     assert.equal(state.slots.name, 'Maya');
     assert.match(reply.aiResponse, /See you in class/);
+  });
+});
+
+const M = FINAL_INTERVIEW_MINNIE;
+
+const MINNIE_HAPPY = [
+  'My name is Maya.',
+  'M A Y A',
+  'Again, please.',
+  "I'm hungry.",
+  "He's a teacher.",
+  "It's a bag.",
+  "It's blue.",
+  "They're pens.",
+  'Two pens.',
+  "It's her bag.",
+  "She's eighteen.",
+  "What's your name?",
+];
+
+function runMinnie(answers: string[]) {
+  let s = initScenarioRuntime(M);
+  let reply = buildScenarioOpening(M, s);
+  const replies = [reply];
+  for (const transcript of answers) {
+    ({ state: s, reply } = processScenarioTurn({ scenario: M, state: s, transcript }));
+    replies.push(reply);
+  }
+  return { state: s, reply, replies };
+}
+
+describe('chapter 8 Minnie interview', () => {
+  it('is a 12-beat Teacher Minnie mid-boss using chapter picture cards', () => {
+    assert.equal(M.teacher, 'minnie');
+    assert.equal(M.ttsVoiceProfile, 'teacher_minnie');
+    assert.equal(M.maxAttemptsPerBeat, 1);
+    assert.equal(M.beats.length, 12);
+    assert.equal(M.goals.length, 12);
+    assert.equal(M.beats[0]!.ungraded, undefined);
+    assert.equal(M.beats[1]!.sttMode, 'name_spelling');
+    assert.equal(M.beats.at(-1)!.learnerMayAsk, true);
+    const images = M.beats.filter((b) => b.imagePath).map((b) => b.imagePath);
+    assert.deepEqual(images, [
+      'describe-it/fnd_v7_u03n05/03-hungry.webp',
+      'describe-it/fnd_v7_u04n05/03-john-teacher.webp',
+      'describe-it/fnd_v7_u06n06/01-this-blue-bag.webp',
+      'describe-it/fnd_v7_u06n06/01-this-blue-bag.webp',
+      'describe-it/fnd_v7_u05n05/02-two-pens.webp',
+      'describe-it/fnd_v7_u05n05/02-two-pens.webp',
+      'describe-it/fnd_v7_u07n04/02-may-her-bag.webp',
+      'describe-it/fnd_v7_u08n09/02-may-profile-18.webp',
+    ]);
+  });
+
+  it('happy path: 12 answers, spells the captured name, Minnie answers hers', () => {
+    const { state, reply, replies } = runMinnie(MINNIE_HAPPY);
+    assert.equal(reply.isTaskComplete, true);
+    assert.ok(Object.values(state.checkpoints).every(Boolean));
+    assert.equal(state.slots.name, 'Maya');
+    assert.equal(replies[0]!.expectedSpeech, undefined);
+    assert.equal(replies[1]!.sttMode, 'name_spelling');
+    assert.equal(replies[1]!.expectedSpeech, 'M A Y A');
+    assert.match(replies[1]!.aiResponse, /Nice to meet you, Maya! Can you spell your name\?/);
+    assert.match(replies[12]!.aiResponse, /My name is Minnie! Great question!/);
+    assert.match(reply.aiResponse, /Great job, Maya!/);
+    assert.match(reply.textTh, /ค่ะ/);
+  });
+
+  it('accepts spelled letters, letter names, or the name as a word', () => {
+    assert.equal(spellNameOut('Maya'), 'M A Y A');
+    assert.equal(matchNameSpelling('M A Y A', 'Maya'), true);
+    assert.equal(matchNameSpelling('em ay why ay', 'Maya'), true);
+    assert.equal(matchNameSpelling('Maya', 'Maya'), true);
+    assert.equal(matchNameSpelling('Max', 'Maya'), false);
+    assert.equal(matchNameSpelling('S A M', undefined), true);
+  });
+
+  it('does not accept a random question on the ask-my-name beat', () => {
+    const early = runMinnie(MINNIE_HAPPY.slice(0, 11));
+    assert.equal(M.beats[early.state.beatIndex]!.id, 't12_ask_name');
+    const wrong = processScenarioTurn({
+      scenario: M,
+      state: early.state,
+      transcript: 'How are you?',
+    });
+    assert.equal(wrong.reply.assessmentTier, 'incorrect');
+    assert.equal(wrong.reply.wasSoftAdvance, true);
+    assert.match(wrong.reply.aiResponse, /What's your name\?/);
+  });
+
+  it('answers as Minnie, not John', () => {
+    assert.equal(answerLearnerQuestion("What's your name?", 'minnie'), 'My name is Minnie!');
+    assert.equal(answerLearnerQuestion('Where are you from?', 'minnie'), "I'm from England.");
   });
 });

@@ -6,10 +6,10 @@ import type {
 import type { TtsVoiceProfileId } from '../tts/tts-voice-profiles';
 
 export type InteractiveScenarioMode = 'practice' | 'review' | 'assessment';
-export type InteractiveScenarioTeacher = 'john' | 'minnie' | 'banana';
+export type InteractiveScenarioTeacher = 'john' | 'minnie' | 'nina' | 'banana';
 
-/** Learner facts captured from answers and reused in NPC lines ({name}, {city}). */
-export type ScenarioSlot = 'name' | 'city';
+/** Learner facts captured from answers and reused in NPC lines. */
+export type ScenarioSlot = 'name' | 'city' | 'hobby' | 'club' | 'when';
 
 export interface InteractiveScenarioGoalHint {
   intentTh: string;
@@ -75,6 +75,20 @@ export interface InteractiveScenarioBeat {
   praiseEn: string[];
   /** Capture learner fact(s) from this beat's answer. */
   capture?: ScenarioSlot | ScenarioSlot[];
+  /**
+   * Whisper bias for this beat (slots filled at reply time).
+   * Used for short scripted answers and letter-by-letter spelling.
+   */
+  expectedSpeech?: string;
+  /** STT mode. `name_spelling` matches letters against the captured `{name}`. */
+  sttMode?: 'name_spelling';
+  /**
+   * Skip this beat (count its goals as already done) when a captured slot
+   * matches `pattern` — e.g. they already suggested Saturday on the previous turn.
+   */
+  skipWhenSlot?: { slot: ScenarioSlot; pattern: string };
+  /** Said instead of this beat's prompt when it is skipped. */
+  skipConfirmEn?: string;
 }
 
 export interface InteractiveScenarioDef {
