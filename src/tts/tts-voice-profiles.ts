@@ -2,11 +2,13 @@
  * Named TTS voice profiles. Clients pass a profile id (never a raw voice name)
  * so the server controls which Gemini voices / style prompts are used.
  */
-export type TtsVoiceProfileId = 'teacher_b' | 'teacher_john';
+export type TtsVoiceProfileId = 'teacher_b' | 'teacher_john' | 'teacher_minnie' | 'teacher_nina';
 
 export const TTS_VOICE_PROFILE_IDS: TtsVoiceProfileId[] = [
   'teacher_b',
   'teacher_john',
+  'teacher_minnie',
+  'teacher_nina',
 ];
 
 export interface TtsVoiceProfile {
@@ -32,6 +34,22 @@ export const TTS_VOICE_PROFILES: Record<TtsVoiceProfileId, TtsVoiceProfile> = {
     stylePrompt:
       'Speak clearly and warmly as Teacher John, a friendly native English teacher. ' +
       'Sound natural and encouraging. English only, native accent',
+    languageCode: 'en-US',
+  },
+  teacher_minnie: {
+    voice: 'Aoede', // matches app GeminiTtsVoices.minnie
+    voiceEnv: 'GEMINI_TTS_VOICE_MINNIE',
+    stylePrompt:
+      'Speak clearly and warmly as Teacher Minnie, a friendly native English teacher. ' +
+      'Sound natural, upbeat, and encouraging. English only, native accent',
+    languageCode: 'en-US',
+  },
+  teacher_nina: {
+    voice: 'Zephyr', // matches app GeminiTtsVoices.nina
+    voiceEnv: 'GEMINI_TTS_VOICE_NINA',
+    stylePrompt:
+      'Speak clearly and energetically as Teacher Nina, a friendly adventure English teacher. ' +
+      'Sound bright, warm, and encouraging. English only, native accent',
     languageCode: 'en-US',
   },
 };

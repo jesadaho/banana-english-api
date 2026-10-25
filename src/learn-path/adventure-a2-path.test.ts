@@ -41,8 +41,7 @@ const chapterOf = (code: string) => Number(code.split('.')[0]);
 const zone1 = a2Nodes.filter((n) => chapterOf(n.code) <= ZONE_1_CHAPTERS);
 /** Picture packs ship only once their bundled images exist (seeAndSayImagesReady). */
 const AWAITING_ART = new Set(['explain_it']);
-/** Chapter 8 finale is an interactive scenario with no script yet, so it stays locked. */
-const PENDING_SCENARIO = new Set(['a2_c08n10']);
+const PENDING_SCENARIO = new Set<string>();
 /** Owner-written flows exempt from the generated-flow shape contract. */
 const HAND_AUTHORED_FLOWS = new Set(
   (JSON.parse(readFileSync('scripts/a2/adventure-a2-course.json', 'utf8')).nodes as { code: string; handAuthoredFlow?: boolean }[])
@@ -167,15 +166,19 @@ describe('Adventure A2 Zone 1 content', () => {
     }
   });
 
-  it('locks the chapter 8 finale until the Nina scenario is written', () => {
+  it('ships the Nina Zone 1 interview as the chapter 8 finale', () => {
     const node = zone1.find((n) => n.id === 'a2_c08n10');
     assert.equal(node?.type, 'interactive_scenario');
+    const scenario = getInteractiveScenario('a2_c08n10')!;
+    assert.equal(scenario.teacher, 'nina');
+    assert.equal(scenario.beats.length, 17);
+    assert.equal(scenario.maxAttemptsPerBeat, 1);
     const item = toFoundationV7ClientChapters(A2_CAPABILITIES, ADVENTURE_A2_COURSE)
       .flatMap((c) => c.items)
       .find((i) => i.id === 'a2_c08n10');
     assert.equal(item?.nodeType, 'interactive_scenario');
-    assert.equal(item?.comingSoon, true);
-    assert.equal(item?.countsTowardProgress, false);
+    assert.equal(item?.comingSoon, false);
+    assert.equal(item?.countsTowardProgress, true);
   });
 
   it('serves 2.5 frequency words as a five-row list pack with bars', () => {

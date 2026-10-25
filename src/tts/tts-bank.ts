@@ -33,6 +33,12 @@ export function ttsBankKey(text: string | null | undefined): string {
 export function ttsBankLookupKey(text: string | null | undefined): string {
   return ttsBankKey(text)
     .normalize('NFC')
+    // Emoji are never spoken (sanitizeTtsSpeech drops them), so 🎉 / 🍌✨
+    // variants must hit the same clip.
+    .replace(
+      /[\u2190-\u21FF\u2300-\u27BF\u2B00-\u2BFF\uFE0F\u200D]|[\u{1F000}-\u{1FAFF}]/gu,
+      ' ',
+    )
     .replace(/^["“']+|["”']+$/g, '')
     .replace(/\s*ๆ/gu, ' ๆ')
     .replace(/[.!?…]+$/u, '')
@@ -130,4 +136,27 @@ export function audioUrlsForSpokenTurn(input: {
       ? lookupTtsBankUrl(bank.lines, praise, null, folded)
       : null,
   };
+}
+
+/**
+ * Banked audio for a turn spoken as `lead` + `body` (reaction, then the next
+ * question). Prefer two half clips when both are banked so praise and the
+ * question stay reusable; fall back to the joined line if a half is missing.
+ */
+export function audioUrlsForSplitTurn(
+  full: string,
+  parts?: { lead: string; body: string } | null,
+): { audioUrl: string | null; praiseAudioUrl: string | null } {
+  const lead = parts?.lead?.trim();
+  const body = parts?.body?.trim();
+  if (lead && body) {
+    const leadUrl = audioUrlForTurn(lead);
+    const bodyUrl = audioUrlForTurn(body);
+    if (leadUrl && bodyUrl) {
+      return { audioUrl: bodyUrl, praiseAudioUrl: leadUrl };
+    }
+  }
+  const whole = audioUrlForTurn(full);
+  if (whole) return { audioUrl: whole, praiseAudioUrl: null };
+  return { audioUrl: null, praiseAudioUrl: null };
 }
