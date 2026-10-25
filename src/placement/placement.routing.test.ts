@@ -174,6 +174,10 @@ describe('placement bank v2.1', () => {
   it('banks scripted Teacher B lines without a learner name', () => {
     const lines = collectPlacementBankLines();
     assert.ok(lines.some((line) => line.endsWith('Where are you from?')));
+    assert.ok(lines.includes('Look at the table. How many apples are there?'));
+    assert.ok(
+      lines.includes('Thanks! Look at the table. How many apples are there?'),
+    );
     assert.ok(lines.includes("What's inside the bag?"));
     assert.ok(lines.includes('Invite me to do something with you this weekend.'));
     assert.ok(lines.includes('What time shall we meet?'));
@@ -204,8 +208,9 @@ describe('placement gates v2.1', () => {
     assert.equal(publicResultFor(state, 'band_not_confirmed'), 'Seed+');
   });
 
-  it('entry [2,2,2,2,1,0] =9 but Q06=0 is Seed', () => {
-    const state = fill(ENTRY, [2, 2, 2, 2, 1, 0]);
+  // Entry order is Q01, Q06, Q04, Q05, Q02, Q03 (v2.4), so Q06 is index 1.
+  it('entry =9 but Q06=0 is Seed', () => {
+    const state = fill(ENTRY, [2, 0, 2, 2, 2, 1]);
     assert.equal(entryGate(state), false);
     assert.equal(publicResultFor(state, 'band_not_confirmed'), 'Seed');
   });
@@ -339,7 +344,7 @@ describe('placement routing walk', () => {
     assert.equal(reply.lastDebug?.score, null);
     assert.match(reply.lastDebug?.reason ?? '', /JSON/);
     assert.equal(state.finished, false);
-    assert.equal(state.currentQuestionId, 'Q04');
+    assert.equal(state.currentQuestionId, 'Q06');
   });
 
   it('uses the settings opening when entrySource is profile_settings', () => {
@@ -371,7 +376,7 @@ describe('placement routing walk', () => {
     let { state, reply } = buildPlacementOpening(
       initPlacementRuntime({ entrySource: 'onboarding', learnerName: 'Maya' }),
     );
-    for (const s of [2, 2, 2, 2, 1, 0] as PlacementScore[]) {
+    for (const s of [2, 0, 2, 2, 2, 1] as PlacementScore[]) {
       ({ state, reply } = scoreWalk(state, s));
     }
     assert.equal(state.finished, true);
@@ -415,7 +420,7 @@ describe('placement routing walk', () => {
     ));
     assert.equal(state.results.Q01?.eligibleForPlacement, true);
     assert.equal(state.results.Q01?.score, 0);
-    assert.equal(state.currentQuestionId, 'Q04');
+    assert.equal(state.currentQuestionId, 'Q06');
   });
 
   it('hides NPC transcript from Q11 without a listen-along caption', () => {

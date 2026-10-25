@@ -6,9 +6,9 @@ export const PLACEMENT_STAGES: Array<{
 }> = [
   {
     id: 'foundation_entry',
-    // Easiest first (prod data): Q04/Q05 warm up before Q02/Q03. IDs keep
-    // their names so stored results and gates still line up.
-    questionIds: ['Q01', 'Q04', 'Q05', 'Q02', 'Q03', 'Q06'],
+    // Easiest first (prod data): Q06 (apples) and Q04/Q05 warm up before
+    // Q02/Q03. IDs keep their names so stored results and gates line up.
+    questionIds: ['Q01', 'Q06', 'Q04', 'Q05', 'Q02', 'Q03'],
   },
   { id: 'a1', questionIds: ['Q07', 'Q08', 'Q09', 'Q10'] },
   {
@@ -110,16 +110,18 @@ export const PLACEMENT_QUESTIONS: PlacementQuestion[] = [
   {
     id: 'Q06',
     stage: 'foundation_entry',
-    skill: 'ownership / plural',
-    npcEn: 'These things belong to May and Max. Tell me what they have.',
-    target: 'เชื่อมเจ้าของกับ keys หลายดอก',
-    requiredEvidence: 'Plural keys linked to owners; counting three is not required',
-    anchors2: ['They have keys.', 'These are their keys.'],
-    anchors1: ['Keys.', 'They have a key.'],
+    skill: 'number / plural',
+    // v2.4: replaced the May & Max keys item ("belong to" was too hard and
+    // ASR lost the one-syllable "keys"). Same line as the Foundation finale
+    // (t08), so the Teacher B clip is already banked.
+    npcEn: 'Look at the table. How many apples are there?',
+    target: 'บอกจำนวนพร้อมคำนามพหูพจน์ (three apples)',
+    requiredEvidence: 'The number three with plural apples; a number or the noun alone is partial',
+    anchors2: ['Three apples.', 'There are three apples.', 'Three apple.'],
+    anchors1: ['Three.', 'Apple.', 'Apples.'],
     delivery: 'picture_text_audio',
-    imagePath: 'describe-it/fnd_v7_u07n04/05-may-max-their-keys.webp',
-    sceneFacts:
-      'May and Max portraits linked to three keys. Do not score a guessed plural if ASR is unclear.',
+    imagePath: FINALE('07-three-apples'),
+    sceneFacts: 'Three red apples on a table. Grammar slips like "three apple" are fine.',
   },
   {
     id: 'Q07',
