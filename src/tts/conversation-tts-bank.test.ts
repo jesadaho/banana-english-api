@@ -2,12 +2,14 @@ import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 import {
   audioClipsForConversationReply,
+  audioClipsForTeacherSplit,
   audioUrlForConversationLine,
   collectConversationBankJobs,
+  collectTeacherScenarioBankJobs,
   conversationClipHash,
   type ConversationTtsBank,
 } from './conversation-tts-bank';
-import { conversationVoiceFor } from './conversation-voices';
+import { conversationVoiceFor, teacherScenarioVoice } from './conversation-voices';
 import { ttsBankObjectPath } from './tts-bank';
 
 describe('conversation voice bank', () => {
@@ -96,5 +98,57 @@ describe('conversation voice bank', () => {
         { praiseAudioUrl: null, audioUrl: null },
       );
     });
+  });
+});
+
+describe('teacher scenario voice bank', () => {
+  it('records Minnie interview lines in Autonoe, not Teacher B', () => {
+    const jobs = collectTeacherScenarioBankJobs();
+    const minnie = jobs.filter((job) => job.voice.speaker === 'Minnie');
+    const texts = new Set(minnie.map((job) => job.text));
+    assert.ok(minnie.length > 20);
+    assert.ok(minnie.every((job) => job.voice.voice === 'Autonoe'));
+    assert.ok(texts.has("Hello! I am Teacher Minnie. What's your name?"));
+    assert.ok(texts.has('Can you spell your name?'));
+    assert.ok(texts.has("What's this?"));
+    assert.equal(
+      minnie.some((job) => job.hash === ttsBankObjectPath(job.text)),
+      false,
+    );
+  });
+
+  it('plays cache halves for a Minnie reaction then question', () => {
+    const voice = teacherScenarioVoice('teacher_minnie');
+    assert.ok(voice);
+    const bank: ConversationTtsBank = {
+      model: 'gemini-2.5-flash-tts',
+      clips: {
+        [conversationClipHash(voice, 'Great spelling!')]: {
+          voice: voice.voice,
+          text: 'Great spelling!',
+          url: 'url:Great spelling!',
+        },
+        [conversationClipHash(voice, 'How do you ask me to say that again?')]: {
+          voice: voice.voice,
+          text: 'How do you ask me to say that again?',
+          url: 'url:How do you ask me to say that again?',
+        },
+      },
+    };
+    assert.deepEqual(
+      audioClipsForTeacherSplit(
+        'teacher_minnie',
+        'Great spelling! How do you ask me to say that again?',
+        {
+          lead: 'Great spelling!',
+          body: 'How do you ask me to say that again?',
+        },
+        bank,
+      ),
+      {
+        praiseAudioUrl: 'url:Great spelling!',
+        audioUrl: 'url:How do you ask me to say that again?',
+      },
+    );
   });
 });

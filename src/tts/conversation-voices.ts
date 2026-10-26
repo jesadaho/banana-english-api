@@ -14,6 +14,15 @@ const MAX_PROMPT =
 const MAY_PROMPT =
   'Speak as May, a cheerful girl about 10 or 11 years old. Use a lighter, higher voice than a teenager. Clear and friendly.';
 
+const MINNIE_PROMPT =
+  'Speak as Teacher Minnie, a young English teacher in her early twenties. Use a light, bright, slightly higher voice. Warm and encouraging.';
+
+const TEACHER_JOHN_PROMPT =
+  'Speak clearly and warmly as Teacher John, a friendly native English teacher. Sound natural and encouraging.';
+
+const TEACHER_NINA_PROMPT =
+  'Speak clearly and energetically as Teacher Nina, a friendly adventure English teacher. Sound bright, warm, and encouraging.';
+
 function characterPrompt(name: string): string {
   return (
     `Speak naturally as ${name}, a friendly character in this English ` +
@@ -26,7 +35,7 @@ const VOICES: Record<string, Omit<ConversationVoice, 'speaker'>> = {
   May: { voice: 'Leda', prompt: MAY_PROMPT },
   Mali: { voice: 'Callirrhoe', prompt: characterPrompt('Mali') },
   John: { voice: 'Iapetus', prompt: characterPrompt('John') },
-  Minnie: { voice: 'Aoede', prompt: characterPrompt('Minnie') },
+  Minnie: { voice: 'Autonoe', prompt: MINNIE_PROMPT },
   Nina: { voice: 'Zephyr', prompt: characterPrompt('Nina') },
   Bogy: { voice: 'Puck', prompt: characterPrompt('Bogy') },
   'Teacher Bee': { voice: 'Sadachbia', prompt: characterPrompt('Teacher Bee') },
@@ -68,4 +77,26 @@ export function conversationVoiceFor(
   const voice = speaker ? VOICES[speaker] : undefined;
   if (!speaker || !voice) return null;
   return { speaker, voice: voice.voice, prompt: voice.prompt };
+}
+
+/**
+ * Interactive-scenario tutors. Minnie matches the conversation Autonoe clip
+ * so shared lines reuse the same file; John/Nina use the lesson tutor prompt.
+ */
+export function teacherScenarioVoice(
+  id: string | null | undefined,
+): ConversationVoice | null {
+  switch (id?.trim()) {
+    case 'john':
+    case 'teacher_john':
+      return { speaker: 'John', voice: 'Iapetus', prompt: TEACHER_JOHN_PROMPT };
+    case 'minnie':
+    case 'teacher_minnie':
+      return { speaker: 'Minnie', ...VOICES.Minnie! };
+    case 'nina':
+    case 'teacher_nina':
+      return { speaker: 'Nina', voice: 'Zephyr', prompt: TEACHER_NINA_PROMPT };
+    default:
+      return null;
+  }
 }

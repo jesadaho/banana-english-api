@@ -15,6 +15,7 @@ import { publicHeroUrl } from '../src/articles/article-hero';
 import {
   CONVERSATION_TTS_MODEL,
   collectConversationBankJobs,
+  collectTeacherScenarioBankJobs,
   conversationClipObjectPath,
   type ConversationTtsBank,
 } from '../src/tts/conversation-tts-bank';
@@ -296,7 +297,15 @@ function writeBank(bank: ConversationTtsBank) {
 }
 
 async function main() {
-  const jobs = collectConversationBankJobs();
+  const speakerFilter = process.argv
+    .find((arg) => arg.startsWith('--speaker='))
+    ?.slice('--speaker='.length)
+    ?.trim();
+  const jobs = (
+    process.argv.includes('--only-scenario-teachers')
+      ? collectTeacherScenarioBankJobs()
+      : collectConversationBankJobs()
+  ).filter((job) => !speakerFilter || job.voice.speaker === speakerFilter);
   const bank = readBank();
   const bucketName = storageBucketName();
   const versionMs = Date.now();

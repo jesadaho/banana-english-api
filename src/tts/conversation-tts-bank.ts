@@ -1,11 +1,17 @@
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import {
+  getInteractiveScenario,
+  listInteractiveScenarioIds,
+} from '../interactive-scenario/interactive-scenario.data';
+import { collectInteractiveScenarioBankLines } from '../interactive-scenario/interactive-scenario.runtime';
 import { getSimulation } from '../simulations/simulations.data';
 import { cacheableLinesForSimulation } from './conversation-tts-lines';
 import {
   conversationSimulationIds,
   conversationVoiceFor,
+  teacherScenarioVoice,
   type ConversationVoice,
 } from './conversation-voices';
 import { ttsBankKey } from './tts-bank';
@@ -44,6 +50,37 @@ export function conversationClipObjectPath(hash: string): string {
   return `tts/conversation/v1/${hash}.mp3`;
 }
 
+function addJobs(
+  jobs: Map<string, ConversationBankJob>,
+  voice: ConversationVoice,
+  texts: Iterable<string>,
+) {
+  for (const text of texts) {
+    const key = ttsBankKey(text);
+    if (!key) continue;
+    const hash = conversationClipHash(voice, key);
+    if (jobs.has(hash)) continue;
+    jobs.set(hash, { voice, text: key, hash });
+  }
+}
+
+/** John / Minnie / Nina interview lines, in that teacher's voice. */
+export function collectTeacherScenarioBankJobs(): ConversationBankJob[] {
+  const jobs = new Map<string, ConversationBankJob>();
+  for (const id of listInteractiveScenarioIds()) {
+    const scenario = getInteractiveScenario(id);
+    if (!scenario) continue;
+    const voice = teacherScenarioVoice(
+      scenario.ttsVoiceProfile ?? scenario.teacher,
+    );
+    if (!voice) continue;
+    addJobs(jobs, voice, collectInteractiveScenarioBankLines([scenario]));
+  }
+  return [...jobs.values()].sort((a, b) =>
+    a.text.localeCompare(b.text) || a.voice.voice.localeCompare(b.voice.voice),
+  );
+}
+
 /** One clip per voice + line. Shared sentences are recorded again for each character. */
 export function collectConversationBankJobs(): ConversationBankJob[] {
   const jobs = new Map<string, ConversationBankJob>();
@@ -51,11 +88,10 @@ export function collectConversationBankJobs(): ConversationBankJob[] {
     const sim = getSimulation(simulationId);
     const voice = conversationVoiceFor(simulationId);
     if (!sim || !voice) continue;
-    for (const text of cacheableLinesForSimulation(sim)) {
-      const hash = conversationClipHash(voice, text);
-      if (jobs.has(hash)) continue;
-      jobs.set(hash, { voice, text, hash });
-    }
+    addJobs(jobs, voice, cacheableLinesForSimulation(sim));
+  }
+  for (const job of collectTeacherScenarioBankJobs()) {
+    if (!jobs.has(job.hash)) jobs.set(job.hash, job);
   }
   return [...jobs.values()].sort((a, b) =>
     a.text.localeCompare(b.text) || a.voice.voice.localeCompare(b.voice.voice),
@@ -120,6 +156,57 @@ export function audioClipsForConversationReply(
     if (!head) continue;
     const tail = audioUrlForConversationLine(
       simulationId,
+      sentences.slice(cut).join(' '),
+      bank,
+    );
+    if (tail) return { praiseAudioUrl: head, audioUrl: tail };
+  }
+  return { praiseAudioUrl: null, audioUrl: null };
+}
+
+export function audioUrlForTeacherLine(
+  profile: string | null | undefined,
+  text: string | null | undefined,
+  bank: ConversationTtsBank = loadConversationTtsBank(),
+): string | null {
+  const voice = teacherScenarioVoice(profile);
+  const key = ttsBankKey(text);
+  if (!voice || !key) return null;
+  return bank.clips[conversationClipHash(voice, key)]?.url ?? null;
+}
+
+/**
+ * Cache-first clips for a John / Minnie / Nina scenario turn.
+ * Same two-part stitch as conversation: praise then body, else the whole line.
+ */
+export function audioClipsForTeacherSplit(
+  profile: string | null | undefined,
+  full: string,
+  parts?: { lead: string; body: string } | null,
+  bank: ConversationTtsBank = loadConversationTtsBank(),
+): ConversationReplyClips {
+  const lead = parts?.lead?.trim();
+  const body = parts?.body?.trim();
+  if (lead && body) {
+    const leadUrl = audioUrlForTeacherLine(profile, lead, bank);
+    const bodyUrl = audioUrlForTeacherLine(profile, body, bank);
+    if (leadUrl && bodyUrl) {
+      return { audioUrl: bodyUrl, praiseAudioUrl: leadUrl };
+    }
+  }
+  const whole = audioUrlForTeacherLine(profile, full, bank);
+  if (whole) return { praiseAudioUrl: null, audioUrl: whole };
+
+  const sentences = ttsBankKey(full).split(SENTENCE_BREAK_RE).filter(Boolean);
+  for (let cut = 1; cut < sentences.length; cut++) {
+    const head = audioUrlForTeacherLine(
+      profile,
+      sentences.slice(0, cut).join(' '),
+      bank,
+    );
+    if (!head) continue;
+    const tail = audioUrlForTeacherLine(
+      profile,
       sentences.slice(cut).join(' '),
       bank,
     );
