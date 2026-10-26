@@ -178,6 +178,20 @@ export class UsersController {
     return { ok: true };
   }
 
+  @Get('me/perfect-stars')
+  async perfectStars(@Req() req: AuthedRequest) {
+    return this.users.listPerfectStars(req.user.id);
+  }
+
+  /** Idempotent: the app sends `game:poolId` keys the server does not have yet. */
+  @Post('me/perfect-stars')
+  async addPerfectStars(
+    @Req() req: AuthedRequest,
+    @Body() body: { keys?: unknown },
+  ) {
+    return this.users.addPerfectStars(req.user.id, body?.keys);
+  }
+
   @Post('me/avatars/unlock')
   async unlockAvatar(
     @Req() req: AuthedRequest,

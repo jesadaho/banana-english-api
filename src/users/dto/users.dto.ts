@@ -100,7 +100,7 @@ export class UnlockAvatarDto {
   @MaxLength(64)
   avatarId!: string;
 
-  /** Client-reported Perfect Star count (minigames). Used for gated avatars. */
+  /** Legacy client-reported Perfect Star count; used only when none are stored. */
   @IsOptional()
   @IsInt()
   @Min(0)

@@ -32,6 +32,7 @@ import {
   EnglishLevelSurveyDto,
   UpsertUserDto,
 } from './dto/users.dto';
+import { parsePerfectStarKeys, perfectStarKey } from './perfect-stars';
 
 export type SelfReportedEnglishLevel =
   | 'beginner'
@@ -472,6 +473,29 @@ export class UsersService {
     return this.getProfile(updated);
   }
 
+  async listPerfectStars(userId: string): Promise<{ count: number; keys: string[] }> {
+    const rows = await this.prisma.userPerfectStar.findMany({
+      where: { userId },
+      select: { game: true, poolId: true },
+      orderBy: { createdAt: 'asc' },
+    });
+    return { count: rows.length, keys: rows.map(perfectStarKey) };
+  }
+
+  async addPerfectStars(
+    userId: string,
+    rawKeys: unknown,
+  ): Promise<{ count: number; keys: string[] }> {
+    const stars = parsePerfectStarKeys(rawKeys);
+    if (stars.length > 0) {
+      await this.prisma.userPerfectStar.createMany({
+        data: stars.map((s) => ({ userId, game: s.game, poolId: s.poolId })),
+        skipDuplicates: true,
+      });
+    }
+    return this.listPerfectStars(userId);
+  }
+
   async unlockAvatar(
     user: User,
     avatarId: string,
@@ -521,8 +545,15 @@ export class UsersService {
       return this.getProfile(updated);
     }
 
-    if (minPerfectStars > 0 && perfectMinigameStars < minPerfectStars) {
-      throw new BadRequestException('Not enough Perfect Stars');
+    if (minPerfectStars > 0) {
+      const stored = await this.prisma.userPerfectStar.count({
+        where: { userId: user.id },
+      });
+      // Apps before Perfect Star sync only report a local count.
+      const stars = stored > 0 ? stored : perfectMinigameStars;
+      if (stars < minPerfectStars) {
+        throw new BadRequestException('Not enough Perfect Stars');
+      }
     }
 
     const updated = await this.prisma.$transaction(async (tx) => {
