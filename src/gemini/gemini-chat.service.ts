@@ -2927,6 +2927,7 @@ ${text}`,
       'correct = answers the task in understandable English (any true or made-up personal content is fine).\n' +
       'close = clearly attempts the task with the right idea but a noticeable grammar error (e.g. "I from Thailand", "She wake up at seven").\n' +
       'incorrect = off-task, only Thai, silence/noise, or does not answer what was asked.\n' +
+      'If the Pass rubric says a form is required (e.g. plural), an answer missing it is incorrect, not close.\n' +
       'For close: set "corrected" to the learner\'s OWN sentence with the smallest grammar fix ' +
       '(keep their words and content, e.g. "I wake up six" → "I wake up at six."). Otherwise "corrected" = "".\n' +
       'Return JSON {"tier": ..., "corrected": ...} only.';

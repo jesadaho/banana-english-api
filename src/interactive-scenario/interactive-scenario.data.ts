@@ -559,7 +559,8 @@ const MINNIE_GOALS: InteractiveScenarioGoal[] = [
     id: 'these_pens',
     labelTh: 'บอกว่าเป็นปากกา',
     labelEn: 'Say they are pens',
-    meaningRubric: "Names the pens in plural — They're pens / These are pens / Pens.",
+    meaningRubric:
+      "Names the pens in plural — They're pens / These are pens / Pens. Plural is required: singular \"pen\" (This is pen / It's a pen) is incorrect.",
     acceptExamples: ["They're pens.", 'They are pens.', 'These are pens.', 'Pens.', 'Two pens.'],
     matchPatterns: ['\\bpens\\b'],
     measuresChapters: [5],

@@ -733,6 +733,7 @@ export class SessionsController {
           goalsTh: config.goals.map((g) => g.labelTh),
           goalsEn: config.goals.map((g) => g.labelEn),
           goalHints: config.goals.map((g) => g.hints),
+          hasIntroBeat: config.beats[0]?.ungraded === true,
           imageUrls: placement
             ? PLACEMENT_IMAGE_PATHS.map((p) => describeItImageUrl(p))
             : config.beats.flatMap((b) =>
