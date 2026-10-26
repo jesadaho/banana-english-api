@@ -144,6 +144,7 @@ model User {
   foundationChapterSkips    FoundationChapterSkip[]
   foundationSkipQuizAttempts FoundationSkipQuizAttempt[]
   miniGameScoreAttempts     MiniGameScoreAttempt[]
+  perfectStars              UserPerfectStar[]
   scenarioProgress          InteractiveScenarioProgress[]
   spokenDays                UserSpokenDay[]
   activeDays                UserActiveDay[]
@@ -493,6 +494,19 @@ model MiniGameScoreAttempt {
   @@index([gameId, createdAt])
   @@index([kind, createdAt])
   @@index([userId, gameId, createdAt])
+}
+
+/** One Perfect Star per mini-game pool/topic cleared with every answer right. */
+model UserPerfectStar {
+  userId    String
+  /** emoji_speak | word_choice | speak_challenge | story_builder | whats_happen | say_it | describe_it | explain_it | listen_up */
+  game      String
+  poolId    String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, game, poolId])
 }
 
 /** Scene-level checkpoint progress so a multi-scene scenario can be resumed. */
