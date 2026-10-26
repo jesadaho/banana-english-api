@@ -30,6 +30,11 @@ export interface InteractiveScenarioGoal {
    * normalized transcript. Any match = correct. No match → AI judge (if wired).
    */
   matchPatterns?: string[];
+  /**
+   * Fixed-answer question (one right job, colour, number…): no pattern match
+   * means wrong — the AI judge may not pass it as close.
+   */
+  requiresPattern?: boolean;
   /** Foundation chapter numbers this goal measures (analytics / authoring). */
   measuresChapters?: number[];
   hints: InteractiveScenarioGoalHint;

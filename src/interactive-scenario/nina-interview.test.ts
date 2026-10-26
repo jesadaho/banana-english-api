@@ -9,6 +9,7 @@ import {
   extractWhen,
   initScenarioRuntime,
   processScenarioTurn,
+  softMatchGoal,
 } from './interactive-scenario.runtime';
 
 const N = NINA_INTERVIEW;
@@ -40,6 +41,17 @@ function run(answers: string[]) {
 }
 
 describe('Adventure A2 Nina interview', () => {
+  it('fails wrong answers on fixed-answer picture questions', () => {
+    const goal = (id: string) => N.goals.find((g) => g.id === id)!;
+    assert.equal(softMatchGoal("It's on the table.", goal('cat_under')), false);
+    assert.equal(softMatchGoal("It's 100 baht.", goal('bag_price')), false);
+    assert.equal(softMatchGoal('On Friday.', goal('suggest_saturday')), false);
+    assert.equal(goal('join_club').requiresPattern, undefined);
+    for (const id of ['cat_under', 'yellow_circle', 'flying_kite', 'busy_friday', 'suggest_saturday', 'bag_price']) {
+      assert.equal(goal(id).requiresPattern, true, id);
+    }
+  });
+
   it('is a 12-beat Teacher Nina Zone 1 boss using A2 picture cards', () => {
     assert.equal(N.id, 'a2_c08n10');
     assert.equal(N.teacher, 'nina');

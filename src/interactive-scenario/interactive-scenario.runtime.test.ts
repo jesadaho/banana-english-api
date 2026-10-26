@@ -320,6 +320,17 @@ function runMinnie(answers: string[]) {
 }
 
 describe('chapter 8 Minnie interview', () => {
+  it('fails wrong answers on fixed-answer picture questions', () => {
+    const goal = (id: string) => M.goals.find((g) => g.id === id)!;
+    for (const b of M.beats.filter((beat) => beat.imagePath)) {
+      assert.equal(goal(b.focusGoalIds[0]!).requiresPattern, true, b.id);
+    }
+    assert.equal(softMatchGoal('He is police.', goal('job_teacher')), false);
+    assert.equal(softMatchGoal('This is pen.', goal('these_pens')), false);
+    assert.equal(softMatchGoal('It is red.', goal('bag_color')), false);
+    assert.equal(softMatchGoal('He is a teacher.', goal('job_teacher')), true);
+  });
+
   it('is a 10-beat Teacher Minnie mid-boss using chapter picture cards', () => {
     assert.equal(M.teacher, 'minnie');
     assert.equal(M.ttsVoiceProfile, 'teacher_minnie');
