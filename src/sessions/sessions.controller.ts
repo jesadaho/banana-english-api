@@ -18,8 +18,17 @@ import {
   isChatDebugRequest,
 } from '../common/ai-user-message';
 import { attachAiDebug, scriptedAiDebug } from '../common/ai-debug';
-import { audioUrlForTurn, audioUrlsForSpokenTurn, spokenTurnText } from '../tts/tts-bank';
-import { audioClipsForConversationReply } from '../tts/conversation-tts-bank';
+import {
+  audioUrlForTurn,
+  audioUrlsForSpokenTurn,
+  audioUrlsForSplitTurn,
+  spokenTurnText,
+} from '../tts/tts-bank';
+import {
+  audioClipsForConversationReply,
+  audioClipsForTeacherSplit,
+} from '../tts/conversation-tts-bank';
+import { teacherScenarioVoice } from '../tts/conversation-voices';
 import { TtsLiveLinesService } from '../tts/tts-live-lines.service';
 import { TrainingTurnEngine } from '../training/engine/training-turn.engine';
 import { isTrainingV2Lesson } from '../training/training-v2.config';
@@ -673,12 +682,23 @@ export class SessionsController {
       openingReply = resumed
         ? buildScenarioResumeOpening(config, resumed)
         : buildScenarioOpening(config, data.scenarioRuntime!);
+      const openingClips = this.scenarioAudioClips(
+        config,
+        openingReply.aiResponse,
+      );
+      openingReply = {
+        ...openingReply,
+        audioUrl: openingClips.audioUrl ?? openingReply.audioUrl ?? null,
+        praiseAudioUrl:
+          openingClips.praiseAudioUrl ?? openingReply.praiseAudioUrl ?? null,
+      };
     }
     const opening = {
       speaker: 'ai' as const,
       textEn: openingReply.aiResponse,
       textTh: openingReply.textTh,
       audioUrl: openingReply.audioUrl ?? null,
+      praiseAudioUrl: openingReply.praiseAudioUrl ?? null,
       expectsUserSpeech: openingReply.expectsUserSpeech ?? true,
       visual: openingReply.visual ?? null,
       emojiChoice: openingReply.emojiChoice ?? null,
@@ -688,6 +708,7 @@ export class SessionsController {
     this.ttsLiveLines.observe('scenario', {
       text: openingReply.aiResponse,
       audioUrl: openingReply.audioUrl,
+      praiseAudioUrl: openingReply.praiseAudioUrl,
     });
     this.sessionStore.addTurn(data.session.id, opening);
     data.session.checkpointStates = { ...openingReply.updatedCheckpoints };
@@ -729,6 +750,21 @@ export class SessionsController {
       scriptedAiDebug(),
       performance.now(),
     );
+  }
+
+  private scenarioAudioClips(
+    config: {
+      ttsVoiceProfile?: string | null;
+      teacher?: string;
+    },
+    full: string,
+    parts?: { lead: string; body: string } | null,
+  ) {
+    const profile = config.ttsVoiceProfile ?? config.teacher;
+    if (teacherScenarioVoice(profile)) {
+      return audioClipsForTeacherSplit(profile, full, parts);
+    }
+    return audioUrlsForSplitTurn(full, parts);
   }
 
   private async processInteractiveScenarioTurn(
@@ -790,23 +826,37 @@ export class SessionsController {
     data.session.isComplete = reply.isTaskComplete;
     data.hintsUsed = state.hintsUsed;
 
+    // Reaction + next line: teacher cache first, then Teacher B bank.
+    const { speechParts, ...replyOut } = reply;
+    const clips = this.scenarioAudioClips(
+      data.scenarioConfig,
+      reply.aiResponse,
+      speechParts,
+    );
     const aiTurn = {
       speaker: 'ai' as const,
       textEn: reply.aiResponse,
       textTh: reply.textTh,
-      audioUrl: null as string | null,
+      audioUrl: clips.audioUrl,
+      praiseAudioUrl: clips.praiseAudioUrl,
       expectsUserSpeech: reply.expectsUserSpeech ?? true,
       assessmentTier: reply.assessmentTier,
       visual: reply.visual ?? null,
       emojiChoice: reply.emojiChoice ?? null,
       guidedSpeaking: reply.guidedSpeaking ?? null,
     };
-    this.ttsLiveLines.observe('scenario', { text: reply.aiResponse });
+    this.ttsLiveLines.observe('scenario', {
+      text: reply.aiResponse,
+      audioUrl: clips.audioUrl,
+      praiseAudioUrl: clips.praiseAudioUrl,
+    });
     this.sessionStore.addTurn(sessionId, aiTurn);
 
     return attachAiDebug(
       {
-        ...reply,
+        ...replyOut,
+        audioUrl: clips.audioUrl,
+        praiseAudioUrl: clips.praiseAudioUrl,
         updatedCheckpoints: state.checkpoints,
       },
       chatDebug,

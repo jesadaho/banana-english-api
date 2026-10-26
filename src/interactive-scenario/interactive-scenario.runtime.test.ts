@@ -130,7 +130,7 @@ describe('final interview (17 turns) — runtime', () => {
     assert.equal(state.slots.name, 'Maya');
     assert.equal(state.slots.city, 'Chiang Mai');
     assert.match(replies[1]!.aiResponse, /^Ha! I like that\. Let's begin\. Hello! I am Teacher John/);
-    assert.match(replies[2]!.aiResponse, /^Nice to meet you, Maya! Where are you from\?$/);
+    assert.match(replies[2]!.aiResponse, /^Nice to meet you too! Where are you from\?$/);
     assert.match(replies[3]!.aiResponse, /^Oh, Chiang Mai! Cool! How old are you\?$/);
     // John answers the learner's question before praising.
     assert.match(replies[14]!.aiResponse, /^Yes, I can! Great question!/);
@@ -298,14 +298,12 @@ const M = FINAL_INTERVIEW_MINNIE;
 const MINNIE_HAPPY = [
   'My name is Maya.',
   'M A Y A',
-  'Again, please.',
   "I'm hungry.",
   "He's a teacher.",
   "It's a bag.",
   "It's blue.",
   "They're pens.",
   'Two pens.',
-  "It's her bag.",
   "She's eighteen.",
   "What's your name?",
 ];
@@ -322,12 +320,12 @@ function runMinnie(answers: string[]) {
 }
 
 describe('chapter 8 Minnie interview', () => {
-  it('is a 12-beat Teacher Minnie mid-boss using chapter picture cards', () => {
+  it('is a 10-beat Teacher Minnie mid-boss using chapter picture cards', () => {
     assert.equal(M.teacher, 'minnie');
     assert.equal(M.ttsVoiceProfile, 'teacher_minnie');
     assert.equal(M.maxAttemptsPerBeat, 1);
-    assert.equal(M.beats.length, 12);
-    assert.equal(M.goals.length, 12);
+    assert.equal(M.beats.length, 10);
+    assert.equal(M.goals.length, 10);
     assert.equal(M.beats[0]!.ungraded, undefined);
     assert.equal(M.beats[1]!.sttMode, 'name_spelling');
     assert.equal(M.beats.at(-1)!.learnerMayAsk, true);
@@ -339,12 +337,11 @@ describe('chapter 8 Minnie interview', () => {
       'describe-it/fnd_v7_u06n06/01-this-blue-bag.webp',
       'describe-it/fnd_v7_u05n05/02-two-pens.webp',
       'describe-it/fnd_v7_u05n05/02-two-pens.webp',
-      'describe-it/fnd_v7_u07n04/02-may-her-bag.webp',
       'describe-it/fnd_v7_u08n09/02-may-profile-18.webp',
     ]);
   });
 
-  it('happy path: 12 answers, spells the captured name, Minnie answers hers', () => {
+  it('happy path: 10 answers, spells the captured name, Minnie answers hers', () => {
     const { state, reply, replies } = runMinnie(MINNIE_HAPPY);
     assert.equal(reply.isTaskComplete, true);
     assert.ok(Object.values(state.checkpoints).every(Boolean));
@@ -352,8 +349,8 @@ describe('chapter 8 Minnie interview', () => {
     assert.equal(replies[0]!.expectedSpeech, undefined);
     assert.equal(replies[1]!.sttMode, 'name_spelling');
     assert.equal(replies[1]!.expectedSpeech, 'M A Y A');
-    assert.match(replies[1]!.aiResponse, /Nice to meet you, Maya! Can you spell your name\?/);
-    assert.match(replies[12]!.aiResponse, /My name is Minnie! Great question!/);
+    assert.match(replies[1]!.aiResponse, /Nice to meet you too! Can you spell your name\?/);
+    assert.match(replies[10]!.aiResponse, /My name is Minnie! Great question!/);
     assert.match(reply.aiResponse, /Great job, Maya!/);
     assert.match(reply.textTh, /ค่ะ/);
   });
@@ -368,7 +365,7 @@ describe('chapter 8 Minnie interview', () => {
   });
 
   it('does not accept a random question on the ask-my-name beat', () => {
-    const early = runMinnie(MINNIE_HAPPY.slice(0, 11));
+    const early = runMinnie(MINNIE_HAPPY.slice(0, 9));
     assert.equal(M.beats[early.state.beatIndex]!.id, 't12_ask_name');
     const wrong = processScenarioTurn({
       scenario: M,

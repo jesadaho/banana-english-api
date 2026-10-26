@@ -52,6 +52,7 @@ describe('interactive scenario bank lines', () => {
     assert.ok(lines.includes('Hmm… not yet. Try again!'));
     assert.ok(lines.includes("I'm good at exploring new places!"));
     assert.ok(lines.includes('Saturday evening? Great!'));
+    assert.ok(lines.includes("Hello! I am Teacher Minnie. What's your name?"));
     assert.equal(
       lines.some((l) => l.includes('Yes! Three apples') && l.includes('What')),
       false,

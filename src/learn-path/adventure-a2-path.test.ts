@@ -171,7 +171,7 @@ describe('Adventure A2 Zone 1 content', () => {
     assert.equal(node?.type, 'interactive_scenario');
     const scenario = getInteractiveScenario('a2_c08n10')!;
     assert.equal(scenario.teacher, 'nina');
-    assert.equal(scenario.beats.length, 17);
+    assert.equal(scenario.beats.length, 12);
     assert.equal(scenario.maxAttemptsPerBeat, 1);
     const item = toFoundationV7ClientChapters(A2_CAPABILITIES, ADVENTURE_A2_COURSE)
       .flatMap((c) => c.items)

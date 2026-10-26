@@ -215,7 +215,8 @@ const BEATS: InteractiveScenarioBeat[] = [
     retryEn: 'My name is John. What is your name?',
     retryTh: 'บอกชื่อของคุณ (จริงหรือสมมติก็ได้)',
     retryGuided: { stem: 'My name is…', emoji: '🙋', label: 'name', speak: 'My name is Maya.' },
-    praiseEn: ['Nice to meet you, {name}!', 'Nice to meet you too!'],
+    // No {name}: a fixed line plays from the TTS bank instead of live TTS.
+    praiseEn: ['Nice to meet you too!'],
     capture: 'name',
   }),
   beat({
@@ -515,25 +516,6 @@ const MINNIE_GOALS: InteractiveScenarioGoal[] = [
     hints: { intentTh: 'สะกดชื่อเป็นตัวอักษร', starterEn: 'M…', modelEn: 'M A Y A' },
   },
   {
-    id: 'ask_again',
-    labelTh: 'ขอให้พูดอีกครั้ง',
-    labelEn: 'Ask to say that again',
-    meaningRubric: 'Asks the teacher to repeat — Again, please / Can you say that again?',
-    acceptExamples: ['Again, please.', 'Can you say that again?', 'Say that again, please.', 'One more time, please.'],
-    matchPatterns: [
-      '\\bagain\\b',
-      '\\brepeat\\b',
-      '\\bone more time\\b',
-      '\\bpardon\\b',
-    ],
-    measuresChapters: [2],
-    hints: {
-      intentTh: 'ขอให้พูดอีกครั้ง',
-      starterEn: 'Again, please.',
-      modelEn: 'Again, please.',
-    },
-  },
-  {
     id: 'hungry',
     labelTh: 'บอกว่าหิว',
     labelEn: 'Say you are hungry',
@@ -594,16 +576,6 @@ const MINNIE_GOALS: InteractiveScenarioGoal[] = [
     hints: { intentTh: 'บอกจำนวนที่เห็น', starterEn: 'Two…', modelEn: 'Two pens.' },
   },
   {
-    id: 'whose_bag',
-    labelTh: 'บอกเจ้าของกระเป๋า',
-    labelEn: "Say it is May's bag",
-    meaningRubric: "Names the owner — It's her bag / It's May's bag.",
-    acceptExamples: ["It's her bag.", 'It is her bag.', "It's May's bag.", "It is May's bag.", "May's bag.", 'Her bag.'],
-    matchPatterns: ["\\b(her|may'?s)\\b"],
-    measuresChapters: [7],
-    hints: { intentTh: "บอกเจ้าของด้วย It's her… / May's…", starterEn: "It's her…", modelEn: "It's her bag." },
-  },
-  {
     id: 'may_age',
     labelTh: 'บอกอายุ May',
     labelEn: 'Say how old May is',
@@ -644,7 +616,8 @@ const MINNIE_BEATS: InteractiveScenarioBeat[] = [
     retryEn: 'My name is Minnie. What is your name?',
     retryTh: 'บอกชื่อของคุณ (จริงหรือสมมติก็ได้)',
     retryGuided: { stem: 'My name is…', emoji: '🙋', label: 'name', speak: 'My name is Maya.' },
-    praiseEn: ['Nice to meet you, {name}!', 'Nice to meet you too!'],
+    // No {name}: a fixed line plays from the TTS bank instead of live TTS.
+    praiseEn: ['Nice to meet you too!'],
     capture: 'name',
   }),
   minnieBeat({
@@ -657,19 +630,7 @@ const MINNIE_BEATS: InteractiveScenarioBeat[] = [
     retryEn: 'Spell it letter by letter. Like: M-A-Y-A.',
     retryTh: 'สะกดทีละตัวอักษร เช่น M A Y A',
     retryGuided: { stem: 'M…', emoji: '🔤', label: 'letters', speak: 'M A Y A' },
-    praiseEn: ['Nice spelling, {name}!', 'Great spelling!'],
-  }),
-  minnieBeat({
-    id: 't03_ask_again',
-    focusGoalIds: ['ask_again'],
-    expectedSpeech: 'Again, please.',
-    npcBriefEn: 'Ask how the learner would request a repetition.',
-    promptEn: 'How do you ask me to say that again?',
-    promptTh: 'ถ้าฟังไม่ทัน จะขอให้ Minnie พูดอีกครั้งอย่างไร?',
-    retryEn: 'Ask me to repeat. Say: Again, please.',
-    retryTh: 'พูดว่า Again, please. หรือ Can you say that again?',
-    retryGuided: { stem: 'Again,…', emoji: '🔁', label: 'please', speak: 'Again, please.' },
-    praiseEn: ['Yes! Again, please.'],
+    praiseEn: ['Great spelling!'],
   }),
   minnieBeat({
     id: 't04_hungry',
@@ -750,19 +711,6 @@ const MINNIE_BEATS: InteractiveScenarioBeat[] = [
     praiseEn: ['Yes! Two pens.'],
   }),
   minnieBeat({
-    id: 't10_whose_bag',
-    focusGoalIds: ['whose_bag'],
-    visualLayout: 'focus_image',
-    imagePath: chCard('fnd_v7_u07n04', '02-may-her-bag'),
-    npcBriefEn: 'Picture: May with an arrow pointing to a red bag. Ask whose bag this is.',
-    promptEn: 'This is May. Whose bag is this?',
-    promptTh: 'นี่คือ May กระเป๋าใบนี้เป็นของใคร?',
-    retryEn: "This is May. Say: It is her bag. Or: It is May's bag.",
-    retryTh: "ใช้ It’s her bag หรือ It’s May’s bag",
-    retryGuided: { stem: "It's her…", emoji: '🎒', label: 'bag', speak: "It's her bag." },
-    praiseEn: ["Yes! It's her bag."],
-  }),
-  minnieBeat({
     id: 't11_may_age',
     focusGoalIds: ['may_age'],
     visualLayout: 'focus_image',
@@ -790,7 +738,7 @@ const MINNIE_BEATS: InteractiveScenarioBeat[] = [
   }),
 ];
 
-/** Chapter 8 mid-boss — 12 scored questions covering A1 ch.1–8 with Teacher Minnie. */
+/** Chapter 8 mid-boss — 10 scored questions covering A1 ch.1–8 with Teacher Minnie. */
 export const FINAL_INTERVIEW_MINNIE: InteractiveScenarioDef = {
   id: 'final_interview_minnie',
   mode: 'review',
@@ -801,7 +749,7 @@ export const FINAL_INTERVIEW_MINNIE: InteractiveScenarioDef = {
   bananaCost: 5,
   estimatedMinutes: 6,
   maxAttemptsPerBeat: 1,
-  softAttemptCeiling: 24,
+  softAttemptCeiling: 20,
   scenes: [
     {
       id: 'classroom',

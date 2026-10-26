@@ -447,7 +447,9 @@ export function collectInteractiveScenarioBankLines(
   add(RETRY_LEAD_AGAIN);
   add('OK, next!');
   add('Hmm, good one!');
+  const teachers = new Set(scenarios.map((s) => s.teacher));
   for (const teacher of ['john', 'minnie', 'nina'] as const) {
+    if (!teachers.has(teacher)) continue;
     for (const [, answer] of teacherAnswers(teacher)) add(answer);
   }
   for (const scenario of scenarios) {
