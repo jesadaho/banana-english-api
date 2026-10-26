@@ -1096,7 +1096,7 @@ export class SessionsController {
     }
     const beat = currentScenarioBeat(scenario, state);
     const goal = scenario.goals.find((g) => beat.focusGoalIds.includes(g.id));
-    if (!goal) return { tier: null };
+    if (!goal || goal.requiresPattern) return { tier: null };
     try {
       const verdict = await Promise.race([
         this.chat.evaluateScenarioUtterance({
