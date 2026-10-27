@@ -6,9 +6,12 @@ export const PLACEMENT_STAGES: Array<{
 }> = [
   {
     id: 'foundation_entry',
-    // Easiest first (prod data): Q06 (apples) and Q04/Q05 warm up before
-    // Q02/Q03. IDs keep their names so stored results and gates line up.
-    questionIds: ['Q01', 'Q06', 'Q04', 'Q05', 'Q02', 'Q03'],
+    // v3.0: one item per Foundation chapter, in chapter order —
+    // S01 ch.1 name · S03 ch.3 feelings · Q02 ch.4 family · Q04 ch.5 inside
+    // the bag · Q03 ch.6 colour / not · Q05 ch.7 describe (has) · Q06 ch.5+8
+    // three apples. Q06 sits last: prod v2.4 data made it the hardest entry
+    // item, and second place ended many tests early.
+    questionIds: ['S01', 'S03', 'Q02', 'Q04', 'Q03', 'Q05', 'Q06'],
   },
   { id: 'a1', questionIds: ['Q07', 'Q08', 'Q09', 'Q10'] },
   {
@@ -39,8 +42,40 @@ export const PLACEMENT_BANDS = PLACEMENT_STAGES;
 
 const FINALE = (file: string) => `describe-it/v7_finale_n01/${file}.webp`;
 
+/** First item of the entry stage (the opening asks it). */
+export const PLACEMENT_FIRST_QUESTION_ID = 'S01';
+
 export const PLACEMENT_QUESTIONS: PlacementQuestion[] = [
   {
+    id: 'S01',
+    stage: 'foundation_entry',
+    skill: 'say my name (Foundation ch.1)',
+    // Teacher Bee already introduced himself in the opening line.
+    npcEn: "What's your name?",
+    target: 'บอกชื่อตัวเองเป็นประโยค (My name is … / I’m …)',
+    requiredEvidence:
+      'A sentence giving their own name; the name alone is partial. Never judge the name itself (ASR mangles Thai names).',
+    anchors2: ['My name is Ploy.', "I'm Ploy.", 'I am Ploy.'],
+    anchors1: ['Ploy.'],
+    delivery: 'text_audio',
+    // Fixed line, no {name}: stays in the TTS bank.
+    afterScoreEn: 'Nice to meet you!',
+  },
+  {
+    id: 'S03',
+    stage: 'foundation_entry',
+    skill: 'I am + feeling (Foundation ch.3)',
+    npcEn: 'How do you feel today?',
+    target: 'บอกความรู้สึกด้วย I am / I’m',
+    requiredEvidence:
+      'A sentence with I am / I’m + a feeling (happy, tired, fine, good…); a feeling word alone is partial',
+    anchors2: ["I'm happy.", 'I am tired.', "I'm fine.", "I'm good."],
+    anchors1: ['Happy.', 'Tired.', 'Fine.'],
+    delivery: 'text_audio',
+  },
+  {
+    // Retired in v3.0 ("from" is first taught in Foundation 16.13). Kept so a
+    // session that was mid-test at deploy time can still resolve it.
     id: 'Q01',
     stage: 'foundation_entry',
     skill: 'personal information',
@@ -116,9 +151,12 @@ export const PLACEMENT_QUESTIONS: PlacementQuestion[] = [
     // (t08), so the Teacher B clip is already banked.
     npcEn: 'Look at the table. How many apples are there?',
     target: 'บอกจำนวนพร้อมคำนามพหูพจน์ (three apples)',
-    requiredEvidence: 'The number three with plural apples; a number or the noun alone is partial',
-    anchors2: ['Three apples.', 'There are three apples.', 'Three apple.'],
-    anchors1: ['Three.', 'Apple.', 'Apples.'],
+    // v3.0: "Three." is a complete answer to "How many?". Thai-accented
+    // "tree / tri / tui / thai" are scored locally (placementLocalScore).
+    requiredEvidence:
+      'The number three (with or without apples); the noun alone is partial. Thai-accented "tree", "tri", "tui" mean three.',
+    anchors2: ['Three apples.', 'There are three apples.', 'Three apple.', 'Three.'],
+    anchors1: ['Apple.', 'Apples.'],
     delivery: 'picture_text_audio',
     imagePath: FINALE('07-three-apples'),
     sceneFacts: 'Three red apples on a table. Grammar slips like "three apple" are fine.',

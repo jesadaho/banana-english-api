@@ -1,4 +1,5 @@
 import {
+  PLACEMENT_FIRST_QUESTION_ID,
   PLACEMENT_QUESTION_IDS,
   PLACEMENT_STAGES,
   getPlacementQuestion,
@@ -105,11 +106,47 @@ function atLeast(state: PlacementRuntimeState, id: string, min: PlacementScore) 
   return score !== null && score >= min;
 }
 
-/** Q01–Q06: sum ≥9/12 and Q05/Q06 ≥1. */
+/** Seed+: S01 (My name is …) and S03 (I'm + feeling) both full sentences. */
+export function seedPlusGate(state: PlacementRuntimeState): boolean {
+  return scoreOf(state, 'S01') === 2 && scoreOf(state, 'S03') === 2;
+}
+
+/**
+ * Seed++ (start ch.8), same idea as the old Seed+ gate: all 7 entry items
+ * sum ≥11/14 (75%, like ≥9/12) with Q05 or Q06 ≥1. Seed+ is not required, so
+ * a one-word S03 ("Happy.") cannot sink an otherwise strong learner.
+ */
 export function entryGate(state: PlacementRuntimeState): boolean {
   const scores = eligibleList(stageEligibleScores(state, 'foundation_entry'));
-  if (scores.length < 6) return false;
-  return sumScores(scores) >= 9 && atLeast(state, 'Q05', 1) && atLeast(state, 'Q06', 1);
+  if (scores.length < stageQuestionCount('foundation_entry')) return false;
+  return (
+    sumScores(scores) >= 11 &&
+    (atLeast(state, 'Q05', 1) || atLeast(state, 'Q06', 1))
+  );
+}
+
+export type FoundationStartChapterId =
+  | 'v7_u01'
+  | 'v7_u02'
+  | 'v7_u04'
+  | 'v7_u05'
+  | 'v7_u06'
+  | 'v7_u07';
+
+/**
+ * Seed / Seed+ start: the first Foundation chapter whose skill the learner did
+ * not show with a full (2) answer. Chapter 2 (please / thank you) is not
+ * tested, so S01 without S03 starts there rather than skipping it.
+ */
+export function seedStartChapter(
+  state: PlacementRuntimeState,
+): FoundationStartChapterId {
+  if (scoreOf(state, 'S01') !== 2) return 'v7_u01';
+  if (scoreOf(state, 'S03') !== 2) return 'v7_u02';
+  if (scoreOf(state, 'Q02') !== 2) return 'v7_u04';
+  if (scoreOf(state, 'Q04') !== 2 || scoreOf(state, 'Q06') !== 2) return 'v7_u05';
+  if (scoreOf(state, 'Q03') !== 2) return 'v7_u06';
+  return 'v7_u07';
 }
 
 /** Q07–Q10: sum ≥6/8 and every item ≥1. */
@@ -161,6 +198,7 @@ export function a2PlusGate(state: PlacementRuntimeState): boolean {
 
 export function evaluateGates(state: PlacementRuntimeState): PlacementGateResults {
   return {
+    seedPlus: seedPlusGate(state),
     entry: entryGate(state),
     a1: a1Gate(state),
     a2: a2Gate(state),
@@ -175,18 +213,19 @@ export function publicResultFor(
   stopReason: PlacementStopReason,
 ): PlacementPublicResult | null {
   const gates = evaluateGates(state);
-  if (stopReason === 'cancelled' && !gates.entry) return null;
+  if (stopReason === 'cancelled' && !gates.seedPlus) return null;
   if (stopReason === 'user_finished_after_a2' && gates.a2) return 'A2';
   if (gates.b1) return 'B1';
   if (gates.a2Plus) return 'A2+';
   if (gates.a2) return 'A2';
   if (gates.a1Plus) return 'A1+';
   if (gates.a1) return 'A1';
-  if (gates.entry) return 'Seed+';
+  if (gates.entry) return 'Seed++';
+  if (gates.seedPlus) return 'Seed+';
   const entryScores = eligibleList(
     stageEligibleScores(state, 'foundation_entry'),
   );
-  if (entryScores.length >= 6) return 'Seed';
+  if (entryScores.length >= stageQuestionCount('foundation_entry')) return 'Seed';
   if (stopReason === 'early_zero_streak' && entryScores.length > 0) return 'Seed';
   return null;
 }
@@ -199,9 +238,11 @@ export function resultLabelFor(
     case 'Seed':
       return 'Seed · พร้อมเติบโต';
     case 'Seed+':
+      return 'Seed+ · มีพื้นฐานแล้ว';
+    case 'Seed++':
       return opts?.incompleteNext
-        ? 'Seed+ · มีพื้นฐานแล้ว · ยังประเมินระดับถัดไปไม่ครบ'
-        : 'Seed+ · มีพื้นฐานแล้ว';
+        ? 'Seed++ · พื้นฐานแน่น · ยังประเมินระดับถัดไปไม่ครบ'
+        : 'Seed++ · พื้นฐานแน่น พร้อมต่อยอด';
     case 'A1':
       return 'A1 · พื้นฐานพร้อมแล้ว';
     case 'A1+':
@@ -215,6 +256,10 @@ export function resultLabelFor(
     default:
       return 'ยังประเมินไม่ได้';
   }
+}
+
+function stageQuestionCount(stageId: PlacementStageId): number {
+  return PLACEMENT_STAGES.find((s) => s.id === stageId)?.questionIds.length ?? 0;
 }
 
 function baseLevelFor(
@@ -319,9 +364,14 @@ export function buildSessionResult(
     stopReason === 'cancelled' && !gates.entry
       ? null
       : publicResultFor(state, stopReason);
-  const route = resolvePlacementStart(publicResult);
+  const route = resolvePlacementStart(publicResult, {
+    foundationChapterId:
+      publicResult === 'Seed' || publicResult === 'Seed+'
+        ? seedStartChapter(state)
+        : undefined,
+  });
   const incompleteNext =
-    publicResult === 'Seed+' && !gates.a1 && stopReason !== 'cancelled';
+    publicResult === 'Seed++' && !gates.a1 && stopReason !== 'cancelled';
   const insufficient =
     publicResult === null &&
     (stopReason === 'insufficient_evidence' ||
@@ -342,7 +392,7 @@ export function buildSessionResult(
     incompleteNext
   ) {
     resultStatus = 'provisional';
-  } else if (publicResult === 'Seed+' && !gates.a1) {
+  } else if (publicResult === 'Seed++' && !gates.a1) {
     resultStatus = 'provisional';
   } else if (stopReason === 'band_not_confirmed' && publicResult) {
     resultStatus = 'early_exit';
@@ -410,7 +460,7 @@ export function buildSessionResult(
 export function nextQuestionId(state: PlacementRuntimeState): string | null {
   if (state.finished) return null;
   const current = state.currentQuestionId;
-  if (!current) return 'Q01';
+  if (!current) return PLACEMENT_FIRST_QUESTION_ID;
   const q = getPlacementQuestion(current);
   if (!q) return null;
   const stageIdx = PLACEMENT_STAGES.findIndex((s) => s.id === q.stage);

@@ -192,6 +192,12 @@ export class UsersController {
     return this.users.addPerfectStars(req.user.id, body?.keys);
   }
 
+  /** Percentile among everyone with a stored Placement Test result. */
+  @Get('me/placement-rank')
+  async placementRank(@Req() req: AuthedRequest) {
+    return this.users.getPlacementRank(req.user);
+  }
+
   @Post('me/avatars/unlock')
   async unlockAvatar(
     @Req() req: AuthedRequest,

@@ -1,7 +1,14 @@
-export const PLACEMENT_QUESTION_VERSION = 'placement-q-v2.4';
-export const PLACEMENT_RUBRIC_VERSION = 'placement-rubric-v2.3';
-export const PLACEMENT_ROUTING_VERSION = 'placement-routing-v2.1';
-export const PLACEMENT_MAPPING_VERSION = 'placement-start-v2.1';
+/**
+ * v3.0: the entry stage measures Foundation chapters directly — S01 (name,
+ * ch.1) and S03 (feelings, ch.3) replace Q01 "Where are you from?" (taught
+ * only in ch.16). Seed splits into Seed / Seed+ / Seed++ with a skill-based
+ * start chapter. Stored v2.x "Seed+" means today's "Seed++" (see
+ * placement-band.ts).
+ */
+export const PLACEMENT_QUESTION_VERSION = 'placement-q-v3.0';
+export const PLACEMENT_RUBRIC_VERSION = 'placement-rubric-v3.0';
+export const PLACEMENT_ROUTING_VERSION = 'placement-routing-v3.0';
+export const PLACEMENT_MAPPING_VERSION = 'placement-start-v3.0';
 export const PLACEMENT_SCENARIO_ID = 'onboarding_placement_bee';
 export const PLACEMENT_MODEL_VERSION = 'placement-eval-v2.3';
 export const PLACEMENT_PROMPT_VERSION = 'placement-prompt-v2.3';
@@ -15,6 +22,7 @@ export type PlacementStageId =
 export type PlacementPublicResult =
   | 'Seed'
   | 'Seed+'
+  | 'Seed++'
   | 'A1'
   | 'A1+'
   | 'A2'
@@ -136,6 +144,9 @@ export interface PlacementRuntimeState {
 }
 
 export interface PlacementGateResults {
+  /** S01 and S03 both 2: ch.1–3 shown, start at ch.4 or later. */
+  seedPlus: boolean;
+  /** Seed++: entry items ≥11/14 with Q05 or Q06 ≥1 (see entryGate). */
   entry: boolean;
   a1: boolean;
   a2: boolean;
@@ -196,6 +207,8 @@ export interface PlacementSessionResult {
 
 export interface PlacementTurnReply {
   aiResponse: string;
+  /** Reaction + next question, so each half can be a separate TTS clip. */
+  speechParts?: { lead: string; body: string };
   textTh: string;
   expectsUserSpeech: boolean;
   canSkip: boolean;

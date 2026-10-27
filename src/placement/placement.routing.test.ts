@@ -16,6 +16,8 @@ import {
   evaluateGates,
   publicResultFor,
   resultLabelFor,
+  seedPlusGate,
+  seedStartChapter,
 } from './placement.routing';
 import {
   applyPlacementEvaluation,
@@ -93,7 +95,7 @@ const A2 = PLACEMENT_STAGES[2]!.questionIds;
 const B1 = PLACEMENT_STAGES[3]!.questionIds;
 
 function passEntry(state: PlacementRuntimeState) {
-  ENTRY.forEach((id, i) => putScore(state, id, i === 5 ? 1 : 2));
+  ENTRY.forEach((id, i) => putScore(state, id, i === 6 ? 1 : 2));
 }
 
 function passA1(state: PlacementRuntimeState) {
@@ -144,15 +146,19 @@ function scoreWalk(
   return result;
 }
 
-describe('placement bank v2.1', () => {
-  it('has 25 unique question IDs in 6+4+10+5 stages', () => {
+describe('placement bank v3.0', () => {
+  it('has 26 staged question IDs in 7+4+10+5 stages (Q01 retired)', () => {
     const ids = PLACEMENT_QUESTIONS.map((q) => q.id);
-    assert.equal(ids.length, 25);
-    assert.equal(new Set(ids).size, 25);
+    assert.equal(new Set(ids).size, ids.length);
+    const staged = PLACEMENT_STAGES.flatMap((s) => s.questionIds);
+    assert.equal(new Set(staged).size, 26);
     assert.deepEqual(
       PLACEMENT_STAGES.map((s) => s.questionIds.length),
-      [6, 4, 10, 5],
+      [7, 4, 10, 5],
     );
+    assert.deepEqual(ENTRY, ['S01', 'S03', 'Q02', 'Q04', 'Q03', 'Q05', 'Q06']);
+    assert.equal(staged.includes('Q01'), false);
+    assert.ok(getPlacementQuestion('Q01'), 'kept for in-flight sessions');
   });
 
   it('hides NPC English from Q11 and keeps Q01–10 as text+audio', () => {
@@ -168,15 +174,21 @@ describe('placement bank v2.1', () => {
       }
     }
     assert.equal(getPlacementQuestion('Q11')?.transitionTh, undefined);
-    assert.equal(getPlacementQuestion('Q01')?.npcEn, 'Where are you from?');
+    assert.equal(getPlacementQuestion('S01')?.npcEn, "What's your name?");
+    assert.equal(getPlacementQuestion('S03')?.npcEn, 'How do you feel today?');
   });
 
-  it('banks scripted Teacher B lines without a learner name', () => {
+  it('banks scripted Teacher B lines as separate acks and questions', () => {
     const lines = collectPlacementBankLines();
-    assert.ok(lines.some((line) => line.endsWith('Where are you from?')));
+    assert.ok(lines.includes("What's your name?"));
+    assert.ok(lines.includes('How do you feel today?'));
+    assert.ok(lines.includes('Nice to meet you!'));
+    assert.equal(lines.includes('Where are you from?'), false);
     assert.ok(lines.includes('Look at the table. How many apples are there?'));
-    assert.ok(
+    assert.ok(lines.includes('Thanks!'));
+    assert.equal(
       lines.includes('Thanks! Look at the table. How many apples are there?'),
+      false,
     );
     assert.ok(lines.includes("What's inside the bag?"));
     assert.ok(lines.includes('Invite me to do something with you this weekend.'));
@@ -191,7 +203,18 @@ describe('placement bank v2.1', () => {
       lines.some((line) => line.includes("We're both free this weekend")),
       false,
     );
-    assert.ok(lines.some((line) => line.includes('Thanks!') && line.includes('Tell me')));
+    assert.ok(lines.some((line) => line.startsWith('Tell me')));
+    assert.ok(
+      lines.includes(
+        'มาลองวัดระดับภาษาอังกฤษกันครับ ตอบเท่าที่ได้เลย',
+      ),
+    );
+    assert.equal(
+      lines.some(
+        (line) => line.includes('มาลองวัดระดับ') && line.includes("What's your name"),
+      ),
+      false,
+    );
     assert.ok(lines.some((line) => line.startsWith('Thank you for talking with Teacher Bee')));
     for (const line of lines) {
       assert.equal(line.includes('{name}'), false);
@@ -200,19 +223,61 @@ describe('placement bank v2.1', () => {
   });
 });
 
-describe('placement gates v2.1', () => {
-  it('entry [2,2,1,1,2,1] =9 with Q05/Q06 ≥1 is Seed+', () => {
-    const state = fill(ENTRY, [2, 2, 1, 1, 2, 1]);
+describe('placement gates v3.0', () => {
+  // Entry order: S01, S03, Q02, Q04, Q03, Q05, Q06.
+  it('Seed++: entry items sum ≥11/14 with Q05 or Q06 ≥1', () => {
+    const state = fill(ENTRY, [2, 2, 2, 2, 1, 1, 2]);
+    assert.equal(seedPlusGate(state), true);
     assert.equal(entryGate(state), true);
     assert.equal(a1Gate(state), false);
-    assert.equal(publicResultFor(state, 'band_not_confirmed'), 'Seed+');
+    assert.equal(publicResultFor(state, 'band_not_confirmed'), 'Seed++');
   });
 
-  // Entry order is Q01, Q06, Q04, Q05, Q02, Q03 (v2.4), so Q06 is index 1.
-  it('entry =9 but Q06=0 is Seed', () => {
-    const state = fill(ENTRY, [2, 0, 2, 2, 2, 1]);
-    assert.equal(entryGate(state), false);
+  it('Seed++ needs only one of Q05/Q06 (Q06=0 still passes)', () => {
+    const state = fill(ENTRY, [2, 2, 2, 2, 2, 2, 0]);
+    assert.equal(entryGate(state), true);
+    assert.equal(publicResultFor(state, 'band_not_confirmed'), 'Seed++');
+  });
+
+  it('a one-word S03 does not block Seed++ when the total is 13/14', () => {
+    const state = fill(ENTRY, [2, 1, 2, 2, 2, 2, 2]);
+    assert.equal(seedPlusGate(state), false);
+    assert.equal(entryGate(state), true);
+    assert.equal(publicResultFor(state, 'band_not_confirmed'), 'Seed++');
+  });
+
+  it('10/14 is not Seed++; with Q05 and Q06 both 0 it is not either', () => {
+    assert.equal(entryGate(fill(ENTRY, [2, 2, 2, 2, 2, 0, 0])), false);
+    assert.equal(entryGate(fill(ENTRY, [2, 2, 2, 2, 0, 0, 2])), false);
+  });
+
+  it('a one-word S03 with a low total is Seed at chapter 2', () => {
+    const state = fill(ENTRY, [2, 1, 2, 2, 0, 0, 2]);
     assert.equal(publicResultFor(state, 'band_not_confirmed'), 'Seed');
+    assert.equal(seedStartChapter(state), 'v7_u02');
+  });
+
+  it('S01 below 2 starts at chapter 1', () => {
+    const state = fill(ENTRY, [1, 2, 2, 0, 0, 2, 2]);
+    assert.equal(publicResultFor(state, 'band_not_confirmed'), 'Seed');
+    assert.equal(seedStartChapter(state), 'v7_u01');
+  });
+
+  it('Seed+ starts at the first chapter whose skill is not shown', () => {
+    const ch4 = fill(ENTRY, [2, 2, 1, 2, 0, 0, 2]);
+    assert.equal(publicResultFor(ch4, 'band_not_confirmed'), 'Seed+');
+    assert.equal(seedStartChapter(ch4), 'v7_u04');
+
+    const ch5 = fill(ENTRY, [2, 2, 2, 1, 0, 0, 2]);
+    assert.equal(publicResultFor(ch5, 'band_not_confirmed'), 'Seed+');
+    assert.equal(seedStartChapter(ch5), 'v7_u05');
+
+    const ch5Apples = fill(ENTRY, [2, 2, 2, 2, 0, 1, 1]);
+    assert.equal(seedStartChapter(ch5Apples), 'v7_u05');
+
+    const ch6 = fill(ENTRY, [2, 2, 2, 2, 0, 0, 2]);
+    assert.equal(publicResultFor(ch6, 'band_not_confirmed'), 'Seed+');
+    assert.equal(seedStartChapter(ch6), 'v7_u06');
   });
 
   it('A1 [2,2,1,1] =6 with no zeros confirms A1', () => {
@@ -223,12 +288,12 @@ describe('placement gates v2.1', () => {
     assert.equal(publicResultFor(state, 'band_not_confirmed'), 'A1');
   });
 
-  it('A1 fails when any item is 0 → Seed+', () => {
+  it('A1 fails when any item is 0 → Seed++', () => {
     const state = emptyState();
     passEntry(state);
     fillA1(state, [2, 2, 2, 0]);
     assert.equal(a1Gate(state), false);
-    assert.equal(publicResultFor(state, 'band_not_confirmed'), 'Seed+');
+    assert.equal(publicResultFor(state, 'band_not_confirmed'), 'Seed++');
   });
 
   it('A2 15/20 with only one of Q13/Q16/Q18=2 is A1+', () => {
@@ -265,15 +330,17 @@ describe('placement gates v2.1', () => {
     assert.equal(publicResultFor(full, 'b1_confirmed'), 'B1');
   });
 
-  it('null and assisted scores are not zeros and do not grant +', () => {
-    const state = fill(ENTRY, [2, 2, 2, 2, 2, 2]);
+  it('null and assisted scores are not zeros and do not grant Seed++', () => {
+    const state = fill(ENTRY, [2, 2, 2, 2, 2, 2, 2]);
     putScore(state, 'Q06', null, { eligible: false, status: 'needs_review' });
     assert.equal(entryGate(state), false);
-    assert.equal(publicResultFor(state, 'band_not_confirmed'), null);
+    // S01/S03 already show ch.1–3, so the safe answer is Seed+, not Seed++.
+    assert.equal(publicResultFor(state, 'band_not_confirmed'), 'Seed+');
     assert.equal(evaluateGates(state).a1Plus, false);
 
-    const assisted = fill(ENTRY, [2, 2, 2, 2, 2, 2]);
-    putScore(assisted, 'Q06', 2, { eligible: false, status: 'assisted' });
+    const assisted = fill(ENTRY, [2, 2, 2, 2, 2, 2, 2]);
+    putScore(assisted, 'S03', 2, { eligible: false, status: 'assisted' });
+    assert.equal(seedPlusGate(assisted), false);
     assert.equal(entryGate(assisted), false);
     assert.equal(publicResultFor(assisted, 'insufficient_evidence'), null);
   });
@@ -288,32 +355,35 @@ function fillA2(state: PlacementRuntimeState, scores: PlacementScore[]) {
 }
 
 describe('placement routing walk', () => {
-  it('starts Q01 with onboarding opening and the learner name', () => {
+  it('starts S01 with onboarding opening and the learner name', () => {
     const { state, reply } = buildPlacementOpening(
       initPlacementRuntime({ entrySource: 'onboarding', learnerName: 'Maya' }),
     );
-    assert.equal(state.currentQuestionId, 'Q01');
+    assert.equal(state.currentQuestionId, 'S01');
     assert.match(reply.aiResponse, /ครูพี่บี/);
-    assert.match(reply.aiResponse, /Where are you from/);
+    assert.match(reply.aiResponse, /What's your name\?/);
+    assert.match(reply.speechParts?.lead ?? '', /ครูพี่บี/);
+    assert.equal(reply.speechParts?.body, "What's your name?");
     assert.doesNotMatch(reply.aiResponse, /Hello, I am Teacher Bee/);
     assert.doesNotMatch(reply.aiResponse, /Hi, Maya/);
     assert.match(reply.textTh, /ฟังไม่ทัน/);
     assert.equal(reply.canSkip, true);
-    assert.equal(reply.progressMax, 25);
+    assert.equal(reply.progressMax, 26);
     assert.equal(reply.progressTurn, 1);
-    assert.equal(reply.progressScores.length, 25);
+    assert.equal(reply.progressScores.length, 26);
     assert.ok(reply.progressScores.every((score) => score === null));
   });
 
-  it('colors scored items 0 gray / 1 yellow / 2 green over 25 slots', () => {
+  it('colors scored items 0 gray / 1 yellow / 2 green over 26 slots', () => {
     let { state, reply } = buildPlacementOpening(
       initPlacementRuntime({ entrySource: 'onboarding', learnerName: 'Maya' }),
     );
     ({ state, reply } = scoreWalk(state, 2));
-    assert.equal(reply.progressMax, 25);
+    assert.equal(reply.progressMax, 26);
     assert.equal(reply.progressTurn, 2);
     assert.equal(reply.progressScores[0], 2);
-    assert.equal(reply.lastDebug?.questionId, 'Q01');
+    assert.equal(reply.lastDebug?.questionId, 'S01');
+    assert.match(reply.aiResponse, /^Nice to meet you! How do you feel today\?$/);
     assert.equal(reply.lastDebug?.score, 2);
     assert.equal(reply.assessmentTier, 'correct');
     assert.ok((reply.lastDebug?.reason ?? '').length > 0);
@@ -328,7 +398,7 @@ describe('placement routing walk', () => {
     let { state, reply } = buildPlacementOpening(
       initPlacementRuntime({ entrySource: 'onboarding', learnerName: 'Maya' }),
     );
-    const q = getPlacementQuestion('Q01')!;
+    const q = getPlacementQuestion('S01')!;
     ({ state, reply } = applyPlacementEvaluation(
       state,
       makeItemResult(q, state, {
@@ -344,7 +414,7 @@ describe('placement routing walk', () => {
     assert.equal(reply.lastDebug?.score, null);
     assert.match(reply.lastDebug?.reason ?? '', /JSON/);
     assert.equal(state.finished, false);
-    assert.equal(state.currentQuestionId, 'Q06');
+    assert.equal(state.currentQuestionId, 'S03');
   });
 
   it('uses the settings opening when entrySource is profile_settings', () => {
@@ -355,7 +425,7 @@ describe('placement routing walk', () => {
       }),
     );
     assert.match(reply.aiResponse, /มาลองวัดระดับ/);
-    assert.match(reply.aiResponse, /Where are you from/);
+    assert.match(reply.aiResponse, /What's your name/);
     assert.doesNotMatch(reply.aiResponse, /Let’s try an English level check/);
   });
 
@@ -363,7 +433,7 @@ describe('placement routing walk', () => {
     let { state } = buildPlacementOpening(
       initPlacementRuntime({ entrySource: 'onboarding', learnerName: 'Maya' }),
     );
-    for (const s of [2, 2, 2, 2, 2, 1] as PlacementScore[]) {
+    for (const s of [2, 2, 2, 2, 2, 2, 1] as PlacementScore[]) {
       ({ state } = scoreWalk(state, s));
     }
     assert.equal(state.currentQuestionId, 'Q07');
@@ -372,11 +442,11 @@ describe('placement routing walk', () => {
     assert.equal(a1Gate(state), false);
   });
 
-  it('stops as Seed when Q06 is 0 even if the sum is 9', () => {
+  it('stops as Seed at chapter 1 when S01 is only a name', () => {
     let { state, reply } = buildPlacementOpening(
       initPlacementRuntime({ entrySource: 'onboarding', learnerName: 'Maya' }),
     );
-    for (const s of [2, 0, 2, 2, 2, 1] as PlacementScore[]) {
+    for (const s of [1, 2, 2, 2, 0, 0, 2] as PlacementScore[]) {
       ({ state, reply } = scoreWalk(state, s));
     }
     assert.equal(state.finished, true);
@@ -407,7 +477,7 @@ describe('placement routing walk', () => {
     let { state } = buildPlacementOpening(
       initPlacementRuntime({ entrySource: 'onboarding', learnerName: 'Maya' }),
     );
-    const q = getPlacementQuestion('Q01')!;
+    const q = getPlacementQuestion('S01')!;
     ({ state } = applyPlacementEvaluation(
       state,
       makeItemResult(q, state, {
@@ -418,16 +488,16 @@ describe('placement routing walk', () => {
         reasonCode: 'user_skipped',
       }),
     ));
-    assert.equal(state.results.Q01?.eligibleForPlacement, true);
-    assert.equal(state.results.Q01?.score, 0);
-    assert.equal(state.currentQuestionId, 'Q06');
+    assert.equal(state.results.S01?.eligibleForPlacement, true);
+    assert.equal(state.results.S01?.score, 0);
+    assert.equal(state.currentQuestionId, 'S03');
   });
 
   it('hides NPC transcript from Q11 without a listen-along caption', () => {
     let { state, reply } = buildPlacementOpening(
       initPlacementRuntime({ entrySource: 'onboarding', learnerName: 'Maya' }),
     );
-    for (const s of [2, 2, 2, 2, 2, 2] as PlacementScore[]) {
+    for (const s of [2, 2, 2, 2, 2, 2, 2] as PlacementScore[]) {
       ({ state } = scoreWalk(state, s));
     }
     for (const s of [2, 2, 2, 2] as PlacementScore[]) {
@@ -576,10 +646,11 @@ describe('placement heuristics', () => {
 });
 
 describe('placement live catalog mapping', () => {
-  it('starts Seed+ at Foundation Ch8 without rewriting the badge', () => {
-    const state = fill(ENTRY, [2, 2, 2, 2, 2, 1]);
+  it('starts Seed++ at Foundation Ch8 without rewriting the badge', () => {
+    const state = fill(ENTRY, [2, 2, 2, 2, 2, 2, 1]);
     const result = buildSessionResult(state, 'band_not_confirmed');
-    assert.equal(result.publicResult, 'Seed+');
+    assert.equal(result.publicResult, 'Seed++');
+    assert.equal(result.recommendedStartKey, 'foundation_ch8');
     assert.equal(result.recommendedPathId, 'foundation_v7');
     assert.equal(result.recommendedChapterId, 'v7_u08');
     assert.equal(result.recommendedNodeId, 'v7_u08n01');
@@ -588,13 +659,13 @@ describe('placement live catalog mapping', () => {
   });
 
   it('starts A1 at Adventure Ch1 and A1+ at Ch8 warm-up', () => {
-    const a1Fail = fill(ENTRY, [2, 2, 2, 2, 2, 2]);
+    const a1Fail = fill(ENTRY, [2, 2, 2, 2, 2, 2, 2]);
     fillA1(a1Fail, [2, 2, 2, 0]);
     const a1Result = buildSessionResult(a1Fail, 'band_not_confirmed');
-    assert.equal(a1Result.publicResult, 'Seed+');
+    assert.equal(a1Result.publicResult, 'Seed++');
     assert.equal(a1Result.recommendedNodeId, 'v7_u08n01');
 
-    const a1Pass = fill(ENTRY, [2, 2, 2, 2, 2, 2]);
+    const a1Pass = fill(ENTRY, [2, 2, 2, 2, 2, 2, 2]);
     fillA1(a1Pass, [2, 2, 1, 2]);
     const a1Ok = buildSessionResult(a1Pass, 'band_not_confirmed');
     assert.equal(a1Ok.publicResult, 'A1');
@@ -607,8 +678,46 @@ describe('placement live catalog mapping', () => {
     assert.equal(plus.recommendationType, 'review_checkpoint');
   });
 
+  it('starts Seed / Seed+ at the first chapter node of their start chapter', () => {
+    const seed2 = buildSessionResult(
+      fill(ENTRY, [2, 1, 2, 2, 0, 0, 2]),
+      'band_not_confirmed',
+    );
+    assert.equal(seed2.publicResult, 'Seed');
+    assert.equal(seed2.recommendedChapterId, 'v7_u02');
+    assert.equal(seed2.recommendedNodeId, 'v7_u02n06');
+    assert.equal(seed2.recommendationType, 'chapter_start');
+    assert.equal(seed2.recommendedStartKey, 'foundation_ch2');
+
+    const plus = buildSessionResult(
+      fill(ENTRY, [2, 2, 1, 2, 0, 0, 2]),
+      'band_not_confirmed',
+    );
+    assert.equal(plus.publicResult, 'Seed+');
+    assert.equal(plus.resultLabel, 'Seed+ · มีพื้นฐานแล้ว');
+    assert.equal(plus.recommendedChapterId, 'v7_u04');
+    assert.equal(plus.recommendedNodeId, 'v7_u04n08');
+    assert.equal(plus.recommendedStartKey, 'foundation_ch4');
+    assert.equal(plus.usedFallback, false);
+
+    const ch6 = buildSessionResult(
+      fill(ENTRY, [2, 2, 2, 2, 0, 0, 2]),
+      'band_not_confirmed',
+    );
+    assert.equal(ch6.recommendedNodeId, 'v7_u06n01');
+
+    const seed1 = buildSessionResult(
+      fill(ENTRY, [0, 0, 0, 1, 0, 0, 0]),
+      'band_not_confirmed',
+    );
+    assert.equal(seed1.publicResult, 'Seed');
+    assert.equal(seed1.recommendedNodeId, 'v7_u01n01');
+    assert.equal(seed1.recommendationType, 'course_start');
+    assert.equal(seed1.recommendedStartKey, 'foundation_beginning');
+  });
+
   it('keeps A2/B1 as coming soon until a later catalog exists', () => {
-    const state = fill(ENTRY, [2, 2, 2, 2, 2, 2]);
+    const state = fill(ENTRY, [2, 2, 2, 2, 2, 2, 2]);
     fillA1(state, [2, 2, 2, 2]);
     fillA2(state, [2, 1, 2, 1, 1, 2, 2, 2, 1, 1]);
     const a2 = buildSessionResult(state, 'band_not_confirmed');
@@ -622,6 +731,8 @@ describe('placement live catalog mapping', () => {
 describe('placement result labels', () => {
   it('maps public badges without .5 or G-codes', () => {
     assert.equal(resultLabelFor('Seed'), 'Seed · พร้อมเติบโต');
+    assert.equal(resultLabelFor('Seed+'), 'Seed+ · มีพื้นฐานแล้ว');
+    assert.equal(resultLabelFor('Seed++'), 'Seed++ · พื้นฐานแน่น พร้อมต่อยอด');
     assert.equal(resultLabelFor('A1+'), 'A1+ · พร้อมต่อยอดสู่ A2');
     assert.equal(resultLabelFor('B1'), 'B1 · สนทนาและเล่าเรื่องได้');
     assert.equal(resultLabelFor(null), 'ยังประเมินไม่ได้');

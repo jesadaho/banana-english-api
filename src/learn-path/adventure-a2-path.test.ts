@@ -56,7 +56,7 @@ describe('Adventure A2 course registry', () => {
     assert.equal(learnCourseById('adventure_a2'), ADVENTURE_A2_COURSE);
     assert.equal(learnCourseById('foundation-v7'), FOUNDATION_V7_COURSE);
     assert.equal(learnCourseById('adventure-a3'), undefined);
-    assert.equal(a2Nodes.length, 332);
+    assert.equal(a2Nodes.length, 331);
     assert.equal(ADVENTURE_A2_COURSE.catalog.chapters.length, 32);
     assert.equal(new Set(ALL_LEARN_PATH_NODES.map((n) => n.id)).size, ALL_LEARN_PATH_NODES.length);
     for (const node of a2Nodes) {
@@ -349,35 +349,6 @@ describe('Adventure A2 Zone 1 content', () => {
       aiResponse: 'What else do you like?', textTh: 'ชอบอะไรอีก?',
     });
     assert.equal(asking.reply.aiResponse, sim.completionReplyEn);
-  });
-
-  it('runs Checkpoint 1 as three resumable scenes with one goal per beat', () => {
-    const scenario = getInteractiveScenario('a2_c08n09')!;
-    assert.equal(scenario.scenes.length, 3);
-    assert.equal(scenario.beats.length, 12);
-    for (const scene of scenario.scenes) {
-      const beats = scenario.beats.filter((b) => b.sceneId === scene.id);
-      assert.equal(beats.length, 4, scene.id);
-      const asks = beats.filter((b) => b.learnerMayAsk || /\bask\b|price/.test(b.focusGoalIds.join(' ')));
-      assert.ok(asks.length >= 1, `${scene.id} needs a learner question`);
-    }
-    const goalIds = new Set(scenario.goals.map((g) => g.id));
-    const used = scenario.beats.flatMap((b) => b.focusGoalIds);
-    assert.equal(new Set(used).size, used.length, 'each goal is focused by exactly one beat');
-    for (const id of used) assert.ok(goalIds.has(id), id);
-
-    const model = (beatIndex: number) => {
-      const beat = scenario.beats[beatIndex];
-      return scenario.goals.find((g) => g.id === beat.focusGoalIds[0])!.hints.modelEn;
-    };
-    let state = initScenarioRuntime(scenario);
-    for (let i = 0; i < scenario.beats.length; i++) {
-      assert.ok(localMatchCurrentBeat(scenario, state, model(i)), `${scenario.beats[i].id} accepts its model`);
-      const result = processScenarioTurn({ scenario, state, transcript: model(i) });
-      assert.doesNotMatch(result.reply.aiResponse, /Canada|John/, 'May and Bee never answer as Teacher John');
-      state = result.state;
-    }
-    assert.equal(state.finished, true);
   });
 });
 

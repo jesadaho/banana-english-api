@@ -33,6 +33,15 @@ import {
   UpsertUserDto,
 } from './dto/users.dto';
 import { parsePerfectStarKeys, perfectStarKey } from './perfect-stars';
+import { normalizePlacementResultPayload } from '../placement/placement-band';
+import {
+  PlacementRank,
+  placementRankFor,
+  placementRankScore,
+  placementRankScoreFromResult,
+} from './placement-rank';
+
+const PLACEMENT_RANK_CACHE_MS = 10 * 60 * 1000;
 
 export type SelfReportedEnglishLevel =
   | 'beginner'
@@ -496,6 +505,55 @@ export class UsersService {
     return this.listPerfectStars(userId);
   }
 
+  async getPlacementRank(user: User): Promise<{ rank: PlacementRank | null }> {
+    const myScore = placementRankScoreFromResult(
+      (user as User & { placementResult?: unknown }).placementResult,
+    );
+    if (myScore === null) return { rank: null };
+    const scores = await this.placementRankScores();
+    return { rank: placementRankFor(scores, myScore) };
+  }
+
+  private placementScoresCache: { at: number; scores: number[] } | null = null;
+
+  private async placementRankScores(): Promise<number[]> {
+    const cached = this.placementScoresCache;
+    if (cached && Date.now() - cached.at < PLACEMENT_RANK_CACHE_MS) {
+      return cached.scores;
+    }
+    const rows = await this.prisma.$queryRaw<
+      Array<{ band: string | null; points: number | null }>
+    >`
+      SELECT
+        CASE
+          WHEN "placementResult"->>'publicResult' = 'Seed+'
+            AND COALESCE(
+              substring("placementResult"->>'questionVersion' from '^placement-q-v([0-9]+)')::int,
+              0
+            ) < 3
+          THEN 'Seed++'
+          ELSE "placementResult"->>'publicResult'
+        END AS band,
+        COALESCE((
+          SELECT SUM((q->>'score')::int)
+          FROM jsonb_array_elements(
+            CASE WHEN jsonb_typeof("placementResult"->'questionResults') = 'array'
+              THEN "placementResult"->'questionResults'
+              ELSE '[]'::jsonb END
+          ) AS q
+          WHERE q->>'score' IN ('0', '1', '2')
+        ), 0)::int AS points
+      FROM "User"
+      WHERE "placementResult" IS NOT NULL
+        AND jsonb_typeof("placementResult") = 'object'
+    `;
+    const scores = rows
+      .map((r) => placementRankScore(r.band?.trim() || null, Number(r.points ?? 0)))
+      .sort((a, b) => a - b);
+    this.placementScoresCache = { at: Date.now(), scores };
+    return scores;
+  }
+
   async unlockAvatar(
     user: User,
     avatarId: string,
@@ -749,7 +807,9 @@ export class UsersService {
           ? user.reminderSlot
           : null,
       placementResult:
-        (user as User & { placementResult?: unknown }).placementResult ?? null,
+        normalizePlacementResultPayload(
+          (user as User & { placementResult?: unknown }).placementResult ?? null,
+        ),
       placementEntryPathId:
         (user as User & { placementEntryPathId?: string | null })
           .placementEntryPathId ?? null,
