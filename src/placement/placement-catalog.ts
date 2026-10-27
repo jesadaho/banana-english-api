@@ -164,21 +164,56 @@ function comingSoon(
   };
 }
 
-function desiredFor(result: PlacementPublicResult | null): DesiredStart {
+/** First node of a Foundation chapter, in path order. */
+export function foundationChapterFirstNodeId(chapterId: string): string | null {
+  const chapter = FOUNDATION_V7_COURSE.catalog.chapters.find(
+    (row) => row.id === chapterId,
+  );
+  return chapter?.items[0]?.id ?? null;
+}
+
+function chapterNumberLabel(chapterId: string): string {
+  const n = Number(chapterId.replace(/^v7_u0*/, ''));
+  return Number.isFinite(n) && n > 0 ? String(n) : chapterId;
+}
+
+function foundationChapterStart(chapterId: string): DesiredStart {
+  if (chapterId === FOUNDATION_START.chapterId) {
+    return {
+      recommendationType: 'course_start',
+      intendedNextLevel: null,
+      pathId: FOUNDATION_START.pathId,
+      chapterId: FOUNDATION_START.chapterId,
+      nodeId: FOUNDATION_START.nodeId,
+      fallbackPathId: null,
+      fallbackChapterId: null,
+      fallbackNodeId: null,
+      fallbackNoticeTh: null,
+    };
+  }
+  return {
+    recommendationType: 'chapter_start',
+    intendedNextLevel: null,
+    pathId: FOUNDATION_START.pathId,
+    chapterId,
+    nodeId: foundationChapterFirstNodeId(chapterId),
+    fallbackPathId: FOUNDATION_START.pathId,
+    fallbackChapterId: FOUNDATION_START.chapterId,
+    fallbackNodeId: FOUNDATION_START.nodeId,
+    fallbackNoticeTh: `บท ${chapterNumberLabel(chapterId)} ยังไม่พร้อม เลยเริ่มที่ต้นคอร์ส`,
+  };
+}
+
+function desiredFor(
+  result: PlacementPublicResult | null,
+  foundationChapterId?: string,
+): DesiredStart {
   switch (result) {
     case 'Seed':
-      return {
-        recommendationType: 'course_start',
-        intendedNextLevel: null,
-        pathId: FOUNDATION_START.pathId,
-        chapterId: FOUNDATION_START.chapterId,
-        nodeId: FOUNDATION_START.nodeId,
-        fallbackPathId: null,
-        fallbackChapterId: null,
-        fallbackNodeId: null,
-        fallbackNoticeTh: null,
-      };
+      return foundationChapterStart(foundationChapterId ?? FOUNDATION_START.chapterId);
     case 'Seed+':
+      return foundationChapterStart(foundationChapterId ?? 'v7_u04');
+    case 'Seed++':
       return {
         recommendationType: 'chapter_start',
         intendedNextLevel: null,
@@ -189,7 +224,7 @@ function desiredFor(result: PlacementPublicResult | null): DesiredStart {
         fallbackChapterId: FOUNDATION_START.chapterId,
         fallbackNodeId: FOUNDATION_START.nodeId,
         fallbackNoticeTh:
-          'จุดเข้าบท 8 ยังไม่พร้อม เลยเริ่มที่เส้นทางที่เปิดใช้งานได้ — ระดับยังเป็น Seed+',
+          'จุดเข้าบท 8 ยังไม่พร้อม เลยเริ่มที่เส้นทางที่เปิดใช้งานได้ — ระดับยังเป็น Seed++',
       };
     case 'A1':
       return {
@@ -256,10 +291,30 @@ function desiredFor(result: PlacementPublicResult | null): DesiredStart {
   }
 }
 
+function startKeyFor(
+  publicResult: PlacementPublicResult,
+  chapterId: string | null,
+): string {
+  switch (publicResult) {
+    case 'Seed':
+    case 'Seed+':
+      return !chapterId || chapterId === FOUNDATION_START.chapterId
+        ? 'foundation_beginning'
+        : `foundation_ch${chapterNumberLabel(chapterId)}`;
+    case 'Seed++':
+      return 'foundation_ch8';
+    case 'A1':
+      return 'adventure_a2';
+    default:
+      return 'adventure_a2_ch8';
+  }
+}
+
 export function resolvePlacementStart(
   publicResult: PlacementPublicResult | null,
+  opts?: { foundationChapterId?: string },
 ): ResolvedPlacementStart {
-  const desired = desiredFor(publicResult);
+  const desired = desiredFor(publicResult, opts?.foundationChapterId);
   if (desired.recommendationType === 'coming_soon') {
     return comingSoon(
       publicResult === 'B1' ? 'coming_soon_b2' : 'coming_soon_b1',
@@ -292,14 +347,7 @@ export function resolvePlacementStart(
       return pack(found, {
         recommendationType: desired.recommendationType,
         intendedNextLevel: desired.intendedNextLevel,
-        startKey:
-          publicResult === 'Seed'
-            ? 'foundation_beginning'
-            : publicResult === 'Seed+'
-              ? 'foundation_ch8'
-              : publicResult === 'A1'
-                ? 'adventure_a2'
-                : 'adventure_a2_ch8',
+        startKey: startKeyFor(publicResult, desired.chapterId),
         usedFallback: false,
         fallbackPathId: desired.fallbackPathId,
         fallbackChapterId: desired.fallbackChapterId,
@@ -315,11 +363,13 @@ export function resolvePlacementStart(
         recommendationType: desired.recommendationType,
         intendedNextLevel: desired.intendedNextLevel,
         startKey:
-          publicResult === 'Seed+'
+          publicResult === 'Seed++'
             ? 'foundation_ch8_fallback'
             : publicResult === 'A1+'
               ? 'adventure_a2_ch8_fallback'
-              : 'foundation_beginning',
+              : publicResult === 'Seed' || publicResult === 'Seed+'
+                ? `${startKeyFor(publicResult, desired.chapterId)}_fallback`
+                : 'foundation_beginning',
         usedFallback: true,
         fallbackPathId: desired.fallbackPathId,
         fallbackChapterId: desired.fallbackChapterId,

@@ -33,6 +33,7 @@ import {
   UpsertUserDto,
 } from './dto/users.dto';
 import { parsePerfectStarKeys, perfectStarKey } from './perfect-stars';
+import { normalizePlacementResultPayload } from '../placement/placement-band';
 import {
   PlacementRank,
   placementRankFor,
@@ -524,7 +525,15 @@ export class UsersService {
       Array<{ band: string | null; points: number | null }>
     >`
       SELECT
-        "placementResult"->>'publicResult' AS band,
+        CASE
+          WHEN "placementResult"->>'publicResult' = 'Seed+'
+            AND COALESCE(
+              substring("placementResult"->>'questionVersion' from '^placement-q-v([0-9]+)')::int,
+              0
+            ) < 3
+          THEN 'Seed++'
+          ELSE "placementResult"->>'publicResult'
+        END AS band,
         COALESCE((
           SELECT SUM((q->>'score')::int)
           FROM jsonb_array_elements(
@@ -798,7 +807,9 @@ export class UsersService {
           ? user.reminderSlot
           : null,
       placementResult:
-        (user as User & { placementResult?: unknown }).placementResult ?? null,
+        normalizePlacementResultPayload(
+          (user as User & { placementResult?: unknown }).placementResult ?? null,
+        ),
       placementEntryPathId:
         (user as User & { placementEntryPathId?: string | null })
           .placementEntryPathId ?? null,

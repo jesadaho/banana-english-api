@@ -207,6 +207,7 @@ import {
   PLACEMENT_ECHO_REASON,
   placementCaptureNoise,
   placementEchoOfTeacher,
+  placementLocalScore,
   placementJudgeContext,
   initPlacementRuntime,
   isPlacementScenarioId,
@@ -562,7 +563,7 @@ export class SessionsController {
   }
 
   private placementExchange(reply: PlacementTurnReply): TurnExchangeResponse {
-    const clips = audioUrlsForSpokenTurn({ ttsText: reply.aiResponse });
+    const clips = audioUrlsForSplitTurn(reply.aiResponse, reply.speechParts);
     return {
       aiResponse: reply.aiResponse,
       textTh: reply.textTh,
@@ -577,6 +578,7 @@ export class SessionsController {
       canSkip: reply.canSkip,
       hideNpcTranscript: reply.hideNpcTranscript,
       audioUrl: clips.audioUrl,
+      praiseAudioUrl: clips.praiseAudioUrl,
       visual: reply.imagePath
         ? {
             imageUrl: describeItImageUrl(reply.imagePath),
@@ -952,6 +954,10 @@ export class SessionsController {
         reason: echo ? PLACEMENT_ECHO_REASON : 'จับเสียงไม่ชัด เลยยังไม่ให้คะแนน',
       };
     }
+    if (!evalPartial && !skipped && !data.placementRuntime.pendingFollowUp) {
+      // S01 / S03 / Q06: closed answers scored locally (no Gemini tokens).
+      evalPartial = placementLocalScore(q, raw);
+    }
     if (!evalPartial) {
       try {
         const judgedCtx = placementJudgeContext(q, data.placementRuntime);
@@ -1058,6 +1064,7 @@ export class SessionsController {
       textEn: exchange.aiResponse,
       textTh: exchange.textTh,
       audioUrl: exchange.audioUrl ?? null,
+      praiseAudioUrl: exchange.praiseAudioUrl ?? null,
       expectsUserSpeech: exchange.expectsUserSpeech ?? true,
       visual: exchange.visual ?? null,
       canSkip: exchange.canSkip,
@@ -1065,8 +1072,10 @@ export class SessionsController {
       placementResult: reply.result ?? null,
     };
     this.ttsLiveLines.observe('scenario', {
-      text: exchange.aiResponse,
+      text: reply.speechParts?.body ?? exchange.aiResponse,
       audioUrl: exchange.audioUrl,
+      praiseText: reply.speechParts?.lead,
+      praiseAudioUrl: exchange.praiseAudioUrl,
     });
     this.sessionStore.addTurn(sessionId, aiTurn);
 

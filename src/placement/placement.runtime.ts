@@ -2,6 +2,7 @@ import { randomUUID } from 'crypto';
 import { isScenarioNoise } from '../interactive-scenario/interactive-scenario.runtime';
 import { describeItImageUrl } from '../describe-it/describe-it.data';
 import {
+  PLACEMENT_FIRST_QUESTION_ID,
   PLACEMENT_PROGRESS_MAX,
   PLACEMENT_QUESTION_BY_ID,
   PLACEMENT_QUESTION_IDS,
@@ -245,9 +246,11 @@ function npcForQuestion(
     textTh = [prefixTh, q.transitionTh].filter(Boolean).join(' ');
   }
   if (!textTh && !hide) textTh = REPLAY_HINT_TH;
-  const spoken = [prefixEn, prompt].filter(Boolean).join(' ');
+  const lead = prefixEn.trim();
+  const spoken = [lead, prompt].filter(Boolean).join(' ');
   return {
     aiResponse: spoken,
+    ...(lead ? { speechParts: { lead, body: prompt } } : {}),
     textTh,
     expectsUserSpeech: true,
     canSkip: true,
@@ -263,14 +266,15 @@ function npcForQuestion(
 export function buildPlacementOpening(
   state: PlacementRuntimeState,
 ): { state: PlacementRuntimeState; reply: PlacementTurnReply } {
-  const q01 = getPlacementQuestion('Q01')!;
+  const firstId = PLACEMENT_FIRST_QUESTION_ID;
+  const q01 = getPlacementQuestion(firstId)!;
   const next: PlacementRuntimeState = {
     ...state,
     openingPlayed: true,
-    currentQuestionId: 'Q01',
-    askedQuestionIds: state.askedQuestionIds.includes('Q01')
+    currentQuestionId: firstId,
+    askedQuestionIds: state.askedQuestionIds.includes(firstId)
       ? state.askedQuestionIds
-      : [...state.askedQuestionIds, 'Q01'],
+      : [...state.askedQuestionIds, firstId],
   };
   const introTh = openingLines(state);
   const body = npcForQuestion(next, q01, '', REPLAY_HINT_TH);
@@ -280,6 +284,7 @@ export function buildPlacementOpening(
     reply: {
       ...body,
       aiResponse: `${introTh} ${spokenPrompt}`,
+      speechParts: { lead: introTh, body: spokenPrompt },
       textTh: REPLAY_HINT_TH,
     },
   };
@@ -371,11 +376,30 @@ export function placementSaysCannotAnswer(transcript: string): boolean {
 /** Reason text the runtime reads to swap the retry line for "don't repeat me". */
 export const PLACEMENT_ECHO_REASON = 'พูดตามคำถามของครู';
 
+/**
+ * Whisper echoes its bias prompt ("Thai learner practicing spoken English
+ * with a Thai accent.") when the take is near-silent — prod v2.4 scored
+ * "Thai learner." / "Tai learner practicing." as off-topic 0s. Ask again.
+ */
+export function placementSttPromptLeak(transcript: string): boolean {
+  const said = normalizeAsr(transcript);
+  if (!said) return false;
+  return (
+    /\bt(h)?ai (learner|accent)/.test(said) ||
+    /\blearner practi[cs]ing\b/.test(said) ||
+    /\bpracti[cs]ing spoken english\b/.test(said) ||
+    /\bwith a t(h)?ai accent\b/.test(said) ||
+    /\btranscribe both languages\b/.test(said) ||
+    /\bcasual t(h)?ai and english\b/.test(said)
+  );
+}
+
 /** True when the transcript is ASR noise (silence / room sound). Ask again. */
 export function placementCaptureNoise(transcript: string): boolean {
   const said = normalizeAsr(transcript);
   if (!said) return true;
   if (ASR_HALLUCINATIONS.has(said)) return true;
+  if (placementSttPromptLeak(transcript)) return true;
   const words = said.split(' ');
   return words.every((w) => w.replace(/'/g, '').length <= 1);
 }
@@ -435,6 +459,125 @@ export function heuristicPlacementEval(
     );
   }
   return null;
+}
+
+const NOT_A_NAME = new Set([
+  'hello', 'hi', 'hey', 'yes', 'no', 'ok', 'okay', 'good', 'morning',
+  'afternoon', 'evening', 'thank', 'thanks', 'you', 'what', "what's", 'whats',
+  'your', 'name', 'is', 'the', 'a', 'and', 'teacher', 'bee', 'please', 'sorry',
+]);
+
+const FEELINGS = new Set([
+  'happy', 'sad', 'tired', 'sleepy', 'hungry', 'thirsty', 'ready', 'hot',
+  'cold', 'fine', 'good', 'great', 'ok', 'okay', 'well', 'bored', 'sick',
+  'excited', 'angry', 'nervous', 'busy', 'alright', 'awesome', 'cool',
+  'relaxed', 'stressed', 'worried', 'lazy', 'full', 'bad', 'nice', 'perfect',
+  'wonderful', 'fantastic', 'calm', 'fresh', 'sleepy', 'scared', 'shy',
+]);
+
+/** "three" as Thai speakers say it and Whisper writes it (prod v2.4 Q06). */
+const THREE_STRONG = new Set([
+  'three', 'threes', "three's", '3', 'tree', 'trees', 'tri', 'trii', 'ttri',
+  'ttrii', 'tui', 'tie', 'thai', 'sri', 'thee',
+]);
+/** Count as three only next to an apple word ("T-Apples", "tea apple"). */
+const THREE_WEAK = new Set(['t', 'tea', 'tee', 'ti', 'tia', 'te', 'tee']);
+const OTHER_NUMBERS = new Set([
+  'zero', 'one', 'two', 'four', 'five', 'six', 'seven', 'eight', 'nine',
+  'ten', '0', '1', '2', '4', '5', '6', '7', '8', '9', '10',
+]);
+
+function isAppleWord(word: string): boolean {
+  return (
+    /^(appl|epp|appo|apo$|apel|aple|appel)/.test(word) ||
+    word === 'effort' ||
+    word === 'efforts'
+  );
+}
+
+type LocalScore = Omit<
+  PlacementItemResult,
+  'questionId' | 'attemptId' | 'exactPrompt' | 'variantId'
+>;
+
+function scoreS01(raw: string, words: string[]): LocalScore | null {
+  const said = words.join(' ');
+  if (/\b(my name(?:'s| is)?|name is|i'?m|i am|call me)\s+[a-z0-9]/.test(said)) {
+    return scored(2, raw, 'target_met', 'บอกชื่อเป็นประโยค');
+  }
+  const content = words.filter((w) => !NOT_A_NAME.has(w));
+  if (words.length <= 3 && content.length >= 1) {
+    return scored(
+      1,
+      raw,
+      'target_partially_demonstrated',
+      'บอกแค่ชื่อ ยังไม่เป็นประโยค (My name is …)',
+    );
+  }
+  return null;
+}
+
+function scoreS03(raw: string, words: string[]): LocalScore | null {
+  const said = words.join(' ');
+  const feeling = words.some((w) => FEELINGS.has(w));
+  if (!feeling) return null;
+  // "am happy" too: ASR often drops the I'm.
+  if (/\b(i'?m|i am|am|i feel|feel|feeling)\b/.test(said)) {
+    return scored(2, raw, 'target_met', 'บอกความรู้สึกเป็นประโยค');
+  }
+  if (words.length <= 3) {
+    return scored(
+      1,
+      raw,
+      'target_partially_demonstrated',
+      'บอกแค่คำความรู้สึก ยังไม่ใช้ I’m …',
+    );
+  }
+  return null;
+}
+
+function scoreQ06(raw: string, words: string[]): LocalScore | null {
+  const apple = words.some(isAppleWord);
+  const three = words.some(
+    (w) => THREE_STRONG.has(w) || (apple && THREE_WEAK.has(w)),
+  );
+  if (three) {
+    return scored(2, raw, 'target_met', 'บอกจำนวน 3 ได้ (รับสำเนียง tree / tri / tui)');
+  }
+  if (words.some((w) => OTHER_NUMBERS.has(w))) {
+    return scored(0, raw, 'off_topic', 'บอกจำนวนไม่ตรงกับภาพ');
+  }
+  if (apple) {
+    return scored(1, raw, 'target_partially_demonstrated', 'บอกแค่ apple ยังไม่บอกจำนวน');
+  }
+  return null;
+}
+
+/**
+ * Deterministic scoring for short, closed items (no Gemini call, no tokens).
+ * Run after skip / noise / echo / "can't answer" / Thai-only checks; null
+ * means "let Gemini judge".
+ */
+export function placementLocalScore(
+  q: PlacementQuestion,
+  transcript: string,
+): LocalScore | null {
+  const raw = transcript.trim();
+  const words = normalizeAsr(raw)
+    .split(' ')
+    .map((w) => w.replace(/^'+|'+$/g, ''))
+    .filter(Boolean);
+  if (!words.length) return null;
+  switch (q.id) {
+    case 'S01':
+      return scoreS01(raw, words);
+    case 'S03':
+      return scoreS03(raw, words);
+    case 'Q06':
+      return scoreQ06(raw, words);
+    default:
+      return null;
+  }
 }
 
 function captureFacts(
@@ -722,27 +865,22 @@ export function currentPlacementQuestion(
     : undefined;
 }
 
-/** Scripted Teacher B lines for the Level Test TTS bank. */
+/** Scripted Teacher B lines for the Level Test TTS bank — halves, never joined. */
 export function collectPlacementBankLines(): string[] {
   const lines = new Set<string>();
-  const add = (text: string) => {
-    const key = text.replace(/\s+/g, ' ').trim();
-    if (key) lines.add(key);
+  const add = (text: string | null | undefined) => {
+    const key = (text ?? '').replace(/\s+/g, ' ').trim();
+    if (key && !key.includes('{')) lines.add(key);
   };
 
-  add(
-    buildPlacementOpening(
-      initPlacementRuntime({ entrySource: 'onboarding', learnerName: '' }),
-    ).reply.aiResponse,
-  );
-  add(
-    buildPlacementOpening(
-      initPlacementRuntime({
-        entrySource: 'profile_settings',
-        learnerName: '',
-      }),
-    ).reply.aiResponse,
-  );
+  add('Thanks!');
+  for (const source of ['onboarding', 'profile_settings'] as const) {
+    const opened = buildPlacementOpening(
+      initPlacementRuntime({ entrySource: source, learnerName: '' }),
+    ).reply;
+    add(opened.speechParts?.lead);
+    add(opened.speechParts?.body);
+  }
 
   const blank = initPlacementRuntime({
     entrySource: 'onboarding',
@@ -751,19 +889,10 @@ export function collectPlacementBankLines(): string[] {
   for (const id of PLACEMENT_QUESTION_IDS) {
     const q = getPlacementQuestion(id)!;
     add(exactPromptFor(q, blank).prompt);
-    if (q.followUp?.timePrompt) add(q.followUp.timePrompt);
-    if (q.followUp?.placePrompt) add(q.followUp.placePrompt);
-    if (q.followUp?.prompt) add(q.followUp.prompt);
-  }
-
-  for (let i = 0; i < PLACEMENT_QUESTION_IDS.length - 1; i++) {
-    const current = getPlacementQuestion(PLACEMENT_QUESTION_IDS[i]!)!;
-    const upcoming = getPlacementQuestion(PLACEMENT_QUESTION_IDS[i + 1]!)!;
-    add(
-      [ackFor(current), exactPromptFor(upcoming, blank).prompt]
-        .filter(Boolean)
-        .join(' '),
-    );
+    add(q.afterScoreEn);
+    add(q.followUp?.timePrompt);
+    add(q.followUp?.placePrompt);
+    add(q.followUp?.prompt);
   }
 
   add(CLOSING_EN);

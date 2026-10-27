@@ -1,4 +1,5 @@
 import { PLACEMENT_BAND_ORDER } from '../admin/admin-placement-summary';
+import { placementBandFromResult } from '../placement/placement-band';
 
 /** Below this many testers the percentile is too noisy to show. */
 export const PLACEMENT_RANK_MIN_TESTERS = 10;
@@ -21,10 +22,7 @@ export function placementRankScore(band: string | null, points: number): number 
 export function placementRankScoreFromResult(value: unknown): number | null {
   const result = asRecord(value);
   if (!result) return null;
-  const band =
-    typeof result.publicResult === 'string' && result.publicResult.trim()
-      ? result.publicResult
-      : null;
+  const band = placementBandFromResult(result);
   let points = 0;
   if (Array.isArray(result.questionResults)) {
     for (const item of result.questionResults) {

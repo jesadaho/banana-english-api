@@ -1,8 +1,13 @@
-import { PLACEMENT_QUESTION_IDS } from '../placement/placement.bank';
+import { PLACEMENT_QUESTIONS } from '../placement/placement.bank';
+import { placementBandFromResult } from '../placement/placement-band';
+
+/** Every item ever asked (v3 S01/S03 plus retired Q01), so old rows still count. */
+const SUMMARY_QUESTION_IDS = PLACEMENT_QUESTIONS.map((q) => q.id);
 
 export const PLACEMENT_BAND_ORDER = [
   'Seed',
   'Seed+',
+  'Seed++',
   'A1',
   'A1+',
   'A2',
@@ -66,9 +71,7 @@ function ranked(map: Record<string, number>, order: readonly string[] = []) {
 }
 
 export function publicResultFromJson(value: unknown): string | null {
-  const row = asRecord(value);
-  const band = row?.publicResult;
-  return typeof band === 'string' && band.trim() ? band.trim() : null;
+  return placementBandFromResult(value);
 }
 
 export function summarizePlacementRows(rows: PlacementSummaryRow[]) {
@@ -77,6 +80,7 @@ export function summarizePlacementRows(rows: PlacementSummaryRow[]) {
   const entrySources: Record<string, number> = {};
   const statuses: Record<string, number> = {};
   const gates = {
+    seedPlus: 0,
     entry: 0,
     a1: 0,
     a1Plus: 0,
@@ -85,7 +89,7 @@ export function summarizePlacementRows(rows: PlacementSummaryRow[]) {
     b1: 0,
   };
   const questions = Object.fromEntries(
-    PLACEMENT_QUESTION_IDS.map((id) => [id, emptyQuestion()]),
+    SUMMARY_QUESTION_IDS.map((id) => [id, emptyQuestion()]),
   ) as Record<string, QuestionAgg>;
 
   let completed = 0;
@@ -111,6 +115,7 @@ export function summarizePlacementRows(rows: PlacementSummaryRow[]) {
 
     const gateResults = asRecord(result.gateResults);
     if (gateResults) {
+      if (gateResults.seedPlus === true) gates.seedPlus += 1;
       if (gateResults.entry === true) gates.entry += 1;
       if (gateResults.a1 === true) gates.a1 += 1;
       if (gateResults.a1Plus === true) gates.a1Plus += 1;
@@ -204,7 +209,7 @@ export function summarizePlacementRows(rows: PlacementSummaryRow[]) {
     ]),
     resultStatuses: ranked(statuses),
     gates,
-    questions: PLACEMENT_QUESTION_IDS.map((id) => {
+    questions: SUMMARY_QUESTION_IDS.map((id) => {
       const q = questions[id];
       return {
         questionId: id,

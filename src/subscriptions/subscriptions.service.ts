@@ -9,6 +9,7 @@ import { FirebaseAdminService } from '../firebase/firebase-admin.service';
 import { placementRetestStatus } from '../placement/placement.access';
 import { PrismaService } from '../prisma/prisma.service';
 import { BeamClient } from './beam.client';
+import { placementBandFromResult } from '../placement/placement-band';
 import {
   addYears,
   beamSignatureMatches,
@@ -37,9 +38,7 @@ const PENDING = 'pending_payment';
 const EXPIRED = 'expired';
 
 function publicPlacementBand(value: unknown): string | null {
-  if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
-  const band = (value as { publicResult?: unknown }).publicResult;
-  return typeof band === 'string' && band.trim() ? band.trim() : null;
+  return placementBandFromResult(value);
 }
 
 @Injectable()
