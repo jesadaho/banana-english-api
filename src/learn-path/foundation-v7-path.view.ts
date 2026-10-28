@@ -224,6 +224,7 @@ export function toFoundationV7ClientChapters(
   const emoji = course.catalog.metadata.chapterEmoji ?? '🍌';
   let previousPlayableId: string | undefined;
   return course.catalog.chapters.map((chapter) => {
+    if (course.openChapterStarts?.includes(chapter.number)) previousPlayableId = undefined;
     const context: MapContext = {
       capabilities,
       released: isChapterReleased(course, chapter.number),

@@ -92,6 +92,14 @@ describe('Adventure A2 course registry', () => {
     assert.equal(chapters[0].zone, 1);
     assert.equal(chapters[8].zone, 2);
   });
+
+  it('opens Section 2 without finishing the Zone 1 finale', () => {
+    const chapters = toFoundationV7ClientChapters(A2_CAPABILITIES, ADVENTURE_A2_COURSE);
+    const ch9 = chapters[8].items.filter((i) => !i.comingSoon);
+    assert.equal(ch9[0].id, 'a2_c09n01');
+    assert.deepEqual(ch9[0].unlockAfterNodeIds, []);
+    assert.deepEqual(ch9[1].unlockAfterNodeIds, [ch9[0].id]);
+  });
 });
 
 describe('Adventure A2 Zone 1 content', () => {
