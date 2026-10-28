@@ -222,13 +222,15 @@ function desiredFor(
         recommendationType: 'chapter_start',
         intendedNextLevel: null,
         pathId: 'foundation_v7',
-        chapterId: 'v7_u08',
-        nodeId: foundationChapterFirstNodeId('v7_u08'),
+        // Seed++ shows Ch1–8 skills but misses the A1 items (Q07–Q10), which
+        // are Ch9–16 content — start Section 2.
+        chapterId: 'v7_u09',
+        nodeId: foundationChapterFirstNodeId('v7_u09'),
         fallbackPathId: FOUNDATION_START.pathId,
         fallbackChapterId: FOUNDATION_START.chapterId,
         fallbackNodeId: FOUNDATION_START.nodeId,
         fallbackNoticeTh:
-          'จุดเข้าบท 8 ยังไม่พร้อม เลยเริ่มที่เส้นทางที่เปิดใช้งานได้ — ระดับยังเป็น Seed++',
+          'จุดเข้าบท 9 ยังไม่พร้อม เลยเริ่มที่เส้นทางที่เปิดใช้งานได้ — ระดับยังเป็น Seed++',
       };
     case 'A1':
       return {
@@ -308,7 +310,7 @@ function startKeyFor(
         ? 'foundation_beginning'
         : `foundation_ch${chapterNumberLabel(chapterId)}`;
     case 'Seed++':
-      return 'foundation_ch8';
+      return 'foundation_ch9';
     case 'A1':
       return 'adventure_a2';
     default:
@@ -371,7 +373,7 @@ export function resolvePlacementStart(
         intendedNextLevel: desired.intendedNextLevel,
         startKey:
           publicResult === 'Seed++'
-            ? 'foundation_ch8_fallback'
+            ? 'foundation_ch9_fallback'
             : publicResult === 'A1+'
               ? 'adventure_a2_ch8_fallback'
               : publicResult === 'Seed' || publicResult === 'Seed+'
