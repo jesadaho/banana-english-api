@@ -35,6 +35,7 @@ import { describeItPoolById } from '../describe-it/describe-it.data';
 import { initScenarioRuntime, localMatchCurrentBeat, processScenarioTurn } from '../interactive-scenario/interactive-scenario.runtime';
 
 const ZONE_1_CHAPTERS = 8;
+const RELEASED_CHAPTERS = 16;
 const A2_CAPABILITIES = [...FOUNDATION_V7_CAPABILITIES];
 const a2Nodes = ADVENTURE_A2_COURSE.nodes;
 const chapterOf = (code: string) => Number(code.split('.')[0]);
@@ -69,10 +70,15 @@ describe('Adventure A2 course registry', () => {
     assert.equal(learnCourseForChapter('v7_u01'), FOUNDATION_V7_COURSE);
   });
 
-  it('releases only Zone 1 (chapters 1–8)', () => {
-    assert.equal(ADVENTURE_A2_COURSE.catalog.metadata.releasedChapterCount, ZONE_1_CHAPTERS);
+  it('releases Zones 1–2 (chapters 1–16)', () => {
+    assert.equal(ADVENTURE_A2_COURSE.catalog.metadata.releasedChapterCount, RELEASED_CHAPTERS);
     const chapters = toFoundationV7ClientChapters(A2_CAPABILITIES, ADVENTURE_A2_COURSE);
-    for (const chapter of chapters.slice(ZONE_1_CHAPTERS)) {
+    const zone2Playable = chapters
+      .slice(ZONE_1_CHAPTERS, RELEASED_CHAPTERS)
+      .flatMap((c) => c.items)
+      .filter((i) => !i.comingSoon && i.nodeType !== 'describe_it');
+    assert.ok(zone2Playable.length >= 40, `only ${zone2Playable.length} playable in Zone 2`);
+    for (const chapter of chapters.slice(RELEASED_CHAPTERS)) {
       for (const item of chapter.items) {
         if (item.nodeType === 'describe_it' && item.backendReady) {
           assert.equal(item.comingSoon, false, item.id);
