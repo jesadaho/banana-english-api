@@ -216,7 +216,7 @@ export function publicResultFor(
   if (stopReason === 'cancelled' && !gates.seedPlus) return null;
   if (stopReason === 'user_finished_after_a2' && gates.a2) return 'A2';
   if (gates.b1) return 'B1';
-  if (gates.a2Plus) return 'A2+';
+  // v3.0: no public A2+ band (gates.a2Plus is still recorded for audit).
   if (gates.a2) return 'A2';
   if (gates.a1Plus) return 'A1+';
   if (gates.a1) return 'A1';

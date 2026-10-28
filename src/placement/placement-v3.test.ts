@@ -106,6 +106,8 @@ describe('placement v3 legacy bands', () => {
     assert.equal(normalizePlacementBand('Seed+', undefined), 'Seed++');
     assert.equal(normalizePlacementBand('Seed+', 'placement-q-v3.0'), 'Seed+');
     assert.equal(normalizePlacementBand('A1', 'placement-q-v2.4'), 'A1');
+    assert.equal(normalizePlacementBand('A2+', 'placement-q-v2.4'), 'A2');
+    assert.equal(normalizePlacementBand('A2+', 'placement-q-v3.0'), 'A2');
     assert.equal(normalizePlacementBand('', 'placement-q-v2.4'), null);
     assert.equal(
       placementBandFromResult({ publicResult: 'Seed+', questionVersion: 'placement-q-v2.3' }),

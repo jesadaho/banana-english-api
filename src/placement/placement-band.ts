@@ -19,6 +19,8 @@ export function normalizePlacementBand(
   const trimmed = typeof band === 'string' ? band.trim() : '';
   if (!trimmed) return null;
   if (trimmed === 'Seed+' && isLegacyVersion(questionVersion)) return 'Seed++';
+  // v3.0 dropped the public A2+ band; older A2+ results read as A2.
+  if (trimmed === 'A2+') return 'A2';
   return trimmed;
 }
 

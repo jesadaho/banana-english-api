@@ -89,6 +89,11 @@ describe('admin placement summary', () => {
     const q16 = summary.questions.find((q) => q.questionId === 'Q16');
     assert.equal(q16?.uneval, 1);
     assert.equal(summary.recent[0]?.displayName, 'Ann');
-    assert.equal(publicResultFromJson({ publicResult: 'A2+' }), 'A2+');
+    // v3.0 has no public A2+ band; stored A2+ rows read as A2.
+    assert.equal(publicResultFromJson({ publicResult: 'A2+' }), 'A2');
+    assert.equal(
+      publicResultFromJson({ publicResult: 'Seed+', questionVersion: 'placement-q-v2.4' }),
+      'Seed++',
+    );
   });
 });
