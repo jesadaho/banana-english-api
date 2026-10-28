@@ -101,13 +101,20 @@ export type LearnCourse = {
   slug: string;
   catalog: LearnPathCatalog;
   nodes: FoundationV7Node[];
+  /** Chapters whose first playable node opens without finishing the chapter before. */
+  openChapterStarts?: readonly number[];
 };
 
-function buildCourse(slug: string, catalog: LearnPathCatalog): LearnCourse {
+function buildCourse(
+  slug: string,
+  catalog: LearnPathCatalog,
+  options: { openChapterStarts?: readonly number[] } = {},
+): LearnCourse {
   return {
     pathId: catalog.metadata.pathId,
     slug,
     catalog,
+    ...(options.openChapterStarts ? { openChapterStarts: options.openChapterStarts } : {}),
     nodes: [
       ...catalog.chapters.flatMap((ch) => ch.items),
       ...(catalog.pathFinale?.items ?? []),
@@ -126,6 +133,8 @@ export const FOUNDATION_V7_COURSE = buildCourse('foundation-v7', FOUNDATION_V7_C
 export const ADVENTURE_A2_COURSE = buildCourse(
   'adventure-a2',
   adventureA2CatalogJson as LearnPathCatalog,
+  // Section 2 opens without the Zone 1 finale (Teacher Nina).
+  { openChapterStarts: [9] },
 );
 
 export const LEARN_COURSES: readonly LearnCourse[] = [
