@@ -125,30 +125,6 @@ export function entryGate(state: PlacementRuntimeState): boolean {
   );
 }
 
-export type FoundationStartChapterId =
-  | 'v7_u01'
-  | 'v7_u02'
-  | 'v7_u04'
-  | 'v7_u05'
-  | 'v7_u06'
-  | 'v7_u07';
-
-/**
- * Seed / Seed+ start: the first Foundation chapter whose skill the learner did
- * not show with a full (2) answer. Chapter 2 (please / thank you) is not
- * tested, so S01 without S03 starts there rather than skipping it.
- */
-export function seedStartChapter(
-  state: PlacementRuntimeState,
-): FoundationStartChapterId {
-  if (scoreOf(state, 'S01') !== 2) return 'v7_u01';
-  if (scoreOf(state, 'S03') !== 2) return 'v7_u02';
-  if (scoreOf(state, 'Q02') !== 2) return 'v7_u04';
-  if (scoreOf(state, 'Q04') !== 2 || scoreOf(state, 'Q06') !== 2) return 'v7_u05';
-  if (scoreOf(state, 'Q03') !== 2) return 'v7_u06';
-  return 'v7_u07';
-}
-
 /** Q07–Q10: sum ≥6/8 and every item ≥1. */
 export function a1Gate(state: PlacementRuntimeState): boolean {
   if (!entryGate(state)) return false;
@@ -364,12 +340,9 @@ export function buildSessionResult(
     stopReason === 'cancelled' && !gates.entry
       ? null
       : publicResultFor(state, stopReason);
-  const route = resolvePlacementStart(publicResult, {
-    foundationChapterId:
-      publicResult === 'Seed' || publicResult === 'Seed+'
-        ? seedStartChapter(state)
-        : undefined,
-  });
+  // One start per band (Seed → Ch1, Seed+ → Ch4) keeps quality and the
+  // first impression easy to control; the skip quiz covers faster learners.
+  const route = resolvePlacementStart(publicResult);
   const incompleteNext =
     publicResult === 'Seed++' && !gates.a1 && stopReason !== 'cancelled';
   const insufficient =

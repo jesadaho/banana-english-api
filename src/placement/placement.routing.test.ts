@@ -17,7 +17,6 @@ import {
   publicResultFor,
   resultLabelFor,
   seedPlusGate,
-  seedStartChapter,
 } from './placement.routing';
 import {
   applyPlacementEvaluation,
@@ -251,33 +250,20 @@ describe('placement gates v3.0', () => {
     assert.equal(entryGate(fill(ENTRY, [2, 2, 2, 2, 0, 0, 2])), false);
   });
 
-  it('a one-word S03 with a low total is Seed at chapter 2', () => {
+  it('a one-word S03 with a low total is Seed', () => {
     const state = fill(ENTRY, [2, 1, 2, 2, 0, 0, 2]);
     assert.equal(publicResultFor(state, 'band_not_confirmed'), 'Seed');
-    assert.equal(seedStartChapter(state), 'v7_u02');
   });
 
-  it('S01 below 2 starts at chapter 1', () => {
-    const state = fill(ENTRY, [1, 2, 2, 0, 0, 2, 2]);
-    assert.equal(publicResultFor(state, 'band_not_confirmed'), 'Seed');
-    assert.equal(seedStartChapter(state), 'v7_u01');
-  });
-
-  it('Seed+ starts at the first chapter whose skill is not shown', () => {
-    const ch4 = fill(ENTRY, [2, 2, 1, 2, 0, 0, 2]);
-    assert.equal(publicResultFor(ch4, 'band_not_confirmed'), 'Seed+');
-    assert.equal(seedStartChapter(ch4), 'v7_u04');
-
-    const ch5 = fill(ENTRY, [2, 2, 2, 1, 0, 0, 2]);
-    assert.equal(publicResultFor(ch5, 'band_not_confirmed'), 'Seed+');
-    assert.equal(seedStartChapter(ch5), 'v7_u05');
-
-    const ch5Apples = fill(ENTRY, [2, 2, 2, 2, 0, 1, 1]);
-    assert.equal(seedStartChapter(ch5Apples), 'v7_u05');
-
-    const ch6 = fill(ENTRY, [2, 2, 2, 2, 0, 0, 2]);
-    assert.equal(publicResultFor(ch6, 'band_not_confirmed'), 'Seed+');
-    assert.equal(seedStartChapter(ch6), 'v7_u06');
+  it('Seed+ needs full S01 and S03', () => {
+    assert.equal(
+      publicResultFor(fill(ENTRY, [2, 2, 1, 2, 0, 0, 2]), 'band_not_confirmed'),
+      'Seed+',
+    );
+    assert.equal(
+      publicResultFor(fill(ENTRY, [1, 2, 2, 0, 0, 2, 2]), 'band_not_confirmed'),
+      'Seed',
+    );
   });
 
   it('A1 [2,2,1,1] =6 with no zeros confirms A1', () => {
@@ -678,33 +664,29 @@ describe('placement live catalog mapping', () => {
     assert.equal(plus.recommendationType, 'chapter_start');
   });
 
-  it('starts Seed / Seed+ at the first chapter node of their start chapter', () => {
-    const seed2 = buildSessionResult(
+  it('starts every Seed at Ch1 and every Seed+ at Ch4', () => {
+    const seedS03 = buildSessionResult(
       fill(ENTRY, [2, 1, 2, 2, 0, 0, 2]),
       'band_not_confirmed',
     );
-    assert.equal(seed2.publicResult, 'Seed');
-    assert.equal(seed2.recommendedChapterId, 'v7_u02');
-    assert.equal(seed2.recommendedNodeId, 'v7_u02n06');
-    assert.equal(seed2.recommendationType, 'chapter_start');
-    assert.equal(seed2.recommendedStartKey, 'foundation_ch2');
+    assert.equal(seedS03.publicResult, 'Seed');
+    assert.equal(seedS03.recommendedNodeId, 'v7_u01n01');
+    assert.equal(seedS03.recommendedStartKey, 'foundation_beginning');
 
-    const plus = buildSessionResult(
-      fill(ENTRY, [2, 2, 1, 2, 0, 0, 2]),
-      'band_not_confirmed',
-    );
-    assert.equal(plus.publicResult, 'Seed+');
-    assert.equal(plus.resultLabel, 'Seed+ · มีพื้นฐานแล้ว');
-    assert.equal(plus.recommendedChapterId, 'v7_u04');
-    assert.equal(plus.recommendedNodeId, 'v7_u04n08');
-    assert.equal(plus.recommendedStartKey, 'foundation_ch4');
-    assert.equal(plus.usedFallback, false);
-
-    const ch6 = buildSessionResult(
-      fill(ENTRY, [2, 2, 2, 2, 0, 0, 2]),
-      'band_not_confirmed',
-    );
-    assert.equal(ch6.recommendedNodeId, 'v7_u06n01');
+    for (const scores of [
+      [2, 2, 1, 2, 0, 0, 2],
+      [2, 2, 2, 1, 0, 0, 2],
+      [2, 2, 2, 2, 0, 0, 2],
+    ]) {
+      const plus = buildSessionResult(fill(ENTRY, scores), 'band_not_confirmed');
+      assert.equal(plus.publicResult, 'Seed+');
+      assert.equal(plus.resultLabel, 'Seed+ · มีพื้นฐานแล้ว');
+      assert.equal(plus.recommendedChapterId, 'v7_u04');
+      assert.equal(plus.recommendedNodeId, 'v7_u04n08');
+      assert.equal(plus.recommendedStartKey, 'foundation_ch4');
+      assert.equal(plus.recommendationType, 'chapter_start');
+      assert.equal(plus.usedFallback, false);
+    }
 
     const seed1 = buildSessionResult(
       fill(ENTRY, [0, 0, 0, 1, 0, 0, 0]),
