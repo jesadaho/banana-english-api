@@ -313,14 +313,14 @@ describe('placement gates v3.0', () => {
     assert.equal(publicResultFor(state, 'band_not_confirmed'), 'A2');
   });
 
-  it('B1 needs narration 2; 8/10 without it is A2+', () => {
+  it('B1 needs narration 2; 8/10 without it stays A2 (no public A2+)', () => {
     const near = emptyState();
     passA1(near);
     fillA2(near, [2, 1, 2, 1, 1, 2, 2, 2, 1, 1]);
     B1.forEach((id, i) => putScore(near, id, ([1, 1, 2, 2, 2] as PlacementScore[])[i]!));
     assert.equal(b1Gate(near), false);
     assert.equal(a2PlusGate(near), true);
-    assert.equal(publicResultFor(near, 'band_not_confirmed'), 'A2+');
+    assert.equal(publicResultFor(near, 'band_not_confirmed'), 'A2');
 
     const full = emptyState();
     passA1(full);
@@ -725,6 +725,9 @@ describe('placement live catalog mapping', () => {
     assert.equal(a2.recommendationType, 'coming_soon');
     assert.equal(a2.intendedNextLevel, 'B1');
     assert.equal(a2.recommendedNodeId, null);
+    assert.equal(a2.recommendedPathId, null);
+    // A2 / B1 land on the Games tab until their course ships.
+    assert.equal(a2.recommendedAppRoute, '/games');
   });
 });
 

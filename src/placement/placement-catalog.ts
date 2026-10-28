@@ -137,9 +137,13 @@ function pack(
   };
 }
 
+/** Games tab: where A2 / B1 learners land until their course ships. */
+export const PLACEMENT_COMING_SOON_ROUTE = '/games';
+
 function comingSoon(
   startKey: string,
   intended: Intended,
+  appRoute: string | null = null,
 ): ResolvedPlacementStart {
   return {
     recommendationType: 'coming_soon',
@@ -150,7 +154,7 @@ function comingSoon(
     nodeId: null,
     titleEn: null,
     titleTh: null,
-    appRoute: null,
+    appRoute,
     contentRef: null,
     resolvedCatalogVersion:
       intended === 'B2'
@@ -319,6 +323,7 @@ export function resolvePlacementStart(
     return comingSoon(
       publicResult === 'B1' ? 'coming_soon_b2' : 'coming_soon_b1',
       desired.intendedNextLevel,
+      PLACEMENT_COMING_SOON_ROUTE,
     );
   }
   if (publicResult === null) {
