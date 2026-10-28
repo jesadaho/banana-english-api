@@ -245,19 +245,18 @@ function desiredFor(
         fallbackNoticeTh: null,
       };
     case 'A1+':
-      // Start with New Words → Lesson; the Zone 1 Warm-up (a2_c08n01, a Say It
-      // review) stays unlocked behind it so a new learner is not tested first.
+      // A1+ shows Zone 1 skills; start Section 2 with Chapter 9 New Words.
       return {
         recommendationType: 'chapter_start',
         intendedNextLevel: null,
         pathId: 'adventure_a2',
-        chapterId: 'a2_c08',
-        nodeId: 'a2_c08n02',
+        chapterId: 'a2_c09',
+        nodeId: 'a2_c09n01',
         fallbackPathId: 'adventure_a2',
         fallbackChapterId: 'a2_c01',
         fallbackNodeId: 'a2_c01n01',
         fallbackNoticeTh:
-          'บท 8 ยังไม่พร้อม เลยเริ่มที่ต้น Adventure A2',
+          'บท 9 ยังไม่พร้อม เลยเริ่มที่ต้น Adventure A2',
       };
     case 'A2':
     case 'A2+':
@@ -314,7 +313,7 @@ function startKeyFor(
     case 'A1':
       return 'adventure_a2';
     default:
-      return 'adventure_a2_ch8';
+      return 'adventure_a2_ch9';
   }
 }
 
@@ -375,7 +374,7 @@ export function resolvePlacementStart(
           publicResult === 'Seed++'
             ? 'foundation_ch9_fallback'
             : publicResult === 'A1+'
-              ? 'adventure_a2_ch8_fallback'
+              ? 'adventure_a2_ch9_fallback'
               : publicResult === 'Seed' || publicResult === 'Seed+'
                 ? `${startKeyFor(publicResult, desired.chapterId)}_fallback`
                 : 'foundation_beginning',

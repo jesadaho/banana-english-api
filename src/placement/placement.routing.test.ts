@@ -644,7 +644,7 @@ describe('placement live catalog mapping', () => {
     assert.equal(result.usedFallback, false);
   });
 
-  it('starts A1 at Adventure Ch1 and A1+ at Ch8 New Words', () => {
+  it('starts A1 at Adventure Ch1 and A1+ at Ch9 New Words', () => {
     const a1Fail = fill(ENTRY, [2, 2, 2, 2, 2, 2, 2]);
     fillA1(a1Fail, [2, 2, 2, 0]);
     const a1Result = buildSessionResult(a1Fail, 'band_not_confirmed');
@@ -660,7 +660,7 @@ describe('placement live catalog mapping', () => {
     fillA2(a1Pass, [2, 2, 1, 2, 2, 2, 1, 1, 1, 1]);
     const plus = buildSessionResult(a1Pass, 'band_not_confirmed');
     assert.equal(plus.publicResult, 'A1+');
-    assert.equal(plus.recommendedNodeId, 'a2_c08n02');
+    assert.equal(plus.recommendedNodeId, 'a2_c09n01');
     assert.equal(plus.recommendationType, 'chapter_start');
   });
 
