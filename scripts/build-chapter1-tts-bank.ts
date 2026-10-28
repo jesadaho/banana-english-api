@@ -349,7 +349,7 @@ async function main() {
         : [
             ...collectChapter1BankLines(),
             ...(await collectFoundationBankLines(2, 16)),
-            ...(await collectAdventureA2BankLines(1, 8)),
+            ...(await collectAdventureA2BankLines(1, 16)),
             getTurn2Script().textEn,
             ...extraBankLines(),
             ...liveExtraLines(),
