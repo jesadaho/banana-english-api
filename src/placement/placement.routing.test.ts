@@ -632,14 +632,14 @@ describe('placement heuristics', () => {
 });
 
 describe('placement live catalog mapping', () => {
-  it('starts Seed++ at Foundation Ch8 without rewriting the badge', () => {
+  it('starts Seed++ at Foundation Ch9 without rewriting the badge', () => {
     const state = fill(ENTRY, [2, 2, 2, 2, 2, 2, 1]);
     const result = buildSessionResult(state, 'band_not_confirmed');
     assert.equal(result.publicResult, 'Seed++');
-    assert.equal(result.recommendedStartKey, 'foundation_ch8');
+    assert.equal(result.recommendedStartKey, 'foundation_ch9');
     assert.equal(result.recommendedPathId, 'foundation_v7');
-    assert.equal(result.recommendedChapterId, 'v7_u08');
-    assert.equal(result.recommendedNodeId, 'v7_u08n11');
+    assert.equal(result.recommendedChapterId, 'v7_u09');
+    assert.equal(result.recommendedNodeId, 'v7_u09n01');
     assert.equal(result.recommendationType, 'chapter_start');
     assert.equal(result.usedFallback, false);
   });
@@ -649,7 +649,7 @@ describe('placement live catalog mapping', () => {
     fillA1(a1Fail, [2, 2, 2, 0]);
     const a1Result = buildSessionResult(a1Fail, 'band_not_confirmed');
     assert.equal(a1Result.publicResult, 'Seed++');
-    assert.equal(a1Result.recommendedNodeId, 'v7_u08n11');
+    assert.equal(a1Result.recommendedNodeId, 'v7_u09n01');
 
     const a1Pass = fill(ENTRY, [2, 2, 2, 2, 2, 2, 2]);
     fillA1(a1Pass, [2, 2, 1, 2]);
