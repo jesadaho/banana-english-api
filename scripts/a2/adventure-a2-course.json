@@ -2072,7 +2072,7 @@
      ]
     },
     {
-     "th": "ของ May",
+     "th": "มันเป็นของ May",
      "en": "It's May's.",
      "accept": [
       "It is May's."
@@ -3099,14 +3099,14 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "ถามว่า Capy กำลังทำอะไรอยู่",
+     "th": "Capy กำลังทำอะไรอยู่?",
      "en": "What is Capy doing?",
      "accept": [
       "What's Capy doing?"
      ]
     },
     {
-     "th": "ถามว่าเธอ (May) กำลังทำอะไร แล้วตอบว่าเธอกำลังว่ายน้ำ",
+     "th": "เธอกำลังทำอะไร? — เธอกำลังว่ายน้ำ",
      "en": "What is she doing? — She's swimming.",
      "accept": [
       "What is she doing? She's swimming.",
@@ -3115,7 +3115,7 @@
      ]
     },
     {
-     "th": "ถามว่าเขา (Bogy) กำลังทำอะไร แล้วตอบว่าเขากำลังวิ่ง",
+     "th": "เขากำลังทำอะไร? — เขากำลังวิ่ง",
      "en": "What is he doing? — He's running.",
      "accept": [
       "What is he doing? He's running.",
@@ -3124,21 +3124,21 @@
      ]
     },
     {
-     "th": "บอกว่า Capy กำลังนอนหลับอยู่บนม้านั่ง",
+     "th": "Capy กำลังนอนหลับอยู่บนม้านั่ง",
      "en": "Capy is sleeping on the bench.",
      "accept": [
       "Capy's sleeping on the bench."
      ]
     },
     {
-     "th": "บอกว่าปกติ Mali ว่ายน้ำ แต่วันนี้เธอกำลังอ่านหนังสือ",
+     "th": "ปกติ Mali ว่ายน้ำ แต่วันนี้เธอกำลังอ่านหนังสือ",
      "en": "Mali usually swims, but today she's reading.",
      "accept": [
       "Mali usually swims, but today she is reading."
      ]
     },
     {
-     "th": "ถามว่าพวกเขากำลังทำอะไร",
+     "th": "พวกเขากำลังทำอะไร?",
      "en": "What are they doing?",
      "accept": []
     }
@@ -3395,14 +3395,14 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "บอกว่าคุณเล่นแบดมินตันบ่อย แต่วันนี้คุณกำลังอ่านหนังสือ",
+     "th": "ฉันเล่นแบดมินตันบ่อย แต่วันนี้ฉันกำลังอ่านหนังสือ",
      "en": "I often play badminton, but today I'm reading.",
      "accept": [
       "I often play badminton, but today I am reading."
      ]
     },
     {
-     "th": "บอกว่าปกติ Bogy วิ่ง แต่ตอนนี้เขากำลังกินข้าว",
+     "th": "ปกติ Bogy วิ่ง แต่ตอนนี้เขากำลังกินข้าว",
      "en": "Bogy usually runs, but at the moment he's eating.",
      "accept": [
       "Bogy usually runs, but right now he's eating.",
@@ -3410,14 +3410,14 @@
      ]
     },
     {
-     "th": "บอกว่า May ไม่เคยวาดรูป แต่วันนี้เธอกำลังวาดรูป",
+     "th": "May ไม่เคยวาดรูป แต่วันนี้เธอกำลังวาดรูป",
      "en": "May never draws, but today she's drawing.",
      "accept": [
       "May never draws, but today she is drawing."
      ]
     },
     {
-     "th": "บอกว่าคุณออกกำลังกายทุกวัน แต่ตอนนี้คุณกำลังพักผ่อน",
+     "th": "ฉันออกกำลังกายทุกวัน แต่ตอนนี้ฉันกำลังพักผ่อน",
      "en": "I exercise every day, but right now I'm relaxing.",
      "accept": [
       "I exercise every day, but at the moment I'm relaxing.",
@@ -3425,7 +3425,7 @@
      ]
     },
     {
-     "th": "บอกว่าบางครั้ง Capy ทำอาหาร แต่วันนี้ Capy กำลังเต้น",
+     "th": "บางครั้ง Capy ทำอาหาร แต่วันนี้ Capy กำลังเต้น",
      "en": "Capy sometimes cooks, but today Capy is dancing.",
      "accept": [
       "Sometimes Capy cooks, but today Capy is dancing.",
@@ -3874,26 +3874,26 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "ถาม Bogy ว่า \"ทำไมอยากเข้าชมรมดนตรี\"",
+     "th": "ทำไมคุณถึงอยากเข้าชมรมดนตรี?",
      "en": "Why do you want to join the music club?",
      "accept": []
     },
     {
-     "th": "ตอบว่า \"เพราะมันสนุก\"",
+     "th": "เพราะมันสนุก",
      "en": "Because it's fun.",
      "accept": [
       "Because it is fun."
      ]
     },
     {
-     "th": "ถาม May ว่า \"ทำไมชอบแบดมินตัน\"",
+     "th": "ทำไมคุณถึงชอบแบดมินตัน?",
      "en": "Why do you like badminton?",
      "accept": [
       "Why do you like playing badminton?"
      ]
     },
     {
-     "th": "ตอบว่า \"เพราะมันดีต่อสุขภาพ\"",
+     "th": "เพราะมันดีต่อสุขภาพ",
      "en": "Because it's healthy.",
      "accept": [
       "Because it is healthy.",
@@ -3901,12 +3901,12 @@
      ]
     },
     {
-     "th": "ถาม Capy ว่า \"ทำไมอยากเข้าชมรมวาดภาพ (painting club)\"",
+     "th": "ทำไมคุณถึงอยากเข้าชมรมวาดภาพ (painting club)?",
      "en": "Why do you want to join the painting club?",
      "accept": []
     },
     {
-     "th": "ตอบว่า \"เพราะฉันวาดรูปเก่ง\"",
+     "th": "เพราะฉันวาดรูปเก่ง",
      "en": "Because I'm good at drawing.",
      "accept": [
       "Because I am good at drawing.",
@@ -4351,36 +4351,36 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "ถาม May ว่า \"สุดสัปดาห์นี้มีแผนจะทำอะไร\"",
+     "th": "สุดสัปดาห์นี้คุณมีแผนจะทำอะไร?",
      "en": "What are you going to do this weekend?",
      "accept": []
     },
     {
-     "th": "ถาม Bogy ว่า \"พรุ่งนี้มีแผนจะทำอะไร\"",
+     "th": "พรุ่งนี้คุณมีแผนจะทำอะไร?",
      "en": "What are you going to do tomorrow?",
      "accept": []
     },
     {
-     "th": "ถาม Capy ว่า \"หลังเลิกเรียนมีแผนจะทำอะไร\"",
+     "th": "หลังเลิกเรียนคุณมีแผนจะทำอะไร?",
      "en": "What are you going to do after school?",
      "accept": []
     },
     {
-     "th": "ถาม Bogy ว่า Mali มีแผนจะทำอะไรวันเสาร์",
+     "th": "วันเสาร์ Mali มีแผนจะทำอะไร?",
      "en": "What is Mali going to do on Saturday?",
      "accept": [
       "What's Mali going to do on Saturday?"
      ]
     },
     {
-     "th": "ตอบว่าคุณตั้งใจจะไปเยี่ยมป้า",
+     "th": "ฉันตั้งใจจะไปเยี่ยมป้า",
      "en": "I'm going to visit my aunt.",
      "accept": [
       "I am going to visit my aunt."
      ]
     },
     {
-     "th": "ตอบว่าพรุ่งนี้คุณจะซ้อมแบดมินตัน (วางแผนไว้แล้ว)",
+     "th": "พรุ่งนี้ฉันจะซ้อมแบดมินตัน (วางแผนไว้แล้ว)",
      "en": "I'm going to practice badminton tomorrow.",
      "accept": [
       "Tomorrow I'm going to practice badminton.",
@@ -4800,28 +4800,28 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "May ชวนไปดูหนัง ตอบตกลงสั้น ๆ",
+     "th": "ได้สิ!",
      "en": "Sure!",
      "accept": [
       "Sure."
      ]
     },
     {
-     "th": "ปฏิเสธ Bogy ว่าขอโทษ ไม่ว่าง ต้องอ่านหนังสือสอบ",
+     "th": "ขอโทษนะ ฉันไม่ว่าง ฉันต้องอ่านหนังสือ",
      "en": "Sorry, I'm busy. I have to study.",
      "accept": [
       "Sorry, I am busy. I have to study."
      ]
     },
     {
-     "th": "ปฏิเสธ Capy ว่าขอโทษ ฉันต้องทำการบ้าน",
+     "th": "ขอโทษนะ ฉันต้องทำการบ้าน",
      "en": "Sorry, I have to do my homework.",
      "accept": [
       "Sorry, I have to do homework."
      ]
     },
     {
-     "th": "ปฏิเสธ Mali ว่าขอโทษ เย็นนี้ฉันมีนัดกับ Bogy",
+     "th": "ขอโทษนะ เย็นนี้ฉันมีนัดกับ Bogy",
      "en": "Sorry, I'm meeting Bogy this evening.",
      "accept": [
       "Sorry, I am meeting Bogy this evening.",
@@ -4829,7 +4829,7 @@
      ]
     },
     {
-     "th": "ปฏิเสธ May ว่าขอโทษ ไม่ว่าง ไว้คราวหน้านะ",
+     "th": "ขอโทษนะ ฉันไม่ว่าง ไว้คราวหน้านะ!",
      "en": "Sorry, I'm busy. Maybe next time!",
      "accept": [
       "Sorry, I am busy. Maybe next time!",
@@ -4837,7 +4837,7 @@
      ]
     },
     {
-     "th": "Bogy ชวนเล่นแบดวันเสาร์ ตอบตกลงแล้วบอกว่าเจอกันวันนั้นนะ",
+     "th": "ได้สิ! เจอกันวันนั้นนะ",
      "en": "Sure! See you then.",
      "accept": [
       "Sure. See you then."
@@ -4967,7 +4967,7 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "บอกว่าคุณสนุกกับการเต้น",
+     "th": "ฉันสนุกกับการเต้น",
      "en": "I enjoy dancing.",
      "accept": [
       "I like dancing.",
@@ -4975,21 +4975,21 @@
      ]
     },
     {
-     "th": "บอกว่า Bogy กินอาหารเช้าตอนเจ็ดโมงเสมอ",
+     "th": "Bogy กินอาหารเช้าตอนเจ็ดโมงเสมอ",
      "en": "Bogy always has breakfast at seven.",
      "accept": [
       "Bogy always has breakfast at 7."
      ]
     },
     {
-     "th": "บอกว่าในตู้เย็นไม่มีแอปเปิ้ลเลยสักลูก",
+     "th": "ในตู้เย็นไม่มีแอปเปิ้ลเลยสักลูก",
      "en": "There aren't any apples in the fridge.",
      "accept": [
       "There are no apples in the fridge."
      ]
     },
     {
-     "th": "ถาม May ว่าทำไมเธอชอบวาดรูป แล้วตอบแทนเธอว่าเพราะมันสนุก",
+     "th": "ทำไมคุณถึงชอบวาดรูป? — เพราะมันสนุก",
      "en": "Why do you like drawing? — Because it's fun.",
      "accept": [
       "Why do you like drawing? Because it's fun.",
@@ -4997,7 +4997,7 @@
      ]
     },
     {
-     "th": "บอกว่าสุดสัปดาห์นี้คุณตั้งใจจะเล่นแบดมินตัน (วางแผนไว้แล้ว)",
+     "th": "สุดสัปดาห์นี้ฉันตั้งใจจะเล่นแบดมินตัน (วางแผนไว้แล้ว)",
      "en": "I'm going to play badminton this weekend.",
      "accept": [
       "This weekend I'm going to play badminton.",
@@ -5005,7 +5005,7 @@
      ]
     },
     {
-     "th": "ปฏิเสธ Capy ว่าขอโทษ ไม่ว่าง ไว้คราวหน้านะ",
+     "th": "ขอโทษนะ ฉันไม่ว่าง ไว้คราวหน้านะ!",
      "en": "Sorry, I'm busy. Maybe next time!",
      "accept": [
       "Sorry, I am busy. Maybe next time!",
@@ -5013,7 +5013,7 @@
      ]
     },
     {
-     "th": "บอกว่า Capy ดูเหนื่อย",
+     "th": "Capy ดูเหนื่อย",
      "en": "Capy looks tired.",
      "accept": []
     }
@@ -5517,7 +5517,7 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "โทรหา May ถามว่าเธออยู่ไหน แล้วบอกว่าคุณอยู่ข้างแผงไอศกรีม",
+     "th": "คุณอยู่ที่ไหน? ฉันอยู่ข้างแผงไอศกรีม",
      "en": "Where are you? I'm next to the ice cream stall.",
      "accept": [
       "Where are you? I am next to the ice cream stall.",
@@ -5525,28 +5525,28 @@
      ]
     },
     {
-     "th": "บอก Bogy ว่าคุณกำลังยืนอยู่ข้างชิงช้าสวรรค์",
+     "th": "ฉันกำลังยืนอยู่ข้างชิงช้าสวรรค์",
      "en": "I'm standing next to the big wheel.",
      "accept": [
       "I am standing next to the big wheel."
      ]
     },
     {
-     "th": "บอก May ว่าคุณกำลังใส่เสื้อเชิ้ตสีเขียว",
+     "th": "ฉันกำลังใส่เสื้อเชิ้ตสีเขียว",
      "en": "I'm wearing a green shirt.",
      "accept": [
       "I am wearing a green shirt."
      ]
     },
     {
-     "th": "ชวนทุกคนไปเจอกันที่ประตูตลาด",
+     "th": "ไปเจอกันที่ประตูกันเถอะ",
      "en": "Let's meet at the gate.",
      "accept": [
       "Let's meet at the market gate."
      ]
     },
     {
-     "th": "บอก Bogy ว่าคุณอยู่ตรงข้ามแผงที่ Mali ช่วยขายของ",
+     "th": "ฉันอยู่ตรงข้ามแผงของ Mali",
      "en": "I'm opposite Mali's stall.",
      "accept": [
       "I am opposite Mali's stall.",
@@ -5554,7 +5554,7 @@
      ]
     },
     {
-     "th": "บอกครูบีว่าคุณกำลังยืนอยู่หน้าแผงของที่ระลึก",
+     "th": "ฉันกำลังยืนอยู่หน้าแผงขายของที่ระลึก",
      "en": "I'm standing in front of the souvenir stall.",
      "accept": [
       "I am standing in front of the souvenir stall."
@@ -5961,7 +5961,7 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "สั่งกับ Mali ที่คาเฟ่: ลาเต้ร้อนแก้วใหญ่ 1 แก้ว กลับบ้าน",
+     "th": "ขอลาเต้ร้อนแก้วใหญ่ 1 แก้ว ใส่กลับบ้าน",
      "en": "A large hot latte to take away, please.",
      "accept": [
       "Can I have a large hot latte to take away, please?",
@@ -5970,7 +5970,7 @@
      ]
     },
     {
-     "th": "สั่งกับ Mali: ชาใส่น้ำแข็งแก้วกลาง 1 แก้ว ทานที่ร้าน",
+     "th": "ขอชาใส่น้ำแข็งแก้วกลาง 1 แก้ว ทานที่ร้าน",
      "en": "A medium iced tea for here, please.",
      "accept": [
       "Can I have a medium iced tea for here, please?",
@@ -5979,7 +5979,7 @@
      ]
     },
     {
-     "th": "สั่งลาเต้เย็นแก้วเล็ก 2 แก้ว กลับบ้าน",
+     "th": "ขอลาเต้เย็นแก้วเล็ก 2 แก้ว ใส่กลับบ้าน",
      "en": "Two small iced lattes to take away, please.",
      "accept": [
       "Can I have two small iced lattes to take away, please?",
@@ -5987,7 +5987,7 @@
      ]
     },
     {
-     "th": "นมร้อนหมดแล้ว สั่งชาร้อนแก้วเล็กแทน ทานที่ร้าน",
+     "th": "ขอชาร้อนแก้วเล็ก 1 แก้ว ทานที่ร้าน",
      "en": "A small hot tea for here, please.",
      "accept": [
       "Can I have a small hot tea for here, please?",
@@ -5996,7 +5996,7 @@
      ]
     },
     {
-     "th": "สั่งลาเต้เย็นแก้วใหญ่ 1 แก้ว ทานที่ร้าน (ใช้ I'd like)",
+     "th": "ฉันขอลาเต้เย็นแก้วใหญ่ 1 แก้ว ทานที่ร้าน (ใช้ I'd like)",
      "en": "I'd like a large iced latte for here, please.",
      "accept": [
       "I'd like a large iced latte for here.",
@@ -6004,7 +6004,7 @@
      ]
     },
     {
-     "th": "สั่งกับ Mali: มัฟฟิน 1 ชิ้น กับน้ำผลไม้หน่อย",
+     "th": "ขอมัฟฟิน 1 ชิ้น กับน้ำผลไม้หน่อยได้ไหม?",
      "en": "Can I have a muffin and some juice, please?",
      "accept": [
       "I'd like a muffin and some juice, please.",
@@ -6012,7 +6012,7 @@
      ]
     },
     {
-     "th": "สั่งโกโก้ร้อนแก้วเล็ก 1 แก้ว กับคุกกี้ 1 ชิ้น ทานที่ร้าน",
+     "th": "ขอโกโก้ร้อนแก้วเล็ก 1 แก้ว กับคุกกี้ 1 ชิ้น ทานที่ร้าน",
      "en": "A small hot cocoa and a cookie for here, please.",
      "accept": [
       "Can I have a small hot cocoa and a cookie for here, please?",
@@ -6612,7 +6612,7 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "ขอ Mali (พนักงานเสิร์ฟ) อย่างสุภาพ: ขอจานนี้แบบไม่ใส่พริกได้ไหม",
+     "th": "ขอจานนี้แบบไม่ใส่พริกได้ไหม?",
      "en": "Could I have it without chilli?",
      "accept": [
       "Could I have it without chilli, please?",
@@ -6620,7 +6620,7 @@
      ]
     },
     {
-     "th": "บอกพนักงานว่า แกงนี้เผ็ดเกินไป",
+     "th": "แกงนี้เผ็ดเกินไป",
      "en": "This curry is too spicy.",
      "accept": [
       "It's too spicy.",
@@ -6628,7 +6628,7 @@
      ]
     },
     {
-     "th": "Bogy กินเผ็ดไม่ได้ ขอข้าวผัดแบบไม่ใส่พริก (ใช้ Could I)",
+     "th": "ขอข้าวผัดแบบไม่ใส่พริกได้ไหม? (ใช้ Could I)",
      "en": "Could I have the fried rice without chilli, please?",
      "accept": [
       "Could I have the fried rice without chilli?",
@@ -6636,7 +6636,7 @@
      ]
     },
     {
-     "th": "บอกพนักงานว่า ซุปนี้เค็มเกินไป",
+     "th": "ซุปนี้เค็มเกินไป",
      "en": "This soup is too salty.",
      "accept": [
       "It's too salty.",
@@ -6644,7 +6644,7 @@
      ]
     },
     {
-     "th": "John ชอบเผ็ดมาก ขอก๋วยเตี๋ยวน้ำใส่พริกเพิ่ม (ใช้ Could I)",
+     "th": "ขอก๋วยเตี๋ยวน้ำใส่พริกเพิ่มได้ไหม? (ใช้ Could I)",
      "en": "Could I have the noodle soup with extra chilli, please?",
      "accept": [
       "Could I have the noodle soup with extra chilli?",
@@ -6652,7 +6652,7 @@
      ]
     },
     {
-     "th": "บอกพนักงานว่า ก๋วยเตี๋ยวน้ำชามนี้เปรี้ยวเกินไป",
+     "th": "ก๋วยเตี๋ยวน้ำชามนี้เปรี้ยวเกินไป",
      "en": "This noodle soup is too sour.",
      "accept": [
       "It's too sour.",
@@ -7237,28 +7237,28 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "บอก Aunt Noi ว่าเราต้องการนม 1 กล่อง",
+     "th": "เราต้องการนม 1 กล่อง",
      "en": "We need a carton of milk.",
      "accept": [
       "We need one carton of milk."
      ]
     },
     {
-     "th": "บอก May ว่าเราไม่มีขนมปังเลย",
+     "th": "เราไม่มีขนมปังเลย",
      "en": "We don't have any bread.",
      "accept": [
       "We do not have any bread."
      ]
     },
     {
-     "th": "บอกว่าเราต้องการน้ำมัน 2 ขวด",
+     "th": "เราต้องการน้ำมัน 2 ขวด",
      "en": "We need two bottles of oil.",
      "accept": [
       "We need 2 bottles of oil."
      ]
     },
     {
-     "th": "บอกว่าเรามีชีสไม่ค่อยเยอะ",
+     "th": "เรามีชีสไม่ค่อยเยอะ",
      "en": "We don't have much cheese.",
      "accept": [
       "We do not have much cheese.",
@@ -7266,19 +7266,19 @@
      ]
     },
     {
-     "th": "บอกว่าเราต้องการไข่ 2-3 ฟอง (ใช้ a few)",
+     "th": "เราต้องการไข่ 2-3 ฟอง (ใช้ a few)",
      "en": "We need a few eggs.",
      "accept": []
     },
     {
-     "th": "บอกว่าเราต้องการข้าว 1 กิโล",
+     "th": "เราต้องการข้าว 1 กิโล",
      "en": "We need a kilo of rice.",
      "accept": [
       "We need one kilo of rice."
      ]
     },
     {
-     "th": "ถาม Aunt Noi ว่าเราต้องการไข่กี่ฟอง",
+     "th": "เราต้องการไข่กี่ฟอง?",
      "en": "How many eggs do we need?",
      "accept": []
     }
@@ -7810,42 +7810,42 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "บอก Bogy: หั่นมันช้าๆ",
+     "th": "หั่นมันช้าๆ",
      "en": "Cut it slowly.",
      "accept": [
       "Cut it slowly, please."
      ]
     },
     {
-     "th": "บอก May: ผสมมันเร็วๆ",
+     "th": "ผสมมันเร็วๆ",
      "en": "Mix it quickly.",
      "accept": [
       "Mix it quickly, please."
      ]
     },
     {
-     "th": "บอก Capy: ถือมันระวังๆ",
+     "th": "ถือมันระวังๆ",
      "en": "Hold it carefully.",
      "accept": [
       "Hold it carefully, please."
      ]
     },
     {
-     "th": "บอก John: ล้างผักอย่างระมัดระวัง",
+     "th": "ล้างผักอย่างระมัดระวัง",
      "en": "Wash the vegetables carefully.",
      "accept": [
       "Wash the vegetables carefully, please."
      ]
     },
     {
-     "th": "บอก May: ทอดไข่ช้าๆ",
+     "th": "ทอดไข่ช้าๆ",
      "en": "Fry the eggs slowly.",
      "accept": [
       "Fry the eggs slowly, please."
      ]
     },
     {
-     "th": "บอก Bogy: ผสมไข่ให้ดีๆ (ใช้คำบอกวิธีของ good)",
+     "th": "ผสมไข่ให้ดีๆ (ใช้คำบอกวิธีของ good)",
      "en": "Mix the eggs well.",
      "accept": [
       "Mix the eggs well, please.",
@@ -7853,7 +7853,7 @@
      ]
     },
     {
-     "th": "บอก Bogy: เทนมช้าๆ",
+     "th": "เทนมช้าๆ",
      "en": "Pour the milk slowly.",
      "accept": [
       "Pour the milk slowly, please.",
@@ -7972,7 +7972,7 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "บอก May: ผสมพวกมัน (ไข่) อย่างระวัง แล้วขอให้ May ส่งน้ำมันให้",
+     "th": "ผสมพวกมันอย่างระวัง ช่วยส่งน้ำมันให้หน่อย",
      "en": "Mix them carefully. Pass me the oil, please.",
      "accept": [
       "Mix them carefully. Please pass me the oil.",
@@ -7980,14 +7980,14 @@
      ]
     },
     {
-     "th": "บอก John: ขั้นแรก ล้างผัก จากนั้น หั่นพวกมัน",
+     "th": "ขั้นแรก ล้างผัก จากนั้น หั่นพวกมัน",
      "en": "First, wash the vegetables. Then, cut them.",
      "accept": [
       "First wash the vegetables, then cut them."
      ]
     },
     {
-     "th": "ขอ Aunt Noi ส่งเกลือให้หน่อย",
+     "th": "ช่วยส่งเกลือให้หน่อย",
      "en": "Pass me the salt, please.",
      "accept": [
       "Could you pass me the salt, please?",
@@ -7995,7 +7995,7 @@
      ]
     },
     {
-     "th": "บอก Bogy: ขั้นแรก ซาวข้าว (ล้างข้าว) จากนั้น เอาไปต้ม",
+     "th": "ขั้นแรก ซาวข้าว (ล้างข้าว) จากนั้น เอาไปต้ม",
      "en": "First, wash the rice. Then, boil it.",
      "accept": [
       "First wash the rice, then boil it.",
@@ -8003,14 +8003,14 @@
      ]
     },
     {
-     "th": "ขอ Capy ส่งกระทะให้ แล้วบอกว่า จากนั้นทอดไข่ช้าๆ",
+     "th": "ช่วยส่งกระทะให้หน่อย จากนั้นทอดไข่ช้าๆ",
      "en": "Pass me the pan, please. Then, fry the eggs slowly.",
      "accept": [
       "Pass me the pan, please. Then fry the eggs slowly."
      ]
     },
     {
-     "th": "บอก May: ขั้นแรก ใส่น้ำมันลงกระทะ จากนั้น ใส่ไข่",
+     "th": "ขั้นแรก ใส่น้ำมันลงกระทะ จากนั้น ใส่ไข่",
      "en": "First, add oil to the pan. Then, add the eggs.",
      "accept": [
       "First add oil to the pan, then add the eggs.",
@@ -8252,7 +8252,7 @@
      ]
     },
     {
-     "th": "บอก Mali ที่ร้านเสื้อผ้า: กางเกงยีนส์ตัวนี้ถูกกว่าตัวนั้น",
+     "th": "กางเกงยีนส์ตัวนี้ถูกกว่าตัวนั้น",
      "en": "These jeans are cheaper than those.",
      "accept": [
       "These jeans are cheaper than those ones.",
@@ -8260,21 +8260,21 @@
      ]
     },
     {
-     "th": "บอก May: ชุดเดรสสีขาวแพงกว่าตัวสีดำ",
+     "th": "ชุดเดรสสีขาวแพงกว่าตัวสีดำ",
      "en": "The white dress is more expensive than the black one.",
      "accept": [
       "The white dress is more expensive than the black dress."
      ]
     },
     {
-     "th": "บอก Bogy: แจ็กเก็ตตัวนี้ใส่สบายกว่าตัวนั้น",
+     "th": "แจ็กเก็ตตัวนี้ใส่สบายกว่าตัวนั้น",
      "en": "This jacket is more comfortable than that one.",
      "accept": [
       "This jacket is more comfortable than that jacket."
      ]
     },
     {
-     "th": "บอก Mali: ตัวสีเขียวดีกว่าตัวสีเหลือง",
+     "th": "ตัวสีเขียวดีกว่าตัวสีเหลือง",
      "en": "The green one is better than the yellow one.",
      "accept": [
       "The green one is better than the yellow."
@@ -8682,7 +8682,7 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "Mali อีกแล้ว! วันนี้ Mali ทำงานที่ร้านเสื้อผ้า ถาม Mali ว่าขอลองตัวนี้ได้ไหม",
+     "th": "ขอลองตัวนี้ได้ไหม?",
      "en": "Can I try it on?",
      "accept": [
       "Can I try this on?",
@@ -8690,19 +8690,19 @@
      ]
     },
     {
-     "th": "ชม May ที่ใส่แจ็กเก็ตใหม่ว่า ใส่แล้วดูดีมาก",
+     "th": "แจ็กเก็ตตัวนี้ คุณใส่แล้วดูดีมาก!",
      "en": "It looks great on you!",
      "accept": [
       "It looks great on you."
      ]
     },
     {
-     "th": "ถาม Mali ว่ามีไซซ์ใหญ่กว่านี้ไหม",
+     "th": "มีไซซ์ใหญ่กว่านี้ไหม?",
      "en": "Do you have a bigger size?",
      "accept": []
     },
     {
-     "th": "ชม Bogy ที่ลองกางเกงยีนส์ใหม่ว่า ใส่แล้วดูดีมาก",
+     "th": "กางเกงยีนส์ตัวนี้ คุณใส่แล้วดูดีมาก!",
      "en": "They look great on you!",
      "accept": [
       "They look great on you.",
@@ -8711,21 +8711,21 @@
      ]
     },
     {
-     "th": "ถาม Mali ว่าห้องลองเสื้ออยู่ที่ไหน",
+     "th": "ห้องลองเสื้ออยู่ที่ไหน?",
      "en": "Where's the fitting room?",
      "accept": [
       "Where is the fitting room?"
      ]
     },
     {
-     "th": "บอก Mali ว่ามันคับเกินไป แล้วถามว่ามีไซซ์ใหญ่กว่าไหม",
+     "th": "มันคับเกินไป มีไซซ์ใหญ่กว่านี้ไหม?",
      "en": "It's too tight. Do you have a bigger size?",
      "accept": [
       "It is too tight. Do you have a bigger size?"
      ]
     },
     {
-     "th": "ถาม Mali ว่าขอลองแจ็กเก็ตสีดำได้ไหม",
+     "th": "ขอลองแจ็กเก็ตสีดำได้ไหม?",
      "en": "Can I try on the black jacket?",
      "accept": [
       "Can I try the black jacket on?",
@@ -9134,14 +9134,14 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "บอก May ว่า ดอกไม้สวยที่สุด",
+     "th": "ดอกไม้สวยที่สุด",
      "en": "The flowers are the most beautiful.",
      "accept": [
       "These flowers are the most beautiful."
      ]
     },
     {
-     "th": "บอกว่า เค้กก้อนนี้ถูกที่สุด",
+     "th": "เค้กก้อนนี้ถูกที่สุด",
      "en": "This cake is the cheapest.",
      "accept": [
       "This cake is the cheapest one.",
@@ -9149,7 +9149,7 @@
      ]
     },
     {
-     "th": "บอก John ว่า ตุ๊กตาหมีตัวนี้ใหญ่ที่สุด",
+     "th": "ตุ๊กตาหมีตัวนี้ใหญ่ที่สุด",
      "en": "This teddy bear is the biggest.",
      "accept": [
       "This is the biggest teddy bear.",
@@ -9157,7 +9157,7 @@
      ]
     },
     {
-     "th": "บอกว่า การ์ดใบนี้แพงที่สุด",
+     "th": "การ์ดใบนี้แพงที่สุด",
      "en": "This card is the most expensive.",
      "accept": [
       "This is the most expensive card.",
@@ -9165,14 +9165,14 @@
      ]
     },
     {
-     "th": "บอก Capy ว่า ของขวัญของ May ดีที่สุด",
+     "th": "ของขวัญของ May ดีที่สุด",
      "en": "May's gift is the best.",
      "accept": [
       "May's gift is the best one."
      ]
     },
     {
-     "th": "บอกว่า ตุ๊กตาหมีน่ารักที่สุด",
+     "th": "ตุ๊กตาหมีน่ารักที่สุด",
      "en": "The teddy bear is the cutest.",
      "accept": [
       "The teddy bear is the cutest one."
@@ -9322,35 +9322,35 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "บอก May: ดอกไม้ถูกกว่า แต่เค้กดีที่สุด",
+     "th": "ดอกไม้ถูกกว่า แต่เค้กดีที่สุด",
      "en": "The flowers are cheaper, but the cake is the best.",
      "accept": [
       "The flowers are cheaper but the cake is the best."
      ]
     },
     {
-     "th": "ชวน May: ซื้อตุ๊กตาหมีกันเถอะ เพราะมันถูกที่สุด",
+     "th": "ซื้อตุ๊กตาหมีกันเถอะ เพราะมันถูกที่สุด",
      "en": "Let's buy the teddy bear because it's the cheapest.",
      "accept": [
       "Let's buy the teddy bear because it is the cheapest."
      ]
     },
     {
-     "th": "บอก John: ฉันชอบดอกไม้ เพราะมันสวยที่สุด",
+     "th": "ฉันชอบดอกไม้ เพราะมันสวยที่สุด",
      "en": "I like the flowers because they're the most beautiful.",
      "accept": [
       "I like the flowers because they are the most beautiful."
      ]
     },
     {
-     "th": "บอก Capy: การ์ดถูกกว่าตุ๊กตาหมี แต่ตุ๊กตาหมีน่ารักที่สุด",
+     "th": "การ์ดถูกกว่าตุ๊กตาหมี แต่ตุ๊กตาหมีน่ารักที่สุด",
      "en": "The card is cheaper than the teddy bear, but the teddy bear is the cutest.",
      "accept": [
       "The card is cheaper than the teddy bear but the teddy bear is the cutest."
      ]
     },
     {
-     "th": "บอก May: เค้กแพงกว่าดอกไม้ แต่มันเป็นของโปรดของ Bogy",
+     "th": "เค้กแพงกว่าดอกไม้ แต่มันเป็นของโปรดของ Bogy",
      "en": "The cake is more expensive than the flowers, but it's Bogy's favorite.",
      "accept": [
       "The cake is more expensive than the flowers, but it's his favorite.",
@@ -9358,7 +9358,7 @@
      ]
     },
     {
-     "th": "บอกทีม: เค้กแพงเกินไป ดังนั้นซื้อดอกไม้กันเถอะ เพราะมันถูกกว่า",
+     "th": "เค้กแพงเกินไป ดังนั้นซื้อดอกไม้กันเถอะ เพราะมันถูกกว่า",
      "en": "The cake is too expensive, so let's buy the flowers because they're cheaper.",
      "accept": [
       "The cake is too expensive, so let's buy the flowers because they are cheaper."
@@ -9731,7 +9731,7 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "บอก Bogy ว่า เมื่อวานฉันอยู่บ้าน",
+     "th": "เมื่อวานฉันอยู่บ้าน",
      "en": "I was at home yesterday.",
      "accept": [
       "Yesterday I was at home.",
@@ -9739,14 +9739,14 @@
      ]
     },
     {
-     "th": "บอก Teacher Nina ว่า เมื่อคืน May กับพี่สาวของ May อยู่ที่คาเฟ่ (ร้านที่ Mali ทำงาน)",
+     "th": "เมื่อคืน May กับพี่สาวของเธออยู่ที่คาเฟ่",
      "en": "May and her sister were at the café last night.",
      "accept": [
       "Last night May and her sister were at the café."
      ]
     },
     {
-     "th": "ถาม Bogy ว่า เมื่อวานสนุกไหม",
+     "th": "เมื่อวานสนุกไหม?",
      "en": "Was it fun yesterday?",
      "accept": [
       "Was yesterday fun?",
@@ -9754,21 +9754,21 @@
      ]
     },
     {
-     "th": "เล่าว่า สุดสัปดาห์ที่แล้วฉันดูหนังกับ Capy",
+     "th": "สุดสัปดาห์ที่แล้วฉันดูหนังกับ Capy",
      "en": "I watched a movie with Capy last weekend.",
      "accept": [
       "Last weekend I watched a movie with Capy."
      ]
     },
     {
-     "th": "เล่าว่า เมื่อวาน Bogy เล่นแบดมินตัน มันเหนื่อยมาก",
+     "th": "เมื่อวาน Bogy เล่นแบดมินตัน เขาเหนื่อยมาก",
      "en": "Bogy played badminton yesterday. He was very tired.",
      "accept": [
       "Yesterday Bogy played badminton. He was very tired."
      ]
     },
     {
-     "th": "เล่าว่า เมื่อคืนเราทำอาหารเย็นกับ Aunt Noi มันอร่อยมาก",
+     "th": "เมื่อคืนเราทำอาหารเย็นกับ Aunt Noi มันอร่อยมาก",
      "en": "We cooked dinner with Aunt Noi last night. It was delicious.",
      "accept": [
       "Last night we cooked dinner with Aunt Noi. It was delicious.",
@@ -9776,7 +9776,7 @@
      ]
     },
     {
-     "th": "เล่าให้ Teacher Nina ฟังว่า เมื่อวานฉันทำความสะอาดห้อง ฉันเหนื่อยมาก",
+     "th": "เมื่อวานฉันทำความสะอาดห้อง ฉันเหนื่อยมาก",
      "en": "I cleaned my room yesterday. I was very tired.",
      "accept": [
       "Yesterday I cleaned my room. I was very tired.",
@@ -9928,14 +9928,14 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "เล่าเรื่องเมื่อวาน: รองเท้าถูกกว่ากระเป๋า",
+     "th": "รองเท้าถูกกว่ากระเป๋า (ใช้ was)",
      "en": "The shoes were cheaper than the bag.",
      "accept": [
       "The shoes were cheaper than the bag yesterday."
      ]
     },
     {
-     "th": "เล่าเรื่องร้านเสื้อเมื่อวาน: แจ็กเก็ตของ May แพงกว่าแจ็กเก็ตของฉัน",
+     "th": "แจ็กเก็ตของ May แพงกว่าแจ็กเก็ตของฉัน (ใช้ was)",
      "en": "May's jacket was more expensive than my jacket.",
      "accept": [
       "May's jacket was more expensive than mine.",
@@ -9943,28 +9943,28 @@
      ]
     },
     {
-     "th": "เล่าว่า เมื่อคืน ก๋วยเตี๋ยวน้ำอร่อยกว่าข้าวผัด (ใช้ better)",
+     "th": "ก๋วยเตี๋ยวน้ำอร่อยกว่าข้าวผัด (ใช้ was + better)",
      "en": "The noodle soup was better than the fried rice.",
      "accept": [
       "The noodle soup was better than the fried rice last night."
      ]
     },
     {
-     "th": "เล่าว่า เมื่อวาน ไปพิพิธภัณฑ์สนุกกว่าดูหนัง",
+     "th": "พิพิธภัณฑ์สนุกกว่าหนัง (ใช้ was)",
      "en": "The museum was more fun than the movie.",
      "accept": [
       "The museum was more fun than the movie yesterday."
      ]
     },
     {
-     "th": "เล่าว่า เมื่อวาน ของขวัญของ John ใหญ่กว่าของ May",
+     "th": "ของขวัญของ John ใหญ่กว่าของ May (ใช้ was)",
      "en": "John's gift was bigger than May's.",
      "accept": [
       "John's gift was bigger than May's gift."
      ]
     },
     {
-     "th": "เล่าว่า เมื่อวาน ชุดเดรสสีแดงสวยกว่าตัวสีฟ้า",
+     "th": "ชุดเดรสสีแดงสวยกว่าตัวสีฟ้า (ใช้ was)",
      "en": "The red dress was more beautiful than the blue one.",
      "accept": [
       "The red dress was more beautiful than the blue dress."
@@ -10001,14 +10001,14 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "สั่งกับ Mali ที่คาเฟ่: ลาเต้เย็นแก้วกลาง (ใช้ I'd like)",
+     "th": "ฉันขอลาเต้เย็นแก้วกลาง (ใช้ I'd like)",
      "en": "I'd like a medium iced latte, please.",
      "accept": [
       "I'd like a medium iced latte."
      ]
     },
     {
-     "th": "ที่ร้านอาหาร บอก Mali (พนักงานเสิร์ฟ) ว่า มันเผ็ดนิดหน่อย แล้วขอน้ำ (ใช้ Could I)",
+     "th": "มันเผ็ดนิดหน่อย ขอน้ำหน่อยได้ไหม? (ใช้ Could I)",
      "en": "It's a bit spicy. Could I have some water, please?",
      "accept": [
       "It's a bit spicy. Could I have some water?",
@@ -10016,35 +10016,35 @@
      ]
     },
     {
-     "th": "บอก Teacher Nina ว่า เรามีน้ำตาลไม่ค่อยเยอะ",
+     "th": "เรามีน้ำตาลไม่ค่อยเยอะ",
      "en": "We don't have much sugar.",
      "accept": [
       "We do not have much sugar."
      ]
     },
     {
-     "th": "ที่ร้านเสื้อผ้า (Mali อีกแล้ว!) บอก Mali ว่า กระเป๋าใบนี้ถูกกว่าใบนั้น",
+     "th": "กระเป๋าใบนี้ถูกกว่าใบนั้น",
      "en": "This bag is cheaper than that one.",
      "accept": [
       "This bag is cheaper than that bag."
      ]
     },
     {
-     "th": "เล่าว่า เมื่อวาน Bogy เล่นแบดมินตันกับ John",
+     "th": "เมื่อวาน Bogy เล่นแบดมินตันกับ John",
      "en": "Bogy played badminton with John yesterday.",
      "accept": [
       "Yesterday Bogy played badminton with John."
      ]
     },
     {
-     "th": "บอก Capy: ทอดไข่อย่างระวัง",
+     "th": "ทอดไข่อย่างระวัง",
      "en": "Fry the eggs carefully.",
      "accept": [
       "Fry the eggs carefully, please."
      ]
     },
     {
-     "th": "บอก Bogy ก่อนออกไปตลาดน้ำ: ใส่หมวกของนายสิ",
+     "th": "ใส่หมวกของนายสิ",
      "en": "Put on your hat.",
      "accept": [
       "Put your hat on.",
@@ -10608,12 +10608,12 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "ยื่นเงินให้ Mali ที่เรือของครอบครัวเธอ",
+     "th": "นี่ค่ะ/ครับ (ตอนยื่นเงินให้)",
      "en": "Here you go.",
      "accept": []
     },
     {
-     "th": "ทัก Mali สุภาพๆ ว่า ขอโทษนะ ฉันคิดว่าเงินทอนไม่ถูก",
+     "th": "ขอโทษนะ ฉันคิดว่าเงินทอนไม่ถูก",
      "en": "Sorry, I think the change isn't right.",
      "accept": [
       "Excuse me, I think the change isn't right.",
@@ -10622,7 +10622,7 @@
      ]
     },
     {
-     "th": "เล่าให้ Bogy ฟังว่า วันนี้เราไปตลาดน้ำ และฉันซื้อมะม่วง",
+     "th": "วันนี้เราไปตลาดน้ำ ฉันซื้อมะม่วงมาลูกหนึ่ง",
      "en": "We went to the floating market today. I bought a mango.",
      "accept": [
       "Today we went to the floating market. I bought a mango.",
@@ -10630,7 +10630,7 @@
      ]
     },
     {
-     "th": "บอก Mali ว่า ฉันให้คุณไป 500 บาท",
+     "th": "ฉันให้คุณไป 500 บาท",
      "en": "I gave you 500 baht.",
      "accept": [
       "Excuse me, I gave you 500 baht.",
@@ -10638,7 +10638,7 @@
      ]
     },
     {
-     "th": "บอก Mali ว่า ฉันได้เงินทอนคืนแค่ 50 บาท",
+     "th": "ฉันได้เงินทอนคืนแค่ 50 บาท",
      "en": "I only got 50 baht back.",
      "accept": [
       "I only got fifty baht back.",
@@ -10646,14 +10646,14 @@
      ]
     },
     {
-     "th": "บอก Mali ว่า ไม่ต้องทอน",
+     "th": "ไม่ต้องทอน",
      "en": "Keep the change.",
      "accept": [
       "Keep the change, please."
      ]
     },
     {
-     "th": "ขอใบเสร็จอย่างสุภาพ (ใช้ Could I)",
+     "th": "ขอใบเสร็จหน่อยได้ไหม? (ใช้ Could I)",
      "en": "Could I have the receipt, please?",
      "accept": [
       "Could I have a receipt, please?",
@@ -11111,26 +11111,26 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "บอกทีม: เราต้องไปอยู่ที่เกตตอนสิบโมง",
+     "th": "เราต้องไปอยู่ที่เกตตอนสิบโมง",
      "en": "We have to be at the gate at ten.",
      "accept": [
       "We have to be at the gate at 10."
      ]
     },
     {
-     "th": "ถามเจ้าหน้าที่เช็กอิน: ฉันต้องเช็กอินกระเป๋าใบนี้ไหม",
+     "th": "ฉันต้องเช็กอินกระเป๋าใบนี้ไหม?",
      "en": "Do I have to check in this bag?",
      "accept": []
     },
     {
-     "th": "คุณเป็นเจ้าหน้าที่เช็กอิน บอกผู้โดยสาร: คุณต้องแสดงพาสปอร์ต",
+     "th": "คุณต้องแสดงพาสปอร์ต",
      "en": "You have to show your passport.",
      "accept": [
       "You have to show me your passport."
      ]
     },
     {
-     "th": "บอก Mali: เราไม่ต้องเช็กอินกระเป๋าถือขึ้นเครื่อง",
+     "th": "เราไม่ต้องเช็กอินกระเป๋าถือขึ้นเครื่อง",
      "en": "We don't have to check in our carry-on.",
      "accept": [
       "We do not have to check in our carry-on.",
@@ -11146,7 +11146,7 @@
      ]
     },
     {
-     "th": "ถามเจ้าหน้าที่เช็กอิน: เราต้องไปเกต 2 ไหม",
+     "th": "เราต้องไปเกต 2 ไหม?",
      "en": "Do we have to go to Gate 2?",
      "accept": [
       "Do we have to go to gate two?"
@@ -11322,14 +11322,14 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "ถามเจ้าหน้าที่เช็กอิน: ฉันเอากระเป๋าใบนี้ขึ้นเครื่องได้ไหม",
+     "th": "ฉันเอากระเป๋าใบนี้ขึ้นเครื่องได้ไหม?",
      "en": "Can I take this bag on the plane?",
      "accept": [
       "Can I take this bag on the plane, please?"
      ]
     },
     {
-     "th": "คุณเป็นเจ้าหน้าที่เช็กอิน ถามผู้โดยสาร: คุณแพ็กกระเป๋าใบนี้เองหรือเปล่า",
+     "th": "คุณแพ็กกระเป๋าใบนี้เองหรือเปล่า?",
      "en": "Did you pack this bag yourself?",
      "accept": [
       "Did you pack it yourself?",
@@ -11337,7 +11337,7 @@
      ]
     },
     {
-     "th": "ตอบเจ้าหน้าที่เช็กอินสั้นๆ ว่า ใช่ ฉันแพ็กเอง",
+     "th": "ใช่ ฉันแพ็กเอง (ตอบสั้นๆ)",
      "en": "Yes, I did.",
      "accept": [
       "Yes, I did. I packed it."
@@ -11352,12 +11352,12 @@
      ]
     },
     {
-     "th": "กระเป๋าน้ำหนักเกิน ถามเจ้าหน้าที่เช็กอิน: ฉันต้องใส่ของพวกนี้ไว้ในกระเป๋าถือขึ้นเครื่องไหม",
+     "th": "ฉันต้องใส่ของพวกนี้ไว้ในกระเป๋าถือขึ้นเครื่องไหม?",
      "en": "Do I have to put these things in my carry-on?",
      "accept": []
     },
     {
-     "th": "ถาม Teacher Torto: เมื่อเช้า May เช็กอินกระเป๋าของเธอหรือเปล่า",
+     "th": "เมื่อเช้า May เช็กอินกระเป๋าของเธอหรือเปล่า?",
      "en": "Did May check in her luggage this morning?",
      "accept": [
       "Did May check in her bag this morning?"
@@ -11793,14 +11793,14 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "ถามพนักงานต้อนรับ: อาหารเช้ากี่โมง",
+     "th": "อาหารเช้ากี่โมง?",
      "en": "What time is breakfast?",
      "accept": [
       "What time is breakfast, please?"
      ]
     },
     {
-     "th": "ถามพนักงานต้อนรับ: ที่นี่มีลิฟต์ไหม",
+     "th": "ที่นี่มีลิฟต์ไหม?",
      "en": "Is there a lift?",
      "accept": [
       "Is there a lift here?"
@@ -11815,7 +11815,7 @@
      ]
     },
     {
-     "th": "ถามพนักงานต้อนรับ: เช็กเอาต์กี่โมง",
+     "th": "เช็กเอาต์กี่โมง?",
      "en": "What time is checkout?",
      "accept": [
       "What time is check-out?"
@@ -11830,7 +11830,7 @@
      ]
     },
     {
-     "th": "Bogy อยากว่ายน้ำ ถามพนักงานต้อนรับ: โรงแรมมีสระว่ายน้ำไหม",
+     "th": "ที่นี่มีสระว่ายน้ำไหม?",
      "en": "Is there a pool?",
      "accept": [
       "Is there a pool in the hotel?",
@@ -12336,36 +12336,36 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "ถาม Driver Uncle Somchai (คนขับ): ค่าโดยสารเท่าไหร่",
+     "th": "ค่าโดยสารเท่าไหร่?",
      "en": "How much is the fare?",
      "accept": []
     },
     {
-     "th": "ถาม Driver Uncle Somchai (คนขับ): ฉันต้องลงที่ไหน",
+     "th": "ฉันต้องลงที่ไหน?",
      "en": "Where do I get off?",
      "accept": [
       "Where do I have to get off?"
      ]
     },
     {
-     "th": "ถามคนที่ป้ายรถเมล์: รถเมล์สายไหนไปตลาด",
+     "th": "รถเมล์สายไหนไปตลาด?",
      "en": "Which bus goes to the market?",
      "accept": []
     },
     {
-     "th": "ถาม Driver Uncle Somchai (คนขับ): รถคันนี้ไปเมืองเก่าไหม",
+     "th": "รถคันนี้ไปเมืองเก่าไหม?",
      "en": "Does this bus go to the old town?",
      "accept": []
     },
     {
-     "th": "ถาม Driver Uncle Somchai (คนขับ): ไปพิพิธภัณฑ์ใช้เวลานานแค่ไหน",
+     "th": "ไปพิพิธภัณฑ์ใช้เวลานานแค่ไหน?",
      "en": "How long does it take to get to the museum?",
      "accept": [
       "How long does it take to go to the museum?"
      ]
     },
     {
-     "th": "ถาม Driver Uncle Somchai (คนขับ): รถออกกี่โมง",
+     "th": "รถออกกี่โมง?",
      "en": "What time does the bus depart?",
      "accept": [
       "What time does the bus leave?",
@@ -12771,7 +12771,7 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "บอกทางไปร้านโปรดของ Teacher Torto: เลี้ยวขวาที่ไฟจราจร ร้านอยู่ทางซ้ายมือ",
+     "th": "เลี้ยวขวาที่ไฟจราจร ร้านอยู่ทางซ้ายมือ",
      "en": "Turn right at the traffic lights. It's on your left.",
      "accept": [
       "Turn right at the traffic lights. It is on your left.",
@@ -12779,17 +12779,17 @@
      ]
     },
     {
-     "th": "บอกทาง May: เดินผ่านธนาคาร แล้วเลี้ยวซ้ายที่แยกที่สอง",
+     "th": "เดินผ่านธนาคาร แล้วเลี้ยวซ้ายที่แยกที่สอง",
      "en": "Go past the bank and take the second left.",
      "accept": []
     },
     {
-     "th": "บอกทาง Bogy: ข้ามสะพาน แล้วเลี้ยวซ้ายที่หัวมุม",
+     "th": "ข้ามสะพาน แล้วเลี้ยวซ้ายที่หัวมุม",
      "en": "Cross the bridge and turn left at the corner.",
      "accept": []
     },
     {
-     "th": "บอกทาง Teacher Nina: เดินตรงไป เลี้ยวขวาที่หัวมุม ร้านอยู่ทางขวามือ",
+     "th": "เดินตรงไป เลี้ยวขวาที่หัวมุม ร้านอยู่ทางขวามือ",
      "en": "Go straight and turn right at the corner. The shop is on your right.",
      "accept": [
       "Go straight and turn right at the corner. It's on your right.",
@@ -12797,12 +12797,12 @@
      ]
     },
     {
-     "th": "บอกทาง Mali: ข้ามถนนที่ไฟจราจร แล้วเลี้ยวขวาที่แยกที่สอง",
+     "th": "ข้ามถนนที่ไฟจราจร แล้วเลี้ยวขวาที่แยกที่สอง",
      "en": "Cross the street at the traffic lights and take the second right.",
      "accept": []
     },
     {
-     "th": "บอกทาง Capy: เดินตรงไป แล้วเลี้ยวซ้ายที่ไฟจราจร",
+     "th": "เดินตรงไป แล้วเลี้ยวซ้ายที่ไฟจราจร",
      "en": "Go straight and turn left at the traffic lights.",
      "accept": [
       "Go straight and turn left at the traffic light.",
@@ -13077,21 +13077,21 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "คนแถวนั้นบอกทางเร็วมาก พูดว่า: ขอโทษ พูดอีกทีได้ไหม แล้วฉันเลี้ยวขวาใช่ไหม",
+     "th": "ขอโทษนะ พูดอีกทีได้ไหม? แล้วฉันเลี้ยวขวาใช่ไหม?",
      "en": "Sorry, can you say that again? So I turn right?",
      "accept": [
       "Sorry, could you say that again? So I turn right?"
      ]
     },
     {
-     "th": "ถามคนแถวนั้น: ร้านโปรดของ Teacher Torto อยู่ไกลแค่ไหน",
+     "th": "ร้านอยู่ไกลแค่ไหน?",
      "en": "How far is the shop?",
      "accept": [
       "How far is the shop from here?"
      ]
     },
     {
-     "th": "ขอให้พูดช้าลง: ช่วยพูดช้าๆ หน่อยได้ไหม",
+     "th": "ช่วยพูดช้าๆ หน่อยได้ไหม?",
      "en": "Can you speak slowly, please?",
      "accept": [
       "Could you speak slowly, please?",
@@ -13108,7 +13108,7 @@
      ]
     },
     {
-     "th": "ถนนปิด ถามคนแถวนั้น: ขอโทษค่ะ/ครับ ตลาดอยู่ที่ไหน",
+     "th": "ขอโทษค่ะ/ครับ ตลาดอยู่ที่ไหน?",
      "en": "Excuse me, where is the market?",
      "accept": [
       "Excuse me, where's the market?"
@@ -13607,7 +13607,7 @@
      ]
     },
     {
-     "th": "ถาม Teacher Torto: ถ้าฝนตก เราจะทำอะไรกัน",
+     "th": "ถ้าฝนตก เราจะทำอะไรกัน?",
      "en": "What will we do if it rains?",
      "accept": [
       "If it rains, what will we do?"
@@ -13740,14 +13740,14 @@
      ]
     },
     {
-     "th": "บอก Bogy: เอาร่มไปด้วยนะ เพราะฝนอาจจะตก",
+     "th": "เอาร่มไปด้วยนะ เพราะฝนอาจจะตก",
      "en": "Take an umbrella because it might rain.",
      "accept": [
       "Take your umbrella because it might rain."
      ]
     },
     {
-     "th": "บอก Capy: พรุ่งนี้เอาหมวกไปด้วยนะ เพราะแดดจะออก",
+     "th": "พรุ่งนี้เอาหมวกไปด้วยนะ เพราะแดดจะออก",
      "en": "Take a hat tomorrow because it's going to be sunny.",
      "accept": [
       "Take your hat tomorrow because it's going to be sunny.",
@@ -14183,26 +14183,26 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "บอกเภสัชกร: เธอ (May) เป็นไข้",
+     "th": "เธอเป็นไข้",
      "en": "She has a fever.",
      "accept": [
       "May has a fever."
      ]
     },
     {
-     "th": "แนะนำ May ที่เป็นไข้: ควรพักผ่อนนะ",
+     "th": "คุณควรพักผ่อนนะ",
      "en": "You should rest.",
      "accept": []
     },
     {
-     "th": "ถาม May: เป็นอะไรเหรอ",
+     "th": "เป็นอะไรเหรอ?",
      "en": "What's wrong?",
      "accept": [
       "What is wrong?"
      ]
     },
     {
-     "th": "Capy ปวดฟัน แนะนำ Capy ว่าควรไปหาหมอฟันนะ",
+     "th": "คุณควรไปหาหมอฟันนะ",
      "en": "You should see a dentist.",
      "accept": [
       "Capy, you should see a dentist.",
@@ -14218,12 +14218,12 @@
      ]
     },
     {
-     "th": "ถามเภสัชกร: ฉันเป็นหวัด ฉันควรทำยังไงดี",
+     "th": "ฉันเป็นหวัด ฉันควรทำยังไงดี?",
      "en": "I have a cold. What should I do?",
      "accept": []
     },
     {
-     "th": "แนะนำ Capy ที่เจ็บคอ: ควรดื่มน้ำและกินยานะ",
+     "th": "คุณควรดื่มน้ำและกินยานะ",
      "en": "You should drink water and take medicine.",
      "accept": [
       "You should drink water and take some medicine.",
@@ -15057,12 +15057,12 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "บอกเจ้าหน้าที่: ฉันลืมกระเป๋าไว้บนรถเมล์",
+     "th": "ฉันลืมกระเป๋าไว้บนรถเมล์",
      "en": "I left my bag on the bus.",
      "accept": []
     },
     {
-     "th": "บอกเจ้าหน้าที่: เมื่อวานฉันลืมร่มไว้ที่คาเฟ่",
+     "th": "เมื่อวานฉันลืมร่มไว้ที่คาเฟ่",
      "en": "I left my umbrella at the café yesterday.",
      "accept": [
       "I left my umbrella at the cafe yesterday.",
@@ -15084,7 +15084,7 @@
      ]
     },
     {
-     "th": "บอกเจ้าหน้าที่ว่า ฉันหามันไม่เจอเลย",
+     "th": "ฉันหามันไม่เจอเลย",
      "en": "I couldn't find it anywhere.",
      "accept": [
       "I couldn't find it."
@@ -15217,42 +15217,42 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "บอกเจ้าหน้าที่: ฉันทำโทรศัพท์หาย มันสีดำ ช่วยฉันหน่อยได้ไหม",
+     "th": "ฉันทำโทรศัพท์หาย มันสีดำ ช่วยฉันหน่อยได้ไหม?",
      "en": "I lost my phone. It's black. Can you help me?",
      "accept": [
       "I lost my phone. It is black. Could you help me?"
      ]
     },
     {
-     "th": "บอกเจ้าหน้าที่: ฉันลืมกระเป๋าสตางค์ไว้บนรถเมล์ มันใบเล็กและสีน้ำเงิน",
+     "th": "ฉันลืมกระเป๋าสตางค์ไว้บนรถเมล์ มันใบเล็กและสีน้ำเงิน",
      "en": "I left my wallet on the bus. It's small and blue.",
      "accept": [
       "I left my wallet on the bus. It is small and blue."
      ]
     },
     {
-     "th": "บอกเจ้าหน้าที่: กระเป๋าถือของเพื่อนฉันหาย มันเป็นกระเป๋าสีแดงที่มีกุญแจอยู่ข้างใน",
+     "th": "กระเป๋าถือของเพื่อนฉันหาย มันเป็นกระเป๋าสีแดงที่มีกุญแจอยู่ข้างใน",
      "en": "My friend's handbag is missing. It's a red bag which has a key inside.",
      "accept": [
       "My friend's handbag is missing. It is a red bag which has a key inside."
      ]
     },
     {
-     "th": "บอกเจ้าหน้าที่: ฉันหามันไม่เจอเลย ช่วยตามหาให้หน่อยได้ไหม",
+     "th": "ฉันหามันไม่เจอเลย ช่วยตามหาให้หน่อยได้ไหม?",
      "en": "I couldn't find it anywhere. Can you look for it?",
      "accept": [
       "I couldn't find it anywhere. Could you look for it?"
      ]
     },
     {
-     "th": "บอกเจ้าหน้าที่: ฉันทำพาสปอร์ตหายเมื่อวาน ฉันอยากแจ้งของหาย",
+     "th": "ฉันทำพาสปอร์ตหายเมื่อวาน ฉันอยากแจ้งของหาย",
      "en": "I lost my passport yesterday. I want to report it.",
      "accept": [
       "I lost my passport yesterday. I'd like to report it."
      ]
     },
     {
-     "th": "ขอเจ้าหน้าที่: ถ้าเจอ ช่วยบอกฉันได้ไหม",
+     "th": "ถ้าเจอ ช่วยบอกฉันได้ไหม?",
      "en": "If you find it, could you tell me?",
      "accept": [
       "Could you tell me if you find it?",
@@ -15290,7 +15290,7 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "บอกทีม: เราต้องไปเกต 12",
+     "th": "เราต้องไปเกต 12",
      "en": "We have to go to Gate 12.",
      "accept": [
       "We have to go to gate twelve."
@@ -15305,7 +15305,7 @@
      ]
     },
     {
-     "th": "ถามทาง: ร้านขายยาอยู่ไกลแค่ไหน",
+     "th": "ร้านขายยาอยู่ไกลแค่ไหน?",
      "en": "How far is the pharmacy?",
      "accept": [
       "How far is the pharmacy from here?"
@@ -15334,7 +15334,7 @@
      ]
     },
     {
-     "th": "ชวน Bogy: ขึ้นแท็กซี่กันเถอะ",
+     "th": "ขึ้นแท็กซี่กันเถอะ",
      "en": "Let's get in the taxi.",
      "accept": [
       "Let's get in a taxi."
@@ -15685,7 +15685,7 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "บอกเจ้าหน้าที่สายการบิน: ขอโทษค่ะ/ครับ เที่ยวบินของฉันถูกยกเลิก มีเที่ยวบินที่ช้ากว่านี้ไหม",
+     "th": "ขอโทษค่ะ/ครับ เที่ยวบินของฉันถูกยกเลิก มีเที่ยวบินที่ช้ากว่านี้ไหม?",
      "en": "Excuse me, my flight is cancelled. Is there a later flight?",
      "accept": [
       "Excuse me, my flight was cancelled. Is there a later flight?",
@@ -15693,12 +15693,12 @@
      ]
     },
     {
-     "th": "ถามเจ้าหน้าที่สายการบิน: ฉันทำอะไรแทนได้บ้าง",
+     "th": "ฉันทำอะไรแทนได้บ้าง?",
      "en": "What can I do instead?",
      "accept": []
     },
     {
-     "th": "ขอเจ้าหน้าที่สายการบิน: ฉันขอ voucher ได้ไหม",
+     "th": "ฉันขอ voucher ได้ไหม?",
      "en": "Can I get a voucher?",
      "accept": [
       "Can I have a voucher?",
@@ -15706,21 +15706,21 @@
      ]
     },
     {
-     "th": "บอกเจ้าหน้าที่สายการบิน: เที่ยวบินของเราดีเลย์ ช่วยหาโรงแรมให้เราได้ไหม",
+     "th": "เที่ยวบินของเราดีเลย์ ช่วยหาโรงแรมให้เราได้ไหม?",
      "en": "Our flight is delayed. Could you find a hotel for us?",
      "accept": [
       "Our flight is delayed. Could you find us a hotel?"
      ]
     },
     {
-     "th": "ถามเจ้าหน้าที่สายการบิน: ถ้าฉันขึ้นเที่ยวบินที่ช้ากว่า ฉันจะได้ voucher ไหม",
+     "th": "ถ้าฉันขึ้นเที่ยวบินที่ช้ากว่า ฉันจะได้ voucher ไหม?",
      "en": "If I take the later flight, will I get a voucher?",
      "accept": [
       "Will I get a voucher if I take the later flight?"
      ]
     },
     {
-     "th": "ถามเจ้าหน้าที่สายการบิน: มีข้อมูลอัปเดตของเที่ยวบินไหม",
+     "th": "มีข้อมูลอัปเดตของเที่ยวบินไหม?",
      "en": "Is there an update on the flight?",
      "accept": [
       "Is there an update on our flight?"
@@ -16139,14 +16139,14 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "ถามเพื่อนว่า (ทริปที่ผ่านมา) ไปเที่ยวกับใครมา",
+     "th": "คุณไปเที่ยวกับใครมา?",
      "en": "Who did you go with?",
      "accept": [
       "Who went with you?"
      ]
     },
     {
-     "th": "ถามพ่อว่า (ทริปทำงานของพ่อ) กินอะไรมาบ้าง",
+     "th": "คุณกินอะไรมาบ้าง?",
      "en": "What did you eat?",
      "accept": [
       "What did you eat on the trip?",
@@ -16154,7 +16154,7 @@
      ]
     },
     {
-     "th": "แม่ถามว่าพักที่ไหน ตอบแม่ว่า: ฉันพักที่โรงแรมติดทะเล",
+     "th": "ฉันพักที่โรงแรมติดทะเล",
      "en": "I stayed at a hotel next to the beach.",
      "accept": [
       "I stayed in a hotel next to the beach.",
@@ -16162,7 +16162,7 @@
      ]
     },
     {
-     "th": "ถาม Teacher John ว่า คุณกลับมาจากทริปเมื่อไหร่",
+     "th": "คุณกลับมาเมื่อไหร่?",
      "en": "When did you come back?",
      "accept": [
       "When did you get back?",
@@ -16170,21 +16170,21 @@
      ]
     },
     {
-     "th": "ตอบแม่ว่า: เรากลับมาเมื่อสองวันก่อน",
+     "th": "เรากลับมาเมื่อสองวันก่อน",
      "en": "We came back two days ago.",
      "accept": [
       "We got back two days ago."
      ]
     },
     {
-     "th": "ถาม Mali ว่า คุณไปเกาะยังไง (เดินทางด้วยอะไร)",
+     "th": "คุณไปเกาะยังไง?",
      "en": "How did you get to the island?",
      "accept": [
       "How did you go to the island?"
      ]
     },
     {
-     "th": "บอกแม่ว่า ฉันซื้อของที่ระลึกให้แม่ระหว่างทางกลับ",
+     "th": "ฉันซื้อของที่ระลึกมาให้คุณระหว่างทาง",
      "en": "I bought a souvenir for you on the way.",
      "accept": [
       "I bought you a souvenir on the way.",
@@ -16722,7 +16722,7 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "ฝึกถาม-ตอบ: ถามว่า 'คุณเคยไปญี่ปุ่นไหม' แล้วตอบเองแบบสั้นว่า 'ไม่เคย'",
+     "th": "คุณเคยไปญี่ปุ่นไหม? — ไม่เคย",
      "en": "Have you ever been to Japan? No, I haven't.",
      "accept": [
       "Have you ever been to Japan? No, I have not.",
@@ -16730,7 +16730,7 @@
      ]
     },
     {
-     "th": "Teacher Torto ถามว่าเคยลองทุเรียนไหม ตอบแบบสั้นว่า 'เคย'",
+     "th": "ใช่ ฉันเคย (ตอบสั้นๆ)",
      "en": "Yes, I have.",
      "accept": [
       "Yes, I have. I've tried durian.",
@@ -16738,31 +16738,31 @@
      ]
     },
     {
-     "th": "ถาม Bogy ว่า เคยเห็นหิมะไหม",
+     "th": "คุณเคยเห็นหิมะไหม?",
      "en": "Have you ever seen snow?",
      "accept": []
     },
     {
-     "th": "ถาม Mali ว่า เคยกินก๋วยเตี๋ยวน้ำไหม",
+     "th": "คุณเคยกินก๋วยเตี๋ยวน้ำไหม?",
      "en": "Have you ever eaten noodle soup?",
      "accept": []
     },
     {
-     "th": "บอกว่า ฉันไม่เคยไปภูเก็ต",
+     "th": "ฉันไม่เคยไปภูเก็ต",
      "en": "I've never been to Phuket.",
      "accept": [
       "I have never been to Phuket."
      ]
     },
     {
-     "th": "ถาม Teacher Torto ว่า เคยตั้งแคมป์ในป่าไหม",
+     "th": "คุณเคยตั้งแคมป์ในป่าไหม?",
      "en": "Have you ever camped in a forest?",
      "accept": [
       "Have you ever camped in the forest?"
      ]
     },
     {
-     "th": "ถาม May ว่า เคยโต้คลื่นไหม แล้วตอบเองแบบสั้นว่า 'ไม่เคย'",
+     "th": "คุณเคยโต้คลื่นไหม? — ไม่เคย",
      "en": "Have you ever surfed? No, I haven't.",
      "accept": [
       "Have you ever surfed? No, I have not.",
@@ -17296,7 +17296,7 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "ฝึกถาม-ตอบ: ถามเพื่อนว่า เมื่อคืนตอนสองทุ่มกำลังทำอะไรอยู่ แล้วตอบเองว่า ฉันกำลังทำอาหารอยู่",
+     "th": "เมื่อคืนตอนสองทุ่มคุณกำลังทำอะไรอยู่? — ฉันกำลังทำอาหารอยู่",
      "en": "What were you doing at 8 p.m. last night? I was cooking.",
      "accept": [
       "What were you doing at 8 p.m.? I was cooking.",
@@ -17304,7 +17304,7 @@
      ]
     },
     {
-     "th": "บอกว่า เมื่อวานตอน 7 โมงเช้า ฉันกำลังรอรถบัสอยู่",
+     "th": "เมื่อวานตอน 7 โมงเช้า ฉันกำลังรอรถบัสอยู่",
      "en": "I was waiting for the bus at 7 a.m. yesterday.",
      "accept": [
       "At 7 a.m. yesterday, I was waiting for the bus.",
@@ -17312,28 +17312,28 @@
      ]
     },
     {
-     "th": "ถาม John ว่า เมื่อวานตอนบ่ายสามโมง Bogy กำลังทำอะไรอยู่",
+     "th": "เมื่อวานตอนบ่ายสามโมง Bogy กำลังทำอะไรอยู่?",
      "en": "What was Bogy doing at 3 p.m. yesterday?",
      "accept": [
       "What was Bogy doing at three yesterday?"
      ]
     },
     {
-     "th": "บอกว่า เมื่อคืนตอนสี่ทุ่ม May กับ Mali กำลังดูหนังอยู่",
+     "th": "เมื่อคืนตอนสี่ทุ่ม May กับ Mali กำลังดูหนังอยู่",
      "en": "May and Mali were watching a movie at 10 p.m. last night.",
      "accept": [
       "At 10 p.m. last night, May and Mali were watching a movie."
      ]
     },
     {
-     "th": "John ถามว่า 'Were you sleeping at 6 a.m.?' ตอบแบบสั้นว่า ใช่ (ตอนนั้นกำลังหลับ)",
+     "th": "ใช่ ฉันกำลังหลับ (ตอบสั้นๆ)",
      "en": "Yes, I was.",
      "accept": [
       "Yes, I was sleeping."
      ]
     },
     {
-     "th": "บอกว่า เมื่อวานตอนเที่ยง แม่ของฉันไม่ได้กำลังทำงาน แม่กำลังกินข้าวกลางวันอยู่",
+     "th": "เมื่อวานตอนเที่ยง แม่ของฉันไม่ได้กำลังทำงาน เธอกำลังกินข้าวกลางวันอยู่",
      "en": "My mother wasn't working at twelve yesterday. She was having lunch.",
      "accept": [
       "My mother was not working at twelve yesterday. She was having lunch.",
@@ -17557,38 +17557,38 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "เล่าว่า (เมื่อวาน) ฉันกำลังวิ่งเพราะสาย ก็เลยเหนื่อยมาก",
+     "th": "ฉันกำลังวิ่งเพราะสาย ก็เลยเหนื่อยมาก",
      "en": "I was running because I was late, so I was very tired.",
      "accept": [
       "I was running because I was late, so I was tired."
      ]
     },
     {
-     "th": "เล่าว่า ฉันกำลังหากระเป๋าอยู่ ตอนที่แม่ของฉันโทรมา",
+     "th": "ฉันกำลังหากระเป๋าอยู่ ตอนที่แม่ของฉันโทรมา",
      "en": "I was looking for my bag when my mother phoned.",
      "accept": [
       "I was looking for my bag when my mother phoned me."
      ]
     },
     {
-     "th": "เล่าว่า Bogy กำลังเดินกลับบ้านตอนที่ฝนเริ่มตก เขาก็เลยเปียก",
+     "th": "Bogy กำลังเดินกลับบ้านตอนที่ฝนเริ่มตก เขาก็เลยเปียก",
      "en": "Bogy was walking home when it started to rain, so he got wet.",
      "accept": [
       "Bogy was walking home when it started raining, so he got wet."
      ]
     },
     {
-     "th": "เล่าว่า เรากำลังเดินอยู่ในป่าตอนที่เราหลงทาง",
+     "th": "เรากำลังเดินอยู่ในป่าตอนที่เราหลงทาง",
      "en": "We were walking in the forest when we got lost.",
      "accept": []
     },
     {
-     "th": "เล่าว่า ถนนลื่นเพราะฝนกำลังตก ฉันก็เลยเดินช้า ๆ",
+     "th": "ถนนลื่นเพราะฝนกำลังตก ฉันก็เลยเดินช้า ๆ",
      "en": "The road was slippery because it was raining, so I walked slowly.",
      "accept": []
     },
     {
-     "th": "เล่าว่า ขณะที่เรากำลังกินข้าวเย็น พายุก็เริ่มเข้า เราก็เลยอยู่บ้าน",
+     "th": "ขณะที่เรากำลังกินข้าวเย็น พายุก็เริ่มเข้า เราก็เลยอยู่บ้าน",
      "en": "While we were having dinner, the storm started, so we stayed home.",
      "accept": [
       "While we were eating dinner, the storm started, so we stayed home.",
@@ -17871,19 +17871,19 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "เล่นเป็น Mali: ถามผู้จัดการของ Mali ว่า ฉันต้องใส่ยูนิฟอร์มไหม",
+     "th": "ฉันต้องใส่ยูนิฟอร์มไหม?",
      "en": "Do I have to wear a uniform?",
      "accept": []
     },
     {
-     "th": "บอกพนักงานใหม่ว่า ห้ามมาสาย",
+     "th": "คุณห้ามมาสาย",
      "en": "You mustn't be late.",
      "accept": [
       "You must not be late."
      ]
     },
     {
-     "th": "พูดแทนผู้จัดการของ Mali: บอก Mali ว่า คุณไม่จำเป็นต้องมาประชุมวันเสาร์",
+     "th": "คุณไม่จำเป็นต้องมาประชุมวันเสาร์",
      "en": "You don't have to come to the meeting on Saturday.",
      "accept": [
       "You don't have to go to the meeting on Saturday.",
@@ -17891,14 +17891,14 @@
      ]
     },
     {
-     "th": "บอกเพื่อนร่วมงานว่า ห้ามใช้โทรศัพท์ตอนทำงาน",
+     "th": "คุณห้ามใช้โทรศัพท์ตอนทำงาน",
      "en": "You mustn't use your phone at work.",
      "accept": [
       "You must not use your phone at work."
      ]
     },
     {
-     "th": "บอกว่า เราต้องทำงานให้เสร็จก่อนห้าโมงเย็น (กฎ)",
+     "th": "เราต้องทำงานให้เสร็จก่อนห้าโมงเย็น (ใช้ must)",
      "en": "We must finish our tasks before 5 p.m.",
      "accept": [
       "We must finish our tasks before five.",
@@ -17906,7 +17906,7 @@
      ]
     },
     {
-     "th": "ถามผู้จัดการว่า Mali ต้องทำงานวันอาทิตย์ไหม",
+     "th": "Mali ต้องทำงานวันอาทิตย์ไหม?",
      "en": "Does Mali have to work on Sunday?",
      "accept": [
       "Does Mali have to work on Sundays?"
@@ -18118,14 +18118,14 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "ถาม Mali ว่า คุณทำงานที่โรงแรมมานานเท่าไรแล้ว",
+     "th": "คุณทำงานที่โรงแรมมานานเท่าไรแล้ว?",
      "en": "How long have you worked at the hotel?",
      "accept": [
       "Mali, how long have you worked at the hotel?"
      ]
     },
     {
-     "th": "บอกว่า (งานพาร์ตไทม์ที่ร้านกาแฟ) ฉันทำงานที่นั่นมาสองเดือนแล้ว",
+     "th": "ฉันทำงานที่นั่นมาสองเดือนแล้ว",
      "en": "I've worked there for two months.",
      "accept": [
       "I have worked there for two months.",
@@ -18133,21 +18133,21 @@
      ]
     },
     {
-     "th": "บอกว่า Bogy เป็นเด็กฝึกงานที่โรงแรม เขาทำงานที่นั่นตั้งแต่เดือนมีนาคม",
+     "th": "Bogy เป็นเด็กฝึกงานที่โรงแรม เขาทำงานที่นั่นตั้งแต่เดือนมีนาคม",
      "en": "Bogy is an intern at the hotel. He has worked there since March.",
      "accept": [
       "Bogy is an intern at the hotel. He's worked there since March."
      ]
     },
     {
-     "th": "บอกว่า ผู้จัดการของ Mali ทำงานที่นี่มาสิบปีแล้ว",
+     "th": "ผู้จัดการของ Mali ทำงานที่นี่มาสิบปีแล้ว",
      "en": "Mali's manager has worked here for ten years.",
      "accept": [
       "Mali's manager has worked here for 10 years."
      ]
     },
     {
-     "th": "บอกว่า ฉันทำงานกะเช้ามาสามเดือนแล้ว",
+     "th": "ฉันทำงานกะเช้ามาสามเดือนแล้ว",
      "en": "I've worked the morning shift for three months.",
      "accept": [
       "I have worked the morning shift for three months.",
@@ -18155,7 +18155,7 @@
      ]
     },
     {
-     "th": "Teacher Torto ถามว่าทำงานที่ร้านมานานเท่าไร ตอบสั้น ๆ ว่า ตั้งแต่เดือนมกราคม",
+     "th": "ตั้งแต่เดือนมกราคม",
      "en": "Since January.",
      "accept": [
       "I've worked there since January.",
@@ -18695,7 +18695,7 @@
      ]
     },
     {
-     "th": "พูดถึงทริปที่ผ่านมา: ฉันคิดว่าวิวสุดยอดมาก แล้วถาม Bogy ว่าคิดยังไง",
+     "th": "ฉันคิดว่าวิวสุดยอดมาก คุณคิดว่ายังไง?",
      "en": "I think the view was amazing. What do you think?",
      "accept": []
     },
@@ -18792,12 +18792,12 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "รีวิวร้านกาแฟ: เราไปที่นั่นวันอาทิตย์ มันเป็นร้านกาแฟที่ดีที่สุด ฉันแนะนำ",
+     "th": "เราไปที่นั่นวันอาทิตย์ มันเป็นร้านกาแฟที่ดีที่สุด ฉันแนะนำ",
      "en": "We went there on Sunday. It was the best café. I recommend it.",
      "accept": []
     },
     {
-     "th": "รีวิวตลาด: เราไปตลาดเมื่อวันเสาร์ มันเป็นตลาดที่คนเยอะที่สุด แต่คุ้มค่า",
+     "th": "เราไปตลาดเมื่อวันเสาร์ มันเป็นตลาดที่คนเยอะที่สุด แต่คุ้มค่า",
      "en": "We went to the market on Saturday. It was the most crowded market, but it was worth it.",
      "accept": [
       "We went to the market on Saturday. It was the most crowded market, but it was worth it. I recommend it.",
@@ -18805,7 +18805,7 @@
      ]
     },
     {
-     "th": "รีวิวโรงแรม: ฉันเคยไปโรงแรมนี้แล้ว บริการแย่ที่สุด ฉันไม่แนะนำ",
+     "th": "ฉันเคยไปโรงแรมนี้แล้ว บริการแย่ที่สุด ฉันไม่แนะนำ",
      "en": "I've been to this hotel. The service was the worst. I don't recommend it.",
      "accept": [
       "I have been to this hotel. The service was the worst. I don't recommend it.",
@@ -18813,19 +18813,19 @@
      ]
     },
     {
-     "th": "รีวิวเกาะ: เราไปเกาะเมื่อเดือนที่แล้ว มันเป็นเกาะที่เงียบสงบที่สุด ฉันแนะนำ",
+     "th": "เราไปเกาะเมื่อเดือนที่แล้ว มันเป็นเกาะที่เงียบสงบที่สุด ฉันแนะนำ",
      "en": "We went to the island last month. It was the most peaceful island. I recommend it.",
      "accept": []
     },
     {
-     "th": "รีวิวร้านก๋วยเตี๋ยว: Mali กับฉันกินที่ร้านก๋วยเตี๋ยวเมื่อวาน ราคาถูกที่สุดในเมือง คุ้มมาก",
+     "th": "Mali กับฉันกินที่ร้านก๋วยเตี๋ยวเมื่อวาน ราคาถูกที่สุดในเมือง คุ้มมาก",
      "en": "Mali and I ate at the noodle shop yesterday. It was the cheapest in town. It was really worth it.",
      "accept": [
       "Mali and I ate at the noodle shop yesterday. It was the cheapest in town. It was worth it."
      ]
     },
     {
-     "th": "รีวิวร้านอาหารริมทะเล: เราไปกินข้าวเย็นที่นั่นเมื่อคืน วิวดีที่สุด ฉันแนะนำ",
+     "th": "เราไปกินข้าวเย็นที่นั่นเมื่อคืน วิวดีที่สุด ฉันแนะนำ",
      "en": "We had dinner there last night. It had the best view. I recommend it.",
      "accept": [
       "We had dinner there last night. The view was the best. I recommend it.",
@@ -19028,26 +19028,26 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "บอกว่า ฉันยังไม่ได้ส่งรูปเลย",
+     "th": "ฉันยังไม่ได้ส่งรูปเลย",
      "en": "I haven't sent the photos yet.",
      "accept": [
       "I have not sent the photos yet."
      ]
     },
     {
-     "th": "บอกว่า ฉันจองโต๊ะไว้แล้ว (already)",
+     "th": "ฉันจองโต๊ะไว้แล้ว (already)",
      "en": "I've already booked the table.",
      "accept": [
       "I have already booked the table."
      ]
     },
     {
-     "th": "ถาม May ว่า โทรหาร้านแล้วหรือยัง",
+     "th": "คุณโทรหาร้านแล้วหรือยัง?",
      "en": "Have you called the restaurant yet?",
      "accept": []
     },
     {
-     "th": "บอกว่า Teacher Nina เพิ่งซื้อเค้กมา (just)",
+     "th": "Teacher Nina เพิ่งซื้อเค้กมา (just)",
      "en": "Teacher Nina has just bought the cake.",
      "accept": [
       "Nina has just bought the cake.",
@@ -19055,7 +19055,7 @@
      ]
     },
     {
-     "th": "บอกว่า Mali ยังไม่ได้โทรกลับมาเลย",
+     "th": "Mali ยังไม่ได้โทรกลับมาเลย",
      "en": "Mali hasn't called back yet.",
      "accept": [
       "Mali has not called back yet.",
@@ -19063,14 +19063,14 @@
      ]
     },
     {
-     "th": "ถามว่า Capy ซื้อเครื่องดื่มแล้วหรือยัง",
+     "th": "Capy ซื้อเครื่องดื่มแล้วหรือยัง?",
      "en": "Has Capy bought the drinks yet?",
      "accept": [
       "Has Capy bought drinks yet?"
      ]
     },
     {
-     "th": "ถาม Capy ว่า ส่งการ์ดเชิญไปงานปาร์ตี้แล้วหรือยัง",
+     "th": "คุณส่งการ์ดเชิญไปงานปาร์ตี้แล้วหรือยัง?",
      "en": "Have you sent the invitations yet?",
      "accept": [
       "Capy, have you sent the invitations yet?",
@@ -19402,14 +19402,14 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "บอกร้านว่า เราจองวันศุกร์ไปแล้ว ขอเปลี่ยนเป็นวันเสาร์ได้ไหม",
+     "th": "เราจองวันศุกร์ไปแล้ว ขอเปลี่ยนเป็นวันเสาร์ได้ไหม?",
      "en": "We've already booked for Friday. Can we change it to Saturday?",
      "accept": [
       "We have already booked for Friday. Can we change it to Saturday?"
      ]
     },
     {
-     "th": "Mali บอกว่าวันศุกร์เต็ม ตอบว่า: โอเค เดี๋ยวฉันจะโทรหา Nina แล้วจะโทรกลับนะ",
+     "th": "โอเค เดี๋ยวฉันจะโทรหา Nina แล้วจะโทรกลับนะ",
      "en": "OK, I'll call Nina and call you back.",
      "accept": [
       "OK, I'll call Nina and I'll call you back.",
@@ -19417,7 +19417,7 @@
      ]
     },
     {
-     "th": "บอกว่า ฉันยังไม่ได้ยืนยันเวลา พรุ่งนี้ฉันจะโทรกลับ",
+     "th": "ฉันยังไม่ได้ยืนยันเวลา พรุ่งนี้ฉันจะโทรกลับ",
      "en": "I haven't confirmed the time yet. I'll call back tomorrow.",
      "accept": [
       "I haven't confirmed the time yet. I'll call you back tomorrow.",
@@ -19425,7 +19425,7 @@
      ]
     },
     {
-     "th": "บอกว่า Mali ยังไม่ได้โทรกลับมา ฉันจะฝากข้อความไว้",
+     "th": "Mali ยังไม่ได้โทรกลับมา ฉันจะฝากข้อความไว้",
      "en": "Mali hasn't called back yet. I'll leave a message.",
      "accept": [
       "Mali hasn't called back yet, so I'll leave a message.",
@@ -19433,14 +19433,14 @@
      ]
     },
     {
-     "th": "ถามร้านว่า ยืนยันการจองแล้วหรือยัง แล้วขอเปลี่ยนเป็นหนึ่งทุ่ม",
+     "th": "คุณยืนยันการจองแล้วหรือยัง? ขอเปลี่ยนเป็นหนึ่งทุ่มได้ไหม?",
      "en": "Have you confirmed the booking yet? Can we change it to 7 p.m.?",
      "accept": [
       "Have you confirmed the booking yet? Can we change it to seven?"
      ]
     },
     {
-     "th": "บอกว่า เราเพิ่งจองวันศุกร์ไป แต่ Bogy ไม่ว่าง ขอเลื่อนเป็นวันอาทิตย์ได้ไหม",
+     "th": "เราเพิ่งจองวันศุกร์ไป แต่ Bogy ไม่ว่าง ขอเลื่อนเป็นวันอาทิตย์ได้ไหม?",
      "en": "We've just booked for Friday, but Bogy isn't free. Can we change it to Sunday?",
      "accept": [
       "We have just booked for Friday, but Bogy isn't free. Can we change it to Sunday?"
@@ -19628,40 +19628,40 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "เสนอว่า ทำไมเราไม่ทำการ์ดกันล่ะ แล้วอาสาว่า ฉันจะซื้อดอกไม้เอง",
+     "th": "ทำไมเราไม่ทำการ์ดกันล่ะ? ฉันจะซื้อดอกไม้เอง",
      "en": "Why don't we make a card? I'll buy the flowers.",
      "accept": []
     },
     {
-     "th": "เสนอว่า ทำไมเราไม่ถ่ายรูปกับ Bogy ล่ะ",
+     "th": "ทำไมเราไม่ถ่ายรูปกับ Bogy ล่ะ?",
      "en": "Why don't we take a photo with Bogy?",
      "accept": [
       "Why don't we take a team photo with Bogy?"
      ]
     },
     {
-     "th": "อาสาว่า ฉันจะเอาเค้กมาเอง",
+     "th": "ฉันจะเอาเค้กมาเอง",
      "en": "I'll bring the cake.",
      "accept": [
       "I will bring the cake."
      ]
     },
     {
-     "th": "เสนอว่า ทำไมเราไม่ขอให้ Teacher John ส่งวิดีโอมาล่ะ",
+     "th": "ทำไมเราไม่ขอให้ Teacher John ส่งวิดีโอมาล่ะ?",
      "en": "Why don't we ask Teacher John to send a video?",
      "accept": [
       "Why don't we ask John to send a video?"
      ]
     },
     {
-     "th": "Mali ถามว่าใครจะเอาเพลงมา ตอบว่า: ฉันเอง! ฉันจะเอาเพลงมา",
+     "th": "ฉันเอง! ฉันจะเอาเพลงมา",
      "en": "I'll do it! I'll bring the music.",
      "accept": [
       "I'll do it. I'll bring the music."
      ]
     },
     {
-     "th": "เสนอว่า ทำไมเราไม่ไปที่ร้านก่อนหกโมงล่ะ แล้วอาสาว่า ฉันจะโทรหา Mali เอง",
+     "th": "ทำไมเราไม่ไปที่ร้านก่อนหกโมงล่ะ? ฉันจะโทรหา Mali เอง",
      "en": "Why don't we go to the restaurant before six? I'll call Mali.",
      "accept": [
       "Why don't we go to the restaurant before 6 p.m.? I'll call Mali."
@@ -19812,24 +19812,24 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "ถาม May ว่า ซื้อของขวัญแล้วหรือยัง",
+     "th": "คุณซื้อของขวัญแล้วหรือยัง?",
      "en": "Have you bought the gift yet?",
      "accept": []
     },
     {
-     "th": "ถามในกลุ่มว่า ใครจะเป็นคนโทรหาร้าน",
+     "th": "ใครจะเป็นคนโทรหาร้าน?",
      "en": "Who's going to call the restaurant?",
      "accept": [
       "Who is going to call the restaurant?"
      ]
     },
     {
-     "th": "ถามว่า Mali ทำการ์ดเสร็จแล้วหรือยัง",
+     "th": "Mali ทำการ์ดเสร็จแล้วหรือยัง?",
      "en": "Has Mali finished the card yet?",
      "accept": []
     },
     {
-     "th": "ตอบว่า ฉันซื้อดอกไม้แล้ว แต่ยังไม่ได้ซื้อเค้ก",
+     "th": "ฉันซื้อดอกไม้แล้ว แต่ยังไม่ได้ซื้อเค้ก",
      "en": "I've already bought the flowers, but I haven't bought the cake yet.",
      "accept": [
       "I've bought the flowers, but I haven't bought the cake yet.",
@@ -19837,7 +19837,7 @@
      ]
     },
     {
-     "th": "ถามว่า ใครจะไปรับ Bogy ที่บ้าน",
+     "th": "ใครจะไปรับ Bogy ที่บ้าน?",
      "en": "Who's going to pick up Bogy from his house?",
      "accept": [
       "Who's going to pick Bogy up from his house?",
@@ -19846,7 +19846,7 @@
      ]
     },
     {
-     "th": "ถามเพื่อนว่า ส่งข้อความหา Teacher John แล้วหรือยัง",
+     "th": "คุณส่งข้อความหา Teacher John แล้วหรือยัง?",
      "en": "Have you sent a message to Teacher John yet?",
      "accept": [
       "Have you sent Teacher John a message yet?",
@@ -20108,33 +20108,33 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "อำลา Bogy: เรามีทริปที่ยอดเยี่ยม ฉันจะคิดถึงคุณ โชคดีนะ!",
+     "th": "เรามีทริปที่ยอดเยี่ยม ฉันจะคิดถึงคุณ โชคดีนะ!",
      "en": "We had a great trip. I'll miss you. Good luck!",
      "accept": []
     },
     {
-     "th": "อำลา Bogy: ทริปของเราเป็นประสบการณ์ที่ดีที่สุด โชคดีที่โรงเรียนใหม่นะ!",
+     "th": "ทริปของเราเป็นประสบการณ์ที่ดีที่สุด โชคดีที่โรงเรียนใหม่นะ!",
      "en": "Our trip was the best experience. Good luck at your new school!",
      "accept": [
       "Our trip was the best experience. Good luck at your new school."
      ]
     },
     {
-     "th": "อำลา Bogy: ตอนที่กระเป๋าฉันหาย คุณช่วยฉันหา ขอบคุณนะ ฉันจะคิดถึงคุณ",
+     "th": "ตอนที่กระเป๋าฉันหาย คุณช่วยฉันหา ขอบคุณนะ ฉันจะคิดถึงคุณ",
      "en": "When I lost my bag, you helped me look for it. Thank you. I'll miss you.",
      "accept": [
       "When I lost my bag, you helped me look for it. Thanks. I'll miss you."
      ]
     },
     {
-     "th": "อำลา Bogy: เราสนุกมากที่เกาะ ฉันจะโทรหาคุณทุกสัปดาห์ ติดต่อกันนะ!",
+     "th": "เราสนุกมากที่เกาะ ฉันจะโทรหาคุณทุกสัปดาห์ ติดต่อกันนะ!",
      "en": "We had a lot of fun on the island. I'll call you every week. Keep in touch!",
      "accept": [
       "We had fun on the island. I'll call you every week. Keep in touch!"
      ]
     },
     {
-     "th": "อำลา Bogy: คุณเป็นเพื่อนที่ตลกที่สุดในทีม เดินทางปลอดภัยนะ! เจอกันปีหน้า",
+     "th": "คุณเป็นเพื่อนที่ตลกที่สุดในทีม เดินทางปลอดภัยนะ! เจอกันปีหน้า",
      "en": "You were the funniest friend in the team. Have a safe trip! See you next year.",
      "accept": [
       "You were the funniest friend on the team. Have a safe trip! See you next year."
@@ -20171,7 +20171,7 @@
    "hint": "① คำแรกหรือคำสำคัญ ② ประโยคเว้นช่อง · ใช้ hint ไม่หักดาว บันทึกเป็น assisted / independent",
    "pool": [
     {
-     "th": "บอก John ว่า ทีมเรากลับมาเมื่อสองสัปดาห์ก่อน ทริปน่าตื่นเต้นมาก",
+     "th": "ทีมเรากลับมาเมื่อสองสัปดาห์ก่อน ทริปน่าตื่นเต้นมาก",
      "en": "Our team came back two weeks ago. The trip was very exciting.",
      "accept": [
       "We came back two weeks ago. The trip was very exciting.",
@@ -20179,19 +20179,19 @@
      ]
     },
     {
-     "th": "ถาม John ว่า เคยไปเชียงใหม่ไหม",
+     "th": "คุณเคยไปเชียงใหม่ไหม?",
      "en": "Have you ever been to Chiang Mai?",
      "accept": []
     },
     {
-     "th": "เล่าให้ John ฟังว่า ฉันกำลังรอรถบัสอยู่ตอนที่ฝนเริ่มตก ก็เลยเปียกหมด",
+     "th": "ฉันกำลังรอรถบัสอยู่ตอนที่ฝนเริ่มตก ก็เลยเปียกหมด",
      "en": "I was waiting for the bus when it started to rain, so I got wet.",
      "accept": [
       "I was waiting for the bus when it started raining, so I got wet."
      ]
     },
     {
-     "th": "เล่าว่า Mali ทำงานพาร์ตไทม์ที่ร้านแห่งหนึ่ง เธอต้องใส่ยูนิฟอร์ม แต่ไม่ต้องทำงานวันอาทิตย์",
+     "th": "Mali ทำงานที่ร้านแห่งหนึ่ง เธอต้องใส่ยูนิฟอร์ม แต่ไม่ต้องทำงานวันอาทิตย์",
      "en": "Mali works at a shop. She has to wear a uniform, but she doesn't have to work on Sunday.",
      "accept": [
       "Mali works at a shop. She has to wear a uniform, but she doesn't have to work on Sundays.",
@@ -20200,14 +20200,14 @@
      ]
     },
     {
-     "th": "บอกว่า ฉันคิดว่าเกาะเป็นที่ที่ดีที่สุด แล้วถาม John ว่าคิดยังไง",
+     "th": "ฉันคิดว่าเกาะเป็นที่ที่ดีที่สุด คุณคิดว่ายังไง?",
      "en": "I think the island was the best place. What do you think?",
      "accept": [
       "I think the island is the best place. What do you think?"
      ]
     },
     {
-     "th": "รับสายแทน Nina: รอสักครู่นะ Nina กำลังคุยกับ Bogy อยู่",
+     "th": "รอสักครู่นะ Nina กำลังคุยกับ Bogy อยู่",
      "en": "Hold on, please. Nina is talking to Bogy.",
      "accept": [
       "Hold on. Nina is talking to Bogy.",
@@ -20215,7 +20215,7 @@
      ]
     },
     {
-     "th": "ถามในกลุ่มว่า ใครจะเป็นคนจองตั๋วสำหรับทริปหน้า",
+     "th": "ใครจะเป็นคนจองตั๋วสำหรับทริปหน้า?",
      "en": "Who's going to book the tickets for the next trip?",
      "accept": [
       "Who is going to book the tickets for the next trip?"

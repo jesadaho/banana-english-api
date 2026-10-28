@@ -22,21 +22,23 @@ test('pool items are well formed', () => {
     assert.ok(['in', 'on', 'at'].includes(item.answer), item.id);
     assert.equal(item.prompt.split('___').length, 2, `${item.id} needs one blank`);
     assert.ok(item.word.length > 0 && item.reasonTh.length > 0, item.id);
+    assert.ok(item.promptTh.includes('___'), `${item.id} promptTh needs a blank`);
   }
   assert.ok(inOnAtPoolFor('time').length >= 60);
   assert.ok(inOnAtPoolFor('place').length >= 60);
 });
 
 for (const topic of ['time', 'place', 'mix']) {
-  test(`${topic} deal: 12 items, 4 per answer, 2+ traps, no repeats`, () => {
+  test(`${topic} deal: 7 items, 2-3 per answer, 2+ traps, no repeats`, () => {
     for (let seed = 1; seed <= 50; seed++) {
-      const deal = dealInOnAt(topic, 12, seeded(seed));
-      assert.equal(deal.length, 12);
+      const deal = dealInOnAt(topic, 7, seeded(seed));
+      assert.equal(deal.length, 7);
       for (const answer of ['in', 'on', 'at']) {
-        assert.equal(deal.filter((d) => d.answer === answer).length, 4);
+        const n = deal.filter((d) => d.answer === answer).length;
+        assert.ok(n >= 2 && n <= 3);
       }
       assert.ok(deal.filter((d) => d.trap).length >= 2);
-      assert.equal(new Set(deal.map((d) => d.id)).size, 12);
+      assert.equal(new Set(deal.map((d) => d.id)).size, 7);
       if (topic === 'mix') {
         assert.ok(deal.some((d) => d.topic === 'time'));
         assert.ok(deal.some((d) => d.topic === 'place'));

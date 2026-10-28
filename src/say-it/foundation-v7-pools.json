@@ -703,7 +703,7 @@
     },
     {
       "id": "fnd_v7_u14n04_q5",
-      "promptTh": "อยากรู้ว่า Max อยู่ที่ไหน",
+      "promptTh": "Max อยู่ที่ไหน?",
       "answerEn": "Where is Max?",
       "acceptedAnswers": [
         "Where's Max?"
@@ -713,25 +713,25 @@
   "fnd_v7_u15n07": [
     {
       "id": "fnd_v7_u15n07_q1",
-      "promptTh": "บอกให้ตรงไป",
+      "promptTh": "ตรงไป",
       "answerEn": "Go straight.",
       "acceptedAnswers": []
     },
     {
       "id": "fnd_v7_u15n07_q2",
-      "promptTh": "บอกให้เลี้ยวซ้าย",
+      "promptTh": "เลี้ยวซ้าย",
       "answerEn": "Turn left.",
       "acceptedAnswers": []
     },
     {
       "id": "fnd_v7_u15n07_q3",
-      "promptTh": "บอกให้เลี้ยวขวา",
+      "promptTh": "เลี้ยวขวา",
       "answerEn": "Turn right.",
       "acceptedAnswers": []
     },
     {
       "id": "fnd_v7_u15n07_q4",
-      "promptTh": "บอกให้ตรงไปแล้วเลี้ยวซ้าย",
+      "promptTh": "ตรงไป แล้วเลี้ยวซ้าย",
       "answerEn": "Go straight, then turn left.",
       "acceptedAnswers": [
         "Go straight and turn left.",
@@ -742,7 +742,7 @@
     },
     {
       "id": "fnd_v7_u15n07_q5",
-      "promptTh": "บอกให้ตรงไปแล้วเลี้ยวขวา",
+      "promptTh": "ตรงไป แล้วเลี้ยวขวา",
       "answerEn": "Go straight, then turn right.",
       "acceptedAnswers": [
         "Go straight and turn right.",
@@ -1356,7 +1356,7 @@
   "fnd_v7_u14n12": [
     {
       "id": "fnd_v7_u14n12_q1",
-      "promptTh": "มีของอยู่ในมือแต่ยังไม่รู้ว่าคืออะไร ลองถาม",
+      "promptTh": "นี่คืออะไร?",
       "answerEn": "What is this?",
       "acceptedAnswers": [
         "What's this?"
@@ -1436,7 +1436,7 @@
   "fnd_v7_u14n13": [
     {
       "id": "fnd_v7_u14n13_q1",
-      "promptTh": "หาไม่เจอกระเป๋าของตัวเอง ลองถาม",
+      "promptTh": "กระเป๋าของฉันอยู่ที่ไหน?",
       "answerEn": "Where is my bag?",
       "acceptedAnswers": [
         "Where's my bag?"
@@ -1452,7 +1452,7 @@
     },
     {
       "id": "fnd_v7_u14n13_q3",
-      "promptTh": "อยากรู้ว่า Max อยู่ที่ไหน",
+      "promptTh": "Max อยู่ที่ไหน?",
       "answerEn": "Where is Max?",
       "acceptedAnswers": [
         "Where's Max?"
@@ -1468,7 +1468,7 @@
     },
     {
       "id": "fnd_v7_u14n13_q5",
-      "promptTh": "พูดถึงกระเป๋าไปแล้ว อยากถามสั้น ๆ ว่ามันอยู่ไหน",
+      "promptTh": "มันอยู่ที่ไหน?",
       "answerEn": "Where is it?",
       "acceptedAnswers": [
         "Where's it?"
@@ -1510,7 +1510,7 @@
   "fnd_v7_u14tn05": [
     {
       "id": "fnd_v7_u14tn05_q1",
-      "promptTh": "วันเกิดสมมติอยู่ในเดือน January",
+      "promptTh": "วันเกิดของฉันอยู่ในเดือนมกราคม",
       "answerEn": "My birthday is in January.",
       "acceptedAnswers": [
         "My birthday is in January"
@@ -1518,19 +1518,19 @@
     },
     {
       "id": "fnd_v7_u14tn05_q2",
-      "promptTh": "วันเกิดสมมติอยู่ในเดือน February",
+      "promptTh": "วันเกิดของฉันอยู่ในเดือนกุมภาพันธ์",
       "answerEn": "My birthday is in February.",
       "acceptedAnswers": []
     },
     {
       "id": "fnd_v7_u14tn05_q3",
-      "promptTh": "คลาสอยู่ในเดือน March",
+      "promptTh": "คลาสเรียนอยู่ในเดือนมีนาคม",
       "answerEn": "The class is in March.",
       "acceptedAnswers": []
     },
     {
       "id": "fnd_v7_u14tn05_q4",
-      "promptTh": "คลาสเรียนวัน Friday",
+      "promptTh": "คลาสเรียนวันศุกร์",
       "answerEn": "The class is on Friday.",
       "acceptedAnswers": []
     },
@@ -1544,7 +1544,7 @@
     },
     {
       "id": "fnd_v7_u14tn05_q6",
-      "promptTh": "คลาสอยู่ในเดือน April",
+      "promptTh": "คลาสเรียนอยู่ในเดือนเมษายน",
       "answerEn": "The class is in April.",
       "acceptedAnswers": []
     }
@@ -1586,43 +1586,43 @@
   "fnd_v7_u14tn13": [
     {
       "id": "fnd_v7_u14tn13_q1",
-      "promptTh": "วันเกิดสมมติอยู่ในเดือน September",
+      "promptTh": "วันเกิดของฉันอยู่ในเดือนกันยายน",
       "answerEn": "My birthday is in September.",
       "acceptedAnswers": []
     },
     {
       "id": "fnd_v7_u14tn13_q2",
-      "promptTh": "คลาสอยู่ในเดือน October",
+      "promptTh": "คลาสเรียนอยู่ในเดือนตุลาคม",
       "answerEn": "The class is in October.",
       "acceptedAnswers": []
     },
     {
       "id": "fnd_v7_u14tn13_q3",
-      "promptTh": "วันเกิดสมมติอยู่ในเดือน November",
+      "promptTh": "วันเกิดของฉันอยู่ในเดือนพฤศจิกายน",
       "answerEn": "My birthday is in November.",
       "acceptedAnswers": []
     },
     {
       "id": "fnd_v7_u14tn13_q4",
-      "promptTh": "คลาสอยู่ในเดือน December",
+      "promptTh": "คลาสเรียนอยู่ในเดือนธันวาคม",
       "answerEn": "The class is in December.",
       "acceptedAnswers": []
     },
     {
       "id": "fnd_v7_u14tn13_q5",
-      "promptTh": "คลาสอยู่ในเดือน May",
+      "promptTh": "คลาสเรียนอยู่ในเดือนพฤษภาคม",
       "answerEn": "The class is in May.",
       "acceptedAnswers": []
     },
     {
       "id": "fnd_v7_u14tn13_q6",
-      "promptTh": "วันเกิดสมมติอยู่ในเดือน July",
+      "promptTh": "วันเกิดของฉันอยู่ในเดือนกรกฎาคม",
       "answerEn": "My birthday is in July.",
       "acceptedAnswers": []
     },
     {
       "id": "fnd_v7_u14tn13_q7",
-      "promptTh": "คลาสเรียนวัน Monday",
+      "promptTh": "คลาสเรียนวันจันทร์",
       "answerEn": "The class is on Monday.",
       "acceptedAnswers": []
     }

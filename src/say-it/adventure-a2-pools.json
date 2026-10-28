@@ -295,7 +295,7 @@
     },
     {
       "id": "a2_c03n10_q4",
-      "promptTh": "ของ May",
+      "promptTh": "มันเป็นของ May",
       "answerEn": "It's May's.",
       "acceptedAnswers": [
         "It is May's."
@@ -427,7 +427,7 @@
   "a2_c05n06": [
     {
       "id": "a2_c05n06_q1",
-      "promptTh": "ถามว่า Capy กำลังทำอะไรอยู่",
+      "promptTh": "Capy กำลังทำอะไรอยู่?",
       "answerEn": "What is Capy doing?",
       "acceptedAnswers": [
         "What's Capy doing?"
@@ -439,7 +439,7 @@
     },
     {
       "id": "a2_c05n06_q2",
-      "promptTh": "ถามว่าเธอ (May) กำลังทำอะไร แล้วตอบว่าเธอกำลังว่ายน้ำ",
+      "promptTh": "เธอกำลังทำอะไร? — เธอกำลังว่ายน้ำ",
       "answerEn": "What is she doing? — She's swimming.",
       "acceptedAnswers": [
         "What is she doing? She's swimming.",
@@ -453,7 +453,7 @@
     },
     {
       "id": "a2_c05n06_q3",
-      "promptTh": "ถามว่าเขา (Bogy) กำลังทำอะไร แล้วตอบว่าเขากำลังวิ่ง",
+      "promptTh": "เขากำลังทำอะไร? — เขากำลังวิ่ง",
       "answerEn": "What is he doing? — He's running.",
       "acceptedAnswers": [
         "What is he doing? He's running.",
@@ -467,7 +467,7 @@
     },
     {
       "id": "a2_c05n06_q4",
-      "promptTh": "บอกว่า Capy กำลังนอนหลับอยู่บนม้านั่ง",
+      "promptTh": "Capy กำลังนอนหลับอยู่บนม้านั่ง",
       "answerEn": "Capy is sleeping on the bench.",
       "acceptedAnswers": [
         "Capy's sleeping on the bench."
@@ -479,7 +479,7 @@
     },
     {
       "id": "a2_c05n06_q5",
-      "promptTh": "บอกว่าปกติ Mali ว่ายน้ำ แต่วันนี้เธอกำลังอ่านหนังสือ",
+      "promptTh": "ปกติ Mali ว่ายน้ำ แต่วันนี้เธอกำลังอ่านหนังสือ",
       "answerEn": "Mali usually swims, but today she's reading.",
       "acceptedAnswers": [
         "Mali usually swims, but today she is reading."
@@ -491,7 +491,7 @@
     },
     {
       "id": "a2_c05n06_q6",
-      "promptTh": "ถามว่าพวกเขากำลังทำอะไร",
+      "promptTh": "พวกเขากำลังทำอะไร?",
       "answerEn": "What are they doing?",
       "acceptedAnswers": [],
       "hints": [
@@ -503,7 +503,7 @@
   "a2_c05n09": [
     {
       "id": "a2_c05n09_q1",
-      "promptTh": "บอกว่าคุณเล่นแบดมินตันบ่อย แต่วันนี้คุณกำลังอ่านหนังสือ",
+      "promptTh": "ฉันเล่นแบดมินตันบ่อย แต่วันนี้ฉันกำลังอ่านหนังสือ",
       "answerEn": "I often play badminton, but today I'm reading.",
       "acceptedAnswers": [
         "I often play badminton, but today I am reading."
@@ -515,7 +515,7 @@
     },
     {
       "id": "a2_c05n09_q2",
-      "promptTh": "บอกว่าปกติ Bogy วิ่ง แต่ตอนนี้เขากำลังกินข้าว",
+      "promptTh": "ปกติ Bogy วิ่ง แต่ตอนนี้เขากำลังกินข้าว",
       "answerEn": "Bogy usually runs, but at the moment he's eating.",
       "acceptedAnswers": [
         "Bogy usually runs, but right now he's eating.",
@@ -528,7 +528,7 @@
     },
     {
       "id": "a2_c05n09_q3",
-      "promptTh": "บอกว่า May ไม่เคยวาดรูป แต่วันนี้เธอกำลังวาดรูป",
+      "promptTh": "May ไม่เคยวาดรูป แต่วันนี้เธอกำลังวาดรูป",
       "answerEn": "May never draws, but today she's drawing.",
       "acceptedAnswers": [
         "May never draws, but today she is drawing."
@@ -540,7 +540,7 @@
     },
     {
       "id": "a2_c05n09_q4",
-      "promptTh": "บอกว่าคุณออกกำลังกายทุกวัน แต่ตอนนี้คุณกำลังพักผ่อน",
+      "promptTh": "ฉันออกกำลังกายทุกวัน แต่ตอนนี้ฉันกำลังพักผ่อน",
       "answerEn": "I exercise every day, but right now I'm relaxing.",
       "acceptedAnswers": [
         "I exercise every day, but at the moment I'm relaxing.",
@@ -553,7 +553,7 @@
     },
     {
       "id": "a2_c05n09_q5",
-      "promptTh": "บอกว่าบางครั้ง Capy ทำอาหาร แต่วันนี้ Capy กำลังเต้น",
+      "promptTh": "บางครั้ง Capy ทำอาหาร แต่วันนี้ Capy กำลังเต้น",
       "answerEn": "Capy sometimes cooks, but today Capy is dancing.",
       "acceptedAnswers": [
         "Sometimes Capy cooks, but today Capy is dancing.",
@@ -568,7 +568,7 @@
   "a2_c06n08": [
     {
       "id": "a2_c06n08_q1",
-      "promptTh": "ถาม Bogy ว่า \"ทำไมอยากเข้าชมรมดนตรี\"",
+      "promptTh": "ทำไมคุณถึงอยากเข้าชมรมดนตรี?",
       "answerEn": "Why do you want to join the music club?",
       "acceptedAnswers": [],
       "hints": [
@@ -578,7 +578,7 @@
     },
     {
       "id": "a2_c06n08_q2",
-      "promptTh": "ตอบว่า \"เพราะมันสนุก\"",
+      "promptTh": "เพราะมันสนุก",
       "answerEn": "Because it's fun.",
       "acceptedAnswers": [
         "Because it is fun."
@@ -590,7 +590,7 @@
     },
     {
       "id": "a2_c06n08_q3",
-      "promptTh": "ถาม May ว่า \"ทำไมชอบแบดมินตัน\"",
+      "promptTh": "ทำไมคุณถึงชอบแบดมินตัน?",
       "answerEn": "Why do you like badminton?",
       "acceptedAnswers": [
         "Why do you like playing badminton?"
@@ -602,7 +602,7 @@
     },
     {
       "id": "a2_c06n08_q4",
-      "promptTh": "ตอบว่า \"เพราะมันดีต่อสุขภาพ\"",
+      "promptTh": "เพราะมันดีต่อสุขภาพ",
       "answerEn": "Because it's healthy.",
       "acceptedAnswers": [
         "Because it is healthy.",
@@ -615,7 +615,7 @@
     },
     {
       "id": "a2_c06n08_q5",
-      "promptTh": "ถาม Capy ว่า \"ทำไมอยากเข้าชมรมวาดภาพ (painting club)\"",
+      "promptTh": "ทำไมคุณถึงอยากเข้าชมรมวาดภาพ (painting club)?",
       "answerEn": "Why do you want to join the painting club?",
       "acceptedAnswers": [],
       "hints": [
@@ -625,7 +625,7 @@
     },
     {
       "id": "a2_c06n08_q6",
-      "promptTh": "ตอบว่า \"เพราะฉันวาดรูปเก่ง\"",
+      "promptTh": "เพราะฉันวาดรูปเก่ง",
       "answerEn": "Because I'm good at drawing.",
       "acceptedAnswers": [
         "Because I am good at drawing.",
@@ -640,7 +640,7 @@
   "a2_c07n04": [
     {
       "id": "a2_c07n04_q1",
-      "promptTh": "ถาม May ว่า \"สุดสัปดาห์นี้มีแผนจะทำอะไร\"",
+      "promptTh": "สุดสัปดาห์นี้คุณมีแผนจะทำอะไร?",
       "answerEn": "What are you going to do this weekend?",
       "acceptedAnswers": [],
       "hints": [
@@ -650,7 +650,7 @@
     },
     {
       "id": "a2_c07n04_q2",
-      "promptTh": "ถาม Bogy ว่า \"พรุ่งนี้มีแผนจะทำอะไร\"",
+      "promptTh": "พรุ่งนี้คุณมีแผนจะทำอะไร?",
       "answerEn": "What are you going to do tomorrow?",
       "acceptedAnswers": [],
       "hints": [
@@ -660,7 +660,7 @@
     },
     {
       "id": "a2_c07n04_q3",
-      "promptTh": "ถาม Capy ว่า \"หลังเลิกเรียนมีแผนจะทำอะไร\"",
+      "promptTh": "หลังเลิกเรียนคุณมีแผนจะทำอะไร?",
       "answerEn": "What are you going to do after school?",
       "acceptedAnswers": [],
       "hints": [
@@ -670,7 +670,7 @@
     },
     {
       "id": "a2_c07n04_q4",
-      "promptTh": "ถาม Bogy ว่า Mali มีแผนจะทำอะไรวันเสาร์",
+      "promptTh": "วันเสาร์ Mali มีแผนจะทำอะไร?",
       "answerEn": "What is Mali going to do on Saturday?",
       "acceptedAnswers": [
         "What's Mali going to do on Saturday?"
@@ -682,7 +682,7 @@
     },
     {
       "id": "a2_c07n04_q5",
-      "promptTh": "ตอบว่าคุณตั้งใจจะไปเยี่ยมป้า",
+      "promptTh": "ฉันตั้งใจจะไปเยี่ยมป้า",
       "answerEn": "I'm going to visit my aunt.",
       "acceptedAnswers": [
         "I am going to visit my aunt."
@@ -694,7 +694,7 @@
     },
     {
       "id": "a2_c07n04_q6",
-      "promptTh": "ตอบว่าพรุ่งนี้คุณจะซ้อมแบดมินตัน (วางแผนไว้แล้ว)",
+      "promptTh": "พรุ่งนี้ฉันจะซ้อมแบดมินตัน (วางแผนไว้แล้ว)",
       "answerEn": "I'm going to practice badminton tomorrow.",
       "acceptedAnswers": [
         "Tomorrow I'm going to practice badminton.",
@@ -709,7 +709,7 @@
   "a2_c07n09": [
     {
       "id": "a2_c07n09_q1",
-      "promptTh": "May ชวนไปดูหนัง ตอบตกลงสั้น ๆ",
+      "promptTh": "ได้สิ!",
       "answerEn": "Sure!",
       "acceptedAnswers": [
         "Sure."
@@ -721,7 +721,7 @@
     },
     {
       "id": "a2_c07n09_q2",
-      "promptTh": "ปฏิเสธ Bogy ว่าขอโทษ ไม่ว่าง ต้องอ่านหนังสือสอบ",
+      "promptTh": "ขอโทษนะ ฉันไม่ว่าง ฉันต้องอ่านหนังสือ",
       "answerEn": "Sorry, I'm busy. I have to study.",
       "acceptedAnswers": [
         "Sorry, I am busy. I have to study."
@@ -733,7 +733,7 @@
     },
     {
       "id": "a2_c07n09_q3",
-      "promptTh": "ปฏิเสธ Capy ว่าขอโทษ ฉันต้องทำการบ้าน",
+      "promptTh": "ขอโทษนะ ฉันต้องทำการบ้าน",
       "answerEn": "Sorry, I have to do my homework.",
       "acceptedAnswers": [
         "Sorry, I have to do homework."
@@ -745,7 +745,7 @@
     },
     {
       "id": "a2_c07n09_q4",
-      "promptTh": "ปฏิเสธ Mali ว่าขอโทษ เย็นนี้ฉันมีนัดกับ Bogy",
+      "promptTh": "ขอโทษนะ เย็นนี้ฉันมีนัดกับ Bogy",
       "answerEn": "Sorry, I'm meeting Bogy this evening.",
       "acceptedAnswers": [
         "Sorry, I am meeting Bogy this evening.",
@@ -758,7 +758,7 @@
     },
     {
       "id": "a2_c07n09_q5",
-      "promptTh": "ปฏิเสธ May ว่าขอโทษ ไม่ว่าง ไว้คราวหน้านะ",
+      "promptTh": "ขอโทษนะ ฉันไม่ว่าง ไว้คราวหน้านะ!",
       "answerEn": "Sorry, I'm busy. Maybe next time!",
       "acceptedAnswers": [
         "Sorry, I am busy. Maybe next time!",
@@ -771,7 +771,7 @@
     },
     {
       "id": "a2_c07n09_q6",
-      "promptTh": "Bogy ชวนเล่นแบดวันเสาร์ ตอบตกลงแล้วบอกว่าเจอกันวันนั้นนะ",
+      "promptTh": "ได้สิ! เจอกันวันนั้นนะ",
       "answerEn": "Sure! See you then.",
       "acceptedAnswers": [
         "Sure. See you then."
@@ -785,7 +785,7 @@
   "a2_c08n01": [
     {
       "id": "a2_c08n01_q1",
-      "promptTh": "บอกว่าคุณสนุกกับการเต้น",
+      "promptTh": "ฉันสนุกกับการเต้น",
       "answerEn": "I enjoy dancing.",
       "acceptedAnswers": [
         "I like dancing.",
@@ -798,7 +798,7 @@
     },
     {
       "id": "a2_c08n01_q2",
-      "promptTh": "บอกว่า Bogy กินอาหารเช้าตอนเจ็ดโมงเสมอ",
+      "promptTh": "Bogy กินอาหารเช้าตอนเจ็ดโมงเสมอ",
       "answerEn": "Bogy always has breakfast at seven.",
       "acceptedAnswers": [
         "Bogy always has breakfast at 7."
@@ -810,7 +810,7 @@
     },
     {
       "id": "a2_c08n01_q3",
-      "promptTh": "บอกว่าในตู้เย็นไม่มีแอปเปิ้ลเลยสักลูก",
+      "promptTh": "ในตู้เย็นไม่มีแอปเปิ้ลเลยสักลูก",
       "answerEn": "There aren't any apples in the fridge.",
       "acceptedAnswers": [
         "There are no apples in the fridge."
@@ -822,7 +822,7 @@
     },
     {
       "id": "a2_c08n01_q4",
-      "promptTh": "ถาม May ว่าทำไมเธอชอบวาดรูป แล้วตอบแทนเธอว่าเพราะมันสนุก",
+      "promptTh": "ทำไมคุณถึงชอบวาดรูป? — เพราะมันสนุก",
       "answerEn": "Why do you like drawing? — Because it's fun.",
       "acceptedAnswers": [
         "Why do you like drawing? Because it's fun.",
@@ -835,7 +835,7 @@
     },
     {
       "id": "a2_c08n01_q5",
-      "promptTh": "บอกว่าสุดสัปดาห์นี้คุณตั้งใจจะเล่นแบดมินตัน (วางแผนไว้แล้ว)",
+      "promptTh": "สุดสัปดาห์นี้ฉันตั้งใจจะเล่นแบดมินตัน (วางแผนไว้แล้ว)",
       "answerEn": "I'm going to play badminton this weekend.",
       "acceptedAnswers": [
         "This weekend I'm going to play badminton.",
@@ -848,7 +848,7 @@
     },
     {
       "id": "a2_c08n01_q6",
-      "promptTh": "ปฏิเสธ Capy ว่าขอโทษ ไม่ว่าง ไว้คราวหน้านะ",
+      "promptTh": "ขอโทษนะ ฉันไม่ว่าง ไว้คราวหน้านะ!",
       "answerEn": "Sorry, I'm busy. Maybe next time!",
       "acceptedAnswers": [
         "Sorry, I am busy. Maybe next time!",
@@ -861,7 +861,7 @@
     },
     {
       "id": "a2_c08n01_q7",
-      "promptTh": "บอกว่า Capy ดูเหนื่อย",
+      "promptTh": "Capy ดูเหนื่อย",
       "answerEn": "Capy looks tired.",
       "acceptedAnswers": [],
       "hints": [
@@ -873,7 +873,7 @@
   "a2_c08n08": [
     {
       "id": "a2_c08n08_q1",
-      "promptTh": "โทรหา May ถามว่าเธออยู่ไหน แล้วบอกว่าคุณอยู่ข้างแผงไอศกรีม",
+      "promptTh": "คุณอยู่ที่ไหน? ฉันอยู่ข้างแผงไอศกรีม",
       "answerEn": "Where are you? I'm next to the ice cream stall.",
       "acceptedAnswers": [
         "Where are you? I am next to the ice cream stall.",
@@ -886,7 +886,7 @@
     },
     {
       "id": "a2_c08n08_q2",
-      "promptTh": "บอก Bogy ว่าคุณกำลังยืนอยู่ข้างชิงช้าสวรรค์",
+      "promptTh": "ฉันกำลังยืนอยู่ข้างชิงช้าสวรรค์",
       "answerEn": "I'm standing next to the big wheel.",
       "acceptedAnswers": [
         "I am standing next to the big wheel."
@@ -898,7 +898,7 @@
     },
     {
       "id": "a2_c08n08_q3",
-      "promptTh": "บอก May ว่าคุณกำลังใส่เสื้อเชิ้ตสีเขียว",
+      "promptTh": "ฉันกำลังใส่เสื้อเชิ้ตสีเขียว",
       "answerEn": "I'm wearing a green shirt.",
       "acceptedAnswers": [
         "I am wearing a green shirt."
@@ -910,7 +910,7 @@
     },
     {
       "id": "a2_c08n08_q4",
-      "promptTh": "ชวนทุกคนไปเจอกันที่ประตูตลาด",
+      "promptTh": "ไปเจอกันที่ประตูกันเถอะ",
       "answerEn": "Let's meet at the gate.",
       "acceptedAnswers": [
         "Let's meet at the market gate."
@@ -922,7 +922,7 @@
     },
     {
       "id": "a2_c08n08_q5",
-      "promptTh": "บอก Bogy ว่าคุณอยู่ตรงข้ามแผงที่ Mali ช่วยขายของ",
+      "promptTh": "ฉันอยู่ตรงข้ามแผงของ Mali",
       "answerEn": "I'm opposite Mali's stall.",
       "acceptedAnswers": [
         "I am opposite Mali's stall.",
@@ -935,7 +935,7 @@
     },
     {
       "id": "a2_c08n08_q6",
-      "promptTh": "บอกครูบีว่าคุณกำลังยืนอยู่หน้าแผงของที่ระลึก",
+      "promptTh": "ฉันกำลังยืนอยู่หน้าแผงขายของที่ระลึก",
       "answerEn": "I'm standing in front of the souvenir stall.",
       "acceptedAnswers": [
         "I am standing in front of the souvenir stall."
@@ -949,7 +949,7 @@
   "a2_c09n07": [
     {
       "id": "a2_c09n07_q1",
-      "promptTh": "สั่งกับ Mali ที่คาเฟ่: ลาเต้ร้อนแก้วใหญ่ 1 แก้ว กลับบ้าน",
+      "promptTh": "ขอลาเต้ร้อนแก้วใหญ่ 1 แก้ว ใส่กลับบ้าน",
       "answerEn": "A large hot latte to take away, please.",
       "acceptedAnswers": [
         "Can I have a large hot latte to take away, please?",
@@ -963,7 +963,7 @@
     },
     {
       "id": "a2_c09n07_q2",
-      "promptTh": "สั่งกับ Mali: ชาใส่น้ำแข็งแก้วกลาง 1 แก้ว ทานที่ร้าน",
+      "promptTh": "ขอชาใส่น้ำแข็งแก้วกลาง 1 แก้ว ทานที่ร้าน",
       "answerEn": "A medium iced tea for here, please.",
       "acceptedAnswers": [
         "Can I have a medium iced tea for here, please?",
@@ -977,7 +977,7 @@
     },
     {
       "id": "a2_c09n07_q3",
-      "promptTh": "สั่งลาเต้เย็นแก้วเล็ก 2 แก้ว กลับบ้าน",
+      "promptTh": "ขอลาเต้เย็นแก้วเล็ก 2 แก้ว ใส่กลับบ้าน",
       "answerEn": "Two small iced lattes to take away, please.",
       "acceptedAnswers": [
         "Can I have two small iced lattes to take away, please?",
@@ -990,7 +990,7 @@
     },
     {
       "id": "a2_c09n07_q4",
-      "promptTh": "นมร้อนหมดแล้ว สั่งชาร้อนแก้วเล็กแทน ทานที่ร้าน",
+      "promptTh": "ขอชาร้อนแก้วเล็ก 1 แก้ว ทานที่ร้าน",
       "answerEn": "A small hot tea for here, please.",
       "acceptedAnswers": [
         "Can I have a small hot tea for here, please?",
@@ -1004,7 +1004,7 @@
     },
     {
       "id": "a2_c09n07_q5",
-      "promptTh": "สั่งลาเต้เย็นแก้วใหญ่ 1 แก้ว ทานที่ร้าน (ใช้ I'd like)",
+      "promptTh": "ฉันขอลาเต้เย็นแก้วใหญ่ 1 แก้ว ทานที่ร้าน (ใช้ I'd like)",
       "answerEn": "I'd like a large iced latte for here, please.",
       "acceptedAnswers": [
         "I'd like a large iced latte for here.",
@@ -1017,7 +1017,7 @@
     },
     {
       "id": "a2_c09n07_q6",
-      "promptTh": "สั่งกับ Mali: มัฟฟิน 1 ชิ้น กับน้ำผลไม้หน่อย",
+      "promptTh": "ขอมัฟฟิน 1 ชิ้น กับน้ำผลไม้หน่อยได้ไหม?",
       "answerEn": "Can I have a muffin and some juice, please?",
       "acceptedAnswers": [
         "I'd like a muffin and some juice, please.",
@@ -1030,7 +1030,7 @@
     },
     {
       "id": "a2_c09n07_q7",
-      "promptTh": "สั่งโกโก้ร้อนแก้วเล็ก 1 แก้ว กับคุกกี้ 1 ชิ้น ทานที่ร้าน",
+      "promptTh": "ขอโกโก้ร้อนแก้วเล็ก 1 แก้ว กับคุกกี้ 1 ชิ้น ทานที่ร้าน",
       "answerEn": "A small hot cocoa and a cookie for here, please.",
       "acceptedAnswers": [
         "Can I have a small hot cocoa and a cookie for here, please?",
@@ -1045,7 +1045,7 @@
   "a2_c10n07": [
     {
       "id": "a2_c10n07_q1",
-      "promptTh": "ขอ Mali (พนักงานเสิร์ฟ) อย่างสุภาพ: ขอจานนี้แบบไม่ใส่พริกได้ไหม",
+      "promptTh": "ขอจานนี้แบบไม่ใส่พริกได้ไหม?",
       "answerEn": "Could I have it without chilli?",
       "acceptedAnswers": [
         "Could I have it without chilli, please?",
@@ -1058,7 +1058,7 @@
     },
     {
       "id": "a2_c10n07_q2",
-      "promptTh": "บอกพนักงานว่า แกงนี้เผ็ดเกินไป",
+      "promptTh": "แกงนี้เผ็ดเกินไป",
       "answerEn": "This curry is too spicy.",
       "acceptedAnswers": [
         "It's too spicy.",
@@ -1071,7 +1071,7 @@
     },
     {
       "id": "a2_c10n07_q3",
-      "promptTh": "Bogy กินเผ็ดไม่ได้ ขอข้าวผัดแบบไม่ใส่พริก (ใช้ Could I)",
+      "promptTh": "ขอข้าวผัดแบบไม่ใส่พริกได้ไหม? (ใช้ Could I)",
       "answerEn": "Could I have the fried rice without chilli, please?",
       "acceptedAnswers": [
         "Could I have the fried rice without chilli?",
@@ -1084,7 +1084,7 @@
     },
     {
       "id": "a2_c10n07_q4",
-      "promptTh": "บอกพนักงานว่า ซุปนี้เค็มเกินไป",
+      "promptTh": "ซุปนี้เค็มเกินไป",
       "answerEn": "This soup is too salty.",
       "acceptedAnswers": [
         "It's too salty.",
@@ -1097,7 +1097,7 @@
     },
     {
       "id": "a2_c10n07_q5",
-      "promptTh": "John ชอบเผ็ดมาก ขอก๋วยเตี๋ยวน้ำใส่พริกเพิ่ม (ใช้ Could I)",
+      "promptTh": "ขอก๋วยเตี๋ยวน้ำใส่พริกเพิ่มได้ไหม? (ใช้ Could I)",
       "answerEn": "Could I have the noodle soup with extra chilli, please?",
       "acceptedAnswers": [
         "Could I have the noodle soup with extra chilli?",
@@ -1110,7 +1110,7 @@
     },
     {
       "id": "a2_c10n07_q6",
-      "promptTh": "บอกพนักงานว่า ก๋วยเตี๋ยวน้ำชามนี้เปรี้ยวเกินไป",
+      "promptTh": "ก๋วยเตี๋ยวน้ำชามนี้เปรี้ยวเกินไป",
       "answerEn": "This noodle soup is too sour.",
       "acceptedAnswers": [
         "It's too sour.",
@@ -1125,7 +1125,7 @@
   "a2_c11n07": [
     {
       "id": "a2_c11n07_q1",
-      "promptTh": "บอก Aunt Noi ว่าเราต้องการนม 1 กล่อง",
+      "promptTh": "เราต้องการนม 1 กล่อง",
       "answerEn": "We need a carton of milk.",
       "acceptedAnswers": [
         "We need one carton of milk."
@@ -1137,7 +1137,7 @@
     },
     {
       "id": "a2_c11n07_q2",
-      "promptTh": "บอก May ว่าเราไม่มีขนมปังเลย",
+      "promptTh": "เราไม่มีขนมปังเลย",
       "answerEn": "We don't have any bread.",
       "acceptedAnswers": [
         "We do not have any bread."
@@ -1149,7 +1149,7 @@
     },
     {
       "id": "a2_c11n07_q3",
-      "promptTh": "บอกว่าเราต้องการน้ำมัน 2 ขวด",
+      "promptTh": "เราต้องการน้ำมัน 2 ขวด",
       "answerEn": "We need two bottles of oil.",
       "acceptedAnswers": [
         "We need 2 bottles of oil."
@@ -1161,7 +1161,7 @@
     },
     {
       "id": "a2_c11n07_q4",
-      "promptTh": "บอกว่าเรามีชีสไม่ค่อยเยอะ",
+      "promptTh": "เรามีชีสไม่ค่อยเยอะ",
       "answerEn": "We don't have much cheese.",
       "acceptedAnswers": [
         "We do not have much cheese.",
@@ -1174,7 +1174,7 @@
     },
     {
       "id": "a2_c11n07_q5",
-      "promptTh": "บอกว่าเราต้องการไข่ 2-3 ฟอง (ใช้ a few)",
+      "promptTh": "เราต้องการไข่ 2-3 ฟอง (ใช้ a few)",
       "answerEn": "We need a few eggs.",
       "acceptedAnswers": [],
       "hints": [
@@ -1184,7 +1184,7 @@
     },
     {
       "id": "a2_c11n07_q6",
-      "promptTh": "บอกว่าเราต้องการข้าว 1 กิโล",
+      "promptTh": "เราต้องการข้าว 1 กิโล",
       "answerEn": "We need a kilo of rice.",
       "acceptedAnswers": [
         "We need one kilo of rice."
@@ -1196,7 +1196,7 @@
     },
     {
       "id": "a2_c11n07_q7",
-      "promptTh": "ถาม Aunt Noi ว่าเราต้องการไข่กี่ฟอง",
+      "promptTh": "เราต้องการไข่กี่ฟอง?",
       "answerEn": "How many eggs do we need?",
       "acceptedAnswers": [],
       "hints": [
@@ -1208,7 +1208,7 @@
   "a2_c12n07": [
     {
       "id": "a2_c12n07_q1",
-      "promptTh": "บอก Bogy: หั่นมันช้าๆ",
+      "promptTh": "หั่นมันช้าๆ",
       "answerEn": "Cut it slowly.",
       "acceptedAnswers": [
         "Cut it slowly, please."
@@ -1220,7 +1220,7 @@
     },
     {
       "id": "a2_c12n07_q2",
-      "promptTh": "บอก May: ผสมมันเร็วๆ",
+      "promptTh": "ผสมมันเร็วๆ",
       "answerEn": "Mix it quickly.",
       "acceptedAnswers": [
         "Mix it quickly, please."
@@ -1232,7 +1232,7 @@
     },
     {
       "id": "a2_c12n07_q3",
-      "promptTh": "บอก Capy: ถือมันระวังๆ",
+      "promptTh": "ถือมันระวังๆ",
       "answerEn": "Hold it carefully.",
       "acceptedAnswers": [
         "Hold it carefully, please."
@@ -1244,7 +1244,7 @@
     },
     {
       "id": "a2_c12n07_q4",
-      "promptTh": "บอก John: ล้างผักอย่างระมัดระวัง",
+      "promptTh": "ล้างผักอย่างระมัดระวัง",
       "answerEn": "Wash the vegetables carefully.",
       "acceptedAnswers": [
         "Wash the vegetables carefully, please."
@@ -1256,7 +1256,7 @@
     },
     {
       "id": "a2_c12n07_q5",
-      "promptTh": "บอก May: ทอดไข่ช้าๆ",
+      "promptTh": "ทอดไข่ช้าๆ",
       "answerEn": "Fry the eggs slowly.",
       "acceptedAnswers": [
         "Fry the eggs slowly, please."
@@ -1268,7 +1268,7 @@
     },
     {
       "id": "a2_c12n07_q6",
-      "promptTh": "บอก Bogy: ผสมไข่ให้ดีๆ (ใช้คำบอกวิธีของ good)",
+      "promptTh": "ผสมไข่ให้ดีๆ (ใช้คำบอกวิธีของ good)",
       "answerEn": "Mix the eggs well.",
       "acceptedAnswers": [
         "Mix the eggs well, please.",
@@ -1281,7 +1281,7 @@
     },
     {
       "id": "a2_c12n07_q7",
-      "promptTh": "บอก Bogy: เทนมช้าๆ",
+      "promptTh": "เทนมช้าๆ",
       "answerEn": "Pour the milk slowly.",
       "acceptedAnswers": [
         "Pour the milk slowly, please.",
@@ -1296,7 +1296,7 @@
   "a2_c12n10": [
     {
       "id": "a2_c12n10_q1",
-      "promptTh": "บอก May: ผสมพวกมัน (ไข่) อย่างระวัง แล้วขอให้ May ส่งน้ำมันให้",
+      "promptTh": "ผสมพวกมันอย่างระวัง ช่วยส่งน้ำมันให้หน่อย",
       "answerEn": "Mix them carefully. Pass me the oil, please.",
       "acceptedAnswers": [
         "Mix them carefully. Please pass me the oil.",
@@ -1309,7 +1309,7 @@
     },
     {
       "id": "a2_c12n10_q2",
-      "promptTh": "บอก John: ขั้นแรก ล้างผัก จากนั้น หั่นพวกมัน",
+      "promptTh": "ขั้นแรก ล้างผัก จากนั้น หั่นพวกมัน",
       "answerEn": "First, wash the vegetables. Then, cut them.",
       "acceptedAnswers": [
         "First wash the vegetables, then cut them."
@@ -1321,7 +1321,7 @@
     },
     {
       "id": "a2_c12n10_q3",
-      "promptTh": "ขอ Aunt Noi ส่งเกลือให้หน่อย",
+      "promptTh": "ช่วยส่งเกลือให้หน่อย",
       "answerEn": "Pass me the salt, please.",
       "acceptedAnswers": [
         "Could you pass me the salt, please?",
@@ -1334,7 +1334,7 @@
     },
     {
       "id": "a2_c12n10_q4",
-      "promptTh": "บอก Bogy: ขั้นแรก ซาวข้าว (ล้างข้าว) จากนั้น เอาไปต้ม",
+      "promptTh": "ขั้นแรก ซาวข้าว (ล้างข้าว) จากนั้น เอาไปต้ม",
       "answerEn": "First, wash the rice. Then, boil it.",
       "acceptedAnswers": [
         "First wash the rice, then boil it.",
@@ -1347,7 +1347,7 @@
     },
     {
       "id": "a2_c12n10_q5",
-      "promptTh": "ขอ Capy ส่งกระทะให้ แล้วบอกว่า จากนั้นทอดไข่ช้าๆ",
+      "promptTh": "ช่วยส่งกระทะให้หน่อย จากนั้นทอดไข่ช้าๆ",
       "answerEn": "Pass me the pan, please. Then, fry the eggs slowly.",
       "acceptedAnswers": [
         "Pass me the pan, please. Then fry the eggs slowly."
@@ -1359,7 +1359,7 @@
     },
     {
       "id": "a2_c12n10_q6",
-      "promptTh": "บอก May: ขั้นแรก ใส่น้ำมันลงกระทะ จากนั้น ใส่ไข่",
+      "promptTh": "ขั้นแรก ใส่น้ำมันลงกระทะ จากนั้น ใส่ไข่",
       "answerEn": "First, add oil to the pan. Then, add the eggs.",
       "acceptedAnswers": [
         "First add oil to the pan, then add the eggs.",
@@ -1387,7 +1387,7 @@
     },
     {
       "id": "a2_c13n04_q2",
-      "promptTh": "บอก Mali ที่ร้านเสื้อผ้า: กางเกงยีนส์ตัวนี้ถูกกว่าตัวนั้น",
+      "promptTh": "กางเกงยีนส์ตัวนี้ถูกกว่าตัวนั้น",
       "answerEn": "These jeans are cheaper than those.",
       "acceptedAnswers": [
         "These jeans are cheaper than those ones.",
@@ -1400,7 +1400,7 @@
     },
     {
       "id": "a2_c13n04_q3",
-      "promptTh": "บอก May: ชุดเดรสสีขาวแพงกว่าตัวสีดำ",
+      "promptTh": "ชุดเดรสสีขาวแพงกว่าตัวสีดำ",
       "answerEn": "The white dress is more expensive than the black one.",
       "acceptedAnswers": [
         "The white dress is more expensive than the black dress."
@@ -1412,7 +1412,7 @@
     },
     {
       "id": "a2_c13n04_q4",
-      "promptTh": "บอก Bogy: แจ็กเก็ตตัวนี้ใส่สบายกว่าตัวนั้น",
+      "promptTh": "แจ็กเก็ตตัวนี้ใส่สบายกว่าตัวนั้น",
       "answerEn": "This jacket is more comfortable than that one.",
       "acceptedAnswers": [
         "This jacket is more comfortable than that jacket."
@@ -1424,7 +1424,7 @@
     },
     {
       "id": "a2_c13n04_q5",
-      "promptTh": "บอก Mali: ตัวสีเขียวดีกว่าตัวสีเหลือง",
+      "promptTh": "ตัวสีเขียวดีกว่าตัวสีเหลือง",
       "answerEn": "The green one is better than the yellow one.",
       "acceptedAnswers": [
         "The green one is better than the yellow."
@@ -1450,7 +1450,7 @@
   "a2_c13n09": [
     {
       "id": "a2_c13n09_q1",
-      "promptTh": "Mali อีกแล้ว! วันนี้ Mali ทำงานที่ร้านเสื้อผ้า ถาม Mali ว่าขอลองตัวนี้ได้ไหม",
+      "promptTh": "ขอลองตัวนี้ได้ไหม?",
       "answerEn": "Can I try it on?",
       "acceptedAnswers": [
         "Can I try this on?",
@@ -1463,7 +1463,7 @@
     },
     {
       "id": "a2_c13n09_q2",
-      "promptTh": "ชม May ที่ใส่แจ็กเก็ตใหม่ว่า ใส่แล้วดูดีมาก",
+      "promptTh": "แจ็กเก็ตตัวนี้ คุณใส่แล้วดูดีมาก!",
       "answerEn": "It looks great on you!",
       "acceptedAnswers": [
         "It looks great on you."
@@ -1475,7 +1475,7 @@
     },
     {
       "id": "a2_c13n09_q3",
-      "promptTh": "ถาม Mali ว่ามีไซซ์ใหญ่กว่านี้ไหม",
+      "promptTh": "มีไซซ์ใหญ่กว่านี้ไหม?",
       "answerEn": "Do you have a bigger size?",
       "acceptedAnswers": [],
       "hints": [
@@ -1485,7 +1485,7 @@
     },
     {
       "id": "a2_c13n09_q4",
-      "promptTh": "ชม Bogy ที่ลองกางเกงยีนส์ใหม่ว่า ใส่แล้วดูดีมาก",
+      "promptTh": "กางเกงยีนส์ตัวนี้ คุณใส่แล้วดูดีมาก!",
       "answerEn": "They look great on you!",
       "acceptedAnswers": [
         "They look great on you.",
@@ -1499,7 +1499,7 @@
     },
     {
       "id": "a2_c13n09_q5",
-      "promptTh": "ถาม Mali ว่าห้องลองเสื้ออยู่ที่ไหน",
+      "promptTh": "ห้องลองเสื้ออยู่ที่ไหน?",
       "answerEn": "Where's the fitting room?",
       "acceptedAnswers": [
         "Where is the fitting room?"
@@ -1511,7 +1511,7 @@
     },
     {
       "id": "a2_c13n09_q6",
-      "promptTh": "บอก Mali ว่ามันคับเกินไป แล้วถามว่ามีไซซ์ใหญ่กว่าไหม",
+      "promptTh": "มันคับเกินไป มีไซซ์ใหญ่กว่านี้ไหม?",
       "answerEn": "It's too tight. Do you have a bigger size?",
       "acceptedAnswers": [
         "It is too tight. Do you have a bigger size?"
@@ -1523,7 +1523,7 @@
     },
     {
       "id": "a2_c13n09_q7",
-      "promptTh": "ถาม Mali ว่าขอลองแจ็กเก็ตสีดำได้ไหม",
+      "promptTh": "ขอลองแจ็กเก็ตสีดำได้ไหม?",
       "answerEn": "Can I try on the black jacket?",
       "acceptedAnswers": [
         "Can I try the black jacket on?",
@@ -1538,7 +1538,7 @@
   "a2_c14n07": [
     {
       "id": "a2_c14n07_q1",
-      "promptTh": "บอก May ว่า ดอกไม้สวยที่สุด",
+      "promptTh": "ดอกไม้สวยที่สุด",
       "answerEn": "The flowers are the most beautiful.",
       "acceptedAnswers": [
         "These flowers are the most beautiful."
@@ -1550,7 +1550,7 @@
     },
     {
       "id": "a2_c14n07_q2",
-      "promptTh": "บอกว่า เค้กก้อนนี้ถูกที่สุด",
+      "promptTh": "เค้กก้อนนี้ถูกที่สุด",
       "answerEn": "This cake is the cheapest.",
       "acceptedAnswers": [
         "This cake is the cheapest one.",
@@ -1563,7 +1563,7 @@
     },
     {
       "id": "a2_c14n07_q3",
-      "promptTh": "บอก John ว่า ตุ๊กตาหมีตัวนี้ใหญ่ที่สุด",
+      "promptTh": "ตุ๊กตาหมีตัวนี้ใหญ่ที่สุด",
       "answerEn": "This teddy bear is the biggest.",
       "acceptedAnswers": [
         "This is the biggest teddy bear.",
@@ -1576,7 +1576,7 @@
     },
     {
       "id": "a2_c14n07_q4",
-      "promptTh": "บอกว่า การ์ดใบนี้แพงที่สุด",
+      "promptTh": "การ์ดใบนี้แพงที่สุด",
       "answerEn": "This card is the most expensive.",
       "acceptedAnswers": [
         "This is the most expensive card.",
@@ -1589,7 +1589,7 @@
     },
     {
       "id": "a2_c14n07_q5",
-      "promptTh": "บอก Capy ว่า ของขวัญของ May ดีที่สุด",
+      "promptTh": "ของขวัญของ May ดีที่สุด",
       "answerEn": "May's gift is the best.",
       "acceptedAnswers": [
         "May's gift is the best one."
@@ -1601,7 +1601,7 @@
     },
     {
       "id": "a2_c14n07_q6",
-      "promptTh": "บอกว่า ตุ๊กตาหมีน่ารักที่สุด",
+      "promptTh": "ตุ๊กตาหมีน่ารักที่สุด",
       "answerEn": "The teddy bear is the cutest.",
       "acceptedAnswers": [
         "The teddy bear is the cutest one."
@@ -1615,7 +1615,7 @@
   "a2_c14n10": [
     {
       "id": "a2_c14n10_q1",
-      "promptTh": "บอก May: ดอกไม้ถูกกว่า แต่เค้กดีที่สุด",
+      "promptTh": "ดอกไม้ถูกกว่า แต่เค้กดีที่สุด",
       "answerEn": "The flowers are cheaper, but the cake is the best.",
       "acceptedAnswers": [
         "The flowers are cheaper but the cake is the best."
@@ -1627,7 +1627,7 @@
     },
     {
       "id": "a2_c14n10_q2",
-      "promptTh": "ชวน May: ซื้อตุ๊กตาหมีกันเถอะ เพราะมันถูกที่สุด",
+      "promptTh": "ซื้อตุ๊กตาหมีกันเถอะ เพราะมันถูกที่สุด",
       "answerEn": "Let's buy the teddy bear because it's the cheapest.",
       "acceptedAnswers": [
         "Let's buy the teddy bear because it is the cheapest."
@@ -1639,7 +1639,7 @@
     },
     {
       "id": "a2_c14n10_q3",
-      "promptTh": "บอก John: ฉันชอบดอกไม้ เพราะมันสวยที่สุด",
+      "promptTh": "ฉันชอบดอกไม้ เพราะมันสวยที่สุด",
       "answerEn": "I like the flowers because they're the most beautiful.",
       "acceptedAnswers": [
         "I like the flowers because they are the most beautiful."
@@ -1651,7 +1651,7 @@
     },
     {
       "id": "a2_c14n10_q4",
-      "promptTh": "บอก Capy: การ์ดถูกกว่าตุ๊กตาหมี แต่ตุ๊กตาหมีน่ารักที่สุด",
+      "promptTh": "การ์ดถูกกว่าตุ๊กตาหมี แต่ตุ๊กตาหมีน่ารักที่สุด",
       "answerEn": "The card is cheaper than the teddy bear, but the teddy bear is the cutest.",
       "acceptedAnswers": [
         "The card is cheaper than the teddy bear but the teddy bear is the cutest."
@@ -1663,7 +1663,7 @@
     },
     {
       "id": "a2_c14n10_q5",
-      "promptTh": "บอก May: เค้กแพงกว่าดอกไม้ แต่มันเป็นของโปรดของ Bogy",
+      "promptTh": "เค้กแพงกว่าดอกไม้ แต่มันเป็นของโปรดของ Bogy",
       "answerEn": "The cake is more expensive than the flowers, but it's Bogy's favorite.",
       "acceptedAnswers": [
         "The cake is more expensive than the flowers, but it's his favorite.",
@@ -1676,7 +1676,7 @@
     },
     {
       "id": "a2_c14n10_q6",
-      "promptTh": "บอกทีม: เค้กแพงเกินไป ดังนั้นซื้อดอกไม้กันเถอะ เพราะมันถูกกว่า",
+      "promptTh": "เค้กแพงเกินไป ดังนั้นซื้อดอกไม้กันเถอะ เพราะมันถูกกว่า",
       "answerEn": "The cake is too expensive, so let's buy the flowers because they're cheaper.",
       "acceptedAnswers": [
         "The cake is too expensive, so let's buy the flowers because they are cheaper."
@@ -1690,7 +1690,7 @@
   "a2_c15n06": [
     {
       "id": "a2_c15n06_q1",
-      "promptTh": "บอก Bogy ว่า เมื่อวานฉันอยู่บ้าน",
+      "promptTh": "เมื่อวานฉันอยู่บ้าน",
       "answerEn": "I was at home yesterday.",
       "acceptedAnswers": [
         "Yesterday I was at home.",
@@ -1703,7 +1703,7 @@
     },
     {
       "id": "a2_c15n06_q2",
-      "promptTh": "บอก Teacher Nina ว่า เมื่อคืน May กับพี่สาวของ May อยู่ที่คาเฟ่ (ร้านที่ Mali ทำงาน)",
+      "promptTh": "เมื่อคืน May กับพี่สาวของเธออยู่ที่คาเฟ่",
       "answerEn": "May and her sister were at the café last night.",
       "acceptedAnswers": [
         "Last night May and her sister were at the café."
@@ -1715,7 +1715,7 @@
     },
     {
       "id": "a2_c15n06_q3",
-      "promptTh": "ถาม Bogy ว่า เมื่อวานสนุกไหม",
+      "promptTh": "เมื่อวานสนุกไหม?",
       "answerEn": "Was it fun yesterday?",
       "acceptedAnswers": [
         "Was yesterday fun?",
@@ -1728,7 +1728,7 @@
     },
     {
       "id": "a2_c15n06_q4",
-      "promptTh": "เล่าว่า สุดสัปดาห์ที่แล้วฉันดูหนังกับ Capy",
+      "promptTh": "สุดสัปดาห์ที่แล้วฉันดูหนังกับ Capy",
       "answerEn": "I watched a movie with Capy last weekend.",
       "acceptedAnswers": [
         "Last weekend I watched a movie with Capy."
@@ -1740,7 +1740,7 @@
     },
     {
       "id": "a2_c15n06_q5",
-      "promptTh": "เล่าว่า เมื่อวาน Bogy เล่นแบดมินตัน มันเหนื่อยมาก",
+      "promptTh": "เมื่อวาน Bogy เล่นแบดมินตัน เขาเหนื่อยมาก",
       "answerEn": "Bogy played badminton yesterday. He was very tired.",
       "acceptedAnswers": [
         "Yesterday Bogy played badminton. He was very tired."
@@ -1752,7 +1752,7 @@
     },
     {
       "id": "a2_c15n06_q6",
-      "promptTh": "เล่าว่า เมื่อคืนเราทำอาหารเย็นกับ Aunt Noi มันอร่อยมาก",
+      "promptTh": "เมื่อคืนเราทำอาหารเย็นกับ Aunt Noi มันอร่อยมาก",
       "answerEn": "We cooked dinner with Aunt Noi last night. It was delicious.",
       "acceptedAnswers": [
         "Last night we cooked dinner with Aunt Noi. It was delicious.",
@@ -1765,7 +1765,7 @@
     },
     {
       "id": "a2_c15n06_q7",
-      "promptTh": "เล่าให้ Teacher Nina ฟังว่า เมื่อวานฉันทำความสะอาดห้อง ฉันเหนื่อยมาก",
+      "promptTh": "เมื่อวานฉันทำความสะอาดห้อง ฉันเหนื่อยมาก",
       "answerEn": "I cleaned my room yesterday. I was very tired.",
       "acceptedAnswers": [
         "Yesterday I cleaned my room. I was very tired.",
@@ -1780,7 +1780,7 @@
   "a2_c15n09": [
     {
       "id": "a2_c15n09_q1",
-      "promptTh": "เล่าเรื่องเมื่อวาน: รองเท้าถูกกว่ากระเป๋า",
+      "promptTh": "รองเท้าถูกกว่ากระเป๋า (ใช้ was)",
       "answerEn": "The shoes were cheaper than the bag.",
       "acceptedAnswers": [
         "The shoes were cheaper than the bag yesterday."
@@ -1792,7 +1792,7 @@
     },
     {
       "id": "a2_c15n09_q2",
-      "promptTh": "เล่าเรื่องร้านเสื้อเมื่อวาน: แจ็กเก็ตของ May แพงกว่าแจ็กเก็ตของฉัน",
+      "promptTh": "แจ็กเก็ตของ May แพงกว่าแจ็กเก็ตของฉัน (ใช้ was)",
       "answerEn": "May's jacket was more expensive than my jacket.",
       "acceptedAnswers": [
         "May's jacket was more expensive than mine.",
@@ -1805,7 +1805,7 @@
     },
     {
       "id": "a2_c15n09_q3",
-      "promptTh": "เล่าว่า เมื่อคืน ก๋วยเตี๋ยวน้ำอร่อยกว่าข้าวผัด (ใช้ better)",
+      "promptTh": "ก๋วยเตี๋ยวน้ำอร่อยกว่าข้าวผัด (ใช้ was + better)",
       "answerEn": "The noodle soup was better than the fried rice.",
       "acceptedAnswers": [
         "The noodle soup was better than the fried rice last night."
@@ -1817,7 +1817,7 @@
     },
     {
       "id": "a2_c15n09_q4",
-      "promptTh": "เล่าว่า เมื่อวาน ไปพิพิธภัณฑ์สนุกกว่าดูหนัง",
+      "promptTh": "พิพิธภัณฑ์สนุกกว่าหนัง (ใช้ was)",
       "answerEn": "The museum was more fun than the movie.",
       "acceptedAnswers": [
         "The museum was more fun than the movie yesterday."
@@ -1829,7 +1829,7 @@
     },
     {
       "id": "a2_c15n09_q5",
-      "promptTh": "เล่าว่า เมื่อวาน ของขวัญของ John ใหญ่กว่าของ May",
+      "promptTh": "ของขวัญของ John ใหญ่กว่าของ May (ใช้ was)",
       "answerEn": "John's gift was bigger than May's.",
       "acceptedAnswers": [
         "John's gift was bigger than May's gift."
@@ -1841,7 +1841,7 @@
     },
     {
       "id": "a2_c15n09_q6",
-      "promptTh": "เล่าว่า เมื่อวาน ชุดเดรสสีแดงสวยกว่าตัวสีฟ้า",
+      "promptTh": "ชุดเดรสสีแดงสวยกว่าตัวสีฟ้า (ใช้ was)",
       "answerEn": "The red dress was more beautiful than the blue one.",
       "acceptedAnswers": [
         "The red dress was more beautiful than the blue dress."
@@ -1855,7 +1855,7 @@
   "a2_c16n01": [
     {
       "id": "a2_c16n01_q1",
-      "promptTh": "สั่งกับ Mali ที่คาเฟ่: ลาเต้เย็นแก้วกลาง (ใช้ I'd like)",
+      "promptTh": "ฉันขอลาเต้เย็นแก้วกลาง (ใช้ I'd like)",
       "answerEn": "I'd like a medium iced latte, please.",
       "acceptedAnswers": [
         "I'd like a medium iced latte."
@@ -1867,7 +1867,7 @@
     },
     {
       "id": "a2_c16n01_q2",
-      "promptTh": "ที่ร้านอาหาร บอก Mali (พนักงานเสิร์ฟ) ว่า มันเผ็ดนิดหน่อย แล้วขอน้ำ (ใช้ Could I)",
+      "promptTh": "มันเผ็ดนิดหน่อย ขอน้ำหน่อยได้ไหม? (ใช้ Could I)",
       "answerEn": "It's a bit spicy. Could I have some water, please?",
       "acceptedAnswers": [
         "It's a bit spicy. Could I have some water?",
@@ -1880,7 +1880,7 @@
     },
     {
       "id": "a2_c16n01_q3",
-      "promptTh": "บอก Teacher Nina ว่า เรามีน้ำตาลไม่ค่อยเยอะ",
+      "promptTh": "เรามีน้ำตาลไม่ค่อยเยอะ",
       "answerEn": "We don't have much sugar.",
       "acceptedAnswers": [
         "We do not have much sugar."
@@ -1892,7 +1892,7 @@
     },
     {
       "id": "a2_c16n01_q4",
-      "promptTh": "ที่ร้านเสื้อผ้า (Mali อีกแล้ว!) บอก Mali ว่า กระเป๋าใบนี้ถูกกว่าใบนั้น",
+      "promptTh": "กระเป๋าใบนี้ถูกกว่าใบนั้น",
       "answerEn": "This bag is cheaper than that one.",
       "acceptedAnswers": [
         "This bag is cheaper than that bag."
@@ -1904,7 +1904,7 @@
     },
     {
       "id": "a2_c16n01_q5",
-      "promptTh": "เล่าว่า เมื่อวาน Bogy เล่นแบดมินตันกับ John",
+      "promptTh": "เมื่อวาน Bogy เล่นแบดมินตันกับ John",
       "answerEn": "Bogy played badminton with John yesterday.",
       "acceptedAnswers": [
         "Yesterday Bogy played badminton with John."
@@ -1916,7 +1916,7 @@
     },
     {
       "id": "a2_c16n01_q6",
-      "promptTh": "บอก Capy: ทอดไข่อย่างระวัง",
+      "promptTh": "ทอดไข่อย่างระวัง",
       "answerEn": "Fry the eggs carefully.",
       "acceptedAnswers": [
         "Fry the eggs carefully, please."
@@ -1928,7 +1928,7 @@
     },
     {
       "id": "a2_c16n01_q7",
-      "promptTh": "บอก Bogy ก่อนออกไปตลาดน้ำ: ใส่หมวกของนายสิ",
+      "promptTh": "ใส่หมวกของนายสิ",
       "answerEn": "Put on your hat.",
       "acceptedAnswers": [
         "Put your hat on.",
@@ -1944,7 +1944,7 @@
   "a2_c16n09": [
     {
       "id": "a2_c16n09_q1",
-      "promptTh": "ยื่นเงินให้ Mali ที่เรือของครอบครัวเธอ",
+      "promptTh": "นี่ค่ะ/ครับ (ตอนยื่นเงินให้)",
       "answerEn": "Here you go.",
       "acceptedAnswers": [],
       "hints": [
@@ -1954,7 +1954,7 @@
     },
     {
       "id": "a2_c16n09_q2",
-      "promptTh": "ทัก Mali สุภาพๆ ว่า ขอโทษนะ ฉันคิดว่าเงินทอนไม่ถูก",
+      "promptTh": "ขอโทษนะ ฉันคิดว่าเงินทอนไม่ถูก",
       "answerEn": "Sorry, I think the change isn't right.",
       "acceptedAnswers": [
         "Excuse me, I think the change isn't right.",
@@ -1968,7 +1968,7 @@
     },
     {
       "id": "a2_c16n09_q3",
-      "promptTh": "เล่าให้ Bogy ฟังว่า วันนี้เราไปตลาดน้ำ และฉันซื้อมะม่วง",
+      "promptTh": "วันนี้เราไปตลาดน้ำ ฉันซื้อมะม่วงมาลูกหนึ่ง",
       "answerEn": "We went to the floating market today. I bought a mango.",
       "acceptedAnswers": [
         "Today we went to the floating market. I bought a mango.",
@@ -1981,7 +1981,7 @@
     },
     {
       "id": "a2_c16n09_q4",
-      "promptTh": "บอก Mali ว่า ฉันให้คุณไป 500 บาท",
+      "promptTh": "ฉันให้คุณไป 500 บาท",
       "answerEn": "I gave you 500 baht.",
       "acceptedAnswers": [
         "Excuse me, I gave you 500 baht.",
@@ -1994,7 +1994,7 @@
     },
     {
       "id": "a2_c16n09_q5",
-      "promptTh": "บอก Mali ว่า ฉันได้เงินทอนคืนแค่ 50 บาท",
+      "promptTh": "ฉันได้เงินทอนคืนแค่ 50 บาท",
       "answerEn": "I only got 50 baht back.",
       "acceptedAnswers": [
         "I only got fifty baht back.",
@@ -2007,7 +2007,7 @@
     },
     {
       "id": "a2_c16n09_q6",
-      "promptTh": "บอก Mali ว่า ไม่ต้องทอน",
+      "promptTh": "ไม่ต้องทอน",
       "answerEn": "Keep the change.",
       "acceptedAnswers": [
         "Keep the change, please."
@@ -2019,7 +2019,7 @@
     },
     {
       "id": "a2_c16n09_q7",
-      "promptTh": "ขอใบเสร็จอย่างสุภาพ (ใช้ Could I)",
+      "promptTh": "ขอใบเสร็จหน่อยได้ไหม? (ใช้ Could I)",
       "answerEn": "Could I have the receipt, please?",
       "acceptedAnswers": [
         "Could I have a receipt, please?",
@@ -2034,7 +2034,7 @@
   "a2_c17n06": [
     {
       "id": "a2_c17n06_q1",
-      "promptTh": "บอกทีม: เราต้องไปอยู่ที่เกตตอนสิบโมง",
+      "promptTh": "เราต้องไปอยู่ที่เกตตอนสิบโมง",
       "answerEn": "We have to be at the gate at ten.",
       "acceptedAnswers": [
         "We have to be at the gate at 10."
@@ -2046,7 +2046,7 @@
     },
     {
       "id": "a2_c17n06_q2",
-      "promptTh": "ถามเจ้าหน้าที่เช็กอิน: ฉันต้องเช็กอินกระเป๋าใบนี้ไหม",
+      "promptTh": "ฉันต้องเช็กอินกระเป๋าใบนี้ไหม?",
       "answerEn": "Do I have to check in this bag?",
       "acceptedAnswers": [],
       "hints": [
@@ -2056,7 +2056,7 @@
     },
     {
       "id": "a2_c17n06_q3",
-      "promptTh": "คุณเป็นเจ้าหน้าที่เช็กอิน บอกผู้โดยสาร: คุณต้องแสดงพาสปอร์ต",
+      "promptTh": "คุณต้องแสดงพาสปอร์ต",
       "answerEn": "You have to show your passport.",
       "acceptedAnswers": [
         "You have to show me your passport."
@@ -2068,7 +2068,7 @@
     },
     {
       "id": "a2_c17n06_q4",
-      "promptTh": "บอก Mali: เราไม่ต้องเช็กอินกระเป๋าถือขึ้นเครื่อง",
+      "promptTh": "เราไม่ต้องเช็กอินกระเป๋าถือขึ้นเครื่อง",
       "answerEn": "We don't have to check in our carry-on.",
       "acceptedAnswers": [
         "We do not have to check in our carry-on.",
@@ -2094,7 +2094,7 @@
     },
     {
       "id": "a2_c17n06_q6",
-      "promptTh": "ถามเจ้าหน้าที่เช็กอิน: เราต้องไปเกต 2 ไหม",
+      "promptTh": "เราต้องไปเกต 2 ไหม?",
       "answerEn": "Do we have to go to Gate 2?",
       "acceptedAnswers": [
         "Do we have to go to gate two?"
@@ -2108,7 +2108,7 @@
   "a2_c17n09": [
     {
       "id": "a2_c17n09_q1",
-      "promptTh": "ถามเจ้าหน้าที่เช็กอิน: ฉันเอากระเป๋าใบนี้ขึ้นเครื่องได้ไหม",
+      "promptTh": "ฉันเอากระเป๋าใบนี้ขึ้นเครื่องได้ไหม?",
       "answerEn": "Can I take this bag on the plane?",
       "acceptedAnswers": [
         "Can I take this bag on the plane, please?"
@@ -2120,7 +2120,7 @@
     },
     {
       "id": "a2_c17n09_q2",
-      "promptTh": "คุณเป็นเจ้าหน้าที่เช็กอิน ถามผู้โดยสาร: คุณแพ็กกระเป๋าใบนี้เองหรือเปล่า",
+      "promptTh": "คุณแพ็กกระเป๋าใบนี้เองหรือเปล่า?",
       "answerEn": "Did you pack this bag yourself?",
       "acceptedAnswers": [
         "Did you pack it yourself?",
@@ -2133,7 +2133,7 @@
     },
     {
       "id": "a2_c17n09_q3",
-      "promptTh": "ตอบเจ้าหน้าที่เช็กอินสั้นๆ ว่า ใช่ ฉันแพ็กเอง",
+      "promptTh": "ใช่ ฉันแพ็กเอง (ตอบสั้นๆ)",
       "answerEn": "Yes, I did.",
       "acceptedAnswers": [
         "Yes, I did. I packed it."
@@ -2157,7 +2157,7 @@
     },
     {
       "id": "a2_c17n09_q5",
-      "promptTh": "กระเป๋าน้ำหนักเกิน ถามเจ้าหน้าที่เช็กอิน: ฉันต้องใส่ของพวกนี้ไว้ในกระเป๋าถือขึ้นเครื่องไหม",
+      "promptTh": "ฉันต้องใส่ของพวกนี้ไว้ในกระเป๋าถือขึ้นเครื่องไหม?",
       "answerEn": "Do I have to put these things in my carry-on?",
       "acceptedAnswers": [],
       "hints": [
@@ -2167,7 +2167,7 @@
     },
     {
       "id": "a2_c17n09_q6",
-      "promptTh": "ถาม Teacher Torto: เมื่อเช้า May เช็กอินกระเป๋าของเธอหรือเปล่า",
+      "promptTh": "เมื่อเช้า May เช็กอินกระเป๋าของเธอหรือเปล่า?",
       "answerEn": "Did May check in her luggage this morning?",
       "acceptedAnswers": [
         "Did May check in her bag this morning?"
@@ -2181,7 +2181,7 @@
   "a2_c18n08": [
     {
       "id": "a2_c18n08_q1",
-      "promptTh": "ถามพนักงานต้อนรับ: อาหารเช้ากี่โมง",
+      "promptTh": "อาหารเช้ากี่โมง?",
       "answerEn": "What time is breakfast?",
       "acceptedAnswers": [
         "What time is breakfast, please?"
@@ -2193,7 +2193,7 @@
     },
     {
       "id": "a2_c18n08_q2",
-      "promptTh": "ถามพนักงานต้อนรับ: ที่นี่มีลิฟต์ไหม",
+      "promptTh": "ที่นี่มีลิฟต์ไหม?",
       "answerEn": "Is there a lift?",
       "acceptedAnswers": [
         "Is there a lift here?"
@@ -2218,7 +2218,7 @@
     },
     {
       "id": "a2_c18n08_q4",
-      "promptTh": "ถามพนักงานต้อนรับ: เช็กเอาต์กี่โมง",
+      "promptTh": "เช็กเอาต์กี่โมง?",
       "answerEn": "What time is checkout?",
       "acceptedAnswers": [
         "What time is check-out?"
@@ -2243,7 +2243,7 @@
     },
     {
       "id": "a2_c18n08_q6",
-      "promptTh": "Bogy อยากว่ายน้ำ ถามพนักงานต้อนรับ: โรงแรมมีสระว่ายน้ำไหม",
+      "promptTh": "ที่นี่มีสระว่ายน้ำไหม?",
       "answerEn": "Is there a pool?",
       "acceptedAnswers": [
         "Is there a pool in the hotel?",
@@ -2270,7 +2270,7 @@
   "a2_c19n07": [
     {
       "id": "a2_c19n07_q1",
-      "promptTh": "ถาม Driver Uncle Somchai (คนขับ): ค่าโดยสารเท่าไหร่",
+      "promptTh": "ค่าโดยสารเท่าไหร่?",
       "answerEn": "How much is the fare?",
       "acceptedAnswers": [],
       "hints": [
@@ -2280,7 +2280,7 @@
     },
     {
       "id": "a2_c19n07_q2",
-      "promptTh": "ถาม Driver Uncle Somchai (คนขับ): ฉันต้องลงที่ไหน",
+      "promptTh": "ฉันต้องลงที่ไหน?",
       "answerEn": "Where do I get off?",
       "acceptedAnswers": [
         "Where do I have to get off?"
@@ -2292,7 +2292,7 @@
     },
     {
       "id": "a2_c19n07_q3",
-      "promptTh": "ถามคนที่ป้ายรถเมล์: รถเมล์สายไหนไปตลาด",
+      "promptTh": "รถเมล์สายไหนไปตลาด?",
       "answerEn": "Which bus goes to the market?",
       "acceptedAnswers": [],
       "hints": [
@@ -2302,7 +2302,7 @@
     },
     {
       "id": "a2_c19n07_q4",
-      "promptTh": "ถาม Driver Uncle Somchai (คนขับ): รถคันนี้ไปเมืองเก่าไหม",
+      "promptTh": "รถคันนี้ไปเมืองเก่าไหม?",
       "answerEn": "Does this bus go to the old town?",
       "acceptedAnswers": [],
       "hints": [
@@ -2312,7 +2312,7 @@
     },
     {
       "id": "a2_c19n07_q5",
-      "promptTh": "ถาม Driver Uncle Somchai (คนขับ): ไปพิพิธภัณฑ์ใช้เวลานานแค่ไหน",
+      "promptTh": "ไปพิพิธภัณฑ์ใช้เวลานานแค่ไหน?",
       "answerEn": "How long does it take to get to the museum?",
       "acceptedAnswers": [
         "How long does it take to go to the museum?"
@@ -2324,7 +2324,7 @@
     },
     {
       "id": "a2_c19n07_q6",
-      "promptTh": "ถาม Driver Uncle Somchai (คนขับ): รถออกกี่โมง",
+      "promptTh": "รถออกกี่โมง?",
       "answerEn": "What time does the bus depart?",
       "acceptedAnswers": [
         "What time does the bus leave?",
@@ -2339,7 +2339,7 @@
   "a2_c20n05": [
     {
       "id": "a2_c20n05_q1",
-      "promptTh": "บอกทางไปร้านโปรดของ Teacher Torto: เลี้ยวขวาที่ไฟจราจร ร้านอยู่ทางซ้ายมือ",
+      "promptTh": "เลี้ยวขวาที่ไฟจราจร ร้านอยู่ทางซ้ายมือ",
       "answerEn": "Turn right at the traffic lights. It's on your left.",
       "acceptedAnswers": [
         "Turn right at the traffic lights. It is on your left.",
@@ -2352,7 +2352,7 @@
     },
     {
       "id": "a2_c20n05_q2",
-      "promptTh": "บอกทาง May: เดินผ่านธนาคาร แล้วเลี้ยวซ้ายที่แยกที่สอง",
+      "promptTh": "เดินผ่านธนาคาร แล้วเลี้ยวซ้ายที่แยกที่สอง",
       "answerEn": "Go past the bank and take the second left.",
       "acceptedAnswers": [],
       "hints": [
@@ -2362,7 +2362,7 @@
     },
     {
       "id": "a2_c20n05_q3",
-      "promptTh": "บอกทาง Bogy: ข้ามสะพาน แล้วเลี้ยวซ้ายที่หัวมุม",
+      "promptTh": "ข้ามสะพาน แล้วเลี้ยวซ้ายที่หัวมุม",
       "answerEn": "Cross the bridge and turn left at the corner.",
       "acceptedAnswers": [],
       "hints": [
@@ -2372,7 +2372,7 @@
     },
     {
       "id": "a2_c20n05_q4",
-      "promptTh": "บอกทาง Teacher Nina: เดินตรงไป เลี้ยวขวาที่หัวมุม ร้านอยู่ทางขวามือ",
+      "promptTh": "เดินตรงไป เลี้ยวขวาที่หัวมุม ร้านอยู่ทางขวามือ",
       "answerEn": "Go straight and turn right at the corner. The shop is on your right.",
       "acceptedAnswers": [
         "Go straight and turn right at the corner. It's on your right.",
@@ -2385,7 +2385,7 @@
     },
     {
       "id": "a2_c20n05_q5",
-      "promptTh": "บอกทาง Mali: ข้ามถนนที่ไฟจราจร แล้วเลี้ยวขวาที่แยกที่สอง",
+      "promptTh": "ข้ามถนนที่ไฟจราจร แล้วเลี้ยวขวาที่แยกที่สอง",
       "answerEn": "Cross the street at the traffic lights and take the second right.",
       "acceptedAnswers": [],
       "hints": [
@@ -2395,7 +2395,7 @@
     },
     {
       "id": "a2_c20n05_q6",
-      "promptTh": "บอกทาง Capy: เดินตรงไป แล้วเลี้ยวซ้ายที่ไฟจราจร",
+      "promptTh": "เดินตรงไป แล้วเลี้ยวซ้ายที่ไฟจราจร",
       "answerEn": "Go straight and turn left at the traffic lights.",
       "acceptedAnswers": [
         "Go straight and turn left at the traffic light.",
@@ -2410,7 +2410,7 @@
   "a2_c20n09": [
     {
       "id": "a2_c20n09_q1",
-      "promptTh": "คนแถวนั้นบอกทางเร็วมาก พูดว่า: ขอโทษ พูดอีกทีได้ไหม แล้วฉันเลี้ยวขวาใช่ไหม",
+      "promptTh": "ขอโทษนะ พูดอีกทีได้ไหม? แล้วฉันเลี้ยวขวาใช่ไหม?",
       "answerEn": "Sorry, can you say that again? So I turn right?",
       "acceptedAnswers": [
         "Sorry, could you say that again? So I turn right?"
@@ -2422,7 +2422,7 @@
     },
     {
       "id": "a2_c20n09_q2",
-      "promptTh": "ถามคนแถวนั้น: ร้านโปรดของ Teacher Torto อยู่ไกลแค่ไหน",
+      "promptTh": "ร้านอยู่ไกลแค่ไหน?",
       "answerEn": "How far is the shop?",
       "acceptedAnswers": [
         "How far is the shop from here?"
@@ -2434,7 +2434,7 @@
     },
     {
       "id": "a2_c20n09_q3",
-      "promptTh": "ขอให้พูดช้าลง: ช่วยพูดช้าๆ หน่อยได้ไหม",
+      "promptTh": "ช่วยพูดช้าๆ หน่อยได้ไหม?",
       "answerEn": "Can you speak slowly, please?",
       "acceptedAnswers": [
         "Could you speak slowly, please?",
@@ -2461,7 +2461,7 @@
     },
     {
       "id": "a2_c20n09_q5",
-      "promptTh": "ถนนปิด ถามคนแถวนั้น: ขอโทษค่ะ/ครับ ตลาดอยู่ที่ไหน",
+      "promptTh": "ขอโทษค่ะ/ครับ ตลาดอยู่ที่ไหน?",
       "answerEn": "Excuse me, where is the market?",
       "acceptedAnswers": [
         "Excuse me, where's the market?"
@@ -2550,7 +2550,7 @@
     },
     {
       "id": "a2_c21n09_q6",
-      "promptTh": "ถาม Teacher Torto: ถ้าฝนตก เราจะทำอะไรกัน",
+      "promptTh": "ถ้าฝนตก เราจะทำอะไรกัน?",
       "answerEn": "What will we do if it rains?",
       "acceptedAnswers": [
         "If it rains, what will we do?"
@@ -2638,7 +2638,7 @@
     },
     {
       "id": "a2_c21n11_q6",
-      "promptTh": "บอก Bogy: เอาร่มไปด้วยนะ เพราะฝนอาจจะตก",
+      "promptTh": "เอาร่มไปด้วยนะ เพราะฝนอาจจะตก",
       "answerEn": "Take an umbrella because it might rain.",
       "acceptedAnswers": [
         "Take your umbrella because it might rain."
@@ -2650,7 +2650,7 @@
     },
     {
       "id": "a2_c21n11_q7",
-      "promptTh": "บอก Capy: พรุ่งนี้เอาหมวกไปด้วยนะ เพราะแดดจะออก",
+      "promptTh": "พรุ่งนี้เอาหมวกไปด้วยนะ เพราะแดดจะออก",
       "answerEn": "Take a hat tomorrow because it's going to be sunny.",
       "acceptedAnswers": [
         "Take your hat tomorrow because it's going to be sunny.",
@@ -2665,7 +2665,7 @@
   "a2_c22n07": [
     {
       "id": "a2_c22n07_q1",
-      "promptTh": "บอกเภสัชกร: เธอ (May) เป็นไข้",
+      "promptTh": "เธอเป็นไข้",
       "answerEn": "She has a fever.",
       "acceptedAnswers": [
         "May has a fever."
@@ -2677,7 +2677,7 @@
     },
     {
       "id": "a2_c22n07_q2",
-      "promptTh": "แนะนำ May ที่เป็นไข้: ควรพักผ่อนนะ",
+      "promptTh": "คุณควรพักผ่อนนะ",
       "answerEn": "You should rest.",
       "acceptedAnswers": [],
       "hints": [
@@ -2687,7 +2687,7 @@
     },
     {
       "id": "a2_c22n07_q3",
-      "promptTh": "ถาม May: เป็นอะไรเหรอ",
+      "promptTh": "เป็นอะไรเหรอ?",
       "answerEn": "What's wrong?",
       "acceptedAnswers": [
         "What is wrong?"
@@ -2699,7 +2699,7 @@
     },
     {
       "id": "a2_c22n07_q4",
-      "promptTh": "Capy ปวดฟัน แนะนำ Capy ว่าควรไปหาหมอฟันนะ",
+      "promptTh": "คุณควรไปหาหมอฟันนะ",
       "answerEn": "You should see a dentist.",
       "acceptedAnswers": [
         "Capy, you should see a dentist.",
@@ -2725,7 +2725,7 @@
     },
     {
       "id": "a2_c22n07_q6",
-      "promptTh": "ถามเภสัชกร: ฉันเป็นหวัด ฉันควรทำยังไงดี",
+      "promptTh": "ฉันเป็นหวัด ฉันควรทำยังไงดี?",
       "answerEn": "I have a cold. What should I do?",
       "acceptedAnswers": [],
       "hints": [
@@ -2735,7 +2735,7 @@
     },
     {
       "id": "a2_c22n07_q7",
-      "promptTh": "แนะนำ Capy ที่เจ็บคอ: ควรดื่มน้ำและกินยานะ",
+      "promptTh": "คุณควรดื่มน้ำและกินยานะ",
       "answerEn": "You should drink water and take medicine.",
       "acceptedAnswers": [
         "You should drink water and take some medicine.",
@@ -2751,7 +2751,7 @@
   "a2_c23n08": [
     {
       "id": "a2_c23n08_q1",
-      "promptTh": "บอกเจ้าหน้าที่: ฉันลืมกระเป๋าไว้บนรถเมล์",
+      "promptTh": "ฉันลืมกระเป๋าไว้บนรถเมล์",
       "answerEn": "I left my bag on the bus.",
       "acceptedAnswers": [],
       "hints": [
@@ -2761,7 +2761,7 @@
     },
     {
       "id": "a2_c23n08_q2",
-      "promptTh": "บอกเจ้าหน้าที่: เมื่อวานฉันลืมร่มไว้ที่คาเฟ่",
+      "promptTh": "เมื่อวานฉันลืมร่มไว้ที่คาเฟ่",
       "answerEn": "I left my umbrella at the café yesterday.",
       "acceptedAnswers": [
         "I left my umbrella at the cafe yesterday.",
@@ -2798,7 +2798,7 @@
     },
     {
       "id": "a2_c23n08_q5",
-      "promptTh": "บอกเจ้าหน้าที่ว่า ฉันหามันไม่เจอเลย",
+      "promptTh": "ฉันหามันไม่เจอเลย",
       "answerEn": "I couldn't find it anywhere.",
       "acceptedAnswers": [
         "I couldn't find it."
@@ -2836,7 +2836,7 @@
   "a2_c23n11": [
     {
       "id": "a2_c23n11_q1",
-      "promptTh": "บอกเจ้าหน้าที่: ฉันทำโทรศัพท์หาย มันสีดำ ช่วยฉันหน่อยได้ไหม",
+      "promptTh": "ฉันทำโทรศัพท์หาย มันสีดำ ช่วยฉันหน่อยได้ไหม?",
       "answerEn": "I lost my phone. It's black. Can you help me?",
       "acceptedAnswers": [
         "I lost my phone. It is black. Could you help me?"
@@ -2848,7 +2848,7 @@
     },
     {
       "id": "a2_c23n11_q2",
-      "promptTh": "บอกเจ้าหน้าที่: ฉันลืมกระเป๋าสตางค์ไว้บนรถเมล์ มันใบเล็กและสีน้ำเงิน",
+      "promptTh": "ฉันลืมกระเป๋าสตางค์ไว้บนรถเมล์ มันใบเล็กและสีน้ำเงิน",
       "answerEn": "I left my wallet on the bus. It's small and blue.",
       "acceptedAnswers": [
         "I left my wallet on the bus. It is small and blue."
@@ -2860,7 +2860,7 @@
     },
     {
       "id": "a2_c23n11_q3",
-      "promptTh": "บอกเจ้าหน้าที่: กระเป๋าถือของเพื่อนฉันหาย มันเป็นกระเป๋าสีแดงที่มีกุญแจอยู่ข้างใน",
+      "promptTh": "กระเป๋าถือของเพื่อนฉันหาย มันเป็นกระเป๋าสีแดงที่มีกุญแจอยู่ข้างใน",
       "answerEn": "My friend's handbag is missing. It's a red bag which has a key inside.",
       "acceptedAnswers": [
         "My friend's handbag is missing. It is a red bag which has a key inside."
@@ -2872,7 +2872,7 @@
     },
     {
       "id": "a2_c23n11_q4",
-      "promptTh": "บอกเจ้าหน้าที่: ฉันหามันไม่เจอเลย ช่วยตามหาให้หน่อยได้ไหม",
+      "promptTh": "ฉันหามันไม่เจอเลย ช่วยตามหาให้หน่อยได้ไหม?",
       "answerEn": "I couldn't find it anywhere. Can you look for it?",
       "acceptedAnswers": [
         "I couldn't find it anywhere. Could you look for it?"
@@ -2884,7 +2884,7 @@
     },
     {
       "id": "a2_c23n11_q5",
-      "promptTh": "บอกเจ้าหน้าที่: ฉันทำพาสปอร์ตหายเมื่อวาน ฉันอยากแจ้งของหาย",
+      "promptTh": "ฉันทำพาสปอร์ตหายเมื่อวาน ฉันอยากแจ้งของหาย",
       "answerEn": "I lost my passport yesterday. I want to report it.",
       "acceptedAnswers": [
         "I lost my passport yesterday. I'd like to report it."
@@ -2896,7 +2896,7 @@
     },
     {
       "id": "a2_c23n11_q6",
-      "promptTh": "ขอเจ้าหน้าที่: ถ้าเจอ ช่วยบอกฉันได้ไหม",
+      "promptTh": "ถ้าเจอ ช่วยบอกฉันได้ไหม?",
       "answerEn": "If you find it, could you tell me?",
       "acceptedAnswers": [
         "Could you tell me if you find it?",
@@ -2911,7 +2911,7 @@
   "a2_c24n01": [
     {
       "id": "a2_c24n01_q1",
-      "promptTh": "บอกทีม: เราต้องไปเกต 12",
+      "promptTh": "เราต้องไปเกต 12",
       "answerEn": "We have to go to Gate 12.",
       "acceptedAnswers": [
         "We have to go to gate twelve."
@@ -2936,7 +2936,7 @@
     },
     {
       "id": "a2_c24n01_q3",
-      "promptTh": "ถามทาง: ร้านขายยาอยู่ไกลแค่ไหน",
+      "promptTh": "ร้านขายยาอยู่ไกลแค่ไหน?",
       "answerEn": "How far is the pharmacy?",
       "acceptedAnswers": [
         "How far is the pharmacy from here?"
@@ -2985,7 +2985,7 @@
     },
     {
       "id": "a2_c24n01_q7",
-      "promptTh": "ชวน Bogy: ขึ้นแท็กซี่กันเถอะ",
+      "promptTh": "ขึ้นแท็กซี่กันเถอะ",
       "answerEn": "Let's get in the taxi.",
       "acceptedAnswers": [
         "Let's get in a taxi."
@@ -2999,7 +2999,7 @@
   "a2_c24n07": [
     {
       "id": "a2_c24n07_q1",
-      "promptTh": "บอกเจ้าหน้าที่สายการบิน: ขอโทษค่ะ/ครับ เที่ยวบินของฉันถูกยกเลิก มีเที่ยวบินที่ช้ากว่านี้ไหม",
+      "promptTh": "ขอโทษค่ะ/ครับ เที่ยวบินของฉันถูกยกเลิก มีเที่ยวบินที่ช้ากว่านี้ไหม?",
       "answerEn": "Excuse me, my flight is cancelled. Is there a later flight?",
       "acceptedAnswers": [
         "Excuse me, my flight was cancelled. Is there a later flight?",
@@ -3012,7 +3012,7 @@
     },
     {
       "id": "a2_c24n07_q2",
-      "promptTh": "ถามเจ้าหน้าที่สายการบิน: ฉันทำอะไรแทนได้บ้าง",
+      "promptTh": "ฉันทำอะไรแทนได้บ้าง?",
       "answerEn": "What can I do instead?",
       "acceptedAnswers": [],
       "hints": [
@@ -3022,7 +3022,7 @@
     },
     {
       "id": "a2_c24n07_q3",
-      "promptTh": "ขอเจ้าหน้าที่สายการบิน: ฉันขอ voucher ได้ไหม",
+      "promptTh": "ฉันขอ voucher ได้ไหม?",
       "answerEn": "Can I get a voucher?",
       "acceptedAnswers": [
         "Can I have a voucher?",
@@ -3035,7 +3035,7 @@
     },
     {
       "id": "a2_c24n07_q4",
-      "promptTh": "บอกเจ้าหน้าที่สายการบิน: เที่ยวบินของเราดีเลย์ ช่วยหาโรงแรมให้เราได้ไหม",
+      "promptTh": "เที่ยวบินของเราดีเลย์ ช่วยหาโรงแรมให้เราได้ไหม?",
       "answerEn": "Our flight is delayed. Could you find a hotel for us?",
       "acceptedAnswers": [
         "Our flight is delayed. Could you find us a hotel?"
@@ -3047,7 +3047,7 @@
     },
     {
       "id": "a2_c24n07_q5",
-      "promptTh": "ถามเจ้าหน้าที่สายการบิน: ถ้าฉันขึ้นเที่ยวบินที่ช้ากว่า ฉันจะได้ voucher ไหม",
+      "promptTh": "ถ้าฉันขึ้นเที่ยวบินที่ช้ากว่า ฉันจะได้ voucher ไหม?",
       "answerEn": "If I take the later flight, will I get a voucher?",
       "acceptedAnswers": [
         "Will I get a voucher if I take the later flight?"
@@ -3059,7 +3059,7 @@
     },
     {
       "id": "a2_c24n07_q6",
-      "promptTh": "ถามเจ้าหน้าที่สายการบิน: มีข้อมูลอัปเดตของเที่ยวบินไหม",
+      "promptTh": "มีข้อมูลอัปเดตของเที่ยวบินไหม?",
       "answerEn": "Is there an update on the flight?",
       "acceptedAnswers": [
         "Is there an update on our flight?"
@@ -3073,7 +3073,7 @@
   "a2_c25n06": [
     {
       "id": "a2_c25n06_q1",
-      "promptTh": "ถามเพื่อนว่า (ทริปที่ผ่านมา) ไปเที่ยวกับใครมา",
+      "promptTh": "คุณไปเที่ยวกับใครมา?",
       "answerEn": "Who did you go with?",
       "acceptedAnswers": [
         "Who went with you?"
@@ -3085,7 +3085,7 @@
     },
     {
       "id": "a2_c25n06_q2",
-      "promptTh": "ถามพ่อว่า (ทริปทำงานของพ่อ) กินอะไรมาบ้าง",
+      "promptTh": "คุณกินอะไรมาบ้าง?",
       "answerEn": "What did you eat?",
       "acceptedAnswers": [
         "What did you eat on the trip?",
@@ -3098,7 +3098,7 @@
     },
     {
       "id": "a2_c25n06_q3",
-      "promptTh": "แม่ถามว่าพักที่ไหน ตอบแม่ว่า: ฉันพักที่โรงแรมติดทะเล",
+      "promptTh": "ฉันพักที่โรงแรมติดทะเล",
       "answerEn": "I stayed at a hotel next to the beach.",
       "acceptedAnswers": [
         "I stayed in a hotel next to the beach.",
@@ -3111,7 +3111,7 @@
     },
     {
       "id": "a2_c25n06_q4",
-      "promptTh": "ถาม Teacher John ว่า คุณกลับมาจากทริปเมื่อไหร่",
+      "promptTh": "คุณกลับมาเมื่อไหร่?",
       "answerEn": "When did you come back?",
       "acceptedAnswers": [
         "When did you get back?",
@@ -3124,7 +3124,7 @@
     },
     {
       "id": "a2_c25n06_q5",
-      "promptTh": "ตอบแม่ว่า: เรากลับมาเมื่อสองวันก่อน",
+      "promptTh": "เรากลับมาเมื่อสองวันก่อน",
       "answerEn": "We came back two days ago.",
       "acceptedAnswers": [
         "We got back two days ago."
@@ -3136,7 +3136,7 @@
     },
     {
       "id": "a2_c25n06_q6",
-      "promptTh": "ถาม Mali ว่า คุณไปเกาะยังไง (เดินทางด้วยอะไร)",
+      "promptTh": "คุณไปเกาะยังไง?",
       "answerEn": "How did you get to the island?",
       "acceptedAnswers": [
         "How did you go to the island?"
@@ -3148,7 +3148,7 @@
     },
     {
       "id": "a2_c25n06_q7",
-      "promptTh": "บอกแม่ว่า ฉันซื้อของที่ระลึกให้แม่ระหว่างทางกลับ",
+      "promptTh": "ฉันซื้อของที่ระลึกมาให้คุณระหว่างทาง",
       "answerEn": "I bought a souvenir for you on the way.",
       "acceptedAnswers": [
         "I bought you a souvenir on the way.",
@@ -3163,7 +3163,7 @@
   "a2_c26n06": [
     {
       "id": "a2_c26n06_q1",
-      "promptTh": "ฝึกถาม-ตอบ: ถามว่า 'คุณเคยไปญี่ปุ่นไหม' แล้วตอบเองแบบสั้นว่า 'ไม่เคย'",
+      "promptTh": "คุณเคยไปญี่ปุ่นไหม? — ไม่เคย",
       "answerEn": "Have you ever been to Japan? No, I haven't.",
       "acceptedAnswers": [
         "Have you ever been to Japan? No, I have not.",
@@ -3176,7 +3176,7 @@
     },
     {
       "id": "a2_c26n06_q2",
-      "promptTh": "Teacher Torto ถามว่าเคยลองทุเรียนไหม ตอบแบบสั้นว่า 'เคย'",
+      "promptTh": "ใช่ ฉันเคย (ตอบสั้นๆ)",
       "answerEn": "Yes, I have.",
       "acceptedAnswers": [
         "Yes, I have. I've tried durian.",
@@ -3189,7 +3189,7 @@
     },
     {
       "id": "a2_c26n06_q3",
-      "promptTh": "ถาม Bogy ว่า เคยเห็นหิมะไหม",
+      "promptTh": "คุณเคยเห็นหิมะไหม?",
       "answerEn": "Have you ever seen snow?",
       "acceptedAnswers": [],
       "hints": [
@@ -3199,7 +3199,7 @@
     },
     {
       "id": "a2_c26n06_q4",
-      "promptTh": "ถาม Mali ว่า เคยกินก๋วยเตี๋ยวน้ำไหม",
+      "promptTh": "คุณเคยกินก๋วยเตี๋ยวน้ำไหม?",
       "answerEn": "Have you ever eaten noodle soup?",
       "acceptedAnswers": [],
       "hints": [
@@ -3209,7 +3209,7 @@
     },
     {
       "id": "a2_c26n06_q5",
-      "promptTh": "บอกว่า ฉันไม่เคยไปภูเก็ต",
+      "promptTh": "ฉันไม่เคยไปภูเก็ต",
       "answerEn": "I've never been to Phuket.",
       "acceptedAnswers": [
         "I have never been to Phuket."
@@ -3221,7 +3221,7 @@
     },
     {
       "id": "a2_c26n06_q6",
-      "promptTh": "ถาม Teacher Torto ว่า เคยตั้งแคมป์ในป่าไหม",
+      "promptTh": "คุณเคยตั้งแคมป์ในป่าไหม?",
       "answerEn": "Have you ever camped in a forest?",
       "acceptedAnswers": [
         "Have you ever camped in the forest?"
@@ -3233,7 +3233,7 @@
     },
     {
       "id": "a2_c26n06_q7",
-      "promptTh": "ถาม May ว่า เคยโต้คลื่นไหม แล้วตอบเองแบบสั้นว่า 'ไม่เคย'",
+      "promptTh": "คุณเคยโต้คลื่นไหม? — ไม่เคย",
       "answerEn": "Have you ever surfed? No, I haven't.",
       "acceptedAnswers": [
         "Have you ever surfed? No, I have not.",
@@ -3248,7 +3248,7 @@
   "a2_c27n04": [
     {
       "id": "a2_c27n04_q1",
-      "promptTh": "ฝึกถาม-ตอบ: ถามเพื่อนว่า เมื่อคืนตอนสองทุ่มกำลังทำอะไรอยู่ แล้วตอบเองว่า ฉันกำลังทำอาหารอยู่",
+      "promptTh": "เมื่อคืนตอนสองทุ่มคุณกำลังทำอะไรอยู่? — ฉันกำลังทำอาหารอยู่",
       "answerEn": "What were you doing at 8 p.m. last night? I was cooking.",
       "acceptedAnswers": [
         "What were you doing at 8 p.m.? I was cooking.",
@@ -3261,7 +3261,7 @@
     },
     {
       "id": "a2_c27n04_q2",
-      "promptTh": "บอกว่า เมื่อวานตอน 7 โมงเช้า ฉันกำลังรอรถบัสอยู่",
+      "promptTh": "เมื่อวานตอน 7 โมงเช้า ฉันกำลังรอรถบัสอยู่",
       "answerEn": "I was waiting for the bus at 7 a.m. yesterday.",
       "acceptedAnswers": [
         "At 7 a.m. yesterday, I was waiting for the bus.",
@@ -3274,7 +3274,7 @@
     },
     {
       "id": "a2_c27n04_q3",
-      "promptTh": "ถาม John ว่า เมื่อวานตอนบ่ายสามโมง Bogy กำลังทำอะไรอยู่",
+      "promptTh": "เมื่อวานตอนบ่ายสามโมง Bogy กำลังทำอะไรอยู่?",
       "answerEn": "What was Bogy doing at 3 p.m. yesterday?",
       "acceptedAnswers": [
         "What was Bogy doing at three yesterday?"
@@ -3286,7 +3286,7 @@
     },
     {
       "id": "a2_c27n04_q4",
-      "promptTh": "บอกว่า เมื่อคืนตอนสี่ทุ่ม May กับ Mali กำลังดูหนังอยู่",
+      "promptTh": "เมื่อคืนตอนสี่ทุ่ม May กับ Mali กำลังดูหนังอยู่",
       "answerEn": "May and Mali were watching a movie at 10 p.m. last night.",
       "acceptedAnswers": [
         "At 10 p.m. last night, May and Mali were watching a movie."
@@ -3298,7 +3298,7 @@
     },
     {
       "id": "a2_c27n04_q5",
-      "promptTh": "John ถามว่า 'Were you sleeping at 6 a.m.?' ตอบแบบสั้นว่า ใช่ (ตอนนั้นกำลังหลับ)",
+      "promptTh": "ใช่ ฉันกำลังหลับ (ตอบสั้นๆ)",
       "answerEn": "Yes, I was.",
       "acceptedAnswers": [
         "Yes, I was sleeping."
@@ -3309,7 +3309,7 @@
     },
     {
       "id": "a2_c27n04_q6",
-      "promptTh": "บอกว่า เมื่อวานตอนเที่ยง แม่ของฉันไม่ได้กำลังทำงาน แม่กำลังกินข้าวกลางวันอยู่",
+      "promptTh": "เมื่อวานตอนเที่ยง แม่ของฉันไม่ได้กำลังทำงาน เธอกำลังกินข้าวกลางวันอยู่",
       "answerEn": "My mother wasn't working at twelve yesterday. She was having lunch.",
       "acceptedAnswers": [
         "My mother was not working at twelve yesterday. She was having lunch.",
@@ -3325,7 +3325,7 @@
   "a2_c27n09": [
     {
       "id": "a2_c27n09_q1",
-      "promptTh": "เล่าว่า (เมื่อวาน) ฉันกำลังวิ่งเพราะสาย ก็เลยเหนื่อยมาก",
+      "promptTh": "ฉันกำลังวิ่งเพราะสาย ก็เลยเหนื่อยมาก",
       "answerEn": "I was running because I was late, so I was very tired.",
       "acceptedAnswers": [
         "I was running because I was late, so I was tired."
@@ -3337,7 +3337,7 @@
     },
     {
       "id": "a2_c27n09_q2",
-      "promptTh": "เล่าว่า ฉันกำลังหากระเป๋าอยู่ ตอนที่แม่ของฉันโทรมา",
+      "promptTh": "ฉันกำลังหากระเป๋าอยู่ ตอนที่แม่ของฉันโทรมา",
       "answerEn": "I was looking for my bag when my mother phoned.",
       "acceptedAnswers": [
         "I was looking for my bag when my mother phoned me."
@@ -3349,7 +3349,7 @@
     },
     {
       "id": "a2_c27n09_q3",
-      "promptTh": "เล่าว่า Bogy กำลังเดินกลับบ้านตอนที่ฝนเริ่มตก เขาก็เลยเปียก",
+      "promptTh": "Bogy กำลังเดินกลับบ้านตอนที่ฝนเริ่มตก เขาก็เลยเปียก",
       "answerEn": "Bogy was walking home when it started to rain, so he got wet.",
       "acceptedAnswers": [
         "Bogy was walking home when it started raining, so he got wet."
@@ -3361,7 +3361,7 @@
     },
     {
       "id": "a2_c27n09_q4",
-      "promptTh": "เล่าว่า เรากำลังเดินอยู่ในป่าตอนที่เราหลงทาง",
+      "promptTh": "เรากำลังเดินอยู่ในป่าตอนที่เราหลงทาง",
       "answerEn": "We were walking in the forest when we got lost.",
       "acceptedAnswers": [],
       "hints": [
@@ -3371,7 +3371,7 @@
     },
     {
       "id": "a2_c27n09_q5",
-      "promptTh": "เล่าว่า ถนนลื่นเพราะฝนกำลังตก ฉันก็เลยเดินช้า ๆ",
+      "promptTh": "ถนนลื่นเพราะฝนกำลังตก ฉันก็เลยเดินช้า ๆ",
       "answerEn": "The road was slippery because it was raining, so I walked slowly.",
       "acceptedAnswers": [],
       "hints": [
@@ -3381,7 +3381,7 @@
     },
     {
       "id": "a2_c27n09_q6",
-      "promptTh": "เล่าว่า ขณะที่เรากำลังกินข้าวเย็น พายุก็เริ่มเข้า เราก็เลยอยู่บ้าน",
+      "promptTh": "ขณะที่เรากำลังกินข้าวเย็น พายุก็เริ่มเข้า เราก็เลยอยู่บ้าน",
       "answerEn": "While we were having dinner, the storm started, so we stayed home.",
       "acceptedAnswers": [
         "While we were eating dinner, the storm started, so we stayed home.",
@@ -3396,7 +3396,7 @@
   "a2_c28n04": [
     {
       "id": "a2_c28n04_q1",
-      "promptTh": "เล่นเป็น Mali: ถามผู้จัดการของ Mali ว่า ฉันต้องใส่ยูนิฟอร์มไหม",
+      "promptTh": "ฉันต้องใส่ยูนิฟอร์มไหม?",
       "answerEn": "Do I have to wear a uniform?",
       "acceptedAnswers": [],
       "hints": [
@@ -3406,7 +3406,7 @@
     },
     {
       "id": "a2_c28n04_q2",
-      "promptTh": "บอกพนักงานใหม่ว่า ห้ามมาสาย",
+      "promptTh": "คุณห้ามมาสาย",
       "answerEn": "You mustn't be late.",
       "acceptedAnswers": [
         "You must not be late."
@@ -3418,7 +3418,7 @@
     },
     {
       "id": "a2_c28n04_q3",
-      "promptTh": "พูดแทนผู้จัดการของ Mali: บอก Mali ว่า คุณไม่จำเป็นต้องมาประชุมวันเสาร์",
+      "promptTh": "คุณไม่จำเป็นต้องมาประชุมวันเสาร์",
       "answerEn": "You don't have to come to the meeting on Saturday.",
       "acceptedAnswers": [
         "You don't have to go to the meeting on Saturday.",
@@ -3431,7 +3431,7 @@
     },
     {
       "id": "a2_c28n04_q4",
-      "promptTh": "บอกเพื่อนร่วมงานว่า ห้ามใช้โทรศัพท์ตอนทำงาน",
+      "promptTh": "คุณห้ามใช้โทรศัพท์ตอนทำงาน",
       "answerEn": "You mustn't use your phone at work.",
       "acceptedAnswers": [
         "You must not use your phone at work."
@@ -3443,7 +3443,7 @@
     },
     {
       "id": "a2_c28n04_q5",
-      "promptTh": "บอกว่า เราต้องทำงานให้เสร็จก่อนห้าโมงเย็น (กฎ)",
+      "promptTh": "เราต้องทำงานให้เสร็จก่อนห้าโมงเย็น (ใช้ must)",
       "answerEn": "We must finish our tasks before 5 p.m.",
       "acceptedAnswers": [
         "We must finish our tasks before five.",
@@ -3456,7 +3456,7 @@
     },
     {
       "id": "a2_c28n04_q6",
-      "promptTh": "ถามผู้จัดการว่า Mali ต้องทำงานวันอาทิตย์ไหม",
+      "promptTh": "Mali ต้องทำงานวันอาทิตย์ไหม?",
       "answerEn": "Does Mali have to work on Sunday?",
       "acceptedAnswers": [
         "Does Mali have to work on Sundays?"
@@ -3470,7 +3470,7 @@
   "a2_c28n08": [
     {
       "id": "a2_c28n08_q1",
-      "promptTh": "ถาม Mali ว่า คุณทำงานที่โรงแรมมานานเท่าไรแล้ว",
+      "promptTh": "คุณทำงานที่โรงแรมมานานเท่าไรแล้ว?",
       "answerEn": "How long have you worked at the hotel?",
       "acceptedAnswers": [
         "Mali, how long have you worked at the hotel?"
@@ -3482,7 +3482,7 @@
     },
     {
       "id": "a2_c28n08_q2",
-      "promptTh": "บอกว่า (งานพาร์ตไทม์ที่ร้านกาแฟ) ฉันทำงานที่นั่นมาสองเดือนแล้ว",
+      "promptTh": "ฉันทำงานที่นั่นมาสองเดือนแล้ว",
       "answerEn": "I've worked there for two months.",
       "acceptedAnswers": [
         "I have worked there for two months.",
@@ -3495,7 +3495,7 @@
     },
     {
       "id": "a2_c28n08_q3",
-      "promptTh": "บอกว่า Bogy เป็นเด็กฝึกงานที่โรงแรม เขาทำงานที่นั่นตั้งแต่เดือนมีนาคม",
+      "promptTh": "Bogy เป็นเด็กฝึกงานที่โรงแรม เขาทำงานที่นั่นตั้งแต่เดือนมีนาคม",
       "answerEn": "Bogy is an intern at the hotel. He has worked there since March.",
       "acceptedAnswers": [
         "Bogy is an intern at the hotel. He's worked there since March."
@@ -3507,7 +3507,7 @@
     },
     {
       "id": "a2_c28n08_q4",
-      "promptTh": "บอกว่า ผู้จัดการของ Mali ทำงานที่นี่มาสิบปีแล้ว",
+      "promptTh": "ผู้จัดการของ Mali ทำงานที่นี่มาสิบปีแล้ว",
       "answerEn": "Mali's manager has worked here for ten years.",
       "acceptedAnswers": [
         "Mali's manager has worked here for 10 years."
@@ -3519,7 +3519,7 @@
     },
     {
       "id": "a2_c28n08_q5",
-      "promptTh": "บอกว่า ฉันทำงานกะเช้ามาสามเดือนแล้ว",
+      "promptTh": "ฉันทำงานกะเช้ามาสามเดือนแล้ว",
       "answerEn": "I've worked the morning shift for three months.",
       "acceptedAnswers": [
         "I have worked the morning shift for three months.",
@@ -3532,7 +3532,7 @@
     },
     {
       "id": "a2_c28n08_q6",
-      "promptTh": "Teacher Torto ถามว่าทำงานที่ร้านมานานเท่าไร ตอบสั้น ๆ ว่า ตั้งแต่เดือนมกราคม",
+      "promptTh": "ตั้งแต่เดือนมกราคม",
       "answerEn": "Since January.",
       "acceptedAnswers": [
         "I've worked there since January.",
@@ -3559,7 +3559,7 @@
     },
     {
       "id": "a2_c29n08_q2",
-      "promptTh": "พูดถึงทริปที่ผ่านมา: ฉันคิดว่าวิวสุดยอดมาก แล้วถาม Bogy ว่าคิดยังไง",
+      "promptTh": "ฉันคิดว่าวิวสุดยอดมาก คุณคิดว่ายังไง?",
       "answerEn": "I think the view was amazing. What do you think?",
       "acceptedAnswers": [],
       "hints": [
@@ -3628,7 +3628,7 @@
   "a2_c29n10": [
     {
       "id": "a2_c29n10_q1",
-      "promptTh": "รีวิวร้านกาแฟ: เราไปที่นั่นวันอาทิตย์ มันเป็นร้านกาแฟที่ดีที่สุด ฉันแนะนำ",
+      "promptTh": "เราไปที่นั่นวันอาทิตย์ มันเป็นร้านกาแฟที่ดีที่สุด ฉันแนะนำ",
       "answerEn": "We went there on Sunday. It was the best café. I recommend it.",
       "acceptedAnswers": [],
       "hints": [
@@ -3638,7 +3638,7 @@
     },
     {
       "id": "a2_c29n10_q2",
-      "promptTh": "รีวิวตลาด: เราไปตลาดเมื่อวันเสาร์ มันเป็นตลาดที่คนเยอะที่สุด แต่คุ้มค่า",
+      "promptTh": "เราไปตลาดเมื่อวันเสาร์ มันเป็นตลาดที่คนเยอะที่สุด แต่คุ้มค่า",
       "answerEn": "We went to the market on Saturday. It was the most crowded market, but it was worth it.",
       "acceptedAnswers": [
         "We went to the market on Saturday. It was the most crowded market, but it was worth it. I recommend it.",
@@ -3651,7 +3651,7 @@
     },
     {
       "id": "a2_c29n10_q3",
-      "promptTh": "รีวิวโรงแรม: ฉันเคยไปโรงแรมนี้แล้ว บริการแย่ที่สุด ฉันไม่แนะนำ",
+      "promptTh": "ฉันเคยไปโรงแรมนี้แล้ว บริการแย่ที่สุด ฉันไม่แนะนำ",
       "answerEn": "I've been to this hotel. The service was the worst. I don't recommend it.",
       "acceptedAnswers": [
         "I have been to this hotel. The service was the worst. I don't recommend it.",
@@ -3664,7 +3664,7 @@
     },
     {
       "id": "a2_c29n10_q4",
-      "promptTh": "รีวิวเกาะ: เราไปเกาะเมื่อเดือนที่แล้ว มันเป็นเกาะที่เงียบสงบที่สุด ฉันแนะนำ",
+      "promptTh": "เราไปเกาะเมื่อเดือนที่แล้ว มันเป็นเกาะที่เงียบสงบที่สุด ฉันแนะนำ",
       "answerEn": "We went to the island last month. It was the most peaceful island. I recommend it.",
       "acceptedAnswers": [],
       "hints": [
@@ -3674,7 +3674,7 @@
     },
     {
       "id": "a2_c29n10_q5",
-      "promptTh": "รีวิวร้านก๋วยเตี๋ยว: Mali กับฉันกินที่ร้านก๋วยเตี๋ยวเมื่อวาน ราคาถูกที่สุดในเมือง คุ้มมาก",
+      "promptTh": "Mali กับฉันกินที่ร้านก๋วยเตี๋ยวเมื่อวาน ราคาถูกที่สุดในเมือง คุ้มมาก",
       "answerEn": "Mali and I ate at the noodle shop yesterday. It was the cheapest in town. It was really worth it.",
       "acceptedAnswers": [
         "Mali and I ate at the noodle shop yesterday. It was the cheapest in town. It was worth it."
@@ -3686,7 +3686,7 @@
     },
     {
       "id": "a2_c29n10_q6",
-      "promptTh": "รีวิวร้านอาหารริมทะเล: เราไปกินข้าวเย็นที่นั่นเมื่อคืน วิวดีที่สุด ฉันแนะนำ",
+      "promptTh": "เราไปกินข้าวเย็นที่นั่นเมื่อคืน วิวดีที่สุด ฉันแนะนำ",
       "answerEn": "We had dinner there last night. It had the best view. I recommend it.",
       "acceptedAnswers": [
         "We had dinner there last night. The view was the best. I recommend it.",
@@ -3701,7 +3701,7 @@
   "a2_c30n03": [
     {
       "id": "a2_c30n03_q1",
-      "promptTh": "บอกว่า ฉันยังไม่ได้ส่งรูปเลย",
+      "promptTh": "ฉันยังไม่ได้ส่งรูปเลย",
       "answerEn": "I haven't sent the photos yet.",
       "acceptedAnswers": [
         "I have not sent the photos yet."
@@ -3713,7 +3713,7 @@
     },
     {
       "id": "a2_c30n03_q2",
-      "promptTh": "บอกว่า ฉันจองโต๊ะไว้แล้ว (already)",
+      "promptTh": "ฉันจองโต๊ะไว้แล้ว (already)",
       "answerEn": "I've already booked the table.",
       "acceptedAnswers": [
         "I have already booked the table."
@@ -3725,7 +3725,7 @@
     },
     {
       "id": "a2_c30n03_q3",
-      "promptTh": "ถาม May ว่า โทรหาร้านแล้วหรือยัง",
+      "promptTh": "คุณโทรหาร้านแล้วหรือยัง?",
       "answerEn": "Have you called the restaurant yet?",
       "acceptedAnswers": [],
       "hints": [
@@ -3735,7 +3735,7 @@
     },
     {
       "id": "a2_c30n03_q4",
-      "promptTh": "บอกว่า Teacher Nina เพิ่งซื้อเค้กมา (just)",
+      "promptTh": "Teacher Nina เพิ่งซื้อเค้กมา (just)",
       "answerEn": "Teacher Nina has just bought the cake.",
       "acceptedAnswers": [
         "Nina has just bought the cake.",
@@ -3748,7 +3748,7 @@
     },
     {
       "id": "a2_c30n03_q5",
-      "promptTh": "บอกว่า Mali ยังไม่ได้โทรกลับมาเลย",
+      "promptTh": "Mali ยังไม่ได้โทรกลับมาเลย",
       "answerEn": "Mali hasn't called back yet.",
       "acceptedAnswers": [
         "Mali has not called back yet.",
@@ -3761,7 +3761,7 @@
     },
     {
       "id": "a2_c30n03_q6",
-      "promptTh": "ถามว่า Capy ซื้อเครื่องดื่มแล้วหรือยัง",
+      "promptTh": "Capy ซื้อเครื่องดื่มแล้วหรือยัง?",
       "answerEn": "Has Capy bought the drinks yet?",
       "acceptedAnswers": [
         "Has Capy bought drinks yet?"
@@ -3773,7 +3773,7 @@
     },
     {
       "id": "a2_c30n03_q7",
-      "promptTh": "ถาม Capy ว่า ส่งการ์ดเชิญไปงานปาร์ตี้แล้วหรือยัง",
+      "promptTh": "คุณส่งการ์ดเชิญไปงานปาร์ตี้แล้วหรือยัง?",
       "answerEn": "Have you sent the invitations yet?",
       "acceptedAnswers": [
         "Capy, have you sent the invitations yet?",
@@ -3788,7 +3788,7 @@
   "a2_c30n10": [
     {
       "id": "a2_c30n10_q1",
-      "promptTh": "บอกร้านว่า เราจองวันศุกร์ไปแล้ว ขอเปลี่ยนเป็นวันเสาร์ได้ไหม",
+      "promptTh": "เราจองวันศุกร์ไปแล้ว ขอเปลี่ยนเป็นวันเสาร์ได้ไหม?",
       "answerEn": "We've already booked for Friday. Can we change it to Saturday?",
       "acceptedAnswers": [
         "We have already booked for Friday. Can we change it to Saturday?"
@@ -3800,7 +3800,7 @@
     },
     {
       "id": "a2_c30n10_q2",
-      "promptTh": "Mali บอกว่าวันศุกร์เต็ม ตอบว่า: โอเค เดี๋ยวฉันจะโทรหา Nina แล้วจะโทรกลับนะ",
+      "promptTh": "โอเค เดี๋ยวฉันจะโทรหา Nina แล้วจะโทรกลับนะ",
       "answerEn": "OK, I'll call Nina and call you back.",
       "acceptedAnswers": [
         "OK, I'll call Nina and I'll call you back.",
@@ -3813,7 +3813,7 @@
     },
     {
       "id": "a2_c30n10_q3",
-      "promptTh": "บอกว่า ฉันยังไม่ได้ยืนยันเวลา พรุ่งนี้ฉันจะโทรกลับ",
+      "promptTh": "ฉันยังไม่ได้ยืนยันเวลา พรุ่งนี้ฉันจะโทรกลับ",
       "answerEn": "I haven't confirmed the time yet. I'll call back tomorrow.",
       "acceptedAnswers": [
         "I haven't confirmed the time yet. I'll call you back tomorrow.",
@@ -3826,7 +3826,7 @@
     },
     {
       "id": "a2_c30n10_q4",
-      "promptTh": "บอกว่า Mali ยังไม่ได้โทรกลับมา ฉันจะฝากข้อความไว้",
+      "promptTh": "Mali ยังไม่ได้โทรกลับมา ฉันจะฝากข้อความไว้",
       "answerEn": "Mali hasn't called back yet. I'll leave a message.",
       "acceptedAnswers": [
         "Mali hasn't called back yet, so I'll leave a message.",
@@ -3839,7 +3839,7 @@
     },
     {
       "id": "a2_c30n10_q5",
-      "promptTh": "ถามร้านว่า ยืนยันการจองแล้วหรือยัง แล้วขอเปลี่ยนเป็นหนึ่งทุ่ม",
+      "promptTh": "คุณยืนยันการจองแล้วหรือยัง? ขอเปลี่ยนเป็นหนึ่งทุ่มได้ไหม?",
       "answerEn": "Have you confirmed the booking yet? Can we change it to 7 p.m.?",
       "acceptedAnswers": [
         "Have you confirmed the booking yet? Can we change it to seven?"
@@ -3851,7 +3851,7 @@
     },
     {
       "id": "a2_c30n10_q6",
-      "promptTh": "บอกว่า เราเพิ่งจองวันศุกร์ไป แต่ Bogy ไม่ว่าง ขอเลื่อนเป็นวันอาทิตย์ได้ไหม",
+      "promptTh": "เราเพิ่งจองวันศุกร์ไป แต่ Bogy ไม่ว่าง ขอเลื่อนเป็นวันอาทิตย์ได้ไหม?",
       "answerEn": "We've just booked for Friday, but Bogy isn't free. Can we change it to Sunday?",
       "acceptedAnswers": [
         "We have just booked for Friday, but Bogy isn't free. Can we change it to Sunday?"
@@ -3865,7 +3865,7 @@
   "a2_c31n02": [
     {
       "id": "a2_c31n02_q1",
-      "promptTh": "เสนอว่า ทำไมเราไม่ทำการ์ดกันล่ะ แล้วอาสาว่า ฉันจะซื้อดอกไม้เอง",
+      "promptTh": "ทำไมเราไม่ทำการ์ดกันล่ะ? ฉันจะซื้อดอกไม้เอง",
       "answerEn": "Why don't we make a card? I'll buy the flowers.",
       "acceptedAnswers": [],
       "hints": [
@@ -3875,7 +3875,7 @@
     },
     {
       "id": "a2_c31n02_q2",
-      "promptTh": "เสนอว่า ทำไมเราไม่ถ่ายรูปกับ Bogy ล่ะ",
+      "promptTh": "ทำไมเราไม่ถ่ายรูปกับ Bogy ล่ะ?",
       "answerEn": "Why don't we take a photo with Bogy?",
       "acceptedAnswers": [
         "Why don't we take a team photo with Bogy?"
@@ -3887,7 +3887,7 @@
     },
     {
       "id": "a2_c31n02_q3",
-      "promptTh": "อาสาว่า ฉันจะเอาเค้กมาเอง",
+      "promptTh": "ฉันจะเอาเค้กมาเอง",
       "answerEn": "I'll bring the cake.",
       "acceptedAnswers": [
         "I will bring the cake."
@@ -3899,7 +3899,7 @@
     },
     {
       "id": "a2_c31n02_q4",
-      "promptTh": "เสนอว่า ทำไมเราไม่ขอให้ Teacher John ส่งวิดีโอมาล่ะ",
+      "promptTh": "ทำไมเราไม่ขอให้ Teacher John ส่งวิดีโอมาล่ะ?",
       "answerEn": "Why don't we ask Teacher John to send a video?",
       "acceptedAnswers": [
         "Why don't we ask John to send a video?"
@@ -3911,7 +3911,7 @@
     },
     {
       "id": "a2_c31n02_q5",
-      "promptTh": "Mali ถามว่าใครจะเอาเพลงมา ตอบว่า: ฉันเอง! ฉันจะเอาเพลงมา",
+      "promptTh": "ฉันเอง! ฉันจะเอาเพลงมา",
       "answerEn": "I'll do it! I'll bring the music.",
       "acceptedAnswers": [
         "I'll do it. I'll bring the music."
@@ -3923,7 +3923,7 @@
     },
     {
       "id": "a2_c31n02_q6",
-      "promptTh": "เสนอว่า ทำไมเราไม่ไปที่ร้านก่อนหกโมงล่ะ แล้วอาสาว่า ฉันจะโทรหา Mali เอง",
+      "promptTh": "ทำไมเราไม่ไปที่ร้านก่อนหกโมงล่ะ? ฉันจะโทรหา Mali เอง",
       "answerEn": "Why don't we go to the restaurant before six? I'll call Mali.",
       "acceptedAnswers": [
         "Why don't we go to the restaurant before 6 p.m.? I'll call Mali."
@@ -3937,7 +3937,7 @@
   "a2_c31n05": [
     {
       "id": "a2_c31n05_q1",
-      "promptTh": "ถาม May ว่า ซื้อของขวัญแล้วหรือยัง",
+      "promptTh": "คุณซื้อของขวัญแล้วหรือยัง?",
       "answerEn": "Have you bought the gift yet?",
       "acceptedAnswers": [],
       "hints": [
@@ -3947,7 +3947,7 @@
     },
     {
       "id": "a2_c31n05_q2",
-      "promptTh": "ถามในกลุ่มว่า ใครจะเป็นคนโทรหาร้าน",
+      "promptTh": "ใครจะเป็นคนโทรหาร้าน?",
       "answerEn": "Who's going to call the restaurant?",
       "acceptedAnswers": [
         "Who is going to call the restaurant?"
@@ -3959,7 +3959,7 @@
     },
     {
       "id": "a2_c31n05_q3",
-      "promptTh": "ถามว่า Mali ทำการ์ดเสร็จแล้วหรือยัง",
+      "promptTh": "Mali ทำการ์ดเสร็จแล้วหรือยัง?",
       "answerEn": "Has Mali finished the card yet?",
       "acceptedAnswers": [],
       "hints": [
@@ -3969,7 +3969,7 @@
     },
     {
       "id": "a2_c31n05_q4",
-      "promptTh": "ตอบว่า ฉันซื้อดอกไม้แล้ว แต่ยังไม่ได้ซื้อเค้ก",
+      "promptTh": "ฉันซื้อดอกไม้แล้ว แต่ยังไม่ได้ซื้อเค้ก",
       "answerEn": "I've already bought the flowers, but I haven't bought the cake yet.",
       "acceptedAnswers": [
         "I've bought the flowers, but I haven't bought the cake yet.",
@@ -3982,7 +3982,7 @@
     },
     {
       "id": "a2_c31n05_q5",
-      "promptTh": "ถามว่า ใครจะไปรับ Bogy ที่บ้าน",
+      "promptTh": "ใครจะไปรับ Bogy ที่บ้าน?",
       "answerEn": "Who's going to pick up Bogy from his house?",
       "acceptedAnswers": [
         "Who's going to pick Bogy up from his house?",
@@ -3996,7 +3996,7 @@
     },
     {
       "id": "a2_c31n05_q6",
-      "promptTh": "ถามเพื่อนว่า ส่งข้อความหา Teacher John แล้วหรือยัง",
+      "promptTh": "คุณส่งข้อความหา Teacher John แล้วหรือยัง?",
       "answerEn": "Have you sent a message to Teacher John yet?",
       "acceptedAnswers": [
         "Have you sent Teacher John a message yet?",
@@ -4011,7 +4011,7 @@
   "a2_c31n10": [
     {
       "id": "a2_c31n10_q1",
-      "promptTh": "อำลา Bogy: เรามีทริปที่ยอดเยี่ยม ฉันจะคิดถึงคุณ โชคดีนะ!",
+      "promptTh": "เรามีทริปที่ยอดเยี่ยม ฉันจะคิดถึงคุณ โชคดีนะ!",
       "answerEn": "We had a great trip. I'll miss you. Good luck!",
       "acceptedAnswers": [],
       "hints": [
@@ -4021,7 +4021,7 @@
     },
     {
       "id": "a2_c31n10_q2",
-      "promptTh": "อำลา Bogy: ทริปของเราเป็นประสบการณ์ที่ดีที่สุด โชคดีที่โรงเรียนใหม่นะ!",
+      "promptTh": "ทริปของเราเป็นประสบการณ์ที่ดีที่สุด โชคดีที่โรงเรียนใหม่นะ!",
       "answerEn": "Our trip was the best experience. Good luck at your new school!",
       "acceptedAnswers": [
         "Our trip was the best experience. Good luck at your new school."
@@ -4033,7 +4033,7 @@
     },
     {
       "id": "a2_c31n10_q3",
-      "promptTh": "อำลา Bogy: ตอนที่กระเป๋าฉันหาย คุณช่วยฉันหา ขอบคุณนะ ฉันจะคิดถึงคุณ",
+      "promptTh": "ตอนที่กระเป๋าฉันหาย คุณช่วยฉันหา ขอบคุณนะ ฉันจะคิดถึงคุณ",
       "answerEn": "When I lost my bag, you helped me look for it. Thank you. I'll miss you.",
       "acceptedAnswers": [
         "When I lost my bag, you helped me look for it. Thanks. I'll miss you."
@@ -4045,7 +4045,7 @@
     },
     {
       "id": "a2_c31n10_q4",
-      "promptTh": "อำลา Bogy: เราสนุกมากที่เกาะ ฉันจะโทรหาคุณทุกสัปดาห์ ติดต่อกันนะ!",
+      "promptTh": "เราสนุกมากที่เกาะ ฉันจะโทรหาคุณทุกสัปดาห์ ติดต่อกันนะ!",
       "answerEn": "We had a lot of fun on the island. I'll call you every week. Keep in touch!",
       "acceptedAnswers": [
         "We had fun on the island. I'll call you every week. Keep in touch!"
@@ -4057,7 +4057,7 @@
     },
     {
       "id": "a2_c31n10_q5",
-      "promptTh": "อำลา Bogy: คุณเป็นเพื่อนที่ตลกที่สุดในทีม เดินทางปลอดภัยนะ! เจอกันปีหน้า",
+      "promptTh": "คุณเป็นเพื่อนที่ตลกที่สุดในทีม เดินทางปลอดภัยนะ! เจอกันปีหน้า",
       "answerEn": "You were the funniest friend in the team. Have a safe trip! See you next year.",
       "acceptedAnswers": [
         "You were the funniest friend on the team. Have a safe trip! See you next year."
@@ -4071,7 +4071,7 @@
   "a2_c32n01": [
     {
       "id": "a2_c32n01_q1",
-      "promptTh": "บอก John ว่า ทีมเรากลับมาเมื่อสองสัปดาห์ก่อน ทริปน่าตื่นเต้นมาก",
+      "promptTh": "ทีมเรากลับมาเมื่อสองสัปดาห์ก่อน ทริปน่าตื่นเต้นมาก",
       "answerEn": "Our team came back two weeks ago. The trip was very exciting.",
       "acceptedAnswers": [
         "We came back two weeks ago. The trip was very exciting.",
@@ -4084,7 +4084,7 @@
     },
     {
       "id": "a2_c32n01_q2",
-      "promptTh": "ถาม John ว่า เคยไปเชียงใหม่ไหม",
+      "promptTh": "คุณเคยไปเชียงใหม่ไหม?",
       "answerEn": "Have you ever been to Chiang Mai?",
       "acceptedAnswers": [],
       "hints": [
@@ -4094,7 +4094,7 @@
     },
     {
       "id": "a2_c32n01_q3",
-      "promptTh": "เล่าให้ John ฟังว่า ฉันกำลังรอรถบัสอยู่ตอนที่ฝนเริ่มตก ก็เลยเปียกหมด",
+      "promptTh": "ฉันกำลังรอรถบัสอยู่ตอนที่ฝนเริ่มตก ก็เลยเปียกหมด",
       "answerEn": "I was waiting for the bus when it started to rain, so I got wet.",
       "acceptedAnswers": [
         "I was waiting for the bus when it started raining, so I got wet."
@@ -4106,7 +4106,7 @@
     },
     {
       "id": "a2_c32n01_q4",
-      "promptTh": "เล่าว่า Mali ทำงานพาร์ตไทม์ที่ร้านแห่งหนึ่ง เธอต้องใส่ยูนิฟอร์ม แต่ไม่ต้องทำงานวันอาทิตย์",
+      "promptTh": "Mali ทำงานที่ร้านแห่งหนึ่ง เธอต้องใส่ยูนิฟอร์ม แต่ไม่ต้องทำงานวันอาทิตย์",
       "answerEn": "Mali works at a shop. She has to wear a uniform, but she doesn't have to work on Sunday.",
       "acceptedAnswers": [
         "Mali works at a shop. She has to wear a uniform, but she doesn't have to work on Sundays.",
@@ -4120,7 +4120,7 @@
     },
     {
       "id": "a2_c32n01_q5",
-      "promptTh": "บอกว่า ฉันคิดว่าเกาะเป็นที่ที่ดีที่สุด แล้วถาม John ว่าคิดยังไง",
+      "promptTh": "ฉันคิดว่าเกาะเป็นที่ที่ดีที่สุด คุณคิดว่ายังไง?",
       "answerEn": "I think the island was the best place. What do you think?",
       "acceptedAnswers": [
         "I think the island is the best place. What do you think?"
@@ -4132,7 +4132,7 @@
     },
     {
       "id": "a2_c32n01_q6",
-      "promptTh": "รับสายแทน Nina: รอสักครู่นะ Nina กำลังคุยกับ Bogy อยู่",
+      "promptTh": "รอสักครู่นะ Nina กำลังคุยกับ Bogy อยู่",
       "answerEn": "Hold on, please. Nina is talking to Bogy.",
       "acceptedAnswers": [
         "Hold on. Nina is talking to Bogy.",
@@ -4145,7 +4145,7 @@
     },
     {
       "id": "a2_c32n01_q7",
-      "promptTh": "ถามในกลุ่มว่า ใครจะเป็นคนจองตั๋วสำหรับทริปหน้า",
+      "promptTh": "ใครจะเป็นคนจองตั๋วสำหรับทริปหน้า?",
       "answerEn": "Who's going to book the tickets for the next trip?",
       "acceptedAnswers": [
         "Who is going to book the tickets for the next trip?"
