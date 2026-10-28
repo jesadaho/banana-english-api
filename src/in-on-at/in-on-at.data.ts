@@ -9,6 +9,8 @@ export type InOnAtItem = {
   topic: 'time' | 'place';
   /** Card prompt, e.g. `___ July.` (time) or `The book is ___ the table.` (place). */
   prompt: string;
+  /** Thai gloss of the prompt, e.g. `___ ตอนเช้า`. */
+  promptTh: string;
   /** The word that follows the preposition, e.g. `July`, `the table`. */
   word: string;
   answer: InOnAtAnswer;
@@ -35,7 +37,7 @@ export type InOnAtTopic = {
 };
 
 export const IN_ON_AT_BANANA_COST = 1;
-export const IN_ON_AT_DEAL_COUNT = 12;
+export const IN_ON_AT_DEAL_COUNT = 7;
 const MIN_TRAPS = 2;
 const ANSWERS: InOnAtAnswer[] = ['in', 'on', 'at'];
 
@@ -92,7 +94,7 @@ function shuffle<T>(list: T[], random: () => number): T[] {
 }
 
 /**
- * One round: an equal number of in / on / at (4 each for 12), at least
+ * One round: in / on / at as even as possible (3 / 2 / 2 for 7), at least
  * [MIN_TRAPS] trap items, then shuffled. Mix splits each answer between the
  * time and place pools.
  */
@@ -103,10 +105,15 @@ export function dealInOnAt(
 ): InOnAtItem[] {
   const pool = inOnAtPoolFor(topicId);
   if (pool.length === 0) return [];
-  const perAnswer = Math.max(1, Math.floor(count / ANSWERS.length));
+  const base = Math.max(1, Math.floor(count / ANSWERS.length));
+  // A count that isn't a multiple of 3 gives the extra items to random answers.
+  const extra = new Set(
+    shuffle([...ANSWERS], random).slice(0, Math.max(0, count - base * ANSWERS.length)),
+  );
 
   const picked: InOnAtItem[] = [];
   for (const answer of ANSWERS) {
+    const perAnswer = base + (extra.has(answer) ? 1 : 0);
     const sources =
       topicId === 'mix'
         ? (['time', 'place'] as const).map((t) =>

@@ -37,11 +37,11 @@ export const TTS_VOICE_PROFILES: Record<TtsVoiceProfileId, TtsVoiceProfile> = {
     languageCode: 'en-US',
   },
   teacher_minnie: {
-    voice: 'Aoede', // matches app GeminiTtsVoices.minnie
+    voice: 'Autonoe', // matches app GeminiTtsVoices.minnie
     voiceEnv: 'GEMINI_TTS_VOICE_MINNIE',
     stylePrompt:
-      'Speak clearly and warmly as Teacher Minnie, a friendly native English teacher. ' +
-      'Sound natural, upbeat, and encouraging. English only, native accent',
+      'Speak as Teacher Minnie, a young English teacher in her early twenties. ' +
+      'Use a light, bright, slightly higher voice. Warm and encouraging. English only, native accent',
     languageCode: 'en-US',
   },
   teacher_nina: {

@@ -2379,10 +2379,9 @@
           "type": "interactive_scenario",
           "beat": "Ketsu",
           "learningTarget": "ทบทวนภาษา A1 บท 1–8 กับ Teacher Minnie",
-          "activity": "บททดสอบ 12 ข้อ ท้ายบท 8 กับ Teacher Minnie รวมสะกดชื่อและถามกลับ",
+          "activity": "บททดสอบ 10 ข้อ ท้ายบท 8 กับ Teacher Minnie รวมสะกดชื่อและถามกลับ",
           "examples": [
             "My name is…",
-            "Again, please.",
             "I'm hungry.",
             "He's a teacher.",
             "It's a bag.",

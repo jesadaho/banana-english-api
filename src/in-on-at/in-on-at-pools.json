@@ -11,7 +11,8 @@
    "trap": false,
    "category": "month",
    "reasonTh": "เดือนเป็นช่วงเวลายาว ใช้ in",
-   "sentence": "My birthday is ___ July."
+   "sentence": "My birthday is ___ July.",
+   "promptTh": "___ กรกฎาคม"
   },
   {
    "id": "t_in02",
@@ -23,7 +24,8 @@
    "trap": false,
    "category": "month",
    "reasonTh": "เดือนเป็นช่วงเวลายาว ใช้ in",
-   "sentence": "School starts ___ January."
+   "sentence": "School starts ___ January.",
+   "promptTh": "___ มกราคม"
   },
   {
    "id": "t_in03",
@@ -35,7 +37,8 @@
    "trap": false,
    "category": "month",
    "reasonTh": "เดือนเป็นช่วงเวลายาว ใช้ in",
-   "sentence": "It is very hot ___ March."
+   "sentence": "It is very hot ___ March.",
+   "promptTh": "___ มีนาคม"
   },
   {
    "id": "t_in04",
@@ -47,7 +50,8 @@
    "trap": false,
    "category": "month",
    "reasonTh": "เดือนเป็นช่วงเวลายาว ใช้ in",
-   "sentence": "We go to Chiang Mai ___ October."
+   "sentence": "We go to Chiang Mai ___ October.",
+   "promptTh": "___ ตุลาคม"
   },
   {
    "id": "t_in05",
@@ -59,7 +63,8 @@
    "trap": false,
    "category": "month",
    "reasonTh": "เดือนเป็นช่วงเวลายาว ใช้ in",
-   "sentence": "I visit my grandma ___ December."
+   "sentence": "I visit my grandma ___ December.",
+   "promptTh": "___ ธันวาคม"
   },
   {
    "id": "t_in06",
@@ -71,7 +76,8 @@
    "trap": false,
    "category": "month",
    "reasonTh": "เดือนเป็นช่วงเวลายาว ใช้ in",
-   "sentence": "Songkran is ___ April."
+   "sentence": "Songkran is ___ April.",
+   "promptTh": "___ เมษายน"
   },
   {
    "id": "t_in07",
@@ -83,7 +89,8 @@
    "trap": false,
    "category": "year",
    "reasonTh": "ปีเป็นช่วงเวลายาวมาก ใช้ in",
-   "sentence": "I started learning English ___ 2026."
+   "sentence": "I started learning English ___ 2026.",
+   "promptTh": "___ ปี 2026"
   },
   {
    "id": "t_in08",
@@ -95,7 +102,8 @@
    "trap": false,
    "category": "year",
    "reasonTh": "ปีเป็นช่วงเวลายาวมาก ใช้ in",
-   "sentence": "My mom was born ___ 1999."
+   "sentence": "My mom was born ___ 1999.",
+   "promptTh": "___ ปี 1999"
   },
   {
    "id": "t_in09",
@@ -107,7 +115,8 @@
    "trap": false,
    "category": "year",
    "reasonTh": "ปีเป็นช่วงเวลายาวมาก ใช้ in",
-   "sentence": "We moved to Bangkok ___ 2010."
+   "sentence": "We moved to Bangkok ___ 2010.",
+   "promptTh": "___ ปี 2010"
   },
   {
    "id": "t_in10",
@@ -119,7 +128,8 @@
    "trap": false,
    "category": "season",
    "reasonTh": "ฤดูเป็นช่วงเวลายาว ใช้ in",
-   "sentence": "It's very hot ___ summer."
+   "sentence": "It's very hot ___ summer.",
+   "promptTh": "___ ฤดูร้อน"
   },
   {
    "id": "t_in11",
@@ -131,7 +141,8 @@
    "trap": false,
    "category": "season",
    "reasonTh": "ฤดูเป็นช่วงเวลายาว ใช้ in",
-   "sentence": "It snows in Japan ___ winter."
+   "sentence": "It snows in Japan ___ winter.",
+   "promptTh": "___ ฤดูหนาว"
   },
   {
    "id": "t_in12",
@@ -143,7 +154,8 @@
    "trap": false,
    "category": "season",
    "reasonTh": "ฤดูเป็นช่วงเวลายาว ใช้ in",
-   "sentence": "Flowers grow ___ spring."
+   "sentence": "Flowers grow ___ spring.",
+   "promptTh": "___ ฤดูใบไม้ผลิ"
   },
   {
    "id": "t_in13",
@@ -155,7 +167,8 @@
    "trap": false,
    "category": "season",
    "reasonTh": "ฤดูเป็นช่วงเวลายาว ใช้ in",
-   "sentence": "It rains a lot ___ the rainy season."
+   "sentence": "It rains a lot ___ the rainy season.",
+   "promptTh": "___ ฤดูฝน"
   },
   {
    "id": "t_in14",
@@ -167,7 +180,8 @@
    "trap": false,
    "category": "part",
    "reasonTh": "ช่วงของวัน (เช้า บ่าย เย็น) ใช้ in",
-   "sentence": "I drink coffee ___ the morning."
+   "sentence": "I drink coffee ___ the morning.",
+   "promptTh": "___ ตอนเช้า"
   },
   {
    "id": "t_in15",
@@ -179,7 +193,8 @@
    "trap": false,
    "category": "part",
    "reasonTh": "ช่วงของวัน (เช้า บ่าย เย็น) ใช้ in",
-   "sentence": "I have a class ___ the afternoon."
+   "sentence": "I have a class ___ the afternoon.",
+   "promptTh": "___ ตอนบ่าย"
   },
   {
    "id": "t_in16",
@@ -191,7 +206,8 @@
    "trap": false,
    "category": "part",
    "reasonTh": "ช่วงของวัน (เช้า บ่าย เย็น) ใช้ in",
-   "sentence": "We cook dinner ___ the evening."
+   "sentence": "We cook dinner ___ the evening.",
+   "promptTh": "___ ตอนเย็น"
   },
   {
    "id": "t_in17",
@@ -203,7 +219,8 @@
    "trap": false,
    "category": "part",
    "reasonTh": "ช่วงของวัน (เช้า บ่าย เย็น) ใช้ in",
-   "sentence": "He runs ___ the early morning."
+   "sentence": "He runs ___ the early morning.",
+   "promptTh": "___ ตอนเช้าตรู่"
   },
   {
    "id": "t_in18",
@@ -215,7 +232,8 @@
    "trap": false,
    "category": "decade",
    "reasonTh": "ทศวรรษ ศตวรรษ เป็นช่วงยาวมาก ใช้ in",
-   "sentence": "This song was popular ___ the 1990s."
+   "sentence": "This song was popular ___ the 1990s.",
+   "promptTh": "___ ทศวรรษ 1990"
   },
   {
    "id": "t_in19",
@@ -227,7 +245,8 @@
    "trap": false,
    "category": "decade",
    "reasonTh": "ทศวรรษ ศตวรรษ เป็นช่วงยาวมาก ใช้ in",
-   "sentence": "We live ___ the 21st century."
+   "sentence": "We live ___ the 21st century.",
+   "promptTh": "___ ศตวรรษที่ 21"
   },
   {
    "id": "t_in20",
@@ -239,7 +258,8 @@
    "trap": false,
    "category": "longp",
    "reasonTh": "ช่วงเวลากว้าง ๆ ใช้ in",
-   "sentence": "People wrote letters ___ the past."
+   "sentence": "People wrote letters ___ the past.",
+   "promptTh": "___ อดีต"
   },
   {
    "id": "t_in21",
@@ -251,7 +271,8 @@
    "trap": false,
    "category": "longp",
    "reasonTh": "ช่วงเวลากว้าง ๆ ใช้ in",
-   "sentence": "I want to visit London ___ the future."
+   "sentence": "I want to visit London ___ the future.",
+   "promptTh": "___ อนาคต"
   },
   {
    "id": "t_in22",
@@ -263,7 +284,8 @@
    "trap": false,
    "category": "longp",
    "reasonTh": "ช่วงเวลากว้าง ๆ ใช้ in",
-   "sentence": "We go to the beach ___ the summer holidays."
+   "sentence": "We go to the beach ___ the summer holidays.",
+   "promptTh": "___ วันหยุดฤดูร้อน"
   },
   {
    "id": "t_in23",
@@ -275,7 +297,8 @@
    "trap": true,
    "category": "mY",
    "reasonTh": "มีแค่เดือนกับปี ไม่มีวันที่ ยังเป็นช่วงยาว ใช้ in",
-   "sentence": "I got my first job ___ May 2025."
+   "sentence": "I got my first job ___ May 2025.",
+   "promptTh": "___ พฤษภาคม 2025"
   },
   {
    "id": "t_in24",
@@ -287,7 +310,8 @@
    "trap": true,
    "category": "mY",
    "reasonTh": "มีแค่เดือนกับปี ไม่มีวันที่ ยังเป็นช่วงยาว ใช้ in",
-   "sentence": "They got married ___ June 2024."
+   "sentence": "They got married ___ June 2024.",
+   "promptTh": "___ มิถุนายน 2024"
   },
   {
    "id": "t_in25",
@@ -299,7 +323,8 @@
    "trap": true,
    "category": "dur",
    "reasonTh": "in + ระยะเวลา แปลว่า \"อีก...ข้างหน้า\"",
-   "sentence": "I'll be back ___ two weeks."
+   "sentence": "I'll be back ___ two weeks.",
+   "promptTh": "___ อีกสองสัปดาห์"
   },
   {
    "id": "t_in26",
@@ -311,7 +336,8 @@
    "trap": true,
    "category": "dur",
    "reasonTh": "in + ระยะเวลา แปลว่า \"อีก...ข้างหน้า\"",
-   "sentence": "The bus will come ___ five minutes."
+   "sentence": "The bus will come ___ five minutes.",
+   "promptTh": "___ อีกห้านาที"
   },
   {
    "id": "t_in27",
@@ -323,7 +349,8 @@
    "trap": true,
    "category": "dur",
    "reasonTh": "in + ระยะเวลา แปลว่า \"อีก...ข้างหน้า\"",
-   "sentence": "The movie starts ___ an hour."
+   "sentence": "The movie starts ___ an hour.",
+   "promptTh": "___ อีกหนึ่งชั่วโมง"
   },
   {
    "id": "t_on01",
@@ -335,7 +362,8 @@
    "trap": false,
    "category": "day",
    "reasonTh": "ชื่อวันใช้ on",
-   "sentence": "I play football ___ Sunday."
+   "sentence": "I play football ___ Sunday.",
+   "promptTh": "___ วันอาทิตย์"
   },
   {
    "id": "t_on02",
@@ -347,7 +375,8 @@
    "trap": false,
    "category": "day",
    "reasonTh": "ชื่อวันใช้ on",
-   "sentence": "The class is ___ Monday."
+   "sentence": "The class is ___ Monday.",
+   "promptTh": "___ วันจันทร์"
   },
   {
    "id": "t_on03",
@@ -359,7 +388,8 @@
    "trap": false,
    "category": "day",
    "reasonTh": "ชื่อวันใช้ on",
-   "sentence": "We meet ___ Wednesday."
+   "sentence": "We meet ___ Wednesday.",
+   "promptTh": "___ วันพุธ"
   },
   {
    "id": "t_on04",
@@ -371,7 +401,8 @@
    "trap": false,
    "category": "day",
    "reasonTh": "ชื่อวันใช้ on",
-   "sentence": "Let's go out ___ Friday."
+   "sentence": "Let's go out ___ Friday.",
+   "promptTh": "___ วันศุกร์"
   },
   {
    "id": "t_on05",
@@ -383,7 +414,8 @@
    "trap": false,
    "category": "day",
    "reasonTh": "ชื่อวันใช้ on",
-   "sentence": "I clean my room ___ Saturday."
+   "sentence": "I clean my room ___ Saturday.",
+   "promptTh": "___ วันเสาร์"
   },
   {
    "id": "t_on06",
@@ -395,7 +427,8 @@
    "trap": false,
    "category": "day",
    "reasonTh": "ชื่อวันใช้ on",
-   "sentence": "I have English class ___ Thursday."
+   "sentence": "I have English class ___ Thursday.",
+   "promptTh": "___ วันพฤหัสบดี"
   },
   {
    "id": "t_on07",
@@ -407,7 +440,8 @@
    "trap": false,
    "category": "special",
    "reasonTh": "วันพิเศษหนึ่งวัน (…Day, วันเกิด) ใช้ on",
-   "sentence": "I sleep late ___ my day off."
+   "sentence": "I sleep late ___ my day off.",
+   "promptTh": "___ วันหยุดของฉัน"
   },
   {
    "id": "t_on08",
@@ -419,7 +453,8 @@
    "trap": false,
    "category": "days",
    "reasonTh": "ชื่อวันเติม s แปลว่า \"ทุกวัน...\" ก็ยังใช้ on",
-   "sentence": "I go to the gym ___ Tuesdays."
+   "sentence": "I go to the gym ___ Tuesdays.",
+   "promptTh": "___ ทุกวันอังคาร"
   },
   {
    "id": "t_on09",
@@ -431,7 +466,8 @@
    "trap": false,
    "category": "days",
    "reasonTh": "ชื่อวันเติม s แปลว่า \"ทุกวัน...\" ก็ยังใช้ on",
-   "sentence": "I work ___ weekdays."
+   "sentence": "I work ___ weekdays.",
+   "promptTh": "___ วันธรรมดา"
   },
   {
    "id": "t_on10",
@@ -443,7 +479,8 @@
    "trap": false,
    "category": "date",
    "reasonTh": "วันที่ (มีตัวเลขวัน) ใช้ on",
-   "sentence": "The party is ___ May 5th."
+   "sentence": "The party is ___ May 5th.",
+   "promptTh": "___ วันที่ 5 พฤษภาคม"
   },
   {
    "id": "t_on11",
@@ -455,7 +492,8 @@
    "trap": false,
    "category": "date",
    "reasonTh": "วันที่ (มีตัวเลขวัน) ใช้ on",
-   "sentence": "We have a holiday ___ July 4th."
+   "sentence": "We have a holiday ___ July 4th.",
+   "promptTh": "___ วันที่ 4 กรกฎาคม"
   },
   {
    "id": "t_on12",
@@ -467,7 +505,8 @@
    "trap": false,
    "category": "date",
    "reasonTh": "วันที่ (มีตัวเลขวัน) ใช้ on",
-   "sentence": "The new year starts ___ 1 January."
+   "sentence": "The new year starts ___ 1 January.",
+   "promptTh": "___ วันที่ 1 มกราคม"
   },
   {
    "id": "t_on13",
@@ -479,7 +518,8 @@
    "trap": false,
    "category": "date",
    "reasonTh": "วันที่ (มีตัวเลขวัน) ใช้ on",
-   "sentence": "My exam is ___ the 15th of June."
+   "sentence": "My exam is ___ the 15th of June.",
+   "promptTh": "___ วันที่ 15 มิถุนายน"
   },
   {
    "id": "t_on14",
@@ -491,7 +531,8 @@
    "trap": false,
    "category": "special",
    "reasonTh": "วันพิเศษหนึ่งวัน (…Day, วันเกิด) ใช้ on",
-   "sentence": "I eat cake ___ my birthday."
+   "sentence": "I eat cake ___ my birthday.",
+   "promptTh": "___ วันเกิดของฉัน"
   },
   {
    "id": "t_on15",
@@ -503,7 +544,8 @@
    "trap": false,
    "category": "special",
    "reasonTh": "วันพิเศษหนึ่งวัน (…Day, วันเกิด) ใช้ on",
-   "sentence": "We visit our family ___ New Year's Day."
+   "sentence": "We visit our family ___ New Year's Day.",
+   "promptTh": "___ วันปีใหม่"
   },
   {
    "id": "t_on16",
@@ -515,7 +557,8 @@
    "trap": true,
    "category": "special",
    "reasonTh": "วันพิเศษหนึ่งวัน (…Day, วันเกิด) ใช้ on",
-   "sentence": "We open presents ___ Christmas Day."
+   "sentence": "We open presents ___ Christmas Day.",
+   "promptTh": "___ วันคริสต์มาส"
   },
   {
    "id": "t_on17",
@@ -527,7 +570,8 @@
    "trap": false,
    "category": "special",
    "reasonTh": "วันพิเศษหนึ่งวัน (…Day, วันเกิด) ใช้ on",
-   "sentence": "He gave her flowers ___ Valentine's Day."
+   "sentence": "He gave her flowers ___ Valentine's Day.",
+   "promptTh": "___ วันวาเลนไทน์"
   },
   {
    "id": "t_on18",
@@ -539,7 +583,8 @@
    "trap": false,
    "category": "special",
    "reasonTh": "วันพิเศษหนึ่งวัน (…Day, วันเกิด) ใช้ on",
-   "sentence": "I give my mom jasmine ___ Mother's Day."
+   "sentence": "I give my mom jasmine ___ Mother's Day.",
+   "promptTh": "___ วันแม่"
   },
   {
    "id": "t_on19",
@@ -551,7 +596,8 @@
    "trap": false,
    "category": "special",
    "reasonTh": "วันพิเศษหนึ่งวัน (…Day, วันเกิด) ใช้ on",
-   "sentence": "It rained ___ my wedding day."
+   "sentence": "It rained ___ my wedding day.",
+   "promptTh": "___ วันแต่งงานของฉัน"
   },
   {
    "id": "t_on20",
@@ -563,7 +609,8 @@
    "trap": false,
    "category": "special",
    "reasonTh": "วันพิเศษหนึ่งวัน (…Day, วันเกิด) ใช้ on",
-   "sentence": "I was nervous ___ the first day of school."
+   "sentence": "I was nervous ___ the first day of school.",
+   "promptTh": "___ วันแรกของโรงเรียน"
   },
   {
    "id": "t_on21",
@@ -575,7 +622,8 @@
    "trap": true,
    "category": "dayPart",
    "reasonTh": "มีชื่อวันนำหน้า ใช้ on ตามวัน ไม่ใช่ in ตามช่วงของวัน",
-   "sentence": "Let's meet ___ Friday night."
+   "sentence": "Let's meet ___ Friday night.",
+   "promptTh": "___ คืนวันศุกร์"
   },
   {
    "id": "t_on22",
@@ -587,7 +635,8 @@
    "trap": true,
    "category": "dayPart",
    "reasonTh": "มีชื่อวันนำหน้า ใช้ on ตามวัน ไม่ใช่ in ตามช่วงของวัน",
-   "sentence": "I have a meeting ___ Monday morning."
+   "sentence": "I have a meeting ___ Monday morning.",
+   "promptTh": "___ เช้าวันจันทร์"
   },
   {
    "id": "t_on23",
@@ -599,7 +648,8 @@
    "trap": true,
    "category": "dayPart",
    "reasonTh": "มีชื่อวันนำหน้า ใช้ on ตามวัน ไม่ใช่ in ตามช่วงของวัน",
-   "sentence": "We watch movies ___ Sunday afternoon."
+   "sentence": "We watch movies ___ Sunday afternoon.",
+   "promptTh": "___ บ่ายวันอาทิตย์"
   },
   {
    "id": "t_on24",
@@ -611,7 +661,8 @@
    "trap": true,
    "category": "dayPart",
    "reasonTh": "มีชื่อวันนำหน้า ใช้ on ตามวัน ไม่ใช่ in ตามช่วงของวัน",
-   "sentence": "The concert is ___ Saturday evening."
+   "sentence": "The concert is ___ Saturday evening.",
+   "promptTh": "___ เย็นวันเสาร์"
   },
   {
    "id": "t_on25",
@@ -623,7 +674,8 @@
    "trap": true,
    "category": "dayPart",
    "reasonTh": "มีชื่อวันนำหน้า ใช้ on ตามวัน ไม่ใช่ in ตามช่วงของวัน",
-   "sentence": "I study English ___ Thursday night."
+   "sentence": "I study English ___ Thursday night.",
+   "promptTh": "___ คืนวันพฤหัสบดี"
   },
   {
    "id": "t_on26",
@@ -635,7 +687,8 @@
    "trap": true,
    "category": "aDay",
    "reasonTh": "พูดถึงวันหนึ่งวัน (a … day) ใช้ on",
-   "sentence": "We go to the park ___ a sunny day."
+   "sentence": "We go to the park ___ a sunny day.",
+   "promptTh": "___ วันที่แดดออก"
   },
   {
    "id": "t_on27",
@@ -647,7 +700,8 @@
    "trap": true,
    "category": "aDay",
    "reasonTh": "พูดถึงวันหนึ่งวัน (a … day) ใช้ on",
-   "sentence": "I stay at home ___ a rainy day."
+   "sentence": "I stay at home ___ a rainy day.",
+   "promptTh": "___ วันที่ฝนตก"
   },
   {
    "id": "t_at01",
@@ -659,7 +713,8 @@
    "trap": false,
    "category": "clock",
    "reasonTh": "เวลาบนนาฬิกาเป็นจุดเดียว ใช้ at",
-   "sentence": "I wake up ___ 7 a.m."
+   "sentence": "I wake up ___ 7 a.m.",
+   "promptTh": "___ 7 โมงเช้า"
   },
   {
    "id": "t_at02",
@@ -671,7 +726,8 @@
    "trap": false,
    "category": "clock",
    "reasonTh": "เวลาบนนาฬิกาเป็นจุดเดียว ใช้ at",
-   "sentence": "The bus leaves ___ 8:30."
+   "sentence": "The bus leaves ___ 8:30.",
+   "promptTh": "___ 8:30 น."
   },
   {
    "id": "t_at03",
@@ -683,7 +739,8 @@
    "trap": false,
    "category": "clock",
    "reasonTh": "เวลาบนนาฬิกาเป็นจุดเดียว ใช้ at",
-   "sentence": "Dinner is ___ 6 o'clock."
+   "sentence": "Dinner is ___ 6 o'clock.",
+   "promptTh": "___ 6 โมง"
   },
   {
    "id": "t_at04",
@@ -695,7 +752,8 @@
    "trap": false,
    "category": "clock",
    "reasonTh": "เวลาบนนาฬิกาเป็นจุดเดียว ใช้ at",
-   "sentence": "I go to bed ___ 10 p.m."
+   "sentence": "I go to bed ___ 10 p.m.",
+   "promptTh": "___ 4 ทุ่ม"
   },
   {
    "id": "t_at05",
@@ -707,7 +765,8 @@
    "trap": false,
    "category": "clock",
    "reasonTh": "เวลาบนนาฬิกาเป็นจุดเดียว ใช้ at",
-   "sentence": "The meeting starts ___ 3 p.m."
+   "sentence": "The meeting starts ___ 3 p.m.",
+   "promptTh": "___ บ่าย 3"
   },
   {
    "id": "t_at06",
@@ -719,7 +778,8 @@
    "trap": false,
    "category": "clock",
    "reasonTh": "เวลาบนนาฬิกาเป็นจุดเดียว ใช้ at",
-   "sentence": "My train arrives ___ 9:15."
+   "sentence": "My train arrives ___ 9:15.",
+   "promptTh": "___ 9:15 น."
   },
   {
    "id": "t_at07",
@@ -731,7 +791,8 @@
    "trap": false,
    "category": "point",
    "reasonTh": "เวลาเป๊ะ ๆ เป็นจุดเดียว ใช้ at",
-   "sentence": "Farmers start work ___ dawn."
+   "sentence": "Farmers start work ___ dawn.",
+   "promptTh": "___ รุ่งสาง"
   },
   {
    "id": "t_at08",
@@ -743,7 +804,8 @@
    "trap": true,
    "category": "edge",
    "reasonTh": "จุดเริ่มหรือจุดจบของช่วงเวลา ใช้ at",
-   "sentence": "I feel tired ___ the end of the day."
+   "sentence": "I feel tired ___ the end of the day.",
+   "promptTh": "___ สิ้นวัน"
   },
   {
    "id": "t_at09",
@@ -755,7 +817,8 @@
    "trap": false,
    "category": "clock",
    "reasonTh": "เวลาบนนาฬิกาเป็นจุดเดียว ใช้ at",
-   "sentence": "The shop opens ___ half past nine."
+   "sentence": "The shop opens ___ half past nine.",
+   "promptTh": "___ เก้าโมงครึ่ง"
   },
   {
    "id": "t_at10",
@@ -767,7 +830,8 @@
    "trap": false,
    "category": "clock",
    "reasonTh": "เวลาบนนาฬิกาเป็นจุดเดียว ใช้ at",
-   "sentence": "The class ends ___ quarter to five."
+   "sentence": "The class ends ___ quarter to five.",
+   "promptTh": "___ ห้าโมงสิบห้า"
   },
   {
    "id": "t_at11",
@@ -779,7 +843,8 @@
    "trap": false,
    "category": "point",
    "reasonTh": "เวลาเป๊ะ ๆ เป็นจุดเดียว ใช้ at",
-   "sentence": "We have lunch ___ noon."
+   "sentence": "We have lunch ___ noon.",
+   "promptTh": "___ เที่ยงวัน"
   },
   {
    "id": "t_at12",
@@ -791,7 +856,8 @@
    "trap": false,
    "category": "point",
    "reasonTh": "เวลาเป๊ะ ๆ เป็นจุดเดียว ใช้ at",
-   "sentence": "The party ends ___ midnight."
+   "sentence": "The party ends ___ midnight.",
+   "promptTh": "___ เที่ยงคืน"
   },
   {
    "id": "t_at13",
@@ -803,7 +869,8 @@
    "trap": false,
    "category": "point",
    "reasonTh": "เวลาเป๊ะ ๆ เป็นจุดเดียว ใช้ at",
-   "sentence": "Monks walk ___ sunrise."
+   "sentence": "Monks walk ___ sunrise.",
+   "promptTh": "___ พระอาทิตย์ขึ้น"
   },
   {
    "id": "t_at14",
@@ -815,7 +882,8 @@
    "trap": false,
    "category": "point",
    "reasonTh": "เวลาเป๊ะ ๆ เป็นจุดเดียว ใช้ at",
-   "sentence": "The beach is beautiful ___ sunset."
+   "sentence": "The beach is beautiful ___ sunset.",
+   "promptTh": "___ พระอาทิตย์ตก"
   },
   {
    "id": "t_at15",
@@ -827,7 +895,8 @@
    "trap": false,
    "category": "meal",
    "reasonTh": "มื้ออาหารหรือเวลาประจำ (…time) ใช้ at",
-   "sentence": "Call me ___ lunchtime."
+   "sentence": "Call me ___ lunchtime.",
+   "promptTh": "___ เวลาอาหารกลางวัน"
   },
   {
    "id": "t_at16",
@@ -839,7 +908,8 @@
    "trap": false,
    "category": "meal",
    "reasonTh": "มื้ออาหารหรือเวลาประจำ (…time) ใช้ at",
-   "sentence": "My family talks ___ dinner time."
+   "sentence": "My family talks ___ dinner time.",
+   "promptTh": "___ เวลาอาหารเย็น"
   },
   {
    "id": "t_at17",
@@ -851,7 +921,8 @@
    "trap": false,
    "category": "meal",
    "reasonTh": "มื้ออาหารหรือเวลาประจำ (…time) ใช้ at",
-   "sentence": "I read a book ___ bedtime."
+   "sentence": "I read a book ___ bedtime.",
+   "promptTh": "___ เวลานอน"
   },
   {
    "id": "t_at18",
@@ -863,7 +934,8 @@
    "trap": false,
    "category": "meal",
    "reasonTh": "มื้ออาหารหรือเวลาประจำ (…time) ใช้ at",
-   "sentence": "I drink milk ___ breakfast."
+   "sentence": "I drink milk ___ breakfast.",
+   "promptTh": "___ อาหารเช้า"
   },
   {
    "id": "t_at19",
@@ -875,7 +947,8 @@
    "trap": true,
    "category": "night",
    "reasonTh": "ข้อยกเว้นที่ต้องจำ: in the morning แต่ at night",
-   "sentence": "I sleep ___ night."
+   "sentence": "I sleep ___ night.",
+   "promptTh": "___ กลางคืน"
   },
   {
    "id": "t_at20",
@@ -887,7 +960,8 @@
    "trap": true,
    "category": "edge",
    "reasonTh": "จุดเริ่มหรือจุดจบของช่วงเวลา ใช้ at",
-   "sentence": "I get paid ___ the end of the month."
+   "sentence": "I get paid ___ the end of the month.",
+   "promptTh": "___ สิ้นเดือน"
   },
   {
    "id": "t_at21",
@@ -899,7 +973,8 @@
    "trap": true,
    "category": "edge",
    "reasonTh": "จุดเริ่มหรือจุดจบของช่วงเวลา ใช้ at",
-   "sentence": "The teacher checks names ___ the beginning of the class."
+   "sentence": "The teacher checks names ___ the beginning of the class.",
+   "promptTh": "___ ต้นคาบเรียน"
   },
   {
    "id": "t_at22",
@@ -911,7 +986,8 @@
    "trap": true,
    "category": "edge",
    "reasonTh": "จุดเริ่มหรือจุดจบของช่วงเวลา ใช้ at",
-   "sentence": "I make plans ___ the start of the year."
+   "sentence": "I make plans ___ the start of the year.",
+   "promptTh": "___ ต้นปี"
   },
   {
    "id": "t_at23",
@@ -923,7 +999,8 @@
    "trap": false,
    "category": "phrase",
    "reasonTh": "วลีตายตัว ใช้ at",
-   "sentence": "We arrived ___ the same time."
+   "sentence": "We arrived ___ the same time.",
+   "promptTh": "___ เวลาเดียวกัน"
   },
   {
    "id": "t_at24",
@@ -935,7 +1012,8 @@
    "trap": false,
    "category": "phrase",
    "reasonTh": "วลีตายตัว ใช้ at",
-   "sentence": "I'm busy ___ the moment."
+   "sentence": "I'm busy ___ the moment.",
+   "promptTh": "___ ตอนนี้"
   },
   {
    "id": "t_at25",
@@ -947,7 +1025,8 @@
    "trap": false,
    "category": "phrase",
    "reasonTh": "วลีตายตัว ใช้ at",
-   "sentence": "You can drive ___ the age of 18."
+   "sentence": "You can drive ___ the age of 18.",
+   "promptTh": "___ อายุ 18 ปี"
   },
   {
    "id": "p_in01",
@@ -959,7 +1038,8 @@
    "trap": false,
    "category": "country",
    "reasonTh": "ประเทศ เมือง เป็นพื้นที่ใหญ่ ใช้ in",
-   "sentence": "I live ___ Thailand."
+   "sentence": "I live ___ Thailand.",
+   "promptTh": "ฉันอยู่ ___ ไทย"
   },
   {
    "id": "p_in02",
@@ -971,7 +1051,8 @@
    "trap": false,
    "category": "country",
    "reasonTh": "ประเทศ เมือง เป็นพื้นที่ใหญ่ ใช้ in",
-   "sentence": "Sushi is popular ___ Japan."
+   "sentence": "Sushi is popular ___ Japan.",
+   "promptTh": "ซูชิเป็นที่นิยม ___ ญี่ปุ่น"
   },
   {
    "id": "p_in03",
@@ -983,7 +1064,8 @@
    "trap": false,
    "category": "country",
    "reasonTh": "ประเทศ เมือง เป็นพื้นที่ใหญ่ ใช้ in",
-   "sentence": "My office is ___ Bangkok."
+   "sentence": "My office is ___ Bangkok.",
+   "promptTh": "ออฟฟิศฉันอยู่ ___ กรุงเทพฯ"
   },
   {
    "id": "p_in04",
@@ -995,7 +1077,8 @@
    "trap": false,
    "category": "country",
    "reasonTh": "ประเทศ เมือง เป็นพื้นที่ใหญ่ ใช้ in",
-   "sentence": "It is cold ___ Chiang Mai."
+   "sentence": "It is cold ___ Chiang Mai.",
+   "promptTh": "อากาศเย็น ___ เชียงใหม่"
   },
   {
    "id": "p_in05",
@@ -1007,7 +1090,8 @@
    "trap": false,
    "category": "country",
    "reasonTh": "ประเทศ เมือง เป็นพื้นที่ใหญ่ ใช้ in",
-   "sentence": "My sister studies ___ London."
+   "sentence": "My sister studies ___ London.",
+   "promptTh": "น้องสาวเรียน ___ ลอนดอน"
   },
   {
    "id": "p_in06",
@@ -1019,7 +1103,8 @@
    "trap": false,
    "category": "room",
    "reasonTh": "อยู่ข้างในห้อง ใช้ in",
-   "sentence": "Mom is ___ the kitchen."
+   "sentence": "Mom is ___ the kitchen.",
+   "promptTh": "แม่อยู่ ___ ครัว"
   },
   {
    "id": "p_in07",
@@ -1031,7 +1116,8 @@
    "trap": false,
    "category": "room",
    "reasonTh": "อยู่ข้างในห้อง ใช้ in",
-   "sentence": "My cat is sleeping ___ the bedroom."
+   "sentence": "My cat is sleeping ___ the bedroom.",
+   "promptTh": "แมวนอนอยู่ ___ ห้องนอน"
   },
   {
    "id": "p_in08",
@@ -1043,7 +1129,8 @@
    "trap": false,
    "category": "room",
    "reasonTh": "อยู่ข้างในห้อง ใช้ in",
-   "sentence": "The students are ___ the classroom."
+   "sentence": "The students are ___ the classroom.",
+   "promptTh": "นักเรียนอยู่ ___ ห้องเรียน"
   },
   {
    "id": "p_in09",
@@ -1055,7 +1142,8 @@
    "trap": false,
    "category": "container",
    "reasonTh": "อยู่ข้างในของที่ปิดล้อม ใช้ in",
-   "sentence": "The cake is ___ the box."
+   "sentence": "The cake is ___ the box.",
+   "promptTh": "เค้กอยู่ใน ___ กล่อง"
   },
   {
    "id": "p_in10",
@@ -1067,7 +1155,8 @@
    "trap": false,
    "category": "container",
    "reasonTh": "อยู่ข้างในของที่ปิดล้อม ใช้ in",
-   "sentence": "My phone is ___ my bag."
+   "sentence": "My phone is ___ my bag.",
+   "promptTh": "มือถือฉันอยู่ใน ___ กระเป๋า"
   },
   {
    "id": "p_in11",
@@ -1079,7 +1168,8 @@
    "trap": false,
    "category": "container",
    "reasonTh": "อยู่ข้างในของที่ปิดล้อม ใช้ in",
-   "sentence": "My keys are ___ my pocket."
+   "sentence": "My keys are ___ my pocket.",
+   "promptTh": "กุญแจอยู่ใน ___ กระเป๋ากางเกง"
   },
   {
    "id": "p_in12",
@@ -1091,7 +1181,8 @@
    "trap": true,
    "category": "smallVehicle",
    "reasonTh": "รถเล็กที่นั่งข้างใน (car, taxi) ใช้ in",
-   "sentence": "The kids are ___ the car."
+   "sentence": "The kids are ___ the car.",
+   "promptTh": "เด็ก ๆ อยู่ ___ รถ"
   },
   {
    "id": "p_in13",
@@ -1103,7 +1194,8 @@
    "trap": true,
    "category": "smallVehicle",
    "reasonTh": "รถเล็กที่นั่งข้างใน (car, taxi) ใช้ in",
-   "sentence": "We talked ___ a taxi."
+   "sentence": "We talked ___ a taxi.",
+   "promptTh": "เราคุยกัน ___ แท็กซี่"
   },
   {
    "id": "p_in14",
@@ -1115,7 +1207,8 @@
    "trap": false,
    "category": "area",
    "reasonTh": "อยู่ในพื้นที่ที่มีขอบเขต ใช้ in",
-   "sentence": "We run ___ the park."
+   "sentence": "We run ___ the park.",
+   "promptTh": "เราวิ่ง ___ สวนสาธารณะ"
   },
   {
    "id": "p_in15",
@@ -1127,7 +1220,8 @@
    "trap": false,
    "category": "area",
    "reasonTh": "อยู่ในพื้นที่ที่มีขอบเขต ใช้ in",
-   "sentence": "Grandpa is ___ the garden."
+   "sentence": "Grandpa is ___ the garden.",
+   "promptTh": "ปู่ยู่ ___ สวน"
   },
   {
    "id": "p_in16",
@@ -1139,7 +1233,8 @@
    "trap": false,
    "category": "area",
    "reasonTh": "อยู่ในพื้นที่ที่มีขอบเขต ใช้ in",
-   "sentence": "The fish swim ___ the water."
+   "sentence": "The fish swim ___ the water.",
+   "promptTh": "ปลาว่ายน้ำ ___ น้ำ"
   },
   {
    "id": "p_in17",
@@ -1151,7 +1246,8 @@
    "trap": false,
    "category": "area",
    "reasonTh": "อยู่ในพื้นที่ที่มีขอบเขต ใช้ in",
-   "sentence": "There are no clouds ___ the sky."
+   "sentence": "There are no clouds ___ the sky.",
+   "promptTh": "ไม่มีเมฆ ___ ท้องฟ้า"
   },
   {
    "id": "p_in18",
@@ -1163,7 +1259,8 @@
    "trap": true,
    "category": "picture",
    "reasonTh": "อยู่ในภาพ ในกระจก ใช้ in",
-   "sentence": "Who is ___ the picture?"
+   "sentence": "Who is ___ the picture?",
+   "promptTh": "ใครอยู่ใน ___ รูป"
   },
   {
    "id": "p_in19",
@@ -1175,7 +1272,8 @@
    "trap": true,
    "category": "picture",
    "reasonTh": "อยู่ในภาพ ในกระจก ใช้ in",
-   "sentence": "I see myself ___ the mirror."
+   "sentence": "I see myself ___ the mirror.",
+   "promptTh": "ฉันเห็นตัวเอง ___ กระจก"
   },
   {
    "id": "p_in20",
@@ -1187,7 +1285,8 @@
    "trap": false,
    "category": "world",
    "reasonTh": "พื้นที่ใหญ่มาก ใช้ in",
-   "sentence": "It is the biggest city ___ the world."
+   "sentence": "It is the biggest city ___ the world.",
+   "promptTh": "เป็นเมืองที่ใหญ่ที่สุด ___ โลก"
   },
   {
    "id": "p_on01",
@@ -1199,7 +1298,8 @@
    "trap": false,
    "category": "surface",
    "reasonTh": "อยู่บนพื้นผิว ใช้ on",
-   "sentence": "The book is ___ the table."
+   "sentence": "The book is ___ the table.",
+   "promptTh": "หนังสืออยู่ ___ โต๊ะ"
   },
   {
    "id": "p_on02",
@@ -1211,7 +1311,8 @@
    "trap": false,
    "category": "surface",
    "reasonTh": "อยู่บนพื้นผิว ใช้ on",
-   "sentence": "There is a clock ___ the wall."
+   "sentence": "There is a clock ___ the wall.",
+   "promptTh": "มีนาฬิกาอยู่ ___ ผนัง"
   },
   {
    "id": "p_on03",
@@ -1223,7 +1324,8 @@
    "trap": false,
    "category": "surface",
    "reasonTh": "อยู่บนพื้นผิว ใช้ on",
-   "sentence": "The cat is sleeping ___ the floor."
+   "sentence": "The cat is sleeping ___ the floor.",
+   "promptTh": "แมวนอนอยู่ ___ พื้น"
   },
   {
    "id": "p_on04",
@@ -1235,7 +1337,8 @@
    "trap": false,
    "category": "surface",
    "reasonTh": "อยู่บนพื้นผิว ใช้ on",
-   "sentence": "Dad is sitting ___ the sofa."
+   "sentence": "Dad is sitting ___ the sofa.",
+   "promptTh": "พ่อนั่งอยู่ ___ โซฟา"
   },
   {
    "id": "p_on05",
@@ -1247,7 +1350,8 @@
    "trap": false,
    "category": "surface",
    "reasonTh": "อยู่บนพื้นผิว ใช้ on",
-   "sentence": "There is a bird ___ the roof."
+   "sentence": "There is a bird ___ the roof.",
+   "promptTh": "มีนกอยู่ ___ หลังคา"
   },
   {
    "id": "p_on06",
@@ -1259,7 +1363,8 @@
    "trap": false,
    "category": "surface",
    "reasonTh": "อยู่บนพื้นผิว ใช้ on",
-   "sentence": "The kids are sitting ___ the grass."
+   "sentence": "The kids are sitting ___ the grass.",
+   "promptTh": "เด็ก ๆ นั่งอยู่ ___ หญ้า"
   },
   {
    "id": "p_on07",
@@ -1271,7 +1376,8 @@
    "trap": false,
    "category": "surface",
    "reasonTh": "อยู่บนพื้นผิว ใช้ on",
-   "sentence": "There is a fan ___ the ceiling."
+   "sentence": "There is a fan ___ the ceiling.",
+   "promptTh": "มีพัดลมอยู่ ___ เพดาน"
   },
   {
    "id": "p_on08",
@@ -1283,7 +1389,8 @@
    "trap": false,
    "category": "street",
    "reasonTh": "ชื่อถนน (ไม่มีเลขที่) ใช้ on",
-   "sentence": "The café is ___ Silom Road."
+   "sentence": "The café is ___ Silom Road.",
+   "promptTh": "คาเฟ่อยู่ ___ ถนนสีลม"
   },
   {
    "id": "p_on09",
@@ -1295,7 +1402,8 @@
    "trap": false,
    "category": "street",
    "reasonTh": "ชื่อถนน (ไม่มีเลขที่) ใช้ on",
-   "sentence": "My hotel is ___ Sukhumvit Road."
+   "sentence": "My hotel is ___ Sukhumvit Road.",
+   "promptTh": "โรงแรมฉันอยู่ ___ ถนนสุขุมวิท"
   },
   {
    "id": "p_on10",
@@ -1307,7 +1415,8 @@
    "trap": true,
    "category": "floor",
    "reasonTh": "ชั้นของอาคาร ใช้ on",
-   "sentence": "My room is ___ the second floor."
+   "sentence": "My room is ___ the second floor.",
+   "promptTh": "ห้องฉันอยู่ ___ ชั้นสอง"
   },
   {
    "id": "p_on11",
@@ -1319,7 +1428,8 @@
    "trap": true,
    "category": "publicVehicle",
    "reasonTh": "รถสาธารณะที่เดินขึ้นไปได้ (bus, train, plane) ใช้ on",
-   "sentence": "I read a book ___ the bus."
+   "sentence": "I read a book ___ the bus.",
+   "promptTh": "ฉันอ่านหนังสือ ___ รถเมล์"
   },
   {
    "id": "p_on12",
@@ -1331,7 +1441,8 @@
    "trap": true,
    "category": "publicVehicle",
    "reasonTh": "รถสาธารณะที่เดินขึ้นไปได้ (bus, train, plane) ใช้ on",
-   "sentence": "We met ___ the train."
+   "sentence": "We met ___ the train.",
+   "promptTh": "เราเจอกัน ___ รถไฟ"
   },
   {
    "id": "p_on13",
@@ -1343,7 +1454,8 @@
    "trap": true,
    "category": "publicVehicle",
    "reasonTh": "รถสาธารณะที่เดินขึ้นไปได้ (bus, train, plane) ใช้ on",
-   "sentence": "I slept ___ the plane."
+   "sentence": "I slept ___ the plane.",
+   "promptTh": "ฉันนอน ___ เครื่องบิน"
   },
   {
    "id": "p_on14",
@@ -1355,7 +1467,8 @@
    "trap": false,
    "category": "page",
    "reasonTh": "บนหน้ากระดาษ หน้าจอ แผนที่ เมนู ใช้ on",
-   "sentence": "The answer is ___ the screen."
+   "sentence": "The answer is ___ the screen.",
+   "promptTh": "คำตอบอยู่ ___ หน้าจอ"
   },
   {
    "id": "p_on15",
@@ -1367,7 +1480,8 @@
    "trap": false,
    "category": "page",
    "reasonTh": "บนหน้ากระดาษ หน้าจอ แผนที่ เมนู ใช้ on",
-   "sentence": "Can you find it ___ the map?"
+   "sentence": "Can you find it ___ the map?",
+   "promptTh": "หาเจอไหม ___ แผนที่"
   },
   {
    "id": "p_on16",
@@ -1379,7 +1493,8 @@
    "trap": true,
    "category": "page",
    "reasonTh": "บนหน้ากระดาษ หน้าจอ แผนที่ เมนู ใช้ on",
-   "sentence": "The answer is ___ page 10."
+   "sentence": "The answer is ___ page 10.",
+   "promptTh": "คำตอบอยู่ ___ หน้า 10"
   },
   {
    "id": "p_on17",
@@ -1391,7 +1506,8 @@
    "trap": false,
    "category": "page",
    "reasonTh": "บนหน้ากระดาษ หน้าจอ แผนที่ เมนู ใช้ on",
-   "sentence": "Is pad thai ___ the menu?"
+   "sentence": "Is pad thai ___ the menu?",
+   "promptTh": "มีผัดไทย ___ เมนูไหม"
   },
   {
    "id": "p_on18",
@@ -1403,7 +1519,8 @@
    "trap": false,
    "category": "page",
    "reasonTh": "บนหน้ากระดาษ หน้าจอ แผนที่ เมนู ใช้ on",
-   "sentence": "I have the photo ___ my phone."
+   "sentence": "I have the photo ___ my phone.",
+   "promptTh": "ฉันมีรูปอยู่ใน ___ มือถือ"
   },
   {
    "id": "p_on19",
@@ -1415,7 +1532,8 @@
    "trap": true,
    "category": "side",
    "reasonTh": "ด้านซ้าย ด้านขวา ใช้ on",
-   "sentence": "The bank is ___ the left."
+   "sentence": "The bank is ___ the left.",
+   "promptTh": "ธนาคารอยู่ ___ ทางซ้าย"
   },
   {
    "id": "p_on20",
@@ -1427,7 +1545,8 @@
    "trap": true,
    "category": "island",
    "reasonTh": "เกาะ ใช้ on",
-   "sentence": "We stayed ___ an island."
+   "sentence": "We stayed ___ an island.",
+   "promptTh": "เราพักอยู่ ___ เกาะ"
   },
   {
    "id": "p_at01",
@@ -1439,7 +1558,8 @@
    "trap": true,
    "category": "homeWork",
    "reasonTh": "at home, at work, at school ใช้ at (ห้ามพูด in home)",
-   "sentence": "I'm ___ home now."
+   "sentence": "I'm ___ home now.",
+   "promptTh": "ฉันอยู่ ___ บ้านตอนนี้"
   },
   {
    "id": "p_at02",
@@ -1451,7 +1571,8 @@
    "trap": false,
    "category": "homeWork",
    "reasonTh": "at home, at work, at school ใช้ at (ห้ามพูด in home)",
-   "sentence": "Dad is ___ work."
+   "sentence": "Dad is ___ work.",
+   "promptTh": "พ่ออยู่ ___ ที่ทำงาน"
   },
   {
    "id": "p_at03",
@@ -1463,7 +1584,8 @@
    "trap": false,
    "category": "homeWork",
    "reasonTh": "at home, at work, at school ใช้ at (ห้ามพูด in home)",
-   "sentence": "She is ___ school today."
+   "sentence": "She is ___ school today.",
+   "promptTh": "เธออยู่ ___ โรงเรียนวันนี้"
   },
   {
    "id": "p_at04",
@@ -1475,7 +1597,8 @@
    "trap": false,
    "category": "point",
    "reasonTh": "จุดเฉพาะจุดเดียว ใช้ at",
-   "sentence": "Wait for me ___ the bus stop."
+   "sentence": "Wait for me ___ the bus stop.",
+   "promptTh": "รอฉัน ___ ป้ายรถเมล์"
   },
   {
    "id": "p_at05",
@@ -1487,7 +1610,8 @@
    "trap": false,
    "category": "point",
    "reasonTh": "จุดเฉพาะจุดเดียว ใช้ at",
-   "sentence": "Someone is ___ the door."
+   "sentence": "Someone is ___ the door.",
+   "promptTh": "มีคนอยู่ ___ ประตู"
   },
   {
    "id": "p_at06",
@@ -1499,7 +1623,8 @@
    "trap": false,
    "category": "point",
    "reasonTh": "จุดเฉพาะจุดเดียว ใช้ at",
-   "sentence": "Please ask ___ the front desk."
+   "sentence": "Please ask ___ the front desk.",
+   "promptTh": "ถามที่ ___ เคาน์เตอร์หน้า"
   },
   {
    "id": "p_at07",
@@ -1511,7 +1636,8 @@
    "trap": false,
    "category": "point",
    "reasonTh": "จุดเฉพาะจุดเดียว ใช้ at",
-   "sentence": "Turn left ___ the traffic lights."
+   "sentence": "Turn left ___ the traffic lights.",
+   "promptTh": "เลี้ยวซ้าย ___ ไฟแดง"
   },
   {
    "id": "p_at08",
@@ -1523,7 +1649,8 @@
    "trap": false,
    "category": "point",
    "reasonTh": "จุดเฉพาะจุดเดียว ใช้ at",
-   "sentence": "Let's meet ___ the gate."
+   "sentence": "Let's meet ___ the gate.",
+   "promptTh": "เจอกัน ___ ประตูทางเข้า"
   },
   {
    "id": "p_at09",
@@ -1535,7 +1662,8 @@
    "trap": false,
    "category": "point",
    "reasonTh": "จุดเฉพาะจุดเดียว ใช้ at",
-   "sentence": "Please pay ___ the counter."
+   "sentence": "Please pay ___ the counter.",
+   "promptTh": "จ่ายเงิน ___ เคาน์เตอร์"
   },
   {
    "id": "p_at10",
@@ -1547,7 +1675,8 @@
    "trap": false,
    "category": "point",
    "reasonTh": "จุดเฉพาะจุดเดียว ใช้ at",
-   "sentence": "Wait ___ the entrance."
+   "sentence": "Wait ___ the entrance.",
+   "promptTh": "รอ ___ ทางเข้า"
   },
   {
    "id": "p_at11",
@@ -1559,7 +1688,8 @@
    "trap": false,
    "category": "point",
    "reasonTh": "จุดเฉพาะจุดเดียว ใช้ at",
-   "sentence": "I'll pick you up ___ the station."
+   "sentence": "I'll pick you up ___ the station.",
+   "promptTh": "ฉันไปรับ ___ สถานี"
   },
   {
    "id": "p_at12",
@@ -1571,7 +1701,8 @@
    "trap": false,
    "category": "point",
    "reasonTh": "จุดเฉพาะจุดเดียว ใช้ at",
-   "sentence": "She is standing ___ the window."
+   "sentence": "She is standing ___ the window.",
+   "promptTh": "เธอยืนอยู่ ___ หน้าต่าง"
   },
   {
    "id": "p_at13",
@@ -1583,7 +1714,8 @@
    "trap": true,
    "category": "edge",
    "reasonTh": "จุดบนสุด ล่างสุด หรือปลาย ใช้ at",
-   "sentence": "Write your name ___ the top of the page."
+   "sentence": "Write your name ___ the top of the page.",
+   "promptTh": "เขียนชื่อ ___ หัวกระดาษ"
   },
   {
    "id": "p_at14",
@@ -1595,7 +1727,8 @@
    "trap": true,
    "category": "edge",
    "reasonTh": "จุดบนสุด ล่างสุด หรือปลาย ใช้ at",
-   "sentence": "My house is ___ the end of the street."
+   "sentence": "My house is ___ the end of the street.",
+   "promptTh": "บ้านฉันอยู่ ___ ต้นถนน"
   },
   {
    "id": "p_at15",
@@ -1607,7 +1740,8 @@
    "trap": true,
    "category": "edge",
    "reasonTh": "จุดบนสุด ล่างสุด หรือปลาย ใช้ at",
-   "sentence": "The note is ___ the bottom of the box."
+   "sentence": "The note is ___ the bottom of the box.",
+   "promptTh": "โน้ตอยู่ ___ ก้นกล่อง"
   },
   {
    "id": "p_at16",
@@ -1619,7 +1753,8 @@
    "trap": true,
    "category": "address",
    "reasonTh": "มีเลขที่บ้าน ใช้ at",
-   "sentence": "The shop is ___ 25 Silom Road."
+   "sentence": "The shop is ___ 25 Silom Road.",
+   "promptTh": "ร้านอยู่ ___ ถนนสีลม 25"
   },
   {
    "id": "p_at17",
@@ -1631,7 +1766,8 @@
    "trap": false,
    "category": "event",
    "reasonTh": "งานหรือกิจกรรม ใช้ at",
-   "sentence": "I met her ___ the party."
+   "sentence": "I met her ___ the party.",
+   "promptTh": "ฉันเจอเธอ ___ งานปาร์ตี้"
   },
   {
    "id": "p_at18",
@@ -1643,7 +1779,8 @@
    "trap": false,
    "category": "event",
    "reasonTh": "งานหรือกิจกรรม ใช้ at",
-   "sentence": "He was quiet ___ the meeting."
+   "sentence": "He was quiet ___ the meeting.",
+   "promptTh": "เขาเงียบ ___ การประชุม"
   },
   {
    "id": "p_at19",
@@ -1655,7 +1792,8 @@
    "trap": false,
    "category": "event",
    "reasonTh": "งานหรือกิจกรรม ใช้ at",
-   "sentence": "We sang ___ the concert."
+   "sentence": "We sang ___ the concert.",
+   "promptTh": "เราร้องเพลง ___ คอนเสิร์ต"
   },
   {
    "id": "p_at20",
@@ -1667,7 +1805,8 @@
    "trap": false,
    "category": "visit",
    "reasonTh": "ไปทำธุระที่ร้านหรือคลินิก ใช้ at",
-   "sentence": "I was ___ the dentist's this morning."
+   "sentence": "I was ___ the dentist's this morning.",
+   "promptTh": "ฉันอยู่ ___ คลินิกทันตแพทย์เช้านี้"
   }
  ]
 }
