@@ -653,17 +653,17 @@ describe('placement live catalog mapping', () => {
     assert.equal(result.recommendedStartKey, 'foundation_ch8');
     assert.equal(result.recommendedPathId, 'foundation_v7');
     assert.equal(result.recommendedChapterId, 'v7_u08');
-    assert.equal(result.recommendedNodeId, 'v7_u08n01');
+    assert.equal(result.recommendedNodeId, 'v7_u08n11');
     assert.equal(result.recommendationType, 'chapter_start');
     assert.equal(result.usedFallback, false);
   });
 
-  it('starts A1 at Adventure Ch1 and A1+ at Ch8 warm-up', () => {
+  it('starts A1 at Adventure Ch1 and A1+ at Ch8 New Words', () => {
     const a1Fail = fill(ENTRY, [2, 2, 2, 2, 2, 2, 2]);
     fillA1(a1Fail, [2, 2, 2, 0]);
     const a1Result = buildSessionResult(a1Fail, 'band_not_confirmed');
     assert.equal(a1Result.publicResult, 'Seed++');
-    assert.equal(a1Result.recommendedNodeId, 'v7_u08n01');
+    assert.equal(a1Result.recommendedNodeId, 'v7_u08n11');
 
     const a1Pass = fill(ENTRY, [2, 2, 2, 2, 2, 2, 2]);
     fillA1(a1Pass, [2, 2, 1, 2]);
@@ -674,8 +674,8 @@ describe('placement live catalog mapping', () => {
     fillA2(a1Pass, [2, 2, 1, 2, 2, 2, 1, 1, 1, 1]);
     const plus = buildSessionResult(a1Pass, 'band_not_confirmed');
     assert.equal(plus.publicResult, 'A1+');
-    assert.equal(plus.recommendedNodeId, 'a2_c08n01');
-    assert.equal(plus.recommendationType, 'review_checkpoint');
+    assert.equal(plus.recommendedNodeId, 'a2_c08n02');
+    assert.equal(plus.recommendationType, 'chapter_start');
   });
 
   it('starts Seed / Seed+ at the first chapter node of their start chapter', () => {

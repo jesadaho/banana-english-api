@@ -223,7 +223,7 @@ function desiredFor(
         intendedNextLevel: null,
         pathId: 'foundation_v7',
         chapterId: 'v7_u08',
-        nodeId: 'v7_u08n01',
+        nodeId: foundationChapterFirstNodeId('v7_u08'),
         fallbackPathId: FOUNDATION_START.pathId,
         fallbackChapterId: FOUNDATION_START.chapterId,
         fallbackNodeId: FOUNDATION_START.nodeId,
@@ -243,17 +243,19 @@ function desiredFor(
         fallbackNoticeTh: null,
       };
     case 'A1+':
+      // Start with New Words → Lesson; the Zone 1 Warm-up (a2_c08n01, a Say It
+      // review) stays unlocked behind it so a new learner is not tested first.
       return {
-        recommendationType: 'review_checkpoint',
+        recommendationType: 'chapter_start',
         intendedNextLevel: null,
         pathId: 'adventure_a2',
         chapterId: 'a2_c08',
-        nodeId: 'a2_c08n01',
+        nodeId: 'a2_c08n02',
         fallbackPathId: 'adventure_a2',
         fallbackChapterId: 'a2_c01',
         fallbackNodeId: 'a2_c01n01',
         fallbackNoticeTh:
-          'จุดทบทวนบท 8 ยังไม่พร้อม เลยเริ่มที่ต้น Adventure A2',
+          'บท 8 ยังไม่พร้อม เลยเริ่มที่ต้น Adventure A2',
       };
     case 'A2':
     case 'A2+':
