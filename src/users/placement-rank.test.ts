@@ -4,7 +4,15 @@ import {
   placementRankFor,
   placementRankScore,
   placementRankScoreFromResult,
+  showsPlacementRank,
 } from './placement-rank';
+
+test('Seed does not show a percentile', () => {
+  assert.equal(showsPlacementRank('Seed'), false);
+  assert.equal(showsPlacementRank('Seed+'), true);
+  assert.equal(showsPlacementRank('Seed++'), true);
+  assert.equal(showsPlacementRank(null), false);
+});
 
 test('higher band always outranks more points in a lower band', () => {
   assert.ok(placementRankScore('A1', 0) > placementRankScore('Seed+', 40));
