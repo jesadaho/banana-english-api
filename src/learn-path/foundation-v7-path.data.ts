@@ -133,8 +133,8 @@ export const FOUNDATION_V7_COURSE = buildCourse('foundation-v7', FOUNDATION_V7_C
 export const ADVENTURE_A2_COURSE = buildCourse(
   'adventure-a2',
   adventureA2CatalogJson as LearnPathCatalog,
-  // Section 2 opens without the Zone 1 finale; Section 3 without the Zone 2 finale.
-  { openChapterStarts: [9, 17] },
+  // Section 2–4 each open without the previous zone finale.
+  { openChapterStarts: [9, 17, 25] },
 );
 
 export const LEARN_COURSES: readonly LearnCourse[] = [
