@@ -26,7 +26,7 @@ APP_REPO = Path(os.environ.get("APP_REPO", ROOT.parent / "banana-english-app"))
 
 PATH_ID = "adventure_a2"
 SOURCE_VERSION = "adventure-a2-2026-10"
-RELEASED_CHAPTERS = 24
+RELEASED_CHAPTERS = 32
 CHAPTERS_PER_ZONE = 8
 
 TYPE_MAP = {"see_and_say": "describe_it"}
