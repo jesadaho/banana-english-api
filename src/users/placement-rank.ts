@@ -11,6 +11,12 @@ function asRecord(value: unknown): Record<string, unknown> | null {
   return value as Record<string, unknown>;
 }
 
+/** Seed stays off the percentile chip; every higher band can show Top X%. */
+export function showsPlacementRank(band: string | null | undefined): boolean {
+  const trimmed = typeof band === 'string' ? band.trim() : '';
+  return trimmed.length > 0 && trimmed !== 'Seed';
+}
+
 /** Band first, then summed 0/1/2 question scores. Inconclusive results rank lowest. */
 export function placementRankScore(band: string | null, points: number): number {
   const index = band

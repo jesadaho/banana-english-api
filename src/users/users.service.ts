@@ -33,12 +33,16 @@ import {
   UpsertUserDto,
 } from './dto/users.dto';
 import { parsePerfectStarKeys, perfectStarKey } from './perfect-stars';
-import { normalizePlacementResultPayload } from '../placement/placement-band';
+import {
+  normalizePlacementResultPayload,
+  placementBandFromResult,
+} from '../placement/placement-band';
 import {
   PlacementRank,
   placementRankFor,
   placementRankScore,
   placementRankScoreFromResult,
+  showsPlacementRank,
 } from './placement-rank';
 
 const PLACEMENT_RANK_CACHE_MS = 10 * 60 * 1000;
@@ -506,9 +510,12 @@ export class UsersService {
   }
 
   async getPlacementRank(user: User): Promise<{ rank: PlacementRank | null }> {
-    const myScore = placementRankScoreFromResult(
-      (user as User & { placementResult?: unknown }).placementResult,
-    );
+    const placementResult = (user as User & { placementResult?: unknown })
+      .placementResult;
+    if (!showsPlacementRank(placementBandFromResult(placementResult))) {
+      return { rank: null };
+    }
+    const myScore = placementRankScoreFromResult(placementResult);
     if (myScore === null) return { rank: null };
     const scores = await this.placementRankScores();
     return { rank: placementRankFor(scores, myScore) };
