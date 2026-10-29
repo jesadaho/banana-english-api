@@ -1,3 +1,5 @@
+import { publicResultFromJson } from './admin-placement-summary';
+
 export type EarlyBirdStatus = 'reserved' | 'purchased' | 'walk_in';
 
 export type EarlyBirdReservedUser = {
@@ -6,6 +8,7 @@ export type EarlyBirdReservedUser = {
   email: string | null;
   earlyBirdReservedAt: Date | null;
   earlyBirdReserveSource: string | null;
+  placementResult?: unknown;
 };
 
 export type EarlyBirdPurchase = {
@@ -15,13 +18,14 @@ export type EarlyBirdPurchase = {
   platform: string | null;
   productId: string | null;
   isSandbox: boolean | null;
-  user: { displayName: string | null; email: string | null };
+  user: { displayName: string | null; email: string | null; placementResult?: unknown };
 };
 
 export type EarlyBirdRow = {
   userId: string;
   displayName: string | null;
   email: string | null;
+  placementResult: string | null;
   reservedAt: string | null;
   source: string | null;
   status: EarlyBirdStatus;
@@ -61,6 +65,9 @@ export function buildEarlyBirdRows(
       userId: u.id,
       displayName: u.displayName,
       email: u.email,
+      placementResult:
+        publicResultFromJson(u.placementResult) ??
+        publicResultFromJson(bought?.user.placementResult),
       reservedAt: u.earlyBirdReservedAt.toISOString(),
       source: u.earlyBirdReserveSource,
       status: bought ? 'purchased' : 'reserved',
@@ -77,6 +84,7 @@ export function buildEarlyBirdRows(
       userId,
       displayName: bought.user.displayName,
       email: bought.user.email,
+      placementResult: publicResultFromJson(bought.user.placementResult),
       reservedAt: null,
       source: null,
       status: 'walk_in',
@@ -147,6 +155,8 @@ export function filterEarlyBirdRows(
     if (params.status && params.status !== 'all' && r.status !== params.status) return false;
     if (!inRange(r.reservedAt) && !inRange(r.purchasedAt)) return false;
     if (!q) return true;
-    return [r.userId, r.displayName, r.email].some((v) => v?.toLowerCase().includes(q));
+    return [r.userId, r.displayName, r.email, r.placementResult].some((v) =>
+      v?.toLowerCase().includes(q),
+    );
   });
 }

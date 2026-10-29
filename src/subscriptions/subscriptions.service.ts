@@ -234,12 +234,16 @@ export class SubscriptionsService {
       this.prisma.subscriptionGrant.findMany({
         orderBy: { createdAt: 'desc' },
         take: 50,
-        include: { user: { select: { id: true, displayName: true, email: true } } },
+        include: {
+          user: { select: { id: true, displayName: true, email: true, placementResult: true } },
+        },
       }),
       this.prisma.presaleOrder.findMany({
         orderBy: { createdAt: 'desc' },
         take: 80,
-        include: { user: { select: { id: true, displayName: true, email: true } } },
+        include: {
+          user: { select: { id: true, displayName: true, email: true, placementResult: true } },
+        },
       }),
     ]);
     const presaleRevenueThb = paidOrders.reduce((sum, row) => sum + row.priceThb, 0);
@@ -262,6 +266,7 @@ export class SubscriptionsService {
         userId: row.userId,
         displayName: row.user.displayName,
         email: row.user.email,
+        placementResult: publicPlacementBand(row.user.placementResult),
         tier: row.tier,
         startsAt: row.startsAt.toISOString(),
         expiresAt: row.expiresAt.toISOString(),
@@ -278,6 +283,7 @@ export class SubscriptionsService {
         firebaseUid: row.firebaseUid,
         displayName: row.user?.displayName ?? null,
         email: row.email ?? row.user?.email ?? null,
+        placementResult: publicPlacementBand(row.user?.placementResult),
         tier: row.tier,
         priceThb: row.priceThb,
         status: row.status,
@@ -314,6 +320,7 @@ export class SubscriptionsService {
         bananaBalance: true,
         subscriptionTier: true,
         subscriptionExpiresAt: true,
+        placementResult: true,
       },
     });
     return { users: users.map((user) => this.adminUserSummary(user)) };
@@ -419,6 +426,7 @@ export class SubscriptionsService {
     bananaBalance: number;
     subscriptionTier: string;
     subscriptionExpiresAt: Date | null;
+    placementResult?: unknown;
   }) {
     const now = new Date();
     const paid = user.subscriptionTier === 'PRO' || user.subscriptionTier === 'PRO_MAX';
@@ -432,6 +440,7 @@ export class SubscriptionsService {
       subscriptionTier: user.subscriptionTier,
       subscriptionExpiresAt: user.subscriptionExpiresAt?.toISOString() ?? null,
       subscriptionStatus: active ? 'active' : paid ? 'expired' : 'free',
+      placementResult: publicPlacementBand(user.placementResult),
     };
   }
 
