@@ -76,7 +76,8 @@ export type FoundationClientNodeType =
   | 'info_task'
   | 'interactive_scenario'
   | 'listen_up'
-  | 'explain_it';
+  | 'explain_it'
+  | 'word_cards';
 
 export type FoundationV5ClientNode = {
   id: string;
@@ -86,6 +87,8 @@ export type FoundationV5ClientNode = {
   type: FoundationClientNodeType;
   nodeType?: string;
   countsTowardProgress: boolean;
+  /** Extra practice (e.g. Word Cards review): never blocks or counts. */
+  optional?: boolean;
   comingSoon: boolean;
   estimatedMinutes: number;
   unlockAfterNodeIds: string[];
@@ -394,6 +397,10 @@ export class LearnPathService {
       ...skippedNodeIds,
       ...placementUnlockedNodeIds,
     ]);
+    // Optional nodes (Word Cards review) don't change the progress bar.
+    const progressNodeIds = new Set(
+      playable.filter((node) => node.countsTowardProgress).map((node) => node.id),
+    );
     const metadata = course.catalog.metadata;
     return {
       pathId: course.pathId, version: metadata.version,
@@ -406,8 +413,10 @@ export class LearnPathService {
         skippedNodeIds: [...skippedNodeIds],
         placementUnlockedNodeIds,
         currentNodeId: this.resolveCurrentNodeId(nodes, satisfied),
-        completedCount: new Set([...completed, ...skippedNodeIds]).size,
-        totalCount: playable.length,
+        completedCount: [...new Set([...completed, ...skippedNodeIds])].filter((id) =>
+          progressNodeIds.has(id),
+        ).length,
+        totalCount: progressNodeIds.size,
       },
       summary: {
         chapterCount: chapters.length, nodeCount: nodes.length, nodeTypeCounts: foundationV7NodeTypeCounts(course),
@@ -823,6 +832,7 @@ export class LearnPathService {
         node.poolId ? `listen_up:${node.poolId}` : null,
         node.poolId ? `story_bites:${node.poolId}` : null,
         node.poolId ? `explain_it:${node.poolId}` : null,
+        node.poolId ? `word_cards:${node.poolId}` : null,
         node.scenarioId ? `interactive_scenario:${node.scenarioId}` : null,
       ].filter((value): value is string => !!value);
       if (candidates.some((id) => completedMiniGameIds.has(id))) {

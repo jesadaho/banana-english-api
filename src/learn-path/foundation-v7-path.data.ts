@@ -1,6 +1,7 @@
 import catalogJson from './foundation-v7-path.catalog.json';
 import adventureA2CatalogJson from './adventure-a2-path.catalog.json';
 import { getInteractiveScenario } from '../interactive-scenario/interactive-scenario.data';
+import { wordCardsItemsForChapter, wordCardsNodeForChapter, type WordCardItem } from './word-cards.data';
 
 export type FoundationV7NodeType =
   | 'lesson'
@@ -14,7 +15,9 @@ export type FoundationV7NodeType =
   | 'info_task'
   | 'interactive_scenario'
   | 'listen_up'
-  | 'explain_it';
+  | 'explain_it'
+  /** Generated per chapter (not in the catalog JSON); optional review. */
+  | 'word_cards';
 
 /** Old app builds omit newer capabilities, so those nodes stay locked for them. */
 export const FOUNDATION_V7_CAPABILITIES = [
@@ -24,6 +27,7 @@ export const FOUNDATION_V7_CAPABILITIES = [
   'listen_up',
   'story_bites',
   'explain_it',
+  'word_cards',
 ] as const;
 export type FoundationV7Capability = (typeof FOUNDATION_V7_CAPABILITIES)[number];
 export type FoundationV7ContentRef = {
@@ -180,6 +184,7 @@ export function foundationV7NodeTypeCounts(
     interactive_scenario: 0,
     listen_up: 0,
     explain_it: 0,
+    word_cards: 0,
   };
   for (const node of course.nodes) result[node.type]++;
   return result;
@@ -193,6 +198,7 @@ const CANONICAL_POOL_TYPES: ReadonlySet<FoundationV7NodeType> = new Set([
   'listen_up',
   'story_bites',
   'explain_it',
+  'word_cards',
 ]);
 
 function canonicalRewardIdForNode(node: FoundationV7Node): string | null {
@@ -217,6 +223,33 @@ for (const node of ALL_LEARN_PATH_NODES) {
     }
   }
 }
+// Word Cards review nodes are generated per chapter, not stored in the catalogs.
+// Foundation (A1) only for now; A2 comes later.
+export const WORD_CARDS_COURSES: readonly LearnCourse[] = [FOUNDATION_V7_COURSE];
+const wordCardsPools = new Map<string, { chapterId: string; items: WordCardItem[] }>();
+for (const course of WORD_CARDS_COURSES) {
+  for (const chapter of course.catalog.chapters) {
+    const node = wordCardsNodeForChapter(chapter);
+    if (!node?.contentRef.poolId) continue;
+    const canonical = canonicalRewardIdForNode(node);
+    if (!canonical) continue;
+    for (const alias of [node.id, node.contentRef.poolId, canonical]) {
+      rewardAliases.set(alias, canonical);
+    }
+    wordCardsPools.set(node.contentRef.poolId, {
+      chapterId: chapter.id,
+      items: wordCardsItemsForChapter(chapter),
+    });
+  }
+}
+
+/** Words for a `word_cards_<chapterId>` pool (Word Cards review node). */
+export function wordCardsPoolById(
+  poolId: string,
+): { chapterId: string; items: WordCardItem[] } | undefined {
+  return wordCardsPools.get(poolId);
+}
+
 rewardAliases.set('fnd_v2_say_first_conversation', 'say_it:fnd_v2_first_conversation');
 rewardAliases.set('new_words_demo', 'new_words:new_words_demo');
 rewardAliases.set('new_words:new_words_demo', 'new_words:new_words_demo');
