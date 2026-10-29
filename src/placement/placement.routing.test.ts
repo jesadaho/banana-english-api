@@ -240,7 +240,7 @@ describe('placement gates v3.0', () => {
 
   it('a one-word S03 does not block Seed++ when the total is 13/14', () => {
     const state = fill(ENTRY, [2, 1, 2, 2, 2, 2, 2]);
-    assert.equal(seedPlusGate(state), false);
+    assert.equal(seedPlusGate(state), true);
     assert.equal(entryGate(state), true);
     assert.equal(publicResultFor(state, 'band_not_confirmed'), 'Seed++');
   });
@@ -251,17 +251,25 @@ describe('placement gates v3.0', () => {
   });
 
   it('a one-word S03 with a low total is Seed', () => {
-    const state = fill(ENTRY, [2, 1, 2, 2, 0, 0, 2]);
+    const state = fill(ENTRY, [2, 1, 1, 1, 0, 0, 0]);
     assert.equal(publicResultFor(state, 'band_not_confirmed'), 'Seed');
   });
 
-  it('Seed+ needs full S01 and S03', () => {
+  it('Seed+ from full S01 and S03, or from entry sum ≥7', () => {
     assert.equal(
       publicResultFor(fill(ENTRY, [2, 2, 1, 2, 0, 0, 2]), 'band_not_confirmed'),
       'Seed+',
     );
     assert.equal(
       publicResultFor(fill(ENTRY, [1, 2, 2, 0, 0, 2, 2]), 'band_not_confirmed'),
+      'Seed+',
+    );
+    assert.equal(
+      publicResultFor(fill(ENTRY, [1, 1, 1, 1, 1, 1, 1]), 'band_not_confirmed'),
+      'Seed+',
+    );
+    assert.equal(
+      publicResultFor(fill(ENTRY, [1, 1, 1, 1, 1, 1, 0]), 'band_not_confirmed'),
       'Seed',
     );
   });
@@ -326,9 +334,9 @@ describe('placement gates v3.0', () => {
 
     const assisted = fill(ENTRY, [2, 2, 2, 2, 2, 2, 2]);
     putScore(assisted, 'S03', 2, { eligible: false, status: 'assisted' });
-    assert.equal(seedPlusGate(assisted), false);
+    assert.equal(seedPlusGate(assisted), true);
     assert.equal(entryGate(assisted), false);
-    assert.equal(publicResultFor(assisted, 'insufficient_evidence'), null);
+    assert.equal(publicResultFor(assisted, 'insufficient_evidence'), 'Seed+');
   });
 });
 
@@ -428,11 +436,11 @@ describe('placement routing walk', () => {
     assert.equal(a1Gate(state), false);
   });
 
-  it('stops as Seed at chapter 1 when S01 is only a name', () => {
+  it('stops as Seed at chapter 1 when the entry total stays under 7', () => {
     let { state, reply } = buildPlacementOpening(
       initPlacementRuntime({ entrySource: 'onboarding', learnerName: 'Maya' }),
     );
-    for (const s of [1, 2, 2, 2, 0, 0, 2] as PlacementScore[]) {
+    for (const s of [1, 2, 1, 0, 1, 0, 0] as PlacementScore[]) {
       ({ state, reply } = scoreWalk(state, s));
     }
     assert.equal(state.finished, true);
@@ -666,7 +674,7 @@ describe('placement live catalog mapping', () => {
 
   it('starts every Seed at Ch1 and every Seed+ at Ch4', () => {
     const seedS03 = buildSessionResult(
-      fill(ENTRY, [2, 1, 2, 2, 0, 0, 2]),
+      fill(ENTRY, [2, 1, 1, 0, 1, 0, 1]),
       'band_not_confirmed',
     );
     assert.equal(seedS03.publicResult, 'Seed');
@@ -677,6 +685,7 @@ describe('placement live catalog mapping', () => {
       [2, 2, 1, 2, 0, 0, 2],
       [2, 2, 2, 1, 0, 0, 2],
       [2, 2, 2, 2, 0, 0, 2],
+      [1, 2, 2, 0, 0, 2, 2],
     ]) {
       const plus = buildSessionResult(fill(ENTRY, scores), 'band_not_confirmed');
       assert.equal(plus.publicResult, 'Seed+');

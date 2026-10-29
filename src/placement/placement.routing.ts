@@ -106,9 +106,15 @@ function atLeast(state: PlacementRuntimeState, id: string, min: PlacementScore) 
   return score !== null && score >= min;
 }
 
-/** Seed+: S01 (My name is …) and S03 (I'm + feeling) both full sentences. */
+/**
+ * Seed+: S01 and S03 both full sentences, or entry items sum ≥7/14.
+ * The sum path covers learners who said a name/feeling as a word but still
+ * showed enough English overall to skip chapters 1–3.
+ */
 export function seedPlusGate(state: PlacementRuntimeState): boolean {
-  return scoreOf(state, 'S01') === 2 && scoreOf(state, 'S03') === 2;
+  if (scoreOf(state, 'S01') === 2 && scoreOf(state, 'S03') === 2) return true;
+  const scores = eligibleList(stageEligibleScores(state, 'foundation_entry'));
+  return sumScores(scores) >= 7;
 }
 
 /**
