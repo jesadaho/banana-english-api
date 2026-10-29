@@ -144,7 +144,7 @@ export interface PlacementRuntimeState {
 }
 
 export interface PlacementGateResults {
-  /** S01 and S03 both 2: ch.1–3 shown, start at ch.4 or later. */
+  /** S01 and S03 both 2, or entry sum ≥7/14: start at ch.4. */
   seedPlus: boolean;
   /** Seed++: entry items ≥11/14 with Q05 or Q06 ≥1 (see entryGate). */
   entry: boolean;
