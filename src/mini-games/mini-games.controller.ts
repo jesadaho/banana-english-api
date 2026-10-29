@@ -13,6 +13,7 @@ import { User } from '@prisma/client';
 import { EconomyService } from '../economy/economy.service';
 import { AnonymousUserGuard } from '../users/anonymous-user.guard';
 import { EmojiSpeakEndlessLeaderboardService } from './emoji-speak-endless-leaderboard.service';
+import { WordCardsLeaderboardService } from './word-cards-leaderboard.service';
 import { EndlessScoreDto } from './dto/endless-score.dto';
 import { DescribeItEvaluateService, type DescribeItEvalTier } from './describe-it-evaluate.service';
 import { EvaluateDescribeItDto } from './dto/evaluate-describe-it.dto';
@@ -36,7 +37,7 @@ import { isFoundationV6RewardGameId } from '../learn-path/foundation-v6-path.dat
 import { RecentLearnersService } from '../recent-learners/recent-learners.service';
 import { isPhonicsNodeId, PhonicsService } from '../phonics/phonics.service';
 import { EmojiSpeakService } from '../emoji-speak/emoji-speak.service';
-import { canonicalFoundationV7RewardId, isFoundationV7EmojiPool } from '../learn-path/foundation-v7-path.data';
+import { canonicalFoundationV7RewardId, isFoundationV7EmojiPool, wordCardsPoolById } from '../learn-path/foundation-v7-path.data';
 import {
   isNewWordsPoolId,
   isValidNewWordsPack,
@@ -116,6 +117,7 @@ export class MiniGamesController {
     private readonly recentLearners: RecentLearnersService,
     private readonly phonics: PhonicsService,
     private readonly emojiSpeak: EmojiSpeakService,
+    private readonly wordCardsLeaderboard: WordCardsLeaderboardService,
   ) {}
 
   @Get(':gameId/recent-learners')
@@ -136,6 +138,15 @@ export class MiniGamesController {
     const id = poolId?.trim();
     if (!id) throw new BadRequestException('poolId is required');
     return this.emojiSpeak.dealForPool(id);
+  }
+
+  /** Word Cards review: every New Words + Emoji Speak word of the chapter. */
+  @Get('word-cards/:poolId/deal')
+  dealWordCardsPack(@Param('poolId') poolId: string) {
+    const id = poolId?.trim();
+    const pool = id ? wordCardsPoolById(id) : undefined;
+    if (!pool) throw new BadRequestException(`Unknown Word Cards pack: ${id}`);
+    return { poolId: id, chapterId: pool.chapterId, items: pool.items };
   }
 
   @Get('info-task/:poolId/deal')
@@ -340,6 +351,26 @@ export class MiniGamesController {
     );
     const streak = await this.economy.recordStreakActivity(req.user.id);
     return { ...scoreResult, ...streak };
+  }
+
+  /** Word Cards Endless: keep this week's best; returns the new rank. */
+  @Post('word-cards-endless/score')
+  async submitWordCardsEndlessScore(
+    @Req() req: AuthedRequest,
+    @Body() body: EndlessScoreDto,
+  ) {
+    const scoreResult = await this.wordCardsLeaderboard.submitScore(
+      req.user,
+      body.score,
+      body.avatarId,
+    );
+    const streak = await this.economy.recordStreakActivity(req.user.id);
+    return { ...scoreResult, ...streak };
+  }
+
+  @Get('word-cards-endless/weekly-leaderboard')
+  async wordCardsWeeklyLeaderboard(@Req() req: AuthedRequest) {
+    return this.wordCardsLeaderboard.weeklyBoard(req.user);
   }
 
   @Get('emoji-speak-endless/weekly-leaderboard')

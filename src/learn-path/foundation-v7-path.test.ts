@@ -20,8 +20,10 @@ import { MiniGamesController } from '../mini-games/mini-games.controller';
 import { EconomyService } from '../economy/economy.service';
 import { Currency } from '@prisma/client';
 
+// Word Cards review nodes are covered in word-cards.test.ts; keep these counts on the catalog nodes.
+const CORE_CAPABILITIES = FOUNDATION_V7_CAPABILITIES.filter((cap) => cap !== 'word_cards');
 const all = () => [
-  ...toFoundationV7ClientChapters(FOUNDATION_V7_CAPABILITIES).flatMap((ch) => ch.items),
+  ...toFoundationV7ClientChapters(CORE_CAPABILITIES).flatMap((ch) => ch.items),
 ];
 const req = { user: { id: 'v7-test', displayName: 'Mia' } } as any;
 const EXPECTED_V7_MIN_TURNS: Record<string, number> = {
@@ -49,7 +51,7 @@ describe('Foundation V7 catalog and real content', () => {
     assert.deepEqual(FOUNDATION_V7_CATALOG.chapters.map(c => c.items.length), [5,6,9,11,11,15,9,8,13,10,9,11,8,11,18,13]);
     assert.deepEqual(FOUNDATION_V7_CATALOG.chapters.slice(13).map(c => c.id), ['v7_u14', 'v7_u14_time_numbers', 'v7_u15']);
     assert.equal(FOUNDATION_V7_CATALOG.pathFinale, undefined);
-    assert.equal(toFoundationV7ClientFinale(FOUNDATION_V7_CAPABILITIES), null);
+    assert.equal(toFoundationV7ClientFinale(CORE_CAPABILITIES), null);
     const minnieNode = FOUNDATION_V7_CATALOG.chapters[7].items.at(-1)!;
     assert.equal(minnieNode.id, 'v7_u08n12');
     assert.equal(minnieNode.code, '8.8');
@@ -59,7 +61,7 @@ describe('Foundation V7 catalog and real content', () => {
     assert.equal(finalNode.id, 'v7_finale_n01');
     assert.equal(finalNode.code, '16.13');
     assert.equal(finalNode.type, 'interactive_scenario');
-    assert.deepEqual(foundationV7NodeTypeCounts(), { lesson:46, say_it:38, emoji_speak:15, new_words:31, pronunciation:4, describe_it:14, story_bites:3, conversation:14, info_task:0, interactive_scenario:2, listen_up:0, explain_it:0 });
+    assert.deepEqual(foundationV7NodeTypeCounts(), { lesson:46, say_it:38, emoji_speak:15, new_words:31, pronunciation:4, describe_it:14, story_bites:3, conversation:14, info_task:0, interactive_scenario:2, listen_up:0, explain_it:0, word_cards:0 });
     assert.deepEqual(FOUNDATION_V7_NODES.map(n => n.globalOrder), Array.from({length:167}, (_, i) => i + 1));
     for (let i = 1; i < FOUNDATION_V7_NODES.length; i++) {
       const prev = FOUNDATION_V7_NODES[i - 1];
@@ -292,7 +294,7 @@ describe('Foundation V7 progress and completion contracts', () => {
     const simulations = playable.flatMap(n => n.simulationId ? [n.simulationId] : []);
     mini.push(...all().filter(n => n.comingSoon).map(n => n.id));
     const service = pathService(lessons, mini, simulations);
-    const full = await service.getFoundationV7('user', FOUNDATION_V7_CAPABILITIES);
+    const full = await service.getFoundationV7('user', CORE_CAPABILITIES);
     assert.equal(full.progress.completedCount, 164);
     assert.equal(full.progress.totalCount, 164);
     assert.equal(full.progress.currentNodeId, null);
@@ -304,7 +306,7 @@ describe('Foundation V7 progress and completion contracts', () => {
 
   it('rejects unknown capabilities rather than silently enabling unsupported mechanics', async () => {
     const controller = new LearnPathController(pathService());
-    assert.equal((await controller.coursePath(req, 'foundation-v7', FOUNDATION_V7_CAPABILITIES.join(','))).summary.playableCount, 164);
+    assert.equal((await controller.coursePath(req, 'foundation-v7', CORE_CAPABILITIES.join(','))).summary.playableCount, 164);
     await assert.rejects(controller.coursePath(req, 'foundation-v7', 'video_bites'));
     await assert.rejects(controller.coursePath(req, 'foundation-v7', ['say_it_guided'] as any));
     await assert.rejects(controller.coursePath(req, 'adventure-a3'));
@@ -387,8 +389,8 @@ describe('Foundation V7 progress and completion contracts', () => {
   });
 
   it('accepts mini-game completion IDs but rejects lesson and unbuilt media IDs', async () => {
-    const economy = {applyMiniGameRewards: async (p: any) => p, recordMiniGameScore: async () => {}, spendBananas: async () => {}, hasClaimedMiniGameReward: async () => false};
-    const controller = new MiniGamesController(economy as any, {} as any, {} as any, {} as any, {} as any, {markActivity:async () => {}} as any, {} as any, new EmojiSpeakService());
+    const economy = {applyMiniGameRewards: async (p: any) => p, recordMiniGameScore: async () => {}, spendBananas: async () => {}, hasClaimedMiniGameReward: async () => false, refundBananas: async () => {}};
+    const controller = new MiniGamesController(economy as any, {} as any, {} as any, {} as any, {} as any, {} as any, {markActivity:async () => {}} as any, {} as any, new EmojiSpeakService(), {} as any);
     for (const node of FOUNDATION_V7_NODES) {
       if (['say_it','emoji_speak','new_words','info_task','interactive_scenario'].includes(node.type) || (node.type === 'describe_it' && node.contentRef.poolId)) await controller.complete(req, node.id);
       else await assert.rejects(controller.complete(req, node.id));

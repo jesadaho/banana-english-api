@@ -4,6 +4,7 @@ import { PhonicsModule } from '../phonics/phonics.module';
 import { UsersModule } from '../users/users.module';
 import { EmojiSpeakService } from '../emoji-speak/emoji-speak.service';
 import { EmojiSpeakEndlessLeaderboardService } from './emoji-speak-endless-leaderboard.service';
+import { WordCardsLeaderboardService } from './word-cards-leaderboard.service';
 import { DescribeItEvaluateService } from './describe-it-evaluate.service';
 import { ExplainItEvaluateService } from './explain-it-evaluate.service';
 import { MiniGamesController } from './mini-games.controller';
@@ -19,6 +20,7 @@ import { StoryBuilderEvaluateService } from './story-builder-evaluate.service';
     ExplainItEvaluateService,
     StoryBuilderEvaluateService,
     EmojiSpeakEndlessLeaderboardService,
+    WordCardsLeaderboardService,
     EmojiSpeakService,
   ],
 })

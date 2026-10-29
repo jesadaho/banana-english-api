@@ -15,7 +15,10 @@ import {
   type FoundationV7Capability,
   type FoundationV7Node,
   type LearnCourse,
+  wordCardsPoolById,
+  WORD_CARDS_COURSES,
 } from './foundation-v7-path.data';
+import { WORD_CARDS_MIN_WORDS, wordCardsInsertIndex, wordCardsNodeForChapter } from './word-cards.data';
 import { conversationCutsceneUrl } from './conversation-cutscenes';
 import type { FoundationV5ClientNode } from './learn-path.service';
 
@@ -70,6 +73,7 @@ const TYPE_CAPABILITY: Partial<Record<FoundationV7Node['type'], FoundationV7Capa
   listen_up: 'listen_up',
   story_bites: 'story_bites',
   explain_it: 'explain_it',
+  word_cards: 'word_cards',
 };
 
 const POOL_GATED_TYPES: ReadonlySet<FoundationV7Node['type']> = new Set([
@@ -205,6 +209,11 @@ export function hasFoundationV7Content(node: FoundationV7Node): boolean {
       return Boolean(
         ref.poolId && isValidStoryBitesPack(storyBitesPoolById(ref.poolId)),
       );
+    case 'word_cards':
+      return Boolean(
+        ref.poolId &&
+          (wordCardsPoolById(ref.poolId)?.items.length ?? 0) >= WORD_CARDS_MIN_WORDS,
+      );
     default:
       return false;
   }
@@ -238,13 +247,33 @@ export function toFoundationV7ClientChapters(
       emoji,
       outcome: chapter.outcome,
       ...(chapter.zone !== undefined ? { zone: chapter.zone } : {}),
-      items: chapter.items.map((node): FoundationV7ClientNode => {
+      items: withWordCards(chapter, capabilities, course).map((node): FoundationV7ClientNode => {
         const mapped = mapClientNode(node, previousPlayableId, context);
+        if (node.type === 'word_cards') {
+          // Optional review: unlocks with the chapter flow but never gates
+          // the next node or counts toward progress.
+          return { ...mapped.node, countsTowardProgress: false, optional: true };
+        }
         previousPlayableId = mapped.nextPrevious;
         return mapped.node;
       }),
     };
   });
+}
+
+/** Chapter items plus the generated Word Cards review (new clients only). */
+function withWordCards(
+  chapter: LearnCourse['catalog']['chapters'][number],
+  capabilities: readonly FoundationV7Capability[],
+  course: LearnCourse,
+): FoundationV7Node[] {
+  if (!capabilities.includes('word_cards')) return chapter.items;
+  if (!WORD_CARDS_COURSES.includes(course)) return chapter.items;
+  const review = wordCardsNodeForChapter(chapter);
+  if (!review) return chapter.items;
+  const items = [...chapter.items];
+  items.splice(wordCardsInsertIndex(items), 0, review);
+  return items;
 }
 
 /** Path Finale block — after the last chapter, not numbered as a chapter. */
