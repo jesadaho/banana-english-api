@@ -35,7 +35,8 @@ import { describeItPoolById } from '../describe-it/describe-it.data';
 import { initScenarioRuntime, localMatchCurrentBeat, processScenarioTurn } from '../interactive-scenario/interactive-scenario.runtime';
 
 const ZONE_1_CHAPTERS = 8;
-const RELEASED_CHAPTERS = 16;
+const ZONE_2_CHAPTERS = 16;
+const RELEASED_CHAPTERS = 24;
 const A2_CAPABILITIES = [...FOUNDATION_V7_CAPABILITIES];
 const a2Nodes = ADVENTURE_A2_COURSE.nodes;
 const chapterOf = (code: string) => Number(code.split('.')[0]);
@@ -70,14 +71,19 @@ describe('Adventure A2 course registry', () => {
     assert.equal(learnCourseForChapter('v7_u01'), FOUNDATION_V7_COURSE);
   });
 
-  it('releases Zones 1–2 (chapters 1–16)', () => {
+  it('releases Zones 1–3 (chapters 1–24)', () => {
     assert.equal(ADVENTURE_A2_COURSE.catalog.metadata.releasedChapterCount, RELEASED_CHAPTERS);
     const chapters = toFoundationV7ClientChapters(A2_CAPABILITIES, ADVENTURE_A2_COURSE);
     const zone2Playable = chapters
-      .slice(ZONE_1_CHAPTERS, RELEASED_CHAPTERS)
+      .slice(ZONE_1_CHAPTERS, ZONE_2_CHAPTERS)
       .flatMap((c) => c.items)
       .filter((i) => !i.comingSoon && i.nodeType !== 'describe_it');
     assert.ok(zone2Playable.length >= 40, `only ${zone2Playable.length} playable in Zone 2`);
+    const zone3Playable = chapters
+      .slice(ZONE_2_CHAPTERS, RELEASED_CHAPTERS)
+      .flatMap((c) => c.items)
+      .filter((i) => !i.comingSoon && i.nodeType !== 'describe_it');
+    assert.ok(zone3Playable.length >= 40, `only ${zone3Playable.length} playable in Zone 3`);
     for (const chapter of chapters.slice(RELEASED_CHAPTERS)) {
       for (const item of chapter.items) {
         if (item.nodeType === 'describe_it' && item.backendReady) {
@@ -91,6 +97,7 @@ describe('Adventure A2 course registry', () => {
     }
     assert.equal(chapters[0].zone, 1);
     assert.equal(chapters[8].zone, 2);
+    assert.equal(chapters[16].zone, 3);
   });
 
   it('opens Section 2 without finishing the Zone 1 finale', () => {
@@ -99,6 +106,14 @@ describe('Adventure A2 course registry', () => {
     assert.equal(ch9[0].id, 'a2_c09n01');
     assert.deepEqual(ch9[0].unlockAfterNodeIds, []);
     assert.deepEqual(ch9[1].unlockAfterNodeIds, [ch9[0].id]);
+  });
+
+  it('opens Section 3 without finishing the Zone 2 finale', () => {
+    const chapters = toFoundationV7ClientChapters(A2_CAPABILITIES, ADVENTURE_A2_COURSE);
+    const ch17 = chapters[16].items.filter((i) => !i.comingSoon);
+    assert.equal(ch17[0].id, 'a2_c17n01');
+    assert.deepEqual(ch17[0].unlockAfterNodeIds, []);
+    assert.deepEqual(ch17[1].unlockAfterNodeIds, [ch17[0].id]);
   });
 });
 
