@@ -28,8 +28,32 @@ describe('early bird report', () => {
     const a = rows.find((r) => r.userId === 'a')!;
     assert.equal(a.status, 'purchased');
     assert.equal(a.purchasedAt, '2026-11-01T04:00:00.000Z');
+    assert.equal(a.placementResult, null);
     assert.equal(rows.find((r) => r.userId === 'b')!.status, 'reserved');
     assert.equal(rows.find((r) => r.userId === 'c')!.status, 'walk_in');
+  });
+
+  it('copies the public placement band onto each row', () => {
+    const withLevel = buildEarlyBirdRows(
+      [
+        {
+          ...reserved[0],
+          placementResult: { publicResult: 'A1+', questionVersion: 'placement-q-v3.0' },
+        },
+      ],
+      [
+        {
+          ...purchases[2],
+          user: {
+            displayName: 'Cat',
+            email: 'c@x.com',
+            placementResult: { publicResult: 'Seed+', questionVersion: 'placement-q-v2.3' },
+          },
+        },
+      ],
+    );
+    assert.equal(withLevel.find((r) => r.userId === 'a')?.placementResult, 'A1+');
+    assert.equal(withLevel.find((r) => r.userId === 'c')?.placementResult, 'Seed++');
   });
 
   it('summary excludes sandbox revenue', () => {
@@ -53,6 +77,13 @@ describe('early bird report', () => {
     const range = { from: d('2026-10-01T00:00:00Z'), to: d('2026-12-01T00:00:00Z') };
     assert.equal(filterEarlyBirdRows(rows, { ...range, status: 'reserved' }).length, 1);
     assert.equal(filterEarlyBirdRows(rows, { ...range, q: 'ann@' }).length, 1);
+    assert.equal(
+      filterEarlyBirdRows([{ ...rows.find((r) => r.userId === 'a')!, placementResult: 'A1+' }], {
+        ...range,
+        q: 'a1+',
+      }).length,
+      1,
+    );
     assert.equal(
       filterEarlyBirdRows(rows, { from: d('2026-10-30T00:00:00Z'), to: d('2026-12-01T00:00:00Z') }).length,
       2,

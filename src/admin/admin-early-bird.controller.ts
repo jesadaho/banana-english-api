@@ -47,6 +47,7 @@ export class AdminEarlyBirdController {
           email: true,
           earlyBirdReservedAt: true,
           earlyBirdReserveSource: true,
+          placementResult: true,
         },
       }),
       this.prisma.subscriptionGrant.findMany({
@@ -58,7 +59,7 @@ export class AdminEarlyBirdController {
           platform: true,
           productId: true,
           isSandbox: true,
-          user: { select: { displayName: true, email: true } },
+          user: { select: { displayName: true, email: true, placementResult: true } },
         },
       }),
     ]);
