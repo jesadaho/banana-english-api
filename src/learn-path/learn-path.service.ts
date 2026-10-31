@@ -195,7 +195,8 @@ function shippedContentForMappedType(
     type === 'info_task' ||
     type === 'interactive_scenario' ||
     type === 'listen_up' ||
-    type === 'explain_it'
+    type === 'explain_it' ||
+    type === 'word_cards'
   ) {
     return undefined;
   }
