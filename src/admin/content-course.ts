@@ -6,6 +6,7 @@ import {
   FOUNDATION_V7_NODES,
   LEARN_COURSES,
 } from '../learn-path/foundation-v7-path.data';
+import { wordCardsNodeForChapter } from '../learn-path/word-cards.data';
 import { canonicalFoundationV7LessonId } from '../lessons/foundation-v7-lesson-id-aliases';
 import { getLesson } from '../lessons/lessons.data';
 
@@ -61,6 +62,7 @@ const MINIGAME_TITLES: Record<string, string> = {
   game_word_choice: 'Word Choice',
   game_story_builder: 'Story Builder',
   game_whats_happen: "What's Happen",
+  game_word_cards: 'Word Cards',
 };
 
 let foundationTitleById: Map<string, string> | null = null;
@@ -95,6 +97,9 @@ function foundationTitles(): Map<string, string> {
       if (node.type === 'new_words' && ref.poolId) {
         foundationTitleById.set(`new_words:${ref.poolId}`, node.titleEn);
       }
+      if (node.type === 'word_cards' && ref.poolId) {
+        foundationTitleById.set(`word_cards:${ref.poolId}`, node.titleEn);
+      }
       const canonical = canonicalFoundationV7RewardId(node.id);
       if (canonical) foundationTitleById.set(canonical, node.titleEn);
     }
@@ -105,6 +110,14 @@ function foundationTitles(): Map<string, string> {
           `Skip Quiz · ${chapter.titleEn}`,
         );
       }
+    }
+    for (const chapter of FOUNDATION_V7_CATALOG.chapters) {
+      const review = wordCardsNodeForChapter(chapter);
+      const poolId = review?.contentRef.poolId;
+      if (!review || !poolId) continue;
+      foundationTitleById.set(review.id, review.titleEn);
+      foundationTitleById.set(poolId, review.titleEn);
+      foundationTitleById.set(`word_cards:${poolId}`, review.titleEn);
     }
   }
   return foundationTitleById;
@@ -126,6 +139,7 @@ export function classifyContentCourse(id: string): ContentCourse {
     trimmed.startsWith('describe_it:') ||
     trimmed.startsWith('emoji_speak:') ||
     trimmed.startsWith('new_words:') ||
+    trimmed.startsWith('word_cards:') ||
     trimmed.startsWith('skip_quiz:') ||
     trimmed.startsWith('fnd_v2_') ||
     trimmed.startsWith('fnd_v7_') ||

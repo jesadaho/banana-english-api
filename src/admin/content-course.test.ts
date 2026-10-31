@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 import {
   classifyContentCourse,
+  contentItemTitle,
   foundationV7PathPosition,
   foundationV7StageCatalog,
   foundationV7StageIdForRating,
@@ -29,6 +30,8 @@ describe('classifyContentCourse', () => {
     assert.equal(classifyContentCourse('game_say_it'), 'minigame');
     assert.equal(classifyContentCourse('game_explain_it'), 'minigame');
     assert.equal(classifyContentCourse('game_emoji_speak'), 'minigame');
+    assert.equal(classifyContentCourse('game_word_cards'), 'minigame');
+    assert.equal(contentItemTitle('game_word_cards'), 'Word Cards');
     assert.equal(classifyContentCourse('game_speak_challenge'), 'minigame');
     assert.equal(classifyContentCourse('game_word_choice'), 'minigame');
   });
@@ -40,6 +43,7 @@ describe('classifyContentCourse', () => {
       'foundation',
     );
     assert.equal(classifyContentCourse('skip_quiz:v7_u04'), 'foundation');
+    assert.equal(classifyContentCourse('word_cards:word_cards_v7_u04'), 'foundation');
   });
 
   it('tags stage scores with their chapter', () => {

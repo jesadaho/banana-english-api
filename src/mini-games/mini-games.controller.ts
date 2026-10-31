@@ -94,6 +94,7 @@ const NEW_WORDS_BANANA_COST = 1;
 const LISTEN_UP_BANANA_COST = 1;
 const STORY_BITES_BANANA_COST = 1;
 const INFO_TASK_BANANA_COST = 1;
+const WORD_CARDS_BANANA_COST = 1;
 
 /** Foundation path Emoji Speak packs charge bananas; Games tab packs are free. */
 function isFoundationPathEmojiSpeak(poolOrGameId: string): boolean {
@@ -102,6 +103,15 @@ function isFoundationPathEmojiSpeak(poolOrGameId: string): boolean {
   if (isFoundationPathRewardGameId(poolOrGameId)) return true;
   if (isFoundationPathRewardGameId(`emoji_speak:${poolOrGameId}`)) return true;
   return false;
+}
+
+/** Chapter review packs charge bananas; Games hub packs stay free. */
+function isFoundationPathWordCards(poolOrGameId: string): boolean {
+  const id = poolOrGameId.trim();
+  if (!id) return false;
+  if (wordCardsPoolById(id)) return true;
+  const bare = id.startsWith('word_cards:') ? id.slice('word_cards:'.length) : id;
+  return Boolean(wordCardsPoolById(bare));
 }
 
 @Controller('mini-games')
@@ -147,6 +157,57 @@ export class MiniGamesController {
     const pool = id ? wordCardsPoolById(id) : undefined;
     if (!pool) throw new BadRequestException(`Unknown Word Cards pack: ${id}`);
     return { poolId: id, chapterId: pool.chapterId, items: pool.items };
+  }
+
+  /** First play of a path review costs 1 banana. Hub packs stay free. */
+  @Post('word-cards/:poolId/start')
+  async startWordCardsPack(
+    @Req() req: AuthedRequest,
+    @Param('poolId') poolId: string,
+  ) {
+    const id = poolId?.trim();
+    if (!id) throw new BadRequestException('poolId is required');
+    const charge = isFoundationPathWordCards(id);
+    const replayFree =
+      charge &&
+      (await this.economy.hasClaimedMiniGameReward(req.user.id, `word_cards:${id}`));
+    const bananaCost = charge && !replayFree ? WORD_CARDS_BANANA_COST : 0;
+    const spendRef = bananaCost > 0 ? randomUUID() : null;
+    if (bananaCost > 0 && spendRef) {
+      await this.economy.spendBananas(
+        req.user.id,
+        bananaCost,
+        spendRef,
+        'word_cards_start',
+      );
+    }
+    try {
+      await this.recentLearners.markActivity(req.user.id, 'minigame', id);
+    } catch (error) {
+      if (bananaCost > 0 && spendRef) {
+        await this.economy.refundBananas(
+          req.user.id,
+          bananaCost,
+          spendRef,
+          'word_cards_start_refund',
+        );
+      }
+      throw error;
+    }
+    return { ok: true, bananaCost };
+  }
+
+  /** Session-volume ping for every Word Cards pack open (free or paid). */
+  @Post('word-cards/:poolId/play')
+  async recordWordCardsPlay(
+    @Req() req: AuthedRequest,
+    @Param('poolId') poolId: string,
+  ) {
+    const id = poolId?.trim();
+    if (!id) throw new BadRequestException('poolId is required');
+    await this.economy.logPlayActivity(req.user.id, 'word_cards_play', id);
+    await this.recentLearners.markActivity(req.user.id, 'minigame', id);
+    return { ok: true };
   }
 
   @Get('info-task/:poolId/deal')
@@ -363,6 +424,11 @@ export class MiniGamesController {
       req.user,
       body.score,
       body.avatarId,
+    );
+    await this.economy.logPlayActivity(
+      req.user.id,
+      'word_cards_play',
+      'endless',
     );
     const streak = await this.economy.recordStreakActivity(req.user.id);
     return { ...scoreResult, ...streak };

@@ -1065,6 +1065,8 @@ export class AdminMetricsService {
                     'listen_up_start',
                     'story_bites_start',
                     'info_task_start',
+                    'word_cards_start',
+                    'word_cards_play',
                   ],
                 },
               },
@@ -1094,6 +1096,8 @@ export class AdminMetricsService {
                     'listen_up_start',
                     'story_bites_start',
                     'info_task_start',
+                    'word_cards_start',
+                    'word_cards_play',
                   ],
                 },
               },
@@ -1511,6 +1515,11 @@ export class AdminMetricsService {
     if (raw.listen_up_start) plays.set('game_listen_up', raw.listen_up_start);
     if (raw.story_bites_start) plays.set('game_story_bites', raw.story_bites_start);
     if (raw.info_task_start) plays.set('game_info_task', raw.info_task_start);
+    const wordCards =
+      (raw.word_cards_play ?? 0) > 0
+        ? raw.word_cards_play
+        : (raw.word_cards_start ?? 0);
+    if (wordCards) plays.set('game_word_cards', wordCards);
     const emoji =
       (raw.emoji_speak_play ?? 0) > 0
         ? raw.emoji_speak_play
@@ -1588,6 +1597,18 @@ export class AdminMetricsService {
       merged.info_task = {
         count: raw.info_task_start,
         users: usersBySource.info_task_start ?? 0,
+      };
+    }
+    const wordCardsPlay = raw.word_cards_play ?? 0;
+    const wordCardsStart = raw.word_cards_start ?? 0;
+    const wordCards = wordCardsPlay > 0 ? wordCardsPlay : wordCardsStart;
+    if (wordCards > 0) {
+      merged.word_cards = {
+        count: wordCards,
+        users:
+          wordCardsPlay > 0
+            ? (usersBySource.word_cards_play ?? 0)
+            : (usersBySource.word_cards_start ?? 0),
       };
     }
     if (raw.daily_speak_reward) {
@@ -1723,6 +1744,7 @@ export class AdminMetricsService {
       'listen_up_start',
       'story_bites_start',
       'info_task_start',
+      'word_cards_start',
     ];
     const spendMix = spendMixKeys.map((source) => ({
       source,
