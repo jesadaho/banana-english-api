@@ -59,6 +59,7 @@ export function inferMiniGameScoreKind(gameId: string): string {
   if (gameId.startsWith('listen_up:')) return 'listen_up';
   if (gameId.startsWith('story_bites:')) return 'story_bites';
   if (gameId.startsWith('info_task:')) return 'info_task';
+  if (gameId.startsWith('word_cards:')) return 'word_cards';
   if (gameId.startsWith('skip_quiz:')) return 'skip_quiz';
   if (gameId.startsWith('speak_challenge')) return 'speak_challenge';
   if (gameId.startsWith('word_choice')) return 'word_choice';
@@ -431,7 +432,8 @@ export class EconomyService {
       | 'skip_quiz_start'
       | 'listen_up_start'
       | 'story_bites_start'
-      | 'info_task_start' = 'mission_start',
+      | 'info_task_start'
+      | 'word_cards_start' = 'mission_start',
   ): Promise<User> {
     return this.prisma.$transaction(async (tx) => {
       const user = await tx.user.findUniqueOrThrow({ where: { id: userId } });
@@ -509,7 +511,8 @@ export class EconomyService {
       | 'skip_quiz_start_refund'
       | 'listen_up_start_refund'
       | 'story_bites_start_refund'
-      | 'info_task_start_refund',
+      | 'info_task_start_refund'
+      | 'word_cards_start_refund',
   ): Promise<User> {
     if (!Number.isFinite(amount) || amount <= 0) {
       return this.prisma.user.findUniqueOrThrow({ where: { id: userId } });
