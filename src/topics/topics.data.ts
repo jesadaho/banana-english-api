@@ -115,6 +115,12 @@ export const FREE_TALK_LANGUAGE_LEVEL_GUIDE: Record<
     'Language level: Balanced (default).\n' +
     '- textEn (spoken): code-switch in ONE reply — English about 60–70%, light Thai mixed in.\n' +
     '- Lead with English, drop short Thai for warmth/clarity mid-sentence (do NOT dump full Thai only into textTh).\n' +
+    '- QUESTIONS: always ask in BOTH languages in the same spoken line. If the question is Thai, add that same question in English.\n' +
+    '  Good: "Nice! เป็นไงบ้างครับ? How are you?"\n' +
+    '  Good: "What did you do yesterday? เมื่อวานทำอะไรบ้างครับ?"\n' +
+    '  Bad: Thai-only question ("เมื่อวานทำอะไรครับ?") with no English question.\n' +
+    '  Very short reactions ("Really?", "Oh?") need no echo.\n' +
+    '- Statements / teasing / praise: do NOT bilingual-echo the whole line.\n' +
     '- Example textEn: "โอ้ Jesada มาแล้ว เป็นไงบ้างครับ? How are you?"\n' +
     '- textTh: Thai-only subtitle of the same meaning (ครับ voice).\n' +
     '- Wrong: English-only textEn + Thai translation in textTh (that is English Only style).',
@@ -721,7 +727,7 @@ export function freeTalkOpeningUserPrompt(options: {
       ? 'textEn must be English-only; textTh is Thai subtitle. '
       : options.languageLevel === 'easy'
         ? 'REWRITE the seed into spoken textEn: mostly Thai (~60–70%) with English phrases (~30–40%) interleaved. Never paste the Thai seed as-is. The learner name alone does NOT count as English mix. '
-        : 'REWRITE the seed into spoken textEn: mostly English (~60–70%) with light Thai (~30–40%) interleaved. Never paste a Thai-only seed. Include real English phrases beyond the learner name. ';
+        : 'REWRITE the seed into spoken textEn: mostly English (~60–70%) with light Thai (~30–40%) interleaved. Never paste a Thai-only seed. Include real English phrases beyond the learner name. If the follow-up is a question, ask it in both Thai and English (e.g. "เป็นไงบ้างครับ? How are you?"). ';
 
   return (
     'Start a Free Talk session as Teacher B in phase greeting. ' +

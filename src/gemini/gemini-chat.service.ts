@@ -1387,7 +1387,7 @@ export class GeminiChatService {
     const mixHint =
       languageLevel === 'easy'
         ? 'Mostly Thai with English ~30–40% (e.g. "โอ้ Jim มาแล้ว! How are you? พร้อมคุยไหมครับ?").'
-        : 'Mostly English ~60–70% with light Thai (e.g. "Hey Jim! มาแล้วครับ How are you feeling today?").';
+        : 'Mostly English ~60–70% with light Thai (e.g. "Hey Jim! มาแล้วครับ How are you feeling today?"). If you ask a question, include both Thai and English (e.g. "เป็นไงบ้างครับ? How are you?").';
 
     try {
       const { value: retryReply } = await this.generateJson<FreeTalkTurnReply>({
