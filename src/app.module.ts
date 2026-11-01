@@ -36,6 +36,7 @@ import { ArticlesModule } from './articles/articles.module';
 import { BugReportsModule } from './bug-reports/bug-reports.module';
 import { PhonicsModule } from './phonics/phonics.module';
 import { SubscriptionsModule } from './subscriptions/subscriptions.module';
+import { WeeklyReportModule } from './weekly-report/weekly-report.module';
 
 @Module({
   imports: [
@@ -70,6 +71,7 @@ import { SubscriptionsModule } from './subscriptions/subscriptions.module';
     DailySpeakModule,
     ReferralsModule,
     SubscriptionsModule,
+    WeeklyReportModule,
     SayItModule,
     InOnAtModule,
     DescribeItModule,

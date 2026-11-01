@@ -27,6 +27,10 @@ export class UpsertUserDto {
   lessonTeachingLanguage?: 'thai' | 'english';
 
   @IsOptional()
+  @IsIn(['th', 'en'])
+  contentLocale?: 'th' | 'en';
+
+  @IsOptional()
   @IsString()
   @MinLength(10)
   fcmToken?: string;

@@ -4,7 +4,8 @@ export type PushNotificationType =
   | 'miss_you'
   | 'bug_report_reply'
   | 'referral_reward'
-  | 'daily_practice';
+  | 'daily_practice'
+  | 'weekly_report';
 
 export type ReminderSlot = 'morning' | 'noon' | 'evening';
 
@@ -107,7 +108,7 @@ export function rememberDailyPracticeTemplate(
 export const PUSH_NOTIFICATION_TEMPLATES: Record<
   Exclude<
     PushNotificationType,
-    'bug_report_reply' | 'banana_full' | 'referral_reward' | 'daily_practice'
+    'bug_report_reply' | 'banana_full' | 'referral_reward' | 'daily_practice' | 'weekly_report'
   >,
   PushTemplate
 > = {
@@ -126,7 +127,7 @@ export const PUSH_NOTIFICATION_TEMPLATES: Record<
 export function pushPayloadForType(
   type: Exclude<
     PushNotificationType,
-    'bug_report_reply' | 'referral_reward' | 'daily_practice'
+    'bug_report_reply' | 'referral_reward' | 'daily_practice' | 'weekly_report'
   >,
 ): PushNotificationPayload {
   const template =
