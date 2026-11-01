@@ -19,6 +19,7 @@ import {
   pushPayloadForType,
   type PushNotificationType,
 } from './notification-templates';
+import { WEEKLY_REPORT_TYPE } from '../weekly-report/weekly-report.week';
 
 const BANANA_PUSH_START_HOUR = 8;
 const BANANA_PUSH_END_HOUR = 22;
@@ -101,6 +102,7 @@ export class DailyJobsService {
       if (!isReminderSlot(user.reminderSlot)) continue;
       const local = getUserLocalTime(user.timezone, now);
       if (local.hour !== REMINDER_SLOT_HOUR[user.reminderSlot]) continue;
+      if (await this.hasWeeklyReportToday(user.id, local.dateKey)) continue;
 
       const alreadySpoke = await this.spokeToday(user.id, local.dateKey, user.lastSessionDate);
       if (alreadySpoke) continue;
@@ -174,6 +176,7 @@ export class DailyJobsService {
       // only day-1 of absence (opened yesterday). Day 2+ without open → skip.
       const yesterdayKey = previousDateKey(local.dateKey);
       if (!isSameDateKey(user.lastAppOpenDate, yesterdayKey)) continue;
+      if (await this.hasWeeklyReportToday(user.id, local.dateKey)) continue;
 
       const sent = await this.tryLogNotification(
         user.id,
@@ -231,11 +234,27 @@ export class DailyJobsService {
     tokens: string[],
     type: Exclude<
       PushNotificationType,
-      'bug_report_reply' | 'referral_reward' | 'daily_practice'
+      'bug_report_reply' | 'referral_reward' | 'daily_practice' | 'weekly_report'
     >,
   ): Promise<string[]> {
     const payload = pushPayloadForType(type);
     return this.fcm.sendAndPersist({ userId, tokens, payload });
+  }
+
+  private async hasWeeklyReportToday(
+    userId: string,
+    dateKey: string,
+  ): Promise<boolean> {
+    const row = await this.prisma.notificationLog.findUnique({
+      where: {
+        userId_type_sentOn: {
+          userId,
+          type: WEEKLY_REPORT_TYPE,
+          sentOn: parseDateKey(dateKey),
+        },
+      },
+    });
+    return Boolean(row);
   }
 
   private async tryLogNotification(

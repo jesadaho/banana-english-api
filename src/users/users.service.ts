@@ -114,6 +114,7 @@ export interface UserProfileResponse {
   /** Selected avatar; null when the user never picked one on the server. */
   avatarId: string | null;
   lessonTeachingLanguage: 'thai' | 'english';
+  contentLocale: 'th' | 'en';
   email?: string | null;
   isGuest?: boolean;
   linkedProviders?: ('google' | 'apple')[];
@@ -189,6 +190,7 @@ export class UsersService {
       dto.timezone ||
       dto.fcmToken ||
       dto.lessonTeachingLanguage ||
+      dto.contentLocale ||
       dto.reminderSlot ||
       dto.placementEntryNodeId ||
       dto.placementEntryPathId
@@ -199,6 +201,7 @@ export class UsersService {
           displayName: dto.displayName ?? undefined,
           timezone: dto.timezone ?? undefined,
           lessonTeachingLanguage: dto.lessonTeachingLanguage ?? undefined,
+          contentLocale: dto.contentLocale ?? undefined,
           reminderSlot: dto.reminderSlot ?? undefined,
           placementEntryPathId: dto.placementEntryPathId ?? undefined,
           placementEntryNodeId: dto.placementEntryNodeId ?? undefined,
@@ -803,6 +806,10 @@ export class UsersService {
       unlockedAvatarIds,
       avatarId: user.avatarId?.trim() || null,
       lessonTeachingLanguage,
+      contentLocale:
+        (user as User & { contentLocale?: string }).contentLocale === 'en'
+          ? 'en'
+          : 'th',
       selfReportedEnglishLevel,
       acquisitionSource,
       surveyGender,
