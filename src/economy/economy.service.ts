@@ -32,10 +32,12 @@ import {
   getMissionReward,
 } from './economy.constants';
 import {
+  completedOnLocalDay,
   getUserLocalTime,
   isSameDateKey,
   parseDateKey,
   previousDateKey,
+  resolveUserTimezone,
 } from '../common/timezone.util';
 
 export interface UserBalances {
@@ -996,12 +998,13 @@ export class EconomyService {
 
   /**
    * True when this user already claimed path mini-game rewards for [gameId]
-   * (node id, pool/topic id, or prefixed canonical id). Used to waive banana
-   * charge on replay of a completed Foundation node.
+   * today in [timezone]. Used to waive banana charge on same-day replay.
    */
   async hasClaimedMiniGameReward(
     userId: string,
     gameId: string,
+    timezone?: string | null,
+    now = new Date(),
   ): Promise<boolean> {
     const canonical = canonicalFoundationV7RewardId(gameId) ?? gameId;
     const priorReferences = foundationV7RewardAliases(canonical).map(
@@ -1014,9 +1017,15 @@ export class EconomyService {
         referenceId: { in: priorReferences },
         currency: Currency.XP,
       },
-      select: { id: true },
+      orderBy: { createdAt: 'desc' },
+      select: { createdAt: true },
     });
-    return Boolean(prior);
+    if (!prior) return false;
+    return completedOnLocalDay(
+      prior.createdAt,
+      resolveUserTimezone(timezone),
+      now,
+    );
   }
 
   async applyMiniGameRewards(params: {

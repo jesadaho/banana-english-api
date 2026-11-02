@@ -107,19 +107,20 @@ describe('Foundation V7 lessons', () => {
     }
   });
 
-  it('maps V7 aliases so a completed lesson can be replayed for free', async () => {
+  it('maps V7 aliases so a lesson completed today can be replayed for free', async () => {
     assert.deepEqual(
       lessonIdsMatchingCompletion('fnd_v7_u02n01').sort(),
       ['fnd_v7_please_and_thank_you', 'fnd_v7_u02n01'].sort(),
     );
     assert.deepEqual(lessonIdsMatchingCompletion('greetings'), ['greetings']);
 
+    const now = new Date();
     const prisma = {
       userSession: {
         findFirst: async ({ where }: { where: { lessonId: { in: string[] } } }) => {
           assert.ok(where.lessonId.in.includes('fnd_v7_please_and_thank_you'));
           assert.ok(where.lessonId.in.includes('fnd_v7_u02n01'));
-          return { id: 'session-1' };
+          return { id: 'session-1', completedAt: now, createdAt: now };
         },
       },
     };
@@ -128,11 +129,37 @@ describe('Foundation V7 lessons', () => {
       await lessons.hasCompletedLesson('user', 'fnd_v7_u02n01'),
       true,
     );
-    assert.deepEqual(await lessons.getLessonQuote('user', 'fnd_v7_u02n01'), {
-      lessonId: 'fnd_v7_please_and_thank_you',
-      bananaCost: 0,
-      completed: true,
-    });
+    assert.deepEqual(
+      await lessons.getLessonQuote('user', 'fnd_v7_u02n01', 'Asia/Bangkok'),
+      {
+        lessonId: 'fnd_v7_please_and_thank_you',
+        bananaCost: 0,
+        completed: true,
+      },
+    );
+  });
+
+  it('quotes one banana when the last lesson completion was on a previous local day', async () => {
+    const yesterday = new Date('2026-11-01T03:00:00.000Z');
+    const lessons = new LessonsService(
+      {
+        userSession: {
+          findFirst: async () => ({
+            completedAt: yesterday,
+            createdAt: yesterday,
+          }),
+        },
+      } as any,
+      {} as any,
+    );
+    assert.deepEqual(
+      await lessons.getLessonQuote('user', 'greetings', 'Asia/Bangkok'),
+      {
+        lessonId: 'greetings',
+        bananaCost: 1,
+        completed: true,
+      },
+    );
   });
 
   it('quotes one banana from the API on first play', async () => {

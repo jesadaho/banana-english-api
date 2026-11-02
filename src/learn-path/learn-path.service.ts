@@ -55,6 +55,10 @@ import {
   type FoundationV6NodeDef,
   type FoundationV6NodeType,
 } from './foundation-v6-path.data';
+import {
+  completedOnLocalDay,
+  resolveUserTimezone,
+} from '../common/timezone.util';
 
 export type FoundationV2PathView = {
   pathId: string;
@@ -65,6 +69,7 @@ export type FoundationV2PathView = {
     currentNodeId: string | null;
     completedCount: number;
     totalCount: number;
+    replayFreeNodeIds: string[];
   };
 };
 
@@ -183,6 +188,36 @@ function mapV6NodeType(type: FoundationV6NodeType): FoundationClientNodeType {
 
 function isLessonLikeType(type: FoundationClientNodeType): boolean {
   return type === 'lesson' || type === 'pronunciation';
+}
+
+function miniGameCandidateIds(node: {
+  id: string;
+  topicId?: string;
+  poolId?: string;
+  scenarioId?: string;
+}): string[] {
+  return [
+    node.id,
+    node.topicId,
+    node.poolId,
+    node.scenarioId,
+    node.topicId ? `say_it:${node.topicId}` : null,
+    node.poolId ? `emoji_speak:${node.poolId}` : null,
+    node.poolId ? `new_words:${node.poolId}` : null,
+    node.poolId ? `describe_it:${node.poolId}` : null,
+    node.poolId ? `info_task:${node.poolId}` : null,
+    node.poolId ? `listen_up:${node.poolId}` : null,
+    node.poolId ? `story_bites:${node.poolId}` : null,
+    node.poolId ? `explain_it:${node.poolId}` : null,
+    node.poolId ? `word_cards:${node.poolId}` : null,
+    node.scenarioId ? `interactive_scenario:${node.scenarioId}` : null,
+  ].filter((value): value is string => !!value);
+}
+
+function legacyIdsForNode(nodeId: string): string[] {
+  return Object.entries(FOUNDATION_V7_NODE_MIGRATION)
+    .filter(([, next]) => next === nodeId)
+    .map(([legacy]) => legacy);
 }
 
 function shippedContentForMappedType(
@@ -379,6 +414,7 @@ export class LearnPathService {
     const placement = await this.prisma.user?.findUnique?.({
       where: { id: userId },
       select: {
+        timezone: true,
         placementEntryPathId: true,
         placementEntryNodeId: true,
       } as Prisma.UserSelect,
@@ -403,6 +439,14 @@ export class LearnPathService {
       playable.filter((node) => node.countsTowardProgress).map((node) => node.id),
     );
     const metadata = course.catalog.metadata;
+    const replayFreeNodeIds = await this.resolveReplayFreeNodeIds(
+      userId,
+      playable,
+      completed,
+      resolveUserTimezone(
+        (placement as { timezone?: string | null } | null)?.timezone,
+      ),
+    );
     return {
       pathId: course.pathId, version: metadata.version,
       sourceVersion: metadata.sourceVersion, releaseStatus: metadata.releaseStatus,
@@ -413,6 +457,7 @@ export class LearnPathService {
         completedNodeIds: [...completed],
         skippedNodeIds: [...skippedNodeIds],
         placementUnlockedNodeIds,
+        replayFreeNodeIds,
         currentNodeId: this.resolveCurrentNodeId(nodes, satisfied),
         completedCount: [...new Set([...completed, ...skippedNodeIds])].filter((id) =>
           progressNodeIds.has(id),
@@ -661,6 +706,12 @@ export class LearnPathService {
     const completed = await this.resolveCompletedV5NodeIds(userId, nodes);
     const completedCore = [...completed];
     const currentNodeId = this.resolveCurrentNodeId(nodes, completed);
+    const replayFreeNodeIds = await this.resolveReplayFreeNodeIds(
+      userId,
+      nodes,
+      completed,
+      await this.userTimezone(userId),
+    );
 
     return {
       pathId: FOUNDATION_V5_PATH_ID,
@@ -670,6 +721,7 @@ export class LearnPathService {
       chapters,
       progress: {
         completedNodeIds: completedCore,
+        replayFreeNodeIds,
         currentNodeId,
         completedCount: completedCore.length,
         totalCount: nodes.filter((node) => !node.comingSoon).length,
@@ -691,6 +743,12 @@ export class LearnPathService {
     const nodes = chapters.flatMap((chapter) => chapter.items);
     const completed = await this.resolveCompletedV5NodeIds(userId, nodes);
     const currentNodeId = this.resolveCurrentNodeId(nodes, completed);
+    const replayFreeNodeIds = await this.resolveReplayFreeNodeIds(
+      userId,
+      nodes,
+      completed,
+      await this.userTimezone(userId),
+    );
 
     return {
       pathId: FOUNDATION_V6_PATH_ID,
@@ -700,6 +758,7 @@ export class LearnPathService {
       chapters,
       progress: {
         completedNodeIds: [...completed],
+        replayFreeNodeIds,
         currentNodeId,
         completedCount: completed.size,
         totalCount: nodes.filter((node) => !node.comingSoon).length,
@@ -730,6 +789,7 @@ export class LearnPathService {
       chapters: FOUNDATION_V2_CHAPTERS,
       progress: {
         completedNodeIds: [...completed],
+        replayFreeNodeIds: [],
         currentNodeId,
         completedCount: completedCore.length,
         totalCount: foundationV2CoreTotal(),
@@ -820,23 +880,7 @@ export class LearnPathService {
         }
         continue;
       }
-      const candidates = [
-        node.id,
-        node.topicId,
-        node.poolId,
-        node.scenarioId,
-        node.topicId ? `say_it:${node.topicId}` : null,
-        node.poolId ? `emoji_speak:${node.poolId}` : null,
-        node.poolId ? `new_words:${node.poolId}` : null,
-        node.poolId ? `describe_it:${node.poolId}` : null,
-        node.poolId ? `info_task:${node.poolId}` : null,
-        node.poolId ? `listen_up:${node.poolId}` : null,
-        node.poolId ? `story_bites:${node.poolId}` : null,
-        node.poolId ? `explain_it:${node.poolId}` : null,
-        node.poolId ? `word_cards:${node.poolId}` : null,
-        node.scenarioId ? `interactive_scenario:${node.scenarioId}` : null,
-      ].filter((value): value is string => !!value);
-      if (candidates.some((id) => completedMiniGameIds.has(id))) {
+      if (miniGameCandidateIds(node).some((id) => completedMiniGameIds.has(id))) {
         completed.add(node.id);
       }
     }
@@ -884,6 +928,89 @@ export class LearnPathService {
       const migrated = migrateFoundationV7NodeId(id);
       if (migrated && playableIds.has(migrated)) completed.add(migrated);
     }
+  }
+
+  private async userTimezone(userId: string): Promise<string> {
+    const row = await this.prisma.user?.findUnique?.({
+      where: { id: userId },
+      select: { timezone: true },
+    });
+    return resolveUserTimezone(
+      (row as { timezone?: string | null } | null)?.timezone,
+    );
+  }
+
+  /** Nodes finished on the learner's local calendar day — UI can waive banana cost. */
+  private async resolveReplayFreeNodeIds(
+    userId: string,
+    nodes: FoundationV5ClientNode[],
+    completed: Set<string>,
+    timezone: string,
+    now = new Date(),
+  ): Promise<string[]> {
+    const completedNodes = nodes.filter((node) => completed.has(node.id));
+    if (completedNodes.length === 0) return [];
+
+    const [lessonRows, miniRows] = await Promise.all([
+      this.prisma.userSession.findMany({
+        where: {
+          userId,
+          sessionType: 'training',
+          lessonId: { not: null },
+          rewardsApplied: true,
+        },
+        select: { lessonId: true, completedAt: true, createdAt: true },
+      }),
+      this.prisma.economyTransaction.findMany({
+        where: {
+          userId,
+          source: 'mini_game_reward',
+          currency: Currency.XP,
+          referenceId: { startsWith: 'mini_game:' },
+        },
+        select: { referenceId: true, createdAt: true },
+      }),
+    ]);
+
+    const lessonToday = new Set<string>();
+    for (const row of lessonRows) {
+      if (!row.lessonId) continue;
+      if (completedOnLocalDay(row.completedAt ?? row.createdAt, timezone, now)) {
+        lessonToday.add(row.lessonId);
+      }
+    }
+
+    const miniToday = new Set<string>();
+    for (const row of miniRows) {
+      const ref = row.referenceId;
+      if (!ref?.startsWith('mini_game:')) continue;
+      if (!completedOnLocalDay(row.createdAt, timezone, now)) continue;
+      const id = ref.slice('mini_game:'.length);
+      miniToday.add(id);
+      const canonical = canonicalFoundationV7RewardId(id);
+      if (canonical) miniToday.add(canonical);
+    }
+
+    const free: string[] = [];
+    for (const node of completedNodes) {
+      if (isLessonLikeType(node.type)) {
+        const ids = [
+          node.id,
+          node.lessonId,
+          ...(node.legacyLessonIds ?? []),
+          ...legacyIdsForNode(node.id),
+        ].filter((id): id is string => !!id);
+        if (ids.some((id) => lessonToday.has(id))) free.push(node.id);
+        continue;
+      }
+      if (node.simulationId) continue;
+      const candidates = [
+        ...miniGameCandidateIds(node),
+        ...legacyIdsForNode(node.id),
+      ];
+      if (candidates.some((id) => miniToday.has(id))) free.push(node.id);
+    }
+    return free;
   }
 
   private async getCompletedSimulationIds(

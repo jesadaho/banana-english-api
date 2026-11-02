@@ -62,6 +62,7 @@ export class SayItController {
       (await this.economy.hasClaimedMiniGameReward(
         req.user.id,
         `say_it:${topicId}`,
+        req.user.timezone,
       ));
     const bananaCost = replayFree ? 0 : SAY_IT_BANANA_COST;
     if (bananaCost > 0) {

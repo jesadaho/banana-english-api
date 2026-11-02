@@ -19,6 +19,10 @@ import {
   RATING_COMMENT_BONUS_BANANAS,
 } from '../economy/economy.constants';
 import { resolveDisplayedAvatarId } from '../users/avatar-catalog';
+import {
+  completedOnLocalDay,
+  resolveUserTimezone,
+} from '../common/timezone.util';
 
 export type LessonProgressStatus =
   | 'locked'
@@ -83,31 +87,64 @@ export class LessonsService {
   }
 
   async hasCompletedLesson(userId: string, lessonId: string): Promise<boolean> {
+    const row = await this.findLatestCompletedLessonSession(userId, lessonId);
+    return row != null;
+  }
+
+  /** Replay is free only when the latest rewarded completion is today in [timezone]. */
+  async hasCompletedLessonOnLocalDay(
+    userId: string,
+    lessonId: string,
+    timezone?: string | null,
+    now = new Date(),
+  ): Promise<boolean> {
+    const row = await this.findLatestCompletedLessonSession(userId, lessonId);
+    if (!row) return false;
+    return completedOnLocalDay(
+      row.completedAt ?? row.createdAt,
+      resolveUserTimezone(timezone),
+      now,
+    );
+  }
+
+  async getLessonQuote(
+    userId: string,
+    lessonId: string,
+    timezone?: string | null,
+  ): Promise<LessonQuoteView | null> {
+    const config = getLesson(lessonId);
+    if (!config) return null;
+    const row = await this.findLatestCompletedLessonSession(
+      userId,
+      config.lessonId,
+    );
+    const completed = row != null;
+    const completedToday = completedOnLocalDay(
+      row?.completedAt ?? row?.createdAt,
+      resolveUserTimezone(timezone),
+    );
+    return {
+      lessonId: config.lessonId,
+      bananaCost: bananaCostToStartLesson(config, completedToday),
+      completed,
+    };
+  }
+
+  private async findLatestCompletedLessonSession(
+    userId: string,
+    lessonId: string,
+  ): Promise<{ completedAt: Date | null; createdAt: Date } | null> {
     const ids = lessonIdsMatchingCompletion(lessonId);
-    const row = await this.prisma.userSession.findFirst({
+    return this.prisma.userSession.findFirst({
       where: {
         userId,
         sessionType: 'training',
         lessonId: { in: ids },
         rewardsApplied: true,
       },
-      select: { id: true },
+      orderBy: [{ completedAt: 'desc' }, { createdAt: 'desc' }],
+      select: { completedAt: true, createdAt: true },
     });
-    return row != null;
-  }
-
-  async getLessonQuote(
-    userId: string,
-    lessonId: string,
-  ): Promise<LessonQuoteView | null> {
-    const config = getLesson(lessonId);
-    if (!config) return null;
-    const completed = await this.hasCompletedLesson(userId, config.lessonId);
-    return {
-      lessonId: config.lessonId,
-      bananaCost: bananaCostToStartLesson(config, completed),
-      completed,
-    };
   }
 
   /** Latest training session's lesson — used to resume Continue strips. */
@@ -172,6 +209,7 @@ export class LessonsService {
     lesson: LessonConfig,
     order: number,
     status: LessonProgressStatus,
+    completedToday: boolean,
   ): LessonProgressItemView {
     return {
       lessonId: lesson.lessonId,
@@ -182,15 +220,45 @@ export class LessonsService {
       estimatedMinutesMax: lesson.estimatedMinutesMax,
       status,
       isPlayable: true,
-      bananaCost: bananaCostToStartLesson(lesson, status === 'completed'),
+      bananaCost: bananaCostToStartLesson(lesson, completedToday),
     };
   }
 
-  async buildProgressView(userId: string): Promise<LessonProgressView> {
-    const [completedIds, lastStudiedLessonId] = await Promise.all([
-      this.getCompletedLessonIds(userId),
-      this.getLastStudiedLessonId(userId),
-    ]);
+  async getLessonIdsCompletedOnLocalDay(
+    userId: string,
+    timezone?: string | null,
+    now = new Date(),
+  ): Promise<Set<string>> {
+    const rows = await this.prisma.userSession.findMany({
+      where: {
+        userId,
+        sessionType: 'training',
+        lessonId: { not: null },
+        rewardsApplied: true,
+      },
+      select: { lessonId: true, completedAt: true, createdAt: true },
+    });
+    const tz = resolveUserTimezone(timezone);
+    const ids = new Set<string>();
+    for (const row of rows) {
+      if (!row.lessonId) continue;
+      if (completedOnLocalDay(row.completedAt ?? row.createdAt, tz, now)) {
+        ids.add(row.lessonId);
+      }
+    }
+    return ids;
+  }
+
+  async buildProgressView(
+    userId: string,
+    timezone?: string | null,
+  ): Promise<LessonProgressView> {
+    const [completedIds, lastStudiedLessonId, completedTodayIds] =
+      await Promise.all([
+        this.getCompletedLessonIds(userId),
+        this.getLastStudiedLessonId(userId),
+        this.getLessonIdsCompletedOnLocalDay(userId, timezone),
+      ]);
     const currentLessonId = this.resolveCurrentLessonId(
       completedIds,
       lastStudiedLessonId,
@@ -200,6 +268,9 @@ export class LessonsService {
         lesson,
         index + 1,
         this.resolveStatus(lesson.lessonId, completedIds, currentLessonId),
+        lessonIdsMatchingCompletion(lesson.lessonId).some((id) =>
+          completedTodayIds.has(id),
+        ),
       ),
     );
     // Clear English phonics lessons live on Games → Pronunciation, not the
@@ -214,6 +285,9 @@ export class LessonsService {
           lesson,
           lessons.length + 1,
           this.resolveStatus(lessonId, completedIds, currentLessonId),
+          lessonIdsMatchingCompletion(lessonId).some((id) =>
+            completedTodayIds.has(id),
+          ),
         ),
       );
     }

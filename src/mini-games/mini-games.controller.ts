@@ -173,7 +173,11 @@ export class MiniGamesController {
     const pathReplayFree =
       !isGamesHubStart(from) &&
       isFoundationPathWordCards(id) &&
-      (await this.economy.hasClaimedMiniGameReward(req.user.id, `word_cards:${id}`));
+      (await this.economy.hasClaimedMiniGameReward(
+        req.user.id,
+        `word_cards:${id}`,
+        req.user.timezone,
+      ));
     const bananaCost = pathReplayFree ? 0 : WORD_CARDS_BANANA_COST;
     const spendRef = bananaCost > 0 ? randomUUID() : null;
     if (bananaCost > 0 && spendRef) {
@@ -277,7 +281,7 @@ export class MiniGamesController {
     if (!pool || !isValidListenUpPack(pool)) {
       throw new BadRequestException(`Unknown Listen Up pack: ${id}`);
     }
-    return this.chargeFirstPlay(req.user.id, id, LISTEN_UP_BANANA_COST, 'listen_up_start');
+    return this.chargeFirstPlay(req.user, id, LISTEN_UP_BANANA_COST, 'listen_up_start');
   }
 
   @Post('story-bites/:poolId/start')
@@ -287,7 +291,7 @@ export class MiniGamesController {
     if (!pool || !isValidStoryBitesPack(pool)) {
       throw new BadRequestException(`Unknown Story Bites pack: ${id}`);
     }
-    return this.chargeFirstPlay(req.user.id, id, STORY_BITES_BANANA_COST, 'story_bites_start');
+    return this.chargeFirstPlay(req.user, id, STORY_BITES_BANANA_COST, 'story_bites_start');
   }
 
   @Post('info-task/:poolId/start')
@@ -297,7 +301,7 @@ export class MiniGamesController {
     if (!pool || !isValidInfoTaskPack(pool)) {
       throw new BadRequestException(`Unknown info-task pool: ${id}`);
     }
-    return this.chargeFirstPlay(req.user.id, id, INFO_TASK_BANANA_COST, 'info_task_start');
+    return this.chargeFirstPlay(req.user, id, INFO_TASK_BANANA_COST, 'info_task_start');
   }
 
   /** Games hub always costs. Path: first play costs, replay is free. */
@@ -312,7 +316,11 @@ export class MiniGamesController {
     const pathReplayFree =
       !isGamesHubStart(from) &&
       isFoundationPathEmojiSpeak(id) &&
-      (await this.economy.hasClaimedMiniGameReward(req.user.id, `emoji_speak:${id}`));
+      (await this.economy.hasClaimedMiniGameReward(
+        req.user.id,
+        `emoji_speak:${id}`,
+        req.user.timezone,
+      ));
     const bananaCost = pathReplayFree ? 0 : EMOJI_SPEAK_BANANA_COST;
     const spendRef = bananaCost > 0 ? randomUUID() : null;
     if (bananaCost > 0 && spendRef) {
@@ -356,6 +364,7 @@ export class MiniGamesController {
     const replayFree = await this.economy.hasClaimedMiniGameReward(
       req.user.id,
       `new_words:${id}`,
+      req.user.timezone,
     );
     const bananaCost = replayFree ? 0 : NEW_WORDS_BANANA_COST;
     const spendRef = bananaCost > 0 ? randomUUID() : null;
@@ -553,19 +562,23 @@ export class MiniGamesController {
   }
 
   private async chargeFirstPlay(
-    userId: string,
+    user: { id: string; timezone: string },
     gameId: string,
     cost: number,
     source: 'listen_up_start' | 'story_bites_start' | 'info_task_start',
   ) {
-    const replayFree = await this.economy.hasClaimedMiniGameReward(userId, gameId);
+    const replayFree = await this.economy.hasClaimedMiniGameReward(
+      user.id,
+      gameId,
+      user.timezone,
+    );
     const bananaCost = replayFree ? 0 : cost;
     const spendRef = bananaCost > 0 ? randomUUID() : null;
     if (bananaCost > 0 && spendRef) {
-      await this.economy.spendBananas(userId, bananaCost, spendRef, source);
+      await this.economy.spendBananas(user.id, bananaCost, spendRef, source);
     }
     try {
-      await this.recentLearners.markActivity(userId, 'minigame', gameId);
+      await this.recentLearners.markActivity(user.id, 'minigame', gameId);
     } catch (error) {
       if (bananaCost > 0 && spendRef) {
         const refund = {
@@ -573,7 +586,7 @@ export class MiniGamesController {
           story_bites_start: 'story_bites_start_refund',
           info_task_start: 'info_task_start_refund',
         } as const;
-        await this.economy.refundBananas(userId, bananaCost, spendRef, refund[source]);
+        await this.economy.refundBananas(user.id, bananaCost, spendRef, refund[source]);
       }
       throw error;
     }

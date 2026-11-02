@@ -1153,11 +1153,13 @@ export class SessionsController {
       throw new BadRequestException('Lesson locked');
     }
 
-    const alreadyCompleted = await this.lessonsService.hasCompletedLesson(
-      user.id,
-      config.lessonId,
-    );
-    const bananaCost = bananaCostToStartLesson(config, alreadyCompleted);
+    const alreadyCompletedToday =
+      await this.lessonsService.hasCompletedLessonOnLocalDay(
+        user.id,
+        config.lessonId,
+        user.timezone,
+      );
+    const bananaCost = bananaCostToStartLesson(config, alreadyCompletedToday);
     const spendRef = randomUUID();
     if (bananaCost > 0) {
       await this.economy.spendBananas(

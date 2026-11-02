@@ -14156,7 +14156,7 @@ export function getLessonBananaCost(config: LessonConfig): number {
   return config.bananaCost ?? LESSON_BANANA_COST;
 }
 
-/** What start-session charges: first play uses the lesson price, replay is free. */
+/** What start-session charges: first play uses the lesson price; same-day replay is free. */
 export function bananaCostToStartLesson(
   config: LessonConfig,
   alreadyCompleted: boolean,

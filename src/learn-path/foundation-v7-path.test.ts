@@ -285,6 +285,41 @@ describe('Foundation V7 progress and completion contracts', () => {
     const progressed = await pathService(['greetings','introductions','yes_no_maybe'], ['fnd_v2_say_first_conversation'], ['foundation_first_conversation']).getFoundationV7('user');
     assert.equal(progressed.progress.completedCount, 5);
     assert.equal(progressed.progress.currentNodeId, 'v7_u02n06');
+    assert.deepEqual(progressed.progress.replayFreeNodeIds, []);
+  });
+
+  it('marks lesson and mini-game nodes completed today as replay-free, not missions', async () => {
+    const today = new Date();
+    const service = new LearnPathService({
+      economyTransaction: {
+        findMany: async () => [
+          {
+            referenceId: 'mini_game:fnd_v2_say_first_conversation',
+            createdAt: today,
+          },
+        ],
+      },
+      userSession: {
+        findMany: async ({ where }: { where?: { sessionType?: string } }) => {
+          if (where?.sessionType === 'training') {
+            return [
+              { lessonId: 'greetings', completedAt: today, createdAt: today },
+            ];
+          }
+          return [{ simulationId: 'foundation_first_conversation' }];
+        },
+      },
+      foundationChapterSkip: { findMany: async () => [] },
+    } as any, {
+      getCompletedLessonIds: async () => new Set(['greetings']),
+    } as any, {} as any);
+    const view = await service.getFoundationV7('user');
+    assert.ok(view.progress.completedNodeIds.includes('v7_u01n01'));
+    assert.ok(view.progress.completedNodeIds.includes('v7_u01n03'));
+    assert.ok(view.progress.completedNodeIds.includes('v7_u01n05'));
+    assert.ok(view.progress.replayFreeNodeIds.includes('v7_u01n01'));
+    assert.ok(view.progress.replayFreeNodeIds.includes('v7_u01n03'));
+    assert.ok(!view.progress.replayFreeNodeIds.includes('v7_u01n05'));
   });
 
   it('recognizes canonical progress and ignores completion claims for Coming Soon content', async () => {

@@ -65,7 +65,11 @@ export class DescribeItController {
     const rewardId = `describe_it:${poolId}`;
     const replayFree =
       !isGamesHubStart(from) &&
-      (await this.economy.hasClaimedMiniGameReward(req.user.id, rewardId));
+      (await this.economy.hasClaimedMiniGameReward(
+        req.user.id,
+        rewardId,
+        req.user.timezone,
+      ));
     const bananaCost = replayFree ? 0 : DESCRIBE_IT_BANANA_COST;
     const spendRef = bananaCost > 0 ? randomUUID() : null;
     if (bananaCost > 0 && spendRef) {

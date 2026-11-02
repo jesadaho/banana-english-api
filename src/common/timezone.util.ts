@@ -3,6 +3,12 @@ export interface UserLocalTime {
   hour: number;
 }
 
+export const DEFAULT_USER_TIMEZONE = 'Asia/Bangkok';
+
+export function resolveUserTimezone(timezone?: string | null): string {
+  return timezone?.trim() || DEFAULT_USER_TIMEZONE;
+}
+
 export function getUserLocalTime(
   timezone: string,
   now = new Date(),
@@ -37,6 +43,21 @@ export function getUserLocalTime(
       hour: fallback.getUTCHours(),
     };
   }
+}
+
+/** True when [at] falls on the learner's current local calendar day. */
+export function completedOnLocalDay(
+  at: Date | string | null | undefined,
+  timezone: string,
+  now = new Date(),
+): boolean {
+  if (!at) return false;
+  const when = at instanceof Date ? at : new Date(at);
+  if (Number.isNaN(when.getTime())) return false;
+  return (
+    getUserLocalTime(timezone, when).dateKey ===
+    getUserLocalTime(timezone, now).dateKey
+  );
 }
 
 export function parseDateKey(dateKey: string): Date {

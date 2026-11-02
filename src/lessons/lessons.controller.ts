@@ -13,7 +13,10 @@ export class LessonsController {
 
   @Get('progress')
   async getProgress(@Req() req: AuthedRequest) {
-    return this.lessonsService.buildProgressView(req.user.id);
+    return this.lessonsService.buildProgressView(
+      req.user.id,
+      req.user.timezone,
+    );
   }
 
   @Get(':lessonId/recent-learners')
@@ -32,6 +35,7 @@ export class LessonsController {
     const quote = await this.lessonsService.getLessonQuote(
       req.user.id,
       lessonId,
+      req.user.timezone,
     );
     if (!quote) {
       throw new NotFoundException('Lesson not found');
