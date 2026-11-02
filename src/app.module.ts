@@ -27,6 +27,7 @@ import { ReferralsModule } from './referrals/referrals.module';
 import { ExplainItModule } from './explain-it/explain-it.module';
 import { SayItModule } from './say-it/say-it.module';
 import { InOnAtModule } from './in-on-at/in-on-at.module';
+import { LiveTalkModule } from './live-talk/live-talk.module';
 import { DescribeItModule } from './describe-it/describe-it.module';
 import { DebugModule } from './debug/debug.module';
 import { PurchasesModule } from './purchases/purchases.module';
@@ -74,6 +75,7 @@ import { WeeklyReportModule } from './weekly-report/weekly-report.module';
     WeeklyReportModule,
     SayItModule,
     InOnAtModule,
+    LiveTalkModule,
     DescribeItModule,
     ExplainItModule,
     DebugModule,

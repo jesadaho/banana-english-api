@@ -124,6 +124,9 @@ model User {
   /** Primary email from linked auth provider(s). */
   email                   String?
 
+  /** Can create Live Talk rooms (toggled from web admin). */
+  communityAdmin          Boolean   @default(false)
+
   /** Invite-a-friend code (`BANANA-XXXX`), minted on first use. */
   referralCode            String?   @unique
 
@@ -162,6 +165,8 @@ model User {
   bugReports                BugReport[]
   subscriptionGrants      SubscriptionGrant[]
   presaleOrders           PresaleOrder[]
+  hostedLiveTalkRooms     LiveTalkRoom[]
+  liveTalkParticipations  LiveTalkParticipant[]
   weeklyReportSnapshots   WeeklyReportSnapshot[]
 
   createdAt               DateTime  @default(now())
@@ -745,4 +750,40 @@ model LiveSession {
   expiresAt DateTime
 
   @@index([expiresAt])
+}
+
+/// Live Talk voice room (not [LiveSession] chat JSON).
+model LiveTalkRoom {
+  id              String    @id @default(uuid())
+  title           String
+  description     String    @default("")
+  /** a1 | a2 | listen_all */
+  minSpeakLevel   String
+  hostUserId      String
+  livekitRoomName String    @unique
+  /** live | ended */
+  status          String    @default("live")
+  createdAt       DateTime  @default(now())
+  endedAt         DateTime?
+
+  host         User                   @relation(fields: [hostUserId], references: [id], onDelete: Cascade)
+  participants LiveTalkParticipant[]
+
+  @@index([status, createdAt])
+}
+
+model LiveTalkParticipant {
+  id       String    @id @default(uuid())
+  roomId   String
+  userId   String
+  /** host | speaker | listener */
+  role     String
+  joinedAt DateTime  @default(now())
+  leftAt   DateTime?
+
+  room LiveTalkRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  user User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([roomId, leftAt])
+  @@index([userId, leftAt])
 }

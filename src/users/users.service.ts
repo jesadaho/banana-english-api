@@ -18,6 +18,7 @@ import {
   earlyBirdPayload,
   subscriptionPayload,
 } from '../subscriptions/subscriptions.service';
+import { canCreateLiveTalkRoom } from '../live-talk/live-talk.rules';
 import { PrismaService } from '../prisma/prisma.service';
 import {
   avatarSeedCost,
@@ -163,6 +164,10 @@ export interface UserProfileResponse {
     reserved: boolean;
     reservedAt: string | null;
   };
+  /** Can create Live Talk rooms. */
+  communityAdmin: boolean;
+  /** True for community admins, and for everyone on staging. */
+  liveTalkCanCreate: boolean;
 }
 
 export interface DebugRefillBananasByNameResponse {
@@ -790,6 +795,10 @@ export class UsersService {
       rawAge && SURVEY_AGE_RANGES.has(rawAge as SurveyAgeRange) ? rawAge : null;
     const placementUser = user as User & { lastPlacementTestAt?: Date | null };
     const retest = placementRetestStatus(placementUser);
+    const liveTalkCanCreate = canCreateLiveTalkRoom({
+      communityAdmin:
+        (user as User & { communityAdmin?: boolean }).communityAdmin === true,
+    });
     return {
       anonymousId: user.anonymousId,
       displayName: user.displayName ?? 'เพื่อน',
@@ -843,6 +852,8 @@ export class UsersService {
       nextBananaRefillAt: this.economy.nextBananaRefillAt(user)?.toISOString() ?? null,
       subscription: subscriptionPayload(user),
       earlyBird: earlyBirdPayload(user),
+      communityAdmin: liveTalkCanCreate,
+      liveTalkCanCreate,
     };
   }
 }
