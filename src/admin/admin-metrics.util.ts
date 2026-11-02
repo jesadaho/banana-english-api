@@ -1,3 +1,5 @@
+import { subscriptionProduct } from '../subscriptions/subscription-products';
+
 /** Estimated THB list prices for IAP packs (tax-inclusive display approx). */
 export const BANANA_PACK_THB: Record<string, number> = {
   banana_tickets_28: 79,
@@ -5,7 +7,16 @@ export const BANANA_PACK_THB: Record<string, number> = {
 };
 
 export function estimatedThbForProduct(productId: string): number {
-  return BANANA_PACK_THB[productId] ?? 0;
+  if (BANANA_PACK_THB[productId] != null) return BANANA_PACK_THB[productId];
+  return subscriptionProduct(productId)?.priceThb ?? 0;
+}
+
+export function estimatedThbForGrant(row: {
+  productId?: string | null;
+  priceThb?: number | null;
+}): number {
+  if (row.priceThb != null && row.priceThb > 0) return row.priceThb;
+  return estimatedThbForProduct(row.productId ?? '');
 }
 
 export type DateRange = {

@@ -6,6 +6,7 @@ import { isKnownAvatarId } from '../users/avatar-catalog';
 import {
   dateKey,
   eachUtcDateKey,
+  estimatedThbForGrant,
   estimatedThbForProduct,
   filtersCacheKey,
   parseDateRange,
@@ -36,6 +37,12 @@ type CacheEntry = { expiresAt: number; payload: unknown };
 
 /** Excludes RevenueCat sandbox / license-tester purchases; unchecked (null) rows count. */
 const REAL_PURCHASE: Prisma.PurchaseRecordWhereInput = {
+  OR: [{ isSandbox: null }, { isSandbox: false }],
+};
+
+/** Store subscriptions only — admin comps and Beam presale are not IAP. */
+const REAL_SUB_GRANT: Prisma.SubscriptionGrantWhereInput = {
+  source: 'revenuecat',
   OR: [{ isSandbox: null }, { isSandbox: false }],
 };
 
@@ -244,9 +251,15 @@ export class AdminMetricsService {
       missionCompletionsPrev,
       purchases,
       purchasesPrev,
+      subGrants,
+      subGrantsPrev,
+      lifetimePurchases,
+      lifetimeGrants,
       signedInUsers,
       payingUsers,
+      payingSubs,
       sandboxPurchases,
+      sandboxSubs,
       dauSeriesRaw,
       completionsByDay,
       newUsersRaw,
@@ -287,6 +300,33 @@ export class AdminMetricsService {
         },
         select: { productId: true },
       }),
+      this.prisma.subscriptionGrant.findMany({
+        where: {
+          ...REAL_SUB_GRANT,
+          createdAt: { gte: range.from, lte: range.to },
+        },
+        select: {
+          productId: true,
+          priceThb: true,
+          platform: true,
+          createdAt: true,
+        },
+      }),
+      this.prisma.subscriptionGrant.findMany({
+        where: {
+          ...REAL_SUB_GRANT,
+          createdAt: { gte: prev.from, lte: prev.to },
+        },
+        select: { productId: true, priceThb: true },
+      }),
+      this.prisma.purchaseRecord.findMany({
+        where: REAL_PURCHASE,
+        select: { productId: true },
+      }),
+      this.prisma.subscriptionGrant.findMany({
+        where: REAL_SUB_GRANT,
+        select: { productId: true, priceThb: true },
+      }),
       this.prisma.user.count({
         where: { ...userFilter, firebaseUid: { not: null } },
       }),
@@ -295,8 +335,20 @@ export class AdminMetricsService {
         distinct: ['userId'],
         select: { userId: true },
       }),
+      this.prisma.subscriptionGrant.findMany({
+        where: REAL_SUB_GRANT,
+        distinct: ['userId'],
+        select: { userId: true },
+      }),
       this.prisma.purchaseRecord.count({
         where: {
+          isSandbox: true,
+          createdAt: { gte: range.from, lte: range.to },
+        },
+      }),
+      this.prisma.subscriptionGrant.count({
+        where: {
+          source: 'revenuecat',
           isSandbox: true,
           createdAt: { gte: range.from, lte: range.to },
         },
@@ -320,20 +372,30 @@ export class AdminMetricsService {
       this.platformMix(userFilter),
     ]);
 
-    const revenue = purchases.reduce(
+    const packRevenue = purchases.reduce(
       (sum, p) => sum + estimatedThbForProduct(p.productId),
       0,
     );
-    const revenuePrev = purchasesPrev.reduce(
-      (sum, p) => sum + estimatedThbForProduct(p.productId),
+    const subRevenue = subGrants.reduce(
+      (sum, g) => sum + estimatedThbForGrant(g),
       0,
     );
+    const revenue = packRevenue + subRevenue;
+    const revenuePrev =
+      purchasesPrev.reduce((sum, p) => sum + estimatedThbForProduct(p.productId), 0) +
+      subGrantsPrev.reduce((sum, g) => sum + estimatedThbForGrant(g), 0);
+    const revenueAllTime =
+      lifetimePurchases.reduce((sum, p) => sum + estimatedThbForProduct(p.productId), 0) +
+      lifetimeGrants.reduce((sum, g) => sum + estimatedThbForGrant(g), 0);
 
     const activationRate =
       newInRange === 0
         ? 0
         : Math.round((activatedInRange / newInRange) * 1000) / 10;
-    const payingCount = payingUsers.length;
+    const payingCount = new Set([
+      ...payingUsers.map((p) => p.userId),
+      ...payingSubs.map((p) => p.userId),
+    ]).size;
     const conversionRate =
       signedInUsers === 0
         ? 0
@@ -374,11 +436,16 @@ export class AdminMetricsService {
     });
 
     const revenueByProduct: Record<string, { count: number; thb: number }> = {};
-    for (const p of purchases) {
-      const cur = revenueByProduct[p.productId] ?? { count: 0, thb: 0 };
+    const addProduct = (productId: string, thb: number) => {
+      const id = productId.trim() || 'unknown';
+      const cur = revenueByProduct[id] ?? { count: 0, thb: 0 };
       cur.count += 1;
-      cur.thb += estimatedThbForProduct(p.productId);
-      revenueByProduct[p.productId] = cur;
+      cur.thb += thb;
+      revenueByProduct[id] = cur;
+    };
+    for (const p of purchases) addProduct(p.productId, estimatedThbForProduct(p.productId));
+    for (const g of subGrants) {
+      addProduct(g.productId ?? 'subscription', estimatedThbForGrant(g));
     }
 
     return {
@@ -429,9 +496,12 @@ export class AdminMetricsService {
         },
         estRevenueThb: {
           value: revenue,
+          allTime: revenueAllTime,
           deltaPct: pctChange(revenue, revenuePrev),
-          purchases: purchases.length,
-          sandboxExcluded: sandboxPurchases,
+          purchases: purchases.length + subGrants.length,
+          packs: purchases.length,
+          subscriptions: subGrants.length,
+          sandboxExcluded: sandboxPurchases + sandboxSubs,
         },
         payingUsers: {
           value: payingCount,
@@ -451,14 +521,26 @@ export class AdminMetricsService {
         ),
         platformMix,
       },
-      recentPurchases: purchases
-        .slice()
+      recentPurchases: [
+        ...purchases.map((p) => ({
+          productId: p.productId,
+          platform: p.platform,
+          thb: estimatedThbForProduct(p.productId),
+          createdAt: p.createdAt,
+        })),
+        ...subGrants.map((g) => ({
+          productId: g.productId ?? 'subscription',
+          platform: g.platform,
+          thb: estimatedThbForGrant(g),
+          createdAt: g.createdAt,
+        })),
+      ]
         .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
         .slice(0, 10)
         .map((p) => ({
           productId: p.productId,
           platform: p.platform,
-          thb: estimatedThbForProduct(p.productId),
+          thb: p.thb,
           createdAt: p.createdAt.toISOString(),
         })),
     };
@@ -1673,7 +1755,7 @@ export class AdminMetricsService {
   private async buildEconomy(range: DateRange, filters: MetricsFilters) {
     await this.ensureSandboxFlags();
     const userFilter = this.userWhere(filters);
-    const [txns, purchases] = await Promise.all([
+    const [txns, purchases, subGrants] = await Promise.all([
       this.prisma.economyTransaction.findMany({
         where: {
           currency: Currency.BANANA,
@@ -1694,6 +1776,18 @@ export class AdminMetricsService {
           userId: true,
           bananasGranted: true,
           createdAt: true,
+        },
+      }),
+      this.prisma.subscriptionGrant.findMany({
+        where: {
+          ...REAL_SUB_GRANT,
+          createdAt: { gte: range.from, lte: range.to },
+        },
+        select: {
+          productId: true,
+          priceThb: true,
+          platform: true,
+          userId: true,
         },
       }),
     ]);
@@ -1774,6 +1868,19 @@ export class AdminMetricsService {
         (purchasesPerUser.get(p.userId) ?? 0) + 1,
       );
     }
+    for (const g of subGrants) {
+      const productId = g.productId?.trim() || 'subscription';
+      const cur = byProduct[productId] ?? { count: 0, thb: 0, bananas: 0 };
+      cur.count += 1;
+      cur.thb += estimatedThbForGrant(g);
+      byProduct[productId] = cur;
+      const plat = g.platform?.trim() || 'unknown';
+      byPlatform[plat] = (byPlatform[plat] ?? 0) + 1;
+      purchasesPerUser.set(
+        g.userId,
+        (purchasesPerUser.get(g.userId) ?? 0) + 1,
+      );
+    }
 
     const buyerCount = purchasesPerUser.size;
     const repeatBuyers = [...purchasesPerUser.values()].filter(
@@ -1796,7 +1903,7 @@ export class AdminMetricsService {
         spendMix,
       },
       iap: {
-        purchases: purchases.length,
+        purchases: purchases.length + subGrants.length,
         estRevenueThb: estRevenue,
         arpu,
         buyerCount,
