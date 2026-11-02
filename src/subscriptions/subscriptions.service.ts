@@ -235,14 +235,32 @@ export class SubscriptionsService {
         orderBy: { createdAt: 'desc' },
         take: 50,
         include: {
-          user: { select: { id: true, displayName: true, email: true, placementResult: true } },
+          user: {
+            select: {
+              id: true,
+              displayName: true,
+              email: true,
+              placementResult: true,
+              surveyGender: true,
+              surveyAgeRange: true,
+            },
+          },
         },
       }),
       this.prisma.presaleOrder.findMany({
         orderBy: { createdAt: 'desc' },
         take: 80,
         include: {
-          user: { select: { id: true, displayName: true, email: true, placementResult: true } },
+          user: {
+            select: {
+              id: true,
+              displayName: true,
+              email: true,
+              placementResult: true,
+              surveyGender: true,
+              surveyAgeRange: true,
+            },
+          },
         },
       }),
     ]);
@@ -267,6 +285,8 @@ export class SubscriptionsService {
         displayName: row.user.displayName,
         email: row.user.email,
         placementResult: publicPlacementBand(row.user.placementResult),
+        gender: row.user.surveyGender,
+        ageRange: row.user.surveyAgeRange,
         tier: row.tier,
         startsAt: row.startsAt.toISOString(),
         expiresAt: row.expiresAt.toISOString(),
@@ -284,6 +304,8 @@ export class SubscriptionsService {
         displayName: row.user?.displayName ?? null,
         email: row.email ?? row.user?.email ?? null,
         placementResult: publicPlacementBand(row.user?.placementResult),
+        gender: row.user?.surveyGender ?? null,
+        ageRange: row.user?.surveyAgeRange ?? null,
         tier: row.tier,
         priceThb: row.priceThb,
         status: row.status,
@@ -321,6 +343,8 @@ export class SubscriptionsService {
         subscriptionTier: true,
         subscriptionExpiresAt: true,
         placementResult: true,
+        surveyGender: true,
+        surveyAgeRange: true,
       },
     });
     return { users: users.map((user) => this.adminUserSummary(user)) };
@@ -347,6 +371,8 @@ export class SubscriptionsService {
         placementResult: true,
         placementEntryPathId: true,
         placementEntryNodeId: true,
+        surveyGender: true,
+        surveyAgeRange: true,
       },
     });
     if (!user) throw new NotFoundException('User not found');
@@ -427,6 +453,8 @@ export class SubscriptionsService {
     subscriptionTier: string;
     subscriptionExpiresAt: Date | null;
     placementResult?: unknown;
+    surveyGender?: string | null;
+    surveyAgeRange?: string | null;
   }) {
     const now = new Date();
     const paid = user.subscriptionTier === 'PRO' || user.subscriptionTier === 'PRO_MAX';
@@ -441,6 +469,8 @@ export class SubscriptionsService {
       subscriptionExpiresAt: user.subscriptionExpiresAt?.toISOString() ?? null,
       subscriptionStatus: active ? 'active' : paid ? 'expired' : 'free',
       placementResult: publicPlacementBand(user.placementResult),
+      gender: user.surveyGender ?? null,
+      ageRange: user.surveyAgeRange ?? null,
     };
   }
 
