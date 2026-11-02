@@ -30,7 +30,7 @@ export class ExplainItService {
       return {
         ...topic,
         unlocked: isUnlocked,
-        bananaCost: isUnlocked ? 0 : EXPLAIN_IT_BANANA_COST,
+        bananaCost: EXPLAIN_IT_BANANA_COST,
       };
     });
   }

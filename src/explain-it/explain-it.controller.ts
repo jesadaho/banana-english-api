@@ -68,20 +68,14 @@ export class ExplainItController {
     const alreadyUnlocked = challenge
       ? false
       : await this.explainIt.isTopicUnlocked(req.user.id, topicId);
-    const bananaCost = challenge
-      ? EXPLAIN_IT_BANANA_COST
-      : alreadyUnlocked
-        ? 0
-        : EXPLAIN_IT_BANANA_COST;
+    const bananaCost = EXPLAIN_IT_BANANA_COST;
     const dealCount = challenge
       ? EXPLAIN_IT_CHALLENGE_DEAL_COUNT
       : EXPLAIN_IT_DEAL_COUNT;
 
-    const spendRef = challenge
+    const spendRef = challenge || alreadyUnlocked
       ? randomUUID()
-      : bananaCost > 0
-        ? explainItUnlockReference(topicId)
-        : null;
+      : explainItUnlockReference(topicId);
 
     if (bananaCost > 0 && spendRef) {
       await this.economy.spendBananas(

@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Post,
+  Query,
   Req,
   ServiceUnavailableException,
   UseGuards,
@@ -13,6 +14,7 @@ import { randomUUID } from 'crypto';
 import { User } from '@prisma/client';
 import { EconomyService } from '../economy/economy.service';
 import { readMiniGameScoreBody, type MiniGameScoreBody } from '../economy/mini-game-score';
+import { isGamesHubStart } from '../economy/is-games-hub-start';
 import { canonicalFoundationV7RewardId } from '../learn-path/foundation-v7-path.data';
 import { AnonymousUserGuard } from '../users/anonymous-user.guard';
 import { RecentLearnersService } from '../recent-learners/recent-learners.service';
@@ -53,14 +55,17 @@ export class DescribeItController {
   }
 
   @Post('pools/:poolId/start')
-  async startPool(@Req() req: AuthedRequest, @Param('poolId') poolId: string) {
+  async startPool(
+    @Req() req: AuthedRequest,
+    @Param('poolId') poolId: string,
+    @Query('from') from?: string,
+  ) {
     this.assertEnabled();
     this.describeIt.getPool(poolId);
     const rewardId = `describe_it:${poolId}`;
-    const replayFree = await this.economy.hasClaimedMiniGameReward(
-      req.user.id,
-      rewardId,
-    );
+    const replayFree =
+      !isGamesHubStart(from) &&
+      (await this.economy.hasClaimedMiniGameReward(req.user.id, rewardId));
     const bananaCost = replayFree ? 0 : DESCRIBE_IT_BANANA_COST;
     const spendRef = bananaCost > 0 ? randomUUID() : null;
     if (bananaCost > 0 && spendRef) {

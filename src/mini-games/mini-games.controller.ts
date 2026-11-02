@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Post,
+  Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
@@ -47,6 +48,7 @@ import { dealListenUpItems, listenUpPoolById, isValidListenUpPack } from '../lis
 import { isValidStoryBitesPack, storyBitesPoolById } from '../story-bites/story-bites.data';
 import { describeItImageUrl } from '../describe-it/describe-it.data';
 import { readMiniGameScoreBody, type MiniGameScoreBody } from '../economy/mini-game-score';
+import { isGamesHubStart } from '../economy/is-games-hub-start';
 import {
   dealInfoTaskItems,
   infoTaskPoolById,
@@ -96,7 +98,7 @@ const STORY_BITES_BANANA_COST = 1;
 const INFO_TASK_BANANA_COST = 1;
 const WORD_CARDS_BANANA_COST = 1;
 
-/** Foundation path Emoji Speak packs charge bananas; Games tab packs are free. */
+/** Foundation path Emoji Speak packs: first play costs, path replay is free. */
 function isFoundationPathEmojiSpeak(poolOrGameId: string): boolean {
   if (isFoundationV7EmojiPool(poolOrGameId)) return true;
   if (poolOrGameId.startsWith('fnd_v2_') || poolOrGameId.startsWith('fnd_v6_')) return true;
@@ -105,7 +107,7 @@ function isFoundationPathEmojiSpeak(poolOrGameId: string): boolean {
   return false;
 }
 
-/** Chapter review packs charge bananas; Games hub packs stay free. */
+/** Chapter review packs: first play costs, path replay is free. */
 function isFoundationPathWordCards(poolOrGameId: string): boolean {
   const id = poolOrGameId.trim();
   if (!id) return false;
@@ -159,19 +161,20 @@ export class MiniGamesController {
     return { poolId: id, chapterId: pool.chapterId, items: pool.items };
   }
 
-  /** First play of a path review costs 1 banana. Hub packs stay free. */
+  /** Games hub always costs. Path review: first play costs, replay is free. */
   @Post('word-cards/:poolId/start')
   async startWordCardsPack(
     @Req() req: AuthedRequest,
     @Param('poolId') poolId: string,
+    @Query('from') from?: string,
   ) {
     const id = poolId?.trim();
     if (!id) throw new BadRequestException('poolId is required');
-    const charge = isFoundationPathWordCards(id);
-    const replayFree =
-      charge &&
+    const pathReplayFree =
+      !isGamesHubStart(from) &&
+      isFoundationPathWordCards(id) &&
       (await this.economy.hasClaimedMiniGameReward(req.user.id, `word_cards:${id}`));
-    const bananaCost = charge && !replayFree ? WORD_CARDS_BANANA_COST : 0;
+    const bananaCost = pathReplayFree ? 0 : WORD_CARDS_BANANA_COST;
     const spendRef = bananaCost > 0 ? randomUUID() : null;
     if (bananaCost > 0 && spendRef) {
       await this.economy.spendBananas(
@@ -297,24 +300,25 @@ export class MiniGamesController {
     return this.chargeFirstPlay(req.user.id, id, INFO_TASK_BANANA_COST, 'info_task_start');
   }
 
-  /** Spend bananas to start a Foundation-path Emoji Speak pack (Games tab free). */
+  /** Games hub always costs. Path: first play costs, replay is free. */
   @Post('emoji-speak/:poolId/start')
   async startEmojiSpeakPack(
     @Req() req: AuthedRequest,
     @Param('poolId') poolId: string,
+    @Query('from') from?: string,
   ) {
     const id = poolId?.trim();
     if (!id) throw new BadRequestException('poolId is required');
-    const normallyCharged = isFoundationPathEmojiSpeak(id);
-    const replayFree =
-      normallyCharged &&
+    const pathReplayFree =
+      !isGamesHubStart(from) &&
+      isFoundationPathEmojiSpeak(id) &&
       (await this.economy.hasClaimedMiniGameReward(req.user.id, `emoji_speak:${id}`));
-    const charge = normallyCharged && !replayFree;
-    const spendRef = charge ? randomUUID() : null;
-    if (charge && spendRef) {
+    const bananaCost = pathReplayFree ? 0 : EMOJI_SPEAK_BANANA_COST;
+    const spendRef = bananaCost > 0 ? randomUUID() : null;
+    if (bananaCost > 0 && spendRef) {
       await this.economy.spendBananas(
         req.user.id,
-        EMOJI_SPEAK_BANANA_COST,
+        bananaCost,
         spendRef,
         'emoji_speak_start',
       );
@@ -322,10 +326,10 @@ export class MiniGamesController {
     try {
       await this.recentLearners.markActivity(req.user.id, 'minigame', id);
     } catch (error) {
-      if (charge && spendRef) {
+      if (bananaCost > 0 && spendRef) {
         await this.economy.refundBananas(
           req.user.id,
-          EMOJI_SPEAK_BANANA_COST,
+          bananaCost,
           spendRef,
           'emoji_speak_start_refund',
         );
@@ -334,7 +338,7 @@ export class MiniGamesController {
     }
     return {
       ok: true,
-      bananaCost: charge ? EMOJI_SPEAK_BANANA_COST : 0,
+      bananaCost,
     };
   }
 

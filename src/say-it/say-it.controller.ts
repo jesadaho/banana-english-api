@@ -3,6 +3,7 @@ import { randomUUID } from 'crypto';
 import { User } from '@prisma/client';
 import { EconomyService } from '../economy/economy.service';
 import { readMiniGameScoreBody, type MiniGameScoreBody } from '../economy/mini-game-score';
+import { isGamesHubStart } from '../economy/is-games-hub-start';
 import { isFoundationPathRewardGameId } from '../learn-path/foundation-v2-path.data';
 import { canonicalFoundationV7RewardId } from '../learn-path/foundation-v7-path.data';
 import { AnonymousUserGuard } from '../users/anonymous-user.guard';
@@ -45,13 +46,18 @@ export class SayItController {
   }
 
   @Post('topics/:topicId/start')
-  async startTopic(@Req() req: AuthedRequest, @Param('topicId') topicId: string) {
+  async startTopic(
+    @Req() req: AuthedRequest,
+    @Param('topicId') topicId: string,
+    @Query('from') from?: string,
+  ) {
     const topic = this.sayIt.getTopic(topicId);
     if (topic.locked) {
       throw new BadRequestException('This topic is locked');
     }
     const isFoundation = isFoundationPathSayItTopic(topicId);
     const replayFree =
+      !isGamesHubStart(from) &&
       isFoundation &&
       (await this.economy.hasClaimedMiniGameReward(
         req.user.id,
