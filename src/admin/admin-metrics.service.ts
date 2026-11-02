@@ -9,8 +9,10 @@ import {
   estimatedThbForGrant,
   estimatedThbForProduct,
   filtersCacheKey,
+  inDateRange,
   parseDateRange,
   pctChange,
+  presalePaidAt,
   previousRange,
   weekStartKey,
   type DateRange,
@@ -40,11 +42,13 @@ const REAL_PURCHASE: Prisma.PurchaseRecordWhereInput = {
   OR: [{ isSandbox: null }, { isSandbox: false }],
 };
 
-/** Store subscriptions only — admin comps and Beam presale are not IAP. */
+/** Store subscriptions only — admin comps are not money. Beam is counted separately. */
 const REAL_SUB_GRANT: Prisma.SubscriptionGrantWhereInput = {
   source: 'revenuecat',
   OR: [{ isSandbox: null }, { isSandbox: false }],
 };
+
+const PAID_PRESALE: Prisma.PresaleOrderWhereInput = { status: 'paid' };
 
 const EMPTY_FILTERS: MetricsFilters = {
   requireOnboarding: false,
@@ -260,6 +264,7 @@ export class AdminMetricsService {
       payingSubs,
       sandboxPurchases,
       sandboxSubs,
+      paidPresaleOrders,
       dauSeriesRaw,
       completionsByDay,
       newUsersRaw,
@@ -285,7 +290,7 @@ export class AdminMetricsService {
       this.countCompletions(prev, 'training', userFilter),
       this.countCompletions(range, 'simulation', userFilter),
       this.countCompletions(prev, 'simulation', userFilter),
-      // IAP is money truth — do not apply cohort filters (source/onboarding/app-open).
+      // Money truth — do not apply cohort filters (source/onboarding/app-open).
       this.prisma.purchaseRecord.findMany({
         where: {
           ...REAL_PURCHASE,
@@ -353,6 +358,15 @@ export class AdminMetricsService {
           createdAt: { gte: range.from, lte: range.to },
         },
       }),
+      this.prisma.presaleOrder.findMany({
+        where: PAID_PRESALE,
+        select: {
+          priceThb: true,
+          userId: true,
+          paidAt: true,
+          createdAt: true,
+        },
+      }),
       this.prisma.user.findMany({
         where: {
           ...userFilter,
@@ -380,13 +394,30 @@ export class AdminMetricsService {
       (sum, g) => sum + estimatedThbForGrant(g),
       0,
     );
-    const revenue = packRevenue + subRevenue;
+    const beamOrders = paidPresaleOrders.filter((row) =>
+      inDateRange(presalePaidAt(row), range),
+    );
+    const beamOrdersPrev = paidPresaleOrders.filter((row) =>
+      inDateRange(presalePaidAt(row), prev),
+    );
+    const beamRevenue = beamOrders.reduce((sum, row) => sum + row.priceThb, 0);
+    const beamRevenuePrev = beamOrdersPrev.reduce(
+      (sum, row) => sum + row.priceThb,
+      0,
+    );
+    const beamRevenueAllTime = paidPresaleOrders.reduce(
+      (sum, row) => sum + row.priceThb,
+      0,
+    );
+    const revenue = packRevenue + subRevenue + beamRevenue;
     const revenuePrev =
       purchasesPrev.reduce((sum, p) => sum + estimatedThbForProduct(p.productId), 0) +
-      subGrantsPrev.reduce((sum, g) => sum + estimatedThbForGrant(g), 0);
+      subGrantsPrev.reduce((sum, g) => sum + estimatedThbForGrant(g), 0) +
+      beamRevenuePrev;
     const revenueAllTime =
       lifetimePurchases.reduce((sum, p) => sum + estimatedThbForProduct(p.productId), 0) +
-      lifetimeGrants.reduce((sum, g) => sum + estimatedThbForGrant(g), 0);
+      lifetimeGrants.reduce((sum, g) => sum + estimatedThbForGrant(g), 0) +
+      beamRevenueAllTime;
 
     const activationRate =
       newInRange === 0
@@ -395,6 +426,9 @@ export class AdminMetricsService {
     const payingCount = new Set([
       ...payingUsers.map((p) => p.userId),
       ...payingSubs.map((p) => p.userId),
+      ...paidPresaleOrders
+        .map((row) => row.userId)
+        .filter((id): id is string => !!id),
     ]).size;
     const conversionRate =
       signedInUsers === 0
@@ -447,6 +481,7 @@ export class AdminMetricsService {
     for (const g of subGrants) {
       addProduct(g.productId ?? 'subscription', estimatedThbForGrant(g));
     }
+    for (const row of beamOrders) addProduct('beam_presale', row.priceThb);
 
     return {
       range: { from: range.from.toISOString(), to: range.to.toISOString() },
@@ -498,9 +533,10 @@ export class AdminMetricsService {
           value: revenue,
           allTime: revenueAllTime,
           deltaPct: pctChange(revenue, revenuePrev),
-          purchases: purchases.length + subGrants.length,
+          purchases: purchases.length + subGrants.length + beamOrders.length,
           packs: purchases.length,
           subscriptions: subGrants.length,
+          beam: beamOrders.length,
           sandboxExcluded: sandboxPurchases + sandboxSubs,
         },
         payingUsers: {
@@ -1755,7 +1791,7 @@ export class AdminMetricsService {
   private async buildEconomy(range: DateRange, filters: MetricsFilters) {
     await this.ensureSandboxFlags();
     const userFilter = this.userWhere(filters);
-    const [txns, purchases, subGrants] = await Promise.all([
+    const [txns, purchases, subGrants, paidPresaleOrders] = await Promise.all([
       this.prisma.economyTransaction.findMany({
         where: {
           currency: Currency.BANANA,
@@ -1764,7 +1800,7 @@ export class AdminMetricsService {
         },
         select: { amount: true, source: true },
       }),
-      // IAP is money truth — ignore cohort filters; date range only.
+      // Money truth — ignore cohort filters; date range only.
       this.prisma.purchaseRecord.findMany({
         where: {
           ...REAL_PURCHASE,
@@ -1790,7 +1826,19 @@ export class AdminMetricsService {
           userId: true,
         },
       }),
+      this.prisma.presaleOrder.findMany({
+        where: PAID_PRESALE,
+        select: {
+          priceThb: true,
+          userId: true,
+          paidAt: true,
+          createdAt: true,
+        },
+      }),
     ]);
+    const beamOrders = paidPresaleOrders.filter((row) =>
+      inDateRange(presalePaidAt(row), range),
+    );
     const referralClaims = await this.prisma.referral.groupBy({
       by: ['source'],
       where: {
@@ -1881,6 +1929,19 @@ export class AdminMetricsService {
         (purchasesPerUser.get(g.userId) ?? 0) + 1,
       );
     }
+    for (const row of beamOrders) {
+      const cur = byProduct.beam_presale ?? { count: 0, thb: 0, bananas: 0 };
+      cur.count += 1;
+      cur.thb += row.priceThb;
+      byProduct.beam_presale = cur;
+      byPlatform.beam = (byPlatform.beam ?? 0) + 1;
+      if (row.userId) {
+        purchasesPerUser.set(
+          row.userId,
+          (purchasesPerUser.get(row.userId) ?? 0) + 1,
+        );
+      }
+    }
 
     const buyerCount = purchasesPerUser.size;
     const repeatBuyers = [...purchasesPerUser.values()].filter(
@@ -1903,8 +1964,11 @@ export class AdminMetricsService {
         spendMix,
       },
       iap: {
-        purchases: purchases.length + subGrants.length,
+        purchases: purchases.length + subGrants.length + beamOrders.length,
         estRevenueThb: estRevenue,
+        packs: purchases.length,
+        subscriptions: subGrants.length,
+        beam: beamOrders.length,
         arpu,
         buyerCount,
         repeatBuyers,

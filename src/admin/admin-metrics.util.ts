@@ -24,6 +24,18 @@ export type DateRange = {
   to: Date;
 };
 
+export function presalePaidAt(row: {
+  paidAt?: Date | null;
+  createdAt: Date;
+}): Date {
+  return row.paidAt ?? row.createdAt;
+}
+
+export function inDateRange(at: Date, range: DateRange): boolean {
+  const t = at.getTime();
+  return t >= range.from.getTime() && t <= range.to.getTime();
+}
+
 /** Inclusive calendar range (from 00:00 UTC of from-day through end of to-day). */
 export function parseDateRange(
   fromRaw?: string,

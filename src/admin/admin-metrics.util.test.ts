@@ -4,8 +4,10 @@ import {
   dateKey,
   estimatedThbForGrant,
   estimatedThbForProduct,
+  inDateRange,
   parseDateRange,
   pctChange,
+  presalePaidAt,
   previousRange,
   weekStartKey,
 } from './admin-metrics.util';
@@ -27,6 +29,20 @@ describe('admin-metrics.util', () => {
   it('prefers the grant price when stored', () => {
     assert.equal(estimatedThbForGrant({ productId: 'pro_monthly', priceThb: 99 }), 99);
     assert.equal(estimatedThbForGrant({ productId: 'pro_monthly', priceThb: null }), 120);
+  });
+
+  it('uses paidAt for Beam orders, then createdAt', () => {
+    const createdAt = new Date('2026-10-20T00:00:00.000Z');
+    const paidAt = new Date('2026-10-21T00:00:00.000Z');
+    assert.equal(presalePaidAt({ createdAt, paidAt }).toISOString(), paidAt.toISOString());
+    assert.equal(presalePaidAt({ createdAt, paidAt: null }).toISOString(), createdAt.toISOString());
+  });
+
+  it('filters Beam paid dates into the UTC range', () => {
+    const range = parseDateRange('2026-10-20', '2026-10-21');
+    assert.equal(inDateRange(new Date('2026-10-20T00:00:00.000Z'), range), true);
+    assert.equal(inDateRange(new Date('2026-10-21T23:59:59.999Z'), range), true);
+    assert.equal(inDateRange(new Date('2026-10-19T23:59:59.999Z'), range), false);
   });
 
   it('parses default 30-day range ending today UTC', () => {
