@@ -21,8 +21,10 @@ import {
 import { canCreateLiveTalkRoom } from '../live-talk/live-talk.rules';
 import { PrismaService } from '../prisma/prisma.service';
 import {
+  avatarMembership,
   avatarSeedCost,
   avatarMinPerfectStars,
+  canUseMemberAvatar,
   FREE_AVATAR_IDS,
   isKnownAvatarId,
 } from './avatar-catalog';
@@ -579,6 +581,8 @@ export class UsersService {
       throw new BadRequestException('Unknown avatar');
     }
 
+    if (avatarMembership(id)) return this.selectAvatar(user, id);
+
     const cost = avatarSeedCost(id);
     const minPerfectStars = avatarMinPerfectStars(id);
     const alreadyUnlocked =
@@ -670,7 +674,11 @@ export class UsersService {
     if (!isKnownAvatarId(id)) {
       throw new BadRequestException('Unknown avatar');
     }
-    const unlocked =
+    const membership = avatarMembership(id);
+    if (!canUseMemberAvatar(id, subscriptionPayload(user).tier)) {
+      throw new BadRequestException('Subscription required for avatar');
+    }
+    const unlocked = !!membership ||
       (FREE_AVATAR_IDS as readonly string[]).includes(id) ||
       user.unlockedAvatarIds.includes(id);
     if (!unlocked) {
