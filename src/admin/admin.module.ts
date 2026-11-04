@@ -19,6 +19,7 @@ import { AdminMetricsController } from './admin-metrics.controller';
 import { AdminMetricsService } from './admin-metrics.service';
 import { AdminReferralsController } from './admin-referrals.controller';
 import { AdminSubscriptionsController } from './admin-subscriptions.controller';
+import { AdminUsersController } from './admin-users.controller';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { AdminSubscriptionsController } from './admin-subscriptions.controller';
     AdminSubscriptionsController,
     AdminTtsLiveLinesController,
     AdminEarlyBirdController,
+    AdminUsersController,
     AdminLiveTalkController,
   ],
   providers: [AdminMetricsService, AdminLedgerService, AdminAuthGuard],

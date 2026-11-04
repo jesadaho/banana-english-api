@@ -321,6 +321,7 @@ export class SubscriptionsService {
         subscriptionTier: true,
         subscriptionExpiresAt: true,
         placementResult: true,
+        communityAdmin: true,
       },
     });
     return { users: users.map((user) => this.adminUserSummary(user)) };
@@ -347,6 +348,7 @@ export class SubscriptionsService {
         placementResult: true,
         placementEntryPathId: true,
         placementEntryNodeId: true,
+        communityAdmin: true,
       },
     });
     if (!user) throw new NotFoundException('User not found');
@@ -427,6 +429,7 @@ export class SubscriptionsService {
     subscriptionTier: string;
     subscriptionExpiresAt: Date | null;
     placementResult?: unknown;
+    communityAdmin?: boolean;
   }) {
     const now = new Date();
     const paid = user.subscriptionTier === 'PRO' || user.subscriptionTier === 'PRO_MAX';
@@ -441,6 +444,7 @@ export class SubscriptionsService {
       subscriptionExpiresAt: user.subscriptionExpiresAt?.toISOString() ?? null,
       subscriptionStatus: active ? 'active' : paid ? 'expired' : 'free',
       placementResult: publicPlacementBand(user.placementResult),
+      communityAdmin: user.communityAdmin === true,
     };
   }
 
