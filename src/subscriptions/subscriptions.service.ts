@@ -345,6 +345,7 @@ export class SubscriptionsService {
         placementResult: true,
         surveyGender: true,
         surveyAgeRange: true,
+        communityAdmin: true,
       },
     });
     return { users: users.map((user) => this.adminUserSummary(user)) };
@@ -373,6 +374,7 @@ export class SubscriptionsService {
         placementEntryNodeId: true,
         surveyGender: true,
         surveyAgeRange: true,
+        communityAdmin: true,
       },
     });
     if (!user) throw new NotFoundException('User not found');
@@ -455,6 +457,7 @@ export class SubscriptionsService {
     placementResult?: unknown;
     surveyGender?: string | null;
     surveyAgeRange?: string | null;
+    communityAdmin?: boolean;
   }) {
     const now = new Date();
     const paid = user.subscriptionTier === 'PRO' || user.subscriptionTier === 'PRO_MAX';
@@ -471,6 +474,7 @@ export class SubscriptionsService {
       placementResult: publicPlacementBand(user.placementResult),
       gender: user.surveyGender ?? null,
       ageRange: user.surveyAgeRange ?? null,
+      communityAdmin: user.communityAdmin === true,
     };
   }
 
