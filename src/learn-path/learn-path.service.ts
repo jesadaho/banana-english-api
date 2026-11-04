@@ -1076,7 +1076,11 @@ export class LearnPathService {
     return false;
   }
 
-  /** First incomplete core node whose unlock prerequisites are satisfied. */
+  /**
+   * Next stage to resume: first unlocked incomplete core node *after* the
+   * furthest finished one. Walking from chapter 1 would send a Section 2
+   * learner back to a leftover Section 1 node.
+   */
   private resolveCurrentNodeId(
     nodes: Array<{
       id: string;
@@ -1087,15 +1091,28 @@ export class LearnPathService {
     completed: Set<string>,
   ): string | null {
     const byId = new Map(nodes.map((n) => [n.id, n]));
-    for (const node of nodes) {
-      if (!node.countsTowardProgress) continue;
-      if (completed.has(node.id)) continue;
-      if (node.comingSoon) continue;
-      const unlocked = node.unlockAfterNodeIds.every((id) =>
-        this.isPrerequisiteSatisfied(id, byId, completed),
-      );
-      if (unlocked) return node.id;
+    const core = nodes.filter((node) => node.countsTowardProgress);
+    let lastDoneIndex = -1;
+    for (let i = 0; i < core.length; i++) {
+      if (completed.has(core[i].id)) lastDoneIndex = i;
     }
-    return null;
+    const pickFrom = (start: number): string | null => {
+      for (let i = start; i < core.length; i++) {
+        const node = core[i];
+        if (completed.has(node.id)) continue;
+        if (node.comingSoon) continue;
+        const unlocked = node.unlockAfterNodeIds.every((id) =>
+          this.isPrerequisiteSatisfied(id, byId, completed),
+        );
+        if (unlocked) return node.id;
+      }
+      return null;
+    };
+    const forward = pickFrom(lastDoneIndex + 1);
+    if (forward) return forward;
+    // Don't rewind to leftover earlier chapters once the learner has
+    // progressed. A finished path has no current node.
+    if (lastDoneIndex >= 0) return null;
+    return pickFrom(0);
   }
 }

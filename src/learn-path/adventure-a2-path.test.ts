@@ -411,6 +411,46 @@ describe('Adventure A2 endpoint', () => {
     assert.equal(res.progress.currentNodeId, 'a2_c01n01');
   });
 
+  it('resumes after the furthest finished node, not leftover Section 1', async () => {
+    const playable = toFoundationV7ClientChapters(A2_CAPABILITIES, ADVENTURE_A2_COURSE)
+      .flatMap((chapter) => chapter.items)
+      .filter((node) => !node.comingSoon && node.countsTowardProgress);
+    const first = playable[0];
+    const section2 = playable.find((node) => node.id.startsWith('a2_c09'));
+    assert.equal(first.id, 'a2_c01n01');
+    assert.ok(section2);
+    const through = playable.slice(0, playable.indexOf(section2) + 1);
+    const leftoverSkip = through.filter((node) => node.id !== first.id);
+    const lessons = leftoverSkip.flatMap((n) => (n.lessonId ? [n.lessonId] : []));
+    const mini = leftoverSkip.flatMap((n) => [
+      n.topicId ? `say_it:${n.topicId}` : null,
+      n.scenarioId ? `interactive_scenario:${n.scenarioId}` : null,
+      n.poolId ? `emoji_speak:${n.poolId}` : null,
+      n.poolId ? `new_words:${n.poolId}` : null,
+      n.poolId ? `describe_it:${n.poolId}` : null,
+      n.poolId ? `info_task:${n.poolId}` : null,
+      n.poolId ? `listen_up:${n.poolId}` : null,
+      n.poolId ? `story_bites:${n.poolId}` : null,
+      n.poolId ? `word_cards:${n.poolId}` : null,
+    ].filter((id): id is string => !!id));
+    const simulations = leftoverSkip.flatMap((n) =>
+      n.simulationId ? [n.simulationId] : [],
+    );
+    const service = new LearnPathService({
+      economyTransaction: {
+        findMany: async () => mini.map((id) => ({ referenceId: `mini_game:${id}` })),
+      },
+      userSession: {
+        findMany: async () => simulations.map((simulationId) => ({ simulationId })),
+      },
+      foundationChapterSkip: { findMany: async () => [] },
+    } as any, { getCompletedLessonIds: async () => new Set(lessons) } as any, {} as any);
+    const view = await service.getFoundationV7('user', A2_CAPABILITIES, ADVENTURE_A2_COURSE);
+    assert.notEqual(view.progress.currentNodeId, first.id);
+    const currentIndex = playable.findIndex((n) => n.id === view.progress.currentNodeId);
+    assert.ok(currentIndex > 0);
+  });
+
   it('keys A2 rewards by the a2_ content id', () => {
     for (const node of zone1) {
       const canonical = canonicalFoundationV7RewardId(node.id);
