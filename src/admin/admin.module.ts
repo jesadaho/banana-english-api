@@ -6,7 +6,9 @@ import { ArticlesModule } from '../articles/articles.module';
 import { ReferralsModule } from '../referrals/referrals.module';
 import { SubscriptionsModule } from '../subscriptions/subscriptions.module';
 import { TtsModule } from '../tts/tts.module';
+import { LiveTalkModule } from '../live-talk/live-talk.module';
 import { AdminAuthGuard } from './admin-auth.guard';
+import { AdminLiveTalkController } from './admin-live-talk.controller';
 import { AdminTtsLiveLinesController } from './admin-tts-live-lines.controller';
 import { AdminEarlyBirdController } from './admin-early-bird.controller';
 import { AdminArticlesController } from './admin-articles.controller';
@@ -27,6 +29,7 @@ import { AdminSubscriptionsController } from './admin-subscriptions.controller';
     ReferralsModule,
     SubscriptionsModule,
     TtsModule,
+    LiveTalkModule,
   ],
   controllers: [
     AdminMetricsController,
@@ -37,6 +40,7 @@ import { AdminSubscriptionsController } from './admin-subscriptions.controller';
     AdminSubscriptionsController,
     AdminTtsLiveLinesController,
     AdminEarlyBirdController,
+    AdminLiveTalkController,
   ],
   providers: [AdminMetricsService, AdminLedgerService, AdminAuthGuard],
 })

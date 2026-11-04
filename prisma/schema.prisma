@@ -167,6 +167,7 @@ model User {
   presaleOrders           PresaleOrder[]
   hostedLiveTalkRooms     LiveTalkRoom[]
   liveTalkParticipations  LiveTalkParticipant[]
+  liveTalkRatings         LiveTalkRating[]
   weeklyReportSnapshots   WeeklyReportSnapshot[]
 
   createdAt               DateTime  @default(now())
@@ -768,6 +769,7 @@ model LiveTalkRoom {
 
   host         User                   @relation(fields: [hostUserId], references: [id], onDelete: Cascade)
   participants LiveTalkParticipant[]
+  ratings      LiveTalkRating[]
 
   @@index([status, createdAt])
 }
@@ -786,4 +788,25 @@ model LiveTalkParticipant {
 
   @@index([roomId, leftAt])
   @@index([userId, leftAt])
+}
+
+/** Leave-sheet thumbs for Live Talk room quality (MVP). */
+model LiveTalkRating {
+  id              String   @id @default(uuid())
+  userId          String
+  roomId          String
+  /** up | down */
+  rating          String
+  /** Optional note — used when the learner taps 👎. */
+  feedback        String?
+  listenedSeconds Int?
+  createdAt       DateTime @default(now())
+
+  user User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  room LiveTalkRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, roomId])
+  @@index([userId, createdAt])
+  @@index([roomId, rating, createdAt])
+  @@index([rating, createdAt])
 }

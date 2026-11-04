@@ -6,5 +6,6 @@ import { LiveTalkWebhookController } from './live-talk-webhook.controller';
 @Module({
   controllers: [LiveTalkController, LiveTalkWebhookController],
   providers: [LiveTalkService],
+  exports: [LiveTalkService],
 })
 export class LiveTalkModule {}

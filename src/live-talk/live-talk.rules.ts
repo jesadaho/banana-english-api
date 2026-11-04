@@ -1,6 +1,11 @@
+import { getUserLocalTime } from '../common/timezone.util';
 import { placementBandFromResult } from '../placement/placement-band';
 
 export const LIVE_TALK_SPEAKER_CAP = 10;
+/** Leave-sheet thumbs: listen this long before we may ask. */
+export const LIVE_TALK_RATING_MIN_LISTEN_MS = 3 * 60 * 1000;
+/** Fraction of eligible exits that show the rating question. */
+export const LIVE_TALK_RATING_SAMPLE_RATE = 0.3;
 
 export const LIVE_TALK_MIN_LEVELS = ['a1', 'a2', 'listen_all'] as const;
 export type LiveTalkMinSpeakLevel = (typeof LIVE_TALK_MIN_LEVELS)[number];
@@ -110,4 +115,48 @@ export function canCreateLiveTalkRoom(
   env: NodeJS.Dict<string | undefined> = process.env,
 ): boolean {
   return user.communityAdmin === true || liveTalkCreateOpen(env);
+}
+
+export type LiveTalkRatingGate =
+  | { ok: true }
+  | { ok: false; reason: 'too_soon' | 'already_rated_today' };
+
+export function resolveLiveTalkTimezone(timezone?: string | null): string {
+  return timezone?.trim() || 'Asia/Bangkok';
+}
+
+function ratedOnLocalDay(
+  at: Date | string | null | undefined,
+  timezone: string,
+  now: Date,
+): boolean {
+  if (!at) return false;
+  const when = at instanceof Date ? at : new Date(at);
+  if (Number.isNaN(when.getTime())) return false;
+  return (
+    getUserLocalTime(timezone, when).dateKey ===
+    getUserLocalTime(timezone, now).dateKey
+  );
+}
+
+/** Server guard: 3 minutes in-room and at most one rating per local day. */
+export function canSubmitLiveTalkLeaveRating(params: {
+  listenedMs: number;
+  lastRatedAt?: Date | null;
+  timezone: string;
+  now?: Date;
+}): LiveTalkRatingGate {
+  const now = params.now ?? new Date();
+  if (params.listenedMs < LIVE_TALK_RATING_MIN_LISTEN_MS) {
+    return { ok: false, reason: 'too_soon' };
+  }
+  if (ratedOnLocalDay(params.lastRatedAt, params.timezone, now)) {
+    return { ok: false, reason: 'already_rated_today' };
+  }
+  return { ok: true };
+}
+
+/** Client sample: [0, 1) — keep 30% of eligible leaves. */
+export function shouldSampleLiveTalkLeaveRating(sample: number): boolean {
+  return sample >= 0 && sample < LIVE_TALK_RATING_SAMPLE_RATE;
 }
