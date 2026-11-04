@@ -8,12 +8,14 @@ import { randomUUID } from 'crypto';
 import { PrismaService } from '../prisma/prisma.service';
 import {
   LIVE_TALK_SPEAKER_CAP,
+  canSubmitLiveTalkLeaveRating,
   countsAsSpeaker,
   decideJoin,
   decidePromote,
   canCreateLiveTalkRoom,
   isLiveTalkMinLevel,
   placementBandOf,
+  resolveLiveTalkTimezone,
   type LiveTalkMinSpeakLevel,
   type LiveTalkRole,
 } from './live-talk.rules';
@@ -173,6 +175,96 @@ export class LiveTalkService {
       role: nextRole,
       ...this.tokenFor(user, room.livekitRoomName, countsAsSpeaker(nextRole)),
     };
+  }
+
+  async submitRating(
+    user: UserRow,
+    roomId: string,
+    body: {
+      rating?: string;
+      feedback?: string;
+      listenedSeconds?: number;
+    },
+  ) {
+    const rating = body.rating === 'up' || body.rating === 'down'
+      ? body.rating
+      : null;
+    if (!rating) throw new BadRequestException('rating must be up or down');
+
+    const room = await this.prisma.liveTalkRoom.findUnique({
+      where: { id: roomId },
+      select: { id: true },
+    });
+    if (!room) throw new NotFoundException('live-talk room not found');
+
+    const existing = await this.prisma.liveTalkRating.findUnique({
+      where: { userId_roomId: { userId: user.id, roomId: room.id } },
+    });
+    if (existing) return { ok: true, rating: existing };
+
+    const participants = await this.prisma.liveTalkParticipant.findMany({
+      where: { roomId: room.id, userId: user.id },
+      select: { joinedAt: true },
+      orderBy: { joinedAt: 'asc' },
+    });
+    if (participants.length === 0) {
+      throw new ForbiddenException('not_in_room');
+    }
+
+    const now = new Date();
+    const joinedAt = participants[0]!.joinedAt;
+    const listenedMs = Math.max(0, now.getTime() - joinedAt.getTime());
+    const dbUser = await this.prisma.user.findUnique({
+      where: { id: user.id },
+      select: { timezone: true },
+    });
+    const timezone = resolveLiveTalkTimezone(dbUser?.timezone);
+    const last = await this.prisma.liveTalkRating.findFirst({
+      where: { userId: user.id },
+      orderBy: { createdAt: 'desc' },
+      select: { createdAt: true },
+    });
+    const gate = canSubmitLiveTalkLeaveRating({
+      listenedMs,
+      lastRatedAt: last?.createdAt,
+      timezone,
+      now,
+    });
+    if (!gate.ok) throw new BadRequestException(gate.reason);
+
+    const feedback =
+      rating === 'down' ? body.feedback?.trim() || null : null;
+    const listenedSeconds =
+      typeof body.listenedSeconds === 'number' && body.listenedSeconds >= 0
+        ? Math.round(body.listenedSeconds)
+        : Math.round(listenedMs / 1000);
+
+    const row = await this.prisma.liveTalkRating.create({
+      data: {
+        userId: user.id,
+        roomId: room.id,
+        rating,
+        feedback,
+        listenedSeconds,
+      },
+    });
+    return { ok: true, rating: row };
+  }
+
+  async listRatings(opts?: { rating?: string; take?: number }) {
+    const rating =
+      opts?.rating === 'up' || opts?.rating === 'down' ? opts.rating : undefined;
+    const take = Math.min(Math.max(opts?.take ?? 50, 1), 200);
+    const rows = await this.prisma.liveTalkRating.findMany({
+      where: rating ? { rating } : undefined,
+      orderBy: { createdAt: 'desc' },
+      take,
+      include: {
+        room: { select: { id: true, title: true, status: true } },
+        user: { select: { id: true, displayName: true } },
+      },
+    });
+    return { ratings: rows };
   }
 
   async leaveRoom(user: UserRow, roomId: string) {

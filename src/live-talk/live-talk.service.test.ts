@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
-import { ForbiddenException } from '@nestjs/common';
+import { BadRequestException, ForbiddenException } from '@nestjs/common';
 import type { PrismaService } from '../prisma/prisma.service';
 import { LiveTalkService } from './live-talk.service';
 
@@ -181,6 +181,88 @@ describe('LiveTalkService.joinRoom', () => {
       (err: unknown) =>
         err instanceof ForbiddenException &&
         (err as ForbiddenException).message === 'speaker_full',
+    );
+  });
+});
+
+describe('LiveTalkService.submitRating', () => {
+  function ratingPrisma(overrides: Record<string, unknown> = {}) {
+    const created: Record<string, unknown>[] = [];
+    return {
+      created,
+      prisma: {
+        liveTalkRoom: {
+          findUnique: async () => ({ id: 'room-1' }),
+        },
+        liveTalkRating: {
+          findUnique: async () => null,
+          findFirst: async () => null,
+          create: async (args: { data: Record<string, unknown> }) => {
+            created.push(args.data);
+            return { id: 'rate-1', ...args.data };
+          },
+        },
+        liveTalkParticipant: {
+          findMany: async () => [
+            { joinedAt: new Date(Date.now() - 4 * 60 * 1000) },
+          ],
+        },
+        user: {
+          findUnique: async () => ({ timezone: 'Asia/Bangkok' }),
+        },
+        ...overrides,
+      },
+    };
+  }
+
+  it('stores a downvote with feedback', async () => {
+    const { created, prisma } = ratingPrisma();
+    const service = new LiveTalkService(prisma as unknown as PrismaService);
+    const result = await service.submitRating(
+      {
+        id: 'u2',
+        displayName: 'Bee',
+        avatarId: null,
+        communityAdmin: false,
+      },
+      'room-1',
+      { rating: 'down', feedback: 'too quiet' },
+    );
+    assert.equal(result.ok, true);
+    assert.equal(created[0]?.rating, 'down');
+    assert.equal(created[0]?.feedback, 'too quiet');
+  });
+
+  it('rejects a second rating the same day', async () => {
+    const { prisma } = ratingPrisma({
+      liveTalkRating: {
+        findUnique: async () => null,
+        findFirst: async () => ({
+          createdAt: new Date(),
+        }),
+        create: async () => {
+          throw new Error('should not create');
+        },
+      },
+    });
+    const service = new LiveTalkService(prisma as unknown as PrismaService);
+    await assert.rejects(
+      () =>
+        service.submitRating(
+          {
+            id: 'u2',
+            displayName: 'Bee',
+            avatarId: null,
+            communityAdmin: false,
+          },
+          'room-1',
+          { rating: 'up' },
+        ),
+      (err: unknown) =>
+        err instanceof BadRequestException &&
+        String((err as BadRequestException).message).includes(
+          'already_rated_today',
+        ),
     );
   });
 });

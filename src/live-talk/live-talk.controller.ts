@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { AnonymousUserGuard } from '../users/anonymous-user.guard';
+import { SubmitLiveTalkRatingDto } from './dto/live-talk-rating.dto';
 import { LiveTalkService } from './live-talk.service';
 
 type AuthedRequest = { user: User };
@@ -53,6 +54,15 @@ export class LiveTalkController {
       throw new BadRequestException('role must be speaker or listener');
     }
     return this.liveTalk.changeRole(req.user, id, body.role);
+  }
+
+  @Post('rooms/:id/rating')
+  submitRating(
+    @Req() req: AuthedRequest,
+    @Param('id') id: string,
+    @Body() body: SubmitLiveTalkRatingDto,
+  ) {
+    return this.liveTalk.submitRating(req.user, id, body);
   }
 
   @Post('rooms/:id/leave')

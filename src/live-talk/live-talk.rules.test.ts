@@ -4,9 +4,11 @@ import {
   LIVE_TALK_SPEAKER_CAP,
   canCreateLiveTalkRoom,
   canSpeakAtLevel,
+  canSubmitLiveTalkLeaveRating,
   decideJoin,
   decidePromote,
   liveTalkCreateOpen,
+  shouldSampleLiveTalkLeaveRating,
 } from './live-talk.rules';
 import { mintLiveKitJwt } from './live-talk.token';
 
@@ -144,5 +146,52 @@ describe('mintLiveKitJwt', () => {
       'secret',
     );
     assert.equal(token.split('.').length, 3);
+  });
+});
+
+describe('canSubmitLiveTalkLeaveRating', () => {
+  const now = new Date('2026-11-04T07:30:00.000Z');
+
+  it('rejects listens shorter than 3 minutes', () => {
+    assert.deepEqual(
+      canSubmitLiveTalkLeaveRating({
+        listenedMs: 3 * 60 * 1000 - 1,
+        timezone: 'Asia/Bangkok',
+        now,
+      }),
+      { ok: false, reason: 'too_soon' },
+    );
+  });
+
+  it('rejects a second rating on the same local day', () => {
+    assert.deepEqual(
+      canSubmitLiveTalkLeaveRating({
+        listenedMs: 3 * 60 * 1000,
+        lastRatedAt: new Date('2026-11-04T01:00:00.000Z'),
+        timezone: 'Asia/Bangkok',
+        now,
+      }),
+      { ok: false, reason: 'already_rated_today' },
+    );
+  });
+
+  it('allows a rating after 3 minutes when none today', () => {
+    assert.deepEqual(
+      canSubmitLiveTalkLeaveRating({
+        listenedMs: 3 * 60 * 1000,
+        lastRatedAt: new Date('2026-11-03T10:00:00.000Z'),
+        timezone: 'Asia/Bangkok',
+        now,
+      }),
+      { ok: true },
+    );
+  });
+});
+
+describe('shouldSampleLiveTalkLeaveRating', () => {
+  it('keeps 30 percent of eligible exits', () => {
+    assert.equal(shouldSampleLiveTalkLeaveRating(0), true);
+    assert.equal(shouldSampleLiveTalkLeaveRating(0.29), true);
+    assert.equal(shouldSampleLiveTalkLeaveRating(0.3), false);
   });
 });
