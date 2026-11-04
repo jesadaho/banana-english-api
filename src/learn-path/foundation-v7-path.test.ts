@@ -279,6 +279,43 @@ describe('Foundation V7 progress and completion contracts', () => {
     } as any, {getCompletedLessonIds: async () => new Set(completedLessons)} as any, {} as any);
   }
 
+  it('resumes after the furthest finished node, not a leftover Section 1 row', async () => {
+    const playable = all().filter((n) => !n.comingSoon && n.countsTowardProgress);
+    const first = playable[0];
+    const chapter9 = playable.find((n) => n.id.startsWith('v7_u09'));
+    assert.ok(first);
+    assert.ok(chapter9);
+    const throughChapter9 = playable.slice(0, playable.indexOf(chapter9) + 1);
+    const leftoverSkip = throughChapter9.filter((n) => n.id !== first.id);
+    const lessons = leftoverSkip.flatMap((n) => (n.lessonId ? [n.lessonId] : []));
+    const mini = leftoverSkip.flatMap((n) =>
+      n.topicId
+        ? [`say_it:${n.topicId}`]
+        : n.nodeType === 'new_words' && n.poolId
+          ? [`new_words:${n.poolId}`]
+          : n.nodeType === 'info_task' && n.poolId
+            ? [`info_task:${n.poolId}`]
+            : n.nodeType === 'describe_it' && n.poolId
+              ? [`describe_it:${n.poolId}`]
+              : n.nodeType === 'interactive_scenario' && n.scenarioId
+                ? [`interactive_scenario:${n.scenarioId}`]
+                : n.poolId
+                  ? [`emoji_speak:${n.poolId}`]
+                  : [],
+    );
+    const simulations = leftoverSkip.flatMap((n) =>
+      n.simulationId ? [n.simulationId] : [],
+    );
+    const view = await pathService(lessons, mini, simulations).getFoundationV7(
+      'user',
+      CORE_CAPABILITIES,
+    );
+    assert.notEqual(view.progress.currentNodeId, first.id);
+    const currentIndex = playable.findIndex((n) => n.id === view.progress.currentNodeId);
+    const firstIndex = playable.findIndex((n) => n.id === first.id);
+    assert.ok(currentIndex > firstIndex);
+  });
+
   it('has exactly one current node and recognizes existing Chapter 1 completion IDs', async () => {
     const initial = await pathService().getFoundationV7('user');
     assert.equal(initial.progress.currentNodeId, 'v7_u01n01');
