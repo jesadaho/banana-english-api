@@ -3801,6 +3801,11 @@ export class SessionsController {
     }
 
     if (data.session.sessionType === 'training' && data.lessonConfig) {
+      // "I already know this": the learner skips the rest of the lesson, so
+      // the path must treat it as finished (same as reaching Celebrate).
+      if (body.markComplete === true) {
+        data.session.isComplete = true;
+      }
       let lessonRewards;
       let newAchievements: Awaited<
         ReturnType<AchievementsService['syncForUser']>
