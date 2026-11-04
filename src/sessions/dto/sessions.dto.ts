@@ -160,6 +160,11 @@ export class EndSessionDto {
   @IsOptional()
   @Type(() => SpeakingMetricsDto)
   speakingMetrics?: SpeakingMetricsDto;
+
+  /** Lesson only: learner chose "I already know this" → record as finished. */
+  @IsOptional()
+  @IsBoolean()
+  markComplete?: boolean;
 }
 
 export class ExtractIntroNameDto {
