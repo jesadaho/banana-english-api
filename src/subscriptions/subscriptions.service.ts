@@ -7,6 +7,17 @@ import {
 import { Prisma, SubscriptionTier, User } from '@prisma/client';
 import { FirebaseAdminService } from '../firebase/firebase-admin.service';
 import { placementRetestStatus } from '../placement/placement.access';
+import { resolvePlacementStart } from '../placement/placement-catalog';
+import { resultLabelFor } from '../placement/placement.routing';
+import {
+  PLACEMENT_MAPPING_VERSION,
+  PLACEMENT_MODEL_VERSION,
+  PLACEMENT_PROMPT_VERSION,
+  PLACEMENT_QUESTION_VERSION,
+  PLACEMENT_RUBRIC_VERSION,
+  PLACEMENT_ROUTING_VERSION,
+  type PlacementPublicResult,
+} from '../placement/placement.types';
 import { PrismaService } from '../prisma/prisma.service';
 import { BeamClient } from './beam.client';
 import { placementBandFromResult } from '../placement/placement-band';
@@ -36,6 +47,29 @@ import {
 const PAID = 'paid';
 const PENDING = 'pending_payment';
 const EXPIRED = 'expired';
+
+const ADMIN_PLACEMENT_BANDS = [
+  'Seed',
+  'Seed+',
+  'Seed++',
+  'A1',
+  'A1+',
+  'A2',
+  'B1',
+] as const satisfies readonly PlacementPublicResult[];
+
+function isAdminPlacementBand(value: string): value is PlacementPublicResult {
+  return (ADMIN_PLACEMENT_BANDS as readonly string[]).includes(value);
+}
+
+function adminBaseLevel(
+  publicResult: PlacementPublicResult,
+): 'A1' | 'A2' | 'B1' | null {
+  if (publicResult === 'A1' || publicResult === 'A1+') return 'A1';
+  if (publicResult === 'A2' || publicResult === 'A2+') return 'A2';
+  if (publicResult === 'B1') return 'B1';
+  return null;
+}
 
 function publicPlacementBand(value: unknown): string | null {
   return placementBandFromResult(value);
@@ -403,6 +437,86 @@ export class SubscriptionsService {
         priceThb: row.priceThb,
         createdAt: row.createdAt.toISOString(),
       })),
+    };
+  }
+
+  /** Sets the public Level Test band and the matching course entry node. */
+  async setPlacementForAdmin(userId: string, publicResultRaw?: string) {
+    const publicResult = publicResultRaw?.trim() ?? '';
+    if (!isAdminPlacementBand(publicResult)) {
+      throw new BadRequestException(
+        `publicResult must be one of ${ADMIN_PLACEMENT_BANDS.join(', ')}`,
+      );
+    }
+    const user = await this.prisma.user.findUnique({ where: { id: userId } });
+    if (!user) throw new NotFoundException('User not found');
+    const route = resolvePlacementStart(publicResult);
+    const contentRef = route.contentRef
+      ? Object.fromEntries(
+          Object.entries(route.contentRef).filter(
+            (entry): entry is [string, string] => Boolean(entry[1]),
+          ),
+        )
+      : null;
+    const placementResult = {
+      demonstratedBand:
+        publicResult === 'B1'
+          ? 'b1'
+          : publicResult === 'A2' || publicResult === 'A2+'
+            ? 'a2'
+            : publicResult === 'A1' || publicResult === 'A1+'
+              ? 'a1'
+              : publicResult === 'Seed++'
+                ? 'foundation_entry'
+                : null,
+      publicResult,
+      baseLevel: adminBaseLevel(publicResult),
+      resultStatus: 'completed',
+      resultLabel: resultLabelFor(publicResult),
+      recommendedStartKey: route.recommendedStartKey,
+      recommendationType: route.recommendationType,
+      intendedNextLevel: route.intendedNextLevel,
+      recommendedPathId: route.pathId,
+      recommendedChapterId: route.chapterId,
+      recommendedNodeId: route.nodeId,
+      recommendedTitleEn: route.titleEn,
+      recommendedTitleTh: route.titleTh,
+      recommendedAppRoute: route.appRoute,
+      recommendedContentRef: contentRef,
+      usedFallback: route.usedFallback,
+      fallbackPathId: route.fallbackPathId,
+      fallbackChapterId: route.fallbackChapterId,
+      fallbackNodeId: route.fallbackNodeId,
+      fallbackNoticeTh: route.fallbackNoticeTh,
+      stopReason: 'band_not_confirmed',
+      entrySource: 'profile_settings',
+      completedQuestionIds: [],
+      questionResults: [],
+      taskEvidence: [],
+      taskGaps: [],
+      progressScores: [],
+      questionVersion: PLACEMENT_QUESTION_VERSION,
+      rubricVersion: PLACEMENT_RUBRIC_VERSION,
+      routingVersion: PLACEMENT_ROUTING_VERSION,
+      mappingVersion: PLACEMENT_MAPPING_VERSION,
+      modelVersion: PLACEMENT_MODEL_VERSION,
+      promptVersion: PLACEMENT_PROMPT_VERSION,
+      resolvedCatalogVersion: route.resolvedCatalogVersion,
+    };
+    const updated = await this.prisma.user.update({
+      where: { id: userId },
+      data: {
+        lastPlacementTestAt: new Date(),
+        placementResult: placementResult as Prisma.InputJsonValue,
+        placementEntryPathId: route.pathId,
+        placementEntryNodeId: route.nodeId,
+      } as Prisma.UserUpdateInput,
+    });
+    return {
+      user: {
+        ...this.adminUserSummary(updated),
+        ...this.adminPlacementSummary(updated),
+      },
     };
   }
 
