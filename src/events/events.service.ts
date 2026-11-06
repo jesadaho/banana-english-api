@@ -11,6 +11,7 @@ import { FirebaseAdminService } from '../firebase/firebase-admin.service';
 import { FcmService } from '../notifications/fcm.service';
 import type { PushNotificationPayload } from '../notifications/notification-templates';
 import { PrismaService } from '../prisma/prisma.service';
+import { optimizeEventImage } from './event-image';
 import {
   EVENT_IMAGE_MAX_BYTES,
   eventBannerObjectPath,
@@ -188,9 +189,11 @@ export class EventsService {
 
   async uploadBanner(id: string, file?: UploadFile) {
     const event = await this.requireEvent(id);
+    this.requireImageExt(file);
     const uploaded = await this.savePublicImage(
       file,
-      eventBannerObjectPath(event.id, this.requireImageExt(file)),
+      eventBannerObjectPath(event.id),
+      'banner',
     );
     const updated = await this.prisma.event.update({
       where: { id },
@@ -208,9 +211,11 @@ export class EventsService {
     if (!tier) {
       throw new NotFoundException('Reward tier not found');
     }
+    this.requireImageExt(file);
     const url = await this.savePublicImage(
       file,
-      eventTierAvatarObjectPath(eventId, tierId, this.requireImageExt(file)),
+      eventTierAvatarObjectPath(eventId, tierId),
+      'avatar',
     );
     await this.prisma.eventRewardTier.update({
       where: { id: tierId },
@@ -942,13 +947,25 @@ export class EventsService {
     return ext;
   }
 
-  private async savePublicImage(file: UploadFile | undefined, objectPath: string) {
-    const ext = this.requireImageExt(file);
-    void ext;
+  private async savePublicImage(
+    file: UploadFile | undefined,
+    objectPath: string,
+    kind: 'banner' | 'avatar',
+  ) {
+    this.requireImageExt(file);
+    let optimized;
+    try {
+      optimized = await optimizeEventImage(file!.buffer, kind);
+    } catch (error) {
+      this.logger.warn(
+        `Event image optimize failed: ${String(error).slice(0, 160)}`,
+      );
+      throw new BadRequestException('Could not process image');
+    }
     const uploaded = await this.firebase.uploadPublicFile(
       objectPath,
-      file!.buffer,
-      file!.mimetype,
+      optimized.buffer,
+      optimized.mimetype,
     );
     if (!uploaded) {
       throw new ServiceUnavailableException('Image upload unavailable');
