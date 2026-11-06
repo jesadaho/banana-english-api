@@ -22,6 +22,7 @@ import {
   clockStatus,
   defaultCtaRoute,
   defaultEventAvatarId,
+  eventsApiEnabled,
   eventTimezoneOrDefault,
   isAnomalousAttemptRate,
   isAnomalousScore,
@@ -412,6 +413,7 @@ export class EventsService {
     avatarId?: string | null;
     topicId?: string | null;
   }): Promise<void> {
+    if (!eventsApiEnabled()) return;
     const event = await this.findActiveEvent(params.gameKey, params.topicId);
     if (!event) return;
     const rounded = Math.floor(params.score);
@@ -454,6 +456,7 @@ export class EventsService {
   }
 
   async runScheduler(now = new Date()): Promise<void> {
+    if (!eventsApiEnabled()) return;
     const locked = await this.tryLock('event_scheduler', bangkokMinuteKey(now));
     if (!locked) return;
     const events = await this.prisma.event.findMany({

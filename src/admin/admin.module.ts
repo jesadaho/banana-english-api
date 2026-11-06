@@ -8,6 +8,7 @@ import { SubscriptionsModule } from '../subscriptions/subscriptions.module';
 import { TtsModule } from '../tts/tts.module';
 import { LiveTalkModule } from '../live-talk/live-talk.module';
 import { EventsModule } from '../events/events.module';
+import { eventsApiEnabled } from '../events/event.rules';
 import { AdminAuthGuard } from './admin-auth.guard';
 import { AdminLiveTalkController } from './admin-live-talk.controller';
 import { AdminTtsLiveLinesController } from './admin-tts-live-lines.controller';
@@ -46,7 +47,7 @@ import { AdminEventsController } from './admin-events.controller';
     AdminEarlyBirdController,
     AdminUsersController,
     AdminLiveTalkController,
-    AdminEventsController,
+    ...(eventsApiEnabled() ? [AdminEventsController] : []),
   ],
   providers: [AdminMetricsService, AdminLedgerService, AdminAuthGuard],
 })

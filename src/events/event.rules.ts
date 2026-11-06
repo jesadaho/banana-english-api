@@ -17,6 +17,26 @@ export function isEventGameKey(value: string): value is EventGameKey {
   return (EVENT_GAME_KEYS as readonly string[]).includes(value);
 }
 
+/** Staging (and local) only until EVENTS_ENABLED is turned on for production. */
+export function eventsApiEnabled(
+  env: NodeJS.Dict<string | undefined> = process.env,
+): boolean {
+  const flag = (env.EVENTS_ENABLED ?? '').trim().toLowerCase();
+  if (flag === 'true' || flag === '1') return true;
+  if (flag === 'false' || flag === '0') return false;
+  const hay = [
+    env.RAILWAY_ENVIRONMENT,
+    env.RAILWAY_ENVIRONMENT_NAME,
+    env.RAILWAY_PUBLIC_DOMAIN,
+    env.RAILWAY_STATIC_URL,
+  ]
+    .join(' ')
+    .toLowerCase();
+  if (hay.includes('staging')) return true;
+  if (hay.includes('production')) return false;
+  return (env.NODE_ENV ?? '').toLowerCase() !== 'production';
+}
+
 export function defaultCtaRoute(gameKey: EventGameKey): string {
   return EVENT_CTA_ROUTES[gameKey];
 }

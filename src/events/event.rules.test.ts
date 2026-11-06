@@ -10,6 +10,7 @@ import {
   bangkokMinuteKey,
   clockStatus,
   defaultEventAvatarId,
+  eventsApiEnabled,
   isAnomalousAttemptRate,
   isAnomalousScore,
   isEventGameKey,
@@ -153,5 +154,19 @@ describe('event.rules', () => {
 
   it('keys scheduler locks on the Bangkok minute', () => {
     assert.equal(bangkokMinuteKey(new Date('2026-11-05T08:44:10Z')), '2026-11-05T15:44');
+  });
+
+  it('opens the events API on staging and keeps production off', () => {
+    assert.equal(
+      eventsApiEnabled({ RAILWAY_PUBLIC_DOMAIN: 'banana-english-api-staging.up.railway.app' }),
+      true,
+    );
+    assert.equal(
+      eventsApiEnabled({ RAILWAY_PUBLIC_DOMAIN: 'banana-english-api-production.up.railway.app' }),
+      false,
+    );
+    assert.equal(eventsApiEnabled({ NODE_ENV: 'production' }), false);
+    assert.equal(eventsApiEnabled({ EVENTS_ENABLED: 'true', NODE_ENV: 'production' }), true);
+    assert.equal(eventsApiEnabled({ EVENTS_ENABLED: 'false', RAILWAY_ENVIRONMENT: 'staging' }), false);
   });
 });

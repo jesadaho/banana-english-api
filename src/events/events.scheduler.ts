@@ -1,5 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
+import { eventsApiEnabled } from './event.rules';
 import { EventsService } from './events.service';
 
 @Injectable()
@@ -10,6 +11,7 @@ export class EventsScheduler {
 
   @Cron('*/15 * * * *')
   async tick() {
+    if (!eventsApiEnabled()) return;
     try {
       await this.events.runScheduler();
     } catch (error) {
