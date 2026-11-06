@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { User } from '@prisma/client';
+import { EventsService } from '../events/events.service';
 import { PrismaService } from '../prisma/prisma.service';
 import type { EndlessLeaderboardEntry } from './emoji-speak-endless-leaderboard.service';
 
@@ -40,7 +41,10 @@ export function wordCardsResetsIn(now: Date = new Date()): string {
 export class WordCardsLeaderboardService {
   static readonly TOP_SIZE = 20;
 
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly events: EventsService,
+  ) {}
 
   async submitScore(
     user: User,
@@ -71,6 +75,16 @@ export class WordCardsLeaderboardService {
       : await this.prisma.wordCardsEndlessScore.create({
           data: { userId: user.id, weekKey, bestScore: rounded, displayName, avatarId: avatar },
         });
+    try {
+      await this.events.recordScore({
+        user,
+        gameKey: 'word_cards_endless',
+        score: rounded,
+        avatarId: avatar,
+      });
+    } catch {
+      // Event board must not fail the weekly submit.
+    }
     return {
       weekKey,
       bestScore: saved.bestScore,

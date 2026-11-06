@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { EconomyModule } from '../economy/economy.module';
 import { PhonicsModule } from '../phonics/phonics.module';
 import { UsersModule } from '../users/users.module';
+import { EventsModule } from '../events/events.module';
 import { EmojiSpeakService } from '../emoji-speak/emoji-speak.service';
 import { EmojiSpeakEndlessLeaderboardService } from './emoji-speak-endless-leaderboard.service';
 import { WordCardsLeaderboardService } from './word-cards-leaderboard.service';
@@ -12,7 +13,7 @@ import { SpeakChallengeEvaluateService } from './speak-challenge-evaluate.servic
 import { StoryBuilderEvaluateService } from './story-builder-evaluate.service';
 
 @Module({
-  imports: [EconomyModule, UsersModule, PhonicsModule],
+  imports: [EconomyModule, UsersModule, PhonicsModule, EventsModule],
   controllers: [MiniGamesController],
   providers: [
     SpeakChallengeEvaluateService,

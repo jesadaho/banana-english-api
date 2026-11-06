@@ -19,6 +19,20 @@ enum SubscriptionTier {
   PRO_MAX
 }
 
+enum EventStatus {
+  DRAFT
+  SCHEDULED
+  ACTIVE
+  ENDED
+  FINALIZING
+  REWARDED
+  ARCHIVED
+}
+
+enum EventRewardType {
+  AVATAR
+}
+
 model User {
   id                      String    @id @default(uuid())
   anonymousId             String    @unique
@@ -169,6 +183,10 @@ model User {
   liveTalkParticipations  LiveTalkParticipant[]
   liveTalkRatings         LiveTalkRating[]
   weeklyReportSnapshots   WeeklyReportSnapshot[]
+  eventLeaderboardRows    EventLeaderboard[]
+  eventScoreAttempts      EventScoreAttempt[]
+  eventResults            EventResult[]
+  eventRewardGrants       EventRewardGrant[]
 
   createdAt               DateTime  @default(now())
   updatedAt               DateTime  @updatedAt
@@ -809,4 +827,140 @@ model LiveTalkRating {
   @@index([userId, createdAt])
   @@index([roomId, rating, createdAt])
   @@index([rating, createdAt])
+}
+
+/** Seasonal event layered on existing mini-game leaderboards. */
+model Event {
+  id                     String      @id @default(uuid())
+  gameKey                String
+  topicId                String?
+  name                   String
+  startsAt               DateTime
+  endsAt                 DateTime
+  timezone               String      @default("Asia/Bangkok")
+  enabled                Boolean     @default(false)
+  autoDistributeRewards  Boolean     @default(true)
+  status                 EventStatus @default(DRAFT)
+  rewardHold             Boolean     @default(false)
+  headlineTh             String?
+  headlineEn             String?
+  bannerImageUrl         String?
+  ctaRoute               String?
+  startNotifiedAt        DateTime?
+  endingSoonNotifiedAt   DateTime?
+  endedNotifiedAt        DateTime?
+  snapshotAt             DateTime?
+  rewardedAt             DateTime?
+  archivedAt             DateTime?
+  createdAt              DateTime    @default(now())
+  updatedAt              DateTime    @updatedAt
+
+  rewardTiers EventRewardTier[]
+  leaderboard EventLeaderboard[]
+  attempts    EventScoreAttempt[]
+  results     EventResult[]
+  grants      EventRewardGrant[]
+
+  @@index([gameKey, status])
+  @@index([status, startsAt, endsAt])
+}
+
+model EventRewardTier {
+  id             String          @id @default(uuid())
+  eventId        String
+  rankFrom       Int
+  rankTo         Int
+  rewardType     EventRewardType @default(AVATAR)
+  avatarId       String
+  avatarImageUrl String?
+  nameTh         String
+  nameEn         String
+  sortOrder      Int             @default(0)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  event  Event              @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  grants EventRewardGrant[]
+
+  @@index([eventId, rankFrom])
+}
+
+model EventLeaderboard {
+  id          String   @id @default(uuid())
+  eventId     String
+  userId      String
+  bestScore   Int
+  playCount   Int      @default(1)
+  displayName String?
+  avatarId    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([eventId, userId])
+  @@index([eventId, bestScore])
+}
+
+model EventScoreAttempt {
+  id        String   @id @default(uuid())
+  eventId   String
+  userId    String
+  score     Int
+  topicId   String?
+  createdAt DateTime @default(now())
+
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([eventId, userId, createdAt])
+  @@index([eventId, createdAt])
+}
+
+model EventResult {
+  id          String   @id @default(uuid())
+  eventId     String
+  userId      String
+  rank        Int
+  score       Int
+  displayName String?
+  avatarId    String?
+  createdAt   DateTime @default(now())
+
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([eventId, userId])
+  @@index([eventId, rank])
+}
+
+model EventRewardGrant {
+  id             String    @id @default(uuid())
+  eventId        String
+  userId         String
+  rewardTierId   String
+  avatarId       String
+  avatarImageUrl String?
+  nameTh         String
+  nameEn         String
+  rank           Int
+  seenAt         DateTime?
+  createdAt      DateTime  @default(now())
+
+  event      Event           @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  user       User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  rewardTier EventRewardTier @relation(fields: [rewardTierId], references: [id], onDelete: Cascade)
+
+  @@unique([eventId, userId, rewardTierId])
+  @@index([userId, seenAt])
+}
+
+model EventJobLock {
+  id        String   @id @default(uuid())
+  jobKey    String
+  runKey    String
+  createdAt DateTime @default(now())
+
+  @@unique([jobKey, runKey])
 }
