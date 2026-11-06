@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { User } from '@prisma/client';
+import { EventsService } from '../events/events.service';
 import { PrismaService } from '../prisma/prisma.service';
 
 export type EndlessLeaderboardEntry = {
@@ -21,7 +22,10 @@ export class EmojiSpeakEndlessLeaderboardService {
 
   static readonly LEADERBOARD_TOP_SIZE = 10;
 
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly events: EventsService,
+  ) {}
 
   async submitScore(
     user: User,
@@ -50,6 +54,7 @@ export class EmojiSpeakEndlessLeaderboardService {
           avatarId: avatar,
         },
       });
+      await this.hookEventScore(user, rounded, avatar);
       return { weekKey, bestScore: created.bestScore, improved: true };
     }
 
@@ -63,6 +68,7 @@ export class EmojiSpeakEndlessLeaderboardService {
         avatarId: avatar ?? existing.avatarId,
       },
     });
+    await this.hookEventScore(user, rounded, avatar);
     return { weekKey, bestScore: updated.bestScore, improved };
   }
 
@@ -137,5 +143,22 @@ export class EmojiSpeakEndlessLeaderboardService {
     }
 
     return { weekKey, resetsIn, top, me };
+  }
+
+  private async hookEventScore(
+    user: User,
+    score: number,
+    avatarId: string | null,
+  ): Promise<void> {
+    try {
+      await this.events.recordScore({
+        user,
+        gameKey: 'emoji_speak_endless',
+        score,
+        avatarId,
+      });
+    } catch {
+      // Event board must not fail the all-time submit.
+    }
   }
 }

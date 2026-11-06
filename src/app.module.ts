@@ -38,6 +38,7 @@ import { BugReportsModule } from './bug-reports/bug-reports.module';
 import { PhonicsModule } from './phonics/phonics.module';
 import { SubscriptionsModule } from './subscriptions/subscriptions.module';
 import { WeeklyReportModule } from './weekly-report/weekly-report.module';
+import { EventsModule } from './events/events.module';
 
 @Module({
   imports: [
@@ -73,6 +74,7 @@ import { WeeklyReportModule } from './weekly-report/weekly-report.module';
     ReferralsModule,
     SubscriptionsModule,
     WeeklyReportModule,
+    EventsModule,
     SayItModule,
     InOnAtModule,
     LiveTalkModule,

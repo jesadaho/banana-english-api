@@ -170,6 +170,13 @@ export interface UserProfileResponse {
   communityAdmin: boolean;
   /** True for community admins, and for everyone on staging. */
   liveTalkCanCreate: boolean;
+  /** Avatars granted by events, rendered from URL in the app. */
+  eventAvatars: Array<{
+    id: string;
+    imageUrl: string;
+    nameTh: string;
+    nameEn: string;
+  }>;
 }
 
 export interface DebugRefillBananasByNameResponse {
@@ -263,7 +270,7 @@ export class UsersService {
 
     updated = await this.economy.maybeRefillFreeBananas(updated);
     updated = await this.economy.ensureOnboardingBonus(updated.id);
-    return this.getProfile(updated);
+    return this.withEventAvatars(updated);
   }
 
   async completeOnboarding(
@@ -671,8 +678,16 @@ export class UsersService {
 
   async selectAvatar(user: User, avatarId: string): Promise<UserProfileResponse> {
     const id = avatarId.trim();
+    const eventUnlocked = user.unlockedAvatarIds.includes(id);
     if (!isKnownAvatarId(id)) {
-      throw new BadRequestException('Unknown avatar');
+      if (!eventUnlocked) {
+        throw new BadRequestException('Unknown avatar');
+      }
+      const updated = await this.prisma.user.update({
+        where: { id: user.id },
+        data: { avatarId: id },
+      });
+      return this.getProfile(updated);
     }
     const membership = avatarMembership(id);
     if (!canUseMemberAvatar(id, subscriptionPayload(user).tier)) {
@@ -745,6 +760,10 @@ export class UsersService {
       data: { displayName: trimmed },
     });
     await this.prisma.explainItTopicScore.updateMany({
+      where: { userId },
+      data: { displayName: trimmed },
+    });
+    await this.prisma.eventLeaderboard.updateMany({
       where: { userId },
       data: { displayName: trimmed },
     });
@@ -862,6 +881,32 @@ export class UsersService {
       earlyBird: earlyBirdPayload(user),
       communityAdmin: liveTalkCanCreate,
       liveTalkCanCreate,
+      eventAvatars: [],
     };
+  }
+
+  private async withEventAvatars(user: User): Promise<UserProfileResponse> {
+    const profile = this.getProfile(user);
+    try {
+      const grants = await this.prisma.eventRewardGrant.findMany({
+        where: { userId: user.id },
+        orderBy: { createdAt: 'desc' },
+      });
+      const seen = new Set<string>();
+      const eventAvatars: UserProfileResponse['eventAvatars'] = [];
+      for (const grant of grants) {
+        if (seen.has(grant.avatarId) || !grant.avatarImageUrl) continue;
+        seen.add(grant.avatarId);
+        eventAvatars.push({
+          id: grant.avatarId,
+          imageUrl: grant.avatarImageUrl,
+          nameTh: grant.nameTh,
+          nameEn: grant.nameEn,
+        });
+      }
+      return { ...profile, eventAvatars };
+    } catch {
+      return profile;
+    }
   }
 }

@@ -7,6 +7,8 @@ import { ReferralsModule } from '../referrals/referrals.module';
 import { SubscriptionsModule } from '../subscriptions/subscriptions.module';
 import { TtsModule } from '../tts/tts.module';
 import { LiveTalkModule } from '../live-talk/live-talk.module';
+import { EventsModule } from '../events/events.module';
+import { eventsApiEnabled } from '../events/event.rules';
 import { AdminAuthGuard } from './admin-auth.guard';
 import { AdminLiveTalkController } from './admin-live-talk.controller';
 import { AdminTtsLiveLinesController } from './admin-tts-live-lines.controller';
@@ -20,6 +22,7 @@ import { AdminMetricsService } from './admin-metrics.service';
 import { AdminReferralsController } from './admin-referrals.controller';
 import { AdminSubscriptionsController } from './admin-subscriptions.controller';
 import { AdminUsersController } from './admin-users.controller';
+import { AdminEventsController } from './admin-events.controller';
 
 @Module({
   imports: [
@@ -31,6 +34,7 @@ import { AdminUsersController } from './admin-users.controller';
     SubscriptionsModule,
     TtsModule,
     LiveTalkModule,
+    EventsModule,
   ],
   controllers: [
     AdminMetricsController,
@@ -43,6 +47,7 @@ import { AdminUsersController } from './admin-users.controller';
     AdminEarlyBirdController,
     AdminUsersController,
     AdminLiveTalkController,
+    ...(eventsApiEnabled() ? [AdminEventsController] : []),
   ],
   providers: [AdminMetricsService, AdminLedgerService, AdminAuthGuard],
 })

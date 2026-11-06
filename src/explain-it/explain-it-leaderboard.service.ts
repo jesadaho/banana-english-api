@@ -4,6 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { User } from '@prisma/client';
+import { EventsService } from '../events/events.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { explainItTopicById } from './explain-it.data';
 
@@ -19,7 +20,10 @@ export type ExplainItLeaderboardEntry = {
 export class ExplainItLeaderboardService {
   static readonly LEADERBOARD_TOP_SIZE = 10;
 
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly events: EventsService,
+  ) {}
 
   requireTopicId(topicId: string): string {
     const id = topicId.trim().toLowerCase();
@@ -57,6 +61,7 @@ export class ExplainItLeaderboardService {
           avatarId: avatar,
         },
       });
+      await this.hookEventScore(user, topic, rounded, avatar);
       return { topicId: topic, bestScore: created.bestScore, improved: true };
     }
 
@@ -69,7 +74,27 @@ export class ExplainItLeaderboardService {
         avatarId: avatar ?? existing.avatarId,
       },
     });
+    await this.hookEventScore(user, topic, rounded, avatar);
     return { topicId: topic, bestScore: updated.bestScore, improved };
+  }
+
+  private async hookEventScore(
+    user: User,
+    topicId: string,
+    score: number,
+    avatarId: string | null,
+  ): Promise<void> {
+    try {
+      await this.events.recordScore({
+        user,
+        gameKey: 'explain_it_challenge',
+        score,
+        avatarId,
+        topicId,
+      });
+    } catch {
+      // Event board must not fail the all-time submit.
+    }
   }
 
   async syncDisplayName(userId: string, displayName: string): Promise<void> {

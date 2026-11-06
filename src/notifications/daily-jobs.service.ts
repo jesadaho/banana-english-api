@@ -234,7 +234,14 @@ export class DailyJobsService {
     tokens: string[],
     type: Exclude<
       PushNotificationType,
-      'bug_report_reply' | 'referral_reward' | 'daily_practice' | 'weekly_report'
+      | 'bug_report_reply'
+      | 'referral_reward'
+      | 'daily_practice'
+      | 'weekly_report'
+      | 'event_start'
+      | 'event_ending_soon'
+      | 'event_ended'
+      | 'event_reward'
     >,
   ): Promise<string[]> {
     const payload = pushPayloadForType(type);

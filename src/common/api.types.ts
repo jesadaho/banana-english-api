@@ -619,6 +619,12 @@ export interface UserProfileResponse {
   };
   /** Next timed free banana; null while the free pool is full. */
   nextBananaRefillAt: string | null;
+  eventAvatars?: Array<{
+    id: string;
+    imageUrl: string;
+    nameTh: string;
+    nameEn: string;
+  }>;
 }
 
 /** POST /lessons/ratings — comment bonus is uncapped. */
