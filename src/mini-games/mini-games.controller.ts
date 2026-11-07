@@ -400,11 +400,14 @@ export class MiniGamesController {
     @Req() req: AuthedRequest,
     @Body() body: EndlessScoreDto,
   ) {
+    const syncOnly = body.syncOnly === true;
     const scoreResult = await this.endlessLeaderboard.submitScore(
       req.user,
       body.score,
       body.avatarId,
+      { syncOnly },
     );
+    if (syncOnly) return scoreResult;
     await this.economy.logPlayActivity(
       req.user.id,
       'emoji_speak_play',
@@ -420,11 +423,14 @@ export class MiniGamesController {
     @Req() req: AuthedRequest,
     @Body() body: EndlessScoreDto,
   ) {
+    const syncOnly = body.syncOnly === true;
     const scoreResult = await this.wordCardsLeaderboard.submitScore(
       req.user,
       body.score,
       body.avatarId,
+      { syncOnly },
     );
+    if (syncOnly) return scoreResult;
     await this.economy.logPlayActivity(
       req.user.id,
       'word_cards_play',

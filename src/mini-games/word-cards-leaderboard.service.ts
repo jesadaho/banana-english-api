@@ -50,6 +50,7 @@ export class WordCardsLeaderboardService {
     user: User,
     score: number,
     avatarId?: string | null,
+    opts?: { syncOnly?: boolean },
   ): Promise<{ weekKey: string; bestScore: number; improved: boolean; rank: number }> {
     if (!Number.isFinite(score) || score < 0 || score > 100000) {
       throw new BadRequestException('Invalid score');
@@ -58,6 +59,7 @@ export class WordCardsLeaderboardService {
     const weekKey = wordCardsWeekKey();
     const displayName = user.displayName?.trim() || null;
     const avatar = avatarId?.trim() || null;
+    const syncOnly = opts?.syncOnly === true;
 
     const existing = await this.prisma.wordCardsEndlessScore.findUnique({
       where: { userId_weekKey: { userId: user.id, weekKey } },
@@ -75,15 +77,17 @@ export class WordCardsLeaderboardService {
       : await this.prisma.wordCardsEndlessScore.create({
           data: { userId: user.id, weekKey, bestScore: rounded, displayName, avatarId: avatar },
         });
-    try {
-      await this.events.recordScore({
-        user,
-        gameKey: 'word_cards_endless',
-        score: rounded,
-        avatarId: avatar,
-      });
-    } catch {
-      // Event board must not fail the weekly submit.
+    if (!syncOnly) {
+      try {
+        await this.events.recordScore({
+          user,
+          gameKey: 'word_cards_endless',
+          score: rounded,
+          avatarId: avatar,
+        });
+      } catch {
+        // Event board must not fail the weekly submit.
+      }
     }
     return {
       weekKey,

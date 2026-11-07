@@ -38,6 +38,7 @@ export class ExplainItLeaderboardService {
     topicId: string,
     score: number,
     avatarId?: string | null,
+    opts?: { syncOnly?: boolean },
   ): Promise<{ topicId: string; bestScore: number; improved: boolean }> {
     const topic = this.requireTopicId(topicId);
     if (!Number.isFinite(score) || score < 0 || score > 2000) {
@@ -46,6 +47,7 @@ export class ExplainItLeaderboardService {
     const rounded = Math.floor(score);
     const displayName = user.displayName?.trim() || null;
     const avatar = avatarId?.trim() || null;
+    const syncOnly = opts?.syncOnly === true;
 
     const existing = await this.prisma.explainItTopicScore.findUnique({
       where: { userId_topicId: { userId: user.id, topicId: topic } },
@@ -61,7 +63,7 @@ export class ExplainItLeaderboardService {
           avatarId: avatar,
         },
       });
-      await this.hookEventScore(user, topic, rounded, avatar);
+      if (!syncOnly) await this.hookEventScore(user, topic, rounded, avatar);
       return { topicId: topic, bestScore: created.bestScore, improved: true };
     }
 
@@ -74,7 +76,7 @@ export class ExplainItLeaderboardService {
         avatarId: avatar ?? existing.avatarId,
       },
     });
-    await this.hookEventScore(user, topic, rounded, avatar);
+    if (!syncOnly) await this.hookEventScore(user, topic, rounded, avatar);
     return { topicId: topic, bestScore: updated.bestScore, improved };
   }
 

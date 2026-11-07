@@ -1,5 +1,12 @@
-import { Type } from 'class-transformer';
-import { IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
+import { Transform, Type } from 'class-transformer';
+import {
+  IsBoolean,
+  IsInt,
+  IsOptional,
+  IsString,
+  Max,
+  Min,
+} from 'class-validator';
 
 export class ExplainItScoreDto {
   @Type(() => Number)
@@ -11,4 +18,10 @@ export class ExplainItScoreDto {
   @IsOptional()
   @IsString()
   avatarId?: string;
+
+  /** Re-seed classic board only — do not write the active event leaderboard. */
+  @IsOptional()
+  @Transform(({ value }) => value === true || value === 'true')
+  @IsBoolean()
+  syncOnly?: boolean;
 }
