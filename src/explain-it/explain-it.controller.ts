@@ -124,6 +124,7 @@ export class ExplainItController {
       topicId,
       body.score,
       body.avatarId,
+      { syncOnly: body.syncOnly === true },
     );
   }
 

@@ -31,6 +31,7 @@ export class EmojiSpeakEndlessLeaderboardService {
     user: User,
     score: number,
     avatarId?: string | null,
+    opts?: { syncOnly?: boolean },
   ): Promise<{ weekKey: string; bestScore: number; improved: boolean }> {
     if (!Number.isFinite(score) || score < 0 || score > 100000) {
       throw new BadRequestException('Invalid score');
@@ -39,6 +40,7 @@ export class EmojiSpeakEndlessLeaderboardService {
     const weekKey = EmojiSpeakEndlessLeaderboardService.ALL_TIME_KEY;
     const displayName = user.displayName?.trim() || null;
     const avatar = avatarId?.trim() || null;
+    const syncOnly = opts?.syncOnly === true;
 
     const existing = await this.prisma.emojiSpeakEndlessWeeklyScore.findUnique({
       where: { userId_weekKey: { userId: user.id, weekKey } },
@@ -54,7 +56,7 @@ export class EmojiSpeakEndlessLeaderboardService {
           avatarId: avatar,
         },
       });
-      await this.hookEventScore(user, rounded, avatar);
+      if (!syncOnly) await this.hookEventScore(user, rounded, avatar);
       return { weekKey, bestScore: created.bestScore, improved: true };
     }
 
@@ -68,7 +70,7 @@ export class EmojiSpeakEndlessLeaderboardService {
         avatarId: avatar ?? existing.avatarId,
       },
     });
-    await this.hookEventScore(user, rounded, avatar);
+    if (!syncOnly) await this.hookEventScore(user, rounded, avatar);
     return { weekKey, bestScore: updated.bestScore, improved };
   }
 
