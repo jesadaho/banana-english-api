@@ -56,6 +56,7 @@ export class EmojiSpeakEndlessLeaderboardService {
           avatarId: avatar,
         },
       });
+      // First classic row: only count toward an event on a real play.
       if (!syncOnly) await this.hookEventScore(user, rounded, avatar);
       return { weekKey, bestScore: created.bestScore, improved: true };
     }
@@ -70,7 +71,11 @@ export class EmojiSpeakEndlessLeaderboardService {
         avatarId: avatar ?? existing.avatarId,
       },
     });
-    if (!syncOnly) await this.hookEventScore(user, rounded, avatar);
+    // Re-posting the same classic PB (leaderboard seed on old app builds)
+    // must not import into the event board. A lower in-event run still counts.
+    if (!syncOnly && (improved || rounded !== existing.bestScore)) {
+      await this.hookEventScore(user, rounded, avatar);
+    }
     return { weekKey, bestScore: updated.bestScore, improved };
   }
 
