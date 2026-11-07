@@ -19,6 +19,7 @@ import {
   type LiveTalkMinSpeakLevel,
   type LiveTalkRole,
 } from './live-talk.rules';
+import { deleteLiveKitRoom } from './live-talk.livekit';
 import { liveKitConfigFromEnv, mintLiveKitJwt } from './live-talk.token';
 
 type UserRow = {
@@ -284,15 +285,32 @@ export class LiveTalkService {
     if (room.hostUserId !== user.id) {
       throw new ForbiddenException('host_only');
     }
-    await this.prisma.liveTalkRoom.update({
-      where: { id: room.id },
-      data: { status: 'ended', endedAt: new Date() },
-    });
-    await this.prisma.liveTalkParticipant.updateMany({
-      where: { roomId: room.id, leftAt: null },
-      data: { leftAt: new Date() },
-    });
+    if (room.status === 'live') {
+      await this.markRoomEnded(room);
+    } else {
+      // Already ended in DB — still kick anyone left on LiveKit.
+      await deleteLiveKitRoom(room.livekitRoomName);
+    }
     return { ok: true };
+  }
+
+  /**
+   * Host force-quit / network drop: LiveKit fires participant_left while
+   * others may still be in the room, so room_finished never arrives.
+   * Non-host leaves are ignored here (role changes also disconnect).
+   */
+  async leaveByLivekitIdentity(livekitRoomName: string, identity: string) {
+    const userId = identity.trim();
+    if (!userId) return { ok: true, left: false };
+    const room = await this.prisma.liveTalkRoom.findUnique({
+      where: { livekitRoomName },
+    });
+    if (!room || room.status !== 'live') return { ok: true, left: false };
+    if (room.hostUserId !== userId) {
+      return { ok: true, left: false, ignored: true };
+    }
+    await this.markRoomEnded(room);
+    return { ok: true, left: true, ended: true };
   }
 
   async endByLivekitName(livekitRoomName: string) {
@@ -300,15 +318,24 @@ export class LiveTalkService {
       where: { livekitRoomName },
     });
     if (!room || room.status !== 'live') return { ok: true, ended: false };
-    await this.prisma.liveTalkRoom.update({
-      where: { id: room.id },
-      data: { status: 'ended', endedAt: new Date() },
+    await this.markRoomEnded(room);
+    return { ok: true, ended: true };
+  }
+
+  private async markRoomEnded(room: {
+    id: string;
+    livekitRoomName: string;
+  }) {
+    const endedAt = new Date();
+    await this.prisma.liveTalkRoom.updateMany({
+      where: { id: room.id, status: 'live' },
+      data: { status: 'ended', endedAt },
     });
     await this.prisma.liveTalkParticipant.updateMany({
       where: { roomId: room.id, leftAt: null },
-      data: { leftAt: new Date() },
+      data: { leftAt: endedAt },
     });
-    return { ok: true, ended: true };
+    await deleteLiveKitRoom(room.livekitRoomName);
   }
 
   private async requireRoom(roomId: string) {
