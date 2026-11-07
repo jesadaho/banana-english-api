@@ -266,3 +266,60 @@ describe('LiveTalkService.submitRating', () => {
     );
   });
 });
+
+describe('LiveTalkService.leaveByLivekitIdentity', () => {
+  it('ends the room when the host disconnects', async () => {
+    const updates: Array<Record<string, unknown>> = [];
+    const participantUpdates: Array<Record<string, unknown>> = [];
+    const prisma = {
+      liveTalkRoom: {
+        findUnique: async () => ({
+          id: 'room-1',
+          hostUserId: 'host-1',
+          livekitRoomName: 'lt_abc',
+          status: 'live',
+        }),
+        updateMany: async (args: { data: Record<string, unknown> }) => {
+          updates.push(args.data);
+          return { count: 1 };
+        },
+      },
+      liveTalkParticipant: {
+        updateMany: async (args: { data: Record<string, unknown> }) => {
+          participantUpdates.push(args.data);
+          return { count: 1 };
+        },
+      },
+    };
+    const service = new LiveTalkService(prisma as unknown as PrismaService);
+    const result = await service.leaveByLivekitIdentity('lt_abc', 'host-1');
+    assert.equal(result.ended, true);
+    assert.equal(updates[0]?.status, 'ended');
+    assert.ok(participantUpdates[0]?.leftAt instanceof Date);
+  });
+
+  it('ignores non-host disconnects so role changes do not end the room', async () => {
+    const prisma = {
+      liveTalkRoom: {
+        findUnique: async () => ({
+          id: 'room-1',
+          hostUserId: 'host-1',
+          livekitRoomName: 'lt_abc',
+          status: 'live',
+        }),
+        updateMany: async () => {
+          throw new Error('should not end room');
+        },
+      },
+      liveTalkParticipant: {
+        updateMany: async () => {
+          throw new Error('should not mark leave');
+        },
+      },
+    };
+    const service = new LiveTalkService(prisma as unknown as PrismaService);
+    const result = await service.leaveByLivekitIdentity('lt_abc', 'guest-1');
+    assert.equal(result.ignored, true);
+    assert.equal(result.left, false);
+  });
+});
