@@ -77,7 +77,11 @@ export class WordCardsLeaderboardService {
       : await this.prisma.wordCardsEndlessScore.create({
           data: { userId: user.id, weekKey, bestScore: rounded, displayName, avatarId: avatar },
         });
-    if (!syncOnly) {
+    // Skip event when syncOnly, or when this is just a re-seed of the same
+    // weekly PB (old clients open the classic board without syncOnly).
+    const countTowardEvent =
+      !syncOnly && (improved || (existing != null && rounded !== existing.bestScore));
+    if (countTowardEvent) {
       try {
         await this.events.recordScore({
           user,

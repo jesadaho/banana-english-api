@@ -76,7 +76,9 @@ export class ExplainItLeaderboardService {
         avatarId: avatar ?? existing.avatarId,
       },
     });
-    if (!syncOnly) await this.hookEventScore(user, topic, rounded, avatar);
+    if (!syncOnly && (improved || rounded !== existing.bestScore)) {
+      await this.hookEventScore(user, topic, rounded, avatar);
+    }
     return { topicId: topic, bestScore: updated.bestScore, improved };
   }
 
