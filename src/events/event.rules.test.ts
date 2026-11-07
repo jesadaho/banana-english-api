@@ -156,16 +156,16 @@ describe('event.rules', () => {
     assert.equal(bangkokMinuteKey(new Date('2026-11-05T08:44:10Z')), '2026-11-05T15:44');
   });
 
-  it('opens the events API on staging and keeps production off', () => {
+  it('keeps the events API on by default with an explicit kill-switch', () => {
     assert.equal(
       eventsApiEnabled({ RAILWAY_PUBLIC_DOMAIN: 'banana-english-api-staging.up.railway.app' }),
       true,
     );
     assert.equal(
       eventsApiEnabled({ RAILWAY_PUBLIC_DOMAIN: 'banana-english-api-production.up.railway.app' }),
-      false,
+      true,
     );
-    assert.equal(eventsApiEnabled({ NODE_ENV: 'production' }), false);
+    assert.equal(eventsApiEnabled({ NODE_ENV: 'production' }), true);
     assert.equal(eventsApiEnabled({ EVENTS_ENABLED: 'true', NODE_ENV: 'production' }), true);
     assert.equal(eventsApiEnabled({ EVENTS_ENABLED: 'false', RAILWAY_ENVIRONMENT: 'staging' }), false);
   });
