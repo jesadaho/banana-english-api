@@ -847,6 +847,171 @@ export class LiveTalkService {
     return { ratings: rows };
   }
 
+  /** Admin dashboard: host roster, live rooms, booked sessions, recent ratings. */
+  async adminOverview(now = new Date()) {
+    const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+    const horizon = new Date(now.getTime() + 14 * 24 * 60 * 60 * 1000);
+    const [
+      hosts,
+      liveRooms,
+      upcomingSessions,
+      recentRatings,
+      ratingUp7d,
+      ratingDown7d,
+      roomsEnded7d,
+    ] = await Promise.all([
+      this.prisma.user.findMany({
+        where: { hostLevel: { not: 'none' } },
+        orderBy: [{ hostLevel: 'desc' }, { hostLevelAt: 'desc' }],
+        take: 200,
+        select: {
+          id: true,
+          displayName: true,
+          email: true,
+          avatarId: true,
+          hostLevel: true,
+          hostLevelAt: true,
+          hostRulesAcceptedAt: true,
+          communityAdmin: true,
+        },
+      }),
+      this.prisma.liveTalkRoom.findMany({
+        where: { status: 'live' },
+        orderBy: { createdAt: 'desc' },
+        take: 50,
+        include: {
+          host: {
+            select: {
+              id: true,
+              displayName: true,
+              hostLevel: true,
+            },
+          },
+          participants: {
+            where: { leftAt: null },
+            select: { role: true },
+          },
+        },
+      }),
+      this.prisma.liveTalkSession.findMany({
+        where: {
+          status: 'scheduled',
+          startsAt: {
+            gte: new Date(now.getTime() - 2 * 60 * 60 * 1000),
+            lt: horizon,
+          },
+        },
+        orderBy: { startsAt: 'asc' },
+        take: 100,
+        include: {
+          host: {
+            select: {
+              id: true,
+              displayName: true,
+              hostLevel: true,
+              email: true,
+            },
+          },
+        },
+      }),
+      this.prisma.liveTalkRating.findMany({
+        orderBy: { createdAt: 'desc' },
+        take: 30,
+        include: {
+          room: { select: { id: true, title: true } },
+          user: { select: { id: true, displayName: true } },
+        },
+      }),
+      this.prisma.liveTalkRating.count({
+        where: { rating: 'up', createdAt: { gte: weekAgo } },
+      }),
+      this.prisma.liveTalkRating.count({
+        where: { rating: 'down', createdAt: { gte: weekAgo } },
+      }),
+      this.prisma.liveTalkRoom.count({
+        where: { status: 'ended', endedAt: { gte: weekAgo } },
+      }),
+    ]);
+
+    const byLevel = { none: 0, trainee: 0, host: 0, official: 0 };
+    for (const h of hosts) {
+      const level = hostLevelOf(h);
+      byLevel[level] += 1;
+    }
+
+    return {
+      generatedAt: now.toISOString(),
+      byLevel,
+      kpis: {
+        hosts: hosts.length,
+        official: byLevel.official,
+        host: byLevel.host,
+        trainee: byLevel.trainee,
+        liveRooms: liveRooms.length,
+        upcomingSessions: upcomingSessions.length,
+        roomsEnded7d,
+        ratingUp7d,
+        ratingDown7d,
+      },
+      hosts: hosts.map((h) => ({
+        userId: h.id,
+        displayName: h.displayName?.trim() || 'เพื่อน',
+        email: h.email,
+        avatarId: h.avatarId,
+        hostLevel: hostLevelOf(h),
+        hostLevelAt: h.hostLevelAt?.toISOString() ?? null,
+        rulesAcceptedAt: h.hostRulesAcceptedAt?.toISOString() ?? null,
+        communityAdmin: h.communityAdmin === true,
+      })),
+      liveRooms: liveRooms.map((room) => {
+        const speakers = room.participants.filter((p) =>
+          countsAsSpeaker(p.role),
+        ).length;
+        const listeners = room.participants.filter(
+          (p) => p.role === 'listener',
+        ).length;
+        return {
+          id: room.id,
+          title: room.title,
+          minSpeakLevel: room.minSpeakLevel,
+          createdAt: room.createdAt.toISOString(),
+          host: {
+            userId: room.host.id,
+            displayName: room.host.displayName?.trim() || 'เพื่อน',
+            hostLevel: hostLevelOf(room.host),
+          },
+          speakerCount: speakers,
+          listenerCount: listeners,
+        };
+      }),
+      upcomingSessions: upcomingSessions.map((row) => ({
+        id: row.id,
+        title: row.title,
+        description: row.description,
+        startsAt: row.startsAt.toISOString(),
+        durationMin: row.durationMin,
+        host: {
+          userId: row.host.id,
+          displayName: row.host.displayName?.trim() || 'เพื่อน',
+          email: row.host.email,
+          hostLevel: hostLevelOf(row.host),
+        },
+      })),
+      recentRatings: recentRatings.map((row) => ({
+        id: row.id,
+        rating: row.rating,
+        feedback: row.feedback,
+        listenedSeconds: row.listenedSeconds,
+        createdAt: row.createdAt.toISOString(),
+        room: row.room,
+        user: {
+          userId: row.user.id,
+          displayName: row.user.displayName?.trim() || 'เพื่อน',
+        },
+      })),
+    };
+  }
+
   async leaveRoom(user: UserRow, roomId: string) {
     const room = await this.requireRoom(roomId);
     await this.prisma.liveTalkParticipant.updateMany({

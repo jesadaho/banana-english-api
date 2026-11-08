@@ -15,6 +15,11 @@ import { AdminAuthGuard } from './admin-auth.guard';
 export class AdminLiveTalkController {
   constructor(private readonly liveTalk: LiveTalkService) {}
 
+  @Get('overview')
+  overview() {
+    return this.liveTalk.adminOverview();
+  }
+
   @Get('ratings')
   listRatings(@Query('rating') rating?: string) {
     return this.liveTalk.listRatings({ rating });
