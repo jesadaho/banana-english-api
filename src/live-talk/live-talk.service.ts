@@ -187,7 +187,7 @@ export class LiveTalkService {
     }
     const title = (body.title ?? '').trim();
     if (!title) throw new BadRequestException('Title is required');
-    const minSpeakLevel = (body.minSpeakLevel ?? 'a1').trim();
+    const minSpeakLevel = (body.minSpeakLevel ?? 'listen_all').trim();
     if (!isLiveTalkMinLevel(minSpeakLevel)) {
       throw new BadRequestException('minSpeakLevel must be a1, a2, or listen_all');
     }
