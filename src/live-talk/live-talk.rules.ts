@@ -12,7 +12,7 @@ export const LIVE_TALK_CONNECT_GRACE_MS = 2 * 60 * 1000;
 /** Hard cap when LiveKit occupancy cannot be checked. */
 export const LIVE_TALK_MAX_LIVE_MS = 3 * 60 * 60 * 1000;
 
-export const LIVE_TALK_MIN_LEVELS = ['a1', 'a2', 'listen_all'] as const;
+export const LIVE_TALK_MIN_LEVELS = ['listen_all', 'a1', 'a2'] as const;
 export type LiveTalkMinSpeakLevel = (typeof LIVE_TALK_MIN_LEVELS)[number];
 export type LiveTalkRole = 'host' | 'cohost' | 'speaker' | 'listener';
 
