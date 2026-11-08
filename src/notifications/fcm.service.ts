@@ -76,6 +76,27 @@ export class FcmService implements OnModuleInit {
     return invalidTokens;
   }
 
+  /**
+   * Data-only ("silent") message to every device subscribed to [topic].
+   * No banner: apps use it to refresh state in the background/foreground.
+   */
+  async sendTopicData(topic: string, data: Record<string, string>): Promise<void> {
+    if (!this.enabled) return;
+    try {
+      await admin.messaging().send({
+        topic,
+        data,
+        android: { priority: 'high', ttl: 60_000 },
+        apns: {
+          headers: { 'apns-push-type': 'background', 'apns-priority': '5' },
+          payload: { aps: { contentAvailable: true } },
+        },
+      });
+    } catch (error) {
+      this.logger.warn(`FCM topic send failed (${topic}): ${String(error)}`);
+    }
+  }
+
   async sendAndPersist(params: {
     userId: string;
     tokens: string[];

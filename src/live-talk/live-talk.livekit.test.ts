@@ -3,6 +3,7 @@ import { describe, it } from 'node:test';
 import {
   deleteLiveKitRoom,
   dispatchCaptionsAgent,
+  isLiveKitAudioTrack,
   liveKitCaptionsAgentName,
 } from './live-talk.livekit';
 
@@ -36,6 +37,20 @@ describe('deleteLiveKitRoom', () => {
   });
 });
 
+describe('isLiveKitAudioTrack', () => {
+  it('matches protojson AUDIO names and numeric enums', () => {
+    assert.equal(isLiveKitAudioTrack({ type: 'AUDIO' }), true);
+    assert.equal(isLiveKitAudioTrack({ type: 0 }), true);
+    assert.equal(isLiveKitAudioTrack({ source: 'MICROPHONE' }), true);
+    assert.equal(isLiveKitAudioTrack({ source: 2 }), true);
+  });
+
+  it('ignores video tracks', () => {
+    assert.equal(isLiveKitAudioTrack({ type: 'VIDEO' }), false);
+    assert.equal(isLiveKitAudioTrack({ type: 1, source: 'CAMERA' }), false);
+  });
+});
+
 describe('captions agent dispatch', () => {
   const env = {
     LIVEKIT_URL: 'wss://demo.livekit.cloud',
@@ -63,9 +78,7 @@ describe('captions agent dispatch', () => {
     );
     assert.equal(calls[0].body.agent_name, 'banana-captions');
     assert.equal(calls[0].body.room, 'lt_room');
-    assert.deepEqual(JSON.parse(String(calls[0].body.metadata)), {
-      hostId: 'host-1',
-    });
+    assert.deepEqual(JSON.parse(String(calls[0].body.metadata)), { hostId: 'host-1' });
   });
 
   it('skips the call when disabled', async () => {

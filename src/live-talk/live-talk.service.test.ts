@@ -116,11 +116,67 @@ describe('LiveTalkService.createRoom', () => {
   });
 });
 
+describe('LiveTalkService.sweepStaleRooms', () => {
+  it('ends live rooms with no active participants', async () => {
+    const ended: string[][] = [];
+    const prisma = {
+      liveTalkRoom: {
+        findMany: async () => [
+          {
+            id: 'ghost',
+            livekitRoomName: 'lt_ghost',
+            createdAt: new Date(),
+            participants: [],
+          },
+        ],
+        updateMany: async (args: { where: { id: { in: string[] } } }) => {
+          ended.push(args.where.id.in);
+          return { count: args.where.id.in.length };
+        },
+      },
+      liveTalkParticipant: {
+        updateMany: async () => ({ count: 0 }),
+      },
+    };
+    const service = new LiveTalkService(prisma as unknown as PrismaService);
+    const count = await service.sweepStaleRooms(new Date(), null);
+    assert.equal(count, 1);
+    assert.deepEqual(ended, [['ghost']]);
+  });
+
+  it('leaves a live room alone when LiveKit still has people', async () => {
+    const prisma = {
+      liveTalkRoom: {
+        findMany: async () => [
+          {
+            id: 'live',
+            livekitRoomName: 'lt_live',
+            createdAt: new Date('2026-01-01T00:00:00.000Z'),
+            participants: [{ id: 'p1' }],
+          },
+        ],
+        updateMany: async () => {
+          throw new Error('should not end');
+        },
+      },
+    };
+    const service = new LiveTalkService(prisma as unknown as PrismaService);
+    const count = await service.sweepStaleRooms(
+      new Date(),
+      new Map([['lt_live', 1]]),
+    );
+    assert.equal(count, 0);
+  });
+});
+
 describe('LiveTalkService.joinRoom', () => {
   it('blocks Seed speakers in A1 rooms', async () => {
     const prisma = {
       liveTalkRoom: {
         findUnique: async () => roomRow(),
+      },
+      liveTalkParticipant: {
+        findFirst: async () => null,
       },
     };
     const service = new LiveTalkService(prisma as unknown as PrismaService);
@@ -160,6 +216,9 @@ describe('LiveTalkService.joinRoom', () => {
             participants: speakers,
           }),
       },
+      liveTalkParticipant: {
+        findFirst: async () => null,
+      },
     };
     const service = new LiveTalkService(prisma as unknown as PrismaService);
     await assert.rejects(
@@ -181,6 +240,43 @@ describe('LiveTalkService.joinRoom', () => {
       (err: unknown) =>
         err instanceof ForbiddenException &&
         (err as ForbiddenException).message === 'speaker_full',
+    );
+  });
+
+  it('blocks a 9th listener', async () => {
+    const listeners = Array.from({ length: 8 }, (_, i) => ({
+      id: `l-${i}`,
+      userId: `l-${i}`,
+      role: 'listener',
+      user: { id: `l-${i}`, displayName: `L${i}`, avatarId: null },
+    }));
+    const prisma = {
+      liveTalkRoom: {
+        findUnique: async () =>
+          roomRow({
+            participants: [...roomRow().participants, ...listeners],
+          }),
+      },
+      liveTalkParticipant: {
+        findFirst: async () => null,
+      },
+    };
+    const service = new LiveTalkService(prisma as unknown as PrismaService);
+    await assert.rejects(
+      () =>
+        service.joinRoom(
+          {
+            id: 'u-new',
+            displayName: 'New',
+            avatarId: null,
+            communityAdmin: false,
+          },
+          'room-1',
+          'listener',
+        ),
+      (err: unknown) =>
+        err instanceof ForbiddenException &&
+        (err as ForbiddenException).message === 'listener_full',
     );
   });
 });
@@ -267,59 +363,137 @@ describe('LiveTalkService.submitRating', () => {
   });
 });
 
-describe('LiveTalkService.leaveByLivekitIdentity', () => {
-  it('ends the room when the host disconnects', async () => {
-    const updates: Array<Record<string, unknown>> = [];
-    const participantUpdates: Array<Record<string, unknown>> = [];
-    const prisma = {
-      liveTalkRoom: {
-        findUnique: async () => ({
-          id: 'room-1',
-          hostUserId: 'host-1',
-          livekitRoomName: 'lt_abc',
-          status: 'live',
-        }),
-        updateMany: async (args: { data: Record<string, unknown> }) => {
-          updates.push(args.data);
-          return { count: 1 };
-        },
-      },
-      liveTalkParticipant: {
-        updateMany: async (args: { data: Record<string, unknown> }) => {
-          participantUpdates.push(args.data);
-          return { count: 1 };
-        },
-      },
-    };
-    const service = new LiveTalkService(prisma as unknown as PrismaService);
-    const result = await service.leaveByLivekitIdentity('lt_abc', 'host-1');
-    assert.equal(result.ended, true);
-    assert.equal(updates[0]?.status, 'ended');
-    assert.ok(participantUpdates[0]?.leftAt instanceof Date);
+const bee = {
+  id: 'p-bee',
+  userId: 'u2',
+  role: 'speaker',
+  mutedByHost: false,
+  user: { id: 'u2', displayName: 'Bee', avatarId: null },
+};
+
+function guestUser() {
+  return {
+    id: 'u2',
+    displayName: 'Bee',
+    avatarId: null,
+    communityAdmin: false,
+    placementResult: { publicResult: 'A1', questionVersion: 'placement-q-v3' },
+  };
+}
+
+function roomWithBee() {
+  const base = roomRow();
+  return roomRow({
+    participants: [...base.participants, bee],
+  });
+}
+
+describe('LiveTalkService.kickParticipant', () => {
+  it('rejects non-hosts', async () => {
+    const service = new LiveTalkService({
+      liveTalkRoom: { findUnique: async () => roomWithBee() },
+    } as unknown as PrismaService);
+    await assert.rejects(
+      () => service.kickParticipant(guestUser(), 'room-1', 'host-1'),
+      (err: unknown) =>
+        err instanceof ForbiddenException &&
+        (err as ForbiddenException).message === 'host_only',
+    );
   });
 
-  it('ignores non-host disconnects so role changes do not end the room', async () => {
+  it('rejects kicking yourself', async () => {
+    const service = new LiveTalkService({
+      liveTalkRoom: { findUnique: async () => roomWithBee() },
+    } as unknown as PrismaService);
+    await assert.rejects(
+      () => service.kickParticipant(adminUser(), 'room-1', 'host-1'),
+      (err: unknown) =>
+        err instanceof ForbiddenException &&
+        (err as ForbiddenException).message === 'cannot_moderate_self',
+    );
+  });
+
+  it('marks the speaker kicked and drops them from the room', async () => {
+    const participants = [...roomRow().participants, { ...bee }];
+    const updates: unknown[] = [];
     const prisma = {
       liveTalkRoom: {
-        findUnique: async () => ({
-          id: 'room-1',
-          hostUserId: 'host-1',
-          livekitRoomName: 'lt_abc',
-          status: 'live',
-        }),
-        updateMany: async () => {
-          throw new Error('should not end room');
-        },
+        findUnique: async () => roomRow({ participants }),
       },
       liveTalkParticipant: {
-        updateMany: async () => {
-          throw new Error('should not mark leave');
+        updateMany: async (args: { data: Record<string, unknown> }) => {
+          updates.push(args.data);
+          const idx = participants.findIndex((p) => p.userId === 'u2');
+          if (idx >= 0) participants.splice(idx, 1);
+          return { count: 1 };
         },
       },
     };
     const service = new LiveTalkService(prisma as unknown as PrismaService);
-    const result = await service.leaveByLivekitIdentity('lt_abc', 'guest-1');
-    assert.equal(result.ignored, true);
-    assert.equal(result.left, false);
+    const result = await service.kickParticipant(adminUser(), 'room-1', 'u2');
+    assert.equal(result.ok, true);
+    assert.equal(updates.length, 1);
+    assert.ok((updates[0] as { kickedAt?: Date }).kickedAt instanceof Date);
+    assert.equal(result.room.speakerCount, 1);
+  });
+
+  it('blocks a kicked user from rejoining', async () => {
+    const service = new LiveTalkService({
+      liveTalkRoom: { findUnique: async () => roomRow() },
+      liveTalkParticipant: {
+        findFirst: async () => ({ kickedAt: new Date(), mutedByHost: false }),
+      },
+    } as unknown as PrismaService);
+    await assert.rejects(
+      () => service.joinRoom(guestUser(), 'room-1', 'listener'),
+      (err: unknown) =>
+        err instanceof ForbiddenException &&
+        (err as ForbiddenException).message === 'kicked',
+    );
   });
 });
+
+describe('LiveTalkService.muteParticipant', () => {
+  it('rejects non-hosts', async () => {
+    const service = new LiveTalkService({
+      liveTalkRoom: { findUnique: async () => roomWithBee() },
+    } as unknown as PrismaService);
+    await assert.rejects(
+      () => service.muteParticipant(guestUser(), 'room-1', 'host-1', true),
+      (err: unknown) =>
+        err instanceof ForbiddenException &&
+        (err as ForbiddenException).message === 'host_only',
+    );
+  });
+
+  it('sets mutedByHost on the speaker', async () => {
+    const participants = [...roomRow().participants, { ...bee }];
+    const prisma = {
+      liveTalkRoom: {
+        findUnique: async () => roomRow({ participants }),
+      },
+      liveTalkParticipant: {
+        updateMany: async (args: { data: { mutedByHost?: boolean } }) => {
+          const target = participants.find((p) => p.userId === 'u2');
+          if (target && args.data.mutedByHost !== undefined) {
+            target.mutedByHost = args.data.mutedByHost;
+          }
+          return { count: 1 };
+        },
+      },
+    };
+    const service = new LiveTalkService(prisma as unknown as PrismaService);
+    const result = await service.muteParticipant(
+      adminUser(),
+      'room-1',
+      'u2',
+      true,
+    );
+    assert.equal(result.ok, true);
+    assert.equal(
+      result.room.speakers.find((p) => p.userId === 'u2')?.mutedByHost,
+      true,
+    );
+  });
+});
+
