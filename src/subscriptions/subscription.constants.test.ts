@@ -44,8 +44,8 @@ describe('presaleSeatsRemaining', () => {
 });
 
 describe('FOUNDER_PRESALE_PRICE_THB', () => {
-  it('charges 250 baht this round', () => {
-    assert.equal(FOUNDER_PRESALE_PRICE_THB, 250);
+  it('charges 740 baht for the promotion round', () => {
+    assert.equal(FOUNDER_PRESALE_PRICE_THB, 740);
   });
 });
 
@@ -56,15 +56,17 @@ describe('FOUNDER_PRESALE_OPENS_AT', () => {
 });
 
 describe('FOUNDER_PRESALE_CLOSES_AT', () => {
-  it('last day is 7 Nov 2026 Bangkok', () => {
-    assert.equal(FOUNDER_PRESALE_CLOSES_AT.toISOString(), '2026-11-08T04:00:00.000Z');
-    assert.equal(presaleIsClosed(new Date('2026-11-07T16:59:59.000Z')), false);
-    assert.equal(presaleIsClosed(new Date('2026-11-07T17:00:00.000Z')), true);
+  it('runs through end of 2026 Bangkok', () => {
+    assert.equal(FOUNDER_PRESALE_CLOSES_AT.toISOString(), '2026-12-31T17:00:00.000Z');
+    assert.equal(presaleIsClosed(new Date('2026-12-31T16:59:59.000Z')), false);
+    assert.equal(presaleIsClosed(new Date('2026-12-31T17:00:00.000Z')), true);
   });
 });
 
 describe('presaleChargeAmountOk', () => {
-  it('accepts this round and the first-round PromptPay amounts', () => {
+  it('accepts promotion and prior PromptPay amounts', () => {
+    assert.equal(presaleChargeAmountOk(74000), true);
+    assert.equal(presaleChargeAmountOk(740), true);
     assert.equal(presaleChargeAmountOk(25000), true);
     assert.equal(presaleChargeAmountOk(250), true);
     assert.equal(presaleChargeAmountOk(15000), true);
