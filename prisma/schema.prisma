@@ -140,6 +140,11 @@ model User {
 
   /** Can create Live Talk rooms (toggled from web admin). */
   communityAdmin          Boolean   @default(false)
+  /** Live Talk host level: none | trainee | host | official. */
+  hostLevel               String    @default("none")
+  hostLevelAt             DateTime?
+  /** First time the user accepted the Live Talk host rules (Trainee onboarding). */
+  hostRulesAcceptedAt     DateTime?
 
   /** Invite-a-friend code (`BANANA-XXXX`), minted on first use. */
   referralCode            String?   @unique
@@ -182,6 +187,11 @@ model User {
   hostedLiveTalkRooms     LiveTalkRoom[]
   liveTalkParticipations  LiveTalkParticipant[]
   liveTalkRatings         LiveTalkRating[]
+  hostLevelEvents         HostLevelEvent[]      @relation("HostLevelSubject")
+  hostLevelActions        HostLevelEvent[]      @relation("HostLevelActor")
+  liveTalkInvitesSent     LiveTalkInvite[]      @relation("LiveTalkInviter")
+  liveTalkInvitesReceived LiveTalkInvite[]      @relation("LiveTalkInvitee")
+  liveTalkSessions        LiveTalkSession[]     @relation("LiveTalkSessionHost")
   weeklyReportSnapshots   WeeklyReportSnapshot[]
   eventLeaderboardRows    EventLeaderboard[]
   eventScoreAttempts      EventScoreAttempt[]
@@ -788,24 +798,91 @@ model LiveTalkRoom {
   host         User                   @relation(fields: [hostUserId], references: [id], onDelete: Cascade)
   participants LiveTalkParticipant[]
   ratings      LiveTalkRating[]
+  invites      LiveTalkInvite[]
 
   @@index([status, createdAt])
 }
 
 model LiveTalkParticipant {
-  id       String    @id @default(uuid())
-  roomId   String
-  userId   String
-  /** host | speaker | listener */
-  role     String
-  joinedAt DateTime  @default(now())
-  leftAt   DateTime?
+  id          String    @id @default(uuid())
+  roomId      String
+  userId      String
+  /** host | cohost | speaker | listener */
+  role        String
+  /** When this person became co-host in this room (practice minutes count from here). */
+  cohostSince DateTime?
+  joinedAt    DateTime  @default(now())
+  leftAt      DateTime?
+  /** Host force-muted this mic; they cannot unmute until the host lifts it. */
+  mutedByHost Boolean   @default(false)
+  /** Set when the host kicks them; they cannot rejoin this room. */
+  kickedAt    DateTime?
 
   room LiveTalkRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)
   user User         @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([roomId, leftAt])
   @@index([userId, leftAt])
+}
+
+/** Audit log: every host-level change, who made it and why (also feeds certificates). */
+model HostLevelEvent {
+  id          String   @id @default(uuid())
+  userId      String
+  fromLevel   String
+  toLevel     String
+  actorUserId String?
+  /** scout_accepted | promoted_auto | manual | paused | demoted */
+  reason      String
+  note        String?
+  roomId      String?
+  createdAt   DateTime @default(now())
+
+  user  User  @relation("HostLevelSubject", fields: [userId], references: [id], onDelete: Cascade)
+  actor User? @relation("HostLevelActor", fields: [actorUserId], references: [id], onDelete: SetNull)
+
+  @@index([userId, createdAt])
+}
+
+/** In-room invite: become a Host Trainee (scout) or a co-host of this room. */
+model LiveTalkInvite {
+  id          String    @id @default(uuid())
+  /** trainee | cohost */
+  kind        String
+  roomId      String
+  inviterId   String
+  inviteeId   String
+  /** pending | accepted | declined | expired */
+  status      String    @default("pending")
+  expiresAt   DateTime
+  respondedAt DateTime?
+  createdAt   DateTime  @default(now())
+
+  room    LiveTalkRoom @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  inviter User         @relation("LiveTalkInviter", fields: [inviterId], references: [id], onDelete: Cascade)
+  invitee User         @relation("LiveTalkInvitee", fields: [inviteeId], references: [id], onDelete: Cascade)
+
+  @@index([inviteeId, status])
+  @@index([roomId, status])
+}
+
+/** Official Host's booked Live Talk time (host web /host). Times are UTC. */
+model LiveTalkSession {
+  id          String   @id @default(uuid())
+  hostUserId  String
+  title       String
+  description String   @default("")
+  startsAt    DateTime
+  durationMin Int      @default(60)
+  /** scheduled | cancelled */
+  status      String   @default("scheduled")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  host User @relation("LiveTalkSessionHost", fields: [hostUserId], references: [id], onDelete: Cascade)
+
+  @@index([status, startsAt])
+  @@index([hostUserId, startsAt])
 }
 
 /** Leave-sheet thumbs for Live Talk room quality (MVP). */

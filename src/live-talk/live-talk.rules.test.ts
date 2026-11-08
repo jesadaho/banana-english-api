@@ -1,12 +1,20 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 import {
+  LIVE_TALK_CONNECT_GRACE_MS,
+  LIVE_TALK_MAX_LIVE_MS,
+  LIVE_TALK_LISTENER_CAP,
   LIVE_TALK_SPEAKER_CAP,
+  canChangeHostLevel,
   canCreateLiveTalkRoom,
+  canModerateInRoom,
+  countsAsSpeaker,
+  hostLevelOf,
   canSpeakAtLevel,
   canSubmitLiveTalkLeaveRating,
   decideJoin,
   decidePromote,
+  isStaleLiveTalkRoom,
   liveTalkCreateOpen,
   shouldSampleLiveTalkLeaveRating,
 } from './live-talk.rules';
@@ -38,16 +46,30 @@ describe('canSpeakAtLevel', () => {
 });
 
 describe('decideJoin', () => {
-  it('always lets listeners in', () => {
+  it('lets listeners in when a seat is free', () => {
     const d = decideJoin({
       requested: 'listener',
       roomStatus: 'live',
       speakerCount: 10,
+      listenerCount: 0,
       band: 'Seed',
       minSpeakLevel: 'a1',
       isHost: false,
     });
     assert.deepEqual(d, { ok: true, role: 'listener' });
+  });
+
+  it('rejects listeners when full', () => {
+    const d = decideJoin({
+      requested: 'listener',
+      roomStatus: 'live',
+      speakerCount: 1,
+      listenerCount: LIVE_TALK_LISTENER_CAP,
+      band: 'Seed',
+      minSpeakLevel: 'a1',
+      isHost: false,
+    });
+    assert.deepEqual(d, { ok: false, reason: 'listener_full' });
   });
 
   it('rejects speakers when full', () => {
@@ -133,6 +155,82 @@ describe('canCreateLiveTalkRoom', () => {
   });
 });
 
+describe('isStaleLiveTalkRoom', () => {
+  const now = new Date('2026-11-02T08:00:00.000Z');
+  const room = {
+    id: 'r1',
+    livekitRoomName: 'lt_abc',
+    createdAt: new Date('2026-11-02T07:50:00.000Z'),
+    activeCount: 1,
+  };
+
+  it('ends rooms with nobody still joined', () => {
+    assert.equal(
+      isStaleLiveTalkRoom({ ...room, activeCount: 0 }, now, null),
+      true,
+    );
+  });
+
+  it('keeps a fresh empty LiveKit miss inside the grace window', () => {
+    const occupancy = new Map<string, number>();
+    assert.equal(
+      isStaleLiveTalkRoom(
+        {
+          ...room,
+          createdAt: new Date(now.getTime() - 30_000),
+        },
+        now,
+        occupancy,
+      ),
+      false,
+    );
+  });
+
+  it('ends a ghost room after grace when LiveKit is empty', () => {
+    const occupancy = new Map<string, number>();
+    assert.equal(
+      isStaleLiveTalkRoom(
+        {
+          ...room,
+          createdAt: new Date(now.getTime() - LIVE_TALK_CONNECT_GRACE_MS),
+        },
+        now,
+        occupancy,
+      ),
+      true,
+    );
+  });
+
+  it('keeps rooms that still have LiveKit participants', () => {
+    const occupancy = new Map([['lt_abc', 2]]);
+    assert.equal(
+      isStaleLiveTalkRoom(
+        {
+          ...room,
+          createdAt: new Date(now.getTime() - LIVE_TALK_MAX_LIVE_MS * 2),
+        },
+        now,
+        occupancy,
+      ),
+      false,
+    );
+  });
+
+  it('ends rooms past max age when occupancy is unknown', () => {
+    assert.equal(
+      isStaleLiveTalkRoom(
+        {
+          ...room,
+          createdAt: new Date(now.getTime() - LIVE_TALK_MAX_LIVE_MS),
+        },
+        now,
+        null,
+      ),
+      true,
+    );
+  });
+});
+
 describe('mintLiveKitJwt', () => {
   it('signs a three-part HS256 token', () => {
     const token = mintLiveKitJwt(
@@ -193,5 +291,46 @@ describe('shouldSampleLiveTalkLeaveRating', () => {
     assert.equal(shouldSampleLiveTalkLeaveRating(0), true);
     assert.equal(shouldSampleLiveTalkLeaveRating(0.29), true);
     assert.equal(shouldSampleLiveTalkLeaveRating(0.3), false);
+  });
+});
+
+describe('host levels', () => {
+  it('reads unknown or missing levels as none', () => {
+    assert.equal(hostLevelOf({}), 'none');
+    assert.equal(hostLevelOf({ hostLevel: 'boss' }), 'none');
+    assert.equal(hostLevelOf({ hostLevel: 'trainee' }), 'trainee');
+  });
+
+  it('lets Host and Official open rooms, not Trainee', () => {
+    const prod = { RAILWAY_ENVIRONMENT: 'production' };
+    assert.equal(canCreateLiveTalkRoom({ hostLevel: 'trainee' }, prod), false);
+    assert.equal(canCreateLiveTalkRoom({ hostLevel: 'host' }, prod), true);
+    assert.equal(canCreateLiveTalkRoom({ hostLevel: 'official' }, prod), true);
+  });
+
+  it('counts co-hosts as speakers and lets them moderate', () => {
+    assert.equal(countsAsSpeaker('cohost'), true);
+    assert.equal(canModerateInRoom('cohost'), true);
+    assert.equal(canModerateInRoom('speaker'), false);
+  });
+
+  it('only Official Hosts change levels, and never to or from Official', () => {
+    const official = { hostLevel: 'official' };
+    assert.equal(
+      canChangeHostLevel({ actor: official, from: 'none', to: 'trainee' }),
+      true,
+    );
+    assert.equal(
+      canChangeHostLevel({ actor: official, from: 'host', to: 'official' }),
+      false,
+    );
+    assert.equal(
+      canChangeHostLevel({ actor: { hostLevel: 'host' }, from: 'none', to: 'trainee' }),
+      false,
+    );
+    assert.equal(
+      canChangeHostLevel({ actor: { communityAdmin: true }, from: 'trainee', to: 'host' }),
+      true,
+    );
   });
 });
