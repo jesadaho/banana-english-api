@@ -1,8 +1,8 @@
 import { completedOnLocalDay } from '../common/timezone.util';
 import { placementBandFromResult } from '../placement/placement-band';
 
-export const LIVE_TALK_SPEAKER_CAP = 10;
-export const LIVE_TALK_LISTENER_CAP = 8;
+export const LIVE_TALK_SPEAKER_CAP = 8;
+export const LIVE_TALK_LISTENER_CAP = 50;
 /** Leave-sheet thumbs: listen this long before we may ask. */
 export const LIVE_TALK_RATING_MIN_LISTEN_MS = 3 * 60 * 1000;
 /** Fraction of eligible exits that show the rating question. */

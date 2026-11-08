@@ -50,7 +50,7 @@ describe('decideJoin', () => {
     const d = decideJoin({
       requested: 'listener',
       roomStatus: 'live',
-      speakerCount: 10,
+      speakerCount: LIVE_TALK_SPEAKER_CAP,
       listenerCount: 0,
       band: 'Seed',
       minSpeakLevel: 'a1',

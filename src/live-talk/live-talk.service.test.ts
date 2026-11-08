@@ -204,8 +204,8 @@ describe('LiveTalkService.joinRoom', () => {
     );
   });
 
-  it('blocks a 11th speaker', async () => {
-    const speakers = Array.from({ length: 10 }, (_, i) => ({
+  it('blocks a 9th speaker', async () => {
+    const speakers = Array.from({ length: 8 }, (_, i) => ({
       id: `p-${i}`,
       userId: `u-${i}`,
       role: i === 0 ? 'host' : 'speaker',
@@ -245,8 +245,8 @@ describe('LiveTalkService.joinRoom', () => {
     );
   });
 
-  it('blocks a 9th listener', async () => {
-    const listeners = Array.from({ length: 8 }, (_, i) => ({
+  it('blocks a 51st listener', async () => {
+    const listeners = Array.from({ length: 50 }, (_, i) => ({
       id: `l-${i}`,
       userId: `l-${i}`,
       role: 'listener',
