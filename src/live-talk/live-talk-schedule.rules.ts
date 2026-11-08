@@ -91,10 +91,9 @@ export function parseSessionInput(
   };
 }
 
-/** Who may book: Official Hosts and community admins. */
+/** Who may book on /host: Official Hosts only. */
 export function canBookLiveTalkSession(user: {
   hostLevel?: string | null;
-  communityAdmin?: boolean | null;
 }): boolean {
-  return user.communityAdmin === true || user.hostLevel === 'official';
+  return user.hostLevel === 'official';
 }
