@@ -5,6 +5,7 @@ import {
   dispatchCaptionsAgent,
   isLiveKitAudioTrack,
   liveKitCaptionsAgentName,
+  mintLiveKitServiceJwt,
 } from './live-talk.livekit';
 
 describe('deleteLiveKitRoom', () => {
@@ -79,6 +80,20 @@ describe('captions agent dispatch', () => {
     assert.equal(calls[0].body.agent_name, 'banana-captions');
     assert.equal(calls[0].body.room, 'lt_room');
     assert.deepEqual(JSON.parse(String(calls[0].body.metadata)), { hostId: 'host-1' });
+  });
+
+  it('scopes the server token to the room', () => {
+    const token = mintLiveKitServiceJwt('key', 'secret', 'lt_room');
+    const payload = JSON.parse(
+      Buffer.from(token.split('.')[1], 'base64url').toString('utf8'),
+    );
+    assert.equal(payload.video.roomAdmin, true);
+    assert.equal(payload.video.room, 'lt_room');
+    const listToken = mintLiveKitServiceJwt('key', 'secret');
+    const listPayload = JSON.parse(
+      Buffer.from(listToken.split('.')[1], 'base64url').toString('utf8'),
+    );
+    assert.equal(listPayload.video.room, undefined);
   });
 
   it('skips the call when disabled', async () => {

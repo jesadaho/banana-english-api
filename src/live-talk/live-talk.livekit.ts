@@ -10,7 +10,16 @@ function liveKitHttpOrigin(url: string): string {
   return url.replace(/^ws/i, 'http');
 }
 
-function mintLiveKitServiceJwt(apiKey: string, apiSecret: string): string {
+/**
+ * Server token for RoomService / AgentDispatchService. Room-scoped calls must
+ * name the room in the grant (LiveKit checks `roomAdmin` + `room` match,
+ * like the official server SDK does per call). CreateDispatch 401s without it.
+ */
+export function mintLiveKitServiceJwt(
+  apiKey: string,
+  apiSecret: string,
+  room?: string,
+): string {
   const now = Math.floor(Date.now() / 1000);
   const header = b64url(JSON.stringify({ alg: 'HS256', typ: 'JWT' }));
   const payload = b64url(
@@ -19,7 +28,12 @@ function mintLiveKitServiceJwt(apiKey: string, apiSecret: string): string {
       nbf: now - 10,
       exp: now + 60,
       jti: randomUUID(),
-      video: { roomList: true, roomAdmin: true, roomCreate: true },
+      video: {
+        roomList: true,
+        roomAdmin: true,
+        roomCreate: true,
+        ...(room ? { room } : {}),
+      },
     }),
   );
   const sig = createHmac('sha256', apiSecret)
@@ -64,7 +78,11 @@ async function liveKitAdminCall(
   const cfg = liveKitConfigFromEnv(env);
   if (!cfg) return null;
   try {
-    const token = mintLiveKitServiceJwt(cfg.apiKey, cfg.apiSecret);
+    const room =
+      body && typeof body === 'object' && 'room' in body
+        ? String((body as { room?: unknown }).room ?? '')
+        : '';
+    const token = mintLiveKitServiceJwt(cfg.apiKey, cfg.apiSecret, room || undefined);
     const res = await fetchFn(
       `${liveKitHttpOrigin(cfg.url)}/twirp/${service}/${method}`,
       {
@@ -77,11 +95,16 @@ async function liveKitAdminCall(
         signal: AbortSignal.timeout(timeoutMs),
       },
     );
-    if (!res.ok) return null;
+    if (!res.ok) {
+      const detail = (await res.text().catch(() => '')).slice(0, 200);
+      console.warn(`[live-talk] LiveKit ${service}/${method} -> ${res.status} ${detail}`);
+      return null;
+    }
     const text = await res.text();
     if (!text) return {};
     return JSON.parse(text) as unknown;
-  } catch {
+  } catch (err) {
+    console.warn(`[live-talk] LiveKit ${service}/${method} failed: ${(err as Error)?.message ?? err}`);
     return null;
   }
 }
