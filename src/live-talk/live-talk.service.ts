@@ -19,7 +19,7 @@ import {
   type LiveTalkMinSpeakLevel,
   type LiveTalkRole,
 } from './live-talk.rules';
-import { deleteLiveKitRoom } from './live-talk.livekit';
+import { deleteLiveKitRoom, dispatchCaptionsAgent } from './live-talk.livekit';
 import { liveKitConfigFromEnv, mintLiveKitJwt } from './live-talk.token';
 
 type UserRow = {
@@ -85,6 +85,7 @@ export class LiveTalkService {
         },
       },
     });
+    void dispatchCaptionsAgent(room.livekitRoomName, user.id).catch(() => false);
     return {
       room: this.toRoomView(room),
       role: 'host' as const,

@@ -34,13 +34,14 @@ async function liveKitAdminCall(
   env = process.env,
   fetchFn: typeof fetch = fetch,
   timeoutMs = 2500,
+  service = 'livekit.RoomService',
 ): Promise<unknown | null> {
   const cfg = liveKitConfigFromEnv(env);
   if (!cfg) return null;
   try {
     const token = mintLiveKitServiceJwt(cfg.apiKey, cfg.apiSecret);
     const res = await fetchFn(
-      `${liveKitHttpOrigin(cfg.url)}/twirp/livekit.RoomService/${method}`,
+      `${liveKitHttpOrigin(cfg.url)}/twirp/${service}/${method}`,
       {
         method: 'POST',
         headers: {
@@ -73,6 +74,40 @@ export async function deleteLiveKitRoom(
     { room: name },
     env,
     fetchFn,
+  );
+  return result !== null;
+}
+
+/** Agent name for Live Talk captions; `off` / empty disables dispatch. */
+export function liveKitCaptionsAgentName(env = process.env): string | null {
+  const raw = (env.LIVE_TALK_CAPTIONS_AGENT ?? 'banana-captions').trim();
+  if (!raw || raw.toLowerCase() === 'off') return null;
+  return raw;
+}
+
+/**
+ * Ask LiveKit Cloud to send the captions agent into this room (host-only STT).
+ * Best effort: `false` when disabled, unconfigured or the call failed.
+ */
+export async function dispatchCaptionsAgent(
+  roomName: string,
+  hostId: string,
+  env = process.env,
+  fetchFn: typeof fetch = fetch,
+): Promise<boolean> {
+  const agentName = liveKitCaptionsAgentName(env);
+  if (!agentName) return false;
+  const result = await liveKitAdminCall(
+    'CreateDispatch',
+    {
+      agent_name: agentName,
+      room: roomName,
+      metadata: JSON.stringify({ hostId }),
+    },
+    env,
+    fetchFn,
+    4000,
+    'livekit.AgentDispatchService',
   );
   return result !== null;
 }
