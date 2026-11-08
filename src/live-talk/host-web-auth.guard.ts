@@ -13,8 +13,8 @@ import type { HostWebViewer } from './live-talk-schedule.service';
 
 /**
  * Host web (/host): Firebase ID token from Google sign-in. Lets in app users
- * who are Official Hosts / community admins (matched by firebaseUid, i.e. the
- * account they linked in the app) and ADMIN_EMAILS admins.
+ * who are Official Hosts (matched by firebaseUid, i.e. the account they linked
+ * in the app) and ADMIN_EMAILS admins.
  */
 @Injectable()
 export class HostWebAuthGuard implements CanActivate {
@@ -63,8 +63,7 @@ export class HostWebAuthGuard implements CanActivate {
         communityAdmin: true,
       },
     });
-    const isHost =
-      user != null && (user.communityAdmin || user.hostLevel === 'official');
+    const isHost = user != null && user.hostLevel === 'official';
     if (!isAdmin && !isHost) {
       throw new ForbiddenException(user ? 'official_host_only' : 'account_not_linked');
     }

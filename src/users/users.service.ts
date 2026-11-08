@@ -18,7 +18,10 @@ import {
   earlyBirdPayload,
   subscriptionPayload,
 } from '../subscriptions/subscriptions.service';
-import { canCreateLiveTalkRoom } from '../live-talk/live-talk.rules';
+import {
+  canCreateLiveTalkRoom,
+  hostLevelOf,
+} from '../live-talk/live-talk.rules';
 import { PrismaService } from '../prisma/prisma.service';
 import {
   avatarMembership,
@@ -166,10 +169,12 @@ export interface UserProfileResponse {
     reserved: boolean;
     reservedAt: string | null;
   };
-  /** Can create Live Talk rooms. */
+  /** Legacy: mirrors liveTalkCanCreate for older app builds. */
   communityAdmin: boolean;
-  /** True for community admins, and for everyone on staging. */
+  /** Host+ / Official (or staging open-create) may open Live Talk rooms. */
   liveTalkCanCreate: boolean;
+  /** none | trainee | host | official */
+  liveTalkHostLevel: string;
   /** Avatars granted by events, rendered from URL in the app. */
   eventAvatars: Array<{
     id: string;
@@ -822,10 +827,10 @@ export class UsersService {
       rawAge && SURVEY_AGE_RANGES.has(rawAge as SurveyAgeRange) ? rawAge : null;
     const placementUser = user as User & { lastPlacementTestAt?: Date | null };
     const retest = placementRetestStatus(placementUser);
-    const liveTalkCanCreate = canCreateLiveTalkRoom({
-      communityAdmin:
-        (user as User & { communityAdmin?: boolean }).communityAdmin === true,
-    });
+    const hostLevel = hostLevelOf(
+      user as User & { hostLevel?: string | null },
+    );
+    const liveTalkCanCreate = canCreateLiveTalkRoom({ hostLevel });
     return {
       anonymousId: user.anonymousId,
       displayName: user.displayName ?? 'เพื่อน',
@@ -881,6 +886,7 @@ export class UsersService {
       earlyBird: earlyBirdPayload(user),
       communityAdmin: liveTalkCanCreate,
       liveTalkCanCreate,
+      liveTalkHostLevel: hostLevel,
       eventAvatars: [],
     };
   }

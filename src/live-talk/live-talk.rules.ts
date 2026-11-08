@@ -49,11 +49,8 @@ export function hostLevelAtLeast(
 }
 
 /** Official Hosts scout Trainees and change Trainee / Host levels. */
-export function canManageHosts(user: {
-  hostLevel?: string | null;
-  communityAdmin?: boolean;
-}): boolean {
-  return user.communityAdmin === true || hostLevelOf(user) === 'official';
+export function canManageHosts(user: { hostLevel?: string | null }): boolean {
+  return hostLevelOf(user) === 'official';
 }
 
 /**
@@ -61,7 +58,7 @@ export function canManageHosts(user: {
  * in-app path never grants or removes it.
  */
 export function canChangeHostLevel(input: {
-  actor: { hostLevel?: string | null; communityAdmin?: boolean };
+  actor: { hostLevel?: string | null };
   from: HostLevel;
   to: HostLevel;
 }): boolean {
@@ -163,7 +160,7 @@ export function decidePromote(input: {
   });
 }
 
-/** Staging / explicit flag: anyone can host. Production stays community-admin. */
+/** Staging / explicit flag: anyone can host. Production stays Host+ / Official. */
 export function liveTalkCreateOpen(
   env: NodeJS.Dict<string | undefined> = process.env,
 ): boolean {
@@ -182,14 +179,10 @@ export function liveTalkCreateOpen(
 }
 
 export function canCreateLiveTalkRoom(
-  user: { communityAdmin?: boolean; hostLevel?: string | null },
+  user: { hostLevel?: string | null },
   env: NodeJS.Dict<string | undefined> = process.env,
 ): boolean {
-  return (
-    user.communityAdmin === true ||
-    hostLevelAtLeast(user, 'host') ||
-    liveTalkCreateOpen(env)
-  );
+  return hostLevelAtLeast(user, 'host') || liveTalkCreateOpen(env);
 }
 
 export type LiveTalkSweepRoom = {

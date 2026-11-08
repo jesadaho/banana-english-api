@@ -9,7 +9,8 @@ function adminUser() {
     id: 'host-1',
     displayName: 'May',
     avatarId: null,
-    communityAdmin: true,
+    communityAdmin: false,
+    hostLevel: 'official',
     placementResult: { publicResult: 'A1', questionVersion: 'placement-q-v3' },
   };
 }
@@ -43,7 +44,7 @@ function roomRow(overrides: Record<string, unknown> = {}) {
 }
 
 describe('LiveTalkService.createRoom', () => {
-  it('rejects users who are not community admin', async () => {
+  it('rejects users who are not Host or Official', async () => {
     const prev = process.env.LIVE_TALK_OPEN_CREATE;
     process.env.LIVE_TALK_OPEN_CREATE = 'false';
     const service = new LiveTalkService({} as PrismaService);
@@ -56,12 +57,13 @@ describe('LiveTalkService.createRoom', () => {
               displayName: 'May',
               avatarId: null,
               communityAdmin: false,
+              hostLevel: 'none',
             },
             { title: 'Coffee chat' },
           ),
         (err: unknown) =>
           err instanceof ForbiddenException &&
-          String((err as ForbiddenException).message).includes('Community admin'),
+          String((err as ForbiddenException).message).includes('host_only'),
       );
     } finally {
       if (prev === undefined) delete process.env.LIVE_TALK_OPEN_CREATE;
@@ -96,7 +98,7 @@ describe('LiveTalkService.createRoom', () => {
     }
   });
 
-  it('creates a live room when the user is community admin', async () => {
+  it('creates a live room when the user is an Official Host', async () => {
     const created = roomRow();
     const prisma = {
       liveTalkRoom: {

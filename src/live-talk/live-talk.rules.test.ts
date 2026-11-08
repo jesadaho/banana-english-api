@@ -144,14 +144,16 @@ describe('canCreateLiveTalkRoom', () => {
     );
   });
 
-  it('stays admin-only in production', () => {
+  it('stays Host+ / Official in production', () => {
     const prod = {
       LIVE_TALK_OPEN_CREATE: 'false',
       RAILWAY_ENVIRONMENT: 'production',
     };
     assert.equal(liveTalkCreateOpen(prod), false);
-    assert.equal(canCreateLiveTalkRoom({ communityAdmin: false }, prod), false);
-    assert.equal(canCreateLiveTalkRoom({ communityAdmin: true }, prod), true);
+    assert.equal(canCreateLiveTalkRoom({ hostLevel: 'none' }, prod), false);
+    assert.equal(canCreateLiveTalkRoom({ hostLevel: 'trainee' }, prod), false);
+    assert.equal(canCreateLiveTalkRoom({ hostLevel: 'host' }, prod), true);
+    assert.equal(canCreateLiveTalkRoom({ hostLevel: 'official' }, prod), true);
   });
 });
 
@@ -329,8 +331,12 @@ describe('host levels', () => {
       false,
     );
     assert.equal(
-      canChangeHostLevel({ actor: { communityAdmin: true }, from: 'trainee', to: 'host' }),
-      true,
+      canChangeHostLevel({
+        actor: { hostLevel: 'none' },
+        from: 'trainee',
+        to: 'host',
+      }),
+      false,
     );
   });
 });

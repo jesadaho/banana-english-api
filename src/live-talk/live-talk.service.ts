@@ -183,7 +183,7 @@ export class LiveTalkService {
     body: { title?: string; description?: string; minSpeakLevel?: string },
   ) {
     if (!canCreateLiveTalkRoom(user)) {
-      throw new ForbiddenException('Community admin only');
+      throw new ForbiddenException('host_only');
     }
     const title = (body.title ?? '').trim();
     if (!title) throw new BadRequestException('Title is required');

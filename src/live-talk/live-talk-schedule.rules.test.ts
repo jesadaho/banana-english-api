@@ -54,9 +54,9 @@ describe('live talk session rules', () => {
     }
   });
 
-  it('lets only official hosts and admins book', () => {
+  it('lets only official hosts book', () => {
     assert.equal(canBookLiveTalkSession({ hostLevel: 'official' }), true);
     assert.equal(canBookLiveTalkSession({ hostLevel: 'host' }), false);
-    assert.equal(canBookLiveTalkSession({ hostLevel: 'none', communityAdmin: true }), true);
+    assert.equal(canBookLiveTalkSession({ hostLevel: 'none' }), false);
   });
 });
