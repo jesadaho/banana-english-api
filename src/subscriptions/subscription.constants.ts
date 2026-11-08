@@ -3,7 +3,8 @@ import { createHmac, timingSafeEqual } from 'crypto';
 export const PRO_BANANA_CAP = 25;
 export const PRO_REFILL_HOURS = 1;
 
-export const FOUNDER_PRESALE_PRICE_THB = 250;
+/** Web / PromptPay Pro Max promotion price (฿/year). */
+export const FOUNDER_PRESALE_PRICE_THB = 740;
 export const FOUNDER_PRESALE_SEATS = 30;
 /** Held off the public counter so the remaining seats look tighter. */
 export const FOUNDER_PRESALE_HELD_SEATS = 9;
@@ -11,10 +12,10 @@ export const FOUNDER_PRESALE_YEARS = 1;
 export const PRESALE_QR_TTL_MS = 15 * 60 * 1000;
 /** Sale opens Sunday 18 Oct 2026, 21:00 Asia/Bangkok. */
 export const FOUNDER_PRESALE_OPENS_AT = new Date('2026-10-18T14:00:00.000Z');
-/** Extended: closes Sunday 8 Nov 2026, 11:00 Asia/Bangkok. */
-export const FOUNDER_PRESALE_CLOSES_AT = new Date('2026-11-08T04:00:00.000Z');
-/** First-round PromptPay amount, still accepted on webhook retries. */
-const FOUNDER_PRESALE_LEGACY_PRICE_THB = 150;
+/** Promotion window through end of 2026 Asia/Bangkok. */
+export const FOUNDER_PRESALE_CLOSES_AT = new Date('2026-12-31T17:00:00.000Z');
+/** Prior PromptPay amounts, still accepted on webhook retries. */
+const FOUNDER_PRESALE_LEGACY_PRICES_THB = [250, 150] as const;
 
 export function presaleSeatsRemaining(sold: number): number {
   return Math.max(0, FOUNDER_PRESALE_SEATS - FOUNDER_PRESALE_HELD_SEATS - sold);
@@ -25,7 +26,7 @@ export function presaleIsClosed(now = new Date()): boolean {
 }
 
 export function presaleChargeAmountOk(amount: number): boolean {
-  const prices = [FOUNDER_PRESALE_PRICE_THB, FOUNDER_PRESALE_LEGACY_PRICE_THB];
+  const prices = [FOUNDER_PRESALE_PRICE_THB, ...FOUNDER_PRESALE_LEGACY_PRICES_THB];
   return prices.some((thb) => amount === thb || amount === thb * 100);
 }
 
