@@ -33,6 +33,7 @@ COPY package.json ./
 COPY prisma ./prisma
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
+COPY clips-cc ./clips-cc
 COPY scripts/start.sh ./scripts/start.sh
 RUN chmod +x ./scripts/start.sh
 
