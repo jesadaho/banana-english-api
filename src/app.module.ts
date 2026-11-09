@@ -27,6 +27,7 @@ import { ReferralsModule } from './referrals/referrals.module';
 import { ExplainItModule } from './explain-it/explain-it.module';
 import { SayItModule } from './say-it/say-it.module';
 import { InOnAtModule } from './in-on-at/in-on-at.module';
+import { ClipsModule } from './clips/clips.module';
 import { LiveTalkModule } from './live-talk/live-talk.module';
 import { DescribeItModule } from './describe-it/describe-it.module';
 import { DebugModule } from './debug/debug.module';
@@ -77,6 +78,7 @@ import { EventsModule } from './events/events.module';
     EventsModule,
     SayItModule,
     InOnAtModule,
+    ClipsModule,
     LiveTalkModule,
     DescribeItModule,
     ExplainItModule,

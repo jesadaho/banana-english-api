@@ -1,0 +1,36 @@
+1
+00:00:01,720 --> 00:00:03,840
+English Singsing
+
+2
+00:00:05,660 --> 00:00:07,680
+What day is it today?
+
+3
+00:00:16,000 --> 00:00:19,220
+Can you play baseball this afternoon?
+
+4
+00:00:21,375 --> 00:00:23,595
+What day is it today?
+
+5
+00:00:24,785 --> 00:00:27,245
+It’s Wednesday.
+
+6
+00:00:28,585 --> 00:00:30,395
+Sorry, I can’t.
+
+7
+00:00:30,795 --> 00:00:32,995
+I have a piano lesson.
+
+8
+00:00:36,980 --> 00:00:39,340
+Let’s play on Friday.
+
+9
+00:00:40,700 --> 00:00:42,480
+Sounds good.
+

@@ -1,0 +1,187 @@
+1
+00:00:00,099 --> 00:00:04,160
+If you get caught in the middle of a big,
+open field during a lightning storm, which
+
+2
+00:00:04,160 --> 00:00:07,279
+of the following uniforms would be most likely
+to keep you safe?
+
+3
+00:00:07,279 --> 00:00:12,780
+A thick wetsuit; a superman costume; a medieval
+coat of armor; or a birthday suit?
+
+4
+00:00:12,780 --> 00:00:16,880
+If you answered "medieval coat of armor,"
+you might be a little crazy--but you'd also
+
+5
+00:00:16,880 --> 00:00:17,880
+be right.
+
+6
+00:00:17,880 --> 00:00:21,780
+You'd be crazy, of course, because lightning
+is much more likely to strike metal than to
+
+7
+00:00:21,780 --> 00:00:23,490
+strike rubber, fabric, or bare skin.
+
+8
+00:00:23,490 --> 00:00:27,700
+The reason is that lightning bolts are just
+long streams of fast-flowing electrons looking
+
+9
+00:00:27,700 --> 00:00:32,940
+for the easiest path from point A to point
+B, and no everyday material provides an easier
+
+10
+00:00:32,940 --> 00:00:34,660
+path than metal.
+
+11
+00:00:34,660 --> 00:00:38,579
+So why would a material that lures lightning
+bolts keep you safe during a thunderstorm?
+
+12
+00:00:38,579 --> 00:00:42,909
+Ironically, for the exact same reason it attracts
+the the lightning in the first place: metal
+
+13
+00:00:42,909 --> 00:00:45,589
+is a great conductor of electricity.
+
+14
+00:00:45,589 --> 00:00:49,839
+Electrons glide so easily over metals that
+they barely penetrate into the surface.
+
+15
+00:00:49,839 --> 00:00:53,481
+And if an electrical current happens to be
+moving over a hollow metal container, like
+
+16
+00:00:53,481 --> 00:00:58,129
+a can or a box or even a welded coat of armor,
+the current won't reach the inside of the
+
+17
+00:00:58,129 --> 00:00:59,129
+container.
+
+18
+00:00:59,129 --> 00:01:03,699
+Physicists call this kind of container a Faraday
+cage . Or, in the case of the steel-woven
+
+19
+00:01:03,699 --> 00:01:07,990
+clothing worn by linemen working on high-voltage
+wires, a Faraday suit.
+
+20
+00:01:07,990 --> 00:01:12,840
+\hIn fact, your car is an everyday example
+of a Faraday cage, which is why--despite what
+
+21
+00:01:12,840 --> 00:01:16,689
+you may have heard about rubber tires--it's
+actually the closed metal body surrounding
+
+22
+00:01:16,689 --> 00:01:18,350
+you that keeps you safe.
+
+23
+00:01:18,350 --> 00:01:21,610
+It channels lightning around, rather than
+through you.
+
+24
+00:01:21,610 --> 00:01:25,719
+Of course, if you're away from your car and
+get caught in an open field during a storm,
+
+25
+00:01:25,719 --> 00:01:30,240
+chances are slim that you'll have a medieval
+coat of armor or high voltage line-suit handy.
+
+26
+00:01:30,240 --> 00:01:35,070
+In that case, whether you're naked or in costume,
+your body unfortunately happens to be a better
+
+27
+00:01:35,070 --> 00:01:39,810
+electrical conductor than both air and soil,
+so it provides a great shortcut for traveling
+
+28
+00:01:39,810 --> 00:01:40,810
+current.
+
+29
+00:01:40,810 --> 00:01:43,670
+Stand upright, and you're the fastest route
+for a descending lightning bolt.
+
+30
+00:01:43,670 --> 00:01:48,080
+Lie down, and you're the best path for current
+racing along the ground from a nearby strike.
+
+31
+00:01:48,080 --> 00:01:52,049
+So the best thing to do is crouch low and
+keep your feet close together.
+
+32
+00:01:52,049 --> 00:01:53,640
+Crouching low is obvious.
+
+33
+00:01:53,640 --> 00:01:56,970
+But similarly important, when your feet are
+right next to each other, your legs don't
+
+34
+00:01:56,970 --> 00:02:01,130
+make for much of a shortcut for the current
+to get from A to B. And even if they are the
+
+35
+00:02:01,130 --> 00:02:04,450
+best path for the lightning, when your feet
+are the only thing touching the ground, then
+
+36
+00:02:04,450 --> 00:02:08,870
+the current will most likely travel up one
+leg and down the other, missing critical organs
+
+37
+00:02:08,870 --> 00:02:11,780
+like your heart--something these cows couldn't
+avoid.
+
+38
+00:02:11,780 --> 00:02:15,563
+But, actually, the real best thing to do is
+avoid lightning altogether--armor or no armor--and
+
+39
+00:02:15,563 --> 00:02:18,140
+head indoors when you spot a storm on the
+horizon.
+

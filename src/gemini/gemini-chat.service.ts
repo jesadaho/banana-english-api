@@ -569,6 +569,41 @@ function buildSimulationReplySchema(criteria: string[]) {
   };
 }
 
+
+const CAPTION_PUNCTUATE_PROMPT = `You fix raw English speech captions (no punctuation) for a listening app.
+Split the text into sentences and add capital letters and punctuation (. , ? ! ').
+Rules: keep EVERY word and the exact word order — do not add, remove, fix or reorder words.
+Prefer short sentences (≤ 15 words); split long run-ons at natural pauses.
+Return JSON: { "sentences": [ ... ] }.`;
+
+const CLIP_PREPARE_PROMPT = `You prepare English video subtitle lines for Thai learners (A1–B1).
+For each numbered line return:
+- i: the line number
+- th: natural, simple spoken Thai translation of the line
+- hide: 0-based word indexes (split on spaces) a learner should rebuild by listening. If the line has ≤ 8 words, hide every word. Otherwise pick up to 6 words that are hard to hear or key to meaning (names, numbers, contractions, content words), not "a/the/to".
+- distractors: 2 short English words that SOUND like a hidden word but are wrong (e.g. large → lunch, can → can't, two → to). Never a word that is in the line.
+Return JSON matching the schema, one item per line.`;
+
+const CLIP_PREPARE_SCHEMA = {
+  type: 'object',
+  properties: {
+    items: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          i: { type: 'integer' },
+          th: { type: 'string' },
+          hide: { type: 'array', items: { type: 'integer' } },
+          distractors: { type: 'array', items: { type: 'string' } },
+        },
+        required: ['i', 'th', 'hide', 'distractors'],
+      },
+    },
+  },
+  required: ['items'],
+};
+
 const HINTS_SCHEMA = {
   type: 'object',
   properties: {
@@ -2674,6 +2709,70 @@ ${
     });
     return result.hints;
   }
+
+  /**
+   * Clips: unpunctuated auto captions → sentences. Same words, same order;
+   * only casing and punctuation change. Chunked so long clips stay in budget.
+   */
+  async punctuateCaptions(text: string): Promise<string[]> {
+    const words = text.split(/\s+/).filter(Boolean);
+    const out: string[] = [];
+    for (let i = 0; i < words.length; i += 600) {
+      const chunk = words.slice(i, i + 600).join(' ');
+      const { value } = await this.generateJson<{ sentences: string[] }>({
+        ...GEMINI_BACKGROUND,
+        systemInstruction: CAPTION_PUNCTUATE_PROMPT,
+        contents: [{ role: 'user', parts: [{ text: chunk }] }],
+        schema: {
+          type: 'object',
+          properties: { sentences: { type: 'array', items: { type: 'string' } } },
+          required: ['sentences'],
+        },
+        maxOutputTokens: Math.min(8000, 400 + Math.ceil(chunk.length / 2)),
+        disableThinking: true,
+      });
+      out.push(...(value.sentences ?? []).map((s) => s.trim()).filter(Boolean));
+    }
+    return out;
+  }
+
+  /**
+   * Clips: Thai translation + dictation picks for each line (admin "prepare").
+   * Returns one item per input line (same order); missing items stay empty.
+   */
+  async prepareClipSentences(
+    lines: string[],
+  ): Promise<Array<{ th: string; hide: number[]; distractors: string[] }>> {
+    const out: Array<{ th: string; hide: number[]; distractors: string[] }> =
+      lines.map(() => ({ th: '', hide: [], distractors: [] }));
+    for (let start = 0; start < lines.length; start += 20) {
+      const chunk = lines.slice(start, start + 20);
+      const numbered = chunk
+        .map((line, i) => `${i}. ${line}`)
+        .join('\n');
+      const { value } = await this.generateJson<{
+        items: Array<{ i: number; th: string; hide: number[]; distractors: string[] }>;
+      }>({
+        ...GEMINI_BACKGROUND,
+        systemInstruction: CLIP_PREPARE_PROMPT,
+        contents: [{ role: 'user', parts: [{ text: numbered }] }],
+        schema: CLIP_PREPARE_SCHEMA,
+        maxOutputTokens: 300 + chunk.length * 160,
+        disableThinking: true,
+      });
+      for (const item of value.items ?? []) {
+        const at = start + item.i;
+        if (!Number.isInteger(item.i) || at < start || at >= start + chunk.length) continue;
+        out[at] = {
+          th: (item.th ?? '').trim(),
+          hide: Array.isArray(item.hide) ? item.hide : [],
+          distractors: Array.isArray(item.distractors) ? item.distractors : [],
+        };
+      }
+    }
+    return out;
+  }
+
 
   async generateReport(
     history: ChatTurn[],
