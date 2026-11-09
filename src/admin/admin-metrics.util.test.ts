@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   dateKey,
+  estimatedThbForGrant,
   estimatedThbForProduct,
   parseDateRange,
   pctChange,
@@ -13,6 +14,18 @@ describe('admin-metrics.util', () => {
     expect(estimatedThbForProduct('banana_tickets_28')).toBe(79);
     expect(estimatedThbForProduct('banana_tickets_70')).toBe(199);
     expect(estimatedThbForProduct('unknown')).toBe(0);
+  });
+
+  it('estimates subscription list prices', () => {
+    expect(estimatedThbForProduct('pro_monthly')).toBe(120);
+    expect(estimatedThbForProduct('promax_yearly')).toBe(780);
+    expect(estimatedThbForProduct('promax_yearly_earlybird')).toBe(780);
+    expect(estimatedThbForProduct('promax_yearly:monthly')).toBe(780);
+  });
+
+  it('prefers the grant price when stored', () => {
+    expect(estimatedThbForGrant({ productId: 'pro_monthly', priceThb: 99 })).toBe(99);
+    expect(estimatedThbForGrant({ productId: 'pro_monthly', priceThb: null })).toBe(120);
   });
 
   it('parses default 30-day range ending today UTC', () => {

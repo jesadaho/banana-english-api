@@ -16,7 +16,7 @@ const PRODUCTS: SubscriptionProduct[] = [
   { productId: 'promax_monthly', tier: 'PRO_MAX', months: 1, priceThb: 280, earlyBird: false },
   { productId: 'promax_quarterly', tier: 'PRO_MAX', months: 3, priceThb: 380, earlyBird: false },
   { productId: 'promax_yearly', tier: 'PRO_MAX', months: 12, priceThb: 780, earlyBird: false },
-  { productId: EARLY_BIRD_PRODUCT_ID, tier: 'PRO_MAX', months: 12, priceThb: 280, earlyBird: true },
+  { productId: EARLY_BIRD_PRODUCT_ID, tier: 'PRO_MAX', months: 12, priceThb: 780, earlyBird: true },
 ];
 
 const BY_ID = new Map(PRODUCTS.map((p) => [p.productId, p]));
