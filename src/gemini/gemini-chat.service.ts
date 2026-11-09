@@ -2734,6 +2734,43 @@ ${
     return out;
   }
 
+  /**
+   * Clips: Thai translation + dictation picks for each line (admin "prepare").
+   * Returns one item per input line (same order); missing items stay empty.
+   */
+  async prepareClipSentences(
+    lines: string[],
+  ): Promise<Array<{ th: string; hide: number[]; distractors: string[] }>> {
+    const out: Array<{ th: string; hide: number[]; distractors: string[] }> =
+      lines.map(() => ({ th: '', hide: [], distractors: [] }));
+    for (let start = 0; start < lines.length; start += 20) {
+      const chunk = lines.slice(start, start + 20);
+      const numbered = chunk
+        .map((line, i) => `${i}. ${line}`)
+        .join('\n');
+      const { value } = await this.generateJson<{
+        items: Array<{ i: number; th: string; hide: number[]; distractors: string[] }>;
+      }>({
+        ...GEMINI_BACKGROUND,
+        systemInstruction: CLIP_PREPARE_PROMPT,
+        contents: [{ role: 'user', parts: [{ text: numbered }] }],
+        schema: CLIP_PREPARE_SCHEMA,
+        maxOutputTokens: 300 + chunk.length * 160,
+        disableThinking: true,
+      });
+      for (const item of value.items ?? []) {
+        const at = start + item.i;
+        if (!Number.isInteger(item.i) || at < start || at >= start + chunk.length) continue;
+        out[at] = {
+          th: (item.th ?? '').trim(),
+          hide: Array.isArray(item.hide) ? item.hide : [],
+          distractors: Array.isArray(item.distractors) ? item.distractors : [],
+        };
+      }
+    }
+    return out;
+  }
+
 
   async generateReport(
     history: ChatTurn[],
