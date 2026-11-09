@@ -3,10 +3,12 @@ import { GeminiChatService } from '../gemini/gemini-chat.service';
 import { PrismaService } from '../prisma/prisma.service';
 import {
   cleanCues,
+  cueStartIndexes,
   limitSegments,
   needsPunctuation,
   parseCues,
   segmentsToWords,
+  splitLongLines,
   splitPunctuated,
 } from './cc-import.rules';
 import { CLIP_CATEGORIES, CLIP_LEVELS, parseYoutubeId } from './clips.rules';
@@ -57,9 +59,14 @@ export class CcImportService {
     if (words.length < MIN_WORDS) throw new BadRequestException('captions_too_short');
 
     const text = segments.map((s) => s.text).join(' ');
-    const sentences = needsPunctuation(segments)
-      ? await this.chat.punctuateCaptions(text)
-      : splitPunctuated(text);
+    // Long sentences (manual captions are often 20–45 words) are split at
+    // natural breaks so each practice line is short enough to hear and rebuild.
+    // Manual captions: cue boundaries are where the speaker pauses — prefer
+    // them as split points. (Auto-caption cues are arbitrary roll-ups.)
+    const manual = !needsPunctuation(segments);
+    const sentences = manual
+      ? splitLongLines(splitPunctuated(text), undefined, cueStartIndexes(segments))
+      : splitLongLines(await this.chat.punctuateCaptions(text));
     if (sentences.length < 2) throw new BadRequestException('captions_no_sentences');
     const timed = alignSentences(sentences, words);
     const truncated = all.length > segments.length;
