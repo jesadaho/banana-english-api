@@ -13,7 +13,7 @@ const at = (days: number) => new Date(now.getTime() + days * day);
 
 describe('subscriptionProduct', () => {
   it('maps store ids, including Play base plans', () => {
-    assert.equal(subscriptionProduct('promax_yearly_earlybird')?.priceThb, 280);
+    assert.equal(subscriptionProduct('promax_yearly_earlybird')?.priceThb, 780);
     assert.equal(subscriptionProduct('promax_yearly_earlybird:yearly')?.earlyBird, true);
     assert.equal(subscriptionProduct('pro_monthly')?.tier, 'PRO');
     assert.equal(subscriptionProduct('banana_tickets_28'), null);
