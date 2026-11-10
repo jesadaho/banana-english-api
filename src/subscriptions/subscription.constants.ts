@@ -12,8 +12,8 @@ export const FOUNDER_PRESALE_YEARS = 1;
 export const PRESALE_QR_TTL_MS = 15 * 60 * 1000;
 /** Sale opens Sunday 18 Oct 2026, 21:00 Asia/Bangkok. */
 export const FOUNDER_PRESALE_OPENS_AT = new Date('2026-10-18T14:00:00.000Z');
-/** Promotion window through end of 2026 Asia/Bangkok. */
-export const FOUNDER_PRESALE_CLOSES_AT = new Date('2026-12-31T17:00:00.000Z');
+/** Promotion window through end of November 2026 Asia/Bangkok. */
+export const FOUNDER_PRESALE_CLOSES_AT = new Date('2026-11-30T17:00:00.000Z');
 /** Prior PromptPay amounts, still accepted on webhook retries. */
 const FOUNDER_PRESALE_LEGACY_PRICES_THB = [740, 250, 150] as const;
 
