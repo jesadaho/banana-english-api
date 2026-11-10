@@ -68,16 +68,25 @@ export class ClipsSeedService implements OnModuleInit {
       select: { text: true },
     });
     const hasLongLine = sentences.some((s) => wordCount(s.text) > MAX_LINE_WORDS);
+    // Caption notes / speaker labels left from older imports (before stripCaptionNotes).
+    const hasCaptionNoise = sentences.some((s) =>
+      /[(\[]/.test(s.text) ||
+      /(^|[.!?]\s+)[A-Z]{2,}[A-Z0-9 .'&-]{0,24}:\s/.test(s.text),
+    );
 
-    if (count > 0 && !hasLongLine) {
-      this.logger.log(`Clips seed skipped (${count} clip(s), lines ≤ ${MAX_LINE_WORDS} words)`);
+    if (count > 0 && !hasLongLine && !hasCaptionNoise) {
+      this.logger.log(
+        `Clips seed skipped (${count} clip(s), lines clean ≤ ${MAX_LINE_WORDS} words)`,
+      );
       return;
     }
 
     const replace = count > 0;
     const packs = this.collect(root);
     this.logger.log(
-      `Clips seed starting: ${packs.length} pack(s)${replace ? ' (replace long lines)' : ''} from ${root}`,
+      `Clips seed starting: ${packs.length} pack(s)${
+        replace ? ' (replace: long lines / caption notes)' : ''
+      } from ${root}`,
     );
     let ok = 0;
     let failed = 0;

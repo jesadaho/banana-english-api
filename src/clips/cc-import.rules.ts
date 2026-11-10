@@ -42,7 +42,33 @@ export function parseCues(text: string): Cue[] {
   return out;
 }
 
-const NOISE = /\[[^\]]*\]|\([^)]*(music|applause|laugh|sigh|gasp)[^)]*\)|♪+|>>/gi;
+/**
+ * Not speech: every [..] and (..) caption note — sound effects and stage
+ * directions like (GIGGLES), [Laughter], (Music) — music notes and ">>".
+ */
+const NOISE = /\[[^\]]*\]|\([^)]*\)|♪+|>>/g;
+
+/**
+ * Speaker labels at the start of a line or after a sentence end:
+ * "MICKEY: Whoa!", "MAN 2: Hi", "- WOODY: Hey". ALL-CAPS names only, so a
+ * normal "Note: …" or "Time: 5pm" in dialogue is kept.
+ */
+const SPEAKER = /(^|[.!?]\s+|\s-\s*)[A-Z][A-Z0-9 .'&-]{0,24}:\s+/g;
+
+/** Caption line → spoken words only. */
+export function stripCaptionNotes(raw: string): string {
+  return raw
+    .replace(NOISE, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .replace(/^-\s*/, '')
+    .replace(SPEAKER, '$1')
+    .replace(/^\s*-\s*/, '')
+    .replace(/\s+([,.!?])/g, '$1')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .replace(/^[,.;:!?\s]+/, '');
+}
 
 /**
  * Auto captions "roll up": each cue repeats the previous line plus a new one,
@@ -56,7 +82,7 @@ export function cleanCues(cues: Cue[]): { segments: Segment[]; auto: boolean } {
   for (const c of cues) {
     if (c.endMs - c.startMs < 60 || c.lines.length === 0) continue;
     const raw = auto ? c.lines[c.lines.length - 1] : c.lines.join(' ');
-    const text = raw.replace(NOISE, ' ').replace(/^\s*-\s*/, '').replace(/\s+/g, ' ').trim();
+    const text = stripCaptionNotes(raw);
     if (!text || text === last) continue;
     last = text;
     // Auto cues overlap (end = next cue's end): clamp to the next start.
@@ -202,4 +228,13 @@ export function cueStartIndexes(segments: Segment[]): Set<number> {
     at += s.text.trim().split(/\s+/).filter(Boolean).length;
   }
   return out;
+}
+
+/** "English Singsing" intro card etc.: the line is only the channel name. */
+export function isChannelNameLine(text: string, channel: string): boolean {
+  const norm = (v: string) => v.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+  const c = norm(channel);
+  if (!c) return false;
+  const t = norm(text);
+  return t === c || t === `${c} channel` || t === `welcome to ${c}`;
 }

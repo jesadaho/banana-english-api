@@ -109,3 +109,31 @@ describe('splitLongLines with caption cues', () => {
     assert.ok(parts.every((p) => p.split(' ').length <= MAX_LINE_WORDS));
   });
 });
+
+import { stripCaptionNotes } from './cc-import.rules';
+
+describe('stripCaptionNotes', () => {
+  it('drops (..) / [..] notes and ALL-CAPS speaker labels', () => {
+    assert.equal(stripCaptionNotes('(GIGGLES) MICKEY: Whoa!'), 'Whoa!');
+    assert.equal(stripCaptionNotes('[Laughter] Oh, Monica!'), 'Oh, Monica!');
+    assert.equal(stripCaptionNotes('- WOODY: Hey, Buzz. (SIGHS)'), 'Hey, Buzz.');
+    assert.equal(stripCaptionNotes('Wait. MAN 2: No way!'), 'Wait. No way!');
+    assert.equal(stripCaptionNotes('♪ (MUSIC PLAYING) ♪'), '');
+  });
+
+  it('keeps normal colons and words', () => {
+    assert.equal(stripCaptionNotes('Note: the store opens at 9:30.'), 'Note: the store opens at 9:30.');
+    assert.equal(stripCaptionNotes('I am OK, Mom.'), 'I am OK, Mom.');
+  });
+});
+
+import { isChannelNameLine } from './cc-import.rules';
+
+describe('isChannelNameLine', () => {
+  it('matches the channel name card only', () => {
+    assert.equal(isChannelNameLine('English Singsing', 'English Singsing'), true);
+    assert.equal(isChannelNameLine('Welcome to English Singsing!', 'English Singsing'), true);
+    assert.equal(isChannelNameLine('What day is it today?', 'English Singsing'), false);
+    assert.equal(isChannelNameLine('Hello', ''), false);
+  });
+});
