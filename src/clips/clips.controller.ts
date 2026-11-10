@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Req, UseGuards } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { AnonymousUserGuard } from '../users/anonymous-user.guard';
+import { ClipWordsService } from './clip-words.service';
 import { ClipsService } from './clips.service';
 
 type AuthedRequest = { user: User };
@@ -9,7 +10,10 @@ type AuthedRequest = { user: User };
 @Controller('clips')
 @UseGuards(AnonymousUserGuard)
 export class ClipsController {
-  constructor(private readonly clips: ClipsService) {}
+  constructor(
+    private readonly clips: ClipsService,
+    private readonly words: ClipWordsService,
+  ) {}
 
   @Get()
   list(@Req() req: AuthedRequest) {
@@ -19,6 +23,17 @@ export class ClipsController {
   @Get(':id')
   get(@Req() req: AuthedRequest, @Param('id') id: string) {
     return this.clips.getForUser(req.user.id, id);
+  }
+
+  /** Tap a word in line [idx] → Thai meaning in context (cached server-side). */
+  @Get(':id/sentences/:idx/words/:wordIdx')
+  word(
+    @Req() req: AuthedRequest,
+    @Param('id') id: string,
+    @Param('idx', ParseIntPipe) idx: number,
+    @Param('wordIdx', ParseIntPipe) wordIdx: number,
+  ) {
+    return this.words.gloss(req.user.id, id, idx, wordIdx);
   }
 
   @Post(':id/progress')
