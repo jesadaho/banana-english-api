@@ -3,10 +3,13 @@ import { GeminiChatService } from '../gemini/gemini-chat.service';
 import { PrismaService } from '../prisma/prisma.service';
 import {
   cleanCues,
+  cueStartIndexes,
+  isChannelNameLine,
   limitSegments,
   needsPunctuation,
   parseCues,
   segmentsToWords,
+  splitLongLines,
   splitPunctuated,
 } from './cc-import.rules';
 import { CLIP_CATEGORIES, CLIP_LEVELS, parseYoutubeId } from './clips.rules';
@@ -41,6 +44,7 @@ export class CcImportService {
     maxSeconds?: unknown;
     publish?: unknown;
     replace?: unknown;
+    videoSeconds?: unknown;
   }) {
     const youtubeId = parseYoutubeId(String(body.youtube ?? ''));
     if (!youtubeId) throw new BadRequestException('youtube_invalid');
@@ -52,17 +56,27 @@ export class CcImportService {
 
     const maxMs = Math.max(30, Math.min(30 * 60, Number(body.maxSeconds) || DEFAULT_MAX_SECONDS)) * 1000;
     const { segments: all, auto } = cleanCues(parseCues(String(body.captions ?? '')));
-    const segments = limitSegments(all, maxMs);
+    // Drop lines that are just the channel's name (intro card / sign-off).
+    const channelName = String(body.channel ?? '').trim();
+    const limited = limitSegments(all, maxMs);
+    const segments = limited.filter(
+      (s) => !isChannelNameLine(s.text, channelName),
+    );
     const words = segmentsToWords(segments);
     if (words.length < MIN_WORDS) throw new BadRequestException('captions_too_short');
 
     const text = segments.map((s) => s.text).join(' ');
-    const sentences = needsPunctuation(segments)
-      ? await this.chat.punctuateCaptions(text)
-      : splitPunctuated(text);
+    // Long sentences (manual captions are often 20–45 words) are split at
+    // natural breaks so each practice line is short enough to hear and rebuild.
+    // Manual captions: cue boundaries are where the speaker pauses — prefer
+    // them as split points. (Auto-caption cues are arbitrary roll-ups.)
+    const manual = !needsPunctuation(segments);
+    const sentences = manual
+      ? splitLongLines(splitPunctuated(text), undefined, cueStartIndexes(segments))
+      : splitLongLines(await this.chat.punctuateCaptions(text));
     if (sentences.length < 2) throw new BadRequestException('captions_no_sentences');
     const timed = alignSentences(sentences, words);
-    const truncated = all.length > segments.length;
+    const truncated = all.length > limited.length;
     this.logger.log(
       `CC ${youtubeId}: ${sentences.length} lines (${auto ? 'auto' : 'manual'} captions${truncated ? ', truncated' : ''})`,
     );
@@ -98,10 +112,17 @@ export class CcImportService {
         this.logger.warn(`CC publish failed for ${clip.id}: ${String(err)}`);
       }
     }
+    // How much of the video the captions cover — many lesson videos caption
+    // the first run only, then repeat without captions. The app stops at the
+    // last line; the admin is warned so the clip can be swapped.
+    const videoSeconds = Number(body.videoSeconds) || 0;
+    const coverage = videoSeconds > 0 ? Math.min(1, data.durationSec / videoSeconds) : 1;
     return {
       skipped: false,
       auto,
       truncated,
+      coverage,
+      lowCoverage: coverage < 0.5,
       ...(await this.clips.adminGet(clip.id)),
     };
   }

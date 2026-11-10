@@ -42,7 +42,33 @@ export function parseCues(text: string): Cue[] {
   return out;
 }
 
-const NOISE = /\[[^\]]*\]|\([^)]*(music|applause|laugh|sigh|gasp)[^)]*\)|♪+|>>/gi;
+/**
+ * Not speech: every [..] and (..) caption note — sound effects and stage
+ * directions like (GIGGLES), [Laughter], (Music) — music notes and ">>".
+ */
+const NOISE = /\[[^\]]*\]|\([^)]*\)|♪+|>>/g;
+
+/**
+ * Speaker labels at the start of a line or after a sentence end:
+ * "MICKEY: Whoa!", "MAN 2: Hi", "- WOODY: Hey". ALL-CAPS names only, so a
+ * normal "Note: …" or "Time: 5pm" in dialogue is kept.
+ */
+const SPEAKER = /(^|[.!?]\s+|\s-\s*)[A-Z][A-Z0-9 .'&-]{0,24}:\s+/g;
+
+/** Caption line → spoken words only. */
+export function stripCaptionNotes(raw: string): string {
+  return raw
+    .replace(NOISE, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .replace(/^-\s*/, '')
+    .replace(SPEAKER, '$1')
+    .replace(/^\s*-\s*/, '')
+    .replace(/\s+([,.!?])/g, '$1')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .replace(/^[,.;:!?\s]+/, '');
+}
 
 /**
  * Auto captions "roll up": each cue repeats the previous line plus a new one,
@@ -56,7 +82,7 @@ export function cleanCues(cues: Cue[]): { segments: Segment[]; auto: boolean } {
   for (const c of cues) {
     if (c.endMs - c.startMs < 60 || c.lines.length === 0) continue;
     const raw = auto ? c.lines[c.lines.length - 1] : c.lines.join(' ');
-    const text = raw.replace(NOISE, ' ').replace(/^\s*-\s*/, '').replace(/\s+/g, ' ').trim();
+    const text = stripCaptionNotes(raw);
     if (!text || text === last) continue;
     last = text;
     // Auto cues overlap (end = next cue's end): clamp to the next start.
@@ -101,4 +127,114 @@ export function splitPunctuated(text: string): string[] {
   return (text.match(/[^.!?]+[.!?]+["”’)]*|[^.!?]+$/g) ?? [])
     .map((s) => s.trim())
     .filter((s) => /[a-z]/i.test(s));
+}
+
+/** Longest practice line (words) before it's split in two. */
+export const MAX_LINE_WORDS = 14;
+
+/** Words a part shouldn't end on when we have to cut mid-clause. */
+const WEAK_END = new Set([
+  'a', 'an', 'the', 'to', 'of', 'in', 'on', 'at', 'for', 'with', 'from', 'by',
+  'that', 'my', 'your', 'his', 'her', 'our', 'their', 'its', 'i', 'you', 'we',
+  'they', 'he', 'she', 'it', 'is', 'are', 'was', 'were', 'be', 'can', 'will',
+  'would', 'could', 'should', 'some', 'any', 'this', 'these', 'those', 'very',
+]);
+
+const BREAK_BEFORE = new Set([
+  'and', 'but', 'so', 'because', 'cause', 'when', 'while', 'if', 'then', 'or',
+  'which', 'who', 'where', 'after', 'before', 'until', 'although', 'though',
+  'unless', 'since', 'whether',
+]);
+
+/**
+ * Splits a long line at the most natural point near its middle and repeats
+ * until every part is ≤ [max] words (never a part under 3 words). Preference:
+ *   1. after , ; : — or at a caption-cue boundary ([cueBreaks]: word indexes
+ *      that start a new cue — manual captions break where the speaker pauses)
+ *   2. before a conjunction (and, but, because, when…) or a capitalised word
+ *      (a missing full stop: "…useless yeah | Tell me this…")
+ *   3. the middle, avoiding a part that ends on "the / to / that…"
+ * Word order is kept exactly, so the aligner still finds every word.
+ */
+export function splitLongLine(
+  text: string,
+  max = MAX_LINE_WORDS,
+  cueBreaks: ReadonlySet<number> = new Set(),
+): string[] {
+  const words = text.trim().split(/\s+/).filter(Boolean);
+  if (words.length <= max) return words.length ? [words.join(' ')] : [];
+  const n = words.length;
+  const minPart = 3;
+  let best = -1;
+  let bestScore = Infinity;
+  for (let i = minPart; i <= n - minPart; i++) {
+    // split between words[i-1] and words[i]
+    const prev = words[i - 1];
+    const nextRaw = words[i];
+    const next = nextRaw.toLowerCase().replace(/[^a-z']/g, '');
+    const capital = /^[A-Z]/.test(nextRaw) && !/^I('|$)/.test(nextRaw);
+    const kind =
+      /[,;:—–]["”’)]*$|-$/.test(prev) || cueBreaks.has(i)
+        ? 0
+        : BREAK_BEFORE.has(next) || capital
+          ? 1
+          : 2;
+    const weak = kind === 2 && WEAK_END.has(prev.toLowerCase().replace(/[^a-z']/g, '')) ? 3 : 0;
+    // A natural break may sit well away from the middle.
+    const score = kind * n + Math.abs(i - n / 2) * (kind === 2 ? 1 : 2) + weak;
+    if (score < bestScore) {
+      bestScore = score;
+      best = i;
+    }
+  }
+  const shift = (set: ReadonlySet<number>, by: number) =>
+    new Set([...set].map((x) => x - by).filter((x) => x > 0));
+  const left = words.slice(0, best).join(' ');
+  const right = words.slice(best).join(' ');
+  return [
+    ...splitLongLine(left, max, cueBreaks),
+    ...splitLongLine(right, max, shift(cueBreaks, best)),
+  ];
+}
+
+/**
+ * [cueStarts]: global word indexes (over all lines joined) where a caption
+ * cue starts — pass them for manual captions so splits follow the speaker.
+ */
+export function splitLongLines(
+  lines: string[],
+  max = MAX_LINE_WORDS,
+  cueStarts: ReadonlySet<number> = new Set(),
+): string[] {
+  const out: string[] = [];
+  let offset = 0;
+  for (const line of lines) {
+    const count = line.trim().split(/\s+/).filter(Boolean).length;
+    const local = new Set(
+      [...cueStarts].filter((g) => g > offset && g < offset + count).map((g) => g - offset),
+    );
+    out.push(...splitLongLine(line, max, local));
+    offset += count;
+  }
+  return out;
+}
+
+/** Word indexes (over all segments joined with spaces) where each cue starts. */
+export function cueStartIndexes(segments: Segment[]): Set<number> {
+  const out = new Set<number>();
+  let at = 0;
+  for (const s of segments) {
+    out.add(at);
+    at += s.text.trim().split(/\s+/).filter(Boolean).length;
+  }
+  return out;
+}
+
+/** "English Singsing" intro card etc.: the line is only the channel name. */
+export function isChannelNameLine(text: string, channel: string): boolean {
+  const norm = (v: string) => v.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+  const c = norm(channel);
+  if (!c) return false;
+  const t = norm(text);
+  return t === c || t === `${c} channel` || t === `welcome to ${c}`;
 }

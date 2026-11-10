@@ -63,6 +63,7 @@ import {
 import { GroqChatService } from '../groq/groq-chat.service';
 import { isGeminiBillingError } from '../common/ai-user-message';
 import { GeminiModelPool, parseGeminiChatModels } from './gemini-model-pool';
+import { cleanGloss, type WordGloss } from '../clips/clip-words.rules';
 
 const REPLY_SCHEMA = {
   type: 'object',
@@ -582,6 +583,28 @@ For each numbered line return:
 - hide: 0-based word indexes (split on spaces) a learner should rebuild by listening. If the line has ≤ 8 words, hide every word. Otherwise pick up to 6 words that are hard to hear or key to meaning (names, numbers, contractions, content words), not "a/the/to".
 - distractors: 2 short English words that SOUND like a hidden word but are wrong (e.g. large → lunch, can → can't, two → to). Never a word that is in the line.
 Return JSON matching the schema, one item per line.`;
+
+const CLIP_WORD_PROMPT = `You explain ONE English word to a Thai learner (A1–B1), as it is used in the given line.
+Return JSON:
+- lemma: dictionary form (bites → bite, went → go, gonna → going to)
+- pos: part of speech in THIS line (noun, verb, adjective, adverb, pronoun, preposition, conjunction, phrasal verb, idiom, interjection…)
+- th: short natural Thai meaning IN THIS LINE (2–8 words). If the word is part of a phrase here (grab a bite, figure out, kind of), give the phrase meaning and say which phrase in note.
+- note: optional, ≤ 1 short Thai sentence (the phrase it belongs to, or a common trap). Empty if nothing useful.
+- example: one short, easy English example using the same meaning (≤ 10 words)
+- exampleTh: Thai for the example`;
+
+const CLIP_WORD_SCHEMA = {
+  type: 'object',
+  properties: {
+    lemma: { type: 'string' },
+    pos: { type: 'string' },
+    th: { type: 'string' },
+    note: { type: 'string' },
+    example: { type: 'string' },
+    exampleTh: { type: 'string' },
+  },
+  required: ['lemma', 'pos', 'th'],
+};
 
 const CLIP_PREPARE_SCHEMA = {
   type: 'object',
@@ -2738,6 +2761,38 @@ ${
    * Clips: Thai translation + dictation picks for each line (admin "prepare").
    * Returns one item per input line (same order); missing items stay empty.
    */
+  /** Clips: one tapped word, meaning in its line (Thai). */
+  async glossClipWord(params: {
+    sentence: string;
+    sentenceTh: string;
+    word: string;
+    wordIdx: number;
+  }): Promise<WordGloss | null> {
+    const { value } = await this.generateJson<Record<string, unknown>>({
+      ...GEMINI_LIVE_TURN,
+      systemInstruction: CLIP_WORD_PROMPT,
+      contents: [
+        {
+          role: 'user',
+          parts: [
+            {
+              text:
+                `Line: ${params.sentence}\n` +
+                (params.sentenceTh ? `Thai of the line: ${params.sentenceTh}\n` : '') +
+                `Word: "${params.word}" (word #${params.wordIdx + 1} in the line)`,
+            },
+          ],
+        },
+      ],
+      schema: CLIP_WORD_SCHEMA,
+      maxOutputTokens: 300,
+      singleAttempt: true,
+      disableThinking: true,
+      timeoutMs: 8000,
+    });
+    return cleanGloss(value);
+  }
+
   async prepareClipSentences(
     lines: string[],
   ): Promise<Array<{ th: string; hide: number[]; distractors: string[] }>> {

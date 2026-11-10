@@ -1087,9 +1087,34 @@ model ClipSentence {
   /** Dictation: word indexes to hide + sound-alike distractors (JSON). */
   dictation Json?
 
-  clip Clip @relation(fields: [clipId], references: [id], onDelete: Cascade)
+  clip    Clip            @relation(fields: [clipId], references: [id], onDelete: Cascade)
+  glosses ClipWordGloss[]
 
   @@unique([clipId, idx])
+}
+
+/**
+ * Tap-a-word meaning in a clip line (AI, Thai, in context). Made the first
+ * time anyone taps that word in that line, then shared by everyone.
+ */
+model ClipWordGloss {
+  id         String   @id @default(uuid())
+  sentenceId String
+  wordIdx    Int
+  /** The word as it was in the line when glossed (regenerate if edited). */
+  word       String
+  lemma      String   @default("")
+  pos        String   @default("")
+  th         String
+  note       String   @default("")
+  example    String   @default("")
+  exampleTh  String   @default("")
+  ipa        String   @default("")
+  createdAt  DateTime @default(now())
+
+  sentence ClipSentence @relation(fields: [sentenceId], references: [id], onDelete: Cascade)
+
+  @@unique([sentenceId, wordIdx])
 }
 
 /** Per user × clip × mode (dictation | shadowing | watch). */

@@ -3,6 +3,7 @@ import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { PrismaService } from '../prisma/prisma.service';
 import { CcImportService } from './cc-import.service';
+import { MAX_LINE_WORDS } from './cc-import.rules';
 
 type ClipMeta = {
   id?: string;
@@ -27,9 +28,15 @@ function guessCategory(title: string): string {
   return 'daily';
 }
 
+function wordCount(text: string): number {
+  return text.trim().split(/\s+/).filter(Boolean).length;
+}
+
 /**
- * One-shot seed: when Clip table is empty and clips-cc/ is on disk (Docker
- * image), import + publish every pack in the background so boot stays fast.
+ * Seed / refresh clips-cc packs:
+ * - empty DB → import + publish
+ * - any stored line still > MAX_LINE_WORDS → re-import with replace
+ *   (picks up splitter fixes without a manual admin pass)
  */
 @Injectable()
 export class ClipsSeedService implements OnModuleInit {
@@ -50,18 +57,37 @@ export class ClipsSeedService implements OnModuleInit {
       this.logger.log(`Clips seed skipped (no ${root})`);
       return;
     }
-    const count = await this.prisma.clip.count();
-    if (count > 0) {
-      this.logger.log(`Clips seed skipped (${count} clip(s) already present)`);
-      return;
-    }
     if (process.env.CLIPS_CC_AUTO_IMPORT === '0') {
       this.logger.log('Clips seed skipped (CLIPS_CC_AUTO_IMPORT=0)');
       return;
     }
 
+    const count = await this.prisma.clip.count();
+    // Prisma has no word-count filter — texts are tiny at this scale.
+    const sentences = await this.prisma.clipSentence.findMany({
+      select: { text: true },
+    });
+    const hasLongLine = sentences.some((s) => wordCount(s.text) > MAX_LINE_WORDS);
+    // Caption notes / speaker labels left from older imports (before stripCaptionNotes).
+    const hasCaptionNoise = sentences.some((s) =>
+      /[(\[]/.test(s.text) ||
+      /(^|[.!?]\s+)[A-Z]{2,}[A-Z0-9 .'&-]{0,24}:\s/.test(s.text),
+    );
+
+    if (count > 0 && !hasLongLine && !hasCaptionNoise) {
+      this.logger.log(
+        `Clips seed skipped (${count} clip(s), lines clean ≤ ${MAX_LINE_WORDS} words)`,
+      );
+      return;
+    }
+
+    const replace = count > 0;
     const packs = this.collect(root);
-    this.logger.log(`Clips seed starting: ${packs.length} pack(s) from ${root}`);
+    this.logger.log(
+      `Clips seed starting: ${packs.length} pack(s)${
+        replace ? ' (replace: long lines / caption notes)' : ''
+      } from ${root}`,
+    );
     let ok = 0;
     let failed = 0;
     for (const p of packs) {
@@ -74,6 +100,7 @@ export class ClipsSeedService implements OnModuleInit {
           category: guessCategory(p.meta.title ?? ''),
           captions: readFileSync(p.srtPath, 'utf8'),
           publish: true,
+          replace,
         });
         ok += 1;
         this.logger.log(`Clips seed ok ${p.meta.id}`);
