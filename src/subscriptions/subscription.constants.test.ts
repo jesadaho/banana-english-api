@@ -56,10 +56,10 @@ describe('FOUNDER_PRESALE_OPENS_AT', () => {
 });
 
 describe('FOUNDER_PRESALE_CLOSES_AT', () => {
-  it('runs through end of 2026 Bangkok', () => {
-    assert.equal(FOUNDER_PRESALE_CLOSES_AT.toISOString(), '2026-12-31T17:00:00.000Z');
-    assert.equal(presaleIsClosed(new Date('2026-12-31T16:59:59.000Z')), false);
-    assert.equal(presaleIsClosed(new Date('2026-12-31T17:00:00.000Z')), true);
+  it('runs through end of November 2026 Bangkok', () => {
+    assert.equal(FOUNDER_PRESALE_CLOSES_AT.toISOString(), '2026-11-30T17:00:00.000Z');
+    assert.equal(presaleIsClosed(new Date('2026-11-30T16:59:59.000Z')), false);
+    assert.equal(presaleIsClosed(new Date('2026-11-30T17:00:00.000Z')), true);
   });
 });
 
