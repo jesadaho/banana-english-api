@@ -4,7 +4,7 @@ export const PRO_BANANA_CAP = 25;
 export const PRO_REFILL_HOURS = 1;
 
 /** Web / PromptPay Pro Max promotion price (฿/year). */
-export const FOUNDER_PRESALE_PRICE_THB = 740;
+export const FOUNDER_PRESALE_PRICE_THB = 700;
 export const FOUNDER_PRESALE_SEATS = 30;
 /** Held off the public counter so the remaining seats look tighter. */
 export const FOUNDER_PRESALE_HELD_SEATS = 9;
@@ -15,7 +15,7 @@ export const FOUNDER_PRESALE_OPENS_AT = new Date('2026-10-18T14:00:00.000Z');
 /** Promotion window through end of 2026 Asia/Bangkok. */
 export const FOUNDER_PRESALE_CLOSES_AT = new Date('2026-12-31T17:00:00.000Z');
 /** Prior PromptPay amounts, still accepted on webhook retries. */
-const FOUNDER_PRESALE_LEGACY_PRICES_THB = [250, 150] as const;
+const FOUNDER_PRESALE_LEGACY_PRICES_THB = [740, 250, 150] as const;
 
 export function presaleSeatsRemaining(sold: number): number {
   return Math.max(0, FOUNDER_PRESALE_SEATS - FOUNDER_PRESALE_HELD_SEATS - sold);

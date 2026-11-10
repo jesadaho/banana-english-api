@@ -44,8 +44,8 @@ describe('presaleSeatsRemaining', () => {
 });
 
 describe('FOUNDER_PRESALE_PRICE_THB', () => {
-  it('charges 740 baht for the promotion round', () => {
-    assert.equal(FOUNDER_PRESALE_PRICE_THB, 740);
+  it('charges 700 baht for the promotion round', () => {
+    assert.equal(FOUNDER_PRESALE_PRICE_THB, 700);
   });
 });
 
@@ -65,6 +65,8 @@ describe('FOUNDER_PRESALE_CLOSES_AT', () => {
 
 describe('presaleChargeAmountOk', () => {
   it('accepts promotion and prior PromptPay amounts', () => {
+    assert.equal(presaleChargeAmountOk(70000), true);
+    assert.equal(presaleChargeAmountOk(700), true);
     assert.equal(presaleChargeAmountOk(74000), true);
     assert.equal(presaleChargeAmountOk(740), true);
     assert.equal(presaleChargeAmountOk(25000), true);
