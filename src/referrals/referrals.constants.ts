@@ -5,6 +5,16 @@ export const REFERRAL_REQUIRED_NODES = 3;
 export const REFERRER_MONTHLY_CAP_BANANAS = 100;
 export const REFERRAL_LINK_BASE = 'https://bananaenglish.app/invite/';
 
+/** Invite V2 — friend gets a store coupon; referrer gets Pro days after purchase. */
+export const REFERRAL_PROGRAM_BANANA_V1 = 'banana_v1';
+export const REFERRAL_PROGRAM_INVITE_V2 = 'invite_v2';
+export const INVITEE_COUPON_PERCENT = 10;
+export const COUPON_TTL_DAYS = 30;
+export const REFERRER_PRO_DAYS = 30;
+/** RevenueCat offering id with store promo offers (~10% off first period). */
+export const RC_OFFERING_INVITE = 'invite_10';
+export const REFERRAL_INVITE_V2_GRANT_SOURCE = 'referral_invite_v2';
+
 export const REFERRAL_SOURCES = [
   'play_referrer',
   'clipboard',
@@ -12,6 +22,14 @@ export const REFERRAL_SOURCES = [
   'manual',
 ] as const;
 export type ReferralSource = (typeof REFERRAL_SOURCES)[number];
+
+export function couponExpiresAt(from = new Date(), ttlDays = COUPON_TTL_DAYS): Date {
+  return new Date(from.getTime() + ttlDays * 86_400_000);
+}
+
+export function addProDays(from: Date, days = REFERRER_PRO_DAYS): Date {
+  return new Date(from.getTime() + days * 86_400_000);
+}
 
 /** No 0/O/1/I/L — codes get read aloud and typed by hand. */
 const CODE_ALPHABET = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';

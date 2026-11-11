@@ -235,17 +235,26 @@ model Referral {
   code         String
   /** "play_referrer" | "clipboard" | "link" | "manual" */
   source       String
+  /** "banana_v1" (bananas) | "invite_v2" (coupon + Pro days) */
+  program      String    @default("banana_v1")
   /** "pending" | "rewarded" | "capped" */
   status       String    @default("pending")
   qualifiedAt  DateTime?
   /** Referrer saw the reward sheet. */
   rewardSeenAt DateTime?
+  /** invite_v2: invitee coupon window */
+  couponExpiresAt    DateTime?
+  couponUsedAt       DateTime?
+  inviteePurchasedAt DateTime?
+  /** SubscriptionGrant.id granted to the referrer (invite_v2). */
+  referrerGrantId    String?
   createdAt    DateTime  @default(now())
 
   referrer User @relation("ReferralReferrer", fields: [referrerId], references: [id], onDelete: Cascade)
   invitee  User @relation("ReferralInvitee", fields: [inviteeId], references: [id], onDelete: Cascade)
 
   @@index([referrerId, qualifiedAt])
+  @@index([program, status])
 }
 
 /** One grant or renewal of Pro / Pro Max. History is kept after revoke. */

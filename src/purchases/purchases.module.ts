@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { EconomyModule } from '../economy/economy.module';
+import { ReferralsModule } from '../referrals/referrals.module';
 import { SubscriptionsModule } from '../subscriptions/subscriptions.module';
 import { UsersModule } from '../users/users.module';
 import { PurchasesController } from './purchases.controller';
@@ -8,7 +9,7 @@ import { RevenueCatClient } from './revenuecat.client';
 import { SubscriptionStoreController } from './subscription-store.controller';
 
 @Module({
-  imports: [EconomyModule, UsersModule, SubscriptionsModule],
+  imports: [EconomyModule, UsersModule, SubscriptionsModule, ReferralsModule],
   controllers: [PurchasesController, SubscriptionStoreController],
   providers: [PurchasesService, RevenueCatClient],
   exports: [PurchasesService, RevenueCatClient],

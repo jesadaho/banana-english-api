@@ -9,6 +9,7 @@ import { User } from '@prisma/client';
 import { Prisma } from '@prisma/client';
 import { EconomyService } from '../economy/economy.service';
 import { PrismaService } from '../prisma/prisma.service';
+import { ReferralsService } from '../referrals/referrals.service';
 import { subscriptionProduct } from '../subscriptions/subscription-products';
 import {
   SubscriptionsService,
@@ -72,6 +73,7 @@ export class PurchasesService {
     private readonly config: ConfigService,
     private readonly revenueCat: RevenueCatClient,
     private readonly subscriptions: SubscriptionsService,
+    private readonly referrals: ReferralsService,
   ) {}
 
   async recordStorePaid(params: {
@@ -389,7 +391,7 @@ export class PurchasesService {
         type === 'PRODUCT_CHANGE' && event.new_product_id
           ? event.new_product_id
           : event.product_id!;
-      await this.subscriptions.applyStorePeriod({
+      const result = await this.subscriptions.applyStorePeriod({
         userId: user.id,
         productId,
         storeTransactionId,
@@ -398,6 +400,9 @@ export class PurchasesService {
         platform: platform ?? null,
         isSandbox,
       });
+      if (result.applied && type === 'INITIAL_PURCHASE') {
+        await this.referrals.onInviteeMembershipPurchase(user.id);
+      }
       return;
     }
     // CANCELLATION keeps access until expiry; only an earlier expiry (refund) cuts it.
@@ -407,6 +412,9 @@ export class PurchasesService {
         storeTransactionId,
         expiresAt,
       });
+      if (type === 'CANCELLATION') {
+        await this.referrals.onInviteeMembershipRefund(user.id);
+      }
     }
   }
 
@@ -431,6 +439,9 @@ export class PurchasesService {
         isSandbox: period.isSandbox,
       });
       if (result.applied) applied += 1;
+    }
+    if (applied > 0) {
+      await this.referrals.onInviteeMembershipPurchase(user.id);
     }
     const refreshed = await this.prisma.user.findUniqueOrThrow({ where: { id: user.id } });
     return {

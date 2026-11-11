@@ -1,9 +1,13 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import {
+  addProDays,
   bangkokMonthStart,
+  couponExpiresAt,
   generateReferralCode,
   normalizeReferralCode,
+  RC_OFFERING_INVITE,
+  REFERRER_PRO_DAYS,
 } from './referrals.constants';
 
 test('normalizeReferralCode accepts typed, linked and clipboard forms', () => {
@@ -31,4 +35,11 @@ test('bangkokMonthStart rolls over at Bangkok midnight, not UTC', () => {
     bangkokMonthStart(new Date('2026-10-15T00:00:00Z')).toISOString(),
     '2026-09-30T17:00:00.000Z',
   );
+});
+
+test('invite v2 coupon and Pro day helpers', () => {
+  const from = new Date('2026-11-11T00:00:00Z');
+  assert.equal(couponExpiresAt(from, 30).toISOString(), '2026-12-11T00:00:00.000Z');
+  assert.equal(addProDays(from, REFERRER_PRO_DAYS).toISOString(), '2026-12-11T00:00:00.000Z');
+  assert.equal(RC_OFFERING_INVITE, 'invite_10');
 });

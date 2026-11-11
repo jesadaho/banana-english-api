@@ -4,20 +4,29 @@ import {
   Logger,
   OnModuleInit,
 } from '@nestjs/common';
-import { Currency, Prisma } from '@prisma/client';
+import { Currency, Prisma, SubscriptionTier } from '@prisma/client';
 import { EconomyService } from '../economy/economy.service';
 import { FcmService } from '../notifications/fcm.service';
 import { PrismaService } from '../prisma/prisma.service';
+import { effectiveSubscriptionTier } from '../subscriptions/subscription.constants';
 import {
+  addProDays,
   bangkokMonthStart,
+  couponExpiresAt,
+  COUPON_TTL_DAYS,
   generateReferralCode,
   INVITEE_BONUS_BANANAS,
+  INVITEE_COUPON_PERCENT,
   normalizeReferralCode,
+  RC_OFFERING_INVITE,
+  REFERRAL_INVITE_V2_GRANT_SOURCE,
   REFERRAL_LINK_BASE,
+  REFERRAL_PROGRAM_INVITE_V2,
   REFERRAL_REQUIRED_NODES,
   REFERRAL_SOURCES,
   type ReferralSource,
   REFERRER_MONTHLY_CAP_BANANAS,
+  REFERRER_PRO_DAYS,
   REFERRER_REWARD_BANANAS,
 } from './referrals.constants';
 
@@ -206,6 +215,8 @@ export class ReferralsService implements OnModuleInit {
       where: { inviteeId },
     });
     if (!referral || referral.status !== 'pending') return;
+    // Invite V2 rewards on purchase, not node progress.
+    if (referral.program === REFERRAL_PROGRAM_INVITE_V2) return;
 
     const done = (await this.completedNodeCounts([inviteeId])).get(inviteeId) ?? 0;
     if (done < REFERRAL_REQUIRED_NODES) return;
@@ -459,6 +470,354 @@ export class ReferralsService implements OnModuleInit {
         invitee: { id: r.inviteeId, ...r.invitee },
       })),
     };
+  }
+
+  // ── Invite V2 (coupon + Pro days) ─────────────────────────────────────
+
+  isInviteV2Enabled(): boolean {
+    const raw = (process.env.INVITE_V2_ENABLED ?? 'true').trim().toLowerCase();
+    return raw !== '0' && raw !== 'false' && raw !== 'off';
+  }
+
+  async getOverviewV2(userId: string) {
+    const code = await this.ensureCode(userId);
+    const now = new Date();
+    const [sent, referredBy, me] = await Promise.all([
+      this.prisma.referral.findMany({
+        where: { referrerId: userId, program: REFERRAL_PROGRAM_INVITE_V2 },
+        orderBy: { createdAt: 'desc' },
+        take: FRIEND_LIST_LIMIT,
+        include: {
+          invitee: { select: { displayName: true, avatarId: true } },
+        },
+      }),
+      this.prisma.referral.findUnique({
+        where: { inviteeId: userId },
+      }),
+      this.prisma.user.findUniqueOrThrow({
+        where: { id: userId },
+        select: {
+          subscriptionTier: true,
+          subscriptionExpiresAt: true,
+        },
+      }),
+    ]);
+
+    const coupon = this.couponPayload(referredBy, now);
+    const activePaid =
+      effectiveSubscriptionTier(me) !== 'FREE' &&
+      !!me.subscriptionExpiresAt &&
+      me.subscriptionExpiresAt.getTime() > now.getTime();
+
+    const friends = sent.map((r) => ({
+      id: r.id,
+      displayName: r.invitee.displayName,
+      avatarId: r.invitee.avatarId,
+      status: r.status,
+      purchased: !!r.inviteePurchasedAt,
+      purchasedAt: r.inviteePurchasedAt?.toISOString() ?? null,
+      rewardedAt: r.qualifiedAt?.toISOString() ?? null,
+    }));
+
+    const unseenRewards = sent
+      .filter((r) => r.status === 'rewarded' && !r.rewardSeenAt)
+      .map((r) => ({
+        referralId: r.id,
+        displayName: r.invitee.displayName,
+        avatarId: r.invitee.avatarId,
+        proDays: REFERRER_PRO_DAYS,
+      }));
+
+    return {
+      program: REFERRAL_PROGRAM_INVITE_V2,
+      code,
+      link: `${REFERRAL_LINK_BASE}${code}`,
+      referrerRewardDays: REFERRER_PRO_DAYS,
+      inviteeCouponPercent: INVITEE_COUPON_PERCENT,
+      couponTtlDays: COUPON_TTL_DAYS,
+      offeringId: RC_OFFERING_INVITE,
+      referredByCode: referredBy?.code ?? null,
+      canClaim: !referredBy && !activePaid,
+      coupon,
+      friends,
+      unseenRewards,
+    };
+  }
+
+  async claimV2(userId: string, rawCode: string, rawSource?: string) {
+    const code = normalizeReferralCode(rawCode);
+    if (!code) throw new BadRequestException('invalid_code');
+    const source: ReferralSource = (REFERRAL_SOURCES as readonly string[]).includes(
+      rawSource ?? '',
+    )
+      ? (rawSource as ReferralSource)
+      : 'manual';
+
+    const referrer = await this.prisma.user.findUnique({
+      where: { referralCode: code },
+      select: { id: true },
+    });
+    if (!referrer) throw new BadRequestException('invalid_code');
+    if (referrer.id === userId) throw new BadRequestException('own_code');
+
+    const me = await this.prisma.user.findUniqueOrThrow({
+      where: { id: userId },
+      select: { subscriptionTier: true, subscriptionExpiresAt: true },
+    });
+    const now = new Date();
+    const activePaid =
+      effectiveSubscriptionTier(me) !== 'FREE' &&
+      !!me.subscriptionExpiresAt &&
+      me.subscriptionExpiresAt.getTime() > now.getTime();
+    if (activePaid) throw new BadRequestException('not_eligible');
+
+    try {
+      const expires = couponExpiresAt(now);
+      const referral = await this.prisma.referral.create({
+        data: {
+          referrerId: referrer.id,
+          inviteeId: userId,
+          code,
+          source,
+          program: REFERRAL_PROGRAM_INVITE_V2,
+          couponExpiresAt: expires,
+        },
+      });
+      return {
+        ok: true,
+        program: REFERRAL_PROGRAM_INVITE_V2,
+        couponPercent: INVITEE_COUPON_PERCENT,
+        couponExpiresAt: expires.toISOString(),
+        offeringId: RC_OFFERING_INVITE,
+        referralId: referral.id,
+      };
+    } catch (error) {
+      if (
+        error instanceof Prisma.PrismaClientKnownRequestError &&
+        error.code === 'P2002'
+      ) {
+        throw new BadRequestException('already_claimed');
+      }
+      throw error;
+    }
+  }
+
+  async markRewardsSeenV2(userId: string, referralIds?: string[]) {
+    const result = await this.prisma.referral.updateMany({
+      where: {
+        referrerId: userId,
+        program: REFERRAL_PROGRAM_INVITE_V2,
+        status: 'rewarded',
+        rewardSeenAt: null,
+        ...(referralIds?.length ? { id: { in: referralIds } } : {}),
+      },
+      data: { rewardSeenAt: new Date() },
+    });
+    return { ok: true, updated: result.count };
+  }
+
+  /**
+   * After invitee’s first paid membership period is applied: consume coupon
+   * and grant the referrer Pro days (idempotent per referral).
+   */
+  async onInviteeMembershipPurchase(inviteeId: string): Promise<void> {
+    const referral = await this.prisma.referral.findUnique({
+      where: { inviteeId },
+    });
+    if (!referral || referral.program !== REFERRAL_PROGRAM_INVITE_V2) return;
+    if (referral.referrerGrantId) return;
+
+    const now = new Date();
+    await this.prisma.$transaction(async (tx) => {
+      const locked = await tx.referral.findUnique({ where: { id: referral.id } });
+      if (!locked || locked.referrerGrantId) return;
+      if (locked.program !== REFERRAL_PROGRAM_INVITE_V2) return;
+
+      await tx.referral.update({
+        where: { id: locked.id },
+        data: {
+          couponUsedAt: locked.couponUsedAt ?? now,
+          inviteePurchasedAt: locked.inviteePurchasedAt ?? now,
+        },
+      });
+
+      const referrer = await tx.user.findUnique({ where: { id: locked.referrerId } });
+      if (!referrer) return;
+
+      const active =
+        effectiveSubscriptionTier(referrer) !== 'FREE' &&
+        !!referrer.subscriptionExpiresAt &&
+        referrer.subscriptionExpiresAt.getTime() > now.getTime();
+      const base = active && referrer.subscriptionExpiresAt
+        ? referrer.subscriptionExpiresAt
+        : now;
+      const expiresAt = addProDays(base, REFERRER_PRO_DAYS);
+      const tier =
+        active && referrer.subscriptionTier === SubscriptionTier.PRO_MAX
+          ? SubscriptionTier.PRO_MAX
+          : SubscriptionTier.PRO;
+
+      const grant = await tx.subscriptionGrant.create({
+        data: {
+          userId: referrer.id,
+          tier,
+          startsAt: now,
+          expiresAt,
+          source: REFERRAL_INVITE_V2_GRANT_SOURCE,
+          note: `referral:${locked.id}`,
+        },
+      });
+
+      await tx.user.update({
+        where: { id: referrer.id },
+        data: {
+          subscriptionTier: tier,
+          subscriptionExpiresAt: expiresAt,
+        },
+      });
+
+      await tx.referral.update({
+        where: { id: locked.id },
+        data: {
+          status: 'rewarded',
+          qualifiedAt: now,
+          referrerGrantId: grant.id,
+        },
+      });
+    });
+
+    const refreshed = await this.prisma.referral.findUnique({
+      where: { id: referral.id },
+      select: { status: true, referrerId: true },
+    });
+    if (refreshed?.status === 'rewarded') {
+      await this.pushInviteV2Reward(refreshed.referrerId, inviteeId, referral.id);
+    }
+  }
+
+  /**
+   * Invitee refund / early expiry: pull back the referrer’s Pro grant by
+   * REFERRER_PRO_DAYS when that grant is still the active expiry tip.
+   */
+  async onInviteeMembershipRefund(inviteeId: string): Promise<void> {
+    const referral = await this.prisma.referral.findUnique({
+      where: { inviteeId },
+    });
+    if (
+      !referral ||
+      referral.program !== REFERRAL_PROGRAM_INVITE_V2 ||
+      !referral.referrerGrantId
+    ) {
+      return;
+    }
+
+    const now = new Date();
+    await this.prisma.$transaction(async (tx) => {
+      const grant = await tx.subscriptionGrant.findUnique({
+        where: { id: referral.referrerGrantId! },
+      });
+      if (!grant || grant.source !== REFERRAL_INVITE_V2_GRANT_SOURCE) return;
+
+      const shortened = new Date(
+        grant.expiresAt.getTime() - REFERRER_PRO_DAYS * 86_400_000,
+      );
+      const newExpires =
+        shortened.getTime() > grant.startsAt.getTime() ? shortened : grant.startsAt;
+
+      await tx.subscriptionGrant.update({
+        where: { id: grant.id },
+        data: { expiresAt: newExpires, note: `${grant.note ?? ''}|clawback` },
+      });
+
+      const referrer = await tx.user.findUnique({ where: { id: grant.userId } });
+      if (
+        referrer?.subscriptionExpiresAt &&
+        referrer.subscriptionExpiresAt.getTime() === grant.expiresAt.getTime()
+      ) {
+        const stillActive = newExpires.getTime() > now.getTime();
+        await tx.user.update({
+          where: { id: referrer.id },
+          data: stillActive
+            ? { subscriptionExpiresAt: newExpires }
+            : {
+                subscriptionTier: SubscriptionTier.FREE,
+                subscriptionExpiresAt: null,
+              },
+        });
+      }
+
+      await tx.referral.update({
+        where: { id: referral.id },
+        data: { status: 'capped' },
+      });
+    });
+  }
+
+  private couponPayload(
+    referral: {
+      program: string;
+      couponExpiresAt: Date | null;
+      couponUsedAt: Date | null;
+    } | null,
+    now: Date,
+  ) {
+    if (!referral || referral.program !== REFERRAL_PROGRAM_INVITE_V2) {
+      return {
+        active: false,
+        percent: INVITEE_COUPON_PERCENT,
+        offeringId: RC_OFFERING_INVITE,
+        expiresAt: null as string | null,
+        usedAt: null as string | null,
+      };
+    }
+    const expiresAt = referral.couponExpiresAt;
+    const used = !!referral.couponUsedAt;
+    const expired = !!expiresAt && expiresAt.getTime() <= now.getTime();
+    return {
+      active: !used && !expired && !!expiresAt,
+      percent: INVITEE_COUPON_PERCENT,
+      offeringId: RC_OFFERING_INVITE,
+      expiresAt: expiresAt?.toISOString() ?? null,
+      usedAt: referral.couponUsedAt?.toISOString() ?? null,
+    };
+  }
+
+  private async pushInviteV2Reward(
+    referrerId: string,
+    inviteeId: string,
+    referralId: string,
+  ) {
+    try {
+      const [referrer, invitee] = await Promise.all([
+        this.prisma.user.findUnique({
+          where: { id: referrerId },
+          include: { fcmTokens: true },
+        }),
+        this.prisma.user.findUnique({
+          where: { id: inviteeId },
+          select: { displayName: true },
+        }),
+      ]);
+      if (!referrer) return;
+      const name = invitee?.displayName?.trim() || 'เพื่อนของคุณ';
+      const invalid = await this.fcm.sendAndPersist({
+        userId: referrerId,
+        tokens: referrer.fcmTokens.map((t) => t.token),
+        payload: {
+          type: 'referral_reward',
+          title: 'Banana English',
+          body: `${name} ซื้อสมาชิกแล้ว! คุณได้ Pro ฟรี ${REFERRER_PRO_DAYS} วัน`,
+          data: { type: 'referral_reward', referralId, route: '/invite' },
+        },
+      });
+      if (invalid.length) {
+        await this.prisma.userFcmToken.deleteMany({
+          where: { token: { in: invalid } },
+        });
+      }
+    } catch (error) {
+      this.logger.warn(`Invite V2 push failed: ${String(error)}`);
+    }
   }
 
   /** Distinct finished map nodes: rewarded mini-games + rewarded lessons / conversations. */

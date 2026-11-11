@@ -3,12 +3,13 @@ import { EconomyModule } from '../economy/economy.module';
 import { NotificationsModule } from '../notifications/notifications.module';
 import { PrismaModule } from '../prisma/prisma.module';
 import { UsersModule } from '../users/users.module';
+import { ReferralsV2Controller } from './referrals-v2.controller';
 import { ReferralsController } from './referrals.controller';
 import { ReferralsService } from './referrals.service';
 
 @Module({
   imports: [EconomyModule, NotificationsModule, PrismaModule, UsersModule],
-  controllers: [ReferralsController],
+  controllers: [ReferralsController, ReferralsV2Controller],
   providers: [ReferralsService],
   exports: [ReferralsService],
 })
