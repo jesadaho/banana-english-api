@@ -11,6 +11,7 @@
  */
 import { readdirSync, readFileSync, existsSync, statSync } from 'node:fs';
 import { join } from 'node:path';
+import { guessClipCategory } from '../src/clips/clips.rules';
 
 type ClipMeta = {
   id?: string;
@@ -22,25 +23,6 @@ type ClipMeta = {
   subtitle_files?: string[];
   ok?: boolean;
 };
-
-function guessCategory(title: string, categoryHint?: string): string {
-  const hint = (categoryHint ?? '').toLowerCase();
-  if (hint.includes('movie') || hint.includes('entertainment')) return 'movies';
-  if (hint.includes('kid') || hint.includes('song')) return 'songs';
-  if (hint.includes('voa') || hint.includes('news') || hint.includes('bbc')) return 'news';
-  if (hint.includes('stor')) return 'stories';
-  if (
-    /trailer|nine-nine|stranger things|toy story|mickey|disney|pixar|ghibli|netflix|short film/i.test(
-      title,
-    )
-  ) {
-    return 'movies';
-  }
-  if (/song|music|sing/i.test(title)) return 'songs';
-  if (/court|news|testimony|report/i.test(title)) return 'news';
-  if (/story|penguin|fox/i.test(title)) return 'stories';
-  return 'daily';
-}
 
 function collectPacks(root: string): Array<{
   dir: string;
@@ -113,7 +95,7 @@ async function main() {
           id: p.meta.id,
           title: p.meta.title,
           level: p.meta.level,
-          category: guessCategory(p.meta.title ?? ''),
+          category: guessClipCategory(p.meta.title ?? '', p.meta.category),
           srt: p.srtPath,
         }),
       );
@@ -145,7 +127,7 @@ async function main() {
           title,
           channel: p.meta.channel,
           level: p.meta.level,
-          category: guessCategory(title),
+          category: guessClipCategory(title, p.meta.category),
           captions,
           publish: !draft,
           replace,

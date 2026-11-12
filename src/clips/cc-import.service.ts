@@ -12,7 +12,7 @@ import {
   splitLongLines,
   splitPunctuated,
 } from './cc-import.rules';
-import { CLIP_CATEGORIES, CLIP_LEVELS, parseYoutubeId } from './clips.rules';
+import { CLIP_LEVELS, normalizeClipCategory, parseYoutubeId } from './clips.rules';
 import { ClipsService } from './clips.service';
 import { alignSentences } from './voa-import.rules';
 
@@ -99,7 +99,7 @@ export class CcImportService {
       title: String(body.title ?? '').trim().slice(0, 120) || youtubeId,
       thumbnailUrl: `https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`,
       level: (CLIP_LEVELS as readonly string[]).includes(level) ? level : 'A2',
-      category: (CLIP_CATEGORIES as readonly string[]).includes(category) ? category : 'daily',
+      category: normalizeClipCategory(category),
       durationSec: Math.ceil((timed.at(-1)?.endMs ?? 0) / 1000),
     };
     const clip = existing
