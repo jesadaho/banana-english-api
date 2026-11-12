@@ -2836,23 +2836,43 @@ ${
       const numbered = chunk
         .map((line, i) => `${i}. ${line}`)
         .join('\n');
-      const { value } = await this.generateJson<{
-        items: Array<{
+      let value: {
+        items?: Array<{
           i: number;
           th: string;
           hide: number[];
           distractors: string[];
           highlights?: Array<{ start: number; end: number; kind: string; labelTh: string }>;
         }>;
-      }>({
-        ...GEMINI_BACKGROUND,
-        systemInstruction: CLIP_PREPARE_PROMPT,
-        contents: [{ role: 'user', parts: [{ text: numbered }] }],
-        schema: CLIP_PREPARE_SCHEMA,
-        maxOutputTokens: 400 + chunk.length * 200,
-        disableThinking: true,
-      });
-      for (const item of value.items ?? []) {
+      } | null = null;
+      for (let attempt = 1; attempt <= 3; attempt++) {
+        try {
+          ({ value } = await this.generateJson<{
+            items: Array<{
+              i: number;
+              th: string;
+              hide: number[];
+              distractors: string[];
+              highlights?: Array<{ start: number; end: number; kind: string; labelTh: string }>;
+            }>;
+          }>({
+            ...GEMINI_BACKGROUND,
+            systemInstruction: CLIP_PREPARE_PROMPT,
+            contents: [{ role: 'user', parts: [{ text: numbered }] }],
+            schema: CLIP_PREPARE_SCHEMA,
+            maxOutputTokens: 400 + chunk.length * 200,
+            disableThinking: true,
+          }));
+          break;
+        } catch (err) {
+          this.logger.warn(
+            `prepareClipSentences chunk ${start}-${start + chunk.length} attempt ${attempt}/3: ${String(err)}`,
+          );
+          if (attempt === 3) throw err;
+          await new Promise((r) => setTimeout(r, 1500 * attempt));
+        }
+      }
+      for (const item of value?.items ?? []) {
         const at = start + item.i;
         if (!Number.isInteger(item.i) || at < start || at >= start + chunk.length) continue;
         const thRaw = (item.th ?? '').trim();
