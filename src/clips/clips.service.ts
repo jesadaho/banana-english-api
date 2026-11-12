@@ -19,6 +19,7 @@ import {
   clipWords,
   isClipMode,
   normalizeDictation,
+  normalizeHighlights,
   parseTranscript,
   parseYoutubeId,
   validateTimedLines,
@@ -157,6 +158,7 @@ export class ClipsService {
         text: s.text,
         textTh: s.textTh,
         dictation: normalizeDictation(s.dictation, s.text),
+        highlights: normalizeHighlights(s.highlights, s.text),
       })),
     };
   }
@@ -287,6 +289,7 @@ export class ClipsService {
         text: s.text,
         textTh: s.textTh,
         dictation: normalizeDictation(s.dictation, s.text),
+        highlights: normalizeHighlights(s.highlights, s.text),
       })),
     };
   }
@@ -404,7 +407,13 @@ export class ClipsService {
       where: { clipId: id },
       orderBy: { idx: 'asc' },
     });
-    const todo = lines.filter((l) => body.force === true || !l.textTh || !l.dictation);
+    const todo = lines.filter(
+      (l) =>
+        body.force === true ||
+        !l.textTh ||
+        !l.dictation ||
+        l.highlights == null,
+    );
     if (todo.length === 0) return this.adminGet(id);
     const prepared = await this.chat.prepareClipSentences(todo.map((l) => l.text));
     await this.prisma.$transaction(
@@ -419,6 +428,7 @@ export class ClipsService {
               { hide: p.hide.filter((n) => n < words.length), distractors: p.distractors },
               l.text,
             ) as Prisma.InputJsonValue,
+            highlights: normalizeHighlights(p.highlights, l.text) as Prisma.InputJsonValue,
           },
         });
       }),

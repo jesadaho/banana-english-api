@@ -3,6 +3,7 @@ import { describe, it } from 'node:test';
 import {
   defaultDictationHide,
   normalizeDictation,
+  normalizeHighlights,
   parseTranscript,
   parseYoutubeId,
   validateTimedLines,
@@ -53,5 +54,23 @@ describe('clips rules', () => {
   it('normalizes dictation and drops distractors that are in the line', () => {
     const d = normalizeDictation({ hide: [4, 99, 4], distractors: ['lunch', 'large', ' '] }, 'Can I get a large latte?');
     assert.deepEqual(d, { hide: [4], distractors: ['lunch'] });
+  });
+
+  it('keeps valid non-overlapping phrase/pattern highlights', () => {
+    const line = 'I need to figure out what to do next';
+    const h = normalizeHighlights(
+      [
+        { start: 3, end: 5, kind: 'phrase', labelTh: 'figure out = คิดออก' },
+        { start: 4, end: 7, kind: 'pattern', labelTh: 'overlap' },
+        { start: 0, end: 1, kind: 'phrase', labelTh: 'too short' },
+        { start: 5, end: 8, kind: 'pattern', labelTh: 'what to do = จะทำอะไร' },
+        { start: 0, end: 2, kind: 'nope', labelTh: 'bad kind' },
+      ],
+      line,
+    );
+    assert.deepEqual(h, [
+      { start: 3, end: 5, kind: 'phrase', labelTh: 'figure out = คิดออก' },
+      { start: 5, end: 8, kind: 'pattern', labelTh: 'what to do = จะทำอะไร' },
+    ]);
   });
 });

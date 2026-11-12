@@ -582,6 +582,11 @@ For each numbered line return:
 - th: natural, simple spoken Thai translation of the line
 - hide: 0-based word indexes (split on spaces) a learner should rebuild by listening. If the line has ≤ 8 words, hide every word. Otherwise pick up to 6 words that are hard to hear or key to meaning (names, numbers, contractions, content words), not "a/the/to".
 - distractors: 2 short English words that SOUND like a hidden word but are wrong (e.g. large → lunch, can → can't, two → to). Never a word that is in the line.
+- highlights: 0–2 useful spans to underline in the watch transcript. Each item:
+  - start / end: 0-based word indexes (end exclusive), covering ≥ 2 words that appear as consecutive words in the line
+  - kind: "phrase" (collocation / phrasal verb / fixed chunk, e.g. "figure out", "a cup of") OR "pattern" (reusable frame, e.g. "Would you like…", "I'm going to…")
+  - labelTh: short Thai tip (≤ 12 Thai words), e.g. "figure out = เข้าใจ / คิดออก"
+  Skip highlights when the line is just a name, number, or has no teachable chunk. Prefer 1 strong highlight over 2 weak ones.
 Return JSON matching the schema, one item per line.`;
 
 const CLIP_WORD_PROMPT = `You explain ONE English word to a Thai learner (A1–B1), as it is used in the given line.
@@ -618,8 +623,21 @@ const CLIP_PREPARE_SCHEMA = {
           th: { type: 'string' },
           hide: { type: 'array', items: { type: 'integer' } },
           distractors: { type: 'array', items: { type: 'string' } },
+          highlights: {
+            type: 'array',
+            items: {
+              type: 'object',
+              properties: {
+                start: { type: 'integer' },
+                end: { type: 'integer' },
+                kind: { type: 'string', enum: ['phrase', 'pattern'] },
+                labelTh: { type: 'string' },
+              },
+              required: ['start', 'end', 'kind', 'labelTh'],
+            },
+          },
         },
-        required: ['i', 'th', 'hide', 'distractors'],
+        required: ['i', 'th', 'hide', 'distractors', 'highlights'],
       },
     },
   },
@@ -2795,22 +2813,39 @@ ${
 
   async prepareClipSentences(
     lines: string[],
-  ): Promise<Array<{ th: string; hide: number[]; distractors: string[] }>> {
-    const out: Array<{ th: string; hide: number[]; distractors: string[] }> =
-      lines.map(() => ({ th: '', hide: [], distractors: [] }));
+  ): Promise<
+    Array<{
+      th: string;
+      hide: number[];
+      distractors: string[];
+      highlights: Array<{ start: number; end: number; kind: string; labelTh: string }>;
+    }>
+  > {
+    const out: Array<{
+      th: string;
+      hide: number[];
+      distractors: string[];
+      highlights: Array<{ start: number; end: number; kind: string; labelTh: string }>;
+    }> = lines.map(() => ({ th: '', hide: [], distractors: [], highlights: [] }));
     for (let start = 0; start < lines.length; start += 20) {
       const chunk = lines.slice(start, start + 20);
       const numbered = chunk
         .map((line, i) => `${i}. ${line}`)
         .join('\n');
       const { value } = await this.generateJson<{
-        items: Array<{ i: number; th: string; hide: number[]; distractors: string[] }>;
+        items: Array<{
+          i: number;
+          th: string;
+          hide: number[];
+          distractors: string[];
+          highlights?: Array<{ start: number; end: number; kind: string; labelTh: string }>;
+        }>;
       }>({
         ...GEMINI_BACKGROUND,
         systemInstruction: CLIP_PREPARE_PROMPT,
         contents: [{ role: 'user', parts: [{ text: numbered }] }],
         schema: CLIP_PREPARE_SCHEMA,
-        maxOutputTokens: 300 + chunk.length * 160,
+        maxOutputTokens: 400 + chunk.length * 200,
         disableThinking: true,
       });
       for (const item of value.items ?? []) {
@@ -2820,6 +2855,7 @@ ${
           th: (item.th ?? '').trim(),
           hide: Array.isArray(item.hide) ? item.hide : [],
           distractors: Array.isArray(item.distractors) ? item.distractors : [],
+          highlights: Array.isArray(item.highlights) ? item.highlights : [],
         };
       }
     }
