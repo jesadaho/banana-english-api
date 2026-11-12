@@ -137,6 +137,18 @@ export function defaultDictationHide(text: string): number[] {
 
 export type ClipDictation = { hide: number[]; distractors: string[] };
 
+/** Phrase / pattern spans to highlight in the watch transcript. */
+export type ClipHighlightKind = 'phrase' | 'pattern';
+export type ClipHighlight = {
+  /** Inclusive word index (space-split, same as dictation). */
+  start: number;
+  /** Exclusive word index. */
+  end: number;
+  kind: ClipHighlightKind;
+  /** Short Thai tip, e.g. "figure out = เข้าใจ / คิดออก". */
+  labelTh: string;
+};
+
 export function normalizeDictation(raw: unknown, text: string): ClipDictation {
   const words = clipWords(text);
   const r = (raw ?? {}) as { hide?: unknown; distractors?: unknown };
@@ -151,4 +163,36 @@ export function normalizeDictation(raw: unknown, text: string): ClipDictation {
         .slice(0, 3)
     : [];
   return { hide: hide.length ? hide : defaultDictationHide(text), distractors };
+}
+
+const HIGHLIGHT_KINDS = new Set<ClipHighlightKind>(['phrase', 'pattern']);
+
+/**
+ * Keep 0–2 valid, non-overlapping word spans. Prefer longer / earlier spans
+ * when Gemini returns junk indexes.
+ */
+export function normalizeHighlights(raw: unknown, text: string): ClipHighlight[] {
+  const words = clipWords(text);
+  if (!Array.isArray(raw) || words.length === 0) return [];
+  const parsed: ClipHighlight[] = [];
+  for (const item of raw) {
+    if (!item || typeof item !== 'object') continue;
+    const o = item as Record<string, unknown>;
+    const start = Number(o.start);
+    const end = Number(o.end);
+    const kind = String(o.kind ?? '') as ClipHighlightKind;
+    const labelTh = String(o.labelTh ?? '').trim().slice(0, 80);
+    if (!Number.isInteger(start) || !Number.isInteger(end)) continue;
+    if (start < 0 || end > words.length || end - start < 2) continue;
+    if (!HIGHLIGHT_KINDS.has(kind) || !labelTh) continue;
+    parsed.push({ start, end, kind, labelTh });
+  }
+  parsed.sort((a, b) => a.start - b.start || b.end - a.end);
+  const out: ClipHighlight[] = [];
+  for (const h of parsed) {
+    if (out.some((x) => h.start < x.end && h.end > x.start)) continue;
+    out.push(h);
+    if (out.length >= 2) break;
+  }
+  return out;
 }

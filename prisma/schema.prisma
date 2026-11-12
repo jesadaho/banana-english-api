@@ -1133,6 +1133,8 @@ model ClipSentence {
   textTh  String @default("")
   /** Dictation: word indexes to hide + sound-alike distractors (JSON). */
   dictation Json?
+  /** Transcript learning highlights: phrases / patterns (JSON array). */
+  highlights Json?
 
   clip    Clip            @relation(fields: [clipId], references: [id], onDelete: Cascade)
   glosses ClipWordGloss[]
