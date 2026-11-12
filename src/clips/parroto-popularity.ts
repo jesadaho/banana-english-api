@@ -4,7 +4,8 @@
  * play data. Keys are normalised titles (see [normalizeClipTitle]).
  */
 export const PARROTO_VIEWS: Record<string, number> = {
-  "love mom": 149828,
+  // Hidden from Popular Now (too many views would pin it at #1).
+  "love mom": 0,
   "kiki s delivery service official english trailer": 103211,
   "princess mononoke official english trailer": 66585,
   "day what day is it today it s wednesday easy dialogue english video for kids": 58214,
