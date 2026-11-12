@@ -2,8 +2,12 @@
 export const CLIP_UNLOCK_COST = 2;
 /** Clips a user can practise without bananas (lifetime, distinct clips). */
 export const CLIP_FREE_UNLOCKS = 3;
-/** A banana unlock is valid for this long (the app also drops it when the clip page closes). */
-export const CLIP_UNLOCK_TTL_MS = 6 * 60 * 60 * 1000;
+/** Thailand time (UTC+7, no DST): a banana unlock lasts until midnight there. */
+const BANGKOK_OFFSET_MS = 7 * 60 * 60 * 1000;
+
+export function bangkokDay(d: Date): string {
+  return new Date(d.getTime() + BANGKOK_OFFSET_MS).toISOString().slice(0, 10);
+}
 /** Firebase Remote Config key (parameter default "true" turns the lock on). */
 export const CLIPS_LOCK_RC_KEY = 'clips_lock_enabled';
 
@@ -22,10 +26,10 @@ export function lockEnabledFrom(rc: Record<string, string> | null | undefined): 
   return (rc?.[CLIPS_LOCK_RC_KEY] ?? '').trim().toLowerCase() === 'true';
 }
 
-/** Still usable: a free unlock never expires; a banana unlock lasts [CLIP_UNLOCK_TTL_MS]. */
+/** Still usable: a free unlock never expires; a banana unlock lasts the rest of that (Bangkok) day. */
 export function unlockValid(u: ExistingUnlock, now = new Date()): boolean {
   if (u.kind === 'free') return true;
-  return now.getTime() - u.createdAt.getTime() < CLIP_UNLOCK_TTL_MS;
+  return bangkokDay(u.createdAt) === bangkokDay(now);
 }
 
 /**
@@ -47,10 +51,9 @@ export function decideClipAccess(p: {
   const now = p.now ?? new Date();
   const free = p.existing.find((u) => u.kind === 'free');
   if (free) return { status: 'unlocked', kind: 'free', reuseUnlockId: free.id };
-  if (p.token) {
-    const held = p.existing.find((u) => u.id === p.token && unlockValid(u, now));
-    if (held) return { status: 'unlocked', kind: 'banana', reuseUnlockId: held.id };
-  }
+  // Paid today for this clip → practise all day (any device, no token needed).
+  const today = p.existing.find((u) => u.kind === 'banana' && unlockValid(u, now));
+  if (today) return { status: 'unlocked', kind: 'banana', reuseUnlockId: today.id };
   if (p.freeUsed < CLIP_FREE_UNLOCKS) return { status: 'create_free' };
   if (p.balance < CLIP_UNLOCK_COST) return { status: 'insufficient' };
   return p.spend ? { status: 'spend' } : { status: 'locked' };
@@ -66,6 +69,5 @@ export function wordAccessAllowed(p: {
 }): boolean {
   if (!p.lockEnabled || p.proMax) return true;
   const now = p.now ?? new Date();
-  if (p.existing.some((u) => u.kind === 'free')) return true;
-  return !!p.token && p.existing.some((u) => u.id === p.token && unlockValid(u, now));
+  return p.existing.some((u) => unlockValid(u, now));
 }

@@ -7,6 +7,7 @@ import {
 import { Prisma } from '@prisma/client';
 import { GeminiChatService } from '../gemini/gemini-chat.service';
 import { PrismaService } from '../prisma/prisma.service';
+import { placementBandFromResult } from '../placement/placement-band';
 import { parrotoViews } from './parroto-popularity';
 import {
   CLIP_CATEGORIES,
@@ -15,6 +16,9 @@ import {
   CLIP_CHANNELS,
   CLIP_CHANNEL_TITLES,
   clipChannelOf,
+  pickRecommendedClips,
+  sortClipsForLearner,
+  recommendedClipLevel,
   CLIP_LEVELS,
   type TimedLine,
   clipWords,
@@ -85,13 +89,40 @@ export class ClipsService {
       titleTh: CLIP_CHANNEL_TITLES[id].th,
       count: views.filter((v) => v.channel === id).length,
     })).filter((c) => c.count > 0);
+    // Recommended for You: unstarted clips around the learner's level.
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      select: { placementResult: true, selfReportedEnglishLevel: true },
+    });
+    const startedIds = new Set(progress.map((p) => p.clipId));
+    const recLevel = recommendedClipLevel({
+      practisedLevels: [...startedIds]
+        .map((id) => byId.get(id)?.level)
+        .filter((l): l is string => !!l),
+      placementBand: placementBandFromResult(user?.placementResult),
+      selfReported: user?.selfReportedEnglishLevel,
+    });
+    const recommended = pickRecommendedClips(views, {
+      level: recLevel,
+      startedIds,
+      popularity: (v) => parrotoViews(v.title),
+    });
     return {
       continue: cont ? views.find((v) => v.id === cont.clipId) ?? null : null,
       continueMode: cont?.mode ?? null,
       continueList,
+      recommended,
+      recommendedLevel: recLevel,
       popular: await this.popularClips(views),
       channels,
-      sections,
+      // Every category rail: learner's level first, then Parroto popularity.
+      sections: sections.map((sec) => ({
+        ...sec,
+        clips: sortClipsForLearner(sec.clips, {
+          level: recLevel,
+          popularity: (v) => parrotoViews(v.title),
+        }),
+      })),
     };
   }
 

@@ -38,6 +38,7 @@ const CLIP_CATEGORY_ALIASES: Record<string, ClipCategory> = {
   study_tips: 'tips',
   learning_broadcast: 'learning',
   bbc_voa: 'learning',
+  listening: 'tips',
 };
 
 export function normalizeClipCategory(raw: unknown): ClipCategory {
@@ -138,6 +139,74 @@ export function clipChannelOf(credit: string | null | undefined): ClipChannel | 
   if (c.includes('voa') || c.includes('voice of america')) return 'voa';
   if (c.includes('listening time')) return 'listening_time';
   return null;
+}
+
+/**
+ * "Recommended for You" level: the level the learner practises most in
+ * Videos, else their Level Test band, else the onboarding self-report, else A2.
+ */
+export function recommendedClipLevel(p: {
+  practisedLevels: string[];
+  placementBand?: string | null;
+  selfReported?: string | null;
+}): (typeof CLIP_LEVELS)[number] {
+  const levels = CLIP_LEVELS as readonly string[];
+  const counts = new Map<string, number>();
+  for (const l of p.practisedLevels) {
+    if (levels.includes(l)) counts.set(l, (counts.get(l) ?? 0) + 1);
+  }
+  if (counts.size > 0) {
+    return [...counts.entries()].sort((a, b) => b[1] - a[1])[0][0] as (typeof CLIP_LEVELS)[number];
+  }
+  const band = (p.placementBand ?? '').trim();
+  if (band.startsWith('Seed') || band.startsWith('A1')) return 'A1';
+  if (band.startsWith('A2')) return 'A2';
+  if (band.startsWith('B1')) return 'B1';
+  if (band.startsWith('B2') || band.startsWith('C')) return 'B2';
+  switch (p.selfReported) {
+    case 'beginner':
+      return 'A1';
+    case 'elementary':
+      return 'A2';
+    case 'intermediate':
+      return 'B1';
+    case 'advanced':
+      return 'B2';
+    default:
+      return 'A2';
+  }
+}
+
+/**
+ * Order clips for one learner: their level first, then harder levels, then
+ * easier ones; within a level, Parroto popularity, then the original order.
+ */
+export function sortClipsForLearner<T extends { level: string }>(
+  clips: T[],
+  p: { level: string; popularity: (c: T) => number },
+): T[] {
+  const levels = CLIP_LEVELS as readonly string[];
+  const target = levels.indexOf(p.level);
+  const rank = (l: string) => {
+    const i = levels.indexOf(l);
+    if (i < 0 || target < 0) return 9;
+    // Own level, then harder levels upward, then easier ones (nearest first).
+    return i >= target ? i - target : levels.length + (target - i);
+  };
+  return clips
+    .map((c, order) => ({ c, order, r: rank(c.level), n: p.popularity(c) }))
+    .sort((a, b) => a.r - b.r || b.n - a.n || a.order - b.order)
+    .map(({ c }) => c);
+}
+
+export function pickRecommendedClips<T extends { id: string; level: string }>(
+  clips: T[],
+  p: { level: string; startedIds: Set<string>; popularity: (c: T) => number; limit?: number },
+): T[] {
+  return sortClipsForLearner(
+    clips.filter((c) => !p.startedIds.has(c.id)),
+    p,
+  ).slice(0, p.limit ?? 10);
 }
 
 export function isClipMode(v: unknown): v is ClipMode {
@@ -254,6 +323,22 @@ export type ClipHighlight = {
   labelTh: string;
 };
 
+/** Short lines (≤ 6 words) may be rebuilt whole; longer ones get ~half, 3–6 blanks. */
+export function maxDictationBlanks(wordCount: number): number {
+  return wordCount <= 6 ? wordCount : Math.min(6, Math.max(3, Math.ceil(wordCount / 2)));
+}
+
+/** Keep at most maxDictationBlanks of hide, preferring longer (content) words. */
+export function limitDictationHide(words: string[], hide: number[]): number[] {
+  const max = maxDictationBlanks(words.length);
+  if (hide.length <= max) return hide;
+  const len = (i: number) => (words[i] ?? '').toLowerCase().replace(/[^a-z0-9']/g, '').length;
+  return [...hide]
+    .sort((a, b) => len(b) - len(a) || a - b)
+    .slice(0, max)
+    .sort((a, b) => a - b);
+}
+
 export function normalizeDictation(raw: unknown, text: string): ClipDictation {
   const words = clipWords(text);
   const r = (raw ?? {}) as { hide?: unknown; distractors?: unknown };
@@ -267,7 +352,10 @@ export function normalizeDictation(raw: unknown, text: string): ClipDictation {
         .filter((d) => !words.some((w) => w.toLowerCase() === d.toLowerCase()))
         .slice(0, 3)
     : [];
-  return { hide: hide.length ? hide : defaultDictationHide(text), distractors };
+  return {
+    hide: limitDictationHide(words, hide.length ? hide : defaultDictationHide(text)),
+    distractors,
+  };
 }
 
 const HIGHLIGHT_KINDS = new Set<ClipHighlightKind>(['phrase', 'pattern']);

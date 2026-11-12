@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { resolveGroqApiKeys } from '../config-keys/groq-api-keys';
 import { PrismaService } from '../prisma/prisma.service';
+import { splitLongLines } from './cc-import.rules';
 import { ClipsService } from './clips.service';
 import {
   type SttWord,
@@ -73,7 +74,7 @@ export class VoaImportService {
     }
 
     const lesson = parseVoaLesson(await this.fetchText(url));
-    const sentences = dialogueSentences(lesson.lines);
+    const sentences = splitLongLines(dialogueSentences(lesson.lines));
     const videos = pickVoaVideos(lesson.videos);
     if (!videos) throw new BadRequestException('voa_no_video');
     if (sentences.length < 2) throw new BadRequestException('voa_no_dialogue');
@@ -97,7 +98,7 @@ export class VoaImportService {
       title: lesson.title.slice(0, 120) || 'VOA lesson',
       thumbnailUrl: lesson.thumbnailUrl,
       level: ['A1', 'A2', 'B1', 'B2'].includes(String(body.level)) ? String(body.level) : 'A1',
-      category: typeof body.category === 'string' && body.category ? body.category : 'cartoons',
+      category: typeof body.category === 'string' && body.category ? body.category : 'learning',
       durationSec: Math.ceil(lastEnd / 1000),
     };
     const clip = existing
