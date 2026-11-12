@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 67,
+  "title": "Lie vs Lay: English In A Minute",
+  "level": "B1",
+  "duration": "01:22",
+  "source": "YouTube",
+  "pro": false,
+  "views": 7015,
+  "in_app": null,
+  "search_query": "Lie vs Lay: English In A Minute",
+  "search_url": "https://www.youtube.com/results?search_query=Lie%20vs%20Lay%3A%20English%20In%20A%20Minute",
+  "youtube_id": "3Bjnkq9LsIE",
+  "resolved_title": "Lie vs Lay - English In A Minute",
+  "url": "https://www.youtube.com/watch?v=3Bjnkq9LsIE",
+  "channel": "BBC Learning English",
+  "resolved_duration": 81,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/67-lie-vs-lay-english-in-a-minute",
+  "ok": true,
+  "subtitle_files": [
+    "3Bjnkq9LsIE.en-GB.vtt"
+  ],
+  "id": "3Bjnkq9LsIE"
+}

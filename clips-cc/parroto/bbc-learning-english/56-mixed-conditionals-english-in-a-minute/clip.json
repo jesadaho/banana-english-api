@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 56,
+  "title": "Mixed conditionals - English In A Minute",
+  "level": "B2",
+  "duration": "01:00",
+  "source": "YouTube",
+  "pro": false,
+  "views": 8397,
+  "in_app": null,
+  "search_query": "Mixed conditionals - English In A Minute",
+  "search_url": "https://www.youtube.com/results?search_query=Mixed%20conditionals%20-%20English%20In%20A%20Minute",
+  "youtube_id": "K74ym19xdYE",
+  "resolved_title": "Mixed conditionals - English In A Minute",
+  "url": "https://www.youtube.com/watch?v=K74ym19xdYE",
+  "channel": "BBC Learning English",
+  "resolved_duration": 60,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/56-mixed-conditionals-english-in-a-minute",
+  "ok": true,
+  "subtitle_files": [
+    "K74ym19xdYE.en-GB.vtt"
+  ],
+  "id": "K74ym19xdYE"
+}

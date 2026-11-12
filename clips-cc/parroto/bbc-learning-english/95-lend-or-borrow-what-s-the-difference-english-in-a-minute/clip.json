@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 95,
+  "title": "Lend or borrow: what's the difference? - English In A Minute",
+  "level": "B1",
+  "duration": "01:00",
+  "source": "YouTube",
+  "pro": false,
+  "views": 3127,
+  "in_app": null,
+  "search_query": "Lend or borrow: what's the difference? - English In A Minute",
+  "search_url": "https://www.youtube.com/results?search_query=Lend%20or%20borrow%3A%20what%27s%20the%20difference%3F%20-%20English%20In%20A%20Minute",
+  "youtube_id": "46E38QvVDMU",
+  "resolved_title": "Lend vs Borrow - English In A Minute",
+  "url": "https://www.youtube.com/watch?v=46E38QvVDMU",
+  "channel": "BBC Learning English",
+  "resolved_duration": 60,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/95-lend-or-borrow-what-s-the-difference-english-in-a-minute",
+  "ok": true,
+  "subtitle_files": [
+    "46E38QvVDMU.en-GB.vtt"
+  ],
+  "id": "46E38QvVDMU"
+}

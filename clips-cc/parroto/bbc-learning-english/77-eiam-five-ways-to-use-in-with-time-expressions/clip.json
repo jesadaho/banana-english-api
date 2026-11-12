@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 77,
+  "title": "EIAM: Five ways to use 'in' with time expressions",
+  "level": "A1",
+  "duration": "00:57",
+  "source": "YouTube",
+  "pro": false,
+  "views": 6583,
+  "in_app": null,
+  "search_query": "EIAM: Five ways to use 'in' with time expressions",
+  "search_url": "https://www.youtube.com/results?search_query=EIAM%3A%20Five%20ways%20to%20use%20%27in%27%20with%20time%20expressions",
+  "youtube_id": "_k5DYl0el14",
+  "resolved_title": "5 ways to use 'in' with time expressions - English In A Minute",
+  "url": "https://www.youtube.com/watch?v=_k5DYl0el14",
+  "channel": "BBC Learning English",
+  "resolved_duration": 57,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/77-eiam-five-ways-to-use-in-with-time-expressions",
+  "ok": true,
+  "subtitle_files": [
+    "_k5DYl0el14.en-GB.vtt"
+  ],
+  "id": "_k5DYl0el14"
+}

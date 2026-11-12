@@ -1,0 +1,24 @@
+{
+  "category": "Movie short clip",
+  "index": 29,
+  "title": "COCO Official Trailer (2017) Disney Pixar Animation Movie HD",
+  "level": "B1",
+  "duration": "02:24",
+  "source": "YouTube",
+  "pro": false,
+  "views": 15883,
+  "in_app": null,
+  "search_query": "COCO Official Trailer (2017) Disney Pixar Animation Movie HD",
+  "search_url": "https://www.youtube.com/results?search_query=COCO%20Official%20Trailer%20%282017%29%20Disney%20Pixar%20Animation%20Movie%20HD",
+  "youtube_id": "xlnPHQ3TLX8",
+  "resolved_title": "Coco - Official US Trailer",
+  "url": "https://www.youtube.com/watch?v=xlnPHQ3TLX8",
+  "channel": "Pixar",
+  "resolved_duration": 88,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/movie-short-clip/29-coco-official-trailer-2017-disney-pixar-animation-movie-h",
+  "ok": true,
+  "subtitle_files": [
+    "xlnPHQ3TLX8.en.srt"
+  ],
+  "id": "xlnPHQ3TLX8"
+}

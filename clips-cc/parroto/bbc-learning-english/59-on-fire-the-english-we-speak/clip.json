@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 59,
+  "title": "On fire: The English We Speak",
+  "level": "B2",
+  "duration": "03:14",
+  "source": "YouTube",
+  "pro": false,
+  "views": 7849,
+  "in_app": null,
+  "search_query": "On fire: The English We Speak",
+  "search_url": "https://www.youtube.com/results?search_query=On%20fire%3A%20The%20English%20We%20Speak",
+  "youtube_id": "5u-QhifdwV8",
+  "resolved_title": "Fire: The English We Speak",
+  "url": "https://www.youtube.com/watch?v=5u-QhifdwV8",
+  "channel": "BBC Learning English",
+  "resolved_duration": 183,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/59-on-fire-the-english-we-speak",
+  "ok": true,
+  "subtitle_files": [
+    "5u-QhifdwV8.en-GB.vtt"
+  ],
+  "id": "5u-QhifdwV8"
+}

@@ -1,0 +1,4 @@
+1
+00:00:00,099 --> 00:00:02,700
+Hi, I'm Sam from BBC Learning English and today we're going to look at the difference between 'less' and 'fewer' when comparing things. It's actually very simple. We use 'fewer' with countable nouns and 'less' with uncountable nouns. But even native speakers get this wrong, so let's have a look at some examples. I moved recently, and comparing my old area to my new neighbourhood, I can say: There are fewer restaurants and fewer cafes and there is less traffic and less pollution. Cafes and restaurants are countable nouns. You can count them on your fingers and you can make them plural, so we use 'fewer'. Pollution and traffic are uncountable nouns. You can't count them on your fingers and you can't make them plural, so we use 'less'.
+

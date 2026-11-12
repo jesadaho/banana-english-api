@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 85,
+  "title": "Remember to do vs remember doing: English In A Minute",
+  "level": "B1",
+  "duration": "00:59",
+  "source": "YouTube",
+  "pro": false,
+  "views": 4719,
+  "in_app": null,
+  "search_query": "Remember to do vs remember doing: English In A Minute",
+  "search_url": "https://www.youtube.com/results?search_query=Remember%20to%20do%20vs%20remember%20doing%3A%20English%20In%20A%20Minute",
+  "youtube_id": "as9mHpTjMU0",
+  "resolved_title": "Remember to do vs Remember doing - English In A Minute",
+  "url": "https://www.youtube.com/watch?v=as9mHpTjMU0",
+  "channel": "BBC Learning English",
+  "resolved_duration": 58,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/85-remember-to-do-vs-remember-doing-english-in-a-minute",
+  "ok": true,
+  "subtitle_files": [
+    "as9mHpTjMU0.en-GB.vtt"
+  ],
+  "id": "as9mHpTjMU0"
+}

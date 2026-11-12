@@ -1,0 +1,24 @@
+{
+  "category": "Movie short clip",
+  "index": 44,
+  "title": "SpongeBob SquarePants | Trash Life | Nickelodeon UK",
+  "level": "B1",
+  "duration": "02:03",
+  "source": "YouTube",
+  "pro": false,
+  "views": 14548,
+  "in_app": null,
+  "search_query": "SpongeBob SquarePants | Trash Life | Nickelodeon UK",
+  "search_url": "https://www.youtube.com/results?search_query=SpongeBob%20SquarePants%20%7C%20Trash%20Life%20%7C%20Nickelodeon%20UK",
+  "youtube_id": "Iumb9BHBK2I",
+  "resolved_title": "SpongeBob SquarePants | Squeaky Squeaky | Nickelodeon UK",
+  "url": "https://www.youtube.com/watch?v=Iumb9BHBK2I",
+  "channel": "Nickelodeon UK",
+  "resolved_duration": 132,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/movie-short-clip/44-spongebob-squarepants-trash-life-nickelodeon-uk",
+  "ok": true,
+  "subtitle_files": [
+    "Iumb9BHBK2I.en.srt"
+  ],
+  "id": "Iumb9BHBK2I"
+}

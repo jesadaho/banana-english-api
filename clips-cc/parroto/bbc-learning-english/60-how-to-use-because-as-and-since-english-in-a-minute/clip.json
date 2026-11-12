@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 60,
+  "title": "How to use 'because', 'as' and 'since' - English In A Minute",
+  "level": "B1",
+  "duration": "01:01",
+  "source": "YouTube",
+  "pro": false,
+  "views": 7781,
+  "in_app": null,
+  "search_query": "How to use 'because', 'as' and 'since' - English In A Minute",
+  "search_url": "https://www.youtube.com/results?search_query=How%20to%20use%20%27because%27%2C%20%27as%27%20and%20%27since%27%20-%20English%20In%20A%20Minute",
+  "youtube_id": "44H2dV40_ec",
+  "resolved_title": "How to use 'because', 'as' and 'since' - English In A Minute",
+  "url": "https://www.youtube.com/watch?v=44H2dV40_ec",
+  "channel": "BBC Learning English",
+  "resolved_duration": 60,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/60-how-to-use-because-as-and-since-english-in-a-minute",
+  "ok": true,
+  "subtitle_files": [
+    "44H2dV40_ec.en-GB.vtt"
+  ],
+  "id": "44H2dV40_ec"
+}

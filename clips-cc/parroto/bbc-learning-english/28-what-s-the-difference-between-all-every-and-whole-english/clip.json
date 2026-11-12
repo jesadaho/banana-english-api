@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 28,
+  "title": "What's the difference between 'all', 'every' and 'whole'? - English In A Minute",
+  "level": "B1",
+  "duration": "00:54",
+  "source": "YouTube",
+  "pro": true,
+  "views": 12326,
+  "in_app": null,
+  "search_query": "What's the difference between 'all', 'every' and 'whole'? - English In A Minute",
+  "search_url": "https://www.youtube.com/results?search_query=What%27s%20the%20difference%20between%20%27all%27%2C%20%27every%27%20and%20%27whole%27%3F%20-%20English%20In%20A%20Minute",
+  "youtube_id": "y6iM7q5LH88",
+  "resolved_title": "All vs Every vs Whole - English In A Minute",
+  "url": "https://www.youtube.com/watch?v=y6iM7q5LH88",
+  "channel": "BBC Learning English",
+  "resolved_duration": 54,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/28-what-s-the-difference-between-all-every-and-whole-english",
+  "ok": true,
+  "subtitle_files": [
+    "y6iM7q5LH88.en-GB.vtt"
+  ],
+  "id": "y6iM7q5LH88"
+}

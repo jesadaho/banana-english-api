@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 78,
+  "title": "Raise vs rise: Learn English in a minute!",
+  "level": "B1",
+  "duration": "00:54",
+  "source": "YouTube",
+  "pro": false,
+  "views": 5971,
+  "in_app": null,
+  "search_query": "Raise vs rise: Learn English in a minute!",
+  "search_url": "https://www.youtube.com/results?search_query=Raise%20vs%20rise%3A%20Learn%20English%20in%20a%20minute%21",
+  "youtube_id": "VFJEhsvs320",
+  "resolved_title": "Raise vs Rise - English In A Minute",
+  "url": "https://www.youtube.com/watch?v=VFJEhsvs320",
+  "channel": "BBC Learning English",
+  "resolved_duration": 53,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/78-raise-vs-rise-learn-english-in-a-minute",
+  "ok": true,
+  "subtitle_files": [
+    "VFJEhsvs320.en-GB.vtt"
+  ],
+  "id": "VFJEhsvs320"
+}

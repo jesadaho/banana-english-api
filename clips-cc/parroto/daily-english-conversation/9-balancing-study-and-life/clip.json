@@ -1,0 +1,24 @@
+{
+  "category": "Daily English Conversation",
+  "index": 9,
+  "title": "Balancing Study and Life",
+  "level": "B1",
+  "duration": "01:30",
+  "source": "YouTube",
+  "pro": false,
+  "views": 30118,
+  "in_app": null,
+  "search_query": "Balancing Study and Life",
+  "search_url": "https://www.youtube.com/results?search_query=Balancing%20Study%20and%20Life",
+  "youtube_id": "ifZWcPXDyFc",
+  "resolved_title": "How I Routinely Study With a Full Time Job when I'm TIRED",
+  "url": "https://www.youtube.com/watch?v=ifZWcPXDyFc",
+  "channel": "Mike and Matty",
+  "resolved_duration": 831,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/daily-english-conversation/9-balancing-study-and-life",
+  "ok": true,
+  "subtitle_files": [
+    "ifZWcPXDyFc.en.srt"
+  ],
+  "id": "ifZWcPXDyFc"
+}

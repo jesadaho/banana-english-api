@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 5,
+  "title": "Don't mind vs Doesn't matter - English In A Minute",
+  "level": "B1",
+  "duration": "01:00",
+  "source": "YouTube",
+  "pro": false,
+  "views": 15250,
+  "in_app": null,
+  "search_query": "Don't mind vs Doesn't matter - English In A Minute",
+  "search_url": "https://www.youtube.com/results?search_query=Don%27t%20mind%20vs%20Doesn%27t%20matter%20-%20English%20In%20A%20Minute",
+  "youtube_id": "TiOPB8WDZKI",
+  "resolved_title": "Don't mind vs Doesn't matter - English In A Minute",
+  "url": "https://www.youtube.com/watch?v=TiOPB8WDZKI",
+  "channel": "BBC Learning English",
+  "resolved_duration": 60,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/5-don-t-mind-vs-doesn-t-matter-english-in-a-minute",
+  "ok": true,
+  "subtitle_files": [
+    "TiOPB8WDZKI.en-GB.vtt"
+  ],
+  "id": "TiOPB8WDZKI"
+}

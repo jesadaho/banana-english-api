@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 24,
+  "title": "Same pronunciation, different meaning? Ask BBC Learning English",
+  "level": "B2",
+  "duration": "03:27",
+  "source": "YouTube",
+  "pro": false,
+  "views": 12667,
+  "in_app": null,
+  "search_query": "Same pronunciation, different meaning? Ask BBC Learning English",
+  "search_url": "https://www.youtube.com/results?search_query=Same%20pronunciation%2C%20different%20meaning%3F%20Ask%20BBC%20Learning%20English",
+  "youtube_id": "XWazel_LHSs",
+  "resolved_title": "Same pronunciation, different meaning? Ask BBC Learning English",
+  "url": "https://www.youtube.com/watch?v=XWazel_LHSs",
+  "channel": "BBC Learning English",
+  "resolved_duration": 206,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/24-same-pronunciation-different-meaning-ask-bbc-learning-eng",
+  "ok": true,
+  "subtitle_files": [
+    "XWazel_LHSs.en-GB.vtt"
+  ],
+  "id": "XWazel_LHSs"
+}

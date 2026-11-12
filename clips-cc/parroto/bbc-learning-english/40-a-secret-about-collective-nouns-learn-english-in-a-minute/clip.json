@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 40,
+  "title": "A secret about collective nouns: Learn English in a minute!",
+  "level": "B2",
+  "duration": "00:53",
+  "source": "YouTube",
+  "pro": false,
+  "views": 10655,
+  "in_app": null,
+  "search_query": "A secret about collective nouns: Learn English in a minute!",
+  "search_url": "https://www.youtube.com/results?search_query=A%20secret%20about%20collective%20nouns%3A%20Learn%20English%20in%20a%20minute%21",
+  "youtube_id": "AGoWL2Vbp1c",
+  "resolved_title": "A secret about collective nouns - English In A Minute",
+  "url": "https://www.youtube.com/watch?v=AGoWL2Vbp1c",
+  "channel": "BBC Learning English",
+  "resolved_duration": 53,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/40-a-secret-about-collective-nouns-learn-english-in-a-minute",
+  "ok": true,
+  "subtitle_files": [
+    "AGoWL2Vbp1c.en-GB.vtt"
+  ],
+  "id": "AGoWL2Vbp1c"
+}

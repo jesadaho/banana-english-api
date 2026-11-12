@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 36,
+  "title": "Morning routine: Phrasal verbs with Georgie",
+  "level": "B2",
+  "duration": "02:34",
+  "source": "YouTube",
+  "pro": false,
+  "views": 10902,
+  "in_app": "เคยลอง ใช้ไม่ได้ (draft)",
+  "search_query": "Morning routine: Phrasal verbs with Georgie",
+  "search_url": "https://www.youtube.com/results?search_query=Morning%20routine%3A%20Phrasal%20verbs%20with%20Georgie",
+  "youtube_id": "t25LxJkZ1Ng",
+  "resolved_title": "Morning routine: Phrasal verbs with Georgie",
+  "url": "https://www.youtube.com/watch?v=t25LxJkZ1Ng",
+  "channel": "BBC Learning English",
+  "resolved_duration": 153,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/36-morning-routine-phrasal-verbs-with-georgie",
+  "ok": true,
+  "subtitle_files": [
+    "t25LxJkZ1Ng.en-GB.vtt"
+  ],
+  "id": "t25LxJkZ1Ng"
+}

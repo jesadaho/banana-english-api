@@ -1,0 +1,24 @@
+{
+  "category": "Listening Time",
+  "index": 7,
+  "title": "A1 English Listening Practice - Soccer",
+  "level": "B1",
+  "duration": "04:42",
+  "source": "YouTube",
+  "pro": false,
+  "views": 15837,
+  "in_app": null,
+  "search_query": "A1 English Listening Practice - Soccer",
+  "search_url": "https://www.youtube.com/results?search_query=A1%20English%20Listening%20Practice%20-%20Soccer",
+  "youtube_id": "jbdoyphEcsc",
+  "resolved_title": "A1 English Listening Practice - Soccer",
+  "url": "https://www.youtube.com/watch?v=jbdoyphEcsc",
+  "channel": "Listening Time",
+  "resolved_duration": 281,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/listening-time/7-a1-english-listening-practice-soccer",
+  "ok": true,
+  "subtitle_files": [
+    "jbdoyphEcsc.en.srt"
+  ],
+  "id": "jbdoyphEcsc"
+}

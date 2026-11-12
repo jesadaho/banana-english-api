@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 53,
+  "title": "Been vs Gone: English In A Minute",
+  "level": "A2",
+  "duration": "01:03",
+  "source": "YouTube",
+  "pro": true,
+  "views": 9012,
+  "in_app": null,
+  "search_query": "Been vs Gone: English In A Minute",
+  "search_url": "https://www.youtube.com/results?search_query=Been%20vs%20Gone%3A%20English%20In%20A%20Minute",
+  "youtube_id": "4kOBvS-asdE",
+  "resolved_title": "Been vs Gone - English In A Minute",
+  "url": "https://www.youtube.com/watch?v=4kOBvS-asdE",
+  "channel": "BBC Learning English",
+  "resolved_duration": 62,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/53-been-vs-gone-english-in-a-minute",
+  "ok": true,
+  "subtitle_files": [
+    "4kOBvS-asdE.en-GB.vtt"
+  ],
+  "id": "4kOBvS-asdE"
+}

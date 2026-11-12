@@ -1,0 +1,24 @@
+{
+  "category": "Movie short clip",
+  "index": 46,
+  "title": "Ghibli Fest 2024 | WHISPER OF THE HEART",
+  "level": "B2",
+  "duration": "02:22",
+  "source": "YouTube",
+  "pro": false,
+  "views": 14247,
+  "in_app": null,
+  "search_query": "Ghibli Fest 2024 | WHISPER OF THE HEART",
+  "search_url": "https://www.youtube.com/results?search_query=Ghibli%20Fest%202024%20%7C%20WHISPER%20OF%20THE%20HEART",
+  "youtube_id": "kyix1XapomE",
+  "resolved_title": "Ghibli Fest 2024 | WHISPER OF THE HEART",
+  "url": "https://www.youtube.com/watch?v=kyix1XapomE",
+  "channel": "GKIDS Films",
+  "resolved_duration": 142,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/movie-short-clip/46-ghibli-fest-2024-whisper-of-the-heart",
+  "ok": true,
+  "subtitle_files": [
+    "kyix1XapomE.en.srt"
+  ],
+  "id": "kyix1XapomE"
+}

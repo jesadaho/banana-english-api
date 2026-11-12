@@ -1,0 +1,24 @@
+{
+  "category": "Movie short clip",
+  "index": 22,
+  "title": "Harry Potter and the Snake",
+  "level": "B1",
+  "duration": "02:30",
+  "source": "YouTube",
+  "pro": false,
+  "views": 16711,
+  "in_app": null,
+  "search_query": "Harry Potter and the Snake",
+  "search_url": "https://www.youtube.com/results?search_query=Harry%20Potter%20and%20the%20Snake",
+  "youtube_id": "p2oIXSgqUjk",
+  "resolved_title": "Harry and the Snake | Harry Potter and the Philosopher's Stone",
+  "url": "https://www.youtube.com/watch?v=p2oIXSgqUjk",
+  "channel": "Harry Potter",
+  "resolved_duration": 150,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/movie-short-clip/22-harry-potter-and-the-snake",
+  "ok": true,
+  "subtitle_files": [
+    "p2oIXSgqUjk.en.srt"
+  ],
+  "id": "p2oIXSgqUjk"
+}

@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 100,
+  "title": "Both vs Either vs Neither - English In A Minute",
+  "level": "B1",
+  "duration": "00:59",
+  "source": "YouTube",
+  "pro": true,
+  "views": 1832,
+  "in_app": null,
+  "search_query": "Both vs Either vs Neither - English In A Minute",
+  "search_url": "https://www.youtube.com/results?search_query=Both%20vs%20Either%20vs%20Neither%20-%20English%20In%20A%20Minute",
+  "youtube_id": "w81zxKdz4Ns",
+  "resolved_title": "EITHER | NEITHER | BOTH - English grammar",
+  "url": "https://www.youtube.com/watch?v=w81zxKdz4Ns",
+  "channel": "Arnel's Everyday English",
+  "resolved_duration": 727,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/100-both-vs-either-vs-neither-english-in-a-minute",
+  "ok": true,
+  "subtitle_files": [
+    "w81zxKdz4Ns.en.srt"
+  ],
+  "id": "w81zxKdz4Ns"
+}

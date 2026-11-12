@@ -9,19 +9,26 @@
  *
  * Reads clip.json + *.srt under clips-cc/{A1,A2,B1,B2}/<slug>/.
  */
-import { readdirSync, readFileSync, existsSync } from 'node:fs';
+import { readdirSync, readFileSync, existsSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 
 type ClipMeta = {
   id?: string;
+  youtube_id?: string;
   title?: string;
   channel?: string;
   level?: string;
+  category?: string;
   subtitle_files?: string[];
   ok?: boolean;
 };
 
-function guessCategory(title: string): string {
+function guessCategory(title: string, categoryHint?: string): string {
+  const hint = (categoryHint ?? '').toLowerCase();
+  if (hint.includes('movie') || hint.includes('entertainment')) return 'movies';
+  if (hint.includes('kid') || hint.includes('song')) return 'songs';
+  if (hint.includes('voa') || hint.includes('news') || hint.includes('bbc')) return 'news';
+  if (hint.includes('stor')) return 'stories';
   if (
     /trailer|nine-nine|stranger things|toy story|mickey|disney|pixar|ghibli|netflix|short film/i.test(
       title,
@@ -41,26 +48,43 @@ function collectPacks(root: string): Array<{
   srtPath: string;
 }> {
   const out: Array<{ dir: string; meta: ClipMeta; srtPath: string }> = [];
+  const take = (dir: string, fallbackLevel?: string) => {
+    const metaPath = join(dir, 'clip.json');
+    if (!existsSync(metaPath)) return;
+    const raw = JSON.parse(readFileSync(metaPath, 'utf8')) as ClipMeta;
+    const id = (raw.id || raw.youtube_id || '').trim();
+    if (raw.ok === false || !id) return;
+    const named = raw.subtitle_files?.length
+      ? raw.subtitle_files
+      : readdirSync(dir).filter((f) => /\.(srt|vtt)$/i.test(f));
+    const prefer = named.filter((n) => !/-orig\./i.test(n));
+    const files = prefer.length ? prefer : named;
+    const srt = files.map((f) => join(dir, f)).find((p) => existsSync(p));
+    if (!srt) {
+      console.warn(`skip ${dir}: no subtitle file`);
+      return;
+    }
+    out.push({
+      dir,
+      meta: { ...raw, id, level: raw.level ?? fallbackLevel },
+      srtPath: srt,
+    });
+  };
+  const walk = (dir: string) => {
+    for (const name of readdirSync(dir)) {
+      const path = join(dir, name);
+      if (!existsSync(path) || !statSync(path).isDirectory()) continue;
+      if (existsSync(join(path, 'clip.json'))) take(path);
+      else walk(path);
+    }
+  };
   for (const level of ['A1', 'A2', 'B1', 'B2']) {
     const levelDir = join(root, level);
     if (!existsSync(levelDir)) continue;
-    for (const slug of readdirSync(levelDir)) {
-      const dir = join(levelDir, slug);
-      const metaPath = join(dir, 'clip.json');
-      if (!existsSync(metaPath)) continue;
-      const meta = JSON.parse(readFileSync(metaPath, 'utf8')) as ClipMeta;
-      if (meta.ok === false) continue;
-      const files = meta.subtitle_files?.length
-        ? meta.subtitle_files
-        : readdirSync(dir).filter((f) => /\.(srt|vtt)$/i.test(f));
-      const srt = files.map((f) => join(dir, f)).find((p) => existsSync(p));
-      if (!srt) {
-        console.warn(`skip ${slug}: no subtitle file`);
-        continue;
-      }
-      out.push({ dir, meta: { ...meta, level: meta.level ?? level }, srtPath: srt });
-    }
+    for (const slug of readdirSync(levelDir)) take(join(levelDir, slug), level);
   }
+  const parroto = join(root, 'parroto');
+  if (existsSync(parroto)) walk(parroto);
   return out;
 }
 

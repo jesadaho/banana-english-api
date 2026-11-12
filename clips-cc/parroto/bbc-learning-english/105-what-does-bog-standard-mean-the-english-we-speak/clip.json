@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 105,
+  "title": "What does 'bog-standard' mean? - The English We Speak",
+  "level": "B1",
+  "duration": "02:18",
+  "source": "YouTube",
+  "pro": false,
+  "views": 1662,
+  "in_app": null,
+  "search_query": "What does 'bog-standard' mean? - The English We Speak",
+  "search_url": "https://www.youtube.com/results?search_query=What%20does%20%27bog-standard%27%20mean%3F%20-%20The%20English%20We%20Speak",
+  "youtube_id": "6zX3GAngHrw",
+  "resolved_title": "What does 'bog-standard' mean? - The English We Speak",
+  "url": "https://www.youtube.com/watch?v=6zX3GAngHrw",
+  "channel": "BBC Learning English",
+  "resolved_duration": 138,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/105-what-does-bog-standard-mean-the-english-we-speak",
+  "ok": true,
+  "subtitle_files": [
+    "6zX3GAngHrw.en-GB.vtt"
+  ],
+  "id": "6zX3GAngHrw"
+}

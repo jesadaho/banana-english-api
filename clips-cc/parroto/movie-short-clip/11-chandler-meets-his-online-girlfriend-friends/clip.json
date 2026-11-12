@@ -1,0 +1,24 @@
+{
+  "category": "Movie short clip",
+  "index": 11,
+  "title": "Chandler Meets His Online Girlfriend | Friends",
+  "level": "A1",
+  "duration": "01:08",
+  "source": "YouTube",
+  "pro": false,
+  "views": 21880,
+  "in_app": null,
+  "search_query": "Chandler Meets His Online Girlfriend | Friends",
+  "search_url": "https://www.youtube.com/results?search_query=Chandler%20Meets%20His%20Online%20Girlfriend%20%7C%20Friends",
+  "youtube_id": "Rb7kZeztbf4",
+  "resolved_title": "Chandler Meets His Online Girlfriend | Friends",
+  "url": "https://www.youtube.com/watch?v=Rb7kZeztbf4",
+  "channel": "Friends",
+  "resolved_duration": 68,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/movie-short-clip/11-chandler-meets-his-online-girlfriend-friends",
+  "ok": true,
+  "subtitle_files": [
+    "Rb7kZeztbf4.en.srt"
+  ],
+  "id": "Rb7kZeztbf4"
+}

@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 34,
+  "title": "Five ways to use 'get': Learn English in a minute!",
+  "level": "B1",
+  "duration": "00:54",
+  "source": "YouTube",
+  "pro": false,
+  "views": 11171,
+  "in_app": null,
+  "search_query": "Five ways to use 'get': Learn English in a minute!",
+  "search_url": "https://www.youtube.com/results?search_query=Five%20ways%20to%20use%20%27get%27%3A%20Learn%20English%20in%20a%20minute%21",
+  "youtube_id": "uLoZ0OfxXfc",
+  "resolved_title": "5 uses of 'get' - English In A Minute",
+  "url": "https://www.youtube.com/watch?v=uLoZ0OfxXfc",
+  "channel": "BBC Learning English",
+  "resolved_duration": 54,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/34-five-ways-to-use-get-learn-english-in-a-minute",
+  "ok": true,
+  "subtitle_files": [
+    "uLoZ0OfxXfc.en-GB.vtt"
+  ],
+  "id": "uLoZ0OfxXfc"
+}

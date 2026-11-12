@@ -1,0 +1,24 @@
+{
+  "category": "Listening Time",
+  "index": 13,
+  "title": "B1 English Listening Practice - The Beach",
+  "level": "B1",
+  "duration": "03:31",
+  "source": "YouTube",
+  "pro": false,
+  "views": 12319,
+  "in_app": null,
+  "search_query": "B1 English Listening Practice - The Beach",
+  "search_url": "https://www.youtube.com/results?search_query=B1%20English%20Listening%20Practice%20-%20The%20Beach",
+  "youtube_id": "Qwv2TnDZVzQ",
+  "resolved_title": "B1 English Listening Practice - The Beach",
+  "url": "https://www.youtube.com/watch?v=Qwv2TnDZVzQ",
+  "channel": "Listening Time",
+  "resolved_duration": 211,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/listening-time/13-b1-english-listening-practice-the-beach",
+  "ok": true,
+  "subtitle_files": [
+    "Qwv2TnDZVzQ.en.srt"
+  ],
+  "id": "Qwv2TnDZVzQ"
+}

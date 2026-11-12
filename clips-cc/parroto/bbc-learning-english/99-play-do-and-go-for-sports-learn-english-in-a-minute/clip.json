@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 99,
+  "title": "'Play', 'do' and 'go' for sports: Learn English in a minute!",
+  "level": "B1",
+  "duration": "00:53",
+  "source": "YouTube",
+  "pro": false,
+  "views": 1980,
+  "in_app": null,
+  "search_query": "'Play', 'do' and 'go' for sports: Learn English in a minute!",
+  "search_url": "https://www.youtube.com/results?search_query=%27Play%27%2C%20%27do%27%20and%20%27go%27%20for%20sports%3A%20Learn%20English%20in%20a%20minute%21",
+  "youtube_id": "VPKuzI1LRJU",
+  "resolved_title": "'play', 'do' or 'go'? English In A Minute",
+  "url": "https://www.youtube.com/watch?v=VPKuzI1LRJU",
+  "channel": "BBC Learning English",
+  "resolved_duration": 53,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/99-play-do-and-go-for-sports-learn-english-in-a-minute",
+  "ok": true,
+  "subtitle_files": [
+    "VPKuzI1LRJU.en-en-GB.srt"
+  ],
+  "id": "VPKuzI1LRJU"
+}

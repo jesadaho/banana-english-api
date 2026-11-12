@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 22,
+  "title": "Soon vs Early vs Quickly - English In A Minute",
+  "level": "B1",
+  "duration": "00:59",
+  "source": "YouTube",
+  "pro": false,
+  "views": 12694,
+  "in_app": null,
+  "search_query": "Soon vs Early vs Quickly - English In A Minute",
+  "search_url": "https://www.youtube.com/results?search_query=Soon%20vs%20Early%20vs%20Quickly%20-%20English%20In%20A%20Minute",
+  "youtube_id": "_1Sd22L6TKY",
+  "resolved_title": "Soon vs Early vs Quickly - English In A Minute",
+  "url": "https://www.youtube.com/watch?v=_1Sd22L6TKY",
+  "channel": "BBC Learning English",
+  "resolved_duration": 59,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/22-soon-vs-early-vs-quickly-english-in-a-minute",
+  "ok": true,
+  "subtitle_files": [
+    "_1Sd22L6TKY.en-GB.vtt"
+  ],
+  "id": "_1Sd22L6TKY"
+}

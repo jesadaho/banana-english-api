@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 15,
+  "title": "So done with: The English We Speak",
+  "level": "B1",
+  "duration": "01:47",
+  "source": "YouTube",
+  "pro": false,
+  "views": 13741,
+  "in_app": null,
+  "search_query": "So done with: The English We Speak",
+  "search_url": "https://www.youtube.com/results?search_query=So%20done%20with%3A%20The%20English%20We%20Speak",
+  "youtube_id": "4SWSI5tJTUE",
+  "resolved_title": "So done with: The English We Speak",
+  "url": "https://www.youtube.com/watch?v=4SWSI5tJTUE",
+  "channel": "BBC Learning English",
+  "resolved_duration": 107,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/15-so-done-with-the-english-we-speak",
+  "ok": true,
+  "subtitle_files": [
+    "4SWSI5tJTUE.en-GB.vtt"
+  ],
+  "id": "4SWSI5tJTUE"
+}

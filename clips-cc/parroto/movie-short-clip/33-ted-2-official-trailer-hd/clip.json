@@ -1,0 +1,24 @@
+{
+  "category": "Movie short clip",
+  "index": 33,
+  "title": "Ted 2 - Official Trailer (HD)",
+  "level": "B2",
+  "duration": "02:40",
+  "source": "YouTube",
+  "pro": false,
+  "views": 15539,
+  "in_app": null,
+  "search_query": "Ted 2 - Official Trailer (HD)",
+  "search_url": "https://www.youtube.com/results?search_query=Ted%202%20-%20Official%20Trailer%20%28HD%29",
+  "youtube_id": "S3AVcCggRnU",
+  "resolved_title": "Ted 2 - Official Trailer (HD)",
+  "url": "https://www.youtube.com/watch?v=S3AVcCggRnU",
+  "channel": "Universal Pictures",
+  "resolved_duration": 160,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/movie-short-clip/33-ted-2-official-trailer-hd",
+  "ok": true,
+  "subtitle_files": [
+    "S3AVcCggRnU.en.srt"
+  ],
+  "id": "S3AVcCggRnU"
+}

@@ -1,0 +1,24 @@
+{
+  "category": "Movie short clip",
+  "index": 40,
+  "title": "2 minutes date -how i met your mother",
+  "level": "B1",
+  "duration": "02:49",
+  "source": "YouTube",
+  "pro": false,
+  "views": 15041,
+  "in_app": null,
+  "search_query": "2 minutes date -how i met your mother",
+  "search_url": "https://www.youtube.com/results?search_query=2%20minutes%20date%20-how%20i%20met%20your%20mother",
+  "youtube_id": "zPS7XiJGmno",
+  "resolved_title": "Can Zahra and Her Mother Protect Their Home from the Storm?",
+  "url": "https://www.youtube.com/watch?v=zPS7XiJGmno",
+  "channel": "BAKHT ORIGINAL 2",
+  "resolved_duration": 1714,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/movie-short-clip/40-2-minutes-date-how-i-met-your-mother",
+  "ok": true,
+  "subtitle_files": [
+    "zPS7XiJGmno.en.srt"
+  ],
+  "id": "zPS7XiJGmno"
+}

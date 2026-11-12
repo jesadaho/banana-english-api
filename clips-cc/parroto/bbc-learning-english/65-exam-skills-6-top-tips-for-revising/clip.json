@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 65,
+  "title": "Exam skills: 6 top tips for revising",
+  "level": "B1",
+  "duration": "01:46",
+  "source": "YouTube",
+  "pro": true,
+  "views": 7431,
+  "in_app": null,
+  "search_query": "Exam skills: 6 top tips for revising",
+  "search_url": "https://www.youtube.com/results?search_query=Exam%20skills%3A%206%20top%20tips%20for%20revising",
+  "youtube_id": "qCAQ_nEKHE0",
+  "resolved_title": "Exam skills: 6 top tips for revising",
+  "url": "https://www.youtube.com/watch?v=qCAQ_nEKHE0",
+  "channel": "BBC Learning English",
+  "resolved_duration": 106,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/65-exam-skills-6-top-tips-for-revising",
+  "ok": true,
+  "subtitle_files": [
+    "qCAQ_nEKHE0.en.srt"
+  ],
+  "id": "qCAQ_nEKHE0"
+}

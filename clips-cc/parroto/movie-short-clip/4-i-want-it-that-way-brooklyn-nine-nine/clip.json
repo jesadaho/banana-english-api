@@ -1,0 +1,24 @@
+{
+  "category": "Movie short clip",
+  "index": 4,
+  "title": "I Want It That Way | Brooklyn Nine-Nine",
+  "level": "A2",
+  "duration": "01:28",
+  "source": "YouTube",
+  "pro": false,
+  "views": 34810,
+  "in_app": "มีแล้ว",
+  "search_query": "I Want It That Way | Brooklyn Nine-Nine",
+  "search_url": "https://www.youtube.com/results?search_query=I%20Want%20It%20That%20Way%20%7C%20Brooklyn%20Nine-Nine",
+  "youtube_id": "HlBYdiXdUa8",
+  "resolved_title": "I Want It That Way | Brooklyn Nine-Nine",
+  "url": "https://www.youtube.com/watch?v=HlBYdiXdUa8",
+  "channel": "Brooklyn Nine-Nine",
+  "resolved_duration": 87,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/movie-short-clip/4-i-want-it-that-way-brooklyn-nine-nine",
+  "ok": true,
+  "subtitle_files": [
+    "HlBYdiXdUa8.en.srt"
+  ],
+  "id": "HlBYdiXdUa8"
+}

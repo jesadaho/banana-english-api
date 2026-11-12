@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 86,
+  "title": "Learn the difference between 'every time' and 'all the time'",
+  "level": "B1",
+  "duration": "00:53",
+  "source": "YouTube",
+  "pro": false,
+  "views": 4517,
+  "in_app": null,
+  "search_query": "Learn the difference between 'every time' and 'all the time'",
+  "search_url": "https://www.youtube.com/results?search_query=Learn%20the%20difference%20between%20%27every%20time%27%20and%20%27all%20the%20time%27",
+  "youtube_id": "QU-XUmujbuM",
+  "resolved_title": "Math Antics - Telling Time",
+  "url": "https://www.youtube.com/watch?v=QU-XUmujbuM",
+  "channel": "mathantics",
+  "resolved_duration": 871,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/86-learn-the-difference-between-every-time-and-all-the-time",
+  "ok": true,
+  "subtitle_files": [
+    "QU-XUmujbuM.en.srt"
+  ],
+  "id": "QU-XUmujbuM"
+}

@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 42,
+  "title": "'Bored' and 'boring' - Learners' Questions",
+  "level": "B1",
+  "duration": "02:17",
+  "source": "YouTube",
+  "pro": false,
+  "views": 10473,
+  "in_app": null,
+  "search_query": "'Bored' and 'boring' - Learners' Questions",
+  "search_url": "https://www.youtube.com/results?search_query=%27Bored%27%20and%20%27boring%27%20-%20Learners%27%20Questions",
+  "youtube_id": "3_-4i9oQoSw",
+  "resolved_title": "'Bored' and 'boring': what's the difference? Learners' Questions",
+  "url": "https://www.youtube.com/watch?v=3_-4i9oQoSw",
+  "channel": "BBC Learning English",
+  "resolved_duration": 136,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/42-bored-and-boring-learners-questions",
+  "ok": true,
+  "subtitle_files": [
+    "3_-4i9oQoSw.en-GB.vtt"
+  ],
+  "id": "3_-4i9oQoSw"
+}

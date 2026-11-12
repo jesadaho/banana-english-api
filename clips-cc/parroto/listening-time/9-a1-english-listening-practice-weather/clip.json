@@ -1,0 +1,24 @@
+{
+  "category": "Listening Time",
+  "index": 9,
+  "title": "A1 English Listening Practice - Weather",
+  "level": "A1",
+  "duration": "05:04",
+  "source": "YouTube",
+  "pro": false,
+  "views": 14238,
+  "in_app": null,
+  "search_query": "A1 English Listening Practice - Weather",
+  "search_url": "https://www.youtube.com/results?search_query=A1%20English%20Listening%20Practice%20-%20Weather",
+  "youtube_id": "eYAaLWdx_h0",
+  "resolved_title": "A1 English Listening Practice - Weather",
+  "url": "https://www.youtube.com/watch?v=eYAaLWdx_h0",
+  "channel": "Listening Time",
+  "resolved_duration": 304,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/listening-time/9-a1-english-listening-practice-weather",
+  "ok": true,
+  "subtitle_files": [
+    "eYAaLWdx_h0.en.srt"
+  ],
+  "id": "eYAaLWdx_h0"
+}

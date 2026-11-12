@@ -1,0 +1,24 @@
+{
+  "category": "Entertainment",
+  "index": 16,
+  "title": "Taylor Swift Buys Back Her Masters!",
+  "level": "C1",
+  "duration": "02:40",
+  "source": "YouTube",
+  "pro": false,
+  "views": 11989,
+  "in_app": null,
+  "search_query": "Taylor Swift Buys Back Her Masters!",
+  "search_url": "https://www.youtube.com/results?search_query=Taylor%20Swift%20Buys%20Back%20Her%20Masters%21",
+  "youtube_id": "wx2oSZ_JTew",
+  "resolved_title": "Taylor Swift Buys Back Her Masters! What It Means for 'Reputation (TV)'",
+  "url": "https://www.youtube.com/watch?v=wx2oSZ_JTew",
+  "channel": "Entertainment Tonight",
+  "resolved_duration": 159,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/entertainment/16-taylor-swift-buys-back-her-masters",
+  "ok": true,
+  "subtitle_files": [
+    "wx2oSZ_JTew.en.srt"
+  ],
+  "id": "wx2oSZ_JTew"
+}

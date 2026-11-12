@@ -1,0 +1,24 @@
+{
+  "category": "Movie short clip",
+  "index": 21,
+  "title": "Romantic Movies Perfect For Your Netflix And Chill Night",
+  "level": "B2",
+  "duration": "07:53",
+  "source": "YouTube",
+  "pro": false,
+  "views": 16761,
+  "in_app": null,
+  "search_query": "Romantic Movies Perfect For Your Netflix And Chill Night",
+  "search_url": "https://www.youtube.com/results?search_query=Romantic%20Movies%20Perfect%20For%20Your%20Netflix%20And%20Chill%20Night",
+  "youtube_id": "scl9OrXgzWM",
+  "resolved_title": "Romantic Movies Perfect For Your Netflix And Chill Night | Netflix",
+  "url": "https://www.youtube.com/watch?v=scl9OrXgzWM",
+  "channel": "Still Watching Netflix",
+  "resolved_duration": 473,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/movie-short-clip/21-romantic-movies-perfect-for-your-netflix-and-chill-night",
+  "ok": true,
+  "subtitle_files": [
+    "scl9OrXgzWM.en-US.srt"
+  ],
+  "id": "scl9OrXgzWM"
+}

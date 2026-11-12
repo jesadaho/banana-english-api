@@ -1,0 +1,24 @@
+{
+  "category": "Movie short clip",
+  "index": 34,
+  "title": "We Bare Bears | Grizz's Rescue Mission! | Cartoon Network",
+  "level": "B1",
+  "duration": "01:13",
+  "source": "YouTube",
+  "pro": false,
+  "views": 15270,
+  "in_app": null,
+  "search_query": "We Bare Bears | Grizz's Rescue Mission! | Cartoon Network",
+  "search_url": "https://www.youtube.com/results?search_query=We%20Bare%20Bears%20%7C%20Grizz%27s%20Rescue%20Mission%21%20%7C%20Cartoon%20Network",
+  "youtube_id": "VLZ0nVy3IW4",
+  "resolved_title": "Grizz's Rescue Mission! | We Bare Bears | Cartoon Network",
+  "url": "https://www.youtube.com/watch?v=VLZ0nVy3IW4",
+  "channel": "Cartoon Network",
+  "resolved_duration": 72,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/movie-short-clip/34-we-bare-bears-grizz-s-rescue-mission-cartoon-network",
+  "ok": true,
+  "subtitle_files": [
+    "VLZ0nVy3IW4.en.srt"
+  ],
+  "id": "VLZ0nVy3IW4"
+}

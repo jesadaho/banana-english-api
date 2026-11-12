@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 79,
+  "title": "How can I stop translating? Ask BBC Learning English",
+  "level": "B1",
+  "duration": "02:19",
+  "source": "YouTube",
+  "pro": false,
+  "views": 5632,
+  "in_app": null,
+  "search_query": "How can I stop translating? Ask BBC Learning English",
+  "search_url": "https://www.youtube.com/results?search_query=How%20can%20I%20stop%20translating%3F%20Ask%20BBC%20Learning%20English",
+  "youtube_id": "lOKD08QAhyc",
+  "resolved_title": "How can I stop translating? Ask BBC Learning English",
+  "url": "https://www.youtube.com/watch?v=lOKD08QAhyc",
+  "channel": "BBC Learning English",
+  "resolved_duration": 139,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/79-how-can-i-stop-translating-ask-bbc-learning-english",
+  "ok": true,
+  "subtitle_files": [
+    "lOKD08QAhyc.en-GB.vtt"
+  ],
+  "id": "lOKD08QAhyc"
+}

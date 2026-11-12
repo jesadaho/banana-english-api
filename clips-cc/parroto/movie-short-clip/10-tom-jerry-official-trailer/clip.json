@@ -1,0 +1,24 @@
+{
+  "category": "Movie short clip",
+  "index": 10,
+  "title": "TOM & JERRY - Official Trailer",
+  "level": "B2",
+  "duration": "02:25",
+  "source": "YouTube",
+  "pro": true,
+  "views": 22521,
+  "in_app": null,
+  "search_query": "TOM & JERRY - Official Trailer",
+  "search_url": "https://www.youtube.com/results?search_query=TOM%20%26%20JERRY%20-%20Official%20Trailer",
+  "youtube_id": "kP9TfCWaQT4",
+  "resolved_title": "TOM & JERRY - Official Trailer",
+  "url": "https://www.youtube.com/watch?v=kP9TfCWaQT4",
+  "channel": "Warner Bros.",
+  "resolved_duration": 144,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/movie-short-clip/10-tom-jerry-official-trailer",
+  "ok": true,
+  "subtitle_files": [
+    "kP9TfCWaQT4.en.srt"
+  ],
+  "id": "kP9TfCWaQT4"
+}

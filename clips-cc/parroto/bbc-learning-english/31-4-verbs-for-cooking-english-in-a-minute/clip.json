@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 31,
+  "title": "4 verbs for cooking - English In A Minute",
+  "level": "B2",
+  "duration": "00:57",
+  "source": "YouTube",
+  "pro": false,
+  "views": 11803,
+  "in_app": null,
+  "search_query": "4 verbs for cooking - English In A Minute",
+  "search_url": "https://www.youtube.com/results?search_query=4%20verbs%20for%20cooking%20-%20English%20In%20A%20Minute",
+  "youtube_id": "qUri6Agl-rg",
+  "resolved_title": "4 verbs for cooking - English In A Minute",
+  "url": "https://www.youtube.com/watch?v=qUri6Agl-rg",
+  "channel": "BBC Learning English",
+  "resolved_duration": 57,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/31-4-verbs-for-cooking-english-in-a-minute",
+  "ok": true,
+  "subtitle_files": [
+    "qUri6Agl-rg.en.srt"
+  ],
+  "id": "qUri6Agl-rg"
+}

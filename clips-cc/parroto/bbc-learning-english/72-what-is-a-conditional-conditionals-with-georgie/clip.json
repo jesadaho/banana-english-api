@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 72,
+  "title": "What is a conditional? Conditionals with Georgie",
+  "level": "B2",
+  "duration": "02:44",
+  "source": "YouTube",
+  "pro": false,
+  "views": 6858,
+  "in_app": null,
+  "search_query": "What is a conditional? Conditionals with Georgie",
+  "search_url": "https://www.youtube.com/results?search_query=What%20is%20a%20conditional%3F%20Conditionals%20with%20Georgie",
+  "youtube_id": "fyqR1yb09CQ",
+  "resolved_title": "What is a conditional? Grammar: Conditionals with Georgie",
+  "url": "https://www.youtube.com/watch?v=fyqR1yb09CQ",
+  "channel": "BBC Learning English",
+  "resolved_duration": 164,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/72-what-is-a-conditional-conditionals-with-georgie",
+  "ok": true,
+  "subtitle_files": [
+    "fyqR1yb09CQ.en-en-GB.srt"
+  ],
+  "id": "fyqR1yb09CQ"
+}

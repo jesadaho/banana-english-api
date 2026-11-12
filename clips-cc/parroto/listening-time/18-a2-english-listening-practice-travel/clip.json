@@ -1,0 +1,24 @@
+{
+  "category": "Listening Time",
+  "index": 18,
+  "title": "A2 English Listening Practice - Travel",
+  "level": "A2",
+  "duration": "03:32",
+  "source": "YouTube",
+  "pro": true,
+  "views": 9648,
+  "in_app": null,
+  "search_query": "A2 English Listening Practice - Travel",
+  "search_url": "https://www.youtube.com/results?search_query=A2%20English%20Listening%20Practice%20-%20Travel",
+  "youtube_id": "gOMypAhVaXE",
+  "resolved_title": "A2 English Listening Practice - Travel",
+  "url": "https://www.youtube.com/watch?v=gOMypAhVaXE",
+  "channel": "Listening Time",
+  "resolved_duration": 212,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/listening-time/18-a2-english-listening-practice-travel",
+  "ok": true,
+  "subtitle_files": [
+    "gOMypAhVaXE.en.srt"
+  ],
+  "id": "gOMypAhVaXE"
+}

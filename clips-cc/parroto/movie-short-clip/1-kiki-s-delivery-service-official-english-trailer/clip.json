@@ -1,0 +1,24 @@
+{
+  "category": "Movie short clip",
+  "index": 1,
+  "title": "KIKI'S DELIVERY SERVICE | Official English Trailer",
+  "level": "B1",
+  "duration": "00:50",
+  "source": "YouTube",
+  "pro": false,
+  "views": 103211,
+  "in_app": "มีแล้ว",
+  "search_query": "KIKI'S DELIVERY SERVICE | Official English Trailer",
+  "search_url": "https://www.youtube.com/results?search_query=KIKI%27S%20DELIVERY%20SERVICE%20%7C%20Official%20English%20Trailer",
+  "youtube_id": "t6-fT0hjTvc",
+  "resolved_title": "KIKI'S DELIVERY SERVICE | Official English Trailer",
+  "url": "https://www.youtube.com/watch?v=t6-fT0hjTvc",
+  "channel": "GKIDS Films",
+  "resolved_duration": 50,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/movie-short-clip/1-kiki-s-delivery-service-official-english-trailer",
+  "ok": true,
+  "subtitle_files": [
+    "t6-fT0hjTvc.en.srt"
+  ],
+  "id": "t6-fT0hjTvc"
+}

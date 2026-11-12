@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 26,
+  "title": "Match vs fit vs suit",
+  "level": "B1",
+  "duration": "01:01",
+  "source": "YouTube",
+  "pro": false,
+  "views": 12598,
+  "in_app": null,
+  "search_query": "Match vs fit vs suit",
+  "search_url": "https://www.youtube.com/results?search_query=Match%20vs%20fit%20vs%20suit",
+  "youtube_id": "wXEys7bJqvE",
+  "resolved_title": "'match' vs 'fit' vs 'suit' - English in a Minute",
+  "url": "https://www.youtube.com/watch?v=wXEys7bJqvE",
+  "channel": "BBC Learning English",
+  "resolved_duration": 61,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/26-match-vs-fit-vs-suit",
+  "ok": true,
+  "subtitle_files": [
+    "wXEys7bJqvE.en-GB.vtt"
+  ],
+  "id": "wXEys7bJqvE"
+}

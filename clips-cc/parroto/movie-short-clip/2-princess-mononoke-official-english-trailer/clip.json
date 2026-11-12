@@ -1,0 +1,24 @@
+{
+  "category": "Movie short clip",
+  "index": 2,
+  "title": "PRINCESS MONONOKE | Official English Trailer",
+  "level": "A2",
+  "duration": "01:04",
+  "source": "YouTube",
+  "pro": true,
+  "views": 66585,
+  "in_app": "มีแล้ว",
+  "search_query": "PRINCESS MONONOKE | Official English Trailer",
+  "search_url": "https://www.youtube.com/results?search_query=PRINCESS%20MONONOKE%20%7C%20Official%20English%20Trailer",
+  "youtube_id": "vf6c6n35wr4",
+  "resolved_title": "PRINCESS MONONOKE | Official English Trailer",
+  "url": "https://www.youtube.com/watch?v=vf6c6n35wr4",
+  "channel": "GKIDS Films",
+  "resolved_duration": 64,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/movie-short-clip/2-princess-mononoke-official-english-trailer",
+  "ok": true,
+  "subtitle_files": [
+    "vf6c6n35wr4.en.srt"
+  ],
+  "id": "vf6c6n35wr4"
+}

@@ -1,0 +1,24 @@
+{
+  "category": "Daily English Conversation",
+  "index": 1,
+  "title": "Love mom",
+  "level": "A2",
+  "duration": "02:24",
+  "source": "YouTube",
+  "pro": false,
+  "views": 149828,
+  "in_app": null,
+  "search_query": "Love mom",
+  "search_url": "https://www.youtube.com/results?search_query=Love%20mom",
+  "youtube_id": "SSxt-8hdwNo",
+  "resolved_title": "Calum Scott - Love You,Mom",
+  "url": "https://www.youtube.com/watch?v=SSxt-8hdwNo",
+  "channel": "Calum Scott tunes",
+  "resolved_duration": 279,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/daily-english-conversation/1-love-mom",
+  "ok": true,
+  "subtitle_files": [
+    "SSxt-8hdwNo.en.srt"
+  ],
+  "id": "SSxt-8hdwNo"
+}

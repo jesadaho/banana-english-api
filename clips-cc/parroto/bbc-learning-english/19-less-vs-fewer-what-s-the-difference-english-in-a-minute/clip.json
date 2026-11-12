@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 19,
+  "title": "Less vs Fewer: What's the difference? English In A Minute",
+  "level": "B1",
+  "duration": "00:59",
+  "source": "YouTube",
+  "pro": false,
+  "views": 12852,
+  "in_app": null,
+  "search_query": "Less vs Fewer: What's the difference? English In A Minute",
+  "search_url": "https://www.youtube.com/results?search_query=Less%20vs%20Fewer%3A%20What%27s%20the%20difference%3F%20English%20In%20A%20Minute",
+  "youtube_id": "7pm-YQGFs8E",
+  "resolved_title": "Less vs Fewer: What's the difference? English In A Minute",
+  "url": "https://www.youtube.com/watch?v=7pm-YQGFs8E",
+  "channel": "BBC Learning English",
+  "resolved_duration": 58,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/19-less-vs-fewer-what-s-the-difference-english-in-a-minute",
+  "ok": true,
+  "subtitle_files": [
+    "7pm-YQGFs8E.en-GB.srt"
+  ],
+  "id": "7pm-YQGFs8E"
+}

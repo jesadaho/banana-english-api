@@ -1,0 +1,24 @@
+{
+  "category": "Movie short clip",
+  "index": 30,
+  "title": "Ghibli Fest 2023 | Nausicaä of the Valley of the Wind",
+  "level": "B1",
+  "duration": "01:46",
+  "source": "YouTube",
+  "pro": false,
+  "views": 15878,
+  "in_app": null,
+  "search_query": "Ghibli Fest 2023 | Nausicaä of the Valley of the Wind",
+  "search_url": "https://www.youtube.com/results?search_query=Ghibli%20Fest%202023%20%7C%20Nausica%C3%A4%20of%20the%20Valley%20of%20the%20Wind",
+  "youtube_id": "9O-JGh4e2Mk",
+  "resolved_title": "Ghibli Fest 2023 | Nausicaä of the Valley of the Wind",
+  "url": "https://www.youtube.com/watch?v=9O-JGh4e2Mk",
+  "channel": "GKIDS Films",
+  "resolved_duration": 106,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/movie-short-clip/30-ghibli-fest-2023-nausica-of-the-valley-of-the-wind",
+  "ok": true,
+  "subtitle_files": [
+    "9O-JGh4e2Mk.en.srt"
+  ],
+  "id": "9O-JGh4e2Mk"
+}

@@ -1,0 +1,24 @@
+{
+  "category": "Movie short clip",
+  "index": 35,
+  "title": "Suzume Dub Trailer (2023)",
+  "level": "B1",
+  "duration": "02:13",
+  "source": "YouTube",
+  "pro": true,
+  "views": 15243,
+  "in_app": null,
+  "search_query": "Suzume Dub Trailer (2023)",
+  "search_url": "https://www.youtube.com/results?search_query=Suzume%20Dub%20Trailer%20%282023%29",
+  "youtube_id": "4x5kjvpQZ-4",
+  "resolved_title": "Suzume Dub Trailer (2023)",
+  "url": "https://www.youtube.com/watch?v=4x5kjvpQZ-4",
+  "channel": "Rotten Tomatoes Trailers",
+  "resolved_duration": 133,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/movie-short-clip/35-suzume-dub-trailer-2023",
+  "ok": true,
+  "subtitle_files": [
+    "4x5kjvpQZ-4.en.srt"
+  ],
+  "id": "4x5kjvpQZ-4"
+}

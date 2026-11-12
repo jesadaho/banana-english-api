@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 29,
+  "title": "How can I improve my listening: Ask BBC Learning English",
+  "level": "B1",
+  "duration": "02:50",
+  "source": "YouTube",
+  "pro": false,
+  "views": 12039,
+  "in_app": null,
+  "search_query": "How can I improve my listening: Ask BBC Learning English",
+  "search_url": "https://www.youtube.com/results?search_query=How%20can%20I%20improve%20my%20listening%3A%20Ask%20BBC%20Learning%20English",
+  "youtube_id": "tug9rDqJDdQ",
+  "resolved_title": "How can I improve my listening? Ask BBC Learning English",
+  "url": "https://www.youtube.com/watch?v=tug9rDqJDdQ",
+  "channel": "BBC Learning English",
+  "resolved_duration": 169,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/29-how-can-i-improve-my-listening-ask-bbc-learning-english",
+  "ok": true,
+  "subtitle_files": [
+    "tug9rDqJDdQ.en-GB.vtt"
+  ],
+  "id": "tug9rDqJDdQ"
+}

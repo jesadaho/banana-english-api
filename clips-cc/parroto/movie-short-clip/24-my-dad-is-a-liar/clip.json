@@ -1,0 +1,24 @@
+{
+  "category": "Movie short clip",
+  "index": 24,
+  "title": "My dad is a liar!",
+  "level": "A2",
+  "duration": "06:57",
+  "source": "YouTube",
+  "pro": false,
+  "views": 16578,
+  "in_app": null,
+  "search_query": "My dad is a liar!",
+  "search_url": "https://www.youtube.com/results?search_query=My%20dad%20is%20a%20liar%21",
+  "youtube_id": "O15dxrBNuAQ",
+  "resolved_title": "My Dad is A Liar!",
+  "url": "https://www.youtube.com/watch?v=O15dxrBNuAQ",
+  "channel": "Imagine Devils",
+  "resolved_duration": 417,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/movie-short-clip/24-my-dad-is-a-liar",
+  "ok": true,
+  "subtitle_files": [
+    "O15dxrBNuAQ.en.srt"
+  ],
+  "id": "O15dxrBNuAQ"
+}

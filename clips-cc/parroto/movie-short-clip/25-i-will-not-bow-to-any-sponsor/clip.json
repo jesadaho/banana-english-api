@@ -1,0 +1,24 @@
+{
+  "category": "Movie short clip",
+  "index": 25,
+  "title": "I Will Not Bow to Any Sponsor",
+  "level": "B1",
+  "duration": "01:40",
+  "source": "YouTube",
+  "pro": false,
+  "views": 16360,
+  "in_app": null,
+  "search_query": "I Will Not Bow to Any Sponsor",
+  "search_url": "https://www.youtube.com/results?search_query=I%20Will%20Not%20Bow%20to%20Any%20Sponsor",
+  "youtube_id": "KjB6r-HDDI0",
+  "resolved_title": "Wayne's World (6/10) Movie CLIP - I Will Not Bow to Any Sponsor (1992) HD",
+  "url": "https://www.youtube.com/watch?v=KjB6r-HDDI0",
+  "channel": "Movieclips",
+  "resolved_duration": 100,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/movie-short-clip/25-i-will-not-bow-to-any-sponsor",
+  "ok": true,
+  "subtitle_files": [
+    "KjB6r-HDDI0.en.srt"
+  ],
+  "id": "KjB6r-HDDI0"
+}

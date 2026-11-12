@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 17,
+  "title": "When 'tell' doesn't mean 'tell' - English In A Minute",
+  "level": "A2",
+  "duration": "01:02",
+  "source": "YouTube",
+  "pro": false,
+  "views": 12891,
+  "in_app": null,
+  "search_query": "When 'tell' doesn't mean 'tell' - English In A Minute",
+  "search_url": "https://www.youtube.com/results?search_query=When%20%27tell%27%20doesn%27t%20mean%20%27tell%27%20-%20English%20In%20A%20Minute",
+  "youtube_id": "RPvhXI-3Ppw",
+  "resolved_title": "When 'tell' doesn't mean 'tell' - English In A Minute",
+  "url": "https://www.youtube.com/watch?v=RPvhXI-3Ppw",
+  "channel": "BBC Learning English",
+  "resolved_duration": 62,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/17-when-tell-doesn-t-mean-tell-english-in-a-minute",
+  "ok": true,
+  "subtitle_files": [
+    "RPvhXI-3Ppw.en-GB.vtt"
+  ],
+  "id": "RPvhXI-3Ppw"
+}

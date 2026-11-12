@@ -1,0 +1,24 @@
+{
+  "category": "Listening Time",
+  "index": 12,
+  "title": "A1 English Listening Practice - Education",
+  "level": "B1",
+  "duration": "06:04",
+  "source": "YouTube",
+  "pro": false,
+  "views": 12753,
+  "in_app": null,
+  "search_query": "A1 English Listening Practice - Education",
+  "search_url": "https://www.youtube.com/results?search_query=A1%20English%20Listening%20Practice%20-%20Education",
+  "youtube_id": "SXR3KPLyyt0",
+  "resolved_title": "A1 English Listening Practice - Education",
+  "url": "https://www.youtube.com/watch?v=SXR3KPLyyt0",
+  "channel": "Listening Time",
+  "resolved_duration": 363,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/listening-time/12-a1-english-listening-practice-education",
+  "ok": true,
+  "subtitle_files": [
+    "SXR3KPLyyt0.en.srt"
+  ],
+  "id": "SXR3KPLyyt0"
+}

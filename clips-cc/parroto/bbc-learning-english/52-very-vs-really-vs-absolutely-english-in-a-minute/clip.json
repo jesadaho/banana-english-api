@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 52,
+  "title": "Very vs Really vs Absolutely - English In A Minute",
+  "level": "B1",
+  "duration": "01:01",
+  "source": "YouTube",
+  "pro": false,
+  "views": 9132,
+  "in_app": null,
+  "search_query": "Very vs Really vs Absolutely - English In A Minute",
+  "search_url": "https://www.youtube.com/results?search_query=Very%20vs%20Really%20vs%20Absolutely%20-%20English%20In%20A%20Minute",
+  "youtube_id": "geM5-oJnVNo",
+  "resolved_title": "Very vs Really vs Absolutely - English In A Minute",
+  "url": "https://www.youtube.com/watch?v=geM5-oJnVNo",
+  "channel": "BBC Learning English",
+  "resolved_duration": 61,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/52-very-vs-really-vs-absolutely-english-in-a-minute",
+  "ok": true,
+  "subtitle_files": [
+    "geM5-oJnVNo.en-GB.vtt"
+  ],
+  "id": "geM5-oJnVNo"
+}

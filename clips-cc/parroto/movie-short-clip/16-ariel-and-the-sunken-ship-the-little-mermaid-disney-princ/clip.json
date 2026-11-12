@@ -1,0 +1,24 @@
+{
+  "category": "Movie short clip",
+  "index": 16,
+  "title": "Ariel and the Sunken Ship | The Little Mermaid | Disney Princess",
+  "level": "A2",
+  "duration": "02:22",
+  "source": "YouTube",
+  "pro": false,
+  "views": 18179,
+  "in_app": null,
+  "search_query": "Ariel and the Sunken Ship | The Little Mermaid | Disney Princess",
+  "search_url": "https://www.youtube.com/results?search_query=Ariel%20and%20the%20Sunken%20Ship%20%7C%20The%20Little%20Mermaid%20%7C%20Disney%20Princess",
+  "youtube_id": "KWk4emh3-qc",
+  "resolved_title": "Ariel and the Sunken Ship | The Little Mermaid | Disney Princess",
+  "url": "https://www.youtube.com/watch?v=KWk4emh3-qc",
+  "channel": "Disney Kids",
+  "resolved_duration": 142,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/movie-short-clip/16-ariel-and-the-sunken-ship-the-little-mermaid-disney-princ",
+  "ok": true,
+  "subtitle_files": [
+    "KWk4emh3-qc.en.srt"
+  ],
+  "id": "KWk4emh3-qc"
+}

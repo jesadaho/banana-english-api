@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 1,
+  "title": "What vs Which : English In A Minute",
+  "level": "A1",
+  "duration": "01:01",
+  "source": "YouTube",
+  "pro": false,
+  "views": 27960,
+  "in_app": null,
+  "search_query": "What vs Which : English In A Minute",
+  "search_url": "https://www.youtube.com/results?search_query=What%20vs%20Which%20%3A%20English%20In%20A%20Minute",
+  "youtube_id": "ToASm7lW1t8",
+  "resolved_title": "What vs Which - English In A Minute",
+  "url": "https://www.youtube.com/watch?v=ToASm7lW1t8",
+  "channel": "BBC Learning English",
+  "resolved_duration": 61,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/1-what-vs-which-english-in-a-minute",
+  "ok": true,
+  "subtitle_files": [
+    "ToASm7lW1t8.en-GB.vtt"
+  ],
+  "id": "ToASm7lW1t8"
+}

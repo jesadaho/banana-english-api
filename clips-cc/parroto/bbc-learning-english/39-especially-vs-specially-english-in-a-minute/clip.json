@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 39,
+  "title": "Especially vs specially: English In A Minute",
+  "level": "B1",
+  "duration": "01:02",
+  "source": "YouTube",
+  "pro": false,
+  "views": 10689,
+  "in_app": null,
+  "search_query": "Especially vs specially: English In A Minute",
+  "search_url": "https://www.youtube.com/results?search_query=Especially%20vs%20specially%3A%20English%20In%20A%20Minute",
+  "youtube_id": "8HhyqlDmnWA",
+  "resolved_title": "Especially vs Specially - English In A Minute",
+  "url": "https://www.youtube.com/watch?v=8HhyqlDmnWA",
+  "channel": "BBC Learning English",
+  "resolved_duration": 62,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/39-especially-vs-specially-english-in-a-minute",
+  "ok": true,
+  "subtitle_files": [
+    "8HhyqlDmnWA.en-GB.vtt"
+  ],
+  "id": "8HhyqlDmnWA"
+}

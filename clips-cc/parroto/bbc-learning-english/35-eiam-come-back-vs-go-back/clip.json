@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 35,
+  "title": "EIAM: Come back vs Go back",
+  "level": "A2",
+  "duration": "00:54",
+  "source": "YouTube",
+  "pro": false,
+  "views": 10965,
+  "in_app": null,
+  "search_query": "EIAM: Come back vs Go back",
+  "search_url": "https://www.youtube.com/results?search_query=EIAM%3A%20Come%20back%20vs%20Go%20back",
+  "youtube_id": "2hnJy9H8J3Y",
+  "resolved_title": "Come back vs Go back - English In A Minute",
+  "url": "https://www.youtube.com/watch?v=2hnJy9H8J3Y",
+  "channel": "BBC Learning English",
+  "resolved_duration": 53,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/35-eiam-come-back-vs-go-back",
+  "ok": true,
+  "subtitle_files": [
+    "2hnJy9H8J3Y.en-GB.vtt"
+  ],
+  "id": "2hnJy9H8J3Y"
+}

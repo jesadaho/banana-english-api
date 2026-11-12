@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 87,
+  "title": "Watch and learn 3 ways to use 'pick up'",
+  "level": "A2",
+  "duration": "00:42",
+  "source": "YouTube",
+  "pro": false,
+  "views": 4460,
+  "in_app": null,
+  "search_query": "Watch and learn 3 ways to use 'pick up'",
+  "search_url": "https://www.youtube.com/results?search_query=Watch%20and%20learn%203%20ways%20to%20use%20%27pick%20up%27",
+  "youtube_id": "nOjqYJ95wQM",
+  "resolved_title": "3 ways to use 'pick up' - English In A Minute",
+  "url": "https://www.youtube.com/watch?v=nOjqYJ95wQM",
+  "channel": "BBC Learning English",
+  "resolved_duration": 41,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/87-watch-and-learn-3-ways-to-use-pick-up",
+  "ok": true,
+  "subtitle_files": [
+    "nOjqYJ95wQM.en-GB.vtt"
+  ],
+  "id": "nOjqYJ95wQM"
+}

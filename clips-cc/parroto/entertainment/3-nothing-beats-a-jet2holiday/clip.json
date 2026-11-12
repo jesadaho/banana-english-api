@@ -1,0 +1,24 @@
+{
+  "category": "Entertainment",
+  "index": 3,
+  "title": "Nothing Beats a Jet2holiday",
+  "level": "A2",
+  "duration": "00:31",
+  "source": "YouTube",
+  "pro": true,
+  "views": 19799,
+  "in_app": null,
+  "search_query": "Nothing Beats a Jet2holiday",
+  "search_url": "https://www.youtube.com/results?search_query=Nothing%20Beats%20a%20Jet2holiday",
+  "youtube_id": "YQZEoZ4W0ac",
+  "resolved_title": "Nothing Beats a Jet2holiday | Sale | Family | TV advert",
+  "url": "https://www.youtube.com/watch?v=YQZEoZ4W0ac",
+  "channel": "Jet2.com",
+  "resolved_duration": 30,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/entertainment/3-nothing-beats-a-jet2holiday",
+  "ok": true,
+  "subtitle_files": [
+    "YQZEoZ4W0ac.en.srt"
+  ],
+  "id": "YQZEoZ4W0ac"
+}

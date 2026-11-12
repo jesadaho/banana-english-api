@@ -1,0 +1,24 @@
+{
+  "category": "Movie short clip",
+  "index": 15,
+  "title": "Avatar: Fire and Ash | Official Trailer",
+  "level": "B2",
+  "duration": "02:26",
+  "source": "YouTube",
+  "pro": false,
+  "views": 18572,
+  "in_app": null,
+  "search_query": "Avatar: Fire and Ash | Official Trailer",
+  "search_url": "https://www.youtube.com/results?search_query=Avatar%3A%20Fire%20and%20Ash%20%7C%20Official%20Trailer",
+  "youtube_id": "nb_fFj_0rq8",
+  "resolved_title": "Avatar: Fire and Ash | Official Trailer",
+  "url": "https://www.youtube.com/watch?v=nb_fFj_0rq8",
+  "channel": "Avatar",
+  "resolved_duration": 145,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/movie-short-clip/15-avatar-fire-and-ash-official-trailer",
+  "ok": true,
+  "subtitle_files": [
+    "nb_fFj_0rq8.en-US.srt"
+  ],
+  "id": "nb_fFj_0rq8"
+}

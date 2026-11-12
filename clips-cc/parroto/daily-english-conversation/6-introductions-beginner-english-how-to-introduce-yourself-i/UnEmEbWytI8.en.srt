@@ -1,0 +1,165 @@
+1
+00:00:02,360 --> 00:00:06,440
+ 
+hi my name is Carol
+
+2
+00:00:06,440 --> 00:00:06,450
+hi my name is Carol
+ 
+
+3
+00:00:06,450 --> 00:00:10,490
+hi my name is Carol
+hi Carol my name is Michael where are
+
+4
+00:00:10,490 --> 00:00:10,500
+hi Carol my name is Michael where are
+ 
+
+5
+00:00:10,500 --> 00:00:15,259
+hi Carol my name is Michael where are
+you from I am from York in England it's
+
+6
+00:00:15,259 --> 00:00:15,269
+you from I am from York in England it's
+ 
+
+7
+00:00:15,269 --> 00:00:17,700
+you from I am from York in England it's
+a nice place to live
+
+8
+00:00:17,700 --> 00:00:17,710
+a nice place to live
+ 
+
+9
+00:00:17,710 --> 00:00:21,109
+a nice place to live
+how about you I'm from Dallas Texas
+
+10
+00:00:21,109 --> 00:00:21,119
+how about you I'm from Dallas Texas
+ 
+
+11
+00:00:21,119 --> 00:00:24,540
+how about you I'm from Dallas Texas
+everything there is very big where do
+
+12
+00:00:24,540 --> 00:00:24,550
+everything there is very big where do
+ 
+
+13
+00:00:24,550 --> 00:00:28,019
+everything there is very big where do
+you work I work for ABC limited as a
+
+14
+00:00:28,019 --> 00:00:28,029
+you work I work for ABC limited as a
+ 
+
+15
+00:00:28,029 --> 00:00:31,830
+you work I work for ABC limited as a
+software engineer it's a good job for me
+
+16
+00:00:31,830 --> 00:00:31,840
+software engineer it's a good job for me
+ 
+
+17
+00:00:31,840 --> 00:00:34,399
+software engineer it's a good job for me
+because I like working with computers
+
+18
+00:00:34,399 --> 00:00:34,409
+because I like working with computers
+ 
+
+19
+00:00:34,409 --> 00:00:38,660
+because I like working with computers
+how about you I'm a journalist I
+
+20
+00:00:38,660 --> 00:00:38,670
+how about you I'm a journalist I
+ 
+
+21
+00:00:38,670 --> 00:00:41,579
+how about you I'm a journalist I
+interview people and write stories for a
+
+22
+00:00:41,579 --> 00:00:41,589
+interview people and write stories for a
+ 
+
+23
+00:00:41,589 --> 00:00:44,790
+interview people and write stories for a
+famous American newspaper what do you do
+
+24
+00:00:44,790 --> 00:00:44,800
+famous American newspaper what do you do
+ 
+
+25
+00:00:44,800 --> 00:00:47,880
+famous American newspaper what do you do
+in your free time at the moment I'm
+
+26
+00:00:47,880 --> 00:00:47,890
+in your free time at the moment I'm
+ 
+
+27
+00:00:47,890 --> 00:00:51,650
+in your free time at the moment I'm
+learning Italian it's fun but difficult
+
+28
+00:00:51,650 --> 00:00:51,660
+learning Italian it's fun but difficult
+ 
+
+29
+00:00:51,660 --> 00:00:55,669
+learning Italian it's fun but difficult
+how about you I like to go rock climbing
+
+30
+00:00:55,669 --> 00:00:55,679
+how about you I like to go rock climbing
+ 
+
+31
+00:00:55,679 --> 00:00:59,130
+how about you I like to go rock climbing
+it's good exercise and I can enjoy the
+
+32
+00:00:59,130 --> 00:00:59,140
+it's good exercise and I can enjoy the
+ 
+
+33
+00:00:59,140 --> 00:01:02,160
+it's good exercise and I can enjoy the
+fresh air too
+
