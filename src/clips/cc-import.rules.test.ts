@@ -119,6 +119,10 @@ describe('stripCaptionNotes', () => {
     assert.equal(stripCaptionNotes('- WOODY: Hey, Buzz. (SIGHS)'), 'Hey, Buzz.');
     assert.equal(stripCaptionNotes('Wait. MAN 2: No way!'), 'Wait. No way!');
     assert.equal(stripCaptionNotes('♪ (MUSIC PLAYING) ♪'), '');
+    assert.equal(stripCaptionNotes('（เสียงประกอบ）'), '');
+    assert.equal(stripCaptionNotes('【Music】'), '');
+    assert.equal(stripCaptionNotes('(light music)'), '');
+    assert.equal(stripCaptionNotes('Hello （หัวเราะ）'), 'Hello');
   });
 
   it('keeps normal colons and words', () => {

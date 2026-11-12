@@ -86,7 +86,9 @@ export class ClipsSeedService implements OnModuleInit {
     const hasLongLine = sentences.some((s) => wordCount(s.text) > MAX_LINE_WORDS);
     const hasCaptionNoise = sentences.some(
       (s) =>
-        /[(\[]/.test(s.text) ||
+        /[(\[（【]/.test(s.text) ||
+        /เสียงประกอบ|เสียงเพลง|เพลงประกอบ/.test(s.text) ||
+        /เสียงประกอบ|เสียงเพลง|เพลงประกอบ/.test(s.textTh) ||
         /(^|[.!?]\s+)[A-Z]{2,}[A-Z0-9 .'&-]{0,24}:\s/.test(s.text),
     );
 
