@@ -2,31 +2,32 @@
 
 export const CLIP_LEVELS = ['A1', 'A2', 'B1', 'B2'] as const;
 /** Section rails on the Clips tab (order = display order). */
+/** Videos tab rails, in display order (empty rails are hidden). */
 export const CLIP_CATEGORIES = [
+  'movies',
   'daily',
   'cartoons',
-  'movies',
   'celebs',
   'songs',
   'learning',
+  'listening',
   'toeic',
   'ielts',
-  'tips',
 ] as const;
 export const CLIP_MODES = ['watch', 'dictation', 'shadowing'] as const;
 export type ClipMode = (typeof CLIP_MODES)[number];
 export type ClipCategory = (typeof CLIP_CATEGORIES)[number];
 
 export const CLIP_CATEGORY_TITLES: Record<ClipCategory, { en: string; th: string }> = {
-  daily: { en: 'Daily conversation', th: 'บทสนทนาประจำวัน' },
-  cartoons: { en: 'Cartoons & animation', th: 'การ์ตูน & แอนิเมชัน' },
-  movies: { en: 'Movies & series', th: 'หนัง & ซีรีส์' },
-  celebs: { en: 'Entertainment & celebs', th: 'บันเทิง & คนดัง' },
+  movies: { en: 'Movies', th: 'หนังและซีรีส์' },
+  daily: { en: 'Daily conversations', th: 'บทสนทนาประจำวัน' },
+  cartoons: { en: 'Cartoons', th: 'การ์ตูน' },
+  celebs: { en: 'Entertainment', th: 'บันเทิง' },
   songs: { en: 'Songs', th: 'เพลง' },
-  learning: { en: 'Learning with BBC & VOA', th: 'Learning - เรียนกับ BBC & VOA' },
+  learning: { en: 'Learning', th: 'Learning' },
+  listening: { en: 'Listening practice', th: 'ฝึกฟัง' },
   toeic: { en: 'TOEIC Listening', th: 'TOEIC Listening' },
   ielts: { en: 'IELTS Listening', th: 'IELTS Listening' },
-  tips: { en: 'Study tips', th: 'เคล็ดลับเรียนภาษา' },
 };
 
 /** Legacy ids → current rails (older imports / admin). */
@@ -35,10 +36,11 @@ const CLIP_CATEGORY_ALIASES: Record<string, ClipCategory> = {
   stories: 'cartoons',
   entertainment: 'celebs',
   cartoon: 'cartoons',
-  study_tips: 'tips',
+  tips: 'learning',
+  study_tips: 'learning',
   learning_broadcast: 'learning',
   bbc_voa: 'learning',
-  listening: 'tips',
+  listening_time: 'listening',
 };
 
 export function normalizeClipCategory(raw: unknown): ClipCategory {
@@ -105,14 +107,18 @@ export function guessClipCategory(
     return 'movies';
   }
 
+  if (/^[abc][12] english listening practice/i.test(t) || h.includes('listening time')) {
+    return 'listening';
+  }
+
+  // Study tips / Parroto "Learning resources" live under Learning.
   if (
-    /tips?\b|how to (improve|learn|study|prepare)|fluent|mistake|listening practice|study smarter|learning resource/i.test(
+    /tips?\b|how to (improve|learn|study|prepare)|fluent|mistake|study smarter|learning resource/i.test(
       t,
     ) ||
-    h.includes('listening time') ||
     h.includes('learning resource')
   ) {
-    return 'tips';
+    return 'learning';
   }
 
   if (h.includes('daily') || h.includes('conversation')) return 'daily';
@@ -150,14 +156,9 @@ export function recommendedClipLevel(p: {
   placementBand?: string | null;
   selfReported?: string | null;
 }): (typeof CLIP_LEVELS)[number] {
-  const levels = CLIP_LEVELS as readonly string[];
-  const counts = new Map<string, number>();
-  for (const l of p.practisedLevels) {
-    if (levels.includes(l)) counts.set(l, (counts.get(l) ?? 0) + 1);
-  }
-  if (counts.size > 0) {
-    return [...counts.entries()].sort((a, b) => b[1] - a[1])[0][0] as (typeof CLIP_LEVELS)[number];
-  }
+  // The learner's own level (placement, then self-report) wins; clips they
+  // happened to try are only a fallback, so testing a B1 clip doesn't turn
+  // an A1 learner's whole Videos tab into B1.
   const band = (p.placementBand ?? '').trim();
   if (band.startsWith('Seed') || band.startsWith('A1')) return 'A1';
   if (band.startsWith('A2')) return 'A2';
@@ -172,9 +173,16 @@ export function recommendedClipLevel(p: {
       return 'B1';
     case 'advanced':
       return 'B2';
-    default:
-      return 'A2';
   }
+  const levels = CLIP_LEVELS as readonly string[];
+  const counts = new Map<string, number>();
+  for (const l of p.practisedLevels) {
+    if (levels.includes(l)) counts.set(l, (counts.get(l) ?? 0) + 1);
+  }
+  if (counts.size > 0) {
+    return [...counts.entries()].sort((a, b) => b[1] - a[1])[0][0] as (typeof CLIP_LEVELS)[number];
+  }
+  return 'A2';
 }
 
 /**

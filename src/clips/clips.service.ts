@@ -271,7 +271,8 @@ export class ClipsService {
       title: c.title,
       titleTh: c.titleTh,
       level: c.level,
-      category: c.category,
+      // Legacy ids (tips, news, stories…) fold into the current rails.
+      category: normalizeClipCategory(c.category),
       durationSec: c.durationSec,
       thumbnailUrl:
         c.thumbnailUrl ||

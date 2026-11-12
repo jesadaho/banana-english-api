@@ -24,7 +24,9 @@ describe('clips rules', () => {
     assert.equal(guessClipCategory('Kiki\'s Delivery Service Trailer', 'Movie short clip'), 'cartoons');
     assert.equal(guessClipCategory('Crazy Rich Asians Meeting His Mother Scene', 'Movie short clip'), 'movies');
     assert.equal(guessClipCategory('Emma Watson Plays With Kittens', 'Entertainment'), 'celebs');
-    assert.equal(guessClipCategory('A1 English Listening Practice - Pets', 'Listening Time'), 'tips');
+    assert.equal(guessClipCategory('A1 English Listening Practice - Pets', 'Listening Time'), 'listening');
+    assert.equal(guessClipCategory('How to Improve Spelling', 'Learning resources'), 'learning');
+    assert.equal(normalizeClipCategory('tips'), 'learning');
     assert.equal(guessClipCategory('What day is it today?', 'Daily English Conversation'), 'daily');
     assert.equal(normalizeClipCategory('news'), 'learning');
     assert.equal(normalizeClipCategory('stories'), 'cartoons');
@@ -120,6 +122,15 @@ describe('recommended clips', () => {
     assert.equal(recommendedClipLevel({ practisedLevels: [], placementBand: 'B1' }), 'B1');
     assert.equal(recommendedClipLevel({ practisedLevels: [], selfReported: 'advanced' }), 'B2');
     assert.equal(recommendedClipLevel({ practisedLevels: [] }), 'A2');
+    // Placement beats clips the learner happened to try.
+    assert.equal(
+      recommendedClipLevel({ practisedLevels: ['B1', 'B1'], placementBand: 'A1' }),
+      'A1',
+    );
+    assert.equal(
+      recommendedClipLevel({ practisedLevels: ['B1'], selfReported: 'beginner' }),
+      'A1',
+    );
   });
   it('orders own level, then harder, then easier; skips started clips', () => {
     const clips = [
