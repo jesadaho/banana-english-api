@@ -185,7 +185,10 @@ import { LessonsService } from '../lessons/lessons.service';
 import { StartSessionDto, TurnDto } from './dto/sessions.dto';
 import { AnonymousUserGuard } from '../users/anonymous-user.guard';
 import { EconomyService } from '../economy/economy.service';
-import { freeTalkBananaCost } from '../economy/economy.constants';
+import {
+  freeTalkBananaCost,
+  normalizeFreeTalkDuration,
+} from '../economy/economy.constants';
 import { UsersService } from '../users/users.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { SeriesService } from '../series/series.service';
@@ -309,7 +312,7 @@ export class SessionsController {
     }
 
     if (body.topicId === 'free_talk') {
-      const durationMinutes = body.durationMinutes === 10 ? 10 : 5;
+      const durationMinutes = normalizeFreeTalkDuration(body.durationMinutes);
       const bananaCost = freeTalkBananaCost(durationMinutes);
       const languageLevel = normalizeFreeTalkLanguageLevel(body.languageLevel);
       const spendRef = randomUUID();

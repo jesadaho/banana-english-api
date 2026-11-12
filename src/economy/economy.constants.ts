@@ -31,12 +31,21 @@ export const LESSON_REVIEW_REWARD_SEEDS = 2;
 export const DAILY_SPEAK_REWARD_XP = 10;
 export const DAILY_SPEAK_REWARD_SEEDS = 1;
 
-/** Free Talk pricing: 1 banana per 5 minutes (5→1, 10→2). */
+/** Free Talk pricing: 1 banana per 5 minutes (5→1, 10→2, 15→3, 20→4). */
 export const FREE_TALK_BANANA_PER_FIVE_MINUTES = 1;
 export const FREE_TALK_MINUTES_PER_BANANA = 5;
+export const FREE_TALK_DURATIONS = [5, 10, 15, 20] as const;
+export type FreeTalkDurationMinutes = (typeof FREE_TALK_DURATIONS)[number];
+
+export function normalizeFreeTalkDuration(raw: unknown): FreeTalkDurationMinutes {
+  const n = Number(raw);
+  return (FREE_TALK_DURATIONS as readonly number[]).includes(n)
+    ? (n as FreeTalkDurationMinutes)
+    : 5;
+}
 
 export function freeTalkBananaCost(durationMinutes: number): number {
-  const minutes = durationMinutes === 10 ? 10 : 5;
+  const minutes = normalizeFreeTalkDuration(durationMinutes);
   return Math.max(
     1,
     Math.ceil(minutes / FREE_TALK_MINUTES_PER_BANANA) *

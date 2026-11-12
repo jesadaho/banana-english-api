@@ -49,11 +49,11 @@ export class StartSessionDto {
   @IsBoolean()
   isDailyMission?: boolean;
 
-  /** Free Talk only: 5 or 10 minutes (default 5). */
+  /** Free Talk only: 5 / 10 / 15 / 20 minutes (default 5). */
   @IsOptional()
   @Type(() => Number)
   @IsInt()
-  @IsIn([5, 10])
+  @IsIn([5, 10, 15, 20])
   durationMinutes?: number;
 
   /** Free Talk only: Easy / Balanced / English Only (default balanced). */
