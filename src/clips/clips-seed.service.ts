@@ -1,4 +1,5 @@
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { PrismaService } from '../prisma/prisma.service';
@@ -20,6 +21,18 @@ type ClipMeta = {
 
 function wordCount(text: string): number {
   return text.trim().split(/\s+/).filter(Boolean).length;
+}
+
+function normLine(text: string): string {
+  return text.replace(/\s+/g, ' ').trim().toLowerCase();
+}
+
+async function httpJson<T>(url: string): Promise<T> {
+  const res = await fetch(url, {
+    headers: { 'X-Anonymous-User-Id': 'clips-thai-mirror' },
+  });
+  if (!res.ok) throw new Error(`http_${res.status}_${url}`);
+  return (await res.json()) as T;
 }
 
 function pickSubFile(dir: string, meta: ClipMeta): string | null {
@@ -128,7 +141,11 @@ export class ClipsSeedService implements OnModuleInit {
     await this.backfillMissingThai();
   }
 
-  /** Re-run Gemini Thai/dictation for clips that still have blank textTh. */
+  /**
+   * Fill blank textTh without re-paying Gemini when possible:
+   * 1) mirror from Staging (same YouTube id) on production
+   * 2) Gemini prepare for whatever is still blank
+   */
   private async backfillMissingThai() {
     const blank = await this.prisma.clipSentence.findMany({
       where: { textTh: '' },
@@ -140,9 +157,29 @@ export class ClipsSeedService implements OnModuleInit {
       return;
     }
     this.logger.log(`Clips Thai backfill starting: ${blank.length} clip(s)`);
-    let ok = 0;
+
+    const source = this.resolveThaiSourceUrl();
+    let mirrored = 0;
+    if (source) {
+      try {
+        mirrored = await this.mirrorThaiFromSource(
+          blank.map((b) => b.clipId),
+          source,
+        );
+        this.logger.log(`Clips Thai mirrored from ${source}: ${mirrored} clip(s)`);
+      } catch (err) {
+        this.logger.warn(`Clips Thai mirror failed: ${String(err)}`);
+      }
+    }
+
+    const still = await this.prisma.clipSentence.findMany({
+      where: { textTh: '' },
+      select: { clipId: true },
+      distinct: ['clipId'],
+    });
+    let ok = mirrored;
     let failed = 0;
-    for (const { clipId } of blank) {
+    for (const { clipId } of still) {
       try {
         await this.clips.adminPrepare(clipId, {});
         const left = await this.prisma.clipSentence.count({
@@ -158,7 +195,112 @@ export class ClipsSeedService implements OnModuleInit {
         this.logger.warn(`Clips Thai backfill fail ${clipId}: ${String(err)}`);
       }
     }
-    this.logger.log(`Clips Thai backfill done: ok=${ok} failed=${failed}`);
+    this.logger.log(`Clips Thai backfill done: ok=${ok} failed=${failed} mirrored=${mirrored}`);
+  }
+
+  /**
+   * Prefer Staging's already-translated Thai (matched by YouTube id).
+   * Set CLIPS_THAI_SOURCE_URL=0 to disable, or to another base URL to override.
+   */
+  private resolveThaiSourceUrl(): string | null {
+    const raw = (process.env.CLIPS_THAI_SOURCE_URL ?? '').trim().replace(/\/$/, '');
+    if (raw === '0' || (process.env.CLIPS_THAI_MIRROR_STAGING ?? '').trim() === '0') {
+      return null;
+    }
+    if (raw && raw !== '1') return raw;
+    return 'https://banana-english-api-staging.up.railway.app';
+  }
+
+  private async mirrorThaiFromSource(clipIds: string[], sourceBase: string): Promise<number> {
+    const clips = await this.prisma.clip.findMany({
+      where: { id: { in: clipIds }, youtubeId: { not: '' } },
+      select: { id: true, youtubeId: true },
+    });
+    if (clips.length === 0) return 0;
+
+    const ytToSourceId = await this.fetchSourceClipIndex(sourceBase);
+    let done = 0;
+    for (const clip of clips) {
+      const sourceId = ytToSourceId.get(clip.youtubeId);
+      if (!sourceId) continue;
+      const sourceLines = await this.fetchSourceSentences(sourceBase, sourceId);
+      if (sourceLines.length === 0) continue;
+      const byText = new Map<string, (typeof sourceLines)[number]>();
+      for (const s of sourceLines) {
+        const key = normLine(s.text);
+        if (key && !byText.has(key)) byText.set(key, s);
+      }
+      const local = await this.prisma.clipSentence.findMany({
+        where: { clipId: clip.id },
+        orderBy: { idx: 'asc' },
+      });
+      let filled = 0;
+      for (const line of local) {
+        if (line.textTh) continue;
+        const hit =
+          byText.get(normLine(line.text)) ??
+          sourceLines.find((s) => s.idx === line.idx && !!s.textTh);
+        if (!hit?.textTh) continue;
+        await this.prisma.clipSentence.update({
+          where: { id: line.id },
+          data: {
+            textTh: hit.textTh.slice(0, 400),
+            ...(hit.dictation != null
+              ? { dictation: hit.dictation as Prisma.InputJsonValue }
+              : {}),
+            ...(hit.highlights != null
+              ? { highlights: hit.highlights as Prisma.InputJsonValue }
+              : {}),
+          },
+        });
+        filled += 1;
+      }
+      if (filled > 0) {
+        done += 1;
+        this.logger.log(
+          `Clips Thai mirror ${clip.youtubeId}: filled ${filled}/${local.length} line(s)`,
+        );
+      }
+    }
+    return done;
+  }
+
+  private async fetchSourceClipIndex(sourceBase: string): Promise<Map<string, string>> {
+    const data = await httpJson<{
+      sections?: Array<{ clips?: Array<{ id: string; youtubeId?: string }> }>;
+      popular?: Array<{ id: string; youtubeId?: string }>;
+      recommended?: Array<{ id: string; youtubeId?: string }>;
+    }>(`${sourceBase}/clips`);
+    const map = new Map<string, string>();
+    const add = (c?: { id: string; youtubeId?: string }) => {
+      const yt = (c?.youtubeId ?? '').trim();
+      if (c?.id && yt && !map.has(yt)) map.set(yt, c.id);
+    };
+    for (const s of data.sections ?? []) for (const c of s.clips ?? []) add(c);
+    for (const c of data.popular ?? []) add(c);
+    for (const c of data.recommended ?? []) add(c);
+    return map;
+  }
+
+  private async fetchSourceSentences(sourceBase: string, clipId: string) {
+    const data = await httpJson<{
+      sentences?: Array<{
+        idx?: number;
+        text?: string;
+        textTh?: string;
+        dictation?: unknown;
+        highlights?: unknown;
+      }>;
+    }>(`${sourceBase}/clips/${clipId}`);
+    return (data.sentences ?? [])
+      .map((s, i) => ({
+        idx: Number.isInteger(s.idx) ? (s.idx as number) : i,
+        text: String(s.text ?? '').trim(),
+        textTh: String(s.textTh ?? '').trim(),
+        dictation: s.dictation ?? null,
+        highlights: s.highlights ?? null,
+      }))
+      .filter((s) => s.text);
   }
 
   /** Align stored category ids/titles with the current Clips tab rails. */
