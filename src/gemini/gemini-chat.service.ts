@@ -579,7 +579,7 @@ Return JSON: { "sentences": [ ... ] }.`;
 const CLIP_PREPARE_PROMPT = `You prepare English video subtitle lines for Thai learners (A1–B1).
 For each numbered line return:
 - i: the line number
-- th: natural, simple spoken Thai translation of the line
+- th: natural, simple spoken Thai translation of the line (dialogue only). Never write sound-effect labels like "เสียงประกอบ", "เสียงเพลง", "(music)", or stage directions.
 - hide: 0-based word indexes (split on spaces) a learner should rebuild by listening. If the line has ≤ 8 words, hide every word. Otherwise pick up to 6 words that are hard to hear or key to meaning (names, numbers, contractions, content words), not "a/the/to".
 - distractors: 2 short English words that SOUND like a hidden word but are wrong (e.g. large → lunch, can → can't, two → to). Never a word that is in the line.
 - highlights: 0–2 useful spans to underline in the watch transcript. Each item:
@@ -2851,8 +2851,14 @@ ${
       for (const item of value.items ?? []) {
         const at = start + item.i;
         if (!Number.isInteger(item.i) || at < start || at >= start + chunk.length) continue;
+        const thRaw = (item.th ?? '').trim();
+        const th =
+          /เสียงประกอบ|เสียงเพลง|เพลงประกอบ/i.test(thRaw) ||
+          /^[(\[（【].*[)\]）】]$/.test(thRaw)
+            ? ''
+            : thRaw;
         out[at] = {
-          th: (item.th ?? '').trim(),
+          th,
           hide: Array.isArray(item.hide) ? item.hide : [],
           distractors: Array.isArray(item.distractors) ? item.distractors : [],
           highlights: Array.isArray(item.highlights) ? item.highlights : [],

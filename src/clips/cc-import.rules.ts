@@ -43,10 +43,16 @@ export function parseCues(text: string): Cue[] {
 }
 
 /**
- * Not speech: every [..] and (..) caption note — sound effects and stage
- * directions like (GIGGLES), [Laughter], (Music) — music notes and ">>".
+ * Not speech: every [..] / (..) / （..） / 【..】 caption note — sound effects
+ * and stage directions like (GIGGLES), [Laughter], （เสียงประกอบ）, (Music) —
+ * music notes and ">>".
  */
-const NOISE = /\[[^\]]*\]|\([^)]*\)|♪+|>>/g;
+const NOISE =
+  /\[[^\]]*\]|\([^)]*\)|（[^）]*）|【[^】]*】|♪+|♫+|>>/g;
+
+/** Whole-line non-speech left after stripping bracket notes (rare). */
+const NON_SPEECH_LINE =
+  /^(?:music|applause|laughter|laughs|sighs?|cheering|inaudible|indistinct|เสียงประกอบ|เสียงเพลง|เพลงประกอบ)[.!?…]*$/i;
 
 /**
  * Speaker labels at the start of a line or after a sentence end:
@@ -57,7 +63,7 @@ const SPEAKER = /(^|[.!?]\s+|\s-\s*)[A-Z][A-Z0-9 .'&-]{0,24}:\s+/g;
 
 /** Caption line → spoken words only. */
 export function stripCaptionNotes(raw: string): string {
-  return raw
+  const text = raw
     .replace(NOISE, ' ')
     .replace(/\s+/g, ' ')
     .trim()
@@ -68,6 +74,8 @@ export function stripCaptionNotes(raw: string): string {
     .replace(/\s+/g, ' ')
     .trim()
     .replace(/^[,.;:!?\s]+/, '');
+  if (!text || NON_SPEECH_LINE.test(text)) return '';
+  return text;
 }
 
 /**
