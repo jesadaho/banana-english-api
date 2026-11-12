@@ -1,0 +1,24 @@
+{
+  "category": "Listening Time",
+  "index": 15,
+  "title": "A2 English Listening Practice - Reading and Books",
+  "level": "B1",
+  "duration": "04:23",
+  "source": "YouTube",
+  "pro": false,
+  "views": 11343,
+  "in_app": null,
+  "search_query": "A2 English Listening Practice - Reading and Books",
+  "search_url": "https://www.youtube.com/results?search_query=A2%20English%20Listening%20Practice%20-%20Reading%20and%20Books",
+  "youtube_id": "DTvgAxi5mVA",
+  "resolved_title": "A2 English Listening Practice - Reading and Books",
+  "url": "https://www.youtube.com/watch?v=DTvgAxi5mVA",
+  "channel": "Listening Time",
+  "resolved_duration": 262,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/listening-time/15-a2-english-listening-practice-reading-and-books",
+  "ok": true,
+  "subtitle_files": [
+    "DTvgAxi5mVA.en.srt"
+  ],
+  "id": "DTvgAxi5mVA"
+}

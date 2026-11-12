@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 104,
+  "title": "Remember vs Remind - English In A Minute",
+  "level": "B1",
+  "duration": "01:18",
+  "source": "YouTube",
+  "pro": false,
+  "views": 1691,
+  "in_app": null,
+  "search_query": "Remember vs Remind - English In A Minute",
+  "search_url": "https://www.youtube.com/results?search_query=Remember%20vs%20Remind%20-%20English%20In%20A%20Minute",
+  "youtube_id": "FA2Ih6WnUZ0",
+  "resolved_title": "Remember vs Remind - English In A Minute",
+  "url": "https://www.youtube.com/watch?v=FA2Ih6WnUZ0",
+  "channel": "BBC Learning English",
+  "resolved_duration": 78,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/104-remember-vs-remind-english-in-a-minute",
+  "ok": true,
+  "subtitle_files": [
+    "FA2Ih6WnUZ0.en-GB.vtt"
+  ],
+  "id": "FA2Ih6WnUZ0"
+}

@@ -1,0 +1,24 @@
+{
+  "category": "Daily English Conversation",
+  "index": 12,
+  "title": "A Dolphin Show Debate",
+  "level": "B1",
+  "duration": "01:12",
+  "source": "YouTube",
+  "pro": true,
+  "views": 24038,
+  "in_app": null,
+  "search_query": "A Dolphin Show Debate",
+  "search_url": "https://www.youtube.com/results?search_query=A%20Dolphin%20Show%20Debate",
+  "youtube_id": "ctxwg0WIlD4",
+  "resolved_title": "Charlie Kirk DESTROYED: \"This Is A Dolphin Fetus\"",
+  "url": "https://www.youtube.com/watch?v=ctxwg0WIlD4",
+  "channel": "Indisputable with Dr. Rashad Richey",
+  "resolved_duration": 273,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/daily-english-conversation/12-a-dolphin-show-debate",
+  "ok": true,
+  "subtitle_files": [
+    "ctxwg0WIlD4.en.srt"
+  ],
+  "id": "ctxwg0WIlD4"
+}

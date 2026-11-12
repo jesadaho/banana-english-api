@@ -1,0 +1,24 @@
+{
+  "category": "Movie short clip",
+  "index": 9,
+  "title": "YOUR NAME English Trailer (2016) Anime Movie",
+  "level": "B1",
+  "duration": "01:47",
+  "source": "YouTube",
+  "pro": false,
+  "views": 22901,
+  "in_app": null,
+  "search_query": "YOUR NAME English Trailer (2016) Anime Movie",
+  "search_url": "https://www.youtube.com/results?search_query=YOUR%20NAME%20English%20Trailer%20%282016%29%20Anime%20Movie",
+  "youtube_id": "dbtN9HOOqhk",
+  "resolved_title": "YOUR NAME English Trailer (2016) Anime Movie",
+  "url": "https://www.youtube.com/watch?v=dbtN9HOOqhk",
+  "channel": "New Trailer Buzz",
+  "resolved_duration": 106,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/movie-short-clip/9-your-name-english-trailer-2016-anime-movie",
+  "ok": true,
+  "subtitle_files": [
+    "dbtN9HOOqhk.en.srt"
+  ],
+  "id": "dbtN9HOOqhk"
+}

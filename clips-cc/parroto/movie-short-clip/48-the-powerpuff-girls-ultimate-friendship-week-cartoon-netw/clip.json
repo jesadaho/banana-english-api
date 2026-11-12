@@ -1,0 +1,24 @@
+{
+  "category": "Movie short clip",
+  "index": 48,
+  "title": "The Powerpuff Girls | Ultimate Friendship Week | Cartoon Network",
+  "level": "A2",
+  "duration": "01:17",
+  "source": "YouTube",
+  "pro": false,
+  "views": 13750,
+  "in_app": null,
+  "search_query": "The Powerpuff Girls | Ultimate Friendship Week | Cartoon Network",
+  "search_url": "https://www.youtube.com/results?search_query=The%20Powerpuff%20Girls%20%7C%20Ultimate%20Friendship%20Week%20%7C%20Cartoon%20Network",
+  "youtube_id": "oITK6vDpSpM",
+  "resolved_title": "The Powerpuff Girls | Ultimate Friendship Week | Cartoon Network",
+  "url": "https://www.youtube.com/watch?v=oITK6vDpSpM",
+  "channel": "The Powerpuff Girls",
+  "resolved_duration": 76,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/movie-short-clip/48-the-powerpuff-girls-ultimate-friendship-week-cartoon-netw",
+  "ok": true,
+  "subtitle_files": [
+    "oITK6vDpSpM.en.srt"
+  ],
+  "id": "oITK6vDpSpM"
+}

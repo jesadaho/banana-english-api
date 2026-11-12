@@ -1,0 +1,24 @@
+{
+  "category": "Listening Time",
+  "index": 5,
+  "title": "A1 English Listening Practice - Language Learning",
+  "level": "A1",
+  "duration": "03:43",
+  "source": "YouTube",
+  "pro": false,
+  "views": 16551,
+  "in_app": null,
+  "search_query": "A1 English Listening Practice - Language Learning",
+  "search_url": "https://www.youtube.com/results?search_query=A1%20English%20Listening%20Practice%20-%20Language%20Learning",
+  "youtube_id": "erjMgola4fQ",
+  "resolved_title": "A1 English Listening Practice - Language Learning",
+  "url": "https://www.youtube.com/watch?v=erjMgola4fQ",
+  "channel": "Listening Time",
+  "resolved_duration": 223,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/listening-time/5-a1-english-listening-practice-language-learning",
+  "ok": true,
+  "subtitle_files": [
+    "erjMgola4fQ.en.srt"
+  ],
+  "id": "erjMgola4fQ"
+}

@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 97,
+  "title": "EIAM: Person vs Persons vs People vs Peoples",
+  "level": "B2",
+  "duration": "00:57",
+  "source": "YouTube",
+  "pro": true,
+  "views": 2106,
+  "in_app": null,
+  "search_query": "EIAM: Person vs Persons vs People vs Peoples",
+  "search_url": "https://www.youtube.com/results?search_query=EIAM%3A%20Person%20vs%20Persons%20vs%20People%20vs%20Peoples",
+  "youtube_id": "EP91nmLYTVQ",
+  "resolved_title": "Person vs Persons vs People vs Peoples - English in a Minute",
+  "url": "https://www.youtube.com/watch?v=EP91nmLYTVQ",
+  "channel": "BBC Learning English",
+  "resolved_duration": 57,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/97-eiam-person-vs-persons-vs-people-vs-peoples",
+  "ok": true,
+  "subtitle_files": [
+    "EP91nmLYTVQ.en-GB.vtt"
+  ],
+  "id": "EP91nmLYTVQ"
+}

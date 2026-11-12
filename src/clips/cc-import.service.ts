@@ -18,6 +18,8 @@ import { alignSentences } from './voa-import.rules';
 
 const DEFAULT_MAX_SECONDS = 7 * 60;
 const MIN_WORDS = 25;
+/** Cap practice lines so Gemini prepare (Thai + dictation + highlights) stays bounded. */
+const MAX_SENTENCES = 64;
 
 /**
  * Caption file (.srt / .vtt) + YouTube id → timed clip, no human step:
@@ -71,14 +73,18 @@ export class CcImportService {
     // Manual captions: cue boundaries are where the speaker pauses — prefer
     // them as split points. (Auto-caption cues are arbitrary roll-ups.)
     const manual = !needsPunctuation(segments);
-    const sentences = manual
+    const allSentences = manual
       ? splitLongLines(splitPunctuated(text), undefined, cueStartIndexes(segments))
       : splitLongLines(await this.chat.punctuateCaptions(text));
-    if (sentences.length < 2) throw new BadRequestException('captions_no_sentences');
+    if (allSentences.length < 2) throw new BadRequestException('captions_no_sentences');
+    const lineTruncated = allSentences.length > MAX_SENTENCES;
+    const sentences = lineTruncated ? allSentences.slice(0, MAX_SENTENCES) : allSentences;
     const timed = alignSentences(sentences, words);
-    const truncated = all.length > limited.length;
+    const truncated = all.length > limited.length || lineTruncated;
     this.logger.log(
-      `CC ${youtubeId}: ${sentences.length} lines (${auto ? 'auto' : 'manual'} captions${truncated ? ', truncated' : ''})`,
+      `CC ${youtubeId}: ${sentences.length} lines (${auto ? 'auto' : 'manual'} captions${
+        truncated ? `, truncated${lineTruncated ? ` to ${MAX_SENTENCES} lines` : ''}` : ''
+      })`,
     );
 
     const level = String(body.level ?? '').toUpperCase();

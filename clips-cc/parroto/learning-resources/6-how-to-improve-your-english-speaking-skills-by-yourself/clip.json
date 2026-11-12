@@ -1,0 +1,24 @@
+{
+  "category": "Learning resources",
+  "index": 6,
+  "title": "How to improve your English speaking skills (by yourself)",
+  "level": "B1",
+  "duration": "04:35",
+  "source": "YouTube",
+  "pro": false,
+  "views": 17726,
+  "in_app": null,
+  "search_query": "How to improve your English speaking skills (by yourself)",
+  "search_url": "https://www.youtube.com/results?search_query=How%20to%20improve%20your%20English%20speaking%20skills%20%28by%20yourself%29",
+  "youtube_id": "CAU2zx2Ri_M",
+  "resolved_title": "How to Improve Your English Speaking Skills (by Yourself)",
+  "url": "https://www.youtube.com/watch?v=CAU2zx2Ri_M",
+  "channel": "EngFluent",
+  "resolved_duration": 275,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/learning-resources/6-how-to-improve-your-english-speaking-skills-by-yourself",
+  "ok": true,
+  "subtitle_files": [
+    "CAU2zx2Ri_M.en.srt"
+  ],
+  "id": "CAU2zx2Ri_M"
+}

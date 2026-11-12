@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 70,
+  "title": "Next vs The next vs Nearest - English In A Minute",
+  "level": "B1",
+  "duration": "00:51",
+  "source": "YouTube",
+  "pro": false,
+  "views": 6908,
+  "in_app": null,
+  "search_query": "Next vs The next vs Nearest - English In A Minute",
+  "search_url": "https://www.youtube.com/results?search_query=Next%20vs%20The%20next%20vs%20Nearest%20-%20English%20In%20A%20Minute",
+  "youtube_id": "h2OpN73FmHc",
+  "resolved_title": "Next vs The next vs Nearest - English In A Minute",
+  "url": "https://www.youtube.com/watch?v=h2OpN73FmHc",
+  "channel": "BBC Learning English",
+  "resolved_duration": 50,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/70-next-vs-the-next-vs-nearest-english-in-a-minute",
+  "ok": true,
+  "subtitle_files": [
+    "h2OpN73FmHc.en-GB.vtt"
+  ],
+  "id": "h2OpN73FmHc"
+}

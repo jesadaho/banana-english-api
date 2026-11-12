@@ -1,0 +1,24 @@
+{
+  "category": "Movie short clip",
+  "index": 17,
+  "title": "Kiki's Delivery Service | Kiki Meets Ursula (Clip) | HBO Max Family",
+  "level": "A2",
+  "duration": "02:02",
+  "source": "YouTube",
+  "pro": false,
+  "views": 17963,
+  "in_app": null,
+  "search_query": "Kiki's Delivery Service | Kiki Meets Ursula (Clip) | HBO Max Family",
+  "search_url": "https://www.youtube.com/results?search_query=Kiki%27s%20Delivery%20Service%20%7C%20Kiki%20Meets%20Ursula%20%28Clip%29%20%7C%20HBO%20Max%20Family",
+  "youtube_id": "-CD9unyq7T8",
+  "resolved_title": "Kiki Meets Ursula | Kiki's Delivery Service | Max Family",
+  "url": "https://www.youtube.com/watch?v=-CD9unyq7T8",
+  "channel": "HBO Max Family",
+  "resolved_duration": 121,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/movie-short-clip/17-kiki-s-delivery-service-kiki-meets-ursula-clip-hbo-max-fa",
+  "ok": true,
+  "subtitle_files": [
+    "-CD9unyq7T8.en.srt"
+  ],
+  "id": "-CD9unyq7T8"
+}

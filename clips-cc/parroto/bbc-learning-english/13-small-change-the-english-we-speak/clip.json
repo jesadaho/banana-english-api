@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 13,
+  "title": "Small change: The English We Speak",
+  "level": "B1",
+  "duration": "02:21",
+  "source": "YouTube",
+  "pro": true,
+  "views": 13870,
+  "in_app": null,
+  "search_query": "Small change: The English We Speak",
+  "search_url": "https://www.youtube.com/results?search_query=Small%20change%3A%20The%20English%20We%20Speak",
+  "youtube_id": "PRbgz0Aw9I0",
+  "resolved_title": "Small change: The English We Speak",
+  "url": "https://www.youtube.com/watch?v=PRbgz0Aw9I0",
+  "channel": "BBC Learning English",
+  "resolved_duration": 140,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/13-small-change-the-english-we-speak",
+  "ok": true,
+  "subtitle_files": [
+    "PRbgz0Aw9I0.en-GB.vtt"
+  ],
+  "id": "PRbgz0Aw9I0"
+}

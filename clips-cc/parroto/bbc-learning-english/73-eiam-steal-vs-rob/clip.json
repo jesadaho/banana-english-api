@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 73,
+  "title": "EIAM: Steal vs Rob",
+  "level": "B1",
+  "duration": "00:54",
+  "source": "YouTube",
+  "pro": false,
+  "views": 6784,
+  "in_app": null,
+  "search_query": "EIAM: Steal vs Rob",
+  "search_url": "https://www.youtube.com/results?search_query=EIAM%3A%20Steal%20vs%20Rob",
+  "youtube_id": "IVnOQyOscAI",
+  "resolved_title": "Steal vs Rob - English In A Minute",
+  "url": "https://www.youtube.com/watch?v=IVnOQyOscAI",
+  "channel": "BBC Learning English",
+  "resolved_duration": 53,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/73-eiam-steal-vs-rob",
+  "ok": true,
+  "subtitle_files": [
+    "IVnOQyOscAI.en-GB.vtt"
+  ],
+  "id": "IVnOQyOscAI"
+}

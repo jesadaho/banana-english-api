@@ -1,0 +1,24 @@
+{
+  "category": "Entertainment",
+  "index": 15,
+  "title": "Taylor Swift and Travis Kelce ENGAGED!",
+  "level": "B2",
+  "duration": "03:30",
+  "source": "YouTube",
+  "pro": false,
+  "views": 12011,
+  "in_app": null,
+  "search_query": "Taylor Swift and Travis Kelce ENGAGED!",
+  "search_url": "https://www.youtube.com/results?search_query=Taylor%20Swift%20and%20Travis%20Kelce%20ENGAGED%21",
+  "youtube_id": "u_bwk8xMOeI",
+  "resolved_title": "Taylor Swift and Travis Kelce ENGAGED!",
+  "url": "https://www.youtube.com/watch?v=u_bwk8xMOeI",
+  "channel": "Entertainment Tonight",
+  "resolved_duration": 210,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/entertainment/15-taylor-swift-and-travis-kelce-engaged",
+  "ok": true,
+  "subtitle_files": [
+    "u_bwk8xMOeI.en.srt"
+  ],
+  "id": "u_bwk8xMOeI"
+}

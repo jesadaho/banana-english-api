@@ -1,0 +1,24 @@
+{
+  "category": "Movie short clip",
+  "index": 7,
+  "title": "Rapunzel Wins Over Maximus | Tangled",
+  "level": "A2",
+  "duration": "02:18",
+  "source": "YouTube",
+  "pro": false,
+  "views": 24015,
+  "in_app": null,
+  "search_query": "Rapunzel Wins Over Maximus | Tangled",
+  "search_url": "https://www.youtube.com/results?search_query=Rapunzel%20Wins%20Over%20Maximus%20%7C%20Tangled",
+  "youtube_id": "_tOU5Le9YiY",
+  "resolved_title": "Rapunzel Wins Over Maximus | Tangled",
+  "url": "https://www.youtube.com/watch?v=_tOU5Le9YiY",
+  "channel": "Disney Kids",
+  "resolved_duration": 138,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/movie-short-clip/7-rapunzel-wins-over-maximus-tangled",
+  "ok": true,
+  "subtitle_files": [
+    "_tOU5Le9YiY.en.srt"
+  ],
+  "id": "_tOU5Le9YiY"
+}

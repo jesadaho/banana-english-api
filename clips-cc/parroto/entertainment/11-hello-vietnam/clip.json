@@ -1,0 +1,24 @@
+{
+  "category": "Entertainment",
+  "index": 11,
+  "title": "Hello Vietnam",
+  "level": "B1",
+  "duration": "03:24",
+  "source": "YouTube",
+  "pro": true,
+  "views": 14457,
+  "in_app": null,
+  "search_query": "Hello Vietnam",
+  "search_url": "https://www.youtube.com/results?search_query=Hello%20Vietnam",
+  "youtube_id": "NCPCoAtCqfc",
+  "resolved_title": "Hello Vietnam - Pham Quynh Anh (Lyrics)",
+  "url": "https://www.youtube.com/watch?v=NCPCoAtCqfc",
+  "channel": "Levy Lyrics",
+  "resolved_duration": 207,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/entertainment/11-hello-vietnam",
+  "ok": true,
+  "subtitle_files": [
+    "NCPCoAtCqfc.en.srt"
+  ],
+  "id": "NCPCoAtCqfc"
+}

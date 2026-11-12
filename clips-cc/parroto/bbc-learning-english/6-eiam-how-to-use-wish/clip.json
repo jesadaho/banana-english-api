@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 6,
+  "title": "EIAM: How to use 'wish'",
+  "level": "B1",
+  "duration": "00:54",
+  "source": "YouTube",
+  "pro": true,
+  "views": 15188,
+  "in_app": null,
+  "search_query": "EIAM: How to use 'wish'",
+  "search_url": "https://www.youtube.com/results?search_query=EIAM%3A%20How%20to%20use%20%27wish%27",
+  "youtube_id": "i7SfiMG0UPM",
+  "resolved_title": "How to use 'wish' - English In A Minute",
+  "url": "https://www.youtube.com/watch?v=i7SfiMG0UPM",
+  "channel": "BBC Learning English",
+  "resolved_duration": 53,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/6-eiam-how-to-use-wish",
+  "ok": true,
+  "subtitle_files": [
+    "i7SfiMG0UPM.en-GB.vtt"
+  ],
+  "id": "i7SfiMG0UPM"
+}

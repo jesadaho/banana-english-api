@@ -1,0 +1,24 @@
+{
+  "category": "Movie short clip",
+  "index": 6,
+  "title": "EVERY Disney Princess Dress! | Disney Princess",
+  "level": "A1",
+  "duration": "04:06",
+  "source": "YouTube",
+  "pro": false,
+  "views": 25906,
+  "in_app": null,
+  "search_query": "EVERY Disney Princess Dress! | Disney Princess",
+  "search_url": "https://www.youtube.com/results?search_query=EVERY%20Disney%20Princess%20Dress%21%20%7C%20Disney%20Princess",
+  "youtube_id": "hjmpMGQxNqI",
+  "resolved_title": "Princess Rosalina meets Disney Princesses | Can Rosalina pass the Princess test? 💖",
+  "url": "https://www.youtube.com/watch?v=hjmpMGQxNqI",
+  "channel": "Monzonation",
+  "resolved_duration": 60,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/movie-short-clip/6-every-disney-princess-dress-disney-princess",
+  "ok": true,
+  "subtitle_files": [
+    "hjmpMGQxNqI.en.srt"
+  ],
+  "id": "hjmpMGQxNqI"
+}

@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 83,
+  "title": "Put someone on the map: The English We Speak",
+  "level": "B2",
+  "duration": "02:32",
+  "source": "YouTube",
+  "pro": false,
+  "views": 4960,
+  "in_app": null,
+  "search_query": "Put someone on the map: The English We Speak",
+  "search_url": "https://www.youtube.com/results?search_query=Put%20someone%20on%20the%20map%3A%20The%20English%20We%20Speak",
+  "youtube_id": "7IApemA46CQ",
+  "resolved_title": "Put someone on the map: The English We Speak",
+  "url": "https://www.youtube.com/watch?v=7IApemA46CQ",
+  "channel": "BBC Learning English",
+  "resolved_duration": 152,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/83-put-someone-on-the-map-the-english-we-speak",
+  "ok": true,
+  "subtitle_files": [
+    "7IApemA46CQ.en-GB.vtt"
+  ],
+  "id": "7IApemA46CQ"
+}

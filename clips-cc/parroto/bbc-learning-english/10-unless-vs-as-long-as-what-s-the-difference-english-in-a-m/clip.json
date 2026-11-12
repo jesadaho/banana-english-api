@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 10,
+  "title": "'Unless' vs 'As long as': What's the difference? English In A Minute",
+  "level": "B1",
+  "duration": "01:00",
+  "source": "YouTube",
+  "pro": false,
+  "views": 14419,
+  "in_app": null,
+  "search_query": "'Unless' vs 'As long as': What's the difference? English In A Minute",
+  "search_url": "https://www.youtube.com/results?search_query=%27Unless%27%20vs%20%27As%20long%20as%27%3A%20What%27s%20the%20difference%3F%20English%20In%20A%20Minute",
+  "youtube_id": "Or_Zm7QdSgc",
+  "resolved_title": "'Unless' vs 'As long as': What's the difference? English In A Minute",
+  "url": "https://www.youtube.com/watch?v=Or_Zm7QdSgc",
+  "channel": "BBC Learning English",
+  "resolved_duration": 60,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/10-unless-vs-as-long-as-what-s-the-difference-english-in-a-m",
+  "ok": true,
+  "subtitle_files": [
+    "Or_Zm7QdSgc.en-GB.vtt"
+  ],
+  "id": "Or_Zm7QdSgc"
+}

@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 12,
+  "title": "EIAM: Must vs have to",
+  "level": "B1",
+  "duration": "00:46",
+  "source": "YouTube",
+  "pro": false,
+  "views": 14035,
+  "in_app": null,
+  "search_query": "EIAM: Must vs have to",
+  "search_url": "https://www.youtube.com/results?search_query=EIAM%3A%20Must%20vs%20have%20to",
+  "youtube_id": "tFirN40-6mY",
+  "resolved_title": "Mustn't vs Don't have to - English In A Minute",
+  "url": "https://www.youtube.com/watch?v=tFirN40-6mY",
+  "channel": "BBC Learning English",
+  "resolved_duration": 44,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/12-eiam-must-vs-have-to",
+  "ok": true,
+  "subtitle_files": [
+    "tFirN40-6mY.en-GB.vtt"
+  ],
+  "id": "tFirN40-6mY"
+}

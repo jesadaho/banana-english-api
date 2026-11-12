@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 82,
+  "title": "How to use 'have something done' - English In A Minute",
+  "level": "B1",
+  "duration": "00:54",
+  "source": "YouTube",
+  "pro": false,
+  "views": 5098,
+  "in_app": null,
+  "search_query": "How to use 'have something done' - English In A Minute",
+  "search_url": "https://www.youtube.com/results?search_query=How%20to%20use%20%27have%20something%20done%27%20-%20English%20In%20A%20Minute",
+  "youtube_id": "I-O6thNzaWo",
+  "resolved_title": "Have something done - how to use the causatives HAVE and GET in the passive",
+  "url": "https://www.youtube.com/watch?v=I-O6thNzaWo",
+  "channel": "Simple English Videos",
+  "resolved_duration": 215,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/82-how-to-use-have-something-done-english-in-a-minute",
+  "ok": true,
+  "subtitle_files": [
+    "I-O6thNzaWo.en.srt"
+  ],
+  "id": "I-O6thNzaWo"
+}

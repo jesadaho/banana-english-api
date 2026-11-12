@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 16,
+  "title": "5 ways to use 'set' - English In A Minute",
+  "level": "B1",
+  "duration": "01:02",
+  "source": "YouTube",
+  "pro": true,
+  "views": 13347,
+  "in_app": null,
+  "search_query": "5 ways to use 'set' - English In A Minute",
+  "search_url": "https://www.youtube.com/results?search_query=5%20ways%20to%20use%20%27set%27%20-%20English%20In%20A%20Minute",
+  "youtube_id": "W3d9SfPdS48",
+  "resolved_title": "5 ways to use 'set' - English In A Minute",
+  "url": "https://www.youtube.com/watch?v=W3d9SfPdS48",
+  "channel": "BBC Learning English",
+  "resolved_duration": 62,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/16-5-ways-to-use-set-english-in-a-minute",
+  "ok": true,
+  "subtitle_files": [
+    "W3d9SfPdS48.en.srt"
+  ],
+  "id": "W3d9SfPdS48"
+}

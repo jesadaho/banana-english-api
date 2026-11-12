@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 75,
+  "title": "3 Facts about 'The': English In A Minute",
+  "level": "A1",
+  "duration": "00:52",
+  "source": "YouTube",
+  "pro": false,
+  "views": 6606,
+  "in_app": null,
+  "search_query": "3 Facts about 'The': English In A Minute",
+  "search_url": "https://www.youtube.com/results?search_query=3%20Facts%20about%20%27The%27%3A%20English%20In%20A%20Minute",
+  "youtube_id": "uldbn_Prt8s",
+  "resolved_title": "3 Facts about The - English In A Minute",
+  "url": "https://www.youtube.com/watch?v=uldbn_Prt8s",
+  "channel": "BBC Learning English",
+  "resolved_duration": 52,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/75-3-facts-about-the-english-in-a-minute",
+  "ok": true,
+  "subtitle_files": [
+    "uldbn_Prt8s.en-GB.vtt"
+  ],
+  "id": "uldbn_Prt8s"
+}

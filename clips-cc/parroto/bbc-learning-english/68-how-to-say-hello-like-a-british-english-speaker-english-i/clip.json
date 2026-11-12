@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 68,
+  "title": "How to say hello like a British English speaker - English In A Minute",
+  "level": "B1",
+  "duration": "00:58",
+  "source": "YouTube",
+  "pro": false,
+  "views": 6949,
+  "in_app": null,
+  "search_query": "How to say hello like a British English speaker - English In A Minute",
+  "search_url": "https://www.youtube.com/results?search_query=How%20to%20say%20hello%20like%20a%20British%20English%20speaker%20-%20English%20In%20A%20Minute",
+  "youtube_id": "hK8KwiGOWb4",
+  "resolved_title": "How to say hello like a British English speaker - English In A Minute ⏰",
+  "url": "https://www.youtube.com/watch?v=hK8KwiGOWb4",
+  "channel": "BBC Learning English",
+  "resolved_duration": 58,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/68-how-to-say-hello-like-a-british-english-speaker-english-i",
+  "ok": true,
+  "subtitle_files": [
+    "hK8KwiGOWb4.en-GB.vtt"
+  ],
+  "id": "hK8KwiGOWb4"
+}

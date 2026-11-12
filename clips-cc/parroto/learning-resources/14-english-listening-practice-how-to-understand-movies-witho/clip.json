@@ -1,0 +1,24 @@
+{
+  "category": "Learning resources",
+  "index": 14,
+  "title": "English Listening Practice: How to Understand Movies Without Subtitles",
+  "level": "B1",
+  "duration": "04:25",
+  "source": "YouTube",
+  "pro": false,
+  "views": 14547,
+  "in_app": null,
+  "search_query": "English Listening Practice: How to Understand Movies Without Subtitles",
+  "search_url": "https://www.youtube.com/results?search_query=English%20Listening%20Practice%3A%20How%20to%20Understand%20Movies%20Without%20Subtitles",
+  "youtube_id": "tB88DEBk5tw",
+  "resolved_title": "How to Understand English Movies Without Subtitles",
+  "url": "https://www.youtube.com/watch?v=tB88DEBk5tw",
+  "channel": "The English Class",
+  "resolved_duration": 341,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/learning-resources/14-english-listening-practice-how-to-understand-movies-witho",
+  "ok": true,
+  "subtitle_files": [
+    "tB88DEBk5tw.en.srt"
+  ],
+  "id": "tB88DEBk5tw"
+}

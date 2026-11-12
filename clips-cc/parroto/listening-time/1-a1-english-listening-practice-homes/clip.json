@@ -1,0 +1,24 @@
+{
+  "category": "Listening Time",
+  "index": 1,
+  "title": "A1 English Listening Practice - Homes",
+  "level": "B1",
+  "duration": "04:30",
+  "source": "YouTube",
+  "pro": false,
+  "views": 58019,
+  "in_app": null,
+  "search_query": "A1 English Listening Practice - Homes",
+  "search_url": "https://www.youtube.com/results?search_query=A1%20English%20Listening%20Practice%20-%20Homes",
+  "youtube_id": "ApzkloKc3Lc",
+  "resolved_title": "A1 English Listening Practice - Homes",
+  "url": "https://www.youtube.com/watch?v=ApzkloKc3Lc",
+  "channel": "Listening Time",
+  "resolved_duration": 270,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/listening-time/1-a1-english-listening-practice-homes",
+  "ok": true,
+  "subtitle_files": [
+    "ApzkloKc3Lc.en.srt"
+  ],
+  "id": "ApzkloKc3Lc"
+}

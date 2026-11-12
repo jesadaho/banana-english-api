@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 21,
+  "title": "Technology: Phrasal verbs with Georgie",
+  "level": "B1",
+  "duration": "03:03",
+  "source": "YouTube",
+  "pro": false,
+  "views": 12709,
+  "in_app": null,
+  "search_query": "Technology: Phrasal verbs with Georgie",
+  "search_url": "https://www.youtube.com/results?search_query=Technology%3A%20Phrasal%20verbs%20with%20Georgie",
+  "youtube_id": "RTAwB-5Fv48",
+  "resolved_title": "💻 Technology: Phrasal verbs with Georgie",
+  "url": "https://www.youtube.com/watch?v=RTAwB-5Fv48",
+  "channel": "BBC Learning English",
+  "resolved_duration": 183,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/21-technology-phrasal-verbs-with-georgie",
+  "ok": true,
+  "subtitle_files": [
+    "RTAwB-5Fv48.en.srt"
+  ],
+  "id": "RTAwB-5Fv48"
+}

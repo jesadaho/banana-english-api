@@ -1,0 +1,24 @@
+{
+  "category": "Movie short clip",
+  "index": 42,
+  "title": "Revolutionary Road - Shell of a Woman (2008) HD",
+  "level": "B1",
+  "duration": "02:22",
+  "source": "YouTube",
+  "pro": false,
+  "views": 14746,
+  "in_app": null,
+  "search_query": "Revolutionary Road - Shell of a Woman (2008) HD",
+  "search_url": "https://www.youtube.com/results?search_query=Revolutionary%20Road%20-%20Shell%20of%20a%20Woman%20%282008%29%20HD",
+  "youtube_id": "n2lTpPptOWA",
+  "resolved_title": "Revolutionary Road (7/8) Movie CLIP - Shell of a Woman (2008) HD",
+  "url": "https://www.youtube.com/watch?v=n2lTpPptOWA",
+  "channel": "Movieclips",
+  "resolved_duration": 142,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/movie-short-clip/42-revolutionary-road-shell-of-a-woman-2008-hd",
+  "ok": true,
+  "subtitle_files": [
+    "n2lTpPptOWA.en.srt"
+  ],
+  "id": "n2lTpPptOWA"
+}

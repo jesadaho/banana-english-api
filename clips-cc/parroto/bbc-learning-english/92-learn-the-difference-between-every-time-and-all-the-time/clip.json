@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 92,
+  "title": "Learn the difference between 'every time' and 'all the time'",
+  "level": "A2",
+  "duration": "00:53",
+  "source": "YouTube",
+  "pro": false,
+  "views": 3611,
+  "in_app": null,
+  "search_query": "Learn the difference between 'every time' and 'all the time'",
+  "search_url": "https://www.youtube.com/results?search_query=Learn%20the%20difference%20between%20%27every%20time%27%20and%20%27all%20the%20time%27",
+  "youtube_id": "sqmPv29tL_g",
+  "resolved_title": "Beyond WHEN & WHILE: Learn Time Expressions to Sound More Natural in English",
+  "url": "https://www.youtube.com/watch?v=sqmPv29tL_g",
+  "channel": "English with Jennifer",
+  "resolved_duration": 494,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/92-learn-the-difference-between-every-time-and-all-the-time",
+  "ok": true,
+  "subtitle_files": [
+    "sqmPv29tL_g.en.srt"
+  ],
+  "id": "sqmPv29tL_g"
+}

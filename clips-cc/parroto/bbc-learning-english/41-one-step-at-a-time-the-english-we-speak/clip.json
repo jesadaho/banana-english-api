@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 41,
+  "title": "One step at a time - The English We Speak",
+  "level": "B1",
+  "duration": "02:24",
+  "source": "YouTube",
+  "pro": false,
+  "views": 10587,
+  "in_app": null,
+  "search_query": "One step at a time - The English We Speak",
+  "search_url": "https://www.youtube.com/results?search_query=One%20step%20at%20a%20time%20-%20The%20English%20We%20Speak",
+  "youtube_id": "pSqGi9Ljk7g",
+  "resolved_title": "One step at a time - The English We Speak",
+  "url": "https://www.youtube.com/watch?v=pSqGi9Ljk7g",
+  "channel": "BBC Learning English",
+  "resolved_duration": 144,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/41-one-step-at-a-time-the-english-we-speak",
+  "ok": true,
+  "subtitle_files": [
+    "pSqGi9Ljk7g.en.srt"
+  ],
+  "id": "pSqGi9Ljk7g"
+}

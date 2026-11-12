@@ -1,0 +1,24 @@
+{
+  "category": "Daily English Conversation",
+  "index": 10,
+  "title": "Eating Like a Bird?",
+  "level": "B1",
+  "duration": "01:15",
+  "source": "YouTube",
+  "pro": false,
+  "views": 24833,
+  "in_app": null,
+  "search_query": "Eating Like a Bird?",
+  "search_url": "https://www.youtube.com/results?search_query=Eating%20Like%20a%20Bird%3F",
+  "youtube_id": "ottNem6wjSc",
+  "resolved_title": "English Idiom #8 - Do You Eat Like a Bird?",
+  "url": "https://www.youtube.com/watch?v=ottNem6wjSc",
+  "channel": "All Things Grammar",
+  "resolved_duration": 192,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/daily-english-conversation/10-eating-like-a-bird",
+  "ok": true,
+  "subtitle_files": [
+    "ottNem6wjSc.en.srt"
+  ],
+  "id": "ottNem6wjSc"
+}

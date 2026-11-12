@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 90,
+  "title": "No vs not any vs none: English In A Minute",
+  "level": "B1",
+  "duration": "01:00",
+  "source": "YouTube",
+  "pro": false,
+  "views": 3965,
+  "in_app": null,
+  "search_query": "No vs not any vs none: English In A Minute",
+  "search_url": "https://www.youtube.com/results?search_query=No%20vs%20not%20any%20vs%20none%3A%20English%20In%20A%20Minute",
+  "youtube_id": "Hd5TucosUiA",
+  "resolved_title": "No vs Not any vs None - English In A Minute",
+  "url": "https://www.youtube.com/watch?v=Hd5TucosUiA",
+  "channel": "BBC Learning English",
+  "resolved_duration": 60,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/90-no-vs-not-any-vs-none-english-in-a-minute",
+  "ok": true,
+  "subtitle_files": [
+    "Hd5TucosUiA.en-GB.vtt"
+  ],
+  "id": "Hd5TucosUiA"
+}

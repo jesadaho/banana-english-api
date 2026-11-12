@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 48,
+  "title": "3 ways to use take off: Learn English in a minute",
+  "level": "B1",
+  "duration": "01:00",
+  "source": "YouTube",
+  "pro": true,
+  "views": 9936,
+  "in_app": null,
+  "search_query": "3 ways to use take off: Learn English in a minute",
+  "search_url": "https://www.youtube.com/results?search_query=3%20ways%20to%20use%20take%20off%3A%20Learn%20English%20in%20a%20minute",
+  "youtube_id": "88CRj4K3SrA",
+  "resolved_title": "3 ways to use 'take off' - English In A Minute",
+  "url": "https://www.youtube.com/watch?v=88CRj4K3SrA",
+  "channel": "BBC Learning English",
+  "resolved_duration": 60,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/48-3-ways-to-use-take-off-learn-english-in-a-minute",
+  "ok": true,
+  "subtitle_files": [
+    "88CRj4K3SrA.en-GB.vtt"
+  ],
+  "id": "88CRj4K3SrA"
+}

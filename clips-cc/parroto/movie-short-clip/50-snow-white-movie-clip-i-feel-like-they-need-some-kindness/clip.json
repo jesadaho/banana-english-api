@@ -1,0 +1,24 @@
+{
+  "category": "Movie short clip",
+  "index": 50,
+  "title": "Snow White Movie Clip - I Feel Like They Need Some Kindness",
+  "level": "B1",
+  "duration": "01:17",
+  "source": "YouTube",
+  "pro": false,
+  "views": 13605,
+  "in_app": null,
+  "search_query": "Snow White Movie Clip - I Feel Like They Need Some Kindness",
+  "search_url": "https://www.youtube.com/results?search_query=Snow%20White%20Movie%20Clip%20-%20I%20Feel%20Like%20They%20Need%20Some%20Kindness",
+  "youtube_id": "qkAjPl_SFqA",
+  "resolved_title": "Snow White Movie Clip - I Feel Like They Need Some Kindness (2025)",
+  "url": "https://www.youtube.com/watch?v=qkAjPl_SFqA",
+  "channel": "Rotten Tomatoes Coming Soon",
+  "resolved_duration": 77,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/movie-short-clip/50-snow-white-movie-clip-i-feel-like-they-need-some-kindness",
+  "ok": true,
+  "subtitle_files": [
+    "qkAjPl_SFqA.en.srt"
+  ],
+  "id": "qkAjPl_SFqA"
+}

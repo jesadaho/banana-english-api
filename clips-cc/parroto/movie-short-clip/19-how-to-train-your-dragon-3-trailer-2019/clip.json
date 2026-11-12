@@ -1,0 +1,24 @@
+{
+  "category": "Movie short clip",
+  "index": 19,
+  "title": "HOW TO TRAIN YOUR DRAGON 3 Trailer (2019)",
+  "level": "B1",
+  "duration": "02:47",
+  "source": "YouTube",
+  "pro": false,
+  "views": 17523,
+  "in_app": null,
+  "search_query": "HOW TO TRAIN YOUR DRAGON 3 Trailer (2019)",
+  "search_url": "https://www.youtube.com/results?search_query=HOW%20TO%20TRAIN%20YOUR%20DRAGON%203%20Trailer%20%282019%29",
+  "youtube_id": "SkcucKDrbOI",
+  "resolved_title": "HOW TO TRAIN YOUR DRAGON: THE HIDDEN WORLD | Official Trailer",
+  "url": "https://www.youtube.com/watch?v=SkcucKDrbOI",
+  "channel": "DreamWorks Dragons",
+  "resolved_duration": 164,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/movie-short-clip/19-how-to-train-your-dragon-3-trailer-2019",
+  "ok": true,
+  "subtitle_files": [
+    "SkcucKDrbOI.en.srt"
+  ],
+  "id": "SkcucKDrbOI"
+}

@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 43,
+  "title": "How to use 'ish' - English In A Minute",
+  "level": "B1",
+  "duration": "01:03",
+  "source": "YouTube",
+  "pro": false,
+  "views": 10417,
+  "in_app": null,
+  "search_query": "How to use 'ish' - English In A Minute",
+  "search_url": "https://www.youtube.com/results?search_query=How%20to%20use%20%27ish%27%20-%20English%20In%20A%20Minute",
+  "youtube_id": "SZHUh5zBNZo",
+  "resolved_title": "How to use 'ish' - English In A Minute",
+  "url": "https://www.youtube.com/watch?v=SZHUh5zBNZo",
+  "channel": "BBC Learning English",
+  "resolved_duration": 63,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/43-how-to-use-ish-english-in-a-minute",
+  "ok": true,
+  "subtitle_files": [
+    "SZHUh5zBNZo.en.srt"
+  ],
+  "id": "SZHUh5zBNZo"
+}

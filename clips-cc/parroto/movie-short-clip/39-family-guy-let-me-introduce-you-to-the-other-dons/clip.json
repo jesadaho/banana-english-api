@@ -1,0 +1,24 @@
+{
+  "category": "Movie short clip",
+  "index": 39,
+  "title": "Family Guy - Let me introduce you to the other dons",
+  "level": "B1",
+  "duration": "01:01",
+  "source": "YouTube",
+  "pro": false,
+  "views": 15094,
+  "in_app": null,
+  "search_query": "Family Guy - Let me introduce you to the other dons",
+  "search_url": "https://www.youtube.com/results?search_query=Family%20Guy%20-%20Let%20me%20introduce%20you%20to%20the%20other%20dons",
+  "youtube_id": "DN0WfyjjqH0",
+  "resolved_title": "Family Guy - Let me introduce you to the other dons",
+  "url": "https://www.youtube.com/watch?v=DN0WfyjjqH0",
+  "channel": "Mr. Rupert",
+  "resolved_duration": 60,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/movie-short-clip/39-family-guy-let-me-introduce-you-to-the-other-dons",
+  "ok": true,
+  "subtitle_files": [
+    "DN0WfyjjqH0.en.srt"
+  ],
+  "id": "DN0WfyjjqH0"
+}

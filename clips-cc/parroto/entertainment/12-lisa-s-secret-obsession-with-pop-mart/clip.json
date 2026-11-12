@@ -1,0 +1,24 @@
+{
+  "category": "Entertainment",
+  "index": 12,
+  "title": "Lisa's Secret Obsession with POP MART",
+  "level": "B1",
+  "duration": "04:56",
+  "source": "YouTube",
+  "pro": false,
+  "views": 14382,
+  "in_app": null,
+  "search_query": "Lisa's Secret Obsession with POP MART",
+  "search_url": "https://www.youtube.com/results?search_query=Lisa%27s%20Secret%20Obsession%20with%20POP%20MART",
+  "youtube_id": "-Bci1a1CF80",
+  "resolved_title": "Lisa's Secret Obsession with Labubus | Vanity Fair",
+  "url": "https://www.youtube.com/watch?v=-Bci1a1CF80",
+  "channel": "Vanity Fair",
+  "resolved_duration": 296,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/entertainment/12-lisa-s-secret-obsession-with-pop-mart",
+  "ok": true,
+  "subtitle_files": [
+    "-Bci1a1CF80.en.srt"
+  ],
+  "id": "-Bci1a1CF80"
+}

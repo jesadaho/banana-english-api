@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 47,
+  "title": "While vs during: English In A Minute",
+  "level": "B2",
+  "duration": "01:07",
+  "source": "YouTube",
+  "pro": false,
+  "views": 9994,
+  "in_app": null,
+  "search_query": "While vs during: English In A Minute",
+  "search_url": "https://www.youtube.com/results?search_query=While%20vs%20during%3A%20English%20In%20A%20Minute",
+  "youtube_id": "jfk-CZNqrzc",
+  "resolved_title": "While vs During - English In A Minute",
+  "url": "https://www.youtube.com/watch?v=jfk-CZNqrzc",
+  "channel": "BBC Learning English",
+  "resolved_duration": 66,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/47-while-vs-during-english-in-a-minute",
+  "ok": true,
+  "subtitle_files": [
+    "jfk-CZNqrzc.en-GB.vtt"
+  ],
+  "id": "jfk-CZNqrzc"
+}

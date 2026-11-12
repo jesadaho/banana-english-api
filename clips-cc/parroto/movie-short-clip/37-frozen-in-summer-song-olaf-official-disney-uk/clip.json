@@ -1,0 +1,24 @@
+{
+  "category": "Movie short clip",
+  "index": 37,
+  "title": "FROZEN | \"In Summer\" Song - Olaf | Official Disney UK",
+  "level": "B1",
+  "duration": "02:00",
+  "source": "YouTube",
+  "pro": false,
+  "views": 15173,
+  "in_app": null,
+  "search_query": "FROZEN | \"In Summer\" Song - Olaf | Official Disney UK",
+  "search_url": "https://www.youtube.com/results?search_query=FROZEN%20%7C%20%22In%20Summer%22%20Song%20-%20Olaf%20%7C%20Official%20Disney%20UK",
+  "youtube_id": "UFatVn1hP3o",
+  "resolved_title": "Frozen | Olaf zingt In Summer | Muziekvideo [ENG] | Disney Kids België-Nederland",
+  "url": "https://www.youtube.com/watch?v=UFatVn1hP3o",
+  "channel": "Disney Kids België-Nederland",
+  "resolved_duration": 120,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/movie-short-clip/37-frozen-in-summer-song-olaf-official-disney-uk",
+  "ok": true,
+  "subtitle_files": [
+    "UFatVn1hP3o.en.srt"
+  ],
+  "id": "UFatVn1hP3o"
+}

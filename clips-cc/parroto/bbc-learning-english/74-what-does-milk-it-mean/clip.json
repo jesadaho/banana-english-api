@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 74,
+  "title": "What does 'milk it' mean?",
+  "level": "B1",
+  "duration": "03:01",
+  "source": "YouTube",
+  "pro": true,
+  "views": 6696,
+  "in_app": null,
+  "search_query": "What does 'milk it' mean?",
+  "search_url": "https://www.youtube.com/results?search_query=What%20does%20%27milk%20it%27%20mean%3F",
+  "youtube_id": "uT3jtaXONM4",
+  "resolved_title": "What does 'milk it' mean?",
+  "url": "https://www.youtube.com/watch?v=uT3jtaXONM4",
+  "channel": "BBC Learning English",
+  "resolved_duration": 180,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/74-what-does-milk-it-mean",
+  "ok": true,
+  "subtitle_files": [
+    "uT3jtaXONM4.en-GB.vtt"
+  ],
+  "id": "uT3jtaXONM4"
+}

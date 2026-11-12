@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 44,
+  "title": "Friendships: Phrasal verbs with Georgie",
+  "level": "B1",
+  "duration": "02:25",
+  "source": "YouTube",
+  "pro": false,
+  "views": 10370,
+  "in_app": null,
+  "search_query": "Friendships: Phrasal verbs with Georgie",
+  "search_url": "https://www.youtube.com/results?search_query=Friendships%3A%20Phrasal%20verbs%20with%20Georgie",
+  "youtube_id": "0TNG3uPcey0",
+  "resolved_title": "Friendships: Phrasal verbs with Georgie",
+  "url": "https://www.youtube.com/watch?v=0TNG3uPcey0",
+  "channel": "BBC Learning English",
+  "resolved_duration": 144,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/44-friendships-phrasal-verbs-with-georgie",
+  "ok": true,
+  "subtitle_files": [
+    "0TNG3uPcey0.en-GB.vtt"
+  ],
+  "id": "0TNG3uPcey0"
+}

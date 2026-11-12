@@ -1,0 +1,24 @@
+{
+  "category": "Movie short clip",
+  "index": 45,
+  "title": "Spongebob Avengers: Squidward Maw",
+  "level": "B1",
+  "duration": "01:01",
+  "source": "YouTube",
+  "pro": false,
+  "views": 14317,
+  "in_app": null,
+  "search_query": "Spongebob Avengers: Squidward Maw",
+  "search_url": "https://www.youtube.com/results?search_query=Spongebob%20Avengers%3A%20Squidward%20Maw",
+  "youtube_id": "61aTz7qykko",
+  "resolved_title": "Spongebob Avengers: Squidward Maw",
+  "url": "https://www.youtube.com/watch?v=61aTz7qykko",
+  "channel": "mashed",
+  "resolved_duration": 60,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/movie-short-clip/45-spongebob-avengers-squidward-maw",
+  "ok": true,
+  "subtitle_files": [
+    "61aTz7qykko.en-GB.srt"
+  ],
+  "id": "61aTz7qykko"
+}

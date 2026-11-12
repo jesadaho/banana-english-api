@@ -1,0 +1,24 @@
+{
+  "category": "Movie short clip",
+  "index": 26,
+  "title": "Potions Class | Harry Potter and the Half-Blood Prince",
+  "level": "B1",
+  "duration": "04:54",
+  "source": "YouTube",
+  "pro": false,
+  "views": 16176,
+  "in_app": null,
+  "search_query": "Potions Class | Harry Potter and the Half-Blood Prince",
+  "search_url": "https://www.youtube.com/results?search_query=Potions%20Class%20%7C%20Harry%20Potter%20and%20the%20Half-Blood%20Prince",
+  "youtube_id": "uc6-2z4e9oA",
+  "resolved_title": "Potions Class | Harry Potter and the Half-Blood Prince",
+  "url": "https://www.youtube.com/watch?v=uc6-2z4e9oA",
+  "channel": "Harry Potter",
+  "resolved_duration": 293,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/movie-short-clip/26-potions-class-harry-potter-and-the-half-blood-prince",
+  "ok": true,
+  "subtitle_files": [
+    "uc6-2z4e9oA.en.srt"
+  ],
+  "id": "uc6-2z4e9oA"
+}

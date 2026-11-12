@@ -1,0 +1,24 @@
+{
+  "category": "Movie short clip",
+  "index": 12,
+  "title": "Ghibli Fest 2024 | THE SECRET WORLD OF ARRIETTY",
+  "level": "B1",
+  "duration": "01:46",
+  "source": "YouTube",
+  "pro": false,
+  "views": 21140,
+  "in_app": null,
+  "search_query": "Ghibli Fest 2024 | THE SECRET WORLD OF ARRIETTY",
+  "search_url": "https://www.youtube.com/results?search_query=Ghibli%20Fest%202024%20%7C%20THE%20SECRET%20WORLD%20OF%20ARRIETTY",
+  "youtube_id": "ncXbAhTzIYc",
+  "resolved_title": "Ghibli Fest 2024 | THE SECRET WORLD OF ARRIETTY",
+  "url": "https://www.youtube.com/watch?v=ncXbAhTzIYc",
+  "channel": "GKIDS Films",
+  "resolved_duration": 105,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/movie-short-clip/12-ghibli-fest-2024-the-secret-world-of-arrietty",
+  "ok": true,
+  "subtitle_files": [
+    "ncXbAhTzIYc.en.srt"
+  ],
+  "id": "ncXbAhTzIYc"
+}

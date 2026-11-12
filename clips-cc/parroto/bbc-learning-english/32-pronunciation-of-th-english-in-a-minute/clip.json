@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 32,
+  "title": "Pronunciation of 'th' - English In A Minute",
+  "level": "B1",
+  "duration": "01:02",
+  "source": "YouTube",
+  "pro": false,
+  "views": 11789,
+  "in_app": null,
+  "search_query": "Pronunciation of 'th' - English In A Minute",
+  "search_url": "https://www.youtube.com/results?search_query=Pronunciation%20of%20%27th%27%20-%20English%20In%20A%20Minute",
+  "youtube_id": "7CeNTtbhYLs",
+  "resolved_title": "Pronunciation of 'th' - English In A Minute",
+  "url": "https://www.youtube.com/watch?v=7CeNTtbhYLs",
+  "channel": "BBC Learning English",
+  "resolved_duration": 61,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/32-pronunciation-of-th-english-in-a-minute",
+  "ok": true,
+  "subtitle_files": [
+    "7CeNTtbhYLs.en.srt"
+  ],
+  "id": "7CeNTtbhYLs"
+}

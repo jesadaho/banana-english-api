@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 3,
+  "title": "4 slang words: English in a Minute",
+  "level": "B1",
+  "duration": "00:57",
+  "source": "YouTube",
+  "pro": true,
+  "views": 15389,
+  "in_app": null,
+  "search_query": "4 slang words: English in a Minute",
+  "search_url": "https://www.youtube.com/results?search_query=4%20slang%20words%3A%20English%20in%20a%20Minute",
+  "youtube_id": "tFpBnKI3w4w",
+  "resolved_title": "4 slang words - English In a Minute",
+  "url": "https://www.youtube.com/watch?v=tFpBnKI3w4w",
+  "channel": "BBC Learning English",
+  "resolved_duration": 57,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/3-4-slang-words-english-in-a-minute",
+  "ok": true,
+  "subtitle_files": [
+    "tFpBnKI3w4w.en-GB.vtt"
+  ],
+  "id": "tFpBnKI3w4w"
+}

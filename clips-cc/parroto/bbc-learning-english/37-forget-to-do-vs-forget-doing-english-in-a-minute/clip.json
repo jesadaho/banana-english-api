@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 37,
+  "title": "Forget to do vs forget doing - English In A Minute",
+  "level": "B1",
+  "duration": "00:55",
+  "source": "YouTube",
+  "pro": false,
+  "views": 10749,
+  "in_app": null,
+  "search_query": "Forget to do vs forget doing - English In A Minute",
+  "search_url": "https://www.youtube.com/results?search_query=Forget%20to%20do%20vs%20forget%20doing%20-%20English%20In%20A%20Minute",
+  "youtube_id": "pgZW-sRpRoI",
+  "resolved_title": "Forget to do vs forget doing - English In A Minute",
+  "url": "https://www.youtube.com/watch?v=pgZW-sRpRoI",
+  "channel": "BBC Learning English",
+  "resolved_duration": 54,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/37-forget-to-do-vs-forget-doing-english-in-a-minute",
+  "ok": true,
+  "subtitle_files": [
+    "pgZW-sRpRoI.en-GB.vtt"
+  ],
+  "id": "pgZW-sRpRoI"
+}

@@ -1,0 +1,24 @@
+{
+  "category": "Movie short clip",
+  "index": 27,
+  "title": "S'winter | Phineas and Ferb | Full Scene | @disneyxd",
+  "level": "B1",
+  "duration": "02:15",
+  "source": "YouTube",
+  "pro": false,
+  "views": 16009,
+  "in_app": null,
+  "search_query": "S'winter | Phineas and Ferb | Full Scene | @disneyxd",
+  "search_url": "https://www.youtube.com/results?search_query=S%27winter%20%7C%20Phineas%20and%20Ferb%20%7C%20Full%20Scene%20%7C%20%40disneyxd",
+  "youtube_id": "467GFAwZvR4",
+  "resolved_title": "S'winter | S1 E3 | Full Episode | Phineas and Ferb | @disneychannel",
+  "url": "https://www.youtube.com/watch?v=467GFAwZvR4",
+  "channel": "Disney Channel Animation",
+  "resolved_duration": 1351,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/movie-short-clip/27-s-winter-phineas-and-ferb-full-scene-disneyxd",
+  "ok": true,
+  "subtitle_files": [
+    "467GFAwZvR4.en.srt"
+  ],
+  "id": "467GFAwZvR4"
+}

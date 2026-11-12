@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 2,
+  "title": "By vs Until - English In A Minute",
+  "level": "B1",
+  "duration": "01:07",
+  "source": "YouTube",
+  "pro": false,
+  "views": 15393,
+  "in_app": null,
+  "search_query": "By vs Until - English In A Minute",
+  "search_url": "https://www.youtube.com/results?search_query=By%20vs%20Until%20-%20English%20In%20A%20Minute",
+  "youtube_id": "cP484B5-RUc",
+  "resolved_title": "'by' vs 'until' - English In A Minute",
+  "url": "https://www.youtube.com/watch?v=cP484B5-RUc",
+  "channel": "BBC Learning English",
+  "resolved_duration": 67,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/2-by-vs-until-english-in-a-minute",
+  "ok": true,
+  "subtitle_files": [
+    "cP484B5-RUc.en-GB.vtt"
+  ],
+  "id": "cP484B5-RUc"
+}

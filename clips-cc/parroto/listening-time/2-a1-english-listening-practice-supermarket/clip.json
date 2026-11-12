@@ -1,0 +1,24 @@
+{
+  "category": "Listening Time",
+  "index": 2,
+  "title": "A1 English Listening Practice - Supermarket",
+  "level": "A2",
+  "duration": "04:37",
+  "source": "YouTube",
+  "pro": true,
+  "views": 27080,
+  "in_app": null,
+  "search_query": "A1 English Listening Practice - Supermarket",
+  "search_url": "https://www.youtube.com/results?search_query=A1%20English%20Listening%20Practice%20-%20Supermarket",
+  "youtube_id": "XWq58Abc7zk",
+  "resolved_title": "A1 English Listening Practice - Supermarket",
+  "url": "https://www.youtube.com/watch?v=XWq58Abc7zk",
+  "channel": "Listening Time",
+  "resolved_duration": 277,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/listening-time/2-a1-english-listening-practice-supermarket",
+  "ok": true,
+  "subtitle_files": [
+    "XWq58Abc7zk.en.srt"
+  ],
+  "id": "XWq58Abc7zk"
+}

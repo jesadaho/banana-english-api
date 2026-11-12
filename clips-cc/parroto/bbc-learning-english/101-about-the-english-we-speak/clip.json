@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 101,
+  "title": "About - The English We Speak",
+  "level": "B1",
+  "duration": "01:51",
+  "source": "YouTube",
+  "pro": false,
+  "views": 1805,
+  "in_app": null,
+  "search_query": "About - The English We Speak",
+  "search_url": "https://www.youtube.com/results?search_query=About%20-%20The%20English%20We%20Speak",
+  "youtube_id": "tD4GqfPmcKA",
+  "resolved_title": "About - The English We Speak",
+  "url": "https://www.youtube.com/watch?v=tD4GqfPmcKA",
+  "channel": "BBC Learning English",
+  "resolved_duration": 110,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/101-about-the-english-we-speak",
+  "ok": true,
+  "subtitle_files": [
+    "tD4GqfPmcKA.en-GB.vtt"
+  ],
+  "id": "tD4GqfPmcKA"
+}

@@ -1,0 +1,188 @@
+1
+00:00:00,200 --> 00:00:02,080
+So if it rains,
+
+2
+00:00:02,080 --> 00:00:04,520
+I'll probably just stay inside and watch a film.
+
+3
+00:00:04,520 --> 00:00:08,720
+Hello and welcome to Conditionals with Georgie - that's me!
+
+4
+00:00:08,720 --> 00:00:10,400
+Conditionals can be tricky.
+
+5
+00:00:10,400 --> 00:00:14,160
+We sometimes think of them  like they're mathematical equations:
+
+6
+00:00:14,160 --> 00:00:18,200
+use this structure plus this structure, in this situation,
+
+7
+00:00:18,200 --> 00:00:20,360
+but not this situation.
+
+8
+00:00:20,360 --> 00:00:25,040
+But sometimes, it's best to just relax, get your head out of the books,
+
+9
+00:00:25,040 --> 00:00:27,680
+and hear how they're used in real life.
+
+10
+00:00:27,680 --> 00:00:31,320
+So, what is a conditional?
+
+11
+00:00:35,440 --> 00:00:40,040
+Conditionals have two parts - the condition or a situation,
+
+12
+00:00:40,040 --> 00:00:44,560
+and the possible consequences
+or results of that situation.
+
+13
+00:00:44,560 --> 00:00:46,960
+If this happens, this happens.
+
+14
+00:00:46,960 --> 00:00:48,160
+Look:
+
+15
+00:00:48,160 --> 00:00:51,520
+Usually, when I finish work, I play guitar.
+
+16
+00:00:51,520 --> 00:00:56,320
+So, if I don't do that, then I kind
+of feel a bit stressed out, maybe.
+
+17
+00:00:56,320 --> 00:00:59,400
+Now, there are different types of conditionals
+
+18
+00:00:59,400 --> 00:01:01,120
+that express different things.
+
+19
+00:01:01,120 --> 00:01:07,000
+The type in the first example expresses things that are generally true or facts.
+
+20
+00:01:07,000 --> 00:01:12,160
+If George doesn't play the guitar, he
+usually feels stressed out, in general.
+
+21
+00:01:12,160 --> 00:01:14,400
+But what else can you do with conditionals?
+
+22
+00:01:14,400 --> 00:01:19,600
+Well, you can use conditionals to
+express a likely future situation and
+
+23
+00:01:19,600 --> 00:01:21,840
+the possible consequences of that.
+
+24
+00:01:21,840 --> 00:01:29,360
+If all the Tubes are cancelled, then I will cry, and get three buses home.
+
+25
+00:01:29,360 --> 00:01:33,000
+If all the tubes - that's underground
+trains - are cancelled,
+
+26
+00:01:33,000 --> 00:01:37,120
+which is a likely situation in London, Andrew will cry,
+
+27
+00:01:37,120 --> 00:01:39,400
+but only if the tubes are cancelled.
+
+28
+00:01:39,400 --> 00:01:41,600
+It depends on that condition.
+
+29
+00:01:41,600 --> 00:01:45,920
+You can talk about situations that are unlikely to happen in the future -
+
+30
+00:01:45,920 --> 00:01:49,560
+hypothetical scenarios - and the consequences of that.
+
+31
+00:01:49,560 --> 00:01:54,800
+If I won a million pounds, I'd probably go travelling all round the world.
+
+32
+00:01:54,800 --> 00:01:58,200
+Now, it's unlikely Pippa will win a million pounds,
+
+33
+00:01:58,200 --> 00:02:02,520
+but she's kind of imagining and dreaming about what she could do
+
+34
+00:02:02,520 --> 00:02:04,360
+if she won a million pounds.
+
+35
+00:02:04,360 --> 00:02:05,880
+Why weren't you at the meeting?
+
+36
+00:02:05,880 --> 00:02:07,640
+Because you didn't tell me about it.
+
+37
+00:02:07,640 --> 00:02:10,080
+If you'd told me about it, I would have been there.
+
+38
+00:02:10,080 --> 00:02:13,080
+You can use conditionals for past situations too.
+
+39
+00:02:13,080 --> 00:02:17,280
+So these are things that have already
+happened, so you can't change them,
+
+40
+00:02:17,280 --> 00:02:21,600
+but you're imagining alternative
+situations and their results.
+
+41
+00:02:21,600 --> 00:02:25,320
+So I've given you a quick overview of the main conditionals.
+
+42
+00:02:25,320 --> 00:02:28,920
+And, now later in the series, we'll look at them in more detail,
+
+43
+00:02:28,920 --> 00:02:31,920
+not forgetting about the mixed conditionals too.
+
+44
+00:02:31,920 --> 00:02:34,200
+Don't forget to check out our website
+
+45
+00:02:34,200 --> 00:02:38,600
+and download the free worksheet to
+help you practise. See you next time!
+

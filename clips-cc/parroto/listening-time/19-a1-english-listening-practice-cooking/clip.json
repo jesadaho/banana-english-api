@@ -1,0 +1,24 @@
+{
+  "category": "Listening Time",
+  "index": 19,
+  "title": "A1 English Listening Practice - Cooking",
+  "level": "A1",
+  "duration": "05:59",
+  "source": "YouTube",
+  "pro": false,
+  "views": 8182,
+  "in_app": null,
+  "search_query": "A1 English Listening Practice - Cooking",
+  "search_url": "https://www.youtube.com/results?search_query=A1%20English%20Listening%20Practice%20-%20Cooking",
+  "youtube_id": "uVGV8LG3HHM",
+  "resolved_title": "A1 English Listening Practice - Cooking",
+  "url": "https://www.youtube.com/watch?v=uVGV8LG3HHM",
+  "channel": "Listening Time",
+  "resolved_duration": 358,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/listening-time/19-a1-english-listening-practice-cooking",
+  "ok": true,
+  "subtitle_files": [
+    "uVGV8LG3HHM.en.srt"
+  ],
+  "id": "uVGV8LG3HHM"
+}

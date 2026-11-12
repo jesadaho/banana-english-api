@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 64,
+  "title": "Step on it: The English We Speak",
+  "level": "B1",
+  "duration": "02:30",
+  "source": "YouTube",
+  "pro": false,
+  "views": 7506,
+  "in_app": null,
+  "search_query": "Step on it: The English We Speak",
+  "search_url": "https://www.youtube.com/results?search_query=Step%20on%20it%3A%20The%20English%20We%20Speak",
+  "youtube_id": "u5vTi-nrMnI",
+  "resolved_title": "Step on it: The English We Speak",
+  "url": "https://www.youtube.com/watch?v=u5vTi-nrMnI",
+  "channel": "BBC Learning English",
+  "resolved_duration": 150,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/64-step-on-it-the-english-we-speak",
+  "ok": true,
+  "subtitle_files": [
+    "u5vTi-nrMnI.en-GB.vtt"
+  ],
+  "id": "u5vTi-nrMnI"
+}

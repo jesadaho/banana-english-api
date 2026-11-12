@@ -1,0 +1,24 @@
+{
+  "category": "Movie short clip",
+  "index": 5,
+  "title": "Weathering With You [Official English Dub Trailer - GKIDS] - January 15",
+  "level": "A2",
+  "duration": "02:01",
+  "source": "YouTube",
+  "pro": false,
+  "views": 26104,
+  "in_app": "มีแล้ว",
+  "search_query": "Weathering With You [Official English Dub Trailer - GKIDS] - January 15",
+  "search_url": "https://www.youtube.com/results?search_query=Weathering%20With%20You%20%5BOfficial%20English%20Dub%20Trailer%20-%20GKIDS%5D%20-%20January%2015",
+  "youtube_id": "ps8qwWG8Uio",
+  "resolved_title": "Weathering With You [Official English Dub Trailer - GKIDS] - January 15",
+  "url": "https://www.youtube.com/watch?v=ps8qwWG8Uio",
+  "channel": "GKIDS Films",
+  "resolved_duration": 121,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/movie-short-clip/5-weathering-with-you-official-english-dub-trailer-gkids-jan",
+  "ok": true,
+  "subtitle_files": [
+    "ps8qwWG8Uio.en.srt"
+  ],
+  "id": "ps8qwWG8Uio"
+}

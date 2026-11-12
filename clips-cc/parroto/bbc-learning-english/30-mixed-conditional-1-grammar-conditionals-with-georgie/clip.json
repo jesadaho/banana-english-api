@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 30,
+  "title": "Mixed conditional 1: Grammar: Conditionals with Georgie",
+  "level": "C1",
+  "duration": "02:45",
+  "source": "YouTube",
+  "pro": false,
+  "views": 11959,
+  "in_app": null,
+  "search_query": "Mixed conditional 1: Grammar: Conditionals with Georgie",
+  "search_url": "https://www.youtube.com/results?search_query=Mixed%20conditional%201%3A%20Grammar%3A%20Conditionals%20with%20Georgie",
+  "youtube_id": "e7-qXZiesbc",
+  "resolved_title": "Mixed conditional 1: Grammar: Conditionals with Georgie",
+  "url": "https://www.youtube.com/watch?v=e7-qXZiesbc",
+  "channel": "BBC Learning English",
+  "resolved_duration": 164,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/30-mixed-conditional-1-grammar-conditionals-with-georgie",
+  "ok": true,
+  "subtitle_files": [
+    "e7-qXZiesbc.en-GB.vtt"
+  ],
+  "id": "e7-qXZiesbc"
+}

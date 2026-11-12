@@ -1,0 +1,24 @@
+{
+  "category": "Listening Time",
+  "index": 4,
+  "title": "B2 English Listening Practice - Living Abroad",
+  "level": "B2",
+  "duration": "03:27",
+  "source": "YouTube",
+  "pro": false,
+  "views": 19273,
+  "in_app": null,
+  "search_query": "B2 English Listening Practice - Living Abroad",
+  "search_url": "https://www.youtube.com/results?search_query=B2%20English%20Listening%20Practice%20-%20Living%20Abroad",
+  "youtube_id": "OX-XEa50fFw",
+  "resolved_title": "B2 English Listening Practice - Living Abroad",
+  "url": "https://www.youtube.com/watch?v=OX-XEa50fFw",
+  "channel": "Listening Time",
+  "resolved_duration": 207,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/listening-time/4-b2-english-listening-practice-living-abroad",
+  "ok": true,
+  "subtitle_files": [
+    "OX-XEa50fFw.en.srt"
+  ],
+  "id": "OX-XEa50fFw"
+}

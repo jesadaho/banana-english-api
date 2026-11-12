@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 8,
+  "title": "5 verbs followed by -ing : English In A Minute",
+  "level": "B1",
+  "duration": "01:00",
+  "source": "YouTube",
+  "pro": false,
+  "views": 14772,
+  "in_app": null,
+  "search_query": "5 verbs followed by -ing : English In A Minute",
+  "search_url": "https://www.youtube.com/results?search_query=5%20verbs%20followed%20by%20-ing%20%3A%20English%20In%20A%20Minute",
+  "youtube_id": "uLoZ0OfxXfc",
+  "resolved_title": "5 uses of 'get' - English In A Minute",
+  "url": "https://www.youtube.com/watch?v=uLoZ0OfxXfc",
+  "channel": "BBC Learning English",
+  "resolved_duration": 54,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/8-5-verbs-followed-by-ing-english-in-a-minute",
+  "ok": true,
+  "subtitle_files": [
+    "uLoZ0OfxXfc.en-GB.vtt"
+  ],
+  "id": "uLoZ0OfxXfc"
+}

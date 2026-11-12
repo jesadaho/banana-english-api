@@ -1,0 +1,24 @@
+{
+  "category": "Movie short clip",
+  "index": 43,
+  "title": "Breaking Bad - Say My Name Scene (S5E7) | Rotten Tomatoes TV",
+  "level": "B1",
+  "duration": "03:12",
+  "source": "YouTube",
+  "pro": false,
+  "views": 14677,
+  "in_app": null,
+  "search_query": "Breaking Bad - Say My Name Scene (S5E7) | Rotten Tomatoes TV",
+  "search_url": "https://www.youtube.com/results?search_query=Breaking%20Bad%20-%20Say%20My%20Name%20Scene%20%28S5E7%29%20%7C%20Rotten%20Tomatoes%20TV",
+  "youtube_id": "MPYlxeG-8_w",
+  "resolved_title": "Breaking Bad - Say My Name Scene (S5E7) | Rotten Tomatoes TV",
+  "url": "https://www.youtube.com/watch?v=MPYlxeG-8_w",
+  "channel": "Rotten Tomatoes TV",
+  "resolved_duration": 191,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/movie-short-clip/43-breaking-bad-say-my-name-scene-s5e7-rotten-tomatoes-tv",
+  "ok": true,
+  "subtitle_files": [
+    "MPYlxeG-8_w.en.srt"
+  ],
+  "id": "MPYlxeG-8_w"
+}

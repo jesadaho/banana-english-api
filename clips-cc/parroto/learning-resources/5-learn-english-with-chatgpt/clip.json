@@ -1,0 +1,24 @@
+{
+  "category": "Learning resources",
+  "index": 5,
+  "title": "Learn English With ChatGPT",
+  "level": "A2",
+  "duration": "08:20",
+  "source": "YouTube",
+  "pro": false,
+  "views": 18425,
+  "in_app": null,
+  "search_query": "Learn English With ChatGPT",
+  "search_url": "https://www.youtube.com/results?search_query=Learn%20English%20With%20ChatGPT",
+  "youtube_id": "97GmvIJWXdE",
+  "resolved_title": "Learn English With ChatGPT",
+  "url": "https://www.youtube.com/watch?v=97GmvIJWXdE",
+  "channel": "The English Class",
+  "resolved_duration": 500,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/learning-resources/5-learn-english-with-chatgpt",
+  "ok": true,
+  "subtitle_files": [
+    "97GmvIJWXdE.en.srt"
+  ],
+  "id": "97GmvIJWXdE"
+}

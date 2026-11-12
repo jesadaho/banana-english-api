@@ -1,0 +1,24 @@
+{
+  "category": "Movie short clip",
+  "index": 3,
+  "title": "Toy Story Tribute",
+  "level": "B2",
+  "duration": "01:53",
+  "source": "YouTube",
+  "pro": false,
+  "views": 49314,
+  "in_app": "มีแล้ว",
+  "search_query": "Toy Story Tribute",
+  "search_url": "https://www.youtube.com/results?search_query=Toy%20Story%20Tribute",
+  "youtube_id": "7cTumvjrm3g",
+  "resolved_title": "Toy Story Tribute",
+  "url": "https://www.youtube.com/watch?v=7cTumvjrm3g",
+  "channel": "SHIELDSPACES",
+  "resolved_duration": 113,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/movie-short-clip/3-toy-story-tribute",
+  "ok": true,
+  "subtitle_files": [
+    "7cTumvjrm3g.en.srt"
+  ],
+  "id": "7cTumvjrm3g"
+}

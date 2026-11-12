@@ -1,0 +1,24 @@
+{
+  "category": "Movie short clip",
+  "index": 18,
+  "title": "Wonder Woman 1984 – Official Trailer",
+  "level": "A1",
+  "duration": "02:25",
+  "source": "YouTube",
+  "pro": true,
+  "views": 17700,
+  "in_app": null,
+  "search_query": "Wonder Woman 1984 – Official Trailer",
+  "search_url": "https://www.youtube.com/results?search_query=Wonder%20Woman%201984%20%E2%80%93%20Official%20Trailer",
+  "youtube_id": "sfM7_JLk-84",
+  "resolved_title": "Wonder Woman 1984 – Official Trailer",
+  "url": "https://www.youtube.com/watch?v=sfM7_JLk-84",
+  "channel": "Warner Bros.",
+  "resolved_duration": 144,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/movie-short-clip/18-wonder-woman-1984-official-trailer",
+  "ok": true,
+  "subtitle_files": [
+    "sfM7_JLk-84.en-US.srt"
+  ],
+  "id": "sfM7_JLk-84"
+}

@@ -1,0 +1,24 @@
+{
+  "category": "BBC learning english",
+  "index": 102,
+  "title": "Wing it - The English We Speak",
+  "level": "B2",
+  "duration": "02:05",
+  "source": "YouTube",
+  "pro": false,
+  "views": 1799,
+  "in_app": null,
+  "search_query": "Wing it - The English We Speak",
+  "search_url": "https://www.youtube.com/results?search_query=Wing%20it%20-%20The%20English%20We%20Speak",
+  "youtube_id": "PrYU7hY0MYM",
+  "resolved_title": "Wing it - The English We Speak",
+  "url": "https://www.youtube.com/watch?v=PrYU7hY0MYM",
+  "channel": "BBC Learning English",
+  "resolved_duration": 125,
+  "dest": "/Users/jesada/Project/banana-english-api/clips-cc/parroto/bbc-learning-english/102-wing-it-the-english-we-speak",
+  "ok": true,
+  "subtitle_files": [
+    "PrYU7hY0MYM.en-GB.vtt"
+  ],
+  "id": "PrYU7hY0MYM"
+}
