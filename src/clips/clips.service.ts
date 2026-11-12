@@ -7,9 +7,13 @@ import {
 import { Prisma } from '@prisma/client';
 import { GeminiChatService } from '../gemini/gemini-chat.service';
 import { PrismaService } from '../prisma/prisma.service';
+import { parrotoViews } from './parroto-popularity';
 import {
   CLIP_CATEGORIES,
   CLIP_CATEGORY_TITLES,
+  CLIP_CHANNELS,
+  CLIP_CHANNEL_TITLES,
+  clipChannelOf,
   CLIP_LEVELS,
   type TimedLine,
   clipWords,
@@ -58,11 +62,81 @@ export class ClipsService {
         clips: views.filter((v) => v.category === cat),
       }))
       .filter((s) => s.clips.length > 0);
+    // Continue Watching rail: clips with unfinished progress, latest first.
+    const continueIds: string[] = [];
+    for (const p of progress) {
+      if (p.completedAt || continueIds.includes(p.clipId)) continue;
+      continueIds.push(p.clipId);
+      if (continueIds.length >= 10) break;
+    }
+    const byId = new Map(views.map((v) => [v.id, v]));
+    const continueList = continueIds
+      .map((id) => {
+        const p = progress.find((row) => row.clipId === id && !row.completedAt);
+        const v = byId.get(id);
+        return v ? { ...v, continueMode: p?.mode ?? 'watch' } : null;
+      })
+      .filter((v): v is NonNullable<typeof v> => v !== null);
+    const channels = CLIP_CHANNELS.map((id) => ({
+      id,
+      titleEn: CLIP_CHANNEL_TITLES[id].en,
+      titleTh: CLIP_CHANNEL_TITLES[id].th,
+      count: views.filter((v) => v.channel === id).length,
+    })).filter((c) => c.count > 0);
     return {
       continue: cont ? views.find((v) => v.id === cont.clipId) ?? null : null,
       continueMode: cont?.mode ?? null,
+      continueList,
+      popular: await this.popularClips(views),
+      channels,
       sections,
     };
+  }
+
+  /**
+   * Popular Now: ranked by Parroto's view counts for now (our own play data
+   * is still thin), then topped up with our most played (ClipSession, 30 d)
+   * and most practised clips.
+   */
+  private async popularClips<T extends { id: string; title: string }>(views: T[]): Promise<T[]> {
+    const fromParroto = views
+      .map((v) => ({ v, n: parrotoViews(v.title) }))
+      .filter((r) => r.n > 0)
+      .sort((a, b) => b.n - a.n)
+      .map((r) => r.v);
+    if (fromParroto.length >= 10) return fromParroto.slice(0, 10);
+
+    const since = new Date(Date.now() - 30 * 86_400_000);
+    const ids = views.map((v) => v.id);
+    let ranked: { clipId: string; n: number }[] = [];
+    try {
+      const rows = await this.prisma.clipSession.groupBy({
+        by: ['clipId'],
+        where: { clipId: { in: ids }, createdAt: { gte: since } },
+        _count: { _all: true },
+      });
+      ranked = rows.map((r) => ({ clipId: r.clipId, n: r._count._all }));
+    } catch {
+      ranked = []; // table not migrated yet
+    }
+    const rows = await this.prisma.clipProgress.groupBy({
+      by: ['clipId'],
+      where: { clipId: { in: ids } },
+      _count: { _all: true },
+    });
+    const seen = new Set(ranked.map((r) => r.clipId));
+    ranked.push(
+      ...rows
+        .filter((r) => !seen.has(r.clipId))
+        .map((r) => ({ clipId: r.clipId, n: r._count._all / 1000 })),
+    );
+    ranked.sort((a, b) => b.n - a.n);
+    const byId = new Map(views.map((v) => [v.id, v]));
+    const picked = new Set(fromParroto.map((v) => v.id));
+    const rest = ranked
+      .map((r) => byId.get(r.clipId))
+      .filter((v): v is T => !!v && !picked.has(v.id));
+    return [...fromParroto, ...rest].slice(0, 10);
   }
 
   async getForUser(userId: string, clipId: string) {
@@ -159,6 +233,7 @@ export class ClipsService {
       youtubeId: c.youtubeId,
       videoUrl: c.videoUrl,
       credit: c.credit,
+      channel: clipChannelOf(c.credit),
       title: c.title,
       titleTh: c.titleTh,
       level: c.level,

@@ -193,6 +193,8 @@ model User {
   liveTalkInvitesReceived LiveTalkInvite[]      @relation("LiveTalkInvitee")
   liveTalkSessions        LiveTalkSession[]     @relation("LiveTalkSessionHost")
   clipProgress            ClipProgress[]
+  clipUnlocks             ClipUnlock[]
+  clipSessions            ClipSession[]
   weeklyReportSnapshots   WeeklyReportSnapshot[]
   eventLeaderboardRows    EventLeaderboard[]
   eventScoreAttempts      EventScoreAttempt[]
@@ -1079,9 +1081,45 @@ model Clip {
 
   sentences ClipSentence[]
   progress  ClipProgress[]
+  unlocks   ClipUnlock[]
+  sessions  ClipSession[]
 
   @@index([status, category, sortOrder])
   @@index([sourceUrl])
+}
+
+/** Clips practice lock: free / banana unlocks per user × clip. */
+model ClipUnlock {
+  id        String   @id @default(uuid())
+  userId    String
+  clipId    String
+  /** free | banana */
+  kind      String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  clip Clip @relation(fields: [clipId], references: [id], onDelete: Cascade)
+
+  @@index([userId, clipId])
+  @@index([userId, kind])
+}
+
+/** One mode opened on a clip page (watch | dictation | shadowing) — admin session counts. */
+model ClipSession {
+  id        String   @id @default(uuid())
+  userId    String
+  clipId    String
+  mode      String
+  /** Played to the end (watch: past the last line; practice: summary reached). */
+  completedAt DateTime?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  clip Clip @relation(fields: [clipId], references: [id], onDelete: Cascade)
+
+  @@index([createdAt, mode])
+  @@index([clipId, mode, createdAt])
+  @@index([userId, createdAt])
 }
 
 /** One timed line of a clip (times in ms on the YouTube video). */

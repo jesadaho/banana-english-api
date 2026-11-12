@@ -6,10 +6,12 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { AdminAuthGuard } from '../admin/admin-auth.guard';
 import { CcImportService } from './cc-import.service';
+import { ClipSessionsService } from './clip-sessions.service';
 import { ClipsService } from './clips.service';
 import { VoaImportService } from './voa-import.service';
 
@@ -21,7 +23,20 @@ export class AdminClipsController {
     private readonly clips: ClipsService,
     private readonly voa: VoaImportService,
     private readonly cc: CcImportService,
+    private readonly sessions: ClipSessionsService,
   ) {}
+
+  /** Videos page: most played clips, per mode — plays, players, played to the end. */
+  @Get('top')
+  top(@Query('from') from?: string, @Query('to') to?: string) {
+    return this.sessions.topClips(from, to);
+  }
+
+  /** Retention page: video sessions per mode in [from, to]. */
+  @Get('session-mix')
+  sessionMix(@Query('from') from?: string, @Query('to') to?: string) {
+    return this.sessions.sessionMix(from, to);
+  }
 
   /** Caption file (.srt/.vtt) + YouTube id → timed clip (AI punctuation + Thai). */
   @Post('import-captions')
