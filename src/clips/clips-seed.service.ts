@@ -4,6 +4,7 @@ import { join } from 'node:path';
 import { PrismaService } from '../prisma/prisma.service';
 import { CcImportService } from './cc-import.service';
 import { MAX_LINE_WORDS } from './cc-import.rules';
+import { guessClipCategory } from './clips.rules';
 
 type ClipMeta = {
   id?: string;
@@ -15,25 +16,6 @@ type ClipMeta = {
   subtitle_files?: string[];
   ok?: boolean;
 };
-
-function guessCategory(title: string, categoryHint?: string): string {
-  const hint = (categoryHint ?? '').toLowerCase();
-  if (hint.includes('movie') || hint.includes('entertainment')) return 'movies';
-  if (hint.includes('kid') || hint.includes('song')) return 'songs';
-  if (hint.includes('voa') || hint.includes('news') || hint.includes('bbc')) return 'news';
-  if (hint.includes('stor')) return 'stories';
-  if (
-    /trailer|nine-nine|stranger things|toy story|mickey|disney|pixar|ghibli|netflix|short film/i.test(
-      title,
-    )
-  ) {
-    return 'movies';
-  }
-  if (/song|music|sing/i.test(title)) return 'songs';
-  if (/court|news|testimony|report/i.test(title)) return 'news';
-  if (/story|penguin|fox/i.test(title)) return 'stories';
-  return 'daily';
-}
 
 function wordCount(text: string): number {
   return text.trim().split(/\s+/).filter(Boolean).length;
@@ -79,9 +61,11 @@ export class ClipsSeedService implements OnModuleInit {
       return;
     }
 
+    await this.remapCategories();
+
     const count = await this.prisma.clip.count();
     const sentences = await this.prisma.clipSentence.findMany({
-      select: { text: true },
+      select: { text: true, textTh: true },
     });
     const hasLongLine = sentences.some((s) => wordCount(s.text) > MAX_LINE_WORDS);
     const hasCaptionNoise = sentences.some(
@@ -124,7 +108,7 @@ export class ClipsSeedService implements OnModuleInit {
           title: p.meta.title,
           channel: p.meta.channel,
           level: p.meta.level,
-          category: guessCategory(p.meta.title ?? '', p.meta.category),
+          category: guessClipCategory(p.meta.title ?? '', p.meta.category),
           captions: readFileSync(p.srtPath, 'utf8'),
           publish: true,
           replace,
@@ -137,6 +121,21 @@ export class ClipsSeedService implements OnModuleInit {
       }
     }
     this.logger.log(`Clips seed done: ok=${ok} failed=${failed}`);
+  }
+
+  /** Align stored category ids/titles with the current Clips tab rails. */
+  private async remapCategories() {
+    const clips = await this.prisma.clip.findMany({
+      select: { id: true, title: true, category: true, credit: true },
+    });
+    let changed = 0;
+    for (const c of clips) {
+      const next = guessClipCategory(c.title, c.credit);
+      if (next === c.category) continue;
+      await this.prisma.clip.update({ where: { id: c.id }, data: { category: next } });
+      changed += 1;
+    }
+    if (changed) this.logger.log(`Clips categories remapped: ${changed}`);
   }
 
   private collect(root: string) {

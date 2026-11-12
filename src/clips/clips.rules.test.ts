@@ -3,6 +3,8 @@ import { describe, it } from 'node:test';
 import {
   defaultDictationHide,
   normalizeDictation,
+  guessClipCategory,
+  normalizeClipCategory,
   normalizeHighlights,
   parseTranscript,
   parseYoutubeId,
@@ -10,6 +12,19 @@ import {
 } from './clips.rules';
 
 describe('clips rules', () => {
+  it('maps titles and Parroto hints to the Clips tab rails', () => {
+    assert.equal(guessClipCategory('TOEIC Listening Practice 1'), 'toeic');
+    assert.equal(guessClipCategory('IELTS Listening Section 2'), 'ielts');
+    assert.equal(guessClipCategory('English in a Minute: Fair and Square'), 'learning');
+    assert.equal(guessClipCategory('Kiki\'s Delivery Service Trailer', 'Movie short clip'), 'cartoons');
+    assert.equal(guessClipCategory('Crazy Rich Asians Meeting His Mother Scene', 'Movie short clip'), 'movies');
+    assert.equal(guessClipCategory('Emma Watson Plays With Kittens', 'Entertainment'), 'celebs');
+    assert.equal(guessClipCategory('A1 English Listening Practice - Pets', 'Listening Time'), 'tips');
+    assert.equal(guessClipCategory('What day is it today?', 'Daily English Conversation'), 'daily');
+    assert.equal(normalizeClipCategory('news'), 'learning');
+    assert.equal(normalizeClipCategory('stories'), 'cartoons');
+  });
+
   it('parses YouTube ids from common URLs', () => {
     assert.equal(parseYoutubeId('https://youtu.be/dQw4w9WgXcQ?t=3'), 'dQw4w9WgXcQ');
     assert.equal(parseYoutubeId('https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=x'), 'dQw4w9WgXcQ');

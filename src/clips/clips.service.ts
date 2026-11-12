@@ -11,6 +11,7 @@ import { parrotoViews } from './parroto-popularity';
 import {
   CLIP_CATEGORIES,
   CLIP_CATEGORY_TITLES,
+  normalizeClipCategory,
   CLIP_CHANNELS,
   CLIP_CHANNEL_TITLES,
   clipChannelOf,
@@ -55,11 +56,11 @@ export class ClipsService {
     }
     const views = clips.map((c) => this.cardView(c, byClip.get(c.id) ?? []));
     const cont = progress.find((p) => p.mode !== 'watch' && !p.completedAt);
-    const sections = (CLIP_CATEGORIES as readonly string[])
+    const sections = CLIP_CATEGORIES
       .map((cat) => ({
         id: cat,
-        titleEn: CLIP_CATEGORY_TITLES[cat]?.en ?? cat,
-        titleTh: CLIP_CATEGORY_TITLES[cat]?.th ?? cat,
+        titleEn: CLIP_CATEGORY_TITLES[cat].en,
+        titleTh: CLIP_CATEGORY_TITLES[cat].th,
         clips: views.filter((v) => v.category === cat),
       }))
       .filter((s) => s.clips.length > 0);
@@ -443,8 +444,7 @@ export class ClipsService {
   }
 
   private pickCategory(v: unknown): string {
-    const s = String(v ?? '').toLowerCase();
-    return (CLIP_CATEGORIES as readonly string[]).includes(s) ? s : 'daily';
+    return normalizeClipCategory(v);
   }
 
   private async oEmbed(youtubeId: string): Promise<{ title: string; thumbnailUrl: string } | null> {

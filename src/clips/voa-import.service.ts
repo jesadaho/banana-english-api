@@ -97,7 +97,7 @@ export class VoaImportService {
       title: lesson.title.slice(0, 120) || 'VOA lesson',
       thumbnailUrl: lesson.thumbnailUrl,
       level: ['A1', 'A2', 'B1', 'B2'].includes(String(body.level)) ? String(body.level) : 'A1',
-      category: typeof body.category === 'string' && body.category ? body.category : 'stories',
+      category: typeof body.category === 'string' && body.category ? body.category : 'cartoons',
       durationSec: Math.ceil(lastEnd / 1000),
     };
     const clip = existing

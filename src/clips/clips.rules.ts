@@ -1,17 +1,122 @@
 /** Clips tab: pure helpers (parsing, validation, dictation defaults). */
 
 export const CLIP_LEVELS = ['A1', 'A2', 'B1', 'B2'] as const;
-export const CLIP_CATEGORIES = ['daily', 'movies', 'stories', 'songs', 'news'] as const;
+/** Section rails on the Clips tab (order = display order). */
+export const CLIP_CATEGORIES = [
+  'daily',
+  'cartoons',
+  'movies',
+  'celebs',
+  'songs',
+  'learning',
+  'toeic',
+  'ielts',
+  'tips',
+] as const;
 export const CLIP_MODES = ['watch', 'dictation', 'shadowing'] as const;
 export type ClipMode = (typeof CLIP_MODES)[number];
+export type ClipCategory = (typeof CLIP_CATEGORIES)[number];
 
-export const CLIP_CATEGORY_TITLES: Record<string, { en: string; th: string }> = {
-  daily: { en: 'Daily life', th: 'ชีวิตประจำวัน' },
-  movies: { en: 'Series & movies', th: 'ซีรีส์ & หนังสั้น' },
-  stories: { en: 'Stories', th: 'เรื่องสั้น' },
+export const CLIP_CATEGORY_TITLES: Record<ClipCategory, { en: string; th: string }> = {
+  daily: { en: 'Daily conversation', th: 'บทสนทนาประจำวัน' },
+  cartoons: { en: 'Cartoons & animation', th: 'การ์ตูน & แอนิเมชัน' },
+  movies: { en: 'Movies & series', th: 'หนัง & ซีรีส์' },
+  celebs: { en: 'Entertainment & celebs', th: 'บันเทิง & คนดัง' },
   songs: { en: 'Songs', th: 'เพลง' },
-  news: { en: 'Easy news', th: 'ข่าวง่าย ๆ' },
+  learning: { en: 'Learning with BBC & VOA', th: 'Learning - เรียนกับ BBC & VOA' },
+  toeic: { en: 'TOEIC Listening', th: 'TOEIC Listening' },
+  ielts: { en: 'IELTS Listening', th: 'IELTS Listening' },
+  tips: { en: 'Study tips', th: 'เคล็ดลับเรียนภาษา' },
 };
+
+/** Legacy ids → current rails (older imports / admin). */
+const CLIP_CATEGORY_ALIASES: Record<string, ClipCategory> = {
+  news: 'learning',
+  stories: 'cartoons',
+  entertainment: 'celebs',
+  cartoon: 'cartoons',
+  study_tips: 'tips',
+  learning_broadcast: 'learning',
+  bbc_voa: 'learning',
+};
+
+export function normalizeClipCategory(raw: unknown): ClipCategory {
+  const s = String(raw ?? '').trim().toLowerCase();
+  if ((CLIP_CATEGORIES as readonly string[]).includes(s)) return s as ClipCategory;
+  return CLIP_CATEGORY_ALIASES[s] ?? 'daily';
+}
+
+/**
+ * Pick a Clips-tab section from the title + optional catalog hint
+ * (Parroto sheet name, channel, etc.).
+ */
+export function guessClipCategory(
+  title: string,
+  hint?: string | null,
+): ClipCategory {
+  const t = title ?? '';
+  const h = (hint ?? '').toLowerCase();
+
+  if (/toeic/i.test(t) || h.includes('toeic')) return 'toeic';
+  if (/ielts/i.test(t) || h.includes('ielts')) return 'ielts';
+
+  if (
+    /official (music )?video|lyrics?\b|\bsong\b|karaoke|sing along|music video/i.test(t) ||
+    (h.includes('song') && !h.includes('kids'))
+  ) {
+    return 'songs';
+  }
+
+  if (
+    /bbc|voa|voice of america|english we speak|english in a minute|eiam|learners'? questions|news words|english at work/i.test(
+      t,
+    ) ||
+    h.includes('bbc') ||
+    h.includes('voa')
+  ) {
+    return 'learning';
+  }
+
+  if (
+    /ghibli|disney|pixar|dreamworks|cartoon|anime|nickelodeon|spongebob|tom\s*&\s*jerry|tom and jerry|frozen|little fox|mickey|minnie|powerpuff|we bare bears|phineas|zootopia|toy story|rapunzel|tangled|whisper of the heart|your name|kiki'?s delivery|princess mononoke|penguin/i.test(
+      t,
+    ) ||
+    h.includes('kid')
+  ) {
+    return 'cartoons';
+  }
+
+  if (
+    /interview|celebrity|blackpink|taylor swift|emma watson|comedy central|talk show|fan questions/i.test(
+      t,
+    ) ||
+    h.includes('entertainment')
+  ) {
+    return 'celebs';
+  }
+
+  if (
+    /trailer|scene|movie|series|nine-nine|friends\b|stranger things|netflix|harry potter|short film|wonder woman|crazy rich/i.test(
+      t,
+    ) ||
+    h.includes('movie')
+  ) {
+    return 'movies';
+  }
+
+  if (
+    /tips?\b|how to (improve|learn|study|prepare)|fluent|mistake|listening practice|study smarter|learning resource/i.test(
+      t,
+    ) ||
+    h.includes('listening time') ||
+    h.includes('learning resource')
+  ) {
+    return 'tips';
+  }
+
+  if (h.includes('daily') || h.includes('conversation')) return 'daily';
+  return 'daily';
+}
 
 
 /** Videos tab "Browse by Channel" tiles (derived from the clip's credit line). */
