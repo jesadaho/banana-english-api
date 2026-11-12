@@ -48,11 +48,15 @@ export function parseCues(text: string): Cue[] {
  * music notes and ">>".
  */
 const NOISE =
-  /\[[^\]]*\]|\([^)]*\)|（[^）]*）|【[^】]*】|♪+|♫+|>>/g;
+  /\[[^\]]*\]|\([^)]*\)|（[^）]*）|【[^】]*】|[♪♫♬]+|>>/g;
 
 /** Whole-line non-speech left after stripping bracket notes (rare). */
 const NON_SPEECH_LINE =
   /^(?:music|applause|laughter|laughs|sighs?|cheering|inaudible|indistinct|เสียงประกอบ|เสียงเพลง|เพลงประกอบ)[.!?…]*$/i;
+
+/** One-word title-case speaker tag at the start of a cue: "Neil: Hello". */
+const LEAD_SPEAKER =
+  /^(?!(?:Note|Time|Tip|Warning|Answer|Question|Rule|Step|Date|Price)\b)[A-Z][a-z]{1,14}\s?:\s+/;
 
 /**
  * Speaker labels at the start of a line or after a sentence end:
@@ -64,10 +68,12 @@ const SPEAKER = /(^|[.!?]\s+|\s-\s*)[A-Z][A-Z0-9 .'&-]{0,24}:\s+/g;
 /** Caption line → spoken words only. */
 export function stripCaptionNotes(raw: string): string {
   const text = raw
+    .replace(/\\h/g, ' ') // YouTube's hard-space escape
     .replace(NOISE, ' ')
     .replace(/\s+/g, ' ')
     .trim()
     .replace(/^-\s*/, '')
+    .replace(LEAD_SPEAKER, '')
     .replace(SPEAKER, '$1')
     .replace(/^\s*-\s*/, '')
     .replace(/\s+([,.!?])/g, '$1')

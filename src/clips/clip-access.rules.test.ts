@@ -1,7 +1,6 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 import {
-  CLIP_UNLOCK_TTL_MS,
   decideClipAccess,
   lockEnabledFrom,
   wordAccessAllowed,
@@ -40,12 +39,12 @@ describe('decideClipAccess', () => {
     assert.equal(decideClipAccess({ ...base, balance: 1, spend: true }).status, 'insufficient');
     assert.equal(decideClipAccess({ ...base, balance: 1 }).status, 'insufficient');
   });
-  it('a held banana unlock is reused until it expires', () => {
-    const fresh = { id: 'b', kind: 'banana', createdAt: new Date(now.getTime() - 1000) };
-    const old = { id: 'o', kind: 'banana', createdAt: new Date(now.getTime() - CLIP_UNLOCK_TTL_MS - 1) };
-    assert.equal(decideClipAccess({ ...base, existing: [fresh], token: 'b' }).status, 'unlocked');
-    assert.equal(decideClipAccess({ ...base, existing: [fresh] }).status, 'locked');
-    assert.equal(decideClipAccess({ ...base, existing: [old], token: 'o' }).status, 'locked');
+  it('a banana unlock lasts the rest of the Bangkok day', () => {
+    // now = 17:00 Bangkok; paid 09:00 Bangkok today vs 23:00 Bangkok yesterday.
+    const today = { id: 'b', kind: 'banana', createdAt: new Date('2026-11-11T02:00:00Z') };
+    const yesterday = { id: 'y', kind: 'banana', createdAt: new Date('2026-11-10T16:00:00Z') };
+    assert.equal(decideClipAccess({ ...base, existing: [today] }).status, 'unlocked');
+    assert.equal(decideClipAccess({ ...base, existing: [yesterday] }).status, 'locked');
   });
 });
 

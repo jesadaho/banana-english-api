@@ -18,8 +18,8 @@ import { alignSentences } from './voa-import.rules';
 
 const DEFAULT_MAX_SECONDS = 7 * 60;
 const MIN_WORDS = 25;
-/** Cap practice lines so Gemini prepare (Thai + dictation + highlights) stays bounded. */
-const MAX_SENTENCES = 64;
+/** Practice lines per clip: longer videos stop after this line (whole lines only). */
+export const DEFAULT_MAX_LINES = 64;
 
 /**
  * Caption file (.srt / .vtt) + YouTube id → timed clip, no human step:
@@ -44,6 +44,7 @@ export class CcImportService {
     category?: unknown;
     captions?: unknown;
     maxSeconds?: unknown;
+    maxLines?: unknown;
     publish?: unknown;
     replace?: unknown;
     videoSeconds?: unknown;
@@ -73,17 +74,21 @@ export class CcImportService {
     // Manual captions: cue boundaries are where the speaker pauses — prefer
     // them as split points. (Auto-caption cues are arbitrary roll-ups.)
     const manual = !needsPunctuation(segments);
-    const allSentences = manual
+    const sentences = manual
       ? splitLongLines(splitPunctuated(text), undefined, cueStartIndexes(segments))
       : splitLongLines(await this.chat.punctuateCaptions(text));
-    if (allSentences.length < 2) throw new BadRequestException('captions_no_sentences');
-    const lineTruncated = allSentences.length > MAX_SENTENCES;
-    const sentences = lineTruncated ? allSentences.slice(0, MAX_SENTENCES) : allSentences;
-    const timed = alignSentences(sentences, words);
-    const truncated = all.length > limited.length || lineTruncated;
+    if (sentences.length < 2) throw new BadRequestException('captions_no_sentences');
+    const maxLines = Math.max(
+      2,
+      Math.min(200, Math.floor(Number(body.maxLines)) || DEFAULT_MAX_LINES),
+    );
+    const aligned = alignSentences(sentences, words);
+    // Long videos: keep the first [maxLines] lines; the clip ends there.
+    const timed = aligned.slice(0, maxLines);
+    const truncated = all.length > limited.length || aligned.length > timed.length;
     this.logger.log(
-      `CC ${youtubeId}: ${sentences.length} lines (${auto ? 'auto' : 'manual'} captions${
-        truncated ? `, truncated${lineTruncated ? ` to ${MAX_SENTENCES} lines` : ''}` : ''
+      `CC ${youtubeId}: ${timed.length}/${sentences.length} lines (${auto ? 'auto' : 'manual'} captions${
+        truncated ? `, truncated to ${maxLines}` : ''
       })`,
     );
 

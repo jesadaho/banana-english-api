@@ -115,6 +115,8 @@ import { stripCaptionNotes } from './cc-import.rules';
 describe('stripCaptionNotes', () => {
   it('drops (..) / [..] notes and ALL-CAPS speaker labels', () => {
     assert.equal(stripCaptionNotes('(GIGGLES) MICKEY: Whoa!'), 'Whoa!');
+    assert.equal(stripCaptionNotes('Neil: Hello and welcome.'), 'Hello and welcome.');
+    assert.equal(stripCaptionNotes('every\\hnight ♫ la ♫'), 'every night la');
     assert.equal(stripCaptionNotes('[Laughter] Oh, Monica!'), 'Oh, Monica!');
     assert.equal(stripCaptionNotes('- WOODY: Hey, Buzz. (SIGHS)'), 'Hey, Buzz.');
     assert.equal(stripCaptionNotes('Wait. MAN 2: No way!'), 'Wait. No way!');

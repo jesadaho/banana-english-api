@@ -1,13 +1,18 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 import {
+  clipChannelOf,
   defaultDictationHide,
-  normalizeDictation,
   guessClipCategory,
+  limitDictationHide,
   normalizeClipCategory,
+  normalizeDictation,
   normalizeHighlights,
   parseTranscript,
   parseYoutubeId,
+  pickRecommendedClips,
+  recommendedClipLevel,
+  sortClipsForLearner,
   validateTimedLines,
 } from './clips.rules';
 
@@ -87,5 +92,60 @@ describe('clips rules', () => {
       { start: 3, end: 5, kind: 'phrase', labelTh: 'figure out = คิดออก' },
       { start: 5, end: 8, kind: 'pattern', labelTh: 'what to do = จะทำอะไร' },
     ]);
+  });
+
+  it('caps dictation blanks on long lines, keeping longer words', () => {
+    const t = 'I told you that we would never ever go back there again, right?';
+    const d = normalizeDictation({ hide: Array.from({ length: 13 }, (_, i) => i), distractors: [] }, t);
+    assert.equal(d.hide.length, 6);
+    assert.ok(!d.hide.includes(0));
+    assert.deepEqual(limitDictationHide(['To', 'go,', 'please.'], [0, 1, 2]), [0, 1, 2]);
+  });
+});
+
+describe('clipChannelOf', () => {
+  it('maps credit lines to channel tiles', () => {
+    assert.equal(clipChannelOf('YouTube · BBC Learning English'), 'bbc');
+    assert.equal(clipChannelOf('Voice of America (VOA Learning English) · public domain'), 'voa');
+    assert.equal(clipChannelOf('YouTube · Listening Time'), 'listening_time');
+    assert.equal(clipChannelOf(''), 'banana');
+    assert.equal(clipChannelOf('YouTube · Netflix'), null);
+  });
+});
+
+describe('recommended clips', () => {
+  it('picks the level from practice, then Level Test, then survey', () => {
+    assert.equal(recommendedClipLevel({ practisedLevels: ['B1', 'B1', 'A2'] }), 'B1');
+    assert.equal(recommendedClipLevel({ practisedLevels: [], placementBand: 'Seed++' }), 'A1');
+    assert.equal(recommendedClipLevel({ practisedLevels: [], placementBand: 'B1' }), 'B1');
+    assert.equal(recommendedClipLevel({ practisedLevels: [], selfReported: 'advanced' }), 'B2');
+    assert.equal(recommendedClipLevel({ practisedLevels: [] }), 'A2');
+  });
+  it('orders own level, then harder, then easier; skips started clips', () => {
+    const clips = [
+      { id: 'a', level: 'B2' },
+      { id: 'b', level: 'A2' },
+      { id: 'c', level: 'B1' },
+      { id: 'd', level: 'A2' },
+      { id: 'e', level: 'A1' },
+    ];
+    const got = pickRecommendedClips(clips, {
+      level: 'A2',
+      startedIds: new Set(['d']),
+      popularity: () => 0,
+    }).map((c) => c.id);
+    assert.deepEqual(got, ['b', 'c', 'a', 'e']);
+  });
+  it('sortClipsForLearner: own level, harder levels, then easier; popularity within a level', () => {
+    const clips = [
+      { id: 'a', level: 'B2' },
+      { id: 'b', level: 'A2' },
+      { id: 'c', level: 'B1' },
+      { id: 'd', level: 'A2' },
+      { id: 'e', level: 'A1' },
+    ];
+    const views: Record<string, number> = { b: 10, d: 50, c: 5, e: 99, a: 1 };
+    const out = sortClipsForLearner(clips, { level: 'A2', popularity: (c) => views[c.id] });
+    assert.deepEqual(out.map((c) => c.id), ['d', 'b', 'c', 'a', 'e']);
   });
 });
