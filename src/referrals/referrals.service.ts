@@ -21,6 +21,7 @@ import {
   RC_OFFERING_INVITE,
   REFERRAL_INVITE_V2_GRANT_SOURCE,
   REFERRAL_LINK_BASE,
+  REFERRAL_PROGRAM_BANANA_V1,
   REFERRAL_PROGRAM_INVITE_V2,
   REFERRAL_REQUIRED_NODES,
   REFERRAL_SOURCES,
@@ -306,12 +307,31 @@ export class ReferralsService implements OnModuleInit {
     return agg._sum.amount ?? 0;
   }
 
-  /** Admin dashboard: claims cohort in range, payouts, sources, top referrers. */
-  async adminReport(range: { from: Date; to: Date }) {
+  /**
+   * Admin dashboard. Default program is Invite V2 (`invite_v2`); pass
+   * `banana_v1` for the legacy banana rewards cohort.
+   */
+  async adminReport(
+    range: { from: Date; to: Date },
+    program: string = REFERRAL_PROGRAM_INVITE_V2,
+  ) {
+    const prog =
+      program === REFERRAL_PROGRAM_BANANA_V1
+        ? REFERRAL_PROGRAM_BANANA_V1
+        : REFERRAL_PROGRAM_INVITE_V2;
+    if (prog === REFERRAL_PROGRAM_INVITE_V2) {
+      return this.adminReportInviteV2(range);
+    }
+    return this.adminReportBananaV1(range);
+  }
+
+  /** Legacy banana invite: claim → 3 nodes → bananas. */
+  private async adminReportBananaV1(range: { from: Date; to: Date }) {
     const inRange = { gte: range.from, lte: range.to };
+    const program = REFERRAL_PROGRAM_BANANA_V1;
     const [cohort, qualified, payouts, codesIssued, allTime] = await Promise.all([
       this.prisma.referral.findMany({
-        where: { createdAt: inRange },
+        where: { createdAt: inRange, program },
         select: {
           id: true,
           referrerId: true,
@@ -327,7 +347,7 @@ export class ReferralsService implements OnModuleInit {
         orderBy: { createdAt: 'desc' },
       }),
       this.prisma.referral.findMany({
-        where: { qualifiedAt: inRange },
+        where: { qualifiedAt: inRange, program },
         select: { status: true, qualifiedAt: true },
       }),
       this.prisma.economyTransaction.groupBy({
@@ -341,82 +361,23 @@ export class ReferralsService implements OnModuleInit {
         _count: { _all: true },
       }),
       this.prisma.user.count({ where: { referralCode: { not: null } } }),
-      this.prisma.referral.groupBy({ by: ['status'], _count: { _all: true } }),
+      this.prisma.referral.groupBy({
+        by: ['status'],
+        where: { program },
+        _count: { _all: true },
+      }),
     ]);
 
     const progress = await this.completedNodeCounts(
       cohort.filter((r) => r.status === 'pending').map((r) => r.inviteeId),
     );
 
-    const dayKey = (d: Date) => d.toISOString().slice(0, 10);
-    const days: string[] = [];
-    for (
-      let t = Date.UTC(
-        range.from.getUTCFullYear(),
-        range.from.getUTCMonth(),
-        range.from.getUTCDate(),
-      );
-      t <= range.to.getTime();
-      t += 86_400_000
-    ) {
-      days.push(dayKey(new Date(t)));
-    }
-    const claimsByDay = new Map(days.map((d) => [d, 0]));
-    const rewardedByDay = new Map(days.map((d) => [d, 0]));
-    for (const r of cohort) {
-      const k = dayKey(r.createdAt);
-      claimsByDay.set(k, (claimsByDay.get(k) ?? 0) + 1);
-    }
-    for (const r of qualified) {
-      if (r.status !== 'rewarded' || !r.qualifiedAt) continue;
-      const k = dayKey(r.qualifiedAt);
-      rewardedByDay.set(k, (rewardedByDay.get(k) ?? 0) + 1);
-    }
-
-    const sourceMap = new Map<
-      string,
-      { source: string; claims: number; rewarded: number; capped: number }
-    >();
-    const referrerMap = new Map<
-      string,
-      {
-        referrerId: string;
-        displayName: string | null;
-        email: string | null;
-        avatarId: string | null;
-        code: string;
-        claims: number;
-        rewarded: number;
-        capped: number;
-      }
-    >();
-    for (const r of cohort) {
-      const s = sourceMap.get(r.source) ?? {
-        source: r.source,
-        claims: 0,
-        rewarded: 0,
-        capped: 0,
-      };
-      s.claims += 1;
-      if (r.status === 'rewarded') s.rewarded += 1;
-      if (r.status === 'capped') s.capped += 1;
-      sourceMap.set(r.source, s);
-
-      const ref = referrerMap.get(r.referrerId) ?? {
-        referrerId: r.referrerId,
-        displayName: r.referrer.displayName,
-        email: r.referrer.email,
-        avatarId: r.referrer.avatarId,
-        code: r.code,
-        claims: 0,
-        rewarded: 0,
-        capped: 0,
-      };
-      ref.claims += 1;
-      if (r.status === 'rewarded') ref.rewarded += 1;
-      if (r.status === 'capped') ref.capped += 1;
-      referrerMap.set(r.referrerId, ref);
-    }
+    const { days, claimsByDay, rewardedByDay } = this.adminDailyBuckets(
+      range,
+      cohort,
+      qualified,
+    );
+    const { sourceMap, referrerMap } = this.adminAggregateCohort(cohort);
 
     const cohortRewarded = cohort.filter((r) => r.status === 'rewarded').length;
     const cohortCapped = cohort.filter((r) => r.status === 'capped').length;
@@ -426,6 +387,7 @@ export class ReferralsService implements OnModuleInit {
       allTime.find((s) => s.status === status)?._count._all ?? 0;
 
     return {
+      program: REFERRAL_PROGRAM_BANANA_V1,
       kpis: {
         claims: cohort.length,
         activeReferrers: referrerMap.size,
@@ -470,6 +432,257 @@ export class ReferralsService implements OnModuleInit {
         invitee: { id: r.inviteeId, ...r.invitee },
       })),
     };
+  }
+
+  /** Invite V2: claim → 10% coupon → purchase → Pro 30d for referrer. */
+  private async adminReportInviteV2(range: { from: Date; to: Date }) {
+    const inRange = { gte: range.from, lte: range.to };
+    const program = REFERRAL_PROGRAM_INVITE_V2;
+    const now = new Date();
+    const [cohort, qualified, purchasedInRange, codesIssued, allTime, couponRows] =
+      await Promise.all([
+        this.prisma.referral.findMany({
+          where: { createdAt: inRange, program },
+          select: {
+            id: true,
+            referrerId: true,
+            inviteeId: true,
+            code: true,
+            source: true,
+            status: true,
+            createdAt: true,
+            qualifiedAt: true,
+            couponExpiresAt: true,
+            couponUsedAt: true,
+            inviteePurchasedAt: true,
+            referrer: {
+              select: { displayName: true, email: true, avatarId: true },
+            },
+            invitee: {
+              select: { displayName: true, email: true, avatarId: true },
+            },
+          },
+          orderBy: { createdAt: 'desc' },
+        }),
+        this.prisma.referral.findMany({
+          where: { qualifiedAt: inRange, program },
+          select: { status: true, qualifiedAt: true },
+        }),
+        this.prisma.referral.findMany({
+          where: { inviteePurchasedAt: inRange, program },
+          select: { inviteePurchasedAt: true },
+        }),
+        this.prisma.user.count({ where: { referralCode: { not: null } } }),
+        this.prisma.referral.groupBy({
+          by: ['status'],
+          where: { program },
+          _count: { _all: true },
+        }),
+        this.prisma.referral.findMany({
+          where: { program },
+          select: {
+            status: true,
+            couponExpiresAt: true,
+            couponUsedAt: true,
+            inviteePurchasedAt: true,
+          },
+        }),
+      ]);
+
+    const { days, claimsByDay, rewardedByDay } = this.adminDailyBuckets(
+      range,
+      cohort,
+      qualified,
+    );
+    const purchasedByDay = new Map(days.map((d) => [d, 0]));
+    for (const r of purchasedInRange) {
+      if (!r.inviteePurchasedAt) continue;
+      const k = r.inviteePurchasedAt.toISOString().slice(0, 10);
+      purchasedByDay.set(k, (purchasedByDay.get(k) ?? 0) + 1);
+    }
+
+    const { sourceMap, referrerMap } = this.adminAggregateCohort(cohort);
+    const cohortPurchased = cohort.filter((r) => !!r.inviteePurchasedAt).length;
+    const cohortRewarded = cohort.filter((r) => r.status === 'rewarded').length;
+    const cohortClawed = cohort.filter((r) => r.status === 'capped').length;
+    const statusCount = (status: string) =>
+      allTime.find((s) => s.status === status)?._count._all ?? 0;
+
+    let couponActive = 0;
+    let couponUsed = 0;
+    let couponExpired = 0;
+    for (const r of couponRows) {
+      if (r.couponUsedAt || r.inviteePurchasedAt) {
+        couponUsed += 1;
+        continue;
+      }
+      if (r.couponExpiresAt && r.couponExpiresAt.getTime() <= now.getTime()) {
+        couponExpired += 1;
+      } else if (r.status === 'pending') {
+        couponActive += 1;
+      }
+    }
+
+    return {
+      program: REFERRAL_PROGRAM_INVITE_V2,
+      kpis: {
+        claims: cohort.length,
+        activeReferrers: referrerMap.size,
+        purchased: cohortPurchased,
+        purchaseRate:
+          cohort.length > 0
+            ? Math.round((cohortPurchased / cohort.length) * 1000) / 10
+            : null,
+        rewardedInRange: qualified.filter((r) => r.status === 'rewarded').length,
+        purchasedInRange: purchasedInRange.length,
+        clawedInRange: qualified.filter((r) => r.status === 'capped').length,
+        referrerProDays: cohortRewarded * REFERRER_PRO_DAYS,
+        couponPercent: INVITEE_COUPON_PERCENT,
+        referrerRewardDays: REFERRER_PRO_DAYS,
+        codesIssued,
+        couponActive,
+        couponUsed,
+        couponExpired,
+        clawedAllTime: statusCount('capped'),
+      },
+      allTime: {
+        pending: statusCount('pending'),
+        rewarded: statusCount('rewarded'),
+        capped: statusCount('capped'),
+        couponActive,
+        couponUsed,
+        couponExpired,
+      },
+      daily: days.map((day) => ({
+        day,
+        claims: claimsByDay.get(day) ?? 0,
+        purchased: purchasedByDay.get(day) ?? 0,
+        rewarded: rewardedByDay.get(day) ?? 0,
+      })),
+      bySource: [...sourceMap.values()].sort((a, b) => b.claims - a.claims),
+      topReferrers: [...referrerMap.values()]
+        .sort((a, b) => b.claims - a.claims || b.rewarded - a.rewarded)
+        .slice(0, 30)
+        .map((r) => ({
+          ...r,
+          proDaysEarned: r.rewarded * REFERRER_PRO_DAYS,
+        })),
+      recent: cohort.slice(0, 100).map((r) => ({
+        id: r.id,
+        createdAt: r.createdAt,
+        qualifiedAt: r.qualifiedAt,
+        inviteePurchasedAt: r.inviteePurchasedAt,
+        couponExpiresAt: r.couponExpiresAt,
+        couponUsedAt: r.couponUsedAt,
+        source: r.source,
+        status: r.status,
+        code: r.code,
+        couponState: !r.couponUsedAt &&
+          !r.inviteePurchasedAt &&
+          r.couponExpiresAt &&
+          r.couponExpiresAt.getTime() > now.getTime()
+          ? 'active'
+          : r.couponUsedAt || r.inviteePurchasedAt
+            ? 'used'
+            : r.couponExpiresAt && r.couponExpiresAt.getTime() <= now.getTime()
+              ? 'expired'
+              : 'none',
+        referrer: { id: r.referrerId, ...r.referrer },
+        invitee: { id: r.inviteeId, ...r.invitee },
+      })),
+    };
+  }
+
+  private adminDailyBuckets(
+    range: { from: Date; to: Date },
+    cohort: { createdAt: Date }[],
+    qualified: { status: string; qualifiedAt: Date | null }[],
+  ) {
+    const dayKey = (d: Date) => d.toISOString().slice(0, 10);
+    const days: string[] = [];
+    for (
+      let t = Date.UTC(
+        range.from.getUTCFullYear(),
+        range.from.getUTCMonth(),
+        range.from.getUTCDate(),
+      );
+      t <= range.to.getTime();
+      t += 86_400_000
+    ) {
+      days.push(dayKey(new Date(t)));
+    }
+    const claimsByDay = new Map(days.map((d) => [d, 0]));
+    const rewardedByDay = new Map(days.map((d) => [d, 0]));
+    for (const r of cohort) {
+      const k = dayKey(r.createdAt);
+      claimsByDay.set(k, (claimsByDay.get(k) ?? 0) + 1);
+    }
+    for (const r of qualified) {
+      if (r.status !== 'rewarded' || !r.qualifiedAt) continue;
+      const k = dayKey(r.qualifiedAt);
+      rewardedByDay.set(k, (rewardedByDay.get(k) ?? 0) + 1);
+    }
+    return { days, claimsByDay, rewardedByDay };
+  }
+
+  private adminAggregateCohort(
+    cohort: {
+      source: string;
+      status: string;
+      referrerId: string;
+      code: string;
+      referrer: {
+        displayName: string | null;
+        email: string | null;
+        avatarId: string | null;
+      };
+    }[],
+  ) {
+    const sourceMap = new Map<
+      string,
+      { source: string; claims: number; rewarded: number; capped: number }
+    >();
+    const referrerMap = new Map<
+      string,
+      {
+        referrerId: string;
+        displayName: string | null;
+        email: string | null;
+        avatarId: string | null;
+        code: string;
+        claims: number;
+        rewarded: number;
+        capped: number;
+      }
+    >();
+    for (const r of cohort) {
+      const s = sourceMap.get(r.source) ?? {
+        source: r.source,
+        claims: 0,
+        rewarded: 0,
+        capped: 0,
+      };
+      s.claims += 1;
+      if (r.status === 'rewarded') s.rewarded += 1;
+      if (r.status === 'capped') s.capped += 1;
+      sourceMap.set(r.source, s);
+
+      const ref = referrerMap.get(r.referrerId) ?? {
+        referrerId: r.referrerId,
+        displayName: r.referrer.displayName,
+        email: r.referrer.email,
+        avatarId: r.referrer.avatarId,
+        code: r.code,
+        claims: 0,
+        rewarded: 0,
+        capped: 0,
+      };
+      ref.claims += 1;
+      if (r.status === 'rewarded') ref.rewarded += 1;
+      if (r.status === 'capped') ref.capped += 1;
+      referrerMap.set(r.referrerId, ref);
+    }
+    return { sourceMap, referrerMap };
   }
 
   // ── Invite V2 (coupon + Pro days) ─────────────────────────────────────
