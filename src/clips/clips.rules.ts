@@ -13,6 +13,28 @@ export const CLIP_CATEGORY_TITLES: Record<string, { en: string; th: string }> = 
   news: { en: 'Easy news', th: 'ข่าวง่าย ๆ' },
 };
 
+
+/** Videos tab "Browse by Channel" tiles (derived from the clip's credit line). */
+export const CLIP_CHANNELS = ['bbc', 'voa', 'listening_time', 'banana'] as const;
+export type ClipChannel = (typeof CLIP_CHANNELS)[number];
+
+export const CLIP_CHANNEL_TITLES: Record<ClipChannel, { en: string; th: string }> = {
+  bbc: { en: 'BBC Learning English', th: 'BBC Learning English' },
+  voa: { en: 'VOA Learning English', th: 'VOA Learning English' },
+  listening_time: { en: 'Listening Time', th: 'Listening Time' },
+  banana: { en: 'Banana Originals', th: 'Banana Originals' },
+};
+
+/** "YouTube · BBC Learning English" → bbc · VOA credit → voa · no credit → banana. */
+export function clipChannelOf(credit: string | null | undefined): ClipChannel | null {
+  const c = (credit ?? '').trim().toLowerCase();
+  if (!c || c.includes('banana')) return 'banana';
+  if (c.includes('bbc')) return 'bbc';
+  if (c.includes('voa') || c.includes('voice of america')) return 'voa';
+  if (c.includes('listening time')) return 'listening_time';
+  return null;
+}
+
 export function isClipMode(v: unknown): v is ClipMode {
   return typeof v === 'string' && (CLIP_MODES as readonly string[]).includes(v);
 }
