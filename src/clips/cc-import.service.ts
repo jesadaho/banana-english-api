@@ -106,10 +106,21 @@ export class CcImportService {
       ? await this.prisma.clip.update({ where: { id: existing.id }, data })
       : await this.prisma.clip.create({ data });
     await this.clips.adminSaveSentences(clip.id, { sentences: timed });
-    try {
-      await this.clips.adminPrepare(clip.id, { force: true });
-    } catch (err) {
-      this.logger.warn(`CC prepare failed for ${clip.id}: ${String(err)}`);
+    let prepared = false;
+    for (let attempt = 1; attempt <= 3; attempt++) {
+      try {
+        await this.clips.adminPrepare(clip.id, { force: true });
+        prepared = true;
+        break;
+      } catch (err) {
+        this.logger.warn(
+          `CC prepare failed for ${clip.id} (attempt ${attempt}/3): ${String(err)}`,
+        );
+        if (attempt < 3) await new Promise((r) => setTimeout(r, 1500 * attempt));
+      }
+    }
+    if (!prepared) {
+      this.logger.warn(`CC prepare gave up for ${clip.id}; Thai backfill will retry on boot`);
     }
     if (body.publish === true) {
       try {

@@ -5,6 +5,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { CcImportService } from './cc-import.service';
 import { MAX_LINE_WORDS } from './cc-import.rules';
 import { guessClipCategory } from './clips.rules';
+import { ClipsService } from './clips.service';
 
 type ClipMeta = {
   id?: string;
@@ -44,6 +45,7 @@ export class ClipsSeedService implements OnModuleInit {
   constructor(
     private readonly prisma: PrismaService,
     private readonly cc: CcImportService,
+    private readonly clips: ClipsService,
   ) {}
 
   onModuleInit() {
@@ -58,6 +60,7 @@ export class ClipsSeedService implements OnModuleInit {
     }
     if (process.env.CLIPS_CC_AUTO_IMPORT === '0') {
       this.logger.log('Clips seed skipped (CLIPS_CC_AUTO_IMPORT=0)');
+      await this.backfillMissingThai();
       return;
     }
 
@@ -87,40 +90,75 @@ export class ClipsSeedService implements OnModuleInit {
 
     if (!refreshAll && missing.length === 0) {
       this.logger.log(
-        `Clips seed skipped (${count} clip(s), ${allPacks.length} pack(s) on disk, nothing new)`,
+        `Clips seed import skipped (${count} clip(s), ${allPacks.length} pack(s) on disk, nothing new)`,
       );
-      return;
+    } else {
+      const packs = refreshAll ? allPacks : missing;
+      const replace = refreshAll;
+      this.logger.log(
+        `Clips seed starting: ${packs.length} pack(s)${
+          replace ? ' (replace: long lines / caption notes)' : ' (new only)'
+        } from ${root}`,
+      );
+      let ok = 0;
+      let failed = 0;
+      for (const p of packs) {
+        try {
+          await this.cc.importCaptions({
+            youtube: p.meta.id,
+            title: p.meta.title,
+            channel: p.meta.channel,
+            level: p.meta.level,
+            category: guessClipCategory(p.meta.title ?? '', p.meta.category),
+            captions: readFileSync(p.srtPath, 'utf8'),
+            publish: true,
+            replace,
+          });
+          ok += 1;
+          this.logger.log(`Clips seed ok ${p.meta.id}`);
+        } catch (err) {
+          failed += 1;
+          this.logger.warn(`Clips seed fail ${p.meta.id}: ${String(err)}`);
+        }
+      }
+      this.logger.log(`Clips seed done: ok=${ok} failed=${failed}`);
     }
 
-    const packs = refreshAll ? allPacks : missing;
-    const replace = refreshAll;
-    this.logger.log(
-      `Clips seed starting: ${packs.length} pack(s)${
-        replace ? ' (replace: long lines / caption notes)' : ' (new only)'
-      } from ${root}`,
-    );
+    // Gemini prepare often fails under bulk import rate limits; retry empty Thai.
+    await this.backfillMissingThai();
+  }
+
+  /** Re-run Gemini Thai/dictation for clips that still have blank textTh. */
+  private async backfillMissingThai() {
+    const blank = await this.prisma.clipSentence.findMany({
+      where: { textTh: '' },
+      select: { clipId: true },
+      distinct: ['clipId'],
+    });
+    if (blank.length === 0) {
+      this.logger.log('Clips Thai backfill skipped (none missing)');
+      return;
+    }
+    this.logger.log(`Clips Thai backfill starting: ${blank.length} clip(s)`);
     let ok = 0;
     let failed = 0;
-    for (const p of packs) {
+    for (const { clipId } of blank) {
       try {
-        await this.cc.importCaptions({
-          youtube: p.meta.id,
-          title: p.meta.title,
-          channel: p.meta.channel,
-          level: p.meta.level,
-          category: guessClipCategory(p.meta.title ?? '', p.meta.category),
-          captions: readFileSync(p.srtPath, 'utf8'),
-          publish: true,
-          replace,
+        await this.clips.adminPrepare(clipId, {});
+        const left = await this.prisma.clipSentence.count({
+          where: { clipId, textTh: '' },
         });
-        ok += 1;
-        this.logger.log(`Clips seed ok ${p.meta.id}`);
+        if (left === 0) ok += 1;
+        else {
+          failed += 1;
+          this.logger.warn(`Clips Thai backfill still blank ${clipId}: ${left} line(s)`);
+        }
       } catch (err) {
         failed += 1;
-        this.logger.warn(`Clips seed fail ${p.meta.id}: ${String(err)}`);
+        this.logger.warn(`Clips Thai backfill fail ${clipId}: ${String(err)}`);
       }
     }
-    this.logger.log(`Clips seed done: ok=${ok} failed=${failed}`);
+    this.logger.log(`Clips Thai backfill done: ok=${ok} failed=${failed}`);
   }
 
   /** Align stored category ids/titles with the current Clips tab rails. */
