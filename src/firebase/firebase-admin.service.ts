@@ -43,6 +43,33 @@ export class FirebaseAdminService implements OnModuleInit {
     this.logger.log('Firebase Admin ready');
   }
 
+
+  private rcCache: { at: number; values: Record<string, string> } | null = null;
+
+  /**
+   * Server-side read of Firebase Remote Config parameter defaults (the same
+   * console the app reads). Cached 60s. `null` when Firebase is off or the
+   * service account can't read Remote Config.
+   */
+  async getRemoteConfigStrings(): Promise<Record<string, string> | null> {
+    if (!this.enabled) return null;
+    const now = Date.now();
+    if (this.rcCache && now - this.rcCache.at < 60_000) return this.rcCache.values;
+    try {
+      const template = await admin.remoteConfig().getTemplate();
+      const values: Record<string, string> = {};
+      for (const [key, param] of Object.entries(template.parameters ?? {})) {
+        const def = param.defaultValue as { value?: string } | undefined;
+        if (def && typeof def.value === 'string') values[key] = def.value;
+      }
+      this.rcCache = { at: now, values };
+      return values;
+    } catch (err) {
+      this.logger.warn(`Remote Config read failed: ${String(err)}`);
+      return this.rcCache?.values ?? null;
+    }
+  }
+
   isEnabled(): boolean {
     return this.enabled;
   }

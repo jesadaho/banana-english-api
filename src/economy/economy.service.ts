@@ -433,7 +433,8 @@ export class EconomyService {
       | 'listen_up_start'
       | 'story_bites_start'
       | 'info_task_start'
-      | 'word_cards_start' = 'mission_start',
+      | 'word_cards_start'
+      | 'clip_unlock' = 'mission_start',
   ): Promise<User> {
     return this.prisma.$transaction(async (tx) => {
       const user = await tx.user.findUniqueOrThrow({ where: { id: userId } });
