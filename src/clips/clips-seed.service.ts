@@ -79,6 +79,10 @@ export class ClipsSeedService implements OnModuleInit {
 
     await this.remapCategories();
 
+    // Fill blank Thai first (mirror from Staging, then Gemini) so a long
+    // missing-pack import cannot starve translations for hours.
+    await this.backfillMissingThai();
+
     const count = await this.prisma.clip.count();
     const sentences = await this.prisma.clipSentence.findMany({
       select: { text: true, textTh: true },
@@ -135,10 +139,9 @@ export class ClipsSeedService implements OnModuleInit {
         }
       }
       this.logger.log(`Clips seed done: ok=${ok} failed=${failed}`);
+      // New imports may still lack Thai if Gemini failed — mirror/retry once more.
+      await this.backfillMissingThai();
     }
-
-    // Gemini prepare often fails under bulk import rate limits; retry empty Thai.
-    await this.backfillMissingThai();
   }
 
   /**
