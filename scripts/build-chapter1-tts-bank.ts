@@ -3,6 +3,7 @@
  *
  *   npx tsx scripts/build-chapter1-tts-bank.ts
  *   npx tsx scripts/build-chapter1-tts-bank.ts --only-phonics   # locked Phonics lines
+ *   npx tsx scripts/build-chapter1-tts-bank.ts --only-daily-speak
  *
  * Resumes from src/tts/tts-bank.json. Skips lines that already have a URL.
  */
@@ -30,8 +31,15 @@ import { synthesisText } from '../src/tts/tts-speech-text';
 import { getTurn2Script } from '../src/topics/intro_script';
 import { V7_LEGACY_FLOWS } from '../src/lessons/foundation-v7-legacy-flows';
 import { collectPlacementBankLines } from '../src/placement/placement.runtime';
+import { collectInteractiveScenarioBankLines } from '../src/interactive-scenario/interactive-scenario.runtime';
+import {
+  getInteractiveScenario,
+  listInteractiveScenarioIds,
+} from '../src/interactive-scenario/interactive-scenario.data';
+import { teacherScenarioVoice } from '../src/tts/conversation-voices';
 import { collectPronunciationBankLines } from '../src/training/scripts/pronunciation.script';
 import { collectPhonicsLockedBankLines } from '../src/training/scripts/phonics-locked.script';
+import { collectDailySpeakBankLines } from '../src/daily-speak/daily-speak-feedback.service';
 
 /** Repeated live TTS lines picked from the admin Live TTS export. */
 function liveExtraLines(): string[] {
@@ -329,6 +337,16 @@ function writeBank(bank: TtsBankFile) {
   );
 }
 
+/** Banana-voice interactive scenarios only. John / Minnie / Nina use the character bank. */
+function scenarioBankLines(): string[] {
+  return collectInteractiveScenarioBankLines(
+    listInteractiveScenarioIds()
+      .map((id) => getInteractiveScenario(id))
+      .filter((s): s is NonNullable<typeof s> => s != null)
+      .filter((s) => !teacherScenarioVoice(s.ttsVoiceProfile ?? s.teacher)),
+  );
+}
+
 async function main() {
   if (process.argv.includes('--conversation-a1')) {
     throw new Error(
@@ -342,20 +360,28 @@ async function main() {
         ? liveExtraLines()
       : process.argv.includes('--only-placement')
         ? collectPlacementBankLines()
+      : process.argv.includes('--only-scenario')
+        ? scenarioBankLines()
         : process.argv.includes('--only-pronunciation')
           ? collectPronunciationBankLines()
         : process.argv.includes('--only-phonics')
           ? collectPhonicsLockedBankLines()
+        : process.argv.includes('--only-daily-speak')
+          ? collectDailySpeakBankLines()
+        : process.argv.includes('--only-a2')
+          ? await collectAdventureA2BankLines(1, 32)
         : [
             ...collectChapter1BankLines(),
             ...(await collectFoundationBankLines(2, 16)),
-            ...(await collectAdventureA2BankLines(1, 16)),
+            ...(await collectAdventureA2BankLines(1, 32)),
             getTurn2Script().textEn,
             ...extraBankLines(),
             ...liveExtraLines(),
             ...collectPlacementBankLines(),
+            ...scenarioBankLines(),
             ...collectPronunciationBankLines(),
             ...collectPhonicsLockedBankLines(),
+            ...collectDailySpeakBankLines(),
           ]
     ).map((line) => ttsBankKey(line)),
   );
