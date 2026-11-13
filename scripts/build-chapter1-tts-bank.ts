@@ -5,7 +5,8 @@
  *   npx tsx scripts/build-chapter1-tts-bank.ts --only-phonics   # locked Phonics lines
  *   npx tsx scripts/build-chapter1-tts-bank.ts --only-daily-speak
  *
- * Resumes from src/tts/tts-bank.json. Skips lines that already have a URL.
+ * Resumes from src/tts/tts-bank.json. Skips lines that already have a URL
+ * (exact key, or the same clip after emoji / trailing-punct folding).
  */
 import { createSign, randomUUID } from 'node:crypto';
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -22,7 +23,9 @@ import {
   TTS_BANK_MODEL,
   TTS_BANK_PROMPT,
   TTS_BANK_VOICE,
+  lookupTtsBankUrl,
   ttsBankKey,
+  ttsBankLookupKey,
   ttsBankObjectPath,
   type TtsBankFile,
 } from '../src/tts/tts-bank';
@@ -389,11 +392,18 @@ async function main() {
   const bank = readBank();
   bank.model = TTS_BANK_MODEL;
   bank.voice = TTS_BANK_VOICE;
+  /** Same folding the app uses at play time — reuse clips when only emoji/punct differ. */
+  const foldedIndex = new Map<string, string>();
+  for (const [banked, url] of Object.entries(bank.lines)) {
+    const folded = ttsBankLookupKey(banked);
+    if (folded && !foldedIndex.has(folded)) foldedIndex.set(folded, url);
+  }
   const bucketName = storageBucketName();
   const versionMs = Date.now();
   let token = await mintAccessToken();
   let mintedAt = Date.now();
   let created = 0;
+  let reused = 0;
 
   async function freshToken(): Promise<string> {
     if (Date.now() - mintedAt > 45 * 60 * 1000) {
@@ -428,6 +438,17 @@ async function main() {
       console.log(`[${i + 1}/${lines.length}] skip`);
       continue;
     }
+    const foldedHit = lookupTtsBankUrl(bank.lines, spoken, null, foldedIndex);
+    if (foldedHit) {
+      // Alias the new exact wording to the existing clip (emoji-only / punct tweaks).
+      bank.lines[key] = foldedHit;
+      const folded = ttsBankLookupKey(key);
+      if (folded && !foldedIndex.has(folded)) foldedIndex.set(folded, foldedHit);
+      writeBank(bank);
+      reused++;
+      console.log(`[${i + 1}/${lines.length}] reuse`);
+      continue;
+    }
     const text = synthesisText(spoken);
     const prompt = (BARE_PRAISE_LINES as readonly string[]).includes(spoken)
       ? null
@@ -454,13 +475,18 @@ async function main() {
     }
     const uploaded = await uploadWithAdmin(bucketName, objectPath, audio);
     if (!uploaded) await uploadWithCliToken(bucketName, objectPath, audio);
-    bank.lines[key] = publicHeroUrl(bucketName, objectPath, versionMs);
+    const url = publicHeroUrl(bucketName, objectPath, versionMs);
+    bank.lines[key] = url;
+    const folded = ttsBankLookupKey(key);
+    if (folded && !foldedIndex.has(folded)) foldedIndex.set(folded, url);
     writeBank(bank);
     created++;
     console.log(`[${i + 1}/${lines.length}] ${audio.length} bytes`);
   }
 
-  console.log(`done ${Object.keys(bank.lines).length} lines (${created} new)`);
+  console.log(
+    `done ${Object.keys(bank.lines).length} lines (${created} new, ${reused} reused)`,
+  );
 }
 
 main().catch((err) => {
