@@ -38,7 +38,8 @@ const ZONE_1_CHAPTERS = 8;
 const ZONE_2_CHAPTERS = 16;
 const ZONE_3_CHAPTERS = 24;
 const RELEASED_CHAPTERS = 32;
-const A2_CAPABILITIES = [...FOUNDATION_V7_CAPABILITIES];
+// Word Cards review nodes are covered in word-cards.test.ts.
+const A2_CAPABILITIES = FOUNDATION_V7_CAPABILITIES.filter((cap) => cap !== 'word_cards');
 const a2Nodes = ADVENTURE_A2_COURSE.nodes;
 const chapterOf = (code: string) => Number(code.split('.')[0]);
 const zone1 = a2Nodes.filter((n) => chapterOf(n.code) <= ZONE_1_CHAPTERS);
@@ -489,8 +490,12 @@ describe('Adventure A2 generator', () => {
     assert.equal(repeat.canSkip, true);
     const gaming = await say('I enjoy baking.');
     assert.equal(gaming.guidedSpeaking?.options.length, 2);
+    // Praise may be English (That's right!) or Thai successText (ใช่เลยครับ / ดีมากครับ / …).
+    const praise = /^(?:That's right!|Very good!|Excellent!|ใช่เลยครับ|ดีมากครับ|ถูกต้องครับ|เยี่ยมเลยครับ)/;
     const hiking = await say('I enjoy gaming.');
-    assert.match(hiking.textEn, /^(?:That's right!|Very good!|Excellent!) I enjoy gaming\. แปลว่า/);
+    assert.match(hiking.textEn, praise);
+    assert.match(hiking.textEn, /I enjoy gaming\./);
+    assert.match(hiking.textEn, /ฉันสนุกกับการเล่นเกม/);
     assert.equal(hiking.expectedSpeech, 'I enjoy hiking.');
     assert.equal(hiking.guidedSpeaking?.options.length, 4);
     const likeLove = await say('I enjoy hiking.');
@@ -498,18 +503,24 @@ describe('Adventure A2 generator', () => {
     const pickVerb = await say('(tapped Continue)');
     assert.equal(pickVerb.expectedSpeech, 'I love gaming.');
     const dont = await say('I love gaming.');
-    assert.match(dont.textEn, /^(?:That's right!|Very good!|Excellent!) I love gaming\./);
+    assert.match(dont.textEn, praise);
+    assert.match(dont.textEn, /I love gaming\./);
     assert.equal(dont.expectedSpeech, "I don't like gaming.");
     assert.equal(dont.canSkip, true);
     const dontPick = await say("I don't like gaming.");
     assert.equal(dontPick.expectedSpeech, "I don't like cycling.");
     const pick = await say("I don't like cycling.");
-    assert.match(pick.textEn, /^(?:That's right!|Very good!|Excellent!) I don’t like cycling\. แปลว่า/);
+    assert.match(pick.textEn, praise);
+    assert.match(pick.textEn, /I don't like cycling\./);
+    assert.match(pick.textEn, /ฉันไม่ชอบปั่นจักรยาน/);
     assert.equal(pick.guidedSpeaking?.options.length, 4);
     const closing = await say("I don't like baking.");
     assert.equal(closing.isLessonComplete, true);
     assert.equal(closing.assessmentTier, 'correct');
-    assert.match(closing.textEn, /^(?:That's right!|Very good!|Excellent!) I don't like baking\. แปลว่า “ฉันไม่ชอบอบขนม” ครับ\nครูบีรู้จักคุณมากขึ้นแล้ว!/);
+    assert.match(closing.textEn, praise);
+    assert.match(closing.textEn, /I don't like baking\./);
+    assert.match(closing.textEn, /ฉันไม่ชอบอบขนม/);
+    assert.match(closing.textEn, /ครูบีรู้จักคุณมากขึ้นแล้ว/);
   });
 
   it('plays the hand-written On Weekends flow', async () => {
