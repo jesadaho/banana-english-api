@@ -413,20 +413,46 @@ async function main() {
     return token;
   }
 
+  function isTransientNetworkError(message: string): boolean {
+    return (
+      message.includes('fetch failed') ||
+      message.includes('ECONNRESET') ||
+      message.includes('ETIMEDOUT') ||
+      message.includes('other side closed') ||
+      message.includes('socket hang up') ||
+      /\bTTS failed \((429|500|502|503|504)\)/.test(message)
+    );
+  }
+
   async function synthesizeFresh(
     text: string,
     prompt: string | null,
     model: string,
   ): Promise<Buffer> {
-    try {
-      return await synthesizeMp3(await freshToken(), text, prompt, model);
-    } catch (err) {
-      const message = err instanceof Error ? err.message : String(err);
-      if (!message.includes('TTS failed (401)')) throw err;
-      token = await mintAccessToken();
-      mintedAt = Date.now();
-      return synthesizeMp3(token, text, prompt, model);
+    const maxAttempts = 6;
+    let lastErr: unknown;
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+      try {
+        return await synthesizeMp3(await freshToken(), text, prompt, model);
+      } catch (err) {
+        lastErr = err;
+        const message = err instanceof Error ? err.message : String(err);
+        if (message.includes('TTS failed (401)')) {
+          token = await mintAccessToken();
+          mintedAt = Date.now();
+          continue;
+        }
+        if (!isTransientNetworkError(message) || attempt === maxAttempts) {
+          throw err;
+        }
+        const waitMs = attempt * 15_000;
+        console.warn(
+          `transient TTS error (attempt ${attempt}/${maxAttempts}), wait ${waitMs / 1000}s: ${message.slice(0, 120)}`,
+        );
+        await new Promise((r) => setTimeout(r, waitMs));
+      }
     }
+    throw lastErr instanceof Error ? lastErr : new Error(String(lastErr));
   }
 
   for (let i = 0; i < lines.length; i++) {
