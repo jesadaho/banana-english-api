@@ -19,6 +19,13 @@ describe('gemini billing errors', () => {
     assert.equal(isGeminiBillingError(new Error('Gemini API failed (503): busy')), false);
   });
 
+  it('does not treat bare 429 RESOURCE_EXHAUSTED as billing', () => {
+    const rateLimited = `Gemini API failed (429): {
+  "error": { "code": 429, "message": "Resource exhausted", "status": "RESOURCE_EXHAUSTED" }
+}`;
+    assert.equal(isGeminiBillingError(new Error(rateLimited)), false);
+  });
+
   it('does not leak the 402 payload to learners', () => {
     const message = formatAiServiceUserMessage(new Error(prepaid));
     assert.equal(message.includes('402'), false);
