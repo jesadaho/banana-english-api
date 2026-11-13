@@ -38,7 +38,13 @@ import { isFoundationV6RewardGameId } from '../learn-path/foundation-v6-path.dat
 import { RecentLearnersService } from '../recent-learners/recent-learners.service';
 import { isPhonicsNodeId, PhonicsService } from '../phonics/phonics.service';
 import { EmojiSpeakService } from '../emoji-speak/emoji-speak.service';
-import { canonicalFoundationV7RewardId, isFoundationV7EmojiPool, wordCardsPoolById } from '../learn-path/foundation-v7-path.data';
+import {
+  canonicalFoundationV7RewardId,
+  isFoundationV7EmojiPool,
+  listenDrillPoolById,
+  wordCardsPoolById,
+} from '../learn-path/foundation-v7-path.data';
+import { withListenDrillAudio } from '../learn-path/listen-drill.audio';
 import {
   isNewWordsPoolId,
   isValidNewWordsPack,
@@ -159,6 +165,19 @@ export class MiniGamesController {
     const pool = id ? wordCardsPoolById(id) : undefined;
     if (!pool) throw new BadRequestException(`Unknown Word Cards pack: ${id}`);
     return { poolId: id, chapterId: pool.chapterId, items: pool.items };
+  }
+
+  /** Listen Up (easy) chapter drill: free, sentences from the chapter + its conversation. */
+  @Get('listen-drill/:poolId/deal')
+  dealListenDrillPack(@Param('poolId') poolId: string) {
+    const id = poolId?.trim();
+    const pool = id ? listenDrillPoolById(id) : undefined;
+    if (!pool) throw new BadRequestException(`Unknown Listen Up drill: ${id}`);
+    return {
+      poolId: id,
+      chapterId: pool.chapterId,
+      items: withListenDrillAudio(pool.chapterId, pool.items),
+    };
   }
 
   /** Games hub always costs. Path review: first play costs, replay is free. */

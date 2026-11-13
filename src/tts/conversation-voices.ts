@@ -41,6 +41,13 @@ const VOICES: Record<string, Omit<ConversationVoice, 'speaker'>> = {
   'Teacher Bee': { voice: 'Sadachbia', prompt: characterPrompt('Teacher Bee') },
 };
 
+/** A named character's conversation voice (Max, May, Mali, John, Minnie…). */
+export function characterVoice(speaker: string | null | undefined): ConversationVoice | null {
+  const name = speaker?.trim();
+  const voice = name ? VOICES[name] : undefined;
+  return name && voice ? { speaker: name, ...voice } : null;
+}
+
 /** Speaker for each conversation currently on the Foundation or A2 path. */
 const SPEAKERS: Record<string, string> = {
   foundation_first_conversation: 'Max',

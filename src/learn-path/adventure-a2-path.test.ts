@@ -39,7 +39,9 @@ const ZONE_2_CHAPTERS = 16;
 const ZONE_3_CHAPTERS = 24;
 const RELEASED_CHAPTERS = 32;
 // Word Cards review nodes are covered in word-cards.test.ts.
-const A2_CAPABILITIES = FOUNDATION_V7_CAPABILITIES.filter((cap) => cap !== 'word_cards');
+const A2_CAPABILITIES = FOUNDATION_V7_CAPABILITIES.filter(
+  (cap) => cap !== 'word_cards' && cap !== 'listen_drill',
+);
 const a2Nodes = ADVENTURE_A2_COURSE.nodes;
 const chapterOf = (code: string) => Number(code.split('.')[0]);
 const zone1 = a2Nodes.filter((n) => chapterOf(n.code) <= ZONE_1_CHAPTERS);

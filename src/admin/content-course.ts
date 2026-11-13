@@ -7,6 +7,7 @@ import {
   LEARN_COURSES,
 } from '../learn-path/foundation-v7-path.data';
 import { wordCardsNodeForChapter } from '../learn-path/word-cards.data';
+import { listenDrillNodeForChapter } from '../learn-path/listen-drill.data';
 import { canonicalFoundationV7LessonId } from '../lessons/foundation-v7-lesson-id-aliases';
 import { getLesson } from '../lessons/lessons.data';
 
@@ -119,6 +120,15 @@ function foundationTitles(): Map<string, string> {
       foundationTitleById.set(poolId, review.titleEn);
       foundationTitleById.set(`word_cards:${poolId}`, review.titleEn);
     }
+    for (const chapter of FOUNDATION_V7_CATALOG.chapters) {
+      const drill = listenDrillNodeForChapter(chapter);
+      const poolId = drill?.contentRef.poolId;
+      if (!drill || !poolId) continue;
+      const title = `${drill.titleEn} (easy) · ${chapter.titleEn}`;
+      foundationTitleById.set(drill.id, title);
+      foundationTitleById.set(poolId, title);
+      foundationTitleById.set(`listen_drill:${poolId}`, title);
+    }
   }
   return foundationTitleById;
 }
@@ -140,6 +150,7 @@ export function classifyContentCourse(id: string): ContentCourse {
     trimmed.startsWith('emoji_speak:') ||
     trimmed.startsWith('new_words:') ||
     trimmed.startsWith('word_cards:') ||
+    trimmed.startsWith('listen_drill:') ||
     trimmed.startsWith('skip_quiz:') ||
     trimmed.startsWith('fnd_v2_') ||
     trimmed.startsWith('fnd_v7_') ||

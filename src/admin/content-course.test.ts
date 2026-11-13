@@ -44,6 +44,7 @@ describe('classifyContentCourse', () => {
     );
     assert.equal(classifyContentCourse('skip_quiz:v7_u04'), 'foundation');
     assert.equal(classifyContentCourse('word_cards:word_cards_v7_u04'), 'foundation');
+    assert.equal(classifyContentCourse('listen_drill:listen_drill_v7_u04'), 'foundation');
   });
 
   it('tags stage scores with their chapter', () => {
@@ -79,6 +80,7 @@ describe('classifyContentCourse', () => {
         ['2.3', 3],
         ['2.4', 4],
         ['2.5', 5],
+        ['2.6', 6],
       ],
     );
   });

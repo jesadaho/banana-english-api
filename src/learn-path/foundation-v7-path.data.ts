@@ -2,6 +2,7 @@ import catalogJson from './foundation-v7-path.catalog.json';
 import adventureA2CatalogJson from './adventure-a2-path.catalog.json';
 import { getInteractiveScenario } from '../interactive-scenario/interactive-scenario.data';
 import { wordCardsItemsForChapter, wordCardsNodeForChapter, type WordCardItem } from './word-cards.data';
+import { listenDrillItemsForChapter, listenDrillNodeForChapter, type ListenDrillItem } from './listen-drill.data';
 
 export type FoundationV7NodeType =
   | 'lesson'
@@ -17,7 +18,9 @@ export type FoundationV7NodeType =
   | 'listen_up'
   | 'explain_it'
   /** Generated per chapter (not in the catalog JSON); optional review. */
-  | 'word_cards';
+  | 'word_cards'
+  /** Generated per chapter (authored sentences); optional listening drill. */
+  | 'listen_drill';
 
 /** Old app builds omit newer capabilities, so those nodes stay locked for them. */
 export const FOUNDATION_V7_CAPABILITIES = [
@@ -28,6 +31,7 @@ export const FOUNDATION_V7_CAPABILITIES = [
   'story_bites',
   'explain_it',
   'word_cards',
+  'listen_drill',
 ] as const;
 export type FoundationV7Capability = (typeof FOUNDATION_V7_CAPABILITIES)[number];
 export type FoundationV7ContentRef = {
@@ -185,6 +189,7 @@ export function foundationV7NodeTypeCounts(
     listen_up: 0,
     explain_it: 0,
     word_cards: 0,
+    listen_drill: 0,
   };
   for (const node of course.nodes) result[node.type]++;
   return result;
@@ -199,6 +204,7 @@ const CANONICAL_POOL_TYPES: ReadonlySet<FoundationV7NodeType> = new Set([
   'story_bites',
   'explain_it',
   'word_cards',
+  'listen_drill',
 ]);
 
 function canonicalRewardIdForNode(node: FoundationV7Node): string | null {
@@ -248,6 +254,32 @@ export function wordCardsPoolById(
   poolId: string,
 ): { chapterId: string; items: WordCardItem[] } | undefined {
   return wordCardsPools.get(poolId);
+}
+
+// Listen Up (easy) nodes: authored per chapter, Foundation (A1) only for now.
+export const LISTEN_DRILL_COURSES: readonly LearnCourse[] = [FOUNDATION_V7_COURSE];
+const listenDrillPools = new Map<string, { chapterId: string; items: ListenDrillItem[] }>();
+for (const course of LISTEN_DRILL_COURSES) {
+  for (const chapter of course.catalog.chapters) {
+    const node = listenDrillNodeForChapter(chapter);
+    if (!node?.contentRef.poolId) continue;
+    const canonical = canonicalRewardIdForNode(node);
+    if (!canonical) continue;
+    for (const alias of [node.id, node.contentRef.poolId, canonical]) {
+      rewardAliases.set(alias, canonical);
+    }
+    listenDrillPools.set(node.contentRef.poolId, {
+      chapterId: chapter.id,
+      items: listenDrillItemsForChapter(chapter.id),
+    });
+  }
+}
+
+/** Sentences for a `listen_drill_<chapterId>` pool (Listen Up easy node). */
+export function listenDrillPoolById(
+  poolId: string,
+): { chapterId: string; items: ListenDrillItem[] } | undefined {
+  return listenDrillPools.get(poolId);
 }
 
 rewardAliases.set('fnd_v2_say_first_conversation', 'say_it:fnd_v2_first_conversation');

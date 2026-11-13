@@ -21,7 +21,9 @@ import { EconomyService } from '../economy/economy.service';
 import { Currency } from '@prisma/client';
 
 // Word Cards review nodes are covered in word-cards.test.ts; keep these counts on the catalog nodes.
-const CORE_CAPABILITIES = FOUNDATION_V7_CAPABILITIES.filter((cap) => cap !== 'word_cards');
+const CORE_CAPABILITIES = FOUNDATION_V7_CAPABILITIES.filter(
+  (cap) => cap !== 'word_cards' && cap !== 'listen_drill',
+);
 const all = () => [
   ...toFoundationV7ClientChapters(CORE_CAPABILITIES).flatMap((ch) => ch.items),
 ];
@@ -61,7 +63,7 @@ describe('Foundation V7 catalog and real content', () => {
     assert.equal(finalNode.id, 'v7_finale_n01');
     assert.equal(finalNode.code, '16.13');
     assert.equal(finalNode.type, 'interactive_scenario');
-    assert.deepEqual(foundationV7NodeTypeCounts(), { lesson:46, say_it:38, emoji_speak:15, new_words:31, pronunciation:4, describe_it:14, story_bites:3, conversation:14, info_task:0, interactive_scenario:2, listen_up:0, explain_it:0, word_cards:0 });
+    assert.deepEqual(foundationV7NodeTypeCounts(), { lesson:46, say_it:38, emoji_speak:15, new_words:31, pronunciation:4, describe_it:14, story_bites:3, conversation:14, info_task:0, interactive_scenario:2, listen_up:0, explain_it:0, word_cards:0, listen_drill:0 });
     assert.deepEqual(FOUNDATION_V7_NODES.map(n => n.globalOrder), Array.from({length:167}, (_, i) => i + 1));
     for (let i = 1; i < FOUNDATION_V7_NODES.length; i++) {
       const prev = FOUNDATION_V7_NODES[i - 1];
