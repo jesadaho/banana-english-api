@@ -77,7 +77,8 @@ export type FoundationClientNodeType =
   | 'interactive_scenario'
   | 'listen_up'
   | 'explain_it'
-  | 'word_cards';
+  | 'word_cards'
+  | 'listen_drill';
 
 export type FoundationV5ClientNode = {
   id: string;
@@ -196,7 +197,8 @@ function shippedContentForMappedType(
     type === 'interactive_scenario' ||
     type === 'listen_up' ||
     type === 'explain_it' ||
-    type === 'word_cards'
+    type === 'word_cards' ||
+    type === 'listen_drill'
   ) {
     return undefined;
   }
@@ -834,6 +836,7 @@ export class LearnPathService {
         node.poolId ? `story_bites:${node.poolId}` : null,
         node.poolId ? `explain_it:${node.poolId}` : null,
         node.poolId ? `word_cards:${node.poolId}` : null,
+        node.poolId ? `listen_drill:${node.poolId}` : null,
         node.scenarioId ? `interactive_scenario:${node.scenarioId}` : null,
       ].filter((value): value is string => !!value);
       if (candidates.some((id) => completedMiniGameIds.has(id))) {

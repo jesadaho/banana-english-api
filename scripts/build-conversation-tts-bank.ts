@@ -2,6 +2,7 @@
  * Cache conversation lines in each character's voice.
  *
  *   npx tsx scripts/build-conversation-tts-bank.ts
+ *   npx tsx scripts/build-conversation-tts-bank.ts --only-listen-drill  # A1 Listen Up (easy) NPC lines
  *
  * Resumes from src/tts/conversation-tts-bank.json. A missing clip stays on
  * live TTS; this script never writes the Teacher B bank.
@@ -19,6 +20,7 @@ import {
   conversationClipObjectPath,
   type ConversationTtsBank,
 } from '../src/tts/conversation-tts-bank';
+import { collectListenDrillConversationJobs } from '../src/learn-path/listen-drill.audio';
 import { synthesisText } from '../src/tts/tts-speech-text';
 
 const BANK_PATH = resolve(__dirname, '../src/tts/conversation-tts-bank.json');
@@ -296,6 +298,11 @@ function writeBank(bank: ConversationTtsBank) {
   );
 }
 
+/** Listen Up (easy) lines that are already a conversation line share its clip. */
+function uniqueJobs<T extends { hash: string }>(jobs: T[]): T[] {
+  return [...new Map(jobs.map((job) => [job.hash, job])).values()];
+}
+
 async function main() {
   const speakerFilter = process.argv
     .find((arg) => arg.startsWith('--speaker='))
@@ -304,7 +311,9 @@ async function main() {
   const jobs = (
     process.argv.includes('--only-scenario-teachers')
       ? collectTeacherScenarioBankJobs()
-      : collectConversationBankJobs()
+      : process.argv.includes('--only-listen-drill')
+        ? collectListenDrillConversationJobs()
+        : uniqueJobs([...collectConversationBankJobs(), ...collectListenDrillConversationJobs()])
   ).filter((job) => !speakerFilter || job.voice.speaker === speakerFilter);
   const bank = readBank();
   const bucketName = storageBucketName();

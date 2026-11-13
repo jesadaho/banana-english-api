@@ -60,6 +60,7 @@ export function inferMiniGameScoreKind(gameId: string): string {
   if (gameId.startsWith('story_bites:')) return 'story_bites';
   if (gameId.startsWith('info_task:')) return 'info_task';
   if (gameId.startsWith('word_cards:')) return 'word_cards';
+  if (gameId.startsWith('listen_drill:')) return 'listen_drill';
   if (gameId.startsWith('skip_quiz:')) return 'skip_quiz';
   if (gameId.startsWith('speak_challenge')) return 'speak_challenge';
   if (gameId.startsWith('word_choice')) return 'word_choice';

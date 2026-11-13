@@ -42,10 +42,11 @@ describe('Word Cards review nodes', () => {
     assert.equal(review.countsTowardProgress, false);
     assert.equal(review.optional, true);
     assert.equal(review.comingSoon, false);
-    const idx = ch.items.indexOf(review);
-    assert.equal(ch.items[idx + 1]?.nodeType, 'conversation');
+    // Only the optional Listen Up drill may sit between the review and the conversation.
+    const after = ch.items.slice(ch.items.indexOf(review) + 1).filter((n) => n.nodeType !== 'listen_drill');
+    assert.equal(after[0]?.nodeType, 'conversation');
     // The review never gates the conversation after it.
-    assert.equal(ch.items[idx + 1].unlockAfterNodeIds.includes(review.id), false);
+    assert.equal(after[0].unlockAfterNodeIds.includes(review.id), false);
     assert.equal(
       without.flatMap((c) => c.items).some((n) => n.nodeType === 'word_cards'),
       false,

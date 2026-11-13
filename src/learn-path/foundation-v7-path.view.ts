@@ -17,7 +17,10 @@ import {
   type LearnCourse,
   wordCardsPoolById,
   WORD_CARDS_COURSES,
+  listenDrillPoolById,
+  LISTEN_DRILL_COURSES,
 } from './foundation-v7-path.data';
+import { LISTEN_DRILL_MIN_ITEMS, listenDrillInsertIndex, listenDrillNodeForChapter } from './listen-drill.data';
 import { WORD_CARDS_MIN_WORDS, wordCardsInsertIndex, wordCardsNodeForChapter } from './word-cards.data';
 import { conversationCutsceneUrl } from './conversation-cutscenes';
 import type { FoundationV5ClientNode } from './learn-path.service';
@@ -74,6 +77,7 @@ const TYPE_CAPABILITY: Partial<Record<FoundationV7Node['type'], FoundationV7Capa
   story_bites: 'story_bites',
   explain_it: 'explain_it',
   word_cards: 'word_cards',
+  listen_drill: 'listen_drill',
 };
 
 const POOL_GATED_TYPES: ReadonlySet<FoundationV7Node['type']> = new Set([
@@ -214,6 +218,11 @@ export function hasFoundationV7Content(node: FoundationV7Node): boolean {
         ref.poolId &&
           (wordCardsPoolById(ref.poolId)?.items.length ?? 0) >= WORD_CARDS_MIN_WORDS,
       );
+    case 'listen_drill':
+      return Boolean(
+        ref.poolId &&
+          (listenDrillPoolById(ref.poolId)?.items.length ?? 0) >= LISTEN_DRILL_MIN_ITEMS,
+      );
     default:
       return false;
   }
@@ -249,7 +258,7 @@ export function toFoundationV7ClientChapters(
       ...(chapter.zone !== undefined ? { zone: chapter.zone } : {}),
       items: withWordCards(chapter, capabilities, course).map((node): FoundationV7ClientNode => {
         const mapped = mapClientNode(node, previousPlayableId, context);
-        if (node.type === 'word_cards') {
+        if (node.type === 'word_cards' || node.type === 'listen_drill') {
           // Optional review: unlocks with the chapter flow but never gates
           // the next node or counts toward progress.
           return { ...mapped.node, countsTowardProgress: false, optional: true };
@@ -261,18 +270,24 @@ export function toFoundationV7ClientChapters(
   });
 }
 
-/** Chapter items plus the generated Word Cards review (new clients only). */
+/**
+ * Chapter items plus the generated optional nodes (new clients only):
+ * … Word Cards, Listen Up (easy), then the closing conversation.
+ */
 function withWordCards(
   chapter: LearnCourse['catalog']['chapters'][number],
   capabilities: readonly FoundationV7Capability[],
   course: LearnCourse,
 ): FoundationV7Node[] {
-  if (!capabilities.includes('word_cards')) return chapter.items;
-  if (!WORD_CARDS_COURSES.includes(course)) return chapter.items;
-  const review = wordCardsNodeForChapter(chapter);
-  if (!review) return chapter.items;
   const items = [...chapter.items];
-  items.splice(wordCardsInsertIndex(items), 0, review);
+  if (capabilities.includes('word_cards') && WORD_CARDS_COURSES.includes(course)) {
+    const review = wordCardsNodeForChapter(chapter);
+    if (review) items.splice(wordCardsInsertIndex(items), 0, review);
+  }
+  if (capabilities.includes('listen_drill') && LISTEN_DRILL_COURSES.includes(course)) {
+    const drill = listenDrillNodeForChapter(chapter);
+    if (drill) items.splice(listenDrillInsertIndex(items), 0, drill);
+  }
   return items;
 }
 

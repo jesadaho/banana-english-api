@@ -1,0 +1,135 @@
+{
+  "v7_u01": [
+    {"text": "Nice to meet you.", "textTh": "ยินดีที่ได้รู้จัก", "source": "lesson", "speaker": "Max"},
+    {"text": "I'm from Thailand.", "textTh": "ฉันมาจากไทย", "source": "lesson", "speaker": "May"},
+    {"text": "I live in Bangkok.", "textTh": "ฉันอยู่ที่กรุงเทพฯ", "source": "lesson", "speaker": "May"},
+    {"text": "Good morning.", "textTh": "สวัสดีตอนเช้า", "source": "lesson", "speaker": "John"},
+    {"text": "Hi! What is your name?", "textTh": "สวัสดี! คุณชื่ออะไร?", "source": "conversation"},
+    {"text": "Where are you from?", "textTh": "คุณมาจากไหน?", "source": "conversation"}
+  ],
+  "v7_u02": [
+    {"text": "Thank you.", "textTh": "ขอบคุณ", "source": "lesson", "speaker": "Mali"},
+    {"text": "Yes, please.", "textTh": "เอาด้วยครับ/ค่ะ", "source": "lesson", "speaker": "May"},
+    {"text": "Excuse me.", "textTh": "ขออนุญาต / ขอโทษนะ", "source": "lesson", "speaker": "Max"},
+    {"text": "See you tomorrow.", "textTh": "แล้วเจอกันพรุ่งนี้", "source": "lesson", "speaker": "May"},
+    {"text": "Is this your student card?", "textTh": "นี่บัตรนักเรียนของคุณใช่ไหม?", "source": "conversation"},
+    {"text": "Here you are.", "textTh": "นี่ครับ (ยื่นให้)", "source": "conversation"},
+    {"text": "You're welcome. See you tomorrow!", "textTh": "ไม่เป็นไรครับ แล้วเจอกันพรุ่งนี้!", "source": "conversation"}
+  ],
+  "v7_u03": [
+    {"text": "I am ready.", "textTh": "ฉันพร้อมแล้ว", "source": "lesson", "speaker": "May"},
+    {"text": "I am not tired.", "textTh": "ฉันไม่เหนื่อย", "source": "lesson", "speaker": "Max"},
+    {"text": "You are happy.", "textTh": "คุณมีความสุข", "source": "lesson", "speaker": "Minnie"},
+    {"text": "Are you sick?", "textTh": "คุณป่วยไหม?", "source": "lesson", "speaker": "May"},
+    {"text": "Are you hungry?", "textTh": "คุณหิวไหม?", "source": "conversation"},
+    {"text": "I am ready for lunch. Are you ready?", "textTh": "ฉันพร้อมไปกินข้าวกลางวันแล้ว คุณพร้อมไหม?", "source": "conversation"},
+    {"text": "Great! Shall we go?", "textTh": "เยี่ยม! ไปกันไหม?", "source": "conversation"}
+  ],
+  "v7_u04": [
+    {"text": "This is my sister.", "textTh": "นี่คือพี่สาวของฉัน", "source": "lesson", "speaker": "Max"},
+    {"text": "He is my brother.", "textTh": "เขาคือพี่ชายของฉัน", "source": "lesson", "speaker": "May"},
+    {"text": "She is my cousin.", "textTh": "เธอคือลูกพี่ลูกน้องของฉัน", "source": "lesson", "speaker": "Max"},
+    {"text": "He is my uncle.", "textTh": "เขาคือลุงของฉัน", "source": "lesson", "speaker": "May"},
+    {"text": "Who is this?", "textTh": "นี่คือใคร?", "source": "conversation"},
+    {"text": "Your father! Is he a teacher?", "textTh": "พ่อของคุณนี่เอง! เขาเป็นครูไหม?", "source": "conversation"},
+    {"text": "Is she a teacher?", "textTh": "เธอเป็นครูไหม?", "source": "conversation"}
+  ],
+  "v7_u05": [
+    {"text": "It is a key.", "textTh": "นี่คือกุญแจหนึ่งดอก", "source": "lesson", "speaker": "John"},
+    {"text": "It is an apple.", "textTh": "นี่คือแอปเปิลหนึ่งผล", "source": "lesson", "speaker": "John"},
+    {"text": "Three books.", "textTh": "หนังสือสามเล่ม", "source": "lesson", "speaker": "Mali"},
+    {"text": "A bag, please.", "textTh": "ขอกระเป๋าหนึ่งใบครับ/ค่ะ", "source": "lesson", "speaker": "May"},
+    {"text": "An apple, please.", "textTh": "ขอแอปเปิลหนึ่งผลครับ/ค่ะ", "source": "lesson", "speaker": "Max"},
+    {"text": "Two phones.", "textTh": "โทรศัพท์สองเครื่อง", "source": "lesson", "speaker": "Mali"}
+  ],
+  "v7_u06": [
+    {"text": "It is yellow.", "textTh": "มันสีเหลือง", "source": "lesson", "speaker": "May"},
+    {"text": "It is not white.", "textTh": "มันไม่ใช่สีขาว", "source": "lesson", "speaker": "Max"},
+    {"text": "A small bag.", "textTh": "กระเป๋าใบเล็กหนึ่งใบ", "source": "lesson", "speaker": "May"},
+    {"text": "A book and a bag.", "textTh": "หนังสือหนึ่งเล่มและกระเป๋าหนึ่งใบ", "source": "lesson", "speaker": "Max"},
+    {"text": "Red or green?", "textTh": "สีแดงหรือสีเขียว?", "source": "lesson", "speaker": "Mali"},
+    {"text": "Hello! This bag or that bag?", "textTh": "สวัสดี! กระเป๋าใบนี้หรือใบนั้น?", "source": "conversation"}
+  ],
+  "v7_u07": [
+    {"text": "I have a hat.", "textTh": "ฉันมีหมวกหนึ่งใบ", "source": "lesson", "speaker": "May"},
+    {"text": "She has a watch.", "textTh": "เธอมีนาฬิกาข้อมือหนึ่งเรือน", "source": "lesson", "speaker": "Max"},
+    {"text": "He has an umbrella.", "textTh": "เขามีร่มหนึ่งคัน", "source": "lesson", "speaker": "May"},
+    {"text": "That is her bag.", "textTh": "นั่นคือกระเป๋าของเธอ", "source": "lesson", "speaker": "Max"},
+    {"text": "This is my phone.", "textTh": "นี่คือโทรศัพท์ของฉัน", "source": "lesson", "speaker": "May"},
+    {"text": "Hey! Do you have a phone?", "textTh": "เฮ้! คุณมีโทรศัพท์ไหม?", "source": "conversation"}
+  ],
+  "v7_u08": [
+    {"text": "I am twelve years old.", "textTh": "ฉันอายุสิบสองปี", "source": "lesson", "speaker": "Max"},
+    {"text": "She is sixteen years old.", "textTh": "เธออายุสิบหกปี", "source": "lesson", "speaker": "Max"},
+    {"text": "He is eleven.", "textTh": "เขาอายุสิบเอ็ดปี", "source": "lesson", "speaker": "May"},
+    {"text": "I am twenty.", "textTh": "ฉันอายุยี่สิบปี", "source": "lesson", "speaker": "Minnie"},
+    {"text": "Hello! Your name, please?", "textTh": "สวัสดี! ขอชื่อของคุณหน่อย", "source": "conversation"},
+    {"text": "How old are you?", "textTh": "คุณอายุเท่าไหร่?", "source": "conversation"}
+  ],
+  "v7_u09": [
+    {"text": "I work on Monday.", "textTh": "ฉันทำงานวันจันทร์", "source": "lesson", "speaker": "Minnie"},
+    {"text": "The class is on Friday.", "textTh": "คลาสเรียนวันศุกร์", "source": "lesson", "speaker": "John"},
+    {"text": "We meet on Wednesday.", "textTh": "เราเจอกันวันพุธ", "source": "lesson", "speaker": "May"},
+    {"text": "Twenty-five baht.", "textTh": "ยี่สิบห้าบาท", "source": "lesson", "speaker": "Mali"},
+    {"text": "One hundred baht.", "textTh": "หนึ่งร้อยบาท", "source": "lesson", "speaker": "Mali"},
+    {"text": "Hello! How can I help?", "textTh": "สวัสดี! ให้ช่วยอะไรไหม?", "source": "conversation"}
+  ],
+  "v7_u10": [
+    {"text": "I like rice.", "textTh": "ฉันชอบข้าว", "source": "lesson", "speaker": "Max"},
+    {"text": "I do not like tea.", "textTh": "ฉันไม่ชอบชา", "source": "lesson", "speaker": "May"},
+    {"text": "A coffee, please.", "textTh": "ขอกาแฟหนึ่งแก้วครับ/ค่ะ", "source": "lesson", "speaker": "May"},
+    {"text": "Water, please.", "textTh": "ขอน้ำครับ/ค่ะ", "source": "lesson", "speaker": "Max"},
+    {"text": "Hello! Do you like coffee?", "textTh": "สวัสดี! คุณชอบกาแฟไหม?", "source": "conversation"},
+    {"text": "Tea or water?", "textTh": "ชาหรือน้ำ?", "source": "conversation"}
+  ],
+  "v7_u11": [
+    {"text": "I can sing.", "textTh": "ฉันร้องเพลงได้", "source": "lesson", "speaker": "May"},
+    {"text": "I can't dance.", "textTh": "ฉันเต้นไม่เป็น", "source": "lesson", "speaker": "Max"},
+    {"text": "I cannot swim.", "textTh": "ฉันว่ายน้ำไม่เป็น", "source": "lesson", "speaker": "May"},
+    {"text": "Can you draw?", "textTh": "คุณวาดรูปเป็นไหม?", "source": "lesson", "speaker": "Minnie"},
+    {"text": "Can you swim?", "textTh": "คุณว่ายน้ำเป็นไหม?", "source": "conversation"},
+    {"text": "Can you cook?", "textTh": "คุณทำอาหารเป็นไหม?", "source": "conversation"},
+    {"text": "What about you?", "textTh": "แล้วคุณล่ะ?", "source": "conversation"}
+  ],
+  "v7_u12": [
+    {"text": "I study every day.", "textTh": "ฉันเรียนทุกวัน", "source": "lesson", "speaker": "May"},
+    {"text": "He eats at seven.", "textTh": "เขากินข้าวตอนเจ็ดโมง", "source": "lesson", "speaker": "May"},
+    {"text": "Does she work?", "textTh": "เธอทำงานไหม?", "source": "lesson", "speaker": "Max"},
+    {"text": "Do you work every day?", "textTh": "คุณทำงานทุกวันไหม?", "source": "lesson", "speaker": "John"},
+    {"text": "Good morning! What time do you wake up every day?", "textTh": "อรุณสวัสดิ์! คุณตื่นนอนกี่โมงทุกวัน?", "source": "conversation"},
+    {"text": "Do you work on Friday?", "textTh": "คุณทำงานวันศุกร์ไหม?", "source": "conversation"}
+  ],
+  "v7_u13": [
+    {"text": "She is walking.", "textTh": "เธอกำลังเดิน", "source": "lesson", "speaker": "Max"},
+    {"text": "He is not talking.", "textTh": "เขาไม่ได้กำลังพูด", "source": "lesson", "speaker": "Mali"},
+    {"text": "Are they waiting?", "textTh": "พวกเขากำลังรออยู่ไหม?", "source": "lesson", "speaker": "John"},
+    {"text": "Is he reading?", "textTh": "เขากำลังอ่านหนังสืออยู่ไหม?", "source": "lesson", "speaker": "Minnie"},
+    {"text": "Hi! What are you doing now?", "textTh": "สวัสดี! ตอนนี้คุณกำลังทำอะไรอยู่?", "source": "conversation"},
+    {"text": "What is he doing?", "textTh": "เขากำลังทำอะไรอยู่?", "source": "conversation"}
+  ],
+  "v7_u14": [
+    {"text": "What is this?", "textTh": "นี่คืออะไร?", "source": "lesson", "speaker": "Max"},
+    {"text": "Who is she?", "textTh": "เธอคือใคร?", "source": "lesson", "speaker": "Max"},
+    {"text": "Where is my bag?", "textTh": "กระเป๋าของฉันอยู่ที่ไหน?", "source": "lesson", "speaker": "May"},
+    {"text": "Where is Max?", "textTh": "Max อยู่ที่ไหน?", "source": "lesson", "speaker": "May"},
+    {"text": "What is that?", "textTh": "นั่นคืออะไร?", "source": "lesson", "speaker": "Minnie"},
+    {"text": "Hi! Can I help you?", "textTh": "สวัสดี! ให้ช่วยอะไรไหม?", "source": "conversation"}
+  ],
+  "v7_u14_time_numbers": [
+    {"text": "What time is the class?", "textTh": "คลาสเรียนกี่โมง?", "source": "lesson", "speaker": "May"},
+    {"text": "My birthday is in January.", "textTh": "วันเกิดของฉันอยู่ในเดือนมกราคม", "source": "lesson", "speaker": "Max"},
+    {"text": "How much is the bag?", "textTh": "กระเป๋าราคาเท่าไหร่?", "source": "lesson", "speaker": "Max"},
+    {"text": "How many tickets?", "textTh": "กี่ใบ (ตั๋ว)?", "source": "lesson", "speaker": "Mali"},
+    {"text": "The class is at ten.", "textTh": "คลาสเริ่มตอนสิบโมง", "source": "lesson", "speaker": "John"},
+    {"text": "Hi! Can I help you?", "textTh": "สวัสดี! ให้ช่วยอะไรไหม?", "source": "conversation"}
+  ],
+  "v7_u15": [
+    {"text": "There is a table.", "textTh": "มีโต๊ะหนึ่งตัว", "source": "lesson", "speaker": "May"},
+    {"text": "There are two chairs.", "textTh": "มีเก้าอี้สองตัว", "source": "lesson", "speaker": "Max"},
+    {"text": "The phone is on the table.", "textTh": "โทรศัพท์อยู่บนโต๊ะ", "source": "lesson", "speaker": "Mali"},
+    {"text": "The bag is under the bed.", "textTh": "กระเป๋าอยู่ใต้เตียง", "source": "lesson", "speaker": "Minnie"},
+    {"text": "Go straight, then turn left.", "textTh": "ตรงไป แล้วเลี้ยวซ้าย", "source": "lesson", "speaker": "Mali"},
+    {"text": "What do you have in your bag?", "textTh": "ในกระเป๋าของคุณมีอะไรบ้าง?", "source": "conversation"},
+    {"text": "Look at the table. How many apples are there?", "textTh": "ดูที่โต๊ะสิ มีแอปเปิลกี่ลูก?", "source": "conversation"}
+  ]
+}
