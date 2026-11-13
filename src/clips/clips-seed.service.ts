@@ -180,6 +180,16 @@ export class ClipsSeedService implements OnModuleInit {
       select: { clipId: true },
       distinct: ['clipId'],
     });
+    // Avoid burning the shared Gemini chat key on boot (that starves live lessons).
+    // Set CLIPS_THAI_GEMINI_BACKFILL=1 to re-enable prepare-on-boot.
+    const geminiBackfill =
+      (process.env.CLIPS_THAI_GEMINI_BACKFILL ?? '').trim() === '1';
+    if (!geminiBackfill) {
+      this.logger.log(
+        `Clips Thai Gemini backfill skipped (${still.length} clip(s) still blank; mirrored=${mirrored})`,
+      );
+      return;
+    }
     let ok = mirrored;
     let failed = 0;
     for (const { clipId } of still) {

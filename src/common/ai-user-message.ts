@@ -13,13 +13,18 @@ export function isChatDebugRequest(req: {
   return value === '1' || value.toLowerCase() === 'true';
 }
 
+/**
+ * True prepaid / billing exhaustion only.
+ * Do NOT treat bare `RESOURCE_EXHAUSTED` as billing — Google also uses that
+ * status on 429 rate limits, and those should fall through to the next model
+ * or Groq instead of failing every learner at once.
+ */
 export function isGeminiBillingError(err: unknown): boolean {
   const raw = err instanceof Error ? err.message : String(err);
   return (
     /\bGemini API failed \(402\)/.test(raw) ||
     /"code":\s*402/.test(raw) ||
-    raw.includes('prepaid credits are depleted') ||
-    raw.includes('RESOURCE_EXHAUSTED')
+    raw.includes('prepaid credits are depleted')
   );
 }
 

@@ -3563,14 +3563,25 @@ ${text}`,
       );
     }
 
-    if (lastPreview) {
-      throw new Error(
-        `Gemini returned invalid JSON after retries. Last error: ${lastPreview}`,
-      );
+    const exhausted =
+      lastError ??
+      (lastPreview
+        ? new Error(
+            `Gemini returned invalid JSON after retries. Last error: ${lastPreview}`,
+          )
+        : new Error('Gemini call failed'));
+
+    // Capacity / quota / all-models-down: prefer Groq over failing every learner.
+    if (
+      this.groq.isConfigured() &&
+      (isGeminiBillingError(exhausted) ||
+        (exhausted instanceof Error && this.isRetryableModelError(exhausted)) ||
+        String(exhausted).includes('invalid JSON after retries'))
+    ) {
+      return this.generateJsonViaGroqFallback(options, exhausted);
     }
-    throw lastError instanceof Error
-      ? lastError
-      : new Error(String(lastError));
+
+    throw exhausted instanceof Error ? exhausted : new Error(String(exhausted));
   }
 
   private modelsForPolicy(_policy: GeminiRetryPolicy): string[] {
