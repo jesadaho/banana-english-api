@@ -250,6 +250,33 @@ export function liveKitCaptionsAgentName(env = process.env): string | null {
 }
 
 /**
+ * Server → room data packet (reliable) on [topic]. Used for Live Talk game
+ * state; the app filters by topic. `destinationIdentities` empty = everyone.
+ */
+export async function sendLiveKitData(
+  roomName: string,
+  payload: string,
+  topic: string,
+  destinationIdentities: string[] = [],
+  env = process.env,
+  fetchFn: typeof fetch = fetch,
+): Promise<boolean> {
+  const result = await liveKitAdminCall(
+    'SendData',
+    {
+      room: roomName,
+      data: Buffer.from(payload, 'utf8').toString('base64'),
+      kind: 'RELIABLE',
+      destination_identities: destinationIdentities,
+      topic,
+    },
+    env,
+    fetchFn,
+  );
+  return result !== null;
+}
+
+/**
  * Ask LiveKit Cloud to send the captions agent into this room (host-only STT).
  * Best effort: `false` when disabled, unconfigured or the call failed.
  */
