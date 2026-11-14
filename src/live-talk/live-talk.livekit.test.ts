@@ -6,6 +6,7 @@ import {
   isLiveKitAudioTrack,
   liveKitCaptionsAgentName,
   mintLiveKitServiceJwt,
+  sendLiveKitData,
 } from './live-talk.livekit';
 
 describe('deleteLiveKitRoom', () => {
@@ -110,5 +111,28 @@ describe('captions agent dispatch', () => {
     );
     assert.equal(ok, false);
     assert.equal(called, false);
+  });
+});
+
+describe('sendLiveKitData', () => {
+  const env = {
+    LIVEKIT_URL: 'wss://demo.livekit.cloud',
+    LIVEKIT_API_KEY: 'key',
+    LIVEKIT_API_SECRET: 'secret',
+  } as NodeJS.ProcessEnv;
+
+  it('posts SendData with base64 payload, topic and reliable kind', async () => {
+    const calls: Array<{ url: string; body: Record<string, unknown> }> = [];
+    const fetchFn = (async (url: string, init: RequestInit) => {
+      calls.push({ url, body: JSON.parse(String(init.body)) });
+      return new Response('{}', { status: 200 });
+    }) as unknown as typeof fetch;
+    const ok = await sendLiveKitData('lt_room', '{"v":1}', 'lt-game', [], env, fetchFn);
+    assert.equal(ok, true);
+    assert.equal(calls[0].url, 'https://demo.livekit.cloud/twirp/livekit.RoomService/SendData');
+    assert.equal(calls[0].body.room, 'lt_room');
+    assert.equal(calls[0].body.topic, 'lt-game');
+    assert.equal(calls[0].body.kind, 'RELIABLE');
+    assert.equal(Buffer.from(String(calls[0].body.data), 'base64').toString('utf8'), '{"v":1}');
   });
 });
