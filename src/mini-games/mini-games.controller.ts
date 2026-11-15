@@ -100,6 +100,7 @@ function isAllowedMiniGameId(gameId: string): boolean {
 const EMOJI_SPEAK_BANANA_COST = 1;
 const NEW_WORDS_BANANA_COST = 1;
 const LISTEN_UP_BANANA_COST = 1;
+const LISTEN_DRILL_BANANA_COST = 1;
 const STORY_BITES_BANANA_COST = 1;
 const INFO_TASK_BANANA_COST = 1;
 const WORD_CARDS_BANANA_COST = 1;
@@ -178,6 +179,16 @@ export class MiniGamesController {
       chapterId: pool.chapterId,
       items: withListenDrillAudio(pool.chapterId, pool.items),
     };
+  }
+
+  /** Listen Up (easy): 1 banana the first time, path replay free (like Listen Up). */
+  @Post('listen-drill/:poolId/start')
+  startListenDrill(@Req() req: AuthedRequest, @Param('poolId') poolId: string) {
+    const id = poolId?.trim();
+    if (!id || !listenDrillPoolById(id)) {
+      throw new BadRequestException(`Unknown Listen Up drill: ${id}`);
+    }
+    return this.chargeFirstPlay(req.user, id, LISTEN_DRILL_BANANA_COST, 'listen_drill_start');
   }
 
   /** Games hub always costs. Path review: first play costs, replay is free. */
@@ -590,7 +601,7 @@ export class MiniGamesController {
     user: { id: string; timezone: string },
     gameId: string,
     cost: number,
-    source: 'listen_up_start' | 'story_bites_start' | 'info_task_start',
+    source: 'listen_up_start' | 'listen_drill_start' | 'story_bites_start' | 'info_task_start',
   ) {
     const replayFree = await this.economy.hasClaimedMiniGameReward(
       user.id,
@@ -608,6 +619,7 @@ export class MiniGamesController {
       if (bananaCost > 0 && spendRef) {
         const refund = {
           listen_up_start: 'listen_up_start_refund',
+          listen_drill_start: 'listen_drill_start_refund',
           story_bites_start: 'story_bites_start_refund',
           info_task_start: 'info_task_start_refund',
         } as const;
