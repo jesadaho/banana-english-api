@@ -83,7 +83,8 @@ export type FoundationClientNodeType =
   | 'listen_up'
   | 'explain_it'
   | 'word_cards'
-  | 'listen_drill';
+  | 'listen_drill'
+  | 'in_on_at';
 
 export type FoundationV5ClientNode = {
   id: string;
@@ -212,6 +213,7 @@ function miniGameCandidateIds(node: {
     node.poolId ? `explain_it:${node.poolId}` : null,
     node.poolId ? `word_cards:${node.poolId}` : null,
     node.poolId ? `listen_drill:${node.poolId}` : null,
+    node.topicId ? `in_on_at:${node.topicId}` : null,
     node.scenarioId ? `interactive_scenario:${node.scenarioId}` : null,
   ].filter((value): value is string => !!value);
 }
@@ -234,7 +236,8 @@ function shippedContentForMappedType(
     type === 'listen_up' ||
     type === 'explain_it' ||
     type === 'word_cards' ||
-    type === 'listen_drill'
+    type === 'listen_drill' ||
+    type === 'in_on_at'
   ) {
     return undefined;
   }

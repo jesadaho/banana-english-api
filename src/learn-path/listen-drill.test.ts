@@ -15,6 +15,10 @@ import {
 } from './listen-drill.data';
 
 const WITHOUT = FOUNDATION_V7_CAPABILITIES.filter((cap) => cap !== 'listen_drill');
+/** Drill placement vs conversation — exclude later optional nodes that share the same slot. */
+const DRILL_CAPS = FOUNDATION_V7_CAPABILITIES.filter(
+  (cap) => cap !== 'in_on_at' && cap !== 'object_pronouns',
+);
 
 describe('Listen Up (easy) chapter drills', () => {
   it('has authored sentences for every A1 chapter, incl. conversation questions', () => {
@@ -36,7 +40,7 @@ describe('Listen Up (easy) chapter drills', () => {
   });
 
   it('sits right before the conversation, after Word Cards, for new clients only', () => {
-    const withDrill = toFoundationV7ClientChapters(FOUNDATION_V7_CAPABILITIES);
+    const withDrill = toFoundationV7ClientChapters(DRILL_CAPS);
     const without = toFoundationV7ClientChapters(WITHOUT);
     for (let i = 0; i < withDrill.length; i++) {
       const ch = withDrill[i];
@@ -55,7 +59,7 @@ describe('Listen Up (easy) chapter drills', () => {
   });
 
   it('Ch 8 drill comes before the conversation, not between it and the interview', () => {
-    const ch8 = toFoundationV7ClientChapters(FOUNDATION_V7_CAPABILITIES)[7];
+    const ch8 = toFoundationV7ClientChapters(DRILL_CAPS)[7];
     const idx = ch8.items.findIndex((n) => n.nodeType === 'listen_drill');
     assert.equal(ch8.items[idx + 1].id, 'v7_u08n10');
   });

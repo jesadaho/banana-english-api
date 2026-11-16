@@ -19,9 +19,12 @@ import {
   WORD_CARDS_COURSES,
   listenDrillPoolById,
   LISTEN_DRILL_COURSES,
+  IN_ON_AT_COURSES,
 } from './foundation-v7-path.data';
 import { LISTEN_DRILL_MIN_ITEMS, listenDrillInsertIndex, listenDrillNodeForChapter } from './listen-drill.data';
 import { OBJECT_PRONOUN_NODE_IDS, objectPronounNodesForChapter } from './object-pronouns.path';
+import { inOnAtNodeForChapter } from './in-on-at.path';
+import { inOnAtTopicById } from '../in-on-at/in-on-at.data';
 import { WORD_CARDS_MIN_WORDS, wordCardsInsertIndex, wordCardsNodeForChapter } from './word-cards.data';
 import { conversationCutsceneUrl } from './conversation-cutscenes';
 import type { FoundationV5ClientNode } from './learn-path.service';
@@ -79,6 +82,7 @@ const TYPE_CAPABILITY: Partial<Record<FoundationV7Node['type'], FoundationV7Capa
   explain_it: 'explain_it',
   word_cards: 'word_cards',
   listen_drill: 'listen_drill',
+  in_on_at: 'in_on_at',
 };
 
 const POOL_GATED_TYPES: ReadonlySet<FoundationV7Node['type']> = new Set([
@@ -224,6 +228,8 @@ export function hasFoundationV7Content(node: FoundationV7Node): boolean {
         ref.poolId &&
           (listenDrillPoolById(ref.poolId)?.items.length ?? 0) >= LISTEN_DRILL_MIN_ITEMS,
       );
+    case 'in_on_at':
+      return Boolean(ref.topicId && inOnAtTopicById(ref.topicId));
     default:
       return false;
   }
@@ -262,7 +268,8 @@ export function toFoundationV7ClientChapters(
         if (
           node.type === 'word_cards' ||
           node.type === 'listen_drill' ||
-          OBJECT_PRONOUN_NODE_IDS.has(node.id)
+          OBJECT_PRONOUN_NODE_IDS.has(node.id) ||
+          node.type === 'in_on_at'
         ) {
           // Optional review: unlocks with the chapter flow but never gates
           // the next node or counts toward progress.
@@ -277,7 +284,7 @@ export function toFoundationV7ClientChapters(
 
 /**
  * Chapter items plus the generated optional nodes (new clients only):
- * … Word Cards, Listen Up (easy), then the closing conversation.
+ * … Word Cards, Listen Up (easy), in · on · at, then the closing conversation.
  */
 function withWordCards(
   chapter: LearnCourse['catalog']['chapters'][number],
@@ -297,6 +304,11 @@ function withWordCards(
   if (capabilities.includes('listen_drill') && LISTEN_DRILL_COURSES.includes(course)) {
     const drill = listenDrillNodeForChapter(chapter);
     if (drill) items.splice(listenDrillInsertIndex(items), 0, drill);
+  }
+  if (capabilities.includes('in_on_at') && IN_ON_AT_COURSES.includes(course)) {
+    const practice = inOnAtNodeForChapter(chapter);
+    // End of the chapter's lessons, just before the closing talk.
+    if (practice) items.splice(listenDrillInsertIndex(items), 0, practice);
   }
   return items;
 }
