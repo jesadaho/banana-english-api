@@ -3,6 +3,7 @@ import adventureA2CatalogJson from './adventure-a2-path.catalog.json';
 import { getInteractiveScenario } from '../interactive-scenario/interactive-scenario.data';
 import { wordCardsItemsForChapter, wordCardsNodeForChapter, type WordCardItem } from './word-cards.data';
 import { listenDrillItemsForChapter, listenDrillNodeForChapter, type ListenDrillItem } from './listen-drill.data';
+import { inOnAtNodeForChapter } from './in-on-at.path';
 
 export type FoundationV7NodeType =
   | 'lesson'
@@ -20,7 +21,9 @@ export type FoundationV7NodeType =
   /** Generated per chapter (not in the catalog JSON); optional review. */
   | 'word_cards'
   /** Generated per chapter (authored sentences); optional listening drill. */
-  | 'listen_drill';
+  | 'listen_drill'
+  /** Generated for chosen chapters; optional in · on · at practice. */
+  | 'in_on_at';
 
 /** Old app builds omit newer capabilities, so those nodes stay locked for them. */
 export const FOUNDATION_V7_CAPABILITIES = [
@@ -32,6 +35,7 @@ export const FOUNDATION_V7_CAPABILITIES = [
   'explain_it',
   'word_cards',
   'listen_drill',
+  'in_on_at',
 ] as const;
 export type FoundationV7Capability = (typeof FOUNDATION_V7_CAPABILITIES)[number];
 export type FoundationV7ContentRef = {
@@ -190,6 +194,7 @@ export function foundationV7NodeTypeCounts(
     explain_it: 0,
     word_cards: 0,
     listen_drill: 0,
+    in_on_at: 0,
   };
   for (const node of course.nodes) result[node.type]++;
   return result;
@@ -210,6 +215,7 @@ const CANONICAL_POOL_TYPES: ReadonlySet<FoundationV7NodeType> = new Set([
 function canonicalRewardIdForNode(node: FoundationV7Node): string | null {
   const ref = node.contentRef;
   if (node.type === 'say_it' && ref.topicId) return `say_it:${ref.topicId}`;
+  if (node.type === 'in_on_at' && ref.topicId) return `in_on_at:${ref.topicId}`;
   if (node.type === 'interactive_scenario' && ref.scenarioId) {
     return `interactive_scenario:${ref.scenarioId}`;
   }
@@ -280,6 +286,18 @@ export function listenDrillPoolById(
   poolId: string,
 ): { chapterId: string; items: ListenDrillItem[] } | undefined {
   return listenDrillPools.get(poolId);
+}
+
+// in · on · at practice nodes (Foundation only). Completing the topic in the
+// game (`in_on_at:<topic>`) completes the node.
+export const IN_ON_AT_COURSES: readonly LearnCourse[] = [FOUNDATION_V7_COURSE];
+for (const course of IN_ON_AT_COURSES) {
+  for (const chapter of course.catalog.chapters) {
+    const node = inOnAtNodeForChapter(chapter);
+    const canonical = node ? canonicalRewardIdForNode(node) : null;
+    if (!node || !canonical) continue;
+    for (const alias of [node.id, canonical]) rewardAliases.set(alias, canonical);
+  }
 }
 
 rewardAliases.set('fnd_v2_say_first_conversation', 'say_it:fnd_v2_first_conversation');
