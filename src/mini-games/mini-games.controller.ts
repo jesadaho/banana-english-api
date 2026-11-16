@@ -211,12 +211,20 @@ export class MiniGamesController {
 
   /** Listen Up (easy): 1 banana the first time, path replay free (like Listen Up). */
   @Post('listen-drill/:poolId/start')
-  startListenDrill(@Req() req: AuthedRequest, @Param('poolId') poolId: string) {
+  async startListenDrill(@Req() req: AuthedRequest, @Param('poolId') poolId: string) {
     const id = poolId?.trim();
     if (!id || !listenDrillPoolById(id)) {
       throw new BadRequestException(`Unknown Listen Up drill: ${id}`);
     }
-    return this.chargeFirstPlay(req.user.id, id, LISTEN_DRILL_BANANA_COST, 'listen_drill_start');
+    const result = await this.chargeFirstPlay(
+      req.user.id,
+      id,
+      LISTEN_DRILL_BANANA_COST,
+      'listen_drill_start',
+    );
+    // Session-volume ping for every open (free replay included).
+    await this.economy.logPlayActivity(req.user.id, 'listen_drill_play', id);
+    return result;
   }
 
   /** First play of a path review costs 1 banana. Hub packs stay free. */

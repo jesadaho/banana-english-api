@@ -64,6 +64,8 @@ const MINIGAME_TITLES: Record<string, string> = {
   game_story_builder: 'Story Builder',
   game_whats_happen: "What's Happen",
   game_word_cards: 'Word Cards',
+  game_listen_up: 'Listen Up',
+  game_listen_drill: 'Listen Up',
 };
 
 let foundationTitleById: Map<string, string> | null = null;

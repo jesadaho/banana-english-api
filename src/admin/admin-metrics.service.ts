@@ -1063,6 +1063,8 @@ export class AdminMetricsService {
                     'new_words_start',
                     'describe_it_start',
                     'listen_up_start',
+                    'listen_drill_start',
+                    'listen_drill_play',
                     'story_bites_start',
                     'info_task_start',
                     'word_cards_start',
@@ -1094,6 +1096,8 @@ export class AdminMetricsService {
                     'new_words_start',
                     'describe_it_start',
                     'listen_up_start',
+                    'listen_drill_start',
+                    'listen_drill_play',
                     'story_bites_start',
                     'info_task_start',
                     'word_cards_start',
@@ -1513,6 +1517,11 @@ export class AdminMetricsService {
     if (raw.new_words_start) plays.set('game_new_words', raw.new_words_start);
     if (raw.describe_it_start) plays.set('game_describe_it', raw.describe_it_start);
     if (raw.listen_up_start) plays.set('game_listen_up', raw.listen_up_start);
+    const listenDrill =
+      (raw.listen_drill_play ?? 0) > 0
+        ? raw.listen_drill_play
+        : (raw.listen_drill_start ?? 0);
+    if (listenDrill) plays.set('game_listen_drill', listenDrill);
     if (raw.story_bites_start) plays.set('game_story_bites', raw.story_bites_start);
     if (raw.info_task_start) plays.set('game_info_task', raw.info_task_start);
     const wordCards =
@@ -1585,6 +1594,20 @@ export class AdminMetricsService {
       merged.listen_up = {
         count: raw.listen_up_start,
         users: usersBySource.listen_up_start ?? 0,
+      };
+    }
+    const listenDrillPlay = raw.listen_drill_play ?? 0;
+    const listenDrillStart = raw.listen_drill_start ?? 0;
+    // Prefer play pings (free replay included). Fall back to banana starts.
+    const listenDrill =
+      listenDrillPlay > 0 ? listenDrillPlay : listenDrillStart;
+    if (listenDrill > 0) {
+      merged.listen_drill = {
+        count: listenDrill,
+        users:
+          listenDrillPlay > 0
+            ? (usersBySource.listen_drill_play ?? 0)
+            : (usersBySource.listen_drill_start ?? 0),
       };
     }
     if (raw.story_bites_start) {
@@ -1742,6 +1765,7 @@ export class AdminMetricsService {
       'new_words_start',
       'describe_it_start',
       'listen_up_start',
+      'listen_drill_start',
       'story_bites_start',
       'info_task_start',
       'word_cards_start',
