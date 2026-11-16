@@ -66,6 +66,7 @@ type AuthedRequest = { user: User };
 /** Allowed mini-game ids that can claim lesson-sized rewards once. */
 const ALLOWED_MINI_GAME_IDS = new Set([
   'game_explain_it',
+  'game_time_hop',
   'emoji_speak_first_contact',
   'speak_challenge_ee_everyday_life_1',
   'speak_challenge_ee_about_me_social',
@@ -101,6 +102,7 @@ const EMOJI_SPEAK_BANANA_COST = 1;
 const NEW_WORDS_BANANA_COST = 1;
 const LISTEN_UP_BANANA_COST = 1;
 const LISTEN_DRILL_BANANA_COST = 1;
+const TIME_HOP_BANANA_COST = 1;
 const STORY_BITES_BANANA_COST = 1;
 const INFO_TASK_BANANA_COST = 1;
 const WORD_CARDS_BANANA_COST = 1;
@@ -179,6 +181,34 @@ export class MiniGamesController {
       chapterId: pool.chapterId,
       items: withListenDrillAudio(pool.chapterId, pool.items),
     };
+  }
+
+  /** Time Hop (Games hub): 1 banana per round. */
+  @Post('time-hop/start')
+  async startTimeHop(@Req() req: AuthedRequest) {
+    const spendRef = randomUUID();
+    await this.economy.spendBananas(
+      req.user.id,
+      TIME_HOP_BANANA_COST,
+      spendRef,
+      'time_hop_start',
+    );
+    try {
+      await this.recentLearners.markActivity(
+        req.user.id,
+        'minigame',
+        'game_time_hop',
+      );
+    } catch (error) {
+      await this.economy.refundBananas(
+        req.user.id,
+        TIME_HOP_BANANA_COST,
+        spendRef,
+        'time_hop_start_refund',
+      );
+      throw error;
+    }
+    return { ok: true, bananaCost: TIME_HOP_BANANA_COST };
   }
 
   /** Listen Up (easy): 1 banana the first time, path replay free (like Listen Up). */

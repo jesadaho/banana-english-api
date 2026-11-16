@@ -563,6 +563,7 @@ export class EconomyService {
       | 'skip_quiz_start'
       | 'listen_up_start'
       | 'listen_drill_start'
+      | 'time_hop_start'
       | 'story_bites_start'
       | 'info_task_start'
       | 'word_cards_start'
@@ -644,6 +645,7 @@ export class EconomyService {
       | 'skip_quiz_start_refund'
       | 'listen_up_start_refund'
       | 'listen_drill_start_refund'
+      | 'time_hop_start_refund'
       | 'story_bites_start_refund'
       | 'info_task_start_refund'
       | 'word_cards_start_refund',
