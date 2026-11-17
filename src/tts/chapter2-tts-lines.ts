@@ -65,6 +65,11 @@ function addBankable(bucket: Set<string>, text: string, name: string): void {
   bucket.add(key);
 }
 
+function addReply(bucket: Set<string>, reply: TrainingTurnReply, name: string): void {
+  addBankable(bucket, spoken(reply), name);
+  if (reply.praiseText) addBankable(bucket, reply.praiseText, name);
+}
+
 function aiTurn(reply: TrainingTurnReply): ChatTurn {
   return {
     speaker: 'ai',
@@ -130,13 +135,13 @@ export async function collectFoundationBankLines(
   return [...lines].sort((a, b) => a.localeCompare(b));
 }
 
-/** Adventure A2 chapters 1–8 scripted lesson lines. Praise stays inside the sentence. */
+/** Adventure A2 scripted lesson lines. Praise is a separate bare clip (like A1). */
 export async function collectAdventureA2BankLines(
   fromChapter = 1,
   toChapter = 8,
   name = FOUNDATION_PROBE_LEARNER,
 ): Promise<string[]> {
-  const lines = new Set<string>();
+  const lines = new Set<string>(BARE_PRAISE_LINES);
   for (const lessonId of adventureA2LessonIds(fromChapter, toChapter)) {
     await collectA2Lesson(lessonId, name, lines);
   }
@@ -156,7 +161,7 @@ async function collectA2Lesson(
 
   for (const step of steps) {
     const here = await replay(engine, config, name, advances, lines, false);
-    if (advances.length === 0) addBankable(lines, spoken(here.reply), name);
+    if (advances.length === 0) addReply(lines, here.reply, name);
     if (step.kind === 'complete' || here.reply.isLessonComplete) break;
     if (!step.expectsUserSpeech) {
       await say(engine, config, name, here, TAP_TO_CONTINUE_TURN_TEXT, lines);
@@ -187,7 +192,7 @@ async function collectLesson(
 
   for (const step of steps) {
     const here = await replay(engine, config, name, prefix, lines, false);
-    if (prefix.length === 0) addBankable(lines, spoken(here.reply), name);
+    if (prefix.length === 0) addReply(lines, here.reply, name);
     if (step.kind === 'complete' || here.reply.isLessonComplete) break;
     if (!step.expectsUserSpeech) {
       await say(engine, config, name, here, TAP_TO_CONTINUE_TURN_TEXT, lines);
@@ -233,7 +238,7 @@ async function replay(
 ): Promise<Walk> {
   let reply = engine.buildOpening(config, name).reply;
   let turns: ChatTurn[] = [aiTurn(reply)];
-  if (record) addBankable(lines, spoken(reply), name);
+  if (record) addReply(lines, reply, name);
   for (const answer of answers) {
     const next = await say(engine, config, name, { reply, turns }, answer, record ? lines : new Set());
     reply = next.reply;
@@ -261,6 +266,6 @@ async function say(
       sessionProgressTurn: state.reply.v7Step,
     })
   ).reply;
-  addBankable(lines, spoken(reply), name);
+  addReply(lines, reply, name);
   return { reply, turns: [...turns, aiTurn(reply)] };
 }

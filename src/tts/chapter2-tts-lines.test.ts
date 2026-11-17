@@ -34,12 +34,16 @@ describe('chapter 2 TTS bank lines', () => {
     assert.equal(lines.filter((line) => line.startsWith('Good!')).length, 1);
   });
 
-  it('collects A2 chapter 1 lesson lines with English praise in the sentence', async () => {
+  it('collects A2 chapter 1 lesson lines with praise as its own clip', async () => {
     assert.equal(adventureA2LessonIds(1, 8).length, 22);
     const lines = await collectAdventureA2BankLines(1, 1);
     assert.ok(lines.some((line) => line.includes('baking')));
-    assert.ok(
+    assert.ok(lines.includes("That's right!"));
+    assert.ok(lines.includes('Very good!'));
+    assert.ok(lines.includes('Excellent!'));
+    assert.equal(
       lines.some((line) => /^(?:That's right!|Very good!|Excellent!) /.test(line)),
+      false,
     );
     assert.equal(lines.some((line) => line.includes('GEMINI_SHOULD_NOT_APPEAR')), false);
     for (const line of lines) {

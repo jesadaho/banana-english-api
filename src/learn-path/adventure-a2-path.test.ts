@@ -492,10 +492,10 @@ describe('Adventure A2 generator', () => {
     assert.equal(repeat.canSkip, true);
     const gaming = await say('I enjoy baking.');
     assert.equal(gaming.guidedSpeaking?.options.length, 2);
-    // Praise may be English (That's right!) or Thai successText (ใช่เลยครับ / ดีมากครับ / …).
-    const praise = /^(?:That's right!|Very good!|Excellent!|ใช่เลยครับ|ดีมากครับ|ถูกต้องครับ|เยี่ยมเลยครับ)/;
+    const a2Praise = /^(?:That's right!|Very good!|Excellent!)$/;
     const hiking = await say('I enjoy gaming.');
-    assert.match(hiking.textEn, praise);
+    assert.match(hiking.praiseText ?? '', a2Praise);
+    assert.equal(/^(?:That's right!|Very good!|Excellent!)/.test(hiking.textEn), false);
     assert.match(hiking.textEn, /I enjoy gaming\./);
     assert.match(hiking.textEn, /ฉันสนุกกับการเล่นเกม/);
     assert.equal(hiking.expectedSpeech, 'I enjoy hiking.');
@@ -505,21 +505,21 @@ describe('Adventure A2 generator', () => {
     const pickVerb = await say('(tapped Continue)');
     assert.equal(pickVerb.expectedSpeech, 'I love gaming.');
     const dont = await say('I love gaming.');
-    assert.match(dont.textEn, praise);
+    assert.match(dont.praiseText ?? '', a2Praise);
     assert.match(dont.textEn, /I love gaming\./);
     assert.equal(dont.expectedSpeech, "I don't like gaming.");
     assert.equal(dont.canSkip, true);
     const dontPick = await say("I don't like gaming.");
     assert.equal(dontPick.expectedSpeech, "I don't like cycling.");
     const pick = await say("I don't like cycling.");
-    assert.match(pick.textEn, praise);
+    assert.match(pick.praiseText ?? '', a2Praise);
     assert.match(pick.textEn, /I don't like cycling\./);
     assert.match(pick.textEn, /ฉันไม่ชอบปั่นจักรยาน/);
     assert.equal(pick.guidedSpeaking?.options.length, 4);
     const closing = await say("I don't like baking.");
     assert.equal(closing.isLessonComplete, true);
     assert.equal(closing.assessmentTier, 'correct');
-    assert.match(closing.textEn, praise);
+    assert.match(closing.praiseText ?? '', a2Praise);
     assert.match(closing.textEn, /I don't like baking\./);
     assert.match(closing.textEn, /ฉันไม่ชอบอบขนม/);
     assert.match(closing.textEn, /ครูบีรู้จักคุณมากขึ้นแล้ว/);
