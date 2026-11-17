@@ -181,4 +181,14 @@ export const FOUNDATION_V7_CHOICE_BEATS: Record<string, FoundationV7ChoiceBeat> 
   fnd_v7_how_do_you_go: any(2, 'เลือกวิธีเดินทางสำหรับทริปสมมติแล้วพูดประโยคเต็มครับ', 'I go by ...', [
     option('🚌', 'bus', 'I go by bus.'), option('🚆', 'train', 'I go by train.'), option('🚕', 'taxi', 'I go by taxi.'),
   ]),
+  // Optional object-pronoun lessons (injected on path via object_pronouns capability).
+  fnd_v7_for_me_for_her: single(2, 'หมวกใบนี้ให้ Ben ซึ่งเป็นผู้ชาย', 'The hat is for ...', 'The hat is for him.', 'Ben เป็นผู้ชาย ใช้ him ครับ', [
+    option('👨', 'him', 'The hat is for him.'), option('👩', 'her', 'The hat is for her.'),
+  ]),
+  fnd_v7_like_it_like_them: single(2, 'เพื่อนถาม Do you like noodles? ตอบว่าชอบ (noodles มีหลายเส้น)', 'Yes, I like ...', 'Yes, I like them.', 'noodles เป็นหลายชิ้น ใช้ them ครับ', [
+    option('🍜', 'them', 'Yes, I like them.'), option('☕', 'it', 'Yes, I like it.'),
+  ]),
+  fnd_v7_help_me_with_them: any(2, 'เลือกกิจกรรมที่อยากชวนเพื่อนทำด้วยกันครับ', 'Can you ... with me?', [
+    option('🏊', 'swim', 'Can you swim with me?'), option('🎤', 'sing', 'Can you sing with me?'), option('💃', 'dance', 'Can you dance with me?'),
+  ]),
 };

@@ -89,6 +89,10 @@ describe('Foundation V7 lessons', () => {
               'fnd_v7_say_that_again',
               'fnd_v7_where_is_it',
               'fnd_v7_how_do_you_go',
+              // Object-pronoun lessons are optional path injects, not catalog nodes.
+              'fnd_v7_for_me_for_her',
+              'fnd_v7_like_it_like_them',
+              'fnd_v7_help_me_with_them',
             ].includes(id),
         )
         .sort(),
@@ -190,7 +194,17 @@ describe('Foundation V7 lessons', () => {
       const steps = coreFlowStepCount(id, spec);
 
       assert.ok(lesson, id);
-      assert.equal(Boolean(node), !['fnd_v7_letter_names_a_m', 'fnd_v7_letter_names_n_z'].includes(id), id);
+      assert.equal(
+        Boolean(node),
+        ![
+          'fnd_v7_letter_names_a_m',
+          'fnd_v7_letter_names_n_z',
+          'fnd_v7_for_me_for_her',
+          'fnd_v7_like_it_like_them',
+          'fnd_v7_help_me_with_them',
+        ].includes(id),
+        id,
+      );
       assert.equal(lesson.titleEn, spec.titleEn, id);
       assert.equal(lesson.titleTh, spec.titleTh, id);
       if (node) assert.equal(node.titleEn, spec.titleEn, id);

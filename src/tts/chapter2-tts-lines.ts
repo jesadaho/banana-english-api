@@ -158,14 +158,40 @@ export async function collectAdventureA2LessonBankLines(
   return [...lines].sort((a, b) => a.localeCompare(b));
 }
 
+/**
+ * One Foundation or Adventure authoring lesson (buildFoundationV7Steps).
+ * Use for surgical TTS bank rebuilds of new A1 nodes that are not in V7_LEGACY_FLOWS.
+ */
+export async function collectScriptedLessonBankLines(
+  lessonId: string,
+  name = FOUNDATION_PROBE_LEARNER,
+): Promise<string[]> {
+  const lines = new Set<string>(BARE_PRAISE_LINES);
+  await collectScriptedLesson(lessonId, name, lines);
+  return [...lines].sort((a, b) => a.localeCompare(b));
+}
+
 async function collectA2Lesson(
   lessonId: string,
   name: string,
   lines: Set<string>,
 ): Promise<void> {
+  await collectScriptedLesson(lessonId, name, lines, 'a2');
+}
+
+async function collectScriptedLesson(
+  lessonId: string,
+  name: string,
+  lines: Set<string>,
+  prefer: 'a2' | 'any' = 'any',
+): Promise<void> {
   const steps = buildFoundationV7Steps(lessonId);
-  const config = ADVENTURE_A2_LESSONS.find((lesson) => lesson.lessonId === lessonId);
-  if (!config) throw new Error(`missing A2 lesson ${lessonId}`);
+  const config =
+    prefer === 'a2'
+      ? ADVENTURE_A2_LESSONS.find((lesson) => lesson.lessonId === lessonId)
+      : ADVENTURE_A2_LESSONS.find((lesson) => lesson.lessonId === lessonId) ??
+        FOUNDATION_V7_LESSONS.find((lesson) => lesson.lessonId === lessonId);
+  if (!config) throw new Error(`missing scripted lesson ${lessonId}`);
   const engine = engineFor();
   const advances: string[] = [];
 

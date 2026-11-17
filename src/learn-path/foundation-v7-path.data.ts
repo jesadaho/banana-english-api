@@ -3,6 +3,7 @@ import adventureA2CatalogJson from './adventure-a2-path.catalog.json';
 import { getInteractiveScenario } from '../interactive-scenario/interactive-scenario.data';
 import { wordCardsItemsForChapter, wordCardsNodeForChapter, type WordCardItem } from './word-cards.data';
 import { listenDrillItemsForChapter, listenDrillNodeForChapter, type ListenDrillItem } from './listen-drill.data';
+import { OBJECT_PRONOUN_NODES } from './object-pronouns.path';
 
 export type FoundationV7NodeType =
   | 'lesson'
@@ -32,6 +33,8 @@ export const FOUNDATION_V7_CAPABILITIES = [
   'explain_it',
   'word_cards',
   'listen_drill',
+  /** Optional object-pronoun lesson + Say It sets in Ch 7, 10, 11. */
+  'object_pronouns',
 ] as const;
 export type FoundationV7Capability = (typeof FOUNDATION_V7_CAPABILITIES)[number];
 export type FoundationV7ContentRef = {
@@ -153,9 +156,12 @@ export const LEARN_COURSES: readonly LearnCourse[] = [
 export const FOUNDATION_V7_NODES = FOUNDATION_V7_COURSE.nodes;
 
 /** Every node of every catalog-driven course (V7 and later). */
-export const ALL_LEARN_PATH_NODES: readonly FoundationV7Node[] = LEARN_COURSES.flatMap(
-  (course) => course.nodes,
-);
+export const ALL_LEARN_PATH_NODES: readonly FoundationV7Node[] = [
+  ...LEARN_COURSES.flatMap((course) => course.nodes),
+  // Generated optional nodes that reuse catalog content types (Say It topic
+  // lookup and reward ids find them here).
+  ...OBJECT_PRONOUN_NODES,
+];
 
 /** Accepts either the pathId (`adventure_a2`) or the URL slug (`adventure-a2`). */
 export function learnCourseById(id: string): LearnCourse | undefined {

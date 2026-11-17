@@ -1814,5 +1814,243 @@
       "answerEn": "There are two chairs.",
       "acceptedAnswers": []
     }
+  ],
+  "fnd_v7_u07_for_whom": [
+    {
+      "id": "fnd_v7_u07_for_whom_q1",
+      "promptTh": "กระเป๋าใบนี้ให้ฉัน",
+      "answerEn": "This bag is for me",
+      "acceptedAnswers": [
+        "The bag is for me"
+      ],
+      "mode": "guided",
+      "hintEn": "This bag is for …",
+      "choices": [
+        "This bag is for me",
+        "This bag is for her",
+        "This bag is for him"
+      ]
+    },
+    {
+      "id": "fnd_v7_u07_for_whom_q2",
+      "promptTh": "หมวกใบนี้ให้เขา (ผู้ชาย)",
+      "answerEn": "This hat is for him",
+      "acceptedAnswers": [
+        "The hat is for him"
+      ],
+      "mode": "guided",
+      "hintEn": "This hat is for …",
+      "choices": [
+        "This hat is for him",
+        "This hat is for her",
+        "This hat is for them"
+      ]
+    },
+    {
+      "id": "fnd_v7_u07_for_whom_q3",
+      "promptTh": "ร่มคันนี้ให้เธอ (ผู้หญิง)",
+      "answerEn": "This umbrella is for her",
+      "acceptedAnswers": [
+        "The umbrella is for her"
+      ],
+      "mode": "guided",
+      "hintEn": "This umbrella is for …",
+      "choices": [
+        "This umbrella is for her",
+        "This umbrella is for him",
+        "This umbrella is for me"
+      ]
+    },
+    {
+      "id": "fnd_v7_u07_for_whom_q4",
+      "promptTh": "นี่ให้คุณ",
+      "answerEn": "This is for you",
+      "acceptedAnswers": [
+        "It's for you",
+        "It is for you"
+      ]
+    },
+    {
+      "id": "fnd_v7_u07_for_whom_q5",
+      "promptTh": "กุญแจพวกนี้ให้พวกเรา",
+      "answerEn": "These keys are for us",
+      "acceptedAnswers": [
+        "The keys are for us"
+      ]
+    },
+    {
+      "id": "fnd_v7_u07_for_whom_q6",
+      "promptTh": "เสื้อพวกนี้ให้พวกเขา",
+      "answerEn": "These shirts are for them",
+      "acceptedAnswers": [
+        "The shirts are for them"
+      ]
+    },
+    {
+      "id": "fnd_v7_u07_for_whom_q7",
+      "promptTh": "นี่คือกระเป๋าของเธอ (ผู้หญิง)",
+      "answerEn": "This is her bag",
+      "acceptedAnswers": [
+        "That is her bag",
+        "That's her bag"
+      ]
+    },
+    {
+      "id": "fnd_v7_u07_for_whom_q8",
+      "promptTh": "โทรศัพท์เครื่องนี้ให้เธอ (ผู้หญิง)",
+      "answerEn": "This phone is for her",
+      "acceptedAnswers": [
+        "The phone is for her"
+      ]
+    }
+  ],
+  "fnd_v7_u10_him_her_them": [
+    {
+      "id": "fnd_v7_u10_him_her_them_q1",
+      "promptTh": "ฉันชอบเขา (ผู้ชาย)",
+      "answerEn": "I like him",
+      "acceptedAnswers": [],
+      "mode": "guided",
+      "hintEn": "I like …",
+      "choices": [
+        "I like him",
+        "I like her",
+        "I like them"
+      ]
+    },
+    {
+      "id": "fnd_v7_u10_him_her_them_q2",
+      "promptTh": "พวกเราชอบพวกเขา",
+      "answerEn": "We like them",
+      "acceptedAnswers": [],
+      "mode": "guided",
+      "hintEn": "We like …",
+      "choices": [
+        "We like them",
+        "We like him",
+        "We like her"
+      ]
+    },
+    {
+      "id": "fnd_v7_u10_him_her_them_q3",
+      "promptTh": "พวกเขาต้องการพวกเรา",
+      "answerEn": "They need us",
+      "acceptedAnswers": [],
+      "mode": "guided",
+      "hintEn": "They need …",
+      "choices": [
+        "They need us",
+        "They need them",
+        "They need me"
+      ]
+    },
+    {
+      "id": "fnd_v7_u10_him_her_them_q4",
+      "promptTh": "เพื่อนถาม Do you like tea? ตอบว่าชอบ โดยใช้ it",
+      "answerEn": "Yes, I like it",
+      "acceptedAnswers": [
+        "I like it"
+      ]
+    },
+    {
+      "id": "fnd_v7_u10_him_her_them_q5",
+      "promptTh": "เพื่อนถาม Do you like noodles? ตอบว่าไม่ชอบ โดยใช้ them",
+      "answerEn": "I don't like them",
+      "acceptedAnswers": [
+        "No, I don't like them",
+        "I do not like them"
+      ]
+    },
+    {
+      "id": "fnd_v7_u10_him_her_them_q6",
+      "promptTh": "เพื่อนถาม Do you need water? ตอบว่าต้องการ โดยใช้ it",
+      "answerEn": "Yes, I need it",
+      "acceptedAnswers": [
+        "I need it"
+      ]
+    },
+    {
+      "id": "fnd_v7_u10_him_her_them_q7",
+      "promptTh": "คุณชอบเธอ (ผู้หญิง) ไหม",
+      "answerEn": "Do you like her?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u10_him_her_them_q8",
+      "promptTh": "พวกเราต้องการคุณ",
+      "answerEn": "We need you",
+      "acceptedAnswers": []
+    }
+  ],
+  "fnd_v7_u11_with_me": [
+    {
+      "id": "fnd_v7_u11_with_me_q1",
+      "promptTh": "คุณช่วยฉันได้ไหม",
+      "answerEn": "Can you help me?",
+      "acceptedAnswers": [],
+      "mode": "guided",
+      "hintEn": "Can you help …?",
+      "choices": [
+        "Can you help me?",
+        "Can you help him?",
+        "Can you help them?"
+      ]
+    },
+    {
+      "id": "fnd_v7_u11_with_me_q2",
+      "promptTh": "ฉันช่วยคุณได้",
+      "answerEn": "I can help you",
+      "acceptedAnswers": [],
+      "mode": "guided",
+      "hintEn": "I can help …",
+      "choices": [
+        "I can help you",
+        "I can help her",
+        "I can help us"
+      ]
+    },
+    {
+      "id": "fnd_v7_u11_with_me_q3",
+      "promptTh": "คุณว่ายน้ำกับฉันได้ไหม",
+      "answerEn": "Can you swim with me?",
+      "acceptedAnswers": [],
+      "mode": "guided",
+      "hintEn": "Can you swim with …?",
+      "choices": [
+        "Can you swim with me?",
+        "Can you swim with her?",
+        "Can you swim with us?"
+      ]
+    },
+    {
+      "id": "fnd_v7_u11_with_me_q4",
+      "promptTh": "ฉันร้องเพลงกับเธอ (ผู้หญิง) ได้",
+      "answerEn": "I can sing with her",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u11_with_me_q5",
+      "promptTh": "พวกเราเต้นกับพวกเขาได้",
+      "answerEn": "We can dance with them",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u11_with_me_q6",
+      "promptTh": "คุณทำอาหารกับพวกเราได้ไหม",
+      "answerEn": "Can you cook with us?",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u11_with_me_q7",
+      "promptTh": "เขา (ผู้ชาย) วาดรูปกับฉันได้",
+      "answerEn": "He can draw with me",
+      "acceptedAnswers": []
+    },
+    {
+      "id": "fnd_v7_u11_with_me_q8",
+      "promptTh": "ฉันอ่านหนังสือกับเขา (ผู้ชาย) ได้",
+      "answerEn": "I can read with him",
+      "acceptedAnswers": []
+    }
   ]
 }

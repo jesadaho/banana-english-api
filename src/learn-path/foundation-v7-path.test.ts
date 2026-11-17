@@ -22,7 +22,7 @@ import { Currency } from '@prisma/client';
 
 // Word Cards review nodes are covered in word-cards.test.ts; keep these counts on the catalog nodes.
 const CORE_CAPABILITIES = FOUNDATION_V7_CAPABILITIES.filter(
-  (cap) => cap !== 'word_cards' && cap !== 'listen_drill',
+  (cap) => cap !== 'word_cards' && cap !== 'listen_drill' && cap !== 'object_pronouns',
 );
 const all = () => [
   ...toFoundationV7ClientChapters(CORE_CAPABILITIES).flatMap((ch) => ch.items),

@@ -4,7 +4,7 @@
  *   npx tsx scripts/build-chapter1-tts-bank.ts
  *   npx tsx scripts/build-chapter1-tts-bank.ts --only-phonics   # locked Phonics lines
  *   npx tsx scripts/build-chapter1-tts-bank.ts --only-daily-speak
- *   npx tsx scripts/build-chapter1-tts-bank.ts --lesson=a2_c06n05  # one A2 lesson
+ *   npx tsx scripts/build-chapter1-tts-bank.ts --lesson=a2_c06n05  # one A1/A2 authoring lesson
  *
  * Resumes from src/tts/tts-bank.json. Skips lines that already have a URL
  * (exact key, or the same clip after emoji / trailing-punct folding).
@@ -18,8 +18,8 @@ import { publicHeroUrl } from '../src/articles/article-hero';
 import { collectChapter1BankLines } from '../src/tts/chapter1-tts-lines';
 import {
   collectAdventureA2BankLines,
-  collectAdventureA2LessonBankLines,
   collectFoundationBankLines,
+  collectScriptedLessonBankLines,
 } from '../src/tts/chapter2-tts-lines';
 import {
   TTS_BANK_MODEL,
@@ -362,7 +362,7 @@ async function main() {
   const lessonId = lessonArg?.slice('--lesson='.length)?.trim() || '';
   const lessonLines = new Set(
     (lessonId
-      ? await collectAdventureA2LessonBankLines(lessonId)
+      ? await collectScriptedLessonBankLines(lessonId)
       : process.argv.includes('--only-extra')
       ? extraBankLines()
       : process.argv.includes('--only-live')

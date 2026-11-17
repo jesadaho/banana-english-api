@@ -21,6 +21,7 @@ import {
   LISTEN_DRILL_COURSES,
 } from './foundation-v7-path.data';
 import { LISTEN_DRILL_MIN_ITEMS, listenDrillInsertIndex, listenDrillNodeForChapter } from './listen-drill.data';
+import { OBJECT_PRONOUN_NODE_IDS, objectPronounNodesForChapter } from './object-pronouns.path';
 import { WORD_CARDS_MIN_WORDS, wordCardsInsertIndex, wordCardsNodeForChapter } from './word-cards.data';
 import { conversationCutsceneUrl } from './conversation-cutscenes';
 import type { FoundationV5ClientNode } from './learn-path.service';
@@ -258,7 +259,11 @@ export function toFoundationV7ClientChapters(
       ...(chapter.zone !== undefined ? { zone: chapter.zone } : {}),
       items: withWordCards(chapter, capabilities, course).map((node): FoundationV7ClientNode => {
         const mapped = mapClientNode(node, previousPlayableId, context);
-        if (node.type === 'word_cards' || node.type === 'listen_drill') {
+        if (
+          node.type === 'word_cards' ||
+          node.type === 'listen_drill' ||
+          OBJECT_PRONOUN_NODE_IDS.has(node.id)
+        ) {
           // Optional review: unlocks with the chapter flow but never gates
           // the next node or counts toward progress.
           return { ...mapped.node, countsTowardProgress: false, optional: true };
@@ -280,6 +285,11 @@ function withWordCards(
   course: LearnCourse,
 ): FoundationV7Node[] {
   const items = [...chapter.items];
+  if (capabilities.includes('object_pronouns') && course === FOUNDATION_V7_COURSE) {
+    const extras = objectPronounNodesForChapter(chapter.id);
+    const at = extras ? items.findIndex((item) => item.id === extras.after) : -1;
+    if (extras && at >= 0) items.splice(at + 1, 0, ...extras.nodes);
+  }
   if (capabilities.includes('word_cards') && WORD_CARDS_COURSES.includes(course)) {
     const review = wordCardsNodeForChapter(chapter);
     if (review) items.splice(wordCardsInsertIndex(items), 0, review);

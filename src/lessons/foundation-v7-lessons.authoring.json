@@ -1741,5 +1741,211 @@
       "promptTh": "อีกฝ่ายขอให้ช่วยเตรียมหนังสือ แต่ยังไม่บอกจำนวน",
       "answerEn": "How many books?"
     }
+  },
+  "fnd_v7_for_me_for_her": {
+    "titleEn": "For Me, For Her",
+    "titleTh": "ของนี้ให้ใคร",
+    "goalTh": "บอกว่าของชิ้นนี้ให้ใครด้วย for + me, you, him, her, us, them",
+    "scope": "ใช้ This is for … กับของในบท 7 (bag, phone, hat, watch, umbrella, keys); เปลี่ยน I→me he→him she→her we→us they→them; เทียบ her bag (ของเธอ) กับ for her (ให้เธอ); ไม่สอนกริยาใหม่",
+    "estimatedMinutes": [
+      3,
+      4
+    ],
+    "pattern": "contrast_and_apply",
+    "opening": "ตอนให้ของใคร เราพูดว่า for … ครับ แต่คำที่ตามหลัง for ต้องเปลี่ยนรูป เช่น I กลายเป็น me และ he กลายเป็น him 🎁 วันนี้มาฝึกบอกว่าของชิ้นนี้ให้ใคร",
+    "stem": "This watch is for ...",
+    "blocks": [
+      {
+        "tipTh": "หลัง for ใช้ me (ฉัน) ไม่ใช้ I ส่วน you ใช้เหมือนเดิม",
+        "models": [
+          "This is for me.",
+          "Is it for you?"
+        ],
+        "repeat": "This is for me."
+      },
+      {
+        "tipTh": "he เปลี่ยนเป็น him (ผู้ชาย) และ she เปลี่ยนเป็น her (ผู้หญิง): ให้เขา = for him, ให้เธอ = for her",
+        "models": [
+          "The hat is for him.",
+          "The bag is for her."
+        ],
+        "repeat": "The bag is for her."
+      },
+      {
+        "tipTh": "we เปลี่ยนเป็น us และ they เปลี่ยนเป็น them: ให้พวกเรา = for us, ให้พวกเขา = for them",
+        "models": [
+          "The keys are for us.",
+          "The umbrellas are for them."
+        ],
+        "repeat": "The umbrellas are for them."
+      },
+      {
+        "tipTh": "her มี 2 ความหมาย: her bag = กระเป๋าของเธอ ส่วน for her = ให้เธอ",
+        "models": [
+          "This is her bag.",
+          "This bag is for her."
+        ],
+        "repeat": "This bag is for her."
+      }
+    ],
+    "choice": {
+      "afterBlock": 2,
+      "promptTh": "หมวกใบนี้ให้ Ben ซึ่งเป็นผู้ชาย",
+      "stem": "The hat is for ...",
+      "answerMode": "single",
+      "expectedSpeech": "The hat is for him.",
+      "incorrectHintTh": "Ben เป็นผู้ชาย ใช้ him ครับ",
+      "options": [
+        {
+          "emoji": "👨",
+          "label": "him",
+          "speak": "The hat is for him."
+        },
+        {
+          "emoji": "👩",
+          "label": "her",
+          "speak": "The hat is for her."
+        }
+      ]
+    },
+    "recall": {
+      "promptTh": "นาฬิกาข้อมือเรือนนี้ให้เขา (ผู้ชาย)",
+      "answerEn": "This watch is for him"
+    },
+    "completionTh": "บอกว่าของให้ใครด้วย for me / for him / for her / for them"
+  },
+  "fnd_v7_like_it_like_them": {
+    "titleEn": "I Like It, I Like Them",
+    "titleTh": "ใช้ it / them แทนของ",
+    "goalTh": "ตอบเรื่องความชอบและสิ่งที่ต้องการโดยใช้ it / them แทนของ และ him / her / us / them แทนคน",
+    "scope": "ของจากบท 10 (tea, coffee, water, rice, noodles, bread) และคนจากบท 4; it = ของชิ้นเดียวหรือนับไม่ได้ them = หลายชิ้นหรือหลายคน; หลัง like / want / need; ประธานใช้ I / you / we / they เท่านั้น (ยังไม่สอน likes)",
+    "estimatedMinutes": [
+      3,
+      4
+    ],
+    "pattern": "contrast_and_apply",
+    "opening": "ตอบว่าชอบหรือต้องการอะไร ไม่ต้องพูดชื่อของซ้ำครับ ใช้ it หรือ them แทนได้ เช่น Do you like tea? Yes, I like it. ☕ วันนี้มาฝึกตอบให้สั้นและเป็นธรรมชาติ",
+    "stem": "Yes, I like ...",
+    "blocks": [
+      {
+        "tipTh": "it แทนของชิ้นเดียว หรือของที่นับไม่ได้ เช่น tea, rice",
+        "models": [
+          "Do you like tea? Yes, I like it.",
+          "I need it.",
+          "Yes, I like it."
+        ],
+        "repeat": "Yes, I like it."
+      },
+      {
+        "tipTh": "them แทนของหลายชิ้น เช่น noodles",
+        "models": [
+          "Do you like noodles? Yes, I like them.",
+          "I want them.",
+          "Yes, I like them."
+        ],
+        "repeat": "Yes, I like them."
+      },
+      {
+        "tipTh": "แทนคนหลัง like / need: he → him (ผู้ชาย), she → her (ผู้หญิง), we → us, they → them",
+        "models": [
+          "I like him.",
+          "They need us."
+        ],
+        "repeat": "I like him."
+      }
+    ],
+    "choice": {
+      "afterBlock": 2,
+      "promptTh": "เพื่อนถาม Do you like noodles? ตอบว่าชอบ (noodles มีหลายเส้น)",
+      "stem": "Yes, I like ...",
+      "answerMode": "single",
+      "expectedSpeech": "Yes, I like them.",
+      "incorrectHintTh": "noodles เป็นหลายชิ้น ใช้ them ครับ",
+      "options": [
+        {
+          "emoji": "🍜",
+          "label": "them",
+          "speak": "Yes, I like them."
+        },
+        {
+          "emoji": "☕",
+          "label": "it",
+          "speak": "Yes, I like it."
+        }
+      ]
+    },
+    "recall": {
+      "promptTh": "เพื่อนถาม Do you like tea? ตอบว่าชอบ โดยใช้ it",
+      "answerEn": "Yes, I like it"
+    },
+    "completionTh": "ใช้ it / them แทนของ และ him / her / us / them แทนคน"
+  },
+  "fnd_v7_help_me_with_them": {
+    "titleEn": "Help Me, Dance With Them",
+    "titleTh": "ช่วยฉัน / ทำกับเพื่อน",
+    "goalTh": "ขอความช่วยเหลือด้วย help me และชวนทำกิจกรรมด้วย with me / with them",
+    "scope": "กริยาใหม่ 1 คำ: help; กริยาจากบท 11 (swim, read, cook, sing, dance, draw); with + me, you, him, her, us, them; ใช้กับ can / Can you…?",
+    "estimatedMinutes": [
+      3,
+      4
+    ],
+    "pattern": "choose_and_reuse",
+    "opening": "อยากให้ใครช่วย พูดว่า Can you help me? ครับ และถ้าอยากทำอะไรกับใคร ใช้ with ตามด้วย me, him, her หรือ them 💃 วันนี้มาฝึกชวนเพื่อนทำกิจกรรมด้วยกัน",
+    "stem": "Can you ... with me?",
+    "blocks": [
+      {
+        "tipTh": "help แปลว่า ช่วย: ช่วยฉัน = help me ช่วยคุณ = help you",
+        "models": [
+          "Can you help me?",
+          "I can help you."
+        ],
+        "repeat": "Can you help me?"
+      },
+      {
+        "tipTh": "with แปลว่า กับ: หลัง with ใช้ me, him (ผู้ชาย), her (ผู้หญิง) ไม่ใช้ I, he, she",
+        "models": [
+          "Can you swim with me?",
+          "I can sing with her."
+        ],
+        "repeat": "Can you swim with me?"
+      },
+      {
+        "tipTh": "ทำกับหลายคน: with us (กับพวกเรา) with them (กับพวกเขา)",
+        "models": [
+          "We can dance with them.",
+          "Can you cook with us?"
+        ],
+        "repeat": "We can dance with them."
+      }
+    ],
+    "choice": {
+      "afterBlock": 2,
+      "promptTh": "เลือกกิจกรรมที่อยากชวนเพื่อนทำด้วยกันครับ",
+      "stem": "Can you ... with me?",
+      "answerMode": "any",
+      "expectedSpeech": "Can you swim with me?",
+      "options": [
+        {
+          "emoji": "🏊",
+          "label": "swim",
+          "speak": "Can you swim with me?"
+        },
+        {
+          "emoji": "🎤",
+          "label": "sing",
+          "speak": "Can you sing with me?"
+        },
+        {
+          "emoji": "💃",
+          "label": "dance",
+          "speak": "Can you dance with me?"
+        }
+      ]
+    },
+    "recall": {
+      "promptTh": "คุณว่ายน้ำกับฉันได้ไหม",
+      "answerEn": "Can you swim with me?"
+    },
+    "completionTh": "ขอให้ช่วยด้วย help me และชวนทำกิจกรรมด้วย with me / with them"
   }
 }
