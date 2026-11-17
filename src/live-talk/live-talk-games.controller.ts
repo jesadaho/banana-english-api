@@ -17,12 +17,12 @@ export class LiveTalkGamesController {
     return this.games.view(id);
   }
 
-  /** Host / co-host: `{ type: 'draw' | 'who', level?: 'A1' | 'A2', turnSeconds? }`. */
+  /** Host / co-host: `{ type: 'draw' | 'who' | 'chain', levels?: ['A1', 'A2'], level?: 'A1' | 'A2', turnSeconds? }`. */
   @Post('start')
   start(
     @Req() req: AuthedRequest,
     @Param('id') id: string,
-    @Body() body: { type?: unknown; level?: unknown; turnSeconds?: unknown },
+    @Body() body: { type?: unknown; level?: unknown; levels?: unknown; turnSeconds?: unknown },
   ) {
     return this.games.start(req.user.id, id, body ?? {});
   }
@@ -43,17 +43,17 @@ export class LiveTalkGamesController {
     return this.games.changeWord(req.user.id, id);
   }
 
-  /** Draw & Guess Game Mic: `{ transcript }` (STT on the device). */
+  /** Draw & Guess: `{ transcript, typed: true }` (typed answer; older apps send Game Mic STT). */
   @Post('guess')
   guess(
     @Req() req: AuthedRequest,
     @Param('id') id: string,
-    @Body() body: { transcript?: unknown },
+    @Body() body: { transcript?: unknown; forUserId?: unknown; typed?: unknown },
   ) {
-    return this.games.guess(req.user.id, id, body?.transcript);
+    return this.games.guess(req.user.id, id, body?.transcript, body?.forUserId, body?.typed);
   }
 
-  /** Who Am I?: "Correct!" for the asker. */
+  /** Who Am I?: "Correct!" for the asker. Word Chain: the host's "นับให้". */
   @Post('correct')
   correct(@Req() req: AuthedRequest, @Param('id') id: string) {
     return this.games.correct(req.user.id, id);

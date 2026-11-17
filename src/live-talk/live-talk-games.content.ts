@@ -132,6 +132,66 @@ export const DRAW_WORDS: readonly DrawWord[] = [
   w('bridge', 'สะพาน', 'place', 'A2'),
   w('heart', 'หัวใจ', 'shape'),
   w('robot', 'หุ่นยนต์', 'thing', 'A2'),
+  // more A1 (2026-11)
+  w('bear', 'หมี', 'animal'),
+  w('mouse', 'หนู', 'animal', 'A1', ['mice', 'rat']),
+  w('milk', 'นม', 'food'),
+  w('cookie', 'คุกกี้', 'food', 'A1', ['biscuit']),
+  w('grapes', 'องุ่น', 'food', 'A1', ['grape']),
+  w('mango', 'มะม่วง', 'food'),
+  w('candy', 'ลูกอม', 'food', 'A1', ['sweets', 'sweet']),
+  w('box', 'กล่อง', 'thing'),
+  w('bottle', 'ขวด', 'thing'),
+  w('spoon', 'ช้อน', 'thing'),
+  w('fork', 'ส้อม', 'thing'),
+  w('plate', 'จาน', 'thing', 'A1', ['dish']),
+  w('tooth', 'ฟัน', 'body', 'A1', ['teeth']),
+  w('hair', 'ผม', 'body'),
+  w('leg', 'ขา', 'body'),
+  w('arm', 'แขน', 'body'),
+  w('fire', 'ไฟ', 'nature'),
+  w('sea', 'ทะเล', 'nature', 'A1', ['ocean']),
+  w('snow', 'หิมะ', 'weather'),
+  w('taxi', 'แท็กซี่', 'transport', 'A1', ['cab']),
+  w('circle', 'วงกลม', 'shape'),
+  w('square', 'สี่เหลี่ยมจัตุรัส', 'shape'),
+  w('triangle', 'สามเหลี่ยม', 'shape'),
+  // more A2 (2026-11)
+  w('bee', 'ผึ้ง', 'animal', 'A2', ['bumblebee']),
+  w('shark', 'ฉลาม', 'animal', 'A2'),
+  w('whale', 'วาฬ', 'animal', 'A2'),
+  w('penguin', 'เพนกวิน', 'animal', 'A2'),
+  w('octopus', 'ปลาหมึกยักษ์', 'animal', 'A2', ['squid']),
+  w('owl', 'นกฮูก', 'animal', 'A2'),
+  w('crab', 'ปู', 'animal', 'A2'),
+  w('tiger', 'เสือ', 'animal', 'A2'),
+  w('frog', 'กบ', 'animal', 'A2'),
+  w('strawberry', 'สตรอว์เบอร์รี', 'food', 'A2'),
+  w('pineapple', 'สับปะรด', 'food', 'A2'),
+  w('corn', 'ข้าวโพด', 'food', 'A2'),
+  w('sandwich', 'แซนด์วิช', 'food', 'A2'),
+  w('tomato', 'มะเขือเทศ', 'food', 'A2', ['tomatoes']),
+  w('sofa', 'โซฟา', 'thing', 'A2', ['couch']),
+  w('toilet', 'ชักโครก', 'thing', 'A2'),
+  w('camera', 'กล้องถ่ายรูป', 'thing', 'A2'),
+  w('candle', 'เทียน', 'thing', 'A2'),
+  w('ladder', 'บันได', 'thing', 'A2'),
+  w('pillow', 'หมอน', 'thing', 'A2'),
+  w('mirror', 'กระจกเงา', 'thing', 'A2'),
+  w('hammer', 'ค้อน', 'thing', 'A2'),
+  w('bell', 'กระดิ่ง', 'thing', 'A2'),
+  w('skirt', 'กระโปรง', 'clothes', 'A2'),
+  w('jacket', 'แจ็กเก็ต', 'clothes', 'A2', ['coat']),
+  w('glove', 'ถุงมือ', 'clothes', 'A2', ['gloves']),
+  w('truck', 'รถบรรทุก', 'transport', 'A2', ['lorry']),
+  w('rocket', 'จรวด', 'transport', 'A2'),
+  w('helicopter', 'เฮลิคอปเตอร์', 'transport', 'A2'),
+  w('pirate', 'โจรสลัด', 'people', 'A2'),
+  w('ghost', 'ผี', 'people', 'A2'),
+  w('park', 'สวนสาธารณะ', 'place', 'A2'),
+  w('castle', 'ปราสาท', 'place', 'A2'),
+  w('tent', 'เต็นท์', 'place', 'A2'),
+  w('zoo', 'สวนสัตว์', 'place', 'A2'),
 ];
 
 const c = (
@@ -197,6 +257,22 @@ export const WHO_CHARACTERS: readonly WhoCharacter[] = [
   c('guitar', 'กีตาร์', 'thing', 'A2'),
   c('ice cream', 'ไอศกรีม', 'thing', 'A2'),
   c('toothbrush', 'แปรงสีฟัน', 'thing', 'A2'),
+  // more (2026-11)
+  c('baker', 'คนทำขนมปัง', 'job', 'A2'),
+  c('vet', 'สัตวแพทย์', 'job', 'A2'),
+  c('tiger', 'เสือ', 'animal'),
+  c('bear', 'หมี', 'animal'),
+  c('duck', 'เป็ด', 'animal'),
+  c('horse', 'ม้า', 'animal'),
+  c('pig', 'หมู', 'animal'),
+  c('giraffe', 'ยีราฟ', 'animal', 'A2'),
+  c('zebra', 'ม้าลาย', 'animal', 'A2'),
+  c('owl', 'นกฮูก', 'animal', 'A2'),
+  c('clock', 'นาฬิกา', 'thing'),
+  c('cup', 'ถ้วย', 'thing'),
+  c('bicycle', 'จักรยาน', 'thing', 'A2'),
+  c('television', 'โทรทัศน์', 'thing', 'A2'),
+  c('camera', 'กล้องถ่ายรูป', 'thing', 'A2'),
 ];
 
 /** A1 rooms get A1 words; A2 rooms get both. */
@@ -205,4 +281,18 @@ export function contentForLevel<T extends { level: LiveTalkGameLevel }>(
   level: LiveTalkGameLevel,
 ): T[] {
   return items.filter((item) => level === 'A2' || item.level === 'A1');
+}
+
+/** Old single `level` → the word sets it meant (A2 rooms got A1 + A2). */
+export function levelsFromLegacy(level: LiveTalkGameLevel): LiveTalkGameLevel[] {
+  return level === 'A2' ? ['A1', 'A2'] : ['A1'];
+}
+
+/** Host ticks A1 and/or A2 (check marks): exactly those sets. */
+export function contentForLevels<T extends { level: LiveTalkGameLevel }>(
+  items: readonly T[],
+  levels: readonly LiveTalkGameLevel[],
+): T[] {
+  const picked = levels.length ? levels : (['A1'] as const);
+  return items.filter((item) => picked.includes(item.level));
 }
