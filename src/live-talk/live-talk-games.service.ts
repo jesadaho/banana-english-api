@@ -10,6 +10,7 @@ import { randomUUID } from 'crypto';
 import { PrismaService } from '../prisma/prisma.service';
 import type { LiveTalkGameLevel } from './live-talk-games.content';
 import {
+  acceptPendingWord,
   changeWord,
   confirmCorrect,
   createGame,
@@ -18,11 +19,14 @@ import {
   isGameType,
   publicView,
   secretFor,
+  submitChainCaption,
   submitGuess,
+  submitWhoCaption,
   syncSpeakers,
   tick,
   type GamePerson,
   type LiveTalkGame,
+  type LiveTalkGameType,
 } from './live-talk-games.rules';
 import { sendLiveKitData } from './live-talk.livekit';
 import { canModerateInRoom, countsAsSpeaker } from './live-talk.rules';
@@ -61,7 +65,7 @@ export class LiveTalkGamesService implements OnModuleDestroy {
   async start(
     userId: string,
     roomId: string,
-    body: { type?: unknown; level?: unknown; turnSeconds?: unknown },
+    body: { type?: unknown; level?: unknown; levels?: unknown; turnSeconds?: unknown },
   ) {
     const room = await this.loadRoom(roomId);
     this.requireModerator(userId, room);
@@ -72,12 +76,17 @@ export class LiveTalkGamesService implements OnModuleDestroy {
       body.level === 'A2' || body.level === 'a2' || (!body.level && room.minSpeakLevel === 'a2')
         ? 'A2'
         : 'A1';
+    // New apps: A1 / A2 check marks. Unknown values are dropped; none → `level`.
+    const levels = Array.isArray(body.levels)
+      ? [...new Set(body.levels.map((l) => String(l).toUpperCase()).filter((l) => l === 'A1' || l === 'A2'))]
+      : [];
     const game = this.rule(() =>
       createGame({
         id: randomUUID(),
         roomId,
-        type: body.type as 'draw' | 'who',
+        type: body.type as LiveTalkGameType,
         level,
+        ...(levels.length ? { levels: levels as LiveTalkGameLevel[] } : {}),
         turnSeconds: body.turnSeconds === undefined ? undefined : Number(body.turnSeconds),
         hostUserId: room.hostUserId,
         speakers: speakersOf(room),
@@ -123,19 +132,50 @@ export class LiveTalkGamesService implements OnModuleDestroy {
     return { secret: secretFor(entry.game, userId), seq: entry.game.seq };
   }
 
-  /** Draw & Guess: the Game Mic transcript (STT runs on the device). */
-  async guess(userId: string, roomId: string, transcript: unknown) {
+  /**
+   * Draw & Guess: the typed answer (`typed: true`), or a Game Mic
+   * transcript from older apps.
+   * Who Am I?: the asker's own final caption line (captions agent STT).
+   * Word Chain: the player's own final caption line (same path).
+   */
+  async guess(userId: string, roomId: string, transcript: unknown, forUserId?: unknown, typed?: unknown) {
     const entry = this.requireGame(roomId);
     const text = typeof transcript === 'string' ? transcript.slice(0, 200) : '';
-    const outcome = this.rule(() => submitGuess(entry.game, userId, text, Date.now()));
-    await this.broadcast(roomId);
+    // Who Am I?: the host's app also forwards the asker's captions (backup
+    // when the asker's app misses them). Only the host may speak for the asker.
+    const spoken = entry.game.type === 'who' || entry.game.type === 'chain';
+    if (
+      spoken &&
+      typeof forUserId === 'string' &&
+      forUserId !== userId &&
+      userId === entry.game.hostUserId
+    ) {
+      userId = forUserId;
+    }
+    const seq = entry.game.seq;
+    const outcome = this.rule(() =>
+      entry.game.type === 'who'
+        ? submitWhoCaption(entry.game, userId, text, Date.now())
+        : entry.game.type === 'chain'
+          ? submitChainCaption(entry.game, userId, text, Date.now(), Math.random)
+          : submitGuess(entry.game, userId, text, Date.now(), { typed: typed === true }),
+    );
+    // Who Am I? questions don't change the state; only a right guess does.
+    if (entry.game.seq !== seq) await this.broadcast(roomId);
     return outcome;
   }
 
-  /** Who Am I?: someone who can see the card confirms the asker got it. */
+  /**
+   * Who Am I?: someone who can see the card confirms the asker got it.
+   * Word Chain: the host's "นับให้" for a word the list did not know.
+   */
   async correct(userId: string, roomId: string) {
     const entry = this.requireGame(roomId);
-    this.rule(() => confirmCorrect(entry.game, userId, Date.now()));
+    this.rule(() =>
+      entry.game.type === 'chain'
+        ? acceptPendingWord(entry.game, userId, Date.now(), Math.random)
+        : confirmCorrect(entry.game, userId, Date.now()),
+    );
     await this.broadcast(roomId);
     return { ok: true };
   }
