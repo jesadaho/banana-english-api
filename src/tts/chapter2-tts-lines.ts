@@ -148,6 +148,16 @@ export async function collectAdventureA2BankLines(
   return [...lines].sort((a, b) => a.localeCompare(b));
 }
 
+/** One Adventure A2 lesson — for surgical TTS bank rebuilds. */
+export async function collectAdventureA2LessonBankLines(
+  lessonId: string,
+  name = FOUNDATION_PROBE_LEARNER,
+): Promise<string[]> {
+  const lines = new Set<string>(BARE_PRAISE_LINES);
+  await collectA2Lesson(lessonId, name, lines);
+  return [...lines].sort((a, b) => a.localeCompare(b));
+}
+
 async function collectA2Lesson(
   lessonId: string,
   name: string,
