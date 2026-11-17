@@ -1,5 +1,9 @@
 import type { TrainingTurnReply } from '../gemini/gemini-chat.service';
-import { englishPraiseFor } from '../tts/english-praises';
+import {
+  a2EnglishPraiseFor,
+  englishPraiseFor,
+  A2_ENGLISH_PRAISES,
+} from '../tts/english-praises';
 import type { TrainingEngineTurnInput } from '../training/engine/training-turn.engine';
 import type { TrainingAiGate } from '../training/engine/ai-gate';
 import { scriptedAiDebug } from '../common/ai-debug';
@@ -10,6 +14,8 @@ import {
   type V7TeachingStep,
 } from './foundation-v7-lessons.data';
 import { userTurnWasContinue, userTurnWasSkip } from './foundation-v7-turn-guard';
+
+export { A2_ENGLISH_PRAISES };
 
 const normalize = (value: string) => value.toLowerCase().normalize('NFD').replace(/\p{M}/gu, '').replace(/[’']/g, '').replace(/[^a-z0-9]/g, '');
 
@@ -76,22 +82,10 @@ const NUMBER_TH: Record<string, string> = {
   five: 'ห้า', six: 'หก', seven: 'เจ็ด', eight: 'แปด', nine: 'เก้า', ten: 'สิบ',
 };
 
-export const A2_ENGLISH_PRAISES = ["That's right!", 'Very good!', 'Excellent!'] as const;
 const THAI_PRAISE_OPENER_RE =
   /^(?:ถูกต้อง|ทำได้ดีมาก|เยี่ยมเลย|เยี่ยมมาก|เยี่ยม|สุดยอด|เก่งมาก|ดีมาก|ดีเลย|ดีครับ)(?:ครับ)?[!！]?[ \t]*/u;
-
-/** A2 praises in English: swap a leading Thai praise for one, or put one before a recap. */
-function a2EnglishPraisePrefix(prefix: string, seed: string): string {
-  let hash = 0;
-  for (const char of seed) hash = (hash * 31 + char.charCodeAt(0)) >>> 0;
-  const praise = A2_ENGLISH_PRAISES[hash % A2_ENGLISH_PRAISES.length];
-  const rest = prefix.replace(THAI_PRAISE_OPENER_RE, '');
-  if (rest !== prefix || /^[A-Za-z“"]/.test(rest)) {
-    if (!rest.trim()) return praise + (rest.includes('\n') ? '\n' : ' ');
-    return praise + (rest.startsWith('\n') ? '' : ' ') + rest;
-  }
-  return prefix;
-}
+const A2_THAI_PRAISE_OPENER_RE =
+  /^(?:ถูกต้อง|ทำได้ดีมาก|เยี่ยมเลย|เยี่ยมมาก|เยี่ยม|สุดยอด|เก่งมาก|ดีมาก|ดีเลย|ดีครับ|ใช่เลย|เป๊ะเลย|เหมาะเลย)(?:ครับ)?[!！]?[ \t]*/u;
 
 function v7CorrectPrefix(step: V7TeachingStep, spoken: string): string {
   const option = [...step.presentation?.options ?? [], ...step.presentation?.extraAnswers ?? []]
@@ -235,7 +229,11 @@ export async function runV7Turn(input: TrainingEngineTurnInput, gate: TrainingAi
   if (tier !== 'correct') {
     prefix = 'ประโยคนี้พูดว่า “' + current.expectedSpeech + '” ครับ ลองฝึกต่อด้วยกันนะครับ ';
   } else if (id.startsWith('a2_')) {
-    prefix = a2EnglishPraisePrefix(correctPrefix, id + stepNumber + spokenAnswer);
+    // Same as A1: praise is its own clip. Body stays stable so the bank hits
+    // even when the learner's answer changes which praise word is picked.
+    praiseText = a2EnglishPraiseFor(id + stepNumber + spokenAnswer);
+    const rest = correctPrefix.replace(A2_THAI_PRAISE_OPENER_RE, '');
+    prefix = rest.trim() ? rest.replace(/^\s+/, '') : '';
   } else {
     const rest = correctPrefix.replace(THAI_PRAISE_OPENER_RE, '');
     praiseText = englishPraiseFor(`${id}\n${stepNumber}\n${spokenAnswer}`, id);
@@ -243,6 +241,8 @@ export async function runV7Turn(input: TrainingEngineTurnInput, gate: TrainingAi
     // that happens to start with the same words.
     prefix = rest.trim() ? correctPrefix : '';
   }
+  // Keep A2 body join identical to the old glued clips (no extra newline) so
+  // lookup can reuse bank entries that still start with a praise word.
   const text = prefix + next.textEn;
   return { reply: { ...next, textEn: text, ttsText: text, praiseText, assessmentTier: tier,
     wasSoftAdvance: tier === 'incorrect' }, aiDebug };
