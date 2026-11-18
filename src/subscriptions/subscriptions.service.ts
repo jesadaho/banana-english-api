@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { Prisma, SubscriptionTier, User } from '@prisma/client';
 import { FirebaseAdminService } from '../firebase/firebase-admin.service';
+import { TelegramNotifier } from '../notifications/telegram.notifier';
 import { placementRetestStatus } from '../placement/placement.access';
 import { resolvePlacementStart } from '../placement/placement-catalog';
 import { resultLabelFor } from '../placement/placement.routing';
@@ -81,6 +82,7 @@ export class SubscriptionsService {
     private readonly prisma: PrismaService,
     private readonly firebase: FirebaseAdminService,
     private readonly beam: BeamClient,
+    private readonly telegram: TelegramNotifier,
   ) {}
 
   async grant(params: {
@@ -751,6 +753,13 @@ export class SubscriptionsService {
         paidAt: new Date(),
         ...(beamChargeId ? { beamChargeId } : {}),
       },
+    });
+    this.telegram.notifyPurchase({
+      kind: 'beam_presale',
+      userId: order.userId,
+      orderId: order.id,
+      amountThb: order.priceThb,
+      storeTransactionId: beamChargeId ?? null,
     });
     if (!order.userId) return;
     const user = await this.prisma.user.findUnique({ where: { id: order.userId } });
