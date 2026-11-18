@@ -200,6 +200,7 @@ model User {
   eventScoreAttempts      EventScoreAttempt[]
   eventResults            EventResult[]
   eventRewardGrants       EventRewardGrant[]
+  answerModeDays          AnswerModeDaily[]
 
   createdAt               DateTime  @default(now())
   updatedAt               DateTime  @updatedAt
@@ -1186,5 +1187,23 @@ model ClipProgress {
 
   @@unique([userId, clipId, mode])
   @@index([userId, updatedAt])
+}
+
+/// Tap Mode analytics: answers per UTC day, node kind and input mode
+/// (`speak` vs `tap`), one row per learner. Admin Retention → "Speak vs Tap".
+model AnswerModeDaily {
+  day     DateTime @db.Date
+  userId  String
+  /// lesson | say_it | new_words | word_cards | see_and_say
+  kind    String
+  /// speak | tap
+  mode    String
+  count   Int      @default(0)
+  correct Int      @default(0)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([day, userId, kind, mode])
+  @@index([day, kind, mode])
 }
 

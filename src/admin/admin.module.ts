@@ -18,6 +18,7 @@ import { AdminBugReportsController } from './admin-bug-reports.controller';
 import { AdminLedgerController } from './admin-ledger.controller';
 import { AdminLedgerService } from './admin-ledger.service';
 import { AdminMetricsController } from './admin-metrics.controller';
+import { AdminSessionMixExtraController } from './admin-session-mix-extra.controller';
 import { AdminMetricsService } from './admin-metrics.service';
 import { AdminReferralsController } from './admin-referrals.controller';
 import { AdminSubscriptionsController } from './admin-subscriptions.controller';
@@ -38,6 +39,7 @@ import { AdminEventsController } from './admin-events.controller';
   ],
   controllers: [
     AdminMetricsController,
+    AdminSessionMixExtraController,
     AdminLedgerController,
     AdminBugReportsController,
     AdminArticlesController,
