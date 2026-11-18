@@ -158,6 +158,7 @@ async function collectA2Lesson(
   if (!config) throw new Error(`missing A2 lesson ${lessonId}`);
   const engine = engineFor();
   const advances: string[] = [];
+  addBareStepTexts(steps, name, lines);
 
   for (const step of steps) {
     const here = await replay(engine, config, name, advances, lines, false);
@@ -189,6 +190,7 @@ async function collectLesson(
 
   const engine = engineFor();
   const prefix: string[] = [];
+  addBareStepTexts(steps, name, lines);
 
   for (const step of steps) {
     const here = await replay(engine, config, name, prefix, lines, false);
@@ -210,6 +212,21 @@ async function collectLesson(
     await say(engine, config, name, firstWrong, OFF_TOPIC, lines);
 
     prefix.push(step.expectedSpeech);
+  }
+}
+
+/** Bank presentation text alone (finish / listen) — runtime may speak these bare. */
+function addBareStepTexts(
+  steps: V7TeachingStep[],
+  name: string,
+  lines: Set<string>,
+): void {
+  for (const step of steps) {
+    const text = step.presentation?.text?.trim();
+    if (!text) continue;
+    if (step.kind === 'complete' || !step.expectsUserSpeech) {
+      addBankable(lines, text, name);
+    }
   }
 }
 

@@ -4,6 +4,8 @@ import {
   audioUrlForTurn,
   audioUrlsForSplitTurn,
   loadTtsBank,
+  lookupTtsBankUrl,
+  stripLeadingPraise,
   ttsBankLookupKey,
 } from './tts-bank';
 import { collectInteractiveScenarioBankLines } from '../interactive-scenario/interactive-scenario.runtime';
@@ -17,6 +19,25 @@ describe('tts bank lookup', () => {
     assert.equal(
       ttsBankLookupKey('สุดยอดครับ! 🎉 เก่งมาก 🍌✨'),
       ttsBankLookupKey('สุดยอดครับ! เก่งมาก'),
+    );
+  });
+
+  it('lookup hits when only the banked line has emoji', () => {
+    const body = 'ต่อไป Excuse me ใช้ทักคน หรือขอผ่าน และ Sorry ใช้ขอโทษ ลองพูดตามว่า Excuse me.';
+    const withEmoji =
+      'ต่อไป Excuse me ใช้ทักคน หรือขอผ่าน 🙋 และ Sorry ใช้ขอโทษ 😔 ลองพูดตามว่า Excuse me.';
+    const url = 'https://example.com/excuse.mp3';
+    assert.equal(lookupTtsBankUrl({ [withEmoji]: url }, body), url);
+    assert.equal(lookupTtsBankUrl({ [body]: url }, withEmoji), url);
+  });
+
+  it('strips leading praise then finds the body clip', () => {
+    const body = 'I go swimming on weekends. วันหยุดฉันไปว่ายน้ำ';
+    const url = 'https://example.com/swim.mp3';
+    assert.equal(stripLeadingPraise(`Very good! ${body}`), body);
+    assert.equal(
+      lookupTtsBankUrl({ [`Very good! ${body}`]: url }, body),
+      url,
     );
   });
 

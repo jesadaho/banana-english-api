@@ -1,7 +1,7 @@
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { A2_PRAISES } from './english-praises';
+import { BARE_PRAISE_LINES } from './english-praises';
 
 /** Cloud TTS model used for scripted lesson clips. */
 export const TTS_BANK_MODEL = 'gemini-3.1-flash-tts-preview';
@@ -30,12 +30,11 @@ export function ttsBankKey(text: string | null | undefined): string {
 /**
  * Loose key for lookup only — not used in object hashes.
  * Hits the same clip when Gemini changes Latin case, trailing punct, or ๆ spacing.
+ * Emoji are never spoken (sanitizeTtsSpeech drops them), so variants must collide.
  */
 export function ttsBankLookupKey(text: string | null | undefined): string {
   return ttsBankKey(text)
     .normalize('NFC')
-    // Emoji are never spoken (sanitizeTtsSpeech drops them), so 🎉 / 🍌✨
-    // variants must hit the same clip.
     .replace(
       /[\u2190-\u21FF\u2300-\u27BF\u2B00-\u2BFF\uFE0F\u200D]|[\u{1F000}-\u{1FAFF}]/gu,
       ' ',
@@ -46,6 +45,33 @@ export function ttsBankLookupKey(text: string | null | undefined): string {
     .replace(/\s+/g, ' ')
     .trim()
     .toLowerCase();
+}
+
+/** Leading praise that may glue onto old bank clips or be split at runtime. */
+const LEADING_PRAISE_RE = (() => {
+  const extras = [
+    'ดีครับ',
+    'ถูกต้องครับ',
+    'ใช่เลยครับ',
+    'เยี่ยมครับ',
+    'สุดยอดครับ',
+    'เก่งมากครับ',
+    'ถูกต้อง',
+    'ดีมาก',
+    'เยี่ยม',
+  ];
+  const parts = [...BARE_PRAISE_LINES, ...extras]
+    .map((p) => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+    .sort((a, b) => b.length - a.length);
+  return new RegExp(`^(?:${parts.join('|')})[!！]?\\s+`, 'iu');
+})();
+
+/** Drop one leading praise token. Lookup-only — does not change bank keys. */
+export function stripLeadingPraise(text: string): string {
+  const key = ttsBankKey(text);
+  if (!key) return '';
+  const next = key.replace(LEADING_PRAISE_RE, '').trim();
+  return next === key ? key : next;
 }
 
 /** Object name for one spoken line. Includes model and voice so a regen does not collide. */
@@ -87,24 +113,38 @@ function lookupExactOrFolded(
   return null;
 }
 
+/**
+ * Resolve a spoken line to a bank URL.
+ * Order: exact → folded (emoji/case/punct) → strip leading praise → repeat.
+ */
 export function lookupTtsBankUrl(
   lines: Record<string, string>,
   ttsText: string | null | undefined,
   textEn?: string | null,
   foldedIndex?: Map<string, string>,
 ): string | null {
-  const key = ttsBankKey(spokenTurnText(ttsText, textEn));
+  let key = ttsBankKey(spokenTurnText(ttsText, textEn));
   if (!key) return null;
-  const hit = lookupExactOrFolded(lines, key, foldedIndex);
-  if (hit) return hit;
-  // Legacy A2 bank clips glued a random praise onto the body. After praise is
-  // split out, reuse any of those prefixed recordings for the same body.
-  if (!A2_PRAISES.some((praise) => key === praise || key.startsWith(`${praise} `))) {
-    for (const praise of A2_PRAISES) {
+
+  for (let i = 0; i < 4; i++) {
+    const hit = lookupExactOrFolded(lines, key, foldedIndex);
+    if (hit) return hit;
+    const stripped = stripLeadingPraise(key);
+    if (!stripped || stripped === key) break;
+    key = stripped;
+  }
+
+  // Legacy: bank has "Praise + body" but request is bare body — try prefixing.
+  const bare = ttsBankKey(spokenTurnText(ttsText, textEn));
+  if (
+    bare &&
+    !BARE_PRAISE_LINES.some((p) => bare === p || bare.startsWith(`${p} `))
+  ) {
+    for (const praise of BARE_PRAISE_LINES) {
       for (const sep of [' ', '\n'] as const) {
         const prefixed = lookupExactOrFolded(
           lines,
-          `${praise}${sep}${key}`,
+          `${praise}${sep}${bare}`,
           foldedIndex,
         );
         if (prefixed) return prefixed;
@@ -117,11 +157,25 @@ export function lookupTtsBankUrl(
 let cached: TtsBankFile | null = null;
 let cachedFolded: Map<string, string> | null = null;
 
+/**
+ * Folded index plus praise-stripped aliases so a banked
+ * "Very good! body…" still hits a request that is only "body…".
+ */
 function foldedBankIndex(lines: Record<string, string>): Map<string, string> {
   const index = new Map<string, string>();
-  for (const [banked, url] of Object.entries(lines)) {
-    const folded = ttsBankLookupKey(banked);
+  const indexOne = (text: string, url: string) => {
+    const folded = ttsBankLookupKey(text);
     if (folded && !index.has(folded)) index.set(folded, url);
+  };
+  for (const [banked, url] of Object.entries(lines)) {
+    indexOne(banked, url);
+    let cursor = banked;
+    for (let i = 0; i < 3; i++) {
+      const stripped = stripLeadingPraise(cursor);
+      if (!stripped || stripped === cursor) break;
+      indexOne(stripped, url);
+      cursor = stripped;
+    }
   }
   return index;
 }
