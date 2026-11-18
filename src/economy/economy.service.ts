@@ -32,14 +32,21 @@ import {
   getMissionReward,
 } from './economy.constants';
 import {
+  ENV_BANANA_BONUS_DAY0,
+  ENV_BANANA_BONUS_DAY1,
+  ENV_BANANA_BONUS_DAY2,
   ENV_BANANA_CAP_DAY0,
   ENV_BANANA_CAP_DAY1TO2,
   ENV_BANANA_CAP_DAY3PLUS,
+  ENV_BANANA_DAY_BONUS,
   ENV_BANANA_DAY_CAPS,
-  freeBananaCapForSignupDay,
-  resolveBananaDayCaps,
+  SIGNUP_DAY_BONUS_SOURCE,
+  resolveBananaDayBonus,
+  signupDayBonusAmount,
+  signupDayBonusRef,
+  signupDayEntitlement,
   signupLocalDayIndex,
-  type BananaDayCaps,
+  type BananaDayBonusConfig,
 } from './banana-day-caps';
 import {
   completedOnLocalDay,
@@ -94,10 +101,16 @@ export interface SessionRewardResult {
   isDailyMission: boolean;
 }
 
+export type SignupDayBonusResult = {
+  user: User;
+  credited: number;
+  dayIndex: number | null;
+};
+
 @Injectable()
 export class EconomyService {
   private readonly logger = new Logger(EconomyService.name);
-  private dayCapsCache: { at: number; caps: BananaDayCaps } | null = null;
+  private dayBonusCache: { at: number; cfg: BananaDayBonusConfig } | null = null;
 
   constructor(
     private readonly prisma: PrismaService,
@@ -144,57 +157,56 @@ export class EconomyService {
     return this.envInt(ENV_DEBUG_BANANA_REFILL, DEBUG_BANANA_REFILL);
   }
 
-  /** Steady-state free cap (Day 3+). */
+  /** Free pool soft cap (timed refill). Always baseCap for free users. */
   maxBananaBalance(): number {
-    return this.dayCaps().day3plus;
+    return this.dayBonus().baseCap;
   }
 
   private bananaRefillHours(): number {
     return this.envInt(ENV_BANANA_REFILL_HOURS, BANANA_REFILL_HOURS);
   }
 
-  private dayCapsEnv() {
+  private dayBonusEnv() {
     return {
-      dayCapsJson: this.config.get<string>(ENV_BANANA_DAY_CAPS),
-      day0: this.config.get<string>(ENV_BANANA_CAP_DAY0),
-      day1to2: this.config.get<string>(ENV_BANANA_CAP_DAY1TO2),
-      day3plus: this.config.get<string>(ENV_BANANA_CAP_DAY3PLUS),
+      bonusJson: this.config.get<string>(ENV_BANANA_DAY_BONUS),
+      capsJson: this.config.get<string>(ENV_BANANA_DAY_CAPS),
+      day0: this.config.get<string>(ENV_BANANA_BONUS_DAY0),
+      day1: this.config.get<string>(ENV_BANANA_BONUS_DAY1),
+      day2: this.config.get<string>(ENV_BANANA_BONUS_DAY2),
+      capDay0: this.config.get<string>(ENV_BANANA_CAP_DAY0),
+      capDay1to2: this.config.get<string>(ENV_BANANA_CAP_DAY1TO2),
+      capDay3plus: this.config.get<string>(ENV_BANANA_CAP_DAY3PLUS),
       maxBananaBalance: this.config.get<string>(ENV_MAX_BANANA_BALANCE),
     };
   }
 
-  /** Resolved caps (defaults → RC cache → Railway env). */
-  private dayCaps(): BananaDayCaps {
+  private dayBonus(): BananaDayBonusConfig {
     return (
-      this.dayCapsCache?.caps ??
-      resolveBananaDayCaps({ env: this.dayCapsEnv() })
+      this.dayBonusCache?.cfg ??
+      resolveBananaDayBonus({ env: this.dayBonusEnv() })
     );
   }
 
-  /**
-   * Refresh caps from Firebase RC then apply env on top (cached ~60s).
-   * Env alone is enough when Firebase is off.
-   */
-  async ensureDayCaps(now = Date.now()): Promise<BananaDayCaps> {
-    if (this.dayCapsCache && now - this.dayCapsCache.at < 60_000) {
-      return this.dayCapsCache.caps;
+  /** Refresh bonus config from RC then env (cached ~60s). */
+  async ensureDayBonus(now = Date.now()): Promise<BananaDayBonusConfig> {
+    if (this.dayBonusCache && now - this.dayBonusCache.at < 60_000) {
+      return this.dayBonusCache.cfg;
     }
-    const caps = resolveBananaDayCaps({
+    const cfg = resolveBananaDayBonus({
       rc: await this.firebase?.getRemoteConfigStrings(),
-      env: this.dayCapsEnv(),
+      env: this.dayBonusEnv(),
     });
-    this.dayCapsCache = { at: now, caps };
-    return caps;
+    this.dayBonusCache = { at: now, cfg };
+    return cfg;
   }
 
   /**
-   * Free-pool cap for this learner.
-   * Pro → PRO_BANANA_CAP (25). Free → Day 0/1–2/3+ (env / RC / defaults).
+   * Free-pool cap for timed refill.
+   * Pro → PRO_BANANA_CAP (25). Free → baseCap (default 5) — signup bonuses are separate.
    */
   bananaCapFor(user: User, now = new Date()): number {
     if (effectiveSubscriptionTier(user, now) === 'PRO') return PRO_BANANA_CAP;
-    const day = signupLocalDayIndex(user.createdAt, user.timezone, now);
-    return freeBananaCapForSignupDay(day, this.dayCaps());
+    return this.dayBonus().baseCap;
   }
 
   private refillHoursFor(user: User): number {
@@ -218,9 +230,15 @@ export class EconomyService {
     refillHours: number;
   } {
     const maxBalance = user ? this.bananaCapFor(user) : this.maxBananaBalance();
+    const dailyDrop = user
+      ? signupDayEntitlement(
+          signupLocalDayIndex(user.createdAt, user.timezone),
+          this.dayBonus(),
+        )
+      : this.dailyBananaDrop();
     return {
-      // Old builds read `dailyDrop` as "bananas per day" — mirror the live cap.
-      dailyDrop: user ? maxBalance : this.dailyBananaDrop(),
+      // Old builds: dailyDrop ≈ "bananas you get today" (base + signup bonus).
+      dailyDrop,
       maxBalance,
       missionCost: MISSION_BANANA_COST,
       refillHours: user ? this.refillHoursFor(user) : this.bananaRefillHours(),
@@ -228,7 +246,7 @@ export class EconomyService {
   }
 
   async creditOnboardingBonus(userId: string): Promise<User> {
-    await this.ensureDayCaps();
+    await this.ensureDayBonus();
     const bonus = this.onboardingBananaBonus();
     return this.prisma.$transaction(async (tx) => {
       const user = await tx.user.findUniqueOrThrow({ where: { id: userId } });
@@ -292,9 +310,65 @@ export class EconomyService {
     return this.creditOnboardingBonus(userId);
   }
 
+  /**
+   * One-shot signup-day banana bonus (uncapped saved bananas, not the free pool).
+   * Day 0 → +3, Day 1 → +2, Day 2 → +2. Idempotent per day index via ledger.
+   */
+  async maybeCreditSignupDayBonus(
+    user: User,
+    now = new Date(),
+  ): Promise<SignupDayBonusResult> {
+    await this.ensureDayBonus(now.getTime());
+    if (effectiveSubscriptionTier(user, now) === 'PRO') {
+      return { user, credited: 0, dayIndex: null };
+    }
+    const dayIndex = signupLocalDayIndex(user.createdAt, user.timezone, now);
+    const amount = signupDayBonusAmount(dayIndex, this.dayBonus());
+    if (amount <= 0) return { user, credited: 0, dayIndex };
+
+    const referenceId = signupDayBonusRef(dayIndex);
+    const existing = await this.prisma.economyTransaction.findFirst({
+      where: {
+        userId: user.id,
+        source: SIGNUP_DAY_BONUS_SOURCE,
+        referenceId,
+        currency: Currency.BANANA,
+      },
+    });
+    if (existing) return { user, credited: 0, dayIndex };
+
+    const updated = await this.prisma.$transaction(async (tx) => {
+      const again = await tx.economyTransaction.findFirst({
+        where: {
+          userId: user.id,
+          source: SIGNUP_DAY_BONUS_SOURCE,
+          referenceId,
+          currency: Currency.BANANA,
+        },
+      });
+      if (again) return null;
+      await this.recordTransaction(tx, {
+        userId: user.id,
+        currency: Currency.BANANA,
+        amount,
+        source: SIGNUP_DAY_BONUS_SOURCE,
+        referenceId,
+      });
+      return tx.user.update({
+        where: { id: user.id },
+        data: { bananaBalance: { increment: amount } },
+      });
+    });
+    if (!updated) {
+      const fresh = await this.prisma.user.findUniqueOrThrow({ where: { id: user.id } });
+      return { user: fresh, credited: 0, dayIndex };
+    }
+    return { user: updated, credited: amount, dayIndex };
+  }
+
   /** Timed free refill (+1 per interval up to the cap); safe to call on every profile load. */
   async maybeRefillFreeBananas(user: User, now = new Date()): Promise<User> {
-    await this.ensureDayCaps(now.getTime());
+    await this.ensureDayBonus(now.getTime());
     const intervalMs = this.refillHoursFor(user) * 3_600_000;
     const max = this.bananaCapFor(user, now);
     const anchorOf = (u: User) => u.lastBananaRefillAt ?? null;
