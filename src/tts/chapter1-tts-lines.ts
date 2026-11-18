@@ -11,14 +11,15 @@ import {
   type Turn,
 } from '../training/foundation/foundation-poolgate.harness';
 import { FOUNDATION_PROBE_LEARNER } from '../training/foundation/foundation-poolgate.fixtures';
+import {
+  FOUNDATION_LESSON_IDS,
+  personalize,
+} from '../training/foundation/foundation.helpers';
+import { FOUNDATION_BOARDS } from '../training/foundation/foundation-boards';
 import { spokenTurnText, ttsBankKey } from './tts-bank';
 
-/** Chapter 1 lessons that use the Foundation choice-lesson script. */
-export const CHAPTER1_TTS_LESSON_IDS = [
-  'greetings',
-  'introductions',
-  'yes_no_maybe',
-] as const;
+/** All Foundation choice-lesson boards (Teacher B scripted TTS). */
+export const CHAPTER1_TTS_LESSON_IDS = FOUNDATION_LESSON_IDS;
 
 const PRAISES = ['ถูกต้องครับ!', 'ดีมากครับ!', 'เยี่ยมครับ!'] as const;
 
@@ -141,7 +142,7 @@ function addBankable(bucket: Set<string>, text: string, name: string): void {
 }
 
 /**
- * Spoken lines from the PoolGate 5-scenario matrix for Chapter 1.
+ * Spoken lines from Foundation boards + the PoolGate scenario matrix.
  * Lines that still contain the learner name are omitted.
  */
 export function collectChapter1BankLines(
@@ -149,6 +150,7 @@ export function collectChapter1BankLines(
 ): string[] {
   const lines = new Set<string>();
   const seeds = praiseSeeds();
+  collectBoardPromptTexts(lines, name);
 
   for (const lessonId of CHAPTER1_TTS_LESSON_IDS) {
     const def = getFoundationChoiceLesson(lessonId);
@@ -156,11 +158,31 @@ export function collectChapter1BankLines(
 
     addBankable(lines, spoken(def.buildOpening(name)), name);
     collectInPool(def, name, lines);
-    collectAssessed(def, name, lines, seeds);
-    collectSoftAdvance(def, name, lines);
+    try {
+      collectAssessed(def, name, lines, seeds);
+    } catch {
+      // Some boards defer every off-pool turn; in-pool lines still bank.
+    }
+    try {
+      collectSoftAdvance(def, name, lines);
+    } catch {
+      // Soft-advance is not scripted on every Foundation board.
+    }
   }
 
   return [...lines].sort();
+}
+
+/** Exact board prompts (e.g. polite_expressions) as spoken at runtime. */
+function collectBoardPromptTexts(lines: Set<string>, name: string): void {
+  for (const lessonId of CHAPTER1_TTS_LESSON_IDS) {
+    const boards = FOUNDATION_BOARDS[lessonId];
+    if (!boards) continue;
+    for (const step of Object.values(boards)) {
+      const text = personalize(step.textEn, name);
+      addBankable(lines, text, name);
+    }
+  }
 }
 
 /** Scenario 1 — exact in-pool answer, fully scripted next line. */

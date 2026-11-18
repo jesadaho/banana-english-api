@@ -364,8 +364,13 @@ async function main() {
   const lessonArg = process.argv.find((arg) => arg.startsWith('--lesson='));
   const lessonId = lessonArg?.slice('--lesson='.length)?.trim() || '';
   const force = process.argv.includes('--force');
+  const onlyKeysJsonIdx = process.argv.indexOf('--only-keys-json');
   const lessonLines = new Set(
-    (lessonId
+    (onlyKeysJsonIdx >= 0
+      ? (JSON.parse(
+          readFileSync(resolve(process.argv[onlyKeysJsonIdx + 1]!), 'utf8'),
+        ) as string[])
+      : lessonId
       ? await collectScriptedLessonBankLines(lessonId)
       : process.argv.includes('--only-extra')
       ? extraBankLines()
@@ -383,6 +388,11 @@ async function main() {
           ? collectDailySpeakBankLines()
         : process.argv.includes('--only-a2')
           ? await collectAdventureA2BankLines(1, 32)
+        : process.argv.includes('--only-a1')
+          ? [
+              ...collectChapter1BankLines(),
+              ...(await collectFoundationBankLines(2, 16)),
+            ]
         : process.argv.includes('--only-praises')
           ? [...BARE_PRAISE_LINES]
         : [
