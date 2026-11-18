@@ -51,7 +51,7 @@ export class DailyJobsService {
 
   /**
    * Credit Day 0/1/2 signup banana bonuses and push — only at 09:00 Asia/Bangkok.
-   * The */15 cron hits 09:00 and 09:15; ledger idempotency makes the second a no-op.
+   * The every-15-min cron hits 09:00 and 09:15; ledger idempotency makes the second a no-op.
    */
   private async processSignupDayBonus() {
     const now = new Date();
@@ -276,6 +276,7 @@ export class DailyJobsService {
     type: Exclude<
       PushNotificationType,
       | 'bug_report_reply'
+      | 'signup_banana_bonus'
       | 'referral_reward'
       | 'daily_practice'
       | 'weekly_report'
