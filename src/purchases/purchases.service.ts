@@ -8,6 +8,7 @@ import { ConfigService } from '@nestjs/config';
 import { User } from '@prisma/client';
 import { Prisma } from '@prisma/client';
 import { EconomyService } from '../economy/economy.service';
+import { TelegramNotifier } from '../notifications/telegram.notifier';
 import { PrismaService } from '../prisma/prisma.service';
 import { ReferralsService } from '../referrals/referrals.service';
 import { subscriptionProduct } from '../subscriptions/subscription-products';
@@ -74,6 +75,7 @@ export class PurchasesService {
     private readonly revenueCat: RevenueCatClient,
     private readonly subscriptions: SubscriptionsService,
     private readonly referrals: ReferralsService,
+    private readonly telegram: TelegramNotifier,
   ) {}
 
   async recordStorePaid(params: {
@@ -348,7 +350,7 @@ export class PurchasesService {
 
     if (!user) return;
 
-    await this.claimPurchase(user, {
+    const claimed = await this.claimPurchase(user, {
       productId,
       storeTransactionId,
       platform,
@@ -358,6 +360,18 @@ export class PurchasesService {
         : undefined,
       source: 'webhook',
     });
+    if (!claimed.alreadyClaimed && claimed.bananasGranted > 0) {
+      this.telegram.notifyPurchase({
+        kind: 'banana_pack',
+        userId: user.id,
+        productId,
+        platform,
+        storeTransactionId,
+        isSandbox: event.environment
+          ? event.environment.toUpperCase() === 'SANDBOX'
+          : null,
+      });
+    }
   }
 
   private async handleSubscriptionEvent(
@@ -402,6 +416,14 @@ export class PurchasesService {
       });
       if (result.applied && type === 'INITIAL_PURCHASE') {
         await this.referrals.onInviteeMembershipPurchase(user.id);
+        this.telegram.notifyPurchase({
+          kind: 'pro',
+          userId: user.id,
+          productId,
+          platform,
+          storeTransactionId,
+          isSandbox,
+        });
       }
       return;
     }

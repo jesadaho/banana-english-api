@@ -100,6 +100,7 @@ test('purchase then restore with the other id credits bananas once', async () =>
     new RevenueCatClient(config),
     {} as SubscriptionsService,
     {} as ReferralsService,
+    { notifyPurchase: () => undefined } as never,
   );
   const user = { id: 'u1', firebaseUid: null, anonymousId: 'a' } as User;
 
