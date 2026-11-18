@@ -5,6 +5,7 @@ import {
   Injectable,
   Logger,
   NotFoundException,
+  Optional,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { User, Prisma } from '@prisma/client';
@@ -14,6 +15,8 @@ import {
   placementRetestStatus,
 } from '../placement/placement.access';
 import { FirebaseAdminService } from '../firebase/firebase-admin.service';
+import { FcmService } from '../notifications/fcm.service';
+import { signupBananaBonusPayload } from '../notifications/notification-templates';
 import {
   earlyBirdPayload,
   subscriptionPayload,
@@ -199,6 +202,7 @@ export class UsersService {
     private readonly economy: EconomyService,
     private readonly config: ConfigService,
     private readonly firebaseAdmin: FirebaseAdminService,
+    @Optional() private readonly fcm?: FcmService,
   ) {}
 
   async upsertProfile(user: User, dto: UpsertUserDto): Promise<UserProfileResponse> {
@@ -275,6 +279,26 @@ export class UsersService {
 
     updated = await this.economy.maybeRefillFreeBananas(updated);
     updated = await this.economy.ensureOnboardingBonus(updated.id);
+    const dayBonus = await this.economy.maybeCreditSignupDayBonus(updated);
+    updated = dayBonus.user;
+    if (dayBonus.credited > 0 && this.fcm) {
+      const tokens = await this.prisma.userFcmToken.findMany({
+        where: { userId: updated.id },
+        select: { token: true },
+      });
+      if (tokens.length > 0) {
+        const invalid = await this.fcm.sendAndPersist({
+          userId: updated.id,
+          tokens: tokens.map((t) => t.token),
+          payload: signupBananaBonusPayload(dayBonus.credited),
+        });
+        if (invalid.length > 0) {
+          await this.prisma.userFcmToken.deleteMany({
+            where: { token: { in: invalid } },
+          });
+        }
+      }
+    }
     return this.withEventAvatars(updated);
   }
 

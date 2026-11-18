@@ -17,9 +17,11 @@ import {
   rememberDailyPracticeTemplate,
   REMINDER_SLOT_HOUR,
   pushPayloadForType,
+  signupBananaBonusPayload,
   type PushNotificationType,
 } from './notification-templates';
 import { WEEKLY_REPORT_TYPE } from '../weekly-report/weekly-report.week';
+import { signupLocalDayIndex } from '../economy/banana-day-caps';
 
 const BANANA_PUSH_START_HOUR = 8;
 const BANANA_PUSH_END_HOUR = 22;
@@ -37,12 +39,49 @@ export class DailyJobsService {
   @Cron('*/15 * * * *')
   async runScheduledJobs() {
     try {
+      await this.processSignupDayBonus();
       await this.processBananaFull();
       await this.processDailyPractice();
       await this.processStreakReminder();
       await this.processMissYouDay3();
     } catch (error) {
       this.logger.error(`Scheduled jobs failed: ${String(error)}`);
+    }
+  }
+
+  /**
+   * Credit Day 0/1/2 signup banana bonuses and push once when credited.
+   * Quiet hours skip the push (credit still lands on next eligible tick / app open).
+   */
+  private async processSignupDayBonus() {
+    const now = new Date();
+    const users = await this.prisma.user.findMany({
+      where: {
+        // Only accounts that could still be on Day 0–2 (created in the last ~4 local days).
+        createdAt: { gte: new Date(now.getTime() - 4 * 86_400_000) },
+        fcmTokens: { some: {} },
+      },
+      include: { fcmTokens: true },
+    });
+
+    for (const user of users) {
+      const day = signupLocalDayIndex(user.createdAt, user.timezone, now);
+      if (day > 2) continue;
+      const local = getUserLocalTime(user.timezone, now);
+      // Defer both credit and push outside quiet hours so the push is not lost.
+      if (local.hour < BANANA_PUSH_START_HOUR || local.hour >= BANANA_PUSH_END_HOUR) {
+        continue;
+      }
+      const result = await this.economy.maybeCreditSignupDayBonus(user, now);
+      if (result.credited <= 0) continue;
+
+      const payload = signupBananaBonusPayload(result.credited);
+      const invalid = await this.fcm.sendAndPersist({
+        userId: user.id,
+        tokens: user.fcmTokens.map((t) => t.token),
+        payload,
+      });
+      await this.removeInvalidTokens(invalid);
     }
   }
 

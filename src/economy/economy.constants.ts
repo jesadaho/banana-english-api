@@ -60,8 +60,8 @@ export const DAILY_BANANA_DROP = 5;
 export const BANANA_REFILL_HOURS = 4;
 export const DEBUG_BANANA_REFILL = 2;
 /**
- * Steady-state free pool cap (Day 3+). Day 0–2 use higher caps from
- * `banana-day-caps.ts` / Remote Config `banana_day_caps`. IAP bananas are uncapped.
+ * Free pool soft cap (timed refill). Signup-day bonuses are separate uncapped
+ * credits — see `banana-day-caps.ts` / env `BANANA_DAY_BONUS`.
  */
 export const MAX_BANANA_BALANCE = 5;
 /** Typical Mission start cost shown in the Banana Ticket sheet. */

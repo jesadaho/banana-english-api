@@ -1,5 +1,6 @@
 export type PushNotificationType =
   | 'banana_full'
+  | 'signup_banana_bonus'
   | 'streak_reminder'
   | 'miss_you'
   | 'bug_report_reply'
@@ -41,6 +42,19 @@ export const BANANA_FULL_VARIANTS: PushTemplate[] = [
   { title: '🍌 กล้วยเต็มแล้ว!', body: 'พักไถฟีด แล้วมาสปีคสักบทปะ 👀', data: { route: '/train' } },
   { title: '🍌 กล้วยเต็มแล้ว!', body: 'ครูบีพร้อมแล้ว ขาดแค่เธอ 🎤', data: { route: '/train' } },
 ];
+
+/** Signup-day bonus push — amount filled in by the sender. */
+export function signupBananaBonusPayload(amount: number): PushNotificationPayload {
+  const n = Math.max(1, Math.floor(amount));
+  return {
+    type: 'signup_banana_bonus',
+    title: `🎁 โบนัสกล้วย +${n}!`,
+    body: n >= 3
+      ? 'ยินดีต้อนรับ! ได้กล้วยเพิ่มแล้ว มาฝึกพูดกันเลย 🍌'
+      : 'กล้วยโบนัสถึงแล้ว มาฝึกพูดต่อกันนะ 🍌',
+    data: { route: '/train', amount: String(n) },
+  };
+}
 
 export const DAILY_PRACTICE_CORE: DailyPracticeTemplate[] = [
   { id: '01', pool: 'core', title: 'ครูบีรอจนกล้วยจะสุกแล้ว 🍌', body: 'วันนี้ยังไม่ได้คุยกันเลย มาหน่อยยย', data: ROUTE_HOME },
@@ -114,6 +128,7 @@ export const PUSH_NOTIFICATION_TEMPLATES: Record<
     PushNotificationType,
     | 'bug_report_reply'
     | 'banana_full'
+    | 'signup_banana_bonus'
     | 'referral_reward'
     | 'daily_practice'
     | 'weekly_report'
@@ -140,6 +155,7 @@ export function pushPayloadForType(
   type: Exclude<
     PushNotificationType,
     | 'bug_report_reply'
+    | 'signup_banana_bonus'
     | 'referral_reward'
     | 'daily_practice'
     | 'weekly_report'
