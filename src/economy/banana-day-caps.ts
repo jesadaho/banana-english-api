@@ -4,10 +4,17 @@ import { getUserLocalTime, parseDateKey, resolveUserTimezone } from '../common/t
  * Free banana pool cap by local calendar day since signup.
  * Day 0 = signup day; Day 3+ is the steady-state free cap.
  *
- * Firebase Remote Config key `banana_day_caps` (JSON string), e.g.
- * `{"day0":8,"day1to2":7,"day3plus":5}`
+ * Config (later wins): code defaults → Firebase RC `banana_day_caps` → env.
+ * Env (Railway):
+ *   BANANA_DAY_CAPS={"day0":8,"day1to2":7,"day3plus":5}
+ *   or BANANA_CAP_DAY0 / BANANA_CAP_DAY1TO2 / BANANA_CAP_DAY3PLUS
+ *   (MAX_BANANA_BALANCE still aliases day3plus)
  */
 export const BANANA_DAY_CAPS_RC_KEY = 'banana_day_caps';
+export const ENV_BANANA_DAY_CAPS = 'BANANA_DAY_CAPS';
+export const ENV_BANANA_CAP_DAY0 = 'BANANA_CAP_DAY0';
+export const ENV_BANANA_CAP_DAY1TO2 = 'BANANA_CAP_DAY1TO2';
+export const ENV_BANANA_CAP_DAY3PLUS = 'BANANA_CAP_DAY3PLUS';
 
 export type BananaDayCaps = {
   day0: number;
@@ -49,14 +56,12 @@ function positiveInt(value: unknown, fallback: number): number {
   return Math.min(100, Math.floor(n));
 }
 
-/** Parse RC JSON; invalid / missing → null (caller keeps defaults). */
-export function parseBananaDayCapsFromRc(
-  rc: Record<string, string> | null | undefined,
-): BananaDayCaps | null {
-  const raw = rc?.[BANANA_DAY_CAPS_RC_KEY]?.trim();
-  if (!raw) return null;
+/** Parse `{"day0":8,"day1to2":7,"day3plus":5}` — invalid → null. */
+export function parseBananaDayCapsJson(raw: string | null | undefined): BananaDayCaps | null {
+  const text = raw?.trim();
+  if (!text) return null;
   try {
-    const parsed = JSON.parse(raw) as Record<string, unknown>;
+    const parsed = JSON.parse(text) as Record<string, unknown>;
     if (!parsed || typeof parsed !== 'object') return null;
     return {
       day0: positiveInt(parsed.day0, DEFAULT_BANANA_DAY_CAPS.day0),
@@ -66,4 +71,55 @@ export function parseBananaDayCapsFromRc(
   } catch {
     return null;
   }
+}
+
+/** Parse RC JSON; invalid / missing → null. */
+export function parseBananaDayCapsFromRc(
+  rc: Record<string, string> | null | undefined,
+): BananaDayCaps | null {
+  return parseBananaDayCapsJson(rc?.[BANANA_DAY_CAPS_RC_KEY]);
+}
+
+export type BananaDayCapsEnv = {
+  /** Full JSON blob `BANANA_DAY_CAPS`. */
+  dayCapsJson?: string | null;
+  day0?: string | null;
+  day1to2?: string | null;
+  day3plus?: string | null;
+  /** Legacy alias for day3plus (`MAX_BANANA_BALANCE`). */
+  maxBananaBalance?: string | null;
+};
+
+/** Apply individual env ints on top of a base (only set keys win). */
+export function applyBananaDayCapEnv(
+  base: BananaDayCaps,
+  env: BananaDayCapsEnv,
+): BananaDayCaps {
+  const fromJson = parseBananaDayCapsJson(env.dayCapsJson ?? undefined);
+  let caps = fromJson ?? base;
+  if (env.day0 != null && String(env.day0).trim() !== '') {
+    caps = { ...caps, day0: positiveInt(env.day0, caps.day0) };
+  }
+  if (env.day1to2 != null && String(env.day1to2).trim() !== '') {
+    caps = { ...caps, day1to2: positiveInt(env.day1to2, caps.day1to2) };
+  }
+  const day3 =
+    env.day3plus != null && String(env.day3plus).trim() !== ''
+      ? env.day3plus
+      : env.maxBananaBalance;
+  if (day3 != null && String(day3).trim() !== '') {
+    caps = { ...caps, day3plus: positiveInt(day3, caps.day3plus) };
+  }
+  return caps;
+}
+
+/**
+ * Resolve live caps: defaults → RC → env (Railway env wins when set).
+ */
+export function resolveBananaDayCaps(input: {
+  rc?: Record<string, string> | null;
+  env?: BananaDayCapsEnv;
+}): BananaDayCaps {
+  const fromRc = parseBananaDayCapsFromRc(input.rc) ?? DEFAULT_BANANA_DAY_CAPS;
+  return applyBananaDayCapEnv(fromRc, input.env ?? {});
 }

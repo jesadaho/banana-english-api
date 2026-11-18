@@ -32,9 +32,12 @@ import {
   getMissionReward,
 } from './economy.constants';
 import {
-  DEFAULT_BANANA_DAY_CAPS,
+  ENV_BANANA_CAP_DAY0,
+  ENV_BANANA_CAP_DAY1TO2,
+  ENV_BANANA_CAP_DAY3PLUS,
+  ENV_BANANA_DAY_CAPS,
   freeBananaCapForSignupDay,
-  parseBananaDayCapsFromRc,
+  resolveBananaDayCaps,
   signupLocalDayIndex,
   type BananaDayCaps,
 } from './banana-day-caps';
@@ -141,38 +144,52 @@ export class EconomyService {
     return this.envInt(ENV_DEBUG_BANANA_REFILL, DEBUG_BANANA_REFILL);
   }
 
-  /** Steady-state free cap (Day 3+). Env overrides RC/defaults for ops. */
+  /** Steady-state free cap (Day 3+). */
   maxBananaBalance(): number {
-    return this.envInt(ENV_MAX_BANANA_BALANCE, this.dayCaps().day3plus);
+    return this.dayCaps().day3plus;
   }
 
   private bananaRefillHours(): number {
     return this.envInt(ENV_BANANA_REFILL_HOURS, BANANA_REFILL_HOURS);
   }
 
-  /** Cached RC day caps (defaults until the first successful refresh). */
-  private dayCaps(): BananaDayCaps {
-    const caps = this.dayCapsCache?.caps ?? DEFAULT_BANANA_DAY_CAPS;
-    const raw = this.config.get<string>(ENV_MAX_BANANA_BALANCE);
-    if (raw == null || raw.trim() === '') return caps;
-    const parsed = Number.parseInt(raw, 10);
-    if (!Number.isFinite(parsed) || parsed < 1) return caps;
-    return { ...caps, day3plus: parsed };
+  private dayCapsEnv() {
+    return {
+      dayCapsJson: this.config.get<string>(ENV_BANANA_DAY_CAPS),
+      day0: this.config.get<string>(ENV_BANANA_CAP_DAY0),
+      day1to2: this.config.get<string>(ENV_BANANA_CAP_DAY1TO2),
+      day3plus: this.config.get<string>(ENV_BANANA_CAP_DAY3PLUS),
+      maxBananaBalance: this.config.get<string>(ENV_MAX_BANANA_BALANCE),
+    };
   }
 
-  /** Pull `banana_day_caps` from Firebase Remote Config (cached ~60s via FirebaseAdmin). */
+  /** Resolved caps (defaults → RC cache → Railway env). */
+  private dayCaps(): BananaDayCaps {
+    return (
+      this.dayCapsCache?.caps ??
+      resolveBananaDayCaps({ env: this.dayCapsEnv() })
+    );
+  }
+
+  /**
+   * Refresh caps from Firebase RC then apply env on top (cached ~60s).
+   * Env alone is enough when Firebase is off.
+   */
   async ensureDayCaps(now = Date.now()): Promise<BananaDayCaps> {
     if (this.dayCapsCache && now - this.dayCapsCache.at < 60_000) {
-      return this.dayCaps();
+      return this.dayCapsCache.caps;
     }
-    const fromRc = parseBananaDayCapsFromRc(await this.firebase?.getRemoteConfigStrings());
-    this.dayCapsCache = { at: now, caps: fromRc ?? DEFAULT_BANANA_DAY_CAPS };
-    return this.dayCaps();
+    const caps = resolveBananaDayCaps({
+      rc: await this.firebase?.getRemoteConfigStrings(),
+      env: this.dayCapsEnv(),
+    });
+    this.dayCapsCache = { at: now, caps };
+    return caps;
   }
 
   /**
    * Free-pool cap for this learner.
-   * Pro → PRO_BANANA_CAP (25). Free → Day 0/1–2/3+ from RC `banana_day_caps`.
+   * Pro → PRO_BANANA_CAP (25). Free → Day 0/1–2/3+ (env / RC / defaults).
    */
   bananaCapFor(user: User, now = new Date()): number {
     if (effectiveSubscriptionTier(user, now) === 'PRO') return PRO_BANANA_CAP;
