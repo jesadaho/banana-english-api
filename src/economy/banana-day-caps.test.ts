@@ -4,6 +4,7 @@ import {
   DEFAULT_BANANA_DAY_CAPS,
   freeBananaCapForSignupDay,
   parseBananaDayCapsFromRc,
+  resolveBananaDayCaps,
   signupLocalDayIndex,
 } from './banana-day-caps';
 
@@ -17,7 +18,6 @@ describe('banana day caps', () => {
   });
 
   it('counts local calendar days since signup (Bangkok)', () => {
-    // Signup Mon 10:00 Bangkok (= Mon 03:00Z); next calendar day Tue 01:00 Bangkok (= Mon 18:00Z)
     const created = new Date('2026-11-17T03:00:00.000Z');
     assert.equal(signupLocalDayIndex(created, 'Asia/Bangkok', new Date('2026-11-17T10:00:00.000Z')), 0);
     assert.equal(signupLocalDayIndex(created, 'Asia/Bangkok', new Date('2026-11-17T18:00:00.000Z')), 1);
@@ -33,5 +33,21 @@ describe('banana day caps', () => {
     assert.equal(parseBananaDayCapsFromRc(null), null);
     assert.equal(parseBananaDayCapsFromRc({ banana_day_caps: 'nope' }), null);
     assert.deepEqual(DEFAULT_BANANA_DAY_CAPS, { day0: 8, day1to2: 7, day3plus: 5 });
+  });
+
+  it('lets Railway env override RC / defaults', () => {
+    assert.deepEqual(
+      resolveBananaDayCaps({
+        rc: { banana_day_caps: '{"day0":10,"day1to2":9,"day3plus":6}' },
+        env: { dayCapsJson: '{"day0":8,"day1to2":7,"day3plus":5}' },
+      }),
+      { day0: 8, day1to2: 7, day3plus: 5 },
+    );
+    assert.deepEqual(
+      resolveBananaDayCaps({
+        env: { day0: '8', day1to2: '7', maxBananaBalance: '5' },
+      }),
+      { day0: 8, day1to2: 7, day3plus: 5 },
+    );
   });
 });
