@@ -96,6 +96,14 @@ export class TurnDto {
   @IsInt()
   @Min(0)
   remainingSeconds?: number;
+
+  /**
+   * Lessons: `tap` = the answer was built from word chips (Tap Mode), not
+   * spoken. Graded exactly — no AI "close" judgement.
+   */
+  @IsOptional()
+  @IsIn(['speech', 'tap'])
+  inputMode?: 'speech' | 'tap';
 }
 
 class SttWordMetricDto {

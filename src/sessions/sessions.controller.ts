@@ -1678,6 +1678,7 @@ export class SessionsController {
           data.learnerFirstName ??
           learnerNameFallback(teachingLanguageFromConfig(config)),
         sessionProgressTurn: data.session.progressTurn,
+        inputMode: body.inputMode === 'tap' ? 'tap' : 'speech',
       });
       reply = generated.reply;
       turnAiDebug = generated.aiDebug;
