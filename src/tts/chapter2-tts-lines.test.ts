@@ -48,7 +48,9 @@ describe('chapter 2 TTS bank lines', () => {
     // Body lines must not glue a praise opener onto the teaching sentence.
     assert.equal(
       lines.some((line) =>
-        /^(?:That's right!|Very good!|Excellent!|เก่งมาก!|สุดยอด!|ใช่เลย!) /.test(line),
+        /^(?:That's right!|Very good!|Excellent!|ดีมากครับ|เยี่ยมมากครับ|ถูกต้องครับ|เยี่ยมครับ) /.test(
+          line,
+        ),
       ),
       false,
     );
