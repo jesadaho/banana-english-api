@@ -279,23 +279,31 @@ export class UsersService {
 
     updated = await this.economy.maybeRefillFreeBananas(updated);
     updated = await this.economy.ensureOnboardingBonus(updated.id);
-    const dayBonus = await this.economy.maybeCreditSignupDayBonus(updated);
-    updated = dayBonus.user;
-    if (dayBonus.credited > 0 && this.fcm) {
-      const tokens = await this.prisma.userFcmToken.findMany({
-        where: { userId: updated.id },
-        select: { token: true },
+    // Signup-day bonus + push fire at 09:00 Asia/Bangkok (daily job).
+    // Catch-up: if they open the app after 09:00 and cron missed them, credit + push once.
+    const bangkokHour = getUserLocalTime('Asia/Bangkok').hour;
+    if (bangkokHour >= 9) {
+      const dayBonus = await this.economy.maybeCreditSignupDayBonus({
+        ...updated,
+        timezone: 'Asia/Bangkok',
       });
-      if (tokens.length > 0) {
-        const invalid = await this.fcm.sendAndPersist({
-          userId: updated.id,
-          tokens: tokens.map((t) => t.token),
-          payload: signupBananaBonusPayload(dayBonus.credited),
+      updated = dayBonus.user;
+      if (dayBonus.credited > 0 && this.fcm) {
+        const tokens = await this.prisma.userFcmToken.findMany({
+          where: { userId: updated.id },
+          select: { token: true },
         });
-        if (invalid.length > 0) {
-          await this.prisma.userFcmToken.deleteMany({
-            where: { token: { in: invalid } },
+        if (tokens.length > 0) {
+          const invalid = await this.fcm.sendAndPersist({
+            userId: updated.id,
+            tokens: tokens.map((t) => t.token),
+            payload: signupBananaBonusPayload(dayBonus.credited),
           });
+          if (invalid.length > 0) {
+            await this.prisma.userFcmToken.deleteMany({
+              where: { token: { in: invalid } },
+            });
+          }
         }
       }
     }
