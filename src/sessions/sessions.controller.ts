@@ -1139,11 +1139,17 @@ export class SessionsController {
       throw new NotFoundException('Lesson not found');
     }
 
-    const teachingLanguage = normalizeLessonTeachingLanguage(
+    // Foundation A1 stays on Teacher B + Training V2 (scripted + TTS bank).
+    // English teaching mode would leave V2, go live Gemini/John, and miss the bank.
+    const requestedTeachingLanguage = normalizeLessonTeachingLanguage(
       teachingLanguageRaw ??
         (user as User & { lessonTeachingLanguage?: string })
           .lessonTeachingLanguage,
     );
+    const teachingLanguage =
+      isFoundationV7LessonId(lessonId) && requestedTeachingLanguage === 'english'
+        ? 'thai'
+        : requestedTeachingLanguage;
     const config = withEmojiRecall2Seed(
       withTeachingLanguage(baseConfig, teachingLanguage),
     );
@@ -1177,8 +1183,9 @@ export class SessionsController {
       user.displayName,
       teachingLanguage,
     );
-    const useTrainingV2 = isTrainingV2Lesson(config.lessonId) ||
-      (isFoundationV7LessonId(config.lessonId) && teachingLanguage === 'thai');
+    const useTrainingV2 =
+      isTrainingV2Lesson(config.lessonId) ||
+      isFoundationV7LessonId(config.lessonId);
 
     try {
     const data = this.sessionStore.createTraining(config, learnerFirstName, {
