@@ -11,6 +11,18 @@ describe('tap mode chips', () => {
     assert.equal(tapKey('Water, please'), tapKey('water please'));
   });
 
+  it('keeps Thai (and other non-Latin) name chips — not stripped as punctuation', () => {
+    assert.deepEqual(tapWords('My name is นักเรียน.'), ['my', 'name', 'is', 'นักเรียน']);
+    const chips = buildTapChoices({
+      answer: 'My name is นักเรียน.',
+      distractorWords: ['to', 'in', 'nice', 'hello'],
+      seed: 'name-th',
+    });
+    assert.ok(chips.includes('นักเรียน'), chips.join(','));
+    assert.ok(chips.includes('my') && chips.includes('name') && chips.includes('is'));
+    assert.notEqual(tapKey('My name is นักเรียน'), tapKey('my name is'));
+  });
+
   it('adds 2–3 distractors, never words of another accepted answer, no duplicates', () => {
     const chips = buildTapChoices({
       answer: 'Hello',

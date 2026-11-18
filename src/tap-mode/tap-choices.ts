@@ -17,7 +17,8 @@ export function tapWords(sentence: string): string[] {
     .replace(/[“”"]/g, ' ')
     .replace(/’/g, "'")
     .split(/\s+/)
-    .map((w) => w.replace(/^[^A-Za-z0-9']+|[^A-Za-z0-9']+$/g, '').replace(/^'+|'+$/g, ''))
+    // Keep any letters/digits (Thai names, Latin, …); only peel edge punctuation.
+    .map((w) => w.replace(/^[^\p{L}\p{N}']+|[^\p{L}\p{N}']+$/gu, '').replace(/^'+|'+$/g, ''))
     .filter(Boolean);
   // Sentence-start capital would give away the first chip.
   return raw.map((w, i) => (i === 0 && !isAlwaysCapital(w) ? lowerFirst(w) : w));
@@ -33,14 +34,14 @@ function isAlwaysCapital(word: string): boolean {
   return /^I('|$)/.test(word) || /^[A-Z]{2,}$/.test(word);
 }
 
-/** Compare built and expected answers on letters/digits only. */
+/** Compare built and expected answers on letters/digits only (any script). */
 export function tapKey(text: string): string {
   return text
     .toLowerCase()
     .normalize('NFD')
     .replace(/\p{M}/gu, '')
     .replace(/[’']/g, '')
-    .replace(/[^a-z0-9]/g, '');
+    .replace(/[^\p{L}\p{N}]+/gu, '');
 }
 
 function seededRandom(seedText: string): () => number {
