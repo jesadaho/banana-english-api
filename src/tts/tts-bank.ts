@@ -1,7 +1,7 @@
 import { createHash } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { A2_ENGLISH_PRAISES } from './english-praises';
+import { A2_PRAISES } from './english-praises';
 
 /** Cloud TTS model used for scripted lesson clips. */
 export const TTS_BANK_MODEL = 'gemini-3.1-flash-tts-preview';
@@ -99,8 +99,8 @@ export function lookupTtsBankUrl(
   if (hit) return hit;
   // Legacy A2 bank clips glued a random praise onto the body. After praise is
   // split out, reuse any of those prefixed recordings for the same body.
-  if (!A2_ENGLISH_PRAISES.some((praise) => key === praise || key.startsWith(`${praise} `))) {
-    for (const praise of A2_ENGLISH_PRAISES) {
+  if (!A2_PRAISES.some((praise) => key === praise || key.startsWith(`${praise} `))) {
+    for (const praise of A2_PRAISES) {
       for (const sep of [' ', '\n'] as const) {
         const prefixed = lookupExactOrFolded(
           lines,

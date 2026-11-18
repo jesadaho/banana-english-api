@@ -122,7 +122,7 @@ export function adventureA2LessonIds(fromChapter: number, toChapter: number): st
   return ids;
 }
 
-/** Chapters 2–16 scripted lesson lines, plus both shared English praise sets. */
+/** Chapters 2–16 scripted lesson lines, plus shared EN+TH praise clips. */
 export async function collectFoundationBankLines(
   fromChapter = 2,
   toChapter = 16,

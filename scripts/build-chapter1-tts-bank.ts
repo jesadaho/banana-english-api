@@ -5,9 +5,12 @@
  *   npx tsx scripts/build-chapter1-tts-bank.ts --only-phonics   # locked Phonics lines
  *   npx tsx scripts/build-chapter1-tts-bank.ts --only-daily-speak
  *   npx tsx scripts/build-chapter1-tts-bank.ts --lesson=a2_c06n05  # one A1/A2 authoring lesson
+ *   npx tsx scripts/build-chapter1-tts-bank.ts --only-praises
+ *   npx tsx scripts/build-chapter1-tts-bank.ts --only-praises --force  # re-synth even if banked
  *
  * Resumes from src/tts/tts-bank.json. Skips lines that already have a URL
- * (exact key, or the same clip after emoji / trailing-punct folding).
+ * (exact key, or the same clip after emoji / trailing-punct folding),
+ * unless --force.
  */
 import { createSign, randomUUID } from 'node:crypto';
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -360,6 +363,7 @@ async function main() {
   }
   const lessonArg = process.argv.find((arg) => arg.startsWith('--lesson='));
   const lessonId = lessonArg?.slice('--lesson='.length)?.trim() || '';
+  const force = process.argv.includes('--force');
   const lessonLines = new Set(
     (lessonId
       ? await collectScriptedLessonBankLines(lessonId)
@@ -379,6 +383,8 @@ async function main() {
           ? collectDailySpeakBankLines()
         : process.argv.includes('--only-a2')
           ? await collectAdventureA2BankLines(1, 32)
+        : process.argv.includes('--only-praises')
+          ? [...BARE_PRAISE_LINES]
         : [
             ...collectChapter1BankLines(),
             ...(await collectFoundationBankLines(2, 16)),
@@ -466,11 +472,13 @@ async function main() {
     const key = ttsBankKey(spoken);
     const model = TTS_BANK_MODEL;
     const objectPath = ttsBankObjectPath(spoken, model);
-    if (bank.lines[key]) {
+    if (bank.lines[key] && !force) {
       console.log(`[${i + 1}/${lines.length}] skip`);
       continue;
     }
-    const foldedHit = lookupTtsBankUrl(bank.lines, spoken, null, foldedIndex);
+    const foldedHit = !force
+      ? lookupTtsBankUrl(bank.lines, spoken, null, foldedIndex)
+      : null;
     if (foldedHit) {
       // Alias the new exact wording to the existing clip (emoji-only / punct tweaks).
       bank.lines[key] = foldedHit;
@@ -482,9 +490,8 @@ async function main() {
       continue;
     }
     const text = synthesisText(spoken);
-    const prompt = (BARE_PRAISE_LINES as readonly string[]).includes(spoken)
-      ? null
-      : TTS_BANK_PROMPT;
+    // Always Teacher B prompt — bare (null) praise synth sounded raspy / off-voice.
+    const prompt = TTS_BANK_PROMPT;
     let audio: Buffer;
     try {
       audio = await synthesizeFresh(text, prompt, model);
