@@ -195,6 +195,10 @@ export async function runV7Turn(input: TrainingEngineTurnInput, gate: TrainingAi
   let aiDebug = scriptedAiDebug();
   if (!exact && isFoundationV7OffTopicProbe(input.userText, current.expectedSpeech)) {
     tier = 'incorrect';
+  } else if (!exact && input.inputMode === 'tap') {
+    // Tap Mode: chips are either in the right order or not — no AI judging
+    // a jumbled sentence as "close".
+    tier = 'incorrect';
   } else if (!exact && !distractor) {
     const result = await gate.runChoiceLessonAssess({
       lessonTitle: input.config.titleEn, coreStep: stepNumber,

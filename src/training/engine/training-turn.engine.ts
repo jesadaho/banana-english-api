@@ -54,6 +54,8 @@ export type TrainingEngineTurnInput = {
   learnerFirstName: string;
   /** Session Core Flow beat — used when AI advanced ahead of replay progress. */
   sessionProgressTurn?: number;
+  /** Tap Mode: answer built from word chips — exact match only. */
+  inputMode?: 'speech' | 'tap';
 };
 
 /** Single-target "ลองพูดตาม" turn — the learner may skip it. */

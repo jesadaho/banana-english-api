@@ -29,6 +29,7 @@ import { SayItModule } from './say-it/say-it.module';
 import { InOnAtModule } from './in-on-at/in-on-at.module';
 import { ClipsModule } from './clips/clips.module';
 import { LiveTalkModule } from './live-talk/live-talk.module';
+import { TapModeModule } from './tap-mode/tap-mode.module';
 import { DescribeItModule } from './describe-it/describe-it.module';
 import { DebugModule } from './debug/debug.module';
 import { PurchasesModule } from './purchases/purchases.module';
@@ -80,6 +81,7 @@ import { EventsModule } from './events/events.module';
     InOnAtModule,
     ClipsModule,
     LiveTalkModule,
+    TapModeModule,
     DescribeItModule,
     ExplainItModule,
     DebugModule,
