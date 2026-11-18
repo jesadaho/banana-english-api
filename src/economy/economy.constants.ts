@@ -54,12 +54,15 @@ export function freeTalkBananaCost(durationMinutes: number): number {
 }
 
 export const ONBOARDING_BANANA_BONUS = 2;
-/** Legacy daily-drop size; still reported to old app builds as `dailyDrop`. */
+/** Legacy daily-drop size; still reported to old app builds as `dailyDrop` when no user context. */
 export const DAILY_BANANA_DROP = 5;
 /** Timed free refill: +1 free banana per interval until the free pool reaches the cap. */
 export const BANANA_REFILL_HOURS = 4;
 export const DEBUG_BANANA_REFILL = 2;
-/** Cap on the daily free banana pool (onboarding, daily drop, debug refill). IAP / bonuses are uncapped saved bananas. */
+/**
+ * Steady-state free pool cap (Day 3+). Day 0–2 use higher caps from
+ * `banana-day-caps.ts` / Remote Config `banana_day_caps`. IAP bananas are uncapped.
+ */
 export const MAX_BANANA_BALANCE = 5;
 /** Typical Mission start cost shown in the Banana Ticket sheet. */
 export const MISSION_BANANA_COST = 1;

@@ -1,7 +1,8 @@
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger, Optional } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Currency, Prisma, User } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
+import { FirebaseAdminService } from '../firebase/firebase-admin.service';
 import {
   PRO_BANANA_CAP,
   PRO_REFILL_HOURS,
@@ -24,13 +25,19 @@ import {
   LESSON_REWARD_XP,
   LESSON_REVIEW_REWARD_SEEDS,
   LESSON_REVIEW_REWARD_XP,
-  MAX_BANANA_BALANCE,
   MISSION_BANANA_COST,
   ONBOARDING_BANANA_BONUS,
   STREAK_MILESTONES,
   cappedBananaCredit,
   getMissionReward,
 } from './economy.constants';
+import {
+  DEFAULT_BANANA_DAY_CAPS,
+  freeBananaCapForSignupDay,
+  parseBananaDayCapsFromRc,
+  signupLocalDayIndex,
+  type BananaDayCaps,
+} from './banana-day-caps';
 import {
   getUserLocalTime,
   isSameDateKey,
@@ -85,10 +92,12 @@ export interface SessionRewardResult {
 @Injectable()
 export class EconomyService {
   private readonly logger = new Logger(EconomyService.name);
+  private dayCapsCache: { at: number; caps: BananaDayCaps } | null = null;
 
   constructor(
     private readonly prisma: PrismaService,
     private readonly config: ConfigService,
+    @Optional() private readonly firebase?: FirebaseAdminService,
   ) {}
 
   private readonly progressListeners: ((userId: string) => Promise<void>)[] = [];
@@ -130,19 +139,43 @@ export class EconomyService {
     return this.envInt(ENV_DEBUG_BANANA_REFILL, DEBUG_BANANA_REFILL);
   }
 
+  /** Steady-state free cap (Day 3+). Env overrides RC/defaults for ops. */
   maxBananaBalance(): number {
-    return this.envInt(ENV_MAX_BANANA_BALANCE, MAX_BANANA_BALANCE);
+    return this.envInt(ENV_MAX_BANANA_BALANCE, this.dayCaps().day3plus);
   }
 
   private bananaRefillHours(): number {
     return this.envInt(ENV_BANANA_REFILL_HOURS, BANANA_REFILL_HOURS);
   }
 
-  /** Free-pool cap for this learner. Pro stores PRO_BANANA_CAP (25); everyone else uses the env cap. */
-  bananaCapFor(user: User): number {
-    return effectiveSubscriptionTier(user) === 'PRO'
-      ? PRO_BANANA_CAP
-      : this.maxBananaBalance();
+  /** Cached RC day caps (defaults until the first successful refresh). */
+  private dayCaps(): BananaDayCaps {
+    const caps = this.dayCapsCache?.caps ?? DEFAULT_BANANA_DAY_CAPS;
+    const raw = this.config.get<string>(ENV_MAX_BANANA_BALANCE);
+    if (raw == null || raw.trim() === '') return caps;
+    const parsed = Number.parseInt(raw, 10);
+    if (!Number.isFinite(parsed) || parsed < 1) return caps;
+    return { ...caps, day3plus: parsed };
+  }
+
+  /** Pull `banana_day_caps` from Firebase Remote Config (cached ~60s via FirebaseAdmin). */
+  async ensureDayCaps(now = Date.now()): Promise<BananaDayCaps> {
+    if (this.dayCapsCache && now - this.dayCapsCache.at < 60_000) {
+      return this.dayCaps();
+    }
+    const fromRc = parseBananaDayCapsFromRc(await this.firebase?.getRemoteConfigStrings());
+    this.dayCapsCache = { at: now, caps: fromRc ?? DEFAULT_BANANA_DAY_CAPS };
+    return this.dayCaps();
+  }
+
+  /**
+   * Free-pool cap for this learner.
+   * Pro → PRO_BANANA_CAP (25). Free → Day 0/1–2/3+ from RC `banana_day_caps`.
+   */
+  bananaCapFor(user: User, now = new Date()): number {
+    if (effectiveSubscriptionTier(user, now) === 'PRO') return PRO_BANANA_CAP;
+    const day = signupLocalDayIndex(user.createdAt, user.timezone, now);
+    return freeBananaCapForSignupDay(day, this.dayCaps());
   }
 
   private refillHoursFor(user: User): number {
@@ -165,15 +198,18 @@ export class EconomyService {
     missionCost: number;
     refillHours: number;
   } {
+    const maxBalance = user ? this.bananaCapFor(user) : this.maxBananaBalance();
     return {
-      dailyDrop: this.dailyBananaDrop(),
-      maxBalance: user ? this.bananaCapFor(user) : this.maxBananaBalance(),
+      // Old builds read `dailyDrop` as "bananas per day" — mirror the live cap.
+      dailyDrop: user ? maxBalance : this.dailyBananaDrop(),
+      maxBalance,
       missionCost: MISSION_BANANA_COST,
       refillHours: user ? this.refillHoursFor(user) : this.bananaRefillHours(),
     };
   }
 
   async creditOnboardingBonus(userId: string): Promise<User> {
+    await this.ensureDayCaps();
     const bonus = this.onboardingBananaBonus();
     return this.prisma.$transaction(async (tx) => {
       const user = await tx.user.findUniqueOrThrow({ where: { id: userId } });
@@ -239,8 +275,9 @@ export class EconomyService {
 
   /** Timed free refill (+1 per interval up to the cap); safe to call on every profile load. */
   async maybeRefillFreeBananas(user: User, now = new Date()): Promise<User> {
+    await this.ensureDayCaps(now.getTime());
     const intervalMs = this.refillHoursFor(user) * 3_600_000;
-    const max = this.bananaCapFor(user);
+    const max = this.bananaCapFor(user, now);
     const anchorOf = (u: User) => u.lastBananaRefillAt ?? null;
     const preview = timedBananaRefill(user.freeBananaBalance, anchorOf(user), now, intervalMs, max);
     if (!preview.nextAnchor) return user;
