@@ -11,6 +11,7 @@ import { FirebaseAdminService } from '../firebase/firebase-admin.service';
 import { FcmService } from '../notifications/fcm.service';
 import type { PushNotificationPayload } from '../notifications/notification-templates';
 import { PrismaService } from '../prisma/prisma.service';
+import { effectiveSubscriptionTier } from '../subscriptions/subscription.constants';
 import { optimizeEventImage } from './event-image';
 import {
   EVENT_IMAGE_MAX_BYTES,
@@ -666,12 +667,18 @@ export class EventsService {
       me: null as EventLeaderboardEntryDto | null,
       snapshot: !options.live,
     };
+    const userSelect = {
+      displayName: true,
+      subscriptionTier: true,
+      subscriptionExpiresAt: true,
+    } as const;
+
     if (options.live) {
       const rows = await this.prisma.eventLeaderboard.findMany({
         where: { eventId: event.id },
         orderBy: [{ bestScore: 'desc' }, { updatedAt: 'asc' }],
         take: options.take,
-        include: { user: { select: { displayName: true } } },
+        include: { user: { select: userSelect } },
       });
       const top = rows.map((row, index) => ({
         rank: index + 1,
@@ -679,12 +686,13 @@ export class EventsService {
         score: row.bestScore,
         avatarId: row.avatarId,
         isYou: user ? row.userId === user.id : false,
+        subscriptionTier: effectiveSubscriptionTier(row.user),
       }));
       let me: EventLeaderboardEntryDto | null = null;
       if (user) {
         const mine = await this.prisma.eventLeaderboard.findUnique({
           where: { eventId_userId: { eventId: event.id, userId: user.id } },
-          include: { user: { select: { displayName: true } } },
+          include: { user: { select: userSelect } },
         });
         if (mine) {
           const better = await this.prisma.eventLeaderboard.count({
@@ -706,6 +714,7 @@ export class EventsService {
             score: mine.bestScore,
             avatarId: mine.avatarId,
             isYou: true,
+            subscriptionTier: effectiveSubscriptionTier(mine.user),
           };
         }
       }
@@ -716,7 +725,7 @@ export class EventsService {
       where: { eventId: event.id },
       orderBy: { rank: 'asc' },
       take: options.take,
-      include: { user: { select: { displayName: true } } },
+      include: { user: { select: userSelect } },
     });
     const top = rows.map((row) => ({
       rank: row.rank,
@@ -724,12 +733,13 @@ export class EventsService {
       score: row.score,
       avatarId: row.avatarId,
       isYou: user ? row.userId === user.id : false,
+      subscriptionTier: effectiveSubscriptionTier(row.user),
     }));
     let me: EventLeaderboardEntryDto | null = null;
     if (user) {
       const mine = await this.prisma.eventResult.findUnique({
         where: { eventId_userId: { eventId: event.id, userId: user.id } },
-        include: { user: { select: { displayName: true } } },
+        include: { user: { select: userSelect } },
       });
       if (mine) {
         me = {
@@ -742,6 +752,7 @@ export class EventsService {
           score: mine.score,
           avatarId: mine.avatarId,
           isYou: true,
+          subscriptionTier: effectiveSubscriptionTier(mine.user),
         };
       }
     }
