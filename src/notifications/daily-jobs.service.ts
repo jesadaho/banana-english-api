@@ -50,14 +50,17 @@ export class DailyJobsService {
   }
 
   /**
-   * Credit Day 0/1/2 signup banana bonuses and push once when credited.
-   * Quiet hours skip the push (credit still lands on next eligible tick / app open).
+   * Credit Day 0/1/2 signup banana bonuses and push — only at 09:00 Asia/Bangkok.
+   * The */15 cron hits 09:00 and 09:15; ledger idempotency makes the second a no-op.
    */
   private async processSignupDayBonus() {
     const now = new Date();
+    const bangkokHour = getUserLocalTime('Asia/Bangkok', now).hour;
+    if (bangkokHour !== 9) return;
+
     const users = await this.prisma.user.findMany({
       where: {
-        // Only accounts that could still be on Day 0–2 (created in the last ~4 local days).
+        // Only accounts that could still be on Day 0–2 (created in the last ~4 days).
         createdAt: { gte: new Date(now.getTime() - 4 * 86_400_000) },
         fcmTokens: { some: {} },
       },
@@ -65,14 +68,13 @@ export class DailyJobsService {
     });
 
     for (const user of users) {
-      const day = signupLocalDayIndex(user.createdAt, user.timezone, now);
+      // Schedule is Thai-time based (same clock as the 09:00 gate).
+      const day = signupLocalDayIndex(user.createdAt, 'Asia/Bangkok', now);
       if (day > 2) continue;
-      const local = getUserLocalTime(user.timezone, now);
-      // Defer both credit and push outside quiet hours so the push is not lost.
-      if (local.hour < BANANA_PUSH_START_HOUR || local.hour >= BANANA_PUSH_END_HOUR) {
-        continue;
-      }
-      const result = await this.economy.maybeCreditSignupDayBonus(user, now);
+      const result = await this.economy.maybeCreditSignupDayBonus(
+        { ...user, timezone: 'Asia/Bangkok' },
+        now,
+      );
       if (result.credited <= 0) continue;
 
       const payload = signupBananaBonusPayload(result.credited);
