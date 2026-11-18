@@ -20,6 +20,7 @@ import {
   shouldNotifyEndingSoon,
   shouldSnapshot,
   tierForRank,
+  toEventLeaderboardEntry,
   validateRewardTiers,
 } from './event.rules';
 
@@ -168,5 +169,53 @@ describe('event.rules', () => {
     assert.equal(eventsApiEnabled({ NODE_ENV: 'production' }), true);
     assert.equal(eventsApiEnabled({ EVENTS_ENABLED: 'true', NODE_ENV: 'production' }), true);
     assert.equal(eventsApiEnabled({ EVENTS_ENABLED: 'false', RAILWAY_ENVIRONMENT: 'staging' }), false);
+  });
+});
+
+describe('toEventLeaderboardEntry membership tier', () => {
+  const future = new Date(Date.now() + 86_400_000);
+  const past = new Date(Date.now() - 86_400_000);
+  const base = {
+    rank: 1,
+    name: 'Mia',
+    score: 120,
+    avatarId: 'bogy' as string | null,
+  };
+
+  it('puts FREE, PRO, or PRO_MAX on every board row (top and me)', () => {
+    const top = toEventLeaderboardEntry({
+      ...base,
+      user: { subscriptionTier: 'PRO', subscriptionExpiresAt: future },
+    });
+    const me = toEventLeaderboardEntry({
+      ...base,
+      rank: 4,
+      isYou: true,
+      user: { subscriptionTier: 'PRO_MAX', subscriptionExpiresAt: future },
+    });
+    assert.equal(top.subscriptionTier, 'PRO');
+    assert.equal(me.subscriptionTier, 'PRO_MAX');
+    assert.equal(me.isYou, true);
+  });
+
+  it('falls expired or missing paid grants back to FREE', () => {
+    assert.equal(
+      toEventLeaderboardEntry({
+        ...base,
+        user: { subscriptionTier: 'PRO_MAX', subscriptionExpiresAt: past },
+      }).subscriptionTier,
+      'FREE',
+    );
+    assert.equal(
+      toEventLeaderboardEntry({
+        ...base,
+        user: { subscriptionTier: 'PRO', subscriptionExpiresAt: null },
+      }).subscriptionTier,
+      'FREE',
+    );
+    assert.equal(
+      toEventLeaderboardEntry({ ...base, user: null }).subscriptionTier,
+      'FREE',
+    );
   });
 });

@@ -71,6 +71,9 @@ export type EventLeaderboardEntryDto = {
   score: number;
   avatarId: string | null;
   isYou?: boolean;
-  /** Owner's live membership → Pro / Pro Max avatar frame on the board. */
-  subscriptionTier?: string;
+  /**
+   * Owner's live membership for the avatar frame on Game Leaderboard.
+   * Always one of FREE / PRO / PRO_MAX (expired paid → FREE).
+   */
+  subscriptionTier: 'FREE' | 'PRO' | 'PRO_MAX';
 };

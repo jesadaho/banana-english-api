@@ -1,3 +1,4 @@
+import { effectiveSubscriptionTier } from '../subscriptions/subscription.constants';
 import {
   ANOMALY_ATTEMPT_COUNT,
   ANOMALY_SCORE_THRESHOLD,
@@ -9,6 +10,7 @@ import {
   FINALIZING_DELAY_MS,
   type EventClock,
   type EventGameKey,
+  type EventLeaderboardEntryDto,
   type EventLifecycleStatus,
   type EventRewardTierInput,
 } from './event.types';
@@ -186,4 +188,30 @@ export function validateRewardTiers(tiers: EventRewardTierInput[]): void {
 export function eventTimezoneOrDefault(value?: string | null): string {
   const trimmed = value?.trim();
   return trimmed || EVENT_TZ;
+}
+
+/** One Game Leaderboard row — always includes an effective membership tier. */
+export function toEventLeaderboardEntry(input: {
+  rank: number;
+  name: string;
+  score: number;
+  avatarId: string | null;
+  isYou?: boolean;
+  user: {
+    subscriptionTier?: string | null;
+    subscriptionExpiresAt?: Date | null;
+  } | null | undefined;
+  now?: Date;
+}): EventLeaderboardEntryDto {
+  return {
+    rank: input.rank,
+    name: input.name,
+    score: input.score,
+    avatarId: input.avatarId,
+    isYou: input.isYou,
+    subscriptionTier: effectiveSubscriptionTier({
+      subscriptionTier: input.user?.subscriptionTier ?? 'FREE',
+      subscriptionExpiresAt: input.user?.subscriptionExpiresAt ?? null,
+    }, input.now),
+  };
 }
