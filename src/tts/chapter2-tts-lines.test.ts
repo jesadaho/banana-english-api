@@ -8,6 +8,7 @@ import {
   collectChapter2BankLines,
   collectFoundationBankLines,
 } from './chapter2-tts-lines';
+import { BARE_PRAISE_LINES, EARLY_PRAISES, THAI_PRAISES } from './english-praises';
 import { ttsBankKey } from './tts-bank';
 
 describe('chapter 2 TTS bank lines', () => {
@@ -23,8 +24,11 @@ describe('chapter 2 TTS bank lines', () => {
     assert.ok(lines.some((line) => line.includes('Water, please')));
     assert.ok(lines.some((line) => line.includes('See you tomorrow')));
     assert.equal(lines.some((line) => line.startsWith('ดีครับ')), false);
-    for (const praise of ['Good!', 'Great!', 'Excellent!']) {
-      assert.ok(lines.includes(praise));
+    for (const praise of EARLY_PRAISES) {
+      assert.ok(lines.includes(praise), praise);
+    }
+    for (const praise of THAI_PRAISES) {
+      assert.ok(lines.includes(praise), praise);
     }
   });
 
@@ -38,11 +42,14 @@ describe('chapter 2 TTS bank lines', () => {
     assert.equal(adventureA2LessonIds(1, 8).length, 22);
     const lines = await collectAdventureA2BankLines(1, 1);
     assert.ok(lines.some((line) => line.includes('baking')));
-    assert.ok(lines.includes("That's right!"));
-    assert.ok(lines.includes('Very good!'));
-    assert.ok(lines.includes('Excellent!'));
+    for (const praise of BARE_PRAISE_LINES) {
+      assert.ok(lines.includes(praise), praise);
+    }
+    // Body lines must not glue a praise opener onto the teaching sentence.
     assert.equal(
-      lines.some((line) => /^(?:That's right!|Very good!|Excellent!) /.test(line)),
+      lines.some((line) =>
+        /^(?:That's right!|Very good!|Excellent!|เก่งมาก!|สุดยอด!|ใช่เลย!) /.test(line),
+      ),
       false,
     );
     assert.equal(lines.some((line) => line.includes('GEMINI_SHOULD_NOT_APPEAR')), false);
