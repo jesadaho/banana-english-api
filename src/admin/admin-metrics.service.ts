@@ -674,8 +674,14 @@ export class AdminMetricsService {
     userFilter: Prisma.UserWhereInput,
   ) {
     const inRange = { gte: range.from, lte: range.to };
-    const [rows, dailySpeakRows, miniGameRows, turnRows, spokenDayRows] =
-      await Promise.all([
+    const [
+      rows,
+      dailySpeakRows,
+      miniGameRows,
+      turnRows,
+      spokenDayRows,
+      answerModeRows,
+    ] = await Promise.all([
       this.prisma.userSession.findMany({
         where: {
           rewardsApplied: true,
@@ -715,6 +721,10 @@ export class AdminMetricsService {
           userId: true,
         },
       }),
+      this.prisma.answerModeDaily.findMany({
+        where: { day: inRange, user: userFilter },
+        select: { day: true, userId: true, mode: true, count: true },
+      }),
     ]);
     const map = new Map<
       string,
@@ -731,6 +741,10 @@ export class AdminMetricsService {
         lessonUsers: Set<string>;
         missionUsers: Set<string>;
         speakers: Set<string>;
+        tapUsers: Set<string>;
+        speakAnswerUsers: Set<string>;
+        tapAnswers: number;
+        speakAnswers: number;
       }
     >();
     for (const key of eachUtcDateKey(range.from, range.to)) {
@@ -747,6 +761,10 @@ export class AdminMetricsService {
         lessonUsers: new Set(),
         missionUsers: new Set(),
         speakers: new Set(),
+        tapUsers: new Set(),
+        speakAnswerUsers: new Set(),
+        tapAnswers: 0,
+        speakAnswers: 0,
       });
     }
     for (const row of rows) {
@@ -792,10 +810,30 @@ export class AdminMetricsService {
         bucket.speakers.add(row.userId);
       }
     }
+    for (const row of answerModeRows) {
+      const bucket = map.get(dateKey(row.day));
+      if (!bucket || row.count <= 0) continue;
+      if (row.mode === 'tap') {
+        bucket.tapAnswers += row.count;
+        bucket.tapUsers.add(row.userId);
+      } else if (row.mode === 'speak') {
+        bucket.speakAnswers += row.count;
+        bucket.speakAnswerUsers.add(row.userId);
+      }
+    }
     return [...map.entries()].map(
       ([
         day,
-        { miniGameUsers, lessonUsers, missionUsers, speakers, spokenDayRows, ...v },
+        {
+          miniGameUsers,
+          lessonUsers,
+          missionUsers,
+          speakers,
+          tapUsers,
+          speakAnswerUsers,
+          spokenDayRows,
+          ...v
+        },
       ]) => ({
         day,
         ...v,
@@ -807,6 +845,8 @@ export class AdminMetricsService {
         lessonUsers: lessonUsers.size,
         missionUsers: missionUsers.size,
         speakers: speakers.size,
+        tapUsers: tapUsers.size,
+        speakAnswerUsers: speakAnswerUsers.size,
       }),
     );
   }
