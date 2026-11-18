@@ -4,21 +4,23 @@ import { canonicalFoundationV7LessonId } from '../lessons/foundation-v7-lesson-i
 /**
  * Short praise clips played on correct answers (separate audio from the body).
  * Each pool is 50/50 English / Thai so learners hear both.
+ *
+ * Thai lines stay short and calm with ครับ — avoid punchy “acting” openers.
  */
 
 /** Chapters 2–7 — 3 EN + 3 TH. */
 export const ENGLISH_PRAISES = ['Good!', 'Great!', 'Excellent!'] as const;
-export const THAI_PRAISES = ['เก่งมาก!', 'เยี่ยมเลย!', 'ถูกต้อง!'] as const;
+export const THAI_PRAISES = ['ดีมากครับ', 'เยี่ยมมากครับ', 'ถูกต้องครับ'] as const;
 export const EARLY_PRAISES = [...ENGLISH_PRAISES, ...THAI_PRAISES] as const;
 
 /** Chapter 8+ — 3 EN + 3 TH. */
 export const LATER_ENGLISH_PRAISES = ['Nice!', 'Perfect!', 'Well done!'] as const;
-export const LATER_THAI_PRAISES = ['สุดยอด!', 'ดีมาก!', 'ใช่เลย!'] as const;
+export const LATER_THAI_PRAISES = ['ดีมากครับ', 'เยี่ยมมากครับ', 'เยี่ยมครับ'] as const;
 export const LATER_PRAISES = [...LATER_ENGLISH_PRAISES, ...LATER_THAI_PRAISES] as const;
 
 /** Adventure A2 — 3 EN + 3 TH. */
 export const A2_ENGLISH_PRAISES = ["That's right!", 'Very good!', 'Excellent!'] as const;
-export const A2_THAI_PRAISES = ['เก่งมาก!', 'สุดยอด!', 'ใช่เลย!'] as const;
+export const A2_THAI_PRAISES = ['ดีมากครับ', 'เยี่ยมมากครับ', 'ถูกต้องครับ'] as const;
 export const A2_PRAISES = [...A2_ENGLISH_PRAISES, ...A2_THAI_PRAISES] as const;
 
 /** All praise lines that must be in the TTS bank (teacher voice). */
