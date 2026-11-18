@@ -43,17 +43,26 @@ export const BANANA_FULL_VARIANTS: PushTemplate[] = [
   { title: '🍌 กล้วยเต็มแล้ว!', body: 'ครูบีพร้อมแล้ว ขาดแค่เธอ 🎤', data: { route: '/train' } },
 ];
 
-/** Signup-day bonus push — amount filled in by the sender. */
-export function signupBananaBonusPayload(amount: number): PushNotificationPayload {
+/** Signup-day bonus push — amount filled in; pick one of two variants. */
+export function signupBananaBonusPayload(
+  amount: number,
+  random = Math.random,
+): PushNotificationPayload {
   const n = Math.max(1, Math.floor(amount));
-  return {
-    type: 'signup_banana_bonus',
-    title: `🎁 โบนัสกล้วย +${n}!`,
-    body: n >= 3
-      ? 'ยินดีต้อนรับ! ได้กล้วยเพิ่มแล้ว มาฝึกพูดกันเลย 🍌'
-      : 'กล้วยโบนัสถึงแล้ว มาฝึกพูดต่อกันนะ 🍌',
-    data: { route: '/train', amount: String(n) },
-  };
+  const variants: PushTemplate[] = [
+    {
+      title: '🍌 ครูบีมีของขวัญให้!',
+      body: `รับกล้วยโบนัส +${n} ลูก 🎁 กลับมาฝึกพูดภาษาอังกฤษกันต่อวันนี้นะ!`,
+      data: { route: '/train', amount: String(n) },
+    },
+    {
+      title: `🎁 กล้วยโบนัส +${n} ลูกมาแล้ว!`,
+      body: 'วันนี้ครูบีรอฝึกพูดด้วยอยู่นะ 🍌 มาใช้กล้วยโบนัสกันเลย!',
+      data: { route: '/train', amount: String(n) },
+    },
+  ];
+  const pick = variants[Math.floor(random() * variants.length)]!;
+  return { type: 'signup_banana_bonus', ...pick };
 }
 
 export const DAILY_PRACTICE_CORE: DailyPracticeTemplate[] = [
