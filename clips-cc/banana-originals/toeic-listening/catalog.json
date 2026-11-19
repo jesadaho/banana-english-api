@@ -11,7 +11,7 @@
       "episode": 1,
       "episodeId": "EP01",
       "title": "A Day at Work",
-      "titleTh": "วันทำงาน",
+      "titleTh": "",
       "level": "A2",
       "category": "toeic",
       "credit": "Banana Original",
@@ -48,210 +48,210 @@
           "startMs": 0,
           "endMs": 5760,
           "text": "A receptionist is handing a visitor an identification card.",
-          "textTh": "พนักงานต้อนรับกำลังมอบบัตรประจำตัวให้ผู้มาเยือน"
+          "textTh": ""
         },
         {
           "idx": 1,
           "startMs": 6040,
           "endMs": 10072,
           "text": "The visitor is standing across the desk from her.",
-          "textTh": "ผู้มาเยือนยืนอยู่ตรงข้ามโต๊ะทำงานของเธอ"
+          "textTh": ""
         },
         {
           "idx": 2,
           "startMs": 10352,
           "endMs": 14072,
           "text": "Several chairs have been placed beside the entrance.",
-          "textTh": "มีเก้าอี้หลายตัววางอยู่ข้างทางเข้า"
+          "textTh": ""
         },
         {
           "idx": 3,
           "startMs": 14352,
           "endMs": 18816,
           "text": "A stack of visitor badges is resting on the counter.",
-          "textTh": "มีป้ายสำหรับผู้มาเยือนกองอยู่บนเคาน์เตอร์"
+          "textTh": ""
         },
         {
           "idx": 4,
           "startMs": 19096,
           "endMs": 22408,
           "text": "A coat has been left on the back of a chair.",
-          "textTh": "มีเสื้อโค้ทวางทิ้งไว้บนพนักเก้าอี้"
+          "textTh": ""
         },
         {
           "idx": 5,
           "startMs": 23408,
           "endMs": 26840,
           "text": "Three coworkers are sitting around a conference table.",
-          "textTh": "เพื่อนร่วมงาน 3 คนนั่งล้อมรอบโต๊ะประชุม"
+          "textTh": ""
         },
         {
           "idx": 6,
           "startMs": 27120,
           "endMs": 30960,
           "text": "One of them is pointing at a chart on the screen.",
-          "textTh": "คนหนึ่งกำลังชี้ไปที่แผนภูมิบนหน้าจอ"
+          "textTh": ""
         },
         {
           "idx": 7,
           "startMs": 31240,
           "endMs": 34864,
           "text": "A laptop has been left open near the window.",
-          "textTh": "มีแล็ปท็อปเครื่องหนึ่งเปิดทิ้งไว้ใกล้หน้าต่าง"
+          "textTh": ""
         },
         {
           "idx": 8,
           "startMs": 35144,
           "endMs": 39248,
           "text": "The presenter is standing close to the screen.",
-          "textTh": "ผู้บรรยายยืนอยู่ใกล้หน้าจอ"
+          "textTh": ""
         },
         {
           "idx": 9,
           "startMs": 39528,
           "endMs": 44688,
           "text": "The other coworkers are looking at the chart instead of their laptops.",
-          "textTh": "เพื่อนร่วมงานคนอื่นๆ กำลังมองไปที่แผนภูมิแทนที่จะมองไปที่แล็ปท็อปของตนเอง"
+          "textTh": ""
         },
         {
           "idx": 10,
           "startMs": 45688,
           "endMs": 49432,
           "text": "A barista is placing a cup on the counter.",
-          "textTh": "บาริสตากำลังวางถ้วยกาแฟไว้บนเคาน์เตอร์"
+          "textTh": ""
         },
         {
           "idx": 11,
           "startMs": 49712,
           "endMs": 52952,
           "text": "The customer is reaching for the drink.",
-          "textTh": "ลูกค้ากำลังเอื้อมมือไปหยิบเครื่องดื่ม"
+          "textTh": ""
         },
         {
           "idx": 12,
           "startMs": 53232,
           "endMs": 56712,
           "text": "More cups are stacked on the shelf behind them.",
-          "textTh": "มีถ้วยอีกหลายใบวางซ้อนกันอยู่บนชั้นวางด้านหลัง"
+          "textTh": ""
         },
         {
           "idx": 13,
           "startMs": 56992,
           "endMs": 61264,
           "text": "A second customer is waiting behind the person at the counter.",
-          "textTh": "มีลูกค้าคนที่ 2 กำลังรออยู่ด้านหลังคนที่เคาน์เตอร์"
+          "textTh": ""
         },
         {
           "idx": 14,
           "startMs": 61544,
           "endMs": 65768,
           "text": "A few napkins are lying beside the customer's cup.",
-          "textTh": "มีทิชชู่วางอยู่ข้างแก้วของลูกค้าไม่กี่แผ่น"
+          "textTh": ""
         },
         {
           "idx": 15,
           "startMs": 66768,
           "endMs": 70728,
           "text": "Two workers are arranging boxes on a shelf.",
-          "textTh": "คนงาน 2 คนกำลังจัดเรียงกล่องบนชั้นวาง"
+          "textTh": ""
         },
         {
           "idx": 16,
           "startMs": 71008,
           "endMs": 75208,
           "text": "A cart is parked next to the boxes.",
-          "textTh": "มีรถเข็นจอดอยู่ข้างกล่อง"
+          "textTh": ""
         },
         {
           "idx": 17,
           "startMs": 75488,
           "endMs": 80048,
           "text": "A sealed package is standing on the floor beside the cart.",
-          "textTh": "มีห่อปิดผนึกวางอยู่บนพื้นข้างรถเข็น"
+          "textTh": ""
         },
         {
           "idx": 18,
           "startMs": 80328,
           "endMs": 84360,
           "text": "The boxes on the cart have not been opened yet.",
-          "textTh": "กล่องบนรถเข็นยังไม่ถูกเปิด"
+          "textTh": ""
         },
         {
           "idx": 19,
           "startMs": 84640,
           "endMs": 89632,
           "text": "One worker is reaching for a box on the highest shelf.",
-          "textTh": "คนงานคนหนึ่งกำลังเอื้อมหยิบกล่องบนชั้นวางของชั้นบนสุด"
+          "textTh": ""
         },
         {
           "idx": 20,
           "startMs": 90632,
           "endMs": 95096,
           "text": "A hotel employee is speaking to a guest at the front desk.",
-          "textTh": "พนักงานโรงแรมกำลังพูดคุยกับแขกที่แผนกต้อนรับส่วนหน้า"
+          "textTh": ""
         },
         {
           "idx": 21,
           "startMs": 95376,
           "endMs": 99360,
           "text": "The guest is holding a suitcase by its handle.",
-          "textTh": "ผู้เข้าพักกำลังถือกระเป๋าเดินทางจากหูหิ้ว"
+          "textTh": ""
         },
         {
           "idx": 22,
           "startMs": 99640,
           "endMs": 103360,
           "text": "An elevator can be seen at the end of the hall.",
-          "textTh": "จะเห็นลิฟต์อยู่สุดทางเดิน"
+          "textTh": ""
         },
         {
           "idx": 23,
           "startMs": 103640,
           "endMs": 108560,
           "text": "The employee is pointing toward the elevators beyond the lobby.",
-          "textTh": "พนักงานกำลังชี้ไปทางลิฟต์ที่อยู่เลยล็อบบี้ไป"
+          "textTh": ""
         },
         {
           "idx": 24,
           "startMs": 108840,
           "endMs": 112800,
           "text": "A luggage cart is parked near the front desk.",
-          "textTh": "มีรถเข็นสัมภาระจอดอยู่ใกล้เคาน์เตอร์ประชาสัมพันธ์"
+          "textTh": ""
         },
         {
           "idx": 25,
           "startMs": 113800,
           "endMs": 117424,
           "text": "A vendor is putting fruit into a basket.",
-          "textTh": "พ่อค้ากำลังใส่ผลไม้ลงในตะกร้า"
+          "textTh": ""
         },
         {
           "idx": 26,
           "startMs": 117704,
           "endMs": 121976,
           "text": "A customer is examining the items on display.",
-          "textTh": "ลูกค้ากำลังตรวจดูสินค้าที่จัดแสดงอยู่"
+          "textTh": ""
         },
         {
           "idx": 27,
           "startMs": 122256,
           "endMs": 125280,
           "text": "Several baskets are lined up under the awning.",
-          "textTh": "มีตะกร้าหลายใบวางเรียงกันอยู่ใต้กันสาด"
+          "textTh": ""
         },
         {
           "idx": 28,
           "startMs": 125560,
           "endMs": 130840,
           "text": "Apples and oranges have been separated into different baskets.",
-          "textTh": "แอปเปิลและส้มถูกแยกไว้ในตะกร้าคนละใบ"
+          "textTh": ""
         },
         {
           "idx": 29,
           "startMs": 131120,
           "endMs": 134792,
           "text": "The customer is standing beneath the awning.",
-          "textTh": "ลูกค้ายืนอยู่ใต้กันสาด"
+          "textTh": ""
         }
       ],
       "audioSha256": "0572d66ef10869cab8cd6e54437e7380f60e87735b67e180fefecdca7c838b01"
@@ -261,7 +261,7 @@
       "episode": 2,
       "episodeId": "EP02",
       "title": "Time & Appointments",
-      "titleTh": "เวลาและการนัดหมาย",
+      "titleTh": "",
       "level": "A2",
       "category": "toeic",
       "credit": "Banana Original",
@@ -298,273 +298,273 @@
           "startMs": 0,
           "endMs": 2544,
           "text": "What time does the sales meeting start?",
-          "textTh": "การประชุมฝ่ายขายจะเริ่มกี่โมง?"
+          "textTh": ""
         },
         {
           "idx": 1,
           "startMs": 2824,
           "endMs": 6904,
           "text": "At nine thirty, but the room opens at nine.",
-          "textTh": "เก้าโมงครึ่ง แต่ห้องเปิดเก้าโมง"
+          "textTh": ""
         },
         {
           "idx": 2,
           "startMs": 7184,
           "endMs": 9824,
           "text": "Great. I'll be there a few minutes early.",
-          "textTh": "เยี่ยมเลย ฉันจะไปถึงก่อนเวลานิดหน่อย"
+          "textTh": ""
         },
         {
           "idx": 3,
           "startMs": 10824,
           "endMs": 13248,
           "text": "When will the new chairs arrive?",
-          "textTh": "เก้าอี้ตัวใหม่จะมาถึงเมื่อไร?"
+          "textTh": ""
         },
         {
           "idx": 4,
           "startMs": 13528,
           "endMs": 16912,
           "text": "The supplier said Thursday afternoon.",
-          "textTh": "ซัพพลายเออร์บอกว่าบ่ายวันพฤหัสบดี"
+          "textTh": ""
         },
         {
           "idx": 5,
           "startMs": 17192,
           "endMs": 20432,
           "text": "Then we can set up the training room on Friday.",
-          "textTh": "จากนั้นเราก็เตรียมห้องฝึกอบรมในวันศุกร์ได้เลย"
+          "textTh": ""
         },
         {
           "idx": 6,
           "startMs": 21432,
           "endMs": 23712,
           "text": "Is my appointment still at two?",
-          "textTh": "นัดหมายของฉันยังเป็นเวลาบ่ายสองอยู่ไหม?"
+          "textTh": ""
         },
         {
           "idx": 7,
           "startMs": 23992,
           "endMs": 28312,
           "text": "The dentist has an opening at one thirty instead.",
-          "textTh": "ทันตแพทย์มีคิวว่างตอนบ่ายโมงครึ่งแทน"
+          "textTh": ""
         },
         {
           "idx": 8,
           "startMs": 28592,
           "endMs": 31112,
           "text": "That works better for me. Thank you.",
-          "textTh": "แบบนั้นดีกว่าสำหรับฉัน ขอบคุณนะ"
+          "textTh": ""
         },
         {
           "idx": 9,
           "startMs": 32112,
           "endMs": 35664,
           "text": "How long does the orientation usually take?",
-          "textTh": "โดยปกติแล้ว การปฐมนิเทศจะใช้เวลานานแค่ไหน?"
+          "textTh": ""
         },
         {
           "idx": 10,
           "startMs": 35944,
           "endMs": 39208,
           "text": "About forty minutes, including the office tour.",
-          "textTh": "ประมาณ 40 นาที รวมถึงการเยี่ยมชมสำนักงานด้วย"
+          "textTh": ""
         },
         {
           "idx": 11,
           "startMs": 39488,
           "endMs": 41888,
           "text": "I'll leave the rest of the morning free.",
-          "textTh": "ผมจะปล่อยให้ช่วงเช้าที่เหลือว่าง"
+          "textTh": ""
         },
         {
           "idx": 12,
           "startMs": 42888,
           "endMs": 45888,
           "text": "Do you need the report today?",
-          "textTh": "คุณต้องการรายงานวันนี้ไหม?"
+          "textTh": ""
         },
         {
           "idx": 13,
           "startMs": 46168,
           "endMs": 49480,
           "text": "Tomorrow morning is fine, before the team call.",
-          "textTh": "พรุ่งนี้เช้าก็ได้ค่ะ ก่อนประชุมทีม"
+          "textTh": ""
         },
         {
           "idx": 14,
           "startMs": 49760,
           "endMs": 53000,
           "text": "I'll send it tonight so you can review it.",
-          "textTh": "ฉันจะส่งให้คืนนี้ คุณจะได้ตรวจดู"
+          "textTh": ""
         },
         {
           "idx": 15,
           "startMs": 54000,
           "endMs": 56880,
           "text": "Has the manager decided on a time yet?",
-          "textTh": "ผู้จัดการตัดสินใจเรื่องเวลาหรือยัง?"
+          "textTh": ""
         },
         {
           "idx": 16,
           "startMs": 57160,
           "endMs": 60280,
           "text": "She said she'd email everyone after lunch.",
-          "textTh": "เธอบอกว่าจะส่งอีเมลหาทุกคนหลังมื้อกลางวัน"
+          "textTh": ""
         },
         {
           "idx": 17,
           "startMs": 60560,
           "endMs": 63104,
           "text": "Okay, I'll check my inbox then.",
-          "textTh": "โอเค งั้นเดี๋ยวฉันจะไปเช็คกล่องข้อความเข้าของฉัน"
+          "textTh": ""
         },
         {
           "idx": 18,
           "startMs": 64104,
           "endMs": 66984,
           "text": "Can we meet on Wednesday instead?",
-          "textTh": "เรานัดเจอกันวันพุธแทนได้ไหม?"
+          "textTh": ""
         },
         {
           "idx": 19,
           "startMs": 67264,
           "endMs": 70744,
           "text": "I'm out of town that day. How about Thursday?",
-          "textTh": "วันนั้นฉันไม่อยู่ในเมือง วันพฤหัสบดีล่ะ?"
+          "textTh": ""
         },
         {
           "idx": 20,
           "startMs": 71024,
           "endMs": 73376,
           "text": "Thursday morning is perfect.",
-          "textTh": "เช้าวันพฤหัสบดีเหมาะที่สุด"
+          "textTh": ""
         },
         {
           "idx": 21,
           "startMs": 74376,
           "endMs": 77928,
           "text": "Does the library open at eight tomorrow?",
-          "textTh": "พรุ่งนี้ห้องสมุดเปิดตอนแปดโมงไหม"
+          "textTh": ""
         },
         {
           "idx": 22,
           "startMs": 78208,
           "endMs": 81640,
           "text": "The weekend hours don't begin until ten.",
-          "textTh": "ช่วงสุดสัปดาห์จะเริ่มเปิดให้บริการตอน 10 โมง"
+          "textTh": ""
         },
         {
           "idx": 23,
           "startMs": 81920,
           "endMs": 83912,
           "text": "I'll come after breakfast then.",
-          "textTh": "งั้นผมจะมาหาหลังอาหารเช้านะครับ"
+          "textTh": ""
         },
         {
           "idx": 24,
           "startMs": 84912,
           "endMs": 87864,
           "text": "When do I need to return this key?",
-          "textTh": "ฉันต้องคืนกุญแจนี้เมื่อไร?"
+          "textTh": ""
         },
         {
           "idx": 25,
           "startMs": 88144,
           "endMs": 91384,
           "text": "Please bring it back before the office closes.",
-          "textTh": "โปรดนำกลับมาคืนก่อนที่สำนักงานจะปิด"
+          "textTh": ""
         },
         {
           "idx": 26,
           "startMs": 91664,
           "endMs": 94328,
           "text": "Is that at five thirty today?",
-          "textTh": "นั่นคือวันนี้เวลาห้าโมงครึ่งใช่ไหม?"
+          "textTh": ""
         },
         {
           "idx": 27,
           "startMs": 94608,
           "endMs": 99240,
           "text": "Yes, but the front desk stays open until six.",
-          "textTh": "ใช่ แต่แผนกต้อนรับเปิดให้บริการถึง 6 โมงเย็น"
+          "textTh": ""
         },
         {
           "idx": 28,
           "startMs": 100240,
           "endMs": 103624,
           "text": "Are we training on Monday or Tuesday?",
-          "textTh": "เราจะฝึกซ้อมกันในวันจันทร์หรือวันอังคาร?"
+          "textTh": ""
         },
         {
           "idx": 29,
           "startMs": 103904,
           "endMs": 109904,
           "text": "Monday is reserved for orientation, so Tuesday is our first option.",
-          "textTh": "วันจันทร์จะใช้สำหรับการปฐมนิเทศ ดังนั้นวันอังคารจึงเป็นตัวเลือกแรกของเรา"
+          "textTh": ""
         },
         {
           "idx": 30,
           "startMs": 110184,
           "endMs": 112944,
           "text": "I'll change the calendar invitation.",
-          "textTh": "ฉันจะเปลี่ยนคำเชิญในปฏิทิน"
+          "textTh": ""
         },
         {
           "idx": 31,
           "startMs": 113944,
           "endMs": 116824,
           "text": "Why hasn't the presentation started yet?",
-          "textTh": "ทำไมการนำเสนอถึงยังไม่เริ่ม?"
+          "textTh": ""
         },
         {
           "idx": 32,
           "startMs": 117104,
           "endMs": 121184,
           "text": "The speaker's flight arrived later than expected.",
-          "textTh": "เที่ยวบินของผู้บรรยายมาถึงช้ากว่าที่คาดไว้"
+          "textTh": ""
         },
         {
           "idx": 33,
           "startMs": 121464,
           "endMs": 124104,
           "text": "Will we still finish before noon?",
-          "textTh": "เราจะยังทำเสร็จก่อนเที่ยงอยู่ไหม?"
+          "textTh": ""
         },
         {
           "idx": 34,
           "startMs": 124384,
           "endMs": 127624,
           "text": "Yes. She shortened the introduction.",
-          "textTh": "ใช่ครับ เธอตัดบทนำให้สั้นลง"
+          "textTh": ""
         },
         {
           "idx": 35,
           "startMs": 128624,
           "endMs": 131888,
           "text": "Is the client visit confirmed for next week?",
-          "textTh": "ยืนยันการเข้าพบลูกค้าสัปดาห์หน้าแล้วหรือยัง?"
+          "textTh": ""
         },
         {
           "idx": 36,
           "startMs": 132168,
           "endMs": 136800,
           "text": "They confirmed Thursday, but not the exact time.",
-          "textTh": "พวกเขาคอนเฟิร์มวันพฤหัสบดี แต่ไม่ได้ระบุเวลาที่แน่นอน"
+          "textTh": ""
         },
         {
           "idx": 37,
           "startMs": 137080,
           "endMs": 139840,
           "text": "Should I reserve the room all morning?",
-          "textTh": "ฉันควรจองห้องไว้ทั้งเช้าไหม?"
+          "textTh": ""
         },
         {
           "idx": 38,
           "startMs": 140120,
           "endMs": 143960,
           "text": "Yes, until we receive their travel details.",
-          "textTh": "ใช่ จนกว่าเราจะได้รับรายละเอียดการเดินทางของพวกเขา"
+          "textTh": ""
         }
       ],
       "audioSha256": "bde1f8bc89f877bd3cf1beab6c00d2ca9e6ecfb14fcf22e03ff7cebccf89fd73"
@@ -574,7 +574,7 @@
       "episode": 3,
       "episodeId": "EP03",
       "title": "Places & Directions",
-      "titleTh": "สถานที่และการบอกทาง",
+      "titleTh": "",
       "level": "A2",
       "category": "toeic",
       "credit": "Banana Original",
@@ -611,280 +611,280 @@
           "startMs": 0,
           "endMs": 2880,
           "text": "Where is the human resources office?",
-          "textTh": "ฝ่ายทรัพยากรบุคคลอยู่ที่ไหน?"
+          "textTh": ""
         },
         {
           "idx": 1,
           "startMs": 3160,
           "endMs": 6232,
           "text": "On the third floor, across from the elevators.",
-          "textTh": "อยู่ชั้น 3 ตรงข้ามลิฟต์"
+          "textTh": ""
         },
         {
           "idx": 2,
           "startMs": 6512,
           "endMs": 8672,
           "text": "Thanks. I'll take the stairs.",
-          "textTh": "ขอบคุณค่ะ ฉันจะขึ้นบันไดเอง"
+          "textTh": ""
         },
         {
           "idx": 3,
           "startMs": 9672,
           "endMs": 13056,
           "text": "Which platform does the airport train use?",
-          "textTh": "รถไฟสนามบินใช้ชานชาลาไหน?"
+          "textTh": ""
         },
         {
           "idx": 4,
           "startMs": 13336,
           "endMs": 18088,
           "text": "Platform four. The signs are above the ticket machines.",
-          "textTh": "ชานชาลา 4 ป้ายอยู่เหนือตู้จำหน่ายตั๋ว"
+          "textTh": ""
         },
         {
           "idx": 5,
           "startMs": 18368,
           "endMs": 19760,
           "text": "I see them now.",
-          "textTh": "ตอนนี้ฉันเห็นพวกมันแล้ว"
+          "textTh": ""
         },
         {
           "idx": 6,
           "startMs": 20760,
           "endMs": 23232,
           "text": "Is there a place to eat near here?",
-          "textTh": "แถวนี้มีที่กินไหม?"
+          "textTh": ""
         },
         {
           "idx": 7,
           "startMs": 23512,
           "endMs": 26896,
           "text": "There's a small café next to the bank.",
-          "textTh": "มีร้านกาแฟเล็กๆ อยู่ข้างๆ ธนาคาร"
+          "textTh": ""
         },
         {
           "idx": 8,
           "startMs": 27176,
           "endMs": 29840,
           "text": "Perfect. I only have half an hour.",
-          "textTh": "เยี่ยมเลย ฉันมีเวลาแค่ครึ่งชั่วโมง"
+          "textTh": ""
         },
         {
           "idx": 9,
           "startMs": 30840,
           "endMs": 32712,
           "text": "Where should visitors park?",
-          "textTh": "ผู้มาเยือนควรจอดรถที่ไหน?"
+          "textTh": ""
         },
         {
           "idx": 10,
           "startMs": 32992,
           "endMs": 35344,
           "text": "In the lot behind the building.",
-          "textTh": "ที่ลานจอดรถด้านหลังอาคาร"
+          "textTh": ""
         },
         {
           "idx": 11,
           "startMs": 35624,
           "endMs": 37904,
           "text": "Is the entrance on Pine Street?",
-          "textTh": "ทางเข้าอยู่บนถนนไพน์ใช่ไหม?"
+          "textTh": ""
         },
         {
           "idx": 12,
           "startMs": 38184,
           "endMs": 40824,
           "text": "Yes, just past the traffic light.",
-          "textTh": "ใช่ค่ะ เลยไฟแดงมานิดเดียว"
+          "textTh": ""
         },
         {
           "idx": 13,
           "startMs": 41824,
           "endMs": 45928,
           "text": "Is the workshop in Room A or Room B?",
-          "textTh": "เวิร์กช็อปจัดที่ห้อง A หรือห้อง B?"
+          "textTh": ""
         },
         {
           "idx": 14,
           "startMs": 46208,
           "endMs": 50192,
           "text": "Room B. Room A is being cleaned.",
-          "textTh": "ห้อง B. ห้อง A กำลังทำความสะอาดอยู่"
+          "textTh": ""
         },
         {
           "idx": 15,
           "startMs": 50472,
           "endMs": 53232,
           "text": "I'll update the sign at the entrance.",
-          "textTh": "ฉันจะอัพเดทป้ายที่ทางเข้า"
+          "textTh": ""
         },
         {
           "idx": 16,
           "startMs": 54232,
           "endMs": 57184,
           "text": "How do I get to the conference center?",
-          "textTh": "ฉันจะไปศูนย์ประชุมได้อย่างไร?"
+          "textTh": ""
         },
         {
           "idx": 17,
           "startMs": 57464,
           "endMs": 61376,
           "text": "Turn left outside, then walk two blocks.",
-          "textTh": "เลี้ยวซ้ายเมื่อออกไปข้างนอก แล้วเดิน 2 ช่วงตึก"
+          "textTh": ""
         },
         {
           "idx": 18,
           "startMs": 61656,
           "endMs": 64440,
           "text": "Is it beside the hotel?",
-          "textTh": "อยู่ข้างๆ โรงแรมใช่ไหมครับ/คะ?"
+          "textTh": ""
         },
         {
           "idx": 19,
           "startMs": 64720,
           "endMs": 67144,
           "text": "It's across the street from the hotel.",
-          "textTh": "อยู่ตรงข้ามโรงแรม"
+          "textTh": ""
         },
         {
           "idx": 20,
           "startMs": 68144,
           "endMs": 71144,
           "text": "Where can I pick up my luggage?",
-          "textTh": "ฉันจะรับสัมภาระได้ที่ไหน?"
+          "textTh": ""
         },
         {
           "idx": 21,
           "startMs": 71424,
           "endMs": 74376,
           "text": "At belt six, near the exit doors.",
-          "textTh": "ที่สายพานลำเลียง 6 ใกล้ประตูทางออก"
+          "textTh": ""
         },
         {
           "idx": 22,
           "startMs": 74656,
           "endMs": 76936,
           "text": "Thank you. I'll head there now.",
-          "textTh": "ขอบคุณครับ/ค่ะ ผม/ดิฉันจะไปที่นั่นตอนนี้เลย"
+          "textTh": ""
         },
         {
           "idx": 23,
           "startMs": 77936,
           "endMs": 81440,
           "text": "Is the museum entrance on this side?",
-          "textTh": "ทางเข้าพิพิธภัณฑ์อยู่ด้านนี้ใช่ไหมครับ/คะ?"
+          "textTh": ""
         },
         {
           "idx": 24,
           "startMs": 81720,
           "endMs": 85152,
           "text": "No, go around the corner near the fountain.",
-          "textTh": "ไม่สิ ไปเลี้ยวตรงมุมใกล้ๆ น้ำพุ"
+          "textTh": ""
         },
         {
           "idx": 25,
           "startMs": 85432,
           "endMs": 88432,
           "text": "Thanks. I walked past it twice.",
-          "textTh": "ขอบคุณ ผมเดินผ่านไป 2 รอบแล้ว"
+          "textTh": ""
         },
         {
           "idx": 26,
           "startMs": 89432,
           "endMs": 92096,
           "text": "Where is the finance department now?",
-          "textTh": "ตอนนี้ฝ่ายการเงินอยู่ที่ไหน?"
+          "textTh": ""
         },
         {
           "idx": 27,
           "startMs": 92376,
           "endMs": 96768,
           "text": "They relocated upstairs, beside the legal team.",
-          "textTh": "พวกเขาจึงย้ายไปอยู่ชั้นบนข้างๆ ทีมกฎหมาย"
+          "textTh": ""
         },
         {
           "idx": 28,
           "startMs": 97048,
           "endMs": 99208,
           "text": "I didn't see the new sign.",
-          "textTh": "ฉันไม่เห็นป้ายใหม่"
+          "textTh": ""
         },
         {
           "idx": 29,
           "startMs": 100208,
           "endMs": 103280,
           "text": "What's the fastest way to the post office?",
-          "textTh": "ทางไหนไปที่ทำการไปรษณีย์เร็วที่สุด?"
+          "textTh": ""
         },
         {
           "idx": 30,
           "startMs": 103560,
           "endMs": 107280,
           "text": "Walk through the park instead of taking the main road.",
-          "textTh": "เดินผ่านสวนสาธารณะแทนที่จะใช้ถนนสายหลัก"
+          "textTh": ""
         },
         {
           "idx": 31,
           "startMs": 107560,
           "endMs": 110440,
           "text": "Is there an exit on the other side?",
-          "textTh": "มีทางออกอีกด้านไหม?"
+          "textTh": ""
         },
         {
           "idx": 32,
           "startMs": 110720,
           "endMs": 113672,
           "text": "Yes. The post office is beside it.",
-          "textTh": "ใช่ครับ ที่ทำการไปรษณีย์อยู่ข้างๆ"
+          "textTh": ""
         },
         {
           "idx": 33,
           "startMs": 114672,
           "endMs": 116496,
           "text": "Where should I meet the driver?",
-          "textTh": "ฉันควรไปพบผู้ขับที่ไหน?"
+          "textTh": ""
         },
         {
           "idx": 34,
           "startMs": 116776,
           "endMs": 119800,
           "text": "In front of the north entrance.",
-          "textTh": "หน้าทางเข้าด้านเหนือ"
+          "textTh": ""
         },
         {
           "idx": 35,
           "startMs": 120080,
           "endMs": 122000,
           "text": "I'll wait there with the luggage.",
-          "textTh": "ผมจะรออยู่ที่นั่นพร้อมสัมภาระ"
+          "textTh": ""
         },
         {
           "idx": 36,
           "startMs": 123000,
           "endMs": 126720,
           "text": "Is there a quiet place to take a call?",
-          "textTh": "มีที่เงียบๆ ให้รับสายไหม?"
+          "textTh": ""
         },
         {
           "idx": 37,
           "startMs": 127000,
           "endMs": 131152,
           "text": "The small lounge is just beyond the elevators.",
-          "textTh": "เลานจ์ขนาดเล็กอยู่เลยลิฟต์ไปนิดเดียว"
+          "textTh": ""
         },
         {
           "idx": 38,
           "startMs": 131432,
           "endMs": 133616,
           "text": "Is anyone using it now?",
-          "textTh": "ตอนนี้มีใครใช้อยู่ไหม?"
+          "textTh": ""
         },
         {
           "idx": 39,
           "startMs": 133896,
           "endMs": 137136,
           "text": "No, it should be empty until three.",
-          "textTh": "ไม่สิ น่าจะว่างจนถึงบ่าย 3 โมง"
+          "textTh": ""
         }
       ],
       "audioSha256": "64ee388eee47072851383c4890a6d99443b64d3e3da78922b5c037246428e86a"
@@ -894,7 +894,7 @@
       "episode": 4,
       "episodeId": "EP04",
       "title": "Requests & Help",
-      "titleTh": "การขอความช่วยเหลือ",
+      "titleTh": "",
       "level": "A2",
       "category": "toeic",
       "credit": "Banana Original",
@@ -931,259 +931,259 @@
           "startMs": 0,
           "endMs": 2520,
           "text": "Could you send me the updated file?",
-          "textTh": "คุณช่วยส่งไฟล์ที่อัปเดตแล้วให้ฉันได้ไหม?"
+          "textTh": ""
         },
         {
           "idx": 1,
           "startMs": 2800,
           "endMs": 5464,
           "text": "I just attached it to my email.",
-          "textTh": "ฉันเพิ่งแนบไปกับอีเมลของฉัน"
+          "textTh": ""
         },
         {
           "idx": 2,
           "startMs": 5744,
           "endMs": 8576,
           "text": "Got it. Thanks for sending it so quickly.",
-          "textTh": "ได้รับแล้ว ขอบคุณที่ส่งมาให้เร็วขนาดนี้"
+          "textTh": ""
         },
         {
           "idx": 3,
           "startMs": 9576,
           "endMs": 12600,
           "text": "May I borrow the projector this afternoon?",
-          "textTh": "ผม/ดิฉันขอยืมโปรเจกเตอร์ช่วงบ่ายวันนี้ได้ไหมครับ/คะ?"
+          "textTh": ""
         },
         {
           "idx": 4,
           "startMs": 12880,
           "endMs": 15904,
           "text": "Of course. Please return it before five.",
-          "textTh": "ได้สิครับ/ค่ะ โปรดนำกลับมาคืนก่อนห้าโมงเย็นนะครับ/ค่ะ"
+          "textTh": ""
         },
         {
           "idx": 5,
           "startMs": 16184,
           "endMs": 18704,
           "text": "I will. My meeting ends at four.",
-          "textTh": "ได้เลยครับ การประชุมของผมจะจบตอนบ่ายสี่โมง"
+          "textTh": ""
         },
         {
           "idx": 6,
           "startMs": 19704,
           "endMs": 21984,
           "text": "Would you mind holding the door?",
-          "textTh": "ช่วยประคองประตูไว้ได้ไหมครับ/คะ?"
+          "textTh": ""
         },
         {
           "idx": 7,
           "startMs": 22264,
           "endMs": 25504,
           "text": "Not at all. Those boxes look heavy.",
-          "textTh": "ไม่เลย กล่องพวกนั้นดูหนักนะ"
+          "textTh": ""
         },
         {
           "idx": 8,
           "startMs": 25784,
           "endMs": 28328,
           "text": "They are. I appreciate the help.",
-          "textTh": "ใช่ครับ ผมขอบคุณสำหรับความช่วยเหลือ"
+          "textTh": ""
         },
         {
           "idx": 9,
           "startMs": 29328,
           "endMs": 31872,
           "text": "Can you help me change my reservation?",
-          "textTh": "คุณช่วยฉันเปลี่ยนการจองได้ไหม?"
+          "textTh": ""
         },
         {
           "idx": 10,
           "startMs": 32152,
           "endMs": 34936,
           "text": "Certainly. What date would you prefer?",
-          "textTh": "ได้แน่นอน คุณต้องการวันที่เท่าไร?"
+          "textTh": ""
         },
         {
           "idx": 11,
           "startMs": 35216,
           "endMs": 38528,
           "text": "Next Friday, if there's a room available.",
-          "textTh": "วันศุกร์หน้า ถ้ามีห้องว่าง"
+          "textTh": ""
         },
         {
           "idx": 12,
           "startMs": 39528,
           "endMs": 43128,
           "text": "Could someone check the meeting-room microphone?",
-          "textTh": "มีใครช่วยเช็คไมโครโฟนในห้องประชุมหน่อยได้ไหม?"
+          "textTh": ""
         },
         {
           "idx": 13,
           "startMs": 43408,
           "endMs": 45952,
           "text": "Our technician is already on the way.",
-          "textTh": "ช่างเทคนิคของเรากำลังเดินทางไปแล้ว"
+          "textTh": ""
         },
         {
           "idx": 14,
           "startMs": 46232,
           "endMs": 50432,
           "text": "Excellent. The presentation starts in twenty minutes.",
-          "textTh": "เยี่ยมเลย การนำเสนอจะเริ่มในอีก 20 นาที"
+          "textTh": ""
         },
         {
           "idx": 15,
           "startMs": 51432,
           "endMs": 54336,
           "text": "Shall I print copies for the whole team?",
-          "textTh": "ฉันควรพิมพ์สำเนาให้ทั้งทีมไหม?"
+          "textTh": ""
         },
         {
           "idx": 16,
           "startMs": 54616,
           "endMs": 57040,
           "text": "A digital copy will be enough.",
-          "textTh": "สำเนาดิจิทัลก็เพียงพอแล้ว"
+          "textTh": ""
         },
         {
           "idx": 17,
           "startMs": 57320,
           "endMs": 60224,
           "text": "Okay. I'll share the link instead.",
-          "textTh": "โอเค ฉันจะแชร์ลิงก์แทน"
+          "textTh": ""
         },
         {
           "idx": 18,
           "startMs": 61224,
           "endMs": 64536,
           "text": "Is it okay if I leave a little early?",
-          "textTh": "ขออนุญาตกลับก่อนนิดหน่อยได้ไหมคะ/ครับ?"
+          "textTh": ""
         },
         {
           "idx": 19,
           "startMs": 64816,
           "endMs": 67600,
           "text": "Yes, once you finish the customer notes.",
-          "textTh": "ใช่ เมื่อคุณเขียนบันทึกสำหรับลูกค้าเสร็จแล้ว"
+          "textTh": ""
         },
         {
           "idx": 20,
           "startMs": 67880,
           "endMs": 70280,
           "text": "I'll complete them before lunch.",
-          "textTh": "ฉันจะทำเสร็จก่อนมื้อกลางวัน"
+          "textTh": ""
         },
         {
           "idx": 21,
           "startMs": 71280,
           "endMs": 74784,
           "text": "Could I have another day to finish the draft?",
-          "textTh": "ขอเวลาอีกวันเพื่อเขียนร่างให้เสร็จได้ไหม?"
+          "textTh": ""
         },
         {
           "idx": 22,
           "startMs": 75064,
           "endMs": 78568,
           "text": "Yes, but we need it by Thursday morning.",
-          "textTh": "ได้ แต่เราต้องได้รับภายในเช้าวันพฤหัสบดี"
+          "textTh": ""
         },
         {
           "idx": 23,
           "startMs": 78848,
           "endMs": 81728,
           "text": "That gives me time to check the figures.",
-          "textTh": "นั่นทำให้ผมมีเวลาตรวจสอบตัวเลข"
+          "textTh": ""
         },
         {
           "idx": 24,
           "startMs": 82728,
           "endMs": 85152,
           "text": "Would you help me carry these boxes?",
-          "textTh": "คุณช่วยฉันยกกล่องพวกนี้หน่อยได้ไหม?"
+          "textTh": ""
         },
         {
           "idx": 25,
           "startMs": 85432,
           "endMs": 88792,
           "text": "Sure. Let's take the smaller ones first.",
-          "textTh": "ได้สิ มาเริ่มจากอันเล็กๆ ก่อนนะ"
+          "textTh": ""
         },
         {
           "idx": 26,
           "startMs": 89072,
           "endMs": 92672,
           "text": "Good plan. The large box is quite heavy.",
-          "textTh": "แผนดี กล่องใบใหญ่ค่อนข้างหนัก"
+          "textTh": ""
         },
         {
           "idx": 27,
           "startMs": 93672,
           "endMs": 95976,
           "text": "May we sit near the front?",
-          "textTh": "เรานั่งใกล้ด้านหน้าได้ไหม?"
+          "textTh": ""
         },
         {
           "idx": 28,
           "startMs": 96256,
           "endMs": 100048,
           "text": "I'm afraid the speakers have already claimed that row.",
-          "textTh": "เกรงว่าผู้บรรยายจะจองแถวนั้นไปแล้ว"
+          "textTh": ""
         },
         {
           "idx": 29,
           "startMs": 100328,
           "endMs": 102488,
           "text": "Then we'll take the next row.",
-          "textTh": "จากนั้นเราจะดูแถวถัดไป"
+          "textTh": ""
         },
         {
           "idx": 30,
           "startMs": 103488,
           "endMs": 106728,
           "text": "Can you translate this document today?",
-          "textTh": "คุณแปลเอกสารนี้วันนี้ได้ไหม?"
+          "textTh": ""
         },
         {
           "idx": 31,
           "startMs": 107008,
           "endMs": 111232,
           "text": "I can't finish it today, but I can start now.",
-          "textTh": "ผมทำวันนี้ให้เสร็จไม่ได้ แต่เริ่มตอนนี้ได้"
+          "textTh": ""
         },
         {
           "idx": 32,
           "startMs": 111512,
           "endMs": 114872,
           "text": "That's fine. Please send the first page tonight.",
-          "textTh": "ไม่เป็นไร ส่งหน้าแรกมาคืนนี้เลย"
+          "textTh": ""
         },
         {
           "idx": 33,
           "startMs": 115872,
           "endMs": 118776,
           "text": "Could you drive me to the station after work?",
-          "textTh": "คุณช่วยขับรถไปส่งฉันที่สถานีหลังเลิกงานได้ไหม?"
+          "textTh": ""
         },
         {
           "idx": 34,
           "startMs": 119056,
           "endMs": 122776,
           "text": "I wish I could, but I have a late appointment.",
-          "textTh": "อยากจะอยู่ต่อเหมือนกัน แต่ผมนัดไว้ดึก"
+          "textTh": ""
         },
         {
           "idx": 35,
           "startMs": 123056,
           "endMs": 125936,
           "text": "No problem. I'll book a taxi.",
-          "textTh": "ไม่มีปัญหา เดี๋ยวผมจองแท็กซี่ให้"
+          "textTh": ""
         },
         {
           "idx": 36,
           "startMs": 126216,
           "endMs": 129696,
           "text": "I can help you carry your bags downstairs.",
-          "textTh": "ผมช่วยคุณยกกระเป๋าลงไปข้างล่างได้นะครับ"
+          "textTh": ""
         }
       ],
       "audioSha256": "8f58a02091fc65ae4fa3fe5ae691ea79841df3a444ce9272d68871d51649bd81"
@@ -1193,7 +1193,7 @@
       "episode": 5,
       "episodeId": "EP05",
       "title": "Orders & Prices",
-      "titleTh": "การสั่งซื้อและราคา",
+      "titleTh": "",
       "level": "A2",
       "category": "toeic",
       "credit": "Banana Original",
@@ -1230,266 +1230,266 @@
           "startMs": 0,
           "endMs": 2064,
           "text": "How many coffees should I order?",
-          "textTh": "ฉันควรสั่งกาแฟกี่แก้วดี?"
+          "textTh": ""
         },
         {
           "idx": 1,
           "startMs": 2344,
           "endMs": 5728,
           "text": "Six regular ones and two without milk.",
-          "textTh": "กาแฟปกติ 6 แก้วและไม่ใส่นม 2 แก้ว"
+          "textTh": ""
         },
         {
           "idx": 2,
           "startMs": 6008,
           "endMs": 8312,
           "text": "I'll write that down before I go.",
-          "textTh": "เดี๋ยวผมจะจดไว้ก่อนกลับ"
+          "textTh": ""
         },
         {
           "idx": 3,
           "startMs": 9312,
           "endMs": 11904,
           "text": "How much are fifty color copies?",
-          "textTh": "สำเนาสี 50 แผ่นราคาเท่าไร?"
+          "textTh": ""
         },
         {
           "idx": 4,
           "startMs": 12184,
           "endMs": 15088,
           "text": "They're twenty dollars, including the paper.",
-          "textTh": "ราคา 20 ดอลลาร์ รวมกระดาษแล้ว"
+          "textTh": ""
         },
         {
           "idx": 5,
           "startMs": 15368,
           "endMs": 17168,
           "text": "That's within our budget.",
-          "textTh": "นั่นอยู่ในงบของเรา"
+          "textTh": ""
         },
         {
           "idx": 6,
           "startMs": 18168,
           "endMs": 20952,
           "text": "Do you still have this notebook in blue?",
-          "textTh": "คุณยังมีสมุดโน้ตสีฟ้าเล่มนี้อยู่ไหม?"
+          "textTh": ""
         },
         {
           "idx": 7,
           "startMs": 21232,
           "endMs": 24784,
           "text": "Blue is sold out, but green is available.",
-          "textTh": "สีฟ้าขายหมดแล้ว แต่ยังมีสีเขียวอยู่"
+          "textTh": ""
         },
         {
           "idx": 8,
           "startMs": 25064,
           "endMs": 26768,
           "text": "Green will be fine.",
-          "textTh": "สีเขียวก็ดีนะ"
+          "textTh": ""
         },
         {
           "idx": 9,
           "startMs": 27768,
           "endMs": 30768,
           "text": "Is delivery included in the price?",
-          "textTh": "ราคารวมค่าจัดส่งแล้วหรือยัง?"
+          "textTh": ""
         },
         {
           "idx": 10,
           "startMs": 31048,
           "endMs": 34432,
           "text": "It is for orders over one hundred dollars.",
-          "textTh": "สำหรับคำสั่งซื้อที่มีมูลค่าเกิน 100 ดอลลาร์"
+          "textTh": ""
         },
         {
           "idx": 11,
           "startMs": 34712,
           "endMs": 37472,
           "text": "Then let's add another pack of pens.",
-          "textTh": "ทีนี้ มาเพิ่มปากกาอีกแพ็กกัน"
+          "textTh": ""
         },
         {
           "idx": 12,
           "startMs": 38472,
           "endMs": 41376,
           "text": "Does the lunch special come with a drink?",
-          "textTh": "เมนูพิเศษมื้อกลางวันมีเครื่องดื่มแถมไหม?"
+          "textTh": ""
         },
         {
           "idx": 13,
           "startMs": 41656,
           "endMs": 44968,
           "text": "Yes, you can choose tea or water.",
-          "textTh": "ได้ คุณเลือกได้ว่าจะรับชาหรือน้ำเปล่า"
+          "textTh": ""
         },
         {
           "idx": 14,
           "startMs": 45248,
           "endMs": 47648,
           "text": "Tea, please. No sugar.",
-          "textTh": "ขอชาค่ะ ไม่ใส่น้ำตาล"
+          "textTh": ""
         },
         {
           "idx": 15,
           "startMs": 48648,
           "endMs": 51792,
           "text": "Is the conference rate still available?",
-          "textTh": "ยังมีอัตราค่าห้องพักสำหรับผู้เข้าร่วมประชุมไหม?"
+          "textTh": ""
         },
         {
           "idx": 16,
           "startMs": 52072,
           "endMs": 55192,
           "text": "Yes, if you book before the end of the month.",
-          "textTh": "ได้ ถ้าคุณจองก่อนสิ้นเดือน"
+          "textTh": ""
         },
         {
           "idx": 17,
           "startMs": 55472,
           "endMs": 57752,
           "text": "I'll make the reservation today.",
-          "textTh": "ฉันจะจองวันนี้เลย"
+          "textTh": ""
         },
         {
           "idx": 18,
           "startMs": 58752,
           "endMs": 62064,
           "text": "Could you send us a receipt for the order?",
-          "textTh": "คุณช่วยส่งใบเสร็จของคำสั่งซื้อให้เราได้ไหม?"
+          "textTh": ""
         },
         {
           "idx": 19,
           "startMs": 62344,
           "endMs": 65608,
           "text": "It will be emailed after payment is complete.",
-          "textTh": "ระบบจะส่งอีเมลให้หลังจากชำระเงินเสร็จสิ้น"
+          "textTh": ""
         },
         {
           "idx": 20,
           "startMs": 65888,
           "endMs": 68960,
           "text": "Please use the address on our account.",
-          "textTh": "โปรดใช้ที่อยู่ที่ระบุในบัญชีของเรา"
+          "textTh": ""
         },
         {
           "idx": 21,
           "startMs": 69960,
           "endMs": 73344,
           "text": "Do these shirts come in a larger size?",
-          "textTh": "เสื้อเหล่านี้มีไซส์ใหญ่กว่านี้ไหม?"
+          "textTh": ""
         },
         {
           "idx": 22,
           "startMs": 73624,
           "endMs": 78088,
           "text": "Yes, but we only have the larger size online.",
-          "textTh": "ใช่ แต่เรามีเฉพาะขนาดใหญ่กว่าเท่านั้นทางออนไลน์"
+          "textTh": ""
         },
         {
           "idx": 23,
           "startMs": 78368,
           "endMs": 81032,
           "text": "Could it be delivered to the store?",
-          "textTh": "ส่งไปที่ร้านได้ไหม?"
+          "textTh": ""
         },
         {
           "idx": 24,
           "startMs": 81312,
           "endMs": 84816,
           "text": "Certainly. It usually takes two days.",
-          "textTh": "แน่นอน ปกติจะใช้เวลา 2 วัน"
+          "textTh": ""
         },
         {
           "idx": 25,
           "startMs": 85816,
           "endMs": 89176,
           "text": "Can I change the number of folders I ordered?",
-          "textTh": "ฉันจะเปลี่ยนจำนวนโฟลเดอร์ที่สั่งซื้อได้หรือไม่?"
+          "textTh": ""
         },
         {
           "idx": 26,
           "startMs": 89456,
           "endMs": 92816,
           "text": "Yes, the order hasn't been packed yet.",
-          "textTh": "ใช่ คำสั่งซื้อยังไม่ได้บรรจุภัณฑ์"
+          "textTh": ""
         },
         {
           "idx": 27,
           "startMs": 93096,
           "endMs": 96456,
           "text": "Please make it thirty instead of twenty.",
-          "textTh": "รบกวนเปลี่ยนจากยี่สิบเป็นสามสิบด้วยครับ/ค่ะ"
+          "textTh": ""
         },
         {
           "idx": 28,
           "startMs": 97456,
           "endMs": 101200,
           "text": "Is the monthly plan cheaper than the weekly plan?",
-          "textTh": "แพ็กเกจรายเดือนถูกกว่าแพ็กเกจรายสัปดาห์หรือไม่?"
+          "textTh": ""
         },
         {
           "idx": 29,
           "startMs": 101480,
           "endMs": 105080,
           "text": "It is, if you use the service every week.",
-          "textTh": "ใช่ ถ้าคุณใช้บริการทุกสัปดาห์"
+          "textTh": ""
         },
         {
           "idx": 30,
           "startMs": 105360,
           "endMs": 108000,
           "text": "I think the monthly plan makes sense.",
-          "textTh": "ผมคิดว่าแพ็กเกจรายเดือนน่าจะเหมาะกว่า"
+          "textTh": ""
         },
         {
           "idx": 31,
           "startMs": 109000,
           "endMs": 111832,
           "text": "Can I pay when the chairs arrive?",
-          "textTh": "ฉันชำระเงินตอนที่เก้าอี้มาถึงได้ไหม?"
+          "textTh": ""
         },
         {
           "idx": 32,
           "startMs": 112112,
           "endMs": 116624,
           "text": "We require a fifty-percent deposit before dispatch.",
-          "textTh": "เราขอให้ชำระเงินมัดจำ 50 เปอร์เซ็นต์ก่อนจัดส่ง"
+          "textTh": ""
         },
         {
           "idx": 33,
           "startMs": 116904,
           "endMs": 119616,
           "text": "I'll arrange the transfer this afternoon.",
-          "textTh": "ผมจะจัดการโอนเงินให้บ่ายนี้"
+          "textTh": ""
         },
         {
           "idx": 34,
           "startMs": 120616,
           "endMs": 124000,
           "text": "Why is the final bill higher than the estimate?",
-          "textTh": "ทำไมใบเรียกเก็บเงินฉบับสุดท้ายจึงมีมูลค่าสูงกว่ายอดโดยประมาณ?"
+          "textTh": ""
         },
         {
           "idx": 35,
           "startMs": 124280,
           "endMs": 128840,
           "text": "The extra chairs were added after we sent the estimate.",
-          "textTh": "เราเพิ่มเก้าอี้พิเศษเข้าไปหลังจากส่งใบเสนอราคาแล้ว"
+          "textTh": ""
         },
         {
           "idx": 36,
           "startMs": 129120,
           "endMs": 132552,
           "text": "Could you email a list of all the charges?",
-          "textTh": "คุณช่วยส่งอีเมลรายการค่าใช้จ่ายทั้งหมดให้ได้ไหม?"
+          "textTh": ""
         },
         {
           "idx": 37,
           "startMs": 132832,
           "endMs": 136624,
           "text": "Certainly. I'll send an updated invoice today.",
-          "textTh": "ได้แน่นอน เดี๋ยววันนี้ฉันจะส่งใบแจ้งหนี้ฉบับปรับปรุงให้"
+          "textTh": ""
         }
       ],
       "audioSha256": "3cf32be91e65c34a95941e485cfe3cc890034848964f57bc51f40ead1331e56c"
@@ -1499,7 +1499,7 @@
       "episode": 6,
       "episodeId": "EP06",
       "title": "Changes & Decisions",
-      "titleTh": "การเปลี่ยนแปลงและการตัดสินใจ",
+      "titleTh": "",
       "level": "A2",
       "category": "toeic",
       "credit": "Banana Original",
@@ -1536,259 +1536,259 @@
           "startMs": 0,
           "endMs": 2400,
           "text": "Why isn't the train here yet?",
-          "textTh": "ทำไมรถไฟยังไม่มาอีก?"
+          "textTh": ""
         },
         {
           "idx": 1,
           "startMs": 2680,
           "endMs": 6160,
           "text": "There's a delay because of track maintenance.",
-          "textTh": "เกิดความล่าช้าเนื่องจากการซ่อมบำรุงรางรถไฟ"
+          "textTh": ""
         },
         {
           "idx": 2,
           "startMs": 6440,
           "endMs": 8912,
           "text": "Then I'll take the bus to the airport.",
-          "textTh": "จากนั้นผมจะนั่งรถบัสไปสนามบิน"
+          "textTh": ""
         },
         {
           "idx": 3,
           "startMs": 9912,
           "endMs": 12696,
           "text": "Should we replace the broken speaker?",
-          "textTh": "เราควรเปลี่ยนลำโพงที่เสียไหม?"
+          "textTh": ""
         },
         {
           "idx": 4,
           "startMs": 12976,
           "endMs": 15976,
           "text": "Let's ask maintenance to inspect it first.",
-          "textTh": "มาขอให้ฝ่ายซ่อมบำรุงตรวจสอบก่อนกันเถอะ"
+          "textTh": ""
         },
         {
           "idx": 5,
           "startMs": 16256,
           "endMs": 19496,
           "text": "Good idea. It might be an easy fix.",
-          "textTh": "เป็นความคิดที่ดีนะ อาจจะแก้ได้ง่ายๆ ก็ได้"
+          "textTh": ""
         },
         {
           "idx": 6,
           "startMs": 20496,
           "endMs": 23376,
           "text": "Are we still eating outside today?",
-          "textTh": "วันนี้เรายังจะออกไปทานข้าวนอกบ้านกันอยู่ไหม?"
+          "textTh": ""
         },
         {
           "idx": 7,
           "startMs": 23656,
           "endMs": 27160,
           "text": "The weather forecast says heavy rain.",
-          "textTh": "พยากรณ์อากาศบอกว่าจะมีฝนตกหนัก"
+          "textTh": ""
         },
         {
           "idx": 8,
           "startMs": 27440,
           "endMs": 29744,
           "text": "I'll reserve a table indoors.",
-          "textTh": "ฉันจะจองโต๊ะในร้านให้"
+          "textTh": ""
         },
         {
           "idx": 9,
           "startMs": 30744,
           "endMs": 33144,
           "text": "Did you find the missing contract?",
-          "textTh": "คุณหาสัญญาที่หายไปเจอไหม?"
+          "textTh": ""
         },
         {
           "idx": 10,
           "startMs": 33424,
           "endMs": 36208,
           "text": "It was in the shared folder all along.",
-          "textTh": "มันอยู่ในโฟลเดอร์ที่แชร์มาตลอด"
+          "textTh": ""
         },
         {
           "idx": 11,
           "startMs": 36488,
           "endMs": 38792,
           "text": "Great. I'll send it to the client.",
-          "textTh": "เยี่ยมเลย เดี๋ยวฉันจะส่งให้ลูกค้า"
+          "textTh": ""
         },
         {
           "idx": 12,
           "startMs": 39792,
           "endMs": 42984,
           "text": "Which design does the customer prefer?",
-          "textTh": "ลูกค้าชอบดีไซน์แบบไหน?"
+          "textTh": ""
         },
         {
           "idx": 13,
           "startMs": 43264,
           "endMs": 46408,
           "text": "They haven't replied to the new samples yet.",
-          "textTh": "พวกเขายังไม่ได้ตอบกลับเกี่ยวกับตัวอย่างใหม่"
+          "textTh": ""
         },
         {
           "idx": 14,
           "startMs": 46688,
           "endMs": 49688,
           "text": "I'll call them before we start printing.",
-          "textTh": "ฉันจะโทรหาพวกเขาก่อนที่เราจะเริ่มพิมพ์"
+          "textTh": ""
         },
         {
           "idx": 15,
           "startMs": 50688,
           "endMs": 53712,
           "text": "Can we move the appointment to Monday?",
-          "textTh": "เราขยับนัดไปเป็นวันจันทร์ได้ไหม?"
+          "textTh": ""
         },
         {
           "idx": 16,
           "startMs": 53992,
           "endMs": 58432,
           "text": "Monday is a holiday. Tuesday is open.",
-          "textTh": "วันจันทร์เป็นวันหยุด วันอังคารเปิดให้บริการ"
+          "textTh": ""
         },
         {
           "idx": 17,
           "startMs": 58712,
           "endMs": 60992,
           "text": "Let's take Tuesday morning.",
-          "textTh": "มาดูเช้าวันอังคารกัน"
+          "textTh": ""
         },
         {
           "idx": 18,
           "startMs": 61992,
           "endMs": 64896,
           "text": "Why did the workshop change rooms?",
-          "textTh": "ทำไมห้องเวิร์กช็อปถึงเปลี่ยนไป?"
+          "textTh": ""
         },
         {
           "idx": 19,
           "startMs": 65176,
           "endMs": 68680,
           "text": "The larger room has better video equipment.",
-          "textTh": "ห้องที่ใหญ่กว่ามีอุปกรณ์วิดีโอที่ดีกว่า"
+          "textTh": ""
         },
         {
           "idx": 20,
           "startMs": 68960,
           "endMs": 71120,
           "text": "I'll tell everyone where to go.",
-          "textTh": "ผมจะบอกทุกคนว่าจะไปไหน"
+          "textTh": ""
         },
         {
           "idx": 21,
           "startMs": 72120,
           "endMs": 75312,
           "text": "Why can't we use the large meeting room?",
-          "textTh": "ทำไมเราถึงใช้ห้องประชุมใหญ่ไม่ได้ล่ะ?"
+          "textTh": ""
         },
         {
           "idx": 22,
           "startMs": 75592,
           "endMs": 78544,
           "text": "Another team reserved it for a workshop.",
-          "textTh": "อีกทีมจองไว้สำหรับเวิร์คช็อป"
+          "textTh": ""
         },
         {
           "idx": 23,
           "startMs": 78824,
           "endMs": 83264,
           "text": "Let's use the smaller room and invite fewer people.",
-          "textTh": "มาใช้ห้องที่เล็กกว่าและเชิญคนให้น้อยลงกันเถอะ"
+          "textTh": ""
         },
         {
           "idx": 24,
           "startMs": 84264,
           "endMs": 87264,
           "text": "Should we send this lamp back to the store?",
-          "textTh": "เราควรส่งโคมไฟนี้กลับไปที่ร้านไหม?"
+          "textTh": ""
         },
         {
           "idx": 25,
           "startMs": 87544,
           "endMs": 91336,
           "text": "Yes. The switch doesn't work properly.",
-          "textTh": "ใช่ สวิตช์ทำงานผิดปกติ"
+          "textTh": ""
         },
         {
           "idx": 26,
           "startMs": 91616,
           "endMs": 93968,
           "text": "I'll keep the receipt for the return.",
-          "textTh": "ฉันจะเก็บใบเสร็จไว้เพื่อนำไปคืน"
+          "textTh": ""
         },
         {
           "idx": 27,
           "startMs": 94968,
           "endMs": 98112,
           "text": "What happens if the speaker can't attend?",
-          "textTh": "จะเกิดอะไรขึ้นหากวิทยากรไม่สามารถเข้าร่วมได้?"
+          "textTh": ""
         },
         {
           "idx": 28,
           "startMs": 98392,
           "endMs": 101872,
           "text": "Her colleague can give the presentation instead.",
-          "textTh": "เพื่อนร่วมงานของเธอสามารถนำเสนอแทนได้"
+          "textTh": ""
         },
         {
           "idx": 29,
           "startMs": 102152,
           "endMs": 104744,
           "text": "I'll prepare a second name card.",
-          "textTh": "ผมจะเตรียมบัตรชื่อใบที่สองไว้ให้ครับ"
+          "textTh": ""
         },
         {
           "idx": 30,
           "startMs": 105744,
           "endMs": 108696,
           "text": "Did the team approve the revised schedule?",
-          "textTh": "ทีมอนุมัติกำหนดการที่แก้ไขแล้วหรือไม่?"
+          "textTh": ""
         },
         {
           "idx": 31,
           "startMs": 108976,
           "endMs": 112960,
           "text": "Yes, but they want the break ten minutes earlier.",
-          "textTh": "ใช่ แต่พวกเขาต้องการพักก่อนกำหนดสิบนาที"
+          "textTh": ""
         },
         {
           "idx": 32,
           "startMs": 113240,
           "endMs": 116072,
           "text": "I'll change the printed program now.",
-          "textTh": "เดี๋ยวผมจะเปลี่ยนโปรแกรมที่พิมพ์ไว้ตอนนี้เลย"
+          "textTh": ""
         },
         {
           "idx": 33,
           "startMs": 117072,
           "endMs": 120672,
           "text": "Should we wait for the new posters to arrive?",
-          "textTh": "เราควรรอให้โปสเตอร์ใหม่มาถึงก่อนไหม?"
+          "textTh": ""
         },
         {
           "idx": 34,
           "startMs": 120952,
           "endMs": 125536,
           "text": "With the event tomorrow, we should use the approved design.",
-          "textTh": "เนื่องจากงานจะจัดขึ้นในวันพรุ่งนี้ เราควรใช้ดีไซน์ที่ได้รับอนุมัติแล้ว"
+          "textTh": ""
         },
         {
           "idx": 35,
           "startMs": 125816,
           "endMs": 127928,
           "text": "I'll print it this afternoon.",
-          "textTh": "ฉันจะพิมพ์ให้เย็นนี้"
+          "textTh": ""
         },
         {
           "idx": 36,
           "startMs": 128208,
           "endMs": 132528,
           "text": "Good. We can update the digital version later.",
-          "textTh": "ดีเลย เราค่อยอัปเดตเวอร์ชันดิจิทัลทีหลังก็ได้"
+          "textTh": ""
         }
       ],
       "audioSha256": "58b8cce7f5c87db09c9b48c8541b432aff26b36cc919b0b6c6e829b9db6bc2a4"
@@ -1798,7 +1798,7 @@
       "episode": 7,
       "episodeId": "EP07",
       "title": "At the Front Desk",
-      "titleTh": "ที่เคาน์เตอร์",
+      "titleTh": "",
       "level": "B1",
       "category": "toeic",
       "credit": "Banana Original",
@@ -1835,7 +1835,7 @@
           "startMs": 0,
           "endMs": 3480,
           "text": "Good morning. I'm here to see Ms. Rivera.",
-          "textTh": "อรุณสวัสดิ์ค่ะ ฉันมาพบคุณริเวร่าค่ะ",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -1843,7 +1843,7 @@
           "startMs": 3760,
           "endMs": 6352,
           "text": "Do you have an appointment with her?",
-          "textTh": "คุณมีนัดกับเธอไหม?",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -1851,7 +1851,7 @@
           "startMs": 6632,
           "endMs": 10232,
           "text": "Yes. We arranged a meeting for ten o'clock.",
-          "textTh": "ใช่ เรานัดประชุมกันไว้ตอนสิบโมง",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -1859,7 +1859,7 @@
           "startMs": 10512,
           "endMs": 12576,
           "text": "May I have your name, please?",
-          "textTh": "ขอทราบชื่อของคุณหน่อยได้ไหมคะ/ครับ?",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -1867,7 +1867,7 @@
           "startMs": 12856,
           "endMs": 16216,
           "text": "Daniel Park, from Northline Design.",
-          "textTh": "แดเนียล พาร์ก จาก Northline Design",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -1875,7 +1875,7 @@
           "startMs": 16496,
           "endMs": 19136,
           "text": "Thank you. I'll let her know you've arrived.",
-          "textTh": "ขอบคุณค่ะ เดี๋ยวฉันจะไปบอกเธอว่าคุณมาถึงแล้ว",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -1883,7 +1883,7 @@
           "startMs": 19416,
           "endMs": 21456,
           "text": "Should I wait here in the lobby?",
-          "textTh": "ฉันควรจะรอตรงนี้ในล็อบบี้ไหม?",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -1891,7 +1891,7 @@
           "startMs": 21736,
           "endMs": 24376,
           "text": "Yes. Please take a seat near the window.",
-          "textTh": "ใช่ครับ/ค่ะ โปรดนั่งใกล้หน้าต่าง",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -1899,7 +1899,7 @@
           "startMs": 24656,
           "endMs": 27536,
           "text": "Her assistant will come down to meet you.",
-          "textTh": "ผู้ช่วยของเธอจะลงมาพบคุณ",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -1907,7 +1907,7 @@
           "startMs": 27816,
           "endMs": 30120,
           "text": "Great. I'll get my notes ready.",
-          "textTh": "เยี่ยมเลย ผมจะเตรียมบันทึกไว้",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -1915,7 +1915,7 @@
           "startMs": 31120,
           "endMs": 35224,
           "text": "Hello. I have a reservation for two nights.",
-          "textTh": "สวัสดีค่ะ ฉันมีการจองไว้ 2 คืน",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -1923,7 +1923,7 @@
           "startMs": 35504,
           "endMs": 38576,
           "text": "Welcome. Could I see your identification?",
-          "textTh": "ยินดีต้อนรับครับ/ค่ะ ขออนุญาตดูบัตรประจำตัวของคุณหน่อยได้ไหมครับ/คะ?",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -1931,7 +1931,7 @@
           "startMs": 38856,
           "endMs": 43248,
           "text": "Certainly. The booking is under Mina Chen.",
-          "textTh": "แน่นอนค่ะ การจองนี้อยู่ภายใต้ชื่อมิน่า เฉิน",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -1939,7 +1939,7 @@
           "startMs": 43528,
           "endMs": 46960,
           "text": "I found it. You requested a quiet room.",
-          "textTh": "ฉันหาเจอแล้ว คุณขอห้องที่เงียบสงบ",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -1947,7 +1947,7 @@
           "startMs": 47240,
           "endMs": 50480,
           "text": "Yes, I have an early meeting tomorrow.",
-          "textTh": "ใช่ ฉันมีประชุมเช้าพรุ่งนี้",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -1955,7 +1955,7 @@
           "startMs": 50760,
           "endMs": 53280,
           "text": "We have a room on the fifth floor.",
-          "textTh": "เรามีห้องพักอยู่ชั้น 5",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -1963,7 +1963,7 @@
           "startMs": 53560,
           "endMs": 55840,
           "text": "It's away from the elevators.",
-          "textTh": "อยู่ไกลจากลิฟต์",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -1971,7 +1971,7 @@
           "startMs": 56120,
           "endMs": 59840,
           "text": "That sounds perfect. Is breakfast included?",
-          "textTh": "ฟังดูดีมากเลย มีอาหารเช้ารวมอยู่ด้วยไหม?",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -1979,7 +1979,7 @@
           "startMs": 60120,
           "endMs": 64704,
           "text": "Yes. Breakfast starts at six thirty downstairs.",
-          "textTh": "ใช่ค่ะ อาหารเช้าเริ่มเสิร์ฟตอนหกโมงครึ่งที่ชั้นล่าง",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -1987,7 +1987,7 @@
           "startMs": 64984,
           "endMs": 68368,
           "text": "Thank you. Where can I find the lift?",
-          "textTh": "ขอบคุณครับ/ค่ะ ผม/ดิฉันจะหาลิฟต์ได้ที่ไหน?",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -1995,7 +1995,7 @@
           "startMs": 68648,
           "endMs": 73112,
           "text": "Turn right after the café. It's beside the stairs.",
-          "textTh": "เลี้ยวขวาหลังร้านกาแฟ อยู่ข้างบันไดครับ",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -2003,7 +2003,7 @@
           "startMs": 74112,
           "endMs": 78744,
           "text": "Excuse me. I think I left my phone charger downstairs.",
-          "textTh": "ขอโทษนะคะ ฉันคิดว่าฉันลืมที่ชาร์จโทรศัพท์ไว้ข้างล่าง",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2011,7 +2011,7 @@
           "startMs": 79024,
           "endMs": 81304,
           "text": "Was it near the check-in counter?",
-          "textTh": "อยู่ใกล้เคาน์เตอร์เช็คอินไหม?",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2019,7 +2019,7 @@
           "startMs": 81584,
           "endMs": 84464,
           "text": "Yes, next to the small plant.",
-          "textTh": "ใช่ ข้างๆ ต้นไม้เล็กๆ นั่นไง",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2027,7 +2027,7 @@
           "startMs": 84744,
           "endMs": 87504,
           "text": "Let me check the lost-and-found box.",
-          "textTh": "เดี๋ยวผมไปดูที่กล่องของหายก่อนนะครับ",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2035,7 +2035,7 @@
           "startMs": 87784,
           "endMs": 91216,
           "text": "Here it is. Is this black charger yours?",
-          "textTh": "นี่ไง นี่เป็นที่ชาร์จสีดำของคุณใช่ไหม?",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2043,7 +2043,7 @@
           "startMs": 91496,
           "endMs": 94520,
           "text": "That's the one. Thank you for keeping it safe.",
-          "textTh": "ใช่แล้ว ขอบคุณที่เก็บรักษาไว้ให้ปลอดภัย",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2051,7 +2051,7 @@
           "startMs": 94800,
           "endMs": 97584,
           "text": "You're welcome. Is your room comfortable?",
-          "textTh": "ด้วยความยินดีค่ะ ห้องพักของคุณสะดวกสบายไหมคะ?",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2059,7 +2059,7 @@
           "startMs": 97864,
           "endMs": 102208,
           "text": "It is, but the air conditioner is a little loud.",
-          "textTh": "ใช่ แต่เครื่องปรับอากาศมีเสียงดังนิดหน่อย",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2067,7 +2067,7 @@
           "startMs": 102488,
           "endMs": 105440,
           "text": "I'll ask someone to look at it this afternoon.",
-          "textTh": "เดี๋ยวผมจะขอให้ใครสักคนมาดูให้บ่ายนี้",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2075,7 +2075,7 @@
           "startMs": 105720,
           "endMs": 109104,
           "text": "That would be helpful. I'll be out until four.",
-          "textTh": "นั่นคงจะช่วยได้เยอะเลย ผมจะไม่อยู่จนถึงสี่โมงเย็น",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2083,7 +2083,7 @@
           "startMs": 109384,
           "endMs": 111808,
           "text": "I'll leave a note for our maintenance team.",
-          "textTh": "เราจะฝากข้อความไว้ให้ทีมซ่อมบำรุง",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2091,7 +2091,7 @@
           "startMs": 112088,
           "endMs": 116192,
           "text": "Will they need to enter the room while I'm away?",
-          "textTh": "เจ้าหน้าที่จะต้องเข้ามาในห้องตอนที่ฉันไม่อยู่ไหม?",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2099,7 +2099,7 @@
           "startMs": 116472,
           "endMs": 118752,
           "text": "Only if you give us permission.",
-          "textTh": "เฉพาะเมื่อคุณอนุญาตเท่านั้น",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2107,7 +2107,7 @@
           "startMs": 119032,
           "endMs": 122896,
           "text": "That's fine. Please leave a note when they finish.",
-          "textTh": "ไม่เป็นไรค่ะ/ครับ โปรดฝากข้อความไว้เมื่อพวกเขาทำเสร็จ",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2115,7 +2115,7 @@
           "startMs": 123176,
           "endMs": 126728,
           "text": "Certainly. You can also ask for another room.",
-          "textTh": "ได้แน่นอน คุณยังขอเปลี่ยนห้องอื่นได้ด้วย",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2123,7 +2123,7 @@
           "startMs": 127008,
           "endMs": 131880,
           "text": "Let's try the repair first. Please call before entering.",
-          "textTh": "ลองซ่อมดูก่อนดีกว่า โปรดโทรมาก่อนเข้า",
+          "textTh": "",
           "section": "C"
         }
       ],
@@ -2134,7 +2134,7 @@
       "episode": 8,
       "episodeId": "EP08",
       "title": "Lunch for the Team",
-      "titleTh": "มื้อกลางวันของทีม",
+      "titleTh": "",
       "level": "B1",
       "category": "toeic",
       "credit": "Banana Original",
@@ -2171,7 +2171,7 @@
           "startMs": 0,
           "endMs": 2952,
           "text": "The training group arrives at noon.",
-          "textTh": "กลุ่มฝึกอบรมจะมาถึงตอนเที่ยง",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -2179,7 +2179,7 @@
           "startMs": 3232,
           "endMs": 5464,
           "text": "Should we order lunch for everyone?",
-          "textTh": "เราควรสั่งอาหารกลางวันให้ทุกคนไหม?",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -2187,7 +2187,7 @@
           "startMs": 5744,
           "endMs": 9464,
           "text": "Yes. There will be twelve people, including us.",
-          "textTh": "ใช่ จะมีคน 12 คน รวมถึงพวกเราด้วย",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -2195,7 +2195,7 @@
           "startMs": 9744,
           "endMs": 13704,
           "text": "The café has sandwiches and rice bowls.",
-          "textTh": "คาเฟ่มีแซนด์วิชและข้าวหน้าต่างๆ",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -2203,7 +2203,7 @@
           "startMs": 13984,
           "endMs": 16264,
           "text": "Let's get six of each.",
-          "textTh": "เอาอย่างละ 6 ชิ้นเลย",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -2211,7 +2211,7 @@
           "startMs": 16544,
           "endMs": 19184,
           "text": "One guest doesn't eat meat.",
-          "textTh": "มีผู้เข้าพักคนหนึ่งไม่ทานเนื้อสัตว์",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -2219,7 +2219,7 @@
           "startMs": 19464,
           "endMs": 22944,
           "text": "Then make one rice bowl vegetarian.",
-          "textTh": "งั้นก็ทำข้าวหน้า 1 ชามให้เป็นแบบมังสวิรัติ",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -2227,7 +2227,7 @@
           "startMs": 23224,
           "endMs": 25984,
           "text": "I'll call now. Should we add drinks?",
-          "textTh": "เดี๋ยวผมจะโทรไปตอนนี้เลย เราควรเพิ่มเครื่องดื่มไหม?",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -2235,7 +2235,7 @@
           "startMs": 26264,
           "endMs": 29144,
           "text": "Water is already in the meeting room.",
-          "textTh": "มีน้ำอยู่ในห้องประชุมแล้ว",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -2243,7 +2243,7 @@
           "startMs": 29424,
           "endMs": 33384,
           "text": "Good. I'll ask for delivery before eleven forty-five.",
-          "textTh": "ดีเลย ผมจะขอให้มาส่งก่อน 11:45 น.",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -2251,7 +2251,7 @@
           "startMs": 34384,
           "endMs": 37816,
           "text": "Hello, this is Maple Café calling.",
-          "textTh": "สวัสดีค่ะ นี่เมเปิลคาเฟ่ค่ะ",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -2259,7 +2259,7 @@
           "startMs": 38096,
           "endMs": 41816,
           "text": "Hi. Is there a problem with our lunch order?",
-          "textTh": "สวัสดีค่ะ มีปัญหาอะไรกับออเดอร์อาหารกลางวันของเราหรือเปล่าคะ?",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -2267,7 +2267,7 @@
           "startMs": 42096,
           "endMs": 45120,
           "text": "We're out of the chicken sandwiches today.",
-          "textTh": "วันนี้เราหมดแซนด์วิชไก่แล้วค่ะ",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -2275,7 +2275,7 @@
           "startMs": 45400,
           "endMs": 47752,
           "text": "What can you offer instead?",
-          "textTh": "คุณมีอะไรเสนอแทนได้บ้าง?",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -2283,7 +2283,7 @@
           "startMs": 48032,
           "endMs": 51536,
           "text": "We can make turkey sandwiches at the same price.",
-          "textTh": "เราทำแซนด์วิชไก่งวงในราคาเดียวกันได้",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -2291,7 +2291,7 @@
           "startMs": 51816,
           "endMs": 55680,
           "text": "That should work. Please keep the vegetarian bowl.",
-          "textTh": "น่าจะใช้ได้นะ โปรดเก็บชามอาหารมังสวิรัติไว้ด้วย",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -2299,7 +2299,7 @@
           "startMs": 55960,
           "endMs": 60064,
           "text": "Of course. Will someone meet the driver downstairs?",
-          "textTh": "แน่นอนครับ/ค่ะ มีใครจะลงไปพบคนขับไหม?",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -2307,7 +2307,7 @@
           "startMs": 60344,
           "endMs": 64016,
           "text": "Yes, I'll be at reception at eleven forty-five.",
-          "textTh": "ครับ/ค่ะ ผม/ดิฉันจะไปที่แผนกต้อนรับเวลาสิบเอ็ดโมงสี่สิบห้านาที",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -2315,7 +2315,7 @@
           "startMs": 64296,
           "endMs": 67728,
           "text": "Perfect. We'll bring the receipt with the food.",
-          "textTh": "เยี่ยมเลย เราจะนำใบเสร็จมาพร้อมกับอาหาร",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -2323,7 +2323,7 @@
           "startMs": 68008,
           "endMs": 71272,
           "text": "Thanks for calling before you made the change.",
-          "textTh": "ขอบคุณที่โทรมาแจ้งก่อนทำการเปลี่ยนแปลง",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -2331,7 +2331,7 @@
           "startMs": 72272,
           "endMs": 75752,
           "text": "Hello. I have lunch from Maple Café.",
-          "textTh": "สวัสดีครับ/ค่ะ ผม/ดิฉันมีอาหารกลางวันจากเมเปิลคาเฟ่",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2339,7 +2339,7 @@
           "startMs": 76032,
           "endMs": 78456,
           "text": "Great. Are all twelve meals here?",
-          "textTh": "เยี่ยมเลย มีอาหารครบ 12 มื้อไหม?",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2347,7 +2347,7 @@
           "startMs": 78736,
           "endMs": 83008,
           "text": "Yes, but the vegetarian bowl is in a separate bag.",
-          "textTh": "ใช่ แต่ข้าวหน้ามังสวิรัติอยู่ในถุงแยกต่างหาก",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2355,7 +2355,7 @@
           "startMs": 83288,
           "endMs": 86552,
           "text": "Thanks for telling me. I'll label it for our guest.",
-          "textTh": "ขอบคุณที่บอกผม ผมจะติดป้ายไว้ให้แขกของเรา",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2363,7 +2363,7 @@
           "startMs": 86832,
           "endMs": 90432,
           "text": "The receipt is attached to the larger bag.",
-          "textTh": "ใบเสร็จจะติดอยู่กับถุงใบใหญ่กว่า",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2371,7 +2371,7 @@
           "startMs": 90712,
           "endMs": 94144,
           "text": "I see it. May I sign for the delivery now?",
-          "textTh": "ฉันเห็นแล้ว ฉันลงชื่อรับของได้เลยไหม?",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2379,7 +2379,7 @@
           "startMs": 94424,
           "endMs": 97304,
           "text": "Of course. Please sign on this line.",
-          "textTh": "แน่นอนครับ/ค่ะ โปรดลงนามตรงเส้นนี้",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2387,7 +2387,7 @@
           "startMs": 97584,
           "endMs": 100776,
           "text": "Leo, the group is ready to take a break.",
-          "textTh": "ลีโอ กลุ่มพร้อมจะพักแล้วนะ",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2395,7 +2395,7 @@
           "startMs": 101056,
           "endMs": 104896,
           "text": "Perfect timing. Please put the meals on the back table.",
-          "textTh": "มาได้ถูกเวลาจริงๆ ค่ะ ช่วยวางอาหารไว้บนโต๊ะด้านหลังด้วยนะคะ",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2403,7 +2403,7 @@
           "startMs": 105176,
           "endMs": 108416,
           "text": "I'll tell everyone which option is vegetarian.",
-          "textTh": "ฉันจะบอกทุกคนว่าตัวเลือกไหนเป็นอาหารมังสวิรัติ",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2411,7 +2411,7 @@
           "startMs": 108696,
           "endMs": 113208,
           "text": "The café included a list of ingredients as well.",
-          "textTh": "ร้านกาแฟยังระบุรายการส่วนผสมไว้ด้วย",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2419,7 +2419,7 @@
           "startMs": 113488,
           "endMs": 117448,
           "text": "Excellent. One guest asked about food allergies.",
-          "textTh": "เยี่ยมเลย ผู้เข้าร่วมคนหนึ่งถามเกี่ยวกับอาการแพ้อาหาร",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2427,7 +2427,7 @@
           "startMs": 117728,
           "endMs": 120968,
           "text": "I'll keep the list beside the meals.",
-          "textTh": "ฉันจะวางรายการไว้ข้างๆ อาหาร",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2435,7 +2435,7 @@
           "startMs": 121248,
           "endMs": 124440,
           "text": "Please call the café if anything is missing.",
-          "textTh": "โปรดโทรหาคาเฟ่หากมีสิ่งใดขาดหายไป",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2443,7 +2443,7 @@
           "startMs": 124720,
           "endMs": 128680,
           "text": "Everything matches the order, including the separate meal.",
-          "textTh": "ทุกอย่างตรงตามคำสั่งซื้อ รวมถึงอาหารแยกต่างหากด้วย",
+          "textTh": "",
           "section": "C"
         }
       ],
@@ -2454,7 +2454,7 @@
       "episode": 9,
       "episodeId": "EP09",
       "title": "The Meeting Moved",
-      "titleTh": "ประชุมเลื่อน",
+      "titleTh": "",
       "level": "B1",
       "category": "toeic",
       "credit": "Banana Original",
@@ -2491,7 +2491,7 @@
           "startMs": 0,
           "endMs": 3600,
           "text": "Did you see the update about tomorrow's meeting?",
-          "textTh": "คุณเห็นอัปเดตเกี่ยวกับการประชุมพรุ่งนี้ไหม?",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -2499,7 +2499,7 @@
           "startMs": 3880,
           "endMs": 7072,
           "text": "I saw an email, but I haven't opened it.",
-          "textTh": "ฉันเห็นอีเมล แต่ยังไม่ได้เปิดอ่าน",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -2507,7 +2507,7 @@
           "startMs": 7352,
           "endMs": 11336,
           "text": "The start time moved from nine to ten thirty.",
-          "textTh": "เวลาเริ่มต้นเลื่อนจากเก้าโมงเป็นสิบโมงครึ่ง",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -2515,7 +2515,7 @@
           "startMs": 11616,
           "endMs": 13296,
           "text": "Why did they change it?",
-          "textTh": "ทำไมพวกเขาถึงเปลี่ยน?",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -2523,7 +2523,7 @@
           "startMs": 13576,
           "endMs": 17968,
           "text": "The client needs extra time to review the proposal.",
-          "textTh": "ลูกค้าต้องการเวลาเพิ่มเพื่อตรวจสอบข้อเสนอ",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -2531,7 +2531,7 @@
           "startMs": 18248,
           "endMs": 21248,
           "text": "Does that mean we should change our slides?",
-          "textTh": "นั่นหมายความว่าเราควรเปลี่ยนสไลด์ของเราหรือไม่?",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -2539,7 +2539,7 @@
           "startMs": 21528,
           "endMs": 25152,
           "text": "Only the price page. Finance sent new numbers.",
-          "textTh": "เฉพาะหน้าแสดงราคาเท่านั้น ฝ่ายการเงินส่งตัวเลขใหม่มาให้",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -2547,7 +2547,7 @@
           "startMs": 25432,
           "endMs": 27832,
           "text": "I'll update that page this afternoon.",
-          "textTh": "ฉันจะอัปเดตหน้านั้นในบ่ายวันนี้",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -2555,7 +2555,7 @@
           "startMs": 28112,
           "endMs": 31544,
           "text": "Please send me the final file before six.",
-          "textTh": "โปรดส่งไฟล์ฉบับสุดท้ายให้ฉันก่อนหกโมงเย็น",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -2563,7 +2563,7 @@
           "startMs": 31824,
           "endMs": 34104,
           "text": "I will. Thanks for the reminder.",
-          "textTh": "ได้เลย ขอบคุณที่เตือน",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -2571,7 +2571,7 @@
           "startMs": 35104,
           "endMs": 39136,
           "text": "I updated the slides, but the room calendar looks different.",
-          "textTh": "ฉันอัปเดตสไลด์แล้ว แต่ปฏิทินห้องดูแตกต่างไปจากเดิม",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -2579,7 +2579,7 @@
           "startMs": 39416,
           "endMs": 42200,
           "text": "The meeting is online now.",
-          "textTh": "การประชุมออนไลน์แล้วตอนนี้",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -2587,7 +2587,7 @@
           "startMs": 42480,
           "endMs": 45960,
           "text": "Really? I thought the client was visiting us.",
-          "textTh": "จริงเหรอ? ผมนึกว่าลูกค้าจะมาหาเรานะ",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -2595,7 +2595,7 @@
           "startMs": 46240,
           "endMs": 48712,
           "text": "Their train was canceled this morning.",
-          "textTh": "รถไฟของพวกเขาถูกยกเลิกเมื่อเช้านี้",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -2603,7 +2603,7 @@
           "startMs": 48992,
           "endMs": 51752,
           "text": "Should I send them a video link?",
-          "textTh": "ฉันควรส่งลิงก์วิดีโอให้พวกเขาไหม?",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -2611,7 +2611,7 @@
           "startMs": 52032,
           "endMs": 54936,
           "text": "I already included one in the invitation.",
-          "textTh": "ฉันใส่ไปในคำเชิญแล้ว 1 ใบ",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -2619,7 +2619,7 @@
           "startMs": 55216,
           "endMs": 58888,
           "text": "Could you test the screen sharing before ten?",
-          "textTh": "คุณช่วยทดสอบการแชร์หน้าจอให้เสร็จก่อน 10 โมงได้ไหม?",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -2627,7 +2627,7 @@
           "startMs": 59168,
           "endMs": 63008,
           "text": "Sure. I'll join early and check the audio too.",
-          "textTh": "ได้สิ เดี๋ยวฉันจะเข้าร่วมก่อนเวลาและเช็คเสียงด้วย",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -2635,7 +2635,7 @@
           "startMs": 63288,
           "endMs": 66600,
           "text": "Great. I'll bring the printed notes just in case.",
-          "textTh": "เยี่ยมเลย ผมจะเอาบันทึกที่พิมพ์ออกมาไปด้วยเผื่อไว้",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -2643,7 +2643,7 @@
           "startMs": 66880,
           "endMs": 69664,
           "text": "Sounds good. See you online tomorrow.",
-          "textTh": "ฟังดูดีนะ แล้วเจอกันออนไลน์พรุ่งนี้",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -2651,7 +2651,7 @@
           "startMs": 70664,
           "endMs": 73784,
           "text": "Nina, can you hear me through the meeting link?",
-          "textTh": "นีน่า ได้ยินฉันผ่านลิงก์การประชุมไหม?",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2659,7 +2659,7 @@
           "startMs": 74064,
           "endMs": 77808,
           "text": "Yes, but your camera is showing the wrong room.",
-          "textTh": "ใช่ แต่กล้องของคุณกำลังแสดงห้องที่ไม่ถูกต้อง",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2667,7 +2667,7 @@
           "startMs": 78088,
           "endMs": 81712,
           "text": "Oh, I selected the old conference camera.",
-          "textTh": "โอ้ ฉันเลือกกล้องประชุมตัวเก่าไป",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2675,7 +2675,7 @@
           "startMs": 81992,
           "endMs": 84704,
           "text": "Try the camera built into your laptop.",
-          "textTh": "ลองใช้กล้องที่ติดตั้งมากับแล็ปท็อป",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2683,7 +2683,7 @@
           "startMs": 84984,
           "endMs": 87936,
           "text": "That's better. Can you see the price slide?",
-          "textTh": "ดีขึ้นแล้วคุณเห็นสไลด์ราคาไหม?",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2691,7 +2691,7 @@
           "startMs": 88216,
           "endMs": 91600,
           "text": "I can. The new numbers are easy to read.",
-          "textTh": "ฉันทำได้ ตัวเลขใหม่อ่านง่าย",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2699,7 +2699,7 @@
           "startMs": 91880,
           "endMs": 95120,
           "text": "I'll keep the notes open in another window.",
-          "textTh": "ฉันจะเปิดบันทึกไว้ในหน้าต่างอื่น",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2707,7 +2707,7 @@
           "startMs": 95400,
           "endMs": 98544,
           "text": "Good. The client will join in a few minutes.",
-          "textTh": "ดี ลูกค้าจะเข้าร่วมในอีกไม่กี่นาที",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2715,7 +2715,7 @@
           "startMs": 98824,
           "endMs": 101944,
           "text": "I sent them the updated proposal last night.",
-          "textTh": "เมื่อคืนฉันส่งข้อเสนอฉบับปรับปรุงให้พวกเขาแล้ว",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2723,7 +2723,7 @@
           "startMs": 102224,
           "endMs": 105488,
           "text": "Great. We're ready to begin at ten thirty.",
-          "textTh": "เยี่ยมเลย เราพร้อมเริ่มตอน 10:30 น.",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2731,7 +2731,7 @@
           "startMs": 105768,
           "endMs": 108648,
           "text": "Should I open the call to everyone now?",
-          "textTh": "ฉันควรเปิดการประชุมให้ทุกคนเข้าร่วมตอนนี้เลยไหม?",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2739,7 +2739,7 @@
           "startMs": 108928,
           "endMs": 112888,
           "text": "Wait until the client joins, then share the slides.",
-          "textTh": "รอจนกว่าลูกค้าจะเข้าร่วม จากนั้นแชร์สไลด์",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2747,7 +2747,7 @@
           "startMs": 113168,
           "endMs": 116552,
           "text": "Understood. I'll mute my microphone while we wait.",
-          "textTh": "เข้าใจแล้วค่ะ/ครับ ฉัน/ผมจะปิดไมโครโฟนระหว่างรอ",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2755,7 +2755,7 @@
           "startMs": 116832,
           "endMs": 119616,
           "text": "I have the latest price sheet beside me.",
-          "textTh": "ผมมีเอกสารราคาล่าสุดอยู่ข้างๆ",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2763,7 +2763,7 @@
           "startMs": 119896,
           "endMs": 123328,
           "text": "Perfect. I'll handle the questions about timing.",
-          "textTh": "เยี่ยมเลย ผมจะจัดการคำถามเกี่ยวกับเวลาเอง",
+          "textTh": "",
           "section": "C"
         }
       ],
@@ -2774,7 +2774,7 @@
       "episode": 10,
       "episodeId": "EP10",
       "title": "A Late Delivery",
-      "titleTh": "พัสดุมาช้า",
+      "titleTh": "",
       "level": "B1",
       "category": "toeic",
       "credit": "Banana Original",
@@ -2811,7 +2811,7 @@
           "startMs": 0,
           "endMs": 4032,
           "text": "I'm calling about an order of twenty desk lamps.",
-          "textTh": "ผมโทรมาเรื่องคำสั่งซื้อโคมไฟตั้งโต๊ะ 20 ดวง",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -2819,7 +2819,7 @@
           "startMs": 4312,
           "endMs": 7024,
           "text": "Certainly. Do you have the order number?",
-          "textTh": "ได้แน่นอน คุณมีหมายเลขคำสั่งซื้อไหม?",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -2827,7 +2827,7 @@
           "startMs": 7304,
           "endMs": 12056,
           "text": "Yes, it's four eight two seven one.",
-          "textTh": "ใช่ค่ะ สี่ แปด สอง เจ็ด หนึ่ง",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -2835,7 +2835,7 @@
           "startMs": 12336,
           "endMs": 16368,
           "text": "Thank you. The shipment left our warehouse yesterday.",
-          "textTh": "ขอบคุณ สินค้าออกจากคลังสินค้าของเราเมื่อวานนี้",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -2843,7 +2843,7 @@
           "startMs": 16648,
           "endMs": 19648,
           "text": "It was supposed to arrive this morning.",
-          "textTh": "มันควรจะมาถึงเช้านี้",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -2851,7 +2851,7 @@
           "startMs": 19928,
           "endMs": 23528,
           "text": "I apologize. The delivery truck broke down.",
-          "textTh": "ผมขอโทษครับ รถบรรทุกส่งของเสีย",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -2859,7 +2859,7 @@
           "startMs": 23808,
           "endMs": 26688,
           "text": "When will the lamps reach our office?",
-          "textTh": "โคมไฟจะมาถึงสำนักงานของเราเมื่อไร?",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -2867,7 +2867,7 @@
           "startMs": 26968,
           "endMs": 31240,
           "text": "The driver expects to arrive by four today.",
-          "textTh": "คนขับคาดว่าจะมาถึงวันนี้เวลา 16.00 น.",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -2875,7 +2875,7 @@
           "startMs": 31520,
           "endMs": 34832,
           "text": "We close at five, so that should work.",
-          "textTh": "เราปิดตอนห้าโมง น่าจะทันนะ",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -2883,7 +2883,7 @@
           "startMs": 35112,
           "endMs": 37776,
           "text": "I'll send you a tracking link right away.",
-          "textTh": "เราจะส่งลิงก์ติดตามให้คุณทันที",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -2891,7 +2891,7 @@
           "startMs": 38776,
           "endMs": 42976,
           "text": "I checked the link, and the delivery is delayed again.",
-          "textTh": "ฉันตรวจสอบลิงก์แล้ว และการจัดส่งก็ล่าช้าอีกครั้ง",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -2899,7 +2899,7 @@
           "startMs": 43256,
           "endMs": 48128,
           "text": "I'm sorry. The truck is waiting for a replacement tire.",
-          "textTh": "ขอโทษด้วยครับ รถบรรทุกกำลังรอเปลี่ยนยาง",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -2907,7 +2907,7 @@
           "startMs": 48408,
           "endMs": 51840,
           "text": "We need the lamps for an event tomorrow morning.",
-          "textTh": "เราต้องการโคมไฟสำหรับงานอีเวนต์พรุ่งนี้เช้า",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -2915,7 +2915,7 @@
           "startMs": 52120,
           "endMs": 54880,
           "text": "There's another driver near your office.",
-          "textTh": "มีผู้ขับอีกคนอยู่ใกล้สำนักงานของคุณ",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -2923,7 +2923,7 @@
           "startMs": 55160,
           "endMs": 57872,
           "text": "He can bring ten lamps tonight.",
-          "textTh": "คืนนี้เขานำตะเกียงมาได้สิบดวง",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -2931,7 +2931,7 @@
           "startMs": 58152,
           "endMs": 61272,
           "text": "Ten will be enough for the first event.",
-          "textTh": "สิบคนก็พอสำหรับงานแรก",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -2939,7 +2939,7 @@
           "startMs": 61552,
           "endMs": 65464,
           "text": "We'll deliver the remaining ten tomorrow afternoon.",
-          "textTh": "เราจะส่งอีก 10 ตัวที่เหลือให้พรุ่งนี้บ่าย",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -2947,7 +2947,7 @@
           "startMs": 65744,
           "endMs": 69464,
           "text": "Please email me the updated delivery times.",
-          "textTh": "โปรดส่งอีเมลแจ้งเวลาจัดส่งที่อัปเดตแล้วให้ฉันทราบ",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -2955,7 +2955,7 @@
           "startMs": 69744,
           "endMs": 73176,
           "text": "Of course. You'll receive a message in a few minutes.",
-          "textTh": "แน่นอน คุณจะได้รับข้อความในอีกไม่กี่นาที",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -2963,7 +2963,7 @@
           "startMs": 73456,
           "endMs": 76120,
           "text": "Thank you for finding another way.",
-          "textTh": "ขอบคุณที่หาวิธีอื่น",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -2971,7 +2971,7 @@
           "startMs": 77120,
           "endMs": 80624,
           "text": "I have the first ten lamps for your event.",
-          "textTh": "ผมมีโคมไฟสิบดวงแรกสำหรับงานของคุณแล้ว",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2979,7 +2979,7 @@
           "startMs": 80904,
           "endMs": 84528,
           "text": "Thanks. Please leave them beside the loading door.",
-          "textTh": "ขอบคุณค่ะ/ครับ โปรดวางไว้ข้างประตูขนของ",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2987,7 +2987,7 @@
           "startMs": 84808,
           "endMs": 88072,
           "text": "Could you check the boxes before signing?",
-          "textTh": "คุณช่วยทำเครื่องหมายในช่องก่อนลงนามได้ไหม?",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -2995,7 +2995,7 @@
           "startMs": 88352,
           "endMs": 91256,
           "text": "Of course. All ten look fine.",
-          "textTh": "แน่นอน ทั้งสิบอันดูดีหมดเลย",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3003,7 +3003,7 @@
           "startMs": 91536,
           "endMs": 94800,
           "text": "The remaining lamps are on tomorrow's route.",
-          "textTh": "โคมไฟที่เหลืออยู่บนเส้นทางของวันพรุ่งนี้",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3011,7 +3011,7 @@
           "startMs": 95080,
           "endMs": 99160,
           "text": "Will they arrive before three in the afternoon?",
-          "textTh": "พวกเขาจะมาถึงก่อนบ่ายสามโมงไหม?",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3019,7 +3019,7 @@
           "startMs": 99440,
           "endMs": 102320,
           "text": "That's the current estimate in my system.",
-          "textTh": "นั่นคือยอดโดยประมาณในระบบของฉันตอนนี้",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3027,7 +3027,7 @@
           "startMs": 102600,
           "endMs": 105312,
           "text": "Please call me if the time changes.",
-          "textTh": "โปรดโทรหาฉันหากเวลาเปลี่ยนแปลง",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3035,7 +3035,7 @@
           "startMs": 105592,
           "endMs": 108784,
           "text": "I will. You can also follow the tracking link.",
-          "textTh": "ได้เลย คุณยังติดตามได้จากลิงก์ติดตามพัสดุด้วย",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3043,7 +3043,7 @@
           "startMs": 109064,
           "endMs": 113624,
           "text": "Great. This first delivery solves the urgent problem.",
-          "textTh": "เยี่ยมเลย การจัดส่งครั้งแรกนี้ช่วยแก้ปัญหาเร่งด่วนได้",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3051,7 +3051,7 @@
           "startMs": 113904,
           "endMs": 117288,
           "text": "Would you like me to remove the empty boxes?",
-          "textTh": "คุณต้องการให้ฉันนำกล่องเปล่าออกไหม?",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3059,7 +3059,7 @@
           "startMs": 117568,
           "endMs": 121192,
           "text": "Please leave them here. We may need the packaging.",
-          "textTh": "โปรดวางไว้ที่นี่ เราอาจต้องใช้บรรจุภัณฑ์",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3067,7 +3067,7 @@
           "startMs": 121472,
           "endMs": 124256,
           "text": "Of course. I have a copy of the receipt.",
-          "textTh": "แน่นอน ฉันมีสำเนาใบเสร็จ",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3075,7 +3075,7 @@
           "startMs": 124536,
           "endMs": 127968,
           "text": "I'll sign it after checking the last lamp.",
-          "textTh": "ผมจะเซ็นหลังจากตรวจโคมไฟดวงสุดท้ายแล้ว",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3083,7 +3083,7 @@
           "startMs": 128248,
           "endMs": 131272,
           "text": "I'll leave a copy of the signed receipt with you.",
-          "textTh": "ผมจะทิ้งสำเนาใบเสร็จที่ลงนามแล้วไว้กับคุณ",
+          "textTh": "",
           "section": "C"
         }
       ],
@@ -3094,7 +3094,7 @@
       "episode": 11,
       "episodeId": "EP11",
       "title": "The Printer Is Down",
-      "titleTh": "ปริ้นเตอร์เสีย",
+      "titleTh": "",
       "level": "B1",
       "category": "toeic",
       "credit": "Banana Original",
@@ -3131,7 +3131,7 @@
           "startMs": 0,
           "endMs": 4032,
           "text": "The printer stopped in the middle of my report.",
-          "textTh": "เครื่องพิมพ์หยุดทำงานกลางคันขณะพิมพ์รายงานของฉัน",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -3139,7 +3139,7 @@
           "startMs": 4312,
           "endMs": 6472,
           "text": "Did it show an error message?",
-          "textTh": "มีข้อความแสดงข้อผิดพลาดหรือไม่?",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -3147,7 +3147,7 @@
           "startMs": 6752,
           "endMs": 10016,
           "text": "Yes. It says the paper tray is empty.",
-          "textTh": "ใช่ค่ะ มันบอกว่าถาดกระดาษว่างเปล่า",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -3155,7 +3155,7 @@
           "startMs": 10296,
           "endMs": 12600,
           "text": "There's more paper in the cabinet.",
-          "textTh": "มีกระดาษอีกเยอะในตู้",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -3163,7 +3163,7 @@
           "startMs": 12880,
           "endMs": 16672,
           "text": "I added some, but it still won't print.",
-          "textTh": "ฉันเพิ่มกระดาษแล้ว แต่ก็ยังพิมพ์ไม่ได้อยู่ดี",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -3171,7 +3171,7 @@
           "startMs": 16952,
           "endMs": 19112,
           "text": "Let me open the back panel.",
-          "textTh": "เดี๋ยวผมเปิดแผงด้านหลังให้ดูนะครับ",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -3179,7 +3179,7 @@
           "startMs": 19392,
           "endMs": 22776,
           "text": "Ah, a sheet of paper is stuck inside.",
-          "textTh": "อ่า มีกระดาษแผ่นหนึ่งติดอยู่ข้างใน",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -3187,7 +3187,7 @@
           "startMs": 23056,
           "endMs": 26416,
           "text": "Can you remove it without damaging the printer?",
-          "textTh": "คุณสามารถถอดออกได้โดยไม่ทำให้เครื่องพิมพ์เสียหายหรือไม่?",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -3195,7 +3195,7 @@
           "startMs": 26696,
           "endMs": 30176,
           "text": "I think so. Please turn the power off first.",
-          "textTh": "ผมคิดว่าใช่ครับ รบกวนปิดเครื่องก่อนนะครับ",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -3203,7 +3203,7 @@
           "startMs": 30456,
           "endMs": 33600,
           "text": "Done. The meeting starts in fifteen minutes.",
-          "textTh": "เรียบร้อย การประชุมจะเริ่มในอีกสิบห้านาที",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -3211,7 +3211,7 @@
           "startMs": 33880,
           "endMs": 38104,
           "text": "If this fails, use the printer upstairs.",
-          "textTh": "หากล้มเหลว ให้ใช้เครื่องพิมพ์ชั้นบน",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -3219,7 +3219,7 @@
           "startMs": 39104,
           "endMs": 43184,
           "text": "The printer works now, but I can't join the call.",
-          "textTh": "ตอนนี้เครื่องพิมพ์ใช้งานได้แล้ว แต่ฉันเข้าร่วมการโทรไม่ได้",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -3227,7 +3227,7 @@
           "startMs": 43464,
           "endMs": 47016,
           "text": "Is your laptop connected to the office network?",
-          "textTh": "แล็ปท็อปของคุณเชื่อมต่อกับเครือข่ายของสำนักงานหรือไม่?",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -3235,7 +3235,7 @@
           "startMs": 47296,
           "endMs": 50776,
           "text": "Yes, and the other websites are loading.",
-          "textTh": "ใช่ และเว็บไซต์อื่นๆ กำลังโหลด",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -3243,7 +3243,7 @@
           "startMs": 51056,
           "endMs": 55088,
           "text": "Try opening the invitation in a new browser window.",
-          "textTh": "ลองเปิดคำเชิญในหน้าต่างเบราว์เซอร์ใหม่",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -3251,7 +3251,7 @@
           "startMs": 55368,
           "endMs": 58392,
           "text": "That worked. I can see everyone now.",
-          "textTh": "ได้ผลแล้ว ตอนนี้ฉันเห็นทุกคนแล้ว",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -3259,7 +3259,7 @@
           "startMs": 58672,
           "endMs": 59752,
           "text": "Can they hear you?",
-          "textTh": "พวกเขาได้ยินคุณไหม?",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -3267,7 +3267,7 @@
           "startMs": 60032,
           "endMs": 63224,
           "text": "Not yet. My microphone was turned off.",
-          "textTh": "ยังครับ ไมโครโฟนของผมปิดอยู่",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -3275,7 +3275,7 @@
           "startMs": 63504,
           "endMs": 66264,
           "text": "Check the small icon at the bottom.",
-          "textTh": "ตรวจสอบไอคอนเล็กๆ ที่ด้านล่าง",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -3283,7 +3283,7 @@
           "startMs": 66544,
           "endMs": 69304,
           "text": "There we go. Thanks for helping twice today.",
-          "textTh": "เรียบร้อย ขอบคุณที่ช่วยอีกครั้งในวันนี้",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -3291,7 +3291,7 @@
           "startMs": 70304,
           "endMs": 74168,
           "text": "The call ended. Can we print the final report now?",
-          "textTh": "การโทรสิ้นสุดลงแล้ว ตอนนี้เราพิมพ์รายงานฉบับสุดท้ายได้ไหม?",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3299,7 +3299,7 @@
           "startMs": 74448,
           "endMs": 78480,
           "text": "Yes, but use the printer on the second floor.",
-          "textTh": "ได้ แต่ใช้เครื่องพิมพ์ที่ชั้น 2",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3307,7 +3307,7 @@
           "startMs": 78760,
           "endMs": 80944,
           "text": "Is ours broken again?",
-          "textTh": "ของเราระเบิดอีกแล้วเหรอ?",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3315,7 +3315,7 @@
           "startMs": 81224,
           "endMs": 85304,
           "text": "It works, but a replacement part is arriving tomorrow.",
-          "textTh": "ใช้งานได้ แต่จะมีอะไหล่มาส่งพรุ่งนี้",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3323,7 +3323,7 @@
           "startMs": 85584,
           "endMs": 88704,
           "text": "I don't want to risk another paper jam.",
-          "textTh": "ฉันไม่อยากเสี่ยงให้กระดาษติดอีก",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3331,7 +3331,7 @@
           "startMs": 88984,
           "endMs": 93064,
           "text": "Exactly. I sent the file to the upstairs printer.",
-          "textTh": "ใช่เลย ผมส่งไฟล์ไปที่เครื่องพิมพ์ชั้นบน",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3339,7 +3339,7 @@
           "startMs": 93344,
           "endMs": 96416,
           "text": "Thanks. I'll collect the pages on my way out.",
-          "textTh": "ขอบคุณครับ ผมจะเก็บหน้าเอกสารตอนออกไป",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3347,7 +3347,7 @@
           "startMs": 96696,
           "endMs": 100200,
           "text": "Check the last page before you give it to the manager.",
-          "textTh": "ตรวจสอบหน้าสุดท้ายก่อนส่งให้ผู้จัดการ",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3355,7 +3355,7 @@
           "startMs": 100480,
           "endMs": 103720,
           "text": "I will. The chart should be in color.",
-          "textTh": "ได้เลยค่ะ แผนภูมิควรเป็นแบบสี",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3363,7 +3363,7 @@
           "startMs": 104000,
           "endMs": 106784,
           "text": "It is. I selected the color setting.",
-          "textTh": "ใช่ค่ะ ฉันเลือกการตั้งค่าสีแล้ว",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3371,7 +3371,7 @@
           "startMs": 107064,
           "endMs": 110928,
           "text": "The first page looks good, but this one is missing.",
-          "textTh": "หน้าแรกดูดี แต่หน้านี้หายไป",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3379,7 +3379,7 @@
           "startMs": 111208,
           "endMs": 114352,
           "text": "It may still be in the printer tray.",
-          "textTh": "อาจยังอยู่ในถาดเครื่องพิมพ์",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3387,7 +3387,7 @@
           "startMs": 114632,
           "endMs": 117872,
           "text": "You're right. It was under another document.",
-          "textTh": "คุณพูดถูก มันอยู่ใต้เอกสารอีกฉบับหนึ่ง",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3395,7 +3395,7 @@
           "startMs": 118152,
           "endMs": 120696,
           "text": "Now the whole report is ready.",
-          "textTh": "ตอนนี้รายงานทั้งหมดพร้อมแล้ว",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3403,7 +3403,7 @@
           "startMs": 120976,
           "endMs": 123328,
           "text": "I'll take it to the manager's office.",
-          "textTh": "ผมจะเอาไปที่ห้องของผู้จัดการครับ",
+          "textTh": "",
           "section": "C"
         }
       ],
@@ -3414,7 +3414,7 @@
       "episode": 12,
       "episodeId": "EP12",
       "title": "Interview Day",
-      "titleTh": "วันสัมภาษณ์",
+      "titleTh": "",
       "level": "B1",
       "category": "toeic",
       "credit": "Banana Original",
@@ -3451,7 +3451,7 @@
           "startMs": 0,
           "endMs": 3504,
           "text": "Good morning. I'm here for the marketing interview.",
-          "textTh": "อรุณสวัสดิ์ค่ะ ฉันมาสัมภาษณ์งานฝ่ายการตลาดค่ะ",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -3459,7 +3459,7 @@
           "startMs": 3784,
           "endMs": 6328,
           "text": "Welcome. What is your name?",
-          "textTh": "ยินดีต้อนรับ คุณชื่ออะไรครับ/คะ?",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -3467,7 +3467,7 @@
           "startMs": 6608,
           "endMs": 9440,
           "text": "My name is Arisa Tan.",
-          "textTh": "ฉันชื่ออาริสา ตัน",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -3475,7 +3475,7 @@
           "startMs": 9720,
           "endMs": 12912,
           "text": "You're a little early. Please sign in here.",
-          "textTh": "คุณมาก่อนเวลานิดหน่อยนะ โปรดลงชื่อเข้าใช้ที่นี่",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -3483,7 +3483,7 @@
           "startMs": 13192,
           "endMs": 16072,
           "text": "Is there anything else I should prepare?",
-          "textTh": "มีอะไรอีกไหมที่ฉันควรเตรียมไว้?",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -3491,7 +3491,7 @@
           "startMs": 16352,
           "endMs": 20504,
           "text": "The manager will ask about your recent projects.",
-          "textTh": "ผู้จัดการจะถามเกี่ยวกับโครงการล่าสุดของคุณ",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -3499,7 +3499,7 @@
           "startMs": 20784,
           "endMs": 23904,
           "text": "I brought a few examples on my tablet.",
-          "textTh": "ผมนำตัวอย่างมาให้ดูในแท็บเล็ต",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -3507,7 +3507,7 @@
           "startMs": 24184,
           "endMs": 26776,
           "text": "That's helpful. She'll be with you shortly.",
-          "textTh": "นั่นมีประโยชน์มาก เธอจะมาหาคุณในไม่ช้า",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -3515,7 +3515,7 @@
           "startMs": 27056,
           "endMs": 30776,
           "text": "Thank you. I'll review my notes while I wait.",
-          "textTh": "ขอบคุณค่ะ ฉันจะทบทวนบันทึกของฉันระหว่างรอ",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -3523,7 +3523,7 @@
           "startMs": 31776,
           "endMs": 34416,
           "text": "Arisa, I'm sorry for the delay.",
-          "textTh": "อาริสะ ผมขอโทษที่มาสายนะครับ",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -3531,7 +3531,7 @@
           "startMs": 34696,
           "endMs": 37816,
           "text": "No problem. I had time to look around.",
-          "textTh": "ไม่มีปัญหา ผมมีเวลาเดินดูรอบๆ",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -3539,7 +3539,7 @@
           "startMs": 38096,
           "endMs": 41816,
           "text": "Our first interview ran longer than expected.",
-          "textTh": "การสัมภาษณ์ครั้งแรกของเราใช้เวลานานกว่าที่คาดไว้",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -3547,7 +3547,7 @@
           "startMs": 42096,
           "endMs": 44808,
           "text": "Would you like some water before we begin?",
-          "textTh": "อยากดื่มน้ำก่อนเริ่มไหมครับ/คะ?",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -3555,7 +3555,7 @@
           "startMs": 45088,
           "endMs": 47272,
           "text": "Yes, please. Thank you.",
-          "textTh": "ได้เลยค่ะ ขอบคุณค่ะ",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -3563,7 +3563,7 @@
           "startMs": 47552,
           "endMs": 50912,
           "text": "I see that you've worked on several campaigns.",
-          "textTh": "ฉันเห็นว่าคุณทำงานในหลายแคมเปญ",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -3571,7 +3571,7 @@
           "startMs": 51192,
           "endMs": 55992,
           "text": "I coordinated online ads for a small retail company.",
-          "textTh": "ฉันประสานงานโฆษณาออนไลน์ให้กับบริษัทค้าปลีกขนาดเล็กแห่งหนึ่ง",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -3579,7 +3579,7 @@
           "startMs": 56272,
           "endMs": 59824,
           "text": "Could you describe one project you're proud of?",
-          "textTh": "คุณช่วยอธิบายโปรเจกต์ที่คุณภาคภูมิใจสักโปรเจกต์ได้ไหม?",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -3587,7 +3587,7 @@
           "startMs": 60104,
           "endMs": 65216,
           "text": "Certainly. We redesigned the customer newsletter last spring.",
-          "textTh": "แน่นอนครับ เราออกแบบจดหมายข่าวสำหรับลูกค้าใหม่เมื่อฤดูใบไม้ผลิที่ผ่านมา",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -3595,7 +3595,7 @@
           "startMs": 65496,
           "endMs": 68616,
           "text": "Great. Let's start with that example.",
-          "textTh": "เยี่ยมเลย มาเริ่มกันด้วยตัวอย่างนั้นกัน",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -3603,7 +3603,7 @@
           "startMs": 69616,
           "endMs": 72640,
           "text": "Thank you for explaining the newsletter project.",
-          "textTh": "ขอบคุณที่อธิบายเกี่ยวกับโครงการจดหมายข่าว",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3611,7 +3611,7 @@
           "startMs": 72920,
           "endMs": 75872,
           "text": "You're welcome. I enjoyed working on it.",
-          "textTh": "ไม่เป็นไร ผมก็สนุกดีที่ได้ทำ",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3619,7 +3619,7 @@
           "startMs": 76152,
           "endMs": 79176,
           "text": "Do you have any questions about this role?",
-          "textTh": "คุณมีคำถามเกี่ยวกับตำแหน่งนี้หรือไม่?",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3627,7 +3627,7 @@
           "startMs": 79456,
           "endMs": 82600,
           "text": "How large is the marketing team?",
-          "textTh": "ทีมการตลาดมีขนาดใหญ่แค่ไหน?",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3635,7 +3635,7 @@
           "startMs": 82880,
           "endMs": 87344,
           "text": "There are five people, including the team lead.",
-          "textTh": "มีคน 5 คน รวมถึงหัวหน้าทีม",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3643,7 +3643,7 @@
           "startMs": 87624,
           "endMs": 90744,
           "text": "And when would the new person start?",
-          "textTh": "แล้วพนักงานคนใหม่จะเริ่มงานเมื่อไร?",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3651,7 +3651,7 @@
           "startMs": 91024,
           "endMs": 94264,
           "text": "Ideally, at the beginning of next month.",
-          "textTh": "ดีที่สุดคือต้นเดือนหน้า",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3659,7 +3659,7 @@
           "startMs": 94544,
           "endMs": 96896,
           "text": "That timing would work for me.",
-          "textTh": "ช่วงเวลานั้นเหมาะกับฉัน",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3667,7 +3667,7 @@
           "startMs": 97176,
           "endMs": 100656,
           "text": "We'll contact you by Friday about the next step.",
-          "textTh": "เราจะติดต่อคุณภายในวันศุกร์เกี่ยวกับขั้นตอนต่อไป",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3675,7 +3675,7 @@
           "startMs": 100936,
           "endMs": 104128,
           "text": "Thank you. I look forward to hearing from you.",
-          "textTh": "ขอบคุณค่ะ/ครับ หวังว่าจะได้รับการติดต่อกลับจากคุณเร็วๆ นี้",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3683,7 +3683,7 @@
           "startMs": 104408,
           "endMs": 108872,
           "text": "Before you go, the receptionist can validate your parking ticket.",
-          "textTh": "ก่อนกลับ เจ้าหน้าที่ต้อนรับสามารถตรวจสอบบัตรจอดรถของคุณได้",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3691,7 +3691,7 @@
           "startMs": 109152,
           "endMs": 112512,
           "text": "That's helpful. I parked in the visitor lot.",
-          "textTh": "นั่นมีประโยชน์มากเลยค่ะ ฉันจอดรถไว้ที่ลานจอดรถสำหรับผู้มาเยือน",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3699,7 +3699,7 @@
           "startMs": 112792,
           "endMs": 116752,
           "text": "The exit is beside the café downstairs.",
-          "textTh": "ทางออกอยู่ข้างคาเฟ่ชั้นล่าง",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3707,7 +3707,7 @@
           "startMs": 117032,
           "endMs": 120056,
           "text": "I'll stop at reception on my way out.",
-          "textTh": "ผมจะแวะที่แผนกต้อนรับตอนออกไป",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3715,7 +3715,7 @@
           "startMs": 120336,
           "endMs": 122520,
           "text": "It was a pleasure meeting you, Arisa.",
-          "textTh": "ยินดีที่ได้รู้จักนะ อาริสะ",
+          "textTh": "",
           "section": "C"
         }
       ],
@@ -3726,7 +3726,7 @@
       "episode": 13,
       "episodeId": "EP13",
       "title": "Planning the Event",
-      "titleTh": "วางแผนกิจกรรม",
+      "titleTh": "",
       "level": "B1",
       "category": "toeic",
       "credit": "Banana Original",
@@ -3763,7 +3763,7 @@
           "startMs": 0,
           "endMs": 4200,
           "text": "The community event starts at ten on Saturday.",
-          "textTh": "กิจกรรมชุมชนจะเริ่มเวลา 10 โมงเช้าวันเสาร์",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -3771,7 +3771,7 @@
           "startMs": 4480,
           "endMs": 7600,
           "text": "I can arrive at eight to set up the chairs.",
-          "textTh": "ฉันมาถึงตอนแปดโมงเพื่อจัดเก้าอี้ได้",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -3779,7 +3779,7 @@
           "startMs": 7880,
           "endMs": 11312,
           "text": "I'll bring the welcome signs and name tags.",
-          "textTh": "ฉันจะนำป้ายต้อนรับและป้ายชื่อมาด้วย",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -3787,7 +3787,7 @@
           "startMs": 11592,
           "endMs": 16344,
           "text": "Great. The speaker needs a microphone by nine thirty.",
-          "textTh": "เยี่ยมเลย ผู้บรรยายต้องการไมโครโฟนภายในเก้าโมงครึ่ง",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -3795,7 +3795,7 @@
           "startMs": 16624,
           "endMs": 18976,
           "text": "I'll test it when I finish the chairs.",
-          "textTh": "ผมจะลองดูตอนทำเก้าอี้เสร็จ",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -3803,7 +3803,7 @@
           "startMs": 19256,
           "endMs": 21968,
           "text": "What about the registration table?",
-          "textTh": "แล้วโต๊ะลงทะเบียนล่ะ?",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -3811,7 +3811,7 @@
           "startMs": 22248,
           "endMs": 24528,
           "text": "I'll handle that with two volunteers.",
-          "textTh": "ผมจะจัดการเรื่องนั้นกับอาสาสมัครสองคน",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -3819,7 +3819,7 @@
           "startMs": 24808,
           "endMs": 27520,
           "text": "Are we still serving coffee outside?",
-          "textTh": "เรายังเสิร์ฟกาแฟด้านนอกอยู่ไหม?",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -3827,7 +3827,7 @@
           "startMs": 27800,
           "endMs": 30152,
           "text": "Only if the weather stays dry.",
-          "textTh": "ก็ต่อเมื่ออากาศยังคงแห้งอยู่เท่านั้น",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -3835,7 +3835,7 @@
           "startMs": 30432,
           "endMs": 33864,
           "text": "I'll ask the café about an indoor option.",
-          "textTh": "ฉันจะสอบถามทางร้านกาแฟเกี่ยวกับตัวเลือกที่นั่งในร่ม",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -3843,7 +3843,7 @@
           "startMs": 34864,
           "endMs": 39328,
           "text": "The café can put the coffee inside the lobby.",
-          "textTh": "ร้านกาแฟสามารถวางกาแฟไว้ในล็อบบี้ได้",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -3851,7 +3851,7 @@
           "startMs": 39608,
           "endMs": 42968,
           "text": "Perfect. Let's change the schedule on the website.",
-          "textTh": "เยี่ยมเลย มาเปลี่ยนกำหนดการบนเว็บไซต์กันเถอะ",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -3859,7 +3859,7 @@
           "startMs": 43248,
           "endMs": 46512,
           "text": "The sound check still begins at nine thirty, right?",
-          "textTh": "การเช็คเสียงยังเริ่มตอนเก้าโมงครึ่งใช่ไหมครับ?",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -3867,7 +3867,7 @@
           "startMs": 46792,
           "endMs": 49696,
           "text": "Yes. The doors open at ten.",
-          "textTh": "ใช่ค่ะ ประตูจะเปิดตอนสิบโมง",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -3875,7 +3875,7 @@
           "startMs": 49976,
           "endMs": 53600,
           "text": "I thought the guest talk started at ten thirty.",
-          "textTh": "ฉันคิดว่าการบรรยายของผู้มาเยือนจะเริ่มตอนสิบโมงครึ่งนะ",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -3883,7 +3883,7 @@
           "startMs": 53880,
           "endMs": 57864,
           "text": "It moved to eleven so visitors can settle in.",
-          "textTh": "เลื่อนเป็น 11 โมงเพื่อให้ผู้เข้าพักมีเวลาจัดแจงที่พัก",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -3891,7 +3891,7 @@
           "startMs": 58144,
           "endMs": 61264,
           "text": "That gives me more time to test the equipment.",
-          "textTh": "นั่นทำให้ผมมีเวลาทดสอบอุปกรณ์มากขึ้น",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -3899,7 +3899,7 @@
           "startMs": 61544,
           "endMs": 64784,
           "text": "I'll tell the guest speaker about the change.",
-          "textTh": "ฉันจะบอกผู้บรรยายรับเชิญเกี่ยวกับการเปลี่ยนแปลงนี้",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -3907,7 +3907,7 @@
           "startMs": 65064,
           "endMs": 68808,
           "text": "Thanks. I'll update the volunteers this afternoon.",
-          "textTh": "ขอบคุณ ฉันจะแจ้งข่าวให้อาสาสมัครทราบช่วงบ่ายวันนี้",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -3915,7 +3915,7 @@
           "startMs": 69088,
           "endMs": 72448,
           "text": "We're ready as soon as the signs arrive.",
-          "textTh": "เราพร้อมทันทีที่ป้ายมาถึง",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -3923,7 +3923,7 @@
           "startMs": 73448,
           "endMs": 77672,
           "text": "The chairs are ready, but one microphone is missing.",
-          "textTh": "เก้าอี้พร้อมแล้ว แต่ยังขาดไมโครโฟน 1 ตัว",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3931,7 +3931,7 @@
           "startMs": 77952,
           "endMs": 82056,
           "text": "I saw an extra microphone at the registration desk.",
-          "textTh": "ฉันเห็นไมโครโฟนสำรองอยู่ที่โต๊ะลงทะเบียน",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3939,7 +3939,7 @@
           "startMs": 82336,
           "endMs": 85336,
           "text": "That's the spare. Bring it to Hall A.",
-          "textTh": "นั่นคืออะไหล่ เอาไปที่โถง A",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3947,7 +3947,7 @@
           "startMs": 85616,
           "endMs": 88880,
           "text": "I'll test both microphones before the doors open.",
-          "textTh": "ผมจะทดสอบไมโครโฟนทั้ง 2 ตัวก่อนประตูเปิด",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3955,7 +3955,7 @@
           "startMs": 89160,
           "endMs": 92760,
           "text": "The café has moved the coffee inside.",
-          "textTh": "ร้านกาแฟย้ายกาแฟเข้าไปข้างในแล้ว",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3963,7 +3963,7 @@
           "startMs": 93040,
           "endMs": 96160,
           "text": "Good. It may rain later this morning.",
-          "textTh": "ดีครับ อาจจะมีฝนตกในตอนสายๆ",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3971,7 +3971,7 @@
           "startMs": 96440,
           "endMs": 99272,
           "text": "Should I move the outdoor signs too?",
-          "textTh": "ฉันควรย้ายป้ายกลางแจ้งด้วยไหม?",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3979,7 +3979,7 @@
           "startMs": 99552,
           "endMs": 103344,
           "text": "Yes. Put one sign near the main entrance.",
-          "textTh": "ใช่ วางป้ายหนึ่งไว้ใกล้ทางเข้าหลัก",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3987,7 +3987,7 @@
           "startMs": 103624,
           "endMs": 106984,
           "text": "I'll tell the volunteers about the changes.",
-          "textTh": "ฉันจะบอกอาสาสมัครเกี่ยวกับการเปลี่ยนแปลง",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -3995,7 +3995,7 @@
           "startMs": 107264,
           "endMs": 111656,
           "text": "Thanks. We still have twenty minutes before visitors arrive.",
-          "textTh": "ขอบคุณค่ะ เรายังมีเวลาอีก 20 นาทีก่อนที่ผู้มาเยือนจะมาถึง",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4003,7 +4003,7 @@
           "startMs": 111936,
           "endMs": 115536,
           "text": "I found the spare microphone, and both work now.",
-          "textTh": "ฉันเจอไมโครโฟนสำรองแล้ว ตอนนี้ใช้ได้ทั้งคู่",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4011,7 +4011,7 @@
           "startMs": 115816,
           "endMs": 119776,
           "text": "The first guests are waiting near the entrance.",
-          "textTh": "แขกกลุ่มแรกกำลังรออยู่ใกล้ทางเข้า",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4019,7 +4019,7 @@
           "startMs": 120056,
           "endMs": 123728,
           "text": "Please ask them to wait until registration opens.",
-          "textTh": "โปรดขอให้พวกเขารอจนกว่าจะเปิดให้ลงทะเบียน",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4027,7 +4027,7 @@
           "startMs": 124008,
           "endMs": 126360,
           "text": "I'll turn on the lights in Hall A.",
-          "textTh": "ผมจะเปิดไฟในฮอลล์ A",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4035,7 +4035,7 @@
           "startMs": 126640,
           "endMs": 129544,
           "text": "And I'll bring the name tags to the desk.",
-          "textTh": "แล้วผมจะนำป้ายชื่อไปวางไว้ที่โต๊ะ",
+          "textTh": "",
           "section": "C"
         }
       ],
@@ -4046,7 +4046,7 @@
       "episode": 14,
       "episodeId": "EP14",
       "title": "Station Announcements",
-      "titleTh": "ประกาศสถานี",
+      "titleTh": "",
       "level": "B1",
       "category": "toeic",
       "credit": "Banana Original",
@@ -4083,7 +4083,7 @@
           "startMs": 0,
           "endMs": 3600,
           "text": "Good morning, passengers traveling to East Harbor.",
-          "textTh": "อรุณสวัสดิ์ครับ ผู้โดยสารที่เดินทางไปยังอีสต์ฮาร์เบอร์",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -4091,7 +4091,7 @@
           "startMs": 3880,
           "endMs": 8512,
           "text": "The nine fifteen train will leave from platform five.",
-          "textTh": "รถไฟขบวนเก้าโมงสิบห้านาทีจะออกจากชานชาลาที่ห้า",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -4099,7 +4099,7 @@
           "startMs": 8792,
           "endMs": 11936,
           "text": "This is a change from the printed schedule.",
-          "textTh": "นี่เป็นการเปลี่ยนแปลงจากกำหนดการที่พิมพ์ไว้",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -4107,7 +4107,7 @@
           "startMs": 12216,
           "endMs": 15816,
           "text": "Please do not wait at platform three.",
-          "textTh": "โปรดอย่ารอที่ชานชาลา 3",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -4115,7 +4115,7 @@
           "startMs": 16096,
           "endMs": 21040,
           "text": "The train is expected to arrive in eight minutes.",
-          "textTh": "คาดว่ารถไฟจะมาถึงในอีก 8 นาที",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -4123,7 +4123,7 @@
           "startMs": 21320,
           "endMs": 24152,
           "text": "Have your tickets ready before you board.",
-          "textTh": "เตรียมตั๋วให้พร้อมก่อนขึ้นรถ",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -4131,7 +4131,7 @@
           "startMs": 24432,
           "endMs": 28776,
           "text": "Staff members can help you near the information desk.",
-          "textTh": "เจ้าหน้าที่บริเวณใกล้เคียงกับเคาน์เตอร์ประชาสัมพันธ์สามารถช่วยคุณได้",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -4139,7 +4139,7 @@
           "startMs": 29056,
           "endMs": 32008,
           "text": "We apologize for any confusion.",
-          "textTh": "ขออภัยในความสับสนที่เกิดขึ้น",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -4147,7 +4147,7 @@
           "startMs": 32288,
           "endMs": 33992,
           "text": "Thank you for your attention.",
-          "textTh": "ขอขอบคุณที่ท่านให้ความสนใจ",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -4155,7 +4155,7 @@
           "startMs": 34992,
           "endMs": 39096,
           "text": "Attention, passengers on the Riverside service.",
-          "textTh": "เรียน ผู้โดยสารที่ใช้บริการริเวอร์ไซด์",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -4163,7 +4163,7 @@
           "startMs": 39376,
           "endMs": 44296,
           "text": "The eleven twenty train is delayed by fifteen minutes.",
-          "textTh": "รถไฟขบวน 11.20 น. ล่าช้าไปสิบห้านาที",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -4171,7 +4171,7 @@
           "startMs": 44576,
           "endMs": 48008,
           "text": "The delay is due to work on the tracks.",
-          "textTh": "ความล่าช้าเกิดจากงานซ่อมบำรุงรางรถไฟ",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -4179,7 +4179,7 @@
           "startMs": 48288,
           "endMs": 53088,
           "text": "Passengers connecting to the airport line should remain on board.",
-          "textTh": "ผู้โดยสารที่ต่อรถไฟสายสนามบินโปรดนั่งอยู่บนรถไฟต่อไป",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -4187,7 +4187,7 @@
           "startMs": 53368,
           "endMs": 57808,
           "text": "Airport tickets will be accepted on the next express train.",
-          "textTh": "จะรับตั๋วสนามบินบนรถไฟด่วนขบวนถัดไป",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -4195,7 +4195,7 @@
           "startMs": 58088,
           "endMs": 62240,
           "text": "That train departs from platform two at noon.",
-          "textTh": "รถไฟขบวนนั้นจะออกจากชานชาลาที่ 2 ตอนเที่ยง",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -4203,7 +4203,7 @@
           "startMs": 62520,
           "endMs": 67440,
           "text": "Please listen for further announcements before changing platforms.",
-          "textTh": "โปรดฟังประกาศเพิ่มเติมก่อนเปลี่ยนชานชาลา",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -4211,7 +4211,7 @@
           "startMs": 67720,
           "endMs": 70240,
           "text": "We appreciate your patience today.",
-          "textTh": "ขอขอบคุณที่อดทนรอในวันนี้",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -4219,7 +4219,7 @@
           "startMs": 71240,
           "endMs": 75992,
           "text": "This is the final boarding announcement for the Lakeview service.",
-          "textTh": "นี่เป็นการประกาศขึ้นรถไฟเที่ยวสุดท้ายสำหรับบริการเลกวิว",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4227,7 +4227,7 @@
           "startMs": 76272,
           "endMs": 80856,
           "text": "The train will depart from platform seven in five minutes.",
-          "textTh": "รถไฟจะออกจากชานชาลาที่ 7 ในอีก 5 นาที",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4235,7 +4235,7 @@
           "startMs": 81136,
           "endMs": 84736,
           "text": "Please check that you have all your bags with you.",
-          "textTh": "โปรดตรวจสอบว่าคุณมีกระเป๋าครบทุกใบแล้ว",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4243,7 +4243,7 @@
           "startMs": 85016,
           "endMs": 89240,
           "text": "Large luggage should be placed in the storage area.",
-          "textTh": "ควรวางสัมภาระขนาดใหญ่ไว้ในพื้นที่เก็บสัมภาระ",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4251,7 +4251,7 @@
           "startMs": 89520,
           "endMs": 93480,
           "text": "Keep the aisle clear while other passengers board.",
-          "textTh": "โปรดเว้นทางเดินให้โล่งขณะที่ผู้โดยสารคนอื่นๆ ขึ้นเครื่อง",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4259,7 +4259,7 @@
           "startMs": 93760,
           "endMs": 98440,
           "text": "If you need assistance, speak to a staff member on the platform.",
-          "textTh": "หากคุณต้องการความช่วยเหลือ โปรดแจ้งเจ้าหน้าที่บนชานชาลา",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4267,7 +4267,7 @@
           "startMs": 98720,
           "endMs": 102944,
           "text": "The doors will close one minute before departure.",
-          "textTh": "ประตูจะปิด 1 นาทีก่อนออกเดินทาง",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4275,7 +4275,7 @@
           "startMs": 103224,
           "endMs": 105984,
           "text": "Thank you, and have a pleasant journey.",
-          "textTh": "ขอบคุณครับ/ค่ะ ขอให้เดินทางโดยสวัสดิภาพ",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4283,7 +4283,7 @@
           "startMs": 106264,
           "endMs": 110488,
           "text": "Passengers with bicycles should use the rear carriage.",
-          "textTh": "ผู้โดยสารที่มีจักรยานควรใช้ตู้โดยสารด้านหลัง",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4291,7 +4291,7 @@
           "startMs": 110768,
           "endMs": 115280,
           "text": "Please allow other passengers to leave the train before boarding.",
-          "textTh": "โปรดให้ผู้โดยสารคนอื่นลงจากรถไฟก่อนขึ้นรถ",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4299,7 +4299,7 @@
           "startMs": 115560,
           "endMs": 119592,
           "text": "The next service to Lakeview will depart in one hour.",
-          "textTh": "รถเที่ยวต่อไปไปยังเลกวิวจะออกเดินทางในอีก 1 ชั่วโมง",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4307,7 +4307,7 @@
           "startMs": 119872,
           "endMs": 123256,
           "text": "If you miss this train, keep your ticket.",
-          "textTh": "หากคุณพลาดรถไฟขบวนนี้ ให้เก็บตั๋วไว้",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4315,7 +4315,7 @@
           "startMs": 123536,
           "endMs": 126968,
           "text": "It will remain valid for the later service.",
-          "textTh": "ซึ่งจะยังคงใช้ได้กับการให้บริการในภายหลัง",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4323,7 +4323,7 @@
           "startMs": 127248,
           "endMs": 131448,
           "text": "Check the display boards for any further changes.",
-          "textTh": "ตรวจสอบป้ายแสดงข้อมูลเพื่อดูการเปลี่ยนแปลงเพิ่มเติม",
+          "textTh": "",
           "section": "C"
         }
       ],
@@ -4334,7 +4334,7 @@
       "episode": 15,
       "episodeId": "EP15",
       "title": "Voicemail Messages",
-      "titleTh": "ข้อความเสียง",
+      "titleTh": "",
       "level": "B1",
       "category": "toeic",
       "credit": "Banana Original",
@@ -4371,7 +4371,7 @@
           "startMs": 0,
           "endMs": 4032,
           "text": "Hello, this is Dana from Bright Dental Clinic.",
-          "textTh": "สวัสดีค่ะ ดิฉันชื่อดาน่า จากคลินิกทันตกรรมไบรท์",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -4379,7 +4379,7 @@
           "startMs": 4312,
           "endMs": 8224,
           "text": "I'm calling to confirm your appointment on Tuesday.",
-          "textTh": "ฉันโทรมาเพื่อยืนยันการนัดหมายของคุณในวันอังคาร",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -4387,7 +4387,7 @@
           "startMs": 8504,
           "endMs": 13016,
           "text": "Your visit is scheduled for ten forty-five in the morning.",
-          "textTh": "นัดเยี่ยมชมของคุณกำหนดไว้เวลาสิบโมงสี่สิบห้านาที",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -4395,7 +4395,7 @@
           "startMs": 13296,
           "endMs": 17976,
           "text": "Please arrive ten minutes early to complete a short form.",
-          "textTh": "โปรดมาถึงก่อนเวลา 10 นาทีเพื่อกรอกแบบฟอร์มสั้นๆ",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -4403,7 +4403,7 @@
           "startMs": 18256,
           "endMs": 22048,
           "text": "If you need to change the time, call us today.",
-          "textTh": "หากต้องการเปลี่ยนเวลา โปรดโทรหาเราวันนี้",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -4411,7 +4411,7 @@
           "startMs": 22328,
           "endMs": 25688,
           "text": "Our office closes at six this evening.",
-          "textTh": "สำนักงานของเราปิดตอนหกโมงเย็นวันนี้",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -4419,7 +4419,7 @@
           "startMs": 25968,
           "endMs": 31680,
           "text": "You can reach me at five five five, zero one four two.",
-          "textTh": "ติดต่อผมได้ที่เบอร์ 555-0142",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -4427,7 +4427,7 @@
           "startMs": 31960,
           "endMs": 34360,
           "text": "Again, my name is Dana.",
-          "textTh": "อีกครั้งนะคะ ฉันชื่อดาน่า",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -4435,7 +4435,7 @@
           "startMs": 34640,
           "endMs": 37640,
           "text": "We look forward to seeing you on Tuesday.",
-          "textTh": "เราหวังว่าจะได้พบคุณในวันอังคาร",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -4443,7 +4443,7 @@
           "startMs": 38640,
           "endMs": 42120,
           "text": "Hi, Marcus. This is Elena at Shoreline Events.",
-          "textTh": "สวัสดีค่ะ คุณมาร์คัส ดิฉันเอเลนาจาก Shoreline Events ค่ะ",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -4451,7 +4451,7 @@
           "startMs": 42400,
           "endMs": 45520,
           "text": "Thank you for sending the updated seating plan.",
-          "textTh": "ขอขอบคุณที่ส่งผังที่นั่งฉบับปรับปรุงมาให้",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -4459,7 +4459,7 @@
           "startMs": 45800,
           "endMs": 49784,
           "text": "The main room now has space for eighty guests.",
-          "textTh": "ตอนนี้ห้องหลักมีพื้นที่รองรับแขกได้ 80 คน",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -4467,7 +4467,7 @@
           "startMs": 50064,
           "endMs": 54168,
           "text": "However, we still need the final meal choices.",
-          "textTh": "อย่างไรก็ตาม เรายังต้องการตัวเลือกอาหารมื้อสุดท้าย",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -4475,7 +4475,7 @@
           "startMs": 54448,
           "endMs": 57712,
           "text": "Could you email them before Thursday afternoon?",
-          "textTh": "คุณช่วยส่งอีเมลหาพวกเขาก่อนบ่ายวันพฤหัสบดีได้ไหม?",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -4483,7 +4483,7 @@
           "startMs": 57992,
           "endMs": 61856,
           "text": "The kitchen needs the numbers to place its order.",
-          "textTh": "ครัวต้องใช้หมายเลขเพื่อจัดลำดับการสั่งซื้อ",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -4491,7 +4491,7 @@
           "startMs": 62136,
           "endMs": 66408,
           "text": "If anyone has an allergy, please mention it separately.",
-          "textTh": "หากมีผู้ใดมีอาการแพ้ โปรดแจ้งแยกต่างหาก",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -4499,7 +4499,7 @@
           "startMs": 66688,
           "endMs": 69448,
           "text": "Call me if you'd like to discuss the menu.",
-          "textTh": "โทรหาฉันได้เลย ถ้าคุณอยากคุยเรื่องเมนู",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -4507,7 +4507,7 @@
           "startMs": 69728,
           "endMs": 72152,
           "text": "Thanks again. I'll speak with you soon.",
-          "textTh": "ขอบคุณอีกครั้ง แล้วจะคุยกับคุณเร็วๆ นี้",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -4515,7 +4515,7 @@
           "startMs": 73152,
           "endMs": 76296,
           "text": "Hi, Elena. It's Marcus returning your call.",
-          "textTh": "สวัสดีครับ เอเลนา ผมมาร์คัส โทรกลับมาตามที่คุณขอไว้ครับ",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4523,7 +4523,7 @@
           "startMs": 76576,
           "endMs": 80368,
           "text": "I've just sent the final meal choices by email.",
-          "textTh": "ฉันเพิ่งส่งตัวเลือกอาหารมื้อสุดท้ายทางอีเมล",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4531,7 +4531,7 @@
           "startMs": 80648,
           "endMs": 86840,
           "text": "We have three vegetarian guests and one guest with a nut allergy.",
-          "textTh": "เรามีแขกมังสวิรัติ 3 คนและแขกที่แพ้ถั่ว 1 คน",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4539,7 +4539,7 @@
           "startMs": 87120,
           "endMs": 90240,
           "text": "I marked those details clearly in the file.",
-          "textTh": "ฉันทำเครื่องหมายรายละเอียดเหล่านั้นไว้ชัดเจนในไฟล์",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4547,7 +4547,7 @@
           "startMs": 90520,
           "endMs": 93880,
           "text": "Could you confirm that the kitchen received it?",
-          "textTh": "คุณช่วยยืนยันได้ไหมว่าห้องครัวได้รับแล้ว?",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4555,7 +4555,7 @@
           "startMs": 94160,
           "endMs": 97472,
           "text": "I'm in meetings until three, but you can email me.",
-          "textTh": "ฉันมีประชุมจนถึงบ่ายสาม แต่คุณส่งอีเมลหาฉันได้นะ",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4563,7 +4563,7 @@
           "startMs": 97752,
           "endMs": 102096,
           "text": "If there's any problem, call my mobile phone after three.",
-          "textTh": "ถ้ามีปัญหาอะไร โทรหาผมทางมือถือหลังบ่ายสามนะครับ",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4571,7 +4571,7 @@
           "startMs": 102376,
           "endMs": 105016,
           "text": "Thank you for helping us prepare the event.",
-          "textTh": "ขอขอบคุณที่ช่วยเราเตรียมงานอีเวนต์",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4579,7 +4579,7 @@
           "startMs": 105296,
           "endMs": 109160,
           "text": "I also attached the final seating plan again.",
-          "textTh": "ฉันแนบผังที่นั่งฉบับสุดท้ายมาให้อีกครั้งด้วย",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4587,7 +4587,7 @@
           "startMs": 109440,
           "endMs": 113280,
           "text": "The names on it match the meal choices.",
-          "textTh": "ชื่อบนบัตรตรงกับตัวเลือกอาหาร",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4595,7 +4595,7 @@
           "startMs": 113560,
           "endMs": 116872,
           "text": "We don't expect any more guests to join.",
-          "textTh": "เราไม่คาดว่าจะมีผู้เข้าร่วมเพิ่มอีก",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4603,7 +4603,7 @@
           "startMs": 117152,
           "endMs": 120416,
           "text": "If that changes, I'll let you know immediately.",
-          "textTh": "หากมีการเปลี่ยนแปลง เราจะแจ้งให้คุณทราบทันที",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4611,7 +4611,7 @@
           "startMs": 120696,
           "endMs": 123528,
           "text": "I know the kitchen needs time to prepare.",
-          "textTh": "ผมรู้ว่าห้องครัวต้องใช้เวลาเตรียมอาหาร",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4619,7 +4619,7 @@
           "startMs": 123808,
           "endMs": 128032,
           "text": "Please confirm by email before the kitchen closes at five.",
-          "textTh": "โปรดยืนยันทางอีเมลก่อนครัวปิดเวลา 17.00 น.",
+          "textTh": "",
           "section": "C"
         }
       ],
@@ -4630,7 +4630,7 @@
       "episode": 16,
       "episodeId": "EP16",
       "title": "Store Information",
-      "titleTh": "ข้อมูลร้าน",
+      "titleTh": "",
       "level": "B1",
       "category": "toeic",
       "credit": "Banana Original",
@@ -4667,7 +4667,7 @@
           "startMs": 0,
           "endMs": 4272,
           "text": "Welcome to Harbor Home, where your week starts with savings.",
-          "textTh": "ยินดีต้อนรับสู่ Harbor Home ที่ซึ่งสัปดาห์ของคุณเริ่มต้นด้วยการประหยัด",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -4675,7 +4675,7 @@
           "startMs": 4552,
           "endMs": 8176,
           "text": "Our store opens at nine every weekday.",
-          "textTh": "ร้านของเราเปิดเวลาเก้าโมงทุกวันธรรมดา",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -4683,7 +4683,7 @@
           "startMs": 8456,
           "endMs": 12848,
           "text": "On Saturdays, we're open from ten until seven.",
-          "textTh": "ในวันเสาร์ เราเปิดตั้งแต่สิบโมงเช้าถึงหนึ่งทุ่ม",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -4691,7 +4691,7 @@
           "startMs": 13128,
           "endMs": 16392,
           "text": "The store is closed on Sundays this month.",
-          "textTh": "ร้านปิดทุกวันอาทิตย์ในเดือนนี้",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -4699,7 +4699,7 @@
           "startMs": 16672,
           "endMs": 20872,
           "text": "For the next three days, all desk lamps are discounted.",
-          "textTh": "ตั้งแต่วันนี้ไปอีก 3 วัน โคมไฟตั้งโต๊ะทุกรุ่นลดราคา",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -4707,7 +4707,7 @@
           "startMs": 21152,
           "endMs": 25424,
           "text": "The sale applies to items marked with a blue label.",
-          "textTh": "โปรโมชั่นนี้ใช้ได้กับสินค้าที่มีป้ายสีฟ้า",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -4715,7 +4715,7 @@
           "startMs": 25704,
           "endMs": 29904,
           "text": "It does not include delivery or installation.",
-          "textTh": "ไม่รวมค่าจัดส่งหรือค่าติดตั้ง",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -4723,7 +4723,7 @@
           "startMs": 30184,
           "endMs": 33664,
           "text": "Please ask a staff member if you need assistance.",
-          "textTh": "โปรดสอบถามเจ้าหน้าที่หากคุณต้องการความช่วยเหลือ",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -4731,7 +4731,7 @@
           "startMs": 34664,
           "endMs": 38096,
           "text": "Thank you for calling Harbor Home customer service.",
-          "textTh": "ขอขอบคุณที่โทรหาฝ่ายบริการลูกค้าของ Harbor Home",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -4739,7 +4739,7 @@
           "startMs": 38376,
           "endMs": 42240,
           "text": "You may return most products within thirty days.",
-          "textTh": "คุณสามารถส่งคืนสินค้าส่วนใหญ่ได้ภายในสามสิบวัน",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -4747,7 +4747,7 @@
           "startMs": 42520,
           "endMs": 46144,
           "text": "Please bring the receipt and the original packaging.",
-          "textTh": "โปรดนำใบเสร็จและบรรจุภัณฑ์เดิมมาด้วย",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -4755,7 +4755,7 @@
           "startMs": 46424,
           "endMs": 50816,
           "text": "Items bought online can also be returned in store.",
-          "textTh": "สินค้าที่ซื้อออนไลน์ก็ส่งคืนที่ร้านได้เช่นกัน",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -4763,7 +4763,7 @@
           "startMs": 51096,
           "endMs": 55560,
           "text": "However, made-to-order furniture cannot be returned.",
-          "textTh": "อย่างไรก็ตาม ไม่สามารถส่งคืนเฟอร์นิเจอร์ที่ผลิตตามออเดอร์ได้",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -4771,7 +4771,7 @@
           "startMs": 55840,
           "endMs": 59800,
           "text": "If an item is damaged, contact us before visiting.",
-          "textTh": "หากสินค้าเสียหาย โปรดติดต่อเราก่อนมาที่ร้าน",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -4779,7 +4779,7 @@
           "startMs": 60080,
           "endMs": 63920,
           "text": "We can arrange a replacement or discuss a refund.",
-          "textTh": "เราจัดการเปลี่ยนสินค้าหรือหารือเรื่องการคืนเงินให้ได้",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -4787,7 +4787,7 @@
           "startMs": 64200,
           "endMs": 68184,
           "text": "For more information, press two to speak with our team.",
-          "textTh": "หากต้องการข้อมูลเพิ่มเติม โปรดกด 2 เพื่อพูดคุยกับทีมของเรา",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -4795,7 +4795,7 @@
           "startMs": 69184,
           "endMs": 73504,
           "text": "Your online order is ready for collection at Harbor Home.",
-          "textTh": "คำสั่งซื้อออนไลน์ของคุณพร้อมให้ไปรับที่ Harbor Home แล้ว",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4803,7 +4803,7 @@
           "startMs": 73784,
           "endMs": 77696,
           "text": "Please bring your order number and a photo ID.",
-          "textTh": "โปรดนำหมายเลขคำสั่งซื้อและบัตรประจำตัวที่มีรูปมาด้วย",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4811,7 +4811,7 @@
           "startMs": 77976,
           "endMs": 82680,
           "text": "Collection is available from ten until six on weekdays.",
-          "textTh": "รับของได้ตั้งแต่ 10 โมงเช้าถึง 6 โมงเย็นในวันธรรมดา",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4819,7 +4819,7 @@
           "startMs": 82960,
           "endMs": 86704,
           "text": "Use the side entrance beside the parking area.",
-          "textTh": "ใช้ทางเข้าด้านข้างที่อยู่ติดกับที่จอดรถ",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4827,7 +4827,7 @@
           "startMs": 86984,
           "endMs": 90896,
           "text": "A staff member will bring your order to the counter.",
-          "textTh": "เจ้าหน้าที่จะนำคำสั่งซื้อของคุณมาที่เคาน์เตอร์",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4835,7 +4835,7 @@
           "startMs": 91176,
           "endMs": 95448,
           "text": "If you cannot collect it this week, contact us.",
-          "textTh": "หากรับไม่ได้ในสัปดาห์นี้ โปรดติดต่อเรา",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4843,7 +4843,7 @@
           "startMs": 95728,
           "endMs": 99040,
           "text": "We can hold most orders for seven more days.",
-          "textTh": "เราสามารถระงับคำสั่งซื้อส่วนใหญ่ได้อีก 7 วัน",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4851,7 +4851,7 @@
           "startMs": 99320,
           "endMs": 101960,
           "text": "Thank you for shopping with Harbor Home.",
-          "textTh": "ขอขอบคุณที่ซื้อสินค้ากับ Harbor Home",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4859,7 +4859,7 @@
           "startMs": 102240,
           "endMs": 106320,
           "text": "For large furniture, please park in the loading area.",
-          "textTh": "สำหรับเฟอร์นิเจอร์ขนาดใหญ่ โปรดจอดรถในพื้นที่ขนถ่ายสินค้า",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4867,7 +4867,7 @@
           "startMs": 106600,
           "endMs": 109960,
           "text": "A staff member can help bring it to your vehicle.",
-          "textTh": "เจ้าหน้าที่สามารถช่วยนำไปที่รถของคุณได้",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4875,7 +4875,7 @@
           "startMs": 110240,
           "endMs": 113552,
           "text": "Please check the size before you arrive.",
-          "textTh": "โปรดตรวจสอบขนาดก่อนมาถึง",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4883,7 +4883,7 @@
           "startMs": 113832,
           "endMs": 117456,
           "text": "Some items may not fit in a small car.",
-          "textTh": "ของบางอย่างอาจใส่ในรถยนต์ขนาดเล็กไม่ได้",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4891,7 +4891,7 @@
           "startMs": 117736,
           "endMs": 122248,
           "text": "If you prefer home delivery, call us before collection.",
-          "textTh": "หากคุณต้องการให้จัดส่งถึงบ้าน โปรดโทรหาเราก่อนมารับ",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -4899,7 +4899,7 @@
           "startMs": 122528,
           "endMs": 126248,
           "text": "Additional delivery charges may apply.",
-          "textTh": "อาจมีค่าจัดส่งเพิ่มเติม",
+          "textTh": "",
           "section": "C"
         }
       ],
@@ -4910,7 +4910,7 @@
       "episode": 17,
       "episodeId": "EP17",
       "title": "Workplace Briefings",
-      "titleTh": "บรีฟฟ์ที่ทำงาน",
+      "titleTh": "",
       "level": "B1",
       "category": "toeic",
       "credit": "Banana Original",
@@ -4947,7 +4947,7 @@
           "startMs": 0,
           "endMs": 3384,
           "text": "Good morning, everyone. Here is today's plan.",
-          "textTh": "อรุณสวัสดิ์ครับทุกคน นี่คือแผนของวันนี้",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -4955,7 +4955,7 @@
           "startMs": 3664,
           "endMs": 7888,
           "text": "The customer survey closes at four this afternoon.",
-          "textTh": "แบบสำรวจลูกค้าจะปิดรับคำตอบเวลา 16:00 น. ของวันนี้",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -4963,7 +4963,7 @@
           "startMs": 8168,
           "endMs": 12680,
           "text": "Please finish entering any paper responses before lunch.",
-          "textTh": "โปรดกรอกคำตอบในกระดาษให้เสร็จก่อนมื้อกลางวัน",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -4971,7 +4971,7 @@
           "startMs": 12960,
           "endMs": 16824,
           "text": "After that, the research team will check the results.",
-          "textTh": "หลังจากนั้น ทีมวิจัยจะตรวจสอบผลลัพธ์",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -4979,7 +4979,7 @@
           "startMs": 17104,
           "endMs": 20536,
           "text": "We'll meet at three to review the first report.",
-          "textTh": "เราจะมาพบกันตอนบ่ายสามเพื่อตรวจสอบรายงานฉบับแรก",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -4987,7 +4987,7 @@
           "startMs": 20816,
           "endMs": 25376,
           "text": "If you find duplicate entries, mark them in the shared file.",
-          "textTh": "หากพบรายการซ้ำ ให้ทำเครื่องหมายไว้ในไฟล์ที่แชร์",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -4995,7 +4995,7 @@
           "startMs": 25656,
           "endMs": 28680,
           "text": "Don't delete them until the team has checked them.",
-          "textTh": "อย่าลบออกจนกว่าทีมจะตรวจสอบแล้ว",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -5003,7 +5003,7 @@
           "startMs": 28960,
           "endMs": 31744,
           "text": "Thank you for keeping the data accurate.",
-          "textTh": "ขอขอบคุณที่ช่วยให้ข้อมูลมีความถูกต้อง",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -5011,7 +5011,7 @@
           "startMs": 32744,
           "endMs": 36896,
           "text": "Before we begin, I need to explain one change.",
-          "textTh": "ก่อนที่เราจะเริ่ม ฉันต้องอธิบายการเปลี่ยนแปลงหนึ่งอย่าง",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -5019,7 +5019,7 @@
           "startMs": 37176,
           "endMs": 42120,
           "text": "New employees will complete safety training online first.",
-          "textTh": "พนักงานใหม่จะต้องเข้ารับการฝึกอบรมด้านความปลอดภัยออนไลน์ก่อน",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -5027,7 +5027,7 @@
           "startMs": 42400,
           "endMs": 46672,
           "text": "The in-person workshop will take place the next day.",
-          "textTh": "การประชุมเชิงปฏิบัติการแบบพบหน้าจะจัดขึ้นในวันถัดไป",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -5035,7 +5035,7 @@
           "startMs": 46952,
           "endMs": 50984,
           "text": "Each supervisor should send the training link by Monday.",
-          "textTh": "หัวหน้างานแต่ละคนควรส่งลิงก์การฝึกอบรมภายในวันจันทร์",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -5043,7 +5043,7 @@
           "startMs": 51264,
           "endMs": 55968,
           "text": "Employees must watch the short video before the workshop.",
-          "textTh": "พนักงานต้องรับชมวิดีโอสั้นๆ ก่อนการประชุมเชิงปฏิบัติการ",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -5051,7 +5051,7 @@
           "startMs": 56248,
           "endMs": 60208,
           "text": "They can use a work computer or their own phone.",
-          "textTh": "โดยใช้คอมพิวเตอร์ที่ทำงานหรือโทรศัพท์ของตัวเองก็ได้",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -5059,7 +5059,7 @@
           "startMs": 60488,
           "endMs": 65480,
           "text": "If anyone cannot open the link, contact the support desk.",
-          "textTh": "หากมีผู้ใดเปิดลิงก์ไม่ได้ โปรดติดต่อฝ่ายสนับสนุน",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -5067,7 +5067,7 @@
           "startMs": 65760,
           "endMs": 69144,
           "text": "We'll answer questions at the end of this briefing.",
-          "textTh": "เราจะตอบคำถามในตอนท้ายของการบรรยายสรุปนี้",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -5075,7 +5075,7 @@
           "startMs": 70144,
           "endMs": 74704,
           "text": "Before you leave, please check tomorrow's room bookings.",
-          "textTh": "ก่อนกลับ โปรดตรวจสอบการจองห้องพักของวันพรุ่งนี้",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -5083,7 +5083,7 @@
           "startMs": 74984,
           "endMs": 78824,
           "text": "Two client meetings will begin at nine.",
-          "textTh": "การประชุมกับลูกค้า 2 รายจะเริ่มเวลา 9 โมง",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -5091,7 +5091,7 @@
           "startMs": 79104,
           "endMs": 82896,
           "text": "The design team needs the large room at eleven.",
-          "textTh": "ทีมออกแบบต้องการใช้ห้องขนาดใหญ่ตอน 11 โมง",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -5099,7 +5099,7 @@
           "startMs": 83176,
           "endMs": 87280,
           "text": "Put any unused equipment back in the storage cabinet.",
-          "textTh": "นำอุปกรณ์ที่ไม่ได้ใช้งานกลับไปเก็บไว้ในตู้เก็บของ",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -5107,7 +5107,7 @@
           "startMs": 87560,
           "endMs": 90800,
           "text": "Our cleaning staff will come through at six.",
-          "textTh": "พนักงานทำความสะอาดของเราจะมาถึงตอน 6 โมงเย็น",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -5115,7 +5115,7 @@
           "startMs": 91080,
           "endMs": 95640,
           "text": "If you are staying late, tell reception before five thirty.",
-          "textTh": "หากคุณจะพักต่อจนดึก โปรดแจ้งแผนกต้อนรับก่อนเวลา 17.30 น.",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -5123,7 +5123,7 @@
           "startMs": 95920,
           "endMs": 99712,
           "text": "The side door will be locked after seven.",
-          "textTh": "ประตูข้างจะล็อกหลัง 19.00 น.",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -5131,7 +5131,7 @@
           "startMs": 99992,
           "endMs": 103256,
           "text": "Thank you for helping us keep the office organized.",
-          "textTh": "ขอขอบคุณที่ช่วยเราจัดระเบียบสำนักงาน",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -5139,7 +5139,7 @@
           "startMs": 103536,
           "endMs": 106608,
           "text": "Remember to save any files you're working on.",
-          "textTh": "อย่าลืมบันทึกไฟล์ที่คุณกำลังทำงานอยู่",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -5147,7 +5147,7 @@
           "startMs": 106888,
           "endMs": 110680,
           "text": "The network will restart at eight tonight.",
-          "textTh": "เครือข่ายจะรีสตาร์ทเวลา 20.00 น. คืนนี้",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -5155,7 +5155,7 @@
           "startMs": 110960,
           "endMs": 114320,
           "text": "It should be available again within fifteen minutes.",
-          "textTh": "น่าจะกลับมาให้บริการได้อีกครั้งภายใน 15 นาที",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -5163,7 +5163,7 @@
           "startMs": 114600,
           "endMs": 118080,
           "text": "Employees working from home will not be affected.",
-          "textTh": "พนักงานที่ทำงานจากที่บ้านจะไม่ได้รับผลกระทบ",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -5171,7 +5171,7 @@
           "startMs": 118360,
           "endMs": 122320,
           "text": "If you notice a problem tomorrow, contact the support desk.",
-          "textTh": "หากคุณพบปัญหาในวันพรุ่งนี้ โปรดติดต่อฝ่ายสนับสนุน",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -5179,7 +5179,7 @@
           "startMs": 122600,
           "endMs": 127280,
           "text": "The next team briefing starts at nine tomorrow morning.",
-          "textTh": "การประชุมทีมครั้งต่อไปจะเริ่มเวลาเก้าโมงเช้าพรุ่งนี้",
+          "textTh": "",
           "section": "C"
         }
       ],
@@ -5190,7 +5190,7 @@
       "episode": 18,
       "episodeId": "EP18",
       "title": "Visitor Information",
-      "titleTh": "ข้อมูลสำหรับผู้มาเยือน",
+      "titleTh": "",
       "level": "B1",
       "category": "toeic",
       "credit": "Banana Original",
@@ -5227,7 +5227,7 @@
           "startMs": 0,
           "endMs": 3192,
           "text": "Welcome to the City Transport Museum.",
-          "textTh": "ยินดีต้อนรับสู่พิพิธภัณฑ์การขนส่งในเมือง",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -5235,7 +5235,7 @@
           "startMs": 3472,
           "endMs": 7936,
           "text": "Your visit begins in the main hall on this floor.",
-          "textTh": "การเยี่ยมชมของคุณจะเริ่มต้นที่โถงหลักบนชั้นนี้",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -5243,7 +5243,7 @@
           "startMs": 8216,
           "endMs": 12968,
           "text": "The first gallery shows how people traveled by river.",
-          "textTh": "ห้องจัดแสดงแรกแสดงให้เห็นว่าผู้คนเดินทางทางแม่น้ำอย่างไร",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -5251,7 +5251,7 @@
           "startMs": 13248,
           "endMs": 17760,
           "text": "From there, follow the blue signs to the train exhibit.",
-          "textTh": "จากนั้น ให้เดินตามป้ายสีฟ้าไปยังนิทรรศการรถไฟ",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -5259,7 +5259,7 @@
           "startMs": 18040,
           "endMs": 21904,
           "text": "The short film starts every half hour upstairs.",
-          "textTh": "ภาพยนตร์สั้นจะเริ่มฉายทุกครึ่งชั่วโมงที่ชั้นบน",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -5267,7 +5267,7 @@
           "startMs": 22184,
           "endMs": 26936,
           "text": "You may take photographs, but please turn off the flash.",
-          "textTh": "คุณสามารถถ่ายรูปได้ แต่โปรดปิดแฟลช",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -5275,7 +5275,7 @@
           "startMs": 27216,
           "endMs": 32160,
           "text": "Food and drinks are available in the café near the exit.",
-          "textTh": "มีอาหารและเครื่องดื่มให้บริการที่คาเฟ่ใกล้ทางออก",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -5283,7 +5283,7 @@
           "startMs": 32440,
           "endMs": 36784,
           "text": "Enjoy your visit, and ask our guides if you need help.",
-          "textTh": "ขอให้เพลิดเพลินกับการเข้าชม และสอบถามไกด์ของเราได้หากต้องการความช่วยเหลือ",
+          "textTh": "",
           "section": "A"
         },
         {
@@ -5291,7 +5291,7 @@
           "startMs": 37784,
           "endMs": 40976,
           "text": "Welcome to the Riverside Business Conference.",
-          "textTh": "ยินดีต้อนรับสู่การประชุมธุรกิจริเวอร์ไซด์",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -5299,7 +5299,7 @@
           "startMs": 41256,
           "endMs": 44616,
           "text": "Please collect your badge at the registration desk.",
-          "textTh": "โปรดรับป้ายชื่อของคุณที่โต๊ะลงทะเบียน",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -5307,7 +5307,7 @@
           "startMs": 44896,
           "endMs": 49336,
           "text": "The desk is directly ahead of the main entrance.",
-          "textTh": "โต๊ะประชาสัมพันธ์อยู่ตรงหน้าทางเข้าหลัก",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -5315,7 +5315,7 @@
           "startMs": 49616,
           "endMs": 53840,
           "text": "Morning presentations will be held in Hall A.",
-          "textTh": "การนำเสนอช่วงเช้าจะจัดขึ้นในห้องโถง A",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -5323,7 +5323,7 @@
           "startMs": 54120,
           "endMs": 58632,
           "text": "The workshops begin in Hall B after lunch.",
-          "textTh": "เวิร์กช็อปจะเริ่มในห้องโถง B หลังอาหารกลางวัน",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -5331,7 +5331,7 @@
           "startMs": 58912,
           "endMs": 63016,
           "text": "The café is located between the two halls.",
-          "textTh": "คาเฟ่อยู่ระหว่างโถงทั้งสอง",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -5339,7 +5339,7 @@
           "startMs": 63296,
           "endMs": 67376,
           "text": "If you need a quiet place to work, use the upstairs lounge.",
-          "textTh": "หากคุณต้องการสถานที่เงียบสงบเพื่อทำงาน ให้ใช้เลานจ์ชั้นบน",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -5347,7 +5347,7 @@
           "startMs": 67656,
           "endMs": 72000,
           "text": "Volunteers wearing yellow badges can answer your questions.",
-          "textTh": "อาสาสมัครที่ติดป้ายสีเหลืองสามารถตอบคำถามของคุณได้",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -5355,7 +5355,7 @@
           "startMs": 72280,
           "endMs": 75784,
           "text": "We hope you have a useful and enjoyable day.",
-          "textTh": "เราหวังว่าคุณจะมีวันที่เป็นประโยชน์และมีความสุข",
+          "textTh": "",
           "section": "B"
         },
         {
@@ -5363,7 +5363,7 @@
           "startMs": 76784,
           "endMs": 81416,
           "text": "Good afternoon, conference visitors. We have one schedule change.",
-          "textTh": "สวัสดีค่ะ ผู้เข้าร่วมการประชุมทุกท่าน เรามีการเปลี่ยนแปลงกำหนดการ 1 รายการ",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -5371,7 +5371,7 @@
           "startMs": 81696,
           "endMs": 87120,
           "text": "The workshop on customer service will begin at two fifteen.",
-          "textTh": "เวิร์กช็อปเรื่องการบริการลูกค้าจะเริ่มเวลาบ่ายสองสิบห้านาที",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -5379,7 +5379,7 @@
           "startMs": 87400,
           "endMs": 90880,
           "text": "It was originally scheduled for two o'clock.",
-          "textTh": "เดิมทีมีกำหนดการไว้ตอนบ่ายสองโมง",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -5387,7 +5387,7 @@
           "startMs": 91160,
           "endMs": 95192,
           "text": "The workshop will still take place in Hall B.",
-          "textTh": "เวิร์กช็อปจะยังคงจัดขึ้นในฮอลล์ B",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -5395,7 +5395,7 @@
           "startMs": 95472,
           "endMs": 99384,
           "text": "Please use the extra time to visit the display area.",
-          "textTh": "โปรดใช้เวลาที่เหลือไปเยี่ยมชมพื้นที่จัดแสดง",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -5403,7 +5403,7 @@
           "startMs": 99664,
           "endMs": 104128,
           "text": "It is located beyond the café, near the garden doors.",
-          "textTh": "ตั้งอยู่เลยจากคาเฟ่ไป ใกล้ประตูสวน",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -5411,7 +5411,7 @@
           "startMs": 104408,
           "endMs": 109520,
           "text": "Staff at the registration desk can provide a revised schedule.",
-          "textTh": "เจ้าหน้าที่ที่โต๊ะลงทะเบียนสามารถมอบกำหนดการฉบับปรับปรุงให้ได้",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -5419,7 +5419,7 @@
           "startMs": 109800,
           "endMs": 111600,
           "text": "Thank you for your patience.",
-          "textTh": "ขอขอบคุณสำหรับความอดทนของคุณ",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -5427,7 +5427,7 @@
           "startMs": 111880,
           "endMs": 117232,
           "text": "The display area includes work from several local companies.",
-          "textTh": "พื้นที่จัดแสดงมีผลงานจากบริษัทท้องถิ่นหลายแห่ง",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -5435,7 +5435,7 @@
           "startMs": 117512,
           "endMs": 121064,
           "text": "You are welcome to speak with their representatives.",
-          "textTh": "คุณสามารถพูดคุยกับตัวแทนของพวกเขาได้",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -5443,7 +5443,7 @@
           "startMs": 121344,
           "endMs": 125544,
           "text": "The afternoon guest talk will still begin at four.",
-          "textTh": "การบรรยายจากแขกรับเชิญช่วงบ่ายจะยังคงเริ่มเวลาสี่โมงเย็น",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -5451,7 +5451,7 @@
           "startMs": 125824,
           "endMs": 129136,
           "text": "It will take place in Hall A as planned.",
-          "textTh": "งานจะจัดขึ้นในฮอลล์ A ตามแผนที่วางไว้",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -5459,7 +5459,7 @@
           "startMs": 129416,
           "endMs": 133760,
           "text": "Please return to Hall B before the workshop begins.",
-          "textTh": "โปรดกลับไปที่ห้องโถง B ก่อนเวิร์กชอปจะเริ่ม",
+          "textTh": "",
           "section": "C"
         },
         {
@@ -5467,7 +5467,7 @@
           "startMs": 134040,
           "endMs": 136752,
           "text": "We hope you enjoy the rest of the conference.",
-          "textTh": "เราหวังว่าคุณจะเพลิดเพลินกับช่วงที่เหลือของการประชุม",
+          "textTh": "",
           "section": "C"
         }
       ],
