@@ -1058,7 +1058,7 @@ model EventJobLock {
 /** Video clip (YouTube embed) for the Clips tab: watch, dictation, shadowing. */
 model Clip {
   id           String   @id @default(uuid())
-  /** youtube = embed `youtubeId` · video = play `videoUrl` (e.g. VOA mp4) */
+  /** youtube = embed youtubeId · video = mp4 videoUrl · audio = mp3 in videoUrl */
   source       String   @default("youtube")
   youtubeId    String   @default("")
   videoUrl     String   @default("")
