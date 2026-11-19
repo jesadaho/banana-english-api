@@ -27,6 +27,18 @@
           "id": "A",
           "label": "Part A",
           "fromIdx": 0,
+          "toIdx": 9
+        },
+        {
+          "id": "B",
+          "label": "Part B",
+          "fromIdx": 10,
+          "toIdx": 19
+        },
+        {
+          "id": "C",
+          "label": "Part C",
+          "fromIdx": 20,
           "toIdx": 29
         }
       ],
@@ -36,240 +48,210 @@
           "startMs": 0,
           "endMs": 5760,
           "text": "A receptionist is handing a visitor an identification card.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 1,
           "startMs": 6040,
           "endMs": 10072,
           "text": "The visitor is standing across the desk from her.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 2,
           "startMs": 10352,
           "endMs": 14072,
           "text": "Several chairs have been placed beside the entrance.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 3,
           "startMs": 14352,
           "endMs": 18816,
           "text": "A stack of visitor badges is resting on the counter.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 4,
           "startMs": 19096,
           "endMs": 22408,
           "text": "A coat has been left on the back of a chair.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 5,
           "startMs": 23408,
           "endMs": 26840,
           "text": "Three coworkers are sitting around a conference table.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 6,
           "startMs": 27120,
           "endMs": 30960,
           "text": "One of them is pointing at a chart on the screen.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 7,
           "startMs": 31240,
           "endMs": 34864,
           "text": "A laptop has been left open near the window.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 8,
           "startMs": 35144,
           "endMs": 39248,
           "text": "The presenter is standing close to the screen.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 9,
           "startMs": 39528,
           "endMs": 44688,
           "text": "The other coworkers are looking at the chart instead of their laptops.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 10,
           "startMs": 45688,
           "endMs": 49432,
           "text": "A barista is placing a cup on the counter.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 11,
           "startMs": 49712,
           "endMs": 52952,
           "text": "The customer is reaching for the drink.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 12,
           "startMs": 53232,
           "endMs": 56712,
           "text": "More cups are stacked on the shelf behind them.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 13,
           "startMs": 56992,
           "endMs": 61264,
           "text": "A second customer is waiting behind the person at the counter.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 14,
           "startMs": 61544,
           "endMs": 65768,
           "text": "A few napkins are lying beside the customer's cup.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 15,
           "startMs": 66768,
           "endMs": 70728,
           "text": "Two workers are arranging boxes on a shelf.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 16,
           "startMs": 71008,
           "endMs": 75208,
           "text": "A cart is parked next to the boxes.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 17,
           "startMs": 75488,
           "endMs": 80048,
           "text": "A sealed package is standing on the floor beside the cart.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 18,
           "startMs": 80328,
           "endMs": 84360,
           "text": "The boxes on the cart have not been opened yet.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 19,
           "startMs": 84640,
           "endMs": 89632,
           "text": "One worker is reaching for a box on the highest shelf.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 20,
           "startMs": 90632,
           "endMs": 95096,
           "text": "A hotel employee is speaking to a guest at the front desk.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 21,
           "startMs": 95376,
           "endMs": 99360,
           "text": "The guest is holding a suitcase by its handle.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 22,
           "startMs": 99640,
           "endMs": 103360,
           "text": "An elevator can be seen at the end of the hall.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 23,
           "startMs": 103640,
           "endMs": 108560,
           "text": "The employee is pointing toward the elevators beyond the lobby.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 24,
           "startMs": 108840,
           "endMs": 112800,
           "text": "A luggage cart is parked near the front desk.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 25,
           "startMs": 113800,
           "endMs": 117424,
           "text": "A vendor is putting fruit into a basket.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 26,
           "startMs": 117704,
           "endMs": 121976,
           "text": "A customer is examining the items on display.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 27,
           "startMs": 122256,
           "endMs": 125280,
           "text": "Several baskets are lined up under the awning.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 28,
           "startMs": 125560,
           "endMs": 130840,
           "text": "Apples and oranges have been separated into different baskets.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 29,
           "startMs": 131120,
           "endMs": 134792,
           "text": "The customer is standing beneath the awning.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         }
       ],
       "audioSha256": "0572d66ef10869cab8cd6e54437e7380f60e87735b67e180fefecdca7c838b01"
@@ -295,6 +277,18 @@
           "id": "A",
           "label": "Part A",
           "fromIdx": 0,
+          "toIdx": 12
+        },
+        {
+          "id": "B",
+          "label": "Part B",
+          "fromIdx": 13,
+          "toIdx": 25
+        },
+        {
+          "id": "C",
+          "label": "Part C",
+          "fromIdx": 26,
           "toIdx": 38
         }
       ],
@@ -304,312 +298,273 @@
           "startMs": 0,
           "endMs": 2544,
           "text": "What time does the sales meeting start?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 1,
           "startMs": 2824,
           "endMs": 6904,
           "text": "At nine thirty, but the room opens at nine.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 2,
           "startMs": 7184,
           "endMs": 9824,
           "text": "Great. I'll be there a few minutes early.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 3,
           "startMs": 10824,
           "endMs": 13248,
           "text": "When will the new chairs arrive?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 4,
           "startMs": 13528,
           "endMs": 16912,
           "text": "The supplier said Thursday afternoon.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 5,
           "startMs": 17192,
           "endMs": 20432,
           "text": "Then we can set up the training room on Friday.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 6,
           "startMs": 21432,
           "endMs": 23712,
           "text": "Is my appointment still at two?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 7,
           "startMs": 23992,
           "endMs": 28312,
           "text": "The dentist has an opening at one thirty instead.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 8,
           "startMs": 28592,
           "endMs": 31112,
           "text": "That works better for me. Thank you.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 9,
           "startMs": 32112,
           "endMs": 35664,
           "text": "How long does the orientation usually take?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 10,
           "startMs": 35944,
           "endMs": 39208,
           "text": "About forty minutes, including the office tour.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 11,
           "startMs": 39488,
           "endMs": 41888,
           "text": "I'll leave the rest of the morning free.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 12,
           "startMs": 42888,
           "endMs": 45888,
           "text": "Do you need the report today?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 13,
           "startMs": 46168,
           "endMs": 49480,
           "text": "Tomorrow morning is fine, before the team call.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 14,
           "startMs": 49760,
           "endMs": 53000,
           "text": "I'll send it tonight so you can review it.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 15,
           "startMs": 54000,
           "endMs": 56880,
           "text": "Has the manager decided on a time yet?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 16,
           "startMs": 57160,
           "endMs": 60280,
           "text": "She said she'd email everyone after lunch.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 17,
           "startMs": 60560,
           "endMs": 63104,
           "text": "Okay, I'll check my inbox then.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 18,
           "startMs": 64104,
           "endMs": 66984,
           "text": "Can we meet on Wednesday instead?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 19,
           "startMs": 67264,
           "endMs": 70744,
           "text": "I'm out of town that day. How about Thursday?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 20,
           "startMs": 71024,
           "endMs": 73376,
           "text": "Thursday morning is perfect.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 21,
           "startMs": 74376,
           "endMs": 77928,
           "text": "Does the library open at eight tomorrow?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 22,
           "startMs": 78208,
           "endMs": 81640,
           "text": "The weekend hours don't begin until ten.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 23,
           "startMs": 81920,
           "endMs": 83912,
           "text": "I'll come after breakfast then.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 24,
           "startMs": 84912,
           "endMs": 87864,
           "text": "When do I need to return this key?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 25,
           "startMs": 88144,
           "endMs": 91384,
           "text": "Please bring it back before the office closes.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 26,
           "startMs": 91664,
           "endMs": 94328,
           "text": "Is that at five thirty today?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 27,
           "startMs": 94608,
           "endMs": 99240,
           "text": "Yes, but the front desk stays open until six.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 28,
           "startMs": 100240,
           "endMs": 103624,
           "text": "Are we training on Monday or Tuesday?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 29,
           "startMs": 103904,
           "endMs": 109904,
           "text": "Monday is reserved for orientation, so Tuesday is our first option.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 30,
           "startMs": 110184,
           "endMs": 112944,
           "text": "I'll change the calendar invitation.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 31,
           "startMs": 113944,
           "endMs": 116824,
           "text": "Why hasn't the presentation started yet?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 32,
           "startMs": 117104,
           "endMs": 121184,
           "text": "The speaker's flight arrived later than expected.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 33,
           "startMs": 121464,
           "endMs": 124104,
           "text": "Will we still finish before noon?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 34,
           "startMs": 124384,
           "endMs": 127624,
           "text": "Yes. She shortened the introduction.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 35,
           "startMs": 128624,
           "endMs": 131888,
           "text": "Is the client visit confirmed for next week?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 36,
           "startMs": 132168,
           "endMs": 136800,
           "text": "They confirmed Thursday, but not the exact time.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 37,
           "startMs": 137080,
           "endMs": 139840,
           "text": "Should I reserve the room all morning?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 38,
           "startMs": 140120,
           "endMs": 143960,
           "text": "Yes, until we receive their travel details.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         }
       ],
       "audioSha256": "bde1f8bc89f877bd3cf1beab6c00d2ca9e6ecfb14fcf22e03ff7cebccf89fd73"
@@ -635,6 +590,18 @@
           "id": "A",
           "label": "Part A",
           "fromIdx": 0,
+          "toIdx": 13
+        },
+        {
+          "id": "B",
+          "label": "Part B",
+          "fromIdx": 14,
+          "toIdx": 27
+        },
+        {
+          "id": "C",
+          "label": "Part C",
+          "fromIdx": 28,
           "toIdx": 39
         }
       ],
@@ -644,320 +611,280 @@
           "startMs": 0,
           "endMs": 2880,
           "text": "Where is the human resources office?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 1,
           "startMs": 3160,
           "endMs": 6232,
           "text": "On the third floor, across from the elevators.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 2,
           "startMs": 6512,
           "endMs": 8672,
           "text": "Thanks. I'll take the stairs.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 3,
           "startMs": 9672,
           "endMs": 13056,
           "text": "Which platform does the airport train use?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 4,
           "startMs": 13336,
           "endMs": 18088,
           "text": "Platform four. The signs are above the ticket machines.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 5,
           "startMs": 18368,
           "endMs": 19760,
           "text": "I see them now.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 6,
           "startMs": 20760,
           "endMs": 23232,
           "text": "Is there a place to eat near here?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 7,
           "startMs": 23512,
           "endMs": 26896,
           "text": "There's a small café next to the bank.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 8,
           "startMs": 27176,
           "endMs": 29840,
           "text": "Perfect. I only have half an hour.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 9,
           "startMs": 30840,
           "endMs": 32712,
           "text": "Where should visitors park?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 10,
           "startMs": 32992,
           "endMs": 35344,
           "text": "In the lot behind the building.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 11,
           "startMs": 35624,
           "endMs": 37904,
           "text": "Is the entrance on Pine Street?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 12,
           "startMs": 38184,
           "endMs": 40824,
           "text": "Yes, just past the traffic light.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 13,
           "startMs": 41824,
           "endMs": 45928,
           "text": "Is the workshop in Room A or Room B?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 14,
           "startMs": 46208,
           "endMs": 50192,
           "text": "Room B. Room A is being cleaned.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 15,
           "startMs": 50472,
           "endMs": 53232,
           "text": "I'll update the sign at the entrance.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 16,
           "startMs": 54232,
           "endMs": 57184,
           "text": "How do I get to the conference center?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 17,
           "startMs": 57464,
           "endMs": 61376,
           "text": "Turn left outside, then walk two blocks.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 18,
           "startMs": 61656,
           "endMs": 64440,
           "text": "Is it beside the hotel?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 19,
           "startMs": 64720,
           "endMs": 67144,
           "text": "It's across the street from the hotel.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 20,
           "startMs": 68144,
           "endMs": 71144,
           "text": "Where can I pick up my luggage?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 21,
           "startMs": 71424,
           "endMs": 74376,
           "text": "At belt six, near the exit doors.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 22,
           "startMs": 74656,
           "endMs": 76936,
           "text": "Thank you. I'll head there now.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 23,
           "startMs": 77936,
           "endMs": 81440,
           "text": "Is the museum entrance on this side?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 24,
           "startMs": 81720,
           "endMs": 85152,
           "text": "No, go around the corner near the fountain.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 25,
           "startMs": 85432,
           "endMs": 88432,
           "text": "Thanks. I walked past it twice.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 26,
           "startMs": 89432,
           "endMs": 92096,
           "text": "Where is the finance department now?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 27,
           "startMs": 92376,
           "endMs": 96768,
           "text": "They relocated upstairs, beside the legal team.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 28,
           "startMs": 97048,
           "endMs": 99208,
           "text": "I didn't see the new sign.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 29,
           "startMs": 100208,
           "endMs": 103280,
           "text": "What's the fastest way to the post office?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 30,
           "startMs": 103560,
           "endMs": 107280,
           "text": "Walk through the park instead of taking the main road.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 31,
           "startMs": 107560,
           "endMs": 110440,
           "text": "Is there an exit on the other side?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 32,
           "startMs": 110720,
           "endMs": 113672,
           "text": "Yes. The post office is beside it.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 33,
           "startMs": 114672,
           "endMs": 116496,
           "text": "Where should I meet the driver?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 34,
           "startMs": 116776,
           "endMs": 119800,
           "text": "In front of the north entrance.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 35,
           "startMs": 120080,
           "endMs": 122000,
           "text": "I'll wait there with the luggage.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 36,
           "startMs": 123000,
           "endMs": 126720,
           "text": "Is there a quiet place to take a call?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 37,
           "startMs": 127000,
           "endMs": 131152,
           "text": "The small lounge is just beyond the elevators.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 38,
           "startMs": 131432,
           "endMs": 133616,
           "text": "Is anyone using it now?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 39,
           "startMs": 133896,
           "endMs": 137136,
           "text": "No, it should be empty until three.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         }
       ],
       "audioSha256": "64ee388eee47072851383c4890a6d99443b64d3e3da78922b5c037246428e86a"
@@ -983,6 +910,18 @@
           "id": "A",
           "label": "Part A",
           "fromIdx": 0,
+          "toIdx": 12
+        },
+        {
+          "id": "B",
+          "label": "Part B",
+          "fromIdx": 13,
+          "toIdx": 25
+        },
+        {
+          "id": "C",
+          "label": "Part C",
+          "fromIdx": 26,
           "toIdx": 36
         }
       ],
@@ -992,296 +931,259 @@
           "startMs": 0,
           "endMs": 2520,
           "text": "Could you send me the updated file?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 1,
           "startMs": 2800,
           "endMs": 5464,
           "text": "I just attached it to my email.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 2,
           "startMs": 5744,
           "endMs": 8576,
           "text": "Got it. Thanks for sending it so quickly.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 3,
           "startMs": 9576,
           "endMs": 12600,
           "text": "May I borrow the projector this afternoon?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 4,
           "startMs": 12880,
           "endMs": 15904,
           "text": "Of course. Please return it before five.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 5,
           "startMs": 16184,
           "endMs": 18704,
           "text": "I will. My meeting ends at four.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 6,
           "startMs": 19704,
           "endMs": 21984,
           "text": "Would you mind holding the door?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 7,
           "startMs": 22264,
           "endMs": 25504,
           "text": "Not at all. Those boxes look heavy.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 8,
           "startMs": 25784,
           "endMs": 28328,
           "text": "They are. I appreciate the help.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 9,
           "startMs": 29328,
           "endMs": 31872,
           "text": "Can you help me change my reservation?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 10,
           "startMs": 32152,
           "endMs": 34936,
           "text": "Certainly. What date would you prefer?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 11,
           "startMs": 35216,
           "endMs": 38528,
           "text": "Next Friday, if there's a room available.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 12,
           "startMs": 39528,
           "endMs": 43128,
           "text": "Could someone check the meeting-room microphone?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 13,
           "startMs": 43408,
           "endMs": 45952,
           "text": "Our technician is already on the way.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 14,
           "startMs": 46232,
           "endMs": 50432,
           "text": "Excellent. The presentation starts in twenty minutes.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 15,
           "startMs": 51432,
           "endMs": 54336,
           "text": "Shall I print copies for the whole team?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 16,
           "startMs": 54616,
           "endMs": 57040,
           "text": "A digital copy will be enough.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 17,
           "startMs": 57320,
           "endMs": 60224,
           "text": "Okay. I'll share the link instead.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 18,
           "startMs": 61224,
           "endMs": 64536,
           "text": "Is it okay if I leave a little early?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 19,
           "startMs": 64816,
           "endMs": 67600,
           "text": "Yes, once you finish the customer notes.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 20,
           "startMs": 67880,
           "endMs": 70280,
           "text": "I'll complete them before lunch.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 21,
           "startMs": 71280,
           "endMs": 74784,
           "text": "Could I have another day to finish the draft?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 22,
           "startMs": 75064,
           "endMs": 78568,
           "text": "Yes, but we need it by Thursday morning.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 23,
           "startMs": 78848,
           "endMs": 81728,
           "text": "That gives me time to check the figures.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 24,
           "startMs": 82728,
           "endMs": 85152,
           "text": "Would you help me carry these boxes?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 25,
           "startMs": 85432,
           "endMs": 88792,
           "text": "Sure. Let's take the smaller ones first.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 26,
           "startMs": 89072,
           "endMs": 92672,
           "text": "Good plan. The large box is quite heavy.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 27,
           "startMs": 93672,
           "endMs": 95976,
           "text": "May we sit near the front?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 28,
           "startMs": 96256,
           "endMs": 100048,
           "text": "I'm afraid the speakers have already claimed that row.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 29,
           "startMs": 100328,
           "endMs": 102488,
           "text": "Then we'll take the next row.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 30,
           "startMs": 103488,
           "endMs": 106728,
           "text": "Can you translate this document today?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 31,
           "startMs": 107008,
           "endMs": 111232,
           "text": "I can't finish it today, but I can start now.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 32,
           "startMs": 111512,
           "endMs": 114872,
           "text": "That's fine. Please send the first page tonight.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 33,
           "startMs": 115872,
           "endMs": 118776,
           "text": "Could you drive me to the station after work?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 34,
           "startMs": 119056,
           "endMs": 122776,
           "text": "I wish I could, but I have a late appointment.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 35,
           "startMs": 123056,
           "endMs": 125936,
           "text": "No problem. I'll book a taxi.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 36,
           "startMs": 126216,
           "endMs": 129696,
           "text": "I can help you carry your bags downstairs.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         }
       ],
       "audioSha256": "8f58a02091fc65ae4fa3fe5ae691ea79841df3a444ce9272d68871d51649bd81"
@@ -1307,6 +1209,18 @@
           "id": "A",
           "label": "Part A",
           "fromIdx": 0,
+          "toIdx": 12
+        },
+        {
+          "id": "B",
+          "label": "Part B",
+          "fromIdx": 13,
+          "toIdx": 25
+        },
+        {
+          "id": "C",
+          "label": "Part C",
+          "fromIdx": 26,
           "toIdx": 37
         }
       ],
@@ -1316,304 +1230,266 @@
           "startMs": 0,
           "endMs": 2064,
           "text": "How many coffees should I order?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 1,
           "startMs": 2344,
           "endMs": 5728,
           "text": "Six regular ones and two without milk.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 2,
           "startMs": 6008,
           "endMs": 8312,
           "text": "I'll write that down before I go.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 3,
           "startMs": 9312,
           "endMs": 11904,
           "text": "How much are fifty color copies?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 4,
           "startMs": 12184,
           "endMs": 15088,
           "text": "They're twenty dollars, including the paper.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 5,
           "startMs": 15368,
           "endMs": 17168,
           "text": "That's within our budget.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 6,
           "startMs": 18168,
           "endMs": 20952,
           "text": "Do you still have this notebook in blue?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 7,
           "startMs": 21232,
           "endMs": 24784,
           "text": "Blue is sold out, but green is available.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 8,
           "startMs": 25064,
           "endMs": 26768,
           "text": "Green will be fine.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 9,
           "startMs": 27768,
           "endMs": 30768,
           "text": "Is delivery included in the price?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 10,
           "startMs": 31048,
           "endMs": 34432,
           "text": "It is for orders over one hundred dollars.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 11,
           "startMs": 34712,
           "endMs": 37472,
           "text": "Then let's add another pack of pens.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 12,
           "startMs": 38472,
           "endMs": 41376,
           "text": "Does the lunch special come with a drink?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 13,
           "startMs": 41656,
           "endMs": 44968,
           "text": "Yes, you can choose tea or water.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 14,
           "startMs": 45248,
           "endMs": 47648,
           "text": "Tea, please. No sugar.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 15,
           "startMs": 48648,
           "endMs": 51792,
           "text": "Is the conference rate still available?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 16,
           "startMs": 52072,
           "endMs": 55192,
           "text": "Yes, if you book before the end of the month.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 17,
           "startMs": 55472,
           "endMs": 57752,
           "text": "I'll make the reservation today.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 18,
           "startMs": 58752,
           "endMs": 62064,
           "text": "Could you send us a receipt for the order?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 19,
           "startMs": 62344,
           "endMs": 65608,
           "text": "It will be emailed after payment is complete.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 20,
           "startMs": 65888,
           "endMs": 68960,
           "text": "Please use the address on our account.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 21,
           "startMs": 69960,
           "endMs": 73344,
           "text": "Do these shirts come in a larger size?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 22,
           "startMs": 73624,
           "endMs": 78088,
           "text": "Yes, but we only have the larger size online.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 23,
           "startMs": 78368,
           "endMs": 81032,
           "text": "Could it be delivered to the store?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 24,
           "startMs": 81312,
           "endMs": 84816,
           "text": "Certainly. It usually takes two days.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 25,
           "startMs": 85816,
           "endMs": 89176,
           "text": "Can I change the number of folders I ordered?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 26,
           "startMs": 89456,
           "endMs": 92816,
           "text": "Yes, the order hasn't been packed yet.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 27,
           "startMs": 93096,
           "endMs": 96456,
           "text": "Please make it thirty instead of twenty.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 28,
           "startMs": 97456,
           "endMs": 101200,
           "text": "Is the monthly plan cheaper than the weekly plan?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 29,
           "startMs": 101480,
           "endMs": 105080,
           "text": "It is, if you use the service every week.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 30,
           "startMs": 105360,
           "endMs": 108000,
           "text": "I think the monthly plan makes sense.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 31,
           "startMs": 109000,
           "endMs": 111832,
           "text": "Can I pay when the chairs arrive?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 32,
           "startMs": 112112,
           "endMs": 116624,
           "text": "We require a fifty-percent deposit before dispatch.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 33,
           "startMs": 116904,
           "endMs": 119616,
           "text": "I'll arrange the transfer this afternoon.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 34,
           "startMs": 120616,
           "endMs": 124000,
           "text": "Why is the final bill higher than the estimate?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 35,
           "startMs": 124280,
           "endMs": 128840,
           "text": "The extra chairs were added after we sent the estimate.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 36,
           "startMs": 129120,
           "endMs": 132552,
           "text": "Could you email a list of all the charges?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 37,
           "startMs": 132832,
           "endMs": 136624,
           "text": "Certainly. I'll send an updated invoice today.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         }
       ],
       "audioSha256": "3cf32be91e65c34a95941e485cfe3cc890034848964f57bc51f40ead1331e56c"
@@ -1639,6 +1515,18 @@
           "id": "A",
           "label": "Part A",
           "fromIdx": 0,
+          "toIdx": 12
+        },
+        {
+          "id": "B",
+          "label": "Part B",
+          "fromIdx": 13,
+          "toIdx": 25
+        },
+        {
+          "id": "C",
+          "label": "Part C",
+          "fromIdx": 26,
           "toIdx": 36
         }
       ],
@@ -1648,296 +1536,259 @@
           "startMs": 0,
           "endMs": 2400,
           "text": "Why isn't the train here yet?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 1,
           "startMs": 2680,
           "endMs": 6160,
           "text": "There's a delay because of track maintenance.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 2,
           "startMs": 6440,
           "endMs": 8912,
           "text": "Then I'll take the bus to the airport.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 3,
           "startMs": 9912,
           "endMs": 12696,
           "text": "Should we replace the broken speaker?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 4,
           "startMs": 12976,
           "endMs": 15976,
           "text": "Let's ask maintenance to inspect it first.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 5,
           "startMs": 16256,
           "endMs": 19496,
           "text": "Good idea. It might be an easy fix.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 6,
           "startMs": 20496,
           "endMs": 23376,
           "text": "Are we still eating outside today?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 7,
           "startMs": 23656,
           "endMs": 27160,
           "text": "The weather forecast says heavy rain.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 8,
           "startMs": 27440,
           "endMs": 29744,
           "text": "I'll reserve a table indoors.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 9,
           "startMs": 30744,
           "endMs": 33144,
           "text": "Did you find the missing contract?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 10,
           "startMs": 33424,
           "endMs": 36208,
           "text": "It was in the shared folder all along.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 11,
           "startMs": 36488,
           "endMs": 38792,
           "text": "Great. I'll send it to the client.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 12,
           "startMs": 39792,
           "endMs": 42984,
           "text": "Which design does the customer prefer?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 13,
           "startMs": 43264,
           "endMs": 46408,
           "text": "They haven't replied to the new samples yet.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 14,
           "startMs": 46688,
           "endMs": 49688,
           "text": "I'll call them before we start printing.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 15,
           "startMs": 50688,
           "endMs": 53712,
           "text": "Can we move the appointment to Monday?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 16,
           "startMs": 53992,
           "endMs": 58432,
           "text": "Monday is a holiday. Tuesday is open.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 17,
           "startMs": 58712,
           "endMs": 60992,
           "text": "Let's take Tuesday morning.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 18,
           "startMs": 61992,
           "endMs": 64896,
           "text": "Why did the workshop change rooms?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 19,
           "startMs": 65176,
           "endMs": 68680,
           "text": "The larger room has better video equipment.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 20,
           "startMs": 68960,
           "endMs": 71120,
           "text": "I'll tell everyone where to go.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 21,
           "startMs": 72120,
           "endMs": 75312,
           "text": "Why can't we use the large meeting room?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 22,
           "startMs": 75592,
           "endMs": 78544,
           "text": "Another team reserved it for a workshop.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 23,
           "startMs": 78824,
           "endMs": 83264,
           "text": "Let's use the smaller room and invite fewer people.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 24,
           "startMs": 84264,
           "endMs": 87264,
           "text": "Should we send this lamp back to the store?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 25,
           "startMs": 87544,
           "endMs": 91336,
           "text": "Yes. The switch doesn't work properly.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 26,
           "startMs": 91616,
           "endMs": 93968,
           "text": "I'll keep the receipt for the return.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 27,
           "startMs": 94968,
           "endMs": 98112,
           "text": "What happens if the speaker can't attend?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 28,
           "startMs": 98392,
           "endMs": 101872,
           "text": "Her colleague can give the presentation instead.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 29,
           "startMs": 102152,
           "endMs": 104744,
           "text": "I'll prepare a second name card.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 30,
           "startMs": 105744,
           "endMs": 108696,
           "text": "Did the team approve the revised schedule?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 31,
           "startMs": 108976,
           "endMs": 112960,
           "text": "Yes, but they want the break ten minutes earlier.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 32,
           "startMs": 113240,
           "endMs": 116072,
           "text": "I'll change the printed program now.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 33,
           "startMs": 117072,
           "endMs": 120672,
           "text": "Should we wait for the new posters to arrive?",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 34,
           "startMs": 120952,
           "endMs": 125536,
           "text": "With the event tomorrow, we should use the approved design.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 35,
           "startMs": 125816,
           "endMs": 127928,
           "text": "I'll print it this afternoon.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         },
         {
           "idx": 36,
           "startMs": 128208,
           "endMs": 132528,
           "text": "Good. We can update the digital version later.",
-          "textTh": "",
-          "section": "A"
+          "textTh": ""
         }
       ],
       "audioSha256": "58b8cce7f5c87db09c9b48c8541b432aff26b36cc919b0b6c6e829b9db6bc2a4"
