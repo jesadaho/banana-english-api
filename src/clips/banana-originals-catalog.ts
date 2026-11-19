@@ -8,6 +8,15 @@ export type BananaOriginalsChapter = {
   toIdx: number;
 };
 
+export type BananaOriginalsStill = {
+  id: string;
+  imageUrl: string;
+  fromIdx: number;
+  toIdx: number;
+  startMs: number;
+  endMs: number;
+};
+
 export type BananaOriginalsSentence = {
   idx: number;
   startMs: number;
@@ -32,6 +41,7 @@ export type BananaOriginalsEpisode = {
   durationSec: number;
   sortOrder: number;
   chapters: BananaOriginalsChapter[];
+  stills?: BananaOriginalsStill[];
   sentences: BananaOriginalsSentence[];
 };
 
@@ -68,4 +78,12 @@ export function bananaOriginalsChaptersFor(
   const cat = loadBananaOriginalsCatalog();
   const ep = cat?.episodes.find((e) => e.id === clipId);
   return ep?.chapters ?? [];
+}
+
+export function bananaOriginalsStillsFor(
+  clipId: string,
+): BananaOriginalsStill[] {
+  const cat = loadBananaOriginalsCatalog();
+  const ep = cat?.episodes.find((e) => e.id === clipId);
+  return ep?.stills ?? [];
 }
