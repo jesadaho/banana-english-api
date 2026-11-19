@@ -239,7 +239,22 @@ async function main() {
       list.push(idx);
       bySection.set(sec, list);
     });
-    if (bySection.size > 0) {
+    // EP02–06 (Question–Response): the script groups 12 mini-scenes into 3
+    // chapters (**Chapter N · …**); the manifest carries `chapter` per line.
+    const byChapter = new Map<number, number[]>();
+    manifest.lines.forEach((line, idx) => {
+      const ch = Number((line as { chapter?: number }).chapter ?? 0);
+      if (!ch) return;
+      const list = byChapter.get(ch) ?? [];
+      list.push(idx);
+      byChapter.set(ch, list);
+    });
+    if (bySection.size === 0 && byChapter.size > 0) {
+      for (const [ch, idxs] of [...byChapter.entries()].sort((a, b) => a[0] - b[0])) {
+        const id = String.fromCharCode(64 + ch);
+        chapters.push({ id, label: `Part ${id}`, fromIdx: idxs[0]!, toIdx: idxs[idxs.length - 1]! });
+      }
+    } else if (bySection.size > 0) {
       for (const [sec, idxs] of [...bySection.entries()].sort((a, b) =>
         a[0].localeCompare(b[0]),
       )) {

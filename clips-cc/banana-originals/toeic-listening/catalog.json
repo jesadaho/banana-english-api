@@ -327,18 +327,18 @@
           "id": "A",
           "label": "Part A",
           "fromIdx": 0,
-          "toIdx": 12
+          "toIdx": 11
         },
         {
           "id": "B",
           "label": "Part B",
-          "fromIdx": 13,
-          "toIdx": 25
+          "fromIdx": 12,
+          "toIdx": 23
         },
         {
           "id": "C",
           "label": "Part C",
-          "fromIdx": 26,
+          "fromIdx": 24,
           "toIdx": 38
         }
       ],
@@ -640,18 +640,18 @@
           "id": "A",
           "label": "Part A",
           "fromIdx": 0,
-          "toIdx": 13
+          "toIdx": 12
         },
         {
           "id": "B",
           "label": "Part B",
-          "fromIdx": 14,
-          "toIdx": 27
+          "fromIdx": 13,
+          "toIdx": 25
         },
         {
           "id": "C",
           "label": "Part C",
-          "fromIdx": 28,
+          "fromIdx": 26,
           "toIdx": 39
         }
       ],
@@ -960,18 +960,18 @@
           "id": "A",
           "label": "Part A",
           "fromIdx": 0,
-          "toIdx": 12
+          "toIdx": 11
         },
         {
           "id": "B",
           "label": "Part B",
-          "fromIdx": 13,
-          "toIdx": 25
+          "fromIdx": 12,
+          "toIdx": 23
         },
         {
           "id": "C",
           "label": "Part C",
-          "fromIdx": 26,
+          "fromIdx": 24,
           "toIdx": 36
         }
       ],
@@ -1259,18 +1259,18 @@
           "id": "A",
           "label": "Part A",
           "fromIdx": 0,
-          "toIdx": 12
+          "toIdx": 11
         },
         {
           "id": "B",
           "label": "Part B",
-          "fromIdx": 13,
-          "toIdx": 25
+          "fromIdx": 12,
+          "toIdx": 24
         },
         {
           "id": "C",
           "label": "Part C",
-          "fromIdx": 26,
+          "fromIdx": 25,
           "toIdx": 37
         }
       ],
@@ -1565,18 +1565,18 @@
           "id": "A",
           "label": "Part A",
           "fromIdx": 0,
-          "toIdx": 12
+          "toIdx": 11
         },
         {
           "id": "B",
           "label": "Part B",
-          "fromIdx": 13,
-          "toIdx": 25
+          "fromIdx": 12,
+          "toIdx": 23
         },
         {
           "id": "C",
           "label": "Part C",
-          "fromIdx": 26,
+          "fromIdx": 24,
           "toIdx": 36
         }
       ],
