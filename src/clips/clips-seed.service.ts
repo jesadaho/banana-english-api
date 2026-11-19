@@ -75,11 +75,9 @@ export class ClipsSeedService implements OnModuleInit {
       this.logger.log(`Clips seed skipped (no ${root})`);
       return;
     }
-    // Always upsert Banana Originals audio packs when the catalog is present.
-    await this.seedBananaOriginals(root);
-
     if (process.env.CLIPS_CC_AUTO_IMPORT === '0') {
       this.logger.log('Clips seed skipped (CLIPS_CC_AUTO_IMPORT=0)');
+      await this.seedBananaOriginals(root);
       await this.backfillMissingThai();
       return;
     }
@@ -149,6 +147,9 @@ export class ClipsSeedService implements OnModuleInit {
       // New imports may still lack Thai if Gemini failed — mirror/retry once more.
       await this.backfillMissingThai();
     }
+
+    // After remap/import so Banana Originals keep category=toeic.
+    await this.seedBananaOriginals(root);
   }
 
   /** Draft Banana Originals clips when the seed catalog is not shipped. */
@@ -420,10 +421,26 @@ export class ClipsSeedService implements OnModuleInit {
   /** Align stored category ids/titles with the current Clips tab rails. */
   private async remapCategories() {
     const clips = await this.prisma.clip.findMany({
-      select: { id: true, title: true, category: true, credit: true },
+      select: {
+        id: true,
+        title: true,
+        category: true,
+        credit: true,
+        source: true,
+        sourceUrl: true,
+      },
     });
     let changed = 0;
     for (const c of clips) {
+      // Banana Originals / audio packs own their category (toeic, …).
+      if (
+        c.source === 'audio' ||
+        c.id.startsWith('toeic_s1_') ||
+        c.sourceUrl.startsWith('banana-originals://') ||
+        c.credit.toLowerCase().includes('banana')
+      ) {
+        continue;
+      }
       const next = guessClipCategory(c.title, c.credit);
       if (next === c.category) continue;
       await this.prisma.clip.update({ where: { id: c.id }, data: { category: next } });

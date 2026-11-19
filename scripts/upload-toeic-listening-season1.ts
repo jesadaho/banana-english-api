@@ -233,20 +233,34 @@ async function main() {
       [];
     const bySection = new Map<string, number[]>();
     manifest.lines.forEach((line, idx) => {
-      const sec = (line.section || 'A').toUpperCase();
+      const sec = (line.section || '').trim().toUpperCase();
+      if (!sec) return;
       const list = bySection.get(sec) ?? [];
       list.push(idx);
       bySection.set(sec, list);
     });
-    for (const [sec, idxs] of [...bySection.entries()].sort((a, b) =>
-      a[0].localeCompare(b[0]),
-    )) {
-      chapters.push({
-        id: sec,
-        label: `Part ${sec}`,
-        fromIdx: idxs[0]!,
-        toIdx: idxs[idxs.length - 1]!,
-      });
+    if (bySection.size > 0) {
+      for (const [sec, idxs] of [...bySection.entries()].sort((a, b) =>
+        a[0].localeCompare(b[0]),
+      )) {
+        chapters.push({
+          id: sec,
+          label: `Part ${sec}`,
+          fromIdx: idxs[0]!,
+          toIdx: idxs[idxs.length - 1]!,
+        });
+      }
+    } else {
+      // EP01 photographs etc. have no section markers — split for practice.
+      const n = manifest.lines.length;
+      const size = Math.max(1, Math.ceil(n / 3));
+      for (let i = 0; i < 3; i++) {
+        const start = i * size;
+        if (start >= n) break;
+        const end = i === 2 ? n - 1 : Math.min(n - 1, start + size - 1);
+        const id = String.fromCharCode(65 + i);
+        chapters.push({ id, label: `Part ${id}`, fromIdx: start, toIdx: end });
+      }
     }
 
     episodes.push({
