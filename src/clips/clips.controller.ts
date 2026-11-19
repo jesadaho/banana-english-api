@@ -1,12 +1,16 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Post, Query, Req, UseGuards } from '@nestjs/common';
 import { User } from '@prisma/client';
+import { clientInfoFrom } from '../common/client-info';
 import { AnonymousUserGuard } from '../users/anonymous-user.guard';
 import { ClipAccessService } from './clip-access.service';
 import { ClipSessionsService } from './clip-sessions.service';
 import { ClipWordsService } from './clip-words.service';
 import { ClipsService } from './clips.service';
 
-type AuthedRequest = { user: User };
+type AuthedRequest = {
+  user: User;
+  headers: Record<string, string | string[] | undefined>;
+};
 
 /** Clips tab (app). */
 @Controller('clips')
@@ -21,12 +25,12 @@ export class ClipsController {
 
   @Get()
   list(@Req() req: AuthedRequest) {
-    return this.clips.listForUser(req.user.id);
+    return this.clips.listForUser(req.user.id, clientInfoFrom(req.headers));
   }
 
   @Get(':id')
   get(@Req() req: AuthedRequest, @Param('id') id: string) {
-    return this.clips.getForUser(req.user.id, id);
+    return this.clips.getForUser(req.user.id, id, clientInfoFrom(req.headers));
   }
 
   /**

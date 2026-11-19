@@ -5,9 +5,11 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
+import { ClientInfo } from '../common/client-info';
 import { GeminiChatService } from '../gemini/gemini-chat.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { placementBandFromResult } from '../placement/placement-band';
+import { appSupportsAudioClips } from './audio-clips-version';
 import { parrotoViews } from './parroto-popularity';
 import {
   CLIP_CATEGORIES,
@@ -48,12 +50,15 @@ export class ClipsService {
   // ------------------------------------------------------------------ app
 
   /** Clips tab: "continue" + one section per category (published only). */
-  async listForUser(userId: string) {
-    const clips = await this.prisma.clip.findMany({
-      where: { status: 'published' },
-      orderBy: [{ sortOrder: 'asc' }, { createdAt: 'desc' }],
-      include: { _count: { select: { sentences: true } } },
-    });
+  async listForUser(userId: string, client?: ClientInfo) {
+    const allowAudio = appSupportsAudioClips(client?.version);
+    const clips = (
+      await this.prisma.clip.findMany({
+        where: { status: 'published' },
+        orderBy: [{ sortOrder: 'asc' }, { createdAt: 'desc' }],
+        include: { _count: { select: { sentences: true } } },
+      })
+    ).filter((c) => allowAudio || c.source !== 'audio');
     const progress = await this.prisma.clipProgress.findMany({
       where: { userId, clipId: { in: clips.map((c) => c.id) } },
       orderBy: { updatedAt: 'desc' },
@@ -176,12 +181,15 @@ export class ClipsService {
     return [...fromParroto, ...rest].slice(0, 10);
   }
 
-  async getForUser(userId: string, clipId: string) {
+  async getForUser(userId: string, clipId: string, client?: ClientInfo) {
     const clip = await this.prisma.clip.findFirst({
       where: { id: clipId, status: 'published' },
       include: { sentences: { orderBy: { idx: 'asc' } }, _count: { select: { sentences: true } } },
     });
     if (!clip) throw new NotFoundException('clip_not_found');
+    if (clip.source === 'audio' && !appSupportsAudioClips(client?.version)) {
+      throw new NotFoundException('clip_not_found');
+    }
     const progress = await this.prisma.clipProgress.findMany({
       where: { userId, clipId },
     });
