@@ -1,0 +1,5626 @@
+{
+  "series": "toeic-listening",
+  "season": 1,
+  "title": "TOEIC Listening Practice",
+  "channel": "Banana Original",
+  "bunnyBase": "https://banana-english-cutscenes.b-cdn.net",
+  "uploadedAt": "2026-11-19T06:07:58.996Z",
+  "episodes": [
+    {
+      "id": "toeic_s1_ep01",
+      "episode": 1,
+      "episodeId": "EP01",
+      "title": "A Day at Work",
+      "titleTh": "",
+      "level": "A2",
+      "category": "toeic",
+      "credit": "Banana Original",
+      "source": "audio",
+      "sourceUrl": "banana-originals://toeic-listening/ep01",
+      "audioUrl": "https://banana-english-cutscenes.b-cdn.net/banana-originals/toeic-listening/v1/ep01/ce3dfe4d490110d1/full.mp3",
+      "storagePath": "banana-originals/toeic-listening/v1/ep01/ce3dfe4d490110d1/full.mp3",
+      "thumbnailUrl": "https://banana-english-cutscenes.b-cdn.net/banana-originals/toeic-listening/covers/ep01.webp",
+      "durationSec": 135,
+      "sortOrder": 1,
+      "chapters": [
+        {
+          "id": "A",
+          "label": "Part A",
+          "fromIdx": 0,
+          "toIdx": 29
+        }
+      ],
+      "sentences": [
+        {
+          "idx": 0,
+          "startMs": 0,
+          "endMs": 5760,
+          "text": "A receptionist is handing a visitor an identification card.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 1,
+          "startMs": 6040,
+          "endMs": 10072,
+          "text": "The visitor is standing across the desk from her.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 2,
+          "startMs": 10352,
+          "endMs": 14072,
+          "text": "Several chairs have been placed beside the entrance.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 3,
+          "startMs": 14352,
+          "endMs": 18816,
+          "text": "A stack of visitor badges is resting on the counter.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 4,
+          "startMs": 19096,
+          "endMs": 22408,
+          "text": "A coat has been left on the back of a chair.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 5,
+          "startMs": 23408,
+          "endMs": 26840,
+          "text": "Three coworkers are sitting around a conference table.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 6,
+          "startMs": 27120,
+          "endMs": 30960,
+          "text": "One of them is pointing at a chart on the screen.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 7,
+          "startMs": 31240,
+          "endMs": 34864,
+          "text": "A laptop has been left open near the window.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 8,
+          "startMs": 35144,
+          "endMs": 39248,
+          "text": "The presenter is standing close to the screen.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 9,
+          "startMs": 39528,
+          "endMs": 44688,
+          "text": "The other coworkers are looking at the chart instead of their laptops.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 10,
+          "startMs": 45688,
+          "endMs": 49432,
+          "text": "A barista is placing a cup on the counter.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 11,
+          "startMs": 49712,
+          "endMs": 52952,
+          "text": "The customer is reaching for the drink.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 12,
+          "startMs": 53232,
+          "endMs": 56712,
+          "text": "More cups are stacked on the shelf behind them.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 13,
+          "startMs": 56992,
+          "endMs": 61264,
+          "text": "A second customer is waiting behind the person at the counter.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 14,
+          "startMs": 61544,
+          "endMs": 65768,
+          "text": "A few napkins are lying beside the customer's cup.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 15,
+          "startMs": 66768,
+          "endMs": 70728,
+          "text": "Two workers are arranging boxes on a shelf.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 16,
+          "startMs": 71008,
+          "endMs": 75208,
+          "text": "A cart is parked next to the boxes.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 17,
+          "startMs": 75488,
+          "endMs": 80048,
+          "text": "A sealed package is standing on the floor beside the cart.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 18,
+          "startMs": 80328,
+          "endMs": 84360,
+          "text": "The boxes on the cart have not been opened yet.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 19,
+          "startMs": 84640,
+          "endMs": 89632,
+          "text": "One worker is reaching for a box on the highest shelf.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 20,
+          "startMs": 90632,
+          "endMs": 95096,
+          "text": "A hotel employee is speaking to a guest at the front desk.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 21,
+          "startMs": 95376,
+          "endMs": 99360,
+          "text": "The guest is holding a suitcase by its handle.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 22,
+          "startMs": 99640,
+          "endMs": 103360,
+          "text": "An elevator can be seen at the end of the hall.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 23,
+          "startMs": 103640,
+          "endMs": 108560,
+          "text": "The employee is pointing toward the elevators beyond the lobby.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 24,
+          "startMs": 108840,
+          "endMs": 112800,
+          "text": "A luggage cart is parked near the front desk.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 25,
+          "startMs": 113800,
+          "endMs": 117424,
+          "text": "A vendor is putting fruit into a basket.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 26,
+          "startMs": 117704,
+          "endMs": 121976,
+          "text": "A customer is examining the items on display.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 27,
+          "startMs": 122256,
+          "endMs": 125280,
+          "text": "Several baskets are lined up under the awning.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 28,
+          "startMs": 125560,
+          "endMs": 130840,
+          "text": "Apples and oranges have been separated into different baskets.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 29,
+          "startMs": 131120,
+          "endMs": 134792,
+          "text": "The customer is standing beneath the awning.",
+          "textTh": "",
+          "section": "A"
+        }
+      ],
+      "audioSha256": "0572d66ef10869cab8cd6e54437e7380f60e87735b67e180fefecdca7c838b01"
+    },
+    {
+      "id": "toeic_s1_ep02",
+      "episode": 2,
+      "episodeId": "EP02",
+      "title": "Time & Appointments",
+      "titleTh": "",
+      "level": "A2",
+      "category": "toeic",
+      "credit": "Banana Original",
+      "source": "audio",
+      "sourceUrl": "banana-originals://toeic-listening/ep02",
+      "audioUrl": "https://banana-english-cutscenes.b-cdn.net/banana-originals/toeic-listening/v1/ep02/00ca17c70e9fddcf/full.mp3",
+      "storagePath": "banana-originals/toeic-listening/v1/ep02/00ca17c70e9fddcf/full.mp3",
+      "thumbnailUrl": "https://banana-english-cutscenes.b-cdn.net/banana-originals/toeic-listening/covers/ep02.webp",
+      "durationSec": 144,
+      "sortOrder": 2,
+      "chapters": [
+        {
+          "id": "A",
+          "label": "Part A",
+          "fromIdx": 0,
+          "toIdx": 38
+        }
+      ],
+      "sentences": [
+        {
+          "idx": 0,
+          "startMs": 0,
+          "endMs": 2544,
+          "text": "What time does the sales meeting start?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 1,
+          "startMs": 2824,
+          "endMs": 6904,
+          "text": "At nine thirty, but the room opens at nine.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 2,
+          "startMs": 7184,
+          "endMs": 9824,
+          "text": "Great. I'll be there a few minutes early.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 3,
+          "startMs": 10824,
+          "endMs": 13248,
+          "text": "When will the new chairs arrive?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 4,
+          "startMs": 13528,
+          "endMs": 16912,
+          "text": "The supplier said Thursday afternoon.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 5,
+          "startMs": 17192,
+          "endMs": 20432,
+          "text": "Then we can set up the training room on Friday.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 6,
+          "startMs": 21432,
+          "endMs": 23712,
+          "text": "Is my appointment still at two?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 7,
+          "startMs": 23992,
+          "endMs": 28312,
+          "text": "The dentist has an opening at one thirty instead.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 8,
+          "startMs": 28592,
+          "endMs": 31112,
+          "text": "That works better for me. Thank you.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 9,
+          "startMs": 32112,
+          "endMs": 35664,
+          "text": "How long does the orientation usually take?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 10,
+          "startMs": 35944,
+          "endMs": 39208,
+          "text": "About forty minutes, including the office tour.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 11,
+          "startMs": 39488,
+          "endMs": 41888,
+          "text": "I'll leave the rest of the morning free.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 12,
+          "startMs": 42888,
+          "endMs": 45888,
+          "text": "Do you need the report today?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 13,
+          "startMs": 46168,
+          "endMs": 49480,
+          "text": "Tomorrow morning is fine, before the team call.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 14,
+          "startMs": 49760,
+          "endMs": 53000,
+          "text": "I'll send it tonight so you can review it.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 15,
+          "startMs": 54000,
+          "endMs": 56880,
+          "text": "Has the manager decided on a time yet?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 16,
+          "startMs": 57160,
+          "endMs": 60280,
+          "text": "She said she'd email everyone after lunch.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 17,
+          "startMs": 60560,
+          "endMs": 63104,
+          "text": "Okay, I'll check my inbox then.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 18,
+          "startMs": 64104,
+          "endMs": 66984,
+          "text": "Can we meet on Wednesday instead?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 19,
+          "startMs": 67264,
+          "endMs": 70744,
+          "text": "I'm out of town that day. How about Thursday?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 20,
+          "startMs": 71024,
+          "endMs": 73376,
+          "text": "Thursday morning is perfect.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 21,
+          "startMs": 74376,
+          "endMs": 77928,
+          "text": "Does the library open at eight tomorrow?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 22,
+          "startMs": 78208,
+          "endMs": 81640,
+          "text": "The weekend hours don't begin until ten.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 23,
+          "startMs": 81920,
+          "endMs": 83912,
+          "text": "I'll come after breakfast then.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 24,
+          "startMs": 84912,
+          "endMs": 87864,
+          "text": "When do I need to return this key?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 25,
+          "startMs": 88144,
+          "endMs": 91384,
+          "text": "Please bring it back before the office closes.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 26,
+          "startMs": 91664,
+          "endMs": 94328,
+          "text": "Is that at five thirty today?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 27,
+          "startMs": 94608,
+          "endMs": 99240,
+          "text": "Yes, but the front desk stays open until six.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 28,
+          "startMs": 100240,
+          "endMs": 103624,
+          "text": "Are we training on Monday or Tuesday?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 29,
+          "startMs": 103904,
+          "endMs": 109904,
+          "text": "Monday is reserved for orientation, so Tuesday is our first option.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 30,
+          "startMs": 110184,
+          "endMs": 112944,
+          "text": "I'll change the calendar invitation.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 31,
+          "startMs": 113944,
+          "endMs": 116824,
+          "text": "Why hasn't the presentation started yet?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 32,
+          "startMs": 117104,
+          "endMs": 121184,
+          "text": "The speaker's flight arrived later than expected.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 33,
+          "startMs": 121464,
+          "endMs": 124104,
+          "text": "Will we still finish before noon?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 34,
+          "startMs": 124384,
+          "endMs": 127624,
+          "text": "Yes. She shortened the introduction.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 35,
+          "startMs": 128624,
+          "endMs": 131888,
+          "text": "Is the client visit confirmed for next week?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 36,
+          "startMs": 132168,
+          "endMs": 136800,
+          "text": "They confirmed Thursday, but not the exact time.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 37,
+          "startMs": 137080,
+          "endMs": 139840,
+          "text": "Should I reserve the room all morning?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 38,
+          "startMs": 140120,
+          "endMs": 143960,
+          "text": "Yes, until we receive their travel details.",
+          "textTh": "",
+          "section": "A"
+        }
+      ],
+      "audioSha256": "bde1f8bc89f877bd3cf1beab6c00d2ca9e6ecfb14fcf22e03ff7cebccf89fd73"
+    },
+    {
+      "id": "toeic_s1_ep03",
+      "episode": 3,
+      "episodeId": "EP03",
+      "title": "Places & Directions",
+      "titleTh": "",
+      "level": "A2",
+      "category": "toeic",
+      "credit": "Banana Original",
+      "source": "audio",
+      "sourceUrl": "banana-originals://toeic-listening/ep03",
+      "audioUrl": "https://banana-english-cutscenes.b-cdn.net/banana-originals/toeic-listening/v1/ep03/fe90e99c29d4f890/full.mp3",
+      "storagePath": "banana-originals/toeic-listening/v1/ep03/fe90e99c29d4f890/full.mp3",
+      "thumbnailUrl": "https://banana-english-cutscenes.b-cdn.net/banana-originals/toeic-listening/covers/ep03.webp",
+      "durationSec": 137,
+      "sortOrder": 3,
+      "chapters": [
+        {
+          "id": "A",
+          "label": "Part A",
+          "fromIdx": 0,
+          "toIdx": 39
+        }
+      ],
+      "sentences": [
+        {
+          "idx": 0,
+          "startMs": 0,
+          "endMs": 2880,
+          "text": "Where is the human resources office?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 1,
+          "startMs": 3160,
+          "endMs": 6232,
+          "text": "On the third floor, across from the elevators.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 2,
+          "startMs": 6512,
+          "endMs": 8672,
+          "text": "Thanks. I'll take the stairs.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 3,
+          "startMs": 9672,
+          "endMs": 13056,
+          "text": "Which platform does the airport train use?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 4,
+          "startMs": 13336,
+          "endMs": 18088,
+          "text": "Platform four. The signs are above the ticket machines.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 5,
+          "startMs": 18368,
+          "endMs": 19760,
+          "text": "I see them now.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 6,
+          "startMs": 20760,
+          "endMs": 23232,
+          "text": "Is there a place to eat near here?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 7,
+          "startMs": 23512,
+          "endMs": 26896,
+          "text": "There's a small café next to the bank.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 8,
+          "startMs": 27176,
+          "endMs": 29840,
+          "text": "Perfect. I only have half an hour.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 9,
+          "startMs": 30840,
+          "endMs": 32712,
+          "text": "Where should visitors park?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 10,
+          "startMs": 32992,
+          "endMs": 35344,
+          "text": "In the lot behind the building.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 11,
+          "startMs": 35624,
+          "endMs": 37904,
+          "text": "Is the entrance on Pine Street?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 12,
+          "startMs": 38184,
+          "endMs": 40824,
+          "text": "Yes, just past the traffic light.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 13,
+          "startMs": 41824,
+          "endMs": 45928,
+          "text": "Is the workshop in Room A or Room B?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 14,
+          "startMs": 46208,
+          "endMs": 50192,
+          "text": "Room B. Room A is being cleaned.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 15,
+          "startMs": 50472,
+          "endMs": 53232,
+          "text": "I'll update the sign at the entrance.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 16,
+          "startMs": 54232,
+          "endMs": 57184,
+          "text": "How do I get to the conference center?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 17,
+          "startMs": 57464,
+          "endMs": 61376,
+          "text": "Turn left outside, then walk two blocks.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 18,
+          "startMs": 61656,
+          "endMs": 64440,
+          "text": "Is it beside the hotel?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 19,
+          "startMs": 64720,
+          "endMs": 67144,
+          "text": "It's across the street from the hotel.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 20,
+          "startMs": 68144,
+          "endMs": 71144,
+          "text": "Where can I pick up my luggage?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 21,
+          "startMs": 71424,
+          "endMs": 74376,
+          "text": "At belt six, near the exit doors.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 22,
+          "startMs": 74656,
+          "endMs": 76936,
+          "text": "Thank you. I'll head there now.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 23,
+          "startMs": 77936,
+          "endMs": 81440,
+          "text": "Is the museum entrance on this side?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 24,
+          "startMs": 81720,
+          "endMs": 85152,
+          "text": "No, go around the corner near the fountain.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 25,
+          "startMs": 85432,
+          "endMs": 88432,
+          "text": "Thanks. I walked past it twice.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 26,
+          "startMs": 89432,
+          "endMs": 92096,
+          "text": "Where is the finance department now?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 27,
+          "startMs": 92376,
+          "endMs": 96768,
+          "text": "They relocated upstairs, beside the legal team.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 28,
+          "startMs": 97048,
+          "endMs": 99208,
+          "text": "I didn't see the new sign.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 29,
+          "startMs": 100208,
+          "endMs": 103280,
+          "text": "What's the fastest way to the post office?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 30,
+          "startMs": 103560,
+          "endMs": 107280,
+          "text": "Walk through the park instead of taking the main road.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 31,
+          "startMs": 107560,
+          "endMs": 110440,
+          "text": "Is there an exit on the other side?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 32,
+          "startMs": 110720,
+          "endMs": 113672,
+          "text": "Yes. The post office is beside it.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 33,
+          "startMs": 114672,
+          "endMs": 116496,
+          "text": "Where should I meet the driver?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 34,
+          "startMs": 116776,
+          "endMs": 119800,
+          "text": "In front of the north entrance.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 35,
+          "startMs": 120080,
+          "endMs": 122000,
+          "text": "I'll wait there with the luggage.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 36,
+          "startMs": 123000,
+          "endMs": 126720,
+          "text": "Is there a quiet place to take a call?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 37,
+          "startMs": 127000,
+          "endMs": 131152,
+          "text": "The small lounge is just beyond the elevators.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 38,
+          "startMs": 131432,
+          "endMs": 133616,
+          "text": "Is anyone using it now?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 39,
+          "startMs": 133896,
+          "endMs": 137136,
+          "text": "No, it should be empty until three.",
+          "textTh": "",
+          "section": "A"
+        }
+      ],
+      "audioSha256": "64ee388eee47072851383c4890a6d99443b64d3e3da78922b5c037246428e86a"
+    },
+    {
+      "id": "toeic_s1_ep04",
+      "episode": 4,
+      "episodeId": "EP04",
+      "title": "Requests & Help",
+      "titleTh": "",
+      "level": "A2",
+      "category": "toeic",
+      "credit": "Banana Original",
+      "source": "audio",
+      "sourceUrl": "banana-originals://toeic-listening/ep04",
+      "audioUrl": "https://banana-english-cutscenes.b-cdn.net/banana-originals/toeic-listening/v1/ep04/3e224aa58d7278c7/full.mp3",
+      "storagePath": "banana-originals/toeic-listening/v1/ep04/3e224aa58d7278c7/full.mp3",
+      "thumbnailUrl": "https://banana-english-cutscenes.b-cdn.net/banana-originals/toeic-listening/covers/ep04.webp",
+      "durationSec": 130,
+      "sortOrder": 4,
+      "chapters": [
+        {
+          "id": "A",
+          "label": "Part A",
+          "fromIdx": 0,
+          "toIdx": 36
+        }
+      ],
+      "sentences": [
+        {
+          "idx": 0,
+          "startMs": 0,
+          "endMs": 2520,
+          "text": "Could you send me the updated file?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 1,
+          "startMs": 2800,
+          "endMs": 5464,
+          "text": "I just attached it to my email.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 2,
+          "startMs": 5744,
+          "endMs": 8576,
+          "text": "Got it. Thanks for sending it so quickly.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 3,
+          "startMs": 9576,
+          "endMs": 12600,
+          "text": "May I borrow the projector this afternoon?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 4,
+          "startMs": 12880,
+          "endMs": 15904,
+          "text": "Of course. Please return it before five.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 5,
+          "startMs": 16184,
+          "endMs": 18704,
+          "text": "I will. My meeting ends at four.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 6,
+          "startMs": 19704,
+          "endMs": 21984,
+          "text": "Would you mind holding the door?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 7,
+          "startMs": 22264,
+          "endMs": 25504,
+          "text": "Not at all. Those boxes look heavy.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 8,
+          "startMs": 25784,
+          "endMs": 28328,
+          "text": "They are. I appreciate the help.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 9,
+          "startMs": 29328,
+          "endMs": 31872,
+          "text": "Can you help me change my reservation?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 10,
+          "startMs": 32152,
+          "endMs": 34936,
+          "text": "Certainly. What date would you prefer?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 11,
+          "startMs": 35216,
+          "endMs": 38528,
+          "text": "Next Friday, if there's a room available.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 12,
+          "startMs": 39528,
+          "endMs": 43128,
+          "text": "Could someone check the meeting-room microphone?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 13,
+          "startMs": 43408,
+          "endMs": 45952,
+          "text": "Our technician is already on the way.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 14,
+          "startMs": 46232,
+          "endMs": 50432,
+          "text": "Excellent. The presentation starts in twenty minutes.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 15,
+          "startMs": 51432,
+          "endMs": 54336,
+          "text": "Shall I print copies for the whole team?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 16,
+          "startMs": 54616,
+          "endMs": 57040,
+          "text": "A digital copy will be enough.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 17,
+          "startMs": 57320,
+          "endMs": 60224,
+          "text": "Okay. I'll share the link instead.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 18,
+          "startMs": 61224,
+          "endMs": 64536,
+          "text": "Is it okay if I leave a little early?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 19,
+          "startMs": 64816,
+          "endMs": 67600,
+          "text": "Yes, once you finish the customer notes.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 20,
+          "startMs": 67880,
+          "endMs": 70280,
+          "text": "I'll complete them before lunch.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 21,
+          "startMs": 71280,
+          "endMs": 74784,
+          "text": "Could I have another day to finish the draft?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 22,
+          "startMs": 75064,
+          "endMs": 78568,
+          "text": "Yes, but we need it by Thursday morning.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 23,
+          "startMs": 78848,
+          "endMs": 81728,
+          "text": "That gives me time to check the figures.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 24,
+          "startMs": 82728,
+          "endMs": 85152,
+          "text": "Would you help me carry these boxes?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 25,
+          "startMs": 85432,
+          "endMs": 88792,
+          "text": "Sure. Let's take the smaller ones first.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 26,
+          "startMs": 89072,
+          "endMs": 92672,
+          "text": "Good plan. The large box is quite heavy.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 27,
+          "startMs": 93672,
+          "endMs": 95976,
+          "text": "May we sit near the front?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 28,
+          "startMs": 96256,
+          "endMs": 100048,
+          "text": "I'm afraid the speakers have already claimed that row.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 29,
+          "startMs": 100328,
+          "endMs": 102488,
+          "text": "Then we'll take the next row.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 30,
+          "startMs": 103488,
+          "endMs": 106728,
+          "text": "Can you translate this document today?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 31,
+          "startMs": 107008,
+          "endMs": 111232,
+          "text": "I can't finish it today, but I can start now.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 32,
+          "startMs": 111512,
+          "endMs": 114872,
+          "text": "That's fine. Please send the first page tonight.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 33,
+          "startMs": 115872,
+          "endMs": 118776,
+          "text": "Could you drive me to the station after work?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 34,
+          "startMs": 119056,
+          "endMs": 122776,
+          "text": "I wish I could, but I have a late appointment.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 35,
+          "startMs": 123056,
+          "endMs": 125936,
+          "text": "No problem. I'll book a taxi.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 36,
+          "startMs": 126216,
+          "endMs": 129696,
+          "text": "I can help you carry your bags downstairs.",
+          "textTh": "",
+          "section": "A"
+        }
+      ],
+      "audioSha256": "8f58a02091fc65ae4fa3fe5ae691ea79841df3a444ce9272d68871d51649bd81"
+    },
+    {
+      "id": "toeic_s1_ep05",
+      "episode": 5,
+      "episodeId": "EP05",
+      "title": "Orders & Prices",
+      "titleTh": "",
+      "level": "A2",
+      "category": "toeic",
+      "credit": "Banana Original",
+      "source": "audio",
+      "sourceUrl": "banana-originals://toeic-listening/ep05",
+      "audioUrl": "https://banana-english-cutscenes.b-cdn.net/banana-originals/toeic-listening/v1/ep05/391d71404bf0b1e4/full.mp3",
+      "storagePath": "banana-originals/toeic-listening/v1/ep05/391d71404bf0b1e4/full.mp3",
+      "thumbnailUrl": "https://banana-english-cutscenes.b-cdn.net/banana-originals/toeic-listening/covers/ep05.webp",
+      "durationSec": 137,
+      "sortOrder": 5,
+      "chapters": [
+        {
+          "id": "A",
+          "label": "Part A",
+          "fromIdx": 0,
+          "toIdx": 37
+        }
+      ],
+      "sentences": [
+        {
+          "idx": 0,
+          "startMs": 0,
+          "endMs": 2064,
+          "text": "How many coffees should I order?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 1,
+          "startMs": 2344,
+          "endMs": 5728,
+          "text": "Six regular ones and two without milk.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 2,
+          "startMs": 6008,
+          "endMs": 8312,
+          "text": "I'll write that down before I go.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 3,
+          "startMs": 9312,
+          "endMs": 11904,
+          "text": "How much are fifty color copies?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 4,
+          "startMs": 12184,
+          "endMs": 15088,
+          "text": "They're twenty dollars, including the paper.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 5,
+          "startMs": 15368,
+          "endMs": 17168,
+          "text": "That's within our budget.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 6,
+          "startMs": 18168,
+          "endMs": 20952,
+          "text": "Do you still have this notebook in blue?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 7,
+          "startMs": 21232,
+          "endMs": 24784,
+          "text": "Blue is sold out, but green is available.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 8,
+          "startMs": 25064,
+          "endMs": 26768,
+          "text": "Green will be fine.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 9,
+          "startMs": 27768,
+          "endMs": 30768,
+          "text": "Is delivery included in the price?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 10,
+          "startMs": 31048,
+          "endMs": 34432,
+          "text": "It is for orders over one hundred dollars.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 11,
+          "startMs": 34712,
+          "endMs": 37472,
+          "text": "Then let's add another pack of pens.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 12,
+          "startMs": 38472,
+          "endMs": 41376,
+          "text": "Does the lunch special come with a drink?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 13,
+          "startMs": 41656,
+          "endMs": 44968,
+          "text": "Yes, you can choose tea or water.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 14,
+          "startMs": 45248,
+          "endMs": 47648,
+          "text": "Tea, please. No sugar.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 15,
+          "startMs": 48648,
+          "endMs": 51792,
+          "text": "Is the conference rate still available?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 16,
+          "startMs": 52072,
+          "endMs": 55192,
+          "text": "Yes, if you book before the end of the month.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 17,
+          "startMs": 55472,
+          "endMs": 57752,
+          "text": "I'll make the reservation today.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 18,
+          "startMs": 58752,
+          "endMs": 62064,
+          "text": "Could you send us a receipt for the order?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 19,
+          "startMs": 62344,
+          "endMs": 65608,
+          "text": "It will be emailed after payment is complete.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 20,
+          "startMs": 65888,
+          "endMs": 68960,
+          "text": "Please use the address on our account.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 21,
+          "startMs": 69960,
+          "endMs": 73344,
+          "text": "Do these shirts come in a larger size?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 22,
+          "startMs": 73624,
+          "endMs": 78088,
+          "text": "Yes, but we only have the larger size online.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 23,
+          "startMs": 78368,
+          "endMs": 81032,
+          "text": "Could it be delivered to the store?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 24,
+          "startMs": 81312,
+          "endMs": 84816,
+          "text": "Certainly. It usually takes two days.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 25,
+          "startMs": 85816,
+          "endMs": 89176,
+          "text": "Can I change the number of folders I ordered?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 26,
+          "startMs": 89456,
+          "endMs": 92816,
+          "text": "Yes, the order hasn't been packed yet.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 27,
+          "startMs": 93096,
+          "endMs": 96456,
+          "text": "Please make it thirty instead of twenty.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 28,
+          "startMs": 97456,
+          "endMs": 101200,
+          "text": "Is the monthly plan cheaper than the weekly plan?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 29,
+          "startMs": 101480,
+          "endMs": 105080,
+          "text": "It is, if you use the service every week.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 30,
+          "startMs": 105360,
+          "endMs": 108000,
+          "text": "I think the monthly plan makes sense.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 31,
+          "startMs": 109000,
+          "endMs": 111832,
+          "text": "Can I pay when the chairs arrive?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 32,
+          "startMs": 112112,
+          "endMs": 116624,
+          "text": "We require a fifty-percent deposit before dispatch.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 33,
+          "startMs": 116904,
+          "endMs": 119616,
+          "text": "I'll arrange the transfer this afternoon.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 34,
+          "startMs": 120616,
+          "endMs": 124000,
+          "text": "Why is the final bill higher than the estimate?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 35,
+          "startMs": 124280,
+          "endMs": 128840,
+          "text": "The extra chairs were added after we sent the estimate.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 36,
+          "startMs": 129120,
+          "endMs": 132552,
+          "text": "Could you email a list of all the charges?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 37,
+          "startMs": 132832,
+          "endMs": 136624,
+          "text": "Certainly. I'll send an updated invoice today.",
+          "textTh": "",
+          "section": "A"
+        }
+      ],
+      "audioSha256": "3cf32be91e65c34a95941e485cfe3cc890034848964f57bc51f40ead1331e56c"
+    },
+    {
+      "id": "toeic_s1_ep06",
+      "episode": 6,
+      "episodeId": "EP06",
+      "title": "Changes & Decisions",
+      "titleTh": "",
+      "level": "A2",
+      "category": "toeic",
+      "credit": "Banana Original",
+      "source": "audio",
+      "sourceUrl": "banana-originals://toeic-listening/ep06",
+      "audioUrl": "https://banana-english-cutscenes.b-cdn.net/banana-originals/toeic-listening/v1/ep06/5d73313d69219091/full.mp3",
+      "storagePath": "banana-originals/toeic-listening/v1/ep06/5d73313d69219091/full.mp3",
+      "thumbnailUrl": "https://banana-english-cutscenes.b-cdn.net/banana-originals/toeic-listening/covers/ep06.webp",
+      "durationSec": 133,
+      "sortOrder": 6,
+      "chapters": [
+        {
+          "id": "A",
+          "label": "Part A",
+          "fromIdx": 0,
+          "toIdx": 36
+        }
+      ],
+      "sentences": [
+        {
+          "idx": 0,
+          "startMs": 0,
+          "endMs": 2400,
+          "text": "Why isn't the train here yet?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 1,
+          "startMs": 2680,
+          "endMs": 6160,
+          "text": "There's a delay because of track maintenance.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 2,
+          "startMs": 6440,
+          "endMs": 8912,
+          "text": "Then I'll take the bus to the airport.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 3,
+          "startMs": 9912,
+          "endMs": 12696,
+          "text": "Should we replace the broken speaker?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 4,
+          "startMs": 12976,
+          "endMs": 15976,
+          "text": "Let's ask maintenance to inspect it first.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 5,
+          "startMs": 16256,
+          "endMs": 19496,
+          "text": "Good idea. It might be an easy fix.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 6,
+          "startMs": 20496,
+          "endMs": 23376,
+          "text": "Are we still eating outside today?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 7,
+          "startMs": 23656,
+          "endMs": 27160,
+          "text": "The weather forecast says heavy rain.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 8,
+          "startMs": 27440,
+          "endMs": 29744,
+          "text": "I'll reserve a table indoors.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 9,
+          "startMs": 30744,
+          "endMs": 33144,
+          "text": "Did you find the missing contract?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 10,
+          "startMs": 33424,
+          "endMs": 36208,
+          "text": "It was in the shared folder all along.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 11,
+          "startMs": 36488,
+          "endMs": 38792,
+          "text": "Great. I'll send it to the client.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 12,
+          "startMs": 39792,
+          "endMs": 42984,
+          "text": "Which design does the customer prefer?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 13,
+          "startMs": 43264,
+          "endMs": 46408,
+          "text": "They haven't replied to the new samples yet.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 14,
+          "startMs": 46688,
+          "endMs": 49688,
+          "text": "I'll call them before we start printing.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 15,
+          "startMs": 50688,
+          "endMs": 53712,
+          "text": "Can we move the appointment to Monday?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 16,
+          "startMs": 53992,
+          "endMs": 58432,
+          "text": "Monday is a holiday. Tuesday is open.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 17,
+          "startMs": 58712,
+          "endMs": 60992,
+          "text": "Let's take Tuesday morning.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 18,
+          "startMs": 61992,
+          "endMs": 64896,
+          "text": "Why did the workshop change rooms?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 19,
+          "startMs": 65176,
+          "endMs": 68680,
+          "text": "The larger room has better video equipment.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 20,
+          "startMs": 68960,
+          "endMs": 71120,
+          "text": "I'll tell everyone where to go.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 21,
+          "startMs": 72120,
+          "endMs": 75312,
+          "text": "Why can't we use the large meeting room?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 22,
+          "startMs": 75592,
+          "endMs": 78544,
+          "text": "Another team reserved it for a workshop.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 23,
+          "startMs": 78824,
+          "endMs": 83264,
+          "text": "Let's use the smaller room and invite fewer people.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 24,
+          "startMs": 84264,
+          "endMs": 87264,
+          "text": "Should we send this lamp back to the store?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 25,
+          "startMs": 87544,
+          "endMs": 91336,
+          "text": "Yes. The switch doesn't work properly.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 26,
+          "startMs": 91616,
+          "endMs": 93968,
+          "text": "I'll keep the receipt for the return.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 27,
+          "startMs": 94968,
+          "endMs": 98112,
+          "text": "What happens if the speaker can't attend?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 28,
+          "startMs": 98392,
+          "endMs": 101872,
+          "text": "Her colleague can give the presentation instead.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 29,
+          "startMs": 102152,
+          "endMs": 104744,
+          "text": "I'll prepare a second name card.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 30,
+          "startMs": 105744,
+          "endMs": 108696,
+          "text": "Did the team approve the revised schedule?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 31,
+          "startMs": 108976,
+          "endMs": 112960,
+          "text": "Yes, but they want the break ten minutes earlier.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 32,
+          "startMs": 113240,
+          "endMs": 116072,
+          "text": "I'll change the printed program now.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 33,
+          "startMs": 117072,
+          "endMs": 120672,
+          "text": "Should we wait for the new posters to arrive?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 34,
+          "startMs": 120952,
+          "endMs": 125536,
+          "text": "With the event tomorrow, we should use the approved design.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 35,
+          "startMs": 125816,
+          "endMs": 127928,
+          "text": "I'll print it this afternoon.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 36,
+          "startMs": 128208,
+          "endMs": 132528,
+          "text": "Good. We can update the digital version later.",
+          "textTh": "",
+          "section": "A"
+        }
+      ],
+      "audioSha256": "58b8cce7f5c87db09c9b48c8541b432aff26b36cc919b0b6c6e829b9db6bc2a4"
+    },
+    {
+      "id": "toeic_s1_ep07",
+      "episode": 7,
+      "episodeId": "EP07",
+      "title": "At the Front Desk",
+      "titleTh": "",
+      "level": "B1",
+      "category": "toeic",
+      "credit": "Banana Original",
+      "source": "audio",
+      "sourceUrl": "banana-originals://toeic-listening/ep07",
+      "audioUrl": "https://banana-english-cutscenes.b-cdn.net/banana-originals/toeic-listening/v1/ep07/cd37d5516aa2fb60/full.mp3",
+      "storagePath": "banana-originals/toeic-listening/v1/ep07/cd37d5516aa2fb60/full.mp3",
+      "thumbnailUrl": "https://banana-english-cutscenes.b-cdn.net/banana-originals/toeic-listening/covers/ep07.webp",
+      "durationSec": 132,
+      "sortOrder": 7,
+      "chapters": [
+        {
+          "id": "A",
+          "label": "Part A",
+          "fromIdx": 0,
+          "toIdx": 9
+        },
+        {
+          "id": "B",
+          "label": "Part B",
+          "fromIdx": 10,
+          "toIdx": 20
+        },
+        {
+          "id": "C",
+          "label": "Part C",
+          "fromIdx": 21,
+          "toIdx": 36
+        }
+      ],
+      "sentences": [
+        {
+          "idx": 0,
+          "startMs": 0,
+          "endMs": 3480,
+          "text": "Good morning. I'm here to see Ms. Rivera.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 1,
+          "startMs": 3760,
+          "endMs": 6352,
+          "text": "Do you have an appointment with her?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 2,
+          "startMs": 6632,
+          "endMs": 10232,
+          "text": "Yes. We arranged a meeting for ten o'clock.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 3,
+          "startMs": 10512,
+          "endMs": 12576,
+          "text": "May I have your name, please?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 4,
+          "startMs": 12856,
+          "endMs": 16216,
+          "text": "Daniel Park, from Northline Design.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 5,
+          "startMs": 16496,
+          "endMs": 19136,
+          "text": "Thank you. I'll let her know you've arrived.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 6,
+          "startMs": 19416,
+          "endMs": 21456,
+          "text": "Should I wait here in the lobby?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 7,
+          "startMs": 21736,
+          "endMs": 24376,
+          "text": "Yes. Please take a seat near the window.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 8,
+          "startMs": 24656,
+          "endMs": 27536,
+          "text": "Her assistant will come down to meet you.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 9,
+          "startMs": 27816,
+          "endMs": 30120,
+          "text": "Great. I'll get my notes ready.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 10,
+          "startMs": 31120,
+          "endMs": 35224,
+          "text": "Hello. I have a reservation for two nights.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 11,
+          "startMs": 35504,
+          "endMs": 38576,
+          "text": "Welcome. Could I see your identification?",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 12,
+          "startMs": 38856,
+          "endMs": 43248,
+          "text": "Certainly. The booking is under Mina Chen.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 13,
+          "startMs": 43528,
+          "endMs": 46960,
+          "text": "I found it. You requested a quiet room.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 14,
+          "startMs": 47240,
+          "endMs": 50480,
+          "text": "Yes, I have an early meeting tomorrow.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 15,
+          "startMs": 50760,
+          "endMs": 53280,
+          "text": "We have a room on the fifth floor.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 16,
+          "startMs": 53560,
+          "endMs": 55840,
+          "text": "It's away from the elevators.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 17,
+          "startMs": 56120,
+          "endMs": 59840,
+          "text": "That sounds perfect. Is breakfast included?",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 18,
+          "startMs": 60120,
+          "endMs": 64704,
+          "text": "Yes. Breakfast starts at six thirty downstairs.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 19,
+          "startMs": 64984,
+          "endMs": 68368,
+          "text": "Thank you. Where can I find the lift?",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 20,
+          "startMs": 68648,
+          "endMs": 73112,
+          "text": "Turn right after the café. It's beside the stairs.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 21,
+          "startMs": 74112,
+          "endMs": 78744,
+          "text": "Excuse me. I think I left my phone charger downstairs.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 22,
+          "startMs": 79024,
+          "endMs": 81304,
+          "text": "Was it near the check-in counter?",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 23,
+          "startMs": 81584,
+          "endMs": 84464,
+          "text": "Yes, next to the small plant.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 24,
+          "startMs": 84744,
+          "endMs": 87504,
+          "text": "Let me check the lost-and-found box.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 25,
+          "startMs": 87784,
+          "endMs": 91216,
+          "text": "Here it is. Is this black charger yours?",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 26,
+          "startMs": 91496,
+          "endMs": 94520,
+          "text": "That's the one. Thank you for keeping it safe.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 27,
+          "startMs": 94800,
+          "endMs": 97584,
+          "text": "You're welcome. Is your room comfortable?",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 28,
+          "startMs": 97864,
+          "endMs": 102208,
+          "text": "It is, but the air conditioner is a little loud.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 29,
+          "startMs": 102488,
+          "endMs": 105440,
+          "text": "I'll ask someone to look at it this afternoon.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 30,
+          "startMs": 105720,
+          "endMs": 109104,
+          "text": "That would be helpful. I'll be out until four.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 31,
+          "startMs": 109384,
+          "endMs": 111808,
+          "text": "I'll leave a note for our maintenance team.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 32,
+          "startMs": 112088,
+          "endMs": 116192,
+          "text": "Will they need to enter the room while I'm away?",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 33,
+          "startMs": 116472,
+          "endMs": 118752,
+          "text": "Only if you give us permission.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 34,
+          "startMs": 119032,
+          "endMs": 122896,
+          "text": "That's fine. Please leave a note when they finish.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 35,
+          "startMs": 123176,
+          "endMs": 126728,
+          "text": "Certainly. You can also ask for another room.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 36,
+          "startMs": 127008,
+          "endMs": 131880,
+          "text": "Let's try the repair first. Please call before entering.",
+          "textTh": "",
+          "section": "C"
+        }
+      ],
+      "audioSha256": "bdcc2643e66860e901b67cd89f71bae15dadb94e298bc6ed31327b0db932da04"
+    },
+    {
+      "id": "toeic_s1_ep08",
+      "episode": 8,
+      "episodeId": "EP08",
+      "title": "Lunch for the Team",
+      "titleTh": "",
+      "level": "B1",
+      "category": "toeic",
+      "credit": "Banana Original",
+      "source": "audio",
+      "sourceUrl": "banana-originals://toeic-listening/ep08",
+      "audioUrl": "https://banana-english-cutscenes.b-cdn.net/banana-originals/toeic-listening/v1/ep08/af55883c53ed84b5/full.mp3",
+      "storagePath": "banana-originals/toeic-listening/v1/ep08/af55883c53ed84b5/full.mp3",
+      "thumbnailUrl": "https://banana-english-cutscenes.b-cdn.net/banana-originals/toeic-listening/covers/ep08.webp",
+      "durationSec": 129,
+      "sortOrder": 8,
+      "chapters": [
+        {
+          "id": "A",
+          "label": "Part A",
+          "fromIdx": 0,
+          "toIdx": 9
+        },
+        {
+          "id": "B",
+          "label": "Part B",
+          "fromIdx": 10,
+          "toIdx": 19
+        },
+        {
+          "id": "C",
+          "label": "Part C",
+          "fromIdx": 20,
+          "toIdx": 34
+        }
+      ],
+      "sentences": [
+        {
+          "idx": 0,
+          "startMs": 0,
+          "endMs": 2952,
+          "text": "The training group arrives at noon.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 1,
+          "startMs": 3232,
+          "endMs": 5464,
+          "text": "Should we order lunch for everyone?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 2,
+          "startMs": 5744,
+          "endMs": 9464,
+          "text": "Yes. There will be twelve people, including us.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 3,
+          "startMs": 9744,
+          "endMs": 13704,
+          "text": "The café has sandwiches and rice bowls.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 4,
+          "startMs": 13984,
+          "endMs": 16264,
+          "text": "Let's get six of each.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 5,
+          "startMs": 16544,
+          "endMs": 19184,
+          "text": "One guest doesn't eat meat.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 6,
+          "startMs": 19464,
+          "endMs": 22944,
+          "text": "Then make one rice bowl vegetarian.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 7,
+          "startMs": 23224,
+          "endMs": 25984,
+          "text": "I'll call now. Should we add drinks?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 8,
+          "startMs": 26264,
+          "endMs": 29144,
+          "text": "Water is already in the meeting room.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 9,
+          "startMs": 29424,
+          "endMs": 33384,
+          "text": "Good. I'll ask for delivery before eleven forty-five.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 10,
+          "startMs": 34384,
+          "endMs": 37816,
+          "text": "Hello, this is Maple Café calling.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 11,
+          "startMs": 38096,
+          "endMs": 41816,
+          "text": "Hi. Is there a problem with our lunch order?",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 12,
+          "startMs": 42096,
+          "endMs": 45120,
+          "text": "We're out of the chicken sandwiches today.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 13,
+          "startMs": 45400,
+          "endMs": 47752,
+          "text": "What can you offer instead?",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 14,
+          "startMs": 48032,
+          "endMs": 51536,
+          "text": "We can make turkey sandwiches at the same price.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 15,
+          "startMs": 51816,
+          "endMs": 55680,
+          "text": "That should work. Please keep the vegetarian bowl.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 16,
+          "startMs": 55960,
+          "endMs": 60064,
+          "text": "Of course. Will someone meet the driver downstairs?",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 17,
+          "startMs": 60344,
+          "endMs": 64016,
+          "text": "Yes, I'll be at reception at eleven forty-five.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 18,
+          "startMs": 64296,
+          "endMs": 67728,
+          "text": "Perfect. We'll bring the receipt with the food.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 19,
+          "startMs": 68008,
+          "endMs": 71272,
+          "text": "Thanks for calling before you made the change.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 20,
+          "startMs": 72272,
+          "endMs": 75752,
+          "text": "Hello. I have lunch from Maple Café.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 21,
+          "startMs": 76032,
+          "endMs": 78456,
+          "text": "Great. Are all twelve meals here?",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 22,
+          "startMs": 78736,
+          "endMs": 83008,
+          "text": "Yes, but the vegetarian bowl is in a separate bag.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 23,
+          "startMs": 83288,
+          "endMs": 86552,
+          "text": "Thanks for telling me. I'll label it for our guest.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 24,
+          "startMs": 86832,
+          "endMs": 90432,
+          "text": "The receipt is attached to the larger bag.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 25,
+          "startMs": 90712,
+          "endMs": 94144,
+          "text": "I see it. May I sign for the delivery now?",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 26,
+          "startMs": 94424,
+          "endMs": 97304,
+          "text": "Of course. Please sign on this line.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 27,
+          "startMs": 97584,
+          "endMs": 100776,
+          "text": "Leo, the group is ready to take a break.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 28,
+          "startMs": 101056,
+          "endMs": 104896,
+          "text": "Perfect timing. Please put the meals on the back table.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 29,
+          "startMs": 105176,
+          "endMs": 108416,
+          "text": "I'll tell everyone which option is vegetarian.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 30,
+          "startMs": 108696,
+          "endMs": 113208,
+          "text": "The café included a list of ingredients as well.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 31,
+          "startMs": 113488,
+          "endMs": 117448,
+          "text": "Excellent. One guest asked about food allergies.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 32,
+          "startMs": 117728,
+          "endMs": 120968,
+          "text": "I'll keep the list beside the meals.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 33,
+          "startMs": 121248,
+          "endMs": 124440,
+          "text": "Please call the café if anything is missing.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 34,
+          "startMs": 124720,
+          "endMs": 128680,
+          "text": "Everything matches the order, including the separate meal.",
+          "textTh": "",
+          "section": "C"
+        }
+      ],
+      "audioSha256": "a1c3a5b83769d8534043ca27928293dbda17e07434a95eff2189597b7228d3ed"
+    },
+    {
+      "id": "toeic_s1_ep09",
+      "episode": 9,
+      "episodeId": "EP09",
+      "title": "The Meeting Moved",
+      "titleTh": "",
+      "level": "B1",
+      "category": "toeic",
+      "credit": "Banana Original",
+      "source": "audio",
+      "sourceUrl": "banana-originals://toeic-listening/ep09",
+      "audioUrl": "https://banana-english-cutscenes.b-cdn.net/banana-originals/toeic-listening/v1/ep09/fdc5b5e662d44df5/full.mp3",
+      "storagePath": "banana-originals/toeic-listening/v1/ep09/fdc5b5e662d44df5/full.mp3",
+      "thumbnailUrl": "https://banana-english-cutscenes.b-cdn.net/banana-originals/toeic-listening/covers/ep09.webp",
+      "durationSec": 123,
+      "sortOrder": 9,
+      "chapters": [
+        {
+          "id": "A",
+          "label": "Part A",
+          "fromIdx": 0,
+          "toIdx": 9
+        },
+        {
+          "id": "B",
+          "label": "Part B",
+          "fromIdx": 10,
+          "toIdx": 19
+        },
+        {
+          "id": "C",
+          "label": "Part C",
+          "fromIdx": 20,
+          "toIdx": 34
+        }
+      ],
+      "sentences": [
+        {
+          "idx": 0,
+          "startMs": 0,
+          "endMs": 3600,
+          "text": "Did you see the update about tomorrow's meeting?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 1,
+          "startMs": 3880,
+          "endMs": 7072,
+          "text": "I saw an email, but I haven't opened it.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 2,
+          "startMs": 7352,
+          "endMs": 11336,
+          "text": "The start time moved from nine to ten thirty.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 3,
+          "startMs": 11616,
+          "endMs": 13296,
+          "text": "Why did they change it?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 4,
+          "startMs": 13576,
+          "endMs": 17968,
+          "text": "The client needs extra time to review the proposal.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 5,
+          "startMs": 18248,
+          "endMs": 21248,
+          "text": "Does that mean we should change our slides?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 6,
+          "startMs": 21528,
+          "endMs": 25152,
+          "text": "Only the price page. Finance sent new numbers.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 7,
+          "startMs": 25432,
+          "endMs": 27832,
+          "text": "I'll update that page this afternoon.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 8,
+          "startMs": 28112,
+          "endMs": 31544,
+          "text": "Please send me the final file before six.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 9,
+          "startMs": 31824,
+          "endMs": 34104,
+          "text": "I will. Thanks for the reminder.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 10,
+          "startMs": 35104,
+          "endMs": 39136,
+          "text": "I updated the slides, but the room calendar looks different.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 11,
+          "startMs": 39416,
+          "endMs": 42200,
+          "text": "The meeting is online now.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 12,
+          "startMs": 42480,
+          "endMs": 45960,
+          "text": "Really? I thought the client was visiting us.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 13,
+          "startMs": 46240,
+          "endMs": 48712,
+          "text": "Their train was canceled this morning.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 14,
+          "startMs": 48992,
+          "endMs": 51752,
+          "text": "Should I send them a video link?",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 15,
+          "startMs": 52032,
+          "endMs": 54936,
+          "text": "I already included one in the invitation.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 16,
+          "startMs": 55216,
+          "endMs": 58888,
+          "text": "Could you test the screen sharing before ten?",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 17,
+          "startMs": 59168,
+          "endMs": 63008,
+          "text": "Sure. I'll join early and check the audio too.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 18,
+          "startMs": 63288,
+          "endMs": 66600,
+          "text": "Great. I'll bring the printed notes just in case.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 19,
+          "startMs": 66880,
+          "endMs": 69664,
+          "text": "Sounds good. See you online tomorrow.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 20,
+          "startMs": 70664,
+          "endMs": 73784,
+          "text": "Nina, can you hear me through the meeting link?",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 21,
+          "startMs": 74064,
+          "endMs": 77808,
+          "text": "Yes, but your camera is showing the wrong room.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 22,
+          "startMs": 78088,
+          "endMs": 81712,
+          "text": "Oh, I selected the old conference camera.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 23,
+          "startMs": 81992,
+          "endMs": 84704,
+          "text": "Try the camera built into your laptop.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 24,
+          "startMs": 84984,
+          "endMs": 87936,
+          "text": "That's better. Can you see the price slide?",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 25,
+          "startMs": 88216,
+          "endMs": 91600,
+          "text": "I can. The new numbers are easy to read.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 26,
+          "startMs": 91880,
+          "endMs": 95120,
+          "text": "I'll keep the notes open in another window.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 27,
+          "startMs": 95400,
+          "endMs": 98544,
+          "text": "Good. The client will join in a few minutes.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 28,
+          "startMs": 98824,
+          "endMs": 101944,
+          "text": "I sent them the updated proposal last night.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 29,
+          "startMs": 102224,
+          "endMs": 105488,
+          "text": "Great. We're ready to begin at ten thirty.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 30,
+          "startMs": 105768,
+          "endMs": 108648,
+          "text": "Should I open the call to everyone now?",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 31,
+          "startMs": 108928,
+          "endMs": 112888,
+          "text": "Wait until the client joins, then share the slides.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 32,
+          "startMs": 113168,
+          "endMs": 116552,
+          "text": "Understood. I'll mute my microphone while we wait.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 33,
+          "startMs": 116832,
+          "endMs": 119616,
+          "text": "I have the latest price sheet beside me.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 34,
+          "startMs": 119896,
+          "endMs": 123328,
+          "text": "Perfect. I'll handle the questions about timing.",
+          "textTh": "",
+          "section": "C"
+        }
+      ],
+      "audioSha256": "49c1a6a281d7a6212a40656cd30e483e5c66d86e08de8f89693cebf7c8906bf7"
+    },
+    {
+      "id": "toeic_s1_ep10",
+      "episode": 10,
+      "episodeId": "EP10",
+      "title": "A Late Delivery",
+      "titleTh": "",
+      "level": "B1",
+      "category": "toeic",
+      "credit": "Banana Original",
+      "source": "audio",
+      "sourceUrl": "banana-originals://toeic-listening/ep10",
+      "audioUrl": "https://banana-english-cutscenes.b-cdn.net/banana-originals/toeic-listening/v1/ep10/4655deff6f7a6b06/full.mp3",
+      "storagePath": "banana-originals/toeic-listening/v1/ep10/4655deff6f7a6b06/full.mp3",
+      "thumbnailUrl": "https://banana-english-cutscenes.b-cdn.net/banana-originals/toeic-listening/covers/ep10.webp",
+      "durationSec": 131,
+      "sortOrder": 10,
+      "chapters": [
+        {
+          "id": "A",
+          "label": "Part A",
+          "fromIdx": 0,
+          "toIdx": 9
+        },
+        {
+          "id": "B",
+          "label": "Part B",
+          "fromIdx": 10,
+          "toIdx": 19
+        },
+        {
+          "id": "C",
+          "label": "Part C",
+          "fromIdx": 20,
+          "toIdx": 34
+        }
+      ],
+      "sentences": [
+        {
+          "idx": 0,
+          "startMs": 0,
+          "endMs": 4032,
+          "text": "I'm calling about an order of twenty desk lamps.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 1,
+          "startMs": 4312,
+          "endMs": 7024,
+          "text": "Certainly. Do you have the order number?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 2,
+          "startMs": 7304,
+          "endMs": 12056,
+          "text": "Yes, it's four eight two seven one.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 3,
+          "startMs": 12336,
+          "endMs": 16368,
+          "text": "Thank you. The shipment left our warehouse yesterday.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 4,
+          "startMs": 16648,
+          "endMs": 19648,
+          "text": "It was supposed to arrive this morning.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 5,
+          "startMs": 19928,
+          "endMs": 23528,
+          "text": "I apologize. The delivery truck broke down.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 6,
+          "startMs": 23808,
+          "endMs": 26688,
+          "text": "When will the lamps reach our office?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 7,
+          "startMs": 26968,
+          "endMs": 31240,
+          "text": "The driver expects to arrive by four today.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 8,
+          "startMs": 31520,
+          "endMs": 34832,
+          "text": "We close at five, so that should work.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 9,
+          "startMs": 35112,
+          "endMs": 37776,
+          "text": "I'll send you a tracking link right away.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 10,
+          "startMs": 38776,
+          "endMs": 42976,
+          "text": "I checked the link, and the delivery is delayed again.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 11,
+          "startMs": 43256,
+          "endMs": 48128,
+          "text": "I'm sorry. The truck is waiting for a replacement tire.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 12,
+          "startMs": 48408,
+          "endMs": 51840,
+          "text": "We need the lamps for an event tomorrow morning.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 13,
+          "startMs": 52120,
+          "endMs": 54880,
+          "text": "There's another driver near your office.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 14,
+          "startMs": 55160,
+          "endMs": 57872,
+          "text": "He can bring ten lamps tonight.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 15,
+          "startMs": 58152,
+          "endMs": 61272,
+          "text": "Ten will be enough for the first event.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 16,
+          "startMs": 61552,
+          "endMs": 65464,
+          "text": "We'll deliver the remaining ten tomorrow afternoon.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 17,
+          "startMs": 65744,
+          "endMs": 69464,
+          "text": "Please email me the updated delivery times.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 18,
+          "startMs": 69744,
+          "endMs": 73176,
+          "text": "Of course. You'll receive a message in a few minutes.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 19,
+          "startMs": 73456,
+          "endMs": 76120,
+          "text": "Thank you for finding another way.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 20,
+          "startMs": 77120,
+          "endMs": 80624,
+          "text": "I have the first ten lamps for your event.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 21,
+          "startMs": 80904,
+          "endMs": 84528,
+          "text": "Thanks. Please leave them beside the loading door.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 22,
+          "startMs": 84808,
+          "endMs": 88072,
+          "text": "Could you check the boxes before signing?",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 23,
+          "startMs": 88352,
+          "endMs": 91256,
+          "text": "Of course. All ten look fine.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 24,
+          "startMs": 91536,
+          "endMs": 94800,
+          "text": "The remaining lamps are on tomorrow's route.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 25,
+          "startMs": 95080,
+          "endMs": 99160,
+          "text": "Will they arrive before three in the afternoon?",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 26,
+          "startMs": 99440,
+          "endMs": 102320,
+          "text": "That's the current estimate in my system.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 27,
+          "startMs": 102600,
+          "endMs": 105312,
+          "text": "Please call me if the time changes.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 28,
+          "startMs": 105592,
+          "endMs": 108784,
+          "text": "I will. You can also follow the tracking link.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 29,
+          "startMs": 109064,
+          "endMs": 113624,
+          "text": "Great. This first delivery solves the urgent problem.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 30,
+          "startMs": 113904,
+          "endMs": 117288,
+          "text": "Would you like me to remove the empty boxes?",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 31,
+          "startMs": 117568,
+          "endMs": 121192,
+          "text": "Please leave them here. We may need the packaging.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 32,
+          "startMs": 121472,
+          "endMs": 124256,
+          "text": "Of course. I have a copy of the receipt.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 33,
+          "startMs": 124536,
+          "endMs": 127968,
+          "text": "I'll sign it after checking the last lamp.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 34,
+          "startMs": 128248,
+          "endMs": 131272,
+          "text": "I'll leave a copy of the signed receipt with you.",
+          "textTh": "",
+          "section": "C"
+        }
+      ],
+      "audioSha256": "100d5084d6ba0fec9e4cf6355ce7151cac09e3491f58b64d05b380dcc85611ab"
+    },
+    {
+      "id": "toeic_s1_ep11",
+      "episode": 11,
+      "episodeId": "EP11",
+      "title": "The Printer Is Down",
+      "titleTh": "",
+      "level": "B1",
+      "category": "toeic",
+      "credit": "Banana Original",
+      "source": "audio",
+      "sourceUrl": "banana-originals://toeic-listening/ep11",
+      "audioUrl": "https://banana-english-cutscenes.b-cdn.net/banana-originals/toeic-listening/v1/ep11/1c8507db3e7baea2/full.mp3",
+      "storagePath": "banana-originals/toeic-listening/v1/ep11/1c8507db3e7baea2/full.mp3",
+      "thumbnailUrl": "https://banana-english-cutscenes.b-cdn.net/banana-originals/toeic-listening/covers/ep11.webp",
+      "durationSec": 123,
+      "sortOrder": 11,
+      "chapters": [
+        {
+          "id": "A",
+          "label": "Part A",
+          "fromIdx": 0,
+          "toIdx": 10
+        },
+        {
+          "id": "B",
+          "label": "Part B",
+          "fromIdx": 11,
+          "toIdx": 19
+        },
+        {
+          "id": "C",
+          "label": "Part C",
+          "fromIdx": 20,
+          "toIdx": 34
+        }
+      ],
+      "sentences": [
+        {
+          "idx": 0,
+          "startMs": 0,
+          "endMs": 4032,
+          "text": "The printer stopped in the middle of my report.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 1,
+          "startMs": 4312,
+          "endMs": 6472,
+          "text": "Did it show an error message?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 2,
+          "startMs": 6752,
+          "endMs": 10016,
+          "text": "Yes. It says the paper tray is empty.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 3,
+          "startMs": 10296,
+          "endMs": 12600,
+          "text": "There's more paper in the cabinet.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 4,
+          "startMs": 12880,
+          "endMs": 16672,
+          "text": "I added some, but it still won't print.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 5,
+          "startMs": 16952,
+          "endMs": 19112,
+          "text": "Let me open the back panel.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 6,
+          "startMs": 19392,
+          "endMs": 22776,
+          "text": "Ah, a sheet of paper is stuck inside.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 7,
+          "startMs": 23056,
+          "endMs": 26416,
+          "text": "Can you remove it without damaging the printer?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 8,
+          "startMs": 26696,
+          "endMs": 30176,
+          "text": "I think so. Please turn the power off first.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 9,
+          "startMs": 30456,
+          "endMs": 33600,
+          "text": "Done. The meeting starts in fifteen minutes.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 10,
+          "startMs": 33880,
+          "endMs": 38104,
+          "text": "If this fails, use the printer upstairs.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 11,
+          "startMs": 39104,
+          "endMs": 43184,
+          "text": "The printer works now, but I can't join the call.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 12,
+          "startMs": 43464,
+          "endMs": 47016,
+          "text": "Is your laptop connected to the office network?",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 13,
+          "startMs": 47296,
+          "endMs": 50776,
+          "text": "Yes, and the other websites are loading.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 14,
+          "startMs": 51056,
+          "endMs": 55088,
+          "text": "Try opening the invitation in a new browser window.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 15,
+          "startMs": 55368,
+          "endMs": 58392,
+          "text": "That worked. I can see everyone now.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 16,
+          "startMs": 58672,
+          "endMs": 59752,
+          "text": "Can they hear you?",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 17,
+          "startMs": 60032,
+          "endMs": 63224,
+          "text": "Not yet. My microphone was turned off.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 18,
+          "startMs": 63504,
+          "endMs": 66264,
+          "text": "Check the small icon at the bottom.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 19,
+          "startMs": 66544,
+          "endMs": 69304,
+          "text": "There we go. Thanks for helping twice today.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 20,
+          "startMs": 70304,
+          "endMs": 74168,
+          "text": "The call ended. Can we print the final report now?",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 21,
+          "startMs": 74448,
+          "endMs": 78480,
+          "text": "Yes, but use the printer on the second floor.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 22,
+          "startMs": 78760,
+          "endMs": 80944,
+          "text": "Is ours broken again?",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 23,
+          "startMs": 81224,
+          "endMs": 85304,
+          "text": "It works, but a replacement part is arriving tomorrow.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 24,
+          "startMs": 85584,
+          "endMs": 88704,
+          "text": "I don't want to risk another paper jam.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 25,
+          "startMs": 88984,
+          "endMs": 93064,
+          "text": "Exactly. I sent the file to the upstairs printer.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 26,
+          "startMs": 93344,
+          "endMs": 96416,
+          "text": "Thanks. I'll collect the pages on my way out.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 27,
+          "startMs": 96696,
+          "endMs": 100200,
+          "text": "Check the last page before you give it to the manager.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 28,
+          "startMs": 100480,
+          "endMs": 103720,
+          "text": "I will. The chart should be in color.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 29,
+          "startMs": 104000,
+          "endMs": 106784,
+          "text": "It is. I selected the color setting.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 30,
+          "startMs": 107064,
+          "endMs": 110928,
+          "text": "The first page looks good, but this one is missing.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 31,
+          "startMs": 111208,
+          "endMs": 114352,
+          "text": "It may still be in the printer tray.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 32,
+          "startMs": 114632,
+          "endMs": 117872,
+          "text": "You're right. It was under another document.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 33,
+          "startMs": 118152,
+          "endMs": 120696,
+          "text": "Now the whole report is ready.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 34,
+          "startMs": 120976,
+          "endMs": 123328,
+          "text": "I'll take it to the manager's office.",
+          "textTh": "",
+          "section": "C"
+        }
+      ],
+      "audioSha256": "b99321e181c7b619aa9ae84b9f924a905df5ac33ce5e556dd0585ace8d1782d5"
+    },
+    {
+      "id": "toeic_s1_ep12",
+      "episode": 12,
+      "episodeId": "EP12",
+      "title": "Interview Day",
+      "titleTh": "",
+      "level": "B1",
+      "category": "toeic",
+      "credit": "Banana Original",
+      "source": "audio",
+      "sourceUrl": "banana-originals://toeic-listening/ep12",
+      "audioUrl": "https://banana-english-cutscenes.b-cdn.net/banana-originals/toeic-listening/v1/ep12/c0edf442208ea455/full.mp3",
+      "storagePath": "banana-originals/toeic-listening/v1/ep12/c0edf442208ea455/full.mp3",
+      "thumbnailUrl": "https://banana-english-cutscenes.b-cdn.net/banana-originals/toeic-listening/covers/ep12.webp",
+      "durationSec": 123,
+      "sortOrder": 12,
+      "chapters": [
+        {
+          "id": "A",
+          "label": "Part A",
+          "fromIdx": 0,
+          "toIdx": 8
+        },
+        {
+          "id": "B",
+          "label": "Part B",
+          "fromIdx": 9,
+          "toIdx": 18
+        },
+        {
+          "id": "C",
+          "label": "Part C",
+          "fromIdx": 19,
+          "toIdx": 33
+        }
+      ],
+      "sentences": [
+        {
+          "idx": 0,
+          "startMs": 0,
+          "endMs": 3504,
+          "text": "Good morning. I'm here for the marketing interview.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 1,
+          "startMs": 3784,
+          "endMs": 6328,
+          "text": "Welcome. What is your name?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 2,
+          "startMs": 6608,
+          "endMs": 9440,
+          "text": "My name is Arisa Tan.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 3,
+          "startMs": 9720,
+          "endMs": 12912,
+          "text": "You're a little early. Please sign in here.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 4,
+          "startMs": 13192,
+          "endMs": 16072,
+          "text": "Is there anything else I should prepare?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 5,
+          "startMs": 16352,
+          "endMs": 20504,
+          "text": "The manager will ask about your recent projects.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 6,
+          "startMs": 20784,
+          "endMs": 23904,
+          "text": "I brought a few examples on my tablet.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 7,
+          "startMs": 24184,
+          "endMs": 26776,
+          "text": "That's helpful. She'll be with you shortly.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 8,
+          "startMs": 27056,
+          "endMs": 30776,
+          "text": "Thank you. I'll review my notes while I wait.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 9,
+          "startMs": 31776,
+          "endMs": 34416,
+          "text": "Arisa, I'm sorry for the delay.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 10,
+          "startMs": 34696,
+          "endMs": 37816,
+          "text": "No problem. I had time to look around.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 11,
+          "startMs": 38096,
+          "endMs": 41816,
+          "text": "Our first interview ran longer than expected.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 12,
+          "startMs": 42096,
+          "endMs": 44808,
+          "text": "Would you like some water before we begin?",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 13,
+          "startMs": 45088,
+          "endMs": 47272,
+          "text": "Yes, please. Thank you.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 14,
+          "startMs": 47552,
+          "endMs": 50912,
+          "text": "I see that you've worked on several campaigns.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 15,
+          "startMs": 51192,
+          "endMs": 55992,
+          "text": "I coordinated online ads for a small retail company.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 16,
+          "startMs": 56272,
+          "endMs": 59824,
+          "text": "Could you describe one project you're proud of?",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 17,
+          "startMs": 60104,
+          "endMs": 65216,
+          "text": "Certainly. We redesigned the customer newsletter last spring.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 18,
+          "startMs": 65496,
+          "endMs": 68616,
+          "text": "Great. Let's start with that example.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 19,
+          "startMs": 69616,
+          "endMs": 72640,
+          "text": "Thank you for explaining the newsletter project.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 20,
+          "startMs": 72920,
+          "endMs": 75872,
+          "text": "You're welcome. I enjoyed working on it.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 21,
+          "startMs": 76152,
+          "endMs": 79176,
+          "text": "Do you have any questions about this role?",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 22,
+          "startMs": 79456,
+          "endMs": 82600,
+          "text": "How large is the marketing team?",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 23,
+          "startMs": 82880,
+          "endMs": 87344,
+          "text": "There are five people, including the team lead.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 24,
+          "startMs": 87624,
+          "endMs": 90744,
+          "text": "And when would the new person start?",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 25,
+          "startMs": 91024,
+          "endMs": 94264,
+          "text": "Ideally, at the beginning of next month.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 26,
+          "startMs": 94544,
+          "endMs": 96896,
+          "text": "That timing would work for me.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 27,
+          "startMs": 97176,
+          "endMs": 100656,
+          "text": "We'll contact you by Friday about the next step.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 28,
+          "startMs": 100936,
+          "endMs": 104128,
+          "text": "Thank you. I look forward to hearing from you.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 29,
+          "startMs": 104408,
+          "endMs": 108872,
+          "text": "Before you go, the receptionist can validate your parking ticket.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 30,
+          "startMs": 109152,
+          "endMs": 112512,
+          "text": "That's helpful. I parked in the visitor lot.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 31,
+          "startMs": 112792,
+          "endMs": 116752,
+          "text": "The exit is beside the café downstairs.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 32,
+          "startMs": 117032,
+          "endMs": 120056,
+          "text": "I'll stop at reception on my way out.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 33,
+          "startMs": 120336,
+          "endMs": 122520,
+          "text": "It was a pleasure meeting you, Arisa.",
+          "textTh": "",
+          "section": "C"
+        }
+      ],
+      "audioSha256": "0ee8777f64025266c3e56cdaad28d7fe5493d353989d112ced3f7fded72cac11"
+    },
+    {
+      "id": "toeic_s1_ep13",
+      "episode": 13,
+      "episodeId": "EP13",
+      "title": "Planning the Event",
+      "titleTh": "",
+      "level": "B1",
+      "category": "toeic",
+      "credit": "Banana Original",
+      "source": "audio",
+      "sourceUrl": "banana-originals://toeic-listening/ep13",
+      "audioUrl": "https://banana-english-cutscenes.b-cdn.net/banana-originals/toeic-listening/v1/ep13/1330d8413b801d5c/full.mp3",
+      "storagePath": "banana-originals/toeic-listening/v1/ep13/1330d8413b801d5c/full.mp3",
+      "thumbnailUrl": "https://banana-english-cutscenes.b-cdn.net/banana-originals/toeic-listening/covers/ep13.webp",
+      "durationSec": 130,
+      "sortOrder": 13,
+      "chapters": [
+        {
+          "id": "A",
+          "label": "Part A",
+          "fromIdx": 0,
+          "toIdx": 9
+        },
+        {
+          "id": "B",
+          "label": "Part B",
+          "fromIdx": 10,
+          "toIdx": 19
+        },
+        {
+          "id": "C",
+          "label": "Part C",
+          "fromIdx": 20,
+          "toIdx": 34
+        }
+      ],
+      "sentences": [
+        {
+          "idx": 0,
+          "startMs": 0,
+          "endMs": 4200,
+          "text": "The community event starts at ten on Saturday.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 1,
+          "startMs": 4480,
+          "endMs": 7600,
+          "text": "I can arrive at eight to set up the chairs.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 2,
+          "startMs": 7880,
+          "endMs": 11312,
+          "text": "I'll bring the welcome signs and name tags.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 3,
+          "startMs": 11592,
+          "endMs": 16344,
+          "text": "Great. The speaker needs a microphone by nine thirty.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 4,
+          "startMs": 16624,
+          "endMs": 18976,
+          "text": "I'll test it when I finish the chairs.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 5,
+          "startMs": 19256,
+          "endMs": 21968,
+          "text": "What about the registration table?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 6,
+          "startMs": 22248,
+          "endMs": 24528,
+          "text": "I'll handle that with two volunteers.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 7,
+          "startMs": 24808,
+          "endMs": 27520,
+          "text": "Are we still serving coffee outside?",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 8,
+          "startMs": 27800,
+          "endMs": 30152,
+          "text": "Only if the weather stays dry.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 9,
+          "startMs": 30432,
+          "endMs": 33864,
+          "text": "I'll ask the café about an indoor option.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 10,
+          "startMs": 34864,
+          "endMs": 39328,
+          "text": "The café can put the coffee inside the lobby.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 11,
+          "startMs": 39608,
+          "endMs": 42968,
+          "text": "Perfect. Let's change the schedule on the website.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 12,
+          "startMs": 43248,
+          "endMs": 46512,
+          "text": "The sound check still begins at nine thirty, right?",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 13,
+          "startMs": 46792,
+          "endMs": 49696,
+          "text": "Yes. The doors open at ten.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 14,
+          "startMs": 49976,
+          "endMs": 53600,
+          "text": "I thought the guest talk started at ten thirty.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 15,
+          "startMs": 53880,
+          "endMs": 57864,
+          "text": "It moved to eleven so visitors can settle in.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 16,
+          "startMs": 58144,
+          "endMs": 61264,
+          "text": "That gives me more time to test the equipment.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 17,
+          "startMs": 61544,
+          "endMs": 64784,
+          "text": "I'll tell the guest speaker about the change.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 18,
+          "startMs": 65064,
+          "endMs": 68808,
+          "text": "Thanks. I'll update the volunteers this afternoon.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 19,
+          "startMs": 69088,
+          "endMs": 72448,
+          "text": "We're ready as soon as the signs arrive.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 20,
+          "startMs": 73448,
+          "endMs": 77672,
+          "text": "The chairs are ready, but one microphone is missing.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 21,
+          "startMs": 77952,
+          "endMs": 82056,
+          "text": "I saw an extra microphone at the registration desk.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 22,
+          "startMs": 82336,
+          "endMs": 85336,
+          "text": "That's the spare. Bring it to Hall A.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 23,
+          "startMs": 85616,
+          "endMs": 88880,
+          "text": "I'll test both microphones before the doors open.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 24,
+          "startMs": 89160,
+          "endMs": 92760,
+          "text": "The café has moved the coffee inside.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 25,
+          "startMs": 93040,
+          "endMs": 96160,
+          "text": "Good. It may rain later this morning.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 26,
+          "startMs": 96440,
+          "endMs": 99272,
+          "text": "Should I move the outdoor signs too?",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 27,
+          "startMs": 99552,
+          "endMs": 103344,
+          "text": "Yes. Put one sign near the main entrance.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 28,
+          "startMs": 103624,
+          "endMs": 106984,
+          "text": "I'll tell the volunteers about the changes.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 29,
+          "startMs": 107264,
+          "endMs": 111656,
+          "text": "Thanks. We still have twenty minutes before visitors arrive.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 30,
+          "startMs": 111936,
+          "endMs": 115536,
+          "text": "I found the spare microphone, and both work now.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 31,
+          "startMs": 115816,
+          "endMs": 119776,
+          "text": "The first guests are waiting near the entrance.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 32,
+          "startMs": 120056,
+          "endMs": 123728,
+          "text": "Please ask them to wait until registration opens.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 33,
+          "startMs": 124008,
+          "endMs": 126360,
+          "text": "I'll turn on the lights in Hall A.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 34,
+          "startMs": 126640,
+          "endMs": 129544,
+          "text": "And I'll bring the name tags to the desk.",
+          "textTh": "",
+          "section": "C"
+        }
+      ],
+      "audioSha256": "2447708f41c9e52315be0ca42f302bff0e8bbc9b63a165148b077aa19d3005a8"
+    },
+    {
+      "id": "toeic_s1_ep14",
+      "episode": 14,
+      "episodeId": "EP14",
+      "title": "Station Announcements",
+      "titleTh": "",
+      "level": "B1",
+      "category": "toeic",
+      "credit": "Banana Original",
+      "source": "audio",
+      "sourceUrl": "banana-originals://toeic-listening/ep14",
+      "audioUrl": "https://banana-english-cutscenes.b-cdn.net/banana-originals/toeic-listening/v1/ep14/79b5728dc1995cd5/full.mp3",
+      "storagePath": "banana-originals/toeic-listening/v1/ep14/79b5728dc1995cd5/full.mp3",
+      "thumbnailUrl": "https://banana-english-cutscenes.b-cdn.net/banana-originals/toeic-listening/covers/ep14.webp",
+      "durationSec": 131,
+      "sortOrder": 14,
+      "chapters": [
+        {
+          "id": "A",
+          "label": "Part A",
+          "fromIdx": 0,
+          "toIdx": 8
+        },
+        {
+          "id": "B",
+          "label": "Part B",
+          "fromIdx": 9,
+          "toIdx": 16
+        },
+        {
+          "id": "C",
+          "label": "Part C",
+          "fromIdx": 17,
+          "toIdx": 30
+        }
+      ],
+      "sentences": [
+        {
+          "idx": 0,
+          "startMs": 0,
+          "endMs": 3600,
+          "text": "Good morning, passengers traveling to East Harbor.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 1,
+          "startMs": 3880,
+          "endMs": 8512,
+          "text": "The nine fifteen train will leave from platform five.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 2,
+          "startMs": 8792,
+          "endMs": 11936,
+          "text": "This is a change from the printed schedule.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 3,
+          "startMs": 12216,
+          "endMs": 15816,
+          "text": "Please do not wait at platform three.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 4,
+          "startMs": 16096,
+          "endMs": 21040,
+          "text": "The train is expected to arrive in eight minutes.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 5,
+          "startMs": 21320,
+          "endMs": 24152,
+          "text": "Have your tickets ready before you board.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 6,
+          "startMs": 24432,
+          "endMs": 28776,
+          "text": "Staff members can help you near the information desk.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 7,
+          "startMs": 29056,
+          "endMs": 32008,
+          "text": "We apologize for any confusion.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 8,
+          "startMs": 32288,
+          "endMs": 33992,
+          "text": "Thank you for your attention.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 9,
+          "startMs": 34992,
+          "endMs": 39096,
+          "text": "Attention, passengers on the Riverside service.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 10,
+          "startMs": 39376,
+          "endMs": 44296,
+          "text": "The eleven twenty train is delayed by fifteen minutes.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 11,
+          "startMs": 44576,
+          "endMs": 48008,
+          "text": "The delay is due to work on the tracks.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 12,
+          "startMs": 48288,
+          "endMs": 53088,
+          "text": "Passengers connecting to the airport line should remain on board.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 13,
+          "startMs": 53368,
+          "endMs": 57808,
+          "text": "Airport tickets will be accepted on the next express train.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 14,
+          "startMs": 58088,
+          "endMs": 62240,
+          "text": "That train departs from platform two at noon.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 15,
+          "startMs": 62520,
+          "endMs": 67440,
+          "text": "Please listen for further announcements before changing platforms.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 16,
+          "startMs": 67720,
+          "endMs": 70240,
+          "text": "We appreciate your patience today.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 17,
+          "startMs": 71240,
+          "endMs": 75992,
+          "text": "This is the final boarding announcement for the Lakeview service.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 18,
+          "startMs": 76272,
+          "endMs": 80856,
+          "text": "The train will depart from platform seven in five minutes.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 19,
+          "startMs": 81136,
+          "endMs": 84736,
+          "text": "Please check that you have all your bags with you.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 20,
+          "startMs": 85016,
+          "endMs": 89240,
+          "text": "Large luggage should be placed in the storage area.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 21,
+          "startMs": 89520,
+          "endMs": 93480,
+          "text": "Keep the aisle clear while other passengers board.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 22,
+          "startMs": 93760,
+          "endMs": 98440,
+          "text": "If you need assistance, speak to a staff member on the platform.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 23,
+          "startMs": 98720,
+          "endMs": 102944,
+          "text": "The doors will close one minute before departure.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 24,
+          "startMs": 103224,
+          "endMs": 105984,
+          "text": "Thank you, and have a pleasant journey.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 25,
+          "startMs": 106264,
+          "endMs": 110488,
+          "text": "Passengers with bicycles should use the rear carriage.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 26,
+          "startMs": 110768,
+          "endMs": 115280,
+          "text": "Please allow other passengers to leave the train before boarding.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 27,
+          "startMs": 115560,
+          "endMs": 119592,
+          "text": "The next service to Lakeview will depart in one hour.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 28,
+          "startMs": 119872,
+          "endMs": 123256,
+          "text": "If you miss this train, keep your ticket.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 29,
+          "startMs": 123536,
+          "endMs": 126968,
+          "text": "It will remain valid for the later service.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 30,
+          "startMs": 127248,
+          "endMs": 131448,
+          "text": "Check the display boards for any further changes.",
+          "textTh": "",
+          "section": "C"
+        }
+      ],
+      "audioSha256": "cf3aa77c01e6c961d00a466c9a72d3f17892980b4459f565cb5e0b131f202d02"
+    },
+    {
+      "id": "toeic_s1_ep15",
+      "episode": 15,
+      "episodeId": "EP15",
+      "title": "Voicemail Messages",
+      "titleTh": "",
+      "level": "B1",
+      "category": "toeic",
+      "credit": "Banana Original",
+      "source": "audio",
+      "sourceUrl": "banana-originals://toeic-listening/ep15",
+      "audioUrl": "https://banana-english-cutscenes.b-cdn.net/banana-originals/toeic-listening/v1/ep15/c5b3749a8f8ee879/full.mp3",
+      "storagePath": "banana-originals/toeic-listening/v1/ep15/c5b3749a8f8ee879/full.mp3",
+      "thumbnailUrl": "https://banana-english-cutscenes.b-cdn.net/banana-originals/toeic-listening/covers/ep15.webp",
+      "durationSec": 128,
+      "sortOrder": 15,
+      "chapters": [
+        {
+          "id": "A",
+          "label": "Part A",
+          "fromIdx": 0,
+          "toIdx": 8
+        },
+        {
+          "id": "B",
+          "label": "Part B",
+          "fromIdx": 9,
+          "toIdx": 17
+        },
+        {
+          "id": "C",
+          "label": "Part C",
+          "fromIdx": 18,
+          "toIdx": 31
+        }
+      ],
+      "sentences": [
+        {
+          "idx": 0,
+          "startMs": 0,
+          "endMs": 4032,
+          "text": "Hello, this is Dana from Bright Dental Clinic.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 1,
+          "startMs": 4312,
+          "endMs": 8224,
+          "text": "I'm calling to confirm your appointment on Tuesday.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 2,
+          "startMs": 8504,
+          "endMs": 13016,
+          "text": "Your visit is scheduled for ten forty-five in the morning.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 3,
+          "startMs": 13296,
+          "endMs": 17976,
+          "text": "Please arrive ten minutes early to complete a short form.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 4,
+          "startMs": 18256,
+          "endMs": 22048,
+          "text": "If you need to change the time, call us today.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 5,
+          "startMs": 22328,
+          "endMs": 25688,
+          "text": "Our office closes at six this evening.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 6,
+          "startMs": 25968,
+          "endMs": 31680,
+          "text": "You can reach me at five five five, zero one four two.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 7,
+          "startMs": 31960,
+          "endMs": 34360,
+          "text": "Again, my name is Dana.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 8,
+          "startMs": 34640,
+          "endMs": 37640,
+          "text": "We look forward to seeing you on Tuesday.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 9,
+          "startMs": 38640,
+          "endMs": 42120,
+          "text": "Hi, Marcus. This is Elena at Shoreline Events.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 10,
+          "startMs": 42400,
+          "endMs": 45520,
+          "text": "Thank you for sending the updated seating plan.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 11,
+          "startMs": 45800,
+          "endMs": 49784,
+          "text": "The main room now has space for eighty guests.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 12,
+          "startMs": 50064,
+          "endMs": 54168,
+          "text": "However, we still need the final meal choices.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 13,
+          "startMs": 54448,
+          "endMs": 57712,
+          "text": "Could you email them before Thursday afternoon?",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 14,
+          "startMs": 57992,
+          "endMs": 61856,
+          "text": "The kitchen needs the numbers to place its order.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 15,
+          "startMs": 62136,
+          "endMs": 66408,
+          "text": "If anyone has an allergy, please mention it separately.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 16,
+          "startMs": 66688,
+          "endMs": 69448,
+          "text": "Call me if you'd like to discuss the menu.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 17,
+          "startMs": 69728,
+          "endMs": 72152,
+          "text": "Thanks again. I'll speak with you soon.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 18,
+          "startMs": 73152,
+          "endMs": 76296,
+          "text": "Hi, Elena. It's Marcus returning your call.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 19,
+          "startMs": 76576,
+          "endMs": 80368,
+          "text": "I've just sent the final meal choices by email.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 20,
+          "startMs": 80648,
+          "endMs": 86840,
+          "text": "We have three vegetarian guests and one guest with a nut allergy.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 21,
+          "startMs": 87120,
+          "endMs": 90240,
+          "text": "I marked those details clearly in the file.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 22,
+          "startMs": 90520,
+          "endMs": 93880,
+          "text": "Could you confirm that the kitchen received it?",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 23,
+          "startMs": 94160,
+          "endMs": 97472,
+          "text": "I'm in meetings until three, but you can email me.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 24,
+          "startMs": 97752,
+          "endMs": 102096,
+          "text": "If there's any problem, call my mobile phone after three.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 25,
+          "startMs": 102376,
+          "endMs": 105016,
+          "text": "Thank you for helping us prepare the event.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 26,
+          "startMs": 105296,
+          "endMs": 109160,
+          "text": "I also attached the final seating plan again.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 27,
+          "startMs": 109440,
+          "endMs": 113280,
+          "text": "The names on it match the meal choices.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 28,
+          "startMs": 113560,
+          "endMs": 116872,
+          "text": "We don't expect any more guests to join.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 29,
+          "startMs": 117152,
+          "endMs": 120416,
+          "text": "If that changes, I'll let you know immediately.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 30,
+          "startMs": 120696,
+          "endMs": 123528,
+          "text": "I know the kitchen needs time to prepare.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 31,
+          "startMs": 123808,
+          "endMs": 128032,
+          "text": "Please confirm by email before the kitchen closes at five.",
+          "textTh": "",
+          "section": "C"
+        }
+      ],
+      "audioSha256": "243720335c1628adb9c0d43ad2aad2d325c8649b334e44bbdb3469795b8f02d1"
+    },
+    {
+      "id": "toeic_s1_ep16",
+      "episode": 16,
+      "episodeId": "EP16",
+      "title": "Store Information",
+      "titleTh": "",
+      "level": "B1",
+      "category": "toeic",
+      "credit": "Banana Original",
+      "source": "audio",
+      "sourceUrl": "banana-originals://toeic-listening/ep16",
+      "audioUrl": "https://banana-english-cutscenes.b-cdn.net/banana-originals/toeic-listening/v1/ep16/734e318587204400/full.mp3",
+      "storagePath": "banana-originals/toeic-listening/v1/ep16/734e318587204400/full.mp3",
+      "thumbnailUrl": "https://banana-english-cutscenes.b-cdn.net/banana-originals/toeic-listening/covers/ep16.webp",
+      "durationSec": 126,
+      "sortOrder": 16,
+      "chapters": [
+        {
+          "id": "A",
+          "label": "Part A",
+          "fromIdx": 0,
+          "toIdx": 7
+        },
+        {
+          "id": "B",
+          "label": "Part B",
+          "fromIdx": 8,
+          "toIdx": 15
+        },
+        {
+          "id": "C",
+          "label": "Part C",
+          "fromIdx": 16,
+          "toIdx": 29
+        }
+      ],
+      "sentences": [
+        {
+          "idx": 0,
+          "startMs": 0,
+          "endMs": 4272,
+          "text": "Welcome to Harbor Home, where your week starts with savings.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 1,
+          "startMs": 4552,
+          "endMs": 8176,
+          "text": "Our store opens at nine every weekday.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 2,
+          "startMs": 8456,
+          "endMs": 12848,
+          "text": "On Saturdays, we're open from ten until seven.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 3,
+          "startMs": 13128,
+          "endMs": 16392,
+          "text": "The store is closed on Sundays this month.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 4,
+          "startMs": 16672,
+          "endMs": 20872,
+          "text": "For the next three days, all desk lamps are discounted.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 5,
+          "startMs": 21152,
+          "endMs": 25424,
+          "text": "The sale applies to items marked with a blue label.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 6,
+          "startMs": 25704,
+          "endMs": 29904,
+          "text": "It does not include delivery or installation.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 7,
+          "startMs": 30184,
+          "endMs": 33664,
+          "text": "Please ask a staff member if you need assistance.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 8,
+          "startMs": 34664,
+          "endMs": 38096,
+          "text": "Thank you for calling Harbor Home customer service.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 9,
+          "startMs": 38376,
+          "endMs": 42240,
+          "text": "You may return most products within thirty days.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 10,
+          "startMs": 42520,
+          "endMs": 46144,
+          "text": "Please bring the receipt and the original packaging.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 11,
+          "startMs": 46424,
+          "endMs": 50816,
+          "text": "Items bought online can also be returned in store.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 12,
+          "startMs": 51096,
+          "endMs": 55560,
+          "text": "However, made-to-order furniture cannot be returned.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 13,
+          "startMs": 55840,
+          "endMs": 59800,
+          "text": "If an item is damaged, contact us before visiting.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 14,
+          "startMs": 60080,
+          "endMs": 63920,
+          "text": "We can arrange a replacement or discuss a refund.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 15,
+          "startMs": 64200,
+          "endMs": 68184,
+          "text": "For more information, press two to speak with our team.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 16,
+          "startMs": 69184,
+          "endMs": 73504,
+          "text": "Your online order is ready for collection at Harbor Home.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 17,
+          "startMs": 73784,
+          "endMs": 77696,
+          "text": "Please bring your order number and a photo ID.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 18,
+          "startMs": 77976,
+          "endMs": 82680,
+          "text": "Collection is available from ten until six on weekdays.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 19,
+          "startMs": 82960,
+          "endMs": 86704,
+          "text": "Use the side entrance beside the parking area.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 20,
+          "startMs": 86984,
+          "endMs": 90896,
+          "text": "A staff member will bring your order to the counter.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 21,
+          "startMs": 91176,
+          "endMs": 95448,
+          "text": "If you cannot collect it this week, contact us.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 22,
+          "startMs": 95728,
+          "endMs": 99040,
+          "text": "We can hold most orders for seven more days.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 23,
+          "startMs": 99320,
+          "endMs": 101960,
+          "text": "Thank you for shopping with Harbor Home.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 24,
+          "startMs": 102240,
+          "endMs": 106320,
+          "text": "For large furniture, please park in the loading area.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 25,
+          "startMs": 106600,
+          "endMs": 109960,
+          "text": "A staff member can help bring it to your vehicle.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 26,
+          "startMs": 110240,
+          "endMs": 113552,
+          "text": "Please check the size before you arrive.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 27,
+          "startMs": 113832,
+          "endMs": 117456,
+          "text": "Some items may not fit in a small car.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 28,
+          "startMs": 117736,
+          "endMs": 122248,
+          "text": "If you prefer home delivery, call us before collection.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 29,
+          "startMs": 122528,
+          "endMs": 126248,
+          "text": "Additional delivery charges may apply.",
+          "textTh": "",
+          "section": "C"
+        }
+      ],
+      "audioSha256": "0e5db87eef6280b185958240a62151d8e0be8d43fab0911492b3f657dced1a86"
+    },
+    {
+      "id": "toeic_s1_ep17",
+      "episode": 17,
+      "episodeId": "EP17",
+      "title": "Workplace Briefings",
+      "titleTh": "",
+      "level": "B1",
+      "category": "toeic",
+      "credit": "Banana Original",
+      "source": "audio",
+      "sourceUrl": "banana-originals://toeic-listening/ep17",
+      "audioUrl": "https://banana-english-cutscenes.b-cdn.net/banana-originals/toeic-listening/v1/ep17/7c7e865ecf408694/full.mp3",
+      "storagePath": "banana-originals/toeic-listening/v1/ep17/7c7e865ecf408694/full.mp3",
+      "thumbnailUrl": "https://banana-english-cutscenes.b-cdn.net/banana-originals/toeic-listening/covers/ep17.webp",
+      "durationSec": 127,
+      "sortOrder": 17,
+      "chapters": [
+        {
+          "id": "A",
+          "label": "Part A",
+          "fromIdx": 0,
+          "toIdx": 7
+        },
+        {
+          "id": "B",
+          "label": "Part B",
+          "fromIdx": 8,
+          "toIdx": 15
+        },
+        {
+          "id": "C",
+          "label": "Part C",
+          "fromIdx": 16,
+          "toIdx": 29
+        }
+      ],
+      "sentences": [
+        {
+          "idx": 0,
+          "startMs": 0,
+          "endMs": 3384,
+          "text": "Good morning, everyone. Here is today's plan.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 1,
+          "startMs": 3664,
+          "endMs": 7888,
+          "text": "The customer survey closes at four this afternoon.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 2,
+          "startMs": 8168,
+          "endMs": 12680,
+          "text": "Please finish entering any paper responses before lunch.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 3,
+          "startMs": 12960,
+          "endMs": 16824,
+          "text": "After that, the research team will check the results.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 4,
+          "startMs": 17104,
+          "endMs": 20536,
+          "text": "We'll meet at three to review the first report.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 5,
+          "startMs": 20816,
+          "endMs": 25376,
+          "text": "If you find duplicate entries, mark them in the shared file.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 6,
+          "startMs": 25656,
+          "endMs": 28680,
+          "text": "Don't delete them until the team has checked them.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 7,
+          "startMs": 28960,
+          "endMs": 31744,
+          "text": "Thank you for keeping the data accurate.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 8,
+          "startMs": 32744,
+          "endMs": 36896,
+          "text": "Before we begin, I need to explain one change.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 9,
+          "startMs": 37176,
+          "endMs": 42120,
+          "text": "New employees will complete safety training online first.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 10,
+          "startMs": 42400,
+          "endMs": 46672,
+          "text": "The in-person workshop will take place the next day.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 11,
+          "startMs": 46952,
+          "endMs": 50984,
+          "text": "Each supervisor should send the training link by Monday.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 12,
+          "startMs": 51264,
+          "endMs": 55968,
+          "text": "Employees must watch the short video before the workshop.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 13,
+          "startMs": 56248,
+          "endMs": 60208,
+          "text": "They can use a work computer or their own phone.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 14,
+          "startMs": 60488,
+          "endMs": 65480,
+          "text": "If anyone cannot open the link, contact the support desk.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 15,
+          "startMs": 65760,
+          "endMs": 69144,
+          "text": "We'll answer questions at the end of this briefing.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 16,
+          "startMs": 70144,
+          "endMs": 74704,
+          "text": "Before you leave, please check tomorrow's room bookings.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 17,
+          "startMs": 74984,
+          "endMs": 78824,
+          "text": "Two client meetings will begin at nine.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 18,
+          "startMs": 79104,
+          "endMs": 82896,
+          "text": "The design team needs the large room at eleven.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 19,
+          "startMs": 83176,
+          "endMs": 87280,
+          "text": "Put any unused equipment back in the storage cabinet.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 20,
+          "startMs": 87560,
+          "endMs": 90800,
+          "text": "Our cleaning staff will come through at six.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 21,
+          "startMs": 91080,
+          "endMs": 95640,
+          "text": "If you are staying late, tell reception before five thirty.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 22,
+          "startMs": 95920,
+          "endMs": 99712,
+          "text": "The side door will be locked after seven.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 23,
+          "startMs": 99992,
+          "endMs": 103256,
+          "text": "Thank you for helping us keep the office organized.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 24,
+          "startMs": 103536,
+          "endMs": 106608,
+          "text": "Remember to save any files you're working on.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 25,
+          "startMs": 106888,
+          "endMs": 110680,
+          "text": "The network will restart at eight tonight.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 26,
+          "startMs": 110960,
+          "endMs": 114320,
+          "text": "It should be available again within fifteen minutes.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 27,
+          "startMs": 114600,
+          "endMs": 118080,
+          "text": "Employees working from home will not be affected.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 28,
+          "startMs": 118360,
+          "endMs": 122320,
+          "text": "If you notice a problem tomorrow, contact the support desk.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 29,
+          "startMs": 122600,
+          "endMs": 127280,
+          "text": "The next team briefing starts at nine tomorrow morning.",
+          "textTh": "",
+          "section": "C"
+        }
+      ],
+      "audioSha256": "17ff4e60013dea197cdc87cc1a29467671f0871bad413c08b9685f39f82af0ae"
+    },
+    {
+      "id": "toeic_s1_ep18",
+      "episode": 18,
+      "episodeId": "EP18",
+      "title": "Visitor Information",
+      "titleTh": "",
+      "level": "B1",
+      "category": "toeic",
+      "credit": "Banana Original",
+      "source": "audio",
+      "sourceUrl": "banana-originals://toeic-listening/ep18",
+      "audioUrl": "https://banana-english-cutscenes.b-cdn.net/banana-originals/toeic-listening/v1/ep18/92cc57a81e6266d3/full.mp3",
+      "storagePath": "banana-originals/toeic-listening/v1/ep18/92cc57a81e6266d3/full.mp3",
+      "thumbnailUrl": "https://banana-english-cutscenes.b-cdn.net/banana-originals/toeic-listening/covers/ep18.webp",
+      "durationSec": 137,
+      "sortOrder": 18,
+      "chapters": [
+        {
+          "id": "A",
+          "label": "Part A",
+          "fromIdx": 0,
+          "toIdx": 7
+        },
+        {
+          "id": "B",
+          "label": "Part B",
+          "fromIdx": 8,
+          "toIdx": 16
+        },
+        {
+          "id": "C",
+          "label": "Part C",
+          "fromIdx": 17,
+          "toIdx": 30
+        }
+      ],
+      "sentences": [
+        {
+          "idx": 0,
+          "startMs": 0,
+          "endMs": 3192,
+          "text": "Welcome to the City Transport Museum.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 1,
+          "startMs": 3472,
+          "endMs": 7936,
+          "text": "Your visit begins in the main hall on this floor.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 2,
+          "startMs": 8216,
+          "endMs": 12968,
+          "text": "The first gallery shows how people traveled by river.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 3,
+          "startMs": 13248,
+          "endMs": 17760,
+          "text": "From there, follow the blue signs to the train exhibit.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 4,
+          "startMs": 18040,
+          "endMs": 21904,
+          "text": "The short film starts every half hour upstairs.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 5,
+          "startMs": 22184,
+          "endMs": 26936,
+          "text": "You may take photographs, but please turn off the flash.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 6,
+          "startMs": 27216,
+          "endMs": 32160,
+          "text": "Food and drinks are available in the café near the exit.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 7,
+          "startMs": 32440,
+          "endMs": 36784,
+          "text": "Enjoy your visit, and ask our guides if you need help.",
+          "textTh": "",
+          "section": "A"
+        },
+        {
+          "idx": 8,
+          "startMs": 37784,
+          "endMs": 40976,
+          "text": "Welcome to the Riverside Business Conference.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 9,
+          "startMs": 41256,
+          "endMs": 44616,
+          "text": "Please collect your badge at the registration desk.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 10,
+          "startMs": 44896,
+          "endMs": 49336,
+          "text": "The desk is directly ahead of the main entrance.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 11,
+          "startMs": 49616,
+          "endMs": 53840,
+          "text": "Morning presentations will be held in Hall A.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 12,
+          "startMs": 54120,
+          "endMs": 58632,
+          "text": "The workshops begin in Hall B after lunch.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 13,
+          "startMs": 58912,
+          "endMs": 63016,
+          "text": "The café is located between the two halls.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 14,
+          "startMs": 63296,
+          "endMs": 67376,
+          "text": "If you need a quiet place to work, use the upstairs lounge.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 15,
+          "startMs": 67656,
+          "endMs": 72000,
+          "text": "Volunteers wearing yellow badges can answer your questions.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 16,
+          "startMs": 72280,
+          "endMs": 75784,
+          "text": "We hope you have a useful and enjoyable day.",
+          "textTh": "",
+          "section": "B"
+        },
+        {
+          "idx": 17,
+          "startMs": 76784,
+          "endMs": 81416,
+          "text": "Good afternoon, conference visitors. We have one schedule change.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 18,
+          "startMs": 81696,
+          "endMs": 87120,
+          "text": "The workshop on customer service will begin at two fifteen.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 19,
+          "startMs": 87400,
+          "endMs": 90880,
+          "text": "It was originally scheduled for two o'clock.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 20,
+          "startMs": 91160,
+          "endMs": 95192,
+          "text": "The workshop will still take place in Hall B.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 21,
+          "startMs": 95472,
+          "endMs": 99384,
+          "text": "Please use the extra time to visit the display area.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 22,
+          "startMs": 99664,
+          "endMs": 104128,
+          "text": "It is located beyond the café, near the garden doors.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 23,
+          "startMs": 104408,
+          "endMs": 109520,
+          "text": "Staff at the registration desk can provide a revised schedule.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 24,
+          "startMs": 109800,
+          "endMs": 111600,
+          "text": "Thank you for your patience.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 25,
+          "startMs": 111880,
+          "endMs": 117232,
+          "text": "The display area includes work from several local companies.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 26,
+          "startMs": 117512,
+          "endMs": 121064,
+          "text": "You are welcome to speak with their representatives.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 27,
+          "startMs": 121344,
+          "endMs": 125544,
+          "text": "The afternoon guest talk will still begin at four.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 28,
+          "startMs": 125824,
+          "endMs": 129136,
+          "text": "It will take place in Hall A as planned.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 29,
+          "startMs": 129416,
+          "endMs": 133760,
+          "text": "Please return to Hall B before the workshop begins.",
+          "textTh": "",
+          "section": "C"
+        },
+        {
+          "idx": 30,
+          "startMs": 134040,
+          "endMs": 136752,
+          "text": "We hope you enjoy the rest of the conference.",
+          "textTh": "",
+          "section": "C"
+        }
+      ],
+      "audioSha256": "9ef80ed9e284c562aaa16f0123040a36778db32796c39e27d89c26a9d447d6fb"
+    }
+  ]
+}
