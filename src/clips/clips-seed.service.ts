@@ -67,6 +67,9 @@ export class ClipsSeedService implements OnModuleInit {
 
   private async maybeSeed() {
     const root = process.env.CLIPS_CC_DIR ?? join(process.cwd(), 'clips-cc');
+    // Prod may still have seeded Banana Originals rows after the feature was
+    // reverted from release — hide them until the catalog ships again.
+    await this.unpublishBananaOriginalsWithoutCatalog(root);
     if (!existsSync(root)) {
       this.logger.log(`Clips seed skipped (no ${root})`);
       return;
@@ -141,6 +144,33 @@ export class ClipsSeedService implements OnModuleInit {
       this.logger.log(`Clips seed done: ok=${ok} failed=${failed}`);
       // New imports may still lack Thai if Gemini failed — mirror/retry once more.
       await this.backfillMissingThai();
+    }
+  }
+
+  /** Draft Banana Originals clips when the seed catalog is not shipped. */
+  private async unpublishBananaOriginalsWithoutCatalog(root: string) {
+    const catalogPath = join(
+      root,
+      'banana-originals',
+      'toeic-listening',
+      'catalog.json',
+    );
+    if (existsSync(catalogPath)) return;
+    const result = await this.prisma.clip.updateMany({
+      where: {
+        status: 'published',
+        OR: [
+          { id: { startsWith: 'toeic_s1_' } },
+          { sourceUrl: { startsWith: 'banana-originals://' } },
+          { credit: { equals: 'Banana Original' } },
+        ],
+      },
+      data: { status: 'draft' },
+    });
+    if (result.count > 0) {
+      this.logger.log(
+        `Unpublished Banana Originals clips (no catalog): ${result.count}`,
+      );
     }
   }
 
