@@ -26,7 +26,7 @@ export const CLIP_CATEGORY_TITLES: Record<ClipCategory, { en: string; th: string
   songs: { en: 'Songs', th: 'เพลง' },
   learning: { en: 'Learning', th: 'Learning' },
   listening: { en: 'Listening practice', th: 'ฝึกฟัง' },
-  toeic: { en: 'TOEIC Listening', th: 'TOEIC Listening' },
+  toeic: { en: 'TOEIC Listening Practice', th: 'TOEIC Listening Practice' },
   ielts: { en: 'IELTS Listening', th: 'IELTS Listening' },
 };
 
@@ -134,7 +134,7 @@ export const CLIP_CHANNEL_TITLES: Record<ClipChannel, { en: string; th: string }
   bbc: { en: 'BBC Learning English', th: 'BBC Learning English' },
   voa: { en: 'VOA Learning English', th: 'VOA Learning English' },
   listening_time: { en: 'Listening Time', th: 'Listening Time' },
-  banana: { en: 'Banana Originals', th: 'Banana Originals' },
+  banana: { en: 'Banana Original', th: 'Banana Original' },
 };
 
 /** "YouTube · BBC Learning English" → bbc · VOA credit → voa · no credit → banana. */

@@ -29,6 +29,7 @@ import {
   parseYoutubeId,
   validateTimedLines,
 } from './clips.rules';
+import { bananaOriginalsChaptersFor } from './banana-originals-catalog';
 
 type ClipRow = Prisma.ClipGetPayload<{ include: { _count: { select: { sentences: true } } } }>;
 
@@ -183,6 +184,7 @@ export class ClipsService {
     });
     return {
       clip: this.cardView(clip, progress),
+      chapters: bananaOriginalsChaptersFor(clip.id),
       sentences: clip.sentences.map((s) => ({
         idx: s.idx,
         startMs: s.startMs,
@@ -356,7 +358,11 @@ export class ClipsService {
       if (yt === null) throw new BadRequestException('youtube_url_invalid');
       data.youtubeId = yt;
       data.source = yt ? 'youtube' : 'video';
-    } else if (body.source === 'youtube' || body.source === 'video') {
+    } else if (
+      body.source === 'youtube' ||
+      body.source === 'video' ||
+      body.source === 'audio'
+    ) {
       data.source = body.source;
     }
     if (typeof body.title === 'string' && body.title.trim()) data.title = body.title.trim().slice(0, 120);
