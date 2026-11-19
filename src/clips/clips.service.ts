@@ -29,7 +29,10 @@ import {
   parseYoutubeId,
   validateTimedLines,
 } from './clips.rules';
-import { bananaOriginalsChaptersFor } from './banana-originals-catalog';
+import {
+  bananaOriginalsChaptersFor,
+  bananaOriginalsStillsFor,
+} from './banana-originals-catalog';
 
 type ClipRow = Prisma.ClipGetPayload<{ include: { _count: { select: { sentences: true } } } }>;
 
@@ -185,6 +188,7 @@ export class ClipsService {
     return {
       clip: this.cardView(clip, progress),
       chapters: bananaOriginalsChaptersFor(clip.id),
+      stills: bananaOriginalsStillsFor(clip.id),
       sentences: clip.sentences.map((s) => ({
         idx: s.idx,
         startMs: s.startMs,
