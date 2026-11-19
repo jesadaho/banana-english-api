@@ -5,8 +5,7 @@ import { join } from 'node:path';
 import { PrismaService } from '../prisma/prisma.service';
 import { CcImportService } from './cc-import.service';
 import { MAX_LINE_WORDS } from './cc-import.rules';
-import { loadBananaOriginalsCatalog } from './banana-originals-catalog';
-import { guessClipCategory, normalizeDictation } from './clips.rules';
+import { guessClipCategory } from './clips.rules';
 import { ClipsService } from './clips.service';
 
 type ClipMeta = {
@@ -72,9 +71,6 @@ export class ClipsSeedService implements OnModuleInit {
       this.logger.log(`Clips seed skipped (no ${root})`);
       return;
     }
-    // Always upsert Banana Originals audio packs when the catalog is present.
-    await this.seedBananaOriginals(root);
-
     if (process.env.CLIPS_CC_AUTO_IMPORT === '0') {
       this.logger.log('Clips seed skipped (CLIPS_CC_AUTO_IMPORT=0)');
       await this.backfillMissingThai();
@@ -146,73 +142,6 @@ export class ClipsSeedService implements OnModuleInit {
       // New imports may still lack Thai if Gemini failed — mirror/retry once more.
       await this.backfillMissingThai();
     }
-  }
-
-  /** Publish Banana Originals · TOEIC Listening Season 1 from catalog.json. */
-  private async seedBananaOriginals(root: string) {
-    const catalog = loadBananaOriginalsCatalog(root);
-    if (!catalog?.episodes?.length) {
-      this.logger.log('Banana Originals seed skipped (no catalog)');
-      return;
-    }
-    let upserted = 0;
-    for (const ep of catalog.episodes) {
-      try {
-        await this.prisma.clip.upsert({
-          where: { id: ep.id },
-          create: {
-            id: ep.id,
-            source: 'audio',
-            youtubeId: '',
-            videoUrl: ep.audioUrl,
-            sourceUrl: ep.sourceUrl,
-            credit: ep.credit || 'Banana Original',
-            title: ep.title,
-            titleTh: ep.titleTh ?? '',
-            level: ep.level || 'A2',
-            category: ep.category || 'toeic',
-            durationSec: ep.durationSec,
-            thumbnailUrl: ep.thumbnailUrl,
-            status: 'published',
-            sortOrder: ep.sortOrder,
-          },
-          update: {
-            source: 'audio',
-            videoUrl: ep.audioUrl,
-            sourceUrl: ep.sourceUrl,
-            credit: ep.credit || 'Banana Original',
-            title: ep.title,
-            titleTh: ep.titleTh ?? '',
-            level: ep.level || 'A2',
-            category: ep.category || 'toeic',
-            durationSec: ep.durationSec,
-            thumbnailUrl: ep.thumbnailUrl,
-            status: 'published',
-            sortOrder: ep.sortOrder,
-          },
-        });
-        await this.prisma.clipSentence.deleteMany({ where: { clipId: ep.id } });
-        if (ep.sentences.length) {
-          await this.prisma.clipSentence.createMany({
-            data: ep.sentences.map((s) => ({
-              clipId: ep.id,
-              idx: s.idx,
-              startMs: s.startMs,
-              endMs: s.endMs,
-              text: s.text,
-              textTh: s.textTh ?? '',
-              dictation: normalizeDictation(null, s.text) as Prisma.InputJsonValue,
-            })),
-          });
-        }
-        upserted += 1;
-      } catch (err) {
-        this.logger.warn(`Banana Originals seed fail ${ep.id}: ${String(err)}`);
-      }
-    }
-    this.logger.log(
-      `Banana Originals seed done: upserted=${upserted}/${catalog.episodes.length}`,
-    );
   }
 
   /**
