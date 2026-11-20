@@ -36,6 +36,8 @@ export const FOUNDATION_V7_CAPABILITIES = [
   'word_cards',
   'listen_drill',
   'in_on_at',
+  /** Optional object-pronoun lesson + Say It sets in Ch 7, 10, 11. */
+  'object_pronouns',
 ] as const;
 export type FoundationV7Capability = (typeof FOUNDATION_V7_CAPABILITIES)[number];
 export type FoundationV7ContentRef = {
