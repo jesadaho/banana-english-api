@@ -2,6 +2,12 @@
  * Avatar catalog costs — keep in sync with Flutter DefaultAvatars.seedCostsById.
  */
 export const AVATAR_SEED_COSTS: Record<string, number> = {
+  nerd_chic_girl: 0,
+  street_pony_girl: 0,
+  navy_beanie_boy: 0,
+  cool_capybara: 0,
+  headphone_otter: 0,
+  star_hippo: 0,
   street_lion: 0,
   cool_black_cat: 0,
   banana_astronaut: 0,
@@ -61,7 +67,7 @@ export function resolveDisplayedAvatarId(
 
 export function avatarMembership(id: string): 'PRO' | 'PRO_MAX' | null {
   if (['dj_tiger', 'banana_astronaut'].includes(id)) return 'PRO';
-  if (['cool_black_cat', 'street_lion'].includes(id)) return 'PRO_MAX';
+  if (['cool_black_cat', 'street_lion', 'nerd_chic_girl', 'street_pony_girl', 'navy_beanie_boy', 'cool_capybara', 'headphone_otter', 'star_hippo'].includes(id)) return 'PRO_MAX';
   return null;
 }
 export function canUseMemberAvatar(id: string, tier: string): boolean {
