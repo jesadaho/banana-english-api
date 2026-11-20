@@ -1,7 +1,21 @@
 import { completedOnLocalDay } from '../common/timezone.util';
 import { placementBandFromResult } from '../placement/placement-band';
 
-export const LIVE_TALK_SPEAKER_CAP = 8;
+/** Soft max if LIVE_TALK_SPEAKER_CAP is set absurdly high. */
+const LIVE_TALK_SPEAKER_CAP_MAX = 50;
+export const DEFAULT_LIVE_TALK_SPEAKER_CAP = 10;
+
+/** Speakers per room (host + cohosts + speakers). Override with LIVE_TALK_SPEAKER_CAP. */
+export function liveTalkSpeakerCap(
+  raw: string | undefined = process.env.LIVE_TALK_SPEAKER_CAP,
+): number {
+  const n = Number.parseInt((raw ?? '').trim(), 10);
+  if (!Number.isFinite(n) || n < 1) return DEFAULT_LIVE_TALK_SPEAKER_CAP;
+  return Math.min(n, LIVE_TALK_SPEAKER_CAP_MAX);
+}
+
+/** @deprecated Prefer liveTalkSpeakerCap() so env overrides apply. */
+export const LIVE_TALK_SPEAKER_CAP = DEFAULT_LIVE_TALK_SPEAKER_CAP;
 export const LIVE_TALK_LISTENER_CAP = 50;
 /** Leave-sheet thumbs: listen this long before we may ask. */
 export const LIVE_TALK_RATING_MIN_LISTEN_MS = 3 * 60 * 1000;
@@ -139,7 +153,7 @@ export function decideJoin(input: {
   if (!canSpeakAtLevel(input.band, input.minSpeakLevel)) {
     return { ok: false, reason: 'level_too_low' };
   }
-  if (input.speakerCount >= LIVE_TALK_SPEAKER_CAP) {
+  if (input.speakerCount >= liveTalkSpeakerCap()) {
     return { ok: false, reason: 'speaker_full' };
   }
   return { ok: true, role: 'speaker' };

@@ -25,7 +25,7 @@ import {
   LIVE_TALK_INVITE_TTL_MS,
   LIVE_TALK_LISTENER_CAP,
   LIVE_TALK_RECONNECT_GRACE_MS,
-  LIVE_TALK_SPEAKER_CAP,
+  liveTalkSpeakerCap,
   canChangeHostLevel,
   canManageHosts,
   canModerateInRoom,
@@ -453,7 +453,7 @@ export class LiveTalkService {
               role: { in: ['host', 'cohost', 'speaker'] },
             },
           });
-          if (speakers >= LIVE_TALK_SPEAKER_CAP) {
+          if (speakers >= liveTalkSpeakerCap()) {
             throw new ForbiddenException('speaker_full');
           }
           await tx.liveTalkParticipant.update({
@@ -685,7 +685,7 @@ export class LiveTalkService {
             role: { in: ['host', 'cohost', 'speaker'] },
           },
         });
-        if (speakers >= LIVE_TALK_SPEAKER_CAP) {
+        if (speakers >= liveTalkSpeakerCap()) {
           throw new ForbiddenException('speaker_full');
         }
       }
@@ -1264,12 +1264,12 @@ export class LiveTalkService {
       description: room.description,
       minSpeakLevel: room.minSpeakLevel,
       status: room.status,
-      speakerCap: LIVE_TALK_SPEAKER_CAP,
+      speakerCap: liveTalkSpeakerCap(),
       speakerCount: speakers.length,
       listenerCap: LIVE_TALK_LISTENER_CAP,
       listenerCount: listeners.length,
       host: this.person(room.host, true, false, 'host'),
-      speakers: speakers.slice(0, LIVE_TALK_SPEAKER_CAP).map((p) =>
+      speakers: speakers.slice(0, liveTalkSpeakerCap()).map((p) =>
         this.person(p.user, p.role === 'host', p.mutedByHost, p.role),
       ),
       listeners: listeners.slice(0, LIVE_TALK_LISTENER_CAP).map((p) =>
