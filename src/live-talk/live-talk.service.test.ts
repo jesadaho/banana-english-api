@@ -204,8 +204,8 @@ describe('LiveTalkService.joinRoom', () => {
     );
   });
 
-  it('blocks a 9th speaker', async () => {
-    const speakers = Array.from({ length: 8 }, (_, i) => ({
+  it('blocks a speaker when the room is at cap', async () => {
+    const speakers = Array.from({ length: 10 }, (_, i) => ({
       id: `p-${i}`,
       userId: `u-${i}`,
       role: i === 0 ? 'host' : 'speaker',

@@ -4,7 +4,7 @@ import {
   LIVE_TALK_CONNECT_GRACE_MS,
   LIVE_TALK_MAX_LIVE_MS,
   LIVE_TALK_LISTENER_CAP,
-  LIVE_TALK_SPEAKER_CAP,
+  liveTalkSpeakerCap,
   canChangeHostLevel,
   canCreateLiveTalkRoom,
   canModerateInRoom,
@@ -50,7 +50,7 @@ describe('decideJoin', () => {
     const d = decideJoin({
       requested: 'listener',
       roomStatus: 'live',
-      speakerCount: LIVE_TALK_SPEAKER_CAP,
+      speakerCount: liveTalkSpeakerCap(),
       listenerCount: 0,
       band: 'Seed',
       minSpeakLevel: 'a1',
@@ -76,7 +76,7 @@ describe('decideJoin', () => {
     const d = decideJoin({
       requested: 'speaker',
       roomStatus: 'live',
-      speakerCount: LIVE_TALK_SPEAKER_CAP,
+      speakerCount: liveTalkSpeakerCap(),
       band: 'A1',
       minSpeakLevel: 'a1',
       isHost: false,
@@ -100,7 +100,7 @@ describe('decideJoin', () => {
     const d = decideJoin({
       requested: 'speaker',
       roomStatus: 'live',
-      speakerCount: LIVE_TALK_SPEAKER_CAP,
+      speakerCount: liveTalkSpeakerCap(),
       band: 'Seed',
       minSpeakLevel: 'a1',
       isHost: true,
@@ -338,5 +338,21 @@ describe('host levels', () => {
       }),
       false,
     );
+  });
+});
+
+describe('liveTalkSpeakerCap', () => {
+  it('defaults to 10', () => {
+    assert.equal(liveTalkSpeakerCap(undefined), 10);
+    assert.equal(liveTalkSpeakerCap(''), 10);
+    assert.equal(liveTalkSpeakerCap('nope'), 10);
+  });
+
+  it('reads a positive integer from env and caps at 50', () => {
+    assert.equal(liveTalkSpeakerCap('10'), 10);
+    assert.equal(liveTalkSpeakerCap('12'), 12);
+    assert.equal(liveTalkSpeakerCap('99'), 50);
+    assert.equal(liveTalkSpeakerCap('0'), 10);
+    assert.equal(liveTalkSpeakerCap('-3'), 10);
   });
 });
