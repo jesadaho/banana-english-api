@@ -5,7 +5,7 @@ import { effectiveSubscriptionTier } from '../subscriptions/subscription.constan
 import { UsersService } from './users.service';
 
 test('membership avatars cannot be selected by free or insufficient tiers', () => {
-  for (const id of ['dj_tiger', 'banana_astronaut', 'cool_black_cat', 'street_lion']) {
+  for (const id of ['dj_tiger', 'banana_astronaut', 'cool_black_cat', 'street_lion', 'nerd_chic_girl', 'street_pony_girl', 'navy_beanie_boy', 'cool_capybara', 'headphone_otter', 'star_hippo']) {
     assert.equal(isKnownAvatarId(id), true);
     assert.equal((FREE_AVATAR_IDS as readonly string[]).includes(id), false);
     assert.equal(canUseMemberAvatar(id, 'FREE'), false);
@@ -20,6 +20,7 @@ test('membership avatars cannot be selected by free or insufficient tiers', () =
 test('gem prices and existing identities remain stable', () => {
   for (const id of ['kenji', 'sky', 'ray', 'owl', 'fox', 'koala']) assert.equal(avatarSeedCost(id), 500);
   assert.equal(avatarSeedCost('white_elephant'), 2500);
+  for (const id of ['nerd_chic_girl', 'street_pony_girl', 'navy_beanie_boy', 'cool_capybara', 'headphone_otter', 'star_hippo']) assert.equal(avatarSeedCost(id), 0);
   for (const id of ['sunny', 'zig', 'bloo', 'linda']) assert.equal(resolveDisplayedAvatarId(id), id);
   assert.equal(resolveDisplayedAvatarId('unknown'), 'bogy');
 });
