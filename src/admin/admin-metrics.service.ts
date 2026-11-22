@@ -15,6 +15,7 @@ import {
   type DateRange,
   type MetricsFilters,
 } from './admin-metrics.util';
+import { canonicalFoundationV7RewardId } from '../learn-path/foundation-v7-path.data';
 import {
   classifyContentCourse,
   CONTENT_COURSES,
@@ -1379,7 +1380,9 @@ export class AdminMetricsService {
       const order = foundationV7PathPosition(acc.gameId)?.order;
       if (order != null) playedOrders.add(order);
     }
+    const nodeIdByGame = new Map<string, string>();
     for (const stage of foundationV7StageCatalog()) {
+      nodeIdByGame.set(stage.gameId, stage.nodeId);
       if (playedOrders.has(stage.order) || byGame.has(stage.gameId)) continue;
       byGame.set(stage.gameId, {
         gameId: stage.gameId,
@@ -1395,7 +1398,10 @@ export class AdminMetricsService {
     }
     for (const row of sessionRows) {
       const stageId = foundationV7StageIdForSession(row);
-      const acc = stageId ? byGame.get(stageId) : undefined;
+      if (!stageId) continue;
+      // Catalog keys use canonical reward ids (say_it:…); sessions return node ids.
+      const key = canonicalFoundationV7RewardId(stageId) ?? stageId;
+      const acc = byGame.get(key) ?? byGame.get(stageId);
       if (!acc) continue;
       acc.attempts += row.count;
       acc.users.add(row.userId);
@@ -1433,8 +1439,13 @@ export class AdminMetricsService {
             : Math.round((acc.passedCount / acc.scoredPass) * 1000) / 10;
         const pathPosition = foundationV7PathPosition(acc.gameId);
         const ratingAcc = ratingByStage.get(acc.gameId);
+        const classified = classifyContentCourse(acc.gameId);
         return {
           gameId: acc.gameId,
+          nodeId:
+            pathPosition?.nodeId ??
+            nodeIdByGame.get(acc.gameId) ??
+            acc.gameId,
           titleEn: contentItemTitle(acc.gameId),
           pathCode: pathPosition?.code ?? null,
           pathOrder: pathPosition?.order ?? null,
@@ -1442,9 +1453,7 @@ export class AdminMetricsService {
           chapterNumber: pathPosition?.chapterNumber ?? null,
           chapterTitleEn: pathPosition?.chapterTitleEn ?? null,
           kind: acc.kind,
-          course: pathPosition
-            ? 'foundation'
-            : classifyContentCourse(acc.gameId),
+          course: classified,
           attempts: acc.attempts,
           scoredAttempts: acc.scoredAttempts,
           users: acc.users.size,
