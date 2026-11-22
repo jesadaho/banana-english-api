@@ -625,6 +625,36 @@ export class LearnPathService {
     return course.pathId;
   }
 
+
+  /**
+   * Settings → Reset course: wipe learn-path progress so the map starts over.
+   * Keeps bananas, subscription, streak, outfits, and placement band.
+   * Clears sessions, skip-quiz skips, path mini-game reward refs, and
+   * placement entry unlock (so mid-path placement no longer opens chapters).
+   */
+  async resetCourse(userId: string): Promise<{ ok: true }> {
+    await this.prisma.$transaction(async (tx) => {
+      await tx.userSession.deleteMany({ where: { userId } });
+      await tx.foundationChapterSkip.deleteMany({ where: { userId } });
+      await tx.foundationSkipQuizAttempt.deleteMany({ where: { userId } });
+      await tx.economyTransaction.deleteMany({
+        where: {
+          userId,
+          source: 'mini_game_reward',
+          referenceId: { startsWith: 'mini_game:' },
+        },
+      });
+      await tx.user.update({
+        where: { id: userId },
+        data: {
+          placementEntryPathId: null,
+          placementEntryNodeId: null,
+        } as Prisma.UserUpdateInput,
+      });
+    });
+    return { ok: true };
+  }
+
   private async resolveSkippedV7NodeIds(
     userId: string,
     pathId: string = FOUNDATION_V7_PATH_ID,
