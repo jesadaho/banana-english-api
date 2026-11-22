@@ -35,6 +35,12 @@ export interface InteractiveScenarioGoal {
    * means wrong — the AI judge may not pass it as close.
    */
   requiresPattern?: boolean;
+  /**
+   * Partly right (e.g. right sentence frame, or the key word in the wrong
+   * form): regex sources tested like `matchPatterns`. Only used when the
+   * scenario has `partialCredit` — the goal stays unchecked but earns half.
+   */
+  partialPatterns?: string[];
   /** Foundation chapter numbers this goal measures (analytics / authoring). */
   measuresChapters?: number[];
   hints: InteractiveScenarioGoalHint;
@@ -118,6 +124,11 @@ export interface InteractiveScenarioDef {
    * (goal stays unchecked). 1 = assessment (no retry).
    */
   maxAttemptsPerBeat?: number;
+  /**
+   * Score per goal instead of pass/fail: correct = 2, close (AI) or a
+   * `partialPatterns` match = 1, wrong = 0. Score % = points / (2 × goals).
+   */
+  partialCredit?: boolean;
   /** Soft ceiling for abandon analytics only — not required for pass. */
   softAttemptCeiling?: number;
 }

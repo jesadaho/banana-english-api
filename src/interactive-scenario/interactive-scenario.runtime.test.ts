@@ -13,8 +13,10 @@ import {
   initScenarioRuntime,
   isScenarioNoise,
   matchNameSpelling,
+  partialMatchGoal,
   processScenarioTurn,
   scenarioHintForState,
+  scenarioScore,
   softMatchGoal,
   spellNameOut,
   type ScenarioRuntimeState,
@@ -335,6 +337,7 @@ describe('chapter 8 Minnie interview', () => {
     assert.equal(M.teacher, 'minnie');
     assert.equal(M.ttsVoiceProfile, 'teacher_minnie');
     assert.equal(M.maxAttemptsPerBeat, 1);
+    assert.equal(M.partialCredit, true);
     assert.equal(M.beats.length, 10);
     assert.equal(M.goals.length, 10);
     assert.equal(M.beats[0]!.ungraded, undefined);
@@ -350,6 +353,38 @@ describe('chapter 8 Minnie interview', () => {
       'describe-it/fnd_v7_u05n05/02-two-pens.webp',
       'describe-it/fnd_v7_u08n09/02-may-profile-18.webp',
     ]);
+  });
+
+  it('partly right = 1 point: one try, then reveal with "Almost!"', () => {
+    const toPens = MINNIE_HAPPY.slice(0, 6);
+    const partly = runMinnie([...toPens, 'This is pen.']);
+    assert.equal(partly.state.checkpoints.these_pens, false);
+    assert.equal(partly.state.goalOutcomes.these_pens, 'partial');
+    assert.match(partly.reply.aiResponse, /^Almost! You can say: They're pens\. Next!/);
+    assert.match(partly.reply.textTh, /ได้ 1 คะแนน/);
+
+    const wrong = runMinnie([...toPens, 'Banana.']);
+    assert.equal(wrong.state.goalOutcomes.these_pens, 'skipped');
+    assert.match(wrong.reply.aiResponse, /^You can say: They're pens\. Next!/);
+
+    const goal = (id: string) => M.goals.find((g) => g.id === id)!;
+    assert.equal(partialMatchGoal("I'm tired.", goal('hungry')), true);
+    assert.equal(partialMatchGoal('He is a doctor.', goal('job_teacher')), true);
+    assert.equal(partialMatchGoal('Banana.', goal('job_teacher')), false);
+  });
+
+  it('scores 2 / 1 / 0 per goal', () => {
+    const all = runMinnie(MINNIE_HAPPY).state;
+    assert.equal(scenarioScore(M, all), 100);
+    const outcomes = { ...all.goalOutcomes, these_pens: 'partial' as const };
+    const checkpoints = { ...all.checkpoints, these_pens: false };
+    assert.equal(scenarioScore(M, { checkpoints, goalOutcomes: outcomes }), 95);
+    const skipped = { ...all.goalOutcomes, these_pens: 'skipped' as const };
+    assert.equal(scenarioScore(M, { checkpoints, goalOutcomes: skipped }), 90);
+    // Pass/fail scenarios keep goals met / goals.
+    const johnAll = Object.fromEntries(S.goals.map((g) => [g.id, true]));
+    assert.equal(scenarioScore(S, { checkpoints: johnAll, goalOutcomes: {} }), 100);
+    assert.equal(scenarioScore(S, { checkpoints: {}, goalOutcomes: {} }), 0);
   });
 
   it('happy path: 10 answers, spells the captured name, Minnie answers hers', () => {

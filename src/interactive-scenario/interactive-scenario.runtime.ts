@@ -10,6 +10,8 @@ import type {
 
 export type ScenarioJudgeTier = 'correct' | 'close' | 'incorrect';
 
+export type ScenarioGoalOutcome = 'correct' | 'close' | 'partial' | 'skipped';
+
 export type ScenarioRuntimeState = {
   scenarioId: string;
   beatIndex: number;
@@ -22,7 +24,7 @@ export type ScenarioRuntimeState = {
   /** Learner facts reused in NPC lines. */
   slots: Partial<Record<ScenarioSlot, string>>;
   /** Per-goal outcome for analytics: correct | close | skipped. */
-  goalOutcomes: Record<string, 'correct' | 'close' | 'skipped'>;
+  goalOutcomes: Record<string, ScenarioGoalOutcome>;
   /** Last beat answered or moved past — scenario is over. */
   finished: boolean;
 };
@@ -553,6 +555,45 @@ export function softMatchGoal(
   return false;
 }
 
+/** Partly right answer for a goal (scenario `partialCredit`). */
+export function partialMatchGoal(
+  transcript: string,
+  goal: InteractiveScenarioGoal,
+): boolean {
+  const raw = transcript.replace(/[\u2018\u2019]/g, "'").trim();
+  if (!raw) return false;
+  for (const src of goal.partialPatterns ?? []) {
+    try {
+      if (new RegExp(src, 'iu').test(raw)) return true;
+    } catch {
+      // bad authored regex — ignore
+    }
+  }
+  return false;
+}
+
+/**
+ * Session score 0–100. Pass/fail scenarios: goals met / goals. With
+ * `partialCredit`: correct 2, close or partial 1, else 0, over 2 × goals.
+ */
+export function scenarioScore(
+  scenario: InteractiveScenarioDef,
+  state: Pick<ScenarioRuntimeState, 'checkpoints' | 'goalOutcomes'>,
+): number {
+  const total = Math.max(scenario.goals.length, 1);
+  if (!scenario.partialCredit) {
+    const met = scenario.goals.filter((g) => state.checkpoints[g.id]).length;
+    return Math.round((met / total) * 100);
+  }
+  let points = 0;
+  for (const g of scenario.goals) {
+    const outcome = state.goalOutcomes?.[g.id];
+    if (outcome === 'close' || outcome === 'partial') points += 1;
+    else if (outcome === 'correct' || state.checkpoints[g.id]) points += 2;
+  }
+  return Math.round((points / (total * 2)) * 100);
+}
+
 export function currentScenarioBeat(
   scenario: InteractiveScenarioDef,
   state: Pick<ScenarioRuntimeState, 'beatIndex'>,
@@ -739,16 +780,29 @@ export function processScenarioTurn(params: {
     }
 
     // Out of attempts (assessment: 1) — reveal the model answer, then move on.
-    // Goal stays unchecked.
+    // Goal stays unchecked; a partly right answer still earns half (partialCredit).
+    const partialIds = scenario.partialCredit
+      ? beat.focusGoalIds.filter((id) => {
+          const goal = scenario.goals.find((g) => g.id === id);
+          return goal ? partialMatchGoal(transcript, goal) : false;
+        })
+      : [];
     for (const id of beat.focusGoalIds) {
-      if (!state.checkpoints[id]) state.goalOutcomes[id] = 'skipped';
+      if (!state.checkpoints[id]) {
+        state.goalOutcomes[id] = partialIds.includes(id) ? 'partial' : 'skipped';
+      }
     }
     wasSoftAdvance = true;
     const model = revealModel(scenario, beat, state.slots);
+    const partly = partialIds.length > 0;
     reaction = model
-      ? `You can say: ${model} Next!`
-      : 'OK, next!';
-    noteTh = model ? `เฉลย: “${model}”` : '';
+      ? `${partly ? 'Almost! ' : ''}You can say: ${model} Next!`
+      : partly ? 'Almost! Next!' : 'OK, next!';
+    noteTh = model
+      ? partly
+        ? `เกือบถูก ได้ 1 คะแนน — พูดว่า “${model}”`
+        : `เฉลย: “${model}”`
+      : '';
   }
 
   if (isLastBeat) {
@@ -842,7 +896,7 @@ export function scenarioHintForState(
 export type ScenarioSceneProgress = {
   completedSceneIds: string[];
   checkpoints: Record<string, boolean>;
-  goalOutcomes: Record<string, 'correct' | 'close' | 'skipped'>;
+  goalOutcomes: Record<string, ScenarioGoalOutcome>;
   slots: Partial<Record<ScenarioSlot, string>>;
 };
 

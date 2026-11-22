@@ -524,6 +524,7 @@ const MINNIE_GOALS: InteractiveScenarioGoal[] = [
     matchPatterns: ['\\bhungry\\b'],
     requiresPattern: true,
     measuresChapters: [3],
+    partialPatterns: ["\\b(i am|i'm|im)\\b", "\\bhung"],
     hints: { intentTh: 'บอกความรู้สึกด้วย I am…', starterEn: "I'm…", modelEn: "I'm hungry." },
   },
   {
@@ -535,6 +536,7 @@ const MINNIE_GOALS: InteractiveScenarioGoal[] = [
     matchPatterns: ['\\bteacher\\b'],
     requiresPattern: true,
     measuresChapters: [4],
+    partialPatterns: ["\\b(he is|he's|hes)\\b", "\\bteach"],
     hints: { intentTh: 'บอกอาชีพด้วย He is a…', starterEn: "He's a…", modelEn: "He's a teacher." },
   },
   {
@@ -546,6 +548,7 @@ const MINNIE_GOALS: InteractiveScenarioGoal[] = [
     matchPatterns: ['\\bbag\\b'],
     requiresPattern: true,
     measuresChapters: [6],
+    partialPatterns: ["\\b(it is|it's|its|this is)\\b", "\\bbags\\b"],
     hints: { intentTh: "บอกของใกล้ตัวด้วย It's a…", starterEn: "It's a…", modelEn: "It's a bag." },
   },
   {
@@ -557,6 +560,7 @@ const MINNIE_GOALS: InteractiveScenarioGoal[] = [
     matchPatterns: ['\\bblue\\b'],
     requiresPattern: true,
     measuresChapters: [6],
+    partialPatterns: ["\\b(it is|it's|its)\\b", "\\bblu"],
     hints: { intentTh: 'บอกสีด้วย It is…', starterEn: "It's…", modelEn: "It's blue." },
   },
   {
@@ -569,6 +573,7 @@ const MINNIE_GOALS: InteractiveScenarioGoal[] = [
     matchPatterns: ['\\bpens\\b'],
     requiresPattern: true,
     measuresChapters: [5],
+    partialPatterns: ["\\bpen\\b", "\\b(they are|they're|these are)\\b"],
     hints: { intentTh: "บอกของหลายชิ้นด้วย They're…", starterEn: "They're…", modelEn: "They're pens." },
   },
   {
@@ -580,6 +585,7 @@ const MINNIE_GOALS: InteractiveScenarioGoal[] = [
     matchPatterns: ['\\b(two|2)\\b'],
     requiresPattern: true,
     measuresChapters: [5, 8],
+    partialPatterns: ["\\bpens?\\b"],
     hints: { intentTh: 'บอกจำนวนที่เห็น', starterEn: 'Two…', modelEn: 'Two pens.' },
   },
   {
@@ -591,6 +597,7 @@ const MINNIE_GOALS: InteractiveScenarioGoal[] = [
     matchPatterns: ['\\b(eighteen|18)\\b'],
     requiresPattern: true,
     measuresChapters: [8],
+    partialPatterns: ["\\b(she is|she's|shes)\\b", "\\byears? old\\b"],
     hints: { intentTh: 'บอกอายุด้วย She is…', starterEn: "She's…", modelEn: "She's eighteen." },
   },
   {
@@ -601,6 +608,7 @@ const MINNIE_GOALS: InteractiveScenarioGoal[] = [
     acceptExamples: ["What's your name?", 'What is your name?', 'May I have your name?'],
     matchPatterns: ["\\bwhat'?s your name\\b", '\\bwhat is your name\\b', '\\byour name\\b'],
     measuresChapters: [1],
+    partialPatterns: ["\\bname\\b"],
     hints: { intentTh: 'ถามชื่อครูด้วย What’s your name?', starterEn: "What's your name?", modelEn: "What's your name?" },
   },
 ];
@@ -756,7 +764,9 @@ export const FINAL_INTERVIEW_MINNIE: InteractiveScenarioDef = {
   titleTh: 'คุยเล่นกับ Teacher Minnie',
   bananaCost: 5,
   estimatedMinutes: 6,
+  // Test: one try per question. Partly right answers still earn 1 of 2 points.
   maxAttemptsPerBeat: 1,
+  partialCredit: true,
   softAttemptCeiling: 20,
   scenes: [
     {
