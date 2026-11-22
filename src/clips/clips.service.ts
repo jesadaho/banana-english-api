@@ -12,6 +12,10 @@ import { placementBandFromResult } from '../placement/placement-band';
 import { appSupportsAudioClips } from './audio-clips-version';
 import { parrotoViews } from './parroto-popularity';
 import {
+  POPULAR_COMPLETES_WINDOW_MS,
+  rankPopularClips,
+} from './popular-clips';
+import {
   CLIP_CATEGORIES,
   CLIP_CATEGORY_TITLES,
   normalizeClipCategory,
@@ -136,49 +140,51 @@ export class ClipsService {
   }
 
   /**
-   * Popular Now: ranked by Parroto's view counts for now (our own play data
-   * is still thin), then topped up with our most played (ClipSession, 30 d)
-   * and most practised clips.
+   * Popular Now: finished plays (`ClipSession.completedAt`) in the last 7
+   * days first. If that list is thin, fill with Parroto views then weak
+   * ClipProgress counts so the rail stays full.
    */
-  private async popularClips<T extends { id: string; title: string }>(views: T[]): Promise<T[]> {
-    const fromParroto = views
-      .map((v) => ({ v, n: parrotoViews(v.title) }))
-      .filter((r) => r.n > 0)
-      .sort((a, b) => b.n - a.n)
-      .map((r) => r.v);
-    if (fromParroto.length >= 10) return fromParroto.slice(0, 10);
-
-    const since = new Date(Date.now() - 30 * 86_400_000);
+  private async popularClips<T extends { id: string; title: string }>(
+    views: T[],
+  ): Promise<T[]> {
     const ids = views.map((v) => v.id);
-    let ranked: { clipId: string; n: number }[] = [];
+    const since = new Date(Date.now() - POPULAR_COMPLETES_WINDOW_MS);
+
+    let completed: { clipId: string; n: number }[] = [];
     try {
       const rows = await this.prisma.clipSession.groupBy({
         by: ['clipId'],
-        where: { clipId: { in: ids }, createdAt: { gte: since } },
+        where: {
+          clipId: { in: ids },
+          // Null completedAt never matches gte — only finished plays count.
+          completedAt: { gte: since },
+        },
         _count: { _all: true },
       });
-      ranked = rows.map((r) => ({ clipId: r.clipId, n: r._count._all }));
+      completed = rows.map((r) => ({ clipId: r.clipId, n: r._count._all }));
     } catch {
-      ranked = []; // table not migrated yet
+      completed = []; // table not migrated yet
     }
-    const rows = await this.prisma.clipProgress.groupBy({
-      by: ['clipId'],
-      where: { clipId: { in: ids } },
-      _count: { _all: true },
+
+    let progressCounts: { clipId: string; n: number }[] = [];
+    try {
+      const rows = await this.prisma.clipProgress.groupBy({
+        by: ['clipId'],
+        where: { clipId: { in: ids } },
+        _count: { _all: true },
+      });
+      progressCounts = rows.map((r) => ({
+        clipId: r.clipId,
+        n: r._count._all,
+      }));
+    } catch {
+      progressCounts = [];
+    }
+
+    return rankPopularClips(views, completed, {
+      parrotoViews,
+      progressCounts,
     });
-    const seen = new Set(ranked.map((r) => r.clipId));
-    ranked.push(
-      ...rows
-        .filter((r) => !seen.has(r.clipId))
-        .map((r) => ({ clipId: r.clipId, n: r._count._all / 1000 })),
-    );
-    ranked.sort((a, b) => b.n - a.n);
-    const byId = new Map(views.map((v) => [v.id, v]));
-    const picked = new Set(fromParroto.map((v) => v.id));
-    const rest = ranked
-      .map((r) => byId.get(r.clipId))
-      .filter((v): v is T => !!v && !picked.has(v.id));
-    return [...fromParroto, ...rest].slice(0, 10);
   }
 
   async getForUser(userId: string, clipId: string, client?: ClientInfo) {
