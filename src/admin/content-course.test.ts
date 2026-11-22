@@ -6,6 +6,7 @@ import {
   foundationV7PathPosition,
   foundationV7StageCatalog,
   foundationV7StageIdForRating,
+  foundationV7StageIdForSession,
 } from './content-course';
 
 describe('classifyContentCourse', () => {
@@ -59,15 +60,17 @@ describe('classifyContentCourse', () => {
   });
 
   it('lists every map node in chapter order, not only scored games', () => {
-    const stages = foundationV7StageCatalog();
+    // Foundation only (A2 stages share chapter codes like 1.1).
+    const stages = foundationV7StageCatalog().filter((s) => !/(^|:)a2_/.test(s.gameId));
     const chapter1 = stages.filter((stage) => stage.code.startsWith('1.'));
+    // Same map as the app: Listen Up (easy) sits before the conversation.
     assert.deepEqual(
       chapter1.map((stage) => stage.code),
-      ['1.1', '1.2', '1.3', '1.4', '1.5'],
+      ['1.1', '1.2', '1.3', '1.4', '1.L', '1.5'],
     );
     assert.deepEqual(
       chapter1.map((stage) => stage.nodeOrder),
-      [1, 2, 3, 4, 5],
+      [1, 2, 3, 4, 5, 6],
     );
     const chapter2 = stages.filter(
       (stage) => stage.code.startsWith('2.') && stage.kind !== 'skip_quiz',
@@ -80,9 +83,45 @@ describe('classifyContentCourse', () => {
         ['2.3', 3],
         ['2.4', 4],
         ['2.5', 5],
-        ['2.6', 6],
+        ['2.L', 6],
+        ['2.6', 7],
       ],
     );
+  });
+
+  it('places generated Listen Up (easy) like the app map', () => {
+    const drill = foundationV7PathPosition('listen_drill:listen_drill_v7_u04');
+    assert.equal(drill?.code, '4.L');
+    assert.equal(drill?.chapterNumber, 4);
+    assert.equal(drill?.nodeId, 'v7_u04_ld');
+    const ch1 = foundationV7StageCatalog().filter(
+      (s) => s.code.startsWith('1.') && !/(^|:)a2_/.test(s.gameId),
+    );
+    assert.deepEqual(
+      ch1.map((s) => [s.code, s.nodeId, s.nodeOrder]),
+      [
+        ['1.1', 'v7_u01n01', 1],
+        ['1.2', 'v7_u01n02', 2],
+        ['1.3', 'v7_u01n03', 3],
+        ['1.4', 'v7_u01n04', 4],
+        ['1.L', 'v7_u01_ld', 5],
+        ['1.5', 'v7_u01n05', 6],
+      ],
+    );
+    assert.equal(
+      ch1.find((s) => s.code === '1.3')?.gameId,
+      'say_it:fnd_v2_first_conversation',
+    );
+  });
+
+  it('places Adventure A2 after Foundations, and maps pronunciation sessions', () => {
+    const a2 = foundationV7PathPosition('new_words:a2_c01n01');
+    assert.equal(a2?.code, '1.1');
+    assert.equal(a2?.chapterNumber, 1);
+    assert.ok((a2?.order ?? 0) > (foundationV7PathPosition('skip_quiz:v7_u04')?.order ?? Infinity));
+    assert.equal(foundationV7PathPosition('skip_quiz:a2_c02')?.code, '2.0');
+    assert.equal(foundationV7StageIdForSession({ lessonId: 'pron_final_s_1', simulationId: null }), 'v7_u05n03');
+    assert.match(contentItemTitle('v7_u04n04'), /coming soon$/);
   });
 
   it('maps lesson ratings onto the same stage ids as the score table', () => {
