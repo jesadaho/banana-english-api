@@ -194,6 +194,7 @@ model User {
   liveTalkInvitesSent     LiveTalkInvite[]      @relation("LiveTalkInviter")
   liveTalkInvitesReceived LiveTalkInvite[]      @relation("LiveTalkInvitee")
   liveTalkSessions        LiveTalkSession[]     @relation("LiveTalkSessionHost")
+  liveTalkInterests       LiveTalkSessionInterest[]
   clipProgress            ClipProgress[]
   clipUnlocks             ClipUnlock[]
   clipSessions            ClipSession[]
@@ -894,10 +895,26 @@ model LiveTalkSession {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  host User @relation("LiveTalkSessionHost", fields: [hostUserId], references: [id], onDelete: Cascade)
+  host      User                      @relation("LiveTalkSessionHost", fields: [hostUserId], references: [id], onDelete: Cascade)
+  interests LiveTalkSessionInterest[]
 
   @@index([status, startsAt])
   @@index([hostUserId, startsAt])
+}
+
+/// "สนใจ" on an upcoming Live Talk session: avatars on the card + a push
+/// 10 minutes before it starts (remindedAt set once sent).
+model LiveTalkSessionInterest {
+  sessionId  String
+  userId     String
+  createdAt  DateTime  @default(now())
+  remindedAt DateTime?
+
+  session LiveTalkSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  user    User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([sessionId, userId])
+  @@index([userId])
 }
 
 /** Leave-sheet thumbs for Live Talk room quality (MVP). */
