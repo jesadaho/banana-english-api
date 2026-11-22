@@ -23,7 +23,7 @@ import {
   migrateFoundationV7NodeId,
 } from './foundation-v7-ch14-16-migration';
 import { foundationV7LessonLegacyIds } from '../lessons/foundation-v7-lesson-id-aliases';
-import { listenDrillNodesForChapter } from './listen-drill.data';
+import { listenDrillNodeForChapter } from './listen-drill.data';
 import { wordCardsNodeForChapter } from './word-cards.data';
 import { inOnAtNodeForChapter } from './in-on-at.path';
 import {
@@ -271,7 +271,8 @@ function collectCourseProgressKeys(course: LearnCourse): {
 
   if (course.pathId === FOUNDATION_V7_PATH_ID) {
     for (const chapter of course.catalog.chapters) {
-      for (const { node } of listenDrillNodesForChapter(chapter)) addNode(node);
+      const listenDrill = listenDrillNodeForChapter(chapter);
+      if (listenDrill) addNode(listenDrill);
       const wordCards = wordCardsNodeForChapter(chapter);
       if (wordCards) addNode(wordCards);
       const inOnAt = inOnAtNodeForChapter(chapter);
