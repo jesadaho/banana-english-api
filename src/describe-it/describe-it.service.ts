@@ -6,6 +6,7 @@ import {
   type DescribeItDealtCard,
   type DescribeItPool,
 } from './describe-it.data';
+import { hintPolicyFor, itemHint, type ItemHint } from '../hints/hint-policy';
 
 @Injectable()
 export class DescribeItService {
@@ -20,10 +21,15 @@ export class DescribeItService {
   dealForPool(poolId: string): {
     poolId: string;
     dealCount: number;
-    items: DescribeItDealtCard[];
+    items: (DescribeItDealtCard & { hint: ItemHint })[];
   } {
     this.getPool(poolId);
-    const items = dealDescribeItCards(poolId);
+    // Hints are decided here (see hints/hint-policy.ts); the app follows them.
+    const policy = hintPolicyFor('describe_it', poolId);
+    const items = dealDescribeItCards(poolId).map((card, index) => ({
+      ...card,
+      hint: itemHint(policy, card.hintEn, index),
+    }));
     return {
       poolId,
       dealCount: items.length || DESCRIBE_IT_DEAL_COUNT,

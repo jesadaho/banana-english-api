@@ -9,6 +9,7 @@ import {
   type SayItPhrase,
   type SayItTopic,
 } from './say-it.data';
+import { hintPolicyFor, itemHint, type ItemHint } from '../hints/hint-policy';
 
 @Injectable()
 export class SayItService {
@@ -28,13 +29,17 @@ export class SayItService {
   dealForTopic(topicId: string, count = SAY_IT_DEAL_COUNT, displayName?: string | null): {
     topicId: string;
     dealCount: number;
-    phrases: SayItPhrase[];
+    phrases: (SayItPhrase & { hint: ItemHint })[];
   } {
     this.getTopic(topicId);
     const effectiveCount = isFoundationPathSayItTopic(topicId)
       ? foundationSayItDealCount(topicId)
       : count;
-    const phrases = dealSayItPhrases(topicId, effectiveCount, displayName);
+    // Hints are decided here (see hints/hint-policy.ts); the app follows them.
+    const policy = hintPolicyFor('say_it', topicId);
+    const phrases = dealSayItPhrases(topicId, effectiveCount, displayName).map(
+      (phrase, index) => ({ ...phrase, hint: itemHint(policy, null, index) }),
+    );
     return {
       topicId,
       dealCount: phrases.length,
