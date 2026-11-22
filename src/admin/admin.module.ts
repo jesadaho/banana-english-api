@@ -20,6 +20,7 @@ import { AdminLedgerService } from './admin-ledger.service';
 import { AdminMetricsController } from './admin-metrics.controller';
 import { AdminSessionMixExtraController } from './admin-session-mix-extra.controller';
 import { AdminGaErrorsController, GaErrorsService } from './admin-ga-errors.controller';
+import { AdminAbTestsController } from './admin-ab-tests.controller';
 import { AdminMetricsService } from './admin-metrics.service';
 import { AdminReferralsController } from './admin-referrals.controller';
 import { AdminSubscriptionsController } from './admin-subscriptions.controller';
@@ -39,6 +40,7 @@ import { AdminEventsController } from './admin-events.controller';
     EventsModule,
   ],
   controllers: [
+    AdminAbTestsController,
     AdminMetricsController,
     AdminSessionMixExtraController,
     AdminGaErrorsController,
