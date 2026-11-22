@@ -46,13 +46,13 @@ const BASE: HintPolicy = {
   reveal: true,
 };
 
-/** A1: frame fades out after the first item; word bank only on a 2nd try. */
+/** A1: frame fades out after the first item; word bank always while speaking. */
 const CODE_DEFAULTS: Record<HintGame, GameOverrides> = {
   describe_it: {
-    a1: { frame: { first: 'full', later: 'first_word', retry: 'full' }, wordBank: 'retry' },
+    a1: { frame: { first: 'full', later: 'first_word', retry: 'full' }, wordBank: 'always' },
   },
   say_it: {
-    a1: { wordBank: 'retry' },
+    a1: { wordBank: 'always' },
   },
 };
 
