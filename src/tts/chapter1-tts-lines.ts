@@ -1,7 +1,10 @@
 import {
   buildChoiceLessonAfterUser,
+  buildSoftAdvanceTextEn,
   pinChoiceLessonAiReply,
+  supportedCompletionText,
   type ChoiceLessonDef,
+  type LessonCompletionStatus,
 } from '../training/scripts/choice-lesson.script';
 import type { ScriptTurnResult } from '../training/scripts/types';
 import { getFoundationChoiceLesson } from '../training/scripts/foundation.registry';
@@ -11,15 +14,23 @@ import {
   type Turn,
 } from '../training/foundation/foundation-poolgate.harness';
 import { FOUNDATION_PROBE_LEARNER } from '../training/foundation/foundation-poolgate.fixtures';
-import {
-  FOUNDATION_LESSON_IDS,
-  personalize,
-} from '../training/foundation/foundation.helpers';
-import { FOUNDATION_BOARDS } from '../training/foundation/foundation-boards';
 import { spokenTurnText, ttsBankKey } from './tts-bank';
 
-/** All Foundation choice-lesson boards (Teacher B scripted TTS). */
-export const CHAPTER1_TTS_LESSON_IDS = FOUNDATION_LESSON_IDS;
+/** Chapter 1 lessons that use the Foundation choice-lesson script. */
+export const CHAPTER1_TTS_LESSON_IDS = [
+  'greetings',
+  'introductions',
+  'yes_no_maybe',
+] as const;
+
+/**
+ * Choice boards we bank today. Family was live on the v2 path but never
+ * collected (only ch1 was). Soft-complete finals are banked for each.
+ */
+export const FOUNDATION_CHOICE_TTS_LESSON_IDS = [
+  ...CHAPTER1_TTS_LESSON_IDS,
+  'ee_about_me_family',
+] as const;
 
 const PRAISES = ['ถูกต้องครับ!', 'ดีมากครับ!', 'เยี่ยมครับ!'] as const;
 
@@ -142,46 +153,67 @@ function addBankable(bucket: Set<string>, text: string, name: string): void {
 }
 
 /**
- * Spoken lines from Foundation boards + the PoolGate scenario matrix.
+ * Spoken lines from the PoolGate 5-scenario matrix for Foundation choice lessons.
  * Lines that still contain the learner name are omitted.
  */
 export function collectChapter1BankLines(
   name = FOUNDATION_PROBE_LEARNER,
 ): string[] {
+  return collectFoundationChoiceBankLines(name);
+}
+
+/** Same as {@link collectChapter1BankLines} — covers every Foundation choice board. */
+export function collectFoundationChoiceBankLines(
+  name = FOUNDATION_PROBE_LEARNER,
+): string[] {
   const lines = new Set<string>();
   const seeds = praiseSeeds();
-  collectBoardPromptTexts(lines, name);
 
-  for (const lessonId of CHAPTER1_TTS_LESSON_IDS) {
+  for (const lessonId of FOUNDATION_CHOICE_TTS_LESSON_IDS) {
     const def = getFoundationChoiceLesson(lessonId);
     if (!def) throw new Error(`missing lesson ${lessonId}`);
 
     addBankable(lines, spoken(def.buildOpening(name)), name);
     collectInPool(def, name, lines);
-    try {
-      collectAssessed(def, name, lines, seeds);
-    } catch {
-      // Some boards defer every off-pool turn; in-pool lines still bank.
-    }
-    try {
-      collectSoftAdvance(def, name, lines);
-    } catch {
-      // Soft-advance is not scripted on every Foundation board.
-    }
+    collectAssessed(def, name, lines, seeds);
+    collectSoftAdvance(def, name, lines);
+    collectSoftCompleteFinals(def, name, lines);
   }
 
   return [...lines].sort();
 }
 
-/** Exact board prompts (e.g. polite_expressions) as spoken at runtime. */
-function collectBoardPromptTexts(lines: Set<string>, name: string): void {
-  for (const lessonId of CHAPTER1_TTS_LESSON_IDS) {
-    const boards = FOUNDATION_BOARDS[lessonId];
-    if (!boards) continue;
-    for (const step of Object.values(boards)) {
-      const text = personalize(step.textEn, name);
-      addBankable(lines, text, name);
-    }
+/**
+ * Soft-advance on the last step can finish as "with support" or "needs review".
+ * The full soft-advance walk only lands on needs-review (many softs), so bank both.
+ */
+function collectSoftCompleteFinals(
+  def: ChoiceLessonDef,
+  name: string,
+  lines: Set<string>,
+): void {
+  const history = openingTurn(def, name);
+  const failedBoard = def.boardForStep(def.maxStep, history, name);
+  if (!failedBoard) return;
+
+  for (const status of [
+    'completed_with_support',
+    'needs_review',
+  ] as const satisfies readonly LessonCompletionStatus[]) {
+    const nextScripted: ScriptTurnResult = {
+      textEn: supportedCompletionText(status, name),
+      textTh: '',
+      isLessonComplete: true,
+      expectsUserSpeech: false,
+      completionStatus: status,
+    };
+    addBankable(
+      lines,
+      spoken({
+        textEn: buildSoftAdvanceTextEn(failedBoard, null, nextScripted),
+      }),
+      name,
+    );
   }
 }
 

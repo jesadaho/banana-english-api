@@ -24,6 +24,23 @@ describe('chapter 1 TTS bank lines', () => {
   it('covers more than the three openings', () => {
     assert.ok(lines.length > 3);
   });
+
+  it('banks soft-complete with-support (not only needs-review)', () => {
+    const softSupport =
+      'ตรงนี้ใช้โครง "My name is... / I\'m..." ครับ เรียนครบแล้วครับ คุณทำบทเรียนจบโดยได้รับคำแนะนำบางส่วน ลองฝึกอีกครั้งเพื่อให้คล่องขึ้นนะครับ';
+    assert.ok(lines.includes(ttsBankKey(softSupport)));
+  });
+
+  it('includes the family choice board (ee_about_me_family)', () => {
+    assert.ok(
+      lines.some((line) => line.includes('mother แปลว่า')),
+      'expected mother board line',
+    );
+    assert.ok(
+      lines.some((line) => line.includes('I have two sisters')),
+      'expected two sisters board line',
+    );
+  });
 });
 
 describe('tts bank lookup', () => {
