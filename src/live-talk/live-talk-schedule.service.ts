@@ -3,9 +3,13 @@ import {
   ConflictException,
   ForbiddenException,
   Injectable,
+  Logger,
   NotFoundException,
+  Optional,
 } from '@nestjs/common';
+import { Cron } from '@nestjs/schedule';
 import { Prisma } from '@prisma/client';
+import { FcmService } from '../notifications/fcm.service';
 import { PrismaService } from '../prisma/prisma.service';
 import {
   LIVE_TALK_SESSION_LONGEST_MS,
@@ -50,9 +54,26 @@ type SessionRow = {
 /** Serialises bookings so two hosts can't grab the same time at once. */
 const BOOKING_LOCK_KEY = 4_242_001;
 
+/** Avatars shown on the "ห้องถัดไป" card (the viewer first when interested). */
+export const INTEREST_AVATARS = 4;
+
+/** Reminder push this long before a session starts. */
+export const INTEREST_REMIND_BEFORE_MS = 10 * 60_000;
+
+export type SessionInterestView = {
+  count: number;
+  mine: boolean;
+  avatars: { userId: string; avatarId: string | null }[];
+};
+
 @Injectable()
 export class LiveTalkScheduleService {
-  constructor(private readonly prisma: PrismaService) {}
+  private readonly logger = new Logger(LiveTalkScheduleService.name);
+
+  constructor(
+    private readonly prisma: PrismaService,
+    @Optional() private readonly fcm?: FcmService,
+  ) {}
 
   canBook(viewer: HostWebViewer): boolean {
     return viewer.user != null && canBookLiveTalkSession(viewer.user);
@@ -147,7 +168,7 @@ export class LiveTalkScheduleService {
   }
 
   /** App: next sessions that haven't ended yet (for "No Live rooms right now"). */
-  async upcoming(limit = 3, now = new Date()) {
+  async upcoming(limit = 3, now = new Date(), viewerId?: string) {
     const rows = await this.prisma.liveTalkSession.findMany({
       where: {
         status: 'scheduled',
@@ -157,12 +178,151 @@ export class LiveTalkScheduleService {
       take: limit + 10,
       include: { host: { select: hostSelect } },
     });
+    const picked = rows
+      .filter((row) => sessionEndsAt(row) > now)
+      .slice(0, Math.max(1, Math.min(limit, 10)));
+    const interest = await this.interestFor(
+      picked.map((row) => row.id),
+      viewerId,
+    );
     return {
-      sessions: rows
-        .filter((row) => sessionEndsAt(row) > now)
-        .slice(0, Math.max(1, Math.min(limit, 10)))
-        .map((row) => this.view(row, null)),
+      sessions: picked.map((row) => ({
+        ...this.view(row, null),
+        interest: interest.get(row.id) ?? { count: 0, mine: false, avatars: [] },
+      })),
     };
+  }
+
+  /** "สนใจ" on / off for an upcoming session. Returns the new card numbers. */
+  async setInterest(userId: string, sessionId: string, on: boolean, now = new Date()) {
+    const session = await this.prisma.liveTalkSession.findUnique({
+      where: { id: sessionId },
+      select: { id: true, status: true, startsAt: true, durationMin: true },
+    });
+    if (!session || session.status !== 'scheduled' || sessionEndsAt(session) <= now) {
+      throw new NotFoundException('session_not_found');
+    }
+    if (on) {
+      await this.prisma.liveTalkSessionInterest.upsert({
+        where: { sessionId_userId: { sessionId, userId } },
+        create: { sessionId, userId },
+        update: {},
+      });
+    } else {
+      await this.prisma.liveTalkSessionInterest.deleteMany({
+        where: { sessionId, userId },
+      });
+    }
+    const interest = await this.interestFor([sessionId], userId);
+    return {
+      interest: interest.get(sessionId) ?? { count: 0, mine: false, avatars: [] },
+    };
+  }
+
+  /** Count, "mine" and up to [INTEREST_AVATARS] avatars per session. */
+  private async interestFor(
+    sessionIds: string[],
+    viewerId?: string,
+  ): Promise<Map<string, SessionInterestView>> {
+    const out = new Map<string, SessionInterestView>();
+    if (sessionIds.length === 0) return out;
+    const [counts, rows, mine] = await Promise.all([
+      this.prisma.liveTalkSessionInterest.groupBy({
+        by: ['sessionId'],
+        where: { sessionId: { in: sessionIds } },
+        _count: { _all: true },
+      }),
+      // Newest first; a few extra so the viewer can be moved to the front.
+      Promise.all(
+        sessionIds.map((sessionId) =>
+          this.prisma.liveTalkSessionInterest.findMany({
+            where: { sessionId },
+            orderBy: { createdAt: 'desc' },
+            take: INTEREST_AVATARS + 1,
+            select: {
+              sessionId: true,
+              user: { select: { id: true, avatarId: true } },
+            },
+          }),
+        ),
+      ),
+      viewerId
+        ? this.prisma.liveTalkSessionInterest.findMany({
+            where: { sessionId: { in: sessionIds }, userId: viewerId },
+            select: { sessionId: true, user: { select: { id: true, avatarId: true } } },
+          })
+        : Promise.resolve([]),
+    ]);
+    const mineBy = new Map(mine.map((m) => [m.sessionId, m.user]));
+    for (const [i, sessionId] of sessionIds.entries()) {
+      const count = counts.find((c) => c.sessionId === sessionId)?._count._all ?? 0;
+      const me = mineBy.get(sessionId);
+      const others = rows[i]
+        .map((r) => r.user)
+        .filter((u) => u.id !== me?.id);
+      const avatars = [...(me ? [me] : []), ...others]
+        .slice(0, INTEREST_AVATARS)
+        .map((u) => ({ userId: u.id, avatarId: u.avatarId }));
+      out.set(sessionId, { count, mine: !!me, avatars });
+    }
+    return out;
+  }
+
+  /** Push "starting in 10 minutes" to everyone who tapped สนใจ (once each). */
+  @Cron('* * * * *')
+  async cronRemindInterested(now = new Date()) {
+    if (!this.fcm) return;
+    try {
+      const due = await this.prisma.liveTalkSessionInterest.findMany({
+        where: {
+          remindedAt: null,
+          session: {
+            status: 'scheduled',
+            startsAt: {
+              gt: now,
+              lte: new Date(now.getTime() + INTEREST_REMIND_BEFORE_MS),
+            },
+          },
+        },
+        take: 500,
+        select: {
+          sessionId: true,
+          userId: true,
+          session: { select: { title: true, startsAt: true } },
+          user: { select: { fcmTokens: { select: { token: true } } } },
+        },
+      });
+      for (const row of due) {
+        // Mark first: a slow send must not make the next minute push twice.
+        const claimed = await this.prisma.liveTalkSessionInterest.updateMany({
+          where: { sessionId: row.sessionId, userId: row.userId, remindedAt: null },
+          data: { remindedAt: now },
+        });
+        if (claimed.count === 0) continue;
+        const tokens = row.user.fcmTokens.map((t) => t.token);
+        if (tokens.length === 0) continue;
+        const mins = Math.max(
+          1,
+          Math.round((row.session.startsAt.getTime() - now.getTime()) / 60_000),
+        );
+        const invalid = await this.fcm.sendToTokens(
+          tokens,
+          `Live Talk เริ่มในอีก ${mins} นาที 🎙️`,
+          row.session.title,
+          {
+            type: 'live_talk_session_reminder',
+            sessionId: row.sessionId,
+            route: '/conversation/live-talk',
+          },
+        );
+        if (invalid.length > 0) {
+          await this.prisma.userFcmToken.deleteMany({ where: { token: { in: invalid } } });
+        }
+      }
+      if (due.length > 0) this.logger.log(`Live Talk reminders: ${due.length}`);
+    } catch (error) {
+      this.logger.warn(`Live Talk reminder sweep failed: ${String(error)}`);
+    }
   }
 
   private parse(body: SessionInput) {

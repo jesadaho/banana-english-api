@@ -26,8 +26,18 @@ export class LiveTalkController {
 
   /** Booked sessions coming up (shown when no room is live). */
   @Get('sessions/upcoming')
-  upcomingSessions() {
-    return this.schedule.upcoming(3);
+  upcomingSessions(@Req() req: AuthedRequest) {
+    return this.schedule.upcoming(3, new Date(), req.user.id);
+  }
+
+  /** "สนใจ" toggle on an upcoming session (avatars + 10-min reminder). */
+  @Post('sessions/:id/interest')
+  setSessionInterest(
+    @Req() req: AuthedRequest,
+    @Param('id') id: string,
+    @Body() body: { on?: boolean },
+  ) {
+    return this.schedule.setInterest(req.user.id, id, body?.on !== false);
   }
 
   @Get('rooms')
