@@ -2,8 +2,12 @@ import { BadRequestException, Body, Controller, Post, Req, UseGuards } from '@ne
 import type { User } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { AnonymousUserGuard } from '../users/anonymous-user.guard';
-import { buildTapChoices } from './tap-choices';
-import { tapDistractorWords, type TapContext } from './tap-vocab';
+import { buildTapChoices, tapWords } from './tap-choices';
+import {
+  tapAllowDistractors,
+  tapDistractorWords,
+  type TapContext,
+} from './tap-vocab';
 
 type TapItemBody = { id?: unknown; answer?: unknown; accepted?: unknown; options?: unknown };
 
@@ -12,7 +16,6 @@ const MAX_ITEMS = 40;
 /** Node kinds that offer Tap Mode (analytics buckets). */
 export const ANSWER_MODE_KINDS = ['lesson', 'say_it', 'word_cards', 'see_and_say', 'new_words', 'in_on_at'] as const;
 export const ANSWER_MODES = ['speak', 'tap'] as const;
-
 
 function strings(value: unknown, max = 12): string[] {
   return Array.isArray(value)
@@ -75,17 +78,19 @@ export class TapModeController {
       topicId: str(body.topicId),
       poolId: str(body.poolId),
     };
-    const distractors = tapDistractorWords(ctx);
+    const pool = tapDistractorWords(ctx);
     const out: Record<string, string[]> = {};
     items.forEach((item, i) => {
       const answer = typeof item?.answer === 'string' ? item.answer.trim().slice(0, 200) : '';
       if (!answer) return;
       const id = str(item.id) ?? String(i);
+      const answerWords = tapWords(answer).length;
+      const distractorWords = tapAllowDistractors(ctx, answerWords) ? pool : [];
       out[id] = buildTapChoices({
         answer,
         accepted: strings(item.accepted),
         options: strings(item.options, 6),
-        distractorWords: distractors,
+        distractorWords,
         seed: `${ctx.lessonId ?? ctx.topicId ?? ctx.poolId ?? ''}|${id}|${answer}`,
       });
     });
