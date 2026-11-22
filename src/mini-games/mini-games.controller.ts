@@ -154,6 +154,11 @@ export class MiniGamesController {
     return this.economy.recordStreakActivity(req.user.id);
   }
 
+  @Get('emoji-speak/progress-catalog')
+  emojiSpeakProgressCatalog() {
+    return this.emojiSpeak.progressCatalog();
+  }
+
   @Get('emoji-speak/:poolId/deal')
   dealEmojiSpeakPack(@Param('poolId') poolId: string) {
     const id = poolId?.trim();
