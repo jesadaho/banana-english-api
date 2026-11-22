@@ -3,12 +3,12 @@ import { describe, it } from 'node:test';
 import { frameText, hintPolicyFor, itemHint, parseHintPolicyEnv } from './hint-policy';
 
 describe('hint policy', () => {
-  it('A1 Describe It: full frame first, first word later, full on retry, word bank on retry', () => {
+  it('A1 Describe It: full frame first, first word later, full on retry, word bank always', () => {
     const p = hintPolicyFor('describe_it', 'fnd_v7_u04n05', {});
     assert.deepEqual(itemHint(p, 'She is a _____', 0), {
       frame: 'She is a _____',
       retryFrame: 'She is a _____',
-      wordBank: 'retry',
+      wordBank: 'always',
       letterHints: 3,
       reveal: true,
     });
@@ -22,7 +22,7 @@ describe('hint policy', () => {
     assert.equal(itemHint(p, 'It has a _____', 3).frame, 'It has a _____');
     assert.equal(p.wordBank, 'never');
     assert.equal(hintPolicyFor('say_it', 'time', {}).wordBank, 'never');
-    assert.equal(hintPolicyFor('say_it', 'fnd_v7_u09n13', {}).wordBank, 'retry');
+    assert.equal(hintPolicyFor('say_it', 'fnd_v7_u09n13', {}).wordBank, 'always');
   });
 
   it('env overrides: a1, then per pool; bad values ignored', () => {
