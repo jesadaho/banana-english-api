@@ -56,6 +56,8 @@ model User {
   weeklyReportTemplateIds String[] @default([])
   /** App content language: "th" | "en". Synced from the client locale. */
   contentLocale           String    @default("th")
+  /// Signup-day banana bonus A/B arm: A = no bonus, B = bonus (null = not in the test).
+  bananaBonusArm          String?
 
   bananaBalance           Int       @default(0)
   /** Daily free pool (capped). Spends this before accumulated bananas. */

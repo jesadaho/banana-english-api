@@ -49,6 +49,14 @@ import {
   type BananaDayBonusConfig,
 } from './banana-day-caps';
 import {
+  ENV_BANANA_BONUS_AB,
+  ENV_BANANA_BONUS_AB_START,
+  applyBananaBonusArm,
+  bananaBonusArmFor,
+  parseBananaBonusAbSettings,
+  type BananaBonusArm,
+} from './banana-bonus-ab';
+import {
   completedOnLocalDay,
   getUserLocalTime,
   isSameDateKey,
@@ -187,6 +195,38 @@ export class EconomyService {
     );
   }
 
+  /** Signup-day bonus A/B test settings (env, read each call). */
+  private bananaBonusAb() {
+    return parseBananaBonusAbSettings(
+      this.config.get<string>(ENV_BANANA_BONUS_AB),
+      this.config.get<string>(ENV_BANANA_BONUS_AB_START),
+    );
+  }
+
+  /** The user's A/B arm (null = not in the test, gets the bonus). */
+  bananaBonusArm(user: Pick<User, 'id' | 'createdAt' | 'bananaBonusArm'>): BananaBonusArm | null {
+    return bananaBonusArmFor(user, this.bananaBonusAb());
+  }
+
+  /** Day bonus config for this user: arm A has no signup-day bonus. */
+  private dayBonusFor(user: Pick<User, 'id' | 'createdAt' | 'bananaBonusArm'>): BananaDayBonusConfig {
+    return applyBananaBonusArm(this.dayBonus(), this.bananaBonusArm(user));
+  }
+
+  /** Store the arm the first time it matters, so it never changes later. */
+  private async persistBananaBonusArm<T extends Pick<User, 'id' | 'createdAt' | 'bananaBonusArm'>>(
+    user: T,
+  ): Promise<T> {
+    if (user.bananaBonusArm) return user;
+    const arm = this.bananaBonusArm(user);
+    if (!arm) return user;
+    await this.prisma.user.updateMany({
+      where: { id: user.id, bananaBonusArm: null },
+      data: { bananaBonusArm: arm },
+    });
+    return { ...user, bananaBonusArm: arm };
+  }
+
   /** Refresh bonus config from RC then env (cached ~60s). */
   async ensureDayBonus(now = Date.now()): Promise<BananaDayBonusConfig> {
     if (this.dayBonusCache && now - this.dayBonusCache.at < 60_000) {
@@ -233,7 +273,7 @@ export class EconomyService {
     const dailyDrop = user
       ? signupDayEntitlement(
           signupLocalDayIndex(user.createdAt, user.timezone),
-          this.dayBonus(),
+          this.dayBonusFor(user),
         )
       : this.dailyBananaDrop();
     return {
@@ -248,7 +288,7 @@ export class EconomyService {
   async creditOnboardingBonus(userId: string): Promise<User> {
     await this.ensureDayBonus();
     const bonus = this.onboardingBananaBonus();
-    return this.prisma.$transaction(async (tx) => {
+    const done = await this.prisma.$transaction(async (tx) => {
       const user = await tx.user.findUniqueOrThrow({ where: { id: userId } });
       const existingBonus = await tx.economyTransaction.findFirst({
         where: { userId, source: 'onboarding_bonus' },
@@ -292,6 +332,11 @@ export class EconomyService {
         },
       });
     });
+    // Day 0 signup bonus right away (it used to wait for the 09:00 Bangkok
+    // job, so early-morning signups had only the free pool). Idempotent.
+    const withArm = await this.persistBananaBonusArm(done);
+    const day0 = await this.maybeCreditSignupDayBonus({ ...withArm, timezone: 'Asia/Bangkok' });
+    return day0.user;
   }
 
   async ensureOnboardingBonus(userId: string): Promise<User> {
@@ -322,8 +367,9 @@ export class EconomyService {
     if (effectiveSubscriptionTier(user, now) === 'PRO') {
       return { user, credited: 0, dayIndex: null };
     }
+    user = await this.persistBananaBonusArm(user);
     const dayIndex = signupLocalDayIndex(user.createdAt, user.timezone, now);
-    const amount = signupDayBonusAmount(dayIndex, this.dayBonus());
+    const amount = signupDayBonusAmount(dayIndex, this.dayBonusFor(user));
     if (amount <= 0) return { user, credited: 0, dayIndex };
 
     const referenceId = signupDayBonusRef(dayIndex);
