@@ -1,84 +1,564 @@
 /**
  * Word Chain (Live Talk): words the system counts on its own — everyday
- * A1/A2 nouns, verbs and adjectives, base forms only (no plurals, so "cats"
- * does not dodge the letter). Anything else waits for the host's "นับให้".
+ * learner vocabulary, base forms preferred (no plurals, so "cats" does not
+ * dodge the letter). Anything else waits for the host's "นับให้".
  * Filler-ish words (see, say, well, very, …) are left out on purpose: they
  * come up in "let me see…" before the real answer.
+ *
+ * ~5511 entries: original A1/A2 list plus common English (frequency-ranked).
  */
 const RAW = `
-able accident act action activity actor address adult adventure advice aeroplane afraid
-afternoon age agree air airport alarm album alive alphabet amazing ambulance anger angry animal
-ankle answer ant apartment apple april area argue arm armchair army arrive arrow art artist
-asleep attack attention august aunt autumn avocado awake awful baby back backpack bad bag bake
-bakery ball balloon banana band bank barbecue baseball basket basketball bat bath bathroom beach
-bean bear beard beautiful bed bedroom bee beef begin behind believe bell belt bench best better
-bicycle big bike bill bird birthday biscuit bite black blackboard blanket blind block blonde
-blood blouse blue board boat body boil bone book bookshop boot bored boring born borrow boss
-bottle bottom bowl box boy brain branch brave bread break breakfast bridge bright bring broom
-brother brown brush bubble bucket buffalo build building burger burn bus business busy butter
-butterfly button buy cabbage cafe cage cake calendar call calm camel camera camp candle candy
-cap capital car card care careful carpet carrot carry cartoon castle cat catch cave ceiling
-celebrate cent centre chair chalk change channel character cheap check cheek cheese chef cherry
-chess chicken child chin chip chocolate choose chopsticks church cinema circle city clap class
-classroom clean clear clever climb clock close cloth clothes cloud cloudy clown club coat
-coconut coffee coin cold collect college colour comb come comic computer cook cookie cool copy
-corn corner correct cost cotton cough count country cousin cow crab crayon crazy cream cross
-crowd crown cry cucumber cup cupboard curtain customer cut cute cycle dad daily dance dancer
-danger dangerous dark date daughter day dead deaf dear december decide deep deer delicious
-dentist desert design desk dessert diary dice dictionary die different difficult dinner dinosaur
-dirty discover dish dive doctor dog doll dollar dolphin donkey door double down download dragon
-draw drawer drawing dream dress drill drink drive driver drop drum dry duck dust duty eagle ear
-early earn earth east easy eat edge egg eight elbow electric elephant elevator eleven email
-empty end energy engineer english enjoy enter envelope eraser escape evening event exam example
-excellent excited exciting exercise exit expensive explain eye eyebrow face factory fairy fall
-false family famous fan far farm farmer fashion fast fat father favourite fear february feed
-feel fence festival fever field fifteen fifty fight fill film find finger finish fire fireman
-fish fisherman fit five fix flag flat flight float floor flower flu fly fog fold follow food
-foot football forest forget fork forty four fox frame free fresh friday fridge friend friendly
-frog fruit frying full fun funny furniture future game garage garden garlic gate gentle ghost
-giant gift giraffe girl give glad glass glasses glove glue go goal goat gold golf good goose
-gorilla grab grandfather grandma grandmother grandpa grape grass gray great green grey ground
-group grow guest guitar gym hair haircut half hall ham hamburger hammer hand handbag happy hard
-hat hate head headache health healthy hear heart heavy helicopter help hen hide high hill hippo
-history hit hobby hold hole holiday home homework honest honey hope horn horse hospital hot
-hotel hour house hungry hurry hurt husband ice idea ill important ink insect inside internet
-invite iron island jacket jam january jar jeans jelly job join joke journey juice july jump
-jumper june jungle kangaroo key keyboard kick kid kill kind king kiss kitchen kite kitten knee
-knife knock koala lake lamp land language laptop large late laugh lazy leaf learn leave left leg
-lemon lemonade leopard lesson letter lettuce library lie lift light lion lip list listen little
-live living lizard lock long look lose loud love lovely low lucky lunch machine mad magazine
-magic mail make man mango many map march market married mask match maths meal meat medicine meet
-melon menu message metal middle milk minute mirror miss mistake mix mobile monday money monkey
-month moon morning mosquito mother motorbike mountain mouse moustache mouth move movie mug
-museum mushroom music musician nail name narrow nature near neck necklace need neighbour nephew
-nervous nest net new news newspaper next nice niece night nine noise noisy noodle noon north
-nose note notebook november number nurse nut ocean october octopus office oil old onion open
-orange order ostrich outside oven owl own paint painter painting pair pajamas palace pan panda
-paper parent park parrot party pass passport past pasta path pay pea peach pear pen pencil
-penguin people pepper person pet phone photo piano pick picnic picture pie piece pig pillow
-pilot pin pineapple pink pizza place plan plane planet plant plate play player playground pocket
-poem police policeman polite pond pool poor popcorn popular post postcard poster pot potato
-practice present pretty price prince princess prize problem pull pumpkin pupil puppy purple
-purse push puzzle queen question quick quiet quiz rabbit race radio rain rainbow rainy read
-ready red relax remember rent repeat rest restaurant rice rich ride right ring river road robot
-rock rocket roof room rope rose round rubber rug rule ruler run sad safe salad sale salt same
-sand sandwich saturday sausage save scarf school science scissors score sea seat second sell
-send sentence september seven shape share shark sheep shelf shell ship shirt shoe shop shopping
-short shorts shoulder shout show shower shy sick sign silver sing singer sink sister sit six
-skate skirt sky sleep slow small smart smell smile snack snake snow soap sock sofa soft soldier
-son song soup south space speak spell spend spider spoon sport spring square stamp stand star
-start station stay steak stomach stone stop store storm story strawberry street strong student
-study subject sugar summer sun sunday sunny supermarket surprise swan sweater sweet swim
-swimming table tablet tail take talk tall taxi tea teach teacher team teddy teeth telephone
-television temple ten tennis tent test text thin thing thirsty three throw thumb thursday ticket
-tidy tie tiger time tired toast today toe together toilet tomato tomorrow tongue tooth
-toothbrush top touch towel tower town toy traffic train travel tree trip trousers truck true try
-tuesday turn turtle twelve twenty two ugly umbrella uncle under understand uniform university
-upstairs use useful vacation van vase vegetable video village violin visit voice volleyball wait
-waiter wake walk wall wallet want warm wash watch water watermelon wave weak wear weather
-wedding wednesday week weekend welcome west wet whale wheel white wide wife wild win wind window
-windy wine wing winter wish wolf woman wonderful wood wool word work world worm worry write
-wrong yard year yellow yesterday yoghurt yogurt young zebra zero zoo
+able accident act action activity actor address adult adventure advice
+aeroplane afraid afternoon age agree air airport alarm album alive
+alphabet amazing ambulance anger angry animal ankle answer ant apartment
+apple april area argue arm armchair army arrive arrow art
+artist asleep attack attention august aunt autumn avocado awake awful
+baby back backpack bad bag bake bakery ball balloon banana
+band bank barbecue baseball basket basketball bat bath bathroom beach
+bean bear beard beautiful bed bedroom bee beef begin behind
+believe bell belt bench best better bicycle big bike bill
+bird birthday biscuit bite black blackboard blanket blind block blonde
+blood blouse blue board boat body boil bone book bookshop
+boot bored boring born borrow boss bottle bottom bowl box
+boy brain branch brave bread break breakfast bridge bright bring
+broom brother brown brush bubble bucket buffalo build building burger
+burn bus business busy butter butterfly button buy cabbage cafe
+cage cake calendar call calm camel camera camp candle candy
+cap capital car card care careful carpet carrot carry cartoon
+castle cat catch cave ceiling celebrate cent centre chair chalk
+change channel character cheap check cheek cheese chef cherry chess
+chicken child chin chip chocolate choose chopsticks church cinema circle
+city clap class classroom clean clear clever climb clock close
+cloth clothes cloud cloudy clown club coat coconut coffee coin
+cold collect college colour comb come comic computer cook cookie
+cool copy corn corner correct cost cotton cough count country
+cousin cow crab crayon crazy cream cross crowd crown cry
+cucumber cup cupboard curtain customer cut cute cycle dad daily
+dance dancer danger dangerous dark date daughter day dead deaf
+dear december decide deep deer delicious dentist desert design desk
+dessert diary dice dictionary die different difficult dinner dinosaur dirty
+discover dish dive doctor dog doll dollar dolphin donkey door
+double down download dragon draw drawer drawing dream dress drill
+drink drive driver drop drum dry duck dust duty eagle
+ear early earn earth east easy eat edge egg eight
+elbow electric elephant elevator eleven email empty end energy engineer
+english enjoy enter envelope eraser escape evening event exam example
+excellent excited exciting exercise exit expensive explain eye eyebrow face
+factory fairy fall false family famous fan far farm farmer
+fashion fast fat father favourite fear february feed feel fence
+festival fever field fifteen fifty fight fill film find finger
+finish fire fireman fish fisherman fit five fix flag flat
+flight float floor flower flu fly fog fold follow food
+foot football forest forget fork forty four fox frame free
+fresh friday fridge friend friendly frog fruit frying full fun
+funny furniture future game garage garden garlic gate gentle ghost
+giant gift giraffe girl give glad glass glasses glove glue
+go goal goat gold golf good goose gorilla grab grandfather
+grandma grandmother grandpa grape grass gray great green grey ground
+group grow guest guitar gym hair haircut half hall ham
+hamburger hammer hand handbag happy hard hat hate head headache
+health healthy hear heart heavy helicopter help hen hide high
+hill hippo history hit hobby hold hole holiday home homework
+honest honey hope horn horse hospital hot hotel hour house
+hungry hurry hurt husband ice idea ill important ink insect
+inside internet invite iron island jacket jam january jar jeans
+jelly job join joke journey juice july jump jumper june
+jungle kangaroo key keyboard kick kid kill kind king kiss
+kitchen kite kitten knee knife knock koala lake lamp land
+language laptop large late laugh lazy leaf learn leave left
+leg lemon lemonade leopard lesson letter lettuce library lie lift
+light lion lip list listen little live living lizard lock
+long look lose loud love lovely low lucky lunch machine
+mad magazine magic mail make man mango many map march
+market married mask match maths meal meat medicine meet melon
+menu message metal middle milk minute mirror miss mistake mix
+mobile monday money monkey month moon morning mosquito mother motorbike
+mountain mouse moustache mouth move movie mug museum mushroom music
+musician nail name narrow nature near neck necklace need neighbour
+nephew nervous nest net new news newspaper next nice niece
+night nine noise noisy noodle noon north nose note notebook
+november number nurse nut ocean october octopus office oil old
+onion open orange order ostrich outside oven owl own paint
+painter painting pair pajamas palace pan panda paper parent park
+parrot party pass passport past pasta path pay pea peach
+pear pen pencil penguin people pepper person pet phone photo
+piano pick picnic picture pie piece pig pillow pilot pin
+pineapple pink pizza place plan plane planet plant plate play
+player playground pocket poem police policeman polite pond pool poor
+popcorn popular post postcard poster pot potato practice present pretty
+price prince princess prize problem pull pumpkin pupil puppy purple
+purse push puzzle queen question quick quiet quiz rabbit race
+radio rain rainbow rainy read ready red relax remember rent
+repeat rest restaurant rice rich ride right ring river road
+robot rock rocket roof room rope rose round rubber rug
+rule ruler run sad safe salad sale salt same sand
+sandwich saturday sausage save scarf school science scissors score sea
+seat second sell send sentence september seven shape share shark
+sheep shelf shell ship shirt shoe shop shopping short shorts
+shoulder shout show shower shy sick sign silver sing singer
+sink sister sit six skate skirt sky sleep slow small
+smart smell smile snack snake snow soap sock sofa soft
+soldier son song soup south space speak spell spend spider
+spoon sport spring square stamp stand star start station stay
+steak stomach stone stop store storm story strawberry street strong
+student study subject sugar summer sun sunday sunny supermarket surprise
+swan sweater sweet swim swimming table tablet tail take talk
+tall taxi tea teach teacher team teddy teeth telephone television
+temple ten tennis tent test text thin thing thirsty three
+throw thumb thursday ticket tidy tie tiger time tired toast
+today toe together toilet tomato tomorrow tongue tooth toothbrush top
+touch towel tower town toy traffic train travel tree trip
+trousers truck true try tuesday turn turtle twelve twenty two
+ugly umbrella uncle under understand uniform university upstairs use useful
+vacation van vase vegetable video village violin visit voice volleyball
+wait waiter wake walk wall wallet want warm wash watch
+water watermelon wave weak wear weather wedding wednesday week weekend
+welcome west wet whale wheel white wide wife wild win
+wind window windy wine wing winter wish wolf woman wonderful
+wood wool word work world worm worry write wrong yard
+year yellow yesterday yoghurt yogurt young zebra zero zoo page
+search one information site up out any contact web now
+view online first services some click service state used last
+products data product system add policy available copyright support software
+jan info rights public books links review years privacy items
+company user de set general research reviews program life games
+way days management part united real item center ebay comments
+development report off member details line terms hotels type because
+local using results education national posted community states dvd shipping
+reserved forum based code special prices website index women file
+link technology case project pages uk version section found sports
+related security county american members power while network systems total
+following access resources current posts media law control pictures size
+personal since including guide directory location rating rate government children
+usa return students account times sites level digital profile previous
+form events john main hours image department title description non
+insurance property cd quality listing content private tools reply compare
+movies include value article york jobs provide source author press
+print course canada process teen stock training credit point men
+categories advanced sales estate conditions select windows photos gay thread
+category gallery register however series model features industry human provided
+tv required accessories forums la questions yahoo going medical dec
+server pc application cart staff articles san feedback issues users
+complete topic comment financial things working standard tax blog payment
+equipment login programs offers legal recent stores side memory performance
+social quote options experience rates create america single ii activities
+girls additional password latest changes ca texas oct poker status
+browse issue range seller court result audio war nov offer
+groups al given files release analysis request fax china making
+needs possible professional major areas committee cards problems london washington
+meeting rss become interest id keep california similar schools million
+added reference companies listed learning delivery term stories computers journal
+reports co central images president notice original cell color self
+council away includes track australia discussion archive once others agreement
+format society months log safety friends sure faq trade edition
+cars messages marketing further updated association provides david studies common
+specific several feb sep collection called arts ask display limited
+powered solutions director natural whether due et electronics period planning
+database official mar average technical france pro region record direct
+microsoft conference environment records district costs style url front statement
+update parts aug downloads miles sound resource applications ago document
+works material apr written federal hosting rules final tickets requirements
+kids finance minutes else mark third gifts europe reading topics
+individual tips plus auto cover edit videos percent function fact
+unit getting global tech economic en projects lyrics subscribe submit
+germany amount included though risk deals various words linux jul
+production commercial james weight advertising received treatment newsletter archives points
+knowledge error jun construction toys registered receive domain methods chapter
+makes protection policies loan beauty manager india position sort listings
+models michael cases step engineering florida simple none wireless license
+paul whole annual published later basic sony shows corporate google
+method purchase customers active response hardware figure materials chat enough
+designed death writing speed html countries loss brand discount higher
+effects created standards bit political increase advertise kingdom base stuff
+french storage japan loans shoes entry orders availability africa summary
+growth notes agency european although drug pics western income force
+cash employment overall bay commission ad package contents players engine
+port regional supplies started bar institute views plans screen exchange
+types soon sponsored lines electronic continue benefits needed season apply
+held ny printer condition effective organization effect asked eur mind
+selection casino pdf lost tour volume mortgage corporation solution mature
+role weeks addition certain usr executive running lower necessary union
+jewelry according dc clothing mon com particular fine names robert
+homepage gas skills bush islands career military rental decision british
+teens pre huge sat facilities zip bid sellers cable taking
+values division coming object lesbian appropriate logo length statistics client
+returns sample investment sent shown christmas england culture flash lead
+george choice starting registration fri courses consumer foreign levels mode
+phones ideas structure fund allow degree contract releases wed homes
+super male matter custom virginia almost located multiple asian distribution
+editor inn industrial cause potential cnet ltd los hp focus
+featured rooms female responsible inc associated thomas primary cancer numbers
+reason tool browser foundation schedule documents purpose feature comes independent
+ip approach cameras physical operating maps deal ratings chicago forms
+tue smith developed unique survey prior sources mexico population pa
+regular secure navigation operations therefore evidence christian paypal favorite option
+master valley thu rentals built publications worldwide improve connection publisher
+larger anti networks parents nokia impact transfer introduction tel carolina
+properties overview owners disease tx paid italy perfect opportunity kit
+classic basis command cities william express award distance peter assessment
+ensure thus involved el extra interface partners budget rated guides
+success maximum ma operation existing selected amazon patients restaurants warning
+locations vote forward flowers stars significant lists technologies owner retail
+animals manufacturer ways est providing mac housing takes iii gmt
+catalog searches max trying authority considered xml programme joined input
+strategy feet agent valid bin modern senior ireland teaching grand
+testing trial charge units instead canadian normal wrote enterprise ships
+entire educational md leading positive fl fitness chinese opinion mb
+asia abstract uses output funds greater develop employees artists alternative
+processing resolution java seems publication relations trust contains session multi
+photography republic fees components century academic assistance completed skin graphics
+indian prev ads mary il expected grade dating pacific pop
+filter mailing vehicle longer consider int northern panel german buying
+proposed default require iraq boys outdoor otherwise allows protein reported
+mm mini politics partner disclaimer authors boards faculty parties membership
+mission string sense modified pack released stage internal goods recommended
+unless richard detailed japanese approved background target usb maintenance ability
+functions ed moving brands places php trademarks phentermine spain southern
+yourself battery youth pressure submitted boston debt keywords medium interested
+core purposes throughout sets msn itself defined papers playing awards
+fee studio reader virtual device established answers las remote programming
+external le regarding instructions min offered theory remove aid surface
+minimum visual host variety teachers isbn martin manual subjects agents
+increased repair fair civil steel songs fixed beginning hands associates
+az updates desktop classes paris ohio gets sector capacity requires
+jersey un fully instruments quotes officer businesses respect unknown specified
+mike pst worth mi procedures eyes relationship workers georgia peace
+traditional campus tom showing creative coast benefit progress funding devices
+lord grant sub fiction sometimes watches careers families led themselves
+transport interesting blogs evaluation accepted former hits zone complex th
+galleries references presented jack flow agencies literature respective spanish michigan
+columbia setting scale economy highest helpful critical musical definition secretary
+angeles networking australian employee chief gives kb magazines packages detail
+francisco laws changed heard individuals colorado royal switch russian largest
+african guy titles relevant guidelines justice connect bible dev applied
+vol installation described demand pp suite vegas na chris advance
+skip diet auction gear lee os difference allowed charles nation
+selling sheet firm older illinois regulations elements species cells module
+resort facility random pricing dvds certificate minister motion directions visitors
+monitor trading calls whose coverage couple giving chance vision ending
+clients actions discuss accept automotive naked successful sold communities clinical
+situation sciences markets lowest publishing appear emergency developing lives currency
+leather determine temperature palm patient actual historical bob commerce ringtones
+persons scientific satellite tests accounts amateur ex met pain xbox
+factors www settings buyer cultural steve oral ford functional root
+au fi closed holidays zealand balance monitoring graduate replies shot
+nc architecture initial label thinking scott llc sec recommend canon
+league waste provider optional accounting sections fishing effort phase fields
+fantasy po letters motor va professor context install apparel continued
+mass crime breast techniques ibm johnson sc dollars websites religion
+claim driving permission surgery patch heat measures generation kansas chemical
+task reduce brought himself nor component enable bug santa mid
+guarantee leader diamond israel se processes servers alone meetings seconds
+jones arizona keyword interests congress fuel username produced italian paperback
+classifieds supported saint freedom argument competition creating jim drugs joint
+premium providers characters attorney upgrade di factor growing thousands km
+stream apartments hearing eastern auctions therapy entries dates generated signed
+upper serious prime samsung limit began louis steps errors shops
+del efforts informed ga ac thoughts creek ft worked quantity
+urban practices sorted reporting essential myself tours platform load affiliate
+labor admin nursing defense machines designated tags covered recovery joe
+guys integrated merchant expert universal protect solid cds presentation languages
+became compliance vehicles prevent theme im campaign marine improvement vs
+finding pennsylvania examples ipod saying spirit ar claims challenge motorola
+acceptance strategies mo seem affairs intended sa goals hire election
+suggest charges serve affiliates reasons mount talking gave latin multimedia
+xp avoid certified manage rank computing oregon element birth virus
+abuse interactive requests separate quarter procedure leadership tables define racing
+religious facts kong column plants faith chain developer identify avenue
+missing died domestic sitemap moved houston reach comparison mental viewed
+moment extended sequence inch centers opening damage lab reserve recipes
+cvs gamma plastic produce placed truth counter failure follows eu
+ontario des minnesota films native williams movement printing owned approval
+draft chart played contacts cc jesus readers clubs lcd wa
+jackson equal matching offering shirts profit leaders posters institutions assistant
+variable dj expect parking headlines compared determined wholesale workshop russia
+codes kinds extension seattle statements golden teams fort cm wi
+lighting senate forces gene turned portable electrical applicable disc returned
+pattern ct named theatre laser earlier sponsor classical icon warranty
+dedicated indiana direction harry objects ends delete nuclear taxes signal
+criminal issued sexual wisconsin powerful obtained da cast felt personnel
+passed supplied identified falls pic soul aids opinions promote stated
+stats hawaii appears decided nj covers hr em advantage designs
+maintain tourism priority newsletters adults clips savings iv graphic atom
+payments rw estimated binding brief ended winning anonymous straight script
+served prepared void dining alert integration atlanta dakota tag interview
+framework disk installed vhs credits handle criteria pubmed dave diego
+hong vice associate ne behavior enlarge ray revenue measure changing
+votes du discussions gain laboratory flights experts signs lack depth
+iowa whatever logged vintage explore maryland spa concept eligible checkout
+reality forgot handling origin gaming feeds billion destination scotland faster
+intelligence dallas bought con ups nations route followed broken tripadvisor
+frank alaska zoom blow battle residential anime decisions industries protocol
+query clip partnership editorial expression es equity provisions speech wire
+principles suggestions rural shared sounds replacement tape strategic judge spam
+economics acid bytes forced compatible height null speaker filed gb
+netherlands obtain bc consulting recreation offices designer remain managed pr
+failed marriage roll korea banks fr participants secret aa kelly
+leads negative austin favorites toronto theater springs missouri andrew var
+perform translation estimates font assets injury mt joseph ministry drivers
+lawyer figures protected proposal sharing philadelphia portal waiting beta fail
+gratis banking officials brian assist conduct contained lingerie legislation calling
+parameters jazz serving bags profiles miami comics matters houses doc
+postal tennessee controls breaking combined ultimate wales frequency introduced minor
+departments residents noted displayed mom reduced physics rare spent performed
+extreme samples davis daniel bars reviewed row oz forecast removed
+helps singles amounts contain accuracy dual rise usd mg pharmacy
+brazil creation static scene hunter addresses lady crystal writer chairman
+violence fans oklahoma speakers academy dynamic gender permanent agriculture dell
+cleaning constitutes portfolio practical delivered collectibles exclusive concerns vendor intel
+utilities philosophy regulation officers reduction aim bids referred supports nutrition
+recording regions junior toll les cape ann rings meaning tip
+secondary ladies henry announced guess agreed prevention ski soccer math
+import posting presence instant mentioned automatic healthcare viewing maintained ch
+increasing majority connected christ dan dogs sd directors aspects austria
+ahead scheme utility preview manner matrix containing combination devel amendment
+despite strength guaranteed turkey libraries proper distributed degrees singapore enterprises
+delta seeking inches phoenix rs convention shares principal standing comfort
+colors wars cisco ordering kept alpha appeal cruise bonus bookmark
+buildings specials beat disney household batteries adobe smoking bbc becomes
+drives arms alabama improved trees avg achieve positions subscription dealer
+contemporary utah nearby rom carried happen exposure panasonic permalink signature
+gambling refer miller provision outdoors caused luxury babes frames indeed
+circuit layer printed removal easier src liability trademark hip printers
+faqs adding kentucky eric spot taylor trackback prints interior revised
+americans optical promotion relative dot hiv identity suites conversion feeling
+hidden reasonable victoria serial relief revision broadband influence ratio pda
+importance dsl webmaster copies recipe zum permit seeing proof dna
+diff bass prescription instance pets licensed orlando tim bureau maine
+sql represent conservation ideal specs recorded pieces finished parks lawyers
+sydney stress ss runs trends ap patterns boxes louisiana hills
+javascript fourth nm advisor mn marketplace nd evil aware wilson
+evolution irish certificates objectives stations suggested gps op remains acc
+greatest firms concerned euro operator structures generic encyclopedia usage charts
+continuing mixed census interracial peak tn competitive exist transit suppliers
+compact poetry lights tracking angel keeping preparation attempt receiving matches
+accordance width engines array discussed accurate stephen elizabeth climate reservations
+playstation alcohol greek instruction managing annotation raw differences walking smaller
+newest establish gnu happened expressed jeff extent sharp lesbians ben
+lane paragraph mathematics aol compensation ce export managers aircraft modules
+sweden conflict conducted versions employer occur percentage knows mississippi describe
+concern backup requested citizens connecticut heritage personals immediate holding trouble
+spread coach kevin agricultural expand supporting audience assigned jordan collections
+ages participate plug specialist affect virgin experienced raised institution directed
+dealers searching sporting helping perl affected lib expenses indicate ab
+proceedings transmission anderson utc der organic seek experiences albums cheats
+verzeichnis contracts guests hosted diseases concerning developers equivalent chemistry tony
+neighborhood nevada kits thailand variables agenda continues tracks advisory cam
+curriculum logic template soil grants anywhere psychology responses atlantic edward
+investor ram leaving wildlife appliances matt elementary cooking speaking sponsors
+unlimited respond sizes plain entered iran keys launch checking costa
+belgium printable holy acts guidance mesh trail enforcement symbol crafts
+highway buddy hardcover observed dean setup poll booking glossary fiscal
+celebrity styles denver unix filled bond channels ericsson appendix notify
+blues pub portion scope hampshire supplier cables bluetooth controlled requirement
+authorities biology dental killed border ancient debate starts pregnancy causes
+arkansas biography leisure attractions learned transactions explorer historic attached opened
+tm disabled authorized upcoming britain concert retirement scores financing efficiency
+sp comedy adopted efficient weblog linear commitment specialty bears jean
+hop carrier edited constant visa jewish meter linked portland interviews
+concepts nh gun reflect pure deliver wonder lessons begins qualified
+reform lens alerts treated discovery mysql classified relating assume confidence
+alliance fm confirm lewis howard offline leaves lifestyle consistent replace
+clearance connections inventory converter organisation babe checks reached becoming safari
+objective indicated crew legs sam stick securities allen pdt relation
+enabled genre slide montana volunteer tested rear democratic enhance switzerland
+exact bound parameter adapter processor node formal dimensions contribute hockey
+micro colleges laptops mile showed challenges editors mens threads supreme
+brothers recognition presents ref tank submission dolls estimate encourage navy
+regulatory inspection consumers cancel limits territory transaction manchester weapons delay
+outlet continuous db czech resulting cambridge initiative novel execution disability
+increases ultra winner idaho contractor ph episode examination potter plays
+bulletin ia pt indicates modify oxford adam truly epinions committed
+extensive affordable universe candidate databases patent slot psp outstanding eating
+perspective planned watching lodge messenger tournament ds discounts sterling sessions
+kernel stocks buyers journals catalogue ea jennifer antonio charged broad
+taiwan und chosen demo greece lg swiss sarah clark labour
+terminal publishers nights behalf caribbean liquid nebraska loop salary reservation
+foods gourmet guard orleans saving nfl remaining empire resume newly
+raise prepare avatar gary depending illegal expansion vary hundreds rome
+arab lincoln helped premier purchased consent drama visiting performing downtown
+contest collected nw bands suitable ff millions audit chamber guinea
+findings muscle featuring iso implement clicking scheduled polls typical yours
+sum misc calculator temporary attend alan sending jason tonight sufficient
+holdem province catholic oak vat awareness vancouver governor beer seemed
+contribution measurement spyware formula constitution packaging solar jose jane pakistan
+ps reliable consultation northwest sir doubt finder unable periods tasks
+democracy attacks kim wallpaper merchandise const resistance doors symptoms resorts
+biggest memorial visitor twin forth insert baltimore gateway ky dont
+alumni candidates charlotte ordered biological fighting transition happens preferences spy
+romance instrument bruce split themes powers heaven br bits pregnant
+twice focused egypt physician hollywood bargain wikipedia cellular norway vermont
+asking blocks lo spiritual hunting diabetes suit ml shift res
+bodies photographs cutting wow simon writers marks flexible loved favourites
+mapping numerous birds satisfaction represents char indexed pittsburgh superior preferred
+saved paying shots intellectual moore granted choices carbon spending comfortable
+magnetic interaction listening registry crisis outlook massive denmark employed treat
+header cs poverty formed echo que grid sheets patrick experimental
+puerto revolution displays plasma allowing earnings voip mystery landscape dependent
+mechanical delaware bidding consultants risks banner applicant charter fig barbara
+cooperation counties acquisition ports implemented sf directories recognized dreams blogger
+notification kg licensing stands occurred textbooks rapid hairy diversity cleveland
+ut reverse deposit seminar investments latina nasa wheels specify dutch
+sensitive templates formats tab depends boots holds router concrete si
+editing poland folder womens css completion upload pulse universities technique
+contractors voting courts notices calculate mc detroit alexander broadcast converted
+metro toshiba anniversary improvements strip pearl nick accessible accessory resident
+plot qty airline regard pump exists arrangements smooth conferences uniprotkb
+strike consumption birmingham flashing lp threat surveys sitting putting consultant
+controller ownership committees legislative researchers vietnam trailer anne gardens missed
+malaysia unsubscribe antique labels willing bio molecular acting heads stored
+logos residence attorneys antiques density hundred ryan operators strange sustainable
+philippines statistical beds mention innovation pcs employers parallel honda amended
+operate bills bold stable opera definitions von doctors asset ag
+scan elections drinking reaction blank enhanced entitled severe generate stainless
+newspapers hospitals vi deluxe humor aged monitors exception lived duration
+bulk indonesia pursuant sci fabric edt visits tight domains capabilities
+pmid contrast flying recruitment sin berlin organized ba para siemens
+adoption improving cr capture pounds pg explained seed programmes desire
+expertise mechanism camping ee jewellery meets welfare peer caught marked
+driven measured medline agreements considering innovative marshall massage conclusion closing
+tampa thousand legend grace susan ing ks adams python monster
+alex bang villa columns disorders bugs hamilton detection ftp cookies
+inner formation tutorial med engineers entity cruises holder proposals moderator
+sw tutorials settlement portugal lawrence roman duties valuable tone collectables
+ethics forever captain fantastic imagine brings heating hd governments purchasing
+scripts abc stereo appointed taste dealing commit tiny operational rail
+airlines liberal livecam jay trips gap sides tube turns descriptions
+cache animation oracle matthew lease productions aviation hobbies proud excess
+disaster console commands jr instructor achieved injuries shipped seats approaches
+biz voltage anthony nintendo usual loading stamps appeared franklin angle
+rob vinyl highlights mining designers melbourne ongoing worst imaging betting
+scientists liberty wyoming blackjack argentina era convert possibility analyst commissioner
+reliability thongs gcc volunteers attachment ringtone finland morgan derived pleasure
+honor asp oriented desktops pants columbus prayer appointment workshops hurricane
+luck postage producer represented mortgages dial jet productivity investors par
+underground diagnosis maker crack principle picks vacations gang semester calculated
+fetish applies casinos appearance smoke apache filters incorporated nv craft
+notebooks apart fellow lounge algorithm semi coins andy gross valentine
+hilton ken proteins horror su exp familiar capable douglas debian
+till involving investing christopher admission epson elected carrying victory madison
+terrorism joy editions cpu ethnic ran parliament finds seal situations
+fifth allocated citizen vertical corrections structural municipal describes sr occurs
+jon absolute disabilities consists anytime substance prohibited addressed lies pipe
+soldiers nr guardian lecture simulation layout initiatives classics lbs lay
+horses lol deck wayne donate taught bankruptcy mp worker optimization
+substances prove discovered wings breaks genetic restrictions waters promise exhibition
+prefer ridge cabinet modem harris mph bringing dose evaluate tiffany
+tropical bet composition toyota streets nationwide vector shaved turning buffer
+existence commentary larry limousines developments def immigration destinations mutual pipeline
+syntax li attribute prison skill chairs nl everyday surrounding mountains
+moves popularity inquiry ethernet checked exhibit trend sierra visible cats
+postposted ya oldest rhode nba coordinator mercury steven handbook greg
+navigate worse summit victims epa spaces fundamental burning coupons somewhat
+receiver substantial tr progressive cialis bb boats glance scottish championship
+arcade richmond sacramento impossible ron russell tells obvious fiber depression
+graph covering platinum judgment bedrooms talks filing foster modeling passing
+awarded testimonials trials tissue nz memorabilia clinton masters bonds cartridge
+alberta explanation folk org commons cincinnati subsection fraud electricity permitted
+spectrum arrival pottery emphasis roger aspect workplace awesome mexican confirmed
+counts priced wallpapers hist crash desired inter closer assumes heights
+shadow riding infection firefox lisa expense grove eligibility venture clinic
+korean healing mall entering packet spray studios involvement buttons placement
+observations vbulletin funded thompson winners extend roads subsequent pat dublin
+rolling fell motorcycle disclosure memories nelson te arrived creates faces
+tourist av mayor murder sean adequate senator yield grades cartoons
+pour digest reg lodging tion hence wiki replaced radar rescue
+losses combat reducing stopped occupation lakes donations associations citysearch radiation
+kings shooting kent adds nsw flags pci baker launched elsewhere
+pollution conservative guestbook shock walls abroad ebony ward drawn arthur
+ian visited walker demonstrate atmosphere suggests beast ra operated experiment
+targets overseas purchases dodge counsel federation invited yards assignment chemicals
+gordon mod farmers rc queries bmw rush ukraine absence nearest
+cluster vendors mpeg whereas yoga serves woods rico partial shoppers
+phil couples nashville ranking jokes cst http ceo simpson twiki
+sublime counseling acceptable satisfied wins measurements verify globe trusted copper
+milwaukee rack medication warehouse shareware ec rep dicke kerry receipt
+supposed ordinary nobody violation configure stability mit applying southwest pride
+expectations independence knowing reporter metabolism keith champion linda ross chile
+anna plenty solo throat ignore maria excellence wealth rm somewhere
+vacuum dancing attributes recognize brass writes plaza pdas outcomes survival
+quest publish sri screening thumbnail trans jonathan whenever nova lifetime
+api pioneer booty forgotten acrobat plates acres venue athletic thermal
+essays behaviour vital telling coastal config cf charity intelligent edinburgh
+vt excel modes obligation campbell stupid harbor hungary traveler urw
+segment realize regardless lan enemy rising aluminum wells wishlist opens
+insight sms restricted republican secrets latter merchants thick trailers syndrome
+philips attendance penalty enables nec iraqi builder vista jessica chips
+terry flood foto ease arguments amsterdam arena adventures pupils stewart
+announcement tabs outcome appreciate expanded casual grown polish extras gm
+centres jerry clause lands ri troops indoor bulgaria armed broker
+charger believed pine cooling tend gulf rt rick trucks cp
+mechanisms divorce laura shopper tokyo nikon customize tradition pills donald
+folks sensor exposed telecom hunt angels deputy indicators sealed thai
+emissions physicians loaded fred complaint scenes experiments afghanistan dd boost
+spanking scholarship governance mill founded supplements chronic icons moral den
+catering aud keeps pound locate camcorder pl trained implementing roses
+labs ourselves tobacco wooden motors tough roberts incident gonna dynamics
+crm rf conversation decrease chest pension billy revenues emerging worship
+capability ak fe craig herself producing churches precision damages reserves
+contributed solve reproduction minority td diverse amp ingredients sb johnny
+sole franchise recorder complaints facing sm nancy promotions tones passion
+maintaining sight laid clay defence patches refund usc towns environments
+trembl divided blvd reception amd wise emails cyprus wv odds
+insider seminars consequences makers hearts geography appearing integrity ns eve
+carter legacy marc pleased vitamin processed phrase genuine raising implications
+paradise hybrid reads roles intermediate emotional sons pad glory platforms
+ja bigger billing diesel versus combine overnight geographic exceed bs
+rod saudi fault cuba hrs preliminary districts introduce silk promotional
+kate chevrolet babies bi karen compiled romantic revealed specialists generator
+albert examine jimmy graham suspension bristol margaret compaq correction communicate
+rugby supplement showtimes cal portions infant promoting sectors samuel fluid
+grounds fits regards ta machinery bandwidth unlike equation baskets probability
+dimension wright img barry proven schedules admissions cached warren slip
+studied reviewer involves rpm profits devil marie florist illustrated continental
+alternate deutsch achievement limitations kenya webcam cuts funeral nutten earrings
+enjoyed automated chapters pee charlie quebec passenger convenient dennis mars
+francis tvs sized manga noticed socket silent literary mhz signals
+caps orientation pill theft childhood swing symbols lat meta humans
+analog facial choosing talent dated flexibility seeker wisdom shoot boundary
+mint packard offset payday philip elite gi spin holders believes
+swedish poems deadline jurisdiction displaying witness collins equipped stages encouraged
+sur winds powder broadway acquired assess cartridges stones entrance gnome
+roots declaration losing attempts gadgets noble glasgow automation impacts rev
+gospel advantages shore loves induced knight preparing loose aims recipient
+linking extensions appeals cl earned illness islamic athletics southeast ieee
+ho alternatives pending parker determining lebanon corp personalized kennedy gt
+sh conditioning teenage ae triple cooper nyc vincent secured unusual
+answered partnerships destruction slots migration disorder routine toolbar rocks conventional
+titans applicants wearing axis sought genes mounted habitat firewall median
+guns scanner herein occupational animated judicial rio hs adjustment hero
+integer treatments bachelor attitude camcorders engaged falling basics montreal rv
+struct lenses binary genetics attended difficulty punk collective coalition pi
+dropped enrollment duke walter ai pace besides wage producers ot
+collector arc hosts interfaces advertisers moments atlas strings dawn representing
+observation feels torture carl deleted mitchell rica restoration convenience returning
+ralph opposition container yr defendant warner confirmation app embedded inkjet
+supervisor wizard corps actors liver peripherals liable brochure morris bestsellers
+petition eminem recall antenna picked assumed departure minneapolis belief killing
+bikini memphis decor lookup texts harvard brokers roy ion diameter
+ottawa ic podcast seasons peru interactions refine bidder evans herald
+literacy fails aging nike intervention fed plugin attraction diving modification
+alice latinas suppose customized reed involve moderate terror younger thirty
+mice opposite understood dealtime ban temp intro mercedes zus assurance
+clerk happening vast mills outline amendments tramadol holland receives metropolitan
+compilation verification fonts ent odd wrap refers mood favor veterans
+mx sigma gr attractive xhtml occasion recordings jefferson victim demands
+sleeping ext beam gardening obligations orchestra sunset tracked moreover minimal
+polyphonic lottery tops framed aside outsourcing licence adjustable allocation michelle
+essay discipline amy ts demonstrated dialogue identifying alphabetical camps declared
+dispatched aaron handheld trace disposal shut florists packs ge installing
+switches romania voluntary ncaa thou consult phd blogging cycling midnight
+ng pe photographer inform turkish coal messaging pentium quantum murray
+intent tt pleasant announce constructed additions requiring spoke aka engagement
+sampling rough weird tee refinance inspired holes weddings blade oxygen
+meals canyon goto meters calendars arrangement conclusions passes bibliography pointer
+stretch durham furthermore permits cooperative muslim xl neil sleeve netscape
+cleaner cricket feeding stroke township rankings measuring cad hats robin
+robinson jacksonville strap headquarters sharon tcp transfers surf olympic remained
+attachments dv dir entities customs personality hook roulette decline gloves
+israeli medicare cord skiing facilitate subscriber valve val hewlett explains
+proceed flickr feelings jamaica priorities bookstore timing parenting adopt denied
+xylophone xenon xerox yacht yolk yawn zipper zigzag zucchini quartz quack
 `;
 
 export const CHAIN_WORDS: ReadonlySet<string> = new Set(RAW.split(/\s+/).filter(Boolean));
