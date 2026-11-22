@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 import { buildTapChoices, tapKey, tapWords } from './tap-choices';
-import { tapDistractorWords } from './tap-vocab';
+import { tapAllowDistractors, tapDistractorWords } from './tap-vocab';
 
 describe('tap mode chips', () => {
   it('splits answers into chips without punctuation or a give-away capital', () => {
@@ -61,8 +61,24 @@ describe('tap mode chips', () => {
     assert.deepEqual(buildTapChoices(input), buildTapChoices(input));
   });
 
-  it('the very first lesson still gets distractors (opening chapters)', () => {
+  it('opening chapters still have a distractor pool (for short answers)', () => {
     assert.ok(tapDistractorWords({ lessonId: 'greetings' }).length >= 6);
+  });
+
+  it('early chapters: no distractors unless the answer is very short', () => {
+    // Ch 3 Say It "Are you sick" (3 words) → answer words only.
+    assert.equal(tapAllowDistractors({ topicId: 'fnd_v7_u03n09' }, 3), false);
+    assert.equal(tapAllowDistractors({ topicId: 'fnd_v7_u03n09' }, 2), true);
+    // Later chapters keep distractors even for longer answers.
+    assert.equal(tapAllowDistractors({ topicId: 'fnd_v7_u10n10' }, 5), true);
+    const chips = buildTapChoices({
+      answer: 'Are you sick',
+      distractorWords: tapAllowDistractors({ topicId: 'fnd_v7_u03n09' }, 3)
+        ? tapDistractorWords({ topicId: 'fnd_v7_u03n09' })
+        : [],
+      seed: 'early-sick',
+    });
+    assert.deepEqual(chips.sort(), ['are', 'sick', 'you'].sort());
   });
 
   it('distractors come from earlier content, not later chapters', () => {

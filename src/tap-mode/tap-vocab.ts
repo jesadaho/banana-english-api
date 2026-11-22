@@ -29,6 +29,16 @@ export type TapContext = { lessonId?: string; topicId?: string; poolId?: string 
 /** Chapters before the learner's one that may lend distractors. */
 export const TAP_EARLIER_CHAPTERS = 2;
 
+/**
+ * Opening chapters (1–3): no distractors unless the answer is very short,
+ * so the speaking word bank lists every word you need (and only those).
+ * Chapter index is 0-based → early = chapterIndex < 3.
+ */
+export const TAP_EARLY_CHAPTERS = 3;
+
+/** Answers with this many words or fewer still get distractors in early chapters. */
+export const TAP_EARLY_SHORT_WORDS = 2;
+
 let nodes: VocabNode[] | null = null;
 let byKey: Map<string, VocabNode> | null = null;
 
@@ -104,6 +114,24 @@ function findNode(ctx: TapContext): VocabNode | undefined {
     (ctx.poolId && byKey!.get(`pool:${ctx.poolId}`)) ||
     undefined
   );
+}
+
+/**
+ * Whether this item should mix in distractor chips.
+ * Early chapters: only when the answer is very short (1–2 words).
+ */
+export function tapAllowDistractors(
+  ctx: TapContext,
+  answerWordCount: number,
+): boolean {
+  if (!byKey) build();
+  const node = findNode(ctx);
+  // Unknown content (hub topics etc.): keep distractors.
+  if (!node) return true;
+  if (node.chapterIndex < TAP_EARLY_CHAPTERS) {
+    return answerWordCount <= TAP_EARLY_SHORT_WORDS;
+  }
+  return true;
 }
 
 /**
