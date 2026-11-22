@@ -239,6 +239,7 @@ import {
   localMatchCurrentBeat,
   processScenarioTurn,
   scenarioHintForState,
+  scenarioScore,
   type ScenarioJudgeTier,
 } from '../interactive-scenario/interactive-scenario.runtime';
 
@@ -886,7 +887,7 @@ export class SessionsController {
     return resumeScenarioRuntime(config, {
       completedSceneIds: asArray(row.completedSceneIds),
       checkpoints: asRecord<boolean>(row.checkpoints),
-      goalOutcomes: asRecord<'correct' | 'close' | 'skipped'>(row.goalOutcomes),
+      goalOutcomes: asRecord<'correct' | 'close' | 'partial' | 'skipped'>(row.goalOutcomes),
       slots: asRecord<string>(row.slots),
     });
   }
@@ -4229,9 +4230,11 @@ export class SessionsController {
     const config = data.scenarioConfig!;
     const checkpoints =
       data.scenarioRuntime?.checkpoints ?? data.session.checkpointStates ?? {};
-    const completedCount = Object.values(checkpoints).filter(Boolean).length;
-    const totalCount = Math.max(config.goals.length, 1);
-    const overallScore = Math.round((completedCount / totalCount) * 100);
+    // Goals met / goals; partial-credit scenarios (Minnie) score 2/1/0 per goal.
+    const overallScore = scenarioScore(config, {
+      checkpoints,
+      goalOutcomes: data.scenarioRuntime?.goalOutcomes ?? {},
+    });
     const scoreLabel = getMissionReward(overallScore).ratingLabel;
     const duration = Math.min(durationSeconds, 60 * 60);
     const ended = data.endedAt ?? new Date();
