@@ -69,8 +69,11 @@ export class LearnPathController {
 
   /** Settings: wipe learn-path progress (map back to the start). */
   @Post('reset-course')
-  resetCourse(@Req() req: AuthedRequest) {
-    return this.learnPath.resetCourse(req.user.id);
+  resetCourse(
+    @Req() req: AuthedRequest,
+    @Body() body?: { pathId?: string },
+  ) {
+    return this.learnPath.resetCourse(req.user.id, body?.pathId);
   }
 
   /** Catalog-driven courses: `foundation-v7`, `adventure-a2` (slug or pathId). */

@@ -9,6 +9,8 @@ import {
   FOUNDATION_V7_PATH_ID,
   foundationV7NodeTypeCounts,
   learnCourseForChapter,
+  type FoundationV7Node,
+  learnCourseById,
   type FoundationV7Capability,
   type LearnCourse,
 } from './foundation-v7-path.data';
@@ -20,6 +22,10 @@ import {
   FOUNDATION_V7_SIMULATION_MIGRATION,
   migrateFoundationV7NodeId,
 } from './foundation-v7-ch14-16-migration';
+import { foundationV7LessonLegacyIds } from '../lessons/foundation-v7-lesson-id-aliases';
+import { listenDrillNodesForChapter } from './listen-drill.data';
+import { wordCardsNodeForChapter } from './word-cards.data';
+import { inOnAtNodeForChapter } from './in-on-at.path';
 import {
   dealSkipQuizPhrases,
   isSkipQuizPassed,
@@ -222,6 +228,111 @@ function legacyIdsForNode(nodeId: string): string[] {
   return Object.entries(FOUNDATION_V7_NODE_MIGRATION)
     .filter(([, next]) => next === nodeId)
     .map(([legacy]) => legacy);
+}
+
+
+/** Lesson / simulation / scenario / mini-game keys that mark progress on one course. */
+function collectCourseProgressKeys(course: LearnCourse): {
+  sessionContentIds: string[];
+  miniGameReferenceIds: string[];
+  scenarioIds: string[];
+} {
+  const sessionContentIds = new Set<string>();
+  const miniIds = new Set<string>();
+  const scenarioIds = new Set<string>();
+
+  const addMini = (id: string) => {
+    miniIds.add(id);
+    miniIds.add(`mini_game:${id}`);
+    const canonical = canonicalFoundationV7RewardId(id);
+    if (canonical) {
+      miniIds.add(canonical);
+      miniIds.add(`mini_game:${canonical}`);
+    }
+  };
+
+  const miniCandidates = (node: {
+    id: string;
+    topicId?: string;
+    poolId?: string;
+    scenarioId?: string;
+  }): string[] =>
+    [
+      node.id,
+      node.topicId,
+      node.poolId,
+      node.scenarioId,
+      node.topicId ? `say_it:${node.topicId}` : null,
+      node.poolId ? `emoji_speak:${node.poolId}` : null,
+      node.poolId ? `new_words:${node.poolId}` : null,
+      node.poolId ? `describe_it:${node.poolId}` : null,
+      node.poolId ? `info_task:${node.poolId}` : null,
+      node.poolId ? `listen_up:${node.poolId}` : null,
+      node.poolId ? `story_bites:${node.poolId}` : null,
+      node.poolId ? `explain_it:${node.poolId}` : null,
+      node.poolId ? `word_cards:${node.poolId}` : null,
+      node.poolId ? `listen_drill:${node.poolId}` : null,
+      node.topicId ? `in_on_at:${node.topicId}` : null,
+      node.scenarioId ? `interactive_scenario:${node.scenarioId}` : null,
+    ].filter((value): value is string => !!value);
+
+  const addNode = (node: FoundationV7Node) => {
+    const ref = node.contentRef;
+    sessionContentIds.add(node.id);
+    if (ref.lessonId) {
+      sessionContentIds.add(ref.lessonId);
+      for (const legacy of foundationV7LessonLegacyIds(ref.lessonId)) {
+        sessionContentIds.add(legacy);
+      }
+    }
+    if (ref.simulationId) sessionContentIds.add(ref.simulationId);
+    for (const legacy of node.legacySimulationIds ?? []) {
+      sessionContentIds.add(legacy);
+    }
+    if (ref.scenarioId) {
+      scenarioIds.add(ref.scenarioId);
+      // Interactive-scenario sessions store the scenario id in simulationId.
+      sessionContentIds.add(ref.scenarioId);
+    }
+    for (const id of miniCandidates({
+      id: node.id,
+      topicId: ref.topicId,
+      poolId: ref.poolId,
+      scenarioId: ref.scenarioId,
+    })) {
+      addMini(id);
+    }
+  };
+
+  for (const node of course.nodes) addNode(node);
+
+  if (course.pathId === FOUNDATION_V7_PATH_ID) {
+    for (const chapter of course.catalog.chapters) {
+      for (const { node } of listenDrillNodesForChapter(chapter)) addNode(node);
+      const wordCards = wordCardsNodeForChapter(chapter);
+      if (wordCards) addNode(wordCards);
+      const inOnAt = inOnAtNodeForChapter(chapter);
+      if (inOnAt) addNode(inOnAt);
+    }
+    for (const [legacy, next] of Object.entries(FOUNDATION_V7_NODE_MIGRATION)) {
+      if (!next) continue;
+      sessionContentIds.add(legacy);
+      addMini(legacy);
+      addMini(`say_it:${legacy}`);
+      addMini(`new_words:${legacy}`);
+      addMini(`emoji_speak:${legacy}`);
+      addMini(`info_task:${legacy}`);
+    }
+    for (const simulationId of Object.keys(FOUNDATION_V7_SIMULATION_MIGRATION)) {
+      sessionContentIds.add(simulationId);
+    }
+  }
+
+  return {
+    sessionContentIds: [...sessionContentIds],
+    miniGameReferenceIds: [...miniIds].filter((id) => id.startsWith('mini_game:')),
+    scenarioIds: [...scenarioIds],
+  };
 }
 
 function shippedContentForMappedType(
@@ -673,34 +784,100 @@ export class LearnPathService {
   }
 
 
+
   /**
    * Settings → Reset course: wipe learn-path progress so the map starts over.
    * Keeps bananas, subscription, streak, outfits, and placement band.
-   * Clears sessions, skip-quiz skips, path mini-game reward refs, and
-   * placement entry unlock (so mid-path placement no longer opens chapters).
+   * With `pathId` (foundation_v7 / adventure_a2 or slug): only that course.
+   * Without `pathId`: wipe every catalog course (legacy clients).
    */
-  async resetCourse(userId: string): Promise<{ ok: true }> {
+  async resetCourse(
+    userId: string,
+    pathIdOrSlug?: string,
+  ): Promise<{ ok: true; pathId: string | 'all' }> {
+    const course = pathIdOrSlug?.trim()
+      ? learnCourseById(pathIdOrSlug.trim())
+      : undefined;
+    if (pathIdOrSlug?.trim() && !course) {
+      throw new BadRequestException(
+        'Unknown course. Use foundation-v7 or adventure-a2.',
+      );
+    }
+
+    if (!course) {
+      await this.prisma.$transaction(async (tx) => {
+        await tx.userSession.deleteMany({ where: { userId } });
+        await tx.foundationChapterSkip.deleteMany({ where: { userId } });
+        await tx.foundationSkipQuizAttempt.deleteMany({ where: { userId } });
+        await tx.economyTransaction.deleteMany({
+          where: {
+            userId,
+            source: 'mini_game_reward',
+            referenceId: { startsWith: 'mini_game:' },
+          },
+        });
+        await tx.interactiveScenarioProgress.deleteMany({ where: { userId } });
+        await tx.user.update({
+          where: { id: userId },
+          data: {
+            placementEntryPathId: null,
+            placementEntryNodeId: null,
+          } as Prisma.UserUpdateInput,
+        });
+      });
+      return { ok: true, pathId: 'all' };
+    }
+
+    const keys = collectCourseProgressKeys(course);
     await this.prisma.$transaction(async (tx) => {
-      await tx.userSession.deleteMany({ where: { userId } });
-      await tx.foundationChapterSkip.deleteMany({ where: { userId } });
-      await tx.foundationSkipQuizAttempt.deleteMany({ where: { userId } });
-      await tx.economyTransaction.deleteMany({
-        where: {
-          userId,
-          source: 'mini_game_reward',
-          referenceId: { startsWith: 'mini_game:' },
-        },
+      if (keys.sessionContentIds.length > 0) {
+        await tx.userSession.deleteMany({
+          where: {
+            userId,
+            OR: [
+              { lessonId: { in: keys.sessionContentIds } },
+              { simulationId: { in: keys.sessionContentIds } },
+            ],
+          },
+        });
+      }
+      await tx.foundationChapterSkip.deleteMany({
+        where: { userId, pathId: course.pathId },
       });
-      await tx.user.update({
+      await tx.foundationSkipQuizAttempt.deleteMany({
+        where: { userId, pathId: course.pathId },
+      });
+      if (keys.miniGameReferenceIds.length > 0) {
+        await tx.economyTransaction.deleteMany({
+          where: {
+            userId,
+            source: 'mini_game_reward',
+            referenceId: { in: keys.miniGameReferenceIds },
+          },
+        });
+      }
+      if (keys.scenarioIds.length > 0) {
+        await tx.interactiveScenarioProgress.deleteMany({
+          where: { userId, scenarioId: { in: keys.scenarioIds } },
+        });
+      }
+      const user = await tx.user.findUnique({
         where: { id: userId },
-        data: {
-          placementEntryPathId: null,
-          placementEntryNodeId: null,
-        } as Prisma.UserUpdateInput,
+        select: { placementEntryPathId: true },
       });
+      if (user?.placementEntryPathId === course.pathId) {
+        await tx.user.update({
+          where: { id: userId },
+          data: {
+            placementEntryPathId: null,
+            placementEntryNodeId: null,
+          } as Prisma.UserUpdateInput,
+        });
+      }
     });
-    return { ok: true };
+    return { ok: true, pathId: course.pathId };
   }
+
 
   private async resolveSkippedV7NodeIds(
     userId: string,
