@@ -223,7 +223,8 @@ function completionStatusFromHistory(
     : 'completed_independently';
 }
 
-function supportedCompletionText(
+/** Shared finish lines (no learner name) so TTS can bank one clip per status. */
+export function supportedCompletionText(
   status: LessonCompletionStatus,
   _learnerFirstName: string,
 ): string {
