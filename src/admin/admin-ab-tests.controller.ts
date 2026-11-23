@@ -26,7 +26,7 @@ type ArmRow = {
 };
 
 /**
- * Admin → A/B Tests. Signup-day banana bonus: A (no bonus) vs B (bonus).
+ * Admin → A/B Tests. Signup-day banana bonus: A (Day 0 +2) vs B (Day 0 +3 · Day 1–2 +2).
  * Retention = any learning session on that Bangkok calendar day after signup;
  * a day is counted only once it is over for that user (matured).
  */
@@ -90,7 +90,7 @@ export class AdminAbTestsController {
     return {
       experiment: BANANA_BONUS_EXPERIMENT,
       title: 'Signup-day banana bonus',
-      arms: { A: 'No signup-day bonus (control)', B: 'Day 0 +3 · Day 1 +2 · Day 2 +2' },
+      arms: { A: 'Day 0 +2 only (control)', B: 'Day 0 +3 · Day 1 +2 · Day 2 +2' },
       enabled: settings.enabled,
       start: settings.start.toISOString(),
       // ~540 users per arm detects a D1 change of ±8 points (31% base, 80% power).
