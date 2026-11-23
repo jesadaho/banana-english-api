@@ -8,11 +8,13 @@ import { StaleGuestCleanupService } from './stale-guest-cleanup.service';
 import { UserAuthService } from './user-auth.service';
 import { UserNotificationsService } from './user-notifications.service';
 import { UsersController } from './users.controller';
+import { PaywallController } from '../subscriptions/paywall.controller';
+import { NotifyAskController } from './notify-ask.controller';
 import { UsersService } from './users.service';
 
 @Module({
   imports: [EconomyModule, NotificationsModule, SubscriptionsModule],
-  controllers: [UsersController],
+  controllers: [UsersController, PaywallController, NotifyAskController],
   providers: [
     UsersService,
     UserAuthService,

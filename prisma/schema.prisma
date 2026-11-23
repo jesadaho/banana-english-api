@@ -58,6 +58,11 @@ model User {
   contentLocale           String    @default("th")
   /// Signup-day banana bonus A/B arm: A = no bonus, B = bonus (null = not in the test).
   bananaBonusArm          String?
+  /** Paywall default-plan A/B arm (A/B/C) and first exposure. */
+  paywallArm              String?
+  paywallArmAt            DateTime?
+  /** Notification-ask timing A/B arm (A = after placement, B = after first lesson). */
+  notifyAskArm            String?
 
   bananaBalance           Int       @default(0)
   /** Daily free pool (capped). Spends this before accumulated bananas. */
