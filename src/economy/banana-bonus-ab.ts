@@ -2,9 +2,9 @@ import { createHash } from 'node:crypto';
 import type { BananaDayBonusConfig } from './banana-day-caps';
 
 /**
- * A/B test: signup-day banana bonus (Day 0 +3, Day 1 +2, Day 2 +2).
- *   A = control, no signup-day bonus (as before 17 Nov 2026)
- *   B = bonus on
+ * A/B test: signup-day banana bonus.
+ *   A = Day 0 +2 only (control)
+ *   B = Day 0 +3 · Day 1 +2 · Day 2 +2
  * New users from the start time are split 50/50 by a stable hash of their id;
  * the arm is stored on the user (`bananaBonusArm`) the first time it matters.
  * Users created before the start keep the bonus (no arm).
@@ -48,12 +48,12 @@ export function bananaBonusArmFor(
   return hashBananaBonusArm(user.id);
 }
 
-/** Arm A gets no signup-day bonus; the free pool (baseCap) is the same. */
+/** Arm A: Day 0 +2 only. Arm B / null: full cfg (Day 0 +3 · Day 1–2 +2). */
 export function applyBananaBonusArm(
   cfg: BananaDayBonusConfig,
   arm: BananaBonusArm | null,
 ): BananaDayBonusConfig {
-  return arm === 'A' ? { ...cfg, day0: 0, day1: 0, day2: 0 } : cfg;
+  return arm === 'A' ? { ...cfg, day0: 2, day1: 0, day2: 0 } : cfg;
 }
 
 /** Two-sided p-value for a difference of two proportions (null if too few). */

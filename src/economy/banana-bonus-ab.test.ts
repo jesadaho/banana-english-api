@@ -27,9 +27,9 @@ describe('banana bonus A/B', () => {
     assert.equal(bananaBonusArmFor({ id: 'u1', createdAt: after, bananaBonusArm: 'B' }, off), 'B');
   });
 
-  it('arm A has no signup-day bonus, same free pool', () => {
+  it('arm A gets Day 0 +2 only; B keeps the full schedule', () => {
     const cfg = { baseCap: 5, day0: 3, day1: 2, day2: 2 };
-    assert.deepEqual(applyBananaBonusArm(cfg, 'A'), { baseCap: 5, day0: 0, day1: 0, day2: 0 });
+    assert.deepEqual(applyBananaBonusArm(cfg, 'A'), { baseCap: 5, day0: 2, day1: 0, day2: 0 });
     assert.deepEqual(applyBananaBonusArm(cfg, 'B'), cfg);
     assert.deepEqual(applyBananaBonusArm(cfg, null), cfg);
   });
