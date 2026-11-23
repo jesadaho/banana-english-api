@@ -12,11 +12,12 @@ export const EARLY_BIRD_PRODUCT_ID = 'promax_yearly_earlybird';
 const PRODUCTS: SubscriptionProduct[] = [
   { productId: 'pro_monthly', tier: 'PRO', months: 1, priceThb: 120, earlyBird: false },
   { productId: 'pro_quarterly', tier: 'PRO', months: 3, priceThb: 240, earlyBird: false },
-  { productId: 'pro_yearly', tier: 'PRO', months: 12, priceThb: 360, earlyBird: false },
+  { productId: 'pro_yearly', tier: 'PRO', months: 12, priceThb: 299, earlyBird: false },
   { productId: 'promax_monthly', tier: 'PRO_MAX', months: 1, priceThb: 280, earlyBird: false },
   { productId: 'promax_quarterly', tier: 'PRO_MAX', months: 3, priceThb: 380, earlyBird: false },
   { productId: 'promax_yearly', tier: 'PRO_MAX', months: 12, priceThb: 780, earlyBird: false },
-  { productId: EARLY_BIRD_PRODUCT_ID, tier: 'PRO_MAX', months: 12, priceThb: 780, earlyBird: true },
+  // Early Bird sold at ฿280/year (1–7 Nov 2026).
+  { productId: EARLY_BIRD_PRODUCT_ID, tier: 'PRO_MAX', months: 12, priceThb: 280, earlyBird: true },
 ];
 
 const BY_ID = new Map(PRODUCTS.map((p) => [p.productId, p]));
