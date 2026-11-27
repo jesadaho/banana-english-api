@@ -8,9 +8,33 @@ export const REFERRAL_LINK_BASE = 'https://bananaenglish.app/invite/';
 /** Invite V2 — friend gets a store coupon; referrer gets Pro days after purchase. */
 export const REFERRAL_PROGRAM_BANANA_V1 = 'banana_v1';
 export const REFERRAL_PROGRAM_INVITE_V2 = 'invite_v2';
+/** Invite V3: same purchase flow as V2 + step-1 bananas, gems for paid referrers, no coupon UI. */
+export const REFERRAL_PROGRAM_INVITE_V3 = 'invite_v3';
+/** Programs that pay the referrer on the invitee's purchase. */
+export const PURCHASE_REFERRAL_PROGRAMS = [
+  REFERRAL_PROGRAM_INVITE_V2,
+  REFERRAL_PROGRAM_INVITE_V3,
+] as const;
+export function isPurchaseReferralProgram(program: string | null | undefined): boolean {
+  return (PURCHASE_REFERRAL_PROGRAMS as readonly string[]).includes(program ?? '');
+}
 export const INVITEE_COUPON_PERCENT = 10;
 export const COUPON_TTL_DAYS = 30;
 export const REFERRER_PRO_DAYS = 30;
+/**
+ * Invite V2 step 1: invitee finished [REFERRAL_REQUIRED_NODES] map nodes →
+ * referrer bananas (monthly cap below). The invitee's bananas land at claim.
+ */
+export const INVITE_STEP1_REFERRER_BANANAS = 20;
+export const INVITE_STEP1_INVITEE_BANANAS = 20;
+export const INVITE_V2_REFERRER_MONTHLY_CAP_BANANAS = 60;
+/**
+ * Invite V2 step 2 when the referrer already has an active plan: gems instead
+ * of Pro days (extra days on a store subscription would be wasted, and a tier
+ * change would fight store renewals).
+ */
+export const INVITE_PAID_REFERRER_GEMS = 1000;
+export const INVITE_PAID_REWARD_SOURCE = 'referral_paid_reward';
 /** RevenueCat offering id with store promo offers (~10% off first period). */
 export const RC_OFFERING_INVITE = 'invite_10';
 export const REFERRAL_INVITE_V2_GRANT_SOURCE = 'referral_invite_v2';

@@ -15,6 +15,11 @@ import {
   couponExpiresAt,
   COUPON_TTL_DAYS,
   generateReferralCode,
+  INVITE_PAID_REFERRER_GEMS,
+  INVITE_PAID_REWARD_SOURCE,
+  INVITE_STEP1_INVITEE_BANANAS,
+  INVITE_STEP1_REFERRER_BANANAS,
+  INVITE_V2_REFERRER_MONTHLY_CAP_BANANAS,
   INVITEE_BONUS_BANANAS,
   INVITEE_COUPON_PERCENT,
   normalizeReferralCode,
@@ -23,6 +28,9 @@ import {
   REFERRAL_LINK_BASE,
   REFERRAL_PROGRAM_BANANA_V1,
   REFERRAL_PROGRAM_INVITE_V2,
+  REFERRAL_PROGRAM_INVITE_V3,
+  PURCHASE_REFERRAL_PROGRAMS,
+  isPurchaseReferralProgram,
   REFERRAL_REQUIRED_NODES,
   REFERRAL_SOURCES,
   type ReferralSource,
@@ -216,8 +224,11 @@ export class ReferralsService implements OnModuleInit {
       where: { inviteeId },
     });
     if (!referral || referral.status !== 'pending') return;
-    // Invite V2 rewards on purchase, not node progress.
-    if (referral.program === REFERRAL_PROGRAM_INVITE_V2) return;
+    // Invite V2: step 1 bananas here; step 2 (Pro days / gems) on purchase.
+    if (isPurchaseReferralProgram(referral.program)) {
+      await this.qualifyInviteV2(referral.id, referral.referrerId, inviteeId);
+      return;
+    }
 
     const done = (await this.completedNodeCounts([inviteeId])).get(inviteeId) ?? 0;
     if (done < REFERRAL_REQUIRED_NODES) return;
@@ -253,6 +264,89 @@ export class ReferralsService implements OnModuleInit {
 
     if (outcome === 'rewarded') {
       await this.pushReward(referral.referrerId, inviteeId, referral.id);
+    }
+  }
+
+  /**
+   * Invite V2 step 1: once per referral, when the invitee has finished enough
+   * map nodes. Sets [qualifiedAt]; [status] stays `pending` until purchase.
+   */
+  private async qualifyInviteV2(
+    referralId: string,
+    referrerId: string,
+    inviteeId: string,
+  ): Promise<void> {
+    const current = await this.prisma.referral.findUnique({
+      where: { id: referralId },
+      select: { qualifiedAt: true },
+    });
+    if (!current || current.qualifiedAt) return;
+    const done = (await this.completedNodeCounts([inviteeId])).get(inviteeId) ?? 0;
+    if (done < REFERRAL_REQUIRED_NODES) return;
+
+    const outcome = await this.prisma.$transaction(async (tx) => {
+      await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${referrerId}))`;
+      const claimed = await tx.referral.updateMany({
+        where: { id: referralId, qualifiedAt: null },
+        data: { qualifiedAt: new Date() },
+      });
+      if (claimed.count === 0) return 'skipped';
+      const earned = await this.monthEarned(tx, referrerId, bangkokMonthStart());
+      if (earned + INVITE_STEP1_REFERRER_BANANAS > INVITE_V2_REFERRER_MONTHLY_CAP_BANANAS) {
+        return 'capped';
+      }
+      await tx.economyTransaction.create({
+        data: {
+          userId: referrerId,
+          currency: Currency.BANANA,
+          amount: INVITE_STEP1_REFERRER_BANANAS,
+          source: 'referral_reward',
+          referenceId: `referral:${referralId}`,
+        },
+      });
+      await tx.user.update({
+        where: { id: referrerId },
+        data: { bananaBalance: { increment: INVITE_STEP1_REFERRER_BANANAS } },
+      });
+      return 'rewarded';
+    });
+
+    if (outcome === 'rewarded') {
+      await this.pushInviteStep1(referrerId, inviteeId, referralId);
+    }
+  }
+
+  private async pushInviteStep1(referrerId: string, inviteeId: string, referralId: string) {
+    try {
+      const [referrer, invitee] = await Promise.all([
+        this.prisma.user.findUnique({
+          where: { id: referrerId },
+          include: { fcmTokens: true },
+        }),
+        this.prisma.user.findUnique({
+          where: { id: inviteeId },
+          select: { displayName: true },
+        }),
+      ]);
+      if (!referrer) return;
+      const name = invitee?.displayName?.trim() || 'เพื่อนของคุณ';
+      const invalid = await this.fcm.sendAndPersist({
+        userId: referrerId,
+        tokens: referrer.fcmTokens.map((t) => t.token),
+        payload: {
+          type: 'referral_reward',
+          title: 'Banana English',
+          body: `${name} เริ่มเรียนแล้ว! รับกล้วย ${INVITE_STEP1_REFERRER_BANANAS} ลูก · ถ้า${name}สมัครสมาชิก คุณได้รางวัลอีก`,
+          data: { type: 'referral_reward', referralId, route: '/invite' },
+        },
+      });
+      if (invalid.length) {
+        await this.prisma.userFcmToken.deleteMany({
+          where: { token: { in: invalid } },
+        });
+      }
+    } catch (error) {
+      this.logger.warn(`Invite step 1 push failed: ${String(error)}`);
     }
   }
 
@@ -313,16 +407,13 @@ export class ReferralsService implements OnModuleInit {
    */
   async adminReport(
     range: { from: Date; to: Date },
-    program: string = REFERRAL_PROGRAM_INVITE_V2,
+    program: string = REFERRAL_PROGRAM_INVITE_V3,
   ) {
-    const prog =
-      program === REFERRAL_PROGRAM_BANANA_V1
-        ? REFERRAL_PROGRAM_BANANA_V1
-        : REFERRAL_PROGRAM_INVITE_V2;
-    if (prog === REFERRAL_PROGRAM_INVITE_V2) {
-      return this.adminReportInviteV2(range);
-    }
-    return this.adminReportBananaV1(range);
+    if (program === REFERRAL_PROGRAM_BANANA_V1) return this.adminReportBananaV1(range);
+    return this.adminReportInviteV2(
+      range,
+      program === REFERRAL_PROGRAM_INVITE_V2 ? REFERRAL_PROGRAM_INVITE_V2 : REFERRAL_PROGRAM_INVITE_V3,
+    );
   }
 
   /** Legacy banana invite: claim → 3 nodes → bananas. */
@@ -435,9 +526,11 @@ export class ReferralsService implements OnModuleInit {
   }
 
   /** Invite V2: claim → 10% coupon → purchase → Pro 30d for referrer. */
-  private async adminReportInviteV2(range: { from: Date; to: Date }) {
+  private async adminReportInviteV2(
+    range: { from: Date; to: Date },
+    program: string = REFERRAL_PROGRAM_INVITE_V3,
+  ) {
     const inRange = { gte: range.from, lte: range.to };
-    const program = REFERRAL_PROGRAM_INVITE_V2;
     const now = new Date();
     const [cohort, qualified, purchasedInRange, codesIssued, allTime, couponRows] =
       await Promise.all([
@@ -524,7 +617,7 @@ export class ReferralsService implements OnModuleInit {
     }
 
     return {
-      program: REFERRAL_PROGRAM_INVITE_V2,
+      program,
       kpis: {
         claims: cohort.length,
         activeReferrers: referrerMap.size,
@@ -697,7 +790,7 @@ export class ReferralsService implements OnModuleInit {
     const now = new Date();
     const [sent, referredBy, me] = await Promise.all([
       this.prisma.referral.findMany({
-        where: { referrerId: userId, program: REFERRAL_PROGRAM_INVITE_V2 },
+        where: { referrerId: userId, program: { in: [...PURCHASE_REFERRAL_PROGRAMS] } },
         orderBy: { createdAt: 'desc' },
         take: FRIEND_LIST_LIMIT,
         include: {
@@ -727,25 +820,58 @@ export class ReferralsService implements OnModuleInit {
       displayName: r.invitee.displayName,
       avatarId: r.invitee.avatarId,
       status: r.status,
+      /** Step 1 done: finished the required map nodes. */
+      started: !!r.qualifiedAt,
+      startedAt: r.qualifiedAt?.toISOString() ?? null,
       purchased: !!r.inviteePurchasedAt,
       purchasedAt: r.inviteePurchasedAt?.toISOString() ?? null,
-      rewardedAt: r.qualifiedAt?.toISOString() ?? null,
+      rewardedAt:
+        r.status === 'rewarded'
+          ? (r.inviteePurchasedAt ?? r.qualifiedAt)?.toISOString() ?? null
+          : null,
     }));
 
+    const gemRewards = new Set(
+      (
+        await this.prisma.economyTransaction.findMany({
+          where: {
+            userId,
+            source: INVITE_PAID_REWARD_SOURCE,
+            referenceId: { in: sent.map((r) => `referral:${r.id}`) },
+          },
+          select: { referenceId: true },
+        })
+      ).map((t) => t.referenceId),
+    );
     const unseenRewards = sent
       .filter((r) => r.status === 'rewarded' && !r.rewardSeenAt)
-      .map((r) => ({
-        referralId: r.id,
-        displayName: r.invitee.displayName,
-        avatarId: r.invitee.avatarId,
-        proDays: REFERRER_PRO_DAYS,
-      }));
+      .map((r) => {
+        const gems = gemRewards.has(`referral:${r.id}`);
+        return {
+          referralId: r.id,
+          displayName: r.invitee.displayName,
+          avatarId: r.invitee.avatarId,
+          kind: gems ? 'gems' : 'pro_days',
+          proDays: gems ? 0 : REFERRER_PRO_DAYS,
+          gems: gems ? INVITE_PAID_REFERRER_GEMS : 0,
+        };
+      });
 
     return {
-      program: REFERRAL_PROGRAM_INVITE_V2,
+      program: REFERRAL_PROGRAM_INVITE_V3,
       code,
       link: `${REFERRAL_LINK_BASE}${code}`,
       referrerRewardDays: REFERRER_PRO_DAYS,
+      /** Step 2 for this referrer now: Pro days if free, gems if already on a plan. */
+      referrerRewardKind: activePaid ? 'gems' : 'pro_days',
+      referrerRewardGems: INVITE_PAID_REFERRER_GEMS,
+      step1: {
+        requiredNodes: REFERRAL_REQUIRED_NODES,
+        referrerBananas: INVITE_STEP1_REFERRER_BANANAS,
+        inviteeBananas: INVITE_STEP1_INVITEE_BANANAS,
+        monthlyCapBananas: INVITE_V2_REFERRER_MONTHLY_CAP_BANANAS,
+      },
+      // Coupon fields stay for older app builds (new builds hide the coupon).
       inviteeCouponPercent: INVITEE_COUPON_PERCENT,
       couponTtlDays: COUPON_TTL_DAYS,
       offeringId: RC_OFFERING_INVITE,
@@ -786,19 +912,37 @@ export class ReferralsService implements OnModuleInit {
 
     try {
       const expires = couponExpiresAt(now);
-      const referral = await this.prisma.referral.create({
-        data: {
-          referrerId: referrer.id,
-          inviteeId: userId,
-          code,
-          source,
-          program: REFERRAL_PROGRAM_INVITE_V2,
-          couponExpiresAt: expires,
-        },
+      const { referral, updated } = await this.prisma.$transaction(async (tx) => {
+        const referral = await tx.referral.create({
+          data: {
+            referrerId: referrer.id,
+            inviteeId: userId,
+            code,
+            source,
+            program: REFERRAL_PROGRAM_INVITE_V3,
+            couponExpiresAt: expires,
+          },
+        });
+        await tx.economyTransaction.create({
+          data: {
+            userId,
+            currency: Currency.BANANA,
+            amount: INVITE_STEP1_INVITEE_BANANAS,
+            source: 'referral_invitee_bonus',
+            referenceId: `referral:${referral.id}`,
+          },
+        });
+        const updated = await tx.user.update({
+          where: { id: userId },
+          data: { bananaBalance: { increment: INVITE_STEP1_INVITEE_BANANAS } },
+        });
+        return { referral, updated };
       });
       return {
         ok: true,
-        program: REFERRAL_PROGRAM_INVITE_V2,
+        bonus: INVITE_STEP1_INVITEE_BANANAS,
+        balances: this.economy.toBalances(updated),
+        program: REFERRAL_PROGRAM_INVITE_V3,
         couponPercent: INVITEE_COUPON_PERCENT,
         couponExpiresAt: expires.toISOString(),
         offeringId: RC_OFFERING_INVITE,
@@ -819,7 +963,7 @@ export class ReferralsService implements OnModuleInit {
     const result = await this.prisma.referral.updateMany({
       where: {
         referrerId: userId,
-        program: REFERRAL_PROGRAM_INVITE_V2,
+        program: { in: [...PURCHASE_REFERRAL_PROGRAMS] },
         status: 'rewarded',
         rewardSeenAt: null,
         ...(referralIds?.length ? { id: { in: referralIds } } : {}),
@@ -837,14 +981,14 @@ export class ReferralsService implements OnModuleInit {
     const referral = await this.prisma.referral.findUnique({
       where: { inviteeId },
     });
-    if (!referral || referral.program !== REFERRAL_PROGRAM_INVITE_V2) return;
-    if (referral.referrerGrantId) return;
+    if (!referral || !isPurchaseReferralProgram(referral.program)) return;
+    if (referral.referrerGrantId || referral.status !== 'pending') return;
 
     const now = new Date();
     await this.prisma.$transaction(async (tx) => {
       const locked = await tx.referral.findUnique({ where: { id: referral.id } });
-      if (!locked || locked.referrerGrantId) return;
-      if (locked.program !== REFERRAL_PROGRAM_INVITE_V2) return;
+      if (!locked || locked.referrerGrantId || locked.status !== 'pending') return;
+      if (!isPurchaseReferralProgram(locked.program)) return;
 
       await tx.referral.update({
         where: { id: locked.id },
@@ -861,14 +1005,30 @@ export class ReferralsService implements OnModuleInit {
         effectiveSubscriptionTier(referrer) !== 'FREE' &&
         !!referrer.subscriptionExpiresAt &&
         referrer.subscriptionExpiresAt.getTime() > now.getTime();
-      const base = active && referrer.subscriptionExpiresAt
-        ? referrer.subscriptionExpiresAt
-        : now;
+      if (active) {
+        // Already on a plan: gems, never extra days or a tier change.
+        await tx.economyTransaction.create({
+          data: {
+            userId: referrer.id,
+            currency: Currency.BANANA_SEED,
+            amount: INVITE_PAID_REFERRER_GEMS,
+            source: INVITE_PAID_REWARD_SOURCE,
+            referenceId: `referral:${locked.id}`,
+          },
+        });
+        await tx.user.update({
+          where: { id: referrer.id },
+          data: { bananaSeedBalance: { increment: INVITE_PAID_REFERRER_GEMS } },
+        });
+        await tx.referral.update({
+          where: { id: locked.id },
+          data: { status: 'rewarded', qualifiedAt: locked.qualifiedAt ?? now },
+        });
+        return;
+      }
+      const base = now;
       const expiresAt = addProDays(base, REFERRER_PRO_DAYS);
-      const tier =
-        active && referrer.subscriptionTier === SubscriptionTier.PRO_MAX
-          ? SubscriptionTier.PRO_MAX
-          : SubscriptionTier.PRO;
+      const tier = SubscriptionTier.PRO;
 
       const grant = await tx.subscriptionGrant.create({
         data: {
@@ -893,7 +1053,7 @@ export class ReferralsService implements OnModuleInit {
         where: { id: locked.id },
         data: {
           status: 'rewarded',
-          qualifiedAt: now,
+          qualifiedAt: locked.qualifiedAt ?? now,
           referrerGrantId: grant.id,
         },
       });
@@ -904,7 +1064,10 @@ export class ReferralsService implements OnModuleInit {
       select: { status: true, referrerId: true },
     });
     if (refreshed?.status === 'rewarded') {
-      await this.pushInviteV2Reward(refreshed.referrerId, inviteeId, referral.id);
+      const gems = await this.prisma.economyTransaction.count({
+        where: { source: INVITE_PAID_REWARD_SOURCE, referenceId: `referral:${referral.id}` },
+      });
+      await this.pushInviteV2Reward(refreshed.referrerId, inviteeId, referral.id, gems > 0);
     }
   }
 
@@ -916,11 +1079,9 @@ export class ReferralsService implements OnModuleInit {
     const referral = await this.prisma.referral.findUnique({
       where: { inviteeId },
     });
-    if (
-      !referral ||
-      referral.program !== REFERRAL_PROGRAM_INVITE_V2 ||
-      !referral.referrerGrantId
-    ) {
+    if (!referral || !isPurchaseReferralProgram(referral.program)) return;
+    if (!referral.referrerGrantId) {
+      if (referral.status === 'rewarded') await this.clawbackInviteGems(referral.id, referral.referrerId);
       return;
     }
 
@@ -966,6 +1127,40 @@ export class ReferralsService implements OnModuleInit {
     });
   }
 
+  /** Refund of the invitee's plan: take back the gem reward (never below 0). */
+  private async clawbackInviteGems(referralId: string, referrerId: string): Promise<void> {
+    await this.prisma.$transaction(async (tx) => {
+      const paid = await tx.economyTransaction.findFirst({
+        where: { userId: referrerId, source: INVITE_PAID_REWARD_SOURCE, referenceId: `referral:${referralId}` },
+      });
+      if (!paid) return;
+      const claimed = await tx.referral.updateMany({
+        where: { id: referralId, status: 'rewarded' },
+        data: { status: 'capped' },
+      });
+      if (claimed.count === 0) return;
+      const user = await tx.user.findUnique({
+        where: { id: referrerId },
+        select: { bananaSeedBalance: true },
+      });
+      const take = Math.min(paid.amount, Math.max(0, user?.bananaSeedBalance ?? 0));
+      if (take <= 0) return;
+      await tx.economyTransaction.create({
+        data: {
+          userId: referrerId,
+          currency: Currency.BANANA_SEED,
+          amount: -take,
+          source: `${INVITE_PAID_REWARD_SOURCE}_clawback`,
+          referenceId: `referral:${referralId}`,
+        },
+      });
+      await tx.user.update({
+        where: { id: referrerId },
+        data: { bananaSeedBalance: { decrement: take } },
+      });
+    });
+  }
+
   private couponPayload(
     referral: {
       program: string;
@@ -974,7 +1169,7 @@ export class ReferralsService implements OnModuleInit {
     } | null,
     now: Date,
   ) {
-    if (!referral || referral.program !== REFERRAL_PROGRAM_INVITE_V2) {
+    if (!referral || !isPurchaseReferralProgram(referral.program)) {
       return {
         active: false,
         percent: INVITEE_COUPON_PERCENT,
@@ -999,6 +1194,7 @@ export class ReferralsService implements OnModuleInit {
     referrerId: string,
     inviteeId: string,
     referralId: string,
+    gems = false,
   ) {
     try {
       const [referrer, invitee] = await Promise.all([
@@ -1019,7 +1215,9 @@ export class ReferralsService implements OnModuleInit {
         payload: {
           type: 'referral_reward',
           title: 'Banana English',
-          body: `${name} ซื้อสมาชิกแล้ว! คุณได้ Pro ฟรี ${REFERRER_PRO_DAYS} วัน`,
+          body: gems
+            ? `${name} สมัครสมาชิกแล้ว! คุณได้ ${INVITE_PAID_REFERRER_GEMS.toLocaleString('en-US')} Gems`
+            : `${name} สมัครสมาชิกแล้ว! คุณได้ Pro ฟรี ${REFERRER_PRO_DAYS} วัน`,
           data: { type: 'referral_reward', referralId, route: '/invite' },
         },
       });
