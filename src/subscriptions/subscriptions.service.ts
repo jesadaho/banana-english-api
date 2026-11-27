@@ -33,6 +33,8 @@ import {
   mergeStorePeriod,
   subscriptionProduct,
 } from './subscription-products';
+import { bangkokDayKey } from '../admin/admin-early-bird.report';
+import { parseDateRange } from '../admin/admin-metrics.util';
 
 const PAID = 'paid';
 const PENDING = 'pending_payment';
@@ -41,6 +43,17 @@ const EXPIRED = 'expired';
 function publicPlacementBand(value: unknown): string | null {
   return placementBandFromResult(value);
 }
+
+type SubsDailyBucket = {
+  day: string;
+  paidGrants: number;
+  paidRevenueThb: number;
+  earlyBirdGrants: number;
+  adminGrants: number;
+  presalePaid: number;
+  presaleRevenueThb: number;
+  totalRevenueThb: number;
+};
 
 @Injectable()
 export class SubscriptionsService {
@@ -201,8 +214,16 @@ export class SubscriptionsService {
     });
   }
 
-  async adminReport() {
+  async adminReport(fromRaw?: string, toRaw?: string) {
     await this.backfillPresaleEmails();
+    let range: { from: Date; to: Date };
+    try {
+      range = parseDateRange(fromRaw, toRaw, 30);
+    } catch (error) {
+      throw new BadRequestException(
+        error instanceof Error ? error.message : 'Invalid date range',
+      );
+    }
     const now = new Date();
     const soon = new Date(now.getTime() + 7 * 86_400_000);
     const activeWhere = {
@@ -216,40 +237,59 @@ export class SubscriptionsService {
         select: { userId: true, priceThb: true },
       }),
     ]);
-    const [pro, proMax, expiringSoon, paidOrders, grants, orders] = await Promise.all([
-      this.prisma.user.count({
-        where: { ...activeWhere, subscriptionTier: SubscriptionTier.PRO },
-      }),
-      this.prisma.user.count({
-        where: { ...activeWhere, subscriptionTier: SubscriptionTier.PRO_MAX },
-      }),
-      this.prisma.user.count({
-        where: {
-          ...activeWhere,
-          subscriptionExpiresAt: { gt: now, lte: soon },
-        },
-      }),
-      this.prisma.presaleOrder.findMany({
-        where: { status: PAID },
-        select: { priceThb: true },
-      }),
-      this.prisma.subscriptionGrant.findMany({
-        orderBy: { createdAt: 'desc' },
-        take: 50,
-        include: {
-          user: { select: { id: true, displayName: true, email: true, placementResult: true } },
-        },
-      }),
-      this.prisma.presaleOrder.findMany({
-        orderBy: { createdAt: 'desc' },
-        take: 80,
-        include: {
-          user: { select: { id: true, displayName: true, email: true, placementResult: true } },
-        },
-      }),
-    ]);
+    const [pro, proMax, expiringSoon, paidOrders, grants, orders, rangeGrants, rangePresale] =
+      await Promise.all([
+        this.prisma.user.count({
+          where: { ...activeWhere, subscriptionTier: SubscriptionTier.PRO },
+        }),
+        this.prisma.user.count({
+          where: { ...activeWhere, subscriptionTier: SubscriptionTier.PRO_MAX },
+        }),
+        this.prisma.user.count({
+          where: {
+            ...activeWhere,
+            subscriptionExpiresAt: { gt: now, lte: soon },
+          },
+        }),
+        this.prisma.presaleOrder.findMany({
+          where: { status: PAID },
+          select: { priceThb: true },
+        }),
+        this.prisma.subscriptionGrant.findMany({
+          orderBy: { createdAt: 'desc' },
+          take: 50,
+          include: {
+            user: { select: { id: true, displayName: true, email: true, placementResult: true } },
+          },
+        }),
+        this.prisma.presaleOrder.findMany({
+          orderBy: { createdAt: 'desc' },
+          take: 80,
+          include: {
+            user: { select: { id: true, displayName: true, email: true, placementResult: true } },
+          },
+        }),
+        this.prisma.subscriptionGrant.findMany({
+          where: { createdAt: { gte: range.from, lte: range.to } },
+          select: {
+            createdAt: true,
+            source: true,
+            priceThb: true,
+            isSandbox: true,
+            productId: true,
+          },
+        }),
+        this.prisma.presaleOrder.findMany({
+          where: {
+            status: PAID,
+            paidAt: { gte: range.from, lte: range.to },
+          },
+          select: { paidAt: true, priceThb: true },
+        }),
+      ]);
     const presaleRevenueThb = paidOrders.reduce((sum, row) => sum + row.priceThb, 0);
     return {
+      range: { from: range.from.toISOString(), to: range.to.toISOString() },
       kpis: {
         pro,
         proMax,
@@ -263,6 +303,7 @@ export class SubscriptionsService {
         earlyBirdBuyers: new Set(earlyBirdGrants.map((row) => row.userId)).size,
         earlyBirdRevenueThb: earlyBirdGrants.reduce((sum, row) => sum + (row.priceThb ?? 0), 0),
       },
+      daily: this.buildSubscriptionDaily(rangeGrants, rangePresale, range.from, range.to),
       grants: grants.map((row) => ({
         id: row.id,
         userId: row.userId,
@@ -294,6 +335,60 @@ export class SubscriptionsService {
         paidAt: row.paidAt?.toISOString() ?? null,
       })),
     };
+  }
+
+  private buildSubscriptionDaily(
+    grants: Array<{
+      createdAt: Date;
+      source: string;
+      priceThb: number | null;
+      isSandbox: boolean | null;
+      productId: string | null;
+    }>,
+    presale: Array<{ paidAt: Date | null; priceThb: number }>,
+    from: Date,
+    to: Date,
+  ): SubsDailyBucket[] {
+    const days = new Map<string, SubsDailyBucket>();
+    for (let t = from.getTime(); t <= to.getTime(); t += 86_400_000) {
+      const day = bangkokDayKey(new Date(t));
+      if (days.has(day)) continue;
+      days.set(day, {
+        day,
+        paidGrants: 0,
+        paidRevenueThb: 0,
+        earlyBirdGrants: 0,
+        adminGrants: 0,
+        presalePaid: 0,
+        presaleRevenueThb: 0,
+        totalRevenueThb: 0,
+      });
+    }
+    for (const row of grants) {
+      const slot = days.get(bangkokDayKey(row.createdAt));
+      if (!slot) continue;
+      if (row.source === 'admin') {
+        slot.adminGrants += 1;
+        continue;
+      }
+      if (row.isSandbox === true) continue;
+      if (row.source === 'revenuecat' || row.source === 'founder_presale') {
+        slot.paidGrants += 1;
+        slot.paidRevenueThb += row.priceThb ?? 0;
+        if (row.productId === EARLY_BIRD_PRODUCT_ID) slot.earlyBirdGrants += 1;
+      }
+    }
+    for (const row of presale) {
+      if (!row.paidAt) continue;
+      const slot = days.get(bangkokDayKey(row.paidAt));
+      if (!slot) continue;
+      slot.presalePaid += 1;
+      slot.presaleRevenueThb += row.priceThb;
+    }
+    for (const slot of days.values()) {
+      slot.totalRevenueThb = slot.paidRevenueThb + slot.presaleRevenueThb;
+    }
+    return [...days.values()];
   }
 
   async searchForAdmin(queryRaw?: string) {
