@@ -54,6 +54,7 @@ export type EventRewardTierInput = {
   rankTo: number;
   avatarId?: string | null;
   avatarImageUrl?: string | null;
+  avatarBgColor?: string | null;
   nameTh: string;
   nameEn: string;
 };
