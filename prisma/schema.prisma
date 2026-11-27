@@ -967,6 +967,10 @@ model Event {
   rewardHold             Boolean     @default(false)
   headlineTh             String?
   headlineEn             String?
+  /** Banner / strip shade as #RRGGBB. Null = app default. */
+  themeColor             String?
+  /** Accent highlight as #RRGGBB. Null = app default. */
+  accentColor            String?
   bannerImageUrl         String?
   ctaRoute               String?
   startNotifiedAt        DateTime?
@@ -996,6 +1000,8 @@ model EventRewardTier {
   rewardType     EventRewardType @default(AVATAR)
   avatarId       String
   avatarImageUrl String?
+  /** Portrait circle background as #RRGGBB. Null = transparent/default. */
+  avatarBgColor  String?
   nameTh         String
   nameEn         String
   sortOrder      Int             @default(0)

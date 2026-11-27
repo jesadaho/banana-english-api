@@ -63,6 +63,13 @@ const EVENT_INCLUDE = {
 
 type EventWithTiers = Prisma.EventGetPayload<{ include: typeof EVENT_INCLUDE }>;
 
+/** Normalize admin/app hex to #RRGGBB or null (clears / invalid → null). */
+function normalizeEventHexColor(raw: string | null | undefined): string | null {
+  if (raw == null) return null;
+  const value = String(raw).trim().replace(/^#?/, '#').toUpperCase();
+  return /^#[0-9A-F]{6}$/.test(value) ? value : null;
+}
+
 @Injectable()
 export class EventsService {
   private readonly logger = new Logger(EventsService.name);
@@ -358,7 +365,10 @@ export class EventsService {
   async unseenRewards(userId: string) {
     const grants = await this.prisma.eventRewardGrant.findMany({
       where: { userId, seenAt: null },
-      include: { event: { select: { id: true, name: true, gameKey: true } } },
+      include: {
+        event: { select: { id: true, name: true, gameKey: true } },
+        rewardTier: { select: { avatarBgColor: true } },
+      },
       orderBy: { createdAt: 'desc' },
     });
     return {
@@ -369,6 +379,7 @@ export class EventsService {
         gameKey: grant.event.gameKey,
         avatarId: grant.avatarId,
         avatarImageUrl: grant.avatarImageUrl,
+        avatarBgColor: grant.rewardTier.avatarBgColor,
         nameTh: grant.nameTh,
         nameEn: grant.nameEn,
         rank: grant.rank,
@@ -776,6 +787,8 @@ export class EventsService {
       rewardHold?: boolean;
       headlineTh?: string | null;
       headlineEn?: string | null;
+      themeColor?: string | null;
+      accentColor?: string | null;
       bannerImageUrl?: string | null;
       ctaRoute?: string | null;
       rewardTiers?: AdminEventTierDto[];
@@ -821,6 +834,8 @@ export class EventsService {
         rewardHold: body.rewardHold === true,
         headlineTh: body.headlineTh?.trim() || null,
         headlineEn: body.headlineEn?.trim() || null,
+        themeColor: normalizeEventHexColor(body.themeColor),
+        accentColor: normalizeEventHexColor(body.accentColor),
         bannerImageUrl: body.bannerImageUrl?.trim() || null,
         ctaRoute: body.ctaRoute?.trim() || defaultCtaRoute(gameKey),
       },
@@ -834,6 +849,7 @@ export class EventsService {
       rankTo: tier.rankTo,
       avatarId: tier.avatarId?.trim() || defaultEventAvatarId(eventId, tier.rankFrom),
       avatarImageUrl: tier.avatarImageUrl?.trim() || null,
+      avatarBgColor: normalizeEventHexColor(tier.avatarBgColor),
       nameTh: tier.nameTh.trim(),
       nameEn: tier.nameEn.trim(),
       sortOrder: index,
@@ -853,6 +869,8 @@ export class EventsService {
       rewardHold: event.rewardHold,
       headlineTh: event.headlineTh ?? undefined,
       headlineEn: event.headlineEn ?? undefined,
+      themeColor: event.themeColor ?? undefined,
+      accentColor: event.accentColor ?? undefined,
       bannerImageUrl: event.bannerImageUrl ?? undefined,
       ctaRoute: event.ctaRoute ?? undefined,
       rewardTiers: event.rewardTiers.map((tier) => ({
@@ -860,6 +878,7 @@ export class EventsService {
         rankTo: tier.rankTo,
         avatarId: tier.avatarId,
         avatarImageUrl: tier.avatarImageUrl ?? undefined,
+        avatarBgColor: tier.avatarBgColor ?? undefined,
         nameTh: tier.nameTh,
         nameEn: tier.nameEn,
       })),
@@ -896,6 +915,8 @@ export class EventsService {
       timezone: event.timezone,
       headlineTh: event.headlineTh,
       headlineEn: event.headlineEn,
+      themeColor: event.themeColor,
+      accentColor: event.accentColor,
       bannerImageUrl: event.bannerImageUrl,
       ctaRoute: event.ctaRoute || defaultCtaRoute(event.gameKey as EventGameKey),
       gameLabel: isEventGameKey(event.gameKey) ? EVENT_GAME_LABELS[event.gameKey] : event.gameKey,
@@ -911,6 +932,7 @@ export class EventsService {
       rewardType: tier.rewardType,
       avatarId: tier.avatarId,
       avatarImageUrl: tier.avatarImageUrl,
+      avatarBgColor: tier.avatarBgColor,
       nameTh: tier.nameTh,
       nameEn: tier.nameEn,
     };

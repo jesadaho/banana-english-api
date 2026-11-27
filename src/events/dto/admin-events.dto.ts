@@ -7,6 +7,7 @@ import {
   IsInt,
   IsOptional,
   IsString,
+  Matches,
   Max,
   MaxLength,
   Min,
@@ -14,6 +15,9 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { EVENT_GAME_KEYS } from '../event.types';
+
+/** Optional #RRGGBB (or null to clear). */
+const HEX_COLOR = /^#[0-9A-Fa-f]{6}$/;
 
 export class AdminEventTierDto {
   @Type(() => Number)
@@ -37,6 +41,11 @@ export class AdminEventTierDto {
   @IsString()
   @MaxLength(500)
   avatarImageUrl?: string;
+
+  @IsOptional()
+  @IsString()
+  @Matches(HEX_COLOR)
+  avatarBgColor?: string | null;
 
   @IsString()
   @MinLength(1)
@@ -98,6 +107,16 @@ export class AdminCreateEventDto {
   @IsString()
   @MaxLength(160)
   headlineEn?: string;
+
+  @IsOptional()
+  @IsString()
+  @Matches(HEX_COLOR)
+  themeColor?: string | null;
+
+  @IsOptional()
+  @IsString()
+  @Matches(HEX_COLOR)
+  accentColor?: string | null;
 
   @IsOptional()
   @IsString()
@@ -170,6 +189,16 @@ export class AdminUpdateEventDto {
   @IsString()
   @MaxLength(160)
   headlineEn?: string | null;
+
+  @IsOptional()
+  @IsString()
+  @Matches(HEX_COLOR)
+  themeColor?: string | null;
+
+  @IsOptional()
+  @IsString()
+  @Matches(HEX_COLOR)
+  accentColor?: string | null;
 
   @IsOptional()
   @IsString()
