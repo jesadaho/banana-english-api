@@ -20,10 +20,13 @@ import {
   CompleteOnboardingDto,
   DemographicsSurveyDto,
   EnglishLevelSurveyDto,
+  GemShopPurchaseDto,
   RefillBananasByNameDto,
+  SetAppIconDto,
   UnlockAvatarDto,
   UpsertUserDto,
 } from './dto/users.dto';
+import { GemShopService } from './gem-shop.service';
 import { UserNotificationsService } from './user-notifications.service';
 import { UserAuthService } from './user-auth.service';
 import { UsersService } from './users.service';
@@ -39,6 +42,7 @@ export class UsersController {
     private readonly userAuth: UserAuthService,
     private readonly activity: ActivityService,
     private readonly notifications: UserNotificationsService,
+    private readonly gemShop: GemShopService,
   ) {}
 
   @Put('me')
@@ -216,6 +220,19 @@ export class UsersController {
     @Body() body: UnlockAvatarDto,
   ) {
     return this.users.selectAvatar(req.user, body.avatarId);
+  }
+
+  @Post('me/gem-shop/purchase')
+  async gemShopPurchase(
+    @Req() req: AuthedRequest,
+    @Body() body: GemShopPurchaseDto,
+  ) {
+    return this.gemShop.purchase(req.user, body.sku);
+  }
+
+  @Post('me/app-icon')
+  async setAppIcon(@Req() req: AuthedRequest, @Body() body: SetAppIconDto) {
+    return this.gemShop.setActiveAppIcon(req.user, body.iconId);
   }
 
   @Post('me/debug/refill-bananas')

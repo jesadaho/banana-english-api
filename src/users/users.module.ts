@@ -10,6 +10,7 @@ import { UserNotificationsService } from './user-notifications.service';
 import { UsersController } from './users.controller';
 import { PaywallController } from '../subscriptions/paywall.controller';
 import { NotifyAskController } from './notify-ask.controller';
+import { GemShopService } from './gem-shop.service';
 import { UsersService } from './users.service';
 
 @Module({
@@ -17,6 +18,7 @@ import { UsersService } from './users.service';
   controllers: [UsersController, PaywallController, NotifyAskController],
   providers: [
     UsersService,
+    GemShopService,
     UserAuthService,
     ActivityService,
     UserNotificationsService,

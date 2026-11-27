@@ -117,3 +117,17 @@ export class RefillBananasByNameDto {
   @MaxLength(80)
   displayName!: string;
 }
+
+export class GemShopPurchaseDto {
+  @IsString()
+  @MinLength(1)
+  @MaxLength(64)
+  sku!: string;
+}
+
+export class SetAppIconDto {
+  @IsString()
+  @MinLength(1)
+  @MaxLength(64)
+  iconId!: string;
+}

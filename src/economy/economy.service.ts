@@ -981,7 +981,7 @@ export class EconomyService {
   private computeStreakUpdate(
     user: User,
     todayKey: string,
-  ): { streakDays: number } {
+  ): { streakDays: number; consumeShield?: boolean } {
     if (!user.lastSessionDate) {
       return { streakDays: 1 };
     }
@@ -993,6 +993,13 @@ export class EconomyService {
     const yesterdayKey = previousDateKey(todayKey);
     if (isSameDateKey(user.lastSessionDate, yesterdayKey)) {
       return { streakDays: user.streakDays + 1 };
+    }
+
+    // Missed a day: spend one Gem Shop shield to keep the streak.
+    const shields =
+      (user as User & { streakShieldCount?: number }).streakShieldCount ?? 0;
+    if (shields > 0) {
+      return { streakDays: user.streakDays, consumeShield: true };
     }
 
     return { streakDays: 1 };
@@ -1013,7 +1020,10 @@ export class EconomyService {
     userUpdate: Prisma.UserUpdateInput;
   }> {
     const previousStreakDays = user.streakDays;
-    const { streakDays } = this.computeStreakUpdate(user, todayKey);
+    const { streakDays, consumeShield } = this.computeStreakUpdate(
+      user,
+      todayKey,
+    );
     let milestones = [...user.streakMilestonesClaimed];
     let streakBonus: StreakBonus | undefined;
     let milestoneSeeds = 0;
@@ -1047,6 +1057,7 @@ export class EconomyService {
         longestStreakDays: Math.max(user.longestStreakDays, streakDays),
         lastSessionDate: parseDateKey(todayKey),
         ...(milestone ? { streakMilestonesClaimed: milestones } : {}),
+        ...(consumeShield ? { streakShieldCount: { decrement: 1 } } : {}),
       },
     };
   }
