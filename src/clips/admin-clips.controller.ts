@@ -32,6 +32,12 @@ export class AdminClipsController {
     return this.sessions.topClips(from, to);
   }
 
+  /** Videos page: plays / finished / players per Bangkok day. */
+  @Get('daily')
+  daily(@Query('from') from?: string, @Query('to') to?: string) {
+    return this.sessions.dailyTrend(from, to);
+  }
+
   /** Retention page: video sessions per mode in [from, to]. */
   @Get('session-mix')
   sessionMix(@Query('from') from?: string, @Query('to') to?: string) {

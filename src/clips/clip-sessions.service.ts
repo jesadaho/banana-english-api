@@ -1,9 +1,36 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { bangkokDayKey } from '../admin/admin-early-bird.report';
 import { parseDateRange } from '../admin/admin-metrics.util';
 import { PrismaService } from '../prisma/prisma.service';
 
 export const CLIP_SESSION_MODES = ['watch', 'dictation', 'shadowing'] as const;
 export type ClipSessionMode = (typeof CLIP_SESSION_MODES)[number];
+
+type DayModeRow = {
+  day: string;
+  mode: string;
+  plays: number;
+  completed: number;
+  players: number;
+};
+
+type DayStat = { plays: number; completed: number; players: number };
+
+const emptyDay = (): DayStat => ({ plays: 0, completed: 0, players: 0 });
+
+/** Inclusive Bangkok calendar days covering [from, to]. */
+export function eachBangkokDayKey(from: Date, to: Date): string[] {
+  const keys: string[] = [];
+  let cur = bangkokDayKey(from);
+  const end = bangkokDayKey(to);
+  while (cur <= end) {
+    keys.push(cur);
+    // Step one calendar day in Bangkok: noon UTC+7 of cur + 24h.
+    const noon = new Date(`${cur}T05:00:00.000Z`);
+    cur = bangkokDayKey(new Date(noon.getTime() + 86_400_000));
+  }
+  return keys;
+}
 
 /** Clip page sessions per mode (the app logs one per mode per page visit). */
 @Injectable()
@@ -115,6 +142,81 @@ export class ClipSessionsService {
     });
     rows.sort((a, b) => b.totalPlays - a.totalPlays);
     return { from: range.from.toISOString(), to: range.to.toISOString(), clips: rows };
+  }
+
+  /**
+   * Admin Videos page: plays / finished / players per Bangkok day (and per
+   * mode). Days with no sessions are filled with zeros so the sparkline is
+   * continuous across the selected range.
+   */
+  async dailyTrend(fromRaw?: string, toRaw?: string) {
+    let range: { from: Date; to: Date };
+    try {
+      range = parseDateRange(fromRaw, toRaw);
+    } catch {
+      throw new BadRequestException('invalid_range');
+    }
+    const rows = await this.prisma.$queryRaw<DayModeRow[]>`
+      SELECT to_char((("createdAt" AT TIME ZONE 'UTC') AT TIME ZONE 'Asia/Bangkok'), 'YYYY-MM-DD') AS day,
+             mode,
+             COUNT(*)::int AS plays,
+             COUNT(*) FILTER (WHERE "completedAt" IS NOT NULL)::int AS completed,
+             COUNT(DISTINCT "userId")::int AS players
+        FROM "ClipSession"
+       WHERE "createdAt" >= ${range.from}
+         AND "createdAt" <= ${range.to}
+       GROUP BY 1, 2
+       ORDER BY 1, 2`;
+
+    const byDayMode = new Map<string, DayStat>();
+    for (const r of rows) {
+      byDayMode.set(`${r.day}|${r.mode}`, {
+        plays: Number(r.plays) || 0,
+        completed: Number(r.completed) || 0,
+        players: Number(r.players) || 0,
+      });
+    }
+
+    const days = eachBangkokDayKey(range.from, range.to);
+    const daily = days.map((day) => {
+      const byMode = Object.fromEntries(
+        CLIP_SESSION_MODES.map((m) => [
+          m,
+          byDayMode.get(`${day}|${m}`) ?? emptyDay(),
+        ]),
+      ) as Record<ClipSessionMode, DayStat>;
+      const plays = CLIP_SESSION_MODES.reduce((a, m) => a + byMode[m].plays, 0);
+      const completed = CLIP_SESSION_MODES.reduce(
+        (a, m) => a + byMode[m].completed,
+        0,
+      );
+      return { day, plays, completed, players: 0, byMode };
+    });
+
+    // Distinct players per Bangkok day (mode rows above can double-count).
+    const playerRows = await this.prisma.$queryRaw<{ day: string; players: number }[]>`
+      SELECT to_char((("createdAt" AT TIME ZONE 'UTC') AT TIME ZONE 'Asia/Bangkok'), 'YYYY-MM-DD') AS day,
+             COUNT(DISTINCT "userId")::int AS players
+        FROM "ClipSession"
+       WHERE "createdAt" >= ${range.from}
+         AND "createdAt" <= ${range.to}
+       GROUP BY 1`;
+    const playersByDay = new Map(
+      playerRows.map((r) => [r.day, Number(r.players) || 0]),
+    );
+    for (const d of daily) d.players = playersByDay.get(d.day) ?? 0;
+
+    return {
+      from: range.from.toISOString(),
+      to: range.to.toISOString(),
+      daily,
+      totals: {
+        plays: daily.reduce((a, d) => a + d.plays, 0),
+        completed: daily.reduce((a, d) => a + d.completed, 0),
+        // Sum of daily uniques (= player-days), not unique across the whole range.
+        playerDays: daily.reduce((a, d) => a + d.players, 0),
+      },
+    };
   }
 
   /** Admin Retention → "Session volume by type": video_watch / video_dictation / video_shadowing. */
