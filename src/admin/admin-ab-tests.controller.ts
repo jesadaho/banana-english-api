@@ -81,12 +81,12 @@ export class AdminAbTestsController {
     const rows = await this.prisma.$queryRaw<ArmRow[]>`
       WITH c AS (
         SELECT id, "bananaBonusArm" AS arm, "createdAt",
-               ("createdAt" AT TIME ZONE 'Asia/Bangkok')::date AS d0
+               (("createdAt" AT TIME ZONE 'UTC') AT TIME ZONE 'Asia/Bangkok')::date AS d0
         FROM "User"
         WHERE "bananaBonusArm" IS NOT NULL AND "onboardingCompleted"
       ),
       act AS (
-        SELECT DISTINCT s."userId", (s."createdAt" AT TIME ZONE 'Asia/Bangkok')::date - c.d0 AS dn
+        SELECT DISTINCT s."userId", ((s."createdAt" AT TIME ZONE 'UTC') AT TIME ZONE 'Asia/Bangkok')::date - c.d0 AS dn
         FROM "UserSession" s JOIN c ON c.id = s."userId"
         WHERE s."createdAt" < c."createdAt" + interval '9 days'
       ),
@@ -100,10 +100,10 @@ export class AdminAbTestsController {
         count(*) FILTER (WHERE c.d0 <= t.today - 8)::int AS m7,
         count(*) FILTER (WHERE c.d0 <= t.today - 8 AND EXISTS (SELECT 1 FROM act a WHERE a."userId" = c.id AND a.dn = 7))::int AS r7,
         avg((SELECT count(*) FROM "UserSession" s WHERE s."userId" = c.id
-             AND (s."createdAt" AT TIME ZONE 'Asia/Bangkok')::date = c.d0))::float8 AS s0,
+             AND ((s."createdAt" AT TIME ZONE 'UTC') AT TIME ZONE 'Asia/Bangkok')::date = c.d0))::float8 AS s0,
         avg((SELECT coalesce(-sum(e.amount), 0) FROM "EconomyTransaction" e
              WHERE e."userId" = c.id AND e.currency = 'BANANA' AND e.amount < 0
-             AND (e."createdAt" AT TIME ZONE 'Asia/Bangkok')::date = c.d0))::float8 AS spend0,
+             AND ((e."createdAt" AT TIME ZONE 'UTC') AT TIME ZONE 'Asia/Bangkok')::date = c.d0))::float8 AS spend0,
         count(*) FILTER (WHERE c.d0 <= t.today - 8 AND EXISTS (
           SELECT 1 FROM "SubscriptionGrant" g WHERE g."userId" = c.id AND g.source = 'revenuecat'
           AND coalesce(g."isSandbox", false) = false AND g."createdAt" < c."createdAt" + interval '7 days'))::int AS subs7,
@@ -244,7 +244,7 @@ export class AdminAbTestsController {
     const rows = await this.prisma.$queryRaw<NotifyRow[]>`
       WITH c AS (
         SELECT id, "notifyAskArm" AS arm, "createdAt",
-               ("createdAt" AT TIME ZONE 'Asia/Bangkok')::date AS d0
+               (("createdAt" AT TIME ZONE 'UTC') AT TIME ZONE 'Asia/Bangkok')::date AS d0
         FROM "User"
         WHERE "notifyAskArm" IS NOT NULL AND "onboardingCompleted"
       ),
@@ -254,7 +254,7 @@ export class AdminAbTestsController {
         SELECT "userId", "createdAt" FROM "MiniGameScoreAttempt" WHERE "userId" IN (SELECT id FROM c)
       ),
       act AS (
-        SELECT DISTINCT e."userId", (e."createdAt" AT TIME ZONE 'Asia/Bangkok')::date - c.d0 AS dn
+        SELECT DISTINCT e."userId", ((e."createdAt" AT TIME ZONE 'UTC') AT TIME ZONE 'Asia/Bangkok')::date - c.d0 AS dn
         FROM ev e JOIN c ON c.id = e."userId"
         WHERE e."createdAt" < c."createdAt" + interval '5 days'
       ),
@@ -275,7 +275,7 @@ export class AdminAbTestsController {
     const d3n = await this.prisma.$queryRaw<{ arm: string; m: number }[]>`
       SELECT "notifyAskArm" AS arm, count(*)::int AS m FROM "User"
       WHERE "notifyAskArm" IS NOT NULL AND "onboardingCompleted"
-        AND ("createdAt" AT TIME ZONE 'Asia/Bangkok')::date <= (now() AT TIME ZONE 'Asia/Bangkok')::date - 4
+        AND (("createdAt" AT TIME ZONE 'UTC') AT TIME ZONE 'Asia/Bangkok')::date <= (now() AT TIME ZONE 'Asia/Bangkok')::date - 4
       GROUP BY 1`;
     const pct = (x: number, n: number) => (n ? Math.round((x / n) * 1000) / 10 : null);
     const arm = (name: string) => rows.find((r) => r.arm === name);
