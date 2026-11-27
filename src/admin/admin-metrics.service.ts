@@ -63,6 +63,12 @@ export class AdminMetricsService {
   private readonly cache = new Map<string, CacheEntry>();
   private readonly ttlMs = 120_000;
 
+  invalidateUsers() {
+    for (const key of [...this.cache.keys()]) {
+      if (key.startsWith('users:')) this.cache.delete(key);
+    }
+  }
+
   private sandboxBackfill: Promise<void> | null = null;
 
   constructor(
