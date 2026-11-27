@@ -32,6 +32,7 @@ import {
   avatarMinPerfectStars,
   canUseMemberAvatar,
   FREE_AVATAR_IDS,
+  isGrantOnlyAvatar,
   isKnownAvatarId,
 } from './avatar-catalog';
 import {
@@ -623,6 +624,9 @@ export class UsersService {
     const id = avatarId.trim();
     if (!isKnownAvatarId(id)) {
       throw new BadRequestException('Unknown avatar');
+    }
+    if (isGrantOnlyAvatar(id)) {
+      throw new BadRequestException('Avatar is grant-only');
     }
 
     if (avatarMembership(id)) return this.selectAvatar(user, id);
