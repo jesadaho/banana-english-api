@@ -153,6 +153,18 @@ export class AdminMetricsService {
     );
   }
 
+  async gemShop(
+    fromRaw?: string,
+    toRaw?: string,
+    filters: MetricsFilters = EMPTY_FILTERS,
+  ) {
+    const range = this.safeRange(fromRaw, toRaw);
+    return this.cached(
+      `gem-shop:${range.from.toISOString()}:${range.to.toISOString()}:${filtersCacheKey(filters)}`,
+      () => this.buildGemShop(range, filters),
+    );
+  }
+
   async placement(
     fromRaw?: string,
     toRaw?: string,
@@ -2052,6 +2064,194 @@ export class AdminMetricsService {
           referralQualified.find((r) => r.status === 'capped')?._count._all ?? 0,
       },
     };
+  }
+
+  private async buildGemShop(range: DateRange, filters: MetricsFilters) {
+    const userFilter = this.userWhere(filters);
+    const days = eachUtcDateKey(range.from, range.to);
+
+    const [txns, shieldAgg, revivalAgg, senseiOwners, senseiActive] =
+      await Promise.all([
+        this.prisma.economyTransaction.findMany({
+          where: {
+            createdAt: { gte: range.from, lte: range.to },
+            currency: Currency.BANANA_SEED,
+            amount: { lt: 0 },
+            user: userFilter,
+            OR: [
+              { source: 'gem_shop' },
+              { source: 'avatar_unlock' },
+            ],
+          },
+          select: {
+            amount: true,
+            source: true,
+            referenceId: true,
+            userId: true,
+            createdAt: true,
+          },
+        }),
+        this.prisma.user.aggregate({
+          where: { ...userFilter, streakShieldCount: { gt: 0 } },
+          _count: { _all: true },
+          _sum: { streakShieldCount: true },
+        }),
+        this.prisma.user.aggregate({
+          where: { ...userFilter, streakRevivalCount: { gt: 0 } },
+          _count: { _all: true },
+          _sum: { streakRevivalCount: true },
+        }),
+        this.prisma.user.count({
+          where: {
+            ...userFilter,
+            unlockedAppIconIds: { has: 'app_icon_sensei_b' },
+          },
+        }),
+        this.prisma.user.count({
+          where: {
+            ...userFilter,
+            activeAppIconId: 'app_icon_sensei_b',
+          },
+        }),
+      ]);
+
+    type SkuRow = {
+      sku: string;
+      kind: string;
+      purchases: number;
+      gemsSpent: number;
+      buyers: Set<string>;
+    };
+    const bySku = new Map<string, SkuRow>();
+    const byKind = new Map<
+      string,
+      { kind: string; purchases: number; gemsSpent: number; buyers: Set<string> }
+    >();
+    const dailyMap = new Map<
+      string,
+      { day: string; purchases: number; gemsSpent: number; buyers: Set<string> }
+    >();
+    for (const d of days) {
+      dailyMap.set(d, { day: d, purchases: 0, gemsSpent: 0, buyers: new Set() });
+    }
+
+    const allBuyers = new Set<string>();
+    let purchases = 0;
+    let gemsSpent = 0;
+
+    for (const t of txns) {
+      const spent = Math.abs(t.amount);
+      const sku = this.gemShopSkuFromTxn(t.source, t.referenceId);
+      const kind = this.gemShopKindFromSku(sku);
+      purchases += 1;
+      gemsSpent += spent;
+      allBuyers.add(t.userId);
+
+      const skuRow = bySku.get(sku) ?? {
+        sku,
+        kind,
+        purchases: 0,
+        gemsSpent: 0,
+        buyers: new Set<string>(),
+      };
+      skuRow.purchases += 1;
+      skuRow.gemsSpent += spent;
+      skuRow.buyers.add(t.userId);
+      bySku.set(sku, skuRow);
+
+      const kindRow = byKind.get(kind) ?? {
+        kind,
+        purchases: 0,
+        gemsSpent: 0,
+        buyers: new Set<string>(),
+      };
+      kindRow.purchases += 1;
+      kindRow.gemsSpent += spent;
+      kindRow.buyers.add(t.userId);
+      byKind.set(kind, kindRow);
+
+      const day = dateKey(t.createdAt);
+      const daily = dailyMap.get(day);
+      if (daily) {
+        daily.purchases += 1;
+        daily.gemsSpent += spent;
+        daily.buyers.add(t.userId);
+      }
+    }
+
+    const buyerCount = allBuyers.size;
+    return {
+      range: { from: range.from.toISOString(), to: range.to.toISOString() },
+      summary: {
+        purchases,
+        gemsSpent,
+        uniqueBuyers: buyerCount,
+        avgGemsPerBuyer:
+          buyerCount > 0 ? Math.round((gemsSpent / buyerCount) * 10) / 10 : 0,
+        avgGemsPerPurchase:
+          purchases > 0 ? Math.round((gemsSpent / purchases) * 10) / 10 : 0,
+      },
+      bySku: [...bySku.values()]
+        .map((r) => ({
+          sku: r.sku,
+          kind: r.kind,
+          purchases: r.purchases,
+          gemsSpent: r.gemsSpent,
+          buyers: r.buyers.size,
+        }))
+        .sort((a, b) => b.gemsSpent - a.gemsSpent || b.purchases - a.purchases),
+      byKind: [...byKind.values()]
+        .map((r) => ({
+          kind: r.kind,
+          purchases: r.purchases,
+          gemsSpent: r.gemsSpent,
+          buyers: r.buyers.size,
+        }))
+        .sort((a, b) => b.gemsSpent - a.gemsSpent),
+      daily: days.map((d) => {
+        const row = dailyMap.get(d)!;
+        return {
+          day: row.day,
+          purchases: row.purchases,
+          gemsSpent: row.gemsSpent,
+          buyers: row.buyers.size,
+        };
+      }),
+      inventory: {
+        shieldHolders: shieldAgg._count._all,
+        shieldsOwned: shieldAgg._sum.streakShieldCount ?? 0,
+        revivalHolders: revivalAgg._count._all,
+        revivalsOwned: revivalAgg._sum.streakRevivalCount ?? 0,
+        senseiIconOwners: senseiOwners,
+        senseiIconActive: senseiActive,
+      },
+      notes: [
+        'Purchases = gem spends: avatar_unlock + gem_shop ledger rows in range.',
+        'Streak / app-icon spends are logged from the Gem Shop purchase endpoint.',
+        'Inventory snapshot is current balances (not limited to the date range).',
+      ],
+    };
+  }
+
+  private gemShopSkuFromTxn(
+    source: string,
+    referenceId: string | null | undefined,
+  ): string {
+    const ref = (referenceId ?? '').trim();
+    if (source === 'avatar_unlock') {
+      if (ref.startsWith('avatar:')) return ref.slice('avatar:'.length) || 'avatar';
+      return ref || 'avatar';
+    }
+    if (source === 'gem_shop') return ref || 'unknown';
+    return ref || source;
+  }
+
+  private gemShopKindFromSku(sku: string): string {
+    if (sku === 'streak_shield') return 'streak_shield';
+    if (sku === 'streak_revival') return 'streak_revival';
+    if (sku.startsWith('app_icon_')) return 'app_icon';
+    if (isKnownAvatarId(sku)) return 'avatar';
+    return 'other';
   }
 
   private async buildPlacement(range: DateRange, filters: MetricsFilters) {

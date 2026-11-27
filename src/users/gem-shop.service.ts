@@ -46,14 +46,25 @@ export class GemShopService {
       if (fresh.bananaSeedBalance < resolved.price) {
         throw new BadRequestException('Insufficient gem balance');
       }
-      const updated = await this.prisma.user.update({
-        where: { id: fresh.id },
-        data: {
-          bananaSeedBalance: { decrement: resolved.price },
-          unlockedAppIconIds: {
-            set: [...new Set([...fresh.unlockedAppIconIds, iconId])],
+      const updated = await this.prisma.$transaction(async (tx) => {
+        await tx.economyTransaction.create({
+          data: {
+            userId: fresh.id,
+            currency: 'BANANA_SEED',
+            amount: -resolved.price,
+            source: 'gem_shop',
+            referenceId: iconId,
           },
-        },
+        });
+        return tx.user.update({
+          where: { id: fresh.id },
+          data: {
+            bananaSeedBalance: { decrement: resolved.price },
+            unlockedAppIconIds: {
+              set: [...new Set([...fresh.unlockedAppIconIds, iconId])],
+            },
+          },
+        });
       });
       return this.users.getProfile(updated);
     }
@@ -62,20 +73,31 @@ export class GemShopService {
       throw new BadRequestException('Insufficient gem balance');
     }
 
-    const data =
-      resolved.kind === 'streak_shield'
-        ? {
-            bananaSeedBalance: { decrement: resolved.price },
-            streakShieldCount: { increment: 1 },
-          }
-        : {
-            bananaSeedBalance: { decrement: resolved.price },
-            streakRevivalCount: { increment: 1 },
-          };
-
-    const updated = await this.prisma.user.update({
-      where: { id: fresh.id },
-      data,
+    const sku =
+      resolved.kind === 'streak_shield' ? 'streak_shield' : 'streak_revival';
+    const updated = await this.prisma.$transaction(async (tx) => {
+      await tx.economyTransaction.create({
+        data: {
+          userId: fresh.id,
+          currency: 'BANANA_SEED',
+          amount: -resolved.price,
+          source: 'gem_shop',
+          referenceId: sku,
+        },
+      });
+      return tx.user.update({
+        where: { id: fresh.id },
+        data:
+          resolved.kind === 'streak_shield'
+            ? {
+                bananaSeedBalance: { decrement: resolved.price },
+                streakShieldCount: { increment: 1 },
+              }
+            : {
+                bananaSeedBalance: { decrement: resolved.price },
+                streakRevivalCount: { increment: 1 },
+              },
+      });
     });
     return this.users.getProfile(updated);
   }
