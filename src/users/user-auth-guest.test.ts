@@ -63,4 +63,71 @@ describe('UserAuthService guest IAP bind', () => {
       (err: unknown) => err instanceof ConflictException,
     );
   });
+
+  it('migrates a new Google email onto the current guest profile', async () => {
+    const guest = {
+      id: 'guest-1',
+      firebaseUid: 'anon-1',
+      email: null,
+      anonymousId: 'a1',
+    } as any;
+    const providerUpserts: any[] = [];
+    const userUpdates: any[] = [];
+    const service = new UserAuthService(
+      {
+        isEnabled: () => true,
+        verifyIdToken: async () => ({
+          uid: 'anon-1',
+          email: 'new@example.com',
+          firebase: {
+            sign_in_provider: 'google.com',
+            identities: { 'google.com': ['g-1'] },
+          },
+        }),
+      } as any,
+      {
+        user: {
+          findUnique: async ({ where }: any) => {
+            if (where.firebaseUid) return guest;
+            if (where.id === guest.id) {
+              return { ...guest, email: 'new@example.com' };
+            }
+            return null;
+          },
+          findUniqueOrThrow: async ({ where }: any) => {
+            assert.equal(where.id, guest.id);
+            return { ...guest, email: 'new@example.com' };
+          },
+        },
+        userAuthProvider: {
+          findUnique: async () => null,
+          count: async () => 0,
+        },
+        $transaction: async (fn: any) =>
+          fn({
+            userAuthProvider: {
+              upsert: async (args: any) => {
+                providerUpserts.push(args);
+              },
+            },
+            user: {
+              update: async ({ data }: any) => {
+                userUpdates.push(data);
+                return { ...guest, ...data };
+              },
+            },
+          }),
+      } as any,
+      {
+        getProfile: async (u: any) => ({ id: u.id, email: u.email }),
+      } as any,
+    );
+
+    const profile = await service.linkAuthFromToken(guest, 'token');
+    assert.equal(profile.id, 'guest-1');
+    assert.equal(providerUpserts[0].create.userId, 'guest-1');
+    assert.equal(providerUpserts[0].create.email, 'new@example.com');
+    assert.equal(userUpdates[0].firebaseUid, 'anon-1');
+    assert.equal(userUpdates[0].email, 'new@example.com');
+  });
 });

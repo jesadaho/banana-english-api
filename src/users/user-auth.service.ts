@@ -125,7 +125,8 @@ export class UserAuthService {
     });
     if (existingByFirebase && existingByFirebase.id !== user.id) {
       if (await this.isGuestUser(user)) {
-        // Multi-device v1: guest adopts the already-linked profile.
+        // Email/account already in the system: guest adopts that profile
+        // (multi-device). New-email migrate keeps the guest row below instead.
         await this.subscriptions?.claimPaidPresaleForUser(existingByFirebase);
         await this.rotateAuthSession(existingByFirebase.id);
         const claimed = await this.prisma.user.findUniqueOrThrow({
@@ -160,6 +161,8 @@ export class UserAuthService {
       );
     }
 
+    // New Google/Apple email: bind provider + Firebase UID onto this guest so
+    // progress / Pro stay on the same Banana user id.
     await this.prisma.$transaction(async (tx) => {
       await tx.userAuthProvider.upsert({
         where: {
