@@ -17,13 +17,16 @@ export class AdminSubscriptionsController {
   constructor(private readonly subscriptions: SubscriptionsService) {}
 
   @Get()
-  list() {
-    return this.subscriptions.adminReport();
+  list(@Query('from') from?: string, @Query('to') to?: string) {
+    return this.subscriptions.adminReport(from, to);
   }
 
   @Post('backfill-presale-emails')
-  backfillPresaleEmails() {
-    return this.subscriptions.adminReport();
+  backfillPresaleEmails(
+    @Query('from') from?: string,
+    @Query('to') to?: string,
+  ) {
+    return this.subscriptions.adminReport(from, to);
   }
 
   @Get('users')
