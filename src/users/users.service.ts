@@ -123,6 +123,14 @@ export interface UserProfileResponse {
   unlockedAvatarIds: string[];
   /** Selected avatar; null when the user never picked one on the server. */
   avatarId: string | null;
+  /** Gem Shop streak shields owned. */
+  streakShieldCount: number;
+  /** Gem Shop streak revivals owned (inventory; redeem UI later). */
+  streakRevivalCount: number;
+  /** Unlocked alternate app icon ids (classic is always free). */
+  unlockedAppIconIds: string[];
+  /** Active app icon id; null means classic. */
+  activeAppIconId: string | null;
   lessonTeachingLanguage: 'thai' | 'english';
   contentLocale: 'th' | 'en';
   email?: string | null;
@@ -882,6 +890,21 @@ export class UsersService {
       timezone: user.timezone,
       unlockedAvatarIds,
       avatarId: user.avatarId?.trim() || null,
+      streakShieldCount:
+        (user as User & { streakShieldCount?: number }).streakShieldCount ?? 0,
+      streakRevivalCount:
+        (user as User & { streakRevivalCount?: number }).streakRevivalCount ?? 0,
+      unlockedAppIconIds: [
+        ...new Set(
+          ((user as User & { unlockedAppIconIds?: string[] })
+            .unlockedAppIconIds ?? [])
+            .map((id) => id.trim())
+            .filter(Boolean),
+        ),
+      ],
+      activeAppIconId:
+        (user as User & { activeAppIconId?: string | null }).activeAppIconId
+          ?.trim() || null,
       lessonTeachingLanguage,
       contentLocale:
         (user as User & { contentLocale?: string }).contentLocale === 'en'

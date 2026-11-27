@@ -73,6 +73,15 @@ model User {
   /** Currently selected profile avatar id (catalog). */
   avatarId                String?
 
+  /** Gem Shop: streak shields (skip one missed day). */
+  streakShieldCount       Int       @default(0)
+  /** Gem Shop: streak revivals inventory (redeem UI later). */
+  streakRevivalCount      Int       @default(0)
+  /** Gem Shop: unlocked alternate app icon ids (classic is always free). */
+  unlockedAppIconIds      String[]  @default([])
+  /** Active home-screen app icon id; null = classic. */
+  activeAppIconId         String?
+
   /** Most recent training lesson started (for social "currently on" proof). */
   lastStudiedLessonId     String?
   lastStudiedAt           DateTime?
