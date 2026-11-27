@@ -1,5 +1,8 @@
 /**
  * Avatar catalog costs — keep in sync with Flutter DefaultAvatars.seedCostsById.
+ *
+ * Grant-only ids (Live Talk / admin rewards) stay in the catalog so they render
+ * everywhere, but learners cannot buy them with seeds — see [AVATAR_GRANT_ONLY_IDS].
  */
 export const AVATAR_SEED_COSTS: Record<string, number> = {
   nerd_chic_girl: 0,
@@ -36,7 +39,16 @@ export const AVATAR_SEED_COSTS: Record<string, number> = {
   ray: 500,
   linda: 700,
   captain_banana: 2500,
+  /** Live Talk reward — admin grant only. */
+  frog_chick: 99999,
 };
+
+/** Avatars that only unlock via admin (or future campaign grants). */
+export const AVATAR_GRANT_ONLY_IDS = ['frog_chick'] as const;
+
+export function isGrantOnlyAvatar(avatarId: string): boolean {
+  return (AVATAR_GRANT_ONLY_IDS as readonly string[]).includes(avatarId);
+}
 
 /** Keep in sync with Flutter DefaultAvatars.minPerfectStarsById */
 export const AVATAR_MIN_PERFECT_STARS: Record<string, number> = {
