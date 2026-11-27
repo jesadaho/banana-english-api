@@ -8,6 +8,13 @@ export type CohortUserRow = {
   /** Days after signup with a learning session (0 = signup day). */
   activeDays: number[];
   paid: boolean;
+  /** Learning activities on signup day / days 0–7 (optional). */
+  activities0?: number;
+  activities7?: number;
+  /** Bananas spent on signup day (optional). */
+  bananasSpent0?: number;
+  /** Banana balance at the end of signup day ≤ 0 (optional). */
+  outOfBananas0?: boolean;
   dims: Record<string, string>;
 };
 
@@ -23,11 +30,26 @@ export type RetentionStats = {
   dropAfterD1: number | null;
   /** Gone on D1 and D2, back on any day 3–7. */
   comeback: number | null;
+  /** Average learning activities on signup day. */
+  acts0: number | null;
+  /** Average learning activities on days 0–7 (users whose day 7 is over). */
+  acts7: number | null;
+  /** Average bananas spent on signup day. */
+  bananas0: number | null;
+  /** Ended signup day with 0 bananas (%). */
+  outOfBananas0: number | null;
 };
 
 type Acc = {
   n: number;
   paid: number;
+  an: number;
+  aSum0: number;
+  an7: number;
+  aSum7: number;
+  bn: number;
+  bSum: number;
+  bOut: number;
   m: Record<'d1' | 'd2' | 'd3' | 'd7' | 'drop' | 'come', number>;
   x: Record<'d1' | 'd2' | 'd3' | 'd7' | 'drop' | 'come', number>;
 };
@@ -35,6 +57,13 @@ type Acc = {
 const empty = (): Acc => ({
   n: 0,
   paid: 0,
+  an: 0,
+  aSum0: 0,
+  an7: 0,
+  aSum7: 0,
+  bn: 0,
+  bSum: 0,
+  bOut: 0,
   m: { d1: 0, d2: 0, d3: 0, d7: 0, drop: 0, come: 0 },
   x: { d1: 0, d2: 0, d3: 0, d7: 0, drop: 0, come: 0 },
 });
@@ -47,6 +76,19 @@ function add(acc: Acc, row: CohortUserRow) {
   const done = (d: number) => row.ageDays >= d + 1;
   acc.n++;
   if (row.paid) acc.paid++;
+  if (row.activities0 != null) {
+    acc.an++;
+    acc.aSum0 += row.activities0;
+  }
+  if (row.activities7 != null && done(7)) {
+    acc.an7++;
+    acc.aSum7 += row.activities7;
+  }
+  if (row.bananasSpent0 != null) {
+    acc.bn++;
+    acc.bSum += row.bananasSpent0;
+    if (row.outOfBananas0) acc.bOut++;
+  }
   for (const [k, d] of [['d1', 1], ['d2', 2], ['d3', 3], ['d7', 7]] as const) {
     if (!done(d)) continue;
     acc.m[k]++;
@@ -73,6 +115,10 @@ function stats(acc: Acc): RetentionStats {
     d7: pct(acc.x.d7, acc.m.d7),
     dropAfterD1: pct(acc.x.drop, acc.m.drop),
     comeback: pct(acc.x.come, acc.m.come),
+    acts0: acc.an > 0 ? Math.round((acc.aSum0 / acc.an) * 10) / 10 : null,
+    acts7: acc.an7 > 0 ? Math.round((acc.aSum7 / acc.an7) * 10) / 10 : null,
+    bananas0: acc.bn > 0 ? Math.round((acc.bSum / acc.bn) * 10) / 10 : null,
+    outOfBananas0: pct(acc.bOut, acc.bn),
   };
 }
 

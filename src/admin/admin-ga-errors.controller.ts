@@ -240,7 +240,60 @@ export class GaErrorsService {
     this.cache.set(key, { at: Date.now(), value });
     return value;
   }
+
+  /**
+   * Onboarding funnel from GA: users per onboarding step (`step` param) and
+   * per platform, plus `first_open` as the top. Users = GA totalUsers who
+   * logged that step in the range.
+   */
+  async onboardingFunnel(from: Date, to: Date) {
+    const range = { start: ymd(from), end: ymd(to) };
+    const key = `onboarding_${range.start}_${range.end}`;
+    const hit = this.cache.get(key);
+    if (hit && Date.now() - hit.at < GaErrorsService.CACHE_MS) return hit.value;
+
+    const custom = await this.customDims();
+    const hasStep = custom.has('step');
+    const [opens, steps, byPlatform] = await Promise.all([
+      this.report(range, { dimensions: ['platform'], eventNames: ['first_open'], limit: 10 }),
+      hasStep
+        ? this.report(range, {
+            dimensions: ['customEvent:step'],
+            eventNames: [ONBOARDING_STEP_EVENT],
+            limit: 100,
+          })
+        : Promise.resolve([] as Row[]),
+      hasStep
+        ? this.report(range, {
+            dimensions: ['customEvent:step', 'platform'],
+            eventNames: [ONBOARDING_STEP_EVENT],
+            limit: 400,
+          })
+        : Promise.resolve([] as Row[]),
+    ]);
+    const value = {
+      from: range.start,
+      to: range.end,
+      event: ONBOARDING_STEP_EVENT,
+      missingDimensions: hasStep ? [] : ['step'],
+      firstOpen: {
+        users: opens.reduce((n, r) => n + r.users, 0),
+        byPlatform: Object.fromEntries(opens.map((r) => [r.dims[0].toLowerCase(), r.users])),
+      },
+      steps: steps.map((r) => ({ step: r.dims[0], events: r.events, users: r.users })),
+      byPlatform: byPlatform.map((r) => ({
+        step: r.dims[0],
+        platform: r.dims[1].toLowerCase(),
+        users: r.users,
+      })),
+    };
+    this.cache.set(key, { at: Date.now(), value });
+    return value;
+  }
 }
+
+/** GA event the onboarding v2/v3 screens log (param `step`). */
+export const ONBOARDING_STEP_EVENT = 'onboarding_v2_step_viewed';
 
 function ymd(d: Date): string {
   return d.toISOString().slice(0, 10);
@@ -261,5 +314,17 @@ export class AdminGaErrorsController {
       throw new BadRequestException('invalid_range');
     }
     return this.ga.errors(range.from, range.to);
+  }
+
+  /** Admin → Onboarding: GA step funnel (see GaErrorsService.onboardingFunnel). */
+  @Get('onboarding-funnel')
+  async onboardingFunnel(@Query('from') from?: string, @Query('to') to?: string) {
+    let range: { from: Date; to: Date };
+    try {
+      range = parseDateRange(from, to);
+    } catch {
+      throw new BadRequestException('invalid_range');
+    }
+    return this.ga.onboardingFunnel(range.from, range.to);
   }
 }

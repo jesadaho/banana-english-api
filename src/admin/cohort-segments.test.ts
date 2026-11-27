@@ -32,6 +32,25 @@ describe('cohort segments', () => {
     assert.equal(s.d2, null);
   });
 
+  it('bananas spent and out of bananas on signup day', () => {
+    const s = overallStats([
+      { ...row([0]), bananasSpent0: 5, outOfBananas0: true },
+      { ...row([0]), bananasSpent0: 2, outOfBananas0: false },
+    ]);
+    assert.equal(s.bananas0, 3.5);
+    assert.equal(s.outOfBananas0, 50);
+    assert.equal(overallStats([row([0])]).bananas0, null);
+  });
+
+  it('average activities on day 0 and days 0–7', () => {
+    const s = overallStats([
+      { ...row([0], 10), activities0: 4, activities7: 10 },
+      { ...row([0], 3), activities0: 2, activities7: 2 },
+    ]);
+    assert.equal(s.acts0, 3);
+    assert.equal(s.acts7, 10); // 2nd user's day 7 is not over
+  });
+
   it('groups by value and hides small groups', () => {
     const rows = [...Array(20)].map(() => row([0, 1], 10, false, 'big')).concat([row([0], 10, false, 'small')]);
     const seg = segmentStats(rows, ['g'], 15);
